@@ -1,12 +1,17 @@
 ---
+description: "Learn more about: ICorProfilerInfo9::GetILToNativeMapping3 Method"
 title: "ICorProfilerInfo9::GetILToNativeMapping3"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/profiling/icorprofilerinfo9-getiltonativemapping3-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "08/06/2019"
+dev_langs:
+  - "cpp"
+api_name:
+  - "ICorProfilerInfo9.GetILToNativeMapping3"
+api_location:
+  - "mscorwks.dll"
+api_type:
+  - "COM"
+author: "davmason"
 ---
-
 # ICorProfilerInfo9::GetILToNativeMapping3 method
 
 Given the native code start address, returns the native to IL mapping information for this jitted version of the code.
@@ -32,15 +37,15 @@ HRESULT GetILToNativeMapping3( [in]  UINT_PTR pNativeCodeStartAddress,
 [out] The total number of available COR_DEBUG_IL_TO_NATIVE_MAP structures.
 
 `map`\
-[out] An array of COR_DEBUG_IL_TO_NATIVE_MAP structures, each of which specifies the offsets. After the `GetILToNativeMapping3` method returns, `map` will contain some or all of the `COR_DEBUG_IL_TO_NATIVE_MAP` structures.
+[out] An array of [COR_DEBUG_IL_TO_NATIVE_MAP](../debugging/icordebug/cor-debug-il-to-native-map-structure.md) structures, each of which specifies the offsets. After the `GetILToNativeMapping3` method returns, `map` will contain some or all of the `COR_DEBUG_IL_TO_NATIVE_MAP` structures.
 
 ## Remarks
 
-When tiered compilation is enabled, a method may have more than one native code body. ICorProfilerInfo9::GetNativeCodeStartAddresses will return the start addresses for all of the native code bodies.
+When tiered compilation is enabled, a method may have more than one native code body. [ICorProfilerInfo9::GetNativeCodeStartAddresses](icorprofilerinfo9-getnativecodestartaddresses-method.md) will return the start addresses for all of the native code bodies.
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** CorProf.idl, CorProf.h
 
@@ -50,4 +55,4 @@ When tiered compilation is enabled, a method may have more than one native code 
 
 ## See also
 
-- ICorProfilerInfo9 Interface
+- [ICorProfilerInfo9 Interface](icorprofilerinfo9-interface.md)

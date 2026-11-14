@@ -1,10 +1,6 @@
 ---
+id: frames
 title: "Frames"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/frames.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
 
 ## Introduction
@@ -27,13 +23,13 @@ Locator username = page.frameLocator(".frame-class").getByLabel("User Name");
 username.fill("John");
 ```
 
-```python
+```python async
 # Locate element inside frame
 username = await page.frame_locator('.frame-class').get_by_label('User Name')
 await username.fill('John')
 ```
 
-```python
+```python sync
 # Locate element inside frame
 # Get frame using any other selector
 username = page.frame_locator('.frame-class').get_by_label('User Name')
@@ -72,7 +68,7 @@ Frame frame = page.frameByUrl(Pattern.compile(".*domain.*"));
 frame.fill("#username-input", "John");
 ```
 
-```python
+```python async
 # Get frame using the frame's name attribute
 frame = page.frame('frame-login')
 
@@ -83,7 +79,7 @@ frame = page.frame(url=r'.*domain.*')
 await frame.fill('#username-input', 'John')
 ```
 
-```python
+```python sync
 # Get frame using the frame's name attribute
 frame = page.frame('frame-login')
 

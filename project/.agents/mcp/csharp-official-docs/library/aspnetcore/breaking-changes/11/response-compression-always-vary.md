@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: Response compression always emits Vary: Accept-Encoding"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/11/response-compression-always-vary.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+ai-usage: ai-assisted
+description: "Learn about the breaking change in ASP.NET Core 11 where the response compression middleware always appends Vary: Accept-Encoding to responses it sees, even when no compression was applied."
+ms.date: 06/04/2026
 ---
-
 # Response compression always emits Vary: Accept-Encoding
 
 The response compression middleware now appends `Vary: Accept-Encoding` to every response that passes through it, including responses for which it didn't actually compress the body. Downstream caches see more correct cache keys, at the cost of slightly more cache variants when caches don't normalize the `Accept-Encoding` request header.
@@ -27,11 +24,11 @@ Starting in ASP.NET Core 11, the response compression middleware appends `Vary: 
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](/dotnet/core/compatibility/categories#behavioral-change).
 
 ## Reason for change
 
-Without the `Vary: Accept-Encoding` header on every response, a shared cache can serve a stored encoded response to a client that doesn't accept that encoding. Adding the header unconditionally makes the middleware's response correctly cacheable by HTTP-compliant intermediaries. For more information, see dotnet/aspnetcore#55092 and the issue it fixes, dotnet/aspnetcore#48008.
+Without the `Vary: Accept-Encoding` header on every response, a shared cache can serve a stored encoded response to a client that doesn't accept that encoding. Adding the header unconditionally makes the middleware's response correctly cacheable by HTTP-compliant intermediaries. For more information, see [dotnet/aspnetcore#55092](https://github.com/dotnet/aspnetcore/pull/55092) and the issue it fixes, [dotnet/aspnetcore#48008](https://github.com/dotnet/aspnetcore/issues/48008).
 
 ## Recommended action
 
@@ -59,5 +56,5 @@ app.Use(async (context, next) =>
 
 ## Affected APIs
 
-- `Microsoft.AspNetCore.ResponseCompression.ResponseCompressionMiddleware`
-- `Microsoft.AspNetCore.Builder.ResponseCompressionBuilderExtensions.UseResponseCompression*`
+- <xref:Microsoft.AspNetCore.ResponseCompression.ResponseCompressionMiddleware?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Builder.ResponseCompressionBuilderExtensions.UseResponseCompression*?displayProperty=fullName>

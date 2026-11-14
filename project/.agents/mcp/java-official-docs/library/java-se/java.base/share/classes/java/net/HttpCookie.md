@@ -1,12 +1,3 @@
----
-title: "HttpCookie class (java.net)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/net/HttpCookie.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # HttpCookie class (java.net)
 
 ```java
@@ -17,19 +8,21 @@ An HttpCookie object represents an HTTP cookie, which carries state
 information between server and user agent. Cookie is widely adopted
 to create stateful sessions.
 
- There are 3 HTTP cookie specifications:
+<p> There are 3 HTTP cookie specifications:
+<blockquote>
+  Netscape draft<br>
+  RFC 2109 - <a href="http://www.ietf.org/rfc/rfc2109.txt">
+<i>http://www.ietf.org/rfc/rfc2109.txt</i></a><br>
+  RFC 2965 - <a href="http://www.ietf.org/rfc/rfc2965.txt">
+<i>http://www.ietf.org/rfc/rfc2965.txt</i></a>
+</blockquote>
 
-  Netscape draft
+<p> HttpCookie class can accept all these 3 forms of syntax.
 
-  RFC 2109 -
-*http://www.ietf.org/rfc/rfc2109.txt*
-
-  RFC 2965 -
-*http://www.ietf.org/rfc/rfc2965.txt*
-
- HttpCookie class can accept all these 3 forms of syntax.
-
-**Since:** 1.6
+@spec https://www.rfc-editor.org/info/rfc2109 RFC 2109: HTTP State Management Mechanism
+@spec https://www.rfc-editor.org/info/rfc2965 RFC 2965: HTTP State Management Mechanism
+@author Edward Wang
+@since 1.6
 
 ## HttpCookie.HttpCookie(String, String)
 
@@ -39,33 +32,34 @@ public HttpCookie(String name, String value)
 
 Constructs a cookie with a specified name and value.
 
- The name must conform to RFC 2965. That means it can contain
+<p> The name must conform to RFC 2965. That means it can contain
 only ASCII alphanumeric characters and cannot contain commas,
 semicolons, or white space or begin with a $ character. The cookie's
 name cannot be changed after creation.
 
- The value can be anything the server chooses to send. Its
+<p> The value can be anything the server chooses to send. Its
 value is probably of interest only to the server. The cookie's
 value can be changed after creation with the
-`setValue` method.
+{@code setValue} method.
 
- By default, cookies are created according to the RFC 2965
+<p> By default, cookies are created according to the RFC 2965
 cookie specification. The version can be changed with the
-`setVersion` method.
+{@code setVersion} method.
 
-Parameters:
 
-- `name`: a `String` specifying the name of the cookie
-- `value`: a `String` specifying the value of the cookie
+@param  name
+        a {@code String} specifying the name of the cookie
 
-**See also:** #setValue
+@param  value
+        a {@code String} specifying the value of the cookie
 
-**See also:** #setVersion
+@throws  IllegalArgumentException
+         if the cookie name contains illegal characters
+@throws  NullPointerException
+         if {@code name} is {@code null}
 
-Throws:
-
-- `IllegalArgumentException`: if the cookie name contains illegal characters
-- `NullPointerException`: if `name` is `null`
+@see #setValue
+@see #setVersion
 
 ## HttpCookie.parse(String)
 
@@ -78,16 +72,18 @@ RFC 2965 section 3.2.2 set-cookie2 syntax indicates that one header line
 may contain more than one cookie definitions, so this is a static
 utility method instead of another constructor.
 
-Parameters:
+@param  header
+        a {@code String} specifying the set-cookie header. The header
+        should start with "set-cookie", or "set-cookie2" token; or it
+        should have no leading token at all.
 
-- `header`: a `String` specifying the set-cookie header. The header should start with "<example-value>", or "<example-value>" token; or it should have no leading token at all.
+@return  a List of cookie parsed from header line string
 
-**Returns:** a List of cookie parsed from header line string
-
-Throws:
-
-- `IllegalArgumentException`: if header string violates the cookie specification's syntax or the cookie name contains illegal characters.
-- `NullPointerException`: if the header string is `null`
+@throws  IllegalArgumentException
+         if header string violates the cookie specification's syntax or
+         the cookie name contains illegal characters.
+@throws  NullPointerException
+         if the header string is {@code null}
 
 ## HttpCookie.hasExpired()
 
@@ -97,8 +93,8 @@ public boolean hasExpired()
 
 Reports whether this HTTP cookie has expired or not.
 
-**Returns:** `true` to indicate this HTTP cookie has expired;
-         otherwise, `false`
+@return  {@code true} to indicate this HTTP cookie has expired;
+         otherwise, {@code false}
 
 ## HttpCookie.setComment(String)
 
@@ -110,11 +106,10 @@ Specifies a comment that describes a cookie's purpose.
 The comment is useful if the browser presents the cookie
 to the user. Comments are not supported by Netscape Version 0 cookies.
 
-Parameters:
+@param  purpose
+        a {@code String} specifying the comment to display to the user
 
-- `purpose`: a `String` specifying the comment to display to the user
-
-**See also:** #getComment
+@see  #getComment
 
 ## HttpCookie.getComment()
 
@@ -123,11 +118,11 @@ public String getComment()
 ```
 
 Returns the comment describing the purpose of this cookie, or
-`null` if the cookie has no comment.
+{@code null} if the cookie has no comment.
 
-**Returns:** a `String` containing the comment, or `null` if none
+@return  a {@code String} containing the comment, or {@code null} if none
 
-**See also:** #setComment
+@see  #setComment
 
 ## HttpCookie.setCommentURL(String)
 
@@ -139,11 +134,10 @@ Specifies a comment URL that describes a cookie's purpose.
 The comment URL is useful if the browser presents the cookie
 to the user. Comment URL is RFC 2965 only.
 
-Parameters:
+@param  purpose
+        a {@code String} specifying the comment URL to display to the user
 
-- `purpose`: a `String` specifying the comment URL to display to the user
-
-**See also:** #getCommentURL
+@see  #getCommentURL
 
 ## HttpCookie.getCommentURL()
 
@@ -152,12 +146,12 @@ public String getCommentURL()
 ```
 
 Returns the comment URL describing the purpose of this cookie, or
-`null` if the cookie has no comment URL.
+{@code null} if the cookie has no comment URL.
 
-**Returns:** a `String` containing the comment URL, or `null`
+@return  a {@code String} containing the comment URL, or {@code null}
          if none
 
-**See also:** #setCommentURL
+@see  #setCommentURL
 
 ## HttpCookie.setDiscard(boolean)
 
@@ -168,11 +162,10 @@ public void setDiscard(boolean discard)
 Specify whether user agent should discard the cookie unconditionally.
 This is RFC 2965 only attribute.
 
-Parameters:
+@param  discard
+        {@code true} indicates to discard cookie unconditionally
 
-- `discard`: `true` indicates to discard cookie unconditionally
-
-**See also:** #getDiscard
+@see  #getDiscard
 
 ## HttpCookie.getDiscard()
 
@@ -182,9 +175,9 @@ public boolean getDiscard()
 
 Returns the discard attribute of the cookie
 
-**Returns:** a `boolean` to represent this cookie's discard attribute
+@return  a {@code boolean} to represent this cookie's discard attribute
 
-**See also:** #setDiscard
+@see  #setDiscard
 
 ## HttpCookie.setPortlist(String)
 
@@ -195,11 +188,11 @@ public void setPortlist(String ports)
 Specify the portlist of the cookie, which restricts the port(s)
 to which a cookie may be sent back in a Cookie header.
 
-Parameters:
+@param  ports
+        a {@code String} specify the port list, which is comma separated
+        series of digits
 
-- `ports`: a `String` specify the port list, which is comma separated series of digits
-
-**See also:** #getPortlist
+@see  #getPortlist
 
 ## HttpCookie.getPortlist()
 
@@ -209,9 +202,9 @@ public String getPortlist()
 
 Returns the port list attribute of the cookie
 
-**Returns:** a `String` contains the port list or `null` if none
+@return  a {@code String} contains the port list or {@code null} if none
 
-**See also:** #setPortlist
+@see  #setPortlist
 
 ## HttpCookie.setDomain(String)
 
@@ -221,18 +214,18 @@ public void setDomain(String pattern)
 
 Specifies the domain within which this cookie should be presented.
 
- The form of the domain name is specified by RFC 2965. A domain
-name begins with a dot (`.foo.com`) and means that
+<p> The form of the domain name is specified by RFC 2965. A domain
+name begins with a dot ({@code .foo.com}) and means that
 the cookie is visible to servers in a specified Domain Name System
-(DNS) zone (for example, `www.foo.com`, but not
-`a.b.foo.com`). By default, cookies are only returned
+(DNS) zone (for example, {@code www.foo.com}, but not
+{@code a.b.foo.com}). By default, cookies are only returned
 to the server that sent them.
 
-Parameters:
+@param  pattern
+        a {@code String} containing the domain name within which this
+        cookie is visible; form is according to RFC 2965
 
-- `pattern`: a `String` containing the domain name within which this cookie is visible; form is according to RFC 2965
-
-**See also:** #getDomain
+@see  #getDomain
 
 ## HttpCookie.getDomain()
 
@@ -243,9 +236,9 @@ public String getDomain()
 Returns the domain name set for this cookie. The form of the domain name
 is set by RFC 2965.
 
-**Returns:** a `String` containing the domain name
+@return  a {@code String} containing the domain name
 
-**See also:** #setDomain
+@see  #setDomain
 
 ## HttpCookie.setMaxAge(long)
 
@@ -255,20 +248,21 @@ public void setMaxAge(long expiry)
 
 Sets the maximum age of the cookie in seconds.
 
- A positive value indicates that the cookie will expire
+<p> A positive value indicates that the cookie will expire
 after that many seconds have passed. Note that the value is
-the *maximum* age when the cookie will expire, not the cookie's
+the <i>maximum</i> age when the cookie will expire, not the cookie's
 current age.
 
- A negative value means that the cookie is not stored persistently
+<p> A negative value means that the cookie is not stored persistently
 and will be deleted when the Web browser exits. A zero value causes the
 cookie to be deleted.
 
-Parameters:
+@param  expiry
+        an integer specifying the maximum age of the cookie in seconds;
+        if zero, the cookie should be discarded immediately; otherwise,
+        the cookie's max age is unspecified.
 
-- `expiry`: an integer specifying the maximum age of the cookie in seconds; if zero, the cookie should be discarded immediately; otherwise, the cookie's max age is unspecified.
-
-**See also:** #getMaxAge
+@see  #getMaxAge
 
 ## HttpCookie.getMaxAge()
 
@@ -277,11 +271,11 @@ public long getMaxAge()
 ```
 
 Returns the maximum age of the cookie, specified in seconds. By default,
-`-1` indicating the cookie will persist until browser shutdown.
+{@code -1} indicating the cookie will persist until browser shutdown.
 
-**Returns:** an integer specifying the maximum age of the cookie in seconds
+@return  an integer specifying the maximum age of the cookie in seconds
 
-**See also:** #setMaxAge
+@see  #setMaxAge
 
 ## HttpCookie.setPath(String)
 
@@ -292,20 +286,19 @@ public void setPath(String uri)
 Specifies a path for the cookie to which the client should return
 the cookie.
 
- The cookie is visible to all the pages in the directory
+<p> The cookie is visible to all the pages in the directory
 you specify, and all the pages in that directory's subdirectories.
 A cookie's path must include the servlet that set the cookie,
-for example, */catalog*, which makes the cookie
-visible to all directories on the server under */catalog*.
+for example, <i>/catalog</i>, which makes the cookie
+visible to all directories on the server under <i>/catalog</i>.
 
- Consult RFC 2965 (available on the Internet) for more
+<p> Consult RFC 2965 (available on the Internet) for more
 information on setting path names for cookies.
 
-Parameters:
+@param  uri
+        a {@code String} specifying a path
 
-- `uri`: a `String` specifying a path
-
-**See also:** #getPath
+@see  #getPath
 
 ## HttpCookie.getPath()
 
@@ -316,10 +309,10 @@ public String getPath()
 Returns the path on the server to which the browser returns this cookie.
 The cookie is visible to all subpaths on the server.
 
-**Returns:** a `String` specifying a path that contains a servlet name,
-         for example, */catalog*
+@return  a {@code String} specifying a path that contains a servlet name,
+         for example, <i>/catalog</i>
 
-**See also:** #setPath
+@see  #setPath
 
 ## HttpCookie.setSecure(boolean)
 
@@ -330,13 +323,14 @@ public void setSecure(boolean flag)
 Indicates whether the cookie should only be sent using a secure protocol,
 such as HTTPS or SSL.
 
- The default value is `false`.
+<p> The default value is {@code false}.
 
-Parameters:
+@param  flag
+        If {@code true}, the cookie can only be sent over a secure
+        protocol like HTTPS. If {@code false}, it can be sent over
+        any protocol.
 
-- `flag`: If `true`, the cookie can only be sent over a secure protocol like HTTPS. If `false`, it can be sent over any protocol.
-
-**See also:** #getSecure
+@see  #getSecure
 
 ## HttpCookie.getSecure()
 
@@ -344,14 +338,14 @@ Parameters:
 public boolean getSecure()
 ```
 
-Returns `true` if sending this cookie should be restricted to a
-secure protocol, or `false` if it can be sent using any
+Returns {@code true} if sending this cookie should be restricted to a
+secure protocol, or {@code false} if it can be sent using any
 protocol.
 
-**Returns:** `false` if the cookie can be sent over any standard
-         protocol; otherwise, `true`
+@return  {@code false} if the cookie can be sent over any standard
+         protocol; otherwise, {@code true}
 
-**See also:** #setSecure
+@see  #setSecure
 
 ## HttpCookie.getName()
 
@@ -362,7 +356,7 @@ public String getName()
 Returns the name of the cookie. The name cannot be changed after
 creation.
 
-**Returns:** a `String` specifying the cookie's name
+@return  a {@code String} specifying the cookie's name
 
 ## HttpCookie.setValue(String)
 
@@ -373,16 +367,15 @@ public void setValue(String newValue)
 Assigns a new value to a cookie after the cookie is created.
 If you use a binary value, you may want to use BASE64 encoding.
 
- With Version 0 cookies, values should not contain white space,
+<p> With Version 0 cookies, values should not contain white space,
 brackets, parentheses, equals signs, commas, double quotes, slashes,
 question marks, at signs, colons, and semicolons. Empty values may not
 behave the same way on all browsers.
 
-Parameters:
+@param  newValue
+        a {@code String} specifying the new value
 
-- `newValue`: a `String` specifying the new value
-
-**See also:** #getValue
+@see  #getValue
 
 ## HttpCookie.getValue()
 
@@ -392,9 +385,9 @@ public String getValue()
 
 Returns the value of the cookie.
 
-**Returns:** a `String` containing the cookie's present value
+@return  a {@code String} containing the cookie's present value
 
-**See also:** #setValue
+@see  #setValue
 
 ## HttpCookie.getVersion()
 
@@ -407,10 +400,10 @@ complies with RFC 2965/2109, and version 0 complies with the original
 cookie specification drafted by Netscape. Cookies provided by a browser
 use and identify the browser's cookie version.
 
-**Returns:** 0 if the cookie complies with the original Netscape
+@return  0 if the cookie complies with the original Netscape
          specification; 1 if the cookie complies with RFC 2965/2109
 
-**See also:** #setVersion
+@see  #setVersion
 
 ## HttpCookie.setVersion(int)
 
@@ -422,15 +415,14 @@ Sets the version of the cookie protocol this cookie complies
 with. Version 0 complies with the original Netscape cookie
 specification. Version 1 complies with RFC 2965/2109.
 
-Parameters:
+@param  v
+        0 if the cookie should comply with the original Netscape
+        specification; 1 if the cookie should comply with RFC 2965/2109
 
-- `v`: 0 if the cookie should comply with the original Netscape specification; 1 if the cookie should comply with RFC 2965/2109
+@throws  IllegalArgumentException
+         if {@code v} is neither 0 nor 1
 
-**See also:** #getVersion
-
-Throws:
-
-- `IllegalArgumentException`: if `v` is neither 0 nor 1
+@see  #getVersion
 
 ## HttpCookie.isHttpOnly()
 
@@ -438,13 +430,13 @@ Throws:
 public boolean isHttpOnly()
 ```
 
-Returns `true` if this cookie contains the *HttpOnly*
+Returns {@code true} if this cookie contains the <i>HttpOnly</i>
 attribute. This means that the cookie should not be accessible to
 scripting engines, like javascript.
 
-**Returns:** `true` if this cookie should be considered HTTPOnly
+@return  {@code true} if this cookie should be considered HTTPOnly
 
-**See also:** #setHttpOnly(boolean)
+@see  #setHttpOnly(boolean)
 
 ## HttpCookie.setHttpOnly(boolean)
 
@@ -453,14 +445,14 @@ public void setHttpOnly(boolean httpOnly)
 ```
 
 Indicates whether the cookie should be considered HTTP Only. If set to
-`true` it means the cookie should not be accessible to scripting
+{@code true} it means the cookie should not be accessible to scripting
 engines like javascript.
 
-Parameters:
+@param  httpOnly
+        if {@code true} make the cookie HTTP only, i.e. only visible as
+        part of an HTTP request.
 
-- `httpOnly`: if `true` make the cookie HTTP only, i.e. only visible as part of an HTTP request.
-
-**See also:** #isHttpOnly()
+@see  #isHttpOnly()
 
 ## HttpCookie.domainMatches(String, String)
 
@@ -470,54 +462,52 @@ public static boolean domainMatches(String domain, String host)
 
 The utility method to check whether a host name is in a domain or not.
 
- This concept is described in the cookie specification.
+<p> This concept is described in the cookie specification.
 To understand the concept, some terminologies need to be defined first:
-
-effective host name = hostname if host name contains dot
-
-     or = hostname.local if not
-
-Host A's name domain-matches host B's if:
-
-- their host name strings string-compare equal; or
-
-- A is a HDN string and has the form NB, where N is a non-empty
+<blockquote>
+effective host name = hostname if host name contains dot<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or = hostname.local if not
+</blockquote>
+<p>Host A's name domain-matches host B's if:
+<blockquote><ul>
+  <li>their host name strings string-compare equal; or</li>
+  <li>A is a HDN string and has the form NB, where N is a non-empty
   name string, B has the form .B', and B' is a HDN string.  (So,
-  x.y.com domain-matches .Y.com but not Y.com.)
+  x.y.com domain-matches .Y.com but not Y.com.)</li>
+</ul></blockquote>
 
-A host isn't in a domain (RFC 2965 sec. 3.3.2) if:
-
-- The value for the Domain attribute contains no embedded dots,
-  and the value is not .local.
-
-- The effective host name that derives from the request-host does
-  not domain-match the Domain attribute.
-
-- The request-host is a HDN (not IP address) and has the form HD,
+<p>A host isn't in a domain (RFC 2965 sec. 3.3.2) if:
+<blockquote><ul>
+  <li>The value for the Domain attribute contains no embedded dots,
+  and the value is not .local.</li>
+  <li>The effective host name that derives from the request-host does
+  not domain-match the Domain attribute.</li>
+  <li>The request-host is a HDN (not IP address) and has the form HD,
   where D is the value of the Domain attribute, and H is a string
-  that contains one or more dots.
+  that contains one or more dots.</li>
+</ul></blockquote>
 
-Examples:
-
-- A Set-Cookie2 from request-host y.x.foo.com for Domain=.foo.com
-  would be rejected, because H is y.x and contains a dot.
-
-- A Set-Cookie2 from request-host x.foo.com for Domain=.foo.com
-  would be accepted.
-
-- A Set-Cookie2 with Domain=.com or Domain=.com., will always be
-  rejected, because there is no embedded dot.
-
-- A Set-Cookie2 from request-host example for Domain=.local will
+<p>Examples:
+<blockquote><ul>
+  <li>A Set-Cookie2 from request-host y.x.foo.com for Domain=.foo.com
+  would be rejected, because H is y.x and contains a dot.</li>
+  <li>A Set-Cookie2 from request-host x.foo.com for Domain=.foo.com
+  would be accepted.</li>
+  <li>A Set-Cookie2 with Domain=.com or Domain=.com., will always be
+  rejected, because there is no embedded dot.</li>
+  <li>A Set-Cookie2 from request-host example for Domain=.local will
   be accepted, because the effective host name for the request-
-  host is example.local, and example.local domain-matches .local.
+  host is example.local, and example.local domain-matches .local.</li>
+</ul></blockquote>
 
-Parameters:
+@param  domain
+        the domain name to check host name with
 
-- `domain`: the domain name to check host name with
-- `host`: the host name in question
+@param  host
+        the host name in question
 
-**Returns:** `true` if they domain-matches; `false` if not
+@return  {@code true} if they domain-matches; {@code false} if not
 
 ## HttpCookie.toString()
 
@@ -527,9 +517,9 @@ public String toString()
 
 Constructs a cookie header string representation of this cookie,
 which is in the format defined by corresponding cookie specification,
-but without the leading "<example-value>" token.
+but without the leading "Cookie:" token.
 
-**Returns:** a string form of the cookie. The string has the defined format
+@return  a string form of the cookie. The string has the defined format
 
 ## HttpCookie.equals(Object)
 
@@ -539,12 +529,12 @@ public boolean equals(Object obj)
 
 Test the equality of two HTTP cookies.
 
- The result is `true` only if two cookies come from same domain
+<p> The result is {@code true} only if two cookies come from same domain
 (case-insensitive), have same name (case-insensitive), and have same path
 (case-sensitive).
 
-**Returns:** `true` if two HTTP cookies equal to each other;
-         otherwise, `false`
+@return  {@code true} if two HTTP cookies equal to each other;
+         otherwise, {@code false}
 
 ## HttpCookie.hashCode()
 
@@ -555,14 +545,13 @@ public int hashCode()
 Returns the hash code of this HTTP cookie. The result is the sum of
 hash code value of three significant components of this cookie: name,
 domain, and path. That is, the hash code is the value of the expression:
-
-getName().toLowerCase().hashCode()
-
-+ getDomain().toLowerCase().hashCode()
-
+<blockquote>
+getName().toLowerCase().hashCode()<br>
++ getDomain().toLowerCase().hashCode()<br>
 + getPath().hashCode()
+</blockquote>
 
-**Returns:** this HTTP cookie's hash code
+@return  this HTTP cookie's hash code
 
 ## HttpCookie.clone()
 
@@ -572,4 +561,4 @@ public Object clone()
 
 Create and return a copy of this object.
 
-**Returns:** a clone of this HTTP cookie
+@return  a clone of this HTTP cookie

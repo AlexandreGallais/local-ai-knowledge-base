@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: Dev cert export no longer creates folder"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/9/certificate-export.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in ASP.NET Core 9 where exporting the development certificate no longer creates the target directory if it doesn't exist.
+ms.date: 11/6/2024
+ms.custom: https://github.com/aspnet/Announcements/issues/515
 ---
 
 # Dev cert export no longer creates folder
@@ -33,7 +31,7 @@ Starting in .NET 9, if target directory doesn't exist, the export fails with a m
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](/dotnet/core/compatibility/categories#behavioral-change).
 
 ## Reason for change
 

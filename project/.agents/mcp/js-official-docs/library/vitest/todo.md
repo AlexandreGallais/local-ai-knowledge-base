@@ -1,12 +1,3 @@
----
-title: "Remove UnoCSS - Migration Complete"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/todo.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # Remove UnoCSS - Migration Complete
 
 UnoCSS was causing OOM in CI. Removed entirely and replaced with `@iconify/vue` + plain CSS.

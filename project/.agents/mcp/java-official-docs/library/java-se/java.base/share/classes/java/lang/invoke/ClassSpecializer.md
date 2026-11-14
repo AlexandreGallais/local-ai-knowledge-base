@@ -1,12 +1,3 @@
----
-title: "ClassSpecializer class (java.lang.invoke)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/invoke/ClassSpecializer.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ClassSpecializer class (java.lang.invoke)
 
 ```java
@@ -14,12 +5,9 @@ license: "GPL-2.0-only WITH Classpath-exception-2.0"
 ```
 
 Class specialization code.
-
-Parameters:
-
-- `<T>`: top class under which species classes are created.
-- `<K>`: key which identifies individual specializations.
-- ``: species data type.
+@param <T> top class under which species classes are created.
+@param <K> key which identifies individual specializations.
+@param <S> species data type.
 
 ## ClassSpecializer.topClass()
 
@@ -27,7 +15,7 @@ Parameters:
 public final Class<T> topClass()
 ```
 
-Return the top type mirror, for type `T`
+Return the top type mirror, for type {@code T}
 
 ## ClassSpecializer.keyType()
 
@@ -35,7 +23,7 @@ Return the top type mirror, for type `T`
 public final Class<K> keyType()
 ```
 
-Return the key type mirror, for type `K`
+Return the key type mirror, for type {@code K}
 
 ## ClassSpecializer.metaType()
 
@@ -43,7 +31,7 @@ Return the key type mirror, for type `K`
 public final Class<S> metaType()
 ```
 
-Return the species metadata type mirror, for type `S`
+Return the species metadata type mirror, for type {@code S}
 
 ## ClassSpecializer.baseConstructorType()
 
@@ -79,23 +67,20 @@ protected final Factory factory()
 
 Return the factory object used to build and load concrete species code.
 
-## ClassSpecializer.ClassSpecializer(Class<T>, Class<K>, Class, MethodType, MemberName, String, List<MemberName>)
+## ClassSpecializer.ClassSpecializer(Class<T>, Class<K>, Class<S>, MethodType, MemberName, String, List<MemberName>)
 
 ```java
 protected ClassSpecializer(Class<T> topClass, Class<K> keyType, Class<S> metaType, MethodType baseConstructorType, MemberName sdAccessor, String sdFieldName, List<MemberName> transformMethods)
 ```
 
 Constructor for this class specializer.
-
-Parameters:
-
-- `topClass`: type mirror for T
-- `keyType`: type mirror for K
-- `metaType`: type mirror for S
-- `baseConstructorType`: principal constructor type
-- `sdAccessor`: the method used to get the speciesData
-- `sdFieldName`: the name of the species data field, inject the speciesData object
-- `transformMethods`: optional list of transformMethods
+@param topClass type mirror for T
+@param keyType type mirror for K
+@param metaType type mirror for S
+@param baseConstructorType principal constructor type
+@param sdAccessor the method used to get the speciesData
+@param sdFieldName the name of the species data field, inject the speciesData object
+@param transformMethods optional list of transformMethods
 
 ## ClassSpecializer.speciesCode()
 
@@ -111,9 +96,9 @@ Throws NPE if this species is not yet resolved.
 protected MethodHandle getter(int i)
 ```
 
-Return a `MethodHandle` which can get the indexed field of this species.
+Return a {@link MethodHandle} which can get the indexed field of this species.
 The return type is the type of the species field it accesses.
-The argument type is the `fieldHolder` class of this species.
+The argument type is the {@code fieldHolder} class of this species.
 
 ## ClassSpecializer.getterFunction(int)
 
@@ -121,7 +106,7 @@ The argument type is the `fieldHolder` class of this species.
 protected LambdaForm.NamedFunction getterFunction(int i)
 ```
 
-Return a `LambdaForm.Name` containing a `LambdaForm.NamedFunction` that
+Return a {@link LambdaForm.Name} containing a {@link LambdaForm.NamedFunction} that
 represents a MH bound to a generic invoker, which in turn forwards to the corresponding
 getter.
 
@@ -150,12 +135,9 @@ which sometimes requires the creation, on the fly, of an extended species.
 This method is only called once for any particular parameter.
 The species caches the result in a private array.
 
-Parameters:
-
-- `transform`: the transform being implemented
-- `whichtm`: the index of that transform in the original list of transforms
-
-**Returns:** the method handle which creates a new result from a mix of transform
+@param transform the transform being implemented
+@param whichtm the index of that transform in the original list of transforms
+@return the method handle which creates a new result from a mix of transform
 arguments and field values
 
 ## ClassSpecializer.deriveTransformHelperArguments(MemberName, int, List<X>, List<X>)
@@ -173,15 +155,12 @@ easier.)  The imputed types of the args correspond to the transform's parameter
 list, while the imputed types of the fields correspond to the species field types.
 After code generation, this method may be called occasionally by error-checking code.
 
-Parameters:
-
-- `transform`: the transform being implemented
-- `whichtm`: the index of that transform in the original list of transforms
-- `args`: a list of opaque objects representing the incoming transform arguments
-- `fields`: a list of opaque objects representing the field values of the receiver
-- `<X>`: the common element type of the various lists
-
-**Returns:** a new list
+@param transform the transform being implemented
+@param whichtm the index of that transform in the original list of transforms
+@param args a list of opaque objects representing the incoming transform arguments
+@param fields a list of opaque objects representing the field values of the receiver
+@param <X> the common element type of the various lists
+@return a new list
 
 ## ClassSpecializer.deriveClassName()
 
@@ -192,7 +171,7 @@ protected String deriveClassName()
 Given a key, generate the name of the class which implements the species for that key.
 This algorithm must be stable.
 
-**Returns:** class name, which by default is `outer().topClass().getName() + "$Species_" + deriveTypeString(key)`
+@return class name, which by default is {@code outer().topClass().getName() + "$Species_" + deriveTypeString(key)}
 
 ## ClassSpecializer.deriveTypeString()
 
@@ -204,7 +183,7 @@ Default implementation collects basic type characters,
 plus possibly type names, if some types don't correspond
 to basic types.
 
-**Returns:** a string suitable for use in a class name
+@return a string suitable for use in a class name
 
 ## ClassSpecializer.deriveSuperClass()
 
@@ -213,11 +192,11 @@ protected Class<? extends T> deriveSuperClass()
 ```
 
 Report what immediate super-class to use for the concrete class of this species.
-Normally this is `topClass`, but if that is an interface, the factory must override.
-The super-class must provide a constructor which takes the `baseConstructorType` arguments, if any.
+Normally this is {@code topClass}, but if that is an interface, the factory must override.
+The super-class must provide a constructor which takes the {@code baseConstructorType} arguments, if any.
 This hook also allows the code generator to use more than one canned supertype for species.
 
-**Returns:** the super-class of the class to be generated
+@return the super-class of the class to be generated
 
 ## ClassSpecializer.chooseFieldName(Class<?>, int)
 

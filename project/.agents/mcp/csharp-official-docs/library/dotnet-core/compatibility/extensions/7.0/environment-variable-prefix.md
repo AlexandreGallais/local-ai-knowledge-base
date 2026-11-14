@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: Environment variable prefixes"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/extensions/7.0/environment-variable-prefix.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 7 breaking change in .NET extensions where the comparison of normalized prefixes and environment variables has changed.
+ms.date: 10/12/2022
 ---
-
 # Environment variable prefixes
 
-Hierarchical data is represented using `:` as the level delimiter. However, for environmental variables, the `:` character is normalized to `__`, because the latter is supported on all platforms. This change affects how normalized and non-normalized prefixes and keys are compared. Specifically, you can now add environment variables by specifying a prefix containing either `:` or `__` as the delimiter. Either syntax will match any environment variables with a matching prefix followed by either a `:` or `__`. Some environment variables that theoretically didn't match the filter previously may now match the filter.
+[Hierarchical data](../../../extensions/configuration.md#binding-hierarchies) is represented using `:` as the level delimiter. However, for environmental variables, the `:` character is normalized to `__`, because the latter is supported on all platforms. This change affects how normalized and non-normalized prefixes and keys are compared. Specifically, you can now add environment variables by specifying a prefix containing either `:` or `__` as the delimiter. Either syntax will match any environment variables with a matching prefix followed by either a `:` or `__`. Some environment variables that theoretically didn't match the filter previously may now match the filter.
 
 ## Version introduced
 
@@ -75,7 +71,7 @@ Console.WriteLine(String.Equals(myValue, loadedValue));
 
 ## Type of breaking change
 
-This change can affect binary compatibility.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 
@@ -87,8 +83,8 @@ Most developers won't be affected by this change, since it corrects previously e
 
 ## Affected APIs
 
-- `Microsoft.Extensions.Configuration.EnvironmentVariablesExtensions.AddEnvironmentVariables(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.String)`
+- <xref:Microsoft.Extensions.Configuration.EnvironmentVariablesExtensions.AddEnvironmentVariables(Microsoft.Extensions.Configuration.IConfigurationBuilder,System.String)?displayProperty=fullName>
 
 ## See also
 
-- Configuration in .NET
+- [Configuration in .NET](../../../extensions/configuration.md)

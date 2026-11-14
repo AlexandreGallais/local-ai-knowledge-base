@@ -1,12 +1,3 @@
----
-title: "UnionLayout interface (java.lang.foreign)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/foreign/UnionLayout.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # UnionLayout interface (java.lang.foreign)
 
 ```java
@@ -15,10 +6,11 @@ public sealed interface UnionLayout extends GroupLayout permits UnionLayoutImpl
 
 A group layout whose member layouts are laid out at the same starting offset.
 
-**Implementation requirements:** Implementing classes are immutable, thread-safe and
-value-based.
+@implSpec
+Implementing classes are immutable, thread-safe and
+<a href="{@docRoot}/java.base/java/lang/doc-files/ValueBased.html">value-based</a>.
 
-**Since:** 22
+@since 22
 
 ## UnionLayout.withName(String)
 
@@ -26,7 +18,7 @@ value-based.
 UnionLayout withName(String name)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
 ## UnionLayout.withoutName()
 
@@ -34,7 +26,7 @@ UnionLayout withName(String name)
 UnionLayout withoutName()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
 ## UnionLayout.withByteAlignment(long)
 
@@ -42,8 +34,5 @@ UnionLayout withoutName()
 UnionLayout withByteAlignment(long byteAlignment)
 ```
 
-(inherited documentation)
-
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+{@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}

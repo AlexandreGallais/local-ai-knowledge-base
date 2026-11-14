@@ -1,17 +1,11 @@
----
-title: "no-repeated-call-wrappers"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-repeated-call-wrappers.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-repeated-call-wrappers
 
 📝 Disallow repeating the same wrapper at every call to a function.
 
 🚫 Disabled by default.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 When every caller converts a function's result in the same way, consider making that conversion part of the function. This can remove repetition and make the function's return value match what its callers need.
 

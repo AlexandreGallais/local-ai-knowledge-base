@@ -1,12 +1,3 @@
----
-title: "FileReader class (java.io)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/io/FileReader.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # FileReader class (java.io)
 
 ```java
@@ -14,19 +5,19 @@ public class FileReader extends InputStreamReader
 ```
 
 Reads text from character files using a default buffer size. Decoding from bytes
-to characters uses either a specified charset
-or the default charset.
+to characters uses either a specified {@linkplain Charset charset}
+or the {@linkplain Charset#defaultCharset() default charset}.
 
-The `FileReader` is meant for reading streams of characters. For reading
-streams of raw bytes, consider using a `FileInputStream`.
+<p>
+The {@code FileReader} is meant for reading streams of characters. For reading
+streams of raw bytes, consider using a {@code FileInputStream}.
 
-**See also:** InputStreamReader
+@see InputStreamReader
+@see FileInputStream
+@see Charset#defaultCharset()
 
-**See also:** FileInputStream
-
-**See also:** Charset#defaultCharset()
-
-**Since:** 1.1
+@author      Mark Reinhold
+@since       1.1
 
 ## FileReader.FileReader(String)
 
@@ -34,18 +25,15 @@ streams of raw bytes, consider using a `FileInputStream`.
 public FileReader(String fileName) throws FileNotFoundException
 ```
 
-Creates a new `FileReader`, given the name of the file to read,
-using the default charset.
+Creates a new {@code FileReader}, given the name of the file to read,
+using the {@linkplain Charset#defaultCharset() default charset}.
 
-Parameters:
-
-- `fileName`: the name of the file to read
-
-**See also:** Charset#defaultCharset()
-
-Throws:
-
-- `FileNotFoundException`: if the named file does not exist, is a directory rather than a regular file, or for some other reason cannot be opened for reading.
+@param      fileName the name of the file to read
+@throws     FileNotFoundException  if the named file does not exist,
+            is a directory rather than a regular file,
+            or for some other reason cannot be opened for
+            reading.
+@see        Charset#defaultCharset()
 
 ## FileReader.FileReader(File)
 
@@ -53,18 +41,15 @@ Throws:
 public FileReader(File file) throws FileNotFoundException
 ```
 
-Creates a new `FileReader`, given the `File` to read,
-using the default charset.
+Creates a new {@code FileReader}, given the {@code File} to read,
+using the {@linkplain Charset#defaultCharset() default charset}.
 
-Parameters:
-
-- `file`: the `File` to read
-
-**See also:** Charset#defaultCharset()
-
-Throws:
-
-- `FileNotFoundException`: if the file does not exist, is a directory rather than a regular file, or for some other reason cannot be opened for reading.
+@param      file the {@code File} to read
+@throws     FileNotFoundException  if the file does not exist,
+            is a directory rather than a regular file,
+            or for some other reason cannot be opened for
+            reading.
+@see        Charset#defaultCharset()
 
 ## FileReader.FileReader(FileDescriptor)
 
@@ -72,14 +57,11 @@ Throws:
 public FileReader(FileDescriptor fd)
 ```
 
-Creates a new `FileReader`, given the `FileDescriptor` to read,
-using the default charset.
+Creates a new {@code FileReader}, given the {@code FileDescriptor} to read,
+using the {@linkplain Charset#defaultCharset() default charset}.
 
-Parameters:
-
-- `fd`: the `FileDescriptor` to read
-
-**See also:** Charset#defaultCharset()
+@param fd the {@code FileDescriptor} to read
+@see Charset#defaultCharset()
 
 ## FileReader.FileReader(String, Charset)
 
@@ -87,19 +69,17 @@ Parameters:
 public FileReader(String fileName, Charset charset) throws IOException
 ```
 
-Creates a new `FileReader`, given the name of the file to read
-and the charset.
+Creates a new {@code FileReader}, given the name of the file to read
+and the {@linkplain Charset charset}.
 
-Parameters:
+@param      fileName the name of the file to read
+@param      charset the {@linkplain Charset charset}
+@throws     IOException  if the named file does not exist,
+            is a directory rather than a regular file,
+            or for some other reason cannot be opened for
+            reading.
 
-- `fileName`: the name of the file to read
-- `charset`: the charset
-
-**Since:** 11
-
-Throws:
-
-- `IOException`: if the named file does not exist, is a directory rather than a regular file, or for some other reason cannot be opened for reading.
+@since 11
 
 ## FileReader.FileReader(File, Charset)
 
@@ -107,16 +87,14 @@ Throws:
 public FileReader(File file, Charset charset) throws IOException
 ```
 
-Creates a new `FileReader`, given the `File` to read and
-the charset.
+Creates a new {@code FileReader}, given the {@code File} to read and
+the {@linkplain Charset charset}.
 
-Parameters:
+@param      file the {@code File} to read
+@param      charset the {@linkplain Charset charset}
+@throws     IOException  if the file does not exist,
+            is a directory rather than a regular file,
+            or for some other reason cannot be opened for
+            reading.
 
-- `file`: the `File` to read
-- `charset`: the charset
-
-**Since:** 11
-
-Throws:
-
-- `IOException`: if the file does not exist, is a directory rather than a regular file, or for some other reason cannot be opened for reading.
+@since 11

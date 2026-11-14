@@ -1,12 +1,17 @@
 ---
 title: "MSTEST0055: Do not ignore the return value of string methods"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0055.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0055: Do not ignore the return value of string methods"
+ms.date: 10/01/2025
+f1_keywords:
+- MSTEST0055
+- IgnoreStringMethodReturnValueAnalyzer
+helpviewer_keywords:
+- IgnoreStringMethodReturnValueAnalyzer
+- MSTEST0055
+author: Youssef1313
+ms.author: ygerges
+ai-usage: ai-generated
 ---
-
 # MSTEST0055: Do not ignore the return value of string methods
 
 | Property                            | Value                                                                                    |
@@ -22,7 +27,7 @@ license: "CC-BY-4.0"
 
 ## Cause
 
-A call to `System.String.Contains*`, `System.String.StartsWith*`, or `System.String.EndsWith*` is made and its return value is ignored.
+A call to <xref:System.String.Contains*>, <xref:System.String.StartsWith*>, or <xref:System.String.EndsWith*> is made and its return value is ignored.
 
 ## Rule description
 

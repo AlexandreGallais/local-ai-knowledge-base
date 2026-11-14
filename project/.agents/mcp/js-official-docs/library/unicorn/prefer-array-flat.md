@@ -1,21 +1,15 @@
----
-title: "prefer-array-flat"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-array-flat.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-array-flat
 
 📝 Prefer `Array#flat()` over legacy techniques to flatten arrays.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
-ES2019 introduced a new method `Array#flat()` that flattens arrays.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+ES2019 introduced a new method [`Array#flat()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat) that flattens arrays.
 
 The native method expresses flattening directly and avoids verbose or indirect flattening patterns.
 
@@ -58,7 +52,7 @@ const foo = underscore.flatten(array);
 const foo = array.flat();
 ```
 
-This rule intentionally does not report plain concat normalization like `[].concat(value)` or `Array.prototype.concat.call([], value)`. Those patterns do not consume an array of concat arguments, so they are better handled by `prefer-spread`, which can replace ordinary `Array#concat()` usage.
+This rule intentionally does not report plain concat normalization like `[].concat(value)` or `Array.prototype.concat.call([], value)`. Those patterns do not consume an array of concat arguments, so they are better handled by [`prefer-spread`](./prefer-spread.md), which can replace ordinary `Array#concat()` usage.
 
 ## Options
 
@@ -102,4 +96,4 @@ const foo = bar.flat();
 
 ## Related rules
 
-- unicorn/prefer-array-flat-map
+- [unicorn/prefer-array-flat-map](./prefer-array-flat-map.md)

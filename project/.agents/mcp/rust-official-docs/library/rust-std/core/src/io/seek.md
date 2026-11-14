@@ -1,12 +1,3 @@
----
-title: "core::io::seek"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/io/seek.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::io::seek
 
 ## trait Seek
@@ -25,7 +16,7 @@ end or the current offset.
 
 `File`s implement `Seek`:
 
-```rust
+```no_run
 use std::io;
 use std::io::prelude::*;
 use std::fs::File;
@@ -53,7 +44,7 @@ by the implementation.
 
 If the seek operation completed successfully,
 this method returns the new position from the start of the stream.
-That position can be used later with `SeekFrom::Start`.
+That position can be used later with [`SeekFrom::Start`].
 
 # Errors
 
@@ -77,7 +68,7 @@ Rewinding can fail, for example because it might involve flushing a buffer.
 
 # Example
 
-```rust
+```no_run
 use std::io::{Read, Seek, Write};
 use std::fs::OpenOptions;
 
@@ -94,6 +85,7 @@ f.rewind()?;
 let mut buf = String::new();
 f.read_to_string(&mut buf)?;
 assert_eq!(&buf, hello);
+# std::io::Result::Ok(())
 ```
 
 ## Seek::stream_position
@@ -108,7 +100,7 @@ This is equivalent to `self.seek(SeekFrom::Current(0))`.
 
 # Example
 
-```rust
+```no_run
 use std::{
     io::{self, BufRead, BufReader, Seek},
     fs::File,
@@ -140,7 +132,7 @@ such as `BufReader` to perform more efficient seeks.
 
 # Example
 
-```rust
+```no_run
 use std::{
     io::{self, Seek},
     fs::File,
@@ -162,4 +154,4 @@ pub enum SeekFrom
 
 Enumeration of possible methods to seek within an I/O object.
 
-It is used by the `Seek` trait.
+It is used by the [`Seek`] trait.

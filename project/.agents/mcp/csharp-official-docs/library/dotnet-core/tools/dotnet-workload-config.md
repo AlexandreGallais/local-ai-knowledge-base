@@ -1,12 +1,8 @@
 ---
-title: "dotnet workload config command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-workload-config.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet workload config command
+description: "The `dotnet workload config` command selects workload set update mode or manifests update mode. It can also display the currently selected update mode."
+ms.date: 08/15/2024
 ---
-
 # dotnet workload config
 
 **This article applies to:** ✔️ .NET 8.0.400 SDK and later versions
@@ -26,17 +22,15 @@ dotnet workload config -?|-h|--help
 
 ## Description
 
-For more information about the `dotnet workload config` command, see .NET SDK workload sets.
+For more information about the `dotnet workload config` command, see [.NET SDK workload sets](dotnet-workload-sets.md).
 
 ## Options
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 - **`--update-mode [<workload-set>|<manifests>]`**
 
-  Controls whether updates look for workload set versions or individual manifest versions. To display the current mode, specify this option without an argument. For more information, see .NET SDK workload sets.
+  Controls whether updates look for workload set versions or individual manifest versions. To display the current mode, specify this option without an argument. For more information, see [.NET SDK workload sets](dotnet-workload-sets.md).
 
 ## Examples
 

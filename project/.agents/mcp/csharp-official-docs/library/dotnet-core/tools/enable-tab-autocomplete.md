@@ -1,10 +1,11 @@
 ---
-title: "Enable tab completion"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/enable-tab-autocomplete.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Enable tab completion
+description: This article teaches you how to enable tab completion for the .NET CLI for PowerShell (pwsh), Bash, zsh, fish, and nushell.
+author: adegeo
+ms.author: adegeo
+ms.topic: how-to
+ms.date: 11/14/2025
+ai-usage: ai-assisted
 ---
 
 # How to enable tab completion for the .NET CLI
@@ -101,7 +102,7 @@ dotnet completions script nushell | save -f ($nu.data-dir | path join "vendor/au
 
 For .NET versions prior to .NET 10, or if you prefer to use dynamic completions, you can configure your shell to use the `dotnet complete` command. Dynamic completions work by sending the current command line to the `dotnet complete` command and processing the results in the shell.
 
-Once set up, tab completion for the .NET CLI is triggered by entering a `dotnet` command in the shell and then pressing the `Tab` key. The current command line is sent to the `dotnet complete` command, and the results are processed by the shell. You can test the results without enabling tab completion by sending something directly to the `dotnet complete` command. For example:
+Once set up, tab completion for the .NET CLI is triggered by entering a `dotnet` command in the shell and then pressing the <kbd>Tab</kbd> key. The current command line is sent to the `dotnet complete` command, and the results are processed by the shell. You can test the results without enabling tab completion by sending something directly to the `dotnet complete` command. For example:
 
 ```console
 > dotnet complete "dotnet a"
@@ -112,13 +113,13 @@ migrate
 pack
 ```
 
-If that command doesn't work, make sure that .NET Core 2.0 SDK or later is installed. If it's installed but that command still doesn't work, make sure that the `dotnet` command resolves to a version of .NET Core 2.0 SDK or later. Use the `dotnet --version` command to see what version of `dotnet` your current path is resolving to. For more information, see Select the .NET version to use.
+If that command doesn't work, make sure that .NET Core 2.0 SDK or later is installed. If it's installed but that command still doesn't work, make sure that the `dotnet` command resolves to a version of .NET Core 2.0 SDK or later. Use the `dotnet --version` command to see what version of `dotnet` your current path is resolving to. For more information, see [Select the .NET version to use](../versions/selection.md).
 
 ### Configure shells to use native completions
 
 #### PowerShell
 
-To add tab completion to **PowerShell** for the .NET CLI, create or edit the profile stored in the variable `$PROFILE`. For more information, see How to create your profile and Profiles and execution policy.
+To add tab completion to **PowerShell** for the .NET CLI, create or edit the profile stored in the variable `$PROFILE`. For more information, see [How to create your profile](/powershell/module/microsoft.powershell.core/about/about_profiles#how-to-create-a-profile) and [Profiles and execution policy](/powershell/module/microsoft.powershell.core/about/about_profiles#profiles-and-execution-policy).
 
 Add the following code to your profile, then restart PowerShell:
 

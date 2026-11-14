@@ -1,22 +1,24 @@
 ---
+description: "Miscellaneous C# Compiler Options. These options provide general options to the compiler."
 title: "Compiler Options that don't fit other categories"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/compiler-options/miscellaneous.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 03/12/2021
+f1_keywords: 
+  - "cs.build.options"
+helpviewer_keywords: 
+  - "ResponseFiles compiler option [C#]"
+  - "NoLogo compiler option [C#]"
+  - "NoConfig compiler option [C#]"
 ---
-
 # Miscellaneous C# Compiler Options
 
 The following options control miscellaneous compiler behavior. The new MSBuild syntax is shown in **Bold**. The older *csc.exe* command-line syntax is shown in `code style`.
 
-- **ResponseFiles** / `@*CustomOpts.RSP*` : Read the specified response file for more options.
+- **ResponseFiles** / <code>@*CustomOpts.RSP*</code> : Read the specified response file for more options.
 - **NoLogo** / `-nologo` : Suppress compiler copyright message.
 - **NoConfig** / `-noconfig` : Don't auto include *CSC.RSP* file.
 
-> **Note:**
-> Refer to Compiler options for more information on configuring these options for your project.
+> [!NOTE]
+> Refer to [Compiler options](index.md#how-to-set-options) for more information on configuring these options for your project.
 
 ## ResponseFiles
 
@@ -26,7 +28,7 @@ The **ResponseFiles** option lets you specify a file that contains compiler opti
 <ResponseFiles>response_file</ResponseFiles>
 ```
 
-The `response_file` specifies the file that lists compiler options or source code files to compile. The compiler options and source code files will be processed by the compiler as if they had been specified on the command line. To specify more than one response file in a compilation, specify multiple response file options. In a response file, multiple compiler options and source code files can appear on one line. A single compiler option specification must appear on one line (can't span multiple lines). Response files can have comments that begin with the # symbol. Specifying compiler options from within a response file is just like issuing those commands on the command line. The compiler processes the command options as they're read. Command-line arguments can override previously listed options in response files. Conversely, options in a response file will override options listed previously on the command line or in other response files. C# provides the csc.rsp file, which is located in the same directory as the csc.exe file. For more information about the response file format, see **NoConfig**. This compiler option cannot be set in the Visual Studio development environment, nor can it be changed programmatically. The following are a few lines from a sample response file:
+The `response_file` specifies the file that lists compiler options or source code files to compile. The compiler options and source code files will be processed by the compiler as if they had been specified on the command line. To specify more than one response file in a compilation, specify multiple response file options. In a response file, multiple compiler options and source code files can appear on one line. A single compiler option specification must appear on one line (can't span multiple lines). Response files can have comments that begin with the # symbol. Specifying compiler options from within a response file is just like issuing those commands on the command line. The compiler processes the command options as they're read. Command-line arguments can override previously listed options in response files. Conversely, options in a response file will override options listed previously on the command line or in other response files. C# provides the csc.rsp file, which is located in the same directory as the csc.exe file. For more information about the response file format, see [**NoConfig**](#noconfig). This compiler option cannot be set in the Visual Studio development environment, nor can it be changed programmatically. The following are a few lines from a sample response file:
 
 ```console
 # build the first output file

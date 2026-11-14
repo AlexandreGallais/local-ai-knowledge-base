@@ -1,12 +1,3 @@
----
-title: "core::hash::sip"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/hash/sip.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::hash::sip
 
 An implementation of SipHash.
@@ -24,7 +15,7 @@ See: <https://github.com/veorq/SipHash>
 SipHash is a general-purpose hashing function: it runs at a good
 speed (competitive with Spooky and City) and permits strong _keyed_
 hashing. This lets you key your hash tables from a strong RNG, such as
-`rand::os::OsRng`.
+[`rand::os::OsRng`](https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html).
 
 Although the SipHash algorithm is considered to be generally strong,
 it is not intended for cryptographic purposes. As such, all

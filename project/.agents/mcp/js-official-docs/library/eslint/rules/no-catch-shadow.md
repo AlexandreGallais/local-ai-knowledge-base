@@ -1,13 +1,7 @@
 ---
-title: "no-catch-shadow"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-catch-shadow.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-catch-shadow
+rule_type: suggestion
 ---
-
-# no-catch-shadow
 
 In IE 8 and earlier, the catch clause parameter can overwrite the value of a variable in the outer scope, if that variable has the same name as the catch clause parameter.
 
@@ -29,7 +23,7 @@ This rule is aimed at preventing unexpected behavior in your program that may ar
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-catch-shadow: "error"*/
@@ -53,9 +47,11 @@ try {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-catch-shadow: "error"*/
@@ -78,6 +74,8 @@ try {
 
 }
 ```
+
+:::
 
 ## When Not To Use It
 

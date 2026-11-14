@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugObjectValue::GetFieldValue Method"
 title: "ICorDebugObjectValue::GetFieldValue Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugobjectvalue-getfieldvalue-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugObjectValue.GetFieldValue"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugObjectValue::GetFieldValue"
+helpviewer_keywords:
+  - "ICorDebugObjectValue::GetFieldValue method [.NET debugging]"
+  - "GetFieldValue method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugObjectValue::GetFieldValue Method
 
 Gets the value of the specified field of the specified class for this object value.
@@ -40,10 +49,12 @@ The `GetFieldValue` method will still succeed for generic objects and generic cl
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
  **Library:** CorGuids.lib
 
  **.NET versions:** Available since .NET Framework 1.0
+
+## See also

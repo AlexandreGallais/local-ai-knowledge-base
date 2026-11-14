@@ -1,19 +1,15 @@
 ---
-title: "dotnet tool update command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-tool-update.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet tool update command
+description: The dotnet tool update command updates the specified .NET tool on your machine.
+ms.date: 11/12/2025
 ---
-
 # dotnet tool update
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
 
 ## Name
 
-`dotnet tool update` - Updates the specified .NET tool on your machine.
+`dotnet tool update` - Updates the specified [.NET tool](global-tools.md) on your machine.
 
 ## Synopsis
 
@@ -62,49 +58,37 @@ The `dotnet tool update` command provides a way for you to update .NET tools on 
 
   Starting in .NET 10.0.100 SDK, use the name/ID, and version separated by `@` to update a .NET tool.
 
-  You can find the package name using the dotnet tool list command.
+  You can find the package name using the [dotnet tool list](dotnet-tool-list.md) command.
 
 ## Options
 
-- **`--add-source `**
-
-Adds an additional NuGet package source to use during installation. Feeds are accessed in parallel, not sequentially in some order of precedence. If the same package and version is in multiple feeds, the fastest feed wins. For more information, see What happens when a NuGet package is installed?.
+- [!INCLUDE [add-source](includes/cli-add-source.md)]
 
 - **`--all`**
 
   Update all tools.
 
-- **`--allow-downgrade`**
+- [!INCLUDE [allow-downgrade](includes/cli-allow-downgrade.md)]
 
-Allow package downgrade when installing or updating a .NET tool package. Suppresses the warning, "The requested version x.x.x is lower than existing version x.x.x."
+- [!INCLUDE [configfile](includes/cli-configfile.md)]
 
-- **`--configfile <FILE>`**
-
-The NuGet configuration file (*nuget.config*) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see Common NuGet Configurations.
-
-- **`--disable-parallel`**
-
-Prevents restoring multiple projects in parallel.
+- [!INCLUDE [disable-parallel](includes/cli-disable-parallel.md)]
 
 - **`--framework <FRAMEWORK>`**
 
-  Specifies the target framework to update the tool for.
+  Specifies the [target framework](../../standard/frameworks.md) to update the tool for.
 
 - **`-g|--global`**
 
   Specifies that the update is for a user-wide tool. Can't be combined with the `--tool-path` option. Omitting both `--global` and `--tool-path` specifies that the tool to be updated is a local tool.
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 - **`--ignore-failed-sources`**
 
   Treat package source failures as warnings.
 
-- **`--interactive`**
-
-Allows the command to stop and wait for user input or action. For example, to complete authentication.
+- [!INCLUDE [interactive](includes/cli-interactive.md)]
 
 - **`--local`**
 
@@ -118,24 +102,17 @@ Allows the command to stop and wait for user input or action. For example, to co
 
   Include prerelease versions.
 
-- **`--source `**
+- [!INCLUDE [source](includes/cli-tool-source.md)]
 
-Specifies the source for NuGet packages.
-
-> **Caution:**
-> This option completely replaces existing NuGet configuration, including Package Source Mapping.
-
-- **`--tool-manifest `**
+- **`--tool-manifest <PATH>`**
 
   Path to the manifest file.
 
-- **`--tool-path `**
+- **`--tool-path <PATH>`**
 
   Specifies the location where the global tool is installed. PATH can be absolute or relative. Can't be combined with the `--global` option. Omitting both `--global` and `--tool-path` specifies that the tool to be updated is a local tool.
 
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+- [!INCLUDE [verbosity](includes/cli-verbosity.md)]
 
 - **`--version <VERSION>`**
 
@@ -147,35 +124,35 @@ Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal
 
 - **`dotnet tool update -g dotnetsay`**
 
-  Updates the dotnetsay global tool.
+  Updates the [dotnetsay](https://www.nuget.org/packages/dotnetsay/) global tool.
 
 - **`dotnet tool update dotnetsay --tool-path c:\global-tools`**
 
-  Updates the dotnetsay global tool located in a specific Windows directory.
+  Updates the [dotnetsay](https://www.nuget.org/packages/dotnetsay/) global tool located in a specific Windows directory.
 
 - **`dotnet tool update dotnetsay --tool-path ~/bin`**
 
-  Updates the dotnetsay global tool located in a specific Linux/macOS directory.
+  Updates the [dotnetsay](https://www.nuget.org/packages/dotnetsay/) global tool located in a specific Linux/macOS directory.
 
 - **`dotnet tool update dotnetsay`**
 
-  Updates the dotnetsay local tool installed for the current directory.
+  Updates the [dotnetsay](https://www.nuget.org/packages/dotnetsay/) local tool installed for the current directory.
 
 - **`dotnet tool update -g dotnetsay --version 2.0.*`**
 
-  Updates the dotnetsay global tool to the latest patch version, with a major version of `2`, and a minor version of `0`.
+  Updates the [dotnetsay](https://www.nuget.org/packages/dotnetsay/) global tool to the latest patch version, with a major version of `2`, and a minor version of `0`.
 
-- **`dotnet tool update -g user@example.com*`**
+- **`dotnet tool update -g dotnetsay@2.1.7*`**
 
-  Updates the dotnetsay global tool to the latest patch version, 2.1.7.
+  Updates the [dotnetsay](https://www.nuget.org/packages/dotnetsay/) global tool to the latest patch version, 2.1.7.
 
 - **`dotnet tool update -g dotnetsay --version (2.0.0,2.1.7)`**
 
-  Updates the dotnetsay global tool to the lowest version within the specified range `(> 2.0.0 && < 2.1.7)`, version `2.1.0` would be installed. For more information on semantic versioning ranges, see NuGet packaging version ranges.
+  Updates the [dotnetsay](https://www.nuget.org/packages/dotnetsay/) global tool to the lowest version within the specified range `(> 2.0.0 && < 2.1.7)`, version `2.1.0` would be installed. For more information on semantic versioning ranges, see [NuGet packaging version ranges](/nuget/concepts/package-versioning#version-ranges).
 
 ## See also
 
-- .NET tools
-- Semantic versioning
-- Tutorial: Install and use a .NET global tool using the .NET CLI
-- Tutorial: Install and use a .NET local tool using the .NET CLI
+- [.NET tools](global-tools.md)
+- [Semantic versioning](https://semver.org)
+- [Tutorial: Install and use a .NET global tool using the .NET CLI](global-tools-how-to-use.md)
+- [Tutorial: Install and use a .NET local tool using the .NET CLI](local-tools-how-to-use.md)

@@ -1,62 +1,53 @@
----
-title: "class: WebStorage"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-webstorage.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: WebStorage
 * since: v1.61
 
 WebStorage exposes the page's `localStorage` or `sessionStorage` for the current origin via an async,
-browser-consistent API.
+[browser-consistent](https://developer.mozilla.org/en-US/docs/Web/API/Storage) API.
 
 Instances are accessed through [`property: Page.localStorage`] and [`property: Page.sessionStorage`].
 
 ```js
 await page.goto('https://example.com');
-await page.localStorage.setItem('<example-value>', '<example-value>');
-const token = await page.localStorage.getItem('<example-value>');
+await page.localStorage.setItem('token', 'abc');
+const token = await page.localStorage.getItem('token');
 const all = await page.localStorage.items();
-await page.localStorage.removeItem('<example-value>');
+await page.localStorage.removeItem('token');
 await page.localStorage.clear();
 ```
 
-```python
+```python async
 await page.goto("https://example.com")
-await page.local_storage.set_item("<example-value>", "<example-value>")
-token = await page.local_storage.get_item("<example-value>")
+await page.local_storage.set_item("token", "abc")
+token = await page.local_storage.get_item("token")
 all = await page.local_storage.items()
-await page.local_storage.remove_item("<example-value>")
+await page.local_storage.remove_item("token")
 await page.local_storage.clear()
 ```
 
-```python
+```python sync
 page.goto("https://example.com")
-page.local_storage.set_item("<example-value>", "<example-value>")
-token = page.local_storage.get_item("<example-value>")
+page.local_storage.set_item("token", "abc")
+token = page.local_storage.get_item("token")
 all = page.local_storage.items()
-page.local_storage.remove_item("<example-value>")
+page.local_storage.remove_item("token")
 page.local_storage.clear()
 ```
 
 ```java
 page.navigate("https://example.com");
-page.localStorage().setItem("<example-value>", "<example-value>");
-String token = page.localStorage().getItem("<example-value>");
+page.localStorage().setItem("token", "abc");
+String token = page.localStorage().getItem("token");
 List<WebStorageItem> all = page.localStorage().items();
-page.localStorage().removeItem("<example-value>");
+page.localStorage().removeItem("token");
 page.localStorage().clear();
 ```
 
 ```csharp
 await page.GotoAsync("https://example.com");
-await page.LocalStorage.SetItemAsync("<example-value>", "<example-value>");
-var token = await page.LocalStorage.GetItemAsync("<example-value>");
+await page.LocalStorage.SetItemAsync("token", "abc");
+var token = await page.LocalStorage.GetItemAsync("token");
 var all = await page.LocalStorage.ItemsAsync();
-await page.LocalStorage.RemoveItemAsync("<example-value>");
+await page.LocalStorage.RemoveItemAsync("token");
 await page.LocalStorage.ClearAsync();
 ```
 

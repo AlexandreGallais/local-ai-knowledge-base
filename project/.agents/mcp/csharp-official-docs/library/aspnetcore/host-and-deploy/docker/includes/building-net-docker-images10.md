@@ -1,17 +1,10 @@
----
-title: "https://hub.docker.com/_/microsoft-dotnet"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/host-and-deploy/docker/includes/building-net-docker-images10.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
+:::moniker range=">= aspnetcore-10.0"
 
 ## ASP.NET Core Docker images
 
 For this tutorial, you download an ASP.NET Core sample app and run it in Docker containers. The sample works with both Linux and Windows containers.
 
-The sample Dockerfile uses the Docker multi-stage build feature to build and run in different containers. The build and run containers are created from images that are provided in Docker Hub by Microsoft:
+The sample Dockerfile uses the [Docker multi-stage build feature](https://docs.docker.com/engine/userguide/eng-image/multistage-build/) to build and run in different containers. The build and run containers are created from images that are provided in Docker Hub by Microsoft:
 
 * `dotnet/sdk`
 
@@ -23,21 +16,21 @@ The sample Dockerfile uses the Docker multi-stage build feature to build and run
 
 ## Prerequisites
 
-* .NET SDK 10.0
+* [.NET SDK 10.0](https://dotnet.microsoft.com/download)
 * Docker client 18.03 or later
 
   * Linux distributions
-    * Debian
-    * Fedora
-    * Ubuntu
-  * macOS
-  * Windows
-
-* Git
+    * [Debian](https://docs.docker.com/install/linux/docker-ce/debian/)
+    * [Fedora](https://docs.docker.com/install/linux/docker-ce/fedora/)
+    * [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+  * [macOS](https://docs.docker.com/desktop/mac/install/)
+  * [Windows](https://docs.docker.com/desktop/windows/install/)
+ 
+* [Git](https://git-scm.com/download)
 
 ## Download the sample app
 
-* Download the sample by cloning the .NET Docker repository:
+* Download the sample by cloning the [.NET Docker repository](https://github.com/dotnet/dotnet-docker):
 
   ```console
   git clone https://github.com/dotnet/dotnet-docker
@@ -59,8 +52,8 @@ The sample Dockerfile uses the Docker multi-stage build feature to build and run
 
 ## Run in a Linux container or Windows container
 
-* To run in a Linux container, right-click the System Tray's Docker client icon and select switch to Linux containers.
-* To run in a Windows container, right-click the System Tray's Docker client icon and select switch to Windows containers.
+* To run in a Linux container, right-click the System Tray's Docker client icon and select [switch to Linux containers](https://docs.docker.com/desktop/windows/#switch-between-windows-and-linux-containers).
+* To run in a Windows container, right-click the System Tray's Docker client icon and select [switch to Windows containers](https://docs.docker.com/desktop/windows/#switch-between-windows-and-linux-containers).
 
 * Navigate to the Dockerfile folder at *dotnet-docker/samples/aspnetapp*.
 
@@ -90,7 +83,7 @@ In some scenarios, you might want to deploy an app to a container by copying its
 
 * Navigate to the project folder at *dotnet-docker/samples/aspnetapp/aspnetapp*.
 
-* Run the dotnet publish command:
+* Run the [dotnet publish](/dotnet/core/tools/dotnet-publish) command:
 
   ```dotnetcli
   dotnet publish -c Release -o published
@@ -153,23 +146,26 @@ COPY --from=build /app ./
 ENTRYPOINT ["dotnet", "aspnetapp.dll"]
 ```
 
-In the preceding *Dockerfile*, the `*.csproj` files are copied and restored as distinct *layers*. When the `docker build` command builds an image, it uses a built-in cache. If the `*.csproj` files did not change since the `docker build` command last ran, the `dotnet restore` command doesn't need to run again. Instead, the built-in cache for the corresponding `dotnet restore` layer is reused. For more information, see Best practices for writing Dockerfiles.
+In the preceding *Dockerfile*, the `*.csproj` files are copied and restored as distinct *layers*. When the `docker build` command builds an image, it uses a built-in cache. If the `*.csproj` files did not change since the `docker build` command last ran, the `dotnet restore` command doesn't need to run again. Instead, the built-in cache for the corresponding `dotnet restore` layer is reused. For more information, see [Best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#leverage-build-cache).
 
 ## Related content
 
-* Containerize a .NET app with dotnet publish
-* Docker build command
-* Docker run command
-* ASP.NET Core Docker sample (The one used in this tutorial.)
-* Configure ASP.NET Core to work with proxy servers and load balancers
-* Working with Visual Studio Docker Tools
-* Debugging with Visual Studio Code
-* GC using Docker and small containers
-* System.IO.IOException: The configured user limit (128) on the number of inotify instances has been reached
-* Updates to Docker images
+* [Containerize a .NET app with dotnet publish](/dotnet/core/docker/publish-as-container)
+* [Docker build command](https://docs.docker.com/engine/reference/commandline/build)
+* [Docker run command](https://docs.docker.com/engine/reference/commandline/run)
+* [ASP.NET Core Docker sample](https://github.com/dotnet/dotnet-docker) (The one used in this tutorial.)
+* [Configure ASP.NET Core to work with proxy servers and load balancers](../../proxy-load-balancer.md)
+* [Working with Visual Studio Docker Tools](/visualstudio/containers/add-container-support)
+* [Debugging with Visual Studio Code](https://code.visualstudio.com/docs/nodejs/debugging-recipes#_debug-nodejs-in-docker-containers)
+* [GC using Docker and small containers](../../../performance/memory.md#gc-using-docker-and-small-containers)
+* [System.IO.IOException: The configured user limit (128) on the number of inotify instances has been reached](../index.md#d128)
+* [Updates to Docker images](https://andrewlock.net/exploring-the-dotnet-8-preview-updates-to-docker-images-in-dotnet-8/)
 
 ## Next steps
 
-The Git repository that contains the sample app also includes documentation. For an overview of the resources available in the repository, see the README file. In particular, learn how to implement HTTPS:
+The Git repository that contains the sample app also includes documentation. For an overview of the resources available in the repository, see [the README file](https://github.com/dotnet/dotnet-docker/blob/main/samples/AspNetCoreRazorApp/README.md). In particular, learn how to implement HTTPS:
 
-> Developing ASP.NET Core Applications with Docker over HTTPS
+> [!div class="nextstepaction"]
+> [Developing ASP.NET Core Applications with Docker over HTTPS](https://github.com/dotnet/dotnet-docker/blob/main/samples/run-aspnetcore-https-development.md)
+
+:::moniker-end

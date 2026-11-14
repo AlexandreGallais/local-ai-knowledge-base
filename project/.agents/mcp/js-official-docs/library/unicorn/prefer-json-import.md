@@ -1,21 +1,15 @@
----
-title: "prefer-json-import"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-json-import.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-json-import
 
 📝 Prefer JSON imports over reading and parsing JSON files.
 
 🚫 Disabled by default.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-JSON imports provide a declarative way to load static JSON data.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+[JSON imports](https://nodejs.org/api/esm.html#json-modules) provide a declarative way to load static JSON data.
 
 This rule is opt-in because it cannot determine whether filesystem reads are intentional. Imports change path resolution, loading and error timing, and cache the data. Enable it when JSON files are intended to be static module data.
 

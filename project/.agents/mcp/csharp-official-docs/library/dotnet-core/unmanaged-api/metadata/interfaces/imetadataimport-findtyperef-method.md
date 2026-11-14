@@ -1,21 +1,28 @@
 ---
+description: "Learn more about: IMetaDataImport::FindTypeRef Method"
 title: "IMetaDataImport::FindTypeRef Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-findtyperef-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.FindTypeRef"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::FindTypeRef"
+  - "FindTypeRef method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::FindTypeRef Method
 
-Gets a pointer to the TypeRef token for the `System.Type` reference that is in the specified scope and that has the specified name.
+Gets a pointer to the TypeRef token for the <xref:System.Type> reference that is in the specified scope and that has the specified name.
 
 ## Syntax
 
 ```cpp
 HRESULT FindTypeRef (
-   [in] mdToken        <example-value>,
+   [in] mdToken        tkResolutionScope,
    [in]  LPCWSTR       szName,
    [out] mdTypeRef     *ptr
 );
@@ -34,7 +41,7 @@ HRESULT FindTypeRef (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -42,5 +49,5 @@ HRESULT FindTypeRef (
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: Identity external login keys use ordinal equality"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/11/identity-login-ordinal-equality.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+ai-usage: ai-assisted
+description: "Learn about the breaking change in ASP.NET Core 11 where the built-in Entity Framework Core Identity stores use ordinal equality to match external login provider names and keys."
+ms.date: 11/10/2026
 ---
-
 # Identity external login keys use ordinal equality
 
 Starting in ASP.NET Core 11, the built-in Entity Framework Core Identity stores use ordinal equality to verify external login provider names and keys after a database lookup. A collation-only match no longer resolves to a user or causes a login to be removed.
@@ -29,11 +26,11 @@ If the database returns only a collation-based match, `FindByLoginAsync` returns
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](/dotnet/core/compatibility/categories#behavioral-change).
 
 ## Reason for change
 
-External provider keys are opaque identifiers. Their equality must not vary with the configured database provider or collation. Managed ordinal verification makes the built-in Entity Framework Core stores consistent with the in-memory reference store while preserving the indexed database lookup. For more information, see dotnet/aspnetcore#69277.
+External provider keys are opaque identifiers. Their equality must not vary with the configured database provider or collation. Managed ordinal verification makes the built-in Entity Framework Core stores consistent with the in-memory reference store while preserving the indexed database lookup. For more information, see [dotnet/aspnetcore#69277](https://github.com/dotnet/aspnetcore/pull/69277).
 
 ## Recommended action
 
@@ -43,5 +40,5 @@ Third-party `IUserLoginStore<TUser>` implementations own their equality semantic
 
 ## Affected APIs
 
-* `Microsoft.AspNetCore.Identity.IUserLoginStore`1.FindByLoginAsync(System.String,System.String,System.Threading.CancellationToken)`
-* `Microsoft.AspNetCore.Identity.IUserLoginStore`1.RemoveLoginAsync(`0,System.String,System.String,System.Threading.CancellationToken)`
+* <xref:Microsoft.AspNetCore.Identity.IUserLoginStore`1.FindByLoginAsync(System.String,System.String,System.Threading.CancellationToken)?displayProperty=fullName>
+* <xref:Microsoft.AspNetCore.Identity.IUserLoginStore`1.RemoveLoginAsync(`0,System.String,System.String,System.Threading.CancellationToken)?displayProperty=fullName>

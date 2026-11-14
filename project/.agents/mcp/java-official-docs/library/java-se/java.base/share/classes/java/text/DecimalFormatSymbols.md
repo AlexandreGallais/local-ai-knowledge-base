@@ -1,12 +1,3 @@
----
-title: "DecimalFormatSymbols class (java.text)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/text/DecimalFormatSymbols.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # DecimalFormatSymbols class (java.text)
 
 ```java
@@ -14,21 +5,21 @@ public class DecimalFormatSymbols implements Cloneable, Serializable
 ```
 
 This class represents the set of symbols (such as the decimal separator,
-the grouping separator, and so on) needed by `DecimalFormat`
-to format numbers. `DecimalFormat` creates for itself an instance of
-`DecimalFormatSymbols` from its locale data.  If you need to change any
-of these symbols, you can get the `DecimalFormatSymbols` object from
-your `DecimalFormat` and modify it.
+the grouping separator, and so on) needed by {@code DecimalFormat}
+to format numbers. {@code DecimalFormat} creates for itself an instance of
+{@code DecimalFormatSymbols} from its locale data.  If you need to change any
+of these symbols, you can get the {@code DecimalFormatSymbols} object from
+your {@code DecimalFormat} and modify it.
 
-If the locale contains "rg" (region override)
-Unicode extension,
+<p>If the locale contains "rg" (region override)
+<a href="../util/Locale.html#def_locale_extension">Unicode extension</a>,
 the symbols are overridden for the designated region.
 
-**See also:** java.util.Locale
-
-**See also:** DecimalFormat
-
-**Since:** 1.1
+@see          java.util.Locale
+@see          DecimalFormat
+@author       Mark Davis
+@author       Alan Liu
+@since 1.1
 
 ## DecimalFormatSymbols.DecimalFormatSymbols()
 
@@ -37,20 +28,18 @@ public DecimalFormatSymbols()
 ```
 
 Create a DecimalFormatSymbols object for the default
-FORMAT locale.
+{@link java.util.Locale.Category#FORMAT FORMAT} locale.
 This constructor can only construct instances for the locales
 supported by the Java runtime environment, not for those
 supported by installed
-DecimalFormatSymbolsProvider
+{@link java.text.spi.DecimalFormatSymbolsProvider DecimalFormatSymbolsProvider}
 implementations. For full locale coverage, use the
-getInstance method.
-
-This is equivalent to calling
-DecimalFormatSymbols(Locale.getDefault(Locale.Category.FORMAT)).
-
-**See also:** java.util.Locale#getDefault(java.util.Locale.Category)
-
-**See also:** java.util.Locale.Category#FORMAT
+{@link #getInstance(Locale) getInstance} method.
+<p>This is equivalent to calling
+{@link #DecimalFormatSymbols(Locale)
+    DecimalFormatSymbols(Locale.getDefault(Locale.Category.FORMAT))}.
+@see java.util.Locale#getDefault(java.util.Locale.Category)
+@see java.util.Locale.Category#FORMAT
 
 ## DecimalFormatSymbols.DecimalFormatSymbols(Locale)
 
@@ -62,27 +51,20 @@ Create a DecimalFormatSymbols object for the given locale.
 This constructor can only construct instances for the locales
 supported by the Java runtime environment, not for those
 supported by installed
-DecimalFormatSymbolsProvider
+{@link java.text.spi.DecimalFormatSymbolsProvider DecimalFormatSymbolsProvider}
 implementations. For full locale coverage, use the
-getInstance method.
-If the specified locale contains the `java.util.Locale.UNICODE_LOCALE_EXTENSION`
+{@link #getInstance(Locale) getInstance} method.
+If the specified locale contains the {@link java.util.Locale#UNICODE_LOCALE_EXTENSION}
 for the numbering system, the instance is initialized with the specified numbering
 system if the JRE implementation supports it. For example,
-
-```java
+<pre>
 NumberFormat.getNumberInstance(Locale.forLanguageTag("th-TH-u-nu-thai"))
-```
-
-This may return a `NumberFormat` instance with the Thai numbering system,
+</pre>
+This may return a {@code NumberFormat} instance with the Thai numbering system,
 instead of the Latin numbering system.
 
-Parameters:
-
-- `locale`: the desired locale
-
-Throws:
-
-- `NullPointerException`: if `locale` is null
+@param locale the desired locale
+@throws    NullPointerException if {@code locale} is null
 
 ## DecimalFormatSymbols.getAvailableLocales()
 
@@ -91,19 +73,18 @@ public static Locale[] getAvailableLocales()
 ```
 
 Returns an array of all locales for which the
-`getInstance` methods of this class can return
+{@code getInstance} methods of this class can return
 localized instances.
 The returned array represents the union of locales supported by the Java
 runtime and by installed
-DecimalFormatSymbolsProvider
+{@link java.text.spi.DecimalFormatSymbolsProvider DecimalFormatSymbolsProvider}
 implementations. At a minimum, the returned array must contain a
-`Locale` instance equal to Locale.ROOT and
-a `Locale` instance equal to Locale.US.
+{@code Locale} instance equal to {@link Locale#ROOT Locale.ROOT} and
+a {@code Locale} instance equal to {@link Locale#US Locale.US}.
 
-**Returns:** an array of locales for which localized
-        `DecimalFormatSymbols` instances are available.
-
-**Since:** 1.6
+@return an array of locales for which localized
+        {@code DecimalFormatSymbols} instances are available.
+@since 1.6
 
 ## DecimalFormatSymbols.getInstance()
 
@@ -111,22 +92,19 @@ a `Locale` instance equal to Locale.US.
 public static final DecimalFormatSymbols getInstance()
 ```
 
-Gets the `DecimalFormatSymbols` instance for the default
-locale.  This method provides access to `DecimalFormatSymbols`
+Gets the {@code DecimalFormatSymbols} instance for the default
+locale.  This method provides access to {@code DecimalFormatSymbols}
 instances for locales supported by the Java runtime itself as well
 as for those supported by installed
-DecimalFormatSymbolsProvider implementations.
-
-This is equivalent to calling
-getInstance(Locale.getDefault(Locale.Category.FORMAT)).
-
-**See also:** java.util.Locale#getDefault(java.util.Locale.Category)
-
-**See also:** java.util.Locale.Category#FORMAT
-
-**Returns:** a `DecimalFormatSymbols` instance.
-
-**Since:** 1.6
+{@link java.text.spi.DecimalFormatSymbolsProvider
+DecimalFormatSymbolsProvider} implementations.
+<p>This is equivalent to calling
+{@link #getInstance(Locale)
+    getInstance(Locale.getDefault(Locale.Category.FORMAT))}.
+@see java.util.Locale#getDefault(java.util.Locale.Category)
+@see java.util.Locale.Category#FORMAT
+@return a {@code DecimalFormatSymbols} instance.
+@since 1.6
 
 ## DecimalFormatSymbols.getInstance(Locale)
 
@@ -134,33 +112,25 @@ getInstance(Locale.getDefault(Locale.Category.FORMAT)).
 public static final DecimalFormatSymbols getInstance(Locale locale)
 ```
 
-Gets the `DecimalFormatSymbols` instance for the specified
-locale.  This method provides access to `DecimalFormatSymbols`
+Gets the {@code DecimalFormatSymbols} instance for the specified
+locale.  This method provides access to {@code DecimalFormatSymbols}
 instances for locales supported by the Java runtime itself as well
 as for those supported by installed
-DecimalFormatSymbolsProvider implementations.
-If the specified locale contains the `java.util.Locale.UNICODE_LOCALE_EXTENSION`
+{@link java.text.spi.DecimalFormatSymbolsProvider
+DecimalFormatSymbolsProvider} implementations.
+If the specified locale contains the {@link java.util.Locale#UNICODE_LOCALE_EXTENSION}
 for the numbering system, the instance is initialized with the specified numbering
 system if the JRE implementation supports it. For example,
-
-```java
+<pre>
 NumberFormat.getNumberInstance(Locale.forLanguageTag("th-TH-u-nu-thai"))
-```
-
-This may return a `NumberFormat` instance with the Thai numbering system,
+</pre>
+This may return a {@code NumberFormat} instance with the Thai numbering system,
 instead of the Latin numbering system.
 
-Parameters:
-
-- `locale`: the desired locale.
-
-**Returns:** a `DecimalFormatSymbols` instance.
-
-**Since:** 1.6
-
-Throws:
-
-- `NullPointerException`: if `locale` is null
+@param locale the desired locale.
+@return a {@code DecimalFormatSymbols} instance.
+@throws    NullPointerException if {@code locale} is null
+@since 1.6
 
 ## DecimalFormatSymbols.getLocale()
 
@@ -168,7 +138,9 @@ Throws:
 public Locale getLocale()
 ```
 
-**Since:** 19
+{@return locale used to create this instance}
+
+@since 19
 
 ## DecimalFormatSymbols.getZeroDigit()
 
@@ -178,7 +150,7 @@ public char getZeroDigit()
 
 Gets the character used for zero. Different for Arabic, etc.
 
-**Returns:** the character used for zero
+@return the character used for zero
 
 ## DecimalFormatSymbols.setZeroDigit(char)
 
@@ -188,9 +160,7 @@ public void setZeroDigit(char zeroDigit)
 
 Sets the character used for zero. Different for Arabic, etc.
 
-Parameters:
-
-- `zeroDigit`: the character used for zero
+@param zeroDigit the character used for zero
 
 ## DecimalFormatSymbols.getGroupingSeparator()
 
@@ -200,7 +170,7 @@ public char getGroupingSeparator()
 
 Gets the character used for grouping separator. Different for French, etc.
 
-**Returns:** the grouping separator
+@return the grouping separator
 
 ## DecimalFormatSymbols.setGroupingSeparator(char)
 
@@ -210,9 +180,7 @@ public void setGroupingSeparator(char groupingSeparator)
 
 Sets the character used for grouping separator. Different for French, etc.
 
-Parameters:
-
-- `groupingSeparator`: the grouping separator
+@param groupingSeparator the grouping separator
 
 ## DecimalFormatSymbols.getDecimalSeparator()
 
@@ -222,7 +190,7 @@ public char getDecimalSeparator()
 
 Gets the character used for decimal sign. Different for French, etc.
 
-**Returns:** the character used for decimal sign
+@return the character used for decimal sign
 
 ## DecimalFormatSymbols.setDecimalSeparator(char)
 
@@ -232,9 +200,7 @@ public void setDecimalSeparator(char decimalSeparator)
 
 Sets the character used for decimal sign. Different for French, etc.
 
-Parameters:
-
-- `decimalSeparator`: the character used for decimal sign
+@param decimalSeparator the character used for decimal sign
 
 ## DecimalFormatSymbols.getPerMill()
 
@@ -244,7 +210,7 @@ public char getPerMill()
 
 Gets the character used for per mille sign. Different for Arabic, etc.
 
-**Returns:** the character used for per mille sign
+@return the character used for per mille sign
 
 ## DecimalFormatSymbols.setPerMill(char)
 
@@ -254,9 +220,7 @@ public void setPerMill(char perMill)
 
 Sets the character used for per mille sign. Different for Arabic, etc.
 
-Parameters:
-
-- `perMill`: the character used for per mille sign
+@param perMill the character used for per mille sign
 
 ## DecimalFormatSymbols.getPercent()
 
@@ -266,7 +230,7 @@ public char getPercent()
 
 Gets the character used for percent sign. Different for Arabic, etc.
 
-**Returns:** the character used for percent sign
+@return the character used for percent sign
 
 ## DecimalFormatSymbols.setPercent(char)
 
@@ -276,9 +240,7 @@ public void setPercent(char percent)
 
 Sets the character used for percent sign. Different for Arabic, etc.
 
-Parameters:
-
-- `percent`: the character used for percent sign
+@param percent the character used for percent sign
 
 ## DecimalFormatSymbols.getDigit()
 
@@ -288,7 +250,7 @@ public char getDigit()
 
 Gets the character used for a digit in a pattern.
 
-**Returns:** the character used for a digit in a pattern
+@return the character used for a digit in a pattern
 
 ## DecimalFormatSymbols.setDigit(char)
 
@@ -298,9 +260,7 @@ public void setDigit(char digit)
 
 Sets the character used for a digit in a pattern.
 
-Parameters:
-
-- `digit`: the character used for a digit in a pattern
+@param digit the character used for a digit in a pattern
 
 ## DecimalFormatSymbols.getPatternSeparator()
 
@@ -311,7 +271,7 @@ public char getPatternSeparator()
 Gets the character used to separate positive and negative subpatterns
 in a pattern.
 
-**Returns:** the pattern separator
+@return the pattern separator
 
 ## DecimalFormatSymbols.setPatternSeparator(char)
 
@@ -322,9 +282,7 @@ public void setPatternSeparator(char patternSeparator)
 Sets the character used to separate positive and negative subpatterns
 in a pattern.
 
-Parameters:
-
-- `patternSeparator`: the pattern separator
+@param patternSeparator the pattern separator
 
 ## DecimalFormatSymbols.getInfinity()
 
@@ -335,7 +293,7 @@ public String getInfinity()
 Gets the string used to represent infinity. Almost always left
 unchanged.
 
-**Returns:** the string representing infinity
+@return the string representing infinity
 
 ## DecimalFormatSymbols.setInfinity(String)
 
@@ -346,13 +304,8 @@ public void setInfinity(String infinity)
 Sets the string used to represent infinity. Almost always left
 unchanged.
 
-Parameters:
-
-- `infinity`: the string representing infinity
-
-Throws:
-
-- `NullPointerException`: if `infinity` is `null`
+@param infinity the string representing infinity
+@throws NullPointerException if {@code infinity} is {@code null}
 
 ## DecimalFormatSymbols.getNaN()
 
@@ -363,7 +316,7 @@ public String getNaN()
 Gets the string used to represent "not a number". Almost always left
 unchanged.
 
-**Returns:** the string representing "not a number"
+@return the string representing "not a number"
 
 ## DecimalFormatSymbols.setNaN(String)
 
@@ -374,13 +327,8 @@ public void setNaN(String NaN)
 Sets the string used to represent "not a number". Almost always left
 unchanged.
 
-Parameters:
-
-- `NaN`: the string representing "not a number"
-
-Throws:
-
-- `NullPointerException`: if `NaN` is `null`
+@param NaN the string representing "not a number"
+@throws NullPointerException if {@code NaN} is {@code null}
 
 ## DecimalFormatSymbols.getMinusSign()
 
@@ -392,7 +340,7 @@ Gets the character used to represent minus sign. If no explicit
 negative format is specified, one is formed by prefixing
 minusSign to the positive format.
 
-**Returns:** the character representing minus sign
+@return the character representing minus sign
 
 ## DecimalFormatSymbols.setMinusSign(char)
 
@@ -404,9 +352,7 @@ Sets the character used to represent minus sign. If no explicit
 negative format is specified, one is formed by prefixing
 minusSign to the positive format.
 
-Parameters:
-
-- `minusSign`: the character representing minus sign
+@param minusSign the character representing minus sign
 
 ## DecimalFormatSymbols.getCurrencySymbol()
 
@@ -417,9 +363,8 @@ public String getCurrencySymbol()
 Returns the currency symbol for the currency of these
 DecimalFormatSymbols in their locale.
 
-**Returns:** the currency symbol
-
-**Since:** 1.2
+@return the currency symbol
+@since 1.2
 
 ## DecimalFormatSymbols.setCurrencySymbol(String)
 
@@ -428,18 +373,13 @@ public void setCurrencySymbol(String currency)
 ```
 
 Sets the currency symbol for the currency of this
-`DecimalFormatSymbols` in their locale. Unlike `setInternationalCurrencySymbol(String)`, this method does not update
+{@code DecimalFormatSymbols} in their locale. Unlike {@link
+#setInternationalCurrencySymbol(String)}, this method does not update
 the currency attribute nor the international currency symbol attribute.
 
-Parameters:
-
-- `currency`: the currency symbol
-
-**Since:** 1.2
-
-Throws:
-
-- `NullPointerException`: if `currency` is `null`
+@param currency the currency symbol
+@throws NullPointerException if {@code currency} is {@code null}
+@since 1.2
 
 ## DecimalFormatSymbols.getInternationalCurrencySymbol()
 
@@ -450,9 +390,8 @@ public String getInternationalCurrencySymbol()
 Returns the ISO 4217 currency code of the currency of these
 DecimalFormatSymbols.
 
-**Returns:** the currency code
-
-**Since:** 1.2
+@return the currency code
+@since 1.2
 
 ## DecimalFormatSymbols.setInternationalCurrencySymbol(String)
 
@@ -463,25 +402,17 @@ public void setInternationalCurrencySymbol(String currencyCode)
 Sets the ISO 4217 currency code of the currency of these
 DecimalFormatSymbols.
 If the currency code is valid (as defined by
-Currency.getInstance),
+{@link java.util.Currency#getInstance(java.lang.String) Currency.getInstance}),
 this also sets the currency attribute to the corresponding Currency
 instance and the currency symbol attribute to the currency's symbol
 in the DecimalFormatSymbols' locale. If the currency code is not valid,
 then the currency attribute and the currency symbol attribute are not modified.
 
-Parameters:
-
-- `currencyCode`: the currency code
-
-**See also:** #setCurrency
-
-**See also:** #setCurrencySymbol
-
-**Since:** 1.2
-
-Throws:
-
-- `NullPointerException`: if `currencyCode` is `null`
+@param currencyCode the currency code
+@throws NullPointerException if {@code currencyCode} is {@code null}
+@see #setCurrency
+@see #setCurrencySymbol
+@since 1.2
 
 ## DecimalFormatSymbols.getCurrency()
 
@@ -489,7 +420,8 @@ Throws:
 public Currency getCurrency()
 ```
 
-**Since:** 1.4
+{@return the {@code Currency} of this {@code DecimalFormatSymbols}}
+@since 1.4
 
 ## DecimalFormatSymbols.setCurrency(Currency)
 
@@ -497,24 +429,16 @@ public Currency getCurrency()
 public void setCurrency(Currency currency)
 ```
 
-Sets the currency of this `DecimalFormatSymbols`.
+Sets the currency of this {@code DecimalFormatSymbols}.
 This also sets the currency symbol attribute to the currency's symbol
 in the DecimalFormatSymbols' locale, and the international currency
 symbol attribute to the currency's ISO 4217 currency code.
 
-Parameters:
-
-- `currency`: the new currency to be used
-
-**Since:** 1.4
-
-**See also:** #setCurrencySymbol
-
-**See also:** #setInternationalCurrencySymbol
-
-Throws:
-
-- `NullPointerException`: if `currency` is null
+@param currency the new currency to be used
+@throws    NullPointerException if {@code currency} is null
+@since 1.4
+@see #setCurrencySymbol
+@see #setInternationalCurrencySymbol
 
 ## DecimalFormatSymbols.getMonetaryDecimalSeparator()
 
@@ -524,9 +448,8 @@ public char getMonetaryDecimalSeparator()
 
 Returns the monetary decimal separator.
 
-**Returns:** the monetary decimal separator
-
-**Since:** 1.2
+@return the monetary decimal separator
+@since 1.2
 
 ## DecimalFormatSymbols.setMonetaryDecimalSeparator(char)
 
@@ -536,11 +459,8 @@ public void setMonetaryDecimalSeparator(char sep)
 
 Sets the monetary decimal separator.
 
-Parameters:
-
-- `sep`: the monetary decimal separator
-
-**Since:** 1.2
+@param sep the monetary decimal separator
+@since 1.2
 
 ## DecimalFormatSymbols.getExponentSeparator()
 
@@ -551,11 +471,9 @@ public String getExponentSeparator()
 Returns the string used to separate the mantissa from the exponent.
 Examples: "x10^" for 1.23x10^4, "E" for 1.23E4.
 
-**Returns:** the exponent separator string
-
-**See also:** #setExponentSeparator(java.lang.String)
-
-**Since:** 1.6
+@return the exponent separator string
+@see #setExponentSeparator(java.lang.String)
+@since 1.6
 
 ## DecimalFormatSymbols.setExponentSeparator(String)
 
@@ -566,17 +484,10 @@ public void setExponentSeparator(String exp)
 Sets the string used to separate the mantissa from the exponent.
 Examples: "x10^" for 1.23x10^4, "E" for 1.23E4.
 
-Parameters:
-
-- `exp`: the exponent separator string
-
-**See also:** #getExponentSeparator()
-
-**Since:** 1.6
-
-Throws:
-
-- `NullPointerException`: if `exp` is null
+@param exp the exponent separator string
+@throws    NullPointerException if {@code exp} is null
+@see #getExponentSeparator()
+@since 1.6
 
 ## DecimalFormatSymbols.getMonetaryGroupingSeparator()
 
@@ -585,12 +496,11 @@ public char getMonetaryGroupingSeparator()
 ```
 
 Gets the character used for grouping separator for currencies.
-May be different from `grouping separator` in some locales,
+May be different from {@code grouping separator} in some locales,
 e.g, German in Austria.
 
-**Returns:** the monetary grouping separator
-
-**Since:** 15
+@return the monetary grouping separator
+@since 15
 
 ## DecimalFormatSymbols.setMonetaryGroupingSeparator(char)
 
@@ -600,15 +510,11 @@ public void setMonetaryGroupingSeparator(char monetaryGroupingSeparator)
 
 Sets the character used for grouping separator for currencies.
 Invocation of this method will not affect the normal
-`grouping separator`.
+{@code grouping separator}.
 
-Parameters:
-
-- `monetaryGroupingSeparator`: the monetary grouping separator
-
-**See also:** #setGroupingSeparator(char)
-
-**Since:** 15
+@param monetaryGroupingSeparator the monetary grouping separator
+@see #setGroupingSeparator(char)
+@since 15
 
 ## DecimalFormatSymbols.clone()
 
@@ -624,22 +530,17 @@ Standard override.
 public boolean equals(Object obj)
 ```
 
-Compares the specified object with this `DecimalFormatSymbols` for equality.
-Returns true if the object is also a `DecimalFormatSymbols` and the two
-`DecimalFormatSymbols` objects represent the same set of symbols.
+Compares the specified object with this {@code DecimalFormatSymbols} for equality.
+Returns true if the object is also a {@code DecimalFormatSymbols} and the two
+{@code DecimalFormatSymbols} objects represent the same set of symbols.
 
-Parameters:
-
-- `obj`: object to be compared for equality
-
-**Implementation requirements:** This method performs an equality check with a notion of class
-identity based on `getClass()`, rather than `instanceof`.
+@implSpec This method performs an equality check with a notion of class
+identity based on {@code getClass()}, rather than {@code instanceof}.
 Therefore, in the equals methods in subclasses, no instance of this class
 should compare as equal to an instance of a subclass.
-
-**Returns:** `true` if the specified object is equal to this `DecimalFormatSymbols`
-
-**See also:** Object#equals(Object)
+@param  obj object to be compared for equality
+@return {@code true} if the specified object is equal to this {@code DecimalFormatSymbols}
+@see Object#equals(Object)
 
 ## DecimalFormatSymbols.hashCode()
 
@@ -647,7 +548,8 @@ should compare as equal to an instance of a subclass.
 public int hashCode()
 ```
 
-**Implementation requirements:** Non-transient instance fields of this class are used to calculate
-a hash code value which adheres to the contract defined in `Objects.hashCode`.
+{@return the hash code for this {@code DecimalFormatSymbols}}
 
-**See also:** Object#hashCode()
+@implSpec Non-transient instance fields of this class are used to calculate
+a hash code value which adheres to the contract defined in {@link Objects#hashCode}.
+@see Object#hashCode()

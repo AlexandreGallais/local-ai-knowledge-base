@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: dnx scripts bypass global.json SDK selection"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/11/dnx-scripts-bypass-global-json.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where the dnx and dnx.cmd scripts no longer respect global.json for SDK selection."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # dnx scripts bypass global.json SDK selection
@@ -27,7 +25,7 @@ Starting with .NET 10 SDK 10.0.302 (and later) and .NET 11, the `dnx` and `dnx.c
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

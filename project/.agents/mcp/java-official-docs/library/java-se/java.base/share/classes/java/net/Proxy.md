@@ -1,12 +1,3 @@
----
-title: "Proxy class (java.net)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/net/Proxy.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Proxy class (java.net)
 
 ```java
@@ -15,11 +6,12 @@ public class Proxy
 
 This class represents a proxy setting, typically a type (http, socks) and
 a socket address.
-A `Proxy` is an immutable object.
+A {@code Proxy} is an immutable object.
 
-**See also:** java.net.ProxySelector
-
-**Since:** 1.5
+@see     java.net.ProxySelector
+@author Yingxian Wang
+@author Jean-Christophe Collet
+@since   1.5
 
 ## Proxy.NO_PROXY
 
@@ -27,12 +19,12 @@ A `Proxy` is an immutable object.
 public static final Proxy NO_PROXY
 ```
 
-A proxy setting that represents a `DIRECT` connection,
+A proxy setting that represents a {@code DIRECT} connection,
 basically telling the protocol handler not to use any proxying.
 Used, for instance, to create sockets bypassing any other global
 proxy settings (like SOCKS):
-
-`Socket s = new Socket(Proxy.NO_PROXY);`
+<P>
+{@code Socket s = new Socket(Proxy.NO_PROXY);}
 
 ## Proxy.Proxy(Type, SocketAddress)
 
@@ -42,19 +34,15 @@ public Proxy(Type type, SocketAddress sa)
 
 Creates an entry representing a PROXY connection.
 Certain combinations are illegal. For instance, for types Http, and
-Socks, a SocketAddress **must** be provided.
-
-Use the `Proxy.NO_PROXY` constant
+Socks, a SocketAddress <b>must</b> be provided.
+<P>
+Use the {@code Proxy.NO_PROXY} constant
 for representing a direct connection.
 
-Parameters:
-
-- `type`: the `Type` of the proxy
-- `sa`: the `SocketAddress` for that proxy
-
-Throws:
-
-- `IllegalArgumentException`: when the type and the address are incompatible
+@param type the {@code Type} of the proxy
+@param sa the {@code SocketAddress} for that proxy
+@throws IllegalArgumentException when the type and the address are
+incompatible
 
 ## Proxy.type()
 
@@ -64,7 +52,7 @@ public Type type()
 
 Returns the proxy type.
 
-**Returns:** a Type representing the proxy type
+@return a Type representing the proxy type
 
 ## Proxy.address()
 
@@ -73,9 +61,9 @@ public SocketAddress address()
 ```
 
 Returns the socket address of the proxy, or
-`null` if it's a direct connection.
+{@code null} if it's a direct connection.
 
-**Returns:** a `SocketAddress` representing the socket end
+@return a {@code SocketAddress} representing the socket end
         point of the proxy
 
 ## Proxy.toString()
@@ -87,9 +75,9 @@ public String toString()
 Constructs a string representation of this Proxy.
 This String is constructed by calling toString() on its type
 and concatenating " @ " and the toString() result from its address
-if its type is not `DIRECT`.
+if its type is not {@code DIRECT}.
 
-**Returns:** a string representation of this object.
+@return  a string representation of this object.
 
 ## Proxy.equals(Object)
 
@@ -98,24 +86,22 @@ public final boolean equals(Object obj)
 ```
 
 Compares this object against the specified object.
-The result is `true` if and only if the argument is
-not `null` and it represents the same proxy as
+The result is {@code true} if and only if the argument is
+not {@code null} and it represents the same proxy as
 this object.
-
-Two instances of `Proxy` represent the same
+<p>
+Two instances of {@code Proxy} represent the same
 address if both the SocketAddresses and type are equal.
 
-Parameters:
-
-- `obj`: the object to compare against.
-
-**Returns:** `true` if the objects are the same;
-         `false` otherwise.
-
-**See also:** java.net.InetSocketAddress#equals(java.lang.Object)
+@param   obj   the object to compare against.
+@return  {@code true} if the objects are the same;
+         {@code false} otherwise.
+@see java.net.InetSocketAddress#equals(java.lang.Object)
 
 ## Proxy.hashCode()
 
 ```java
 public final int hashCode()
 ```
+
+{@return a hash code value for this Proxy}

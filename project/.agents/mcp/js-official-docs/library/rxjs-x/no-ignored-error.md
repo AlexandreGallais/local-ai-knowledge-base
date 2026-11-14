@@ -1,17 +1,10 @@
----
-title: "Disallow calling subscribe without specifying an error handler (rxjs-x/no-ignored-error)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/no-ignored-error.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Disallow calling `subscribe` without specifying an error handler (`rxjs-x/no-ignored-error`)
 
 💼 This rule is enabled in the 🔒 `strict` config.
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule enforces the passing of an error handler to `subscribe` calls.
 
@@ -56,5 +49,5 @@ Type checked lint rules are more powerful than traditional lint rules, but also 
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/no-ignored-error.ts)
+- [Test source](/tests/rules/no-ignored-error.test.ts)

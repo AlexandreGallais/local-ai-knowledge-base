@@ -1,12 +1,3 @@
----
-title: "Angular coding style guide"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/best-practices/style-guide.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Angular coding style guide
 
 ## Introduction
@@ -18,7 +9,7 @@ code and move between projects.
 
 This guide does _not_ cover TypeScript or general coding practices unrelated to Angular. For
 TypeScript, check
-out Google's TypeScript style guide.
+out [Google's TypeScript style guide](https://google.github.io/styleguide/tsguide.html).
 
 ### When in doubt, prefer consistency
 
@@ -119,32 +110,32 @@ When in doubt, go with the approach that leads to smaller files.
 
 ### Prefer the `inject` function over constructor parameter injection
 
-Prefer using the `inject` function over injecting constructor parameters. The `inject` function works the same way as constructor parameter injection, but offers several style advantages:
+Prefer using the [`inject`](/api/core/inject) function over injecting constructor parameters. The [`inject`](/api/core/inject) function works the same way as constructor parameter injection, but offers several style advantages:
 
-- `inject` is generally more readable, especially when a class injects many dependencies.
+- [`inject`](/api/core/inject) is generally more readable, especially when a class injects many dependencies.
 - It's more syntactically straightforward to add comments to injected dependencies
-- `inject` offers better type inference.
-- When targeting ES2022+ with `useDefineForClassFields`, you can avoid separating field declaration and initialization when fields read on injected dependencies.
+- [`inject`](/api/core/inject) offers better type inference.
+- When targeting ES2022+ with [`useDefineForClassFields`](https://www.typescriptlang.org/tsconfig/#useDefineForClassFields), you can avoid separating field declaration and initialization when fields read on injected dependencies.
 
-You can refactor existing code to `inject` with an automatic tool.
+[You can refactor existing code to `inject` with an automatic tool](reference/migrations/inject-function).
 
 ## Components and directives
 
 ### Choosing component selectors
 
 See
-the Components guide for details on choosing component selectors.
+the [Components guide for details on choosing component selectors](guide/components/selectors#choosing-a-selector).
 
 ### Naming component and directive members
 
 See the Components guide for details
-on naming input properties
-and naming output properties.
+on [naming input properties](guide/components/inputs#choosing-input-names)
+and [naming output properties](guide/components/outputs#choosing-event-names).
 
 ### Choosing directive selectors
 
 Directives should use the
-same application-specific prefix
+same [application-specific prefix](guide/components/selectors#selector-prefixes)
 as your components.
 
 When using an attribute selector for a directive, use a camelCase attribute name. For example, if
@@ -169,11 +160,11 @@ classes.
 ### Avoid overly complex logic in templates
 
 Angular templates are designed to
-accommodate JavaScript-like expressions.
+accommodate [JavaScript-like expressions](guide/templates/expression-syntax).
 You should take advantage of these expressions to capture relatively straightforward logic directly
 in template expressions.
 
-When the code in a template gets too complex, though, refactor logic into the TypeScript code (typically with a computed).
+When the code in a template gets too complex, though, refactor logic into the TypeScript code (typically with a [computed](guide/signals#computed-signals)).
 
 There's no one hard-and-fast rule that determines what constitutes "complex". Use your best
 judgement.
@@ -181,7 +172,7 @@ judgement.
 ### Use `protected` on class members that are only used by a component's template
 
 A component class's public members intrinsically define a public API that's accessible via
-dependency injection and queries. Prefer `protected`
+dependency injection and [queries](guide/components/queries). Prefer `protected`
 access for any members that are meant to be read from the component's template.
 
 ```ts
@@ -226,9 +217,9 @@ export class UserProfile {
 
 ### Prefer `class` and `style` over `ngClass` and `ngStyle`
 
-Prefer `class` and `style` bindings over using the `NgClass` and `NgStyle` directives.
+Prefer `class` and `style` bindings over using the [`NgClass`](/api/common/NgClass) and [`NgStyle`](/api/common/NgStyle) directives.
 
-```html
+```html {prefer}
 <div [class.admin]="isAdmin" [class.dense]="density === 'high'">
   <div [style.color]="textColor" [style.background-color]="backgroundColor">
     <!-- OR -->
@@ -239,7 +230,7 @@ Prefer `class` and `style` bindings over using the `NgClass` and `NgStyle` direc
 </div>
 ```
 
-```html
+```html {avoid}
 <div [ngClass]="{admin: isAdmin, dense: density === 'high'}">
   <div [ngStyle]="{'color': textColor, 'background-color': backgroundColor}"></div>
 </div>
@@ -252,17 +243,17 @@ developers familiar with basic HTML.
 Additionally, the `NgClass` and `NgStyle` directives incur an additional performance cost compared
 to the built-in `class` and `style` binding syntax.
 
-For more details, refer to the bindings guide
+For more details, refer to the [bindings guide](/guide/templates/binding#css-class-and-style-property-bindings)
 
 ### Name event handlers for what they _do_, not for the triggering event
 
 Prefer naming event handlers for the action they perform rather than for the triggering event:
 
-```html
+```html {prefer}
 <button (click)="saveUserData()">Save</button>
 ```
 
-```html
+```html {avoid}
 <button (click)="handleClick()">Save</button>
 ```
 
@@ -302,14 +293,14 @@ well-named methods to contain that logic and then _call those methods_ in your l
 Lifecycle hook names describe _when_ they run, meaning that the code inside doesn't have a
 meaningful name that describes what the code inside is doing.
 
-```ts
+```ts {prefer}
 ngOnInit() {
   this.startLogging();
   this.runBackgroundTask();
 }
 ```
 
-```ts
+```ts {avoid}
 ngOnInit() {
   this.logger.setMode('info');
   this.logger.monitorErrors();

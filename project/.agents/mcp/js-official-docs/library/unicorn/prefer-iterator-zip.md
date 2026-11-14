@@ -1,19 +1,13 @@
----
-title: "prefer-iterator-zip"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-iterator-zip.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-iterator-zip
 
 📝 Prefer `Iterator.zip()` over parallel-array indexing.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Prefer `Iterator.zip()` when a loop uses an index only to read corresponding values from multiple arrays and explicitly stops at the shortest array.
 
@@ -56,4 +50,4 @@ Conversions are editor suggestions because they can change when values are read.
 
 Suggestions create unique element names and preserve the body and its declarations. If a replacement would remove or relocate a comment, the rule reports without a suggestion.
 
-Check the runtime support for `Iterator.zip()`.
+Check the [runtime support for `Iterator.zip()`](https://caniuse.com/mdn-javascript_builtins_iterator_zip).

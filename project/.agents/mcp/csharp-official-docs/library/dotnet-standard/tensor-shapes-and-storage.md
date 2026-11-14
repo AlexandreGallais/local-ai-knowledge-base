@@ -1,15 +1,13 @@
 ---
-title: "Tensor shapes, storage, and NumPy differences"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/tensor-shapes-and-storage.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Tensor shapes, storage, and NumPy differences
+description: Understand the shape, stride, resizing, and overlapping-storage behavior of System.Numerics.Tensors and how it differs from NumPy.
+ms.date: 09/30/2026
+ai-usage: ai-generated
 ---
 
 # Tensor shapes, storage, and NumPy differences
 
-The System.Numerics.Tensors package provides `System.Numerics.Tensors.Tensor`1`, `System.Numerics.Tensors.TensorSpan`1`, and `System.Numerics.Tensors.ReadOnlyTensorSpan`1` for multidimensional data. Tensor shapes describe the logical dimensions; strides describe the distance, in elements, between successive positions along each dimension.
+The [System.Numerics.Tensors](https://www.nuget.org/packages/System.Numerics.Tensors) package provides <xref:System.Numerics.Tensors.Tensor`1>, <xref:System.Numerics.Tensors.TensorSpan`1>, and <xref:System.Numerics.Tensors.ReadOnlyTensorSpan`1> for multidimensional data. Tensor shapes describe the logical dimensions; strides describe the distance, in elements, between successive positions along each dimension.
 
 The behavior described here ships in the package across its supported target frameworks. Updating the package can affect apps that target earlier .NET versions.
 
@@ -60,7 +58,7 @@ Separate tensor objects and spans can refer to overlapping regions of the same a
 | `Tensor.ResizeTo` | Dense source and destination. Unsupported strided overlap is rejected. |
 | Reversal into the same view | A dense view can be reversed in place. No-op reversals are also supported. |
 
-Other unsupported overlapping layouts throw `System.ArgumentException` before the operation writes output. A dense tensor alone doesn't guarantee support for every operation: for example, a shifted dense destination is supported for a copy, but not for an elementwise operation.
+Other unsupported overlapping layouts throw <xref:System.ArgumentException> before the operation writes output. A dense tensor alone doesn't guarantee support for every operation: for example, a shifted dense destination is supported for a copy, but not for an elementwise operation.
 
 The `TryCopyTo` and `TryFlattenTo` methods return `false` without copying when the destination is too short. `TryCopyTo` also returns `false` for incompatible source and destination shapes. For compatible shapes with sufficient destination capacity, these methods can still throw for unsupported overlap; `Try` doesn't suppress invalid-layout exceptions.
 
@@ -89,7 +87,7 @@ The library doesn't implicitly allocate a full-tensor snapshot to support arbitr
 
 ## See also
 
-- Numerics in .NET
-- Use SIMD and hardware intrinsics in .NET
-- Tensor storage-layout breaking change
-- `System.Numerics.Tensors`
+- [Numerics in .NET](numerics.md)
+- [Use SIMD and hardware intrinsics in .NET](simd.md)
+- [Tensor storage-layout breaking change](../core/compatibility/core-libraries/11/tensor-storage-layout-validation.md)
+- <xref:System.Numerics.Tensors>

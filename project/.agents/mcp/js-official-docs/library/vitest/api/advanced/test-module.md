@@ -1,15 +1,6 @@
----
-title: "TestModule"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/api/advanced/test-module.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # TestModule
 
-The `TestModule` class represents a single module in a single project. This class is only available in the main thread. Refer to the "Runner API" if you are working with runtime tasks.
+The `TestModule` class represents a single module in a single project. This class is only available in the main thread. Refer to the ["Runner API"](/api/advanced/runner#tasks) if you are working with runtime tasks.
 
 The `TestModule` instance always has a `type` property with the value of `module`. You can use it to distinguish between different task types:
 
@@ -19,8 +10,9 @@ if (task.type === 'module') {
 }
 ```
 
-**Extending Suite Methods**
-The `TestModule` class inherits all methods and properties from the `TestSuite`. This guide will only list methods and properties unique to the `TestModule`.
+::: warning Extending Suite Methods
+The `TestModule` class inherits all methods and properties from the [`TestSuite`](/api/advanced/test-suite). This guide will only list methods and properties unique to the `TestModule`.
+:::
 
 ## moduleId
 
@@ -44,11 +36,13 @@ Module id relative to the project. This is the same as `task.name` in the deprec
 
 ## viteEnvironment <Version>4.1.0</Version> {#viteenvironment}
 
-This is a Vite's `DevEnvironment` that transforms all files inside of the test module.
+This is a Vite's [`DevEnvironment`](https://vite.dev/guide/api-environment) that transforms all files inside of the test module.
 
 ::: details History
 
 - `v4.0.15`: added as experimental
+
+:::
 
 ## state
 
@@ -56,7 +50,7 @@ This is a Vite's `DevEnvironment` that transforms all files inside of the test m
 function state(): TestModuleState
 ```
 
-Works the same way as `testSuite.state()`, but can also return `queued` if module wasn't executed yet.
+Works the same way as [`testSuite.state()`](/api/advanced/test-suite#state), but can also return `queued` if module wasn't executed yet.
 
 ## meta <Version>3.1.0</Version> {#meta}
 
@@ -64,9 +58,9 @@ Works the same way as `testSuite.state()`, but can also return `queued` if modul
 function meta(): TaskMeta
 ```
 
-Custom metadata that was attached to the module during its execution or collection. The meta can be attached by assigning a property to the `task.meta` object during a test run:
+Custom [metadata](/api/advanced/metadata) that was attached to the module during its execution or collection. The meta can be attached by assigning a property to the `task.meta` object during a test run:
 
-```ts
+```ts {5,10}
 import { test } from 'vitest'
 
 describe('the validation works correctly', (task) => {
@@ -81,8 +75,9 @@ describe('the validation works correctly', (task) => {
 })
 ```
 
-**Tip:**
-If metadata was attached during collection (outside of the `test` function), then it will be available in `onTestModuleCollected` hook in the custom reporter.
+:::tip
+If metadata was attached during collection (outside of the `test` function), then it will be available in [`onTestModuleCollected`](./reporters#ontestmodulecollected) hook in the custom reporter.
+:::
 
 ## diagnostic
 
@@ -180,6 +175,6 @@ describe('suite', () => {
 function toTestSpecification(testCases?: TestCase[]): TestSpecification
 ```
 
-Returns a new test specification that can be used to filter or run this specific test module.
+Returns a new [test specification](/api/advanced/test-specification) that can be used to filter or run this specific test module.
 
 It accepts an optional array of test cases that should be filtered.

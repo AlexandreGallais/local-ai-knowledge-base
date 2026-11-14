@@ -1,12 +1,3 @@
----
-title: "Improving Performance"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/improving-performance.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # Improving Performance
 
 ## Profile First
@@ -17,38 +8,38 @@ The `Duration` line of the summary breaks the run down into phases, as percentag
 Duration  3.76s (environment 79%, import 13%, transform 6%, tests 1%, setup 1%)
 ```
 
-The percentages are relative to the sum of all tracked phases, not to the wall-clock time: phases run in parallel workers, so their sum is usually larger than the run itself. In a multi-project setup the percentages aggregate over all projects, so a phase that dominates one project can be diluted by the others; the performance hints below analyze each project separately.
+The percentages are relative to the sum of all tracked phases, not to the wall-clock time: phases run in parallel workers, so their sum is usually larger than the run itself. In a multi-project setup the percentages aggregate over all [projects](/guide/projects), so a phase that dominates one project can be diluted by the others; the performance hints below analyze each project separately.
 
 The phases map to configuration options:
 
-- `environment` - creating the test environment (for example `jsdom`, `happy-dom`) for test files. See Test Environments.
-- `transform` - waiting for Vite to resolve and transform imported modules. See Caching Between Reruns.
-- `import` - evaluating test files and their modules, excluding the transform wait tracked above. When files import mostly the same modules (typical for barrel-file imports), isolation re-evaluates that shared graph for every file. See Test Isolation.
-- `setup` - running `setupFiles`.
-- `worker` - preparing the test runner in each worker. Isolation pays this cost for every test file. See Test Isolation.
+- `environment` - creating the test environment (for example `jsdom`, `happy-dom`) for test files. See [Test Environments](#test-environments).
+- `transform` - waiting for Vite to resolve and transform imported modules. See [Caching Between Reruns](#caching-between-reruns).
+- `import` - evaluating test files and their modules, excluding the transform wait tracked above. When files import mostly the same modules (typical for barrel-file imports), isolation re-evaluates that shared graph for every file. See [Test Isolation](#test-isolation).
+- `setup` - running [`setupFiles`](/config/setupfiles).
+- `worker` - preparing the test runner in each worker. Isolation pays this cost for every test file. See [Test Isolation](#test-isolation).
 - `tests` - running the tests themselves. A run dominated by this phase has little to gain from configuration changes.
 
-When the collected timings show that a configuration change would make the run significantly faster, Vitest also prints a hint after the summary, see `experimental.diagnostics`. Hints never suggest changing an option that was set explicitly.
+When the collected timings show that a configuration change would make the run significantly faster, Vitest also prints a hint after the summary, see [`experimental.diagnostics`](/config/experimental#experimental-diagnostics). Hints never suggest changing an option that was set explicitly.
 
-`vitest doctor` measures the alternative configurations instead of estimating them: it runs the suite under each candidate and reports the comparison, including whether the tests pass with `isolate: false`.
+[`vitest doctor`](/guide/cli#vitest-doctor) measures the alternative configurations instead of estimating them: it runs the suite under each candidate and reports the comparison, including whether the tests pass with `isolate: false`.
 
 ## Test Isolation
 
-By default Vitest runs every test file in an isolated environment based on the pool:
+By default Vitest runs every test file in an isolated environment based on the [pool](/config/pool):
 
-- `threads` pool runs every test file in a separate `Worker`
-- `forks` pool runs every test file in a separate forked child process
-- `vmThreads` pool runs every test file in a separate VM context, but it uses workers for parallelism
+- `threads` pool runs every test file in a separate [`Worker`](https://nodejs.org/api/worker_threads.html#class-worker)
+- `forks` pool runs every test file in a separate [forked child process](https://nodejs.org/api/child_process.html#child_processforkmodulepath-args-options)
+- `vmThreads` pool runs every test file in a separate [VM context](https://nodejs.org/api/vm.html#vmcreatecontextcontextobject-options), but it uses workers for parallelism
 
-This greatly increases test times, which might not be desirable for projects that don't rely on side effects and properly cleanup their state (which is usually true for projects with `node` environment). In this case disabling isolation will improve the speed of your tests. To do that, you can provide `--no-isolate` flag to the CLI or set `test.isolate` property in the config to `false`.
+This greatly increases test times, which might not be desirable for projects that don't rely on side effects and properly cleanup their state (which is usually true for projects with `node` environment). In this case disabling isolation will improve the speed of your tests. To do that, you can provide `--no-isolate` flag to the CLI or set [`test.isolate`](/config/isolate) property in the config to `false`.
 
 ::: code-group
 
-```bash
+```bash [CLI]
 vitest --no-isolate
 ```
 
-```ts
+```ts [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -58,9 +49,11 @@ export default defineConfig({
 })
 ```
 
+:::
+
 You can also disable isolation for specific files only by using `projects`:
 
-```ts
+```ts [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -85,18 +78,19 @@ export default defineConfig({
 })
 ```
 
-**Tip:**
+:::tip
 If you are using `vmThreads` pool, you cannot disable isolation. Use `threads` pool instead to improve your tests performance.
+:::
 
-For some projects, it might also be desirable to disable parallelism to improve startup time. To do that, provide `--no-file-parallelism` flag to the CLI or set `test.fileParallelism` property in the config to `false`.
+For some projects, it might also be desirable to disable parallelism to improve startup time. To do that, provide `--no-file-parallelism` flag to the CLI or set [`test.fileParallelism`](/config/fileparallelism) property in the config to `false`.
 
 ::: code-group
 
-```bash
+```bash [CLI]
 vitest --no-file-parallelism
 ```
 
-```ts
+```ts [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -105,6 +99,8 @@ export default defineConfig({
   },
 })
 ```
+
+:::
 
 ## Test Environments
 
@@ -115,10 +111,10 @@ Three configurations reduce this cost:
 | configuration                                           | environment created | isolation                                                              | trade-off                                                                                                                                                                            |
 | ------------------------------------------------------- | ------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `pool: 'forks'`/`'threads'` + `isolate: true` (default) | once per file       | fresh process/thread and environment per file                          | safest, slowest                                                                                                                                                                      |
-| `pool: 'vmThreads'`                                     | once per worker     | fresh VM context and `window` per file                                 | test code runs in a VM realm: cross-realm `instanceof` edge cases with externalized packages, and memory is not reclaimed as reliably (see `vmMemoryLimit`) |
+| `pool: 'vmThreads'`                                     | once per worker     | fresh VM context and `window` per file                                 | test code runs in a VM realm: cross-realm `instanceof` edge cases with externalized packages, and memory is not reclaimed as reliably (see [`vmMemoryLimit`](/config/vmmemorylimit)) |
 | `isolate: false`                                        | once per worker     | none - files in the same worker share the environment and module state | tests must not depend on a clean `window` or module state; run `vitest doctor` to check                                                                                              |
 
-```ts
+```ts [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -133,11 +129,11 @@ Prefer `isolate: false` with `threads` if the tests tolerate shared state: it is
 
 ## Limiting Directory Search
 
-You can limit the working directory when Vitest searches for files using `test.dir` option. This should make the search faster if you have unrelated folders and files in the root directory.
+You can limit the working directory when Vitest searches for files using [`test.dir`](/config/dir) option. This should make the search faster if you have unrelated folders and files in the root directory.
 
 ## Caching Between Reruns
 
-In watch mode, Vitest caches all transformed files in memory, which makes reruns fast. However, this cache is discarded once the test run finishes. With `fsModuleCache` (enabled by default), Vitest persists this cache to the file system so it can be reused across reruns.
+In watch mode, Vitest caches all transformed files in memory, which makes reruns fast. However, this cache is discarded once the test run finishes. With [`fsModuleCache`](/config/fsmodulecache) (enabled by default), Vitest persists this cache to the file system so it can be reused across reruns.
 
 This improvement is most noticeable when rerunning a small number of tests that depend on a large module graph. For full test suites, parallelization already mitigates the cost because other tests populate the in-memory cache while earlier tests are still running. For example, running one test file with a huge module graph (>900 modules):
 
@@ -151,7 +147,7 @@ Duration  5.90s (tests 44%, import 35%, transform 13%, setup 8%)
 
 ## Node Compile Cache
 
-Vitest supports Node's on-disk compile cache: when the `NODE_COMPILE_CACHE` environment variable points at a directory, the V8 bytecode of Vitest's own modules and of your externalized dependencies is written to disk and reused by later runs instead of being recompiled. Vitest propagates the variable to every worker, and workers persist the modules they compiled when they shut down.
+Vitest supports Node's [on-disk compile cache](https://nodejs.org/api/cli.html#node_compile_cachedir): when the `NODE_COMPILE_CACHE` environment variable points at a directory, the V8 bytecode of Vitest's own modules and of your externalized dependencies is written to disk and reused by later runs instead of being recompiled. Vitest propagates the variable to every worker, and workers persist the modules they compiled when they shut down.
 
 ```shell
 NODE_COMPILE_CACHE=node_modules/.cache/node-compile-cache vitest
@@ -163,17 +159,17 @@ Note that Vitest automatically disables the compile cache in workers when the `v
 
 ## Pool
 
-By default Vitest runs tests in `pool: 'forks'`. While `'forks'` pool is better for compatibility issues (hanging process and segfaults), it may be slightly slower than `pool: 'threads'` in larger projects.
+By default Vitest runs tests in `pool: 'forks'`. While `'forks'` pool is better for compatibility issues ([hanging process](/guide/common-errors#failed-to-terminate-worker) and [segfaults](/guide/common-errors#segfaults-and-native-code-errors)), it may be slightly slower than `pool: 'threads'` in larger projects.
 
 You can try to improve test run time by switching `pool` option in configuration:
 
 ::: code-group
 
-```bash
+```bash [CLI]
 vitest --pool=threads
 ```
 
-```ts
+```ts [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -183,11 +179,13 @@ export default defineConfig({
 })
 ```
 
+:::
+
 ## Sharding
 
 Test sharding is a process of splitting your test suite into groups, or shards. This can be useful when you have a large test suite and multiple machines that could run subsets of that suite simultaneously.
 
-To split Vitest tests on multiple different runs, use `--shard` option with `--reporter=blob` option:
+To split Vitest tests on multiple different runs, use [`--shard`](/guide/cli#shard) option with [`--reporter=blob`](/guide/reporters#blob-reporter) option:
 
 ```sh
 vitest run --reporter=blob --shard=1/3 # 1st machine
@@ -197,7 +195,7 @@ vitest run --reporter=blob --shard=3/3 # 3rd machine
 
 > Vitest splits your _test files_, not your test cases, into shards. If you've got 1000 test files, the `--shard=1/4` option will run 250 test files, no matter how many test cases individual files have.
 
-Collect the results stored in `.vitest/blob/` directory from each machine and merge them with `--merge-reports` option:
+Collect the results stored in `.vitest/blob/` directory from each machine and merge them with [`--merge-reports`](/guide/cli#merge-reports) option:
 
 ```sh
 vitest run --merge-reports
@@ -280,9 +278,11 @@ jobs:
         run: npx vitest --merge-reports
 ```
 
-If your tests create file-based attachments (for example via `context.annotate` or custom artifacts), upload and restore `attachmentsDir` in the merge job as shown above.
+If your tests create file-based attachments (for example via `context.annotate` or custom artifacts), upload and restore [`attachmentsDir`](/config/attachmentsdir) in the merge job as shown above.
 
-**Tip:**
+:::
+
+:::tip
 Test sharding can also become useful on high CPU-count machines.
 
 Vitest will run only a single Vite server in its main thread. Rest of the threads are used to run test files.
@@ -302,3 +302,5 @@ wait # https://man7.org/linux/man-pages/man2/waitpid.2.html
 
 vitest run --merge-reports
 ```
+
+:::

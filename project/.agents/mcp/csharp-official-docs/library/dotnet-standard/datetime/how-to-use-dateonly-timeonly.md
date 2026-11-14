@@ -1,15 +1,19 @@
 ---
-title: "How to use DateOnly and TimeOnly (part 1 of 2)"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/datetime/how-to-use-dateonly-timeonly.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to use DateOnly and TimeOnly
+description: Learn about the DateOnly and TimeOnly structures in .NET.
+ms.date: 01/16/2026
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "DateOnly structure"
+  - "TimeOnly structure"
+  - "date and time classes [.NET]"
 ---
 
 # How to use the DateOnly and TimeOnly structures
 
-The `System.DateOnly` and `System.TimeOnly` structures were introduced with .NET 6 and represent a specific date or time-of-day, respectively. Prior to .NET 6, and always in .NET Framework, developers used the `System.DateTime` type (or some other alternative) to represent one of the following:
+The <xref:System.DateOnly> and <xref:System.TimeOnly> structures were introduced with .NET 6 and represent a specific date or time-of-day, respectively. Prior to .NET 6, and always in .NET Framework, developers used the <xref:System.DateTime> type (or some other alternative) to represent one of the following:
 
 - A whole date and time.
 - A date, disregarding the time.
@@ -17,12 +21,12 @@ The `System.DateOnly` and `System.TimeOnly` structures were introduced with .NET
 
 `DateOnly` and `TimeOnly` are types that represent those particular portions of a `DateTime` type.
 
-> **Important:**
-> `System.DateOnly` and `System.TimeOnly` types aren't available for .NET Framework.
+> [!IMPORTANT]
+> <xref:System.DateOnly> and <xref:System.TimeOnly> types aren't available for .NET Framework.
 
 ## The DateOnly structure
 
-The `System.DateOnly` structure represents a specific date, without time. Since it has no time component, it represents a date from the start of the day to the end of the day. This structure is ideal for storing specific dates, such as a birth date, an anniversary date, or business-related dates.
+The <xref:System.DateOnly> structure represents a specific date, without time. Since it has no time component, it represents a date from the start of the day to the end of the day. This structure is ideal for storing specific dates, such as a birth date, an anniversary date, or business-related dates.
 
 Although you could use `DateTime` while ignoring the time component, there are a few benefits to using `DateOnly` over `DateTime`:
 
@@ -34,193 +38,51 @@ Although you could use `DateTime` while ignoring the time component, there are a
 
 `DateOnly` has a range from 0001-01-01 through 9999-12-31, just like `DateTime`. You can specify a specific calendar in the `DateOnly` constructor. However, a `DateOnly` object always represents a date in the proleptic Gregorian calendar, regardless of which calendar was used to construct it. For example, you can build the date from a Hebrew calendar, but the date is converted to Gregorian:
 
-```csharp
-var hebrewCalendar = new System.Globalization.HebrewCalendar();
-var theDate = new DateOnly(5776, 2, 8, hebrewCalendar); // 8 Cheshvan 5776
+:::code language="csharp" source="./snippets/how-to-use-dateonly-timeonly/csharp/Program.cs" id="hebrew":::
+:::code language="vb" source="./snippets/how-to-use-dateonly-timeonly/vb/Program.vb" id="hebrew":::
 
-Console.WriteLine(theDate);
-
-/* This example produces the following output:
- *
- * 10/21/2015
-*/
-```
-```vb
-Dim hebrewCalendar = New System.Globalization.HebrewCalendar()
-Dim theDate = New DateOnly(5776, 2, 8, hebrewCalendar) ' 8 Cheshvan 5776
-
-Console.WriteLine(theDate)
-
-' This example produces the following output
-'
-' 10/21/2015
-```
 ## DateOnly examples
 
 Use the following examples to learn about `DateOnly`:
 
-- Convert DateTime to DateOnly
-- Add or subtract days, months, years
-- Parse and format DateOnly
-- Compare DateOnly
+- [Convert DateTime to DateOnly](#convert-datetime-to-dateonly)
+- [Add or subtract days, months, years](#add-or-subtract-days-months-years)
+- [Parse and format DateOnly](#parse-and-format-dateonly)
+- [Compare DateOnly](#compare-dateonly)
 
 ### Convert DateTime to DateOnly
 
-Use the `System.DateOnly.FromDateTime*` static method to create a `DateOnly` type from a `DateTime` type, as demonstrated in the following code:
+Use the <xref:System.DateOnly.FromDateTime*?displayProperty=nameWithType> static method to create a `DateOnly` type from a `DateTime` type, as demonstrated in the following code:
 
-```csharp
-var today = DateOnly.FromDateTime(DateTime.Now);
-Console.WriteLine($"Today is {today}");
+:::code language="csharp" source="./snippets/how-to-use-dateonly-timeonly/csharp/Program.cs" id="today":::
+:::code language="vb" source="./snippets/how-to-use-dateonly-timeonly/vb/Program.vb" id="today":::
 
-/* This example produces output similar to the following:
- * 
- * Today is 12/28/2022
-*/
-```
-```vb
-Dim today = DateOnly.FromDateTime(DateTime.Now)
-Console.WriteLine($"Today is {today}")
-
-' This example produces output similar to the following
-' 
-' Today is 12/28/2022
-```
 ### Add or subtract days, months, years
 
-There are three methods used to adjust a `System.DateOnly` structure: `System.DateOnly.AddDays*`, `System.DateOnly.AddMonths*`, and `System.DateOnly.AddYears*`. Each method takes an integer parameter, and increases the date by that measurement. If a negative number is provided, the date is decreased by that measurement. The methods return a new instance of `DateOnly`, as the structure is immutable.
+There are three methods used to adjust a <xref:System.DateOnly> structure: <xref:System.DateOnly.AddDays*>, <xref:System.DateOnly.AddMonths*>, and <xref:System.DateOnly.AddYears*>. Each method takes an integer parameter, and increases the date by that measurement. If a negative number is provided, the date is decreased by that measurement. The methods return a new instance of `DateOnly`, as the structure is immutable.
 
-```csharp
-var theDate = new DateOnly(2015, 10, 21);
+:::code language="csharp" source="./snippets/how-to-use-dateonly-timeonly/csharp/Program.cs" id="date_adjust":::
+:::code language="vb" source="./snippets/how-to-use-dateonly-timeonly/vb/Program.vb" id="date_adjust":::
 
-var nextDay = theDate.AddDays(1);
-var previousDay = theDate.AddDays(-1);
-var decadeLater = theDate.AddYears(10);
-var lastMonth = theDate.AddMonths(-1);
-
-Console.WriteLine($"Date: {theDate}");
-Console.WriteLine($" Next day: {nextDay}");
-Console.WriteLine($" Previous day: {previousDay}");
-Console.WriteLine($" Decade later: {decadeLater}");
-Console.WriteLine($" Last month: {lastMonth}");
-
-/* This example produces the following output:
- * 
- * Date: 10/21/2015
- *  Next day: 10/22/2015
- *  Previous day: 10/20/2015
- *  Decade later: 10/21/2025
- *  Last month: 9/21/2015
-*/
-```
-```vb
-Dim theDate = New DateOnly(2015, 10, 21)
-
-Dim nextDay = theDate.AddDays(1)
-Dim previousDay = theDate.AddDays(-1)
-Dim decadeLater = theDate.AddYears(10)
-Dim lastMonth = theDate.AddMonths(-1)
-
-Console.WriteLine($"Date: {theDate}")
-Console.WriteLine($" Next day: {nextDay}")
-Console.WriteLine($" Previous day: {previousDay}")
-Console.WriteLine($" Decade later: {decadeLater}")
-Console.WriteLine($" Last month: {lastMonth}")
-
-' This example produces the following output
-' 
-' Date: 10/21/2015
-'  Next day: 10/22/2015
-'  Previous day: 10/20/2015
-'  Decade later: 10/21/2025
-'  Last month: 9/21/2015
-```
 ### Parse and format DateOnly
 
-`System.DateOnly` can be parsed from a string, just like the `System.DateTime` structure. All of the standard .NET date-based parsing tokens work with `DateOnly`. When converting a `DateOnly` type to a string, you can use standard .NET date-based formatting patterns too. For more information about formatting strings, see Standard date and time format strings.
+<xref:System.DateOnly> can be parsed from a string, just like the <xref:System.DateTime> structure. All of the standard .NET date-based parsing tokens work with `DateOnly`. When converting a `DateOnly` type to a string, you can use standard .NET date-based formatting patterns too. For more information about formatting strings, see [Standard date and time format strings](../base-types/standard-date-and-time-format-strings.md).
 
-```csharp
-var theDate = DateOnly.ParseExact("21 Oct 2015", "dd MMM yyyy", CultureInfo.InvariantCulture);  // Custom format
-var theDate2 = DateOnly.Parse("October 21, 2015", CultureInfo.InvariantCulture);
+:::code language="csharp" source="./snippets/how-to-use-dateonly-timeonly/csharp/Program.cs" id="parse":::
+:::code language="vb" source="./snippets/how-to-use-dateonly-timeonly/vb/Program.vb" id="parse":::
 
-Console.WriteLine(theDate.ToString("m", CultureInfo.InvariantCulture));     // Month day pattern
-Console.WriteLine(theDate2.ToString("o", CultureInfo.InvariantCulture));    // ISO 8601 format
-Console.WriteLine(theDate2.ToLongDateString());
-
-/* This example produces the following output:
- * 
- * October 21
- * 2015-10-21
- * Wednesday, October 21, 2015
-*/
-```
-```vb
-Dim theDate = DateOnly.ParseExact("21 Oct 2015", "dd MMM yyyy", CultureInfo.InvariantCulture) ' Custom format
-Dim theDate2 = DateOnly.Parse("October 21, 2015", CultureInfo.InvariantCulture)
-
-Console.WriteLine(theDate.ToString("m", CultureInfo.InvariantCulture))     ' Month day pattern
-Console.WriteLine(theDate2.ToString("o", CultureInfo.InvariantCulture))    ' ISO 8601 format
-Console.WriteLine(theDate2.ToLongDateString())
-
-' This example produces the following output
-' 
-' October 21
-' 2015-10-21
-' Wednesday, October 21, 2015
-```
 ### Compare DateOnly
 
-`System.DateOnly` can be compared with other instances. For example, you can check if a date is before or after another, or if a date today matches a specific date.
+<xref:System.DateOnly> can be compared with other instances. For example, you can check if a date is before or after another, or if a date today matches a specific date.
 
-```csharp
-var theDate = DateOnly.ParseExact("21 Oct 2015", "dd MMM yyyy", CultureInfo.InvariantCulture);  // Custom format
-var theDate2 = DateOnly.Parse("October 21, 2015", CultureInfo.InvariantCulture);
-var dateLater = theDate.AddMonths(6);
-var dateBefore = theDate.AddDays(-10);
+:::code language="csharp" source="./snippets/how-to-use-dateonly-timeonly/csharp/Program.cs" id="date_compare":::
+:::code language="vb" source="./snippets/how-to-use-dateonly-timeonly/vb/Program.vb" id="date_compare":::
 
-Console.WriteLine($"Consider {theDate}...");
-Console.WriteLine($" Is '{nameof(theDate2)}' equal? {theDate == theDate2}");
-Console.WriteLine($" Is {dateLater} after? {dateLater > theDate} ");
-Console.WriteLine($" Is {dateLater} before? {dateLater < theDate} ");
-Console.WriteLine($" Is {dateBefore} after? {dateBefore > theDate} ");
-Console.WriteLine($" Is {dateBefore} before? {dateBefore < theDate} ");
-
-/* This example produces the following output:
- * 
- * Consider 10/21/2015
- *  Is 'theDate2' equal? True
- *  Is 4/21/2016 after? True
- *  Is 4/21/2016 before? False
- *  Is 10/11/2015 after? False
- *  Is 10/11/2015 before? True
-*/
-```
-```vb
-Dim theDate = DateOnly.ParseExact("21 Oct 2015", "dd MMM yyyy", CultureInfo.InvariantCulture) ' Custom format
-Dim theDate2 = DateOnly.Parse("October 21, 2015", CultureInfo.InvariantCulture)
-Dim dateLater = theDate.AddMonths(6)
-Dim dateBefore = theDate.AddDays(-10)
-
-Console.WriteLine($"Consider {theDate}...")
-Console.WriteLine($" Is '{NameOf(theDate2)}' equal? {theDate = theDate2}")
-Console.WriteLine($" Is {dateLater} after? {dateLater > theDate} ")
-Console.WriteLine($" Is {dateLater} before? {dateLater < theDate} ")
-Console.WriteLine($" Is {dateBefore} after? {dateBefore > theDate} ")
-Console.WriteLine($" Is {dateBefore} before? {dateBefore < theDate} ")
-
-' This example produces the following output
-' 
-' Consider 10/21/2015
-'  Is 'theDate2' equal? True
-'  Is 4/21/2016 after? True
-'  Is 4/21/2016 before? False
-'  Is 10/11/2015 after? False
-'  Is 10/11/2015 before? True
-```
 ## The TimeOnly structure
 
-The `System.TimeOnly` structure represents a time-of-day value, such as a daily alarm clock or what time you eat lunch each day. `TimeOnly` is limited to the range of **00:00:00.0000000** - **23:59:59.9999999**, a specific time of day.
+The <xref:System.TimeOnly> structure represents a time-of-day value, such as a daily alarm clock or what time you eat lunch each day. `TimeOnly` is limited to the range of **00:00:00.0000000** - **23:59:59.9999999**, a specific time of day.
 
-Prior to the `TimeOnly` type being introduced, programmers typically used either the `System.DateTime` type or the `System.TimeSpan` type to represent a specific time. However, using these structures to simulate a time without a date may introduce some problems, which `TimeOnly` solves:
+Prior to the `TimeOnly` type being introduced, programmers typically used either the <xref:System.DateTime> type or the <xref:System.TimeSpan> type to represent a specific time. However, using these structures to simulate a time without a date may introduce some problems, which `TimeOnly` solves:
 
 - `TimeSpan` represents elapsed time, such as time measured with a stopwatch. The upper range is more than 29,000 years, and its value can be negative to indicate moving backwards in time. A negative `TimeSpan` doesn't indicate a specific time of the day.
 
@@ -229,3 +91,82 @@ Prior to the `TimeOnly` type being introduced, programmers typically used either
 - Using `DateTime` for a time of day requires that an arbitrary date be associated with the time, and then later disregarded. It's common practice to choose `DateTime.MinValue` (0001-01-01) as the date, however, if hours are subtracted from the `DateTime` value, an `OutOfRange` exception might occur. `TimeOnly` doesn't have this problem as the time rolls forwards and backwards around the 24-hour timeframe.
 
 - Serializing a `DateTime` structure includes the date component, which may obscure the intent of the data. Also, `TimeOnly` serializes less data.
+
+## TimeOnly examples
+
+Use the following examples to learn about `TimeOnly`:
+
+- [Convert DateTime to TimeOnly](#convert-datetime-to-timeonly)
+- [Add or subtract time](#add-or-subtract-time)
+- [Parse and format TimeOnly](#parse-and-format-timeonly)
+- [Work with TimeSpan and DateTime](#work-with-timespan-and-datetime)
+- [Arithmetic operators and comparing TimeOnly](#arithmetic-operators-and-comparing-timeonly)
+
+### Convert DateTime to TimeOnly
+
+Use the <xref:System.TimeOnly.FromDateTime*?displayProperty=nameWithType> static method to create a `TimeOnly` type from a `DateTime` type, as demonstrated in the following code:
+
+:::code language="csharp" source="./snippets/how-to-use-dateonly-timeonly/csharp/Program.cs" id="time_now":::
+:::code language="vb" source="./snippets/how-to-use-dateonly-timeonly/vb/Program.vb" id="time_now":::
+
+### Add or subtract time
+
+There are three methods used to adjust a <xref:System.TimeOnly> structure: <xref:System.TimeOnly.AddHours*>, <xref:System.TimeOnly.AddMinutes*>, and <xref:System.TimeOnly.Add*>. Both `AddHours` and `AddMinutes` take an integer parameter, and adjust the value accordingly. You can use a negative value to subtract and a positive value to add. The methods return a new instance of `TimeOnly` is returned, as the structure is immutable. The `Add` method takes a <xref:System.TimeSpan> parameter and adds or subtracts the value from the `TimeOnly` value.
+
+Because `TimeOnly` only represents a 24-hour period, it rolls over forwards or backwards appropriately when adding values supplied to those three methods. For example, if you use a value of `01:30:00` to represent 1:30 AM, then add -4 hours from that period, it rolls backwards to `21:30:00`, which is 9:30 PM. There are method overloads for `AddHours`, `AddMinutes`, and `Add` that capture the number of days rolled over.
+
+:::code language="csharp" source="./snippets/how-to-use-dateonly-timeonly/csharp/Program.cs" id="time_adjust":::
+:::code language="vb" source="./snippets/how-to-use-dateonly-timeonly/vb/Program.vb" id="time_adjust":::
+
+### Parse and format TimeOnly
+
+<xref:System.TimeOnly> can be parsed from a string, just like the <xref:System.DateTime> structure. All of the standard .NET time-based parsing tokens work with `TimeOnly`. When converting a `TimeOnly` type to a string, you can use standard .NET date-based formatting patterns too. For more information about formatting strings, see [Standard date and time format strings](../base-types/standard-date-and-time-format-strings.md).
+
+:::code language="csharp" source="./snippets/how-to-use-dateonly-timeonly/csharp/Program.cs" id="time_parse":::
+:::code language="vb" source="./snippets/how-to-use-dateonly-timeonly/vb/Program.vb" id="time_parse":::
+
+### Serialize DateOnly and TimeOnly types
+
+<!-- This section is somewhat duplicated in system-text-json-support.md section 'Serialize DateOnly and TimeOnly properties' -->
+
+Starting in .NET 7, `System.Text.Json` supports serializing and deserializing <xref:System.DateOnly> and <xref:System.TimeOnly> types. Consider the following object:
+
+:::code source="./snippets/how-to-use-dateonly-timeonly/csharp/Program.cs" id="appointment":::
+:::code source="./snippets/how-to-use-dateonly-timeonly/vb/Program.vb" id="appointment":::
+
+The following example serializes an `Appointment` object, displays the resulting JSON, and then deserializes it back into a new instance of the `Appointment` type. Finally, the original and newly deserialized instances are compared for equality and the results are written to the console:
+
+:::code source="./snippets/how-to-use-dateonly-timeonly/csharp/Program.cs" id="serialization":::
+:::code source="./snippets/how-to-use-dateonly-timeonly/vb/Program.vb" id="serialization":::
+
+In the preceding code:
+
+- An `Appointment` object is instantiated and assigned to the `appointment` variable.
+- The `appointment` instance is serialized to JSON using <xref:System.Text.Json.JsonSerializer.Serialize*?displayProperty=nameWithType>.
+- The resulting JSON is written to the console.
+- The JSON is deserialized back into a new instance of the `Appointment` type using <xref:System.Text.Json.JsonSerializer.Deserialize*?displayProperty=nameWithType>.
+- The original and newly deserialized instances are compared for equality.
+- The result of the comparison is written to the console.
+
+For more information, see [How to serialize and deserialize JSON in .NET](../serialization/system-text-json/how-to.md).
+
+### Work with TimeSpan and DateTime
+
+<xref:System.TimeOnly> can be created from and converted to a <xref:System.TimeSpan>. Also, `TimeOnly` can be used with a <xref:System.DateTime>, either to create the `TimeOnly` instance, or to create a `DateTime` instance as long as a date is provided.
+
+The following example creates a `TimeOnly` object from a `TimeSpan`, and then converts it back:
+
+:::code language="csharp" source="./snippets/how-to-use-dateonly-timeonly/csharp/Program.cs" id="time_timespan":::
+:::code language="vb" source="./snippets/how-to-use-dateonly-timeonly/vb/Program.vb" id="time_timespan":::
+
+The following example creates a `DateTime` from a `TimeOnly` object, with an arbitrary date chosen:
+
+:::code language="csharp" source="./snippets/how-to-use-dateonly-timeonly/csharp/Program.cs" id="time_datetime":::
+:::code language="vb" source="./snippets/how-to-use-dateonly-timeonly/vb/Program.vb" id="time_datetime":::
+
+### Arithmetic operators and comparing TimeOnly
+
+Two <xref:System.TimeOnly> instances can be compared with one another, and you can use the <xref:System.TimeOnly.IsBetween*> method to check if a time is between two other times. When an addition or subtraction operator is used on a `TimeOnly`, a <xref:System.TimeSpan> is returned, representing a duration of time.
+
+:::code language="csharp" source="./snippets/how-to-use-dateonly-timeonly/csharp/Program.cs" id="time_between":::
+:::code language="vb" source="./snippets/how-to-use-dateonly-timeonly/vb/Program.vb" id="time_between":::

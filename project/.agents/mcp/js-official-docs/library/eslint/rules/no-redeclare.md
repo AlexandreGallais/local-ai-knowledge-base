@@ -1,13 +1,13 @@
 ---
-title: "no-redeclare"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-redeclare.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-redeclare
+rule_type: suggestion
+handled_by_typescript: true
+extra_typescript_info: Note that while TypeScript will catch `let` redeclares and `const` redeclares, it will not catch `var` redeclares. Thus, if you use the legacy `var` keyword in your TypeScript codebase, this rule will still provide some value.
+related_rules:
+- no-shadow
 ---
 
-# no-redeclare
+
 
 In JavaScript, it's possible to redeclare the same variable name using `var`. This can lead to confusion as to where the variable is actually declared and initialized.
 
@@ -17,7 +17,7 @@ This rule is aimed at eliminating variables that have multiple declarations in t
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-redeclare: "error"*/
@@ -38,9 +38,11 @@ class C {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-redeclare: "error"*/
@@ -62,6 +64,8 @@ class C {
 
 ```
 
+:::
+
 ## Options
 
 This rule takes one optional argument, an object with a boolean property `"builtinGlobals"`. It defaults to `true`.
@@ -73,7 +77,7 @@ The `"builtinGlobals"` option will check for redeclaration of built-in globals i
 
 Examples of **incorrect** code for the `{ "builtinGlobals": true }` option:
 
-**Incorrect:**
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint no-redeclare: ["error", { "builtinGlobals": true }]*/
@@ -81,4 +85,6 @@ Examples of **incorrect** code for the `{ "builtinGlobals": true }` option:
 var Object = 0;
 ```
 
-Note that when using `sourceType: "commonjs"` (or `ecmaFeatures.globalReturn`, if using the default parser), the top scope of a program is not actually the global scope, but rather a "module" scope. When this is the case, declaring a variable named after a builtin global is not a redeclaration, but rather a shadowing of the global variable. In that case, the `no-shadow` rule with the `"builtinGlobals"` option should be used.
+:::
+
+Note that when using `sourceType: "commonjs"` (or `ecmaFeatures.globalReturn`, if using the default parser), the top scope of a program is not actually the global scope, but rather a "module" scope. When this is the case, declaring a variable named after a builtin global is not a redeclaration, but rather a shadowing of the global variable. In that case, the [`no-shadow`](no-shadow) rule with the `"builtinGlobals"` option should be used.

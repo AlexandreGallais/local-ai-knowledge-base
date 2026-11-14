@@ -1,18 +1,18 @@
 ---
-title: "Microsoft.Testing.Platform (MTP) Hot Reload"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/microsoft-testing-platform-hot-reload.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Microsoft.Testing.Platform (MTP) Hot Reload
+description: Learn about the MTP Hot Reload extension for running tests with hot reload.
+author: evangelink
+ms.author: amauryleve
+ms.date: 08/28/2026
+ai-usage: ai-assisted
 ---
 
 # Hot Reload
 
-This feature requires the Microsoft.Testing.Extensions.HotReload NuGet package.
+This feature requires the [Microsoft.Testing.Extensions.HotReload](https://nuget.org/packages/Microsoft.Testing.Extensions.HotReload) NuGet package.
 
-> **Tip:**
-> When using Microsoft.Testing.Platform.MSBuild (included transitively by MSTest, NUnit, and xUnit runners), this extension is auto-registered when you install its NuGet package — no code changes needed. The manual registration specified in this article is only required if you disabled the auto-generated entry point by setting `<GenerateTestingPlatformEntryPoint>false</GenerateTestingPlatformEntryPoint>`.
+> [!TIP]
+> When using [Microsoft.Testing.Platform.MSBuild](https://www.nuget.org/packages/Microsoft.Testing.Platform.MSBuild) (included transitively by MSTest, NUnit, and xUnit runners), this extension is auto-registered when you install its NuGet package — no code changes needed. The manual registration specified in this article is only required if you disabled the auto-generated entry point by setting `<GenerateTestingPlatformEntryPoint>false</GenerateTestingPlatformEntryPoint>`.
 
 ### Manual registration
 
@@ -25,12 +25,12 @@ builder.TestHost.AddHotReloadProvider();
 
 Hot reload lets you modify your app's managed source code while the application is running, without the need to manually pause or hit a breakpoint. Simply make a supported change while the app is running and select the **Apply code changes** button in Visual Studio to apply your edits.
 
-If you use an AI coding assistant, the `mtp-hot-reload` .NET Agent Skill guides the assistant through setup and recovery from unsupported edits. This skill isn't an MTP extension or CLI plugin.
+If you use an AI coding assistant, the [`mtp-hot-reload` .NET Agent Skill](https://github.com/dotnet/skills/tree/main/plugins/dotnet-test/skills/mtp-hot-reload) guides the assistant through setup and recovery from unsupported edits. This skill isn't an MTP extension or CLI plugin.
 
-> **Note:**
+> [!NOTE]
 > The current version is limited to supporting hot reload in "console mode" only. There is currently no support for hot reload in Test Explorer for Visual Studio or Visual Studio Code.
 
-> **Note:**
+> [!NOTE]
 > The package is shipped with the restrictive MTP Tools license.
 > The full license is available at <https://www.nuget.org/packages/Microsoft.Testing.Extensions.HotReload/1.0.0/License>.
 

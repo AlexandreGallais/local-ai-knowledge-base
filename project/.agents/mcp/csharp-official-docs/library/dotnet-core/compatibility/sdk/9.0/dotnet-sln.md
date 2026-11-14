@@ -1,15 +1,14 @@
 ---
 title: "'dotnet sln add' no longer allows invalid file names"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/9.0/dotnet-sln.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in the .NET SDK where the CLI command 'dotnet sln add' adds support for .slnx solution files and no longer allows invalid file names.
+ms.date: 12/10/2024
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/43882
 ---
 
 # `dotnet sln add` no longer allows invalid file names
 
-Starting in .NET SDK 9.0.2xx, the `dotnet sln add` CLI command includes support for *.slnx* solution files using the vs-solutionpersistence serializer. As a result, slight changes in behavior are expected.
+Starting in .NET SDK 9.0.2xx, the [`dotnet sln add`](../../../tools/dotnet-sln.md#add) CLI command includes support for *.slnx* solution files using the [vs-solutionpersistence](https://github.com/microsoft/vs-solutionpersistence) serializer. As a result, slight changes in behavior are expected.
 
 ## Version introduced
 
@@ -29,11 +28,11 @@ Starting in .NET SDK 9.0.2xx, projects and solution folder names:
 
 In addition, `dotnet sln add` now succeeds if you attempt to add a nested project with the same name as an existing project, which mimics the behavior for non-nested projects. Example: Adding `folder/project.csproj` and `parent/child/project.csproj` doesn't result in an error.
 
-Exceptions contain the current strings, but wrap error messages from vs-solutionpersistence.
+Exceptions contain the current strings, but wrap error messages from [vs-solutionpersistence](https://github.com/microsoft/vs-solutionpersistence).
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

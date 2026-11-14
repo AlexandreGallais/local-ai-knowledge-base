@@ -1,25 +1,19 @@
----
-title: "prefer-type-error"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-type-error.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-type-error
 
 📝 Enforce throwing `TypeError` in type checking conditions.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 This rule enforces you to throw a `TypeError` after a type checking if-statement, instead of a generic `Error`.
 
 `TypeError` communicates that a value has the wrong type, giving callers and debuggers more specific failure information.
 
-It's aware of the most commonly used type checking operators and identifiers like `typeof`, `instanceof`, `.isString()`, etc, borrowed from ES2017, Underscore, Lodash, and jQuery. For a complete list of the recognized identifiers, please take a look at the identifier-definition.
+It's aware of the most commonly used type checking operators and identifiers like `typeof`, `instanceof`, `.isString()`, etc, borrowed from [ES2017](https://tc39.github.io/ecma262/), [Underscore](https://underscorejs.org), [Lodash](https://lodash.com), and [jQuery](https://jquery.com). For a complete list of the recognized identifiers, please take a look at the [identifier-definition](https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/rules/prefer-type-error.js#L3).
 
 The rule investigates every throw-statement which throws a generic `Error`. It will fail if the throw-statement is the only expression in the surrounding block and is preceded by an if-statement whose condition consists of type-checks exclusively. You have to replace the `Error` with a `TypeError`.
 

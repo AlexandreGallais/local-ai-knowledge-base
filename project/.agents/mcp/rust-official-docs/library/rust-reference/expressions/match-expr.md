@@ -1,17 +1,8 @@
----
-title: "match expressions"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/expressions/match-expr.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[expr.match]
 # `match` expressions
 
 r[expr.match.syntax]
-```grammar
+```grammar,expressions
 MatchExpression ->
     `match` Scrutinee `{`
         InnerAttribute*
@@ -48,6 +39,7 @@ MatchGuardScrutinee -> Expression _except [ExcludedMatchConditions]_
     | AssignmentExpression
     | CompoundAssignmentExpression
 ```
+<!-- TODO: The exception above isn't accurate, see https://github.com/rust-lang/reference/issues/569 -->
 
 r[expr.match.intro]
 A *`match` expression* branches on a pattern. The exact form of matching that occurs depends on the [pattern].
@@ -59,7 +51,7 @@ r[expr.match.scrutinee-constraint]
 The scrutinee expression and the patterns must have the same type.
 
 r[expr.match.scrutinee-behavior]
-A `match` behaves differently depending on whether or not the scrutinee expression is a place expression or value expression.
+A `match` behaves differently depending on whether or not the scrutinee expression is a [place expression or value expression][place expression].
 
 r[expr.match.scrutinee-value]
 If the scrutinee expression is a [value expression], it is first evaluated into a temporary location, and the resulting value is sequentially compared to the patterns in the arms until a match is found. The first arm with a matching pattern is chosen as the branch target of the `match`, any variables bound by the pattern are assigned to local variables in the arm's block, and control enters the block.
@@ -110,7 +102,7 @@ match S(1, 2) {
 }
 ```
 
-> **Note:**
+> [!NOTE]
 > The `2..=9` is a [Range Pattern], not a [Range Expression]. Thus, only those types of ranges supported by range patterns can be used in match arms.
 
 r[expr.match.or-patterns-restriction]
@@ -134,6 +126,7 @@ If there are no match arms, then the `match` expression is [diverging] and the t
 > }
 > ```
 
+
 r[expr.match.diverging]
 If either the scrutinee expression or all of the match arms diverge, then the entire `match` expression also diverges.
 
@@ -144,7 +137,7 @@ r[expr.match.guard.intro]
 Match arms can accept _match guards_ to further refine the criteria for matching a case.
 
 r[expr.match.guard.condition]
-Pattern guards appear after the pattern following the `if` keyword and consist of an [Expression] with a boolean type or a conditional `let` match.
+Pattern guards appear after the pattern following the `if` keyword and consist of an [Expression] with a [boolean type][type.bool] or a conditional `let` match.
 
 r[expr.match.guard.behavior]
 When the pattern matches successfully, the pattern guard is executed. If all of the guard condition operands evaluate to `true` and all of the `let` patterns successfully match their [scrutinee]s, the match arm is successfully matched against and the arm body is executed.
@@ -163,7 +156,7 @@ let message = match maybe_digit {
 };
 ```
 
-> **Note:**
+> [!NOTE]
 > Multiple matches using the `|` operator can cause the pattern guard and the side effects it has to execute multiple times. For example:
 >
 > ```rust
@@ -237,7 +230,7 @@ r[expr.match.guard.chains.bindings]
 The bindings of each `let` pattern are put into scope to be available for the next condition operand and the match arm body.
 
 r[expr.match.guard.chains.or]
-If any guard condition operand is a `let` pattern, then none of the condition operands can be a `||` lazy boolean operator expression due to ambiguity and precedence with the `let` scrutinee.
+If any guard condition operand is a `let` pattern, then none of the condition operands can be a `||` [lazy boolean operator expression][expr.bool-logic] due to ambiguity and precedence with the `let` scrutinee.
 
 > [!EXAMPLE]
 > If a `||` expression is needed, then parentheses can be used. For example:
@@ -260,3 +253,18 @@ Outer attributes are allowed on match arms. The only attributes that have meanin
 
 r[expr.match.attributes.inner]
 [Inner attributes] are allowed directly after the opening brace of the match expression in the same expression contexts as [attributes on block expressions].
+
+[`!`]: type.never
+[`cfg`]: ../conditional-compilation.md
+[attributes on block expressions]: block-expr.md#attributes-on-block-expressions
+[binding mode]: ../patterns.md#binding-modes
+[diverging]: divergence
+[Inner attributes]: ../attributes.md
+[least upper bound]: coerce.least-upper-bound
+[lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
+[pattern]: ../patterns.md
+[place expression]: ../expressions.md#place-expressions-and-value-expressions
+[Range Expression]: range-expr.md
+[Range Pattern]: ../patterns.md#range-patterns
+[scrutinee]: ../glossary.md#scrutinee
+[value expression]: ../expressions.md#place-expressions-and-value-expressions

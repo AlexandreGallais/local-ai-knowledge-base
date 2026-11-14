@@ -1,12 +1,3 @@
----
-title: "alloc::collections::binary_heap (part 1 of 2)"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/alloc/src/collections/binary_heap/mod.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # alloc::collections::binary_heap
 
 A priority queue implemented with a binary heap.
@@ -17,13 +8,17 @@ can be done in-place, and has *O*(*n*) complexity. A binary heap can also be
 converted to a sorted vector in-place, allowing it to be used for an *O*(*n* * log(*n*))
 in-place heapsort.
 
-#### Examples
+# Examples
 
-This is a larger example that implements Dijkstra's algorithm
-to solve the shortest path problem on a directed graph.
-It shows how to use `BinaryHeap` with custom types.
+This is a larger example that implements [Dijkstra's algorithm][dijkstra]
+to solve the [shortest path problem][sssp] on a [directed graph][dir_graph].
+It shows how to use [`BinaryHeap`] with custom types.
 
-```rust
+[dijkstra]: https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+[sssp]: https://en.wikipedia.org/wiki/Shortest_path_problem
+[dir_graph]: https://en.wikipedia.org/wiki/Directed_graph
+
+```
 use std::cmp::Ordering;
 use std::collections::BinaryHeap;
 
@@ -158,7 +153,7 @@ A priority queue implemented with a binary heap.
 This will be a max-heap.
 
 It is a logic error for an item to be modified in such a way that the
-item's ordering relative to any other item, as determined by the `Ord`
+item's ordering relative to any other item, as determined by the [`Ord`]
 trait, changes while it is in the heap. This is normally only possible
 through interior mutability, global state, I/O, or unsafe code. The
 behavior resulting from such a logic error is not specified, but will
@@ -176,7 +171,7 @@ leaked, and similar foolishness.
 
 # Examples
 
-```rust
+```
 use std::collections::BinaryHeap;
 
 // Type inference lets us omit an explicit type signature (which
@@ -219,7 +214,7 @@ assert!(heap.is_empty())
 
 A `BinaryHeap` with a known list of items can be initialized from an array:
 
-```rust
+```
 use std::collections::BinaryHeap;
 
 let heap = BinaryHeap::from([1, 5, 2]);
@@ -227,11 +222,11 @@ let heap = BinaryHeap::from([1, 5, 2]);
 
 ## Min-heap
 
-Either `core::cmp::Reverse` or a custom `Ord` implementation can be used to
+Either [`core::cmp::Reverse`] or a custom [`Ord`] implementation can be used to
 make `BinaryHeap` a min-heap. This makes `heap.pop()` return the smallest
 value instead of the greatest one.
 
-```rust
+```
 use std::collections::BinaryHeap;
 use std::cmp::Reverse;
 
@@ -258,6 +253,14 @@ assert_eq!(heap.pop(), None);
 The value for `push` is an expected cost; the method documentation gives a
 more detailed analysis.
 
+[`core::cmp::Reverse`]: core::cmp::Reverse
+[`Cell`]: core::cell::Cell
+[`RefCell`]: core::cell::RefCell
+[push]: BinaryHeap::push
+[pop]: BinaryHeap::pop
+[peek]: BinaryHeap::peek
+[peek\_mut]: BinaryHeap::peek_mut
+
 ## struct PeekMut
 
 ```rust
@@ -267,8 +270,10 @@ pub struct PeekMut< 'a, T: 'a + Ord, #[unstable(feature = "allocator_ext", issue
 Structure wrapping a mutable reference to the greatest item on a
 `BinaryHeap`.
 
-This `struct` is created by the `peek_mut` method on `BinaryHeap`. See
+This `struct` is created by the [`peek_mut`] method on [`BinaryHeap`]. See
 its documentation for more.
+
+[`peek_mut`]: BinaryHeap::peek_mut
 
 ## PeekMut::pop
 
@@ -290,7 +295,7 @@ Creates an empty `BinaryHeap` as a max-heap.
 
 Basic usage:
 
-```rust
+```
 use std::collections::BinaryHeap;
 let mut heap = BinaryHeap::new();
 heap.push(4);
@@ -312,7 +317,7 @@ reallocating. This method is allowed to allocate for more elements than
 
 Basic usage:
 
-```rust
+```
 use std::collections::BinaryHeap;
 let mut heap = BinaryHeap::with_capacity(10);
 heap.push(4);
@@ -335,7 +340,7 @@ heap.
 
 Basic usage:
 
-```rust
+```
 use std::collections::BinaryHeap;
 let mut heap = BinaryHeap::new();
 assert!(heap.peek_mut().is_none());
@@ -367,7 +372,7 @@ is empty.
 
 Basic usage:
 
-```rust
+```
 use std::collections::BinaryHeap;
 let mut heap = BinaryHeap::from([1, 3]);
 
@@ -392,7 +397,7 @@ Pushes an item onto the binary heap.
 
 Basic usage:
 
-```rust
+```
 use std::collections::BinaryHeap;
 let mut heap = BinaryHeap::new();
 heap.push(3);
@@ -432,7 +437,7 @@ Consumes the `BinaryHeap` and returns a vector in sorted
 
 Basic usage:
 
-```rust
+```
 use std::collections::BinaryHeap;
 
 let mut heap = BinaryHeap::from([1, 2, 4, 5, 7]);
@@ -455,7 +460,7 @@ Moves all the elements of `other` into `self`, leaving `other` empty.
 
 Basic usage:
 
-```rust
+```
 use std::collections::BinaryHeap;
 
 let mut a = BinaryHeap::from([-10, 1, 2, 3, 3]);
@@ -482,7 +487,7 @@ In other words, remove all elements `e` for which `f(&e)` returns
 
 Basic usage:
 
-```rust
+```
 use std::collections::BinaryHeap;
 
 let mut heap = BinaryHeap::from([-10, -5, 1, 2, 4, 13]);
@@ -505,7 +510,7 @@ arbitrary order.
 
 Basic usage:
 
-```rust
+```
 use std::collections::BinaryHeap;
 let heap = BinaryHeap::from([1, 2, 3, 4]);
 
@@ -527,7 +532,7 @@ Returns the greatest item in the binary heap, or `None` if it is empty.
 
 Basic usage:
 
-```rust
+```
 use std::collections::BinaryHeap;
 let mut heap = BinaryHeap::new();
 assert_eq!(heap.peek(), None);
@@ -555,7 +560,7 @@ Returns the number of elements the binary heap can hold without reallocating.
 
 Basic usage:
 
-```rust
+```
 use std::collections::BinaryHeap;
 let mut heap = BinaryHeap::with_capacity(100);
 assert!(heap.capacity() >= 100);
@@ -569,24 +574,365 @@ pub fn reserve_exact(&mut self, additional: usize)
 ```
 
 Reserves the minimum capacity for at least `additional` elements more than
-the current length. Unlike `reserve`, this will not
+the current length. Unlike [`reserve`], this will not
 deliberately over-allocate to speculatively avoid frequent allocations.
 After calling `reserve_exact`, capacity will be greater than or equal to
 `self.len() + additional`. Does nothing if the capacity is already
 sufficient.
 
+[`reserve`]: BinaryHeap::reserve
+
 # Panics
 
-Panics if the new capacity overflows `usize`.
+Panics if the new capacity overflows [`usize`].
 
 # Examples
 
 Basic usage:
 
-```rust
+```
 use std::collections::BinaryHeap;
 let mut heap = BinaryHeap::new();
 heap.reserve_exact(100);
 assert!(heap.capacity() >= 100);
 heap.push(4);
 ```
+
+[`reserve`]: BinaryHeap::reserve
+
+## BinaryHeap::reserve
+
+```rust
+pub fn reserve(&mut self, additional: usize)
+```
+
+Reserves capacity for at least `additional` elements more than the
+current length. The allocator may reserve more space to speculatively
+avoid frequent allocations. After calling `reserve`,
+capacity will be greater than or equal to `self.len() + additional`.
+Does nothing if capacity is already sufficient.
+
+# Panics
+
+Panics if the new capacity overflows [`usize`].
+
+# Examples
+
+Basic usage:
+
+```
+use std::collections::BinaryHeap;
+let mut heap = BinaryHeap::new();
+heap.reserve(100);
+assert!(heap.capacity() >= 100);
+heap.push(4);
+```
+
+## BinaryHeap::try_reserve_exact
+
+```rust
+pub fn try_reserve_exact(&mut self, additional: usize) -> Result<(), TryReserveError>
+```
+
+Tries to reserve the minimum capacity for at least `additional` elements
+more than the current length. Unlike [`try_reserve`], this will not
+deliberately over-allocate to speculatively avoid frequent allocations.
+After calling `try_reserve_exact`, capacity will be greater than or
+equal to `self.len() + additional` if it returns `Ok(())`.
+Does nothing if the capacity is already sufficient.
+
+Note that the allocator may give the collection more space than it
+requests. Therefore, capacity can not be relied upon to be precisely
+minimal. Prefer [`try_reserve`] if future insertions are expected.
+
+[`try_reserve`]: BinaryHeap::try_reserve
+
+# Errors
+
+If the capacity overflows, or the allocator reports a failure, then an error
+is returned.
+
+# Examples
+
+```
+use std::collections::BinaryHeap;
+use std::collections::TryReserveError;
+
+fn find_max_slow(data: &[u32]) -> Result<Option<u32>, TryReserveError> {
+    let mut heap = BinaryHeap::new();
+
+    // Pre-reserve the memory, exiting if we can't
+    heap.try_reserve_exact(data.len())?;
+
+    // Now we know this can't OOM in the middle of our complex work
+    heap.extend(data.iter());
+
+    Ok(heap.pop())
+}
+# find_max_slow(&[1, 2, 3]).expect("reserving capacity for 12 bytes should never fail");
+```
+
+## BinaryHeap::try_reserve
+
+```rust
+pub fn try_reserve(&mut self, additional: usize) -> Result<(), TryReserveError>
+```
+
+Tries to reserve capacity for at least `additional` elements more than the
+current length. The allocator may reserve more space to speculatively
+avoid frequent allocations. After calling `try_reserve`, capacity will be
+greater than or equal to `self.len() + additional` if it returns
+`Ok(())`. Does nothing if capacity is already sufficient. This method
+preserves the contents even if an error occurs.
+
+# Errors
+
+If the capacity overflows, or the allocator reports a failure, then an error
+is returned.
+
+# Examples
+
+```
+use std::collections::BinaryHeap;
+use std::collections::TryReserveError;
+
+fn find_max_slow(data: &[u32]) -> Result<Option<u32>, TryReserveError> {
+    let mut heap = BinaryHeap::new();
+
+    // Pre-reserve the memory, exiting if we can't
+    heap.try_reserve(data.len())?;
+
+    // Now we know this can't OOM in the middle of our complex work
+    heap.extend(data.iter());
+
+    Ok(heap.pop())
+}
+# find_max_slow(&[1, 2, 3]).expect("reserving capacity for 12 bytes should never fail");
+```
+
+## BinaryHeap::shrink_to_fit
+
+```rust
+pub fn shrink_to_fit(&mut self)
+```
+
+Discards as much additional capacity as possible.
+
+# Examples
+
+Basic usage:
+
+```
+use std::collections::BinaryHeap;
+let mut heap: BinaryHeap<i32> = BinaryHeap::with_capacity(100);
+
+assert!(heap.capacity() >= 100);
+heap.shrink_to_fit();
+assert!(heap.capacity() == 0);
+```
+
+## BinaryHeap::shrink_to
+
+```rust
+pub fn shrink_to(&mut self, min_capacity: usize)
+```
+
+Discards capacity with a lower bound.
+
+The capacity will remain at least as large as both the length
+and the supplied value.
+
+If the current capacity is less than the lower limit, this is a no-op.
+
+# Examples
+
+```
+use std::collections::BinaryHeap;
+let mut heap: BinaryHeap<i32> = BinaryHeap::with_capacity(100);
+
+assert!(heap.capacity() >= 100);
+heap.shrink_to(10);
+assert!(heap.capacity() >= 10);
+```
+
+## BinaryHeap::as_slice
+
+```rust
+pub fn as_slice(&self) -> &[T]
+```
+
+Returns a slice of all values in the underlying vector, in arbitrary
+order.
+
+# Examples
+
+Basic usage:
+
+```
+use std::collections::BinaryHeap;
+use std::io::{self, Write};
+
+let heap = BinaryHeap::from([1, 2, 3, 4, 5, 6, 7]);
+
+io::sink().write(heap.as_slice()).unwrap();
+```
+
+## BinaryHeap::into_vec
+
+```rust
+pub fn into_vec(self) -> Vec<T, A>
+```
+
+Consumes the `BinaryHeap` and returns the underlying vector
+in arbitrary order.
+
+# Examples
+
+Basic usage:
+
+```
+use std::collections::BinaryHeap;
+let heap = BinaryHeap::from([1, 2, 3, 4, 5, 6, 7]);
+let vec = heap.into_vec();
+
+// Will print in some order
+for x in vec {
+    println!("{x}");
+}
+```
+
+## BinaryHeap::len
+
+```rust
+pub fn len(&self) -> usize
+```
+
+Returns the length of the binary heap.
+
+# Examples
+
+Basic usage:
+
+```
+use std::collections::BinaryHeap;
+let heap = BinaryHeap::from([1, 3]);
+
+assert_eq!(heap.len(), 2);
+```
+
+## BinaryHeap::is_empty
+
+```rust
+pub fn is_empty(&self) -> bool
+```
+
+Checks if the binary heap is empty.
+
+# Examples
+
+Basic usage:
+
+```
+use std::collections::BinaryHeap;
+let mut heap = BinaryHeap::new();
+
+assert!(heap.is_empty());
+
+heap.push(3);
+heap.push(5);
+heap.push(1);
+
+assert!(!heap.is_empty());
+```
+
+## BinaryHeap::drain
+
+```rust
+pub fn drain(&mut self) -> Drain<'_, T, A> where A: AllocatorNightly, // needed for the `Vec::drain` call
+```
+
+Clears the binary heap, returning an iterator over the removed elements
+in arbitrary order. If the iterator is dropped before being fully
+consumed, it drops the remaining elements in arbitrary order.
+
+The returned iterator keeps a mutable borrow on the heap to optimize
+its implementation.
+
+# Examples
+
+Basic usage:
+
+```
+use std::collections::BinaryHeap;
+let mut heap = BinaryHeap::from([1, 3]);
+
+assert!(!heap.is_empty());
+
+for x in heap.drain() {
+    println!("{x}");
+}
+
+assert!(heap.is_empty());
+```
+
+## BinaryHeap::clear
+
+```rust
+pub fn clear(&mut self) where A: AllocatorNightly,
+```
+
+Drops all items from the binary heap.
+
+# Examples
+
+Basic usage:
+
+```
+use std::collections::BinaryHeap;
+let mut heap = BinaryHeap::from([1, 3]);
+
+assert!(!heap.is_empty());
+
+heap.clear();
+
+assert!(heap.is_empty());
+```
+
+## struct Iter
+
+```rust
+pub struct Iter<'a, T: 'a>
+```
+
+An iterator over the elements of a `BinaryHeap`.
+
+This `struct` is created by [`BinaryHeap::iter()`]. See its
+documentation for more.
+
+[`iter`]: BinaryHeap::iter
+
+## ::IntoIter
+
+```rust
+pub struct IntoIter< T, #[unstable(feature = "allocator_ext", issue = "163177", implied_by = "allocator_api")] A: Allocator = Global, >
+```
+
+An owning iterator over the elements of a `BinaryHeap`.
+
+This `struct` is created by [`BinaryHeap::into_iter()`]
+(provided by the [`IntoIterator`] trait). See its documentation for more.
+
+[`into_iter`]: BinaryHeap::into_iter
+
+## ::Drain
+
+```rust
+pub struct Drain< 'a, T: 'a, #[unstable(feature = "allocator_ext", issue = "163177", implied_by = "allocator_api")] A: Allocator = Global, >
+```
+
+A draining iterator over the elements of a `BinaryHeap`.
+
+This `struct` is created by [`BinaryHeap::drain()`]. See its
+documentation for more.
+
+[`drain`]: BinaryHeap::drain

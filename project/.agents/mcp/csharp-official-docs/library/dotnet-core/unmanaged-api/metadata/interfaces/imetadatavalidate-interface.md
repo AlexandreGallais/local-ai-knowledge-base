@@ -1,12 +1,18 @@
 ---
+description: "Learn more about: IMetaDataValidate Interface"
 title: "IMetaDataValidate Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadatavalidate-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataValidate"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataValidate"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataValidate Interface
 
 Provides methods to validate metadata signatures.
@@ -15,12 +21,12 @@ Provides methods to validate metadata signatures.
 
 | Method | Description |
 |------------|-----------------|
-|ValidateMetaData Method| Validates the metadata signatures of the objects in the current metadata scope. |
-|ValidatorInit Method| Sets a flag that specifies the type of the module in the current metadata scope, and registers the specified callback method for validation errors. |
+|[ValidateMetaData Method](imetadatavalidate-validatemetadata-method.md)| Validates the metadata signatures of the objects in the current metadata scope. |
+|[ValidatorInit Method](imetadatavalidate-validatorinit-method.md)| Sets a flag that specifies the type of the module in the current metadata scope, and registers the specified callback method for validation errors. |
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -28,4 +34,4 @@ Provides methods to validate metadata signatures.
 
 ## See also
 
-- Metadata Interfaces
+- [Metadata Interfaces](metadata-interfaces.md)

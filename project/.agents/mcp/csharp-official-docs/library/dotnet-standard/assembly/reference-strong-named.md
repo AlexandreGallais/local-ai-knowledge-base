@@ -1,19 +1,25 @@
 ---
 title: "How to: Reference a strong-named assembly"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/assembly/reference-strong-named.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: This article shows you how to reference types or resources in a strong-named .NET assembly, either at compile time or runtime.
+ms.date: "08/20/2019"
+helpviewer_keywords:
+  - "strong-named assemblies, compile-time references"
+  - "compile-time assembly referencing"
+  - "assemblies [.NET], strong-named"
+  - "assembly binding, strong-named"
+ms.topic: how-to
+dev_langs:
+  - "csharp"
+  - "vb"
+  - "cpp"
 ---
-
 # How to: Reference a strong-named assembly
 
 The process for referencing types or resources in a strong-named assembly is usually transparent. You can make the reference either at compile time (early binding) or at runtime.
 
 A compile-time reference occurs when you indicate to the compiler that the assembly to be compiled explicitly references another assembly. When you use compile-time referencing, the compiler automatically gets the public key of the targeted strong-named assembly and places it in the assembly reference of the assembly being compiled.
 
-> **Note:**
+> [!NOTE]
 > A strong-named assembly can only use types from other strong-named assemblies. Otherwise, the security of the strong-named assembly would be compromised.
 
 ## Make a compile-time reference to a strong-named assembly
@@ -32,36 +38,36 @@ csc /t:library myAssembly.cs /reference:myLibAssembly.dll
 
 ## Make a runtime reference to a strong-named assembly
 
-When you make a runtime reference to a strong-named assembly, for example by using the `System.Reflection.Assembly.Load*` or `System.Reflection.Assembly.GetType*` method, you must use the display name of the referenced strong-named assembly. The syntax of a display name is as follows:
+When you make a runtime reference to a strong-named assembly, for example by using the <xref:System.Reflection.Assembly.Load*?displayProperty=nameWithType> or <xref:System.Reflection.Assembly.GetType*?displayProperty=nameWithType> method, you must use the display name of the referenced strong-named assembly. The syntax of a display name is as follows:
 
 \<*assembly name*>**,** \<*version number*>**,** \<*culture*>**,** \<*public key token*>
 
 For example:
 
 ```console
-myDll, Version=1.1.0.0, Culture=en, PublicKeyToken=<example-value>
+myDll, Version=1.1.0.0, Culture=en, PublicKeyToken=03689116d3a4ae33
 ```
 
 In this example, `PublicKeyToken` is the hexadecimal form of the public key token. If there is no culture value, use `Culture=neutral`.
 
-The following code example shows how to use this information with the `System.Reflection.Assembly.Load*` method.
+The following code example shows how to use this information with the <xref:System.Reflection.Assembly.Load*?displayProperty=nameWithType> method.
 
 ```cpp
 Assembly^ myDll =
-    Assembly::Load("<example-value>");
+    Assembly::Load("myDll, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9b35aa32c18d4fb1");
 ```
 
 ```csharp
 Assembly myDll =
-    Assembly.Load("<example-value>");
+    Assembly.Load("myDll, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9b35aa32c18d4fb1");
 ```
 
 ```vb
 Dim myDll As Assembly = _
-    Assembly.Load("<example-value>")
+    Assembly.Load("myDll, Version=1.0.0.1, Culture=neutral, PublicKeyToken=9b35aa32c18d4fb1")
 ```
 
-You can print the hexadecimal format of the public key and public key token for a specific assembly by using the following Strong Name (Sn.exe) command:
+You can print the hexadecimal format of the public key and public key token for a specific assembly by using the following [Strong Name (Sn.exe)](../../framework/tools/sn-exe-strong-name-tool.md) command:
 
 **sn -Tp \<** *assembly* **>**
 
@@ -71,4 +77,4 @@ If you have a public key file, you can use the following command instead (note t
 
 ## See also
 
-- Create and use strong-named assemblies
+- [Create and use strong-named assemblies](create-use-strong-named.md)

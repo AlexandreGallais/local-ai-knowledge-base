@@ -1,0 +1,120 @@
+---
+title: "HTMLInputElement: setSelectionRange() method"
+short-title: setSelectionRange()
+slug: Web/API/HTMLInputElement/setSelectionRange
+page-type: web-api-instance-method
+browser-compat: api.HTMLInputElement.setSelectionRange
+---
+
+{{APIRef("HTML DOM")}}
+
+The **`setSelectionRange()`** method of the {{domxref("HTMLInputElement")}} interface sets the start and end positions of the current text selection in an {{HTMLElement("input")}} element. This updates the selection state immediately, though the visual highlight only appears when the element is focused.
+
+This method updates the {{domxref("HTMLInputElement.selectionStart")}}, {{domxref("HTMLInputElement.selectionEnd")}}, and {{domxref("HTMLInputElement.selectionDirection")}} properties in one call. If you wish to select **all** text of an input element, you can use the [`select()`](/en-US/docs/Web/API/HTMLInputElement/select) method instead.
+
+The selection of an input element can either be a range of characters or a caret (if nothing is selected). Therefore, by setting `selectionStart` and `selectionEnd` to the same value, you can effectively move the caret to a specific position in the text field.
+
+## Syntax
+
+```js-nolint
+setSelectionRange(selectionStart, selectionEnd)
+setSelectionRange(selectionStart, selectionEnd, selectionDirection)
+```
+
+### Parameters
+
+- `selectionStart`
+  - : The 0-based index of the first selected character. An index greater than the length of the element's value is treated as pointing to the end of the value. See the {{domxref("HTMLInputElement/selectionStart", "selectionStart")}} property.
+- `selectionEnd`
+  - : The 0-based index of the character _after_ the last selected character. An index greater than the length of the element's value is treated as pointing to the end of the value. If `selectionEnd` is less than `selectionStart`, then both are treated as the value of `selectionEnd`. See the {{domxref("HTMLInputElement/selectionEnd", "selectionEnd")}} property.
+- `selectionDirection` {{optional_inline}}
+  - : A string indicating the direction in which the selection is considered to have been performed. See the {{domxref("HTMLInputElement/selectionDirection", "selectionDirection")}} property. Possible values:
+    - `"forward"`
+    - `"backward"`
+    - `"none"` if the direction is unknown or irrelevant. Default value.
+
+### Return value
+
+None ({{jsxref("undefined")}}).
+
+### Exceptions
+
+- `InvalidStateError` {{domxref("DOMException")}}
+  - : Thrown if the element is not one of the following input types: [`password`](/en-US/docs/Web/HTML/Reference/Elements/input/password), [`search`](/en-US/docs/Web/HTML/Reference/Elements/input/search), [`tel`](/en-US/docs/Web/HTML/Reference/Elements/input/tel), [`text`](/en-US/docs/Web/HTML/Reference/Elements/input/text), or [`url`](/en-US/docs/Web/HTML/Reference/Elements/input/url).
+
+## Examples
+
+### Selecting text
+
+Click the button in this example to select the third, fourth, and fifth characters in
+the text box ("zil" in the word "Mozilla").
+
+#### HTML
+
+```html
+<input type="text" id="text-box" size="20" value="Mozilla" />
+<button>Select text</button>
+```
+
+#### JavaScript
+
+```js
+function selectText() {
+  const input = document.getElementById("text-box");
+  input.focus();
+  input.setSelectionRange(2, 5);
+}
+
+document.querySelector("button").addEventListener("click", selectText);
+```
+
+#### Result
+
+{{EmbedLiveSample("Selecting text")}}
+
+### Moving the caret
+
+Passing the same value for `selectionStart` and `selectionEnd` moves the caret without selecting any text. Choose a position and click the button to move the caret there. Position `0` is before the first character, and position `7` is after the last one.
+
+#### HTML
+
+```html
+<input type="text" id="caret-box" size="20" value="Mozilla" />
+<label>
+  Position
+  <input type="number" id="caret-position" min="0" max="7" value="2" />
+</label>
+<button>Move caret</button>
+```
+
+#### JavaScript
+
+```js
+const input = document.getElementById("caret-box");
+const position = document.getElementById("caret-position");
+
+document.querySelector("button").addEventListener("click", () => {
+  const index = position.valueAsNumber;
+  input.focus();
+  input.setSelectionRange(index, index);
+});
+```
+
+#### Result
+
+{{EmbedLiveSample("Moving the caret")}}
+
+## Specifications
+
+{{Specifications}}
+
+## Browser compatibility
+
+{{Compat}}
+
+## See also
+
+- {{HTMLElement("input")}}
+- {{HTMLElement("textarea")}}
+- {{domxref("HTMLInputElement")}}
+- {{domxref("Selection")}}

@@ -1,10 +1,9 @@
 ---
 title: "Breaking change - Microsoft.Extensions.ApiDescription.Client package deprecated"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/10/apidescription-client-deprecated.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 10 where the Microsoft.Extensions.ApiDescription.Client package has been deprecated."
+ms.date: 08/07/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/aspnet/Announcements/issues/518
 ---
 
 # Microsoft.Extensions.ApiDescription.Client package deprecated
@@ -41,7 +40,7 @@ The package is now deprecated and projects that reference it receive build warni
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](/dotnet/core/compatibility/categories#source-compatibility).
 
 ## Reason for change
 
@@ -62,4 +61,4 @@ This change can affect source compatibility.
 
 - MSBuild item `OpenApiReference` (all instances).
 - MSBuild property `OpenApiProjectReference`.
-- CLI command `dotnet openapi`.
+- CLI command [`dotnet openapi`](../../fundamentals/openapi/openapi-tools.md).

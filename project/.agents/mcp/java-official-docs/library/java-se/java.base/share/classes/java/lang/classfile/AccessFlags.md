@@ -1,12 +1,3 @@
----
-title: "AccessFlags interface (java.lang.classfile)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/AccessFlags.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AccessFlags interface (java.lang.classfile)
 
 ```java
@@ -14,37 +5,33 @@ public sealed interface AccessFlags extends ClassElement, MethodElement, FieldEl
 ```
 
 Models the access flags for a class, method, or field.  The access flags
-appears exactly once in each class, method, or field; a `ClassBuilder` and a `FieldBuilder` chooses an unspecified default value
-if access flags are not provided, and a `MethodBuilder` is always
+appears exactly once in each class, method, or field; a {@link
+ClassBuilder} and a {@link FieldBuilder} chooses an unspecified default value
+if access flags are not provided, and a {@link MethodBuilder} is always
 created with access flags.
-
-`AccessFlags` cannot be created via a factory method directly; it can
-be created with `withFlags` methods on the respective builders.
-
-A `MethodBuilder` throws an `IllegalArgumentException` if it is
-supplied an `AccessFlags` object that changes the preexisting
-ACC_STATIC flag of the builder, because the
+<p>
+{@code AccessFlags} cannot be created via a factory method directly; it can
+be created with {@code withFlags} methods on the respective builders.
+<p>
+A {@link MethodBuilder} throws an {@link IllegalArgumentException} if it is
+supplied an {@code AccessFlags} object that changes the preexisting
+{@link ClassFile#ACC_STATIC ACC_STATIC} flag of the builder, because the
 access flag change may invalidate previously supplied data to the builder.
 
-**API note:** The access flags of classes, methods, and fields are modeled as a standalone
-object to support streaming as elements for `ClassFileTransform`.
-Other access flags are not elements of a `CompoundElement` and thus not
-modeled by `AccessFlags`; they provide their own `flagsMask`,
-`flags`, and `has` methods.
+@apiNote
+The access flags of classes, methods, and fields are modeled as a standalone
+object to support streaming as elements for {@link ClassFileTransform}.
+Other access flags are not elements of a {@link CompoundElement} and thus not
+modeled by {@code AccessFlags}; they provide their own {@code flagsMask},
+{@code flags}, and {@code has} methods.
 
-**See also:** ClassModel#flags()
-
-**See also:** FieldModel#flags()
-
-**See also:** MethodModel#flags()
-
-**See also:** ClassBuilder#withFlags
-
-**See also:** FieldBuilder#withFlags
-
-**See also:** MethodBuilder#withFlags
-
-**Since:** 24
+@see ClassModel#flags()
+@see FieldModel#flags()
+@see MethodModel#flags()
+@see ClassBuilder#withFlags
+@see FieldBuilder#withFlags
+@see MethodBuilder#withFlags
+@since 24
 
 ## AccessFlags.flagsMask()
 
@@ -52,8 +39,8 @@ modeled by `AccessFlags`; they provide their own `flagsMask`,
 int flagsMask()
 ```
 
-It is in the range of unsigned
-short, `[0, 0xFFFF]`.
+{@return the access flags, as a bit mask}  It is in the range of unsigned
+short, {@code [0, 0xFFFF]}.
 
 ## AccessFlags.flags()
 
@@ -61,11 +48,10 @@ short, `[0, 0xFFFF]`.
 Set<AccessFlag> flags()
 ```
 
-**See also:** #location()
+{@return the access flags, as a set of flag enums}
 
-Throws:
-
-- `IllegalArgumentException`: if the flags mask has any undefined bit set
+@throws IllegalArgumentException if the flags mask has any undefined bit set
+@see #location()
 
 ## AccessFlags.has(AccessFlag)
 
@@ -73,15 +59,12 @@ Throws:
 boolean has(AccessFlag flag)
 ```
 
-If the specified flag
-is not available to this location, returns
-`false`.
+{@return whether the specified flag is set}  If the specified flag
+is not available to this {@linkplain #location() location}, returns
+{@code false}.
 
-Parameters:
-
-- `flag`: the flag to test
-
-**See also:** #location()
+@param flag the flag to test
+@see #location()
 
 ## AccessFlags.location()
 
@@ -89,8 +72,9 @@ Parameters:
 AccessFlag.Location location()
 ```
 
-**See also:** AccessFlag.Location#CLASS
+{@return the {@code class} file location for this element, which is
+either class, method, or field}
 
-**See also:** AccessFlag.Location#FIELD
-
-**See also:** AccessFlag.Location#METHOD
+@see AccessFlag.Location#CLASS
+@see AccessFlag.Location#FIELD
+@see AccessFlag.Location#METHOD

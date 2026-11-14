@@ -1,15 +1,22 @@
 ---
+description: "Learn more about: CreateDebuggingInterfaceFromVersion Function"
 title: "CreateDebuggingInterfaceFromVersion Function"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/createdebugginginterfacefromversion-function.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/21/2022"
+f1_keywords:
+  - "CreateDebuggingInterfaceFromVersion"
+api_location:
+  - "dbgshim.dll"
+  - "libdbgshim.so"
+  - "libdbgshim.dylib"
+helpviewer_keywords:
+  - "CreateDebuggingInterfaceFromVersion function"
+  - "debugging API [.NET Core]"
+  - ".NET Core, debugging"
+ms.assetid: 35c7a18f-133a-4584-bd25-bb338568b0c6
 ---
-
 # CreateDebuggingInterfaceFromVersion function
 
-Accepts a common language runtime (CLR) version string that is returned from the CreateVersionStringFromModule function, and returns a corresponding debugger interface (typically, ICorDebug).
+Accepts a common language runtime (CLR) version string that is returned from the [CreateVersionStringFromModule function](createversionstringfrommodule-function.md), and returns a corresponding debugger interface (typically, [ICorDebug](./icordebug/icordebug-interface.md)).
 
 ## Syntax
 
@@ -23,15 +30,15 @@ HRESULT CreateDebuggingInterfaceFromVersion (
 ## Parameters
 
  `szDebuggeeVersion`\
- [in] Version string of the CLR in the target debuggee, which is returned by the CreateVersionStringFromModule function.
+ [in] Version string of the CLR in the target debuggee, which is returned by the [CreateVersionStringFromModule function](createversionstringfrommodule-function.md).
 
  `ppCordb`\
- [out] Pointer to a pointer to a COM object (`IUnknown`). This object will be cast to an ICorDebug object before it is returned.
+ [out] Pointer to a pointer to a COM object (`IUnknown`). This object will be cast to an [ICorDebug](./icordebug/icordebug-interface.md) object before it is returned.
 
 ## Return value
 
  `S_OK`\
- `ppCordb` references a valid object that implements the ICorDebug interface interface.
+ `ppCordb` references a valid object that implements the [ICorDebug interface](./icordebug/icordebug-interface.md) interface.
 
  `E_INVALIDARG`\
  Either `szDebuggeeVersion` or `ppCordb` is null.
@@ -43,7 +50,7 @@ HRESULT CreateDebuggingInterfaceFromVersion (
  Either mscordbi.dll or mscordaccore.dll is not the same version as the target CoreCLR.dll.
 
  `E_FAIL` (or other `E_` return codes)\
- Unable to return an ICorDebug interface.
+ Unable to return an [ICorDebug interface](./icordebug/icordebug-interface.md).
 
 ## Remarks
 
@@ -51,7 +58,7 @@ HRESULT CreateDebuggingInterfaceFromVersion (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** dbgshim.h
 

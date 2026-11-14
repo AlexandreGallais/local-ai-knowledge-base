@@ -1,23 +1,17 @@
----
-title: "prefer-code-point"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-code-point.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-code-point
 
 📝 Prefer `String#codePointAt(…)` over `String#charCodeAt(…)` and `String.fromCodePoint(…)` over `String.fromCharCode(…)`.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-`String#codePointAt()` and `String.fromCodePoint()` are superior because they handle full Unicode support, including characters outside the Basic <example-value> Plane (BMP) that require surrogate pairs. The `charCodeAt()` method only returns the code unit, which is insufficient for emoji and other high Unicode characters.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
-Learn more: Difference between `String.fromCodePoint()` and `String.fromCharCode()`
+[`String#codePointAt()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/codePointAt) and [`String.fromCodePoint()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCodePoint) are superior because they handle full Unicode support, including characters outside the Basic Multilingual Plane (BMP) that require surrogate pairs. The `charCodeAt()` method only returns the code unit, which is insufficient for emoji and other high Unicode characters.
+
+Learn more: [Difference between `String.fromCodePoint()` and `String.fromCharCode()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCodePoint#compared_to_fromcharcode)
 
 ## Examples
 
@@ -49,7 +43,7 @@ const emoji = String.fromCharCode(0x1f60a); // Smiley
 const emoji = String.fromCodePoint(0x1f60a); // Smiley
 ```
 
-> **Note:**
+> [!NOTE]
 > When the result is used as a number (for example, a string hash, or `charCodeAt(index) - 48` to parse a digit), the rule reports but offers no suggestion, since swapping to `codePointAt()` is not a safe rename there. A correct code-point version must iterate by code point:
 >
 > ```js

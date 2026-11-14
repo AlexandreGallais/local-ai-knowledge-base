@@ -1,17 +1,8 @@
----
-title: "TestCollection"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/api/advanced/test-collection.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # TestCollection
 
-`TestCollection` represents a collection of top-level suites and tests in a suite or a module. It also provides useful methods to iterate over itself.
+`TestCollection` represents a collection of top-level [suites](/api/advanced/test-suite) and [tests](/api/advanced/test-case) in a suite or a module. It also provides useful methods to iterate over itself.
 
-**Info:**
+::: info
 Most methods return an iterator instead of an array for better performance in case you don't need every item in the collection. If you prefer working with array, you can spread the iterator: `[...children.allSuites()]`.
 
 Also note that the collection itself is an iterator:
@@ -22,12 +13,15 @@ for (const child of module.children) {
 }
 ```
 
+:::
+
 ## size
 
 The number of tests and suites in the collection.
 
-**Warning:**
+::: warning
 This number includes only tests and suites at the top-level, it doesn't include nested suites and tests.
+:::
 
 ## at
 

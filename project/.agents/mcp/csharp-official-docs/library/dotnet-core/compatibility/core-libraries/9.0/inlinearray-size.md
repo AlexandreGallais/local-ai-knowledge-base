@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: Inline array struct size limit is enforced"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/9.0/inlinearray-size.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 9 breaking change in core .NET libraries where the size limit for inline arrays is now enforced.
+ms.date: 02/09/2024
 ---
-
 # Inline array struct size limit is enforced
 
-The `System.Runtime.CompilerServices.InlineArrayAttribute` attribute was introduced in .NET 8 to annotate struct types that have a single field. Inline array structs were intended to have a size limit of 1 mebibyte (MiB). However, due to a bug, the limit wasn't enforced for inline array structs that have a sequential layout, which is also the default layout as emitted by C#. This change enforces the size limit.
+The <xref:System.Runtime.CompilerServices.InlineArrayAttribute> attribute was introduced in .NET 8 to annotate struct types that have a single field. Inline array structs were intended to have a size limit of 1 mebibyte (MiB). However, due to a bug, the limit wasn't enforced for inline array structs that have a sequential layout, which is also the default layout as emitted by C#. This change enforces the size limit.
 
 ## Previous behavior
 
@@ -25,7 +21,7 @@ Starting in .NET 9, the size limit of 1 MiB is enforced.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -37,4 +33,4 @@ If you have code that uses inline array structs with very large instances that e
 
 ## Affected APIs
 
-- `System.Runtime.CompilerServices.InlineArrayAttribute`
+- <xref:System.Runtime.CompilerServices.InlineArrayAttribute?displayProperty=fullName>

@@ -1,13 +1,9 @@
 ---
-title: "no-empty-character-class"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-empty-character-class.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-empty-character-class
+rule_type: problem
 ---
 
-# no-empty-character-class
+
 
 Because empty character classes in regular expressions do not match anything, they might be typing mistakes.
 
@@ -21,7 +17,7 @@ This rule disallows empty character classes in regular expressions.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-empty-character-class: "error"*/
@@ -47,9 +43,11 @@ regex.test("abc"); // false, the nested `[]` has no effect
 "abc".match(regex); // null
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-empty-character-class: "error"*/
@@ -63,6 +61,8 @@ Examples of **correct** code for this rule:
 /^abc[^]/.test("abcdefg"); // true
 "abcdefg".match(/^abc[^]/); // ["abcd"]
 ```
+
+:::
 
 ## Options
 

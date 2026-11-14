@@ -1,17 +1,11 @@
----
-title: "ch17-03-more-futures"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch17-03-more-futures.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
 
-# ch17-03-more-futures
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="yielding"></a>
 
 ### Yielding Control to the Runtime
 
-Recall from the “Our First Async Program”
+Recall from the [“Our First Async Program”][async-program]<!-- ignore -->
 section that at each await point, Rust gives a runtime a chance to pause the
 task and switch to another one if the future being awaited isn’t ready. The
 inverse is also true: Rust _only_ pauses async blocks and hands control back to
@@ -28,14 +22,13 @@ control back to the runtime.
 Let’s simulate a long-running operation to illustrate the starvation problem,
 then explore how to solve it. Listing 17-14 introduces a `slow` function.
 
-**Listing 17-14: Using `thread::sleep` to simulate slow operations** (src/main.rs)
+<Listing number="17-14" caption="Using `thread::sleep` to simulate slow operations" file-name="src/main.rs">
 
 ```rust
-fn slow(name: &str, ms: u64) {
-    thread::sleep(Duration::from_millis(ms));
-    println!("'{name}' ran for {ms}ms");
-}
+{{#rustdoc_include ../listings/ch17-async-await/listing-17-14/src/main.rs:slow}}
 ```
+
+</Listing>
 
 This code uses `std::thread::sleep` instead of `trpl::sleep` so that calling
 `slow` will block the current thread for some number of milliseconds. We can
@@ -45,33 +38,22 @@ blocking.
 In Listing 17-15, we use `slow` to emulate doing this kind of CPU-bound work in
 a pair of futures.
 
-**Listing 17-15: Calling the `slow` function to simulate slow operations** (src/main.rs)
+<Listing number="17-15" caption="Calling the `slow` function to simulate slow operations" file-name="src/main.rs">
 
 ```rust
-let a = async {
-    println!("'a' started.");
-    slow("a", 30);
-    slow("a", 10);
-    slow("a", 20);
-    trpl::sleep(Duration::from_millis(50)).await;
-    println!("'a' finished.");
-};
-
-let b = async {
-    println!("'b' started.");
-    slow("b", 75);
-    slow("b", 10);
-    slow("b", 15);
-    slow("b", 350);
-    trpl::sleep(Duration::from_millis(50)).await;
-    println!("'b' finished.");
-};
-
-trpl::select(a, b).await;
+{{#rustdoc_include ../listings/ch17-async-await/listing-17-15/src/main.rs:slow-futures}}
 ```
+
+</Listing>
 
 Each future hands control back to the runtime only _after_ carrying out a bunch
 of slow operations. If you run this code, you will see this output:
+
+<!-- manual-regeneration
+cd listings/ch17-async-await/listing-17-15/
+cargo run
+copy just the output
+-->
 
 ```text
 'a' started.
@@ -101,38 +83,22 @@ without the `b` future running _at all_. Let’s try using the `trpl::sleep`
 function as a starting point for letting operations switch off making progress,
 as shown in Listing 17-16.
 
-**Listing 17-16: Using `trpl::sleep` to let operations switch off making progress** (src/main.rs)
+<Listing number="17-16" caption="Using `trpl::sleep` to let operations switch off making progress" file-name="src/main.rs">
 
 ```rust
-let one_ms = Duration::from_millis(1);
-
-let a = async {
-    println!("'a' started.");
-    slow("a", 30);
-    trpl::sleep(one_ms).await;
-    slow("a", 10);
-    trpl::sleep(one_ms).await;
-    slow("a", 20);
-    trpl::sleep(one_ms).await;
-    println!("'a' finished.");
-};
-
-let b = async {
-    println!("'b' started.");
-    slow("b", 75);
-    trpl::sleep(one_ms).await;
-    slow("b", 10);
-    trpl::sleep(one_ms).await;
-    slow("b", 15);
-    trpl::sleep(one_ms).await;
-    slow("b", 350);
-    trpl::sleep(one_ms).await;
-    println!("'b' finished.");
-};
+{{#rustdoc_include ../listings/ch17-async-await/listing-17-16/src/main.rs:here}}
 ```
+
+</Listing>
 
 We’ve added `trpl::sleep` calls with await points between each call to `slow`.
 Now the two futures’ work is interleaved:
+
+<!-- manual-regeneration
+cd listings/ch17-async-await/listing-17-16
+cargo run
+copy just the output
+-->
 
 ```text
 'a' started.
@@ -157,33 +123,13 @@ as we can. We just need to hand back control to the runtime. We can do that
 directly, using the `trpl::yield_now` function. In Listing 17-17, we replace
 all those `trpl::sleep` calls with `trpl::yield_now`.
 
-**Listing 17-17: Using `yield_now` to let operations switch off making progress** (src/main.rs)
+<Listing number="17-17" caption="Using `yield_now` to let operations switch off making progress" file-name="src/main.rs">
 
 ```rust
-let a = async {
-    println!("'a' started.");
-    slow("a", 30);
-    trpl::yield_now().await;
-    slow("a", 10);
-    trpl::yield_now().await;
-    slow("a", 20);
-    trpl::yield_now().await;
-    println!("'a' finished.");
-};
-
-let b = async {
-    println!("'b' started.");
-    slow("b", 75);
-    trpl::yield_now().await;
-    slow("b", 10);
-    trpl::yield_now().await;
-    slow("b", 15);
-    trpl::yield_now().await;
-    slow("b", 350);
-    trpl::yield_now().await;
-    println!("'b' finished.");
-};
+{{#rustdoc_include ../listings/ch17-async-await/listing-17-17/src/main.rs:yields}}
 ```
+
+</Listing>
 
 This code is both clearer about the actual intent and can be significantly
 faster than using `sleep`, because timers such as the one used by `sleep` often
@@ -220,21 +166,13 @@ still more async abstractions.
 Listing 17-18 shows how we would expect this `timeout` to work with a slow
 future.
 
-**Listing 17-18: Using our imagined `timeout` to run a slow operation with a time limit** (src/main.rs)
+<Listing number="17-18" caption="Using our imagined `timeout` to run a slow operation with a time limit" file-name="src/main.rs">
 
-```rust
-let slow = async {
-    trpl::sleep(Duration::from_secs(5)).await;
-    "Finally finished"
-};
-
-match timeout(slow, Duration::from_secs(2)).await {
-    Ok(message) => println!("Succeeded with '{message}'"),
-    Err(duration) => {
-        println!("Failed after {} seconds", duration.as_secs())
-    }
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch17-async-await/listing-17-18/src/main.rs:here}}
 ```
+
+</Listing>
 
 Let’s implement this! To begin, let’s think about the API for `timeout`:
 
@@ -250,16 +188,15 @@ Let’s implement this! To begin, let’s think about the API for `timeout`:
 
 Listing 17-19 shows this declaration.
 
-**Listing 17-19: Defining the signature of `timeout`** (src/main.rs)
+<!-- This is not tested because it intentionally does not compile. -->
 
-```rust
-async fn timeout<F: Future>(
-    future_to_try: F,
-    max_time: Duration,
-) -> Result<F::Output, Duration> {
-    // Here is where our implementation will go!
-}
+<Listing number="17-19" caption="Defining the signature of `timeout`" file-name="src/main.rs">
+
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch17-async-await/listing-17-19/src/main.rs:declaration}}
 ```
+
+</Listing>
 
 That satisfies our goals for the types. Now let’s think about the _behavior_ we
 need: we want to race the future passed in against the duration. We can use
@@ -269,13 +206,13 @@ to run that timer with the future the caller passes in.
 In Listing 17-20, we implement `timeout` by matching on the result of awaiting
 `trpl::select`.
 
-**Listing 17-20: Defining `timeout` with `select` and `sleep`** (src/main.rs)
+<Listing number="17-20" caption="Defining `timeout` with `select` and `sleep`" file-name="src/main.rs">
 
 ```rust
-use trpl::Either;
-
-// --snip--
+{{#rustdoc_include ../listings/ch17-async-await/listing-17-20/src/main.rs:implementation}}
 ```
+
+</Listing>
 
 The implementation of `trpl::select` is not fair: it always polls arguments in
 the order in which they are passed (other `select` implementations will
@@ -308,3 +245,5 @@ macro to control how the outermost futures are executed.
 We’ve now seen a number of ways to work with multiple futures at the same time.
 Up next, we’ll look at how we can work with multiple futures in a sequence over
 time with _streams_.
+
+[async-program]: ch17-01-futures-and-syntax.html#our-first-async-program

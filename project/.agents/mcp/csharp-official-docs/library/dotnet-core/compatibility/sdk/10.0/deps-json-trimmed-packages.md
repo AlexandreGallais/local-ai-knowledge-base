@@ -1,12 +1,10 @@
 ---
 title: "Breaking change: NuGet packages with no runtime assets aren't included in deps.json"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/deps-json-trimmed-packages.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where NuGet packages that don't contribute runtime assets might be excluded from deps.json files."
+ms.date: 08/27/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/48132
 ---
-
 # NuGet packages with no runtime assets aren't included in deps.json
 
 NuGet packages or other libraries that don't contribute any runtime assets are now excluded from the deps.json file if removing them wouldn't cause dependency resolution issues.
@@ -28,7 +26,7 @@ NuGet packages or other libraries might be excluded from the deps.json file if:
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
@@ -50,4 +48,4 @@ None.
 
 ## See also
 
-- Pruning of framework-provided package references
+- [Pruning of framework-provided package references](../../../whats-new/dotnet-10/sdk.md#pruning-of-framework-provided-package-references)

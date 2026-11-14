@@ -1,19 +1,13 @@
----
-title: "no-useless-coercion"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-useless-coercion.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-useless-coercion
 
 📝 Disallow useless type coercions of values that are already of the target type.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Calling `Boolean()`, `String()`, `Number()`, or `BigInt()` on a value that is already of that type is a no-op. It adds noise and can hide the author's intent.
 
@@ -25,7 +19,7 @@ The check is syntactic, so it catches the common cases without type information,
 
 In TypeScript, `Boolean()` calls inside functions without explicit return annotations are ignored because removing them can introduce inferred type predicates.
 
-For redundant wrapper callbacks like `array.map(x => String(x))`, see `prefer-native-coercion-functions`. For `Boolean()` casts inside array predicate callbacks, see `no-useless-boolean-cast`.
+For redundant wrapper callbacks like `array.map(x => String(x))`, see [`prefer-native-coercion-functions`](./prefer-native-coercion-functions.md). For `Boolean()` casts inside array predicate callbacks, see [`no-useless-boolean-cast`](./no-useless-boolean-cast.md).
 
 ## Examples
 
@@ -85,5 +79,5 @@ const b = someString;
 const c = someString;
 ```
 
-> **Tip:**
-> Unlike `@typescript-eslint/no-unnecessary-type-conversion`, this rule works without typed linting, using type information only when available.
+> [!TIP]
+> Unlike [`@typescript-eslint/no-unnecessary-type-conversion`](https://typescript-eslint.io/rules/no-unnecessary-type-conversion), this rule works without [typed linting](https://typescript-eslint.io/getting-started/typed-linting), using type information only when available.

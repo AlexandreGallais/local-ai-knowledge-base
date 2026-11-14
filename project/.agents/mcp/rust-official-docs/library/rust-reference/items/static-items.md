@@ -1,20 +1,13 @@
----
-title: "Static items"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/items/static-items.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[items.static]
 # Static items
 
 r[items.static.syntax]
-```grammar
+```grammar,items
 StaticItem ->
     ItemSafety?[^extern-safety] `static` `mut`? IDENTIFIER `:` Type ( `=` Expression )? `;`
 ```
+
+[^extern-safety]: The `safe` and `unsafe` function qualifiers are only allowed semantically within `extern` blocks.
 
 r[items.static.intro]
 A *static item* is similar to a [constant], except that it represents an allocation in the program that is initialized with the initializer expression. All references and raw pointers to the static refer to the same allocation.
@@ -23,7 +16,7 @@ r[items.static.lifetime]
 Static items have the `static` lifetime, which outlives all other lifetimes in a Rust program. Static items do not call [`drop`] at the end of the program.
 
 r[items.static.storage-disjointness]
-If the `static` has a size of at least 1 byte, this allocation is disjoint from all other such `static` allocations as well as heap allocations and stack-allocated variables. However, the storage of immutable `static` items can overlap with allocations that do not themselves have a unique address, such as [promoteds] and `const` items.
+If the `static` has a size of at least 1 byte, this allocation is disjoint from all other such `static` allocations as well as heap allocations and stack-allocated variables. However, the storage of immutable `static` items can overlap with allocations that do not themselves have a unique address, such as [promoteds] and [`const` items][constant].
 
 r[items.static.namespace]
 The static declaration defines a static value in the [value namespace] of the module or block where it is located.
@@ -38,7 +31,7 @@ r[items.static.safety]
 All access to a static is safe, but there are a number of restrictions on statics:
 
 r[items.static.sync]
-* The type must have the `Sync` trait bound to allow thread-safe access.
+* The type must have the [`Sync`](std::marker::Sync) trait bound to allow thread-safe access.
 
 r[items.static.init-omission]
 The initializer expression must be omitted in an [external block], and must be provided for free static items.
@@ -143,3 +136,11 @@ It can be confusing whether or not you should use a constant item or a static it
 * Large amounts of data are being stored.
 * The single-address property of statics is required.
 * Interior mutability is required.
+
+[constant]: constant-items.md
+[`drop`]: ../destructors.md
+[constant expression]: ../const_eval.md#constant-expressions
+[external block]: external-blocks.md
+[interior mutable]: ../interior-mutability.md
+[value namespace]: ../names/namespaces.md
+[promoteds]: ../destructors.md#constant-promotion

@@ -1,10 +1,5 @@
 ---
-title: "includeSource | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/include-source.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: includeSource | Config
 ---
 
 # includeSource
@@ -12,14 +7,15 @@ license: "MIT"
 - **Type:** `string[]`
 - **Default:** `[]`
 
-A list of glob patterns that match your in-source test files. These patterns are resolved relative to the `root` (`process.cwd()` by default).
+A list of [glob patterns](https://superchupu.dev/tinyglobby/comparison) that match your [in-source test files](/guide/in-source). These patterns are resolved relative to the [`root`](/config/root) ([`process.cwd()`](https://nodejs.org/api/process.html#processcwd) by default).
 
 When defined, Vitest will run all matched files that have `import.meta.vitest` inside.
 
-**Warning:**
+::: warning
 Vitest performs a simple text-based inclusion check on source files. If a file contains `import.meta.vitest`, even in a comment, it will be matched as an in-source test file.
+:::
 
-Vitest uses the `tinyglobby` package to resolve the globs.
+Vitest uses the [`tinyglobby`](https://npmx.dev/package/tinyglobby) package to resolve the globs.
 
 ## Example
 
@@ -35,7 +31,7 @@ export default defineConfig({
 
 Then you can write tests inside your source files:
 
-```ts
+```ts [src/index.ts]
 export function add(...args: number[]) {
   return args.reduce((a, b) => a + b, 0)
 }
@@ -56,7 +52,7 @@ For your production build, you need to replace the `import.meta.vitest` with `un
 
 ::: code-group
 
-```js
+```js [vite.config.ts]
 import { defineConfig } from 'vite'
 
 export default defineConfig({
@@ -66,7 +62,7 @@ export default defineConfig({
 })
 ```
 
-```js
+```js [rolldown.config.js]
 import { defineConfig } from 'rolldown/config'
 
 export default defineConfig({
@@ -78,7 +74,7 @@ export default defineConfig({
 })
 ```
 
-```js
+```js [rollup.config.js]
 import replace from '@rollup/plugin-replace' // [!code ++]
 
 export default {
@@ -91,7 +87,7 @@ export default {
 }
 ```
 
-```js
+```js [build.config.js]
 import { defineBuildConfig } from 'unbuild'
 
 export default defineBuildConfig({
@@ -102,7 +98,7 @@ export default defineBuildConfig({
 })
 ```
 
-```js
+```js [webpack.config.js]
 const webpack = require('webpack')
 
 module.exports = {
@@ -114,13 +110,17 @@ module.exports = {
 }
 ```
 
-**Tip:**
+:::
+
+::: tip
 To get TypeScript support for `import.meta.vitest`, add `vitest/importMeta` to your `tsconfig.json`:
 
-```json
+```json [tsconfig.json]
 {
   "compilerOptions": {
     "types": ["vitest/importMeta"]
   }
 }
 ```
+
+:::

@@ -1,13 +1,16 @@
 ---
-title: "grouped-accessor-pairs"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/grouped-accessor-pairs.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: grouped-accessor-pairs
+rule_type: suggestion
+related_rules:
+- accessor-pairs
+- no-dupe-keys
+- no-dupe-class-members
+further_reading:
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
 ---
 
-# grouped-accessor-pairs
 
 A getter and setter for the same property don't necessarily have to be defined adjacent to each other.
 
@@ -45,11 +48,11 @@ This rule requires grouped definitions of accessor functions for the same proper
 
 Optionally, this rule can also enforce consistent order (`getBeforeSet` or `setBeforeGet`).
 
-This rule does not enforce the existence of the pair for a getter or a setter. See accessor-pairs if you also want to enforce getter/setter pairs.
+This rule does not enforce the existence of the pair for a getter or a setter. See [accessor-pairs](accessor-pairs) if you also want to enforce getter/setter pairs.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint grouped-accessor-pairs: "error"*/
@@ -95,9 +98,11 @@ const Bar = class {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint grouped-accessor-pairs: "error"*/
@@ -143,6 +148,8 @@ const Bar = class {
 }
 ```
 
+:::
+
 ## Options
 
 This rule has a primary string and an optional secondary object option.
@@ -158,7 +165,7 @@ The optional object option allows opting-in to check additional object-likes:
 
 Examples of **incorrect** code for this rule with the `"getBeforeSet"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint grouped-accessor-pairs: ["error", "getBeforeSet"]*/
@@ -190,10 +197,12 @@ const Bar = class {
     }
 }
 ```
+
+:::
 
 Examples of **correct** code for this rule with the `"getBeforeSet"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint grouped-accessor-pairs: ["error", "getBeforeSet"]*/
@@ -225,12 +234,14 @@ const Bar = class {
     }
 }
 ```
+
+:::
 
 ### setBeforeGet
 
 Examples of **incorrect** code for this rule with the `"setBeforeGet"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint grouped-accessor-pairs: ["error", "setBeforeGet"]*/
@@ -262,10 +273,12 @@ const Bar = class {
     }
 }
 ```
+
+:::
 
 Examples of **correct** code for this rule with the `"setBeforeGet"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint grouped-accessor-pairs: ["error", "setBeforeGet"]*/
@@ -298,11 +311,12 @@ const Bar = class {
 }
 ```
 
+:::
 ### enforceForTSTypes
 
 Examples of **incorrect** code for this rule with `["anyOrder", { enforceForTSTypes: true }]`:
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /*eslint grouped-accessor-pairs: ["error", "anyOrder", { enforceForTSTypes: true }] */
@@ -319,10 +333,12 @@ type T = {
     set a(value: string): void
 };
 ```
+
+:::
 
 Examples of **correct** code for this rule with `["anyOrder", { enforceForTSTypes: true }]`:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint grouped-accessor-pairs: ["error", "anyOrder", { enforceForTSTypes: true }] */
@@ -337,6 +353,8 @@ type T = {
     get a(): string,
 };
 ```
+
+:::
 
 ## Known Limitations
 
@@ -373,6 +391,6 @@ const bar = {
 
 Also, this rule does not report any warnings for properties that have duplicate getters or setters.
 
-See no-dupe-keys if you also want to disallow duplicate keys in object literals.
+See [no-dupe-keys](no-dupe-keys) if you also want to disallow duplicate keys in object literals.
 
-See no-dupe-class-members if you also want to disallow duplicate names in class definitions.
+See [no-dupe-class-members](no-dupe-class-members) if you also want to disallow duplicate names in class definitions.

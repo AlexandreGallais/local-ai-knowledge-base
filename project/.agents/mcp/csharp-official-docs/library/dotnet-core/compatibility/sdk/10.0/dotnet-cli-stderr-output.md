@@ -1,10 +1,8 @@
 ---
 title: "Breaking change - dotnet CLI commands log non-command-relevant data to stderr"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/dotnet-cli-stderr-output.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where some dotnet CLI commands log verbose and non-command-relevant data to stderr instead of stdout."
+ms.date: 10/08/2025
+ai-usage: ai-generated
 ---
 
 # dotnet CLI commands log non-command-relevant data to stderr
@@ -25,7 +23,7 @@ Starting in .NET 10, first-run messages for the `dotnet` CLI emit to `stderr`. (
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

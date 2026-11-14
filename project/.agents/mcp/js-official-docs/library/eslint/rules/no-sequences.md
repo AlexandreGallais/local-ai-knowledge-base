@@ -1,13 +1,8 @@
 ---
-title: "no-sequences"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-sequences.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-sequences
+rule_type: suggestion
 ---
 
-# no-sequences
 
 The comma operator includes multiple expressions where only one is expected. It evaluates each operand from left to right and returns the value of the last operand. However, this frequently obscures side effects, and its use is often an accident. Here are some examples of sequences:
 
@@ -30,7 +25,7 @@ This rule forbids the use of the comma operator, with the following exceptions:
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint no-sequences: "error"*/
@@ -52,9 +47,11 @@ while (val = foo(), val < 42);
 with (doSomething(), val) {}
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct { "sourceType": "script" }
 
 ```js
 /*eslint no-sequences: "error"*/
@@ -76,13 +73,15 @@ while ((val = foo(), val < 42));
 with ((doSomething(), val)) {}
 ```
 
+:::
+
 ### Note about arrow function bodies
 
 If an arrow function body is a statement rather than a block, and that statement contains a sequence, you need to use double parentheses around the statement to indicate that the sequence is intentional.
 
 Examples of **incorrect** code for arrow functions:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-sequences: "error"*/
@@ -93,9 +92,11 @@ const baz = () => ((bar = 123), 10);
 const qux = () => { return (bar = 123), 10 }
 ```
 
+:::
+
 Examples of **correct** code for arrow functions:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-sequences: "error"*/
@@ -105,6 +106,8 @@ const baz = () => (((bar = 123), 10));
 
 const qux = () => { return ((bar = 123), 10) }
 ```
+
+:::
 
 ## Options
 
@@ -116,7 +119,7 @@ This rule takes one option, an object, with the following properties:
 
 Examples of **incorrect** code for this rule with the `{ "allowInParentheses": false }` option:
 
-**Incorrect:**
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint no-sequences: ["error", { "allowInParentheses": false }]*/
@@ -140,15 +143,19 @@ with ((doSomething(), val)) {}
 const foo = (val) => ((console.log('bar'), val));
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "allowInParentheses": false }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-sequences: ["error", { "allowInParentheses": false }]*/
 
 for (i = 0, j = 10; i < j; i++, j--);
 ```
+
+:::
 
 ## When Not To Use It
 

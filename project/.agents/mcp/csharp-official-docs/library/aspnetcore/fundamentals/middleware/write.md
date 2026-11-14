@@ -1,254 +1,191 @@
 ---
-title: "Write custom ASP.NET Core middleware"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/middleware/write.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Write custom ASP.NET Core middleware
+ai-usage: ai-assisted
+description: Learn how to write custom ASP.NET Core middleware.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 06/21/2025
 ---
-
 # Write custom ASP.NET Core middleware
 
-By Fiyaz Hasan, Rick Anderson, and Steve Smith
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+:::moniker range=">= aspnetcore-6.0"
+
+By [Fiyaz Hasan](https://twitter.com/FiyazBinHasan), [Rick Anderson](https://twitter.com/RickAndMSFT), and [Steve Smith](https://ardalis.com/)
 
 Middleware is software that's assembled into an app pipeline to handle requests and responses. ASP.NET Core provides a rich set of built-in middleware components, but in some scenarios you might want to write a custom middleware.
 
-This topic describes how to write *convention-based* middleware. For an approach that uses strong typing and per-request activation, see Factory-based middleware activation in ASP.NET Core.
+This topic describes how to write *convention-based* middleware. For an approach that uses strong typing and per-request activation, see [Factory-based middleware activation in ASP.NET Core](extensibility.md).
 
 ## Middleware class
 
 Middleware is generally encapsulated in a class and exposed with an extension method. Consider the following inline middleware, which sets the culture for the current request from a query string:
 
-```csharp
-using System.Globalization;
+:::code language="csharp" source="~/fundamentals/middleware/write/samples/WebMiddleware/Program.cs" id="snippet_first" highlight="8-21":::
 
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
-
-app.UseHttpsRedirection();
-
-app.Use(async (context, next) =>
-{
-    var cultureQuery = context.Request.Query["culture"];
-    if (!string.IsNullOrWhiteSpace(cultureQuery))
-    {
-        var culture = new CultureInfo(cultureQuery);
-
-        CultureInfo.CurrentCulture = culture;
-        CultureInfo.CurrentUICulture = culture;
-    }
-
-    // Call the next delegate/middleware in the pipeline.
-    await next(context);
-});
-
-app.Run(async (context) =>
-{
-    await context.Response.WriteAsync(
-        $"CurrentCulture.DisplayName: {CultureInfo.CurrentCulture.DisplayName}");
-});
-
-app.Run();
-```
-The preceding highlighted inline middleware is used to demonstrate creating a middleware component by calling `Microsoft.AspNetCore.Builder.UseExtensions.Use*`. The preceding `Use` extension method adds a middleware delegate defined in-line to the application's request pipeline.
+The preceding highlighted inline middleware is used to demonstrate creating a middleware component by calling <xref:Microsoft.AspNetCore.Builder.UseExtensions.Use*?displayProperty=fullName>. The preceding `Use` extension method adds a middleware [delegate](/dotnet/csharp/programming-guide/delegates/) defined in-line to the application's request pipeline.
 
 There are two overloads available for the `Use` extension:
 
-* One takes a `Microsoft.AspNetCore.Http.HttpContext` and a `Func<Task>`. Invoke the `Func<Task>` without any parameters.
-* The other takes a `HttpContext` and a `Microsoft.AspNetCore.Http.RequestDelegate`. Invoke the `RequestDelegate` by passing the `HttpContext`.
+* One takes a <xref:Microsoft.AspNetCore.Http.HttpContext> and a `Func<Task>`. Invoke the `Func<Task>` without any parameters.
+* The other takes a `HttpContext` and a <xref:Microsoft.AspNetCore.Http.RequestDelegate>. Invoke the `RequestDelegate` by passing the `HttpContext`.
 
 Prefer using the later overload as it saves two internal per-request allocations that are required when using the other overload.
 
 Test the middleware by passing in the culture. For example, request `https://localhost:5001/?culture=es-es`.
 
-For ASP.NET Core's built-in localization support, see Globalization and localization in ASP.NET Core.
+For ASP.NET Core's built-in localization support, see [Globalization and localization in ASP.NET Core](../localization.md).
+
+<!--?culture=de-de ?culture=fr-fr /?culture=zh-hk -->
 
 The following code moves the middleware delegate to a class:
 
-```csharp
-using System.Globalization;
+:::code language="csharp" source="~/fundamentals/middleware/write/samples/WebMiddleware/RequestCultureMiddleware.cs" id="snippet_1":::
 
-namespace Middleware.Example;
-
-public class RequestCultureMiddleware
-{
-    private readonly RequestDelegate _next;
-
-    public RequestCultureMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
-
-    public async Task InvokeAsync(HttpContext context)
-    {
-        var cultureQuery = context.Request.Query["culture"];
-        if (!string.IsNullOrWhiteSpace(cultureQuery))
-        {
-            var culture = new CultureInfo(cultureQuery);
-
-            CultureInfo.CurrentCulture = culture;
-            CultureInfo.CurrentUICulture = culture;
-        }
-
-        // Call the next delegate/middleware in the pipeline.
-        await _next(context);
-    }
-}
-```
 The middleware class must include:
 
-* A public constructor with a parameter of type `Microsoft.AspNetCore.Http.RequestDelegate`.
+* A public constructor with a parameter of type <xref:Microsoft.AspNetCore.Http.RequestDelegate>.
 * A public method named `Invoke` or `InvokeAsync`. This method must:
   * Return a `Task`.
-  * Accept a first parameter of type `Microsoft.AspNetCore.Http.HttpContext`.
+  * Accept a first parameter of type <xref:Microsoft.AspNetCore.Http.HttpContext>.
+  
+Additional parameters for the constructor and `Invoke`/`InvokeAsync` are populated by [dependency injection (DI)](../dependency-injection.md).
 
-Additional parameters for the constructor and `Invoke`/`InvokeAsync` are populated by dependency injection (DI).
+Typically, an extension method is created to expose the middleware through <xref:Microsoft.AspNetCore.Builder.IApplicationBuilder>:
 
-Typically, an extension method is created to expose the middleware through `Microsoft.AspNetCore.Builder.IApplicationBuilder`:
+:::code language="csharp" source="~/fundamentals/middleware/write/samples/WebMiddleware/RequestCultureMiddleware.cs" id="snippet_all" highlight="30-99":::
 
-```csharp
-using System.Globalization;
-
-namespace Middleware.Example;
-
-public class RequestCultureMiddleware
-{
-    private readonly RequestDelegate _next;
-
-    public RequestCultureMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
-
-    public async Task InvokeAsync(HttpContext context)
-    {
-        var cultureQuery = context.Request.Query["culture"];
-        if (!string.IsNullOrWhiteSpace(cultureQuery))
-        {
-            var culture = new CultureInfo(cultureQuery);
-
-            CultureInfo.CurrentCulture = culture;
-            CultureInfo.CurrentUICulture = culture;
-        }
-
-        // Call the next delegate/middleware in the pipeline.
-        await _next(context);
-    }
-}
-```
 The following code calls the middleware from `Program.cs`:
 
-```csharp
-using Middleware.Example;
-using System.Globalization;
+:::code language="csharp" source="~/fundamentals/middleware/write/samples/WebMiddleware/Program.cs" id="snippet_2" highlight="9":::
 
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
-
-app.UseHttpsRedirection();
-
-app.UseRequestCulture();
-
-app.Run(async (context) =>
-{
-    await context.Response.WriteAsync(
-        $"CurrentCulture.DisplayName: {CultureInfo.CurrentCulture.DisplayName}");
-});
-
-app.Run();
-```
 ## Middleware dependencies
 
-Middleware should follow the Explicit Dependencies Principle by exposing its dependencies in its constructor. Middleware is constructed once per *application lifetime*.
+Middleware should follow the [Explicit Dependencies Principle](/dotnet/standard/modern-web-apps-azure-architecture/architectural-principles#explicit-dependencies) by exposing its dependencies in its constructor. Middleware is constructed once per *application lifetime*.
 
-Middleware components can resolve their dependencies from dependency injection (DI) through constructor parameters. `Microsoft.AspNetCore.Builder.UseMiddlewareExtensions.UseMiddleware*` can also accept additional parameters directly.
+Middleware components can resolve their dependencies from [dependency injection (DI)](../dependency-injection.md) through constructor parameters. <xref:Microsoft.AspNetCore.Builder.UseMiddlewareExtensions.UseMiddleware*> can also accept additional parameters directly.
 
 ## Per-request middleware dependencies
 
 Middleware is constructed at app startup and therefore has application life
-time. Scoped lifetime services used by middleware constructors aren't shared with other dependency-injected types during each request. To share a *scoped* service between middleware and other types, add these services to the `InvokeAsync` method's signature. The `InvokeAsync` method can accept additional parameters that are populated by DI:
+time. [Scoped lifetime](/dotnet/core/extensions/dependency-injection/service-lifetimes#scoped) services used by middleware constructors aren't shared with other dependency-injected types during each request. To share a *scoped* service between middleware and other types, add these services to the `InvokeAsync` method's signature. The `InvokeAsync` method can accept additional parameters that are populated by DI:
+
+:::code language="csharp" source="~/fundamentals/middleware/write/samples/WebMiddleware/MyCustomMiddleware.cs":::
+
+[Lifetime and registration options](../dependency-injection.md#lifetime-and-registration-options) contains a complete sample of middleware with *scoped* lifetime services.
+
+The following code is used to test the preceding middleware:
+
+:::code language="csharp" source="~/fundamentals/middleware/write/samples/WebMiddleware/Program.cs" id="snippet_3" highlight="4,10":::
+
+The `IMessageWriter` interface and implementation:
+
+:::code language="csharp" source="~/fundamentals/middleware/write/samples/WebMiddleware/IMessageWriter.cs":::
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-6.0"
+
+By [Rick Anderson](https://twitter.com/RickAndMSFT) and [Steve Smith](https://ardalis.com/)
+
+Middleware is software that's assembled into an app pipeline to handle requests and responses. ASP.NET Core provides a rich set of built-in middleware components, but in some scenarios you might want to write a custom middleware.
+
+> [!NOTE]
+> This topic describes how to write *convention-based* middleware. For an approach that uses strong typing and per-request activation, see [Factory-based middleware activation in ASP.NET Core](extensibility.md).
+
+## Middleware class
+
+Middleware is generally encapsulated in a class and exposed with an extension method. Consider the following middleware, which sets the culture for the current request from a query string:
+
+:::code language="csharp" source="write/snapshot/StartupCulture.cs":::
+
+The preceding sample code is used to demonstrate creating a middleware component. For ASP.NET Core's built-in localization support, see [Globalization and localization in ASP.NET Core](../localization.md).
+
+Test the middleware by passing in the culture. For example, request `https://localhost:5001/?culture=no`.
+
+The following code moves the middleware delegate to a class:
+
+:::code language="csharp" source="write/snapshot/RequestCultureMiddleware.cs":::
+
+The middleware class must include:
+
+* A public constructor with a parameter of type <xref:Microsoft.AspNetCore.Http.RequestDelegate>.
+* A public method named `Invoke` or `InvokeAsync`. This method must:
+  * Return a `Task`.
+  * Accept a first parameter of type <xref:Microsoft.AspNetCore.Http.HttpContext>.
+  
+Additional parameters for the constructor and `Invoke`/`InvokeAsync` are populated by [dependency injection (DI)](../dependency-injection.md).
+
+## Middleware dependencies
+
+Middleware should follow the [Explicit Dependencies Principle](/dotnet/standard/modern-web-apps-azure-architecture/architectural-principles#explicit-dependencies) by exposing its dependencies in its constructor. Middleware is constructed once per *application lifetime*. See the [Per-request middleware dependencies](#per-request-middleware-dependencies) section if you need to share services with middleware within a request.
+
+Middleware components can resolve their dependencies from [dependency injection (DI)](../dependency-injection.md) through constructor parameters. <xref:Microsoft.AspNetCore.Builder.UseMiddlewareExtensions.UseMiddleware*> can also accept additional parameters directly.
+
+## Per-request middleware dependencies
+
+Because middleware is constructed at app startup, not per-request, *scoped* lifetime services used by middleware constructors aren't shared with other dependency-injected types during each request. If you must share a *scoped* service between your middleware and other types, add these services to the `InvokeAsync` method's signature. The `InvokeAsync` method can accept additional parameters that are populated by DI:
 
 ```csharp
-﻿namespace Middleware.Example;
-
-public class MyCustomMiddleware
+public class CustomMiddleware
 {
     private readonly RequestDelegate _next;
 
-    public MyCustomMiddleware(RequestDelegate next)
+    public CustomMiddleware(RequestDelegate next)
     {
         _next = next;
     }
 
-    // IMessageWriter is injected into InvokeAsync
-    public async Task InvokeAsync(HttpContext httpContext, IMessageWriter svc)
+    // IMyScopedService is injected into InvokeAsync
+    public async Task InvokeAsync(HttpContext httpContext, IMyScopedService svc)
     {
-        svc.Write(DateTime.Now.Ticks.ToString());
+        svc.MyProperty = 1000;
         await _next(httpContext);
     }
 }
-
-public static class MyCustomMiddlewareExtensions
-{
-    public static IApplicationBuilder UseMyCustomMiddleware(
-        this IApplicationBuilder builder)
-    {
-        return builder.UseMiddleware<MyCustomMiddleware>();
-    }
-}
 ```
-Lifetime and registration options contains a complete sample of middleware with *scoped* lifetime services.
 
-The following code is used to test the preceding middleware:
+[Lifetime and registration options](../dependency-injection.md#lifetime-and-registration-options) contains a complete sample of middleware with *scoped* lifetime services.
 
-```csharp
-using Middleware.Example;
-var builder = WebApplication.CreateBuilder(args);
+## Middleware extension method
 
-builder.Services.AddScoped<IMessageWriter, LoggingMessageWriter>();
+The following extension method exposes the middleware through <xref:Microsoft.AspNetCore.Builder.IApplicationBuilder>:
 
-var app = builder.Build();
+:::code language="csharp" source="write/snapshot/RequestCultureMiddlewareExtensions.cs":::
 
-app.UseHttpsRedirection();
+The following code calls the middleware from `Startup.Configure`:
 
-app.UseMyCustomMiddleware();
+:::code language="csharp" source="write/snapshot/Startup.cs" highlight="5":::
 
-app.MapGet("/", () => "Hello World!");
+:::moniker-end
 
-app.Run();
-```
-The `IMessageWriter` interface and implementation:
-
-```csharp
-﻿namespace Middleware.Example;
-
-public interface IMessageWriter
-{
-    void Write(string message);
-}
-
-public class LoggingMessageWriter : IMessageWriter
-{
-
-    private readonly ILogger<LoggingMessageWriter> _logger;
-
-    public LoggingMessageWriter(ILogger<LoggingMessageWriter> logger) =>
-        _logger = logger;
-
-    public void Write(string message) =>
-        _logger.LogInformation(message);
-}
-```
 ## Related content
 
-* Sample code used in this article
-* UseExtensions source on GitHub
-* Lifetime and registration options contains a complete sample of middleware with *scoped*, *transient*, and *singleton* lifetime services.
-* DEEP DIVE: HOW IS THE ASP.NET CORE MIDDLEWARE PIPELINE BUILT
-* ASP.NET Core middleware
-* Test ASP.NET Core middleware
-* Migrate HTTP modules to ASP.NET Core middleware
-* App startup in ASP.NET Core
-* Request Features in ASP.NET Core
-* Factory-based middleware activation in ASP.NET Core
-* Middleware activation with a third-party container in ASP.NET Core
+:::moniker range=">= aspnetcore-6.0"
+
+* [Sample code used in this article](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/fundamentals/middleware/write/samples/WebMiddleware)
+* [UseExtensions source on GitHub](https://github.com/dotnet/aspnetcore/blob/main/src/Http/Http.Abstractions/src/Extensions/UseExtensions.cs)
+* [Lifetime and registration options](../dependency-injection.md#lifetime-and-registration-options) contains a complete sample of middleware with *scoped*, *transient*, and *singleton* lifetime services.
+* [DEEP DIVE: HOW IS THE ASP.NET CORE MIDDLEWARE PIPELINE BUILT](https://www.stevejgordon.co.uk/how-is-the-asp-net-core-middleware-pipeline-built)
+* [ASP.NET Core middleware](index.md)
+* [Test ASP.NET Core middleware](../../test/middleware.md)
+* [Migrate HTTP modules to ASP.NET Core middleware](../../migration/fx-to-core/areas/http-modules.md)
+* [App startup in ASP.NET Core](../startup.md)
+* [Request Features in ASP.NET Core](../request-features.md)
+* [Factory-based middleware activation in ASP.NET Core](extensibility.md)
+* [Middleware activation with a third-party container in ASP.NET Core](extensibility-third-party-container.md)
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-6.0"
+
+* [Lifetime and registration options](../dependency-injection.md#lifetime-and-registration-options) contains a complete sample of middleware with *scoped*, *transient*, and *singleton* lifetime services.
+* [ASP.NET Core middleware](index.md)
+* [Test ASP.NET Core middleware](../../test/middleware.md)
+* [Migrate HTTP modules to ASP.NET Core middleware](../../migration/fx-to-core/areas/http-modules.md)
+* [App startup in ASP.NET Core](../startup.md)
+* [Request Features in ASP.NET Core](../request-features.md)
+* [Factory-based middleware activation in ASP.NET Core](extensibility.md)
+* [Middleware activation with a third-party container in ASP.NET Core](extensibility-third-party-container.md)
+
+:::moniker-end

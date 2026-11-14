@@ -1,12 +1,20 @@
 ---
 title: "Consuming Unmanaged DLL Functions"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/native-interop/consuming-unmanaged-dll-functions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Consume unmanaged DLL functions by using the platform invoke service, which lets managed code call unmanaged functions implemented in DLL libraries.
+ms.date: 07/08/2026
+ai-usage: ai-assisted
+helpviewer_keywords:
+  - "unmanaged functions, calling"
+  - "COM interop, DLL functions"
+  - "unmanaged functions"
+  - "COM interop, platform invoke"
+  - "platform invoke, about platform invoke"
+  - "DLL functions, consuming unmanaged"
+  - "interoperation with unmanaged code, DLL functions"
+  - "interoperation with unmanaged code, platform invoke"
+  - "platform invoke"
+  - "DLL functions"
 ---
-
 # Consuming Unmanaged DLL Functions
 
 Platform invoke is a service that enables managed code to call unmanaged functions implemented in dynamic link libraries (DLLs), such as those in the Windows API. It locates and invokes an exported function and marshals its arguments (integers, strings, arrays, structures, and so on) across the interoperation boundary as needed.
@@ -15,15 +23,15 @@ Platform invoke is a service that enables managed code to call unmanaged functio
 
 #### To consume exported DLL functions
 
-1. Identify functions in DLLs.
+1. [Identify functions in DLLs](identifying-functions-in-dlls.md).
 
      Minimally, you must specify the name of the function and name of the DLL that contains it.
 
-2. Create a class to hold DLL functions.
+2. [Create a class to hold DLL functions](creating-a-class-to-hold-dll-functions.md).
 
      You can use an existing class, create an individual class for each unmanaged function, or create one class that contains a set of related unmanaged functions.
 
-3. Create prototypes in managed code.
+3. [Create prototypes in managed code](creating-prototypes-in-managed-code.md).
 
      [Visual Basic] Use the `Declare` statement with the `Function` and `Lib` keywords. In some rare cases, you can use the `DllImportAttribute` with the **Shared Function** keywords. These cases are explained later in this section.
 
@@ -31,15 +39,17 @@ Platform invoke is a service that enables managed code to call unmanaged functio
 
      [C++] Use the `DllImportAttribute` to identify the DLL and function. Mark the wrapper method or function with **extern "C"**.
 
-4. Call a DLL function.
+4. [Call a DLL function](calling-a-dll-function.md).
 
-     Call the method on your managed class as you would any other managed method. Passing structures and implementing callback functions are special cases.
+     Call the method on your managed class as you would any other managed method. [Passing structures](passing-structures.md) and [implementing callback functions](callback-functions.md) are special cases.
 
- For examples that demonstrate how to construct .NET-based declarations to be used with platform invoke, see Marshalling Data with Platform Invoke.
+ For examples that demonstrate how to construct .NET-based declarations to be used with platform invoke, see [Marshalling Data with Platform Invoke](marshalling-data-with-platform-invoke.md).
 
 ## A closer look at platform invoke
 
  Platform invoke relies on metadata to locate exported functions and marshal their arguments at runtime. The following illustration shows this process.
+
+ ![Diagram that shows a platform invoke call.](./media/consuming-unmanaged-dll-functions/platform-invoke-call.gif)
 
  When platform invoke calls an unmanaged function, it performs the following sequence of actions:
 
@@ -49,7 +59,7 @@ Platform invoke is a service that enables managed code to call unmanaged functio
 
 3. Locates the address of the function in memory and pushes its arguments onto the stack, marshalling data as required.
 
-    > **Note:**
+    > [!NOTE]
     > Locating and loading the DLL, and locating the address of the function in memory occur only on the first call to the function.
 
 4. Transfers control to the unmanaged function.
@@ -58,6 +68,6 @@ Platform invoke is a service that enables managed code to call unmanaged functio
 
 ## See also
 
-- Interoperating with Unmanaged Code
-- Platform Invoke Examples
-- Interop Marshaling
+- [Interoperating with Unmanaged Code](index.md)
+- [Platform Invoke Examples](platform-invoke-examples.md)
+- [Interop Marshaling](interop-marshalling.md)

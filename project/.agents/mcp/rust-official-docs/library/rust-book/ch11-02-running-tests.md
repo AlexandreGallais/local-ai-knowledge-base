@@ -1,14 +1,3 @@
----
-title: "ch11-02-running-tests"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch11-02-running-tests.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch11-02-running-tests
-
 ## Controlling How Tests Are Run
 
 Just as `cargo run` compiles your code and then runs the resultant binary,
@@ -24,8 +13,10 @@ binary. To separate these two types of arguments, you list the arguments that
 go to `cargo test` followed by the separator `--` and then the ones that go to
 the test binary. Running `cargo test --help` displays the options you can use
 with `cargo test`, and running `cargo test -- --help` displays the options you
-can use after the separator. These options are also documented in the “Tests”
-section of _The `rustc` Book_.
+can use after the separator. These options are also documented in [the “Tests”
+section of _The `rustc` Book_][tests].
+
+[tests]: https://doc.rust-lang.org/rustc/tests/index.html
 
 ### Running Tests in Parallel or Consecutively
 
@@ -70,61 +61,18 @@ printed to standard output with the rest of the failure message.
 As an example, Listing 11-10 has a silly function that prints the value of its
 parameter and returns 10, as well as a test that passes and a test that fails.
 
-**Listing 11-10: Tests for a function that calls `println!`** (src/lib.rs)
+<Listing number="11-10" file-name="src/lib.rs" caption="Tests for a function that calls `println!`">
 
-```rust
-fn prints_and_returns_10(a: i32) -> i32 {
-    println!("I got the value {a}");
-    10
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn this_test_will_pass() {
-        let value = prints_and_returns_10(4);
-        assert_eq!(value, 10);
-    }
-
-    #[test]
-    fn this_test_will_fail() {
-        let value = prints_and_returns_10(8);
-        assert_eq!(value, 5);
-    }
-}
+```rust,panics,noplayground
+{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-10/src/lib.rs}}
 ```
+
+</Listing>
 
 When we run these tests with `cargo test`, we’ll see the following output:
 
 ```console
-$ cargo test
-   Compiling silly-function v0.1.0 (file:///projects/silly-function)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.58s
-     Running unittests src/lib.rs (target/debug/deps/silly_function-160869f38cff9166)
-
-running 2 tests
-test tests::this_test_will_fail ... FAILED
-test tests::this_test_will_pass ... ok
-
-failures:
-
----- tests::this_test_will_fail stdout ----
-I got the value 8
-
-thread 'tests::this_test_will_fail' (6019863) panicked at src/lib.rs:19:9:
-assertion `left == right` failed
-  left: 10
- right: 5
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-
-failures:
-    tests::this_test_will_fail
-
-test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-error: test failed, to rerun pass `--lib`
+{{#include ../listings/ch11-writing-automated-tests/listing-11-10/output.txt}}
 ```
 
 Note that nowhere in this output do we see `I got the value 4`, which is
@@ -143,40 +91,7 @@ When we run the tests in Listing 11-10 again with the `--show-output` flag, we
 see the following output:
 
 ```console
-$ cargo test -- --show-output
-   Compiling silly-function v0.1.0 (file:///projects/silly-function)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.60s
-     Running unittests src/lib.rs (target/debug/deps/silly_function-160869f38cff9166)
-
-running 2 tests
-test tests::this_test_will_fail ... FAILED
-test tests::this_test_will_pass ... ok
-
-successes:
-
----- tests::this_test_will_pass <example-value> ----
-I got the value 4
-
-successes:
-    tests::this_test_will_pass
-
-failures:
-
----- tests::this_test_will_fail stdout ----
-I got the value 8
-
-thread 'tests::this_test_will_fail' (6022313) panicked at src/lib.rs:19:9:
-assertion `left == right` failed
-  left: 10
- right: 5
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-
-failures:
-    tests::this_test_will_fail
-
-test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-error: test failed, to rerun pass `--lib`
+{{#include ../listings/ch11-writing-automated-tests/output-only-01-show-output/output.txt}}
 ```
 
 ### Running a Subset of Tests by Name
@@ -189,58 +104,19 @@ or names of the test(s) you want to run as an argument.
 To demonstrate how to run a subset of tests, we’ll first create three tests for
 our `add_two` function, as shown in Listing 11-11, and choose which ones to run.
 
-**Listing 11-11: Three tests with three different names** (src/lib.rs)
+<Listing number="11-11" file-name="src/lib.rs" caption="Three tests with three different names">
 
-```rust
-pub fn add_two(a: u64) -> u64 {
-    a + 2
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn add_two_and_two() {
-        let result = add_two(2);
-        assert_eq!(result, 4);
-    }
-
-    #[test]
-    fn add_three_and_two() {
-        let result = add_two(3);
-        assert_eq!(result, 5);
-    }
-
-    #[test]
-    fn one_hundred() {
-        let result = add_two(100);
-        assert_eq!(result, 102);
-    }
-}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-11/src/lib.rs}}
 ```
+
+</Listing>
 
 If we run the tests without passing any arguments, as we saw earlier, all the
 tests will run in parallel:
 
 ```console
-$ cargo test
-   Compiling adder v0.1.0 (file:///projects/adder)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.62s
-     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
-
-running 3 tests
-test tests::add_three_and_two ... ok
-test tests::add_two_and_two ... ok
-test tests::one_hundred ... ok
-
-test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-   Doc-tests adder
-
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+{{#include ../listings/ch11-writing-automated-tests/listing-11-11/output.txt}}
 ```
 
 #### Running Single Tests
@@ -248,15 +124,7 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 We can pass the name of any test function to `cargo test` to run only that test:
 
 ```console
-$ cargo test one_hundred
-   Compiling adder v0.1.0 (file:///projects/adder)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.69s
-     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
-
-running 1 test
-test tests::one_hundred ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+{{#include ../listings/ch11-writing-automated-tests/output-only-02-single-test/output.txt}}
 ```
 
 Only the test with the name `one_hundred` ran; the other two tests didn’t match
@@ -273,22 +141,17 @@ will be run. For example, because two of our tests’ names contain `add`, we ca
 run those two by running `cargo test add`:
 
 ```console
-$ cargo test add
-   Compiling adder v0.1.0 (file:///projects/adder)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.61s
-     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
-
-running 2 tests
-test tests::add_three_and_two ... ok
-test tests::add_two_and_two ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+{{#include ../listings/ch11-writing-automated-tests/output-only-03-multiple-tests/output.txt}}
 ```
 
 This command ran all tests with `add` in the name and filtered out the test
 named `one_hundred`. Also note that the module in which a test appears becomes
 part of the test’s name, so we can run all the tests in a module by filtering
 on the module’s name.
+
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="ignoring-some-tests-unless-specifically-requested"></a>
 
 ### Ignoring Tests Unless Specifically Requested
 
@@ -298,68 +161,24 @@ listing as arguments all tests you do want to run, you can instead annotate the
 time-consuming tests using the `ignore` attribute to exclude them, as shown
 here:
 
-Filename: src/lib.rs
+<span class="filename">Filename: src/lib.rs</span>
 
-```rust
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-
-    #[test]
-    #[ignore]
-    fn expensive_test() {
-        // code that takes an hour to run
-    }
-}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-11-ignore-a-test/src/lib.rs:here}}
 ```
 
 After `#[test]`, we add the `#[ignore]` line to the test we want to exclude.
 Now when we run our tests, `it_works` runs, but `expensive_test` doesn’t:
 
 ```console
-$ cargo test
-   Compiling adder v0.1.0 (file:///projects/adder)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.60s
-     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
-
-running 2 tests
-test tests::expensive_test ... ignored
-test tests::it_works ... ok
-
-test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-   Doc-tests adder
-
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+{{#include ../listings/ch11-writing-automated-tests/no-listing-11-ignore-a-test/output.txt}}
 ```
 
 The `expensive_test` function is listed as `ignored`. If we want to run only
 the ignored tests, we can use `cargo test -- --ignored`:
 
 ```console
-$ cargo test -- --ignored
-   Compiling adder v0.1.0 (file:///projects/adder)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.61s
-     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
-
-running 1 test
-test tests::expensive_test ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
-
-   Doc-tests adder
-
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+{{#include ../listings/ch11-writing-automated-tests/output-only-04-running-ignored/output.txt}}
 ```
 
 By controlling which tests run, you can make sure your `cargo test` results

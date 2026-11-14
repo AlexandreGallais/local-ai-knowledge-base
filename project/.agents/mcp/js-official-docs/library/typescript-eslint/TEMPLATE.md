@@ -1,29 +1,34 @@
 ---
-title: "TEMPLATE"
-tool: "typescript-eslint"
-version: "8.72"
-source: "https://github.com/typescript-eslint/typescript-eslint/blob/12e452f0292212bf9bf443b3988ec230f4ae7097/packages/eslint-plugin/docs/rules/TEMPLATE.md"
-commit: "12e452f0292212bf9bf443b3988ec230f4ae7097"
-license: "MIT"
+description: '<Description from rule metadata here>'
 ---
 
-# TEMPLATE
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+> 🛑 This file is source code, not the primary documentation location! 🛑
+>
+> See **https://typescript-eslint.io/rules/RULE_NAME_REPLACEME** for documentation.
 
 ## Examples
 
 To fill out: tell us more about this rule.
 
-**❌ Incorrect**
+<Tabs>
+<TabItem value="❌ Incorrect">
 
 ```ts
 // To fill out: incorrect code
 ```
 
-**✅ Correct**
+</TabItem>
+<TabItem value="✅ Correct">
 
 ```ts
 // To fill out: correct code
 ```
+
+</TabItem>
+</Tabs>
 
 ## When Not To Use It
 

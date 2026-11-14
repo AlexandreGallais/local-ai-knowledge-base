@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataAssemblyEmit::SetExportedTypeProps Method"
 title: "IMetaDataAssemblyEmit::SetExportedTypeProps Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataassemblyemit-setexportedtypeprops-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataAssemblyEmit.SetExportedTypeProps"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataAssemblyEmit::SetExportedTypeProps"
+  - "IMetaDataAssemblyEmit::SetExportedTypeProps method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataAssemblyEmit::SetExportedTypeProps Method
 
 Modifies the specified `ExportedType` metadata structure.
@@ -16,7 +23,7 @@ Modifies the specified `ExportedType` metadata structure.
 ```cpp
 HRESULT SetExportedTypeProps (
     [in] mdExportedType   ct,
-    [in] mdToken          <example-value>,
+    [in] mdToken          tkImplementation,
     [in] mdTypeDef        tkTypeDef,
     [in] DWORD            dwExportedTypeFlags
 );
@@ -31,18 +38,18 @@ HRESULT SetExportedTypeProps (
  [in] The token, of type `File`, `AssemblyRef`, or `ExportedType`, that specifies how this type is implemented.
 
  `tkTypeDef`
- [in] The `TypeDef` token <example-value> in the code file.
+ [in] The `TypeDef` token referenced in the code file.
 
  `dwExportedTypeFlags`
  [in] A bitwise combination of values that specify attributes of the type.
 
 ## Remarks
 
- To create an `ExportedType` metadata structure, use the IMetaDataAssemblyEmit::DefineExportedType method.
+ To create an `ExportedType` metadata structure, use the [IMetaDataAssemblyEmit::DefineExportedType](imetadataassemblyemit-defineexportedtype-method.md) method.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -50,4 +57,4 @@ HRESULT SetExportedTypeProps (
 
 ## See also
 
-- IMetaDataAssemblyEmit Interface
+- [IMetaDataAssemblyEmit Interface](imetadataassemblyemit-interface.md)

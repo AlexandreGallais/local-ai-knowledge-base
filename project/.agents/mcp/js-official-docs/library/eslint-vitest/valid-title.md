@@ -1,19 +1,12 @@
----
-title: "vitest/valid-title"
-tool: "eslint-vitest"
-version: "1.6"
-source: "https://github.com/vitest-dev/eslint-plugin-vitest/blob/c5df1054a25044a7ca5baf07461b7aee1f15f5f2/docs/rules/valid-title.md"
-commit: "c5df1054a25044a7ca5baf07461b7aee1f15f5f2"
-license: "MIT"
----
-
 # vitest/valid-title
 
 📝 Enforce valid titles.
 
 💼⚠️ This rule is enabled in the ✅ `recommended` config. This rule _warns_ in the 🌐 `all` config.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 # Rule Details
 
@@ -21,11 +14,15 @@ This rule aims to enforce valid titles for `describe`, `it` and `test` titles.
 
 ## Options
 
+<!-- begin auto-generated rule options list -->
+
 | Name                       | Description                                                | Type     | Default |
 | :------------------------- | :--------------------------------------------------------- | :------- | :------ |
 | `allowArguments`           | Allow dynamic arguments as titles.                         | Boolean  | `false` |
 | `disallowedWords`          | Words that are not allowed in test titles.                 | String[] | `[]`    |
 | `ignoreTypeOfDescribeName` | Skip validating `describe` titles that come from `typeof`. | Boolean  | `false` |
+
+<!-- end auto-generated rule options list -->
 
 This rule has an object option:
 

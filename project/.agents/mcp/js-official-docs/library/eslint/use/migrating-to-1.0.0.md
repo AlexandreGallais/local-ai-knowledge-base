@@ -1,13 +1,6 @@
 ---
-title: "Migrating to v1.0.0"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/use/migrating-to-1.0.0.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: Migrating to v1.0.0
 ---
-
-# Migrating to v1.0.0
 
 ESLint v1.0.0 is the first major version release. As a result, there are some significant changes between how ESLint worked during its life in 0.x and how it will work going forward. These changes are the direct result of feedback from the ESLint community of users and were not made without due consideration for the upgrade path. We believe that these changes make ESLint even better, and while some work is necessary to upgrade, we hope the pain of this upgrade is small enough that you will see the benefit of upgrading.
 
@@ -29,64 +22,64 @@ This setting mimics some of the default behavior from 0.x, but not all. If you d
 
 The `"eslint:recommended"` configuration contains many of the same default rule settings from 0.x, but not all. These rules are no longer on by default, so you should review your settings to ensure they are still as you expect:
 
-- no-alert
-- no-array-constructor
-- no-caller
-- no-catch-shadow
-- no-empty-label
-- no-eval
-- no-extend-native
-- no-extra-bind
-- no-extra-strict
-- no-implied-eval
-- no-iterator
-- no-label-var
-- no-labels
-- no-lone-blocks
-- no-loop-func
-- no-multi-spaces
-- no-multi-str
-- no-native-reassign
-- no-new
-- no-new-func
-- no-new-object
-- no-new-wrappers
-- no-octal-escape
-- no-process-exit
-- no-proto
-- no-return-assign
-- no-script-url
-- no-sequences
-- no-shadow
-- no-shadow-restricted-names
-- no-spaced-func
-- no-trailing-spaces
-- no-undef-init
-- no-underscore-dangle
-- no-unused-expressions
-- no-use-before-define
-- no-with
-- no-wrap-func
-- camelcase
-- comma-spacing
-- consistent-return
-- curly
-- dot-notation
-- eol-last
-- eqeqeq
-- key-spacing
-- new-cap
-- new-parens
-- quotes
-- semi
-- semi-spacing
-- space-infix-ops
-- space-return-throw-case
-- space-unary-ops
-- strict
-- yoda
+- [no-alert](../rules/no-alert)
+- [no-array-constructor](../rules/no-array-constructor)
+- [no-caller](../rules/no-caller)
+- [no-catch-shadow](../rules/no-catch-shadow)
+- [no-empty-label](../rules/no-empty-label)
+- [no-eval](../rules/no-eval)
+- [no-extend-native](../rules/no-extend-native)
+- [no-extra-bind](../rules/no-extra-bind)
+- [no-extra-strict](../rules/no-extra-strict)
+- [no-implied-eval](../rules/no-implied-eval)
+- [no-iterator](../rules/no-iterator)
+- [no-label-var](../rules/no-label-var)
+- [no-labels](../rules/no-labels)
+- [no-lone-blocks](../rules/no-lone-blocks)
+- [no-loop-func](../rules/no-loop-func)
+- [no-multi-spaces](../rules/no-multi-spaces)
+- [no-multi-str](../rules/no-multi-str)
+- [no-native-reassign](../rules/no-native-reassign)
+- [no-new](../rules/no-new)
+- [no-new-func](../rules/no-new-func)
+- [no-new-object](../rules/no-new-object)
+- [no-new-wrappers](../rules/no-new-wrappers)
+- [no-octal-escape](../rules/no-octal-escape)
+- [no-process-exit](../rules/no-process-exit)
+- [no-proto](../rules/no-proto)
+- [no-return-assign](../rules/no-return-assign)
+- [no-script-url](../rules/no-script-url)
+- [no-sequences](../rules/no-sequences)
+- [no-shadow](../rules/no-shadow)
+- [no-shadow-restricted-names](../rules/no-shadow-restricted-names)
+- [no-spaced-func](../rules/no-spaced-func)
+- [no-trailing-spaces](../rules/no-trailing-spaces)
+- [no-undef-init](../rules/no-undef-init)
+- [no-underscore-dangle](../rules/no-underscore-dangle)
+- [no-unused-expressions](../rules/no-unused-expressions)
+- [no-use-before-define](../rules/no-use-before-define)
+- [no-with](../rules/no-with)
+- [no-wrap-func](../rules/no-wrap-func)
+- [camelcase](../rules/camelcase)
+- [comma-spacing](../rules/comma-spacing)
+- [consistent-return](../rules/consistent-return)
+- [curly](../rules/curly)
+- [dot-notation](../rules/dot-notation)
+- [eol-last](../rules/eol-last)
+- [eqeqeq](../rules/eqeqeq)
+- [key-spacing](../rules/key-spacing)
+- [new-cap](../rules/new-cap)
+- [new-parens](../rules/new-parens)
+- [quotes](../rules/quotes)
+- [semi](../rules/semi)
+- [semi-spacing](../rules/semi-spacing)
+- [space-infix-ops](../rules/space-infix-ops)
+- [space-return-throw-case](../rules/space-return-throw-case)
+- [space-unary-ops](../rules/space-unary-ops)
+- [strict](../rules/strict)
+- [yoda](../rules/yoda)
 
-See also: the full diff where the defaults were changed.
+See also: the [full diff](https://github.com/eslint/eslint/commit/e3e9dbd9876daf4bdeb4e15f8a76a9d5e6e03e39#diff-b01a5cfd9361ca9280a460fd6bb8edbbL1) where the defaults were changed.
 
 Here's a configuration file with the closest equivalent of the old defaults:
 
@@ -157,19 +150,19 @@ Here's a configuration file with the closest equivalent of the old defaults:
 
 Over the past several releases, we have been deprecating rules and introducing new rules to take their place. The following is a list of the removed rules and their replacements:
 
-- generator-star is replaced by generator-star-spacing
-- global-strict is replaced by strict
-- no-comma-dangle is replaced by comma-dangle
-- no-empty-class is replaced by no-empty-character-class
-- no-extra-strict is replaced by strict
-- no-reserved-keys is replaced by quote-props
-- no-space-before-semi is replaced by semi-spacing
-- no-wrap-func is replaced by no-extra-parens
-- space-after-function-name is replaced by space-before-function-paren
-- space-before-function-parentheses is replaced by space-before-function-paren
-- space-in-brackets is replaced byobject-curly-spacing and array-bracket-spacing
-- space-unary-word-ops is replaced by space-unary-ops
-- spaced-line-comment is replaced by spaced-comment
+- [generator-star](../rules/generator-star) is replaced by [generator-star-spacing](../rules/generator-star-spacing)
+- [global-strict](../rules/global-strict) is replaced by [strict](../rules/strict)
+- [no-comma-dangle](../rules/no-comma-dangle) is replaced by [comma-dangle](../rules/comma-dangle)
+- [no-empty-class](../rules/no-empty-class) is replaced by [no-empty-character-class](../rules/no-empty-character-class)
+- [no-extra-strict](../rules/no-extra-strict) is replaced by [strict](../rules/strict)
+- [no-reserved-keys](../rules/no-reserved-keys) is replaced by [quote-props](../rules/quote-props)
+- [no-space-before-semi](../rules/no-space-before-semi) is replaced by [semi-spacing](../rules/semi-spacing)
+- [no-wrap-func](../rules/no-wrap-func) is replaced by [no-extra-parens](../rules/no-extra-parens)
+- [space-after-function-name](../rules/space-after-function-name) is replaced by [space-before-function-paren](../rules/space-before-function-paren)
+- [space-before-function-parentheses](../rules/space-before-function-parentheses) is replaced by [space-before-function-paren](../rules/space-before-function-paren)
+- [space-in-brackets](../rules/space-in-brackets) is replaced by[object-curly-spacing](../rules/object-curly-spacing) and [array-bracket-spacing](../rules/array-bracket-spacing)
+- [space-unary-word-ops](../rules/space-unary-word-ops) is replaced by [space-unary-ops](../rules/space-unary-ops)
+- [spaced-line-comment](../rules/spaced-line-comment) is replaced by [spaced-comment](../rules/spaced-comment)
 
 **To address:** You'll need to update your rule configurations to use the new rules. ESLint v1.0.0 will also warn you when you're using a rule that has been removed and will suggest the replacement rules. Hopefully, this will result in few surprises during the upgrade process.
 
@@ -177,7 +170,7 @@ Over the past several releases, we have been deprecating rules and introducing n
 
 From the beginning, ESLint has reported errors using 0-based columns because that's what Esprima, and later Espree, reported. However, most tools and editors use 1-based columns, which made for some tricky integrations with ESLint. In v1.0.0, we've switched over to reporting errors using 1-based columns to fall into line with the tools developers use everyday.
 
-**To address:** If you've created an editor integration, or a tool that had to correct the column number, you'll need to update to just pass <example-value> the column number from ESLint. Otherwise, no change is necessary.
+**To address:** If you've created an editor integration, or a tool that had to correct the column number, you'll need to update to just pass through the column number from ESLint. Otherwise, no change is necessary.
 
 ## No Longer Exporting cli
 

@@ -1,17 +1,8 @@
----
-title: "Grouped expressions"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/expressions/grouped-expr.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[expr.paren]
 # Grouped expressions
 
 r[expr.paren.syntax]
-```grammar
+```grammar,expressions
 GroupedExpression -> `(` Expression `)`
 ```
 
@@ -22,7 +13,7 @@ r[expr.paren.evaluation]
 Parenthesized expressions evaluate to the value of the enclosed operand.
 
 r[expr.paren.place-or-value]
-A parenthesized expression is a place expression if the enclosed operand is a place expression, and is a value expression if the enclosed operand is a value expression.
+A parenthesized expression is a [place expression][place] if the enclosed operand is a place expression, and is a value expression if the enclosed operand is a value expression.
 
 r[expr.paren.override-precedence]
 Parentheses can be used to explicitly modify the precedence order of subexpressions within an expression.
@@ -52,3 +43,5 @@ An example of a necessary use of parentheses is when calling a function pointer 
 assert_eq!( a.f (), "The method f");
 assert_eq!((a.f)(), "The field f");
 ```
+
+[place]: ../expressions.md#place-expressions-and-value-expressions

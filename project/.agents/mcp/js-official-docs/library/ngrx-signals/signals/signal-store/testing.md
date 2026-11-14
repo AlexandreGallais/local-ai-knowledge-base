@@ -1,12 +1,3 @@
----
-title: "Testing"
-tool: "ngrx-signals"
-version: "22.0"
-source: "https://github.com/ngrx/platform/blob/a4995391ef631f1bd60d539f436a1aa5c23c4fe5/projects/www/src/app/pages/guide/signals/signal-store/testing.md"
-commit: "a4995391ef631f1bd60d539f436a1aa5c23c4fe5"
-license: "MIT"
----
-
 # Testing
 
 A SignalStore is an Angular service and is tested like any other service. This guide assumes Vitest (in browser mode); the same ideas apply to other test runners.
@@ -246,7 +237,7 @@ describe('CounterStore with StepService', () => {
 
 ## Testing `signalMethod` Instance
 
-When testing a store that exposes a method created with `signalMethod`, the `TestBed` supplies the injection context. When the method is called with a Signal, the test must wait for the effect (e.g. `TestBed.tick()` or `expect.poll`) before asserting. Additionally, the call must be made within an injection context.
+When testing a store that exposes a method created with [`signalMethod`](/guide/signals/signal-method), the `TestBed` supplies the injection context. When the method is called with a Signal, the test must wait for the effect (e.g. `TestBed.tick()` or `expect.poll`) before asserting. Additionally, the call must be made within an injection context.
 
 <ngrx-code-example header="counter-store.spec.ts">
 
@@ -307,7 +298,7 @@ describe('CounterStore with signalMethod', () => {
 
 ## Testing `rxMethod` Instance
 
-Testing a store method created with `rxMethod` follows the same ideas as testing `signalMethod`. The only difference is that `rxMethod` also supports an `Observable` as an input argument.
+Testing a store method created with [`rxMethod`](/guide/signals/rxjs-integration) follows the same ideas as testing [`signalMethod`](/guide/signals/signal-store/testing#testing-signalmethod-instance). The only difference is that `rxMethod` also supports an `Observable` as an input argument.
 
 <ngrx-code-example header="counter-store.spec.ts">
 
@@ -441,13 +432,13 @@ describe('CounterComponent', () => {
 
 <ngrx-docs-alert type="help">
 
-**Note:** Asserting on state (as in the first test) is preferred over asserting that a method was called (as in the second test). See Guiding principles.
+**Note:** Asserting on state (as in the first test) is preferred over asserting that a method was called (as in the second test). See [Guiding principles](/guide/signals/signal-store/testing#guiding-principles).
 
 </ngrx-docs-alert>
 
 ## Testing Custom SignalStore Features
 
-Custom features built with `signalStoreFeature` can be tested by creating a minimal store that uses the feature and asserting on that store.
+Custom features built with [`signalStoreFeature`](/guide/signals/signal-store/custom-store-features) can be tested by creating a minimal store that uses the feature and asserting on that store.
 
 <ngrx-code-example header="with-counter.spec.ts">
 

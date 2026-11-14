@@ -1,12 +1,3 @@
----
-title: "ModuleLayer class (java.lang) (part 1 of 2)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/ModuleLayer.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ModuleLayer class (java.lang)
 
 ```java
@@ -15,73 +6,91 @@ public final class ModuleLayer
 
 A layer of modules in the Java virtual machine.
 
- A layer is created from a graph of modules in a `Configuration`
-and a function that maps each module to a `ClassLoader`.
+<p> A layer is created from a graph of modules in a {@link Configuration}
+and a function that maps each module to a {@link ClassLoader}.
 Creating a layer informs the Java virtual machine about the classes that
 may be loaded from the modules so that the Java virtual machine knows which
-module that each class is a member of.
+module that each class is a member of. </p>
 
- Creating a layer creates a `Module` object for each `ResolvedModule` in the configuration. For each resolved module that is
-read, the `Module` reads the corresponding run-time `Module`, which may
-be in the same layer or a parent layer.
+<p> Creating a layer creates a {@link Module} object for each {@link
+ResolvedModule} in the configuration. For each resolved module that is
+{@link ResolvedModule#reads() read}, the {@code Module} {@link
+Module#canRead reads} the corresponding run-time {@code Module}, which may
+be in the same layer or a {@link #parents() parent} layer. </p>
 
- The defineModulesWithOneLoader and
-defineModulesWithManyLoaders methods
+<p> The {@link #defineModulesWithOneLoader defineModulesWithOneLoader} and
+{@link #defineModulesWithManyLoaders defineModulesWithManyLoaders} methods
 provide convenient ways to create a module layer where all modules are
 mapped to a single class loader or where each module is mapped to its own
-class loader. The defineModules method is for more
+class loader. The {@link #defineModules defineModules} method is for more
 advanced cases where modules are mapped to custom class loaders by means of
 a function specified to the method. Each of these methods has an instance
 and static variant. The instance methods create a layer with the receiver
 as the parent layer. The static methods are for more advanced cases where
-there can be more than one parent layer or where a Controller is needed to control modules in the layer
+there can be more than one parent layer or where a {@link
+ModuleLayer.Controller Controller} is needed to control modules in the layer
+</p>
 
- A Java virtual machine has at least one non-empty layer, the boot layer, that is created when the Java virtual machine is
-started. The boot layer contains module `java.base` and is the only
-layer in the Java virtual machine with a module named "`java.base`".
+<p> A Java virtual machine has at least one non-empty layer, the {@link
+#boot() boot} layer, that is created when the Java virtual machine is
+started. The boot layer contains module {@code java.base} and is the only
+layer in the Java virtual machine with a module named "{@code java.base}".
 The modules in the boot layer are mapped to the bootstrap class loader and
-other class loaders that are
-built-in into the Java virtual machine. The boot layer will often be
-the parent when creating additional layers.
+other class loaders that are <a href="ClassLoader.html#builtinLoaders">
+built-in</a> into the Java virtual machine. The boot layer will often be
+the {@link #parents() parent} when creating additional layers. </p>
 
- Each `Module` in a layer is created so that it exports and opens
-the packages described by its `ModuleDescriptor`. Qualified exports
+<p> Each {@code Module} in a layer is created so that it {@link
+Module#isExported(String) exports} and {@link Module#isOpen(String) opens}
+the packages described by its {@link ModuleDescriptor}. Qualified exports
 (where a package is exported to a set of target modules rather than all
-modules) are reified when creating the layer as follows:
+modules) are reified when creating the layer as follows: </p>
+<ul>
+    <li> If module {@code X} exports a package to {@code Y}, and if the
+    runtime {@code Module} {@code X} reads {@code Module} {@code Y}, then
+    the package is exported to {@code Module} {@code Y} (which may be in
+    the same layer as {@code X} or a parent layer). </li>
 
--  If module `X` exports a package to `Y`, and if the
-    runtime `Module` `X` reads `Module` `Y`, then
-    the package is exported to `Module` `Y` (which may be in
-    the same layer as `X` or a parent layer).
+    <li> If module {@code X} exports a package to {@code Y}, and if the
+    runtime {@code Module} {@code X} does not read {@code Y} then target
+    {@code Y} is located as if by invoking {@link #findModule(String)
+    findModule} to find the module in the layer or its parent layers. If
+    {@code Y} is found then the package is exported to the instance of
+    {@code Y} that was found. If {@code Y} is not found then the qualified
+    export is ignored. </li>
+</ul>
 
--  If module `X` exports a package to `Y`, and if the
-    runtime `Module` `X` does not read `Y` then target
-    `Y` is located as if by invoking findModule to find the module in the layer or its parent layers. If
-    `Y` is found then the package is exported to the instance of
-    `Y` that was found. If `Y` is not found then the qualified
-    export is ignored.
+<p> Qualified opens are handled in same way as qualified exports. </p>
 
- Qualified opens are handled in same way as qualified exports.
-
- As when creating a `Configuration`,
-automatic modules receive special
+<p> As when creating a {@code Configuration},
+{@link ModuleDescriptor#isAutomatic() automatic} modules receive special
 treatment when creating a layer. An automatic module is created in the
-Java virtual machine as a `Module` that reads every unnamed `Module` in the Java virtual machine.
+Java virtual machine as a {@code Module} that reads every unnamed {@code
+Module} in the Java virtual machine. </p>
 
- Unless otherwise specified, passing a `null` argument to a method
-in this class causes a NullPointerException to
-be thrown.
+<p> Unless otherwise specified, passing a {@code null} argument to a method
+in this class causes a {@link NullPointerException NullPointerException} to
+be thrown. </p>
 
-####  Example
+<h2> Example </h2>
 
- This example creates a configuration by resolving a module named
-"`myapp`" with the configuration for the boot layer as the parent. It
+<p> This example creates a configuration by resolving a module named
+"{@code myapp}" with the configuration for the boot layer as the parent. It
 then creates a new layer with the modules in this configuration. All modules
-are defined to the same class loader.
+are defined to the same class loader. </p>
 
-**Since:** 9
+{@snippet :
+    ModuleFinder finder = ModuleFinder.of(dir1, dir2, dir3);
+    ModuleLayer parent = ModuleLayer.boot();
+    Configuration cf = parent.configuration()
+                             .resolve(finder, ModuleFinder.of(), Set.of("myapp"));
+    ClassLoader scl = ClassLoader.getSystemClassLoader();
+    ModuleLayer layer = parent.defineModulesWithOneLoader(cf, scl);
+    Class<?> c = layer.findLoader("myapp").loadClass("app.Main");
+}
 
-**See also:** Module#getLayer()
+@since 9
+@see Module#getLayer()
 
 ## ModuleLayer.layer()
 
@@ -91,7 +100,7 @@ public ModuleLayer layer()
 
 Returns the layer that this object controls.
 
-**Returns:** the module layer
+@return the module layer
 
 ## ModuleLayer.addReads(Module, Module)
 
@@ -99,26 +108,25 @@ Returns the layer that this object controls.
 public Controller addReads(Module source, Module target)
 ```
 
-Updates module `source` in the layer to read module
-`target`. This method is a no-op if `source` already
-reads `target`.
+Updates module {@code source} in the layer to read module
+{@code target}. This method is a no-op if {@code source} already
+reads {@code target}.
 
-Parameters:
-
-- `source`: The source module
-- `target`: The target module to read
-
-**Implementation note:** *Read edges* added by this method are *weak*
-and do not prevent `target` from being GC'ed when `source`
+@implNote <em>Read edges</em> added by this method are <em>weak</em>
+and do not prevent {@code target} from being GC'ed when {@code source}
 is strongly reachable.
 
-**Returns:** This controller
+@param  source
+        The source module
+@param  target
+        The target module to read
 
-**See also:** Module#addReads
+@return This controller
 
-Throws:
+@throws IllegalArgumentException
+        If {@code source} is not in the module layer
 
-- `IllegalArgumentException`: If `source` is not in the module layer
+@see Module#addReads
 
 ## ModuleLayer.addExports(Module, String, Module)
 
@@ -126,23 +134,24 @@ Throws:
 public Controller addExports(Module source, String pn, Module target)
 ```
 
-Updates module `source` in the layer to export a package to
-module `target`. This method is a no-op if `source`
-already exports the package to at least `target`.
+Updates module {@code source} in the layer to export a package to
+module {@code target}. This method is a no-op if {@code source}
+already exports the package to at least {@code target}.
 
-Parameters:
+@param  source
+        The source module
+@param  pn
+        The package name
+@param  target
+        The target module
 
-- `source`: The source module
-- `pn`: The package name
-- `target`: The target module
+@return This controller
 
-**Returns:** This controller
+@throws IllegalArgumentException
+        If {@code source} is not in the module layer or the package
+        is not in the source module
 
-**See also:** Module#addExports
-
-Throws:
-
-- `IllegalArgumentException`: If `source` is not in the module layer or the package is not in the source module
+@see Module#addExports
 
 ## ModuleLayer.addOpens(Module, String, Module)
 
@@ -150,23 +159,24 @@ Throws:
 public Controller addOpens(Module source, String pn, Module target)
 ```
 
-Updates module `source` in the layer to open a package to
-module `target`. This method is a no-op if `source`
-already opens the package to at least `target`.
+Updates module {@code source} in the layer to open a package to
+module {@code target}. This method is a no-op if {@code source}
+already opens the package to at least {@code target}.
 
-Parameters:
+@param  source
+        The source module
+@param  pn
+        The package name
+@param  target
+        The target module
 
-- `source`: The source module
-- `pn`: The package name
-- `target`: The target module
+@return This controller
 
-**Returns:** This controller
+@throws IllegalArgumentException
+        If {@code source} is not in the module layer or the package
+        is not in the source module
 
-**See also:** Module#addOpens
-
-Throws:
-
-- `IllegalArgumentException`: If `source` is not in the module layer or the package is not in the source module
+@see Module#addOpens
 
 ## ModuleLayer.enableNativeAccess(Module)
 
@@ -177,18 +187,18 @@ public Controller enableNativeAccess(Module target)
 Enables native access for a module in the layer if the caller's module
 has native access.
 
-Parameters:
+@param  target
+        The module to update
 
-- `target`: The module to update
+@return This controller
 
-**Returns:** This controller
+@throws IllegalArgumentException
+        If {@code target} is not in the module layer
 
-**Since:** 22
+@throws IllegalCallerException
+        If the caller is in a module that does not have native access enabled
 
-Throws:
-
-- `IllegalArgumentException`: If `target` is not in the module layer
-- `IllegalCallerException`: If the caller is in a module that does not have native access enabled
+@since 22
 
 ## ModuleLayer.defineModulesWithOneLoader(Configuration, ClassLoader)
 
@@ -197,31 +207,35 @@ public ModuleLayer defineModulesWithOneLoader(Configuration cf, ClassLoader pare
 ```
 
 Creates a new module layer, with this layer as its parent, by defining the
-modules in the given `Configuration` to the Java virtual machine.
+modules in the given {@code Configuration} to the Java virtual machine.
 This method creates one class loader and defines all modules to that
-class loader. The parent of each class
+class loader. The {@link ClassLoader#getParent() parent} of each class
 loader is the given parent class loader. This method works exactly as
-specified by the static defineModulesWithOneLoader method when invoked with this layer as the
-parent. In other words, if this layer is `thisLayer` then this
+specified by the static {@link
+#defineModulesWithOneLoader(Configuration,List,ClassLoader)
+defineModulesWithOneLoader} method when invoked with this layer as the
+parent. In other words, if this layer is {@code thisLayer} then this
 method is equivalent to invoking:
-
-```java
+<pre> {@code
     ModuleLayer.defineModulesWithOneLoader(cf, List.of(thisLayer), parentLoader).layer();
-```
+}</pre>
 
-Parameters:
+@param  cf
+        The configuration for the layer
+@param  parentLoader
+        The parent class loader for the class loader created by this
+        method; may be {@code null} for the bootstrap class loader
 
-- `cf`: The configuration for the layer
-- `parentLoader`: The parent class loader for the class loader created by this method; may be `null` for the bootstrap class loader
+@return The newly created layer
 
-**Returns:** The newly created layer
+@throws IllegalArgumentException
+        If the given configuration has more than one parent or the parent
+        of the configuration is not the configuration for this layer
+@throws LayerInstantiationException
+        If the layer cannot be created for any of the reasons specified
+        by the static {@code defineModulesWithOneLoader} method
 
-**See also:** #findLoader
-
-Throws:
-
-- `IllegalArgumentException`: If the given configuration has more than one parent or the parent of the configuration is not the configuration for this layer
-- `LayerInstantiationException`: If the layer cannot be created for any of the reasons specified by the static `defineModulesWithOneLoader` method
+@see #findLoader
 
 ## ModuleLayer.defineModulesWithManyLoaders(Configuration, ClassLoader)
 
@@ -230,31 +244,35 @@ public ModuleLayer defineModulesWithManyLoaders(Configuration cf, ClassLoader pa
 ```
 
 Creates a new module layer, with this layer as its parent, by defining the
-modules in the given `Configuration` to the Java virtual machine.
-Each module is defined to its own `ClassLoader` created by this
-method. The parent of each class loader
+modules in the given {@code Configuration} to the Java virtual machine.
+Each module is defined to its own {@link ClassLoader} created by this
+method. The {@link ClassLoader#getParent() parent} of each class loader
 is the given parent class loader. This method works exactly as specified
-by the static defineModulesWithManyLoaders method when invoked with this layer as the
-parent. In other words, if this layer is `thisLayer` then this
+by the static {@link
+#defineModulesWithManyLoaders(Configuration,List,ClassLoader)
+defineModulesWithManyLoaders} method when invoked with this layer as the
+parent. In other words, if this layer is {@code thisLayer} then this
 method is equivalent to invoking:
-
-```java
+<pre> {@code
     ModuleLayer.defineModulesWithManyLoaders(cf, List.of(thisLayer), parentLoader).layer();
-```
+}</pre>
 
-Parameters:
+@param  cf
+        The configuration for the layer
+@param  parentLoader
+        The parent class loader for each of the class loaders created by
+        this method; may be {@code null} for the bootstrap class loader
 
-- `cf`: The configuration for the layer
-- `parentLoader`: The parent class loader for each of the class loaders created by this method; may be `null` for the bootstrap class loader
+@return The newly created layer
 
-**Returns:** The newly created layer
+@throws IllegalArgumentException
+        If the given configuration has more than one parent or the parent
+        of the configuration is not the configuration for this layer
+@throws LayerInstantiationException
+        If the layer cannot be created for any of the reasons specified
+        by the static {@code defineModulesWithManyLoaders} method
 
-**See also:** #findLoader
-
-Throws:
-
-- `IllegalArgumentException`: If the given configuration has more than one parent or the parent of the configuration is not the configuration for this layer
-- `LayerInstantiationException`: If the layer cannot be created for any of the reasons specified by the static `defineModulesWithManyLoaders` method
+@see #findLoader
 
 ## ModuleLayer.defineModules(Configuration, Function<String, ClassLoader>)
 
@@ -263,29 +281,30 @@ public ModuleLayer defineModules(Configuration cf, Function<String, ClassLoader>
 ```
 
 Creates a new module layer, with this layer as its parent, by defining the
-modules in the given `Configuration` to the Java virtual machine.
+modules in the given {@code Configuration} to the Java virtual machine.
 Each module is mapped, by name, to its class loader by means of the
 given function. This method works exactly as specified by the static
-defineModules
+{@link #defineModules(Configuration,List,Function) defineModules}
 method when invoked with this layer as the parent. In other words, if
-this layer is `thisLayer` then this method is equivalent to
+this layer is {@code thisLayer} then this method is equivalent to
 invoking:
-
-```java
+<pre> {@code
     ModuleLayer.defineModules(cf, List.of(thisLayer), clf).layer();
-```
+}</pre>
 
-Parameters:
+@param  cf
+        The configuration for the layer
+@param  clf
+        The function to map a module name to a class loader
 
-- `cf`: The configuration for the layer
-- `clf`: The function to map a module name to a class loader
+@return The newly created layer
 
-**Returns:** The newly created layer
-
-Throws:
-
-- `IllegalArgumentException`: If the given configuration has more than one parent or the parent of the configuration is not the configuration for this layer
-- `LayerInstantiationException`: If the layer cannot be created for any of the reasons specified by the static `defineModules` method
+@throws IllegalArgumentException
+        If the given configuration has more than one parent or the parent
+        of the configuration is not the configuration for this layer
+@throws LayerInstantiationException
+        If the layer cannot be created for any of the reasons specified
+        by the static {@code defineModules} method
 
 ## ModuleLayer.defineModulesWithOneLoader(Configuration, List<ModuleLayer>, ClassLoader)
 
@@ -293,56 +312,64 @@ Throws:
 public static Controller defineModulesWithOneLoader(Configuration cf, List<ModuleLayer> parentLayers, ClassLoader parentLoader)
 ```
 
-Creates a new module layer by defining the modules in the given `Configuration` to the Java virtual machine. This method creates one
+Creates a new module layer by defining the modules in the given {@code
+Configuration} to the Java virtual machine. This method creates one
 class loader and defines all modules to that class loader.
 
- The class loader created by this method implements *direct
-delegation* when loading classes from modules. If the boolean) loadClass method is invoked to
+<p> The class loader created by this method implements <em>direct
+delegation</em> when loading classes from modules. If the {@link
+ClassLoader#loadClass(String, boolean) loadClass} method is invoked to
 load a class then it uses the package name of the class to map it to a
 module. This may be a module in this layer and hence defined to the same
 class loader. It may be a package in a module in a parent layer that is
 exported to one or more of the modules in this layer. The class
-loader delegates to the class loader of the module, throwing `ClassNotFoundException` if not found by that class loader.
-When `loadClass` is invoked to load classes that do not map to a
-module then it delegates to the parent class loader.
+loader delegates to the class loader of the module, throwing {@code
+ClassNotFoundException} if not found by that class loader.
+When {@code loadClass} is invoked to load classes that do not map to a
+module then it delegates to the parent class loader. </p>
 
- The class loader created by this method locates resources
-(getResource, getResources, and other resource
+<p> The class loader created by this method locates resources
+({@link ClassLoader#getResource(String) getResource}, {@link
+ClassLoader#getResources(String) getResources}, and other resource
 methods) in all modules in the layer before searching the parent class
-loader.
+loader. </p>
 
- Attempting to create a layer with all modules defined to the same
+<p> Attempting to create a layer with all modules defined to the same
 class loader can fail for the following reasons:
 
--
+<ul>
 
- *Overlapping packages*: Two or more modules in the
-    configuration have the same package.
+    <li><p> <em>Overlapping packages</em>: Two or more modules in the
+    configuration have the same package. </p></li>
 
--
-
- *Split delegation*: The resulting class loader would
+    <li><p> <em>Split delegation</em>: The resulting class loader would
     need to delegate to more than one class loader in order to load
-    classes in a specific package.
+    classes in a specific package. </p></li>
 
- In addition, a layer cannot be created if the configuration contains
-a module named "`java.base`", or a module contains a package named
-"`java`" or a package with a name starting with "`java.`".
+</ul>
 
-Parameters:
+<p> In addition, a layer cannot be created if the configuration contains
+a module named "{@code java.base}", or a module contains a package named
+"{@code java}" or a package with a name starting with "{@code java.}". </p>
 
-- `cf`: The configuration for the layer
-- `parentLayers`: The list of parent layers in search order
-- `parentLoader`: The parent class loader for the class loader created by this method; may be `null` for the bootstrap class loader
+@param  cf
+        The configuration for the layer
+@param  parentLayers
+        The list of parent layers in search order
+@param  parentLoader
+        The parent class loader for the class loader created by this
+        method; may be {@code null} for the bootstrap class loader
 
-**Returns:** A controller that controls the newly created layer
+@return A controller that controls the newly created layer
 
-**See also:** #findLoader
+@throws IllegalArgumentException
+        If the parent(s) of the given configuration do not match the
+        configuration of the parent layers, including order
+@throws LayerInstantiationException
+        If all modules cannot be defined to the same class loader for any
+        of the reasons listed above
 
-Throws:
-
-- `IllegalArgumentException`: If the parent(s) of the given configuration do not match the configuration of the parent layers, including order
-- `LayerInstantiationException`: If all modules cannot be defined to the same class loader for any of the reasons listed above
+@see #findLoader
 
 ## ModuleLayer.defineModulesWithManyLoaders(Configuration, List<ModuleLayer>, ClassLoader)
 
@@ -350,38 +377,224 @@ Throws:
 public static Controller defineModulesWithManyLoaders(Configuration cf, List<ModuleLayer> parentLayers, ClassLoader parentLoader)
 ```
 
-Creates a new module layer by defining the modules in the given `Configuration` to the Java virtual machine. Each module is defined to
-its own `ClassLoader` created by this method. The parent of each class loader is the given parent
+Creates a new module layer by defining the modules in the given {@code
+Configuration} to the Java virtual machine. Each module is defined to
+its own {@link ClassLoader} created by this method. The {@link
+ClassLoader#getParent() parent} of each class loader is the given parent
 class loader.
 
- The class loaders created by this method implement *direct
-delegation* when loading classes from modules. If the boolean) loadClass method is invoked to
+<p> The class loaders created by this method implement <em>direct
+delegation</em> when loading classes from modules. If the {@link
+ClassLoader#loadClass(String, boolean) loadClass} method is invoked to
 load a class then it uses the package name of the class to map it to a
 module. The package may be in the module defined to the class loader.
 The package may be exported by another module in this layer to the
 module defined to the class loader. It may be in a package exported by a
 module in a parent layer. The class loader delegates to the class loader
-of the module, throwing `ClassNotFoundException` if not found by
-that class loader. When `loadClass` is invoked to load a class
+of the module, throwing {@code ClassNotFoundException} if not found by
+that class loader. When {@code loadClass} is invoked to load a class
 that does not map to a module then it delegates to the parent class
-loader.
+loader. </p>
 
- The class loaders created by this method locate resources
-(getResource, getResources, and other resource
+<p> The class loaders created by this method locate resources
+({@link ClassLoader#getResource(String) getResource}, {@link
+ClassLoader#getResources(String) getResources}, and other resource
 methods) in the module defined to the class loader before searching
-the parent class loader.
+the parent class loader. </p>
 
-Parameters:
+@param  cf
+        The configuration for the layer
+@param  parentLayers
+        The list of parent layers in search order
+@param  parentLoader
+        The parent class loader for each of the class loaders created by
+        this method; may be {@code null} for the bootstrap class loader
 
-- `cf`: The configuration for the layer
-- `parentLayers`: The list of parent layers in search order
-- `parentLoader`: The parent class loader for each of the class loaders created by this method; may be `null` for the bootstrap class loader
+@return A controller that controls the newly created layer
 
-**Returns:** A controller that controls the newly created layer
+@throws IllegalArgumentException
+        If the parent(s) of the given configuration do not match the
+        configuration of the parent layers, including order
+@throws LayerInstantiationException
+        If the layer cannot be created because the configuration contains
+        a module named "{@code java.base}" or a module contains a package
+        named "{@code java}" or a package with a name starting with
+        "{@code java.}"
 
-**See also:** #findLoader
+@see #findLoader
 
-Throws:
+## ModuleLayer.defineModules(Configuration, List<ModuleLayer>, Function<String, ClassLoader>)
 
-- `IllegalArgumentException`: If the parent(s) of the given configuration do not match the configuration of the parent layers, including order
-- `LayerInstantiationException`: If the layer cannot be created because the configuration contains a module named "`java.base`" or a module contains a package named "`java`" or a package with a name starting with "`java.`"
+```java
+public static Controller defineModules(Configuration cf, List<ModuleLayer> parentLayers, Function<String, ClassLoader> clf)
+```
+
+Creates a new module layer by defining the modules in the given {@code
+Configuration} to the Java virtual machine. The given function maps each
+module in the configuration, by name, to a class loader. Creating the
+layer informs the Java virtual machine about the classes that may be
+loaded so that the Java virtual machine knows which module that each
+class is a member of.
+
+<p> The class loader delegation implemented by the class loaders must
+respect module readability. The class loaders should be
+{@link ClassLoader#registerAsParallelCapable parallel-capable} so as to
+avoid deadlocks during class loading. In addition, the entity creating
+a new layer with this method should arrange that the class loaders be
+ready to load from these modules before there are any attempts to load
+classes or resources. </p>
+
+<p> Creating a layer can fail for the following reasons: </p>
+
+<ul>
+
+    <li><p> Two or more modules with the same package are mapped to the
+    same class loader. </p></li>
+
+    <li><p> A module is mapped to a class loader that already has a
+    module of the same name defined to it. </p></li>
+
+    <li><p> A module is mapped to a class loader that has already
+    defined types in any of the packages in the module. </p></li>
+
+</ul>
+
+<p> In addition, a layer cannot be created if the configuration contains
+a module named "{@code java.base}", a configuration contains a module
+with a package named "{@code java}" or a package name starting with
+"{@code java.}", or the function to map a module name to a class loader
+returns {@code null} or the {@linkplain ClassLoader#getPlatformClassLoader()
+platform class loader}. </p>
+
+<p> If the function to map a module name to class loader throws an error
+or runtime exception then it is propagated to the caller of this method.
+</p>
+
+@apiNote It is implementation specific as to whether creating a layer
+with this method is an atomic operation or not. Consequently it is
+possible for this method to fail with some modules, but not all, defined
+to the Java virtual machine.
+
+@param  cf
+        The configuration for the layer
+@param  parentLayers
+        The list of parent layers in search order
+@param  clf
+        The function to map a module name to a class loader
+
+@return A controller that controls the newly created layer
+
+@throws IllegalArgumentException
+        If the parent(s) of the given configuration do not match the
+        configuration of the parent layers, including order
+@throws LayerInstantiationException
+        If creating the layer fails for any of the reasons listed above
+
+## ModuleLayer.configuration()
+
+```java
+public Configuration configuration()
+```
+
+Returns the configuration for this layer.
+
+@return The configuration for this layer
+
+## ModuleLayer.parents()
+
+```java
+public List<ModuleLayer> parents()
+```
+
+Returns an unmodifiable list of this layer's parents, in search
+order. If this is the {@linkplain #empty() empty layer} then an
+empty list is returned.
+
+@return A possibly-empty unmodifiable list of this layer's parents
+
+## ModuleLayer.modules()
+
+```java
+public Set<Module> modules()
+```
+
+Returns an unmodifiable set of the modules in this layer.
+
+@return A possibly-empty unmodifiable set of the modules in this layer
+
+## ModuleLayer.findModule(String)
+
+```java
+public Optional<Module> findModule(String name)
+```
+
+Returns the module with the given name in this layer, or if not in this
+layer, the {@linkplain #parents() parent} layers. Finding a module in
+parent layers is equivalent to invoking {@code findModule} on each
+parent, in search order, until the module is found or all parents have
+been searched. In a <em>tree of layers</em>  then this is equivalent to
+a depth-first search.
+
+@param  name
+        The name of the module to find
+
+@return The module with the given name or an empty {@code Optional}
+        if there isn't a module with this name in this layer or any
+        parent layer
+
+## ModuleLayer.findLoader(String)
+
+```java
+public ClassLoader findLoader(String name)
+```
+
+Returns the {@code ClassLoader} for the module with the given name. If
+a module of the given name is not in this layer then the {@link #parents()
+parent} layers are searched in the manner specified by {@link
+#findModule(String) findModule}.
+
+@apiNote This method does not return an {@code Optional<ClassLoader>}
+because `null` must be used to represent the bootstrap class loader.
+
+@param  name
+        The name of the module to find
+
+@return The ClassLoader that the module is defined to
+
+@throws IllegalArgumentException if a module of the given name is not
+        defined in this layer or any parent of this layer
+
+## ModuleLayer.toString()
+
+```java
+public String toString()
+```
+
+Returns a string describing this module layer.
+
+@return A possibly empty string describing this module layer
+
+## ModuleLayer.empty()
+
+```java
+public static ModuleLayer empty()
+```
+
+Returns the <em>empty</em> layer. There are no modules in the empty
+layer. It has no parents.
+
+@return The empty layer
+
+## ModuleLayer.boot()
+
+```java
+public static ModuleLayer boot()
+```
+
+Returns the boot layer. The boot layer contains at least one module,
+{@code java.base}. Its parent is the {@link #empty() empty} layer.
+
+@apiNote This method returns {@code null} during startup and before
+         the boot layer is fully initialized.
+
+@return The boot layer

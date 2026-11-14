@@ -1,12 +1,3 @@
----
-title: "class: PageAssertions"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-pageassertions.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: PageAssertions
 * since: v1.17
 
@@ -37,7 +28,7 @@ public class TestPage {
 }
 ```
 
-```python
+```python async
 import re
 from playwright.async_api import Page, expect
 
@@ -47,7 +38,7 @@ async def test_navigates_to_login_page(page: Page) -> None:
     await expect(page).to_have_url(re.compile(r".*/login"))
 ```
 
-```python
+```python sync
 import re
 from playwright.sync_api import Page, expect
 
@@ -141,7 +132,7 @@ Whether to perform case-insensitive match. [`option: ignoreCase`] option takes p
 * langs:
   - alias-java: matchesAriaSnapshot
 
-Asserts that the page body matches the given accessibility snapshot.
+Asserts that the page body matches the given [accessibility snapshot](../aria-snapshots.md).
 
 **Usage**
 
@@ -153,7 +144,7 @@ await expect(page).toMatchAriaSnapshot(`
 `);
 ```
 
-```python
+```python async
 await page.goto("https://demo.playwright.dev/todomvc/")
 await expect(page).to_match_aria_snapshot('''
   - heading "todos"
@@ -161,7 +152,7 @@ await expect(page).to_match_aria_snapshot('''
 ''')
 ```
 
-```python
+```python sync
 page.goto("https://demo.playwright.dev/todomvc/")
 expect(page).to_match_aria_snapshot('''
   - heading "todos"
@@ -215,7 +206,7 @@ The opposite of [`method: PageAssertions.toMatchAriaSnapshot`].
 * since: v1.60
 * langs: js
 
-Asserts that the page body matches the given accessibility snapshot.
+Asserts that the page body matches the given [accessibility snapshot](../aria-snapshots.md).
 
 Snapshot is stored in a separate `.aria.yml` file in a location configured by `expect.toMatchAriaSnapshot.pathTemplate` and/or `snapshotPathTemplate` properties in the configuration file.
 
@@ -382,7 +373,7 @@ await expect(page).toHaveTitle(/.*checkout/);
 assertThat(page).hasTitle("Playwright");
 ```
 
-```python
+```python async
 import re
 from playwright.async_api import expect
 
@@ -390,7 +381,7 @@ from playwright.async_api import expect
 await expect(page).to_have_title(re.compile(r".*checkout"))
 ```
 
-```python
+```python sync
 import re
 from playwright.sync_api import expect
 
@@ -448,7 +439,7 @@ await expect(page).toHaveURL(url => {
 assertThat(page).hasURL(".com");
 ```
 
-```python
+```python async
 import re
 from playwright.async_api import expect
 
@@ -456,7 +447,7 @@ from playwright.async_api import expect
 await expect(page).to_have_url(re.compile(".*checkout"))
 ```
 
-```python
+```python sync
 import re
 from playwright.sync_api import expect
 
@@ -474,7 +465,7 @@ await Expect(Page).ToHaveURLAsync(new Regex(".*checkout"));
 - `url` <[string]|[RegExp]|[URLPattern]|[function]\([URL]\):[boolean]>
 
 Expected URL string, RegExp, or predicate receiving [URL] to match.
-When [`option: Browser.newContext.baseURL`] is provided via the context options and the `url` argument is a string, the two values are merged via the `new URL()` constructor and used for the comparison against the current browser URL.
+When [`option: Browser.newContext.baseURL`] is provided via the context options and the `url` argument is a string, the two values are merged via the [`new URL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL/URL) constructor and used for the comparison against the current browser URL.
 
 ### param: PageAssertions.toHaveURL.urlOrRegExp
 * since: v1.18

@@ -1,19 +1,15 @@
 ---
 title: ".NET 8 breaking change: ProcessStartInfo.WindowStyle honored when UseShellExecute is false"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/8.0/processstartinfo-windowstyle.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 8 breaking change in core .NET libraries where ProcessStartInfo.WindowStyle is now honored even when UseShellExecute is false.
+ms.date: 11/08/2023
 ---
-
 # ProcessStartInfo.WindowStyle honored when UseShellExecute is false
 
-Previously, `System.Diagnostics.ProcessStartInfo.WindowStyle` was only honored when `System.Diagnostics.ProcessStartInfo.UseShellExecute` was `true`. This change honors `System.Diagnostics.ProcessStartInfo.WindowStyle` even when `System.Diagnostics.ProcessStartInfo.UseShellExecute` is `false`.
+Previously, <xref:System.Diagnostics.ProcessStartInfo.WindowStyle?displayName=nameWithType> was only honored when <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute?displayName=nameWithType> was `true`. This change honors <xref:System.Diagnostics.ProcessStartInfo.WindowStyle> even when <xref:System.Diagnostics.ProcessStartInfo.UseShellExecute> is `false`.
 
 ## Previous behavior
 
-Prior to this change, the following code started the process as though `System.Diagnostics.ProcessStartInfo.WindowStyle` hadn't been specified, because `UseShellExecute = false`. That is, the window was visible, not hidden.
+Prior to this change, the following code started the process as though <xref:System.Diagnostics.ProcessStartInfo.WindowStyle> hadn't been specified, because `UseShellExecute = false`. That is, the window was visible, not hidden.
 
 ```csharp
 using System.Diagnostics;
@@ -31,9 +27,9 @@ process!.WaitForExit();
 
 ## New behavior
 
-Starting in .NET 8, `System.Diagnostics.ProcessStartInfo.WindowStyle` is honored even for processes started with `UseShellExecute = false`.
+Starting in .NET 8, <xref:System.Diagnostics.ProcessStartInfo.WindowStyle> is honored even for processes started with `UseShellExecute = false`.
 
-The code from the Previous behavior section starts the process with the window hidden.
+The code from the [Previous behavior](#previous-behavior) section starts the process with the window hidden.
 
 ## Version introduced
 
@@ -41,7 +37,7 @@ The code from the Previous behavior section starts the process with the window h
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -49,8 +45,8 @@ Some scenarios require changing the style of the spawned process's window (espec
 
 ## Recommended action
 
-This change affects code that specified `System.Diagnostics.ProcessStartInfo.WindowStyle` even when it wasn't properly supported. For example, WPF's order of event firing is now altered. To mitigate the breaking change, don't specify `WindowStyle` in `System.Diagnostics.ProcessStartInfo`.
+This change affects code that specified <xref:System.Diagnostics.ProcessStartInfo.WindowStyle> even when it wasn't properly supported. For example, WPF's order of event firing is now altered. To mitigate the breaking change, don't specify `WindowStyle` in <xref:System.Diagnostics.ProcessStartInfo>.
 
 ## Affected APIs
 
-- `System.Diagnostics.Process.Start*`
+- <xref:System.Diagnostics.Process.Start*?displayName=fullName>

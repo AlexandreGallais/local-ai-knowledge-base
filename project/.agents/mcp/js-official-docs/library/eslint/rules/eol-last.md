@@ -1,14 +1,7 @@
 ---
-title: "eol-last"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/eol-last.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: eol-last
+rule_type: layout
 ---
-
-# eol-last
-
 Trailing newlines in non-empty files are a common UNIX idiom. Benefits of
 trailing newlines include the ability to concatenate or append to files as well
 as output files to the terminal without interfering with shell prompts.
@@ -20,12 +13,12 @@ of non-empty files.
 
 Prior to v0.16.0 this rule also enforced that there was only a single line at
 the end of the file. If you still want this behavior, consider enabling
-no-multiple-empty-lines with `maxEOF` and/or
-no-trailing-spaces.
+[no-multiple-empty-lines](no-multiple-empty-lines) with `maxEOF` and/or
+[no-trailing-spaces](no-trailing-spaces).
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint eol-last: ["error", "always"]*/
@@ -34,10 +27,12 @@ function doSomething() {
   var foo = 2;
 }
 ```
+
+:::
 
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint eol-last: ["error", "always"]*/
@@ -47,6 +42,8 @@ function doSomething() {
 }
 
 ```
+
+:::
 
 ## Options
 

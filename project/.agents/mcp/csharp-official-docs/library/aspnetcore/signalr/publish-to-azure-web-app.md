@@ -1,24 +1,21 @@
 ---
-title: "Publish an ASP.NET Core SignalR app to Azure App Service"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/signalr/publish-to-azure-web-app.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Publish an ASP.NET Core SignalR app to Azure App Service
+description: Learn how to publish an ASP.NET Core SignalR app to Azure App Service.
+monikerRange: '>= aspnetcore-2.1'
+ms.date: 11/02/2020
 ---
-
 # Publish an ASP.NET Core SignalR app to Azure App Service
 
-By Brady Gaster
+By [Brady Gaster](https://twitter.com/bradygaster)
 
-Azure App Service is a Microsoft cloud computing platform service for hosting web apps, including ASP.NET Core.
+[Azure App Service](/azure/app-service/app-service-web-overview) is a [Microsoft cloud computing](https://azure.microsoft.com/) platform service for hosting web apps, including ASP.NET Core.
 
-> **Note:**
-> This article refers to publishing an ASP.NET Core SignalR app from Visual Studio. For more information, see SignalR service for Azure.
+> [!NOTE]
+> This article refers to publishing an ASP.NET Core SignalR app from Visual Studio. For more information, see [SignalR service for Azure](https://azure.microsoft.com/services/signalr-service).
 
 ## Publish the app
 
-This article covers publishing using the tools in Visual Studio. Visual Studio Code users can use Azure CLI commands to publish apps to Azure. For more information, see Publish an ASP.NET Core app to Azure with command line tools.
+This article covers publishing using the tools in Visual Studio. Visual Studio Code users can use [Azure CLI](/cli/azure) commands to publish apps to Azure. For more information, see [Publish an ASP.NET Core app to Azure with command line tools](/azure/app-service/app-service-web-get-started-dotnet).
 
 1. Right-click on the project in **Solution Explorer** and select **Publish**.
 
@@ -37,6 +34,8 @@ This article covers publishing using the tools in Visual Studio. Visual Studio C
 
 1. Select **Azure SignalR Service** in the **Service Dependencies** section. Select the **+** button:
 
+   ![Dependencies area showing the selection of Azure SignalR Service in the Add drop-down list](publish-to-azure-web-app/_static/signalr-service-dependency.png)
+
 1. In the **Azure SignalR Service** dialog, select **Create a new Azure SignalR Service instance**.
 
 1. Provide a **Name**, **Resource Group**, and **Location**. Return to the **Azure SignalR Service** dialog and select **Add**.
@@ -50,19 +49,19 @@ Visual Studio completes the following tasks:
 
 The format of the app's URL is `{APP SERVICE NAME}.azurewebsites.net`. For example, an app named `SignalRChatApp` has a URL of `https://signalrchatapp.azurewebsites.net`.
 
-If an HTTP *502.2 - Bad Gateway* error occurs when deploying an app that targets a preview .NET release, see Deploy ASP.NET Core preview release to Azure App Service to resolve it.
+If an HTTP *502.2 - Bad Gateway* error occurs when deploying an app that targets a preview .NET release, see [Deploy ASP.NET Core preview release to Azure App Service](../host-and-deploy/azure-apps/index.md#deploy-aspnet-core-preview-release-to-azure-app-service) to resolve it.
 
 ## Configure the app in Azure App Service
 
-> **Note:**
+> [!NOTE]
 > *This section only applies to apps not using the Azure SignalR Service.*
 >
 > If the app uses the Azure SignalR Service, the App Service doesn't require the configuration of WebSockets and session affinity, also called Application Request Routing (ARR) affinity, described in this section. Clients connect their WebSockets to the Azure SignalR Service, not directly to the app.
 
 For apps hosted without the Azure SignalR Service, enable:
 
-* WebSockets to allow the WebSockets transport to function. The default setting is **Off**.
-* Session affinity (ARR affinity) to route requests from a user back to the same App Service instance. The default setting is **On**.
+* [WebSockets](../fundamentals/websockets.md) to allow the WebSockets transport to function. The default setting is **Off**.
+* [Session affinity (ARR affinity)](https://azure.github.io/AppService/2016/05/16/Disable-Session-affinity-cookie-(ARR-cookie)-for-Azure-web-apps.html) to route requests from a user back to the same App Service instance. The default setting is **On**.
 
 1. In the Azure portal, navigate to the web app in **App Services**.
 1. Open **Settings** > **Configuration**.
@@ -71,13 +70,13 @@ For apps hosted without the Azure SignalR Service, enable:
 
 ## App Service Plan limits
 
-WebSockets and other transports are limited based on the App Service Plan selected. For more information, see the *Azure Cloud Services limits* and *App Service limits* sections of the Azure subscription and service limits, quotas, and constraints article.
+WebSockets and other transports are limited based on the App Service Plan selected. For more information, see the *Azure Cloud Services limits* and *App Service limits* sections of the [Azure subscription and service limits, quotas, and constraints](/azure/azure-subscription-service-limits#app-service-limits) article.
 
 ## Related content
 
-* What is Azure SignalR Service?
-* Overview of ASP.NET Core SignalR
-* Host and deploy ASP.NET Core
-* Publish an ASP.NET Core app to Azure with Visual Studio
-* Publish an ASP.NET Core app to Azure with command line tools
-* Host and deploy ASP.NET Core Preview apps on Azure
+* [What is Azure SignalR Service?](/azure/azure-signalr/signalr-overview)
+* [Overview of ASP.NET Core SignalR](introduction.md)
+* [Host and deploy ASP.NET Core](../host-and-deploy/index.md)
+* [Publish an ASP.NET Core app to Azure with Visual Studio](../tutorials/publish-to-azure-webapp-using-vs.md)
+* [Publish an ASP.NET Core app to Azure with command line tools](/azure/app-service/app-service-web-get-started-dotnet)
+* [Host and deploy ASP.NET Core Preview apps on Azure](../host-and-deploy/azure-apps/index.md#deploy-aspnet-core-preview-release-to-azure-app-service)

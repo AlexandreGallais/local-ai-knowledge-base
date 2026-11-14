@@ -1,27 +1,25 @@
----
-title: "require-hyphen-before-param-description"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/require-hyphen-before-param-description.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-require-hyphen-before-param-description"></a>
+<a name="require-hyphen-before-param-description"></a>
+# <code>require-hyphen-before-param-description</code>
 
-# `require-hyphen-before-param-description`
+* [Fixer](#user-content-require-hyphen-before-param-description-fixer)
+* [Options](#user-content-require-hyphen-before-param-description-options)
+    * [`tags`](#user-content-require-hyphen-before-param-description-options-tags)
+* [Context and settings](#user-content-require-hyphen-before-param-description-context-and-settings)
+* [Failing examples](#user-content-require-hyphen-before-param-description-failing-examples)
+* [Passing examples](#user-content-require-hyphen-before-param-description-passing-examples)
 
-* Fixer
-* Options
-    * `tags`
-* Context and settings
-* Failing examples
-* Passing examples
 
 Requires (or disallows) a hyphen before the `@param` description.
 
+<a name="user-content-require-hyphen-before-param-description-fixer"></a>
+<a name="require-hyphen-before-param-description-fixer"></a>
 ## Fixer
 
 Adds a hyphen for "always" and removes a hyphen for "never".
 
+<a name="user-content-require-hyphen-before-param-description-options"></a>
+<a name="require-hyphen-before-param-description-options"></a>
 ## Options
 
 The first option is a string with the following possible values: "always", "never".
@@ -39,7 +37,9 @@ The next option is an object with the following properties.
 The options object may have the following property to indicate behavior for
 other tags besides the `@param` tag (or the `@arg` tag if so set).
 
-### `tags`
+<a name="user-content-require-hyphen-before-param-description-options-tags"></a>
+<a name="require-hyphen-before-param-description-options-tags"></a>
+### <code>tags</code>
 
 Object whose keys indicate different tags to check for the
   presence or absence of hyphens; the key value should be "always" or "never",
@@ -49,6 +49,9 @@ Object whose keys indicate different tags to check for the
   `@param` tag which follows the main string option setting and besides any
   other `tags` entries).
 
+
+<a name="user-content-require-hyphen-before-param-description-context-and-settings"></a>
+<a name="require-hyphen-before-param-description-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -59,6 +62,8 @@ Object whose keys indicate different tags to check for the
 |Recommended|false|
 |Options|string ("always", "never") followed by object with `tags`|
 
+<a name="user-content-require-hyphen-before-param-description-failing-examples"></a>
+<a name="require-hyphen-before-param-description-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -219,6 +224,10 @@ function test(input) {}
 // Message: There must be no hyphen followed by newline after the @param name.
 ````
 
+
+
+<a name="user-content-require-hyphen-before-param-description-passing-examples"></a>
+<a name="require-hyphen-before-param-description-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -325,3 +334,4 @@ function main(argv) {
  * - `"option2"`: Description of option 2.
  */
 ````
+

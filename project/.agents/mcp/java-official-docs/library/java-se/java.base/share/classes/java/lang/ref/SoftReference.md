@@ -1,12 +1,3 @@
----
-title: "SoftReference class (java.lang.ref)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/ref/SoftReference.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # SoftReference class (java.lang.ref)
 
 ```java
@@ -17,24 +8,24 @@ Soft reference objects, which are cleared at the discretion of the garbage
 collector in response to memory demand.  Soft references are most often used
 to implement memory-sensitive caches.
 
- Suppose that the garbage collector determines at a certain point in time
-that an object is softly
-reachable.  At that time it may choose to clear atomically all soft
+<p> Suppose that the garbage collector determines at a certain point in time
+that an object is <a href="package-summary.html#reachability">softly
+reachable</a>.  At that time it may choose to clear atomically all soft
 references to that object and all soft references to any other
 softly-reachable objects from which that object is reachable through a chain
 of strong references.  At the same time or at some later time it will
 enqueue those newly-cleared soft references that are registered with
 reference queues.
 
- All soft references to softly-reachable objects are guaranteed to have
+<p> All soft references to softly-reachable objects are guaranteed to have
 been cleared before the virtual machine throws an
-`OutOfMemoryError`.  Otherwise no constraints are placed upon the
+{@code OutOfMemoryError}.  Otherwise no constraints are placed upon the
 time at which a soft reference will be cleared or the order in which a set
 of such references to different objects will be cleared.  Virtual machine
 implementations are, however, encouraged to bias against clearing
 recently-created or recently-used soft references.
 
- Direct instances of this class may be used to implement simple caches;
+<p> Direct instances of this class may be used to implement simple caches;
 this class or derived subclasses may also be used in larger data structures
 to implement more sophisticated caches.  As long as the referent of a soft
 reference is strongly reachable, that is, is actually in use, the soft
@@ -42,12 +33,10 @@ reference will not be cleared.  Thus a sophisticated cache can, for example,
 prevent its most recently used entries from being discarded by keeping
 strong referents to those entries, leaving the remaining entries to be
 discarded at the discretion of the garbage collector.
+@param <T> the type of the referent
 
-Parameters:
-
-- `<T>`: the type of the referent
-
-**Since:** 1.2
+@author   Mark Reinhold
+@since    1.2
 
 ## SoftReference.SoftReference(T)
 
@@ -58,9 +47,7 @@ public SoftReference( T referent)
 Creates a new soft reference that refers to the given object.  The new
 reference is not registered with any queue.
 
-Parameters:
-
-- `referent`: object the new soft reference will refer to
+@param referent object the new soft reference will refer to
 
 ## SoftReference.SoftReference(T, ReferenceQueue<? super T>)
 
@@ -71,10 +58,9 @@ public SoftReference( T referent, ReferenceQueue<? super T> q)
 Creates a new soft reference that refers to the given object and is
 registered with the given queue.
 
-Parameters:
-
-- `referent`: object the new soft reference will refer to
-- `q`: the queue with which the reference is to be registered, or `null` if registration is not required
+@param referent object the new soft reference will refer to
+@param q the queue with which the reference is to be registered,
+         or {@code null} if registration is not required
 
 ## SoftReference.get()
 
@@ -84,7 +70,7 @@ public T get()
 
 Returns this reference object's referent.  If this reference object has
 been cleared, either by the program or by the garbage collector, then
-this method returns `null`.
+this method returns {@code null}.
 
-**Returns:** The object to which this reference refers, or
-          `null` if this reference object has been cleared
+@return   The object to which this reference refers, or
+          {@code null} if this reference object has been cleared

@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: System.Text.Json source generator fallback"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/serialization/7.0/reflection-fallback.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 7 breaking change in serialization where the System.Text.Json source generator no longer fall backs to reflection-based serialization for unrecognized types.
+ms.date: 09/12/2022
 ---
-
 # System.Text.Json source generator fallback
 
-When using one of the `System.Text.Json.JsonSerializer` methods that accepts `System.Text.Json.JsonSerializerOptions`, the `System.Text.Json` source generator will no longer implicitly fall back to reflection-based serialization for unrecognized types.
+When using one of the <xref:System.Text.Json.JsonSerializer> methods that accepts <xref:System.Text.Json.JsonSerializerOptions>, the <xref:System.Text.Json?displayProperty=fullName> source generator will no longer implicitly fall back to reflection-based serialization for unrecognized types.
 
 ## Previous behavior
 
@@ -36,15 +32,15 @@ ensure that all root types passed to the serializer have been indicated with 'Js
 along with any types that might be serialized polymorphically.
 ```
 
-Now consider the following call, which tries to serialize the same type (`MyContext`) using the `System.Text.Json.JsonSerializerOptions` instance constructed by the source generator:
+Now consider the following call, which tries to serialize the same type (`MyContext`) using the <xref:System.Text.Json.JsonSerializerOptions> instance constructed by the source generator:
 
 ```csharp
 JsonSerializer.Serialize(new Poco2(), MyContext.Default.Options);
 ```
 
-The options instance silently incorporates the default reflection-based contract resolver as a fallback mechanism, and as such, the type serializes successfully—using reflection.
+The options instance silently incorporates the default reflection-based contract resolver as a fallback mechanism, and as such, the type serializes successfully&mdash;using reflection.
 
-The same fallback logic applies to `System.Text.Json.JsonSerializerOptions.GetConverter(System.Type)` for options instances that are attached to a `System.Text.Json.Serialization.JsonSerializerContext`. The following statement will return a converter using the built-in reflection converter:
+The same fallback logic applies to <xref:System.Text.Json.JsonSerializerOptions.GetConverter(System.Type)?displayProperty=nameWithType> for options instances that are attached to a <xref:System.Text.Json.Serialization.JsonSerializerContext>. The following statement will return a converter using the built-in reflection converter:
 
 ```csharp
 JsonConverter converter = MyContext.Default.Options.GetConverter(typeof(Poco2));
@@ -52,13 +48,13 @@ JsonConverter converter = MyContext.Default.Options.GetConverter(typeof(Poco2));
 
 ## New behavior
 
-Starting in .NET 7, the following call fails with the same exception (`System.InvalidOperationException`) as when using the `System.Text.Json.Serialization.JsonSerializerContext` overload:
+Starting in .NET 7, the following call fails with the same exception (<xref:System.InvalidOperationException>) as when using the <xref:System.Text.Json.Serialization.JsonSerializerContext> overload:
 
 ```csharp
 JsonSerializer.Serialize(new Poco2(), MyContext.Default.Options);
 ```
 
-In addition, the following statement will fail with a `System.NotSupportedException`:
+In addition, the following statement will fail with a <xref:System.NotSupportedException>:
 
 ```csharp
 JsonConverter converter = MyContext.Default.Options.GetConverter(typeof(Poco2));
@@ -70,15 +66,15 @@ JsonConverter converter = MyContext.Default.Options.GetConverter(typeof(Poco2));
 
 ## Type of breaking change
 
-This change can affect binary compatibility.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 
-The previous behavior violates the principle of least surprise and ultimately defeats the purpose of source generation. With the release of a feature that allows you to customize the JSON serialization contracts of your types, you have the ability to fine tune the sources of your contract metadata. With this in mind, silently introducing alternative sources becomes even less desirable.
+The previous behavior violates the principle of least surprise and ultimately defeats the purpose of source generation. With the release of a feature that allows you to [customize the JSON serialization contracts of your types](https://github.com/dotnet/runtime/issues/63686), you have the ability to fine tune the sources of your contract metadata. With this in mind, silently introducing alternative sources becomes even less desirable.
 
 ## Recommended action
 
-You might depend on the previous behavior, either intentionally or unintentionally. The recommended course of action is to update your `System.Text.Json.Serialization.JsonSerializerContext` definition so that it includes all type dependencies:
+You might depend on the previous behavior, either intentionally or unintentionally. The recommended course of action is to update your <xref:System.Text.Json.Serialization.JsonSerializerContext> definition so that it includes all type dependencies:
 
 ```csharp
 [JsonSerializable(typeof(Poco1))]
@@ -106,7 +102,7 @@ options.GetConverter(typeof(Poco2)); // Returns the reflection-based converter.
 
 ### Use an AppContext switch
 
-Starting in .NET 7, you can re-enable reflection fallback globally using the provided AppContext compatibility switch. Add the following entry to your application's project file to re-enable reflection fallback for all source-generated contexts in your app. For more information on using AppContext switches, see the article on .NET runtime configuration settings.
+Starting in .NET 7, you can re-enable reflection fallback globally using the provided AppContext compatibility switch. Add the following entry to your application's project file to re-enable reflection fallback for all source-generated contexts in your app. For more information on using AppContext switches, see the article on [.NET runtime configuration settings](../../../runtime-config/index.md).
 
 ```xml
 <ItemGroup>
@@ -116,12 +112,12 @@ Starting in .NET 7, you can re-enable reflection fallback globally using the pro
 
 ## Affected APIs
 
-- `System.Text.Json.JsonSerializerOptions.GetConverter(System.Type)`
-- `System.Text.Json.JsonSerializer.Serialize(System.IO.Stream,System.Object,System.Type,System.Text.Json.JsonSerializerOptions)`
-- `System.Text.Json.JsonSerializer.Serialize(System.Object,System.Type,System.Text.Json.JsonSerializerOptions)`
-- `System.Text.Json.JsonSerializer.Serialize(System.Text.Json.Utf8JsonWriter,System.Object,System.Type,System.Text.Json.JsonSerializerOptions)`
-- `System.Text.Json.JsonSerializer.Serialize``1(``0,System.Text.Json.JsonSerializerOptions)`
-- `System.Text.Json.JsonSerializer.Serialize``1(System.IO.Stream,``0,System.Text.Json.JsonSerializerOptions)`
-- `System.Text.Json.JsonSerializer.Serialize``1(System.Text.Json.Utf8JsonWriter,``0,System.Text.Json.JsonSerializerOptions)`
-- `System.Text.Json.JsonSerializer.SerializeAsync(System.IO.Stream,System.Object,System.Type,System.Text.Json.JsonSerializerOptions,System.Threading.CancellationToken)`
-- `System.Text.Json.JsonSerializer.SerializeAsync``1(System.IO.Stream,``0,System.Text.Json.JsonSerializerOptions,System.Threading.CancellationToken)`
+- <xref:System.Text.Json.JsonSerializerOptions.GetConverter(System.Type)?displayProperty=fullName>
+- <xref:System.Text.Json.JsonSerializer.Serialize(System.IO.Stream,System.Object,System.Type,System.Text.Json.JsonSerializerOptions)?displayProperty=fullName>
+- <xref:System.Text.Json.JsonSerializer.Serialize(System.Object,System.Type,System.Text.Json.JsonSerializerOptions)?displayProperty=fullName>
+- <xref:System.Text.Json.JsonSerializer.Serialize(System.Text.Json.Utf8JsonWriter,System.Object,System.Type,System.Text.Json.JsonSerializerOptions)?displayProperty=fullName>
+- <xref:System.Text.Json.JsonSerializer.Serialize``1(``0,System.Text.Json.JsonSerializerOptions)?displayProperty=fullName>
+- <xref:System.Text.Json.JsonSerializer.Serialize``1(System.IO.Stream,``0,System.Text.Json.JsonSerializerOptions)?displayProperty=fullName>
+- <xref:System.Text.Json.JsonSerializer.Serialize``1(System.Text.Json.Utf8JsonWriter,``0,System.Text.Json.JsonSerializerOptions)?displayProperty=fullName>
+- <xref:System.Text.Json.JsonSerializer.SerializeAsync(System.IO.Stream,System.Object,System.Type,System.Text.Json.JsonSerializerOptions,System.Threading.CancellationToken)?displayProperty=fullName>
+- <xref:System.Text.Json.JsonSerializer.SerializeAsync``1(System.IO.Stream,``0,System.Text.Json.JsonSerializerOptions,System.Threading.CancellationToken)?displayProperty=fullName>

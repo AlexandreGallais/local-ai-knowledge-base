@@ -1,16 +1,19 @@
 ---
+description: "Learn more about: Abstract Class Design"
 title: "Abstract Class Design"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/abstract-class.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "type design guidelines, abstract classes"
+  - "abstract classes, design guidelines"
+  - "class library design guidelines [.NET Framework], classes"
+  - "classes [.NET Framework], abstract"
+  - "classes [.NET Framework], design guidelines"
+  - "type design guidelines, classes"
+ms.assetid: d3646e6d-5c1f-4922-8fb0-ec5effb30d60
 ---
-
 # Abstract Class Design
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
 ❌ DO NOT define public or protected internal constructors in abstract types.
 
@@ -24,13 +27,13 @@ license: "CC-BY-4.0"
 
  ✔️ DO provide at least one concrete type that inherits from each abstract class that you ship.
 
- Doing this helps to validate the design of the abstract class. For example,  `System.IO.FileStream` is an implementation of the `System.IO.Stream` abstract class.
+ Doing this helps to validate the design of the abstract class. For example,  <xref:System.IO.FileStream?displayProperty=nameWithType> is an implementation of the <xref:System.IO.Stream?displayProperty=nameWithType> abstract class.
 
  *Portions © 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Type Design Guidelines
-- Framework Design Guidelines
+- [Type Design Guidelines](type.md)
+- [Framework Design Guidelines](index.md)

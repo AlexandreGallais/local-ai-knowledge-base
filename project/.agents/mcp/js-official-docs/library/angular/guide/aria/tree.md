@@ -1,225 +1,19 @@
----
-title: "Tree (part 1 of 7)"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/aria/tree.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Tree
 
-  - Tree ARIA pattern
-  - Tree API Reference
+<docs-pill-row>
+  <docs-pill href="https://www.w3.org/WAI/ARIA/apg/patterns/treeview/" title="Tree ARIA pattern"/>
+  <docs-pill href="/api/aria/tree/Tree" title="Tree API Reference"/>
+</docs-pill-row>
 
 ## Overview
 
 A tree displays hierarchical data where items can expand to reveal children or collapse to hide them. Users navigate with arrow keys, expand and collapse nodes, and optionally select items for navigation or data selection scenarios.
 
-  File: `TS`
-
-```ts
-import {Component, signal} from '@angular/core';
-import {NgTemplateOutlet} from '@angular/common';
-import {Tree, TreeItem, TreeItemGroup} from '@angular/aria/tree';
-
-type TreeNode = {
-  name: string;
-  value: string;
-  children?: TreeNode[];
-  disabled?: boolean;
-  expanded?: boolean;
-};
-
-@Component({
-  selector: 'app-root',
-  templateUrl: 'app.html',
-  styleUrl: 'app.css',
-  imports: [Tree, TreeItem, TreeItemGroup, NgTemplateOutlet],
-})
-export class App {
-  readonly nodes: TreeNode[] = [
-    {
-      name: 'public',
-      value: 'public',
-      children: [
-        {name: 'index.html', value: 'public/index.html'},
-        {name: 'favicon.ico', value: 'public/favicon.ico'},
-        {name: 'styles.css', value: 'public/styles.css'},
-      ],
-      expanded: true,
-    },
-    {
-      name: 'src',
-      value: 'src',
-      children: [
-        {
-          name: 'app',
-          value: 'src/app',
-          children: [
-            {name: 'app.ts', value: 'src/app/app.ts'},
-            {name: 'app.html', value: 'src/app/app.html'},
-            {name: 'app.css', value: 'src/app/app.css'},
-          ],
-          expanded: false,
-        },
-        {
-          name: 'assets',
-          value: 'src/assets',
-          children: [{name: 'logo.png', value: 'src/assets/logo.png'}],
-          expanded: false,
-        },
-        {
-          name: 'environments',
-          value: 'src/environments',
-          children: [
-            {
-              name: 'environment.prod.ts',
-              value: 'src/environments/environment.prod.ts',
-              expanded: false,
-            },
-            {name: 'environment.ts', value: 'src/environments/environment.ts'},
-          ],
-          expanded: false,
-        },
-        {name: 'main.ts', value: 'src/main.ts'},
-        {name: 'polyfills.ts', value: 'src/polyfills.ts'},
-        {name: 'styles.css', value: 'src/styles.css', disabled: true},
-        {name: 'test.ts', value: 'src/test.ts'},
-      ],
-      expanded: false,
-    },
-    {name: 'angular.json', value: 'angular.json'},
-    {name: 'package.json', value: 'package.json'},
-    {name: 'README.md', value: 'README.md'},
-  ];
-
-  readonly selected = signal(['angular.json']);
-}
-```
-  File: `HTML`
-
-```html
-<ul ngTree #tree="ngTree" [(value)]="selected" class="basic-tree">
-  <ng-template
-    [ngTemplateOutlet]="treeNodes"
-    [ngTemplateOutletContext]="{nodes: nodes, parent: tree}"
-  />
-</ul>
-
-<ng-template #treeNodes let-nodes="nodes" let-parent="parent">
-  @for (node of nodes; track node.value) {
-    <li
-      ngTreeItem
-      [parent]="parent"
-      [value]="node.value"
-      [label]="node.name"
-      [disabled]="node.disabled"
-      [(expanded)]="node.expanded"
-      #treeItem="ngTreeItem"
-    >
-      <span aria-hidden="true" class="material-symbols-outlined expand-icon" translate="no">{{
-        node.children ? 'chevron_right' : ''
-      }}</span>
-      <span aria-hidden="true" class="material-symbols-outlined" translate="no">{{
-        node.children ? 'folder' : 'docs'
-      }}</span>
-      {{ node.name }}
-      <span aria-hidden="true" class="material-symbols-outlined selected-icon" translate="no"
-        >check</span
-      >
-    </li>
-
-    @if (node.children) {
-      <ul role="group">
-        <ng-template ngTreeItemGroup [ownedBy]="treeItem" #group="ngTreeItemGroup">
-          <ng-template
-            [ngTemplateOutlet]="treeNodes"
-            [ngTemplateOutletContext]="{nodes: node.children, parent: group}"
-          />
-        </ng-template>
-      </ul>
-    }
-  }
-</ng-template>
-```
-  File: `CSS`
-
-```css
-@import url('https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined');
-
-:host {
-  display: flex;
-  justify-content: center;
-  user-select: none;
-  font-family: var(--inter-font);
-}
-
-[ngTree] {
-  min-width: 24rem;
-  background-color: var(--septenary-contrast);
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-}
-
-[ngTreeItem] {
-  cursor: pointer;
-  list-style: none;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.3rem 1rem;
-}
-
-[ngTreeItem][aria-disabled='true'] {
-  opacity: 0.5;
-  cursor: default;
-}
-
-[ngTreeItem]:focus,
-[ngTreeItem]:hover {
-  background-color: var(--quinary-contrast);
-}
-
-[ngTreeItem]:focus {
-  outline: 1px solid color-mix(in srgb, var(--hot-pink) 60%, transparent);
-}
-
-[ngTreeItem][aria-selected='true'],
-[ngTreeItem][aria-selected='true'] .expand-icon {
-  background-image: var(--pink-to-purple-horizontal-gradient);
-  background-clip: text;
-  color: transparent;
-}
-
-.material-symbols-outlined {
-  margin: 0;
-  width: 24px;
-}
-
-.expand-icon {
-  transition: transform 0.2s ease;
-}
-
-[ngTreeItem][aria-expanded='true'] .expand-icon {
-  transform: rotate(90deg);
-}
-
-.selected-icon {
-  visibility: hidden;
-  margin-left: auto;
-}
-
-[ngTreeItem][aria-current] .selected-icon,
-[ngTreeItem][aria-selected='true'] .selected-icon {
-  visibility: visible;
-}
-
-li[aria-expanded='false'] + ul[role='group'] {
-  display: none;
-}
-```
+<docs-code-multifile preview hideCode path="adev/src/content/examples/aria/tree/src/single-select/basic/app/app.ts">
+  <docs-code header="TS" path="adev/src/content/examples/aria/tree/src/single-select/basic/app/app.ts"/>
+  <docs-code header="HTML" path="adev/src/content/examples/aria/tree/src/single-select/basic/app/app.html"/>
+  <docs-code header="CSS" path="adev/src/content/examples/aria/tree/src/single-select/basic/app/app.css"/>
+</docs-code-multifile>
 
 ## Usage
 
@@ -236,9 +30,9 @@ Trees work well for displaying hierarchical data where users need to navigate th
 
 **Avoid trees when:**
 
-- Displaying flat lists (use Listbox instead)
-- Showing data tables (use Grid instead)
-- Creating simple dropdowns (use Select instead)
+- Displaying flat lists (use [Listbox](guide/aria/listbox) instead)
+- Showing data tables (use [Grid](guide/aria/grid) instead)
+- Creating simple dropdowns (use [Select](guide/aria/select) instead)
 - Building breadcrumb navigation (use breadcrumb patterns)
 
 ## Features
@@ -251,3 +45,179 @@ Trees work well for displaying hierarchical data where users need to navigate th
 - **Disabled items** - Disable specific nodes with focus management
 - **Focus modes** - Roving tabindex or activedescendant focus strategies
 - **RTL support** - Right-to-left language navigation
+
+## Examples
+
+### Navigation tree
+
+Use a tree for navigation where clicking items triggers actions rather than selecting them.
+
+<docs-tab-group>
+  <docs-tab label="Basic">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/tree/src/nav/basic/app/app.ts">
+      <docs-code header="TS" path="adev/src/content/examples/aria/tree/src/nav/basic/app/app.ts"/>
+      <docs-code header="HTML" path="adev/src/content/examples/aria/tree/src/nav/basic/app/app.html"/>
+      <docs-code header="CSS" path="adev/src/content/examples/aria/tree/src/nav/basic/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+</docs-tab-group>
+
+Set `[nav]="true"` to enable navigation mode. This uses `aria-current` to indicate the current page instead of selection.
+
+### Single selection
+
+Enable single selection for scenarios where users choose one item from the tree.
+
+<docs-tab-group>
+  <docs-tab label="Basic">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/tree/src/single-select/basic/app/app.ts">
+      <docs-code header="TS" path="adev/src/content/examples/aria/tree/src/single-select/basic/app/app.ts"/>
+      <docs-code header="HTML" path="adev/src/content/examples/aria/tree/src/single-select/basic/app/app.html"/>
+      <docs-code header="CSS" path="adev/src/content/examples/aria/tree/src/single-select/basic/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+  <docs-tab label="Retro">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/tree/src/single-select/retro/app/app.ts">
+      <docs-code header="TS" path="adev/src/content/examples/aria/tree/src/single-select/retro/app/app.ts"/>
+      <docs-code header="HTML" path="adev/src/content/examples/aria/tree/src/single-select/retro/app/app.html"/>
+      <docs-code header="CSS" path="adev/src/content/examples/aria/tree/src/single-select/retro/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+</docs-tab-group>
+
+Leave `[multi]="false"` (the default) for single selection. Users press Space to select the focused item.
+
+### Multi-selection
+
+Allow users to select multiple items from the tree.
+
+<docs-tab-group>
+  <docs-tab label="Basic">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/tree/src/multi-select/basic/app/app.ts">
+      <docs-code header="TS" path="adev/src/content/examples/aria/tree/src/multi-select/basic/app/app.ts"/>
+      <docs-code header="HTML" path="adev/src/content/examples/aria/tree/src/multi-select/basic/app/app.html"/>
+      <docs-code header="CSS" path="adev/src/content/examples/aria/tree/src/multi-select/basic/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+  <docs-tab label="Retro">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/tree/src/multi-select/retro/app/app.ts">
+      <docs-code header="TS" path="adev/src/content/examples/aria/tree/src/multi-select/retro/app/app.ts"/>
+      <docs-code header="HTML" path="adev/src/content/examples/aria/tree/src/multi-select/retro/app/app.html"/>
+      <docs-code header="CSS" path="adev/src/content/examples/aria/tree/src/multi-select/retro/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+</docs-tab-group>
+
+Set `[multi]="true"` on the tree. Users select items individually with Space or select ranges with Shift+Arrow keys.
+
+### Selection follows focus
+
+When selection follows focus, the focused item is automatically selected. This simplifies interaction for navigation scenarios.
+
+<docs-tab-group>
+  <docs-tab label="Basic">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/tree/src/single-select-follow-focus/basic/app/app.ts">
+      <docs-code header="TS" path="adev/src/content/examples/aria/tree/src/single-select-follow-focus/basic/app/app.ts"/>
+      <docs-code header="HTML" path="adev/src/content/examples/aria/tree/src/single-select-follow-focus/basic/app/app.html"/>
+      <docs-code header="CSS" path="adev/src/content/examples/aria/tree/src/single-select-follow-focus/basic/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+  <docs-tab label="Retro">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/tree/src/single-select-follow-focus/retro/app/app.ts">
+      <docs-code header="TS" path="adev/src/content/examples/aria/tree/src/single-select-follow-focus/retro/app/app.ts"/>
+      <docs-code header="HTML" path="adev/src/content/examples/aria/tree/src/single-select-follow-focus/retro/app/app.html"/>
+      <docs-code header="CSS" path="adev/src/content/examples/aria/tree/src/single-select-follow-focus/retro/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+</docs-tab-group>
+
+Set `[selectionMode]="'follow'"` on the tree. Selection automatically updates as users navigate with arrow keys.
+
+### Disabled tree items
+
+Disable specific tree nodes to prevent interaction. Control whether disabled items can receive focus.
+
+<docs-tab-group>
+  <docs-tab label="Basic">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/tree/src/disabled-focusable/basic/app/app.ts">
+      <docs-code header="TS" path="adev/src/content/examples/aria/tree/src/disabled-focusable/basic/app/app.ts"/>
+      <docs-code header="HTML" path="adev/src/content/examples/aria/tree/src/disabled-focusable/basic/app/app.html"/>
+      <docs-code header="CSS" path="adev/src/content/examples/aria/tree/src/disabled-focusable/basic/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+  <docs-tab label="Retro">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/tree/src/disabled-focusable/retro/app/app.ts">
+      <docs-code header="TS" path="adev/src/content/examples/aria/tree/src/disabled-focusable/retro/app/app.ts"/>
+      <docs-code header="HTML" path="adev/src/content/examples/aria/tree/src/disabled-focusable/retro/app/app.html"/>
+      <docs-code header="CSS" path="adev/src/content/examples/aria/tree/src/disabled-focusable/retro/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+</docs-tab-group>
+
+When `[softDisabled]="true"` on the tree, disabled items can receive focus but cannot be activated or selected. When `[softDisabled]="false"`, disabled items are skipped during keyboard navigation.
+
+## Testing
+
+Angular Aria provides component harnesses for testing tree components.
+Here is an example of how to use the harnesses in a component test:
+
+```typescript
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {HarnessLoader} from '@angular/cdk/testing';
+import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
+import {TreeHarness} from '@angular/aria/tree/testing';
+import {MyTreeComponent} from './my-tree'; // Your component
+
+describe('MyTreeComponent', () => {
+  let fixture: ComponentFixture<MyTreeComponent>;
+  let loader: HarnessLoader;
+
+  beforeEach(async () => {
+    TestBed.configureTestingModule({
+      imports: [MyTreeComponent],
+    });
+
+    fixture = TestBed.createComponent(MyTreeComponent);
+    await fixture.whenStable();
+    loader = TestbedHarnessEnvironment.loader(fixture);
+  });
+
+  it('should navigate and expand tree items', async () => {
+    const tree = await loader.getHarness(TreeHarness);
+
+    // Get top-level structure representation
+    expect(await tree.getTreeStructure()).toEqual({
+      children: [{text: 'public'}, {text: 'src'}, {text: 'package.json'}],
+    });
+
+    // Get all items (currently visible)
+    const items = await tree.getItems();
+    expect(items.length).toBe(3);
+
+    // Expand the first item ('public')
+    expect(await items[0].isExpanded()).toBe(false);
+    await items[0].click();
+    expect(await items[0].isExpanded()).toBe(true);
+
+    // Verifying tree structure updates after expansion
+    expect(await tree.getTreeStructure()).toEqual({
+      children: [
+        {
+          text: 'public',
+          children: [{text: 'index.html'}, {text: 'styles.css'}],
+        },
+        {text: 'src'},
+        {text: 'package.json'},
+      ],
+    });
+  });
+});
+```
+
+## API reference
+
+For detailed API documentation, inspect the following API references:
+
+- [`Tree`](/api/aria/tree/Tree)
+- [`TreeItem`](/api/aria/tree/TreeItem)
+- [`TreeItemGroup`](/api/aria/tree/TreeItemGroup)

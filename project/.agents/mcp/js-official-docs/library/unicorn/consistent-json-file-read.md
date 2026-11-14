@@ -1,23 +1,17 @@
----
-title: "consistent-json-file-read"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/consistent-json-file-read.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # consistent-json-file-read
 
 📝 Enforce consistent JSON file reads before `JSON.parse()`.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 When reading and parsing a JSON file, consistently read it using the configured style. By default, the rule prefers reading it as a string.
 
-The default keeps the code compatible with TypeScript, where `JSON.parse()` accepts a string.
+The default keeps the code compatible with TypeScript, where [`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) accepts a string.
 
 The rule only checks and fixes direct no-option reads and option objects where `encoding` is the only property. Reads with additional options are left unchanged to avoid dropping options.
 

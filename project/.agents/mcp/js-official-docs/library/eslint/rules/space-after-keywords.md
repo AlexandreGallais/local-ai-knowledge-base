@@ -1,18 +1,13 @@
 ---
-title: "space-after-keywords"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/space-after-keywords.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
----
+title: space-after-keywords
 
-# space-after-keywords
+---
 
 Enforces consistent spacing after keywords.
 
-**Important:**
-This rule was removed in ESLint v2.0.0 and replaced by the keyword-spacing rule.
+:::important
+This rule was removed in ESLint v2.0.0 and replaced by the [keyword-spacing](keyword-spacing) rule.
+:::
 
 Some style guides will require or disallow spaces following the certain keywords.
 
@@ -39,7 +34,7 @@ then there should be no spaces following. The default is `"always"`.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint space-after-keywords: "error"*/
@@ -51,7 +46,9 @@ if (a) {} else{}
 do{} while (a);
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint space-after-keywords: ["error", "never"]*/
@@ -59,9 +56,11 @@ do{} while (a);
 if (a) {}
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint space-after-keywords: "error"*/
@@ -71,10 +70,14 @@ if (a) {}
 if (a) {} else {}
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint space-after-keywords: ["error", "never"]*/
 
 if(a) {}
 ```
+
+:::

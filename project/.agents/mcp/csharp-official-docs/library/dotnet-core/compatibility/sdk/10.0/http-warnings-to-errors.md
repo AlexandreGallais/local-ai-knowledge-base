@@ -1,10 +1,9 @@
 ---
 title: "Breaking change - HTTP warnings promoted to errors in dotnet package list and dotnet package search"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/http-warnings-to-errors.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where HTTP warnings are promoted to errors in dotnet package operations."
+ms.date: 5/9/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/45985
 ---
 
 # HTTP warnings promoted to errors in `dotnet package list` and `dotnet package search`
@@ -31,7 +30,7 @@ The tools now treat HTTP sources as errors by default. To allow HTTP sources, ex
 
 ## Type of breaking change
 
-This is a behavioral change.
+This is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

@@ -1,10 +1,11 @@
 ---
-title: "Scope of default namespaces - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/scope-default-namespaces.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Scope of default namespaces - LINQ to XML
+description: Default namespaces as represented in the XML tree aren't in scope for queries. Here are proper and improper ways of querying them.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: fe826236-830f-457a-9027-7ad62c909fae
 ---
 
 # Scope of default namespaces (LINQ to XML)
@@ -71,7 +72,7 @@ End of result set
 
 This example shows the creation of XML in a namespace, and a proper query.
 
-In C#, the correct approach is to declare and initialize an `System.Xml.Linq.XNamespace` object, and to use it when specifying `System.Xml.Linq.XName` objects. In this case, the argument to the `System.Xml.Linq.XContainer.Elements*` method is an `System.Xml.Linq.XName` object.
+In C#, the correct approach is to declare and initialize an <xref:System.Xml.Linq.XNamespace> object, and to use it when specifying <xref:System.Xml.Linq.XName> objects. In this case, the argument to the <xref:System.Xml.Linq.XContainer.Elements*> method is an <xref:System.Xml.Linq.XName> object.
 
 The correct approach when using Visual Basic is to declare and initialize a global default namespace. This places all XML properties in the default namespace.
 
@@ -135,4 +136,4 @@ End of result set
 
 ## See also
 
-- Namespaces overview
+- [Namespaces overview](namespaces-overview.md)

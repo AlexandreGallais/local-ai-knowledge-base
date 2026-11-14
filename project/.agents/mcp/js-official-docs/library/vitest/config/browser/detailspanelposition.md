@@ -1,10 +1,6 @@
 ---
-title: "browser.detailsPanelPosition | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/browser/detailspanelposition.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: browser.detailsPanelPosition | Config
+outline: deep
 ---
 
 # browser.detailsPanelPosition
@@ -18,7 +14,7 @@ Controls the default position of the details panel in the Vitest UI when running
 - `'right'` - Shows the details panel on the right side with a horizontal split between the browser viewport and the details panel.
 - `'bottom'` - Shows the details panel at the bottom with a vertical split between the browser viewport and the details panel.
 
-```ts
+```ts [vitest.config.ts]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -35,5 +31,13 @@ export default defineConfig({
 
 ::: tabs
 == bottom
-
+<center>
+  <img alt="Vitest UI with details at the bottom" img-light src="/ui/light-ui-details-bottom.png">
+  <img alt="Vitest UI with details at the bottom" img-dark src="/ui/dark-ui-details-bottom.png">
+</center>
 == right
+<center>
+  <img alt="Vitest UI with details at the right side" img-light src="/ui/light-ui-details-right.png">
+  <img alt="Vitest UI with details at the right side" img-dark src="/ui/dark-ui-details-right.png">
+</center>
+:::

@@ -1,131 +1,44 @@
 ---
-title: "Part 7, add a new field"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/tutorials/razor-pages/new-field.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Part 7, add a new field
+ai-usage: ai-assisted
+description: Part 7 of tutorial series on Razor Pages.
+ms.date: 05/11/2026
 ---
-
 # Part 7, add a new field to a Razor Page in ASP.NET Core
 
-By Rick Anderson
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
-In this section, Entity Framework Core (EF Core) is used to define the database schema based on the app's model class:
+By [Rick Anderson](https://twitter.com/RickAndMSFT)
+
+:::moniker range=">= aspnetcore-10.0"
+
+In this section, [Entity Framework Core (EF Core)](/ef/core/get-started/aspnetcore/new-db) is used to define the database schema based on the app's model class:
 
 * Add a new field to the model.
 * Migrate the new field schema change to the database.
 
-The EF Core approach allows for a more agile development process. You work on the app's data model directly while EF Core creates and synchronizes the database schema. You don't need to switch contexts to and from a database management tool. For an overview of Entity Framework Core and its benefits, see Entity Framework Core.
+The EF Core approach allows for a more agile development process. You work on the app's data model directly while EF Core creates and synchronizes the database schema. You don't need to switch contexts to and from a database management tool. For an overview of Entity Framework Core and its benefits, see [Entity Framework Core](/ef/core).
 
 Using EF Core to automatically create and track a database:
 
-* Adds an `__EFMigrationsHistory` table to the database to track whether the schema of the database is in sync with the model classes it was generated from.
+* Adds an [`__EFMigrationsHistory`](/ef/core/managing-schemas/migrations/history-table) table to the database to track whether the schema of the database is in sync with the model classes it was generated from.
 * Throws an exception if the model classes aren't in sync with the database.
 
 Automatic verification that the schema and model are in sync makes it easier to find inconsistent database code issues.
 
 ## Add a Rating property to the Movie model
+<!-- Update code in working project (which becomes clean finished sample) to compile and verify steps, then copy to snapshot sample folder. -->
 
 1. Open the `Models/Movie.cs` file and add a `Rating` property:
-   ```csharp
-public class Movie
-{
-    public int Id { get; set; }
-    public string Title { get; set; } = string.Empty;
-
-    [Display(Name = "Release Date")]
-    [DataType(DataType.Date)]
-    public DateTime ReleaseDate { get; set; }
-    public string Genre { get; set; } = string.Empty;
-
-    [Column(TypeName = "decimal(18, 2)")]
-    public decimal Price { get; set; }
-    public string Rating { get; set; } = string.Empty;
-}
-```
+   [!code-csharp[](~/tutorials/razor-pages/razor-pages-start/samples/snapshot-10/Models/MovieDateRating.cs?highlight=13&name=snippet)]
 1. Edit `Pages/MoviePages/Index.cshtml`, and add a `Rating` field:
-   ```cshtml
-@page
-@model RazorPagesMovie.Pages.MoviePages.IndexModel
-
-@{
-    ViewData["Title"] = "Index";
-}
-
-<h1>Index</h1>
-
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-
-<form>
-    <p>
-        <select asp-for="MovieGenre" asp-items="Model.Genres">
-            <option value="">All</option>
-        </select>
-        <label>Title: <input type="text" asp-for="SearchString" /></label>
-        <input type="submit" value="Filter" />
-    </p>
-</form>
-
-<table class="table">
-
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Movie[0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Movie[0].ReleaseDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Movie[0].Genre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Movie[0].Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Movie[0].Rating)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Movie)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReleaseDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Genre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Rating)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-```
+   [!code-cshtml[](~/tutorials/razor-pages/razor-pages-start/samples/snapshot-10/Pages/MoviePages/IndexRating.cshtml?highlight=40-42,62-64)]
 
 1. Update the following pages with a `Rating` field:
-   * *Pages/MoviePages/Create.cshtml*.
-   * *Pages/MoviePages/Delete.cshtml*.
-   * *Pages/MoviePages/Details.cshtml*.
-   * *Pages/MoviePages/Edit.cshtml*.
+   * *[Pages/MoviePages/Create.cshtml](https://github.com/dotnet/AspNetCore.Docs/blob/main/aspnetcore/tutorials/razor-pages/razor-pages-start/samples/RazorPagesMovie10/Pages/MoviePages/Create.cshtml)*.
+   * *[Pages/MoviePages/Delete.cshtml](https://github.com/dotnet/AspNetCore.Docs/blob/main/aspnetcore/tutorials/razor-pages/razor-pages-start/samples/RazorPagesMovie10/Pages/MoviePages/Delete.cshtml)*.
+   * *[Pages/MoviePages/Details.cshtml](https://github.com/dotnet/AspNetCore.Docs/blob/main/aspnetcore/tutorials/razor-pages/razor-pages-start/samples/RazorPagesMovie10/Pages/MoviePages/Details.cshtml)*.
+   * *[Pages/MoviePages/Edit.cshtml](https://github.com/dotnet/AspNetCore.Docs/blob/main/aspnetcore/tutorials/razor-pages/razor-pages-start/samples/RazorPagesMovie10/Pages/MoviePages/Edit.cshtml)*.
 
 The app doesn't work until you update the database to include the new field. Running the app without an update to the database throws a `SqlException`:
 
@@ -143,27 +56,17 @@ For this tutorial, use EF Core Migrations.
 
 Update the `SeedData` class so that it provides a value for the new column. A sample change is shown in the following code, but make this change for each `new Movie` block.
 
-```csharp
-context.Movie.AddRange(
-    new Movie
-    {
-        Title = "When Harry Met Sally",
-        ReleaseDate = DateTime.Parse("1989-2-12"),
-        Genre = "Romantic Comedy",
-        Price = 7.99M,
-        Rating = "R"
-    },
-```
+[!code-csharp[](~/tutorials/razor-pages/razor-pages-start/samples/snapshot-10/Models/SeedDataRating.cs?name=snippet1&highlight=8)]
 
-See the completed SeedData.cs file.
+See the [completed SeedData.cs file](https://github.com/dotnet/AspNetCore.Docs/blob/main/aspnetcore/tutorials/razor-pages/razor-pages-start/samples/RazorPagesMovie10/Models/SeedData.cs).
 
 Build the app
 
-### Visual Studio
+### [Visual Studio](#tab/visual-studio)
 
-Press `Ctrl`+`Shift`+`B`.
+Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd>.
 
-### Visual Studio Code
+### [Visual Studio Code](#tab/visual-studio-code)
 
 From the *View* menu, select *Terminal* and enter the following command:
 
@@ -173,7 +76,7 @@ dotnet build
 
 ---
 
-# Visual Studio
+# [Visual Studio](#tab/visual-studio)
 
 ## Add a migration for the rating field
 
@@ -199,7 +102,7 @@ The name "Rating" is arbitrary and is used to name the migration file. It's help
 
 The `Update-Database` command tells the framework to apply the schema changes to the database and to preserve existing data.
 
-To delete all the records in the database, the initializer seeds the database and includes the `Rating` field. You can delete records by using the delete links in the browser or from Sql Server Object Explorer (SSOX).
+To delete all the records in the database, the initializer seeds the database and includes the `Rating` field. You can delete records by using the delete links in the browser or from [Sql Server Object Explorer](sql.md#ssox) (SSOX).
 
 Another option is to delete the database and use migrations to re-create the database. To delete the database in SSOX:
 
@@ -207,13 +110,13 @@ Another option is to delete the database and use migrations to re-create the dat
 1. Right-click on the database, and select **Delete**.
 1. Check **Close existing connections**.
 1. Select **OK**.
-1. In the PMC, update the database:
+1. In the [PMC](new-field.md#pmc), update the database:
 
    ```powershell
    Update-Database
    ```
 
-# Visual Studio Code
+# [Visual Studio Code](#tab/visual-studio-code)
 
 ## Add a migration for rating
 
@@ -250,12 +153,12 @@ To work around these limitations, manually write migrations code to perform a ta
 
 For more information, see the following resources:
 
-* SQLite EF Core Database Provider Limitations
-* Customize migration code
-* Data seeding
-* SQLite ALTER TABLE statement
+* [SQLite EF Core Database Provider Limitations](/ef/core/providers/sqlite/limitations)
+* [Customize migration code](/ef/core/managing-schemas/migrations/#customize-migration-code)
+* [Data seeding](/ef/core/modeling/data-seeding)
+* [SQLite ALTER TABLE statement](https://sqlite.org/lang_altertable.html)
 
-1. Delete the migration folder.
+1. Delete the migration folder.  
 
 1. Use the following commands to recreate the database.
 
@@ -271,5 +174,20 @@ Run the app and verify you can create, edit, and display movies with a `Rating` 
 
 ## Next steps
 
-> Previous: Add Search
-> Next: Add Validation
+> [!div class="step-by-step"]
+> [Previous: Add Search](search.md)
+> [Next: Add Validation](validation.md)
+
+:::moniker-end
+
+[!INCLUDE[](~/tutorials/razor-pages/new-field/includes/new-field9.md)]
+
+[!INCLUDE[](~/tutorials/razor-pages/new-field/includes/new-field8.md)]
+
+[!INCLUDE[](~/tutorials/razor-pages/new-field/includes/new-field7.md)]
+
+[!INCLUDE[](~/tutorials/razor-pages/new-field/includes/new-field6.md)]
+
+[!INCLUDE[](~/tutorials/razor-pages/new-field/includes/new-field5.md)]
+
+[!INCLUDE[](~/tutorials/razor-pages/new-field/includes/new-field3.md)]

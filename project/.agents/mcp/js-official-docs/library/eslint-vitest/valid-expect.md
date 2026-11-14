@@ -1,23 +1,18 @@
----
-title: "vitest/valid-expect"
-tool: "eslint-vitest"
-version: "1.6"
-source: "https://github.com/vitest-dev/eslint-plugin-vitest/blob/c5df1054a25044a7ca5baf07461b7aee1f15f5f2/docs/rules/valid-expect.md"
-commit: "c5df1054a25044a7ca5baf07461b7aee1f15f5f2"
-license: "MIT"
----
-
 # vitest/valid-expect
 
 📝 Enforce valid `expect()` usage.
 
 💼⚠️ This rule is enabled in the ✅ `recommended` config. This rule _warns_ in the 🌐 `all` config.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 This rule triggers a warning if `expect` is called with no argument or with more than one argument. You change that behavior by setting the `minArgs` and `maxArgs` options.
 
 ### Options
+
+<!-- begin auto-generated rule options list -->
 
 | Name            | Description                                          | Type     | Default                   |
 | :-------------- | :--------------------------------------------------- | :------- | :------------------------ |
@@ -25,6 +20,8 @@ This rule triggers a warning if `expect` is called with no argument or with more
 | `asyncMatchers` | Matchers that should be considered async assertions. | String[] | [`toReject`, `toResolve`] |
 | `maxArgs`       | Maximum number of arguments allowed for `expect`.    | Number   | `1`                       |
 | `minArgs`       | Minimum number of arguments allowed for `expect`.    | Number   | `1`                       |
+
+<!-- end auto-generated rule options list -->
 
 1. `alwaysAwait`
 

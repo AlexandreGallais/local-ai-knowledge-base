@@ -1,23 +1,18 @@
----
-title: "Array Arguments"
-tool: "rxjs"
-version: "7.8"
-source: "https://github.com/ReactiveX/rxjs/blob/e5351d02e225e275ac0e497c7b66eaa5f0c88791/docs_app/content/deprecations/array-argument.md"
-commit: "e5351d02e225e275ac0e497c7b66eaa5f0c88791"
-license: "Apache-2.0"
----
-
 # Array Arguments
 
 To unify the API surface of `forkJoin` and `combineLatest` we deprecated some signatures.
 Since that it is recommended to either pass an Object or an Array to these operators.
 
+<div class="alert is-important">
+    <span>
         This deprecation was introduced in RxJS 6.5.
+    </span>
+</div>
 
 ## Operators affected by this Change
 
-- combineLatest
-- forkJoin
+- [combineLatest](/api/index/function/combineLatest)
+- [forkJoin](/api/index/function/forkJoin)
 
 ## How to Refactor
 

@@ -1,0 +1,71 @@
+---
+title: "MediaStream: addtrack event"
+short-title: addtrack
+slug: Web/API/MediaStream/addtrack_event
+page-type: web-api-event
+browser-compat: api.MediaStream.addtrack_event
+---
+
+{{APIRef("Media Capture and Streams")}}
+
+The **`addtrack`** event is fired when a new [`MediaStreamTrack`](/en-US/docs/Web/API/MediaStreamTrack) object has been added to a [`MediaStream`](/en-US/docs/Web/API/MediaStream).
+
+This event is not cancelable and does not bubble.
+
+## Syntax
+
+Use the event name in {{domxref("EventTarget/addEventListener", "addEventListener()")}}:
+
+```js-nolint
+addEventListener("addtrack", (event) => { })
+```
+
+Alternatively, assign to the [event handler property](/en-US/docs/Web/API/Document_Object_Model/Events#using_onevent_properties) of the interface:
+
+```js-nolint
+onaddtrack = (event) => { }
+```
+
+## Event type
+
+A {{domxref("MediaStreamTrackEvent")}}. Inherits from {{domxref("Event")}}.
+
+{{InheritanceDiagram("MediaStreamTrackEvent")}}
+
+## Examples
+
+Using `addEventListener()`:
+
+```js
+const stream = new MediaStream();
+
+stream.addEventListener("addtrack", (event) => {
+  console.log(`New ${event.track.kind} track added`);
+});
+```
+
+Using the `onaddtrack` event handler property (but note that this replaces other event listeners added using `onaddtrack`, if any):
+
+```js
+const stream = new MediaStream();
+
+stream.onaddtrack = (event) => {
+  console.log(`New ${event.track.kind} track added`);
+};
+```
+
+## Specifications
+
+{{Specifications}}
+
+## Browser compatibility
+
+{{Compat}}
+
+## See also
+
+- Related events: [`removetrack`](/en-US/docs/Web/API/MediaStream/removetrack_event)
+- This event on [`AudioTrackList`](/en-US/docs/Web/API/AudioTrackList) targets: [`addtrack`](/en-US/docs/Web/API/AudioTrackList/addtrack_event)
+- This event on [`VideoTrackList`](/en-US/docs/Web/API/VideoTrackList) targets: [`addtrack`](/en-US/docs/Web/API/VideoTrackList/addtrack_event)
+- [Media Capture and Streams API](/en-US/docs/Web/API/Media_Capture_and_Streams_API)
+- [WebRTC](/en-US/docs/Web/API/WebRTC_API)

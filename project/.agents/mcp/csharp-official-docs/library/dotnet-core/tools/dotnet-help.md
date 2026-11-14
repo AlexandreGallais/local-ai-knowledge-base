@@ -1,12 +1,8 @@
 ---
-title: "dotnet help command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-help.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet help command
+description: The dotnet help command shows more detailed documentation online for the specified command.
+ms.date: 10/28/2025
 ---
-
 # dotnet help reference
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -29,17 +25,15 @@ The `dotnet help` command opens up the reference page for more detailed informat
 
 - **`COMMAND_NAME`**
 
-  Name of the .NET CLI command. For a list of the valid CLI commands, see CLI commands.
+  Name of the .NET CLI command. For a list of the valid CLI commands, see [CLI commands](index.md#cli-commands).
 
 ## Options
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Examples
 
-- Opens the documentation page for the dotnet new command:
+- Opens the documentation page for the [dotnet new](dotnet-new.md) command:
 
   ```dotnetcli
   dotnet help new

@@ -1,25 +1,17 @@
----
-title: "Principal interface (java.security)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/Principal.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Principal interface (java.security)
 
 ```java
 public interface Principal
 ```
 
-This interface represents the abstract notion of a `Principal`, which
+This interface represents the abstract notion of a {@code Principal}, which
 can be used to represent any entity, such as an individual, a
 corporation, and a login id.
 
-**See also:** java.security.cert.X509Certificate
+@see java.security.cert.X509Certificate
 
-**Since:** 1.1
+@author Li Gong
+@since 1.1
 
 ## Principal.equals(Object)
 
@@ -27,17 +19,15 @@ corporation, and a login id.
 boolean equals(Object another)
 ```
 
-Compares this `Principal` to the specified object.
-Returns `true`
-if the object passed in matches the `Principal` represented by
+Compares this {@code Principal} to the specified object.
+Returns {@code true}
+if the object passed in matches the {@code Principal} represented by
 the implementation of this interface.
 
-Parameters:
+@param another {@code Principal} to compare with.
 
-- `another`: `Principal` to compare with.
-
-**Returns:** `true` if the `Principal` passed in is the same as
-that encapsulated by this `Principal`, and `false` otherwise.
+@return {@code true} if the {@code Principal} passed in is the same as
+that encapsulated by this {@code Principal}, and {@code false} otherwise.
 
 ## Principal.toString()
 
@@ -45,9 +35,9 @@ that encapsulated by this `Principal`, and `false` otherwise.
 String toString()
 ```
 
-Returns a string representation of this `Principal`.
+Returns a string representation of this {@code Principal}.
 
-**Returns:** a string representation of this `Principal`.
+@return a string representation of this {@code Principal}.
 
 ## Principal.hashCode()
 
@@ -55,15 +45,17 @@ Returns a string representation of this `Principal`.
 int hashCode()
 ```
 
+{@return a hashcode for this {@code Principal}}
+
 ## Principal.getName()
 
 ```java
 String getName()
 ```
 
-Returns the name of this `Principal`.
+Returns the name of this {@code Principal}.
 
-**Returns:** the name of this `Principal`.
+@return the name of this {@code Principal}.
 
 ## Principal.implies(Subject)
 
@@ -71,21 +63,18 @@ Returns the name of this `Principal`.
 default boolean implies(Subject subject)
 ```
 
-Returns `true` if the specified subject is implied by this
-`Principal`.
+Returns {@code true} if the specified subject is implied by this
+{@code Principal}.
 
-Parameters:
+@implSpec
+The default implementation of this method returns {@code true} if
+{@code subject} is non-null and contains at least one
+{@code Principal} that is equal to this {@code Principal}.
 
-- `subject`: the `Subject`
-
-**Implementation requirements:** The default implementation of this method returns `true` if
-`subject` is non-null and contains at least one
-`Principal` that is equal to this `Principal`.
-
-Subclasses may override this with a different implementation, if
+<p>Subclasses may override this with a different implementation, if
 necessary.
 
-**Returns:** `true` if `subject` is non-null and is
-             implied by this `Principal`, or false otherwise.
-
-**Since:** 1.8
+@param subject the {@code Subject}
+@return {@code true} if {@code subject} is non-null and is
+             implied by this {@code Principal}, or false otherwise.
+@since 1.8

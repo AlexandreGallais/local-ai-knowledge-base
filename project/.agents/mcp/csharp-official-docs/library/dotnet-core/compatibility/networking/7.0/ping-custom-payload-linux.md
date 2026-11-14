@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: Custom ping payloads on Linux"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/networking/7.0/ping-custom-payload-linux.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 7 breaking change in networking where an exception is thrown on non-privileged Linux processes when a custom payload is passed to the Ping method.
+ms.date: 03/23/2022
+ms.custom: linux-related-content
 ---
-
 # Custom ping payloads on Linux
 
-On Linux, non-privileged processes can't send raw IP packets. `System.Net.NetworkInformation.Ping` functionality is implemented by interfacing with the `ping` utility. However, this utility doesn't support specifying a custom payload for the Internet Control Message Protocol (ICMP) ping packets. .NET 7 adds a check for such cases and throws an exception if a custom payload is specified.
+On Linux, non-privileged processes can't send raw IP packets. <xref:System.Net.NetworkInformation.Ping> functionality is implemented by interfacing with the `ping` utility. However, this utility doesn't support specifying a custom payload for the Internet Control Message Protocol (ICMP) ping packets. .NET 7 adds a check for such cases and throws an exception if a custom payload is specified.
 
 ## Previous behavior
 
@@ -17,7 +14,7 @@ In previous versions, the ping packet payload was silently ignored (that is, it 
 
 ## New behavior
 
-Starting in .NET 7, a `System.PlatformNotSupportedException` is thrown if you attempt to send a custom ping packet payload when running in non-privileged Linux process.
+Starting in .NET 7, a <xref:System.PlatformNotSupportedException> is thrown if you attempt to send a custom ping packet payload when running in non-privileged Linux process.
 
 ## Version introduced
 
@@ -25,7 +22,7 @@ Starting in .NET 7, a `System.PlatformNotSupportedException` is thrown if you at
 
 ## Type of breaking change
 
-This change can affect binary compatibility.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 
@@ -35,19 +32,19 @@ It's better to signal to the user that the operation cannot be performed instead
 
 If a ping payload is necessary, run the application as `root`, or grant the `cap_net_raw` capability using the `setcap` utility.
 
-Otherwise, use an overload of `System.Net.NetworkInformation.Ping.SendPingAsync*` that does not accept a custom payload, or pass in an empty array.
+Otherwise, use an overload of <xref:System.Net.NetworkInformation.Ping.SendPingAsync*?displayProperty=nameWithType> that does not accept a custom payload, or pass in an empty array.
 
 ## Affected APIs
 
-- `System.Net.NetworkInformation.Ping.Send(System.Net.IPAddress,System.Int32,System.Byte[],System.Net.NetworkInformation.PingOptions)`
-- `System.Net.NetworkInformation.Ping.Send(System.Net.IPAddress,System.Int32,System.Byte[])`
-- `System.Net.NetworkInformation.Ping.Send(System.String,System.Int32,System.Byte[],System.Net.NetworkInformation.PingOptions)`
-- `System.Net.NetworkInformation.Ping.Send(System.String,System.Int32,System.Byte[])`
-- `System.Net.NetworkInformation.Ping.SendAsync(System.Net.IPAddress,System.Int32,System.Byte[],System.Net.NetworkInformation.PingOptions,System.Object)`
-- `System.Net.NetworkInformation.Ping.SendAsync(System.Net.IPAddress,System.Int32,System.Byte[],System.Object)`
-- `System.Net.NetworkInformation.Ping.SendAsync(System.String,System.Int32,System.Byte[],System.Net.NetworkInformation.PingOptions,System.Object)`
-- `System.Net.NetworkInformation.Ping.SendAsync(System.String,System.Int32,System.Byte[],System.Object)`
-- `System.Net.NetworkInformation.Ping.SendPingAsync(System.Net.IPAddress,System.Int32,System.Byte[],System.Net.NetworkInformation.PingOptions)`
-- `System.Net.NetworkInformation.Ping.SendPingAsync(System.Net.IPAddress,System.Int32,System.Byte[])`
-- `System.Net.NetworkInformation.Ping.SendPingAsync(System.String,System.Int32,System.Byte[],System.Net.NetworkInformation.PingOptions)`
-- `System.Net.NetworkInformation.Ping.SendPingAsync(System.String,System.Int32,System.Byte[])`
+- <xref:System.Net.NetworkInformation.Ping.Send(System.Net.IPAddress,System.Int32,System.Byte[],System.Net.NetworkInformation.PingOptions)?displayProperty=fullName>
+- <xref:System.Net.NetworkInformation.Ping.Send(System.Net.IPAddress,System.Int32,System.Byte[])?displayProperty=fullName>
+- <xref:System.Net.NetworkInformation.Ping.Send(System.String,System.Int32,System.Byte[],System.Net.NetworkInformation.PingOptions)?displayProperty=fullName>
+- <xref:System.Net.NetworkInformation.Ping.Send(System.String,System.Int32,System.Byte[])?displayProperty=fullName>
+- <xref:System.Net.NetworkInformation.Ping.SendAsync(System.Net.IPAddress,System.Int32,System.Byte[],System.Net.NetworkInformation.PingOptions,System.Object)?displayProperty=fullName>
+- <xref:System.Net.NetworkInformation.Ping.SendAsync(System.Net.IPAddress,System.Int32,System.Byte[],System.Object)?displayProperty=fullName>
+- <xref:System.Net.NetworkInformation.Ping.SendAsync(System.String,System.Int32,System.Byte[],System.Net.NetworkInformation.PingOptions,System.Object)?displayProperty=fullName>
+- <xref:System.Net.NetworkInformation.Ping.SendAsync(System.String,System.Int32,System.Byte[],System.Object)?displayProperty=fullName>
+- <xref:System.Net.NetworkInformation.Ping.SendPingAsync(System.Net.IPAddress,System.Int32,System.Byte[],System.Net.NetworkInformation.PingOptions)?displayProperty=fullName>
+- <xref:System.Net.NetworkInformation.Ping.SendPingAsync(System.Net.IPAddress,System.Int32,System.Byte[])?displayProperty=fullName>
+- <xref:System.Net.NetworkInformation.Ping.SendPingAsync(System.String,System.Int32,System.Byte[],System.Net.NetworkInformation.PingOptions)?displayProperty=fullName>
+- <xref:System.Net.NetworkInformation.Ping.SendPingAsync(System.String,System.Int32,System.Byte[])?displayProperty=fullName>

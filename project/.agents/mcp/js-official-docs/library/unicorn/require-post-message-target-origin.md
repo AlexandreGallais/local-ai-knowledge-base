@@ -1,21 +1,15 @@
----
-title: "require-post-message-target-origin"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/require-post-message-target-origin.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # require-post-message-target-origin
 
 📝 Enforce using the `targetOrigin` argument with `window.postMessage()`.
 
 🚫 Disabled by default.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-Specifying the `targetOrigin` argument with `window.postMessage()` is a security best practice. It ensures that sensitive messages are only delivered to the intended recipient, preventing accidentally sending data to a window with an unexpected origin due to navigation or redirects.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+Specifying the `targetOrigin` argument with [`window.postMessage()`](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) is a security best practice. It ensures that sensitive messages are only delivered to the intended recipient, preventing accidentally sending data to a window with an unexpected origin due to navigation or redirects.
 
 When TypeScript type information is available, this rule ignores methods whose call signatures have no `targetOrigin` parameter, such as `Worker#postMessage()`, `MessagePort#postMessage()`, and `BroadcastChannel#postMessage()`.
 
@@ -33,10 +27,10 @@ window.postMessage(sensitiveData, 'https://trusted-domain.com');
 
 ```js
 // ❌
-window.postMessage({token: <example-value>});
+window.postMessage({token: authToken});
 
 // ✅ - Always specify the target origin
-window.postMessage({token: <example-value>}, '<example-value>');
+window.postMessage({token: authToken}, 'https://api.example.com');
 ```
 
 ```js

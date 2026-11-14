@@ -1,18 +1,12 @@
 ---
+id: actionability
 title: "Auto-waiting"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/actionability.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# Auto-waiting
 
 ## Introduction
 
 Playwright performs a range of actionability checks on the elements before making actions to ensure these actions
-behave as expected. It auto-waits for all the relevant checks to pass and only then performs the requested action. If the required checks do not pass <example-value> the given `timeout`, action fails with the `TimeoutError`.
+behave as expected. It auto-waits for all the relevant checks to pass and only then performs the requested action. If the required checks do not pass within the given `timeout`, action fails with the `TimeoutError`.
 
 For example, for [`method: Locator.click`], Playwright will ensure that:
 - locator resolves to exactly one element
@@ -83,7 +77,7 @@ Playwright includes auto-retrying assertions that remove flakiness by waiting un
 | [`method: PageAssertions.toHaveURL`] | Page has a URL |
 | [`method: APIResponseAssertions.toBeOK`] | Response has an OK status |
 
-Learn more in the assertions guide.
+Learn more in the [assertions guide](./test-assertions.md).
 
 ## Visible
 
@@ -103,8 +97,8 @@ Element is considered stable when it has maintained the same bounding box for at
 Element is considered enabled when it is **not disabled**.
 
 Element is **disabled** when:
-- it is a ``, `<select>`, ``, `<textarea>`, `<option>` or `<optgroup>` with a `[disabled]` attribute;
-- it is a ``, `<select>`, ``, `<textarea>`, `<option>` or `<optgroup>` that is a part of a `<fieldset>` with a `[disabled]` attribute;
+- it is a `<button>`, `<select>`, `<input>`, `<textarea>`, `<option>` or `<optgroup>` with a `[disabled]` attribute;
+- it is a `<button>`, `<select>`, `<input>`, `<textarea>`, `<option>` or `<optgroup>` that is a part of a `<fieldset>` with a `[disabled]` attribute;
 - it is a descendant of an element with `[aria-disabled=true]` attribute.
 
 ## Editable
@@ -112,20 +106,28 @@ Element is **disabled** when:
 Element is considered editable when it is [enabled] and is **not readonly**.
 
 Element is **readonly** when:
-- it is a `<select>`, `` or `<textarea>` with a `[readonly]` attribute;
-- it has an `[aria-readonly=true]` attribute and an aria role that supports it.
+- it is a `<select>`, `<input>` or `<textarea>` with a `[readonly]` attribute;
+- it has an `[aria-readonly=true]` attribute and an aria role that [supports it](https://w3c.github.io/aria/#aria-readonly).
 
 ## Not Inert
 
 Element is considered not inert when it is **not** a part of an inert subtree. Inert elements cannot be focused, clicked or otherwise interacted with.
 
 Element is **inert** when:
-- it is an element with the `inert` attribute, or a descendant of such an element.
+- it is an element with the [`inert`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/inert) attribute, or a descendant of such an element.
 
 ## Receives Events
 
 Element is considered receiving pointer events when it is the hit target of the pointer event at the action point. For example, when clicking at the point `(10;10)`, Playwright checks whether some other element (usually an overlay) will instead capture the click at `(10;10)`.
 
+
 For example, consider a scenario where Playwright will click `Sign Up` button regardless of when the [`method: Locator.click`] call was made:
 - page is checking that user name is unique and `Sign Up` button is disabled;
 - after checking with the server, the disabled `Sign Up` button is replaced with another one that is now enabled.
+
+[Visible]: #visible "Visible"
+[Stable]: #stable "Stable"
+[Enabled]: #enabled "Enabled"
+[Editable]: #editable "Editable"
+[Receives Events]: #receives-events "Receives Events"
+[Not Inert]: #not-inert "Not Inert"

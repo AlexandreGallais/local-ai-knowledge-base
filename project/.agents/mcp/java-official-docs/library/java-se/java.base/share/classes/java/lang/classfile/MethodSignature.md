@@ -1,12 +1,3 @@
----
-title: "MethodSignature interface (java.lang.classfile)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/MethodSignature.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # MethodSignature interface (java.lang.classfile)
 
 ```java
@@ -14,19 +5,14 @@ public sealed interface MethodSignature permits SignaturesImpl.MethodSignatureIm
 ```
 
 Models the generic signature of a method or constructor, as defined by JVMS
-.
+{@jvms 4.7.9.1}.
 
-**See also:** Executable
-
-**See also:** SignatureAttribute
-
-**JLS:** 8.4 Method Declarations
-
-**JLS:** 8.8 Constructor Declarations
-
-**jvms:** 4.7.9.1 Signatures
-
-**Since:** 24
+@see Executable
+@see SignatureAttribute
+@jls 8.4 Method Declarations
+@jls 8.8 Constructor Declarations
+@jvms 4.7.9.1 Signatures
+@since 24
 
 ## MethodSignature.typeParameters()
 
@@ -34,11 +20,11 @@ Models the generic signature of a method or constructor, as defined by JVMS
 List<Signature.TypeParam> typeParameters()
 ```
 
-**See also:** Executable#getTypeParameters()
+{@return the type parameters of this method or constructor, may be empty}
 
-**JLS:** 8.4.4 Generic Methods
-
-**JLS:** 8.8.4 Generic Constructors
+@see Executable#getTypeParameters()
+@jls 8.4.4 Generic Methods
+@jls 8.8.4 Generic Constructors
 
 ## MethodSignature.arguments()
 
@@ -46,14 +32,13 @@ List<Signature.TypeParam> typeParameters()
 List<Signature> arguments()
 ```
 
-The parameters may differ from those in the method
+{@return the signatures of the parameters of this method or constructor,
+may be empty}  The parameters may differ from those in the method
 descriptor because some synthetic or implicit parameters are omitted.
 
-**See also:** Executable#getGenericParameterTypes()
-
-**JLS:** 8.4.1 Formal Parameters
-
-**JLS:** 8.8.1 Formal Parameters
+@see Executable#getGenericParameterTypes()
+@jls 8.4.1 Formal Parameters
+@jls 8.8.1 Formal Parameters
 
 ## MethodSignature.result()
 
@@ -61,12 +46,11 @@ descriptor because some synthetic or implicit parameters are omitted.
 Signature result()
 ```
 
-For
-constructors, this returns a signature representing `void`.
+{@return the signatures of the return value of this method}  For
+constructors, this returns a signature representing {@code void}.
 
-**See also:** Method#getGenericReturnType()
-
-**JLS:** 8.4.5 Method Result
+@see Method#getGenericReturnType()
+@jls 8.4.5 Method Result
 
 ## MethodSignature.throwableSignatures()
 
@@ -74,11 +58,12 @@ constructors, this returns a signature representing `void`.
 List<Signature.ThrowableSig> throwableSignatures()
 ```
 
-**See also:** Executable#getGenericExceptionTypes()
+{@return the signatures of the exceptions thrown by this method or
+constructor}
 
-**JLS:** 8.4.6 Method Throws
-
-**JLS:** 8.8.5 Constructor Throws
+@see Executable#getGenericExceptionTypes()
+@jls 8.4.6 Method Throws
+@jls 8.8.5 Constructor Throws
 
 ## MethodSignature.signatureString()
 
@@ -86,18 +71,18 @@ List<Signature.ThrowableSig> throwableSignatures()
 String signatureString()
 ```
 
+{@return the raw signature string}
+
 ## MethodSignature.of(MethodTypeDesc)
 
 ```java
 public static MethodSignature of(MethodTypeDesc methodDescriptor)
 ```
 
-The resulting
+{@return a method signature for a raw method descriptor}  The resulting
 signature has no type parameter or exception type declared.
 
-Parameters:
-
-- `methodDescriptor`: the method descriptor
+@param methodDescriptor the method descriptor
 
 ## MethodSignature.of(Signature, Signature...)
 
@@ -105,13 +90,12 @@ Parameters:
 public static MethodSignature of(Signature result, Signature... arguments)
 ```
 
+{@return a method signature with no type parameter or exception type}
 The parameters may differ from those in the method descriptor because
 some synthetic or implicit parameters are omitted.
 
-Parameters:
-
-- `result`: signature for the return type
-- `arguments`: signatures for the method parameters
+@param result signature for the return type
+@param arguments signatures for the method parameters
 
 ## MethodSignature.of(List<Signature.TypeParam>, List<Signature.ThrowableSig>, Signature, Signature...)
 
@@ -119,16 +103,14 @@ Parameters:
 public static MethodSignature of(List<Signature.TypeParam> typeParameters, List<Signature.ThrowableSig> exceptions, Signature result, Signature... arguments)
 ```
 
-The parameters may differ from those in
+{@return a method signature}  The parameters may differ from those in
 the method descriptor because some synthetic or implicit parameters are
 omitted.
 
-Parameters:
-
-- `typeParameters`: signatures for the type parameters
-- `exceptions`: signatures for the exceptions
-- `result`: signature for the return type
-- `arguments`: signatures for the method parameters
+@param typeParameters signatures for the type parameters
+@param exceptions signatures for the exceptions
+@param result signature for the return type
+@param arguments signatures for the method parameters
 
 ## MethodSignature.parseFrom(String)
 
@@ -136,14 +118,9 @@ Parameters:
 public static MethodSignature parseFrom(String methodSignature)
 ```
 
-Parses a raw method signature string into a `MethodSignature`.
+Parses a raw method signature string into a {@code MethodSignature}.
 
-Parameters:
-
-- `methodSignature`: the raw method signature string
-
-**Returns:** the parsed method signature
-
-Throws:
-
-- `IllegalArgumentException`: if the string is not a valid method signature string
+@param methodSignature the raw method signature string
+@return the parsed method signature
+@throws IllegalArgumentException if the string is not a valid method
+        signature string

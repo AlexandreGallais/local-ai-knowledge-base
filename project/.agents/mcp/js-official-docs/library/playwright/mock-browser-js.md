@@ -1,13 +1,7 @@
 ---
+id: mock-browser-apis
 title: "Mock browser APIs"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/mock-browser-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# Mock browser APIs
 
 ## Introduction
 
@@ -15,7 +9,7 @@ Playwright provides native support for most of the browser features. However, th
 and APIs which are not (yet) fully supported by all browsers. Playwright usually doesn't provide dedicated
 automation APIs in such cases. You can use mocks to test the behavior of your application in such cases. This guide gives a few examples.
 
-Let's consider a web app that uses battery API
+Let's consider a web app that uses [battery API](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getBattery)
 to show your device's battery status. We'll mock the battery API and check that the page correctly displays the
 battery status.
 
@@ -73,7 +67,7 @@ Some APIs are read-only so you won't be able to assign to a navigator property. 
 navigator.cookieEnabled = true;
 ```
 
-However, if the property is configurable, you can still override it using the plain JavaScript:
+However, if the property is [configurable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty#configurable), you can still override it using the plain JavaScript:
 
 ```js
 await page.addInitScript(() => {

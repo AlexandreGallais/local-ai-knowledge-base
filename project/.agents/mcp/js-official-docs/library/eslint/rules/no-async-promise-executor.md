@@ -1,13 +1,9 @@
 ---
-title: "no-async-promise-executor"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-async-promise-executor.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-async-promise-executor
+rule_type: problem
 ---
 
-# no-async-promise-executor
+
 
 The `new Promise` constructor accepts an *executor* function as an argument, which has `resolve` and `reject` parameters that can be used to control the state of the created Promise. For example:
 
@@ -34,7 +30,7 @@ This rule aims to disallow async Promise executor functions.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-async-promise-executor: "error"*/
@@ -54,9 +50,11 @@ const result = new Promise(async (resolve, reject) => {
 });
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-async-promise-executor: "error"*/
@@ -73,6 +71,8 @@ const foo = new Promise((resolve, reject) => {
 
 const result = Promise.resolve(foo);
 ```
+
+:::
 
 ## Options
 

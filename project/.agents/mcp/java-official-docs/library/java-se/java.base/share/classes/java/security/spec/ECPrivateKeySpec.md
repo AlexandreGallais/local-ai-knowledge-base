@@ -1,12 +1,3 @@
----
-title: "ECPrivateKeySpec class (java.security.spec)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/spec/ECPrivateKeySpec.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ECPrivateKeySpec class (java.security.spec)
 
 ```java
@@ -16,11 +7,12 @@ public class ECPrivateKeySpec implements KeySpec
 This immutable class specifies an elliptic curve private key with
 its associated parameters.
 
-**See also:** KeySpec
+@see KeySpec
+@see ECParameterSpec
 
-**See also:** ECParameterSpec
+@author Valerie Peng
 
-**Since:** 1.5
+@since 1.5
 
 ## ECPrivateKeySpec.ECPrivateKeySpec(BigInteger, ECParameterSpec)
 
@@ -30,15 +22,11 @@ public ECPrivateKeySpec(BigInteger s, ECParameterSpec params)
 
 Creates a new ECPrivateKeySpec with the specified
 parameter values.
-
-Parameters:
-
-- `s`: the private value.
-- `params`: the associated elliptic curve domain parameters.
-
-Throws:
-
-- `NullPointerException`: if `s` or `params` is null.
+@param s the private value.
+@param params the associated elliptic curve domain
+parameters.
+@throws    NullPointerException if {@code s}
+or {@code params} is null.
 
 ## ECPrivateKeySpec.getS()
 
@@ -47,8 +35,7 @@ public BigInteger getS()
 ```
 
 Returns the private value S.
-
-**Returns:** the private value S.
+@return the private value S.
 
 ## ECPrivateKeySpec.getParams()
 
@@ -58,5 +45,4 @@ public ECParameterSpec getParams()
 
 Returns the associated elliptic curve domain
 parameters.
-
-**Returns:** the EC domain parameters.
+@return the EC domain parameters.

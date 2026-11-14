@@ -1,24 +1,15 @@
----
-title: "ModuleResolutionAttribute interface (java.lang.classfile.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/attribute/ModuleResolutionAttribute.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ModuleResolutionAttribute interface (java.lang.classfile.attribute)
 
 ```java
 public sealed interface ModuleResolutionAttribute extends Attribute<ModuleResolutionAttribute>, ClassElement permits BoundAttribute.BoundModuleResolutionAttribute, UnboundAttribute.UnboundModuleResolutionAttribute
 ```
 
-Models the ModuleResolution attribute,
-which can appear on classes that represent module descriptors, to capture resolution metadata for modules.
-
-The specification of the `ModuleResolution` attribute is:
-
-```java
+Models the {@link Attributes#moduleResolution() ModuleResolution} attribute,
+which can appear on classes that {@linkplain ClassModel#isModuleInfo()
+represent} module descriptors, to capture resolution metadata for modules.
+<p>
+The specification of the {@code ModuleResolution} attribute is:
+<pre> {@code
  ModuleResolution_attribute {
    u2 attribute_name_index;    // "ModuleResolution"
    u4 attribute_length;        // 2
@@ -35,22 +26,20 @@ The specification of the `ModuleResolution` attribute is:
   0x0004 (WARN_DEPRECATED_FOR_REMOVAL)
   0x0008 (WARN_INCUBATING)
  }
-```
-
-This attribute only appears on classes, and does not permit multiple instances in a class.  It has
-no data dependency.
-
+} </pre>
+<p>
+This attribute only appears on classes, and does not permit {@linkplain
+AttributeMapper#allowMultiple multiple instances} in a class.  It has
+{@linkplain AttributeStability#STATELESS no data dependency}.
+<p>
 This attribute is not predefined in the Java SE Platform.  This is a
-JDK-specific nonstandard attribute produced by the `jdk.jlink` module,
-which defines the `jlink` and `jmod` tools.
+JDK-specific nonstandard attribute produced by the {@code jdk.jlink} module,
+which defines the {@code jlink} and {@code jmod} tools.
 
-**See also:** Attributes#moduleResolution()
-
-**See also:** ModuleHashesAttribute
-
-**See also:** ModuleTargetAttribute
-
-**Since:** 24
+@see Attributes#moduleResolution()
+@see ModuleHashesAttribute
+@see ModuleTargetAttribute
+@since 24
 
 ## ModuleResolutionAttribute.resolutionFlags()
 
@@ -58,13 +47,12 @@ which defines the `jlink` and `jmod` tools.
 int resolutionFlags()
 ```
 
-It is in the range of unsigned
-short, `[0, 0xFFFF]`.
-
+{@return the module resolution flags}  It is in the range of unsigned
+short, {@code [0, 0xFFFF]}.
+<p>
 The value of the resolution_flags item is a mask of flags used to denote
 properties of module resolution. The flags are as follows:
-
-```java
+<pre> {@code
   // Optional
   0x0001 (DO_NOT_RESOLVE_BY_DEFAULT)
 
@@ -72,7 +60,7 @@ properties of module resolution. The flags are as follows:
   0x0002 (WARN_DEPRECATED)
   0x0004 (WARN_DEPRECATED_FOR_REMOVAL)
   0x0008 (WARN_INCUBATING)
-```
+ } </pre>
 
 ## ModuleResolutionAttribute.of(int)
 
@@ -80,6 +68,6 @@ properties of module resolution. The flags are as follows:
 static ModuleResolutionAttribute of(int resolutionFlags)
 ```
 
-Parameters:
+{@return a {@code ModuleResolution} attribute}
 
-- `resolutionFlags`: the resolution flags
+@param resolutionFlags the resolution flags

@@ -1,12 +1,3 @@
----
-title: "std::os::windows::io::handle"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/os/windows/io/handle.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::os::windows::io::handle
 
 Owned and borrowed OS handles.
@@ -38,6 +29,9 @@ This type's `.to_owned()` implementation returns another `BorrowedHandle`
 rather than an `OwnedHandle`. It just makes a trivial copy of the raw
 handle, which is then borrowed under the same lifetime.
 
+[here]: https://devblogs.microsoft.com/oldnewthing/20040302-00/?p=40443
+[the current process handle]: https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getcurrentprocess#remarks
+
 ## struct OwnedHandle
 
 ```rust
@@ -56,9 +50,15 @@ not `INVALID_HANDLE_VALUE`, despite the two having the same value. See
 And, it *may* have the value `NULL` (0), which can occur when consoles are
 detached from processes, or when `windows_subsystem` is used.
 
-`OwnedHandle` uses `CloseHandle` to close its handle on drop. As such,
+`OwnedHandle` uses [`CloseHandle`] to close its handle on drop. As such,
 it must not be used with handles to open registry keys which need to be
-closed with `RegCloseKey` instead.
+closed with [`RegCloseKey`] instead.
+
+[`CloseHandle`]: https://docs.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-closehandle
+[`RegCloseKey`]: https://docs.microsoft.com/en-us/windows/win32/api/winreg/nf-winreg-regclosekey
+
+[here]: https://devblogs.microsoft.com/oldnewthing/20040302-00/?p=40443
+[the current process handle]: https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getcurrentprocess#remarks
 
 ## struct HandleOrNull
 
@@ -72,15 +72,17 @@ as a sentry value to indicate errors, such as in the return value of `CreateThre
 FFI declarations.
 
 The only thing you can usefully do with a `HandleOrNull` is to convert it into an
-`OwnedHandle` using its `TryFrom` implementation; this conversion takes care of the check for
+`OwnedHandle` using its [`TryFrom`] implementation; this conversion takes care of the check for
 `NULL`. This ensures that such FFI calls cannot start using the handle without
 checking for `NULL` first.
 
-This type may hold any handle value that `OwnedHandle` may hold. As with `OwnedHandle`, when
+This type may hold any handle value that [`OwnedHandle`] may hold. As with `OwnedHandle`, when
 it holds `-1`, that value is interpreted as a valid handle value, such as
 [the current process handle], and not `INVALID_HANDLE_VALUE`.
 
 If this holds a non-null handle, it will close the handle on drop.
+
+[the current process handle]: https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getcurrentprocess#remarks
 
 ## struct HandleOrInvalid
 
@@ -94,11 +96,11 @@ as a sentry value to indicate errors, such as in the return value of `CreateFile
 FFI declarations.
 
 The only thing you can usefully do with a `HandleOrInvalid` is to convert it into an
-`OwnedHandle` using its `TryFrom` implementation; this conversion takes care of the check for
+`OwnedHandle` using its [`TryFrom`] implementation; this conversion takes care of the check for
 `INVALID_HANDLE_VALUE`. This ensures that such FFI calls cannot start using the handle without
 checking for `INVALID_HANDLE_VALUE` first.
 
-This type may hold any handle value that `OwnedHandle` may hold, except that when it holds
+This type may hold any handle value that [`OwnedHandle`] may hold, except that when it holds
 `-1`, that value is interpreted to mean `INVALID_HANDLE_VALUE`.
 
 If holds a handle other than `INVALID_HANDLE_VALUE`, it will close the handle on drop.
@@ -121,6 +123,8 @@ sometimes a valid handle value. See [here] for the full story.
 
 And, it *may* have the value `NULL` (0), which can occur when consoles are
 detached from processes, or when `windows_subsystem` is used.
+
+[here]: https://devblogs.microsoft.com/oldnewthing/20040302-00/?p=40443
 
 ## OwnedHandle::try_clone
 
@@ -156,8 +160,10 @@ use `INVALID_HANDLE_VALUE` to indicate failure.
 # Safety
 
 The passed `handle` value must either satisfy the safety requirements
-of `FromRawHandle::from_raw_handle`, or be null. Note that not all
+of [`FromRawHandle::from_raw_handle`], or be null. Note that not all
 Windows APIs use null for errors; see [here] for the full story.
+
+[here]: https://devblogs.microsoft.com/oldnewthing/20040302-00/?p=40443
 
 ## HandleOrInvalid::from_raw_handle
 
@@ -175,9 +181,11 @@ use null to indicate failure.
 # Safety
 
 The passed `handle` value must either satisfy the safety requirements
-of `FromRawHandle::from_raw_handle`, or be
+of [`FromRawHandle::from_raw_handle`], or be
 `INVALID_HANDLE_VALUE` (-1). Note that not all Windows APIs use
 `INVALID_HANDLE_VALUE` for errors; see [here] for the full story.
+
+[here]: https://devblogs.microsoft.com/oldnewthing/20040302-00/?p=40443
 
 ## trait AsHandle
 
@@ -200,4 +208,4 @@ use std::os::windows::io::{AsHandle, BorrowedHandle};
 let mut f = File::open("foo.txt")?;
 let borrowed_handle: BorrowedHandle<'_> = f.as_handle();
 # Ok::<(), io::Error>(())
-```rust
+```

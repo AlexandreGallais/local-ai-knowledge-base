@@ -1,21 +1,12 @@
----
-title: "Data fetching with resources"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/routing/data-fetching-with-resources.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Data fetching with resources
 
-IMPORTANT: Route resources are in developer preview.
+IMPORTANT: Route resources are in [developer preview](reference/releases#developer-preview).
 
 The Angular Router integrates with Angular signals through the `resources` route configuration. This allows you to fetch data reactively using `Resource` APIs.
 
 ## Why use route resources?
 
-Route resources offer several advantages over traditional data resolvers:
+Route resources offer several advantages over traditional [data resolvers](/guide/routing/data-resolvers):
 
 - **Parallel execution**: Route resources across all matched routes load concurrently instead of one route at a time.
 - **Non-blocking data loading**: Use `nonBlocking()` to activate the route immediately and render loading skeletons or UI states while data loads in the background.

@@ -1,86 +1,49 @@
----
-title: "Visual Studio"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/run-the-app6.0.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# Visual Studio
+# [Visual Studio](#tab/visual-studio)
 
 * Press Ctrl+F5 to run without the debugger.
 
-  Visual Studio displays the following dialog when a project is not yet configured to use SSL:
-
-Select **Yes** if you trust the IIS Express SSL certificate.
-
-The following dialog is displayed:
-
-Select **Yes** if you agree to trust the development certificate.
-
-For information on trusting the Firefox browser, see Firefox SEC_ERROR_INADEQUATE_KEY_USAGE certificate error.
+  [!INCLUDE[](~/includes/trustCertVS.md)]
 
   Visual Studio:
 
-  * Starts Kestrel server.
+  * Starts [Kestrel](../fundamentals/servers/index.md#kestrel) server.
   * Launches a browser.
   * Navigates to `http://localhost:port`, such as `http://localhost:7042`.
     * *port*: A randomly assigned port number for the app.
     * `localhost`: The standard hostname for the local computer. Localhost only serves web requests from the local computer.
 
-# Visual Studio Code
+# [Visual Studio Code](#tab/visual-studio-code)
 
-  * Trust the HTTPS development certificate by running the following command:
-
-  ```dotnetcli
-  dotnet dev-certs https --trust
-  ```
-
-  The preceding command displays the following dialog, provided the certificate was not previously trusted:
-
-* Select **Yes** if you agree to trust the development certificate.
-
-  For more information, see the **Trust the ASP.NET Core HTTPS development certificate** section of the Enforcing SSL article.
-
-For information on trusting the Firefox browser, see Firefox SEC_ERROR_INADEQUATE_KEY_USAGE certificate error.
+  [!INCLUDE[](~/includes/trustCertVSC.md)]
 
 * Press **Ctrl-F5** to run without the debugger.
 
   Visual Studio Code:
 
-  * Starts Kestrel server.
+  * Starts [Kestrel](../fundamentals/servers/index.md#kestrel) server.
   * Launches a browser.
   * Navigates to `http://localhost:port`, such as `http://localhost:7042`.
     * *port*: A randomly assigned port number for the app.
     * `localhost`: The standard hostname for the local computer. Localhost only serves web requests from the local computer.
-
-# Visual Studio for Mac
+  
+# [Visual Studio for Mac](#tab/visual-studio-mac)
 
 * Select **Debug** > **Start Without Debugging** to launch the app.
 
   Visual Studio for Mac:
 
-  * Starts Kestrel server.
+  * Starts [Kestrel](../fundamentals/servers/index.md#kestrel) server.
   * Launches a browser.
   * Navigates to `http://localhost:port`, such as `http://localhost:7042`.
     * *port*: A randomly assigned port number for the app.
     * `localhost`: The standard hostname for the local computer. Localhost only serves web requests from the local computer.
 
-  Visual Studio for Mac displays the following popup:
-
-Select **Install and Trust** if you trust the development certificate.
-
-The following dialog is displayed:
-
-Enter your password and select **Update Settings**
-
-Select **Yes** if you agree to trust the development certificate.
-
-See Trust the ASP.NET Core HTTPS development certificate for more information.
+  [!INCLUDE[](~/includes/trustCertMac6.md)]
 
 * From Visual Studio, press **Opt-Cmd-Return** to run without the debugger. Alternatively, navigate to the menu bar and go to **Run>Start Without Debugging**.
 
-  Visual Studio starts Kestrel, launches a browser, and navigates to a randomly assigned port such as `http://localhost:7042`.
+  Visual Studio starts [Kestrel](../fundamentals/servers/kestrel.md), launches a browser, and navigates to a randomly assigned port such as `http://localhost:7042`.
+
+<!-- End of VS tabs -->
 
 ---

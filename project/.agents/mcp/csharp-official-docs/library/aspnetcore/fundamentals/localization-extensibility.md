@@ -1,15 +1,14 @@
 ---
-title: "Localization Extensibility"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/localization-extensibility.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Localization Extensibility
+description: Learn how to extend the localization APIs in ASP.NET Core apps.
+monikerRange: '>= aspnetcore-2.1'
+ms.date: 08/03/2019
 ---
-
 # Localization Extensibility
 
-By Hisham Bin Ateya
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+By [Hisham Bin Ateya](https://github.com/hishamco)
 
 This article:
 
@@ -18,27 +17,29 @@ This article:
 
 ## Extensible Points in Localization APIs
 
-ASP.NET Core localization APIs are built to be extensible. Extensibility allows developers to customize the localization according to their needs. For instance, OrchardCore has a `POStringLocalizer`. `POStringLocalizer` describes in detail using Portable Object localization to use `PO` files to store localization resources.
+ASP.NET Core localization APIs are built to be extensible. Extensibility allows developers to customize the localization according to their needs. For instance, [OrchardCore](https://github.com/orchardCMS/OrchardCore/) has a `POStringLocalizer`. `POStringLocalizer` describes in detail using [Portable Object localization](portable-object-localization.md) to use `PO` files to store localization resources.
 
-This article lists the two main extensibility points that localization APIs provide:
+This article lists the two main extensibility points that localization APIs provide: 
 
-* `Microsoft.AspNetCore.Localization.RequestCultureProvider`
-* `Microsoft.Extensions.Localization.IStringLocalizer`
+* <xref:Microsoft.AspNetCore.Localization.RequestCultureProvider>
+* <xref:Microsoft.Extensions.Localization.IStringLocalizer>
 
 ## Localization Culture Providers
 
 ASP.NET Core localization APIs have four default providers that can determine the current culture of an executing request:
 
-* `Microsoft.AspNetCore.Localization.QueryStringRequestCultureProvider`
-* `Microsoft.AspNetCore.Localization.CookieRequestCultureProvider`
-* `Microsoft.AspNetCore.Localization.AcceptLanguageHeaderRequestCultureProvider`
-* `Microsoft.AspNetCore.Localization.CustomRequestCultureProvider`
+* <xref:Microsoft.AspNetCore.Localization.QueryStringRequestCultureProvider>
+* <xref:Microsoft.AspNetCore.Localization.CookieRequestCultureProvider>
+* <xref:Microsoft.AspNetCore.Localization.AcceptLanguageHeaderRequestCultureProvider>
+* <xref:Microsoft.AspNetCore.Localization.CustomRequestCultureProvider>
 
-The preceding providers are described in detail in the localization middleware documentation. If the default providers don't meet your needs, build a custom provider using one of the following approaches:
+The preceding providers are described in detail in the [localization middleware](localization.md) documentation. If the default providers don't meet your needs, build a custom provider using one of the following approaches:
 
 ### Use CustomRequestCultureProvider
 
-`Microsoft.AspNetCore.Localization.CustomRequestCultureProvider` provides a custom `Microsoft.AspNetCore.Localization.RequestCultureProvider` that uses a simple delegate to determine the current localization culture:
+<xref:Microsoft.AspNetCore.Localization.CustomRequestCultureProvider> provides a custom <xref:Microsoft.AspNetCore.Localization.RequestCultureProvider> that uses a simple delegate to determine the current localization culture:
+
+:::moniker range=">= aspnetcore-3.0"
 
 ```csharp
 options.AddInitialRequestCultureProvider(new CustomRequestCultureProvider(async context =>
@@ -58,11 +59,35 @@ options.AddInitialRequestCultureProvider(new CustomRequestCultureProvider(async 
 }));
 ```
 
+:::moniker-end
+
+:::moniker range="< aspnetcore-3.0"
+
+```csharp
+options.RequestCultureProviders.Insert(0, new CustomRequestCultureProvider(async context =>
+{
+    var currentCulture = "en";
+    var segments = context.Request.Path.Value.Split(new char[] { '/' }, 
+        StringSplitOptions.RemoveEmptyEntries);
+
+    if (segments.Length > 1 && segments[0].Length == 2)
+    {
+        currentCulture = segments[0];
+    }
+
+    var requestCulture = new ProviderCultureResult(currentCulture);
+
+    return Task.FromResult(requestCulture);
+}));
+```
+
+:::moniker-end
+
 ### Use a new implementation of RequestCultureProvider
 
-A new implementation of `Microsoft.AspNetCore.Localization.RequestCultureProvider` can be created that determines the request culture information from a custom source. For example, the custom source can be a configuration file or database.
+A new implementation of <xref:Microsoft.AspNetCore.Localization.RequestCultureProvider> can be created that determines the request culture information from a custom source. For example, the custom source can be a configuration file or database.
 
-The following example shows `AppSettingsRequestCultureProvider`, which extends the `Microsoft.AspNetCore.Localization.RequestCultureProvider` to determine the request culture information from `appsettings.json`:
+The following example shows `AppSettingsRequestCultureProvider`, which extends the <xref:Microsoft.AspNetCore.Localization.RequestCultureProvider> to determine the request culture information from `appsettings.json`:
 
 ```csharp
 public class AppSettingsRequestCultureProvider : RequestCultureProvider
@@ -106,12 +131,12 @@ public class AppSettingsRequestCultureProvider : RequestCultureProvider
 
 ## Localization resources
 
-ASP.NET Core localization provides `Microsoft.Extensions.Localization.ResourceManagerStringLocalizer`. `Microsoft.Extensions.Localization.ResourceManagerStringLocalizer` is an implementation of `Microsoft.Extensions.Localization.IStringLocalizer` that uses `resx` to store localization resources.
+ASP.NET Core localization provides <xref:Microsoft.Extensions.Localization.ResourceManagerStringLocalizer>. <xref:Microsoft.Extensions.Localization.ResourceManagerStringLocalizer> is an implementation of <xref:Microsoft.Extensions.Localization.IStringLocalizer> that uses `resx` to store localization resources.
 
 You aren't limited to using `resx` files. By implementing `IStringLocalizer`, any data source can be used.
 
-The following example projects implement `Microsoft.Extensions.Localization.IStringLocalizer`:
+The following example projects implement <xref:Microsoft.Extensions.Localization.IStringLocalizer>:
 
-* EFStringLocalizer
-* JsonStringLocalizer
-* SqlLocalizer
+* [EFStringLocalizer](https://github.com/aspnet/Entropy/tree/master/samples/Localization.EntityFramework)
+* [JsonStringLocalizer](https://github.com/hishamco/My.Extensions.Localization.Json)
+* [SqlLocalizer](https://github.com/damienbod/AspNetCoreLocalization)

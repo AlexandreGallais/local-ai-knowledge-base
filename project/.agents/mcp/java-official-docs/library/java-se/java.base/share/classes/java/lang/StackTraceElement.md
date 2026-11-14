@@ -1,26 +1,19 @@
----
-title: "StackTraceElement class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/StackTraceElement.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # StackTraceElement class (java.lang)
 
 ```java
 public final class StackTraceElement implements java.io.Serializable
 ```
 
-An element in a stack trace, as returned by `Throwable.getStackTrace()`.  Each element represents a single stack frame.
+An element in a stack trace, as returned by {@link
+Throwable#getStackTrace()}.  Each element represents a single stack frame.
 All stack frames except for the one at the top of the stack represent
 a method invocation.  The frame at the top of the stack represents the
 execution point at which the stack trace was generated.  Typically,
 this is the point at which the throwable corresponding to the stack trace
 was created.
 
-**Since:** 1.4
+@since  1.4
+@author Josh Bloch
 
 ## StackTraceElement.StackTraceElement(String, String, String, int)
 
@@ -29,21 +22,26 @@ public StackTraceElement(String declaringClass, String methodName, String fileNa
 ```
 
 Creates a stack trace element representing the specified execution
-point. The module name and module version of the stack trace element will
-be `null`.
+point. The {@link #getModuleName module name} and {@link
+#getModuleVersion module version} of the stack trace element will
+be {@code null}.
 
-Parameters:
-
-- `declaringClass`: the binary name of the class containing the execution point represented by the stack trace element
-- `methodName`: the name of the method containing the execution point represented by the stack trace element
-- `fileName`: the name of the file containing the execution point represented by the stack trace element, or `null` if this information is unavailable
-- `lineNumber`: the line number of the source line containing the execution point represented by this stack trace element, or a negative number if this information is unavailable. A value of -2 indicates that the method containing the execution point is a native method
-
-**Since:** 1.5
-
-Throws:
-
-- `NullPointerException`: if `declaringClass` or `methodName` is null
+@param declaringClass the {@linkplain ClassLoader##binary-name binary name}
+       of the class containing the execution point represented by
+       the stack trace element
+@param methodName the name of the method containing the execution point
+       represented by the stack trace element
+@param fileName the name of the file containing the execution point
+        represented by the stack trace element, or {@code null} if
+        this information is unavailable
+@param lineNumber the line number of the source line containing the
+        execution point represented by this stack trace element, or
+        a negative number if this information is unavailable. A value
+        of -2 indicates that the method containing the execution point
+        is a native method
+@throws NullPointerException if {@code declaringClass} or
+        {@code methodName} is null
+@since 1.5
 
 ## StackTraceElement.StackTraceElement(String, String, String, String, String, String, int)
 
@@ -54,21 +52,33 @@ public StackTraceElement(String classLoaderName, String moduleName, String modul
 Creates a stack trace element representing the specified execution
 point.
 
-Parameters:
+@param classLoaderName the class loader name if the class loader of
+       the class containing the execution point represented by
+       the stack trace is named; otherwise {@code null}
+@param moduleName the module name if the class containing the
+       execution point represented by the stack trace is in a named
+       module; otherwise {@code null}
+@param moduleVersion the module version if the class containing the
+       execution point represented by the stack trace is in a named
+       module that has a version; otherwise {@code null}
+@param declaringClass the {@linkplain ClassLoader##binary-name binary name}
+       of the class containing the execution point represented by
+       the stack trace element
+@param methodName the name of the method containing the execution point
+       represented by the stack trace element
+@param fileName the name of the file containing the execution point
+       represented by the stack trace element, or {@code null} if
+       this information is unavailable
+@param lineNumber the line number of the source line containing the
+       execution point represented by this stack trace element, or
+       a negative number if this information is unavailable. A value
+       of -2 indicates that the method containing the execution point
+       is a native method
 
-- `classLoaderName`: the class loader name if the class loader of the class containing the execution point represented by the stack trace is named; otherwise `null`
-- `moduleName`: the module name if the class containing the execution point represented by the stack trace is in a named module; otherwise `null`
-- `moduleVersion`: the module version if the class containing the execution point represented by the stack trace is in a named module that has a version; otherwise `null`
-- `declaringClass`: the binary name of the class containing the execution point represented by the stack trace element
-- `methodName`: the name of the method containing the execution point represented by the stack trace element
-- `fileName`: the name of the file containing the execution point represented by the stack trace element, or `null` if this information is unavailable
-- `lineNumber`: the line number of the source line containing the execution point represented by this stack trace element, or a negative number if this information is unavailable. A value of -2 indicates that the method containing the execution point is a native method
+@throws NullPointerException if {@code declaringClass} is {@code null}
+        or {@code methodName} is {@code null}
 
-**Since:** 9
-
-Throws:
-
-- `NullPointerException`: if `declaringClass` is `null` or `methodName` is `null`
+@since 9
 
 ## StackTraceElement.getFileName()
 
@@ -78,13 +88,13 @@ public String getFileName()
 
 Returns the name of the source file containing the execution point
 represented by this stack trace element.  Generally, this corresponds
-to the `SourceFile` attribute of the relevant `class`
-file (as per *The Java Virtual Machine Specification*, Section
-).  In some systems, the name may refer to some source code unit
+to the {@code SourceFile} attribute of the relevant {@code class}
+file (as per <cite>The Java Virtual Machine Specification</cite>, Section
+{@jvms 4.7.7}).  In some systems, the name may refer to some source code unit
 other than a file, such as an entry in source repository.
 
-**Returns:** the name of the file containing the execution point
-        represented by this stack trace element, or `null` if
+@return the name of the file containing the execution point
+        represented by this stack trace element, or {@code null} if
         this information is unavailable.
 
 ## StackTraceElement.getLineNumber()
@@ -95,11 +105,11 @@ public int getLineNumber()
 
 Returns the line number of the source line containing the execution
 point represented by this stack trace element.  Generally, this is
-derived from the `LineNumberTable` attribute of the relevant
-`class` file (as per *The Java Virtual Machine
-Specification*, Section ).
+derived from the {@code LineNumberTable} attribute of the relevant
+{@code class} file (as per <cite>The Java Virtual Machine
+Specification</cite>, Section {@jvms 4.7.8}).
 
-**Returns:** the line number of the source line containing the execution
+@return the line number of the source line containing the execution
         point represented by this stack trace element, or a negative
         number if this information is unavailable.
 
@@ -112,13 +122,11 @@ public String getModuleName()
 Returns the module name of the module containing the execution point
 represented by this stack trace element.
 
-**Returns:** the module name of the `Module` containing the execution
-        point represented by this stack trace element; `null`
+@return the module name of the {@code Module} containing the execution
+        point represented by this stack trace element; {@code null}
         if the module name is not available.
-
-**Since:** 9
-
-**See also:** Module#getName()
+@since 9
+@see Module#getName()
 
 ## StackTraceElement.getModuleVersion()
 
@@ -129,13 +137,11 @@ public String getModuleVersion()
 Returns the module version of the module containing the execution point
 represented by this stack trace element.
 
-**Returns:** the module version of the `Module` containing the execution
-        point represented by this stack trace element; `null`
+@return the module version of the {@code Module} containing the execution
+        point represented by this stack trace element; {@code null}
         if the module version is not available.
-
-**Since:** 9
-
-**See also:** java.lang.module.ModuleDescriptor.Version
+@since 9
+@see java.lang.module.ModuleDescriptor.Version
 
 ## StackTraceElement.getClassLoaderName()
 
@@ -146,19 +152,22 @@ public String getClassLoaderName()
 Returns the name of the class loader of the class containing the
 execution point represented by this stack trace element.
 
-**Returns:** the name of the class loader of the class containing the execution
-        point represented by this stack trace element; `null`
+@return the name of the class loader of the class containing the execution
+        point represented by this stack trace element; {@code null}
         if the class loader is not named.
 
-**Since:** 9
-
-**See also:** java.lang.ClassLoader#getName()
+@since 9
+@see java.lang.ClassLoader#getName()
 
 ## StackTraceElement.getClassName()
 
 ```java
 public String getClassName()
 ```
+
+{@return the {@linkplain ClassLoader##binary-name binary name}
+of the {@code Class} containing the execution point represented
+by this stack trace element}
 
 ## StackTraceElement.getMethodName()
 
@@ -169,11 +178,11 @@ public String getMethodName()
 Returns the name of the method containing the execution point
 represented by this stack trace element.  If the execution point is
 contained in an instance or class initializer, this method will return
-the appropriate *special method name*, `ConstantDescs#INIT_NAME`
-or `ConstantDescs#CLASS_INIT_NAME`, as per Section
-of *The Java Virtual Machine Specification*.
+the appropriate <i>special method name</i>, {@value ConstantDescs#INIT_NAME}
+or {@value ConstantDescs#CLASS_INIT_NAME}, as per Section {@jvms 3.9}
+of <cite>The Java Virtual Machine Specification</cite>.
 
-**Returns:** the name of the method containing the execution point
+@return the name of the method containing the execution point
         represented by this stack trace element.
 
 ## StackTraceElement.isNativeMethod()
@@ -185,7 +194,7 @@ public boolean isNativeMethod()
 Returns true if the method containing the execution point
 represented by this stack trace element is a native method.
 
-**Returns:** `true` if the method containing the execution point
+@return {@code true} if the method containing the execution point
         represented by this stack trace element is a native method.
 
 ## StackTraceElement.toString()
@@ -196,72 +205,74 @@ public String toString()
 
 Returns a string representation of this stack trace element.
 
-**API note:** The format of this string depends on the implementation, but the
+@apiNote The format of this string depends on the implementation, but the
 following examples may be regarded as typical:
-
--
-    "`com.foo.loader/user@example.com/com.foo.Main.run(Main.java:101)`"
+<ul>
+<li>
+    "{@code com.foo.loader/foo@9.0/com.foo.Main.run(Main.java:101)}"
 - See the description below.
-
--
-    "`com.foo.loader/user@example.com/com.foo.Main.run(Main.java)`"
+</li>
+<li>
+    "{@code com.foo.loader/foo@9.0/com.foo.Main.run(Main.java)}"
 - The line number is unavailable.
-
--
-    "`com.foo.loader/user@example.com/com.foo.Main.run(Unknown Source)`"
+</li>
+<li>
+    "{@code com.foo.loader/foo@9.0/com.foo.Main.run(Unknown Source)}"
 - Neither the file name nor the line number is available.
-
--
-    "`com.foo.loader/user@example.com/com.foo.Main.run(Native Method)`"
+</li>
+<li>
+    "{@code com.foo.loader/foo@9.0/com.foo.Main.run(Native Method)}"
 - The method containing the execution point is a native method.
-
--
-    "`com.foo.loader//com.foo.bar.App.run(App.java:12)`"
+</li>
+<li>
+    "{@code com.foo.loader//com.foo.bar.App.run(App.java:12)}"
 - The class of the execution point is defined in the unnamed module of
-the class loader named `com.foo.loader`.
-
--
-    "`user@example.com/org.acme.Lib.test(Lib.java:80)`"
-- The class of the execution point is defined in `acme` module
+the class loader named {@code com.foo.loader}.
+</li>
+<li>
+    "{@code acme@2.1/org.acme.Lib.test(Lib.java:80)}"
+- The class of the execution point is defined in {@code acme} module
 loaded by a built-in class loader such as the application class loader.
+</li>
+<li>
+    "{@code MyClass.mash(MyClass.java:9)}"
+- {@code MyClass} class is on the application class path.
+</li>
+</ul>
 
--
-    "`MyClass.mash(MyClass.java:9)`"
-- `MyClass` class is on the application class path.
-
- The first example shows a stack trace element consisting of
-three elements, each separated by `"/"`, followed by
+<p> The first example shows a stack trace element consisting of
+three elements, each separated by {@code "/"}, followed by
 the source file name and the line number of the source line
 containing the execution point.
 
-The first element "`com.foo.loader`" is
-the name of the class loader.  The second element "`user@example.com`"
+The first element "{@code com.foo.loader}" is
+the name of the class loader.  The second element "{@code foo@9.0}"
 is the module name and version.  The third element is the method
-containing the execution point; "`com.foo.Main"`" is the
-binary name and "`run`" is the name of the method.
-"`Main.java`" is the source file name and "`101`" is
+containing the execution point; "{@code com.foo.Main"}" is the
+binary name and "{@code run}" is the name of the method.
+"{@code Main.java}" is the source file name and "{@code 101}" is
 the line number.
 
- If a class is defined in an *unnamed module*
+<p> If a class is defined in an <em>unnamed module</em>
 then the second element is omitted as shown in
-"`com.foo.loader//com.foo.bar.App.run(App.java:12)`".
+"{@code com.foo.loader//com.foo.bar.App.run(App.java:12)}".
 
- If the class loader is a
-built-in class loader or is not named then the first element
-and its following `"/"` are omitted as shown in
-"`user@example.com/org.acme.Lib.test(Lib.java:80)`".
+<p> If the class loader is a <a href="ClassLoader.html#builtinLoaders">
+built-in class loader</a> or is not named then the first element
+and its following {@code "/"} are omitted as shown in
+"{@code acme@2.1/org.acme.Lib.test(Lib.java:80)}".
 If the first element is omitted and the module is an unnamed module,
-the second element and its following `"/"` are also omitted
-as shown in "`MyClass.mash(MyClass.java:9)`".
+the second element and its following {@code "/"} are also omitted
+as shown in "{@code MyClass.mash(MyClass.java:9)}".
 
- The `toString` method may return two different values on two
-`StackTraceElement` instances that are
-equal, for example one created via the
-constructor, and one obtained from `java.lang.Throwable` or
-`java.lang.StackWalker.StackFrame`, where an implementation may
+<p> The {@code toString} method may return two different values on two
+{@code StackTraceElement} instances that are
+{@linkplain #equals(Object) equal}, for example one created via the
+constructor, and one obtained from {@link java.lang.Throwable} or
+{@link java.lang.StackWalker.StackFrame}, where an implementation may
 choose to omit some element in the returned string.
 
-**See also:** Throwable#printStackTrace()
+@see    Throwable#printStackTrace()
 
 ## StackTraceElement.equals(Object)
 
@@ -270,11 +281,10 @@ public boolean equals(Object obj)
 ```
 
 Returns true if the specified object is another
-`StackTraceElement` instance representing the same execution
-point as this instance.  Two stack trace elements `a` and
-`b` are equal if and only if:
-
-```java
+{@code StackTraceElement} instance representing the same execution
+point as this instance.  Two stack trace elements {@code a} and
+{@code b} are equal if and only if:
+<pre>{@code
     equals(a.getClassLoaderName(), b.getClassLoaderName()) &&
     equals(a.getModuleName(), b.getModuleName()) &&
     equals(a.getModuleVersion(), b.getModuleVersion()) &&
@@ -282,16 +292,14 @@ point as this instance.  Two stack trace elements `a` and
     equals(a.getMethodName(), b.getMethodName())
     equals(a.getFileName(), b.getFileName()) &&
     a.getLineNumber() == b.getLineNumber()
-```
 
-where `equals` has the semantics of Object) Objects.equals.
+}</pre>
+where {@code equals} has the semantics of {@link
+java.util.Objects#equals(Object, Object) Objects.equals}.
 
-Parameters:
-
-- `obj`: the object to be compared with this stack trace element.
-
-**Returns:** true if the specified object is another
-        `StackTraceElement` instance representing the same
+@param  obj the object to be compared with this stack trace element.
+@return true if the specified object is another
+        {@code StackTraceElement} instance representing the same
         execution point as this instance.
 
 ## StackTraceElement.hashCode()

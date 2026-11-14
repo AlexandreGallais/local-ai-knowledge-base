@@ -1,17 +1,16 @@
 ---
-title: "Troubleshoot IHttpClientFactory issues"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/httpclient-factory-troubleshooting.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Troubleshoot IHttpClientFactory issues
+description: Learn how to troubleshoot common HttpClient and IHttpClientFactory problems.
+author: CarnaViire
+ms.author: knatalia
+ms.date: 08/21/2024
 ---
 
 # Common `IHttpClientFactory` usage issues
 
 In this article, you'll learn some of the most common problems you can run into when using `IHttpClientFactory` to create `HttpClient` instances.
 
-`IHttpClientFactory` is a convenient way to set up multiple `HttpClient` configurations in the DI container, configure logging, set up resilience strategies, and more. `IHttpClientFactory` also encapsulates the lifetime management of `HttpClient` and `HttpMessageHandler` instances, to prevent problems like socket exhaustion and losing DNS changes. For an overview on how to use `IHttpClientFactory` in your .NET application, see IHttpClientFactory with .NET.
+`IHttpClientFactory` is a convenient way to set up multiple `HttpClient` configurations in the DI container, configure logging, set up resilience strategies, and more. `IHttpClientFactory` also encapsulates the lifetime management of `HttpClient` and `HttpMessageHandler` instances, to prevent problems like socket exhaustion and losing DNS changes. For an overview on how to use `IHttpClientFactory` in your .NET application, see [IHttpClientFactory with .NET](httpclient-factory.md).
 
 Due to a complex nature of `IHttpClientFactory` integration with DI, you can hit some issues that might be hard to catch and troubleshoot. The scenarios listed in this article also contain recommendations, which you can apply proactively to avoid potential problems.
 
@@ -34,13 +33,13 @@ Consider the following recommendations to help alleviate this known limitation:
 
 ✔️ CONSIDER not storing the information, or only pass it within the `HttpRequestMessage` instance.
 
-To pass <example-value> information alongside the `HttpRequestMessage`, you can use the `System.Net.Http.HttpRequestMessage.Options` property.
+To pass arbitrary information alongside the `HttpRequestMessage`, you can use the <xref:System.Net.Http.HttpRequestMessage.Options?displayProperty=nameWithType> property.
 
 ✔️ CONSIDER encapsulating all the scope-related (for example, authentication) logic in a separate `DelegatingHandler` that's **not** created by the `IHttpClientFactory`, and use it to wrap the `IHttpClientFactory`-created handler.
 
-To create just an `HttpMessageHandler` without `HttpClient`, call `System.Net.Http.IHttpMessageHandlerFactory.CreateHandler*` for any registered _named client_. In that case, you will need to create an `HttpClient` instance yourself using the combined handler. You can find a fully runnable example for this workaround on GitHub.
+To create just an `HttpMessageHandler` without `HttpClient`, call <xref:System.Net.Http.IHttpMessageHandlerFactory.CreateHandler*?displayProperty=nameWithType> for any registered _named client_. In that case, you will need to create an `HttpClient` instance yourself using the combined handler. You can find a fully runnable example for this workaround on [GitHub](https://github.com/dotnet/docs/tree/main/docs/core/extensions/snippets/http/scopeworkaround).
 
-For more information, see the Message Handler Scopes in IHttpClientFactory section in the `IHttpClientFactory` guidelines.
+For more information, see the [Message Handler Scopes in IHttpClientFactory](httpclient-factory.md#message-handler-scopes-in-ihttpclientfactory) section in the `IHttpClientFactory` guidelines.
 
 ## `HttpClient` doesn't respect DNS changes
 
@@ -60,7 +59,7 @@ Even if `IHttpClientFactory` is used, it's still possible to hit the stale DNS p
 
 _Typed clients_ are intended to be **short-lived** as well, as an `HttpClient` instance is injected into the constructor, so it will share the _typed client_ lifetime.
 
-For more information, see the `HttpClient` lifetime management and Avoid _typed clients_ in singleton services sections in the `IHttpClientFactory` guidelines.
+For more information, see the [`HttpClient` lifetime management](httpclient-factory.md#httpclient-lifetime-management) and [Avoid _typed clients_ in singleton services](httpclient-factory.md#avoid-typed-clients-in-singleton-services) sections in the `IHttpClientFactory` guidelines.
 
 ## `HttpClient` uses too many sockets
 
@@ -68,7 +67,7 @@ Even if `IHttpClientFactory` is used, it's still possible to hit the socket exha
 
 ❌ DO NOT start a large number of HTTP/1.1 requests concurrently at the same time without specifying the limits.
 
-✔️ CONSIDER setting `System.Net.Http.HttpClientHandler.MaxConnectionsPerServer` (or `System.Net.Http.SocketsHttpHandler.MaxConnectionsPerServer`, if you use it as a primary handler) to a reasonable value. Note that these limits only apply to the specific handler instance.
+✔️ CONSIDER setting <xref:System.Net.Http.HttpClientHandler.MaxConnectionsPerServer?displayProperty=nameWithType> (or <xref:System.Net.Http.SocketsHttpHandler.MaxConnectionsPerServer?displayProperty=nameWithType>, if you use it as a primary handler) to a reasonable value. Note that these limits only apply to the specific handler instance.
 
 ✔️ CONSIDER using HTTP/2, which allows multiplexing requests over a single TCP connection.
 
@@ -113,7 +112,7 @@ Consider the following examples of how the link between _typed_ and _named_ clie
 
 If a _typed client_ is erroneously registered a second time as a plain Transient service, this will overwrite the registration added by the `IHttpClientFactory`, breaking the link to the _named client_. It will manifest as if the `HttpClient`'s configuration is lost, as an unconfigured `HttpClient` will get injected into the _typed client_ instead.
 
-It might be confusing that, instead of throwing an exception, a "wrong" `HttpClient` is used. This happens because the "default" unconfigured `HttpClient` — the client with the `Microsoft.Extensions.Options.Options.DefaultName` name (`string.Empty`) — is registered as a plain Transient service, to enable the most basic `IHttpClientFactory` usage scenario. That's why after the link gets broken and the _typed client_ becomes just an ordinary service, this "default" `HttpClient` will naturally get injected into the respective constructor parameter.
+It might be confusing that, instead of throwing an exception, a "wrong" `HttpClient` is used. This happens because the "default" unconfigured `HttpClient` — the client with the <xref:Microsoft.Extensions.Options.Options.DefaultName?displayProperty=nameWithType> name (`string.Empty`) — is registered as a plain Transient service, to enable the most basic `IHttpClientFactory` usage scenario. That's why after the link gets broken and the _typed client_ becomes just an ordinary service, this "default" `HttpClient` will naturally get injected into the respective constructor parameter.
 
 ### Different _typed clients_ are registered on a common interface
 
@@ -123,7 +122,7 @@ In case two different _typed clients_ are registered on a common interface, they
 
 ✔️ CONSIDER registering and configuring a _named client_ separately, and then linking it to one or multiple _typed clients_, either by specifying the name in `AddHttpClient<T>` call or by calling `AddTypedClient` during the _named client_ setup.
 
-By design, registering and configuring a _named client_ with the same name several times just appends the configuration actions to the list of existing ones. This behavior of `IHttpClientFactory` might not be obvious, but it is the same approach that is used by the Options pattern and configuration APIs like `Microsoft.Extensions.Options.OptionsBuilder`1.Configure*`.
+By design, registering and configuring a _named client_ with the same name several times just appends the configuration actions to the list of existing ones. This behavior of `IHttpClientFactory` might not be obvious, but it is the same approach that is used by the [Options pattern](options.md) and configuration APIs like <xref:Microsoft.Extensions.Options.OptionsBuilder`1.Configure*>.
 
 This is mostly useful for advanced handler configurations, for example, adding a custom handler to a _named client_ defined externally, or mocking a primary handler for tests, but it works for `HttpClient` instance configuration as well. For example, the three following examples will result in an `HttpClient` configured in the **same** way (both `BaseAddress` and `DefaultRequestHeaders` are set):
 
@@ -158,7 +157,7 @@ services.AddHttpClient<FooLogger>("LogClient");
 services.AddHttpClient<BarLogger>("LogClient");
 ```
 
-The same thing can also be achieved by calling `Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.AddTypedClient*` during the _named client_ configuration:
+The same thing can also be achieved by calling <xref:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.AddTypedClient*> during the _named client_ configuration:
 
 ```csharp
 services.AddHttpClient("LogClient", c => c.BaseAddress = new Uri(LogServerAddress))
@@ -177,8 +176,11 @@ services.AddHttpClient<ITypedClient, GithubClient>(nameof(GithubClient),
 
 ## See also
 
-- IHttpClientFactory with .NET
-- `System.Net.Http.IHttpClientFactory`
-- `System.Net.Http.IHttpMessageHandlerFactory`
-- `System.Net.Http.HttpClient`
-- Make HTTP requests with the HttpClient
+- [IHttpClientFactory with .NET][hcf]
+- <xref:System.Net.Http.IHttpClientFactory>
+- <xref:System.Net.Http.IHttpMessageHandlerFactory>
+- <xref:System.Net.Http.HttpClient>
+- [Make HTTP requests with the HttpClient][httpclient]
+
+[hcf]: httpclient-factory.md
+[httpclient]: ../../fundamentals/networking/http/httpclient.md

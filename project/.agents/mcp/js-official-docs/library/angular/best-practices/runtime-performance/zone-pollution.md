@@ -1,17 +1,8 @@
----
-title: "Resolving zone pollution"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/best-practices/runtime-performance/zone-pollution.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Resolving zone pollution
 
 **Zone.js** is a signaling mechanism that Angular uses to detect when an application state might have changed. It captures asynchronous operations like `setTimeout`, network requests, and event listeners. Angular schedules change detection based on signals from Zone.js.
 
-In some cases scheduled tasks or microtasks don’t make any changes in the data model, which makes running change detection unnecessary. Common examples are:
+In some cases scheduled [tasks](https://developer.mozilla.org/docs/Web/API/HTML_DOM_API/Microtask_guide#tasks) or [microtasks](https://developer.mozilla.org/docs/Web/API/HTML_DOM_API/Microtask_guide#microtasks) don’t make any changes in the data model, which makes running change detection unnecessary. Common examples are:
 
 - `requestAnimationFrame`, `setTimeout` or `setInterval`
 - Task or microtask scheduling by third-party libraries
@@ -22,13 +13,15 @@ This section covers how to identify such conditions, and how to run code outside
 
 You can detect unnecessary change detection calls using Angular DevTools. Often they appear as consecutive bars in the profiler’s timeline with source `setTimeout`, `setInterval`, `requestAnimationFrame`, or an event handler. When you have limited calls within your application of these APIs, the change detection invocation is usually caused by a third-party library.
 
+<img alt="Angular DevTools profiler preview showing Zone pollution" src="assets/images/best-practices/runtime-performance/zone-pollution.png">
+
 In the image above, there is a series of change detection calls triggered by event handlers associated with an element. That’s a common challenge when using third-party, non-native Angular components, which do not alter the default behavior of `NgZone`.
 
 ## Run tasks outside `NgZone`
 
-In such cases, you can instruct Angular to avoid calling change detection for tasks scheduled by a given piece of code using NgZone.
+In such cases, you can instruct Angular to avoid calling change detection for tasks scheduled by a given piece of code using [NgZone](/api/core/NgZone).
 
-```ts
+```ts {header:"Run outside of the Zone" , linenums}
 import { Component, NgZone, OnInit, inject } from '@angular/core';
 
 @Component(...)
@@ -45,7 +38,7 @@ The preceding snippet instructs Angular to call `setInterval` outside the Angula
 
 Third-party libraries commonly trigger unnecessary change detection cycles when their APIs are invoked within the Angular zone. This phenomenon particularly affects libraries that set up event listeners or initiate other tasks (such as timers, XHR requests, etc.). Avoid these extra cycles by calling library APIs outside the Angular zone:
 
-```ts
+```ts {header:"Move the plot initialization outside of the Zone" , linenums}
 import { Component, NgZone, OnInit, inject } from '@angular/core';
 import * as Plotly from 'plotly.js-dist-min';
 
@@ -67,7 +60,7 @@ For example, if `Plotly.newPlot('chart', data)` adds event listeners to a DOM el
 
 But sometimes, you may need to listen to events dispatched by third-party APIs. In such cases, it's important to remember that those event listeners will also execute outside of the Angular zone if the initialization logic was done there:
 
-```ts
+```ts {header:"Check whether the handler is called outside of the Zone" , linenums}
 import { Component, NgZone, OnInit, output, inject } from '@angular/core';
 import * as Plotly from 'plotly.js-dist-min';
 
@@ -99,7 +92,7 @@ class App implements OnInit {
 
 If you need to dispatch events to parent components and execute specific view update logic, you should consider re-entering the Angular zone to instruct the framework to run change detection or run change detection manually:
 
-```ts
+```ts {header:"Re-enter the Angular zone when dispatching event" , linenums}
 import { Component, NgZone, OnInit, output, inject } from '@angular/core';
 import * as Plotly from 'plotly.js-dist-min';
 

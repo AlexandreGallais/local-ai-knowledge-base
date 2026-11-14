@@ -1,13 +1,13 @@
 ---
-title: "preserve-caught-error"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/preserve-caught-error.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: preserve-caught-error
+rule_type: suggestion
+further_reading:
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause
+- https://nodejs.org/api/errors.html#errorcause
+- https://github.com/tc39/proposal-error-cause/blob/main/README.md
+- https://dev.to/amnish04/never-lose-valuable-error-context-in-javascript-3aco
+- https://github.com/microsoft/TypeScript/blob/main/src/lib/es2022.error.d.ts
 ---
-
-# preserve-caught-error
 
 JavaScript developers often re-throw errors in `catch` blocks to add context but forget to preserve the original error, resulting in lost debugging information.
 
@@ -32,7 +32,7 @@ Checks for all built-in `error types` that support passing a `cause`.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint preserve-caught-error: "error" */
@@ -70,9 +70,11 @@ try {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint preserve-caught-error: "error" */
@@ -111,6 +113,8 @@ try {
 }
 ```
 
+:::
+
 ## Options
 
 This rule takes a single option — an object with the following optional properties:
@@ -130,7 +134,7 @@ Enabling this option mandates for all the catch blocks to have a caught error pa
 
 Example of **incorrect** code for the `{ "requireCatchParameter": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint preserve-caught-error: ["error", { "requireCatchParameter": true }] */
@@ -142,9 +146,11 @@ try {
 }
 ```
 
+:::
+
 Example of **correct** code for the `{ "requireCatchParameter": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint preserve-caught-error: ["error", { "requireCatchParameter": true }] */
@@ -155,6 +161,8 @@ try {
 	// Handling and re-throw logic
 }
 ```
+
+:::
 
 ### errorClassNames
 
@@ -180,7 +188,7 @@ Each entry can be either a string or an object:
 
 Example of **incorrect** code for the `{ "errorClassNames": ["AppError"] }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint preserve-caught-error: ["error", { "errorClassNames": ["AppError"] }] */
@@ -194,9 +202,11 @@ try {
 }
 ```
 
+:::
+
 Example of **correct** code for the `{ "errorClassNames": ["AppError"] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint preserve-caught-error: ["error", { "errorClassNames": ["AppError"] }] */
@@ -210,9 +220,11 @@ try {
 }
 ```
 
+:::
+
 Example of **incorrect** code for the `{ "errorClassNames": [{ "name": "APIError", "argumentPosition": 3 }] }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint preserve-caught-error: ["error", { "errorClassNames": [{ "name": "APIError", "argumentPosition": 3 }] }] */
@@ -231,9 +243,11 @@ try {
 }
 ```
 
+:::
+
 Example of **correct** code for the `{ "errorClassNames": [{ "name": "APIError", "argumentPosition": 3 }] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint preserve-caught-error: ["error", { "errorClassNames": [{ "name": "APIError", "argumentPosition": 3 }] }] */
@@ -251,6 +265,8 @@ try {
 	throw new APIError("Request failed", 500, { cause: err });
 }
 ```
+
+:::
 
 ## Known Limitations
 
@@ -286,6 +302,6 @@ You might not want to enable this rule if:
 
 - You follow a custom error-handling approach where the original error is intentionally omitted from re-thrown errors (e.g., to avoid exposing internal details or to log the original error separately).
 
-- You use a third-party or internal error-handling library that preserves error context using non-standard properties (e.g., verror) instead of the cause option.
+- You use a third-party or internal error-handling library that preserves error context using non-standard properties (e.g., [verror](https://www.npmjs.com/package/verror)) instead of the cause option.
 
 - (In rare cases) you are targeting legacy environments where the cause option in `Error` constructors is not supported.

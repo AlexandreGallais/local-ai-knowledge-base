@@ -1,15 +1,14 @@
 ---
 title: "Breaking change - FilePatternMatch.Stem changed to non-nullable"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/10.0/filepatternmatch-stem-nonnullable.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where FilePatternMatch.Stem property was changed from nullable to non-nullable."
+ms.date: 09/08/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/47914
 ---
 
 # FilePatternMatch.Stem changed to non-nullable
 
-The `Microsoft.Extensions.FileSystemGlobbing.FilePatternMatch.Stem` property was previously annotated as nullable because the `PatternTestResult.Stem` property it gets its value from is nullable. While the `Microsoft.Extensions.FileSystemGlobbing.Internal.PatternTestResult` can indeed be null if the result isn't successful, the `FilePatternMatch` never is because it's only constructed when `PatternTestResult` is successful.
+The <xref:Microsoft.Extensions.FileSystemGlobbing.FilePatternMatch.Stem?displayProperty=nameWithType> property was previously annotated as nullable because the `PatternTestResult.Stem` property it gets its value from is nullable. While the <xref:Microsoft.Extensions.FileSystemGlobbing.Internal.PatternTestResult> can indeed be null if the result isn't successful, the `FilePatternMatch` never is because it's only constructed when `PatternTestResult` is successful.
 
 To accurately reflect nullability, the `[MemberNotNullWhen()]` attribute is applied to the `PatternTestResult.Stem` property to tell the compiler it won't be null if it's successful. Additionally, the `stem` argument passed into the `FilePatternMatch` constructor is no longer nullable, and an `ArgumentNullException` will be thrown if a null `stem` is passed in.
 
@@ -19,20 +18,20 @@ To accurately reflect nullability, the `[MemberNotNullWhen()]` attribute is appl
 
 ## Previous behavior
 
-Previously, the `Microsoft.Extensions.FileSystemGlobbing.FilePatternMatch` constructor accepted `null` for the `stem` parameter without any compile-time or runtime warnings or errors.
+Previously, the <xref:Microsoft.Extensions.FileSystemGlobbing.FilePatternMatch> constructor accepted `null` for the `stem` parameter without any compile-time or runtime warnings or errors.
 
 ```csharp
 // Allowed in previous versions.
 var match = new FilePatternMatch("path/to/file.txt", null);
 ```
 
-The `Microsoft.Extensions.FileSystemGlobbing.FilePatternMatch.Stem` property was also annotated as being nullable.
+The <xref:Microsoft.Extensions.FileSystemGlobbing.FilePatternMatch.Stem?displayProperty=nameWithType> property was also annotated as being nullable.
 
 ## New behavior
 
-Starting in .NET 10, passing a `null` or possibly-null value to the `stem` argument in the `Microsoft.Extensions.FileSystemGlobbing.FilePatternMatch` constructor yields a compile-time warning. And, if `null` is passed in, a runtime `System.ArgumentNullException` is thrown.
+Starting in .NET 10, passing a `null` or possibly-null value to the `stem` argument in the <xref:Microsoft.Extensions.FileSystemGlobbing.FilePatternMatch> constructor yields a compile-time warning. And, if `null` is passed in, a runtime <xref:System.ArgumentNullException> is thrown.
 
-The `Microsoft.Extensions.FileSystemGlobbing.FilePatternMatch.Stem` property is now annotated to indicate that the value won't be null if `IsSuccessful` is `true`.
+The <xref:Microsoft.Extensions.FileSystemGlobbing.FilePatternMatch.Stem?displayProperty=nameWithType> property is now annotated to indicate that the value won't be null if `IsSuccessful` is `true`.
 
 ```csharp
 // Generates compile-time warning.
@@ -41,7 +40,7 @@ var match = new FilePatternMatch("path/to/file.txt", null);
 
 ## Type of breaking change
 
-This change can affect source compatibility and is a behavioral change.
+This change can affect [source compatibility](../../categories.md#source-compatibility) and is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -55,5 +54,5 @@ If you applied nullability warning suppressions when consuming the `FilePatternM
 
 ## Affected APIs
 
-- FilePatternMatch(String,String) constructor)
-- `Microsoft.Extensions.FileSystemGlobbing.FilePatternMatch.Stem`
+- [FilePatternMatch(String,String) constructor](xref:Microsoft.Extensions.FileSystemGlobbing.FilePatternMatch.%23ctor(System.String,System.String))
+- <xref:Microsoft.Extensions.FileSystemGlobbing.FilePatternMatch.Stem?displayProperty=fullName>

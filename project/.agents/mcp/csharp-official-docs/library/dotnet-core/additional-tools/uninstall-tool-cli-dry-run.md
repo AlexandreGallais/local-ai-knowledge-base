@@ -1,10 +1,9 @@
 ---
-title: "dotnet-core-uninstall dry-run command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/additional-tools/uninstall-tool-cli-dry-run.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet-core-uninstall dry-run command
+description: The dotnet-core-uninstall dry-run command simulates uninstalling the target .NET SDK or runtime. Status is reported for potential removal.
+author: adegeo
+ms.date: 05/27/2026
+zone_pivot_groups: operating-systems-set-three
 ---
 
 # dotnet-core-uninstall dry-run
@@ -15,12 +14,12 @@ license: "CC-BY-4.0"
 
 `dotnet-core-uninstall dry-run` - Display .NET SDKs and Runtimes that will be removed.
 
-> **Tip:**
+> [!TIP]
 > The `dotnet-core-uninstall whatif` command is the same command as `dry-run`.
 
 ## Synopsis
 
-**os-windows:**
+::: zone pivot="os-windows"
 
 ```dotnetcli
 dotnet-core-uninstall dry-run <TARGET> <FILTER> [-v|--verbosity <LEVEL>]
@@ -29,7 +28,9 @@ dotnet-core-uninstall dry-run <TARGET> <FILTER> [-v|--verbosity <LEVEL>]
 dotnet-core-uninstall dry-run -h|--help
 ```
 
-**os-macos:**
+::: zone-end
+
+::: zone pivot="os-macos"
 
 ```dotnetcli
 dotnet-core-uninstall dry-run <TARGET> <FILTER> [-v|--verbosity <LEVEL>]
@@ -37,6 +38,8 @@ dotnet-core-uninstall dry-run <TARGET> <FILTER> [-v|--verbosity <LEVEL>]
 
 dotnet-core-uninstall dry-run -h|--help
 ```
+
+::: zone-end
 
 ## Description
 
@@ -48,12 +51,12 @@ The `dotnet-core-uninstall dry-run` command simulates .NET SDK and runtime remov
 
   The version to uninstall. You can list several versions separated by a space. Response files are also supported.
 
-  > **Tip:**
+  > [!TIP]
   > Response files are an alternative to placing all the versions on the command line. They're text files, typically with a *\*.rsp* extension, and each version is listed on a separate line. To specify a response file for the `VERSION` argument, use the \@ character immediately followed by the response file name.
 
 ## Options - TARGET
 
-**os-windows:**
+::: zone pivot="os-windows"
 
 - **`--aspnet-runtime`**
 
@@ -87,7 +90,9 @@ The `dotnet-core-uninstall dry-run` command simulates .NET SDK and runtime remov
 
   Use with `--sdk`, `--runtime`, `--aspnet-runtime`, and `--windows-desktop-runtime` to remove x86.
 
-**os-macos:**
+::: zone-end
+
+::: zone pivot="os-macos"
 
 - **`--runtime`**
 
@@ -96,6 +101,8 @@ The `dotnet-core-uninstall dry-run` command simulates .NET SDK and runtime remov
 - **`--sdk`**
 
   Removes .NET Core SDKs only.
+
+::: zone-end
 
 ## Options - FILTER
 
@@ -135,13 +142,15 @@ These options are exclusive.
 
 ## Options
 
-**os-windows:**
+::: zone pivot="os-windows"
 
 - **`--force`**
 
   Forces removal of versions that might be used by Visual Studio.
 
-**os-macos:**
+::: zone-end
+
+::: zone pivot="os-macos"
 
 - **`--force`**
 
@@ -151,8 +160,10 @@ These options are exclusive.
 
   Prevents removal of SDKs and runtimes that have a high probability of being used by Visual Studio for Mac.
 
-  > **Note:**
+  > [!NOTE]
   > Visual Studio for Mac is out of support.
+
+::: zone-end
 
 - **`-v, --verbosity <LEVEL>`**
 
@@ -168,15 +179,19 @@ These options are exclusive.
 
   Shows help and usage information.
 
-**os-windows:**
+::: zone pivot="os-windows"
 
-> **Note:**
-> By default, SDKs and runtimes that have a high probability of being used by Visual Studio aren't removed. To remove these, specify them individually or use `--force`. If removing SDKs or runtimes causes issues with your Visual Studio installation, run Repair. SDKs and runtimes are available for download at https://aka.ms/dotnet-core-download.
+> [!NOTE]
+> By default, SDKs and runtimes that have a high probability of being used by Visual Studio aren't removed. To remove these, specify them individually or use `--force`. If removing SDKs or runtimes causes issues with your Visual Studio installation, run Repair. SDKs and runtimes are available for download at [https://aka.ms/dotnet-core-download](https://aka.ms/dotnet-core-download).
 
-**os-macos:**
+::: zone-end
 
-> **Note:**
-> Use `--preserve-vs-for-mac-sdks` to prevent removal of SDKs and runtimes that have a high probability of being used by Visual Studio for Mac. Visual Studio for Mac is out of support. SDKs and runtimes are available for download at https://aka.ms/dotnet-core-download.
+::: zone pivot="os-macos"
+
+> [!NOTE]
+> Use `--preserve-vs-for-mac-sdks` to prevent removal of SDKs and runtimes that have a high probability of being used by Visual Studio for Mac. Visual Studio for Mac is out of support. SDKs and runtimes are available for download at [https://aka.ms/dotnet-core-download](https://aka.ms/dotnet-core-download).
+
+::: zone-end
 
 - Dry run of removing all the .NET runtimes that have been superseded by higher patches:
 
@@ -192,6 +207,6 @@ These options are exclusive.
 
 ## See also
 
-- .NET uninstall tool overview
-- dotnet-core-uninstall list
-- dotnet-core-uninstall remove
+- [.NET uninstall tool overview](uninstall-tool-overview.md)
+- [dotnet-core-uninstall list](uninstall-tool-cli-list.md)
+- [dotnet-core-uninstall remove](uninstall-tool-cli-remove.md)

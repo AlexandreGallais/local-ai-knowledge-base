@@ -1,12 +1,15 @@
 ---
+description: "Learn more about: ICorProfilerInfo12::EventPipeStartSession Method"
 title: "ICorProfilerInfo12::EventPipeStartSession Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/profiling/icorprofilerinfo12-eventpipestartsession-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/19/2021"
+api_name:
+  - "ICorProfilerInfo12.EventPipeStartSession"
+api_location:
+  - "coreclr.dll"
+  - "corprof.idl"
+api_type:
+  - "COM"
 ---
-
 # ICorProfilerInfo12::EventPipeStartSession method
 
 Starts an EventPipe session. The session can be used by the profiler to write events which can be listened to by any EventPipe consumer.
@@ -38,7 +41,7 @@ Starts an EventPipe session. The session can be used by the profiler to write ev
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** CorProf.idl, CorProf.h
 
@@ -46,7 +49,7 @@ Starts an EventPipe session. The session can be used by the profiler to write ev
 
 ## See also
 
-- EventPipe Overview
-- Well Known EventProviders
-- ICorProfilerCallback10 Interface
-- ICorProfilerInfo12 Interface
+- [EventPipe Overview](../../../core/diagnostics/eventpipe.md)
+- [Well Known EventProviders](../../../core/diagnostics/well-known-event-providers.md)
+- [ICorProfilerCallback10 Interface](icorprofilercallback10-interface.md)
+- [ICorProfilerInfo12 Interface](icorprofilerinfo12-interface.md)

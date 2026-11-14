@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: Kestrel: Log message attributes changed"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/6/kestrel-log-message-attributes-changed.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 6.0 titled Kestrel: Log message attributes changed"
+ms.date: 02/01/2021
+ms.custom: https://github.com/aspnet/Announcements/issues/447
 ---
-
 # Kestrel: Log message attributes changed
 
 Kestrel log messages have associated IDs and names. These attributes uniquely identify different kinds of log messages. Some of those IDs and names were incorrectly duplicated. This duplication problem is fixed in ASP.NET Core 6.0.
@@ -40,3 +37,15 @@ Log IDs and names should be unique so different message types can be identified.
 ## Recommended action
 
 If you have code or configuration that references the old IDs and names, update those references to use the new IDs and names.
+
+<!--
+
+## Category
+
+ASP.NET Core
+
+## Affected APIs
+
+Not detectable via API analysis
+
+-->

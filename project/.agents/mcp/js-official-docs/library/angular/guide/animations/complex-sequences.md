@@ -1,15 +1,6 @@
----
-title: "Complex animation sequences"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/animations/complex-sequences.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Complex animation sequences
 
-IMPORTANT: The `@angular/animations` package is now deprecated. The Angular team recommends using native CSS with `animate.enter` and `animate.leave` for animations for all new code. Learn more at the new enter and leave animation guide. Also see Migrating away from Angular's Animations package to learn how you can start migrating to pure CSS animations in your apps.
+IMPORTANT: The `@angular/animations` package is now deprecated. The Angular team recommends using native CSS with `animate.enter` and `animate.leave` for animations for all new code. Learn more at the new enter and leave [animation guide](/guide/animations). Also see [Migrating away from Angular's Animations package](guide/animations/migration) to learn how you can start migrating to pure CSS animations in your apps.
 
 So far, we've learned simple animations of single HTML elements.
 Angular also lets you animate coordinated sequences, such as an entire grid or list of elements as they enter and leave a page.
@@ -21,32 +12,34 @@ The functions that control complex animation sequences are:
 | :-------------------------------- | :------------------------------------------------------------- |
 | `query()`                         | Finds one or more inner HTML elements.                         |
 | `stagger()`                       | Applies a cascading delay to animations for multiple elements. |
-| `group()` | Runs multiple animation steps in parallel.                     |
+| [`group()`](api/animations/group) | Runs multiple animation steps in parallel.                     |
 | `sequence()`                      | Runs animation steps one after another.                        |
 
 ## The query() function
 
-Most complex animations rely on the `query()` function to find child elements and apply animations to them. Basic <example-value> include:
+Most complex animations rely on the `query()` function to find child elements and apply animations to them. Basic examples include:
 
 | Examples                               | Details                                                                                                                                                                                            |
 | :------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `query()` followed by `animate()`      | Used to query simple HTML elements and directly apply animations to them.                                                                                                                          |
 | `query()` followed by `animateChild()` | Used to query child elements, which themselves have animation metadata applied to them and trigger such animations \(which would otherwise be blocked by the current/parent element's animation\). |
 
-The first argument of `query()` is a css selector string which can also contain the following Angular-specific tokens:
+The first argument of `query()` is a [css selector](https://developer.mozilla.org/docs/Web/CSS/CSS_Selectors) string which can also contain the following Angular-specific tokens:
 
 | Tokens                     | Details                                      |
 | :------------------------- | :------------------------------------------- |
-| `:enter`  `:leave`   | For entering/leaving elements.               |
+| `:enter` <br /> `:leave`   | For entering/leaving elements.               |
 | `:animating`               | For elements currently animating.            |
-| `@*`  `@triggerName` | For elements with any—or a specific—trigger. |
+| `@*` <br /> `@triggerName` | For elements with any—or a specific—trigger. |
 | `:self`                    | The animating element itself.                |
 
-**Entering and Leaving Elements**
+<docs-callout title="Entering and Leaving Elements">
 
-Not all child elements are actually considered as entering/leaving; this can, at times, be counterintuitive and confusing. Please see the query api docs for more information.
+Not all child elements are actually considered as entering/leaving; this can, at times, be counterintuitive and confusing. Please see the [query api docs](api/animations/query#entering-and-leaving-elements) for more information.
 
-You can also see an illustration of this in the animations example \(introduced in the animations introduction section\) under the Querying tab.
+You can also see an illustration of this in the animations example \(introduced in the animations [introduction section](guide/legacy-animations#about-this-guide)\) under the Querying tab.
+
+</docs-callout>
 
 ## Animate multiple elements using query() and stagger() functions
 
@@ -61,89 +54,25 @@ The following example demonstrates how to use the `query()` and `stagger()` func
 - Use `stagger()` to delay each animation by 30 milliseconds
 - Animate each element on screen for 0.5 seconds using a custom-defined easing curve, simultaneously fading it in and un-transforming it
 
-File: `hero-list-page.ts`
-
-```ts
-animations: [
-  trigger('pageAnimations', [
-    transition(':enter', [
-      query('.hero', [
-        style({opacity: 0, transform: 'translateY(-100px)'}),
-        stagger(30, [
-          animate('500ms cubic-bezier(0.35, 0, 0.25, 1)', style({opacity: 1, transform: 'none'})),
-        ]),
-      ]),
-    ]),
-  ]),
-```
+<docs-code header="hero-list-page.ts" path="adev/src/content/examples/animations/src/app/hero-list-page.ts" region="page-animations"/>
 
 ## Parallel animation using group() function
 
 You've seen how to add a delay between each successive animation.
 But you might also want to configure animations that happen in parallel.
 For example, you might want to animate two CSS properties of the same element but use a different `easing` function for each one.
-For this, you can use the animation `group()` function.
+For this, you can use the animation [`group()`](api/animations/group) function.
 
-HELPFUL: The `group()` function is used to group animation _steps_, rather than animated elements.
+HELPFUL: The [`group()`](api/animations/group) function is used to group animation _steps_, rather than animated elements.
 
-The following example uses `group()`s on both `:enter` and `:leave` for two different timing configurations, thus applying two independent animations to the same element in parallel.
+The following example uses [`group()`](api/animations/group)s on both `:enter` and `:leave` for two different timing configurations, thus applying two independent animations to the same element in parallel.
 
-File: `hero-list-groups.ts (excerpt)`
-
-```ts
-animations: [
-  trigger('flyInOut', [
-    state(
-      'in',
-      style({
-        width: '*',
-        transform: 'translateX(0)',
-        opacity: 1,
-      }),
-    ),
-    transition(':enter', [
-      style({width: 10, transform: 'translateX(50px)', opacity: 0}),
-      group([
-        animate(
-          '0.3s 0.1s ease',
-          style({
-            transform: 'translateX(0)',
-            width: '*',
-          }),
-        ),
-        animate(
-          '0.3s ease',
-          style({
-            opacity: 1,
-          }),
-        ),
-      ]),
-    ]),
-    transition(':leave', [
-      group([
-        animate(
-          '0.3s ease',
-          style({
-            transform: 'translateX(50px)',
-            width: 10,
-          }),
-        ),
-        animate(
-          '0.3s 0.2s ease',
-          style({
-            opacity: 0,
-          }),
-        ),
-      ]),
-    ]),
-  ]),
-],
-```
+<docs-code header="hero-list-groups.ts (excerpt)" path="adev/src/content/examples/animations/src/app/hero-list-groups.ts" region="animationdef"/>
 
 ## Sequential vs. parallel animations
 
 Complex animations can have many things happening at once.
-But what if you want to create an animation involving several animations happening one after the other? Earlier you used `group()` to run multiple animations all at the same time, in parallel.
+But what if you want to create an animation involving several animations happening one after the other? Earlier you used [`group()`](api/animations/group) to run multiple animations all at the same time, in parallel.
 
 A second function called `sequence()` lets you run those same animations one after the other.
 Within `sequence()`, the animation steps consist of either `style()` or `animate()` function calls.
@@ -162,37 +91,11 @@ The heroes list gradually re-enters the page as you delete each letter in the fi
 
 The HTML template contains a trigger called `filterAnimation`.
 
-File: `hero-list-page.html`
-
-```angular-html
-<label for="search">Search heroes: </label>
-<input
-  type="text"
-  id="search"
-  #criteria
-  (input)="updateCriteria(criteria.value)"
-  placeholder="Search heroes"
-/>
-
-<ul class="heroes" [@filterAnimation]="heroesTotal">
-  @for (hero of heroes; track hero) {
-    <li class="hero">
-      <div class="inner">
-        <span class="badge">{{ hero.id }}</span>
-        <span class="name">{{ hero.name }}</span>
-      </div>
-    </li>
-  }
-</ul>
-```
+<docs-code header="hero-list-page.html" path="adev/src/content/examples/animations/src/app/hero-list-page.html" region="filter-animations" language="angular-html"/>
 
 The `filterAnimation` in the component's decorator contains three transitions.
 
-File: `hero-list-page.ts`
-
-```ts
-@Component({
-```
+<docs-code header="hero-list-page.ts" path="adev/src/content/examples/animations/src/app/hero-list-page.ts" region="filter-animations"/>
 
 The code in this example performs the following tasks:
 
@@ -218,23 +121,25 @@ IMPORTANT: If you need to animate the items of an `*ngFor` list and there is a p
 
 ## Animations and Component View Encapsulation
 
-Angular animations are based on the components DOM structure and do not directly take View Encapsulation into account, this means that components using `ViewEncapsulation.Emulated` behave exactly as if they were using `ViewEncapsulation.None` (`ViewEncapsulation.ShadowDom` and `ViewEncapsulation.ExperimentalIsolatedShadowDom` behave differently as we'll discuss shortly).
+Angular animations are based on the components DOM structure and do not directly take [View Encapsulation](guide/components/styling#style-scoping) into account, this means that components using `ViewEncapsulation.Emulated` behave exactly as if they were using `ViewEncapsulation.None` (`ViewEncapsulation.ShadowDom` and `ViewEncapsulation.ExperimentalIsolatedShadowDom` behave differently as we'll discuss shortly).
 
 For example if the `query()` function (which you'll see more of in the rest of the Animations guide) were to be applied at the top of a tree of components using the emulated view encapsulation, such query would be able to identify (and thus animate) DOM elements on any depth of the tree.
 
-On the other hand the `ViewEncapsulation.ShadowDom` and `ViewEncapsulation.ExperimentalIsolatedShadowDom` changes the component's DOM structure by "hiding" DOM elements inside `ShadowRoot` elements. Such DOM manipulations do prevent some of the animations implementation to work properly since it relies on simple DOM structures and doesn't take `ShadowRoot` elements into account. Therefore it is advised to avoid applying animations to views incorporating components using the ShadowDom view encapsulation.
+On the other hand the `ViewEncapsulation.ShadowDom` and `ViewEncapsulation.ExperimentalIsolatedShadowDom` changes the component's DOM structure by "hiding" DOM elements inside [`ShadowRoot`](https://developer.mozilla.org/docs/Web/API/ShadowRoot) elements. Such DOM manipulations do prevent some of the animations implementation to work properly since it relies on simple DOM structures and doesn't take `ShadowRoot` elements into account. Therefore it is advised to avoid applying animations to views incorporating components using the ShadowDom view encapsulation.
 
 ## Animation sequence summary
 
-Angular functions for animating multiple elements start with `query()` to find inner elements; for example, gathering all images within a ``.
-The remaining functions, `stagger()`, `group()`, and `sequence()`, apply cascades or let you control how multiple animation steps are applied.
+Angular functions for animating multiple elements start with `query()` to find inner elements; for example, gathering all images within a `<div>`.
+The remaining functions, `stagger()`, [`group()`](api/animations/group), and `sequence()`, apply cascades or let you control how multiple animation steps are applied.
 
 ## More on Angular animations
 
 You might also be interested in the following:
 
-  - Introduction to Angular animations
-  - Transition and triggers
-  - Reusable animations
-  - Route transition animations
-  - Migrating to Native CSS Animations
+<docs-pill-row>
+  <docs-pill href="guide/legacy-animations" title="Introduction to Angular animations"/>
+  <docs-pill href="guide/legacy-animations/transition-and-triggers" title="Transition and triggers"/>
+  <docs-pill href="guide/legacy-animations/reusable-animations" title="Reusable animations"/>
+  <docs-pill href="guide/routing/route-transition-animations" title="Route transition animations"/>
+  <docs-pill href="guide/animations/migration" title="Migrating to Native CSS Animations"/>
+</docs-pill-row>

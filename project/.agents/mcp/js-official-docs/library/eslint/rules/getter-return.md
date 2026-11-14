@@ -1,13 +1,13 @@
 ---
-title: "getter-return"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/getter-return.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: getter-return
+rule_type: problem
+handled_by_typescript: true
+further_reading:
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get
+- https://leanpub.com/understandinges6/read/#leanpub-auto-accessor-properties
 ---
 
-# getter-return
+
 
 The get syntax binds an object property to a function that will be called when that property is looked up. It was first introduced in ECMAScript 5:
 
@@ -33,7 +33,7 @@ This rule enforces that a return statement is present in property getters.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint getter-return: "error"*/
@@ -57,9 +57,11 @@ class P{
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint getter-return: "error"*/
@@ -83,6 +85,8 @@ class P{
 }
 ```
 
+:::
+
 ## Options
 
 This rule has an object option:
@@ -91,7 +95,7 @@ This rule has an object option:
 
 Examples of **correct** code for the `{ "allowImplicit": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint getter-return: ["error", { allowImplicit: true }]*/
@@ -101,6 +105,8 @@ const p = {
     }
 };
 ```
+
+:::
 
 ## When Not To Use It
 

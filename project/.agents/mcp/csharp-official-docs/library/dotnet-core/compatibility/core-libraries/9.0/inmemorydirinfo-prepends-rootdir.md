@@ -1,21 +1,17 @@
 ---
 title: "Breaking change: InMemoryDirectoryInfo prepends rootDir to files"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/9.0/inmemorydirinfo-prepends-rootdir.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 9 breaking change in core .NET libraries where InMemoryDirectoryInfo prepends the root directory to its file paths.
+ms.date: 02/12/2024
 ---
-
 # InMemoryDirectoryInfo prepends rootDir to files
 
-`Microsoft.Extensions.FileSystemGlobbing.InMemoryDirectoryInfo` now prepends the specified root directory to its collection of files.
+<xref:Microsoft.Extensions.FileSystemGlobbing.InMemoryDirectoryInfo> now prepends the specified root directory to its collection of files.
 
-`InMemoryDirectoryInfo` is used by `Microsoft.Extensions.FileSystemGlobbing.MatcherExtensions.Match*`, which enables the `Microsoft.Extensions.FileSystemGlobbing.Matcher` to execute glob-matching patterns without accessing the disk.
+`InMemoryDirectoryInfo` is used by <xref:Microsoft.Extensions.FileSystemGlobbing.MatcherExtensions.Match*?displayProperty=nameWithType>, which enables the <xref:Microsoft.Extensions.FileSystemGlobbing.Matcher> to execute glob-matching patterns without accessing the disk.
 
 ## Previous behavior
 
-Previously, relative paths in the `files` argument of the constructor) were prepended with the current working directory (CWD). This caused an unnecessary dependency on the CWD for a type that's supposed to work in-memory.
+Previously, relative paths in the `files` argument of the [constructor](xref:Microsoft.Extensions.FileSystemGlobbing.InMemoryDirectoryInfo.%23ctor(System.String,System.Collections.Generic.IEnumerable{System.String})) were prepended with the current working directory (CWD). This caused an unnecessary dependency on the CWD for a type that's supposed to work in-memory.
 
 ## New behavior
 
@@ -27,11 +23,11 @@ Starting in .NET 9, relative paths in the `files` argument of the constructor ar
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-There were blocked scenarios with in-memory paths using a drive letter other than the one used by the current working directory. For example, see dotnet/runtime issue 93107.
+There were blocked scenarios with in-memory paths using a drive letter other than the one used by the current working directory. For example, see [dotnet/runtime issue 93107](https://github.com/dotnet/runtime/issues/93107).
 
 ## Recommended action
 
@@ -56,6 +52,6 @@ Console.WriteLine(string.Join(", ", result.Files.Select(x => x.Path)));
 
 ## Affected APIs
 
-- `Microsoft.Extensions.FileSystemGlobbing.InMemoryDirectoryInfo`
-- `Microsoft.Extensions.FileSystemGlobbing.MatcherExtensions.Match(Microsoft.Extensions.FileSystemGlobbing.Matcher,System.String,System.String)`
-- `Microsoft.Extensions.FileSystemGlobbing.MatcherExtensions.Match(Microsoft.Extensions.FileSystemGlobbing.Matcher,System.String,System.Collections.Generic.IEnumerable{System.String})`
+- <xref:Microsoft.Extensions.FileSystemGlobbing.InMemoryDirectoryInfo?displayProperty=fullName>
+- <xref:Microsoft.Extensions.FileSystemGlobbing.MatcherExtensions.Match(Microsoft.Extensions.FileSystemGlobbing.Matcher,System.String,System.String)?displayProperty=fullName>
+- <xref:Microsoft.Extensions.FileSystemGlobbing.MatcherExtensions.Match(Microsoft.Extensions.FileSystemGlobbing.Matcher,System.String,System.Collections.Generic.IEnumerable{System.String})?displayProperty=fullName>

@@ -1,18 +1,18 @@
 ---
-title: "Microsoft.Testing.Platform (MTP) retry"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/microsoft-testing-platform-retry.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Microsoft.Testing.Platform (MTP) retry
+description: Learn about retrying failed tests with MTP.
+author: evangelink
+ms.author: amauryleve
+ms.date: 08/06/2026
+ai-usage: ai-assisted
 ---
 
 # Retry
 
-This feature requires the Microsoft.Testing.Extensions.Retry NuGet package.
+This feature requires the [Microsoft.Testing.Extensions.Retry](https://nuget.org/packages/Microsoft.Testing.Extensions.Retry) NuGet package.
 
-> **Tip:**
-> When using Microsoft.Testing.Platform.MSBuild (included transitively by MSTest, NUnit, and xUnit runners), this extension is auto-registered when you install its NuGet package — no code changes needed. The manual registration in the following section is only required if you disabled the auto-generated entry point by setting `<GenerateTestingPlatformEntryPoint>false</GenerateTestingPlatformEntryPoint>`.
+> [!TIP]
+> When using [Microsoft.Testing.Platform.MSBuild](https://www.nuget.org/packages/Microsoft.Testing.Platform.MSBuild) (included transitively by MSTest, NUnit, and xUnit runners), this extension is auto-registered when you install its NuGet package — no code changes needed. The manual registration in the following section is only required if you disabled the auto-generated entry point by setting `<GenerateTestingPlatformEntryPoint>false</GenerateTestingPlatformEntryPoint>`.
 
 ### Manual registration
 
@@ -27,7 +27,7 @@ A .NET test resilience and transient-fault-handling extension.
 
 This extension is intended for integration tests where the test depends heavily on the state of the environment and could experience transient faults.
 
-> **Note:**
+> [!NOTE]
 > The package is shipped with the restrictive Microsoft.Testing.Platform Tools license.
 > The full license is available at <https://www.nuget.org/packages/Microsoft.Testing.Extensions.Retry/1.0.0/License>.
 
@@ -42,9 +42,9 @@ This extension is intended for integration tests where the test depends heavily 
 
 Both threshold options (`--retry-failed-tests-max-percentage` and `--retry-failed-tests-max-tests`) require `--retry-failed-tests` to also be set.
 
-For framework authors, this extension requires stable test node UIDs and correct request-filter handling. A retry launches a new test process and selects the failed tests through `--filter-uid`. If your framework ignores `TestNodeUidListFilter`, it can rerun unselected tests instead of only the failures.
+For framework authors, this extension requires stable test node UIDs and correct [request-filter handling](./microsoft-testing-platform-architecture-test-framework.md#honor-request-filters). A retry launches a new test process and selects the failed tests through `--filter-uid`. If your framework ignores `TestNodeUidListFilter`, it can rerun unselected tests instead of only the failures.
 
-Starting with MTP 2.4.0, the retry summary reports separate `flaky` and `retried` counts and lists recovered test names under **Flaky tests**. To avoid misleading totals, MTP doesn't print a full-suite summary for filtered retry attempts after the first attempt. Use the terminal reporter's `--show-flaky-tests` option to show or hide flaky details.
+Starting with MTP 2.4.0, the retry summary reports separate `flaky` and `retried` counts and lists recovered test names under **Flaky tests**. To avoid misleading totals, MTP doesn't print a full-suite summary for filtered retry attempts after the first attempt. Use the terminal reporter's [`--show-flaky-tests`](microsoft-testing-platform-terminal-output.md#options) option to show or hide flaky details.
 
 Each retry attempt writes its report artifacts under the `Retries` directory. For JUnit, the top-level report represents only the final filtered retry attempt, not the original full suite; collect the earlier attempt reports from `Retries` when your CI requires complete coverage. This layout applies to `--retry-failed-tests`. MSTest's in-process `[Retry]` instead collapses superseded attempts into one final JUnit or TRX result per test.
 

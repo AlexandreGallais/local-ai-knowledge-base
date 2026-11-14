@@ -1,15 +1,6 @@
----
-title: "Advanced component configuration"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/components/advanced-configuration.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Advanced component configuration
 
-TIP: This guide assumes you've already read the Essentials Guide. Read that first if you're new to Angular.
+TIP: This guide assumes you've already read the [Essentials Guide](essentials). Read that first if you're new to Angular.
 
 ## ChangeDetectionStrategy
 

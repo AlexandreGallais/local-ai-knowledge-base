@@ -1,10 +1,11 @@
 ---
-title: "How to find an element with a specific child element - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/find-element-specific-child-element.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to find an element with a specific child element - LINQ to XML
+description: Find an element whose child element has a specific value
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to find an element with a specific child element (LINQ to XML)
@@ -13,7 +14,7 @@ This article shows how to find an element whose child element has a specific val
 
 ## Example: Find an element whose child element has a specific value
 
-The example finds the `Test` element whose `CommandLine` child element has a value of "Examp2.EXE". The example uses XML document Sample XML file: Test configuration.
+The example finds the `Test` element whose `CommandLine` child element has a value of "Examp2.EXE". The example uses XML document [Sample XML file: Test configuration](sample-xml-file-test-configuration.md).
 
 ```csharp
 XElement root = XElement.Load("TestConfig.xml");
@@ -43,13 +44,13 @@ This example produces the following output:
 0006
 ```
 
-Note that the Visual Basic <example-value> of the code uses the XML Child axis property, the XML Attribute axis property, and the XML Value property.
+Note that the Visual Basic version of the code uses the [XML Child axis property](../../visual-basic/language-reference/xml-axis/xml-child-axis-property.md), the [XML Attribute axis property](../../visual-basic/language-reference/xml-axis/xml-attribute-axis-property.md), and the [XML Value property](../../visual-basic/language-reference/xml-axis/xml-value-property.md).
 
 ## Example: Find when the XML is in a namespace
 
-The following example does the same as the previous one, but for XML that's in a namespace. The example uses XML document Sample XML file: Test configuration in a namespace.
+The following example does the same as the previous one, but for XML that's in a namespace. The example uses XML document [Sample XML file: Test configuration in a namespace](sample-xml-file-test-configuration-namespace.md).
 
-For more information, see Namespaces overview.
+For more information, see [Namespaces overview](namespaces-overview.md).
 
 ```csharp
 XElement root = XElement.Load("TestConfigInNamespace.xml");
@@ -88,7 +89,7 @@ This example produces the following output:
 
 ## See also
 
-- `System.Xml.Linq.XElement.Attribute*`
-- `System.Xml.Linq.XContainer.Elements*`
-- Standard Query Operators Overview
-- Projection Operations
+- <xref:System.Xml.Linq.XElement.Attribute*>
+- <xref:System.Xml.Linq.XContainer.Elements*>
+- [Standard Query Operators Overview](../../csharp/linq/standard-query-operators/index.md)
+- [Projection Operations](../../csharp/linq/standard-query-operators/projection-operations.md)

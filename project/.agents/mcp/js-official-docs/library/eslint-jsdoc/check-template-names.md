@@ -1,13 +1,6 @@
----
-title: "check-template-names"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/check-template-names.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
-
-# `check-template-names`
+<a name="user-content-check-template-names"></a>
+<a name="check-template-names"></a>
+# <code>check-template-names</code>
 
 Checks that any `@template` names are actually used in the connected
 `@typedef`, `@callback`, `@function` or type structure.
@@ -41,6 +34,8 @@ or
 |Settings||
 |Options||
 
+<a name="user-content-check-template-names-failing-examples"></a>
+<a name="check-template-names-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -250,6 +245,10 @@ export default class <NumType> {
 // Message: @template U not in use
 ````
 
+
+
+<a name="user-content-check-template-names-passing-examples"></a>
+<a name="check-template-names-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -500,3 +499,4 @@ function quux (x) {}
  */
 function quux () {}
 ````
+

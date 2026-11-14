@@ -1,35 +1,34 @@
 ---
-title: "EventPipe Overview"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/eventpipe.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: EventPipe Overview
+description: Learn about EventPipe and how to use it for tracing your .NET applications to diagnose performance issues.
+ms.date: 10/12/2026
+ms.topic: overview
+ai-usage: ai-assisted
 ---
 
 # EventPipe
 
-EventPipe is a runtime component that can be used to collect tracing data, similar to ETW or perf_events. The goal of EventPipe is to allow .NET developers to easily trace their .NET applications without having to rely on platform-specific high-privilege components such as ETW or perf_events.
+EventPipe is a runtime component that can be used to collect tracing data, similar to [ETW](/windows/win32/etw/event-tracing-portal) or [perf_events](https://wikipedia.org/wiki/Perf_%28Linux%29). The goal of EventPipe is to allow .NET developers to easily trace their .NET applications without having to rely on platform-specific high-privilege components such as ETW or perf_events.
 
-EventPipe is the mechanism behind many of the diagnostic tools and can be used for consuming events emitted by the runtime as well as custom events written with EventSource.
+EventPipe is the mechanism behind many of the diagnostic tools and can be used for consuming events emitted by the runtime as well as custom events written with [EventSource](xref:System.Diagnostics.Tracing.EventSource).
 
 This article is a high-level overview of EventPipe. It describes when and how to use EventPipe, and how to configure it to best suit your needs.
 
 ## EventPipe basics
 
-EventPipe aggregates events emitted by runtime components - for example, the Just-In-Time compiler or the garbage collector - and events written from EventSource instances in the libraries and user code.
+EventPipe aggregates events emitted by runtime components - for example, the Just-In-Time compiler or the garbage collector - and events written from [EventSource](xref:System.Diagnostics.Tracing.EventSource) instances in the libraries and user code.
 
-The events are then serialized in the `.nettrace` file format and can be written directly to a file or streamed through a diagnostic port for out-of-process consumption.
+The events are then serialized in the `.nettrace` file format and can be written directly to a file or streamed through a [diagnostic port](./diagnostic-port.md) for out-of-process consumption.
 
-To learn more about the NetTrace format, see the NetTrace format documentation.
+To learn more about the NetTrace format, see the [NetTrace format documentation](https://github.com/microsoft/perfview/blob/main/src/TraceEvent/EventPipe/NetTraceFormat.md).
 
 ## EventPipe vs. ETW/perf_events
 
 EventPipe is part of the .NET runtime and is designed to work the same way across all the platforms .NET Core supports. This allows tracing tools based on EventPipe, such as `dotnet-counters`, `dotnet-gcdump`, and `dotnet-trace`, to work seamlessly across platforms.
 
-However, because EventPipe is a runtime built-in component, its scope is limited to managed code and the runtime itself. Without other tracing tools, EventPipe events include stack traces with managed code frame information only. To get events from other unmanaged user-mode libraries, CPU sampling for native code, or kernel events, use OS-specific tracing tools such as ETW or perf_events. On Linux, the perfcollect tool helps automate using perf_events and LTTng.
+However, because EventPipe is a runtime built-in component, its scope is limited to managed code and the runtime itself. Without other tracing tools, EventPipe events include stack traces with managed code frame information only. To get events from other unmanaged user-mode libraries, CPU sampling for native code, or kernel events, use OS-specific tracing tools such as ETW or perf_events. On Linux, the [perfcollect tool](./trace-perfcollect-lttng.md) helps automate using perf_events and [LTTng](https://en.wikipedia.org/wiki/LTTng).
 
-Starting in .NET 10, EventPipe on Linux can emit events as user_events, enabling collection of managed events, OS/kernel events, and native callstacks in a single unified trace. This mode requires admin/root privileges and Linux kernel 6.4+. For more information, see `dotnet-trace collect-linux`.
+Starting in .NET 10, EventPipe on Linux can emit events as [user_events](https://docs.kernel.org/trace/user_events.html), enabling collection of managed events, OS/kernel events, and native callstacks in a single unified trace. This mode requires admin/root privileges and Linux kernel 6.4+. For more information, see [`dotnet-trace collect-linux`](./dotnet-trace.md#dotnet-trace-collect-linux).
 
 Another major difference between EventPipe and ETW/perf_events is admin/root privilege requirement. To trace an application using ETW or perf_events you need to be an admin/root. Using standard EventPipe, you can trace applications as long as the tracer (for example, `dotnet-trace`) is run as the same user as the user that launched the application. The EventPipe (user_events) mode described earlier requires admin/root privileges because it interacts with OS-level tracing infrastructure.
 
@@ -46,29 +45,29 @@ The following table is a summary of the differences between EventPipe and ETW/pe
 
 You can use EventPipe to trace your .NET application in many ways:
 
-* Use one of the diagnostics tools that are built on top of EventPipe.
+* Use one of the [diagnostics tools](#tools-that-use-eventpipe) that are built on top of EventPipe.
 
-* Use Microsoft.Diagnostics.NETCore.Client library to write your own tool to configure and start EventPipe sessions.
+* Use [Microsoft.Diagnostics.NETCore.Client](diagnostics-client-library.md) library to write your own tool to configure and start EventPipe sessions.
 
-* Use environment variables to start EventPipe.
+* Use [environment variables](#trace-using-environment-variables) to start EventPipe.
 
-After you've produced a `nettrace` file that contains your EventPipe events, you can view the file in PerfView or Visual Studio. On non-Windows platforms, you can convert the `nettrace` file to a `speedscope` or `Chromium` trace format by using dotnet-trace convert command and view it with speedscope or Chrome DevTools.
+After you've produced a `nettrace` file that contains your EventPipe events, you can view the file in [PerfView](https://github.com/Microsoft/perfview#perfview-overview) or Visual Studio. On non-Windows platforms, you can convert the `nettrace` file to a `speedscope` or `Chromium` trace format by using [dotnet-trace convert](./dotnet-trace.md#dotnet-trace-convert) command and view it with [speedscope](https://www.speedscope.app/) or Chrome DevTools.
 
-You can also analyze EventPipe traces programmatically with TraceEvent.
+You can also analyze EventPipe traces programmatically with [TraceEvent](https://github.com/Microsoft/perfview/blob/main/documentation/TraceEvent/TraceEventLibrary.md).
 
 ### Tools that use EventPipe
 
 This is the easiest way to use EventPipe to trace your application. To learn more about how to use each of these tools, refer to each tool's documentation.
 
-* dotnet-counters lets you monitor and collect various metrics emitted by the .NET runtime and core libraries, as well as custom metrics you can write.
+* [dotnet-counters](./dotnet-counters.md) lets you monitor and collect various metrics emitted by the .NET runtime and core libraries, as well as custom metrics you can write.
 
-* dotnet-gcdump lets you collect GC heap dumps of live processes for analyzing an application's managed heap.
+* [dotnet-gcdump](./dotnet-gcdump.md) lets you collect GC heap dumps of live processes for analyzing an application's managed heap.
 
-* dotnet-trace lets you collect traces of applications to analyze for performance.
+* [dotnet-trace](./dotnet-trace.md) lets you collect traces of applications to analyze for performance.
 
 ## Trace using environment variables
 
-The preferred mechanism for using EventPipe is to use dotnet-trace or the Microsoft.Diagnostics.NETCore.Client library.
+The preferred mechanism for using EventPipe is to use [dotnet-trace](dotnet-trace.md) or the [Microsoft.Diagnostics.NETCore.Client](diagnostics-client-library.md) library.
 
 However, you can use the following environment variables to set up an EventPipe session on an app and have it write the trace directly to a file. To stop tracing, exit the application.
 
@@ -76,12 +75,12 @@ However, you can use the following environment variables to set up an EventPipe 
 
 * `DOTNET_EventPipeOutputPath`: The path to the output EventPipe trace file when it's configured to run via `DOTNET_EnableEventPipe`. The default value is `trace.nettrace`, which will be created in the same directory that the app is running from.
 
-  > **Note:**
+  > [!NOTE]
   > Since .NET 6, instances of the string `{pid}` in `DOTNET_EventPipeOutputPath` are replaced with the process id of the process being traced.
 
 * `DOTNET_EventPipeCircularMB`: A hexadecimal value that represents the size of EventPipe's internal buffer in megabytes. This configuration value is only used when EventPipe is configured to run via `DOTNET_EnableEventPipe`. The default buffer size is 1024MB which translates to this environment variable being set to `400`, since `0x400` == `1024`.
 
-  > **Note:**
+  > [!NOTE]
   > If the target process writes events too frequently, it can overflow this buffer, and some events might be dropped. If the runtime drops too many events, set `DOTNET_EventPipeBufferingMode=1` with `DOTNET_EventPipeOutputStreaming=1` or increase the buffer size to see if the number of dropped events decreases. If the number of dropped events does not decrease with a larger buffer size, a slow reader might prevent the target process's buffers from being flushed.
 
 * `DOTNET_EventPipeBufferingMode`: Available in .NET 11 and later. This setting controls how the startup EventPipe session handles recording an event when the in-memory buffer is full. Set it to `0` (default) to drop events that would overflow the buffer, or `1` to pause event-writing threads until buffer space becomes available. `1` requires a streaming session (see `DOTNET_EventPipeOutputStreaming`).
@@ -90,7 +89,7 @@ However, you can use the following environment variables to set up an EventPipe 
 
 * `DOTNET_EventPipeProcNumbers`: Set this to `1` to enable capturing processor numbers in EventPipe event headers. The default value is `0`.
 
-* `DOTNET_EventPipeThreadSamplingRate`: Available in .NET 10.0.10 and later. Sets the interval, in milliseconds, for the EventPipe thread time sampling profiler. When set to `0` or omitted, the runtime uses its built-in default of 1 ms (~1,000 Hz). Builds without threading support, such as single-threaded WebAssembly, use a default of 5 ms (~200 Hz). This setting is process-global and affects all EventPipe sessions, including on-demand traces started by tools such as dotnet-trace. Setting a large value reduces sampling overhead but also reduces the resolution of any trace collected during the process lifetime.
+* `DOTNET_EventPipeThreadSamplingRate`: Available in .NET 10.0.10 and later. Sets the interval, in milliseconds, for the EventPipe thread time sampling profiler. When set to `0` or omitted, the runtime uses its built-in default of 1 ms (~1,000 Hz). Builds without threading support, such as single-threaded WebAssembly, use a default of 5 ms (~200 Hz). This setting is process-global and affects all EventPipe sessions, including on-demand traces started by tools such as [dotnet-trace](./dotnet-trace.md). Setting a large value reduces sampling overhead but also reduces the resolution of any trace collected during the process lifetime.
 
 * `DOTNET_EventPipeConfig`: Sets up the EventPipe session configuration when starting an EventPipe session with `DOTNET_EnableEventPipe`.
   The syntax is as follows:
@@ -107,4 +106,4 @@ However, you can use the following environment variables to set up an EventPipe 
   * `Microsoft-Windows-DotNETRuntimePrivate:4002000b:5`
   * `Microsoft-DotNETCore-SampleProfiler:0:5`
 
-  To learn more about some of the well-known providers in .NET, refer to Well-known Event Providers.
+  To learn more about some of the well-known providers in .NET, refer to [Well-known Event Providers](./well-known-event-providers.md).

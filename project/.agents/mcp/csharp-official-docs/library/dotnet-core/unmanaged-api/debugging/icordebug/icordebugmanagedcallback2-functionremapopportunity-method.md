@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugManagedCallback2::FunctionRemapOpportunity Method"
 title: "ICorDebugManagedCallback2::FunctionRemapOpportunity Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmanagedcallback2-functionremapopportunity-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugManagedCallback2.FunctionRemapOpportunity"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugManagedCallback2::FunctionRemapOpportunity"
+helpviewer_keywords:
+  - "FunctionRemapOpportunity method [.NET debugging]"
+  - "ICorDebugManagedCallback2::FunctionRemapOpportunity method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugManagedCallback2::FunctionRemapOpportunity Method
 
 Notifies the debugger that code execution has reached a sequence point in an older version of an edited function.
@@ -42,13 +51,13 @@ HRESULT FunctionRemapOpportunity (
 
 ## Remarks
 
-This callback gives the debugger an opportunity to remap the instruction pointer to its proper place in the new version of the specified function by calling the ICorDebugILFrame2::RemapFunction method. If the debugger does not call `RemapFunction` before calling the ICorDebugController::Continue method, the runtime will continue to execute the old code and will fire another `FunctionRemapOpportunity` callback at the next sequence point.
+This callback gives the debugger an opportunity to remap the instruction pointer to its proper place in the new version of the specified function by calling the [ICorDebugILFrame2::RemapFunction](icordebugilframe2-remapfunction-method.md) method. If the debugger does not call `RemapFunction` before calling the [ICorDebugController::Continue](icordebugcontroller-continue-method.md) method, the runtime will continue to execute the old code and will fire another `FunctionRemapOpportunity` callback at the next sequence point.
 
 This callback will be invoked for every frame that is executing an older version of the given function until the debugger returns S_OK.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -58,5 +67,5 @@ This callback will be invoked for every frame that is executing an older version
 
 ## See also
 
-- ICorDebugManagedCallback2 Interface
-- ICorDebugManagedCallback Interface
+- [ICorDebugManagedCallback2 Interface](icordebugmanagedcallback2-interface.md)
+- [ICorDebugManagedCallback Interface](icordebugmanagedcallback-interface.md)

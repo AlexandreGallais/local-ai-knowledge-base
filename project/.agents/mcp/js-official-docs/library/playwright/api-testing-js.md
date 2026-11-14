@@ -1,17 +1,11 @@
 ---
+id: api-testing
 title: "API testing"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api-testing-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# API testing
 
 ## Introduction
 
-Playwright can be used to get access to the REST API of
+Playwright can be used to get access to the [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) API of
 your application.
 
 Sometimes you may want to send requests to the server directly from Node.js without loading a page and running js code in it.
@@ -26,16 +20,16 @@ All of that could be achieved via [APIRequestContext] methods.
 
 [APIRequestContext] can send all kinds of HTTP(S) requests over network.
 
-The following example demonstrates how to use Playwright to test issues creation via GitHub API. The test suite will do the following:
+The following example demonstrates how to use Playwright to test issues creation via [GitHub API](https://docs.github.com/en/rest). The test suite will do the following:
 - Create a new repository before running tests.
 - Create a few issues and validate server state.
 - Delete the repository after running tests.
 
 ### Configuration
 
-GitHub API requires authorization, so we'<example-value>'ll also set the `baseURL` to simplify the tests. You can either put them in the configuration file, or in the test file with `test.use()`.
+GitHub API requires authorization, so we'll configure the token once for all tests. While at it, we'll also set the `baseURL` to simplify the tests. You can either put them in the configuration file, or in the test file with `test.use()`.
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 export default defineConfig({
   use: {
@@ -45,7 +39,7 @@ export default defineConfig({
       // We set this header per GitHub guidelines.
       'Accept': 'application/vnd.github.v3+json',
       // Add authorization token to all requests.
-      // Assuming personal access token <example-value> in the environment.
+      // Assuming personal access token available in the environment.
       'Authorization': `token ${process.env.API_TOKEN}`,
     },
   }
@@ -57,14 +51,14 @@ export default defineConfig({
 If your tests need to run behind a proxy, you can specify this in the config and the `request` fixture
 will pick it up automatically:
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 export default defineConfig({
   use: {
     proxy: {
       server: 'http://my-proxy:8080',
       username: 'user',
-      password: '<example-value>'
+      password: 'secret'
     },
   }
 });
@@ -138,7 +132,7 @@ test.afterAll(async ({ request }) => {
 
 ## Using request context
 
-Behind the scenes, `request` fixture will actually call [`method: APIRequest.newContext`]. You can always do that manually if you'd like more control. Below is a standalone script that does the same as `beforeAll` and `afterAll` from above.
+Behind the scenes, [`request` fixture](./api/class-fixtures#fixtures-request) will actually call [`method: APIRequest.newContext`]. You can always do that manually if you'd like more control. Below is a standalone script that does the same as `beforeAll` and `afterAll` from above.
 
 ```js
 import { request } from '@playwright/test';
@@ -200,7 +194,7 @@ test.beforeAll(async ({ playwright }) => {
       // We set this header per GitHub guidelines.
       'Accept': 'application/vnd.github.v3+json',
       // Add authorization token to all requests.
-      // Assuming personal access token <example-value> in the environment.
+      // Assuming personal access token available in the environment.
       'Authorization': `token ${process.env.API_TOKEN}`,
     },
   });
@@ -247,7 +241,7 @@ test.beforeAll(async ({ playwright }) => {
       // We set this header per GitHub guidelines.
       'Accept': 'application/vnd.github.v3+json',
       // Add authorization token to all requests.
-      // Assuming personal access token <example-value> in the environment.
+      // Assuming personal access token available in the environment.
       'Authorization': `token ${process.env.API_TOKEN}`,
     },
   });
@@ -279,7 +273,7 @@ test('last created issue should be on the server', async ({ page }) => {
 ## Reusing authentication state
 
 Web apps use cookie-based or token-based authentication, where authenticated
-state is stored as cookies.
+state is stored as [cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies).
 Playwright provides [`method: APIRequestContext.storageState`] method that can be used to
 retrieve storage state from an authenticated context and then create new contexts with that state.
 
@@ -292,7 +286,7 @@ creates a new [BrowserContext] with that state.
 const requestContext = await request.newContext({
   httpCredentials: {
     username: 'user',
-    password: '<example-value>'
+    password: 'passwd'
   }
 });
 await requestContext.get(`https://api.example.com/login`);

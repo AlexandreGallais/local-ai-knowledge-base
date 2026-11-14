@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: CorDebugJITCompilerFlags Enumeration"
 title: "CorDebugJITCompilerFlags Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cordebugjitcompilerflags-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "CorDebugJITCompilerFlags"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "CorDebugJITCompilerFlags"
+helpviewer_keywords:
+  - "CorDebugJITCompilerFlags enumeration [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # CorDebugJITCompilerFlags Enumeration
 
 Contains values that influence the behavior of the managed just-in-time (JIT) compiler.
@@ -33,7 +41,7 @@ typedef enum CorDebugJITCompilerFlags {
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

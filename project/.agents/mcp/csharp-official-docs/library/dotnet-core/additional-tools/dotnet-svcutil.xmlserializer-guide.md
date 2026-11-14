@@ -1,19 +1,16 @@
 ---
-title: "Using dotnet-svcutil.xmlserializer"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/additional-tools/dotnet-svcutil.xmlserializer-guide.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Using dotnet-svcutil.xmlserializer
+description: Learn how you can use the `dotnet-svcutil.xmlserializer` NuGet package to pre-generate a serialization assembly for .NET Core projects.
+author: huanwu
+ms.date: 11/27/2018
 ---
-
 # Using dotnet-svcutil.xmlserializer on .NET Core
 
 The `dotnet-svcutil.xmlserializer` NuGet package can pre-generate a serialization assembly for .NET Core projects. It pre-generates C# serialization code for the types in the client application that are used by the WCF Service Contract and that can be serialized by the XmlSerializer. This improves the startup performance of XML serialization when serializing or deserializing objects of those types.
 
 ## Prerequisites
 
-* .NET Core 2.1 SDK or later
+* [.NET Core 2.1 SDK](https://dotnet.microsoft.com/download) or later
 * Your favorite code editor
 
 You can use the command `dotnet --info` to check which versions of .NET SDK and runtime you already have installed.

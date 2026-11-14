@@ -1,14 +1,9 @@
 ---
-title: "space-before-function-paren"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/space-before-function-paren.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: space-before-function-paren
+rule_type: layout
+related_rules:
+- keyword-spacing
 ---
-
-# space-before-function-paren
-
 When formatting a function, whitespace is allowed between the function name or `function` keyword and the opening paren. Named functions also require a space between the `function` keyword and the function name, but anonymous functions require no whitespace. For example:
 
 ```js
@@ -63,7 +58,7 @@ Each of the following options can be set to `"always"`, `"never"`, or `"ignore"`
 
 Examples of **incorrect** code for this rule with the default `"always"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint space-before-function-paren: "error"*/
@@ -95,9 +90,11 @@ var baz = {
 var baz = async() => 1
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"always"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint space-before-function-paren: "error"*/
@@ -128,12 +125,14 @@ var baz = {
 
 var baz = async () => 1
 ```
+
+:::
 
 ### "never"
 
 Examples of **incorrect** code for this rule with the `"never"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint space-before-function-paren: ["error", "never"]*/
@@ -165,9 +164,11 @@ var baz = {
 var baz = async () => 1
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"never"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint space-before-function-paren: ["error", "never"]*/
@@ -199,11 +200,13 @@ var baz = {
 var baz = async() => 1
 ```
 
+:::
+
 ### `{"anonymous": "always", "named": "never", "asyncArrow": "always"}`
 
 Examples of **incorrect** code for this rule with the `{"anonymous": "always", "named": "never", "asyncArrow": "always"}` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint space-before-function-paren: ["error", {"anonymous": "always", "named": "never", "asyncArrow": "always"}]*/
@@ -231,9 +234,11 @@ var baz = {
 var baz = async(a) => await a
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{"anonymous": "always", "named": "never", "asyncArrow": "always"}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint space-before-function-paren: ["error", {"anonymous": "always", "named": "never", "asyncArrow": "always"}]*/
@@ -261,11 +266,13 @@ var baz = {
 var baz = async (a) => await a
 ```
 
+:::
+
 ### `{"anonymous": "never", "named": "always"}`
 
 Examples of **incorrect** code for this rule with the `{"anonymous": "never", "named": "always"}` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint space-before-function-paren: ["error", { "anonymous": "never", "named": "always" }]*/
@@ -291,9 +298,11 @@ var baz = {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{"anonymous": "never", "named": "always"}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint space-before-function-paren: ["error", { "anonymous": "never", "named": "always" }]*/
@@ -318,12 +327,14 @@ var baz = {
     }
 };
 ```
+
+:::
 
 ### `{"anonymous": "ignore", "named": "always"}`
 
 Examples of **incorrect** code for this rule with the `{"anonymous": "ignore", "named": "always"}` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint space-before-function-paren: ["error", { "anonymous": "ignore", "named": "always" }]*/
@@ -345,9 +356,11 @@ var baz = {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{"anonymous": "ignore", "named": "always"}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint space-before-function-paren: ["error", { "anonymous": "ignore", "named": "always" }]*/
@@ -376,6 +389,8 @@ var baz = {
     }
 };
 ```
+
+:::
 
 ## When Not To Use It
 

@@ -1,12 +1,3 @@
----
-title: "std::sys::io::kernel_copy::linux"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sys/io/kernel_copy/linux.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::sys::io::kernel_copy::linux
 
 This module contains specializations that can offload `io::copy()` operations on file descriptor

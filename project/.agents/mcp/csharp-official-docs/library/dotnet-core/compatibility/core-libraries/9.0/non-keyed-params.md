@@ -1,19 +1,15 @@
 ---
-title: "FromKeyedServicesAttribute no longer injects non-keyed parameter"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/9.0/non-keyed-params.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: FromKeyedServicesAttribute no longer injects non-keyed parameter
+description: Learn about the .NET 9 breaking change in core .NET libraries (dependency injection) where FromKeyedServicesAttribute no longer injects a non-keyed parameter.
+ms.date: 09/05/2024
 ---
-
 # FromKeyedServicesAttribute no longer injects non-keyed parameter
 
-When you use `Microsoft.Extensions.DependencyInjection.FromKeyedServicesAttribute` to specify a keyed service to be injected, an incorrect service might be passed.
+When you use <xref:Microsoft.Extensions.DependencyInjection.FromKeyedServicesAttribute> to specify a keyed service to be injected, an incorrect service might be passed.
 
 ## Previous behavior
 
-Previously, when a keyed service was intended to be injected as a parameter in a service constructor by using `Microsoft.Extensions.DependencyInjection.FromKeyedServicesAttribute` and the corresponding keyed service (`service1` in the following example) wasn't registered as a keyed service but *was* registered as a non-keyed service type (`IService` in the following example), the non-keyed service was injected instead of throwing an exception.
+Previously, when a keyed service was intended to be injected as a parameter in a service constructor by using <xref:Microsoft.Extensions.DependencyInjection.FromKeyedServicesAttribute> and the corresponding keyed service (`service1` in the following example) wasn't registered as a keyed service but *was* registered as a non-keyed service type (`IService` in the following example), the non-keyed service was injected instead of throwing an exception.
 
 ```csharp
 public MyService([FromKeyedServices("service1")] IService service1, ...
@@ -21,7 +17,7 @@ public MyService([FromKeyedServices("service1")] IService service1, ...
 
 ## New behavior
 
-Starting in .NET 9, an `System.InvalidOperationException` is thrown when `Microsoft.Extensions.DependencyInjection.FromKeyedServicesAttribute` is used and the specified keyed service isn't found. This behavior is consistent with other cases when the requested service can't be found due to lack of registration.
+Starting in .NET 9, an <xref:System.InvalidOperationException> is thrown when <xref:Microsoft.Extensions.DependencyInjection.FromKeyedServicesAttribute> is used and the specified keyed service isn't found. This behavior is consistent with other cases when the requested service can't be found due to lack of registration.
 
 ## Version introduced
 
@@ -29,7 +25,7 @@ Starting in .NET 9, an `System.InvalidOperationException` is thrown when `Micros
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -43,4 +39,4 @@ The fix has also been backported to .NET 8.0.9, so both .NET 8 and .NET 9 have t
 
 ## Affected APIs
 
-- `Microsoft.Extensions.DependencyInjection.FromKeyedServicesAttribute.#ctor(System.Object)`
+- <xref:Microsoft.Extensions.DependencyInjection.FromKeyedServicesAttribute.%23ctor(System.Object)>

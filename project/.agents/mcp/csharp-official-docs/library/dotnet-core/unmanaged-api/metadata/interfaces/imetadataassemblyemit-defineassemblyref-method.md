@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataAssemblyEmit::DefineAssemblyRef Method"
 title: "IMetaDataAssemblyEmit::DefineAssemblyRef Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataassemblyemit-defineassemblyref-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataAssemblyEmit.DefineAssemblyRef"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataAssemblyEmit::DefineAssemblyRef"
+  - "IMetaDataAssemblyEmit::DefineAssemblyRef method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataAssemblyEmit::DefineAssemblyRef Method
 
 Creates an `AssemblyRef` structure containing metadata for the assembly that this assembly references, and returns the associated metadata token.
@@ -29,7 +36,7 @@ HRESULT DefineAssemblyRef (
 ## Parameters
 
  `pbPublicKeyOrToken`
- [in] The public key of the publisher of the referenced assembly. The helper function StrongNameTokenFromAssembly can be used to get the hash of the public key to pass as this parameter.
+ [in] The public key of the publisher of the referenced assembly. The helper function [StrongNameTokenFromAssembly](../../../../framework/unmanaged-api/strong-naming/strongnametokenfromassembly-function.md) can be used to get the hash of the public key to pass as this parameter.
 
  `cbPublicKeyOrToken`
  [in] The size in bytes of `pbPublicKeyOrToken`.
@@ -47,7 +54,7 @@ HRESULT DefineAssemblyRef (
  [in] The size in bytes of `pbHashValue`.
 
  `dwAssemblyRefFlags`
- [in] A bitwise combination of CorAssemblyFlags values that influence the behavior of the execution engine.
+ [in] A bitwise combination of [CorAssemblyFlags](../enumerations/corassemblyflags-enumeration.md) values that influence the behavior of the execution engine.
 
  `pmdar`
  [out] A pointer to the returned `AssemblyRef` metadata token.
@@ -60,7 +67,7 @@ HRESULT DefineAssemblyRef (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -68,4 +75,4 @@ HRESULT DefineAssemblyRef (
 
 ## See also
 
-- IMetaDataAssemblyEmit Interface
+- [IMetaDataAssemblyEmit Interface](imetadataassemblyemit-interface.md)

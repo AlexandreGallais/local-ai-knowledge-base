@@ -1,10 +1,9 @@
 ---
 title: "Breaking change - CoreCLR replaces Mono runtime for .NET mobile apps"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/maui/11/mobile-runtime-replacement.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where CoreCLR replaces Mono runtime for .NET mobile apps."
+ms.date: 10/21/2026
+ai-usage: ai-generated
+ms.custom: https://github.com/dotnet/docs/issues/56476
 ---
 
 # CoreCLR replaces Mono runtime for .NET mobile apps
@@ -27,18 +26,18 @@ stack traces, symbols, and diagnostic events.
 
 Supported .NET 11 Android, iOS, tvOS, and Mac Catalyst projects use CoreCLR.
 Setting `UseMonoRuntime=true` causes build error
-NETSDK1242.
+[NETSDK1242](../../../tools/sdk-errors/netsdk1242.md).
 
 Apps and tools can see new runtime names. For example:
 
-- `System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription`
+- <xref:System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription>
   reports .NET instead of Mono.
 - Android packages contain CoreCLR files instead of `libmonosgen-2.0`.
 - Stack traces, symbols, and diagnostic events identify CoreCLR.
 
 ## Type of breaking change
 
-This change can affect source compatibility, binary compatibility, and behavior.
+This change can affect [source compatibility](../../categories.md#source-compatibility), [binary compatibility](../../categories.md#binary-compatibility), and [behavior](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -55,5 +54,5 @@ This change can affect source compatibility, binary compatibility, and behavior.
 
 ## Affected APIs
 
-- `System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription`
+- <xref:System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription>
   reports .NET instead of Mono.

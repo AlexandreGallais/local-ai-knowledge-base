@@ -1,0 +1,208 @@
+\chapter*{Preface}\pagestyle{preface}\thispagestyle{preface}
+\setlength{\parskip}{.25ex}
+
+
+This collection supplements the text \nocite{Hefferon12}
+\textit{Linear Algebra}.\footnote{See 
+\protect\url{hefferon.net/linearalgebra}
+for a PDF that you can freely download, the ancillary materials, and
+the \protect\LaTeX{} source.}
+It helps students
+solidify and extend their understanding of the subject, 
+using the mathematical software \Sage{}.% \footnote{See 
+% \url{http://www.sagemath.org} for the software and documentation.}
+
+A major goal of any undergraduate Mathematics program is to move students 
+toward a higher-level grasp of the subject.
+At the start they take Calculus classes that relax
+completeness and rigor in favor of practicing algorithms, while
+later courses spend more effort on concepts and proofs.
+\textit{Linear Algebra} fits into this developmental plan.
+It works to bring students to a deeper understanding, 
+but it does so by expecting
+that for them at this point a good bit of calculation helps the process,
+by reinforcing the concepts. 
+
+Naturally the text uses examples and homework problems
+that are small and have manageable numbers\Dash an 
+assignment to by-hand multiply a pair of three by three matrices
+of small integers will build intuition, whereas asking students to do the same
+with twenty by twenty matrices
+of ten decimal place numbers would be badgering.
+However, an instructor can worry that this misses a chance
+to enhance students's understanding through explorations that are not 
+hindered by the limitations of paper and pencil,
+or to make the point that the subject is widely applied, because in 
+realistic examples of 
+applications the computations are usually hard. 
+
+Mathematical software can spread the reach of
+what is reasonable 
+to bigger systems, harder numbers, and longer computations.
+This manual extends what students can do in this direction.
+Besides helping solidify the understanding of the concepts that students have,
+an advantage of learning how to automate work and
+handle larger jobs is that 
+this is more like what a professional must do in practice.
+Another advantage is that students see new ideas, such as 
+runtime growth measures.
+
+OK then, why 
+not teach straight from the computer?
+
+Our goal is to develop a higher-level understanding of the subject. 
+For that, we keep the focus on vector spaces and linear maps.
+The exposition here takes computation to be
+a tool to develop that understanding, not the main object.
+
+Some instructors find that their students are best served by
+sticking to the core material.
+Other instructors
+have students who will benefit from the kind of work that
+we do here.
+Because this manual is a supplement, it allows different 
+teachers to make different choices.
+
+
+\section{Why \Sage?}
+In 
+\textit{Open Source Mathematical Software} 
+\citep{JoynerStein07},\footnote{The full text is at
+\protect\url{www.ams.org/notices/200710/tx071001279p.pdf}.}
+the authors argue that the best way forward for Mathematics 
+is to pay attention to the license of the software that we use.
+
+\begin{quotation}\small
+Suppose Jane is a well-known mathematician who announces
+she has proved a theorem. We probably will believe
+her, but she knows that she will be required to produce
+a proof if requested. However, suppose now Jane says a
+theorem is true based partly on the results of software. The
+closest we can reasonably hope to get to a rigorous proof
+(without new ideas) is the open inspection and ability to use
+all the computer code on which the result depends. If the
+program is proprietary, this is not possible. We have every
+right to be distrustful, not only due to a vague distrust of
+computers but because even the best programmers regularly
+make mistakes.
+
+If one reads the proof of Jane’s theorem in hopes of
+extending her ideas or applying them in a new context, it
+is limiting to not have access to the inner workings of the
+software on which Jane’s result builds.
+\end{quotation}  
+Professionals choose their tools by balancing many factors, but
+this argument is persuasive.
+Here we use \Sage{} both because it is very capable 
+and because it is 
+Free, meaning not just that it is available at no cost but also that the
+source code is open for inspection by anyone.\footnote{See
+\protect\url{www.gnu.org/philosophy/free-sw.html} 
+for some background and a definition.} 
+
+
+
+\section{This manual}
+This manual is Free.
+See
+\url{hefferon.net/linearalgebra} for the license.
+In particular, students are free to download it
+and instructors are free to redistribute it, such
+as on an intranet course web site.
+
+%% I am glad to get feedback, especially from instructors
+%% who have class tested the material.
+%% That same link gives my current contact information.
+
+Also Free are the software systems that we use to explore the subject,
+\python{} and \Sage{}.
+Probably users already have them on their operating system but if not then 
+they are available from  
+\href{http://www.python.org}{\url{www.python.org}}
+and 
+\href{https://www.sagemath.org}{\url{www.sagemath.org}}.
+Both are powerful and capable software systems that
+have been in production use by thousands of professionals for years. 
+
+\textbf{A note on accuracy of the examples:}~we often 
+show input code for \python{} and \Sage{}, 
+along with the computer's responses.
+These are not cut and pasted.
+Instead, as part of generating this 
+document, we grab the interaction.
+So what you see should be exact,
+unless your software version is very different from mine.
+This is my \Sage.
+\begin{sagecommandline}
+sage: version()  
+\end{sagecommandline}
+This is my \python{}. 
+\begin{pythonconsole}
+import sys
+print(sys.version)
+\end{pythonconsole}
+
+
+
+
+\section{Reading this manual}
+Because this supplements the text \textit{Linear Algebra}, 
+we don't define the terms or prove the results here.
+Instead, a student should work through this material after covering the associated
+chapter in the book, using that for reference.
+
+The association between what's here and the text is:
+\textit{Python and Sage} does not depend on the
+book,
+\textit{Gauss’s Method} works with Chapter One,
+\textit{Vector Spaces} is for Chapter Two,
+\textit{Matrices}, 
+\textit{Maps}, and 
+\textit{Singular Value Decomposition} go with Chapter Three,
+\textit{Geometry of Linear Maps} goes best with Chapter Four,
+and \textit{Eigenvalues} fits with Chapter Five
+(it mentions Jordan Form but only relies on the material up to 
+diagonalization.)
+
+%% An instructor may want to write Jupyter notebooks for the chapters here
+%% since they do not have stand-alone exercises.
+
+
+
+
+\section{Acknowledgments}
+I am glad for this chance to thank the \python{} and
+\Sage{} development teams.
+In particular,
+without \citep{SageTeam19ref} this work would not have happened.
+I am glad also for the chance to mention 
+\citep{Beezer11} as an inspiration.
+Finally, I am grateful to Saint Michael's College for the 
+time to write this document.
+
+
+
+
+
+\vspace{.5in}
+\noindent\begin{tabular}[t]{@{}l}
+\textit{We emphasize practice.} \\
+\quotefrom{Suzuki}  \\[2ex]
+\textit{[A]n orderly presentation is not necessarily bad} \\ 
+\quad\textit{but by itself may be insufficient.} \\
+\quotefrom{Brandt}  
+\end{tabular}
+
+\vspace*{.25in}
+\hbox{}
+\hfill
+\begin{tabular}[t]{l@{}}
+Jim Hef{}feron \\
+Mathematics, Saint Michael's College \\
+Colchester, Vermont USA \\
+2021-Oct-12
+\end{tabular}
+\vspace{1ex}
+\endinput
+
+TODO

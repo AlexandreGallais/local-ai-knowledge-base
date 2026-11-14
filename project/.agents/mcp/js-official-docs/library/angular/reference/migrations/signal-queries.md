@@ -1,17 +1,8 @@
----
-title: "Migration to signal queries"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/reference/migrations/signal-queries.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Migration to signal queries
 
 Angular introduced improved APIs for queries that are considered
 production ready as of v19.
-Read more about signal queries and their benefits in the dedicated guide.
+Read more about signal queries and their benefits in the [dedicated guide](guide/components/queries).
 
 To support existing teams that would like to use signal queries, the Angular team
 provides an automated migration that converts existing decorator query fields to the new API.
@@ -22,9 +13,9 @@ Run the schematic using the following command:
 ng generate @angular/core:signal-queries-migration
 ```
 
-Alternatively, the migration is available as a code refactor action in VSCode.
+Alternatively, the migration is available as a [code refactor action](https://code.visualstudio.com/docs/typescript/typescript-refactoring#_refactoring) in VSCode.
 Install the latest version of the VSCode extension and click onto e.g. a `@ViewChild` field.
-See more details in the section below.
+See more details in the section [below](#vscode-extension).
 
 ## What does the migration change?
 
@@ -111,7 +102,9 @@ references outside this directory are silently skipped, potentially breaking you
 
 ## VSCode extension
 
-The migration is available as a code refactor action in VSCode.
+![Screenshot of the VSCode extension and clicking on an `@ViewChild` field](assets/images/migrations/signal-queries-vscode.png 'Screenshot of the VSCode extension and clicking on an `@ViewChild` field.')
+
+The migration is available as a [code refactor action](https://code.visualstudio.com/docs/typescript/typescript-refactoring#_refactoring) in VSCode.
 
 To make use of the migration via VSCode, install the latest version of the VSCode extension and either click:
 

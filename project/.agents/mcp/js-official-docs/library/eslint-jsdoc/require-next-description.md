@@ -1,13 +1,6 @@
----
-title: "require-next-description"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/require-next-description.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
-
-# `require-next-description`
+<a name="user-content-require-next-description"></a>
+<a name="require-next-description"></a>
+# <code>require-next-description</code>
 
 Requires a description for (non-standard) `@next` tags.
 
@@ -19,6 +12,8 @@ Requires a description for (non-standard) `@next` tags.
 |Settings||
 |Options||
 
+<a name="user-content-require-next-description-failing-examples"></a>
+<a name="require-next-description-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -30,6 +25,10 @@ The following patterns are considered problems:
 // Message: @next should have a description
 ````
 
+
+
+<a name="user-content-require-next-description-passing-examples"></a>
+<a name="require-next-description-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -39,3 +38,4 @@ The following patterns are not considered problems:
  * @next {SomeType} Has a description
  */
 ````
+

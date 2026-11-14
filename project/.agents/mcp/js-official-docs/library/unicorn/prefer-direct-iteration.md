@@ -1,21 +1,15 @@
----
-title: "prefer-direct-iteration"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-direct-iteration.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-direct-iteration
 
 📝 Prefer direct iteration over default iterator method calls.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
-Some built-ins expose their default iterator through both `Symbol.iterator` and a named method. For example, `Map#entries()` is the same iterator as `Map#Symbol.iterator`, and `Array#values()` is the same iterator as `Array#Symbol.iterator`.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+Some built-ins expose their default iterator through both `[Symbol.iterator]()` and a named method. For example, `Map#entries()` is the same iterator as `Map#[Symbol.iterator]()`, and `Array#values()` is the same iterator as `Array#[Symbol.iterator]()`.
 
 When the result is immediately consumed as an iterable, the named method is redundant.
 
@@ -27,7 +21,7 @@ This rule reports:
 
 It intentionally does not report unknown receivers, or methods that are not equivalent to the default iterator, such as `Array#entries()`, `Map#values()`, or `Set#entries()`.
 
-With TypeScript type information, this rule can also recognize supported built-ins through type aliases and inferred references. Without type information, it only uses direct syntax and simple annotations.
+With [TypeScript type information](https://typescript-eslint.io/getting-started/typed-linting/), this rule can also recognize supported built-ins through type aliases and inferred references. Without type information, it only uses direct syntax and simple annotations.
 
 ## Examples
 

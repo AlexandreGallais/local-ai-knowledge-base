@@ -1,15 +1,13 @@
 ---
-title: "Diagnostics and instrumentation"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/deploying/native-aot/diagnostics.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Diagnostics and instrumentation
+description: Learn about diagnostics in Native AOT applications
+author: lakshanf
+ms.date: 08/07/2023
 ---
 
 # Diagnostics and instrumentation
 
-Native AOT shares some, but not all, diagnostics and instrumentation capabilities with the full .NET runtime. Apps that are trim-compatible shouldn't have behavioral differences, so investigations often apply to both runtimes. As such, it's sometimes appropriate to diagnose and debug problems in the full .NET runtime, as it has a rich selection of available diagnostic utilities. Nonetheless, some information can only be gathered after publishing, so Native AOT also provides post-publish diagnostic tooling.
+Native AOT shares some, but not all, diagnostics and instrumentation capabilities with the full .NET runtime. Apps that are [trim-compatible](../trimming/prepare-libraries-for-trimming.md) shouldn't have behavioral differences, so investigations often apply to both runtimes. As such, it's sometimes appropriate to diagnose and debug problems in the full .NET runtime, as it has a rich selection of available diagnostic utilities. Nonetheless, some information can only be gathered after publishing, so Native AOT also provides post-publish diagnostic tooling.
 
 ## Native AOT diagnostic support
 
@@ -17,15 +15,15 @@ The following table summarizes diagnostic features supported for Native AOT depl
 
 | Feature | Fully supported | Partially supported | Not supported |
 | - | - | - | - |
-| Observability and telemetry | | ✔️Partially supported | |
-| Development-time diagnostics | ✔️Fully supported | | |
-| Native debugging | | ✔️Partially supported | |
-| CPU Profiling | | ✔️Partially supported | |
-| Heap analysis | | | ❌Not supported |
+| [Observability and telemetry](#observability-and-telemetry) | | <span aria-hidden="true">✔️</span><span class="visually-hidden">Partially supported</span> | |
+| [Development-time diagnostics](#development-time-diagnostics) | <span aria-hidden="true">✔️</span><span class="visually-hidden">Fully supported</span> | | |
+| [Native debugging](#native-debugging) | | <span aria-hidden="true">✔️</span><span class="visually-hidden">Partially supported</span> | |
+| [CPU Profiling](#cpu-profiling) | | <span aria-hidden="true">✔️</span><span class="visually-hidden">Partially supported</span> | |
+| [Heap analysis](#heap-analysis) | | | <span aria-hidden="true">❌</span><span class="visually-hidden">Not supported</span> |
 
 ## Observability and telemetry
 
-As of .NET 8, the Native AOT runtime supports EventPipe, which is the base layer used by many logging and tracing libraries. You can interface with EventPipe directly through APIs like `EventSource.WriteEvent` or you can use libraries built on top, like OpenTelemetry. EventPipe support also allows .NET diagnostic tools like dotnet-trace, dotnet-counters, and dotnet-monitor to work seamlessly with Native AOT or full .NET runtime applications. EventPipe is an optional component in Native AOT. To include EventPipe support, set the `EventSourceSupport` MSBuild property to `true`.
+As of .NET 8, the Native AOT runtime supports [EventPipe](../../diagnostics/eventpipe.md), which is the base layer used by many logging and tracing libraries. You can interface with EventPipe directly through APIs like `EventSource.WriteEvent` or you can use libraries built on top, like [OpenTelemetry](../../diagnostics/observability-with-otel.md). EventPipe support also allows .NET diagnostic tools like [dotnet-trace](../../diagnostics/dotnet-trace.md), [dotnet-counters](../../diagnostics/dotnet-counters.md), and [dotnet-monitor](../../diagnostics/dotnet-monitor.md) to work seamlessly with Native AOT or full .NET runtime applications. EventPipe is an optional component in Native AOT. To include EventPipe support, set the `EventSourceSupport` MSBuild property to `true`.
 
 ```xml
 <PropertyGroup>
@@ -33,7 +31,7 @@ As of .NET 8, the Native AOT runtime supports EventPipe, which is the base layer
 </PropertyGroup>
 ```
 
-Native AOT provides partial support for some well-known event providers. Not all runtime events are supported in Native AOT.
+Native AOT provides partial support for some [well-known event providers](../../diagnostics/well-known-event-providers.md). Not all [runtime events](../../../fundamentals/diagnostics/runtime-events.md) are supported in Native AOT.
 
 ## Development-time diagnostics
 
@@ -56,15 +54,15 @@ The Native AOT compiler generates information about line numbers, types, locals,
 To debug managed exceptions, set a breakpoint on the `RhThrowEx` method, which is called whenever a managed exception is thrown. The exception is stored in the first argument register, which is `rcx` on x64 and `x0` on Arm64. If your debugger supports viewing C++ objects, you can cast
 the register to `S_P_CoreLib_System_Exception*` to see more information about the exception.
 
-Collecting a dump file for a Native AOT application involves some manual steps in .NET 8.
+Collecting a [dump](../../diagnostics/dumps.md) file for a Native AOT application involves some manual steps in .NET 8.
 
 ### Visual Studio-specific notes
 
-You can launch a Native AOT-compiled executable under the Visual Studio debugger by opening it in the Visual Studio IDE. You need to open the executable itself in Visual Studio.
+You can launch a Native AOT-compiled executable under the Visual Studio debugger by opening it in the Visual Studio IDE. You need to [open the executable itself in Visual Studio](/visualstudio/debugger/how-to-debug-an-executable-not-part-of-a-visual-studio-solution).
 
 To set a breakpoint that breaks whenever an exception is thrown, choose the **Breakpoints** option from the **Debug > Windows** menu. In the new window, select **New > Function** breakpoint. Specify `RhThrowEx` as the Function Name and leave the Language option at **All Languages** (don't select C#).
 
-To see what exception was thrown, start debugging (**Debug > Start Debugging** or `F5`) and when the `RhThrowEx` breakpoint hits, open the Watch window (**Debug > Windows > Watch**), and add following expression as one of the watches:
+To see what exception was thrown, start debugging (**Debug > Start Debugging** or <kbd>F5</kbd>) and when the `RhThrowEx` breakpoint hits, open the Watch window (**Debug > Windows > Watch**), and add following expression as one of the watches:
 
 | Architecture       | Expression                            |
 |--------------------|---------------------------------------|
@@ -77,16 +75,16 @@ This mechanism leverages the fact that at the time `RhThrowEx` is called, the CP
 
 When publishing, the Native AOT compiler produces both an executable and a symbol file. Native debugging, and related activities like profiling, require access to the native symbol file. If this file isn't present, you might have degraded or broken results.
 
-For information about the name and location of the symbol file, see Native debug information.
+For information about the name and location of the symbol file, see [Native debug information](index.md#native-aot-deployment).
 
 ## CPU profiling
 
-Platform-specific tools like PerfView and Perf can be used to collect CPU samples of a Native AOT application.
+Platform-specific tools like [PerfView](https://github.com/microsoft/perfview) and [Perf](https://perf.wiki.kernel.org/index.php/Main_Page) can be used to collect CPU samples of a Native AOT application.
 
 ## Heap analysis
 
-Managed heap analysis isn't currently supported in Native AOT. Heap analysis tools like dotnet-gcdump, PerfView, and Visual Studio heap analysis tools don't work in Native AOT in .NET 8.
+Managed heap analysis isn't currently supported in Native AOT. Heap analysis tools like [dotnet-gcdump](../../diagnostics/dotnet-gcdump.md), [PerfView](https://github.com/microsoft/perfview), and Visual Studio heap analysis tools don't work in Native AOT in .NET 8.
 
 ## See also
 
-- Native AOT diagnostic support on iOS and Mac Catalyst
+- [Native AOT diagnostic support on iOS and Mac Catalyst](/dotnet/maui/deployment/nativeaot#native-aot-diagnostic-support-on-ios-and-mac-catalyst)

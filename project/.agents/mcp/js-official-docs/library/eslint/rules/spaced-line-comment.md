@@ -1,18 +1,15 @@
 ---
-title: "spaced-line-comment"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/spaced-line-comment.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
----
+title: spaced-line-comment
 
-# spaced-line-comment
+related_rules:
+- spaced-comment
+---
 
 Enforces consistent spacing after `//` in line comments.
 
-**Important:**
-This rule was removed in ESLint v1.0.0 and replaced by the spaced-comment rule.
+::: important
+This rule was removed in ESLint v1.0.0 and replaced by the [spaced-comment](spaced-comment) rule.
+:::
 
 Some style guides require or disallow a whitespace immediately after the initial `//` of a line comment.
 Whitespace after the `//` makes it easier to read text in comments.
@@ -33,14 +30,16 @@ Exceptions cannot be mixed.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 // When ["never"]
 // This is a comment with a whitespace at the beginning
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 //When ["always"]
@@ -48,7 +47,9 @@ Examples of **incorrect** code for this rule:
 var foo = 5;
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 // When ["always",{"exceptions":["-","+"]}]
@@ -57,9 +58,11 @@ var foo = 5;
 //------++++++++
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 // When ["always"]
@@ -67,7 +70,9 @@ Examples of **correct** code for this rule:
 var foo = 5;
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 //When ["never"]
@@ -75,7 +80,9 @@ var foo = 5;
 var foo = 5;
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 // When ["always",{"exceptions":["-"]}]
@@ -84,7 +91,9 @@ var foo = 5;
 //--------------
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 // When ["always",{"exceptions":["-+"]}]
@@ -92,3 +101,5 @@ var foo = 5;
 // Comment block
 //-+-+-+-+-+-+-+
 ```
+
+:::

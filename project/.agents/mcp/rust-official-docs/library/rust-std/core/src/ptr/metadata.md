@@ -1,12 +1,3 @@
----
-title: "core::ptr::metadata"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/ptr/metadata.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::ptr::metadata
 
 ## trait Pointee
@@ -26,17 +17,20 @@ For statically-sized types (that implement the `Sized` traits)
 as well as for `extern` types,
 pointers are said to be “thin”: metadata is zero-sized and its type is `()`.
 
-Pointers to dynamically-sized types are said to be “wide” or “fat”,
+Pointers to [dynamically-sized types][dst] are said to be “wide” or “fat”,
 they have non-zero-sized metadata:
 
 * For structs whose last field is a DST, metadata is the metadata for the last field
 * For the `str` type, metadata is the length in bytes as `usize`
 * For slice types like `[T]`, metadata is the length in items as `usize`
-* For trait objects like `dyn SomeTrait`, metadata is `DynMetadata<Self>`[DynMetadata]
+* For trait objects like `dyn SomeTrait`, metadata is [`DynMetadata<Self>`][DynMetadata]
   (e.g. `DynMetadata<dyn SomeTrait>`)
 
 In the future, the Rust language may gain new kinds of types
 that have different pointer metadata.
+
+[dst]: https://doc.rust-lang.org/nomicon/exotic-sizes.html#dynamically-sized-types-dsts
+
 
 # The `Pointee` trait
 
@@ -45,16 +39,19 @@ which is `()` or `usize` or `DynMetadata<_>` as described above.
 It is automatically implemented for every type.
 It can be assumed to be implemented in a generic context, even without a corresponding bound.
 
+
 # Usage
 
 Raw pointers can be decomposed into the data pointer and metadata components
-with their `to_raw_parts` method.
+with their [`to_raw_parts`] method.
 
-Alternatively, metadata alone can be extracted with the `metadata` function.
-A reference can be passed to `metadata` and implicitly coerced.
+Alternatively, metadata alone can be extracted with the [`metadata`] function.
+A reference can be passed to [`metadata`] and implicitly coerced.
 
 A (possibly-wide) pointer can be put back together from its data pointer and metadata
-with `from_raw_parts` or `from_raw_parts_mut`.
+with [`from_raw_parts`] or [`from_raw_parts_mut`].
+
+[`to_raw_parts`]: *const::to_raw_parts
 
 ## Thin::metadata
 
@@ -69,7 +66,7 @@ as they implicitly coerce to `*const T`.
 
 # Example
 
-```rust
+```
 #![feature(ptr_metadata)]
 
 assert_eq!(std::ptr::metadata("foo"), 3_usize);

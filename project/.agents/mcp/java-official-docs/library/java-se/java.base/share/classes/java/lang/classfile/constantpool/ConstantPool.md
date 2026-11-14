@@ -1,12 +1,3 @@
----
-title: "ConstantPool interface (java.lang.classfile.constantpool)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/constantpool/ConstantPool.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ConstantPool interface (java.lang.classfile.constantpool)
 
 ```java
@@ -14,21 +5,18 @@ public sealed interface ConstantPool extends Iterable<PoolEntry> permits ClassRe
 ```
 
 Provides read access to the constant pool and the bootstrap method table of a
-`class` file.
+{@code class} file.
 
-#### Index in the Constant Pool
-
+<h2 id="index">Index in the Constant Pool</h2>
 The constant pool entries are accessed by index.  A valid index is in the
-range of [1, size()).  It is unusable if a `LongEntry` or `DoubleEntry` is at its previous
+range of {@link #size() [1, size())}.  It is {@linkplain PoolEntry#width()
+unusable} if a {@link LongEntry} or {@link DoubleEntry} is at its previous
 index.
 
-**See also:** BootstrapMethodsAttribute
-
-**jvms:** 4.4 The Constant Pool
-
-**sealedGraph:**
-
-**Since:** 24
+@see BootstrapMethodsAttribute
+@jvms 4.4 The Constant Pool
+@sealedGraph
+@since 24
 
 ## ConstantPool.entryByIndex(int)
 
@@ -36,15 +24,15 @@ index.
 PoolEntry entryByIndex(int index)
 ```
 
-Parameters:
+{@return the entry at the specified index}
 
-- `index`: the index within the pool of the desired entry
+@apiNote
+If only a particular type of entry is expected, use {@link #entryByIndex(
+int, Class)}.
 
-**API note:** If only a particular type of entry is expected, use int, Class).
-
-Throws:
-
-- `ConstantPoolException`: if the index is out of range of the constant pool, or is considered unusable
+@param index the index within the pool of the desired entry
+@throws ConstantPoolException if the index is out of range of the
+        constant pool, or is considered unusable
 
 ## ConstantPool.size()
 
@@ -52,9 +40,11 @@ Throws:
 int size()
 ```
 
-The actual number of entries is lower because `0`, `size()` are not valid, and a valid index may be unusable.
+{@return the exclusive upper bound of the valid indices of this constant
+pool}  The actual number of entries is lower because {@code 0}, {@code
+size()} are not valid, and a valid index may be unusable.
 
-**See also:** ##index Index in the Constant Pool
+@see ##index Index in the Constant Pool
 
 ## ConstantPool.entryByIndex(int, Class<T>)
 
@@ -62,15 +52,14 @@ The actual number of entries is lower because `0`, `size()` are not valid, and a
 <T extends PoolEntry> T entryByIndex(int index, Class<T> cls)
 ```
 
-Parameters:
+{@return the entry of a given type at the specified index}
 
-- `<T>`: the entry type
-- `index`: the index within the pool of the desired entry
-- `cls`: the entry type
-
-Throws:
-
-- `ConstantPoolException`: if the index is out of range of the constant pool or considered unusable, or the entry is not of the given type
+@param <T> the entry type
+@param index the index within the pool of the desired entry
+@param cls the entry type
+@throws ConstantPoolException if the index is out of range of the
+        constant pool or considered unusable, or the entry is not
+        of the given type
 
 ## ConstantPool.iterator()
 
@@ -78,8 +67,11 @@ Throws:
 default Iterator<PoolEntry> iterator()
 ```
 
-**API note:** This skips any unusable index and is less error-prone than iterating by
-raw index.  See *Index in the Constant Pool*.
+{@return an iterator over pool entries}
+
+@apiNote
+This skips any unusable index and is less error-prone than iterating by
+raw index.  See <em>{@linkplain ##index Index in the Constant Pool}</em>.
 
 ## ConstantPool.bootstrapMethodEntry(int)
 
@@ -87,16 +79,18 @@ raw index.  See *Index in the Constant Pool*.
 BootstrapMethodEntry bootstrapMethodEntry(int index)
 ```
 
-Parameters:
+{@return the {@link BootstrapMethodEntry} at the specified index within
+the bootstrap method table}
 
-- `index`: the index within the bootstrap method table of the desired entry
-
-Throws:
-
-- `ConstantPoolException`: if the index is out of range of the bootstrap methods
+@param index the index within the bootstrap method table of the desired
+             entry
+@throws ConstantPoolException if the index is out of range of the
+        bootstrap methods
 
 ## ConstantPool.bootstrapMethodCount()
 
 ```java
 int bootstrapMethodCount()
 ```
+
+{@return the number of entries in the bootstrap method table}

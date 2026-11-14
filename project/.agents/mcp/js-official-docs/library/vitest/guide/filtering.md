@@ -1,10 +1,5 @@
 ---
-title: "Test Filtering | Guide"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/filtering.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Test Filtering | Guide
 ---
 
 # Test Filtering
@@ -13,7 +8,7 @@ As your test suite grows, running every test on every change becomes slow and di
 
 Vitest offers several ways to filter tests: from the command line, inside your test files, and through tags. Each approach is useful in different situations.
 
-**Performance Note**
+::: tip Performance Note
 Filters like `-t`, `--tags-filter`, `.only`, and `.skip` are applied _per test file_ — Vitest still has to run each test file to discover which tests match. In a large project, this overhead adds up even if only a few tests actually execute.
 
 To avoid this, always pass a file path alongside your filter so Vitest only loads the files you care about:
@@ -22,11 +17,13 @@ To avoid this, always pass a file path alongside your filter so Vitest only load
 vitest utils.test.ts -t "handles empty input"
 ```
 
-Alternatively, you can use the `--experimental.preParse` flag, which parses test files to discover test names without fully executing them:
+Alternatively, you can use the [`--experimental.preParse`](/config/experimental#experimental-preparse) flag, which parses test files to discover test names without fully executing them:
 
 ```bash
 vitest --experimental.preParse -t "handles empty input"
 ```
+
+:::
 
 ## Filtering by File Name
 
@@ -89,7 +86,7 @@ vitest basic/foo.test.ts:10-25 # ❌ ranges are not supported
 
 ## Filtering by Tags
 
-For larger projects, you may want to categorize tests and run them by category. Tags let you label tests and then filter by those labels from the CLI:
+For larger projects, you may want to categorize tests and run them by category. [Tags](/guide/test-tags) let you label tests and then filter by those labels from the CLI:
 
 ```ts
 test('renders a form', { tags: ['frontend'] }, () => {
@@ -136,10 +133,11 @@ describe('another suite', () => {
 
 You can use `.only` on both `describe` blocks and individual tests. When any test or suite in a file is marked with `.only`, all unmarked tests in that file are skipped.
 
-**Warning:**
-Remember to remove `.only` before committing. By default, Vitest will fail the entire test run if it encounters `.only` in CI (when `process.env.CI` is set), preventing you from accidentally skipping tests in your pipeline. This behavior is controlled by the `allowOnly` option.
+::: warning
+Remember to remove `.only` before committing. By default, Vitest will fail the entire test run if it encounters `.only` in CI (when `process.env.CI` is set), preventing you from accidentally skipping tests in your pipeline. This behavior is controlled by the [`allowOnly`](/config/allowonly) option.
 
-To catch `.only` even earlier, the `no-focused-tests` ESLint rule (also available in oxlint) can flag it in your editor before you commit.
+To catch `.only` even earlier, the [`no-focused-tests`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-focused-tests.md) ESLint rule (also available in [oxlint](https://oxc.rs/docs/guide/usage/linter/rules/jest/no-focused-tests.html)) can flag it in your editor before you commit.
+:::
 
 ## Skipping Tests with `.skip`
 

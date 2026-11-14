@@ -1,12 +1,16 @@
 ---
+description: "Learn more about: CorDebugDecodeEventFlagsWindows Enumeration"
 title: "CorDebugDecodeEventFlagsWindows Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cordebugdecodeeventflagswindows-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "CorDebugDecodeEventFlagsWindows"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+topic_type:
+  - "apiref"
 ---
-
 # CorDebugDecodeEventFlagsWindows Enumeration
 
 Provides additional information about debug events on the Windows platform.
@@ -27,14 +31,14 @@ typedef enum CorDebugDecodeEventFlagsWindows {
 
 ## Remarks
 
- The ICorDebugProcess6::DecodeEvent method includes a `dwFlags` parameter that provides additional information about a debug event and whose value is dependent on the target architecture. The `CorDebugDecodeEventFlagsWindows` enumeration can be used with debug events on the Windows platform.
+ The [ICorDebugProcess6::DecodeEvent](icordebugprocess6-decodeevent-method.md) method includes a `dwFlags` parameter that provides additional information about a debug event and whose value is dependent on the target architecture. The `CorDebugDecodeEventFlagsWindows` enumeration can be used with debug events on the Windows platform.
 
-> **Note:**
+> [!NOTE]
 > This enumeration is intended for use in .NET Native debugging scenarios only.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

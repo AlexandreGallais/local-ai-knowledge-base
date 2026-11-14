@@ -1,12 +1,3 @@
----
-title: "std::os::fd::raw"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/os/fd/raw.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::os::fd::raw
 
 Raw Unix-like file descriptors.
@@ -40,18 +31,19 @@ fn as_raw_fd(&self) -> RawFd
 Extracts the raw file descriptor.
 
 This function is typically used to **borrow** an owned file descriptor.
-When used in this way, this method does **not** pass <example-value> of the
+When used in this way, this method does **not** pass ownership of the
 raw file descriptor to the caller, and the file descriptor is only
 guaranteed to be valid while the original object has not yet been
 destroyed.
 
-However, borrowing is not strictly required. See `AsFd::as_fd`
+However, borrowing is not strictly required. See [`AsFd::as_fd`]
 for an API which strictly borrows a file descriptor.
 
 # Example
 
-```rust
+```no_run
 use std::fs::File;
+# use std::io;
 #[cfg(any(unix, target_os = "wasi"))]
 use std::os::fd::{AsRawFd, RawFd};
 
@@ -59,6 +51,7 @@ let mut f = File::open("foo.txt")?;
 // Note that `raw_fd` is only valid as long as `f` exists.
 #[cfg(any(unix, target_os = "wasi"))]
 let raw_fd: RawFd = f.as_raw_fd();
+# Ok::<(), io::Error>(())
 ```
 
 ## trait FromRawFd
@@ -85,26 +78,32 @@ will take responsibility for closing it when the object goes out of
 scope.
 
 However, consuming ownership is not strictly required. Use a
-`From<OwnedFd>::from` implementation for an API which strictly
+[`From<OwnedFd>::from`] implementation for an API which strictly
 consumes ownership.
 
 # Safety
 
-The `fd` passed in must be an owned file descriptor;
+The `fd` passed in must be an [owned file descriptor][io-safety];
 in particular, it must be open.
+
+[io-safety]: io#io-safety
 
 # Example
 
-```rust
+```no_run
 use std::fs::File;
+# use std::io;
 #[cfg(any(unix, target_os = "wasi"))]
 use std::os::fd::{FromRawFd, IntoRawFd, RawFd};
 
 let f = File::open("foo.txt")?;
+# #[cfg(any(unix, target_os = "wasi"))]
 let raw_fd: RawFd = f.into_raw_fd();
 // SAFETY: no other functions should call `from_raw_fd`, so there
 // is only one owner for the file descriptor.
+# #[cfg(any(unix, target_os = "wasi"))]
 let f = unsafe { File::from_raw_fd(raw_fd) };
+# Ok::<(), io::Error>(())
 ```
 
 ## trait IntoRawFd
@@ -129,17 +128,19 @@ file descriptor to the caller. When used in this way, callers are then the uniqu
 owners of the file descriptor and must close it once it's no longer needed.
 
 However, transferring ownership is not strictly required. Use a
-`Into<OwnedFd>::into` implementation for an API which strictly
+[`Into<OwnedFd>::into`] implementation for an API which strictly
 transfers ownership.
 
 # Example
 
-```rust
+```no_run
 use std::fs::File;
+# use std::io;
 #[cfg(any(unix, target_os = "wasi"))]
 use std::os::fd::{IntoRawFd, RawFd};
 
 let f = File::open("foo.txt")?;
 #[cfg(any(unix, target_os = "wasi"))]
 let raw_fd: RawFd = f.into_raw_fd();
+# Ok::<(), io::Error>(())
 ```

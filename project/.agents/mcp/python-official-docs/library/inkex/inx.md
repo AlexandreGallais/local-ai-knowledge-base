@@ -1,12 +1,3 @@
----
-title: "inkex.inx"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/inx.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.inx
 
 Parsing inx files for checking and generating.
@@ -75,7 +66,7 @@ class InxElement(etree.ElementBase)
 
 Any element in an inx file
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## InxElement.set_warning
 
@@ -117,7 +108,7 @@ def xpath(self, xpath, nss=None)
 
 Namespace specific xpath searches
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## InxElement.find_one
 
@@ -127,7 +118,7 @@ def find_one(self, name, nss=None)
 
 Return the first element matching the given name
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## InxElement.get_text
 

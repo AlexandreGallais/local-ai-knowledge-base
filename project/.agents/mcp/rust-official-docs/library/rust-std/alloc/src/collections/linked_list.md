@@ -1,12 +1,3 @@
----
-title: "alloc::collections::linked_list"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/alloc/src/collections/linked_list.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # alloc::collections::linked_list
 
 A doubly-linked list with owned nodes.
@@ -14,9 +5,12 @@ A doubly-linked list with owned nodes.
 The `LinkedList` allows pushing and popping elements at either end
 in constant time.
 
-NOTE: It is almost always better to use `Vec` or `VecDeque` because
+NOTE: It is almost always better to use [`Vec`] or [`VecDeque`] because
 array-based containers are generally faster,
 more memory efficient, and make better use of CPU cache.
+
+[`Vec`]: crate::vec::Vec
+[`VecDeque`]: super::vec_deque::VecDeque
 
 ## struct LinkedList
 
@@ -30,15 +24,18 @@ The `LinkedList` allows pushing and popping elements at either end
 in constant time.
 
 A `LinkedList` with a known list of items can be initialized from an array:
-```rust
+```
 use std::collections::LinkedList;
 
 let list = LinkedList::from([1, 2, 3]);
 ```
 
-NOTE: It is almost always better to use `Vec` or `VecDeque` because
+NOTE: It is almost always better to use [`Vec`] or [`VecDeque`] because
 array-based containers are generally faster,
 more memory efficient, and make better use of CPU cache.
+
+[`Vec`]: crate::vec::Vec
+[`VecDeque`]: super::vec_deque::VecDeque
 
 ## struct Iter
 
@@ -48,7 +45,7 @@ pub struct Iter<'a, T: 'a>
 
 An iterator over the elements of a `LinkedList`.
 
-This `struct` is created by `LinkedList::iter()`. See its
+This `struct` is created by [`LinkedList::iter()`]. See its
 documentation for more.
 
 ## struct IterMut
@@ -59,7 +56,7 @@ pub struct IterMut<'a, T: 'a>
 
 A mutable iterator over the elements of a `LinkedList`.
 
-This `struct` is created by `LinkedList::iter_mut()`. See its
+This `struct` is created by [`LinkedList::iter_mut()`]. See its
 documentation for more.
 
 ## struct IntoIter
@@ -70,8 +67,10 @@ pub struct IntoIter< T, #[unstable(feature = "allocator_ext", issue = "163177", 
 
 An owning iterator over the elements of a `LinkedList`.
 
-This `struct` is created by the `into_iter` method on `LinkedList`
-(provided by the `IntoIterator` trait). See its documentation for more.
+This `struct` is created by the [`into_iter`] method on [`LinkedList`]
+(provided by the [`IntoIterator`] trait). See its documentation for more.
+
+[`into_iter`]: LinkedList::into_iter
 
 ## LinkedList::new
 
@@ -83,7 +82,7 @@ Creates an empty `LinkedList`.
 
 # Examples
 
-```rust
+```
 use std::collections::LinkedList;
 
 let list: LinkedList<u32> = LinkedList::new();
@@ -104,7 +103,7 @@ This operation should compute in *O*(1) time and *O*(1) memory.
 
 # Examples
 
-```rust
+```
 use std::collections::LinkedList;
 
 let mut list1 = LinkedList::new();
@@ -135,7 +134,7 @@ Provides a forward iterator.
 
 # Examples
 
-```rust
+```
 use std::collections::LinkedList;
 
 let mut list: LinkedList<u32> = LinkedList::new();
@@ -161,7 +160,7 @@ Provides a forward iterator with mutable references.
 
 # Examples
 
-```rust
+```
 use std::collections::LinkedList;
 
 let mut list: LinkedList<u32> = LinkedList::new();
@@ -193,7 +192,7 @@ This operation should compute in *O*(1) time.
 
 # Examples
 
-```rust
+```
 use std::collections::LinkedList;
 
 let mut dl = LinkedList::new();
@@ -215,7 +214,7 @@ This operation should compute in *O*(1) time.
 
 # Examples
 
-```rust
+```
 use std::collections::LinkedList;
 
 let mut dl = LinkedList::new();
@@ -242,7 +241,7 @@ This operation should compute in *O*(*n*) time.
 
 # Examples
 
-```rust
+```
 use std::collections::LinkedList;
 
 let mut dl = LinkedList::new();
@@ -270,7 +269,7 @@ This operation should compute linearly in *O*(*n*) time.
 
 # Examples
 
-```rust
+```
 use std::collections::LinkedList;
 
 let mut list: LinkedList<u32> = LinkedList::new();
@@ -296,7 +295,7 @@ This operation should compute in *O*(1) time.
 
 # Examples
 
-```rust
+```
 use std::collections::LinkedList;
 
 let mut dl = LinkedList::new();
@@ -319,7 +318,7 @@ This operation should compute in *O*(1) time.
 
 # Examples
 
-```rust
+```
 use std::collections::LinkedList;
 
 let mut dl = LinkedList::new();
@@ -348,7 +347,7 @@ This operation should compute in *O*(1) time.
 
 # Examples
 
-```rust
+```
 use std::collections::LinkedList;
 
 let mut dl = LinkedList::new();
@@ -371,7 +370,7 @@ This operation should compute in *O*(1) time.
 
 # Examples
 
-```rust
+```
 use std::collections::LinkedList;
 
 let mut dl = LinkedList::new();
@@ -399,7 +398,7 @@ This operation should compute in *O*(1) time.
 
 # Examples
 
-```rust
+```
 use std::collections::LinkedList;
 
 let mut dl = LinkedList::new();
@@ -423,7 +422,7 @@ This operation should compute in *O*(1) time.
 
 # Examples
 
-```rust
+```
 use std::collections::LinkedList;
 
 let mut dl = LinkedList::from([1, 2, 3]);
@@ -446,7 +445,7 @@ This operation should compute in *O*(1) time.
 
 # Examples
 
-```rust
+```
 use std::collections::LinkedList;
 
 let mut d = LinkedList::new();
@@ -471,7 +470,7 @@ This operation should compute in *O*(1) time.
 
 # Examples
 
-```rust
+```
 use std::collections::LinkedList;
 
 let mut d = LinkedList::new();
@@ -492,7 +491,7 @@ This operation should compute in *O*(1) time.
 
 # Examples
 
-```rust
+```
 use std::collections::LinkedList;
 
 let mut dl = LinkedList::from([1, 2, 3]);
@@ -515,7 +514,7 @@ This operation should compute in *O*(1) time.
 
 # Examples
 
-```rust
+```
 use std::collections::LinkedList;
 
 let mut d = LinkedList::new();
@@ -542,7 +541,7 @@ Panics if `at > len`.
 
 # Examples
 
-```rust
+```
 use std::collections::LinkedList;
 
 let mut d = LinkedList::new();
@@ -580,7 +579,7 @@ closure, regardless of whether you choose to keep or remove it.
 
 Splitting a list into even and odd values, reusing the original list:
 
-```rust
+```
 use std::collections::LinkedList;
 
 let mut numbers: LinkedList<u32> = LinkedList::new();
@@ -599,4 +598,6 @@ assert_eq!(odds.into_iter().collect::<Vec<_>>(), vec![1, 3, 5, 9, 11, 13, 15]);
 pub struct ExtractIf< 'a, T: 'a, F: 'a, #[unstable(feature = "allocator_ext", issue = "163177", implied_by = "allocator_api")] A: Allocator = Global, >
 ```
 
-This `struct` is created by the `extract_if` method on `LinkedList`.
+This `struct` is created by the [`extract_if`] method on [`LinkedList`].
+
+[`extract_if`]: LinkedList::extract_if

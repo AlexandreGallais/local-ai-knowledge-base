@@ -1,12 +1,15 @@
 ---
 title: "Qualifying .NET Types for COM Interoperation"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/native-interop/qualify-net-types-for-interoperation.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: This article provides guidelines to help you expose types in a .NET assembly to COM applications for COM interop.
+ms.date: "03/30/2017"
+helpviewer_keywords:
+  - "exposing .NET components to COM"
+  - "COM interop, qualifying .NET types"
+  - "qualifying .NET types for interoperation"
+  - "interoperation with unmanaged code, qualifying .NET types"
+  - "interoperation with unmanaged code, exposing .NET components"
+  - "COM interop, exposing COM components"
 ---
-
 # Qualify .NET types for COM interoperation
 
 ## Expose .NET types to COM
@@ -15,7 +18,7 @@ If you intend to expose types in an assembly to COM applications, consider the r
 
 - Classes should implement interfaces explicitly.
 
-     Although COM interop provides a mechanism to automatically generate an interface containing all members of the class and the members of its base class, it is far better to provide explicit interfaces. The automatically generated interface is called the class interface. For guidelines, see Introducing the class interface.
+     Although COM interop provides a mechanism to automatically generate an interface containing all members of the class and the members of its base class, it is far better to provide explicit interfaces. The automatically generated interface is called the class interface. For guidelines, see [Introducing the class interface](com-callable-wrapper.md#introducing-the-class-interface).
 
      You can use Visual Basic, C#, and C++ to incorporate interface definitions in your code, instead of having to use Interface Definition Language (IDL) or its equivalent. For syntax details, see your language documentation.
 
@@ -27,7 +30,7 @@ If you intend to expose types in an assembly to COM applications, consider the r
 
 - Methods, properties, fields, and events must be public.
 
-     Members of public types must also be public if they are to be visible to COM. You can restrict the visibility of an assembly, a public type, or public members of a public type by applying the `System.Runtime.InteropServices.ComVisibleAttribute`. By default, all public types and members are visible.
+     Members of public types must also be public if they are to be visible to COM. You can restrict the visibility of an assembly, a public type, or public members of a public type by applying the <xref:System.Runtime.InteropServices.ComVisibleAttribute>. By default, all public types and members are visible.
 
 - Types must have a public parameterless constructor to be activated from COM.
 
@@ -41,19 +44,19 @@ If you intend to expose types in an assembly to COM applications, consider the r
 
 ## Consume COM types from .NET
 
-If you intend to consume COM types from .NET and you don't want to use tools like Tlbimp.exe (Type Library Importer), you must follow these guidelines:
+If you intend to consume COM types from .NET and you don't want to use tools like [Tlbimp.exe (Type Library Importer)](../../framework/tools/tlbimp-exe-type-library-importer.md), you must follow these guidelines:
 
-- Interfaces must have the `System.Runtime.InteropServices.ComImportAttribute` applied.
-- Interfaces must have the `System.Runtime.InteropServices.GuidAttribute` applied with the Interface ID for the COM interface.
-- Interfaces should have the `System.Runtime.InteropServices.InterfaceTypeAttribute` applied to specify the base interface type of this interface (`IUnknown`, `IDispatch`, or `IInspectable`).
+- Interfaces must have the <xref:System.Runtime.InteropServices.ComImportAttribute> applied.
+- Interfaces must have the <xref:System.Runtime.InteropServices.GuidAttribute> applied with the Interface ID for the COM interface.
+- Interfaces should have the <xref:System.Runtime.InteropServices.InterfaceTypeAttribute> applied to specify the base interface type of this interface (`IUnknown`, `IDispatch`, or `IInspectable`).
   - The default option is to have the base type of `IDispatch` and append the declared methods to the expected virtual function table for the interface.
   - Only .NET Framework supports specifying a base type of `IInspectable`.
 
-These guidelines provide the minimum requirements for common scenarios. Many more customization options exist and are described in Applying Interop Attributes.
+These guidelines provide the minimum requirements for common scenarios. Many more customization options exist and are described in [Applying Interop Attributes](apply-interop-attributes.md).
 
 ### Define COM interfaces in .NET
 
-When .NET code tries to call a method on a COM object through an interface with the `System.Runtime.InteropServices.ComImportAttribute` attribute, it needs to build up a virtual function table (also known as vtable or vftable) to form the .NET definition of the interface to determine the native code to call. This process is complex. The following examples show some simple cases.
+When .NET code tries to call a method on a COM object through an interface with the <xref:System.Runtime.InteropServices.ComImportAttribute> attribute, it needs to build up a virtual function table (also known as vtable or vftable) to form the .NET definition of the interface to determine the native code to call. This process is complex. The following examples show some simple cases.
 
 Consider a COM interface with a few methods:
 
@@ -90,9 +93,9 @@ interface IComInterface
 }
 ```
 
-The `System.Runtime.InteropServices.InterfaceTypeAttribute` specifies the base interface. It provides a few options:
+The <xref:System.Runtime.InteropServices.InterfaceTypeAttribute> specifies the base interface. It provides a few options:
 
-| `System.Runtime.InteropServices.ComInterfaceType` Value | Base interface type | Behavior for members on attributed interface |
+| <xref:System.Runtime.InteropServices.ComInterfaceType> Value | Base interface type | Behavior for members on attributed interface |
 |------------|---------------|------------------|
 | `InterfaceIsIUnknown` | `IUnknown` | Virtual function table first has the members of `IUnknown`, then the members of this interface in declaration order. |
 | `InterfaceIsIDispatch` | `IDispatch` | Members are not added to the virtual function table. They're only accessible through `IDispatch`. |
@@ -101,7 +104,7 @@ The `System.Runtime.InteropServices.InterfaceTypeAttribute` specifies the base i
 
 #### COM interface inheritance and .NET
 
-The COM interop system that uses the `System.Runtime.InteropServices.ComImportAttribute` does not interact with interface inheritance, so it can cause unexpected behavior unless some mitigating steps are taken.
+The COM interop system that uses the <xref:System.Runtime.InteropServices.ComImportAttribute> does not interact with interface inheritance, so it can cause unexpected behavior unless some mitigating steps are taken.
 
 The COM source generator that uses the `System.Runtime.InteropServices.Marshalling.GeneratedComInterfaceAttribute` attribute does interact with interface inheritance, so it behaves more as expected.
 
@@ -143,10 +146,10 @@ This declaration style is regularly used as a mechanism to add methods to COM ob
 
 As a result, it's easy to call a method defined on `IComInterface` from an `IComInterface2*`. Specifically, calling a method on a base interface does not require a call to `QueryInterface` to get a pointer to the base interface. Additionally, C++ allows an implicit conversion from `IComInterface2*` to `IComInterface*`, which is well defined and lets you avoid calling a `QueryInterface` again. As a result, in C or C++, you never have to call `QueryInterface` to get to the base type if you don't want to, which can allow some performance improvements.
 
-> **Note:**
+> [!NOTE]
 > WinRT interfaces don't follow this inheritance model. They're defined to follow the same model as the `[ComImport]`-based COM interop model in .NET.
 
-###### Interface inheritance with `System.Runtime.InteropServices.ComImportAttribute`
+###### Interface inheritance with <xref:System.Runtime.InteropServices.ComImportAttribute>
 
 In .NET, C# code that looks like interface inheritance isn't actually interface inheritance. Consider the following code:
 
@@ -161,7 +164,7 @@ interface J : I
 }
 ```
 
-This code does not say, "`J` implements `I`." The code actually says, "any type that implements `J` must also implement `I`." This difference leads to the fundamental design decision that makes interface inheritance in `System.Runtime.InteropServices.ComImportAttribute`-based interop unergonomic. Interfaces are always considered on their own; an interface's base interface list has no impact on any calculations to determine a virtual function table for a given .NET interface.
+This code does not say, "`J` implements `I`." The code actually says, "any type that implements `J` must also implement `I`." This difference leads to the fundamental design decision that makes interface inheritance in <xref:System.Runtime.InteropServices.ComImportAttribute>-based interop unergonomic. Interfaces are always considered on their own; an interface's base interface list has no impact on any calculations to determine a virtual function table for a given .NET interface.
 
 As a result, the natural equivalent of the previous C++ COM interface example leads to a different virtual function table layout.
 
@@ -201,7 +204,7 @@ Virtual function table layouts:
 | 2                                            | `IUnknown::Release`        |
 | 3                                            | `IComInterface2::Method3`  |
 
-As these virtual function tables differ from the C++ example, this will lead to serious problems at runtime. The correct definition of these interfaces in .NET with `System.Runtime.InteropServices.ComImportAttribute` is as follows:
+As these virtual function tables differ from the C++ example, this will lead to serious problems at runtime. The correct definition of these interfaces in .NET with <xref:System.Runtime.InteropServices.ComImportAttribute> is as follows:
 
 ```csharp
 [ComImport]
@@ -268,9 +271,9 @@ As you can see, these tables match the C++ example, so these interfaces will fun
 
 ## See also
 
-- `System.Runtime.InteropServices.ComVisibleAttribute`
-- `System.Runtime.InteropServices.ComImportAttribute`
-- Expose .NET Framework components to COM
-- Introducing the class interface
-- Apply interop attributes
-- Package a .NET Framework assembly for COM
+- <xref:System.Runtime.InteropServices.ComVisibleAttribute>
+- <xref:System.Runtime.InteropServices.ComImportAttribute>
+- [Expose .NET Framework components to COM](exposing-dotnet-components-to-com.md)
+- [Introducing the class interface](com-callable-wrapper.md#introducing-the-class-interface)
+- [Apply interop attributes](apply-interop-attributes.md)
+- [Package a .NET Framework assembly for COM](packaging-an-assembly-for-com.md)

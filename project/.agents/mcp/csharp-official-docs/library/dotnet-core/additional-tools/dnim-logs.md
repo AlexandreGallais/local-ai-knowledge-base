@@ -1,10 +1,9 @@
 ---
-title: ".NET Install Manager Logging"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/additional-tools/dnim-logs.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: .NET Install Manager Logging
+description: An overview of various logs provided by DNIM.
+author: joeloff
+ms.date: 08/11/2026
+ai-usage: ai-assisted
 ---
 
 # Logging
@@ -50,6 +49,8 @@ HKEY_CURRENT_USER\Software\Microsoft\DNIM\License
 ## Events
 
 Commands that modify the state of a device will generate events in the Windows Application log using `DNIM` as the event source.
+
+![DNIM Start Event](./media/dnim/eventlog.png)
 
 ### Event IDs
 

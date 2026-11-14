@@ -1,12 +1,3 @@
----
-title: "Enumerated types"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/types/enum.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[type.enum]
 # Enumerated types
 
@@ -24,3 +15,8 @@ Any `enum` value consumes as much memory as the largest variant for its correspo
 
 r[type.enum.name]
 Enum types cannot be denoted *structurally* as types, but must be denoted by named reference to an [`enum` item].
+
+[^enumtype]: The `enum` type is analogous to a `data` constructor declaration in Haskell, or a *pick ADT* in Limbo.
+
+[`enum` item]: ../items/enumerations.md
+[struct expression]: ../expressions/struct-expr.md

@@ -1,33 +1,25 @@
----
-title: "AlgorithmParametersSpi class (java.security)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/AlgorithmParametersSpi.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AlgorithmParametersSpi class (java.security)
 
 ```java
 public abstract class AlgorithmParametersSpi
 ```
 
-This class defines the *Service Provider Interface* (**SPI**)
-for the `AlgorithmParameters` class, which is used to manage
+This class defines the <i>Service Provider Interface</i> (<b>SPI</b>)
+for the {@code AlgorithmParameters} class, which is used to manage
 algorithm parameters.
 
- All the abstract methods in this class must be implemented by each
+<p> All the abstract methods in this class must be implemented by each
 cryptographic service provider who wishes to supply parameter management
 for a particular algorithm.
 
-**See also:** AlgorithmParameters
+@author Jan Luehe
 
-**See also:** java.security.spec.AlgorithmParameterSpec
 
-**See also:** java.security.spec.DSAParameterSpec
+@see AlgorithmParameters
+@see java.security.spec.AlgorithmParameterSpec
+@see java.security.spec.DSAParameterSpec
 
-**Since:** 1.2
+@since 1.2
 
 ## AlgorithmParametersSpi.AlgorithmParametersSpi()
 
@@ -44,15 +36,13 @@ protected abstract void engineInit(AlgorithmParameterSpec paramSpec) throws Inva
 ```
 
 Initializes this parameters object using the parameters
-specified in `paramSpec`.
+specified in {@code paramSpec}.
 
-Parameters:
+@param paramSpec the parameter specification.
 
-- `paramSpec`: the parameter specification.
-
-Throws:
-
-- `InvalidParameterSpecException`: if the given parameter specification is inappropriate for the initialization of this parameter object.
+@throws    InvalidParameterSpecException if the given parameter
+specification is inappropriate for the initialization of this parameter
+object.
 
 ## AlgorithmParametersSpi.engineInit(byte[])
 
@@ -65,13 +55,9 @@ according to the primary decoding format for parameters.
 The primary decoding format for parameters is ASN.1, if an ASN.1
 specification for this type of parameters exists.
 
-Parameters:
+@param params the encoded parameters.
 
-- `params`: the encoded parameters.
-
-Throws:
-
-- `IOException`: on decoding errors
+@throws    IOException on decoding errors
 
 ## AlgorithmParametersSpi.engineInit(byte[], String)
 
@@ -79,21 +65,18 @@ Throws:
 protected abstract void engineInit(byte[] params, String format) throws IOException
 ```
 
-Imports the parameters from `params` and
+Imports the parameters from {@code params} and
 decodes them according to the specified decoding format.
-If `format` is `null`, the
+If {@code format} is {@code null}, the
 primary decoding format for parameters is used. The primary decoding
 format is ASN.1, if an ASN.1 specification for these parameters
 exists.
 
-Parameters:
+@param params the encoded parameters.
 
-- `params`: the encoded parameters.
-- `format`: the name of the decoding format.
+@param format the name of the decoding format.
 
-Throws:
-
-- `IOException`: on decoding errors
+@throws    IOException on decoding errors
 
 ## AlgorithmParametersSpi.engineGetParameterSpec(Class<T>)
 
@@ -103,22 +86,21 @@ protected abstract <T extends AlgorithmParameterSpec> T engineGetParameterSpec(C
 
 Returns a (transparent) specification of this parameters
 object.
-`paramSpec` identifies the specification class in which
+{@code paramSpec} identifies the specification class in which
 the parameters should be returned. It could, for example, be
-`DSAParameterSpec.class`, to indicate that the
+{@code DSAParameterSpec.class}, to indicate that the
 parameters should be returned in an instance of the
-`DSAParameterSpec` class.
+{@code DSAParameterSpec} class.
 
-Parameters:
+@param <T> the type of the parameter specification to be returned
 
-- `<T>`: the type of the parameter specification to be returned
-- `paramSpec`: the specification class in which the parameters should be returned.
+@param paramSpec the specification class in which
+the parameters should be returned.
 
-**Returns:** the parameter specification.
+@return the parameter specification.
 
-Throws:
-
-- `InvalidParameterSpecException`: if the requested parameter specification is inappropriate for this parameter object.
+@throws    InvalidParameterSpecException if the requested parameter
+specification is inappropriate for this parameter object.
 
 ## AlgorithmParametersSpi.engineGetEncoded()
 
@@ -130,11 +112,9 @@ Returns the parameters in their primary encoding format.
 The primary encoding format for parameters is ASN.1, if an ASN.1
 specification for this type of parameters exists.
 
-**Returns:** the parameters encoded using their primary encoding format.
+@return the parameters encoded using their primary encoding format.
 
-Throws:
-
-- `IOException`: on encoding errors.
+@throws    IOException on encoding errors.
 
 ## AlgorithmParametersSpi.engineGetEncoded(String)
 
@@ -143,20 +123,16 @@ protected abstract byte[] engineGetEncoded(String format) throws IOException
 ```
 
 Returns the parameters encoded in the specified format.
-If `format` is `null`, the
+If {@code format} is {@code null}, the
 primary encoding format for parameters is used. The primary encoding
 format is ASN.1, if an ASN.1 specification for these parameters
 exists.
 
-Parameters:
+@param format the name of the encoding format.
 
-- `format`: the name of the encoding format.
+@return the parameters encoded using the specified encoding scheme.
 
-**Returns:** the parameters encoded using the specified encoding scheme.
-
-Throws:
-
-- `IOException`: on encoding errors.
+@throws    IOException on encoding errors.
 
 ## AlgorithmParametersSpi.engineToString()
 
@@ -166,4 +142,4 @@ protected abstract String engineToString()
 
 Returns a formatted string describing the parameters.
 
-**Returns:** a formatted string describing the parameters.
+@return a formatted string describing the parameters.

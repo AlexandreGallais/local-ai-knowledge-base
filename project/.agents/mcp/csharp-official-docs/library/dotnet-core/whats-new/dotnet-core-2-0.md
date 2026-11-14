@@ -1,34 +1,27 @@
 ---
-title: "What's new in .NET Core 2.0"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/whats-new/dotnet-core-2-0.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: What's new in .NET Core 2.0
+description: Learn about the new features found in .NET Core.
+ms.date: 08/13/2017
+ms.update-cycle: 3650-days
 ---
-
 # What's new in .NET Core 2.0
 
 .NET Core 2.0 includes enhancements and new features in the following areas:
 
-- Tooling
-- Language support
-- Platform improvements
-- API changes
-- Visual Studio integration
-- Documentation improvements
+- [Tooling](#tooling)
+- [Language support](#language-support)
+- [Platform improvements](#platform-improvements)
+- [API changes](#api-changes-and-library-support)
+- [Visual Studio integration](#visual-studio-integration)
+- [Documentation improvements](#documentation-improvements)
 
 ## Tooling
 
 ### dotnet restore runs implicitly
 
-In previous versions of .NET Core, you had to run the dotnet restore command to download dependencies immediately after you created a new project with the dotnet new command, as well as whenever you added a new dependency to your project.
+In previous versions of .NET Core, you had to run the [dotnet restore](../tools/dotnet-restore.md) command to download dependencies immediately after you created a new project with the [dotnet new](../tools/dotnet-new.md) command, as well as whenever you added a new dependency to your project.
 
-You don't have to run `dotnet restore` because it's run implicitly by all commands that require a restore to occur, such as `dotnet new`, `dotnet build`, `dotnet run`, `dotnet test`, `dotnet publish`, and `dotnet pack`. To disable implicit restore, use the `--no-restore` option.
-
-The `dotnet restore` command is still useful in certain scenarios where explicitly restoring makes sense, such as continuous integration builds in Azure DevOps Services or in build systems that need to explicitly control when the restore occurs.
-
-For information about how to manage NuGet feeds, see the `dotnet restore` documentation.
+[!INCLUDE[DotNet Restore Note](~/includes/dotnet-restore-note.md)]
 
 You can also disable the automatic invocation of `dotnet restore` by passing the `--no-restore` switch to the `new`, `run`, `build`, `publish`, `pack`, and `test` commands.
 
@@ -52,7 +45,7 @@ You can also retarget .NET Standard libraries to .NET Standard 2.0 the same way:
  </PropertyGroup>
 ```
 
-For more information about migrating your project to .NET Core 2.0, see Migrating from ASP.NET Core 1.x to ASP.NET Core 2.0.
+For more information about migrating your project to .NET Core 2.0, see [Migrating from ASP.NET Core 1.x to ASP.NET Core 2.0](/aspnet/core/migration/1x-to-2x/index).
 
 ## Language support
 
@@ -74,17 +67,19 @@ For example, to create a Visual Basic "Hello World" application, do the followin
 
 1. Enter the command `dotnet new console -lang vb`.
 
-   The command creates a project file with a `.vbproj` file extension, along with a Visual Basic <example-value> code file named *Program.vb*. This file contains the source code to write the string "Hello World!" to the console window.
+   The command creates a project file with a `.vbproj` file extension, along with a Visual Basic source code file named *Program.vb*. This file contains the source code to write the string "Hello World!" to the console window.
 
-1. Enter the command `dotnet run`. The .NET CLI automatically compiles and executes the application, which displays the message "Hello World!" in the console window.
+1. Enter the command `dotnet run`. The [.NET CLI](../tools/index.md) automatically compiles and executes the application, which displays the message "Hello World!" in the console window.
 
 ### Support for C# 7.1
 
 .NET Core 2.0 supports C# 7.1, which adds a number of new features, including:
 
-- The `Main` method, the application entry point, can be marked with the async keyword.
+- The `Main` method, the application entry point, can be marked with the [async](../../csharp/language-reference/keywords/async.md) keyword.
 - Inferred tuple names.
 - Default expressions.
+
+<!-- For more information see [link to C# what's new](url). -->
 
 ## Platform improvements
 
@@ -104,19 +99,19 @@ You can also develop apps that target Linux as a single operating system. .NET C
 
 ### Support for .NET Standard 2.0
 
-.NET Standard defines a versioned set of APIs that must be available on .NET implementations that comply with that version of the standard. .NET Standard is targeted at library developers. It aims to guarantee the functionality that is available to a library that targets a version of .NET Standard on each .NET implementation. .NET Core 1.x supports .NET Standard version 1.6; .NET Core 2.0 supports the latest version, .NET Standard 2.0. For more information, see .NET Standard.
+.NET Standard defines a versioned set of APIs that must be available on .NET implementations that comply with that version of the standard. .NET Standard is targeted at library developers. It aims to guarantee the functionality that is available to a library that targets a version of .NET Standard on each .NET implementation. .NET Core 1.x supports .NET Standard version 1.6; .NET Core 2.0 supports the latest version, .NET Standard 2.0. For more information, see [.NET Standard](../../standard/net-standard.md).
 
 .NET Standard 2.0 includes over 20,000 more APIs than were available in .NET Standard 1.6. Much of this expanded surface area results from incorporating APIs that are common to the .NET Framework and Xamarin into .NET Standard.
 
 .NET Standard 2.0 class libraries can also reference .NET Framework class libraries, provided that they call APIs that are present in .NET Standard 2.0. No recompilation of the .NET Framework libraries is required.
 
-For a list of the APIs that have been added to .NET Standard since its last version, .NET Standard 1.6, see .NET Standard 2.0 vs. 1.6.
+For a list of the APIs that have been added to .NET Standard since its last version, .NET Standard 1.6, see [.NET Standard 2.0 vs. 1.6](https://raw.githubusercontent.com/dotnet/standard/release/2.0.0/docs/versions/netstandard2.0_diff.md).
 
 ### Expanded surface area
 
 The total number of APIs available on .NET Core 2.0 has more than doubled in comparison with .NET Core 1.1.
 
-And with the Windows Compatibility Pack porting from .NET Framework has also become much simpler.
+And with the [Windows Compatibility Pack](../porting/windows-compat-pack.md) porting from .NET Framework has also become much simpler.
 
 ### Support for .NET Framework libraries
 
@@ -130,17 +125,19 @@ Visual Studio 2017 version 15.3 offers a number of significant enhancements for 
 
 If the .NET Core 2.0 SDK is installed, you can retarget .NET Core 1.x projects to .NET Core 2.0 and .NET Standard 1.x libraries to .NET Standard 2.0.
 
-To retarget your project in Visual Studio, you open the **Application** tab of the project's properties dialog and change the **Target framework** value to **.NET Core 2.0** or **.NET Standard 2.0**. You can also change it by right-clicking on the project and selecting the **Edit \*.csproj file** option. For more information, see the Tooling section earlier in this topic.
+To retarget your project in Visual Studio, you open the **Application** tab of the project's properties dialog and change the **Target framework** value to **.NET Core 2.0** or **.NET Standard 2.0**. You can also change it by right-clicking on the project and selecting the **Edit \*.csproj file** option. For more information, see the [Tooling](#tooling) section earlier in this topic.
 
 ### Live Unit Testing support for .NET Core
 
 Whenever you modify your code, Live Unit Testing automatically runs any affected unit tests in the background and displays the results and code coverage live in the Visual Studio environment. .NET Core 2.0 now supports Live Unit Testing. Previously, Live Unit Testing was available only for .NET Framework applications.
 
-For more information, see Live Unit Testing with Visual Studio and the Live Unit Testing FAQ.
+For more information, see [Live Unit Testing with Visual Studio](/visualstudio/test/live-unit-testing) and the [Live Unit Testing FAQ](/visualstudio/test/live-unit-testing-faq).
 
 ### Better support for multiple target frameworks
 
 If you're building a project for multiple target frameworks, you can now select the target platform from the top-level menu. In the following figure, a project named SCD1 targets 64-bit macOS X 10.11 (`osx.10.11-x64`) and 64-bit Windows 10/Windows Server 2016 (`win10-x64`). You can select the target framework before selecting the project button, in this case to run a debug build.
+
+![Screenshot showing target framework selection when building a project.](./media/dotnet-core-2-0/target-framework-selection.png)
 
 ### Side-by-side support for .NET Core SDKs
 
@@ -150,12 +147,12 @@ You can now install the .NET Core SDK independently of Visual Studio. This makes
 
 ### .NET Application Architecture
 
-.NET Application Architecture gives you access to a set of e-books that provide guidance, best practices, and sample applications when using .NET to build:
+[.NET Application Architecture](https://dotnet.microsoft.com/learn/dotnet/architecture-guides) gives you access to a set of e-books that provide guidance, best practices, and sample applications when using .NET to build:
 
-- Microservices and Docker containers
-- Web applications with ASP.NET
-- Applications that are deployed to the Cloud with Azure
+- [Microservices and Docker containers](../../architecture/microservices/index.md)
+- [Web applications with ASP.NET](../../architecture/modern-web-apps-azure/index.md)
+- [Applications that are deployed to the Cloud with Azure](/azure/architecture/reference-architectures/index)
 
 ## See also
 
-- What's new in ASP.NET Core 2.0
+- [What's new in ASP.NET Core 2.0](/aspnet/core/aspnetcore-2.0)

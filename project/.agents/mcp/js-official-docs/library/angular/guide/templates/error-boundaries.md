@@ -1,15 +1,6 @@
----
-title: "Error boundaries with @boundary"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/templates/error-boundaries.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Error boundaries with `@boundary`
 
-IMPORTANT: `@boundary` is in developer preview.
+IMPORTANT: `@boundary` is in [developer preview](reference/releases#developer-preview).
 
 Angular templates support error boundaries to gracefully handle runtime errors that occur during rendering and change detection.
 
@@ -92,11 +83,11 @@ IMPORTANT: If an `@error` block itself throws an error, the error propagates to 
 
 ## Content projection
 
-If your component uses content projection, wrapping `<ng-content>` in a `@boundary` does not catch errors from projected content. That content belongs to the view that declares it, not the receiving component's view.
+If your component uses [content projection](guide/components/content-projection), wrapping `<ng-content>` in a `@boundary` does not catch errors from projected content. That content belongs to the view that declares it, not the receiving component's view.
 
 For example, a wrapper component with the following template does not catch errors from components projected into it:
 
-```angular-html
+```angular-html {avoid}
 @boundary {
   <ng-content />
 } @error {
@@ -106,7 +97,7 @@ For example, a wrapper component with the following template does not catch erro
 
 To catch those errors, wrap the wrapper component and its projected content in a `@boundary` in the parent template:
 
-```angular-html
+```angular-html {prefer}
 @boundary {
   <app-wrapper>
     <app-risky-component />
@@ -118,4 +109,4 @@ To catch those errors, wrap the wrapper component and its projected content in a
 
 ## Dynamic views and programmatic error handling
 
-Error handling isn't limited to template syntax. If you are creating components or embedded views dynamically, you can use the `onError` option to handle errors. See the Handling rendering errors section in the programmatic rendering guide for more information.
+Error handling isn't limited to template syntax. If you are creating components or embedded views dynamically, you can use the `onError` option to handle errors. See the [Handling rendering errors](guide/components/programmatic-rendering#handling-rendering-errors) section in the programmatic rendering guide for more information.

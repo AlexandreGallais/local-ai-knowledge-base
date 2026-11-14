@@ -1,30 +1,29 @@
 ---
-title: "Two-factor authentication with SMS in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/authentication/2fa.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Two-factor authentication with SMS in ASP.NET Core
+ai-usage: ai-assisted
+description: Learn how to set up two-factor authentication (2FA) with an ASP.NET Core app.
+monikerRange: '< aspnetcore-2.0'
+ms.custom: sfi-image-nochange
+ms.date: 09/22/2018
 ---
-
 # Two-factor authentication with SMS in ASP.NET Core
 
-By Rick Anderson and Swiss-Devs
+By [Rick Anderson](https://twitter.com/RickAndMSFT) and [Swiss-Devs](https://github.com/Swiss-Devs)
 
->**Warning:**
-> Two factor authentication (2FA) authenticator apps, using a Time-based One-time Password <example-value> (TOTP), are the industry recommended approach for 2FA. 2FA using TOTP is preferred to SMS 2FA. For more information, see Enable QR Code generation for TOTP authenticator apps in ASP.NET Core for ASP.NET Core 2.0 or later.
+>[!WARNING]
+> Two factor authentication (2FA) authenticator apps, using a Time-based One-time Password Algorithm (TOTP), are the industry recommended approach for 2FA. 2FA using TOTP is preferred to SMS 2FA. For more information, see [Enable QR Code generation for TOTP authenticator apps in ASP.NET Core](identity-enable-qrcodes.md) for ASP.NET Core 2.0 or later.
 
-This tutorial shows how to set up two-factor authentication (2FA) using SMS. Instructions are given for twilio and ASPSMS (`https://www.aspsms.com/asp.net/identity/core/testcredits/`), but you can use any other SMS provider. We recommend you complete Account Confirmation and Password <example-value> before starting this tutorial.
+This tutorial shows how to set up two-factor authentication (2FA) using SMS. Instructions are given for [twilio](https://www.twilio.com/) and ASPSMS (`https://www.aspsms.com/asp.net/identity/core/testcredits/`), but you can use any other SMS provider. We recommend you complete [Account Confirmation and Password Recovery](accconfirm.md) before starting this tutorial.
 
-View or download sample code. How to download.
+[View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/security/authentication/2fa/samples/Web2FA). [How to download](../../fundamentals/index.md#how-to-download-a-sample).
 
 ## Create a new ASP.NET Core project
 
-Create a new ASP.NET Core web app named `Web2FA` with individual accounts. Follow the instructions in Enforce HTTPS in ASP.NET Core to set up and require HTTPS.
+Create a new ASP.NET Core web app named `Web2FA` with individual accounts. Follow the instructions in [Enforce HTTPS in ASP.NET Core](../enforcing-ssl.md) to set up and require HTTPS.
 
 ### Create an SMS account
 
-Create an SMS account, for example, from twilio or ASPSMS (`https://www.aspsms.com/asp.net/identity/core/testcredits/`). Record the authentication credentials (for twilio: accountSid and authToken, for ASPSMS: Userkey and Password).
+Create an SMS account, for example, from [twilio](https://www.twilio.com/) or ASPSMS (`https://www.aspsms.com/asp.net/identity/core/testcredits/`). Record the authentication credentials (for twilio: accountSid and authToken, for ASPSMS: Userkey and Password).
 
 #### Figuring out SMS Provider credentials
 
@@ -50,23 +49,13 @@ We will later store this value with the secret-manager tool within the key `SMSA
 
 ### Provide credentials for the SMS service
 
-We'll use the Options pattern to access the user account and key settings.
+We'll use the [Options pattern](../../fundamentals/configuration/options.md) to access the user account and key settings.
 
 * Create a class to fetch the secure SMS key. For this sample, the `SMSoptions` class is created in the `Services/SMSoptions.cs` file.
 
-```csharp
-﻿namespace Web2FA.Services
-{
-    public class SMSoptions
-    {
-        public string SMSAccountIdentification { get; set; }
-        public string SMSAccountPassword { get; set; }
-        public string SMSAccountFrom { get; set; }
-    }
-}
-```
+[!code-csharp[](2fa/samples/Web2FA/Services/SMSoptions.cs)]
 
-Set the `SMSAccountIdentification`, `SMSAccountPassword` and `SMSAccountFrom` with the secret-manager tool. For example:
+Set the `SMSAccountIdentification`, `SMSAccountPassword` and `SMSAccountFrom` with the [secret-manager tool](../app-secrets.md). For example:
 
 ```none
 C:/Web2FA/src/WebApp1>dotnet user-secrets set SMSAccountIdentification 12345
@@ -85,108 +74,17 @@ info: Successfully saved SMSAccountIdentification = 12345 to the secret store.
 
 * Add code in the `Services/MessageServices.cs` file to enable SMS. Use either the Twilio or the ASPSMS section:
 
-**Twilio:**
-```csharp
-﻿using Microsoft.Extensions.Options;
-using System.Threading.Tasks;
-using Twilio;
-using Twilio.Rest.Api.V2010.Account;
-using Twilio.Types;
+**Twilio:**  
+[!code-csharp[](2fa/samples/Web2FA/Services/MessageServices_twilio.cs)]
 
-namespace Web2FA.Services
-{
-    // This class is used by the application to send Email and SMS
-    // when you turn on two-factor authentication in ASP.NET Identity.
-    // For more details see this link https://go.microsoft.com/fwlink/?LinkID=532713
-    public class AuthMessageSender : IEmailSender, ISmsSender
-    {
-        public AuthMessageSender(IOptions<SMSoptions> optionsAccessor)
-        {
-            Options = optionsAccessor.Value;
-        }
-
-        public SMSoptions Options { get; }  // set only via Secret <example-value>
-
-        public Task SendEmailAsync(string email, string subject, string message)
-        {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
-        }
-
-        public Task SendSmsAsync(string number, string message)
-        {
-            // Plug in your SMS service here to send a text message.
-            // Your Account SID from twilio.com/console
-            var accountSid = Options.SMSAccountIdentification;
-            // Your Auth Token from twilio.com/console
-            var authToken = Options.SMSAccountPassword;
-
-            TwilioClient.Init(accountSid, authToken);
-
-            return MessageResource.CreateAsync(
-              to: new PhoneNumber(number),
-              from: new PhoneNumber(Options.SMSAccountFrom),
-              body: message);
-        }
-    }
-}
-```
-
-**ASPSMS:**
-```csharp
-﻿using Microsoft.Extensions.Options;
-using System.Threading.Tasks;
-
-namespace Web2FA.Services
-{
-    // This class is used by the application to send Email and SMS
-    // when you turn on two-factor authentication in ASP.NET Identity.
-    // For more details see this link https://go.microsoft.com/fwlink/?LinkID=532713
-    public class AuthMessageSender : IEmailSender, ISmsSender
-    {
-        public AuthMessageSender(IOptions<SMSoptions> optionsAccessor)
-        {
-            Options = optionsAccessor.Value;
-        }
-
-        public SMSoptions Options { get; }  // set only via Secret <example-value>
-
-        public Task SendEmailAsync(string email, string subject, string message)
-        {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
-        }
-
-        public Task SendSmsAsync(string number, string message)
-        {
-            ASPSMS.SMS SMSSender = new ASPSMS.SMS();
-
-            SMSSender.Userkey = Options.SMSAccountIdentification;
-            SMSSender.Password = Options.SMSAccountPassword;
-            SMSSender.Originator = Options.SMSAccountFrom;
-
-            SMSSender.AddRecipient(number);
-            SMSSender.MessageData = message;
-
-            SMSSender.SendTextSMS();
-
-            return Task.FromResult(0);
-        }
-    }
-}
-```
+**ASPSMS:**  
+[!code-csharp[](2fa/samples/Web2FA/Services/MessageServices_ASPSMS.cs)]
 
 ### Configure startup to use `SMSoptions`
 
 Add `SMSoptions` to the service container in the `ConfigureServices` method in the `Startup.cs`:
 
-```csharp
-    // Add application services.
-    services.AddTransient<IEmailSender, AuthMessageSender>();
-    services.AddTransient<ISmsSender, AuthMessageSender>();
-    services.Configure<SMSoptions>(Configuration);
-}
-```
+[!code-csharp[](2fa/samples/Web2FA/Startup.cs?name=snippet1&highlight=4)]
 
 ### Enable two-factor authentication
 
@@ -196,17 +94,29 @@ Open the `Views/Manage/Index.cshtml` Razor view file and remove the comment char
 
 * Run the app and register a new user
 
+![Web application Register view open in Microsoft Edge](2fa/_static/login2fa1.png)
+
 * Tap on your user name, which activates the `Index` action method in Manage controller. Then tap the phone number **Add** link.
+
+![Manage view - tap the "add" link](2fa/_static/login2fa2.png)
 
 * Add a phone number that will receive the verification code, and tap **Send verification code**.
 
+![Add Phone Number page](2fa/_static/login2fa3.png)
+
 * You will get a text message with the verification code. Enter it and tap **Submit**
+
+![Verify Phone Number page](2fa/_static/login2fa4.png)
 
 If you don't get a text message, see twilio log page.
 
 * The Manage view shows your phone number was added successfully.
 
+![Manage view - phone number added successfully](2fa/_static/login2fa5.png)
+
 * Tap **Enable** to enable two-factor authentication.
+
+![Manage view - enable two-factor authentication](2fa/_static/login2fa6.png)
 
 ### Test two-factor authentication
 
@@ -216,41 +126,21 @@ If you don't get a text message, see twilio log page.
 
 * The user account has enabled two-factor authentication, so you have to provide the second factor of authentication. In this tutorial you have enabled phone verification. The built in templates also allow you to set up email as the second factor. You can set up additional second factors for authentication such as QR codes. Tap **Submit**.
 
+![Send Verification Code view](2fa/_static/login2fa7.png)
+
 * Enter the code you get in the SMS message.
 
 * Clicking on the **Remember this browser** checkbox will exempt you from needing to use 2FA to log on when using the same device and browser. Enabling 2FA and clicking on **Remember this browser** will provide you with strong 2FA protection from malicious users trying to access your account, as long as they don't have access to your device. You can do this on any private device you regularly use. By setting  **Remember this browser**, you get the added security of 2FA from devices you don't regularly use, and you get the convenience on not having to go through 2FA on your own devices.
 
+![Verify view](2fa/_static/login2fa8.png)
+
 ## Account lockout for protecting against brute force attacks
 
-Account lockout is recommended with 2FA. Once a user signs in through a local account or social account, each failed attempt at 2FA is stored. If the maximum failed access attempts is reached, the user is locked out (default: 5 minute lockout after 5 failed access attempts). A successful authentication resets the failed access attempts count and resets the clock. The maximum failed access attempts and lockout time can be set with `Microsoft.AspNetCore.Identity.LockoutOptions.MaxFailedAccessAttempts` and `Microsoft.AspNetCore.Identity.LockoutOptions.DefaultLockoutTimeSpan`. The following configures account lockout for 10 minutes after 10 failed access attempts:
+Account lockout is recommended with 2FA. Once a user signs in through a local account or social account, each failed attempt at 2FA is stored. If the maximum failed access attempts is reached, the user is locked out (default: 5 minute lockout after 5 failed access attempts). A successful authentication resets the failed access attempts count and resets the clock. The maximum failed access attempts and lockout time can be set with <xref:Microsoft.AspNetCore.Identity.LockoutOptions.MaxFailedAccessAttempts> and <xref:Microsoft.AspNetCore.Identity.LockoutOptions.DefaultLockoutTimeSpan>. The following configures account lockout for 10 minutes after 10 failed access attempts:
 
-```csharp
-public void ConfigureServices(IServiceCollection services)
-{
-    // Add framework services.
-    services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+[!code-csharp[](2fa/samples/Web2FA/Startup.cs?name=snippet2&highlight=13-17)]
 
-    services.AddIdentity<ApplicationUser, IdentityRole>()
-        .AddEntityFrameworkStores<ApplicationDbContext>()
-        .AddDefaultTokenProviders();
-
-    services.AddMvc();
-
-    services.Configure<IdentityOptions>(options =>
-    {
-        options.Lockout.MaxFailedAccessAttempts = 10;
-        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
-    });
-
-    // Add application services.
-    services.AddTransient<IEmailSender, AuthMessageSender>();
-    services.AddTransient<ISmsSender, AuthMessageSender>();
-    services.Configure<SMSoptions>(Configuration);
-}
-```
-
-Confirm that `Microsoft.AspNetCore.Identity.SignInManager`1.PasswordSignInAsync*` sets `lockoutOnFailure` to `true`:
+Confirm that <xref:Microsoft.AspNetCore.Identity.SignInManager`1.PasswordSignInAsync*> sets `lockoutOnFailure` to `true`:
 
 ```csharp
 var result = await _signInManager.PasswordSignInAsync(

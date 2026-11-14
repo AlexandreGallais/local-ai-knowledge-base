@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: COR_HEAPOBJECT Structure"
 title: "COR_HEAPOBJECT Structure"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cor-heapobject-structure.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "COR_HEAPOBJECT"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "COR_HEAPOBJECT"
+helpviewer_keywords:
+  - "COR_HEAPOBJECT structure [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # COR_HEAPOBJECT Structure
 
 Provides information about an object on the managed heap.
@@ -27,23 +35,23 @@ typedef struct _COR_HEAPOBJECT {
 |-----------|---------------------------------------------------------------------------------------|
 | `address` | The address of the object in memory.                                                  |
 | `size`    | The total size of the object, in bytes.                                               |
-| `type`    | A COR_TYPEID token that represents the type of the object. |
+| `type`    | A [COR_TYPEID](cor-typeid-structure.md) token that represents the type of the object. |
 
 ## Remarks
 
- `COR_HEAPOBJECT` instances can be retrieved by enumerating an ICorDebugHeapEnum interface object that is populated by calling the ICorDebugProcess5::EnumerateHeap method.
+ `COR_HEAPOBJECT` instances can be retrieved by enumerating an [ICorDebugHeapEnum](icordebugheapenum-interface.md) interface object that is populated by calling the [ICorDebugProcess5::EnumerateHeap](icordebugprocess5-enumerateheap-method.md) method.
 
  A `COR_HEAPOBJECT` instance provides information either about a live object on the managed heap, or about an object that is not rooted by any object but has not yet been collected by the garbage collector.
 
- For better performance, the `COR_HEAPOBJECT.address` field is a `CORDB_ADDRESS` value rather than the ICorDebugValue interface value used in much of the debugging API. To obtain an ICorDebugValue object for a given object address, you can pass the `CORDB_ADDRESS` value to the ICorDebugProcess5::GetObject method.
+ For better performance, the `COR_HEAPOBJECT.address` field is a `CORDB_ADDRESS` value rather than the ICorDebugValue interface value used in much of the debugging API. To obtain an ICorDebugValue object for a given object address, you can pass the `CORDB_ADDRESS` value to the [ICorDebugProcess5::GetObject](icordebugprocess5-getobject-method.md) method.
 
- For better performance, the `COR_HEAPOBJECT.type` field is a `COR_TYPEID` value rather than the ICorDebugType interface value used in much of the debugging API. To obtain an ICorDebugType object for a given type ID, you can pass the `COR_TYPEID` value to the ICorDebugProcess5::GetTypeForTypeID method.
+ For better performance, the `COR_HEAPOBJECT.type` field is a `COR_TYPEID` value rather than the ICorDebugType interface value used in much of the debugging API. To obtain an ICorDebugType object for a given type ID, you can pass the `COR_TYPEID` value to the [ICorDebugProcess5::GetTypeForTypeID](icordebugprocess5-gettypefortypeid-method.md) method.
 
- The `COR_HEAPOBJECT` structure includes a reference-counted COM interface. If you retrieve a `COR_HEAPOBJECT` instance from the enumerator by calling the ICorDebugHeapEnum::Next method, you must subsequently release the reference.
+ The `COR_HEAPOBJECT` structure includes a reference-counted COM interface. If you retrieve a `COR_HEAPOBJECT` instance from the enumerator by calling the [ICorDebugHeapEnum::Next](icordebugheapenum-next-method.md) method, you must subsequently release the reference.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

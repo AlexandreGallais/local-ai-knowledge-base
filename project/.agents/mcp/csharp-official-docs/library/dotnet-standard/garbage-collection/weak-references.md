@@ -1,12 +1,14 @@
 ---
 title: "Weak References"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/garbage-collection/weak-references.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about weak references, which allow the .NET garbage collector to collect an object while still allowing the application to access the object.
+ms.date: "03/30/2017"
+helpviewer_keywords:
+  - "weak references, short"
+  - "weak references, using"
+  - "weak references, long"
+  - "garbage collection, weak references"
+ms.assetid: 6a600fe5-3af3-4c64-82da-10a0a8e2d79b
 ---
-
 # Weak References
 
 The garbage collector cannot collect an object in use by an application while the application's code can reach that object. The application is said to have a strong reference to the object.
@@ -17,9 +19,9 @@ The garbage collector cannot collect an object in use by an application while th
 
  Suppose a tree view in a Windows Forms application displays a complex hierarchical choice of options to the user. If the underlying data is large, keeping the tree in memory is inefficient when the user is involved with something else in the application.
 
- When the user switches away to another part of the application, you can use the `System.WeakReference` class to create a weak reference to the tree and destroy all strong references. When the user switches back to the tree, the application attempts to obtain a strong reference to the tree and, if successful, avoids reconstructing the tree.
+ When the user switches away to another part of the application, you can use the <xref:System.WeakReference> class to create a weak reference to the tree and destroy all strong references. When the user switches back to the tree, the application attempts to obtain a strong reference to the tree and, if successful, avoids reconstructing the tree.
 
- To establish a weak reference with an object, you create a `System.WeakReference` using the instance of the object to be tracked. For a code example, see `System.WeakReference` in the class library.
+ To establish a weak reference with an object, you create a <xref:System.WeakReference> using the instance of the object to be tracked. For a code example, see <xref:System.WeakReference> in the class library.
 
 ## Short and Long Weak References
 
@@ -27,15 +29,15 @@ The garbage collector cannot collect an object in use by an application while th
 
 - Short
 
-     The target of a short weak reference becomes `null` when the object is reclaimed by garbage collection. The weak reference is itself a managed object, and is subject to garbage collection just like any other managed object.  A short weak reference is the parameterless constructor for `System.WeakReference`.
+     The target of a short weak reference becomes `null` when the object is reclaimed by garbage collection. The weak reference is itself a managed object, and is subject to garbage collection just like any other managed object.  A short weak reference is the parameterless constructor for <xref:System.WeakReference>.
 
 - Long
 
-     A long weak reference is retained after the object's `System.Object.Finalize*` method has been called. This allows the object to be recreated, but the state of the object remains unpredictable. To use a long reference, specify `true` in the `System.WeakReference` constructor.
+     A long weak reference is retained after the object's <xref:System.Object.Finalize*> method has been called. This allows the object to be recreated, but the state of the object remains unpredictable. To use a long reference, specify `true` in the <xref:System.WeakReference> constructor.
 
-     If the object's type does not have a `System.Object.Finalize*` method, the short weak reference functionality applies and the weak reference is valid only until the target is collected, which can occur anytime after the finalizer is run.
+     If the object's type does not have a <xref:System.Object.Finalize*> method, the short weak reference functionality applies and the weak reference is valid only until the target is collected, which can occur anytime after the finalizer is run.
 
- To establish a strong reference and use the object again, cast the `System.WeakReference.Target` property of a `System.WeakReference` to the type of the object. If the `System.WeakReference.Target` property returns `null`, the object was collected; otherwise, you can continue to use the object because the application has regained a strong reference to it.
+ To establish a strong reference and use the object again, cast the <xref:System.WeakReference.Target> property of a <xref:System.WeakReference> to the type of the object. If the <xref:System.WeakReference.Target> property returns `null`, the object was collected; otherwise, you can continue to use the object because the application has regained a strong reference to it.
 
 ## Guidelines for Using Weak References
 
@@ -47,4 +49,4 @@ The garbage collector cannot collect an object in use by an application while th
 
 ## See also
 
-- Garbage Collection
+- [Garbage Collection](index.md)

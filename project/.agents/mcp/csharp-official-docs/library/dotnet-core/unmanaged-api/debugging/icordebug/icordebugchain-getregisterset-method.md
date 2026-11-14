@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugChain::GetRegisterSet Method"
 title: "ICorDebugChain::GetRegisterSet Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugchain-getregisterset-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugChain.GetRegisterSet"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugChain::GetRegisterSet"
+helpviewer_keywords:
+  - "ICorDebugChain::GetRegisterSet method [.NET debugging]"
+  - "GetRegisterSet method, ICorDebugChain interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugChain::GetRegisterSet Method
 
 Gets the register set for the active part of this chain.
@@ -22,11 +31,11 @@ HRESULT GetRegisterSet (
 ## Parameters
 
  `ppRegisters`
- [out] A pointer to the address of an ICorDebugRegisterSet object that represents the register set for the active part of this chain.
+ [out] A pointer to the address of an [ICorDebugRegisterSet](icordebugregisterset-interface.md) object that represents the register set for the active part of this chain.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

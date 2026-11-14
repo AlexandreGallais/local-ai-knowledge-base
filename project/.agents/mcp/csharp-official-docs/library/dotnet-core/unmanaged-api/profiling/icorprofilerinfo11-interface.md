@@ -1,26 +1,29 @@
 ---
+description: "Learn more about: ICorProfilerInfo11 Interface"
 title: "ICorProfilerInfo11 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/profiling/icorprofilerinfo11-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/19/2021"
+api_name:
+  - "ICorProfilerInfo11"
+api_location:
+  - "coreclr.dll"
+  - "corprof.idl"
+api_type:
+  - "COM"
 ---
-
 # ICorProfilerInfo11 interface
 
- A subclass of ICorProfilerInfo10 that provides methods to get and set environment variables in the process.
+ A subclass of [ICorProfilerInfo10](icorprofilerinfo10-interface.md) that provides methods to get and set environment variables in the process.
 
 ## Methods
 
 | Method | Description |
 |------------|-----------------|
-|GetEnvironmentVariable Method| Gets an environment variable. |
-|SetEnvironmentVariable Method| Sets an environment variable. |
+|[GetEnvironmentVariable Method](icorprofilerinfo11-getenvironmentvariable-method.md)| Gets an environment variable. |
+|[SetEnvironmentVariable Method](icorprofilerinfo11-setenvironmentvariable-method.md)| Sets an environment variable. |
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** CorProf.idl, CorProf.h
 

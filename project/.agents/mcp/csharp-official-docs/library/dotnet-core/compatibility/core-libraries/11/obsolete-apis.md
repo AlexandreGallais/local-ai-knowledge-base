@@ -1,17 +1,15 @@
 ---
 title: "Breaking change: .NET 11 obsoletions with custom IDs"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/11/obsolete-apis.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+titleSuffix: ""
+description: Learn about the APIs that have been marked as obsolete in .NET 11 with a custom diagnostic ID.
+ms.date: 10/14/2026
+ai-usage: ai-assisted
 ---
-
 # API obsoletions with non-default diagnostic IDs (.NET 11)
 
 Some APIs are marked as obsolete, starting in .NET 11.
 
-This breaking change is specific to APIs that have been marked as obsolete *with a custom diagnostic ID*. Suppressing the default obsoletion diagnostic ID, which is CS0618 for the C# compiler, does not suppress the warnings that the compiler generates when these APIs are used.
+This breaking change is specific to APIs that have been marked as obsolete *with a custom diagnostic ID*. Suppressing the default obsoletion diagnostic ID, which is [CS0618](../../../../csharp/language-reference/compiler-messages/cs0618.md) for the C# compiler, does not suppress the warnings that the compiler generates when these APIs are used.
 
 ## Change description
 
@@ -21,8 +19,8 @@ The following table lists the custom diagnostic IDs and their corresponding warn
 
 | Diagnostic ID                                                           | Description | Severity |
 |-------------------------------------------------------------------------|-------------|----------|
-| SYSLIB0064 | `System.Security.Cryptography.RSACryptoServiceProvider.Encrypt(System.Byte[],System.Boolean)` and `System.Security.Cryptography.RSACryptoServiceProvider.Decrypt(System.Byte[],System.Boolean)` are obsolete. Use the overloads that accept an `System.Security.Cryptography.RSAEncryptionPadding` instead. | Warning |
-| SYSLIB0066 | `Microsoft.Extensions.Options.IStartupValidator` is obsolete. Implement and register a custom `Microsoft.Extensions.Options.IAsyncStartupValidator` instead; don't register the same implementation under both startup-validator interfaces. | Warning |
+| [SYSLIB0064](../../../../fundamentals/syslib-diagnostics/syslib0064.md) | <xref:System.Security.Cryptography.RSACryptoServiceProvider.Encrypt(System.Byte[],System.Boolean)?displayProperty=nameWithType> and <xref:System.Security.Cryptography.RSACryptoServiceProvider.Decrypt(System.Byte[],System.Boolean)?displayProperty=nameWithType> are obsolete. Use the overloads that accept an <xref:System.Security.Cryptography.RSAEncryptionPadding> instead. | Warning |
+| [SYSLIB0066](../../../../fundamentals/syslib-diagnostics/syslib0066.md) | <xref:Microsoft.Extensions.Options.IStartupValidator> is obsolete. Implement and register a custom <xref:Microsoft.Extensions.Options.IAsyncStartupValidator> instead; don't register the same implementation under both startup-validator interfaces. | Warning |
 
 ## Version introduced
 
@@ -30,7 +28,7 @@ The following table lists the custom diagnostic IDs and their corresponding warn
 
 ## Type of breaking change
 
-These obsoletions can affect source compatibility.
+These obsoletions can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Recommended action
 
@@ -42,17 +40,17 @@ These obsoletions can affect source compatibility.
 
 ### SYSLIB0064
 
-- `System.Security.Cryptography.RSACryptoServiceProvider.Encrypt(System.Byte[],System.Boolean)`
-- `System.Security.Cryptography.RSACryptoServiceProvider.Decrypt(System.Byte[],System.Boolean)`
+- <xref:System.Security.Cryptography.RSACryptoServiceProvider.Encrypt(System.Byte[],System.Boolean)?displayProperty=fullName>
+- <xref:System.Security.Cryptography.RSACryptoServiceProvider.Decrypt(System.Byte[],System.Boolean)?displayProperty=fullName>
 
 ### SYSLIB0066
 
-- `Microsoft.Extensions.Options.IStartupValidator`
+- <xref:Microsoft.Extensions.Options.IStartupValidator>
 
 ## See also
 
-- Cryptography obsoletions (.NET 11)
-- API obsoletions with non-default diagnostic IDs (.NET 10)
-- API obsoletions with non-default diagnostic IDs (.NET 9)
-- API obsoletions with non-default diagnostic IDs (.NET 8)
-- Obsolete features in .NET 5+
+- [Cryptography obsoletions (.NET 11)](../../cryptography/11/obsolete-apis.md)
+- [API obsoletions with non-default diagnostic IDs (.NET 10)](../10.0/obsolete-apis.md)
+- [API obsoletions with non-default diagnostic IDs (.NET 9)](../9.0/obsolete-apis-with-custom-diagnostics.md)
+- [API obsoletions with non-default diagnostic IDs (.NET 8)](../8.0/obsolete-apis-with-custom-diagnostics.md)
+- [Obsolete features in .NET 5+](../../../../fundamentals/syslib-diagnostics/obsoletions-overview.md)

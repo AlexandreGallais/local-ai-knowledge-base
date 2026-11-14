@@ -1,19 +1,17 @@
 ---
-title: "Custom Reverse Engineering Templates - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/managing-schemas/scaffolding/templates.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Custom Reverse Engineering Templates - EF Core
+description: Using T4 text templates to customize the scaffolded code when reverse engineering an Entity Framework Core model from a database
+author: SamMonoRT
+ms.date: 08/16/2022
+uid: core/managing-schemas/scaffolding/templates
 ---
-
 # Custom Reverse Engineering Templates
 
-While reverse engineering, Entity Framework Core strives to scaffold good, general-purpose code that can be used in a variety of app types and uses common coding conventions for a consistent look and a familiar feel. Sometimes, however, more specialized code and alternative coding styles are desirable. This article shows how to customize the scaffolded code using T4 text templates.
+While [reverse engineering](xref:core/managing-schemas/scaffolding), Entity Framework Core strives to scaffold good, general-purpose code that can be used in a variety of app types and uses [common coding conventions](/dotnet/csharp/fundamentals/coding-style/coding-conventions) for a consistent look and a familiar feel. Sometimes, however, more specialized code and alternative coding styles are desirable. This article shows how to customize the scaffolded code using [T4 text templates](/visualstudio/modeling/code-generation-and-t4-text-templates).
 
 ## Prerequisites
 
-This article assumes you're familiar with reverse engineering in EF Core. If not, please review that article before proceeding.
+This article assumes you're familiar with [reverse engineering in EF Core](xref:core/managing-schemas/scaffolding). If not, please review that article before proceeding.
 
 ## Adding the default templates
 
@@ -40,17 +38,17 @@ This command adds the following files to your project.
 
 The `DbContext.t4` template is used to scaffold a DbContext class for the database, and the `EntityType.t4` template is used to scaffold entity type classes for each table and view in the database.
 
-> **Tip:**
+> [!TIP]
 > The .t4 extension is used (instead of .tt) to prevent Visual Studio from transforming the templates. The templates will be transformed by EF Core instead.
 
 ## Introduction to T4
 
-Let's open the `DbContext.t4` template and inspect its contents. This file is a T4 text template. T4 is a language for generating text using .NET. The following code is for illustrative purposes only; it does not represent the full contents of the file.
+Let's open the `DbContext.t4` template and inspect its contents. This file is a [T4 text template](/visualstudio/modeling/writing-a-t4-text-template). T4 is a language for generating text using .NET. The following code is for illustrative purposes only; it does not represent the full contents of the file.
 
-> **Important:**
+> [!IMPORTANT]
 > T4 text templates--especially ones that generate code--can be difficult to read without syntax highlighting. If necessary, search for an extension to your code editor that enables T4 syntax highlighting.
 
-```t4
+```T4
 <#@ template hostSpecific="true" #>
 <#@ assembly name="Microsoft.EntityFrameworkCore.Design" #>
 <#@ parameter name="NamespaceHint" type="System.String" #>
@@ -71,19 +69,19 @@ Directive   | Description
 `parameter` | Declares parameters that will be passed in by EF Core when transforming the template.
 `import`    | Like C# using directives, brings namespaces into scope for the template code.
 
-After the directives, the next section of `DbContext.t4` is called a control block. A standard control block begins with `<#` and ends with `#>`. The code inside of it will be executed when transforming the template. For a list of properties and methods available inside control blocks, see the TextTransformation class.
+After the directives, the next section of `DbContext.t4` is called a control block. A standard control block begins with `<#` and ends with `#>`. The code inside of it will be executed when transforming the template. For a list of properties and methods available inside control blocks, see the [TextTransformation](/dotnet/api/microsoft.visualstudio.texttemplating.texttransformation) class.
 
 Anything outside of a control block will be copied directly to the template output.
 
 An expression control block begins with `<#=`. The code inside of it will be evaluated and the result will be added to the template output. These are similar to C# interpolated string arguments.
 
-For a more detailed and complete explanation of the T4 syntax, see Writing a T4 Text Template.
+For a more detailed and complete explanation of the T4 syntax, see [Writing a T4 Text Template](/visualstudio/modeling/writing-a-t4-text-template).
 
 ## Customize the entity types
 
 Let's walk through what it's like to customize a template. By default, EF Core generates the following code for collection navigation properties.
 
-```c#
+```C#
 public virtual ICollection<Album> Albums { get; } = new List<Album>();
 ```
 
@@ -91,7 +89,7 @@ Using `List<T>` is a good default for most applications. However, if you're usin
 
 Open the `EntityType.t4` template and find where it generates `List<T>`. It looks like this:
 
-```t4
+```T4
     if (navigation.IsCollection)
     {
 #>
@@ -102,13 +100,13 @@ Open the `EntityType.t4` template and find where it generates `List<T>`. It look
 
 Replace List with ObservableCollection.
 
-```t4
+```T4
 public virtual ICollection<<#= targetType #>> <#= navigation.Name #> { get; } = new ObservableCollection<<#= targetType #>>();
 ```
 
 We also need to add a `using` directive to the scaffolded code. The usings are specified in a list near the top of the template. Add `System.Collections.ObjectModel` to the list.
 
-```c#
+```C#
 var usings = new List<string>
 {
     "System",
@@ -119,7 +117,7 @@ var usings = new List<string>
 
 Test the changes by using the reverse engineering commands. The templates inside your project are used automatically by the commands.
 
-### .NET CLI
+### [.NET CLI](#tab/dotnet-core-cli)
 
 ```dotnetcli
 dotnet ef dbcontext scaffold "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook" Microsoft.EntityFrameworkCore.SqlServer
@@ -127,7 +125,7 @@ dotnet ef dbcontext scaffold "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog
 
 If you've ran the command previously, add the `--force` option to overwrite the existing files.
 
-### Visual Studio
+### [Visual Studio](#tab/vs)
 
 ```powershell
 Scaffold-DbContext 'Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Chinook' Microsoft.EntityFrameworkCore.SqlServer
@@ -139,7 +137,7 @@ If you've ran the command previously, add the `-Force` switch to overwrite the e
 
 If you did everything correctly, the collection navigation properties should now use `ObservableCollection<T>`.
 
-```c#
+```C#
 public virtual ICollection<Album> Albums { get; } = new ObservableCollection<Album>();
 ```
 
@@ -155,7 +153,7 @@ cd efcore
 git diff v7.0.0 v8.0.0 -- src/EFCore.Design/Scaffolding/Internal/CSharpDbContextGenerator.tt src/EFCore.Design/Scaffolding/Internal/CSharpEntityTypeGenerator.tt
 ```
 
-Another way to review the changes is to download the two versions of Microsoft.EntityFrameworkCore.Templates from NuGet, extract their contents (you can change the file extensions to .zip), and compare those files.
+Another way to review the changes is to download the two versions of [Microsoft.EntityFrameworkCore.Templates](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Templates) from NuGet, extract their contents (you can change the file extensions to .zip), and compare those files.
 
 Before adding the default templates to a new project, remember to update to the latest EF Core template package.
 
@@ -173,7 +171,7 @@ When making advanced changes like this, just make sure the resulting model remai
 
 ### Entity configuration classes
 
-For large models, the OnModelCreating method of the DbContext class can become unmanageably large. One way to address this is to use `IEntityTypeConfiguration<T>` classes. See Creating and configuring a model for more information about these classes.
+For large models, the OnModelCreating method of the DbContext class can become unmanageably large. One way to address this is to use `IEntityTypeConfiguration<T>` classes. See [Creating and configuring a model](xref:core/modeling/index#grouping-configuration) for more information about these classes.
 
 To scaffold these classes, you can use a third template called `EntityTypeConfiguration.t4`. Like the `EntityType.t4` template, it gets used for each entity type in the model and uses the `EntityType` template parameter.
 
@@ -183,7 +181,7 @@ By default, the scaffolding process does not generate an entity for join tables 
 
 The scaffolding behavior for each entity is controlled by the EntityType.t4 template file. Within this file, there is a condition that short-circuits entity generation for simple many-to-many join tables. To override this behavior and generate the join entity, you can comment out this condition in the 'EntityType.t4' file.
 
-```t4
+```T4
 <#
     // Comment this condition
     if (EntityType.IsSimpleManyToManyJoinEntityType())
@@ -197,9 +195,9 @@ The scaffolding behavior for each entity is controlled by the EntityType.t4 temp
 
 ### Scaffolding other types of files
 
-The primary purpose of reverse engineering in EF Core is to scaffold a DbContext and entity types. However, there's nothing in the tools that require you to actually scaffold code. For example, you could instead scaffold an entity relationship diagram using Mermaid.
+The primary purpose of reverse engineering in EF Core is to scaffold a DbContext and entity types. However, there's nothing in the tools that require you to actually scaffold code. For example, you could instead scaffold an entity relationship diagram using [Mermaid](https://mermaid-js.github.io/).
 
-````t4
+````T4
 <#@ output extension=".md" #>
 <#@ assembly name="Microsoft.EntityFrameworkCore" #>
 <#@ assembly name="Microsoft.EntityFrameworkCore.Relational" #>

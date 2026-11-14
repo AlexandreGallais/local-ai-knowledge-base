@@ -1,15 +1,10 @@
 ---
-title: "vitest-browser-svelte"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/api/browser/svelte.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+outline: deep
 ---
 
 # vitest-browser-svelte
 
-The community `vitest-browser-svelte` package renders Svelte components in Browser Mode.
+The community [`vitest-browser-svelte`](https://npmx.dev/package/vitest-browser-svelte) package renders [Svelte](https://svelte.dev/) components in [Browser Mode](/guide/browser/).
 
 ```ts
 import { render } from 'vitest-browser-svelte'
@@ -27,12 +22,13 @@ test('counter button increments the count', async () => {
 })
 ```
 
-**Warning:**
-This library takes inspiration from `@testing-library/svelte`.
+::: warning
+This library takes inspiration from [`@testing-library/svelte`](https://github.com/testing-library/svelte-testing-library).
 
 If you have used `@testing-library/svelte` in your tests before, you can keep using it, however the `vitest-browser-svelte` package provides certain benefits unique to the Browser Mode that `@testing-library/svelte` lacks:
 
-`vitest-browser-svelte` returns APIs that interact well with built-in locators, user events and assertions: for example, Vitest will automatically retry the element until the assertion is successful, even if it was rerendered between the assertions.
+`vitest-browser-svelte` returns APIs that interact well with built-in [locators](/api/browser/locators), [user events](/api/browser/interactivity) and [assertions](/api/browser/assertions): for example, Vitest will automatically retry the element until the assertion is successful, even if it was rerendered between the assertions.
+:::
 
 The package exposes two entry points: `vitest-browser-svelte` and `vitest-browser-svelte/pure`. They expose identical API, but the `pure` entry point doesn't add a handler to remove the component before the next test has started.
 
@@ -46,11 +42,11 @@ export function render<C extends Component>(
 ): Promise<RenderResult<C>>
 ```
 
-The `render` function records a `svelte.render` trace mark, visible in the Trace View.
+The `render` function records a `svelte.render` trace mark, visible in the [Trace View](/guide/browser/trace-view).
 
 ### Options
 
-The `render` function supports either options that you can pass down to `mount` or props directly:
+The `render` function supports either options that you can pass down to [`mount`](https://svelte.dev/docs/svelte/imperative-component-api#mount) or props directly:
 
 ```ts
 const screen = await render(Component, {
@@ -89,7 +85,7 @@ If the `target` is specified, then this defaults to that, otherwise this default
 
 ### Render Result
 
-In addition to documented return value, the `render` function also returns all available locators relative to the `baseElement`, including custom ones.
+In addition to documented return value, the `render` function also returns all available [locators](/api/browser/locators) relative to the [`baseElement`](#baseelement), including [custom ones](/api/browser/locators#custom-locators).
 
 ```ts
 const screen = await render(TableBody, props)
@@ -101,8 +97,9 @@ await screen.getByRole('link', { name: 'Expand' }).click()
 
 The containing DOM node where your Svelte component is rendered. This is a regular DOM node, so you technically could call `container.querySelector` etc. to inspect the children.
 
-**Danger:**
-If you find yourself using `container` to query for rendered elements then you should reconsider! The locators are designed to be more resilient to changes that will be made to the component you're testing. Avoid using `container` to query for elements!
+:::danger
+If you find yourself using `container` to query for rendered elements then you should reconsider! The [locators](/api/browser/locators) are designed to be more resilient to changes that will be made to the component you're testing. Avoid using `container` to query for elements!
+:::
 
 #### component
 
@@ -118,7 +115,7 @@ const { component } = await render(Counter, {
 
 #### locator
 
-The locator of your `container`. It is useful to use queries scoped only to your component, or pass it down to other assertions:
+The [locator](/api/browser/locators) of your `container`. It is useful to use queries scoped only to your component, or pass it down to other assertions:
 
 ```ts
 import { render } from 'vitest-browser-svelte'
@@ -147,7 +144,7 @@ This method is a shortcut for `console.log(prettyDOM(baseElement))`. It will pri
 function rerender(props: Partial<ComponentProps<T>>): Promise<void>
 ```
 
-Updates the component's props and waits for Svelte to apply the changes. Use this to test how your component responds to prop changes. Also records a `svelte.rerender` trace mark in the Trace View.
+Updates the component's props and waits for Svelte to apply the changes. Use this to test how your component responds to prop changes. Also records a `svelte.rerender` trace mark in the [Trace View](/guide/browser/trace-view).
 
 ```ts
 import { render } from 'vitest-browser-svelte'
@@ -166,7 +163,7 @@ await rerender({ number: 2 })
 function unmount(): Promise<void>
 ```
 
-Unmount and destroy the Svelte component. Also records a `svelte.unmount` trace mark in the Trace View. This is useful for testing what happens when your component is removed from the page (like testing that you don't leave event handlers hanging around causing memory leaks).
+Unmount and destroy the Svelte component. Also records a `svelte.unmount` trace mark in the [Trace View](/guide/browser/trace-view). This is useful for testing what happens when your component is removed from the page (like testing that you don't leave event handlers hanging around causing memory leaks).
 
 ```ts
 import { render } from 'vitest-browser-svelte'
@@ -182,13 +179,13 @@ await unmount()
 export function cleanup(): void
 ```
 
-Remove all components rendered with `render`.
+Remove all components rendered with [`render`](#render).
 
 ## Extend Queries
 
-To extend locator queries, see `"Custom Locators"`. For example, to make `render` return a new custom locator, define it using the `locators.extend` API:
+To extend locator queries, see [`"Custom Locators"`](/api/browser/locators#custom-locators). For example, to make `render` return a new custom locator, define it using the `locators.extend` API:
 
-```ts
+```ts {5-7,12}
 import { locators } from 'vitest/browser'
 import { render } from 'vitest-browser-svelte'
 
@@ -210,13 +207,13 @@ For simple snippets, you can use a wrapper component and "dummy" children to tes
 
 ::: code-group
 
-```ts
+```ts [basic.test.js]
 import { render } from 'vitest-browser-svelte'
 import { expect, test } from 'vitest'
 
 import SubjectTest from './basic-snippet.test.svelte'
 
-test('basic <example-value>', async () => {
+test('basic snippet', async () => {
   const screen = await render(SubjectTest)
 
   const heading = screen.getByRole('heading')
@@ -226,7 +223,7 @@ test('basic <example-value>', async () => {
 })
 ```
 
-```svelte
+```svelte [basic-snippet.svelte]
 <script>
   let { children } = $props()
 </script>
@@ -236,7 +233,7 @@ test('basic <example-value>', async () => {
 </h1>
 ```
 
-```svelte
+```svelte [basic-snippet.test.svelte]
 <script>
   import Subject from './basic-snippet.svelte'
 </script>
@@ -246,11 +243,13 @@ test('basic <example-value>', async () => {
 </Subject>
 ```
 
-For more complex snippets, e.g. where you want to check arguments, you can use Svelte's `createRawSnippet` API.
+:::
+
+For more complex snippets, e.g. where you want to check arguments, you can use Svelte's [`createRawSnippet`](https://svelte.dev/docs/svelte/svelte#createRawSnippet) API.
 
 ::: code-group
 
-```js
+```js [complex-snippet.test.js]
 import { render } from 'vitest-browser-svelte'
 import { createRawSnippet } from 'svelte'
 import { expect, test } from 'vitest'
@@ -271,7 +270,7 @@ test('renders greeting in message snippet', async () => {
 })
 ```
 
-```svelte
+```svelte [complex-snippet.svelte]
 <script>
   let { name, message } = $props()
 
@@ -283,7 +282,9 @@ test('renders greeting in message snippet', async () => {
 </p>
 ```
 
+:::
+
 ## See also
 
-- Svelte Testing Library documentation
-- Svelte Testing Library examples
+- [Svelte Testing Library documentation](https://testing-library.com/docs/svelte-testing-library/intro)
+- [Svelte Testing Library examples](https://github.com/testing-library/svelte-testing-library/tree/main/examples)

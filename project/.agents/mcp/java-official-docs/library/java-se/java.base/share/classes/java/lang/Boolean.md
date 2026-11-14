@@ -1,35 +1,28 @@
----
-title: "Boolean class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/Boolean.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Boolean class (java.lang)
 
 ```java
 public final class Boolean implements java.io.Serializable, Comparable<Boolean>, Constable
 ```
 
-The `Boolean` class is the wrapper class for values of the primitive
-type `boolean`. An object of type `Boolean` contains a
-single field whose type is `boolean`.
+The {@code Boolean} class is the {@linkplain
+java.lang##wrapperClass wrapper class} for values of the primitive
+type {@code boolean}. An object of type {@code Boolean} contains a
+single field whose type is {@code boolean}.
 
-In addition, this class provides many methods for
-converting a `boolean` to a `String` and a
-`String` to a `boolean`, as well as other
+<p>In addition, this class provides many methods for
+converting a {@code boolean} to a {@code String} and a
+{@code String} to a {@code boolean}, as well as other
 constants and methods useful when dealing with a
-`boolean`.
+{@code boolean}.
 
-This is a value-based
+<p>This is a <a href="{@docRoot}/java.base/java/lang/doc-files/ValueBased.html">value-based</a>
 class; programmers should treat instances that are
-equal as interchangeable and should not
+{@linkplain #equals(Object) equal} as interchangeable and should not
 use instances for synchronization, or unpredictable behavior may
 occur. For example, in a future release, synchronization may fail.
 
-**Since:** 1.0
+@author  Arthur van Hoff
+@since   1.0
 
 ## Boolean.TRUE
 
@@ -37,8 +30,8 @@ occur. For example, in a future release, synchronization may fail.
 public static final Boolean TRUE
 ```
 
-The `Boolean` object corresponding to the primitive
-value `true`.
+The {@code Boolean} object corresponding to the primitive
+value {@code true}.
 
 ## Boolean.FALSE
 
@@ -46,8 +39,8 @@ value `true`.
 public static final Boolean FALSE
 ```
 
-The `Boolean` object corresponding to the primitive
-value `false`.
+The {@code Boolean} object corresponding to the primitive
+value {@code false}.
 
 ## Boolean.TYPE
 
@@ -57,7 +50,7 @@ public static final Class<Boolean> TYPE
 
 The Class object representing the primitive type boolean.
 
-**Since:** 1.1
+@since   1.1
 
 ## Boolean.Boolean(boolean)
 
@@ -65,17 +58,16 @@ The Class object representing the primitive type boolean.
 public Boolean(boolean value)
 ```
 
-Allocates a `Boolean` object representing the
-`value` argument.
+Allocates a {@code Boolean} object representing the
+{@code value} argument.
 
-Parameters:
+@param   value   the value of the {@code Boolean}.
 
-- `value`: the value of the `Boolean`.
-
-**Deprecated:** It is rarely appropriate to use this constructor. The static factory
-`valueOf(boolean)` is generally a better choice, as it is
+@deprecated
+It is rarely appropriate to use this constructor. The static factory
+{@link #valueOf(boolean)} is generally a better choice, as it is
 likely to yield significantly better space and time performance.
-Also consider using the final fields `TRUE` and `FALSE`
+Also consider using the final fields {@link #TRUE} and {@link #FALSE}
 if possible.
 
 ## Boolean.Boolean(String)
@@ -84,20 +76,19 @@ if possible.
 public Boolean(String s)
 ```
 
-Allocates a `Boolean` object representing the value
-`true` if the string argument is not `null`
-and is equal, ignoring case, to the string `"true"`.
-Otherwise, allocates a `Boolean` object representing the
-value `false`.
+Allocates a {@code Boolean} object representing the value
+{@code true} if the string argument is not {@code null}
+and is equal, ignoring case, to the string {@code "true"}.
+Otherwise, allocates a {@code Boolean} object representing the
+value {@code false}.
 
-Parameters:
+@param   s   the string to be converted to a {@code Boolean}.
 
-- `s`: the string to be converted to a `Boolean`.
-
-**Deprecated:** It is rarely appropriate to use this constructor.
-Use `parseBoolean(String)` to convert a string to a
-`boolean` primitive, or use `valueOf(String)`
-to convert a string to a `Boolean` object.
+@deprecated
+It is rarely appropriate to use this constructor.
+Use {@link #parseBoolean(String)} to convert a string to a
+{@code boolean} primitive, or use {@link #valueOf(String)}
+to convert a string to a {@code Boolean} object.
 
 ## Boolean.parseBoolean(String)
 
@@ -105,24 +96,19 @@ to convert a string to a `Boolean` object.
 public static boolean parseBoolean(String s)
 ```
 
-Parses the string argument as a boolean.  The `boolean`
-returned represents the value `true` if the string argument
-is not `null` and is equal, ignoring case, to the string
-`"true"`.
+Parses the string argument as a boolean.  The {@code boolean}
+returned represents the value {@code true} if the string argument
+is not {@code null} and is equal, ignoring case, to the string
+{@code "true"}.
 Otherwise, a false value is returned, including for a null
-argument.
+argument.<p>
+Example: {@code Boolean.parseBoolean("True")} returns {@code true}.<br>
+Example: {@code Boolean.parseBoolean("yes")} returns {@code false}.
 
-Example: `Boolean.parseBoolean("True")` returns `true`.
-
-Example: `Boolean.parseBoolean("yes")` returns `false`.
-
-Parameters:
-
-- `s`: the `String` containing the boolean representation to be parsed
-
-**Returns:** the boolean represented by the string argument
-
-**Since:** 1.5
+@param      s   the {@code String} containing the boolean
+                representation to be parsed
+@return     the boolean represented by the string argument
+@since 1.5
 
 ## Boolean.booleanValue()
 
@@ -130,10 +116,10 @@ Parameters:
 public boolean booleanValue()
 ```
 
-Returns the value of this `Boolean` object as a boolean
+Returns the value of this {@code Boolean} object as a boolean
 primitive.
 
-**Returns:** the primitive `boolean` value of this object.
+@return  the primitive {@code boolean} value of this object.
 
 ## Boolean.valueOf(boolean)
 
@@ -141,22 +127,18 @@ primitive.
 public static Boolean valueOf(boolean b)
 ```
 
-Returns a `Boolean` instance representing the specified
-`boolean` value.  If the specified `boolean` value
-is `true`, this method returns `Boolean.TRUE`;
-if it is `false`, this method returns `Boolean.FALSE`.
-If a new `Boolean` instance is not required, this method
+Returns a {@code Boolean} instance representing the specified
+{@code boolean} value.  If the specified {@code boolean} value
+is {@code true}, this method returns {@code Boolean.TRUE};
+if it is {@code false}, this method returns {@code Boolean.FALSE}.
+If a new {@code Boolean} instance is not required, this method
 should generally be used in preference to the constructor
-`Boolean(boolean)`, as this method is likely to yield
+{@link #Boolean(boolean)}, as this method is likely to yield
 significantly better space and time performance.
 
-Parameters:
-
-- `b`: a boolean value.
-
-**Returns:** a `Boolean` instance representing `b`.
-
-**Since:** 1.4
+@param  b a boolean value.
+@return a {@code Boolean} instance representing {@code b}.
+@since  1.4
 
 ## Boolean.valueOf(String)
 
@@ -164,18 +146,15 @@ Parameters:
 public static Boolean valueOf(String s)
 ```
 
-Returns a `Boolean` with a value represented by the
-specified string.  The `Boolean` returned represents a
-true value if the string argument is not `null`
-and is equal, ignoring case, to the string `"true"`.
+Returns a {@code Boolean} with a value represented by the
+specified string.  The {@code Boolean} returned represents a
+true value if the string argument is not {@code null}
+and is equal, ignoring case, to the string {@code "true"}.
 Otherwise, a false value is returned, including for a null
 argument.
 
-Parameters:
-
-- `s`: a string.
-
-**Returns:** the `Boolean` value represented by the string.
+@param   s   a string.
+@return  the {@code Boolean} value represented by the string.
 
 ## Boolean.toString(boolean)
 
@@ -183,18 +162,14 @@ Parameters:
 public static String toString(boolean b)
 ```
 
-Returns a `String` object representing the specified
-boolean.  If the specified boolean is `true`, then
-the string `"true"` will be returned, otherwise the
-string `"false"` will be returned.
+Returns a {@code String} object representing the specified
+boolean.  If the specified boolean is {@code true}, then
+the string {@code "true"} will be returned, otherwise the
+string {@code "false"} will be returned.
 
-Parameters:
-
-- `b`: the boolean to be converted
-
-**Returns:** the string representation of the specified `boolean`
-
-**Since:** 1.4
+@param b the boolean to be converted
+@return the string representation of the specified {@code boolean}
+@since 1.4
 
 ## Boolean.toString()
 
@@ -202,12 +177,12 @@ Parameters:
 public String toString()
 ```
 
-Returns a `String` object representing this Boolean's
-value.  If this object represents the value `true`,
-a string equal to `"true"` is returned. Otherwise, a
-string equal to `"false"` is returned.
+Returns a {@code String} object representing this Boolean's
+value.  If this object represents the value {@code true},
+a string equal to {@code "true"} is returned. Otherwise, a
+string equal to {@code "false"} is returned.
 
-**Returns:** a string representation of this object.
+@return  a string representation of this object.
 
 ## Boolean.hashCode()
 
@@ -215,11 +190,11 @@ string equal to `"false"` is returned.
 public int hashCode()
 ```
 
-Returns a hash code for this `Boolean` object.
+Returns a hash code for this {@code Boolean} object.
 
-**Returns:** the integer `1231` if this object represents
-`true`; returns the integer `1237` if this
-object represents `false`.
+@return  the integer {@code 1231} if this object represents
+{@code true}; returns the integer {@code 1237} if this
+object represents {@code false}.
 
 ## Boolean.hashCode(boolean)
 
@@ -227,16 +202,12 @@ object represents `false`.
 public static int hashCode(boolean value)
 ```
 
-Returns a hash code for a `boolean` value; compatible with
-`Boolean.hashCode()`.
+Returns a hash code for a {@code boolean} value; compatible with
+{@code Boolean.hashCode()}.
 
-Parameters:
-
-- `value`: the value to hash
-
-**Returns:** a hash code value for a `boolean` value.
-
-**Since:** 1.8
+@param value the value to hash
+@return a hash code value for a {@code boolean} value.
+@since 1.8
 
 ## Boolean.equals(Object)
 
@@ -244,16 +215,13 @@ Parameters:
 public boolean equals(Object obj)
 ```
 
-Returns `true` if and only if the argument is not
-`null` and is a `Boolean` object that
-represents the same `boolean` value as this object.
+Returns {@code true} if and only if the argument is not
+{@code null} and is a {@code Boolean} object that
+represents the same {@code boolean} value as this object.
 
-Parameters:
-
-- `obj`: the object to compare with.
-
-**Returns:** `true` if the Boolean objects represent the
-         same value; `false` otherwise.
+@param   obj   the object to compare with.
+@return  {@code true} if the Boolean objects represent the
+         same value; {@code false} otherwise.
 
 ## Boolean.getBoolean(String)
 
@@ -261,25 +229,18 @@ Parameters:
 public static boolean getBoolean(String name)
 ```
 
-Returns `true` if and only if the system property named
+Returns {@code true} if and only if the system property named
 by the argument exists and is equal to, ignoring case, the
-string `"true"`.
-A system property is accessible through `getProperty`, a
-method defined by the `System` class.
-
- If there is no
+string {@code "true"}.
+A system property is accessible through {@code getProperty}, a
+method defined by the {@code System} class.  <p> If there is no
 property with the specified name, or if the specified name is
-empty or null, then `false` is returned.
+empty or null, then {@code false} is returned.
 
-Parameters:
-
-- `name`: the system property name.
-
-**Returns:** the `boolean` value of the system property.
-
-**See also:** java.lang.System#getProperty(java.lang.String)
-
-**See also:** java.lang.System#getProperty(java.lang.String, java.lang.String)
+@param   name   the system property name.
+@return  the {@code boolean} value of the system property.
+@see     java.lang.System#getProperty(java.lang.String)
+@see     java.lang.System#getProperty(java.lang.String, java.lang.String)
 
 ## Boolean.compareTo(Boolean)
 
@@ -287,24 +248,16 @@ Parameters:
 public int compareTo(Boolean b)
 ```
 
-Compares this `Boolean` instance with another.
+Compares this {@code Boolean} instance with another.
 
-Parameters:
-
-- `b`: the `Boolean` instance to be compared
-
-**Returns:** zero if this object represents the same boolean value as the
+@param   b the {@code Boolean} instance to be compared
+@return  zero if this object represents the same boolean value as the
          argument; a positive value if this object represents true
          and the argument represents false; and a negative value if
          this object represents false and the argument represents true
-
-**See also:** Comparable
-
-**Since:** 1.5
-
-Throws:
-
-- `NullPointerException`: if the argument is `null`
+@throws  NullPointerException if the argument is {@code null}
+@see     Comparable
+@since  1.5
 
 ## Boolean.compare(boolean, boolean)
 
@@ -312,23 +265,18 @@ Throws:
 public static int compare(boolean x, boolean y)
 ```
 
-Compares two `boolean` values.
+Compares two {@code boolean} values.
 The value returned is identical to what would be returned by:
-
-```java
+<pre>
    Boolean.valueOf(x).compareTo(Boolean.valueOf(y))
-```
+</pre>
 
-Parameters:
-
-- `x`: the first `boolean` to compare
-- `y`: the second `boolean` to compare
-
-**Returns:** the value `0` if `x == y`;
-        a value less than `0` if `!x && y`; and
-        a value greater than `0` if `x && !y`
-
-**Since:** 1.7
+@param  x the first {@code boolean} to compare
+@param  y the second {@code boolean} to compare
+@return the value {@code 0} if {@code x == y};
+        a value less than {@code 0} if {@code !x && y}; and
+        a value greater than {@code 0} if {@code x && !y}
+@since 1.7
 
 ## Boolean.logicalAnd(boolean, boolean)
 
@@ -337,18 +285,13 @@ public static boolean logicalAnd(boolean a, boolean b)
 ```
 
 Returns the result of applying the logical AND operator to the
-specified `boolean` operands.
+specified {@code boolean} operands.
 
-Parameters:
-
-- `a`: the first operand
-- `b`: the second operand
-
-**Returns:** the logical AND of `a` and `b`
-
-**See also:** java.util.function.BinaryOperator
-
-**Since:** 1.8
+@param a the first operand
+@param b the second operand
+@return the logical AND of {@code a} and {@code b}
+@see java.util.function.BinaryOperator
+@since 1.8
 
 ## Boolean.logicalOr(boolean, boolean)
 
@@ -357,18 +300,13 @@ public static boolean logicalOr(boolean a, boolean b)
 ```
 
 Returns the result of applying the logical OR operator to the
-specified `boolean` operands.
+specified {@code boolean} operands.
 
-Parameters:
-
-- `a`: the first operand
-- `b`: the second operand
-
-**Returns:** the logical OR of `a` and `b`
-
-**See also:** java.util.function.BinaryOperator
-
-**Since:** 1.8
+@param a the first operand
+@param b the second operand
+@return the logical OR of {@code a} and {@code b}
+@see java.util.function.BinaryOperator
+@since 1.8
 
 ## Boolean.logicalXor(boolean, boolean)
 
@@ -377,18 +315,13 @@ public static boolean logicalXor(boolean a, boolean b)
 ```
 
 Returns the result of applying the logical XOR operator to the
-specified `boolean` operands.
+specified {@code boolean} operands.
 
-Parameters:
-
-- `a`: the first operand
-- `b`: the second operand
-
-**Returns:** the logical XOR of `a` and `b`
-
-**See also:** java.util.function.BinaryOperator
-
-**Since:** 1.8
+@param a the first operand
+@param b the second operand
+@return  the logical XOR of {@code a} and {@code b}
+@see java.util.function.BinaryOperator
+@since 1.8
 
 ## Boolean.describeConstable()
 
@@ -396,9 +329,8 @@ Parameters:
 public Optional<DynamicConstantDesc<Boolean>> describeConstable()
 ```
 
-Returns an `Optional` containing the nominal descriptor for this
+Returns an {@link Optional} containing the nominal descriptor for this
 instance.
 
-**Returns:** an `Optional` describing the `Boolean` instance
-
-**Since:** 15
+@return an {@link Optional} describing the {@linkplain Boolean} instance
+@since 15

@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: CorDebugExceptionFlags Enumeration"
 title: "CorDebugExceptionFlags Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cordebugexceptionflags-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "CorDebugExceptionFlags"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "CorDebugExceptionFlags"
+helpviewer_keywords:
+  - "CorDebugExceptionFlags enumeration [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # CorDebugExceptionFlags Enumeration
 
 Provides additional information about an exception.
@@ -25,7 +33,7 @@ typedef enum CorDebugExceptionFlags {
 | Member                 | Description            |
 |------------------------|------------------------|
 | `DEBUG_EXCEPTION_NONE` | There is no exception. |
-|`DEBUG_EXCEPTION_CAN_BE_INTERCEPTED`|The exception is interceptable. The timing of the exception may still be such that the debugger cannot intercept it. For example, if there is no managed code below the current callback or the exception event resulted from a just-in-time (JIT) attachment, the exception cannot be intercepted.|
+|`DEBUG_EXCEPTION_CAN_BE_INTERCEPTED`|The exception is interceptable.<br /><br /> The timing of the exception may still be such that the debugger cannot intercept it. For example, if there is no managed code below the current callback or the exception event resulted from a just-in-time (JIT) attachment, the exception cannot be intercepted.|
 
 ## Remarks
 
@@ -33,7 +41,7 @@ typedef enum CorDebugExceptionFlags {
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

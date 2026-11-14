@@ -1,12 +1,12 @@
 ---
-title: "Creating New Attributes for Elements in the DOM"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/creating-new-attributes-for-elements-in-the-dom.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn more about: Creating New Attributes for Elements in the DOM"
+title: Creating New Attributes for Elements in the DOM
+ms.date: 09/02/2021
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: dd6dc920-b011-418a-b3db-f1580a7d9251
 ---
-
 # Create new attributes for elements in the DOM
 
 Creating new attributes is different than creating other node types, because attributes are not nodes. They are properties of an element node and are contained in an **XmlAttributeCollection** associated with the element. There are multiple ways to create an attribute and attach it to an element:
@@ -104,9 +104,9 @@ doc.DocumentElement.SetAttributeNode(attr);
 </book>
 ```
 
-The full code sample can be found at `System.Xml.XmlDocument.CreateAttribute*`.
+The full code sample can be found at <xref:System.Xml.XmlDocument.CreateAttribute*>.
 
-If you created an **XmlNamedNodeMap** of attributes, you can add an attribute by name using the `System.Xml.XmlNamedNodeMap.SetNamedItem*` method. For more information, see Node Collections in NamedNodeMaps and NodeLists.
+If you created an **XmlNamedNodeMap** of attributes, you can add an attribute by name using the <xref:System.Xml.XmlNamedNodeMap.SetNamedItem*> method. For more information, see [Node Collections in NamedNodeMaps and NodeLists](node-collections-in-namednodemaps-and-nodelists.md).
 
 ## Default attributes
 
@@ -114,8 +114,8 @@ If you create an element that is declared to have a default attribute, then a ne
 
 ## Attribute child nodes
 
-The value of an attribute node becomes its child nodes. There are only two types of valid child nodes: **XmlText** nodes and **XmlEntityReference** nodes. These are child nodes in the sense that methods such as **FirstChild** and **LastChild** process them as child nodes. This distinction of an attribute having child nodes is important when trying to remove attributes or attribute child nodes. For more information, see Removing Attributes from an Element Node in the DOM.
+The value of an attribute node becomes its child nodes. There are only two types of valid child nodes: **XmlText** nodes and **XmlEntityReference** nodes. These are child nodes in the sense that methods such as **FirstChild** and **LastChild** process them as child nodes. This distinction of an attribute having child nodes is important when trying to remove attributes or attribute child nodes. For more information, see [Removing Attributes from an Element Node in the DOM](removing-attributes-from-an-element-node-in-the-dom.md).
 
 ## See also
 
-- XML Document Object Model (DOM)
+- [XML Document Object Model (DOM)](xml-document-object-model-dom.md)

@@ -1,12 +1,15 @@
 ---
 title: "Assembly versioning"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/assembly/versioning.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about versioning of .NET assemblies. All versioning of assemblies that use the CLR is done at the assembly level.
+ms.date: "08/20/2019"
+helpviewer_keywords:
+  - "informational versions"
+  - "version numbers, assemblies"
+  - "assemblies [.NET], versioning"
+  - "resolving assembly binding requests"
+  - "versioning, assemblies"
+ms.assetid: 775ad4fb-914f-453c-98ef-ce1089b6f903
 ---
-
 # Assembly versioning
 
 All versioning of assemblies that use the common language runtime is done at the assembly level. The specific version of an assembly and the versions of dependent assemblies are recorded in the assembly's manifest. The default version policy for the runtime is that applications run only with the versions they were built and tested with, unless overridden by explicit version policy in configuration files (the application configuration file, the publisher policy file, and the computer's administrator configuration file).
@@ -19,11 +22,13 @@ The runtime performs several steps to resolve an assembly binding request:
 
 3. Determines the correct assembly from the original assembly reference and any redirection specified in the configuration files, and determines the version that should be bound to the calling assembly.
 
-4. Checks the global assembly cache, codebases specified in configuration files, and then checks the application's directory and subdirectories using the probing rules explained in How the runtime locates assemblies.
+4. Checks the global assembly cache, codebases specified in configuration files, and then checks the application's directory and subdirectories using the probing rules explained in [How the runtime locates assemblies](../../framework/deployment/how-the-runtime-locates-assemblies.md).
 
 The following illustration shows these steps:
 
-For more information about configuring applications, see Configure apps. For more information about binding policy, see How the runtime locates assemblies.
+![Diagram that shows steps in assembly binding request resolution.](./media/versioning/resolve-assembly-binding-request.gif)
+
+For more information about configuring applications, see [Configure apps](../../framework/configure-apps/index.md). For more information about binding policy, see [How the runtime locates assemblies](../../framework/deployment/how-the-runtime-locates-assemblies.md).
 
 ## Version information
 
@@ -47,20 +52,20 @@ When an assembly is built, the development tool records dependency information f
 
 The runtime distinguishes between regular and strong-named assemblies for the purposes of versioning. Version checking only occurs with strong-named assemblies.
 
-For information about specifying version binding policies, see Configure apps. For information about how the runtime uses version information to find a particular assembly, see How the runtime locates assemblies.
+For information about specifying version binding policies, see [Configure apps](../../framework/configure-apps/index.md). For information about how the runtime uses version information to find a particular assembly, see [How the runtime locates assemblies](../../framework/deployment/how-the-runtime-locates-assemblies.md).
 
 ### Assembly informational version
 
 The informational version is a string that attaches additional version information to an assembly for informational purposes only; this information is not used at runtime. The text-based informational version corresponds to the product's marketing literature, packaging, or product name and is not used by the runtime. For example, an informational version could be "Common Language Runtime version 1.0" or "NET Control SP 2". On the Version tab of the file properties dialog in Microsoft Windows, this information appears in the item "Product Version".
 
-> **Note:**
+> [!NOTE]
 > Although you can specify any text, a warning message appears on compilation if the string is not in the format used by the assembly version number, or if it is in that format but contains wildcards. This warning is harmless.
 
-The informational version is represented using the custom attribute `System.Reflection.AssemblyInformationalVersionAttribute`. For more information about the informational version attribute, see Set assembly attributes.
+The informational version is represented using the custom attribute <xref:System.Reflection.AssemblyInformationalVersionAttribute?displayProperty=nameWithType>. For more information about the informational version attribute, see [Set assembly attributes](set-attributes.md).
 
 ## See also
 
-- How the runtime locates assemblies
-- Configure apps
-- Set assembly attributes
-- Assemblies in .NET
+- [How the runtime locates assemblies](../../framework/deployment/how-the-runtime-locates-assemblies.md)
+- [Configure apps](../../framework/configure-apps/index.md)
+- [Set assembly attributes](set-attributes.md)
+- [Assemblies in .NET](index.md)

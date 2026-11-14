@@ -1,15 +1,13 @@
 ---
 title: "URI query redaction in IHttpClientFactory logs"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/networking/9.0/query-redaction-logs.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in networking in .NET 9 where the IHttpClientFactory implementation scrubs query strings in logs to enhance privacy.
+ms.date: 11/5/2024
+ai-usage: ai-assisted
 ---
 
 # URI query and fragment redaction in IHttpClientFactory logs
 
-In .NET 9, the default implementation of `System.Net.Http.IHttpClientFactory` has been modified to scrub query strings when logging URI information. This change enhances privacy by preventing the logging of potentially sensitive information contained in query strings while keeping the performance costs of the redaction minimal. For scenarios where logging query strings is necessary and deemed safe, you can override this behavior.
+In .NET 9, the default implementation of <xref:System.Net.Http.IHttpClientFactory> has been modified to scrub query strings when logging URI information. This change enhances privacy by preventing the logging of potentially sensitive information contained in query strings while keeping the performance costs of the redaction minimal. For scenarios where logging query strings is necessary and deemed safe, you can override this behavior.
 
 ## Version introduced
 
@@ -17,15 +15,15 @@ In .NET 9, the default implementation of `System.Net.Http.IHttpClientFactory` ha
 
 ## Previous behavior
 
-Previously, the default implementation of `IHttpClientFactory` logging included query strings in the messages passed to `Microsoft.Extensions.Logging.ILogger`, which could inadvertently expose sensitive information.
+Previously, the default implementation of `IHttpClientFactory` logging included query strings in the messages passed to <xref:Microsoft.Extensions.Logging.ILogger>, which could inadvertently expose sensitive information.
 
 ## New behavior
 
-The messages passed to `Microsoft.Extensions.Logging.ILogger` now have the query part replaced by a `*` character, and the user info and fragment parts removed.
+The messages passed to <xref:Microsoft.Extensions.Logging.ILogger> now have the query part replaced by a `*` character, and the user info and fragment parts removed.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -61,9 +59,9 @@ If your application relies on logging query strings and you're confident that it
 
 Otherwise, no action is required, and the default behavior will help enhance the privacy aspects of your application.
 
-> **Note:**
-> This switch also skips URI redaction in `HttpClient` EventSource events. For more information, see URI redaction in HttpClient EventSource events.
+> [!NOTE]
+> This switch also skips URI redaction in `HttpClient` EventSource events. For more information, see [URI redaction in HttpClient EventSource events](query-redaction-events.md).
 
 ## Affected APIs
 
-- `Microsoft.Extensions.DependencyInjection.HttpClientFactoryServiceCollectionExtensions.AddHttpClient*`
+- <xref:Microsoft.Extensions.DependencyInjection.HttpClientFactoryServiceCollectionExtensions.AddHttpClient*?displayProperty=fullName>

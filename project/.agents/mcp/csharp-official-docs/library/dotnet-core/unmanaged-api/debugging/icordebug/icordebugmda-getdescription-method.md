@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugMDA::GetDescription Method"
 title: "ICorDebugMDA::GetDescription Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmda-getdescription-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugMDA.GetDescription"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugMDA::GetDescription"
+helpviewer_keywords:
+  - "GetDescription method [.NET debugging]"
+  - "ICorDebugMDA::GetDescription method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugMDA::GetDescription Method
 
-Gets a string containing the description of the managed debugging assistant (MDA) represented by ICorDebugMDA.
+Gets a string containing the description of the managed debugging assistant (MDA) represented by [ICorDebugMDA](icordebugmda-interface.md).
 
 ## Syntax
 
@@ -39,7 +48,7 @@ The string can be zero in length.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -49,5 +58,5 @@ The string can be zero in length.
 
 ## See also
 
-- ICorDebugMDA Interface
-- Diagnose Errors with Managed Debugging Assistants
+- [ICorDebugMDA Interface](icordebugmda-interface.md)
+- [Diagnose Errors with Managed Debugging Assistants](../../../../framework/debug-trace-profile/diagnosing-errors-with-managed-debugging-assistants.md)

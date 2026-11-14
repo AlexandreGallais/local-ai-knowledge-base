@@ -1,28 +1,19 @@
----
-title: "RecursiveAction class (java.util.concurrent)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/RecursiveAction.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # RecursiveAction class (java.util.concurrent)
 
 ```java
 public abstract class RecursiveAction extends ForkJoinTask<Void>
 ```
 
-A recursive resultless `ForkJoinTask`.  This class
+A recursive resultless {@link ForkJoinTask}.  This class
 establishes conventions to parameterize resultless actions as
-`Void` `ForkJoinTask`s. Because `null` is the
-only valid value of type `Void`, methods such as `join`
-always return `null` upon completion.
+{@code Void} {@code ForkJoinTask}s. Because {@code null} is the
+only valid value of type {@code Void}, methods such as {@code join}
+always return {@code null} upon completion.
 
-**Sample Usages.** Here is a simple but complete ForkJoin
-sort that sorts a given `long[]` array:
+<p><b>Sample Usages.</b> Here is a simple but complete ForkJoin
+sort that sorts a given {@code long[]} array:
 
-```java
+<pre> {@code
 static class SortTask extends RecursiveAction {
   final long[] array; final int lo, hi;
   SortTask(long[] array, int lo, int hi) {
@@ -50,14 +41,13 @@ static class SortTask extends RecursiveAction {
       array[j] = (k == hi || buf[i] < array[k]) ?
         buf[i++] : array[k++];
   }
-}
-```
+}}</pre>
 
-You could then sort `anArray` by creating `new SortTask(anArray)` and invoking it in a ForkJoinPool.  As a more
+You could then sort {@code anArray} by creating {@code new
+SortTask(anArray)} and invoking it in a ForkJoinPool.  As a more
 concrete simple example, the following task increments each element
 of an array:
-
-```java
+<pre> {@code
 class IncrementTask extends RecursiveAction {
   final long[] array; final int lo, hi;
   IncrementTask(long[] array, int lo, int hi) {
@@ -74,22 +64,21 @@ class IncrementTask extends RecursiveAction {
                 new IncrementTask(array, mid, hi));
     }
   }
-}
-```
+}}</pre>
 
-The following example illustrates some refinements and idioms
+<p>The following example illustrates some refinements and idioms
 that may lead to better performance: RecursiveActions need not be
 fully recursive, so long as they maintain the basic
 divide-and-conquer approach. Here is a class that sums the squares
 of each element of a double array, by subdividing out only the
 right-hand-sides of repeated divisions by two, and keeping track of
-them with a chain of `next` references. It uses a dynamic
-threshold based on method `getSurplusQueuedTaskCount`, but
+them with a chain of {@code next} references. It uses a dynamic
+threshold based on method {@code getSurplusQueuedTaskCount}, but
 counterbalances potential excess partitioning by directly
 performing leaf actions on unstolen tasks rather than further
 subdividing.
 
-```java
+<pre> {@code
 double sumOfSquares(ForkJoinPool pool, double[] array) {
   int n = array.length;
   Applyer a = new Applyer(array, 0, n, null);
@@ -136,10 +125,10 @@ class Applyer extends RecursiveAction {
     }
     result = sum;
   }
-}
-```
+}}</pre>
 
-**Since:** 1.7
+@since 1.7
+@author Doug Lea
 
 ## RecursiveAction.RecursiveAction()
 
@@ -163,9 +152,9 @@ The main computation performed by this task.
 public final Void getRawResult()
 ```
 
-Always returns `null`.
+Always returns {@code null}.
 
-**Returns:** `null` always
+@return {@code null} always
 
 ## RecursiveAction.setRawResult(Void)
 

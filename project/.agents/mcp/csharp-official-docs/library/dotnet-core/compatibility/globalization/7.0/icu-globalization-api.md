@@ -1,23 +1,19 @@
 ---
 title: "Breaking change: Globalization APIs use ICU libraries on Windows Server 2019"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/globalization/7.0/icu-globalization-api.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the globalization breaking change in .NET 7 where ICU libraries are used for globalization functionality instead of NLS on Windows Server.
+ms.date: 09/01/2022
 ---
-
 # Globalization APIs use ICU libraries on Windows Server 2019
 
-.NET 7 and later versions use International Components for Unicode (ICU) libraries for globalization functionality when running on Windows Server 2019. Non-server editions of Windows have been using ICU since .NET 5. However, .NET 7 introduced support for loading ICU in earlier Windows client versions, specifically Windows 10 versions 1703, 1709, 1803, and 1809.
+.NET 7 and later versions use [International Components for Unicode (ICU)](https://icu.unicode.org/) libraries for globalization functionality when running on Windows Server 2019. Non-server editions of Windows have been [using ICU since .NET 5](../5.0/icu-globalization-api.md). However, .NET 7 introduced support for loading ICU in earlier Windows client versions, specifically Windows 10 versions 1703, 1709, 1803, and 1809.
 
 ## Previous behavior
 
-In .NET 5 and .NET 6, the .NET libraries used National Language Support (NLS) APIs for globalization functionality on Windows Server 2019. For example, NLS functions were used to compare strings, get culture information, and perform string casing in the appropriate culture. This behavior also applied to Windows 10 client versions, such as 1703, 1709, 1803, and 1809.
+In .NET 5 and .NET 6, the .NET libraries used [National Language Support (NLS)](/windows/win32/intl/national-language-support) APIs for globalization functionality on Windows Server 2019. For example, NLS functions were used to compare strings, get culture information, and perform string casing in the appropriate culture. This behavior also applied to Windows 10 client versions, such as 1703, 1709, 1803, and 1809.
 
 ## New behavior
 
-Starting in .NET 7, if an app is running on Windows Server 2019 or Windows 10 client versions 1703, 1709, 1803, and 1809, .NET libraries use ICU globalization APIs, by default. (Non-server Windows versions have already been using ICU since .NET 5, so there is no change for these versions.)
+Starting in .NET 7, if an app is running on Windows Server 2019 or Windows 10 client versions 1703, 1709, 1803, and 1809, .NET libraries use [ICU](https://icu.unicode.org/) globalization APIs, by default. (Non-server Windows versions have already been [using ICU since .NET 5](../5.0/icu-globalization-api.md), so there is no change for these versions.)
 
 ## Behavioral differences
 
@@ -37,7 +33,7 @@ string text = string.Format("{0:C}", 100);
 
 ## Reason for change
 
-- .NET introduced some APIs that depend on ICU libraries, for example, `System.TimeZoneInfo.TryConvertIanaIdToWindowsId(System.String,System.String@)`. Users who wanted to use such APIs on Windows Server 2019 were required to manually deploy ICU libraries with their binaries, using the ICU App Local feature. This wasn't a great solution, because the code can be in a library that can't control forcing ICU libraries to be installed with whatever app or service is using the library.
+- .NET introduced some APIs that depend on ICU libraries, for example, <xref:System.TimeZoneInfo.TryConvertIanaIdToWindowsId(System.String,System.String@)?displayProperty=nameWithType>. Users who wanted to use such APIs on Windows Server 2019 were required to manually deploy ICU libraries with their binaries, using the ICU App Local feature. This wasn't a great solution, because the code can be in a library that can't control forcing ICU libraries to be installed with whatever app or service is using the library.
 - If Windows Server 2019 is automatically provided by a cloud platform (like Azure), the deployed service doesn't necessarily know it's going to run on such a server. Also, the service owner has to manage if/when to deploy ICU binaries. In addition, every service deployed to the cloud using Windows Server 2019 that wants to use the new .NET ICU-dependent APIs needs to deploy the ICU binaries with the service. This can bloat the size on the disk on the server.
 - Some users prefer using ICU by default because it conforms more to the Unicode Standard.
 
@@ -49,19 +45,19 @@ string text = string.Format("{0:C}", 100);
 
 If you're using .NET 7 on Windows Server 2019 or Windows 10 client versions 1703, 1709, 1803, or 1809, we recommend testing your app or service before shipping it to ensure the behavior is as expected and doesn't break any users.
 
-If you wish to continue using NLS globalization APIs, you can set a runtime switch to revert to that behavior. For more information about the available switches, see the .NET globalization and ICU article.
+If you wish to continue using NLS globalization APIs, you can set a [runtime switch](../../../runtime-config/globalization.md#nls) to revert to that behavior. For more information about the available switches, see the [.NET globalization and ICU](../../../../core/extensions/globalization-icu.md) article.
 
 ## Affected APIs
 
-- `System.Span`1`
-- `System.String`
-- Most types in the `System.Globalization` namespace
-- `System.Array.Sort*` (when sorting an array of strings)
-- `System.Collections.Generic.List`1.Sort` (when the list elements are strings)
-- `System.Collections.Generic.SortedDictionary`2` (when the keys are strings)
-- `System.Collections.Generic.SortedList`2` (when the keys are strings)
-- `System.Collections.Generic.SortedSet`1` (when the set contains strings)
+- <xref:System.Span`1?displayProperty=fullName>
+- <xref:System.String?displayProperty=fullName>
+- Most types in the <xref:System.Globalization?displayProperty=fullName> namespace
+- <xref:System.Array.Sort*?displayProperty=fullName> (when sorting an array of strings)
+- <xref:System.Collections.Generic.List`1.Sort?displayProperty=fullName> (when the list elements are strings)
+- <xref:System.Collections.Generic.SortedDictionary`2?displayProperty=fullName> (when the keys are strings)
+- <xref:System.Collections.Generic.SortedList`2?displayProperty=fullName> (when the keys are strings)
+- <xref:System.Collections.Generic.SortedSet`1?displayProperty=fullName> (when the set contains strings)
 
 ## See also
 
-- Globalization APIs use ICU libraries on Windows 10
+- [Globalization APIs use ICU libraries on Windows 10](../5.0/icu-globalization-api.md)

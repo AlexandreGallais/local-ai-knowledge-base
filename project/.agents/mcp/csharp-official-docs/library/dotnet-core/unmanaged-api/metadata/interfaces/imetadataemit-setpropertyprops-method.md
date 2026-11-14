@@ -1,15 +1,22 @@
 ---
+description: "Learn more about: IMetaDataEmit::SetPropertyProps Method"
 title: "IMetaDataEmit::SetPropertyProps Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataemit-setpropertyprops-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataEmit.SetPropertyProps"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataEmit::SetPropertyProps"
+  - "IMetaDataEmit::SetPropertyProps method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataEmit::SetPropertyProps Method
 
-Sets the features stored in metadata for a property defined by a prior call to DefineProperty Method.
+Sets the features stored in metadata for a property defined by a prior call to [DefineProperty Method](imetadataemit-defineproperty-method.md).
 
 ## Syntax
 
@@ -54,7 +61,7 @@ HRESULT SetPropertyProps (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -62,5 +69,5 @@ HRESULT SetPropertyProps (
 
 ## See also
 
-- IMetaDataEmit Interface
-- IMetaDataEmit2 Interface
+- [IMetaDataEmit Interface](imetadataemit-interface.md)
+- [IMetaDataEmit2 Interface](imetadataemit2-interface.md)

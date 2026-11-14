@@ -1,12 +1,3 @@
----
-title: "prefer-one-generic-in-create-for-feature-selector"
-tool: "ngrx-signals"
-version: "22.0"
-source: "https://github.com/ngrx/platform/blob/a4995391ef631f1bd60d539f436a1aa5c23c4fe5/projects/www/src/app/pages/guide/eslint-plugin/rules/prefer-one-generic-in-create-for-feature-selector.md"
-commit: "a4995391ef631f1bd60d539f436a1aa5c23c4fe5"
-license: "MIT"
----
-
 # prefer-one-generic-in-create-for-feature-selector
 
 Prefer using a single generic to define the feature state.
@@ -17,11 +8,14 @@ Prefer using a single generic to define the feature state.
 - **Requires type checking**: No
 - **Configurable**: No
 
+<!-- Everything above this generated, do not edit -->
+<!-- MANUAL-DOC:START -->
+
 ## Rule Details
 
 `createFeatureSelector` is typically used with `forFeature`, which should not be aware about the shape of the Global Store. Most of the time, feature states are lazy-loaded. As such, they only need to know (and care) about their own shape.
 
-This doesn't affect the composability of these selectors across features.
+This doesn't affect the [composability of these selectors](https://timdeschryver.dev/blog/sharing-data-between-modules-is-peanuts) across features.
 You can still use multiple selectors from different feature states together.
 
 > Tip: If you're accessing a lazy loaded feature that isn't loaded yet, the state returned by `createFeatureSelector` is `undefined`.

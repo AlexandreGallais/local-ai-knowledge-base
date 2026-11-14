@@ -1,15 +1,6 @@
----
-title: "Lazy loading services"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/di/lazy-loading-services.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Lazy loading services
 
-IMPORTANT: For lazy loading to work, the service you load must be auto-provided. Decorate it with either `@Injectable({providedIn: 'root'})` or `@Service()`. Without auto-provisioning, Angular has no way to construct the service after it loads.
+IMPORTANT: For lazy loading to work, the service you load must be auto-provided. Decorate it with either `@Injectable({providedIn: 'root'})` or [`@Service()`](guide/di/creating-and-using-services#using-the-service-vs-injectable-decorator). Without auto-provisioning, Angular has no way to construct the service after it loads.
 
 Angular's `injectAsync` function lets you load a service on demand, only when it's actually needed. This is useful when a service depends on a large library or rarely used feature, and you don't want to pay for it on the initial page load.
 
@@ -38,16 +29,16 @@ export class Report {
 
 The first call to `this.exporter()` triggers the dynamic import and resolves the service from DI. Subsequent calls reuse the same promise, so the chunk is only fetched once.
 
-If the lazy-loaded service is the default export, pass the dynamic import directly, Angular unwraps the `default` for you:
+If the lazy-loaded service is the [default export](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/export#using_the_default_export), pass the dynamic import directly, Angular unwraps the `default` for you:
 
-```ts
+```ts {header: "report-exporter.ts"}
 @Service()
 export default class ReportExporter {
   /* … */
 }
 ```
 
-```ts
+```ts {header: "report.ts"}
 private exporter = injectAsync(() => import('./report-exporter'));
 ```
 

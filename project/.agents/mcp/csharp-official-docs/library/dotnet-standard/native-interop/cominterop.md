@@ -1,10 +1,7 @@
 ---
-title: "COM Interop in .NET"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/native-interop/cominterop.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: COM Interop in .NET
+description: Learn how to interoperate with COM libraries in .NET.
+ms.date: 07/08/2026
 ---
 
 # COM interop in .NET
@@ -13,10 +10,10 @@ The Component Object Model (COM) lets an object expose its functionality to othe
 
 ## Built-in and source-generated COM interop
 
-COM interop functionality can be achieved through a built-in system in the .NET runtime or through implementing the ComWrappers API (introduced in .NET 6). You can use the COM source generator to automatically implement the `ComWrappers` API for `IUnknown`-based interfaces.
+COM interop functionality can be achieved through a built-in system in the .NET runtime or through implementing the [ComWrappers API](./tutorial-comwrappers.md) (introduced in .NET 6). You can use the [COM source generator](./comwrappers-source-generation.md) to automatically implement the `ComWrappers` API for `IUnknown`-based interfaces.
 
-- COM Wrappers
-- COM Callable Wrappers
-- Runtime Callable Wrappers
-- Qualifying .NET Types for COM Interoperation
-- Trimmer and Native AOT-friendly COM interop
+- [COM Wrappers](./com-wrappers.md)
+- [COM Callable Wrappers](./com-callable-wrapper.md)
+- [Runtime Callable Wrappers](./runtime-callable-wrapper.md)
+- [Qualifying .NET Types for COM Interoperation](./qualify-net-types-for-interoperation.md)
+- [Trimmer and Native AOT-friendly COM interop](./tutorial-comwrappers.md)

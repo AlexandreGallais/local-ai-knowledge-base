@@ -1,13 +1,16 @@
 ---
-title: "no-new-native-nonconstructor"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-new-native-nonconstructor.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-new-native-nonconstructor
+layout: doc
+rule_type: problem
+handled_by_typescript: true
+related_rules:
+- no-obj-calls
+further_reading:
+- https://tc39.es/ecma262/#sec-symbol-constructor
+- https://tc39.es/ecma262/#sec-bigint-constructor
 ---
 
-# no-new-native-nonconstructor
+
 
 It is a convention in JavaScript that global variables beginning with an uppercase letter typically represent classes that can be instantiated using the `new` operator, such as `new Array` and `new Map`. Confusingly, JavaScript also provides some global variables that begin with an uppercase letter that cannot be called using the `new` operator and will throw an error if you attempt to do so. These are typically functions that are related to data types and are easy to mistake for classes. Consider the following example:
 
@@ -30,7 +33,7 @@ This rule is aimed at preventing the accidental calling of native JavaScript glo
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-new-native-nonconstructor: "error"*/
@@ -39,9 +42,11 @@ const foo = new Symbol('foo');
 const bar = new BigInt(9007199254740991);
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-new-native-nonconstructor: "error"*/
@@ -58,6 +63,8 @@ function quux(BigInt) {
 }
 
 ```
+
+:::
 
 ## Options
 

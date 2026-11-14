@@ -1,17 +1,18 @@
 ---
-title: "OWIN integration in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/migration/fx-to-core/areas/owin.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: OWIN integration in ASP.NET Core
+description: How to use OWIN middleware in ASP.NET Core applications during migration from ASP.NET Framework
+ai-usage: ai-assisted
+ms.reviewer: tasou
+monikerRange: '>= aspnetcore-6.0'
+ms.date: 11/10/2025
+ms.topic: concept-article
 ---
 
 # OWIN integration
 
 The `Microsoft.AspNetCore.SystemWebAdapters.Owin` library enables ASP.NET Core applications to use OWIN middleware during migration from ASP.NET Framework. This integration is valuable when migrating applications that rely on OWIN-based middleware, particularly for authentication, authorization, or custom pipeline components.
 
-> **Warning:**
+> [!WARNING]
 > When using OWIN integration, you may need to suppress build warnings for .NET Framework package dependencies. Add the following to your project file:
 > ```xml
 > <PropertyGroup>
@@ -158,7 +159,7 @@ builder.Services
     });
 ```
 
-For more information about authentication schemes and how they work in ASP.NET Core, see Overview of ASP.NET Core Authentication and Use cookie authentication without ASP.NET Core Identity.
+For more information about authentication schemes and how they work in ASP.NET Core, see [Overview of ASP.NET Core Authentication](../../../security/authentication/index.md) and [Use cookie authentication without ASP.NET Core Identity](../../../security/authentication/cookie.md).
 
 ### Access OWIN authentication
 
@@ -171,9 +172,9 @@ authManager.SignIn(identity);
 authManager.SignOut();
 ```
 
-### `System.Security.Claims.ClaimsPrincipal.Current`
+### <xref:System.Security.Claims.ClaimsPrincipal.Current?displayProperty=nameWithType>
 
-If code is expecting to use `System.Security.Claims.ClaimsPrincipal.Current`, then see Migrate from static ClaimsPrincipal access for options to enable setting that property.
+If code is expecting to use <xref:System.Security.Claims.ClaimsPrincipal.Current?displayProperty=nameWithType>, then see [Migrate from static ClaimsPrincipal access](claimsprincipal-current.md) for options to enable setting that property.
 
 ## Migrating ASP.NET Framework Identity
 
@@ -277,11 +278,11 @@ public class AccountController : Controller
 }
 ```
 
-### Key <example-value> points
+### Key configuration points
 
 When migrating ASP.NET Framework Identity:
 
-* **Data protection**: Configure the same `ApplicationName` and key <example-value> location in both ASP.NET Framework and ASP.NET Core
+* **Data protection**: Configure the same `ApplicationName` and key storage location in both ASP.NET Framework and ASP.NET Core
 * **Per-request services**: Use `app.CreatePerOwinContext<T>()` to register services created once per request
 * **Data protection bridge**: Use `AspNetTicketDataFormat` with `DataProtectorShim` to bridge ASP.NET Core's `IDataProtector` to OWIN
 * **Service access**: Access OWIN-registered services through `HttpContext.GetOwinContext()`
@@ -361,6 +362,6 @@ When incorporating OWIN middleware into your ASP.NET Core application:
 
 ## Related content
 
-* ASP.NET Framework to Core Authentication Migration
-* ASP.NET Core middleware
-* Overview of ASP.NET Core Authentication
+* [ASP.NET Framework to Core Authentication Migration](authentication.md)
+* [ASP.NET Core middleware](../../../fundamentals/middleware/index.md)
+* [Overview of ASP.NET Core Authentication](../../../security/authentication/index.md)

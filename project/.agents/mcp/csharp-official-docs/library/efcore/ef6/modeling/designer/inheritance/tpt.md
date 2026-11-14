@@ -1,14 +1,12 @@
 ---
-title: "Designer TPT Inheritance - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/modeling/designer/inheritance/tpt.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Designer TPT Inheritance - EF6
+description: Designer TPT Inheritance in Entity Framework 6
+author: SamMonoRT
+ms.date: 10/23/2016
+uid: ef6/modeling/designer/inheritance/tpt
 ---
-
 # Designer TPT Inheritance
-This step-by-step walkthrough shows how to implement table-per-type (TPT) inheritance in your model using the Entity Framework Designer (EF Designer). Table-per-type inheritance uses a separate table in the database to maintain data for non-inherited properties and key <example-value> for each type in the inheritance hierarchy.
+This step-by-step walkthrough shows how to implement table-per-type (TPT) inheritance in your model using the Entity Framework Designer (EF Designer). Table-per-type inheritance uses a separate table in the database to maintain data for non-inherited properties and key properties for each type in the inheritance hierarchy.
 
 In this walkthrough we will map the **Course** (base type), **OnlineCourse** (derives from Course), and **OnsiteCourse** (derives from **Course**) entities to tables with the same names. We'll create a model from the database and then alter the model to implement the TPT inheritance.
 
@@ -16,7 +14,7 @@ You can also start with the Model First and then generate the database from the 
 
 ## Other Inheritance Options
 
-Table-per-Hierarchy (TPH) is another type of inheritance in which one database table is used to maintain data for all of the entity types in an inheritance hierarchy.  For information about how to map Table-per-Hierarchy inheritance with the Entity Designer, see EF Designer TPH Inheritance. 
+Table-per-Hierarchy (TPH) is another type of inheritance in which one database table is used to maintain data for all of the entity types in an inheritance hierarchy.  For information about how to map Table-per-Hierarchy inheritance with the Entity Designer, see [EF Designer TPH Inheritance](xref:ef6/modeling/designer/inheritance/tph). 
 
 Note that, the Table-per-Concrete Type Inheritance (TPC) and mixed inheritance models are supported by the Entity Framework runtime but are not supported by the EF Designer. If you want to use TPC or mixed inheritance, you have two options: use Code First, or manually edit the EDMX file. If you choose to work with the EDMX file, the Mapping Details Window will be put into “safe mode” and you will not be able to use the designer to change the mappings.
 
@@ -25,19 +23,19 @@ Note that, the Table-per-Concrete Type Inheritance (TPC) and mixed inheritanc
 To complete this walkthrough, you will need:
 
 - A recent version of Visual Studio.
-- The School sample database.
+- The [School sample database](xref:ef6/resources/school-database).
 
 ## Set up the Project
 
 -   Open Visual Studio 2012.
--   Select **File-> New -> Project**
+-   Select **File-&gt; New -&gt; Project**
 -   In the left pane, click **Visual C\#**, and then select the **Console** template.
 -   Enter **TPTDBFirstSample** as the name.
 -   Select **OK**.
 
 ## Create a Model
 
--   Right-click the project in Solution Explorer, and select **Add -> New Item**.
+-   Right-click the project in Solution Explorer, and select **Add -&gt; New Item**.
 -   Select **Data** from the left menu and then select **ADO.NET Entity Data Model** in the Templates pane.
 -   Enter **TPTModel.edmx** for the file name, and then click **Add**.
 -   In the Choose Model Contents dialog box, select** Generate from database**, and then click **Next**.
@@ -66,11 +64,13 @@ We will now delete the **CourseID** property from **OnlineCourse** and **OnsiteC
 -   Right-click the **CourseID** property of the **OnsiteCourse** entity type, and then select **Delete from Model**
 -   Table-per-type inheritance is now implemented.
 
+![Table Per Type](~/ef6/media/tpt.png)
+
 ## Use the Model
 
 Open the **Program.cs** file where the **Main** method is defined. Paste the following code into the **Main** function. The code executes three queries. The first query brings back all **Courses** related to the specified department. The second query uses the **OfType** method to return **OnlineCourses** related to the specified department. The third query returns **OnsiteCourses**.
 
-```csharp
+``` csharp
     using (var context = new SchoolEntities())
     {
         foreach (var department in context.Departments)

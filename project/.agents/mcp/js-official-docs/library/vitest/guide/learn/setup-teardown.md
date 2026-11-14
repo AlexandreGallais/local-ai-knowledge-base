@@ -1,10 +1,11 @@
 ---
-title: "Setup and Teardown | Guide"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/learn/setup-teardown.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Setup and Teardown | Guide
+prev:
+  text: Testing Asynchronous Code
+  link: /guide/learn/async
+next:
+  text: Mock Functions
+  link: /guide/learn/mock-functions
 ---
 
 # Setup and Teardown
@@ -13,7 +14,7 @@ Often while writing tests, you need to do some work before tests run (initialize
 
 ## Repeating Setup for Each Test
 
-The most common hooks are `beforeEach` and `afterEach`. As the names suggest, `beforeEach` runs before every test in the file, and `afterEach` runs after every test, even if the test fails. This makes them perfect for ensuring each test starts with a known state.
+The most common hooks are [`beforeEach`](/api/hooks#beforeeach) and [`afterEach`](/api/hooks#aftereach). As the names suggest, `beforeEach` runs before every test in the file, and `afterEach` runs after every test, even if the test fails. This makes them perfect for ensuring each test starts with a known state.
 
 ```js
 import { afterEach, beforeEach, expect, test } from 'vitest'
@@ -49,7 +50,7 @@ Without these hooks, mutations like `pop` or `push` from earlier tests would aff
 
 ## One-Time Setup
 
-Some setup is too expensive to repeat for every test. If you need to connect to a database, start a server, or load a large file, doing that before every test would slow your suite down dramatically. That's what `beforeAll` and `afterAll` are for. They run once for the entire file:
+Some setup is too expensive to repeat for every test. If you need to connect to a database, start a server, or load a large file, doing that before every test would slow your suite down dramatically. That's what [`beforeAll`](/api/hooks#beforeall) and [`afterAll`](/api/hooks#afterall) are for. They run once for the entire file:
 
 ```js
 import { afterAll, beforeAll, expect, test } from 'vitest'
@@ -164,7 +165,7 @@ Notice the pattern: `beforeAll` and `afterAll` run once for the entire suite, wh
 
 ## Cleanup with `onTestFinished`
 
-Sometimes you create a resource inside a test that needs to be cleaned up afterwards. You could use `afterEach`, but that means the cleanup is separated from the setup, which can make the test harder to follow. `onTestFinished` lets you register a cleanup function right where you create the resource:
+Sometimes you create a resource inside a test that needs to be cleaned up afterwards. You could use `afterEach`, but that means the cleanup is separated from the setup, which can make the test harder to follow. [`onTestFinished`](/api/hooks#ontestfinished) lets you register a cleanup function right where you create the resource:
 
 ```js
 import { expect, onTestFinished, test } from 'vitest'
@@ -196,9 +197,9 @@ beforeEach(() => {
 
 The examples above use `let` variables and `beforeEach` to set up shared state. This works, but it has some downsides: the variable declarations are separated from the initialization, the types require explicit annotation, and it's easy to forget to clean up.
 
-Vitest offers a better pattern for this with `test.extend`. You define reusable **fixtures** that are automatically created for each test and cleaned up afterwards:
+Vitest offers a better pattern for this with [`test.extend`](/guide/test-context#extend-test-context). You define reusable **fixtures** that are automatically created for each test and cleaned up afterwards:
 
-```js
+```js [my-test.js]
 import { test as baseTest } from 'vitest'
 
 export const test = baseTest
@@ -212,7 +213,7 @@ export const test = baseTest
   })
 ```
 
-```js
+```js [my-test.test.js]
 import { expect } from 'vitest'
 import { test } from './my-test.js'
 
@@ -223,13 +224,13 @@ test('user is created', ({ db, user }) => {
 
 Fixtures are only initialized when a test actually uses them (by destructuring them from the context), and they can depend on each other. This makes them a great alternative to `beforeEach`/`afterEach` for most setup and teardown patterns.
 
-See the Test Context guide for the full details on fixtures, scoping, and overrides.
+See the [Test Context](/guide/test-context) guide for the full details on fixtures, scoping, and overrides.
 
 ## Setup Files
 
-If you have setup code that should run before every test file in your project (things like polyfills, global configuration, or custom matchers), you can put it in a setup file and point to it with the `setupFiles` config option:
+If you have setup code that should run before every test file in your project (things like polyfills, global configuration, or custom matchers), you can put it in a setup file and point to it with the [`setupFiles`](/config/setupfiles) config option:
 
-```js
+```js [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -239,7 +240,7 @@ export default defineConfig({
 })
 ```
 
-```js
+```js [test/setup.js]
 // This runs before every test file
 import { expect } from 'vitest'
 import { customMatchers } from './custom-matchers.js'
@@ -249,5 +250,6 @@ expect.extend(customMatchers)
 
 Unlike `beforeAll`, which runs once per file, setup files run in a separate phase before the test file even starts being collected. This makes them the right place for things like extending the `expect` API or configuring global polyfills.
 
-**Tip:**
-For advanced cases where your test needs to run _inside_ a wrapping context (like a database transaction or a tracing span), see the `aroundEach` and `aroundAll` hooks. For the complete lifecycle picture, see Test Run Lifecycle.
+::: tip
+For advanced cases where your test needs to run _inside_ a wrapping context (like a database transaction or a tracing span), see the [`aroundEach`](/api/hooks#aroundeach) and [`aroundAll`](/api/hooks#aroundall) hooks. For the complete lifecycle picture, see [Test Run Lifecycle](/guide/lifecycle).
+:::

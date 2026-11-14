@@ -1,13 +1,13 @@
 ---
-title: "no-irregular-whitespace"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-irregular-whitespace.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-irregular-whitespace
+rule_type: problem
+further_reading:
+- https://es5.github.io/#x7.2
+- https://web.archive.org/web/20200414142829/http://timelessrepo.com/json-isnt-a-javascript-subset
+- https://codepoints.net/U+1680
 ---
 
-# no-irregular-whitespace
+
 
 Invalid or irregular whitespace causes issues with ECMAScript 5 parsers and also makes code harder to debug in a similar nature to mixed tabs and spaces.
 
@@ -18,13 +18,13 @@ A simple fix for this problem could be to rewrite the offending line from scratc
 Known issues these spaces cause:
 
 * Ogham Space Mark
-    * Is a valid token <example-value>, but is rendered as a visible glyph in most typefaces, which may be misleading in source code.
+    * Is a valid token separator, but is rendered as a visible glyph in most typefaces, which may be misleading in source code.
 * Mongolian Vowel Separator
     * Is no longer considered a space separator since Unicode 6.3. It will result in a syntax error in current parsers when used in place of a regular token separator.
 * Line Separator and Paragraph Separator
     * These have always been valid whitespace characters and line terminators, but were considered illegal in string literals prior to ECMAScript 2019.
 * Zero Width Space
-    * Is NOT considered a separator for tokens and is often parsed as an `Unexpected token <example-value>`.
+    * Is NOT considered a separator for tokens and is often parsed as an `Unexpected token ILLEGAL`.
     * Is NOT shown in modern browsers making code repository software expected to resolve the visualization.
 
 In JSON, none of the characters listed as irregular whitespace by this rule may appear outside of a string.
@@ -76,7 +76,7 @@ This rule has an object option for exceptions:
 
 Examples of **incorrect** code for this rule with the default `{ "skipStrings": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-irregular-whitespace: "error"*/
@@ -122,9 +122,11 @@ const myFunc = function() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `{ "skipStrings": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-irregular-whitespace: "error"*/
@@ -142,11 +144,13 @@ const bar = function() {
 }
 ```
 
+:::
+
 ### skipComments
 
 Examples of additional **correct** code for this rule with the `{ "skipComments": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-irregular-whitespace: ["error", { "skipComments": true }]*/
@@ -160,11 +164,13 @@ Description <NBSP>: some descriptive text
 */
 ```
 
+:::
+
 ### skipRegExps
 
 Examples of additional **correct** code for this rule with the `{ "skipRegExps": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-irregular-whitespace: ["error", { "skipRegExps": true }]*/
@@ -174,11 +180,13 @@ function thing() {
 }
 ```
 
+:::
+
 ### skipTemplates
 
 Examples of additional **correct** code for this rule with the `{ "skipTemplates": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-irregular-whitespace: ["error", { "skipTemplates": true }]*/
@@ -188,11 +196,13 @@ function thing() {
 }
 ```
 
+:::
+
 ### skipJSXText
 
 Examples of additional **correct** code for this rule with the `{ "skipJSXText": true }` option:
 
-**Correct:**
+::: correct { "parserOptions": { "ecmaFeatures": { "jsx": true } } }
 
 ```jsx
 /*eslint no-irregular-whitespace: ["error", { "skipJSXText": true }]*/
@@ -201,6 +211,8 @@ function Thing() {
     return <div>text in JSX</div>; // <NBSP> before `JSX`
 }
 ```
+
+:::
 
 ## When Not To Use It
 

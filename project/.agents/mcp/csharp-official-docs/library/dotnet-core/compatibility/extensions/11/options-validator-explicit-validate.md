@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: Options validation generator reports SYSLIB1205 for explicit Validate implementations"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/extensions/11/options-validator-explicit-validate.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where the options validation source generator reports SYSLIB1205 for explicit Validate implementations."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # Options validation generator reports SYSLIB1205 for explicit Validate implementations
@@ -17,7 +15,7 @@ Starting in .NET 11, the options validation source generator recognizes an expli
 
 ## Previous behavior
 
-Previously, the source generator didn't recognize an explicit implementation of `Microsoft.Extensions.Options.IValidateOptions`1.Validate(System.String,`0)` as an existing implementation. It could generate an additional public `Validate` method, so interface calls used the handwritten implementation while direct calls on the concrete validator used the generated method. The two call paths could produce different validation results.
+Previously, the source generator didn't recognize an explicit implementation of <xref:Microsoft.Extensions.Options.IValidateOptions`1.Validate(System.String,`0)> as an existing implementation. It could generate an additional public `Validate` method, so interface calls used the handwritten implementation while direct calls on the concrete validator used the generated method. The two call paths could produce different validation results.
 
 ```csharp
 [OptionsValidator]
@@ -36,11 +34,11 @@ If the validator also implements `IAsyncValidateOptions<TOptions>`, synchronous 
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
-The previous behavior allowed interface calls to use handwritten validation while direct calls used separately generated validation. Recognizing explicit implementations prevents generated validation from being silently bypassed and removes these divergent validation paths. For more information, see dotnet/runtime#130263.
+The previous behavior allowed interface calls to use handwritten validation while direct calls used separately generated validation. Recognizing explicit implementations prevents generated validation from being silently bypassed and removes these divergent validation paths. For more information, see [dotnet/runtime#130263](https://github.com/dotnet/runtime/pull/130263).
 
 ## Recommended action
 
@@ -69,5 +67,5 @@ There is no compatibility switch. Suppressing `SYSLIB1205` doesn't resolve the c
 
 ## Affected APIs
 
-- `Microsoft.Extensions.Options.OptionsValidatorAttribute`
-- `Microsoft.Extensions.Options.IValidateOptions`1.Validate(System.String,`0)`
+- <xref:Microsoft.Extensions.Options.OptionsValidatorAttribute?displayProperty=fullName>
+- <xref:Microsoft.Extensions.Options.IValidateOptions`1.Validate(System.String,`0)?displayProperty=fullName>

@@ -1,16 +1,17 @@
 ---
 title: "Expose COM components to .NET"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/native-interop/exposing-com-components.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Know the process of exposing COM components to .NET. COM components are valuable in managed code as middle-tier business applications or isolated functionality.
+ms.date: 07/08/2026
+ai-usage: ai-assisted
+helpviewer_keywords:
+  - "exposing COM components to .NET"
+  - "interoperation with unmanaged code, exposing COM components"
+  - "COM interop, exposing COM components"
 ---
-
 # Expose COM components to .NET
 
-> **Note:**
-> This article describes .NET Framework COM interop guidance that uses legacy tools and deployment models, such as primary interop assemblies, the global assembly cache, and registry-based COM registration. For modern .NET, use COM source generation or the `System.Runtime.InteropServices.ComWrappers` API. For more information, see COM interop.
+> [!NOTE]
+> This article describes .NET Framework COM interop guidance that uses legacy tools and deployment models, such as primary interop assemblies, the global assembly cache, and registry-based COM registration. For modern .NET, use [COM source generation](comwrappers-source-generation.md) or the <xref:System.Runtime.InteropServices.ComWrappers> API. For more information, see [COM interop](cominterop.md).
 
 This section summarizes the process needed to expose an existing COM component to managed code.
 
@@ -18,26 +19,26 @@ This section summarizes the process needed to expose an existing COM component t
 
 ## Expose COM components to .NET
 
-1. Import a type library as an assembly.
+1. [Import a type library as an assembly](importing-a-type-library-as-an-assembly.md).
 
      The common language runtime requires metadata for all types, including COM types. There are several ways to obtain an assembly containing COM types imported as metadata.
 
-2. Use COM types in managed Code.
+2. [Use COM types in managed Code](/previous-versions/dotnet/netframework-4.0/3y76b69k(v=vs.100)).
 
      You can inspect COM types, activate instances, and invoke methods on the COM object the same way you do for any managed type.
 
-3. Compile an interop project.
+3. [Compile an interop project](compiling-an-interop-project.md).
 
      The Windows SDK provides compilers for several languages compliant with the Common Language Specification (CLS), including Visual Basic, C#, and C++.
 
-4. Deploy an interop application.
+4. [Deploy an interop application](deploying-an-interop-application.md).
 
-     For .NET Framework, interop applications are often deployed as strong-named, signed assemblies in the global assembly cache.
+     For .NET Framework, interop applications are often deployed as [strong-named](../../standard/assembly/strong-named.md), signed assemblies in the global assembly cache.
 
 ## See also
 
-- Interoperating with Unmanaged Code
-- Design Considerations for Interoperation
-- COM Interop Sample: .NET Client and COM Server
-- Language Independence and Language-Independent Components
-- Gacutil.exe (Global Assembly Cache Tool)
+- [Interoperating with Unmanaged Code](index.md)
+- [Design Considerations for Interoperation](/previous-versions/dotnet/netframework-4.0/61aax4kh(v=vs.100))
+- [COM Interop Sample: .NET Client and COM Server](com-interop-sample-net-client-and-com-server.md)
+- [Language Independence and Language-Independent Components](../../standard/language-independence.md)
+- [Gacutil.exe (Global Assembly Cache Tool)](../../framework/tools/gacutil-exe-gac-tool.md)

@@ -1,10 +1,11 @@
 ---
-title: "How to write a query that finds elements based on context - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/write-query-finds-elements-based-context.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to write a query that finds elements based on context - LINQ to XML
+description: Write a query that selects elements based on context; for example, filter results based on preceding or following sibling elements.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to write a query that finds elements based on context (LINQ to XML)
@@ -89,7 +90,7 @@ id = 6
 
 ## Example: In a namespace select `p` elements that are immediately followed by a `ul` element
 
-The following example shows the same query as above, but for XML that's in a namespace. For more information, see Namespaces overview.
+The following example shows the same query as above, but for XML that's in a namespace. For more information, see [Namespaces overview](namespaces-overview.md).
 
 ```csharp
 XElement doc = XElement.Parse(@"<Root xmlns='http://www.adatum.com'>
@@ -171,8 +172,8 @@ id = 6
 
 ## See also
 
-- `System.Xml.Linq.XElement.Parse*`
-- `System.Xml.Linq.XContainer.Descendants*`
-- `System.Xml.Linq.XNode.ElementsAfterSelf*`
-- `System.Linq.Enumerable.FirstOrDefault*`
-- Basic <example-value> (LINQ to XML) (Visual Basic)
+- <xref:System.Xml.Linq.XElement.Parse*>
+- <xref:System.Xml.Linq.XContainer.Descendants*>
+- <xref:System.Xml.Linq.XNode.ElementsAfterSelf*>
+- <xref:System.Linq.Enumerable.FirstOrDefault*>
+- [Basic Queries (LINQ to XML) (Visual Basic)](./find-element-specific-attribute.md)

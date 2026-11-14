@@ -1,19 +1,15 @@
 ---
 title: "Breaking change: DataContractSerializer retains sign when deserializing -0"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/serialization/7.0/datacontractserializer-negative-sign.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 6/7 breaking change in serialization where DataContractSerializer retains the negative sign when deserializing the value "-0" as a float or double.
+ms.date: 09/08/2022
 ---
-
 # DataContractSerializer retains sign when deserializing -0
 
-`System.Runtime.Serialization.DataContractSerializer` and `System.Runtime.Serialization.Json.DataContractJsonSerializer` previously discarded the sign when deserializing the input "-0" as a float or double. Both serializers have always done the right thing when given "-0.0" as an input, but with an input of "-0", the sign was lost. This behavior is both inconsistent and results in data loss. In addition, these serializers write a value of negative zero out as "-0" during serialization.
+<xref:System.Runtime.Serialization.DataContractSerializer> and <xref:System.Runtime.Serialization.Json.DataContractJsonSerializer> previously discarded the sign when deserializing the input "-0" as a float or double. Both serializers have always done the right thing when given "-0.0" as an input, but with an input of "-0", the sign was lost. This behavior is both inconsistent and results in data loss. In addition, these serializers write a value of negative zero out as "-0" during serialization.
 
 ## Previous behavior
 
-Previously, the negative sign was lost when deserializing "-0" (but *not* "-0.0") as a float or double using `System.Runtime.Serialization.DataContractSerializer`.
+Previously, the negative sign was lost when deserializing "-0" (but *not* "-0.0") as a float or double using <xref:System.Runtime.Serialization.DataContractSerializer>.
 
 ## New behavior
 
@@ -26,7 +22,7 @@ The negative sign is now preserved when deserializing "-0" as a float or double.
 
 ## Type of breaking change
 
-This change can affect binary compatibility.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 
@@ -38,5 +34,5 @@ In most cases, no action is needed. If your code was affected by the bug, then t
 
 ## Affected APIs
 
-- `System.Runtime.Serialization.DataContractSerializer.ReadObject*`
-- `System.Runtime.Serialization.Json.DataContractJsonSerializer.ReadObject*`
+- <xref:System.Runtime.Serialization.DataContractSerializer.ReadObject*?displayProperty=fullName>
+- <xref:System.Runtime.Serialization.Json.DataContractJsonSerializer.ReadObject*?displayProperty=fullName>

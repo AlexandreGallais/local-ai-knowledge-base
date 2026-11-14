@@ -1,12 +1,3 @@
----
-title: "inkex.elements._polygons"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/elements/_polygons.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.elements._polygons
 
 Interface for all shapes/polygons such as lines, paths, rectangles, circles etc.
@@ -71,9 +62,10 @@ This is indicated with the second return value (=clockwise)
 
 Returns a PathElement. May be a line if x,y,z are collinear.
 
+
 Idea: http://www.math.okstate.edu/~wrightd/INDRA/MobiusonCircles/node4.html
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## PathElement.star
 
@@ -85,36 +77,34 @@ Generate a sodipodi star / polygon. Also computes the path that Inkscape uses
 under the hood. The arguments for center, radii, sides, rounded and args can be
 given as strings or as numeric data.
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 Args:
-center (Tuple-like): Coordinates of the star/polygon center as tuple or
-Vector2d
-radii (tuple): Radii of the control points, i.e. their distances from the
-center. The control points are specified in polar coordinates. Only the
-first control point is used for polygons.
-sides (int, optional): Number of sides / tips of the polygon / star.
-Defaults to 5.
-rounded (int, optional): Controls the rounding radius of the polygon / star.
-For `rounded=0`, only straight lines are used. Defaults to 0.
-args (tuple, optional): Angle between horizontal axis and control points.
-Defaults to (0,0).
+    center (Tuple-like): Coordinates of the star/polygon center as tuple or
+        Vector2d
+    radii (tuple): Radii of the control points, i.e. their distances from the
+        center. The control points are specified in polar coordinates. Only the
+        first control point is used for polygons.
+    sides (int, optional): Number of sides / tips of the polygon / star.
+        Defaults to 5.
+    rounded (int, optional): Controls the rounding radius of the polygon / star.
+        For `rounded=0`, only straight lines are used. Defaults to 0.
+    args (tuple, optional): Angle between horizontal axis and control points.
+        Defaults to (0,0).
 
-> *Added in version 1.2.*
-> Previously fixed to (0.85, 1.3)
+        .. versionadded:: 1.2
+            Previously fixed to (0.85, 1.3)
+    flatsided (bool, optional): True for polygons, False for stars.
+        Defaults to False.
 
-flatsided (bool, optional): True for polygons, False for stars.
-Defaults to False.
+        .. versionadded:: 1.2
+    pathonly (bool, optional): Whether to create the path without
+        Inkscape-specific attributes. Defaults to False.
 
-> *Added in version 1.2.*
-
-pathonly (bool, optional): Whether to create the path without
-Inkscape-specific attributes. Defaults to False.
-
-> *Added in version 1.2.*
+        .. versionadded:: 1.2
 
 Returns:
-PathElement : the created star/polygon
+    PathElement : the created star/polygon
 
 ## class Polyline
 

@@ -1,12 +1,3 @@
----
-title: "Show routes with outlets"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/routing/show-routes-with-outlets.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Show routes with outlets
 
 The `RouterOutlet` directive is a placeholder that marks the location where the router should render the component for the current URL.
@@ -91,7 +82,7 @@ As your application grows more complex, you might want to create routes that are
 
 These types of nested routes are called child routes. This means you're adding a second `<router-outlet>` to your app, because it is in addition to the `<router-outlet>` in AppComponent.
 
-In this example, the `Settings` component will display the desired panel based on what the user selects. One of the unique things you’ll notice about child routes is that the component often has its own `` and `<router-outlet>`.
+In this example, the `Settings` component will display the desired panel based on what the user selects. One of the unique things you’ll notice about child routes is that the component often has its own `<nav>` and `<router-outlet>`.
 
 ```angular-html
 <h1>Settings</h1>
@@ -173,7 +164,7 @@ You can add event listeners with the standard event binding syntax:
 />
 ```
 
-Check out the API docs for RouterOutlet if you’d like to learn more.
+Check out the [API docs for RouterOutlet](/api/router/RouterOutlet?tab=api) if you’d like to learn more.
 
 ## Passing contextual data to routed components
 
@@ -217,4 +208,4 @@ NOTE: When the `routerOutletData` input is unset, the injected signal's value is
 
 ## Next steps
 
-Learn how to navigate to routes with Angular Router.
+Learn how to [navigate to routes](/guide/routing/navigate-to-routes) with Angular Router.

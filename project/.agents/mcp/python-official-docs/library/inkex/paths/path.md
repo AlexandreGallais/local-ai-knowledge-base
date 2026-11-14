@@ -1,12 +1,3 @@
----
-title: "inkex.paths.path"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/paths/path.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.paths.path
 
 Path and CubicSuperPath classes
@@ -36,7 +27,7 @@ class PathCommandProxy
 A handy class for Path traverse and coordinate access
 
 Reduces number of arguments in user code compared to bare
-`PathCommand` methods
+:class:`PathCommand` methods
 
 ## PathCommandProxy.first_point
 
@@ -150,7 +141,7 @@ Reverse path command
 def to_curve(self) -> Curve
 ```
 
-Convert command to `Curve`
+Convert command to :py:class:`Curve`
 Curve().to_curve() returns a copy
 
 ## PathCommandProxy.to_curves
@@ -159,7 +150,7 @@ Curve().to_curve() returns a copy
 def to_curves(self) -> List[Curve]
 ```
 
-Convert command to list of `Curve` commands
+Convert command to list of :py:class:`Curve` commands
 
 ## PathCommandProxy.to_absolute
 
@@ -177,7 +168,7 @@ def to_non_shorthand(self) -> AbsolutePathCommand
 
 Returns an absolute non-shorthand command
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## PathCommandProxy.split
 
@@ -188,7 +179,7 @@ def split(self, time) -> Tuple[Path.PathCommandProxy, Path.PathCommandProxy]
 Split this path command into two PathCommandProxy segments.
 Raises ValueError for Move commands.
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## PathCommandProxy.cpoint
 
@@ -198,7 +189,7 @@ def cpoint(self, time) -> complex
 
 Returns the coordinates of the Bezier curve evaluated at t as complex number.
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## PathCommandProxy.point
 
@@ -206,9 +197,9 @@ Returns the coordinates of the Bezier curve evaluated at t as complex number.
 def point(self, time) -> Vector2d
 ```
 
-Returns the coordinates of the Bezier curve evaluated at t as `Vector2d`.
+Returns the coordinates of the Bezier curve evaluated at t as :class:`Vector2d`.
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## PathCommandProxy.length
 
@@ -218,7 +209,7 @@ def length(self, t0=0, t1=1, settings=LengthSettings()) -> float
 
 Get the length of the command between t0 and t1 in user units
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## PathCommandProxy.ilength
 
@@ -229,7 +220,7 @@ def ilength(self, length, settings=ILengthSettings()) -> float
 Tries to compute the time t at which the path segment has the given
 length along its trajectory
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## PathCommandProxy.cunit_tangent
 
@@ -239,7 +230,7 @@ def cunit_tangent(self, t) -> complex
 
 Returns the unit tangent at t as complex number
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## PathCommandProxy.unit_tangent
 
@@ -247,9 +238,9 @@ Returns the unit tangent at t as complex number
 def unit_tangent(self, t) -> Vector2d
 ```
 
-Returns the unit tangent at t as `inkex.Vector2D`
+Returns the unit tangent at t as :class:`inkex.Vector2D`
 
-> *Added in version .*
+.. versionadded::  1.4
 
 ## Path.parse_string
 
@@ -347,7 +338,7 @@ def break_apart(self) -> List[Path]
 
 Breaks apart a path into its subpaths
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 ## Path.close
 
@@ -363,9 +354,9 @@ Attempt to close the last path segment
 def proxy_iterator(self) -> Iterator[PathCommandProxy]
 ```
 
-Yields `AugmentedPathIterator`
+Yields :py:class:`AugmentedPathIterator`
 
-- **rtype:** Iterator[ Path.PathCommandProxy ]
+:rtype: Iterator[ Path.PathCommandProxy ]
 
 ## Path.subpath_iterator
 
@@ -391,7 +382,7 @@ def to_non_shorthand(self) -> Path
 
 Convert this path to use only absolute non-shorthand coordinates
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## Path.to_relative
 
@@ -410,8 +401,8 @@ def to_arrays(self)
 Returns path in format of parsePath output, returning arrays of absolute
 command data
 
-> *Deprecated since version 1.0.*
-> This is compatibility function for older API. Should not be used in new code
+.. deprecated:: 1.0
+    This is compatibility function for older API. Should not be used in new code
 
 ## Path.to_superpath
 
@@ -462,8 +453,8 @@ Append a path command.
 
 For ordinary commands:
 
-- old last entry -> [[.., ..], [.., ..], [x1, y1]]
-- new last entry -> [[x2, y2], [x3, y3], [x3, y3]]
+* old last entry -> [[.., ..], [.., ..], [x1, y1]]
+* new last entry -> [[x2, y2], [x3, y3], [x3, y3]]
 
 The last tuple is duplicated (retracted handle): either it's the last command
 of the subpath, then the handle will stay retracted, or it will be replaced
@@ -479,11 +470,11 @@ Append a segment/node to the superpath and update the internal state.
 
 item may be specified in any of the following formats:
 
-- `PathCommand`
-- `[str, List[float]]` - A path command letter and its arguments
-- `[[float, float], [float, float], [float, float]]` - Incoming handle, node,
-outgoing handle.
-- `List[[float, float], [float, float], [float, float]]` - An entire subpath.
+* ``PathCommand``
+* ``[str, List[float]]`` - A path command letter and its arguments
+* ``[[float, float], [float, float], [float, float]]`` - Incoming handle, node,
+   outgoing handle.
+* ``List[[float, float], [float, float], [float, float]]`` - An entire subpath.
 
 ## CubicSuperPath.to_path
 
@@ -493,7 +484,7 @@ def to_path(self, curves_only=False, rtol=1e-5, atol=1e-8)
 
 Convert the super path back to an svg path
 
-Arguments: see `to_segments()` for parameters
+Arguments: see :func:`to_segments` for parameters
 
 ## CubicSuperPath.to_segments
 
@@ -504,18 +495,17 @@ def to_segments(self, curves_only=False, rtol=1e-5, atol=1e-8)
 Generate a set of segments for this cubic super path
 
 Arguments:
-curves_only (bool, optional): If False, curves that can be represented
-by Lineto / ZoneClose commands, will be. Defaults to False.
-rtol (float, optional): relative tolerance, passed to `is_line()` and
-`inkex.transforms.ImmutableVector2d.is_close()` for checking if a
-line can be replaced by a ZoneClose command. Defaults to 1e-5.
+    curves_only (bool, optional): If False, curves that can be represented
+        by Lineto / ZoneClose commands, will be. Defaults to False.
+    rtol (float, optional): relative tolerance, passed to :func:`is_line` and
+        :func:`inkex.transforms.ImmutableVector2d.is_close` for checking if a
+        line can be replaced by a ZoneClose command. Defaults to 1e-5.
 
-> *Added in version 1.2.*
+        .. versionadded:: 1.2
+    atol: absolute tolerance, passed to :func:`is_line` and
+        :func:`inkex.transforms.ImmutableVector2d.is_close`. Defaults to 1e-8.
 
-atol: absolute tolerance, passed to `is_line()` and
-`inkex.transforms.ImmutableVector2d.is_close()`. Defaults to 1e-8.
-
-> *Added in version 1.2.*
+        .. versionadded:: 1.2
 
 ## CubicSuperPath.transform
 
@@ -533,7 +523,7 @@ def is_on(pt_a, pt_b, pt_c, tol=1e-8)
 
 Checks if point pt_a is on the line between points pt_b and pt_c
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## CubicSuperPath.collinear
 
@@ -544,7 +534,7 @@ def collinear(pt_a, pt_b, pt_c, tol=1e-8)
 Checks if points pt_a, pt_b, pt_c lie on the same line,
 i.e. that the cross product (b-a) x (c-a) < tol
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## CubicSuperPath.within
 
@@ -554,7 +544,7 @@ def within(val_b, val_a, val_c)
 
 Checks if float val_b is between val_a and val_c
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## CubicSuperPath.is_line
 
@@ -566,25 +556,24 @@ Check whether csp segment (two points) can be expressed as a line has
 retracted handles or the handles can be retracted without loss of information
 (i.e. both handles lie on the line)
 
-> *Changed in version 1.2.*
-> Previously, it was only checked if both control points have retracted
-> handles. Now it is also checked if the handles can be retracted without
-> (visible) loss of information (i.e. both handles lie on the line connecting
-> the nodes).
+.. versionchanged:: 1.2
+    Previously, it was only checked if both control points have retracted
+    handles. Now it is also checked if the handles can be retracted without
+    (visible) loss of information (i.e. both handles lie on the line connecting
+    the nodes).
 
 Arguments:
-previous: first node in superpath notation
-segment: second node in superpath notation
-rtol (float, optional): relative tolerance, passed to
-`inkex.transforms.ImmutableVector2d.is_close()` for checking handle
-retraction. Defaults to 1e-5.
+    previous: first node in superpath notation
+    segment: second node in superpath notation
+    rtol (float, optional): relative tolerance, passed to
+        :func:`inkex.transforms.ImmutableVector2d.is_close` for checking handle
+        retraction. Defaults to 1e-5.
 
-> *Added in version 1.2.*
+        .. versionadded:: 1.2
+    atol (float, optional): absolute tolerance, passed to
+        :func:`inkex.transforms.ImmutableVector2d.is_close` for checking handle
+        retraction and
+        :func:`inkex.paths.CubicSuperPath.is_on` for checking if all points
+        (nodes + handles) lie on a line. Defaults to 1e-8.
 
-atol (float, optional): absolute tolerance, passed to
-`inkex.transforms.ImmutableVector2d.is_close()` for checking handle
-retraction and
-`inkex.paths.CubicSuperPath.is_on()` for checking if all points
-(nodes + handles) lie on a line. Defaults to 1e-8.
-
-> *Added in version 1.2.*
+        .. versionadded:: 1.2

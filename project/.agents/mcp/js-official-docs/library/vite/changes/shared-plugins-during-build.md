@@ -1,23 +1,16 @@
----
-title: "Shared Plugins during Build"
-tool: "vite"
-version: "8.3"
-source: "https://github.com/vitejs/vite/blob/b39e6e63dcbfc3cf4be871acf3554efbd6d0e268/docs/changes/shared-plugins-during-build.md"
-commit: "b39e6e63dcbfc3cf4be871acf3554efbd6d0e268"
-license: "MIT"
----
-
 # Shared Plugins during Build
 
-**Feedback**
-Give us feedback at Environment API feedback discussion
+::: tip Feedback
+Give us feedback at [Environment API feedback discussion](https://github.com/vitejs/vite/discussions/16358)
+:::
 
-See Shared plugins during build.
+See [Shared plugins during build](/guide/api-environment-plugins.md#shared-plugins-during-build).
 
 Affected scope: `Vite Plugin Authors`
 
-**Future Default Change**
+::: warning Future Default Change
 `builder.sharedConfigBuild` was first introduced in `v6.0`. You can set it true to check how your plugins work with a shared config. We're looking for feedback about changing the default in a future major once the plugin ecosystem is ready.
+:::
 
 ## Motivation
 

@@ -1,10 +1,11 @@
 ---
-title: "The XML shape of WordprocessingML documents - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/xml-shape-wordprocessingml-documents.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: The XML shape of WordprocessingML documents - LINQ to XML
+description: Learn about the XML shape of a WordprocessingML document.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: 3791b5e0-c502-469b-bb75-a7bf6fdd0a94
 ---
 
 # The XML shape of WordprocessingML documents (LINQ to XML)
@@ -56,7 +57,7 @@ This document contains two paragraphs. They both contain a single text run, and 
 
 The easiest way to see the contents of a WordprocessingML document in XML form is to create one using Microsoft Word, save it, and then run the following program that prints the XML to the console.
 
-This example uses classes found in the WindowsBase assembly. It uses types in the `System.IO.Packaging` namespace.
+This example uses classes found in the WindowsBase assembly. It uses types in the <xref:System.IO.Packaging?displayProperty=nameWithType> namespace.
 
 ```csharp
 const string documentRelationshipType =
@@ -120,6 +121,6 @@ End Module
 
 ## See also
 
-- Introducing the Office (2007) Open XML File Formats
-- Overview of WordprocessingML
-- Introduction to WordprocessingML
+- [Introducing the Office (2007) Open XML File Formats](/previous-versions/office/developer/office-2007/aa338205(v=office.12))
+- [Overview of WordprocessingML](/previous-versions/office/developer/office-2003/aa212812(v=office.11))
+- [Introduction to WordprocessingML](https://ericwhite.com/blog/introduction-to-wordprocessingml-series/)

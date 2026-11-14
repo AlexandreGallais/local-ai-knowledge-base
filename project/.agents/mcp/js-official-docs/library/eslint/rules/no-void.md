@@ -1,13 +1,14 @@
 ---
-title: "no-void"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-void.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-void
+rule_type: suggestion
+related_rules:
+- no-undef-init
+- no-undefined
+further_reading:
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/void
+- https://oreilly.com/javascript/excerpts/javascript-good-parts/bad-parts.html
 ---
 
-# no-void
 
 The `void` operator takes an operand and returns `undefined`: `void expression` will evaluate `expression` and return `undefined`. It can be used to ignore any side effects `expression` may produce:
 
@@ -59,7 +60,7 @@ This rule aims to eliminate use of `void` operator.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-void: "error"*/
@@ -73,6 +74,8 @@ function baz() {
 }
 ```
 
+:::
+
 ## Options
 
 This rule has an object option:
@@ -85,7 +88,7 @@ When `allowAsStatement` is set to true, the rule will not error on cases that th
 
 Examples of **incorrect** code for `{ "allowAsStatement": true }`:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-void: ["error", { "allowAsStatement": true }]*/
@@ -96,9 +99,11 @@ function baz() {
 }
 ```
 
+:::
+
 Examples of **correct** code for `{ "allowAsStatement": true }`:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-void: ["error", { "allowAsStatement": true }]*/
@@ -106,6 +111,8 @@ Examples of **correct** code for `{ "allowAsStatement": true }`:
 void foo;
 void someFunction();
 ```
+
+:::
 
 ## When Not To Use It
 

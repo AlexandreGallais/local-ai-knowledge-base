@@ -1,46 +1,108 @@
 ---
-title: "Errors and warnings for parameter / argument mismatches"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/compiler-messages/parameter-argument-mismatch.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Errors and warnings for parameter / argument mismatches
+description: These errors and warnings are issued when arguments are missing or arguments can't be used for one or more parameters on a method. Learn how to diagnose and fix them.
+f1_keywords:
+  - "CS0182"
+  - "CS0591"
+  - "CS0599"
+  - "CS0617"
+  - "CS0633"
+  - "CS0643"
+  - "CS0655"
+  - "CS0839"
+  - "CS1016"
+  - "CS1739"
+  - "CS1740"
+  - "CS1742"
+  - "CS1744"
+  - "CS1746"
+  - "CS7036"
+  - "CS8323"
+  - "CS8324"
+  - "CS8362"
+  - "CS8378"
+  - "CS8905"
+  - "CS8943"
+  - "CS8944"
+  - "CS8945"
+  - "CS8948"
+  - "CS8949"
+  - "CS8950"
+  - "CS8951"
+  - "CS8964"
+  - "CS8965"
+  - "CS8966"
+helpviewer_keywords:
+  - "CS0182"
+  - "CS0591"
+  - "CS0599"
+  - "CS0617"
+  - "CS0633"
+  - "CS0643"
+  - "CS0655"
+  - "CS0839"
+  - "CS1016"
+  - "CS1739"
+  - "CS1740"
+  - "CS1742"
+  - "CS1744"
+  - "CS1746"
+  - "CS7036"
+  - "CS8323"
+  - "CS8324"
+  - "CS8362"
+  - "CS8378"
+  - "CS8905"
+  - "CS8943"
+  - "CS8944"
+  - "CS8945"
+  - "CS8948"
+  - "CS8949"
+  - "CS8950"
+  - "CS8951"
+  - "CS8964"
+  - "CS8965"
+  - "CS8966"
+ms.date: 09/23/2026
+ai-usage: ai-assisted
 ---
-
 # Parameter and argument mismatch
 
 The compiler generates the following errors when you don't supply an argument for a formal parameter, or when the argument isn't valid for that parameter:
 
-- **CS0182**: *An attribute argument must be a constant expression, `typeof` expression or array creation expression of an attribute parameter type.*
-- **CS0591**: *Invalid value for argument to 'attribute' attribute.*
-- **CS0599**: *Invalid value for named attribute argument 'argument'.*
-- **CS0617**: *'argument' is not a valid named attribute argument. Named attribute arguments must be fields which are not readonly, static, or const, or read-write properties which are public and not static.*
-- **CS0633**: *The argument to the 'attribute' attribute must be a valid identifier.*
-- **CS0643**: *'argument' duplicate named attribute argument.*
-- **CS0655**: *'argument' is not a valid named attribute argument because it is not a valid attribute parameter type.*
-- **CS0839**: *Argument missing.*
-- **CS1016**: *Named attribute argument expected.*
-- **CS1739**: *The best overload for 'method' does not have a parameter named 'parameter'.*
-- **CS1740**: *Named argument 'argument' cannot be specified multiple times.*
-- **CS1742**: *An array access may not have a named argument specifier.*
-- **CS1744**: *Named argument 'argument' specifies a parameter for which a positional argument has already been given.*
-- **CS1746**: *The delegate 'delegate' does not have a parameter named 'name'.*
-- **CS7036**: *There is no argument given that corresponds to the required parameter 'parameter' of 'method'.*
-- **CS8323**: *Named argument 'argument name' is used out-of-position but is followed by an unnamed argument.*
-- **CS8324**: *Named argument specifications must appear after all fixed arguments have been specified in a dynamic invocation.*
-- **CS8362**: *`__arglist` cannot have an argument of void type.*
-- **CS8378**: *`__arglist` cannot have an argument passed by 'in' or 'out'.*
-- **CS8905**: *A function pointer cannot be called with named arguments.*
-- **CS8943**: *null is not a valid parameter name. To get access to the receiver of an instance method, use the empty string as the parameter name.*
-- **CS8944**: *'method' is not an instance method, the receiver or extension receiver parameter cannot be an interpolated string handler argument.*
-- **CS8945**: *'parameter name' is not a valid parameter name from 'method'.*
-- **CS8948**: *`InterpolatedStringHandlerArgumentAttribute` arguments cannot refer to the parameter the attribute is used on.*
-- **CS8949**: *The `InterpolatedStringHandlerArgumentAttribute` applied to parameter 'parameter' is malformed and cannot be interpreted. Construct an instance of 'handler type' manually.*
-- **CS8950**: *Parameter 'argument parameter' is an argument to the interpolated string handler conversion on parameter 'handler parameter', but the corresponding argument is specified after the interpolated string expression. Reorder the arguments to move 'argument parameter' before 'handler parameter'.*
-- **CS8951**: *Parameter 'argument parameter' is not explicitly provided, but is used as an argument to the interpolated string handler conversion on parameter 'handler parameter'. Specify the value of 'argument parameter' before 'handler parameter'.*
-- **CS8964**: *The `CallerArgumentExpressionAttribute` may only be applied to parameters with default values.*
-- **CS8965**: *The `CallerArgumentExpressionAttribute` applied to parameter 'parameter' will have no effect because it's self-referential.*
-- **CS8966**: *The `CallerArgumentExpressionAttribute` applied to parameter 'parameter' will have no effect because it applies to a member that is used in contexts that do not allow optional arguments.*
+<!-- The text in this list generates issues for Acrolinx, because they don't use contractions.
+That's by design. The text closely matches the text of the compiler error or warning for SEO purposes.
+ -->
+- [**CS0182**](#arguments-for-attributes): *An attribute argument must be a constant expression, `typeof` expression or array creation expression of an attribute parameter type.*
+- [**CS0591**](#arguments-for-attributes): *Invalid value for argument to 'attribute' attribute.*
+- [**CS0599**](#arguments-for-attributes): *Invalid value for named attribute argument 'argument'.*
+- [**CS0617**](#arguments-for-attributes): *'argument' is not a valid named attribute argument. Named attribute arguments must be fields which are not readonly, static, or const, or read-write properties which are public and not static.*
+- [**CS0633**](#arguments-for-attributes): *The argument to the 'attribute' attribute must be a valid identifier.*
+- [**CS0643**](#arguments-for-attributes): *'argument' duplicate named attribute argument.*
+- [**CS0655**](#arguments-for-attributes): *'argument' is not a valid named attribute argument because it is not a valid attribute parameter type.*
+- [**CS0839**](#missing-argument): *Argument missing.*
+- [**CS1016**](#named-and-optional-parameters-and-arguments): *Named attribute argument expected.*
+- [**CS1739**](#named-and-optional-parameters-and-arguments): *The best overload for 'method' does not have a parameter named 'parameter'.*
+- [**CS1740**](#named-and-optional-parameters-and-arguments): *Named argument 'argument' cannot be specified multiple times.*
+- [**CS1742**](#named-and-optional-parameters-and-arguments): *An array access may not have a named argument specifier.*
+- [**CS1744**](#named-and-optional-parameters-and-arguments): *Named argument 'argument' specifies a parameter for which a positional argument has already been given.*
+- [**CS1746**](#named-and-optional-parameters-and-arguments): *The delegate 'delegate' does not have a parameter named 'name'.*
+- [**CS7036**](#missing-argument): *There is no argument given that corresponds to the required parameter 'parameter' of 'method'.*
+- [**CS8323**](#named-and-optional-parameters-and-arguments): *Named argument 'argument name' is used out-of-position but is followed by an unnamed argument.*
+- [**CS8324**](#named-and-optional-parameters-and-arguments): *Named argument specifications must appear after all fixed arguments have been specified in a dynamic invocation.*
+- [**CS8362**](#variable-argument-lists): *`__arglist` cannot have an argument of void type.*
+- [**CS8378**](#variable-argument-lists): *`__arglist` cannot have an argument passed by 'in' or 'out'.*
+- [**CS8905**](#named-and-optional-parameters-and-arguments): *A function pointer cannot be called with named arguments.*
+- [**CS8943**](#interpolated-string-handler): *null is not a valid parameter name. To get access to the receiver of an instance method, use the empty string as the parameter name.*
+- [**CS8944**](#interpolated-string-handler): *'method' is not an instance method, the receiver or extension receiver parameter cannot be an interpolated string handler argument.*
+- [**CS8945**](#interpolated-string-handler): *'parameter name' is not a valid parameter name from 'method'.*
+- [**CS8948**](#interpolated-string-handler): *`InterpolatedStringHandlerArgumentAttribute` arguments cannot refer to the parameter the attribute is used on.*
+- [**CS8949**](#interpolated-string-handler): *The `InterpolatedStringHandlerArgumentAttribute` applied to parameter 'parameter' is malformed and cannot be interpreted. Construct an instance of 'handler type' manually.*
+- [**CS8950**](#interpolated-string-handler): *Parameter 'argument parameter' is an argument to the interpolated string handler conversion on parameter 'handler parameter', but the corresponding argument is specified after the interpolated string expression. Reorder the arguments to move 'argument parameter' before 'handler parameter'.*
+- [**CS8951**](#interpolated-string-handler): *Parameter 'argument parameter' is not explicitly provided, but is used as an argument to the interpolated string handler conversion on parameter 'handler parameter'. Specify the value of 'argument parameter' before 'handler parameter'.*
+- [**CS8964**](#caller-debugging-information): *The `CallerArgumentExpressionAttribute` may only be applied to parameters with default values.*
+- [**CS8965**](#caller-debugging-information): *The `CallerArgumentExpressionAttribute` applied to parameter 'parameter' will have no effect because it's self-referential.*
+- [**CS8966**](#caller-debugging-information): *The `CallerArgumentExpressionAttribute` applied to parameter 'parameter' will have no effect because it applies to a member that is used in contexts that do not allow optional arguments.*
 
 ## Missing argument
 
@@ -72,13 +134,13 @@ The compiler returns these errors when an argument to an attribute constructor i
 - **CS0643**: *'argument' duplicate named attribute argument.*
 - **CS0655**: *'argument' is not a valid named attribute argument because it is not a valid attribute parameter type.*
 
-If you use the `System.AttributeUsageAttribute` on your attribute definition, ensure the allowed values aren't mutually exclusive. Check that the type and order of arguments to the attribute are correct. Ensure the text of string arguments is valid. For many attributes, the argument must be a valid C# identifier. Arguments to attribute constructors must be compile-time constants. Therefore, you can only use types that support literal constants. In addition, the following types that support literal constants are disallowed as attribute parameters:
+If you use the <xref:System.AttributeUsageAttribute?displayProperty=nameWithType> on your attribute definition, ensure the allowed values aren't mutually exclusive. Check that the type and order of arguments to the attribute are correct. Ensure the text of string arguments is valid. For many attributes, the argument must be a valid C# identifier. Arguments to attribute constructors must be compile-time constants. Therefore, you can only use types that support literal constants. In addition, the following types that support literal constants are disallowed as attribute parameters:
 
-- sbyte
-- ushort
-- uint
-- ulong
-- decimal
+- [sbyte](../../language-reference/builtin-types/integral-numeric-types.md)
+- [ushort](../../language-reference/builtin-types/integral-numeric-types.md)
+- [uint](../../language-reference/builtin-types/integral-numeric-types.md)
+- [ulong](../../language-reference/builtin-types/integral-numeric-types.md)
+- [decimal](../../language-reference/builtin-types/floating-point-numeric-types.md)
 
 You can't specify repeated named arguments with the same parameter name. You can only set accessible properties when you initialize an attribute. You can't set private properties.
 
@@ -115,7 +177,7 @@ Pass only expressions that produce a value, either by value or with `ref`. Repla
 
 ## Interpolated string handler
 
-The compiler returns the following errors when you specify an interpolated string handler incorrectly.
+The compiler returns the following errors when you specify an [interpolated string handler](../tokens/interpolated.md#compilation-of-interpolated-strings) incorrectly.
 
 - **CS8943**: *null is not a valid parameter name. To get access to the receiver of an instance method, use the empty string as the parameter name.*
 - **CS8944**: *'method' is not an instance method, the receiver or extension receiver parameter cannot be an interpolated string handler argument.*
@@ -125,11 +187,11 @@ The compiler returns the following errors when you specify an interpolated strin
 - **CS8950**: *Parameter 'argument parameter' is an argument to the interpolated string handler conversion on parameter 'handler parameter', but the corresponding argument is specified after the interpolated string expression. Reorder the arguments to move 'argument parameter' before 'handler parameter'.*
 - **CS8951**: *Parameter 'argument parameter' is not explicitly provided, but is used as an argument to the interpolated string handler conversion on parameter 'handler parameter'. Specify the value of 'argument parameter' before 'handler parameter'.*
 
-An interpolated string handler is a pattern-based construct. It's important to get the pattern correct. Consult the C# language specification section on custom interpolated string expression handlers, or follow the tutorial on building an interpolated string handler.
+An interpolated string handler is a pattern-based construct. It's important to get the pattern correct. Consult the C# language specification section on [custom interpolated string expression handlers](~/_csharpstandard/standard/attributes.md#235111-custom-interpolated-string-expression-handlers), or follow the tutorial on [building an interpolated string handler](../../advanced-topics/performance/interpolated-string-handler.md).
 
 ## Caller debugging information
 
-The compiler issues the following error when you use the `System.Runtime.CompilerServices.CallerArgumentExpressionAttribute` incorrectly:
+The compiler issues the following error when you use the <xref:System.Runtime.CompilerServices.CallerArgumentExpressionAttribute?displayProperty=nameWithType> incorrectly:
 
 - **CS8964**: *The `CallerArgumentExpressionAttribute` may only be applied to parameters with default values.*
 

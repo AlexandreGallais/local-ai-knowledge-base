@@ -1,14 +1,3 @@
----
-title: "appendix-03-derivable-traits"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/appendix-03-derivable-traits.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# appendix-03-derivable-traits
-
 ## Appendix C: Derivable Traits
 
 In various places in the book, we’ve discussed the `derive` attribute, which
@@ -26,7 +15,7 @@ library that you can use with `derive`. Each section covers:
 - Examples of operations that require the trait
 
 If you want different behavior from that provided by the `derive` attribute,
-consult the standard library documentation
+consult the [standard library documentation](../std/index.html)<!-- ignore -->
 for each trait for details on how to manually implement them.
 
 The traits listed here are the only ones defined by the standard library that
@@ -44,8 +33,8 @@ it can’t provide appropriate default behavior for you.
 The list of derivable traits provided in this appendix is not comprehensive:
 Libraries can implement `derive` for their own traits, making the list of
 traits you can use `derive` with truly open ended. Implementing `derive`
-involves using a procedural macro, which is covered in the “Custom `derive`
-Macros” section in Chapter 20.
+involves using a procedural macro, which is covered in the [“Custom `derive`
+Macros”][custom-derive-macros]<!-- ignore --> section in Chapter 20.
 
 ### `Debug` for Programmer Output
 
@@ -123,8 +112,8 @@ a data structure that stores data based on the sort order of the values.
 
 The `Clone` trait allows you to explicitly create a deep copy of a value, and
 the duplication process might involve running arbitrary code and copying heap
-data. See the “Variables and Data Interacting with
-Clone” section in
+data. See the [“Variables and Data Interacting with
+Clone”][variables-and-data-interacting-with-clone]<!-- ignore --> section in
 Chapter 4 for more information on `Clone`.
 
 Deriving `Clone` implements the `clone` method, which when implemented for the
@@ -137,8 +126,8 @@ returned from `to_vec` will need to own its instances, so `to_vec` calls
 `clone` on each item. Thus, the type stored in the slice must implement `Clone`.
 
 The `Copy` trait allows you to duplicate a value by only copying bits stored on
-the stack; no arbitrary code is necessary. See the “Stack-Only Data:
-Copy” section in Chapter 4 for more
+the stack; no arbitrary code is necessary. See the [“Stack-Only Data:
+Copy”][stack-only-data-copy]<!-- ignore --> section in Chapter 4 for more
 information on `Copy`.
 
 The `Copy` trait doesn’t define any methods to prevent programmers from
@@ -178,9 +167,10 @@ meaning all fields or values in the type must also implement `Default` to
 derive `Default`.
 
 The `Default::default` function is commonly used in combination with the struct
-update syntax discussed in the “Creating Instances from Other Instances with
+update syntax discussed in the [“Creating Instances from Other Instances with
 Struct Update
-Syntax” section in Chapter 5. You can customize a few fields of a struct and
+Syntax”][creating-instances-from-other-instances-with-struct-update-syntax]<!--
+ignore --> section in Chapter 5. You can customize a few fields of a struct and
 then set and use a default value for the rest of the fields by using
 `..Default::default()`.
 
@@ -188,3 +178,8 @@ The `Default` trait is required when you use the method `unwrap_or_default` on
 `Option<T>` instances, for example. If the `Option<T>` is `None`, the method
 `unwrap_or_default` will return the result of `Default::default` for the type
 `T` stored in the `Option<T>`.
+
+[creating-instances-from-other-instances-with-struct-update-syntax]: ch05-01-defining-structs.html#creating-instances-from-other-instances-with-struct-update-syntax
+[stack-only-data-copy]: ch04-01-what-is-ownership.html#stack-only-data-copy
+[variables-and-data-interacting-with-clone]: ch04-01-what-is-ownership.html#variables-and-data-interacting-with-clone
+[custom-derive-macros]: ch20-05-macros.html#custom-derive-macros

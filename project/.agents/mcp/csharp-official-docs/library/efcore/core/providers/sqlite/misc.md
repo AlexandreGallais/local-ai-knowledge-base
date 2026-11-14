@@ -1,19 +1,17 @@
 ---
-title: "Miscellaneous - SQLite Database Provider - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/providers/sqlite/misc.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Miscellaneous - SQLite Database Provider - EF Core
+description: Miscellaneous information for the SQLite database provider
+author: SamMonoRT
+ms.date: 11/27/2025
+uid: core/providers/sqlite/misc
 ---
-
 # Miscellaneous notes for SQLite
 
 ## SaveChanges and the RETURNING clause
 
-When EF Core saves changes to the database, it does so with an optimized technique using the SQL RETURNING clause. Unfortunately, the RETURNING clause has some limitations; it cannot be used with virtual tables or tables with certain trigger types, for example.
+When EF Core saves changes to the database, it does so with an optimized technique using the SQL [RETURNING clause](https://sqlite.org/lang_returning.html). Unfortunately, the RETURNING clause has some limitations; it cannot be used with virtual tables or tables with certain trigger types, for example.
 
-If you run into a limitation related to the use of the RETURNING clause, you can disable it on a specific table via `Microsoft.EntityFrameworkCore.SqliteEntityTypeExtensions.UseSqlReturningClause*`:
+If you run into a limitation related to the use of the RETURNING clause, you can disable it on a specific table via <xref:Microsoft.EntityFrameworkCore.SqliteEntityTypeExtensions.UseSqlReturningClause*>:
 
 ```c#
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,7 +23,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 Doing this will make EF switch to an older, less efficient technique for updating the table.
 
-If most or all of your tables have triggers, you can configure this for all your model's tables by using the following model building convention:
+If most or all of your tables have triggers, you can configure this for all your model's tables by using the following [model building convention](xref:core/modeling/bulk-configuration#conventions):
 
 ```c#
 public class NoOutputClauseConvention : IModelFinalizingConvention
@@ -51,4 +49,4 @@ public class NoOutputClauseConvention : IModelFinalizingConvention
 }
 ```
 
-This effectively calls `Microsoft.EntityFrameworkCore.SqliteEntityTypeExtensions.UseSqlReturningClause*` on all your model's tables, instead of you having to do it manually for each and every table.
+This effectively calls <xref:Microsoft.EntityFrameworkCore.SqliteEntityTypeExtensions.UseSqlReturningClause*> on all your model's tables, instead of you having to do it manually for each and every table.

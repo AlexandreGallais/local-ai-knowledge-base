@@ -1,12 +1,3 @@
----
-title: "inkex.css.compiler"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/css/compiler.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.css.compiler
 
 CSS evaluation logic, forked from cssselect2 (rewritten without eval, targeted to
@@ -95,5 +86,5 @@ def compile_node(self, selector)
 Return a boolean expression, as a callable.
 
 When evaluated in a context where the `el` variable is an
-`cssselect2.tree.Element` object, tells whether the element is a
+:class:`cssselect2.tree.Element` object, tells whether the element is a
 subject of `selector`.

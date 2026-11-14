@@ -1,12 +1,3 @@
----
-title: "ConstantValueEntry interface (java.lang.classfile.constantpool)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/constantpool/ConstantValueEntry.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ConstantValueEntry interface (java.lang.classfile.constantpool)
 
 ```java
@@ -14,14 +5,12 @@ public sealed interface ConstantValueEntry extends LoadableConstantEntry permits
 ```
 
 Marker interface for constant pool entries that can represent constant values
-in the ConstantValue attribute.
+in the {@link Attributes#constantValue() ConstantValue} attribute.
 
-**See also:** ConstantPoolBuilder#constantValueEntry
+@see ConstantPoolBuilder#constantValueEntry
      ConstantPoolBuilder::constantValueEntry
-
-**sealedGraph:**
-
-**Since:** 24
+@sealedGraph
+@since 24
 
 ## ConstantValueEntry.constantValue()
 
@@ -29,6 +18,7 @@ in the ConstantValue attribute.
 ConstantDesc constantValue()
 ```
 
-The constant value will be an `Integer`, `Long`, `Float`, `Double`, or `String`.
+{@return the constant value}  The constant value will be an {@link
+Integer}, {@link Long}, {@link Float}, {@link Double}, or {@link String}.
 
-**See also:** ConstantPoolBuilder#constantValueEntry(ConstantDesc)
+@see ConstantPoolBuilder#constantValueEntry(ConstantDesc)

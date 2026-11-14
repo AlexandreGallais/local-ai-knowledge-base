@@ -1,35 +1,33 @@
----
-title: "require-file-overview"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/require-file-overview.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-require-file-overview"></a>
+<a name="require-file-overview"></a>
+# <code>require-file-overview</code>
 
-# `require-file-overview`
+* [Options](#user-content-require-file-overview-options)
+    * [`tags`](#user-content-require-file-overview-options-tags)
+* [Context and settings](#user-content-require-file-overview-context-and-settings)
+* [Failing examples](#user-content-require-file-overview-failing-examples)
+* [Passing examples](#user-content-require-file-overview-passing-examples)
 
-* Options
-    * `tags`
-* Context and settings
-* Failing examples
-* Passing examples
 
 Checks that:
 
 1. All files have a `@file`, `@fileoverview`, or `@overview` tag.
 2. Duplicate file overview tags within a given file will be reported
 3. File overview tags will be reported which are not, as per
-  the docs, "at the beginning of
+  [the docs](https://jsdoc.app/tags-file.html), "at the beginning of
   the file"–where beginning of the file is interpreted in this rule
   as being when the overview tag is not preceded by anything other than
   a comment.
 
+<a name="user-content-require-file-overview-options"></a>
+<a name="require-file-overview-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `tags`
+<a name="user-content-require-file-overview-options-tags"></a>
+<a name="require-file-overview-options-tags"></a>
+### <code>tags</code>
 
 The keys of this object are tag names, and the values are configuration
 objects indicating what will be checked for these whole-file tags.
@@ -40,7 +38,7 @@ to `false` when this option is supplied).
 1. `mustExist` - enforces that all files have a `@file`, `@fileoverview`, or `@overview` tag.
 2. `preventDuplicates` - enforces that duplicate file overview tags within a given file will be reported
 3. `initialCommentsOnly` - reports file overview tags which are not, as per
-  the docs, "at the beginning of
+  [the docs](https://jsdoc.app/tags-file.html), "at the beginning of
   the file"–where beginning of the file is interpreted in this rule
   as being when the overview tag is not preceded by anything other than
   a comment.
@@ -91,6 +89,9 @@ in this configuration object regardless of whether you have configured
 `fileoverview` instead of `file` on `tagNamePreference` (i.e., `fileoverview`
 will be checked, but you must use `file` on the configuration object).
 
+
+<a name="user-content-require-file-overview-context-and-settings"></a>
+<a name="require-file-overview-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -101,6 +102,8 @@ will be checked, but you must use `file` on the configuration object).
 |Recommended|false|
 |Options|`tags`|
 
+<a name="user-content-require-file-overview-failing-examples"></a>
+<a name="require-file-overview-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -109,11 +112,14 @@ The following patterns are considered problems:
 
 // Message: Missing @file
 
+
 // "jsdoc/require-file-overview": ["error"|"warn", {"tags":{"file":{"initialCommentsOnly":true,"mustExist":true,"preventDuplicates":true}}}]
 // Message: Missing @file
 
+
 // "jsdoc/require-file-overview": ["error"|"warn", {"tags":{"file":{"mustExist":true}}}]
 // Message: Missing @file
+
 
 // "jsdoc/require-file-overview": ["error"|"warn", {"tags":{"author":{"initialCommentsOnly":false,"mustExist":true,"preventDuplicates":false}}}]
 // Message: Missing @author
@@ -242,6 +248,10 @@ function quux () {}
 // Message: Missing @fileoverview
 ````
 
+
+
+<a name="user-content-require-file-overview-passing-examples"></a>
+<a name="require-file-overview-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -321,3 +331,4 @@ function quux () {
   */
 // "jsdoc/require-file-overview": ["error"|"warn", {"tags":{"license":{"initialCommentsOnly":true,"mustExist":false,"preventDuplicates":false}}}]
 ````
+

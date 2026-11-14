@@ -1,21 +1,13 @@
----
-title: "core::num::imp::int_sqrt"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/num/imp/int_sqrt.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::num::imp::int_sqrt
 
-These functions use the Karatsuba square root algorithm to compute the
-integer square root
+These functions use the [Karatsuba square root algorithm][1] to compute the
+[integer square root](https://en.wikipedia.org/wiki/Integer_square_root)
 for the primitive integer types.
 
 The signed integer functions can only handle **nonnegative** inputs, so
 that must be checked before calling those.
 
+[1]: <https://web.archive.org/web/20230511212802/https://inria.hal.science/inria-00072854v1/file/RR-3805.pdf>
 "Paul Zimmermann. Karatsuba Square Root. \[Research Report\] RR-3805,
 INRIA. 1999, pp.8. (inria-00072854)"
 
@@ -25,7 +17,8 @@ INRIA. 1999, pp.8. (inria-00072854)"
 macro_rules! unsigned_fn
 ```
 
-Generates a `u*` function that returns the integer square root of any input of
+Generates a `u*` function that returns the [integer square root](
+https://en.wikipedia.org/wiki/Integer_square_root) of any input of
 a specific unsigned integer type.
 
 ## macro first_stage!

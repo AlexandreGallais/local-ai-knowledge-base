@@ -1,44 +1,35 @@
----
-title: "LinkedBlockingDeque class (java.util.concurrent)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/LinkedBlockingDeque.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # LinkedBlockingDeque class (java.util.concurrent)
 
 ```java
 public class LinkedBlockingDeque<E> extends AbstractQueue<E> implements BlockingDeque<E>, java.io.Serializable
 ```
 
-An optionally-bounded blocking deque based on
+An optionally-bounded {@linkplain BlockingDeque blocking deque} based on
 linked nodes.
 
-The optional capacity bound constructor argument serves as a
+<p>The optional capacity bound constructor argument serves as a
 way to prevent excessive expansion. The capacity, if unspecified,
-is equal to `Integer.MAX_VALUE`.  Linked nodes are
+is equal to {@link Integer#MAX_VALUE}.  Linked nodes are
 dynamically created upon each insertion unless this would bring the
 deque above capacity.
 
-Most operations run in constant time (ignoring time spent
-blocking).  Exceptions include remove,
-removeFirstOccurrence, removeLastOccurrence, contains, and the bulk operations, all of which run in linear
+<p>Most operations run in constant time (ignoring time spent
+blocking).  Exceptions include {@link #remove(Object) remove},
+{@link #removeFirstOccurrence removeFirstOccurrence}, {@link
+#removeLastOccurrence removeLastOccurrence}, {@link #contains
+contains}, and the bulk operations, all of which run in linear
 time.
 
-This class and its iterator implement all of the *optional*
-methods of the `Collection` and `Iterator` interfaces.
+<p>This class and its iterator implement all of the <em>optional</em>
+methods of the {@link Collection} and {@link Iterator} interfaces.
 
-This class is a member of the
+<p>This class is a member of the
+<a href="{@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+Java Collections Framework</a>.
 
-Java Collections Framework.
-
-Parameters:
-
-- `<E>`: the type of elements held in this deque
-
-**Since:** 1.6
+@since 1.6
+@author  Doug Lea
+@param <E> the type of elements held in this deque
 
 ## LinkedBlockingDeque.LinkedBlockingDeque()
 
@@ -46,8 +37,8 @@ Parameters:
 public LinkedBlockingDeque()
 ```
 
-Creates a `LinkedBlockingDeque` with a capacity of
-`Integer.MAX_VALUE`.
+Creates a {@code LinkedBlockingDeque} with a capacity of
+{@link Integer#MAX_VALUE}.
 
 ## LinkedBlockingDeque.LinkedBlockingDeque(int)
 
@@ -55,15 +46,10 @@ Creates a `LinkedBlockingDeque` with a capacity of
 public LinkedBlockingDeque(int capacity)
 ```
 
-Creates a `LinkedBlockingDeque` with the given (fixed) capacity.
+Creates a {@code LinkedBlockingDeque} with the given (fixed) capacity.
 
-Parameters:
-
-- `capacity`: the capacity of this deque
-
-Throws:
-
-- `IllegalArgumentException`: if `capacity` is less than 1
+@param capacity the capacity of this deque
+@throws IllegalArgumentException if {@code capacity} is less than 1
 
 ## LinkedBlockingDeque.LinkedBlockingDeque(Collection<? extends E>)
 
@@ -71,18 +57,14 @@ Throws:
 public LinkedBlockingDeque(Collection<? extends E> c)
 ```
 
-Creates a `LinkedBlockingDeque` with a capacity of
-`Integer.MAX_VALUE`, initially containing the elements of
+Creates a {@code LinkedBlockingDeque} with a capacity of
+{@link Integer#MAX_VALUE}, initially containing the elements of
 the given collection, added in traversal order of the
 collection's iterator.
 
-Parameters:
-
-- `c`: the collection of elements to initially contain
-
-Throws:
-
-- `NullPointerException`: if the specified collection or any of its elements are null
+@param c the collection of elements to initially contain
+@throws NullPointerException if the specified collection or any
+        of its elements are null
 
 ## LinkedBlockingDeque.addFirst(E)
 
@@ -90,10 +72,8 @@ Throws:
 public void addFirst(E e)
 ```
 
-Throws:
-
-- `IllegalStateException`: if this deque is full
-- `NullPointerException`: (inherited documentation)
+@throws IllegalStateException if this deque is full
+@throws NullPointerException {@inheritDoc}
 
 ## LinkedBlockingDeque.addLast(E)
 
@@ -101,10 +81,8 @@ Throws:
 public void addLast(E e)
 ```
 
-Throws:
-
-- `IllegalStateException`: if this deque is full
-- `NullPointerException`: (inherited documentation)
+@throws IllegalStateException if this deque is full
+@throws NullPointerException  {@inheritDoc}
 
 ## LinkedBlockingDeque.offerFirst(E)
 
@@ -112,9 +90,7 @@ Throws:
 public boolean offerFirst(E e)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## LinkedBlockingDeque.offerLast(E)
 
@@ -122,9 +98,7 @@ Throws:
 public boolean offerLast(E e)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## LinkedBlockingDeque.putFirst(E)
 
@@ -132,10 +106,8 @@ Throws:
 public void putFirst(E e) throws InterruptedException
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
-- `InterruptedException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
+@throws InterruptedException {@inheritDoc}
 
 ## LinkedBlockingDeque.putLast(E)
 
@@ -143,10 +115,8 @@ Throws:
 public void putLast(E e) throws InterruptedException
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
-- `InterruptedException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
+@throws InterruptedException {@inheritDoc}
 
 ## LinkedBlockingDeque.offerFirst(E, long, TimeUnit)
 
@@ -154,10 +124,8 @@ Throws:
 public boolean offerFirst(E e, long timeout, TimeUnit unit) throws InterruptedException
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
-- `InterruptedException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
+@throws InterruptedException {@inheritDoc}
 
 ## LinkedBlockingDeque.offerLast(E, long, TimeUnit)
 
@@ -165,10 +133,8 @@ Throws:
 public boolean offerLast(E e, long timeout, TimeUnit unit) throws InterruptedException
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
-- `InterruptedException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
+@throws InterruptedException {@inheritDoc}
 
 ## LinkedBlockingDeque.removeFirst()
 
@@ -176,9 +142,7 @@ Throws:
 public E removeFirst()
 ```
 
-Throws:
-
-- `NoSuchElementException`: (inherited documentation)
+@throws NoSuchElementException {@inheritDoc}
 
 ## LinkedBlockingDeque.removeLast()
 
@@ -186,9 +150,7 @@ Throws:
 public E removeLast()
 ```
 
-Throws:
-
-- `NoSuchElementException`: (inherited documentation)
+@throws NoSuchElementException {@inheritDoc}
 
 ## LinkedBlockingDeque.getFirst()
 
@@ -196,9 +158,7 @@ Throws:
 public E getFirst()
 ```
 
-Throws:
-
-- `NoSuchElementException`: (inherited documentation)
+@throws NoSuchElementException {@inheritDoc}
 
 ## LinkedBlockingDeque.getLast()
 
@@ -206,9 +166,7 @@ Throws:
 public E getLast()
 ```
 
-Throws:
-
-- `NoSuchElementException`: (inherited documentation)
+@throws NoSuchElementException {@inheritDoc}
 
 ## LinkedBlockingDeque.add(E)
 
@@ -218,14 +176,12 @@ public boolean add(E e)
 
 Inserts the specified element at the end of this deque unless it would
 violate capacity restrictions.  When using a capacity-restricted deque,
-it is generally preferable to use method offer.
+it is generally preferable to use method {@link #offer(Object) offer}.
 
-This method is equivalent to `addLast`.
+<p>This method is equivalent to {@link #addLast}.
 
-Throws:
-
-- `IllegalStateException`: if this deque is full
-- `NullPointerException`: if the specified element is null
+@throws IllegalStateException if this deque is full
+@throws NullPointerException if the specified element is null
 
 ## LinkedBlockingDeque.offer(E)
 
@@ -233,13 +189,9 @@ Throws:
 public boolean offer(E e)
 ```
 
-(inherited documentation)
-
-**Returns:** (inherited documentation)
-
-Throws:
-
-- `NullPointerException`: if the specified element is null
+{@inheritDoc BlockingDeque}
+@throws NullPointerException if the specified element is null
+@return {@inheritDoc BlockingDeque}
 
 ## LinkedBlockingDeque.put(E)
 
@@ -247,10 +199,8 @@ Throws:
 public void put(E e) throws InterruptedException
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
-- `InterruptedException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
+@throws InterruptedException {@inheritDoc}
 
 ## LinkedBlockingDeque.offer(E, long, TimeUnit)
 
@@ -258,10 +208,8 @@ Throws:
 public boolean offer(E e, long timeout, TimeUnit unit) throws InterruptedException
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
-- `InterruptedException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
+@throws InterruptedException {@inheritDoc}
 
 ## LinkedBlockingDeque.remove()
 
@@ -270,16 +218,13 @@ public E remove()
 ```
 
 Retrieves and removes the head of the queue represented by this deque.
-This method differs from poll() only in that it throws an
+This method differs from {@link #poll() poll()} only in that it throws an
 exception if this deque is empty.
 
-This method is equivalent to removeFirst.
+<p>This method is equivalent to {@link #removeFirst() removeFirst}.
 
-**Returns:** the head of the queue represented by this deque
-
-Throws:
-
-- `NoSuchElementException`: if this deque is empty
+@return the head of the queue represented by this deque
+@throws NoSuchElementException if this deque is empty
 
 ## LinkedBlockingDeque.poll()
 
@@ -287,9 +232,8 @@ Throws:
 public E poll()
 ```
 
-(inherited documentation)
-
-**Returns:** (inherited documentation)
+{@inheritDoc BlockingDeque}
+@return {@inheritDoc BlockingDeque}
 
 ## LinkedBlockingDeque.element()
 
@@ -298,16 +242,13 @@ public E element()
 ```
 
 Retrieves, but does not remove, the head of the queue represented by
-this deque.  This method differs from peek() only in that
+this deque.  This method differs from {@link #peek() peek()} only in that
 it throws an exception if this deque is empty.
 
-This method is equivalent to getFirst.
+<p>This method is equivalent to {@link #getFirst() getFirst}.
 
-**Returns:** the head of the queue represented by this deque
-
-Throws:
-
-- `NoSuchElementException`: if this deque is empty
+@return the head of the queue represented by this deque
+@throws NoSuchElementException if this deque is empty
 
 ## LinkedBlockingDeque.peek()
 
@@ -315,9 +256,8 @@ Throws:
 public E peek()
 ```
 
-(inherited documentation)
-
-**Returns:** (inherited documentation)
+{@inheritDoc BlockingDeque}
+@return {@inheritDoc BlockingDeque}
 
 ## LinkedBlockingDeque.remainingCapacity()
 
@@ -328,10 +268,10 @@ public int remainingCapacity()
 Returns the number of additional elements that this deque can ideally
 (in the absence of memory or resource constraints) accept without
 blocking. This is always equal to the initial capacity of this deque
-less the current `size` of this deque.
+less the current {@code size} of this deque.
 
-Note that you *cannot* always tell if an attempt to insert
-an element will succeed by inspecting `remainingCapacity`
+<p>Note that you <em>cannot</em> always tell if an attempt to insert
+an element will succeed by inspecting {@code remainingCapacity}
 because it may be the case that another thread is about to
 insert or remove an element.
 
@@ -341,12 +281,10 @@ insert or remove an element.
 public int drainTo(Collection<? super E> c)
 ```
 
-Throws:
-
-- `UnsupportedOperationException`: (inherited documentation)
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
-- `IllegalArgumentException`: (inherited documentation)
+@throws UnsupportedOperationException {@inheritDoc}
+@throws ClassCastException            {@inheritDoc}
+@throws NullPointerException          {@inheritDoc}
+@throws IllegalArgumentException      {@inheritDoc}
 
 ## LinkedBlockingDeque.drainTo(Collection<? super E>, int)
 
@@ -354,12 +292,10 @@ Throws:
 public int drainTo(Collection<? super E> c, int maxElements)
 ```
 
-Throws:
-
-- `UnsupportedOperationException`: (inherited documentation)
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
-- `IllegalArgumentException`: (inherited documentation)
+@throws UnsupportedOperationException {@inheritDoc}
+@throws ClassCastException            {@inheritDoc}
+@throws NullPointerException          {@inheritDoc}
+@throws IllegalArgumentException      {@inheritDoc}
 
 ## LinkedBlockingDeque.push(E)
 
@@ -367,10 +303,8 @@ Throws:
 public void push(E e)
 ```
 
-Throws:
-
-- `IllegalStateException`: if this deque is full
-- `NullPointerException`: (inherited documentation)
+@throws IllegalStateException if this deque is full
+@throws NullPointerException {@inheritDoc}
 
 ## LinkedBlockingDeque.pop()
 
@@ -378,9 +312,7 @@ Throws:
 public E pop()
 ```
 
-Throws:
-
-- `NoSuchElementException`: (inherited documentation)
+@throws NoSuchElementException {@inheritDoc}
 
 ## LinkedBlockingDeque.remove(Object)
 
@@ -390,19 +322,16 @@ public boolean remove(Object o)
 
 Removes the first occurrence of the specified element from this deque.
 If the deque does not contain the element, it is unchanged.
-More formally, removes the first element `e` such that
-`o.equals(e)` (if such an element exists).
-Returns `true` if this deque contained the specified element
+More formally, removes the first element {@code e} such that
+{@code o.equals(e)} (if such an element exists).
+Returns {@code true} if this deque contained the specified element
 (or equivalently, if this deque changed as a result of the call).
 
-This method is equivalent to
-removeFirstOccurrence.
+<p>This method is equivalent to
+{@link #removeFirstOccurrence(Object) removeFirstOccurrence}.
 
-Parameters:
-
-- `o`: element to be removed from this deque, if present
-
-**Returns:** `true` if this deque changed as a result of the call
+@param o element to be removed from this deque, if present
+@return {@code true} if this deque changed as a result of the call
 
 ## LinkedBlockingDeque.size()
 
@@ -412,7 +341,7 @@ public int size()
 
 Returns the number of elements in this deque.
 
-**Returns:** the number of elements in this deque
+@return the number of elements in this deque
 
 ## LinkedBlockingDeque.contains(Object)
 
@@ -420,15 +349,12 @@ Returns the number of elements in this deque.
 public boolean contains(Object o)
 ```
 
-Returns `true` if this deque contains the specified element.
-More formally, returns `true` if and only if this deque contains
-at least one element `e` such that `o.equals(e)`.
+Returns {@code true} if this deque contains the specified element.
+More formally, returns {@code true} if and only if this deque contains
+at least one element {@code e} such that {@code o.equals(e)}.
 
-Parameters:
-
-- `o`: object to be checked for containment in this deque
-
-**Returns:** `true` if this deque contains the specified element
+@param o object to be checked for containment in this deque
+@return {@code true} if this deque contains the specified element
 
 ## LinkedBlockingDeque.addAll(Collection<? extends E>)
 
@@ -438,22 +364,16 @@ public boolean addAll(Collection<? extends E> c)
 
 Appends all of the elements in the specified collection to the end of
 this deque, in the order that they are returned by the specified
-collection's iterator.  Attempts to `addAll` of a deque to
-itself result in `IllegalArgumentException`.
+collection's iterator.  Attempts to {@code addAll} of a deque to
+itself result in {@code IllegalArgumentException}.
 
-Parameters:
-
-- `c`: the elements to be inserted into this deque
-
-**Returns:** `true` if this deque changed as a result of the call
-
-**See also:** #add(Object)
-
-Throws:
-
-- `NullPointerException`: if the specified collection or any of its elements are null
-- `IllegalArgumentException`: if the collection is this deque
-- `IllegalStateException`: if this deque is full
+@param c the elements to be inserted into this deque
+@return {@code true} if this deque changed as a result of the call
+@throws NullPointerException if the specified collection or any
+        of its elements are null
+@throws IllegalArgumentException if the collection is this deque
+@throws IllegalStateException if this deque is full
+@see #add(Object)
 
 ## LinkedBlockingDeque.toArray()
 
@@ -464,14 +384,14 @@ public Object[] toArray()
 Returns an array containing all of the elements in this deque, in
 proper sequence (from first to last element).
 
-The returned array will be "safe" in that no references to it are
+<p>The returned array will be "safe" in that no references to it are
 maintained by this deque.  (In other words, this method must allocate
 a new array).  The caller is thus free to modify the returned array.
 
-This method acts as bridge between array-based and collection-based
+<p>This method acts as bridge between array-based and collection-based
 APIs.
 
-**Returns:** an array containing all of the elements in this deque
+@return an array containing all of the elements in this deque
 
 ## LinkedBlockingDeque.toArray(T[])
 
@@ -485,37 +405,33 @@ the specified array.  If the deque fits in the specified array, it
 is returned therein.  Otherwise, a new array is allocated with the
 runtime type of the specified array and the size of this deque.
 
-If this deque fits in the specified array with room to spare
+<p>If this deque fits in the specified array with room to spare
 (i.e., the array has more elements than this deque), the element in
 the array immediately following the end of the deque is set to
-`null`.
+{@code null}.
 
-Like the `toArray()` method, this method acts as bridge between
+<p>Like the {@link #toArray()} method, this method acts as bridge between
 array-based and collection-based APIs.  Further, this method allows
 precise control over the runtime type of the output array, and may,
 under certain circumstances, be used to save allocation costs.
 
-Suppose `x` is a deque known to contain only strings.
+<p>Suppose {@code x} is a deque known to contain only strings.
 The following code can be used to dump the deque into a newly
-allocated array of `String`:
+allocated array of {@code String}:
 
-```java
-String[] y = x.toArray(new String[0]);
-```
+<pre> {@code String[] y = x.toArray(new String[0]);}</pre>
 
-Note that `toArray(new Object[0])` is identical in function to
-`toArray()`.
+Note that {@code toArray(new Object[0])} is identical in function to
+{@code toArray()}.
 
-Parameters:
-
-- `a`: the array into which the elements of the deque are to be stored, if it is big enough; otherwise, a new array of the same runtime type is allocated for this purpose
-
-**Returns:** an array containing all of the elements in this deque
-
-Throws:
-
-- `ArrayStoreException`: if the runtime type of the specified array is not a supertype of the runtime type of every element in this deque
-- `NullPointerException`: if the specified array is null
+@param a the array into which the elements of the deque are to
+         be stored, if it is big enough; otherwise, a new array of the
+         same runtime type is allocated for this purpose
+@return an array containing all of the elements in this deque
+@throws ArrayStoreException if the runtime type of the specified array
+        is not a supertype of the runtime type of every element in
+        this deque
+@throws NullPointerException if the specified array is null
 
 ## LinkedBlockingDeque.clear()
 
@@ -535,10 +451,10 @@ public Iterator<E> iterator()
 Returns an iterator over the elements in this deque in proper sequence.
 The elements will be returned in order from first (head) to last (tail).
 
-The returned iterator is
-*weakly consistent*.
+<p>The returned iterator is
+<a href="package-summary.html#Weakly"><i>weakly consistent</i></a>.
 
-**Returns:** an iterator over the elements in this deque in proper sequence
+@return an iterator over the elements in this deque in proper sequence
 
 ## LinkedBlockingDeque.descendingIterator()
 
@@ -550,10 +466,10 @@ Returns an iterator over the elements in this deque in reverse
 sequential order.  The elements will be returned in order from
 last (tail) to first (head).
 
-The returned iterator is
-*weakly consistent*.
+<p>The returned iterator is
+<a href="package-summary.html#Weakly"><i>weakly consistent</i></a>.
 
-**Returns:** an iterator over the elements in this deque in reverse order
+@return an iterator over the elements in this deque in reverse order
 
 ## LinkedBlockingDeque.spliterator()
 
@@ -561,20 +477,20 @@ The returned iterator is
 public Spliterator<E> spliterator()
 ```
 
-Returns a `Spliterator` over the elements in this deque.
+Returns a {@link Spliterator} over the elements in this deque.
 
-The returned spliterator is
-*weakly consistent*.
+<p>The returned spliterator is
+<a href="package-summary.html#Weakly"><i>weakly consistent</i></a>.
 
-The `Spliterator` reports `Spliterator.CONCURRENT`,
-`Spliterator.ORDERED`, and `Spliterator.NONNULL`.
+<p>The {@code Spliterator} reports {@link Spliterator#CONCURRENT},
+{@link Spliterator#ORDERED}, and {@link Spliterator#NONNULL}.
 
-**Implementation note:** The `Spliterator` implements `trySplit` to permit limited
+@implNote
+The {@code Spliterator} implements {@code trySplit} to permit limited
 parallelism.
 
-**Returns:** a `Spliterator` over the elements in this deque
-
-**Since:** 1.8
+@return a {@code Spliterator} over the elements in this deque
+@since 1.8
 
 ## LinkedBlockingDeque.forEach(Consumer<? super E>)
 
@@ -582,9 +498,7 @@ parallelism.
 public void forEach(Consumer<? super E> action)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## LinkedBlockingDeque.removeIf(Predicate<? super E>)
 
@@ -592,9 +506,7 @@ Throws:
 public boolean removeIf(Predicate<? super E> filter)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## LinkedBlockingDeque.removeAll(Collection<?>)
 
@@ -602,9 +514,7 @@ Throws:
 public boolean removeAll(Collection<?> c)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## LinkedBlockingDeque.retainAll(Collection<?>)
 
@@ -612,6 +522,4 @@ Throws:
 public boolean retainAll(Collection<?> c)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}

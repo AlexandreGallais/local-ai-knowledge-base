@@ -1,40 +1,32 @@
----
-title: "CertPathBuilderSpi class (java.security.cert)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/cert/CertPathBuilderSpi.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # CertPathBuilderSpi class (java.security.cert)
 
 ```java
 public abstract class CertPathBuilderSpi
 ```
 
-The *Service Provider Interface* (**SPI**)
-for the CertPathBuilder class. All
-`CertPathBuilder` implementations must include a class (the
-SPI class) that extends this class (`CertPathBuilderSpi`) and
+The <i>Service Provider Interface</i> (<b>SPI</b>)
+for the {@link CertPathBuilder CertPathBuilder} class. All
+{@code CertPathBuilder} implementations must include a class (the
+SPI class) that extends this class ({@code CertPathBuilderSpi}) and
 implements all of its methods. In general, instances of this class should
-only be accessed through the `CertPathBuilder` class. For
+only be accessed through the {@code CertPathBuilder} class. For
 details, see the Java Cryptography Architecture.
-
-**Concurrent Access**
-
+<p>
+<b>Concurrent Access</b>
+<p>
 Instances of this class need not be protected against concurrent
 access from multiple threads. Threads that need to access a single
-`CertPathBuilderSpi` instance concurrently should synchronize
+{@code CertPathBuilderSpi} instance concurrently should synchronize
 amongst themselves and provide the necessary locking before calling the
-wrapping `CertPathBuilder` object.
-
-However, implementations of `CertPathBuilderSpi` may still
+wrapping {@code CertPathBuilder} object.
+<p>
+However, implementations of {@code CertPathBuilderSpi} may still
 encounter concurrency issues, since multiple threads each
-manipulating a different `CertPathBuilderSpi` instance need not
+manipulating a different {@code CertPathBuilderSpi} instance need not
 synchronize.
 
-**Since:** 1.4
+@since       1.4
+@author      Sean Mullan
 
 ## CertPathBuilderSpi.CertPathBuilderSpi()
 
@@ -53,16 +45,12 @@ public abstract CertPathBuilderResult engineBuild(CertPathParameters params) thr
 Attempts to build a certification path using the specified
 algorithm parameter set.
 
-Parameters:
-
-- `params`: the algorithm parameters
-
-**Returns:** the result of the build algorithm
-
-Throws:
-
-- `CertPathBuilderException`: if the builder is unable to construct a certification path that satisfies the specified parameters
-- `InvalidAlgorithmParameterException`: if the specified parameters are inappropriate for this `CertPathBuilder`
+@param params the algorithm parameters
+@return the result of the build algorithm
+@throws CertPathBuilderException if the builder is unable to construct
+a certification path that satisfies the specified parameters
+@throws InvalidAlgorithmParameterException if the specified parameters
+are inappropriate for this {@code CertPathBuilder}
 
 ## CertPathBuilderSpi.engineGetRevocationChecker()
 
@@ -70,24 +58,20 @@ Throws:
 public CertPathChecker engineGetRevocationChecker()
 ```
 
-Returns a `CertPathChecker` that this implementation uses to
+Returns a {@code CertPathChecker} that this implementation uses to
 check the revocation status of certificates. A PKIX implementation
-returns objects of type `PKIXRevocationChecker`.
+returns objects of type {@code PKIXRevocationChecker}.
 
-The primary purpose of this method is to allow callers to specify
+<p>The primary purpose of this method is to allow callers to specify
 additional input parameters and options specific to revocation checking.
-See the class description of `CertPathBuilder` for an example.
+See the class description of {@code CertPathBuilder} for an example.
 
-This method was added to version 1.8 of the Java Platform Standard
+<p>This method was added to version 1.8 of the Java Platform Standard
 Edition. In order to maintain backwards compatibility with existing
 service providers, this method cannot be abstract and by default throws
-an `UnsupportedOperationException`.
+an {@code UnsupportedOperationException}.
 
-**Returns:** a `CertPathChecker` that this implementation uses to
+@return a {@code CertPathChecker} that this implementation uses to
 check the revocation status of certificates
-
-**Since:** 1.8
-
-Throws:
-
-- `UnsupportedOperationException`: if this method is not supported
+@throws UnsupportedOperationException if this method is not supported
+@since 1.8

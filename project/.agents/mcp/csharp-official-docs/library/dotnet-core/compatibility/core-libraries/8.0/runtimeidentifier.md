@@ -1,15 +1,11 @@
 ---
 title: ".NET 8 breaking change: RuntimeIdentifier returns platform for which the runtime was built"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/8.0/runtimeidentifier.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 8 breaking change in core .NET libraries where RuntimeInformation.RuntimeIdentifier returns the platform for which the runtime was built.
+ms.date: 09/06/2023
 ---
-
 # RuntimeIdentifier returns platform for which the runtime was built
 
-`System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier` returns the platform for which the runtime was built, rather than a value computed at runtime.
+<xref:System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier?displayProperty=nameWithType> returns the platform for which the runtime was built, rather than a value computed at runtime.
 
 ## Previous behavior
 
@@ -25,21 +21,21 @@ Starting in .NET 8, the value is the RID for which the runtime was built. This m
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-This change is in line with a .NET 8 change to RID-specific asset resolution and the move away from a distro-aware runtime. `System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier` is an opaque value that should represent the platform on which the host or runtime considers itself to be running. In .NET 8, that corresponds to the platform for which the host or runtime is built, rather than an RID computed at runtime.
+This change is in line with a .NET 8 change to [RID-specific asset resolution](../../deployment/8.0/rid-asset-list.md) and the move away from a distro-aware runtime. <xref:System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier?displayProperty=nameWithType> is an opaque value that should represent the platform on which the host or runtime considers itself to be running. In .NET 8, that corresponds to the platform for which the host or runtime is built, rather than an RID computed at runtime.
 
 ## Recommended action
 
-`System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier` is an opaque value and not intended to be parsed into its component parts. For the OS version of the actual machine an application is running on, use `System.Environment.OSVersion`. For a description, use `System.Runtime.InteropServices.RuntimeInformation.OSDescription`. For a specific ID (distro) and corresponding version on Linux, you can read the os-release file.
+<xref:System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier?displayProperty=nameWithType> is an opaque value and not intended to be parsed into its component parts. For the OS version of the actual machine an application is running on, use <xref:System.Environment.OSVersion?displayProperty=nameWithType>. For a description, use <xref:System.Runtime.InteropServices.RuntimeInformation.OSDescription?displayProperty=nameWithType>. For a specific ID (distro) and corresponding version on Linux, you can read the [os-release](https://www.freedesktop.org/software/systemd/man/latest/os-release.html) file.
 
 ## Affected APIs
 
-- `System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier`
+- <xref:System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier?displayProperty=fullName>
 
 ## See also
 
-- .NET SDK uses a smaller RID graph
-- Host determines RID-specific assets
+- [.NET SDK uses a smaller RID graph](../../sdk/8.0/rid-graph.md)
+- [Host determines RID-specific assets](../../deployment/8.0/rid-asset-list.md)

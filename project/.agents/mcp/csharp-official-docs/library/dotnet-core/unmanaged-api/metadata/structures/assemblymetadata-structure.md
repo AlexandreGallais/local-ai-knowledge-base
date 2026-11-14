@@ -1,12 +1,18 @@
 ---
+description: "Learn more about: ASSEMBLYMETADATA Structure"
 title: "ASSEMBLYMETADATA Structure"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/structures/assemblymetadata-structure.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ASSEMBLYMETADATA"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ASSEMBLYMETADATA"
+topic_type:
+  - "apiref"
 ---
-
 # ASSEMBLYMETADATA Structure
 
 Contains information about the referenced assembly, including its version and its level of support for locales, processors, and operating systems.
@@ -40,16 +46,16 @@ typedef struct {
 | `cbLocale` | The size in wide characters of `szLocale`. |
 | `rdwProcessor` | An array of identifiers, as defined in Winnt.h, for the processor types that are supported by the referenced assembly. A NULL value indicates processor independence. |
 | `ulProcessor` | The length of the `rdwProcessor` array. |
-| `rOS` |An array of OSINFO instances specifying the operating systems that are supported by the referenced assembly. A NULL value indicates operating-system independence.|
+| `rOS` |An array of [OSINFO](osinfo-structure.md) instances specifying the operating systems that are supported by the referenced assembly. A NULL value indicates operating-system independence.|
 | `ulOS` | The length of the `rOS` array. |
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
 ## See also
 
-- IMetaDataAssemblyEmit Interface
-- OSINFO Structure
+- [IMetaDataAssemblyEmit Interface](../interfaces/imetadataassemblyemit-interface.md)
+- [OSINFO Structure](osinfo-structure.md)

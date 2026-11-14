@@ -1,17 +1,8 @@
----
-title: "return expressions"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/expressions/return-expr.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[expr.return]
 # `return` expressions
 
 r[expr.return.syntax]
-```grammar
+```grammar,expressions
 ReturnExpression -> `return` Expression?
 ```
 
@@ -34,3 +25,6 @@ fn max(a: i32, b: i32) -> i32 {
     return b;
 }
 ```
+
+[`!`]: type.never
+[diverging]: divergence

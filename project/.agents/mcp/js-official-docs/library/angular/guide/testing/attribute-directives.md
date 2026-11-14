@@ -1,12 +1,3 @@
----
-title: "Testing Attribute Directives"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/testing/attribute-directives.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Testing Attribute Directives
 
 An _attribute directive_ modifies the behavior of an element, component or another directive.
@@ -51,7 +42,7 @@ It's used throughout the application, perhaps most simply in the `About` compone
 export class About {}
 ```
 
-Testing the specific use of the `Highlight` directive within the `About` component requires only the techniques explored in the "Nested component tests" section of Component testing scenarios.
+Testing the specific use of the `Highlight` directive within the `About` component requires only the techniques explored in the ["Nested component tests"](guide/testing/components-scenarios#nested-component-tests) section of [Component testing scenarios](guide/testing/components-scenarios).
 
 ```ts
 let fixture: ComponentFixture<About>;
@@ -93,7 +84,9 @@ A better solution is to create an artificial test component that demonstrates al
 class Test {}
 ```
 
-HELPFUL: The `` case binds the `Highlight` to the name of a color value in the input box.
+<img alt="HighlightDirective spec in action" src="assets/images/guide/testing/highlight-directive-spec.png">
+
+HELPFUL: The `<input>` case binds the `Highlight` to the name of a color value in the input box.
 The initial value is the word "cyan" which should be the background color of the input box.
 
 Here are some tests of this component:
@@ -151,7 +144,7 @@ it('bare <h2> should not have a backgroundColor', () => {
 A few techniques are noteworthy:
 
 - The `By.directive` predicate is a great way to get the elements that have this directive _when their element types are unknown_
-- The `:not` pseudo-class in `By.css('h2:not([highlight])')` helps find `<h2>` elements that _do not_ have the directive.
+- The [`:not` pseudo-class](https://developer.mozilla.org/docs/Web/CSS/:not) in `By.css('h2:not([highlight])')` helps find `<h2>` elements that _do not_ have the directive.
   `By.css('*:not([highlight])')` finds _any_ element that does not have the directive.
 
 - `DebugElement.styles` affords access to element styles even in the absence of a real browser, thanks to the `DebugElement` abstraction.

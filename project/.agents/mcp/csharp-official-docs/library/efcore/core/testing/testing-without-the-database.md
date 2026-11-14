@@ -1,35 +1,22 @@
 ---
-title: "Testing without your Production Database System - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/testing/testing-without-the-database.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Testing without your Production Database System - EF Core
+description: Techniques for testing EF Core applications without involving  your production database system
+author: SamMonoRT
+ms.date: 01/24/2022
+uid: core/testing/testing-without-the-database
 ---
-
 # Testing without your production database system
 
-In this page, we discuss techniques for writing automated tests which do not involve the database system against which the application runs in production, by swapping your database with a test double. There are various types of test doubles and approaches for doing this, and it's recommended to thoroughly read Choosing a testing strategy to fully understand the different options. Finally, it's also possible to test against your production database system; this is covered in Testing against your production database system.
+In this page, we discuss techniques for writing automated tests which do not involve the database system against which the application runs in production, by swapping your database with a [test double](https://en.wikipedia.org/wiki/Test_double). There are various types of test doubles and approaches for doing this, and it's recommended to thoroughly read [Choosing a testing strategy](xref:core/testing/choosing-a-testing-strategy) to fully understand the different options. Finally, it's also possible to test against your production database system; this is covered in [Testing against your production database system](xref:core/testing/testing-with-the-database).
 
-> **Tip:**
-> This page shows xUnit techniques, but similar concepts exist in other testing frameworks, including NUnit.
+> [!TIP]
+> This page shows [xUnit](https://xunit.net/) techniques, but similar concepts exist in other testing frameworks, including [NUnit](https://nunit.org/).
 
 ## Repository pattern
 
-If you've decided to write tests without involving your production database system, then the recommended technique for doing so is the repository pattern; for more background on this, see this section. The first step of implementing the repository pattern is to extract out your EF Core LINQ queries to a separate layer, which we'll later stub or mock. Here's an example of a repository interface for our blogging system:
+If you've decided to write tests without involving your production database system, then the recommended technique for doing so is the repository pattern; for more background on this, see [this section](xref:core/testing/choosing-a-testing-strategy#repository-pattern). The first step of implementing the repository pattern is to extract out your EF Core LINQ queries to a separate layer, which we'll later stub or mock. Here's an example of a repository interface for our blogging system:
 
-```csharp
-public interface IBloggingRepository
-{
-    Task<Blog> GetBlogByNameAsync(string name);
-
-    IAsyncEnumerable<Blog> GetAllBlogsAsync();
-
-    void AddBlog(Blog blog);
-
-    Task SaveChangesAsync();
-}
-```
+[!code-csharp[Main](../../../samples/core/Testing/BusinessLogic/IBloggingRepository.cs?name=IBloggingRepository)]
 
 ... and here's a partial sample implementation for production use:
 
@@ -52,125 +39,41 @@ There's not much to it: the repository simply wraps an EF Core context, and expo
 
 For an ASP.NET Core application, we need to register the repository as a service in dependency injection by adding the following to the application's `ConfigureServices`:
 
-```csharp
-services.AddScoped<IBloggingRepository, BloggingRepository>();
-```
+[!code-csharp[Main](../../../samples/core/Testing/BloggingWebApi/Startup.cs?name=RegisterRepositoryInDI)]
 
 Finally, our controllers get injected with the repository service instead of the EF Core context, and execute methods on it:
 
-```csharp
-private readonly IBloggingRepository _repository;
+[!code-csharp[Main](../../../samples/core/Testing/BloggingWebApi/Controllers/BloggingControllerWithRepository.cs?name=BloggingControllerWithRepository&highlight=8)]
 
-public BloggingControllerWithRepository(IBloggingRepository repository)
-    => _repository = repository;
+At this point, your application is architected according to the repository pattern: the only point of contact with the data access layer - EF Core - is now via the repository layer, which acts as a mediator between application code and actual database queries. Tests can now be written simply by stubbing out the repository, or by mocking it with your favorite mocking library. Here's an example of a mock-based test using the popular [Moq](https://github.com/Moq/moq4) library:
 
-[HttpGet]
-public async Task<Blog> GetBlog(string name)
-    => await _repository.GetBlogByNameAsync(name);
-```
+[!code-csharp[Main](../../../samples/core/Testing/TestingWithoutTheDatabase/RepositoryBloggingControllerTest.cs?name=GetBlog)]
 
-At this point, your application is architected according to the repository pattern: the only point of contact with the data access layer - EF Core - is now via the repository layer, which acts as a mediator between application code and actual database queries. Tests can now be written simply by stubbing out the repository, or by mocking it with your favorite mocking library. Here's an example of a mock-based test using the popular Moq library:
-
-```csharp
-[Fact]
-public async Task GetBlog()
-{
-    // Arrange
-    var repositoryMock = new Mock<IBloggingRepository>();
-    repositoryMock
-        .Setup(r => r.GetBlogByNameAsync("Blog2"))
-        .Returns(Task.FromResult(new Blog { Name = "Blog2", Url = "http://blog2.com" }));
-
-    var controller = new BloggingControllerWithRepository(repositoryMock.Object);
-
-    // Act
-    var blog = await controller.GetBlog("Blog2");
-
-    // Assert
-    repositoryMock.Verify(r => r.GetBlogByNameAsync("Blog2"));
-    Assert.Equal("http://blog2.com", blog.Url);
-}
-```
-
-The full sample code can be viewed here.
+The full sample code can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Testing/TestingWithoutTheDatabase/RepositoryBloggingControllerTest.cs).
 
 ## SQLite in-memory
 
-SQLite can easily be configured as the EF Core provider for your test suite instead of your production database system (e.g. SQL Server); consult the SQLite provider docs for details. However, it's usually a good idea to use SQLite's in-memory database feature when testing, since it provides easy isolation between tests, and does not require dealing with actual SQLite files.
+SQLite can easily be configured as the EF Core provider for your test suite instead of your production database system (e.g. SQL Server); consult the [SQLite provider docs](xref:core/providers/sqlite/index) for details. However, it's usually a good idea to use SQLite's [in-memory database](https://sqlite.org/inmemorydb.html) feature when testing, since it provides easy isolation between tests, and does not require dealing with actual SQLite files.
 
 To use in-memory SQLite, it's important to understand that a **new database is created** whenever a low-level connection is opened, and that it's **deleted** when that connection is closed. In normal usage, EF Core's `DbContext` opens and closes database connections as needed - every time a query is executed - to avoid keeping connection for unnecessarily long times. However, with in-memory SQLite this would lead to resetting the database every time; so as a workaround, we open the connection before passing it to EF Core, and arrange for it to be closed only when the test completes:
 
-```csharp
-    public SqliteInMemoryBloggingControllerTest()
-    {
-        // Create and open a connection. This creates the SQLite in-memory database, which will persist until the connection is closed
-        // at the end of the test (see Dispose below).
-        _connection = new SqliteConnection("Filename=:memory:");
-        _connection.Open();
-
-        // These options will be used by the context instances in this test suite, including the connection opened above.
-        _contextOptions = new DbContextOptionsBuilder<BloggingContext>()
-            .UseSqlite(_connection)
-            .Options;
-
-        // Create the schema and seed some data
-        using var context = new BloggingContext(_contextOptions);
-
-        if (context.Database.EnsureCreated())
-        {
-            using var viewCommand = context.Database.GetDbConnection().CreateCommand();
-            viewCommand.CommandText = @"
-CREATE VIEW AllResources AS
-SELECT Url
-FROM Blogs;";
-            viewCommand.ExecuteNonQuery();
-        }
-
-        context.AddRange(
-            new Blog { Name = "Blog1", Url = "http://blog1.com" },
-            new Blog { Name = "Blog2", Url = "http://blog2.com" });
-        context.SaveChanges();
-    }
-
-    BloggingContext CreateContext() => new BloggingContext(_contextOptions);
-
-    public void Dispose() => _connection.Dispose();
-```
+[!code-csharp[Main](../../../samples/core/Testing/TestingWithoutTheDatabase/SqliteInMemoryBloggingControllerTest.cs?name=ConstructorAndDispose)]
 
 Tests can now call `CreateContext`, which returns a context using the connection we set up in the constructor, ensuring we have a clean database with the seeded data.
 
-The full sample code for SQLite in-memory testing can be viewed here.
+The full sample code for SQLite in-memory testing can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Testing/TestingWithoutTheDatabase/SqliteInMemoryBloggingControllerTest.cs).
 
 ## In-memory provider
 
-As discussed in the testing overview page, using the in-memory provider for testing is strongly discouraged; consider using SQLite instead, or implementing the repository pattern. If you've decided to use in-memory, here is a typical test class constructor that sets up and seeds a new in-memory database before each test:
+As discussed in the [testing overview page](xref:core/testing/choosing-a-testing-strategy#inmemory-as-a-database-fake), using the in-memory provider for testing is strongly discouraged; [consider using SQLite instead](#sqlite-in-memory), or [implementing the repository pattern](#repository-pattern). If you've decided to use in-memory, here is a typical test class constructor that sets up and seeds a new in-memory database before each test:
 
-```csharp
-public InMemoryBloggingControllerTest()
-{
-    _contextOptions = new DbContextOptionsBuilder<BloggingContext>()
-        .UseInMemoryDatabase("BloggingControllerTest")
-        .ConfigureWarnings(b => b.Ignore(InMemoryEventId.TransactionIgnoredWarning))
-        .Options;
+[!code-csharp[Main](../../../samples/core/Testing/TestingWithoutTheDatabase/InMemoryBloggingControllerTest.cs?name=Constructor)]
 
-    using var context = new BloggingContext(_contextOptions);
-
-    context.Database.EnsureDeleted();
-    context.Database.EnsureCreated();
-
-    context.AddRange(
-        new Blog { Name = "Blog1", Url = "http://blog1.com" },
-        new Blog { Name = "Blog2", Url = "http://blog2.com" });
-
-    context.SaveChanges();
-}
-```
-
-The full sample code for in-memory testing can be viewed here.
+The full sample code for in-memory testing can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Testing/TestingWithoutTheDatabase/InMemoryBloggingControllerTest.cs).
 
 ### In-memory database naming
 
-In-memory databases are identified by a simple, string name, and it's possible to connect to the same database several times by providing the same name (this is why the sample above must call `EnsureDeleted` before each test). However, note that in-memory databases are rooted in the context's internal service provider; while in most cases contexts share the same service provider, configuring contexts with different options may trigger the use of a new internal service provider. When that's the case, explicitly pass the same instance of `Microsoft.EntityFrameworkCore.Storage.InMemoryDatabaseRoot` to `UseInMemoryDatabase` for all contexts which should share in-memory databases (this is typically done by having a static `InMemoryDatabaseRoot` field).
+In-memory databases are identified by a simple, string name, and it's possible to connect to the same database several times by providing the same name (this is why the sample above must call `EnsureDeleted` before each test). However, note that in-memory databases are rooted in the context's internal service provider; while in most cases contexts share the same service provider, configuring contexts with different options may trigger the use of a new internal service provider. When that's the case, explicitly pass the same instance of <xref:Microsoft.EntityFrameworkCore.Storage.InMemoryDatabaseRoot> to `UseInMemoryDatabase` for all contexts which should share in-memory databases (this is typically done by having a static `InMemoryDatabaseRoot` field).
 
 ### Transactions
 
@@ -178,9 +81,6 @@ Note that by default, if a transaction is started, the in-memory provider will t
 
 ### Views
 
-The in-memory provider allows the definition of views via LINQ queries, using `Microsoft.EntityFrameworkCore.InMemoryEntityTypeBuilderExtensions.ToInMemoryQuery*`:
+The in-memory provider allows the definition of views via LINQ queries, using <xref:Microsoft.EntityFrameworkCore.InMemoryEntityTypeBuilderExtensions.ToInMemoryQuery*>:
 
-```csharp
-modelBuilder.Entity<UrlResource>()
-    .ToInMemoryQuery(() => context.Blogs.Select(b => new UrlResource { Url = b.Url }));
-```
+[!code-csharp[Main](../../../samples/core/Testing/TestingWithoutTheDatabase/InMemoryBloggingControllerTest.cs?name=ToInMemoryQuery)]

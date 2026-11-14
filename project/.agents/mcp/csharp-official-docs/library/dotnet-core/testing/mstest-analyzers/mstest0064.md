@@ -1,12 +1,19 @@
 ---
 title: "MSTEST0064: Prefer async assertion methods"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0064.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0064: Prefer async assertion methods"
+ms.date: 06/04/2026
+f1_keywords:
+- MSTEST0064
+- PreferAsyncAssertionAnalyzer
+helpviewer_keywords:
+- PreferAsyncAssertionAnalyzer
+- MSTEST0064
+author: Evangelink
+ms.author: amauryleve
+ai-usage: ai-assisted
+dev_langs:
+- CSharp
 ---
-
 # MSTEST0064: Prefer async assertion methods
 
 | Property                            | Value                                              |
@@ -20,12 +27,12 @@ license: "CC-BY-4.0"
 | **Introduced in version**           | 4.3.0                                              |
 | **Is there a code fix**             | No                                                 |
 
-> **Note:**
+> [!NOTE]
 > This rule is available starting with MSTest 4.3.
 
 ## Cause
 
-A test method uses `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Throws*` or `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ThrowsExactly*` to assert an exception is thrown by code that is asynchronous and blocks the asynchronous operation using `GetAwaiter().GetResult()`.
+A test method uses <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Throws*?displayProperty=nameWithType> or <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ThrowsExactly*?displayProperty=nameWithType> to assert an exception is thrown by code that is asynchronous and blocks the asynchronous operation using `GetAwaiter().GetResult()`.
 
 ## Rule description
 
@@ -72,7 +79,7 @@ public class TestClass
 }
 ```
 
-The same applies to `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ThrowsExactly*`, which has an `Assert.ThrowsExactlyAsync` counterpart.
+The same applies to <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ThrowsExactly*?displayProperty=nameWithType>, which has an `Assert.ThrowsExactlyAsync` counterpart.
 
 ## When to suppress warnings
 
@@ -88,11 +95,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0064
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0064.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

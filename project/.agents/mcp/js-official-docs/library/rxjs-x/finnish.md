@@ -1,15 +1,8 @@
----
-title: "Enforce Finnish notation (rxjs-x/finnish)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/finnish.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Enforce Finnish notation (`rxjs-x/finnish`)
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule enforces the use of Finnish notation - i.e. the `$` suffix.
 
@@ -45,6 +38,8 @@ const answer$ = 'green';
 
 ## Options
 
+<!-- begin auto-generated rule options list -->
+
 | Name         | Description                                                                | Type    | Default           |
 | :----------- | :------------------------------------------------------------------------- | :------ | :---------------- |
 | `functions`  | Require for function-valued names.                                         | Boolean | `true`            |
@@ -56,6 +51,8 @@ const answer$ = 'green';
 | `strict`     | Disallow Finnish notation for non-Observables.                             | Boolean | `false`           |
 | `types`      | Enforce for specific types. Keys are a RegExp, values are a boolean.       | Object  | `[object Object]` |
 | `variables`  | Require for variables.                                                     | Boolean | `true`            |
+
+<!-- end auto-generated rule options list -->
 
 This rule accepts a single option which is an object with properties that determine whether Finnish notation is enforced for `functions`, `methods`, `parameters`, `properties`, `objects` and `variables`. It also contains:
 
@@ -92,7 +89,7 @@ The default (Angular-friendly) configuration looks like this:
 
 The properties in the options object are themselves optional; they do not all have to be specified.
 
-> **Tip:**
+> [!TIP]
 > This rule will skip `method` enforcement if the `override` keyword is present.
 > Users are encouraged to enable `noImplicitOverride` in their `tsconfig.json` to take advantage of this.
 
@@ -100,20 +97,20 @@ The properties in the options object are themselves optional; they do not all ha
 
 If you don't use Finnish notation in your project or don't care about enforcing Finnish notation in your project, you don't need this rule.
 However, keep in mind that inconsistent style can harm readability in a project;
-consider using `no-finnish` to ban Finnish notation if you don't use it in your project.
+consider using [`no-finnish`](./no-finnish.md) to ban Finnish notation if you don't use it in your project.
 
 Type checked lint rules are more powerful than traditional lint rules, but also require configuring type checked linting.
 
 ## Further reading
 
-- Observables and Finnish Notation
+- [Observables and Finnish Notation](https://medium.com/@benlesh/observables-and-finnish-notation-df8356ed1c9b)
 
 ## Related To
 
-- `no-finnish`
-- `suffix-subjects`
+- [`no-finnish`](./no-finnish.md)
+- [`suffix-subjects`](./suffix-subjects.md)
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/finnish.ts)
+- [Test source](/tests/rules/finnish.test.ts)

@@ -1,21 +1,17 @@
----
-title: "ASP.NET Core 2.1 MVC SameSite cookie sample"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/samesite/mvc21.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+﻿---
+title: ASP.NET Core 2.1 MVC SameSite cookie sample
+description: ASP.NET Core 2.1 MVC SameSite cookie sample
+monikerRange: '>= aspnetcore-2.1 < aspnetcore-3.0'
+ms.date: 12/03/2019
 ---
 
 # ASP.NET Core 2.1 MVC SameSite cookie sample
 
-ASP.NET Core 2.1 has built-in support for the SameSite attribute, but it was written to the original standard. The patched behavior changed the meaning of `SameSite.None` to emit the sameSite attribute with a value of `None`, rather than not emit the value at all. If you want to not emit the value you can set the `SameSite` property on a cookie to -1.
+ASP.NET Core 2.1 has built-in support for the [SameSite](https://owasp.org/www-community/SameSite) attribute, but it was written to the original standard. The [patched behavior](https://github.com/dotnet/aspnetcore/issues/8212) changed the meaning of `SameSite.None` to emit the sameSite attribute with a value of `None`, rather than not emit the value at all. If you want to not emit the value you can set the `SameSite` property on a cookie to -1.
 
-ASP.NET Core Identity is largely unaffected by SameSite cookies except for advanced scenarios like `IFrames` or `OpenIdConnect` integration.
+[!INCLUDE[](~/includes/SameSiteIdentity.md)]
 
-When using `Identity`, do ***not*** add any cookie providers or call ` services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)`, `Identity` takes care of that.
-
-## Writing the SameSite attribute
+## <a name="sampleCode"></a>Writing the SameSite attribute
 
 Following is an example of how to write a SameSite attribute on a cookie:
 
@@ -41,7 +37,7 @@ Response.Cookies.Append(CookieName, "cookieValue", cookieOptions);
 
 ## Setting Cookie Authentication and Session State cookies
 
-Cookie authentication, session state and various other components set their sameSite options via Cookie options, for example
+Cookie authentication, session state and [various other components](../samesite.md) set their sameSite options via Cookie options, for example
 
 ```csharp
 services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -64,15 +60,17 @@ In the preceding code, both cookie authentication and session state set their sa
 
 ### Run the sample
 
-If you run the sample project, load your browser debugger on the initial page and use it to view the cookie collection for the site. To do so in Edge and Chrome press `F12` then select the `Application` tab and click the site URL under the `Cookies` option in the `Storage` section.
+If you run the [sample project](https://github.com/blowdart/AspNetSameSiteSamples/tree/master/AspNetCore21MVC), load your browser debugger on the initial page and use it to view the cookie collection for the site. To do so in Edge and Chrome press `F12` then select the `Application` tab and click the site URL under the `Cookies` option in the `Storage` section.
 
-You can see from the image above that the cookie created by the sample when you click the "Create SameSite Cookie" button has a SameSite attribute value of `Lax`, matching the value set in the sample code.
+![Browser Debugger Cookie List](BrowserDebugger.png)
 
-## Intercepting cookies
+You can see from the image above that the cookie created by the sample when you click the "Create SameSite Cookie" button has a SameSite attribute value of `Lax`, matching the value set in the [sample code](#sampleCode).
+
+## <a name="interception"></a>Intercepting cookies
 
 In order to intercept cookies, to adjust the none value according to its support in the user's browser agent you must use the `CookiePolicy` middleware. This must be placed into the http request pipeline **before** any components that write cookies and configured within `ConfigureServices()`.
 
-To insert it into the pipeline use `app.UseCookiePolicy()` in the `Configure(IApplicationBuilder, IHostingEnvironment)` method in Startup.cs. For example:
+To insert it into the pipeline use `app.UseCookiePolicy()` in the `Configure(IApplicationBuilder, IHostingEnvironment)` method in [Startup.cs](https://github.com/blowdart/AspNetSameSiteSamples/blob/master/AspNetCore21MVC/Startup.cs). For example:
 
 ```csharp
 public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -152,6 +150,6 @@ To get the ASP.NET Core changes for .NET Framework, ensure that you have a direc
 
 ### More information
 
-* Chrome Updates
-* ASP.NET Core SameSite Documentation
-* ASP.NET Core 2.1 SameSite Change Announcement
+* [Chrome Updates](https://www.chromium.org/updates/same-site)
+* [ASP.NET Core SameSite Documentation](../samesite.md)
+* [ASP.NET Core 2.1 SameSite Change Announcement](https://github.com/dotnet/aspnetcore/issues/8212)

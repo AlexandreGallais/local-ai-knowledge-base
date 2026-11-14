@@ -1,16 +1,19 @@
 ---
+description: "Learn more about: Nested Types"
 title: "Nested Types"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/nested-types.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "types, nested"
+  - "public nested types"
+  - "type design guidelines, nested types"
+  - "nested types"
+  - "members [.NET Framework], type"
+  - "class library design guidelines [.NET Framework], nested types"
+ms.assetid: 12feb7f0-b793-4d96-b090-42d6473bab8c
 ---
-
 # Nested Types
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
 A nested type is a type defined within the scope of another type, which is called the enclosing type. A nested type has access to all members of its enclosing type. For example, it has access to private fields defined in the enclosing type and to protected fields defined in all ascendants of the enclosing type.
 
@@ -36,9 +39,9 @@ A nested type is a type defined within the scope of another type, which is calle
 
  *Portions © 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Type Design Guidelines
-- Framework Design Guidelines
+- [Type Design Guidelines](type.md)
+- [Framework Design Guidelines](index.md)

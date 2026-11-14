@@ -1,62 +1,49 @@
----
-title: "AbstractSequentialList class (java.util)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/AbstractSequentialList.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AbstractSequentialList class (java.util)
 
 ```java
 public abstract class AbstractSequentialList<E> extends AbstractList<E>
 ```
 
-This class provides a skeletal implementation of the `List`
+This class provides a skeletal implementation of the {@code List}
 interface to minimize the effort required to implement this interface
 backed by a "sequential access" data store (such as a linked list).  For
-random access data (such as an array), `AbstractList` should be used
-in preference to this class.
+random access data (such as an array), {@code AbstractList} should be used
+in preference to this class.<p>
 
-This class is the opposite of the `AbstractList` class in the sense
-that it implements the "random access" methods (`get(int index)`,
-`set(int index, E element)`, `add(int index, E element)` and
-`remove(int index)`) on top of the list's list iterator, instead of
-the other way around.
+This class is the opposite of the {@code AbstractList} class in the sense
+that it implements the "random access" methods ({@code get(int index)},
+{@code set(int index, E element)}, {@code add(int index, E element)} and
+{@code remove(int index)}) on top of the list's list iterator, instead of
+the other way around.<p>
 
 To implement a list the programmer needs only to extend this class and
-provide implementations for the `listIterator` and `size`
+provide implementations for the {@code listIterator} and {@code size}
 methods.  For an unmodifiable list, the programmer need only implement the
-list iterator's `hasNext`, `next`, `hasPrevious`,
-`previous` and `index` methods.
+list iterator's {@code hasNext}, {@code next}, {@code hasPrevious},
+{@code previous} and {@code index} methods.<p>
 
 For a modifiable list the programmer should additionally implement the list
-iterator's `set` method.  For a variable-size list the programmer
-should additionally implement the list iterator's `remove` and
-`add` methods.
+iterator's {@code set} method.  For a variable-size list the programmer
+should additionally implement the list iterator's {@code remove} and
+{@code add} methods.<p>
 
 The programmer should generally provide a void (no argument) and collection
-constructor, as per the recommendation in the `Collection` interface
-specification.
+constructor, as per the recommendation in the {@code Collection} interface
+specification.<p>
 
 This class is a member of the
+<a href="{@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+Java Collections Framework</a>.
 
-Java Collections Framework.
+@param <E> the type of elements in this list
 
-Parameters:
-
-- `<E>`: the type of elements in this list
-
-**See also:** Collection
-
-**See also:** List
-
-**See also:** AbstractList
-
-**See also:** AbstractCollection
-
-**Since:** 1.2
+@author  Josh Bloch
+@author  Neal Gafter
+@see Collection
+@see List
+@see AbstractList
+@see AbstractCollection
+@since 1.2
 
 ## AbstractSequentialList.AbstractSequentialList()
 
@@ -75,13 +62,11 @@ public E get(int index)
 
 Returns the element at the specified position in this list.
 
-This implementation first gets a list iterator pointing to the
-indexed element (with `listIterator(index)`).  Then, it gets
-the element using `ListIterator.next` and returns it.
+<p>This implementation first gets a list iterator pointing to the
+indexed element (with {@code listIterator(index)}).  Then, it gets
+the element using {@code ListIterator.next} and returns it.
 
-Throws:
-
-- `IndexOutOfBoundsException`: (inherited documentation)
+@throws IndexOutOfBoundsException {@inheritDoc}
 
 ## AbstractSequentialList.set(int, E)
 
@@ -92,22 +77,20 @@ public E set(int index, E element)
 Replaces the element at the specified position in this list with the
 specified element (optional operation).
 
-This implementation first gets a list iterator pointing to the
-indexed element (with `listIterator(index)`).  Then, it gets
-the current element using `ListIterator.next` and replaces it
-with `ListIterator.set`.
+<p>This implementation first gets a list iterator pointing to the
+indexed element (with {@code listIterator(index)}).  Then, it gets
+the current element using {@code ListIterator.next} and replaces it
+with {@code ListIterator.set}.
 
-Note that this implementation will throw an
-`UnsupportedOperationException` if the list iterator does not
-implement the `set` operation.
+<p>Note that this implementation will throw an
+{@code UnsupportedOperationException} if the list iterator does not
+implement the {@code set} operation.
 
-Throws:
-
-- `UnsupportedOperationException`: (inherited documentation)
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
-- `IllegalArgumentException`: (inherited documentation)
-- `IndexOutOfBoundsException`: (inherited documentation)
+@throws UnsupportedOperationException {@inheritDoc}
+@throws ClassCastException            {@inheritDoc}
+@throws NullPointerException          {@inheritDoc}
+@throws IllegalArgumentException      {@inheritDoc}
+@throws IndexOutOfBoundsException     {@inheritDoc}
 
 ## AbstractSequentialList.add(int, E)
 
@@ -120,21 +103,19 @@ Inserts the specified element at the specified position in this list
 (if any) and any subsequent elements to the right (adds one to their
 indices).
 
-This implementation first gets a list iterator pointing to the
-indexed element (with `listIterator(index)`).  Then, it
-inserts the specified element with `ListIterator.add`.
+<p>This implementation first gets a list iterator pointing to the
+indexed element (with {@code listIterator(index)}).  Then, it
+inserts the specified element with {@code ListIterator.add}.
 
-Note that this implementation will throw an
-`UnsupportedOperationException` if the list iterator does not
-implement the `add` operation.
+<p>Note that this implementation will throw an
+{@code UnsupportedOperationException} if the list iterator does not
+implement the {@code add} operation.
 
-Throws:
-
-- `UnsupportedOperationException`: (inherited documentation)
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
-- `IllegalArgumentException`: (inherited documentation)
-- `IndexOutOfBoundsException`: (inherited documentation)
+@throws UnsupportedOperationException {@inheritDoc}
+@throws ClassCastException            {@inheritDoc}
+@throws NullPointerException          {@inheritDoc}
+@throws IllegalArgumentException      {@inheritDoc}
+@throws IndexOutOfBoundsException     {@inheritDoc}
 
 ## AbstractSequentialList.remove(int)
 
@@ -147,18 +128,16 @@ operation).  Shifts any subsequent elements to the left (subtracts one
 from their indices).  Returns the element that was removed from the
 list.
 
-This implementation first gets a list iterator pointing to the
-indexed element (with `listIterator(index)`).  Then, it removes
-the element with `ListIterator.remove`.
+<p>This implementation first gets a list iterator pointing to the
+indexed element (with {@code listIterator(index)}).  Then, it removes
+the element with {@code ListIterator.remove}.
 
-Note that this implementation will throw an
-`UnsupportedOperationException` if the list iterator does not
-implement the `remove` operation.
+<p>Note that this implementation will throw an
+{@code UnsupportedOperationException} if the list iterator does not
+implement the {@code remove} operation.
 
-Throws:
-
-- `UnsupportedOperationException`: (inherited documentation)
-- `IndexOutOfBoundsException`: (inherited documentation)
+@throws UnsupportedOperationException {@inheritDoc}
+@throws IndexOutOfBoundsException     {@inheritDoc}
 
 ## AbstractSequentialList.addAll(int, Collection<? extends E>)
 
@@ -176,25 +155,23 @@ undefined if the specified collection is modified while the
 operation is in progress.  (Note that this will occur if the specified
 collection is this list, and it's nonempty.)
 
-This implementation gets an iterator over the specified collection and
+<p>This implementation gets an iterator over the specified collection and
 a list iterator over this list pointing to the indexed element (with
-`listIterator(index)`).  Then, it iterates over the specified
+{@code listIterator(index)}).  Then, it iterates over the specified
 collection, inserting the elements obtained from the iterator into this
-list, one at a time, using `ListIterator.add` followed by
-`ListIterator.next` (to skip over the added element).
+list, one at a time, using {@code ListIterator.add} followed by
+{@code ListIterator.next} (to skip over the added element).
 
-Note that this implementation will throw an
-`UnsupportedOperationException` if the list iterator returned by
-the `listIterator` method does not implement the `add`
+<p>Note that this implementation will throw an
+{@code UnsupportedOperationException} if the list iterator returned by
+the {@code listIterator} method does not implement the {@code add}
 operation.
 
-Throws:
-
-- `UnsupportedOperationException`: (inherited documentation)
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
-- `IllegalArgumentException`: (inherited documentation)
-- `IndexOutOfBoundsException`: (inherited documentation)
+@throws UnsupportedOperationException {@inheritDoc}
+@throws ClassCastException            {@inheritDoc}
+@throws NullPointerException          {@inheritDoc}
+@throws IllegalArgumentException      {@inheritDoc}
+@throws IndexOutOfBoundsException     {@inheritDoc}
 
 ## AbstractSequentialList.iterator()
 
@@ -203,11 +180,11 @@ public Iterator<E> iterator()
 ```
 
 Returns an iterator over the elements in this list (in proper
-sequence).
+sequence).<p>
 
 This implementation merely returns a list iterator over the list.
 
-**Returns:** an iterator over the elements in this list (in proper sequence)
+@return an iterator over the elements in this list (in proper sequence)
 
 ## AbstractSequentialList.listIterator(int)
 
@@ -218,13 +195,8 @@ public abstract ListIterator<E> listIterator(int index)
 Returns a list iterator over the elements in this list (in proper
 sequence).
 
-Parameters:
-
-- `index`: index of first element to be returned from the list iterator (by a call to the `next` method)
-
-**Returns:** a list iterator over the elements in this list (in proper
+@param  index index of first element to be returned from the list
+        iterator (by a call to the {@code next} method)
+@return a list iterator over the elements in this list (in proper
         sequence)
-
-Throws:
-
-- `IndexOutOfBoundsException`: (inherited documentation)
+@throws IndexOutOfBoundsException {@inheritDoc}

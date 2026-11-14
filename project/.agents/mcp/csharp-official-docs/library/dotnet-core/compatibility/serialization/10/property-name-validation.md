@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: System.Text.Json checks for property name conflicts"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/serialization/10/property-name-validation.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where System.Text.Json validates that user-defined property names don't conflict with reserved metadata property names."
+ms.date: 11/13/2025
+ai-usage: ai-assisted
 ---
-
 # System.Text.Json checks for property name conflicts
 
-Under certain contexts, such as polymorphism and reference preservation, `System.Text.Json` reserves specific property names (for example, `$type`, `$id`, and `$ref`) for emitting metadata. Some property names such as the `TypeDiscriminatorPropertyName` can also be configured with custom names. Previously, the serializer didn't perform validation on whether these property names conflicted with user-defined contracts, which could result in duplicate properties and produce JSON that was ambiguous or failed to round-trip. Starting with .NET 10, System.Text.Json enables validation to prevent such configurations and provides early warning to users.
+Under certain contexts, such as polymorphism and reference preservation, <xref:System.Text.Json> reserves specific property names (for example, `$type`, `$id`, and `$ref`) for emitting metadata. Some property names such as the `TypeDiscriminatorPropertyName` can also be configured with custom names. Previously, the serializer didn't perform validation on whether these property names conflicted with user-defined contracts, which could result in duplicate properties and produce JSON that was ambiguous or failed to round-trip. Starting with .NET 10, System.Text.Json enables validation to prevent such configurations and provides early warning to users.
 
 ## Version introduced
 
@@ -17,7 +14,7 @@ Under certain contexts, such as polymorphism and reference preservation, `System
 
 ## Previous behavior
 
-Previously, the following code produced an invalid JSON object with duplicate `Type` properties and failed to deserialize with a `System.Text.Json.JsonException`:
+Previously, the following code produced an invalid JSON object with duplicate `Type` properties and failed to deserialize with a <xref:System.Text.Json.JsonException>:
 
 ```csharp
 using System.Text.Json;
@@ -50,7 +47,7 @@ This validation error occurs when the serializer is first created or when serial
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -58,14 +55,14 @@ This change provides early prevention of invalid serialization contracts. By val
 
 For more information, see:
 
-- [STJ] Disallow property names that conflict with metadata property names (dotnet/runtime#106390)
-- Disallow types with property names conflicting with metadata (dotnet/runtime#106460)
+- [[STJ] Disallow property names that conflict with metadata property names (dotnet/runtime#106390)](https://github.com/dotnet/runtime/issues/106390)
+- [Disallow types with property names conflicting with metadata (dotnet/runtime#106460)](https://github.com/dotnet/runtime/pull/106460)
 
 ## Recommended action
 
-Avoid using property names that conflict with System.Text.Json-specific metadata properties (such as `$type`, `$id`, and `$ref`). If it's absolutely necessary to keep such a property in the class, apply a `System.Text.Json.Serialization.JsonIgnoreAttribute` annotation on the conflicting property.
+Avoid using property names that conflict with System.Text.Json-specific metadata properties (such as `$type`, `$id`, and `$ref`). If it's absolutely necessary to keep such a property in the class, apply a <xref:System.Text.Json.Serialization.JsonIgnoreAttribute> annotation on the conflicting property.
 
 ## Affected APIs
 
-- `System.Text.Json.JsonSerializer.Deserialize*`
-- `System.Text.Json.JsonSerializer.DeserializeAsync*`
+- <xref:System.Text.Json.JsonSerializer.Deserialize*?displayProperty=fullName>
+- <xref:System.Text.Json.JsonSerializer.DeserializeAsync*?displayProperty=fullName>

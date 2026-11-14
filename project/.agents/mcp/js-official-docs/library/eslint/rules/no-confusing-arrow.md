@@ -1,14 +1,10 @@
 ---
-title: "no-confusing-arrow"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-confusing-arrow.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-confusing-arrow
+rule_type: suggestion
+related_rules:
+- no-constant-condition
+- arrow-parens
 ---
-
-# no-confusing-arrow
-
 Arrow functions (`=>`) are similar in syntax to some comparison operators (`>`, `<`, `<=`, and `>=`). This rule warns against using the arrow function syntax in places where it could be confused with a comparison operator.
 
 Here's an example where the usage of `=>` could be confusing:
@@ -28,7 +24,7 @@ var x = a <= 1 ? 2 : 3;
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-confusing-arrow: "error"*/
@@ -37,9 +33,11 @@ var x = a => 1 ? 2 : 3;
 var x = (a) => 1 ? 2 : 3;
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-confusing-arrow: "error"*/
@@ -51,6 +49,8 @@ var x = (a) => {
 };
 var x = a => { return 1 ? 2 : 3; };
 ```
+
+:::
 
 ## Options
 
@@ -74,7 +74,7 @@ This rule accepts two options argument with the following defaults:
 
 Examples of **incorrect** code for this rule with the `{"allowParens": false}` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-confusing-arrow: ["error", {"allowParens": false}]*/
@@ -83,6 +83,8 @@ var x = a => (1 ? 2 : 3);
 var x = (a) => (1 ? 2 : 3);
 ```
 
+:::
+
 `onlyOneSimpleParam` is a boolean setting that can be `true` or `false`(default):
 
 1. `true` relaxes the rule and doesn't report errors if the arrow function has 0 or more than 1 parameters, or the parameter is not an identifier.
@@ -90,7 +92,7 @@ var x = (a) => (1 ? 2 : 3);
 
 Examples of **correct** code for this rule with the `{"onlyOneSimpleParam": true}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-confusing-arrow: ["error", {"onlyOneSimpleParam": true}]*/
@@ -102,3 +104,5 @@ Examples of **correct** code for this rule with the `{"onlyOneSimpleParam": true
 ([a]) => 1 ? 2 : 3;
 (...a) => 1 ? 2 : 3;
 ```
+
+:::

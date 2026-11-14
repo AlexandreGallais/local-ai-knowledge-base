@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugProcess::GetHandle Method"
 title: "ICorDebugProcess::GetHandle Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess-gethandle-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugProcess.GetHandle"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugProcess::GetHandle"
+helpviewer_keywords:
+  - "GetHandle method, ICorDebugProcess interface [.NET debugging]"
+  - "ICorDebugProcess::GetHandle method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugProcess::GetHandle Method
 
 Gets a handle to the process.
@@ -28,7 +37,7 @@ The retrieved handle is owned by the debugging interface. The debugger should du
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

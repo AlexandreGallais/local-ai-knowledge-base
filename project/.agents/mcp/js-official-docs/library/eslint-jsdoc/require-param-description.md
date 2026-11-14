@@ -1,21 +1,15 @@
----
-title: "require-param-description"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/require-param-description.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-require-param-description"></a>
+<a name="require-param-description"></a>
+# <code>require-param-description</code>
 
-# `require-param-description`
+* [Options](#user-content-require-param-description-options)
+    * [`contexts`](#user-content-require-param-description-options-contexts)
+    * [`defaultDestructuredRootDescription`](#user-content-require-param-description-options-defaultdestructuredrootdescription)
+    * [`setDefaultDestructuredRootDescription`](#user-content-require-param-description-options-setdefaultdestructuredrootdescription)
+* [Context and settings](#user-content-require-param-description-context-and-settings)
+* [Failing examples](#user-content-require-param-description-failing-examples)
+* [Passing examples](#user-content-require-param-description-passing-examples)
 
-* Options
-    * `contexts`
-    * `defaultDestructuredRootDescription`
-    * `setDefaultDestructuredRootDescription`
-* Context and settings
-* Failing examples
-* Passing examples
 
 Requires that each `@param` tag has a `description` value.
 
@@ -24,11 +18,15 @@ Will exempt destructured roots and their children if
 `@param {object} props` will be exempted from requiring a description given
 `function someFunc ({child1, child2})`).
 
+<a name="user-content-require-param-description-options"></a>
+<a name="require-param-description-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `contexts`
+<a name="user-content-require-param-description-options-contexts"></a>
+<a name="require-param-description-options-contexts"></a>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
 optional `context` and `comment` properties) where you wish the rule to be applied.
@@ -42,15 +40,19 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
-See the "AST and Selectors"
+See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
 section of our Advanced docs for more on the expected format.
 
-### `defaultDestructuredRootDescription`
+<a name="user-content-require-param-description-options-defaultdestructuredrootdescription"></a>
+<a name="require-param-description-options-defaultdestructuredrootdescription"></a>
+### <code>defaultDestructuredRootDescription</code>
 
 The description string to set by default for destructured roots. Defaults to
 "The root object".
 
-### `setDefaultDestructuredRootDescription`
+<a name="user-content-require-param-description-options-setdefaultdestructuredrootdescription"></a>
+<a name="require-param-description-options-setdefaultdestructuredrootdescription"></a>
+### <code>setDefaultDestructuredRootDescription</code>
 
 Whether to set a default destructured root description. For example, you may
 wish to avoid manually having to set the description for a `@param`
@@ -58,6 +60,9 @@ corresponding to a destructured root object as it should always be the same
 type of object. Uses `defaultDestructuredRootDescription` for the description
 string. Defaults to `false`.
 
+
+<a name="user-content-require-param-description-context-and-settings"></a>
+<a name="require-param-description-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -69,6 +74,8 @@ string. Defaults to `false`.
 |Options|`contexts`, `defaultDestructuredRootDescription`, `setDefaultDestructuredRootDescription`|
 |Settings|`exemptDestructuredRootsFromChecks`|
 
+<a name="user-content-require-param-description-failing-examples"></a>
+<a name="require-param-description-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -166,6 +173,10 @@ function quux (foo, {bar}, baz) {
 // Message: Missing JSDoc @param "root" description.
 ````
 
+
+
+<a name="user-content-require-param-description-passing-examples"></a>
+<a name="require-param-description-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -231,3 +242,4 @@ function quux (foo, {bar: {baz}}) {
 }
 // Settings: {"jsdoc":{"exemptDestructuredRootsFromChecks":true}}
 ````
+

@@ -1,12 +1,3 @@
----
-title: "PropertyPermission class (java.util)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/PropertyPermission.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # PropertyPermission class (java.util)
 
 ```java
@@ -15,6 +6,7 @@ public final class PropertyPermission extends BasicPermission
 
 This class is for property permissions.
 
+<P>
 The name is the name of the property ("java.home",
 "os.name", etc). The naming
 convention follows the  hierarchical property naming convention.
@@ -22,27 +14,27 @@ Also, an asterisk
 may appear at the end of the name, following a ".", or by itself, to
 signify a wildcard match. For example: "java.*" and "*" signify a wildcard
 match, while "*java" and "a*b" do not.
-
+<P>
 The actions are passed to the constructor in a string containing
 a list of one or more comma-separated keywords. The possible keywords are
 "read" and "write".
-
+<P>
 The actions string is converted to lowercase before processing.
 
-**Deprecated:** This permission cannot be used for controlling access to resources
+@deprecated
+This permission cannot be used for controlling access to resources
 as the Security Manager is no longer supported.
 
-**See also:** java.security.BasicPermission
+@see java.security.BasicPermission
+@see java.security.Permission
+@see java.security.Permissions
+@see java.security.PermissionCollection
+@see java.lang.SecurityManager
 
-**See also:** java.security.Permission
+@author Roland Schemers
+@since 1.2
 
-**See also:** java.security.Permissions
-
-**See also:** java.security.PermissionCollection
-
-**See also:** java.lang.SecurityManager
-
-**Since:** 1.2
+@serial exclude
 
 ## PropertyPermission.PropertyPermission(String, String)
 
@@ -52,19 +44,16 @@ public PropertyPermission(String name, String actions)
 
 Creates a new PropertyPermission object with the specified name.
 The name is the name of the system property, and
-*actions* contains a comma-separated list of the
+<i>actions</i> contains a comma-separated list of the
 desired actions granted on the property. Possible actions are
 "read" and "write".
 
-Parameters:
+@param name the name of the PropertyPermission.
+@param actions the actions string.
 
-- `name`: the name of the PropertyPermission.
-- `actions`: the actions string.
-
-Throws:
-
-- `NullPointerException`: if `name` is `null`.
-- `IllegalArgumentException`: if `name` is empty or if `actions` is invalid.
+@throws NullPointerException if {@code name} is {@code null}.
+@throws IllegalArgumentException if {@code name} is empty or if
+{@code actions} is invalid.
 
 ## PropertyPermission.implies(Permission)
 
@@ -74,22 +63,18 @@ public boolean implies(Permission p)
 
 Checks if this PropertyPermission object "implies" the specified
 permission.
-
+<P>
 More specifically, this method returns true if:
-
--  *p* is an instanceof PropertyPermission,
-
--  *p*'s actions are a subset of this
+<ul>
+<li> <i>p</i> is an instanceof PropertyPermission,
+<li> <i>p</i>'s actions are a subset of this
 object's actions, and
-
--  *p*'s name is implied by this object's
+<li> <i>p</i>'s name is implied by this object's
      name. For example, "java.*" implies "java.home".
+</ul>
+@param p the permission to check against.
 
-Parameters:
-
-- `p`: the permission to check against.
-
-**Returns:** true if the specified permission is implied by this object,
+@return true if the specified permission is implied by this object,
 false if not.
 
 ## PropertyPermission.equals(Object)
@@ -98,14 +83,11 @@ false if not.
 public boolean equals(Object obj)
 ```
 
-Checks two PropertyPermission objects for equality. Checks that *obj* is
+Checks two PropertyPermission objects for equality. Checks that <i>obj</i> is
 a PropertyPermission, and has the same name and actions as this object.
 
-Parameters:
-
-- `obj`: the object we are testing for equality with this object.
-
-**Returns:** true if obj is a PropertyPermission, and has the same name and
+@param obj the object we are testing for equality with this object.
+@return true if obj is a PropertyPermission, and has the same name and
 actions as this PropertyPermission object.
 
 ## PropertyPermission.hashCode()
@@ -116,10 +98,10 @@ public int hashCode()
 
 Returns the hash code value for this object.
 The hash code used is the hash code of this permissions name, that is,
-`getName().hashCode()`, where `getName` is
+{@code getName().hashCode()}, where {@code getName} is
 from the Permission superclass.
 
-**Returns:** a hash code value for this object.
+@return a hash code value for this object.
 
 ## PropertyPermission.getActions()
 
@@ -130,10 +112,10 @@ public String getActions()
 Returns the "canonical string representation" of the actions.
 That is, this method always returns present actions in the following order:
 read, write. For example, if this PropertyPermission object
-allows both write and read actions, a call to `getActions`
+allows both write and read actions, a call to {@code getActions}
 will return the string "read,write".
 
-**Returns:** the canonical string representation of the actions.
+@return the canonical string representation of the actions.
 
 ## PropertyPermission.newPermissionCollection()
 
@@ -144,7 +126,7 @@ public PermissionCollection newPermissionCollection()
 Returns a new PermissionCollection object for storing
 PropertyPermission objects.
 
-**Returns:** a new PermissionCollection object suitable for storing
+@return a new PermissionCollection object suitable for storing
 PropertyPermissions.
 
 ## PropertyPermission.PropertyPermissionCollection()
@@ -164,14 +146,13 @@ public void add(Permission permission)
 Adds a permission to the PropertyPermissions. The key for the hash is
 the name.
 
-Parameters:
+@param permission the Permission object to add.
 
-- `permission`: the Permission object to add.
+@throws    IllegalArgumentException   if the permission is not a
+                                      PropertyPermission
 
-Throws:
-
-- `IllegalArgumentException`: if the permission is not a PropertyPermission
-- `SecurityException`: if this PropertyPermissionCollection object has been marked readonly
+@throws    SecurityException   if this PropertyPermissionCollection
+                               object has been marked readonly
 
 ## PropertyPermission.implies(Permission)
 
@@ -182,11 +163,9 @@ public boolean implies(Permission permission)
 Check and see if this set of permissions implies the permissions
 expressed in "permission".
 
-Parameters:
+@param permission the Permission object to compare
 
-- `permission`: the Permission object to compare
-
-**Returns:** true if "permission" is a proper subset of a permission in
+@return true if "permission" is a proper subset of a permission in
 the set, false if not.
 
 ## PropertyPermission.elements()
@@ -198,4 +177,4 @@ public Enumeration<Permission> elements()
 Returns an enumeration of all the PropertyPermission objects in the
 container.
 
-**Returns:** an enumeration of all the PropertyPermission objects.
+@return an enumeration of all the PropertyPermission objects.

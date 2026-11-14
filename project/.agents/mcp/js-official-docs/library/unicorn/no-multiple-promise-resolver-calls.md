@@ -1,21 +1,15 @@
----
-title: "no-multiple-promise-resolver-calls"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-multiple-promise-resolver-calls.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-multiple-promise-resolver-calls
 
 📝 Disallow calling Promise executor resolver functions more than once on the same execution path.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 The `resolve` and `reject` functions passed to a Promise executor share a single-use state. After either function is called, later calls cannot change the promise's eventual outcome. This is often caused by a missing `return` or by branches that should be mutually exclusive.
 
-Resolving with a pending promise or thenable does not immediately settle the new promise, but it still prevents later calls to either resolver function from changing the outcome.
+[Resolving with a pending promise or thenable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/resolve#description) does not immediately settle the new promise, but it still prevents later calls to either resolver function from changing the outcome.
 
 This rule uses code-path analysis to report a resolver call when an earlier `resolve` or `reject` call can reach it. It also reports resolver calls in loops that may execute more than once.
 

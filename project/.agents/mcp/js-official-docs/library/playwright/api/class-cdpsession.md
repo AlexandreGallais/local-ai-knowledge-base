@@ -1,12 +1,3 @@
----
-title: "class: CDPSession"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-cdpsession.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: CDPSession
 * since: v1.8
 
@@ -16,7 +7,7 @@ The `CDPSession` instances are used to talk raw Chrome Devtools Protocol:
 
 Useful links:
 * Documentation on DevTools Protocol can be found here:
-  DevTools Protocol Viewer.
+  [DevTools Protocol Viewer](https://chromedevtools.github.io/devtools-protocol/).
 * Getting Started with DevTools Protocol:
   https://github.com/aslushnikov/getting-started-with-cdp/blob/master/README.md
 
@@ -31,7 +22,7 @@ await client.send('Animation.setPlaybackRate', {
 });
 ```
 
-```python
+```python async
 client = await page.context.new_cdp_session(page)
 await client.send("Animation.enable")
 client.on("Animation.animationCreated", lambda: print("animation created!"))
@@ -42,7 +33,7 @@ await client.send("Animation.setPlaybackRate", {
 })
 ```
 
-```python
+```python sync
 client = page.context.new_cdp_session(page)
 client.send("Animation.enable")
 client.on("Animation.animationCreated", lambda: print("animation created!"))
@@ -160,7 +151,7 @@ Maximum time in milliseconds to wait for the response. Defaults to `0` - no time
 * langs: js
 - `signal` <[AbortSignal]>
 
-Allows to cancel the operation using an `AbortSignal`. If the signal is aborted, the operation will be aborted and throw an error.
+Allows to cancel the operation using an [`AbortSignal`](https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal). If the signal is aborted, the operation will be aborted and throw an error.
 
 ## method: CDPSession.event
 * since: v1.30

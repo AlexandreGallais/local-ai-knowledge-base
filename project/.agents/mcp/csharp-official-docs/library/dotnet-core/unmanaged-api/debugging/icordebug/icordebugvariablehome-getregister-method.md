@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugVariableHome::GetRegister Method"
 title: "ICorDebugVariableHome::GetRegister Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugvariablehome-getregister-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugVariableHome.GetRegister"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugVariableHome::GetRegister"
+helpviewer_keywords:
+  - "ICorDebugVariableHome::GetRegister method [.NET debugging]"
+  - "GetRegister method, ICorDebugVariableHome interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugVariableHome::GetRegister Method
 
 Gets the register that contains a variable with a location type of `VLT_REGISTER`, and the base register for a variable with a location type of `VLT_REGISTER_RELATIVE`.
@@ -22,7 +31,7 @@ HRESULT GetRegister(
 ## Parameters
 
  `pRegister`\
- [out] A CorDebugRegister enumeration value that indicates the register for a variable with a location type of `VLT_REGISTER`, and the base register for a variable with a location type of `VLT_REGISTER_RELATIVE`.
+ [out] A [CorDebugRegister](cordebugregister-enumeration.md) enumeration value that indicates the register for a variable with a location type of `VLT_REGISTER`, and the base register for a variable with a location type of `VLT_REGISTER_RELATIVE`.
 
 ## Return Value
 
@@ -35,7 +44,7 @@ The method returns the following values:
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -45,4 +54,4 @@ The method returns the following values:
 
 ## See also
 
-- ICorDebugVariableHome interface
+- [ICorDebugVariableHome interface](icordebugvariablehome-interface.md)

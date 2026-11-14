@@ -1,13 +1,7 @@
 ---
+id: trace-viewer-intro
 title: "Trace viewer"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/trace-viewer-intro-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# Trace viewer
 
 import LiteYouTube from '@site/src/components/LiteYouTube';
 
@@ -17,9 +11,9 @@ Playwright Trace Viewer is a GUI tool that lets you explore recorded Playwright 
 
 **You will learn**
 
-- How to record a trace
-- How to open the HTML report
-- How to open and view the trace
+- [How to record a trace](/trace-viewer-intro.md#recording-a-trace)
+- [How to open the HTML report](/trace-viewer-intro.md#opening-the-html-report)
+- [How to open and view the trace](/trace-viewer-intro.md#opening-the-trace)
 
 <LiteYouTube
     id="yP6AnTxC34s"
@@ -28,9 +22,9 @@ Playwright Trace Viewer is a GUI tool that lets you explore recorded Playwright 
 
 ## Recording a Trace
 
-By default the playwright.config file contains the configuration needed to create a `trace.zip` file for each test. Traces are setup to run `on-first-retry`, meaning they run on the first retry of a failed test. Also `retries` are set to 2 when running on CI and 0 locally. This means the traces are recorded on the first retry of a failed test but not on the first run and not on the second retry.
+By default the [playwright.config](./trace-viewer.md#tracing-on-ci) file contains the configuration needed to create a `trace.zip` file for each test. Traces are setup to run `on-first-retry`, meaning they run on the first retry of a failed test. Also `retries` are set to 2 when running on CI and 0 locally. This means the traces are recorded on the first retry of a failed test but not on the first run and not on the second retry.
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 export default defineConfig({
   retries: process.env.CI ? 2 : 0, // set to 2 when running on CI
@@ -41,9 +35,9 @@ export default defineConfig({
 });
 ```
 
-To learn more about available options to record a trace check out our detailed guide on Trace Viewer.
+To learn more about available options to record a trace check out our detailed guide on [Trace Viewer](/trace-viewer.md).
 
-Traces are normally run in a Continuous Integration (CI) environment, because locally you can use UI Mode for developing and debugging tests. However, if you want to run traces locally without using UI Mode, you can force tracing to be on with `--trace on`.
+Traces are normally run in a Continuous Integration (CI) environment, because locally you can use [UI Mode](/test-ui-mode.md) for developing and debugging tests. However, if you want to run traces locally without using [UI Mode](/test-ui-mode.md), you can force tracing to be on with `--trace on`.
 
 ```bash
 npx playwright test --trace on
@@ -61,17 +55,25 @@ npx playwright show-report
 
 In the HTML report, click on the trace icon next to the test file name to directly open the trace for the required test.
 
+![playwright html report](./images/getting-started/html-report-failed-tests.png)
+
+
 You can also click to open the detailed view of the test and scroll down to the `'Traces'` tab and open the trace by clicking on the trace screenshot.
 
-To learn more about reporters, check out our detailed guide on reporters including the HTML Reporter.
+![playwright html report detailed view](./images/getting-started/html-report-trace.png)
+
+
+To learn more about reporters, check out our detailed guide on reporters including the [HTML Reporter](/test-reporters.md#html-reporter).
 
 ## Viewing the trace
 
 View traces of your test by clicking through each action or hovering using the timeline and see the state of the page before and after the action. Inspect the log, source and network, errors, and console during each step of the test. The trace viewer creates a DOM snapshot so you can fully interact with it and open the browser DevTools to inspect the HTML, CSS, etc.
 
-To learn more about traces, check out our detailed guide on Trace Viewer.
+![playwright trace viewer](./images/getting-started/trace-viewer-failed-test.png)
+
+To learn more about traces, check out our detailed guide on [Trace Viewer](/trace-viewer.md).
 
 ## What's next
 
-- Run tests on CI with GitHub Actions
-- Learn more about Trace Viewer
+- [Run tests on CI with GitHub Actions](/ci-intro.md)
+- [Learn more about Trace Viewer](/trace-viewer.md)

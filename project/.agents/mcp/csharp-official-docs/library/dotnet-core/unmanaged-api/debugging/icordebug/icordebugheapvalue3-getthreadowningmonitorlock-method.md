@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugHeapValue3::GetThreadOwningMonitorLock Method"
 title: "ICorDebugHeapValue3::GetThreadOwningMonitorLock Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugheapvalue3-getthreadowningmonitorlock-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugHeapValue3.GetThreadOwningMonitorLock"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugHeapValue3::GetThreadOwningMonitorLock"
+helpviewer_keywords:
+  - "GetThreadOwningMonitorLock method [.NET debugging]"
+  - "ICorDebugHeapValue3::GetThreadOwningMonitorLock method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugHeapValue3::GetThreadOwningMonitorLock Method
 
 Returns the managed thread that owns the monitor lock on this object.
@@ -37,6 +46,8 @@ This method returns the following specific HRESULTs as well as HRESULT errors th
 |S_OK|The method completed successfully.|
 |S_FALSE|No managed thread owns the monitor lock on this object.|
 
+## Exceptions
+
 ## Remarks
 
 If a managed thread owns the monitor lock on this object:
@@ -53,7 +64,7 @@ If an error occurs such that it cannot be determined which, if any, thread owns 
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

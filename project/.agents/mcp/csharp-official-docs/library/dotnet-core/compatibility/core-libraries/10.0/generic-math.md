@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: Consistent shift behavior in generic math"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/10.0/generic-math.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 10 breaking change in core .NET libraries where shift operations in generic math now have consistent behavior.
+ms.date: 01/30/2025
+ai-usage: ai-assisted
 ---
-
 # Consistent shift behavior in generic math
 
 Shift operations in generic math now have consistent behavior across all built-in integer types.
@@ -17,7 +14,7 @@ Previously, the behavior when utilizing generic math to perform a shift on a `T`
 
 ## New behavior
 
-The implementations were updated to mask the shift amount, as appropriate, to ensure consistent behavior across all built-in integer types and with the behavior documented by the `System.Numerics.IShiftOperators`3` interface.
+The implementations were updated to mask the shift amount, as appropriate, to ensure consistent behavior across all built-in integer types and with the behavior documented by the <xref:System.Numerics.IShiftOperators`3?displayProperty=nameWithType> interface.
 
 ## Version introduced
 
@@ -25,7 +22,7 @@ The implementations were updated to mask the shift amount, as appropriate, to en
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

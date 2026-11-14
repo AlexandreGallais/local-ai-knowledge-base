@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataAssemblyEmit::DefineAssembly Method"
 title: "IMetaDataAssemblyEmit::DefineAssembly Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataassemblyemit-defineassembly-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataAssemblyEmit.DefineAssembly"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataAssemblyEmit::DefineAssembly"
+  - "DefineAssembly method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataAssemblyEmit::DefineAssembly Method
 
 Creates an `Assembly` structure containing metadata for the specified assembly and returns the associated metadata token.
@@ -40,10 +47,10 @@ HRESULT DefineAssembly (
  [in] The human-readable text name of the assembly. This value must not exceed 1024 characters.
 
  `pMetaData`
- [in] A pointer to an ASSEMBLYMETADATA instance that contains the version, platform, and locale information for the assembly.
+ [in] A pointer to an [ASSEMBLYMETADATA](../structures/assemblymetadata-structure.md) instance that contains the version, platform, and locale information for the assembly.
 
  `dwAssemblyFlags`
- [in] A combination of CorAssemblyFlags values that describe features of the assembly.
+ [in] A combination of [CorAssemblyFlags](../enumerations/corassemblyflags-enumeration.md) values that describe features of the assembly.
 
  `pmda`
  [out] A pointer to the metadata token.
@@ -54,7 +61,7 @@ HRESULT DefineAssembly (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -62,4 +69,4 @@ HRESULT DefineAssembly (
 
 ## See also
 
-- IMetaDataAssemblyEmit Interface
+- [IMetaDataAssemblyEmit Interface](imetadataassemblyemit-interface.md)

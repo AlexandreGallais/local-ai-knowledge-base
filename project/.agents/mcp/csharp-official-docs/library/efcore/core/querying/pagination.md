@@ -1,34 +1,25 @@
 ---
-title: "Pagination - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/querying/pagination.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Pagination - EF Core
+description: Writing paginating queries in Entity Framework Core
+author: SamMonoRT
+ms.date: 12/19/2021
+uid: core/querying/pagination
 ---
-
 # Pagination
 
 Pagination refers to retrieving results in pages, rather than all at once; this is typically done for large resultsets, where a user interface is shown that allows the user to navigate to the next or previous page of the results.
 
-> **Warning:**
+> [!WARNING]
 > Regardless of the pagination method used, always make sure that your ordering is fully unique. For example, if results are ordered only by date, but there can be multiple results with the same date, then results could be skipped when paginating as they're ordered differently across two paginating queries. Ordering by both date and ID (or any other unique property or combination of properties) makes the ordering fully unique and avoids this problem. Note that relational databases do not apply any ordering by default, even on the primary key.
 
-> **Note:**
-> Azure Cosmos DB has its own mechanism for pagination, see the dedicated documentation page.
+> [!NOTE]
+> Azure Cosmos DB has its own mechanism for pagination, [see the dedicated documentation page](xref:core/providers/cosmos/querying#pagination).
 
 ## Offset pagination
 
 A common way to implement pagination with databases is to use the `Skip` and `Take` LINQ operators (`OFFSET` and `LIMIT` in SQL). Given a page size of 10 results, the third page can be fetched with EF Core as follows:
 
-```csharp
-var position = 20;
-var nextPage = await context.Posts
-    .OrderBy(b => b.PostId)
-    .Skip(position)
-    .Take(10)
-    .ToListAsync();
-```
+[!code-csharp[Main](../../../samples/core/Querying/Pagination/Program.cs?name=OffsetPagination&highlight=4)]
 
 Unfortunately, while this technique is very intuitive, it also has some severe shortcomings:
 
@@ -39,14 +30,7 @@ Unfortunately, while this technique is very intuitive, it also has some severe s
 
 The recommended alternative to offset-based pagination - sometimes called *keyset pagination* or *seek-based pagination* - is to simply use a `WHERE` clause to skip rows, instead of an offset. This means remember the relevant values from the last entry fetched (instead of its offset), and to ask for the next rows after that row. For example, assuming the last entry in the last page we fetched had an ID value of 55, we'd simply do the following:
 
-```csharp
-var lastId = 55;
-var nextPage = await context.Posts
-    .OrderBy(b => b.PostId)
-    .Where(b => b.PostId > lastId)
-    .Take(10)
-    .ToListAsync();
-```
+[!code-csharp[Main](../../../samples/core/Querying/Pagination/Program.cs?name=KeySetPagination&highlight=4)]
 
 Assuming an index is defined on `PostId`, this query is very efficient, and also isn't sensitive to any concurrent changes happening in lower Id values.
 
@@ -56,31 +40,22 @@ Keyset pagination is appropriate for pagination interfaces where the user naviga
 
 When using keyset pagination, it's frequently necessary to order by more than one property. For example, the following query paginates by date and ID:
 
-```csharp
-var lastDate = new DateTime(2020, 1, 1);
-var lastId = 55;
-var nextPage = await context.Posts
-    .OrderBy(b => b.Date)
-    .ThenBy(b => b.PostId)
-    .Where(b => b.Date > lastDate || (b.Date == lastDate && b.PostId > lastId))
-    .Take(10)
-    .ToListAsync();
-```
+[!code-csharp[Main](../../../samples/core/Querying/Pagination/Program.cs?name=KeySetPaginationWithMultipleKeys&highlight=6)]
 
 This ensures that the next page picks off exactly where the previous one ended. As more ordering keys are added, additional clauses can be added.
 
-> **Note:**
-> Most SQL databases support a simpler and more efficient version of the above, using *row values*: `WHERE (Date, Id) > (@lastDate, @lastId)`. EF Core does not currently support expressing this in LINQ queries, this is tracked by #26822.
+> [!NOTE]
+> Most SQL databases support a simpler and more efficient version of the above, using *row values*: `WHERE (Date, Id) > (@lastDate, @lastId)`. EF Core does not currently support expressing this in LINQ queries, this is tracked by [#26822](https://github.com/dotnet/efcore/issues/26822).
 
 ## Indexes
 
 As with any other query, proper indexing is vital for good performance: make sure to have indexes in place which correspond to your pagination ordering. If ordering by more than one column, an index over those multiple columns can be defined; this is called a *composite index*.
 
-For more information, see the documentation page on indexes.
+For more information, [see the documentation page on indexes](xref:core/modeling/indexes).
 
 ## Additional resources
 
-* To learn more about the shortcomings of offset-based pagination and about keyset pagination, see this post.
-* .NET Data Community Standup session where we discuss pagination and demo all the above concepts.
-* A technical deep dive presentation comparing offset and keyset pagination. While the content deals with the PostgreSQL database, the general information is valid for other relational databases as well.
-* For extensions on top of EF Core which simplify keyset pagination, see MR.EntityFrameworkCore.KeysetPagination and MR.AspNetCore.Pagination.
+* To learn more about the shortcomings of offset-based pagination and about keyset pagination, [see this post](https://use-the-index-luke.com/no-offset).
+* [.NET Data Community Standup session](https://www.youtube.com/watch?v=DIKH-q-gJNU) where we discuss pagination and demo all the above concepts.
+* [A technical deep dive presentation](https://www.slideshare.net/MarkusWinand/p2d2-pagination-done-the-postgresql-way) comparing offset and keyset pagination. While the content deals with the PostgreSQL database, the general information is valid for other relational databases as well.
+* For extensions on top of EF Core which simplify keyset pagination, see [MR.EntityFrameworkCore.KeysetPagination](https://github.com/mrahhal/MR.EntityFrameworkCore.KeysetPagination) and [MR.AspNetCore.Pagination](https://github.com/mrahhal/MR.AspNetCore.Pagination).

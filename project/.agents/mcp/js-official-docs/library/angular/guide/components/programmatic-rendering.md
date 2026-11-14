@@ -1,15 +1,6 @@
----
-title: "Programmatically rendering components"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/components/programmatic-rendering.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Programmatically rendering components
 
-TIP: This guide assumes you've already read the Essentials Guide. Read that first if you're new to Angular.
+TIP: This guide assumes you've already read the [Essentials Guide](essentials). Read that first if you're new to Angular.
 
 In addition to using a component directly in a template, you can also dynamically render components
 programmatically. This is helpful for situations when a component is unknown initially (thus can not
@@ -19,7 +10,7 @@ There are two main ways to render a component programmatically: in a template us
 or in your TypeScript code using `ViewContainerRef`.
 
 HELPFUL: for lazy-loading use-cases (for example if you want to delay loading of a heavy component), consider
-using the built-in `@defer` feature instead. The `@defer` feature allows the code
+using the built-in [`@defer` feature](/guide/templates/defer) instead. The `@defer` feature allows the code
 of any components, directives, and pipes inside the `@defer` block to be extracted into separate JavaScript
 chunks automatically and loaded only when necessary, based on the configured triggers.
 
@@ -60,7 +51,7 @@ export class CustomDialog {
 
 ### Passing inputs to dynamically rendered components
 
-You can pass <example-value> to the dynamically rendered component using the `ngComponentOutletInputs` property. This property accepts an object where keys are input names and values are the input values.
+You can pass inputs to the dynamically rendered component using the `ngComponentOutletInputs` property. This property accepts an object where keys are input names and values are the input values.
 
 ```angular-ts
 @Component({
@@ -92,7 +83,7 @@ The inputs are updated whenever the `greetingInputs` signal changes, keeping the
 
 ### Providing content projection
 
-Use `ngComponentOutletContent` to pass <example-value> content to the dynamically rendered component. This is useful when the dynamic component uses `<ng-content>` to display content.
+Use `ngComponentOutletContent` to pass projected content to the dynamically rendered component. This is useful when the dynamic component uses `<ng-content>` to display content.
 
 ```angular-ts
 @Component({
@@ -132,7 +123,7 @@ export class DynamicCard {
 }
 ```
 
-NOTE: Hydration does not support projecting DOM nodes created with native DOM APIs. This causes an NG0503 error. Use Angular APIs to create projected content or add `ngSkipHydration` to the component.
+NOTE: Hydration does not support projecting DOM nodes created with native DOM APIs. This causes an [NG0503 error](/errors/NG0503). Use Angular APIs to create projected content or add `ngSkipHydration` to the component.
 
 ### Providing injectors
 
@@ -196,7 +187,7 @@ export class CounterHost {
 
 NOTE: The `componentInstance` property is `null` before the component is rendered.
 
-See the NgComponentOutlet API reference for more information on the
+See the [NgComponentOutlet API reference](api/common/NgComponentOutlet) for more information on the
 directive's capabilities.
 
 ## Using ViewContainerRef
@@ -254,18 +245,18 @@ In the example above, clicking the "Load content" button results in the followin
 
 ## Lazy-loading components
 
-HELPFUL: if you want to lazy-load some components, you may consider using the built-in `@defer` feature
+HELPFUL: if you want to lazy-load some components, you may consider using the built-in [`@defer` feature](/guide/templates/defer)
 instead.
 
 If your use-case is not covered by the `@defer` feature, you can use either `NgComponentOutlet` or
-`ViewContainerRef` with a standard JavaScript dynamic import.
+`ViewContainerRef` with a standard JavaScript [dynamic import](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/import).
 
 ```angular-ts
 @Component({
   ...,
   template: `
     <section>
-      <h2>Basic <example-value></h2>
+      <h2>Basic settings</h2>
       <basic-settings />
     </section>
     <section>
@@ -416,7 +407,7 @@ export class PopupService {
 
 ## Handling rendering errors
 
-IMPORTANT: The `onError` option and its `ErrorDetails` parameter are in developer preview.
+IMPORTANT: The `onError` option and its `ErrorDetails` parameter are in [developer preview](reference/releases#developer-preview).
 
 When dynamically creating components using `ViewContainerRef.createComponent` or the standalone `createComponent` function, you can provide an `onError` callback in the options object to handle errors that occur during the rendering or change detection phases. This is the programmatic equivalent of using an `@error` block in templates.
 

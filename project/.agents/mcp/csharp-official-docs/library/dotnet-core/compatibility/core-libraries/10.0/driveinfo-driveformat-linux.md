@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: DriveInfo.DriveFormat returns Linux filesystem types"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/10.0/driveinfo-driveformat-linux.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 10 breaking change in core .NET libraries where DriveInfo.DriveFormat on Linux systems returns Linux kernel filesystem type strings instead of mapped magic constants.
+ms.date: 06/24/2025
 ---
-
 # DriveInfo.DriveFormat returns Linux filesystem types
 
-On Linux systems, `System.IO.DriveInfo.DriveFormat` now returns Linux kernel filesystem type strings. These strings represent a more granular representation of the filesystem type than the previous implementation. For example, it's now possible to distinguish between `ext3` and `ext4`.
+On Linux systems, <xref:System.IO.DriveInfo.DriveFormat?displayProperty=nameWithType> now returns Linux kernel filesystem type strings. These strings represent a more granular representation of the filesystem type than the previous implementation. For example, it's now possible to distinguish between `ext3` and `ext4`.
 
 ## Previous behavior
 
@@ -29,7 +25,7 @@ For cgroup file systems, `DriveFormat` returns `cgroup`/`cgroup2`. For the SELin
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -37,8 +33,8 @@ Provide more granular filesystem type information.
 
 ## Recommended action
 
-Check and update usages of `System.IO.DriveInfo.DriveFormat` to include the Linux filesystem type strings. On a Linux system, you can read the type strings of the drives from the `/proc/self/mountinfo` file. On each line, the filesystem type string is the first field after the `-` separator.
+Check and update usages of <xref:System.IO.DriveInfo.DriveFormat?displayProperty=nameWithType> to include the Linux filesystem type strings. On a Linux system, you can read the type strings of the drives from the `/proc/self/mountinfo` file. On each line, the filesystem type string is the first field after the `-` separator.
 
 ## Affected APIs
 
-- `System.IO.DriveInfo.DriveFormat`
+- <xref:System.IO.DriveInfo.DriveFormat?displayProperty=fullName>

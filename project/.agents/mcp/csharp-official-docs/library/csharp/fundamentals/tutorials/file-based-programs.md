@@ -1,18 +1,19 @@
 ---
-title: "Build file-based apps (part 1 of 2)"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/fundamentals/tutorials/file-based-programs.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Build file-based apps
+description: File-based apps are command line utilities that are built and execute without a project file. The build and run commands are implicit. New syntax supports project settings in source.
+ms.date: 01/12/2026
+ms.topic: tutorial
+ai-usage: ai-assisted
+#customer intent: As a developer, I want to build utilities so that more work is automated.
 ---
 
 # Tutorial: Build file-based C# programs
 
-*File-based apps* are programs contained within a single `*.cs` file that you build and run without a corresponding project (`*.csproj`) file. File-based apps are ideal for learning C# because they have less complexity: The entire program is stored in a single file. File-based apps are also useful for building command line utilities. On Unix platforms, you can run file-based apps by using `#!` (shebang) directives.
+*File-based apps* are programs contained within a single `*.cs` file that you build and run without a corresponding project (`*.csproj`) file. File-based apps are ideal for learning C# because they have less complexity: The entire program is stored in a single file. File-based apps are also useful for building command line utilities. On Unix platforms, you can run file-based apps by using `#!` (shebang) [directives](../../language-reference/preprocessor-directives.md).
 
 In this tutorial, you:
 
+> [!div class="checklist"]
 >
 > * Create a file-based app.
 > * Add Unix shebang (`#!`) support.
@@ -27,9 +28,9 @@ You build a file-based app that writes text as ASCII art. The app is contained i
 
 ## Prerequisites
 
-- The .NET 10 SDK. Download it from the .NET download site.
-- Visual Studio Code. Download it from the Visual Studio Code homepage.
-- (Optional) The C# DevKit extension for Visual Studio Code. Download it from the Visual Studio Code marketplace.
+- The .NET 10 SDK. Download it from the [.NET download site](https://dotnet.microsoft.com/download/dotnet/10.0).
+- Visual Studio Code. Download it from the [Visual Studio Code homepage](https://code.visualstudio.com/Download).
+- (Optional) The C# DevKit extension for Visual Studio Code. Download it from the [Visual Studio Code marketplace](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit).
 
 ## Create a file-based app
 
@@ -65,7 +66,7 @@ File-based apps are regular C# programs. The only limitation is that you must wr
 
 ## Unix shebang (`#!`) support
 
-> **Note:**
+> [!NOTE]
 >
 > Support for `#!` directives applies on Unix platforms only. There's no similar directive for Windows to directly execute a C# program. On Windows, you must use `dotnet` on the command line.
 
@@ -85,7 +86,7 @@ On Unix, you can execute file-based apps directly using just the source file nam
 
    This shebang uses `env` to find `dotnet` in the PATH environment. The `-S` parameter enables `env` to pass `dotnet` and `--` as separate arguments. The `--` ensures that any arguments a user provides are passed directly to your app, preventing `dotnet` from consuming them by mistake.
 
-   > **Tip:**
+   > [!TIP]
    > If the previous shebang doesn't work, try `#!/usr/bin/env dotnet` or the exact location of `dotnet`, for example `#!/usr/local/share/dotnet/dotnet --`.
 
 After making these two changes, you can run the program directly:
@@ -121,8 +122,8 @@ Now, write all arguments on the command line to the output.
 This version demonstrates these new concepts:
 
 - The predefined variable `args` passes the command line arguments to the program. The `args` variable is an array of strings: `string[]`. If the length of `args` is 0, no arguments were provided. Otherwise, each word on the argument list is stored in the corresponding entry in the array.
-- The `string.Join` method joins multiple strings into a single string, with the specified separator. In this case, the separator is a single space.
-- `System.Console.WriteLine*` writes the string to the standard output console, followed by a new line.
+- The [`string.Join`](xref:System.String.Join*) method joins multiple strings into a single string, with the specified separator. In this case, the separator is a single space.
+- <xref:System.Console.WriteLine*?displayProperty=nameWithType> writes the string to the standard output console, followed by a new line.
 
 ## Handle standard input
 
@@ -140,22 +141,12 @@ The preceding code handles command line arguments correctly. Now, add the code t
    }
    ```
 
-   The preceding code reads the console input until either a blank line or a `null` is read. (The `System.Console.ReadLine*` method returns `null` if the input stream is closed by typing `ctrl+C`.)
+   The preceding code reads the console input until either a blank line or a `null` is read. (The <xref:System.Console.ReadLine*?displayProperty=nameWithType> method returns `null` if the input stream is closed by typing <kbd>ctrl+C</kbd>.)
 
 1. Test reading standard input by creating a new text file in the same folder. Name the file `input.txt` and add the following lines:
 
-```txt
-Hello from ...
-dotnet!
+   :::code language="txt" source="./snippets/file-based-programs/input.txt":::
 
-You can create
-file-based apps
-in .NET 10 and
-C# 14
-
-Have fun writing
-useful utilities
-```
    Keep the lines short so they format correctly when you add the feature to use ASCII art.
 
 1. Run the program again.
@@ -176,21 +167,19 @@ Now your program can accept either command line arguments or standard input.
 
 ## Write ASCII art output
 
-Next, add a package that supports ASCII art, Colorful.Console. To add a package to a file-based app, use the `#:package` directive.
+Next, add a package that supports ASCII art, [Colorful.Console](https://www.nuget.org/packages/Colorful.Console). To add a package to a file-based app, use the `#:package` directive.
 
 1. Add the following directive after the `#!` directive in your `AsciiArt.cs` file:
 
-```csharp
-#:package user@example.com
-```
-   > **Important:**
-   > The version `1.2.15` was the latest version of the `Colorful.Console` package when this tutorial was last updated. Check the package's NuGet page for the latest version to ensure you use a package version with the latest security fixes.
+   :::code language="csharp" source="./snippets/file-based-programs/AsciiArt.cs" id="ColorfulPackage":::
+
+   > [!IMPORTANT]
+   > The version `1.2.15` was the latest version of the `Colorful.Console` package when this tutorial was last updated. Check the package's [NuGet page](https://www.nuget.org/packages/Colorful.Console) for the latest version to ensure you use a package version with the latest security fixes.
 
 1. Change the lines that call `Console.WriteLine` to use the `Colorful.Console.WriteAscii` method instead:
 
-```csharp
-Colorful.Console.WriteAscii(line);
-```
+   :::code language="csharp" source="./snippets/file-based-programs/AsciiArt.cs" id="WriteAscii":::
+
 1. Run the program. You see ASCII art output instead of echoed text.
 
 ## Process command options
@@ -211,9 +200,9 @@ Next, add command line parsing. The current version writes each word as a differ
 
 Users can use both arguments together.
 
-Most command line applications need to parse command line arguments to handle options, commands, and user input effectively. The `System.CommandLine` library provides comprehensive capabilities to handle commands, subcommands, options, and arguments. You can concentrate on what your application does rather than the mechanics of parsing command line input.
+Most command line applications need to parse command line arguments to handle options, commands, and user input effectively. The [`System.CommandLine` library](../../../standard/commandline/index.md) provides comprehensive capabilities to handle commands, subcommands, options, and arguments. You can concentrate on what your application does rather than the mechanics of parsing command line input.
 
-The `System.CommandLine` library offers several key <example-value>:
+The `System.CommandLine` library offers several key benefits:
 
 - Automatic help text generation and validation.
 - Support for POSIX and Windows command-line conventions.
@@ -222,105 +211,66 @@ The `System.CommandLine` library offers several key <example-value>:
 
 1. Add the `System.CommandLine` package. Add this directive after the existing package directive:
 
-```csharp
-#:package user@example.com
-```
-   > **Important:**
-   > The version `2.0.0` was the latest version when this tutorial was last updated. If there's a newer version available, use the latest version to ensure you have the latest security packages. Check the package's NuGet page for the latest version to ensure you use a package version with the latest security fixes.
+   :::code language="csharp" source="./snippets/file-based-programs/AsciiArt.cs" id="CommandLinePackage":::
+
+   > [!IMPORTANT]
+   > The version `2.0.0` was the latest version when this tutorial was last updated. If there's a newer version available, use the latest version to ensure you have the latest security packages. Check the package's [NuGet page](https://www.nuget.org/packages/System.CommandLine) for the latest version to ensure you use a package version with the latest security fixes.
 
 1. Add the necessary using statements at the top of your file (after the `#!` and `#:package` directives):
 
-```csharp
-using System.CommandLine;
-using System.CommandLine.Parsing;
-```
+   :::code language="csharp" source="./snippets/file-based-programs/AsciiArt.cs" id="Usings":::
+
 1. Define the delay option and messages argument. Add the following code to create the `CommandLine.Option` and `CommandLine.Argument` objects to represent the command line option and argument:
 
-```csharp
-Option<int> delayOption = new("--delay")
-{
-    Description = "Delay between lines, specified as milliseconds.",
-    DefaultValueFactory = parseResult => 100
-};
+   :::code language="csharp" source="./snippets/file-based-programs/AsciiArt.cs" id="OptionArgument":::
 
-Argument<string[]> messagesArgument = new("Messages")
-{
-    Description = "Text to render."
-};
-```
-   In command-line applications, options typically begin with `--` (double dash) and can accept arguments. The `--delay` option accepts an integer argument that specifies the delay in milliseconds. The `messagesArgument` defines how any remaining tokens after options are parsed as text. Each token <example-value> a separate string in the array, but text can be quoted to include multiple words in one token. For example, `"<example-value>"` becomes a single token, while `This is four tokens` becomes four separate tokens.
+   In command-line applications, options typically begin with `--` (double dash) and can accept arguments. The `--delay` option accepts an integer argument that specifies the delay in milliseconds. The `messagesArgument` defines how any remaining tokens after options are parsed as text. Each token becomes a separate string in the array, but text can be quoted to include multiple words in one token. For example, `"This is one message"` becomes a single token, while `This is four tokens` becomes four separate tokens.
 
    The preceding code defines the argument type for the `--delay` option, and that the arguments are an array of `string` values. This application has only one command, so you use the *root command*.
 
 1. Create a root command and configure it with the option and argument. Add the argument and option to the root command:
 
-```csharp
-RootCommand rootCommand = new("Ascii Art file-based app sample");
+   :::code language="csharp" source="./snippets/file-based-programs/AsciiArt.cs" id="RootCommand":::
 
-rootCommand.Options.Add(delayOption);
-rootCommand.Arguments.Add(messagesArgument);
-```
-1. Add the code to parse the command line arguments and handle any errors. This code validates the command line arguments and stores parsed arguments in the `System.CommandLine.ParseResult` object:
+1. Add the code to parse the command line arguments and handle any errors. This code validates the command line arguments and stores parsed arguments in the <xref:System.CommandLine.ParseResult?displayProperty=nameWithType> object:
 
-```csharp
-ParseResult result = rootCommand.Parse(args);
-foreach (ParseError parseError in result.Errors)
-{
-    Console.Error.WriteLine(parseError.Message);
-}
-if (result.Errors.Count > 0)
-{
-    return 1;
-}
-```
+   :::code language="csharp" source="./snippets/file-based-programs/AsciiArt.cs" id="ParseAndValidate":::
+
 The preceding code validates all command line arguments. If the validation fails, the app writes errors to the console and exits.
 
 ## Use parsed command line results
 
 Now, finish the app to use the parsed options and write the output. First, define a record to hold the parsed options. File-based apps can include type declarations, like records and classes. They must be after all top-level statements and local functions.
 
-1. Add a `record` declaration to store the messages and the delay option value:
+1. Add a [`record`](../types/records.md) declaration to store the messages and the delay option value:
 
-```csharp
-public record AsciiMessageOptions(string[] Messages, int Delay);
-```
+   :::code language="csharp" source="./snippets/file-based-programs/AsciiArt.cs" id="Record":::
+
 1. Add the following local function before the record declaration. This method handles both command line arguments and standard input, and returns a new record instance:
 
-```csharp
-async Task<AsciiMessageOptions> ProcessParseResults(ParseResult result)
-{
-    int delay = result.GetValue(delayOption);
-    List<string> messages = [.. result.GetValue(messagesArgument) ?? Array.Empty<string>()];
+   :::code language="csharp" source="./snippets/file-based-programs/AsciiArt.cs" id="ProcessParsedArgs":::
 
-    if (messages.Count == 0)
-    {
-        while (Console.ReadLine() is string line && line.Length > 0)
-        {
-            Colorful.Console.WriteAscii(line);
-            await Task.Delay(delay);
-        }
-    }
-    return new([.. messages], delay);
-}
-```
 1. Create a local function to write the ASCII art with the specified delay. This function writes each message in the record with the specified delay between each message:
 
-```csharp
-async Task WriteAsciiArt(AsciiMessageOptions options)
-{
-    foreach (string message in options.Messages)
-    {
-        Colorful.Console.WriteAscii(message);
-        await Task.Delay(options.Delay);
-    }
-}
-```
+   :::code language="csharp" source="./snippets/file-based-programs/AsciiArt.cs" id="WriteAsciiArt":::
+
 1. Replace the `if` clause you wrote earlier with the following code that processes the command line arguments and writes the output:
 
-```csharp
-var parsedArgs = await ProcessParseResults(result);
+   :::code language="csharp" source="./snippets/file-based-programs/AsciiArt.cs" id="InvokeCommand":::
 
-await WriteAsciiArt(parsedArgs);
-return 0;
-```
 You created a `record` type that provides structure to the parsed command line options and arguments. New local functions create an instance of the record, and use the record to write the ASCII art output.
+
+## Test the final application
+
+Test the application by running several different commands. If you have trouble, here's the finished sample to compare with what you built:
+
+:::code language="csharp" source="./snippets/file-based-programs/AsciiArt":::
+
+In this tutorial, you learned to build a file-based app, where you build the program in a single C# file. These programs don't use a project file, and can use the `#!` directive on Unix systems. Learners can create these programs after trying our [online tutorials](../../tour-of-csharp/tutorials/hello-world.md) and before building larger project-based apps. File-based apps are also a great platform for command line utilities.
+
+## Related content
+
+- [File-based apps reference](../../../core/sdk/file-based-apps.md)
+- [Top level statement](../program-structure/top-level-statements.md)
+- [Preprocessor directives](../../language-reference/preprocessor-directives.md#file-based-apps)
+- [What's new in C# 14](../../whats-new/csharp-14.md)

@@ -1,25 +1,22 @@
 ---
+description: "out keyword - C# Reference"
 title: "out keyword"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/keywords/out.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 01/22/2026
+f1_keywords: 
+  - "out_CSharpKeyword"
+  - "out"
+helpviewer_keywords: 
+  - "out [C#]"
+  - "out keyword [C#]"
 ---
-
 # out (C# Reference)
 
 Use the `out` keyword in two contexts:
 
-- As a parameter modifier, which you use to pass an argument to a method by reference rather than by value.
-- In generic type parameter declarations for interfaces and delegates, which you use to specify that a type parameter is covariant.
+- As a [parameter modifier](method-parameters.md#out-parameter-modifier), which you use to pass an argument to a method by reference rather than by value.
+- In [generic type parameter declarations](out-generic-modifier.md) for interfaces and delegates, which you use to specify that a type parameter is covariant.
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
-
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
-
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
 The `out` parameter modifier is especially useful when a method needs to return more than one value since you can use more than one `out` parameter. For example,
 
@@ -46,4 +43,4 @@ The following limitations apply to using the `out` keyword:
 
 - You can't use `out` parameters in asynchronous methods.
 - You can't use `out` parameters in iterator methods.
-- You can't pass <example-value> as `out` parameters.
+- You can't pass properties as `out` parameters.

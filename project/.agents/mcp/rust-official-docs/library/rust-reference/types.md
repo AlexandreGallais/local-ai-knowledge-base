@@ -1,12 +1,3 @@
----
-title: "Types"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/types.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[type]
 # Types
 
@@ -51,7 +42,7 @@ r[type.name]
 ## Type expressions
 
 r[type.name.syntax]
-```grammar
+```grammar,types
 Type ->
       TypeNoBounds
     | ImplTraitType
@@ -109,12 +100,12 @@ r[type.name.parenthesized]
 ### Parenthesized types
 
 r[type.name.parenthesized.syntax]
-```grammar
+```grammar,types
 ParenthesizedType -> `(` Type `)`
 ```
 
 r[type.name.parenthesized.intro]
-In some situations the combination of types may be ambiguous. Use parentheses around a type to avoid ambiguity. For example, the `+` operator for [type boundaries] within a [reference type] is unclear where the boundary applies, so the use of parentheses is required. Grammar rules that require this disambiguation use the [TypeNoBounds] rule instead of Type.
+In some situations the combination of types may be ambiguous. Use parentheses around a type to avoid ambiguity. For example, the `+` operator for [type boundaries] within a [reference type] is unclear where the boundary applies, so the use of parentheses is required. Grammar rules that require this disambiguation use the [TypeNoBounds] rule instead of [Type][grammar-Type].
 
 ```rust
 # use std::any::Any;
@@ -125,7 +116,7 @@ r[type.recursive]
 ## Recursive types
 
 r[type.recursive.intro]
-Nominal types — [structs], [enumerations], and [unions] — may be recursive. That is, each `enum` variant or `struct` or `union` field may refer, directly or indirectly, to the enclosing `enum` or `struct` type itself.
+Nominal types &mdash; [structs], [enumerations], and [unions] &mdash; may be recursive. That is, each `enum` variant or `struct` or `union` field may refer, directly or indirectly, to the enclosing `enum` or `struct` type itself.
 
 r[type.recursive.constraint]
 Such recursion has restrictions:
@@ -143,3 +134,43 @@ enum List<T> {
 
 let a: List<i32> = List::Cons(7, Box::new(List::Cons(13, Box::new(List::Nil))));
 ```
+
+[`char`]: types/char.md
+[`str`]: types/str.md
+[Array]: types/array.md
+[Boolean]: types/boolean.md
+[Closures]: types/closure.md
+[Enum]: types/enum.md
+[Function pointers]: types/function-pointer.md
+[Functions]: types/function-item.md
+[Impl trait]: types/impl-trait.md
+[Macros]: macros.md
+[Numeric]: types/numeric.md
+[Parentheses]: #parenthesized-types
+[Raw pointers]: types/pointer.md#raw-pointers-const-and-mut
+[References]: types/pointer.md#shared-references-
+[Slice]: types/slice.md
+[Struct]: types/struct.md
+[Trait objects]: types/trait-object.md
+[Tuple]: types/tuple.md
+[Type paths]: paths.md#paths-in-types
+[Union]: types/union.md
+[`Self` path]: paths.md#self-1
+[arrays]: types/array.md
+[enumerations]: types/enum.md
+[function pointer]: types/function-pointer.md
+[inferred type]: types/inferred.md
+[item]: items.md
+[never]: types/never.md
+[pointer types]: types/pointer.md
+[raw pointer]: types/pointer.md#raw-pointers-const-and-mut
+[reference type]: types/pointer.md#shared-references-
+[reference]: types/pointer.md#shared-references-
+[structs]: types/struct.md
+[trait]: types/trait-object.md
+[tuples]: types/tuple.md
+[type alias]: items/type-aliases.md
+[type aliases]: items/type-aliases.md
+[type boundaries]: trait-bounds.md
+[type parameters]: types/parameters.md
+[unions]: types/union.md

@@ -1,27 +1,20 @@
----
-title: "Environment Variables"
-tool: "node"
-version: "26.13"
-source: "https://github.com/nodejs/node/blob/e9c277643b0249c50f6e6de5413be8a88ea11b6a/doc/api/environment_variables.md"
-commit: "e9c277643b0249c50f6e6de5413be8a88ea11b6a"
-license: "MIT"
----
-
 # Environment Variables
+
+<!--introduced_in=v20.12.0-->
 
 Environment variables are variables associated to the environment the Node.js process runs in.
 
 ## CLI Environment Variables
 
 There is a set of environment variables that can be defined to customize the behavior of Node.js,
-for more details refer to the CLI Environment Variables documentation.
+for more details refer to the [CLI Environment Variables documentation][].
 
 ## `process.env`
 
 The basic API for interacting with environment variables is `process.env`, it consists of an object
 with pre-populated user environment variables that can be modified and expanded.
 
-For more details refer to the `process.env` documentation.
+For more details refer to the [`process.env` documentation][].
 
 ## DotEnv
 
@@ -32,7 +25,7 @@ Set of utilities for dealing with additional environment variables defined in `.
 ### .env files
 
 `.env` files (also known as dotenv files) are files that define environment variables,
-which Node.js applications can then interact with (popularized by the dotenv package).
+which Node.js applications can then interact with (popularized by the [dotenv][] package).
 
 The following is an example of the content of a basic `.env` file:
 
@@ -142,14 +135,22 @@ export MY_VAR = my variable
 
 `.env` files can be used to populate the `process.env` object via one the following CLI options:
 
-* `--env-file=file`
+* [`--env-file=file`][]
 
-* `--env-file-if-exists=file`
+* [`--env-file-if-exists=file`][]
 
 ### Programmatic APIs
 
 There following two functions allow you to directly interact with `.env` files:
 
-* `process.loadEnvFile` loads an `.env` file and populates `process.env` with its variables
+* [`process.loadEnvFile`][] loads an `.env` file and populates `process.env` with its variables
 
-* `util.parseEnv` parses the raw content of an `.env` file and returns its value in an object
+* [`util.parseEnv`][] parses the raw content of an `.env` file and returns its value in an object
+
+[CLI Environment Variables documentation]: cli.md#environment-variables_1
+[`--env-file-if-exists=file`]: cli.md#--env-file-if-existsfile
+[`--env-file=file`]: cli.md#--env-filefile
+[`process.env` documentation]: process.md#processenv
+[`process.loadEnvFile`]: process.md#processloadenvfilepath
+[`util.parseEnv`]: util.md#utilparseenvcontent
+[dotenv]: https://github.com/motdotla/dotenv

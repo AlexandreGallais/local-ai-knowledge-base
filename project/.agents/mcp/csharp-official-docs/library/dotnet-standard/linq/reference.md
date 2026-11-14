@@ -1,22 +1,20 @@
 ---
-title: "Reference - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/reference.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Reference - LINQ to XML
+description: Find LINQ to XML reference articles.
+ms.date: 07/20/2015
+ms.assetid: 815b45e2-3527-4dee-9986-b1277a693cde
 ---
 
 # Reference (LINQ to XML)
 
 This article contains links to the LINQ to XML reference articles.
 
-For reference documentation for the LINQ to XML classes, see `System.Xml.Linq`.
+For reference documentation for the LINQ to XML classes, see <xref:System.Xml.Linq>.
 
-For reference documentation for the extension methods that help you validate XML trees against an XSD file, see `System.Xml.Schema.Extensions`.
+For reference documentation for the extension methods that help you validate XML trees against an XSD file, see <xref:System.Xml.Schema.Extensions?displayProperty=nameWithType>.
 
-For reference documentation for the extension methods that enable you to evaluate XPath queries on an XML tree, see `System.Xml.XPath.Extensions`.
+For reference documentation for the extension methods that enable you to evaluate XPath queries on an XML tree, see <xref:System.Xml.XPath.Extensions?displayProperty=nameWithType>.
 
 ## See also
 
-- LINQ to XML overview
+- [LINQ to XML overview](linq-xml-overview.md)

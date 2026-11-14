@@ -1,43 +1,29 @@
----
-title: "PermittedSubclassesAttribute interface (java.lang.classfile.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/attribute/PermittedSubclassesAttribute.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # PermittedSubclassesAttribute interface (java.lang.classfile.attribute)
 
 ```java
 public sealed interface PermittedSubclassesAttribute extends Attribute<PermittedSubclassesAttribute>, ClassElement permits BoundAttribute.BoundPermittedSubclassesAttribute, UnboundAttribute.UnboundPermittedSubclassesAttribute
 ```
 
-Models the PermittedSubclasses
-attribute (JVMS ), which indicates this class or interface
-is sealed,
+Models the {@link Attributes#permittedSubclasses() PermittedSubclasses}
+attribute (JVMS {@jvms 4.7.31}), which indicates this class or interface
+is {@linkplain java.compiler/javax.lang.model.element.Modifier#SEALED sealed},
 and which classes or interfaces may extend or implement this class or
 interface.
-
-This attribute only appears on classes, and does not permit multiple instances in a class.  It has a
-data dependency on the constant pool.
-
+<p>
+This attribute only appears on classes, and does not permit {@linkplain
+AttributeMapper#allowMultiple multiple instances} in a class.  It has a
+data dependency on the {@linkplain AttributeStability#CP_REFS constant pool}.
+<p>
 The attribute was introduced in the Java SE Platform version 17, major
-version `ClassFile#JAVA_17_VERSION`.
+version {@value ClassFile#JAVA_17_VERSION}.
 
-**See also:** Attributes#permittedSubclasses()
-
-**See also:** Class#isSealed()
-
-**See also:** Class#getPermittedSubclasses()
-
-**JLS:** 8.1.1.2 `sealed`, `non-sealed`, and `final` Classes
-
-**JLS:** 9.1.1.4 `sealed` and `non-sealed` Interfaces
-
-**jvms:** 4.7.31 The `PermittedSubclasses` Attribute
-
-**Since:** 24
+@see Attributes#permittedSubclasses()
+@see Class#isSealed()
+@see Class#getPermittedSubclasses()
+@jls 8.1.1.2 {@code sealed}, {@code non-sealed}, and {@code final} Classes
+@jls 9.1.1.4 {@code sealed} and {@code non-sealed} Interfaces
+@jvms 4.7.31 The {@code PermittedSubclasses} Attribute
+@since 24
 
 ## PermittedSubclassesAttribute.permittedSubclasses()
 
@@ -45,7 +31,9 @@ version `ClassFile#JAVA_17_VERSION`.
 List<ClassEntry> permittedSubclasses()
 ```
 
-**See also:** Class#getPermittedSubclasses()
+{@return the list of permitted subclasses or subinterfaces}
+
+@see Class#getPermittedSubclasses()
 
 ## PermittedSubclassesAttribute.of(List<ClassEntry>)
 
@@ -53,9 +41,9 @@ List<ClassEntry> permittedSubclasses()
 static PermittedSubclassesAttribute of(List<ClassEntry> permittedSubclasses)
 ```
 
-Parameters:
+{@return a {@code PermittedSubclasses} attribute}
 
-- `permittedSubclasses`: the permitted subclasses or subinterfaces
+@param permittedSubclasses the permitted subclasses or subinterfaces
 
 ## PermittedSubclassesAttribute.of(ClassEntry...)
 
@@ -63,9 +51,9 @@ Parameters:
 static PermittedSubclassesAttribute of(ClassEntry... permittedSubclasses)
 ```
 
-Parameters:
+{@return a {@code PermittedSubclasses} attribute}
 
-- `permittedSubclasses`: the permitted subclasses or subinterfaces
+@param permittedSubclasses the permitted subclasses or subinterfaces
 
 ## PermittedSubclassesAttribute.ofSymbols(List<ClassDesc>)
 
@@ -73,13 +61,10 @@ Parameters:
 static PermittedSubclassesAttribute ofSymbols(List<ClassDesc> permittedSubclasses)
 ```
 
-Parameters:
+{@return a {@code PermittedSubclasses} attribute}
 
-- `permittedSubclasses`: the permitted subclasses or subinterfaces
-
-Throws:
-
-- `IllegalArgumentException`: if any of `permittedSubclasses` is primitive
+@param permittedSubclasses the permitted subclasses or subinterfaces
+@throws IllegalArgumentException if any of {@code permittedSubclasses} is primitive
 
 ## PermittedSubclassesAttribute.ofSymbols(ClassDesc...)
 
@@ -87,10 +72,7 @@ Throws:
 static PermittedSubclassesAttribute ofSymbols(ClassDesc... permittedSubclasses)
 ```
 
-Parameters:
+{@return a {@code PermittedSubclasses} attribute}
 
-- `permittedSubclasses`: the permitted subclasses or subinterfaces
-
-Throws:
-
-- `IllegalArgumentException`: if any of `permittedSubclasses` is primitive
+@param permittedSubclasses the permitted subclasses or subinterfaces
+@throws IllegalArgumentException if any of {@code permittedSubclasses} is primitive

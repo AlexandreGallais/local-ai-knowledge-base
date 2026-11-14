@@ -1,17 +1,8 @@
----
-title: "Configuring Playwright"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/browser/playwright.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # Configuring Playwright
 
-To run tests using playwright, you need to install the `@vitest/browser-playwright` npm package and specify its `playwright` export in the `test.browser.provider` property of your config:
+To run tests using playwright, you need to install the [`@vitest/browser-playwright`](https://npmx.dev/package/@vitest/browser-playwright) npm package and specify its `playwright` export in the `test.browser.provider` property of your config:
 
-```ts
+```ts [vitest.config.js]
 import { playwright } from '@vitest/browser-playwright'
 import { defineConfig } from 'vitest/config'
 
@@ -25,9 +16,9 @@ export default defineConfig({
 })
 ```
 
-You can configure the `launchOptions`, `connectOptions` and `contextOptions` when calling `playwright` at the top level or inside instances:
+You can configure the [`launchOptions`](https://playwright.dev/docs/api/class-browsertype#browser-type-launch), [`connectOptions`](https://playwright.dev/docs/api/class-browsertype#browser-type-connect) and [`contextOptions`](https://playwright.dev/docs/api/class-browser#browser-new-context) when calling `playwright` at the top level or inside instances:
 
-```ts
+```ts{7-14,21-26} [vitest.config.js]
 import { playwright } from '@vitest/browser-playwright'
 import { defineConfig } from 'vitest/config'
 
@@ -62,24 +53,26 @@ export default defineConfig({
 })
 ```
 
-**Warning:**
+::: warning
 Unlike Playwright test runner, Vitest opens a _single_ page to run all tests that are defined in the same file. This means that isolation is restricted to a single test file, not to every individual test.
+:::
 
 ## launchOptions
 
-These options are directly passed down to `playwright[browser].launch` command. You can read more about the command and available arguments in the Playwright documentation.
+These options are directly passed down to `playwright[browser].launch` command. You can read more about the command and available arguments in the [Playwright documentation](https://playwright.dev/docs/api/class-browsertype#browser-type-launch).
 
-**Warning:**
-Vitest will ignore `launch.headless` option. Instead, use `test.browser.headless`.
+::: warning
+Vitest will ignore `launch.headless` option. Instead, use [`test.browser.headless`](/config/browser/headless).
 
-Note that Vitest will push debugging flags to `launch.args` if `--inspect` is enabled.
+Note that Vitest will push debugging flags to `launch.args` if [`--inspect`](/guide/cli#inspect) is enabled.
+:::
 
-**Enabling new Chromium headless mode**
-Playwright supports a new headless mode for Chromium that uses the real Chrome browser instead of the dedicated headless shell. This provides more authentic, reliable test execution and removes the need to install a separate headless Chromium build.
+::: tip Enabling new Chromium headless mode
+Playwright supports a [new headless mode](https://playwright.dev/docs/browsers#chromium-new-headless-mode) for Chromium that uses the real Chrome browser instead of the dedicated headless shell. This provides more authentic, reliable test execution and removes the need to install a separate headless Chromium build.
 
 To opt in, set `channel` to `'chromium'` in `launchOptions`:
 
-```ts
+```ts [vitest.config.ts]
 import { playwright } from '@vitest/browser-playwright'
 import { defineConfig } from 'vitest/config'
 
@@ -98,26 +91,30 @@ export default defineConfig({
 })
 ```
 
+:::
+
 ## connectOptions
 
-These options are directly passed down to `playwright[browser].connect` command. You can read more about the command and available arguments in the Playwright documentation.
+These options are directly passed down to `playwright[browser].connect` command. You can read more about the command and available arguments in the [Playwright documentation](https://playwright.dev/docs/api/class-browsertype#browser-type-connect).
 
 Use `connectOptions.wsEndpoint` to connect to an existing Playwright server instead of launching browsers locally. This is useful for running browsers in Docker, in CI, or on a remote machine.
 
-**Warning:**
+::: warning
 
 Vitest forwards `launchOptions` to Playwright server via the `x-playwright-launch-options` header. This works only if the remote Playwright server supports this header, for example when using the `playwright run-server` CLI.
 
+:::
+
 ::: details Example: Running a Playwright Server in Docker
-To run browsers in a Docker container (see Playwright Docker guide):
+To run browsers in a Docker container (see [Playwright Docker guide](https://playwright.dev/docs/docker#remote-connection)):
 
 Start a Playwright server using Docker Compose:
 
-```yaml
+```yaml [docker-compose.yml]
 services:
   playwright:
     image: mcr.microsoft.com/playwright:v1.61.0-noble
-    command: /bin/sh -c "npx -y user@example.com run-server --port 6677 --host 0.0.0.0"
+    command: /bin/sh -c "npx -y playwright@1.61.0 run-server --port 6677 --host 0.0.0.0"
     init: true
     ipc: host
     user: pwuser
@@ -129,9 +126,9 @@ services:
 docker compose up -d
 ```
 
-Then configure Vitest to connect to it. The `exposeNetwork` option lets the containerized browser reach Vitest's dev server on the host:
+Then configure Vitest to connect to it. The [`exposeNetwork`](https://playwright.dev/docs/api/class-browsertype#browser-type-connect-option-expose-network) option lets the containerized browser reach Vitest's dev server on the host:
 
-```ts
+```ts [vitest.config.ts]
 import { playwright } from '@vitest/browser-playwright'
 import { defineConfig } from 'vitest/config'
 
@@ -154,23 +151,27 @@ export default defineConfig({
 })
 ```
 
+:::
+
 ## contextOptions
 
-Vitest creates a new context for every test file by calling `browser.newContext()`. You can configure this behaviour by specifying custom arguments.
+Vitest creates a new context for every test file by calling [`browser.newContext()`](https://playwright.dev/docs/api/class-browsercontext). You can configure this behaviour by specifying [custom arguments](https://playwright.dev/docs/api/class-browser#browser-new-context).
 
-**Tip:**
+::: tip
 Note that the context is created for every _test file_, not every _test_ like in playwright test runner.
+:::
 
-**Warning:**
-Vitest always sets `ignoreHTTPSErrors` to `true` in case your server is served via HTTPS and `serviceWorkers` to `'allow'` to support module mocking via MSW.
+::: warning
+Vitest always sets `ignoreHTTPSErrors` to `true` in case your server is served via HTTPS and `serviceWorkers` to `'allow'` to support module mocking via [MSW](https://mswjs.io).
 
-It is also recommended to use `test.browser.viewport` instead of specifying it here as it will be lost when tests are running in headless mode.
+It is also recommended to use [`test.browser.viewport`](/config/browser/headless) instead of specifying it here as it will be lost when tests are running in headless mode.
+:::
 
 ## `actionTimeout`
 
 - **Default:** no timeout
 
-This value configures the default timeout it takes for Playwright to wait until all accessibility checks pass and the action is actually done.
+This value configures the default timeout it takes for Playwright to wait until all accessibility checks pass and [the action](/api/browser/interactivity) is actually done.
 
 You can also configure the action timeout per-action:
 
@@ -187,15 +188,16 @@ await userEvent.click(page.getByRole('button'), {
 - **Type:** `boolean | string`
 - **Default:** `false`
 
-When enabled, Vitest uses Playwright's persistent context instead of a regular browser context. This allows browser state (cookies, localStorage, DevTools settings, etc.) to persist between test runs.
+When enabled, Vitest uses Playwright's [persistent context](https://playwright.dev/docs/api/class-browsertype#browser-type-launch-persistent-context) instead of a regular browser context. This allows browser state (cookies, localStorage, DevTools settings, etc.) to persist between test runs.
 
-**Warning:**
-This option is ignored when running tests in parallel (e.g. when headless with `fileParallelism` enabled) since persistent context cannot be shared across parallel sessions.
+::: warning
+This option is ignored when running tests in parallel (e.g. when headless with [`fileParallelism`](/config/fileparallelism) enabled) since persistent context cannot be shared across parallel sessions.
+:::
 
 - When set to `true`, the user data is stored in `./node_modules/.cache/vitest-playwright-user-data`
 - When set to a string, the value is used as the path to the user data directory
 
-```ts
+```ts [vitest.config.js]
 import { playwright } from '@vitest/browser-playwright'
 import { defineConfig } from 'vitest/config'
 

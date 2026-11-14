@@ -1,12 +1,3 @@
----
-title: "SequenceLayout interface (java.lang.foreign)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/foreign/SequenceLayout.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # SequenceLayout interface (java.lang.foreign)
 
 ```java
@@ -14,17 +5,29 @@ public sealed interface SequenceLayout extends MemoryLayout permits SequenceLayo
 ```
 
 A compound layout that denotes a homogeneous repetition of a given
-*element layout*. The repetition count is said to be the sequence layout's
-*element count*. A sequence layout can be thought of as a struct layout where
+<em>element layout</em>. The repetition count is said to be the sequence layout's
+<em>element count</em>. A sequence layout can be thought of as a struct layout where
 the sequence layout's element layout is repeated a number of times that is equal to
 the sequence layout's element count. In other words this layout:
 
+{@snippet lang=java :
+MemoryLayout.sequenceLayout(3, ValueLayout.JAVA_INT.withOrder(ByteOrder.BIG_ENDIAN));
+}
+
 is equivalent to the following layout:
 
-**Implementation requirements:** This class is immutable, thread-safe and
-value-based.
+{@snippet lang=java :
+MemoryLayout.structLayout(
+    ValueLayout.JAVA_INT.withOrder(ByteOrder.BIG_ENDIAN),
+    ValueLayout.JAVA_INT.withOrder(ByteOrder.BIG_ENDIAN),
+    ValueLayout.JAVA_INT.withOrder(ByteOrder.BIG_ENDIAN));
+}
 
-**Since:** 22
+@implSpec
+This class is immutable, thread-safe and
+<a href="{@docRoot}/java.base/java/lang/doc-files/ValueBased.html">value-based</a>.
+
+@since 22
 
 ## SequenceLayout.elementLayout()
 
@@ -32,11 +35,15 @@ value-based.
 MemoryLayout elementLayout()
 ```
 
+{@return the element layout of this sequence layout}
+
 ## SequenceLayout.elementCount()
 
 ```java
 long elementCount()
 ```
+
+{@return the element count of this sequence layout}
 
 ## SequenceLayout.withElementCount(long)
 
@@ -44,14 +51,12 @@ long elementCount()
 SequenceLayout withElementCount(long elementCount)
 ```
 
-Parameters:
-
-- `elementCount`: the new element count
-
-Throws:
-
-- `IllegalArgumentException`: if `elementCount` is negative
-- `IllegalArgumentException`: if `elementLayout.bitSize() * elementCount` overflows
+{@return a sequence layout with the same characteristics of this layout, but with
+         the given element count}
+@param elementCount the new element count
+@throws IllegalArgumentException if {@code elementCount} is negative
+@throws IllegalArgumentException if {@code elementLayout.bitSize() * elementCount}
+        overflows
 
 ## SequenceLayout.reshape(long...)
 
@@ -61,34 +66,40 @@ SequenceLayout reshape(long... elementCounts)
 
 Rearranges the elements in this sequence layout into a multidimensional sequence
 layout. The resulting layout is a sequence layout where element layouts in the
-flattened projection of this sequence layout are
+{@linkplain #flatten() flattened projection} of this sequence layout are
 rearranged into one or more nested sequence layouts according to the provided
 element counts. This transformation preserves the layout size;
 that is, multiplying the provided element counts must yield the same element count
 as the flattened projection of this sequence layout.
-
+<p>
 For instance, given a sequence layout of the kind:
-
-calling `seq.reshape(2, 6)` will yield the following sequence layout:
-
-If one of the provided element counts is the special value `-1`, then
+{@snippet lang=java :
+var seq = MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, ValueLayout.JAVA_INT));
+}
+calling {@code seq.reshape(2, 6)} will yield the following sequence layout:
+{@snippet lang=java :
+var reshapeSeq = MemoryLayout.sequenceLayout(2, MemoryLayout.sequenceLayout(6, ValueLayout.JAVA_INT));
+}
+<p>
+If one of the provided element counts is the special value {@code -1}, then
 the element count in that position will be inferred from the remaining element
 counts and the element count of the flattened projection of this layout.
-For instance, a layout equivalent to the above `reshapeSeq` can also be
+For instance, a layout equivalent to the above {@code reshapeSeq} can also be
 computed in the following ways:
-
-Parameters:
-
-- `elementCounts`: an array of element counts, of which at most one can be `-1`
-
-**Returns:** a sequence layout where element layouts in the
-        flattened projection of this sequence layout
-        (see `flatten()`) are re-arranged into one or more nested
+{@snippet lang=java :
+var reshapeSeqImplicit1 = seq.reshape(-1, 6);
+var reshapeSeqImplicit2 = seq.reshape(2, -1);
+}
+@param elementCounts an array of element counts, of which at most one can be {@code -1}
+@return a sequence layout where element layouts in the
+        {@linkplain #flatten() flattened projection} of this sequence layout
+        (see {@link #flatten()}) are re-arranged into one or more nested
         sequence layouts
-
-Throws:
-
-- `IllegalArgumentException`: if two or more element counts are set to `-1`, or if one or more element count is `<= 0` (but other than `-1`) or, if, after any required inference, multiplying the element counts does not yield the same element count as the flattened projection of this sequence layout
+@throws IllegalArgumentException if two or more element counts are set to {@code -1},
+        or if one or more element count is {@code <= 0} (but other than {@code -1}) or,
+        if, after any required inference, multiplying the element counts does not
+        yield the same element count as the flattened projection of this
+        sequence layout
 
 ## SequenceLayout.flatten()
 
@@ -99,15 +110,27 @@ SequenceLayout flatten()
 Returns a flattened sequence layout. The element layout of the returned
 sequence layout is the first non-sequence layout found by inspecting
 (recursively, if needed) the element layout of this sequence layout:
-
+{@snippet lang=java :
+MemoryLayout flatElementLayout(SequenceLayout sequenceLayout) {
+   return switch (sequenceLayout.elementLayout()) {
+       case SequenceLayout nestedSequenceLayout -> flatElementLayout(nestedSequenceLayout);
+       case MemoryLayout layout -> layout;
+   };
+}
+}
+<p>
 This transformation preserves the layout size; nested sequence layout in this
 sequence layout will be dropped and their element counts will be incorporated
 into that of the returned sequence layout. For instance, given a
 sequence layout of the kind:
-
-calling `seq.flatten()` will yield the following sequence layout:
-
-**Returns:** a sequence layout with the same size as this layout
+{@snippet lang=java :
+var seq = MemoryLayout.sequenceLayout(4, MemoryLayout.sequenceLayout(3, ValueLayout.JAVA_INT));
+}
+calling {@code seq.flatten()} will yield the following sequence layout:
+{@snippet lang=java :
+var flattenedSeq = MemoryLayout.sequenceLayout(12, ValueLayout.JAVA_INT);
+}
+@return a sequence layout with the same size as this layout
         (but, possibly, with different element count), whose
         element layout is not a sequence layout
 
@@ -117,7 +140,7 @@ calling `seq.flatten()` will yield the following sequence layout:
 SequenceLayout withName(String name)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
 ## SequenceLayout.withoutName()
 
@@ -125,7 +148,7 @@ SequenceLayout withName(String name)
 MemoryLayout withoutName()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
 ## SequenceLayout.withByteAlignment(long)
 
@@ -133,9 +156,7 @@ MemoryLayout withoutName()
 SequenceLayout withByteAlignment(long byteAlignment)
 ```
 
-(inherited documentation)
-
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
-- `IllegalArgumentException`: if `byteAlignment < elementLayout().byteAlignment()`
+{@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}
+@throws IllegalArgumentException if
+        {@code byteAlignment < elementLayout().byteAlignment()}

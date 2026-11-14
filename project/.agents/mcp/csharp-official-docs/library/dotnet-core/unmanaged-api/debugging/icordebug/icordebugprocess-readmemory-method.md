@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugProcess::ReadMemory Method"
 title: "ICorDebugProcess::ReadMemory Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess-readmemory-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugProcess.ReadMemory"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugProcess::ReadMemory"
+helpviewer_keywords:
+  - "ReadMemory method [.NET debugging]"
+  - "ICorDebugProcess::ReadMemory method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugProcess::ReadMemory Method
 
 Reads a specified area of memory for this process.
@@ -39,13 +48,13 @@ HRESULT ReadMemory(
 
 The `ReadMemory` method is primarily intended to be used by interop debugging to inspect memory regions that are being used by the unmanaged portion of the debuggee. This method can also be used to read common intermediate language (CIL) code and native JIT-compiled code.
 
-Any managed breakpoints will be removed from the data that is returned in the `buffer` parameter. No adjustments will be made for native breakpoints set by ICorDebugProcess2::SetUnmanagedBreakpoint.
+Any managed breakpoints will be removed from the data that is returned in the `buffer` parameter. No adjustments will be made for native breakpoints set by [ICorDebugProcess2::SetUnmanagedBreakpoint](icordebugprocess2-setunmanagedbreakpoint-method.md).
 
 No caching of process memory is performed.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

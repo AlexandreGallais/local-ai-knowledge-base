@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: Decimal and BigInteger floating-point conversions are correctly rounded"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/11/decimal-biginteger-floating-point-conversions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where conversions between Decimal and binary floating-point types, and conversions from BigInteger to binary floating-point types, produce correctly rounded results."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # Decimal and BigInteger floating-point conversions are correctly rounded
 
-Conversions between `System.Decimal` and binary floating-point types, and conversions from `System.Numerics.BigInteger` to binary floating-point types, now produce correctly rounded results. Previously, these conversions could truncate, round through intermediate values, or discard significant digits.
+Conversions between <xref:System.Decimal> and binary floating-point types, and conversions from <xref:System.Numerics.BigInteger> to binary floating-point types, now produce correctly rounded results. Previously, these conversions could truncate, round through intermediate values, or discard significant digits.
 
 ## Version introduced
 
@@ -103,13 +101,13 @@ If a conversion is evaluated as a compile-time constant, a compiler hosted by th
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
 The previous conversion algorithms lost information that the destination type could represent and sometimes selected a value other than the nearest representable result. This caused precision errors in both directions of `decimal` conversion and in conversions from `BigInteger`. The new algorithms follow the expected floating-point rule of computation of the conversion as if with exact intermediate precision, followed by a single rounding to the destination type.
 
-For more information, see dotnet/runtime#130565 and dotnet/runtime#130566.
+For more information, see [dotnet/runtime#130565](https://github.com/dotnet/runtime/pull/130565) and [dotnet/runtime#130566](https://github.com/dotnet/runtime/pull/130566).
 
 ## Recommended action
 
@@ -158,18 +156,18 @@ There's no compatibility switch to restore the previous conversion algorithms.
 
 ## Affected APIs
 
-- `System.Decimal.#ctor(System.Single)`
-- `System.Decimal.#ctor(System.Double)`
-- Explicit conversions from `System.Single` and `System.Double` to `System.Decimal`
-- Explicit conversions from `System.Decimal` to `System.Single` and `System.Double`
-- `System.Decimal.ToSingle(System.Decimal)`
-- `System.Decimal.ToDouble(System.Decimal)`
-- `System.Convert.ToDecimal(System.Single)`
-- `System.Convert.ToDecimal(System.Double)`
-- `System.Convert.ToSingle(System.Decimal)`
-- `System.Convert.ToDouble(System.Decimal)`
-- `System.Decimal.CreateChecked``1(``0)`, `System.Decimal.CreateSaturating``1(``0)`, and `System.Decimal.CreateTruncating``1(``0)` when they convert to or from `System.Single` or `System.Double`
-- Explicit conversion from `System.Decimal` to `System.Half`
-- Explicit conversion from `System.Decimal` to `System.Numerics.BFloat16`
-- Explicit conversions from `System.Numerics.BigInteger` to `System.Double`, `System.Single`, `System.Half`, and `System.Numerics.BFloat16`
-- Equivalent conversions performed through `System.IConvertible` or the generic math interfaces
+- <xref:System.Decimal.%23ctor(System.Single)?displayProperty=nameWithType>
+- <xref:System.Decimal.%23ctor(System.Double)?displayProperty=nameWithType>
+- Explicit conversions from <xref:System.Single> and <xref:System.Double> to <xref:System.Decimal>
+- Explicit conversions from <xref:System.Decimal> to <xref:System.Single> and <xref:System.Double>
+- <xref:System.Decimal.ToSingle(System.Decimal)?displayProperty=nameWithType>
+- <xref:System.Decimal.ToDouble(System.Decimal)?displayProperty=nameWithType>
+- <xref:System.Convert.ToDecimal(System.Single)?displayProperty=nameWithType>
+- <xref:System.Convert.ToDecimal(System.Double)?displayProperty=nameWithType>
+- <xref:System.Convert.ToSingle(System.Decimal)?displayProperty=nameWithType>
+- <xref:System.Convert.ToDouble(System.Decimal)?displayProperty=nameWithType>
+- <xref:System.Decimal.CreateChecked``1(``0)?displayProperty=nameWithType>, <xref:System.Decimal.CreateSaturating``1(``0)?displayProperty=nameWithType>, and <xref:System.Decimal.CreateTruncating``1(``0)?displayProperty=nameWithType> when they convert to or from <xref:System.Single> or <xref:System.Double>
+- Explicit conversion from <xref:System.Decimal> to <xref:System.Half>
+- Explicit conversion from <xref:System.Decimal> to <xref:System.Numerics.BFloat16>
+- Explicit conversions from <xref:System.Numerics.BigInteger> to <xref:System.Double>, <xref:System.Single>, <xref:System.Half>, and <xref:System.Numerics.BFloat16>
+- Equivalent conversions performed through <xref:System.IConvertible> or the generic math interfaces

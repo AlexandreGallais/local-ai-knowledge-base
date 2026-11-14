@@ -1,12 +1,18 @@
 ---
+description: "Learn more about: OSINFO Structure"
 title: "OSINFO Structure"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/structures/osinfo-structure.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "OSINFO"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "OSINFO"
+topic_type:
+  - "apiref"
 ---
-
 # OSINFO Structure
 
 Contains details about the operating system for an assembly or module.
@@ -25,7 +31,7 @@ typedef struct {
 
 | Member             | Description                                                                  |
 |--------------------|------------------------------------------------------------------------------|
-| `dwOSPlatformId`   | One of the identifier values defined by the Microsoft Windows platform function `GetVersionEx`. The following values are supported: - VER_PLATFORM_WIN32s, or 0x0000, to specify Microsoft Windows 3.1.- VER_PLATFORM_WIN32_WINDOWS, or 0x0001, to specify Windows 95, Windows 98, or operating systems descended from them.- VER_PLATFORM_WIN32_NT, or 0x0002, to specify Windows NT or operating systems descended from it. |
+| `dwOSPlatformId`   | One of the identifier values defined by the Microsoft Windows platform function `GetVersionEx`. The following values are supported:<br /><br /> - VER_PLATFORM_WIN32s, or 0x0000, to specify Microsoft Windows 3.1.<br />- VER_PLATFORM_WIN32_WINDOWS, or 0x0001, to specify Windows 95, Windows 98, or operating systems descended from them.<br />- VER_PLATFORM_WIN32_NT, or 0x0002, to specify Windows NT or operating systems descended from it. |
 | `dwOSMajorVersion` | The operating system major version, or a NULL value to indicate any version. |
 | `dwOSMinorVersion` | The operating system minor version, or a NULL value to indicate any version. |
 
@@ -35,10 +41,10 @@ typedef struct {
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
 ## See also
 
-- IMetaDataAssemblyEmit Interface
+- [IMetaDataAssemblyEmit Interface](../interfaces/imetadataassemblyemit-interface.md)

@@ -1,21 +1,15 @@
----
-title: "require-frontmatter-fields"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/require-frontmatter-fields.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # require-frontmatter-fields
 
 📝 Require configured YAML frontmatter fields.
 
 🚫 Disabled by default.
 
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
 Require specified keys in a top-level YAML mapping. This is useful for Markdown collections such as blog posts or documentation pages that require consistent metadata.
 
-The rule only checks YAML frontmatter that `@eslint/markdown` has parsed. Configure the Markdown language and enable YAML frontmatter:
+The rule only checks YAML frontmatter that [`@eslint/markdown`](https://github.com/eslint/markdown#enabling-front-matter-in-both-commonmark-and-gfm) has parsed. Configure the Markdown language and enable YAML frontmatter:
 
 ```js
 import markdown from '@eslint/markdown';

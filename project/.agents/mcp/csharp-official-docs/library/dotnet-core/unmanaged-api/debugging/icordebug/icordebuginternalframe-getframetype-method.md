@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugInternalFrame::GetFrameType Method"
 title: "ICorDebugInternalFrame::GetFrameType Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebuginternalframe-getframetype-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugInternalFrame.GetFrameType"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugInternalFrame::GetFrameType"
+helpviewer_keywords:
+  - "GetFrameType method [.NET debugging]"
+  - "ICorDebugInternalFrame::GetFrameType method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugInternalFrame::GetFrameType Method
 
 Gets the type of this internal frame.
@@ -30,7 +39,7 @@ The internal frame type will never be STUBFRAME_NONE. Debuggers should gracefull
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

@@ -1,15 +1,11 @@
 ---
-title: "no-inner-declarations"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-inner-declarations.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-inner-declarations
+rule_type: problem
 ---
 
-# no-inner-declarations
 
-In JavaScript, prior to ES6, a function declaration is only allowed in the first level of a program or the body of another function, though parsers sometimes erroneously accept them elsewhere. This only applies to function declarations; named or anonymous function expressions can occur anywhere an expression is permitted.
+
+In JavaScript, prior to ES6, a function declaration is only allowed in the first level of a program or the body of another function, though parsers sometimes [erroneously accept them elsewhere](https://code.google.com/p/esprima/issues/detail?id=422). This only applies to function declarations; named or anonymous function expressions can occur anywhere an expression is permitted.
 
 ```js
 // Good
@@ -34,7 +30,7 @@ function anotherThing() {
 }
 ```
 
-In ES6, block-level functions (functions declared inside a block) are limited to the scope of the block they are declared in and outside of the block scope they can't be accessed and called, but only when the code is in strict mode (code with `"use strict"` tag or ESM modules). In non-strict mode, they can be accessed and called outside of the block scope.
+In ES6, [block-level functions](https://leanpub.com/understandinges6/read#leanpub-auto-block-level-functions) (functions declared inside a block) are limited to the scope of the block they are declared in and outside of the block scope they can't be accessed and called, but only when the code is in strict mode (code with `"use strict"` tag or ESM modules). In non-strict mode, they can be accessed and called outside of the block scope.
 
 ```js
 "use strict";
@@ -48,7 +44,7 @@ if (test) {
 doSomething(); // error
 ```
 
-A variable declaration is permitted anywhere a statement can go, even nested deeply inside other blocks. This is often undesirable due to variable hoisting, and moving declarations to the root of the program or function body can increase clarity. Note that block bindings (`let`, `const`) are not hoisted and therefore they are not affected by this rule.
+A variable declaration is permitted anywhere a statement can go, even nested deeply inside other blocks. This is often undesirable due to variable hoisting, and moving declarations to the root of the program or function body can increase clarity. Note that [block bindings](https://leanpub.com/understandinges6/read#leanpub-auto-block-bindings) (`let`, `const`) are not hoisted and therefore they are not affected by this rule.
 
 ```js
 // Good
@@ -91,7 +87,7 @@ This rule has a string and an object option:
 
 Examples of **incorrect** code for this rule with the default `"functions"` option:
 
-**Incorrect:**
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint no-inner-declarations: "error"*/
@@ -111,9 +107,11 @@ function doSomethingElse() {
 if (foo) function f(){}
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"functions"` option:
 
-**Correct:**
+::: correct { "sourceType": "script" }
 
 ```js
 /*eslint no-inner-declarations: "error"*/
@@ -150,11 +148,13 @@ if (test) {
 if (foo) var a;
 ```
 
+:::
+
 ### both
 
 Examples of **incorrect** code for this rule with the `"both"` option:
 
-**Incorrect:**
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint no-inner-declarations: ["error", "both"]*/
@@ -182,9 +182,11 @@ class C {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"both"` option:
 
-**Correct:**
+::: correct { "sourceType": "script" }
 
 ```js
 /*eslint no-inner-declarations: ["error", "both"]*/
@@ -206,11 +208,13 @@ class C {
 }
 ```
 
+:::
+
 ### blockScopedFunctions
 
 Example of **incorrect** code for this rule with `{ blockScopedFunctions: "disallow" }` option with `ecmaVersion: 2015`:
 
-**Incorrect:**
+::: incorrect { "sourceType": "script", "ecmaVersion": 2015 }
 
 ```js
 /*eslint no-inner-declarations: ["error", "functions", { blockScopedFunctions: "disallow" }]*/
@@ -238,9 +242,11 @@ function foo() {
 }
 ```
 
+:::
+
 Example of **correct** code for this rule with `{ blockScopedFunctions: "disallow" }` option with `ecmaVersion: 2015`:
 
-**Correct:**
+::: correct { "sourceType": "script", "ecmaVersion": 2015 }
 
 ```js
 /*eslint no-inner-declarations: ["error", "functions", { blockScopedFunctions: "disallow" }]*/
@@ -252,9 +258,11 @@ function doSomething() {
 }
 ```
 
+:::
+
 Example of **correct** code for this rule with `{ blockScopedFunctions: "allow" }` option with `ecmaVersion: 2015`:
 
-**Correct:**
+::: correct { "sourceType": "script", "ecmaVersion": 2015 }
 
 ```js
 /*eslint no-inner-declarations: ["error", "functions", { blockScopedFunctions: "allow" }]*/
@@ -282,9 +290,11 @@ function foo() {
 }
 ```
 
+:::
+
 `ESM modules` and both `class` declarations and expressions are always in strict mode.
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-inner-declarations: ["error", "functions", { blockScopedFunctions: "allow" }]*/
@@ -316,10 +326,12 @@ const C = class {
 }
 ```
 
+:::
+
 ## When Not To Use It
 
 By default, this rule disallows inner function declarations only in contexts where their behavior is unspecified and thus inconsistent (pre-ES6 environments) or legacy semantics apply (non-strict mode code). If your code targets pre-ES6 environments or is not in strict mode, you should enable this rule to prevent unexpected behavior.
 
 In ES6+ environments, in strict mode code, the behavior of inner function declarations is well-defined and consistent - they are always block-scoped. If your code targets only ES6+ environments and is in strict mode (ES modules, or code with `"use strict"` directives) then there is no need to enable this rule unless you want to disallow inner functions as a stylistic choice, in which case you should enable this rule with the option `blockScopedFunctions: "disallow"`.
 
-Disable checking variable declarations when using block-scoped-var or if declaring variables in nested blocks is acceptable despite hoisting.
+Disable checking variable declarations when using [block-scoped-var](block-scoped-var) or if declaring variables in nested blocks is acceptable despite hoisting.

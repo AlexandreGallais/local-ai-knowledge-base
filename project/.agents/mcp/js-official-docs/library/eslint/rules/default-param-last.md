@@ -1,13 +1,7 @@
 ---
-title: "default-param-last"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/default-param-last.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: default-param-last
+rule_type: suggestion
 ---
-
-# default-param-last
 
 Putting default parameter at last allows function calls to omit optional tail arguments.
 
@@ -27,7 +21,7 @@ This rule enforces default parameters to be the last of parameters.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint default-param-last: ["error"] */
@@ -37,9 +31,11 @@ function f(a = 0, b) {}
 function g(a, b = 0, c) {}
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint default-param-last: ["error"] */
@@ -49,11 +45,13 @@ function f(a, b = 0) {}
 function g(a, b = 0, c = 0) {}
 ```
 
+:::
+
 This rule additionally supports TypeScript type syntax.
 
 Examples of **incorrect** TypeScript code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /* eslint default-param-last: ["error"] */
@@ -61,9 +59,11 @@ Examples of **incorrect** TypeScript code for this rule:
 function h(a = 0, b: number) {}
 ```
 
+:::
+
 Examples of **correct** TypeScript code for this rule:
 
-**Correct:**
+::: correct
 
 ```ts
 /* eslint default-param-last: ["error"] */
@@ -71,6 +71,9 @@ Examples of **correct** TypeScript code for this rule:
 function h(a = 0, b?: number) {}
 ```
 
+:::
+
 ## Options
 
 This rule has no options.
+

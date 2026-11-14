@@ -1,39 +1,24 @@
 ---
+description: "The `remove` contextual keyword declares an event accessor that removes a handler from that event. - C# Reference"
 title: "The `remove` contextual keyword"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/keywords/remove.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 01/22/2026
+f1_keywords: 
+  - "remove_CSharpKeyword"
+helpviewer_keywords: 
+  - "remove event accessor [C#]"
 ---
-
 # The `remove` contextual keyword (C# Reference)
 
-Use the `remove` contextual keyword to define a custom event accessor that's invoked when client code unsubscribes from your event. If you supply a custom `remove` accessor, you must also supply an add accessor.
+Use the `remove` contextual keyword to define a custom event accessor that's invoked when client code unsubscribes from your [event](event.md). If you supply a custom `remove` accessor, you must also supply an [add](add.md) accessor.
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
+The following example shows an event with custom [add](add.md) and `remove` accessors. For the full example, see [How to implement interface events](../../programming-guide/events/how-to-implement-interface-events.md).
 
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+:::code language="csharp" source="./snippets/events.cs" id="AddHandler":::
 
-The following example shows an event with custom add and `remove` accessors. For the full example, see How to implement interface events.
-
-```csharp
-class Events : IDrawingObject
-{
-    event EventHandler PreDrawEvent;
-
-    event EventHandler IDrawingObject.OnDraw
-    {
-        add => PreDrawEvent += value;
-        remove => PreDrawEvent -= value;
-    }
-}
-```
-You don't typically need to provide your own custom event accessors. The automatically generated accessors when you declare an event are sufficient for most scenarios. Starting with C# 14, you can declare `partial` events. The implementing declaration of a partial event must declare the `add` and `remove` handlers.
+You don't typically need to provide your own custom event accessors. The automatically generated accessors when you declare an event are sufficient for most scenarios. Starting with C# 14, you can declare [`partial`](./partial-member.md) events. The implementing declaration of a partial event must declare the `add` and `remove` handlers.
 
 ## See also
 
-- Events
+- [Events](../../programming-guide/events/index.md)

@@ -1,12 +1,17 @@
 ---
+description: "Learn more about: ICorProfilerInfo10::IsFrozenObject Method"
 title: "ICorProfilerInfo10::IsFrozenObject"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/profiling/icorprofilerinfo10-isfrozenobject-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "08/06/2019"
+dev_langs:
+  - "cpp"
+api_name:
+  - "ICorProfilerInfo10.IsFrozenObject"
+api_location:
+  - "mscorwks.dll"
+api_type:
+  - "COM"
+author: "davmason"
 ---
-
 # ICorProfilerInfo10::IsFrozenObject method
 
 Given an ObjectID, determines whether the object is in a read-only segment.
@@ -28,7 +33,7 @@ HRESULT IsFrozenObject( [in]  ObjectID objectId,
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** CorProf.idl, CorProf.h
 
@@ -38,4 +43,4 @@ HRESULT IsFrozenObject( [in]  ObjectID objectId,
 
 ## See also
 
-- ICorProfilerInfo10 Interface
+- [ICorProfilerInfo10 Interface](icorprofilerinfo10-interface.md)

@@ -1,13 +1,11 @@
 ---
-title: "no-case-declarations"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-case-declarations.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-case-declarations
+rule_type: suggestion
+related_rules:
+- no-fallthrough
 ---
 
-# no-case-declarations
+
 
 This rule disallows lexical declarations (`let`, `const`, `function` and `class`)
 in `case`/`default` clauses. The reason is that the lexical declaration is visible
@@ -23,7 +21,7 @@ This rule aims to prevent access to uninitialized lexical bindings as well as ac
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-case-declarations: "error"*/
@@ -43,9 +41,11 @@ switch (foo) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-case-declarations: "error"*/
@@ -76,6 +76,8 @@ switch (foo) {
     }
 }
 ```
+
+:::
 
 ## Options
 

@@ -1,292 +1,76 @@
 ---
 title: "Comparison operators - order items using the greater than and less than operators"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/operators/comparison-operators.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "C# comparison operators check the order of values. The operators `>`, `<`, `>=`, `<=` compare the order of values. They determine if a value is greater than or less than another value."
+ms.date: 01/20/2026
+author: pkulikov
+f1_keywords:
+  - "<_CSharpKeyword"
+  - ">_CSharpKeyword"
+  - "<=_CSharpKeyword"
+  - ">=_CSharpKeyword"
+helpviewer_keywords:
+  - "comparison operators [C#]"
+  - "relational operators [C#]"
+  - "less than operator [C#]"
+  - "< operator [C#]"
+  - "greater than operator [C#]"
+  - "> operator [C#]"
+  - "less than or equal to operator [C#]"
+  - "<= operator [C#]"
+  - "greater than or equal to operator [C#]"
+  - ">= operator [C#]"
 ---
-
 # Comparison operators (C# reference)
 
-The `<` (less than), `>` (greater than), `<=` (less than or equal), and `>=` (greater than or equal) comparison, also known as relational, operators compare their operands. All integral and floating-point numeric types support those operators.
+The [`<` (less than)](#less-than-operator-), [`>` (greater than)](#greater-than-operator-), [`<=` (less than or equal)](#less-than-or-equal-operator-), and [`>=` (greater than or equal)](#greater-than-or-equal-operator-) comparison, also known as relational, operators compare their operands. All [integral](../builtin-types/integral-numeric-types.md) and [floating-point](../builtin-types/floating-point-numeric-types.md) numeric types support those operators.
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
+> [!NOTE]
+> For the `==`, `<`, `>`, `<=`, and `>=` operators, if any of the operands isn't a number (<xref:System.Double.NaN?displayProperty=nameWithType> or <xref:System.Single.NaN?displayProperty=nameWithType>), the result of operation is `false`. This behavior means that the `NaN` value is neither greater than, less than, nor equal to any other `double` (or `float`) value, including `NaN`. For more information and examples, see the <xref:System.Double.NaN?displayProperty=nameWithType> or <xref:System.Single.NaN?displayProperty=nameWithType> reference article.
 
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+The [char](../builtin-types/char.md) type also supports comparison operators. When you use `char` operands, the corresponding character codes are compared.
 
-> **Note:**
-> For the `==`, `<`, `>`, `<=`, and `>=` operators, if any of the operands isn't a number (`System.Double.NaN` or `System.Single.NaN`), the result of operation is `false`. This behavior means that the `NaN` value is neither greater than, less than, nor equal to any other `double` (or `float`) value, including `NaN`. For more information and examples, see the `System.Double.NaN` or `System.Single.NaN` reference article.
+Enumeration types also support comparison operators. For operands of the same [enum](../builtin-types/enum.md) type, the corresponding values of the underlying integral type are compared.
 
-The char type also supports comparison operators. When you use `char` operands, the corresponding character codes are compared.
-
-Enumeration types also support comparison operators. For operands of the same enum type, the corresponding values of the underlying integral type are compared.
-
-The `==` and `!=` operators check if their operands are equal or not.
+The [`==` and `!=` operators](equality-operators.md) check if their operands are equal or not.
 
 ## Less than operator \<
 
 The `<` operator returns `true` if its left-hand operand is less than its right-hand operand, `false` otherwise:
 
-```csharp
-﻿namespace operators;
+:::code language="csharp" source="snippets/shared/ComparisonOperators.cs" id="Less":::
 
-public static class ComparisonOperators
-{
-    public static void Examples()
-    {
-        Console.WriteLine("--- >");
-        Greater();
-        Console.WriteLine("--- <");
-        Less();
-        Console.WriteLine("--- >=");
-        GreaterOrEqual();
-        Console.WriteLine("--- <=");
-        LessOrEqual();
-    }
-
-    private static void Greater()
-    {
-        Console.WriteLine(7.0 > 5.1);   // output: True
-        Console.WriteLine(5.1 > 5.1);   // output: False
-        Console.WriteLine(0.0 > 5.1);   // output: False
-
-        Console.WriteLine(double.NaN > 5.1);   // output: False
-        Console.WriteLine(double.NaN <= 5.1);  // output: False
-    }
-
-    private static void Less()
-    {
-        Console.WriteLine(7.0 < 5.1);   // output: False
-        Console.WriteLine(5.1 < 5.1);   // output: False
-        Console.WriteLine(0.0 < 5.1);   // output: True
-
-        Console.WriteLine(double.NaN < 5.1);   // output: False
-        Console.WriteLine(double.NaN >= 5.1);  // output: False
-    }
-
-    private static void GreaterOrEqual()
-    {
-        Console.WriteLine(7.0 >= 5.1);   // output: True
-        Console.WriteLine(5.1 >= 5.1);   // output: True
-        Console.WriteLine(0.0 >= 5.1);   // output: False
-
-        Console.WriteLine(double.NaN < 5.1);   // output: False
-        Console.WriteLine(double.NaN >= 5.1);  // output: False
-    }
-
-    private static void LessOrEqual()
-    {
-        Console.WriteLine(7.0 <= 5.1);   // output: False
-        Console.WriteLine(5.1 <= 5.1);   // output: True
-        Console.WriteLine(0.0 <= 5.1);   // output: True
-
-        Console.WriteLine(double.NaN > 5.1);   // output: False
-        Console.WriteLine(double.NaN <= 5.1);  // output: False
-    }
-}
-```
 ## Greater than operator >
 
 The `>` operator returns `true` if its left-hand operand is greater than its right-hand operand, `false` otherwise:
 
-```csharp
-﻿namespace operators;
+:::code language="csharp" source="snippets/shared/ComparisonOperators.cs" id="Greater":::
 
-public static class ComparisonOperators
-{
-    public static void Examples()
-    {
-        Console.WriteLine("--- >");
-        Greater();
-        Console.WriteLine("--- <");
-        Less();
-        Console.WriteLine("--- >=");
-        GreaterOrEqual();
-        Console.WriteLine("--- <=");
-        LessOrEqual();
-    }
-
-    private static void Greater()
-    {
-        Console.WriteLine(7.0 > 5.1);   // output: True
-        Console.WriteLine(5.1 > 5.1);   // output: False
-        Console.WriteLine(0.0 > 5.1);   // output: False
-
-        Console.WriteLine(double.NaN > 5.1);   // output: False
-        Console.WriteLine(double.NaN <= 5.1);  // output: False
-    }
-
-    private static void Less()
-    {
-        Console.WriteLine(7.0 < 5.1);   // output: False
-        Console.WriteLine(5.1 < 5.1);   // output: False
-        Console.WriteLine(0.0 < 5.1);   // output: True
-
-        Console.WriteLine(double.NaN < 5.1);   // output: False
-        Console.WriteLine(double.NaN >= 5.1);  // output: False
-    }
-
-    private static void GreaterOrEqual()
-    {
-        Console.WriteLine(7.0 >= 5.1);   // output: True
-        Console.WriteLine(5.1 >= 5.1);   // output: True
-        Console.WriteLine(0.0 >= 5.1);   // output: False
-
-        Console.WriteLine(double.NaN < 5.1);   // output: False
-        Console.WriteLine(double.NaN >= 5.1);  // output: False
-    }
-
-    private static void LessOrEqual()
-    {
-        Console.WriteLine(7.0 <= 5.1);   // output: False
-        Console.WriteLine(5.1 <= 5.1);   // output: True
-        Console.WriteLine(0.0 <= 5.1);   // output: True
-
-        Console.WriteLine(double.NaN > 5.1);   // output: False
-        Console.WriteLine(double.NaN <= 5.1);  // output: False
-    }
-}
-```
 ## Less than or equal operator `<=`
 
 The `<=` operator returns `true` if its left-hand operand is less than or equal to its right-hand operand. Otherwise, it returns `false`:
 
-```csharp
-﻿namespace operators;
+:::code language="csharp" source="snippets/shared/ComparisonOperators.cs" id="LessOrEqual":::
 
-public static class ComparisonOperators
-{
-    public static void Examples()
-    {
-        Console.WriteLine("--- >");
-        Greater();
-        Console.WriteLine("--- <");
-        Less();
-        Console.WriteLine("--- >=");
-        GreaterOrEqual();
-        Console.WriteLine("--- <=");
-        LessOrEqual();
-    }
-
-    private static void Greater()
-    {
-        Console.WriteLine(7.0 > 5.1);   // output: True
-        Console.WriteLine(5.1 > 5.1);   // output: False
-        Console.WriteLine(0.0 > 5.1);   // output: False
-
-        Console.WriteLine(double.NaN > 5.1);   // output: False
-        Console.WriteLine(double.NaN <= 5.1);  // output: False
-    }
-
-    private static void Less()
-    {
-        Console.WriteLine(7.0 < 5.1);   // output: False
-        Console.WriteLine(5.1 < 5.1);   // output: False
-        Console.WriteLine(0.0 < 5.1);   // output: True
-
-        Console.WriteLine(double.NaN < 5.1);   // output: False
-        Console.WriteLine(double.NaN >= 5.1);  // output: False
-    }
-
-    private static void GreaterOrEqual()
-    {
-        Console.WriteLine(7.0 >= 5.1);   // output: True
-        Console.WriteLine(5.1 >= 5.1);   // output: True
-        Console.WriteLine(0.0 >= 5.1);   // output: False
-
-        Console.WriteLine(double.NaN < 5.1);   // output: False
-        Console.WriteLine(double.NaN >= 5.1);  // output: False
-    }
-
-    private static void LessOrEqual()
-    {
-        Console.WriteLine(7.0 <= 5.1);   // output: False
-        Console.WriteLine(5.1 <= 5.1);   // output: True
-        Console.WriteLine(0.0 <= 5.1);   // output: True
-
-        Console.WriteLine(double.NaN > 5.1);   // output: False
-        Console.WriteLine(double.NaN <= 5.1);  // output: False
-    }
-}
-```
 ## Greater than or equal operator `>=`
 
 The `>=` operator returns `true` if its left-hand operand is greater than or equal to its right-hand operand. Otherwise, it returns `false`:
 
-```csharp
-﻿namespace operators;
+:::code language="csharp" source="snippets/shared/ComparisonOperators.cs" id="GreaterOrEqual":::
 
-public static class ComparisonOperators
-{
-    public static void Examples()
-    {
-        Console.WriteLine("--- >");
-        Greater();
-        Console.WriteLine("--- <");
-        Less();
-        Console.WriteLine("--- >=");
-        GreaterOrEqual();
-        Console.WriteLine("--- <=");
-        LessOrEqual();
-    }
-
-    private static void Greater()
-    {
-        Console.WriteLine(7.0 > 5.1);   // output: True
-        Console.WriteLine(5.1 > 5.1);   // output: False
-        Console.WriteLine(0.0 > 5.1);   // output: False
-
-        Console.WriteLine(double.NaN > 5.1);   // output: False
-        Console.WriteLine(double.NaN <= 5.1);  // output: False
-    }
-
-    private static void Less()
-    {
-        Console.WriteLine(7.0 < 5.1);   // output: False
-        Console.WriteLine(5.1 < 5.1);   // output: False
-        Console.WriteLine(0.0 < 5.1);   // output: True
-
-        Console.WriteLine(double.NaN < 5.1);   // output: False
-        Console.WriteLine(double.NaN >= 5.1);  // output: False
-    }
-
-    private static void GreaterOrEqual()
-    {
-        Console.WriteLine(7.0 >= 5.1);   // output: True
-        Console.WriteLine(5.1 >= 5.1);   // output: True
-        Console.WriteLine(0.0 >= 5.1);   // output: False
-
-        Console.WriteLine(double.NaN < 5.1);   // output: False
-        Console.WriteLine(double.NaN >= 5.1);  // output: False
-    }
-
-    private static void LessOrEqual()
-    {
-        Console.WriteLine(7.0 <= 5.1);   // output: False
-        Console.WriteLine(5.1 <= 5.1);   // output: True
-        Console.WriteLine(0.0 <= 5.1);   // output: True
-
-        Console.WriteLine(double.NaN > 5.1);   // output: False
-        Console.WriteLine(double.NaN <= 5.1);  // output: False
-    }
-}
-```
 ## Operator overloadability
 
-You can overload the `<`, `>`, `<=`, and `>=` operators in a user-defined type.
+You can [overload](operator-overloading.md) the `<`, `>`, `<=`, and `>=` operators in a user-defined type.
 
 If you overload one of the `<` or `>` operators, you must overload both `<` and `>`. If you overload one of the `<=` or `>=` operators, you must overload both `<=` and `>=`.
 
 ## C# language specification
 
-For more information, see the Relational and type-testing operators section of the C# language specification.
+For more information, see the [Relational and type-testing operators](~/_csharpstandard/standard/expressions.md#1215-relational-and-type-testing-operators) section of the [C# language specification](~/_csharpstandard/standard/README.md).
 
 ## See also
 
-- C# operators and expressions
-- `System.IComparable`1`
-- Equality operators
+- [C# operators and expressions](index.md)
+- <xref:System.IComparable`1?displayProperty=nameWithType>
+- [Equality operators](equality-operators.md)

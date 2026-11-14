@@ -1,12 +1,20 @@
 ---
 title: "MSTEST0084: Platform compatibility attributes should be consistent with '[OSCondition]'"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0084.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0084: Platform compatibility attributes should be consistent with '[OSCondition]'"
+ms.date: 10/06/2026
+f1_keywords:
+- MSTEST0084
+- OSPlatformAttributesShouldBeConsistentAnalyzer
+helpviewer_keywords:
+- OSPlatformAttributesShouldBeConsistentAnalyzer
+- MSTEST0084
+author: evangelink
+ms.author: amauryleve
+ai-usage: ai-assisted
+dev_langs:
+- CSharp
+- VB
 ---
-
 # MSTEST0084: Platform compatibility attributes should be consistent with '\[OSCondition]'
 
 | Property | Value |
@@ -22,7 +30,7 @@ license: "CC-BY-4.0"
 
 ## Cause
 
-An MSTest class or method uses `System.Runtime.Versioning.SupportedOSPlatformAttribute` or `System.Runtime.Versioning.UnsupportedOSPlatformAttribute`, but its MSTest `Microsoft.VisualStudio.TestTools.UnitTesting.OSConditionAttribute` doesn't express a compatible operating-system condition.
+An MSTest class or method uses <xref:System.Runtime.Versioning.SupportedOSPlatformAttribute> or <xref:System.Runtime.Versioning.UnsupportedOSPlatformAttribute>, but its MSTest <xref:Microsoft.VisualStudio.TestTools.UnitTesting.OSConditionAttribute> doesn't express a compatible operating-system condition.
 
 ## Rule description
 
@@ -49,7 +57,7 @@ Keep the platform compatibility attribute for API analysis, and add or update `[
 public void UsesWindowsApi() { }
 ```
 
-A C# code fix adds or updates `[OSCondition]` when the analyzer can determine a compatible condition. The analyzer reports a diagnostic without a fix when, for example, a method's class-level condition conflicts with its platform attributes, the platform isn't represented by `OperatingSystems`, or the platform attributes mix supported and unsupported restrictions. Resolve those conflicts manually. Visual Basic <example-value> the diagnostic but doesn't provide an automatic fix.
+A C# code fix adds or updates `[OSCondition]` when the analyzer can determine a compatible condition. The analyzer reports a diagnostic without a fix when, for example, a method's class-level condition conflicts with its platform attributes, the platform isn't represented by `OperatingSystems`, or the platform attributes mix supported and unsupported restrictions. Resolve those conflicts manually. Visual Basic reports the diagnostic but doesn't provide an automatic fix.
 
 ## When to suppress warnings
 
@@ -63,16 +71,16 @@ Suppress the rule when another mechanism guarantees that the test can't run on a
 #pragma warning restore MSTEST0084
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0084.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).
 
 ## See also
 
-- OSConditionAttribute
-- MSTEST0061: Use OSCondition attribute instead of runtime check
+- [OSConditionAttribute](../unit-testing-mstest-writing-tests-controlling-execution.md#osconditionattribute)
+- [MSTEST0061: Use OSCondition attribute instead of runtime check](mstest0061.md)

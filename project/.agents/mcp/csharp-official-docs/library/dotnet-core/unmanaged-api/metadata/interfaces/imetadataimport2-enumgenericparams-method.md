@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataImport2::EnumGenericParams Method"
 title: "IMetaDataImport2::EnumGenericParams Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport2-enumgenericparams-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport2.EnumGenericParams"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport2::EnumGenericParams"
+  - "IMetaDataImport2::EnumGenericParams method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport2::EnumGenericParams Method
 
 Gets an enumerator for an array of generic parameter tokens associated with the specified TypeDef or MethodDef token.
@@ -49,7 +56,7 @@ HRESULT EnumGenericParams (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -59,5 +66,5 @@ HRESULT EnumGenericParams (
 
 ## See also
 
-- IMetaDataImport2 Interface
-- IMetaDataImport Interface
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)
+- [IMetaDataImport Interface](imetadataimport-interface.md)

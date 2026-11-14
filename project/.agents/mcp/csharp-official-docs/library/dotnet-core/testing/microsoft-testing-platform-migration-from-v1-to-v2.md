@@ -1,10 +1,9 @@
 ---
-title: "Migrating from Microsoft.Testing.Platform (MTP) v1 to v2"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/microsoft-testing-platform-migration-from-v1-to-v2.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Migrating from Microsoft.Testing.Platform (MTP) v1 to v2
+description: Learn how to migrate to MTP v2 and understand the key changes.
+author: Youssef1313
+ms.author: ygerges
+ms.date: 10/08/2025
 ---
 
 # Migrate from Microsoft.Testing.Platform (MTP) v1 to v2
@@ -33,8 +32,8 @@ This breaking change doesn't affect typical users of test frameworks. It only af
 
 ### API signature changes
 
-- A `CancellationToken` parameter was added to `Microsoft.Testing.Platform.OutputDevice.IOutputDevice.DisplayAsync(Microsoft.Testing.Platform.Extensions.OutputDevice.IOutputDeviceDataProducer,Microsoft.Testing.Platform.OutputDevice.IOutputDeviceData)`.
-- Methods in `Microsoft.Testing.Platform.Extensions.TestHost.ITestSessionLifetimeHandler` interface are changed to have an `ITestSessionContext` parameter instead of both `Microsoft.Testing.Platform.TestHost.SessionUid` and `System.Threading.CancellationToken` parameters.
+- A `CancellationToken` parameter was added to <xref:Microsoft.Testing.Platform.OutputDevice.IOutputDevice.DisplayAsync(Microsoft.Testing.Platform.Extensions.OutputDevice.IOutputDeviceDataProducer,Microsoft.Testing.Platform.OutputDevice.IOutputDeviceData)?displayProperty=nameWithType>.
+- Methods in <xref:Microsoft.Testing.Platform.Extensions.TestHost.ITestSessionLifetimeHandler> interface are changed to have an `ITestSessionContext` parameter instead of both <xref:Microsoft.Testing.Platform.TestHost.SessionUid> and <xref:System.Threading.CancellationToken> parameters.
 - `IDataConsumer` is moved from `Microsoft.Testing.Platform.Extensions.TestHost` namespace to `Microsoft.Testing.Platform.Extensions`.
 
 This breaking change doesn't affect typical users of test frameworks. It only affects test framework authors and extension authors.

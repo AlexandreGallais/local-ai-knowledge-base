@@ -1,12 +1,16 @@
 ---
 title: "MSTEST0040: Do not assert inside 'async void' contexts"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0040.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0040: Do not assert inside 'async void' methods, local functions, or lambdas because they may not fail the test"
+ms.date: 01/17/2025
+f1_keywords:
+- MSTEST0040
+- AvoidUsingAssertsInAsyncVoidContextAnalyzer
+helpviewer_keywords:
+- AvoidUsingAssertsInAsyncVoidContextAnalyzer
+- MSTEST0040
+author: Youssef1313
+ms.author: ygerges
 ---
-
 # MSTEST0040: Do not assert inside 'async void' contexts
 
 | Property                            | Value                                                                  |

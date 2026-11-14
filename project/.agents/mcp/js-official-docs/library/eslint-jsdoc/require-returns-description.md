@@ -1,29 +1,27 @@
----
-title: "require-returns-description"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/require-returns-description.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-require-returns-description"></a>
+<a name="require-returns-description"></a>
+# <code>require-returns-description</code>
 
-# `require-returns-description`
+* [Options](#user-content-require-returns-description-options)
+    * [`contexts`](#user-content-require-returns-description-options-contexts)
+* [Context and settings](#user-content-require-returns-description-context-and-settings)
+* [Failing examples](#user-content-require-returns-description-failing-examples)
+* [Passing examples](#user-content-require-returns-description-passing-examples)
 
-* Options
-    * `contexts`
-* Context and settings
-* Failing examples
-* Passing examples
 
 Requires that the `@returns` tag has a `description` value. The error
 will not be reported if the return value is `void` or `undefined`
 or if it is `Promise<void>` or `Promise<undefined>`.
 
+<a name="user-content-require-returns-description-options"></a>
+<a name="require-returns-description-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `contexts`
+<a name="user-content-require-returns-description-options-contexts"></a>
+<a name="require-returns-description-options-contexts"></a>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
 optional `context` and `comment` properties) where you wish the rule to be applied.
@@ -37,9 +35,12 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
-See the "AST and Selectors"
+See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
 section of our Advanced docs for more on the expected format.
 
+
+<a name="user-content-require-returns-description-context-and-settings"></a>
+<a name="require-returns-description-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -50,6 +51,8 @@ section of our Advanced docs for more on the expected format.
 |Recommended|true|
 |Options|`contexts`|
 
+<a name="user-content-require-returns-description-failing-examples"></a>
+<a name="require-returns-description-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -113,6 +116,10 @@ function quux () {
 // Message: Unexpected tag `@returns`
 ````
 
+
+
+<a name="user-content-require-returns-description-passing-examples"></a>
+<a name="require-returns-description-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -178,3 +185,4 @@ function quux () {
  * @returns
  */
 ````
+

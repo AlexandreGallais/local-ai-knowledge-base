@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: ManagementDateTimeConverter.ToDateTime returns a local time"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/extensions/8.0/dmtf-todatetime.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 8 breaking change in .NET extensions where the DateTime returned by ManagementDateTimeConverter.ToDateTime is based on local time.
+ms.date: 10/05/2023
 ---
-
 # ManagementDateTimeConverter.ToDateTime returns a local time
 
-The `System.DateTime` value returned by `System.Management.ManagementDateTimeConverter.ToDateTime(System.String)` is now based on the local time zone.
+The <xref:System.DateTime> value returned by <xref:System.Management.ManagementDateTimeConverter.ToDateTime(System.String)?displayProperty=nameWithType> is now based on the local time zone.
 
 ## Version introduced
 
@@ -17,15 +13,15 @@ The `System.DateTime` value returned by `System.Management.ManagementDateTimeCon
 
 ## Previous behavior
 
-Previously, `System.Management.ManagementDateTimeConverter.ToDateTime(System.String)` returned a value whose `System.DateTime.Kind` value was `System.DateTimeKind.Unspecified`.
+Previously, <xref:System.Management.ManagementDateTimeConverter.ToDateTime(System.String)?displayProperty=nameWithType> returned a value whose <xref:System.DateTime.Kind?displayProperty=nameWithType> value was <xref:System.DateTimeKind.Unspecified?displayProperty=nameWithType>.
 
 ## New behavior
 
-Starting in .NET 8, `System.Management.ManagementDateTimeConverter.ToDateTime(System.String)` returns a value whose `System.DateTime.Kind` value was `System.DateTimeKind.Local`.
+Starting in .NET 8, <xref:System.Management.ManagementDateTimeConverter.ToDateTime(System.String)?displayProperty=nameWithType> returns a value whose <xref:System.DateTime.Kind?displayProperty=nameWithType> value was <xref:System.DateTimeKind.Local?displayProperty=nameWithType>.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -37,4 +33,4 @@ If your code expected the returned value to be based on an unspecified time zone
 
 ## Affected APIs
 
-- `System.Management.ManagementDateTimeConverter.ToDateTime(System.String)`
+- <xref:System.Management.ManagementDateTimeConverter.ToDateTime(System.String)?displayProperty=fullName>

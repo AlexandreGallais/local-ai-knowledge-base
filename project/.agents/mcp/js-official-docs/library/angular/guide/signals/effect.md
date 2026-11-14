@@ -1,12 +1,3 @@
----
-title: "Effects"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/signals/effect.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Effects
 
 Signals are useful because they notify interested consumers when they change. An **effect** is an operation that runs whenever one or more signal values change. You can create an effect with the `effect` function:
@@ -34,14 +25,15 @@ TIP: There are no situations where effect is good, only situations where it is a
 - Adding custom DOM behavior that can't be expressed with template syntax.
 - Performing custom rendering to a `<canvas>` element, charting library, or other third party UI library.
 
-**When not to use effects**
+<docs-callout critical title="When not to use effects">
 Avoid using effects for propagation of state changes. This can result in `ExpressionChangedAfterItHasBeenChecked` errors, infinite circular updates, or unnecessary change detection cycles.
 
 Instead, use `computed` signals to model state that depends on other state.
+</docs-callout>
 
 ## Injection context
 
-By default, you can only create an `effect()` within an injection context (where you have access to the `inject` function). The easiest way to satisfy this requirement is to call `effect` within a component, directive, or service `constructor`:
+By default, you can only create an `effect()` within an [injection context](guide/di/dependency-injection-context) (where you have access to the `inject` function). The easiest way to satisfy this requirement is to call `effect` within a component, directive, or service `constructor`:
 
 ```ts
 @Component(/* ... */)
@@ -80,7 +72,7 @@ export class EffectiveCounter {
 
 Angular implicitly defines two implicit behaviors for its effects depending on the context they were created in.
 
-A "View Effect" is an `effect` created in the context of a component instantiation. This includes effects created by services that are tied to component injectors.
+A "View Effect" is an `effect` created in the context of a component instantiation. This includes effects created by services that are tied to component injectors.<br>
 A "Root Effect" is created in the context of a root provided service instantiation.
 
 The execution of both kinds of `effect` are tied to the change detection process.
@@ -155,7 +147,7 @@ TIP: You often don't need `afterRenderEffect` to check for DOM changes. APIs lik
 
 ### Render phases
 
-Accessing the DOM and mutating it can impact the performance of your application, for example by triggering too many unnecessary reflows.
+Accessing the DOM and mutating it can impact the performance of your application, for example by triggering too many unnecessary [reflows](https://developer.mozilla.org/en-US/docs/Glossary/Reflow).
 
 To optimize those operations, `afterRenderEffect` offers four phases to group the callbacks and execute them in an optimized order.
 
@@ -212,4 +204,4 @@ Each phase provides a cleanup callback function as argument. The cleanup callbac
 
 `afterRenderEffect`, similarly to `afterNextRender`/`afterEveryRender`, only runs on the client.
 
-NOTE: Components are not guaranteed to be hydrated before the callback runs. You must use caution when directly reading or writing the DOM and layout.
+NOTE: Components are not guaranteed to be [hydrated](/guide/hydration) before the callback runs. You must use caution when directly reading or writing the DOM and layout.

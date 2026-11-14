@@ -1,13 +1,8 @@
 ---
-title: "Developers"
-tool: "npm"
-version: "12.2"
-source: "https://github.com/npm/cli/blob/60e11343e61316d966c86805d803df5a0eb99230/docs/lib/content/using-npm/developers.md"
-commit: "60e11343e61316d966c86805d803df5a0eb99230"
-license: "Artistic-2.0"
+title: Developers
+section: 7
+description: Developer guide
 ---
-
-# Developers
 
 ### Description
 
@@ -53,7 +48,7 @@ The default is whatever the repository uses as its default branch.
 You need to have a `package.json` file in the root of your project to do much of anything with npm.
 That is basically the whole interface.
 
-See `package.json` for details about what goes in that file.
+See [`package.json`](/configuring-npm/package-json) for details about what goes in that file.
 At the very least, you need:
 
 * name: This should be a string that identifies your project.
@@ -74,8 +69,8 @@ At the very least, you need:
 * author: Take some credit.
 
 * scripts: If you have a special compilation or installation script, then you should put it in the `scripts` object.
-  You should definitely have at least a basic <example-value> command as the "scripts.test" field.
-  See scripts.
+  You should definitely have at least a basic smoke-test command as the "scripts.test" field.
+  See [scripts](/using-npm/scripts).
 
 * main: If you have a single module that serves as the entry point to your program (like what the "foo" package gives you at require("foo")), then you need to specify that in the "main" field.
 
@@ -83,7 +78,7 @@ At the very least, you need:
   The best ones to include are "lib" and "doc", but if you use "man" to specify a folder full of man pages, they'll get installed just like these ones.
 
 You can use `npm init` in the root of your package in order to get you started with a pretty basic package.json file.
-See `npm init` for more info.
+See [`npm init`](/commands/npm-init) for more info.
 
 ### Keeping files *out* of your Package
 
@@ -92,7 +87,7 @@ If there's no `.npmignore` file, but there *is* a `.gitignore` file, then npm wi
 If you *want* to include something that is excluded by your `.gitignore` file, you can create an empty `.npmignore` file to override it.
 Like `git`, `npm` looks for `.npmignore` and `.gitignore` files in all subdirectories of your package, not only the root directory.
 
-`.npmignore` files follow the same pattern rules as `.gitignore` files:
+`.npmignore` files follow the [same pattern rules](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository#_ignoring) as `.gitignore` files:
 
 * Blank lines or lines starting with `#` are ignored.
 * Standard glob patterns work.
@@ -129,7 +124,7 @@ The following paths and files are never ignored, so adding them to `.npmignore` 
 If, given the structure of your project, you find `.npmignore` to be a maintenance headache, you might instead try populating the `files` property of `package.json`, which is an array of file or directory names that should be included in your package.
 Sometimes manually picking which items to allow is easier to manage than building a block list.
 
-See `package.json` for more info on what can and can't be ignored.
+See [`package.json`](/configuring-npm/package-json) for more info on what can and can't be ignored.
 
 #### Testing whether your `.npmignore` or `files` config works
 
@@ -140,7 +135,7 @@ If you want to double check that your package will include only the files you in
 `npm link` is designed to install a development package and see the changes in real time without having to keep re-installing it.
 (You do need to either re-link or `npm rebuild -g` to update compiled packages, of course.)
 
-More info at `npm link`.
+More info at [`npm link`](/commands/npm-link).
 
 ### Before Publishing: Make Sure Your Package Installs and Works
 
@@ -182,7 +177,7 @@ Under the default hoisted `node_modules` layout, your package can `import` a dep
 A transitive dependency hoisted alongside it, or your workspace root's `node_modules`, happens to satisfy the `import`.
 That undeclared ("phantom") dependency passes your own build silently, then fails for anyone who installs your package on its own.
 
-We recommend developing your package under `install-strategy=linked`.
+We recommend developing your package under [`install-strategy=linked`](/using-npm/config#install-strategy).
 The isolated layout only exposes a package's *declared* dependencies, so an `import` of an undeclared package fails for you during development instead of resolving by accident, shipping broken, and failing for your users:
 
 ```bash
@@ -196,7 +191,7 @@ npm test
 
 ### Create a User Account
 
-Create a user account on the npm website.
+Create a user account on the [npm website](https://www.npmjs.com/signup).
 
 ### Publish your Package
 
@@ -220,10 +215,10 @@ Tell the world how easy it is to install your program!
 
 ### See also
 
-* npm
-* npm init
-* package.json
-* npm scripts
-* npm publish
-* npm login
-* npm registry
+* [npm](/commands/npm)
+* [npm init](/commands/npm-init)
+* [package.json](/configuring-npm/package-json)
+* [npm scripts](/using-npm/scripts)
+* [npm publish](/commands/npm-publish)
+* [npm login](/commands/npm-login)
+* [npm registry](/using-npm/registry)

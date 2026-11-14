@@ -1,24 +1,16 @@
----
-title: "Mocking Functions"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/mocking/functions.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # Mocking Functions
 
 Mocking functions can be split up into two different categories: spying and mocking.
 
-If you need to observe the behaviour of a method on an object, you can use `vi.spyOn()` to create a spy that tracks calls to that method.
+If you need to observe the behaviour of a method on an object, you can use [`vi.spyOn()`](/api/vi#vi-spyon) to create a spy that tracks calls to that method.
 
-If you need to pass down a custom function implementation as an argument or create a new mocked entity, you can use `vi.fn()` to create a mock function.
+If you need to pass down a custom function implementation as an argument or create a new mocked entity, you can use [`vi.fn()`](/api/vi#vi-fn) to create a mock function.
 
 Both `vi.spyOn` and `vi.fn` share the same methods.
 
-**Tip:**
-If you need a mock to return different values depending on the arguments it receives, `vi.when()` lets you define argument-specific behaviors without writing your own `if/else` logic. See the Conditional Mocking recipe for details.
+::: tip
+If you need a mock to return different values depending on the arguments it receives, [`vi.when()`](/api/vi#vi-when) lets you define argument-specific behaviors without writing your own `if/else` logic. See the [Conditional Mocking](/guide/recipes/conditional-mocking) recipe for details.
+:::
 
 ## Example
 

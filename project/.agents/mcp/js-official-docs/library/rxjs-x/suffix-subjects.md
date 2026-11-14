@@ -1,20 +1,13 @@
----
-title: "Enforce the use of a suffix in subject identifiers (rxjs-x/suffix-subjects)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/suffix-subjects.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Enforce the use of a suffix in subject identifiers (`rxjs-x/suffix-subjects`)
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule effects failures if subject variables, properties and parameters don't conform to a naming scheme that identifies them as subjects.
 
-> **Note:**
-> This rule is designed to be optionally compatible with `finnish`.
+> [!NOTE]
+> This rule is designed to be optionally compatible with [`finnish`](./finnish.md).
 > Using Finnish notation (adding a `$` suffix) your subject names will _not_ cause a failure of this rule.
 
 ## Rule details
@@ -37,6 +30,8 @@ combineLatest({ answers: new Subject<number>() });
 
 ## Options
 
+<!-- begin auto-generated rule options list -->
+
 | Name         | Description                                                                | Type    | Default           |
 | :----------- | :------------------------------------------------------------------------- | :------ | :---------------- |
 | `objects`    | Require for object literal keys.                                           | Boolean | `true`            |
@@ -45,6 +40,8 @@ combineLatest({ answers: new Subject<number>() });
 | `suffix`     | The suffix to enforce.                                                     | String  | `Subject`         |
 | `types`      | Enforce for specific types. Keys are a RegExp, values are a boolean.       | Object  | `[object Object]` |
 | `variables`  | Require for variables.                                                     | Boolean | `true`            |
+
+<!-- end auto-generated rule options list -->
 
 This rule accepts a single option which is an object with properties that determine whether subject suffixes are enforced for `parameters`, `properties`, `objects`, and `variables`.
 It also contains a `types` property that determine whether or not the naming convention is to be enforced for specific types
@@ -72,7 +69,7 @@ The default (Angular-friendly) configuration looks like this:
 
 The properties in the options object are themselves optional; they do not all have to be specified.
 
-> **Tip:**
+> [!TIP]
 > This rule will skip `method` enforcement if the `override` keyword is present.
 > Users are encouraged to enable `noImplicitOverride` in their `tsconfig.json` to take advantage of this.
 
@@ -85,9 +82,9 @@ Type checked lint rules are more powerful than traditional lint rules, but also 
 
 ## Related To
 
-- `finnish`
+- [`finnish`](./finnish.md)
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/suffix-subjects.ts)
+- [Test source](/tests/rules/suffix-subjects.test.ts)

@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugValue3 Interface"
 title: "ICorDebugValue3 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugvalue3-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugValue3"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugValue3"
+helpviewer_keywords:
+  - "ICorDebugValue3 interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugValue3 Interface
 
 Extends the "ICorDebugValue" and "ICorDebugValue2" interfaces to provide support for arrays that are larger than 2 GB.
@@ -15,15 +23,15 @@ Extends the "ICorDebugValue" and "ICorDebugValue2" interfaces to provide support
 
 |Method|Description|
 |------------|-----------------|
-|GetSize64 Method|Gets the size, in bytes, of this `ICorDebugValue3` object.|
+|[GetSize64 Method](icordebugvalue3-getsize64-method.md)|Gets the size, in bytes, of this `ICorDebugValue3` object.|
 
 ## Remarks
 
-The ICorDebugValue::GetSize method returns an object size that ranges from 0 to 2,147,483,647 bytes. In .NET Framework 4.5 and later versions, the size of arrays can exceed 2 GB. The `ICorDebugValue3` interface enables you to determine the size of these arrays.
+The [ICorDebugValue::GetSize](icordebugvalue3-getsize64-method.md) method returns an object size that ranges from 0 to 2,147,483,647 bytes. In .NET Framework 4.5 and later versions, the size of arrays can exceed 2 GB. The `ICorDebugValue3` interface enables you to determine the size of these arrays.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

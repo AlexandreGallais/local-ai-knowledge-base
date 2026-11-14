@@ -1,16 +1,14 @@
 ---
-title: "Using ef6.exe - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/modeling/code-first/migrations/ef6-exe.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Using ef6.exe - EF6
+description: Using ef6.exe in Entity Framework 6
+author: SamMonoRT
+ms.date: 08/19/2026
+uid: ef6/modeling/code-first/migrations/ef6-exe
 ---
-
 # Using ef6.exe
 
-> **Note:**
-> This article assumes you know how to use Code First Migrations in basic scenarios. If you don't, then read Code First Migrations before continuing.
+> [!NOTE]
+> This article assumes you know how to use Code First Migrations in basic scenarios. If you don't, then read [Code First Migrations](xref:ef6/modeling/code-first/migrations/index) before continuing.
 
 Code First Migrations can update a database from Visual Studio, but you can also run migrations from the command line with `ef6.exe`. This utility replaces `migrate.exe`.
 

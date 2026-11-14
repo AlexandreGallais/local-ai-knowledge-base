@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugUnmanagedCallback::DebugEvent Method"
 title: "ICorDebugUnmanagedCallback::DebugEvent Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugunmanagedcallback-debugevent-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugUnmanagedCallback.DebugEvent"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugUnmanagedCallback::DebugEvent"
+helpviewer_keywords:
+  - "DebugEvent method [.NET debugging]"
+  - "ICorDebugUnmanagedCallback::DebugEvent method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugUnmanagedCallback::DebugEvent Method
 
 Notifies the debugger that a native event has been fired.
@@ -26,7 +35,7 @@ HRESULT DebugEvent (
  [in] A pointer to the native event.
 
  `fOutOfBand`
- [in] `true`, if interaction with the managed process state is impossible after an unmanaged event occurs, until the debugger calls ICorDebugController::Continue; otherwise, `false`.
+ [in] `true`, if interaction with the managed process state is impossible after an unmanaged event occurs, until the debugger calls [ICorDebugController::Continue](icordebugcontroller-continue-method.md); otherwise, `false`.
 
 ## Remarks
 
@@ -34,13 +43,13 @@ If the thread being debugged is a Win32 thread, do not use any members of the Wi
 
 The `DebugEvent` callback does not follow the standard rules for callbacks. When you call `DebugEvent`, the process will be in the raw, OS-debug stopped state. The process will not be synchronized. It will automatically enter the synchronized state when necessary to satisfy requests for information about managed code, which may result in other nested `DebugEvent` callbacks.
 
-Call ICorDebugProcess::ClearCurrentException on the process to ignore an exception event before continuing the process. Calling this method sends DBG_CONTINUE instead of DBG_EXCEPTION_NOT_HANDLED on the continue request, and automatically clears out-of-band breakpoints and single-step exceptions. Out-of-band events can come at any time, even when the application being debugged appears stopped and when an outstanding in-band event already exists.
+Call [ICorDebugProcess::ClearCurrentException](icordebugprocess-clearcurrentexception-method.md) on the process to ignore an exception event before continuing the process. Calling this method sends DBG_CONTINUE instead of DBG_EXCEPTION_NOT_HANDLED on the continue request, and automatically clears out-of-band breakpoints and single-step exceptions. Out-of-band events can come at any time, even when the application being debugged appears stopped and when an outstanding in-band event already exists.
 
-The debugger should immediately continue past an out-of-band breakpoint event. The debugger should be using the ICorDebugProcess2::SetUnmanagedBreakpoint and ICorDebugProcess2::ClearUnmanagedBreakpoint methods to add and remove breakpoints. These methods will skip over any out-of-band breakpoints automatically. Thus, the only out-of-band breakpoints that get dispatched should be raw breakpoints that are already in the instruction stream, such as a call to the Win32 `DebugBreak` function. Do not try to use `ICorDebugProcess::ClearCurrentException`, ICorDebugProcess::GetThreadContext, ICorDebugProcess::SetThreadContext, or any other member of the debugging API.
+The debugger should immediately continue past an out-of-band breakpoint event. The debugger should be using the [ICorDebugProcess2::SetUnmanagedBreakpoint](icordebugprocess2-setunmanagedbreakpoint-method.md) and [ICorDebugProcess2::ClearUnmanagedBreakpoint](icordebugprocess2-clearunmanagedbreakpoint-method.md) methods to add and remove breakpoints. These methods will skip over any out-of-band breakpoints automatically. Thus, the only out-of-band breakpoints that get dispatched should be raw breakpoints that are already in the instruction stream, such as a call to the Win32 `DebugBreak` function. Do not try to use `ICorDebugProcess::ClearCurrentException`, [ICorDebugProcess::GetThreadContext](icordebugprocess-getthreadcontext-method.md), [ICorDebugProcess::SetThreadContext](icordebugprocess-setthreadcontext-method.md), or any other member of the debugging API.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -50,4 +59,4 @@ The debugger should immediately continue past an out-of-band breakpoint event. T
 
 ## See also
 
-- ICorDebugUnmanagedCallback Interface
+- [ICorDebugUnmanagedCallback Interface](icordebugunmanagedcallback-interface.md)

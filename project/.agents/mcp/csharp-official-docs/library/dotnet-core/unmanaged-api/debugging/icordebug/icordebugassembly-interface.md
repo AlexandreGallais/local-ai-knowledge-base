@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugAssembly Interface"
 title: "ICorDebugAssembly Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugassembly-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugAssembly"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugAssembly"
+helpviewer_keywords:
+  - "ICorDebugAssembly interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugAssembly Interface
 
 Represents an assembly.
@@ -15,20 +23,20 @@ Represents an assembly.
 
 |Method|Description|
 |------------|-----------------|
-|EnumerateModules Method|Gets an enumerator for the modules contained in the assembly.|
-|GetAppDomain Method|Gets an interface pointer to the application domain that contains this `ICorDebugAssembly` instance.|
-|GetCodeBase Method|Not implemented.|
-|GetName Method|Gets the name of the assembly.|
-|GetProcess Method|Gets the ICorDebugProcess instance in which the assembly is running.|
+|[EnumerateModules Method](icordebugassembly-enumeratemodules-method.md)|Gets an enumerator for the modules contained in the assembly.|
+|[GetAppDomain Method](icordebugassembly-getappdomain-method.md)|Gets an interface pointer to the application domain that contains this `ICorDebugAssembly` instance.|
+|[GetCodeBase Method](icordebugassembly-getcodebase-method.md)|Not implemented.|
+|[GetName Method](icordebugassembly-getname-method.md)|Gets the name of the assembly.|
+|[GetProcess Method](icordebugassembly-getprocess-method.md)|Gets the ICorDebugProcess instance in which the assembly is running.|
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

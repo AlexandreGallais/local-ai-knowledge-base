@@ -1,10 +1,11 @@
 ---
-title: "Project XML in a different shape - LINQ to XML (part 1 of 2)"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/project-xml-different-shape.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Project XML in a different shape - LINQ to XML
+description: Learn how to project XML in a shape that differs from the source XML.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # Project XML in a different shape (LINQ to XML)
@@ -17,9 +18,9 @@ Many typical XML transformations consist of chained queries, as in this example.
 
 This example retrieves the paragraph nodes from a WordprocessingML document and identifies the style and text of each paragraph. Then it projects XML of a different shape. The example builds on the previous examples in this tutorial. The statement that was added to do the projection is pointed out by comments in the code.
 
-The instructions for creating the source document for this example are in Create the source Office Open XML document.
+The instructions for creating the source document for this example are in [Create the source Office Open XML document](create-source-office-open-xml-document.md).
 
-This example uses classes from the WindowsBase assembly. It uses types in the `System.IO.Packaging` namespace.
+This example uses classes from the WindowsBase assembly. It uses types in the <xref:System.IO.Packaging?displayProperty=nameWithType> namespace.
 
 ```csharp
 public static class LocalExtensions
@@ -369,7 +370,7 @@ The C# version of this example produces the following output:
 </Root>
 ```
 
-The Visual Basic <example-value> of this example produces the following output:
+The Visual Basic version of this example produces the following output:
 
 ```xml
 <Root>
@@ -438,4 +439,8 @@ The Visual Basic <example-value> of this example produces the following output:
 
 The next article in this tutorial shows how to find all the text in a Word document:
 
-- Find text in Word documents
+- [Find text in Word documents](find-text-word-documents.md)
+
+## See also
+
+- [Tutorial: Manipulate content in a WordprocessingML document](xml-shape-wordprocessingml-documents.md)

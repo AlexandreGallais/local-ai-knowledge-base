@@ -1,10 +1,6 @@
 ---
-title: "restoreMocks | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/restoremocks.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: restoreMocks | Config
+outline: deep
 ---
 
 # restoreMocks
@@ -12,11 +8,11 @@ license: "MIT"
 - **Type:** `boolean`
 - **Default:** `false`
 
-Should Vitest automatically call `vi.restoreAllMocks()` before each test.
+Should Vitest automatically call [`vi.restoreAllMocks()`](/api/vi#vi-restoreallmocks) before each test.
 
-This restores all original implementations on spies created manually with `vi.spyOn`.
+This restores all original implementations on spies created manually with [`vi.spyOn`](/api/vi#vi-spyon).
 
-```js
+```js [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -26,5 +22,6 @@ export default defineConfig({
 })
 ```
 
-**Warning:**
-Be aware that this option may cause problems with async concurrent tests. If enabled, the completion of one test will restore the implementation for all spies, including those currently being used by other tests in progress.
+::: warning
+Be aware that this option may cause problems with async [concurrent tests](/api/test#test-concurrent). If enabled, the completion of one test will restore the implementation for all spies, including those currently being used by other tests in progress.
+:::

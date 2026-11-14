@@ -1,16 +1,20 @@
 ---
-title: "Dispose Pattern (part 1 of 2)"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/dispose-pattern.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: "Dispose Pattern"
+description: Learn about the Dispose Pattern, which standardizes the usage and implementation of finalizers and the `IDisposable` interface to release unmanaged resources.
+ms.date: "10/22/2008"
+ms.subservice: standard-library
+helpviewer_keywords:
+  - "Dispose method"
+  - "class library design guidelines [.NET Framework], Dispose method"
+  - "class library design guidelines [.NET Framework], Finalize method"
+  - "customizing Dispose method name"
+  - "Finalize method"
+ms.assetid: 31a6c13b-d6a2-492b-9a9f-e5238c983bcb
+author: "KrzysztofCwalina"
 ---
-
 # Dispose Pattern
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
 All programs acquire one or more system resources, such as memory, system handles, or database connections, during the course of their execution. Developers have to be careful when using such system resources, because they must be released after they have been acquired and used.
 
@@ -18,7 +22,7 @@ All programs acquire one or more system resources, such as memory, system handle
 
  Unfortunately, managed memory is just one of many types of system resources. Resources other than managed memory still need to be released explicitly and are referred to as unmanaged resources. The GC was specifically not designed to manage such unmanaged resources, which means that the responsibility for managing unmanaged resources lies in the hands of the developers.
 
- The CLR provides some help in releasing unmanaged resources. `System.Object` declares a virtual method `System.Object.Finalize*` (also called the finalizer) that is called by the GC before the object’s memory is reclaimed by the GC and can be overridden to release unmanaged resources. Types that override the finalizer are referred to as finalizable types.
+ The CLR provides some help in releasing unmanaged resources. <xref:System.Object?displayProperty=nameWithType> declares a virtual method <xref:System.Object.Finalize*> (also called the finalizer) that is called by the GC before the object’s memory is reclaimed by the GC and can be overridden to release unmanaged resources. Types that override the finalizer are referred to as finalizable types.
 
  Although finalizers are effective in some cleanup scenarios, they have two significant drawbacks:
 
@@ -28,29 +32,29 @@ All programs acquire one or more system resources, such as memory, system handle
 
  Therefore, relying exclusively on finalizers might not be appropriate in many scenarios when it is important to reclaim unmanaged resources as quickly as possible, when dealing with scarce resources, or in highly performant scenarios in which the added GC overhead of finalization is unacceptable.
 
- The Framework provides the `System.IDisposable` interface that should be implemented to provide the developer a manual way to release unmanaged resources as soon as they are not needed. It also provides the `System.GC.SuppressFinalize*` method that can tell the GC that an object was manually disposed of and does not need to be finalized anymore, in which case the object’s memory can be reclaimed earlier. Types that implement the `IDisposable` interface are referred to as disposable types.
+ The Framework provides the <xref:System.IDisposable?displayProperty=nameWithType> interface that should be implemented to provide the developer a manual way to release unmanaged resources as soon as they are not needed. It also provides the <xref:System.GC.SuppressFinalize*?displayProperty=nameWithType> method that can tell the GC that an object was manually disposed of and does not need to be finalized anymore, in which case the object’s memory can be reclaimed earlier. Types that implement the `IDisposable` interface are referred to as disposable types.
 
  The Dispose Pattern is intended to standardize the usage and implementation of finalizers and the `IDisposable` interface.
 
- The main motivation for the pattern is to reduce the complexity of the implementation of the `System.Object.Finalize*` and the `System.IDisposable.Dispose*` methods. The complexity stems from the fact that the methods share some but not all code paths (the differences are described later in the chapter). In addition, there are historical reasons for some elements of the pattern related to the evolution of language support for deterministic resource management.
+ The main motivation for the pattern is to reduce the complexity of the implementation of the <xref:System.Object.Finalize*> and the <xref:System.IDisposable.Dispose*> methods. The complexity stems from the fact that the methods share some but not all code paths (the differences are described later in the chapter). In addition, there are historical reasons for some elements of the pattern related to the evolution of language support for deterministic resource management.
 
- **✓ DO** implement the Basic <example-value> Pattern on types containing instances of disposable types. See the Basic <example-value> Pattern section for details on the basic pattern.
+ **✓ DO** implement the Basic Dispose Pattern on types containing instances of disposable types. See the [Basic Dispose Pattern](#basic-dispose-pattern) section for details on the basic pattern.
 
  If a type is responsible for the lifetime of other disposable objects, developers need a way to dispose of them, too. Using the container’s `Dispose` method is a convenient way to make this possible.
 
- **✓ DO** implement the Basic <example-value> Pattern and provide a finalizer on types holding resources that need to be freed explicitly and that do not have finalizers.
+ **✓ DO** implement the Basic Dispose Pattern and provide a finalizer on types holding resources that need to be freed explicitly and that do not have finalizers.
 
- For example, the pattern should be implemented on types storing unmanaged memory buffers. The Finalizable Types section discusses guidelines related to implementing finalizers.
+ For example, the pattern should be implemented on types storing unmanaged memory buffers. The [Finalizable Types](#finalizable-types) section discusses guidelines related to implementing finalizers.
 
- **✓ CONSIDER** implementing the Basic <example-value> Pattern on classes that themselves don’t hold unmanaged resources or disposable objects but are likely to have subtypes that do.
+ **✓ CONSIDER** implementing the Basic Dispose Pattern on classes that themselves don’t hold unmanaged resources or disposable objects but are likely to have subtypes that do.
 
- A great example of this is the `System.IO.Stream` class. Although it is an abstract base class that doesn’t hold any resources, most of its subclasses do and because of this, it implements this pattern.
+ A great example of this is the <xref:System.IO.Stream?displayProperty=nameWithType> class. Although it is an abstract base class that doesn’t hold any resources, most of its subclasses do and because of this, it implements this pattern.
 
-## Basic <example-value> Pattern
+## Basic Dispose Pattern
 
- The basic <example-value> of the pattern involves implementing the `System.IDisposable` interface and declaring the `Dispose(bool)` method that implements all resource cleanup logic to be shared between the `Dispose` method and the optional finalizer.
+ The basic implementation of the pattern involves implementing the `System.IDisposable` interface and declaring the `Dispose(bool)` method that implements all resource cleanup logic to be shared between the `Dispose` method and the optional finalizer.
 
- The following example shows a simple implementation of the basic <example-value>:
+ The following example shows a simple implementation of the basic pattern:
 
 ```csharp
 public class DisposableResourceHolder : IDisposable {
@@ -145,7 +149,7 @@ public class DisposableResourceHolder : IDisposable {
 
  If `Dispose` could raise an exception, further finally-block cleanup logic will not execute. To work around this, the user would need to wrap every call to `Dispose` (within the finally block!) in a try block, which leads to very complex cleanup handlers. If executing a `Dispose(bool disposing)` method, never throw an exception if disposing is false. Doing so will terminate the process if executing inside a finalizer context.
 
- **✓ DO** throw an `System.ObjectDisposedException` from any member that cannot be used after the object has been disposed of.
+ **✓ DO** throw an <xref:System.ObjectDisposedException> from any member that cannot be used after the object has been disposed of.
 
 ```csharp
 public class DisposableResourceHolder : IDisposable {
@@ -181,3 +185,101 @@ public class Stream : IDisposable {
     }
 }
 ```
+
+## Finalizable Types
+
+ Finalizable types are types that extend the Basic Dispose Pattern by overriding the finalizer and providing finalization code path in the `Dispose(bool)` method.
+
+ Finalizers are notoriously difficult to implement correctly, primarily because you cannot make certain (normally valid) assumptions about the state of the system during their execution. The following guidelines should be taken into careful consideration.
+
+ Note that some of the guidelines apply not just to the `Finalize` method, but to any code called from a finalizer. In the case of the Basic Dispose Pattern previously defined, this means logic that executes inside `Dispose(bool disposing)` when the `disposing` parameter is false.
+
+ If the base class already is finalizable and implements the Basic Dispose Pattern, you should not override `Finalize` again. You should instead just override the `Dispose(bool)` method to provide additional resource cleanup logic.
+
+ The following code shows an example of a finalizable type:
+
+```csharp
+public class ComplexResourceHolder : IDisposable {
+
+    private IntPtr buffer; // unmanaged memory buffer
+    private SafeHandle resource; // disposable handle to a resource
+
+    public ComplexResourceHolder() {
+        this.buffer = ... // allocates memory
+        this.resource = ... // allocates the resource
+    }
+
+    protected virtual void Dispose(bool disposing) {
+        ReleaseBuffer(buffer); // release unmanaged memory
+        if (disposing) { // release other disposable objects
+            if (resource!= null) resource.Dispose();
+        }
+    }
+
+    ~ComplexResourceHolder() {
+        Dispose(false);
+    }
+
+    public void Dispose() {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+}
+```
+
+ **X AVOID** making types finalizable.
+
+ Carefully consider any case in which you think a finalizer is needed. There is a real cost associated with instances with finalizers, from both a performance and code complexity standpoint. Prefer using resource wrappers such as <xref:System.Runtime.InteropServices.SafeHandle> to encapsulate unmanaged resources where possible, in which case a finalizer becomes unnecessary because the wrapper is responsible for its own resource cleanup.
+
+ **X DO NOT** make value types finalizable.
+
+ Only reference types actually get finalized by the CLR, and thus any attempt to place a finalizer on a value type will be ignored. The C# and C++ compilers enforce this rule.
+
+ **✓ DO** make a type finalizable if the type is responsible for releasing an unmanaged resource that does not have its own finalizer.
+
+ When implementing the finalizer, simply call `Dispose(false)` and place all resource cleanup logic inside the `Dispose(bool disposing)` method.
+
+```csharp
+public class ComplexResourceHolder : IDisposable {
+
+    ~ComplexResourceHolder() {
+        Dispose(false);
+    }
+
+    protected virtual void Dispose(bool disposing) {
+        ...
+    }
+}
+```
+
+ **✓ DO** implement the Basic Dispose Pattern on every finalizable type.
+
+ This gives users of the type a means to explicitly perform deterministic cleanup of those same resources for which the finalizer is responsible.
+
+ **X DO NOT** access any finalizable objects in the finalizer code path, because there is significant risk that they will have already been finalized.
+
+ For example, a finalizable object A that has a reference to another finalizable object B cannot reliably use B in A’s finalizer, or vice versa. Finalizers are called in a random order (short of a weak ordering guarantee for critical finalization).
+
+ Also, be aware that objects stored in static variables will get collected at certain points during an application domain unload or while exiting the process. Accessing a static variable that refers to a finalizable object (or calling a static method that might use values stored in static variables) might not be safe if <xref:System.Environment.HasShutdownStarted?displayProperty=nameWithType> returns true.
+
+ **✓ DO** make your `Finalize` method protected.
+
+ C#, C++, and VB.NET developers do not need to worry about this, because the compilers help to enforce this guideline.
+
+ **X DO NOT** let exceptions escape from the finalizer logic, except for system-critical failures.
+
+ If an exception is thrown from a finalizer, the CLR will shut down the entire process (as of .NET Framework version 2.0), preventing other finalizers from executing and resources from being released in a controlled manner.
+
+ **✓ CONSIDER** creating and using a critical finalizable object (a type with a type hierarchy that contains <xref:System.Runtime.ConstrainedExecution.CriticalFinalizerObject>) for situations in which a finalizer absolutely must execute even in the face of forced application domain unloads and thread aborts.
+
+ *Portions © 2005, 2009 Microsoft Corporation. All rights reserved.*
+
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+
+## See also
+
+- <xref:System.IDisposable.Dispose*?displayProperty=nameWithType>
+- <xref:System.Object.Finalize*?displayProperty=nameWithType>
+- [Framework Design Guidelines](../../../docs/standard/design-guidelines/index.md)
+- [Common Design Patterns](../../../docs/standard/design-guidelines/common-design-patterns.md)
+- [Garbage Collection](../../../docs/standard/garbage-collection/index.md)

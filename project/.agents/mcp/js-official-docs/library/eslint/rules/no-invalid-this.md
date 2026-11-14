@@ -1,13 +1,10 @@
 ---
-title: "no-invalid-this"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-invalid-this.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-invalid-this
+rule_type: suggestion
+handled_by_typescript: true
+extra_typescript_info: Note that, technically, TypeScript will only catch this if you have the `strict` or `noImplicitThis` flags enabled. These are enabled in most TypeScript projects, since they are considered to be best practice.
 ---
 
-# no-invalid-this
 
 Under the strict mode, `this` keywords outside of classes or class-like objects might be `undefined` and raise a `TypeError`.
 
@@ -52,7 +49,7 @@ With `"languageOptions": { "sourceType": "module" }` in the ESLint configuration
 
 Examples of **incorrect** code for this rule in strict mode:
 
-**Incorrect:**
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint no-invalid-this: "error"*/
@@ -95,9 +92,11 @@ foo.forEach(function() {
 });
 ```
 
+:::
+
 Examples of **correct** code for this rule in strict mode:
 
-**Correct:**
+::: correct { "sourceType": "script" }
 
 ```js
 /*eslint no-invalid-this: "error"*/
@@ -226,6 +225,8 @@ function foo() {
 }
 ```
 
+:::
+
 ## Options
 
 This rule has an object option, with one option:
@@ -240,7 +241,7 @@ Set `"capIsConstructor"` to `false` if you want those functions to be treated as
 
 Examples of **incorrect** code for this rule with `"capIsConstructor"` option set to `false`:
 
-**Incorrect:**
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint no-invalid-this: ["error", { "capIsConstructor": false }]*/
@@ -264,9 +265,11 @@ Baz = function() {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule with `"capIsConstructor"` option set to `false`:
 
-**Correct:**
+::: correct { "sourceType": "script" }
 
 ```js
 /*eslint no-invalid-this: ["error", { "capIsConstructor": false }]*/
@@ -279,11 +282,13 @@ obj.Foo = function Foo() {
 };
 ```
 
+:::
+
 This rule additionally supports TypeScript type syntax.
 
 Examples of **incorrect** TypeScript code for this rule:
 
-**Incorrect:**
+:::incorrect
 
 ```ts
 /*eslint no-invalid-this: "error"*/
@@ -306,9 +311,11 @@ function foo() {
 }
 ```
 
+:::
+
 Examples of **correct** TypeScript code for this rule:
 
-**Correct:**
+:::correct
 
 ```ts
 /*eslint no-invalid-this: "error"*/
@@ -327,6 +334,8 @@ class A {
     accessor c = this.a;
 }
 ```
+
+:::
 
 ## When Not To Use It
 

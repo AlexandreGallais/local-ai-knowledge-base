@@ -1,23 +1,19 @@
 ---
 title: "Breaking change: 'dotnet watch' incompatible with Hot Reload for old frameworks"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/9.0/dotnet-watch.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in the .NET 9 SDK where 'dotnet watch' requires disabling Hot Reload for projects targeting .NET 5 or earlier.
+ms.date: 11/08/2024
 ---
-
 # 'dotnet watch' incompatible with Hot Reload for old frameworks
 
-.NET 9 introduces a change that requires `dotnet watch` to launched with Hot Reload disabled for projects targeting .NET 5 or earlier versions.
+.NET 9 introduces a change that requires [`dotnet watch`](../../../tools/dotnet-watch.md) to launched with Hot Reload disabled for projects targeting .NET 5 or earlier versions.
 
 ## Previous behavior
 
-Previously, `dotnet watch` automatically disabled Hot Reload when used with projects targeting .NET 5 or earlier.
+Previously, [`dotnet watch`](../../../tools/dotnet-watch.md) automatically disabled Hot Reload when used with projects targeting .NET 5 or earlier.
 
 ## New behavior
 
-Starting in .NET 9, an error is reported when `dotnet watch` is launched without `--no-hot-reload` for projects targeting .NET 5 or earlier versions. The error is similar to:
+Starting in .NET 9, an error is reported when [`dotnet watch`](../../../tools/dotnet-watch.md) is launched without `--no-hot-reload` for projects targeting .NET 5 or earlier versions. The error is similar to:
 
 > Hot Reload based watching is only supported in .NET 6.0 or newer apps.
 
@@ -27,7 +23,7 @@ Starting in .NET 9, an error is reported when `dotnet watch` is launched without
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

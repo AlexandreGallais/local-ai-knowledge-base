@@ -1,12 +1,3 @@
----
-title: "CoderResult class (java.nio.charset)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/charset/CoderResult.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # CoderResult class (java.nio.charset)
 
 ```java
@@ -15,51 +6,52 @@ public final class CoderResult
 
 A description of the result state of a coder.
 
- A charset coder, that is, either a decoder or an encoder, consumes bytes
+<p> A charset coder, that is, either a decoder or an encoder, consumes bytes
 (or characters) from an input buffer, translates them, and writes the
 resulting characters (or bytes) to an output buffer.  A coding process
 terminates for one of four categories of reasons, which are described by
 instances of this class:
 
--
+<ul>
 
- *Underflow* is reported when there is no more input to be
+  <li><p> <i>Underflow</i> is reported when there is no more input to be
   processed, or there is insufficient input and additional input is
   required.  This condition is represented by the unique result object
-  `UNDERFLOW`, whose isUnderflow method
-  returns `true`.
+  {@link #UNDERFLOW}, whose {@link #isUnderflow() isUnderflow} method
+  returns {@code true}.  </p></li>
 
--
-
- *Overflow* is reported when there is insufficient room
+  <li><p> <i>Overflow</i> is reported when there is insufficient room
   remaining in the output buffer.  This condition is represented by the
-  unique result object `OVERFLOW`, whose isOverflow method returns `true`.
+  unique result object {@link #OVERFLOW}, whose {@link #isOverflow()
+  isOverflow} method returns {@code true}.  </p></li>
 
--
-
- A *malformed-input error* is reported when a sequence of
+  <li><p> A <i>malformed-input error</i> is reported when a sequence of
   input units is not well-formed.  Such errors are described by instances of
-  this class whose isMalformed method returns
-  `true` and whose length method returns the length
+  this class whose {@link #isMalformed() isMalformed} method returns
+  {@code true} and whose {@link #length() length} method returns the length
   of the malformed sequence.  There is one unique instance of this class for
-  all malformed-input errors of a given length.
+  all malformed-input errors of a given length.  </p></li>
 
--
-
- An *unmappable-character error* is reported when a sequence
+  <li><p> An <i>unmappable-character error</i> is reported when a sequence
   of input units denotes a character that cannot be represented in the
   output charset.  Such errors are described by instances of this class
-  whose isUnmappable method returns `true` and
-  whose length method returns the length of the input
+  whose {@link #isUnmappable() isUnmappable} method returns {@code true} and
+  whose {@link #length() length} method returns the length of the input
   sequence denoting the unmappable character.  There is one unique instance
   of this class for all unmappable-character errors of a given length.
+  </p></li>
 
- For convenience, the isError method returns `true`
+</ul>
+
+<p> For convenience, the {@link #isError() isError} method returns {@code true}
 for result objects that describe malformed-input and unmappable-character
-errors but `false` for those that describe underflow or overflow
-conditions.
+errors but {@code false} for those that describe underflow or overflow
+conditions.  </p>
 
-**Since:** 1.4
+
+@author Mark Reinhold
+@author JSR-51 Expert Group
+@since 1.4
 
 ## CoderResult.toString()
 
@@ -69,7 +61,7 @@ public String toString()
 
 Returns a string describing this coder result.
 
-**Returns:** A descriptive string
+@return  A descriptive string
 
 ## CoderResult.isUnderflow()
 
@@ -79,7 +71,7 @@ public boolean isUnderflow()
 
 Tells whether or not this object describes an underflow condition.
 
-**Returns:** `true` if, and only if, this object denotes underflow
+@return  {@code true} if, and only if, this object denotes underflow
 
 ## CoderResult.isOverflow()
 
@@ -89,7 +81,7 @@ public boolean isOverflow()
 
 Tells whether or not this object describes an overflow condition.
 
-**Returns:** `true` if, and only if, this object denotes overflow
+@return  {@code true} if, and only if, this object denotes overflow
 
 ## CoderResult.isError()
 
@@ -99,7 +91,7 @@ public boolean isError()
 
 Tells whether or not this object describes an error condition.
 
-**Returns:** `true` if, and only if, this object denotes either a
+@return  {@code true} if, and only if, this object denotes either a
          malformed-input error or an unmappable-character error
 
 ## CoderResult.isMalformed()
@@ -110,7 +102,7 @@ public boolean isMalformed()
 
 Tells whether or not this object describes a malformed-input error.
 
-**Returns:** `true` if, and only if, this object denotes a
+@return  {@code true} if, and only if, this object denotes a
          malformed-input error
 
 ## CoderResult.isUnmappable()
@@ -122,7 +114,7 @@ public boolean isUnmappable()
 Tells whether or not this object describes an unmappable-character
 error.
 
-**Returns:** `true` if, and only if, this object denotes an
+@return  {@code true} if, and only if, this object denotes an
          unmappable-character error
 
 ## CoderResult.length()
@@ -132,13 +124,13 @@ public int length()
 ```
 
 Returns the length of the erroneous input described by this
-object  *(optional operation)*.
+object&nbsp;&nbsp;<i>(optional operation)</i>.
 
-**Returns:** The length of the erroneous input, a positive integer
+@return  The length of the erroneous input, a positive integer
 
-Throws:
-
-- `UnsupportedOperationException`: If this object does not describe an error condition, that is, if the isError does not return `true`
+@throws  UnsupportedOperationException
+         If this object does not describe an error condition, that is,
+         if the {@link #isError() isError} does not return {@code true}
 
 ## CoderResult.UNDERFLOW
 
@@ -168,11 +160,10 @@ public static CoderResult malformedForLength(int length)
 Static factory method that returns the unique object describing a
 malformed-input error of the given length.
 
-Parameters:
+@param   length
+         The given length
 
-- `length`: The given length
-
-**Returns:** The requested coder-result object
+@return  The requested coder-result object
 
 ## CoderResult.unmappableForLength(int)
 
@@ -183,11 +174,10 @@ public static CoderResult unmappableForLength(int length)
 Static factory method that returns the unique result object describing
 an unmappable-character error of the given length.
 
-Parameters:
+@param   length
+         The given length
 
-- `length`: The given length
-
-**Returns:** The requested coder-result object
+@return  The requested coder-result object
 
 ## CoderResult.throwException()
 
@@ -197,10 +187,21 @@ public void throwException() throws CharacterCodingException
 
 Throws an exception appropriate to the result described by this object.
 
-Throws:
+@throws  BufferUnderflowException
+         If this object is {@link #UNDERFLOW}
 
-- `BufferUnderflowException`: If this object is `UNDERFLOW`
-- `BufferOverflowException`: If this object is `OVERFLOW`
-- `MalformedInputException`: If this object represents a malformed-input error; the exception's length value will be that of this object
-- `UnmappableCharacterException`: If this object represents an unmappable-character error; the exception's length value will be that of this object
-- `CharacterCodingException`: `MalformedInputException` if this object represents a malformed-input error; `UnmappableCharacterException` if this object represents an unmappable-character error
+@throws  BufferOverflowException
+         If this object is {@link #OVERFLOW}
+
+@throws  MalformedInputException
+         If this object represents a malformed-input error; the
+         exception's length value will be that of this object
+
+@throws  UnmappableCharacterException
+         If this object represents an unmappable-character error; the
+         exception's length value will be that of this object
+
+@throws  CharacterCodingException
+         {@code MalformedInputException} if this object represents a
+         malformed-input error; {@code UnmappableCharacterException}
+         if this object represents an unmappable-character error

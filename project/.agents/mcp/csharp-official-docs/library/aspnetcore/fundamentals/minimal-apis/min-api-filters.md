@@ -1,15 +1,18 @@
 ---
-title: "Filters in Minimal API apps (part 1 of 2)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/minimal-apis/min-api-filters.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Filters in Minimal API apps
+ai-usage: ai-assisted
+description: Use filters in Minimal API apps, including validation of an object with a filter, and registering a filter.
+monikerRange: '>= aspnetcore-7.0'
+ms.date: 10/21/2026
+
+# customer intent: As an ASP.NET developer, I want to use filters in Minimal APIs, so I can validate and log request and response data for my apps.
 ---
 
 # Filters in Minimal API apps
 
-By Fiyaz Bin Hasan, Martin Costello, and Rick Anderson
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+By [Fiyaz Bin Hasan](https://github.com/fiyazbinhasan), [Martin Costello](https://twitter.com/martin_costello), and [Rick Anderson](https://twitter.com/RickAndMSFT)
 
 Minimal API filters allow developers to implement business logic that supports the following tasks:
 
@@ -27,35 +30,15 @@ This article describes how to use filters in your Minimal API apps, such as for 
 
 ## Work with filters
 
-Filters are registered by providing a Delegate that takes a EndpointFilterInvocationContext and returns a EndpointFilterDelegate. The `EndpointFilterInvocationContext` provides access to the `HttpContext` of the request and an `Arguments` list. The list specifies the arguments passed to the handler in the order in which they appear in the declaration of the handler.
+Filters are registered by providing a [Delegate](/dotnet/csharp/programming-guide/delegates/) that takes a [EndpointFilterInvocationContext](https://github.com/dotnet/aspnetcore/blob/main/src/Http/Http.Abstractions/src/EndpointFilterInvocationContext.cs) and returns a [EndpointFilterDelegate](https://github.com/dotnet/aspnetcore/blob/main/src/Http/Http.Abstractions/src/EndpointFilterDelegate.cs). The `EndpointFilterInvocationContext` provides access to the `HttpContext` of the request and an `Arguments` list. The list specifies the arguments passed to the handler in the order in which they appear in the declaration of the handler.
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-
-var app = builder.Build();
-
-string ColorName(string color) => $"Color specified: {color}!";
-
-app.MapGet("/colorSelector/{color}", ColorName)
-    .AddEndpointFilter(async (invocationContext, next) =>
-    {
-        var color = invocationContext.GetArgument<string>(0);
-
-        if (color == "Red")
-        {
-            return Results.Problem("Red not allowed!");
-        }
-        return await next(invocationContext);
-    });
-
-app.Run();
-```
+[!code-csharp[](~/fundamentals/minimal-apis/min-api-filters/samples/Filters/Program.cs?name=snippet1)]
 
 The preceding code:
 
 * Calls the `AddEndpointFilter` extension method to add a filter to the `/colorSelector/{color}` endpoint.
 * Returns the color specified, except for the value `"Red"`.
-* Returns Results.Problem when the `/colorSelector/Red` is requested.
+* Returns [Results.Problem](xref:Microsoft.AspNetCore.Http.Results.Problem*) when the `/colorSelector/Red` is requested.
 * Uses `next` as the `EndpointFilterDelegate` and `invocationContext` as the `EndpointFilterInvocationContext` to invoke the next filter in the pipeline, or the request delegate if the last filter is already invoked.
 
 The filter runs before the endpoint handler. When multiple `AddEndpointFilter` invocations are made on a handler:
@@ -63,40 +46,7 @@ The filter runs before the endpoint handler. When multiple `AddEndpointFilter` i
 * The execution order of filter code called _before_ the call to `EndpointFilterDelegate` (`next`) is First In, First Out (FIFO).
 * The execution order of filter code called _after_ the call to `EndpointFilterDelegate` (`next`) is First In, Last Out (FILO).
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-
-var app = builder.Build();
-
-app.MapGet("/", () =>
-    {
-        app.Logger.LogInformation("             Endpoint");
-        return "Test of multiple filters";
-    })
-    .AddEndpointFilter(async (efiContext, next) =>
-    {
-        app.Logger.LogInformation("Before first filter");
-        var result = await next(efiContext);
-        app.Logger.LogInformation("After first filter");
-        return result;
-    })
-    .AddEndpointFilter(async (efiContext, next) =>
-    {
-        app.Logger.LogInformation(" Before 2nd filter");
-        var result = await next(efiContext);
-        app.Logger.LogInformation(" After 2nd filter");
-        return result;
-    })
-    .AddEndpointFilter(async (efiContext, next) =>
-    {
-        app.Logger.LogInformation("     Before 3rd filter");
-        var result = await next(efiContext);
-        app.Logger.LogInformation("     After 3rd filter");
-        return result;
-    });
-
-app.Run();
-```
+[!code-csharp[](~/fundamentals/minimal-apis/min-api-filters/samples/Filters/Program.cs?name=snippet_xyz)]
 
 In the preceding code, the filters and endpoint log the following output:
 
@@ -112,24 +62,7 @@ After first filter
 
 The following code uses filters that implement the `IEndpointFilter` interface:
 
-```csharp
-using Filters.EndpointFilters;
-
-var builder = WebApplication.CreateBuilder(args);
-
-var app = builder.Build();
-
-app.MapGet("/", () =>
-    {
-        app.Logger.LogInformation("Endpoint");
-        return "Test of multiple filters";
-    })
-    .AddEndpointFilter<AEndpointFilter>()
-    .AddEndpointFilter<BEndpointFilter>()
-    .AddEndpointFilter<CEndpointFilter>();
-
-app.Run();
-```
+[!code-csharp[](~/fundamentals/minimal-apis/min-api-filters/samples/Filters/Program.cs?name=snippet_abc)]
 
 In the preceding code, the logs for the filters and handlers show the run order:
 
@@ -145,77 +78,13 @@ AEndpointFilter After next
 
 Filters that implement the `IEndpointFilter` interface are shown in the following example:
 
-```csharp
-
-namespace Filters.EndpointFilters;
-
-public abstract class ABCEndpointFilters : IEndpointFilter
-{
-    protected readonly ILogger Logger;
-    private readonly string _methodName;
-
-    protected ABCEndpointFilters(ILoggerFactory loggerFactory)
-    {
-        Logger = loggerFactory.CreateLogger<ABCEndpointFilters>();
-        _methodName = GetType().Name;
-    }
-
-    public virtual async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context,
-        EndpointFilterDelegate next)
-    {
-        Logger.LogInformation("{MethodName} Before next", _methodName);
-        var result = await next(context);
-        Logger.LogInformation("{MethodName} After next", _methodName);
-        return result;
-    }
-}
-
-class AEndpointFilter : ABCEndpointFilters
-{
-    public AEndpointFilter(ILoggerFactory loggerFactory) : base(loggerFactory) { }
-}
-
-class BEndpointFilter : ABCEndpointFilters
-{
-    public BEndpointFilter(ILoggerFactory loggerFactory) : base(loggerFactory) { }
-}
-
-class CEndpointFilter : ABCEndpointFilters
-{
-    public CEndpointFilter(ILoggerFactory loggerFactory) : base(loggerFactory) { }
-}
-```
+[!code-csharp[](~/fundamentals/minimal-apis/min-api-filters/samples/Filters/EndpointFilters/AbcEndpointFilters.cs)]
 
 ## Validate an object with a filter
 
 Consider a filter that validates a `Todo` object:
 
-```csharp
-app.MapPut("/todoitems/{id}", async (Todo inputTodo, int id, TodoDb db) =>
-{
-    var todo = await db.Todos.FindAsync(id);
-
-    if (todo is null) return Results.NotFound();
-
-    todo.Name = inputTodo.Name;
-    todo.IsComplete = inputTodo.IsComplete;
-    
-    await db.SaveChangesAsync();
-
-    return Results.NoContent();
-}).AddEndpointFilter(async (efiContext, next) =>
-{
-    var tdparam = efiContext.GetArgument<Todo>(0);
-
-    var validationError = Utilities.IsValid(tdparam);
-
-    if (!string.IsNullOrEmpty(validationError))
-    {
-        return Results.Problem(validationError);
-    }
-    return await next(efiContext);
-});
-```
+[!code-csharp[](~/fundamentals/minimal-apis/min-api-filters/samples/todo/Program.cs?name=snippet_filter1)]
 
 In the preceding code:
 
@@ -224,127 +93,31 @@ In the preceding code:
 
 In addition to being passed as delegates, filters can be registered by implementing the `IEndpointFilter` interface. The following code shows the preceding filter encapsulated in a class that implements `IEndpointFilter`:
 
-```csharp
-public class TodoIsValidFilter : IEndpointFilter
-{
-    private ILogger _logger;
+[!code-csharp[](~/fundamentals/minimal-apis/min-api-filters/samples/todo/EndpointFilters/ToDoIsValidFilter.cs?name=snippet)]
 
-    public TodoIsValidFilter(ILoggerFactory loggerFactory)
-    {
-        _logger = loggerFactory.CreateLogger<TodoIsValidFilter>();
-    }
-
-    public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext efiContext, 
-        EndpointFilterDelegate next)
-    {
-        var todo = efiContext.GetArgument<Todo>(0);
-
-        var validationError = Utilities.IsValid(todo!);
-
-        if (!string.IsNullOrEmpty(validationError))
-        {
-            _logger.LogWarning(validationError);
-            return Results.Problem(validationError);
-        }
-        return await next(efiContext);
-    }
-}
-```
-
-Filters that implement the `IEndpointFilter` interface can resolve dependencies from Dependency Injection (DI), as shown in the previous code. Although filters can resolve dependencies from DI, filters themselves **can't** be resolved from DI.
+Filters that implement the `IEndpointFilter` interface can resolve dependencies from [Dependency Injection (DI)](../dependency-injection.md), as shown in the previous code. Although filters can resolve dependencies from DI, filters themselves **can't** be resolved from DI.
 
 The `ToDoIsValidFilter` is applied to the following endpoints:
 
-```csharp
-app.MapPut("/todoitems2/{id}", async (Todo inputTodo, int id, TodoDb db) =>
-{
-    var todo = await db.Todos.FindAsync(id);
-
-    if (todo is null) return Results.NotFound();
-
-    todo.Name = inputTodo.Name;
-    todo.IsComplete = inputTodo.IsComplete;
-
-    await db.SaveChangesAsync();
-
-    return Results.NoContent();
-}).AddEndpointFilter<TodoIsValidFilter>();
-
-app.MapPost("/todoitems", async (Todo todo, TodoDb db) =>
-{
-    db.Todos.Add(todo);
-    await db.SaveChangesAsync();
-
-    return Results.Created($"/todoitems/{todo.Id}", todo);
-}).AddEndpointFilter<TodoIsValidFilter>();
-```
+[!code-csharp[](~/fundamentals/minimal-apis/min-api-filters/samples/todo/Program.cs?name=snippet_2flt&highlight=13,21)]
 
 The following filter validates the `Todo` object and modifies the `Name` property:
 
-```csharp
-public class TodoIsValidUcFilter : IEndpointFilter
-{
-    public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext efiContext, 
-        EndpointFilterDelegate next)
-    {
-        var todo = efiContext.GetArgument<Todo>(0);
-        todo.Name = todo.Name!.ToUpper();
-
-        var validationError = Utilities.IsValid(todo!);
-
-        if (!string.IsNullOrEmpty(validationError))
-        {
-            return Results.Problem(validationError);
-        }
-        return await next(efiContext);
-    }
-}
-```
+[!code-csharp[](~/fundamentals/minimal-apis/min-api-filters/samples/todo/EndpointFilters/ToDoIsValidFilter.cs?name=snippet2&highlight=7)]
 
 ## Register a filter by using an endpoint filter factory
 
-In some scenarios, it might be necessary to cache some of the information provided in the MethodInfo in a filter. Suppose you want to verify that the handler attached to an endpoint filter has a first parameter that evaluates to a `Todo` type.
+In some scenarios, it might be necessary to cache some of the information provided in the [MethodInfo](/dotnet/api/system.reflection.methodinfo) in a filter. Suppose you want to verify that the handler attached to an endpoint filter has a first parameter that evaluates to a `Todo` type.
 
-```csharp
-app.MapPut("/todoitems/{id}", async (Todo inputTodo, int id, TodoDb db) =>
-{
-    var todo = await db.Todos.FindAsync(id);
-
-    if (todo is null) return Results.NotFound();
-
-    todo.Name = inputTodo.Name;
-    todo.IsComplete = inputTodo.IsComplete;
-    
-    await db.SaveChangesAsync();
-
-    return Results.NoContent();
-}).AddEndpointFilterFactory((filterFactoryContext, next) =>
-{
-    var parameters = filterFactoryContext.MethodInfo.GetParameters();
-    if (parameters.Length >= 1 && parameters[0].ParameterType == typeof(Todo))
-    {
-        return async invocationContext =>
-        {
-            var todoParam = invocationContext.GetArgument<Todo>(0);
-
-            var validationError = Utilities.IsValid(todoParam);
-
-            if (!string.IsNullOrEmpty(validationError))
-            {
-                return Results.Problem(validationError);
-            }
-            return await next(invocationContext);
-        };
-    }
-    return invocationContext => next(invocationContext); 
-});
-```
+[!code-csharp[](~/fundamentals/minimal-apis/min-api-filters/samples/todo/Program.cs?name=snippet_filterfactory1)]
 
 In the preceding code:
 
-* The `EndpointFilterFactoryContext` object provides access to the MethodInfo associated with the endpoint's handler.
+* The `EndpointFilterFactoryContext` object provides access to the [MethodInfo](/dotnet/api/system.reflection.methodinfo) associated with the endpoint's handler.
 * The signature of the handler is examined by inspecting `MethodInfo` for the expected type signature. If the expected signature is found, the validation filter is registered onto the endpoint. This factory pattern is useful to register a filter that depends on the signature of the target endpoint handler.
 * If a matching signature isn't found, a pass-through filter is registered.
+
+:::moniker range=">= aspnetcore-8.0"
 
 ## Filters and parameter binding failures
 
@@ -375,13 +148,13 @@ app.MapGet("/products/{id}", (Guid id) => TypedResults.Ok(id))
 
 Test the status code with `>=` rather than `== 400`. That's the same comparison the framework uses to decide whether to skip the handler, and a filter that runs earlier in the pipeline can set a different code.
 
-Because parameter binding did not fully succeed, values in `Microsoft.AspNetCore.Http.EndpointFilterInvocationContext.Arguments` might only be partially bound. A filter that inspects arguments should check the status code first before relying on argument values.
+Because parameter binding did not fully succeed, values in <xref:Microsoft.AspNetCore.Http.EndpointFilterInvocationContext.Arguments?displayProperty=nameWithType> might only be partially bound. A filter that inspects arguments should check the status code first before relying on argument values.
 
 ## Observe binding failures in the Development environment
 
-`Microsoft.AspNetCore.Routing.RouteHandlerOptions.ThrowOnBadRequest` controls whether the framework throws `Microsoft.AspNetCore.Http.BadHttpRequestException` in addition to writing a `Debug`-level log entry when it handles an invalid request. It defaults to the value of `Microsoft.Extensions.Hosting.HostEnvironmentEnvExtensions.IsDevelopment*`, so it's `true` in the `Development` environment and `false` in other environments.
+<xref:Microsoft.AspNetCore.Routing.RouteHandlerOptions.ThrowOnBadRequest> controls whether the framework throws <xref:Microsoft.AspNetCore.Http.BadHttpRequestException> in addition to writing a `Debug`-level log entry when it handles an invalid request. It defaults to the value of <xref:Microsoft.Extensions.Hosting.HostEnvironmentEnvExtensions.IsDevelopment*>, so it's `true` in the `Development` environment and `false` in other environments.
 
-In the `Development` environment with the default value of `true`, the exception reaches the developer exception page before a filter can respond. Set `Microsoft.AspNetCore.Routing.RouteHandlerOptions.ThrowOnBadRequest` to `false` to receive the `400` response that the filter can observe:
+In the `Development` environment with the default value of `true`, the exception reaches the developer exception page before a filter can respond. Set <xref:Microsoft.AspNetCore.Routing.RouteHandlerOptions.ThrowOnBadRequest> to `false` to receive the `400` response that the filter can observe:
 
 ```csharp
 builder.Services.Configure<RouteHandlerOptions>(options =>
@@ -392,4 +165,23 @@ builder.Services.Configure<RouteHandlerOptions>(options =>
 
 No change is needed in other environments, where `false` is already the default.
 
-An endpoint whose filter factories all return `next` unchanged—so that no filter pipeline is actually built—no longer runs its route handler after a parameter-binding failure. In earlier releases, that configuration set the `400` status code and then invoked the handler anyway with unbound argument values. For more information, see Refactor param binding failure handling in RequestDelegate (`dotnet/aspnetcore` #64539). (Please don't comment on closed issues and PRs.)
+:::moniker-end
+
+:::moniker range=">= aspnetcore-11.0"
+
+An endpoint whose filter factories all return `next` unchanged—so that no filter pipeline is actually built—no longer runs its route handler after a parameter-binding failure. In earlier releases, that configuration set the `400` status code and then invoked the handler anyway with unbound argument values. For more information, see [Refactor param binding failure handling in RequestDelegate (`dotnet/aspnetcore` #64539)](https://github.com/dotnet/aspnetcore/pull/64539). (Please don't comment on closed issues and PRs.)
+
+:::moniker-end
+
+## Register a filter on controller actions
+
+In some scenarios, it might be necessary to apply the same filter logic for both route-handler based endpoints and controller actions. For this scenario, you can invoke `AddEndpointFilter` on `ControllerActionEndpointConventionBuilder` to support executing the same filter logic on actions and endpoints.
+
+[!code-csharp[](~/fundamentals/minimal-apis/min-api-filters/samples/Filters/Program.cs?name=snippet_action_endpoint_filters)]
+
+## Related content
+
+* [View or download sample code](https://github.com/aspnet/Docs/tree/main/aspnetcore/fundamentals/minimal-apis/min-api-filters/samples) ([How to download](../index.md#how-to-download-a-sample))
+* [ValidationFilterRouteHandlerBuilderExtensions (Validation extension methods)](https://github.com/DamianEdwards/MinimalApis.Extensions/blob/main/src/MinimalApis.Extensions/Filters/ValidationFilterRouteHandlerBuilderExtensions.cs)
+* [Tutorial: Create a Minimal API with ASP.NET Core](../../tutorials/min-web-api.md)
+* [Authentication and authorization in Minimal APIs](security.md)

@@ -1,22 +1,18 @@
 ---
 title: "Breaking change: C# code in templates not supported by earlier versions"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/6.0/csharp-template-code.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 6 where project templates use new C# features that aren't available in previous versions.
+ms.date: 07/30/2021
 ---
-
 # C# code in templates not supported by earlier versions
 
 Starting in .NET 6, the project templates that ship with the .NET SDK use the latest C# language features. The following language features are used in template-generated code or enabled by default in the project:
 
-- Top-level statements
-- Global using directives
-- File-scoped namespaces
-- Target-typed new expressions
-- Nullable reference types
-- Async Main return values
+- [Top-level statements](../../../../csharp/fundamentals/program-structure/top-level-statements.md)
+- [Global using directives](/dotnet/csharp/language-reference/language-specification/namespaces#1452-global-using-alias-directives)
+- [File-scoped namespaces](/dotnet/csharp/language-reference/language-specification/namespaces#143-namespace-declarations)
+- [Target-typed new expressions](/dotnet/csharp/language-reference/language-specification/expressions#128172-object-creation-expressions)
+- [Nullable reference types](../../../../csharp/fundamentals/null-safety/nullable-reference-types.md)
+- [Async Main return values](../../../../csharp/fundamentals/program-structure/main-command-line.md#main-return-values)
 
 Some of the latest C# language features are not supported by previous target frameworks, so you might experience issues in the following scenarios:
 
@@ -37,7 +33,7 @@ Starting in .NET 6, when you change or add a target framework, you may need to c
 
 ## Change category
 
-This change affects *source compatibility*.
+This change affects [*source compatibility*](../../categories.md#source-compatibility).
 
 ## Reason for change
 

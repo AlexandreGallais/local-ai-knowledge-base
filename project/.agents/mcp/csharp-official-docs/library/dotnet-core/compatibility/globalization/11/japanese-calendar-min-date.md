@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: Japanese Calendar minimum supported date corrected"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/globalization/11/japanese-calendar-min-date.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where the Japanese Calendar minimum supported date was corrected from 1868-09-08 to 1868-10-23."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # Japanese Calendar minimum supported date corrected
@@ -17,25 +15,25 @@ The start date of the Japanese Meiji era has been updated from `1868-09-08` to `
 
 ## Previous behavior
 
-Previously, `System.Globalization.JapaneseCalendar.MinSupportedDateTime` returned `1868-09-08`. `System.Globalization.JapaneseCalendar` accepted dates between `1868-09-08` and `1868-10-23` as valid.
+Previously, <xref:System.Globalization.JapaneseCalendar.MinSupportedDateTime?displayProperty=nameWithType> returned `1868-09-08`. <xref:System.Globalization.JapaneseCalendar> accepted dates between `1868-09-08` and `1868-10-23` as valid.
 
 ## New behavior
 
-Starting in .NET 11, `System.Globalization.JapaneseCalendar.MinSupportedDateTime` returns `1868-10-23` instead. `System.Globalization.JapaneseCalendar` now rejects dates between `1868-09-08` and `1868-10-23` as invalid.
+Starting in .NET 11, <xref:System.Globalization.JapaneseCalendar.MinSupportedDateTime?displayProperty=nameWithType> returns `1868-10-23` instead. <xref:System.Globalization.JapaneseCalendar> now rejects dates between `1868-09-08` and `1868-10-23` as invalid.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-The change was made to reflect the latest Unicode CLDR data (CLDR-11375) and improved historical accuracy regarding the start of the Meiji era in Japan.
+The change was made to reflect the latest Unicode CLDR data ([CLDR-11375](https://unicode-org.atlassian.net/browse/CLDR-11375)) and improved historical accuracy regarding the start of the Meiji era in Japan.
 
 ## Recommended action
 
-Update any code that depends on the old value of `System.Globalization.JapaneseCalendar.MinSupportedDateTime`. Avoid using Gregorian dates before `1868-10-23` with the `System.Globalization.JapaneseCalendar`.
+Update any code that depends on the old value of <xref:System.Globalization.JapaneseCalendar.MinSupportedDateTime?displayProperty=nameWithType>. Avoid using Gregorian dates before `1868-10-23` with the <xref:System.Globalization.JapaneseCalendar>.
 
 ## Affected APIs
 
-- `System.Globalization.JapaneseCalendar`
-- `System.Globalization.JapaneseCalendar.MinSupportedDateTime`
+- <xref:System.Globalization.JapaneseCalendar?displayProperty=fullName>
+- <xref:System.Globalization.JapaneseCalendar.MinSupportedDateTime?displayProperty=fullName>

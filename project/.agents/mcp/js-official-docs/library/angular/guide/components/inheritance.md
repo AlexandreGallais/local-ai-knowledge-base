@@ -1,15 +1,6 @@
----
-title: "Inheritance"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/components/inheritance.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Inheritance
 
-TIP: This guide assumes you've already read the Essentials Guide. Read that first if you're new to Angular.
+TIP: This guide assumes you've already read the [Essentials Guide](essentials). Read that first if you're new to Angular.
 
 Angular components are TypeScript classes and participate in standard JavaScript inheritance
 semantics.

@@ -1,12 +1,17 @@
 ---
 title: "MSTEST0043: Use retry attribute on test method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0043.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0043: Use retry attribute on test method"
+ms.date: 11/05/2026
+ai-usage: ai-assisted
+f1_keywords:
+- MSTEST0043
+- UseRetryWithTestMethodAnalyzer
+helpviewer_keywords:
+- UseRetryWithTestMethodAnalyzer
+- MSTEST0043
+author: Youssef1313
+ms.author: ygerges
 ---
-
 # MSTEST0043: Use retry attribute on test method
 
 | Property                            | Value                                                                                    |
@@ -22,11 +27,11 @@ license: "CC-BY-4.0"
 
 ## Cause
 
-A method or class has an attribute that derives from `Microsoft.VisualStudio.TestTools.UnitTesting.RetryBaseAttribute` but isn't a test method or test class.
+A method or class has an attribute that derives from <xref:Microsoft.VisualStudio.TestTools.UnitTesting.RetryBaseAttribute> but isn't a test method or test class.
 
 ## Rule description
 
-`Microsoft.VisualStudio.TestTools.UnitTesting.RetryBaseAttribute` supplies retry policy for test execution. It doesn't declare a test or turn a helper or lifecycle method into a test. MSTest applies the policy when it invokes a test method, not when it calls an arbitrary method.
+<xref:Microsoft.VisualStudio.TestTools.UnitTesting.RetryBaseAttribute> supplies retry policy for test execution. It doesn't declare a test or turn a helper or lifecycle method into a test. MSTest applies the policy when it invokes a test method, not when it calls an arbitrary method.
 
 Starting with MSTest 4.3, retry attributes can also apply to a class marked with `[TestClass]` or a derived attribute. A class-level retry policy applies to the class's tests; it doesn't retry a lifecycle callback as an independent test. Earlier versions support retry attributes only on test methods.
 

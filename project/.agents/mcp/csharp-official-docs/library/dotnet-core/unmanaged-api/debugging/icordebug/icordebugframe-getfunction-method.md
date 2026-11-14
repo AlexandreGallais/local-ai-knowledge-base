@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugFrame::GetFunction Method"
 title: "ICorDebugFrame::GetFunction Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugframe-getfunction-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugFrame.GetFunction"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugFrame::GetFunction"
+helpviewer_keywords:
+  - "GetFunction method, ICorDebugFrame interface [.NET debugging]"
+  - "ICorDebugFrame::GetFunction method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugFrame::GetFunction Method
 
 Gets the function that contains the code associated with this stack frame.
@@ -30,7 +39,7 @@ The `GetFunction` method may fail if the frame is not associated with any partic
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

@@ -1,19 +1,13 @@
----
-title: "no-this-assignment"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-this-assignment.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-this-assignment
 
 📝 Disallow assigning `this` to a variable.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-`this` should be used directly. If you want a reference to `this` from a higher scope, consider using arrow function expression or `Function#bind()`.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+`this` should be used directly. If you want a reference to `this` from a higher scope, consider using [arrow function expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) or [`Function#bind()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind).
 
 ## Examples
 
@@ -63,4 +57,4 @@ new Bar(this).method();
 
 ## Related rules
 
-- `@typescript-eslint/no-this-alias` - Equivalent rule from typescript-eslint. If you already use that one, you don't need this rule. It has `allowDestructuring` (enabled by default) and `allowedNames` options.
+- [`@typescript-eslint/no-this-alias`](https://typescript-eslint.io/rules/no-this-alias/) - Equivalent rule from typescript-eslint. If you already use that one, you don't need this rule. It has `allowDestructuring` (enabled by default) and `allowedNames` options.

@@ -1,21 +1,17 @@
 ---
-title: "Test Tags | Guide"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/test-tags.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Test Tags | Guide
+outline: deep
 ---
 
 # Test Tags <Version>4.1.0</Version> {#test-tags}
 
-`Tags` let you label tests so you can filter what runs and override their options when needed.
+[`Tags`](/config/tags) let you label tests so you can filter what runs and override their options when needed.
 
 ## Why tags
 
 Tags become useful once a suite has groups of tests that share runner options, like a longer timeout for database queries or retries for integration tests on CI. Repeating those options on every relevant test by hand is brittle, and the categories often don't line up with file paths anyway, so splitting them out by file isn't an option. Flaky tests in particular tend to accumulate wherever the bugs landed, not in a `flaky/` folder.
 
-A tag captures that kind of category: the definition holds the shared options, and any test marked with the tag inherits them. Those tag names can also be combined into expressions: `--tags-filter='db && !flaky'` runs database tests that aren't marked flaky. `TestRunner.matchesTags` exposes the same expression at runtime, useful when `globalSetup` does expensive work that should be skipped if no tagged tests are scheduled.
+A tag captures that kind of category: the definition holds the shared options, and any test marked with the tag inherits them. Those tag names can also be combined into expressions: `--tags-filter='db && !flaky'` runs database tests that aren't marked flaky. [`TestRunner.matchesTags`](#checking-tags-filter-at-runtime) exposes the same expression at runtime, useful when `globalSetup` does expensive work that should be skipped if no tagged tests are scheduled.
 
 ## When to reach for tags
 
@@ -23,20 +19,20 @@ A tag captures that kind of category: the definition holds the shared options, a
 | --------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
 | Apply timeout/retry to a _category_ of tests                                            | **Tags**                                                     |
 | Mark cross-cutting categories (`flaky`, `slow`, `frontend`) scattered across many files | **Tags**                                                     |
-| Conditionally run expensive setup based on what's filtered                              | **Tags** + `matchesTags` |
-| Run a subset by test name match                                                         | `-t` / `testNamePattern`          |
+| Conditionally run expensive setup based on what's filtered                              | **Tags** + [`matchesTags`](#checking-tags-filter-at-runtime) |
+| Run a subset by test name match                                                         | [`-t` / `testNamePattern`](/config/testnamepattern)          |
 | Run a subset by file path                                                               | `--include` / `--exclude`                                    |
-| Run different files with different _runner settings_ (isolation, pool, environment)     | Test Projects                             |
+| Run different files with different _runner settings_ (isolation, pool, environment)     | [Test Projects](/guide/projects)                             |
 
 You can combine projects and tags. A test that sits in a `Sequential` project can also carry a `flaky` tag, and Vitest applies both.
 
 ## Defining Tags
 
-Tags must be defined in your configuration file. By default, Vitest does not provide any built-in tags. If a test uses a tag that isn't defined in the config, the test runner will throw an error. This prevents unexpected behavior from mistyped tag names. You can disable this check with the `strictTags` option.
+Tags must be defined in your configuration file. By default, Vitest does not provide any built-in tags. If a test uses a tag that isn't defined in the config, the test runner will throw an error. This prevents unexpected behavior from mistyped tag names. You can disable this check with the [`strictTags`](/config/stricttags) option.
 
-You must define a `name` of the tag, and you may define additional options that will be applied to every test marked with the tag, e.g., a `timeout`, or `retry`. For the full list of available options, see `tags`.
+You must define a `name` of the tag, and you may define additional options that will be applied to every test marked with the tag, e.g., a `timeout`, or `retry`. For the full list of available options, see [`tags`](/config/tags).
 
-```ts
+```ts [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -69,7 +65,7 @@ export default defineConfig({
 
 If you are using TypeScript, you can enforce what tags are available by augmenting the `TestTags` type with a property that contains a union of strings (make sure this file is included by your `tsconfig`):
 
-```ts
+```ts [vitest.shims.ts]
 import 'vitest'
 
 declare module 'vitest' {
@@ -83,7 +79,7 @@ declare module 'vitest' {
 }
 ```
 
-To see all your tags, you can use `--list-tags` command:
+To see all your tags, you can use [`--list-tags`](/guide/cli#listtags) command:
 
 ```shell
 vitest --list-tags
@@ -187,12 +183,12 @@ test('dashboard renders items', () => {
 })
 ```
 
-**Danger:**
+::: danger
 A `@module-tag` in a JSDoc comment applies to all tests in that file, not just the test it precedes.
 
 Consider this example:
 
-```js
+```js{3,10}
 describe('forms', () => {
   /**
    * @module-tag frontend
@@ -212,7 +208,7 @@ describe('forms', () => {
 
 In this example, every test in the file will have both the `frontend` and `db` tags. To tag individual tests, use the options argument instead:
 
-```js
+```js{2,6}
 describe('forms', () => {
   test('renders a form', { tags: 'frontend' }, () => {
     // ...
@@ -224,9 +220,11 @@ describe('forms', () => {
 })
 ```
 
+:::
+
 ## Filtering Tests by Tag
 
-To run only tests with specific tags, use the `--tags-filter` CLI option:
+To run only tests with specific tags, use the [`--tags-filter`](/guide/cli#tagsfilter) CLI option:
 
 ```shell
 vitest --tags-filter=frontend
@@ -235,7 +233,10 @@ vitest --tags-filter="frontend and backend"
 
 If you are running Vitest UI, you can start a filter with a `tag:` prefix to filter out tests by tags using the same tags expression syntax:
 
-If you are using a programmatic API, you can pass down a `tagsFilter` option to `startVitest` or `createVitest`:
+<img alt="The tags filter in Vitest UI" img-light src="/ui/light-ui-tags.png">
+<img alt="The tags filter in Vitest UI" img-dark src="/ui/dark-ui-tags.png">
+
+If you are using a programmatic API, you can pass down a `tagsFilter` option to [`startVitest`](/guide/advanced/#startvitest) or [`createVitest`](/guide/advanced/#createvitest):
 
 ```ts
 import { startVitest } from 'vitest/node'
@@ -245,7 +246,7 @@ await startVitest([], {
 })
 ```
 
-Or you can create a test specification with your custom filters:
+Or you can create a [test specification](/api/advanced/test-specification) with your custom filters:
 
 ```ts
 const specification = vitest.getRootProject().createSpecification(
@@ -266,10 +267,11 @@ You can combine tags in different ways. Vitest supports these keywords:
 - `*` to match any number of characters (0 or more)
 - `()` to group expressions and override precedence
 
-The parser follows standard operator precedence: `not`/`!` has the highest priority, then `and`/`&&`, then `or`/`||`. Use parentheses to override default precedence.
+The parser follows standard [operator precedence](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_precedence): `not`/`!` has the highest priority, then `and`/`&&`, then `or`/`||`. Use parentheses to override default precedence.
 
-**Reserved Names**
+::: warning Reserved Names
 Tag names cannot be `and`, `or`, or `not` (case-insensitive) as these are reserved keywords. Tag names also cannot contain special characters (`(`, `)`, `&`, `|`, `!`, `*`, spaces) as these are used by the expression parser.
+:::
 
 ### Wildcards
 
@@ -319,7 +321,7 @@ vitest --tags-filter="(unit || e2e) && !slow"
 vitest --tags-filter="db && (postgres || mysql) && !slow"
 ```
 
-You can also pass <example-value> `--tags-filter` flags. They are combined with AND logic:
+You can also pass multiple `--tags-filter` flags. They are combined with AND logic:
 
 ```shell
 # Run tests that match (unit OR e2e) AND are NOT slow
@@ -345,6 +347,6 @@ The method accepts an array of tags and returns `true` if the current `--tags-fi
 
 ## See also
 
-- Per-File Isolation Settings and Parallel and Sequential Test Files use projects to partition tests by file. Reach for projects when categories need different runner settings rather than different timeouts or retries.
-- Test Filtering covers `-t`, `--include`, and the rest of the CLI filters.
-- `tags` and `strictTags` configuration reference.
+- [Per-File Isolation Settings](/guide/recipes/disable-isolation) and [Parallel and Sequential Test Files](/guide/recipes/parallel-sequential) use projects to partition tests by file. Reach for projects when categories need different runner settings rather than different timeouts or retries.
+- [Test Filtering](/guide/filtering) covers `-t`, `--include`, and the rest of the CLI filters.
+- [`tags`](/config/tags) and [`strictTags`](/config/stricttags) configuration reference.

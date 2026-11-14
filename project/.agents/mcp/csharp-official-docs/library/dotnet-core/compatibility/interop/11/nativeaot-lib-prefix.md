@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: NativeAOT uses lib prefix for native library outputs on Unix"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/interop/11/nativeaot-lib-prefix.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where NativeAOT applies the lib prefix by default to non-executable native library outputs on Unix."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # NativeAOT uses lib prefix for native library outputs on Unix
@@ -39,13 +37,13 @@ To opt out of the new behavior, set `UseNativeLibPrefix` to `false` in your proj
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
 The `lib` prefix is the widely accepted naming convention for shared and static libraries on Unix platforms. Applying it by default improves consistency and interoperability with other Unix-based tools and systems. It also removes the need for workarounds in .NET for Android, which requires binaries to follow this convention.
 
-For more details, see the original pull request.
+For more details, see the [original pull request](https://github.com/dotnet/runtime/pull/124611).
 
 ## Recommended action
 

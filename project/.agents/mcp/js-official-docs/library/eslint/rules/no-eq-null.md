@@ -1,13 +1,10 @@
 ---
-title: "no-eq-null"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-eq-null.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-eq-null
+rule_type: suggestion
+related_rules:
+- eqeqeq
 ---
 
-# no-eq-null
 
 Comparing to `null` without a type-checking operator (`==` or `!=`) can have unintended results as the comparison will evaluate to `true` when comparing not just to `null`, but also to `undefined`.
 
@@ -23,7 +20,7 @@ The `no-eq-null` rule aims to reduce potential bugs and unwanted behavior by ens
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-eq-null: "error"*/
@@ -37,9 +34,11 @@ while (qux != null) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-eq-null: "error"*/
@@ -53,13 +52,15 @@ while (qux !== null) {
 }
 ```
 
+:::
+
 ## Options
 
 This rule has no options.
 
 ## When Not To Use It
 
-If you want to enforce type-checking operations in general, use the more powerful eqeqeq instead.
+If you want to enforce type-checking operations in general, use the more powerful [eqeqeq](./eqeqeq) instead.
 
 ## Compatibility
 

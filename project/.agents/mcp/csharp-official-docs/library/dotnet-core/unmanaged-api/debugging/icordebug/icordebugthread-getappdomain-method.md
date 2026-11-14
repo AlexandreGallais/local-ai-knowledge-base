@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugThread::GetAppDomain Method"
 title: "ICorDebugThread::GetAppDomain Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugthread-getappdomain-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugThread.GetAppDomain"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugThread::GetAppDomain"
+helpviewer_keywords:
+  - "GetAppDomain method, ICorDebugThread interface [.NET debugging]"
+  - "ICorDebugThread::GetAppDomain method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugThread::GetAppDomain Method
 
 Gets an interface pointer to the application domain in which this ICorDebugThread is currently executing.
@@ -26,7 +35,7 @@ HRESULT GetAppDomain (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

@@ -1,19 +1,10 @@
----
-title: "Styling components"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/components/styling.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Styling components
 
-TIP: This guide assumes you've already read the Essentials Guide. Read that first if you're new to Angular.
+TIP: This guide assumes you've already read the [Essentials Guide](essentials). Read that first if you're new to Angular.
 
 Components can optionally include CSS styles that apply to that component's DOM:
 
-```angular-ts
+```angular-ts {highlight:[4]}
 @Component({
   selector: 'profile-photo',
   template: `<img src="profile-photo.jpg" alt="Your profile photo" />`,
@@ -28,7 +19,7 @@ export class ProfilePhoto {}
 
 You can also choose to write your styles in separate files:
 
-```angular-ts
+```angular-ts {highlight:[4]}
 @Component({
   selector: 'profile-photo',
   templateUrl: 'profile-photo.html',
@@ -43,8 +34,8 @@ render an Angular component, the framework automatically includes its associated
 lazy-loading a component.
 
 Angular works with any tool that outputs CSS,
-including Sass, Less,
-and Stylus.
+including [Sass](https://sass-lang.com), [Less](https://lesscss.org),
+and [Stylus](https://stylus-lang.com).
 
 ## Style scoping
 
@@ -52,7 +43,7 @@ Every component has a **view encapsulation** setting that determines how the fra
 component's styles. There are four view encapsulation modes: `Emulated`, `ShadowDom`, `ExperimentalIsolatedShadowDom`, and `None`.
 You can specify the mode in the `@Component` decorator:
 
-```angular-ts
+```angular-ts {highlight:[3]}
 @Component({
   ...,
   encapsulation: ViewEncapsulation.None,
@@ -72,11 +63,11 @@ global styles defined outside of a component may still affect elements inside a 
 emulated encapsulation.
 
 In emulated mode, Angular supports
-the `:host` pseudo-class.
-While the `:host-context()` pseudo-class
+the [`:host`](https://developer.mozilla.org/docs/Web/CSS/:host) pseudo-class.
+While the [`:host-context()`](https://developer.mozilla.org/docs/Web/CSS/:host-context) pseudo-class
 is deprecated in modern browsers, Angular's compiler provides full support for it. Both pseudo-classes
 can be used without relying on native
-Shadow DOM.
+[Shadow DOM](https://developer.mozilla.org/docs/Web/Web_Components/Using_shadow_DOM).
 During compilation, the framework transforms these pseudo classes into attributes so it doesn't
 comply with these native pseudo classes' rules at runtime (e.g. browser compatibility, specificity). Angular's
 emulated encapsulation mode does not support any other pseudo classes related to Shadow DOM, such
@@ -92,25 +83,25 @@ When a selector contains `::ng-deep`, Angular stops applying view-encapsulation 
 
 For example:
 
-- a CSS rule selector like `p a`, using the emulated encapsulation, will match `` elements that are descendants of a `` element,
+- a CSS rule selector like `p a`, using the emulated encapsulation, will match `<a>` elements that are descendants of a `<p>` element,
   both being within the component's own template.
 
-- A selector like `::ng-deep p a` will match `` elements anywhere in the application, descendants of a `` element anywhere in the application.
+- A selector like `::ng-deep p a` will match `<a>` elements anywhere in the application, descendants of a `<p>` element anywhere in the application.
 
   That effectively makes it behave like a global style.
 
-- In `p ::ng-deep a`, Angular requires the `` element to come from the component's own template, but the `` element may be anywhere in the application.
+- In `p ::ng-deep a`, Angular requires the `<p>` element to come from the component's own template, but the `<a>` element may be anywhere in the application.
 
-  So, in effect, the `` element may be in the component's template, or in any of its projected or child content.
+  So, in effect, the `<a>` element may be in the component's template, or in any of its projected or child content.
 
-- With `:host ::ng-deep p a`, both the `` and `` elements must be descendants of the component's host element.
+- With `:host ::ng-deep p a`, both the `<a>` and `<p>` elements must be descendants of the component's host element.
 
   They can come from the component's template or the views of its child components, but not elsewhere in the app.
 
 ### ViewEncapsulation.ShadowDom
 
 This mode scopes styles within a component by
-using the web standard Shadow DOM API.
+using [the web standard Shadow DOM API](https://developer.mozilla.org/docs/Web/Web_Components/Using_shadow_DOM).
 When enabling this mode, Angular attaches a shadow root to the component's host element and renders
 the component's template and styles into the corresponding shadow tree.
 
@@ -118,7 +109,7 @@ Styles inside the shadow tree cannot affect elements outside of that shadow tree
 
 Enabling `ShadowDom` encapsulation, however, impacts more than style scoping. Rendering the
 component in a shadow tree affects event propagation, interaction
-with the `<slot>` API,
+with [the `<slot>` API](https://developer.mozilla.org/docs/Web/Web_Components/Using_templates_and_slots),
 and how browser developer tools show elements. Always understand the full implications of using
 Shadow DOM in your application before enabling this option.
 
@@ -146,9 +137,9 @@ Angular does not support bindings inside of style elements.
 ## Referencing external style files
 
 Component templates can
-use the `<link>` element to
+use [the `<link>` element](https://developer.mozilla.org/docs/Web/HTML/Element/link) to
 reference CSS files. Additionally, your CSS may
-use the `@import`at-rule to reference
+use [the `@import`at-rule](https://developer.mozilla.org/docs/Web/CSS/@import) to reference
 CSS files. Angular treats these references as _external_ styles. External styles are not affected by
 emulated view encapsulation.
 
@@ -162,10 +153,10 @@ application or with markup you do not control. Angular does not namespace custom
 you ask it to, and an application that owns its page does not need namespacing.
 
 To scope the custom properties in your component styles to your application, add
-`provideCssVarNamespacing` to your application's
-providers. It uses the application's `APP_ID` as the namespace:
+[`provideCssVarNamespacing`](api/platform-browser/provideCssVarNamespacing) to your application's
+providers. It uses the application's [`APP_ID`](api/core/APP_ID) as the namespace:
 
-```ts
+```ts {header: "app.config.ts"}
 import {APP_ID, ApplicationConfig} from '@angular/core';
 import {provideCssVarNamespacing} from '@angular/platform-browser';
 
@@ -185,17 +176,17 @@ the application id, pass it to `provideCssVarNamespacing`. Angular appends the u
 `provideCssVarNamespacing('my-app_')` produces `--my-app__primary-color`.
 
 Angular namespaces the styles it compiles into a component: the `styles` and `styleUrl` of the
-component, the styles you write in a `<style>` element in its
+component, the styles you [write in a `<style>` element](#defining-styles-in-templates) in its
 template, stylesheets its template references with a relative `<link rel="stylesheet">`, and
 the styles of a component that uses `ViewEncapsulation.None`. Angular does not namespace a stylesheet the browser
 loads at runtime, such as a global stylesheet your build configuration lists or an
-external style that your build does not inline.
+[external style](#referencing-external-style-files) that your build does not inline.
 
 Namespacing applies to every component Angular compiles, including the components of the libraries
 you install. When a library's styles read a custom property that a global stylesheet defines, such
 as the properties of a theme, the reference no longer matches, the browser uses the `var()`
 fallback if there is one or otherwise
-the property's inherited or initial value,
+[the property's inherited or initial value](https://www.w3.org/TR/css-variables-1/#invalid-variables),
 and nothing reports an error. Before you enable namespacing in an
 existing application, review the custom properties that cross between your global stylesheets and
 your components.
@@ -216,7 +207,7 @@ Angular does not rewrite the name in:
 
 Each of these produces a property that your namespaced styles no longer read. Namespace those
 names yourself, as described in
-Using namespaced properties in TypeScript.
+[Using namespaced properties in TypeScript](#using-namespaced-properties-in-typescript).
 
 ### Opting out of namespacing
 
@@ -242,9 +233,9 @@ namespace.
 
 Prefer a style binding such as `[style.--primary-color]`, which Angular namespaces for you. When
 you go through a DOM API instead, pass the name you wrote in your styles to
-`CssVarNamespacer`, including the leading `--`:
+[`CssVarNamespacer`](api/platform-browser/CssVarNamespacer), including the leading `--`:
 
-```angular-ts
+```angular-ts {header: "profile-photo.ts"}
 import {Component, ElementRef, inject} from '@angular/core';
 import {CssVarNamespacer} from '@angular/platform-browser';
 

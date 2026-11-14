@@ -1,35 +1,15 @@
 ---
-title: "Classes and objects tutorial"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/fundamentals/tutorials/classes.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Classes and objects tutorial
+description: Create your first C# program and explore object oriented concepts
+ms.date: 10/10/2025
 ---
-
 # Explore object oriented programming with classes and objects
 
-In this tutorial, you build a console application and see the basic <example-value> features that are part of the C# language.
+In this tutorial, you build a console application and see the basic object-oriented features that are part of the C# language.
 
 ## Prerequisites
 
-- The latest .NET SDK
-- Visual Studio Code editor
-- The C# DevKit
-
-### Installation instructions
-
-On Windows, this WinGet configuration file to install all prerequisites. If you already have something installed, WinGet will skip that step.
-
-1. Download the file and double-click to run it.
-1. Read the license agreement, type `y`, and select `Enter` when prompted to accept.
-1. If you get a flashing User Account Control (UAC) prompt in your Taskbar, allow the installation to continue.
-
-On other platforms, you need to install each of these components separately.
-
-1. Download the recommended installer from the .NET SDK download page and double-click to run it. The download page detects your platform and recommends the latest installer for your platform.
-1. Download the latest installer from the Visual Studio Code home page and double click to run it. That page also detects your platform and the link should be correct for your system.
-1. Click the "Install" button on the C# DevKit extension page. That opens Visual Studio code, and asks if you want to install or enable the extension. Select "install".
+[!INCLUDE [Prerequisites](../../../../includes/prerequisites-basic-winget.md)]
 
 ## Create your application
 
@@ -105,7 +85,7 @@ public BankAccount(string name, decimal initialBalance)
 
 The `this` qualifier is only required when a local variable or parameter has the same name as that field or property. The `this` qualifier is omitted throughout the remainder of this article unless it's necessary.
 
-Constructors are called when you create an object using `new`. Replace the line `Console.WriteLine("Hello World!");` in *Program.cs* with the following code (replace `<name>` with your name):
+Constructors are called when you create an object using [`new`](../../language-reference/operators/new-operator.md). Replace the line `Console.WriteLine("Hello World!");` in *Program.cs* with the following code (replace `<name>` with your name):
 
 ```csharp
 using Classes;
@@ -139,79 +119,31 @@ Your bank account class needs to accept deposits and withdrawals to work correct
 
 Start by creating a new type that represents a transaction. The transaction is a `record` type that doesn't have any responsibilities. It needs a few properties. Create a new file named *Transaction.cs*. Add the following code to it:
 
-```csharp
-namespace Classes;
+:::code language="csharp" source="./snippets/introduction-to-classes/Transaction.cs":::
 
-public record Transaction(decimal Amount, DateTime Date, string Notes);
-```
-Now, let's add a `System.Collections.Generic.List`1` of `Transaction` objects to the `BankAccount` class. Add the following declaration after the constructor in your *BankAccount.cs* file:
+Now, let's add a <xref:System.Collections.Generic.List`1> of `Transaction` objects to the `BankAccount` class. Add the following declaration after the constructor in your *BankAccount.cs* file:
 
-```csharp
-private List<Transaction> _allTransactions = new List<Transaction>();
-```
+:::code language="csharp" source="./snippets/introduction-to-classes/BankAccount.cs" id="TransactionDeclaration":::
+
 Now, let's correctly compute the `Balance`. The current balance can be found by summing the values of all transactions. As the code is currently, you can only get the initial balance of the account, so you have to update the `Balance` property. Replace the line `public decimal Balance { get; }` in *BankAccount.cs* with the following code:
 
-```csharp
-public decimal Balance
-{
-    get
-    {
-        decimal balance = 0;
-        foreach (var item in _allTransactions)
-        {
-            balance += item.Amount;
-        }
+:::code language="csharp" source="./snippets/introduction-to-classes/BankAccount.cs" id="BalanceComputation":::
 
-        return balance;
-    }
-}
-```
 This example shows an important aspect of ***properties***. You're now computing the balance when another programmer asks for the value. Your computation enumerates all transactions, and provides the sum as the current balance.
 
 Next, implement the `MakeDeposit` and `MakeWithdrawal` methods. These methods enforce the final two rules: the initial balance must be positive, and any withdrawal must not create a negative balance.
 
 These rules introduce the concept of ***exceptions***. The standard way of indicating that a method can't complete its work successfully is to throw an exception. The type of exception and the message associated with it describe the error. Here, the `MakeDeposit` method throws an exception if the amount of the deposit isn't greater than 0. The `MakeWithdrawal` method throws an exception if the withdrawal amount isn't greater than 0, or if applying the withdrawal results in a negative balance. Add the following code after the declaration of the `_allTransactions` list:
 
-```csharp
-public void MakeDeposit(decimal amount, DateTime date, string note)
-{
-    if (amount <= 0)
-    {
-        throw new ArgumentOutOfRangeException(nameof(amount), "Amount of deposit must be positive");
-    }
-    var deposit = new Transaction(amount, date, note);
-    _allTransactions.Add(deposit);
-}
+:::code language="csharp" source="./snippets/introduction-to-classes/BankAccount.cs" id="DepositAndWithdrawal":::
 
-public void MakeWithdrawal(decimal amount, DateTime date, string note)
-{
-    if (amount <= 0)
-    {
-        throw new ArgumentOutOfRangeException(nameof(amount), "Amount of withdrawal must be positive");
-    }
-    if (Balance - amount < 0)
-    {
-        throw new InvalidOperationException("Not sufficient funds for this withdrawal");
-    }
-    var withdrawal = new Transaction(-amount, date, note);
-    _allTransactions.Add(withdrawal);
-}
-```
-The `throw` statement **throws** an exception. Execution of the current block ends, and control transfers to the first matching `catch` block found in the call stack. You add a `catch` block to test this code a little later on.
+The [`throw` statement](../../language-reference/statements/exception-handling-statements.md#the-throw-statement) **throws** an exception. Execution of the current block ends, and control transfers to the first matching `catch` block found in the call stack. You add a `catch` block to test this code a little later on.
 
 The constructor should get one change so that it adds an initial transaction, rather than updating the balance directly. Since you already wrote the `MakeDeposit` method, call it from your constructor. The finished constructor should look like this:
 
-```csharp
-public BankAccount(string name, decimal initialBalance)
-{
-    Number = s_accountNumberSeed.ToString();
-    s_accountNumberSeed++;
+:::code language="csharp" source="./snippets/introduction-to-classes/BankAccount.cs" id="Constructor":::
 
-    Owner = name;
-    MakeDeposit(initialBalance, DateTime.Now, "Initial balance");
-}
-```
-`System.DateTime.Now` is a property that returns the current date and time. Test this code by adding a few deposits and withdrawals in your `Main` method, following the code that creates a new `BankAccount`:
+<xref:System.DateTime.Now?displayProperty=nameWithType> is a property that returns the current date and time. Test this code by adding a few deposits and withdrawals in your `Main` method, following the code that creates a new `BankAccount`:
 
 ```csharp
 account.MakeWithdrawal(500, DateTime.Now, "Rent payment");
@@ -237,7 +169,7 @@ catch (ArgumentOutOfRangeException e)
 }
 ```
 
-You use the `try-catch` statement to mark a block of code that might throw exceptions and to catch those errors that you expect. You can use the same technique to test the code that throws an exception for a negative balance. Add the following code before the declaration of `invalidAccount` in your `Main` method:
+You use the [`try-catch` statement](../../language-reference/statements/exception-handling-statements.md#the-try-catch-statement) to mark a block of code that might throw exceptions and to catch those errors that you expect. You can use the same technique to test the code that throws an exception for a negative balance. Add the following code before the declaration of `invalidAccount` in your `Main` method:
 
 ```csharp
 // Test for a negative balance.
@@ -258,23 +190,9 @@ Save the file and type `dotnet run` to try it.
 
 To finish this tutorial, you can write the `GetAccountHistory` method that creates a `string` for the transaction history. Add this method to the `BankAccount` type:
 
-```csharp
-public string GetAccountHistory()
-{
-    var report = new System.Text.StringBuilder();
+:::code language="csharp" source="./snippets/introduction-to-classes/BankAccount.cs" id="History":::
 
-    decimal balance = 0;
-    report.AppendLine("Date\t\tAmount\tBalance\tNote");
-    foreach (var item in _allTransactions)
-    {
-        balance += item.Amount;
-        report.AppendLine($"{item.Date.ToShortDateString()}\t{item.Amount}\t{balance}\t{item.Notes}");
-    }
-
-    return report.ToString();
-}
-```
-The history uses the `System.Text.StringBuilder` class to format a string that contains one line for each transaction. You used string formatting earlier in these tutorials. One new character is `\t`. That inserts a tab to format the output.
+The history uses the <xref:System.Text.StringBuilder> class to format a string that contains one line for each transaction. You used string formatting earlier in these tutorials. One new character is `\t`. That inserts a tab to format the output.
 
 Add this line to test it in *Program.cs*:
 
@@ -286,11 +204,11 @@ Run your program and check the results.
 
 ## Next steps
 
-If you got stuck, you can see the source for this tutorial in our GitHub repo.
+If you got stuck, you can see the source for this tutorial [in our GitHub repo](https://github.com/dotnet/docs/tree/main/docs/csharp/fundamentals/tutorials/snippets/introduction-to-classes).
 
-You can continue with the object oriented programming tutorial.
+You can continue with the [object oriented programming](oop.md) tutorial.
 
 You can learn more about these concepts in these articles:
 
-- Selection statements
-- Iteration statements
+- [Selection statements](../../language-reference/statements/selection-statements.md)
+- [Iteration statements](../../language-reference/statements/iteration-statements.md)

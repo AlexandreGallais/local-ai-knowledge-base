@@ -1,10 +1,9 @@
 ---
-title: "dnim trace command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/additional-tools/dnim-cli-trace.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dnim trace command
+description: The trace command identifies .NET processes.
+author: joeloff
+ms.date: 08/11/2026
+ai-usage: ai-assisted
 ---
 
 # dnim trace
@@ -34,26 +33,18 @@ The command differentiates between single file and self-contained applications. 
 
 The command is useful to identify applications using end-of-life runtimes and how removing older versions of .NET could impact a device.
 
-> **Important:**
+> [!IMPORTANT]
 > The command requires administrator access to process kernel traces.
 
 ## Options
 
-- **`-a|--accept-license`**
+- [!INCLUDE [accept-license](includes/dnim-cli-accept-license.md)]
 
-Automatically accept the license agreement. On first run, the user will be prompted to accept the license. The command will fail if the verbosity is set to `quiet` and the tool is executed for the first time. Administrators should include this option when deploying DNIM across their network.
+- [!INCLUDE [output-file](includes/dnim-cli-output-file.md)]
 
-- **`-o|--output-file <OUTPUT_FILE>`**
+- [!INCLUDE [output-format](includes/dnim-cli-output-format.md)]
 
-Specify the full path of the file where DNIM writes the command results.
-
-- **`--output-format <text|csv|html|json>`**
-
-Specify the output format for command results. The default format is `csv`.
-
-- **`-v|--verbosity <quiet|normal|diagnostic>`**
-
-Set the console output verbosity. Log files always contain diagnostic output. The default value is `normal`.
+- [!INCLUDE [verbosity](includes/dnim-cli-verbosity.md)]
 
 ## Results
 
@@ -69,3 +60,5 @@ The results include information about each process (PID and start time) and the 
 1. The `dotnet` process is an FDD application running on .NET 10.0.11. Note that the process also loaded modules from the .NET SDK.
 1. The `pwsh` process is a self-contained application. The diagnostic log confirms this and shows a local copy of `coreclr.dll` was loaded. The version is also different from the global copy loaded by `dotnet` (second row).
 `[2026-08-17 08:31:59.175]d0000: Event: RuntimeStart, timestamp: 08/17/2026 08:31:57, PID: 37364, path: C:\Program Files\PowerShell\7\coreclr.dll`
+
+## See also

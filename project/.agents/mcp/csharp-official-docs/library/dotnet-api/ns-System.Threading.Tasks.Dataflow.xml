@@ -1,0 +1,6 @@
+<Namespace Name="System.Threading.Tasks.Dataflow">
+  <Docs>
+    <summary>Provides an actor-based programming model that supports in-process message passing for coarse-grained dataflow and pipelining tasks.</summary>
+    <seealso href="https://learn.microsoft.com/dotnet/standard/parallel-programming/dataflow-task-parallel-library">Dataflow (Task Parallel Library)</seealso>
+  </Docs>
+</Namespace>

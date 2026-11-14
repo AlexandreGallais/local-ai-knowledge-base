@@ -1,29 +1,20 @@
----
-title: "InvocationHandler interface (java.lang.reflect)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/reflect/InvocationHandler.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # InvocationHandler interface (java.lang.reflect)
 
 ```java
 public interface InvocationHandler
 ```
 
-`InvocationHandler` is the interface implemented by
-the *invocation handler* of a proxy instance.
+{@code InvocationHandler} is the interface implemented by
+the <i>invocation handler</i> of a proxy instance.
 
-Each proxy instance has an associated invocation handler.
+<p>Each proxy instance has an associated invocation handler.
 When a method is invoked on a proxy instance, the method
-invocation is encoded and dispatched to the `invoke`
+invocation is encoded and dispatched to the {@code invoke}
 method of its invocation handler.
 
-**See also:** Proxy
-
-**Since:** 1.3
+@author      Peter Jones
+@see         Proxy
+@since       1.3
 
 ## InvocationHandler.invoke(Object, Method, Object[])
 
@@ -36,31 +27,49 @@ the result.  This method will be invoked on an invocation handler
 when a method is invoked on a proxy instance that it is
 associated with.
 
-Parameters:
+@param   proxy the proxy instance that the method was invoked on
 
-- `proxy`: the proxy instance that the method was invoked on
-- `method`: the `Method` instance corresponding to the interface method invoked on the proxy instance. The declaring class of the `Method` object will be the interface that the method was declared in, which may be a superinterface of the proxy interface that the proxy class inherits the method through.
-- `args`: an array of objects containing the values of the arguments passed in the method invocation on the proxy instance, or `null` if interface method takes no arguments. Arguments of primitive types are wrapped in instances of the appropriate primitive wrapper class, such as `java.lang.Integer` or `java.lang.Boolean`.
+@param   method the {@code Method} instance corresponding to
+the interface method invoked on the proxy instance.  The declaring
+class of the {@code Method} object will be the interface that
+the method was declared in, which may be a superinterface of the
+proxy interface that the proxy class inherits the method through.
 
-**Returns:** the value to return from the method invocation on the
+@param   args an array of objects containing the values of the
+arguments passed in the method invocation on the proxy instance,
+or {@code null} if interface method takes no arguments.
+Arguments of primitive types are wrapped in instances of the
+appropriate primitive wrapper class, such as
+{@code java.lang.Integer} or {@code java.lang.Boolean}.
+
+@return  the value to return from the method invocation on the
 proxy instance.  If the declared return type of the interface
 method is a primitive type, then the value returned by
 this method must be an instance of the corresponding primitive
 wrapper class; otherwise, it must be a type assignable to the
 declared return type.  If the value returned by this method is
-`null` and the interface method's return type is
-primitive, then a `NullPointerException` will be
+{@code null} and the interface method's return type is
+primitive, then a {@code NullPointerException} will be
 thrown by the method invocation on the proxy instance.  If the
 value returned by this method is otherwise not compatible with
 the interface method's declared return type as described above,
-a `ClassCastException` will be thrown by the method
+a {@code ClassCastException} will be thrown by the method
 invocation on the proxy instance.
 
-**See also:** UndeclaredThrowableException
+@throws  Throwable the exception to throw from the method
+invocation on the proxy instance.  The exception's type must be
+assignable either to any of the exception types declared in the
+{@code throws} clause of the interface method or to the
+unchecked exception types {@code java.lang.RuntimeException}
+or {@code java.lang.Error}.  If a checked exception is
+thrown by this method that is not assignable to any of the
+exception types declared in the {@code throws} clause of
+the interface method, then an
+{@link UndeclaredThrowableException} containing the
+exception that was thrown by this method will be thrown by the
+method invocation on the proxy instance.
 
-Throws:
-
-- `Throwable`: the exception to throw from the method invocation on the proxy instance. The exception's type must be assignable either to any of the exception types declared in the `throws` clause of the interface method or to the unchecked exception types `java.lang.RuntimeException` or `java.lang.Error`. If a checked exception is thrown by this method that is not assignable to any of the exception types declared in the `throws` clause of the interface method, then an `UndeclaredThrowableException` containing the exception that was thrown by this method will be thrown by the method invocation on the proxy instance.
+@see     UndeclaredThrowableException
 
 ## InvocationHandler.invokeDefault(Object, Method, Object...)
 
@@ -68,22 +77,22 @@ Throws:
 public static Object invokeDefault(Object proxy, Method method, Object... args) throws Throwable
 ```
 
-Invokes the specified default method on the given `proxy` instance with
-the given parameters.  The given `method` must be a default method
-declared in a proxy interface of the `proxy`'s class or inherited
+Invokes the specified default method on the given {@code proxy} instance with
+the given parameters.  The given {@code method} must be a default method
+declared in a proxy interface of the {@code proxy}'s class or inherited
 from its superinterface directly or indirectly.
-
-Invoking this method behaves as if `invokespecial` instruction executed
+<p>
+Invoking this method behaves as if {@code invokespecial} instruction executed
 from the proxy class, targeting the default method in a proxy interface.
 This is equivalent to the invocation:
-`X.super.m(A* a)` where `X` is a proxy interface and the call to
-`X.super::m(A*)` is resolved to the given `method`.
+{@code X.super.m(A* a)} where {@code X} is a proxy interface and the call to
+{@code X.super::m(A*)} is resolved to the given {@code method}.
+<p>
+Examples: interface {@code A} and {@code B} both declare a default
+implementation of method {@code m}. Interface {@code C} extends {@code A}
+and inherits the default method {@code m} from its superinterface {@code A}.
 
-Examples: interface `A` and `B` both declare a default
-implementation of method `m`. Interface `C` extends `A`
-and inherits the default method `m` from its superinterface `A`.
-
-```java
+<blockquote><pre>{@code
 interface A {
     default T m(A a) { return t1; }
 }
@@ -91,12 +100,12 @@ interface B {
     default T m(A a) { return t2; }
 }
 interface C extends A {}
-```
+}</pre></blockquote>
 
-The following creates a proxy instance that implements `A`
-and invokes the default method `A::m`.
+The following creates a proxy instance that implements {@code A}
+and invokes the default method {@code A::m}.
 
-```java
+<blockquote><pre>{@code
 Object proxy = Proxy.newProxyInstance(loader, new Class<?>[] { A.class },
         (o, m, params) -> {
             if (m.isDefault()) {
@@ -104,16 +113,16 @@ Object proxy = Proxy.newProxyInstance(loader, new Class<?>[] { A.class },
                 return InvocationHandler.invokeDefault(o, m, params);
             }
         });
-```
+}</pre></blockquote>
 
-If a proxy instance implements both `A` and `B`, both
-of which provides the default implementation of method `m`,
+If a proxy instance implements both {@code A} and {@code B}, both
+of which provides the default implementation of method {@code m},
 the invocation handler can dispatch the method invocation to
-`A::m` or `B::m` via the `invokeDefault` method.
+{@code A::m} or {@code B::m} via the {@code invokeDefault} method.
 For example, the following code delegates the method invocation
-to `B::m`.
+to {@code B::m}.
 
-```java
+<blockquote><pre>{@code
 Object proxy = Proxy.newProxyInstance(loader, new Class<?>[] { A.class, B.class },
         (o, m, params) -> {
             if (m.getName().equals("m")) {
@@ -122,16 +131,16 @@ Object proxy = Proxy.newProxyInstance(loader, new Class<?>[] { A.class, B.class 
                 return InvocationHandler.invokeDefault(o, bMethod, params);
             }
         });
-```
+}</pre></blockquote>
 
-If a proxy instance implements `C` that inherits the default
-method `m` from its superinterface `A`, then
-the interface method invocation on `"m"` is dispatched to
-the invocation handler's Method, Object[]) invoke
-method with the `Method` object argument representing the
-default method `A::m`.
+If a proxy instance implements {@code C} that inherits the default
+method {@code m} from its superinterface {@code A}, then
+the interface method invocation on {@code "m"} is dispatched to
+the invocation handler's {@link #invoke(Object, Method, Object[]) invoke}
+method with the {@code Method} object argument representing the
+default method {@code A::m}.
 
-```java
+<blockquote><pre>{@code
 Object proxy = Proxy.newProxyInstance(loader, new Class<?>[] { C.class },
        (o, m, params) -> {
             if (m.isDefault()) {
@@ -139,34 +148,34 @@ Object proxy = Proxy.newProxyInstance(loader, new Class<?>[] { C.class },
                 return InvocationHandler.invokeDefault(o, m, params);
             }
        });
-```
+}</pre></blockquote>
 
-The invocation of method `"m"` on this `proxy` will behave
-as if `C.super::m` is called and that is resolved to invoking
-`A::m`.
-
+The invocation of method {@code "m"} on this {@code proxy} will behave
+as if {@code C.super::m} is called and that is resolved to invoking
+{@code A::m}.
+<p>
 Adding a default method, or changing a method from abstract to default
-may cause an exception if an existing code attempts to call `invokeDefault`
+may cause an exception if an existing code attempts to call {@code invokeDefault}
 to invoke a default method.
 
-For example, if `C` is modified to implement a default method
-`m`:
+For example, if {@code C} is modified to implement a default method
+{@code m}:
 
-```java
+<blockquote><pre>{@code
 interface C extends A {
     default T m(A a) { return t3; }
 }
-```
+}</pre></blockquote>
 
-The code above that creates proxy instance `proxy` with
-the modified `C` will run with no exception and it will result in
-calling `C::m` instead of `A::m`.
+The code above that creates proxy instance {@code proxy} with
+the modified {@code C} will run with no exception and it will result in
+calling {@code C::m} instead of {@code A::m}.
+<p>
+The following is another example that creates a proxy instance of {@code C}
+and the invocation handler calls the {@code invokeDefault} method
+to invoke {@code A::m}:
 
-The following is another example that creates a proxy instance of `C`
-and the invocation handler calls the `invokeDefault` method
-to invoke `A::m`:
-
-```java
+<blockquote><pre>{@code
 C c = (C) Proxy.newProxyInstance(loader, new Class<?>[] { C.class },
         (o, m, params) -> {
             if (m.getName().equals("m")) {
@@ -177,38 +186,50 @@ C c = (C) Proxy.newProxyInstance(loader, new Class<?>[] { C.class },
             }
         });
 c.m(...);
-```
+}</pre></blockquote>
 
-The above code runs successfully with the old version of `C` and
-`A::m` is invoked.  When running with the new version of `C`,
-the above code will fail with `IllegalArgumentException` because
-`C` overrides the implementation of the same method and
-`A::m` is not accessible by a proxy instance.
+The above code runs successfully with the old version of {@code C} and
+{@code A::m} is invoked.  When running with the new version of {@code C},
+the above code will fail with {@code IllegalArgumentException} because
+{@code C} overrides the implementation of the same method and
+{@code A::m} is not accessible by a proxy instance.
 
-Parameters:
-
-- `proxy`: the `Proxy` instance on which the default method to be invoked
-- `method`: the `Method` instance corresponding to a default method declared in a proxy interface of the proxy class or inherited from its superinterface directly or indirectly
-- `args`: the parameters used for the method invocation; can be `null` if the number of formal parameters required by the method is zero.
-
-**API note:** The `proxy` parameter is of type `Object` rather than `Proxy`
-to make it easy for Method, Object[]) InvocationHandler::invoke implementation to call directly without the need
+@apiNote
+The {@code proxy} parameter is of type {@code Object} rather than {@code Proxy}
+to make it easy for {@link InvocationHandler#invoke(Object, Method, Object[])
+InvocationHandler::invoke} implementation to call directly without the need
 of casting.
 
-**Returns:** the value returned from the method invocation
+@param proxy   the {@code Proxy} instance on which the default method to be invoked
+@param method  the {@code Method} instance corresponding to a default method
+               declared in a proxy interface of the proxy class or inherited
+               from its superinterface directly or indirectly
+@param args    the parameters used for the method invocation; can be {@code null}
+               if the number of formal parameters required by the method is zero.
+@return the value returned from the method invocation
 
-**Since:** 16
+@throws IllegalArgumentException if any of the following conditions is {@code true}:
+        <ul>
+        <li>{@code proxy} is not {@linkplain Proxy#isProxyClass(Class)
+            a proxy instance}; or</li>
+        <li>the given {@code method} is not a default method declared
+            in a proxy interface of the proxy class and not inherited from
+            any of its superinterfaces; or</li>
+        <li>the given {@code method} is overridden directly or indirectly by
+            the proxy interfaces and the method reference to the named
+            method never resolves to the given {@code method}; or</li>
+        <li>the length of the given {@code args} array does not match the
+            number of parameters of the method to be invoked; or</li>
+        <li>any of the {@code args} elements fails the unboxing
+            conversion if the corresponding method parameter type is
+            a primitive type; or if, after possible unboxing, any of the
+            {@code args} elements cannot be assigned to the corresponding
+            method parameter type.</li>
+        </ul>
+@throws IllegalAccessException if the declaring class of the specified
+        default method is inaccessible to the caller class
+@throws NullPointerException if {@code proxy} or {@code method} is {@code null}
+@throws Throwable anything thrown by the default method
 
-**jvms:** 5.4.3 Resolution
-
-Throws:
-
-- `IllegalArgumentException`: if any of the following conditions is `true`:
-- `proxy` is not a proxy instance; or
-- the given `method` is not a default method declared in a proxy interface of the proxy class and not inherited from any of its superinterfaces; or
-- the given `method` is overridden directly or indirectly by the proxy interfaces and the method reference to the named method never resolves to the given `method`; or
-- the length of the given `args` array does not match the number of parameters of the method to be invoked; or
-- any of the `args` elements fails the unboxing conversion if the corresponding method parameter type is a primitive type; or if, after possible unboxing, any of the `args` elements cannot be assigned to the corresponding method parameter type.
-- `IllegalAccessException`: if the declaring class of the specified default method is inaccessible to the caller class
-- `NullPointerException`: if `proxy` or `method` is `null`
-- `Throwable`: anything thrown by the default method
+@since 16
+@jvms 5.4.3 Resolution

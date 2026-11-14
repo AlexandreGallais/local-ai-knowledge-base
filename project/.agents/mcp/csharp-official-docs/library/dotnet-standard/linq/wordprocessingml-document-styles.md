@@ -1,19 +1,19 @@
 ---
-title: "WordprocessingML document with styles - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/wordprocessingml-document-styles.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: WordprocessingML document with styles - LINQ to XML
+description: Learn about WordprocessingML documents whose paragraphs are formatted with styles.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
 ---
 
 # WordprocessingML document with styles (LINQ to XML)
 
-This article presents a WordprocessingML document that is more complicated than the one in The XML shape of WordprocessingML documents; specifically, it presents a document whose paragraphs are formatted with styles.
+This article presents a WordprocessingML document that is more complicated than the one in [The XML shape of WordprocessingML documents](xml-shape-wordprocessingml-documents.md); specifically, it presents a document whose paragraphs are formatted with styles.
 
 To understand styles, it's helpful to know something about document structure. A WordprocessingML document is stored in a *package* that comprises *parts*. Specifically, the term *package* corresponds to a ZIP archive and the term *part* corresponds to a file stored within the ZIP. If a document contains paragraphs that are formatted with styles, there will be a document part that contains paragraphs that have styles applied to them, and a style part that defines the styles referenced in the document part.
 
-The easiest way to see the XML that makes up an Office Open XML document is to run the example in Example that outputs Office Open XML document parts.
+The easiest way to see the XML that makes up an Office Open XML document is to run the example in [Example that outputs Office Open XML document parts](example-outputs-office-open-xml-document-parts.md).
 
 When you access a package, you should do so through the relationships among parts, not through an arbitrary path. This issue is beyond the scope of the current tutorial, but the example programs in this and other tutorial articles demonstrate the correct approach.
 

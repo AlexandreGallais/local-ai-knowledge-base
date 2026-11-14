@@ -1,12 +1,3 @@
----
-title: "Attributes class (java.util.jar)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/jar/Attributes.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Attributes class (java.util.jar)
 
 ```java
@@ -20,15 +11,16 @@ characters in length. There must be a colon and a SPACE after the name;
 the combined length will not exceed 72 characters.
 Attribute values can contain any characters and
 will be UTF8-encoded when written to the output stream.  See the
-JAR File Specification
+<a href="{@docRoot}/../specs/jar/jar.html">JAR File Specification</a>
 for more information about valid attribute names and values.
 
-This map and its views have a predictable iteration order, namely the
-order that keys were inserted into the map, as with `LinkedHashMap`.
+<p>This map and its views have a predictable iteration order, namely the
+order that keys were inserted into the map, as with {@link LinkedHashMap}.
 
-**See also:** Manifest
-
-**Since:** 1.2
+@spec jar/jar.html JAR File Specification
+@author  David Connelly
+@see     Manifest
+@since   1.2
 
 ## Attributes.map
 
@@ -55,9 +47,7 @@ public Attributes(int size)
 Constructs a new, empty Attributes object with the specified
 initial size.
 
-Parameters:
-
-- `size`: the initial number of attributes
+@param size the initial number of attributes
 
 ## Attributes.Attributes(Attributes)
 
@@ -68,9 +58,7 @@ public Attributes(Attributes attr)
 Constructs a new Attributes object with the same attribute name-value
 mappings as in the specified Attributes.
 
-Parameters:
-
-- `attr`: the specified Attributes
+@param attr the specified Attributes
 
 ## Attributes.get(Object)
 
@@ -81,11 +69,8 @@ public Object get(Object name)
 Returns the value of the specified attribute name, or null if the
 attribute name was not found.
 
-Parameters:
-
-- `name`: the attribute name
-
-**Returns:** the value of the specified attribute name, or null if
+@param name the attribute name
+@return the value of the specified attribute name, or null if
         not found.
 
 ## Attributes.getValue(String)
@@ -97,23 +82,16 @@ public String getValue(String name)
 Returns the value of the specified attribute name, specified as
 a string, or null if the attribute was not found. The attribute
 name is case-insensitive.
-
+<p>
 This method is defined as:
-
-```java
+<pre>
      return (String)get(new Attributes.Name((String)name));
-```
+</pre>
 
-Parameters:
-
-- `name`: the attribute name as a string
-
-**Returns:** the String value of the specified attribute name, or null if
+@param name the attribute name as a string
+@return the String value of the specified attribute name, or null if
         not found.
-
-Throws:
-
-- `IllegalArgumentException`: if the attribute name is invalid
+@throws IllegalArgumentException if the attribute name is invalid
 
 ## Attributes.getValue(Name)
 
@@ -123,18 +101,14 @@ public String getValue(Name name)
 
 Returns the value of the specified Attributes.Name, or null if the
 attribute was not found.
-
+<p>
 This method is defined as:
-
-```java
+<pre>
     return (String)get(name);
-```
+</pre>
 
-Parameters:
-
-- `name`: the Attributes.Name object
-
-**Returns:** the String value of the specified Attribute.Name, or null if
+@param name the Attributes.Name object
+@return the String value of the specified Attribute.Name, or null if
         not found.
 
 ## Attributes.put(Object, Object)
@@ -147,16 +121,11 @@ Associates the specified value with the specified attribute name
 (key) in this Map. If the Map previously contained a mapping for
 the attribute name, the old value is replaced.
 
-Parameters:
-
-- `name`: the attribute name
-- `value`: the attribute value
-
-**Returns:** the previous value of the attribute, or null if none
-
-Throws:
-
-- `ClassCastException`: if the name is not a Attributes.Name or the value is not a String
+@param name the attribute name
+@param value the attribute value
+@return the previous value of the attribute, or null if none
+@throws    ClassCastException if the name is not a Attributes.Name
+           or the value is not a String
 
 ## Attributes.putValue(String, String)
 
@@ -168,23 +137,16 @@ Associates the specified value with the specified attribute name,
 specified as a String. The attributes name is case-insensitive.
 If the Map previously contained a mapping for the attribute name,
 the old value is replaced.
-
+<p>
 This method is defined as:
-
-```java
+<pre>
      return (String)put(new Attributes.Name(name), value);
-```
+</pre>
 
-Parameters:
-
-- `name`: the attribute name as a string
-- `value`: the attribute value
-
-**Returns:** the previous value of the attribute, or null if none
-
-Throws:
-
-- `IllegalArgumentException`: if the attribute name is invalid
+@param name the attribute name as a string
+@param value the attribute value
+@return the previous value of the attribute, or null if none
+@throws    IllegalArgumentException if the attribute name is invalid
 
 ## Attributes.remove(Object)
 
@@ -195,11 +157,8 @@ public Object remove(Object name)
 Removes the attribute with the specified name (key) from this Map.
 Returns the previous attribute value, or null if none.
 
-Parameters:
-
-- `name`: attribute name
-
-**Returns:** the previous value of the attribute, or null if none
+@param name attribute name
+@return the previous value of the attribute, or null if none
 
 ## Attributes.containsValue(Object)
 
@@ -210,11 +169,8 @@ public boolean containsValue(Object value)
 Returns true if this Map maps one or more attribute names (keys)
 to the specified value.
 
-Parameters:
-
-- `value`: the attribute value
-
-**Returns:** true if this Map maps one or more attribute names to
+@param value the attribute value
+@return true if this Map maps one or more attribute names to
         the specified value
 
 ## Attributes.containsKey(Object)
@@ -225,11 +181,8 @@ public boolean containsKey(Object name)
 
 Returns true if this Map contains the specified attribute name (key).
 
-Parameters:
-
-- `name`: the attribute name
-
-**Returns:** true if this Map contains the specified attribute name
+@param name the attribute name
+@return true if this Map contains the specified attribute name
 
 ## Attributes.putAll(Map<?,?>)
 
@@ -240,13 +193,8 @@ public void putAll(Map<?,?> attr)
 Copies all of the attribute name-value mappings from the specified
 Attributes to this Map. Duplicate mappings will be replaced.
 
-Parameters:
-
-- `attr`: the Attributes to be stored in this map
-
-Throws:
-
-- `ClassCastException`: if attr is not an Attributes
+@param attr the Attributes to be stored in this map
+@throws    ClassCastException if attr is not an Attributes
 
 ## Attributes.clear()
 
@@ -304,15 +252,12 @@ public boolean equals(Object o)
 ```
 
 Compares the specified object to the underlying
-map for equality.
+{@linkplain Attributes#map map} for equality.
 Returns true if the given object is also a Map
 and the two maps represent the same mappings.
 
-Parameters:
-
-- `o`: the Object to be compared
-
-**Returns:** true if the specified Object is equal to this Map
+@param o the Object to be compared
+@return true if the specified Object is equal to this Map
 
 ## Attributes.hashCode()
 
@@ -329,11 +274,9 @@ public Object clone()
 ```
 
 Returns a copy of the Attributes, implemented as follows:
-
-```java
-    public Object clone() { return new Attributes(this);
-```
-
+<pre>
+    public Object clone() { return new Attributes(this); }
+</pre>
 Since the attribute names and values are themselves immutable,
 the Attributes returned can be safely modified without affecting
 the original.
@@ -346,14 +289,10 @@ public Name(String name)
 
 Constructs a new attribute name using the given string name.
 
-Parameters:
-
-- `name`: the attribute string name
-
-Throws:
-
-- `IllegalArgumentException`: if the attribute name was invalid
-- `NullPointerException`: if the attribute name was null
+@param name the attribute string name
+@throws    IllegalArgumentException if the attribute name was
+           invalid
+@throws    NullPointerException if the attribute name was null
 
 ## Attributes.equals(Object)
 
@@ -362,12 +301,8 @@ public boolean equals(Object o)
 ```
 
 Compares this attribute name to another for equality.
-
-Parameters:
-
-- `o`: the object to compare
-
-**Returns:** true if this attribute name is equal to the
+@param o the object to compare
+@return true if this attribute name is equal to the
         specified attribute object
 
 ## Attributes.hashCode()
@@ -392,11 +327,11 @@ Returns the attribute name as a String.
 public static final Name MANIFEST_VERSION
 ```
 
-`Name` object for `Manifest-Version`
+{@code Name} object for {@code Manifest-Version}
 manifest attribute. This attribute indicates the version number
 of the manifest standard to which a JAR file's manifest conforms.
-
-**See also:** Manifest and Signature Specification
+@see <a href="{@docRoot}/../specs/jar/jar.html#jar-manifest">
+     Manifest and Signature Specification</a>
 
 ## Attributes.SIGNATURE_VERSION
 
@@ -404,10 +339,10 @@ of the manifest standard to which a JAR file's manifest conforms.
 public static final Name SIGNATURE_VERSION
 ```
 
-`Name` object for `Signature-Version`
+{@code Name} object for {@code Signature-Version}
 manifest attribute used when signing JAR files.
-
-**See also:** Manifest and Signature Specification
+@see <a href="{@docRoot}/../specs/jar/jar.html#jar-manifest">
+     Manifest and Signature Specification</a>
 
 ## Attributes.CONTENT_TYPE
 
@@ -415,7 +350,7 @@ manifest attribute used when signing JAR files.
 public static final Name CONTENT_TYPE
 ```
 
-`Name` object for `Content-Type`
+{@code Name} object for {@code Content-Type}
 manifest attribute.
 
 ## Attributes.CLASS_PATH
@@ -424,10 +359,10 @@ manifest attribute.
 public static final Name CLASS_PATH
 ```
 
-`Name` object for `Class-Path`
+{@code Name} object for {@code Class-Path}
 manifest attribute.
-
-**See also:** JAR file specification
+@see <a href="{@docRoot}/../specs/jar/jar.html#class-path-attribute">
+     JAR file specification</a>
 
 ## Attributes.MAIN_CLASS
 
@@ -435,11 +370,11 @@ manifest attribute.
 public static final Name MAIN_CLASS
 ```
 
-`Name` object for `Main-Class` manifest
+{@code Name} object for {@code Main-Class} manifest
 attribute used for launching applications packaged in JAR files.
-The `Main-Class` attribute is used in conjunction
-with the `-jar` command-line option of the
-`java` application launcher.
+The {@code Main-Class} attribute is used in conjunction
+with the {@code -jar} command-line option of the
+{@code java} application launcher.
 
 ## Attributes.SEALED
 
@@ -447,10 +382,10 @@ with the `-jar` command-line option of the
 public static final Name SEALED
 ```
 
-`Name` object for `Sealed` manifest attribute
+{@code Name} object for {@code Sealed} manifest attribute
 used for sealing.
-
-**See also:** Package Sealing
+@see <a href="{@docRoot}/../specs/jar/jar.html#package-sealing">
+     Package Sealing</a>
 
 ## Attributes.EXTENSION_LIST
 
@@ -458,7 +393,7 @@ used for sealing.
 public static final Name EXTENSION_LIST
 ```
 
-`Name` object for `Extension-List` manifest attribute
+{@code Name} object for {@code Extension-List} manifest attribute
 used for the extension mechanism that is no longer supported.
 
 ## Attributes.EXTENSION_NAME
@@ -467,7 +402,7 @@ used for the extension mechanism that is no longer supported.
 public static final Name EXTENSION_NAME
 ```
 
-`Name` object for `Extension-Name` manifest attribute
+{@code Name} object for {@code Extension-Name} manifest attribute
 used for the extension mechanism that is no longer supported.
 
 ## Attributes.EXTENSION_INSTALLATION
@@ -476,9 +411,9 @@ used for the extension mechanism that is no longer supported.
 public static final Name EXTENSION_INSTALLATION
 ```
 
-`Name` object for `Extension-Installation` manifest attribute.
+{@code Name} object for {@code Extension-Installation} manifest attribute.
 
-**Deprecated:** Extension mechanism is no longer supported.
+@deprecated Extension mechanism is no longer supported.
 
 ## Attributes.IMPLEMENTATION_TITLE
 
@@ -486,7 +421,7 @@ public static final Name EXTENSION_INSTALLATION
 public static final Name IMPLEMENTATION_TITLE
 ```
 
-`Name` object for `Implementation-Title`
+{@code Name} object for {@code Implementation-Title}
 manifest attribute used for package versioning.
 
 ## Attributes.IMPLEMENTATION_VERSION
@@ -495,7 +430,7 @@ manifest attribute used for package versioning.
 public static final Name IMPLEMENTATION_VERSION
 ```
 
-`Name` object for `Implementation-Version`
+{@code Name} object for {@code Implementation-Version}
 manifest attribute used for package versioning.
 
 ## Attributes.IMPLEMENTATION_VENDOR
@@ -504,7 +439,7 @@ manifest attribute used for package versioning.
 public static final Name IMPLEMENTATION_VENDOR
 ```
 
-`Name` object for `Implementation-Vendor`
+{@code Name} object for {@code Implementation-Vendor}
 manifest attribute used for package versioning.
 
 ## Attributes.IMPLEMENTATION_VENDOR_ID
@@ -513,10 +448,10 @@ manifest attribute used for package versioning.
 public static final Name IMPLEMENTATION_VENDOR_ID
 ```
 
-`Name` object for `Implementation-Vendor-Id`
+{@code Name} object for {@code Implementation-Vendor-Id}
 manifest attribute.
 
-**Deprecated:** Extension mechanism is no longer supported.
+@deprecated Extension mechanism is no longer supported.
 
 ## Attributes.IMPLEMENTATION_URL
 
@@ -524,10 +459,10 @@ manifest attribute.
 public static final Name IMPLEMENTATION_URL
 ```
 
-`Name` object for `Implementation-URL`
+{@code Name} object for {@code Implementation-URL}
 manifest attribute.
 
-**Deprecated:** Extension mechanism is no longer supported.
+@deprecated Extension mechanism is no longer supported.
 
 ## Attributes.SPECIFICATION_TITLE
 
@@ -535,7 +470,7 @@ manifest attribute.
 public static final Name SPECIFICATION_TITLE
 ```
 
-`Name` object for `Specification-Title`
+{@code Name} object for {@code Specification-Title}
 manifest attribute used for package versioning.
 
 ## Attributes.SPECIFICATION_VERSION
@@ -544,7 +479,7 @@ manifest attribute used for package versioning.
 public static final Name SPECIFICATION_VERSION
 ```
 
-`Name` object for `Specification-Version`
+{@code Name} object for {@code Specification-Version}
 manifest attribute used for package versioning.
 
 ## Attributes.SPECIFICATION_VENDOR
@@ -553,7 +488,7 @@ manifest attribute used for package versioning.
 public static final Name SPECIFICATION_VENDOR
 ```
 
-`Name` object for `Specification-Vendor`
+{@code Name} object for {@code Specification-Vendor}
 manifest attribute used for package versioning.
 
 ## Attributes.MULTI_RELEASE
@@ -562,7 +497,7 @@ manifest attribute used for package versioning.
 public static final Name MULTI_RELEASE
 ```
 
-`Name` object for `Multi-Release`
+{@code Name} object for {@code Multi-Release}
 manifest attribute that indicates this is a multi-release JAR file.
 
-**Since:** 9
+@since   9

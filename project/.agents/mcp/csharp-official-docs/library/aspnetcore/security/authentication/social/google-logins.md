@@ -1,21 +1,17 @@
 ---
-title: "Google external login setup in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/authentication/social/google-logins.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Google external login setup in ASP.NET Core
+description: This tutorial demonstrates the integration of Google account user authentication into an existing ASP.NET Core app.
+ms.date: 10/08/2026
 ---
-
 # Google external login setup in ASP.NET Core
 
-By Valeriy Novytskyy, Rick Anderson, and Sharaf Abacery
+By [Valeriy Novytskyy](https://github.com/01binary), [Rick Anderson](https://twitter.com/RickAndMSFT), and [Sharaf Abacery](https://github.com/sharafabacery)
 
-This tutorial shows how to enable user sign in with Google accounts using a sample ASP.NET Core project created in Using external login providers with Identity in ASP.NET Core. Follow Google's official guidance in Sign in with Google for Web: Setup to create a Google API client ID.
+This tutorial shows how to enable user sign in with Google accounts using a sample ASP.NET Core project created in [Using external login providers with Identity in ASP.NET Core](index.md). Follow Google's official guidance in [Sign in with Google for Web: Setup](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid) to create a Google API client ID.
 
 ## Create the app in Google
 
-* Navigate to the Google API & Services page of the Google Cloud platform.
+* Navigate to the [Google API & Services](https://console.cloud.google.com/apis) page of the Google Cloud platform.
 * If no project exists, create a new project by selecting the **Create Project** button. To select a different project than an existing project that loads, select the loaded project's button in the top-left corner of the UI, followed by the project. To add a new project, select the loaded project's button in the top-left corner of the UI, followed by the **New project** button.
 * When creating a new project:
   * Enter a **Project name**.
@@ -33,7 +29,7 @@ The prerequisite to creating the credentials is to configure the OAuth consent s
 * Set the **App name** and **User support email**.
 * Set the audience type to **External**.
 * Add **Contact information** by entering a contact email address.
-* Agree to the terms.
+* Agree to the terms. 
 * Select **Create**.
 
 Create the client credentials for the app by opening the **Clients** sidebar menu item:
@@ -45,8 +41,8 @@ Create the client credentials for the app by opening the **Clients** sidebar men
 * Select the **Create** button to create the client.
 * Save the **Client ID** and **Client secret**, which are used later in the ASP.NET app configuration.
 
-> **Note:**
-> The URI segment `/signin-google` is set as the default callback of the Google authentication provider. It's possible to change the default callback URI while configuring the Google authentication middleware via the inherited `Microsoft.AspNetCore.Authentication.RemoteAuthenticationOptions.CallbackPath` property.
+> [!NOTE]
+> The URI segment `/signin-google` is set as the default callback of the Google authentication provider. It's possible to change the default callback URI while configuring the Google authentication middleware via the inherited <xref:Microsoft.AspNetCore.Authentication.RemoteAuthenticationOptions.CallbackPath?displayProperty=nameWithType> property.
 
 When deploying the app, either:
 
@@ -55,23 +51,25 @@ When deploying the app, either:
 
 ## Store the Google client ID and secret
 
-Store sensitive settings, such as the Google client ID and secret <example-value>, with Secret Manager. For this sample, follow these steps:
+Store sensitive settings, such as the Google client ID and secret values, with [Secret Manager](../../app-secrets.md). For this sample, follow these steps:
 
-1. Initialize the project for secret <example-value> according to the instructions in Safe storage of app secrets in development.
+1. Initialize the project for secret storage according to the instructions in [Safe storage of app secrets in development](../../app-secrets.md).
 1. Store the sensitive settings in the local secret store with the secret keys `Authentication:Google:ClientId` (value: `{CLIENT ID}` placeholder) and `Authentication:Google:ClientSecret` (value: `{CLIENT SECRET}` placeholder):
 
     ```dotnetcli
-    dotnet user-secrets set "<example-value>" "<example-value>"
-    dotnet user-secrets set "<example-value>" "<example-value>"
+    dotnet user-secrets set "Authentication:Google:ClientId" "{CLIENT ID}"
+    dotnet user-secrets set "Authentication:Google:ClientSecret" "{CLIENT SECRET}"
     ```
 
-The colon (`:`) separator doesn't work with environment variable hierarchical keys on all platforms. For example, Bash doesn't support colon (`:`) as a separator. All platforms support the double underscore (`__`) syntax and automatically replace it with a colon (`:`).
+[!INCLUDE[](~/includes/environmentVarableColon.md)]
 
-Manage API credentials and usage in the API Console.
+Manage API credentials and usage in the [API Console](https://console.developers.google.com/apis/dashboard).
 
 ## Configure Google authentication
 
-To use Google authentication with OpenID Connect, add the `Google.Apis.Auth.AspNetCore3` NuGet package to the app:
+:::moniker range=">= aspnetcore-6.0"
+
+To use Google authentication with OpenID Connect, add the [`Google.Apis.Auth.AspNetCore3` NuGet package](https://www.nuget.org/packages/Google.Apis.Auth.AspNetCore3) to the app:
 
 ```dotnetcli
 dotnet add package Google.Apis.Auth.AspNetCore3
@@ -79,14 +77,9 @@ dotnet add package Google.Apis.Auth.AspNetCore3
 
 Add the authentication service to the `Program` file:
 
-```csharp
-services.AddAuthentication().AddGoogleOpenIdConnect(googleOptions =>
-{
-    googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = <example-value>["<example-value>"];
-});
-```
-Alternatively, to use Google OAuth authentication with `AddGoogle`, add the `Microsoft.AspNetCore.Authentication.Google` NuGet package to the app:
+:::code language="csharp" source="~/security/authentication/social/social-code/6.x/ProgramGoogle.cs" id="snippet1":::
+
+Alternatively, to use Google OAuth authentication with `AddGoogle`, add the [`Microsoft.AspNetCore.Authentication.Google` NuGet package](https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.Google) to the app:
 
 ```dotnetcli
 dotnet add package Microsoft.AspNetCore.Authentication.Google
@@ -98,17 +91,37 @@ Add the authentication service to the `Program` file:
 builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 {
     googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-    googleOptions.ClientSecret = builder.Configuration["<example-value>"];
+    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
 });
 ```
 
-The `Microsoft.Extensions.DependencyInjection.AuthenticationServiceCollectionExtensions.AddAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)` overload sets the `Microsoft.AspNetCore.Authentication.AuthenticationOptions.DefaultScheme` property. The `Microsoft.Extensions.DependencyInjection.AuthenticationServiceCollectionExtensions.AddAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Microsoft.AspNetCore.Authentication.AuthenticationOptions})` overload allows configuring authentication options, which can be used to set up default authentication schemes for different purposes. Subsequent calls to `AddAuthentication` override previously configured `Microsoft.AspNetCore.Builder.AuthenticationOptions` properties.
+:::moniker-end
 
-`Microsoft.AspNetCore.Authentication.AuthenticationBuilder` extension methods that register an authentication handler may only be called once per authentication scheme. Overloads exist that allow configuring the scheme properties, scheme name, and display name.
+:::moniker range="< aspnetcore-6.0"
+
+Add the [`Microsoft.AspNetCore.Authentication.Google` NuGet package](https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.Google) to the app:
+
+```dotnetcli
+dotnet add package Microsoft.AspNetCore.Authentication.Google
+```
+
+Add the authentication service to `Startup.ConfigureServices`:
+
+```csharp
+services.AddAuthentication().AddGoogle(googleOptions =>
+{
+    googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
+    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+});
+```
+
+:::moniker-end
+
+[!INCLUDE [default settings configuration](includes/default-settings.md)]
 
 ## Sign in with Google
 
-* Run the app and select **Log in**.
+* Run the app and select **Log in**. 
 * Under **Use another service to log in.**, select Google.
 * The browser is redirected to **Google** for authentication.
 * Select the Google account to log in or enter Google credentials.
@@ -121,14 +134,14 @@ The user is now logged in using Google credentials.
 
 * If the sign-in doesn't work without receiving any errors, switch to development mode to make the app and Google registration easier to debug.
 * If the site's database hasn't been created by applying the initial migration, the following error occurs: *A database operation failed while processing the request*. Select **Apply Migrations** to create the database and refresh the page to continue past the error.
-* For information about an HTTP 500 error after successfully authenticating the request by the OAuth 2.0 provider, such as Google, and information on how to implement external authentication with Google for React and other SPA apps, see Middleware not handling 'signin-google' route after successful authentication in Asp.Net Core Web Api External Login Authentication (`dotnet/AspNetCore.Docs` #14169).
+* For information about an HTTP 500 error after successfully authenticating the request by the OAuth 2.0 provider, such as Google, and information on how to implement external authentication with Google for React and other SPA apps, see [Middleware not handling 'signin-google' route after successful authentication in Asp.Net Core Web Api External Login Authentication (`dotnet/AspNetCore.Docs` #14169)](https://github.com/dotnet/AspNetCore.Docs/issues/14169).
 
 ## Next steps
 
-* This article demonstrates authentication with Google. For information on authenticating with other external providers, see Using external login providers with Identity in ASP.NET Core.
+* This article demonstrates authentication with Google. For information on authenticating with other external providers, see [Using external login providers with Identity in ASP.NET Core](index.md).
 * After the app is deployed to Azure, reset the `ClientSecret` in the Google API console.
 * Set the `Authentication:Google:ClientId` and `Authentication:Google:ClientSecret` as app settings in the Azure portal. The configuration system is set up to read keys from the environment variables.
 
 ## Related content
 
-Multiple authentication providers
+[Multiple authentication providers](index.md#multiple-authentication-providers)

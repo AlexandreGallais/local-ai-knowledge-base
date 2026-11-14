@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugILFrame2::RemapFunction Method"
 title: "ICorDebugILFrame2::RemapFunction Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugilframe2-remapfunction-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugILFrame2.RemapFunction"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugILFrame2::RemapFunction"
+helpviewer_keywords:
+  - "ICorDebugILFrame2::RemapFunction method [.NET debugging]"
+  - "RemapFunction method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugILFrame2::RemapFunction Method
 
 Remaps an edited function by specifying the new common intermediate language (CIL) offset
@@ -30,18 +39,18 @@ It is the caller’s responsibility to ensure the validity of this value. For ex
 
 When a frame’s function has been edited, the debugger can call the `RemapFunction` method to swap in the latest version of the frame's function so it can be executed. The code execution will begin at the given CIL offset.
 
-> **Note:**
-> Calling `RemapFunction`, like calling ICorDebugILFrame::SetIP, will immediately invalidate all debugging interfaces that are related to generating a stack trace for the thread. These interfaces include ICorDebugChain, ICorDebugILFrame, ICorDebugInternalFrame, and ICorDebugNativeFrame.
+> [!NOTE]
+> Calling `RemapFunction`, like calling [ICorDebugILFrame::SetIP](icordebugilframe-setip-method.md), will immediately invalidate all debugging interfaces that are related to generating a stack trace for the thread. These interfaces include [ICorDebugChain](icordebugchain-interface.md), ICorDebugILFrame, ICorDebugInternalFrame, and ICorDebugNativeFrame.
 
 The `RemapFunction` method can be called only in the context of the current frame, and only in one of the following cases:
 
-- After receipt of a ICorDebugManagedCallback2::FunctionRemapOpportunity callback that has not yet been continued.
+- After receipt of a [ICorDebugManagedCallback2::FunctionRemapOpportunity](icordebugmanagedcallback2-functionremapopportunity-method.md) callback that has not yet been continued.
 
-- While code execution is stopped because of an ICorDebugManagedCallback::EditAndContinueRemap event for this frame.
+- While code execution is stopped because of an [ICorDebugManagedCallback::EditAndContinueRemap](icordebugmanagedcallback-editandcontinueremap-method.md) event for this frame.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

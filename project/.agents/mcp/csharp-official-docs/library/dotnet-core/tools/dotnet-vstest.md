@@ -1,18 +1,15 @@
 ---
-title: "dotnet vstest command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-vstest.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet vstest command
+description: The dotnet vstest command builds a project and all of its dependencies.
+ms.date: 07/19/2026
+ai-usage: ai-assisted
 ---
-
 # dotnet vstest
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
 
-> **Important:**
-> The `dotnet vstest` command is superseded by `dotnet test`, which can now be used to run assemblies. See dotnet test.
+> [!IMPORTANT]
+> The `dotnet vstest` command is superseded by `dotnet test`, which can now be used to run assemblies. See [dotnet test](dotnet-test.md).
 
 ## Name
 
@@ -34,7 +31,7 @@ dotnet vstest -?|--Help
 
 ## Description
 
-The `dotnet vstest` command runs the `VSTest.Console` command-line application to run automated unit tests. The options in this article are forwarded to `vstest.console`. For the complete list of command-line options, see vstest.console.exe command line options.
+The `dotnet vstest` command runs the `VSTest.Console` command-line application to run automated unit tests. The options in this article are forwarded to `vstest.console`. For the complete list of command-line options, see [vstest.console.exe command line options](https://github.com/microsoft/vstest/blob/main/docs/commandline.md).
 
 ## Arguments
 
@@ -50,7 +47,7 @@ The `dotnet vstest` command runs the `VSTest.Console` command-line application t
 
 - **`--Collect:<DATA_COLLECTOR_NAME>`**
 
-  Enables a data collector for the test run. For example, `--Collect:"Code Coverage"` collects code coverage with the built-in Visual Studio collector, and `--Collect:"XPlat Code Coverage"` uses the cross-platform Coverlet collector. For more information, see Monitor and analyze test run.
+  Enables a data collector for the test run. For example, `--Collect:"Code Coverage"` collects code coverage with the built-in Visual Studio collector, and `--Collect:"XPlat Code Coverage"` uses the cross-platform Coverlet collector. For more information, see [Monitor and analyze test run](https://aka.ms/vstest-collect).
 
 - **`--Diag:<PATH_TO_LOG_FILE>`**
 
@@ -102,7 +99,7 @@ The `dotnet vstest` command runs the `VSTest.Console` command-line application t
 
   Target platform architecture used for test execution. Valid values are `x86`, `x64`, `ARM`, `ARM64`, `S390x`, `Ppc64le`, `RiscV64`, and `LoongArch64`.
 
-- **`--ResultsDirectory:`**
+- **`--ResultsDirectory:<PATH>`**
 
   Test results directory will be created in specified path if not exists.
 
@@ -110,13 +107,13 @@ The `dotnet vstest` command runs the `VSTest.Console` command-line application t
 
   Settings to use when running tests.
 
-- **`--TestAdapterPath:`**
+- **`--TestAdapterPath:<PATH>`**
 
   Use custom test adapters from a given path (if any) in the test run.
 
 - **`--TestCaseFilter:<EXPRESSION>`**
 
-  Run tests that match the given expression. `<EXPRESSION>` is of the format `<property>Operator<value>[|&<EXPRESSION>]`, where Operator is one of `=`, `!=`, or `~`. Operator `~` has 'contains' semantics and is applicable for string properties like `DisplayName`. Parentheses `()` are used to group subexpressions. For more information, see TestCase filter.
+  Run tests that match the given expression. `<EXPRESSION>` is of the format `<property>Operator<value>[|&<EXPRESSION>]`, where Operator is one of `=`, `!=`, or `~`. Operator `~` has 'contains' semantics and is applicable for string properties like `DisplayName`. Parentheses `()` are used to group subexpressions. For more information, see [TestCase filter](https://github.com/microsoft/vstest/blob/main/docs/filter.md).
 
 - **`--Tests:<TEST_NAMES>`**
 
@@ -168,6 +165,6 @@ dotnet vstest /Tests:TestMethod1,TestMethod2
 
 ## See also
 
-- VSTest.Console.exe command-line options (Microsoft Learn) - the official Microsoft Learn reference for the `VSTest.Console.exe` tool, including options that `dotnet vstest` doesn't expose. Start here for stable, curated documentation.
-- VSTest.Console.exe command-line options (microsoft/vstest repo) - the source-derived reference in the `microsoft/vstest` repo. Use it for the most up-to-date option details and internal switches, plus links to related runsettings, filtering, and diagnostics docs.
-- VSTest environment variables (microsoft/vstest) - environment variables that VSTest and the test host recognize, such as `VSTEST_DUMP_FORCEPROCDUMP` and the `VSTEST_DOTNET_ROOT_*` variables the .NET SDK sets when it launches `vstest.console`.
+- [VSTest.Console.exe command-line options (Microsoft Learn)](/visualstudio/test/vstest-console-options) - the official Microsoft Learn reference for the `VSTest.Console.exe` tool, including options that `dotnet vstest` doesn't expose. Start here for stable, curated documentation.
+- [VSTest.Console.exe command-line options (microsoft/vstest repo)](https://github.com/microsoft/vstest/blob/main/docs/commandline.md) - the source-derived reference in the `microsoft/vstest` repo. Use it for the most up-to-date option details and internal switches, plus links to related runsettings, filtering, and diagnostics docs.
+- [VSTest environment variables (microsoft/vstest)](https://github.com/microsoft/vstest/blob/main/docs/environment-variables.md) - environment variables that VSTest and the test host recognize, such as `VSTEST_DUMP_FORCEPROCDUMP` and the `VSTEST_DOTNET_ROOT_*` variables the .NET SDK sets when it launches `vstest.console`.

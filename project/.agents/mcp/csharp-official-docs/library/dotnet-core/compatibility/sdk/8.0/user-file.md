@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: .user file imported in outer builds"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/8.0/user-file.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in the .NET 8 SDK where the .user configuration file is now imported in outer builds.
+ms.date: 02/09/2024
 ---
-
 # .user file imported in outer builds
 
 Previously, the SDK only imported *.user* configuration files in inner builds during a cross-targeted build. Now, these files are also imported in outer builds, which might cause breaks when you build projects locally.
@@ -25,7 +21,7 @@ When using the the plural `<TargetFrameworks>` property to define targeted frame
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

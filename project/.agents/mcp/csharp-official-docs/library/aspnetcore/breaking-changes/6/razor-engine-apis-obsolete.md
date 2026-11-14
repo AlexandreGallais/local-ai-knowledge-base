@@ -1,12 +1,10 @@
 ---
 title: "Breaking change: Razor: RazorEngine APIs marked obsolete"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/6/razor-engine-apis-obsolete.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 6.0 titled Razor: RazorEngine APIs marked obsolete"
+no-loc: [ Razor ]
+ms.date: 02/09/2021
+ms.custom: https://github.com/aspnet/Announcements/issues/446
 ---
-
 # Razor: RazorEngine APIs marked obsolete
 
 Types related to the `Microsoft.AspNetCore.Razor.Language.RazorEngine` type in Blazor have been marked as obsolete.

@@ -1,21 +1,14 @@
----
-title: "Disallow observables not composed from the repeatWhen or retryWhen notifier (rxjs-x/no-ignored-notifier)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/no-ignored-notifier.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Disallow observables not composed from the `repeatWhen` or `retryWhen` notifier (`rxjs-x/no-ignored-notifier`)
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, 🔒 `strict`.
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule effects failures if the notifier passed to a `repeatWhen` or `retryWhen` callback is not used.
 
-> **Note:**
+> [!NOTE]
 > Both `repeatWhen` and `retryWhen` are deprecated by RxJS,
 > so this rule may be removed in a future major version.
 
@@ -50,5 +43,5 @@ Type checked lint rules are more powerful than traditional lint rules, but also 
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/no-ignored-notifier.ts)
+- [Test source](/tests/rules/no-ignored-notifier.test.ts)

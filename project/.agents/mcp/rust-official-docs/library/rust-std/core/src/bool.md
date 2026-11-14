@@ -1,12 +1,3 @@
----
-title: "core::bool"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/bool.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::bool
 
 impl bool {}
@@ -17,21 +8,23 @@ impl bool {}
 pub const fn then_some<T: [const] Destruct>(self, t: T) -> Option<T>
 ```
 
-Returns `Some(t)` if the `bool` is `true`,
+Returns `Some(t)` if the `bool` is [`true`](../std/keyword.true.html),
 or `None` otherwise.
 
 Arguments passed to `then_some` are eagerly evaluated; if you are
 passing the result of a function call, it is recommended to use
-`then`, which is lazily evaluated.
+[`then`], which is lazily evaluated.
+
+[`then`]: bool::then
 
 # Examples
 
-```rust
+```
 assert_eq!(false.then_some(0), None);
 assert_eq!(true.then_some(0), Some(0));
 ```
 
-```rust
+```
 let mut a = 0;
 let mut function_with_side_effects = || { a += 1; };
 
@@ -49,17 +42,17 @@ assert_eq!(a, 2);
 pub const fn then<T, F: [const] FnOnce() -> T + [const] Destruct>(self, f: F) -> Option<T>
 ```
 
-Returns `Some(f())` if the `bool` is `true`,
+Returns `Some(f())` if the `bool` is [`true`](../std/keyword.true.html),
 or `None` otherwise.
 
 # Examples
 
-```rust
+```
 assert_eq!(false.then(|| 0), None);
 assert_eq!(true.then(|| 0), Some(0));
 ```
 
-```rust
+```
 let mut a = 0;
 
 true.then(|| { a += 1; });
@@ -76,21 +69,23 @@ assert_eq!(a, 1);
 pub const fn ok_or<E: [const] Destruct>(self, err: E) -> Result<(), E>
 ```
 
-Returns `Ok(())` if the `bool` is `true`,
+Returns `Ok(())` if the `bool` is [`true`](../std/keyword.true.html),
 or `Err(err)` otherwise.
 
 Arguments passed to `ok_or` are eagerly evaluated; if you are
 passing the result of a function call, it is recommended to use
-`ok_or_else`, which is lazily evaluated.
+[`ok_or_else`], which is lazily evaluated.
+
+[`ok_or_else`]: bool::ok_or_else
 
 # Examples
 
-```rust
+```
 assert_eq!(false.ok_or(0), Err(0));
 assert_eq!(true.ok_or(0), Ok(()));
 ```
 
-```rust
+```
 let mut a = 0;
 let mut function_with_side_effects = || { a += 1; };
 
@@ -108,17 +103,17 @@ assert_eq!(a, 2);
 pub const fn ok_or_else<E, F: [const] FnOnce() -> E + [const] Destruct>( self, f: F, ) -> Result<(), E>
 ```
 
-Returns `Ok(())` if the `bool` is `true`,
+Returns `Ok(())` if the `bool` is [`true`](../std/keyword.true.html),
 or `Err(f())` otherwise.
 
 # Examples
 
-```rust
+```
 assert_eq!(false.ok_or_else(|| 0), Err(0));
 assert_eq!(true.ok_or_else(|| 0), Ok(()));
 ```
 
-```rust
+```
 let mut a = 0;
 
 assert!(true.ok_or_else(|| { a += 1; }).is_ok());
@@ -137,14 +132,14 @@ pub const fn toggle(&mut self)
 
 Toggles `self` in-place.
 
-- If `self` is `true`, sets `self` to `false`.
-- If `self` is `false`, sets `self` to `true`.
+- If `self` is [`true`], sets `self` to [`false`].
+- If `self` is [`false`], sets `self` to [`true`].
 
 Equivalent to `value = !value`.
 
 # Examples
 
-```rust
+```
 let mut boolean = false;
 
 boolean.toggle();
@@ -153,3 +148,6 @@ assert_eq!(boolean, true);
 boolean.toggle();
 assert_eq!(boolean, false);
 ```
+
+[`true`]: ../std/keyword.true.html
+[`false`]: ../std/keyword.false.html

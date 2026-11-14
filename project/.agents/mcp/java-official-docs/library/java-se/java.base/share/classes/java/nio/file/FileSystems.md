@@ -1,41 +1,36 @@
----
-title: "FileSystems class (java.nio.file)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/file/FileSystems.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # FileSystems class (java.nio.file)
 
 ```java
 public final class FileSystems
 ```
 
-Factory methods for file systems. This class defines the getDefault method to get the default file system and factory methods to
+Factory methods for file systems. This class defines the {@link #getDefault
+getDefault} method to get the default file system and factory methods to
 construct other types of file systems.
 
- The first invocation of any of the methods defined by this class causes
-the default provider to be loaded. The default
-provider, identified by the URI scheme "file", creates the `FileSystem`
+<p> The first invocation of any of the methods defined by this class causes
+the default {@link FileSystemProvider provider} to be loaded. The default
+provider, identified by the URI scheme "file", creates the {@link FileSystem}
 that provides access to the file systems accessible to the Java virtual
 machine. If the process of loading or initializing the default provider fails
 then an unspecified error is thrown.
 
- The first invocation of the installedProviders method, by way of invoking any of the `newFileSystem` methods defined by this class, locates and loads all
+<p> The first invocation of the {@link FileSystemProvider#installedProviders()
+installedProviders} method, by way of invoking any of the {@code
+newFileSystem} methods defined by this class, locates and loads all
 installed file system providers. Installed providers are loaded using the
-service-provider loading facility defined by the `ServiceLoader` class.
+service-provider loading facility defined by the {@link ServiceLoader} class.
 Installed providers are loaded using the system class loader. If the
 system class loader cannot be found then the platform class loader is used.
 Providers are typically installed by placing them in a JAR file on the
 application class path, the JAR file contains a
-provider-configuration file named `java.nio.file.spi.FileSystemProvider`
-in the resource directory `META-INF/services`, and the file lists one or
-more fully-qualified names of concrete subclass of `FileSystemProvider`
+provider-configuration file named {@code java.nio.file.spi.FileSystemProvider}
+in the resource directory {@code META-INF/services}, and the file lists one or
+more fully-qualified names of concrete subclass of {@link FileSystemProvider}
 that have a zero argument constructor.
 The ordering that installed providers are located is implementation specific.
-If a provider is instantiated and its getScheme returns the same URI scheme of a provider that was previously
+If a provider is instantiated and its {@link FileSystemProvider#getScheme()
+getScheme} returns the same URI scheme of a provider that was previously
 instantiated then the most recently instantiated duplicate is discarded. URI
 schemes are compared without regard to case. During construction a provider
 may safely access files associated with the default provider but care needs
@@ -43,16 +38,16 @@ to be taken to avoid circular loading of other installed providers. If
 circular loading of installed providers is detected then an unspecified error
 is thrown.
 
- This class also defines factory methods that allow a `ClassLoader`
+<p> This class also defines factory methods that allow a {@link ClassLoader}
 to be specified when locating a provider. As with installed providers, the
 provider classes are identified by placing the provider configuration file
-in the resource directory `META-INF/services`.
+in the resource directory {@code META-INF/services}.
 
- If a thread initiates the loading of the installed file system providers
+<p> If a thread initiates the loading of the installed file system providers
 and another thread invokes a method that also attempts to load the providers
 then the method will block until the loading completes.
 
-**Since:** 1.7
+@since 1.7
 
 ## FileSystems.getDefault()
 
@@ -60,45 +55,47 @@ then the method will block until the loading completes.
 public static FileSystem getDefault()
 ```
 
-Returns the default `FileSystem`. The default file system creates
+Returns the default {@code FileSystem}. The default file system creates
 objects that provide access to the file systems accessible to the Java
-virtual machine. The *working directory* of the file system is
-the current user directory, named by the system property `user.dir`.
-This allows for interoperability with the java.io.File
+virtual machine. The <em>working directory</em> of the file system is
+the current user directory, named by the system property {@code user.dir}.
+This allows for interoperability with the {@link java.io.File java.io.File}
 class.
 
- The first invocation of any of the methods defined by this class
-locates the default provider object. Where the
-system property `java.nio.file.spi.DefaultFileSystemProvider` is
+<p> The first invocation of any of the methods defined by this class
+locates the default {@link FileSystemProvider provider} object. Where the
+system property {@code java.nio.file.spi.DefaultFileSystemProvider} is
 not defined then the default provider is a system-default provider that
 is invoked to create the default file system.
 
- If the system property `java.nio.file.spi.DefaultFileSystemProvider`
+<p> If the system property {@code java.nio.file.spi.DefaultFileSystemProvider}
 is defined then it is taken to be a list of one or more fully-qualified names
-of concrete provider classes identified by the URI scheme `"file"`.
+of concrete provider classes identified by the URI scheme {@code "file"}.
 If the property is a list of more than one name then the names are separated
-by a comma character. Each provider class is a `public` class with a
-`public` constructor that has one formal parameter of type `FileSystemProvider`. If the provider class is in a named module then the module
-exports the package containing the provider class to at least `java.base`.
+by a comma character. Each provider class is a {@code public} class with a
+{@code public} constructor that has one formal parameter of type {@code
+FileSystemProvider}. If the provider class is in a named module then the module
+exports the package containing the provider class to at least {@code java.base}.
 Each provider class is loaded, using the
-default system class loader,
+{@linkplain ClassLoader#getSystemClassLoader() default system class loader},
 and instantiated by invoking the constructor. The providers are loaded and
 instantiated in the order they are listed in the property.
-If this process fails or a provider's scheme is not equal to `"file"`
+If this process fails or a provider's scheme is not equal to {@code "file"}
 then an unspecified error is thrown. URI schemes are normally compared
 without regard to case but for the default provider, the scheme is
-required to be `"file"`. The first provider class is instantiated
+required to be {@code "file"}. The first provider class is instantiated
 by invoking it with a reference to the system-default provider.
 The second provider class is instantiated by invoking it with a reference
 to the first provider instance. The third provider class is instantiated
 by invoking it with a reference to the second instance, and so on. The
-last provider to be instantiated becomes the default provider; its `getFileSystem` method is invoked with the URI `"file:///"` to
+last provider to be instantiated becomes the default provider; its {@code
+getFileSystem} method is invoked with the URI {@code "file:///"} to
 get a reference to the default file system.
 
- Subsequent invocations of this method return the file system that was
+<p> Subsequent invocations of this method return the file system that was
 returned by the first invocation.
 
-**Returns:** the default file system
+@return  the default file system
 
 ## FileSystems.getFileSystem(URI)
 
@@ -106,31 +103,34 @@ returned by the first invocation.
 public static FileSystem getFileSystem(URI uri)
 ```
 
-Returns a reference to an existing `FileSystem`.
+Returns a reference to an existing {@code FileSystem}.
 
- This method iterates over the installed providers to locate the provider that is identified by the URI
-scheme of the given URI. URI schemes are compared
+<p> This method iterates over the {@link FileSystemProvider#installedProviders()
+installed} providers to locate the provider that is identified by the URI
+{@link URI#getScheme scheme} of the given URI. URI schemes are compared
 without regard to case. The exact form of the URI is highly provider
-dependent. If found, the provider's getFileSystem method is invoked to obtain a reference to the `FileSystem`.
+dependent. If found, the provider's {@link FileSystemProvider#getFileSystem
+getFileSystem} method is invoked to obtain a reference to the {@code
+FileSystem}.
 
- Once a file system created by this provider is closed it is provider-dependent if this method returns a reference to
-the closed file system or throws `FileSystemNotFoundException`.
+<p> Once a file system created by this provider is {@link FileSystem#close
+closed} it is provider-dependent if this method returns a reference to
+the closed file system or throws {@link FileSystemNotFoundException}.
 If the provider allows a new file system to be created with the same URI
 as a file system it previously created then this method throws the
 exception if invoked after the file system is closed (and before a new
-instance is created by the newFileSystem method).
+instance is created by the {@link #newFileSystem newFileSystem} method).
 
-Parameters:
+@param   uri  the URI to locate the file system
 
-- `uri`: the URI to locate the file system
+@return  the reference to the file system
 
-**Returns:** the reference to the file system
-
-Throws:
-
-- `IllegalArgumentException`: if the pre-conditions for the `uri` parameter are not met
-- `FileSystemNotFoundException`: if the file system, identified by the URI, does not exist
-- `ProviderNotFoundException`: if a provider supporting the URI scheme is not installed
+@throws  IllegalArgumentException
+         if the pre-conditions for the {@code uri} parameter are not met
+@throws  FileSystemNotFoundException
+         if the file system, identified by the URI, does not exist
+@throws  ProviderNotFoundException
+         if a provider supporting the URI scheme is not installed
 
 ## FileSystems.newFileSystem(URI, Map<String,?>)
 
@@ -138,34 +138,46 @@ Throws:
 public static FileSystem newFileSystem(URI uri, Map<String,?> env) throws IOException
 ```
 
-Constructs a new file system that is identified by a `URI`
+Constructs a new file system that is identified by a {@link URI}
 
- This method iterates over the installed providers to locate the provider that is identified by the URI
-scheme of the given URI. URI schemes are compared
+<p> This method iterates over the {@link FileSystemProvider#installedProviders()
+installed} providers to locate the provider that is identified by the URI
+{@link URI#getScheme scheme} of the given URI. URI schemes are compared
 without regard to case. The exact form of the URI is highly provider
-dependent. If found, the provider's newFileSystem(URI,Map) method is invoked to construct the new file system.
+dependent. If found, the provider's {@link FileSystemProvider#newFileSystem(URI,Map)
+newFileSystem(URI,Map)} method is invoked to construct the new file system.
 
- Once a file system is closed it is
+<p> Once a file system is {@link FileSystem#close closed} it is
 provider-dependent if the provider allows a new file system to be created
 with the same URI as a file system it previously created.
 
- **Usage Example:**
-Suppose there is a provider identified by the scheme `"memory"`
+<p> <b>Usage Example:</b>
+Suppose there is a provider identified by the scheme {@code "memory"}
 installed:
+{@snippet lang=java :
+    FileSystem fs = FileSystems.newFileSystem(URI.create("memory:///?name=logfs"),
+                                              Map.of("capacity", "16G", "blockSize", "4k"));
+}
 
-Parameters:
+@param   uri
+         the URI identifying the file system
+@param   env
+         a map of provider specific properties to configure the file system;
+         may be empty
 
-- `uri`: the URI identifying the file system
-- `env`: a map of provider specific properties to configure the file system; may be empty
+@return  a new file system
 
-**Returns:** a new file system
-
-Throws:
-
-- `IllegalArgumentException`: if the pre-conditions for the `uri` parameter are not met, or if the `env` parameter does not contain properties required by the provider, contains an invalid combination of properties and values, or contains an invalid property value
-- `FileSystemAlreadyExistsException`: if the file system has already been created
-- `ProviderNotFoundException`: if a provider supporting the URI scheme is not installed
-- `IOException`: if an I/O error occurs creating the file system
+@throws  IllegalArgumentException
+         if the pre-conditions for the {@code uri} parameter are not met,
+         or if the {@code env} parameter does not contain properties
+         required by the provider, contains an invalid combination of
+         properties and values, or contains an invalid property value
+@throws  FileSystemAlreadyExistsException
+         if the file system has already been created
+@throws  ProviderNotFoundException
+         if a provider supporting the URI scheme is not installed
+@throws  IOException
+         if an I/O error occurs creating the file system
 
 ## FileSystems.newFileSystem(URI, Map<String,?>, ClassLoader)
 
@@ -173,30 +185,41 @@ Throws:
 public static FileSystem newFileSystem(URI uri, Map<String,?> env, ClassLoader loader) throws IOException
 ```
 
-Constructs a new file system that is identified by a `URI`
+Constructs a new file system that is identified by a {@link URI}
 
- This method first attempts to locate an installed provider in exactly
-the same manner as the newFileSystem(URI,Map)
+<p> This method first attempts to locate an installed provider in exactly
+the same manner as the {@link #newFileSystem(URI,Map) newFileSystem(URI,Map)}
 method. If none of the installed providers support the URI scheme then an
 attempt is made to locate the provider using the given class loader. If a
-provider supporting the URI scheme is located then its newFileSystem(URI,Map) is
+provider supporting the URI scheme is located then its {@link
+FileSystemProvider#newFileSystem(URI,Map) newFileSystem(URI,Map)} is
 invoked to construct the new file system.
 
-Parameters:
+@param   uri
+         the URI identifying the file system
+@param   env
+         a map of provider specific properties to configure the file system;
+         may be empty
+@param   loader
+         the class loader to locate the provider or {@code null} to only
+         attempt to locate an installed provider
 
-- `uri`: the URI identifying the file system
-- `env`: a map of provider specific properties to configure the file system; may be empty
-- `loader`: the class loader to locate the provider or `null` to only attempt to locate an installed provider
+@return  a new file system
 
-**Returns:** a new file system
-
-Throws:
-
-- `IllegalArgumentException`: if the pre-conditions for the `uri` parameter are not met, or if the `env` parameter does not contain properties required by the provider, contains an invalid combination of properties and values, or contains an invalid property value
-- `FileSystemAlreadyExistsException`: if the URI scheme identifies an installed provider and the file system has already been created
-- `ProviderNotFoundException`: if a provider supporting the URI scheme is not found
-- `ServiceConfigurationError`: when an error occurs while loading a service provider
-- `IOException`: an I/O error occurs creating the file system
+@throws  IllegalArgumentException
+         if the pre-conditions for the {@code uri} parameter are not met,
+         or if the {@code env} parameter does not contain properties
+         required by the provider, contains an invalid combination of
+         properties and values, or contains an invalid property value
+@throws  FileSystemAlreadyExistsException
+         if the URI scheme identifies an installed provider and the file
+         system has already been created
+@throws  ProviderNotFoundException
+         if a provider supporting the URI scheme is not found
+@throws  ServiceConfigurationError
+         when an error occurs while loading a service provider
+@throws  IOException
+         an I/O error occurs creating the file system
 
 ## FileSystems.newFileSystem(Path, ClassLoader)
 
@@ -204,32 +227,35 @@ Throws:
 public static FileSystem newFileSystem(Path path, ClassLoader loader) throws IOException
 ```
 
-Constructs a new `FileSystem` to access the contents of a file as a
+Constructs a new {@code FileSystem} to access the contents of a file as a
 file system.
 
- This method makes use of specialized providers that create pseudo file
+<p> This method makes use of specialized providers that create pseudo file
 systems where the contents of one or more files is treated as a file
 system.
 
- This method first attempts to locate an installed provider in exactly
-the same manner as the Map, ClassLoader) newFileSystem(Path, Map, ClassLoader) method with an empty map. If none
-of the installed providers return a `FileSystem` then an attempt is
+<p> This method first attempts to locate an installed provider in exactly
+the same manner as the {@link #newFileSystem(Path, Map, ClassLoader)
+newFileSystem(Path, Map, ClassLoader)} method with an empty map. If none
+of the installed providers return a {@code FileSystem} then an attempt is
 made to locate the provider using the given class loader. If a provider
 returns a file system then the lookup terminates and the file system is
 returned.
 
-Parameters:
+@param   path
+         the path to the file
+@param   loader
+         the class loader to locate the provider or {@code null} to only
+         attempt to locate an installed provider
 
-- `path`: the path to the file
-- `loader`: the class loader to locate the provider or `null` to only attempt to locate an installed provider
+@return  a new file system
 
-**Returns:** a new file system
-
-Throws:
-
-- `ProviderNotFoundException`: if a provider supporting this file type cannot be located
-- `ServiceConfigurationError`: when an error occurs while loading a service provider
-- `IOException`: if an I/O error occurs
+@throws  ProviderNotFoundException
+         if a provider supporting this file type cannot be located
+@throws  ServiceConfigurationError
+         when an error occurs while loading a service provider
+@throws  IOException
+         if an I/O error occurs
 
 ## FileSystems.newFileSystem(Path, Map<String,?>)
 
@@ -237,33 +263,39 @@ Throws:
 public static FileSystem newFileSystem(Path path, Map<String,?> env) throws IOException
 ```
 
-Constructs a new `FileSystem` to access the contents of a file as a
+Constructs a new {@code FileSystem} to access the contents of a file as a
 file system.
 
- This method makes use of specialized providers that create pseudo file
+<p> This method makes use of specialized providers that create pseudo file
 systems where the contents of one or more files is treated as a file
 system.
 
- This method first attempts to locate an installed provider in exactly
-the same manner as the newFileSystem(Path, Map, ClassLoader) method. If found, the provider's
-Map) newFileSystem(Path, Map)
+<p> This method first attempts to locate an installed provider in exactly
+the same manner as the {@link #newFileSystem(Path,Map,ClassLoader)
+newFileSystem(Path, Map, ClassLoader)} method. If found, the provider's
+{@link FileSystemProvider#newFileSystem(Path, Map) newFileSystem(Path, Map)}
 method is invoked to construct the new file system.
 
-Parameters:
+@param   path
+         the path to the file
+@param   env
+         a map of provider specific properties to configure the file system;
+         may be empty
 
-- `path`: the path to the file
-- `env`: a map of provider specific properties to configure the file system; may be empty
+@return  a new file system
 
-**Returns:** a new file system
+@throws  IllegalArgumentException
+         if the {@code env} parameter does not contain properties
+         required by the provider, contains an invalid combination of
+         properties and values, or contains an invalid property value
+@throws  ProviderNotFoundException
+         if a provider supporting this file type cannot be located
+@throws  ServiceConfigurationError
+         when an error occurs while loading a service provider
+@throws  IOException
+         if an I/O error occurs
 
-**Since:** 13
-
-Throws:
-
-- `IllegalArgumentException`: if the `env` parameter does not contain properties required by the provider, contains an invalid combination of properties and values, or contains an invalid property value
-- `ProviderNotFoundException`: if a provider supporting this file type cannot be located
-- `ServiceConfigurationError`: when an error occurs while loading a service provider
-- `IOException`: if an I/O error occurs
+@since 13
 
 ## FileSystems.newFileSystem(Path)
 
@@ -271,31 +303,32 @@ Throws:
 public static FileSystem newFileSystem(Path path) throws IOException
 ```
 
-Constructs a new `FileSystem` to access the contents of a file as a
+Constructs a new {@code FileSystem} to access the contents of a file as a
 file system.
 
- This method makes use of specialized providers that create pseudo file
+<p> This method makes use of specialized providers that create pseudo file
 systems where the contents of one or more files is treated as a file
 system.
 
- This method first attempts to locate an installed provider in exactly
-the same manner as the newFileSystem(Path, Map, ClassLoader) method. If found, the provider's
-Map) newFileSystem(Path, Map)
+<p> This method first attempts to locate an installed provider in exactly
+the same manner as the {@link #newFileSystem(Path,Map,ClassLoader)
+newFileSystem(Path, Map, ClassLoader)} method. If found, the provider's
+{@link FileSystemProvider#newFileSystem(Path, Map) newFileSystem(Path, Map)}
 method is invoked with an empty map to construct the new file system.
 
-Parameters:
+@param   path
+         the path to the file
 
-- `path`: the path to the file
+@return  a new file system
 
-**Returns:** a new file system
+@throws  ProviderNotFoundException
+         if a provider supporting this file type cannot be located
+@throws  ServiceConfigurationError
+         when an error occurs while loading a service provider
+@throws  IOException
+         if an I/O error occurs
 
-**Since:** 13
-
-Throws:
-
-- `ProviderNotFoundException`: if a provider supporting this file type cannot be located
-- `ServiceConfigurationError`: when an error occurs while loading a service provider
-- `IOException`: if an I/O error occurs
+@since 13
 
 ## FileSystems.newFileSystem(Path, Map<String,?>, ClassLoader)
 
@@ -303,34 +336,43 @@ Throws:
 public static FileSystem newFileSystem(Path path, Map<String,?> env, ClassLoader loader) throws IOException
 ```
 
-Constructs a new `FileSystem` to access the contents of a file as a
+Constructs a new {@code FileSystem} to access the contents of a file as a
 file system.
 
- This method makes use of specialized providers that create pseudo file
+<p> This method makes use of specialized providers that create pseudo file
 systems where the contents of one or more files is treated as a file
 system.
 
- This method iterates over the installed providers. It invokes, in turn, each provider's newFileSystem(Path,Map)
+<p> This method iterates over the {@link FileSystemProvider#installedProviders()
+installed} providers. It invokes, in turn, each provider's {@link
+FileSystemProvider#newFileSystem(Path,Map) newFileSystem(Path,Map)}
 method. If a provider returns a file system then the iteration
 terminates and the file system is returned.
-If none of the installed providers return a `FileSystem` then
+If none of the installed providers return a {@code FileSystem} then
 an attempt is made to locate the provider using the given class loader.
 If a provider returns a file
 system, then the lookup terminates and the file system is returned.
 
-Parameters:
+@param   path
+         the path to the file
+@param   env
+         a map of provider specific properties to configure the file system;
+         may be empty
+@param   loader
+         the class loader to locate the provider or {@code null} to only
+         attempt to locate an installed provider
 
-- `path`: the path to the file
-- `env`: a map of provider specific properties to configure the file system; may be empty
-- `loader`: the class loader to locate the provider or `null` to only attempt to locate an installed provider
+@return  a new file system
 
-**Returns:** a new file system
+@throws  IllegalArgumentException
+         if the {@code env} parameter does not contain properties
+         required by the provider, contains an invalid combination of
+         properties and values, or contains an invalid property value
+@throws  ProviderNotFoundException
+         if a provider supporting this file type cannot be located
+@throws  ServiceConfigurationError
+         when an error occurs while loading a service provider
+@throws  IOException
+         if an I/O error occurs
 
-**Since:** 13
-
-Throws:
-
-- `IllegalArgumentException`: if the `env` parameter does not contain properties required by the provider, contains an invalid combination of properties and values, or contains an invalid property value
-- `ProviderNotFoundException`: if a provider supporting this file type cannot be located
-- `ServiceConfigurationError`: when an error occurs while loading a service provider
-- `IOException`: if an I/O error occurs
+@since 13

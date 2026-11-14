@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugFunction::GetILCode Method"
 title: "ICorDebugFunction::GetILCode Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugfunction-getilcode-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugFunction.GetILCode"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugFunction::GetILCode"
+helpviewer_keywords:
+  - "ICorDebugFunction::GetILCode method [.NET debugging]"
+  - "GetILCode method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugFunction::GetILCode Method
 
 Gets the ICorDebugCode instance that represents the common intermediate language (CIL) code associated with this ICorDebugFunction object.
@@ -30,7 +39,7 @@ If Edit and Continue has been allowed on this function, the `GetILCode` method w
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

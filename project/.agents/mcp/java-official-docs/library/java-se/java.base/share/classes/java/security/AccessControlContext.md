@@ -1,25 +1,17 @@
----
-title: "AccessControlContext class (java.security)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/AccessControlContext.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AccessControlContext class (java.security)
 
 ```java
 public final class AccessControlContext
 ```
 
-`AccessControlContext` was used with the Security Manager for access
+{@code AccessControlContext} was used with the Security Manager for access
 control decisions based on context that it encapsulated. This feature no
 longer exists.
 
-**Since:** 1.2
-
-**Deprecated:** This class was only useful in conjunction with the the Security Manager, which is no longer supported.
+@author Roland Schemers
+@since 1.2
+@deprecated This class was only useful in conjunction with the {@linkplain
+      SecurityManager the Security Manager}, which is no longer supported.
       There is no replacement for the Security Manager or this class.
 
 ## AccessControlContext.AccessControlContext(ProtectionDomain[])
@@ -28,18 +20,15 @@ longer exists.
 public AccessControlContext(ProtectionDomain[] context)
 ```
 
-Create an `AccessControlContext` with the given array of
-`ProtectionDomain` objects.
-Context must not be `null`. Duplicate domains will be removed
+Create an {@code AccessControlContext} with the given array of
+{@code ProtectionDomain} objects.
+Context must not be {@code null}. Duplicate domains will be removed
 from the context.
 
-Parameters:
-
-- `context`: the `ProtectionDomain` objects associated with this context. The non-duplicate domains are copied from the array. Subsequent changes to the array will not affect this `AccessControlContext`.
-
-Throws:
-
-- `NullPointerException`: if `context` is `null`
+@param context the {@code ProtectionDomain} objects associated with this
+context. The non-duplicate domains are copied from the array. Subsequent
+changes to the array will not affect this {@code AccessControlContext}.
+@throws NullPointerException if {@code context} is {@code null}
 
 ## AccessControlContext.AccessControlContext(AccessControlContext, DomainCombiner)
 
@@ -47,22 +36,22 @@ Throws:
 public AccessControlContext(AccessControlContext acc, DomainCombiner combiner)
 ```
 
-Create a new `AccessControlContext` with the given
-`AccessControlContext` and `DomainCombiner`.
+Create a new {@code AccessControlContext} with the given
+{@code AccessControlContext} and {@code DomainCombiner}.
 This constructor associates the provided
-`DomainCombiner` with the provided
-`AccessControlContext`.
+{@code DomainCombiner} with the provided
+{@code AccessControlContext}.
 
-Parameters:
+@param acc the {@code AccessControlContext} associated
+         with the provided {@code DomainCombiner}.
 
-- `acc`: the `AccessControlContext` associated with the provided `DomainCombiner`.
-- `combiner`: the `DomainCombiner` to be associated with the provided `AccessControlContext`.
+@param combiner the {@code DomainCombiner} to be associated
+         with the provided {@code AccessControlContext}.
 
-**Since:** 1.3
+@throws    NullPointerException if the provided
+         {@code context} is {@code null}.
 
-Throws:
-
-- `NullPointerException`: if the provided `context` is `null`.
+@since 1.3
 
 ## AccessControlContext.getDomainCombiner()
 
@@ -70,14 +59,14 @@ Throws:
 public DomainCombiner getDomainCombiner()
 ```
 
-Get the `DomainCombiner` associated with this
-`AccessControlContext`.
+Get the {@code DomainCombiner} associated with this
+{@code AccessControlContext}.
 
-**Returns:** the `DomainCombiner` associated with this
-         `AccessControlContext`, or `null`
+@return the {@code DomainCombiner} associated with this
+         {@code AccessControlContext}, or {@code null}
          if there is none.
 
-**Since:** 1.3
+@since 1.3
 
 ## AccessControlContext.checkPermission(Permission)
 
@@ -85,15 +74,10 @@ Get the `DomainCombiner` associated with this
 public void checkPermission(Permission perm) throws AccessControlException
 ```
 
-Throws `AccessControlException`.
+Throws {@code AccessControlException}.
 
-Parameters:
-
-- `perm`: ignored
-
-Throws:
-
-- `AccessControlException`: always
+@param perm ignored
+@throws    AccessControlException always
 
 ## AccessControlContext.equals(Object)
 
@@ -101,18 +85,15 @@ Throws:
 public boolean equals(Object obj)
 ```
 
-Checks two `AccessControlContext` objects for equality.
-Checks that `obj` is
-an `AccessControlContext` and has the same set of
-`ProtectionDomain` objects as this context.
+Checks two {@code AccessControlContext} objects for equality.
+Checks that {@code obj} is
+an {@code AccessControlContext} and has the same set of
+{@code ProtectionDomain} objects as this context.
 
-Parameters:
-
-- `obj`: the object we are testing for equality with this object.
-
-**Returns:** `true` if `obj` is an `AccessControlContext`,
-and has the same set of `ProtectionDomain` objects as this context,
-`false` otherwise.
+@param obj the object we are testing for equality with this object.
+@return {@code true} if {@code obj} is an {@code AccessControlContext},
+and has the same set of {@code ProtectionDomain} objects as this context,
+{@code false} otherwise.
 
 ## AccessControlContext.hashCode()
 
@@ -120,5 +101,6 @@ and has the same set of `ProtectionDomain` objects as this context,
 public int hashCode()
 ```
 
+{@return the hash code value for this context}
 The hash code is computed by exclusive or-ing the hash code of all the
 protection domains in the context together.

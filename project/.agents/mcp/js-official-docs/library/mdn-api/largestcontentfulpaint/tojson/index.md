@@ -1,0 +1,102 @@
+---
+title: "LargestContentfulPaint: toJSON() method"
+short-title: toJSON()
+slug: Web/API/LargestContentfulPaint/toJSON
+page-type: web-api-instance-method
+browser-compat: api.LargestContentfulPaint.toJSON
+---
+
+{{APIRef("Performance API")}}
+
+The **`toJSON()`** method of the {{domxref("LargestContentfulPaint")}} interface returns a JSON-serializable plain object representing the `LargestContentfulPaint` object.
+
+The method is automatically called by {{jsxref("JSON.stringify()")}} when a `LargestContentfulPaint` object is encountered during [JSON](/en-US/docs/Glossary/JSON) serialization.
+
+## Syntax
+
+```js-nolint
+toJSON()
+```
+
+### Parameters
+
+None.
+
+### Return value
+
+A JSON-serializable plain object containing the following properties:
+
+- {{domxref("PerformanceEntry/name", "name")}}
+- {{domxref("PerformanceEntry/entryType", "entryType")}}
+- {{domxref("PerformanceEntry/startTime", "startTime")}}
+- {{domxref("PerformanceEntry/duration", "duration")}}
+- {{domxref("PerformanceEntry/navigationId", "navigationId")}}
+- {{domxref("LargestContentfulPaint/paintTime", "paintTime")}}
+- {{domxref("LargestContentfulPaint/presentationTime", "presentationTime")}}
+- {{domxref("LargestContentfulPaint/size", "size")}}
+- {{domxref("LargestContentfulPaint/renderTime", "renderTime")}}
+- {{domxref("LargestContentfulPaint/loadTime", "loadTime")}}
+- {{domxref("LargestContentfulPaint/id", "id")}}
+- {{domxref("LargestContentfulPaint/url", "url")}}
+
+Each property's value is copied as-is.
+
+The returned object doesn't contain the {{domxref("LargestContentfulPaint.element", "element")}} property because {{domxref("Element")}} doesn't provide a `toJSON()` operation.
+
+## Examples
+
+### Calling toJSON() directly
+
+This example obtains a `LargestContentfulPaint` object. Calling `toJSON()` directly returns a plain object. Its properties have the same values as the corresponding properties of the original object.
+
+```js
+const observer = new PerformanceObserver((list) => {
+  list.getEntries().forEach((entry) => {
+    const json = entry.toJSON();
+    console.log(json); // A plain object
+    console.log(typeof json); // "object"
+    console.log(json.size); // Same value as entry.size
+  });
+});
+
+observer.observe({ type: "largest-contentful-paint", buffered: true });
+```
+
+### Serializing to a JSON string
+
+Within the callback from the previous example, the same object can be serialized using {{jsxref("JSON.stringify()")}}, which calls the `toJSON()` method automatically.
+
+```js
+console.log(JSON.stringify(entry));
+```
+
+This would log a JSON string like so (formatted for readability):
+
+```json
+{
+  "name": "",
+  "entryType": "largest-contentful-paint",
+  "startTime": 468.5,
+  "duration": 0,
+  "navigationId": 2463,
+  "paintTime": 460.25,
+  "presentationTime": 468.5,
+  "size": 19824,
+  "renderTime": 468.5,
+  "loadTime": 0,
+  "id": "",
+  "url": ""
+}
+```
+
+## Specifications
+
+{{Specifications}}
+
+## Browser compatibility
+
+{{Compat}}
+
+## See also
+
+- {{jsxref("JSON")}}

@@ -1,27 +1,19 @@
----
-title: "ECPublicKey <example-value> (java.security.interfaces)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/interfaces/ECPublicKey.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
-# ECPublicKey <example-value> (java.security.interfaces)
+# ECPublicKey interface (java.security.interfaces)
 
 ```java
-public interface ECPublicKey <example-value> PublicKey, ECKey
+public interface ECPublicKey extends PublicKey, ECKey
 ```
 
 The interface to an elliptic curve (EC) public key.
 
-**See also:** PublicKey
+@author Valerie Peng
 
-**See also:** ECKey
 
-**See also:** java.security.spec.ECPoint
+@see PublicKey
+@see ECKey
+@see java.security.spec.ECPoint
 
-**Since:** 1.5
+@since 1.5
 
 ## ECPublicKey.serialVersionUID
 
@@ -32,7 +24,7 @@ long serialVersionUID
 The class fingerprint that is set to indicate
 serialization compatibility.
 
-**Deprecated:** A `serialVersionUID` field in an interface is
+@deprecated A {@code serialVersionUID} field in an interface is
 ineffectual. Do not use; no replacement.
 
 ## ECPublicKey.getW()
@@ -42,8 +34,7 @@ ECPoint getW()
 ```
 
 Returns the public point W.
-
-**Returns:** the public point W.
+@return the public point W.
 
 ## ECPublicKey.getParams()
 
@@ -51,8 +42,9 @@ Returns the public point W.
 default ECParameterSpec getParams()
 ```
 
-(inherited documentation)
+{@inheritDoc java.security.AsymmetricKey}
 
-**Implementation requirements:** The default implementation returns `null`.
+@implSpec
+The default implementation returns {@code null}.
 
-**Returns:** (inherited documentation)
+@return {@inheritDoc java.security.AsymmetricKey}

@@ -1,10 +1,9 @@
 ---
-title: "What is new in EF Core 2.2 - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/what-is-new/ef-core-2.2.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: What is new in EF Core 2.2 - EF Core
+description: Changes and improvements in Entity Framework Core 2.2
+author: SamMonoRT
+ms.date: 11/14/2018
+uid: core/what-is-new/ef-core-2.2
 ---
 
 # New features in EF Core 2.2
@@ -14,12 +13,12 @@ license: "CC-BY-4.0"
 Spatial data can be used to represent the physical location and shape of objects.
 Many databases can natively store, index, and query spatial data.
 Common scenarios include querying for objects within a given distance, and testing if a polygon contains a given location.
-EF Core 2.2 now supports working with spatial data from various databases using types from the NetTopologySuite (NTS) library.
+EF Core 2.2 now supports working with spatial data from various databases using types from the [NetTopologySuite](https://github.com/NetTopologySuite/NetTopologySuite) (NTS) library.
 
 Spatial data support is implemented as a series of provider-specific extension packages.
 Each of these packages contributes mappings for NTS types and methods, and the corresponding spatial types and functions in the database.
-Such provider extensions are now available for SQL Server, SQLite, and PostgreSQL (from the Npgsql project).
-Spatial types can be used directly with the EF Core in-memory provider without additional extensions.
+Such provider extensions are now available for [SQL Server](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite/), [SQLite](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite.NetTopologySuite/), and [PostgreSQL](https://www.nuget.org/packages/Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite/) (from the [Npgsql project](https://www.npgsql.org/)).
+Spatial types can be used directly with the [EF Core in-memory provider](xref:core/providers/in-memory/index) without additional extensions.
 
 Once the provider extension is installed, you can add properties of supported types to your entities. For example:
 
@@ -63,7 +62,7 @@ var nearestFriends =
     select f).Take(5).ToListAsync();
 ```
 
-For more information on this feature, see the spatial types documentation.
+For more information on this feature, see the [spatial types documentation](xref:core/modeling/spatial).
 
 ## Collections of owned entities
 
@@ -85,7 +84,7 @@ You can use the feature by calling the new OwnsMany() API:
 modelBuilder.Entity<Customer>().OwnsMany(c => c.Addresses);
 ```
 
-For more information, see the updated owned entities documentation.
+For more information, see the [updated owned entities documentation](xref:core/modeling/owned-entities#collections-of-owned-types).
 
 ## Query tags
 
@@ -111,4 +110,4 @@ FROM [Friends] AS [f]
 ORDER BY [f].[Location].STDistance(@__myLocation_0) DESC
 ```
 
-For more information, see the query tags documentation.
+For more information, see the [query tags documentation](xref:core/querying/tags).

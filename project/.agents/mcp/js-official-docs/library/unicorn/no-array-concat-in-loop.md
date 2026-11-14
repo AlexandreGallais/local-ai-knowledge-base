@@ -1,17 +1,11 @@
----
-title: "no-array-concat-in-loop"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-array-concat-in-loop.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-array-concat-in-loop
 
 📝 Disallow array accumulation with `Array#concat()` in loops.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 `Array#concat()` creates a new array every time it is called. When an accumulator is reassigned with `.concat()` on every loop iteration, each iteration copies everything accumulated so far, which can make the loop quadratic in the total number of accumulated items.
 

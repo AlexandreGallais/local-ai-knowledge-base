@@ -1,30 +1,29 @@
 ---
+description: "Learn more about: Parallel Diagnostic Tools"
 title: "Parallel Diagnostic Tools"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/parallel-programming/parallel-diagnostic-tools.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+helpviewer_keywords: 
+  - "parallel programming, debugging and profiling tools"
+ms.assetid: 38f7302a-ddf6-4179-ba19-f49e00395b9f
 ---
-
 # Parallel Diagnostic Tools
 
-Visual Studio provides extensive support for debugging and profiling multi-threaded applications.
+Visual Studio provides extensive support for debugging and profiling multi-threaded applications.  
+  
+## Debugging  
 
-## Debugging
+ The Visual Studio debugger adds new windows for debugging parallel applications. For more information, see the following topics:  
+  
+- [Using the Parallel Stacks Window](/visualstudio/debugger/using-the-parallel-stacks-window)  
+  
+- [Using the Tasks Window](/visualstudio/debugger/using-the-tasks-window)  
+  
+- [Walkthrough: Debugging a Parallel Application](/visualstudio/debugger/walkthrough-debugging-a-parallel-application).  
+  
+## Profiling  
 
- The Visual Studio debugger adds new windows for debugging parallel applications. For more information, see the following topics:
-
-- Using the Parallel Stacks Window
-
-- Using the Tasks Window
-
-- Walkthrough: Debugging a Parallel Application.
-
-## Profiling
-
- The Concurrency Visualizer report views enable you to visualize how the threads in a parallel program interact with each other and with threads from other processes on the system. For more information, see Concurrency Visualizer.
-
+ The Concurrency Visualizer report views enable you to visualize how the threads in a parallel program interact with each other and with threads from other processes on the system. For more information, see [Concurrency Visualizer](/visualstudio/profiling/concurrency-visualizer).  
+  
 ## See also
 
-- Parallel Programming
+- [Parallel Programming](index.md)

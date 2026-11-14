@@ -1,35 +1,35 @@
 ---
-title: "Context headers in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/data-protection/implementation/context-headers.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Context headers in ASP.NET Core
+description: Learn implementation details of ASP.NET Core Data Protection context headers.
+ms.date: 10/14/2016
 ---
-
 # Context headers in ASP.NET Core
+
+<a name="data-protection-implementation-context-headers"></a>
 
 ## Background and theory
 
-In the data protection system, a "key" means an object that can provide authenticated encryption services. Each key is identified by a unique id (a GUID), and it carries with it algorithmic information and entropic material. It's intended that each key carry unique entropy, but the system cannot enforce that, and we also need to account for developers who might change the key ring manually by modifying the algorithmic information of an existing key in the key ring. To achieve our security requirements given these cases the data protection system has a concept of cryptographic agility, which allows securely using a single entropic value across multiple cryptographic algorithms.
+In the data protection system, a "key" means an object that can provide authenticated encryption services. Each key is identified by a unique id (a GUID), and it carries with it algorithmic information and entropic material. It's intended that each key carry unique entropy, but the system cannot enforce that, and we also need to account for developers who might change the key ring manually by modifying the algorithmic information of an existing key in the key ring. To achieve our security requirements given these cases the data protection system has a concept of [cryptographic agility](https://www.microsoft.com/research/publication/cryptographic-agility-and-its-relation-to-circular-encryption), which allows securely using a single entropic value across multiple cryptographic algorithms.
 
 Most systems which support cryptographic agility do so by including some identifying information about the algorithm inside the payload. The algorithm's OID is generally a good candidate for this. However, one problem that we ran into is that there are multiple ways to specify the same algorithm: "AES" (CNG) and the managed Aes, AesManaged, AesCryptoServiceProvider, AesCng, and RijndaelManaged (given specific parameters) classes are all actually the same thing, and we'd need to maintain a mapping of all of these to the correct OID. If a developer wanted to provide a custom algorithm (or even another implementation of AES!), they'd have to tell us its OID. This extra registration step makes system configuration particularly painful.
 
 Stepping back, we decided that we were approaching the problem from the wrong direction. An OID tells you what the algorithm is, but we don't actually care about this. If we need to use a single entropic value securely in two different algorithms, it's not necessary for us to know what the algorithms actually are. What we actually care about is how they behave. Any decent symmetric block cipher algorithm is also a strong pseudorandom permutation (PRP): fix the inputs (key, chaining mode, IV, plaintext) and the ciphertext output will with overwhelming probability be distinct from any other symmetric block cipher algorithm given the same inputs. Similarly, any decent keyed hash function is also a strong pseudorandom function (PRF), and given a fixed input set its output will overwhelmingly be distinct from any other keyed hash function.
 
-We use this concept of strong PRPs and PRFs to build up a context header. This context header essentially acts as a stable thumbprint over the algorithms in use for any given operation, and it provides the cryptographic agility needed by the data protection system. This header is reproducible and is used later as part of the subkey <example-value> process. There are two different ways to build the context header depending on the modes of operation of the underlying algorithms.
+We use this concept of strong PRPs and PRFs to build up a context header. This context header essentially acts as a stable thumbprint over the algorithms in use for any given operation, and it provides the cryptographic agility needed by the data protection system. This header is reproducible and is used later as part of the [subkey derivation process](subkeyderivation.md#data-protection-implementation-subkey-derivation). There are two different ways to build the context header depending on the modes of operation of the underlying algorithms.
 
 ## CBC-mode encryption + HMAC authentication
+
+<a name="data-protection-implementation-context-headers-cbc-components"></a>
 
 The context header consists of the following components:
 
 * [16 bits] The value 00 00, which is a marker meaning "CBC encryption + HMAC authentication".
 
-* [32 bits] The key <example-value> (in bytes, big-endian) of the symmetric block cipher algorithm.
+* [32 bits] The key length (in bytes, big-endian) of the symmetric block cipher algorithm.
 
 * [32 bits] The block size (in bytes, big-endian) of the symmetric block cipher algorithm.
 
-* [32 bits] The key <example-value> (in bytes, big-endian) of the HMAC algorithm. (Currently the key size always matches the digest size.)
+* [32 bits] The key length (in bytes, big-endian) of the HMAC algorithm. (Currently the key size always matches the digest size.)
 
 * [32 bits] The digest size (in bytes, big-endian) of the HMAC algorithm.
 
@@ -37,9 +37,9 @@ The context header consists of the following components:
 
 * `MAC(K_H, "")`, which is the output of the HMAC algorithm given an empty string input. The construction of `K_H` is described below.
 
-Ideally, we could pass <example-value> vectors for `K_E` and `K_H`. However, we want to avoid the situation where the underlying algorithm checks for the existence of weak keys before performing any operations (notably DES and 3DES), which precludes using a simple or repeatable pattern like an all-zero vector.
+Ideally, we could pass all-zero vectors for `K_E` and `K_H`. However, we want to avoid the situation where the underlying algorithm checks for the existence of weak keys before performing any operations (notably DES and 3DES), which precludes using a simple or repeatable pattern like an all-zero vector.
 
-Instead, we use the NIST SP800-108 KDF in Counter Mode (see NIST SP800-108, Sec. 5.1) with a zero-length key, label, and context and HMACSHA512 as the underlying PRF. We derive `| K_E | + | K_H |` bytes of output, then decompose the result into `K_E` and `K_H` themselves. Mathematically, this is represented as follows.
+Instead, we use the NIST SP800-108 KDF in Counter Mode (see [NIST SP800-108](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-108.pdf), Sec. 5.1) with a zero-length key, label, and context and HMACSHA512 as the underlying PRF. We derive `| K_E | + | K_H |` bytes of output, then decompose the result into `K_E` and `K_H` themselves. Mathematically, this is represented as follows.
 
 `( K_E || K_H ) = SP800_108_CTR(prf = HMACSHA512, key = "", label = "", context = "")`
 
@@ -74,15 +74,15 @@ DB 6F D4 79 11 84 B9 96 09 2E E1 20 2F 36 E8 60
 22 0C
 ```
 
-This context header is the thumbprint of the authenticated encryption algorithm pair (AES-192-CBC encryption + HMACSHA256 validation). The components, as described above are:
+This context header is the thumbprint of the authenticated encryption algorithm pair (AES-192-CBC encryption + HMACSHA256 validation). The components, as described [above](context-headers.md#data-protection-implementation-context-headers-cbc-components) are:
 
 * the marker `(00 00)`
 
-* the block cipher key <example-value> `(00 00 00 18)`
+* the block cipher key length `(00 00 00 18)`
 
 * the block cipher block size `(00 00 00 10)`
 
-* the HMAC key <example-value> `(00 00 00 20)`
+* the HMAC key length `(00 00 00 20)`
 
 * the HMAC digest size `(00 00 00 20)`
 
@@ -90,7 +90,7 @@ This context header is the thumbprint of the authenticated encryption algorithm 
 
 * the HMAC PRF output `(D4 79 - end)`.
 
-> **Note:**
+> [!NOTE]
 > The CBC-mode encryption + HMAC authentication context header is built the same way regardless of whether the algorithms implementations are provided by Windows CNG or by managed SymmetricAlgorithm and KeyedHashAlgorithm types. This allows applications running on different operating systems to reliably produce the same context header even though the implementations of the algorithms differ between OSes. (In practice, the KeyedHashAlgorithm doesn't have to be a proper HMAC. It can be any keyed hash algorithm type.)
 
 ### Example: 3DES-192-CBC + HMACSHA1
@@ -123,11 +123,11 @@ The components break down as follows:
 
 * the marker `(00 00)`
 
-* the block cipher key <example-value> `(00 00 00 18)`
+* the block cipher key length `(00 00 00 18)`
 
 * the block cipher block size `(00 00 00 08)`
 
-* the HMAC key <example-value> `(00 00 00 14)`
+* the HMAC key length `(00 00 00 14)`
 
 * the HMAC digest size `(00 00 00 14)`
 
@@ -141,7 +141,7 @@ The context header consists of the following components:
 
 * [16 bits] The value 00 01, which is a marker meaning "GCM encryption + authentication".
 
-* [32 bits] The key <example-value> (in bytes, big-endian) of the symmetric block cipher algorithm.
+* [32 bits] The key length (in bytes, big-endian) of the symmetric block cipher algorithm.
 
 * [32 bits] The nonce size (in bytes, big-endian) used during authenticated encryption operations. (For our system, this is fixed at nonce size = 96 bits.)
 
@@ -177,7 +177,7 @@ The components break down as follows:
 
 * the marker `(00 01)`
 
-* the block cipher key <example-value> `(00 00 00 20)`
+* the block cipher key length `(00 00 00 20)`
 
 * the nonce size `(00 00 00 0C)`
 

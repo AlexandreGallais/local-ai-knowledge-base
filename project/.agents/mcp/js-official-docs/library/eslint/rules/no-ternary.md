@@ -1,13 +1,11 @@
 ---
-title: "no-ternary"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-ternary.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-ternary
+rule_type: suggestion
+related_rules:
+- no-nested-ternary
+- no-unneeded-ternary
 ---
 
-# no-ternary
 
 The ternary operator is used to conditionally assign a value to a variable. Some believe that the use of ternary operators leads to unclear code.
 
@@ -21,7 +19,7 @@ This rule disallows ternary operators.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-ternary: "error"*/
@@ -33,9 +31,11 @@ function quux() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-ternary: "error"*/
@@ -56,6 +56,8 @@ function quux() {
     }
 }
 ```
+
+:::
 
 ## Options
 

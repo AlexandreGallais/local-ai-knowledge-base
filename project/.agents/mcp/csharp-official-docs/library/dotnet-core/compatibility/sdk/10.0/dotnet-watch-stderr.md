@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: 'dotnet watch' logs to stderr instead of stdout"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/dotnet-watch-stderr.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where 'dotnet watch' emits its internal-facing log messages to stderr instead of stdout."
+ms.date: 10/08/2025
+ai-usage: ai-generated
+ms.custom: https://github.com/dotnet/docs/issues/45871
 ---
-
 # 'dotnet watch' logs to stderr instead of stdout
 
-Starting in .NET 10, `dotnet watch` emits its internal-facing log messages to the `stderr` channel instead of `stdout`. This change is part of a general trend towards `dotnet` CLI commands not obscuring the `stdout` channel. That channel is often reserved for special semantics when running certain kinds of applications, like LSP or MCP servers.
+Starting in .NET 10, [`dotnet watch`](../../../tools/dotnet-watch.md) emits its internal-facing log messages to the `stderr` channel instead of `stdout`. This change is part of a general trend towards `dotnet` CLI commands not obscuring the `stdout` channel. That channel is often reserved for special semantics when running certain kinds of applications, like LSP or MCP servers.
 
 ## Version introduced
 
@@ -17,15 +15,15 @@ Starting in .NET 10, `dotnet watch` emits its internal-facing log messages to th
 
 ## Previous behavior
 
-Previously, `dotnet watch` emitted log messages to `stdout`.
+Previously, [`dotnet watch`](../../../tools/dotnet-watch.md) emitted log messages to `stdout`.
 
 ## New behavior
 
-Starting in .NET 10, `dotnet watch` emits log messages to `stderr`.
+Starting in .NET 10, [`dotnet watch`](../../../tools/dotnet-watch.md) emits log messages to `stderr`.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

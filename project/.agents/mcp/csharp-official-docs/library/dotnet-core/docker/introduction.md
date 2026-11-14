@@ -1,29 +1,27 @@
 ---
-title: "Introduction to Docker"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/docker/introduction.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Introduction to Docker
+description: This article provides an introduction and overview to Docker containers in the context of a .NET application.
+ms.date: 10/20/2025
+ms.custom: "mvc"
 ---
 
 # Introduction to .NET and Docker
 
-Containers are one of the most popular ways for deploying and hosting cloud applications, with tools like Docker, Kubernetes, and Podman. Many developers choose containers because it's straightforward to package an app with its dependencies and get that app to reliably run on any container host. There's extensive support for using .NET with containers.
+Containers are one of the most popular ways for deploying and hosting cloud applications, with tools like [Docker](https://www.docker.com/), [Kubernetes](https://kubernetes.io/), and [Podman](https://podman.io/). Many developers choose containers because it's straightforward to package an app with its dependencies and get that app to reliably run on any container host. There's extensive support for [using .NET with containers](https://devblogs.microsoft.com/dotnet/category/containers/).
 
-Docker provides a great overview of containers. Docker Desktop: Community Edition is a good tool to use for using containers on developer desktop machine.
+Docker provides a great [overview](https://docs.docker.com/engine/docker-overview/) of containers. [Docker Desktop: Community Edition](https://www.docker.com/products/docker-desktop) is a good tool to use for using containers on developer desktop machine.
 
 ## .NET images
 
-Official .NET container images are published to the Microsoft Artifact Registry and are discoverable on the Docker Hub. There are runtime images for production and SDK images for building your code, for Linux (Alpine, Debian, Ubuntu, Mariner) and Windows. For more information, see .NET container images.
+Official .NET container images are published to the [Microsoft Artifact Registry](https://mcr.microsoft.com/) and are discoverable on the [Docker Hub](https://hub.docker.com/_/microsoft-dotnet/). There are [runtime images](https://mcr.microsoft.com/product/dotnet/aspnet/) for production and [SDK images](https://mcr.microsoft.com/product/dotnet/sdk/) for building your code, for Linux (Alpine, Debian, Ubuntu, Mariner) and Windows. For more information, see [.NET container images](container-images.md).
 
 .NET images are regularly updated whenever a new .NET patch is published or when an operating system base image is updated.
 
-Chiseled container images are Ubuntu container images with a minimal set of components required by the .NET runtime. These images are ~100 MB smaller than the regular Ubuntu images and have fewer CVEs since they have fewer components. In particular, they don't contain a shell or package manager, which significantly improves their security profile. They also include a non-root user and are configured with that user enabled.
+[Chiseled container images](https://devblogs.microsoft.com/dotnet/announcing-dotnet-chiseled-containers/) are Ubuntu container images with a minimal set of components required by the .NET runtime. These images are ~100 MB smaller than the regular Ubuntu images and have fewer [CVEs](https://www.cve.org/) since they have fewer components. In particular, they don't contain a shell or package manager, which significantly improves their security profile. They also include a [non-root user](https://devblogs.microsoft.com/dotnet/securing-containers-with-rootless/) and are configured with that user enabled.
 
 ## Building container images
 
-You can build a container image with a **Dockerfile** or rely on the .NET SDK to produce an image. For samples on building images, see dotnet/dotnet-docker and dotnet/sdk-container-builds.
+You can build a container image with a **Dockerfile** or rely on the [.NET SDK to produce an image](../containers/sdk-publish.md). For samples on building images, see [dotnet/dotnet-docker](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) and [dotnet/sdk-container-builds](https://github.com/dotnet/sdk-container-builds).
 
 The following example demonstrates building and running a container image in a few quick steps (supported with .NET 8 and .NET 7.0.300).
 
@@ -48,11 +46,11 @@ CONTAINER ID   IMAGE     COMMAND               CREATED              STATUS      
 $ docker kill 7c7ad33409e5
 ```
 
-`docker init` is a new option for developers wanting to use Dockerfiles.
+[`docker init`](https://www.docker.com/blog/docker-desktop-4-23/) is a new option for developers wanting to use Dockerfiles.
 
 ## Ports
 
-Port mapping is a key part of using containers. Ports must be published outside the container in order to respond to external web requests. ASP.NET Core container images changed in .NET 8 to listen on port `8080`, by default. .NET 6 and 7 listen on port `80`.
+[Port mapping](https://docs.docker.com/network/#published-ports) is a key part of using containers. Ports must be published outside the container in order to respond to external web requests. ASP.NET Core container images [changed in .NET 8](../compatibility/containers/8.0/aspnet-port.md) to listen on port `8080`, by default. .NET 6 and 7 listen on port `80`.
 
 In the prior example with `docker run`, the host port `8000` is mapped to the container port `8080`. Kubernetes works in a similar way.
 
@@ -60,40 +58,40 @@ The `ASPNETCORE_HTTP_PORTS`, `ASPNETCORE_HTTPS_PORTS`, and `ASPNETCORE_URLS` env
 
 ## Users
 
-Starting with .NET 8, all images include a non-root user called `app`. By default, chiseled images are configured with this user enabled. The publish app as .NET container feature (demonstrated in the Building container images section) also configures images with this user enabled by default. In all other scenarios, the `app` user can be set manually, for example with the `USER` *Dockerfile* instruction. If an image has been configured with `app` and commands need to run as `root`, then the `USER` instruction can be used to set to the user to `root`.
+Starting with .NET 8, all images include a non-root user called `app`. By default, chiseled images are configured with this user enabled. The publish app as .NET container feature (demonstrated in the [Building container images](#building-container-images) section) also configures images with this user enabled by default. In all other scenarios, the `app` user can be set manually, for example with the `USER` *Dockerfile* instruction. If an image has been configured with `app` and commands need to run as `root`, then the `USER` instruction can be used to set to the user to `root`.
 
 ## Staying informed
 
-Container-related news is posted to dotnet/dotnet-docker discussions and to the .NET Blog "containers" category.
+Container-related news is posted to [dotnet/dotnet-docker discussions](https://github.com/dotnet/dotnet-docker/discussions) and to the [.NET Blog "containers" category](https://devblogs.microsoft.com/dotnet/category/containers/).
 
 ## Azure services
 
 Various Azure services support containers. You create a Docker image for your application and deploy it to one of the following services:
 
-- Azure Kubernetes Service (AKS)\
+- [Azure Kubernetes Service (AKS)](https://azure.microsoft.com/services/kubernetes-service/)\
 Scale and orchestrate Windows & Linux containers using Kubernetes.
 
-- Azure App Service\
+- [Azure App Service](https://azure.microsoft.com/services/app-service/containers/)\
 Deploy web apps or APIs using containers in a PaaS environment.
 
-- Azure Container Apps\
-Run your container workloads without managing servers, orchestration, or infrastructure and leverage native support for Dapr and KEDA for observability and scaling to zero.
+- [Azure Container Apps](https://azure.microsoft.com/services/container-apps/)\
+Run your container workloads without managing servers, orchestration, or infrastructure and leverage native support for [Dapr](https://dapr.io/) and [KEDA](https://keda.sh/) for observability and scaling to zero.
 
-- Azure Container Instances\
+- [Azure Container Instances](https://azure.microsoft.com/services/container-instances/)\
 Create individual containers in the cloud without any higher-level management services.
 
-- Azure Batch\
+- [Azure Batch](https://azure.microsoft.com/services/batch/)\
 Run repetitive compute jobs using containers.
 
-- Azure Service Fabric\
+- [Azure Service Fabric](https://azure.microsoft.com/services/service-fabric/)\
 Lift, shift, and modernize .NET applications to microservices using Windows & Linux containers.
 
-- Azure Container Registry\
+- [Azure Container Registry](https://azure.microsoft.com/services/container-registry/)\
 Store and manage container images across all types of Azure deployments.
 
 ## Next steps
 
-- Learn how to containerize a .NET Core application.
-- Learn how to containerize an ASP.NET Core application.
-- Try the Learn ASP.NET Core Microservice tutorial.
-- Learn about Container Tools in Visual Studio
+- [Learn how to containerize a .NET Core application.](build-container.md)
+- [Learn how to containerize an ASP.NET Core application.](/aspnet/core/host-and-deploy/docker/building-net-docker-images)
+- [Try the Learn ASP.NET Core Microservice tutorial.](https://dotnet.microsoft.com/learn/web/aspnet-microservice-tutorial/intro)
+- [Learn about Container Tools in Visual Studio](/visualstudio/containers/overview)

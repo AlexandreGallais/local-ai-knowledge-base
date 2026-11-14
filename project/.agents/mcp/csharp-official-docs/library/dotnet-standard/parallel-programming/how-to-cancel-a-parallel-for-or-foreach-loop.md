@@ -1,78 +1,30 @@
 ---
 title: "How to: Cancel a Parallel.For or ForEach Loop"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/parallel-programming/how-to-cancel-a-parallel-for-or-foreach-loop.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Cancel a Parallel.For or Parallel.ForEach loop in .NET by supplying a cancellation token object to the method in the ParallelOptions parameter.
+ms.date: 08/18/2023
+dev_langs:
+ - "csharp"
+ - "vb"
+helpviewer_keywords:
+ - "parallel foreach loop, how to cancel"
+ - "parallel for loops, how to cancel"
+ms.assetid: 9d19b591-ea95-4418-8ea7-b6266af9905b
 ---
 
 # How to: Cancel a Parallel.For or ForEach Loop
 
-The `System.Threading.Tasks.Parallel.For*` and `System.Threading.Tasks.Parallel.ForEach*` methods support cancellation through the use of cancellation tokens. For more information about cancellation in general, see Cancellation. In a parallel loop, you supply the `System.Threading.CancellationToken` to the method in the `System.Threading.Tasks.ParallelOptions` parameter and then enclose the parallel call in a try-catch block.
+The <xref:System.Threading.Tasks.Parallel.For*?displayProperty=nameWithType> and <xref:System.Threading.Tasks.Parallel.ForEach*?displayProperty=nameWithType> methods support cancellation through the use of cancellation tokens. For more information about cancellation in general, see [Cancellation](../threading/cancellation-in-managed-threads.md). In a parallel loop, you supply the <xref:System.Threading.CancellationToken> to the method in the <xref:System.Threading.Tasks.ParallelOptions> parameter and then enclose the parallel call in a try-catch block.
 
 ## Example
 
-The following example shows how to cancel a call to `System.Threading.Tasks.Parallel.ForEach*`. You can apply the same approach to a `System.Threading.Tasks.Parallel.For*` call.
+The following example shows how to cancel a call to <xref:System.Threading.Tasks.Parallel.ForEach*?displayProperty=nameWithType>. You can apply the same approach to a <xref:System.Threading.Tasks.Parallel.For*?displayProperty=nameWithType> call.
 
-```csharp
-namespace CancelParallelLoops
-{
-    using System;
-    using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
+[!code-csharp[TPL_Parallel#29](../../../samples/snippets/csharp/VS_Snippets_Misc/tpl_parallel/cs/parallel_cancel.cs#29)]
+[!code-vb[TPL_Parallel#29](../../../samples/snippets/visualbasic/VS_Snippets_Misc/tpl_parallel/vb/cancelloop.vb#29)]
 
-    class Program
-    {
-        static void Main()
-        {
-            int[] nums = Enumerable.Range(0, 10_000_000).ToArray();
-            CancellationTokenSource cts = new();
-
-            // Use ParallelOptions instance to store the CancellationToken
-            ParallelOptions options = new()
-            {
-                CancellationToken = cts.Token,
-                MaxDegreeOfParallelism = Environment.ProcessorCount
-            };
-            Console.WriteLine("Press any key to start. Press 'c' to cancel.");
-            Console.ReadKey();
-
-            // Run a task so that we can cancel from another thread.
-            Task.Factory.StartNew(() =>
-            {
-                if (Console.ReadKey().KeyChar is 'c')
-                    cts.Cancel();
-                Console.WriteLine("press any key to exit");
-            });
-
-            try
-            {
-                Parallel.ForEach(nums, options, (num) =>
-                {
-                    double d = Math.Sqrt(num);
-                    Console.WriteLine($"{d} on {Environment.CurrentManagedThreadId}");
-                });
-            }
-            catch (OperationCanceledException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            finally
-            {
-                cts.Dispose();
-            }
-
-            Console.ReadKey();
-        }
-    }
-}
-```
-
-If the token that signals the cancellation is the same token that is specified in the `System.Threading.Tasks.ParallelOptions` instance, then the parallel loop will throw a single `System.OperationCanceledException` on cancellation. This immediately stops all iterations from executing as the exception is thrown. If some other token <example-value> cancellation, the loop will throw an `System.AggregateException` with an `System.OperationCanceledException` as an `InnerException`.
+If the token that signals the cancellation is the same token that is specified in the <xref:System.Threading.Tasks.ParallelOptions> instance, then the parallel loop will throw a single <xref:System.OperationCanceledException> on cancellation. This immediately stops all iterations from executing as the exception is thrown. If some other token causes cancellation, the loop will throw an <xref:System.AggregateException> with an <xref:System.OperationCanceledException> as an `InnerException`.
 
 ## See also
 
-- Data parallelism
-- Lambda expressions in PLINQ and TPL
+- [Data parallelism](data-parallelism-task-parallel-library.md)
+- [Lambda expressions in PLINQ and TPL](lambda-expressions-in-plinq-and-tpl.md)

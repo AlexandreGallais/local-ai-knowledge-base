@@ -1,13 +1,10 @@
 ---
-title: "Modules .d.ts"
-tool: "typescript"
-version: "6.0"
-source: "https://github.com/microsoft/TypeScript-Website/blob/4ec663ac4412c3a7086401bd5a8811565589b11d/packages/documentation/copy/en/declaration-files/templates/module.d.ts.md"
-commit: "4ec663ac4412c3a7086401bd5a8811565589b11d"
-license: "CC-BY-4.0"
+title: Modules .d.ts
+layout: docs
+permalink: /docs/handbook/declaration-files/templates/module-d-ts.html
 ---
 
-# Modules .d.ts
+## Comparing JavaScript to an example DTS
 
 ## Common CommonJS Patterns
 
@@ -33,9 +30,9 @@ export function getArrayLength(arr: any[]): number;
 export const maxInterval: 12;
 ```
 
-The TypeScript playground can show you the `.d.ts` equivalent for JavaScript code. You can try it yourself here.
+The TypeScript playground can show you the `.d.ts` equivalent for JavaScript code. You can [try it yourself here](/play?useJavaScript=true#code/GYVwdgxgLglg9mABAcwKZQIICcsEMCeAMqmMlABYAUuOAlIgN6IBQiiW6IWSNWAdABsSZcswC+zCAgDOURAFtcADwAq5GKUQBeRAEYATM2by4AExBC+qJQAc4WKNO2NWKdNjxFhFADSvFquqk4sxAA).
 
-The `.d.ts` syntax intentionally looks like ES Modules syntax.
+The `.d.ts` syntax intentionally looks like [ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) syntax.
 ES Modules was ratified by TC39 in 2015 as part of ES2015 (ES6), while it has been available via transpilers for a long time, however if you have a JavaScript codebase using ES Modules:
 
 ```js
@@ -99,7 +96,7 @@ declare namespace getArrayLength {
 export = getArrayLength;
 ```
 
-See Module: Functions for details of how that works, and the Modules reference page.
+See [Module: Functions](/docs/handbook/declaration-files/templates/module-function-d-ts.html) for details of how that works, and the [Modules reference](/docs/handbook/modules.html) page.
 
 ## Handling Many Consuming Import
 
@@ -162,7 +159,7 @@ export type ArrayMetadata = {
 export function getArrayMetadata(arr: any[]): ArrayMetadata;
 ```
 
-This example is a good case for using generics to provide richer type information:
+This example is a good case for [using generics](/docs/handbook/generics.html#generic-types) to provide richer type information:
 
 ```ts
 export type ArrayMetadata<ArrType> = {
@@ -177,7 +174,7 @@ export function getArrayMetadata<ArrType>(
 
 Now the type of the array propagates into the `ArrayMetadata` type.
 
-The types which are exported can then be re-used by consumers of the modules using either `import` or `import type` in TypeScript code or JSDoc imports.
+The types which are exported can then be re-used by consumers of the modules using either `import` or `import type` in TypeScript code or [JSDoc imports](/docs/handbook/jsdoc-supported-types.html#import-types).
 
 ### Namespaces in Module Code
 
@@ -207,7 +204,7 @@ declare namespace API {
 }
 ```
 
-To understand how namespaces work in `.d.ts` files read the `.d.ts` deep dive.
+To understand how namespaces work in `.d.ts` files read the [`.d.ts` deep dive](/docs/handbook/declaration-files/deep-dive.html).
 
 ### Optional Global Usage
 
@@ -296,10 +293,10 @@ If you are planning on submitting these changes to DefinitelyTyped for everyone 
 > 1. Create a new folder in `node_modules/@types/[libname]`
 > 2. Create an `index.d.ts` in that folder, and copy the example in
 > 3. See where your usage of the module breaks, and start to fill out the index.d.ts
-> 4. When you're happy, clone DefinitelyTyped/DefinitelyTyped and follow the instructions in the README.
+> 4. When you're happy, clone [DefinitelyTyped/DefinitelyTyped](https://github.com/DefinitelyTyped) and follow the instructions in the README. 
 
 Otherwise
 
 > 1. Create a new file in the root of your source tree: `[libname].d.ts`
 > 2. Add `declare module "[libname]" {  }`
-> 3. Add the template inside the braces of the declare module, and see where your usage breaks
+> 3. Add the template inside the braces of the declare module, and see where your usage breaks 

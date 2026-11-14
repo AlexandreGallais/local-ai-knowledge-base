@@ -1,0 +1,19 @@
+<Namespace Name="System.Collections.Immutable">
+  <Docs>
+    <summary>Contains interfaces and classes that define immutable collections.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+With immutable collections, you can:
+
+- Share a collection in a way that its consumer can be assured that the collection never changes.
+- Provide implicit thread safety in multi-threaded applications (no locks required to access collections).
+- Follow functional programming practices.
+- Modify a collection during enumeration, while ensuring that the original collection does not change.
+
+ ]]></format>
+    </remarks>
+  </Docs>
+</Namespace>

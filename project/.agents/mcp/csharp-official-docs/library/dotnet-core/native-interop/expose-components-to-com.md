@@ -1,10 +1,14 @@
 ---
 title: "Exposing .NET Core components to COM"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/native-interop/expose-components-to-com.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "This tutorial shows you how to expose a class to COM from .NET Core. You generate a COM server and a side-by-side server manifest for Registry-Free COM."
+ms.date: 07/12/2019
+helpviewer_keywords:
+  - "exposing .NET Core components to COM"
+  - "interoperation with unmanaged code, exposing .NET Core components"
+  - "COM interop, exposing COM components"
+ms.assetid: 21271167-fe7f-46ba-a81f-a6812ea649d4
+author: "jkoritzinsky"
+ms.author: "jekoritz"
 ---
 
 # Expose .NET Core components to COM
@@ -17,7 +21,7 @@ This article walks you through how to expose a class to COM from .NET Core (or .
 
 ## Prerequisites
 
-- Install .NET Core 3.0 SDK or a newer version.
+- Install [.NET Core 3.0 SDK](https://dotnet.microsoft.com/download) or a newer version.
 
 ## Create the library
 
@@ -55,7 +59,7 @@ The first step is to create the library.
 8. Add the `[Guid("<CLSID>")]` attribute to the class, with the class identifier GUID for the COM class you're implementing. For example, `[Guid("9f35b6f5-2c05-4e7f-93aa-ee087f6e7ab6")]`. As with the interface GUID, this GUID must be unique since it is the only identifier of this interface to COM.
 9. Add the `[ComVisible(true)]` attribute to both the interface and the class.
 
-> **Important:**
+> [!IMPORTANT]
 > Unlike in .NET Framework, .NET Core requires you to specify the CLSID of any class you want to be activatable via COM.
 
 ## Generate the COM host
@@ -69,7 +73,7 @@ The resulting output will have a `ProjectName.dll`, `ProjectName.deps.json`, `Pr
 
 Open an elevated command prompt and run `regsvr32 ProjectName.comhost.dll`. That will register all of your exposed .NET objects with COM.
 
-If you intend to embed a type library (TLB), it's recommended to also define functions using `ComRegisterFunctionAttribute` and `ComUnregisterFunctionAttribute`. These functions can be used to register and unregister the TLB for the COM server. For a complete example, see the `OutOfProcCOM` sample.
+If you intend to [embed a type library (TLB)](#embed_tlb), it's recommended to also define functions using [`ComRegisterFunctionAttribute`](/dotnet/api/system.runtime.interopservices.comregisterfunctionattribute) and [`ComUnregisterFunctionAttribute`](/dotnet/api/system.runtime.interopservices.comunregisterfunctionattribute). These functions can be used to register and unregister the TLB for the COM server. For a complete example, see the [`OutOfProcCOM`](https://github.com/dotnet/samples/tree/main/core/extensions/OutOfProcCOM) sample.
 
 ## Enabling RegFree COM
 
@@ -78,9 +82,9 @@ If you intend to embed a type library (TLB), it's recommended to also define fun
 
 The resulting output will now also have a `ProjectName.X.manifest` file. This file is the side-by-side manifest for use with Registry-Free COM.
 
-##  Embedding type libraries in the COM host
+## <a name="embed_tlb"></a> Embedding type libraries in the COM host
 
-Unlike in .NET Framework, there is no support in .NET Core or .NET 5+ for generating a COM Type Library (TLB) from a .NET assembly. The guidance is to either manually write an IDL file or a C/C++ header for the native declarations of the COM interfaces. If you decide to write an IDL file, you can compile it with the Visual C++ SDK's MIDL compiler to produce a TLB.
+Unlike in .NET Framework, there is no support in .NET Core or .NET 5+ for generating a [COM Type Library (TLB)](/windows/win32/midl/com-dcom-and-type-libraries#type-library) from a .NET assembly. The guidance is to either manually write an IDL file or a C/C++ header for the native declarations of the COM interfaces. If you decide to write an IDL file, you can compile it with the Visual C++ SDK's MIDL compiler to produce a TLB.
 
 In .NET 6 and later versions, the .NET SDK supports embedding already-compiled TLBs into the COM host as part of your project build.
 
@@ -100,9 +104,9 @@ For example, the following code block adds the `Server.tlb` type library at inde
 
 ## Loading in the default `AssemblyLoadContext`
 
-During activation, the assembly containing the COM component is loaded in a separate `System.Runtime.Loader.AssemblyLoadContext` based on the assembly path. If there is one assembly providing multiple COM servers, the `AssemblyLoadContext` is reused such that all of the servers from that assembly reside in the same load context. If there are multiple assemblies providing COM servers, a new `AssemblyLoadContext` is created for each assembly, and each server resides in the load context that corresponds to its assembly.
+During activation, the assembly containing the COM component is loaded in a separate <xref:System.Runtime.Loader.AssemblyLoadContext> based on the assembly path. If there is one assembly providing multiple COM servers, the `AssemblyLoadContext` is reused such that all of the servers from that assembly reside in the same load context. If there are multiple assemblies providing COM servers, a new `AssemblyLoadContext` is created for each assembly, and each server resides in the load context that corresponds to its assembly.
 
-In .NET 8 and later versions, the assembly can specify that it should be loaded in the default `AssemblyLoadContext`. To enable loading in the default context, add the following RuntimeHostConfigurationOption item to the project:
+In .NET 8 and later versions, the assembly can specify that it should be loaded in the default `AssemblyLoadContext`. To enable loading in the default context, add the following [RuntimeHostConfigurationOption](../runtime-config/index.md#msbuild-properties) item to the project:
 
 ```xml
 <ItemGroup>
@@ -112,17 +116,17 @@ In .NET 8 and later versions, the assembly can specify that it should be loaded 
 
 ## Sample
 
-There is a fully functional COM server sample in the dotnet/samples repository on GitHub.
+There is a fully functional [COM server sample](https://github.com/dotnet/samples/tree/main/core/extensions/COMServerDemo) in the dotnet/samples repository on GitHub.
 
 ## Additional notes
 
-> **Important:**
+> [!IMPORTANT]
 > In .NET Framework, an "Any CPU" assembly can be consumed by both 32-bit and 64-bit clients. By default, in .NET Core, .NET 5, and later versions, "Any CPU" assemblies are accompanied by a 64-bit *\*.comhost.dll*. Because of this, they can only be consumed by 64-bit clients. That is the default because that is what the SDK represents. This behavior is identical to how the "self-contained" feature is published: by default it uses what the SDK provides. The `NETCoreSdkRuntimeIdentifier` MSBuild property determines the bitness of *\*.comhost.dll*. The managed part is actually bitness agnostic as expected, but the accompanying native asset defaults to the targeted SDK.
 
-Self-contained deployments of COM components are not supported. Only framework-dependent deployments of COM components are supported.
+[Self-contained deployments](../deploying/index.md#publish-as-self-contained) of COM components are not supported. Only [framework-dependent deployments](../deploying/index.md#publish-as-framework-dependent) of COM components are supported.
 
-Exposing COM components from C++/CLI projects via the EnableComHosting property is not supported.
+Exposing COM components from [C++/CLI projects](/cpp/dotnet/dotnet-programming-with-cpp-cli-visual-cpp) via the [EnableComHosting property](../project-sdk/msbuild-props.md#enablecomhosting) is not supported.
 
 Additionally, loading both .NET Framework and .NET Core into the same process does have diagnostic limitations. The primary limitation is the debugging of managed components as it is not possible to debug both .NET Framework and .NET Core at the same time. In addition, the two runtime instances don't share managed assemblies. This means that it isn't possible to share actual .NET types across the two runtimes and instead all interactions must be restricted to the exposed COM interface contracts.
 
-For scenarios where you need command-line COM tools similar to tools that .NET Framework provided, see the community project `dscom`. This project isn't a Microsoft tool, so support comes from the project maintainers.
+For scenarios where you need command-line COM tools similar to tools that .NET Framework provided, see the community project [`dscom`](https://github.com/dspace-group/dscom). This project isn't a Microsoft tool, so support comes from the project maintainers.

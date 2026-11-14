@@ -1,12 +1,3 @@
----
-title: "NetPermission class (java.net)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/net/NetPermission.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # NetPermission class (java.net)
 
 ```java
@@ -17,7 +8,7 @@ This class is for various network permissions.
 A NetPermission contains a name (also referred to as a "target name") but
 no actions list; you either have the named permission
 or you don't.
-
+<P>
 The target name is the name of the network permission. The naming convention
 follows the hierarchical property naming convention, typically the reverse
 domain name notation, to avoid name clashes.
@@ -25,20 +16,20 @@ An asterisk may appear at the end of the name, following a ".", or by itself,
 to signify a wildcard match. For example: "foo.*" and "*" signify a wildcard
 match, while "*foo" and "a*b" do not.
 
-**Deprecated:** This permission cannot be used for controlling access to resources
+@deprecated
+This permission cannot be used for controlling access to resources
 as the Security Manager is no longer supported.
 
-**See also:** java.security.BasicPermission
+@see java.security.BasicPermission
+@see java.security.Permission
+@see java.security.Permissions
+@see java.security.PermissionCollection
+@see java.lang.SecurityManager
 
-**See also:** java.security.Permission
 
-**See also:** java.security.Permissions
-
-**See also:** java.security.PermissionCollection
-
-**See also:** java.lang.SecurityManager
-
-**Since:** 1.2
+@author Marianne Mueller
+@author Roland Schemers
+@since 1.2
 
 ## NetPermission.NetPermission(String)
 
@@ -52,14 +43,10 @@ The name is the symbolic name of the NetPermission, such as
 may appear at the end of the name, following a ".", or by itself, to
 signify a wildcard match.
 
-Parameters:
+@param name the name of the NetPermission.
 
-- `name`: the name of the NetPermission.
-
-Throws:
-
-- `NullPointerException`: if `name` is `null`.
-- `IllegalArgumentException`: if `name` is empty.
+@throws NullPointerException if {@code name} is {@code null}.
+@throws IllegalArgumentException if {@code name} is empty.
 
 ## NetPermission.NetPermission(String, String)
 
@@ -71,12 +58,8 @@ Creates a new NetPermission object with the specified name.
 The name is the symbolic name of the NetPermission, and the
 actions String is currently unused and should be null.
 
-Parameters:
+@param name the name of the NetPermission.
+@param actions should be null.
 
-- `name`: the name of the NetPermission.
-- `actions`: should be null.
-
-Throws:
-
-- `NullPointerException`: if `name` is `null`.
-- `IllegalArgumentException`: if `name` is empty.
+@throws NullPointerException if {@code name} is {@code null}.
+@throws IllegalArgumentException if {@code name} is empty.

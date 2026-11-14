@@ -1,12 +1,9 @@
 ---
-title: "dotnet nuget push command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-nuget-push.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet nuget push command
+description: The dotnet nuget push command pushes a package to the server and publishes it.
+author: karann-msft
+ms.date: 10/28/2025
 ---
-
 # dotnet nuget push
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -30,9 +27,9 @@ dotnet nuget push -h|--help
 
 ## Description
 
-The `dotnet nuget push` command pushes a package to the server and publishes it. The push command uses server and credential <example-value> found in the system's NuGet config file or chain of config files. For more information on config files, see Configuring NuGet Behavior. NuGet's default configuration is obtained by loading *%AppData%\NuGet\NuGet.config* (Windows) or *$HOME/.nuget/NuGet/NuGet.Config* (Linux/macOS), then loading any *nuget.config* or *.nuget\nuget.config* starting from the root of drive and ending in the current directory.
+The `dotnet nuget push` command pushes a package to the server and publishes it. The push command uses server and credential details found in the system's NuGet config file or chain of config files. For more information on config files, see [Configuring NuGet Behavior](/nuget/consume-packages/configuring-nuget-behavior). NuGet's default configuration is obtained by loading *%AppData%\NuGet\NuGet.config* (Windows) or *$HOME/.nuget/NuGet/NuGet.Config* (Linux/macOS), then loading any *nuget.config* or *.nuget\nuget.config* starting from the root of drive and ending in the current directory.
 
-The command pushes an existing package. It doesn't create a package. To create a package, use `dotnet pack`.
+The command pushes an existing package. It doesn't create a package. To create a package, use [`dotnet pack`](dotnet-pack.md).
 
 ### Hierarchical folder structure
 
@@ -43,7 +40,7 @@ This command can store packages in a hierarchical folder structure, which is rec
 * Use `dotnet nuget push` to publish your package to the local feed.
 * You can now delete the folder you previously copied in, and you can freely use `dotnet nuget push` to publish to your local feed.
 
-Alternatively, use the NuGet CLI for the first package, then you can use `dotnet nuget push` for the rest. For more information, see Local feeds.
+Alternatively, use the NuGet CLI for the first package, then you can use `dotnet nuget push` for the rest. For more information, see [Local feeds](/nuget/hosting-packages/local-feeds).  
 
 ## Arguments
 
@@ -54,7 +51,7 @@ Alternatively, use the NuGet CLI for the first package, then you can use `dotnet
 ## Options
 
 - **`--allow-insecure-connections`**
-
+  
   Allows pushing to HTTP sources (insecure). Available since .NET 10 SDK.
 
 - **`-d|--disable-buffering`**
@@ -65,13 +62,9 @@ Alternatively, use the NuGet CLI for the first package, then you can use `dotnet
 
   Forces the application to run using an invariant, English-based culture.
 
-- **`-?|-h|--help`**
+- [!INCLUDE [help](includes/cli-help.md)]
 
-Prints out a description of how to use the command.
-
-- **`--interactive`**
-
-Allows the command to stop and wait for user input or action. For example, to complete authentication.
+- [!INCLUDE [interactive](includes/cli-interactive.md)]
 
 - **`-k|--api-key <API_KEY>`**
 
@@ -84,11 +77,11 @@ Allows the command to stop and wait for user input or action. For example, to co
 - **`--no-service-endpoint`**
 
   Doesn't append "api/v2/package" to the source URL.
-- **`-s|--source `**
+- **`-s|--source <SOURCE>`**
 
   Specifies the server URL. NuGet identifies a UNC or local folder source and simply copies the file there instead of pushing it using HTTP.
-  > **Important:**
-  > Starting with NuGet 3.4.2, this is a mandatory parameter unless the NuGet config file specifies a `DefaultPushSource` value. For more information, see Configuring NuGet behavior.
+  > [!IMPORTANT]
+  > Starting with NuGet 3.4.2, this is a mandatory parameter unless the NuGet config file specifies a `DefaultPushSource` value. For more information, see [Configuring NuGet behavior](/nuget/consume-packages/configuring-nuget-behavior).
 
 - **`--skip-duplicate`**
 
@@ -98,7 +91,7 @@ Allows the command to stop and wait for user input or action. For example, to co
 
   The API key for the symbol server.
 
-- **`-ss|--symbol-source `**
+- **`-ss|--symbol-source <SOURCE>`**
 
   Specifies the symbol server URL.
 
@@ -108,7 +101,7 @@ Allows the command to stop and wait for user input or action. For example, to co
 
 - **`--configfile`**
 
-  The NuGet configuration file (*nuget.config*) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see Common NuGet Configurations. Available since .NET 9 SDK.
+  The NuGet configuration file (*nuget.config*) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see [Common NuGet Configurations](/nuget/consume-packages/configuring-nuget-behavior). Available since .NET 9 SDK.
 
 ## Examples
 
@@ -123,7 +116,7 @@ Allows the command to stop and wait for user input or action. For example, to co
   ```dotnetcli
   dotnet nuget push foo.nupkg -k 4003d786-cc37-4004-bfdf-c4f3e8ef9b3a -s https://api.nuget.org/v3/index.json
   ```
-
+  
 - Push *foo.nupkg* to the custom push source `https://customsource`, specifying an API key:
 
   ```dotnetcli
@@ -165,5 +158,5 @@ Allows the command to stop and wait for user input or action. For example, to co
   ```dotnetcli
   dotnet nuget push "*.nupkg" -s c:\mydir
   ```
-
-- For pushing to Azure Artifacts, see Azure Artifacts' push documentation.
+  
+- For pushing to Azure Artifacts, [see Azure Artifacts' push documentation](/azure/devops/artifacts/nuget/dotnet-exe#publish-packages).

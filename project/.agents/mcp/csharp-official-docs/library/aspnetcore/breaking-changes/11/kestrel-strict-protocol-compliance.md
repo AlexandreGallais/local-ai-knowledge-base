@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: Kestrel tightens HTTP protocol compliance"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/11/kestrel-strict-protocol-compliance.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+ai-usage: ai-assisted
+description: "Learn about the breaking change in ASP.NET Core 11 where Kestrel rejects additional HTTP/2 and HTTP/3 connection-specific headers and closes HTTP/1.1 connections after a request with both Content-Length and Transfer-Encoding."
+ms.date: 06/04/2026
 ---
-
 # Kestrel tightens HTTP protocol compliance
 
 Kestrel in ASP.NET Core 11 makes two HTTP-protocol-compliance changes:
@@ -39,12 +36,12 @@ Both changes are stricter conformance to the HTTP specifications. Compliant clie
 
 **HTTP/1.1.** When a request includes both `Content-Length` and `Transfer-Encoding`, Kestrel still strips `Content-Length` and processes the request, but it now closes the connection after sending the response instead of keeping it alive. This mitigates a known HTTP request-smuggling vector.
 
-> **Note:**
+> [!NOTE]
 > The HTTP/1.1 connection-close behavior for requests that include both `Content-Length` and `Transfer-Encoding` is also being shipped in servicing updates to earlier supported versions of Kestrel and to IIS and HTTP.sys.
 
 ## Type of breaking change
 
-These changes are behavioral changes.
+These changes are [behavioral changes](/dotnet/core/compatibility/categories#behavioral-change).
 
 ## Reason for change
 
@@ -52,7 +49,7 @@ Per RFC 9113 §8.2.2 (HTTP/2) and RFC 9114 §4.2 (HTTP/3), endpoints must treat 
 
 Per the updated RFC 9112, a server must close the connection after processing a request that contained both `Content-Length` and `Transfer-Encoding`. Closing the connection prevents a class of HTTP request-smuggling attacks that exploit the ambiguity between the two framing headers.
 
-For more information, see dotnet/aspnetcore#66669 and dotnet/aspnetcore#66671.
+For more information, see [dotnet/aspnetcore#66669](https://github.com/dotnet/aspnetcore/pull/66669) and [dotnet/aspnetcore#66671](https://github.com/dotnet/aspnetcore/pull/66671).
 
 ## Recommended action
 
@@ -62,4 +59,4 @@ For the HTTP/1.1 change, audit any client that emits both `Content-Length` and `
 
 ## Affected APIs
 
-None directly. The change is enforced at the protocol layer by Kestrel; no public API surface is changed. For more information, see the Kestrel documentation.
+None directly. The change is enforced at the protocol layer by Kestrel; no public API surface is changed. For more information, see the [Kestrel documentation](../../fundamentals/servers/kestrel.md).

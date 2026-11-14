@@ -1,12 +1,12 @@
 ---
-title: "How to: Let users resolve ambiguous times (part 1 of 3)"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/datetime/let-users-resolve-ambiguous-times.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn more about: How to: Let users resolve ambiguous times"
+title: "How to: Let users resolve ambiguous times"
+ms.date: "04/10/2017"
+helpviewer_keywords:
+  - "time zones [.NET], ambiguous time"
+  - "ambiguous time [.NET]"
+ms.topic: how-to
 ---
-
 # How to: Let users resolve ambiguous times
 
 An ambiguous time is a time that maps to more than one Coordinated Universal Time (UTC). It occurs when the clock time is adjusted back in time, such as during the transition from a time zone's daylight saving time to its standard time. When handling an ambiguous time, you can do one of the following:
@@ -21,12 +21,28 @@ This topic shows how to let a user resolve an ambiguous time.
 
 1. Get the date and time input by the user.
 
-2. Call the `System.TimeZoneInfo.IsAmbiguousTime*` method to determine whether the time is ambiguous.
+2. Call the <xref:System.TimeZoneInfo.IsAmbiguousTime*> method to determine whether the time is ambiguous.
 
-3. If the time is ambiguous, call the `System.TimeZoneInfo.GetAmbiguousTimeOffsets*` method to retrieve an array of `System.TimeSpan` objects. Each element in the array contains a UTC offset that the ambiguous time can map to.
+3. If the time is ambiguous, call the <xref:System.TimeZoneInfo.GetAmbiguousTimeOffsets*> method to retrieve an array of <xref:System.TimeSpan> objects. Each element in the array contains a UTC offset that the ambiguous time can map to.
 
 4. Let the user select the desired offset.
 
 5. Get the UTC date and time by subtracting the offset selected by the user from the local time.
 
-6. Call the `static` (`Shared` in Visual Basic .NET) `System.DateTime.SpecifyKind*` method to set the UTC date and time value's `System.DateTime.Kind` property to `System.DateTimeKind.Utc`.
+6. Call the `static` (`Shared` in Visual Basic .NET) <xref:System.DateTime.SpecifyKind*> method to set the UTC date and time value's <xref:System.DateTime.Kind> property to <xref:System.DateTimeKind.Utc?displayProperty=nameWithType>.
+
+## Example
+
+The following example prompts the user to enter a date and time and, if it is ambiguous, lets the user select the UTC time that the ambiguous time maps to.
+
+[!code-csharp[System.TimeZone2.Concepts#11](./snippets/timezone-concepts/TimeZone2Concepts.cs#11)]
+[!code-vb[System.TimeZone2.Concepts#11](../../../samples/snippets/visualbasic/VS_Snippets_CLR_System/system.TimeZone2.Concepts/VB/TimeZone2Concepts.vb#11)]
+
+The core of the example code uses an array of <xref:System.TimeSpan> objects to indicate possible offsets of the ambiguous time from UTC. However, these offsets are unlikely to be meaningful to the user. To clarify the meaning of the offsets, the code also notes whether an offset represents the local time zone's standard time or its daylight saving time. The code determines which time is standard and which time is daylight by comparing the offset with the value of the <xref:System.TimeZoneInfo.BaseUtcOffset> property. This property indicates the difference between the UTC and the time zone's standard time.
+
+In this example, all references to the local time zone are made through the <xref:System.TimeZoneInfo.Local?displayProperty=nameWithType> property; the local time zone is never assigned to an object variable. This is a recommended practice because a call to the <xref:System.TimeZoneInfo.ClearCachedData*?displayProperty=nameWithType> method invalidates any objects that the local time zone is assigned to.
+
+## See also
+
+- [Dates, times, and time zones](index.md)
+- [How to: Resolve ambiguous times](resolve-ambiguous-times.md)

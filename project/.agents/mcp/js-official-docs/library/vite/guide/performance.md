@@ -1,12 +1,3 @@
----
-title: "Performance"
-tool: "vite"
-version: "8.3"
-source: "https://github.com/vitejs/vite/blob/b39e6e63dcbfc3cf4be871acf3554efbd6d0e268/docs/guide/performance.md"
-commit: "b39e6e63dcbfc3cf4be871acf3554efbd6d0e268"
-license: "MIT"
----
-
 # Performance
 
 While Vite is fast by default, performance issues can creep in as the project's requirements grow. This guide aims to help you identify and fix common performance issues, such as:
@@ -27,7 +18,7 @@ Vite's internal and official plugins are optimized to do the least amount of wor
 
 However, the performance of community plugins is out of Vite's control, which may affect the developer experience. Here are a few things you can look out for when using additional Vite plugins:
 
-1. Large dependencies that are only used in certain cases should be dynamically imported to reduce the Node.js startup time. Example refactors: vite-plugin-react#212 and vite-plugin-pwa#244.
+1. Large dependencies that are only used in certain cases should be dynamically imported to reduce the Node.js startup time. Example refactors: [vite-plugin-react#212](https://github.com/vitejs/vite-plugin-react/pull/212) and [vite-plugin-pwa#244](https://github.com/vite-pwa/vite-plugin-pwa/pull/244).
 
 2. The `buildStart`, `config`, and `configResolved` hooks should not run long and extensive operations. These hooks are awaited during dev server startup, which delays when you can access the site in the browser.
 
@@ -35,14 +26,15 @@ However, the performance of community plugins is out of Vite's control, which ma
 
    The longer it takes to transform a file, the more significant the request waterfall will be when loading the site in the browser.
 
-   You can inspect the duration it takes to transform a file using `vite --debug plugin-transform` or vite-plugin-inspect. Note that as asynchronous operations tend to provide inaccurate timings, you should treat the numbers as a rough estimate, but it should still reveal the more expensive operations.
+   You can inspect the duration it takes to transform a file using `vite --debug plugin-transform` or [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect). Note that as asynchronous operations tend to provide inaccurate timings, you should treat the numbers as a rough estimate, but it should still reveal the more expensive operations.
 
-**Profiling**
-You can run `vite --profile`, visit the site, and press `p + enter` in your terminal to record a `.cpuprofile`. A tool like speedscope can then be used to inspect the profile and identify the bottlenecks. You can also share the profiles with the Vite team to help us identify performance issues.
+::: tip Profiling
+You can run `vite --profile`, visit the site, and press `p + enter` in your terminal to record a `.cpuprofile`. A tool like [speedscope](https://www.speedscope.app) can then be used to inspect the profile and identify the bottlenecks. You can also [share the profiles](https://chat.vite.dev) with the Vite team to help us identify performance issues.
+:::
 
 ## Reduce Resolve Operations
 
-Resolving import paths can be an expensive operation when hitting its worst case often. For example, Vite supports "guessing" import paths with the `resolve.extensions` option, which defaults to `['.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json']`.
+Resolving import paths can be an expensive operation when hitting its worst case often. For example, Vite supports "guessing" import paths with the [`resolve.extensions`](/config/shared-options.md#resolve-extensions) option, which defaults to `['.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json']`.
 
 When you try to import `./Component.jsx` with `import './Component'`, Vite will run these steps to resolve it:
 
@@ -57,16 +49,17 @@ As shown, a total of 6 filesystem checks is required to resolve an import path. 
 
 Hence, it's usually better to be explicit with your import paths, e.g. `import './Component.jsx'`. You can also narrow down the list for `resolve.extensions` to reduce the general filesystem checks, but you have to make sure it works for files in `node_modules` too.
 
-If you're a plugin author, make sure to only call `this.resolve` when needed to reduce the number of checks above.
+If you're a plugin author, make sure to only call [`this.resolve`](https://rollupjs.org/plugin-development/#this-resolve) when needed to reduce the number of checks above.
 
-**TypeScript**
+::: tip TypeScript
 If you are using TypeScript, enable `"moduleResolution": "bundler"` and `"allowImportingTsExtensions": true` in your `tsconfig.json`'s `compilerOptions` to use `.ts` and `.tsx` extensions directly in your code.
+:::
 
 ## Avoid Barrel Files
 
 Barrel files are files that re-export the APIs of other files in the same directory. For example:
 
-```js
+```js [src/utils/index.js]
 export * from './color.js'
 export * from './dom.js'
 export * from './slash.js'
@@ -74,7 +67,7 @@ export * from './slash.js'
 
 When you only import an individual API, e.g. `import { slash } from './utils'`, all the files in that barrel file need to be fetched and transformed as they may contain the `slash` API and may also contain side-effects that run on initialization. This means you're loading more files than required on the initial page load, resulting in a slower page load.
 
-If possible, you should avoid barrel files and import the individual APIs directly, e.g. `import { slash } from './utils/slash.js'`. You can read issue #8237 for more information.
+If possible, you should avoid barrel files and import the individual APIs directly, e.g. `import { slash } from './utils/slash.js'`. You can read [issue #8237](https://github.com/vitejs/vite/issues/8237) for more information.
 
 ## Warm Up Frequently Used Files
 
@@ -88,7 +81,7 @@ main.js -> BigComponent.vue -> big-utils.js -> large-data.json
 
 The import relationship can only be known after the file is transformed. If `BigComponent.vue` takes some time to transform, `big-utils.js` has to wait for its turn, and so on. This causes an internal waterfall even with pre-transformation built-in.
 
-Vite allows you to warm up files that you know are frequently used, e.g. `big-utils.js`, using the `server.warmup` option. This way `big-utils.js` will be ready and cached to be served immediately when requested.
+Vite allows you to warm up files that you know are frequently used, e.g. `big-utils.js`, using the [`server.warmup`](/config/server-options.md#server-warmup) option. This way `big-utils.js` will be ready and cached to be served immediately when requested.
 
 You can find files that are frequently used by running `vite --debug transform` and inspect the logs:
 
@@ -98,7 +91,7 @@ vite:transform 62.95ms /src/components/BigComponent.vue +1ms
 vite:transform 102.54ms /src/utils/big-utils.js +1ms
 ```
 
-```js
+```js [vite.config.js]
 export default defineConfig({
   server: {
     warmup: {
@@ -111,9 +104,9 @@ export default defineConfig({
 })
 ```
 
-Note that you should only warm up files that are frequently used to not overload the Vite dev server on startup. Check the `server.warmup` option for more information.
+Note that you should only warm up files that are frequently used to not overload the Vite dev server on startup. Check the [`server.warmup`](/config/server-options.md#server-warmup) option for more information.
 
-Using `--open` or `server.open` also provides a performance boost, as Vite will automatically warm up the entry point of your app or the provided URL to open.
+Using [`--open` or `server.open`](/config/server-options.html#server-open) also provides a performance boost, as Vite will automatically warm up the entry point of your app or the provided URL to open.
 
 ## Use Lesser or Native Tooling
 
@@ -128,4 +121,4 @@ Examples of using native tooling:
 
 While Vite core is based on native tooling, some features still use non-native tooling by default to provide better compatibility and feature set. But it may be worth the cost for larger applications.
 
-- Try out the experimental support for LightningCSS
+- Try out the experimental support for [LightningCSS](https://github.com/vitejs/vite/discussions/13835)

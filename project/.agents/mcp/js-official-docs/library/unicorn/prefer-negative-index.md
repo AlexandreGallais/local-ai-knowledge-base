@@ -1,33 +1,27 @@
----
-title: "prefer-negative-index"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-negative-index.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-negative-index
 
 📝 Prefer negative index over `.length - index` when possible.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Negative indexes express positions from the end directly, avoiding length arithmetic and making the intent easier to read.
 
 Prefer negative index over calculating from `.length` for:
 
-- `String#slice()`
-- `Array#slice()`
-- `TypedArray#slice()`
-- `String#at()`
-- `Array#at()`
-- `TypedArray#at()`
-- `Array#splice()`
-- `Array#toSpliced()`
-- `TypedArray#subarray()`
+- [`String#slice()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice)
+- [`Array#slice()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice)
+- [`TypedArray#slice()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/slice)
+- [`String#at()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/at)
+- [`Array#at()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at)
+- [`TypedArray#at()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/at)
+- [`Array#splice()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)
+- [`Array#toSpliced()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/toSpliced)
+- [`TypedArray#subarray()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/subarray)
 
 Only `.length - 1` is autofixed. Other offsets are suggestions because they can change behavior when the offset exceeds the receiver's length. For example, `[1, 2, 3].slice(3 - 4)` returns `[3]`, while `[1, 2, 3].slice(-4)` returns the entire array. Check that the offset stays within bounds before applying a suggestion.
 
@@ -77,4 +71,4 @@ Array.prototype.slice.apply(foo, [-2, -1]);
 
 ## Related rules
 
-- unicorn/prefer-at
+- [unicorn/prefer-at](./prefer-at.md)

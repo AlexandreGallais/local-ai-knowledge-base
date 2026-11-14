@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: Rules for Inferring Schema Node Types and Structure"
 title: "Rules for Inferring Schema Node Types and Structure"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/rules-for-inferring-schema-node-types-and-structure.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # Rules for Inferring Schema Node Types and Structure
 
 This topic describes how the schema inference process translates the node types in an XML document to an XML Schema definition language (XSD) structure.
@@ -31,102 +27,102 @@ This topic describes how the schema inference process translates the node types 
 
 8. Element with a sequence of choices of child elements and attributes
 
-> **Note:**
+> [!NOTE]
 > All `complexType` declarations are inferred as anonymous types. The only global element inferred is the root element; all other elements are local.
 
- For more information about the schema inference process, see Inferring Schemas from XML Documents.
+ For more information about the schema inference process, see [Inferring Schemas from XML Documents](inferring-schemas-from-xml-documents.md).
 
 ### Simple Typed Element
 
- The following table shows the XML input to the `System.Xml.Schema.XmlSchemaInference.InferSchema*` method, and the XML schema generated. The bolded element shows the schema inferred for the simple type element.
+ The following table shows the XML input to the <xref:System.Xml.Schema.XmlSchemaInference.InferSchema*> method, and the XML schema generated. The bolded element shows the schema inferred for the simple type element.
 
- For more information about the schema inference process, see Inferring Schemas from XML Documents.
+ For more information about the schema inference process, see [Inferring Schemas from XML Documents](inferring-schemas-from-xml-documents.md).
 
 |XML|Schema|
 |---------|------------|
-|`<?xml version="1.0"?>` `<root>text</root>`|`<?xml version="1.0" encoding="utf-8"?>` `<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xml` `ns:xs="http://www.w3.org/2001/XMLSchema">` `<xs:element name="root" type="xs:string" />` `</xs:schema>`|
+|`<?xml version="1.0"?>`<br /><br /> `<root>text</root>`|`<?xml version="1.0" encoding="utf-8"?>`<br /><br /> `<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xml`<br /><br /> `ns:xs="http://www.w3.org/2001/XMLSchema">`<br /><br /> `<xs:element name="root" type="xs:string" />`<br /><br /> `</xs:schema>`|
 
 ### Empty Element
 
- The following table shows the XML input to the `System.Xml.Schema.XmlSchemaInference.InferSchema*` method, and the XML schema generated. The bolded element shows the schema inferred for the empty element.
+ The following table shows the XML input to the <xref:System.Xml.Schema.XmlSchemaInference.InferSchema*> method, and the XML schema generated. The bolded element shows the schema inferred for the empty element.
 
- For more information about the schema inference process, see Inferring Schemas from XML Documents.
+ For more information about the schema inference process, see [Inferring Schemas from XML Documents](inferring-schemas-from-xml-documents.md).
 
 |XML|Schema|
 |---------|------------|
-|`<?xml version="1.0"?>` `<empty/>`|`<?xml version="1.0" encoding="utf-8"?>` `<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xml` `ns:xs="http://www.w3.org/2001/XMLSchema">` `<xs:element name="empty" />` `</xs:schema>`|
+|`<?xml version="1.0"?>`<br /><br /> `<empty/>`|`<?xml version="1.0" encoding="utf-8"?>`<br /><br /> `<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xml`<br /><br /> `ns:xs="http://www.w3.org/2001/XMLSchema">`<br /><br /> `<xs:element name="empty" />`<br /><br /> `</xs:schema>`|
 
 ### Empty Element with Attributes
 
- The following table shows the XML input to the `System.Xml.Schema.XmlSchemaInference.InferSchema*` method, and the XML schema generated. The bolded elements show the schema inferred for the empty element with attributes.
+ The following table shows the XML input to the <xref:System.Xml.Schema.XmlSchemaInference.InferSchema*> method, and the XML schema generated. The bolded elements show the schema inferred for the empty element with attributes.
 
- For more information about the schema inference process, see Inferring Schemas from XML Documents.
+ For more information about the schema inference process, see [Inferring Schemas from XML Documents](inferring-schemas-from-xml-documents.md).
 
 |XML|Schema|
 |---------|------------|
-|`<?xml version="1.0"?>` `<empty attribute1="text"/>`|`<?xml version="1.0" encoding="utf-8"?>` `<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xml` `ns:xs="http://www.w3.org/2001/XMLSchema">` `<xs:element name="empty">` `<xs:complexType>` `<xs:attribute name="attribute1" type="xs:string" use="required" />` `</xs:complexType>` `</xs:element>` `</xs:schema>`|
+|`<?xml version="1.0"?>`<br /><br /> `<empty attribute1="text"/>`|`<?xml version="1.0" encoding="utf-8"?>`<br /><br /> `<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xml`<br /><br /> `ns:xs="http://www.w3.org/2001/XMLSchema">`<br /><br /> `<xs:element name="empty">`<br /><br /> `<xs:complexType>`<br /><br /> `<xs:attribute name="attribute1" type="xs:string" use="required" />`<br /><br /> `</xs:complexType>`<br /><br /> `</xs:element>`<br /><br /> `</xs:schema>`|
 
 ### Element with Attributes and Simple Content
 
- The following table shows the XML input to the `System.Xml.Schema.XmlSchemaInference.InferSchema*` method, and the XML schema generated. The bolded elements show the schema inferred for an element with attributes and simple content.
+ The following table shows the XML input to the <xref:System.Xml.Schema.XmlSchemaInference.InferSchema*> method, and the XML schema generated. The bolded elements show the schema inferred for an element with attributes and simple content.
 
- For more information about the schema inference process, see Inferring Schemas from XML Documents.
+ For more information about the schema inference process, see [Inferring Schemas from XML Documents](inferring-schemas-from-xml-documents.md).
 
 |XML|Schema|
 |---------|------------|
-|`<?xml version="1.0"?>` `<root attribute1="text">value</root>`|`<?xml version="1.0" encoding="utf-8"?>` `<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xml` `ns:xs="http://www.w3.org/2001/XMLSchema">` `<xs:element name="root">` `<xs:complexType>` `<xs:simpleContent>` `<xs:extension base="xs:string">` `<xs:attribute name="attribute1" type="xs:string" use="required" />` `</xs:extension>` `</xs:simpleContent>` `</xs:complexType>` `</xs:element>` `</xs:schema>`|
+|`<?xml version="1.0"?>`<br /><br /> `<root attribute1="text">value</root>`|`<?xml version="1.0" encoding="utf-8"?>`<br /><br /> `<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xml`<br /><br /> `ns:xs="http://www.w3.org/2001/XMLSchema">`<br /><br /> `<xs:element name="root">`<br /><br /> `<xs:complexType>`<br /><br /> `<xs:simpleContent>`<br /><br /> `<xs:extension base="xs:string">`<br /><br /> `<xs:attribute name="attribute1" type="xs:string" use="required" />`<br /><br /> `</xs:extension>`<br /><br /> `</xs:simpleContent>`<br /><br /> `</xs:complexType>`<br /><br /> `</xs:element>`<br /><br /> `</xs:schema>`|
 
 ### Element with a Sequence of Child Elements
 
- The following table shows the XML input to the `System.Xml.Schema.XmlSchemaInference.InferSchema*` method, and the XML schema generated. The bolded elements show the schema inferred for an element with a sequence of child elements.
+ The following table shows the XML input to the <xref:System.Xml.Schema.XmlSchemaInference.InferSchema*> method, and the XML schema generated. The bolded elements show the schema inferred for an element with a sequence of child elements.
 
-> **Note:**
+> [!NOTE]
 > Even if an element has only one child element, it is still treated as a sequence.
 
- For more information about the schema inference process, see Inferring Schemas from XML Documents.
+ For more information about the schema inference process, see [Inferring Schemas from XML Documents](inferring-schemas-from-xml-documents.md).
 
 |XML|Schema|
 |---------|------------|
-|`<?xml version="1.0"?>` `<root>` `<subElement/>` `</root>`|`<?xml version="1.0" encoding="utf-8"?>` `<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xml` `ns:xs="http://www.w3.org/2001/XMLSchema">` `<xs:element name="root">` `<xs:complexType>` `<xs:sequence>` `<xs:element name="subElement" />` `</xs:sequence>` `</xs:complexType>` `</xs:element>` `</xs:schema>`|
+|`<?xml version="1.0"?>`<br /><br /> `<root>`<br /><br /> `<subElement/>`<br /><br /> `</root>`|`<?xml version="1.0" encoding="utf-8"?>`<br /><br /> `<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xml`<br /><br /> `ns:xs="http://www.w3.org/2001/XMLSchema">`<br /><br /> `<xs:element name="root">`<br /><br /> `<xs:complexType>`<br /><br /> `<xs:sequence>`<br /><br /> `<xs:element name="subElement" />`<br /><br /> `</xs:sequence>`<br /><br /> `</xs:complexType>`<br /><br /> `</xs:element>`<br /><br /> `</xs:schema>`|
 
 ### Element with a Sequence of Child Elements and Attributes
 
- The following table shows the XML input to the `System.Xml.Schema.XmlSchemaInference.InferSchema*` method, and the XML schema generated. The bolded elements show the schema inferred for an element with a sequence of child elements and attributes.
+ The following table shows the XML input to the <xref:System.Xml.Schema.XmlSchemaInference.InferSchema*> method, and the XML schema generated. The bolded elements show the schema inferred for an element with a sequence of child elements and attributes.
 
-> **Note:**
+> [!NOTE]
 > Even if an element has only one child element, it is still treated as a sequence.
 
- For more information about the schema inference process, see Inferring Schemas from XML Documents.
+ For more information about the schema inference process, see [Inferring Schemas from XML Documents](inferring-schemas-from-xml-documents.md).
 
 |XML|Schema|
 |---------|------------|
-|`<?xml version="1.0"?>` `<root attribute1="text">` `<subElement1/>` `<subElement2/>` `</root>`|`<?xml version="1.0" encoding="utf-8"?>` `<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xml` `ns:xs="http://www.w3.org/2001/XMLSchema">` `<xs:element name="root">` `<xs:complexType>` `<xs:sequence>` `<xs:element name="subElement1" />` `<xs:element name="subElement2" />` `</xs:sequence>` `<xs:attribute name="attribute1" type="xs:string" use="required" />` `</xs:complexType>` `</xs:element>` `</xs:schema>`|
+|`<?xml version="1.0"?>`<br /><br /> `<root attribute1="text">`<br /><br /> `<subElement1/>`<br /><br /> `<subElement2/>`<br /><br /> `</root>`|`<?xml version="1.0" encoding="utf-8"?>`<br /><br /> `<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xml`<br /><br /> `ns:xs="http://www.w3.org/2001/XMLSchema">`<br /><br /> `<xs:element name="root">`<br /><br /> `<xs:complexType>`<br /><br /> `<xs:sequence>`<br /><br /> `<xs:element name="subElement1" />`<br /><br /> `<xs:element name="subElement2" />`<br /><br /> `</xs:sequence>`<br /><br /> `<xs:attribute name="attribute1" type="xs:string" use="required" />`<br /><br /> `</xs:complexType>`<br /><br /> `</xs:element>`<br /><br /> `</xs:schema>`|
 
 ### Element with a Sequence and Choices of Child Elements
 
- The following table shows the XML input to the `System.Xml.Schema.XmlSchemaInference.InferSchema*` method, and the XML schema generated. The bolded elements show the schema inferred for an element with a sequence and choice of child elements.
+ The following table shows the XML input to the <xref:System.Xml.Schema.XmlSchemaInference.InferSchema*> method, and the XML schema generated. The bolded elements show the schema inferred for an element with a sequence and choice of child elements.
 
-> **Note:**
+> [!NOTE]
 > The `maxOccurs` attribute of the `xs:choice` element is set to `"unbounded"` in the inferred schema.
 
- For more information about the schema inference process, see Inferring Schemas from XML Documents.
+ For more information about the schema inference process, see [Inferring Schemas from XML Documents](inferring-schemas-from-xml-documents.md).
 
 |XML|Schema|
 |---------|------------|
-|`<?xml version="1.0"?>` `<root>` `<subElement1/>` `<subElement2/>` `<subElement1/>` `</root>`|`<?xml version="1.0" encoding="utf-8"?>` `<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xml` `ns:xs="http://www.w3.org/2001/XMLSchema">` `<xs:element name="root">` `<xs:complexType>` `<xs:sequence>` `<xs:choice maxOccurs="unbounded">` `<xs:element name="subElement1" />` `<xs:element name="subElement2" />` `</xs:choice>` `</xs:sequence>` `</xs:complexType>` `</xs:element>` `</xs:schema>`|
+|`<?xml version="1.0"?>`<br /><br /> `<root>`<br /><br /> `<subElement1/>`<br /><br /> `<subElement2/>`<br /><br /> `<subElement1/>`<br /><br /> `</root>`|`<?xml version="1.0" encoding="utf-8"?>`<br /><br /> `<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xml`<br /><br /> `ns:xs="http://www.w3.org/2001/XMLSchema">`<br /><br /> `<xs:element name="root">`<br /><br /> `<xs:complexType>`<br /><br /> `<xs:sequence>`<br /><br /> `<xs:choice maxOccurs="unbounded">`<br /><br /> `<xs:element name="subElement1" />`<br /><br /> `<xs:element name="subElement2" />`<br /><br /> `</xs:choice>`<br /><br /> `</xs:sequence>`<br /><br /> `</xs:complexType>`<br /><br /> `</xs:element>`<br /><br /> `</xs:schema>`|
 
 ### Element with a Sequence and Choice of Child Elements and Attributes
 
- The following table shows the XML input to the `System.Xml.Schema.XmlSchemaInference.InferSchema*` method, and the XML schema generated. The bolded elements show the schema inferred for an element with a sequence and choice of child elements and attributes.
+ The following table shows the XML input to the <xref:System.Xml.Schema.XmlSchemaInference.InferSchema*> method, and the XML schema generated. The bolded elements show the schema inferred for an element with a sequence and choice of child elements and attributes.
 
-> **Note:**
+> [!NOTE]
 > The `maxOccurs` attribute of the `xs:choice` element is set to `"unbounded"` in the inferred schema.
 
- For more information about the schema inference process, see Inferring Schemas from XML Documents.
+ For more information about the schema inference process, see [Inferring Schemas from XML Documents](inferring-schemas-from-xml-documents.md).
 
 |XML|Schema|
 |---------|------------|
-|`<?xml version="1.0"?>` `<root attribute1="text">` `<subElement1/>` `<subElement2/>` `<subElement1/>` `</root>`|`<?xml version="1.0" encoding="utf-8"?>` `<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xml` `ns:xs="http://www.w3.org/2001/XMLSchema">` `<xs:element name="root">` `<xs:complexType>` `<xs:sequence>` `<xs:choice maxOccurs="unbounded">` `<xs:element name="subElement1" />` `<xs:element name="subElement2" />` `</xs:choice>` `</xs:sequence>` `<xs:attribute name="attribute1" type="xs:string" use="required" />` `</xs:complexType>` `</xs:element>` `</xs:schema>`|
+|`<?xml version="1.0"?>`<br /><br /> `<root attribute1="text">`<br /><br /> `<subElement1/>`<br /><br /> `<subElement2/>`<br /><br /> `<subElement1/>`<br /><br /> `</root>`|`<?xml version="1.0" encoding="utf-8"?>`<br /><br /> `<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xml`<br /><br /> `ns:xs="http://www.w3.org/2001/XMLSchema">`<br /><br /> `<xs:element name="root">`<br /><br /> `<xs:complexType>`<br /><br /> `<xs:sequence>`<br /><br /> `<xs:choice maxOccurs="unbounded">`<br /><br /> `<xs:element name="subElement1" />`<br /><br /> `<xs:element name="subElement2" />`<br /><br /> `</xs:choice>`<br /><br /> `</xs:sequence>`<br /><br /> `<xs:attribute name="attribute1" type="xs:string" use="required" />`<br /><br /> `</xs:complexType>`<br /><br /> `</xs:element>`<br /><br /> `</xs:schema>`|
 
 ### Attribute Processing
 
@@ -148,17 +144,17 @@ This topic describes how the schema inference process translates the node types 
 |---------------|-----------------|
 |Processing instruction|Ignored.|
 |Comment|Ignored.|
-|Entity reference|The `System.Xml.Schema.XmlSchemaInference` class does not handle entity references. If an XML document contains entity references, you need to use a reader that expands the entities. For example, you can pass an `System.Xml.XmlTextReader` with the `System.Xml.XmlTextReader.EntityHandling` property set to `System.Xml.EntityHandling.ExpandEntities` as a parameter. If entity references are encountered and the reader does not expand entities, an exception is throw.|
+|Entity reference|The <xref:System.Xml.Schema.XmlSchemaInference> class does not handle entity references. If an XML document contains entity references, you need to use a reader that expands the entities. For example, you can pass an <xref:System.Xml.XmlTextReader> with the <xref:System.Xml.XmlTextReader.EntityHandling> property set to <xref:System.Xml.EntityHandling.ExpandEntities> as a parameter. If entity references are encountered and the reader does not expand entities, an exception is throw.|
 |CDATA|Any `<![CDATA[ … ]]` sections in an XML document will be inferred as `xs:string`.|
 |Document type|Ignored.|
 |Namespaces|Ignored.|
 
- For more information about the schema inference process, see Inferring Schemas from XML Documents.
+ For more information about the schema inference process, see [Inferring Schemas from XML Documents](inferring-schemas-from-xml-documents.md).
 
 ## See also
 
-- `System.Xml.Schema.XmlSchemaInference`
-- XML Schema Object Model (SOM)
-- Inferring an XML Schema
-- Inferring Schemas from XML Documents
-- Rules for Inferring Simple Types
+- <xref:System.Xml.Schema.XmlSchemaInference>
+- [XML Schema Object Model (SOM)](xml-schema-object-model-som.md)
+- [Inferring an XML Schema](inferring-an-xml-schema.md)
+- [Inferring Schemas from XML Documents](inferring-schemas-from-xml-documents.md)
+- [Rules for Inferring Simple Types](rules-for-inferring-simple-types.md)

@@ -1,21 +1,17 @@
 ---
-title: "Troubleshoot ASP.NET Core localization"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/troubleshoot-aspnet-core-localization.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Troubleshoot ASP.NET Core localization
+description: Learn how to diagnose problems with localization in ASP.NET Core apps.
+ms.date: 05/03/2024
 ---
-
 # Troubleshoot ASP.NET Core localization
 
-By Hisham Bin Ateya
+By [Hisham Bin Ateya](https://github.com/hishamco)
 
 This article provides instructions on how to diagnose ASP.NET Core app localization issues.
 
 ## Localization configuration issues
 
-**Localization middleware order**
+**Localization middleware order**  
 The app may not localize because the localization middleware isn't ordered as expected.
 
 To resolve this issue, ensure that localization middleware is registered before MVC middleware. Otherwise, the localization middleware isn't applied.
@@ -35,7 +31,7 @@ public void ConfigureServices(IServiceCollection services)
 
 ## Resource file naming issues
 
-ASP.NET Core has predefined rules and guidelines for localization resources file naming, which are described in Globalization and localization in ASP.NET Core.
+ASP.NET Core has predefined rules and guidelines for localization resources file naming, which are described in [Globalization and localization in ASP.NET Core](localization.md#resource-file-naming).
 
 ## Missing resources
 
@@ -45,32 +41,34 @@ Common causes of resources not being found include:
 * The resource is missing from the resource file for some languages, but exists in others.
 * If you're still having trouble, check the localization log messages (logged at the `Debug` log level) for more details about the missing resources.
 
-> **Tip:**
-> When using `Microsoft.AspNetCore.Localization.CookieRequestCultureProvider`, verify single quotes aren't used with the cultures inside the localization cookie value. For example, `c='en-UK'|uic='en-US'` is an invalid cookie value, while `c=en-UK|uic=en-US` is valid.
+> [!TIP]
+> When using <xref:Microsoft.AspNetCore.Localization.CookieRequestCultureProvider>, verify single quotes aren't used with the cultures inside the localization cookie value. For example, `c='en-UK'|uic='en-US'` is an invalid cookie value, while `c=en-UK|uic=en-US` is valid.
 
 ## Resources and class libraries issues
 
-ASP.NET Core by default provides a way to allow the class libraries to find their resource files via `Microsoft.Extensions.Localization.ResourceLocationAttribute`.
+ASP.NET Core by default provides a way to allow the class libraries to find their resource files via <xref:Microsoft.Extensions.Localization.ResourceLocationAttribute>.
 
 Common issues with class libraries include:
 
-* Missing the `Microsoft.Extensions.Localization.ResourceLocationAttribute` in a class library prevents `Microsoft.Extensions.Localization.ResourceManagerStringLocalizerFactory` from discovering the resources.
-* Resource file naming. For more information, see the Resource file naming issues section.
-* Changing the root namespace of the class library. For more information, see the Root namespace issues section.
+* Missing the <xref:Microsoft.Extensions.Localization.ResourceLocationAttribute> in a class library prevents <xref:Microsoft.Extensions.Localization.ResourceManagerStringLocalizerFactory> from discovering the resources.
+* Resource file naming. For more information, see the [Resource file naming issues](#resource-file-naming-issues) section.
+* Changing the root namespace of the class library. For more information, see the [Root namespace issues](#root-namespace-issues) section.
 
 ## `CustomRequestCultureProvider` doesn't work as expected
 
-The `Microsoft.AspNetCore.Builder.RequestLocalizationOptions` class has three default providers:
+The <xref:Microsoft.AspNetCore.Builder.RequestLocalizationOptions> class has three default providers:
 
-* `Microsoft.AspNetCore.Localization.QueryStringRequestCultureProvider`
-* `Microsoft.AspNetCore.Localization.CookieRequestCultureProvider`
-* `Microsoft.AspNetCore.Localization.AcceptLanguageHeaderRequestCultureProvider`
+* <xref:Microsoft.AspNetCore.Localization.QueryStringRequestCultureProvider>
+* <xref:Microsoft.AspNetCore.Localization.CookieRequestCultureProvider>
+* <xref:Microsoft.AspNetCore.Localization.AcceptLanguageHeaderRequestCultureProvider>
 
-The `Microsoft.AspNetCore.Localization.CustomRequestCultureProvider` allows you to customize how the localization culture is provided. The `Microsoft.AspNetCore.Localization.CustomRequestCultureProvider` is used when the default providers don't meet your requirements.
+The <xref:Microsoft.AspNetCore.Localization.CustomRequestCultureProvider> allows you to customize how the localization culture is provided. The <xref:Microsoft.AspNetCore.Localization.CustomRequestCultureProvider> is used when the default providers don't meet your requirements.
 
-A common reason for a custom provider not working properly is that it isn't the first provider in the `Microsoft.AspNetCore.Builder.RequestLocalizationOptions.RequestCultureProviders` list. To resolve this issue:
+A common reason for a custom provider not working properly is that it isn't the first provider in the <xref:Microsoft.AspNetCore.Builder.RequestLocalizationOptions.RequestCultureProviders> list. To resolve this issue:
 
-* Insert the custom provider at position zero in the `Microsoft.AspNetCore.Builder.RequestLocalizationOptions.RequestCultureProviders` list:
+:::moniker range=">= aspnetcore-3.0"
+
+* Insert the custom provider at position zero in the <xref:Microsoft.AspNetCore.Builder.RequestLocalizationOptions.RequestCultureProviders> list:
 
   ```csharp
   options.AddInitialRequestCultureProvider(
@@ -81,14 +79,31 @@ A common reason for a custom provider not working properly is that it isn't the 
       }));
   ```
 
-* Use the `Microsoft.AspNetCore.Builder.RequestLocalizationOptionsExtensions.AddInitialRequestCultureProvider*` extension method to set the custom provider as the initial provider.
+:::moniker-end
+
+:::moniker range="< aspnetcore-3.0"
+
+* Insert the custom provider at position zero in the <xref:Microsoft.AspNetCore.Builder.RequestLocalizationOptions.RequestCultureProviders> list:
+
+  ```csharp
+  options.RequestCultureProviders.Insert(0, 
+      new CustomRequestCultureProvider(async context =>
+      {
+          // My custom request culture logic
+          return new ProviderCultureResult("en");
+      }));
+  ```
+
+:::moniker-end
+
+* Use the <xref:Microsoft.AspNetCore.Builder.RequestLocalizationOptionsExtensions.AddInitialRequestCultureProvider*> extension method to set the custom provider as the initial provider.
 
 ## Root namespace issues
 
-When the root namespace of an assembly is different than the assembly name, localization doesn't work by default. To avoid this issue use the `RootNamespace` attribute, which is described in Globalization and localization in ASP.NET Core.
+When the root namespace of an assembly is different than the assembly name, localization doesn't work by default. To avoid this issue use the [`RootNamespace` attribute](xref:Microsoft.Extensions.Localization.RootNamespaceAttribute), which is described in [Globalization and localization in ASP.NET Core](localization.md#resource-file-naming).
 
-> **Warning:**
-> A root namespace issue can occur when a project's name isn't a valid .NET identifier. For instance, `my-project-name.csproj` uses the root namespace `my_project_name` and the assembly name `my-project-name`, which results in this error.
+> [!WARNING]
+> A root namespace issue can occur when a project's name isn't a valid .NET identifier. For instance, `my-project-name.csproj` uses the root namespace `my_project_name` and the assembly name `my-project-name`, which results in this error. 
 
 ## Resources and build action
 
@@ -98,9 +113,9 @@ If you use resource files for localization, it's important that they have an app
 
 When using the location override using the **Sensors** pane in Google Chrome or Microsoft Edge developer tools, the fallback language is reset after prerendering. Avoid setting the language using the **Sensors** pane when testing. Set the language using the browser's language settings.
 
-For more information, see Blazor Localization does not work with InteractiveServer (`dotnet/aspnetcore` #53707).
+For more information, see [Blazor Localization does not work with InteractiveServer (`dotnet/aspnetcore` #53707)](https://github.com/dotnet/aspnetcore/issues/53707).
 
 ## GitHub issues with helpful problem solving tips
 
-* Please add more info about shared files (`dotnet/AspNetCore.Docs` #28674)
-* Blazor Localization does not work with InteractiveServer (`dotnet/aspnetcore` #53707) (Location override using "Sensors" pane)
+* [Please add more info about shared files (`dotnet/AspNetCore.Docs` #28674)](https://github.com/dotnet/AspNetCore.Docs/issues/28674)
+* [Blazor Localization does not work with InteractiveServer (`dotnet/aspnetcore` #53707)](https://github.com/dotnet/aspnetcore/issues/53707) ([Location override using "Sensors" pane](#location-override-using-sensors-pane-in-developer-tools))

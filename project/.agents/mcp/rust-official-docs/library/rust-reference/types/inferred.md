@@ -1,17 +1,8 @@
----
-title: "Inferred type"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/types/inferred.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[type.inferred]
 # Inferred type
 
 r[type.inferred.syntax]
-```grammar
+```grammar,types
 InferredType -> `_`
 ```
 
@@ -27,3 +18,9 @@ The inferred type asks the compiler to infer the type if possible based on the s
 
 r[type.inferred.constraint]
 The inferred type cannot be used in item signatures.
+
+<!--
+  What else should be said here?
+  The only documentation I am aware of is https://rustc-dev-guide.rust-lang.org/type-inference.html
+  There should be a broader discussion of type inference somewhere.
+-->

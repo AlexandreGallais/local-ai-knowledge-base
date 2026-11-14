@@ -1,12 +1,16 @@
 ---
 title: "MSTEST0046: Use Assert instead of StringAssert"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0046.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0046: Use Assert instead of StringAssert"
+ms.date: 07/24/2025
+f1_keywords:
+- MSTEST0046
+- StringAssertToAssertAnalyzer
+helpviewer_keywords:
+- StringAssertToAssertAnalyzer
+- MSTEST0046
+author: Evangelink
+ms.author: amauryleve
 ---
-
 # MSTEST0046: Use Assert instead of StringAssert
 
 | Property                            | Value                                                                                    |
@@ -22,13 +26,13 @@ license: "CC-BY-4.0"
 
 ## Cause
 
-A test method uses `Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert` methods instead of equivalent `Microsoft.VisualStudio.TestTools.UnitTesting.Assert` methods.
+A test method uses <xref:Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert> methods instead of equivalent <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert> methods.
 
 ## Rule description
 
-`Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert` methods have equivalent counterparts in `Microsoft.VisualStudio.TestTools.UnitTesting.Assert` that provide the same functionality. Use the `Microsoft.VisualStudio.TestTools.UnitTesting.Assert` methods for consistency, better readability, improved discoverability, and alignment with behavior across all test frameworks.
+<xref:Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert> methods have equivalent counterparts in <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert> that provide the same functionality. Use the <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert> methods for consistency, better readability, improved discoverability, and alignment with behavior across all test frameworks.
 
-The following `Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert` methods have equivalent `Microsoft.VisualStudio.TestTools.UnitTesting.Assert` methods:
+The following <xref:Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert> methods have equivalent <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert> methods:
 
 - `StringAssert.Contains(value, substring)` → `Assert.Contains(substring, value)`
 - `StringAssert.StartsWith(value, substring)` → `Assert.StartsWith(substring, value)`
@@ -36,13 +40,13 @@ The following `Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert` method
 - `StringAssert.Matches(value, pattern)` → `Assert.MatchesRegex(pattern, value)`
 - `StringAssert.DoesNotMatch(value, pattern)` → `Assert.DoesNotMatchRegex(pattern, value)`
 
-> **Warning:**
-> When migrating from `Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert` to `Microsoft.VisualStudio.TestTools.UnitTesting.Assert` methods, be careful about the change in parameter order. In `Microsoft.VisualStudio.TestTools.UnitTesting.Assert` methods, the expected value is always the first parameter.
+> [!WARNING]
+> When migrating from <xref:Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert> to <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert> methods, be careful about the change in parameter order. In <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert> methods, the expected value is always the first parameter.
 
 ## How to fix violations
 
-Use the provided code fixer to automatically replace `Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert` method calls with their equivalent `Microsoft.VisualStudio.TestTools.UnitTesting.Assert` methods. You can also manually replace the method calls if needed.
+Use the provided code fixer to automatically replace <xref:Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert> method calls with their equivalent <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert> methods. You can also manually replace the method calls if needed.
 
 ## When to suppress warnings
 
-Don't suppress warnings from this rule. The `Microsoft.VisualStudio.TestTools.UnitTesting.Assert` methods provide the same functionality with better consistency.
+Don't suppress warnings from this rule. The <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert> methods provide the same functionality with better consistency.

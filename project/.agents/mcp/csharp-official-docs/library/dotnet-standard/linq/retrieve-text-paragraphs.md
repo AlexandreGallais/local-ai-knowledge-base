@@ -1,31 +1,32 @@
 ---
-title: "Retrieve the text of the paragraphs - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/retrieve-text-paragraphs.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Retrieve the text of the paragraphs - LINQ to XML
+description: Learn how to find the paragraph nodes in a WordprocessingML document, and to retrieve the text from each node as a string.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # Retrieve the text of the paragraphs (LINQ to XML)
 
-This example builds on the previous example, Retrieve the paragraphs and their styles. This new example retrieves the text of each paragraph as a string.
+This example builds on the previous example, [Retrieve the paragraphs and their styles](retrieve-paragraphs-styles.md). This new example retrieves the text of each paragraph as a string.
 
-To retrieve the text, this example adds an additional query that iterates through the collection of anonymous types and projects a new collection of an anonymous type with the addition of a new member, `Text`. It uses the `System.Linq.Enumerable.Aggregate*` standard query operator to concatenate multiple strings into one string.
+To retrieve the text, this example adds an additional query that iterates through the collection of anonymous types and projects a new collection of an anonymous type with the addition of a new member, `Text`. It uses the <xref:System.Linq.Enumerable.Aggregate*> standard query operator to concatenate multiple strings into one string.
 
 This technique (that is, first projecting to a collection of an anonymous type, then using this collection to project to a new collection of an anonymous type) is a common and useful one. This query could have been written without projecting to the first anonymous type. However, because of lazy evaluation, doing so doesn't use much additional processing power. The technique does create more short-lived objects on the heap, but that doesn't substantially degrade performance.
 
 Of course, it would be possible to write a single query that contains the functionality to retrieve the paragraphs, the style of each paragraph, and the text of each paragraph. However, it's often useful to break up a more complicated query into multiple queries because the resulting code is more modular and easier to maintain. Further, if you need to reuse a portion of the query, it's easier to refactor if the queries are written in this manner.
 
-These queries, which are chained together, use the processing model that's examined in the article Chain queries example.
+These queries, which are chained together, use the processing model that's examined in the article [Chain queries example](chain-queries-example.md).
 
 ## Example: Determine the element node, style name, and text of each paragraph
 
 This example processes a WordprocessingML document, determining the element node, style name, and text of each paragraph. This example builds on the previous examples in this tutorial. The new query is called out in comments in the code below.
 
-The instructions for creating the source document for this example are in Create the source Office Open XML document.
+The instructions for creating the source document for this example are in [Create the source Office Open XML document](create-source-office-open-xml-document.md).
 
-This example uses classes from the WindowsBase assembly. It uses types in the `System.IO.Packaging` namespace.
+This example uses classes from the WindowsBase assembly. It uses types in the <xref:System.IO.Packaging?displayProperty=nameWithType> namespace.
 
 ```csharp
 const string fileName = "SampleDoc.docx";
@@ -226,7 +227,7 @@ StyleName:Normal ><
 StyleName:Code >Hello World<
 ```
 
-The Visual Basic <example-value> of this example produces the following output:
+The Visual Basic version of this example produces the following output:
 
 ```output
 StyleName:Heading1 >Parsing WordprocessingML with LINQ to XML<
@@ -246,11 +247,11 @@ StyleName:Normal ><
 StyleName:Code >Hello World<
 ```
 
-The next article in this tutorial shows how to use an extension method, instead of `System.Linq.Enumerable.Aggregate*`, to concatenate multiple strings into a single string:
+The next article in this tutorial shows how to use an extension method, instead of <xref:System.Linq.Enumerable.Aggregate*>, to concatenate multiple strings into a single string:
 
-- Refactor using an extension method
+- [Refactor using an extension method](refactor-extension-method.md)
 
 ## See also
 
-- Tutorial: Manipulate content in a WordprocessingML document
-- Deferred execution and lazy evaluation
+- [Tutorial: Manipulate content in a WordprocessingML document](xml-shape-wordprocessingml-documents.md)
+- [Deferred execution and lazy evaluation](deferred-execution-lazy-evaluation.md)

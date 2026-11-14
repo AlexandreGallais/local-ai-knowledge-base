@@ -1,12 +1,3 @@
----
-title: "Basics of testing components"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/testing/components-basics.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Basics of testing components
 
 A component, unlike all other parts of an Angular application, combines an HTML template and a TypeScript class.
@@ -103,7 +94,7 @@ After configuring `TestBed`, you call its `createComponent()` method.
 const fixture = TestBed.createComponent(Banner);
 ```
 
-`TestBed.createComponent()` creates an instance of the `Banner` component, adds a corresponding element to the test-runner DOM, and returns a `ComponentFixture`.
+`TestBed.createComponent()` creates an instance of the `Banner` component, adds a corresponding element to the test-runner DOM, and returns a [`ComponentFixture`](#componentfixture).
 
 IMPORTANT: Do not re-configure `TestBed` after calling `createComponent`.
 
@@ -114,7 +105,7 @@ If you try, `TestBed` throws an error.
 
 ### `ComponentFixture`
 
-The `ComponentFixture` is a test harness for interacting with the created component and its corresponding element.
+The [`ComponentFixture`](api/core/testing/ComponentFixture) is a test harness for interacting with the created component and its corresponding element.
 
 Access the component instance through the fixture and confirm it exists with an expectation:
 
@@ -269,7 +260,7 @@ it('should find the <p> with fixture.debugElement.query(By.css)', () => {
 
 Some noteworthy observations:
 
-- The `By.css()` static method selects `DebugElement` nodes with a standard CSS selector.
+- The `By.css()` static method selects `DebugElement` nodes with a [standard CSS selector](https://developer.mozilla.org/docs/Learn/CSS/Building_blocks/Selectors 'CSS selectors').
 - The query returns a `DebugElement` for the paragraph.
 - You must unwrap that result to get the paragraph element.
 

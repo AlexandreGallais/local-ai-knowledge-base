@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: No A/W suffix probing on non-Windows platforms"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/interop/5.0/function-suffix-pinvoke.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the interop breaking change in .NET 5 where suffixes are no longer added to function export names during probing for P/Invokes on non-Windows platforms.
+ms.date: 08/13/2020
 ---
-
 # No A/W suffix probing on non-Windows platforms
 
 The .NET runtimes no longer add an `A` or `W` suffix to function export names during probing for P/Invokes on non-Windows platforms.
@@ -17,7 +13,7 @@ The .NET runtimes no longer add an `A` or `W` suffix to function export names du
 
 ## Change description
 
-Windows has a convention of adding an `A` or `W` suffix to Windows SDK function names, which correspond to the Windows code page and Unicode versions, respectively.
+[Windows has a convention](/windows/win32/intl/conventions-for-function-prototypes) of adding an `A` or `W` suffix to Windows SDK function names, which correspond to the Windows code page and Unicode versions, respectively.
 
 In previous versions of .NET, both the CoreCLR and Mono runtimes add an `A` or `W` suffix to the export name during export discovery for P/Invokes *on all platforms*.
 
@@ -38,4 +34,16 @@ extern static void SetWindowTextW();
 
 ## Affected APIs
 
-- `System.Runtime.InteropServices.DllImportAttribute`
+- <xref:System.Runtime.InteropServices.DllImportAttribute?displayProperty=fullName>
+
+<!--
+
+### Affected APIs
+
+- `T:System.Runtime.InteropServices.DllImportAttribute`
+
+### Category
+
+Interop
+
+-->

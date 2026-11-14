@@ -1,12 +1,8 @@
 ---
-title: "Tips for Java Developers"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/tour-of-csharp/tips-for-java-developers.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Tips for Java Developers
+description: Are you new to C#, but experienced in Java? Here's a roadmap of what's familiar, and new features to learn in C#, and features in Java that aren't in C#.
+ms.date: 02/09/2026
 ---
-
 # Roadmap for Java developers learning C\#
 
 If you're starting a new job or joining a team that uses C#, this article helps you get productive quickly. It highlights what's familiar from Java and what's new in C#.
@@ -18,7 +14,7 @@ C# and Java have many similarities. As you learn C#, you can apply much of the k
 1. ***Strongly typed***: Both Java and C# are strongly typed languages. You declare the data type of variables, either explicitly or implicitly. The compiler enforces type safety. The compiler catches type-related errors in your code, before you run the code.
 1. ***Cross-platform***: Both Java and C# are cross-platform. You can run your development tools on your favorite platform. Your application can run on multiple platforms. Your development platform isn't required to match your target platform.
 1. ***Exception handling***: Both Java and C# throw exceptions to indicate errors. Both use `try` - `catch` - `finally` blocks to handle exceptions. The Exception classes have similar names and inheritance hierarchies. One difference is that C# doesn't have the concept of *checked exceptions*. Any method might (in theory) throw any exception.
-1. ***Standard libraries***: The .NET runtime and the Java Standard Library (JSL) have support for common tasks. Both have extensive ecosystems for other open source packages. In C#, the package manager is NuGet. It's analogous to Maven.
+1. ***Standard libraries***: The .NET runtime and the Java Standard Library (JSL) have support for common tasks. Both have extensive ecosystems for other open source packages. In C#, the package manager is [NuGet](https://www.nuget.org). It's analogous to Maven.
 1. ***Garbage Collection***: Both languages employ automatic memory management through garbage collection. The runtime reclaims the memory from objects that aren't referenced. One difference is that C# enables you to create value types, as `struct` types.
 
 ## Syntax at a glance
@@ -51,7 +47,7 @@ var message = "Hello, " + name + "! Count: " + count;
 var message = $"Hello, {name}! Count: {count}";
 ```
 
-Learn more: String interpolation
+Learn more: [String interpolation](../language-reference/tokens/interpolated.md)
 
 **Lambda expressions:**
 
@@ -65,7 +61,7 @@ list.stream().filter(x -> x > 5).collect(Collectors.toList());
 var result = list.Where(x => x > 5).ToList();
 ```
 
-Learn more: LINQ overview
+Learn more: [LINQ overview](../linq/index.md)
 
 **Null handling:**
 
@@ -79,30 +75,30 @@ String value = optional.orElse("default");
 string value = input ?? "default";
 ```
 
-Learn more: Nullable reference types
+Learn more: [Nullable reference types](../fundamentals/null-safety/nullable-reference-types.md)
 
 ## What's familiar
 
 You can work productively in C# almost immediately because of the similarities. As you progress, learn features and idioms in C# that aren't available in Java:
 
-1. ***Pattern matching***: Pattern matching enables concise conditional statements and expressions based on the shape of complex data structures. The `is` statement checks if a variable "is" some pattern. The pattern-based `switch` expression provides a rich syntax to inspect a variable and make decisions based on its characteristics.
-1. ***String interpolation*** and ***raw string literals***: String interpolation enables you to insert evaluated expressions in a string, rather than using positional identifiers. Raw string literals provide a way to minimize escape sequences in text.
-1. ***Nullable and non-nullable types***: C# supports *nullable value types*, and *nullable reference types* by appending the `?` suffix to a type. For nullable types, the compiler warns you if you don't check for `null` before dereferencing the expression. For non-nullable types, the compiler warns you if you might be assigning a `null` value to that variable. Non-nullable reference types minimize programming errors that throw a `System.NullReferenceException`.
-1. ***Extensions***:  In C#, you can create members that *extend* a class or interface. Extensions provide new behavior for a type from a library, or all types that implement a given interface.
-1. ***LINQ***: Language integrated query (LINQ) provides a common syntax to query and transform data, regardless of its storage.
-1. ***Local functions***: In C#, you can nest functions inside methods, or other local functions. Local functions provide yet another layer of encapsulation.
+1. [***Pattern matching***](../fundamentals/patterns/pattern-matching.md): Pattern matching enables concise conditional statements and expressions based on the shape of complex data structures. The [`is` statement](../language-reference/operators/is.md) checks if a variable "is" some pattern. The pattern-based [`switch` expression](../language-reference/operators/switch-expression.md) provides a rich syntax to inspect a variable and make decisions based on its characteristics.
+1. [***String interpolation***](../language-reference/tokens/interpolated.md) and [***raw string literals***](../language-reference/builtin-types/reference-types.md#string-literals): String interpolation enables you to insert evaluated expressions in a string, rather than using positional identifiers. Raw string literals provide a way to minimize escape sequences in text.
+1. [***Nullable and non-nullable types***](../fundamentals/null-safety/nullable-reference-types.md): C# supports *nullable value types*, and *nullable reference types* by appending the `?` suffix to a type. For nullable types, the compiler warns you if you don't check for `null` before dereferencing the expression. For non-nullable types, the compiler warns you if you might be assigning a `null` value to that variable. Non-nullable reference types minimize programming errors that throw a <xref:System.NullReferenceException?displayProperty=nameWithType>.
+1. [***Extensions***](../programming-guide/classes-and-structs/extension-methods.md):  In C#, you can create members that *extend* a class or interface. Extensions provide new behavior for a type from a library, or all types that implement a given interface.
+1. [***LINQ***](../linq/index.md): Language integrated query (LINQ) provides a common syntax to query and transform data, regardless of its storage.
+1. [***Local functions***](../fundamentals/building-software/local-functions.md): In C#, you can nest functions inside methods, or other local functions. Local functions provide yet another layer of encapsulation.
 
-> **Tip:**
-> To learn more about C#'s type system—including `struct` vs. `class`, records, and interfaces—visit the Type system overview in the Fundamentals section.
+> [!TIP]
+> To learn more about C#'s type system—including `struct` vs. `class`, records, and interfaces—visit the [Type system](../fundamentals/types/index.md) overview in the Fundamentals section.
 
-There are other features in C# that aren't in Java. Features like `async` and `await` model asynchronous operations in sequential syntax. The `using` statement automatically frees nonmemory resources.
+There are other features in C# that aren't in Java. Features like [`async` and `await`](../asynchronous-programming/index.md) model asynchronous operations in sequential syntax. The [`using`](../language-reference/statements/using.md) statement automatically frees nonmemory resources.
 
 There are also some similar features between C# and Java that have subtle but important differences:
 
-1. ***Properties*** and ***Indexers***: Both properties and indexers (treating a class like an array or dictionary) have language support. In Java, they're naming conventions for methods starting with `get` and `set`.
-1. ***Records***: In C#, records can be either `class` (reference) or `struct` (value) types. C# records can be immutable, but aren't required to be immutable.
-1. ***Tuples*** have different syntax in C# and Java.
-1. ***Attributes*** are similar to Java annotations.
+1. [***Properties***](../programming-guide/classes-and-structs/properties.md) and [***Indexers***](/dotnet/csharp/programming-guide/indexers): Both properties and indexers (treating a class like an array or dictionary) have language support. In Java, they're naming conventions for methods starting with `get` and `set`.
+1. [***Records***](../fundamentals/types/records.md): In C#, records can be either `class` (reference) or `struct` (value) types. C# records can be immutable, but aren't required to be immutable.
+1. [***Tuples***](../language-reference/builtin-types/value-tuples.md) have different syntax in C# and Java.
+1. [***Attributes***](../language-reference/attributes/general.md) are similar to Java annotations.
 
 Finally, there are Java language features that aren't available in C#:
 
@@ -113,7 +109,7 @@ Overall, learning C# for a developer experienced in Java should be smooth. C# ha
 
 ## Next steps
 
-- A tour of C#: Get a high-level overview of all C# features.
-- Beginner tutorials: Learn C# step by step with interactive lessons.
-- What you can build with C#: Explore the application types you can create with C#.
-- C# fundamentals: Dive deeper into the type system, object-oriented programming, and more.
+- [A tour of C#](./overview.md): Get a high-level overview of all C# features.
+- [Beginner tutorials](./tutorials/index.md): Learn C# step by step with interactive lessons.
+- [What you can build with C#](./what-you-can-build.md): Explore the application types you can create with C#.
+- [C# fundamentals](../fundamentals/program-structure/index.md): Dive deeper into the type system, object-oriented programming, and more.

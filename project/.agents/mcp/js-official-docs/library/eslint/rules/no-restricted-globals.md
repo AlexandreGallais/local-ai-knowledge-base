@@ -1,13 +1,11 @@
 ---
-title: "no-restricted-globals"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-restricted-globals.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-restricted-globals
+rule_type: suggestion
+related_rules:
+- no-restricted-properties
+- no-restricted-syntax
 ---
 
-# no-restricted-globals
 
 Disallowing usage of specific global variables can be useful if you want to allow a set of global
 variables, but still want to disallow some of those.
@@ -56,7 +54,7 @@ Alternatively, the rule also accepts objects, where the global name and an optio
 
 Examples of **incorrect** code for sample `"event", "fdescribe"` global variable names:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*global event, fdescribe*/
@@ -70,9 +68,11 @@ fdescribe("foo", function() {
 });
 ```
 
+:::
+
 Examples of **correct** code for a sample `"event"` global variable name:
 
-**Correct:**
+::: correct
 
 ```js
 /*global event*/
@@ -81,7 +81,9 @@ Examples of **correct** code for a sample `"event"` global variable name:
 import event from "event-module";
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*global event*/
@@ -90,9 +92,11 @@ import event from "event-module";
 const event = 1;
 ```
 
+:::
+
 Examples of **incorrect** code for a sample `"event"` global variable name, along with a custom error message:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*global event*/
@@ -103,13 +107,15 @@ function onClick() {
 }
 ```
 
+:::
+
 ### globals
 
 An object option whose value is an array containing the names of the globals you want to restrict.
 
 Examples of **incorrect** code for `"event"` and `"fdescribe"` global variable names:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*global event, fdescribe*/
@@ -123,11 +129,13 @@ fdescribe("foo", function() {
 });
 ```
 
+:::
+
 Custom messages for a particular global can also be specified in `globals` array using objects with `name` and `message`:
 
 Examples of **incorrect** code for an `"event"` global variable name, along with a custom error message:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*global event*/
@@ -138,13 +146,15 @@ function onClick() {
 }
 ```
 
+:::
+
 ### checkGlobalObject
 
 A boolean option that enables detection of restricted globals accessed via global objects. Default is `false`.
 
 Examples of **incorrect** code for `checkGlobalObject: true` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*global globalThis, self, window*/
@@ -155,13 +165,15 @@ self.Promise
 window.Promise
 ```
 
+:::
+
 ### globalObjects
 
 An array option that specifies additional global object names to check when `checkGlobalObject` is enabled. By default, the rule checks these global objects: `globalThis`, `self`, and `window`.
 
 Examples of **incorrect** code for `globalObjects` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*global globalThis, self, window, myGlobal*/
@@ -177,11 +189,13 @@ window.Promise
 myGlobal.Promise;
 ```
 
+:::
+
 Restricted globals used in TypeScript type annotations—such as type references, interface inheritance, or class implementations—are ignored by this rule.
 
 Examples of **correct** TypeScript code for "Promise", "Event", and "Window" global variable names:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint no-restricted-globals: ["error", "Promise", "Event", "Window"]*/
@@ -196,3 +210,5 @@ function handleClick(event: Event) {
   console.log(event);
 }
 ```
+
+:::

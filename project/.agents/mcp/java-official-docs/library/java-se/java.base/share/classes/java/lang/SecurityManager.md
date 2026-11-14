@@ -1,12 +1,3 @@
----
-title: "SecurityManager class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/SecurityManager.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # SecurityManager class (java.lang)
 
 ```java
@@ -19,9 +10,8 @@ a possibly unsafe or security sensitive operation, whether the operation was
 being attempted in a security context that allowed the operation.
 This feature no longer exists.
 
-**Since:** 1.0
-
-**Deprecated:** There is no replacement for this class.
+@since   1.0
+@deprecated There is no replacement for this class.
 
 ## SecurityManager.SecurityManager()
 
@@ -29,8 +19,8 @@ This feature no longer exists.
 public SecurityManager()
 ```
 
-Constructs a new `SecurityManager`. Setting a security manager with
-`System.setSecurityManager(SecurityManager)` is not supported.
+Constructs a new {@code SecurityManager}. Setting a security manager with
+{@link System#setSecurityManager(SecurityManager)} is not supported.
 
 ## SecurityManager.getClassContext()
 
@@ -39,16 +29,16 @@ protected Class<?>[] getClassContext()
 ```
 
 Returns the current execution stack as an array of classes.
-
+<p>
 The length of the array is the number of methods on the execution
-stack. The element at index `0` is the class of the
-currently executing method, the element at index `1` is
+stack. The element at index {@code 0} is the class of the
+currently executing method, the element at index {@code 1} is
 the class of that method's caller, and so on.
 
-**API note:** The `StackWalker` class can be used as a replacement
+@apiNote The {@code StackWalker} class can be used as a replacement
 for this method.
 
-**Returns:** the execution stack.
+@return  the execution stack.
 
 ## SecurityManager.getSecurityContext()
 
@@ -56,20 +46,18 @@ for this method.
 public Object getSecurityContext()
 ```
 
-Returns an `AccessControlContext` where the `checkPermission`
-method always throws an `AccessControlException` and the
-`getDomainCombiner` method always returns `null`.
+Returns an {@code AccessControlContext} where the {@code checkPermission}
+method always throws an {@code AccessControlException} and the
+{@code getDomainCombiner} method always returns {@code null}.
 
-**Returns:** an `AccessControlContext` as specified above
-
-**See also:** java.security.AccessControlContext AccessControlContext
-
-**API note:** This method originally returned a snapshot of the current
+@return  an {@code AccessControlContext} as specified above
+@see     java.security.AccessControlContext AccessControlContext
+@apiNote This method originally returned a snapshot of the current
       calling context, which included the current thread's access
       control context and any limited privilege scope. This method has
       been changed to always return an innocuous
-      `AccessControlContext` that fails all permission checks.
-      The Security Manager is no longer
+      {@code AccessControlContext} that fails all permission checks.
+      {@linkplain SecurityManager The Security Manager} is no longer
       supported. There is no replacement for the Security Manager or
       this method.
 
@@ -79,17 +67,11 @@ method always throws an `AccessControlException` and the
 public void checkPermission(Permission perm)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `perm`: ignored
-
-**Since:** 1.2
-
-Throws:
-
-- `SecurityException`: always
+@param     perm   ignored
+@throws    SecurityException always
+@since     1.2
 
 ## SecurityManager.checkPermission(Permission, Object)
 
@@ -97,18 +79,12 @@ Throws:
 public void checkPermission(Permission perm, Object context)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `perm`: ignored
-- `context`: ignored
-
-**Since:** 1.2
-
-Throws:
-
-- `SecurityException`: always
+@param      perm      ignored
+@param      context   ignored
+@throws     SecurityException always
+@since      1.2
 
 ## SecurityManager.checkCreateClassLoader()
 
@@ -116,11 +92,9 @@ Throws:
 public void checkCreateClassLoader()
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Throws:
-
-- `SecurityException`: always
+@throws    SecurityException always
 
 ## SecurityManager.checkAccess(Thread)
 
@@ -128,15 +102,10 @@ Throws:
 public void checkAccess(Thread t)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `t`: ignored
-
-Throws:
-
-- `SecurityException`: always
+@param      t   ignored
+@throws     SecurityException always
 
 ## SecurityManager.checkAccess(ThreadGroup)
 
@@ -144,15 +113,10 @@ Throws:
 public void checkAccess(ThreadGroup g)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `g`: ignored
-
-Throws:
-
-- `SecurityException`: always
+@param      g   ignored
+@throws     SecurityException always
 
 ## SecurityManager.checkExit(int)
 
@@ -160,15 +124,10 @@ Throws:
 public void checkExit(int status)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `status`: ignored
-
-Throws:
-
-- `SecurityException`: always
+@param      status   ignored
+@throws    SecurityException always
 
 ## SecurityManager.checkExec(String)
 
@@ -176,15 +135,10 @@ Throws:
 public void checkExec(String cmd)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `cmd`: ignored
-
-Throws:
-
-- `SecurityException`: always
+@param      cmd   ignored
+@throws     SecurityException always
 
 ## SecurityManager.checkLink(String)
 
@@ -192,15 +146,10 @@ Throws:
 public void checkLink(String lib)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `lib`: ignored
-
-Throws:
-
-- `SecurityException`: always
+@param      lib   ignored
+@throws     SecurityException always
 
 ## SecurityManager.checkRead(FileDescriptor)
 
@@ -208,15 +157,10 @@ Throws:
 public void checkRead(FileDescriptor fd)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `fd`: the system-dependent file descriptor
-
-Throws:
-
-- `SecurityException`: always
+@param      fd   the system-dependent file descriptor
+@throws     SecurityException always
 
 ## SecurityManager.checkRead(String)
 
@@ -224,15 +168,10 @@ Throws:
 public void checkRead(String file)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `file`: ignored
-
-Throws:
-
-- `SecurityException`: always
+@param      file   ignored
+@throws     SecurityException always
 
 ## SecurityManager.checkRead(String, Object)
 
@@ -240,16 +179,11 @@ Throws:
 public void checkRead(String file, Object context)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `file`: ignored
-- `context`: ignored
-
-Throws:
-
-- `SecurityException`: always
+@param      file      ignored
+@param      context   ignored
+@throws     SecurityException always
 
 ## SecurityManager.checkWrite(FileDescriptor)
 
@@ -257,15 +191,10 @@ Throws:
 public void checkWrite(FileDescriptor fd)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `fd`: ignored
-
-Throws:
-
-- `SecurityException`: always
+@param     fd   ignored
+@throws    SecurityException always
 
 ## SecurityManager.checkWrite(String)
 
@@ -273,15 +202,10 @@ Throws:
 public void checkWrite(String file)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `file`: ignored
-
-Throws:
-
-- `SecurityException`: always
+@param      file   ignored
+@throws     SecurityException always
 
 ## SecurityManager.checkDelete(String)
 
@@ -289,15 +213,10 @@ Throws:
 public void checkDelete(String file)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `file`: ignored
-
-Throws:
-
-- `SecurityException`: always
+@param      file   ignored
+@throws     SecurityException always
 
 ## SecurityManager.checkConnect(String, int)
 
@@ -305,16 +224,11 @@ Throws:
 public void checkConnect(String host, int port)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `host`: ignored
-- `port`: ignored
-
-Throws:
-
-- `SecurityException`: always
+@param      host   ignored
+@param      port   ignored
+@throws     SecurityException always
 
 ## SecurityManager.checkConnect(String, int, Object)
 
@@ -322,17 +236,12 @@ Throws:
 public void checkConnect(String host, int port, Object context)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `host`: ignored
-- `port`: ignored
-- `context`: ignored
-
-Throws:
-
-- `SecurityException`: always
+@param      host      ignored
+@param      port      ignored
+@param      context   ignored
+@throws     SecurityException always
 
 ## SecurityManager.checkListen(int)
 
@@ -340,15 +249,10 @@ Throws:
 public void checkListen(int port)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `port`: ignored
-
-Throws:
-
-- `SecurityException`: always
+@param      port   ignored
+@throws     SecurityException always
 
 ## SecurityManager.checkAccept(String, int)
 
@@ -356,16 +260,11 @@ Throws:
 public void checkAccept(String host, int port)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `host`: ignored
-- `port`: ignored
-
-Throws:
-
-- `SecurityException`: always
+@param      host   ignored
+@param      port   ignored
+@throws     SecurityException always
 
 ## SecurityManager.checkMulticast(InetAddress)
 
@@ -373,17 +272,11 @@ Throws:
 public void checkMulticast(InetAddress maddr)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `maddr`: ignored
-
-**Since:** 1.1
-
-Throws:
-
-- `SecurityException`: always
+@param      maddr  ignored
+@throws     SecurityException always
+@since      1.1
 
 ## SecurityManager.checkMulticast(InetAddress, byte)
 
@@ -391,18 +284,12 @@ Throws:
 public void checkMulticast(InetAddress maddr, byte ttl)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `maddr`: ignored
-- `ttl`: ignored
-
-**Since:** 1.1
-
-Throws:
-
-- `SecurityException`: always
+@param      maddr  ignored
+@param      ttl    ignored
+@throws     SecurityException always
+@since      1.1
 
 ## SecurityManager.checkPropertiesAccess()
 
@@ -410,11 +297,9 @@ Throws:
 public void checkPropertiesAccess()
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Throws:
-
-- `SecurityException`: always
+@throws     SecurityException always
 
 ## SecurityManager.checkPropertyAccess(String)
 
@@ -422,15 +307,10 @@ Throws:
 public void checkPropertyAccess(String key)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `key`: ignored
-
-Throws:
-
-- `SecurityException`: always
+@param      key  ignored
+@throws     SecurityException always
 
 ## SecurityManager.checkPrintJobAccess()
 
@@ -438,13 +318,10 @@ Throws:
 public void checkPrintJobAccess()
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-**Since:** 1.1
-
-Throws:
-
-- `SecurityException`: always
+@throws     SecurityException always
+@since   1.1
 
 ## SecurityManager.checkPackageAccess(String)
 
@@ -452,15 +329,10 @@ Throws:
 public void checkPackageAccess(String pkg)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `pkg`: ignored
-
-Throws:
-
-- `SecurityException`: always
+@param      pkg   ignored
+@throws     SecurityException always
 
 ## SecurityManager.checkPackageDefinition(String)
 
@@ -468,15 +340,10 @@ Throws:
 public void checkPackageDefinition(String pkg)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `pkg`: ignored
-
-Throws:
-
-- `SecurityException`: always
+@param      pkg   ignored
+@throws     SecurityException always
 
 ## SecurityManager.checkSetFactory()
 
@@ -484,11 +351,9 @@ Throws:
 public void checkSetFactory()
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Throws:
-
-- `SecurityException`: always
+@throws     SecurityException always
 
 ## SecurityManager.checkSecurityAccess(String)
 
@@ -496,17 +361,11 @@ Throws:
 public void checkSecurityAccess(String target)
 ```
 
-Throws `SecurityException`.
+Throws {@code SecurityException}.
 
-Parameters:
-
-- `target`: ignored
-
-**Since:** 1.1
-
-Throws:
-
-- `SecurityException`: always
+@param     target ignored
+@throws    SecurityException always
+@since   1.1
 
 ## SecurityManager.getThreadGroup()
 
@@ -514,4 +373,5 @@ Throws:
 public ThreadGroup getThreadGroup()
 ```
 
-**Since:** 1.1
+{@return the current Thread's {@code ThreadGroup}}
+@since   1.1

@@ -1,35 +1,33 @@
 ---
-title: "Containerize an app with dotnet publish"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/containers/sdk-publish.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Containerize an app with dotnet publish
+description: In this tutorial, you learn how to containerize a .NET application with dotnet publish command without the use of a Dockerfile.
+ms.date: 05/27/2026
+ms.topic: tutorial
 ---
 
 # Containerize a .NET app with dotnet publish
 
-Containers have many features and benefits, such as being an immutable infrastructure, providing a portable architecture, and enabling scalability. The image can be used to create containers for your local development environment, private cloud, or public cloud. In this tutorial, you learn how to containerize a .NET application using the dotnet publish command without the use of a Dockerfile. Additionally, you explore how to configure the container image and execution, and how to clean up resources.
+Containers have many features and benefits, such as being an immutable infrastructure, providing a portable architecture, and enabling scalability. The image can be used to create containers for your local development environment, private cloud, or public cloud. In this tutorial, you learn how to containerize a .NET application using the [dotnet publish](../tools/dotnet-publish.md) command without the use of a Dockerfile. Additionally, you explore how to configure the [container image](../docker/container-images.md) and execution, and how to clean up resources.
 
-> **Tip:**
-> If you're interested in using a _Dockerfile_ to containerize your .NET app, see Tutorial: Containerize a .NET app.
+> [!TIP]
+> If you're interested in using a _Dockerfile_ to containerize your .NET app, see [Tutorial: Containerize a .NET app](../docker/build-container.md).
 
 ## Prerequisites
 
 Install the following prerequisites:
 
-- .NET 8+ SDK\
+- [.NET 8+ SDK](https://dotnet.microsoft.com/download/dotnet)\
 If you have .NET installed, use the `dotnet --info` command to determine which SDK you're using.
 
 If you plan on running the container locally, you need an Open Container Initiative (OCI)-compatible container runtime, such as:
 
-- Docker Desktop: Most common container runtime.
-- Podman: An open-source daemonless alternative to Docker.
+- [Docker Desktop](https://www.docker.com/products/docker-desktop): Most common container runtime.
+- [Podman](https://podman.io/): An open-source daemonless alternative to Docker.
 
-> **Important:**
-> The .NET SDK creates container images without Docker. Docker or Podman are only needed if you want to run the image locally. By default, when you publish your .NET app as a container image it's pushed to a local container runtime. Alternatively, you can save the image as a tarball or push it directly to a container registry without using any container runtime at all.
+> [!IMPORTANT]
+> The .NET SDK creates container images without Docker. Docker or Podman are only needed if you want to run the image locally. By default, when you [publish your .NET app](#publish-net-app) as a container image it's pushed to a local container runtime. Alternatively, you can save the [image as a tarball](#publish-net-app-to-a-tarball) or push it directly to a [container registry](#publish-net-app-to-container-registry) without using any container runtime at all.
 
-In addition to these prerequisites, it's recommended that you're familiar with Worker Services in .NET as the sample project is a worker.
+In addition to these prerequisites, it's recommended that you're familiar with [Worker Services in .NET](../extensions/workers.md) as the sample project is a worker.
 
 ## Create .NET app
 
@@ -41,7 +39,7 @@ dotnet new worker -o Worker -n DotNet.ContainerImage
 
 Your folder tree looks similar to the following directory:
 
-```directory
+```Directory
 📁 sample-directory
     └──📂 Worker
         ├──appsettings.Development.json
@@ -81,33 +79,19 @@ info: Microsoft.Hosting.Lifetime[0]
       Application is shutting down...
 ```
 
-The worker template loops indefinitely. Use the cancel command `Ctrl+C` to stop it.
+The worker template loops indefinitely. Use the cancel command <kbd>Ctrl+C</kbd> to stop it.
 
 ## Set the container image name
 
 There are various configuration options available when publishing an app as a container. By default, the container image name is the `AssemblyName` of the project. If that name is invalid as a container image name, you can override it by specifying a `ContainerRepository` as shown in the following project file:
 
-```xml
-<Project Sdk="Microsoft.NET.Sdk.Worker">
+:::code language="xml" source="snippets/Worker/DotNet.ContainerImage.csproj" highlight="8":::
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>dotnet-DotNet.ContainerImage-2e40c179-a00b-4cc9-9785-54266210b7eb</UserSecretsId>
-    <ContainerRepository>dotnet-worker-image</ContainerRepository>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.13" />
-  </ItemGroup>
-</Project>
-```
-For further reference, see `ContainerRepository`.
+For further reference, see [`ContainerRepository`](publish-configuration.md#containerrepository).
 
 ## Publish .NET app
 
-To publish the .NET app as a container, use the following dotnet publish command:
+To publish the .NET app as a container, use the following [dotnet publish](../tools/dotnet-publish.md) command:
 
 ```dotnetcli
 dotnet publish --os linux --arch x64 /t:PublishContainer
@@ -118,7 +102,7 @@ The preceding .NET CLI command publishes the app as a container:
 - Targeting Linux as the OS (`--os linux`).
 - Specifying an x64 architecture (`--arch x64`).
 
-> **Important:**
+> [!IMPORTANT]
 > To publish the container locally, you must have an active OCI-compliant daemon running. If it isn't running when you attempt to publish the app as a container, you experience an error similar to the following:
 >
 > ```console
@@ -153,7 +137,7 @@ The preceding command publishes the app as a container to a tarball:
 - Specifying an x64 architecture (`--arch x64`).
 - Setting the `ContainerArchiveOutputPath` property to `./images/container-image.tar.gz`.
 
-The command doesn't require a running OCI-compliant daemon. For more information, see `ContainerArchiveOutputPath`.
+The command doesn't require a running OCI-compliant daemon. For more information, see [`ContainerArchiveOutputPath`](publish-configuration.md#containerarchiveoutputpath).
 
 ### Load the tarball
 
@@ -161,8 +145,8 @@ A common use case for exporting to a tarball is for security-focused organizatio
 
 The tarball contains the entire container, which can then be loaded using the appropriate tool:
 
-- Docker: `docker load -i ./images/container-image.tar.gz`
-- Podman: `podman load -i ./images/container-image.tar.gz`
+- [Docker](https://docs.docker.com/reference/cli/docker/image/load/): `docker load -i ./images/container-image.tar.gz`
+- [Podman](https://docs.podman.io/en/latest/markdown/podman-load.1.html): `podman load -i ./images/container-image.tar.gz`
 
 ## Publish .NET app to container registry
 
@@ -180,7 +164,7 @@ The preceding code publishes the app as a container to a container registry:
 - Specifying an x64 architecture (`--arch x64`).
 - Setting the `ContainerRegistry` property to `ghcr.io`.
 
-For more information, see ContainerRegistry.
+For more information, see [ContainerRegistry](publish-configuration.md#containerregistry).
 
 ## Clean up resources
 
@@ -197,7 +181,7 @@ REPOSITORY             TAG       IMAGE ID       CREATED          SIZE
 dotnet-worker-image    1.0.0     25aeb97a2e21   12 seconds ago   191MB
 ```
 
-> **Tip:**
+> [!TIP]
 > Image files can be large. Typically, you would remove temporary containers you created while testing and developing your app. You usually keep the base images with the runtime installed if you plan on building other images based on that runtime.
 
 To delete the image, copy the image ID and run the `docker image rm` command:
@@ -208,9 +192,9 @@ docker image rm 25aeb97a2e21
 
 ## Next steps
 
-- Announcing built-in container support for the .NET SDK
-- Tutorial: Containerize a .NET app
-- .NET container images
-- Review the Azure services that support containers
-- Read about Dockerfile commands
-- Explore the container tools in Visual Studio
+- [Announcing built-in container support for the .NET SDK](https://devblogs.microsoft.com/dotnet/announcing-builtin-container-support-for-the-dotnet-sdk)
+- [Tutorial: Containerize a .NET app](../docker/build-container.md)
+- [.NET container images](../docker/container-images.md)
+- [Review the Azure services that support containers](https://azure.microsoft.com/overview/containers/)
+- [Read about Dockerfile commands](https://docs.docker.com/engine/reference/builder/)
+- [Explore the container tools in Visual Studio](/visualstudio/containers/overview)

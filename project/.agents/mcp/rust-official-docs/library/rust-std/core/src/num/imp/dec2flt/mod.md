@@ -1,17 +1,8 @@
----
-title: "core::num::imp::dec2flt"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/num/imp/dec2flt/mod.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::num::imp::dec2flt
 
 Converting decimal strings into IEEE 754 binary floating point numbers.
 
-#### Problem statement
+# Problem statement
 
 We are given a decimal string such as `12.34e56`. This string consists of integral (`12`),
 fractional (`34`), and exponent (`56`) parts. All parts are optional and interpreted as a
@@ -26,7 +17,7 @@ half-to-even strategy, also known as banker's rounding.
 Needless to say, this is quite hard, both in terms of implementation complexity and in terms
 of CPU cycles taken.
 
-#### Implementation
+# Implementation
 
 First, we ignore signs. Or rather, we remove it at the very beginning of the conversion
 process and re-apply it at the very end. This is correct in all edge cases since IEEE
@@ -61,7 +52,7 @@ Primarily, this module and its children implement the algorithms described in:
 "Number Parsing at a Gigabyte per Second", available online:
 <https://arxiv.org/abs/2101.11408>.
 
-#### Other
+# Other
 
 The conversion should *never* panic. There are assertions and explicit panics in the code,
 but they should never be triggered and only serve as internal sanity checks. Any panics should
@@ -79,7 +70,7 @@ the parsing submodule to only hand out sufficiently small exponents, where "suff
 Larger exponents are accepted, but we don't do arithmetic with them, they are immediately
 turned into {positive,negative} {zero,infinity}.
 
-#### Notation
+# Notation
 
 This module uses the same notation as the Lemire paper:
 

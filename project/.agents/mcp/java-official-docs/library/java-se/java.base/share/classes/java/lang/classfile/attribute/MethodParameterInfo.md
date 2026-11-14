@@ -1,27 +1,15 @@
----
-title: "MethodParameterInfo interface (java.lang.classfile.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/attribute/MethodParameterInfo.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # MethodParameterInfo interface (java.lang.classfile.attribute)
 
 ```java
 public sealed interface MethodParameterInfo permits UnboundAttribute.UnboundMethodParameterInfo
 ```
 
-Models a single method parameter in the `MethodParametersAttribute`.
+Models a single method parameter in the {@link MethodParametersAttribute}.
 
-**See also:** MethodParametersAttribute#parameters()
-
-**See also:** Parameter
-
-**jvms:** 4.7.24 The `MethodParameters` Attribute
-
-**Since:** 24
+@see MethodParametersAttribute#parameters()
+@see Parameter
+@jvms 4.7.24 The {@code MethodParameters} Attribute
+@since 24
 
 ## MethodParameterInfo.name()
 
@@ -29,9 +17,10 @@ Models a single method parameter in the `MethodParametersAttribute`.
 Optional<Utf8Entry> name()
 ```
 
-**See also:** Parameter#getName()
+{@return the parameter name, if it has one}
 
-**See also:** Parameter#isNamePresent()
+@see Parameter#getName()
+@see Parameter#isNamePresent()
 
 ## MethodParameterInfo.flagsMask()
 
@@ -39,12 +28,11 @@ Optional<Utf8Entry> name()
 int flagsMask()
 ```
 
-It is in the range of unsigned
-short, `[0, 0xFFFF]`.
+{@return the access flags, as a bit mask}  It is in the range of unsigned
+short, {@code [0, 0xFFFF]}.
 
-**See also:** Parameter#getModifiers()
-
-**See also:** AccessFlag.Location#METHOD_PARAMETER
+@see Parameter#getModifiers()
+@see AccessFlag.Location#METHOD_PARAMETER
 
 ## MethodParameterInfo.flags()
 
@@ -52,13 +40,11 @@ short, `[0, 0xFFFF]`.
 default Set<AccessFlag> flags()
 ```
 
-**See also:** Parameter#accessFlags()
+{@return the access flags, as a set of flag enums}
 
-**See also:** AccessFlag.Location#METHOD_PARAMETER
-
-Throws:
-
-- `IllegalArgumentException`: if the flags mask has any undefined bit set
+@throws IllegalArgumentException if the flags mask has any undefined bit set
+@see Parameter#accessFlags()
+@see AccessFlag.Location#METHOD_PARAMETER
 
 ## MethodParameterInfo.has(AccessFlag)
 
@@ -66,11 +52,9 @@ Throws:
 default boolean has(AccessFlag flag)
 ```
 
-Parameters:
-
-- `flag`: the method parameter flag
-
-**See also:** AccessFlag.Location#METHOD_PARAMETER
+{@return whether the method parameter has a specific flag set}
+@param flag the method parameter flag
+@see AccessFlag.Location#METHOD_PARAMETER
 
 ## MethodParameterInfo.of(Optional<Utf8Entry>, int)
 
@@ -78,10 +62,9 @@ Parameters:
 static MethodParameterInfo of(Optional<Utf8Entry> name, int flags)
 ```
 
-Parameters:
-
-- `name`: the method parameter name, may be empty
-- `flags`: the method parameter access flags
+{@return a method parameter description}
+@param name the method parameter name, may be empty
+@param flags the method parameter access flags
 
 ## MethodParameterInfo.of(Optional<String>, AccessFlag...)
 
@@ -89,14 +72,11 @@ Parameters:
 static MethodParameterInfo of(Optional<String> name, AccessFlag... flags)
 ```
 
-Parameters:
-
-- `name`: the method parameter name, may be empty
-- `flags`: the method parameter access flags
-
-Throws:
-
-- `IllegalArgumentException`: if any flag cannot be applied to the `AccessFlag.Location.METHOD_PARAMETER` location
+{@return a method parameter description}
+@param name the method parameter name, may be empty
+@param flags the method parameter access flags
+@throws IllegalArgumentException if any flag cannot be applied to the
+        {@link AccessFlag.Location#METHOD_PARAMETER} location
 
 ## MethodParameterInfo.ofParameter(Optional<String>, int)
 
@@ -104,7 +84,6 @@ Throws:
 static MethodParameterInfo ofParameter(Optional<String> name, int flags)
 ```
 
-Parameters:
-
-- `name`: the method parameter name, may be empty
-- `flags`: the method parameter access flags
+{@return a method parameter description}
+@param name the method parameter name, may be empty
+@param flags the method parameter access flags

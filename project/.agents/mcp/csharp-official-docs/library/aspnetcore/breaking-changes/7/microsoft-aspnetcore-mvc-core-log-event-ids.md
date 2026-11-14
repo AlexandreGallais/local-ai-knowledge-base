@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: Event IDs for some Microsoft.AspNetCore.Mvc.Core log messages changed"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/7/microsoft-aspnetcore-mvc-core-log-event-ids.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in ASP.NET Core 7.0 where event IDs for some Microsoft.AspNetCore.Mvc.Core log messages changed.
+ms.date: 03/23/2022
+ms.custom: https://github.com/aspnet/Announcements/issues/483
 ---
 
 # Event IDs for some Microsoft.AspNetCore.Mvc.Core log messages changed
 
-As part of updating the `Microsoft.AspNetcore.Mvc.Core` assembly to use `Microsoft.Extensions.Logging.LoggerMessageAttribute`, the ASP.NET Core team discovered logger event IDs that were reused within a single log category. Event IDs and names should be unique so that different message types can be identified. These IDs have been updated to ensure that they're unique within a single log category.
+As part of updating the `Microsoft.AspNetcore.Mvc.Core` assembly to use <xref:Microsoft.Extensions.Logging.LoggerMessageAttribute>, the ASP.NET Core team discovered logger event IDs that were reused within a single log category. Event IDs and names should be unique so that different message types can be identified. These IDs have been updated to ensure that they're unique within a single log category.
 
 ## Version introduced
 
@@ -25,7 +23,7 @@ Duplicate logger event IDs within a single log category within the `Microsoft.As
 
 ## Type of breaking change
 
-This change affects binary compatibility.
+This change affects [binary compatibility](/dotnet/core/compatibility/categories#binary-compatibility).
 
 ## Reason for change
 

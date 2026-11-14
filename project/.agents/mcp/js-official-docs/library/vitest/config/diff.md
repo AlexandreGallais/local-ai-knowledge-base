@@ -1,20 +1,16 @@
 ---
-title: "diff | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/diff.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: diff | Config
+outline: deep
 ---
 
 # diff
 
 - **Type:** `string`
-- **CLI:** `--diff=`
+- **CLI:** `--diff=<path>`
 
 `DiffOptions` object or a path to a module which exports `DiffOptions`. Useful if you want to customize diff display.
 
-Vitest diff rendering uses `@vitest/pretty-format` under the hood and a part of `DiffOptions` is forwarded to the pretty-format configuration, while the rest affects diff rendering itself.
+Vitest diff rendering uses [`@vitest/pretty-format`](https://npmx.dev/package/@vitest/pretty-format) under the hood and a part of `DiffOptions` is forwarded to the pretty-format configuration, while the rest affects diff rendering itself.
 
 For example, as a config object:
 
@@ -37,7 +33,7 @@ Or as a module:
 
 :::code-group
 
-```ts
+```ts [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -47,7 +43,7 @@ export default defineConfig({
 })
 ```
 
-```ts
+```ts [vitest.diff.ts]
 import type { DiffOptions } from 'vitest'
 import c from 'picocolors'
 
@@ -57,6 +53,8 @@ export default {
   omitAnnotationLines: true,
 } satisfies DiffOptions
 ```
+
+:::
 
 ## diff.expand
 
@@ -70,7 +68,7 @@ Expand all common lines.
 
 - **Type:** `number`
 - **Default:** `0`
-- **CLI:** `--diff.truncateThreshold=`
+- **CLI:** `--diff.truncateThreshold=<path>`
 
 The maximum length of diff result to be displayed. Diffs above this threshold will be truncated.
 Truncation won't take effect with default value 0.
@@ -95,7 +93,7 @@ Color of truncate annotation, default is output with no color.
 - **Type:** `boolean`
 - **Default:** `false`
 
-Print basic <example-value> `Object` and `Array` in diff output.
+Print basic prototype `Object` and `Array` in diff output.
 
 ## diff.maxDepth
 

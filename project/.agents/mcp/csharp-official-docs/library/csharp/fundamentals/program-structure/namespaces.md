@@ -1,26 +1,18 @@
 ---
 title: "Namespaces and using directives"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/fundamentals/program-structure/namespaces.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
----
+description: Learn how C# namespaces organize types and how using directives let you refer to those types by their simple names.
+ms.date: 11/05/2026
+ms.topic: concept-article
+ai-usage: ai-assisted
 
+#customer intent: As a developer new to C#, I want to recognize namespace declarations and using directives so that I can understand the structure of a C# program.
+---
 # Namespaces and using directives
 
 A C# file often starts with `using` directives followed by a `namespace` declaration:
 
-```csharp
-using System;
+:::code language="csharp" source="snippets/namespaces/Basics.cs" id="NamespaceBasics":::
 
-namespace MyApp.Services;
-
-class Greeter
-{
-    public void Greet(string name) => Console.WriteLine($"Hello, {name}!");
-}
-```
 The example declares `Greeter` in the `MyApp.Services` namespace. Its complete name is `MyApp.Services.Greeter`. The `using System;` directive lets the code refer to types such as `Console` by their simple names.
 
 ## Namespace declarations
@@ -44,9 +36,9 @@ Console.WriteLine("Hello!"); // With using System;
 
 In a new console project, `Console` often works without an explicit `using System;`. The .NET SDK can generate common imports for you through the project's `ImplicitUsings` setting.
 
-To declare namespaces, resolve name conflicts, and choose between file-local, global, and SDK-generated imports, continue with Organize types with namespaces.
+To declare namespaces, resolve name conflicts, and choose between file-local, global, and SDK-generated imports, continue with [Organize types with namespaces](../namespaces/overview.md).
 
 ## Related content
 
-- `namespace` keyword
-- `using` directive
+- [`namespace` keyword](../../language-reference/keywords/namespace.md)
+- [`using` directive](../../language-reference/keywords/using-directive.md)

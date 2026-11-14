@@ -1,17 +1,12 @@
----
-title: "Releases"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/releases.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
+<script setup>
+import SupportedVersions from './.vitepress/theme/SupportedVersions.vue';
+</script>
 
 # Releases
 
-Vitest releases follow Semantic Versioning. You can see the latest stable version of Vitest in the Vitest npm package page.
+Vitest releases follow [Semantic Versioning](https://semver.org/). You can see the latest stable version of Vitest in the [Vitest npm package page](https://www.npmjs.com/package/vite).
 
-A full changelog of past releases is available on GitHub.
+A full changelog of past releases is [available on GitHub](https://github.com/vitest-dev/vitest/releases).
 
 ## Release Cycle
 
@@ -19,7 +14,7 @@ Vitest does not have a fixed release cycle.
 
 - **Patch** releases are released as needed (usually every week).
 - **Minor** releases always contain new features and are released as needed. Minor releases always have a beta pre-release phase (usually every two months).
-- **Major** releases generally align with Vite and Node.js EOL schedule, and will be announced ahead of time. These releases will have a long beta pre-release phases (usually every year).
+- **Major** releases generally align with [Vite](https://vite.dev/releases) and [Node.js EOL schedule](https://endoflife.date/nodejs), and will be announced ahead of time. These releases will have a long beta pre-release phases (usually every year).
 
 ## Supported Versions
 
@@ -27,13 +22,15 @@ In summary, the current supported Vitest versions are:
 
 <SupportedVersions />
 
+<br>
+
 The supported version ranges are automatically determined by:
 
 - **Current Minor** gets regular fixes.
 - **Previous Major** (only for its latest minor) and **Previous Minor** receives important fixes and security patches.
 - All versions before these are no longer supported.
 
-We recommend updating Vitest regularly. Check out the Migration Guides when you update to each Major. We test new Vitest versions before releasing them through the vitest-ecosystem-ci project. Most projects using Vitest should be able to quickly offer support or migrate to new versions as soon as they are released.
+We recommend updating Vitest regularly. Check out the [Migration Guides](/guide/migration/) when you update to each Major. We test new Vitest versions before releasing them through the [vitest-ecosystem-ci project](https://github.com/vitest-dev/vitest-ecosystem-ci). Most projects using Vitest should be able to quickly offer support or migrate to new versions as soon as they are released.
 
 ## Semantic Versioning Edge Cases
 
@@ -53,8 +50,8 @@ Pre-releases allow early adopters and maintainers from the Ecosystem to do integ
 
 ## Deprecations
 
-We periodically deprecate features that have been superseded by better alternatives in Minor releases. Deprecated features will continue to work with a type or logged warning. They will be removed in the next major release after entering deprecated status. The Migration Guide for each major will list these removals and document an upgrade path for them.
+We periodically deprecate features that have been superseded by better alternatives in Minor releases. Deprecated features will continue to work with a type or logged warning. They will be removed in the next major release after entering deprecated status. The [Migration Guide](/guide/migration/) for each major will list these removals and document an upgrade path for them.
 
 ## Experimental Features
 
-Some features are marked as experimental when released in a stable version of Vite. Experimental features allow us to gather real-world experience to influence their final design. The goal is to let users provide feedback by testing them in production. Experimental features themselves are considered unstable, and should only be used in a controlled manner. These features may change between Minors, so users must pin their Vite version when they rely on them. We will create a GitHub discussion for each experimental feature.
+Some features are marked as experimental when released in a stable version of Vite. Experimental features allow us to gather real-world experience to influence their final design. The goal is to let users provide feedback by testing them in production. Experimental features themselves are considered unstable, and should only be used in a controlled manner. These features may change between Minors, so users must pin their Vite version when they rely on them. We will create [a GitHub discussion](https://github.com/vitest-dev/vitest/discussions/categories/feedback?discussions_q=is%3Aopen+label%3Aexperimental+category%3AFeedback) for each experimental feature.

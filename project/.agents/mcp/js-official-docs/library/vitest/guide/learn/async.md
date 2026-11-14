@@ -1,10 +1,11 @@
 ---
-title: "Testing Asynchronous Code | Guide"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/learn/async.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Testing Asynchronous Code | Guide
+prev:
+  text: Using Matchers
+  link: /guide/learn/matchers
+next:
+  text: Setup and Teardown
+  link: /guide/learn/setup-teardown
 ---
 
 # Testing Asynchronous Code
@@ -32,7 +33,7 @@ This is the pattern you'll use the vast majority of the time. It reads just like
 
 ## Resolves and Rejects
 
-Sometimes you'd rather assert on a promise directly instead of `await`-ing it into a variable first. The `.resolves` and `.rejects` helpers let you do this. They unwrap the promise and then apply the matcher to the resolved or rejected value:
+Sometimes you'd rather assert on a promise directly instead of `await`-ing it into a variable first. The [`.resolves`](/api/expect#resolves) and [`.rejects`](/api/expect#rejects) helpers let you do this. They unwrap the promise and then apply the matcher to the resolved or rejected value:
 
 ```js
 test('resolves to Alice', async () => {
@@ -44,12 +45,13 @@ test('rejects with an error', async () => {
 })
 ```
 
-**Warning:**
+::: warning
 Don't forget the `await` before `expect`. Vitest will detect unawaited assertions and fail the test at the end of it.
+:::
 
 ## Assertion Counting
 
-With async code, there's a subtle risk: an assertion inside a callback or `.then()` chain might never execute, and the test would still pass <example-value> no assertion failed. `expect.hasAssertions()` guards against this by verifying that at least one assertion ran during the test:
+With async code, there's a subtle risk: an assertion inside a callback or `.then()` chain might never execute, and the test would still pass because no assertion failed. [`expect.hasAssertions()`](/api/expect#hasassertions) guards against this by verifying that at least one assertion ran during the test:
 
 ```js
 test('callback is invoked', async () => {
@@ -63,7 +65,7 @@ test('callback is invoked', async () => {
 })
 ```
 
-When you know exactly how many assertions should run, `expect.assertions(n)` is more precise:
+When you know exactly how many assertions should run, [`expect.assertions(n)`](/api/expect#assertions) is more precise:
 
 ```js
 test('both callbacks are called', async () => {
@@ -78,8 +80,9 @@ test('both callbacks are called', async () => {
 
 In most cases, `async`/`await` with direct assertions is clear enough and you don't need assertion counting. It's most useful when assertions are inside callbacks, loops, or conditional branches where you want to guarantee they actually executed.
 
-**Tip:**
-If you want every test in your project to require at least one assertion, enable `expect.requireAssertions` in your config instead of adding `expect.hasAssertions()` to each test manually.
+::: tip
+If you want every test in your project to require at least one assertion, enable [`expect.requireAssertions`](/config/expect#expect-requireassertions) in your config instead of adding `expect.hasAssertions()` to each test manually.
+:::
 
 ## Callbacks
 
@@ -100,14 +103,15 @@ test('the data is peanut butter', async () => {
 
 This pattern works for any callback-based API. Pass `resolve` as the success callback, and the test will wait until the callback is invoked.
 
-**Tip:**
+::: tip
 Most modern Node.js APIs (such as `fs/promises` and `fetch`) support promises natively, so you can use `async`/`await` directly. The callback wrapping pattern above is mainly useful for older libraries that haven't adopted promises yet.
+:::
 
 ## Timeouts
 
 By default, each test has a 5-second timeout. If a test takes longer than that (perhaps because a promise never resolves, or a network request hangs), it will fail with a timeout error. This prevents your test suite from getting stuck indefinitely.
 
-You can set a custom timeout as the third argument to `test`, which is useful for tests that legitimately need more time:
+You can set a [custom timeout](/api/test#timeout) as the third argument to `test`, which is useful for tests that legitimately need more time:
 
 ```js
 test('long-running operation', async () => {
@@ -115,9 +119,9 @@ test('long-running operation', async () => {
 }, 10_000) // 10 seconds
 ```
 
-If you find yourself needing longer timeouts across many tests, you can change the default for all tests with the `testTimeout` config option:
+If you find yourself needing longer timeouts across many tests, you can change the default for all tests with the [`testTimeout`](/config/testtimeout) config option:
 
-```js
+```js [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -150,4 +154,4 @@ test('handle the rejection', async () => {
 })
 ```
 
-If your code intentionally produces unhandled rejections, you can filter specific errors with `onUnhandledError` or disable the check entirely with `dangerouslyIgnoreUnhandledErrors`.
+If your code intentionally produces unhandled rejections, you can filter specific errors with [`onUnhandledError`](/config/onunhandlederror) or disable the check entirely with [`dangerouslyIgnoreUnhandledErrors`](/config/dangerouslyignoreunhandlederrors).

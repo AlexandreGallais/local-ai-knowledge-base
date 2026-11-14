@@ -1,21 +1,15 @@
----
-title: "no-array-reduce"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-array-reduce.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-array-reduce
 
 📝 Disallow `Array#reduce()` and `Array#reduceRight()`.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-`Array#reduce()` and `Array#reduceRight()` usually result in hard-to-read and less performant code. In almost every case, it can be replaced by `.map`, `.filter`, or a `for-of` loop.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+`Array#reduce()` and `Array#reduceRight()` usually result in [hard-to-read](https://twitter.com/jaffathecake/status/1213077702300852224) and [less performant](https://www.richsnapp.com/article/2019/06-09-reduce-spread-anti-pattern) code. In almost every case, it can be replaced by `.map`, `.filter`, or a `for-of` loop.
 
 It's only somewhat useful in the rare case of summing up numbers, which is allowed by default.
 
@@ -109,7 +103,7 @@ for (const item of array) {
 }
 ```
 
-When `allowSimpleOperations` is `false`, a simple sum like `array.reduce((total, item) => total + item)` (with no initial value or an initial value of `0`) also offers a suggestion to switch to `Math.sumPrecise()`:
+When `allowSimpleOperations` is `false`, a simple sum like `array.reduce((total, item) => total + item)` (with no initial value or an initial value of `0`) also offers a suggestion to switch to [`Math.sumPrecise()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sumPrecise):
 
 ```js
 /* eslint unicorn/no-array-reduce: ["error", {"allowSimpleOperations": false}] */

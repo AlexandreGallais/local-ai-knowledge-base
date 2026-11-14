@@ -1,12 +1,9 @@
 ---
 title: "Sample XML file: Typical purchase order in a namespace - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/sample-xml-file-typical-purchase-order-namespace.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: This XML file—which is used in examples—has data, in a namespace, about a purchase order.
+ms.date: 07/20/2015
+ms.assetid: 84dc3339-ea32-4ccc-9af6-ab38ddfecced
 ---
-
 # Sample XML file: Typical purchase order in a namespace (LINQ to XML)
 
 The following XML file is used in various examples in the LINQ to XML documentation. This file is a typical purchase order. The XML is in a namespace.

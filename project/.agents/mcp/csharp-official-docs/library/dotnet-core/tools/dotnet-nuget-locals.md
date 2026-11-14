@@ -1,12 +1,9 @@
 ---
-title: "dotnet nuget locals command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-nuget-locals.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet nuget locals command
+description: The dotnet nuget locals command clears or lists local NuGet resources such as http-request cache, temporary cache, or machine-wide global packages folder.
+author: karann-msft
+ms.date: 10/28/2025
 ---
-
 # dotnet nuget locals
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -45,9 +42,7 @@ The `dotnet nuget locals` command clears or lists local NuGet resources in the h
 
   Forces the application to run using an invariant, English-based culture.
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 - **`-c|--clear`**
 
@@ -103,4 +98,4 @@ Prints out a description of how to use the command.
 
 ## Troubleshooting
 
-For information on common problems and errors while using the `dotnet nuget locals` command, see Managing the NuGet cache.
+For information on common problems and errors while using the `dotnet nuget locals` command, see [Managing the NuGet cache](/nuget/consume-packages/managing-the-nuget-cache).

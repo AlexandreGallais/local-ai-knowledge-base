@@ -1,35 +1,26 @@
----
-title: "PostCSS plugin"
-tool: "stylelint"
-version: "18.0"
-source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/docs/user-guide/postcss-plugin.md"
-commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
-license: "MIT"
----
-
 # PostCSS plugin
 
-As with any other PostCSS plugin, you can use Stylelint's PostCSS plugin either with a PostCSS runner or with the PostCSS JS API directly.
+As with any other [PostCSS plugin](https://github.com/postcss/postcss#plugins), you can use Stylelint's PostCSS plugin either with a [PostCSS runner](https://github.com/postcss/postcss#runners) or with the PostCSS JS API directly.
 
 _However, we recommend using the CLI or Node.js API (directly or via an integration) as they provide better reporting._
 
 ## Options
 
-The PostCSS plugin uses the standard options, _except the `customSyntax` option_. Instead, the syntax must be set within the PostCSS options as there can only be one parser/syntax in a pipeline.
+The PostCSS plugin uses the [standard options](options.md), _except the `customSyntax` option_. Instead, the syntax must be set within the [PostCSS options](https://github.com/postcss/postcss#options) as there can only be one parser/syntax in a pipeline.
 
 ## Usage examples
 
 We recommend you lint your CSS before applying any transformations. You can do this by either:
 
 - creating a separate lint task that is independent of your build one.
-- using the `plugins` option of `postcss-import` or `postcss-easy-import` to lint your files before any transformations.
+- using the [`plugins` option](https://github.com/postcss/postcss-import#plugins) of [`postcss-import`](https://github.com/postcss/postcss-import) or [`postcss-easy-import`](https://github.com/TrySound/postcss-easy-import) to lint your files before any transformations.
 - placing Stylelint at the beginning of your plugin pipeline.
 
-You'll also need to use a reporter. _The Stylelint plugin registers warnings via PostCSS_. Therefore, you'll want to use it with a PostCSS runner that prints warnings or another PostCSS plugin whose purpose is to format and print warnings (e.g. `postcss-reporter`).
+You'll also need to use a reporter. _The Stylelint plugin registers warnings via PostCSS_. Therefore, you'll want to use it with a PostCSS runner that prints warnings or another PostCSS plugin whose purpose is to format and print warnings (e.g. [`postcss-reporter`](https://github.com/postcss/postcss-reporter)).
 
 ### Example A
 
-A separate lint task that uses the plugin via the PostCSS JS API to lint SCSS using `postcss-scss`.
+A separate lint task that uses the plugin via the PostCSS JS API to lint SCSS using [`postcss-scss`](https://github.com/postcss/postcss-scss).
 
 ```js
 import fs from "node:fs";
@@ -53,11 +44,11 @@ postcss([
   .catch((err) => console.error(err.stack));
 ```
 
-The same pattern can be used to lint other syntaxes, such as SugarSS.
+The same pattern can be used to lint other syntaxes, such as [SugarSS](https://github.com/postcss/sugarss).
 
 ### Example B
 
-A combined lint and build task where the plugin is used via the PostCSS JS API, but within `postcss-import` (using its `plugins` option) so that the source files are linted before any transformations.
+A combined lint and build task where the plugin is used via the PostCSS JS API, but within [`postcss-import`](https://github.com/postcss/postcss-import) (using its `plugins` option) so that the source files are linted before any transformations.
 
 ```js
 import fs from "node:fs";

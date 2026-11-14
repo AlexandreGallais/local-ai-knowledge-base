@@ -1,17 +1,8 @@
----
-title: "Items"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/items.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[items]
 # Items
 
 r[items.syntax]
-```grammar
+```grammar,items
 Item ->
     OuterAttribute* ( VisItem | MacroItem )
 
@@ -62,7 +53,7 @@ There are several kinds of items:
 * [`extern` blocks]
 
 r[items.locations]
-Items may be declared in the [root of the crate], a module, or a [block expression].
+Items may be declared in the [root of the crate], a [module][modules], or a [block expression].
 
 r[items.associated-locations]
 A subset of items, called [associated items], may be declared in [traits] and [implementations].
@@ -77,3 +68,26 @@ r[items.name-resolution]
 [Name resolution] of item names allows items to be defined before or after where the item is referred to in the module or block.
 
 See [item scopes] for information on the scoping rules of items.
+
+[`extern crate` declarations]: items/extern-crates.md
+[`extern` blocks]: items/external-blocks.md
+[`macro_rules`]: macros-by-example.md
+[`use` declarations]: items/use-declarations.md
+[associated items]: items/associated-items.md
+[block expression]: expressions/block-expr.md
+[constant items]: items/constant-items.md
+[enumeration definitions]: items/enumerations.md
+[function definitions]: items/functions.md
+[implementations]: items/implementations.md
+[item scopes]: names/scopes.md#item-scopes
+[modules]: items/modules.md
+[name resolution]: names/name-resolution.md
+[paths]: paths.md
+[root of the crate]: crates-and-source-files.md
+[statement]: statements.md
+[static items]: items/static-items.md
+[struct definitions]: items/structs.md
+[trait definitions]: items/traits.md
+[traits]: items/traits.md
+[type alias definitions]: items/type-aliases.md
+[union definitions]: items/unions.md

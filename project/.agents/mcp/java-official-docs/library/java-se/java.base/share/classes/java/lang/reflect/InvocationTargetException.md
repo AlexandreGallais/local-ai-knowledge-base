@@ -1,12 +1,3 @@
----
-title: "InvocationTargetException class (java.lang.reflect)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/reflect/InvocationTargetException.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # InvocationTargetException class (java.lang.reflect)
 
 ```java
@@ -16,11 +7,9 @@ public class InvocationTargetException extends ReflectiveOperationException
 InvocationTargetException is a checked exception that wraps
 an exception thrown by an invoked method or constructor.
 
-**See also:** Method
-
-**See also:** Constructor
-
-**Since:** 1.1
+@see Method
+@see Constructor
+@since 1.1
 
 ## InvocationTargetException.InvocationTargetException()
 
@@ -28,8 +17,8 @@ an exception thrown by an invoked method or constructor.
 protected InvocationTargetException()
 ```
 
-Constructs an `InvocationTargetException` with
-`null` as the target exception.
+Constructs an {@code InvocationTargetException} with
+{@code null} as the target exception.
 
 ## InvocationTargetException.InvocationTargetException(Throwable)
 
@@ -39,9 +28,7 @@ public InvocationTargetException(Throwable target)
 
 Constructs a InvocationTargetException with a target exception.
 
-Parameters:
-
-- `target`: the target exception
+@param target the target exception
 
 ## InvocationTargetException.InvocationTargetException(Throwable, String)
 
@@ -52,10 +39,8 @@ public InvocationTargetException(Throwable target, String s)
 Constructs a InvocationTargetException with a target exception
 and a detail message.
 
-Parameters:
-
-- `target`: the target exception
-- `s`: the detail message
+@param target the target exception
+@param s      the detail message
 
 ## InvocationTargetException.getTargetException()
 
@@ -65,11 +50,12 @@ public Throwable getTargetException()
 
 Get the thrown target exception.
 
-**API note:** This method predates the general-purpose exception chaining facility.
-The `Throwable.getCause()` method is now the preferred means of
+@apiNote
+This method predates the general-purpose exception chaining facility.
+The {@link Throwable#getCause()} method is now the preferred means of
 obtaining this information.
 
-**Returns:** the thrown target exception (cause of this exception).
+@return the thrown target exception (cause of this exception).
 
 ## InvocationTargetException.getCause()
 
@@ -78,8 +64,7 @@ public Throwable getCause()
 ```
 
 Returns the cause of this exception (the thrown target exception,
-which may be `null`).
+which may be {@code null}).
 
-**Returns:** the cause of this exception.
-
-**Since:** 1.4
+@return  the cause of this exception.
+@since   1.4

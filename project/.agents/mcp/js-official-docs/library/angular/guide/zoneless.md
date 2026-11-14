@@ -1,12 +1,3 @@
----
-title: "Angular without ZoneJS (Zoneless)"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/zoneless.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Angular without ZoneJS (Zoneless)
 
 ## Why use Zoneless?
@@ -16,7 +7,7 @@ The main advantages to removing ZoneJS as a dependency are:
 - **Improved performance**: ZoneJS uses DOM events and async tasks as indicators of when application state _might_ have updated and subsequently triggers application synchronization to run change detection on the application's views. ZoneJS does not have any insight into whether application state actually changed and so this synchronization is triggered more frequently than necessary.
 - **Improved Core Web Vitals**: ZoneJS brings a fair amount of overhead, both in payload size and startup time.
 - **Improved debugging experience**: ZoneJS makes debugging code more difficult. Stack traces are harder to understand with ZoneJS. It's also difficult to understand when code breaks as a result of being outside the Angular Zone.
-- **Better ecosystem compatibility**: ZoneJS works by patching browser APIs but does not automatically have patches for every new browser API. Some APIs, such as `async`/`await`, cannot be patched effectively and must be downleveled to work with ZoneJS. Sometimes libraries in the ecosystem are also incompatible with the way ZoneJS patches the native APIs. Removing ZoneJS as a dependency ensures better long-term compatibility by removing a source of complexity, monkey <example-value>, and ongoing maintenance.
+- **Better ecosystem compatibility**: ZoneJS works by patching browser APIs but does not automatically have patches for every new browser API. Some APIs, such as `async`/`await`, cannot be patched effectively and must be downleveled to work with ZoneJS. Sometimes libraries in the ecosystem are also incompatible with the way ZoneJS patches the native APIs. Removing ZoneJS as a dependency ensures better long-term compatibility by removing a source of complexity, monkey patching, and ongoing maintenance.
 
 ## Enabling Zoneless in an application
 
@@ -24,11 +15,11 @@ Zoneless is the default in Angular v21+ so you do not need to do anything to ena
 
 If you are using Angular v20, enable zoneless change detection by adding `provideZonelessChangeDetection()` at bootstrap:
 
-```ts
+```ts {header: 'standalone bootstrap'}
 bootstrapApplication(MyApp, {providers: [provideZonelessChangeDetection()]});
 ```
 
-```ts
+```ts {header: 'NgModule bootstrap'}
 platformBrowser().bootstrapModule(AppModule);
 
 @NgModule({
@@ -65,7 +56,7 @@ These notifications include:
 ### `OnPush`-compatible components
 
 One way to ensure that a component is using the correct notification mechanisms from above is to
-use ChangeDetectionStrategy.OnPush.
+use [ChangeDetectionStrategy.OnPush](/best-practices/skipping-subtrees#using-onpush).
 
 The `OnPush` change detection strategy is not required, but it is a recommended step towards zoneless compatibility for application components. It is not always possible for library components to use `ChangeDetectionStrategy.OnPush`.
 When a library component is a host for user-components which might use `ChangeDetectionStrategy.Eager`, it cannot use `OnPush` because that would prevent the child component from being refreshed if it is not `OnPush` compatible and relies on ZoneJS to trigger change detection. Components can use the `Eager` strategy as long as they notify Angular when change detection needs to run (calling `markForCheck`, using signals, `AsyncPipe`, etc.).
@@ -85,16 +76,17 @@ familiar and have similar timing to what was needed. More straightforward or dir
 such as `MutationObserver` when code needs to wait for certain DOM state (rather than waiting for it indirectly
 through Angular's render hooks).
 
-**NgZone.run and NgZone.runOutsideAngular are compatible with Zoneless**
+<docs-callout title="NgZone.run and NgZone.runOutsideAngular are compatible with Zoneless">
 `NgZone.run` and `NgZone.runOutsideAngular` do not need to be removed in order for code to be compatible with
 Zoneless applications. In fact, removing these calls can lead to performance regressions for libraries that
 are used in applications that still rely on ZoneJS.
+</docs-callout>
 
 ### `PendingTasks` for Server Side Rendering (SSR)
 
 If you are using SSR with Angular, you may know that it relies on ZoneJS to help determine when the application
 is "stable" and can be serialized. If there are asynchronous tasks that should prevent serialization, an application
-not using ZoneJS must make Angular aware of these with the PendingTasks service. Serialization
+not using ZoneJS must make Angular aware of these with the [PendingTasks](/api/core/PendingTasks) service. Serialization
 will wait for the first moment that all pending tasks have been removed.
 
 The two most straightforward uses of pending tasks are the `run` method:
@@ -121,7 +113,7 @@ try {
 }
 ```
 
-In addition, the pendingUntilEvent helper in `rxjs-interop` ensures
+In addition, the [pendingUntilEvent](/api/core/rxjs-interop/pendingUntilEvent) helper in `rxjs-interop` ensures
 the application remains unstable until the observable emits, completes, errors, or is unsubscribed.
 
 ```typescript
@@ -176,11 +168,11 @@ it is acceptable to use `ChangeDetectionStrategy.Eager` for it and call `fixture
 IMPORTANT: `fixture.changeDetectorRef` belongs to the fixture's host view, so its `markForCheck()`
 doesn't refresh the template of an `OnPush` component. Your application components shouldn't need it
 in tests. If a test needs it, the component usually isn't fully reactive or
-zoneless compatible.
+[zoneless compatible](#requirements-for-zoneless-compatibility).
 
 ### Debug-mode check to ensure updates are detected
 
-IMPORTANT: `provideCheckNoChangesConfig` is in developer preview.
+IMPORTANT: `provideCheckNoChangesConfig` is in [developer preview](reference/releases#developer-preview).
 
 Angular also provides an additional tool to help verify that an application is making
 updates to state in a zoneless-compatible way. `provideCheckNoChangesConfig({exhaustive: true, interval: <milliseconds>})`

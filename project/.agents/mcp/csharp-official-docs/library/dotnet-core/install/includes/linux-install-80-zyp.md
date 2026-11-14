@@ -1,13 +1,10 @@
 ---
-title: "linux-install-80-zyp"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/install/includes/linux-install-80-zyp.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+author: adegeo
+ms.author: adegeo
+ms.date: 11/14/2023
+ms.topic: include
+ms.custom: linux-related-content
 ---
-
-# linux-install-80-zyp
 
 ### Install the SDK
 
@@ -17,7 +14,7 @@ The .NET SDK allows you to develop apps with .NET. If you install the .NET SDK, 
 sudo zypper install dotnet-sdk-8.0
 ```
 
-To learn how to use the .NET CLI, see .NET CLI overview.
+To learn how to use the .NET CLI, see [.NET CLI overview](../../tools/index.md).
 
 ### Install the runtime
 
@@ -33,4 +30,4 @@ As an alternative to the ASP.NET Core Runtime, you can install the .NET Runtime,
 sudo zypper install dotnet-runtime-8.0
 ```
 
-To learn how to use the .NET CLI, see .NET CLI overview.
+To learn how to use the .NET CLI, see [.NET CLI overview](../../tools/index.md).

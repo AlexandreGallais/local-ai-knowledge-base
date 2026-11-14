@@ -1,13 +1,8 @@
 ---
-title: "Logging"
-tool: "npm"
-version: "12.2"
-source: "https://github.com/npm/cli/blob/60e11343e61316d966c86805d803df5a0eb99230/docs/lib/content/using-npm/logging.md"
-commit: "60e11343e61316d966c86805d803df5a0eb99230"
-license: "Artistic-2.0"
+title: Logging
+section: 7
+description: Why, What & How we Log
 ---
-
-# Logging
 
 ### Description
 
@@ -67,7 +62,7 @@ If you'd like to change this behavior & log this output you can set `foreground-
 
 ### Timing Information
 
-The `--timing` config can be set which does a few things:
+The [`--timing` config](/using-npm/config#timing) can be set which does a few things:
 
 1. Always shows the full path to the debug log regardless of command exit status
 1. Write timing information to a process specific timing file in the cache or `logs-dir`
@@ -101,4 +96,4 @@ If you are concerned about secrets in your log file or terminal output, you can 
 
 ### See also
 
-* config
+* [config](/using-npm/config)

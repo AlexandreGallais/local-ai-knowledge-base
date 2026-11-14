@@ -1,12 +1,3 @@
----
-title: "core::ops::drop"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/ops/drop.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::ops::drop
 
 ## trait Drop
@@ -22,6 +13,8 @@ The most common way that a value is no longer needed is when it goes out of
 scope. Destructors may still run in other circumstances, but we're going to
 focus on scope for the examples here. To learn about some of those other cases,
 please see [the reference] section on destructors.
+
+[the reference]: https://doc.rust-lang.org/reference/destructors.html
 
 This destructor consists of two components:
 - A call to `Drop::drop` for that value, if this special `Drop` trait is implemented for its type.
@@ -69,21 +62,21 @@ fn main() {
 Rust will first call `Drop::drop` for `_x` and then for both `_x.one` and `_x.two`,
 meaning that running this will print
 
-```
+```text
 Running!
 Dropping HasTwoDrops!
 Dropping HasDrop!
 Dropping HasDrop!
-```rust
+```
 
 Even if we remove the implementation of `Drop` for `HasTwoDrop`, the destructors of its fields are still called.
 This would result in
 
-```
+```test
 Running!
 Dropping HasDrop!
 Dropping HasDrop!
-```rust
+```
 
 ## You cannot call `Drop::drop` yourself
 
@@ -93,9 +86,9 @@ Rust prevents misuse by not allowing you to call `Drop::drop` directly.
 
 In other words, if you tried to explicitly call `Drop::drop` in the above example, you'd get a compiler error.
 
-If you'd like to explicitly call the destructor of a value, `mem::drop` can be used instead.
+If you'd like to explicitly call the destructor of a value, [`mem::drop`] can be used instead.
 
-`mem::drop`: drop
+[`mem::drop`]: drop
 
 ## Drop order
 
@@ -107,7 +100,7 @@ guaranteed by the language.
 
 Unlike for structs, local variables are dropped in reverse order:
 
-```
+```rust
 struct Foo;
 
 impl Drop for Foo {
@@ -128,14 +121,14 @@ fn main() {
     let _foo = Foo;
     let _bar = Bar;
 }
-```rust
+```
 
 This will print
 
-```
+```text
 Dropping Bar!
 Dropping Foo!
-```rust
+```
 
 Please see [the reference] for the full rules.
 
@@ -143,7 +136,7 @@ Please see [the reference] for the full rules.
 
 ## `Copy` and `Drop` are exclusive
 
-You cannot implement both `Copy` and `Drop` on the same type. Types that
+You cannot implement both [`Copy`] and `Drop` on the same type. Types that
 are `Copy` get implicitly duplicated by the compiler, making it very
 hard to predict when, and how often destructors will be executed. As such,
 these types cannot have destructors.
@@ -156,7 +149,7 @@ calling `T`'s destructor at this moment is safe. In particular, it also needs to
 recursively drop all the fields of `T`. For example, it is crucial that code like the following
 is being rejected:
 
-```
+```compile_fail,E0597
 use std::cell::Cell;
 
 struct S<'a>(Cell<Option<&'a S<'a>>>, Box<i32>);
@@ -178,7 +171,7 @@ fn main() {
     // to be dropped will access the `Box` in the first one,
     // which is a use-after-free!
 }
-```rust
+```
 
 The Nomicon discusses the need for [drop check in more detail][drop check].
 
@@ -186,8 +179,8 @@ To reject such code, the "drop check" analysis determines which types and lifeti
 still be live when `T` gets dropped. The exact details of this analysis are not yet
 stably guaranteed and **subject to change**. Currently, the analysis works as follows:
 - If `T` has no drop glue, then trivially nothing is required to be live. This is the case if
-  neither `T` nor any of its (recursive) fields have a destructor (`impl Drop`). `PhantomData`,
-  arrays of length 0 and `ManuallyDrop` are considered to never have a destructor, no matter
+  neither `T` nor any of its (recursive) fields have a destructor (`impl Drop`). [`PhantomData`],
+  arrays of length 0 and [`ManuallyDrop`] are considered to never have a destructor, no matter
   their field type.
 - If `T` has drop glue, then, for all types `U` that are *owned* by any field of `T`,
   recursively add the types and lifetimes that need to be live when `U` gets dropped. The set of
@@ -212,7 +205,7 @@ There exists an unstable way for a type to opt-out of the last clause; this is c
 check eyepatch" or `may_dangle`. For more details on this nightly-only feature, see the
 [discussion in the Nomicon][nomicon].
 
-`ManuallyDrop`: crate::mem::ManuallyDrop
-`PhantomData`: crate::marker::PhantomData
+[`ManuallyDrop`]: crate::mem::ManuallyDrop
+[`PhantomData`]: crate::marker::PhantomData
 [drop check]: ../../nomicon/dropck.html
 [nomicon]: ../../nomicon/phantom-data.html#an-exception-the-special-case-of-the-standard-library-and-its-unstable-may_dangle

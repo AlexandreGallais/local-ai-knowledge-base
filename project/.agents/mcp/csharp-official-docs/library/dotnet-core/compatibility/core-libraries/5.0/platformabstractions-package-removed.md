@@ -1,23 +1,19 @@
 ---
 title: "Breaking change: Microsoft.DotNet.PlatformAbstractions package removed"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/5.0/platformabstractions-package-removed.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 5 breaking change in core .NET libraries where the Microsoft.DotNet.PlatformAbstractions package has been removed.
+ms.date: 11/01/2020
 ---
-
 # Microsoft.DotNet.PlatformAbstractions package removed
 
-No new versions of the Microsoft.DotNet.PlatformAbstractions NuGet package will be produced.
+No new versions of the [Microsoft.DotNet.PlatformAbstractions NuGet package](https://www.nuget.org/packages/Microsoft.DotNet.PlatformAbstractions/) will be produced.
 
 ## Change description
 
-Previously, new versions of the `Microsoft.DotNet.PlatformAbstractions` library were produced alongside new versions of .NET Core. Going forward, no new functionality will be added to the library, and no new major versions will be released. However, existing versions of the library will continue to work and be serviced.
+Previously, new versions of the <xref:Microsoft.DotNet.PlatformAbstractions?displayProperty=fullName> library were produced alongside new versions of .NET Core. Going forward, no new functionality will be added to the library, and no new major versions will be released. However, existing versions of the library will continue to work and be serviced.
 
-The `Microsoft.DotNet.PlatformAbstractions` library overlaps with APIs that are already established in the System.\* namespaces. Also, some `Microsoft.DotNet.PlatformAbstractions` APIs weren't designed with the same level of scrutiny and long-term supportability as the rest of the System.\* APIs. For example, `Microsoft.DotNet.PlatformAbstractions` uses the `Platform` enumeration to describe the current operating system platform. This enumeration design was explicitly rejected when the `System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform)` API was designed, to allow for new platforms and future flexibility.
+The <xref:Microsoft.DotNet.PlatformAbstractions?displayProperty=fullName> library overlaps with APIs that are already established in the System.\* namespaces. Also, some <xref:Microsoft.DotNet.PlatformAbstractions> APIs weren't designed with the same level of scrutiny and long-term supportability as the rest of the System.\* APIs. For example, <xref:Microsoft.DotNet.PlatformAbstractions> uses the `Platform` enumeration to describe the current operating system platform. This enumeration design was explicitly rejected when the <xref:System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform)?displayProperty=nameWithType> API was designed, to allow for new platforms and future flexibility.
 
-The scenarios enabled by the `Microsoft.DotNet.PlatformAbstractions` library are now possible without it. Existing versions will continue to work, even in .NET 5 and later, and will be serviced along with previous versions of .NET Core. However, new functionality won't be added to the library. Instead, new functionality will be added to other libraries and APIs.
+The scenarios enabled by the <xref:Microsoft.DotNet.PlatformAbstractions?displayProperty=fullName> library are now possible without it. Existing versions will continue to work, even in .NET 5 and later, and will be serviced along with previous versions of .NET Core. However, new functionality won't be added to the library. Instead, new functionality will be added to other libraries and APIs.
 
 ## Version introduced
 
@@ -31,23 +27,41 @@ The scenarios enabled by the `Microsoft.DotNet.PlatformAbstractions` library are
 
   | `PlatformAbstractions` API | Recommended replacement |
   |-|-|
-  | `ApplicationEnvironment.ApplicationBasePath` | `System.AppContext.BaseDirectory` |
-  | `Microsoft.DotNet.PlatformAbstractions.HashCodeCombiner` | `System.HashCode` |
-  | `RuntimeEnvironment.GetRuntimeIdentifier()` | `System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier` |
-  | `RuntimeEnvironment.OperatingSystemPlatform` | `System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform)` |
-  | `RuntimeEnvironment.RuntimeArchitecture` | `System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture` |
-  | `RuntimeEnvironment.OperatingSystem` | `System.Runtime.InteropServices.RuntimeInformation.OSDescription` |
-  | `RuntimeEnvironment.OperatingSystemVersion` | `System.Runtime.InteropServices.RuntimeInformation.OSDescription` and `System.Environment.OSVersion` |
+  | `ApplicationEnvironment.ApplicationBasePath` | <xref:System.AppContext.BaseDirectory?displayProperty=nameWithType> |
+  | <xref:Microsoft.DotNet.PlatformAbstractions.HashCodeCombiner> | <xref:System.HashCode?displayProperty=nameWithType> |
+  | `RuntimeEnvironment.GetRuntimeIdentifier()` | <xref:System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier?displayProperty=nameWithType> |
+  | `RuntimeEnvironment.OperatingSystemPlatform` | <xref:System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform)?displayProperty=nameWithType> |
+  | `RuntimeEnvironment.RuntimeArchitecture` | <xref:System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture?displayProperty=nameWithType> |
+  | `RuntimeEnvironment.OperatingSystem` | <xref:System.Runtime.InteropServices.RuntimeInformation.OSDescription?displayProperty=nameWithType> |
+  | `RuntimeEnvironment.OperatingSystemVersion` | <xref:System.Runtime.InteropServices.RuntimeInformation.OSDescription?displayProperty=nameWithType> and <xref:System.Environment.OSVersion?displayProperty=nameWithType> |
 
-  > **Note:**
-  > Most use cases for `RuntimeEnvironment.OperatingSystem` and `RuntimeEnvironment.OperatingSystemVersion` are for display purposes, for example, displaying to a user, logging, and telemetry. It's not recommended to make runtime decisions based on an operating system (OS) version. `System.Environment.OSVersion` now returns the correct version for Windows and macOS operating systems. However, for most Unix distributions, what is considered to be the "OS version" is not as straightforward. For example, it could be the Linux kernel version, or it could be the distro version. For most Unix platforms, `System.Environment.OSVersion` and `System.Runtime.InteropServices.RuntimeInformation.OSDescription` return the version that's returned by `uname`. To get the Linux distro name and version information, the recommended approach is to read the */etc/os-release* file.
+  > [!NOTE]
+  > Most use cases for `RuntimeEnvironment.OperatingSystem` and `RuntimeEnvironment.OperatingSystemVersion` are for display purposes, for example, displaying to a user, logging, and telemetry. It's not recommended to make runtime decisions based on an operating system (OS) version. <xref:System.Environment.OSVersion?displayProperty=nameWithType> now [returns the correct version](environment-osversion-returns-correct-version.md) for Windows and macOS operating systems. However, for most Unix distributions, what is considered to be the "OS version" is not as straightforward. For example, it could be the Linux kernel version, or it could be the distro version. For most Unix platforms, <xref:System.Environment.OSVersion?displayProperty=nameWithType> and <xref:System.Runtime.InteropServices.RuntimeInformation.OSDescription?displayProperty=nameWithType> return the version that's returned by `uname`. To get the Linux distro name and version information, the recommended approach is to read the */etc/os-release* file.
 
 ## Affected APIs
 
 - `Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath`
-- `Microsoft.DotNet.PlatformAbstractions.HashCodeCombiner`
+- <xref:Microsoft.DotNet.PlatformAbstractions.HashCodeCombiner?displayProperty=fullName>
 - `Microsoft.DotNet.PlatformAbstractions.RuntimeEnvironment.GetRuntimeIdentifier()`
 - `Microsoft.DotNet.PlatformAbstractions.RuntimeEnvironment.OperatingSystem`
 - `Microsoft.DotNet.PlatformAbstractions.RuntimeEnvironment.OperatingSystemPlatform`
 - `Microsoft.DotNet.PlatformAbstractions.RuntimeEnvironment.OperatingSystemVersion`
 - `Microsoft.DotNet.PlatformAbstractions.RuntimeEnvironment.RuntimeArchitecture`
+
+<!--
+
+### Category
+
+Core .NET libraries
+
+### Affected APIs
+
+- `P:Microsoft.DotNet.PlatformAbstractions.ApplicationEnvironment.ApplicationBasePath`
+- `T:Microsoft.DotNet.PlatformAbstractions.HashCodeCombiner`
+- `M:Microsoft.DotNet.PlatformAbstractions.RuntimeEnvironment.GetRuntimeIdentifier`
+- `P:Microsoft.DotNet.PlatformAbstractions.RuntimeEnvironment.OperatingSystem`
+- `P:Microsoft.DotNet.PlatformAbstractions.RuntimeEnvironment.OperatingSystemPlatform`
+- `P:Microsoft.DotNet.PlatformAbstractions.RuntimeEnvironment.OperatingSystemVersion`
+- `P:Microsoft.DotNet.PlatformAbstractions.RuntimeEnvironment.RuntimeArchitecture`
+
+-->

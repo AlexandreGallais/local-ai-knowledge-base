@@ -1,15 +1,14 @@
 ---
 title: "Breaking change - Streaming HTTP responses enabled by default in browser HTTP clients"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/networking/10.0/default-http-streaming.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where streaming HTTP responses are enabled by default in browser HTTP clients."
+ms.date: 4/7/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/45644
 ---
 
 # Streaming HTTP responses enabled by default in browser HTTP clients
 
-Browser HTTP clients now enable streaming HTTP responses by default. Consequently, the `System.Net.Http.HttpContent.ReadAsStreamAsync*` method now returns a `BrowserHttpReadStream` instead of a `System.IO.MemoryStream`, which does not support synchronous operations. This may require updates to existing code that relies on synchronous stream operations.
+Browser HTTP clients now enable streaming HTTP responses by default. Consequently, the <xref:System.Net.Http.HttpContent.ReadAsStreamAsync*?displayProperty=nameWithType> method now returns a `BrowserHttpReadStream` instead of a <xref:System.IO.MemoryStream>, which does not support synchronous operations. This may require updates to existing code that relies on synchronous stream operations.
 
 ## Version introduced
 
@@ -17,7 +16,7 @@ Browser HTTP clients now enable streaming HTTP responses by default. Consequentl
 
 ## Previous behavior
 
-Previously, in browser environments such as WebAssembly (WASM) and Blazor, the HTTP client buffered the entire response by default. The `System.Net.Http.HttpContent` object contained a `System.IO.MemoryStream` unless you explicitly opted in to streaming responses using the `WebAssemblyEnableStreamingResponse` option.
+Previously, in browser environments such as WebAssembly (WASM) and Blazor, the HTTP client buffered the entire response by default. The <xref:System.Net.Http.HttpContent> object contained a <xref:System.IO.MemoryStream> unless you explicitly opted in to streaming responses using the `WebAssemblyEnableStreamingResponse` option.
 
 ```csharp
 var response = await httpClient.GetAsync("https://example.com");
@@ -26,7 +25,7 @@ var contentStream = await response.Content.ReadAsStreamAsync(); // Returns Memor
 
 ## New behavior
 
-Starting in .NET 10, streaming HTTP responses are enabled by default. The `System.Net.Http.HttpContent` no longer contains a `System.IO.MemoryStream`. Instead, `System.Net.Http.HttpContent.ReadAsStreamAsync*` returns a `BrowserHttpReadStream`, which does not support synchronous operations.
+Starting in .NET 10, streaming HTTP responses are enabled by default. The <xref:System.Net.Http.HttpContent> no longer contains a <xref:System.IO.MemoryStream>. Instead, <xref:System.Net.Http.HttpContent.ReadAsStreamAsync*?displayProperty=nameWithType> returns a `BrowserHttpReadStream`, which does not support synchronous operations.
 
 ```csharp
 var response = await httpClient.GetAsync("https://example.com");
@@ -35,11 +34,11 @@ var contentStream = await response.Content.ReadAsStreamAsync(); // Returns Brows
 
 ## Type of breaking change
 
-This is a behavioral change.
+This is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-This change supports use-cases around streaming `System.Net.Http.Json.HttpClientJsonExtensions.GetFromJsonAsAsyncEnumerable*`.
+This change supports use-cases around streaming <xref:System.Net.Http.Json.HttpClientJsonExtensions.GetFromJsonAsAsyncEnumerable*>.
 
 ## Recommended action
 
@@ -59,10 +58,10 @@ To disable streaming globally, set the environment variable `DOTNET_WASM_ENABLE_
 <WasmEnableStreamingResponse>false</WasmEnableStreamingResponse>
 ```
 
-> **Note:**
-> As of .NET 10 Preview 3 the `<WasmEnableStreamingResponse>` property is not yet available. It will be available in a future release. For more details, see the GitHub issue.
+> [!NOTE]
+> As of .NET 10 Preview 3 the `<WasmEnableStreamingResponse>` property is not yet available. It will be available in a future release. For more details, see the [GitHub issue](https://github.com/dotnet/runtime/issues/97449).
 
 ## Affected APIs
 
-- `System.Net.Http.HttpContent`
-- `System.Net.Http.HttpContent.ReadAsStreamAsync*`
+- <xref:System.Net.Http.HttpContent?displayProperty=fullName>
+- <xref:System.Net.Http.HttpContent.ReadAsStreamAsync*?displayProperty=fullName>

@@ -1,13 +1,8 @@
 ---
-title: "Install"
-tool: "npm"
-version: "12.2"
-source: "https://github.com/npm/cli/blob/60e11343e61316d966c86805d803df5a0eb99230/docs/lib/content/configuring-npm/install.md"
-commit: "60e11343e61316d966c86805d803df5a0eb99230"
-license: "Artistic-2.0"
+title: Install
+section: 5
+description: Download and install node and npm
 ---
-
-# Install
 
 ### Description
 
@@ -17,9 +12,9 @@ Node installer, since the Node installation process installs npm in a directory 
 
 ### Overview
 
-- Checking your version of npm and Node.js
-- Using a Node version manager to install Node.js and npm
-- Using a Node installer to install Node.js and npm
+- [Checking your version of npm and Node.js](#checking-your-version-of-npm-and-nodejs)
+- [Using a Node version manager to install Node.js and npm](#using-a-node-version-manager-to-install-nodejs-and-npm)
+- [Using a Node installer to install Node.js and npm](#using-a-node-installer-to-install-nodejs-and-npm)
 
 ### Checking your version of npm and Node.js
 
@@ -33,26 +28,26 @@ npm -v
 ### Using a Node version manager to install Node.js and npm
 
 Node version managers allow you to install and switch between multiple versions of Node.js and npm on your system so you can test your applications on multiple versions of npm to ensure they work for users on different versions.
-You can search for them on GitHub.
+You can [search for them on GitHub](https://github.com/search?q=node+version+manager+archived%3Afalse&type=repositories&ref=advsearch).
 
 ### Using a Node installer to install Node.js and npm
 
 If you are unable to use a Node version manager, you can use a Node installer to install both Node.js and npm on your system.
 
-* Node.js installer
-* NodeSource installer.
+* [Node.js installer](https://nodejs.org/en/download/)
+* [NodeSource installer](https://github.com/nodesource/distributions).
 If you use Linux, we recommend that you use a NodeSource installer.
 
 #### macOS or Windows Node installers
 
-If you're using macOS or Windows, use one of the installers from the Node.js download page.
+If you're using macOS or Windows, use one of the installers from the [Node.js download page](https://nodejs.org/en/download/).
 Be sure to install the version labeled **LTS**. Other versions have not yet been tested with npm.
 
 #### Linux or other operating systems Node installers
 
 If you're using Linux or another operating system, use one of the following installers:
 
-- NodeSource installer (recommended)
-- One of the installers on the Node.js download page
+- [NodeSource installer](https://github.com/nodesource/distributions) (recommended)
+- One of the installers on the [Node.js download page](https://nodejs.org/en/download/)
 
-Or see this page to install npm for Linux in the way many Linux developers prefer.
+Or see [this page](https://nodejs.org/en/download/package-manager/) to install npm for Linux in the way many Linux developers prefer.

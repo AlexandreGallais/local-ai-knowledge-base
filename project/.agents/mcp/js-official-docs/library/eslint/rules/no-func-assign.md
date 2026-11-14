@@ -1,13 +1,10 @@
 ---
-title: "no-func-assign"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-func-assign.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-func-assign
+rule_type: problem
+handled_by_typescript: true
 ---
 
-# no-func-assign
+
 
 JavaScript functions can be written as a FunctionDeclaration `function foo() { ... }` or as a FunctionExpression `const foo = function() { ... };`. While a JavaScript interpreter might tolerate it, overwriting/reassigning a function written as a FunctionDeclaration is often indicative of a mistake or issue.
 
@@ -22,7 +19,7 @@ This rule disallows reassigning `function` declarations.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-func-assign: "error"*/
@@ -39,9 +36,11 @@ let a = function hello() {
 };
 ```
 
+:::
+
 Examples of **incorrect** code for this rule, unlike the corresponding rule in JSHint:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-func-assign: "error"*/
@@ -50,9 +49,11 @@ foo = bar;
 function foo() {}
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-func-assign: "error"*/
@@ -68,6 +69,8 @@ function qux() {
     const qux = bar;  // `qux` is shadowed.
 }
 ```
+
+:::
 
 ## Options
 

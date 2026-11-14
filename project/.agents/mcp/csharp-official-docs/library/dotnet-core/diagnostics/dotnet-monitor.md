@@ -1,12 +1,9 @@
 ---
-title: "dotnet-monitor diagnostic tool - .NET"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/dotnet-monitor.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet-monitor diagnostic tool - .NET
+description: Learn how to install and use the dotnet-monitor tool to collect dumps, traces, logs, and metrics from applications in production environments.
+ms.date: 03/04/2025
+ms.topic: reference
 ---
-
 # Diagnostic monitoring and collection utility (dotnet-monitor)
 
 **This article applies to:** ✔️ `dotnet-monitor` version 6.0.0 and later versions
@@ -17,7 +14,7 @@ There are two ways to download `dotnet-monitor`:
 
 - **dotnet global tool:**
 
-  To install the latest release version of the `dotnet-monitor` NuGet package, use the dotnet tool install command:
+  To install the latest release version of the `dotnet-monitor` [NuGet package](https://www.nuget.org/packages/dotnet-monitor), use the [dotnet tool install](../tools/dotnet-tool-install.md) command:
 
   ```dotnetcli
   dotnet tool install --global dotnet-monitor
@@ -55,9 +52,9 @@ The `dotnet-monitor` global tool is a way to monitor .NET applications in produc
 
 | Command                                                   |
 | --------------------------------------------------------- |
-| dotnet monitor collect         |
-| dotnet monitor config show |
-| dotnet monitor generatekey |
+| [dotnet monitor collect](#dotnet-monitor-collect)         |
+| [dotnet monitor config show](#dotnet-monitor-config-show) |
+| [dotnet monitor generatekey](#dotnet-monitor-generatekey) |
 
 ## dotnet-monitor collect
 
@@ -87,11 +84,11 @@ dotnet-monitor collect [-h|--help] [-u|--urls] [-m|--metrics] [--metricUrls] [--
 
   Bindings for the metrics HTTP api. Default is `http://localhost:52325`.
 
-- **`--diagnostic-port `**
+- **`--diagnostic-port <path>`**
 
   The fully qualified path and filename of the diagnostic port to which runtime instances can connect. Specifying this option places `dotnet-monitor` into
   'listen' mode. When not specified, `dotnet-monitor` is in 'connect' mode.
-
+  
   On Windows, this must be a valid named pipe name.
   On Linux and macOS, this must be a valid Unix Domain Socket path.
 
@@ -100,7 +97,7 @@ dotnet-monitor collect [-h|--help] [-u|--urls] [-m|--metrics] [--metricUrls] [--
   Disables API key authentication. Default is `false`.
 
   It is strongly recommended that this option is not used in production environments.
-
+  
 - **`--temp-apikey`**
 
   Generates a temporary API key for the `dotnet-monitor` instance.
@@ -143,11 +140,11 @@ dotnet-monitor config show [-h|--help] [-u|--urls] [-m|--metrics] [--metricUrls]
 
   This value is mapped into configuration as the `Metrics:Endpoints` key.
 
-- **`--diagnostic-port `**
+- **`--diagnostic-port <path>`**
 
   The fully qualified path and filename of the diagnostic port to which runtime instances can connect. Specifying this option places `dotnet-monitor` into
   'listen' mode. When not specified, `dotnet-monitor` is in 'connect' mode.
-
+  
   On Windows, this must be a valid named pipe name.
   On Linux and macOS, this must be a valid Unix Domain Socket path.
 
@@ -160,7 +157,7 @@ dotnet-monitor config show [-h|--help] [-u|--urls] [-m|--metrics] [--metricUrls]
   It is strongly recommended that this option is not used in production environments.
 
   This value is not mapped into configuration.
-
+  
 - **`--temp-apikey`**
 
   Generates a temporary API key for the `dotnet-monitor` instance.
@@ -202,7 +199,7 @@ dotnet-monitor generatekey [-h|--help] [-o|--output] [-e|--expiration]
 
 - **`-o|--output <Cmd|Json|MachineJson|PowerShell|Shell|Text>`**
 
-  The output format in which the API key <example-value> is written to standard output.
+  The output format in which the API key information is written to standard output.
 
   The allowable values are:
   - `Cmd` - Outputs in a format usable in Windows Command Prompt or batch files.
@@ -214,8 +211,8 @@ dotnet-monitor generatekey [-h|--help] [-o|--output] [-e|--expiration]
 
 - **`-e|--expiration <expiration>`**
 
-  The expiration time after which the generated API key will no longer be accepted. The value must be in `System.TimeSpan` format (for example, "7.00:00:00" for 7 days). Default: "7.00:00:00" (7 days).
+  The expiration time after which the generated API key will no longer be accepted. The value must be in <xref:System.TimeSpan> format (for example, "7.00:00:00" for 7 days). Default: "7.00:00:00" (7 days).
 
 ## See also
 
-- dotnet/dotnet-monitor
+- [dotnet/dotnet-monitor](https://github.com/dotnet/dotnet-monitor/tree/main/documentation)

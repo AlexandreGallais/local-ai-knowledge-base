@@ -1,15 +1,20 @@
 ---
 title: "Asynchronous wrappers for synchronous methods"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/asynchronous-programming-patterns/async-wrappers-for-synchronous-methods.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn why you should avoid exposing asynchronous wrappers for synchronous methods in .NET libraries, and when consumers should use Task.Run instead.
+ms.date: 04/06/2026
+ai-usage: ai-assisted
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "async over sync"
+  - "Task.Run wrapper"
+  - "asynchronous programming, wrappers"
+  - "TAP, async wrappers"
 ---
-
 # Asynchronous wrappers for synchronous methods
 
-When you have a synchronous method in a library, you might be tempted to expose an asynchronous counterpart that wraps it in `System.Threading.Tasks.Task.Run*`:
+When you have a synchronous method in a library, you might be tempted to expose an asynchronous counterpart that wraps it in <xref:System.Threading.Tasks.Task.Run*?displayProperty=nameWithType>:
 
 ```csharp
 public T Foo() { /* synchronous work */ }
@@ -36,96 +41,23 @@ These benefits require different approaches. The critical distinction: **wrappin
 
 A truly asynchronous implementation reduces the number of threads consumed during a long-running operation. A `Task.Run` wrapper still blocks a thread — it just moves the blocking from one thread to another:
 
-```csharp
-public static class TimerExampleWrong
-{
-    public static Task SleepAsync(int millisecondsTimeout)
-    {
-        return Task.Run(() => Thread.Sleep(millisecondsTimeout));
-    }
-}
-```
-```vb
-Public Module TimerExampleWrong
-    Public Function SleepAsync(millisecondsTimeout As Integer) As Task
-        Return Task.Run(Sub() Thread.Sleep(millisecondsTimeout))
-    End Function
-End Module
-```
+:::code language="csharp" source="./snippets/async-wrappers-for-synchronous-methods/csharp/Program.cs" id="ScalabilityWrong":::
+:::code language="vb" source="./snippets/async-wrappers-for-synchronous-methods/vb/Program.vb" id="ScalabilityWrong":::
+
 Compare that approach with a truly asynchronous implementation that consumes no threads while waiting:
 
-```csharp
-public static class TimerExampleRight
-{
-    public static Task SleepAsync(int millisecondsTimeout)
-    {
-        var tcs = new TaskCompletionSource<bool>();
-        var timer = new Timer(
-            _ => tcs.TrySetResult(true), null, millisecondsTimeout, Timeout.Infinite);
+:::code language="csharp" source="./snippets/async-wrappers-for-synchronous-methods/csharp/Program.cs" id="ScalabilityRight":::
+:::code language="vb" source="./snippets/async-wrappers-for-synchronous-methods/vb/Program.vb" id="ScalabilityRight":::
 
-        tcs.Task.ContinueWith(
-            _ => timer.Dispose(), TaskScheduler.Default);
-
-        return tcs.Task;
-    }
-}
-```
-```vb
-Public Module TimerExampleRight
-    Public Function SleepAsync(millisecondsTimeout As Integer) As Task
-        Dim tcs As New TaskCompletionSource(Of Boolean)()
-        Dim tmr As New Timer(
-            Sub(state) tcs.TrySetResult(True), Nothing, millisecondsTimeout, Timeout.Infinite)
-
-        tcs.Task.ContinueWith(
-            Sub(t) tmr.Dispose(), TaskScheduler.Default)
-
-        Return tcs.Task
-    End Function
-End Module
-```
 Both implementations complete after the specified delay, but the second implementation doesn't block any thread while waiting. For server applications handling many concurrent requests, that difference directly affects how many requests a server can process simultaneously.
 
 ### Offloading is the consumer's responsibility
 
 Wrapping synchronous calls in `Task.Run` is useful for offloading work from a UI thread. However, the consumer, not the library, should handle this wrapping:
 
-```csharp
-public static class UIOffloadExample
-{
-    public static int ComputeIntensive(int input)
-    {
-        int result = 0;
-        for (int i = 0; i < input; i++)
-        {
-            result += i;
-        }
-        return result;
-    }
+:::code language="csharp" source="./snippets/async-wrappers-for-synchronous-methods/csharp/Program.cs" id="OffloadFromUI":::
+:::code language="vb" source="./snippets/async-wrappers-for-synchronous-methods/vb/Program.vb" id="OffloadFromUI":::
 
-    public static async Task ConsumeFromUIThreadAsync()
-    {
-        int result = await Task.Run(() => ComputeIntensive(10_000));
-        Console.WriteLine($"Result: {result}");
-    }
-}
-```
-```vb
-Public Module UIOffloadExample
-    Public Function ComputeIntensive(input As Integer) As Integer
-        Dim result As Integer = 0
-        For i As Integer = 0 To input - 1
-            result += i
-        Next
-        Return result
-    End Function
-
-    Public Async Function ConsumeFromUIThreadAsync() As Task
-        Dim result As Integer = Await Task.Run(Function() ComputeIntensive(10_000))
-        Console.WriteLine($"Result: {result}")
-    End Function
-End Module
-```
 The consumer knows their context: whether they're on a UI thread, how much granularity they need, and whether offloading adds value. The library doesn't.
 
 ## Why libraries shouldn't expose async-over-sync wrappers
@@ -141,9 +73,9 @@ When a library exposes only the synchronous method (and not an async wrapper), c
 
 Some base classes expose asynchronous methods so that derived classes can override them with truly asynchronous implementations. The base class provides an async-over-sync default.
 
-For example, `System.IO.Stream` exposes `System.IO.Stream.ReadAsync*` and `System.IO.Stream.WriteAsync*`. The base implementations wrap the synchronous `System.IO.Stream.Read*` and `System.IO.Stream.Write*` methods. Derived classes like `System.IO.FileStream` and `System.Net.Sockets.NetworkStream` override these methods with asynchronous I/O implementations that provide real scalability benefits.
+For example, <xref:System.IO.Stream> exposes <xref:System.IO.Stream.ReadAsync*> and <xref:System.IO.Stream.WriteAsync*>. The base implementations wrap the synchronous <xref:System.IO.Stream.Read*> and <xref:System.IO.Stream.Write*> methods. Derived classes like <xref:System.IO.FileStream> and <xref:System.Net.Sockets.NetworkStream> override these methods with asynchronous I/O implementations that provide real scalability benefits.
 
-Similarly, `System.IO.TextReader` provides `System.IO.TextReader.ReadToEndAsync*` on the base class as a wrapper, and `System.IO.StreamReader` overrides it with a truly asynchronous implementation that calls `System.IO.Stream.ReadAsync*` internally.
+Similarly, <xref:System.IO.TextReader> provides <xref:System.IO.TextReader.ReadToEndAsync*> on the base class as a wrapper, and <xref:System.IO.StreamReader> overrides it with a truly asynchronous implementation that calls <xref:System.IO.Stream.ReadAsync*> internally.
 
 These exceptions are valid because:
 
@@ -156,6 +88,6 @@ Expose asynchronous methods from a library only when the implementation provides
 
 ## See also
 
-- Task-based asynchronous pattern (TAP)
-- Implement the task-based asynchronous pattern
-- Synchronous wrappers for asynchronous methods
+- [Task-based asynchronous pattern (TAP)](task-based-asynchronous-pattern-tap.md)
+- [Implement the task-based asynchronous pattern](implementing-the-task-based-asynchronous-pattern.md)
+- [Synchronous wrappers for asynchronous methods](synchronous-wrappers-for-asynchronous-methods.md)

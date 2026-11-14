@@ -1,19 +1,17 @@
 ---
-title: "SQLite Database Provider - Spatial Data - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/providers/sqlite/spatial.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: SQLite Database Provider - Spatial Data - EF Core
+description: Using spatial data with the Entity Framework Core SQLite database provider
+author: SamMonoRT
+ms.date: 03/27/2026
+uid: core/providers/sqlite/spatial
 ---
-
 # Spatial Data in the SQLite EF Core Provider
 
-This page includes additional information about using spatial data with the SQLite database provider. For general information about using spatial data in EF Core, see the main Spatial Data documentation.
+This page includes additional information about using spatial data with the SQLite database provider. For general information about using spatial data in EF Core, see the main [Spatial Data](xref:core/modeling/spatial) documentation.
 
 ## Installing SpatiaLite
 
-On Windows, the native `mod_spatialite` library is distributed as a NuGet package dependency. Other platforms need to install it separately. This is typically done using a software package manager. For example, you can use APT on Debian and Ubuntu; and Homebrew on MacOS.
+On Windows, the native `mod_spatialite` library is distributed as a [NuGet package](https://www.nuget.org/packages/mod_spatialite) dependency. Other platforms need to install it separately. This is typically done using a software package manager. For example, you can use APT on Debian and Ubuntu; and Homebrew on MacOS.
 
 ```bash
 # Debian/Ubuntu
@@ -23,12 +21,12 @@ apt-get install libsqlite3-mod-spatialite
 brew install libspatialite
 ```
 
-Unfortunately, newer versions of PROJ (a dependency of SpatiaLite) are incompatible with EF's default SQLitePCLRaw bundle. You can work around this by using the system SQLite library instead.
+Unfortunately, newer versions of PROJ (a dependency of SpatiaLite) are incompatible with EF's default [SQLitePCLRaw bundle](/dotnet/standard/data/sqlite/custom-versions#bundles). You can work around this by using the system SQLite library instead.
 
-> **Important:**
+> [!IMPORTANT]
 > Don't use `Microsoft.EntityFrameworkCore.Sqlite` or `Microsoft.Data.Sqlite` with SpatiaLite on macOS and Linux. Both packages pull in `SQLitePCLRaw.bundle_e_sqlite3` by default—a bundled version of SQLite that is incompatible with system-installed SQLite. Using it may result in a silent crash at run time. Use `Microsoft.EntityFrameworkCore.Sqlite.Core` or `Microsoft.Data.Sqlite.Core` instead, together with the system SQLite provider as shown below.
 >
-> Also note that the system-installed SQLite library may have different compile-time options than the bundled version. This can affect the availability of features such as math functions and full-text search. To quickly inspect the options in your SQLite build, run `PRAGMA compile_options;` and check for the features your application relies on.
+> Also note that the system-installed SQLite library may have different [compile-time options](https://sqlite.org/compile.html) than the bundled version. This can affect the availability of features such as math functions and full-text search. To quickly inspect the options in your SQLite build, run `PRAGMA compile_options;` and check for the features your application relies on.
 
 Replace `Microsoft.EntityFrameworkCore.Sqlite` with `Microsoft.EntityFrameworkCore.Sqlite.Core` and reference the `SQLitePCLRaw.provider.sqlite3` package to use the system SQLite library:
 
@@ -42,8 +40,8 @@ Replace `Microsoft.EntityFrameworkCore.Sqlite` with `Microsoft.EntityFrameworkCo
 </ItemGroup>
 ```
 
-> **Note:**
-> Starting with EF Core 11 (SQLitePCLRaw 3.0), replace the `SQLitePCLRaw.provider.sqlite3` version with `3.x.x`. See the breaking changes for details.
+> [!NOTE]
+> Starting with EF Core 11 (SQLitePCLRaw 3.0), replace the `SQLitePCLRaw.provider.sqlite3` version with `3.x.x`. See the [breaking changes](xref:core/what-is-new/ef-core-11.0/breaking-changes#sqlite-bundles-removed) for details.
 
 Then add explicit initialization before using SQLite:
 
@@ -66,7 +64,7 @@ modelBuilder.Entity<City>().Property(c => c.Location)
     .HasSrid(4326);
 ```
 
-> **Note:**
+> [!NOTE]
 > 4326 refers to WGS 84, a standard used in GPS and other geographic systems.
 
 ## Dimension
@@ -80,7 +78,7 @@ modelBuilder.Entity<City>().Property(c => c.Location)
 
 ## Spatial function mappings
 
-This table shows which NetTopologySuite (NTS) members are translated into which SQL functions.
+This table shows which [NetTopologySuite](https://nettopologysuite.github.io/NetTopologySuite/) (NTS) members are translated into which SQL functions.
 
 .NET                                        | SQL
 ------------------------------------------- | ---
@@ -155,5 +153,5 @@ EnvelopeCombiner.CombineAsGeometry(group.Select(x => x.Property)) | Extent(Prope
 
 ## Additional resources
 
-* SpatiaLite Homepage
-* NetTopologySuite API Documentation
+* [SpatiaLite Homepage](https://www.gaia-gis.it/fossil/libspatialite)
+* [NetTopologySuite API Documentation](https://nettopologysuite.github.io/NetTopologySuite/api/NetTopologySuite.html)

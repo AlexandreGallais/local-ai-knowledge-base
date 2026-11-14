@@ -1,25 +1,19 @@
----
-title: "prefer-temporal"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-temporal.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-temporal
 
 📝 Prefer `Temporal` over `Date`.
 
 🚫 Disabled by default.
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-`Temporal` is the modern replacement for the legacy `Date`. It avoids `Date`'s long-standing footguns: zero-indexed months, mutability, the lack of a time zone or calendar, and string parsing that is implementation-defined and unreliable across platforms. `Temporal` provides purpose-built, immutable types (`Temporal.Instant`, `Temporal.PlainDate`, `Temporal.ZonedDateTime`, and more) with precise parsing and arithmetic.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+[`Temporal`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Temporal) is the modern replacement for the legacy [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date). It avoids `Date`'s long-standing footguns: zero-indexed months, mutability, the lack of a time zone or calendar, and string parsing that is [implementation-defined and unreliable across platforms](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date#date_time_string_format). `Temporal` provides purpose-built, immutable types (`Temporal.Instant`, `Temporal.PlainDate`, `Temporal.ZonedDateTime`, and more) with precise parsing and arithmetic.
 
 `Date.now()` is autofixed to `Temporal.Now.instant().epochMilliseconds`, since both return the epoch milliseconds as a number. For `new Date()` and `new Date(milliseconds)` there are a few exact `Temporal` equivalents, offered as suggestions. The remaining cases (parsing strings, calendar parts) have no single correct replacement, so they are only reported, because the right `Temporal` type depends on what you need.
 
-`Temporal` reached Stage 4. It ships unflagged in Node.js 26 and recent browsers. For older environments, use the `@js-temporal/polyfill`.
+`Temporal` reached [Stage 4](https://github.com/tc39/proposal-temporal). It ships unflagged in Node.js 26 and recent browsers. For older environments, use the [`@js-temporal/polyfill`](https://www.npmjs.com/package/@js-temporal/polyfill).
 
 ## Examples
 
@@ -113,7 +107,7 @@ Default: `false`
 
 Whether to also flag methods called on `Date` instances, such as `date.getFullYear()` or `date.toISOString()`.
 
-This requires type information, since a bare `.getFullYear()` cannot be attributed to a `Date` without knowing the receiver's type. It has no effect without type-aware linting. It is off by default because it is broader than the other checks and adds a type-checker lookup on every member access.
+This requires [type information](https://typescript-eslint.io/getting-started/typed-linting/), since a bare `.getFullYear()` cannot be attributed to a `Date` without knowing the receiver's type. It has no effect without type-aware linting. It is off by default because it is broader than the other checks and adds a type-checker lookup on every member access.
 
 Only values typed as `Date` (including unions and intersections) are detected. Subclasses of `Date` and generic type parameters constrained to `Date` are not.
 

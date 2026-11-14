@@ -1,12 +1,3 @@
----
-title: "Fundamentals of Asynchronous Programming: Async, Await, Futures, and Streams"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch17-00-async-await.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
 # Fundamentals of Asynchronous Programming: Async, Await, Futures, and Streams
 
 Many operations we ask the computer to do can take a while to finish. It would
@@ -115,13 +106,25 @@ so you can’t make progress on both tasks at the exact same time, but you can
 multitask, making progress on one at a time by switching between them (see
 Figure 17-1).
 
-Figure 17-1: A concurrent workflow, switching between Task A and Task B
+<figure>
+
+<img src="img/trpl17-01.svg" class="center" alt="A diagram with stacked boxes labeled Task A and Task B, with diamonds in them representing subtasks. Arrows point from A1 to B1, B1 to A2, A2 to B2, B2 to A3, A3 to A4, and A4 to B3. The arrows between the subtasks cross the boxes between Task A and Task B." />
+
+<figcaption>Figure 17-1: A concurrent workflow, switching between Task A and Task B</figcaption>
+
+</figure>
 
 When the team splits up a group of tasks by having each member take one task
 and work on it alone, this is _parallelism_. Each person on the team can make
 progress at the exact same time (see Figure 17-2).
 
-Figure 17-2: A parallel workflow, where work happens on Task A and Task B independently
+<figure>
+
+<img src="img/trpl17-02.svg" class="center" alt="A diagram with stacked boxes labeled Task A and Task B, with diamonds in them representing subtasks. Arrows point from A1 to A2, A2 to A3, A3 to A4, B1 to B2, and B2 to B3. No arrows cross between the boxes for Task A and Task B." />
+
+<figcaption>Figure 17-2: A parallel workflow, where work happens on Task A and Task B independently</figcaption>
+
+</figure>
 
 In both of these workflows, you might have to coordinate between different
 tasks. Maybe you thought the task assigned to one person was totally
@@ -130,7 +133,13 @@ on the team to finish their task first. Some of the work could be done in
 parallel, but some of it was actually _serial_: it could only happen in a
 series, one task after the other, as in Figure 17-3.
 
-Figure 17-3: A partially parallel workflow, where work happens on Task A and Task B independently until Task A3 is blocked on the results of Task B3.
+<figure>
+
+<img src="img/trpl17-03.svg" class="center" alt="A diagram with stacked boxes labeled Task A and Task B, with diamonds in them representing subtasks. In Task A, arrows point from A1 to A2, from A2 to a pair of thick vertical lines like a “pause” symbol, and from that symbol to A3. In task B, arrows point from B1 to B2, from B2 to B3, from B3 to A3, and from B3 to B4." />
+
+<figcaption>Figure 17-3: A partially parallel workflow, where work happens on Task A and Task B independently until Task A3 is blocked on the results of Task B3.</figcaption>
+
+</figure>
 
 Likewise, you might realize that one of your own tasks depends on another of
 your tasks. Now your concurrent work has also become serial.
@@ -141,7 +150,7 @@ focus all your efforts on that task to “unblock” your colleague. You and you
 coworker are no longer able to work in parallel, and you’re also no longer able
 to work concurrently on your own tasks.
 
-The same basic <example-value> come into play with software and hardware. On a machine
+The same basic dynamics come into play with software and hardware. On a machine
 with a single CPU core, the CPU can perform only one operation at a time, but
 it can still work concurrently. Using tools such as threads, processes, and
 async, the computer can pause one activity and switch to others before

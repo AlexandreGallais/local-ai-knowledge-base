@@ -1,12 +1,17 @@
 ---
 title: "MSTEST0047: Unused TestContext parameter suppressor."
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0047.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code suppressor MSTEST0047: Unused TestContext parameter suppressor."
+ms.date: 06/16/2026
+ai-usage: ai-assisted
+f1_keywords:
+- MSTEST0047
+- UnusedParameterSuppressor
+helpviewer_keywords:
+- UnusedParameterSuppressor
+- MSTEST0047
+author: Evangelink
+ms.author: amauryleve
 ---
-
 # MSTEST0047: Unused TestContext parameter suppressor
 
 | Property                            | Value                                                     |
@@ -18,9 +23,9 @@ license: "CC-BY-4.0"
 
 ## Suppressor description
 
-Suppress the IDE0060: Remove unused parameter diagnostic for the `Microsoft.VisualStudio.TestTools.UnitTesting.TestContext` parameter of fixture methods.
+Suppress the [IDE0060: Remove unused parameter](../../../fundamentals/code-analysis/style-rules/ide0060.md) diagnostic for the <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext> parameter of fixture methods.
 
-MSTest lets you receive the `TestContext` as a parameter of fixture methods that are marked with `Microsoft.VisualStudio.TestTools.UnitTesting.AssemblyInitializeAttribute`, `Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute`, `Microsoft.VisualStudio.TestTools.UnitTesting.GlobalTestInitializeAttribute`, or `Microsoft.VisualStudio.TestTools.UnitTesting.GlobalTestCleanupAttribute`. Because the parameter is required by MSTest even when your method body doesn't use it, IDE0060 would otherwise incorrectly flag it as unused.
+MSTest lets you receive the `TestContext` as a parameter of fixture methods that are marked with <xref:Microsoft.VisualStudio.TestTools.UnitTesting.AssemblyInitializeAttribute>, <xref:Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute>, <xref:Microsoft.VisualStudio.TestTools.UnitTesting.GlobalTestInitializeAttribute>, or <xref:Microsoft.VisualStudio.TestTools.UnitTesting.GlobalTestCleanupAttribute>. Because the parameter is required by MSTest even when your method body doesn't use it, IDE0060 would otherwise incorrectly flag it as unused.
 
 ## When to disable suppressor
 

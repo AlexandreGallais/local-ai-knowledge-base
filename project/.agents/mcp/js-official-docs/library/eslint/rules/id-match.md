@@ -1,13 +1,8 @@
 ---
-title: "id-match"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/id-match.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: id-match
+rule_type: suggestion
 ---
 
-# id-match
 
 > "There are only two hard things in Computer Science: cache invalidation and naming things." — Phil Karlton
 
@@ -32,9 +27,9 @@ For example, to enforce a camelcase naming convention:
 }
 ```
 
-Examples of **incorrect** code for this rule with the `"^[a-z]+(A-Z+)*$"` option:
+Examples of **incorrect** code for this rule with the `"^[a-z]+([A-Z][a-z]+)*$"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint id-match: ["error", "^[a-z]+([A-Z][a-z]+)*$"]*/
@@ -58,9 +53,11 @@ class anotherClass {
 }
 ```
 
-Examples of **correct** code for this rule with the `"^[a-z]+(A-Z+)*$"` option:
+:::
 
-**Correct:**
+Examples of **correct** code for this rule with the `"^[a-z]+([A-Z][a-z]+)*$"` option:
+
+::: correct
 
 ```js
 /*eslint id-match: ["error", "^[a-z]+([A-Z][a-z]+)*$"]*/
@@ -84,6 +81,8 @@ class oneMoreClass {
 }
 ```
 
+:::
+
 This rule has an object option:
 
 * `"properties": false` (default) does not check object properties
@@ -97,9 +96,9 @@ This rule has an object option:
 
 ### properties
 
-Examples of **incorrect** code for this rule with the `"^[a-z]+(A-Z+)*$", { "properties": true }` options:
+Examples of **incorrect** code for this rule with the `"^[a-z]+([A-Z][a-z]+)*$", { "properties": true }` options:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint id-match: ["error", "^[a-z]+([A-Z][a-z]+)*$", { "properties": true }]*/
@@ -113,11 +112,13 @@ obj.do_something = function() {
 };
 ```
 
+:::
+
 ### classFields
 
-Examples of **incorrect** code for this rule with the `"^[a-z]+(A-Z+)*$", { "classFields": true }` options:
+Examples of **incorrect** code for this rule with the `"^[a-z]+([A-Z][a-z]+)*$", { "classFields": true }` options:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint id-match: ["error", "^[a-z]+([A-Z][a-z]+)*$", { "classFields": true }]*/
@@ -131,11 +132,13 @@ class anotherClass {
 }
 ```
 
+:::
+
 ### onlyDeclarations
 
-Examples of **correct** code for this rule with the `"^[a-z]+(A-Z+)*$", { "onlyDeclarations": true }` options:
+Examples of **correct** code for this rule with the `"^[a-z]+([A-Z][a-z]+)*$", { "onlyDeclarations": true }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint id-match: [2, "^[a-z]+([A-Z][a-z]+)*$", { "onlyDeclarations": true }]*/
@@ -143,11 +146,13 @@ Examples of **correct** code for this rule with the `"^[a-z]+(A-Z+)*$", { "onlyD
 foo = __dirname;
 ```
 
+:::
+
 ### ignoreDestructuring: false
 
 Examples of **incorrect** code for this rule with the default `"^[^_]+$", { "ignoreDestructuring": false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint id-match: [2, "^[^_]+$", { "ignoreDestructuring": false }]*/
@@ -163,11 +168,13 @@ const { category_id: category_Alias } = query;
 const { category_id: category_IdRenamed, ...other_Props } = query;
 ```
 
+:::
+
 ### ignoreDestructuring: true
 
 Examples of **incorrect** code for this rule with the `"^[^_]+$", { "ignoreDestructuring": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint id-match: [2, "^[^_]+$", { "ignoreDestructuring": true }]*/
@@ -177,9 +184,11 @@ const { category_id: category_alias } = query;
 const { category_id: category_Id, ...other_props } = query;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"^[^_]+$", { "ignoreDestructuring": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint id-match: [2, "^[^_]+$", { "ignoreDestructuring": true }]*/
@@ -190,6 +199,8 @@ const { category_Id = 1 } = query;
 
 const { category_alias: category_alias } = query;
 ```
+
+:::
 
 ## When Not To Use It
 

@@ -1,13 +1,9 @@
 ---
-title: "no-delete-var"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-delete-var.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-delete-var
+rule_type: suggestion
 ---
 
-# no-delete-var
+
 
 The purpose of the `delete` operator is to remove a property from an object. Using the `delete` operator on a variable might lead to unexpected behavior.
 
@@ -19,7 +15,7 @@ If ESLint parses code in strict mode, the parser (instead of this rule) reports 
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint no-delete-var: "error"*/
@@ -27,6 +23,8 @@ Examples of **incorrect** code for this rule:
 let x;
 delete x;
 ```
+
+:::
 
 ## Options
 

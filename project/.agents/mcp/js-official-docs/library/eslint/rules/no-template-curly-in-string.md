@@ -1,13 +1,8 @@
 ---
-title: "no-template-curly-in-string"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-template-curly-in-string.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-template-curly-in-string
+rule_type: problem
 ---
 
-# no-template-curly-in-string
 
 ECMAScript 6 allows programmers to create strings containing variable or expressions using template literals, instead of string concatenation, by writing expressions like `${variable}` between two backtick quotes (\`). It can be easy to use the wrong quotes when wanting to use template literals, by writing `"${variable}"`, and end up with the literal value `"${variable}"` instead of a string containing the value of the injected expressions.
 
@@ -17,7 +12,7 @@ This rule aims to warn when a regular string contains what looks like a template
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-template-curly-in-string: "error"*/
@@ -26,9 +21,11 @@ Examples of **incorrect** code for this rule:
 "Time: ${12 * 60 * 60 * 1000}";
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-template-curly-in-string: "error"*/
@@ -37,6 +34,8 @@ Examples of **correct** code for this rule:
 
 templateFunction`Hello ${name}`;
 ```
+
+:::
 
 ## Options
 

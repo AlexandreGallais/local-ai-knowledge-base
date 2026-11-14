@@ -1,12 +1,3 @@
----
-title: "ToolProvider interface (java.util.spi)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/spi/ToolProvider.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ToolProvider interface (java.util.spi)
 
 ```java
@@ -16,8 +7,8 @@ public interface ToolProvider
 An interface for command-line tools to provide a way to
 be invoked without necessarily starting a new VM.
 
-Tool providers are normally located using the service-provider
-loading facility defined by `ServiceLoader`.
+<p>Tool providers are normally located using the service-provider
+loading facility defined by {@link ServiceLoader}.
 Each provider must provide a name, and a method to run
 an instance of the corresponding tool. When a tool is run,
 it will be provided with an array of string arguments, and a
@@ -28,7 +19,7 @@ each individual tool provider, but will generally correspond to the
 arguments that could be provided to the tool when invoking the tool
 from the command line.
 
-**Since:** 9
+@since 9
 
 ## ToolProvider.name()
 
@@ -38,10 +29,10 @@ String name()
 
 Returns the name of this tool provider.
 
-**API note:** It is recommended that the name be the same as would be
+@apiNote It is recommended that the name be the same as would be
 used on the command line: for example, "javac", "jar", "jlink".
 
-**Returns:** the name of this tool provider
+@return the name of this tool provider
 
 ## ToolProvider.description()
 
@@ -49,21 +40,24 @@ used on the command line: for example, "javac", "jar", "jlink".
 default Optional<String> description()
 ```
 
-**API note:** It is recommended that the description fits into a single
-line in order to allow creating concise overviews like the following:
+{@return a short description of the tool, or an empty
+{@code Optional} if no description is available}
 
-```java
+@apiNote It is recommended that the description fits into a single
+line in order to allow creating concise overviews like the following:
+<pre>{@code
 jar
   Create, manipulate, and extract an archive of classes and resources.
 javac
   Read Java declarations and compile them into class files.
 jlink
   Assemble a set of modules (...) into a custom runtime image.
-```
+}
+</pre>
 
-**Implementation requirements:** This implementation returns an empty `Optional`.
+@implSpec This implementation returns an empty {@code Optional}.
 
-**Since:** 19
+@since 19
 
 ## ToolProvider.run(PrintWriter, PrintWriter, String...)
 
@@ -79,23 +73,23 @@ Two streams should be provided, for "expected" output, and for any
 error messages. If it is not necessary to distinguish the output,
 the same stream may be used for both.
 
-Parameters:
-
-- `out`: a stream to which "expected" output should be written
-- `err`: a stream to which any error messages should be written
-- `args`: the command-line arguments for the tool
-
-**API note:** The interpretation of the arguments will be specific to
+@apiNote The interpretation of the arguments will be specific to
 each tool.
 
-**Returns:** the result of executing the tool.
+@param out a stream to which "expected" output should be written
+
+@param err a stream to which any error messages should be written
+
+@param args the command-line arguments for the tool
+
+@return the result of executing the tool.
         A return value of 0 means the tool did not encounter any errors;
         any other value indicates that at least one error occurred
         during execution.
 
-Throws:
-
-- `NullPointerException`: if any of the arguments are `null`, or if there are any `null` values in the `args` array
+@throws NullPointerException if any of the arguments are {@code null},
+        or if there are any {@code null} values in the {@code args}
+        array
 
 ## ToolProvider.run(PrintStream, PrintStream, String...)
 
@@ -111,27 +105,27 @@ Two streams should be provided, for "expected" output, and for any
 error messages. If it is not necessary to distinguish the output,
 the same stream may be used for both.
 
-Parameters:
-
-- `out`: a stream to which "expected" output should be written
-- `err`: a stream to which any error messages should be written
-- `args`: the command-line arguments for the tool
-
-**API note:** The interpretation of the arguments will be specific to
+@apiNote The interpretation of the arguments will be specific to
 each tool.
 
-**Implementation note:** This implementation wraps the `out` and `err`
-streams within `PrintWriter`s, and then calls
-PrintWriter, String[]).
+@implNote This implementation wraps the {@code out} and {@code err}
+streams within {@link PrintWriter}s, and then calls
+{@link #run(PrintWriter, PrintWriter, String[])}.
 
-**Returns:** the result of executing the tool.
+@param out a stream to which "expected" output should be written
+
+@param err a stream to which any error messages should be written
+
+@param args the command-line arguments for the tool
+
+@return the result of executing the tool.
         A return value of 0 means the tool did not encounter any errors;
         any other value indicates that at least one error occurred
         during execution.
 
-Throws:
-
-- `NullPointerException`: if any of the arguments are `null`, or if there are any `null` values in the `args` array
+@throws NullPointerException if any of the arguments are {@code null},
+        or if there are any {@code null} values in the {@code args}
+        array
 
 ## ToolProvider.findFirst(String)
 
@@ -139,15 +133,11 @@ Throws:
 static Optional<ToolProvider> findFirst(String name)
 ```
 
-Returns the first instance of a `ToolProvider` with the given name,
-as loaded by `ServiceLoader` using the system class loader.
+Returns the first instance of a {@code ToolProvider} with the given name,
+as loaded by {@link ServiceLoader} using the system class loader.
 
-Parameters:
+@param name the name of the desired tool provider
 
-- `name`: the name of the desired tool provider
+@return an {@code Optional<ToolProvider>} of the first instance found
 
-**Returns:** an `Optional<ToolProvider>` of the first instance found
-
-Throws:
-
-- `NullPointerException`: if `name` is `null`
+@throws NullPointerException if {@code name} is {@code null}

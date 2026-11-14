@@ -1,21 +1,22 @@
 ---
-title: "How to read and write an encoded document - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/read-write-encoded-document.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to read and write an encoded document - LINQ to XML
+description: Learn how to add an XDeclaration to an XML tree to create an encoded XML document.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to read and write an encoded document (LINQ to XML)
 
-To create an encoded XML document, you add an `System.Xml.Linq.XDeclaration` to the XML tree, setting the encoding to the desired code page name.
+To create an encoded XML document, you add an <xref:System.Xml.Linq.XDeclaration> to the XML tree, setting the encoding to the desired code page name.
 
-Any value returned by `System.Text.Encoding.WebName*` is a valid value.
+Any value returned by <xref:System.Text.Encoding.WebName*> is a valid value.
 
-If you read an encoded document, the `System.Xml.Linq.XDeclaration.Encoding` property will be set to the code page name.
+If you read an encoded document, the <xref:System.Xml.Linq.XDeclaration.Encoding> property will be set to the code page name.
 
-If you set `System.Xml.Linq.XDeclaration.Encoding*` to a valid code page name, LINQ to XML will serialize with the specified encoding.
+If you set <xref:System.Xml.Linq.XDeclaration.Encoding*> to a valid code page name, LINQ to XML will serialize with the specified encoding.
 
 ## Example: Create two documents that have different encoding and identify the encoding.
 
@@ -111,4 +112,4 @@ Encoding of loaded document is:utf-16
 
 ## See also
 
-- `System.Xml.Linq.XDeclaration.Encoding*`
+- <xref:System.Xml.Linq.XDeclaration.Encoding*?displayProperty=nameWithType>

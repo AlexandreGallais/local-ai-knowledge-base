@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: CorDebugChainReason Enumeration"
 title: "CorDebugChainReason Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cordebugchainreason-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "CorDebugChainReason"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "CorDebugChainReason"
+helpviewer_keywords:
+  - "CorDebugChainReason enumeration [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # CorDebugChainReason Enumeration
 
 Indicates the reason or reasons for the initiation of a call chain.
@@ -51,11 +59,11 @@ typedef enum CorDebugChainReason {
 
 ## Remarks
 
- Use the ICorDebugChain::GetReason method to ascertain the reasons for the initiation of a call chain.
+ Use the [ICorDebugChain::GetReason](icordebugchain-getreason-method.md) method to ascertain the reasons for the initiation of a call chain.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

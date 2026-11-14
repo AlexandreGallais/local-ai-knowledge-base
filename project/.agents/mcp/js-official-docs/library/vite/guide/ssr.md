@@ -1,36 +1,29 @@
----
-title: "Server-Side Rendering (SSR)"
-tool: "vite"
-version: "8.3"
-source: "https://github.com/vitejs/vite/blob/b39e6e63dcbfc3cf4be871acf3554efbd6d0e268/docs/guide/ssr.md"
-commit: "b39e6e63dcbfc3cf4be871acf3554efbd6d0e268"
-license: "MIT"
----
-
 # Server-Side Rendering (SSR)
 
-**Note**
-SSR specifically refers to front-end frameworks (for example React, Preact, Vue, and Svelte) that support running the same application in Node.js, pre-rendering it to HTML, and finally hydrating it on the client. If you are looking for integration with traditional server-side frameworks, check out the Backend Integration guide instead.
+:::tip Note
+SSR specifically refers to front-end frameworks (for example React, Preact, Vue, and Svelte) that support running the same application in Node.js, pre-rendering it to HTML, and finally hydrating it on the client. If you are looking for integration with traditional server-side frameworks, check out the [Backend Integration guide](./backend-integration) instead.
 
 The following guide also assumes prior experience working with SSR in your framework of choice, and will only focus on Vite-specific integration details.
+:::
 
-**Low-level API**
-This is a low-level API meant for library and framework authors. If your goal is to create an application, make sure to check out the higher-level SSR plugins and tools at Awesome Vite SSR section first. That said, many applications are successfully built directly on top of Vite's native low-level API.
+:::warning Low-level API
+This is a low-level API meant for library and framework authors. If your goal is to create an application, make sure to check out the higher-level SSR plugins and tools at [Awesome Vite SSR section](https://github.com/vitejs/awesome-vite#ssr) first. That said, many applications are successfully built directly on top of Vite's native low-level API.
 
-Currently, Vite is working on an improved SSR API with the Environment API. Check out the link for more details.
+Currently, Vite is working on an improved SSR API with the [Environment API](https://github.com/vitejs/vite/discussions/16358). Check out the link for more details.
+:::
 
 ## Example Projects
 
-Vite provides built-in support for server-side rendering (SSR). `create-vite-extra` contains example SSR setups you can use as references for this guide:
+Vite provides built-in support for server-side rendering (SSR). [`create-vite-extra`](https://github.com/bluwy/create-vite-extra) contains example SSR setups you can use as references for this guide:
 
-- Vanilla
-- Vue
-- React
-- Preact
-- Svelte
-- Solid
+- [Vanilla](https://github.com/bluwy/create-vite-extra/tree/master/template-ssr-vanilla)
+- [Vue](https://github.com/bluwy/create-vite-extra/tree/master/template-ssr-vue)
+- [React](https://github.com/bluwy/create-vite-extra/tree/master/template-ssr-react)
+- [Preact](https://github.com/bluwy/create-vite-extra/tree/master/template-ssr-preact)
+- [Svelte](https://github.com/bluwy/create-vite-extra/tree/master/template-ssr-svelte)
+- [Solid](https://github.com/bluwy/create-vite-extra/tree/master/template-ssr-solid)
 
-You can also scaffold these projects locally by running `create-vite` and choose `Others > create-vite-extra` under the framework option.
+You can also scaffold these projects locally by [running `create-vite`](./index.md#scaffolding-your-first-vite-project) and choose `Others > create-vite-extra` under the framework option.
 
 ## Source Structure
 
@@ -47,18 +40,18 @@ A typical SSR application will have the following source file structure:
 
 The `index.html` will need to reference `entry-client.js` and include a placeholder where the server-rendered markup should be injected:
 
-```html
+```html [index.html]
 <div id="app"><!--ssr-outlet--></div>
 <script type="module" src="/src/entry-client.js"></script>
 ```
 
-You can use any placeholder you prefer instead of ``, as long as it can be precisely replaced.
+You can use any placeholder you prefer instead of `<!--ssr-outlet-->`, as long as it can be precisely replaced.
 
 ## Conditional Logic
 
 If you need to perform conditional logic based on SSR vs. client, you can use
 
-```js
+```js twoslash
 import 'vite/client'
 // ---cut---
 if (import.meta.env.SSR) {
@@ -70,9 +63,9 @@ This is statically replaced during build so it will allow tree-shaking of unused
 
 ## Setting Up the Dev Server
 
-When building an SSR app, you likely want to have full control over your main server and decouple Vite from the production environment. It is therefore recommended to use Vite in middleware mode. Here is an example with express:
+When building an SSR app, you likely want to have full control over your main server and decouple Vite from the production environment. It is therefore recommended to use Vite in middleware mode. Here is an example with [express](https://expressjs.com/):
 
-```js
+```js{12-15} twoslash [server.js]
 import fs from 'node:fs'
 import path from 'node:path'
 import express from 'express'
@@ -107,12 +100,12 @@ async function createServer() {
 createServer()
 ```
 
-Here `vite` is an instance of ViteDevServer. `vite.middlewares` is a Connect instance which can be used as a middleware in any connect-compatible Node.js framework.
+Here `vite` is an instance of [ViteDevServer](./api-javascript#vitedevserver). `vite.middlewares` is a [Connect](https://github.com/senchalabs/connect) instance which can be used as a middleware in any connect-compatible Node.js framework.
 
-**SSR-only module updates**
+::: tip SSR-only module updates
 By default, updating a module that is only imported by the SSR environment does not reload the page in the browser. Framework integrations usually handle this for you. For a low-level custom SSR setup, you can add a plugin that reloads the browser when an SSR-only module changes:
 
-```ts
+```ts twoslash
 import type { EnvironmentModuleNode, Plugin } from 'vite'
 
 export function ssrReload(): Plugin {
@@ -152,11 +145,12 @@ export function ssrReload(): Plugin {
 }
 ```
 
-Add `ssrReload()` to the `plugins` array passed to `createViteServer` in the example above. See the `hotUpdate` hook for details.
+Add `ssrReload()` to the `plugins` array passed to `createViteServer` in the example above. See the [`hotUpdate` hook](./api-environment-plugins#the-hotupdate-hook) for details.
+:::
 
 The next step is implementing the `*` handler to serve server-rendered HTML:
 
-```js
+```js twoslash [server.js]
 // @noErrors
 import fs from 'node:fs'
 import path from 'node:path'
@@ -208,7 +202,7 @@ app.use('*all', async (req, res, next) => {
 
 The `dev` script in `package.json` should also be changed to use the server script instead:
 
-```diff
+```diff [package.json]
   "scripts": {
 -   "dev": "vite"
 +   "dev": "node server"
@@ -224,7 +218,7 @@ To ship an SSR project for production, we need to:
 
 Our scripts in `package.json` will look like this:
 
-```json
+```json [package.json]
 {
   "scripts": {
     "dev": "node server",
@@ -244,7 +238,7 @@ Then, in `server.js` we need to add some production specific logic by checking `
 
 - Move the creation and all usage of the `vite` dev server behind dev-only conditional branches, then add static file serving middlewares to serve files from `dist/client`.
 
-Refer to the example projects for a working setup.
+Refer to the [example projects](#example-projects) for a working setup.
 
 ## Generating Preload Directives
 
@@ -261,28 +255,29 @@ To leverage the manifest, frameworks need to provide a way to collect the module
 
 `@vitejs/plugin-vue` supports this out of the box and automatically registers used component module IDs on to the associated Vue SSR context:
 
-```js
+```js [src/entry-server.js]
 const ctx = {}
 const html = await vueServerRenderer.renderToString(app, ctx)
 // ctx.modules is now a Set of module IDs that were used during the render
 ```
 
-In the production branch of `server.js` we need to read and pass the manifest to the `render` function exported by `src/entry-server.js`. This would provide us with enough information to render preload directives for files used by async routes! See demo source for a full example. You can also use this information for 103 Early Hints.
+In the production branch of `server.js` we need to read and pass the manifest to the `render` function exported by `src/entry-server.js`. This would provide us with enough information to render preload directives for files used by async routes! See [demo source](https://github.com/vitejs/vite-plugin-vue/blob/main/playground/ssr-vue/src/entry-server.js) for a full example. You can also use this information for [103 Early Hints](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/103).
 
 ## Pre-Rendering / SSG
 
-If the routes and the data needed for certain routes are known ahead of time, we can pre-render these routes into static HTML using the same logic as production SSR. This can also be considered a form of Static-Site Generation (SSG). See demo pre-render script for working example.
+If the routes and the data needed for certain routes are known ahead of time, we can pre-render these routes into static HTML using the same logic as production SSR. This can also be considered a form of Static-Site Generation (SSG). See [demo pre-render script](https://github.com/vitejs/vite-plugin-vue/blob/main/playground/ssr-vue/prerender.js) for working example.
 
 ## SSR Externals
 
 Dependencies are "externalized" from Vite's SSR transform module system by default when running SSR. This speeds up both dev and build.
 
-If a dependency needs to be transformed by Vite's pipeline, for example, because Vite features are used untranspiled in them, they can be added to `ssr.noExternal`.
+If a dependency needs to be transformed by Vite's pipeline, for example, because Vite features are used untranspiled in them, they can be added to [`ssr.noExternal`](../config/ssr-options.md#ssr-noexternal).
 
-For linked dependencies, they are not externalized by default to take advantage of Vite's HMR. If this isn't desired, for example, to test dependencies as if they aren't linked, you can add it to `ssr.external`.
+For linked dependencies, they are not externalized by default to take advantage of Vite's HMR. If this isn't desired, for example, to test dependencies as if they aren't linked, you can add it to [`ssr.external`](../config/ssr-options.md#ssr-external).
 
-**Working with Aliases**
-If you have configured aliases that redirect one package to another, you may want to alias the actual `node_modules` packages instead to make it work for SSR externalized dependencies. Both Yarn and pnpm support aliasing via the `npm:` prefix.
+:::warning Working with Aliases
+If you have configured aliases that redirect one package to another, you may want to alias the actual `node_modules` packages instead to make it work for SSR externalized dependencies. Both [Yarn](https://classic.yarnpkg.com/en/docs/cli/add/#toc-yarn-add-alias) and [pnpm](https://pnpm.io/aliases/) support aliasing via the `npm:` prefix.
+:::
 
 ## SSR-specific Plugin Logic
 
@@ -294,7 +289,7 @@ Some frameworks such as Vue or Svelte compile components into different formats 
 
 **Example:**
 
-```js
+```js twoslash
 /** @type {() => import('vite').Plugin} */
 // ---cut---
 export function mySSRPlugin() {
@@ -311,8 +306,9 @@ export function mySSRPlugin() {
 
 The options object in `load` and `transform` is optional, Rollup is not currently using this object but may extend these hooks with additional metadata in the future.
 
-**Note**
+:::tip Note
 Before Vite 2.7, this was informed to plugin hooks with a positional `ssr` param instead of using the `options` object. All major frameworks and plugins are updated but you may find outdated posts using the previous API.
+:::
 
 ## SSR Target
 
@@ -327,11 +323,12 @@ In some cases like `webworker` runtimes, you might want to bundle your SSR build
 
 ## SSR Resolve Conditions
 
-By default package entry resolution will use the conditions set in `resolve.conditions` for the SSR build. You can use `ssr.resolve.conditions` and `ssr.resolve.externalConditions` to customize this behavior.
+By default package entry resolution will use the conditions set in [`resolve.conditions`](../config/shared-options.md#resolve-conditions) for the SSR build. You can use [`ssr.resolve.conditions`](../config/ssr-options.md#ssr-resolve-conditions) and [`ssr.resolve.externalConditions`](../config/ssr-options.md#ssr-resolve-externalconditions) to customize this behavior.
 
 ## Vite CLI
 
-The CLI commands `$ vite dev` and `$ vite preview` can also be used for SSR apps. You can add your SSR middlewares to the development server with `configureServer` and to the preview server with `configurePreviewServer`.
+The CLI commands `$ vite dev` and `$ vite preview` can also be used for SSR apps. You can add your SSR middlewares to the development server with [`configureServer`](/guide/api-plugin#configureserver) and to the preview server with [`configurePreviewServer`](/guide/api-plugin#configurepreviewserver).
 
-**Note**
+:::tip Note
 Use a post hook so that your SSR middleware runs _after_ Vite's middlewares.
+:::

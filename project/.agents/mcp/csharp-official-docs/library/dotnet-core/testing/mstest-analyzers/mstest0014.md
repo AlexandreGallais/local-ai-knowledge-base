@@ -1,12 +1,17 @@
 ---
 title: "MSTEST0014: DataRow should be valid"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0014.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0014: DataRow should be valid"
+ms.date: 11/05/2026
+ai-usage: ai-assisted
+f1_keywords:
+- MSTEST0014
+- DataRowShouldBeValidAnalyzer
+helpviewer_keywords:
+- DataRowShouldBeValidAnalyzer
+- MSTEST0014
+author: evangelink
+ms.author: amauryleve
 ---
-
 # MSTEST0014: DataRow should be valid
 
 | Property                            | Value                                           |
@@ -34,7 +39,7 @@ MSTest turns each `[DataRow]` into arguments for a test-method invocation. The a
 | Supply an argument count that matches the method's parameters, including any supported `params` handling. | MSTest binds the row's values to the parameter list. Missing or extra arguments can prevent the test method from being invoked. |
 | Supply values compatible with the parameter types. | The runner must pass each value to its corresponding parameter. An incompatible value causes an argument-binding failure instead of exercising the behavior the test intends to check. |
 
-For supported argument shapes and examples, see Data-driven testing.
+For supported argument shapes and examples, see [Data-driven testing](../unit-testing-mstest-writing-tests-data-driven.md#datarowattribute).
 
 ## How to fix violations
 
@@ -54,11 +59,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0014
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0014.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

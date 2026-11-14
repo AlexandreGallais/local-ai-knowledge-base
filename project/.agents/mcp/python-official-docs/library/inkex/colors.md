@@ -1,12 +1,3 @@
----
-title: "inkex.colors"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/colors.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.colors
 
 Basic color controls
@@ -54,9 +45,9 @@ An RGB array for the color
 Can be constructed from valid CSS color attributes, as well as
 tuple/list + color space. Percentage values are supported.
 
-> *Changed in version 1.2.*
-> Clarification with respect to values denoting unity: For RGB color channels,
-> "1.0", 1.0 and "100%" are treated as 255, while "1" and 1 are treated as 1.
+.. versionchanged:: 1.2
+    Clarification with respect to values denoting unity: For RGB color channels,
+    "1.0", 1.0 and "100%" are treated as 255, while "1" and 1 are treated as 1.
 
 ## Color.append
 
@@ -138,7 +129,7 @@ def interpolate(self, other, fraction)
 
 Interpolate two colours by the given fraction
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## Color.isnone
 
@@ -148,7 +139,7 @@ def isnone(x)
 
 Checks if a given color is none
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## Color.iscolor
 
@@ -158,7 +149,7 @@ def iscolor(x, accept_none=False)
 
 Checks if a given value can be parsed as a color
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## rgb_to_hsl
 
@@ -185,4 +176,4 @@ def hsv_to_hsl(hue, saturation, value)
 Conversion according to
 https://en.wikipedia.org/wiki/HSL_and_HSV#HSV_to_HSL
 
-> *Added in version 1.5.*
+.. versionadded:: 1.5

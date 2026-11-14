@@ -1,24 +1,22 @@
----
-title: "ts-no-unnecessary-template-expression"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/ts-no-unnecessary-template-expression.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
-
-# `ts-no-unnecessary-template-expression`
+<a name="user-content-ts-no-unnecessary-template-expression"></a>
+<a name="ts-no-unnecessary-template-expression"></a>
+# <code>ts-no-unnecessary-template-expression</code>
 
 Catches unnecessary template expressions such as string expressions within
 a template literal.
 
+<a name="user-content-ts-no-unnecessary-template-expression-options"></a>
+<a name="ts-no-unnecessary-template-expression-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `enableFixer`
+<a name="user-content-ts-no-unnecessary-template-expression-options-enablefixer"></a>
+<a name="ts-no-unnecessary-template-expression-options-enablefixer"></a>
+### <code>enableFixer</code>
 
 Whether to enable the fixer. Defaults to `true`.
+
 
 |||
 |---|---|
@@ -28,6 +26,8 @@ Whether to enable the fixer. Defaults to `true`.
 |Settings||
 |Options|`enableFixer`|
 
+<a name="user-content-ts-no-unnecessary-template-expression-failing-examples"></a>
+<a name="ts-no-unnecessary-template-expression-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -91,6 +91,10 @@ The following patterns are considered problems:
 // Message: Found a lone template expression within a template.
 ````
 
+
+
+<a name="user-content-ts-no-unnecessary-template-expression-passing-examples"></a>
+<a name="ts-no-unnecessary-template-expression-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -113,3 +117,4 @@ The following patterns are not considered problems:
  */
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
 ````
+

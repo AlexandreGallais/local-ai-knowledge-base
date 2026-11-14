@@ -1,17 +1,12 @@
 ---
-title: "Schema-Driven Assertions | Recipes"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/recipes/schema-matching.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Schema-Driven Assertions | Recipes
 ---
 
 # Schema-Driven Assertions
 
-If your project already validates data with Zod, Valibot, or ArkType, those schemas already describe what a valid value looks like. Reusing them in tests is more direct than duplicating shape checks across `toEqual` and `toMatchObject`.
+If your project already validates data with [Zod](https://zod.dev), [Valibot](https://valibot.dev), or [ArkType](https://arktype.io), those schemas already describe what a valid value looks like. Reusing them in tests is more direct than duplicating shape checks across `toEqual` and `toMatchObject`.
 
-`expect.schemaMatching` <Version>4.0.0</Version> is an asymmetric matcher that takes any Standard Schema v1 object and passes if the value conforms to it.
+[`expect.schemaMatching`](/api/expect#expect-schemamatching) <Version>4.0.0</Version> is an asymmetric matcher that takes any [Standard Schema v1](https://standardschema.dev) object and passes if the value conforms to it.
 
 ## Pattern
 
@@ -20,7 +15,7 @@ import { expect, test } from 'vitest'
 import { z } from 'zod'
 
 test('email validation', () => {
-  const user = { email: 'user@example.com' }
+  const user = { email: 'john@example.com' }
 
   expect(user).toEqual({
     email: expect.schemaMatching(z.string().email()),
@@ -46,7 +41,7 @@ import { z } from 'zod'
 import * as v from 'valibot'
 import { type } from 'arktype'
 
-const user = { email: 'user@example.com' }
+const user = { email: 'john@example.com' }
 
 // Zod
 expect(user).toEqual({
@@ -80,7 +75,7 @@ const UserSchema = z.object({
 
 test('persists a valid user', () => {
   const repo = { save: vi.fn() }
-  registerUser(repo, { email: 'user@example.com' })
+  registerUser(repo, { email: 'a@b.com' })
 
   expect(repo.save).toHaveBeenCalledWith(expect.schemaMatching(UserSchema))
 })
@@ -90,6 +85,6 @@ Reach for `schemaMatching` when you already have a schema for the value and woul
 
 ## See also
 
-- `expect.schemaMatching`
-- Standard Schema
-- Asymmetric Matchers
+- [`expect.schemaMatching`](/api/expect#expect-schemamatching)
+- [Standard Schema](https://standardschema.dev)
+- [Asymmetric Matchers](/api/expect)

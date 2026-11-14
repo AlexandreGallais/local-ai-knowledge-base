@@ -1,17 +1,18 @@
 ---
-title: "How to change the namespace for an entire XML tree - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/change-namespace-entire-xml-tree.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to change the namespace for an entire XML tree - LINQ to XML
+description: Learn how to change the namespace for an entire XML tree.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to change the namespace for an entire XML tree (LINQ to XML)
 
-You sometimes have to programmatically change the namespace for an element or an attribute. LINQ to XML makes this easy. The `System.Xml.Linq.XElement.Name` property can be set. The `System.Xml.Linq.XAttribute.Name` property can't be set, but you can easily copy the attributes into a `System.Collections.Generic.List`1`, remove the existing attributes, and then add new attributes that are in the new desired namespace.
+You sometimes have to programmatically change the namespace for an element or an attribute. LINQ to XML makes this easy. The <xref:System.Xml.Linq.XElement.Name?displayProperty=nameWithType> property can be set. The <xref:System.Xml.Linq.XAttribute.Name?displayProperty=nameWithType> property can't be set, but you can easily copy the attributes into a <xref:System.Collections.Generic.List`1?displayProperty=nameWithType>, remove the existing attributes, and then add new attributes that are in the new desired namespace.
 
-For more information, see Namespaces overview.
+For more information, see [Namespaces overview](namespaces-overview.md).
 
 ## Example: Create two XML trees, change the namespaces, and combine the trees
 

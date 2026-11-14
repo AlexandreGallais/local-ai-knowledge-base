@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: DeflateStream and GZipStream write headers and footers for empty payload"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/11/deflatestream-gzipstream-empty-payload.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where DeflateStream and GZipStream always write headers and footers to the output, even for empty payloads."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # DeflateStream and GZipStream write headers and footers for empty payload
 
-`System.IO.Compression.DeflateStream` and `System.IO.Compression.GZipStream` now always write format headers and footers to the output stream, even when no data is written. This ensures the output is a valid compressed stream according to the Deflate and GZip specifications.
+<xref:System.IO.Compression.DeflateStream> and <xref:System.IO.Compression.GZipStream> now always write format headers and footers to the output stream, even when no data is written. This ensures the output is a valid compressed stream according to the Deflate and GZip specifications.
 
 ## Version introduced
 
@@ -43,7 +41,7 @@ Console.WriteLine(output.Length); // 2 (for Deflate) or 20 (for GZip).
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -74,5 +72,5 @@ If you need to distinguish between empty and nonempty compressed streams, track 
 
 ## Affected APIs
 
-- `System.IO.Compression.DeflateStream`
-- `System.IO.Compression.GZipStream`
+- <xref:System.IO.Compression.DeflateStream?displayProperty=fullName>
+- <xref:System.IO.Compression.GZipStream?displayProperty=fullName>

@@ -1,17 +1,12 @@
 ---
-title: "Extending Matchers | Guide"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/extending-matchers.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Extending Matchers | Guide
 ---
 
 # Extending Matchers
 
-Since Vitest is compatible with both Chai and Jest, you can use either the `chai.use` API or `expect.extend`, whichever you prefer.
+Since Vitest is compatible with both Chai and Jest, you can use either the [`chai.use`](https://www.chaijs.com/guide/plugins/) API or `expect.extend`, whichever you prefer.
 
-This guide will explore extending matchers with `expect.extend`. If you are interested in Chai's API, check their guide.
+This guide will explore extending matchers with `expect.extend`. If you are interested in Chai's API, check [their guide](https://www.chaijs.com/guide/plugins/).
 
 To extend default matchers, call `expect.extend` with an object containing your matchers.
 
@@ -21,7 +16,7 @@ expect.extend({
     const { isNot } = this
     return {
       // do not alter your "pass" based on isNot. Vitest does it for you
-      pass: <example-value> === 'foo',
+      pass: received === 'foo',
       message: () => `${received} is${isNot ? ' not' : ''} foo`
     }
   }
@@ -42,7 +37,7 @@ declare module 'vitest' {
 
 `R` is the assertion return type, and `T` is the type of the received value.
 
-Return `R` from matchers that run synchronously. This makes the return type `void` for a regular assertion and `Promise<void>` when the assertion is used with `.resolves`, `.rejects`, `expect.poll`, or `expect.element`. You can use `T` when an expected argument should have the same type as the received value:
+Return `R` from matchers that run synchronously. This makes the return type `void` for a regular assertion and `Promise<void>` when the assertion is used with `.resolves`, `.rejects`, [`expect.poll`](/api/expect#poll), or [`expect.element`](/api/browser/assertions). You can use `T` when an expected argument should have the same type as the received value:
 
 ```ts
 declare module 'vitest' {
@@ -52,19 +47,21 @@ declare module 'vitest' {
 }
 ```
 
-**Tip:**
+::: tip
 Importing `vitest` makes TypeScript think this is an ES module file, type declaration won't work without it.
+:::
 
 Extending the `Matchers` interface will add a type to `expect.extend`, `expect().*`, and `expect.*` methods at the same time.
 
-**Warning:**
+::: warning
 Don't forget to include the ambient declaration file in your `tsconfig.json`.
+:::
 
 The return value of a matcher should be compatible with the following types:
 
 ```ts
 interface SyncMatcherResult {
-  pass: <example-value>
+  pass: boolean
   message: () => string
   // If you pass these, they will automatically appear inside a diff when
   // the matcher does not pass, so you don't need to print the diff yourself
@@ -76,14 +73,14 @@ interface SyncMatcherResult {
 type MatcherResult = SyncMatcherResult | Promise<SyncMatcherResult>
 ```
 
-**Warning:**
+::: warning
 If a matcher implementation is asynchronous, declare its return type as `Promise<void>` instead of `R` and don't forget to `await` it in the test:
 
 ```ts
 expect.extend({
   async toBeAsyncAssertion(received) {
     return {
-      pass: <example-value> === 'foo',
+      pass: received === 'foo',
       message: () => `expected ${received} to be foo`,
     }
   }
@@ -97,6 +94,8 @@ declare module 'vitest' {
 
 await expect('foo').toBeAsyncAssertion()
 ```
+
+:::
 
 The first argument inside a matcher's function is the received value (the one inside `expect(received)`). The rest are arguments passed directly to the matcher. Since version 4.1, Vitest exposes several types that can be used by your custom matcher:
 
@@ -133,8 +132,9 @@ function customMatcher(this: MatcherState, received: unknown, arg1: unknown, arg
 expect.extend({ customMatcher })
 ```
 
-**Tip:**
-To build custom **snapshot matchers** (wrappers around `toMatchSnapshot()` / `toMatchInlineSnapshot()` / `toMatchFileSnapshot()`), use `Snapshots` exported from `vitest`. See Custom Snapshot Matchers.
+::: tip
+To build custom **snapshot matchers** (wrappers around `toMatchSnapshot()` / `toMatchInlineSnapshot()` / `toMatchFileSnapshot()`), use `Snapshots` exported from `vitest`. See [Custom Snapshot Matchers](/guide/snapshot#custom-snapshot-matchers).
+:::
 
 Matcher function has access to `this` context with the following properties:
 
@@ -152,7 +152,7 @@ This is a utility function that allows you to compare two values. It will return
 
 ## `customTesters`
 
-Equality testers to pass to `equals`, including ones registered with `expect.addEqualityTesters`.
+Equality testers to pass to `equals`, including ones registered with [`expect.addEqualityTesters`](/api/expect#expect-addequalitytesters).
 
 `equals` alone does not compare the contents of `Map` and `Set`. To get the same equality as `toEqual`, add `this.utils.iterableEquality`:
 
@@ -180,10 +180,11 @@ Full name of the current test (including describe block).
 
 ## `task` <Advanced /> <Version>4.1.0</Version> {#task}
 
-Contains a reference to the `Test` runner task when available.
+Contains a reference to [the `Test` runner task](/api/advanced/runner#tasks) when available.
 
-**Warning:**
+::: warning
 When using the global `expect` with concurrent tests, `this.task` is `undefined`. Use `context.expect` instead to ensure `task` is available in custom matchers.
+:::
 
 ## `testPath`
 
@@ -191,15 +192,16 @@ File path to the current test.
 
 ## `environment`
 
-The name of the current `environment` (for example, `jsdom`).
+The name of the current [`environment`](/config/environment) (for example, `jsdom`).
 
 ## `soft`
 
-Was assertion called as a `soft` one. You don't need to respect it, Vitest will always catch the error.
+Was assertion called as a [`soft`](/api/expect#soft) one. You don't need to respect it, Vitest will always catch the error.
 
 ## `assertion` <Advanced /> <Version>5.0.0</Version> {#assertion}
 
-The underlying Chai assertion object. This is the same instance that Chai plugins receive, giving you access to Chai's flag system and chainable methods. This can be useful for building custom matchers that need to interact with Chai's internals.
+The underlying [Chai assertion](https://www.chaijs.com/guide/plugins/) object. This is the same instance that Chai plugins receive, giving you access to Chai's flag system and chainable methods. This can be useful for building custom matchers that need to interact with Chai's internals.
 
-**Tip:**
+::: tip
 These are not all of the available properties, only the most useful ones. The other state values are used by Vitest internally.
+:::

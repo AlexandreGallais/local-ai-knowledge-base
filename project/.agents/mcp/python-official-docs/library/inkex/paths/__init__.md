@@ -1,12 +1,3 @@
----
-title: "inkex.paths"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/paths/__init__.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.paths
 
 Paths module.
@@ -21,7 +12,7 @@ https://github.com/mathandy/svgpathtools/ (MIT licensed)
 def to_curve(self, prev: ComplexLike, prev_prev: ComplexLike = 0) -> Curve
 ```
 
-Convert command to `Curve`
+Convert command to :py:class:`Curve`
 
 Curve().to_curve() returns a copy
 

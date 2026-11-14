@@ -1,12 +1,19 @@
 ---
 title: "MSTEST0083: Use '[ExecutableCondition]' instead of 'File.Exists' checks before 'Process.Start'"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0083.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0083: Use '[ExecutableCondition]' instead of 'File.Exists' checks before 'Process.Start'"
+ms.date: 10/01/2026
+f1_keywords:
+- MSTEST0083
+- UseExecutableConditionAttributeInsteadOfProcessCheckAnalyzer
+helpviewer_keywords:
+- UseExecutableConditionAttributeInsteadOfProcessCheckAnalyzer
+- MSTEST0083
+author: evangelink
+ms.author: amauryleve
+ai-usage: ai-assisted
+dev_langs:
+- CSharp
 ---
-
 # MSTEST0083: Use '\[ExecutableCondition]' instead of 'File.Exists' checks before 'Process.Start'
 
 | Property                            | Value                                              |
@@ -49,7 +56,7 @@ Replace the guard with `[ExecutableCondition]`.
 public void RunsTool() => Process.Start("tool.exe");
 ```
 
-A C# code fix replaces the guard with the attribute. Visual Basic <example-value> the diagnostic but doesn't provide an automatic fix.
+A C# code fix replaces the guard with the attribute. Visual Basic reports the diagnostic but doesn't provide an automatic fix.
 
 ## When to suppress warnings
 
@@ -65,17 +72,17 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0083
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0083.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).
 
 ## See also
 
-- ExecutableConditionAttribute
-- MSTEST0061: Use OSCondition attribute instead of runtime check
-- MSTEST0079: Use ArchitectureCondition attribute instead of runtime checks
+- [ExecutableConditionAttribute](../unit-testing-mstest-writing-tests-controlling-execution.md#executableconditionattribute)
+- [MSTEST0061: Use OSCondition attribute instead of runtime check](mstest0061.md)
+- [MSTEST0079: Use ArchitectureCondition attribute instead of runtime checks](mstest0079.md)

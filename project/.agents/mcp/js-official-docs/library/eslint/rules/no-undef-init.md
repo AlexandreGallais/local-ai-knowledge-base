@@ -1,13 +1,12 @@
 ---
-title: "no-undef-init"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-undef-init.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-undef-init
+rule_type: suggestion
+related_rules:
+- no-undefined
+- no-void
 ---
 
-# no-undef-init
+
 
 In JavaScript, a variable that is declared and not initialized to any value automatically gets the value of `undefined`. For example:
 
@@ -31,7 +30,7 @@ This rule aims to eliminate `var` and `let` variable declarations that initializ
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-undef-init: "error"*/
@@ -40,9 +39,11 @@ var foo = undefined;
 let bar = undefined;
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-undef-init: "error"*/
@@ -51,11 +52,13 @@ var foo;
 let bar;
 ```
 
+:::
+
 Please note that this rule does not check `const` declarations, `using` declarations, `await using` declarations, destructuring patterns, function parameters, and class fields.
 
 Examples of additional **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-undef-init: "error"*/
@@ -77,6 +80,8 @@ class Foo {
 }
 ```
 
+:::
+
 ## Options
 
 This rule has no options.
@@ -89,7 +94,7 @@ One such case is when a `var` declaration occurs inside of a loop. For example:
 
 Example of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-undef-init: "error"*/
@@ -100,6 +105,8 @@ for (i = 0; i < 10; i++) {
     x = i;
 }
 ```
+
+:::
 
 In this case, the `var x` is hoisted out of the loop, effectively creating:
 
@@ -140,7 +147,7 @@ If you're using such an initialization inside of a loop, then you should disable
 
 Example of **correct** code for this rule, because it is disabled on a specific line:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-undef-init: "error"*/
@@ -151,6 +158,8 @@ for (i = 0; i < 10; i++) {
     x = i;
 }
 ```
+
+:::
 
 Another such case is when a variable is redeclared using `var`. For example:
 

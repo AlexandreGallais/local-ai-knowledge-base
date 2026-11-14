@@ -1,16 +1,22 @@
 ---
 title: "General Naming Conventions"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/general-naming-conventions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Use general naming conventions relating to word choice, guidelines on using abbreviations and acronyms, and guidance on avoiding language-specific names.
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "names [.NET Framework], conflicts"
+  - "type names, conflicts"
+  - "language-specific type names"
+  - "names [.NET Framework], about naming guidelines"
+  - "names [.NET Framework], abbreviations"
+  - "abbreviation naming guidelines"
+  - "acronym naming guidelines"
+  - "Hungarian notation"
+  - "names [.NET Framework], type names"
+  - "names [.NET Framework], acronyms"
 ---
-
 # General Naming Conventions
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
 This section describes general naming conventions that relate to word choice, guidelines on using abbreviations and acronyms, and recommendations on how to avoid using language-specific names.
 
@@ -48,7 +54,7 @@ This section describes general naming conventions that relate to word choice, gu
 
  ✔️ DO use a generic CLR type name, rather than a language-specific name, in the rare cases when an identifier has no semantic meaning beyond its type.
 
- For example, a method converting to `System.Int64` should be named `ToInt64`, not `ToLong` (because `System.Int64` is a CLR name for the C#-specific alias `long`). The following table presents several base data types using the CLR type names (as well as the corresponding type names for C#, Visual Basic, and C++).
+ For example, a method converting to <xref:System.Int64> should be named `ToInt64`, not `ToLong` (because <xref:System.Int64> is a CLR name for the C#-specific alias `long`). The following table presents several base data types using the CLR type names (as well as the corresponding type names for C#, Visual Basic, and C++).
 
 |C#|Visual Basic|C++|CLR|
 |---------|------------------|-----------|---------|
@@ -89,10 +95,10 @@ This section describes general naming conventions that relate to word choice, gu
 
  *Portions &copy; 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Framework design guidelines
-- Naming guidelines
-- .NET naming conventions for EditorConfig
+- [Framework design guidelines](index.md)
+- [Naming guidelines](naming-guidelines.md)
+- [.NET naming conventions for EditorConfig](/visualstudio/ide/editorconfig-naming-conventions)

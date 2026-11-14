@@ -1,10 +1,9 @@
 ---
 title: "Legacy Mono and Emscripten JavaScript APIs not exported to global namespace in Blazor WebAssembly apps"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/9/legacy-apis.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in ASP.NET Core 9 where legacy Mono and Emscripten APIs are now accessible through the Blazor.runtime object instead of the global namespace.
+ms.date: 12/4/2024
+ai-usage: ai-assisted
+ms.custom: https://github.com/aspnet/Announcements/issues/516
 ---
 
 # Legacy Mono and Emscripten JavaScript APIs not exported to global namespace
@@ -25,7 +24,7 @@ The Emscripten `Module` object is now exported to the `Blazor.runtime` object. F
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](/dotnet/core/compatibility/categories#source-compatibility).
 
 ## Reason for change
 

@@ -1,12 +1,3 @@
----
-title: "End to End Testing"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/tools/cli/end-to-end.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # End to End Testing
 
 End-to-end or (E2E) testing is a form of testing used to assert your entire application works as expected from start to finish or _"end-to-end"_. E2E testing differs from unit testing in that it is completely decoupled from the underlying implementation details of your code. It is typically used to validate an application in a way that mimics the way a user would interact with it. This page serves as a guide to getting started with end-to-end testing in Angular using the Angular CLI.
@@ -57,14 +48,14 @@ ng e2e
 
 ```
 
-Note, there isn't anything "special" about running your tests with any of the integrated e2e packages. The `ng e2e` command is really just running the `e2e` builder under the hood. You can always create your own custom builder named `e2e` and run it using `ng e2e`.
+Note, there isn't anything "special" about running your tests with any of the integrated e2e packages. The `ng e2e` command is really just running the `e2e` builder under the hood. You can always [create your own custom builder](tools/cli/cli-builder#creating-a-builder) named `e2e` and run it using `ng e2e`.
 
 ## More information on end-to-end testing tools
 
 | Testing Tool | Details                                                                                                              |
 | :----------- | :------------------------------------------------------------------------------------------------------------------- |
-| Cypress      | Getting started with Cypress |
-| Nightwatch   | Getting started with Nightwatch                    |
-| WebdriverIO  | Getting started with Webdriver.io                                        |
-| Playwright   | Getting started with Playwright                                         |
-| Puppeteer    | Getting started with Puppeteer                                                                   |
+| Cypress      | [Getting started with Cypress](https://docs.cypress.io/guides/end-to-end-testing/writing-your-first-end-to-end-test) |
+| Nightwatch   | [Getting started with Nightwatch](https://nightwatchjs.org/guide/writing-tests/introduction.html)                    |
+| WebdriverIO  | [Getting started with Webdriver.io](https://webdriver.io/docs/gettingstarted)                                        |
+| Playwright   | [Getting started with Playwright](https://playwright.dev/docs/writing-tests)                                         |
+| Puppeteer    | [Getting started with Puppeteer](https://pptr.dev)                                                                   |

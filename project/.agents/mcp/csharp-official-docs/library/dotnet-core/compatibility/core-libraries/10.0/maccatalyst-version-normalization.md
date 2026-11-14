@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: MacCatalyst version normalization"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/10.0/maccatalyst-version-normalization.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 10 breaking change in core .NET libraries where MacCatalyst version components are normalized.
+ms.date: 01/01/2025
+ai-usage: ai-assisted
 ---
 
 # MacCatalyst version normalization
@@ -25,7 +23,7 @@ Starting in .NET 10, the MacCatalyst build component is normalized to `0`, ensur
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -37,6 +35,6 @@ Use versions of up to three components (major, minor, and build) on MacCatalyst.
 
 ## Affected APIs
 
-- `System.OperatingSystem.IsMacCatalystVersionAtLeast(System.Int32,System.Int32,System.Int32)`
-- `System.OperatingSystem.IsOSPlatformVersionAtLeast(System.String,System.Int32,System.Int32,System.Int32,System.Int32)`
-- `System.Environment.OSVersion`
+- <xref:System.OperatingSystem.IsMacCatalystVersionAtLeast(System.Int32,System.Int32,System.Int32)?displayProperty=fullName>
+- <xref:System.OperatingSystem.IsOSPlatformVersionAtLeast(System.String,System.Int32,System.Int32,System.Int32,System.Int32)?displayProperty=fullName>
+- <xref:System.Environment.OSVersion?displayProperty=fullName>

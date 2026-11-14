@@ -1,30 +1,26 @@
 ---
+description: "Learn more about: ICorDebugDataTarget3 Interface"
 title: "ICorDebugDataTarget3 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugdatatarget3-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugDataTarget3 Interface
 
-Logically extends the ICorDebugDataTarget interface to provide information about loaded modules.
+Logically extends the [ICorDebugDataTarget](icordebugdatatarget-interface.md) interface to provide information about loaded modules.
 
 ## Method
 
 |Method|Description|
 |------------|-----------------|
-|GetLoadedModules Method|Gets a list of the modules that have been loaded so far.|
+|[GetLoadedModules Method](icordebugdatatarget3-getloadedmodules-method.md)|Gets a list of the modules that have been loaded so far.|
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This interface is available with .NET Native only. If you implement this interface for ICorDebug scenarios outside of .NET Native, the common language runtime will ignore this interface.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

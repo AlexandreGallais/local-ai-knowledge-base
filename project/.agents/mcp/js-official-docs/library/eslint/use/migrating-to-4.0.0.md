@@ -1,13 +1,6 @@
 ---
-title: "Migrating to v4.0.0"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/use/migrating-to-4.0.0.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: Migrating to v4.0.0
 ---
-
-# Migrating to v4.0.0
 
 ESLint v4.0.0 is the fourth major version release. We have made several breaking changes in this release; however, we expect that most of the changes will only affect a very small percentage of users. This guide is intended to walk you through the changes.
 
@@ -15,36 +8,36 @@ The lists below are ordered roughly by the number of users each change is expect
 
 ## Breaking changes for users
 
-1. New rules have been added to `eslint:recommended`
-1. The `indent` rule is more strict
-1. Unrecognized properties in config files now cause a fatal error
-1. .eslintignore patterns are now resolved from the location of the file
-1. The `padded-blocks` rule is more strict by default
-1. The `space-before-function-paren` rule is more strict by default
-1. The `no-multi-spaces` rule is more strict by default
-1. References to scoped plugins in config files are now required to include the scope
+1. [New rules have been added to `eslint:recommended`](#eslint-recommended-changes)
+1. [The `indent` rule is more strict](#indent-rewrite)
+1. [Unrecognized properties in config files now cause a fatal error](#config-validation)
+1. [.eslintignore patterns are now resolved from the location of the file](#eslintignore-patterns)
+1. [The `padded-blocks` rule is more strict by default](#padded-blocks-defaults)
+1. [The `space-before-function-paren` rule is more strict by default](#space-before-function-paren-defaults)
+1. [The `no-multi-spaces` rule is more strict by default](#no-multi-spaces-eol-comments)
+1. [References to scoped plugins in config files are now required to include the scope](#scoped-plugin-resolution)
 
 ## Breaking changes for plugin/custom rule developers
 
-1. `RuleTester` now validates properties of test cases
-1. AST nodes no longer have comment properties
-1. `LineComment` and `BlockComment` events will no longer be emitted during AST traversal
-1. Shebangs are now returned from comment APIs
+1. [`RuleTester` now validates properties of test cases](#rule-tester-validation)
+1. [AST nodes no longer have comment properties](#comment-attachment)
+1. [`LineComment` and `BlockComment` events will no longer be emitted during AST traversal](#event-comments)
+1. [Shebangs are now returned from comment APIs](#shebangs)
 
 ## Breaking changes for integration developers
 
-1. The `global` property in the `linter.verify()` API is no longer supported
-1. More report messages now have full location ranges
-1. Some exposed APIs are now ES2015 classes
+1. [The `global` property in the `linter.verify()` API is no longer supported](#global-property)
+1. [More report messages now have full location ranges](#report-locations)
+1. [Some exposed APIs are now ES2015 classes](#exposed-es2015-classes)
 
 ---
 
-##  `eslint:recommended` changes
+## <a name="eslint-recommended-changes"></a> `eslint:recommended` changes
 
-Two new rules have been added to the `eslint:recommended` config:
+Two new rules have been added to the [`eslint:recommended`](configure/configuration-files#use-predefined-configurations) config:
 
-- `no-compare-neg-zero` disallows comparisons to `-0`
-- `no-useless-escape` disallows uselessly-escaped characters in strings and regular expressions
+- [`no-compare-neg-zero`](../rules/no-compare-neg-zero) disallows comparisons to `-0`
+- [`no-useless-escape`](../rules/no-useless-escape) disallows uselessly-escaped characters in strings and regular expressions
 
 **To address:** To mimic the `eslint:recommended` behavior from 3.x, you can disable these rules in a config file:
 
@@ -59,13 +52,13 @@ Two new rules have been added to the `eslint:recommended` config:
 }
 ```
 
-##  The `indent` rule is more strict
+## <a name="indent-rewrite"></a> The `indent` rule is more strict
 
-Previously, the `indent` rule was fairly lenient about checking indentation; there were many code patterns where indentation was not validated by the rule. This caused confusion for users, because they were accidentally writing code with incorrect indentation, and they expected ESLint to catch the issues.
+Previously, the [`indent`](../rules/indent) rule was fairly lenient about checking indentation; there were many code patterns where indentation was not validated by the rule. This caused confusion for users, because they were accidentally writing code with incorrect indentation, and they expected ESLint to catch the issues.
 
 In 4.0.0, the `indent` rule has been rewritten. The new version of the rule will report some indentation errors that the old version of the rule did not catch. Additionally, the indentation of `MemberExpression` nodes, function parameters, and function arguments will now be checked by default (it was previously ignored by default for backwards compatibility).
 
-To make the upgrade process easier, we've introduced the `indent-legacy` rule as a snapshot of the `indent` rule from 3.x. If you run into issues from the `indent` rule when you upgrade, you should be able to use the `indent-legacy` rule to replicate the 3.x behavior. However, the `indent-legacy` rule is deprecated and will not receive bugfixes or improvements in the future, so you should eventually switch back to the `indent` rule.
+To make the upgrade process easier, we've introduced the [`indent-legacy`](../rules/indent-legacy) rule as a snapshot of the `indent` rule from 3.x. If you run into issues from the `indent` rule when you upgrade, you should be able to use the `indent-legacy` rule to replicate the 3.x behavior. However, the `indent-legacy` rule is deprecated and will not receive bugfixes or improvements in the future, so you should eventually switch back to the `indent` rule.
 
 **To address:** We recommend upgrading without changing your `indent` configuration, and fixing any new indentation errors that appear in your codebase. However, if you want to mimic how the `indent` rule worked in 3.x, you can update your configuration:
 
@@ -78,27 +71,27 @@ To make the upgrade process easier, we've introduced the `indent-legacy` rule as
 }
 ```
 
-##  Unrecognized properties in config files now cause a fatal error
+## <a name="config-validation"></a> Unrecognized properties in config files now cause a fatal error
 
 When creating a config, users sometimes make typos or misunderstand how the config is supposed to be structured. Previously, ESLint did not validate the properties of a config file, so a typo in a config could be very tedious to debug. Starting in 4.0.0, ESLint will raise an error if a property in a config file is unrecognized or has the wrong type.
 
 **To address:** If you see a config validation error after upgrading, verify that your config doesn't contain any typos. If you are using an unrecognized property, you should be able to remove it from your config to restore the previous behavior.
 
-##  .eslintignore patterns are now resolved from the location of the file
+## <a name="eslintignore-patterns"></a> .eslintignore patterns are now resolved from the location of the file
 
 Due to a bug, glob patterns in an `.eslintignore` file were previously resolved from the current working directory of the process, rather than the location of the `.eslintignore` file. Starting in 4.0, patterns in an `.eslintignore` file will be resolved from the `.eslintignore` file's location.
 
 **To address:** If you use an `.eslintignore` file and you frequently run ESLint from somewhere other than the project root, it's possible that the patterns will be matched differently. You should update the patterns in the `.eslintignore` file to ensure they are relative to the file, not to the working directory.
 
-##  The `padded-blocks` rule is more strict by default
+## <a name="padded-blocks-defaults"></a> The `padded-blocks` rule is more strict by default
 
-By default, the `padded-blocks` rule will now enforce padding in class bodies and switch statements. Previously, the rule would ignore these cases unless the user opted into enforcing them.
+By default, the [`padded-blocks`](../rules/padded-blocks) rule will now enforce padding in class bodies and switch statements. Previously, the rule would ignore these cases unless the user opted into enforcing them.
 
 **To address:** If this change results in more linting errors in your codebase, you should fix them or reconfigure the rule.
 
-##  The `space-before-function-paren` rule is more strict by default
+## <a name="space-before-function-paren-defaults"></a> The `space-before-function-paren` rule is more strict by default
 
-By default, the `space-before-function-paren` rule will now enforce spacing for async arrow functions. Previously, the rule would ignore these cases unless the user opted into enforcing them.
+By default, the [`space-before-function-paren`](../rules/space-before-function-paren) rule will now enforce spacing for async arrow functions. Previously, the rule would ignore these cases unless the user opted into enforcing them.
 
 **To address:** To mimic the default config from 3.x, you can use:
 
@@ -117,9 +110,9 @@ By default, the `space-before-function-paren` rule will now enforce spacing for 
 }
 ```
 
-##  The `no-multi-spaces` rule is more strict by default
+## <a name="no-multi-spaces-eol-comments"></a> The `no-multi-spaces` rule is more strict by default
 
-By default, the `no-multi-spaces` rule will now disallow multiple spaces before comments at the end of a line. Previously, the rule did not check this case.
+By default, the [`no-multi-spaces`](../rules/no-multi-spaces) rule will now disallow multiple spaces before comments at the end of a line. Previously, the rule did not check this case.
 
 **To address:** To mimic the default config from 3.x, you can use:
 
@@ -131,7 +124,7 @@ By default, the `no-multi-spaces` rule will now disallow multiple spaces before 
 }
 ```
 
-##  References to scoped plugins in config files are now required to include the scope
+## <a name="scoped-plugin-resolution"></a> References to scoped plugins in config files are now required to include the scope
 
 In 3.x, there was a bug where references to scoped NPM packages as plugins in config files could omit the scope. For example, in 3.x the following config was legal:
 
@@ -161,13 +154,13 @@ To avoid this ambiguity, in 4.0 references to scoped plugins must include the sc
 
 ---
 
-##  `RuleTester` now validates properties of test cases
+## <a name="rule-tester-validation"></a> `RuleTester` now validates properties of test cases
 
 Starting in 4.0, the `RuleTester` utility will validate properties of test case objects, and an error will be thrown if an unknown property is encountered. This change was added because we found that it was relatively common for developers to make typos in rule tests, often invalidating the assertions that the test cases were trying to make.
 
 **To address:** If your tests for custom rules have extra properties, you should remove those properties.
 
-##  AST Nodes no longer have comment properties
+## <a name="comment-attachment"></a> AST Nodes no longer have comment properties
 
 Prior to 4.0, ESLint required parsers to implement comment attachment, a process where AST nodes would gain additional properties corresponding to their leading and trailing comments in the source file. This made it difficult for users to develop custom parsers, because they would have to replicate the confusing comment attachment semantics required by ESLint.
 
@@ -175,7 +168,7 @@ In 4.0, we have moved away from the concept of comment attachment and have moved
 
 **To address:** If you have a custom rule that depends on the `leadingComments` or `trailingComments` properties of an AST node, you can now use `sourceCode.getCommentsBefore()` and `sourceCode.getCommentsAfter()` instead, respectively.
 
-Additionally, the `sourceCode` object now also has `sourceCode.getCommentsInside()` (which returns all the comments inside a node), `sourceCode.getAllComments()` (which returns all the comments in the file), and allows comments to be accessed through various other token <example-value> methods (such as `getTokenBefore()` and `getTokenAfter()`) with the `{ includeComments: true }` option.
+Additionally, the `sourceCode` object now also has `sourceCode.getCommentsInside()` (which returns all the comments inside a node), `sourceCode.getAllComments()` (which returns all the comments in the file), and allows comments to be accessed through various other token iterator methods (such as `getTokenBefore()` and `getTokenAfter()`) with the `{ includeComments: true }` option.
 
 For rule authors concerned about supporting ESLint v3.0 in addition to v4.0, the now deprecated `sourceCode.getComments()` is still available and will work for both versions.
 
@@ -185,7 +178,7 @@ Finally, please note that the following `SourceCode` methods have been deprecate
 - `getTokenOrCommentBefore()` - replaced by `getTokenBefore()` with the `{ includeComments: true }` option
 - `getTokenOrCommentAfter()` - replaced by `getTokenAfter()` with the `{ includeComments: true }` option
 
-##  `LineComment` and `BlockComment` events will no longer be emitted during AST traversal
+## <a name="event-comments"></a> `LineComment` and `BlockComment` events will no longer be emitted during AST traversal
 
 Starting in 4.0, `LineComment` and `BlockComments` events will not be emitted during AST traversal. There are two reasons for this:
 
@@ -199,7 +192,7 @@ sourceCode.getAllComments().filter(comment => comment.type === "Line");
 sourceCode.getAllComments().filter(comment => comment.type === "Block");
 ```
 
-##  Shebangs are now returned from comment APIs
+## <a name="shebangs"></a> Shebangs are now returned from comment APIs
 
 Prior to 4.0, shebang comments in a source file would not appear in the output of `sourceCode.getAllComments()` or `sourceCode.getComments()`, but they would appear in the output of `sourceCode.getTokenOrCommentBefore` as line comments. This inconsistency led to some confusion for rule developers.
 
@@ -213,13 +206,13 @@ sourceCode.getAllComments().filter(comment => comment.type !== "Shebang");
 
 ---
 
-##  The `global` property in the `linter.verify()` API is no longer supported
+## <a name="global-property"></a> The `global` property in the `linter.verify()` API is no longer supported
 
 Previously, the `linter.verify()` API accepted a `global` config option, which was a synonym for the documented `globals` property. The `global` option was never documented or officially supported, and did not work in config files. It has been removed in 4.0.
 
 **To address:** If you were using the `global` property, please use the `globals` property instead, which does the same thing.
 
-##  More report messages now have full location ranges
+## <a name="report-locations"></a> More report messages now have full location ranges
 
 Starting in 3.1.0, rules have been able to specify the _end_ location of a reported problem, in addition to the start location, by explicitly specifying an end location in the `report` call. This is useful for tools like editor integrations, which can use the range to precisely display where a reported problem occurs. Starting in 4.0, if a _node_ is reported rather than a location, the end location of the range will automatically be inferred from the end location of the node. As a result, many more reported problems will have end locations.
 
@@ -227,7 +220,7 @@ This is not expected to cause breakage. However, it will likely result in larger
 
 **To address:** If you have an integration that deals with the ranges of reported problems, make sure you handle large report ranges in a user-friendly way.
 
-##  Some exposed APIs are now ES2015 classes
+## <a name="exposed-es2015-classes"></a> Some exposed APIs are now ES2015 classes
 
 The `CLIEngine`, `SourceCode`, and `RuleTester` modules from ESLint's Node.js API are now ES2015 classes. This will not break any documented behavior, but it does have some observable effects (for example, the methods on `CLIEngine.prototype` are now non-enumerable).
 

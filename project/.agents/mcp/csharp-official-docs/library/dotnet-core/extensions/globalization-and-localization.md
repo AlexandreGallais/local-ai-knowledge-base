@@ -1,25 +1,31 @@
 ---
 title: "Globalize and localize .NET applications"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/globalization-and-localization.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to develop a world-ready application. Read about globalization, localizability review, and localization in .NET.
+ms.date: 03/13/2023
+helpviewer_keywords:
+  - "international applications [.NET]"
+  - "globalization [.NET], encoding"
+  - "global applications"
+  - "internationalization"
+  - "world-ready applications"
+  - "application development [.NET], globalization"
+  - "multilingual application development"
+ms.assetid: 9a59696b-d89b-45bd-946d-c75da4732d02
 ---
 
 # Globalize and localize .NET applications
 
 Developing a world-ready application, including an application that can be localized into one or more languages, involves three steps: globalization, localizability review, and localization.
 
-Globalization
+[Globalization](globalization.md)
 
 This step involves designing and coding an application that is culture-neutral and language-neutral, and that supports localized user interfaces and regional data for all users. It involves making design and programming decisions that are not based on culture-specific assumptions. While a globalized application is not localized, it nevertheless is designed and written so that it can be subsequently localized into one or more languages with relative ease.
 
-Localizability review
+[Localizability review](localizability-review.md)
 
 This step involves reviewing an application's code and design to ensure that it can be localized easily and to identify potential roadblocks for localization, and verifying that the application's executable code is separated from its resources. If the globalization stage was effective, the localizability review will confirm the design and coding choices made during globalization. The localizability stage may also identify any remaining issues so that an application's source code doesn't have to be modified during the localization stage.
 
-Localization
+[Localization](localization.md)
 
 This step involves customizing an application for specific cultures or regions. If the globalization and localizability steps have been performed correctly, localization consists primarily of translating the user interface.
 
@@ -33,48 +39,48 @@ Following these three steps provides two advantages:
 
 ## In this section
 
-Globalization
+[Globalization](globalization.md)
 
 Discusses the first stage of creating a world-ready application, which involves designing and coding an application that is culture-neutral and language-neutral.
 
-.NET globalization and ICU
+[.NET globalization and ICU](globalization-icu.md)
 
-Describes how .NET globalization uses International Components for Unicode (ICU).
+Describes how .NET globalization uses [International Components for Unicode (ICU)](https://icu.unicode.org/).
 
-Localizability review
+[Localizability review](localizability-review.md)
 
 Discusses the second stage of creating a localized application, which involves identifying potential roadblocks to localization.
 
-Localization
+[Localization](localization.md)
 
 Discusses the final stage of creating a localized application, which involves customizing an application's user interface for specific regions or cultures.
 
-Culture-insensitive string operations
+[Culture-insensitive string operations](performing-culture-insensitive-string-operations.md)
 
 Describes how to use .NET methods and classes that are culture-sensitive by default to obtain culture-insensitive results.
 
-Best practices for developing world-ready applications
+[Best practices for developing world-ready applications](best-practices-for-developing-world-ready-apps.md)
 
 Describes the best practices to follow for globalization, localization, and developing world-ready ASP.NET applications.
 
 ## Reference
 
-- `System.Globalization` namespace
+- <xref:System.Globalization?displayProperty=nameWithType> namespace
 
    Contains classes that define culture-related information, including the language, the country/region, the calendars in use, the format patterns for dates, currency, and numbers, and the sort order for strings.
 
-- `System.Resources` namespace
+- <xref:System.Resources> namespace
 
    Provides classes for creating, manipulating, and using resources.
 
-- `System.Text` namespace
+- <xref:System.Text> namespace
 
    Contains classes representing ASCII, ANSI, Unicode, and other character encodings.
 
-- Resgen.exe (Resource File Generator)
+- [Resgen.exe (Resource File Generator)](../../framework/tools/resgen-exe-resource-file-generator.md)
 
    Describes how to use Resgen.exe to convert .txt files and XML-based resource format (.resx) files to common language runtime binary .resources files.
 
-- Winres.exe (Windows Forms Resource Editor)
+- [Winres.exe (Windows Forms Resource Editor)](../../framework/tools/winres-exe-windows-forms-resource-editor.md)
 
    Describes how to use Winres.exe to localize Windows Forms forms.

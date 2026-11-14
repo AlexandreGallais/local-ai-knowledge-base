@@ -1,18 +1,21 @@
 ---
-title: "Tutorial: Get started with System.CommandLine (part 1 of 3)"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/commandline/get-started-tutorial.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: "Tutorial: Get started with System.CommandLine"
+description: Learn how to use the System.CommandLine library for command-line apps.
+ms.date: 12/05/2025
+ms.topic: tutorial
+no-loc: [System.CommandLine]
+helpviewer_keywords:
+  - "command line interface"
+  - "command line"
+  - "System.CommandLine"
 ---
-
 # Tutorial: Get started with System.CommandLine
 
-This tutorial shows how to create a .NET command-line app that uses the `System.CommandLine` library. You'll begin by creating a simple root command that has one option. Then you'll build on that base, creating a more complex app that contains multiple subcommands and different options for each command.
+This tutorial shows how to create a .NET command-line app that uses the [`System.CommandLine` library](index.md). You'll begin by creating a simple root command that has one option. Then you'll build on that base, creating a more complex app that contains multiple subcommands and different options for each command.
 
 In this tutorial, you learn how to:
 
+> [!div class="checklist"]
 >
 > * Create commands, options, and arguments.
 > * Specify default values for options.
@@ -26,13 +29,11 @@ In this tutorial, you learn how to:
 
 ## Prerequisites
 
-- The latest .NET SDK
-- Visual Studio Code editor
-- The C# DevKit
+[!INCLUDE [Prerequisites](../../../includes/prerequisites-basic.md)]
 
 Or
 
-* Visual Studio with the **.NET desktop development** workload installed.
+* [Visual Studio](https://visualstudio.microsoft.com/downloads/?utm_medium=microsoft&utm_source=learn.microsoft.com&utm_campaign=inline+link) with the **.NET desktop development** workload installed.
 
 ## Create the app
 
@@ -64,89 +65,26 @@ Create a .NET 9 console app project named "scl".
 
 Replace the contents of *Program.cs* with the following code:
 
-```csharp
-using System.CommandLine;
-using System.CommandLine.Parsing;
+:::code language="csharp" source="snippets/get-started-tutorial/csharp/Stage0/Program.cs" id="all" :::
 
-namespace scl;
-
-class Program
-{
-    static int Main(string[] args)
-    {
-        Option<FileInfo> fileOption = new("--file")
-        {
-            Description = "The file to read and display on the console"
-        };
-
-        RootCommand rootCommand = new("Sample app for System.CommandLine");
-        rootCommand.Options.Add(fileOption);
-
-        ParseResult parseResult = rootCommand.Parse(args);
-        if (parseResult.Errors.Count == 0 && parseResult.GetValue(fileOption) is FileInfo parsedFile)
-        {
-            ReadFile(parsedFile);
-            return 0;
-        }
-        foreach (ParseError parseError in parseResult.Errors)
-        {
-            Console.Error.WriteLine(parseError.Message);
-        }
-        return 1;
-    }
-
-    static void ReadFile(FileInfo file)
-    {
-        foreach (string line in File.ReadLines(file.FullName))
-        {
-            Console.WriteLine(line);
-        }
-    }
-}
-```
 The preceding code:
 
-* Creates an option named `--file` of type `System.IO.FileInfo` and adds it to the root command:
+* Creates an [option](syntax.md#options) named `--file` of type <xref:System.IO.FileInfo> and adds it to the [root command](syntax.md#root-command):
 
-```csharp
-Option<FileInfo> fileOption = new("--file")
-{
-    Description = "The file to read and display on the console"
-};
+:::code language="csharp" source="snippets/get-started-tutorial/csharp/Stage0/Program.cs" id="symbols" :::
 
-RootCommand rootCommand = new("Sample app for System.CommandLine");
-rootCommand.Options.Add(fileOption);
-```
 * Parses `args` and checks whether any value was provided for the `--file` option. If so, it calls the `ReadFile` method using the parsed value and returns exit code `0`:
 
-```csharp
-ParseResult parseResult = rootCommand.Parse(args);
-if (parseResult.Errors.Count == 0 && parseResult.GetValue(fileOption) is FileInfo parsedFile)
-{
-    ReadFile(parsedFile);
-    return 0;
-}
-```
+:::code language="csharp" source="snippets/get-started-tutorial/csharp/Stage0/Program.cs" id="parse" :::
+
 * If no value was provided for `--file`, it prints available parse errors and returns exit code `1`:
 
-```csharp
-foreach (ParseError parseError in parseResult.Errors)
-{
-    Console.Error.WriteLine(parseError.Message);
-}
-return 1;
-```
+:::code language="csharp" source="snippets/get-started-tutorial/csharp/Stage0/Program.cs" id="errors" :::
+
 * The `ReadFile` method reads the specified file and displays its contents on the console:
 
-```csharp
-static void ReadFile(FileInfo file)
-{
-    foreach (string line in File.ReadLines(file.FullName))
-    {
-        Console.WriteLine(line);
-    }
-}
-```
+:::code language="csharp" source="snippets/get-started-tutorial/csharp/Stage0/Program.cs" id="action" :::
+
 ## Test the app
 
 You can use any of the following ways to test while developing a command-line app:
@@ -159,7 +97,7 @@ You can use any of the following ways to test while developing a command-line ap
   scl --file scl.runtimeconfig.json
   ```
 
-* Use `dotnet run` and pass <example-value> values to the app instead of to the `run` command by including them after `--`, as in the following example:
+* Use `dotnet run` and pass option values to the app instead of to the `run` command by including them after `--`, as in the following example:
 
   ```dotnetcli
   dotnet run -- --file bin/Debug/net9.0/scl.runtimeconfig.json
@@ -185,65 +123,22 @@ But if you ask it to display the help by providing `--help`, nothing gets printe
 
 ## Parse the arguments and invoke the ParseResult
 
-System.CommandLine allows you to specify an action that's invoked when a given symbol (command, directive, or option) is parsed successfully. The action is a delegate that takes a `System.CommandLine.ParseResult` parameter and returns an `int` exit code. (Async actions are also available). The exit code is returned by the `System.CommandLine.ParseResult.Invoke(System.CommandLine.InvocationConfiguration)` method and can be used to indicate whether the command was executed successfully or not.
+System.CommandLine allows you to specify an action that's invoked when a given symbol (command, directive, or option) is parsed successfully. The action is a delegate that takes a <xref:System.CommandLine.ParseResult> parameter and returns an `int` exit code. ([Async actions](how-to-parse-and-invoke.md#asynchronous-actions) are also available). The exit code is returned by the <xref:System.CommandLine.ParseResult.Invoke(System.CommandLine.InvocationConfiguration)?displayProperty=nameWithType> method and can be used to indicate whether the command was executed successfully or not.
 
 Replace the contents of *Program.cs* with the following code:
 
-```csharp
-using System.CommandLine;
+:::code language="csharp" source="snippets/get-started-tutorial/csharp/Stage1/Program.cs" id="all" :::
 
-namespace scl;
-
-class Program
-{
-    static int Main(string[] args)
-    {
-        Option<FileInfo> fileOption = new("--file")
-        {
-            Description = "The file to read and display on the console"
-        };
-
-        RootCommand rootCommand = new("Sample app for System.CommandLine");
-        rootCommand.Options.Add(fileOption);
-
-        rootCommand.SetAction(parseResult =>
-        {
-            FileInfo parsedFile = parseResult.GetValue(fileOption);
-            ReadFile(parsedFile);
-            return 0;
-        });
-
-        ParseResult parseResult = rootCommand.Parse(args);
-        return parseResult.Invoke();
-    }
-
-    static void ReadFile(FileInfo file)
-    {
-        foreach (string line in File.ReadLines(file.FullName))
-        {
-            Console.WriteLine(line);
-        }
-    }
-}
-```
 The preceding code:
 
 * Specifies that `ReadFile` is the method that will be called when the root command is **invoked**:
 
-```csharp
-rootCommand.SetAction(parseResult =>
-{
-    FileInfo parsedFile = parseResult.GetValue(fileOption);
-    ReadFile(parsedFile);
-    return 0;
-});
-```
+  :::code language="csharp" source="snippets/get-started-tutorial/csharp/Stage1/Program.cs" id="setaction" :::
+
 * Parses `args` and **invokes** the result:
 
-```csharp
-ParseResult parseResult = rootCommand.Parse(args);
-return parseResult.Invoke();
-```
+  :::code language="csharp" source="snippets/get-started-tutorial/csharp/Stage1/Program.cs" id="invoke" :::
+
 When you run the app, it displays the contents of the file specified by the `--file` option.
 
 If you ask it to display the help by specifying `scl --help`, the following output gets printed:
@@ -261,7 +156,7 @@ Options:
   --file          The file to read and display on the console
 ```
 
-`System.CommandLine.RootCommand` by default provides Help option, Version option, and Suggest directive. The `System.CommandLine.ParseResult.Invoke(System.CommandLine.InvocationConfiguration)` method is responsible for invoking the action of the parsed symbol. It could be the action explicitly defined for the command or the help action defined by `System.CommandLine` for `System.CommandLine.Help.HelpOption`.
+<xref:System.CommandLine.RootCommand> by default provides [Help option](how-to-customize-help.md#customize-help-output), [Version option](syntax.md#version-option), and [Suggest directive](syntax.md#suggest-directive). The <xref:System.CommandLine.ParseResult.Invoke(System.CommandLine.InvocationConfiguration)?displayProperty=nameWithType> method is responsible for invoking the action of the parsed symbol. It could be the action explicitly defined for the command or the help action defined by `System.CommandLine` for `System.CommandLine.Help.HelpOption`.
 
 Moreover, when the `Invoke` method detects any parse errors, it prints them to the standard error, prints help to standard output, and returns `1` as the exit code:
 
@@ -273,3 +168,285 @@ scl --invalid bla
 Unrecognized command or argument '--invalid'.
 Unrecognized command or argument 'bla'.
 ```
+
+## Add a subcommand and options
+
+In this section, you:
+
+* Create more options.
+* Create a subcommand.
+* Assign the new options to the new subcommand.
+
+The new options let the end user configure the foreground and background text colors and the readout speed. These features will be used to read a collection of quotes that comes from the [Teleprompter console app tutorial](../../csharp/tutorials/console-teleprompter.md).
+
+1. Copy the [sampleQuotes.txt](https://github.com/dotnet/samples/blob/main/csharp/getting-started/console-teleprompter/sampleQuotes.txt) file from the dotnet samples repository into your project directory.
+
+   (For information on how to download files, see the instructions in [Samples and tutorials](../../samples-and-tutorials/index.md#view-and-download-samples).)
+
+1. Open the project file and add an `<ItemGroup>` element just before the closing `</Project>` tag:
+
+   ```xml
+   <ItemGroup>
+     <Content Include="sampleQuotes.txt">
+       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+     </Content>
+   </ItemGroup>
+   ```
+
+   Adding this markup causes the text file to be copied to the output folder when you build the app. So when you run the executable in that folder, you can access the file by name without specifying a folder path.
+
+1. In *Program.cs*, after the code that creates the `--file` option, create options to control the readout speed and text colors:
+
+   :::code language="csharp" source="snippets/get-started-tutorial/csharp/Stage2/Program.cs" id="options" :::
+
+1. After the line that creates the root command, delete the code that adds the `--file` option to it. You're removing it here because you'll add it to a new subcommand.
+
+1. After the line that creates the root command, create a `read` subcommand. Add the options to this subcommand (by using collection initializer syntax rather than `Options` property), and add the subcommand to the root command.
+
+   :::code language="csharp" source="snippets/get-started-tutorial/csharp/Stage2/Program.cs" id="subcommand" :::
+
+1. Replace the `SetAction` code with the following `SetAction` code for the new subcommand:
+
+   :::code language="csharp" source="snippets/get-started-tutorial/csharp/Stage2/Program.cs" id="setaction" :::
+
+   You're no longer calling `SetAction` on the root command because the root command no longer needs an action. When a command has subcommands, you typically have to specify one of the subcommands when invoking a command-line app.
+
+1. Replace the `ReadFile` action method with the following code:
+
+   :::code language="csharp" source="snippets/get-started-tutorial/csharp/Stage2/Program.cs" id="action" :::
+
+The app now looks like this:
+
+:::code language="csharp" source="snippets/get-started-tutorial/csharp/Stage2/Program.cs" id="all" :::
+
+### Test the new subcommand
+
+Now if you try to run the app without specifying the subcommand, you get an error message followed by a help message that specifies the subcommand that is available.
+
+```console
+scl --file sampleQuotes.txt
+```
+
+```output
+'--file' was not matched. Did you mean one of the following?
+--help
+
+Required command was not provided.
+Unrecognized command or argument '--file'.
+Unrecognized command or argument 'sampleQuotes.txt'.
+
+Description:
+  Sample app for System.CommandLine
+
+Usage:
+  scl [command] [options]
+
+Options:
+  -?, -h, --help  Show help and usage information
+  --version       Show version information
+
+Commands:
+  read  Read and display the file.
+```
+
+The help text for subcommand `read` shows that four options are available. It shows valid values for the enum.
+
+```console
+scl read -h
+```
+
+```output
+Description:
+  Read and display the file.
+
+Usage:
+  scl read [options]
+
+Options:
+  --file <file>                                               The file to read and display on the console.
+  --delay <delay>                                             Delay between lines, specified as milliseconds per
+                                                              character in a line. [default: 42]
+  --fgcolor                                                   Foreground color of text displayed on the console.
+  <Black|Blue|Cyan|DarkBlue|DarkCyan|DarkGray|DarkGreen|Dark  [default: White]
+  Magenta|DarkRed|DarkYellow|Gray|Green|Magenta|Red|White|Ye
+  llow>
+  --light-mode                                                Background color of text displayed on the console:
+                                                              default is black, light mode is white.
+  -?, -h, --help                                              Show help and usage information
+```
+
+Run subcommand `read` specifying only the `--file` option, and you get the default values for the other three options.
+
+```console
+scl read --file sampleQuotes.txt
+```
+
+The 42 milliseconds per character default delay causes a slow readout speed. You can speed it up by setting `--delay` to a lower number.
+
+```console
+scl read --file sampleQuotes.txt --delay 0
+```
+
+You can use `--fgcolor` and `--light-mode` to set text colors:
+
+```console
+scl read --file sampleQuotes.txt --fgcolor red --light-mode
+```
+
+If you provide an invalid value for `--delay`, you get an error message:
+
+```console
+scl read --file sampleQuotes.txt --delay forty-two
+```
+
+```output
+Cannot parse argument 'forty-two' for option '--int' as expected type 'System.Int32'.
+```
+
+If you provide an invalid value for `--file`, you get an exception:
+
+```console
+scl read --file nofile
+```
+
+```output
+Unhandled exception: System.IO.FileNotFoundException: Could not find file 'C:\bin\Debug\net9.0\nofile''.
+File name: 'C:\bin\Debug\net9.0\nofile''
+```
+
+## Add subcommands and custom validation
+
+This section creates the final version of the app. When finished, the app will have the following commands and options:
+
+| Command      | Options                                    | Arguments            |
+|--------------|--------------------------------------------|----------------------|
+| Root command | `--file` (*recursive*)                     |                      |
+| `quotes`     |                                            |                      |
+| `read`       | `--delay`, `--fgcolor`, `--light-mode`     |                      |
+| `add`        |                                            | `quote` and `byline` |
+| `delete`     | `--search-terms`                           |                      |
+
+(A *recursive* option is available to the command it's assigned to and recursively to all its subcommands.)
+
+Here's sample command-line input that invokes each of the available commands with its options and arguments:
+
+```console
+scl quotes read --file sampleQuotes.txt --delay 40 --fgcolor red --light-mode
+scl quotes add "Hello world!" "Nancy Davolio"
+scl quotes delete --search-terms David "You can do" Antoine "Perfection is achieved"
+```
+
+1. In *Program.cs*, replace the code that creates the `--file` option with the following code:
+
+   :::code language="csharp" source="snippets/get-started-tutorial/csharp/Stage3/Program.cs" id="fileoption" :::
+
+   This code uses two separate mechanisms:
+
+   * <xref:System.CommandLine.Option`1.DefaultValueFactory?displayProperty=nameWithType> supplies `sampleQuotes.txt` as the default when you don't provide `--file`. `DefaultValueFactory` doesn't run when you do provide `--file`.
+   * <xref:System.CommandLine.Option`1.CustomParser?displayProperty=nameWithType> runs when you explicitly provide `--file`. It converts the token to a `FileInfo` and validates that the file exists. Without validation, a missing file would cause an unhandled `FileNotFoundException` with a stack trace. With validation, just the specified error message is displayed.
+
+1. After the code that creates `lightModeOption`, add options and arguments for the `add` and `delete` commands:
+
+   :::code language="csharp" source="snippets/get-started-tutorial/csharp/Stage3/Program.cs" id="optionsandargs" :::
+
+   The <xref:System.CommandLine.Option.AllowMultipleArgumentsPerToken> setting lets you omit the `--search-terms` option name when specifying elements in the list after the first one. It makes the following examples of command-line input equivalent:
+
+   ```console
+   scl quotes delete --search-terms David "You can do"
+   scl quotes delete --search-terms David --search-terms "You can do"
+   ```
+
+1. Replace the code that creates the root command and the `read` command with the following code:
+
+   :::code language="csharp" source="snippets/get-started-tutorial/csharp/Stage3/Program.cs" id="commands" :::
+
+   This code makes the following changes:
+
+   * Removes the `--file` option from the `read` command.
+   * Adds the `--file` option as a recursive option to the root command.
+
+   * Creates a `quotes` command and adds it to the root command.
+   * Adds the `read` command to the `quotes` command instead of to the root command.
+   * Creates `add` and `delete` commands and adds them to the `quotes` command.
+
+   The result is the following command hierarchy:
+
+   Root command
+     └──`quotes`
+           └──`read`
+           └──`add`
+           └──`delete`
+
+   The app now implements the [recommended](design-guidance.md#symbols) pattern where the parent command (`quotes`) specifies an area or group, and its children commands (`read`, `add`, `delete`) are actions.
+
+   Recursive options are applied to the command and recursively to subcommands. Since `--file` is on the root command, it will be available automatically in all subcommands of the app.
+
+1. After the `SetAction` code, add new `SetAction` code for the new subcommands:
+
+   :::code language="csharp" source="snippets/get-started-tutorial/csharp/Stage3/Program.cs" id="setactions" :::
+
+   Subcommand `quotes` doesn't have an action because it isn't a leaf command. Subcommands `read`, `add`, and `delete` are leaf commands under `quotes`, and `SetAction` is called for each of them.
+
+1. Add the actions for `add` and `delete`.
+
+   :::code language="csharp" source="snippets/get-started-tutorial/csharp/Stage3/Program.cs" id="actions" :::
+
+The finished app looks like this:
+
+:::code language="csharp" source="snippets/get-started-tutorial/csharp/Stage3/Program.cs" id="all" :::
+
+Build the project, and then try the following commands.
+
+Submit a nonexistent file to `--file` with the `read` command, and you get an error message instead of an exception and stack trace:
+
+```console
+scl quotes read --file nofile
+```
+
+```output
+File does not exist
+```
+
+If you try to run subcommand `quotes`, you get a message directing you to use `read`, `add`, or `delete`:
+
+```console
+scl quotes
+```
+
+```output
+Required command was not provided.
+
+Description:
+  Work with a file that contains quotes.
+
+Usage:
+  scl quotes [command] [options]
+
+Options:
+  --file <file>   An option whose argument is parsed as a FileInfo [default: sampleQuotes.txt]
+  -?, -h, --help  Show help and usage information
+
+Commands:
+  read                          Read and display the file.
+  delete                        Delete lines from the file.
+  add, insert <quote> <byline>  Add an entry to the file.
+```
+
+Run subcommand `add`, and then look at the end of the text file to see the added text:
+
+```console
+scl quotes add "Hello world!" "Nancy Davolio"
+```
+
+Run subcommand `delete` with search strings from the beginning of the file, and then look at the beginning of the text file to see where text was removed:
+
+```console
+scl quotes delete --search-terms David "You can do" Antoine "Perfection is achieved"
+```
+
+> [!NOTE]
+> The file in the output folder reflects the changes from the `add` and `delete` commands. The copy of the file in the project folder remains unchanged.
+
+## Next steps
+
+In this tutorial, you created a simple command-line app that uses `System.CommandLine`. To learn more about the library, see [System.CommandLine overview](index.md). To enable tab completion capabilities, see [Tab completion for System.CommandLine](how-to-enable-tab-completion.md).

@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugProcess3::SetEnableCustomNotification Method"
 title: "ICorDebugProcess3::SetEnableCustomNotification Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess3-setenablecustomnotification-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugProcess3.SetEnableCustomNotification Method"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugProcess3::SetEnableCustomNotification"
+helpviewer_keywords:
+  - "ICorDebugProcess3::SetEnableCustomNotification method [.NET debugging]"
+  - "SetEnableCustomNotification method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugProcess3::SetEnableCustomNotification Method
 
 Enables and disables custom debugger notifications of the specified type.
@@ -28,13 +37,13 @@ HRESULT SetEnableCustomNotification(ICorDebugClass * pClass,
 
 ## Remarks
 
-When `fEnable` is set to `true`, calls to the `System.Diagnostics.Debugger.NotifyOfCrossThreadDependency*` method trigger an ICorDebugManagedCallback3::CustomNotification callback. Notifications are disabled by default; therefore, the debugger must specify any notification types it knows about and wants to handle. Because the ICorDebugClass class is scoped by application domain, the debugger must call `SetEnableCustomNotification` for every application domain in the process if it wants to receive the notification across the entire process.
+When `fEnable` is set to `true`, calls to the <xref:System.Diagnostics.Debugger.NotifyOfCrossThreadDependency*?displayProperty=nameWithType> method trigger an [ICorDebugManagedCallback3::CustomNotification](icordebugmanagedcallback3-customnotification-method.md) callback. Notifications are disabled by default; therefore, the debugger must specify any notification types it knows about and wants to handle. Because the [ICorDebugClass](icordebug-interface.md) class is scoped by application domain, the debugger must call `SetEnableCustomNotification` for every application domain in the process if it wants to receive the notification across the entire process.
 
 Starting with the .NET Framework 4, the only supported notification is a cross-thread dependency notification.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -44,4 +53,4 @@ Starting with the .NET Framework 4, the only supported notification is a cross-t
 
 ## See also
 
-- ICorDebugProcess3 Interface
+- [ICorDebugProcess3 Interface](icordebugprocess3-interface.md)

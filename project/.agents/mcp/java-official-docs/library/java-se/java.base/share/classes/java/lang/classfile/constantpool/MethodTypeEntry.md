@@ -1,33 +1,26 @@
----
-title: "MethodTypeEntry interface (java.lang.classfile.constantpool)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/constantpool/MethodTypeEntry.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # MethodTypeEntry interface (java.lang.classfile.constantpool)
 
 ```java
 public sealed interface MethodTypeEntry extends LoadableConstantEntry permits AbstractPoolEntry.MethodTypeEntryImpl
 ```
 
-Models a `CONSTANT_MethodType_info` structure, or a symbolic reference
-to a method type, in the constant pool of a `class` file.
-
-The use of a `MethodTypeEntry` is modeled by a `MethodTypeDesc`.
-Conversions are through `ConstantPoolBuilder.methodTypeEntry(MethodTypeDesc)`
-and `asSymbol()`.
-
+Models a {@code CONSTANT_MethodType_info} structure, or a symbolic reference
+to a method type, in the constant pool of a {@code class} file.
+<p>
+The use of a {@code MethodTypeEntry} is modeled by a {@link MethodTypeDesc}.
+Conversions are through {@link ConstantPoolBuilder#methodTypeEntry(MethodTypeDesc)}
+and {@link #asSymbol()}.
+<p>
 A method type entry is composite:
-
-where `descriptor` is a method descriptor
+{@snippet lang=text :
+// @link substring="MethodTypeEntry" target="ConstantPoolBuilder#methodTypeEntry(Utf8Entry)" :
+MethodTypeEntry(Utf8Entry descriptor) // @link substring="descriptor" target="#descriptor()"
+}
+where {@code descriptor} is a {@linkplain #asSymbol() method descriptor}
 string.
 
-**jvms:** 4.4.9 The `CONSTANT_MethodType_info` Structure
-
-**Since:** 24
+@jvms 4.4.9 The {@code CONSTANT_MethodType_info} Structure
+@since 24
 
 ## MethodTypeEntry.constantValue()
 
@@ -35,9 +28,9 @@ string.
 default ConstantDesc constantValue()
 ```
 
-(inherited documentation)
-
-This is equivalent to asSymbol().
+{@inheritDoc}
+<p>
+This is equivalent to {@link #asSymbol() asSymbol()}.
 
 ## MethodTypeEntry.descriptor()
 
@@ -45,14 +38,21 @@ This is equivalent to asSymbol().
 Utf8Entry descriptor()
 ```
 
+{@return the {@linkplain #asSymbol() method descriptor} string}
+
 ## MethodTypeEntry.asSymbol()
 
 ```java
 MethodTypeDesc asSymbol()
 ```
 
-**API note:** If only symbol equivalence is desired, matches should be used.  It requires reduced parsing and can
-improve `class` file reading performance.
+{@return a symbolic descriptor for the {@linkplain #descriptor() method
+type}}
+
+@apiNote
+If only symbol equivalence is desired, {@link #matches(MethodTypeDesc)
+matches} should be used.  It requires reduced parsing and can
+improve {@code class} file reading performance.
 
 ## MethodTypeEntry.matches(MethodTypeDesc)
 
@@ -60,8 +60,7 @@ improve `class` file reading performance.
 boolean matches(MethodTypeDesc desc)
 ```
 
-Parameters:
+{@return whether this entry describes the given method type}
 
-- `desc`: the method type descriptor
-
-**Since:** 25
+@param desc the method type descriptor
+@since 25

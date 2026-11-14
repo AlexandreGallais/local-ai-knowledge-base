@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugModule4 Interface"
 title: "ICorDebugModule4 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmodule4-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "06/06/2022"
+api_name:
+  - "ICorDebugModule4"
+api_location:
+  - "CorDebug.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugModule4"
+helpviewer_keywords:
+  - "ICorDebugModule4 interface [.NET debugging]"
+ms.assetid:
+  - "apiref"
 ---
-
 # ICorDebugModule4 Interface
 
 Provides a method that determines whether the module is loaded into memory in mapped/hydrated format.
@@ -26,18 +34,18 @@ interface ICorDebugModule4 : IUnknown
 
 |Method|Description|
 |------------|-----------------|
-|ICorDebugModule4::IsMappedLayout Method|Queries to see if the module is loaded into memory in mapped/hydrated format.|
+|[ICorDebugModule4::IsMappedLayout Method](icordebugmodule4-ismappedlayout-method.md)|Queries to see if the module is loaded into memory in mapped/hydrated format.|
 
 ## Remarks
 
 This interface logically extends the 'ICorDebugModule', 'ICorDebugModule2', and 'ICoreDebugModule3' interfaces.
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -47,5 +55,5 @@ This interface logically extends the 'ICorDebugModule', 'ICorDebugModule2', and 
 
 ## See also
 
-- ICorDebugRemoteTarget Interface
-- ICorDebug Interface
+- [ICorDebugRemoteTarget Interface](icordebugremotetarget-interface.md)
+- [ICorDebug Interface](icordebug-interface.md)

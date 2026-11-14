@@ -1,30 +1,22 @@
----
-title: "ParsePosition class (java.text)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/text/ParsePosition.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ParsePosition class (java.text)
 
 ```java
 public class ParsePosition
 ```
 
-`ParsePosition` is a simple class used by `Format`
+{@code ParsePosition} is a simple class used by {@code Format}
 and its subclasses to keep track of the current position during parsing.
-The `parseObject` method in the various `Format`
-classes requires a `ParsePosition` object as an argument.
+The {@code parseObject} method in the various {@code Format}
+classes requires a {@code ParsePosition} object as an argument.
 
+<p>
 By design, as you parse through a string with different formats,
-you can use the same `ParsePosition`, since the index parameter
+you can use the same {@code ParsePosition}, since the index parameter
 records the current position.
 
-**Since:** 1.1
-
-**See also:** java.text.Format
+@author      Mark Davis
+@since 1.1
+@see         java.text.Format
 
 ## ParsePosition.getIndex()
 
@@ -36,7 +28,7 @@ Retrieve the current parse position.  On input to a parse method, this
 is the index of the character at which parsing will begin; on output, it
 is the index of the character following the last character parsed.
 
-**Returns:** the current parse position
+@return the current parse position
 
 ## ParsePosition.setIndex(int)
 
@@ -46,9 +38,7 @@ public void setIndex(int index)
 
 Set the current parse position.
 
-Parameters:
-
-- `index`: the current parse position
+@param index the current parse position
 
 ## ParsePosition.ParsePosition(int)
 
@@ -58,9 +48,7 @@ public ParsePosition(int index)
 
 Create a new ParsePosition with the given initial index.
 
-Parameters:
-
-- `index`: initial index
+@param index initial index
 
 ## ParsePosition.setErrorIndex(int)
 
@@ -72,11 +60,8 @@ Set the index at which a parse error occurred.  Formatters
 should set this before returning an error code from their
 parseObject method.  The default value is -1 if this is not set.
 
-Parameters:
-
-- `ei`: the index at which an error occurred
-
-**Since:** 1.2
+@param ei the index at which an error occurred
+@since 1.2
 
 ## ParsePosition.getErrorIndex()
 
@@ -87,9 +72,8 @@ public int getErrorIndex()
 Retrieve the index at which an error occurred, or -1 if the
 error index has not been set.
 
-**Returns:** the index at which an error occurred
-
-**Since:** 1.2
+@return the index at which an error occurred
+@since 1.2
 
 ## ParsePosition.equals(Object)
 
@@ -105,6 +89,8 @@ Overrides equals
 public int hashCode()
 ```
 
+{@return a hash code for this ParsePosition}
+
 ## ParsePosition.toString()
 
 ```java
@@ -112,5 +98,4 @@ public String toString()
 ```
 
 Return a string representation of this ParsePosition.
-
-**Returns:** a string representation of this object
+@return  a string representation of this object

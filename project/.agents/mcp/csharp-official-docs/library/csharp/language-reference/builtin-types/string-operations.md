@@ -1,19 +1,18 @@
 ---
 title: "String operations: pattern matching, performance, and span-based search"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/builtin-types/string-operations.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn how to apply regular-expression patterns to strings, search strings with ReadOnlySpan<char>, and pick the right StringComparison for performance."
+ms.topic: reference
+ms.date: 05/21/2026
+ai-usage: ai-assisted
 ---
 
 # String operations: Pattern matching, performance, and span-based search
 
-This article covers three string operations: regular-expression pattern matching with `System.Text.RegularExpressions.Regex`, allocation-free search over `System.ReadOnlySpan`1`, and choosing a `System.StringComparison` value for correct, fast comparisons.
+This article covers three string operations: regular-expression pattern matching with <xref:System.Text.RegularExpressions.Regex?displayProperty=nameWithType>, allocation-free search over <xref:System.ReadOnlySpan`1>, and choosing a <xref:System.StringComparison> value for correct, fast comparisons.
 
 ## Find specific text by using regular expressions
 
-The `System.Text.RegularExpressions.Regex` class searches strings for patterns rather than fixed substrings. The static `System.Text.RegularExpressions.Regex.IsMatch*` method takes the input string, a pattern, and optional `System.Text.RegularExpressions.RegexOptions` flags.
+The <xref:System.Text.RegularExpressions.Regex?displayProperty=nameWithType> class searches strings for patterns rather than fixed substrings. The static <xref:System.Text.RegularExpressions.Regex.IsMatch*?displayProperty=nameWithType> method takes the input string, a pattern, and optional <xref:System.Text.RegularExpressions.RegexOptions> flags.
 
 The following example searches each sentence for the word *the* or *their*, case insensitive. The pattern `the(ir)?\s` matches `the` optionally followed by `ir`, then a whitespace character:
 
@@ -23,30 +22,8 @@ The following example searches each sentence for the word *the* or *their*, case
 | `(ir)?`  | match 0 or 1 occurrence of `ir`  |
 | `\s`     | match a whitespace character     |
 
-```csharp
-string[] sentences =
-[
-    "Put the water over there.",
-    "They're quite thirsty.",
-    "Their water bottles broke."
-];
+:::code language="csharp" source="snippets/string-operations/Program.cs" id="RegexPattern":::
 
-string pattern = @"the(ir)?\s";
-
-foreach (string s in sentences)
-{
-    Console.Write($"{s,28}");
-
-    if (Regex.IsMatch(s, pattern, RegexOptions.IgnoreCase))
-    {
-        Console.WriteLine($"  (match for '{pattern}' found)");
-    }
-    else
-    {
-        Console.WriteLine();
-    }
-}
-```
 ## Validate strings against a pattern
 
 To check whether an entire input matches a shape, anchor the pattern with `^` and `$`. The following example validates that each string is a US-style telephone number: three digits, three digits, four digits, separated by dashes:
@@ -59,32 +36,9 @@ To check whether an entire input matches a shape, anchor the pattern with `^` an
 | `\d{4}` | match exactly four digit characters    |
 | `$`     | match the end of the string            |
 
-```csharp
-string[] numbers =
-[
-    "123-555-0190",
-    "444-234-22450",
-    "690-555-0178",
-    "146-893-232",
-    "146-555-0122",
-    "4007-555-0111",
-    "407-555-0111",
-    "407-2-5555",
-    "407-555-8974",
-    "407-2ab-5555",
-    "690-555-8148",
-    "146-893-232-"
-];
+:::code language="csharp" source="snippets/string-operations/Program.cs" id="RegexValidate":::
 
-string pattern = """^\d{3}-\d{3}-\d{4}$""";
-
-foreach (string s in numbers)
-{
-    Console.Write($"{s,14}");
-    Console.WriteLine(Regex.IsMatch(s, pattern) ? " - valid" : " - invalid");
-}
-```
-For the full pattern syntax, see Regular expression language - quick reference.
+For the full pattern syntax, see [Regular expression language - quick reference](../../../standard/base-types/regular-expression-language-quick-reference.md).
 
 ## Choose between `string` methods and regular expressions
 
@@ -92,39 +46,27 @@ For the full pattern syntax, see Regular expression language - quick reference.
 
 ## Search using `ReadOnlySpan<char>`
 
-When you parse large inputs or run a search on a hot path, the per-call allocations of `string.Substring` and `string.Split` can dominate. `ReadOnlySpan<char>` gives you a view over an existing string (or array, or stack buffer) without copying, and `System.MemoryExtensions` provides span-based equivalents of the common `string` methods, including `System.MemoryExtensions.IndexOf*`:
+When you parse large inputs or run a search on a hot path, the per-call allocations of `string.Substring` and `string.Split` can dominate. `ReadOnlySpan<char>` gives you a view over an existing string (or array, or stack buffer) without copying, and <xref:System.MemoryExtensions> provides span-based equivalents of the common `string` methods, including <xref:System.MemoryExtensions.IndexOf*>:
 
-```csharp
-ReadOnlySpan<char> input = "key1=alpha;key2=beta;key3=gamma".AsSpan();
-ReadOnlySpan<char> needle = "key2=".AsSpan();
+:::code language="csharp" source="snippets/string-operations/Program.cs" id="SpanSearch":::
 
-int start = input.IndexOf(needle);
-if (start >= 0)
-{
-    ReadOnlySpan<char> rest = input[(start + needle.Length)..];
-    int end = rest.IndexOf(';');
-    ReadOnlySpan<char> value = end >= 0 ? rest[..end] : rest;
-    Console.WriteLine($"key2 = {value}");
-}
-// => key2 = beta
-```
 Span-based search avoids allocations because the slices (`input[start..]`, `rest[..end]`) are simply windows over the original characters. The same approach scales to parsing key-value lists, headers, and other delimited text without ever calling `Substring`.
 
 ## Performance considerations for `StringComparison`
 
-Most `string` instance methods have overloads that accept a `System.StringComparison` value. Methods such as `System.String.Equals(System.String)` default to **ordinal**, but `System.String.Compare(System.String,System.String)` and `System.String.IndexOf(System.String)` default to **current culture**. This difference matters in two ways:
+Most `string` instance methods have overloads that accept a <xref:System.StringComparison> value. Methods such as <xref:System.String.Equals(System.String)?displayProperty=nameWithType> default to **ordinal**, but <xref:System.String.Compare(System.String,System.String)?displayProperty=nameWithType> and <xref:System.String.IndexOf(System.String)?displayProperty=nameWithType> default to **current culture**. This difference matters in two ways:
 
 - **Speed.** Ordinal comparison is a byte-for-byte test that runs in tight, vectorized loops. Culture-aware comparison consults a sort table, walks combining characters, and applies locale-specific rules. For the same input, it can be an order of magnitude slower.
 - **Correctness.** Culture-aware comparison can fold characters that you don't expect (Turkish `i`/`I`, German `ß` to `ss`, ligatures). This behavior is right for sorting names a user sees but wrong for parsing identifiers, paths, or protocol tokens.
 
-For machine-defined text, such as file names, URLs, HTTP headers, identifiers, and configuration keys, pass `System.StringComparison.Ordinal` or `System.StringComparison.OrdinalIgnoreCase` explicitly. Reserve culture-aware values for natural-language text shown to users. For comprehensive guidance, see Best practices for comparing strings in .NET.
+For machine-defined text, such as file names, URLs, HTTP headers, identifiers, and configuration keys, pass <xref:System.StringComparison.Ordinal?displayProperty=nameWithType> or <xref:System.StringComparison.OrdinalIgnoreCase?displayProperty=nameWithType> explicitly. Reserve culture-aware values for natural-language text shown to users. For comprehensive guidance, see [Best practices for comparing strings in .NET](../../../standard/base-types/best-practices-strings.md).
 
 ## See also
 
-- Regular expression language — quick reference
-- Best practices for comparing strings in .NET
-- Search strings
-- Split strings into substrings
-- `System.Text.RegularExpressions.Regex`
-- `System.MemoryExtensions`
-- `System.StringComparison`
+- [Regular expression language — quick reference](../../../standard/base-types/regular-expression-language-quick-reference.md)
+- [Best practices for comparing strings in .NET](../../../standard/base-types/best-practices-strings.md)
+- [Search strings](../../fundamentals/strings/common-tasks/search.md)
+- [Split strings into substrings](../../fundamentals/strings/common-tasks/split.md)
+- <xref:System.Text.RegularExpressions.Regex?displayProperty=nameWithType>
+- <xref:System.MemoryExtensions?displayProperty=nameWithType>
+- <xref:System.StringComparison?displayProperty=nameWithType>

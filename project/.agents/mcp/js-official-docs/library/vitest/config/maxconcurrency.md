@@ -1,10 +1,6 @@
 ---
-title: "maxConcurrency | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/maxconcurrency.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: maxConcurrency | Config
+outline: deep
 ---
 
 # maxConcurrency
@@ -15,4 +11,4 @@ license: "MIT"
 
 The maximum number of tests and hooks that can run at the same time when using `test.concurrent` or `describe.concurrent`.
 
-The hook execution order within a single group is also controlled by `sequence.hooks`. With `sequence.hooks: 'parallel'`, the execution is bounded by the same limit of `maxConcurrency`.
+The hook execution order within a single group is also controlled by [`sequence.hooks`](/config/sequence#sequence-hooks). With `sequence.hooks: 'parallel'`, the execution is bounded by the same limit of [`maxConcurrency`](/config/maxconcurrency).

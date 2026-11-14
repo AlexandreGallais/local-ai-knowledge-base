@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: COR_FIELD Structure"
 title: "COR_FIELD Structure"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cor-field-structure.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "COR_FIELD"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "COR_FIELD"
+helpviewer_keywords:
+  - "COR_FIELD structure [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # COR_FIELD Structure
 
 Provides information about a field in an object.
@@ -28,12 +36,14 @@ typedef struct COR_FIELD{
 |-------------|---------------------------------------------------------------------------------------|
 | `token`     | An `mdFieldDef` token that can be used to get field information.                      |
 | `offset`    | The offset, in bytes, to the field data in the object.                                |
-| `id`        | A COR_TYPEID value that identifies the type of this field. |
+| `id`        | A [COR_TYPEID](cor-typeid-structure.md) value that identifies the type of this field. |
 | `fieldType` | A CorElementType enumeration value that indicates the type of the field.              |
+
+## Remarks
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

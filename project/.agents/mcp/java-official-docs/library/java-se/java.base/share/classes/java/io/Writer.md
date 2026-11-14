@@ -1,12 +1,3 @@
----
-title: "Writer class (java.io)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/io/Writer.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Writer class (java.io)
 
 ```java
@@ -18,25 +9,18 @@ subclass must implement are write(char[], int, int), flush(), and close().
 Most subclasses, however, will override some of the methods defined here in
 order to provide higher efficiency, additional functionality, or both.
 
-**See also:** BufferedWriter
+@see   BufferedWriter
+@see   CharArrayWriter
+@see   FilterWriter
+@see   OutputStreamWriter
+@see   FileWriter
+@see   PipedWriter
+@see   PrintWriter
+@see   StringWriter
+@see Reader
 
-**See also:** CharArrayWriter
-
-**See also:** FilterWriter
-
-**See also:** OutputStreamWriter
-
-**See also:** FileWriter
-
-**See also:** PipedWriter
-
-**See also:** PrintWriter
-
-**See also:** StringWriter
-
-**See also:** Reader
-
-**Since:** 1.1
+@author      Mark Reinhold
+@since       1.1
 
 ## Writer.nullWriter()
 
@@ -44,22 +28,23 @@ order to provide higher efficiency, additional functionality, or both.
 public static Writer nullWriter()
 ```
 
-Returns a new `Writer` which discards all characters.  The
+Returns a new {@code Writer} which discards all characters.  The
 returned stream is initially open.  The stream is closed by calling
-the `close()` method.  Subsequent calls to `close()` have
+the {@code close()} method.  Subsequent calls to {@code close()} have
 no effect.
 
- While the stream is open, the `append(char)`, `append(CharSequence)`, `append(CharSequence, int, int)`,
-`flush()`, `write(int)`, `write(char[])`, and
-`write(char[], int, int)` methods do nothing. After the stream
-has been closed, these methods all throw `IOException`.
+<p> While the stream is open, the {@code append(char)}, {@code
+append(CharSequence)}, {@code append(CharSequence, int, int)},
+{@code flush()}, {@code write(int)}, {@code write(char[])}, and
+{@code write(char[], int, int)} methods do nothing. After the stream
+has been closed, these methods all throw {@code IOException}.
 
- The object used to synchronize operations on the
-returned `Writer` is not specified.
+<p> The {@link #lock object} used to synchronize operations on the
+returned {@code Writer} is not specified.
 
-**Returns:** a `Writer` which discards all characters
+@return a {@code Writer} which discards all characters
 
-**Since:** 11
+@since 11
 
 ## Writer.lock
 
@@ -70,7 +55,7 @@ protected Object lock
 The object used to synchronize operations on this stream.  For
 efficiency, a character-stream object may use an object other than
 itself to protect critical sections.  A subclass should therefore use
-the object in this field rather than `this` or a synchronized
+the object in this field rather than {@code this} or a synchronized
 method.
 
 ## Writer.Writer()
@@ -91,9 +76,8 @@ protected Writer(Object lock)
 Creates a new character-stream writer whose critical sections will
 synchronize on the given object.
 
-Parameters:
-
-- `lock`: Object to synchronize on
+@param  lock
+        Object to synchronize on
 
 ## Writer.write(int)
 
@@ -105,16 +89,14 @@ Writes a single character.  The character to be written is contained in
 the 16 low-order bits of the given integer value; the 16 high-order bits
 are ignored.
 
- Subclasses that intend to support efficient single-character output
+<p> Subclasses that intend to support efficient single-character output
 should override this method.
 
-Parameters:
+@param  c
+        int specifying a character to be written
 
-- `c`: int specifying a character to be written
-
-Throws:
-
-- `IOException`: If an I/O error occurs
+@throws  IOException
+         If an I/O error occurs
 
 ## Writer.write(char[])
 
@@ -124,13 +106,11 @@ public void write(char[] cbuf) throws IOException
 
 Writes an array of characters.
 
-Parameters:
+@param  cbuf
+        Array of characters to be written
 
-- `cbuf`: Array of characters to be written
-
-Throws:
-
-- `IOException`: If an I/O error occurs
+@throws  IOException
+         If an I/O error occurs
 
 ## Writer.write(char[], int, int)
 
@@ -140,16 +120,23 @@ public abstract void write(char[] cbuf, int off, int len) throws IOException
 
 Writes a portion of an array of characters.
 
-Parameters:
+@param  cbuf
+        Array of characters
 
-- `cbuf`: Array of characters
-- `off`: Offset from which to start writing characters
-- `len`: Number of characters to write
+@param  off
+        Offset from which to start writing characters
 
-Throws:
+@param  len
+        Number of characters to write
 
-- `IndexOutOfBoundsException`: Implementations should throw this exception if `off` is negative, or `len` is negative, or `off + len` is negative or greater than the length of the given array
-- `IOException`: If an I/O error occurs
+@throws  IndexOutOfBoundsException
+         Implementations should throw this exception
+         if {@code off} is negative, or {@code len} is negative,
+         or {@code off + len} is negative or greater than the length
+         of the given array
+
+@throws  IOException
+         If an I/O error occurs
 
 ## Writer.write(String)
 
@@ -159,13 +146,11 @@ public void write(String str) throws IOException
 
 Writes a string.
 
-Parameters:
+@param  str
+        String to be written
 
-- `str`: String to be written
-
-Throws:
-
-- `IOException`: If an I/O error occurs
+@throws  IOException
+         If an I/O error occurs
 
 ## Writer.write(String, int, int)
 
@@ -175,20 +160,28 @@ public void write(String str, int off, int len) throws IOException
 
 Writes a portion of a string.
 
-Parameters:
-
-- `str`: A String
-- `off`: Offset from which to start writing characters
-- `len`: Number of characters to write
-
-**Implementation requirements:** The implementation in this class throws an
-`IndexOutOfBoundsException` for the indicated conditions;
+@implSpec
+The implementation in this class throws an
+{@code IndexOutOfBoundsException} for the indicated conditions;
 overriding methods may choose to do otherwise.
 
-Throws:
+@param  str
+        A String
 
-- `IndexOutOfBoundsException`: Implementations should throw this exception if `off` is negative, or `len` is negative, or `off + len` is negative or greater than the length of the given string
-- `IOException`: If an I/O error occurs
+@param  off
+        Offset from which to start writing characters
+
+@param  len
+        Number of characters to write
+
+@throws  IndexOutOfBoundsException
+         Implementations should throw this exception
+         if {@code off} is negative, or {@code len} is negative,
+         or {@code off + len} is negative or greater than the length
+         of the given string
+
+@throws  IOException
+         If an I/O error occurs
 
 ## Writer.append(CharSequence)
 
@@ -198,27 +191,31 @@ public Writer append(CharSequence csq) throws IOException
 
 Appends the specified character sequence to this writer.
 
- An invocation of this method of the form `out.append(csq)`
-when `csq` is not `null`, behaves in exactly the same way
+<p> An invocation of this method of the form {@code out.append(csq)}
+when {@code csq} is not {@code null}, behaves in exactly the same way
 as the invocation
 
- Depending on the specification of `toString` for the
-character sequence `csq`, the entire sequence may not be
-appended. For instance, invoking the `toString` method of a
+{@snippet lang=java :
+    out.write(csq.toString())
+}
+
+<p> Depending on the specification of {@code toString} for the
+character sequence {@code csq}, the entire sequence may not be
+appended. For instance, invoking the {@code toString} method of a
 character buffer will return a subsequence whose content depends upon
 the buffer's position and limit.
 
-Parameters:
+@param  csq
+        The character sequence to append.  If {@code csq} is
+        {@code null}, then the four characters {@code "null"} are
+        appended to this writer.
 
-- `csq`: The character sequence to append. If `csq` is `null`, then the four characters `"null"` are appended to this writer.
+@return  This writer
 
-**Returns:** This writer
+@throws  IOException
+         If an I/O error occurs
 
-**Since:** 1.5
-
-Throws:
-
-- `IOException`: If an I/O error occurs
+@since  1.5
 
 ## Writer.append(CharSequence, int, int)
 
@@ -228,25 +225,39 @@ public Writer append(CharSequence csq, int start, int end) throws IOException
 
 Appends a subsequence of the specified character sequence to this writer.
 
- An invocation of this method of the form
-`out.append(csq, start, end)` when `csq`
-is not `null` behaves in exactly the
+<p> An invocation of this method of the form
+{@code out.append(csq, start, end)} when {@code csq}
+is not {@code null} behaves in exactly the
 same way as the invocation
 
-Parameters:
+{@snippet lang=java :
+    out.write(csq.subSequence(start, end).toString())
+}
 
-- `csq`: The character sequence from which a subsequence will be appended. If `csq` is `null`, then characters will be appended as if `csq` contained the four characters `"null"`.
-- `start`: The index of the first character in the subsequence
-- `end`: The index of the character following the last character in the subsequence
+@param  csq
+        The character sequence from which a subsequence will be
+        appended.  If {@code csq} is {@code null}, then characters
+        will be appended as if {@code csq} contained the four
+        characters {@code "null"}.
 
-**Returns:** This writer
+@param  start
+        The index of the first character in the subsequence
 
-**Since:** 1.5
+@param  end
+        The index of the character following the last character in the
+        subsequence
 
-Throws:
+@return  This writer
 
-- `IndexOutOfBoundsException`: If `start` or `end` are negative, `start` is greater than `end`, or `end` is greater than `csq.length()`
-- `IOException`: If an I/O error occurs
+@throws  IndexOutOfBoundsException
+         If {@code start} or {@code end} are negative, {@code start}
+         is greater than {@code end}, or {@code end} is greater than
+         {@code csq.length()}
+
+@throws  IOException
+         If an I/O error occurs
+
+@since  1.5
 
 ## Writer.append(char)
 
@@ -256,20 +267,22 @@ public Writer append(char c) throws IOException
 
 Appends the specified character to this writer.
 
- An invocation of this method of the form `out.append(c)`
+<p> An invocation of this method of the form {@code out.append(c)}
 behaves in exactly the same way as the invocation
 
-Parameters:
+{@snippet lang=java :
+    out.write(c)
+}
 
-- `c`: The 16-bit character to append
+@param  c
+        The 16-bit character to append
 
-**Returns:** This writer
+@return  This writer
 
-**Since:** 1.5
+@throws  IOException
+         If an I/O error occurs
 
-Throws:
-
-- `IOException`: If an I/O error occurs
+@since 1.5
 
 ## Writer.flush()
 
@@ -283,15 +296,14 @@ intended destination.  Then, if that destination is another character or
 byte stream, flush it.  Thus one flush() invocation will flush all the
 buffers in a chain of Writers and OutputStreams.
 
- If the intended destination of this stream is an abstraction provided
+<p> If the intended destination of this stream is an abstraction provided
 by the underlying operating system, for example a file, then flushing the
 stream guarantees only that bytes previously written to the stream are
 passed to the operating system for writing; it does not guarantee that
 they are actually written to a physical device such as a disk drive.
 
-Throws:
-
-- `IOException`: If an I/O error occurs
+@throws  IOException
+         If an I/O error occurs
 
 ## Writer.close()
 
@@ -303,6 +315,5 @@ Closes the stream, flushing it first. Once the stream has been closed,
 further write() or flush() invocations will cause an IOException to be
 thrown. Closing a previously closed stream has no effect.
 
-Throws:
-
-- `IOException`: If an I/O error occurs
+@throws  IOException
+         If an I/O error occurs

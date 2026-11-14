@@ -1,12 +1,21 @@
 ---
 title: "Secure coding guidelines for .NET"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/security/secure-coding-guidelines.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Design code to work with .NET-enforced permissions and other enforcement to help prevent malicious code from accessing data or performing other actions.
+ms.date: 07/15/2020
+helpviewer_keywords: 
+  - "managed wrapper to native code implementation"
+  - "secure coding"
+  - "reusable components"
+  - "library code that exposes protected resources"
+  - "code, security"
+  - "code security"
+  - "secure coding, options"
+  - "components [.NET], security"
+  - "code security, options"
+  - "security-neutral code"
+  - "security [.NET], coding guidelines"
+ms.assetid: 4f882d94-262b-4494-b0a6-ba9ba1f5f177
 ---
-
 # Secure coding guidelines
 
 Most application code can simply use the infrastructure implemented by .NET. In some cases, additional application-specific security is required, built either by extending the security system or by using new ad hoc methods.
@@ -23,7 +32,7 @@ When designing and writing your code, you need to protect and limit the access t
 
 - Do not use partial trusted code.
 
-- Do not use the AllowPartiallyTrustedCaller attribute (APTCA).
+- Do not use the [AllowPartiallyTrustedCaller](xref:System.Security.AllowPartiallyTrustedCallersAttribute) attribute (APTCA).
 
 - Do not use .NET Remoting.
 
@@ -45,7 +54,7 @@ Code Access Security and Security-Transparent Code are not supported as a securi
 
 Security-neutral code does nothing explicit with the security system. It runs with whatever permissions it receives. Although applications that fail to catch security exceptions associated with protected operations (such as using files, networking, and so on) can result in an unhandled exception, security-neutral code still takes advantage of the security technologies in .NET.
 
-A security-neutral library has special characteristics that you should understand. Suppose your library provides API elements that use files or call unmanaged code. If your code doesn't have the corresponding permission, it won't run as described. However, even if the code has the permission, any application code that calls it must have the same permission in order to work. If the calling code doesn't have the right permission, a `System.Security.SecurityException` appears as a result of the code access security stack walk.
+A security-neutral library has special characteristics that you should understand. Suppose your library provides API elements that use files or call unmanaged code. If your code doesn't have the corresponding permission, it won't run as described. However, even if the code has the permission, any application code that calls it must have the same permission in order to work. If the calling code doesn't have the right permission, a <xref:System.Security.SecurityException> appears as a result of the code access security stack walk.
 
 ## Application code that isn't a reusable component
 
@@ -65,9 +74,9 @@ The following approach is the most powerful and hence potentially dangerous (if 
 
 ## See also
 
-- Securing State Data
-- Security and User Input
-- Security and Race Conditions
-- Security and On-the-Fly Code Generation
-- Role-Based Security
-- ASP.NET Core Security
+- [Securing State Data](securing-state-data.md)
+- [Security and User Input](security-and-user-input.md)
+- [Security and Race Conditions](security-and-race-conditions.md)
+- [Security and On-the-Fly Code Generation](security-and-on-the-fly-code-generation.md)
+- [Role-Based Security](role-based-security.md)
+- [ASP.NET Core Security](/aspnet/core/security/)

@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugHeapValue2::CreateHandle Method"
 title: "ICorDebugHeapValue2::CreateHandle Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugheapvalue2-createhandle-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugHeapValue2.CreateHandle"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugHeapValue2::CreateHandle"
+helpviewer_keywords:
+  - "CreateHandle method [.NET debugging]"
+  - "ICorDebugHeapValue2::CreateHandle method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugHeapValue2::CreateHandle Method
 
 Creates a handle of the specified type for the heap value represented by this ICorDebugHeapValue2 object.
@@ -36,7 +45,7 @@ Multiple calls to this function for the same heap value will create multiple han
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

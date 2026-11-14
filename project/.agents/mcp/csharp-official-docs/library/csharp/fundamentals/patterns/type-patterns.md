@@ -1,16 +1,15 @@
 ---
 title: "Type patterns"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/fundamentals/patterns/type-patterns.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn when to use a C# type pattern for a yes-or-no run-time type test without declaring a variable.
+ms.date: 09/15/2026
+ms.topic: concept-article
+ai-usage: ai-assisted
 ---
 
 # Type patterns
 
-> **Tip:**
-> This article is part of the **Fundamentals** section for developers who already know at least one programming language and are learning C#. Start with the pattern matching overview if patterns are new to you. For complete compatibility rules, see declaration and type patterns in the language reference.
+> [!TIP]
+> This article is part of the **Fundamentals** section for developers who already know at least one programming language and are learning C#. Start with the [pattern matching overview](pattern-matching.md) if patterns are new to you. For complete compatibility rules, see [declaration and type patterns](../../language-reference/operators/patterns.md#declaration-and-type-patterns) in the language reference.
 
 A *type pattern* is applied to an input expression. C# evaluates the expression, then tests whether the resulting value is non-null and its run-time type is compatible with the specified type. A type pattern reports only whether the type test succeeds. It doesn't declare a variable.
 
@@ -18,369 +17,45 @@ A *type pattern* is applied to an input expression. C# evaluates the expression,
 
 In a delivery system, `IRouteStop` is a capability contract for destinations accepted by route planning. `CanRoute` tests whether the evaluated destination has that capability, and its Boolean result determines whether the destination enters the route-planning workflow. The workflow needs only a yes-or-no answer and doesn't read any route-stop members, so a type pattern without a captured variable fits.
 
-```csharp
-static class TypePatterns
-{
-    public static void Run()
-    {
-        Console.WriteLine(CanRoute(new CustomerAddress("15 Pine Street"))
-            ? "Add the destination to the route plan."
-            : "Reject the destination.");
-        ShowCompatibility();
-        Console.WriteLine(RouteRequest(new PasswordResetRequest()));
+:::code language="csharp" source="snippets/patterns/TypePatterns.cs" ID="TypePattern":::
 
-        ShowConfidentialBatchHandling();
-    }
+The input expression is `destination`, and `IRouteStop` is the type being tested. Choose a type pattern when the answer is only yes or no. If the matching branch needs to read an address or call another member through `IRouteStop`, choose a [declaration pattern](declaration-constant-var-patterns.md#test-and-capture-a-type-with-a-declaration-pattern) instead so the branch has a variable of that type.
 
-    static bool CanRoute(object? destination) =>
-        destination is IRouteStop;
-
-    static string RouteRequest(object request) =>
-        request switch
-        {
-            PasswordResetRequest => "<example-value>",
-            BillingQuestion => "Billing queue",
-            SupportRequest => "General support queue",
-            _ => "Intake queue"
-        };
-
-    interface IRouteStop { }
-
-    abstract class RouteStop(string street) : IRouteStop
-    {
-        public string Street { get; } = street;
-
-        public string GetDisplayName() => Street;
-    }
-
-    sealed class ExpressRouteStop(string street) : RouteStop(street)
-    {
-    }
-
-    static void ShowCompatibility()
-    {
-        object destination = new ExpressRouteStop("8 Oak Avenue");
-
-        Console.WriteLine($"Exact class: {destination is ExpressRouteStop}");
-        Console.WriteLine($"Base class: {destination is RouteStop}");
-        Console.WriteLine($"Interface: {destination is IRouteStop}");
-    }
-
-    static void ShowConfidentialBatchHandling()
-    {
-        object[] incomingRequests = [new BillingQuestion(), new ConfidentialRequest()];
-        bool requiresConfidentialHandling =
-            ContainsRequestOfType<ConfidentialRequest>(incomingRequests);
-
-        Console.WriteLine(requiresConfidentialHandling
-            ? "Send the entire batch to confidential handling."
-            : "Send the batch to standard handling.");
-    }
-
-    static bool ContainsRequestOfType<TRequest>(IEnumerable<object> requests)
-    {
-        foreach (object request in requests)
-        {
-            if (request is TRequest)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    sealed class CustomerAddress(string street) : IRouteStop
-    {
-        public string Street { get; } = street;
-    }
-
-    abstract record SupportRequest;
-    sealed record PasswordResetRequest : SupportRequest;
-    sealed record BillingQuestion : SupportRequest;
-    sealed record ConfidentialRequest : SupportRequest;
-}
-```
-The input expression is `destination`, and `IRouteStop` is the type being tested. Choose a type pattern when the answer is only yes or no. If the matching branch needs to read an address or call another member through `IRouteStop`, choose a declaration pattern instead so the branch has a variable of that type.
-
-> **Note:**
+> [!NOTE]
 > You might also see `destination is IRouteStop _`. That syntax is a declaration pattern in which `_` means that no variable is retained. It performs the same type test when both forms are valid, but `destination is IRouteStop` states the test-only intent more directly.
 
 ## Match classes and interfaces
 
 In the delivery system, `IRouteStop` defines the capability contract for route-planning destinations, while `RouteStop` is a base class that provides common route-stop data and implementation. `ExpressRouteStop` is a specialized class derived from `RouteStop`. The example tests one evaluated value so its output can demonstrate all three compatible types. Each test needs only a Boolean result, so no captured variable is needed.
 
-```csharp
-static class TypePatterns
-{
-    public static void Run()
-    {
-        Console.WriteLine(CanRoute(new CustomerAddress("15 Pine Street"))
-            ? "Add the destination to the route plan."
-            : "Reject the destination.");
-        ShowCompatibility();
-        Console.WriteLine(RouteRequest(new PasswordResetRequest()));
+:::code language="csharp" source="snippets/patterns/TypePatterns.cs" ID="ClassAndInterface":::
 
-        ShowConfidentialBatchHandling();
-    }
-
-    static bool CanRoute(object? destination) =>
-        destination is IRouteStop;
-
-    static string RouteRequest(object request) =>
-        request switch
-        {
-            PasswordResetRequest => "<example-value>",
-            BillingQuestion => "Billing queue",
-            SupportRequest => "General support queue",
-            _ => "Intake queue"
-        };
-
-    interface IRouteStop { }
-
-    abstract class RouteStop(string street) : IRouteStop
-    {
-        public string Street { get; } = street;
-
-        public string GetDisplayName() => Street;
-    }
-
-    sealed class ExpressRouteStop(string street) : RouteStop(street)
-    {
-    }
-
-    static void ShowCompatibility()
-    {
-        object destination = new ExpressRouteStop("8 Oak Avenue");
-
-        Console.WriteLine($"Exact class: {destination is ExpressRouteStop}");
-        Console.WriteLine($"Base class: {destination is RouteStop}");
-        Console.WriteLine($"Interface: {destination is IRouteStop}");
-    }
-
-    static void ShowConfidentialBatchHandling()
-    {
-        object[] incomingRequests = [new BillingQuestion(), new ConfidentialRequest()];
-        bool requiresConfidentialHandling =
-            ContainsRequestOfType<ConfidentialRequest>(incomingRequests);
-
-        Console.WriteLine(requiresConfidentialHandling
-            ? "Send the entire batch to confidential handling."
-            : "Send the batch to standard handling.");
-    }
-
-    static bool ContainsRequestOfType<TRequest>(IEnumerable<object> requests)
-    {
-        foreach (object request in requests)
-        {
-            if (request is TRequest)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    sealed class CustomerAddress(string street) : IRouteStop
-    {
-        public string Street { get; } = street;
-    }
-
-    abstract record SupportRequest;
-    sealed record PasswordResetRequest : SupportRequest;
-    sealed record BillingQuestion : SupportRequest;
-    sealed record ConfidentialRequest : SupportRequest;
-}
-```
 The evaluated value is an `ExpressRouteStop`. The output shows that it matches its exact class, its `RouteStop` base class, and the `IRouteStop` interface that `RouteStop` implements.
 
-For detailed compatibility rules and edge cases, see the type pattern reference.
+For detailed compatibility rules and edge cases, see the [type pattern reference](../../language-reference/operators/patterns.md#declaration-and-type-patterns).
 
 ## Route several types
 
 In a support system, `SupportRequest` is the base class for specialized request classes such as `PasswordResetRequest` and `BillingQuestion`. A *switch arm* pairs a pattern with the result to return when that pattern matches. Each arm returns the name of a processing queue, and the final arm provides a fallback queue for other evaluated values. The selected queue depends only on the run-time type of the evaluated value, so type patterns fit because no request member is read.
 
-```csharp
-static class TypePatterns
-{
-    public static void Run()
-    {
-        Console.WriteLine(CanRoute(new CustomerAddress("15 Pine Street"))
-            ? "Add the destination to the route plan."
-            : "Reject the destination.");
-        ShowCompatibility();
-        Console.WriteLine(RouteRequest(new PasswordResetRequest()));
+:::code language="csharp" source="snippets/patterns/TypePatterns.cs" ID="TypePatternSwitch":::
 
-        ShowConfidentialBatchHandling();
-    }
-
-    static bool CanRoute(object? destination) =>
-        destination is IRouteStop;
-
-    static string RouteRequest(object request) =>
-        request switch
-        {
-            PasswordResetRequest => "<example-value>",
-            BillingQuestion => "Billing queue",
-            SupportRequest => "General support queue",
-            _ => "Intake queue"
-        };
-
-    interface IRouteStop { }
-
-    abstract class RouteStop(string street) : IRouteStop
-    {
-        public string Street { get; } = street;
-
-        public string GetDisplayName() => Street;
-    }
-
-    sealed class ExpressRouteStop(string street) : RouteStop(street)
-    {
-    }
-
-    static void ShowCompatibility()
-    {
-        object destination = new ExpressRouteStop("8 Oak Avenue");
-
-        Console.WriteLine($"Exact class: {destination is ExpressRouteStop}");
-        Console.WriteLine($"Base class: {destination is RouteStop}");
-        Console.WriteLine($"Interface: {destination is IRouteStop}");
-    }
-
-    static void ShowConfidentialBatchHandling()
-    {
-        object[] incomingRequests = [new BillingQuestion(), new ConfidentialRequest()];
-        bool requiresConfidentialHandling =
-            ContainsRequestOfType<ConfidentialRequest>(incomingRequests);
-
-        Console.WriteLine(requiresConfidentialHandling
-            ? "Send the entire batch to confidential handling."
-            : "Send the batch to standard handling.");
-    }
-
-    static bool ContainsRequestOfType<TRequest>(IEnumerable<object> requests)
-    {
-        foreach (object request in requests)
-        {
-            if (request is TRequest)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    sealed class CustomerAddress(string street) : IRouteStop
-    {
-        public string Street { get; } = street;
-    }
-
-    abstract record SupportRequest;
-    sealed record PasswordResetRequest : SupportRequest;
-    sealed record BillingQuestion : SupportRequest;
-    sealed record ConfidentialRequest : SupportRequest;
-}
-```
 Each arm answers a type question and returns the queue that handles that request. If an arm needs to read request members, use a declaration pattern to capture the matching value in a variable.
 
 Switch arms are considered from top to bottom. Put a specialized class before its base class. Otherwise, the base-class arm can match every instance of the specialized class, which makes the later arm unreachable.
 
 ## Optional: use a type parameter as the tested type
 
-This optional example builds on generic types and methods. A *type parameter* such as `TRequest` is a placeholder for a type that the caller supplies. An incoming-request batch can contain several request types, and the caller supplies `ConfidentialRequest` to test whether any request requires confidential handling. The Boolean result selects confidential handling for the entire batch and produces a visible status message. A type pattern with a type parameter fits because only the existence of a matching request matters, so the matching object doesn't need to be retained.
+This optional example builds on [generic types and methods](../types/generics.md). A *type parameter* such as `TRequest` is a placeholder for a type that the caller supplies. An incoming-request batch can contain several request types, and the caller supplies `ConfidentialRequest` to test whether any request requires confidential handling. The Boolean result selects confidential handling for the entire batch and produces a visible status message. A type pattern with a type parameter fits because only the existence of a matching request matters, so the matching object doesn't need to be retained.
 
-```csharp
-static class TypePatterns
-{
-    public static void Run()
-    {
-        Console.WriteLine(CanRoute(new CustomerAddress("15 Pine Street"))
-            ? "Add the destination to the route plan."
-            : "Reject the destination.");
-        ShowCompatibility();
-        Console.WriteLine(RouteRequest(new PasswordResetRequest()));
+:::code language="csharp" source="snippets/patterns/TypePatterns.cs" ID="GenericTypePattern":::
 
-        ShowConfidentialBatchHandling();
-    }
-
-    static bool CanRoute(object? destination) =>
-        destination is IRouteStop;
-
-    static string RouteRequest(object request) =>
-        request switch
-        {
-            PasswordResetRequest => "<example-value>",
-            BillingQuestion => "Billing queue",
-            SupportRequest => "General support queue",
-            _ => "Intake queue"
-        };
-
-    interface IRouteStop { }
-
-    abstract class RouteStop(string street) : IRouteStop
-    {
-        public string Street { get; } = street;
-
-        public string GetDisplayName() => Street;
-    }
-
-    sealed class ExpressRouteStop(string street) : RouteStop(street)
-    {
-    }
-
-    static void ShowCompatibility()
-    {
-        object destination = new ExpressRouteStop("8 Oak Avenue");
-
-        Console.WriteLine($"Exact class: {destination is ExpressRouteStop}");
-        Console.WriteLine($"Base class: {destination is RouteStop}");
-        Console.WriteLine($"Interface: {destination is IRouteStop}");
-    }
-
-    static void ShowConfidentialBatchHandling()
-    {
-        object[] incomingRequests = [new BillingQuestion(), new ConfidentialRequest()];
-        bool requiresConfidentialHandling =
-            ContainsRequestOfType<ConfidentialRequest>(incomingRequests);
-
-        Console.WriteLine(requiresConfidentialHandling
-            ? "Send the entire batch to confidential handling."
-            : "Send the batch to standard handling.");
-    }
-
-    static bool ContainsRequestOfType<TRequest>(IEnumerable<object> requests)
-    {
-        foreach (object request in requests)
-        {
-            if (request is TRequest)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    sealed class CustomerAddress(string street) : IRouteStop
-    {
-        public string Street { get; } = street;
-    }
-
-    abstract record SupportRequest;
-    sealed record PasswordResetRequest : SupportRequest;
-    sealed record BillingQuestion : SupportRequest;
-    sealed record ConfidentialRequest : SupportRequest;
-}
-```
 If the caller needed the matching request itself, a search or filter operation that returns matching items would be more appropriate.
 
 ## See also
 
-- Pattern matching overview
-- Declaration, constant, and `var` patterns
-- Generic types and methods
-- Type-testing and cast operators
-- Type pattern reference
+- [Pattern matching overview](pattern-matching.md)
+- [Declaration, constant, and `var` patterns](declaration-constant-var-patterns.md)
+- [Generic types and methods](../types/generics.md)
+- [Type-testing and cast operators](../../language-reference/operators/type-testing-and-cast.md)
+- [Type pattern reference](../../language-reference/operators/patterns.md#declaration-and-type-patterns)

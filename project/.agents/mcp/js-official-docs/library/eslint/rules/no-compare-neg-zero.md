@@ -1,13 +1,9 @@
 ---
-title: "no-compare-neg-zero"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-compare-neg-zero.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-compare-neg-zero
+rule_type: problem
 ---
 
-# no-compare-neg-zero
+
 
 ## Rule Details
 
@@ -15,7 +11,7 @@ The rule should warn against code that tries to compare against `-0`, since that
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint no-compare-neg-zero: "error" */
@@ -25,9 +21,11 @@ if (x === -0) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-compare-neg-zero: "error" */
@@ -37,7 +35,9 @@ if (x === 0) {
 }
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /* eslint no-compare-neg-zero: "error" */
@@ -46,6 +46,8 @@ if (Object.is(x, -0)) {
     // doSomething()...
 }
 ```
+
+:::
 
 ## Options
 

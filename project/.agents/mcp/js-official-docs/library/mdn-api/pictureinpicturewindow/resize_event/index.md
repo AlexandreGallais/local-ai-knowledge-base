@@ -1,0 +1,71 @@
+---
+title: "PictureInPictureWindow: resize event"
+short-title: resize
+slug: Web/API/PictureInPictureWindow/resize_event
+page-type: web-api-event
+browser-compat: api.PictureInPictureWindow.resize_event
+---
+
+{{APIRef("Picture-in-Picture API")}}
+
+The **`resize`** event fires when the floating video window has been resized.
+
+This event is not cancelable and does not bubble.
+
+## Syntax
+
+Use the event name in {{domxref("EventTarget/addEventListener", "addEventListener()")}}:
+
+```js-nolint
+addEventListener("resize", (event) => { })
+```
+
+Alternatively, assign to the [event handler property](/en-US/docs/Web/API/Document_Object_Model/Events#using_onevent_properties) of the interface:
+
+```js-nolint
+onresize = (event) => { }
+```
+
+## Event type
+
+A {{domxref("PictureInPictureEvent")}}. Inherits from {{domxref("Event")}}.
+
+{{InheritanceDiagram("PictureInPictureEvent")}}
+
+## Examples
+
+### Window size logger
+
+```html
+<p>Resize the floating video window to fire the <code>resize</code> event.</p>
+<p>Window height: <span id="height"></span></p>
+<p>Window width: <span id="width"></span></p>
+<video id="video" src="" muted autoplay></video>
+```
+
+```js
+const video = document.querySelector("#video");
+const heightOutput = document.querySelector("#height");
+const widthOutput = document.querySelector("#width");
+
+function resize(evt) {
+  heightOutput.textContent = evt.target.height;
+  widthOutput.textContent = evt.target.width;
+}
+
+video.requestPictureInPicture().then((pictureInPictureWindow) => {
+  // Use onresize (but note that this replaces other event listeners
+  // added using onresize, if any)
+  pictureInPictureWindow.onresize = resize;
+  // or
+  pictureInPictureWindow.addEventListener("resize", resize);
+});
+```
+
+## Specifications
+
+{{Specifications}}
+
+## Browser compatibility
+
+{{Compat}}

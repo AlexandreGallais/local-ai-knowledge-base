@@ -1,10 +1,9 @@
 ---
-title: "dnim query products command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/additional-tools/dnim-cli-query-products.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dnim query products command
+description: The query products command provides information about specific .NET products.
+author: joeloff
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # dnim query products
@@ -31,62 +30,32 @@ dnim-win-[x86|x64|arm64] query products -?|-h|--help
 
 The command provides a summary of .NET products, including the latest versions, support phase and expected end-of-life date.
 
-> **Important:**
+> [!IMPORTANT]
 > The information provided by this command depends on the published releases JSON data.
 
 ## Options
 
-- **`-a|--accept-license`**
+- [!INCLUDE [accept-license](includes/dnim-cli-accept-license.md)]
 
-Automatically accept the license agreement. On first run, the user will be prompted to accept the license. The command will fail if the verbosity is set to `quiet` and the tool is executed for the first time. Administrators should include this option when deploying DNIM across their network.
+- [!INCLUDE [except-product-version](includes/dnim-cli-except-product-version.md)]
+  
+- [!INCLUDE [except-support-phase](includes/dnim-cli-except-support-phase.md)]
 
-- **`--epv|--except-product-version <PRODUCT_VERSION>`**
+- [!INCLUDE [output-file](includes/dnim-cli-output-file.md)]
 
-Exclude installations that match the specified product version. Product versions contain a major and minor version, such as `2.2` or `5.0`. Specify the option once for each product version.
+- [!INCLUDE [offline](includes/dnim-cli-offline.md)]
 
-> **Note:**
-> The `--product-version` and `--except-product-version` options are mutually exclusive.
+- [!INCLUDE [output-format](includes/dnim-cli-output-format.md)]
 
-- **`--esp|--except-support-phase <active|eol|golive|maintenance|preview>`**
+- [!INCLUDE [product-version](includes/dnim-cli-product-version.md)]
 
-Exclude installations that match the specified support phase. Specify the option once for each support phase.
+- [!INCLUDE [support-phase](includes/dnim-cli-support-phase.md)]
 
-> **Note:**
-> The `--support-phase` and `--except-support-phase` options are mutually exclusive.
-
-- **`-o|--output-file <OUTPUT_FILE>`**
-
-Specify the full path of the file where DNIM writes the command results.
-
-- **`--offline <LAYOUT_DIRECTORY>`**
-
-Use files from the specified layout directory instead of retrieving required files from the internet.
-
-- **`--output-format <text|csv|html|json>`**
-
-Specify the output format for command results. The default format is `csv`.
-
-- **`--pv|--product-version <PRODUCT_VERSION>`**
-
-Include installations that match the specified product version. Product versions contain a major and minor version, such as `2.2` or `5.0`. Specify the option once for each product version. By default, all known product versions are included.
-
-> **Note:**
-> The `--product-version` and `--except-product-version` options are mutually exclusive.
-
-- **`--sp|--support-phase <active|eol|golive|maintenance|preview>`**
-
-Include only products, releases, or installations that match the specified support phase. Specify the option once for each support phase. By default, all support phases are included.
-
-> **Note:**
-> The `--support-phase` and `--except-support-phase` options are mutually exclusive.
-
-- **`-v|--verbosity <quiet|normal|diagnostic>`**
-
-Set the console output verbosity. Log files always contain diagnostic output. The default value is `normal`.
+- [!INCLUDE [verbosity](includes/dnim-cli-verbosity.md)]
 
 ## Results
 
-The example below lists all products whose support phase is not `eol`. The security update column indicates whether the latest release addressed security vulnerabilities. The `query releases` command can be used to obtain a list of vulnerabilities addressed by the latest release.
+The example below lists all products whose support phase is not `eol`. The security update column indicates whether the latest release addressed security vulnerabilities. The [`query releases`](dnim-cli-query-releases.md) command can be used to obtain a list of vulnerabilities addressed by the latest release.
 
 | Version | Support | Release type | Latest release | Latest release date | Latest SDK | Latest runtime | End of support | Security update |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -117,4 +86,4 @@ The example below lists all products whose support phase is not `eol`. The secur
 
 ## See also
 
-The `query-releases` command.
+The [`query-releases`](dnim-cli-query-releases.md) command.

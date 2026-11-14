@@ -1,14 +1,9 @@
 ---
-title: "no-mixed-spaces-and-tabs"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-mixed-spaces-and-tabs.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-mixed-spaces-and-tabs
+rule_type: layout
+further_reading:
+- https://www.emacswiki.org/emacs/SmartTabs
 ---
-
-# no-mixed-spaces-and-tabs
-
 Most code conventions require either tabs or spaces be used for indentation. As such, it's usually an error if a single line of code is indented with both tabs and spaces.
 
 ## Rule Details
@@ -17,7 +12,9 @@ This rule disallows mixed spaces and tabs for indentation.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+<!-- markdownlint-capture -->
+<!-- markdownlint-disable MD010 -->
+::: incorrect
 
 ```js
 /*eslint no-mixed-spaces-and-tabs: "error"*/
@@ -32,9 +29,14 @@ function main() {
 }
 ```
 
+:::
+<!-- markdownlint-restore -->
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+<!-- markdownlint-capture -->
+<!-- markdownlint-disable MD010 -->
+::: correct
 
 ```js
 /*eslint no-mixed-spaces-and-tabs: "error"*/
@@ -43,6 +45,9 @@ function add(x, y) {
 	return x + y;
 }
 ```
+
+:::
+<!-- markdownlint-restore -->
 
 ## Options
 
@@ -54,7 +59,9 @@ This rule has a string option.
 
 Examples of **correct** code for this rule with the `"smart-tabs"` option:
 
-**Correct:**
+<!-- markdownlint-capture -->
+<!-- markdownlint-disable MD010 -->
+::: correct
 
 ```js
 /*eslint no-mixed-spaces-and-tabs: ["error", "smart-tabs"]*/
@@ -64,3 +71,6 @@ function main() {
 	    y = 7;
 }
 ```
+
+:::
+<!-- markdownlint-restore -->

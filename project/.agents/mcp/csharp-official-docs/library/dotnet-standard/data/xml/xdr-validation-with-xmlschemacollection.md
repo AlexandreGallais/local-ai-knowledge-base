@@ -1,18 +1,18 @@
 ---
+description: "Learn more about: XDR Validation with XmlSchemaCollection"
 title: "XDR Validation with XmlSchemaCollection"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/xdr-validation-with-xmlschemacollection.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: 00833027-1428-4586-83c1-42f5de3323d1
 ---
-
 # XDR Validation with XmlSchemaCollection
 
 If the XML-Data Reduced (XDR) schema you are validating against is stored in the **XmlSchemaCollection**, it is associated with the namespace URI specified when the schema was added to the collection. **XmlValidatingReader** maps the namespace URI in the XML document to the schema that corresponds to that URI in the collection.
 
-> **Important:**
-> The `System.Xml.Schema.XmlSchemaCollection` class is now obsolete and has been replaced with the `System.Xml.Schema.XmlSchemaSet` class. For more information about the `System.Xml.Schema.XmlSchemaSet` class see, XmlSchemaSet for Schema Compilation.
+> [!IMPORTANT]
+> The <xref:System.Xml.Schema.XmlSchemaCollection> class is now obsolete and has been replaced with the <xref:System.Xml.Schema.XmlSchemaSet> class. For more information about the <xref:System.Xml.Schema.XmlSchemaSet> class see, [XmlSchemaSet for Schema Compilation](xmlschemaset-for-schema-compilation.md).
 
 For example, if the root element of the XML document is `<bookstore xmlns="urn:newbooks-schema">`, when the schema is added to the **XmlSchemaCollection** it references the same namespace, as follows:
 
@@ -150,5 +150,5 @@ The following outlines the contents of the XDR schema file, *HeadCount.xdr*, to 
 
 ## See also
 
-- `System.Xml.XmlValidatingReader.ValidationType*`
-- XmlSchemaCollection Schema Compilation
+- <xref:System.Xml.XmlValidatingReader.ValidationType*>
+- [XmlSchemaCollection Schema Compilation](xmlschemacollection-schema-compilation.md)

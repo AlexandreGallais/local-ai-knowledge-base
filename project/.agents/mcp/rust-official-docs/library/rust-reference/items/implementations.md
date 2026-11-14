@@ -1,17 +1,8 @@
----
-title: "Implementations"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/items/implementations.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[items.impl]
 # Implementations
 
 r[items.impl.syntax]
-```grammar
+```grammar,items
 Implementation -> InherentImpl | TraitImpl
 
 InherentImpl ->
@@ -62,7 +53,7 @@ The [path] to an associated item is any path to the implementing type, followed 
 r[items.impl.inherent.coherence]
 A type can also have multiple inherent implementations. An implementing type must be defined within the same crate as the original type definition.
 
-```rust
+``` rust
 pub mod color {
     pub struct Color(pub u8, pub u8, pub u8);
 
@@ -101,6 +92,8 @@ r[items.impl.trait]
 
 r[items.impl.trait.intro]
 A _trait implementation_ is defined like an inherent implementation except that the optional generic type declarations are followed by a [trait], followed by the keyword `for`, followed by a path to a nominal type.
+
+<!-- To understand this, you have to back-reference to the previous section. :( -->
 
 r[items.impl.trait.implemented-trait]
 The trait is known as the _implemented trait_. The implementing type implements the implemented trait.
@@ -153,7 +146,7 @@ r[items.impl.trait.coherence.intro]
 A trait implementation is considered incoherent if either the orphan rules check fails or there are overlapping implementation instances.
 
 r[items.impl.trait.coherence.overlapping]
-Two trait implementations overlap when there is a non-empty intersection of the traits the implementation is for, the implementations can be instantiated with the same type.
+Two trait implementations overlap when there is a non-empty intersection of the traits the implementation is for, the implementations can be instantiated with the same type. <!-- This is probably wrong? Source: No two implementations can be instantiable with the same set of types for the input type parameters. -->
 
 r[items.impl.trait.orphan-rule]
 #### Orphan rules
@@ -234,7 +227,7 @@ impl<T, U> GenericStruct<U> where (U, isize): HasAssocType<Ty = T> { /* ... */ }
 
 Examples of non-constraining situations:
 
-```rust
+```rust,compile_fail
 // The rest of these are errors, since they have type or const parameters that
 // do not constrain.
 
@@ -265,7 +258,7 @@ impl<'a> Struct {}
 
 Example of a disallowed unconstraining lifetime parameter:
 
-```rust
+```rust,compile_fail
 # struct Struct;
 # trait HasAssocType { type Ty; }
 impl<'a> HasAssocType for Struct {
@@ -277,3 +270,22 @@ r[items.impl.attributes]
 ## Attributes on implementations
 
 Implementations may contain outer [attributes] before the `impl` keyword and inner [attributes] inside the brackets that contain the associated items. Inner attributes must come before any associated items. The attributes that have meaning here are [`cfg`], [`deprecated`], [`doc`], and [the lint check attributes].
+
+[trait]: traits.md
+[associated constants]: associated-items.md#associated-constants
+[associated functions]: associated-items.md#associated-functions-and-methods
+[associated type]: associated-items.md#associated-types
+[attributes]: ../attributes.md
+[bounds]: ../trait-bounds.md
+[`cfg`]: ../conditional-compilation.md
+[`deprecated`]: ../attributes/diagnostics.md#the-deprecated-attribute
+[`doc`]: ../../rustdoc/the-doc-attribute.html
+[generic parameters]: generics.md
+[methods]: associated-items.md#methods
+[path]: ../paths.md
+[the lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
+[Unsafe traits]: traits.md#unsafe-traits
+[local trait]: ../glossary.md#local-trait
+[local type]: ../glossary.md#local-type
+[fundamental types]: ../glossary.md#fundamental-type-constructors
+[uncovered type]: ../glossary.md#uncovered-type

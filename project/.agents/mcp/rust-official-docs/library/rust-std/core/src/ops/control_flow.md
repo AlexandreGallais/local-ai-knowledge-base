@@ -1,12 +1,3 @@
----
-title: "core::ops::control_flow"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/ops/control_flow.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::ops::control_flow
 
 ## ControlFlow::is_break
@@ -19,7 +10,7 @@ Returns `true` if this is a `Break` variant.
 
 # Examples
 
-```rust
+```
 use std::ops::ControlFlow;
 
 assert!(ControlFlow::<&str, i32>::Break("Stop right there!").is_break());
@@ -36,7 +27,7 @@ Returns `true` if this is a `Continue` variant.
 
 # Examples
 
-```rust
+```
 use std::ops::ControlFlow;
 
 assert!(!ControlFlow::<&str, i32>::Break("Stop right there!").is_continue());
@@ -54,7 +45,7 @@ Converts the `ControlFlow` into an `Option` which is `Some` if the
 
 # Examples
 
-```rust
+```
 use std::ops::ControlFlow;
 
 assert_eq!(ControlFlow::<&str, i32>::Break("Stop right there!").break_value(), Some("Stop right there!"));
@@ -72,7 +63,7 @@ Converts the `ControlFlow` into a `Result` which is `Ok` if the
 
 # Examples
 
-```rust
+```
 use std::ops::ControlFlow;
 
 struct TreeNode<T> {
@@ -137,7 +128,7 @@ assert_eq!(res, Ok(&5));
 pub const fn map_break<T, F>(self, f: F) -> ControlFlow<T, C> where F: [const] FnOnce(B) -> T + [const] Destruct,
 ```
 
-Maps `ControlFlow` to `ControlFlow<T, C>` by applying a function
+Maps `ControlFlow<B, C>` to `ControlFlow<T, C>` by applying a function
 to the break value in case it exists.
 
 ## ControlFlow::continue_value
@@ -151,7 +142,7 @@ Converts the `ControlFlow` into an `Option` which is `Some` if the
 
 # Examples
 
-```rust
+```
 use std::ops::ControlFlow;
 
 assert_eq!(ControlFlow::<&str, i32>::Break("Stop right there!").continue_value(), None);
@@ -169,7 +160,7 @@ Converts the `ControlFlow` into a `Result` which is `Ok` if the
 
 # Examples
 
-```rust
+```
 use std::ops::ControlFlow;
 
 struct TreeNode<T> {
@@ -233,5 +224,5 @@ assert_eq!(res, Err("too big value detected"));
 pub const fn map_continue<T, F>(self, f: F) -> ControlFlow<B, T> where F: [const] FnOnce(C) -> T + [const] Destruct,
 ```
 
-Maps `ControlFlow` to `ControlFlow` by applying a function
+Maps `ControlFlow<B, C>` to `ControlFlow<B, T>` by applying a function
 to the continue value in case it exists.

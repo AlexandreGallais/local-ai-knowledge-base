@@ -1,23 +1,17 @@
----
-title: "no-non-function-verb-prefix"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-non-function-verb-prefix.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-non-function-verb-prefix
 
 📝 Disallow non-function values with function-style verb prefixes.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Names that start with function-style verbs like `get`, `set`, or `create` imply that the value is callable or constructable. This rule reports JavaScript and TypeScript bindings where the name starts with a configured verb but the non-nullish type is not always callable or constructable.
 
-This rule requires type-aware linting, including for JavaScript files. Both inferred types and JSDoc annotations are supported. Without type information, it does nothing.
+This rule requires [type-aware linting](https://typescript-eslint.io/getting-started/typed-linting/), including for JavaScript files. Both inferred types and JSDoc annotations are supported. Without type information, it does nothing.
 
 Object-literal property names and type members are ignored; class fields are checked.
 

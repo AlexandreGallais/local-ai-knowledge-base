@@ -1,12 +1,10 @@
 ---
-title: "Optimizing AOT deployments"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/deploying/native-aot/optimizing.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Optimizing AOT deployments
+description: Learn about optimizing the outputs of AOT compilation for size and speed.
+author: MichalStrehovsky
+ms.author: michals
+ms.date: 04/21/2023
 ---
-
 # Optimize AOT deployments
 
 The Native AOT publishing process generates a self-contained executable with a subset of the runtime libraries that are tailored specifically for your app. The compilation generally relies on static analysis of the application to generate the best possible output. However, the term "best possible" can have many meanings. Sometimes, you can improve the output of the compilation by providing hints to the publish process.
@@ -31,4 +29,4 @@ Setting `OptimizationPreference` to `Speed` instructs the publishing process to 
 
 ## Further size optimization options
 
-Since Native AOT deployments imply the use of trimming, it's possible to further improve the size of the application by specifying more trimming options. For example, the Trim framework library features section discusses how to disable library features such as globalization.
+Since Native AOT deployments imply the use of trimming, it's possible to further improve the size of the application by specifying more [trimming options](../trimming/trimming-options.md). For example, the [Trim framework library features section](../trimming/trimming-options.md#trim-framework-library-features) discusses how to disable library features such as globalization.

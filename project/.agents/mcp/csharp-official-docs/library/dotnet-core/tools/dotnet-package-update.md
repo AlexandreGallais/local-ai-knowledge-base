@@ -1,12 +1,9 @@
 ---
-title: "dotnet package update command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-package-update.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet package update command
+description: Update PackageReferences in a project.
+author: zivkan
+ms.date: 10/03/2025
 ---
-
 # dotnet package update
 
 **This article applies to:** ✔️ .NET 10 SDK and later versions
@@ -28,7 +25,7 @@ dotnet package update -h|--help
 ## Description
 
 The `dotnet package update` command updates packages used by projects.
-If NuGetAudit is enabled, it can also attempt to automatically update packages with known vulnerabilities to fixed versions.
+If [NuGetAudit](/nuget/concepts/auditing-packages) is enabled, it can also attempt to automatically update packages with known vulnerabilities to fixed versions.
 
 ### Warnings as Errors
 
@@ -36,7 +33,7 @@ If NuGetAudit is enabled, it can also attempt to automatically update packages w
 Using `--vulnerable` also does an implicit restore to find NuGetAudit warnings.
 However, if your project uses `WarningsAsErrors` or `TreatWarningsAsErrors`, NuGet's restore warnings can cause restore to fail, preventing the update from completing.
 
-We recommend taking advantage of MSBuild conditions and environment variables as a workaround until this feature request is implemented.
+We recommend taking advantage of MSBuild conditions and environment variables as a workaround until [this feature request](https://github.com/NuGet/Home/issues/14311) is implemented.
 For example, set `<TreatWarningsAsErrors Condition="'$(CustomCondition)' == ''">true</TreatWarningsAsErrors>` in your project, and then on most Linux and Mac shells you can run `CustomCondition=true dotnet package update`.
 On Windows Command Prompt and PowerShell, you will need to set the environment variable, run dotnet package update, then unset the environment variable as three separate commands.
 
@@ -47,33 +44,27 @@ On Windows Command Prompt and PowerShell, you will need to set the environment v
   An optional list of packages to update.
   When no packages are provided, the command will attempt to update all packages referenced by the project.
   Packages can be a package name optionally followed by an `@` and a version number.
-  For example, `dotnet package update Contoso.Utilities` or `dotnet package update user@example.com`.
+  For example, `dotnet package update Contoso.Utilities` or `dotnet package update Contoso.Utilities@3.2.1`.
   When no version is provided, it will find the highest version available on the configured package sources.
 
 ## Options
 
-- **`--interactive`**
+- [!INCLUDE [interactive](includes/cli-interactive.md)]
 
-Allows the command to stop and wait for user input or action. For example, to complete authentication.
-
-- **`--project `**
+- **`--project <path>`**
 
     The project which packages should be updated in.
     If a directory is provided, it searches for project and solution files in the directory.
     Defaults to the current working directory.
 
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+- [!INCLUDE [verbosity](includes/cli-verbosity.md)]
 
 - **`--vulnerable`**
 
     If restore reports any packages as having known vulnerabilities, this command will upgrade those packages.
     Using this option will upgrade packages to the lowest version that is higher than the currently referenced version, that does not have any known vulnerabilities.
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Examples
 
@@ -95,7 +86,7 @@ Prints out a description of how to use the command.
 - Update Contoso.Utilities to the highest version available, and Fabrikam.WebApi to version 1.2.3
 
     ```dotnetcli
-    dotnet package update Contoso.Utilities user@example.com
+    dotnet package update Contoso.Utilities Fabrikam.WebApi@1.2.3
     ```
 
     ```output

@@ -1,12 +1,3 @@
----
-title: "std::sync::once"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sync/once.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::sync::once
 
 A "once initialization" primitive
@@ -24,15 +15,15 @@ A low-level synchronization primitive for one-time global execution.
 
 Previously this was the only "execute once" synchronization in `std`.
 Other libraries implemented novel synchronizing types with `Once`, like
-`OnceLock<T>` or `LazyLock<T, F>`, before those were added to `std`.
+[`OnceLock<T>`] or [`LazyLock<T, F>`], before those were added to `std`.
 `OnceLock<T>` in particular supersedes `Once` in functionality and should
 be preferred for the common case where the `Once` is associated with data.
 
-This type can only be constructed with `Once::new()`.
+This type can only be constructed with [`Once::new()`].
 
 # Examples
 
-```rust
+```
 use std::sync::Once;
 
 static START: Once = Once::new();
@@ -42,14 +33,17 @@ START.call_once(|| {
 });
 ```
 
+[`OnceLock<T>`]: crate::sync::OnceLock
+[`LazyLock<T, F>`]: crate::sync::LazyLock
+
 ## ::OnceState
 
 ```rust
 pub struct OnceState
 ```
 
-State yielded to `Once::call_once_force()`’s closure parameter. The state
-can be used to query the poison status of the `Once`.
+State yielded to [`Once::call_once_force()`]’s closure parameter. The state
+can be used to query the poison status of the [`Once`].
 
 ## const ONCE_INIT
 
@@ -57,11 +51,11 @@ can be used to query the poison status of the `Once`.
 pub const ONCE_INIT: Once = Once::new()
 ```
 
-Initialization value for static `Once` values.
+Initialization value for static [`Once`] values.
 
 # Examples
 
-```rust
+```
 use std::sync::{Once, ONCE_INIT};
 
 static START: Once = ONCE_INIT;
@@ -95,13 +89,13 @@ be reliably observed by other threads at this point (there is a
 happens-before relation between the closure and code executing after the
 return).
 
-If the given closure recursively invokes `call_once` on the same `Once`
+If the given closure recursively invokes `call_once` on the same [`Once`]
 instance, the exact behavior is not specified: allowed outcomes are
 a panic or a deadlock.
 
 # Examples
 
-```rust
+```
 use std::sync::Once;
 
 static mut VAL: usize = 0;
@@ -124,6 +118,7 @@ fn get_cached_val() -> usize {
 
 fn expensive_computation() -> usize {
     // ...
+# 2
 }
 ```
 
@@ -131,11 +126,13 @@ fn expensive_computation() -> usize {
 
 The closure `f` will only be executed once even if this is called
 concurrently amongst many threads. If that closure panics, however, then
-it will *poison* this `Once` instance, causing all future invocations of
+it will *poison* this [`Once`] instance, causing all future invocations of
 `call_once` to also panic.
 
-This is similar to poisoning with mutexes, but this mechanism
+This is similar to [poisoning with mutexes][poison], but this mechanism
 is guaranteed to never skip panics within `f`.
+
+[poison]: struct.Mutex.html#poisoning
 
 ## Once::call_once_force
 
@@ -143,22 +140,25 @@ is guaranteed to never skip panics within `f`.
 pub fn call_once_force<F>(&self, f: F) where F: FnOnce(&OnceState),
 ```
 
-Performs the same function as `call_once()` except ignores poisoning.
+Performs the same function as [`call_once()`] except ignores poisoning.
 
-Unlike `call_once()`, if this `Once` has been poisoned (i.e., a previous
-call to `call_once()` or `call_once_force()` caused a panic), calling
-`call_once_force()` will still invoke the closure `f` and will _not_
-result in an immediate panic. If `f` panics, the `Once` will remain
-in a poison state. If `f` does _not_ panic, the `Once` will no
-longer be in a poison state and all future calls to `call_once()` or
-`call_once_force()` will be no-ops.
+Unlike [`call_once()`], if this [`Once`] has been poisoned (i.e., a previous
+call to [`call_once()`] or [`call_once_force()`] caused a panic), calling
+[`call_once_force()`] will still invoke the closure `f` and will _not_
+result in an immediate panic. If `f` panics, the [`Once`] will remain
+in a poison state. If `f` does _not_ panic, the [`Once`] will no
+longer be in a poison state and all future calls to [`call_once()`] or
+[`call_once_force()`] will be no-ops.
 
-The closure `f` is yielded a `OnceState` structure which can be used
-to query the poison status of the `Once`.
+The closure `f` is yielded a [`OnceState`] structure which can be used
+to query the poison status of the [`Once`].
+
+[`call_once()`]: Once::call_once
+[`call_once_force()`]: Once::call_once_force
 
 # Examples
 
-```rust
+```
 use std::sync::Once;
 use std::thread;
 
@@ -191,21 +191,23 @@ INIT.call_once(|| {});
 pub fn is_completed(&self) -> bool
 ```
 
-Returns `true` if some `call_once()` call has completed
+Returns `true` if some [`call_once()`] call has completed
 successfully. Specifically, `is_completed` will return false in
 the following situations:
-  * `call_once()` was not called at all,
-  * `call_once()` was called, but has not yet completed,
-  * the `Once` instance is poisoned
+  * [`call_once()`] was not called at all,
+  * [`call_once()`] was called, but has not yet completed,
+  * the [`Once`] instance is poisoned
 
-This function returning `false` does not mean that `Once` has not been
+This function returning `false` does not mean that [`Once`] has not been
 executed. For example, it may have been executed in the time between
 when `is_completed` starts executing and when it returns, in which case
 the `false` return value would be stale (but still permissible).
 
+[`call_once()`]: Once::call_once
+
 # Examples
 
-```rust
+```
 use std::sync::Once;
 
 static INIT: Once = Once::new();
@@ -217,7 +219,7 @@ INIT.call_once(|| {
 assert_eq!(INIT.is_completed(), true);
 ```
 
-```rust
+```
 use std::sync::Once;
 use std::thread;
 
@@ -257,8 +259,8 @@ READY.call_once(|| println!("performing setup"));
 
 # Panics
 
-If this `Once` has been poisoned because an initialization closure has
-panicked, this method will also panic. Use `wait_force`
+If this [`Once`] has been poisoned because an initialization closure has
+panicked, this method will also panic. Use [`wait_force`](Self::wait_force)
 if this behavior is not desired.
 
 ## Once::wait_force
@@ -270,8 +272,8 @@ pub fn wait_force(&self)
 Blocks the current thread until initialization has completed, ignoring
 poisoning.
 
-If this `Once` has been poisoned, this function blocks until it
-becomes completed, unlike `Once::wait()`, which panics in this case.
+If this [`Once`] has been poisoned, this function blocks until it
+becomes completed, unlike [`Once::wait()`], which panics in this case.
 
 ## OnceState::is_poisoned
 
@@ -279,14 +281,14 @@ becomes completed, unlike `Once::wait()`, which panics in this case.
 pub fn is_poisoned(&self) -> bool
 ```
 
-Returns `true` if the associated `Once` was poisoned prior to the
-invocation of the closure passed to `Once::call_once_force()`.
+Returns `true` if the associated [`Once`] was poisoned prior to the
+invocation of the closure passed to [`Once::call_once_force()`].
 
 # Examples
 
-A poisoned `Once`:
+A poisoned [`Once`]:
 
-```rust
+```
 use std::sync::Once;
 use std::thread;
 
@@ -303,9 +305,9 @@ INIT.call_once_force(|state| {
 });
 ```
 
-An unpoisoned `Once`:
+An unpoisoned [`Once`]:
 
-```rust
+```
 use std::sync::Once;
 
 static INIT: Once = Once::new();

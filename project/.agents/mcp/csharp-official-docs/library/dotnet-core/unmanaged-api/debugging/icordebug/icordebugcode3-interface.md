@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugCode3 Interface"
 title: "ICorDebugCode3 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugcode3-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugCode3"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugCode3"
+helpviewer_keywords:
+  - "ICorDebugCode3 interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugCode3 Interface
 
 Provides a method that extends "ICorDebugCode" and "ICorDebugCode2" to provide information about a managed return value.
@@ -15,16 +23,16 @@ Provides a method that extends "ICorDebugCode" and "ICorDebugCode2" to provide i
 
 |Method|Description|
 |------------|-----------------|
-|GetReturnValueLiveOffset Method|For a specified IL offset, gets the native offsets where a breakpoint should be placed so that the debugger can obtain the return value from a function.|
+|[GetReturnValueLiveOffset Method](icordebugcode3-getreturnvalueliveoffset-method.md)|For a specified IL offset, gets the native offsets where a breakpoint should be placed so that the debugger can obtain the return value from a function.|
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -34,4 +42,4 @@ Provides a method that extends "ICorDebugCode" and "ICorDebugCode2" to provide i
 
 ## See also
 
-- ICorDebugILFrame3 Interface
+- [ICorDebugILFrame3 Interface](icordebugilframe3-interface.md)

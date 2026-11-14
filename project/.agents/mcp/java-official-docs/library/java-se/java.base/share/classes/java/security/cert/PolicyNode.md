@@ -1,12 +1,3 @@
----
-title: "PolicyNode interface (java.security.cert)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/cert/PolicyNode.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # PolicyNode interface (java.security.cert)
 
 ```java
@@ -16,34 +7,35 @@ public interface PolicyNode
 An immutable valid policy tree node as defined by the PKIX certification
 path validation algorithm.
 
-One of the outputs of the PKIX certification path validation
+<p>One of the outputs of the PKIX certification path validation
 algorithm is a valid policy tree, which includes the policies that
 were determined to be valid, how this determination was reached,
 and any policy qualifiers encountered. This tree is of depth
-*n*, where *n* is the length of the certification
+<i>n</i>, where <i>n</i> is the length of the certification
 path that has been validated.
 
-Most applications will not need to examine the valid policy tree.
+<p>Most applications will not need to examine the valid policy tree.
 They can achieve their policy processing goals by setting the
-policy-related parameters in `PKIXParameters`. However,
+policy-related parameters in {@code PKIXParameters}. However,
 the valid policy tree is available for more sophisticated applications,
 especially those that process policy qualifiers.
 
-PKIXCertPathValidatorResult.getPolicyTree returns the root node of the
+<p>{@link PKIXCertPathValidatorResult#getPolicyTree()
+PKIXCertPathValidatorResult.getPolicyTree} returns the root node of the
 valid policy tree. The tree can be traversed using the
-getChildren and getParent methods.
+{@link #getChildren getChildren} and {@link #getParent getParent} methods.
 Data about a particular node can be retrieved using other methods of
-`PolicyNode`.
+{@code PolicyNode}.
 
-**Concurrent Access**
-
-All `PolicyNode` objects must be immutable and
+<p><b>Concurrent Access</b>
+<p>All {@code PolicyNode} objects must be immutable and
 thread-safe. Multiple threads may concurrently invoke the methods defined
-in this class on a single `PolicyNode` object (or more than one)
+in this class on a single {@code PolicyNode} object (or more than one)
 with no ill effects. This stipulation applies to all public fields and
 methods of this class and any added or overridden by subclasses.
 
-**Since:** 1.4
+@since       1.4
+@author      Sean Mullan
 
 ## PolicyNode.getParent()
 
@@ -51,10 +43,10 @@ methods of this class and any added or overridden by subclasses.
 PolicyNode getParent()
 ```
 
-Returns the parent of this node, or `null` if this is the
+Returns the parent of this node, or {@code null} if this is the
 root node.
 
-**Returns:** the parent of this node, or `null` if this is the
+@return the parent of this node, or {@code null} if this is the
 root node
 
 ## PolicyNode.getChildren()
@@ -65,10 +57,10 @@ Iterator<? extends PolicyNode> getChildren()
 
 Returns an iterator over the children of this node. Any attempts to
 modify the children of this node through the
-`Iterator`'s remove method must throw an
-`UnsupportedOperationException`.
+{@code Iterator}'s remove method must throw an
+{@code UnsupportedOperationException}.
 
-**Returns:** an iterator over the children of this node
+@return an iterator over the children of this node
 
 ## PolicyNode.getDepth()
 
@@ -78,7 +70,7 @@ int getDepth()
 
 Returns the depth of this node in the valid policy tree.
 
-**Returns:** the depth of this node (0 for the root node, 1 for its
+@return the depth of this node (0 for the root node, 1 for its
 children, and so on)
 
 ## PolicyNode.getValidPolicy()
@@ -89,7 +81,7 @@ String getValidPolicy()
 
 Returns the valid policy represented by this node.
 
-**Returns:** the `String` OID of the valid policy
+@return the {@code String} OID of the valid policy
 represented by this node. For the root node, this method always returns
 the special anyPolicy OID: "2.5.29.32.0".
 
@@ -102,9 +94,9 @@ Set<? extends PolicyQualifierInfo> getPolicyQualifiers()
 Returns the set of policy qualifiers associated with the
 valid policy represented by this node.
 
-**Returns:** an immutable `Set` of
-`PolicyQualifierInfo`s. For the root node, this
-is always an empty `Set`.
+@return an immutable {@code Set} of
+{@code PolicyQualifierInfo}s. For the root node, this
+is always an empty {@code Set}.
 
 ## PolicyNode.getExpectedPolicies()
 
@@ -115,9 +107,9 @@ Set<String> getExpectedPolicies()
 Returns the set of expected policies that would satisfy this
 node's valid policy in the next certificate to be processed.
 
-**Returns:** an immutable `Set` of expected policy
-`String` OIDs. For the root node, this method
-always returns a `Set` with one element, the
+@return an immutable {@code Set} of expected policy
+{@code String} OIDs. For the root node, this method
+always returns a {@code Set} with one element, the
 special anyPolicy OID: "2.5.29.32.0".
 
 ## PolicyNode.isCritical()
@@ -129,6 +121,6 @@ boolean isCritical()
 Returns the criticality indicator of the certificate policy extension
 in the most recently processed certificate.
 
-**Returns:** `true` if extension marked critical,
-`false` otherwise. For the root node, `false`
+@return {@code true} if extension marked critical,
+{@code false} otherwise. For the root node, {@code false}
 is always returned.

@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugEnum::Clone Method"
 title: "ICorDebugEnum::Clone Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugenum-clone-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugEnum.Clone"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugEnum::Clone"
+helpviewer_keywords:
+  - "Clone method, ICorDebugEnum interface [.NET debugging]"
+  - "ICorDebugEnum::Clone method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugEnum::Clone Method
 
 Creates a copy of this ICorDebugEnum object.
@@ -26,7 +35,7 @@ HRESULT Clone (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

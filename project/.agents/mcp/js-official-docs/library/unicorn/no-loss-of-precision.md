@@ -1,21 +1,15 @@
----
-title: "no-loss-of-precision"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-loss-of-precision.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-loss-of-precision
 
 📝 Disallow numeric literals that lose precision when represented as IEEE 754 binary64 values.
 
 🚫 Disabled by default.
 
-Reports numeric literals that lose their written precision when converted to IEEE 754 binary64. This checks round-tripping, not a fixed digit limit. Decimal literals exceeding 100 significant digits are reported because `Number#toPrecision()` cannot compare them.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
-Supports JSON, JSONC, JSON5, TOML floats, and parsed CSS numbers, dimensions, and percentages. TOML integers and raw CSS values, including custom properties, are ignored. For JavaScript and TypeScript, use ESLint's core `no-loss-of-precision` rule.
+Reports numeric literals that lose their written precision when converted to [IEEE 754 binary64](https://en.wikipedia.org/wiki/Double-precision_floating-point_format). This checks round-tripping, not a fixed digit limit. Decimal literals exceeding 100 significant digits are reported because `Number#toPrecision()` cannot compare them.
+
+Supports JSON, JSONC, JSON5, TOML floats, and parsed CSS numbers, dimensions, and percentages. TOML integers and raw CSS values, including custom properties, are ignored. For JavaScript and TypeScript, use ESLint's core [`no-loss-of-precision`](https://eslint.org/docs/latest/rules/no-loss-of-precision) rule.
 
 SOML support checks floats only; its integers are represented exactly as 64-bit integers.
 

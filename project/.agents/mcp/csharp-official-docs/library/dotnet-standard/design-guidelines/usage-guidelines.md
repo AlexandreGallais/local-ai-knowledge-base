@@ -1,34 +1,33 @@
 ---
+description: "Learn more about: Usage guidelines"
 title: "Usage guidelines"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/usage-guidelines.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "class library design guidelines [.NET Framework], usage guidelines"
+ms.assetid: 42215ffa-a099-4a26-b14e-fb2bdb6f95b7
 ---
-
 # Usage guidelines
 
 This section contains guidelines for using common types in publicly accessible APIs. It deals with direct usage of built-in Framework types (e.g., serialization attributes) and overloading common operators.
 
-The `System.IDisposable` interface is not covered in this section, but is discussed in the Dispose Pattern section.
+The <xref:System.IDisposable?displayProperty=nameWithType> interface is not covered in this section, but is discussed in the [Dispose Pattern](dispose-pattern.md) section.
 
-> **Note:**
-> For guidelines and additional information about other common, built-in .NET Framework types, see the reference topics for the following: `System.DateTime`, `System.DateTimeOffset`, `System.ICloneable`, `System.IComparable`1`, `System.IEquatable`1`, `System.Nullable`1`, `System.Object`, `System.Uri`.
+> [!NOTE]
+> For guidelines and additional information about other common, built-in .NET Framework types, see the reference topics for the following: <xref:System.DateTime?displayProperty=nameWithType>, <xref:System.DateTimeOffset?displayProperty=nameWithType>, <xref:System.ICloneable?displayProperty=nameWithType>, <xref:System.IComparable`1?displayProperty=nameWithType>, <xref:System.IEquatable`1?displayProperty=nameWithType>, <xref:System.Nullable`1?displayProperty=nameWithType>, <xref:System.Object?displayProperty=nameWithType>, <xref:System.Uri?displayProperty=nameWithType>.
 
 ## In this section
 
-Arrays\
-Attributes\
-Collections\
-Serialization\
-System.Xml Usage\
-Equality Operators
+[Arrays](arrays.md)\
+[Attributes](attributes.md)\
+[Collections](guidelines-for-collections.md)\
+[Serialization](serialization.md)\
+[System.Xml Usage](system-xml-usage.md)\
+[Equality Operators](equality-operators.md)
 
 *Portions © 2005, 2009 Microsoft Corporation. All rights reserved.*
 
-*Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+*Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Framework Design Guidelines
+- [Framework Design Guidelines](index.md)

@@ -1,12 +1,3 @@
----
-title: "class: FileChooser"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-filechooser.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: FileChooser
 * since: v1.8
 
@@ -25,14 +16,14 @@ FileChooser fileChooser = page.waitForFileChooser(() -> page.getByText("Upload f
 fileChooser.setFiles(Paths.get("myfile.pdf"));
 ```
 
-```python
+```python async
 async with page.expect_file_chooser() as fc_info:
     await page.get_by_text("Upload file").click()
 file_chooser = await fc_info.value
 await file_chooser.set_files("myfile.pdf")
 ```
 
-```python
+```python sync
 with page.expect_file_chooser() as fc_info:
     page.get_by_text("Upload file").click()
 file_chooser = fc_info.value
@@ -82,3 +73,5 @@ they are resolved relative to the current working directory. For empty array, cl
 
 ### option: FileChooser.setFiles.timeout = %%-input-timeout-js-%%
 * since: v1.8
+
+### option: FileChooser.setFiles.signal = %%-input-signal-%%

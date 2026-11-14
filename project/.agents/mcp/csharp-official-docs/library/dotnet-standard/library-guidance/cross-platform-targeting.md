@@ -1,10 +1,7 @@
 ---
-title: "Cross-platform targeting for .NET libraries"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/library-guidance/cross-platform-targeting.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Cross-platform targeting for .NET libraries
+description: Best practice recommendations for creating cross-platform .NET libraries.
+ms.date: 11/11/2026
 ---
 
 # Cross-platform targeting
@@ -23,17 +20,17 @@ These goals don't always require the same approach. If your target applications 
 .NET and .NET Standard targets are the best way to add cross-platform support to a .NET library.
 
 * .NET 5 and later versions are implementations of .NET. Each version is a single product with a uniform set of capabilities and APIs that can be used for Windows desktop apps and cross-platform console apps, cloud services, and websites.
-* .NET Standard is a specification of .NET APIs that are available on all .NET implementations. Targeting .NET Standard lets you produce libraries that are constrained to use APIs that are in a given version of .NET Standard, which means it's usable by all platforms that implement that version of .NET Standard.
+* [.NET Standard](../net-standard.md) is a specification of .NET APIs that are available on all .NET implementations. Targeting .NET Standard lets you produce libraries that are constrained to use APIs that are in a given version of .NET Standard, which means it's usable by all platforms that implement that version of .NET Standard.
 
-For more information about how .NET compares to .NET Standard, see .NET 5 and .NET Standard.
+For more information about how .NET compares to .NET Standard, see [.NET 5 and .NET Standard](../net-standard.md#net-5-and-net-standard).
 
 If your project targets .NET or .NET Standard and compiles successfully, it doesn't guarantee that the library will run successfully on all platforms:
 
-- Platform-specific APIs will fail on other platforms. For example, `Microsoft.Win32.Registry` will succeed on Windows and throw `System.PlatformNotSupportedException` when used on any other OS.
+- Platform-specific APIs will fail on other platforms. For example, <xref:Microsoft.Win32.Registry?displayProperty=nameWithType> will succeed on Windows and throw <xref:System.PlatformNotSupportedException> when used on any other OS.
 - APIs can behave differently. For example, reflection APIs have different performance characteristics when an application uses ahead-of-time compilation on iOS or Android.
 
-> **Tip:**
-> The .NET team offers a Platform compatibility analyzer to help you discover possible issues.
+> [!TIP]
+> The .NET team offers a [Platform compatibility analyzer](../analyzers/platform-compat-analyzer.md) to help you discover possible issues.
 
 ✔️ DO start with including a `net11.0` (STS) or `net10.0` (LTS) target for new libraries.
 
@@ -57,11 +54,11 @@ If your project targets .NET or .NET Standard and compiles successfully, it does
 
 ❌ DO NOT publish for `netstandard2.0` if your project or dependencies multi-target.
 
-> `netstandard2.0` is not a runtime, and multi-targeted projects provide a runtime framework—specific library, which is required when running on other frameworks.
+> `netstandard2.0` is not a runtime, and multi-targeted projects provide a runtime framework&mdash;specific library, which is required when running on other frameworks.
 
 ## Multi-targeting
 
-Sometimes you need to access framework-specific APIs from your libraries. The best way to call framework-specific APIs is to use multi-targeting, which builds your project for many .NET target frameworks rather than for just one.
+Sometimes you need to access framework-specific APIs from your libraries. The best way to call framework-specific APIs is to use multi-targeting, which builds your project for many [.NET target frameworks](../frameworks.md) rather than for just one.
 
 To shield your consumers from having to build for individual frameworks, you should strive to have a .NET Standard output plus one or more framework-specific outputs. With multi-targeting, all assemblies are packaged inside a single NuGet package. Consumers can then reference the same package and NuGet picks the appropriate implementation. Your .NET Standard library serves as the fallback library that is used everywhere, except for the cases where your NuGet package offers a framework-specific implementation. Multi-targeting allows you to use conditional compilation in your code and call framework-specific APIs.
 
@@ -143,5 +140,6 @@ public static class GpsLocation
 
 ❌ DO NOT include targets for .NET platforms that are no longer supported. For example, `SL4`, `WP`.
 
->Previous
->Next
+>[!div class="step-by-step"]
+>[Previous](get-started.md)
+>[Next](strong-naming.md)

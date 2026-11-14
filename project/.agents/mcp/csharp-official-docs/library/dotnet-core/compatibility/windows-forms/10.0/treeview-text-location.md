@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: TreeView checkbox image truncation"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/windows-forms/10.0/treeview-text-location.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 10 breaking change in Windows Forms where the TreeView checkbox image is truncated under certain conditions.
+ms.date: 01/30/2025
 ---
-
 # TreeView checkbox image truncation
 
-The `System.Windows.Forms.TreeNode` in the `System.Windows.Forms.TreeView` control allows users to customize the DrawMode and add checkboxes. However, the checkbox image will be truncated due to the position of the TreeNode text drawing. To avoid affecting normal, common use, you can use an AppContext switch setting to avoid checkbox truncation in these specific situations.
+The <xref:System.Windows.Forms.TreeNode> in the <xref:System.Windows.Forms.TreeView> control allows users to customize the DrawMode and add checkboxes. However, the checkbox image will be truncated due to the position of the TreeNode text drawing. To avoid affecting normal, common use, you can use an AppContext switch setting to avoid checkbox truncation in these specific situations.
 
 The checkbox image is truncated when all of the following conditions are met:
 
@@ -31,7 +27,7 @@ By setting the switch `"System.Windows.Forms.TreeView.MoveTreeViewTextLocationOn
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -53,4 +49,4 @@ Manually add `"System.Windows.Forms.TreeView.MoveTreeViewTextLocationOnePixel": 
 
 ## Affected APIs
 
-- `System.Windows.Forms.TreeView.CheckBoxes`
+- <xref:System.Windows.Forms.TreeView.CheckBoxes?displayProperty=fullName>

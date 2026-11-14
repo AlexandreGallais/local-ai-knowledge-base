@@ -1,12 +1,3 @@
----
-title: "Type coercions"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/type-coercions.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[coerce]
 # Type coercions
 
@@ -67,7 +58,7 @@ r[coerce.site.constructor]
   ```
 
 r[coerce.site.return]
-* Function results—either the final line of a block if it is not semicolon-terminated or any expression in a `return` statement
+* Function results&mdash;either the final line of a block if it is not semicolon-terminated or any expression in a `return` statement
 
   For example, `x` is coerced to have type `&dyn Display` in the following:
 
@@ -169,7 +160,11 @@ r[coerce.types.unsize]
     - `*mut T`
     - `Box<T>`
 
-    and where `U` can be obtained from `T` by unsized coercion.
+    and where `U` can be obtained from `T` by [unsized coercion](#unsized-coercions).
+
+    <!--In the future, coerce_inner will be recursively extended to tuples and
+    structs. In addition, coercions from subtraits to supertraits will be
+    added. See [RFC 401] for more details.-->
 
 r[coerce.types.fn]
 * Function item types to `fn` pointers
@@ -187,7 +182,7 @@ r[coerce.unsize.intro]
 The following coercions are called `unsized coercions`, since they relate to converting types to unsized types, and are permitted in a few cases where other coercions are not, as described above. They can still happen anywhere else a coercion can occur.
 
 r[coerce.unsize.trait]
-Two traits, [`Unsize`] and [`CoerceUnsized`], are used to assist in this process and expose it for library use. The following coercions are built-ins and, if `T` can be coerced to `U` with one of them, then an implementation of `Unsize` for `T` will be provided:
+Two traits, [`Unsize`] and [`CoerceUnsized`], are used to assist in this process and expose it for library use. The following coercions are built-ins and, if `T` can be coerced to `U` with one of them, then an implementation of `Unsize<U>` for `T` will be provided:
 
 r[coerce.unsize.slice]
 * `[T; n]` to `[T]`.
@@ -203,15 +198,15 @@ r[coerce.unsize.trait-upcast]
 r[coerce.unsized.composite]
 * `Foo<..., T, ...>` to `Foo<..., U, ...>`, when:
     * `Foo` is a struct.
-    * `T` implements `Unsize`.
+    * `T` implements `Unsize<U>`.
     * The last field of `Foo` has a type involving `T`.
-    * If that field has type `Bar<T>`, then `Bar<T>` implements `Unsize<Bar>`.
+    * If that field has type `Bar<T>`, then `Bar<T>` implements `Unsize<Bar<U>>`.
     * T is not part of the type of any other fields.
 
 r[coerce.unsized.pointer]
-Additionally, a type `Foo<T>` can implement `CoerceUnsized<Foo>` when `T` implements `Unsize` or `CoerceUnsized<Foo>`. This allows it to provide an unsized coercion to `Foo`.
+Additionally, a type `Foo<T>` can implement `CoerceUnsized<Foo<U>>` when `T` implements `Unsize<U>` or `CoerceUnsized<Foo<U>>`. This allows it to provide an unsized coercion to `Foo<U>`.
 
-> **Note:**
+> [!NOTE]
 > While the definition of the unsized coercions and their implementation has been stabilized, the traits themselves are not yet stable and therefore can't be used directly in stable Rust.
 
 r[coerce.least-upper-bound]
@@ -294,3 +289,15 @@ In these examples, types of the `ba*` are found by LUB coercion. And the compile
 ### Caveat
 
 This description is obviously informal. Making it more precise is expected to proceed as part of a general effort to specify the Rust type checker more precisely.
+
+[RFC 401]: https://github.com/rust-lang/rfcs/blob/master/text/0401-coercions.md
+[RFC 1558]: https://github.com/rust-lang/rfcs/blob/master/text/1558-closure-to-fn-coercion.md
+[subtype]: subtyping.md
+[dyn compatible]: items/traits.md#dyn-compatibility
+[type cast operator]: expressions/operator-expr.md#type-cast-expressions
+[`Unsize`]: std::marker::Unsize
+[`CoerceUnsized`]: std::ops::CoerceUnsized
+[labeled block expression]: expr.loop.block-labels
+[`loop` expression with break expressions]: expr.loop.break-value
+[method-call expressions]: expressions/method-call-expr.md
+[supertraits]: items/traits.md#supertraits

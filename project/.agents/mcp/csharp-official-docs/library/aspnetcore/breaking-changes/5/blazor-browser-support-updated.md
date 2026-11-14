@@ -1,17 +1,15 @@
 ---
 title: "Breaking change: Blazor: Updated browser support"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/5/blazor-browser-support-updated.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 5.0 titled Blazor: Updated browser support"
+ms.date: 10/01/2020
+ms.custom: https://github.com/aspnet/Announcements/issues/441
+no-loc: [Blazor, "Blazor WebAssembly", "Blazor Server"]
 ---
-
 # Blazor: Updated browser support
 
-ASP.NET Core 5.0 introduces new Blazor features, some of which are incompatible with older browsers. The list of browsers supported by Blazor in ASP.NET Core 5.0 has been updated accordingly.
+ASP.NET Core 5.0 introduces [new Blazor features](https://github.com/dotnet/aspnetcore/issues/21514), some of which are incompatible with older browsers. The list of browsers supported by Blazor in ASP.NET Core 5.0 has been updated accordingly.
 
-For discussion, see GitHub issue dotnet/aspnetcore#26475.
+For discussion, see GitHub issue [dotnet/aspnetcore#26475](https://github.com/dotnet/aspnetcore/issues/26475).
 
 ## Version introduced
 
@@ -19,7 +17,7 @@ For discussion, see GitHub issue dotnet/aspnetcore#26475.
 
 ## Old behavior
 
-Blazor Server supports Microsoft Internet Explorer 11 with sufficient polyfills. Blazor Server and Blazor WebAssembly are also functional in Microsoft Edge Legacy.
+Blazor Server supports Microsoft Internet Explorer 11 with sufficient polyfills. Blazor Server and Blazor WebAssembly are also functional in [Microsoft Edge Legacy](https://support.microsoft.com/help/4533505/what-is-microsoft-edge-legacy).
 
 ## New behavior
 
@@ -29,13 +27,25 @@ Blazor Server in ASP.NET Core 5.0 isn't supported with Microsoft Internet Explor
 
 New Blazor features in ASP.NET Core 5.0 are incompatible with these older browsers, and use of these older browsers is diminishing. For more information, see the following resources:
 
-* Windows support for Microsoft Edge Legacy is also ending on March 9, 2021
-* Microsoft 365 apps and services will end support for Microsoft Internet Explorer 11 by August 17, 2021
+* [Windows support for Microsoft Edge Legacy is also ending on March 9, 2021](https://support.microsoft.com/help/4533505/what-is-microsoft-edge-legacy)
+* [Microsoft 365 apps and services will end support for Microsoft Internet Explorer 11 by August 17, 2021](/lifecycle/announcements/m365-ie11-microsoft-edge-legacy)
 
 ## Recommended action
 
-Upgrade from these older browsers to the new, Chromium-based Microsoft Edge. For Blazor apps that need to support these older browsers, use ASP.NET Core 3.1. The supported browsers list for Blazor in ASP.NET Core 3.1 hasn't changed and is documented at Supported platforms.
+Upgrade from these older browsers to the [new, Chromium-based Microsoft Edge](https://www.microsoft.com/edge). For Blazor apps that need to support these older browsers, use ASP.NET Core 3.1. The supported browsers list for Blazor in ASP.NET Core 3.1 hasn't changed and is documented at [Supported platforms](/aspnet/core/blazor/supported-platforms?view=aspnetcore-3.1&preserve-view=true).
 
 ## Affected APIs
 
 None
+
+<!--
+
+### Category
+
+ASP.NET Core
+
+### Affected APIs
+
+Not detectable via API analysis
+
+-->

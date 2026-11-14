@@ -1,16 +1,14 @@
 ---
-title: "Try .NET daily builds with dotnetup"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/usecases/try-daily-builds.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Try .NET daily builds with dotnetup
+description: Install, run, update, and remove daily .NET builds.
+ms.topic: how-to
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # Try .NET daily builds with dotnetup
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 Daily channels give you bleeding-edge builds from the .NET build feeds. `dotnetup`
 makes it easy to try these daily builds in your workspaces.
@@ -62,7 +60,7 @@ Runtime daily channels use the same suffix:
 
 ```dotnetcli
 dotnetup runtime install 11.0-daily
-dotnetup runtime install user@example.com
+dotnetup runtime install aspnetcore@11.0-daily
 ```
 
 ## Update or remove the daily requirement
@@ -78,7 +76,7 @@ An exact prerelease version is pinned and is not changed by update commands.
 
 ## See also
 
-- Daily channels
-- Preview channels
-- Manage custom installation roots
-- How dotnetup verifies downloads
+- [Daily channels](../channels/daily.md)
+- [Preview channels](../channels/preview.md)
+- [Manage custom installation roots](manage-custom-installation-roots.md)
+- [How dotnetup verifies downloads](../concepts/download-verification.md)

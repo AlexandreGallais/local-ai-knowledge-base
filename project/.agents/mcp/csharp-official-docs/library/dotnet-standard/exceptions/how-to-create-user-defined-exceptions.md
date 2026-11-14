@@ -1,53 +1,27 @@
 ---
 title: "How to: Create User-Defined Exceptions"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/exceptions/how-to-create-user-defined-exceptions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to create user-defined exceptions, which are an alternative to the hierarchy of exception classes derived from the Exception base class in .NET.
+ms.date: "08/10/2022"
+ms.custom: devdivchpfy22
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "user-defined exceptions"
+  - "exceptions, examples"
+  - "exceptions, user-defined"
 ---
-
 # How to create user-defined exceptions
 
-.NET provides a hierarchy of exception classes ultimately derived from the `System.Exception` base class. However, if none of the predefined exceptions meet your needs, you can create your own exception class by deriving from the `System.Exception` class.
+.NET provides a hierarchy of exception classes ultimately derived from the <xref:System.Exception> base class. However, if none of the predefined exceptions meet your needs, you can create your own exception class by deriving from the <xref:System.Exception> class.
 
-When creating your own exceptions, end the class name of the user-defined exception with the word "Exception", and implement the three common constructors, as shown in the following example. The example defines a new exception class named `EmployeeListNotFoundException`. The class is derived from the `System.Exception` base class and includes three constructors.
-```csharp
-using System;
+When creating your own exceptions, end the class name of the user-defined exception with the word "Exception", and implement the three common constructors, as shown in the following example. The example defines a new exception class named `EmployeeListNotFoundException`. The class is derived from the <xref:System.Exception> base class and includes three constructors.
+[!code-csharp[dg_exceptionDesign#14](../../../samples/snippets/csharp/VS_Snippets_CLR/dg_exceptionDesign/cs/example2.cs#14)]
+[!code-vb[dg_exceptionDesign#14](../../../samples/snippets/visualbasic/VS_Snippets_CLR/dg_exceptionDesign/vb/example2.vb#14)]
 
-public class EmployeeListNotFoundException : Exception
-{
-    public EmployeeListNotFoundException()
-    {
-    }
-
-    public EmployeeListNotFoundException(string message)
-        : base(message)
-    {
-    }
-
-    public EmployeeListNotFoundException(string message, Exception inner)
-        : base(message, inner)
-    {
-    }
-}
-
-public class TestExample
-{
-    public static void Main()
-    {
-        Exception ex = new();
-
-        _ = new EmployeeListNotFoundException();
-        _ = new EmployeeListNotFoundException("Hi!");
-        _ = new EmployeeListNotFoundException("Hi!", ex);
-    }
-}
-```
-
-> **Note:**
-> In situations where you're using remoting, you must ensure that the metadata for any user-defined exceptions is available at the server (callee) and to the client (the proxy object or caller). For more information, see Best practices for exceptions.
+> [!NOTE]
+> In situations where you're using remoting, you must ensure that the metadata for any user-defined exceptions is available at the server (callee) and to the client (the proxy object or caller). For more information, see [Best practices for exceptions](best-practices-for-exceptions.md).
 
 ## See also
 
-- Exceptions
+- [Exceptions](index.md)

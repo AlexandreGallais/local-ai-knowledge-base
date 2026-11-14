@@ -1,0 +1,159 @@
+<section xml:id="s_strings_comb-proof">
+    <title>Combinatorial Proofs</title>
+    <idx><h>proof</h><h>combinatorial</h></idx>
+    <p>Combinatorial arguments are among the most beautiful in all of mathematics. Oftentimes, statements that can be proved by other, more complicated methods (usually involving large amounts of tedious algebraic manipulations) have very short proofs once you can make a connection to counting. In this section, we introduce a new way of thinking about combinatorial problems with several examples. Our goal is to help you develop a <q>gut feeling</q> for combinatorial problems.
+    </p>
+    <example xml:id="ex_strings_comb-proof_sum-ints">
+        <statement>
+            <p>
+                Let <m>n</m> be a positive integer. Use <xref ref="fig_squaredots"/> to explain why
+            <md>
+                1+2+3+\dots+n=\frac{n(n+1)}{2}.
+            </md>
+            </p>
+            <figure xml:id="fig_squaredots">
+                <caption>The sum of the first <m>n</m> integers</caption>
+                <image width="40%" source="3012-fig25"><description><p>The sum of the first <m>n</m> integers</p>
+                </description></image>
+            </figure>
+        </statement>
+        <solution>
+            <p>Consider an <m>(n+1)\times (n+1)</m> array of dots as depicted in <xref ref="fig_squaredots"/>. There are <m>(n+1)^2</m> dots altogether, with exactly <m>n+1</m> on the main diagonal.  The off-diagonal entries split naturally into two equal size parts, those above and those below the diagonal.
+            </p>
+
+            <p>Furthermore, each of those two parts has <m>S(n)=1+2+3+\dots+n</m> dots.  It follows that
+            <md>
+                S(n)=\frac{(n+1)^2-(n+1)}{2}
+            </md>
+                and this is obvious! Now a little algebra on the right hand side of this expression produces the formula given earlier.
+            </p>
+        </solution>
+    </example>
+
+    <example>
+        <statement>
+            <p>
+                Let <m>n</m> be a positive integer. Explain why
+                <md>
+                    1+3+5+\dots+2n-1=n^2.
+                </md>
+            </p>
+            <figure xml:id="fig_oddsum2">
+                <caption>The sum of the first <m>n</m> odd integers</caption>
+                <image width="40%" source="3012-fig21"><description><p>The sum of the first <m>n</m> odd integers</p>
+                </description></image>
+            </figure>
+        </statement>
+        <solution>
+            <p>
+                The left hand side is just the
+                sum of the first <m>n</m> odd integers. But as suggested in
+                <xref ref="fig_oddsum2"/>, this is clearly equal to <m>n^2</m>.
+            </p>
+        </solution>
+    </example>
+
+    <example>
+        <idx><h>binomial coefficient</h><h>identity involving</h></idx>
+        <statement>
+            <p>
+                Let <m>n</m> be a positive integer. Explain why
+            <md>
+                \binom{n}{0}+\binom{n}{1}+\binom{n}{2}+\dots+\binom{n}{n}=2^n.
+            </md>
+            </p>
+        </statement>
+        <solution>
+            <p>Both sides count the number of bit strings of length <m>n</m>, with the left side first grouping them according to the number of <m>0</m>'s.
+            </p>
+        </solution>
+    </example>
+
+    <example>
+        <idx><h>binomial coefficient</h><h>identity involving</h></idx>
+        <statement>
+            <p>Let <m>n</m> and <m>k</m> be integers with <m>0\le k\lt n</m>.  Explain why
+            <md>
+                \binom{n}{k+1} = \binom{k}{k} + \binom{k+1}{k} +
+                \binom{k+2}{k} +\dots+
+                \binom{n-1}{k}.
+            </md>
+            </p>
+        </statement>
+        <solution>
+            <p>To prove this formula, we simply observe that both sides count the number of bit strings of length<nbsp/><m>n</m> that contain <m>k+1</m> <m>1</m>'s with the right hand side first partitioning them according to the last occurence of a<nbsp/><m>1</m>. (For example, if the last <m>1</m> occurs in position <m>k+5</m>, then the remaining <m>k</m> <m>1</m>'s must appear in the preceding <m>k+4</m> positions, giving <m>C(k+4,k)</m> strings of this type.) Note that when <m>k=1</m> (so <m>k+1=2</m>), we have the same formula as developed earlier for the sum of the first <m>n</m> positive integers.
+            </p>
+        </solution>
+    </example>
+
+    <example>
+        <idx><h>binomial coefficient</h><h>identity involving</h></idx>
+        <statement>
+            <p>
+                Explain the identity
+            <md>
+                3^n=\binom{n}{0}2^0+\binom{n}{1}2^1+\binom{n}{2}2^2+
+                \dots+\binom{n}{n}2^n.
+            </md>
+            </p>
+        </statement>
+        <solution>
+            <p>Both sides count the number of <m>\{0,1,2\}</m>-strings of length<nbsp/><m>n</m>, the right hand side first partitioning them according to positions in the string which are not<nbsp/><m>2</m>. (For instance, if <m>6</m> of the positions are not<nbsp/><m>2</m>, we must first choose those <m>6</m> positions in <m>C(n,6)</m> ways and then there are <m>2^6</m> ways to fill in those six positions by choosing either a <m>0</m> or a <m>1</m> for each position.)
+            </p>
+        </solution>
+    </example>
+
+    <example xml:id="ex_strings_comb-proof_2n-choose-n">
+        <idx><h>binomial coefficient</h><h>identity involving</h></idx>        
+        <statement>
+            <p>
+                Explain why, for each non-negative integer<nbsp/><m>n</m>, 
+                <md>
+                \binom{2n}{n}=
+                {\binom{n}{0}}^2+{\binom{n}{1}}^2+{\binom{n}{2}}^2+\dots+
+                {\binom{n}{n}}^2.
+                </md>
+            </p>
+        </statement>
+        <solution>
+            <p>Both sides count the number of bit strings of length <m>2n</m> with half the bits being <m>0</m>'s, with the right side first partitioning them according to the number of <m>1</m>'s occurring in the first <m>n</m> positions of the string. Note that we are also using the trivial identity <m>\binom{n}{k}=\binom{n}{n-k}</m>.
+            </p>
+        </solution>
+    </example>
+    <reading-questions label="rqs-strings_comb-proof" component="runestone">
+        <exercise label="appcomb_strings_comb-proof_reading_sum-ints">
+          <statement>
+            <p>
+              Consider the illustration below. Although the grid of circles is eight by seven, please treat it as if it had <m>n+1</m> rows and <m>n</m> columns. Explain how this illustration gives another way to arrive at the formula 
+              <md>
+                1 + 2 + 3+\cdots + n  = \frac{n(n+1)}{2}
+              </md>
+              from <xref ref="ex_strings_comb-proof_sum-ints"/>.
+            </p>
+            <image width="40%">
+                <description>
+                    <p>
+                        An array of circles. The first row is seven unfilled circles. The second row is six unfilled circles followed by a filled circle. The third row is five unfilled circles followed by two filled circles. This pattern continues until the eighth row, which consists of seven filled circles.
+                    </p>
+                </description>
+                <latex-image label="img-rectangular-grid-sum-ints">
+                    \begin{tikzpicture}[line width=.7pt, outer sep=0pt]
+                    \foreach \x in {1,...,7}
+                      \foreach \y in {1,...,8}
+                        \ifthenelse{\x \gt \y \OR \x = \y}{\draw [fill=gray](\x,\y) circle (0.2cm);}{\draw (\x,\y) circle (0.2cm)};
+                    \end{tikzpicture}
+                </latex-image>
+            </image>
+          </statement>
+          <response/>
+        </exercise>
+        <exercise label="appcomb_strings_comb-proof_reading_2n-choose-n">
+            <statement>
+              <p>
+                Explain how the identity <m>C(n,k) = C(n,n-k)</m> is used in <xref ref="ex_strings_comb-proof_2n-choose-n"/>.
+              </p>
+            </statement>
+            <response/>
+          </exercise>
+      </reading-questions>
+</section>

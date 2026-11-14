@@ -1,12 +1,3 @@
----
-title: "alloc::task"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/alloc/src/task.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # alloc::task
 
 Types and Traits for working with asynchronous tasks.
@@ -24,23 +15,28 @@ pub trait Wake
 
 The implementation of waking a task on an executor.
 
-This trait can be used to create a `Waker`. An executor can define an
-implementation of this trait, and use that to construct a `Waker` to pass
+This trait can be used to create a [`Waker`]. An executor can define an
+implementation of this trait, and use that to construct a [`Waker`] to pass
 to the tasks that are executed on that executor.
 
 This trait is a memory-safe and ergonomic alternative to constructing a
-`RawWaker`. It supports the common executor design in which the data used
-to wake up a task is stored in an `Arc`. Some executors (especially
-those for embedded systems) cannot use this API, which is why `RawWaker`
+[`RawWaker`]. It supports the common executor design in which the data used
+to wake up a task is stored in an [`Arc`]. Some executors (especially
+those for embedded systems) cannot use this API, which is why [`RawWaker`]
 exists as an alternative for those systems.
 
-To construct a `Waker` from some type `W` implementing this trait,
-wrap it in an `Arc<W>` and call `Waker::from()` on that.
-It is also possible to convert to `RawWaker` in the same way.
+To construct a [`Waker`] from some type `W` implementing this trait,
+wrap it in an [`Arc<W>`](Arc) and call `Waker::from()` on that.
+It is also possible to convert to [`RawWaker`] in the same way.
+
+<!-- Ideally we'd link to the `From` impl, but rustdoc doesn't generate any page for it within
+     `alloc` because `alloc` neither defines nor re-exports `From` or `Waker`, and we can't
+     link ../../std/task/struct.Waker.html#impl-From%3CArc%3CW,+Global%3E%3E-for-Waker
+     without getting a link-checking error in CI. -->
 
 # Memory Ordering
 
-To avoid missed wakeups, all executors must adhere to the requirement described for `Waker::wake`.
+To avoid missed wakeups, all executors must adhere to the requirement described for [`Waker::wake`].
 
 # Examples
 
@@ -109,4 +105,6 @@ Wake this task without consuming the waker.
 
 If an executor supports a cheaper way to wake without consuming the
 waker, it should override this method. By default, it clones the
-`Arc` and calls `wake` on the clone.
+[`Arc`] and calls [`wake`] on the clone.
+
+[`wake`]: Wake::wake

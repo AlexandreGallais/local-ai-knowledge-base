@@ -1,10 +1,6 @@
 ---
-title: "benchmark | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/benchmark.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: benchmark | Config
+outline: deep
 ---
 
 # benchmark <Experimental /> {#benchmark}
@@ -18,7 +14,7 @@ Options used when running `vitest bench`.
 - **Type:** `boolean`
 - **Default:** `false`
 
-Enables the benchmark project. When set, Vitest creates a dedicated benchmark project alongside your regular test project, runs files matching `benchmark.include` in it, and exposes the `bench` fixture to those files. Running `vitest bench` enables this automatically.
+Enables the benchmark project. When set, Vitest creates a dedicated benchmark project alongside your regular test project, runs files matching [`benchmark.include`](#benchmark-include) in it, and exposes the [`bench` fixture](/guide/test-context#bench) to those files. Running `vitest bench` enables this automatically.
 
 ## benchmark.include
 
@@ -39,7 +35,7 @@ Exclude globs for benchmark test files
 - **Type:** `string[]`
 - **Default:** `[]`
 
-Include globs for in-source benchmark test files. This option is similar to `includeSource`.
+Include globs for in-source benchmark test files. This option is similar to [`includeSource`](/config/include-source).
 
 When defined, Vitest will run all matched files with `import.meta.vitest` inside.
 
@@ -57,11 +53,11 @@ Include the `samples` array of per-iteration timings on every benchmark result. 
 
 The benchmark provider that executes registered benchmarks and returns their results. Set this to a module path whose default export implements `BenchmarkProvider`. Relative paths are resolved from the project root.
 
-See the Custom Benchmark Provider guide for setup instructions and the provider API.
+See the [Custom Benchmark Provider](/guide/advanced/benchmark-provider) guide for setup instructions and the provider API.
 
 ## benchmark.suppressExportGetterWarnings
 
 - **Type:** `boolean`
 - **Default:** `false`
 
-Suppress the warning printed when a benchmark accesses module export getters too many times. Vitest tracks getter access during benchmark runs because Vite's module runner wraps every export in a getter, and excessive access can dominate the measurement (see Module Runner Overhead). Enable this when you've intentionally accepted the overhead, or when the warning is noisy for benchmarks where the getter cost is negligible.
+Suppress the warning printed when a benchmark accesses module export getters too many times. Vitest tracks getter access during benchmark runs because Vite's module runner wraps every export in a getter, and excessive access can dominate the measurement (see [Module Runner Overhead](/guide/benchmarking#module-runner-overhead)). Enable this when you've intentionally accepted the overhead, or when the warning is noisy for benchmarks where the getter cost is negligible.

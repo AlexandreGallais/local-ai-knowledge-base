@@ -1,17 +1,11 @@
----
-title: "no-top-level-side-effects"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-top-level-side-effects.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-top-level-side-effects
 
 📝 Disallow top-level side effects in exported modules.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 This rule reports explicit global mutations when importing ES modules with runtime exports. Unknown calls are allowed by default; enable `checkUnknownCalls` to also check invocations whose effects are unknown.
 
@@ -20,7 +14,7 @@ The default checks assignments, updates, and deletions whose target is rooted in
 - `Object.assign`, `Object.defineProperty`, `Object.defineProperties`, `Object.freeze`, `Object.seal`, `Object.preventExtensions`, and `Object.setPrototypeOf`.
 - `Reflect.defineProperty`, `Reflect.deleteProperty`, `Reflect.set` (three arguments without spread), `Reflect.preventExtensions`, and `Reflect.setPrototypeOf`.
 
-Configure environment globals such as `window` and `process` through ESLint's `languageOptions.globals`. Local bindings that shadow globals are ignored.
+Configure environment globals such as `window` and `process` through ESLint's [`languageOptions.globals`](https://eslint.org/docs/latest/use/configure/language-options#specifying-globals). Local bindings that shadow globals are ignored.
 
 Both modes check declarations, default exports, conditionals, computed class keys, and static initialization. Function bodies (including immediately invoked functions) and instance field values are ignored. Aliases, imported objects, and targets returned by calls are not resolved. The rule does not prove purity or branch reachability.
 

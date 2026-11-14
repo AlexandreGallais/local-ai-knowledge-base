@@ -1,24 +1,25 @@
 ---
-title: "Unit testing F# in .NET with dotnet test and TUnit"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/unit-testing-fsharp-with-tunit.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Unit testing F# in .NET with dotnet test and TUnit
+description: Learn unit test concepts for F# in .NET through an interactive experience building a sample solution step-by-step using dotnet test and TUnit.
+author: thomhurst
+ms.author: wiwagn
+ms.date: 11/03/2026
+ai-usage: ai-assisted
+dev_langs:
+  - "fsharp"
 ---
-
 # Unit testing F# libraries using dotnet test and TUnit
 
 This tutorial takes you through an interactive experience building a sample solution step-by-step to learn unit testing concepts.
 
-This article is about testing a .NET Core project. If you're testing an ASP.NET Core project, see Integration tests in ASP.NET Core.
+[!INCLUDE [testing an ASP.NET Core project from .NET Core](../../../includes/core-testing-note-aspnet.md)]
 
 ## Prerequisites
 
-- .NET 10 SDK or later versions.
+- [.NET 10 SDK](https://dotnet.microsoft.com/download) or later versions.
 - A text editor or code editor of your choice.
 
-TUnit is built entirely on Microsoft.Testing.Platform (MTP) and doesn't support VSTest. This tutorial uses the MTP mode of `dotnet test`, which requires the .NET 10 SDK.
+TUnit is built entirely on [Microsoft.Testing.Platform (MTP)](microsoft-testing-platform-intro.md) and doesn't support VSTest. This tutorial uses the MTP mode of `dotnet test`, which requires the .NET 10 SDK.
 
 ## Create the source project
 
@@ -83,7 +84,7 @@ Make the *MathService.Tests* directory the current directory and create a new pr
 dotnet new TUnit -lang "F#"
 ```
 
-> **Note:**
+> [!NOTE]
 > Template short names are case-sensitive. Use `TUnit`, not `tunit`.
 
 This command creates a test project that uses TUnit as the test framework. The generated *MathService.Tests.fsproj* file is an executable project that references the `TUnit` package, which includes the test framework, the assertion library, and the MTP test runner, and the `TUnit.Assertions.FSharp` package, which adds F# helpers for assertions.
@@ -96,7 +97,7 @@ The template also adds sample tests. This tutorial replaces them with its own te
 </ItemGroup>
 ```
 
-Now, add the `MathService` class library as another dependency to the project. Use the `dotnet reference add` command:
+Now, add the `MathService` class library as another dependency to the project. Use the [`dotnet reference add`](../tools/dotnet-reference-add.md) command:
 
 ```dotnetcli
 dotnet reference add ../MathService/MathService.fsproj
@@ -133,7 +134,7 @@ Because TUnit doesn't support VSTest, `dotnet test` must run in its MTP mode. In
 }
 ```
 
-For more information, see MTP mode of dotnet test.
+For more information, see [MTP mode of dotnet test](unit-testing-with-dotnet-test.md#mtp-mode-of-dotnet-test).
 
 ## Create the first test
 
@@ -165,7 +166,7 @@ The `[<Test>]` attribute denotes a test method that is run by the test runner. T
 
 From the *unit-testing-with-fsharp* directory, execute `dotnet test` to build the tests and the class library and then run the tests. The TUnit test project contains the program entry point to run your tests. `dotnet test` starts the test application using the unit test project you've created.
 
-These two tests show the most basic <example-value> and failing tests. `TestMethodPassing` passes, and `FailEveryTime` fails. Now, create a test for the `squaresOfOdds` method. The `squaresOfOdds` method returns a sequence of the squares of all odd integer values that are part of the input sequence. Rather than trying to write all of those functions at once, you can iteratively create tests that validate the functionality. To make each test pass, you create the necessary functionality for the method.
+These two tests show the most basic passing and failing tests. `TestMethodPassing` passes, and `FailEveryTime` fails. Now, create a test for the `squaresOfOdds` method. The `squaresOfOdds` method returns a sequence of the squares of all odd integer values that are part of the input sequence. Rather than trying to write all of those functions at once, you can iteratively create tests that validate the functionality. To make each test pass, you create the necessary functionality for the method.
 
 The simplest test you can write is to call `squaresOfOdds` with all even numbers, where the result should be an empty sequence of integers. Add the following test to the `TestClass` type:
 
@@ -239,9 +240,9 @@ You've built a small library and a set of unit tests for that library. You struc
 
 ## See also
 
-- TUnit documentation
-- F# assertions in TUnit
-- dotnet new
-- dotnet sln
-- dotnet reference add
-- dotnet test
+- [TUnit documentation](https://tunit.dev/)
+- [F# assertions in TUnit](https://tunit.dev/docs/assertions/fsharp)
+- [dotnet new](../tools/dotnet-new.md)
+- [dotnet sln](../tools/dotnet-sln.md)
+- [dotnet reference add](../tools/dotnet-reference-add.md)
+- [dotnet test](../tools/dotnet-test.md)

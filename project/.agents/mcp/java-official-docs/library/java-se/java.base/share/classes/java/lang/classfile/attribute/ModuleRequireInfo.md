@@ -1,27 +1,15 @@
----
-title: "ModuleRequireInfo interface (java.lang.classfile.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/attribute/ModuleRequireInfo.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ModuleRequireInfo interface (java.lang.classfile.attribute)
 
 ```java
 public sealed interface ModuleRequireInfo permits UnboundAttribute.UnboundModuleRequiresInfo
 ```
 
-Models a single "requires" declaration in the `ModuleAttribute`.
+Models a single "requires" declaration in the {@link ModuleAttribute}.
 
-**See also:** ModuleAttribute#requires()
-
-**See also:** ModuleDescriptor#requires()
-
-**jvms:** 4.7.25 The `Module` Attribute
-
-**Since:** 24
+@see ModuleAttribute#requires()
+@see ModuleDescriptor#requires()
+@jvms 4.7.25 The {@code Module} Attribute
+@since 24
 
 ## ModuleRequireInfo.requires()
 
@@ -29,17 +17,19 @@ Models a single "requires" declaration in the `ModuleAttribute`.
 ModuleEntry requires()
 ```
 
+{@return The module on which the current module depends}
+
 ## ModuleRequireInfo.requiresFlagsMask()
 
 ```java
 int requiresFlagsMask()
 ```
 
-It is in the range of unsigned short, `[0, 0xFFFF]`.
+{@return the flags associated with this require declaration, as a bit mask}
+It is in the range of unsigned short, {@code [0, 0xFFFF]}.
 
-**See also:** ModuleDescriptor.Requires#modifiers()
-
-**See also:** AccessFlag.Location#MODULE_REQUIRES
+@see ModuleDescriptor.Requires#modifiers()
+@see AccessFlag.Location#MODULE_REQUIRES
 
 ## ModuleRequireInfo.requiresFlags()
 
@@ -47,13 +37,12 @@ It is in the range of unsigned short, `[0, 0xFFFF]`.
 default Set<AccessFlag> requiresFlags()
 ```
 
-**See also:** ModuleDescriptor.Requires#accessFlags()
+{@return the flags associated with this require declaration, as a set of
+flag enums}
 
-**See also:** AccessFlag.Location#MODULE_REQUIRES
-
-Throws:
-
-- `IllegalArgumentException`: if the flags mask has any undefined bit set
+@throws IllegalArgumentException if the flags mask has any undefined bit set
+@see ModuleDescriptor.Requires#accessFlags()
+@see AccessFlag.Location#MODULE_REQUIRES
 
 ## ModuleRequireInfo.requiresVersion()
 
@@ -61,7 +50,9 @@ Throws:
 Optional<Utf8Entry> requiresVersion()
 ```
 
-**See also:** ModuleDescriptor.Requires#rawCompiledVersion()
+{@return the required version of the required module, if present}
+
+@see ModuleDescriptor.Requires#rawCompiledVersion()
 
 ## ModuleRequireInfo.has(AccessFlag)
 
@@ -69,11 +60,10 @@ Optional<Utf8Entry> requiresVersion()
 default boolean has(AccessFlag flag)
 ```
 
-Parameters:
+{@return whether the specific access flag is set}
 
-- `flag`: the access flag
-
-**See also:** AccessFlag.Location#MODULE_REQUIRES
+@param flag the access flag
+@see AccessFlag.Location#MODULE_REQUIRES
 
 ## ModuleRequireInfo.of(ModuleEntry, int, Utf8Entry)
 
@@ -81,11 +71,11 @@ Parameters:
 static ModuleRequireInfo of(ModuleEntry requires, int requiresFlags, Utf8Entry requiresVersion)
 ```
 
-Parameters:
+{@return a module requirement description}
 
-- `requires`: the required module
-- `requiresFlags`: the require-specific flags
-- `requiresVersion`: the required version, may be `null`
+@param requires the required module
+@param requiresFlags the require-specific flags
+@param requiresVersion the required version, may be {@code null}
 
 ## ModuleRequireInfo.of(ModuleEntry, Collection<AccessFlag>, Utf8Entry)
 
@@ -93,15 +83,13 @@ Parameters:
 static ModuleRequireInfo of(ModuleEntry requires, Collection<AccessFlag> requiresFlags, Utf8Entry requiresVersion)
 ```
 
-Parameters:
+{@return a module requirement description}
 
-- `requires`: the required module
-- `requiresFlags`: the require-specific flags
-- `requiresVersion`: the required version, may be `null`
-
-Throws:
-
-- `IllegalArgumentException`: if any flag cannot be applied to the `AccessFlag.Location.MODULE_REQUIRES` location
+@param requires the required module
+@param requiresFlags the require-specific flags
+@param requiresVersion the required version, may be {@code null}
+@throws IllegalArgumentException if any flag cannot be applied to the
+        {@link AccessFlag.Location#MODULE_REQUIRES} location
 
 ## ModuleRequireInfo.of(ModuleDesc, int, String)
 
@@ -109,11 +97,11 @@ Throws:
 static ModuleRequireInfo of(ModuleDesc requires, int requiresFlags, String requiresVersion)
 ```
 
-Parameters:
+{@return a module requirement description}
 
-- `requires`: the required module
-- `requiresFlags`: the require-specific flags
-- `requiresVersion`: the required version, may be `null`
+@param requires the required module
+@param requiresFlags the require-specific flags
+@param requiresVersion the required version, may be {@code null}
 
 ## ModuleRequireInfo.of(ModuleDesc, Collection<AccessFlag>, String)
 
@@ -121,12 +109,10 @@ Parameters:
 static ModuleRequireInfo of(ModuleDesc requires, Collection<AccessFlag> requiresFlags, String requiresVersion)
 ```
 
-Parameters:
+{@return a module requirement description}
 
-- `requires`: the required module
-- `requiresFlags`: the require-specific flags
-- `requiresVersion`: the required version, may be `null`
-
-Throws:
-
-- `IllegalArgumentException`: if any flag cannot be applied to the `AccessFlag.Location.MODULE_REQUIRES` location
+@param requires the required module
+@param requiresFlags the require-specific flags
+@param requiresVersion the required version, may be {@code null}
+@throws IllegalArgumentException if any flag cannot be applied to the
+        {@link AccessFlag.Location#MODULE_REQUIRES} location

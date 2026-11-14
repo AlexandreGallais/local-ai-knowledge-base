@@ -1,19 +1,17 @@
 ---
-title: "Intermediate materialization (C#)"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/intermediate-materialization.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Intermediate materialization (C#)
+description: Learn how the use of some standard query operators can cause materialization of collections in a query, and drastically alter the memory and performance profile of your application.
+ms.date: 07/20/2015
+ms.assetid: 7922d38f-5044-41cf-8e17-7173d6553a5e
 ---
 
 # Intermediate materialization (C#)
 
-If you're not careful you can, in some situations, drastically alter the memory and performance profile of your application by causing premature materialization of collections in your queries. Some standard query operators cause materialization of their source collection before yielding a single element. For example, `System.Linq.Enumerable.OrderBy*` first iterates through its entire source collection, then sorts all items, and then finally yields the first item. This means that it's expensive to get the first item of an ordered collection; each item thereafter isn't expensive. This makes sense; it would be impossible for that query operator to do otherwise.
+If you're not careful you can, in some situations, drastically alter the memory and performance profile of your application by causing premature materialization of collections in your queries. Some standard query operators cause materialization of their source collection before yielding a single element. For example, <xref:System.Linq.Enumerable.OrderBy*?displayProperty=nameWithType> first iterates through its entire source collection, then sorts all items, and then finally yields the first item. This means that it's expensive to get the first item of an ordered collection; each item thereafter isn't expensive. This makes sense; it would be impossible for that query operator to do otherwise.
 
 ## Example: Add a method that calls `ToList`, causing materialization
 
-This example alters the example in Chain queries example (C#): the `AppendString` method is changed to call `System.Linq.Enumerable.ToList*` before iterating through the source, which causes materialization.
+This example alters the example in [Chain queries example (C#)](chain-queries-example.md): the `AppendString` method is changed to call <xref:System.Linq.Enumerable.ToList*> before iterating through the source, which causes materialization.
 
 ```csharp
 public static class LocalExtensions
@@ -80,12 +78,12 @@ AppendString: source >GHI<
 Main: str >GHI!!!<
 ```
 
-In this example, you can see that the call to `System.Linq.Enumerable.ToList*` causes `AppendString` to enumerate its entire source before yielding the first item. If the source were a large array, this would significantly alter the memory profile of the application.
+In this example, you can see that the call to <xref:System.Linq.Enumerable.ToList*> causes `AppendString` to enumerate its entire source before yielding the first item. If the source were a large array, this would significantly alter the memory profile of the application.
 
 Standard query operators can also be chained together as shown in the final article in this tutorial:
 
-- Chain standard query operators together (C#)
+- [Chain standard query operators together (C#)](chain-standard-query-operators-together.md)
 
 ## See also
 
-- Deferred execution and lazy evaluation
+- [Deferred execution and lazy evaluation](deferred-execution-lazy-evaluation.md)

@@ -1,13 +1,19 @@
 ---
+description: "Learn more about: ICorDebugILCode2::GetLocalVarSigToken Method"
 title: "ICorDebugILCode2::GetLocalVarSigToken Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugilcode2-getlocalvarsigtoken-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "cpp"
+api_name:
+  - "ICorDebugILCode2.GetLocalVarSigToken"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+topic_type:
+  - "apiref"
 ---
-
-# ICorDebugILCode2::GetLocalVarSigToken <example-value>
+# ICorDebugILCode2::GetLocalVarSigToken Method
 
 Gets the metadata token for the local variable signature for the function that is represented by this instance.
 
@@ -24,9 +30,11 @@ HRESULT GetLocalVarSigToken(
  `pmdSig`
  [out] A pointer to the `mdSignature` token for the local variable signature for this function, or `mdSignatureNil` if there is no signature (that is, if the function doesn't have any local variables).
 
+## Remarks
+
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -36,4 +44,4 @@ HRESULT GetLocalVarSigToken(
 
 ## See also
 
-- ICorDebugILCode2 Interface
+- [ICorDebugILCode2 Interface](icordebugilcode2-interface.md)

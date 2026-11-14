@@ -1,22 +1,19 @@
 ---
-title: "dotnet store command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-store.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet store command
+description: The 'dotnet store' command stores the specified assemblies in the runtime package store.
+ms.date: 02/04/2026
+ai-usage: ai-assisted
 ---
-
 # dotnet store
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
 
-> **Warning:**
-> The `dotnet store` command and the runtime package store feature are **deprecated and no longer supported**. This command has known issues with .NET 6 and later versions and **is not recommended for use**. The .NET team plans to eventually stop shipping this command. For more information, see GitHub issue #24752.
+> [!WARNING]
+> The `dotnet store` command and the runtime package store feature are **deprecated and no longer supported**. This command has known issues with .NET 6 and later versions and **is not recommended for use**. The .NET team plans to eventually stop shipping this command. For more information, see [GitHub issue #24752](https://github.com/dotnet/sdk/issues/24752).
 
 ## Name
 
-`dotnet store` - Stores the specified assemblies in the runtime package store.
+`dotnet store` - Stores the specified assemblies in the [runtime package store](../deploying/runtime-store.md).
 
 ## Synopsis
 
@@ -34,20 +31,18 @@ dotnet store -h|--help
 
 ## Description
 
-> **Caution:**
+> [!CAUTION]
 > The runtime package store feature is deprecated and no longer functional on .NET 6+. This command might fail with crossgen-related errors. Even when using the `--skip-optimization` workaround, the generated stores might not work correctly.
 
-`dotnet store` stores the specified assemblies in the runtime package store. By default, assemblies are optimized for the target runtime and framework. For more information, see the runtime package store topic.
+`dotnet store` stores the specified assemblies in the [runtime package store](../deploying/runtime-store.md). By default, assemblies are optimized for the target runtime and framework. For more information, see the [runtime package store](../deploying/runtime-store.md) topic.
 
 ## Required options
 
 - **`-f|--framework <FRAMEWORK>`**
 
-  Specifies the target framework. The target framework has to be specified in the project file.
+  Specifies the [target framework](../../standard/frameworks.md). The target framework has to be specified in the project file.
 
-- **`--disable-build-servers`**
-
-Forces the command to ignore any persistent build servers. This option provides a consistent way to disable all use of build caching, which forces a build from scratch. A build that doesn't rely on caches is useful when the caches might be corrupted or incorrect for some reason. Available since .NET 7 SDK.
+- [!INCLUDE [disable-build-servers](includes/cli-disable-build-servers.md)]
 
 - **`-m|--manifest <PATH_TO_MANIFEST_FILE>`**
 
@@ -55,7 +50,7 @@ Forces the command to ignore any persistent build servers. This option provides 
 
 - **`-r|--runtime <RUNTIME_IDENTIFIER>`**
 
-  The runtime identifier to target.
+  The [runtime identifier](../rid-catalog.md) to target.
 
 ## Optional options
 
@@ -69,7 +64,7 @@ Forces the command to ignore any persistent build servers. This option provides 
 
 - **`--skip-optimization`**
 
-  Skips the optimization phase. For more information about optimization, see Preparing a runtime environment.
+  Skips the optimization phase. For more information about optimization, see [Preparing a runtime environment](../deploying/runtime-store.md#preparing-a-runtime-environment).
 
 - **`--skip-symbols`**
 
@@ -79,17 +74,13 @@ Forces the command to ignore any persistent build servers. This option provides 
 
   Use current runtime as the target runtime. The default is `false`.
 
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+- [!INCLUDE [verbosity](includes/cli-verbosity.md)]
 
 - **`-w|--working-dir <WORKING_DIRECTORY>`**
 
   The working directory used by the command. If not specified, it uses the *obj* subdirectory of the current directory.
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Examples
 
@@ -107,4 +98,4 @@ Prints out a description of how to use the command.
 
 ## See also
 
-- Runtime package store
+- [Runtime package store](../deploying/runtime-store.md)

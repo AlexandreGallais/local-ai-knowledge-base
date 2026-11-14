@@ -1,12 +1,9 @@
 ---
-title: "Guidance for .NET library dependency versions"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/library-guidance/dependencies-net.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Guidance for .NET library dependency versions
+description: Learn about the strategies and recommendations for choosing dependency versions when you build a library that targets multiple .NET versions.
+ms.date: 11/11/2026
+ai-usage: ai-assisted
 ---
-
 # Guidance for .NET library dependency versions
 
 When you build libraries that target multiple .NET versions, choosing dependency versions has implications for compatibility, servicing, and ecosystem health. This article outlines the main strategies, their tradeoffs, and recommendations.
@@ -43,9 +40,9 @@ Compare the following three strategies to choose a dependency policy for your li
 
 Reference the latest supported version of the dependency across all target frameworks. For example, a project might reference 11.0 packages on `netstandard2.0`, `net10.0`, and `net11.0`.
 
-> **Note:**
+> [!NOTE]
 >
-> - An STS release and the preceding LTS release can share an end-of-support date. For example, .NET 11 (STS) and .NET 10 (LTS) are supported until November 2028. For this strategy, choose the latest supported dependency version regardless of its STS or LTS designation. For current support dates, see the .NET support policy.
+> - An STS release and the preceding LTS release can share an end-of-support date. For example, .NET 11 (STS) and .NET 10 (LTS) are supported until November 2028. For this strategy, choose the latest supported dependency version regardless of its STS or LTS designation. For current support dates, see the [.NET support policy](https://dotnet.microsoft.com/platform/support/policy/dotnet-core).
 > - Not all packages support targeting older frameworks in their latest version, for example, `Microsoft.AspNetCore.Authorization`. If you reference these packages, exclude them from this policy and follow option 2 instead.
 
 **Pros**
@@ -110,7 +107,7 @@ Reference the latest supported version of the dependency across all target frame
 
 ---
 
-## Key <example-value>
+## Key tradeoffs
 
 - **Friction vs. innovation:** Latest versions offer new features but have more friction for existing applications on older runtimes.
 - **Development cost:** Configuring multiple dependency groups, updating dependencies for those, and managing API gaps can all accumulate to slow down innovation in a fast-moving library.
@@ -128,7 +125,7 @@ Reference the latest supported version of the dependency across all target frame
 
 ## Examples
 
-These examples use `Microsoft.Extensions.Logging.Abstractions`, which isn't part of the .NET shared framework. Version 10.0.0 of the package depends on `System.Diagnostics.DiagnosticSource` 10.0.0 when targeting `net8.0` or `net9.0`, but relies on the shared framework for that API when targeting `net10.0`. This transitive dependency means that your dependency policy affects framework libraries even when you don't reference them directly. For the dependency groups, see Microsoft.Extensions.Logging.Abstractions 10.0.0.
+These examples use `Microsoft.Extensions.Logging.Abstractions`, which isn't part of the .NET shared framework. Version 10.0.0 of the package depends on `System.Diagnostics.DiagnosticSource` 10.0.0 when targeting `net8.0` or `net9.0`, but relies on the shared framework for that API when targeting `net10.0`. This transitive dependency means that your dependency policy affects framework libraries even when you don't reference them directly. For the dependency groups, see [Microsoft.Extensions.Logging.Abstractions 10.0.0](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Abstractions/10.0.0#dependencies-body-tab).
 
 ### Example 1: Latest supported version
 

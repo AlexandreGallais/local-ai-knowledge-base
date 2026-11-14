@@ -1,15 +1,14 @@
 ---
-title: "System.Web adapters"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/migration/fx-to-core/inc/systemweb-adapters.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: System.Web adapters
+description: System.Web adapters
+monikerRange: '>= aspnetcore-6.0'
+ms.date: 07/17/2025
+ms.topic: concept-article
 ---
 
 # System.Web adapters
 
-The main use case of the adapters in the dotnet/systemweb-adapters repository is to help developers who have taken a reliance on `System.Web` types within their class libraries as they want to move to ASP.NET Core.
+The main use case of the adapters in the [dotnet/systemweb-adapters](https://github.com/dotnet/systemweb-adapters) repository is to help developers who have taken a reliance on `System.Web` types within their class libraries as they want to move to ASP.NET Core.
 
 An important feature of the adapters is the adapters allow the library to be used from ***both*** ASP.NET Framework and ASP.NET Core projects. Updating multiple ASP.NET Framework apps to ASP.NET Core often involves intermediate states where not all the apps have been fully updated. By using the `System.Web` adapters, the library can be used both from ASP.NET Core callers and ASP.NET Framework callers that haven't been upgraded.
 
@@ -26,17 +25,17 @@ Let's take a look at an example using the adapters moving from .NET Framework to
 
 To convert between the two representations of HttpContext, you may do the following:
 
-For `Microsoft.AspNetCore.Http.HttpContext` to `System.Web.HttpContext`:
+For <xref:Microsoft.AspNetCore.Http.HttpContext> to <xref:System.Web.HttpContext>:
 
 * Implicit casting
 * `HttpContext.AsSystemWeb()`
 
-For `System.Web.HttpContext` to `Microsoft.AspNetCore.Http.HttpContext`
+For <xref:System.Web.HttpContext> to <xref:Microsoft.AspNetCore.Http.HttpContext>
 
 * Implicit casting
 * `HttpContext.AsAspNetCore()`
 
-Both of these methods will use a cached `System.Web.HttpContext` representation for the duration of a request. This allows for targeted rewrites to `Microsoft.AspNetCore.Http.HttpContext` as needed.
+Both of these methods will use a cached <xref:System.Web.HttpContext> representation for the duration of a request. This allows for targeted rewrites to <xref:Microsoft.AspNetCore.Http.HttpContext> as needed.
 
 ## Example
 
@@ -54,7 +53,7 @@ public class SomeController : Controller
 }
 ```
 
-which then has logic in a separate assembly passing that `System.Web.HttpContext` around until finally, some inner method does some logic on it such as:
+which then has logic in a separate assembly passing that <xref:System.Web.HttpContext> around until finally, some inner method does some logic on it such as:
 
 ```cs
 public class Class2
@@ -70,7 +69,7 @@ public class Class2
 
 In order to run the above logic in ASP.NET Core, a developer will need to add the `Microsoft.AspNetCore.SystemWebAdapters` package, that will enable the projects to work on both platforms.
 
-The libraries would need to be updated to understand the adapters, but it will be as simple as adding the package and recompiling. If these are the only dependencies a system has on `System.Web.dll`, then the libraries will be able to target .NET Standard 2.0 to facilitate a simpler building process while migrating.
+The libraries would need to be updated to understand the adapters, but it will be as simple as adding the package and recompiling. If these are the only dependencies a system has on `System.Web.dll`, then the libraries will be able to target [.NET Standard 2.0](/dotnet/standard/net-standard?tabs=net-standard-2-0) to facilitate a simpler building process while migrating.
 
 The controller in ASP.NET Core will now look like this:
 
@@ -85,73 +84,14 @@ public class SomeController : Controller
 }
 ```
 
-Notice that since there's a `Microsoft.AspNetCore.Mvc.ControllerBase.HttpContext` property, they can pass that through, but it generally looks the same. Using implicit conversions, the `Microsoft.AspNetCore.Http.HttpContext` can be converted into the adapter that could then be passed around through the levels utilizing the code in the same way.
+Notice that since there's a <xref:Microsoft.AspNetCore.Mvc.ControllerBase.HttpContext> property, they can pass that through, but it generally looks the same. Using implicit conversions, the <xref:Microsoft.AspNetCore.Http.HttpContext> can be converted into the adapter that could then be passed around through the levels utilizing the code in the same way.
 
 ## Unit Testing
 
 When unit testing code that uses the System.Web adapters, there are some special considerations to keep in mind.
 
-In most cases, there's no need to set up additional components for running tests. But if the component being tested uses `System.Web.HttpRuntime`, it might be necessary to start up the `SystemWebAdapters` service, as shown in the following example:
+In most cases, there's no need to set up additional components for running tests. But if the component being tested uses <xref:System.Web.HttpRuntime>, it might be necessary to start up the `SystemWebAdapters` service, as shown in the following example:
 
-```csharp
-namespace TestProject1;
+:::code language="csharp" source="~/migration/fx-to-core/inc/samples/unit-testing/Program.cs" id="snippet_UnitTestingFixture" :::
 
-/// <summary>
-/// This demonstrates an xUnit feature that ensures all tests
-/// in classes marked with this collection are run sequentially.
-/// </summary>
-[CollectionDefinition(nameof(SystemWebAdaptersHostedTests),
-    DisableParallelization = true)]
-public class SystemWebAdaptersHostedTests
-{
-}
-[Collection(nameof(SystemWebAdaptersHostedTests))]
-public class RuntimeTests
-{
-    /// <summary>
-    /// This method starts up a host in the background that
-    /// makes it possible to initialize <see cref="HttpRuntime"/>
-    /// and <see cref="HostingEnvironment"/> with values needed 
-    /// for testing with the <paramref name="configure"/> option.
-    /// </summary>
-    /// <param name="configure">
-    /// Configuration for the hosting and runtime options.
-    /// </param>
-    public static async Task<IDisposable> EnableRuntimeAsync(
-        Action<SystemWebAdaptersOptions>? configure = null,
-        CancellationToken token = <example-value>)
-        => await new HostBuilder()
-           .ConfigureWebHost(webBuilder =>
-           {
-               webBuilder
-                   .UseTestServer()
-                   .ConfigureServices(services =>
-                   {
-                       services.AddSystemWebAdapters();
-                       if (configure is not null)
-                       {
-                           services.AddOptions
-                               <SystemWebAdaptersOptions>()
-                               .Configure(configure);
-                       }
-                   })
-                   .Configure(app =>
-                   {
-                       // No need to configure pipeline for tests
-                   });
-           })
-           .StartAsync(token);
-    [Fact]
-    public async Task RuntimeEnabled()
-    {
-        using (await EnableRuntimeAsync(options =>
-            options.AppDomainAppPath = "path"))
-        {
-            Assert.True(HostingEnvironment.IsHosted);
-            Assert.Equal("path", HttpRuntime.AppDomainAppPath);
-        }
-        Assert.False(HostingEnvironment.IsHosted);
-    }
-}
-```
-The tests must be executed in sequence, not in parallel. The preceding example illustrates how to achieve this by setting XUnit's `DisableParallelization` option to `true`. This setting disables parallel execution for a specific test collection, ensuring that the tests within that collection run one after the other, without concurrency.
+The tests must be executed in sequence, not in parallel. The preceding example illustrates how to achieve this by setting [XUnit's `DisableParallelization` option](https://xunit.net/docs/running-tests-in-parallel#parallelism-in-test-frameworks) to `true`. This setting disables parallel execution for a specific test collection, ensuring that the tests within that collection run one after the other, without concurrency.

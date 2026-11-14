@@ -1,27 +1,24 @@
 ---
-title: "Union types (part 1 of 2)"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/builtin-types/union.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: "Union types"
+description: Learn about union types in C#. Unions express values from a closed set of types with exhaustive pattern matching support.
+ms.date: 10/19/2026
+f1_keywords:
+  - "union_CSharpKeyword"
+helpviewer_keywords:
+  - "union keyword [C#]"
+  - "union type [C#]"
+  - "case type [C#]"
+ai-usage: ai-assisted
 ---
-
 # Union types (C# reference)
 
 A *union type* represents a value that can be one of several *case types*. Unions provide implicit conversions from each case type, exhaustive pattern matching, and enhanced nullability tracking. Use the `union` keyword to declare a union type:
 
-```csharp
-public union Pet(Cat, Dog, Bird);
-```
+:::code language="csharp" source="snippets/unions/BasicUnion.cs" id="BasicDeclaration":::
+
 This declaration creates a `Pet` union with three case types: `Cat`, `Dog`, and `Bird`. You can assign any case type value to a `Pet` variable. The compiler ensures that `switch` expressions cover all case types.
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
-
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
-
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
 Declare a union when a value must be exactly one of a fixed set of types and you want the compiler to enforce that every possibility is handled. Common scenarios include:
 
@@ -35,7 +32,7 @@ A union differs from other type declarations in important ways:
 - Unlike an `interface`, a union is closed—you define the complete list of case types in the declaration, and the compiler uses that list for exhaustiveness checks.
 - Unlike a `record`, a union doesn't add equality, cloning, or deconstruction behavior. A union focuses on "which case is it?" rather than "what fields does it have?"
 
-Union types rely on the `System.Runtime.CompilerServices.UnionAttribute` and `System.Runtime.CompilerServices.IUnion` types in the `System.Runtime.CompilerServices` namespace. The .NET 11 runtime includes these types.
+Union types rely on the <xref:System.Runtime.CompilerServices.UnionAttribute> and <xref:System.Runtime.CompilerServices.IUnion> types in the `System.Runtime.CompilerServices` namespace. The .NET 11 runtime includes these types.
 
 ## Union declarations
 
@@ -47,93 +44,34 @@ public union Pet(Cat, Dog, Bird);
 
 *Case types* can be any type that converts to `object`, including classes, structs, interfaces, type parameters, nullable types, and other unions. The following examples show different case type possibilities:
 
-```csharp
-public record class Cat(string Name);
-public record class Dog(string Name, string Breed);
-public record class Bird(string Name);
-```
-```csharp
-public record class None;
-public record class Some<T>(T Value);
-public union Option<T>(None, Some<T>);
-```
-```csharp
-public union IntOrString(int, string);
-```
-When a case type is a value type (like `int`), a union declaration boxes the value and stores it as a single `object?` reference. Custom union types can use a different storage strategy.
+:::code language="csharp" source="snippets/unions/BasicUnion.cs" id="CaseTypes":::
+:::code language="csharp" source="snippets/unions/GenericUnion.cs" id="GenericUnion":::
+:::code language="csharp" source="snippets/unions/ValueTypeCases.cs" id="ValueTypeCases":::
+
+When a case type is a value type (like `int`), a union declaration boxes the value and stores it as a single `object?` reference. [Custom union types](#custom-union-types) can use a different storage strategy.
 
 A union declaration can include a body with additional members, just like a struct, subject to some restrictions. Union declarations can't include instance fields, auto-properties, or field-like events. You also can't declare public constructors with a single parameter, because the compiler generates those constructors as union creation members. Any constructor you declare must use a `this(...)` initializer to delegate, directly or indirectly, to a generated constructor. The following `Length` union adds a `TotalMeters` property that uses pattern matching to handle every case type, along with an `Add` method that combines two lengths:
 
-```csharp
-public record class Meters(double Value);
-public record class Feet(double Value);
+:::code language="csharp" source="snippets/unions/BodyMembers.cs" id="BodyMembers":::
 
-public union Length(Meters, Feet)
-{
-    public double TotalMeters => this switch
-    {
-        Meters m => m.Value,
-        Feet f => f.Value * 0.3048,
-        _ => throw new InvalidOperationException("The Length has no value."),
-    };
-
-    public Length Add(Length other) => new Meters(TotalMeters + other.TotalMeters);
-}
-```
 ## Union conversions
 
 An implicit *union conversion* exists from each case type to the union type:
 
-```csharp
-static void BasicConversion()
-{
-    Pet pet = new Dog("Rex", "Labrador");
-    Console.WriteLine(pet.Value); // output: Dog { Name = Rex, Breed = Labrador }
+:::code language="csharp" source="snippets/unions/BasicUnion.cs" id="BasicConversion":::
 
-    Pet pet2 = new Cat("Whiskers");
-    Console.WriteLine(pet2.Value); // output: Cat { Name = Whiskers }
-}
-```
-Union conversions work by calling the corresponding generated constructor. If a user-defined implicit conversion operator exists for the same type, the user-defined operator takes priority over the union conversion. If more than one case type is equally applicable to the source value, the union conversion is ambiguous, and the compiler reports an error. For details on conversion priority, see the feature specification.
+Union conversions work by calling the corresponding generated constructor. If a user-defined implicit conversion operator exists for the same type, the user-defined operator takes priority over the union conversion. If more than one case type is equally applicable to the source value, the union conversion is ambiguous, and the compiler reports an error. For details on conversion priority, see the [feature specification](~/_csharplang/proposals/csharp-15.0/unions.md).
 
 A union conversion to a nullable union struct (`T?`) also works when `T` is a union type:
 
-```csharp
-static void NullableUnionExample()
-{
-    Pet? maybePet = new Dog("Buddy", "Beagle");
-    Pet? noPet = null;
+:::code language="csharp" source="snippets/unions/NullHandling.cs" id="NullableUnionExample":::
 
-    Console.WriteLine(Describe(maybePet)); // output: Buddy
-    Console.WriteLine(Describe(noPet));    // output: no pet
-
-    static string Describe(Pet? pet) => pet switch
-    {
-        Dog d => d.Name,
-        Cat c => c.Name,
-        Bird b => b.Name,
-        null => "no pet",
-    };
-}
-```
 ## Union pattern matching
 
 When you use a type or declaration pattern on a union expression, the pattern tests the union's contents, not the union instance. For example, a `Dog` pattern tests whether `Value` is a `Dog`:
 
-```csharp
-static void PatternMatching()
-{
-    Pet pet = new Dog("Rex", "Labrador");
+:::code language="csharp" source="snippets/unions/BasicUnion.cs" id="PatternMatching":::
 
-    var name = pet switch
-    {
-        Dog d => d.Name,
-        Cat c => c.Name,
-        Bird b => b.Name,
-    };
-    Console.WriteLine(name); // output: Rex
-}
-```
 The pattern's form determines which value it tests:
 
 | Pattern | Behavior on a union expression |
@@ -147,41 +85,19 @@ The pattern's form determines which value it tests:
 
 For example, define a `Pet` union with a read-only `Name` property that delegates to the contained `Cat` or `Dog`. The type patterns in the property's `switch` expression test the contents:
 
-```csharp
-public union Pet(Cat, Dog)
-{
-    public string Name => this switch
-    {
-        Cat cat => cat.Name,
-        Dog dog => dog.Name,
-        null => "",
-    };
-}
-```
+:::code language="csharp" source="snippets/unions/UnionPatternMatching.cs" id="UnionWithProperty":::
+
 The typed pattern `Dog { Breed: "Labrador" }` tests the contents and reads the dog's `Breed`, a property the union doesn't have. The untyped pattern `{ Name: "Rex" }` reads the union's `Name` property instead, so it also matches a cat named Rex:
 
-```csharp
-Pet pet = new Dog("Rex", "Labrador");
-Console.WriteLine(pet is Dog { Breed: "Labrador" }); // output: True
-Console.WriteLine(pet is { Name: "Rex" });           // output: True
-pet = new Cat("Rex");
-Console.WriteLine(pet is Dog { Breed: "Labrador" }); // output: False
-Console.WriteLine(pet is { Name: "Rex" });           // output: True
-```
+:::code language="csharp" source="snippets/unions/UnionPatternMatching.cs" id="PropertyMatching":::
+
 The `not` pattern negates its nested pattern. In `pet is not null`, the nested `null` pattern checks the contents, so `not null` is a useful has-a-value test. In contrast, an empty untyped property pattern, `{ }`, checks the union instance. It always matches a nonnullable struct union, even when `Value` is null:
 
-```csharp
-Pet empty = default;
-Console.WriteLine(empty is { });       // output: True
-Console.WriteLine(empty is not null);  // output: False
-if (empty is var captured)
-{
-    Console.WriteLine(captured.Value is null); // output: True
-}
-```
+:::code language="csharp" source="snippets/unions/UnionPatternMatching.cs" id="NullAndCapture":::
+
 Logical patterns preserve these distinctions. In `var pet and not null`, `var pet` captures the incoming union, and `not null` tests whether it has non-null contents. In `not null and var pet`, the `var` pattern still captures the incoming union: `not` doesn't change the value passed to the right-hand pattern. By contrast, in `Dog and { Breed: "Labrador" }`, the type pattern passes the matched `Dog` to the property pattern.
 
-> **Note:**
+> [!NOTE]
 > A type pattern must be compatible with at least one case type. For the `Pet` declarations in this article, `pet is Pet` produces compiler error CS8121: none of their case types can match `Pet`. It isn't a runtime test of the union instance. To check for contents, use `pet is not null` or `pet.Value is not null`; to capture the union itself, use a `var` pattern.
 
 In short, type and declaration patterns test the contents. Recursive patterns with a type test the contents too; recursive patterns without a type use the union's own members. These rules are the same in an `is` expression and a `switch` expression.
@@ -190,21 +106,8 @@ In short, type and declaration patterns test the contents. Recursive patterns wi
 
 For struct unions, the `null` pattern checks whether `Value` is null:
 
-```csharp
-static void NullHandling()
-{
-    Pet pet = default;
-    var description = pet switch
-    {
-        Dog d => d.Name,
-        Cat c => c.Name,
-        Bird b => b.Name,
-        null => "no pet",
-    };
-    Console.WriteLine(description); // output: no pet
-    Console.WriteLine(pet.Value is null); // output: True
-}
-```
+:::code language="csharp" source="snippets/unions/NullHandling.cs" id="NullHandling":::
+
 For class-based unions, `null` succeeds when either the union reference itself is null or its `Value` property is null:
 
 ```csharp
@@ -221,55 +124,21 @@ For nullable union struct types (`Pet?`), `null` succeeds when the nullable wrap
 
 A `switch` expression is exhaustive over a union's case types when it handles each case type. If nullability analysis also considers the contents non-null, you don't need a discard (`_`) or `var` arm:
 
-```csharp
-static void PatternMatching()
-{
-    Pet pet = new Dog("Rex", "Labrador");
+:::code language="csharp" source="snippets/unions/BasicUnion.cs" id="PatternMatching":::
 
-    var name = pet switch
-    {
-        Dog d => d.Name,
-        Cat c => c.Name,
-        Bird b => b.Name,
-    };
-    Console.WriteLine(name); // output: Rex
-}
-```
 To handle null contents, prefer a `null` arm over a `var` or discard (`_`) arm. The `null` pattern states your intent and preserves warnings when you add a new case type without a matching arm. A `var` or discard arm also accepts any new case, so the compiler can't warn you about that missing case.
 
 When the tracked null state of `Value` is "maybe null," the compiler also warns if you omit a `null` arm. For example, `NullablePet` has a nullable case type, so its parameter's contents might be null:
 
-```csharp
-public union NullablePet(Cat?, Dog, Bird);
+:::code language="csharp" source="snippets/unions/NullHandling.cs" id="MaybeNullContents":::
 
-static string DescribeNullableCase(NullablePet pet) => pet switch
-{
-    Cat cat => cat.Name,
-    Dog dog => dog.Name,
-    Bird bird => bird.Name,
-    null => "no pet",
-};
-```
 Removing the `null` arm from this switch produces warning CS8655.
 
 Nullable analysis doesn't guarantee that a generated union has non-null contents at runtime. A default union contains null, including when it's a default-initialized field or array element. If all case types are nonnullable, the default tracked state of `Value` is nevertheless "not null," so the compiler doesn't necessarily warn about an omitted `null` arm. Handle `null` for correctness whenever default contents can reach your switch:
 
-```csharp
-static void NullHandling()
-{
-    Pet pet = default;
-    var description = pet switch
-    {
-        Dog d => d.Name,
-        Cat c => c.Name,
-        Bird b => b.Name,
-        null => "no pet",
-    };
-    Console.WriteLine(description); // output: no pet
-    Console.WriteLine(pet.Value is null); // output: True
-}
-```
-For this `Pet` example, removing the `null` arm produces no missing-null-arm warning unless earlier code changes the tracked null state, but the switch throws `System.Runtime.CompilerServices.SwitchExpressionException` when it receives the default value. An earlier `is null` test can change the tracked state and cause a warning. This behavior is separate from definite assignment: the compiler rejects a read of an unassigned local variable.
+:::code language="csharp" source="snippets/unions/NullHandling.cs" id="NullHandling":::
+
+For this `Pet` example, removing the `null` arm produces no missing-null-arm warning unless earlier code changes the tracked null state, but the switch throws <xref:System.Runtime.CompilerServices.SwitchExpressionException> when it receives the default value. An earlier `is null` test can change the tracked state and cause a warning. This behavior is separate from definite assignment: the compiler rejects a read of an unassigned local variable.
 
 ## Nullability
 
@@ -278,3 +147,90 @@ The compiler tracks the null state of a union's `Value` property through the fol
 - The default null state of a union's `Value` property is "maybe null" if the default null state of any case type is "maybe null." Otherwise, the default null state is "not null."
 - When you create a union value from a case type (through a constructor or union conversion), `Value` gets the null state of the incoming value.
 - When the non-boxing access pattern's `HasValue` or `TryGetValue(...)` members query the union's contents, the null state of `Value` becomes "not null" on the `true` branch.
+
+## Custom union types
+
+The compiler converts a `union` declaration to a `struct` declaration. The struct is marked with the `[System.Runtime.CompilerServices.Union]` attribute and implements the `IUnion` interface. It includes a public constructor for each case type and a `Value` property. The language provides implicit union conversions that call those constructors. That generated form is opinionated. It's always a struct, always boxes value-type cases, and always stores contents as `object?`.
+
+You might need different behavior if you want to adapt an existing type, create a class-based union, or use a custom storage strategy, or if you need interop support. You can create a union type manually.
+
+Any class or struct with a `[Union]` attribute is a *union type* if it follows the *basic union pattern*. The basic union pattern requires:
+
+- A `[Union]` <!--<xref:System.Runtime.CompilerServices.UnionAttribute>--> attribute on the type.
+- One or more public constructors, each with a single by-value or `in` parameter. The parameter type of each constructor defines a *case type*.
+- A public `Value` property of type `object?` (or `object`) with a `get` accessor.
+
+All the preceding union members must be public. The compiler uses these members to implement union conversions, pattern matching, and exhaustiveness checks. You can also implement the [non-boxing access pattern](#non-boxing-access-pattern) or create a [class-based union type](#class-based-union-types). Your custom union type can add more members.
+
+The compiler assumes that custom union types satisfy these behavioral rules:
+
+- **Soundness**: `Value` always returns `null` or a value of one of the case types, including for a default struct value. A custom union can represent its default value as a non-null case, unlike the null contents of a default generated union.
+- **Stability**: If you create a union value from a case type, `Value` matches that case type (or is `null` if the input was `null`).
+- **Creation equivalence**: If a value is implicitly convertible to two different case types, both creation members produce the same observable behavior.
+- **Access pattern consistency**: The `HasValue` and `TryGetValue` members, if present, behave equivalently to checking `Value` directly.
+
+The following example shows a custom union type:
+
+:::code language="csharp" source="snippets/unions/ManualUnion.cs" id="ManualBasicPattern":::
+
+:::code language="csharp" source="snippets/unions/ManualUnion.cs" id="ManualUnionExample":::
+
+### Non-boxing access pattern
+
+A custom union type can optionally implement the *non-boxing access pattern* to enable strongly typed access to value-type cases without boxing during pattern matching. This pattern requires:
+
+- A `HasValue` property of type `bool` that returns `true` when `Value` isn't `null`.
+- A `TryGetValue` method for each case type that returns `bool` and delivers the value through an `out` parameter. `TryGetValue` returns `true` only when `Value` is a non-null value of that case type. The `out` parameter's type is identity-convertible to the case type, or to the underlying value type when the case type is a nullable value type.
+
+:::code language="csharp" source="snippets/unions/NonBoxingAccess.cs" id="NonBoxingAccessPattern":::
+
+:::code language="csharp" source="snippets/unions/NonBoxingAccess.cs" id="NonBoxingExample":::
+
+For pattern matching, the compiler calls `TryGetValue` for type-pattern checks (such as `union is T`) and `HasValue` for null-pattern checks (such as `union is null`), avoiding boxing for value-type cases. Each member applies to its own pattern kind—neither is a fallback for the other. When a member is missing, the compiler checks the `Value` property for that pattern instead. For more information, see [How the compiler generates code for pattern matching](#union-member-providers).
+
+### Union member providers
+
+A union type can delegate its union members to a public nested `IUnionMembers` interface that it directly contains and implements. That interface is the *union member provider*. The compiler finds union members only on the provider interface, including inherited members. Members declared only on the union type itself aren't used as union members.
+
+When using a union member provider, the interface must declare these required members:
+
+- **Static `Create` methods**: One for each case type, with a single parameter and a return type identity-convertible to the union type. These methods establish your case types.
+- **`Value` property**: A public `object` or `object?` property with a `get` accessor that returns the contained value.
+
+You can optionally declare these members on the interface so the compiler generates more efficient pattern matching code:
+
+- **`TryGetValue` methods**: One for each case type, returning `bool` with an `out` parameter of the case type.
+- **`HasValue` property**: A public `bool` property with a `get` accessor returning `true` when `Value` isn't `null`.
+
+**How the compiler generates code for pattern matching**: `TryGetValue` and `HasValue` apply to different kinds of patterns—neither is a fallback for the other:
+
+- For a *type pattern*, such as `union is T`, the compiler calls `TryGetValue(out T value)` when declared, extracting the value and applying the pattern to it without boxing. Otherwise, the compiler applies the pattern to the `Value` property, which performs a runtime type check against `T` and can box the value when `T` is a value type.
+- For a *null pattern*, such as `union is null`, the compiler calls `HasValue` when declared to test whether the union contains a value. Otherwise, the compiler applies the null pattern to the `Value` property directly.
+
+Each member is independently optional: without `TryGetValue`, type patterns use `Value`; without `HasValue`, null patterns use `Value`. Declaring either member lets the compiler generate more efficient, strongly typed code for that pattern kind:
+
+:::code language="csharp" source="snippets/unions/MemberProvider.cs" id="MemberProvider":::
+
+Union member providers are useful when the union type needs a private constructor or when the creation logic requires a factory pattern, such as with `record class` union types.
+
+### Class-based union types
+
+A class can also be a union type. This type of union is useful when you need reference semantics or inheritance:
+
+:::code language="csharp" source="snippets/unions/ClassUnion.cs" id="ClassUnion":::
+
+:::code language="csharp" source="snippets/unions/ClassUnion.cs" id="ClassUnionExample":::
+
+For class-based unions, the `null` pattern matches both a null reference and a null `Value`.
+
+## C# language specification
+
+For more information, see the [Unions](~/_csharplang/proposals/csharp-15.0/unions.md) feature specification.
+
+## See also
+
+- [The C# type system](../../fundamentals/types/index.md)
+- [Pattern matching](../operators/patterns.md)
+- [Switch expression](../operators/switch-expression.md)
+- [Value types](value-types.md)
+- [Records](record.md)

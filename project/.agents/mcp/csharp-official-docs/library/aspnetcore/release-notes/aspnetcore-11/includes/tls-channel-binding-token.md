@@ -1,15 +1,4 @@
----
-title: "tls-channel-binding-token"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-11/includes/tls-channel-binding-token.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# tls-channel-binding-token
-
-### TLS channel-binding token <example-value> from `ITlsConnectionFeature`
+### TLS channel-binding token access from `ITlsConnectionFeature`
 
 Applications using TLS can read the connection's channel binding token to defend against relay attacks:
 
@@ -30,7 +19,7 @@ app.Use(async (context, next) =>
 });
 ```
 
-Kestrel returns the binding from `SslStream.TransportContext.GetChannelBinding`. IIS and HTTP.sys return it from the request. On HTTP.sys, `HttpSysOptions.HttpAuthenticationHardeningLevel` controls Extended Protection and channel-binding token <example-value>:
+Kestrel returns the binding from `SslStream.TransportContext.GetChannelBinding`. IIS and HTTP.sys return it from the request. On HTTP.sys, `HttpSysOptions.HttpAuthenticationHardeningLevel` controls Extended Protection and channel-binding token exposure:
 
 * `Legacy` disables channel-binding validation and doesn't expose the token.
 * `Medium`, the default, exposes the token and validates it when supplied, but tolerates its absence.

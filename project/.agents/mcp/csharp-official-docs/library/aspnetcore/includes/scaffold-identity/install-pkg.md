@@ -1,17 +1,5 @@
----
-title: "install-pkg"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/scaffold-identity/install-pkg.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
+Install the [Microsoft.VisualStudio.Web.CodeGeneration.Design](https://www.nuget.org/packages/Microsoft.VisualStudio.Web.CodeGeneration.Design) NuGet package.
 
-# install-pkg
-
-Install the Microsoft.VisualStudio.Web.CodeGeneration.Design NuGet package.
-
-> **Note:**
-> For guidance on adding packages to .NET apps, see the articles under *Install and manage packages* at Package consumption workflow (NuGet documentation). Confirm correct package versions at NuGet.org.
+[!INCLUDE[](~/includes/package-reference.md)]
 
 ---

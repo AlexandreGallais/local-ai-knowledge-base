@@ -1,12 +1,14 @@
 ---
 title: "Security and User Input"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/security/security-and-user-input.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Your code might pass user-entered data as parameters to other code, which can affect security. You can do range checking to reject problematic input.
+ms.date: 07/15/2020
+helpviewer_keywords:
+  - "security [.NET], user input"
+  - "user input, security"
+  - "secure coding, user input"
+  - "code security, user input"
+ms.assetid: 9141076a-96c9-4b01-93de-366bb1d858bc
 ---
-
 # Security and User Input
 
 User data, which is any kind of input (data from a Web request or URL, input to controls of a Microsoft Windows Forms application, and so on), can adversely influence code because often that data is used directly as parameters to call other code. This situation is analogous to malicious code calling your code with strange parameters, and the same precautions should be taken. User input is actually harder to make safe because there is no stack frame to trace the presence of the potentially untrusted data.
@@ -25,7 +27,7 @@ Some important considerations involving user data include the following:
 
   - Use of wild card characters (*).
 
-  - Token <example-value> (%token%).
+  - Token expansion (%token%).
 
   - Strange forms of paths with special meaning.
 
@@ -51,5 +53,5 @@ Some important considerations involving user data include the following:
 
 ## See also
 
-- Secure Coding Guidelines
-- ASP.NET Core Security
+- [Secure Coding Guidelines](secure-coding-guidelines.md)
+- [ASP.NET Core Security](/aspnet/core/security/)

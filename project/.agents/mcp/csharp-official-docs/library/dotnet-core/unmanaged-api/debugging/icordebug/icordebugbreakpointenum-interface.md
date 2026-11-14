@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugBreakpointEnum Interface"
 title: "ICorDebugBreakpointEnum Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugbreakpointenum-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugBreakpointEnum"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugBreakpointEnum"
+helpviewer_keywords:
+  - "ICorDebugBreakpointEnum interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugBreakpointEnum Interface
 
 Implements ICorDebugEnum methods, and enumerates ICorDebugBreakpoint arrays.
@@ -15,16 +23,16 @@ Implements ICorDebugEnum methods, and enumerates ICorDebugBreakpoint arrays.
 
 |Method|Description|
 |------------|-----------------|
-|Next Method|Gets the specified number of `ICorDebugBreakpoint` instances from the enumeration, starting at the current position.|
+|[Next Method](icordebugbreakpointenum-next-method.md)|Gets the specified number of `ICorDebugBreakpoint` instances from the enumeration, starting at the current position.|
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

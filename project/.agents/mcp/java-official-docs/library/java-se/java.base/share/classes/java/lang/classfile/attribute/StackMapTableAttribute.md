@@ -1,42 +1,32 @@
----
-title: "StackMapTableAttribute interface (java.lang.classfile.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/attribute/StackMapTableAttribute.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # StackMapTableAttribute interface (java.lang.classfile.attribute)
 
 ```java
 public sealed interface StackMapTableAttribute extends Attribute<StackMapTableAttribute>, CodeElement permits BoundAttribute.BoundStackMapTableAttribute, UnboundAttribute.UnboundStackMapTableAttribute
 ```
 
-Models the StackMapTable attribute (JVMS
-), which is used for verification by type checking ().
-
-This attribute is not delivered in the traversal of a `CodeAttribute`,
-but instead automatically generated upon `class` file writing.
-Advanced users can supply their own stack maps according to the `ClassFile.StackMapsOption`.
-
-This attribute only appears on `Code` attributes, and does not permit
-multiple instances in a `Code` attribute.  It has a data dependency on labels in the `code` array.
-
+Models the {@link Attributes#stackMapTable() StackMapTable} attribute (JVMS
+{@jvms 4.7.4}), which is used for verification by type checking ({@jvms
+4.10.1}).
+<p>
+This attribute is not delivered in the traversal of a {@link CodeAttribute},
+but instead automatically generated upon {@code class} file writing.
+Advanced users can supply their own stack maps according to the {@link
+ClassFile.StackMapsOption}.
+<p>
+This attribute only appears on {@code Code} attributes, and does not permit
+{@linkplain AttributeMapper#allowMultiple multiple instances} in a {@code
+Code} attribute.  It has a data dependency on {@linkplain
+AttributeStability#LABELS labels} in the {@code code} array.
+<p>
 This attribute was introduced in the Java SE Platform version 6, major
-version `ClassFile#JAVA_6_VERSION`.
+version {@value ClassFile#JAVA_6_VERSION}.
 
-**See also:** Attributes#stackMapTable()
-
-**See also:** DiscontinuedInstruction.JsrInstruction
-
-**See also:** DiscontinuedInstruction.RetInstruction
-
-**jvms:** 4.7.4 The `StackMapTable` Attribute
-
-**jvms:** 4.10.1 Verification by Type Checking
-
-**Since:** 24
+@see Attributes#stackMapTable()
+@see DiscontinuedInstruction.JsrInstruction
+@see DiscontinuedInstruction.RetInstruction
+@jvms 4.7.4 The {@code StackMapTable} Attribute
+@jvms 4.10.1 Verification by Type Checking
+@since 24
 
 ## StackMapTableAttribute.entries()
 
@@ -44,12 +34,14 @@ version `ClassFile#JAVA_6_VERSION`.
 List<StackMapFrameInfo> entries()
 ```
 
+{@return the stack map frames}
+
 ## StackMapTableAttribute.of(List<StackMapFrameInfo>)
 
 ```java
 public static StackMapTableAttribute of(List<StackMapFrameInfo> entries)
 ```
 
-Parameters:
+{@return a stack map table attribute}
 
-- `entries`: the stack map frames
+@param entries the stack map frames

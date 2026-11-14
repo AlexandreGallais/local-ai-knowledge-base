@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: Deserialize char requires single-character string"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/serialization/5.0/deserializing-json-into-char-requires-single-character.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 5 where System.Text.Json requires a single-char string in the JSON when deserializing to a char target.
+ms.date: 12/15/2020
 ---
-
 # System.Text.Json requires single-char string to deserialize a char
 
-To successfully deserialize a `System.Char` using `System.Text.Json`, the JSON string must contain a single character.
+To successfully deserialize a <xref:System.Char> using <xref:System.Text.Json>, the JSON string must contain a single character.
 
 ## Change description
 
@@ -21,7 +17,7 @@ In previous .NET versions, a multi-`char` string in the JSON is successfully des
 char deserializedChar = JsonSerializer.Deserialize<char>("\"abc\"");
 ```
 
-In .NET 5 and later, anything other than a single-`char` string causes a `System.Text.Json.JsonException` to be thrown when the deserialization target is a `char`. The following example string is successfully deserialized in all .NET versions:
+In .NET 5 and later, anything other than a single-`char` string causes a <xref:System.Text.Json.JsonException> to be thrown when the deserialization target is a `char`. The following example string is successfully deserialized in all .NET versions:
 
 ```csharp
 // Correct usage.
@@ -42,4 +38,16 @@ When you deserialize JSON into a `char` target, make sure the string consists of
 
 ## Affected APIs
 
-- `System.Text.Json.JsonSerializer.Deserialize*`
+- <xref:System.Text.Json.JsonSerializer.Deserialize*?displayProperty=fullName>
+
+<!--
+
+### Affected APIs
+
+- `Overload:System.Text.Json.JsonSerializer.Deserialize`
+
+### Category
+
+Serialization
+
+-->

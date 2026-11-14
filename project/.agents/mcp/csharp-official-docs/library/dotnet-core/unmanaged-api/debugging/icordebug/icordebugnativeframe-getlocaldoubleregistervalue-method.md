@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugNativeFrame::GetLocalDoubleRegisterValue Method"
 title: "ICorDebugNativeFrame::GetLocalDoubleRegisterValue Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugnativeframe-getlocaldoubleregistervalue-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugNativeFrame.GetLocalDoubleRegisterValue"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugNativeFrame::GetLocalDoubleRegisterValue"
+helpviewer_keywords:
+  - "ICorDebugNativeFrame::GetLocalDoubleRegisterValue method [.NET debugging]"
+  - "GetLocalDoubleRegisterValue method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugNativeFrame::GetLocalDoubleRegisterValue Method
 
 Gets the value of an argument or local variable that is stored in the two specified registers for this native frame.
@@ -46,10 +55,12 @@ The `GetLocalDoubleRegisterValue` method can be used either in a native frame or
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
  **Library:** CorGuids.lib
 
  **.NET versions:** Available since .NET Framework 1.0
+
+## See also

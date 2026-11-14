@@ -1,21 +1,22 @@
 ---
-title: "Upgrade the TypeScript compiler"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/github-copilot-upgrade/javascript-typescript-upgrade-typescript.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Upgrade the TypeScript compiler
+description: Use GitHub Copilot upgrade to update the TypeScript compiler through supported major versions and resolve compatibility problems.
+ms.topic: how-to
+ms.date: 09/21/2026
+ai-usage: ai-generated
+
+#customer intent: As a TypeScript developer, I want to upgrade the TypeScript compiler and resolve errors introduced by each major version.
 ---
 
 # Upgrade the TypeScript compiler
 
 Use GitHub Copilot upgrade to move a project to a newer TypeScript compiler version. The agent upgrades the compiler incrementally across major versions, resolves new compiler errors at each step, and validates application behavior after the upgrade.
 
-Use the dependency upgrade workflow instead when you want to update packages other than `typescript`. For more information, see Upgrade JavaScript and TypeScript dependencies.
+Use the dependency upgrade workflow instead when you want to update packages other than `typescript`. For more information, see [Upgrade JavaScript and TypeScript dependencies](javascript-typescript-upgrade-dependencies.md).
 
 ## Start the compiler upgrade
 
-1. Install GitHub Copilot upgrade. For instructions, see Install GitHub Copilot upgrade.
+1. Install GitHub Copilot upgrade. For instructions, see [Install GitHub Copilot upgrade](install.md).
 1. Open the repository that contains the TypeScript project in a supported GitHub Copilot environment.
 1. Ask the agent to upgrade TypeScript. Name the target version when you need a specific release. For example:
 
@@ -42,10 +43,10 @@ After the final compiler update, the agent compiles the project again and repeat
 - Compile and runtime validation results.
 - Preexisting code defects exposed by the newer compiler.
 
-For details about runtime checks, see Validate a JavaScript or TypeScript application.
+For details about runtime checks, see [Validate a JavaScript or TypeScript application](javascript-typescript-validate-application.md).
 
 ## Related content
 
-- Upgrade JavaScript and TypeScript projects
-- Upgrade JavaScript and TypeScript dependencies
-- JavaScript and TypeScript capabilities
+- [Upgrade JavaScript and TypeScript projects](javascript-typescript-overview.md)
+- [Upgrade JavaScript and TypeScript dependencies](javascript-typescript-upgrade-dependencies.md)
+- [JavaScript and TypeScript capabilities](javascript-typescript-capabilities.md)

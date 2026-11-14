@@ -1,15 +1,13 @@
 ---
-title: "Unit testing Visual Basic in .NET Core with dotnet test and xUnit"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/unit-testing-visual-basic-with-xunit.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Unit testing Visual Basic in .NET Core with dotnet test and xUnit
+description: Learn unit test concepts in .NET Core through an interactive experience building a sample Visual Basic solution step-by-step using dotnet test and xUnit.
+author: billwagner
+ms.author: wiwagn
+ms.date: 05/18/2020
 ---
-
 # Unit testing Visual Basic .NET Core libraries using dotnet test and xUnit
 
-This tutorial shows how to build a solution containing a unit test project and library project. To follow the tutorial using a pre-built solution, view or download the sample code. For download instructions, see Samples and Tutorials.
+This tutorial shows how to build a solution containing a unit test project and library project. To follow the tutorial using a pre-built solution, [view or download the sample code](https://github.com/dotnet/samples/tree/main/core/getting-started/unit-testing-using-dotnet-test/). For download instructions, see [Samples and Tutorials](../../samples-and-tutorials/index.md#view-and-download-samples).
 
 ## Create the solution
 
@@ -26,7 +24,7 @@ In this section, a solution is created that contains the source and test project
         PrimeServiceTests.vbproj
 ```
 
-The following instructions provide the steps to create the test solution. See Commands to create test solution for instructions to create the test solution in one step.
+The following instructions provide the steps to create the test solution. See [Commands to create test solution](#create-test-cmd) for instructions to create the test solution in one step.
 
 * Open a shell window.
 * Run the following command:
@@ -35,7 +33,7 @@ The following instructions provide the steps to create the test solution. See Co
   dotnet new sln -o unit-testing-using-dotnet-test
   ```
 
-  The `dotnet new sln` command creates a new solution in the *unit-testing-using-dotnet-test* directory.
+  The [`dotnet new sln`](../tools/dotnet-new.md) command creates a new solution in the *unit-testing-using-dotnet-test* directory.
 * Change directory to the *unit-testing-using-dotnet-test* folder.
 * Run the following command:
 
@@ -43,7 +41,7 @@ The following instructions provide the steps to create the test solution. See Co
   dotnet new classlib -o PrimeService -lang VB
   ```
 
-   The `dotnet new classlib` command creates a new class library project  in the *PrimeService* folder. The new class library will contain the code to be tested.
+   The [`dotnet new classlib`](../tools/dotnet-new.md) command creates a new class library project  in the *PrimeService* folder. The new class library will contain the code to be tested.
 * Rename *Class1.vb* to *PrimeService.vb*.
 * Replace the code in *PrimeService.vb* with the following code:
 
@@ -60,8 +58,10 @@ The following instructions provide the steps to create the test solution. See Co
   ```
 
 * The preceding code:
-  * Throws a `System.NotImplementedException` with a message indicating it's not implemented.
+  * Throws a <xref:System.NotImplementedException> with a message indicating it's not implemented.
   * Is updated later in the tutorial.
+
+<!-- preceding code shows an english bias. Message makes no sense outside english -->
 
 * In the *unit-testing-using-dotnet-test* directory, run the following command to add the class library project to the solution:
 
@@ -76,7 +76,7 @@ The following instructions provide the steps to create the test solution. See Co
   ```
 
 * The preceding command:
-  * Creates the *PrimeService.Tests* project in the *PrimeService.Tests* directory. The test project uses xUnit as the test library.
+  * Creates the *PrimeService.Tests* project in the *PrimeService.Tests* directory. The test project uses [xUnit](https://xunit.net/) as the test library.
   * Configures the test runner by adding the following `<PackageReference />`elements to the project file:
     * "Microsoft.NET.Test.Sdk"
     * "xunit"
@@ -93,6 +93,8 @@ The following instructions provide the steps to create the test solution. See Co
   ```dotnetcli
   dotnet add ./PrimeService.Tests/PrimeService.Tests.vbproj reference ./PrimeService/PrimeService.vbproj
   ```
+
+<a name="create-test-cmd"></a>
 
 ### Commands to create the solution
 
@@ -134,6 +136,7 @@ Namespace PrimeService.Tests
             _primeService = New Prime.Services.PrimeService()
         End Sub
 
+
         <Fact>
         Sub IsPrime_InputIs1_ReturnFalse()
             Dim result As Boolean = _primeService.IsPrime(1)
@@ -145,7 +148,7 @@ Namespace PrimeService.Tests
 End Namespace
 ```
 
-The `[Fact]` attribute declares a test method that's run by the test runner. From the *PrimeService.Tests* folder, run `dotnet test`. The dotnet test command builds both projects and runs the tests. The xUnit test runner contains the program entry point to run the tests. `dotnet test` starts the test runner using the unit test project.
+The `[Fact]` attribute declares a test method that's run by the test runner. From the *PrimeService.Tests* folder, run `dotnet test`. The [dotnet test](../tools/dotnet-test.md) command builds both projects and runs the tests. The xUnit test runner contains the program entry point to run the tests. `dotnet test` starts the test runner using the unit test project.
 
 The test fails because `IsPrime` hasn't been implemented. Using the TDD approach, write only enough code so this test passes. Update `IsPrime` with the following code:
 
@@ -213,12 +216,12 @@ Public Function IsPrime(candidate As Integer) As Boolean
 End Function
 ```
 
-Following the TDD approach, add more failing tests, then update the target code. See the finished version of the tests and the complete implementation of the library.
+Following the TDD approach, add more failing tests, then update the target code. See the [finished version of the tests](https://github.com/dotnet/samples/blob/main/core/getting-started/unit-testing-vb-dotnet-test/PrimeService.Tests/PrimeService_IsPrimeShould.vb) and the [complete implementation of the library](https://github.com/dotnet/samples/blob/main/core/getting-started/unit-testing-vb-dotnet-test/PrimeService/PrimeService.vb).
 
 The completed `IsPrime` method is not an efficient algorithm for testing primality.
 
 ### Additional resources
 
-- xUnit.net official site
-- Testing controller logic in ASP.NET Core
-- `dotnet reference add`
+- [xUnit.net official site](https://xunit.net/)
+- [Testing controller logic in ASP.NET Core](/aspnet/core/mvc/controllers/testing)
+- [`dotnet reference add`](../tools/dotnet-reference-add.md)

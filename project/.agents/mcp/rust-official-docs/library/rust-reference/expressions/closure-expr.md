@@ -1,17 +1,8 @@
----
-title: "Closure expressions"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/expressions/closure-expr.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[expr.closure]
 # Closure expressions
 
 r[expr.closure.syntax]
-```grammar
+```grammar,expressions
 ClosureExpression ->
     `async`?[^cl-async-edition]
     `move`?
@@ -22,6 +13,8 @@ ClosureParameters -> ClosureParam (`,` ClosureParam)* `,`?
 
 ClosureParam -> OuterAttribute* PatternNoTopAlt ( `:` Type )?
 ```
+
+[^cl-async-edition]: The `async` qualifier is not allowed in the 2015 edition.
 
 r[expr.closure.intro]
 A *closure expression*, also known as a lambda expression or a lambda, defines a [closure type] and evaluates to a value of that type. The syntax for a closure expression is an optional `async` keyword, an optional `move` keyword, then a pipe-symbol-delimited (`|`) comma-separated list of [patterns], called the *closure parameters* each optionally followed by a `:` and a type, then an optional `->` and type, called the *return type*, and then an expression, called the *closure body operand*.
@@ -42,7 +35,7 @@ r[expr.closure.captures]
 Significantly, closure expressions _capture their environment_, which regular [function definitions] do not.
 
 r[expr.closure.capture-inference]
-Without the `move` keyword, the closure expression infers how it captures each variable from its environment, preferring to capture by shared reference, effectively borrowing all outer variables mentioned inside the closure's body.
+Without the `move` keyword, the closure expression [infers how it captures each variable from its environment](../types/closure.md#capture-modes), preferring to capture by shared reference, effectively borrowing all outer variables mentioned inside the closure's body.
 
 r[expr.closure.capture-mut-ref]
 If needed the compiler will infer that instead mutable references should be taken, or that the values should be moved or copied (depending on their type) from the environment.
@@ -59,7 +52,7 @@ r[expr.closure.async]
 ## Async closures
 
 r[expr.closure.async.intro]
-Closures marked with the `async` keyword indicate that they are asynchronous in an analogous way to an async function.
+Closures marked with the `async` keyword indicate that they are asynchronous in an analogous way to an [async function][items.fn.async].
 
 r[expr.closure.async.future]
 Calling the async closure does not perform any work, but instead evaluates to a value that implements [`Future`] that corresponds to the computation of the body of the closure.
@@ -105,3 +98,13 @@ ten_times(move |j| println!("{}, {}", word, j));
 
 r[expr.closure.param-attributes]
 Attributes on closure parameters follow the same rules and restrictions as [regular function parameters].
+
+[`let` binding]: ../statements.md#let-statements
+[`Send`]: ../special-types-and-traits.md#send
+[`Sync`]: ../special-types-and-traits.md#sync
+[block]: block-expr.md
+[call traits and coercions]: ../types/closure.md#call-traits-and-coercions
+[closure type]: ../types/closure.md
+[function definitions]: ../items/functions.md
+[patterns]: ../patterns.md
+[regular function parameters]: ../items/functions.md#attributes-on-function-parameters

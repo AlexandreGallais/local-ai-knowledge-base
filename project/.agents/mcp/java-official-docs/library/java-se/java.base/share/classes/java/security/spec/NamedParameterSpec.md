@@ -1,12 +1,3 @@
----
-title: "NamedParameterSpec class (java.security.spec)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/spec/NamedParameterSpec.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # NamedParameterSpec class (java.security.spec)
 
 ```java
@@ -16,12 +7,14 @@ public class NamedParameterSpec implements AlgorithmParameterSpec
 This class is used to specify any algorithm parameters that are determined
 by a standard name. This class also holds constants for standard parameter
 set names. The names of these constants exactly match the corresponding
-parameter set name. For example, `NamedParameterSpec.X25519`
+parameter set name. For example, {@code NamedParameterSpec.X25519}
 represents the parameter set identified by the string "X25519". These
-strings are defined in the
-         Java Security Standard Algorithm Names Specification.
+strings are defined in the <a href=
+"{@docRoot}/../specs/security/standard-names.html#namedparameterspec">
+         Java Security Standard Algorithm Names Specification</a>.
 
-**Since:** 11
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@since 11
 
 ## NamedParameterSpec.X25519
 
@@ -47,7 +40,7 @@ public static final NamedParameterSpec ED25519
 
 The Ed25519 parameters
 
-**Since:** 15
+@since 15
 
 ## NamedParameterSpec.ED448
 
@@ -57,7 +50,7 @@ public static final NamedParameterSpec ED448
 
 The Ed448 parameters
 
-**Since:** 15
+@since 15
 
 ## NamedParameterSpec.ML_DSA_44
 
@@ -67,7 +60,7 @@ public static final NamedParameterSpec ML_DSA_44
 
 The ML-DSA-44 parameters
 
-**Since:** 24
+@since 24
 
 ## NamedParameterSpec.ML_DSA_65
 
@@ -77,7 +70,7 @@ public static final NamedParameterSpec ML_DSA_65
 
 The ML-DSA-65 parameters
 
-**Since:** 24
+@since 24
 
 ## NamedParameterSpec.ML_DSA_87
 
@@ -87,7 +80,7 @@ public static final NamedParameterSpec ML_DSA_87
 
 The ML-DSA-87 parameters
 
-**Since:** 24
+@since 24
 
 ## NamedParameterSpec.ML_KEM_512
 
@@ -97,7 +90,7 @@ public static final NamedParameterSpec ML_KEM_512
 
 The ML-KEM-512 parameters
 
-**Since:** 24
+@since 24
 
 ## NamedParameterSpec.ML_KEM_768
 
@@ -107,7 +100,7 @@ public static final NamedParameterSpec ML_KEM_768
 
 The ML-KEM-768 parameters
 
-**Since:** 24
+@since 24
 
 ## NamedParameterSpec.ML_KEM_1024
 
@@ -117,7 +110,7 @@ public static final NamedParameterSpec ML_KEM_1024
 
 The ML-KEM-1024 parameters
 
-**Since:** 24
+@since 24
 
 ## NamedParameterSpec.NamedParameterSpec(String)
 
@@ -126,17 +119,19 @@ public NamedParameterSpec(String stdName)
 ```
 
 Creates a parameter specification using a standard (or predefined)
-name `stdName`. For the
+name {@code stdName}. For the
 list of supported names, please consult the documentation
 of the provider whose implementation will be used.
 
-Parameters:
+@param stdName the standard name of the algorithm parameters. See the
+       NamedParameterSpec section in the
+       <a href=
+       "{@docRoot}/../specs/security/standard-names.html#namedparameterspec">
+       Java Security Standard Algorithm Names Specification</a> for
+       information about standard names.
 
-- `stdName`: the standard name of the algorithm parameters. See the NamedParameterSpec section in the  Java Security Standard Algorithm Names Specification for information about standard names.
-
-Throws:
-
-- `NullPointerException`: if `stdName` is null.
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@throws NullPointerException if {@code stdName} is null.
 
 ## NamedParameterSpec.getName()
 
@@ -145,5 +140,4 @@ public String getName()
 ```
 
 Returns the standard name that determines the algorithm parameters.
-
-**Returns:** the standard name.
+@return the standard name.

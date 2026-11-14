@@ -1,12 +1,3 @@
----
-title: "std::sys::os_str::wtf8"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sys/os_str/wtf8.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::sys::os_str::wtf8
 
 The underlying OsString/OsStr implementation on Windows is a

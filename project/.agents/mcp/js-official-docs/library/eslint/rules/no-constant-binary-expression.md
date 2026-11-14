@@ -1,13 +1,12 @@
 ---
-title: "no-constant-binary-expression"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-constant-binary-expression.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-constant-binary-expression
+rule_type: problem
+related_rules:
+- no-constant-condition
+further_reading:
+- https://eslint.org/blog/2022/07/interesting-bugs-caught-by-no-constant-binary-expression/
 ---
 
-# no-constant-binary-expression
 
 Comparisons which will always evaluate to true or false and logical expressions (`||`, `&&`, `??`) which either always short-circuit or never short-circuit are both likely indications of programmer error.
 
@@ -38,7 +37,7 @@ It also identifies `||`, `&&` and `??` logical expressions which will either alw
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-constant-binary-expression: "error"*/
@@ -62,9 +61,11 @@ const shortCircuit2 = condition1 || true || condition2;
 const shortCircuit3 = condition1 ?? "non-nullish" ?? condition2;
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-constant-binary-expression: "error"*/
@@ -82,6 +83,8 @@ const objIsEmpty = Object.keys(someObj).length === 0;
 const arrIsEmpty = someArr.length === 0;
 ```
 
+:::
+
 ## Options
 
 This rule has an object option:
@@ -92,7 +95,7 @@ This rule has an object option:
 
 Examples of **incorrect** code for this rule with the `{ "checkRelationalComparisons": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-constant-binary-expression: ["error", { "checkRelationalComparisons": true } ]*/
@@ -106,9 +109,11 @@ const value3 = true > false;
 const hasStreak = profile.streak ?? 0 > 1;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "checkRelationalComparisons": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-constant-binary-expression: ["error", { "checkRelationalComparisons": true } ]*/
@@ -119,3 +124,5 @@ const value2 = a >= b;
 
 const hasStreak = (profile.streak ?? 0) > 1;
 ```
+
+:::

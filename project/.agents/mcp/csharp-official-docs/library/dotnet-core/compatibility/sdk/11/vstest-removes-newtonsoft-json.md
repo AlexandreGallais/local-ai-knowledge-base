@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: VSTest removes dependency on Newtonsoft.Json"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/11/vstest-removes-newtonsoft-json.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where the VSTest platform and Microsoft.NET.Test.SDK no longer depend on Newtonsoft.Json."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # VSTest removes dependency on Newtonsoft.Json
@@ -34,14 +32,14 @@ Test extensions (such as data collectors or test adapters) that depended on `New
 ```
 Data collector 'SampleDataCollector' threw an exception during type loading, construction, or initialization:
 System.IO.FileNotFoundException: Could not load file or assembly 'Newtonsoft.Json,
-Version=13.0.0.0, Culture=neutral, PublicKeyToken=<example-value>'.
+Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed'.
 ```
 
 The `Newtonsoft.Json`-based types in `Microsoft.VisualStudio.TestPlatform.CommunicationUtilities` have been removed from the public API.
 
 ## Type of breaking change
 
-This change can affect source compatibility and binary compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility) and [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 

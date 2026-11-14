@@ -1,13 +1,9 @@
 ---
-title: "no-else-return"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-else-return.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-else-return
+rule_type: suggestion
 ---
 
-# no-else-return
+
 
 If an `if` block contains a `return` statement, the `else` block becomes unnecessary. Its contents can be placed outside of the block.
 
@@ -27,7 +23,7 @@ This rule is aimed at highlighting an unnecessary block of code following an `if
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-else-return: "error"*/
@@ -72,9 +68,11 @@ function foo4() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-else-return: "error"*/
@@ -126,6 +124,8 @@ function foo5() {
 }
 ```
 
+:::
+
 ## Options
 
 ### allowElseIf
@@ -136,7 +136,7 @@ This rule has an object option:
 
 Examples of **correct** code for the default `{"allowElseIf": true}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-else-return: ["error", {allowElseIf: true}]*/
@@ -161,9 +161,11 @@ function foo2() {
 }
 ```
 
+:::
+
 Examples of **incorrect** code for the `{"allowElseIf": false}` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-else-return: ["error", {allowElseIf: false}]*/
@@ -177,9 +179,11 @@ function foo() {
 }
 ```
 
+:::
+
 Examples of **correct** code for the `{"allowElseIf": false}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-else-return: ["error", {allowElseIf: false}]*/
@@ -194,3 +198,5 @@ function foo() {
     }
 }
 ```
+
+:::

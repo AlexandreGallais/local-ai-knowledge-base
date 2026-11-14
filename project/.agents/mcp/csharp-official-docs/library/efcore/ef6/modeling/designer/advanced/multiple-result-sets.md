@@ -1,12 +1,10 @@
 ---
-title: "Stored Procedures with Multiple Result Sets - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/modeling/designer/advanced/multiple-result-sets.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Stored Procedures with Multiple Result Sets - EF6
+description: Stored Procedures with Multiple Result Sets in Entity Framework 6
+author: SamMonoRT
+ms.date: 10/23/2016
+uid: ef6/modeling/designer/advanced/multiple-result-sets
 ---
-
 # Stored Procedures with Multiple Result Sets
 Sometimes when using stored procedures you will need to return more than one result set. This scenario is commonly used to reduce the number of database round trips required to compose a single screen. Prior to EF5, Entity Framework would allow the stored procedure to be called but would only return the first result set to the calling code.
 
@@ -16,7 +14,7 @@ This article will show you two ways that you can use to access more than one res
 
 The examples in this article use a basic Blog and Posts model where a blog has many posts and a post belongs to a single blog. We will use a stored procedure in the database that returns all blogs and posts, something like this:
 
-```sql
+``` SQL
     CREATE PROCEDURE [dbo].[GetAllBlogsAndPosts]
     AS
         SELECT * FROM dbo.Blogs
@@ -31,7 +29,7 @@ In order to get multiple result sets working we need to drop to the ObjectContex
 
 Once we have an ObjectContext then we can use the Translate method to translate the results of our stored procedure into entities that can be tracked and used in EF as normal. The following code sample demonstrates this in action.
 
-```csharp
+``` csharp
     using (var db = new BloggingContext())
     {
         // If using Code First we need to make sure the model is built before we open the connection
@@ -54,6 +52,7 @@ Once we have an ObjectContext then we can use the Translate method to translate 
                 .ObjectContext
                 .Translate<Blog>(reader, "Blogs", MergeOption.AppendOnly);   
 
+
             foreach (var item in blogs)
             {
                 Console.WriteLine(item.Name);
@@ -64,6 +63,7 @@ Once we have an ObjectContext then we can use the Translate method to translate 
             var posts = ((IObjectContextAdapter)db)
                 .ObjectContext
                 .Translate<Post>(reader, "Posts", MergeOption.AppendOnly);
+
 
             foreach (var item in posts)
             {
@@ -83,15 +83,15 @@ Here we iterate through the collection of blogs before we call NextResult, this 
 
 Once the two translate methods are called then the Blog and Post entities are tracked by EF the same way as any other entity and so can be modified or deleted and saved as normal.
 
->**Note:**
+>[!NOTE]
 > EF does not take any mapping into account when it creates entities using the Translate method. It will simply match column names in the result set with property names on your classes.
 
->**Note:**
+>[!NOTE]
 > That if you have lazy loading enabled, accessing the posts property on one of the blog entities then EF will connect to the database to lazily load all posts, even though we have already loaded them all. This is because EF cannot know whether or not you have loaded all posts or if there are more in the database. If you want to avoid this then you will need to disable lazy loading.
 
 ## Multiple Result Sets with Configured in EDMX
 
->**Note:**
+>[!NOTE]
 > You must target .NET Framework 4.5 to be able to configure multiple result sets in EDMX. If you are targeting .NET 4.0 you can use the code-based method shown in the previous section.
 
 If you are using the EF Designer, you can also modify your model so that it knows about the different result sets that will be returned. One thing to know before hand is that the tooling is not multiple result set aware, so you will need to manually edit the edmx file. Editing the edmx file like this will work but it will also break the validation of the model in VS. So if you validate your model you will always get errors.
@@ -99,11 +99,13 @@ If you are using the EF Designer, you can also modify your model so that it know
 -   In order to do this you need to add the stored procedure to your model as you would for a single result set query.
 -   Once you have this then you need to right click on your model and select **Open With..** then **Xml**
 
+    ![Open As](~/ef6/media/openas.png)
+
 Once you have the model opened as XML then you need to do the following steps:
 
 -   Find the complex type and function import in your model:
 
-```xml
+``` xml
     <!-- CSDL content -->
     <edmx:ConceptualModels>
 
@@ -129,7 +131,7 @@ Once you have the model opened as XML then you need to do the following steps:
 -   Remove the complex type
 -   Update the function import so that it maps to your entities, in our case it will look like the following:
 
-```xml
+``` xml
     <FunctionImport Name="GetAllBlogsAndPosts">
       <ReturnType EntitySet="Blogs" Type="Collection(BlogModel.Blog)" />
       <ReturnType EntitySet="Posts" Type="Collection(BlogModel.Post)" />
@@ -140,7 +142,7 @@ This tells the model that the stored procedure will return two collections, one 
 
 -   Find the function mapping element:
 
-```xml
+``` xml
     <!-- C-S mapping content -->
     <edmx:Mappings>
 
@@ -163,7 +165,7 @@ This tells the model that the stored procedure will return two collections, one 
 
 -   Replace the result mapping with one for each entity being returned, such as the following:
 
-```xml
+``` xml
     <ResultMapping>
       <EntityTypeMapping TypeName ="BlogModel.Blog">
         <ScalarProperty Name="BlogId" ColumnName="BlogId" />
@@ -185,7 +187,7 @@ It is also possible to map the result sets to complex types, such as the one cre
 
 Once these mappings have been changed then you can save the model and execute the following code to use the stored procedure:
 
-```csharp
+``` csharp
     using (var db = new BlogEntities())
     {
         var results = db.GetAllBlogsAndPosts();
@@ -206,7 +208,7 @@ Once these mappings have been changed then you can save the model and execute th
     }
 ```
 
->**Note:**
+>[!NOTE]
 > If you manually edit the edmx file for your model it will be overwritten if you ever regenerate the model from the database.
 
 ## Summary

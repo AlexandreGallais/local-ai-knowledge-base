@@ -1,12 +1,3 @@
----
-title: "FileTime class (java.nio.file.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/file/attribute/FileTime.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # FileTime class (java.nio.file.attribute)
 
 ```java
@@ -15,17 +6,15 @@ public final class FileTime implements Comparable<FileTime>
 
 Represents the value of a file's time stamp attribute. For example, it may
 represent the time that the file was last
-modified,
-accessed,
-or created.
+{@link BasicFileAttributes#lastModifiedTime() modified},
+{@link BasicFileAttributes#lastAccessTime() accessed},
+or {@link BasicFileAttributes#creationTime() created}.
 
- Instances of this class are immutable.
+<p> Instances of this class are immutable.
 
-**Since:** 1.7
-
-**See also:** java.nio.file.Files#setLastModifiedTime
-
-**See also:** java.nio.file.Files#getLastModifiedTime
+@since 1.7
+@see java.nio.file.Files#setLastModifiedTime
+@see java.nio.file.Files#getLastModifiedTime
 
 ## FileTime.from(long, TimeUnit)
 
@@ -33,15 +22,16 @@ or created.
 public static FileTime from(long value, TimeUnit unit)
 ```
 
-Returns a `FileTime` representing a value at the given unit of
+Returns a {@code FileTime} representing a value at the given unit of
 granularity.
 
-Parameters:
+@param   value
+         the value since the epoch (1970-01-01T00:00:00Z); can be
+         negative
+@param   unit
+         the unit of granularity to interpret the value
 
-- `value`: the value since the epoch (1970-01-01T00:00:00Z); can be negative
-- `unit`: the unit of granularity to interpret the value
-
-**Returns:** a `FileTime` representing the given value
+@return  a {@code FileTime} representing the given value
 
 ## FileTime.fromMillis(long)
 
@@ -49,13 +39,13 @@ Parameters:
 public static FileTime fromMillis(long value)
 ```
 
-Returns a `FileTime` representing the given value in milliseconds.
+Returns a {@code FileTime} representing the given value in milliseconds.
 
-Parameters:
+@param   value
+         the value, in milliseconds, since the epoch
+         (1970-01-01T00:00:00Z); can be negative
 
-- `value`: the value, in milliseconds, since the epoch (1970-01-01T00:00:00Z); can be negative
-
-**Returns:** a `FileTime` representing the given value
+@return  a {@code FileTime} representing the given value
 
 ## FileTime.from(Instant)
 
@@ -63,17 +53,14 @@ Parameters:
 public static FileTime from(Instant instant)
 ```
 
-Returns a `FileTime` representing the same point of time value
-on the time-line as the provided `Instant` object.
+Returns a {@code FileTime} representing the same point of time value
+on the time-line as the provided {@code Instant} object.
 
-Parameters:
-
-- `instant`: the instant to convert
-
-**Returns:** a `FileTime` representing the same point on the time-line
+@param   instant
+         the instant to convert
+@return  a {@code FileTime} representing the same point on the time-line
          as the provided instant
-
-**Since:** 1.8
+@since 1.8
 
 ## FileTime.to(TimeUnit)
 
@@ -83,15 +70,14 @@ public long to(TimeUnit unit)
 
 Returns the value at the given unit of granularity.
 
- Conversion from a coarser granularity that would numerically overflow
-saturate to `Long.MIN_VALUE` if negative or `Long.MAX_VALUE`
+<p> Conversion from a coarser granularity that would numerically overflow
+saturate to {@code Long.MIN_VALUE} if negative or {@code Long.MAX_VALUE}
 if positive.
 
-Parameters:
+@param   unit
+         the unit of granularity for the return value
 
-- `unit`: the unit of granularity for the return value
-
-**Returns:** value in the given unit of granularity, since the epoch
+@return  value in the given unit of granularity, since the epoch
          since the epoch (1970-01-01T00:00:00Z); can be negative
 
 ## FileTime.toMillis()
@@ -102,11 +88,11 @@ public long toMillis()
 
 Returns the value in milliseconds.
 
- Conversion from a coarser granularity that would numerically overflow
-saturate to `Long.MIN_VALUE` if negative or `Long.MAX_VALUE`
+<p> Conversion from a coarser granularity that would numerically overflow
+saturate to {@code Long.MIN_VALUE} if negative or {@code Long.MAX_VALUE}
 if positive.
 
-**Returns:** the value in milliseconds, since the epoch (1970-01-01T00:00:00Z)
+@return  the value in milliseconds, since the epoch (1970-01-01T00:00:00Z)
 
 ## FileTime.toInstant()
 
@@ -114,21 +100,20 @@ if positive.
 public Instant toInstant()
 ```
 
-Converts this `FileTime` object to an `Instant`.
+Converts this {@code FileTime} object to an {@code Instant}.
 
- The conversion creates an `Instant` that represents the
-same point on the time-line as this `FileTime`.
+<p> The conversion creates an {@code Instant} that represents the
+same point on the time-line as this {@code FileTime}.
 
- `FileTime` can store points on the time-line further in the
-future and further in the past than `Instant`. Conversion
-from such further time points saturates to `Instant.MIN` if
-earlier than `Instant.MIN` or `Instant.MAX` if later
-than `Instant.MAX`.
+<p> {@code FileTime} can store points on the time-line further in the
+future and further in the past than {@code Instant}. Conversion
+from such further time points saturates to {@link Instant#MIN} if
+earlier than {@code Instant.MIN} or {@link Instant#MAX} if later
+than {@code Instant.MAX}.
 
-**Returns:** an instant representing the same point on the time-line as
-         this `FileTime` object
-
-**Since:** 1.8
+@return  an instant representing the same point on the time-line as
+         this {@code FileTime} object
+@since 1.8
 
 ## FileTime.equals(Object)
 
@@ -136,16 +121,17 @@ than `Instant.MAX`.
 public boolean equals(Object obj)
 ```
 
-Tests this `FileTime` for equality with the given object.
+Tests this {@code FileTime} for equality with the given object.
 
- The result is `true` if and only if the argument is not `null` and is a `FileTime` that represents the same time. This
-method satisfies the general contract of the `Object.equals` method.
+<p> The result is {@code true} if and only if the argument is not {@code
+null} and is a {@code FileTime} that represents the same time. This
+method satisfies the general contract of the {@code Object.equals} method.
 
-Parameters:
+@param   obj
+         the object to compare with
 
-- `obj`: the object to compare with
-
-**Returns:** `true` if, and only if, the given object is a `FileTime` that represents the same time
+@return  {@code true} if, and only if, the given object is a {@code
+         FileTime} that represents the same time
 
 ## FileTime.hashCode()
 
@@ -155,10 +141,10 @@ public int hashCode()
 
 Computes a hash code for this file time.
 
- The hash code is based upon the value represented, and satisfies the
-general contract of the `Object.hashCode` method.
+<p> The hash code is based upon the value represented, and satisfies the
+general contract of the {@link Object#hashCode} method.
 
-**Returns:** the hash-code value
+@return  the hash-code value
 
 ## FileTime.compareTo(FileTime)
 
@@ -166,16 +152,15 @@ general contract of the `Object.hashCode` method.
 public int compareTo(FileTime other)
 ```
 
-Compares the value of two `FileTime` objects for order.
+Compares the value of two {@code FileTime} objects for order.
 
-Parameters:
+@param   other
+         the other {@code FileTime} to be compared
 
-- `other`: the other `FileTime` to be compared
-
-**Returns:** `0` if this `FileTime` is equal to `other`, a
-         value less than 0 if this `FileTime` represents a time
-         that is before `other`, and a value greater than 0 if this
-         `FileTime` represents a time that is after `other`
+@return  {@code 0} if this {@code FileTime} is equal to {@code other}, a
+         value less than 0 if this {@code FileTime} represents a time
+         that is before {@code other}, and a value greater than 0 if this
+         {@code FileTime} represents a time that is after {@code other}
 
 ## FileTime.toString()
 
@@ -183,25 +168,29 @@ Parameters:
 public String toString()
 ```
 
-Returns the string representation of this `FileTime`. The string
-is returned in the ISO 8601 format:
-
-```java
+Returns the string representation of this {@code FileTime}. The string
+is returned in the <a
+href="http://www.w3.org/TR/NOTE-datetime">ISO&nbsp;8601</a> format:
+<pre>
     YYYY-MM-DDThh:mm:ss[.s+]Z
-```
-
-where "`[.s+]`" represents a dot followed by one of more digits
+</pre>
+where "{@code [.s+]}" represents a dot followed by one of more digits
 for the decimal fraction of a second. It is only present when the decimal
-fraction of a second is not zero. For example, `FileTime.fromMillis(1234567890000L).toString()` yields `"2009-02-13T23:31:30Z"`, and `FileTime.fromMillis(1234567890123L).toString()`
-yields `"2009-02-13T23:31:30.123Z"`.
+fraction of a second is not zero. For example, {@code
+FileTime.fromMillis(1234567890000L).toString()} yields {@code
+"2009-02-13T23:31:30Z"}, and {@code FileTime.fromMillis(1234567890123L).toString()}
+yields {@code "2009-02-13T23:31:30.123Z"}.
 
- A `FileTime` is primarily intended to represent the value of a
-file's time stamp. Where used to represent *extreme values*, where
-the year is less than "`0001`" or greater than "`9999`" then
+<p> A {@code FileTime} is primarily intended to represent the value of a
+file's time stamp. Where used to represent <i>extreme values</i>, where
+the year is less than "{@code 0001}" or greater than "{@code 9999}" then
 this method deviates from ISO 8601 in the same manner as the
-XML Schema
-language. That is, the year may be expanded to more than four digits
+<a href="http://www.w3.org/TR/xmlschema-2/#deviantformats">XML Schema
+language</a>. That is, the year may be expanded to more than four digits
 and may be negative-signed. If more than four digits then leading zeros
-are not present. The year before "`0001`" is "`-0001`".
+are not present. The year before "{@code 0001}" is "{@code -0001}".
 
-**Returns:** the string representation of this file time
+@return  the string representation of this file time
+
+@spec https://www.w3.org/TR/NOTE-datetime Date and Time Formats
+@spec https://www.w3.org/TR/xmlschema-2 XML Schema Part 2: Datatypes Second Edition

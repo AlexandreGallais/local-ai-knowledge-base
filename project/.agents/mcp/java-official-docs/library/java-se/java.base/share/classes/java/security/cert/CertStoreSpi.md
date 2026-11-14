@@ -1,42 +1,34 @@
----
-title: "CertStoreSpi class (java.security.cert)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/cert/CertStoreSpi.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # CertStoreSpi class (java.security.cert)
 
 ```java
 public abstract class CertStoreSpi
 ```
 
-The *Service Provider Interface* (**SPI**)
-for the CertStore class. All `CertStore`
+The <i>Service Provider Interface</i> (<b>SPI</b>)
+for the {@link CertStore CertStore} class. All {@code CertStore}
 implementations must include a class (the SPI class) that extends
-this class (`CertStoreSpi`), provides a constructor with
-a single argument of type `CertStoreParameters`, and implements
+this class ({@code CertStoreSpi}), provides a constructor with
+a single argument of type {@code CertStoreParameters}, and implements
 all of its methods. In general, instances of this class should only be
-accessed through the `CertStore` class.
+accessed through the {@code CertStore} class.
 For details, see the Java Cryptography Architecture.
-
-**Concurrent Access**
-
-The public methods of all `CertStoreSpi` objects must be
+<p>
+<b>Concurrent Access</b>
+<p>
+The public methods of all {@code CertStoreSpi} objects must be
 thread-safe. That is, multiple threads may concurrently invoke these
-methods on a single `CertStoreSpi` object (or more than one)
-with no ill effects. This allows a `CertPathBuilder` to search
+methods on a single {@code CertStoreSpi} object (or more than one)
+with no ill effects. This allows a {@code CertPathBuilder} to search
 for a CRL while simultaneously searching for further certificates, for
 instance.
-
-Simple `CertStoreSpi` implementations will probably ensure
-thread safety by adding a `synchronized` keyword to their
-`engineGetCertificates` and `engineGetCRLs` methods.
+<p>
+Simple {@code CertStoreSpi} implementations will probably ensure
+thread safety by adding a {@code synchronized} keyword to their
+{@code engineGetCertificates} and {@code engineGetCRLs} methods.
 More sophisticated ones may allow truly concurrent access.
 
-**Since:** 1.4
+@since       1.4
+@author      Steve Hanna
 
 ## CertStoreSpi.CertStoreSpi(CertStoreParameters)
 
@@ -46,13 +38,9 @@ public CertStoreSpi(CertStoreParameters params) throws InvalidAlgorithmParameter
 
 The sole constructor.
 
-Parameters:
-
-- `params`: the initialization parameters (may be `null`)
-
-Throws:
-
-- `InvalidAlgorithmParameterException`: if the initialization parameters are inappropriate for this `CertStoreSpi`
+@param params the initialization parameters (may be {@code null})
+@throws InvalidAlgorithmParameterException if the initialization
+parameters are inappropriate for this {@code CertStoreSpi}
 
 ## CertStoreSpi.engineGetCertificates(CertSelector)
 
@@ -60,33 +48,29 @@ Throws:
 public abstract Collection<? extends Certificate> engineGetCertificates (CertSelector selector) throws CertStoreException
 ```
 
-Returns a `Collection` of `Certificate`s that
-match the specified selector. If no `Certificate`s
-match the selector, an empty `Collection` will be returned.
-
-For some `CertStore` types, the resulting
-`Collection` may not contain **all** of the
-`Certificate`s that match the selector. For instance,
-an LDAP `CertStore` may not search all entries in the
+Returns a {@code Collection} of {@code Certificate}s that
+match the specified selector. If no {@code Certificate}s
+match the selector, an empty {@code Collection} will be returned.
+<p>
+For some {@code CertStore} types, the resulting
+{@code Collection} may not contain <b>all</b> of the
+{@code Certificate}s that match the selector. For instance,
+an LDAP {@code CertStore} may not search all entries in the
 directory. Instead, it may just search entries that are likely to
-contain the `Certificate`s it is looking for.
-
-Some `CertStore` implementations (especially LDAP
-`CertStore`s) may throw a `CertStoreException`
-unless a non-null `CertSelector` is provided that includes
+contain the {@code Certificate}s it is looking for.
+<p>
+Some {@code CertStore} implementations (especially LDAP
+{@code CertStore}s) may throw a {@code CertStoreException}
+unless a non-null {@code CertSelector} is provided that includes
 specific criteria that can be used to find the certificates. Issuer
 and/or subject names are especially useful criteria.
 
-Parameters:
-
-- `selector`: A `CertSelector` used to select which `Certificate`s should be returned. Specify `null` to return all `Certificate`s (if supported).
-
-**Returns:** A `Collection` of `Certificate`s that
-        match the specified selector (never `null`)
-
-Throws:
-
-- `CertStoreException`: if an exception occurs
+@param selector A {@code CertSelector} used to select which
+ {@code Certificate}s should be returned. Specify {@code null}
+ to return all {@code Certificate}s (if supported).
+@return A {@code Collection} of {@code Certificate}s that
+        match the specified selector (never {@code null})
+@throws CertStoreException if an exception occurs
 
 ## CertStoreSpi.engineGetCRLs(CRLSelector)
 
@@ -94,30 +78,26 @@ Throws:
 public abstract Collection<? extends CRL> engineGetCRLs (CRLSelector selector) throws CertStoreException
 ```
 
-Returns a `Collection` of `CRL`s that
-match the specified selector. If no `CRL`s
-match the selector, an empty `Collection` will be returned.
-
-For some `CertStore` types, the resulting
-`Collection` may not contain **all** of the
-`CRL`s that match the selector. For instance,
-an LDAP `CertStore` may not search all entries in the
+Returns a {@code Collection} of {@code CRL}s that
+match the specified selector. If no {@code CRL}s
+match the selector, an empty {@code Collection} will be returned.
+<p>
+For some {@code CertStore} types, the resulting
+{@code Collection} may not contain <b>all</b> of the
+{@code CRL}s that match the selector. For instance,
+an LDAP {@code CertStore} may not search all entries in the
 directory. Instead, it may just search entries that are likely to
-contain the `CRL`s it is looking for.
-
-Some `CertStore` implementations (especially LDAP
-`CertStore`s) may throw a `CertStoreException`
-unless a non-null `CRLSelector` is provided that includes
+contain the {@code CRL}s it is looking for.
+<p>
+Some {@code CertStore} implementations (especially LDAP
+{@code CertStore}s) may throw a {@code CertStoreException}
+unless a non-null {@code CRLSelector} is provided that includes
 specific criteria that can be used to find the CRLs. Issuer names
 and/or the certificate to be checked are especially useful.
 
-Parameters:
-
-- `selector`: A `CRLSelector` used to select which `CRL`s should be returned. Specify `null` to return all `CRL`s (if supported).
-
-**Returns:** A `Collection` of `CRL`s that
-        match the specified selector (never `null`)
-
-Throws:
-
-- `CertStoreException`: if an exception occurs
+@param selector A {@code CRLSelector} used to select which
+ {@code CRL}s should be returned. Specify {@code null}
+ to return all {@code CRL}s (if supported).
+@return A {@code Collection} of {@code CRL}s that
+        match the specified selector (never {@code null})
+@throws CertStoreException if an exception occurs

@@ -1,13 +1,14 @@
 ---
-title: "ASP.NET Core Blazor WebAssembly browser developer tools diagnostics"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/performance/webassembly-browser-developer-tools-diagnostics.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core Blazor WebAssembly browser developer tools diagnostics
+description: Learn about browser developer tools diagnostics in ASP.NET Core Blazor WebAssembly apps.
+monikerRange: '>= aspnetcore-10.0'
+ms.date: 11/11/2025
 ---
-
 # ASP.NET Core Blazor WebAssembly browser developer tools diagnostics
+
+<!-- UPDATE 11.0 - Activate ...
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
 -->
 
@@ -15,7 +16,7 @@ This article describes browser developer tools diagnostic tools in Blazor WebAss
 
 ## Prerequisite
 
-Install the .NET WebAssembly build tools:
+Install the [.NET WebAssembly build tools](../webassembly-build-tools-and-aot.md#net-webassembly-build-tools):
 
 ```dotnetcli
 dotnet workload install wasm-tools
@@ -27,18 +28,18 @@ App code can be manually profiled using the diagnostic profiler in a browser's d
 
 Built-in diagnostic features are available to track:
 
-* Ahead-of-time (AOT) compilation
+* [Ahead-of-time (AOT) compilation](../webassembly-build-tools-and-aot.md#ahead-of-time-aot-compilation)
 * Call specification (":::no-loc text="callspec":::", sequence and timing of function calls) and instrumentation
 
 The MSBuild properties in the following table enable profiler integration.
 
-Property | Default | Set value to… | Description
+Property | Default | Set value to&hellip; | Description
 --- | :---: | :---: | ---
 `<WasmProfilers>` | No value | `browser` | Mono profilers to use. Potential values are "`browser`" and "`log`". To use both, separate the values with a semicolon. The `browser` profiler enables integration with the browser's developer tools profiler.
 `<WasmNativeStrip>` | `true` | `false` | Enables stripping the native executable.
 `<WasmNativeDebugSymbols>` | `true` | `true` | Enables building with native debug symbols.
 
-Setting the `Timing-Allow-Origin` HTTP header allows for more precise time measurements.
+Setting the [`Timing-Allow-Origin` HTTP header](https://developer.mozilla.org/docs/Web/HTTP/Reference/Headers/Timing-Allow-Origin) allows for more precise time measurements.
 
 Enabling profilers has negative size and performance impacts, so don't publish an app for production with profilers enabled. In the following example, a condition is set on a property group section that only enables profiling when the app is built with `/p:BlazorSampleProfilingEnabled=true` (.NET CLI) or `<BlazorSampleProfilingEnabled>true</BlazorSampleProfilingEnabled>` in a Visual Studio publish profile, where "`BlazorSampleProfilingEnabled`" is a custom symbol name that you choose and doesn't conflict with other symbol names.
 
@@ -60,11 +61,11 @@ Alternatively, enable features when the app is built with the .NET CLI. The foll
 /p:WasmProfilers=browser /p:WasmNativeStrip=false /p:WasmNativeDebugSymbols=true
 ```
 
-Setting WebAssembly profilers with `<WasmProfilers>` doesn't require ahead-of-time (AOT) compilation.
+Setting WebAssembly profilers with `<WasmProfilers>` doesn't require [ahead-of-time (AOT) compilation](../webassembly-build-tools-and-aot.md).
 
 The browser developer tools profiler can be used with AOT (`<RunAOTCompilation>`/`<RunAOTCompilationAfterBuild>` set to `true`) and without WebAssembly profilers (`<WasmProfilers>` removed).
 
-To see AOT method names in the developer tools console, install DWARF chrome extension.
+To see AOT method names in the developer tools console, install [DWARF chrome extension](https://chromewebstore.google.com/detail/cc++-devtools-support-dwa/pdcpmagijalfljmkmjngeonclgbbannb).
 
 ## Set the sample interval
 
@@ -107,5 +108,5 @@ In the following example, profiled methods are filtered to the app's namespace `
 
 ## Related content
 
-* What diagnostic tools are available in .NET Core?
-* .NET diagnostic tools
+* [What diagnostic tools are available in .NET Core?](/dotnet/core/diagnostics/)
+* [.NET diagnostic tools](/dotnet/core/diagnostics/tools-overview)

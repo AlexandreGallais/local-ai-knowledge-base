@@ -1,12 +1,3 @@
----
-title: "Package class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/Package.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Package class (java.lang)
 
 ```java
@@ -15,77 +6,78 @@ public final class Package extends NamedPackage implements java.lang.reflect.Ann
 
 Represents metadata about a run-time package associated with a class loader.
 Metadata includes annotations, versioning, and sealing.
-
-Annotations for the run-time package are read from `package-info.class`
+<p>
+Annotations for the run-time package are read from {@code package-info.class}
 at the same code source as classes in the run-time package.
-
+<p>
 The set of classes that make up the run-time package may implement a
 particular specification. The specification title, version, and vendor
 (indicating the owner/maintainer of the specification) can be provided
-when the `Package` is defined. An application can ask if the
-`Package` is compatible with a particular specification version
-by using the Package.isCompatibleWith(String)
+when the {@code Package} is defined. An application can ask if the
+{@code Package} is compatible with a particular specification version
+by using the {@link #isCompatibleWith Package.isCompatibleWith(String)}
 method. In addition, information about the actual classes that make up the
-run-time package can be provided when the `Package` is defined.
+run-time package can be provided when the {@code Package} is defined.
 This information consists of an implementation title, version, and vendor
 (indicating the supplier of the classes).
-
-A `Package` may be explicitly defined with
-the String, String, String, String, String, String, URL) method.
+<p>
+A {@code Package} may be explicitly defined with
+the {@link ClassLoader#definePackage(String, String, String, String,
+String, String, String, URL)} method.
 The caller supplies the specification and implementation titles, versions, and
 vendors. The caller also indicates whether the package is
-sealed.
-If a `Package` is not explicitly defined for a run-time package when
-a class in that run-time package is defined, then a `Package` is
+{@linkplain java.util.jar.Attributes.Name#SEALED sealed}.
+If a {@code Package} is not explicitly defined for a run-time package when
+a class in that run-time package is defined, then a {@code Package} is
 automatically defined by the class's defining class loader, as follows.
-
-A `Package` automatically defined for classes in a named module has
+<p>
+A {@code Package} automatically defined for classes in a named module has
 the following properties:
-
-- The name of the package is derived from the binary names
+<ul>
+<li>The name of the package is derived from the {@linkplain Class#getName() binary names}
     of the classes. Since classes in a named module must be in a named package,
-    the derived name is never empty.
-
-- The package is sealed with the module location as the code source, if known.
-
-- The specification and implementation titles, versions, and vendors
-    are unspecified.
-
-- Any annotations on the package are read from `package-info.class`
-    as specified above.
-
-A `Package` automatically defined for classes in an unnamed module
+    the derived name is never empty.</li>
+<li>The package is sealed with the {@linkplain java.lang.module.ModuleReference#location()
+    module location} as the code source, if known.</li>
+<li>The specification and implementation titles, versions, and vendors
+    are unspecified.</li>
+<li>Any annotations on the package are read from {@code package-info.class}
+    as specified above.</li>
+</ul>
+<p>
+A {@code Package} automatically defined for classes in an unnamed module
 has the following properties:
+<ul>
+<li>The name of the package is either {@code ""} (for classes in an unnamed package)
+    or derived from the {@linkplain Class#getName() binary names} of the classes
+    (for classes in a named package).</li>
+<li>The package is not sealed.</li>
+<li>The specification and implementation titles, versions, and vendors
+    are unspecified.</li>
+<li>Any annotations on the package are read from {@code package-info.class}
+    as specified above.</li>
+</ul>
 
-- The name of the package is either `""` (for classes in an unnamed package)
-    or derived from the binary names of the classes
-    (for classes in a named package).
+<p>
+A {@code Package} can be obtained with the {@link Package#getPackage
+Package.getPackage(String)} and {@link ClassLoader#getDefinedPackage
+ClassLoader.getDefinedPackage(String)} methods.
+Every {@code Package} defined by a class loader can be obtained
+with the {@link Package#getPackages Package.getPackages()} and
+{@link ClassLoader#getDefinedPackages} methods.
 
-- The package is not sealed.
-
-- The specification and implementation titles, versions, and vendors
-    are unspecified.
-
-- Any annotations on the package are read from `package-info.class`
-    as specified above.
-
-A `Package` can be obtained with the Package.getPackage(String) and ClassLoader.getDefinedPackage(String) methods.
-Every `Package` defined by a class loader can be obtained
-with the Package.getPackages() and
-`ClassLoader.getDefinedPackages` methods.
-
-**Implementation note:** The builtin class loaders
-do not explicitly define `Package` objects for packages in
-*named modules*.  Instead those packages are automatically defined
+@implNote
+The <a href="ClassLoader.html#builtinLoaders">builtin class loaders</a>
+do not explicitly define {@code Package} objects for packages in
+<em>named modules</em>.  Instead those packages are automatically defined
 and have no specification and implementation versioning information.
 
-**jvms:** 5.3 Creation and Loading
+@jvms 5.3 Creation and Loading
+@see <a href="{@docRoot}/../specs/jar/jar.html#package-sealing">
+The JAR File Specification: Package Sealing</a>
+@see ClassLoader#definePackage(String, String, String, String, String, String, String, URL)
 
-**See also:** The JAR File Specification: Package Sealing
-
-**See also:** ClassLoader#definePackage(String, String, String, String, String, String, String, URL)
-
-**Since:** 1.2
+@since 1.2
 
 ## Package.getName()
 
@@ -95,9 +87,9 @@ public String getName()
 
 Return the name of this package.
 
-**Returns:** The fully-qualified name of this package as defined in section  of
-         *The Java Language Specification*,
-         for example, `java.lang`
+@return  The fully-qualified name of this package as defined in section {@jls 6.5.3} of
+         <cite>The Java Language Specification</cite>,
+         for example, {@code java.lang}
 
 ## Package.getSpecificationTitle()
 
@@ -106,8 +98,7 @@ public String getSpecificationTitle()
 ```
 
 Return the title of the specification that this package implements.
-
-**Returns:** the specification title, `null` is returned if it is not known.
+@return the specification title, {@code null} is returned if it is not known.
 
 ## Package.getSpecificationVersion()
 
@@ -122,28 +113,32 @@ integers separated by "."'s and may have leading zeros.
 When version strings are compared the most significant
 numbers are compared.
 
-Specification version numbers use a syntax that consists of non-negative
+
+<p>Specification version numbers use a syntax that consists of non-negative
 decimal integers separated by periods ".", for example "2.0" or
 "1.2.3.4.5.6.7".  This allows an extensible number to be used to represent
 major, minor, micro, etc. versions.  The version specification is described
 by the following formal grammar:
+<blockquote>
+<dl>
+<dt><i>SpecificationVersion:</i>
+<dd><i>Digits RefinedVersion<sub>opt</sub></i>
 
-*SpecificationVersion:*
-*Digits RefinedVersionopt*
+<dt><i>RefinedVersion:</i>
+<dd>{@code .} <i>Digits</i>
+<dd>{@code .} <i>Digits RefinedVersion</i>
 
-*RefinedVersion:*
-`.` *Digits*
-`.` *Digits RefinedVersion*
+<dt><i>Digits:</i>
+<dd><i>Digit</i>
+<dd><i>Digits</i>
 
-*Digits:*
-*Digit*
-*Digits*
-
-*Digit:*
-any character for which `Character.isDigit` returns `true`,
+<dt><i>Digit:</i>
+<dd>any character for which {@link Character#isDigit} returns {@code true},
 e.g. 0, 1, 2, ...
+</dl>
+</blockquote>
 
-**Returns:** the specification version, `null` is returned if it is not known.
+@return the specification version, {@code null} is returned if it is not known.
 
 ## Package.getSpecificationVendor()
 
@@ -154,8 +149,7 @@ public String getSpecificationVendor()
 Return the name of the organization, vendor,
 or company that owns and maintains the specification
 of the classes that implement this package.
-
-**Returns:** the specification vendor, `null` is returned if it is not known.
+@return the specification vendor, {@code null} is returned if it is not known.
 
 ## Package.getImplementationTitle()
 
@@ -164,8 +158,7 @@ public String getImplementationTitle()
 ```
 
 Return the title of this package.
-
-**Returns:** the title of the implementation, `null` is returned if it is not known.
+@return the title of the implementation, {@code null} is returned if it is not known.
 
 ## Package.getImplementationVersion()
 
@@ -179,8 +172,7 @@ not have any particular syntax specified or expected by the Java
 runtime. It may be compared for equality with other
 package version strings used for this implementation
 by this vendor for this package.
-
-**Returns:** the version of the implementation, `null` is returned if it is not known.
+@return the version of the implementation, {@code null} is returned if it is not known.
 
 ## Package.getImplementationVendor()
 
@@ -188,10 +180,9 @@ by this vendor for this package.
 public String getImplementationVendor()
 ```
 
-Returns the vendor that implemented this package, `null`
+Returns the vendor that implemented this package, {@code null}
 is returned if it is not known.
-
-**Returns:** the vendor that implemented this package, `null`
+@return the vendor that implemented this package, {@code null}
 is returned if it is not known.
 
 ## Package.isSealed()
@@ -202,13 +193,14 @@ public boolean isSealed()
 
 Returns true if this package is sealed.
 
-**API note:** Package sealing
-has no relationship with sealed classes or interfaces.
+@apiNote
+<a href="{@docRoot}/../specs/jar/jar.html#package-sealing">Package sealing</a>
+has no relationship with {@linkplain Class#isSealed() sealed classes or interfaces}.
 Package sealing is specific to JAR files defined for classes in an unnamed module.
-See the Package class specification for details
-how a `Package` is defined as sealed package.
+See the {@link Package Package} class specification for details
+how a {@code Package} is defined as sealed package.
 
-**Returns:** true if the package is sealed, false otherwise
+@return true if the package is sealed, false otherwise
 
 ## Package.isSealed(URL)
 
@@ -217,19 +209,17 @@ public boolean isSealed(URL url)
 ```
 
 Returns true if this package is sealed with respect to the specified
-code source `url`.
+code source {@code url}.
 
-Parameters:
-
-- `url`: the code source URL
-
-**API note:** Package sealing
-has no relationship with sealed classes or interfaces.
+@apiNote
+<a href="{@docRoot}/../specs/jar/jar.html#package-sealing">Package sealing</a>
+has no relationship with {@linkplain Class#isSealed() sealed classes or interfaces}.
 Package sealing is specific to JAR files defined for classes in an unnamed module.
-See the Package class specification for details
-how a `Package` is defined as sealed package.
+See the {@link Package Package} class specification for details
+how a {@code Package} is defined as sealed package.
 
-**Returns:** true if this package is sealed with respect to the given `url`
+@param  url the code source URL
+@return true if this package is sealed with respect to the given {@code url}
 
 ## Package.isCompatibleWith(String)
 
@@ -240,7 +230,7 @@ public boolean isCompatibleWith(String desired) throws NumberFormatException
 Compare this package's specification version with a
 desired version. It returns true if
 this packages specification version number is greater than or equal
-to the desired version number.
+to the desired version number. <p>
 
 Version numbers are compared by sequentially comparing corresponding
 components of the desired and specification strings.
@@ -251,16 +241,12 @@ value true is returned. If the value is less false is returned.
 If the values are equal the period is skipped and the next pair of
 components is compared.
 
-Parameters:
-
-- `desired`: the version string of the desired version.
-
-**Returns:** true if this package's version number is greater
+@param  desired the version string of the desired version.
+@return true if this package's version number is greater
         than or equal to the desired version number
 
-Throws:
-
-- `NumberFormatException`: if the current version is not known or the desired or current version is not of the correct dotted form.
+@throws NumberFormatException if the current version is not known or
+        the desired or current version is not of the correct dotted form.
 
 ## Package.getPackage(String)
 
@@ -270,39 +256,36 @@ public static Package getPackage(String name)
 
 Finds a package by name in the caller's class loader and its
 ancestors.
-
-If the caller's class loader defines a `Package` of the given name,
-the `Package` is returned. Otherwise, the ancestors of the
+<p>
+If the caller's class loader defines a {@code Package} of the given name,
+the {@code Package} is returned. Otherwise, the ancestors of the
 caller's class loader are searched recursively (parent by parent)
-for a `Package` of the given name.
+for a {@code Package} of the given name.
+<p>
+Calling this method is equivalent to calling {@link ClassLoader#getPackage}
+on a {@code ClassLoader} instance which is the caller's class loader.
 
-Calling this method is equivalent to calling `ClassLoader.getPackage`
-on a `ClassLoader` instance which is the caller's class loader.
+@param name A package name, such as "{@code java.lang}".
+@return The {@code Package} of the given name defined by the caller's
+        class loader or its ancestors, or {@code null} if not found.
 
-Parameters:
+@throws NullPointerException
+        if {@code name} is {@code null}.
 
-- `name`: A package name, such as "`java.lang`".
-
-**Returns:** The `Package` of the given name defined by the caller's
-        class loader or its ancestors, or `null` if not found.
-
-**Deprecated:** If multiple class loaders delegate to each other and define classes
+@deprecated
+If multiple class loaders delegate to each other and define classes
 with the same package name, and one such loader relies on the lookup
-behavior of `getPackage` to return a `Package` from
-a parent loader, then the properties exposed by the `Package`
+behavior of {@code getPackage} to return a {@code Package} from
+a parent loader, then the properties exposed by the {@code Package}
 may not be as expected in the rest of the program.
-For example, the `Package` will only expose annotations from the
-`package-info.class` file defined by the parent loader, even if
-annotations exist in a `package-info.class` file defined by
+For example, the {@code Package} will only expose annotations from the
+{@code package-info.class} file defined by the parent loader, even if
+annotations exist in a {@code package-info.class} file defined by
 a child loader.  A more robust approach is to use the
-`ClassLoader.getDefinedPackage` method which returns
-a `Package` for the specified class loader.
+{@link ClassLoader#getDefinedPackage} method which returns
+a {@code Package} for the specified class loader.
 
-**See also:** ClassLoader#getDefinedPackage
-
-Throws:
-
-- `NullPointerException`: if `name` is `null`.
+@see ClassLoader#getDefinedPackage
 
 ## Package.getPackages()
 
@@ -310,18 +293,18 @@ Throws:
 public static Package[] getPackages()
 ```
 
-Returns all of the `Package`s defined by the caller's class loader
+Returns all of the {@code Package}s defined by the caller's class loader
 and its ancestors.  The returned array may contain more than one
-`Package` object of the same package name, each defined by
+{@code Package} object of the same package name, each defined by
 a different class loader in the class loader hierarchy.
+<p>
+Calling this method is equivalent to calling {@link ClassLoader#getPackages}
+on a {@code ClassLoader} instance which is the caller's class loader.
 
-Calling this method is equivalent to calling `ClassLoader.getPackages`
-on a `ClassLoader` instance which is the caller's class loader.
-
-**Returns:** The array of `Package` objects defined by this
+@return  The array of {@code Package} objects defined by this
          class loader and its ancestors
 
-**See also:** ClassLoader#getDefinedPackages
+@see ClassLoader#getDefinedPackages
 
 ## Package.hashCode()
 
@@ -330,8 +313,7 @@ public int hashCode()
 ```
 
 Return the hash code computed from the package name.
-
-**Returns:** the hash code computed from the package name.
+@return the hash code computed from the package name.
 
 ## Package.toString()
 
@@ -343,25 +325,20 @@ Returns the string representation of this Package.
 Its value is the string "package " and the package name.
 If the package title is defined it is appended.
 If the package version is defined it is appended.
+@return the string representation of the package.
 
-**Returns:** the string representation of the package.
-
-## Package.getAnnotation(Class)
+## Package.getAnnotation(Class<A>)
 
 ```java
 public <A extends Annotation> A getAnnotation(Class<A> annotationClass)
 ```
 
-(inherited documentation)
-
-Note that any annotation returned by this method is a
+{@inheritDoc}
+<p>Note that any annotation returned by this method is a
 declaration annotation.
 
-**Since:** 1.5
-
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
+@since 1.5
 
 ## Package.isAnnotationPresent(Class<? extends Annotation>)
 
@@ -369,30 +346,22 @@ Throws:
 public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass)
 ```
 
-(inherited documentation)
+{@inheritDoc}
+@throws NullPointerException {@inheritDoc}
+@since 1.5
 
-**Since:** 1.5
-
-Throws:
-
-- `NullPointerException`: (inherited documentation)
-
-## Package.getAnnotationsByType(Class)
+## Package.getAnnotationsByType(Class<A>)
 
 ```java
 public <A extends Annotation> A[] getAnnotationsByType(Class<A> annotationClass)
 ```
 
-(inherited documentation)
-
-Note that any annotations returned by this method are
+{@inheritDoc}
+<p>Note that any annotations returned by this method are
 declaration annotations.
 
-**Since:** 1.8
-
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
+@since 1.8
 
 ## Package.getAnnotations()
 
@@ -400,41 +369,32 @@ Throws:
 public Annotation[] getAnnotations()
 ```
 
-(inherited documentation)
-
-Note that any annotations returned by this method are
+{@inheritDoc}
+<p>Note that any annotations returned by this method are
 declaration annotations.
+@since 1.5
 
-**Since:** 1.5
-
-## Package.getDeclaredAnnotation(Class)
+## Package.getDeclaredAnnotation(Class<A>)
 
 ```java
 public <A extends Annotation> A getDeclaredAnnotation(Class<A> annotationClass)
 ```
 
-(inherited documentation)
-
-Note that any annotation returned by this method is a
+{@inheritDoc}
+<p>Note that any annotation returned by this method is a
 declaration annotation.
 
-**Since:** 1.8
+@throws NullPointerException {@inheritDoc}
+@since 1.8
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
-
-## Package.getDeclaredAnnotationsByType(Class)
+## Package.getDeclaredAnnotationsByType(Class<A>)
 
 ```java
 public <A extends Annotation> A[] getDeclaredAnnotationsByType(Class<A> annotationClass)
 ```
 
-**Since:** 1.8
-
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
+@since 1.8
 
 ## Package.getDeclaredAnnotations()
 
@@ -442,9 +402,7 @@ Throws:
 public Annotation[] getDeclaredAnnotations()
 ```
 
-(inherited documentation)
-
-Note that any annotations returned by this method are
+{@inheritDoc}
+<p>Note that any annotations returned by this method are
 declaration annotations.
-
-**Since:** 1.5
+@since 1.5

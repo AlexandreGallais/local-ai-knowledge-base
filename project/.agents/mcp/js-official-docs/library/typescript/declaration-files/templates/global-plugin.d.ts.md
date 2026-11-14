@@ -1,18 +1,13 @@
 ---
 title: "Global: Plugin"
-tool: "typescript"
-version: "6.0"
-source: "https://github.com/microsoft/TypeScript-Website/blob/4ec663ac4412c3a7086401bd5a8811565589b11d/packages/documentation/copy/en/declaration-files/templates/global-plugin.d.ts.md"
-commit: "4ec663ac4412c3a7086401bd5a8811565589b11d"
-license: "CC-BY-4.0"
+layout: docs
+permalink: /docs/handbook/declaration-files/templates/global-plugin-d-ts.html
 ---
-
-# Global: Plugin
 
 ## _UMD_
 
 A _UMD_ module is one that can _either_ be used as module (through an import), or as a global (when run in an environment without a module loader).
-Many popular libraries, such as Moment.js, are written this way.
+Many popular libraries, such as [Moment.js](http://momentjs.com/), are written this way.
 For example, in Node.js or using RequireJS, you would write:
 
 ```ts
@@ -28,7 +23,7 @@ console.log(moment.format());
 
 ### Identifying a UMD library
 
-UMD modules check for the existence of a module loader environment.
+[UMD modules](https://github.com/umdjs/umd) check for the existence of a module loader environment.
 This is an easy-to-spot pattern that looks something like this:
 
 ```js
@@ -51,14 +46,14 @@ and a "Using in the browser" example showing using a `<script>` tag to load the 
 ### Examples of UMD libraries
 
 Most popular libraries are now available as UMD packages.
-Examples include jQuery, Moment.js, lodash, and many more.
+Examples include [jQuery](https://jquery.com/), [Moment.js](http://momentjs.com/), [lodash](https://lodash.com/), and many more.
 
 ### Template
 
 There are three templates available for modules,
-`module.d.ts`, `module-class.d.ts` and `module-function.d.ts`.
+[`module.d.ts`](/docs/handbook/declaration-files/templates/module-d-ts.html), [`module-class.d.ts`](/docs/handbook/declaration-files/templates/module-class-d-ts.html) and [`module-function.d.ts`](/docs/handbook/declaration-files/templates/module-function-d-ts.html).
 
-Use `module-function.d.ts` if your module can be _called_ like a function:
+Use [`module-function.d.ts`](/docs/handbook/declaration-files/templates/module-function-d-ts.html) if your module can be _called_ like a function:
 
 ```js
 var x = require("foo");
@@ -66,9 +61,9 @@ var x = require("foo");
 var y = x(42);
 ```
 
-Be sure to read the footnote "The Impact of ES6 on Module Call Signatures"
+Be sure to read the [footnote "The Impact of ES6 on Module Call Signatures"](#the-impact-of-es6-on-module-plugins)
 
-Use `module-class.d.ts` if your module can be _constructed_ using `new`:
+Use [`module-class.d.ts`](/docs/handbook/declaration-files/templates/module-class-d-ts.html) if your module can be _constructed_ using `new`:
 
 ```js
 var x = require("bar");
@@ -76,9 +71,9 @@ var x = require("bar");
 var y = new x("hello");
 ```
 
-The same footnote applies to these modules.
+The same [footnote](#the-impact-of-es6-on-module-plugins) applies to these modules.
 
-If your module is not callable or constructable, use the `module.d.ts` file.
+If your module is not callable or constructable, use the [`module.d.ts`](/docs/handbook/declaration-files/templates/module-d-ts.html) file.
 
 ## _Module Plugin_ or _UMD Plugin_
 
@@ -89,7 +84,7 @@ For the purposes of writing a declaration file, you'll write the same code wheth
 
 ### Template
 
-Use the `module-plugin.d.ts` template.
+Use the [`module-plugin.d.ts`](/docs/handbook/declaration-files/templates/module-plugin-d-ts.html) template.
 
 ## _Global Plugin_
 
@@ -116,7 +111,7 @@ console.log(y.reverseAndSort());
 
 ### Template
 
-Use the `global-plugin.d.ts` template.
+Use the [`global-plugin.d.ts`](/docs/handbook/declaration-files/templates/global-plugin-d-ts.html) template.
 
 ## _Global-modifying Modules_
 
@@ -149,7 +144,7 @@ console.log(y.reverseAndSort());
 
 ### Template
 
-Use the `global-modifying-module.d.ts` template.
+Use the [`global-modifying-module.d.ts`](/docs/handbook/declaration-files/templates/global-modifying-module-d-ts.html) template.
 
 ## Consuming Dependencies
 

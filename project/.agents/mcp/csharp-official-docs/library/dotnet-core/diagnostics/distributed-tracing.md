@@ -1,12 +1,8 @@
 ---
-title: "Distributed tracing - .NET"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/distributed-tracing.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Distributed tracing - .NET
+description: An introduction to .NET distributed tracing.
+ms.date: 03/15/2021
 ---
-
 # .NET distributed tracing
 
 Distributed tracing is a diagnostic technique that helps engineers localize failures and
@@ -19,9 +15,9 @@ process, which then makes several queries to a database. Using distributed traci
 engineers to distinguish if any of those steps failed, how long each step took, and potentially
 logging messages produced by each step as it ran.
 
-> **Note:**
+> [!NOTE]
 > The term 'tracing' can have multiple meanings in older .NET APIs. This document focuses on distributed tracing. For information
-> on logging and older tracing APIs, see Logging and tracing.
+> on logging and older tracing APIs, see [Logging and tracing](./logging-tracing.md).
 
 ## Getting started for .NET app developers
 
@@ -30,27 +26,27 @@ Typically, app developers select a telemetry service that stores this trace info
 then use a corresponding library to transmit the distributed tracing telemetry to their chosen
 service:
 
-- OpenTelemetry
-is a vendor-neutral library that supports several services. For more information, see Collect distributed traces with OpenTelemetry.
-- Application Insights
-is a full-featured service provided by Microsoft. For more information, see Collect distributed traces with Application Insights.
+- [OpenTelemetry](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/docs/trace/getting-started-console/README.md)
+is a vendor-neutral library that supports several services. For more information, see [Collect distributed traces with OpenTelemetry](distributed-tracing-collection-walkthroughs.md#collect-traces-using-opentelemetry).
+- [Application Insights](/azure/azure-monitor/app/distributed-tracing)
+is a full-featured service provided by Microsoft. For more information, see [Collect distributed traces with Application Insights](distributed-tracing-collection-walkthroughs.md#collect-traces-using-application-insights).
 - There are many high-quality third-party application performance monitoring (APM) vendors that offer integrated .NET solutions.
 
-For more information, see Understand distributed tracing concepts and the following guides:
+For more information, see [Understand distributed tracing concepts](distributed-tracing-concepts.md) and the following guides:
 
-- Configure distributed tracing
-- Collect distributed traces with custom logic
-- Adding custom distributed trace instrumentation
+- [Configure distributed tracing](distributed-tracing-configuration.md)
+- [Collect distributed traces with custom logic](distributed-tracing-collection-walkthroughs.md#collect-traces-using-custom-logic)
+- [Adding custom distributed trace instrumentation](distributed-tracing-instrumentation-walkthroughs.md)
 
 For third-party telemetry collection services, follow the setup instructions provided by the vendor.
 
 ## Built-in activities emitted by .NET
 
-For a comprehensive list of activities built into .NET see Built-in activities in .NET.
+For a comprehensive list of activities built into .NET see [Built-in activities in .NET](distributed-tracing-builtin-activities.md).
 
 ## Getting started for .NET library developers
 
 .NET libraries don't need to be concerned with how telemetry is ultimately collected, only
 with how it is produced. If you want consumers of your library to be able to see the work that it does detailed in a distributed trace, add distributed tracing instrumentation to support it.
 
-For more information, see Understand distributed tracing concepts and the Adding custom distributed trace instrumentation guide.
+For more information, see [Understand distributed tracing concepts](distributed-tracing-concepts.md) and the [Adding custom distributed trace instrumentation](distributed-tracing-instrumentation-walkthroughs.md) guide.

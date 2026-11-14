@@ -1,34 +1,33 @@
 ---
-title: "Connection management - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/fundamentals/connection-management.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Connection management - EF6
+description: Connection management in Entity Framework 6
+author: SamMonoRT
+ms.date: 10/23/2016
+uid: ef6/fundamentals/connection-management
+ms.custom: sfi-ropc-nochange
 ---
-
 # Connection management
-This page describes the behavior of Entity Framework with regard to passing connections to the context and the functionality of the **Database.Connection.Open()** API.
+This page describes the behavior of Entity Framework with regard to passing connections to the context and the functionality of the **Database.Connection.Open()** API.  
 
-## Passing Connections to the Context
+## Passing Connections to the Context  
 
-### Behavior for EF5 and earlier versions
+### Behavior for EF5 and earlier versions  
 
-There are two constructors which accept connections:
+There are two constructors which accept connections:  
 
-```csharp
+``` csharp
 public DbContext(DbConnection existingConnection, bool contextOwnsConnection)
 public DbContext(DbConnection existingConnection, DbCompiledModel model, bool contextOwnsConnection)
 ```  
 
-It is possible to use these but you have to work around a couple of limitations:
+It is possible to use these but you have to work around a couple of limitations:  
 
-1. If you pass an open connection to either of these then the first time the framework attempts to use it an InvalidOperationException is thrown saying it cannot re-open an already open connection.
-2. The contextOwnsConnection flag is interpreted to mean whether or not the underlying store connection should be disposed when the context is disposed. But, regardless of that setting, the store connection is always closed when the context is disposed. So if you have more than one DbContext with the same connection whichever context is disposed first will close the connection (similarly if you have mixed an existing ADO.NET connection with a DbContext, DbContext will always close the connection when it is disposed).
+1. If you pass an open connection to either of these then the first time the framework attempts to use it an InvalidOperationException is thrown saying it cannot re-open an already open connection.  
+2. The contextOwnsConnection flag is interpreted to mean whether or not the underlying store connection should be disposed when the context is disposed. But, regardless of that setting, the store connection is always closed when the context is disposed. So if you have more than one DbContext with the same connection whichever context is disposed first will close the connection (similarly if you have mixed an existing ADO.NET connection with a DbContext, DbContext will always close the connection when it is disposed).  
 
-It is possible to work around the first limitation above by passing a closed connection and only executing code that would open it once all contexts have been created:
+It is possible to work around the first limitation above by passing a closed connection and only executing code that would open it once all contexts have been created:  
 
-```csharp
+``` csharp
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.Entity;
@@ -68,13 +67,13 @@ namespace ConnectionManagementExamples
 }
 ```  
 
-The second limitation just means you need to refrain from disposing any of your DbContext objects until you are ready for the connection to be closed.
+The second limitation just means you need to refrain from disposing any of your DbContext objects until you are ready for the connection to be closed.  
 
-### Behavior in EF6 and future versions
+### Behavior in EF6 and future versions  
 
-In EF6 and future versions the DbContext has the same two constructors but no longer requires that the connection passed to the constructor be closed when it is received. So this is now possible:
+In EF6 and future versions the DbContext has the same two constructors but no longer requires that the connection passed to the constructor be closed when it is received. So this is now possible:  
 
-```csharp
+``` csharp
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
@@ -120,26 +119,26 @@ namespace ConnectionManagementExamples
 }
 ```  
 
-Also the contextOwnsConnection flag now controls whether or not the connection is both closed and disposed when the DbContext is disposed. So in the above example the connection is not closed when the context is disposed (line 32) as it would have been in previous versions of EF, but rather when the connection itself is disposed (line 40).
+Also the contextOwnsConnection flag now controls whether or not the connection is both closed and disposed when the DbContext is disposed. So in the above example the connection is not closed when the context is disposed (line 32) as it would have been in previous versions of EF, but rather when the connection itself is disposed (line 40).  
 
-Of course it is still possible for the DbContext to take control of the connection (just set contextOwnsConnection to true or use one of the other constructors) if you so wish.
+Of course it is still possible for the DbContext to take control of the connection (just set contextOwnsConnection to true or use one of the other constructors) if you so wish.  
 
-> **Note:**
-> There are some additional considerations when using transactions with this new model. For details see Working with Transactions.
+> [!NOTE]
+> There are some additional considerations when using transactions with this new model. For details see [Working with Transactions](xref:ef6/saving/transactions).  
 
-## Database.Connection.Open()
+## Database.Connection.Open()  
 
-### Behavior for EF5 and earlier versions
+### Behavior for EF5 and earlier versions  
 
-In EF5 and earlier versions there is a bug such that the **ObjectContext.Connection.State** was not updated to reflect the true state of the underlying store connection. For example, if you executed the following code you can be returned the status **Closed** even though in fact the underlying store connection is **Open**.
+In EF5 and earlier versions there is a bug such that the **ObjectContext.Connection.State** was not updated to reflect the true state of the underlying store connection. For example, if you executed the following code you can be returned the status **Closed** even though in fact the underlying store connection is **Open**.  
 
-```csharp
+``` csharp
 ((IObjectContextAdapter)context).ObjectContext.Connection.State
 ```  
 
-Separately, if you open the database connection by calling Database.Connection.Open() it will be open until the next time you execute a query or call anything which requires a database connection (for example, SaveChanges()) but after that the underlying store connection will be closed. The context will then re-open and re-close the connection any time another database operation is required:
+Separately, if you open the database connection by calling Database.Connection.Open() it will be open until the next time you execute a query or call anything which requires a database connection (for example, SaveChanges()) but after that the underlying store connection will be closed. The context will then re-open and re-close the connection any time another database operation is required:  
 
-```csharp
+``` csharp
 using System;
 using System.Data;
 using System.Data.Entity;
@@ -181,16 +180,16 @@ namespace ConnectionManagementExamples
 }
 ```  
 
-### Behavior in EF6 and future versions
+### Behavior in EF6 and future versions  
 
-For EF6 and future versions we have taken the approach that if the calling code chooses to open the connection by calling context.Database.Connection.Open() then it has a good reason for doing so and the framework will assume that it wants control over opening and closing of the connection and will no longer close the connection automatically.
+For EF6 and future versions we have taken the approach that if the calling code chooses to open the connection by calling context.Database.Connection.Open() then it has a good reason for doing so and the framework will assume that it wants control over opening and closing of the connection and will no longer close the connection automatically.  
 
-> **Note:**
-> This can potentially lead to connections which are open for a long time so use with care.
+> [!NOTE]
+> This can potentially lead to connections which are open for a long time so use with care.  
 
-We also updated the code so that ObjectContext.Connection.State now keeps track of the state of the underlying connection correctly.
+We also updated the code so that ObjectContext.Connection.State now keeps track of the state of the underlying connection correctly.  
 
-```csharp
+``` csharp
 using System;
 using System.Data;
 using System.Data.Entity;
@@ -228,4 +227,4 @@ namespace ConnectionManagementExamples
         }
     }
 }
-```
+```  

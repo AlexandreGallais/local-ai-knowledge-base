@@ -1,48 +1,36 @@
----
-title: "Annotation interface (java.lang.classfile)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/Annotation.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Annotation interface (java.lang.classfile)
 
 ```java
 public sealed interface Annotation permits AnnotationImpl
 ```
 
-Models an `annotation` structure (JVMS ) or part of a `type_annotation` structure (JVMS ). This model indicates the
+Models an {@code annotation} structure (JVMS {@jvms 4.7.16}) or part of a {@code
+type_annotation} structure (JVMS {@jvms 4.7.20}). This model indicates the
 interface of the annotation and a set of element-value pairs.
-
+<p>
 This model can reconstruct an annotation, given the location of the modeled
-structure in the `class` file and the definition of the annotation
+structure in the {@code class} file and the definition of the annotation
 interface.
+<p>
+Two {@code Annotation} objects should be compared using the {@link
+Object#equals(Object) equals} method.
 
-Two `Annotation` objects should be compared using the equals method.
-
-**API note:** For Java programs, the location of the modeled structure indicates the source code
-element or type (JLS ) on which the reconstructed annotation appears,
+@apiNote
+For Java programs, the location of the modeled structure indicates the source code
+element or type (JLS {@jls 9.7.4}) on which the reconstructed annotation appears,
 and the annotation interface definition determines whether the reconstructed annotation has
-elements with default values (JLS ), and whether the reconstructed annotation
-is a container annotation for multiple annotations (JLS ).
+elements with default values (JLS {@jls 9.6.2}), and whether the reconstructed annotation
+is a container annotation for multiple annotations (JLS {@jls 9.7.5}).
 
-**See also:** java.lang.annotation.Annotation
+@see java.lang.annotation.Annotation
+@see java.lang.reflect.AnnotatedElement Annotations in core reflection
+@see TypeAnnotation
+@see RuntimeVisibleAnnotationsAttribute
+@see RuntimeInvisibleAnnotationsAttribute
+@see RuntimeVisibleParameterAnnotationsAttribute
+@see RuntimeInvisibleParameterAnnotationsAttribute
 
-**See also:** java.lang.reflect.AnnotatedElement Annotations in core reflection
-
-**See also:** TypeAnnotation
-
-**See also:** RuntimeVisibleAnnotationsAttribute
-
-**See also:** RuntimeInvisibleAnnotationsAttribute
-
-**See also:** RuntimeVisibleParameterAnnotationsAttribute
-
-**See also:** RuntimeInvisibleParameterAnnotationsAttribute
-
-**Since:** 24
+@since 24
 
 ## Annotation.className()
 
@@ -50,7 +38,10 @@ is a container annotation for multiple annotations (JLS ).
 Utf8Entry className()
 ```
 
-**See also:** java.lang.annotation.Annotation#annotationType()
+{@return the constant pool entry holding the {@linkplain Class#descriptorString
+descriptor string} of the annotation interface}
+
+@see java.lang.annotation.Annotation#annotationType()
 
 ## Annotation.classSymbol()
 
@@ -58,7 +49,9 @@ Utf8Entry className()
 default ClassDesc classSymbol()
 ```
 
-**See also:** java.lang.annotation.Annotation#annotationType()
+{@return the annotation interface, as a symbolic descriptor}
+
+@see java.lang.annotation.Annotation#annotationType()
 
 ## Annotation.elements()
 
@@ -66,16 +59,18 @@ default ClassDesc classSymbol()
 List<AnnotationElement> elements()
 ```
 
+{@return the element-value pairs of the annotation}
+
 ## Annotation.of(Utf8Entry, List<AnnotationElement>)
 
 ```java
 static Annotation of(Utf8Entry annotationClass, List<AnnotationElement> elements)
 ```
 
-Parameters:
-
-- `annotationClass`: the constant pool entry holding the descriptor string of the annotation interface
-- `elements`: the element-value pairs of the annotation
+{@return an annotation}
+@param annotationClass the constant pool entry holding the descriptor string
+                       of the annotation interface
+@param elements the element-value pairs of the annotation
 
 ## Annotation.of(Utf8Entry, AnnotationElement...)
 
@@ -83,10 +78,10 @@ Parameters:
 static Annotation of(Utf8Entry annotationClass, AnnotationElement... elements)
 ```
 
-Parameters:
-
-- `annotationClass`: the constant pool entry holding the descriptor string of the annotation interface
-- `elements`: the element-value pairs of the annotation
+{@return an annotation}
+@param annotationClass the constant pool entry holding the descriptor string
+                       of the annotation interface
+@param elements the element-value pairs of the annotation
 
 ## Annotation.of(ClassDesc, List<AnnotationElement>)
 
@@ -94,10 +89,9 @@ Parameters:
 static Annotation of(ClassDesc annotationClass, List<AnnotationElement> elements)
 ```
 
-Parameters:
-
-- `annotationClass`: the descriptor of the annotation interface
-- `elements`: the element-value pairs of the annotation
+{@return an annotation}
+@param annotationClass the descriptor of the annotation interface
+@param elements the element-value pairs of the annotation
 
 ## Annotation.of(ClassDesc, AnnotationElement...)
 
@@ -105,7 +99,6 @@ Parameters:
 static Annotation of(ClassDesc annotationClass, AnnotationElement... elements)
 ```
 
-Parameters:
-
-- `annotationClass`: the descriptor of the annotation interface
-- `elements`: the element-value pairs of the annotation
+{@return an annotation}
+@param annotationClass the descriptor of the annotation interface
+@param elements the element-value pairs of the annotation

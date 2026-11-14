@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataAssemblyImport::EnumExportedTypes Method"
 title: "IMetaDataAssemblyImport::EnumExportedTypes Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataassemblyimport-enumexportedtypes-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataAssemblyImport.EnumExportedTypes"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataAssemblyImport::EnumExportedTypes"
+  - "IMetaDataAssemblyImport::EnumExportedTypes method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataAssemblyImport::EnumExportedTypes Method
 
 Enumerates the exported types referenced in the assembly manifest in the current metadata scope.
@@ -45,7 +52,7 @@ HRESULT EnumExportedTypes (
 
 ## Requirements
 
- **Platform:** See .NET supported operating systems.
+ **Platform:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -53,4 +60,4 @@ HRESULT EnumExportedTypes (
 
 ## See also
 
-- IMetaDataAssemblyImport Interface
+- [IMetaDataAssemblyImport Interface](imetadataassemblyimport-interface.md)

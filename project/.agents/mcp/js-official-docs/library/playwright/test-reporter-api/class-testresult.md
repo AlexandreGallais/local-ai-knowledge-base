@@ -1,12 +1,3 @@
----
-title: "class: TestResult"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/test-reporter-api/class-testresult.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: TestResult
 * since: v1.10
 * langs: js
@@ -37,7 +28,7 @@ The list of annotations applicable to the current test. Includes:
 
 Annotations are available during test execution through [`property: TestInfo.annotations`].
 
-Learn more about test annotations.
+Learn more about [test annotations](../test-annotations.md).
 
 ## property: TestResult.duration
 * since: v1.10
@@ -64,7 +55,7 @@ Errors thrown during the test execution.
 
 When test is retried multiple times, each retry attempt is given a sequential number.
 
-Learn more about test retries.
+Learn more about [test retries](../test-retries.md#retries).
 
 ## property: TestResult.startTime
 * since: v1.10
@@ -102,7 +93,7 @@ List of steps inside this test run.
 
 Index of the worker where the test was run. If the test was not run a single time, for example when the user interrupted testing, the only result will have a `workerIndex` equal to `-1`.
 
-Learn more about parallelism and sharding with Playwright Test.
+Learn more about [parallelism and sharding](../test-parallel.md) with Playwright Test.
 
 ## property: TestResult.parallelIndex
 * since: v1.30

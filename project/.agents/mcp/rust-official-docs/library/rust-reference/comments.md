@@ -1,17 +1,8 @@
----
-title: "Comments"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/comments.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[comments]
 # Comments
 
 r[comments.syntax]
-```grammar
+```grammar,lexer
 @root COMMENT ->
       LINE_COMMENT
     | INNER_LINE_DOC
@@ -83,10 +74,10 @@ That is, they are equivalent to writing `#![doc="..."]` around the body of the c
 r[comments.doc.bare-crs]
 The character `U+000D` (CR) is not allowed in doc comments.
 
-> **Note:**
+> [!NOTE]
 > It is conventional for doc comments to contain Markdown, as expected by `rustdoc`. However, the comment syntax does not respect any internal Markdown. ``/** `glob = "*/*.rs";` */`` terminates the comment at the first `*/`, and the remaining code would cause a syntax error. This slightly limits the content of block doc comments compared to line doc comments.
 
-> **Note:**
+> [!NOTE]
 > The sequence `U+000D` (CR) immediately followed by `U+000A` (LF) would have been previously transformed into a single `U+000A` (LF).
 
 ## Examples
@@ -154,3 +145,5 @@ pub mod outer_module {
 #   mod boo {}
 }
 ```
+
+[`doc` attributes]: ../rustdoc/the-doc-attribute.html

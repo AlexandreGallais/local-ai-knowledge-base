@@ -1,21 +1,22 @@
 ---
-title: "How to filter on element names - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/filter-element-names.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to filter on element names - LINQ to XML
+description: Learn how to filter on the element name when you call a method that returns an IEnumerable of XElement.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to filter on element names (LINQ to XML)
 
-When you call one of the methods that return `System.Collections.Generic.IEnumerable`1` of `System.Xml.Linq.XElement`, you can filter on the element name.
+When you call one of the methods that return <xref:System.Collections.Generic.IEnumerable`1> of <xref:System.Xml.Linq.XElement>, you can filter on the element name.
 
 ## Example: Retrieve descendants filtered to a specified name
 
 This example retrieves a collection of descendants that's filtered to contain only descendants with the specified name.
 
-This example uses XML document Sample XML file: Typical purchase order.
+This example uses XML document [Sample XML file: Typical purchase order](sample-xml-file-typical-purchase-order.md).
 
 ```csharp
 XElement po = XElement.Load("PurchaseOrder.xml");
@@ -43,21 +44,21 @@ ProductName:Lawnmower
 ProductName:Baby Monitor
 ```
 
-The other methods that return `System.Collections.Generic.IEnumerable`1` of `System.Xml.Linq.XElement` collections follow the same pattern. Their signatures are similar to `System.Xml.Linq.XContainer.Elements*` and `System.Xml.Linq.XContainer.Descendants*`. The following is the complete list of methods that have similar method signatures:
+The other methods that return <xref:System.Collections.Generic.IEnumerable`1> of <xref:System.Xml.Linq.XElement> collections follow the same pattern. Their signatures are similar to <xref:System.Xml.Linq.XContainer.Elements*> and <xref:System.Xml.Linq.XContainer.Descendants*>. The following is the complete list of methods that have similar method signatures:
 
-- `System.Xml.Linq.XNode.Ancestors*`
-- `System.Xml.Linq.XContainer.Descendants*`
-- `System.Xml.Linq.XContainer.Elements*`
-- `System.Xml.Linq.XNode.ElementsAfterSelf*`
-- `System.Xml.Linq.XNode.ElementsBeforeSelf*`
-- `System.Xml.Linq.XElement.AncestorsAndSelf*`
-- `System.Xml.Linq.XElement.DescendantsAndSelf*`
+- <xref:System.Xml.Linq.XNode.Ancestors*>
+- <xref:System.Xml.Linq.XContainer.Descendants*>
+- <xref:System.Xml.Linq.XContainer.Elements*>
+- <xref:System.Xml.Linq.XNode.ElementsAfterSelf*>
+- <xref:System.Xml.Linq.XNode.ElementsBeforeSelf*>
+- <xref:System.Xml.Linq.XElement.AncestorsAndSelf*>
+- <xref:System.Xml.Linq.XElement.DescendantsAndSelf*>
 
 ## Example: Retrieve from XML that's in a namespace
 
-The following example shows the same query for XML that's in a namespace. For more information, see Namespaces overview.
+The following example shows the same query for XML that's in a namespace. For more information, see [Namespaces overview](namespaces-overview.md).
 
-The example uses XML document Sample XML file: Typical purchase order in a namespace.
+The example uses XML document [Sample XML file: Typical purchase order in a namespace](sample-xml-file-typical-purchase-order-namespace.md).
 
 ```csharp
 XNamespace aw = "http://www.adventure-works.com";
@@ -94,4 +95,4 @@ This example produces the following output:
 
 ## See also
 
-- LINQ to XML axes overview
+- [LINQ to XML axes overview](linq-xml-axes-overview.md)

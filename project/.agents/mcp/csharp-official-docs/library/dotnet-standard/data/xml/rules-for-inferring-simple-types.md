@@ -1,23 +1,19 @@
 ---
+description: "Learn more about: Rules for Inferring Simple Types"
 title: "Rules for Inferring Simple Types"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/rules-for-inferring-simple-types.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # Rules for Inferring Simple Types
 
-Describes how the `System.Xml.Schema.XmlSchemaInference` class infers the data type for attributes and elements.
+Describes how the <xref:System.Xml.Schema.XmlSchemaInference> class infers the data type for attributes and elements.
 
- The `System.Xml.Schema.XmlSchemaInference` class infers the data type for attributes and elements as simple types. This section describes the potential inferred types, how multiple differing values are reconciled to a single type, and how schema-defining `xsi` attributes are handled.
+ The <xref:System.Xml.Schema.XmlSchemaInference> class infers the data type for attributes and elements as simple types. This section describes the potential inferred types, how multiple differing values are reconciled to a single type, and how schema-defining `xsi` attributes are handled.
 
 ## Inferred Types
 
- The `System.Xml.Schema.XmlSchemaInference` class infers element and attribute values as simple types and includes a type attribute in the resulting schema. All inferred types are simple types. No base types or facets are included as part of the resulting schema.
+ The <xref:System.Xml.Schema.XmlSchemaInference> class infers element and attribute values as simple types and includes a type attribute in the resulting schema. All inferred types are simple types. No base types or facets are included as part of the resulting schema.
 
- Values are examined individually as they are encountered in the XML document. The type is inferred for a value at the time it is examined. If a type has been inferred for an attribute or element, and a value for the attribute or element is encountered that does not match the currently inferred type, the `System.Xml.Schema.XmlSchemaInference` class promotes the type for each of a set of rules. These rules are discussed in the Type Promotion section, later in this topic.
+ Values are examined individually as they are encountered in the XML document. The type is inferred for a value at the time it is examined. If a type has been inferred for an attribute or element, and a value for the attribute or element is encountered that does not match the currently inferred type, the <xref:System.Xml.Schema.XmlSchemaInference> class promotes the type for each of a set of rules. These rules are discussed in the Type Promotion section, later in this topic.
 
  The following table lists the possible inferred types for the resulting schema.
 
@@ -34,8 +30,8 @@ Describes how the `System.Xml.Schema.XmlSchemaInference` class infers the data t
 |unsignedLong|Integers in the range of 0 to 18446744073709551615.|
 |integer|A finite number of digits possibly prefixed with "-".|
 |decimal|Numerical values that contain from 0 to 28 digits of precision.|
-|float|Decimals optionally followed by "E" or "e" followed by an integer value representing the exponent. Decimal values can be in the range of -16777216 to 16777216. Exponent values can be in the range of –149 to 104. Float allows for special values to represent infinity and non-numeric values. Special values for float are: 0, -0, INF, -INF, NaN.|
-|double|The same as float except decimal values can be in the range of -<example-card-number> to <example-card-number>, and exponent values can be in the range of –1075 to 970. Double allows for special values to represent infinity and non-numeric values. Special values for float are: 0, -0, INF, -INF, NaN.|
+|float|Decimals optionally followed by "E" or "e" followed by an integer value representing the exponent. Decimal values can be in the range of -16777216 to 16777216. Exponent values can be in the range of –149 to 104.<br /><br /> Float allows for special values to represent infinity and non-numeric values. Special values for float are: 0, -0, INF, -INF, NaN.|
+|double|The same as float except decimal values can be in the range of -9007199254740992 to 9007199254740992, and exponent values can be in the range of –1075 to 970.<br /><br /> Double allows for special values to represent infinity and non-numeric values. Special values for float are: 0, -0, INF, -INF, NaN.|
 |duration|The W3C duration format.|
 |dateTime|The W3C dateTime format.|
 |time|The W3C time format.|
@@ -45,7 +41,7 @@ Describes how the `System.Xml.Schema.XmlSchemaInference` class infers the data t
 
 ## Type Promotion
 
- The `System.Xml.Schema.XmlSchemaInference` class examines attribute and element values one at a time. As values are encountered, the most restrictive, unsigned type is inferred. If a type has been inferred for an attribute or element, and a new value is encountered that does not match the currently inferred type, the inferred type is promoted to a new type that applies to both the currently inferred type and the new value. The `System.Xml.Schema.XmlSchemaInference` class does consider previous values when promoting the inferred type.
+ The <xref:System.Xml.Schema.XmlSchemaInference> class examines attribute and element values one at a time. As values are encountered, the most restrictive, unsigned type is inferred. If a type has been inferred for an attribute or element, and a new value is encountered that does not match the currently inferred type, the inferred type is promoted to a new type that applies to both the currently inferred type and the new value. The <xref:System.Xml.Schema.XmlSchemaInference> class does consider previous values when promoting the inferred type.
 
  For example, consider the following XML fragments from two XML documents:
 
@@ -61,7 +57,7 @@ Describes how the `System.Xml.Schema.XmlSchemaInference` class infers the data t
 
  `<MyElement2 attr2="true" />`
 
- When the first `attr2` value is encountered, the type of `attr2` is inferred as `unsignedByte` based on the value `0`. When the second `attr2` is encountered, the type is promoted to `string` based on the currently inferred type of `unsignedByte` and the current value `true` because the `System.Xml.Schema.XmlSchemaInference` class does consider previous values when promoting the inferred type. However, if both instances of `attr2` were encountered in the same XML document and not in two different XML documents as illustrated above, `attr2` would have been inferred as `boolean`.
+ When the first `attr2` value is encountered, the type of `attr2` is inferred as `unsignedByte` based on the value `0`. When the second `attr2` is encountered, the type is promoted to `string` based on the currently inferred type of `unsignedByte` and the current value `true` because the <xref:System.Xml.Schema.XmlSchemaInference> class does consider previous values when promoting the inferred type. However, if both instances of `attr2` were encountered in the same XML document and not in two different XML documents as illustrated above, `attr2` would have been inferred as `boolean`.
 
 ### Ignored attributes from the <https://www.w3.org/2001/XMLSchema-instance> namespace
 
@@ -76,6 +72,6 @@ The following are schema-defining attributes that are ignored during schema infe
 
 ## See also
 
-- XML Schema Object Model (SOM)
-- Inferring Schemas from XML Documents
-- Rules for Inferring Schema Node Types and Structure
+- [XML Schema Object Model (SOM)](xml-schema-object-model-som.md)
+- [Inferring Schemas from XML Documents](inferring-schemas-from-xml-documents.md)
+- [Rules for Inferring Schema Node Types and Structure](rules-for-inferring-schema-node-types-and-structure.md)

@@ -1,12 +1,20 @@
 ---
 title: "CorGCReferenceType Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/corgcreferencetype-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn more about: CorGCReferenceType Enumeration"
+ms.date: "03/30/2017"
+api_name:
+  - "CorGCReferenceType"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "CorGCReferenceType"
+helpviewer_keywords:
+  - "CorGCReferenceType"
+topic_type:
+  - "apiref"
 ---
-
 # CorGCReferenceType Enumeration
 
 Identifies the source of an object to be garbage-collected.
@@ -49,20 +57,20 @@ typedef enum {
 |`CorHandleWeakWinRT`|A weak handle to a RCW (Runtime Callable Wrapper). An RCW is a managed object that proxies calls to an underlying COM object.|
 |`CorReferenceStack`|A reference from the managed stack.|
 |`CorReferenceFinalizer`|A reference from the finalizer queue.|
-|CorHandleStrongOnly|Return only strong references from the handle table. This value is used by the ICorDebugProcess5::EnumerateHandles method only.|
-|`CorHandleWeakOnly`|Return only weak references from the handle table. This value is used by the ICorDebugProcess5::EnumerateHandles method only.|
-|`CorHandleAll`|Return all references from the handle table. This value is used by the ICorDebugProcess5::EnumerateHandles method only.|
+|CorHandleStrongOnly|Return only strong references from the handle table. This value is used by the [ICorDebugProcess5::EnumerateHandles](icordebugprocess5-enumeratehandles-method.md) method only.|
+|`CorHandleWeakOnly`|Return only weak references from the handle table. This value is used by the [ICorDebugProcess5::EnumerateHandles](icordebugprocess5-enumeratehandles-method.md) method only.|
+|`CorHandleAll`|Return all references from the handle table. This value is used by the [ICorDebugProcess5::EnumerateHandles](icordebugprocess5-enumeratehandles-method.md) method only.|
 
 ## Remarks
 
  The `CorGCReferenceType` enumeration is used as follows:
 
-- As the value of the `type` field of the COR_GC_REFERENCE structure, it indicates the source of a reference or handle.
-- As the `types` argument to the ICorDebugProcess5::EnumerateHandles method, it specifies the types of handles to include in the enumeration.
+- As the value of the `type` field of the [COR_GC_REFERENCE](cor-gc-reference-structure.md) structure, it indicates the source of a reference or handle.
+- As the `types` argument to the [ICorDebugProcess5::EnumerateHandles](icordebugprocess5-enumeratehandles-method.md) method, it specifies the types of handles to include in the enumeration.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

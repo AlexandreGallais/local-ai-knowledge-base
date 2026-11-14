@@ -1,28 +1,34 @@
 ---
+description: "Learn more about: IMapToken Interface"
 title: "IMapToken Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imaptoken-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMapToken"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMapToken"
+topic_type:
+  - "apiref"
 ---
-
-# IMapToken <example-value>
+# IMapToken Interface
 
 Provides mapping capabilities between assemblies.
 
-> **Note:**
+> [!NOTE]
 > The `IMapToken` interface must be implemented by the client.
 
 ## Methods
 
 | Method                                | Description |
 |---------------------------------------|-------------|
-| Map Method | Maps a relationship between two assemblies using metadata signatures. |
+| [Map Method](imaptoken-map-method.md) | Maps a relationship between two assemblies using metadata signatures. |
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -30,4 +36,4 @@ Provides mapping capabilities between assemblies.
 
 ## See also
 
-- Metadata Interfaces
+- [Metadata Interfaces](metadata-interfaces.md)

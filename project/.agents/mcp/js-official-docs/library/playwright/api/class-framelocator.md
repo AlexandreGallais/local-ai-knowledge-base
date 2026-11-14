@@ -1,12 +1,3 @@
----
-title: "class: FrameLocator"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-framelocator.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: FrameLocator
 * since: v1.17
 
@@ -22,12 +13,12 @@ Locator locator = page.locator("#my-frame").contentFrame().getByText("Submit");
 locator.click();
 ```
 
-```python
+```python async
 locator = page.locator("#my-frame").content_frame.get_by_text("Submit")
 await locator.click()
 ```
 
-```python
+```python sync
 locator = page.locator("my-frame").content_frame.get_by_text("Submit")
 locator.click()
 ```
@@ -49,7 +40,7 @@ await page.locator('.result-frame').contentFrame().getByRole('button').click();
 await page.locator('.result-frame').contentFrame().first().getByRole('button').click();
 ```
 
-```python
+```python async
 # Throws if there are several frames in DOM:
 await page.locator('.result-frame').content_frame.get_by_role('button').click()
 
@@ -57,7 +48,7 @@ await page.locator('.result-frame').content_frame.get_by_role('button').click()
 await page.locator('.result-frame').first.content_frame.get_by_role('button').click()
 ```
 
-```python
+```python sync
 # Throws if there are several frames in DOM:
 page.locator('.result-frame').content_frame.get_by_role('button').click()
 
@@ -103,7 +94,7 @@ page.frameLocator().getByRole(AriaRole.BUTTON).click();
 page.frameLocator().locator("#my-frame").contentFrame().getByRole(AriaRole.BUTTON).click();
 ```
 
-```python
+```python async
 # Finds the button in any frame on the page:
 await page.frame_locator().get_by_role("button").click()
 
@@ -111,7 +102,7 @@ await page.frame_locator().get_by_role("button").click()
 await page.frame_locator().locator("#my-frame").content_frame.get_by_role("button").click()
 ```
 
-```python
+```python sync
 # Finds the button in any frame on the page:
 page.frame_locator().get_by_role("button").click()
 
@@ -141,6 +132,7 @@ If you have a [Locator] object pointing to an `iframe` it can be converted to [F
 
 If you have a [FrameLocator] object it can be converted to [Locator] pointing to the same `iframe` using [`method: FrameLocator.owner`].
 
+
 ## method: FrameLocator.first
 * deprecated: Use [`method: Locator.first`] followed by [`method: Locator.contentFrame`] instead.
 * since: v1.17
@@ -164,17 +156,29 @@ in that iframe.
 
 %%-template-locator-get-by-alt-text-%%
 
+### param: FrameLocator.getByAltText.text = %%-locator-get-by-text-text-%%
+
+### option: FrameLocator.getByAltText.exact = %%-locator-get-by-text-exact-%%
+
 ## method: FrameLocator.getByLabel
 * since: v1.27
 - returns: <[Locator]>
 
 %%-template-locator-get-by-label-text-%%
 
+### param: FrameLocator.getByLabel.text = %%-locator-get-by-text-text-%%
+
+### option: FrameLocator.getByLabel.exact = %%-locator-get-by-text-exact-%%
+
 ## method: FrameLocator.getByPlaceholder
 * since: v1.27
 - returns: <[Locator]>
 
 %%-template-locator-get-by-placeholder-text-%%
+
+### param: FrameLocator.getByPlaceholder.text = %%-locator-get-by-text-text-%%
+
+### option: FrameLocator.getByPlaceholder.exact = %%-locator-get-by-text-exact-%%
 
 ## method: FrameLocator.getByRole
 * since: v1.27
@@ -187,6 +191,10 @@ in that iframe.
 
 ### option: FrameLocator.getByRole.-inline- = %%-locator-get-by-role-option-list-v1.27-%%
 * since: v1.27
+
+### option: FrameLocator.getByRole.exact = %%-locator-get-by-role-option-exact-%%
+
+### option: FrameLocator.getByRole.description = %%-locator-get-by-role-option-description-%%
 
 ## method: FrameLocator.getByTestId
 * since: v1.27
@@ -203,11 +211,19 @@ in that iframe.
 
 %%-template-locator-get-by-text-%%
 
+### param: FrameLocator.getByText.text = %%-locator-get-by-text-text-%%
+
+### option: FrameLocator.getByText.exact = %%-locator-get-by-text-exact-%%
+
 ## method: FrameLocator.getByTitle
 * since: v1.27
 - returns: <[Locator]>
 
 %%-template-locator-get-by-title-%%
+
+### param: FrameLocator.getByTitle.text = %%-locator-get-by-text-text-%%
+
+### option: FrameLocator.getByTitle.exact = %%-locator-get-by-text-exact-%%
 
 ## method: FrameLocator.last
 * deprecated: Use [`method: Locator.last`] followed by [`method: Locator.contentFrame`] instead.
@@ -271,14 +287,14 @@ Locator locator = frameLocator.owner();
 assertThat(locator).isVisible();
 ```
 
-```python
+```python async
 frame_locator = page.locator("iframe[name=\"embedded\"]").content_frame
 # ...
 locator = frame_locator.owner
 await expect(locator).to_be_visible()
 ```
 
-```python
+```python sync
 frame_locator = page.locator("iframe[name=\"embedded\"]").content_frame
 # ...
 locator = frame_locator.owner

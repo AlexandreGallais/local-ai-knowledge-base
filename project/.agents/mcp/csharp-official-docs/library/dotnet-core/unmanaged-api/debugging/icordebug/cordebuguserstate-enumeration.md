@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: CorDebugUserState Enumeration"
 title: "CorDebugUserState Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cordebuguserstate-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "CorDebugUserState"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "CorDebugUserState"
+helpviewer_keywords:
+  - "CorDebugUserState enumeration [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # CorDebugUserState Enumeration
 
 Indicates the user state of a thread.
@@ -38,18 +46,18 @@ typedef enum CorDebugUserState {
 |`USER_STOPPED`|The thread has been terminated.|
 |`USER_WAIT_SLEEP_JOIN`|The thread is waiting for another thread to complete a task.|
 |`USER_SUSPENDED`|The thread has been suspended.|
-|`USER_UNSAFE_POINT`|The thread is at an unsafe point. That is, the thread is at a point in execution where it may block garbage collection. Debug events may be dispatched from unsafe points, but suspending a thread at an unsafe point  will very likely cause a deadlock until the thread is resumed. The safe and unsafe points are determined by the just-in-time (JIT) and garbage collection implementation.|
+|`USER_UNSAFE_POINT`|The thread is at an unsafe point. That is, the thread is at a point in execution where it may block garbage collection.<br /><br /> Debug events may be dispatched from unsafe points, but suspending a thread at an unsafe point  will very likely cause a deadlock until the thread is resumed. The safe and unsafe points are determined by the just-in-time (JIT) and garbage collection implementation.|
 |`USER_THREADPOOL`|The thread is from the thread pool.|
 
 ## Remarks
 
  The user state of a thread is the state that the thread has when the debugger examines it. A thread may have a combination of user states.
 
- Use the ICorDebugThread::GetUserState method to retrieve a thread's user state.
+ Use the [ICorDebugThread::GetUserState](icordebugthread-getuserstate-method.md) method to retrieve a thread's user state.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

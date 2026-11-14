@@ -1,10 +1,7 @@
 ---
-title: "Compliance libraries in .NET"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/compliance.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Compliance libraries in .NET
+description: Learn how to use compliance libraries to implement compliance features in .NET applications.
+ms.date: 03/21/2025
 ---
 
 # Compliance libraries in .NET
@@ -13,12 +10,12 @@ license: "CC-BY-4.0"
 
 ## Data classification in .NET
 
-Data classification helps categorize data based on its sensitivity and protection level using the `Microsoft.Extensions.Compliance.Classification.DataClassification` structure. This allows you to label sensitive information and enforce policies based on these labels. You can create custom classifications and attributes to tag your data appropriately.
+Data classification helps categorize data based on its sensitivity and protection level using the <xref:Microsoft.Extensions.Compliance.Classification.DataClassification> structure. This allows you to label sensitive information and enforce policies based on these labels. You can create custom classifications and attributes to tag your data appropriately.
 
-For more information about .NET's data classification library, see Data classification in .NET.
+For more information about .NET's data classification library, see [Data classification in .NET](data-classification.md).
 
 ## Data redaction in .NET
 
-Data redaction helps protect sensitive information in logs, error messages, or other outputs to comply with privacy rules and protect sensitive data. The `Microsoft.Extensions.Compliance.Redaction` library provides various redactors, such as the `Microsoft.Extensions.Compliance.Redaction.ErasingRedactor` and `Microsoft.Extensions.Compliance.Redaction.HmacRedactor`. You can configure these redactors and register them using the `AddRedaction` methods. Additionally, you can create custom redactors and redactor providers to suit your specific needs.
+Data redaction helps protect sensitive information in logs, error messages, or other outputs to comply with privacy rules and protect sensitive data. The <xref:Microsoft.Extensions.Compliance.Redaction> library provides various redactors, such as the <xref:Microsoft.Extensions.Compliance.Redaction.ErasingRedactor> and <xref:Microsoft.Extensions.Compliance.Redaction.HmacRedactor>. You can configure these redactors and register them using the `AddRedaction` methods. Additionally, you can create custom redactors and redactor providers to suit your specific needs.
 
-For more information about .NET's data redaction library, see Data redaction in .NET.
+For more information about .NET's data redaction library, see [Data redaction in .NET](data-redaction.md).

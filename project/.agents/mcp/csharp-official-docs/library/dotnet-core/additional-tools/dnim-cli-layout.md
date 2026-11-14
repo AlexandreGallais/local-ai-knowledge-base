@@ -1,10 +1,8 @@
 ---
-title: "dnim layout command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/additional-tools/dnim-cli-layout.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dnim layout command
+description: The layout command creates a cache for offline deployments.
+author: joeloff
+ms.date: 08/11/2026
 ---
 
 # dnim layout
@@ -32,29 +30,17 @@ The command creates or updates a cache used for offline deployments inside netwo
 
 ## Options
 
-- **`-a|--accept-license`**
+- [!INCLUDE [accept-license](includes/dnim-cli-accept-license.md)]
 
-Automatically accept the license agreement. On first run, the user will be prompted to accept the license. The command will fail if the verbosity is set to `quiet` and the tool is executed for the first time. Administrators should include this option when deploying DNIM across their network.
+- [!INCLUDE [include-installers](includes/dnim-cli-include-installers.md)]
 
-- **`--include-installers`**
+- [!INCLUDE [include-previews](includes/dnim-cli-include-previews.md)]
 
-Download installation packages when creating or updating a layout.
+- [!INCLUDE [log-file](includes/dnim-cli-log-file.md)]
 
-- **`--include-previews`**
+- [!INCLUDE [latest](includes/dnim-cli-latest.md)]
 
-Include preview versions when downloading installation packages.
-
-- **`-l|--log-file <LOG_FILE>`**
-
-Specify the path of the log file. By default, DNIM creates a timestamped log file in the user's temporary directory.
-
-- **`--latest`**
-
-Include only the latest release of each product.
-
-- **`-v|--verbosity <quiet|normal|diagnostic>`**
-
-Set the console output verbosity. Log files always contain diagnostic output. The default value is `normal`.
+- [!INCLUDE [verbosity](includes/dnim-cli-verbosity.md)]
 
 ## Examples
 
@@ -69,3 +55,5 @@ Set the console output verbosity. Log files always contain diagnostic output. Th
   ```console
   dnim-win-[x86|x64|arm64] layout C:\dnim\layout --include-installers --latest
   ```
+
+## See also

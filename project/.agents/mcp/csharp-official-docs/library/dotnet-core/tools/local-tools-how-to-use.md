@@ -1,21 +1,19 @@
 ---
 title: "Tutorial: Install and use .NET local tools"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/local-tools-how-to-use.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to install and use a .NET tool as a local tool.
+ms.topic: tutorial
+ms.date: 04/08/2026
 ---
 
 # Tutorial: Install and use a .NET local tool using the .NET CLI
 
 **This article applies to:** ✔️ .NET 8 SDK and later versions
 
-This tutorial teaches you how to install and use a local tool. You use a tool that you create in the first tutorial of this series.
+This tutorial teaches you how to install and use a local tool. You use a tool that you create in the [first tutorial of this series](global-tools-how-to-create.md).
 
 ## Prerequisites
 
-* Complete the first tutorial of this series.
+* Complete the [first tutorial of this series](global-tools-how-to-create.md).
 * .NET 10.0.100 SDK or later (for `dnx`) - optional but recommended.
 
 ## Create a manifest file
@@ -28,7 +26,7 @@ From the *dotnet-env* folder, navigate up one level to the *repository* folder:
 cd ..
 ```
 
-Create a manifest file by running the dotnet new command:
+Create a manifest file by running the [dotnet new](dotnet-new.md) command:
 
 ```dotnetcli
 dotnet new tool-manifest
@@ -98,7 +96,7 @@ Once installed as a local tool, you can invoke it in multiple ways:
    dnx dotnet-env --add-source ./nupkg
    ```
 
-   > **Note:**
+   > [!NOTE]
    > When using dnx with a local tool manifest, it automatically uses the version specified in the manifest.
 
 - Using `dotnet dotnet-env`:
@@ -182,7 +180,7 @@ You typically install a local tool in the root directory of the repository. Afte
 
 ## Update a local tool
 
-The installed version of local tool `dotnetsay` is 2.1.3.  Use the dotnet tool update command to update the tool to the latest version.
+The installed version of local tool `dotnetsay` is 2.1.3.  Use the [dotnet tool update](dotnet-tool-update.md) command to update the tool to the latest version.
 
 ```dotnetcli
 dotnet tool update dotnetsay
@@ -199,7 +197,7 @@ The update command finds the first manifest file that contains the package ID an
 
 ## Remove local tools
 
-Remove the installed tools by running the dotnet tool uninstall command:
+Remove the installed tools by running the [dotnet tool uninstall](dotnet-tool-uninstall.md) command:
 
 ```dotnetcli
 dotnet tool uninstall dotnet-env
@@ -211,8 +209,8 @@ dotnet tool uninstall dotnetsay
 
 ## Troubleshoot
 
-If you get an error message while following the tutorial, see Troubleshoot .NET tool usage issues.
+If you get an error message while following the tutorial, see [Troubleshoot .NET tool usage issues](troubleshoot-usage-issues.md).
 
 ## See also
 
-For more information, see .NET tools.
+For more information, see [.NET tools](global-tools.md).

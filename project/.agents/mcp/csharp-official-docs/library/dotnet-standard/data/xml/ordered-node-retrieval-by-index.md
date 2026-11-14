@@ -1,27 +1,27 @@
 ---
+description: "Learn more about: Ordered Node Retrieval by Index"
 title: "Ordered Node Retrieval by Index"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/ordered-node-retrieval-by-index.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs: 
+  - "csharp"
+  - "vb"
+ms.assetid: 5412c90f-2703-4aa8-a9c4-1b8a35183c37
 ---
-
 # Ordered Node Retrieval by Index
 
-The World Wide Web Consortium (W3C) XML Document Object Model (DOM) also describes a NodeList, which has the ability to handle an ordered list of nodes, as opposed to the unordered set handled by the **XmlNamedNodeMap**. The NodeList in the Microsoft .NET Framework is called **XmlNodeList**. Methods and properties that return an **XmlNodeList** are:
-
-- XmlNode.ChildNodes
-
-- XmlDocument.GetElementsByTagName
-
-- XmlElement.GetElementsByTagName
-
-- XmlNode.SelectNodes
-
- The **XmlNodeList** has a **Count** property that can be used to write loops to iterate over the nodes in the **XmlNodeList**, as shown in the following code sample:
-
-```vb
+The World Wide Web Consortium (W3C) XML Document Object Model (DOM) also describes a NodeList, which has the ability to handle an ordered list of nodes, as opposed to the unordered set handled by the **XmlNamedNodeMap**. The NodeList in the Microsoft .NET Framework is called **XmlNodeList**. Methods and properties that return an **XmlNodeList** are:  
+  
+- XmlNode.ChildNodes  
+  
+- XmlDocument.GetElementsByTagName  
+  
+- XmlElement.GetElementsByTagName  
+  
+- XmlNode.SelectNodes  
+  
+ The **XmlNodeList** has a **Count** property that can be used to write loops to iterate over the nodes in the **XmlNodeList**, as shown in the following code sample:  
+  
+```vb  
 Dim doc as XmlDocument = new XmlDocument()  
    doc.Load("books.xml")  
   
@@ -34,8 +34,8 @@ Dim doc as XmlDocument = new XmlDocument()
         Console.WriteLine(elemList.ItemOf(i).InnerXml)  
     next  
 ```  
-
-```csharp
+  
+```csharp  
 XmlDocument doc = new XmlDocument();  
 doc.Load("books.xml");  
 // Retrieve all book titles.  
@@ -47,10 +47,10 @@ for (int i=0; i < elemList.Count; i++)
    Console.WriteLine(elemList[i].InnerXml);  
 }
 ```  
-
- In addition to the **Count** property, there is a **GetEnumerator** method that provides a, `foreach` style iteration over the collection of nodes in the **XmlNodeList**. The following code example shows the use of the `foreach` statement.
-
-```vb
+  
+ In addition to the **Count** property, there is a **GetEnumerator** method that provides a, `foreach` style iteration over the collection of nodes in the **XmlNodeList**. The following code example shows the use of the `foreach` statement.  
+  
+```vb  
 Dim doc As New XmlDocument()  
 doc.Load("books.xml")  
   
@@ -65,8 +65,8 @@ While ienum.MoveNext()
     Console.WriteLine(title.InnerText)  
 End While  
 ```  
-
-```csharp
+  
+```csharp  
 {  
      XmlDocument doc = new XmlDocument();  
      doc.Load("books.xml");  
@@ -84,9 +84,9 @@ End While
      }  
   }  
 ```  
-
- For more information on the methods and properties available on the **XmlNodeList**, see `System.Xml.XmlNodeList`.
-
+  
+ For more information on the methods and properties available on the **XmlNodeList**, see <xref:System.Xml.XmlNodeList>.  
+  
 ## See also
 
-- XML Document Object Model (DOM)
+- [XML Document Object Model (DOM)](xml-document-object-model-dom.md)

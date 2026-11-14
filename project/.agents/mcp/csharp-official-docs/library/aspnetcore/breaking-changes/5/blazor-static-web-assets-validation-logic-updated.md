@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: Blazor: Updated validation logic for static web assets"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/5/blazor-static-web-assets-validation-logic-updated.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 5.0 titled Blazor: Updated validation logic for static web assets"
+ms.date: 10/01/2020
+ms.custom: https://github.com/aspnet/Announcements/issues/443
 ---
-
 # Blazor: Updated validation logic for static web assets
 
 There was an issue in conflict validation for static web assets in ASP.NET Core 3.1 and Blazor WebAssembly 3.2. The issue:
@@ -43,3 +40,15 @@ To use the RCL's file or the Blazor WebAssembly app's file instead of the host p
 ## Affected APIs
 
 None
+
+<!--
+
+### Category
+
+ASP.NET Core
+
+### Affected APIs
+
+Not detectable via API analysis
+
+-->

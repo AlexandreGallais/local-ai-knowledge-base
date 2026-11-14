@@ -1,24 +1,20 @@
 ---
-title: "Upgrade Assistant Telemetry"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/upgrade-assistant-telemetry.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Upgrade Assistant Telemetry
+description: Learn about telemetry collected by the Upgrade Assistant.
+author: tasou
+ms.date: 03/19/2026
 ---
-
 # Upgrade Assistant telemetry
 
-The Upgrade Assistant includes a telemetry feature that collects usage data. The telemetry data is used to help understand how to make improvements to the tool.
+The [Upgrade Assistant](./upgrade-assistant-overview.md) includes a telemetry feature that collects usage data. The telemetry data is used to help understand how to make improvements to the tool.
 
-> **Important:**
-> .NET Upgrade Assistant is officially deprecated. Use the GitHub Copilot modernization chat agent instead, which is included with Visual Studio 2026 and Visual Studio 2022 17.14.16 or later. This agent analyzes your projects and dependencies, produces a step-by-step migration plan with targeted recommendations and automated code fixes, and commits each change so you can validate or roll back. It automates common porting tasks—updating project files, replacing deprecated APIs, and resolving build issues—so you can modernize faster with less manual effort.
+[!INCLUDE [github-copilot-suggestion](includes/github-copilot-suggestion.md)]
 
 ## How to opt out
 
 The Upgrade Assistant telemetry feature is enabled by default. To opt out of the telemetry feature, set the `DOTNET_UPGRADEASSISTANT_TELEMETRY_OPTOUT` environment variable to `1` or `true`.
 
-### Console
+### [Console](#tab/console)
 
 Create and assign persisted environment variable, given the value.
 
@@ -34,7 +30,7 @@ In a new instance of the **Command Prompt**, read the environment variable.
 echo %DOTNET_UPGRADEASSISTANT_TELEMETRY_OPTOUT%
 ```
 
-### PowerShell
+### [PowerShell](#tab/powershell)
 
 Create and assign persisted environment variable, given the value.
 
@@ -50,18 +46,18 @@ In a new instance of the **Windows PowerShell**, read the environment variable.
 [System.Environment]::GetEnvironmentVariable('DOTNET_UPGRADEASSISTANT_TELEMETRY_OPTOUT')
 ```
 
-### Bash
+### [Bash](#tab/bash)
 
 Create and assign persisted environment variable, given the value.
 
-```bash
+```Bash
 # Assigns the env var to the value
 echo export DOTNET_UPGRADEASSISTANT_TELEMETRY_OPTOUT="1" >> /etc/environment && source /etc/environment
 ```
 
 In a new instance of the **Bash**, read the environment variable.
 
-```bash
+```Bash
 # Prints the env var value
 echo "${DOTNET_UPGRADEASSISTANT_TELEMETRY_OPTOUT}"
 
@@ -93,8 +89,8 @@ The data is sent securely to Microsoft servers and held under restricted access.
 
 Protecting your privacy is important to us. If you suspect the telemetry feature is collecting sensitive data or the data is being insecurely or inappropriately handled, take one of the following actions:
 
-* File an issue in the dotnet/upgrade-assistant repository.
-* Send an email to user@example.com for investigation.
+* File an issue in the [dotnet/upgrade-assistant](https://github.com/dotnet/upgrade-assistant/issues) repository.
+* Send an email to [dotnet@microsoft.com](mailto:dotnet@microsoft.com) for investigation.
 
 The telemetry feature collects the following data.
 
@@ -118,5 +114,5 @@ The telemetry feature collects the following data.
 
 ## Additional resources
 
-* .NET SDK telemetry
-* .NET CLI telemetry data
+* [.NET SDK telemetry](../tools/telemetry.md)
+* [.NET CLI telemetry data](https://dotnet.microsoft.com/platform/telemetry)

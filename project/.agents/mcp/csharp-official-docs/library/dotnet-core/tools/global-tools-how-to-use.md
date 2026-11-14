@@ -1,26 +1,24 @@
 ---
 title: "Tutorial: Install and use a .NET global tool"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/global-tools-how-to-use.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to install and use a .NET tool as a global tool.
+ms.topic: tutorial
+ms.date: 04/24/2026
 ---
 
 # Tutorial: Install and use a .NET global tool using the .NET CLI
 
 **This article applies to:** ✔️ .NET 8 SDK and later versions
 
-This tutorial shows you how to install and use a global tool. The tool you use is the one you create in the first tutorial of this series.
+This tutorial shows you how to install and use a global tool. The tool you use is the one you create in the [first tutorial of this series](global-tools-how-to-create.md).
 
 ## Prerequisites
 
-* Complete the first tutorial of this series.
+* Complete the [first tutorial of this series](global-tools-how-to-create.md).
 * .NET 10.0.100 SDK or later (for `dnx`) - optional but recommended.
 
 ## Run the tool without installation (recommended)
 
-Starting with .NET 10.0.100, you can run .NET tools without permanent installation using `dnx`:
+Starting with .NET 10.0.100, you can run .NET tools without permanent installation using [`dnx`](dotnet-tool-exec.md):
 
 1. Run the tool directly using dnx (simplified syntax):
 
@@ -34,7 +32,7 @@ Starting with .NET 10.0.100, you can run .NET tools without permanent installati
 
 If you prefer permanent installation for frequent use:
 
-1. Install the tool from the package by running the dotnet tool install command in the *dotnet-env* project folder:
+1. Install the tool from the package by running the [dotnet tool install](dotnet-tool-install.md) command in the *dotnet-env* project folder:
 
    ```dotnetcli
    dotnet tool install --global --add-source ./nupkg dotnet-env
@@ -51,8 +49,7 @@ If you prefer permanent installation for frequent use:
    Tool 'dotnet-env' (version '1.0.0') was successfully installed.
    ```
 
-   > **Note:**
-> By default the architecture of the .NET binaries to install represents the currently running OS architecture. To specify a different OS architecture, see dotnet tool install, --arch option.
+   [!INCLUDE[](includes/dotnet-tool-install-arch-options.md)]
 
 1. Invoke the tool:
 
@@ -60,10 +57,10 @@ If you prefer permanent installation for frequent use:
    dotnet-env
    ```
 
-   > **Note:**
+   > [!NOTE]
    > If the command fails, open a new terminal to refresh the `PATH` environment variable.
 
-1. Remove the tool by running the dotnet tool uninstall command:
+1. Remove the tool by running the [dotnet tool uninstall](dotnet-tool-uninstall.md) command:
 
    ```dotnetcli
    dotnet tool uninstall -g dotnet-env
@@ -108,7 +105,7 @@ If you prefer permanent installation for frequent use:
    ~/bin/dotnet-env
    ```
 
-1. Remove the tool by running the dotnet tool uninstall command:
+1. Remove the tool by running the [dotnet tool uninstall](dotnet-tool-uninstall.md) command:
 
    On Windows:
 
@@ -124,10 +121,11 @@ If you prefer permanent installation for frequent use:
 
 ## Troubleshoot
 
-If you get an error message while following the tutorial, see Troubleshoot .NET tool usage issues.
+If you get an error message while following the tutorial, see [Troubleshoot .NET tool usage issues](troubleshoot-usage-issues.md).
 
 ## Next steps
 
-In this tutorial, you installed and used a tool as a global tool. For more information on installing and using global tools, see Managing global tools. To install and use the same tool as a local tool, advance to the next tutorial.
+In this tutorial, you installed and used a tool as a global tool. For more information on installing and using global tools, see [Managing global tools](global-tools.md). To install and use the same tool as a local tool, advance to the next tutorial.
 
-> Install and use local tools
+> [!div class="nextstepaction"]
+> [Install and use local tools](local-tools-how-to-use.md)

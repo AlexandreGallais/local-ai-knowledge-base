@@ -1,23 +1,14 @@
----
-title: "Troubleshooting"
-tool: "vite"
-version: "8.3"
-source: "https://github.com/vitejs/vite/blob/b39e6e63dcbfc3cf4be871acf3554efbd6d0e268/docs/guide/troubleshooting.md"
-commit: "b39e6e63dcbfc3cf4be871acf3554efbd6d0e268"
-license: "MIT"
----
-
 # Troubleshooting
 
-See Rollup's troubleshooting guide for more information too.
+See [Rollup's troubleshooting guide](https://rollupjs.org/troubleshooting/) for more information too.
 
-If the suggestions here don't work, please try posting questions on GitHub Discussions or in the `#help` channel of Vite Land Discord.
+If the suggestions here don't work, please try posting questions on [GitHub Discussions](https://github.com/vitejs/vite/discussions) or in the `#help` channel of [Vite Land Discord](https://chat.vite.dev).
 
 ## CLI
 
 ### `Error: Cannot find module 'C:\foo\bar&baz\vite\bin\vite.js'`
 
-The path to your project folder may include `&`, which doesn't work with `npm` on Windows (npm/cmd-shim#45).
+The path to your project folder may include `&`, which doesn't work with `npm` on Windows ([npm/cmd-shim#45](https://github.com/npm/cmd-shim/issues/45)).
 
 You will need to either:
 
@@ -35,9 +26,9 @@ When importing an ESM only package by `require`, the following error happens.
 > Error [ERR_REQUIRE_ESM]: require() of ES Module /path/to/dependency.js from /path/to/vite.config.js not supported.
 > Instead change the require of index.js in /path/to/vite.config.js to a dynamic import() which is available in all CommonJS modules.
 
-In Node.js <=22, ESM files cannot be loaded by `require` by default.
+In Node.js <=22, ESM files cannot be loaded by [`require`](https://nodejs.org/docs/latest-v22.x/api/esm.html#require) by default.
 
-While it may work using `--experimental-require-module`, or Node.js >22, or in other runtimes, we still recommend converting your config to ESM by either:
+While it may work using [`--experimental-require-module`](https://nodejs.org/docs/latest-v22.x/api/modules.html#loading-ecmascript-modules-using-require), or Node.js >22, or in other runtimes, we still recommend converting your config to ESM by either:
 
 - adding `"type": "module"` to the nearest `package.json`
 - renaming `vite.config.js`/`vite.config.ts` to `vite.config.mjs`/`vite.config.mts`
@@ -81,7 +72,7 @@ For Ubuntu Linux, you may need to add the line `* - nofile 65536` to the file `/
 Note that these settings persist but a **restart is required**.
 
 Alternatively, if the server is running inside a VS Code devcontainer, the request may appear to be stalled. To fix this issue, see
-Dev Containers / VS Code Port Forwarding.
+[Dev Containers / VS Code Port Forwarding](#dev-containers-vs-code-port-forwarding).
 
 ### Vite crashes with ENOSPC error
 
@@ -105,8 +96,8 @@ To solve this, you can:
   $ sudo sysctl -p
   ```
 
-- Exclude directories with many files from file watching using `server.watch.ignored`
-- Use polling instead of file system events with `server.watch.usePolling`. Note that polling uses more CPU resources
+- Exclude directories with many files from file watching using [`server.watch.ignored`](/config/server-options#server-watch)
+- Use polling instead of file system events with [`server.watch.usePolling`](/config/server-options#server-watch). Note that polling uses more CPU resources
 
 ### Network requests stop loading
 
@@ -114,7 +105,7 @@ When using a self-signed SSL certificate, Chrome ignores all caching directives 
 
 To resolve the problem use a trusted SSL cert.
 
-See: Chrome issue
+See: [Chrome issue](https://bugs.chromium.org/p/chromium/issues/detail?id=110649#c8)
 
 #### macOS
 
@@ -132,17 +123,17 @@ When the server / WebSocket server receives a large HTTP header, the request wil
 
 > Server responded with status code 431. See https://vite.dev/guide/troubleshooting.html#_431-request-header-fields-too-large.
 
-This is because Node.js limits request header size to mitigate CVE-2018-12121.
+This is because Node.js limits request header size to mitigate [CVE-2018-12121](https://www.cve.org/CVERecord?id=CVE-2018-12121).
 
-To avoid this, try to reduce your request header size. For example, if the cookie is long, delete it. Or you can use `--max-http-header-size` to change max header size.
+To avoid this, try to reduce your request header size. For example, if the cookie is long, delete it. Or you can use [`--max-http-header-size`](https://nodejs.org/api/cli.html#--max-http-header-sizesize) to change max header size.
 
 ### Dev Containers / VS Code Port Forwarding
 
-If you are using a Dev Container or port forwarding feature in VS Code, you may need to set the `server.host` option to `127.0.0.1` in the config to make it work.
+If you are using a Dev Container or port forwarding feature in VS Code, you may need to set the [`server.host`](/config/server-options.md#server-host) option to `127.0.0.1` in the config to make it work.
 
-This is because the port forwarding feature in VS Code does not support IPv6.
+This is because [the port forwarding feature in VS Code does not support IPv6](https://github.com/microsoft/vscode-remote-release/issues/7029).
 
-See #16522 for more details.
+See [#16522](https://github.com/vitejs/vite/issues/16522) for more details.
 
 ### Illegal operation error when watching files
 
@@ -156,7 +147,7 @@ Error: EISDIR: illegal operation on a directory, watch 'C:/Users/me/project/vite
 
 For example, this can happen with a VirtualBox shared folder.
 
-To solve this, you can enable `server.watch.usePolling`. Note that `usePolling` leads to high CPU utilization.
+To solve this, you can enable [`server.watch.usePolling`](/config/server-options#server-watch). Note that [`usePolling` leads to high CPU utilization](https://github.com/paulmillr/chokidar/tree/3.6.0#performance).
 
 ## HMR
 
@@ -168,11 +159,11 @@ You may be importing a file with a different case. For example, `src/foo.js` exi
 import './Foo.js' // should be './foo.js'
 ```
 
-Related issue: #964
+Related issue: [#964](https://github.com/vitejs/vite/issues/964)
 
 ### Vite does not detect a file change
 
-If you are running Vite with WSL2, Vite cannot watch file changes in some conditions. See `server.watch` option.
+If you are running Vite with WSL2, Vite cannot watch file changes in some conditions. See [`server.watch` option](/config/server-options.md#server-watch).
 
 ### A full reload happens instead of HMR
 
@@ -190,7 +181,7 @@ If the HTML file output was opened with `file` protocol, the scripts won't run w
 
 > Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at file:///foo/bar.js. (Reason: CORS request not http).
 
-See Reason: CORS request not HTTP - HTTP | MDN for more information about why this happens.
+See [Reason: CORS request not HTTP - HTTP | MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors/CORSRequestNotHttp) for more information about why this happens.
 
 You will need to access the file with `http` protocol. The easiest way to achieve this is to run `npx vite preview`.
 
@@ -223,27 +214,27 @@ To resolve this, you can:
 - **Keep old chunks temporarily**: Consider keeping the previous deployment's chunks for a period to allow cached users to transition smoothly.
 - **Use a service worker**: Implement a service worker that will prefetch all the assets and cache them.
 - **Prefetch the dynamic chunks**: Note that this does not help if your HTML file is cached by the browser due to `Cache-Control` headers.
-- **Implement a graceful fallback**: Implement error handling for dynamic imports to reload the page when chunks are missing. See Load Error Handling for more details.
+- **Implement a graceful fallback**: Implement error handling for dynamic imports to reload the page when chunks are missing. See [Load Error Handling](./build.md#load-error-handling) for more details.
 
 #### Poor network conditions
 
 This error may occur in unstable network environments. For example, when the request fails due to network errors or server downtime.
 
-Browsers that support retriable module loading do not cache network and HTTP errors in the module map. In these browsers, your application or framework can retry the original dynamic import. Older browsers cache the failure, so reloading the page remains the fallback.
+Browsers that support [retriable module loading](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import#browser_compatibility) do not cache network and HTTP errors in the module map. In these browsers, your application or framework can retry the original dynamic import. Older browsers cache the failure, so reloading the page remains the fallback.
 
-Retrying also does not fix version skew when a chunk has been permanently removed by a deployment.
+Retrying also does not fix [version skew](#version-skew) when a chunk has been permanently removed by a deployment.
 
 #### Browser extensions blocking requests
 
 The error may also occur if the browser extensions (like ad-blockers) are blocking that request.
 
-It might be possible to work around by selecting a different chunk name by `build.rolldownOptions.output.chunkFileNames`, as these extensions often block requests based on file names (e.g. names containing `ad`, `track`).
+It might be possible to work around by selecting a different chunk name by [`build.rolldownOptions.output.chunkFileNames`](../config/build-options.md#build-rolldownoptions), as these extensions often block requests based on file names (e.g. names containing `ad`, `track`).
 
 ## Optimized Dependencies
 
 ### Outdated pre-bundled deps when linking to a local package
 
-The hash key used to invalidate optimized dependencies depends on the package lock contents, the patches applied to dependencies, and the options in the Vite config file that affects the bundling of node modules. This means that Vite will detect when a dependency is overridden using a feature as npm overrides, and re-bundle your dependencies on the next server start. Vite won't invalidate the dependencies when you use a feature like npm link. In case you link or unlink a dependency, you'll need to force re-optimization on the next server start by using `vite --force`. We recommend using overrides instead, which are supported now by every package manager (see also pnpm overrides and yarn resolutions).
+The hash key used to invalidate optimized dependencies depends on the package lock contents, the patches applied to dependencies, and the options in the Vite config file that affects the bundling of node modules. This means that Vite will detect when a dependency is overridden using a feature as [npm overrides](https://docs.npmjs.com/cli/v9/configuring-npm/package-json#overrides), and re-bundle your dependencies on the next server start. Vite won't invalidate the dependencies when you use a feature like [npm link](https://docs.npmjs.com/cli/v9/commands/npm-link). In case you link or unlink a dependency, you'll need to force re-optimization on the next server start by using `vite --force`. We recommend using overrides instead, which are supported now by every package manager (see also [pnpm overrides](https://pnpm.io/settings#overrides) and [yarn resolutions](https://yarnpkg.com/configuration/manifest/#resolutions)).
 
 ## Performance Bottlenecks
 
@@ -251,20 +242,23 @@ If you suffer any application performance bottlenecks resulting in slow load tim
 
 ::: code-group
 
-```bash
+```bash [dev server]
 vite --profile --open
 ```
 
-```bash
+```bash [build]
 vite build --profile
 ```
 
-**Vite Dev Server**
+:::
+
+::: tip Vite Dev Server
 Once your application is opened in the browser, just await finish loading it and then go back to the terminal and press `p` key (will stop the Node.js inspector) then press `q` key to stop the dev server.
+:::
 
 Node.js inspector will generate `vite-profile-0.cpuprofile` in the root folder. You can pass `--profile <name>` (or `--profile=<name>`) to write `<name>.cpuprofile` instead. Go to https://www.speedscope.app/, and upload the CPU profile using the `BROWSE` button to inspect the result.
 
-You can install vite-plugin-inspect, which lets you inspect the intermediate state of Vite plugins and can also help you to identify which plugins or middlewares are the bottleneck in your applications. The plugin can be used in both dev and build modes. Check the readme file for more details.
+You can install [vite-plugin-inspect](https://github.com/antfu/vite-plugin-inspect), which lets you inspect the intermediate state of Vite plugins and can also help you to identify which plugins or middlewares are the bottleneck in your applications. The plugin can be used in both dev and build modes. Check the readme file for more details.
 
 ## Others
 
@@ -280,7 +274,7 @@ We recommend avoiding Node.js modules for browser code to reduce the bundle size
 
 ### Syntax Error / Type Error happens
 
-Vite cannot handle and does not support code that only runs on non-strict mode (sloppy mode). This is because Vite uses ESM and it is always strict mode inside ESM.
+Vite cannot handle and does not support code that only runs on non-strict mode (sloppy mode). This is because Vite uses ESM and it is always [strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) inside ESM.
 
 For example, you might see these errors.
 
@@ -288,7 +282,7 @@ For example, you might see these errors.
 
 > TypeError: Cannot create property 'foo' on boolean 'false'
 
-If these codes are used inside dependencies, you could use `patch-package` (or `yarn patch` or `pnpm patch`) for an escape hatch.
+If these codes are used inside dependencies, you could use [`patch-package`](https://github.com/ds300/patch-package) (or [`yarn patch`](https://yarnpkg.com/cli/patch) or [`pnpm patch`](https://pnpm.io/cli/patch)) for an escape hatch.
 
 ### Browser extensions
 
@@ -307,7 +301,7 @@ An example of cross drive links are:
 - a virtual drive linked to a folder by `subst` command
 - a symlink/junction to a different drive by `mklink` command (e.g. Yarn global cache)
 
-Related issue: #10802
+Related issue: [#10802](https://github.com/vitejs/vite/issues/10802)
 
 ### Default import unexpectedly returns an object
 
@@ -319,4 +313,19 @@ This may cause errors like:
 
 > foo is not a function
 
-See Rolldown's docs about this problem for more details: Ambiguous `default` import from CJS modules - Bundling CJS | Rolldown.
+See Rolldown's docs about this problem for more details: [Ambiguous `default` import from CJS modules - Bundling CJS | Rolldown](https://rolldown.rs/in-depth/bundling-cjs#ambiguous-default-import-from-cjs-modules).
+
+<script setup lang="ts">
+// redirect old links with hash to old version docs
+if (typeof window !== "undefined") {
+  const hashForOldVersion = {
+    'vite-cjs-node-api-deprecated': 6
+  }
+
+  const version = hashForOldVersion[location.hash.slice(1)]
+  if (version) {
+    // update the scheme and the port as well so that it works in local preview (it is http and 4173 locally)
+    location.href = `https://v${version}.vite.dev` + location.pathname + location.search + location.hash
+  }
+}
+</script>

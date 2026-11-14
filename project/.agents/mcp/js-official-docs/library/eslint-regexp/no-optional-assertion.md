@@ -1,15 +1,15 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/no-optional-assertion"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/no-optional-assertion.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "disallow optional assertions"
+since: "v0.9.0"
 ---
-
 # regexp/no-optional-assertion
 
 💼 This rule is enabled in the following configs: 🟢 `flat/recommended`, 🔵 `recommended`.
+
+<!-- end auto-generated rule header -->
 
 > disallow optional assertions
 
@@ -51,11 +51,14 @@ Nothing.
 This rule was taken from [eslint-plugin-clean-regex].\
 This rule is compatible with [clean-regex/no-optional-assertion] rule.
 
+[eslint-plugin-clean-regex]: https://github.com/RunDevelopment/eslint-plugin-clean-regex
+[clean-regex/no-optional-assertion]: https://github.com/RunDevelopment/eslint-plugin-clean-regex/blob/master/docs/rules/no-optional-assertion.md
+
 ## :rocket: Version
 
 This rule was introduced in eslint-plugin-regexp v0.9.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/no-optional-assertion.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/no-optional-assertion.ts)

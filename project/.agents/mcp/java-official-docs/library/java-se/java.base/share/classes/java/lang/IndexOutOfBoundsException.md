@@ -1,12 +1,3 @@
----
-title: "IndexOutOfBoundsException class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/IndexOutOfBoundsException.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # IndexOutOfBoundsException class (java.lang)
 
 ```java
@@ -15,10 +6,11 @@ public class IndexOutOfBoundsException extends RuntimeException
 
 Thrown to indicate that an index of some sort (such as to an array, to a
 string, or to a vector) is out of range.
-
+<p>
 Applications can subclass this class to indicate similar exceptions.
 
-**Since:** 1.0
+@author Frank Yellin
+@since 1.0
 
 ## IndexOutOfBoundsException.IndexOutOfBoundsException()
 
@@ -26,7 +18,7 @@ Applications can subclass this class to indicate similar exceptions.
 public IndexOutOfBoundsException()
 ```
 
-Constructs an `IndexOutOfBoundsException` with no detail message.
+Constructs an {@code IndexOutOfBoundsException} with no detail message.
 
 ## IndexOutOfBoundsException.IndexOutOfBoundsException(String)
 
@@ -34,12 +26,10 @@ Constructs an `IndexOutOfBoundsException` with no detail message.
 public IndexOutOfBoundsException(String s)
 ```
 
-Constructs an `IndexOutOfBoundsException` with the specified detail
+Constructs an {@code IndexOutOfBoundsException} with the specified detail
 message.
 
-Parameters:
-
-- `s`: the detail message
+@param s the detail message
 
 ## IndexOutOfBoundsException.IndexOutOfBoundsException(int)
 
@@ -47,17 +37,14 @@ Parameters:
 public IndexOutOfBoundsException(int index)
 ```
 
-Constructs a new `IndexOutOfBoundsException` class with an
+Constructs a new {@code IndexOutOfBoundsException} class with an
 argument indicating the illegal index.
 
-The index is included in this exception's detail message.  The
+<p>The index is included in this exception's detail message.  The
 exact presentation format of the detail message is unspecified.
 
-Parameters:
-
-- `index`: the illegal index.
-
-**Since:** 9
+@param index the illegal index.
+@since 9
 
 ## IndexOutOfBoundsException.IndexOutOfBoundsException(long)
 
@@ -65,14 +52,11 @@ Parameters:
 public IndexOutOfBoundsException(long index)
 ```
 
-Constructs a new `IndexOutOfBoundsException` class with an
+Constructs a new {@code IndexOutOfBoundsException} class with an
 argument indicating the illegal index.
 
-The index is included in this exception's detail message.  The
+<p>The index is included in this exception's detail message.  The
 exact presentation format of the detail message is unspecified.
 
-Parameters:
-
-- `index`: the illegal index.
-
-**Since:** 16
+@param index the illegal index.
+@since 16

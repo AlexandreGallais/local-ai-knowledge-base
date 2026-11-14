@@ -1,13 +1,6 @@
----
-title: "ch07-02-defining-modules-to-control-scope-and-privacy"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch07-02-defining-modules-to-control-scope-and-privacy.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
+<!-- Old headings. Do not remove or links may break. -->
 
-# ch07-02-defining-modules-to-control-scope-and-privacy
+<a id="defining-modules-to-control-scope-and-privacy"></a>
 
 ## Control Scope and Privacy with Modules
 
@@ -74,34 +67,30 @@ backyard
 
 The crate root file in this case is _src/main.rs_, and it contains:
 
-**Listing** (src/main.rs)
+<Listing file-name="src/main.rs">
 
-```rust
-use crate::garden::vegetables::Asparagus;
-
-pub mod garden;
-
-fn main() {
-    let plant = Asparagus {};
-    println!("I'm growing {plant:?}!");
-}
+```rust,noplayground,ignore
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/main.rs}}
 ```
+
+</Listing>
 
 The `pub mod garden;` line tells the compiler to include the code it finds in
 _src/garden.rs_, which is:
 
-**Listing** (src/garden.rs)
+<Listing file-name="src/garden.rs">
 
-```rust
-pub mod vegetables;
+```rust,noplayground,ignore
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/garden.rs}}
 ```
+
+</Listing>
 
 Here, `pub mod vegetables;` means the code in _src/garden/vegetables.rs_ is
 included too. That code is:
 
-```rust
-#[derive(Debug)]
-pub struct Asparagus {}
+```rust,noplayground,ignore
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/quick-reference-example/src/garden/vegetables.rs}}
 ```
 
 Now let’s get into the details of these rules and demonstrate them in action!
@@ -133,25 +122,13 @@ restaurant --lib`. Then, enter the code in Listing 7-1 into _src/lib.rs_ to
 define some modules and function signatures; this code is the front of house
 section.
 
-**Listing 7-1: A `front_of_house` module containing other modules that then contain functions** (src/lib.rs)
+<Listing number="7-1" file-name="src/lib.rs" caption="A `front_of_house` module containing other modules that then contain functions">
 
-```rust
-mod front_of_house {
-    mod hosting {
-        fn add_to_waitlist() {}
-
-        fn seat_at_table() {}
-    }
-
-    mod serving {
-        fn take_order() {}
-
-        fn serve_order() {}
-
-        fn take_payment() {}
-    }
-}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-01/src/lib.rs}}
 ```
+
+</Listing>
 
 We define a module with the `mod` keyword followed by the name of the module
 (in this case, `front_of_house`). The body of the module then goes inside curly
@@ -173,7 +150,7 @@ known as the _module tree_.
 
 Listing 7-2 shows the module tree for the structure in Listing 7-1.
 
-**Listing 7-2: The module tree for the code in Listing 7-1**
+<Listing number="7-2" caption="The module tree for the code in Listing 7-1">
 
 ```text
 crate
@@ -186,6 +163,8 @@ crate
          ├── serve_order
          └── take_payment
 ```
+
+</Listing>
 
 This tree shows how some of the modules nest inside other modules; for example,
 `hosting` nests inside `front_of_house`. The tree also shows that some modules

@@ -1,28 +1,15 @@
----
-title: "Manage marked text with custom IDs"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/i18n/manage-marked-text.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Manage marked text with custom IDs
 
 The Angular extractor generates a file with a translation unit entry each of the following instances.
 
 - Each `i18n` attribute in a component template
-- Each `$localize` tagged message string in component code
+- Each [`$localize`][ApiLocalizeInitLocalize] tagged message string in component code
 
-As described in How meanings control text extraction and merges, Angular assigns each translation unit a unique ID.
+As described in [How meanings control text extraction and merges][GuideI18nCommonPrepareHowMeaningsControlTextExtractionAndMerges], Angular assigns each translation unit a unique ID.
 
 The following example displays translation units with unique IDs.
 
-File: `messages.fr.xlf`
-
-```
-<trans-unit id="ba0cc104d3d69bf669f97b8d96a4c5d8d9559aa3" datatype="html">
-```
+<docs-code header="messages.fr.xlf" path="adev/src/content/examples/i18n/doc-files/messages.fr.xlf" region="generated-id"/>
 
 When you change the translatable text, the extractor generates a new ID for that translation unit.
 In most cases, changes in the source text also require a change to the translation.
@@ -34,14 +21,10 @@ Most developers don't need to use a custom ID.
 If you want to use a unique syntax to convey additional metadata, use a custom ID.
 Additional metadata may include the library, component, or area of the application in which the text appears.
 
-To specify a custom ID in the `i18n` attribute or `$localize` tagged message string, use the `@@` prefix.
+To specify a custom ID in the `i18n` attribute or [`$localize`][ApiLocalizeInitLocalize] tagged message string, use the `@@` prefix.
 The following example defines the `introductionHeader` custom ID in a heading element.
 
-File: `app.component.html`
-
-```html
-<h1 i18n="@@introductionHeader">Hello i18n!</h1>
-```
+<docs-code header="app.component.html" path="adev/src/content/examples/i18n/doc-files/app.component.html" region="i18n-attribute-solo-id"/>
 
 The following example defines the `introductionHeader` custom ID for a variable.
 
@@ -51,11 +34,7 @@ variableText1 = $localize`:@@introductionHeader:Hello i18n!`;
 
 When you specify a custom ID, the extractor generates a translation unit with the custom ID.
 
-File: `messages.fr.xlf`
-
-```
-<trans-unit id="introductionHeader" datatype="html">
-```
+<docs-code header="messages.fr.xlf" path="adev/src/content/examples/i18n/doc-files/messages.fr.xlf" region="custom-id"/>
 
 If you change the text, the extractor does not change the ID.
 As a result, you don't have to take the extra step to update the translation.
@@ -67,11 +46,7 @@ Use a custom ID in combination with a description and a meaning to further help 
 
 The following example includes a description, followed by the custom ID.
 
-File: `app.component.html`
-
-```html
-<h1 i18n="An introduction header for this sample@@introductionHeader">Hello i18n!</h1>
-```
+<docs-code header="app.component.html" path="adev/src/content/examples/i18n/doc-files/app.component.html" region="i18n-attribute-id"/>
 
 The following example defines the `introductionHeader` custom ID and description for a variable.
 
@@ -81,11 +56,7 @@ variableText2 = $localize`:An introduction header for this sample@@introductionH
 
 The following example adds a meaning.
 
-File: `app.component.html`
-
-```html
-<h1 i18n="site header|An introduction header for this sample@@introductionHeader">Hello i18n!</h1>
-```
+<docs-code header="app.component.html" path="adev/src/content/examples/i18n/doc-files/app.component.html" region="i18n-attribute-meaning-and-id"/>
 
 The following example defines the `introductionHeader` custom ID for a variable.
 
@@ -100,29 +71,15 @@ If you use the same ID for two different text elements, the extraction tool extr
 
 For example, in the following code snippet the same `myId` custom ID is defined for two different text elements.
 
-File: `app.component.html`
-
-```html
-<h3 i18n="@@myId">Hello</h3>
-<!-- ... -->
-<p i18n="@@myId">Good bye</p>
-```
+<docs-code header="app.component.html" path="adev/src/content/examples/i18n/doc-files/app.component.html" region="i18n-duplicate-custom-id"/>
 
 The following displays the translation in French.
 
-File: `src/locale/messages.fr.xlf`
-
-```
-<trans-unit id="myId" datatype="html">
-  <source>Hello</source>
-  <target state="new">Bonjour</target>
-</trans-unit>
-```
+<docs-code header="src/locale/messages.fr.xlf" path="adev/src/content/examples/i18n/doc-files/messages.fr.xlf" region="i18n-duplicate-custom-id"/>
 
 Both elements now use the same translation \(`Bonjour`\), because both were defined with the same custom ID.
 
-```html
-<h3>Bonjour</h3>
-<!-- ... -->
-<p>Bonjour</p>
-```
+<docs-code path="adev/src/content/examples/i18n/doc-files/rendered-output.html"/>
+
+[ApiLocalizeInitLocalize]: api/localize/init/$localize '$localize | init - localize - API | Angular'
+[GuideI18nCommonPrepareHowMeaningsControlTextExtractionAndMerges]: guide/i18n/prepare#h1-example 'How meanings control text extraction and merges - Prepare components for translations | Angular'

@@ -1,13 +1,10 @@
 ---
-title: "no-const-assign"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-const-assign.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-const-assign
+rule_type: problem
+handled_by_typescript: true
 ---
 
-# no-const-assign
+
 
 Constant bindings cannot be modified. An attempt to modify a constant binding will raise a runtime error.
 
@@ -17,7 +14,7 @@ This rule is aimed to flag modifying variables that are declared using `const`, 
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-const-assign: "error"*/
@@ -26,7 +23,9 @@ const a = 0;
 a = 1;
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint no-const-assign: "error"*/
@@ -35,7 +34,9 @@ const a = 0;
 a += 1;
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint no-const-assign: "error"*/
@@ -44,7 +45,9 @@ const a = 0;
 ++a;
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint no-const-assign: "error"*/
@@ -60,9 +63,11 @@ if (bar) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-const-assign: "error"*/
@@ -71,7 +76,9 @@ const a = 0;
 console.log(a);
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint no-const-assign: "error"*/
@@ -87,7 +94,9 @@ if (bar) {
 }
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint no-const-assign: "error"*/
@@ -97,7 +106,9 @@ for (const a in [1, 2, 3]) { // `a` is re-defined (not modified) on each loop st
 }
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint no-const-assign: "error"*/
@@ -106,6 +117,8 @@ for (const a of [1, 2, 3]) { // `a` is re-defined (not modified) on each loop st
     console.log(a);
 }
 ```
+
+:::
 
 ## Options
 

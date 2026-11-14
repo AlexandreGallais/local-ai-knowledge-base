@@ -1,71 +1,44 @@
 ---
-title: "Microsoft SQL Server Database Provider - Value Generation - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/providers/sql-server/value-generation.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Microsoft SQL Server Database Provider - Value Generation - EF Core
+description: Value Generation Patterns Specific to the SQL Server Entity Framework Core Database Provider
+author: SamMonoRT
+ms.date: 11/15/2021
+uid: core/providers/sql-server/value-generation
 ---
-
 # SQL Server Value Generation
 
-This page details value generation configuration  and patterns that are specific to the SQL Server provider. It's recommended to first read the general page on value generation.
+This page details value generation configuration  and patterns that are specific to the SQL Server provider. It's recommended to first read [the general page on value generation](xref:core/modeling/generated-properties).
 
 ## IDENTITY columns
 
-By convention, numeric columns that are configured to have their values generated on add are set up as SQL Server IDENTITY columns.
+By convention, numeric columns that are configured to have their values generated on add are set up as [SQL Server IDENTITY columns](/sql/t-sql/statements/create-table-transact-sql-identity-property).
 
 ### Seed and increment
 
 By default, IDENTITY columns start off at 1 (the seed), and increment by 1 each time a row is added (the increment). You can configure a different seed and increment as follows:
 
-```csharp
-protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    modelBuilder.Entity<Blog>()
-        .Property(b => b.BlogId)
-        .UseIdentityColumn(seed: 10, increment: 10);
-}
-```
+[!code-csharp[Main](../../../../samples/core/SqlServer/ValueGeneration/IdentityOptionsContext.cs?name=IdentityOptions&highlight=5)]
 
 ### Inserting explicit values into IDENTITY columns
 
 By default, SQL Server doesn't allow inserting explicit values into IDENTITY columns. To do so, you must manually enable `IDENTITY_INSERT` before calling `SaveChangesAsync()`, as follows:
 
-```csharp
-using (var context = new ExplicitIdentityValuesContext())
-{
-    context.Blogs.Add(new Blog { BlogId = 100, Url = "http://blog1.somesite.com" });
-    context.Blogs.Add(new Blog { BlogId = 101, Url = "http://blog2.somesite.com" });
+[!code-csharp[Main](../../../../samples/core/SqlServer/ValueGeneration/ExplicitIdentityValues.cs?name=ExplicitIdentityValues)]
 
-    await context.Database.OpenConnectionAsync();
-    try
-    {
-        await context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT dbo.Blogs ON");
-        await context.SaveChangesAsync();
-        await context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT dbo.Blogs OFF");
-    }
-    finally
-    {
-        await context.Database.CloseConnectionAsync();
-    }
-}
-```
-
-> **Note:**
-> We have a feature request on our backlog to do this automatically within the SQL Server provider.
+> [!NOTE]
+> We have a [feature request](https://github.com/aspnet/EntityFramework/issues/703) on our backlog to do this automatically within the SQL Server provider.
 
 ## Sequences
 
 As an alternative to IDENTITY columns, you can use standard sequences. This can be useful in various scenarios; for example, you may want to have multiple columns drawing their default values from a single sequence.
 
-SQL Server allows you to create sequences and use them as detailed in the general page on sequences. It's up to you to configure your properties to use sequences via `HasDefaultValueSql()`.
+SQL Server allows you to create sequences and use them as detailed in [the general page on sequences](xref:core/modeling/sequences). It's up to you to configure your properties to use sequences via `HasDefaultValueSql()`.
 
 ## GUIDs
 
-For GUID primary keys, the provider automatically generates optimal sequential values, similar to SQL Server's NEWSEQUENTIALID function. Generating the value on the client is more efficient in some scenarios, i.e. an extra database round trip isn't needed to get the database-generated value, when a dependent is also being inserted that references that key.
+For GUID primary keys, the provider automatically generates optimal sequential values, similar to SQL Server's [NEWSEQUENTIALID](/sql/t-sql/functions/newsequentialid-transact-sql) function. Generating the value on the client is more efficient in some scenarios, i.e. an extra database round trip isn't needed to get the database-generated value, when a dependent is also being inserted that references that key.
 
-To have EF generate the same sequential GUID values for non-key <example-value>, configure them as follows:
+To have EF generate the same sequential GUID values for non-key properties, configure them as follows:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -76,11 +49,11 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ## Rowversions
 
-SQL Server has the `rowversion` data type, which automatically changes whenever the row is updated. This makes it very useful as a concurrency token, for managing cases where the same row is simultaneously updated by multiple transactions.
+SQL Server has the [`rowversion`](/sql/t-sql/data-types/rowversion-transact-sql) data type, which automatically changes whenever the row is updated. This makes it very useful as a concurrency token, for managing cases where the same row is simultaneously updated by multiple transactions.
 
-To fully understand concurrency tokens and how to use them, read the dedicated page on concurrency conflicts. To map a `byte[]` property to a `rowversion` column, configure it as follows:
+To fully understand concurrency tokens and how to use them, read the dedicated page on [concurrency conflicts](xref:core/saving/concurrency). To map a `byte[]` property to a `rowversion` column, configure it as follows:
 
-### Data Annotations
+### [Data Annotations](#tab/data-annotations)
 
 ```c#
 public class Person
@@ -94,7 +67,7 @@ public class Person
 }
 ```
 
-### Fluent API
+### [Fluent API](#tab/fluent-api)
 
 ```c#
 protected override void OnModelCreating(ModelBuilder modelBuilder)

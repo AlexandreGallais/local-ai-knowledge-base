@@ -1,24 +1,29 @@
 ---
 title: "Choosing Between Class and Struct"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/choosing-between-class-and-struct.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to decide whether to design a type as a class, or to design a type as a struct. Understand how reference types and value types differ in .NET.
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "class library design guidelines [.NET Framework], structures"
+  - "class library design guidelines [.NET Framework], classes"
+  - "structures [.NET Framework], vs. classes"
+  - "classes [.NET Framework], design guidelines"
+  - "type design guidelines, structures"
+  - "structures [.NET Framework], design guidelines"
+  - "classes [.NET Framework], vs. structures"
+  - "type design guidelines, classes"
+ms.assetid: f8b8ec9b-0ba7-4dea-aadf-a93395cd804f
 ---
-
 # Choosing Between Class and Struct
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
-One of the basic <example-value> decisions every framework designer faces is whether to design a type as a class (a reference type) or as a struct (a value type). Good understanding of the differences in the behavior of reference types and value types is crucial in making this choice.
+One of the basic design decisions every framework designer faces is whether to design a type as a class (a reference type) or as a struct (a value type). Good understanding of the differences in the behavior of reference types and value types is crucial in making this choice.
 
  The first difference between reference types and value types we will consider is that reference types are allocated on the heap and garbage-collected, whereas value types are allocated either on the stack or inline in containing types and deallocated when the stack unwinds or when their containing type gets deallocated. Therefore, allocations and deallocations of value types are in general cheaper than allocations and deallocations of reference types.
 
  Next, arrays of reference types are allocated out-of-line, meaning the array elements are just references to instances of the reference type residing on the heap. Value type arrays are allocated inline, meaning that the array elements are the actual instances of the value type. Therefore, allocations and deallocations of value type arrays are much cheaper than allocations and deallocations of reference type arrays. In addition, in a majority of cases value type arrays exhibit much better locality of reference.
 
- The next difference is related to memory usage. Value types get boxed when cast to a reference type or one of the interfaces they implement. They get unboxed when cast back to the value type. Because boxes are objects that are allocated on the heap and are garbage-collected, too much boxing and unboxing can have a negative impact on the heap, the garbage collector, and ultimately the performance of the application.  In contrast, no such boxing occurs as reference types are cast. (For more information, see Boxing and Unboxing).
+ The next difference is related to memory usage. Value types get boxed when cast to a reference type or one of the interfaces they implement. They get unboxed when cast back to the value type. Because boxes are objects that are allocated on the heap and are garbage-collected, too much boxing and unboxing can have a negative impact on the heap, the garbage collector, and ultimately the performance of the application.  In contrast, no such boxing occurs as reference types are cast. (For more information, see [Boxing and Unboxing](../../csharp/programming-guide/types/boxing-and-unboxing.md)).
 
  Next, reference type assignments copy the reference, whereas value type assignments copy the entire value. Therefore, assignments of large reference types are cheaper than assignments of large value types.
 
@@ -42,9 +47,9 @@ One of the basic <example-value> decisions every framework designer faces is whe
 
  *Portions © 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Type Design Guidelines
-- Framework Design Guidelines
+- [Type Design Guidelines](type.md)
+- [Framework Design Guidelines](index.md)

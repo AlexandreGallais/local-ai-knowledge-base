@@ -1,14 +1,16 @@
 ---
-title: "array-element-newline"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/array-element-newline.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: array-element-newline
+rule_type: layout
+related_rules:
+- array-bracket-spacing
+- array-bracket-newline
+- object-property-newline
+- object-curly-spacing
+- object-curly-newline
+- max-statements-per-line
+- block-spacing
+- brace-style
 ---
-
-# array-element-newline
-
 A number of style guides require or disallow line breaks between array elements.
 
 ## Rule Details
@@ -46,7 +48,7 @@ Alternatively, different configurations can be specified for array expressions a
 
 Examples of **incorrect** code for this rule with the default `"always"` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint array-element-newline: ["error", "always"]*/
@@ -67,9 +69,11 @@ var g = [
 ];
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"always"` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-element-newline: ["error", "always"]*/
@@ -96,11 +100,13 @@ var e = [
 ];
 ```
 
+:::
+
 ### never
 
 Examples of **incorrect** code for this rule with the `"never"` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint array-element-newline: ["error", "never"]*/
@@ -124,9 +130,11 @@ var e = [
 ];
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"never"` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-element-newline: ["error", "never"]*/
@@ -149,11 +157,13 @@ var g = [
 ];
 ```
 
+:::
+
 ### consistent
 
 Examples of **incorrect** code for this rule with the `"consistent"` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint array-element-newline: ["error", "consistent"]*/
@@ -174,9 +184,11 @@ var b = [
 ];
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"consistent"` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-element-newline: ["error", "consistent"]*/
@@ -216,11 +228,13 @@ var h = [
 ];
 ```
 
+:::
+
 ### multiline
 
 Examples of **incorrect** code for this rule with the `{ "multiline": true }` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint array-element-newline: ["error", { "multiline": true }]*/
@@ -236,9 +250,11 @@ var e = [
 ];
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "multiline": true }` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-element-newline: ["error", { "multiline": true }]*/
@@ -257,11 +273,13 @@ var e = [
 ];
 ```
 
+:::
+
 ### minItems
 
 Examples of **incorrect** code for this rule with the `{ "minItems": 3 }` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint array-element-newline: ["error", { "minItems": 3 }]*/
@@ -279,9 +297,11 @@ var e = [
 ];
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "minItems": 3 }` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-element-newline: ["error", { "minItems": 3 }]*/
@@ -301,11 +321,13 @@ var e = [
 ];
 ```
 
+:::
+
 ### multiline and minItems
 
 Examples of **incorrect** code for this rule with the `{ "multiline": true, "minItems": 3 }` options:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint array-element-newline: ["error", { "multiline": true, "minItems": 3 }]*/
@@ -322,9 +344,11 @@ var e = [
 ];
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "multiline": true, "minItems": 3 }` options:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-element-newline: ["error", { "multiline": true, "minItems": 3 }]*/
@@ -345,11 +369,13 @@ var e = [
 ];
 ```
 
+:::
+
 ### ArrayExpression and ArrayPattern
 
 Examples of **incorrect** code for this rule with the `{ "ArrayExpression": "always", "ArrayPattern": "never" }` options:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint array-element-newline: ["error", { "ArrayExpression": "always", "ArrayPattern": "never" }]*/
@@ -377,9 +403,11 @@ j = function bar() {
 }] = arr
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "ArrayExpression": "always", "ArrayPattern": "never" }` options:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-element-newline: ["error", { "ArrayExpression": "always", "ArrayPattern": "never" }]*/
@@ -407,10 +435,12 @@ var [i = function foo() {
 }] = arr
 ```
 
+:::
+
 ## When Not To Use It
 
 If you don't want to enforce linebreaks between array elements, don't enable this rule.
 
 ## Compatibility
 
-* **JSCS:** validateNewlineAfterArrayElements
+* **JSCS:** [validateNewlineAfterArrayElements](https://jscs-dev.github.io/rule/validateNewlineAfterArrayElements)

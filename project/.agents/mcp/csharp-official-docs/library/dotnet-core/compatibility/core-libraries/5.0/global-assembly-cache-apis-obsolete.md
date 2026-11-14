@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Global assembly cache APIs are obsolete"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/5.0/global-assembly-cache-apis-obsolete.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 5 breaking change in core .NET libraries where APIs that deal with the GAC either fail or perform no operation.
+ms.date: 11/01/2020
 ---
-
 # Global assembly cache APIs are obsolete
 
 .NET Core and .NET 5 and later versions eliminate the concept of the global assembly cache (GAC) that was present in .NET Framework. As such, all .NET Core and .NET 5+ APIs that deal with the GAC either fail or perform no operation.
@@ -19,9 +15,9 @@ The following APIs are marked obsolete.
 
 | API | Marked obsolete in... |
 | - | - |
-| `System.Reflection.Assembly.GlobalAssemblyCache` | 5.0 RC1 |
+| <xref:System.Reflection.Assembly.GlobalAssemblyCache?displayProperty=nameWithType> | 5.0 RC1 |
 
-In .NET Framework 2.x - 4.x, the `System.Reflection.Assembly.GlobalAssemblyCache` property returns `true` if the queried assembly was loaded from the GAC, and `false` if it was loaded from a different location on disk. In .NET Core 2.x - 3.x, the `System.Reflection.Assembly.GlobalAssemblyCache` always returns `false`, reflecting that the GAC does not exist in .NET Core.
+In .NET Framework 2.x - 4.x, the <xref:System.Reflection.Assembly.GlobalAssemblyCache> property returns `true` if the queried assembly was loaded from the GAC, and `false` if it was loaded from a different location on disk. In .NET Core 2.x - 3.x, the <xref:System.Reflection.Assembly.GlobalAssemblyCache> always returns `false`, reflecting that the GAC does not exist in .NET Core.
 
 ```csharp
 Assembly asm = typeof(object).Assembly;
@@ -29,7 +25,7 @@ Assembly asm = typeof(object).Assembly;
 Console.WriteLine(asm.GlobalAssemblyCache);
 ```
 
-In .NET 5 and later versions, the `System.Reflection.Assembly.GlobalAssemblyCache` property continues to always return `false`. However, the property getter is also marked as obsolete to indicate to callers that they should stop accessing the property. Libraries and apps should not use the `System.Reflection.Assembly.GlobalAssemblyCache` API to make determinations about runtime behavior, as it always returns `false` in .NET Core and .NET 5 and later versions.
+In .NET 5 and later versions, the <xref:System.Reflection.Assembly.GlobalAssemblyCache> property continues to always return `false`. However, the property getter is also marked as obsolete to indicate to callers that they should stop accessing the property. Libraries and apps should not use the <xref:System.Reflection.Assembly.GlobalAssemblyCache> API to make determinations about runtime behavior, as it always returns `false` in .NET Core and .NET 5 and later versions.
 
 ```csharp
 Assembly asm = typeof(object).Assembly;
@@ -49,7 +45,7 @@ The global assembly cache (GAC) does not exist as a concept in .NET Core and .NE
 
 ## Recommended action
 
-- If your application queries the `System.Reflection.Assembly.GlobalAssemblyCache` property, consider removing the call. If you use the `System.Reflection.Assembly.GlobalAssemblyCache` value to choose between an "assembly in the GAC"-flow vs. an "assembly not in the GAC"-flow at runtime, reconsider whether the flow still makes sense for a .NET Core or .NET 5+ application.
+- If your application queries the <xref:System.Reflection.Assembly.GlobalAssemblyCache> property, consider removing the call. If you use the <xref:System.Reflection.Assembly.GlobalAssemblyCache> value to choose between an "assembly in the GAC"-flow vs. an "assembly not in the GAC"-flow at runtime, reconsider whether the flow still makes sense for a .NET Core or .NET 5+ application.
 
 - If you must continue to use the obsolete APIs, you can suppress the `SYSLIB0005` warning in code.
 
@@ -73,8 +69,20 @@ The global assembly cache (GAC) does not exist as a concept in .NET Core and .NE
   </Project>
   ```
 
-  Suppressing `SYSLIB0005` disables only the `System.Reflection.Assembly.GlobalAssemblyCache` obsoletion warning. It does not disable any other warnings.
+  Suppressing `SYSLIB0005` disables only the <xref:System.Reflection.Assembly.GlobalAssemblyCache> obsoletion warning. It does not disable any other warnings.
 
 ## Affected APIs
 
-- `System.Reflection.Assembly.GlobalAssemblyCache`
+- <xref:System.Reflection.Assembly.GlobalAssemblyCache?displayProperty=fullName>
+
+<!--
+
+### Category
+
+Core .NET libraries
+
+### Affected APIs
+
+- `P:System.Reflection.Assembly.GlobalAssemblyCache`
+
+-->

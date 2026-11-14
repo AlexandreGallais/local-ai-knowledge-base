@@ -1,12 +1,3 @@
----
-title: "class: Response"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-response.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: Response
 * since: v1.8
 
@@ -50,7 +41,7 @@ Returns the [Frame] that initiated this response.
 * since: v1.23
 - returns: <[boolean]>
 
-Indicates whether this Response was fulfilled by a Service Worker's Fetch Handler (i.e. via FetchEvent.respondWith).
+Indicates whether this Response was fulfilled by a Service Worker's Fetch Handler (i.e. via [FetchEvent.respondWith](https://developer.mozilla.org/en-US/docs/Web/API/FetchEvent/respondWith)).
 
 ## method: Response.headers
 * since: v1.8

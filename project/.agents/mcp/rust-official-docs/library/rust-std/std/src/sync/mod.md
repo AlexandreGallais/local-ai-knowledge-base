@@ -1,17 +1,8 @@
----
-title: "std::sync"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sync/mod.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::sync
 
 Useful synchronization primitives.
 
-#### The need for synchronization
+## The need for synchronization
 
 Conceptually, a Rust program is a series of operations which will
 be executed on a computer. The timeline of events happening in the
@@ -74,7 +65,10 @@ Note that thanks to Rust's safety guarantees, accessing global (static)
 variables requires `unsafe` code, assuming we don't use any of the
 synchronization primitives in this module.
 
-#### Out-of-order execution
+[constant folding]: https://en.wikipedia.org/wiki/Constant_folding
+[concurrency]: https://en.wikipedia.org/wiki/Concurrency_(computer_science)
+
+## Out-of-order execution
 
 Instructions can execute in a different order from the one we define, due to
 various reasons:
@@ -103,7 +97,14 @@ various reasons:
   - [atomic operations] to ensure simultaneous access to the same
   memory location doesn't lead to undefined behavior.
 
-#### Higher-level synchronization objects
+[prefetching]: https://en.wikipedia.org/wiki/Cache_prefetching
+[compiler fences]: crate::sync::atomic::compiler_fence
+[out-of-order]: https://en.wikipedia.org/wiki/Out-of-order_execution
+[superscalar]: https://en.wikipedia.org/wiki/Superscalar_processor
+[memory fences]: crate::sync::atomic::fence
+[atomic operations]: crate::sync::atomic
+
+## Higher-level synchronization objects
 
 Most of the low-level synchronization primitives are quite error-prone and
 inconvenient to use, which is why the standard library also exposes some
@@ -118,45 +119,55 @@ a lock.
 The following is an overview of the available synchronization
 objects:
 
-- `Arc`: Atomically Reference-Counted pointer, which can be used
+- [`Arc`]: Atomically Reference-Counted pointer, which can be used
   in multithreaded environments to prolong the lifetime of some
   data until all the threads have finished using it.
 
-- `Barrier`: Ensures multiple threads will wait for each other
+- [`Barrier`]: Ensures multiple threads will wait for each other
   to reach a point in the program, before continuing execution all
   together.
 
-- `Condvar`: Condition Variable, providing the ability to block
+- [`Condvar`]: Condition Variable, providing the ability to block
   a thread while waiting for an event to occur.
 
-- `mpsc`: Multi-producer, single-consumer queues, used for
+- [`mpsc`]: Multi-producer, single-consumer queues, used for
   message-based communication. Can provide a lightweight
   inter-thread synchronisation mechanism, at the cost of some
   extra memory.
 
-- `mpmc`: Multi-producer, multi-consumer queues, used for
+- [`mpmc`]: Multi-producer, multi-consumer queues, used for
   message-based communication. Can provide a lightweight
   inter-thread synchronisation mechanism, at the cost of some
   extra memory.
 
-- `Mutex`: Mutual Exclusion mechanism, which ensures that at
+- [`Mutex`]: Mutual Exclusion mechanism, which ensures that at
   most one thread at a time is able to access some data.
 
-- `Once`: Used for a thread-safe, one-time global initialization routine.
-  Mostly useful for implementing other types like `OnceLock`.
+- [`Once`]: Used for a thread-safe, one-time global initialization routine.
+  Mostly useful for implementing other types like [`OnceLock`].
 
-- `OnceLock`: Used for thread-safe, one-time initialization of a
+- [`OnceLock`]: Used for thread-safe, one-time initialization of a
   variable, with potentially different initializers based on the caller.
 
-- `LazyLock`: Used for thread-safe, one-time initialization of a
+- [`LazyLock`]: Used for thread-safe, one-time initialization of a
   variable, using one nullary initializer function provided at creation.
 
-- `RwLock`: Provides a mutual exclusion mechanism which allows
+- [`RwLock`]: Provides a mutual exclusion mechanism which allows
   multiple readers at the same time, while allowing only one
   writer at a time. In some cases, this can be more efficient than
   a mutex.
 
-#### Blocking guarantees
+[`Arc`]: crate::sync::Arc
+[`Barrier`]: crate::sync::Barrier
+[`Condvar`]: crate::sync::Condvar
+[`mpmc`]: crate::sync::mpmc
+[`mpsc`]: crate::sync::mpsc
+[`Mutex`]: crate::sync::Mutex
+[`Once`]: crate::sync::Once
+[`OnceLock`]: crate::sync::OnceLock
+[`RwLock`]: crate::sync::RwLock
+
+## Blocking guarantees
 
 Methods that are documented not to block will never block for an unbounded length of time.
 That is, they may internally block through platform primitives but still "behave" like they are non-blocking. This difference is invisible to most programs.
@@ -173,7 +184,9 @@ pub struct WaitTimeoutResult(bool)
 A type indicating whether a timed wait on a condition variable returned
 due to a time out or not.
 
-It is returned by the `wait_timeout` method.
+It is returned by the [`wait_timeout`] method.
+
+[`wait_timeout`]: Condvar::wait_timeout
 
 ## WaitTimeoutResult::timed_out
 
@@ -191,7 +204,7 @@ updating a boolean value and then notifying the condvar.
 The main thread will wait with a 10 millisecond timeout on the condvar
 and will leave the loop upon timeout.
 
-```rust
+```
 use std::sync::{Arc, Condvar, Mutex};
 use std::thread;
 use std::time::Duration;
@@ -199,6 +212,7 @@ use std::time::Duration;
 let pair = Arc::new((Mutex::new(false), Condvar::new()));
 let pair2 = Arc::clone(&pair);
 
+# let handle =
 thread::spawn(move || {
     let (lock, cvar) = &*pair2;
 
@@ -222,4 +236,6 @@ loop {
         break
     }
 }
+# // Prevent leaks for Miri.
+# let _ = handle.join();
 ```

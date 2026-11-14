@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataEmit::DefineCustomAttribute Method"
 title: "IMetaDataEmit::DefineCustomAttribute Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataemit-definecustomattribute-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataEmit.DefineCustomAttribute"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataEmit::DefineCustomAttribute"
+  - "IMetaDataEmit::DefineCustomAttribute method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataEmit::DefineCustomAttribute Method
 
 Creates a definition for a custom attribute with the specified metadata signature, to be attached to the specified object, and gets a token to that custom attribute definition.
@@ -16,7 +23,7 @@ Creates a definition for a custom attribute with the specified metadata signatur
 ```cpp
 HRESULT DefineCustomAttribute (
     [in]  mdToken     tkObj,
-    [in]  mdToken     <example-value>,
+    [in]  mdToken     tkType,
     [in]  void const  *pCustomAttribute,
     [in]  ULONG       cbCustomAttribute,
     [out] mdCustomAttribute *pcv
@@ -42,7 +49,7 @@ HRESULT DefineCustomAttribute (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -50,5 +57,5 @@ HRESULT DefineCustomAttribute (
 
 ## See also
 
-- IMetaDataEmit Interface
-- IMetaDataEmit2 Interface
+- [IMetaDataEmit Interface](imetadataemit-interface.md)
+- [IMetaDataEmit2 Interface](imetadataemit2-interface.md)

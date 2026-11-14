@@ -1,12 +1,10 @@
 ---
-title: "Comparisons with null values in queries"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/querying/null-comparisons.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Comparisons with null values in queries
+description: Information on how Entity Framework Core handles null comparisons in queries 
+author: SamMonoRT
+ms.date: 11/11/2020
+uid: core/querying/null-comparisons
 ---
-
 # Query null semantics
 
 ## Introduction
@@ -14,26 +12,11 @@ license: "CC-BY-4.0"
 SQL databases operate on 3-valued logic (`true`, `false`, `null`) when performing comparisons, as opposed to the boolean logic of C#. When translating LINQ queries to SQL, EF Core tries to compensate for the difference by introducing additional null checks for some elements of the query.
 To illustrate this, let's define the following entity:
 
-```csharp
-public class NullSemanticsEntity
-{
-    public int Id { get; set; }
-    public int Int { get; set; }
-    public int? NullableInt { get; set; }
-    public string String1 { get; set; }
-    public string String2 { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Querying/NullSemantics/NullSemanticsEntity.cs#Entity)]
 
 and issue several queries:
 
-```csharp
-var query1 = context.Entities.Where(e => e.Id == e.Int);
-var query2 = context.Entities.Where(e => e.Id == e.NullableInt);
-var query3 = context.Entities.Where(e => e.Id != e.NullableInt);
-var query4 = context.Entities.Where(e => e.String1 == e.String2);
-var query5 = context.Entities.Where(e => e.String1 != e.String2);
-```
+[!code-csharp[Main](../../../samples/core/Querying/NullSemantics/Program.cs#BasicExamples)]
 
 The first two queries produce simple comparisons. In the first query, both columns are non-nullable so null checks are not needed. In the second query, `NullableInt` could contain `null`, but `Id` is non-nullable; comparing `null` to non-null yields `null` as a result, which would be filtered out by `WHERE` operation. So no additional terms are needed either.
 
@@ -72,9 +55,7 @@ WHERE (([e].[String1] <> [e].[String2]) OR ([e].[String1] IS NULL OR [e].[String
 Many functions in SQL can only return a `null` result if some of their arguments are `null`. EF Core takes advantage of this to produce more efficient queries.
 The query below illustrates the optimization:
 
-```csharp
-var query = context.Entities.Where(e => e.String1.Substring(0, e.String2.Length) == null);
-```
+[!code-csharp[Main](../../../samples/core/Querying/NullSemantics/Program.cs#Functions)]
 
 The generated SQL is as follows (we don't need to evaluate the `SUBSTRING` function since it will be only null when either of the arguments to it is null.):
 
@@ -84,7 +65,7 @@ FROM [Entities] AS [e]
 WHERE [e].[String1] IS NULL OR [e].[String2] IS NULL
 ```
 
-The optimization can also be used for user-defined functions. See user defined function mapping page for more details.
+The optimization can also be used for user-defined functions. See [user defined function mapping](xref:core/querying/user-defined-function-mapping#configuring-nullability-of-user-defined-function-based-on-its-arguments) page for more details.
 
 ## Writing performant queries
 
@@ -94,11 +75,7 @@ The optimization can also be used for user-defined functions. See user defined f
 
 - In some cases, it is possible to simplify a complex comparison by filtering out `null` values from a column explicitly - for example when no `null` values are present or these values are not relevant in the result. Consider the following example:
 
-```csharp
-var query1 = context.Entities.Where(e => e.String1 != e.String2 || e.String1.Length == e.String2.Length);
-var query2 = context.Entities.Where(
-    e => e.String1 != null && e.String2 != null && (e.String1 != e.String2 || e.String1.Length == e.String2.Length));
-```
+[!code-csharp[Main](../../../samples/core/Querying/NullSemantics/Program.cs#ManualOptimization)]
 
 These queries produce the following SQL:
 
@@ -118,9 +95,7 @@ In the second query, `null` results are filtered out from `String1` column expli
 
 It's possible to disable the null comparison compensation and use relational null semantics directly. This can be done by calling `UseRelationalNulls(true)` method on the options builder inside `OnConfiguring` method:
 
-```csharp
-new SqlServerDbContextOptionsBuilder(optionsBuilder).UseRelationalNulls();
-```
+[!code-csharp[Main](../../../samples/core/Querying/NullSemantics/NullSemanticsContext.cs#UseRelationalNulls)]
 
-> **Warning:**
+> [!WARNING]
 > When using relational null semantics, your LINQ queries no longer have the same meaning as they do in C#, and may yield different results than expected. Exercise caution when using this mode.

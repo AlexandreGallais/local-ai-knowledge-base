@@ -1,16 +1,14 @@
 ---
-title: "dotnetup channels and versions"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/concepts/channels.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnetup channels and versions
+description: Learn how dotnetup resolves stable, preview, daily, numeric, and exact .NET version specifications.
+ms.topic: concept-article
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # dotnetup channels and versions
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 A channel describes a set of .NET versions. An exact version describes one
 version. `dotnetup` stores `channels` and resolves it for the
@@ -48,9 +46,9 @@ major/minor channel, such as `10.0`, or an exact runtime version, such as
 Use `component@version-or-channel` to select a runtime component:
 
 ```dotnetcli
-dotnetup runtime install user@example.com
-dotnetup runtime install user@example.com
-dotnetup runtime install user@example.com
+dotnetup runtime install runtime@10.0
+dotnetup runtime install aspnetcore@10.0
+dotnetup runtime install windowsdesktop@10.0
 ```
 
 When you omit the component name, `dotnetup` selects the core .NET runtime:
@@ -71,5 +69,5 @@ It returns a failure after it processes the remaining specifications.
 
 ## Release-channel details
 
-- Preview channel
-- Daily channels
+- [Preview channel](../channels/preview.md)
+- [Daily channels](../channels/daily.md)

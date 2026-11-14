@@ -1,32 +1,30 @@
 ---
-title: "Testing Types | Guide"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/testing-types.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Testing Types | Guide
 ---
 
 # Testing Types
 
-**Sample Project**
+::: tip Sample Project
 
-GitHub - Play Online
+[GitHub](https://github.com/vitest-dev/vitest/tree/main/examples/typecheck) - [Play Online](https://stackblitz.com/fork/github/vitest-dev/vitest/tree/main/examples/typecheck?initialPath=__vitest__/)
 
-Vitest allows you to write tests for your types, using `expectTypeOf` or `assertType` syntaxes. By default all tests inside `*.test-d.ts` files are considered type tests, but you can change it with `typecheck.include` config option.
+:::
 
-Under the hood Vitest calls `tsc` or `vue-tsc`, depending on your config, and parses results. Vitest will also print out type errors in your source code, if it finds any. You can disable it with `typecheck.ignoreSourceErrors` config option.
+Vitest allows you to write tests for your types, using `expectTypeOf` or `assertType` syntaxes. By default all tests inside `*.test-d.ts` files are considered type tests, but you can change it with [`typecheck.include`](/config/typecheck#typecheck-include) config option.
+
+Under the hood Vitest calls `tsc` or `vue-tsc`, depending on your config, and parses results. Vitest will also print out type errors in your source code, if it finds any. You can disable it with [`typecheck.ignoreSourceErrors`](/config/typecheck#typecheck-ignoresourceerrors) config option.
 
 Keep in mind that Vitest doesn't run these files, they are only statically analyzed by the compiler. Meaning, that if you use a dynamic name or `test.each` or `test.for`, the test name will not be evaluated - it will be displayed as is.
 
-**Warning:**
+::: warning
 Before Vitest 2.1, your `typecheck.include` overrode the `include` pattern, so your runtime tests did not actually run; they were only type-checked.
 
 Since Vitest 2.1, if your `include` and `typecheck.include` overlap, Vitest will report type tests and runtime tests as separate entries.
+:::
 
 Using CLI flags, like `--allowOnly` and `-t` are also supported for type checking.
 
-```ts
+```ts [mount.test-d.ts]
 import { assertType, expectTypeOf } from 'vitest'
 import { mount } from './mount.js'
 
@@ -41,11 +39,11 @@ test('my types work properly', () => {
 
 Any type error triggered inside a test file will be treated as a test error, so you can use any type trick you want to test types of your project.
 
-You can see a list of possible matchers in API section.
+You can see a list of possible matchers in [API section](/api/expect-typeof).
 
 ## Reading Errors
 
-If you are using `expectTypeOf` API, refer to the expect-type documentation on its error messages.
+If you are using `expectTypeOf` API, refer to the [expect-type documentation on its error messages](https://github.com/mmkal/expect-type#error-messages).
 
 When types don't match, `.toEqualTypeOf` and `.toExtend` use a special helper type to produce error messages that are as actionable as possible. But there's a bit of an nuance to understanding them. Since the assertions are written "fluently", the failure should be on the "expected" type, not the "actual" type (`expect<Actual>().toEqualTypeOf<Expected>()`). This means that type errors can be a little confusing - so this library produces a `MismatchInfo` type to try to make explicit what the expectation is. For example:
 
@@ -63,7 +61,7 @@ test/test.ts:999:999 - error TS2344: Type '{ a: string; }' does not satisfy the 
 999 expectTypeOf({a: 1}).toEqualTypeOf<{a: string}>()
 ```
 
-Note that the type constraint reported is a human-readable messaging specifying both the "expected" and "actual" types. Rather than taking the sentence `Types of property 'a' are incompatible // Type 'string' is not assignable to type "Expected: string, Actual: number"` literally - just look at the property name (`'a'`) and the message: `Expected: string, Actual: number`. This will tell you what's wrong, in most cases. Extremely complex types will of course be more effort to debug, and may require some experimentation. Please raise an issue if the error messages are actually misleading.
+Note that the type constraint reported is a human-readable messaging specifying both the "expected" and "actual" types. Rather than taking the sentence `Types of property 'a' are incompatible // Type 'string' is not assignable to type "Expected: string, Actual: number"` literally - just look at the property name (`'a'`) and the message: `Expected: string, Actual: number`. This will tell you what's wrong, in most cases. Extremely complex types will of course be more effort to debug, and may require some experimentation. Please [raise an issue](https://github.com/mmkal/expect-type) if the error messages are actually misleading.
 
 The `toBe...` methods (like `toBeString`, `toBeNumber`, `toBeVoid` etc.) fail by resolving to a non-callable type when the `Actual` type under test doesn't match up. For example, the failure for an assertion like `expectTypeOf(1).toBeString()` will look something like this:
 
@@ -77,7 +75,7 @@ test/test.ts:999:999 - error TS2349: This expression is not callable.
 
 The `This expression is not callable` part isn't all that helpful - the meaningful error is the next line, `Type 'ExpectString<number> has no call signatures`. This essentially means you passed a number but asserted it should be a string.
 
-If TypeScript added support for "throw" types these error messages could be improved significantly. Until then they will take a certain amount of squinting.
+If TypeScript added support for ["throw" types](https://github.com/microsoft/TypeScript/pull/40468) these error messages could be improved significantly. Until then they will take a certain amount of squinting.
 
 ### Concrete "expected" objects vs typeargs
 
@@ -112,8 +110,8 @@ assertType<number>(answer)
 assertType<string>(answer)
 ```
 
-**Tip:**
-When using `@ts-expect-error` syntax, you might want to make sure that you didn't make a typo. You can do that by including your type files in `test.include` config option, so Vitest will also actually _run_ these tests and fail with `ReferenceError`.
+::: tip
+When using `@ts-expect-error` syntax, you might want to make sure that you didn't make a typo. You can do that by including your type files in [`test.include`](/config/include) config option, so Vitest will also actually _run_ these tests and fail with `ReferenceError`.
 
 This will pass, because it expects an error, but the word “answer” has a typo, so it's a false positive error:
 
@@ -122,11 +120,13 @@ This will pass, because it expects an error, but the word “answer” has a typ
 assertType<string>(answr)
 ```
 
+:::
+
 ## Run Typechecking
 
-To enable typechecking, just add `--typecheck` flag to your Vitest command in `package.json`:
+To enable typechecking, just add [`--typecheck`](/config/typecheck) flag to your Vitest command in `package.json`:
 
-```json
+```json [package.json]
 {
   "scripts": {
     "test": "vitest --typecheck"
@@ -138,20 +138,22 @@ Now you can run typecheck:
 
 ::: code-group
 
-```bash
+```bash [npm]
 npm run test
 ```
 
-```bash
+```bash [yarn]
 yarn test
 ```
 
-```bash
+```bash [pnpm]
 pnpm run test
 ```
 
-```bash
+```bash [bun]
 bun test
 ```
+
+:::
 
 Vitest uses `tsc --noEmit` or `vue-tsc --noEmit`, depending on your configuration, so you can remove these scripts from your pipeline.

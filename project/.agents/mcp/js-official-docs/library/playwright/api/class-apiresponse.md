@@ -1,18 +1,9 @@
----
-title: "class: APIResponse"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-apiresponse.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: APIResponse
 * since: v1.16
 
 [APIResponse] class represents responses returned by [`method: APIRequestContext.get`] and similar methods.
 
-```python
+```python async
 import asyncio
 from playwright.async_api import async_playwright, Playwright
 
@@ -26,6 +17,7 @@ async def run(playwright: Playwright):
     assert json_data["name"] == "foobar"
     assert await response.body() == '{"status": "ok"}'
 
+
 async def main():
     async with async_playwright() as playwright:
         await run(playwright)
@@ -33,7 +25,7 @@ async def main():
 asyncio.run(main())
 ```
 
-```python
+```python sync
 from playwright.sync_api import sync_playwright
 
 with sync_playwright() as p:
@@ -129,9 +121,9 @@ Returns the text representation of response body.
 * since: v1.62
 
 Returns resource timing information for given response. For redirected requests, returns the information for the last
-request in the redirect chain. When the response is served from the HAR file, timing
+request in the redirect chain. When the response is served [from the HAR file](../mock.md#replaying-from-har), timing
 information is not available and all the values are -1. Find more information at
-Resource Timing API.
+[Resource Timing API](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceResourceTiming).
 
 ## method: APIResponse.url
 * since: v1.16

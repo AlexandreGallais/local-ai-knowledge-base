@@ -1,23 +1,16 @@
----
-title: "Disallow implicit any error parameters in catchError, subscribe, and tap (rxjs-x/no-implicit-any-catch)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/no-implicit-any-catch.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Disallow implicit `any` error parameters in `catchError`, `subscribe`, and `tap` (`rxjs-x/no-implicit-any-catch`)
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, 🔒 `strict`.
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule requires an explicit type annotation for error parameters in error handlers for `catchError`, `subscribe`, and `tap`.
-It's similar to the typescript-eslint `use-unknown-in-catch-callback-variable` rule
-or the TSConfig `useUnknownInCatchVariables` option,
+It's similar to the typescript-eslint [`use-unknown-in-catch-callback-variable`](https://typescript-eslint.io/rules/use-unknown-in-catch-callback-variable/) rule
+or the TSConfig [`useUnknownInCatchVariables`](https://www.typescriptlang.org/tsconfig/#useUnknownInCatchVariables) option,
 but is for observables - not `try`/`catch` statements.
 
 ## Rule details
@@ -87,10 +80,14 @@ throwError(() => new Error("Kaboom!")).pipe(
 
 ## Options
 
+<!-- begin auto-generated rule options list -->
+
 | Name                 | Description                                           | Type    | Default |
 | :------------------- | :---------------------------------------------------- | :------ | :------ |
 | `allowExplicitAny`   | Allow error variable to be explicitly typed as `any`. | Boolean | `true`  |
 | `allowExplicitError` | Allow narrowing error type to `Error`.                | Boolean | `false` |
+
+<!-- end auto-generated rule options list -->
 
 This rule accepts a single option which is an object with the following properties:
 
@@ -109,7 +106,7 @@ This rule accepts a single option which is an object with the following properti
 }
 ```
 
-> **Warning:**
+> [!WARNING]
 > The `allowExplicitError` option is inherently unsafe.
 > The JavaScript `throw` statement can be followed by any kind of expression,
 > and so `catch (e)` can provide anything instead of just `Error`;
@@ -118,7 +115,7 @@ This rule accepts a single option which is an object with the following properti
 > However, `allowExplicitError` is convenient in codebases
 > where `throw` is known to only receive `Error` objects.
 > We highly recommend you use the `only-throw-error` rule from `typescript-eslint`,
-> as well as `throw-error` from this plugin.
+> as well as [`throw-error`](./throw-error.md) from this plugin.
 > Note this also assumes that 3rd-party libraries also only throw `Error`.
 
 ## When Not To Use It
@@ -130,13 +127,13 @@ Type checked lint rules are more powerful than traditional lint rules, but also 
 
 ## Further reading
 
-- Catching Unknowns
+- [Catching Unknowns](https://ncjamieson.com/catching-unknowns/)
 
 ## Related To
 
-- `throw-error`
+- [`throw-error`](./throw-error.md)
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/no-implicit-any-catch.ts)
+- [Test source](/tests/rules/no-implicit-any-catch.test.ts)

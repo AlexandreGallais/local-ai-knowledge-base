@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: BindingSource.SortDescriptions doesn't return null"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/windows-forms/9.0/sortdescriptions-return-value.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 9 for Windows Forms where BindingSource.SortDescriptions no longer returns null if the data source is not an IBindingListView.
+ms.date: 01/16/2024
 ---
-
 # BindingSource.SortDescriptions doesn't return null
 
-`System.Windows.Forms.BindingSource.SortDescriptions` has been updated to return an empty `System.ComponentModel.ListSortDescriptionCollection` instead of `null` if the data source is not an `System.ComponentModel.IBindingListView`.
+<xref:System.Windows.Forms.BindingSource.SortDescriptions?displayProperty=nameWithType> has been updated to return an empty <xref:System.ComponentModel.ListSortDescriptionCollection> instead of `null` if the data source is not an <xref:System.ComponentModel.IBindingListView>.
 
 ## Version introduced
 
@@ -17,26 +13,26 @@ license: "CC-BY-4.0"
 
 ## Previous behavior
 
-Previously, `System.Windows.Forms.BindingSource.SortDescriptions` returned `null` if the data source wasn't an `System.ComponentModel.IBindingListView`.
+Previously, <xref:System.Windows.Forms.BindingSource.SortDescriptions?displayProperty=nameWithType> returned `null` if the data source wasn't an <xref:System.ComponentModel.IBindingListView>.
 
 ## New behavior
 
-Starting in .NET 9, `System.Windows.Forms.BindingSource.SortDescriptions` returns an empty `System.ComponentModel.ListSortDescriptionCollection` if the data source is not an `System.ComponentModel.IBindingListView`.
+Starting in .NET 9, <xref:System.Windows.Forms.BindingSource.SortDescriptions?displayProperty=nameWithType> returns an empty <xref:System.ComponentModel.ListSortDescriptionCollection> if the data source is not an <xref:System.ComponentModel.IBindingListView>.
 
 ## Change category
 
-This change is a *behavioral change*.
+This change is a [*behavioral change*](../../categories.md#behavioral-change).
 
 ## Reason for change
 
 The previous behavior was incorrect.
 
-`System.Windows.Forms.BindingSource.SortDescriptions` has historically returned `null` if the data source was not an `IBindingListView`. However `BindingSource.SortDescriptions` implements `System.ComponentModel.IBindingListView.SortDescriptions`, whose return type is non-nullable. To align with the interface it implements, `BindingSource.SortDescriptions` was changed to return an empty `ListSortDescriptionCollection` instead.
+<xref:System.Windows.Forms.BindingSource.SortDescriptions?displayProperty=nameWithType> has historically returned `null` if the data source was not an `IBindingListView`. However `BindingSource.SortDescriptions` implements <xref:System.ComponentModel.IBindingListView.SortDescriptions?displayProperty=nameWithType>, whose return type is non-nullable. To align with the interface it implements, `BindingSource.SortDescriptions` was changed to return an empty `ListSortDescriptionCollection` instead.
 
 ## Recommended action
 
-If your code expects `null` from `System.Windows.Forms.BindingSource.SortDescriptions` for any reason, update your code to expect an empty `System.ComponentModel.ListSortDescriptionCollection` instead.
+If your code expects `null` from <xref:System.Windows.Forms.BindingSource.SortDescriptions?displayProperty=nameWithType> for any reason, update your code to expect an empty <xref:System.ComponentModel.ListSortDescriptionCollection> instead.
 
 ## Affected APIs
 
-- `System.Windows.Forms.BindingSource.SortDescriptions`
+- <xref:System.Windows.Forms.BindingSource.SortDescriptions?displayProperty=fullName>

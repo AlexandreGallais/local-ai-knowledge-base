@@ -1,21 +1,10 @@
----
-title: "avoid-cookie-login-redirects"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-10/includes/avoid-cookie-login-redirects.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# avoid-cookie-login-redirects
-
 ### Avoid cookie login redirects for known API endpoints
 
 By default, unauthenticated and unauthorized requests made to known API endpoints protected by cookie authentication now result in 401 and 403 responses rather than redirecting to a login or access denied URI.
 
-This change was highly requested, because redirecting unauthenticated requests to a login page doesn't usually make sense for API endpoints which typically rely on 401 and 403 status codes rather than HTML redirects to communicate auth failures.
+This change was [highly requested](https://github.com/dotnet/aspnetcore/issues/9039), because redirecting unauthenticated requests to a login page doesn't usually make sense for API endpoints which typically rely on 401 and 403 status codes rather than HTML redirects to communicate auth failures.
 
-Known API Endpoints are identified using the new `IApiEndpointMetadata` interface, and metadata implementing the new interface has been added automatically to the following:
+Known API [Endpoints](../../../fundamentals/routing.md?view=aspnetcore-10.0) are identified using the new `IApiEndpointMetadata` interface, and metadata implementing the new interface has been added automatically to the following:
 
 - `[ApiController]` endpoints
 - Minimal API endpoints that read JSON request bodies or write JSON responses
@@ -44,4 +33,4 @@ builder.Services.AddAuthentication()
     });
 ```
 
-For more information about this breaking change, see ASP.NET Core breaking changes announcement.
+For more information about this breaking change, see [ASP.NET Core breaking changes announcement](https://github.com/aspnet/Announcements/issues/525).

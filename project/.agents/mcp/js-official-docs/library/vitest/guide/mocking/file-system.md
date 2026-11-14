@@ -1,17 +1,8 @@
----
-title: "Mocking the File System"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/mocking/file-system.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # Mocking the File System
 
 Mocking the file system ensures that the tests do not depend on the actual file system, making the tests more reliable and predictable. This isolation helps in avoiding side effects from previous tests. It allows for testing error conditions and edge cases that might be difficult or impossible to replicate with an actual file system, such as permission issues, disk full scenarios, or read/write errors.
 
-Vitest doesn't provide any file system mocking API out of the box. You can use `vi.mock` to mock the `fs` module manually, but it's hard to maintain. Instead, we recommend using `memfs` to do that for you. `memfs` creates an in-memory file system, which simulates file system operations without touching the actual disk. This approach is fast and safe, avoiding any potential side effects on the real file system.
+Vitest doesn't provide any file system mocking API out of the box. You can use `vi.mock` to mock the `fs` module manually, but it's hard to maintain. Instead, we recommend using [`memfs`](https://npmx.dev/package/memfs) to do that for you. `memfs` creates an in-memory file system, which simulates file system operations without touching the actual disk. This approach is fast and safe, avoiding any potential side effects on the real file system.
 
 ## Example
 
@@ -19,7 +10,7 @@ To automatically redirect every `fs` call to `memfs`, you can create `__mocks__/
 
 ::: code-group
 
-```ts
+```ts [__mocks__/fs.cjs]
 // we can also use `import`, but then
 // every export should be explicitly defined
 
@@ -27,7 +18,7 @@ const { fs } = require('memfs')
 module.exports = fs
 ```
 
-```ts
+```ts [__mocks__/fs/promises.cjs]
 // we can also use `import`, but then
 // every export should be explicitly defined
 
@@ -35,7 +26,9 @@ const { fs } = require('memfs')
 module.exports = fs.promises
 ```
 
-```ts
+:::
+
+```ts [read-hello-world.js]
 import { readFileSync } from 'node:fs'
 
 export function readHelloWorld(path) {
@@ -43,7 +36,7 @@ export function readHelloWorld(path) {
 }
 ```
 
-```ts
+```ts [hello-world.test.js]
 import { beforeEach, expect, it, vi } from 'vitest'
 import { fs, vol } from 'memfs'
 import { readHelloWorld } from './read-hello-world.js'

@@ -1,10 +1,6 @@
 ---
-title: "sequence | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/sequence.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: sequence | Config
+outline: deep
 ---
 
 # sequence
@@ -28,21 +24,21 @@ A custom class that defines methods for sharding and sorting. You can extend `Ba
 
 Sharding is happening before sorting, and only if `--shard` option is provided.
 
-If `sequence.groupOrder` is specified, the sequencer will be called once for each group and pool.
+If [`sequence.groupOrder`](#sequence-grouporder) is specified, the sequencer will be called once for each group and pool.
 
 ## sequence.groupOrder
 
 - **Type:** `number`
 - **Default:** `0`
 
-Controls the order in which this project runs its tests when using multiple projects.
+Controls the order in which this project runs its tests when using multiple [projects](/guide/projects).
 
 - Projects with the same group order number will run together, and groups are run from lowest to highest.
 - If you don't set this option, all projects run in parallel.
 - If several projects use the same group order, they will run at the same time.
 
 This setting only affects the order in which projects run, not the order of tests within a project.
-To control test isolation or the order of tests inside a project, use the `isolate` and `sequence.sequencer` options.
+To control test isolation or the order of tests inside a project, use the [`isolate`](/config/isolate) and [`sequence.sequencer`](/config/sequence#sequence-sequencer) options.
 
 ::: details Example
 Consider this example:
@@ -92,13 +88,15 @@ Tests in these projects will run in this order:
  1. flaky |> runs after slow and fast alone
 ```
 
+:::
+
 ## sequence.shuffle
 
 - **Type:** `boolean | { files?, tests? }`
 - **Default:** `false`
 - **CLI:** `--sequence.shuffle`, `--sequence.shuffle=false`
 
-If you want files and tests to run randomly, you can enable it with this option, or CLI argument `--sequence.shuffle`.
+If you want files and tests to run randomly, you can enable it with this option, or CLI argument [`--sequence.shuffle`](/guide/cli).
 
 Vitest usually uses cache to sort tests, so long-running tests start earlier, which makes tests run faster. If your files and tests run in random order, you will lose this performance improvement, but it may be useful to track tests that accidentally depend on another test run previously.
 
@@ -110,7 +108,7 @@ Vitest usually uses cache to sort tests, so long-running tests start earlier, wh
 
 Whether to randomize files, be aware that long running tests will not start earlier if you enable this option.
 
-Because file ordering is shared across projects, this option is resolved from the root config only. A project can still randomize its own tests with `sequence.shuffle.tests`.
+Because file ordering is shared across [projects](/guide/projects), this option is resolved from the root config only. A project can still randomize its own tests with [`sequence.shuffle.tests`](#sequence-shuffle-tests).
 
 ### sequence.shuffle.tests {#sequence-shuffle-tests}
 
@@ -126,10 +124,11 @@ Whether to randomize tests.
 - **Default:** `false`
 - **CLI:** `--sequence.concurrent`, `--sequence.concurrent=false`
 
-If you want tests to run in parallel, you can enable it with this option, or CLI argument `--sequence.concurrent`.
+If you want tests to run in parallel, you can enable it with this option, or CLI argument [`--sequence.concurrent`](/guide/cli).
 
-**Warning:**
-When you run tests with `sequence.concurrent` and `expect.requireAssertions` set to `true`, you should use local expect instead of the global one. Otherwise, this may cause false negatives in some situations (#8469).
+::: warning
+When you run tests with `sequence.concurrent` and `expect.requireAssertions` set to `true`, you should use [local expect](/guide/test-context#expect) instead of the global one. Otherwise, this may cause false negatives in [some situations (#8469)](https://github.com/vitest-dev/vitest/issues/8469).
+:::
 
 ## sequence.seed <CRoot />
 
@@ -149,10 +148,11 @@ Changes the order in which hooks are executed.
 
 - `stack` will order "after" hooks in reverse order, "before" hooks will run in the order they were defined
 - `list` will order all hooks in the order they are defined
-- `parallel` runs hooks in a single group in parallel (hooks in parent suites still run before the current suite's hooks). The actual number of simultaneously running hooks is limited by `maxConcurrency`.
+- `parallel` runs hooks in a single group in parallel (hooks in parent suites still run before the current suite's hooks). The actual number of simultaneously running hooks is limited by [`maxConcurrency`](/config/maxconcurrency).
 
-**Tip:**
-This option doesn't affect `onTestFinished`. It is always called in reverse order.
+::: tip
+This option doesn't affect [`onTestFinished`](/api/hooks#ontestfinished). It is always called in reverse order.
+:::
 
 ## sequence.setupFiles {#sequence-setupfiles}
 

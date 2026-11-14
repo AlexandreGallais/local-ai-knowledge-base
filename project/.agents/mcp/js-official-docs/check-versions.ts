@@ -25,25 +25,34 @@ export interface Behind {
 // The tool names of the documents and of the library, and the npm package that gives the version.
 const PACKAGES: Record<string, string> = {
   'angular': '@angular/core',
+  'angular-api': '@angular/core',
+  'angular-cli': '@angular/cli',
   'angular-eslint': 'angular-eslint',
   'eslint': 'eslint',
-  'eslint-functional': 'eslint-plugin-functional',
+  'eslint-config-prettier': 'eslint-config-prettier',
+  'eslint-headers': 'eslint-plugin-headers',
   'eslint-jsdoc': 'eslint-plugin-jsdoc',
-  'eslint-jsonc': 'eslint-plugin-jsonc',
   'eslint-regexp': 'eslint-plugin-regexp',
   'eslint-stylistic': '@stylistic/eslint-plugin',
   'eslint-vitest': '@vitest/eslint-plugin',
-  'import-lite': 'eslint-plugin-import-lite',
+  'import-x': 'eslint-plugin-import-x',
   'ngrx-signals': '@ngrx/signals',
+  'ngrx-signals-api': '@ngrx/signals',
   'perfectionist': 'eslint-plugin-perfectionist',
   'playwright': '@playwright/test',
+  'prettier': 'prettier',
   'rxjs': 'rxjs',
+  'rxjs-api': 'rxjs',
   'rxjs-x': 'eslint-plugin-rxjs-x',
+  'sass': 'sass',
+  'storybook': 'storybook',
   'stylelint': 'stylelint',
   'stylelint-order': 'stylelint-order',
-  'stylelint-stylistic': '@stylistic/stylelint-plugin',
+  'stylelint-recess-order': 'stylelint-config-recess-order',
+  'tsconfig': 'typescript',
   'typescript': 'typescript',
   'typescript-eslint': 'typescript-eslint',
+  'typescript-eslint-guides': 'typescript-eslint',
   'unicorn': 'eslint-plugin-unicorn',
   'vite': 'vite',
   'vitest': 'vitest',
@@ -133,7 +142,7 @@ export function checkVersions(brick: string, project: string): Behind[] {
     version?: string;
   }[] : []).flatMap((source) => {
     const version = major(source.version);
-    const built = existsSync(join(brick, 'library', source.tool ?? '', 'index.md'));
+    const built = existsSync(join(brick, 'library', `${source.tool ?? ''}.index.md`));
 
     return built && version !== undefined ? behindOf(`library/${source.tool ?? ''}/`, toolKey(source.tool ?? ''), version, versions) : [];
   });

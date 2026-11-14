@@ -1,135 +1,52 @@
 ---
 title: "ExecutionContext and SynchronizationContext"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/asynchronous-programming-patterns/executioncontext-synchronizationcontext.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the difference between ExecutionContext and SynchronizationContext in .NET, how each one is used with async/await, and why SynchronizationContext.Current doesn't flow across awaits.
+ms.date: 04/08/2026
+ai-usage: ai-assisted
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "ExecutionContext"
+  - "SynchronizationContext"
+  - "async await context"
+  - "ConfigureAwait"
+  - "context flow"
+  - "asynchronous programming, context"
 ---
-
 # ExecutionContext and SynchronizationContext
 
-When you work with `async` and `await`, two context types play important but very different roles: `System.Threading.ExecutionContext` and `System.Threading.SynchronizationContext`. You learn what each one does, how each one interacts with `async`/`await`, and why `System.Threading.SynchronizationContext.Current` doesn't flow across await points.
+When you work with `async` and `await`, two context types play important but very different roles: <xref:System.Threading.ExecutionContext> and <xref:System.Threading.SynchronizationContext>. You learn what each one does, how each one interacts with `async`/`await`, and why <xref:System.Threading.SynchronizationContext.Current?displayProperty=nameWithType> doesn't flow across await points.
 
 ## What is ExecutionContext?
 
-`System.Threading.ExecutionContext` is a container for ambient state that flows with the logical control flow of your program. In a synchronous world, ambient information lives in thread-local storage (TLS), and all code running on a given thread sees that data. In an asynchronous world, a logical operation can start on one thread, suspend, and resume on a different thread. Thread-local data doesn't follow along automatically—`System.Threading.ExecutionContext` makes it follow.
+<xref:System.Threading.ExecutionContext> is a container for ambient state that flows with the logical control flow of your program. In a synchronous world, ambient information lives in thread-local storage (TLS), and all code running on a given thread sees that data. In an asynchronous world, a logical operation can start on one thread, suspend, and resume on a different thread. Thread-local data doesn't follow along automatically—<xref:System.Threading.ExecutionContext> makes it follow.
 
 ### How ExecutionContext flows
 
-Capture `System.Threading.ExecutionContext` by using `System.Threading.ExecutionContext.Capture`. Restore it during execution of a delegate by using `System.Threading.ExecutionContext.Run*`:
+Capture <xref:System.Threading.ExecutionContext> by using <xref:System.Threading.ExecutionContext.Capture?displayProperty=nameWithType>. Restore it during execution of a delegate by using <xref:System.Threading.ExecutionContext.Run*?displayProperty=nameWithType>:
 
-```csharp
-static void ExecutionContextCaptureDemo()
-{
-    // Capture the current ExecutionContext
-    ExecutionContext? ec = ExecutionContext.Capture();
+:::code language="csharp" source="./snippets/executioncontext-synchronizationcontext/csharp/Program.cs" id="ExecutionContextCapture":::
+:::code language="vb" source="./snippets/executioncontext-synchronizationcontext/vb/Program.vb" id="ExecutionContextCapture":::
 
-    // Later, run a delegate within that captured context
-    if (ec is not null)
-    {
-        ExecutionContext.Run(ec, _ =>
-        {
-            // Code here sees the ambient state from the point of capture
-            Console.WriteLine("Running inside captured ExecutionContext.");
-        }, null);
-    }
-}
-```
-```vb
-Sub ExecutionContextCaptureExample()
-    ' Capture the current ExecutionContext
-    Dim ec As ExecutionContext = ExecutionContext.Capture()
-
-    ' Later, run a delegate within that captured context
-    If ec IsNot Nothing Then
-        ExecutionContext.Run(ec,
-            Sub(state)
-                ' Code here sees the ambient state from the point of capture
-                Console.WriteLine("Running inside captured ExecutionContext.")
-            End Sub, Nothing)
-    End If
-End Sub
-```
-All asynchronous APIs in .NET that fork work—`System.Threading.Tasks.Task.Run*`, `System.Threading.ThreadPool.QueueUserWorkItem*`, `System.IO.Stream.BeginRead*`, and others—capture `System.Threading.ExecutionContext` and use the stored context when invoking your callback. This process of capturing state on one thread and restoring it on another is what "flowing ExecutionContext" means.
+All asynchronous APIs in .NET that fork work—<xref:System.Threading.Tasks.Task.Run*>, <xref:System.Threading.ThreadPool.QueueUserWorkItem*>, <xref:System.IO.Stream.BeginRead*>, and others—capture <xref:System.Threading.ExecutionContext> and use the stored context when invoking your callback. This process of capturing state on one thread and restoring it on another is what "flowing ExecutionContext" means.
 
 ## What is SynchronizationContext?
 
-`System.Threading.SynchronizationContext` is an abstraction that represents a target environment where you want work to run. Different UI frameworks provide their own implementations:
+<xref:System.Threading.SynchronizationContext> is an abstraction that represents a target environment where you want work to run. Different UI frameworks provide their own implementations:
 
-- Windows Forms provides `WindowsFormsSynchronizationContext`, which overrides `System.Threading.SynchronizationContext.Post*` to call `Control.BeginInvoke`.
-- WPF provides `DispatcherSynchronizationContext`, which overrides `System.Threading.SynchronizationContext.Post*` to call `Dispatcher.BeginInvoke`.
+- Windows Forms provides `WindowsFormsSynchronizationContext`, which overrides <xref:System.Threading.SynchronizationContext.Post*> to call `Control.BeginInvoke`.
+- WPF provides `DispatcherSynchronizationContext`, which overrides <xref:System.Threading.SynchronizationContext.Post*> to call `Dispatcher.BeginInvoke`.
 - ASP.NET (on .NET Framework) provided its own context that ensured `HttpContext.Current` was available.
 
-By using `System.Threading.SynchronizationContext` instead of framework-specific marshaling APIs, you can write components that work across UI frameworks:
+By using <xref:System.Threading.SynchronizationContext> instead of framework-specific marshaling APIs, you can write components that work across UI frameworks:
 
-```csharp
-static class SyncContextExample
-{
-    public static void DoWork()
-    {
-        // Capture the current SynchronizationContext
-        SynchronizationContext? sc = SynchronizationContext.Current;
+:::code language="csharp" source="./snippets/executioncontext-synchronizationcontext/csharp/Program.cs" id="SyncContextUsage":::
+:::code language="vb" source="./snippets/executioncontext-synchronizationcontext/vb/Program.vb" id="SyncContextUsage":::
 
-        ThreadPool.QueueUserWorkItem(_ =>
-        {
-            // ... do work on the ThreadPool ...
-
-            if (sc is not null)
-            {
-                sc.Post(_ =>
-                {
-                    // This runs on the original context (e.g. UI thread)
-                    Console.WriteLine("Back on the original context.");
-                }, null);
-            }
-        });
-    }
-}
-```
-```vb
-Class SyncContextExample
-    Public Shared Sub DoWork()
-        ' Install a custom SynchronizationContext for demonstration
-        Dim customContext As New SimpleSynchronizationContext()
-        SynchronizationContext.SetSynchronizationContext(customContext)
-
-        ' Capture the current SynchronizationContext
-        Dim sc As SynchronizationContext = SynchronizationContext.Current
-
-        ThreadPool.QueueUserWorkItem(
-            Sub(state)
-                ' ... do work on the ThreadPool ...
-
-                If sc IsNot Nothing Then
-                    sc.Post(
-                        Sub(s)
-                            ' This runs on the original context (e.g. UI thread)
-                            Console.WriteLine("Back on the original context.")
-                        End Sub, Nothing)
-                Else
-                    Console.WriteLine("No SynchronizationContext was captured.")
-                End If
-            End Sub)
-    End Sub
-End Class
-
-' A minimal SynchronizationContext for demonstration purposes
-Class SimpleSynchronizationContext
-    Inherits SynchronizationContext
-
-    Public Overrides Sub Post(d As SendOrPostCallback, state As Object)
-        ' Queue the callback to run on a thread pool thread
-        ThreadPool.QueueUserWorkItem(
-            Sub(s)
-                d(state)
-            End Sub)
-    End Sub
-End Class
-```
 ### Capture a SynchronizationContext
 
-When you capture a `System.Threading.SynchronizationContext`, you read the reference from `System.Threading.SynchronizationContext.Current` and store it for later use. You then call `System.Threading.SynchronizationContext.Post*` on the captured reference to schedule work back to that environment.
+When you capture a <xref:System.Threading.SynchronizationContext>, you read the reference from <xref:System.Threading.SynchronizationContext.Current?displayProperty=nameWithType> and store it for later use. You then call <xref:System.Threading.SynchronizationContext.Post*> on the captured reference to schedule work back to that environment.
 
 ## Flowing ExecutionContext vs. using SynchronizationContext
 
@@ -138,7 +55,7 @@ Although both mechanisms involve capturing state from a thread, they serve diffe
 - **Flowing ExecutionContext** means capturing ambient state and making that same state current during a delegate's execution. The delegate runs wherever it ends up running—the state follows it.
 - **Using SynchronizationContext** means capturing a scheduling target and using it to *decide where a delegate executes*. The captured context controls where the delegate runs.
 
-In short: `System.Threading.ExecutionContext` answers "what environment should be visible?" while `System.Threading.SynchronizationContext` answers "where should the code run?"
+In short: <xref:System.Threading.ExecutionContext> answers "what environment should be visible?" while <xref:System.Threading.SynchronizationContext> answers "where should the code run?"
 
 ## How async/await interacts with both contexts
 
@@ -146,17 +63,17 @@ The `async`/`await` infrastructure interacts with both contexts automatically, b
 
 ### ExecutionContext always flows
 
-Whenever an `await` suspends a method (because the awaiter's `IsCompleted` returns `false`), the infrastructure captures an `System.Threading.ExecutionContext`. When the method resumes, the continuation runs within the captured context. This behavior is built into the async method builders (for example, `System.Runtime.CompilerServices.AsyncTaskMethodBuilder`) and applies regardless of what kind of awaitable you use.
+Whenever an `await` suspends a method (because the awaiter's `IsCompleted` returns `false`), the infrastructure captures an <xref:System.Threading.ExecutionContext>. When the method resumes, the continuation runs within the captured context. This behavior is built into the async method builders (for example, <xref:System.Runtime.CompilerServices.AsyncTaskMethodBuilder>) and applies regardless of what kind of awaitable you use.
 
-`System.Threading.ExecutionContext.SuppressFlow` exists, but it isn't an await-specific switch like `ConfigureAwait(false)`. It suppresses `System.Threading.ExecutionContext` capture for work that you queue while suppression is active. It doesn't provide a per-`await` programming-model option that tells the async method builders to skip restoring the captured `System.Threading.ExecutionContext` for a continuation. That design is intentional because `System.Threading.ExecutionContext` is infrastructure-level support that simulates thread-local semantics in an asynchronous world, and most developers never need to think about it.
+<xref:System.Threading.ExecutionContext.SuppressFlow> exists, but it isn't an await-specific switch like `ConfigureAwait(false)`. It suppresses <xref:System.Threading.ExecutionContext> capture for work that you queue while suppression is active. It doesn't provide a per-`await` programming-model option that tells the async method builders to skip restoring the captured <xref:System.Threading.ExecutionContext> for a continuation. That design is intentional because <xref:System.Threading.ExecutionContext> is infrastructure-level support that simulates thread-local semantics in an asynchronous world, and most developers never need to think about it.
 
 ### Task awaiters capture SynchronizationContext
 
-The awaiters for `System.Threading.Tasks.Task` and `System.Threading.Tasks.Task`1` include support for `System.Threading.SynchronizationContext`. The async method builders don't include this support.
+The awaiters for <xref:System.Threading.Tasks.Task> and <xref:System.Threading.Tasks.Task`1> include support for <xref:System.Threading.SynchronizationContext>. The async method builders don't include this support.
 
 When you `await` a task:
 
-1. The awaiter checks `System.Threading.SynchronizationContext.Current`.
+1. The awaiter checks <xref:System.Threading.SynchronizationContext.Current?displayProperty=nameWithType>.
 1. If a context exists, the awaiter captures it.
 1. When the task completes, the continuation is posted back to that captured context instead of running on the completing thread or the thread pool.
 
@@ -164,85 +81,32 @@ This behavior is how `await` "brings you back to where you were". For example, r
 
 ### ConfigureAwait controls SynchronizationContext capture
 
-If you don't want the marshaling behavior, call `System.Threading.Tasks.Task.ConfigureAwait*` with `false`:
+If you don't want the marshaling behavior, call <xref:System.Threading.Tasks.Task.ConfigureAwait*> with `false`:
 
 ```csharp
 await task.ConfigureAwait(false);
 ```
 
-When you set `continueOnCapturedContext` to `false`, the awaiter doesn't check for a `System.Threading.SynchronizationContext` and the continuation runs wherever the task completes (typically on a thread pool thread). Library authors should use `ConfigureAwait(false)` on every await unless the code specifically needs to resume on the captured context.
+When you set `continueOnCapturedContext` to `false`, the awaiter doesn't check for a <xref:System.Threading.SynchronizationContext> and the continuation runs wherever the task completes (typically on a thread pool thread). Library authors should use `ConfigureAwait(false)` on every await unless the code specifically needs to resume on the captured context.
 
 ## SynchronizationContext.Current doesn't flow across awaits
 
-This point is the most important: `System.Threading.SynchronizationContext.Current` **doesn't flow** across await points. The async method builders in the runtime use internal overloads that explicitly suppress `System.Threading.SynchronizationContext` from flowing as part of `System.Threading.ExecutionContext`.
+This point is the most important: <xref:System.Threading.SynchronizationContext.Current?displayProperty=nameWithType> **doesn't flow** across await points. The async method builders in the runtime use internal overloads that explicitly suppress <xref:System.Threading.SynchronizationContext> from flowing as part of <xref:System.Threading.ExecutionContext>.
 
 ### Why this matters
 
-Technically, `System.Threading.SynchronizationContext` is one of the sub-contexts that `System.Threading.ExecutionContext` can contain. If it flowed as part of `System.Threading.ExecutionContext`, code executing on a thread pool thread might see a UI `SynchronizationContext` as `Current`, not because that thread is the UI thread, but because the context "leaked" via flow. That change would alter the meaning of `System.Threading.SynchronizationContext.Current` from "the environment I'm currently in" to "the environment that historically existed somewhere in the call chain."
+Technically, <xref:System.Threading.SynchronizationContext> is one of the sub-contexts that <xref:System.Threading.ExecutionContext> can contain. If it flowed as part of <xref:System.Threading.ExecutionContext>, code executing on a thread pool thread might see a UI `SynchronizationContext` as `Current`, not because that thread is the UI thread, but because the context "leaked" via flow. That change would alter the meaning of <xref:System.Threading.SynchronizationContext.Current?displayProperty=nameWithType> from "the environment I'm currently in" to "the environment that historically existed somewhere in the call chain."
 
 ### The Task.Run example
 
-Consider code that offloads work to the thread pool. The UI-thread behavior described here applies only when `System.Threading.SynchronizationContext.Current` is non-null, such as in a UI app:
+Consider code that offloads work to the thread pool. The UI-thread behavior described here applies only when <xref:System.Threading.SynchronizationContext.Current?displayProperty=nameWithType> is non-null, such as in a UI app:
 
-```csharp
-static class TaskRunExample
-{
-    public static async Task ProcessOnUIThread()
-    {
-        // This method is called from a thread with a SynchronizationContext.
-        // Task.Run offloads work to the thread pool.
-        string result = await Task.Run(async () =>
-        {
-            string data = await DownloadAsync();
-            // Compute runs on the thread pool, not the original context,
-            // because SynchronizationContext doesn't flow into Task.Run.
-            return Compute(data);
-        });
+:::code language="csharp" source="./snippets/executioncontext-synchronizationcontext/csharp/Program.cs" id="TaskRunExample":::
+:::code language="vb" source="./snippets/executioncontext-synchronizationcontext/vb/Program.vb" id="TaskRunExample":::
 
-        // Back on the original context (the continuation is posted back).
-        Console.WriteLine(result);
-    }
+In a console app, <xref:System.Threading.SynchronizationContext.Current?displayProperty=nameWithType> is typically `null`, so the snippet doesn't resume on a real UI thread. Instead, the snippet illustrates the rule conceptually: if a UI <xref:System.Threading.SynchronizationContext> flowed across `await` points, the `await` inside the delegate passed to <xref:System.Threading.Tasks.Task.Run*?displayProperty=nameWithType> would see that UI context as `Current`. The continuation after `await DownloadAsync()` would then post back to the UI thread, causing `Compute(data)` to run on the UI thread instead of on the thread pool. That behavior defeats the purpose of the `Task.Run` call.
 
-    private static async Task<string> DownloadAsync()
-    {
-        await Task.Delay(100);
-        return "downloaded data";
-    }
-
-    private static string Compute(string data) =>
-        $"Computed: {data.Length} chars";
-}
-```
-```vb
-Class TaskRunExampleClass
-    Public Shared Async Function ProcessOnUIThread() As Task
-        ' If a SynchronizationContext is present when this method starts,
-        ' the outer await captures it. Task.Run still offloads work to the thread pool.
-        Dim result As String = Await Task.Run(
-            Async Function()
-                Dim data As String = Await DownloadAsync()
-                ' Compute runs on the thread pool, not the caller's context,
-                ' because SynchronizationContext doesn't flow into Task.Run.
-                Return Compute(data)
-            End Function)
-
-        ' Resume on the captured context, if one was available.
-        Console.WriteLine(result)
-    End Function
-
-    Private Shared Async Function DownloadAsync() As Task(Of String)
-        Await Task.Delay(100)
-        Return "downloaded data"
-    End Function
-
-    Private Shared Function Compute(data As String) As String
-        Return $"Computed: {data.Length} chars"
-    End Function
-End Class
-```
-In a console app, `System.Threading.SynchronizationContext.Current` is typically `null`, so the snippet doesn't resume on a real UI thread. Instead, the snippet illustrates the rule conceptually: if a UI `System.Threading.SynchronizationContext` flowed across `await` points, the `await` inside the delegate passed to `System.Threading.Tasks.Task.Run*` would see that UI context as `Current`. The continuation after `await DownloadAsync()` would then post back to the UI thread, causing `Compute(data)` to run on the UI thread instead of on the thread pool. That behavior defeats the purpose of the `Task.Run` call.
-
-Because the runtime suppresses `System.Threading.SynchronizationContext` flow in `System.Threading.ExecutionContext`, the `await` inside `Task.Run` doesn't inherit an outer UI context, and the continuation keeps running on the thread pool as intended.
+Because the runtime suppresses <xref:System.Threading.SynchronizationContext> flow in <xref:System.Threading.ExecutionContext>, the `await` inside `Task.Run` doesn't inherit an outer UI context, and the continuation keeps running on the thread pool as intended.
 
 ## Summary
 
@@ -256,6 +120,6 @@ Because the runtime suppresses `System.Threading.SynchronizationContext` flow in
 
 ## See also
 
-- Task-based asynchronous pattern (TAP)
-- Consume the task-based asynchronous pattern
-- SynchronizationContext and console apps
+- [Task-based asynchronous pattern (TAP)](task-based-asynchronous-pattern-tap.md)
+- [Consume the task-based asynchronous pattern](consuming-the-task-based-asynchronous-pattern.md)
+- [SynchronizationContext and console apps](synchronizationcontext-console-apps.md)

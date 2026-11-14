@@ -1,12 +1,3 @@
----
-title: "core::num"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/num/mod.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::num
 
 Numeric traits and functions for the built-in numeric types.
@@ -17,7 +8,7 @@ Numeric traits and functions for the built-in numeric types.
 pub const fn midpoint(self, rhs: $SelfT) -> $SelfT
 ```
 
-```rust
+```
 
 ## fn midpoint
 
@@ -25,7 +16,7 @@ pub const fn midpoint(self, rhs: $SelfT) -> $SelfT
 pub const fn midpoint(self, rhs: Self) -> Self
 ```
 
-```rust
+```
 
 ## fn midpoint
 
@@ -33,7 +24,7 @@ pub const fn midpoint(self, rhs: Self) -> Self
 pub const fn midpoint(self, rhs: $SelfT) -> $SelfT
 ```
 
-```rust
+```
 
 ## fn midpoint
 
@@ -41,7 +32,7 @@ pub const fn midpoint(self, rhs: $SelfT) -> $SelfT
 pub const fn midpoint(self, rhs: $SelfT) -> $SelfT
 ```
 
-```rust
+```
 
 ## u8::is_ascii
 
@@ -53,7 +44,7 @@ Checks if the value is within the ASCII range.
 
 # Examples
 
-```rust
+```
 let ascii = 97u8;
 let non_ascii = 150u8;
 
@@ -72,15 +63,17 @@ Makes a copy of the value in its ASCII upper case equivalent.
 ASCII letters 'a' to 'z' are mapped to 'A' to 'Z',
 but non-ASCII letters are unchanged.
 
-To uppercase the value in-place, use `make_ascii_uppercase`.
+To uppercase the value in-place, use [`make_ascii_uppercase`].
 
 # Examples
 
-```rust
+```
 let lowercase_a = 97u8;
 
 assert_eq!(65, lowercase_a.to_ascii_uppercase());
 ```
+
+[`make_ascii_uppercase`]: Self::make_ascii_uppercase
 
 ## u8::to_ascii_lowercase
 
@@ -93,15 +86,17 @@ Makes a copy of the value in its ASCII lower case equivalent.
 ASCII letters 'A' to 'Z' are mapped to 'a' to 'z',
 but non-ASCII letters are unchanged.
 
-To lowercase the value in-place, use `make_ascii_lowercase`.
+To lowercase the value in-place, use [`make_ascii_lowercase`].
 
 # Examples
 
-```rust
+```
 let uppercase_a = 65u8;
 
 assert_eq!(97, uppercase_a.to_ascii_lowercase());
 ```
+
+[`make_ascii_lowercase`]: Self::make_ascii_lowercase
 
 ## u8::eq_ignore_ascii_case
 
@@ -115,7 +110,7 @@ This is equivalent to `to_ascii_lowercase(a) == to_ascii_lowercase(b)`.
 
 # Examples
 
-```rust
+```
 let lowercase_a = 97u8;
 let uppercase_a = 65u8;
 
@@ -134,17 +129,19 @@ ASCII letters 'a' to 'z' are mapped to 'A' to 'Z',
 but non-ASCII letters are unchanged.
 
 To return a new uppercased value without modifying the existing one, use
-`to_ascii_uppercase`.
+[`to_ascii_uppercase`].
 
 # Examples
 
-```rust
+```
 let mut byte = b'a';
 
 byte.make_ascii_uppercase();
 
 assert_eq!(b'A', byte);
 ```
+
+[`to_ascii_uppercase`]: Self::to_ascii_uppercase
 
 ## u8::make_ascii_lowercase
 
@@ -158,17 +155,19 @@ ASCII letters 'A' to 'Z' are mapped to 'a' to 'z',
 but non-ASCII letters are unchanged.
 
 To return a new lowercased value without modifying the existing one, use
-`to_ascii_lowercase`.
+[`to_ascii_lowercase`].
 
 # Examples
 
-```rust
+```
 let mut byte = b'A';
 
 byte.make_ascii_lowercase();
 
 assert_eq!(b'a', byte);
 ```
+
+[`to_ascii_lowercase`]: Self::to_ascii_lowercase
 
 ## u8::is_ascii_alphabetic
 
@@ -183,7 +182,7 @@ Checks if the value is an ASCII alphabetic character:
 
 # Examples
 
-```rust
+```
 let uppercase_a = b'A';
 let uppercase_g = b'G';
 let a = b'a';
@@ -216,7 +215,7 @@ U+0041 'A' ..= U+005A 'Z'.
 
 # Examples
 
-```rust
+```
 let uppercase_a = b'A';
 let uppercase_g = b'G';
 let a = b'a';
@@ -249,7 +248,7 @@ U+0061 'a' ..= U+007A 'z'.
 
 # Examples
 
-```rust
+```
 let uppercase_a = b'A';
 let uppercase_g = b'G';
 let a = b'a';
@@ -285,7 +284,7 @@ Checks if the value is an ASCII alphanumeric character:
 
 # Examples
 
-```rust
+```
 let uppercase_a = b'A';
 let uppercase_g = b'G';
 let a = b'a';
@@ -318,7 +317,7 @@ U+0030 '0' ..= U+0039 '9'.
 
 # Examples
 
-```rust
+```
 let uppercase_a = b'A';
 let uppercase_g = b'G';
 let a = b'a';
@@ -354,7 +353,7 @@ Checks if the value is an ASCII hexadecimal digit:
 
 # Examples
 
-```rust
+```
 let uppercase_a = b'A';
 let uppercase_g = b'G';
 let a = b'a';
@@ -392,7 +391,7 @@ Checks if the value is an ASCII punctuation or symbol character
 
 # Examples
 
-```rust
+```
 let uppercase_a = b'A';
 let uppercase_g = b'G';
 let a = b'a';
@@ -426,7 +425,7 @@ U+0021 '!' ..= U+007E '~'.
 
 # Examples
 
-```rust
+```
 let uppercase_a = b'A';
 let uppercase_g = b'G';
 let a = b'a';
@@ -461,21 +460,25 @@ U+000C FORM FEED, or U+000D CARRIAGE RETURN.
 **Warning:** Because the list above excludes U+000B VERTICAL TAB,
 `b.is_ascii_whitespace()` is **not** equivalent to `char::from(b).is_whitespace()`.
 
-Rust uses the WhatWG Infra Standard's definition of ASCII
-whitespace. There are several other definitions in
-wide use. For instance, the POSIX locale includes
+Rust uses the WhatWG Infra Standard's [definition of ASCII
+whitespace][infra-aw]. There are several other definitions in
+wide use. For instance, [the POSIX locale][pct] includes
 U+000B VERTICAL TAB as well as all the above characters,
-but—from the very same specification—the default rule for
-"field splitting" in the Bourne shell considers *only*
+but—from the very same specification—[the default rule for
+"field splitting" in the Bourne shell][bfs] considers *only*
 SPACE, HORIZONTAL TAB, and LINE FEED as whitespace.
 
 If you are writing a program that will process an existing
 file format, check what that format's definition of whitespace is
 before using this function.
 
+[infra-aw]: https://infra.spec.whatwg.org/#ascii-whitespace
+[pct]: https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap07.html#tag_07_03_01
+[bfs]: https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_19_06_05
+
 # Examples
 
-```rust
+```
 let uppercase_a = b'A';
 let uppercase_g = b'G';
 let a = b'a';
@@ -510,7 +513,7 @@ characters, but SPACE is not.
 
 # Examples
 
-```rust
+```
 let uppercase_a = b'A';
 let uppercase_g = b'G';
 let a = b'a';
@@ -541,11 +544,11 @@ pub fn escape_ascii(self) -> ascii::EscapeDefault
 Returns an iterator that produces an escaped version of a `u8`,
 treating it as an ASCII character.
 
-The behavior is identical to `ascii::escape_default`.
+The behavior is identical to [`ascii::escape_default`].
 
 # Examples
 
-```rust
+```
 assert_eq!("0", b'0'.escape_ascii().to_string());
 assert_eq!("\\t", b'\t'.escape_ascii().to_string());
 assert_eq!("\\r", b'\r'.escape_ascii().to_string());
@@ -564,12 +567,12 @@ pub enum FpCategory
 
 A classification of floating point numbers.
 
-This `enum` is used as the return type for `f32::classify` and `f64::classify`. See
+This `enum` is used as the return type for [`f32::classify`] and [`f64::classify`]. See
 their documentation for more.
 
 # Examples
 
-```rust
+```
 use std::num::FpCategory;
 
 let num = 12.4_f32;
@@ -591,4 +594,4 @@ assert_eq!(nan.classify(), FpCategory::Nan);
 pub const fn from_str_radix(src: &str, radix: u32) -> Result<$int_ty, ParseIntError>
 ```
 
-```rust
+```

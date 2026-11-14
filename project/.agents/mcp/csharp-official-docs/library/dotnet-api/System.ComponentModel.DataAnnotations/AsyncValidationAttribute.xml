@@ -1,0 +1,302 @@
+<Type Name="AsyncValidationAttribute" FullName="System.ComponentModel.DataAnnotations.AsyncValidationAttribute">
+  <TypeSignature Language="C#" Value="public abstract class AsyncValidationAttribute : System.ComponentModel.DataAnnotations.ValidationAttribute" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract beforefieldinit AsyncValidationAttribute extends System.ComponentModel.DataAnnotations.ValidationAttribute" />
+  <TypeSignature Language="DocId" Value="T:System.ComponentModel.DataAnnotations.AsyncValidationAttribute" />
+  <TypeSignature Language="VB.NET" Value="Public MustInherit Class AsyncValidationAttribute&#xA;Inherits ValidationAttribute" />
+  <TypeSignature Language="F#" Value="type AsyncValidationAttribute = class&#xA;    inherit ValidationAttribute" />
+  <TypeSignature Language="C++ CLI" Value="public ref class AsyncValidationAttribute abstract : System::ComponentModel::DataAnnotations::ValidationAttribute" />
+  <AssemblyInfo>
+    <AssemblyName>System.ComponentModel.Annotations</AssemblyName>
+    <AssemblyVersion>11.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.ComponentModel.DataAnnotations.ValidationAttribute</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Attributes>
+    <Attribute>
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>
+      <para>Base class for validation attributes that require asynchronous operations, such as database lookups or API calls.</para>
+      <para>Derived implementations must be thread-safe, as instances of this attribute might be invoked concurrently from multiple threads.</para>
+    </summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected AsyncValidationAttribute ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.DataAnnotations.AsyncValidationAttribute.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Protected Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; AsyncValidationAttribute();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.ComponentModel.Annotations</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>Default constructor for any async validation attribute.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected AsyncValidationAttribute (Func&lt;string&gt; errorMessageAccessor);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor(class System.Func`1&lt;string&gt; errorMessageAccessor) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.DataAnnotations.AsyncValidationAttribute.#ctor(System.Func{System.String})" />
+      <MemberSignature Language="VB.NET" Value="Protected Sub New (errorMessageAccessor As Func(Of String))" />
+      <MemberSignature Language="F#" Value="new System.ComponentModel.DataAnnotations.AsyncValidationAttribute : Func&lt;string&gt; -&gt; System.ComponentModel.DataAnnotations.AsyncValidationAttribute" Usage="new System.ComponentModel.DataAnnotations.AsyncValidationAttribute errorMessageAccessor" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; AsyncValidationAttribute(Func&lt;System::String ^&gt; ^ errorMessageAccessor);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.ComponentModel.Annotations</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="errorMessageAccessor" Type="System.Func&lt;System.String&gt;" />
+      </Parameters>
+      <Docs>
+        <param name="errorMessageAccessor">The <see cref="T:System.Func`1" /> that returns an error message.</param>
+        <summary>
+          <para>Allows for providing a resource accessor function that is used by the <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageString" /> property to retrieve the error message.</para>
+        </summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected AsyncValidationAttribute (string errorMessage);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor(string errorMessage) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.DataAnnotations.AsyncValidationAttribute.#ctor(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Protected Sub New (errorMessage As String)" />
+      <MemberSignature Language="F#" Value="new System.ComponentModel.DataAnnotations.AsyncValidationAttribute : string -&gt; System.ComponentModel.DataAnnotations.AsyncValidationAttribute" Usage="new System.ComponentModel.DataAnnotations.AsyncValidationAttribute errorMessage" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; AsyncValidationAttribute(System::String ^ errorMessage);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.ComponentModel.Annotations</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="errorMessage" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="errorMessage">A non-localized error message to use in <see cref="P:System.ComponentModel.DataAnnotations.ValidationAttribute.ErrorMessageString" />.</param>
+        <summary>Constructor that accepts a fixed validation error message.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetValidationResultAsync">
+      <MemberSignature Language="C#" Value="public System.Threading.Tasks.Task&lt;System.ComponentModel.DataAnnotations.ValidationResult?&gt; GetValidationResultAsync (object? value, System.ComponentModel.DataAnnotations.ValidationContext validationContext, System.Threading.CancellationToken cancellationToken = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Threading.Tasks.Task`1&lt;class System.ComponentModel.DataAnnotations.ValidationResult&gt; GetValidationResultAsync(object value, class System.ComponentModel.DataAnnotations.ValidationContext validationContext, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.DataAnnotations.AsyncValidationAttribute.GetValidationResultAsync(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Public Function GetValidationResultAsync (value As Object, validationContext As ValidationContext, Optional cancellationToken As CancellationToken = Nothing) As Task(Of ValidationResult)" />
+      <MemberSignature Language="F#" Value="member this.GetValidationResultAsync : obj * System.ComponentModel.DataAnnotations.ValidationContext * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.ComponentModel.DataAnnotations.ValidationResult&gt;" Usage="asyncValidationAttribute.GetValidationResultAsync (value, validationContext, cancellationToken)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.ComponentModel.Annotations</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;System.ComponentModel.DataAnnotations.ValidationResult&gt;</ReturnType>
+        <Attributes>
+          <Attribute>
+            <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 1, 2 })]</AttributeName>
+            <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 1, 2 })&gt;]</AttributeName>
+          </Attribute>
+        </Attributes>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.Object">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="validationContext" Type="System.ComponentModel.DataAnnotations.ValidationContext" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
+      </Parameters>
+      <Docs>
+        <param name="value">The value to validate.</param>
+        <param name="validationContext">
+          <para>A <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> instance that provides context about the validation operation, such as the object and member being validated. Provides access to services required to perform validation using <see cref="T:System.IServiceProvider" />.</para>
+        </param>
+        <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
+        <summary>
+          <para>Tests whether the given <paramref name="value" /> is valid asynchronously with respect to the current validation attribute without throwing a <see cref="T:System.ComponentModel.DataAnnotations.ValidationException" />.</para>
+        </summary>
+        <returns>
+          <para>A <see cref="T:System.Threading.Tasks.Task`1" /> representing the asynchronous validation operation.</para>
+          <para>When validation is valid, the result is <see cref="F:System.ComponentModel.DataAnnotations.ValidationResult.Success" />.</para>
+          <para>When validation is invalid, the result is an instance of <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" />.</para>
+        </returns>
+        <remarks>
+          <para>
+            The underlying <see cref="M:System.ComponentModel.DataAnnotations.AsyncValidationAttribute.IsValidAsync(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Threading.CancellationToken)" /> implementation
+            must observe the supplied <paramref name="cancellationToken" /> and stop work promptly when cancellation
+            is requested. The validation infrastructure awaits all started validation tasks before returning, so an
+            implementation that ignores cancellation can delay failure and short-circuiting.
+          </para>
+          <para>
+            Callers that need to bound validation time should pass a token configured to cancel after a timeout,
+            such as one from a <see cref="T:System.Threading.CancellationTokenSource" /> configured with
+            <see cref="M:System.Threading.CancellationTokenSource.CancelAfter(System.TimeSpan)" />.
+          </para>
+        </remarks>
+        <exception cref="T:System.InvalidOperationException">The current attribute is malformed.</exception>
+        <exception cref="T:System.ArgumentNullException">When <paramref name="validationContext" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.OperationCanceledException">The validation operation was canceled.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="IsValid">
+      <MemberSignature Language="C#" Value="public override sealed bool IsValid (object? value);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance bool IsValid(object value) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.DataAnnotations.AsyncValidationAttribute.IsValid(System.Object)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides NotOverridable Function IsValid (value As Object) As Boolean" />
+      <MemberSignature Language="F#" Value="override this.IsValid : obj -&gt; bool" Usage="asyncValidationAttribute.IsValid value" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override bool IsValid(System::Object ^ value);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.ComponentModel.Annotations</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="value">The value to validate.</param>
+        <summary>
+          <para>Sealed override of <see cref="M:System.ComponentModel.DataAnnotations.ValidationAttribute.IsValid(System.Object)" /> that delegates to the <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> overload so that <see cref="T:System.ComponentModel.DataAnnotations.AsyncValidationAttribute" /> implementations only need to provide a single synchronous fallback via <see cref="M:System.ComponentModel.DataAnnotations.ValidationAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)" />.</para>
+        </summary>
+        <returns>
+          <see langword="true" /> if the value is valid; otherwise, <see langword="false" />.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsValid">
+      <MemberSignature Language="C#" Value="protected abstract System.ComponentModel.DataAnnotations.ValidationResult? IsValid (object? value, System.ComponentModel.DataAnnotations.ValidationContext validationContext);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance class System.ComponentModel.DataAnnotations.ValidationResult IsValid(object value, class System.ComponentModel.DataAnnotations.ValidationContext validationContext) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.DataAnnotations.AsyncValidationAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)" />
+      <MemberSignature Language="VB.NET" Value="Protected MustOverride Function IsValid (value As Object, validationContext As ValidationContext) As ValidationResult" />
+      <MemberSignature Language="F#" Value="override this.IsValid : obj * System.ComponentModel.DataAnnotations.ValidationContext -&gt; System.ComponentModel.DataAnnotations.ValidationResult" Usage="asyncValidationAttribute.IsValid (value, validationContext)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; abstract System::ComponentModel::DataAnnotations::ValidationResult ^ IsValid(System::Object ^ value, System::ComponentModel::DataAnnotations::ValidationContext ^ validationContext);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.ComponentModel.Annotations</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.ComponentModel.DataAnnotations.ValidationResult</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.Object" />
+        <Parameter Name="validationContext" Type="System.ComponentModel.DataAnnotations.ValidationContext">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(1)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(1)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+      </Parameters>
+      <Docs>
+        <param name="value">The value to validate.</param>
+        <param name="validationContext">
+          <para>A <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> instance that provides context about the validation operation, such as the object and member being validated. Provides access to services required to perform validation using <see cref="T:System.IServiceProvider" />. This value can be <see langword="null" /> when the contextless <see cref="M:System.ComponentModel.DataAnnotations.ValidationAttribute.IsValid(System.Object)" /> overload invokes this method.</para>
+        </param>
+        <summary>Defines the synchronous validation behavior for this attribute.</summary>
+        <returns>
+          <para>
+            <see cref="F:System.ComponentModel.DataAnnotations.ValidationResult.Success" /> when validation is valid.</para>
+          <para>An instance of <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" /> when validation is invalid.</para>
+        </returns>
+        <remarks>
+          <para>
+            Synchronous validation consumers invoke this method. Provide a synchronous implementation when it
+            can evaluate the applicable rule, and return a validation error when the rule rejects the value.
+            If a required rule applies but cannot be evaluated synchronously, throw
+            <see cref="T:System.InvalidOperationException" /> with a message directing callers to an asynchronous
+            validation entry point. An unsupported invocation does not establish that the value is invalid.
+          </para>
+          <para>
+            Return <see cref="F:System.ComponentModel.DataAnnotations.ValidationResult.Success" /> without evaluating the rule only when the rule does
+            not apply. Do not return success merely because a required asynchronous check applies but cannot run
+            synchronously. Success does not indicate pending validation or arrange a later asynchronous invocation.
+          </para>
+          <para>
+            Do not implement this method by blocking on asynchronous work through
+            <c>Task&lt;TResult&gt;.Result</c>, <c>Task.Wait()</c>, or <c>GetAwaiter().GetResult()</c>.
+            Wrapping the asynchronous operation in <c>Task.Run</c> does not make a blocking wait appropriate.
+          </para>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsValidAsync">
+      <MemberSignature Language="C#" Value="protected abstract System.Threading.Tasks.Task&lt;System.ComponentModel.DataAnnotations.ValidationResult?&gt; IsValidAsync (object? value, System.ComponentModel.DataAnnotations.ValidationContext validationContext, System.Threading.CancellationToken cancellationToken);" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig newslot virtual instance class System.Threading.Tasks.Task`1&lt;class System.ComponentModel.DataAnnotations.ValidationResult&gt; IsValidAsync(object value, class System.ComponentModel.DataAnnotations.ValidationContext validationContext, valuetype System.Threading.CancellationToken cancellationToken) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ComponentModel.DataAnnotations.AsyncValidationAttribute.IsValidAsync(System.Object,System.ComponentModel.DataAnnotations.ValidationContext,System.Threading.CancellationToken)" />
+      <MemberSignature Language="VB.NET" Value="Protected MustOverride Function IsValidAsync (value As Object, validationContext As ValidationContext, cancellationToken As CancellationToken) As Task(Of ValidationResult)" />
+      <MemberSignature Language="F#" Value="abstract member IsValidAsync : obj * System.ComponentModel.DataAnnotations.ValidationContext * System.Threading.CancellationToken -&gt; System.Threading.Tasks.Task&lt;System.ComponentModel.DataAnnotations.ValidationResult&gt;" Usage="asyncValidationAttribute.IsValidAsync (value, validationContext, cancellationToken)" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; abstract System::Threading::Tasks::Task&lt;System::ComponentModel::DataAnnotations::ValidationResult ^&gt; ^ IsValidAsync(System::Object ^ value, System::ComponentModel::DataAnnotations::ValidationContext ^ validationContext, System::Threading::CancellationToken cancellationToken);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.ComponentModel.Annotations</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Threading.Tasks.Task&lt;System.ComponentModel.DataAnnotations.ValidationResult&gt;</ReturnType>
+        <Attributes>
+          <Attribute>
+            <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(new System.Byte[] { 1, 2 })]</AttributeName>
+            <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(new System.Byte[] { 1, 2 })&gt;]</AttributeName>
+          </Attribute>
+        </Attributes>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="value" Type="System.Object">
+          <Attributes>
+            <Attribute>
+              <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+              <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+            </Attribute>
+          </Attributes>
+        </Parameter>
+        <Parameter Name="validationContext" Type="System.ComponentModel.DataAnnotations.ValidationContext" />
+        <Parameter Name="cancellationToken" Type="System.Threading.CancellationToken" />
+      </Parameters>
+      <Docs>
+        <param name="value">The value to validate.</param>
+        <param name="validationContext">
+          <para>A <see cref="T:System.ComponentModel.DataAnnotations.ValidationContext" /> instance that provides context about the validation operation, such as the object and member being validated. Provides access to services required to perform validation using <see cref="T:System.IServiceProvider" />.</para>
+        </param>
+        <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
+        <summary>Override this method in subclasses to implement asynchronous validation logic.</summary>
+        <returns>
+          <para>A <see cref="T:System.Threading.Tasks.Task`1" /> representing the asynchronous validation operation.</para>
+          <para>When validation is valid, the result is <see cref="F:System.ComponentModel.DataAnnotations.ValidationResult.Success" />.</para>
+          <para>When validation is invalid, the result is an instance of <see cref="T:System.ComponentModel.DataAnnotations.ValidationResult" />.</para>
+        </returns>
+        <remarks>
+          <para>
+            This method must perform all applicable checks, including checks that can run synchronously.
+            The synchronous <see cref="M:System.ComponentModel.DataAnnotations.AsyncValidationAttribute.IsValid(System.Object,System.ComponentModel.DataAnnotations.ValidationContext)" /> implementation is not
+            automatically invoked before this method. Share common checks through a helper when needed.
+          </para>
+          <para>
+            Implementations must observe the supplied <paramref name="cancellationToken" /> and stop work promptly
+            when cancellation is requested. The validation infrastructure might cancel this token after a validation
+            failure to stop sibling validators and awaits all started validation tasks before returning. An
+            implementation that ignores cancellation can delay failure and short-circuiting.
+          </para>
+        </remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

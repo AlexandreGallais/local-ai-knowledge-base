@@ -1,10 +1,5 @@
 ---
-title: "injectCjsGlobals | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/injectcjsglobals.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: injectCjsGlobals | Config
 ---
 
 # injectCjsGlobals
@@ -45,7 +40,8 @@ ReferenceError: __dirname is not defined
 "__dirname" is a CommonJS variable that is not available in ES modules, and "injectCjsGlobals" is disabled. If this module is meant to be an ES module, use "import.meta.dirname" instead of "__dirname". If it is meant to be a CommonJS module, use the ".cjs" file extension, set "type": "commonjs" in the nearest package.json, or externalize it with "server.deps.external".
 ```
 
-**Warning:**
+::: warning
 This option doesn't affect externalized modules which are always executed by the native runtime. Node.js provides CommonJS variables to externalized CommonJS modules on its own.
 
-Note that inlined CommonJS modules are not processed by Vite plugins even when this option is enabled: `require` calls always leave the module runner, so features like mocking do not apply to them. See CommonJS source code is not fully supported for configuration alternatives.
+Note that inlined CommonJS modules are not processed by Vite plugins even when this option is enabled: `require` calls always leave the module runner, so features like mocking do not apply to them. See [CommonJS source code is not fully supported](/guide/common-errors#commonjs-source-code-is-not-fully-supported) for configuration alternatives.
+:::

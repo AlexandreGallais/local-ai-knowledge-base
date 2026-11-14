@@ -1,12 +1,13 @@
 ---
 title: "Specifying an Entry Point"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/native-interop/specifying-an-entry-point.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn to specify an entry point, which identifies a function's location in a DLL. You can rename the function by mapping the entry point to another name.
+ms.date: 07/08/2026
+ai-usage: ai-assisted
+helpviewer_keywords:
+  - "EntryPoint field"
+  - "platform invoke, attribute fields"
+  - "attribute fields in platform invoke, EntryPoint"
 ---
-
 # Specifying an Entry Point
 
 An entry point identifies the location of a function in a DLL. Within a managed project, the original name or ordinal entry point of a target function identifies that function across the interoperation boundary. Further, you can map the entry point to a different name, effectively renaming the function.
@@ -25,7 +26,7 @@ An entry point identifies the location of a function in a DLL. Within a managed 
 
 ## Renaming a Function in Visual Basic
 
-Visual Basic uses the `Function` keyword in the `Declare` statement to set the `System.Runtime.InteropServices.DllImportAttribute.EntryPoint` field. The following example shows a basic declaration.
+Visual Basic uses the `Function` keyword in the `Declare` statement to set the <xref:System.Runtime.InteropServices.DllImportAttribute.EntryPoint?displayProperty=nameWithType> field. The following example shows a basic declaration.
 
 ```vb
 Friend Class NativeMethods
@@ -37,7 +38,7 @@ Friend Class NativeMethods
 End Class
 ```
 
-You can replace the `MessageBox` entry point with `MsgBox` by including the `Alias` keyword in your definition, as shown in the following example. In both examples the `Auto` keyword eliminates the need to specify the character-set version of the entry point. For more information about selecting a character set, see Specifying a Character Set.
+You can replace the `MessageBox` entry point with `MsgBox` by including the `Alias` keyword in your definition, as shown in the following example. In both examples the `Auto` keyword eliminates the need to specify the character-set version of the entry point. For more information about selecting a character set, see [Specifying a Character Set](specifying-a-character-set.md).
 
 ```vb
 Friend Class NativeMethods
@@ -52,7 +53,7 @@ End Class
 
 ## Renaming a Function in C# and C++
 
- You can use the `System.Runtime.InteropServices.DllImportAttribute.EntryPoint` field to specify a DLL function by name or ordinal. If the name of the function in your method definition is the same as the entry point in the DLL, you do not have to explicitly identify the function with the `EntryPoint` field. Otherwise, use one of the following attribute forms to indicate a name or ordinal:
+ You can use the <xref:System.Runtime.InteropServices.DllImportAttribute.EntryPoint?displayProperty=nameWithType> field to specify a DLL function by name or ordinal. If the name of the function in your method definition is the same as the entry point in the DLL, you do not have to explicitly identify the function with the `EntryPoint` field. Otherwise, use one of the following attribute forms to indicate a name or ordinal:
 
 ```csharp
 [DllImport("DllName", EntryPoint = "Functionname")]
@@ -87,7 +88,7 @@ extern "C" int MsgBox(
 
 ## See also
 
-- `System.Runtime.InteropServices.DllImportAttribute`
-- Creating Prototypes in Managed Code
-- Platform Invoke Examples
-- Marshalling Data with Platform Invoke
+- <xref:System.Runtime.InteropServices.DllImportAttribute>
+- [Creating Prototypes in Managed Code](creating-prototypes-in-managed-code.md)
+- [Platform Invoke Examples](platform-invoke-examples.md)
+- [Marshalling Data with Platform Invoke](marshalling-data-with-platform-invoke.md)

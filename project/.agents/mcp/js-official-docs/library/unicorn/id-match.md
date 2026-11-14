@@ -1,19 +1,13 @@
----
-title: "id-match"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/id-match.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # id-match
 
 📝 Require identifiers to match a specified regular expression.
 
 🚫 Disabled by default.
 
-This rule is the same as the built-in ESLint `id-match` rule, but with an additional `checkNamedSpecifiers` option.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+This rule is the same as the built-in ESLint [`id-match`](https://eslint.org/docs/latest/rules/id-match) rule, but with an additional `checkNamedSpecifiers` option.
 
 Enforcing an identifier pattern prevents names from drifting from a project's naming convention while keeping that convention configurable.
 

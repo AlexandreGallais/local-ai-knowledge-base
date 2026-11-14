@@ -1,68 +1,60 @@
----
-title: "PriorityQueue class (java.util)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/PriorityQueue.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # PriorityQueue class (java.util)
 
 ```java
 public class PriorityQueue<E> extends AbstractQueue<E> implements java.io.Serializable
 ```
 
-An unbounded priority queue based on a priority heap.
+An unbounded priority {@linkplain Queue queue} based on a priority heap.
 The elements of the priority queue are ordered according to their
-natural ordering, or by a `Comparator`
+{@linkplain Comparable natural ordering}, or by a {@link Comparator}
 provided at queue construction time, depending on which constructor is
-used.  A priority queue does not permit `null` elements.
+used.  A priority queue does not permit {@code null} elements.
 A priority queue relying on natural ordering also does not permit
 insertion of non-comparable objects (doing so may result in
-`ClassCastException`).
+{@code ClassCastException}).
 
-The *head* of this queue is the *least* element
+<p>The <em>head</em> of this queue is the <em>least</em> element
 with respect to the specified ordering.  If multiple elements are
 tied for least value, the head is one of those elements -- ties are
-broken arbitrarily.  The queue retrieval operations `poll`,
-`remove`, `peek`, and `element` access the
+broken arbitrarily.  The queue retrieval operations {@code poll},
+{@code remove}, {@code peek}, and {@code element} access the
 element at the head of the queue.
 
-A priority queue is unbounded, but has an internal
-*capacity* governing the size of an array used to store the
+<p>A priority queue is unbounded, but has an internal
+<i>capacity</i> governing the size of an array used to store the
 elements on the queue.  It is always at least as large as the queue
 size.  As elements are added to a priority queue, its capacity
 grows automatically.  The details of the growth policy are not
 specified.
 
-This class and its iterator implement all of the
-*optional* methods of the `Collection` and `Iterator` interfaces.  The Iterator provided in method `iterator()` and the Spliterator provided in method `spliterator()`
-are *not* guaranteed to traverse the elements of
+<p>This class and its iterator implement all of the
+<em>optional</em> methods of the {@link Collection} and {@link
+Iterator} interfaces.  The Iterator provided in method {@link
+#iterator()} and the Spliterator provided in method {@link #spliterator()}
+are <em>not</em> guaranteed to traverse the elements of
 the priority queue in any particular order. If you need ordered
-traversal, consider using `Arrays.sort(pq.toArray())`.
+traversal, consider using {@code Arrays.sort(pq.toArray())}.
 
-**Note that this implementation is not synchronized.**
-Multiple threads should not access a `PriorityQueue`
+<p><strong>Note that this implementation is not synchronized.</strong>
+Multiple threads should not access a {@code PriorityQueue}
 instance concurrently if any of the threads modifies the queue.
-Instead, use the thread-safe `java.util.concurrent.PriorityBlockingQueue` class.
+Instead, use the thread-safe {@link
+java.util.concurrent.PriorityBlockingQueue} class.
 
-Implementation note: this implementation provides
+<p>Implementation note: this implementation provides
 O(log(n)) time for the enqueuing and dequeuing methods
-(`offer`, `poll`, `remove()` and `add`);
-linear time for the `remove(Object)` and `contains(Object)`
+({@code offer}, {@code poll}, {@code remove()} and {@code add});
+linear time for the {@code remove(Object)} and {@code contains(Object)}
 methods; and constant time for the retrieval methods
-(`peek`, `element`, and `size`).
+({@code peek}, {@code element}, and {@code size}).
 
-This class is a member of the
+<p>This class is a member of the
+<a href="{@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+Java Collections Framework</a>.
 
-Java Collections Framework.
-
-Parameters:
-
-- `<E>`: the type of elements held in this queue
-
-**Since:** 1.5
+@since 1.5
+@author Josh Bloch, Doug Lea
+@param <E> the type of elements held in this queue
 
 ## PriorityQueue.PriorityQueue()
 
@@ -70,9 +62,9 @@ Parameters:
 public PriorityQueue()
 ```
 
-Creates a `PriorityQueue` with the default initial
+Creates a {@code PriorityQueue} with the default initial
 capacity (11) that orders its elements according to their
-natural ordering.
+{@linkplain Comparable natural ordering}.
 
 ## PriorityQueue.PriorityQueue(int)
 
@@ -80,17 +72,13 @@ natural ordering.
 public PriorityQueue(int initialCapacity)
 ```
 
-Creates a `PriorityQueue` with the specified initial
+Creates a {@code PriorityQueue} with the specified initial
 capacity that orders its elements according to their
-natural ordering.
+{@linkplain Comparable natural ordering}.
 
-Parameters:
-
-- `initialCapacity`: the initial capacity for this priority queue
-
-Throws:
-
-- `IllegalArgumentException`: if `initialCapacity` is less than 1
+@param initialCapacity the initial capacity for this priority queue
+@throws IllegalArgumentException if {@code initialCapacity} is less
+        than 1
 
 ## PriorityQueue.PriorityQueue(Comparator<? super E>)
 
@@ -98,14 +86,13 @@ Throws:
 public PriorityQueue(Comparator<? super E> comparator)
 ```
 
-Creates a `PriorityQueue` with the default initial capacity and
+Creates a {@code PriorityQueue} with the default initial capacity and
 whose elements are ordered according to the specified comparator.
 
-Parameters:
-
-- `comparator`: the comparator that will be used to order this priority queue. If `null`, the natural ordering of the elements will be used.
-
-**Since:** 1.8
+@param  comparator the comparator that will be used to order this
+        priority queue.  If {@code null}, the {@linkplain Comparable
+        natural ordering} of the elements will be used.
+@since 1.8
 
 ## PriorityQueue.PriorityQueue(int, Comparator<? super E>)
 
@@ -113,17 +100,15 @@ Parameters:
 public PriorityQueue(int initialCapacity, Comparator<? super E> comparator)
 ```
 
-Creates a `PriorityQueue` with the specified initial capacity
+Creates a {@code PriorityQueue} with the specified initial capacity
 that orders its elements according to the specified comparator.
 
-Parameters:
-
-- `initialCapacity`: the initial capacity for this priority queue
-- `comparator`: the comparator that will be used to order this priority queue. If `null`, the natural ordering of the elements will be used.
-
-Throws:
-
-- `IllegalArgumentException`: if `initialCapacity` is less than 1
+@param  initialCapacity the initial capacity for this priority queue
+@param  comparator the comparator that will be used to order this
+        priority queue.  If {@code null}, the {@linkplain Comparable
+        natural ordering} of the elements will be used.
+@throws IllegalArgumentException if {@code initialCapacity} is
+        less than 1
 
 ## PriorityQueue.PriorityQueue(Collection<? extends E>)
 
@@ -131,21 +116,20 @@ Throws:
 public PriorityQueue(Collection<? extends E> c)
 ```
 
-Creates a `PriorityQueue` containing the elements in the
+Creates a {@code PriorityQueue} containing the elements in the
 specified collection.  If the specified collection is an instance of
-a `SortedSet` or is another `PriorityQueue`, this
+a {@link SortedSet} or is another {@code PriorityQueue}, this
 priority queue will be ordered according to the same ordering.
 Otherwise, this priority queue will be ordered according to the
-natural ordering of its elements.
+{@linkplain Comparable natural ordering} of its elements.
 
-Parameters:
-
-- `c`: the collection whose elements are to be placed into this priority queue
-
-Throws:
-
-- `ClassCastException`: if elements of the specified collection cannot be compared to one another according to the priority queue's ordering
-- `NullPointerException`: if the specified collection or any of its elements are null
+@param  c the collection whose elements are to be placed
+        into this priority queue
+@throws ClassCastException if elements of the specified collection
+        cannot be compared to one another according to the priority
+        queue's ordering
+@throws NullPointerException if the specified collection or any
+        of its elements are null
 
 ## PriorityQueue.PriorityQueue(PriorityQueue<? extends E>)
 
@@ -153,19 +137,18 @@ Throws:
 public PriorityQueue(PriorityQueue<? extends E> c)
 ```
 
-Creates a `PriorityQueue` containing the elements in the
+Creates a {@code PriorityQueue} containing the elements in the
 specified priority queue.  This priority queue will be
 ordered according to the same ordering as the given priority
 queue.
 
-Parameters:
-
-- `c`: the priority queue whose elements are to be placed into this priority queue
-
-Throws:
-
-- `ClassCastException`: if elements of `c` cannot be compared to one another according to `c`'s ordering
-- `NullPointerException`: if the specified priority queue or any of its elements are null
+@param  c the priority queue whose elements are to be placed
+        into this priority queue
+@throws ClassCastException if elements of {@code c} cannot be
+        compared to one another according to {@code c}'s
+        ordering
+@throws NullPointerException if the specified priority queue or any
+        of its elements are null
 
 ## PriorityQueue.PriorityQueue(SortedSet<? extends E>)
 
@@ -173,18 +156,17 @@ Throws:
 public PriorityQueue(SortedSet<? extends E> c)
 ```
 
-Creates a `PriorityQueue` containing the elements in the
+Creates a {@code PriorityQueue} containing the elements in the
 specified sorted set.   This priority queue will be ordered
 according to the same ordering as the given sorted set.
 
-Parameters:
-
-- `c`: the sorted set whose elements are to be placed into this priority queue
-
-Throws:
-
-- `ClassCastException`: if elements of the specified sorted set cannot be compared to one another according to the sorted set's ordering
-- `NullPointerException`: if the specified sorted set or any of its elements are null
+@param  c the sorted set whose elements are to be placed
+        into this priority queue
+@throws ClassCastException if elements of the specified sorted
+        set cannot be compared to one another according to the
+        sorted set's ordering
+@throws NullPointerException if the specified sorted set or any
+        of its elements are null
 
 ## PriorityQueue.add(E)
 
@@ -194,12 +176,11 @@ public boolean add(E e)
 
 Inserts the specified element into this priority queue.
 
-**Returns:** `true` (as specified by `Collection.add`)
-
-Throws:
-
-- `ClassCastException`: if the specified element cannot be compared with elements currently in this priority queue according to the priority queue's ordering
-- `NullPointerException`: if the specified element is null
+@return {@code true} (as specified by {@link Collection#add})
+@throws ClassCastException if the specified element cannot be
+        compared with elements currently in this priority queue
+        according to the priority queue's ordering
+@throws NullPointerException if the specified element is null
 
 ## PriorityQueue.offer(E)
 
@@ -209,12 +190,11 @@ public boolean offer(E e)
 
 Inserts the specified element into this priority queue.
 
-**Returns:** `true` (as specified by `Queue.offer`)
-
-Throws:
-
-- `ClassCastException`: if the specified element cannot be compared with elements currently in this priority queue according to the priority queue's ordering
-- `NullPointerException`: if the specified element is null
+@return {@code true} (as specified by {@link Queue#offer})
+@throws ClassCastException if the specified element cannot be
+        compared with elements currently in this priority queue
+        according to the priority queue's ordering
+@throws NullPointerException if the specified element is null
 
 ## PriorityQueue.remove(Object)
 
@@ -223,17 +203,14 @@ public boolean remove(Object o)
 ```
 
 Removes a single instance of the specified element from this queue,
-if it is present.  More formally, removes an element `e` such
-that `o.equals(e)`, if this queue contains one or more such
-elements.  Returns `true` if and only if this queue contained
+if it is present.  More formally, removes an element {@code e} such
+that {@code o.equals(e)}, if this queue contains one or more such
+elements.  Returns {@code true} if and only if this queue contained
 the specified element (or equivalently, if this queue changed as a
 result of the call).
 
-Parameters:
-
-- `o`: element to be removed from this queue, if present
-
-**Returns:** `true` if this queue changed as a result of the call
+@param o element to be removed from this queue, if present
+@return {@code true} if this queue changed as a result of the call
 
 ## PriorityQueue.contains(Object)
 
@@ -241,15 +218,12 @@ Parameters:
 public boolean contains(Object o)
 ```
 
-Returns `true` if this queue contains the specified element.
-More formally, returns `true` if and only if this queue contains
-at least one element `e` such that `o.equals(e)`.
+Returns {@code true} if this queue contains the specified element.
+More formally, returns {@code true} if and only if this queue contains
+at least one element {@code e} such that {@code o.equals(e)}.
 
-Parameters:
-
-- `o`: object to be checked for containment in this queue
-
-**Returns:** `true` if this queue contains the specified element
+@param o object to be checked for containment in this queue
+@return {@code true} if this queue contains the specified element
 
 ## PriorityQueue.toArray()
 
@@ -260,14 +234,14 @@ public Object[] toArray()
 Returns an array containing all of the elements in this queue.
 The elements are in no particular order.
 
-The returned array will be "safe" in that no references to it are
+<p>The returned array will be "safe" in that no references to it are
 maintained by this queue.  (In other words, this method must allocate
 a new array).  The caller is thus free to modify the returned array.
 
-This method acts as bridge between array-based and collection-based
+<p>This method acts as bridge between array-based and collection-based
 APIs.
 
-**Returns:** an array containing all of the elements in this queue
+@return an array containing all of the elements in this queue
 
 ## PriorityQueue.toArray(T[])
 
@@ -282,37 +256,33 @@ If the queue fits in the specified array, it is returned therein.
 Otherwise, a new array is allocated with the runtime type of the
 specified array and the size of this queue.
 
-If the queue fits in the specified array with room to spare
+<p>If the queue fits in the specified array with room to spare
 (i.e., the array has more elements than the queue), the element in
 the array immediately following the end of the collection is set to
-`null`.
+{@code null}.
 
-Like the `toArray()` method, this method acts as bridge between
+<p>Like the {@link #toArray()} method, this method acts as bridge between
 array-based and collection-based APIs.  Further, this method allows
 precise control over the runtime type of the output array, and may,
 under certain circumstances, be used to save allocation costs.
 
-Suppose `x` is a queue known to contain only strings.
+<p>Suppose {@code x} is a queue known to contain only strings.
 The following code can be used to dump the queue into a newly
-allocated array of `String`:
+allocated array of {@code String}:
 
-```java
-String[] y = x.toArray(new String[0]);
-```
+<pre> {@code String[] y = x.toArray(new String[0]);}</pre>
 
-Note that `toArray(new Object[0])` is identical in function to
-`toArray()`.
+Note that {@code toArray(new Object[0])} is identical in function to
+{@code toArray()}.
 
-Parameters:
-
-- `a`: the array into which the elements of the queue are to be stored, if it is big enough; otherwise, a new array of the same runtime type is allocated for this purpose.
-
-**Returns:** an array containing all of the elements in this queue
-
-Throws:
-
-- `ArrayStoreException`: if the runtime type of the specified array is not a supertype of the runtime type of every element in this queue
-- `NullPointerException`: if the specified array is null
+@param a the array into which the elements of the queue are to
+         be stored, if it is big enough; otherwise, a new array of the
+         same runtime type is allocated for this purpose.
+@return an array containing all of the elements in this queue
+@throws ArrayStoreException if the runtime type of the specified array
+        is not a supertype of the runtime type of every element in
+        this queue
+@throws NullPointerException if the specified array is null
 
 ## PriorityQueue.iterator()
 
@@ -323,7 +293,7 @@ public Iterator<E> iterator()
 Returns an iterator over the elements in this queue. The iterator
 does not return the elements in any particular order.
 
-**Returns:** an iterator over the elements in this queue
+@return an iterator over the elements in this queue
 
 ## PriorityQueue.clear()
 
@@ -341,11 +311,11 @@ public Comparator<? super E> comparator()
 ```
 
 Returns the comparator used to order the elements in this
-queue, or `null` if this queue is sorted according to
-the natural ordering of its elements.
+queue, or {@code null} if this queue is sorted according to
+the {@linkplain Comparable natural ordering} of its elements.
 
-**Returns:** the comparator used to order this queue, or
-        `null` if this queue is sorted according to the
+@return the comparator used to order this queue, or
+        {@code null} if this queue is sorted according to the
         natural ordering of its elements
 
 ## PriorityQueue.spliterator()
@@ -354,19 +324,18 @@ the natural ordering of its elements.
 public final Spliterator<E> spliterator()
 ```
 
-Creates a *late-binding*
-and *fail-fast* `Spliterator` over the elements in this
+Creates a <em><a href="Spliterator.html#binding">late-binding</a></em>
+and <em>fail-fast</em> {@link Spliterator} over the elements in this
 queue. The spliterator does not traverse elements in any particular order
-(the ORDERED characteristic is not reported).
+(the {@link Spliterator#ORDERED ORDERED} characteristic is not reported).
 
-The `Spliterator` reports `Spliterator.SIZED`,
-`Spliterator.SUBSIZED`, and `Spliterator.NONNULL`.
+<p>The {@code Spliterator} reports {@link Spliterator#SIZED},
+{@link Spliterator#SUBSIZED}, and {@link Spliterator#NONNULL}.
 Overriding implementations should document the reporting of additional
 characteristic values.
 
-**Returns:** a `Spliterator` over the elements in this queue
-
-**Since:** 1.8
+@return a {@code Spliterator} over the elements in this queue
+@since 1.8
 
 ## PriorityQueue.removeIf(Predicate<? super E>)
 
@@ -374,9 +343,7 @@ characteristic values.
 public boolean removeIf(Predicate<? super E> filter)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## PriorityQueue.removeAll(Collection<?>)
 
@@ -384,9 +351,7 @@ Throws:
 public boolean removeAll(Collection<?> c)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## PriorityQueue.retainAll(Collection<?>)
 
@@ -394,9 +359,7 @@ Throws:
 public boolean retainAll(Collection<?> c)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## PriorityQueue.forEach(Consumer<? super E>)
 
@@ -404,6 +367,4 @@ Throws:
 public void forEach(Consumer<? super E> action)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}

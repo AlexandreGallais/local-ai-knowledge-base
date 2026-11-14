@@ -1,17 +1,6 @@
----
-title: "integrationTests"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/integrationTests.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# integrationTests
-
 ## Introduction to integration tests
 
-Integration tests evaluate an app's components on a broader level than unit tests. Unit tests are used to test isolated software components, such as individual class methods. Integration tests confirm that two or more app components work together to produce an expected result, possibly including every component required to fully process a request.
+Integration tests evaluate an app's components on a broader level than [unit tests](/dotnet/core/testing/). Unit tests are used to test isolated software components, such as individual class methods. Integration tests confirm that two or more app components work together to produce an expected result, possibly including every component required to fully process a request.
 
 These broader tests are used to test the app's infrastructure and whole framework, often including the following components:
 
@@ -20,7 +9,7 @@ These broader tests are used to test the app's infrastructure and whole framewor
 * Network appliances
 * Request-response pipeline
 
-Unit tests use fabricated components, known as *fakes* or *mock objects*, in place of infrastructure components.
+Unit tests use fabricated components, known as [*fakes* or *mock objects*](/dotnet/core/testing/unit-testing-best-practices#lets-speak-the-same-language), in place of infrastructure components.
 
 In contrast to unit tests, integration tests:
 
@@ -54,15 +43,15 @@ Integration tests follow a sequence of events that include the usual *Arrange*, 
 
 Usually, the test web host is configured differently than the app's normal web host for the test runs. For example, a different database or different app settings might be used for the tests.
 
-Infrastructure components, such as the test web host and in-memory test server (`Microsoft.AspNetCore.TestHost.TestServer`), are provided or managed by the Microsoft.AspNetCore.Mvc.Testing package. Use of this package streamlines test creation and execution.
+Infrastructure components, such as the test web host and in-memory test server (<xref:Microsoft.AspNetCore.TestHost.TestServer>), are provided or managed by the [Microsoft.AspNetCore.Mvc.Testing](https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.Testing) package. Use of this package streamlines test creation and execution.
 
 The `Microsoft.AspNetCore.Mvc.Testing` package handles the following tasks:
 
 * Copies the dependencies file (`.deps`) from the SUT into the test project's `bin` directory.
-* Sets the content root to the SUT's project root so that static files and pages/views are found when the tests are executed.
-* Provides the WebApplicationFactory class to streamline bootstrapping the SUT with `TestServer`.
+* Sets the [content root](../fundamentals/index.md#content-root) to the SUT's project root so that static files and pages/views are found when the tests are executed.
+* Provides the [WebApplicationFactory](xref:Microsoft.AspNetCore.Mvc.Testing.WebApplicationFactory`1) class to streamline bootstrapping the SUT with `TestServer`.
 
-The unit tests documentation describes how to set up a test project and test runner, along with detailed instructions on how to run tests and recommendations for how to name tests and test classes.
+The [unit tests](/dotnet/articles/core/testing/unit-testing-with-dotnet-test) documentation describes how to set up a test project and test runner, along with detailed instructions on how to run tests and recommendations for how to name tests and test classes.
 
 **Separate unit tests from integration tests into different projects**. Separating the tests:
 

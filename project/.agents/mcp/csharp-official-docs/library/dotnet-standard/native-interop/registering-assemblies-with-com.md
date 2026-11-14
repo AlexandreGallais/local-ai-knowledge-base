@@ -1,18 +1,20 @@
 ---
 title: "Register .NET Framework assemblies with COM"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/native-interop/registering-assemblies-with-com.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Register or unregister assemblies with COM using the Assembly Registration Tool (Regasm.exe), which adds information about the class to the system registry.
+ms.date: 07/08/2026
+ai-usage: ai-assisted
+helpviewer_keywords:
+  - "COM interop, registering assemblies"
+  - "unregistering assemblies"
+  - "interoperation with unmanaged code, registering assemblies"
+  - "registering assemblies"
 ---
-
 # Register .NET Framework assemblies with COM
 
-> **Note:**
-> This article describes .NET Framework COM interop guidance that uses the legacy Assembly Registration Tool (Regasm.exe), the global assembly cache, and registry-based COM registration. For modern .NET, use COM source generation or the `System.Runtime.InteropServices.ComWrappers` API. For more information, see COM interop.
+> [!NOTE]
+> This article describes .NET Framework COM interop guidance that uses the legacy Assembly Registration Tool (Regasm.exe), the global assembly cache, and registry-based COM registration. For modern .NET, use [COM source generation](comwrappers-source-generation.md) or the <xref:System.Runtime.InteropServices.ComWrappers> API. For more information, see [COM interop](cominterop.md).
 
-You can run a command-line tool called the Assembly Registration Tool (Regasm.exe) to register or unregister a .NET Framework assembly for use with COM. Regasm.exe adds information about the class to the system registry so COM clients can use the .NET Framework class transparently. The `System.Runtime.InteropServices.RegistrationServices` class provides the equivalent functionality.
+You can run a command-line tool called the [Assembly Registration Tool (Regasm.exe)](../../framework/tools/regasm-exe-assembly-registration-tool.md) to register or unregister a .NET Framework assembly for use with COM. Regasm.exe adds information about the class to the system registry so COM clients can use the .NET Framework class transparently. The <xref:System.Runtime.InteropServices.RegistrationServices> class provides the equivalent functionality.
 
  For .NET Framework, a managed component must be registered in the Windows registry before it can be activated from a COM client. The following table shows the keys that Regasm.exe typically adds to the Windows registry. (000000 indicates the actual GUID value.)
 
@@ -41,7 +43,7 @@ You can run a command-line tool called the Assembly Registration Tool (Regasm.ex
 
 ## See also
 
-- Expose .NET components to COM
-- Reference .NET types from COM
-- Calling a .NET Object
-- Deploying an Application for COM Access
+- [Expose .NET components to COM](exposing-dotnet-components-to-com.md)
+- [Reference .NET types from COM](how-to-reference-net-types-from-com.md)
+- [Calling a .NET Object](/previous-versions/dotnet/netframework-4.0/8hw8h46b(v=vs.100))
+- [Deploying an Application for COM Access](/previous-versions/dotnet/netframework-4.0/c2850st8(v=vs.100))

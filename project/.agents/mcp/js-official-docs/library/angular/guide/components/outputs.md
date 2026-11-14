@@ -1,19 +1,10 @@
----
-title: "Custom events with outputs"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/components/outputs.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Custom events with outputs
 
-TIP: This guide assumes you've already read the Essentials Guide. Read that first if you're new to Angular.
+TIP: This guide assumes you've already read the [Essentials Guide](essentials). Read that first if you're new to Angular.
 
 Angular components can define custom events by assigning a property to the `output` function:
 
-```ts
+```ts {highlight:[5]}
 @Component({
   /*...*/
 })
@@ -127,11 +118,11 @@ Avoid choosing output names that collide with events on DOM elements like HTMLEl
 
 Avoid adding prefixes for component outputs like you would with component selectors. Since a given element can only host one component, any custom properties can be assumed to belong to the component.
 
-Always use camelCase output names. Avoid prefixing output names with "on".
+Always use [camelCase](https://en.wikipedia.org/wiki/Camel_case) output names. Avoid prefixing output names with "on".
 
 ## Using outputs with RxJS
 
-See RxJS interop with component and directive outputs for details on interoperability between outputs and RxJS.
+See [RxJS interop with component and directive outputs](ecosystem/rxjs-interop/output-interop) for details on interoperability between outputs and RxJS.
 
 ## Declaring outputs with the `@Output` decorator
 

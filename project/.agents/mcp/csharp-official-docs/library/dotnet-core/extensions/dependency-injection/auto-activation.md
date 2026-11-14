@@ -1,15 +1,14 @@
 ---
-title: "Dependency injection auto-activation"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/dependency-injection/auto-activation.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Dependency injection auto-activation
+description: Learn how to use auto-activation for singleton services in .NET to ensure services are instantiated at startup rather than on first use.
+ms.date: 02/26/2026
+ms.topic: concept-article
+ai-usage: ai-assisted
 ---
 
 # Dependency injection auto-activation
 
-The 📦 `Microsoft.Extensions.DependencyInjection.AutoActivation` NuGet package provides functionality to automatically activate singleton services at application startup, rather than waiting for their first use. This approach can help minimize latency for initial requests by ensuring services are ready to handle requests immediately when the application starts.
+The [📦 `Microsoft.Extensions.DependencyInjection.AutoActivation`](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection.AutoActivation) NuGet package provides functionality to automatically activate singleton services at application startup, rather than waiting for their first use. This approach can help minimize latency for initial requests by ensuring services are ready to handle requests immediately when the application starts.
 
 ## When to use auto-activation
 
@@ -22,15 +21,15 @@ Auto-activation is beneficial in scenarios where:
 
 ## Get started
 
-To get started with auto-activation, install the `Microsoft.Extensions.DependencyInjection.AutoActivation` NuGet package.
+To get started with auto-activation, install the [`Microsoft.Extensions.DependencyInjection.AutoActivation`](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection.AutoActivation) NuGet package.
 
-### .NET CLI
+### [.NET CLI](#tab/dotnet-cli)
 
 ```dotnetcli
 dotnet add package Microsoft.Extensions.DependencyInjection.AutoActivation
 ```
 
-### PackageReference
+### [PackageReference](#tab/package-reference)
 
 ```xml
 <PackageReference Include="Microsoft.Extensions.DependencyInjection.AutoActivation" Version="10.0.0" />
@@ -38,7 +37,7 @@ dotnet add package Microsoft.Extensions.DependencyInjection.AutoActivation
 
 ---
 
-For more information, see dotnet add package or Manage package dependencies in .NET applications.
+For more information, see [dotnet add package](../../tools/dotnet-package-add.md) or [Manage package dependencies in .NET applications](../../tools/dependencies.md).
 
 ## Register services for auto-activation
 
@@ -46,7 +45,7 @@ The auto-activation package provides extension methods to register services that
 
 ### AddActivatedSingleton
 
-The `Microsoft.Extensions.DependencyInjection.AutoActivationExtensions.AddActivatedSingleton*` method registers a service as a singleton and ensures it's activated at startup:
+The <xref:Microsoft.Extensions.DependencyInjection.AutoActivationExtensions.AddActivatedSingleton*> method registers a service as a singleton and ensures it's activated at startup:
 
 ```csharp
 using Microsoft.Extensions.DependencyInjection;
@@ -62,7 +61,7 @@ In this example, `MyService` is instantiated when `BuildServiceProvider()` is ca
 
 ### ActivateSingleton
 
-The `Microsoft.Extensions.DependencyInjection.AutoActivationExtensions.ActivateSingleton*` method marks an already-registered singleton service for activation at startup:
+The <xref:Microsoft.Extensions.DependencyInjection.AutoActivationExtensions.ActivateSingleton*> method marks an already-registered singleton service for activation at startup:
 
 ```csharp
 using Microsoft.Extensions.DependencyInjection;
@@ -79,7 +78,7 @@ This approach is useful when you have existing service registrations that you wa
 
 ### TryAddActivatedSingleton
 
-The `Microsoft.Extensions.DependencyInjection.AutoActivationExtensions.TryAddActivatedSingleton*` method conditionally registers a service for auto-activation only if it hasn't been registered already:
+The <xref:Microsoft.Extensions.DependencyInjection.AutoActivationExtensions.TryAddActivatedSingleton*> method conditionally registers a service for auto-activation only if it hasn't been registered already:
 
 ```csharp
 using Microsoft.Extensions.DependencyInjection;
@@ -98,48 +97,16 @@ This method follows the same pattern as other `TryAdd*` methods in the dependenc
 
 Here's a complete example showing how to use auto-activation in a console application:
 
-```csharp
-public class CacheWarmer
-{
-    public CacheWarmer()
-    {
-        Console.WriteLine("Warming up cache at startup...");
-        // Perform expensive initialization
-        WarmUpCache();
-    }
+:::code language="csharp" source="../snippets/dependency-injection-auto-activation/csharp/CompleteExample/Program.cs" id="CacheWarmer":::
 
-    private void WarmUpCache()
-    {
-        // Cache warming logic here
-        Console.WriteLine("Cache warmed up successfully!");
-    }
-}
-```
 When this application starts, you'll see the messages from the `CacheWarmer` constructor printed before the application begins processing requests, confirming that the service was activated at startup.
 
 ## Auto-activation with dependencies
 
 Auto-activated services can depend on other services through dependency injection:
 
-```csharp
-public class StartupTaskRunner
-{
-    private readonly ILogger<StartupTaskRunner> _logger;
+:::code language="csharp" source="../snippets/dependency-injection-auto-activation/csharp/DependenciesExample/Program.cs" id="StartupTaskRunner":::
 
-    public StartupTaskRunner(ILogger<StartupTaskRunner> logger)
-    {
-        _logger = logger;
-        _logger.LogInformation("Running startup tasks...");
-        RunTasks();
-    }
-
-    private void RunTasks()
-    {
-        // Execute startup tasks
-        _logger.LogInformation("Startup tasks completed.");
-    }
-}
-```
 In this example, the `StartupTaskRunner` service depends on `ILogger<StartupTaskRunner>`, which is automatically provided by the dependency injection container.
 
 ## Best practices
@@ -149,10 +116,10 @@ When using auto-activation, consider the following best practices:
 - **Use for singletons only**: Auto-activation is designed for singleton services. Services with shorter lifetimes (scoped or transient) should not be auto-activated.
 - **Keep startup fast**: Auto-activated services should complete their initialization quickly to avoid delaying application startup. For longer-running initialization, consider using background services or hosted services.
 - **Handle errors gracefully**: Exceptions thrown during the construction of auto-activated services will prevent the application from starting. Ensure robust error handling in service constructors.
-- **Consider hosted services**: For services that need to perform ongoing work or asynchronous initialization, consider using `Microsoft.Extensions.Hosting.IHostedService` instead of auto-activation.
+- **Consider hosted services**: For services that need to perform ongoing work or asynchronous initialization, consider using <xref:Microsoft.Extensions.Hosting.IHostedService> instead of auto-activation.
 
 ## See also
 
-- Dependency injection in .NET
-- Dependency injection guidelines
-- Worker Services in .NET
+- [Dependency injection in .NET](overview.md)
+- [Dependency injection guidelines](guidelines.md)
+- [Worker Services in .NET](../workers.md)

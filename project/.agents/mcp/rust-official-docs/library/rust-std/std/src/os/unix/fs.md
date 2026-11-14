@@ -1,15 +1,8 @@
----
-title: "std::os::unix::fs"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/os/unix/fs.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::os::unix::fs
 
-Unix-specific extensions to primitives in the `std::fs` module.
+Unix-specific extensions to primitives in the [`std::fs`] module.
+
+[`std::fs`]: crate::fs
 
 ## trait FileExt
 
@@ -17,7 +10,7 @@ Unix-specific extensions to primitives in the `std::fs` module.
 pub trait FileExt
 ```
 
-Unix-specific extensions to `fs::File`.
+Unix-specific extensions to [`fs::File`].
 
 ## FileExt::read_at
 
@@ -38,7 +31,7 @@ fn main() -> io::Result<()> {
     println!("read {num_bytes_read} bytes: {buf:?}");
     Ok(())
 }
-```rust
+```
 
 ## FileExt::read_exact_at
 
@@ -59,7 +52,7 @@ fn main() -> io::Result<()> {
     println!("read {} bytes: {:?}", buf.len(), buf);
     Ok(())
 }
-```rust
+```
 
 ## FileExt::write_at
 
@@ -78,7 +71,7 @@ fn main() -> io::Result<()> {
     file.write_at(b"sushi", 10)?;
     Ok(())
 }
-```rust
+```
 
 ## FileExt::write_all_at
 
@@ -97,7 +90,7 @@ fn main() -> io::Result<()> {
     file.write_all_at(b"sushi", 10)?;
     Ok(())
 }
-```rust
+```
 
 ## trait PermissionsExt
 
@@ -117,7 +110,7 @@ assert_eq!(permissions.mode(), my_mode);
 let other_mode = 0o700;
 permissions.set_mode(other_mode);
 assert_eq!(permissions.mode(), other_mode);
-```rust
+```
 
 ## PermissionsExt::mode
 
@@ -149,7 +142,7 @@ Creates a new instance from the given mode permission bits.
 pub trait OpenOptionsExt
 ```
 
-Unix-specific extensions to `fs::OpenOptions`.
+Unix-specific extensions to [`fs::OpenOptions`].
 
 ## OpenOptionsExt::mode
 
@@ -165,7 +158,7 @@ let mut options = OpenOptions::new();
 options.mode(0o644); // Give read/write for owner and read for others.
 let file = options.open("foo.txt");
 # }
-```rust
+```
 
 ## OpenOptionsExt::custom_flags
 
@@ -183,7 +176,7 @@ options.write(true);
 options.custom_flags(libc::O_NOFOLLOW);
 let file = options.open("foo.txt");
 # }
-```rust
+```
 
 ## trait MetadataExt
 
@@ -191,7 +184,7 @@ let file = options.open("foo.txt");
 pub trait MetadataExt
 ```
 
-Unix-specific extensions to `fs::Metadata`.
+Unix-specific extensions to [`fs::Metadata`].
 
 ## MetadataExt::dev
 
@@ -208,7 +201,7 @@ fn main() -> io::Result<()> {
     let dev_id = meta.dev();
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::ino
 
@@ -225,7 +218,7 @@ fn main() -> io::Result<()> {
     let inode = meta.ino();
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::mode
 
@@ -246,7 +239,7 @@ fn main() -> io::Result<()> {
     let others_have_exec_access    = mode & 0o001;
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::nlink
 
@@ -263,7 +256,7 @@ fn main() -> io::Result<()> {
     let nb_hard_links = meta.nlink();
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::uid
 
@@ -280,7 +273,7 @@ fn main() -> io::Result<()> {
     let user_id = meta.uid();
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::gid
 
@@ -297,7 +290,7 @@ fn main() -> io::Result<()> {
     let group_id = meta.gid();
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::rdev
 
@@ -314,7 +307,7 @@ fn main() -> io::Result<()> {
     let device_id = meta.rdev();
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::size
 
@@ -331,7 +324,7 @@ fn main() -> io::Result<()> {
     let file_size = meta.size();
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::atime
 
@@ -348,7 +341,7 @@ fn main() -> io::Result<()> {
     let last_access_time = meta.atime();
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::atime_nsec
 
@@ -365,7 +358,7 @@ fn main() -> io::Result<()> {
     let nano_last_access_time = meta.atime_nsec();
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::mtime
 
@@ -382,7 +375,7 @@ fn main() -> io::Result<()> {
     let last_modification_time = meta.mtime();
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::mtime_nsec
 
@@ -399,7 +392,7 @@ fn main() -> io::Result<()> {
     let nano_last_modification_time = meta.mtime_nsec();
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::ctime
 
@@ -416,7 +409,7 @@ fn main() -> io::Result<()> {
     let last_status_change_time = meta.ctime();
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::ctime_nsec
 
@@ -433,7 +426,7 @@ fn main() -> io::Result<()> {
     let nano_last_status_change_time = meta.ctime_nsec();
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::blksize
 
@@ -450,7 +443,7 @@ fn main() -> io::Result<()> {
     let block_size = meta.blksize();
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::blocks
 
@@ -467,7 +460,7 @@ fn main() -> io::Result<()> {
     let blocks = meta.blocks();
     Ok(())
 }
-```rust
+```
 
 ## trait FileTypeExt
 
@@ -475,7 +468,7 @@ fn main() -> io::Result<()> {
 pub trait FileTypeExt
 ```
 
-Unix-specific extensions for `fs::FileType`.
+Unix-specific extensions for [`fs::FileType`].
 
 Adds support for special Unix file types such as block/character devices,
 pipes, and sockets.
@@ -496,7 +489,7 @@ fn main() -> io::Result<()> {
     assert!(file_type.is_block_device());
     Ok(())
 }
-```rust
+```
 
 ## FileTypeExt::is_char_device
 
@@ -514,7 +507,7 @@ fn main() -> io::Result<()> {
     assert!(file_type.is_char_device());
     Ok(())
 }
-```rust
+```
 
 ## FileTypeExt::is_fifo
 
@@ -532,7 +525,7 @@ fn main() -> io::Result<()> {
     assert!(file_type.is_fifo());
     Ok(())
 }
-```rust
+```
 
 ## FileTypeExt::is_socket
 
@@ -550,7 +543,7 @@ fn main() -> io::Result<()> {
     assert!(file_type.is_socket());
     Ok(())
 }
-```rust
+```
 
 ## trait DirEntryExt
 
@@ -558,7 +551,7 @@ fn main() -> io::Result<()> {
 pub trait DirEntryExt
 ```
 
-Unix-specific extension methods for `fs::DirEntry`.
+Unix-specific extension methods for [`fs::DirEntry`].
 
 ## DirEntryExt::ino
 
@@ -577,7 +570,7 @@ if let Ok(entries) = fs::read_dir(".") {
         }
     }
 }
-```rust
+```
 
 ## fn symlink
 
@@ -591,7 +584,7 @@ fn main() -> std::io::Result<()> {
     fs::symlink("a.txt", "b.txt")?;
     Ok(())
 }
-```rust
+```
 
 ## trait DirBuilderExt
 
@@ -599,7 +592,7 @@ fn main() -> std::io::Result<()> {
 pub trait DirBuilderExt
 ```
 
-Unix-specific extensions to `fs::DirBuilder`.
+Unix-specific extensions to [`fs::DirBuilder`].
 
 ## DirBuilderExt::mode
 
@@ -612,7 +605,7 @@ use std::os::unix::fs::DirBuilderExt;
 
 let mut builder = DirBuilder::new();
 builder.mode(0o755);
-```rust
+```
 
 ## fn chown
 
@@ -626,7 +619,7 @@ fn main() -> std::io::Result<()> {
     fs::chown("/sandbox", Some(0), Some(0))?;
     Ok(())
 }
-```rust
+```
 
 ## fn fchown
 
@@ -641,7 +634,7 @@ fn main() -> std::io::Result<()> {
     fs::fchown(&f, Some(0), Some(0))?;
     Ok(())
 }
-```rust
+```
 
 ## fn lchown
 
@@ -655,7 +648,7 @@ fn main() -> std::io::Result<()> {
     fs::lchown("/symlink", Some(0), Some(0))?;
     Ok(())
 }
-```rust
+```
 
 ## fn chroot
 
@@ -671,4 +664,4 @@ fn main() -> std::io::Result<()> {
     // continue working in sandbox
     Ok(())
 }
-```rust
+```

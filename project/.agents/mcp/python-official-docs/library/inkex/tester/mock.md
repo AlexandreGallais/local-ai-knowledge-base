@@ -1,12 +1,3 @@
----
-title: "inkex.tester.mock"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/tester/mock.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.tester.mock
 
 Any mocking utilities required by testing. Mocking is when you need the test
@@ -43,10 +34,10 @@ Mocks are stored in an array attached to the test class (not instance!) which
 ensures that mocks can only ever be setUp once and can never be reset over
 themselves. (just in case this looks weird at first glance):
 
-```python
-class SomeTest(MockingMixin, TestBase):
-    mocks = [(sys, 'exit', NoSystemExit("Nope!")]
-```
+.. code-block:: python
+
+    class SomeTest(MockingMixin, TestBase):
+        mocks = [(sys, 'exit', NoSystemExit("Nope!")]
 
 ## class MockMixin
 
@@ -61,10 +52,10 @@ Mocks are stored in an array attached to the test class (not instance!) which
 ensures that mocks can only ever be setUp once and can never be reset over
 themselves. (just in case this looks weird at first glance):
 
-```python
-class SomeTest(MockingMixin, TestBase):
-    mocks = [(sys, 'exit', NoSystemExit("Nope!")]
-```
+.. code-block:: python
+
+    class SomeTest(MockingMixin, TestBase):
+        mocks = [(sys, 'exit', NoSystemExit("Nope!")]
 
 ## MockMixin.old_call
 

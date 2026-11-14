@@ -1,12 +1,3 @@
----
-title: "core::panic::panic_info"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/panic/panic_info.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::panic::panic_info
 
 ## struct PanicInfo
@@ -19,7 +10,9 @@ A struct providing information about a panic.
 
 A `PanicInfo` structure is passed to the panic handler defined by `#[panic_handler]`.
 
-For the type used by the panic hook mechanism in `std`, see `std::panic::PanicHookInfo`.
+For the type used by the panic hook mechanism in `std`, see [`std::panic::PanicHookInfo`].
+
+[`std::panic::PanicHookInfo`]: ../../std/panic/struct.PanicHookInfo.html
 
 ## struct PanicMessage
 
@@ -29,10 +22,10 @@ pub struct PanicMessage<'a>
 
 A message that was given to the `panic!()` macro.
 
-The `Display` implementation of this type will format the message with the arguments
+The [`Display`] implementation of this type will format the message with the arguments
 that were given to the `panic!()` macro.
 
-See `PanicInfo::message`.
+See [`PanicInfo::message`].
 
 ## PanicInfo::message
 
@@ -45,15 +38,17 @@ The message that was given to the `panic!` macro.
 # Example
 
 The type returned by this method implements `Display`, so it can
-be passed directly to `write!()` and similar macros.
+be passed directly to [`write!()`] and similar macros.
 
-```
+[`write!()`]: core::write
+
+```ignore (no_std)
 #[panic_handler]
 fn panic_handler(panic_info: &PanicInfo<'_>) -> ! {
     write!(DEBUG_OUTPUT, "panicked: {}", panic_info.message());
     loop {}
 }
-```rust
+```
 
 ## PanicInfo::location
 
@@ -64,12 +59,12 @@ pub fn location(&self) -> Option<&'static Location<'static>>
 Returns information about the location from which the panic originated,
 if available.
 
-This method will currently always return `Some`, but this may change
+This method will currently always return [`Some`], but this may change
 in future versions.
 
 # Examples
 
-```rust
+```should_panic
 use std::panic;
 
 panic::set_hook(Box::new(|panic_info| {
@@ -95,10 +90,13 @@ pub fn payload(&self) -> &(dyn crate::any::Any + Send)
 Returns the payload associated with the panic.
 
 On this type, `core::panic::PanicInfo`, this method never returns anything useful.
-It only exists because of compatibility with `std::panic::PanicHookInfo`,
+It only exists because of compatibility with [`std::panic::PanicHookInfo`],
 which used to be the same type.
 
-See `std::panic::PanicHookInfo::payload`.
+See [`std::panic::PanicHookInfo::payload`].
+
+[`std::panic::PanicHookInfo`]: ../../std/panic/struct.PanicHookInfo.html
+[`std::panic::PanicHookInfo::payload`]: ../../std/panic/struct.PanicHookInfo.html#method.payload
 
 ## PanicMessage::as_str
 
@@ -117,4 +115,4 @@ return `Some("just a literal")`.
 
 For most cases with placeholders, this function will return `None`.
 
-See `fmt::Arguments::as_str` for details.
+See [`fmt::Arguments::as_str`] for details.

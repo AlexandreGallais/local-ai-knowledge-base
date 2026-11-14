@@ -1,29 +1,20 @@
----
-title: "WebMCP"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/ai/webmcp.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # WebMCP
 
-WebMCP is a proposed web standard that allows web applications to expose structured tools directly to AI agents running natively in the browser. Tools defined by an application allow AI assistants to interact with it directly, providing additional capabilities to the agent and reducing the need for DOM interactions.
+WebMCP is a [proposed web standard](https://github.com/webmachinelearning/webmcp/) that allows web applications to expose structured tools directly to AI agents running natively in the browser. Tools defined by an application allow AI assistants to interact with it directly, providing additional capabilities to the agent and reducing the need for DOM interactions.
 
 For example, an application to register a new user might provide a WebMCP tool for a browser's AI agent to create the user directly rather than requiring the agent to go through a complex wizard UI via DOM interactions.
 
 Angular provides experimental support for WebMCP, allowing you to easily register tools tied to your application's dependency injection lifecycle and automatically turn your Signal Forms into AI-ready tools.
 
-IMPORTANT: The WebMCP spec is very early in its lifecycle and is undergoing frequent changes. As such, WebMCP support in Angular is currently **experimental**. APIs are subject to change even outside of major versions.
+IMPORTANT: The WebMCP spec is very early in its lifecycle and is undergoing frequent changes. As such, WebMCP support in Angular is currently [**experimental**](reference/releases#experimental). APIs are subject to change even outside of major versions.
 
 ## Provide tools for the application
 
-Use `provideExperimentalWebMcpTools` in your application config to register tools for the entire lifecycle of the application. Tools provided this way are automatically registered when the application initializes and unregistered when the application is destroyed.
+Use [`provideExperimentalWebMcpTools`](api/core/provideExperimentalWebMcpTools) in your application config to register tools for the entire lifecycle of the application. Tools provided this way are automatically registered when the application initializes and unregistered when the application is destroyed.
 
-The `execute` callback is invoked in the injection context of the associated `Injector`, meaning you can `inject` services directly.
+The `execute` callback is invoked in the injection context of the associated `Injector`, meaning you can [`inject`](api/core/inject) services directly.
 
-```ts
+```ts {header:"main.ts"}
 import {Service, inject, provideExperimentalWebMcpTools} from '@angular/core';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {AppRoot} from './app-root';
@@ -54,9 +45,9 @@ bootstrapApplication(AppRoot, {
 
 ### Define tool parameters
 
-When a tool requires input from the AI assistant, define the expected arguments inside `inputSchema` using JSON Schema syntax. Angular automatically infers the parameter types passed into your `execute` callback based on the schema definition.
+When a tool requires input from the AI assistant, define the expected arguments inside `inputSchema` using [JSON Schema](https://json-schema.org/) syntax. Angular automatically infers the parameter types passed into your `execute` callback based on the schema definition.
 
-```ts
+```ts {header:"main.ts"}
 import {provideExperimentalWebMcpTools} from '@angular/core';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {AppRoot} from './app-root';
@@ -108,7 +99,7 @@ TIP: Use `required: ['param1', 'param2', ...]` to remove `undefined` from the ty
 
 When building complex applications, you may only want certain tools available when the user is viewing specific routes. You can achieve this by providing tools directly in route definitions.
 
-```ts
+```ts {header:"routes.ts"}
 import {provideExperimentalWebMcpTools} from '@angular/core';
 import {Routes} from '@angular/router';
 
@@ -131,9 +122,9 @@ export const routes: Routes = [
 ];
 ```
 
-NOTE: When registering tools to a particular route, consider configuring the router to use `withAutoCleanupInjectors` to ensure tools are automatically _unregistered_ when the user navigates away from the route. Without this option, WebMCP tools declared on routes will remain accessible to AI agents even after the user has navigated to a different route.
+NOTE: When registering tools to a particular route, consider configuring the router to use [`withAutoCleanupInjectors`](api/router/withAutoCleanupInjectors) to ensure tools are automatically _unregistered_ when the user navigates away from the route. Without this option, WebMCP tools declared on routes will remain accessible to AI agents even after the user has navigated to a different route.
 
-```ts
+```ts {header:"app.config.ts"}
 import {ApplicationConfig} from '@angular/core';
 import {provideRouter, withAutoCleanupInjectors} from '@angular/router';
 import {routes} from './routes';
@@ -145,9 +136,9 @@ export const appConfig: ApplicationConfig = {
 
 ## Provide tools within services
 
-For dynamic use cases, the `declareExperimentalWebMcpTool` function registers a tool directly within an injection context and automatically unregisters it when that context is destroyed.
+For dynamic use cases, the [`declareExperimentalWebMcpTool`](api/core/declareExperimentalWebMcpTool) function registers a tool directly within an injection context and automatically unregisters it when that context is destroyed.
 
-```ts
+```ts {header:"counter.ts"}
 import {Service, declareExperimentalWebMcpTool, signal, inject} from '@angular/core';
 
 @Service()
@@ -166,17 +157,17 @@ export class Counter {
 }
 ```
 
-While `declareExperimentalWebMcpTool` works in any injection context, watch out for name collisions and prefer using it in root services.
+While `declareExperimentalWebMcpTool` works in any injection context, watch out for [name collisions](#name-collisions) and prefer using it in root services.
 
 ## Implicit tools in Signal Forms
 
-You can create a WebMCP tool implicitly from an existing Angular Signal Form with minimal configuration. Angular converts your form models into rich WebMCP tools, effectively supporting highly dynamic forms without requiring you to manually write JSON schemas or event handlers.
+You can create a WebMCP tool implicitly from an existing Angular [Signal Form](essentials/signal-forms) with minimal configuration. Angular converts your form models into rich WebMCP tools, effectively supporting highly dynamic forms without requiring you to manually write JSON schemas or event handlers.
 
 ### Enable the WebMCP forms feature
 
-First, add `provideExperimentalWebMcpForms` to your root application providers:
+First, add [`provideExperimentalWebMcpForms`](api/forms/signals/provideExperimentalWebMcpForms) to your root application providers:
 
-```ts
+```ts {header:"main.ts"}
 import {bootstrapApplication} from '@angular/platform-browser';
 import {provideExperimentalWebMcpForms} from '@angular/forms/signals';
 import {AppRoot} from './app-root';
@@ -188,9 +179,9 @@ bootstrapApplication(AppRoot, {
 
 ### Opt in a Signal Form
 
-Second, when defining a Signal Form using `form`, pass the `experimentalWebMcpTool` configuration option to opt-in to an implicit WebMCP tool. Angular will inspect your form's data model and automatically generate a JSON schema for connected AI agents.
+Second, when defining a Signal Form using [`form`](api/forms/signals/form), pass the `experimentalWebMcpTool` configuration option to opt-in to an implicit WebMCP tool. Angular will inspect your form's data model and automatically generate a JSON schema for connected AI agents.
 
-```ts
+```ts {header:"user-registration.ts"}
 import {Component, signal} from '@angular/core';
 import {form, required, minLength} from '@angular/forms/signals';
 
@@ -232,7 +223,7 @@ export class UserRegistration {
 In this example, Angular generates a WebMCP tool with a JSON schema which:
 
 1. includes `firstName`, `lastName`, `age`, and `hobbies` as parameters inferred from the initial value of the `model` signal.
-2. defines `firstName` and `lastName` as _required_ fields as inferred from the `required` validator.
+2. defines `firstName` and `lastName` as _required_ fields as inferred from the [`required`](api/forms/signals/required) validator.
 3. defines `hobbies` as an array of strings, allowing the agent to provide an arbitrary amount of hobbies.
 
 Beyond inferring the input schema, Angular also connects the WebMCP tool to the form's validation logic and submission handler. This means the agent will observe any validation errors triggered by its inputs or any failures which happen during submission, allowing it to self-correct and potentially retry.
@@ -254,7 +245,7 @@ Keep the following best practices in mind:
 
 WebMCP requires each tool to have a unique name and will throw an error if the same tool name is registered multiple times. This means calling `declareExperimentalWebMcpTool` or `provideExperimentalWebMcpTools` in a context where they might be registered multiple times (such as a component constructor) may lead to errors at runtime.
 
-Prefer placing tools on application providers, route providers, or root services where possible. When putting tools on a component, including implicit tools in Signal Forms, ensure that component is only ever rendered on the page at most _once_ at any given time.
+Prefer placing tools on application providers, route providers, or root services where possible. When putting tools on a component, including [implicit tools in Signal Forms](#implicit-tools-in-signal-forms), ensure that component is only ever rendered on the page at most _once_ at any given time.
 
 ### Validate tool inputs
 
@@ -262,4 +253,4 @@ Angular does not provide any implicit validation that the inputs provided by an 
 
 ### Testing
 
-Consider using a mock WebMCP implementation like `@mcp-b/webmcp-polyfill` to effectively unit test your tools.
+Consider using a mock WebMCP implementation like [`@mcp-b/webmcp-polyfill`](https://www.npmjs.com/package/@mcp-b/webmcp-polyfill) to effectively unit test your tools.

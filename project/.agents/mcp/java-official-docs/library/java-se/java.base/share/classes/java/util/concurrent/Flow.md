@@ -1,12 +1,3 @@
----
-title: "Flow class (java.util.concurrent)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/Flow.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Flow class (java.util.concurrent)
 
 ```java
@@ -14,25 +5,32 @@ public final class Flow
 ```
 
 Interrelated interfaces and static methods for establishing
-flow-controlled components in which Publishers
-produce items consumed by one or more Subscribers, each managed by a Subscription.
+flow-controlled components in which {@link Publisher Publishers}
+produce items consumed by one or more {@link Subscriber
+Subscribers}, each managed by a {@link Subscription
+Subscription}.
 
-These interfaces correspond to the  reactive-streams
+<p>These interfaces correspond to the <a
+href="http://www.reactive-streams.org/"> reactive-streams</a>
 specification.  They apply in both concurrent and distributed
-asynchronous settings: All (seven) methods are defined in `void` "one-way" message style. Communication relies on a simple form
-of flow control (method `Subscription.request`) that can be
+asynchronous settings: All (seven) methods are defined in {@code
+void} "one-way" message style. Communication relies on a simple form
+of flow control (method {@link Subscription#request}) that can be
 used to avoid resource management problems that may otherwise occur
 in "push" based systems.
 
-**Examples.** A `Publisher` usually defines its own
-`Subscription` implementation; constructing one in method
-`subscribe` and issuing it to the calling `Subscriber`. It publishes items to the subscriber asynchronously,
-normally using an `Executor`.  For example, here is a very
-simple publisher that only issues (when requested) a single `TRUE` item to a single subscriber.  Because the subscriber receives
+<p><b>Examples.</b> A {@link Publisher} usually defines its own
+{@link Subscription} implementation; constructing one in method
+{@code subscribe} and issuing it to the calling {@link
+Subscriber}. It publishes items to the subscriber asynchronously,
+normally using an {@link Executor}.  For example, here is a very
+simple publisher that only issues (when requested) a single {@code
+TRUE} item to a single subscriber.  Because the subscriber receives
 only a single item, this class does not use buffering and ordering
-control required in most implementations (for example `SubmissionPublisher`).
+control required in most implementations (for example {@link
+SubmissionPublisher}).
 
-```java
+<pre> {@code
 class OneShotPublisher implements Publisher<Boolean> {
   private final ExecutorService executor = ForkJoinPool.commonPool(); // daemon-based
   private boolean subscribed; // true after first subscribe
@@ -73,23 +71,23 @@ class OneShotPublisher implements Publisher<Boolean> {
       if (future != null) future.cancel(false);
     }
   }
-}
-```
+}}</pre>
 
-A `Subscriber` arranges that items be requested and
-processed.  Items (invocations of `Subscriber.onNext`) are
+<p>A {@link Subscriber} arranges that items be requested and
+processed.  Items (invocations of {@link Subscriber#onNext}) are
 not issued unless requested, but multiple items may be requested.
 Many Subscriber implementations can arrange this in the style of
 the following example, where a buffer size of 1 single-steps, and
 larger sizes usually allow for more efficient overlapped processing
 with less communication; for example with a value of 64, this keeps
 total outstanding requests between 32 and 64.
-Because Subscriber method invocations for a given `Subscription` are strictly ordered, there is no need for these
+Because Subscriber method invocations for a given {@link
+Subscription} are strictly ordered, there is no need for these
 methods to use locks or volatiles unless a Subscriber maintains
 multiple Subscriptions (in which case it is better to instead
 define multiple Subscribers, each with its own Subscription).
 
-```java
+<pre> {@code
 class SampleSubscriber<T> implements Subscriber<T> {
   final Consumer<? super T> consumer;
   Subscription subscription;
@@ -111,16 +109,15 @@ class SampleSubscriber<T> implements Subscriber<T> {
   }
   public void onError(Throwable ex) { ex.printStackTrace(); }
   public void onComplete() {}
-}
-```
+}}</pre>
 
-The default value of `defaultBufferSize` may provide a
+<p>The default value of {@link #defaultBufferSize} may provide a
 useful starting point for choosing request sizes and capacities in
 Flow components based on expected rates, resources, and usages.
 Or, when flow control is never needed, a subscriber may initially
 request an effectively unbounded number of items, as in:
 
-```java
+<pre> {@code
 class UnboundedSubscriber<T> implements Subscriber<T> {
   public void onSubscribe(Subscription subscription) {
     subscription.request(Long.MAX_VALUE); // effectively unbounded
@@ -129,10 +126,10 @@ class UnboundedSubscriber<T> implements Subscriber<T> {
   public void onError(Throwable ex) { ex.printStackTrace(); }
   public void onComplete() {}
   void use(T item) { ... }
-}
-```
+}}</pre>
 
-**Since:** 9
+@author Doug Lea
+@since 9
 
 ## Flow.subscribe(Subscriber<? super T>)
 
@@ -142,21 +139,16 @@ public void subscribe(Subscriber<? super T> subscriber)
 
 Adds the given Subscriber if possible.  If already
 subscribed, or the attempt to subscribe fails due to policy
-violations or errors, the Subscriber's `onError`
-method is invoked with an `IllegalStateException`.
-Otherwise, the Subscriber's `onSubscribe` method is
-invoked with a new `Subscription`.  Subscribers may
-enable receiving items by invoking the `request`
+violations or errors, the Subscriber's {@code onError}
+method is invoked with an {@link IllegalStateException}.
+Otherwise, the Subscriber's {@code onSubscribe} method is
+invoked with a new {@link Subscription}.  Subscribers may
+enable receiving items by invoking the {@code request}
 method of this Subscription, and may unsubscribe by
-invoking its `cancel` method.
+invoking its {@code cancel} method.
 
-Parameters:
-
-- `subscriber`: the subscriber
-
-Throws:
-
-- `NullPointerException`: if subscriber is null
+@param subscriber the subscriber
+@throws NullPointerException if subscriber is null
 
 ## Flow.onSubscribe(Subscription)
 
@@ -169,11 +161,10 @@ methods for the given Subscription. If this method throws
 an exception, resulting behavior is not guaranteed, but may
 cause the Subscription not to be established or to be cancelled.
 
-Typically, implementations of this method invoke `subscription.request` to enable receiving items.
+<p>Typically, implementations of this method invoke {@code
+subscription.request} to enable receiving items.
 
-Parameters:
-
-- `subscription`: a new subscription
+@param subscription a new subscription
 
 ## Flow.onNext(T)
 
@@ -185,9 +176,7 @@ Method invoked with a Subscription's next item.  If this
 method throws an exception, resulting behavior is not
 guaranteed, but may cause the Subscription to be cancelled.
 
-Parameters:
-
-- `item`: the item
+@param item the item
 
 ## Flow.onError(Throwable)
 
@@ -201,9 +190,7 @@ methods are invoked by the Subscription.  If this method
 itself throws an exception, resulting behavior is
 undefined.
 
-Parameters:
-
-- `throwable`: the exception
+@param throwable the exception
 
 ## Flow.onComplete()
 
@@ -224,15 +211,16 @@ undefined.
 public void request(long n)
 ```
 
-Adds the given number `n` of items to the current
-unfulfilled demand for this subscription.  If `n` is
+Adds the given number {@code n} of items to the current
+unfulfilled demand for this subscription.  If {@code n} is
 less than or equal to zero, the Subscriber will receive an
-`onError` signal with an `IllegalArgumentException` argument.  Otherwise, the
-Subscriber will receive up to `n` additional `onNext` invocations (or fewer if terminated).
+{@code onError} signal with an {@link
+IllegalArgumentException} argument.  Otherwise, the
+Subscriber will receive up to {@code n} additional {@code
+onNext} invocations (or fewer if terminated).
 
-Parameters:
-
-- `n`: the increment of demand; a value of `Long.MAX_VALUE` may be considered as effectively unbounded
+@param n the increment of demand; a value of {@code
+Long.MAX_VALUE} may be considered as effectively unbounded
 
 ## Flow.cancel()
 
@@ -244,7 +232,7 @@ Causes the Subscriber to (eventually) stop receiving
 messages.  Implementation is best-effort -- additional
 messages may be received after invoking this method.
 A cancelled subscription need not ever receive an
-`onComplete` or `onError` signal.
+{@code onComplete} or {@code onError} signal.
 
 ## Flow.defaultBufferSize()
 
@@ -255,6 +243,7 @@ public static int defaultBufferSize()
 Returns a default value for Publisher or Subscriber buffering,
 that may be used in the absence of other constraints.
 
-**Implementation note:** The current value returned is 256.
+@implNote
+The current value returned is 256.
 
-**Returns:** the buffer size value
+@return the buffer size value

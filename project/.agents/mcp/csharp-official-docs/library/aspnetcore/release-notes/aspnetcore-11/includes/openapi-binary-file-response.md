@@ -1,21 +1,13 @@
----
-title: "openapi-binary-file-response"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-11/includes/openapi-binary-file-response.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# openapi-binary-file-response
-
 ### Describe binary file responses
 
 ASP.NET Core 11 introduces support for generating OpenAPI descriptions for operations that return binary file responses. This support maps the `FileContentResult` result type to an OpenAPI schema with `type: string` and `format: binary`.
 
-#### Minimal APIs
+#### [Minimal APIs](#tab/minimal-apis)
 
 Use the `Produces<T>` extension method with `T` of `FileContentResult` to specify the response type and content type:
+<!-- UPDATE 11.0 - API cross-link needs to be entered in the line above for the new API
+such as: <xref:Microsoft.AspNetCore.NEW_API_TO_BE_ENTERED_>
+-->
 
 ```csharp
 app.MapPost("/filecontentresult", () =>
@@ -26,7 +18,7 @@ app.MapPost("/filecontentresult", () =>
 .Produces<FileContentResult>(contentType: MediaTypeNames.Application.Octet);
 ```
 
-#### Controllers
+#### [Controllers](#tab/controllers)
 
 Use the `ProducesResponseType<T>` attribute with `T` of `FileContentResult` to specify the response type and content type:
 

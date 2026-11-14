@@ -1,23 +1,21 @@
 ---
-title: "Spatial - EF Designer - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/modeling/designer/data-types/spatial.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Spatial - EF Designer - EF6
+description: Spatial - EF Designer in Entity Framework 6
+author: SamMonoRT
+ms.date: 10/23/2016
+uid: ef6/modeling/designer/data-types/spatial
 ---
-
 # Spatial - EF Designer
-> **Note:**
+> [!NOTE]
 > **EF5 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 5. If you are using an earlier version, some or all of the information does not apply.
 
 The video and step-by-step walkthrough shows how to map spatial types with the Entity Framework Designer. It also demonstrates how to use a LINQ query to find a distance between two locations.
 
-This walkthrough will use Model First to create a new database, but the EF Designer can also be used with the Database First workflow to map to an existing database.
+This walkthrough will use Model First to create a new database, but the EF Designer can also be used with the [Database First](xref:ef6/modeling/designer/workflows/database-first) workflow to map to an existing database.
 
 Spatial type support was introduced in Entity Framework 5. Note that to use the new features like spatial type, enums, and Table-valued functions, you must target .NET Framework 4.5. Visual Studio 2012 targets .NET 4.5 by default.
 
-To use spatial data types you must also use an Entity Framework provider that has spatial support. See provider support for spatial types for more information.
+To use spatial data types you must also use an Entity Framework provider that has spatial support. See [provider support for spatial types](xref:ef6/fundamentals/providers/spatial-support) for more information.
 
 There are two main spatial data types: geography and geometry. The geography data type stores ellipsoidal data (for example, GPS latitude and longitude coordinates). The geometry data type represents Euclidean (flat) coordinate system.
 
@@ -26,7 +24,7 @@ This video shows how to map spatial types with the Entity Framework Designer. It
 
 **Presented By**: Julia Kornich
 
-**Video**: WMV | MP4 | WMV (ZIP)
+**Video**: [WMV](https://download.microsoft.com/download/E/C/9/EC9E6547-8983-4C1F-A919-D33210E4B213/HDI-ITPro-MSDN-winvideo-spatialwithdesigner.wmv) | [MP4](https://download.microsoft.com/download/E/C/9/EC9E6547-8983-4C1F-A919-D33210E4B213/HDI-ITPro-MSDN-mp4video-spatialwithdesigner.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/E/C/9/EC9E6547-8983-4C1F-A919-D33210E4B213/HDI-ITPro-MSDN-winvideo-spatialwithdesigner.zip)
 
 ## Pre-Requisites
 
@@ -57,15 +55,15 @@ The wizard performs the following actions:
 
 ## Add a New Entity Type
 
-1.  Right-click an empty area of the design surface, select **Add -> Entity**, the New Entity dialog box appears
-2.  Specify **University** for the type name and specify **UniversityID** for the key <example-value> name, leave the type as **Int32**
+1.  Right-click an empty area of the design surface, select **Add -&gt; Entity**, the New Entity dialog box appears
+2.  Specify **University** for the type name and specify **UniversityID** for the key property name, leave the type as **Int32**
 3.  Click **OK**
-4.  Right-click the entity and select **Add New -> Scalar Property**
+4.  Right-click the entity and select **Add New -&gt; Scalar Property**
 5.  Rename the new property to **Name**
 6.  Add another scalar property and rename it to **Location**
     Open the Properties window and change the type of the new property to **Geography**
 7.  Save the model and build the project
-    > **Note:**
+    > [!NOTE]
     > When you build, warnings about unmapped entities and associations may appear in the Error List. You can ignore these warnings because after we choose to generate the database from the model, the errors will go away.
 
 ## Generate Database from Model
@@ -96,7 +94,7 @@ Open the Program.cs file where the Main method is defined. Add the following cod
 
 The code adds two new University objects to the context. Spatial properties are initialized by using the DbGeography.FromText method. The geography point represented as WellKnownText is passed to the method. The code then saves the data. Then, the LINQ query that returns a University object where its location is closest to the specified location, is constructed and executed.
 
-```csharp
+``` csharp
 using (var context = new UniversityModelContainer())
 {
     context.Universities.Add(new University()
@@ -135,4 +133,4 @@ To view data in the database, right-click on the database name in SQL Server Obj
 
 ## Summary
 
-In this walkthrough we looked at how to map spatial types using the Entity Framework Designer and how to use spatial types in code.
+In this walkthrough we looked at how to map spatial types using the Entity Framework Designer and how to use spatial types in code. 

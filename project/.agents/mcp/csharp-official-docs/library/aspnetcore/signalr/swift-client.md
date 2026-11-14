@@ -1,10 +1,9 @@
 ---
-title: "ASP.NET Core SignalR Swift client"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/signalr/swift-client.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core SignalR Swift client
+ai-usage: ai-assisted
+description: Overview of the ASP.NET Core SignalR Swift client library.
+ms.custom: devx-track-swift
+ms.date: 03/20/2025
 ---
 
 # ASP.NET Core SignalR Swift client
@@ -13,7 +12,7 @@ SignalR Swift is a client library for connecting to SignalR servers from Swift a
 
 ## Install the SignalR client package
 
-The SignalR Swift client library is delivered as a Swift package. You can add it to your project using the Swift Package Manager.
+The SignalR Swift client library is delivered as a Swift package. You can add it to your project using the [Swift Package Manager](https://swift.org/package-manager/).
 
 ### Requirements
 
@@ -72,24 +71,14 @@ await connection.on("ReceiveMessage") { (user: String, message: String) in
 }
 ```
 
-The preceding code in `connection.on` runs when server-side code calls it using the `Microsoft.AspNetCore.SignalR.ClientProxyExtensions.SendAsync*` method:
+The preceding code in `connection.on` runs when server-side code calls it using the <xref:Microsoft.AspNetCore.SignalR.ClientProxyExtensions.SendAsync*> method:
 
-```csharp
-﻿using Microsoft.AspNetCore.SignalR;
-namespace SignalRChat.Hubs;
-
-public class ChatHub : Hub
-{
-    public async Task SendMessage(string user, string message)
-    {
-        await Clients.All.SendAsync("ReceiveMessage", user, message);
-    }
-}
-```
+[!code-csharp[Call client-side](javascript-client/samples/6.x/SignalRChat/Hubs/ChatHub.cs)]
 
 SignalR determines which client method to call by matching the method name and arguments defined in `SendAsync` and `connection.on`.
 
 A **best practice** is to call the `try await connection.start()` method on the `HubConnection` after `on`. Doing so ensures the handlers are registered before any messages are received.
+
 
 ## Call hub methods from the client
 
@@ -141,7 +130,7 @@ public class ChatHub : Hub
             new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
         var message = await Clients.Client(connectionId).InvokeAsync<string>(
-            "<example-value>", cancellationTokenSource.Token);
+            "ClientResult", cancellationTokenSource.Token);
     }
 }
 ```
@@ -247,11 +236,11 @@ let connection = HubConnectionBuilder()
 
 ## Related content
 
-* WebPack and TypeScript tutorial
-* Hubs
-* .NET client
-* JavaScript client
-* Publish to Azure
-* Cross-Origin Requests (CORS)
-* Azure SignalR Service serverless documentation
-* Troubleshoot connection errors
+* [WebPack and TypeScript tutorial](../tutorials/signalr-typescript-webpack.md)
+* [Hubs](hubs.md)
+* [.NET client](dotnet-client.md)
+* [JavaScript client](javascript-client.md)
+* [Publish to Azure](publish-to-azure-web-app.md)
+* [Cross-Origin Requests (CORS)](../security/cors.md)
+* [Azure SignalR Service serverless documentation](/azure/azure-signalr/signalr-concept-serverless-development-config)
+* [Troubleshoot connection errors](troubleshoot.md)

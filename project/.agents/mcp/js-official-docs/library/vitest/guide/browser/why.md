@@ -1,10 +1,6 @@
 ---
-title: "Why Browser Mode | Browser Mode"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/browser/why.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Why Browser Mode | Browser Mode
+outline: deep
 ---
 
 # Why Browser Mode
@@ -15,7 +11,7 @@ We developed the Vitest browser mode feature to help improve testing workflows a
 
 ### Different Ways of Testing
 
-There are different ways to test JavaScript code. Some testing frameworks simulate browser environments in Node.js, while others run tests in real browsers. In this context, jsdom is an example of a spec implementation that simulates a browser environment by being used with a test runner like Jest or Vitest, while other testing tools such as WebdriverIO or Cypress allow developers to test their applications in a real browser or in case of Playwright provide you a browser engine.
+There are different ways to test JavaScript code. Some testing frameworks simulate browser environments in Node.js, while others run tests in real browsers. In this context, [jsdom](https://npmx.dev/package/jsdom) is an example of a spec implementation that simulates a browser environment by being used with a test runner like Jest or Vitest, while other testing tools such as [WebdriverIO](https://webdriver.io/) or [Cypress](https://www.cypress.io/) allow developers to test their applications in a real browser or in case of [Playwright](https://playwright.dev/) provide you a browser engine.
 
 ### The Simulation Caveat
 

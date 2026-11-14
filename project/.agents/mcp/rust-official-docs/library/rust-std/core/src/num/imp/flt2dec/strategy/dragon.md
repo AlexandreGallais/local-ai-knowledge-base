@@ -1,17 +1,9 @@
----
-title: "core::num::imp::flt2dec::strategy::dragon"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/num/imp/flt2dec/strategy/dragon.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::num::imp::flt2dec::strategy::dragon
 
 Almost direct (but slightly optimized) Rust translation of Figure 3 of "Printing
 Floating-Point Numbers Quickly and Accurately"[^1].
 
+[^1]: Burger, R. G. and Dybvig, R. K. 1996. Printing floating-point numbers
   quickly and accurately. SIGPLAN Not. 31, 5 (May. 1996), 108-116.
 
 ## fn format_shortest

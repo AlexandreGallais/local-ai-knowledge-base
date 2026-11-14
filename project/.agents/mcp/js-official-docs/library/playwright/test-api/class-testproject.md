@@ -1,23 +1,14 @@
----
-title: "class: TestProject (part 1 of 2)"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/test-api/class-testproject.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: TestProject
 * since: v1.10
 * langs: js
 
 Playwright Test supports running multiple test projects at the same time. This is useful for running tests in multiple configurations. For example, consider running tests against multiple browsers. This type describes format of a project in the configuration file, to access resolved configuration parameters at run time use [FullProject].
 
-`TestProject` encapsulates configuration specific to a single project. Projects are configured in [`property: TestConfig.projects`] specified in the configuration file. Note that all properties of [TestProject] are available in the top-level [TestConfig], in which case they are shared between all projects.
+`TestProject` encapsulates configuration specific to a single project. Projects are configured in [`property: TestConfig.projects`] specified in the [configuration file](../test-configuration.md). Note that all properties of [TestProject] are available in the top-level [TestConfig], in which case they are shared between all projects.
 
 Here is an example configuration that runs every test in Chromium, Firefox and WebKit, both Desktop and Mobile versions.
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
@@ -67,7 +58,7 @@ see the setup steps in the test report, etc.
 
 **Usage**
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -107,7 +98,7 @@ A project with `default: false` still runs when another running project lists it
 
 **Usage**
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -132,7 +123,7 @@ Now `npx playwright test` only runs `chromium`, while `npx playwright test --pro
 - type: ?<[Object]>
   - `timeout` ?<[int]> Default timeout for async expect matchers in milliseconds, defaults to 5000ms.
   - `toHaveScreenshot` ?<[Object]> Configuration for the [`method: PageAssertions.toHaveScreenshot#1`] method.
-    - `threshold` ?<[float]> an acceptable perceived color difference between the same pixel in compared images, ranging from `0` (strict) and `1` (lax). `"pixelmatch"` comparator computes color difference in YIQ color space and defaults `threshold` value to `0.2`.
+    - `threshold` ?<[float]> an acceptable perceived color difference between the same pixel in compared images, ranging from `0` (strict) and `1` (lax). `"pixelmatch"` comparator computes color difference in [YIQ color space](https://en.wikipedia.org/wiki/YIQ) and defaults `threshold` value to `0.2`.
     - `maxDiffPixels` ?<[int]> an acceptable amount of pixels that could be different, unset by default. Note that `threshold` defines which pixels are considered different.
     - `maxDiffPixelRatio` ?<[float]> an acceptable ratio of pixels that are different to the total amount of pixels, between `0` and `1` , unset by default. Note that `threshold` defines which pixels are considered different.
     - `animations` "ScreenshotAnimations" ?<"allow"|"disabled"> See [`option: Page.screenshot.animations`] in [`method: Page.screenshot`]. Defaults to `"disabled"`.
@@ -146,12 +137,12 @@ Now `npx playwright test` only runs `chromium`, while `npx playwright test --pro
     - `pathTemplate` ?<[string]> A template controlling location of the aria snapshots. See [`property: TestProject.snapshotPathTemplate`] for details.
     - `children` ?<["contain" | "equal" | "deep-equal"]> Controls how children of the snapshot root are matched against the actual accessibility tree. This is equivalent to adding a `/children` property at the top of every aria snapshot template. Individual snapshots can override this by including an explicit `/children` property.
   - `toMatchSnapshot` ?<[Object]> Configuration for the [`method: SnapshotAssertions.toMatchSnapshot#1`] method.
-    - `threshold` ?<[float]> an acceptable perceived color difference between the same pixel in compared images, ranging from `0` (strict) and `1` (lax). `"pixelmatch"` comparator computes color difference in YIQ color space and defaults `threshold` value to `0.2`.
+    - `threshold` ?<[float]> an acceptable perceived color difference between the same pixel in compared images, ranging from `0` (strict) and `1` (lax). `"pixelmatch"` comparator computes color difference in [YIQ color space](https://en.wikipedia.org/wiki/YIQ) and defaults `threshold` value to `0.2`.
     - `maxDiffPixels` ?<[int]> an acceptable amount of pixels that could be different, unset by default. Note that `threshold` defines which pixels are considered different.
     - `maxDiffPixelRatio` ?<[float]> an acceptable ratio of pixels that are different to the total amount of pixels, between `0` and `1` , unset by default. Note that `threshold` defines which pixels are considered different.
-  - `toPass` ?<[Object]> Configuration for the expect(value).toPass() method.
-    - `timeout` ?<[int]> timeout for toPass <example-value> in milliseconds.
-    - `intervals` ?<[Array]<[int]>> probe intervals for toPass <example-value> in milliseconds.
+  - `toPass` ?<[Object]> Configuration for the [expect(value).toPass()](../test-assertions.md) method.
+    - `timeout` ?<[int]> timeout for toPass method in milliseconds.
+    - `intervals` ?<[Array]<[int]>> probe intervals for toPass method in milliseconds.
 
 Configuration for the `expect` assertion library.
 
@@ -170,17 +161,17 @@ You can configure entire test project to concurrently run all tests in all files
 * since: v1.10
 - type: ?<[RegExp]|[Array]<[RegExp]>>
 
-Filter to only run tests with a title matching one of the patterns. For example, passing `grep: /cart/` should only run tests with "cart" in the title. Also available globally and in the command line with the `-g` option. The regular expression will be tested against the string that consists of the project name, the test file name, the `test.describe` name (if any), the test name and the test tags divided by spaces, e.g. `chromium my-test.spec.ts my-suite my-test`.
+Filter to only run tests with a title matching one of the patterns. For example, passing `grep: /cart/` should only run tests with "cart" in the title. Also available globally and in the [command line](../test-cli.md) with the `-g` option. The regular expression will be tested against the string that consists of the project name, the test file name, the `test.describe` name (if any), the test name and the test tags divided by spaces, e.g. `chromium my-test.spec.ts my-suite my-test`.
 
-`grep` option is also useful for tagging tests.
+`grep` option is also useful for [tagging tests](../test-annotations.md#tag-tests).
 
 ## property: TestProject.grepInvert
 * since: v1.10
 - type: ?<[RegExp]|[Array]<[RegExp]>>
 
-Filter to only run tests with a title **not** matching any of the patterns. This is the opposite of [`property: TestProject.grep`]. Also available globally and in the command line with the `--grep-invert` option.
+Filter to only run tests with a title **not** matching any of the patterns. This is the opposite of [`property: TestProject.grep`]. Also available globally and in the [command line](../test-cli.md) with the `--grep-invert` option.
 
-`grepInvert` option is also useful for tagging tests.
+`grepInvert` option is also useful for [tagging tests](../test-annotations.md#tag-tests).
 
 ## property: TestProject.ignoreSnapshots
 * since: v1.44
@@ -192,7 +183,7 @@ Whether to skip snapshot expectations, such as `expect(value).toMatchSnapshot()`
 
 The following example will only perform screenshot assertions on Chromium.
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -284,11 +275,12 @@ Whether to skip entries from `.gitignore` when searching for test files. By defa
 * since: v1.10
 - type: ?<[int]>
 
-The maximum number of retry attempts given to failed tests. Learn more about test retries.
+The maximum number of retry attempts given to failed tests. Learn more about [test retries](../test-retries.md#retries).
 
 Use [`method: Test.describe.configure`] to change the number of retries for a specific file or a group of tests.
 
 Use [`property: TestConfig.retries`] to change this option for all projects.
+
 
 ## property: TestProject.teardown
 * since: v1.34
@@ -302,7 +294,7 @@ Passing `--no-deps` argument ignores [`property: TestProject.teardown`] and beha
 
 A common pattern is a "setup" dependency that has a corresponding "teardown":
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -343,7 +335,7 @@ Directory that will be recursively scanned for test files. Defaults to the direc
 
 Each project can use a different directory. Here is an example that runs smoke tests in three browsers and all other tests in stable Chrome browser.
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -392,3 +384,78 @@ Files matching one of these patterns are not executed as test files. Matching is
 For example, `'**/test-assets/**'` will ignore any files in the `test-assets` directory.
 
 Use [`property: TestConfig.testIgnore`] to change this option for all projects.
+
+## property: TestProject.testMatch
+* since: v1.10
+- type: ?<[string]|[RegExp]|[Array]<[string]|[RegExp]>>
+
+Only the files matching one of these patterns are executed as test files. Matching is performed against the absolute file path. Strings are treated as glob patterns.
+
+By default, Playwright looks for files matching the following glob pattern: `**/*.@(spec|test).?(c|m)[jt]s?(x)`. This means JavaScript or TypeScript files with `".test"` or `".spec"` suffix, for example `login-screen.wrong-credentials.spec.ts`.
+
+Use [`property: TestConfig.testMatch`] to change this option for all projects.
+
+## property: TestProject.timeout
+* since: v1.10
+- type: ?<[int]>
+
+Timeout for each test in milliseconds. Defaults to 30 seconds.
+
+This is a base timeout for all tests. Each test can configure its own timeout with [`method: Test.setTimeout`]. Each file or a group of tests can configure the timeout with [`method: Test.describe.configure`].
+
+Use [`property: TestConfig.timeout`] to change this option for all projects.
+
+## property: TestProject.use
+* since: v1.10
+- type: ?<[TestOptions]>
+
+Options for all tests in this project, for example [`property: TestOptions.browserName`]. Learn more about [configuration](../test-configuration.md) and see [available options][TestOptions].
+
+```js title="playwright.config.ts"
+import { defineConfig } from '@playwright/test';
+
+export default defineConfig({
+  projects: [
+    {
+      name: 'Chromium',
+      use: {
+        browserName: 'chromium',
+      },
+    },
+  ],
+});
+```
+
+Use [`property: TestConfig.use`] to change this option for all projects.
+
+## property: TestProject.workers
+* since: v1.52
+- type: ?<[int]|[string]>
+
+The maximum number of concurrent worker processes to use for parallelizing tests from this project. Can also be set as percentage of logical CPU cores, e.g. `'50%'.`
+
+This could be useful, for example, when all tests from a project share a single resource like a test account, and therefore cannot be executed in parallel. Limiting workers to one for such a project will prevent simultaneous use of the shared resource.
+
+Note that the global [`property: TestConfig.workers`] limit applies to the total number of worker processes. However, Playwright will limit the number of workers used for this project by the value of [`property: TestProject.workers`].
+
+By default, there is no limit per project. See [`property: TestConfig.workers`] for the default of the total worker limit.
+
+**Usage**
+
+```js title="playwright.config.ts"
+import { defineConfig } from '@playwright/test';
+
+export default defineConfig({
+  workers: 10,  // total workers limit
+
+  projects: [
+    {
+      name: 'runs in parallel',
+    },
+    {
+      name: 'one at a time',
+      workers: 1,  // workers limit for this project
+    },
+  ],
+});
+```

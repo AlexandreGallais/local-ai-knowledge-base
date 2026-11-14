@@ -1,19 +1,15 @@
 ---
 title: "Breaking change: Serialize throws exception when type parameter is null"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/serialization/5.0/jsonserializer-serialize-throws-argumentnullexception-for-null-type.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 5 where JsonSerialize serialization methods that have a Type parameter now throw an exception whenever null is passed for that parameter.
+ms.date: 10/18/2020
 ---
-
 # JsonSerializer.Serialize throws ArgumentNullException when type parameter is null
 
-`System.Text.Json.JsonSerializer.Serialize*`, `System.Text.Json.JsonSerializer.SerializeAsync*`, and `System.Text.Json.JsonSerializer.SerializeToUtf8Bytes*` overloads that have a parameter of type `System.Type` now throw an `System.ArgumentNullException` whenever `null` is passed for that parameter.
+<xref:System.Text.Json.JsonSerializer.Serialize*?displayProperty=nameWithType>, <xref:System.Text.Json.JsonSerializer.SerializeAsync*?displayProperty=nameWithType>, and <xref:System.Text.Json.JsonSerializer.SerializeToUtf8Bytes*?displayProperty=nameWithType> overloads that have a parameter of type <xref:System.Type> now throw an <xref:System.ArgumentNullException> whenever `null` is passed for that parameter.
 
 ## Change description
 
-In .NET Core 3.1, the `System.Text.Json.JsonSerializer.Serialize*`, `System.Text.Json.JsonSerializer.SerializeAsync(System.IO.Stream,System.Object,System.Type,System.Text.Json.JsonSerializerOptions,System.Threading.CancellationToken)`, and `System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(System.Object,System.Type,System.Text.Json.JsonSerializerOptions)` overloads that have a `System.Type` parameter throw an `System.ArgumentNullException` when `null` is passed for the `Type inputType` parameter, but not if the `Object value` parameter is also `null`. Starting in .NET 5, these methods *always* throw an `System.ArgumentNullException` when `null` is passed for the `System.Type` parameter.
+In .NET Core 3.1, the <xref:System.Text.Json.JsonSerializer.Serialize*?displayProperty=nameWithType>, <xref:System.Text.Json.JsonSerializer.SerializeAsync(System.IO.Stream,System.Object,System.Type,System.Text.Json.JsonSerializerOptions,System.Threading.CancellationToken)?displayProperty=nameWithType>, and <xref:System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(System.Object,System.Type,System.Text.Json.JsonSerializerOptions)?displayProperty=nameWithType> overloads that have a <xref:System.Type> parameter throw an <xref:System.ArgumentNullException> when `null` is passed for the `Type inputType` parameter, but not if the `Object value` parameter is also `null`. Starting in .NET 5, these methods *always* throw an <xref:System.ArgumentNullException> when `null` is passed for the <xref:System.Type> parameter.
 
 Behavior in .NET Core 3.1:
 
@@ -41,7 +37,7 @@ JsonSerializer.SerializeToUtf8Bytes(null, null);
 
 ## Reason for change
 
-Passing in `null` for the `Type inputType` parameter is unacceptable and should always throw an `System.ArgumentNullException`.
+Passing in `null` for the `Type inputType` parameter is unacceptable and should always throw an <xref:System.ArgumentNullException>.
 
 ## Recommended action
 
@@ -49,7 +45,22 @@ Make sure that you are not passing `null` for the `Type inputType` parameter of 
 
 ## Affected APIs
 
-- `System.Text.Json.JsonSerializer.Serialize(System.Object,System.Type,System.Text.Json.JsonSerializerOptions)`
-- `System.Text.Json.JsonSerializer.Serialize(System.Text.Json.Utf8JsonWriter,System.Object,System.Type,System.Text.Json.JsonSerializerOptions)`
-- `System.Text.Json.JsonSerializer.SerializeAsync(System.IO.Stream,System.Object,System.Type,System.Text.Json.JsonSerializerOptions,System.Threading.CancellationToken)`
-- `System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(System.Object,System.Type,System.Text.Json.JsonSerializerOptions)`
+- <xref:System.Text.Json.JsonSerializer.Serialize(System.Object,System.Type,System.Text.Json.JsonSerializerOptions)?displayProperty=fullName>
+- <xref:System.Text.Json.JsonSerializer.Serialize(System.Text.Json.Utf8JsonWriter,System.Object,System.Type,System.Text.Json.JsonSerializerOptions)?displayProperty=fullName>
+- <xref:System.Text.Json.JsonSerializer.SerializeAsync(System.IO.Stream,System.Object,System.Type,System.Text.Json.JsonSerializerOptions,System.Threading.CancellationToken)?displayProperty=fullName>
+- <xref:System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(System.Object,System.Type,System.Text.Json.JsonSerializerOptions)?displayProperty=fullName>
+
+<!--
+
+### Affected APIs
+
+- `M:System.Text.Json.JsonSerializer.Serialize(System.Object,System.Type,System.Text.Json.JsonSerializerOptions)`
+- `M:System.Text.Json.JsonSerializer.Serialize(System.Text.Json.Utf8JsonWriter,System.Object,System.Type,System.Text.Json.JsonSerializerOptions)`
+- `M:System.Text.Json.JsonSerializer.SerializeAsync(System.IO.Stream,System.Object,System.Type,System.Text.Json.JsonSerializerOptions,System.Threading.CancellationToken)`
+- `M:System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(System.Object,System.Type,System.Text.Json.JsonSerializerOptions)`
+
+### Category
+
+Serialization
+
+-->

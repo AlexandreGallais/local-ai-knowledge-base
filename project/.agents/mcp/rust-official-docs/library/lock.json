@@ -1,20 +1,32 @@
 {
   "rust-book": {
     "commit": "2771df165f092a4fbb9f46b5b2e7450f19010adb",
-    "files": 183,
-    "bytes": 1314849,
+    "files": 112,
+    "bytes": 1221077,
     "built": "2026-11-14"
   },
   "rust-reference": {
     "commit": "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c",
-    "files": 159,
-    "bytes": 1049025,
+    "files": 121,
+    "bytes": 1128142,
     "built": "2026-11-14"
   },
   "rust-std": {
     "commit": "0ef1bc386059596dada8fb65b50425aab2ea637a",
-    "files": 754,
-    "bytes": 3214113,
+    "files": 649,
+    "bytes": 3138070,
+    "built": "2026-11-14"
+  },
+  "cargo": {
+    "commit": "3acc79c0c841844675bc53a605922dbfc441e750",
+    "files": 99,
+    "bytes": 1656819,
+    "built": "2026-11-14"
+  },
+  "rust-by-example": {
+    "commit": "dcc14f912bf8790792a2df082eddc82ab2539229",
+    "files": 198,
+    "bytes": 392408,
     "built": "2026-11-14"
   }
 }

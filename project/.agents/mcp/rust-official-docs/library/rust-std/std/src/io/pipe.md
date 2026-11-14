@@ -1,12 +1,3 @@
----
-title: "std::io::pipe"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/io/pipe.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::io::pipe
 
 ## fn pipe
@@ -25,13 +16,13 @@ faster ways to communicate within a single process.
 
 In particular:
 
-* A read on a `PipeReader` blocks until the pipe is non-empty.
-* A write on a `PipeWriter` blocks when the pipe is full.
-* When all copies of a `PipeWriter` are closed, a read on the corresponding `PipeReader`
+* A read on a [`PipeReader`] blocks until the pipe is non-empty.
+* A write on a [`PipeWriter`] blocks when the pipe is full.
+* When all copies of a [`PipeWriter`] are closed, a read on the corresponding [`PipeReader`]
   returns EOF.
-* `PipeWriter` can be shared, and multiple processes or threads can write to it at once, but
+* [`PipeWriter`] can be shared, and multiple processes or threads can write to it at once, but
   writes (above a target-specific threshold) may have their data interleaved.
-* `PipeReader` can be shared, and multiple processes or threads can read it at once. Any
+* [`PipeReader`] can be shared, and multiple processes or threads can read it at once. Any
   given byte will only get consumed by one reader. There are no guarantees about data
   interleaving.
 * Portable applications cannot assume any atomicity of messages larger than a single byte.
@@ -41,7 +32,7 @@ In particular:
 This function currently corresponds to the `pipe` function on Unix and the
 `CreatePipe` function on Windows.
 
-Note that this may change in the future.
+Note that this [may change in the future][changes].
 
 # Capacity
 
@@ -53,7 +44,8 @@ Pipe capacity is platform dependent. To quote the Linux [man page]:
 
 # Example
 
-```rust
+```no_run
+# fn main() -> std::io::Result<()> {
 use std::io::{Read, Write, pipe};
 use std::process::Command;
 let (ping_reader, mut ping_writer) = pipe()?;
@@ -86,7 +78,11 @@ assert_eq!(&buf, "hello");
 
 // At this point we know `cat` has exited, but we still need to wait to clean up the "zombie".
 echo_child.wait()?;
+# Ok(())
+# }
 ```
+[changes]: io#platform-specific-behavior
+[man page]: https://man7.org/linux/man-pages/man7/pipe.7.html
 
 ## struct PipeReader
 
@@ -110,11 +106,12 @@ Write end of an anonymous pipe.
 pub fn try_clone(&self) -> io::Result<Self>
 ```
 
-Creates a new `PipeReader` instance that shares the same underlying file description.
+Creates a new [`PipeReader`] instance that shares the same underlying file description.
 
 # Examples
 
-```rust
+```no_run
+# fn main() -> std::io::Result<()> {
 use std::fs;
 use std::io::{pipe, Write};
 use std::process::Command;
@@ -156,6 +153,8 @@ for mut job in jobs {
 let xs = fs::read_to_string(OUTPUT)?;
 fs::remove_file(OUTPUT)?;
 assert_eq!(xs, "x".repeat(NUM_PROC.into()));
+# Ok(())
+# }
 ```
 
 ## PipeWriter::try_clone
@@ -164,11 +163,12 @@ assert_eq!(xs, "x".repeat(NUM_PROC.into()));
 pub fn try_clone(&self) -> io::Result<Self>
 ```
 
-Creates a new `PipeWriter` instance that shares the same underlying file description.
+Creates a new [`PipeWriter`] instance that shares the same underlying file description.
 
 # Examples
 
-```rust
+```no_run
+# fn main() -> std::io::Result<()> {
 use std::process::Command;
 use std::io::{pipe, Read};
 let (mut reader, writer) = pipe()?;
@@ -190,4 +190,6 @@ reader.read_to_string(&mut msg)?;
 assert_eq!(&msg, "foobar");
 
 peer.wait()?;
+# Ok(())
+# }
 ```

@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: ICorDebugDebugEvent Interface"
 title: "ICorDebugDebugEvent Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugdebugevent-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugDebugEvent Interface
 
 Defines the base interface from which all `ICorDebug` debug events derive.
@@ -15,22 +11,22 @@ Defines the base interface from which all `ICorDebug` debug events derive.
 
 | Method | Description |
 |--------|-------------|
-|GetEventKind Method|Indicates what kind of event this `ICorDebugDebugEvent` object represents.|
-|GetThread Method|Gets the thread on which the event occurred.|
+|[GetEventKind Method](icordebugdebugevent-geteventkind-method.md)|Indicates what kind of event this `ICorDebugDebugEvent` object represents.|
+|[GetThread Method](icordebugdebugevent-getthread-method.md)|Gets the thread on which the event occurred.|
 
 ## Remarks
 
 The following interfaces are derived from the `ICorDebugDebugEvent` interface:
 
-- ICorDebugExceptionDebugEvent
-- ICorDebugModuleDebugEvent
+- [ICorDebugExceptionDebugEvent](icordebugexceptiondebugevent-interface.md)
+- [ICorDebugModuleDebugEvent](icordebugmoduledebugevent-interface.md)
 
-> **Note:**
+> [!NOTE]
 > The interface is available with .NET Native only. Attempting to call `QueryInterface` to retrieve an interface pointer returns `E_NOINTERFACE` for ICorDebug scenarios outside of .NET Native.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

@@ -1,13 +1,13 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/grapheme-string-literal"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/grapheme-string-literal.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "enforce single grapheme in string literal"
+since: "v2.0.0-next.13"
 ---
-
 # regexp/grapheme-string-literal
+
+<!-- end auto-generated rule header -->
 
 > enforce single grapheme in string literal
 
@@ -42,11 +42,15 @@ Nothing.
 - [regexp/no-empty-alternative]
 - [regexp/no-useless-string-literal]
 
+[regexp/no-empty-string-literal]: ./no-empty-string-literal.md
+[regexp/no-empty-alternative]: ./no-empty-alternative.md
+[regexp/no-useless-string-literal]: ./no-useless-string-literal.md
+
 ## :rocket: Version
 
 This rule was introduced in eslint-plugin-regexp v2.0.0-next.13
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/grapheme-string-literal.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/grapheme-string-literal.ts)

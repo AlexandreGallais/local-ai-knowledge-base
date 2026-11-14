@@ -1,21 +1,15 @@
----
-title: "prefer-string-repeat"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-string-repeat.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-string-repeat
 
 📝 Prefer `String#repeat()` for repeated whitespace.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
-Repeated whitespace in string literals and no-substitution template literals is hard to count. Use `String#repeat()` to make the count explicit.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+Repeated whitespace in string literals and no-substitution template literals is hard to count. Use [`String#repeat()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/repeat) to make the count explicit.
 
 This rule only reports string literals and no-substitution template literals made entirely of the same repeated whitespace character. It does not report repeated words or mixed whitespace.
 

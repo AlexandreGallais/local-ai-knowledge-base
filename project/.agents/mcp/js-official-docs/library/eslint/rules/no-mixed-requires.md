@@ -1,13 +1,7 @@
 ---
-title: "no-mixed-requires"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-mixed-requires.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-mixed-requires
+rule_type: suggestion
 ---
-
-# no-mixed-requires
 
 In the Node.js community it is often customary to separate initializations with calls to `require` modules from other variable declarations, sometimes also grouping them by the type of module. This rule helps you enforce this convention.
 
@@ -20,9 +14,9 @@ When this rule is enabled, each `var` statement must satisfy the following condi
 
 This rule distinguishes between six kinds of variable declaration types:
 
-* `core`: declaration of a required core module
-* `file`: declaration of a required file module
-* `module`: declaration of a required module from the node_modules folder
+* `core`: declaration of a required [core module][1]
+* `file`: declaration of a required [file module][2]
+* `module`: declaration of a required module from the [node_modules folder][3]
 * `computed`: declaration of a required module whose type could not be determined (either because it is computed or because require was called without an argument)
 * `uninitialized`: a declaration that is not initialized
 * `other`: any other kind of declaration
@@ -46,7 +40,7 @@ Configuring this rule with one boolean option `true` is deprecated.
 
 Examples of **incorrect** code for this rule with the default `{ "grouping": false, "allowCall": false }` options:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-mixed-requires: "error"*/
@@ -59,9 +53,11 @@ var async = require('async'),
     eslint = require('eslint');
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `{ "grouping": false, "allowCall": false }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-mixed-requires: "error"*/
@@ -82,11 +78,13 @@ var foo = require('foo' + VERSION),
     baz = require();
 ```
 
+:::
+
 ### grouping
 
 Examples of **incorrect** code for this rule with the `{ "grouping": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-mixed-requires: ["error", { "grouping": true }]*/
@@ -100,11 +98,13 @@ var foo = require('foo'),
     bar = require(getBarModuleName());
 ```
 
+:::
+
 ### allowCall
 
 Examples of **incorrect** code for this rule with the `{ "allowCall": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-mixed-requires: ["error", { "allowCall": true }]*/
@@ -114,9 +114,11 @@ var async = require('async'),
     eslint = require('eslint');
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "allowCall": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-mixed-requires: ["error", { "allowCall": true }]*/
@@ -125,6 +127,8 @@ var async = require('async'),
     debug = require('diagnostics')('my-module'),
     eslint = require('eslint');
 ```
+
+:::
 
 ## Known Limitations
 
@@ -135,4 +139,9 @@ var async = require('async'),
 
 ## When Not To Use It
 
-If you use a pattern such as UMD where the `require`d modules are not loaded in variable declarations, this rule will obviously do nothing for you.
+If you use a pattern such as [UMD][4] where the `require`d modules are not loaded in variable declarations, this rule will obviously do nothing for you.
+
+[1]: https://nodejs.org/api/modules.html#modules_core_modules
+[2]: https://nodejs.org/api/modules.html#modules_file_modules
+[3]: https://nodejs.org/api/modules.html#modules_loading_from_node_modules_folders
+[4]: https://github.com/umdjs/umd

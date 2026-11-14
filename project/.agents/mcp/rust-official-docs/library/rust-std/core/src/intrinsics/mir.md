@@ -1,12 +1,3 @@
----
-title: "core::intrinsics::mir"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/intrinsics/mir.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::intrinsics::mir
 
 Rustc internal tooling for hand-writing MIR.
@@ -15,7 +6,7 @@ If for some reasons you are not writing rustc tests and have found yourself cons
 this feature, turn back. This is *exceptionally* unstable. There is no attempt at all to make
 anything work besides those things which the rustc test suite happened to need. If you make a
 typo you'll probably ICE. Really, this is not the solution to your problems. Consider instead
-supporting the rustc public project group.
+supporting the [rustc public project group](https://github.com/rust-lang/rustc_public).
 
 The documentation for this module describes how to use this feature. If you are interested in
 hacking on the implementation, most of that documentation lives at
@@ -50,11 +41,15 @@ pub fn simple(x: i32) -> i32 {
 
 The `custom_mir` attribute tells the compiler to treat the function as being custom MIR. This
 attribute only works on functions - there is no way to insert custom MIR into the middle of
-another function. The `dialect` and `phase` parameters indicate which version of MIR you are inserting here. Generally you'll want to use `#![custom_mir(dialect = "built")]`
+another function. The `dialect` and `phase` parameters indicate which [version of MIR][dialect
+docs] you are inserting here. Generally you'll want to use `#![custom_mir(dialect = "built")]`
 if you want your MIR to be modified by the full MIR pipeline, or `#![custom_mir(dialect =
 "runtime", phase = "optimized")]` if you don't.
 
-The input to the `mir!` macro is:
+[dialect docs]:
+    https://doc.rust-lang.org/nightly/nightly-rustc/rustc_middle/mir/enum.MirPhase.html
+
+The input to the [`mir!`] macro is:
 
  - An optional return type annotation in the form of `type RET = ...;`. This may be required
    if the compiler cannot infer the type of RET.
@@ -67,7 +62,7 @@ The input to the `mir!` macro is:
       syntax for the various statements and terminators is designed to be as similar as possible
       to the syntax for analogous concepts in native Rust. See below for a list.
 
-#### Examples
+# Examples
 
 #![feature(core_intrinsics, custom_mir)]
 #![allow(internal_features)]
@@ -147,12 +142,12 @@ fn annotated_return_type() -> (i32, bool) {
         }
     }
 }
-```rust
+```
 
 We can also set off compilation failures that happen in sufficiently late stages of the
 compiler:
 
-```
+```rust,compile_fail
 #![feature(core_intrinsics, custom_mir)]
 
 extern crate core;
@@ -181,9 +176,9 @@ fn borrow_error(should_init: bool) -> i32 {
         }
     }
 }
-```rust
-
 ```
+
+```text
 error[E0381]: used binding is possibly-uninitialized
   --> test.rs:24:13
    |
@@ -205,7 +200,9 @@ error[E0381]: used binding is possibly-uninitialized
 error: aborting due to 1 previous error
 
 For more information about this error, try `rustc --explain E0381`.
-```rust
+```
+
+# Syntax
 
 The lists below are an exhaustive description of how various MIR constructs can be created.
 Anything missing from the list should be assumed to not be supported, PRs welcome.
@@ -219,40 +216,40 @@ Anything missing from the list should be assumed to not be supported, PRs welcom
 #### Places
  - Locals implicitly convert to places.
  - Field accesses, derefs, and indexing work normally.
- - Fields in variants can be accessed via the `Variant` and `Field` associated functions,
+ - Fields in variants can be accessed via the [`Variant`] and [`Field`] associated functions,
    see their documentation for details.
 
 #### Operands
  - Places implicitly convert to `Copy` operands.
- - `Move` operands can be created via `Move`.
+ - `Move` operands can be created via [`Move`].
  - Const blocks, literals, named constants, and const params all just work.
- - `Static` and `StaticMut` can be used to create `&T` and `*mut T`s to statics. These are
+ - [`Static`] and [`StaticMut`] can be used to create `&T` and `*mut T`s to statics. These are
    constants in MIR and the only way to access statics.
 
 #### Statements
  - Assign statements work via normal Rust assignment.
- - `StorageLive`, `StorageDead` statements have an associated function.
+ - [`StorageLive`], [`StorageDead`] statements have an associated function.
 
 #### Rvalues
 
  - Operands implicitly convert to `Use` rvalues.
  - `&`, `&mut`, `addr_of!`, and `addr_of_mut!` all work to create their associated rvalue.
- - `CastTransmute`, `CastPtrToPtr`, `CastUnsize`, and `Discriminant`
+ - [`CastTransmute`], [`CastPtrToPtr`], [`CastUnsize`], and [`Discriminant`]
    have associated functions.
  - Unary and binary operations use their normal Rust syntax - `a * b`, `!c`, etc.
- - The binary operation `Offset` can be created via `Offset`.
- - Checked binary operations are represented by wrapping the associated binop in `Checked`.
+ - The binary operation `Offset` can be created via [`Offset`].
+ - Checked binary operations are represented by wrapping the associated binop in [`Checked`].
  - Array repetition syntax (`[foo; 10]`) creates the associated rvalue.
 
 #### Terminators
 
- - `Goto`, `Return`, `Unreachable` and `Drop`) have associated functions.
+ - [`Goto`], [`Return`], [`Unreachable`] and [`Drop`](Drop()) have associated functions.
  - `match some_int_operand` becomes a `SwitchInt`. Each arm should be `literal => basic_block`
     - The exception is the last arm, which must be `_ => basic_block` and corresponds to the
       otherwise branch.
- - `Call` has an associated function as well, with special syntax:
+ - [`Call`] has an associated function as well, with special syntax:
    `Call(ret_val = function(arg1, arg2, ...), ReturnTo(next_block), UnwindContinue())`.
- - `TailCall` does not have a return destination or next block, so its syntax is just
+ - [`TailCall`] does not have a return destination or next block, so its syntax is just
    `TailCall(function(arg1, arg2, ...))`.
 
 #### Debuginfo
@@ -260,12 +257,12 @@ Anything missing from the list should be assumed to not be supported, PRs welcom
 Debuginfo associates source code variable names (of variables that may not exist any more) with
 MIR expressions that indicate where the value of that variable is stored. The syntax to do so
 is:
-```
+```text
 debug source_var_name => expression;
-```rust
+```
 Both places and constants are supported in the `expression`.
 
-```
+```rust
 #![allow(internal_features)]
 #![feature(core_intrinsics, custom_mir)]
 
@@ -286,7 +283,7 @@ fn debuginfo(arg: Option<&i32>) {
         }
     )
 }
-```rust
+```
 
 ## enum BasicBlock
 

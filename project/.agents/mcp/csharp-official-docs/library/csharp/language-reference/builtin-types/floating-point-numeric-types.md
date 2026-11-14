@@ -1,22 +1,29 @@
 ---
 title: "Floating-point numeric types"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/builtin-types/floating-point-numeric-types.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the built-in C# floating-point types: float, double, and decimal"
+ms.date: 01/14/2026
+f1_keywords:
+  - "float"
+  - "float_CSharpKeyword"
+  - "double"
+  - "double_CSharpKeyword"
+  - "decimal_CSharpKeyword"
+  - "decimal"
+helpviewer_keywords:
+  - "floating-point numbers [C#]"
+  - "ranges of floating-point types [C#]"
+  - "size of floating-point types [C#]"
+  - "types [C#], floating-point types"
+  - "float keyword [C#]"
+  - "floating-point numbers [C#], float keyword"
+  - "double data type [C#]"
+  - "decimal keyword [C#]"
 ---
-
 # Floating-point numeric types (C# reference)
 
-The *floating-point numeric types* represent real numbers. All floating-point numeric types are value types. They're also simple types, and you can initialize them by using literals. All floating-point numeric types support arithmetic, comparison, and equality operators.
+The *floating-point numeric types* represent real numbers. All floating-point numeric types are [value types](value-types.md). They're also [simple types](value-types.md#built-in-value-types), and you can initialize them by using [literals](#real-literals). All floating-point numeric types support [arithmetic](../operators/arithmetic-operators.md), [comparison](../operators/comparison-operators.md), and [equality](../operators/equality-operators.md) operators.
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
-
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
-
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
 ## Characteristics of the floating-point types
 
@@ -24,9 +31,9 @@ C# supports the following predefined floating-point types:
 
 | C# type/keyword | Approximate range | Precision | Size | .NET type |
 |-----------------|-------------------|-----------|------|-----------|
-|`float`|±1.5 x 10−45 to ±3.4 x 1038|~6-9 digits|4 bytes|`System.Single`|
-|`double`|±5.0 × 10−324 to ±1.7 × 10308|~15-17 digits|8 bytes|`System.Double`|
-|`decimal`|±1.0 x 10-28 to ±7.9228 x 1028|28-29 digits|16 bytes|`System.Decimal`|
+|`float`|±1.5 x 10<sup>−45</sup> to ±3.4 x 10<sup>38</sup>|~6-9 digits|4 bytes|<xref:System.Single?displayProperty=nameWithType>|
+|`double`|±5.0 × 10<sup>−324</sup> to ±1.7 × 10<sup>308</sup>|~15-17 digits|8 bytes|<xref:System.Double?displayProperty=nameWithType>|
+|`decimal`|±1.0 x 10<sup>-28</sup> to ±7.9228 x 10<sup>28</sup>|28-29 digits|16 bytes|<xref:System.Decimal?displayProperty=nameWithType>|
 
 In the preceding table, each C# type keyword from the leftmost column is an alias for the corresponding .NET type. They're interchangeable. For example, the following declarations declare variables of the same type:
 
@@ -35,15 +42,15 @@ double a = 12.3;
 System.Double b = 12.3;
 ```
 
-The default value of each floating-point type is zero, `0`. Each of the floating-point types has the `MinValue` and `MaxValue` constants that provide the minimum and maximum finite value of that type. The `float` and `double` types also provide constants that represent not-a-number and infinity values. For example, the `double` type provides the following constants: `System.Double.NaN`, `System.Double.NegativeInfinity`, and `System.Double.PositiveInfinity`.
+The default value of each floating-point type is zero, `0`. Each of the floating-point types has the `MinValue` and `MaxValue` constants that provide the minimum and maximum finite value of that type. The `float` and `double` types also provide constants that represent not-a-number and infinity values. For example, the `double` type provides the following constants: <xref:System.Double.NaN?displayProperty=nameWithType>, <xref:System.Double.NegativeInfinity?displayProperty=nameWithType>, and <xref:System.Double.PositiveInfinity?displayProperty=nameWithType>.
 
 The `float` and `double` types conform to the IEEE 754 specification for binary floating-point arithmetic (`binary32` and `binary64`, respectively). The `decimal` type is not an IEEE 754 floating-point format (such as `decimal128`); it does not support NaN or infinity values, and represents numbers using a 96-bit integer mantissa scaled by a power of 10.
 
-The `decimal` type is appropriate when the required degree of precision is determined by the number of digits to the right of the decimal point. Such numbers are commonly used in financial applications, for currency amounts (for example, $1.00), interest rates (for example, 2.625%), and so forth. Even numbers that are precise to only one decimal digit are handled more accurately by the `decimal` type: 0.1, for example, can be exactly represented by a `decimal` instance, while there's no `double` or `float` instance that exactly represents 0.1. Because of this difference in numeric types, unexpected rounding errors can occur in arithmetic calculations when you use `double` or `float` for decimal data. You can use `double` instead of `decimal` when optimizing performance is more important than ensuring accuracy. However, any difference in performance goes unnoticed by all but the most calculation-intensive applications. Another possible reason to avoid `decimal` is to minimize storage requirements. For example, ML.NET uses `float` because the difference between 4 bytes and 16 bytes adds up for very large data sets. For more information, see `System.Decimal`.
+The `decimal` type is appropriate when the required degree of precision is determined by the number of digits to the right of the decimal point. Such numbers are commonly used in financial applications, for currency amounts (for example, $1.00), interest rates (for example, 2.625%), and so forth. Even numbers that are precise to only one decimal digit are handled more accurately by the `decimal` type: 0.1, for example, can be exactly represented by a `decimal` instance, while there's no `double` or `float` instance that exactly represents 0.1. Because of this difference in numeric types, unexpected rounding errors can occur in arithmetic calculations when you use `double` or `float` for decimal data. You can use `double` instead of `decimal` when optimizing performance is more important than ensuring accuracy. However, any difference in performance goes unnoticed by all but the most calculation-intensive applications. Another possible reason to avoid `decimal` is to minimize storage requirements. For example, [ML.NET](../../../machine-learning/mldotnet-api.md) uses `float` because the difference between 4 bytes and 16 bytes adds up for very large data sets. For more information, see <xref:System.Decimal?displayProperty=nameWithType>.
 
-You can mix integral types and the `float` and `double` types in an expression. In this case, integral types are implicitly converted to one of the floating-point types and, if necessary, the `float` type is implicitly converted to `double`. The expression is evaluated as follows:
+You can mix [integral](integral-numeric-types.md) types and the `float` and `double` types in an expression. In this case, integral types are implicitly converted to one of the floating-point types and, if necessary, the `float` type is implicitly converted to `double`. The expression is evaluated as follows:
 
-- If there's a `double` type in the expression, the expression evaluates to `double`, or to `bool` in relational and equality comparisons.
+- If there's a `double` type in the expression, the expression evaluates to `double`, or to [`bool`](bool.md) in relational and equality comparisons.
 - If there's no `double` type in the expression, the expression evaluates to `float`, or to `bool` in relational and equality comparisons.
 
 You can also mix integral types and the `decimal` type in an expression. In this case, integral types are implicitly converted to the `decimal` type and the expression evaluates to `decimal`, or to `bool` in relational and equality comparisons.
@@ -57,7 +64,7 @@ Console.WriteLine(a + (double)b);
 Console.WriteLine((decimal)a + b);
 ```
 
-You can use either standard numeric format strings or custom numeric format strings to format a floating-point value.
+You can use either [standard numeric format strings](../../../standard/base-types/standard-numeric-format-strings.md) or [custom numeric format strings](../../../standard/base-types/custom-numeric-format-strings.md) to format a floating-point value.
 
 ## Real literals
 
@@ -98,20 +105,20 @@ Console.WriteLine(m);  // output: 1500000
 
 ## Conversions
 
-There's only one implicit conversion between floating-point numeric types: from `float` to `double`. However, you can convert any floating-point type to any other floating-point type by using the explicit cast. For more information, see Built-in numeric conversions.
+There's only one implicit conversion between floating-point numeric types: from `float` to `double`. However, you can convert any floating-point type to any other floating-point type by using the [explicit cast](../operators/type-testing-and-cast.md#cast-expression). For more information, see [Built-in numeric conversions](numeric-conversions.md).
 
 ## C# language specification
 
-For more information, see the following sections of the C# language specification:
+For more information, see the following sections of the [C# language specification](~/_csharpstandard/standard/README.md):
 
-- Floating-point types
-- The decimal type
-- Real literals
+- [Floating-point types](~/_csharpstandard/standard/types.md#837-floating-point-types)
+- [The decimal type](~/_csharpstandard/standard/types.md#838-the-decimal-type)
+- [Real literals](~/_csharpstandard/standard/lexical-structure.md#6454-real-literals)
 
 ## See also
 
-- Value types
-- Integral types
-- Standard numeric format strings
-- Numerics in .NET
-- `System.Numerics.Complex`
+- [Value types](value-types.md)
+- [Integral types](integral-numeric-types.md)
+- [Standard numeric format strings](../../../standard/base-types/standard-numeric-format-strings.md)
+- [Numerics in .NET](../../../standard/numerics.md)
+- <xref:System.Numerics.Complex?displayProperty=nameWithType>

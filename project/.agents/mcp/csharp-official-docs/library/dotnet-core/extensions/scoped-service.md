@@ -1,152 +1,69 @@
 ---
-title: "Use scoped services within a BackgroundService"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/scoped-service.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Use scoped services within a BackgroundService
+description: Learn how to use scoped services within a BackgroundService in .NET.
+ms.date: 05/27/2026
+ms.topic: tutorial
 ---
 
 # Use scoped services within a `BackgroundService`
 
-When you register implementations of `Microsoft.Extensions.Hosting.IHostedService` using any of the `Microsoft.Extensions.DependencyInjection.ServiceCollectionHostedServiceExtensions.AddHostedService*` extension methods, the service is registered as a singleton. There might be scenarios where you'd like to rely on a scoped service. For more information, see Service lifetimes.
+When you register implementations of <xref:Microsoft.Extensions.Hosting.IHostedService> using any of the <xref:Microsoft.Extensions.DependencyInjection.ServiceCollectionHostedServiceExtensions.AddHostedService*> extension methods, the service is registered as a singleton. There might be scenarios where you'd like to rely on a scoped service. For more information, see [Service lifetimes](dependency-injection/service-lifetimes.md).
 
 In this tutorial, you learn how to:
 
+> [!div class="checklist"]
 >
-> - Correctly resolve scoped dependencies in a singleton `Microsoft.Extensions.Hosting.BackgroundService`.
+> - Correctly resolve scoped dependencies in a singleton <xref:Microsoft.Extensions.Hosting.BackgroundService>.
 > - Delegate work to a scoped service.
-> - Implement an `override` of `Microsoft.Extensions.Hosting.BackgroundService.StopAsync(System.Threading.CancellationToken)`.
+> - Implement an `override` of <xref:Microsoft.Extensions.Hosting.BackgroundService.StopAsync(System.Threading.CancellationToken)?displayProperty=nameWithType>.
 
-> **Tip:**
-> All of the "Workers in .NET" example source code is available in the **Samples Browser** for download. For more information, see Browse code samples: Workers in .NET.
+[!INCLUDE [workers-samples-browser](includes/workers-samples-browser.md)]
 
 ## Prerequisites
 
-- The .NET 8.0 SDK or later
-- A .NET integrated development environment (IDE), for example, Visual Studio
+- The [.NET 8.0 SDK or later](https://dotnet.microsoft.com/download/dotnet/8.0)
+- A .NET integrated development environment (IDE), for example, [Visual Studio](https://visualstudio.microsoft.com)
 
-## Create a new project
-
-To create a new Worker Service project with Visual Studio, you'd select **File** > **New** > **Project...**. From the **Create a new project** dialog search for "Worker Service", and select Worker Service template. If you'd rather use the .NET CLI, open your favorite terminal in a working directory. Run the `dotnet new` command, and replace the `<Project.Name>` with your desired project name.
-
-```dotnetcli
-dotnet new worker --name <Project.Name>
-```
-
-For more information on the .NET CLI new worker service project command, see dotnet new worker.
-
-> **Tip:**
-> If you're using Visual Studio Code, you can run .NET CLI commands from the integrated terminal. For more information, see Visual Studio Code: Integrated Terminal.
+<!-- ## Create a new project -->
+[!INCLUDE [file-new-worker](includes/file-new-worker.md)]
 
 ## Create scoped services
 
-To use scoped services within a `BackgroundService`, create an async scope with the `Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.CreateAsyncScope*` API. No scope is created for a hosted service by default. The scoped background service contains the background task's logic.
+To use [scoped services](dependency-injection/service-lifetimes.md#scoped) within a `BackgroundService`, create an async scope with the <xref:Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.CreateAsyncScope*> API. No scope is created for a hosted service by default. The scoped background service contains the background task's logic.
 
-```csharp
-﻿namespace App.ScopedService;
+:::code source="snippets/workers/scoped-service/IScopedProcessingService.cs":::
 
-public interface IScopedProcessingService
-{
-    Task DoWorkAsync(CancellationToken <example-value>);
-}
-```
 The preceding interface defines a single `DoWorkAsync` method. Create an implementation in a new class named *DefaultScopedProcessingService.cs*:
 
-```csharp
-﻿namespace App.ScopedService;
+:::code source="snippets/workers/scoped-service/DefaultScopedProcessingService.cs":::
 
-public sealed class DefaultScopedProcessingService(
-    ILogger<DefaultScopedProcessingService> logger) : IScopedProcessingService
-{
-    private readonly string _instanceId = Guid.NewGuid().ToString();
-
-    public Task DoWorkAsync(CancellationToken <example-value>)
-    {
-        logger.LogInformation(
-            "{ServiceName} doing work, instance ID: {Id}",
-            nameof(DefaultScopedProcessingService),
-            _instanceId);
-
-        return Task.CompletedTask;
-    }
-}
-```
-- An `Microsoft.Extensions.Logging.ILogger` is injected into the service using a primary constructor.
-- The `DoWorkAsync` method returns a `Task` and accepts the `System.Threading.CancellationToken`.
+- An <xref:Microsoft.Extensions.Logging.ILogger> is injected into the service using a primary constructor.
+- The `DoWorkAsync` method returns a `Task` and accepts the <xref:System.Threading.CancellationToken>.
   - The method logs the instance identifier—the `_instanceId` is assigned whenever the class is instantiated.
 
 ## Rewrite the Worker class
 
 Replace the existing `Worker` class with the following C# code, and rename the file to *ScopedBackgroundService.cs*:
 
-```csharp
-﻿namespace App.ScopedService;
+:::code source="snippets/workers/scoped-service/ScopedBackgroundService.cs" highlight="14-24":::
 
-public sealed class ScopedBackgroundService(
-    IServiceScopeFactory serviceScopeFactory,
-    ILogger<ScopedBackgroundService> logger) : BackgroundService
-{
-    private const string ClassName = nameof(ScopedBackgroundService);
-
-    protected override async Task ExecuteAsync(CancellationToken <example-value>)
-    {
-        logger.LogInformation(
-            "{Name} is running.", ClassName);
-
-        while (!stoppingToken.IsCancellationRequested)
-        {
-            await using AsyncServiceScope scope = serviceScopeFactory.CreateAsyncScope();
-
-            IScopedProcessingService scopedProcessingService =
-                scope.ServiceProvider.GetRequiredService<IScopedProcessingService>();
-
-            await scopedProcessingService.DoWorkAsync(stoppingToken);
-
-            await Task.Delay(10_000, stoppingToken);
-        }
-    }
-
-    public override async Task StopAsync(CancellationToken <example-value>)
-    {
-        logger.LogInformation(
-            "{Name} is stopping.", ClassName);
-
-        await base.StopAsync(stoppingToken);
-    }
-}
-```
 In the preceding code, while the `stoppingToken` isn't canceled, the `IServiceScopeFactory` is used to create an async scope. From the `AsyncServiceScope`, the `IScopedProcessingService` is resolved. The `DoWorkAsync` method is awaited, and the `stoppingToken` is passed to the method. Finally, the execution is delayed for 10 seconds and the loop continues. Each time the `DoWorkAsync` method is called, a new instance of the `DefaultScopedProcessingService` is created and the instance identifier is logged.
 
 Replace the template *Program.cs* file contents with the following C# code:
 
-```csharp
-﻿using App.ScopedService;
+:::code source="snippets/workers/scoped-service/Program.cs" highlight="4-5":::
 
-HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
-builder.Services.AddHostedService<ScopedBackgroundService>();
-builder.Services.AddScoped<IScopedProcessingService, DefaultScopedProcessingService>();
+The services are registered in (*Program.cs*). The hosted service is registered with the <xref:Microsoft.Extensions.DependencyInjection.ServiceCollectionHostedServiceExtensions.AddHostedService*> extension method.
 
-IHost host = builder.Build();
-host.Run();
-```
-The services are registered in (*Program.cs*). The hosted service is registered with the `Microsoft.Extensions.DependencyInjection.ServiceCollectionHostedServiceExtensions.AddHostedService*` extension method.
-
-For more information on registering services, see Dependency injection in .NET.
+For more information on registering services, see [Dependency injection in .NET](dependency-injection/overview.md).
 
 ## Verify service functionality
 
-To run the application from Visual Studio, select `F5` or select the **Debug** > **Start Debugging** menu option. If you're using the .NET CLI, run the `dotnet run` command from the working directory:
-
-```dotnetcli
-dotnet run
-```
-
-For more information on the .NET CLI run command, see dotnet run.
+[!INCLUDE [run-app](includes/run-app.md)]
 
 Let the application run for a bit to generate several calls to `DoWorkAsync`, thus logging new instance identifiers. You see output similar to the following logs:
 
-```output
+```Output
 info: App.ScopedService.ScopedBackgroundService[0]
       ScopedBackgroundService is running.
 info: App.ScopedService.DefaultScopedProcessingService[0]
@@ -167,11 +84,11 @@ info: App.ScopedService.ScopedBackgroundService[0]
       ScopedBackgroundService is stopping.
 ```
 
-If running the application from within Visual Studio, select **Debug** > **Stop Debugging...**. Alternatively, select `Ctrl` + `C` from the console window to signal cancellation.
+[!INCLUDE [stop-app](includes/stop-app.md)]
 
 ## See also
 
-- Worker Services in .NET
-- Create a Queue Service
-- Create a Windows Service using `BackgroundService`
-- Implement the `IHostedService` interface
+- [Worker Services in .NET](workers.md)
+- [Create a Queue Service](queue-service.md)
+- [Create a Windows Service using `BackgroundService`](windows-service.md)
+- [Implement the `IHostedService` interface](timer-service.md)

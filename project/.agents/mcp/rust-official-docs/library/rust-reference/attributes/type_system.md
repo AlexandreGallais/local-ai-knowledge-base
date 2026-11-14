@@ -1,12 +1,3 @@
----
-title: "Type system attributes"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/attributes/type_system.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[attributes.type-system]
 # Type system attributes
 
@@ -21,7 +12,7 @@ The *`non_exhaustive` attribute* indicates that a type or variant may have
 more fields or variants added in the future.
 
 r[attributes.type-system.non_exhaustive.allowed-positions]
-It can be applied to `struct`s, `enum`s, and `enum` variants.
+It can be applied to [`struct`s][struct], [`enum`s][enum], and `enum` variants.
 
 r[attributes.type-system.non_exhaustive.syntax]
 The `non_exhaustive` attribute uses the [MetaWord] syntax and thus does not
@@ -89,19 +80,20 @@ preserve backwards compatibility when new fields or variants are added.
 r[attributes.type-system.non_exhaustive.construction]
 Non-exhaustive types cannot be constructed outside of the defining crate:
 
-- Non-exhaustive variants (`struct` or `enum` variant) cannot be constructed
+- Non-exhaustive variants ([`struct`][struct] or [`enum` variant][enum]) cannot be constructed
   with a [StructExpression] \(including with [functional update syntax]).
-- The implicitly defined same-named constant of a unit-like struct,
-  or the same-named constructor function of a tuple struct,
+- The implicitly defined same-named constant of a [unit-like struct][struct],
+  or the same-named constructor function of a [tuple struct][struct],
   has a [visibility] no greater than `pub(crate)`.
   That is, if the struct’s visibility is `pub`, then the constant or constructor’s visibility
   is `pub(crate)`, and otherwise the visibility of the two items is the same
   (as is the case without `#[non_exhaustive]`).
-- `enum` instances can be constructed.
+- [`enum`][enum] instances can be constructed.
 
 The following examples of construction do not compile when outside the defining crate:
 
-```rust
+<!-- ignore: requires external crates -->
+```rust,ignore
 // These are types defined in an upstream crate that have been annotated as
 // `#[non_exhaustive]`.
 use upstream::{Config, Token, Id, Error, Message};
@@ -140,10 +132,11 @@ let message = Message::Quit;
 r[attributes.type-system.non_exhaustive.match]
 There are limitations when matching on non-exhaustive types outside of the defining crate:
 
-- When pattern matching on a non-exhaustive variant (`struct` or `enum` variant), a [StructPattern] must be used which must include a `..`. A tuple enum variant's constructor's [visibility] is reduced to be no greater than `pub(crate)`.
-- When pattern matching on a non-exhaustive `enum`, matching on a variant does not contribute towards the exhaustiveness of the arms. The following examples of matching do not compile when outside the defining crate:
+- When pattern matching on a non-exhaustive variant ([`struct`][struct] or [`enum` variant][enum]), a [StructPattern] must be used which must include a `..`. A tuple enum variant's constructor's [visibility] is reduced to be no greater than `pub(crate)`.
+- When pattern matching on a non-exhaustive [`enum`][enum], matching on a variant does not contribute towards the exhaustiveness of the arms. The following examples of matching do not compile when outside the defining crate:
 
-```rust
+<!-- ignore: requires external crates -->
+```rust, ignore
 // These are types defined in an upstream crate that have been annotated as
 // `#[non_exhaustive]`.
 use upstream::{Config, Token, Id, Error, Message};
@@ -199,7 +192,8 @@ pub enum EnumWithNonExhaustiveVariants {
 }
 ```
 
-```rust
+<!-- ignore: needs multiple crates -->
+```rust,ignore
 use othercrate::EnumWithNonExhaustiveVariants;
 
 // Error: cannot cast an enum with a non-exhaustive variant when it's defined in another crate
@@ -207,3 +201,10 @@ let _ = EnumWithNonExhaustiveVariants::First as u8;
 ```
 
 Non-exhaustive types are always considered inhabited in downstream crates.
+
+[`match`]: ../expressions/match-expr.md
+[attributes]: ../attributes.md
+[enum]: ../items/enumerations.md
+[functional update syntax]: ../expressions/struct-expr.md#functional-update-syntax
+[struct]: ../items/structs.md
+[visibility]: ../visibility-and-privacy.md

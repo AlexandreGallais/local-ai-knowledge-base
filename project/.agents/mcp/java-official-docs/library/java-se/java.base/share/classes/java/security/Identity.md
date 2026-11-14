@@ -1,47 +1,36 @@
----
-title: "Identity class (java.security)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/Identity.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Identity class (java.security)
 
 ```java
 public abstract class Identity implements Principal, Serializable
 ```
 
-This class represents identities: real-world objects such as people,
+<p>This class represents identities: real-world objects such as people,
 companies or organizations whose identities can be authenticated using
 their public keys. Identities may also be more abstract (or concrete)
 constructs, such as daemon threads or smart cards.
 
-All `Identity` objects have a name and a public key. Names are
-immutable. Identities may also be scoped. That is, if an `Identity` is
+<p>All {@code Identity} objects have a name and a public key. Names are
+immutable. Identities may also be scoped. That is, if an {@code Identity} is
 specified to have a particular scope, then the name and public
-key of the `Identity` are unique within that scope.
+key of the {@code Identity} are unique within that scope.
 
-An `Identity` also has a set of certificates (all certifying its own
+<p>An {@code Identity} also has a set of certificates (all certifying its own
 public key). The Principal names specified in these certificates need
 not be the same, only the key.
 
-An `Identity` can be subclassed, to include postal and email
+<p>An {@code Identity} can be subclassed, to include postal and email
 addresses, telephone numbers, images of faces and logos, and so on.
 
-**See also:** IdentityScope
+@see IdentityScope
+@see Signer
+@see Principal
 
-**See also:** Signer
-
-**See also:** Principal
-
-**Since:** 1.1
-
-**Deprecated:** This class is deprecated and subject to removal in a future
+@author Benjamin Renaud
+@since 1.1
+@deprecated This class is deprecated and subject to removal in a future
     version of Java SE. It has been replaced by
-    `java.security.KeyStore`, the `java.security.cert` package,
-    and `java.security.Principal`.
+    {@code java.security.KeyStore}, the {@code java.security.cert} package,
+    and {@code java.security.Principal}.
 
 ## Identity.Identity()
 
@@ -57,16 +46,13 @@ Constructor for serialization only.
 public Identity(String name, IdentityScope scope) throws KeyManagementException
 ```
 
-Constructs an `Identity` with the specified name and scope.
+Constructs an {@code Identity} with the specified name and scope.
 
-Parameters:
+@param name the {@code Identity} name.
+@param scope the scope of the {@code Identity}.
 
-- `name`: the `Identity` name.
-- `scope`: the scope of the `Identity`.
-
-Throws:
-
-- `KeyManagementException`: if there is already an `Identity` with the same name in the scope.
+@throws    KeyManagementException if there is already an {@code Identity}
+with the same name in the scope.
 
 ## Identity.Identity(String)
 
@@ -74,11 +60,9 @@ Throws:
 public Identity(String name)
 ```
 
-Constructs an `Identity` with the specified name and no scope.
+Constructs an {@code Identity} with the specified name and no scope.
 
-Parameters:
-
-- `name`: the identity name.
+@param name the identity name.
 
 ## Identity.getName()
 
@@ -88,7 +72,7 @@ public final String getName()
 
 Returns this identity's name.
 
-**Returns:** the name of this `Identity`.
+@return the name of this {@code Identity}.
 
 ## Identity.getScope()
 
@@ -98,7 +82,7 @@ public final IdentityScope getScope()
 
 Returns this identity's scope.
 
-**Returns:** the scope of this `Identity`.
+@return the scope of this {@code Identity}.
 
 ## Identity.getPublicKey()
 
@@ -108,9 +92,9 @@ public PublicKey getPublicKey()
 
 Returns this identity's public key.
 
-**Returns:** the public key for this `Identity`.
+@return the public key for this {@code Identity}.
 
-**See also:** #setPublicKey
+@see #setPublicKey
 
 ## Identity.setPublicKey(PublicKey)
 
@@ -121,15 +105,12 @@ Returns this identity's public key.
 Sets this identity's public key. The old key and all of this
 identity's certificates are removed by this operation.
 
-Parameters:
+@param key the public key for this {@code Identity}.
 
-- `key`: the public key for this `Identity`.
+@throws    KeyManagementException if another identity in the
+identity's scope has the same public key, or if another exception occurs.
 
-**See also:** #getPublicKey
-
-Throws:
-
-- `KeyManagementException`: if another identity in the identity's scope has the same public key, or if another exception occurs.
+@see #getPublicKey
 
 ## Identity.setInfo(String)
 
@@ -137,13 +118,11 @@ Throws:
 public void setInfo(String info)
 ```
 
-Specifies a general information string for this `Identity`.
+Specifies a general information string for this {@code Identity}.
 
-Parameters:
+@param info the information string.
 
-- `info`: the information string.
-
-**See also:** #getInfo
+@see #getInfo
 
 ## Identity.getInfo()
 
@@ -151,11 +130,11 @@ Parameters:
 public String getInfo()
 ```
 
-Returns general information previously specified for this `Identity`.
+Returns general information previously specified for this {@code Identity}.
 
-**Returns:** general information about this `Identity`.
+@return general information about this {@code Identity}.
 
-**See also:** #setInfo
+@see #setInfo
 
 ## Identity.addCertificate(Certificate)
 
@@ -163,18 +142,16 @@ Returns general information previously specified for this `Identity`.
 public void addCertificate(Certificate certificate) throws KeyManagementException
 ```
 
-Adds a certificate for this `Identity`. If the `Identity` has a public
+Adds a certificate for this {@code Identity}. If the {@code Identity} has a public
 key, the public key in the certificate must be the same, and if
-the `Identity` does not have a public key, the identity's
+the {@code Identity} does not have a public key, the identity's
 public key is set to be that specified in the certificate.
 
-Parameters:
+@param certificate the certificate to be added.
 
-- `certificate`: the certificate to be added.
-
-Throws:
-
-- `KeyManagementException`: if the certificate is not valid, if the public key in the certificate being added conflicts with this identity's public key, or if another exception occurs.
+@throws    KeyManagementException if the certificate is not valid,
+if the public key in the certificate being added conflicts with
+this identity's public key, or if another exception occurs.
 
 ## Identity.removeCertificate(Certificate)
 
@@ -182,15 +159,12 @@ Throws:
 public void removeCertificate(Certificate certificate) throws KeyManagementException
 ```
 
-Removes a certificate from this `Identity`.
+Removes a certificate from this {@code Identity}.
 
-Parameters:
+@param certificate the certificate to be removed.
 
-- `certificate`: the certificate to be removed.
-
-Throws:
-
-- `KeyManagementException`: if the certificate is missing, or if another exception occurs.
+@throws    KeyManagementException if the certificate is
+missing, or if another exception occurs.
 
 ## Identity.certificates()
 
@@ -198,9 +172,9 @@ Throws:
 public Certificate[] certificates()
 ```
 
-Returns a copy of all the certificates for this `Identity`.
+Returns a copy of all the certificates for this {@code Identity}.
 
-**Returns:** a copy of all the certificates for this `Identity`.
+@return a copy of all the certificates for this {@code Identity}.
 
 ## Identity.equals(Object)
 
@@ -209,22 +183,21 @@ public final boolean equals(Object identity)
 ```
 
 Tests for equality between the specified object and this
-`Identity`.
+{@code Identity}.
 This first tests to see if the entities actually refer to the same
-object, in which case it returns `true`. Next, it checks to see if
+object, in which case it returns {@code true}. Next, it checks to see if
 the entities have the same name and the same scope. If they do,
-the method returns `true`. Otherwise, it calls
-identityEquals, which subclasses should
+the method returns {@code true}. Otherwise, it calls
+{@link #identityEquals(Identity) identityEquals}, which subclasses should
 override.
 
-Parameters:
+@param identity the object to test for equality with this
+{@code Identity}.
 
-- `identity`: the object to test for equality with this `Identity`.
+@return {@code true} if the objects are considered equal,
+{@code false} otherwise.
 
-**Returns:** `true` if the objects are considered equal,
-`false` otherwise.
-
-**See also:** #identityEquals
+@see #identityEquals
 
 ## Identity.identityEquals(Identity)
 
@@ -232,20 +205,19 @@ Parameters:
 protected boolean identityEquals(Identity identity)
 ```
 
-Tests for equality between the specified `Identity` and this
-`Identity`.
+Tests for equality between the specified {@code Identity} and this
+{@code Identity}.
 This method should be overridden by subclasses to test for equality.
-The default behavior is to return `true` if the names and public
+The default behavior is to return {@code true} if the names and public
 keys are equal.
 
-Parameters:
+@param identity the identity to test for equality with this
+{@code identity}.
 
-- `identity`: the identity to test for equality with this `identity`.
+@return {@code true} if the identities are considered equal,
+{@code false} otherwise.
 
-**Returns:** `true` if the identities are considered equal,
-`false` otherwise.
-
-**See also:** #equals
+@see #equals
 
 ## Identity.toString()
 
@@ -253,10 +225,10 @@ Parameters:
 public String toString()
 ```
 
-Returns a short string describing this `Identity`, telling its
+Returns a short string describing this {@code Identity}, telling its
 name and its scope (if any).
 
-**Returns:** information about this `Identity`, such as its name and the
+@return information about this {@code Identity}, such as its name and the
 name of its scope (if any).
 
 ## Identity.toString(boolean)
@@ -265,22 +237,22 @@ name of its scope (if any).
 public String toString(boolean detailed)
 ```
 
-Returns a string representation of this `Identity`, with
+Returns a string representation of this {@code Identity}, with
 optionally more details than that provided by the
-`toString` method without any arguments.
+{@code toString} method without any arguments.
 
-Parameters:
+@param detailed whether or not to provide detailed information.
 
-- `detailed`: whether or not to provide detailed information.
+@return information about this {@code Identity}. If {@code detailed}
+is {@code true}, then this method returns more information than that
+provided by the {@code toString} method without any arguments.
 
-**Returns:** information about this `Identity`. If `detailed`
-is `true`, then this method returns more information than that
-provided by the `toString` method without any arguments.
-
-**See also:** #toString
+@see #toString
 
 ## Identity.hashCode()
 
 ```java
 public int hashCode()
 ```
+
+{@return the hashcode for this {@code Identity}}

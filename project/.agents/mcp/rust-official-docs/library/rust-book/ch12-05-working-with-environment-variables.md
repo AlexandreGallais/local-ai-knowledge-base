@@ -1,14 +1,3 @@
----
-title: "ch12-05-working-with-environment-variables"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch12-05-working-with-environment-variables.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch12-05-working-with-environment-variables
-
 ## Working with Environment Variables
 
 We’ll improve the `minigrep` binary by adding an extra feature: an option for
@@ -17,6 +6,9 @@ variable. We could make this feature a command line option and require that
 users enter it each time they want it to apply, but by instead making it an
 environment variable, we allow our users to set the environment variable once
 and have all their searches be case insensitive in that terminal session.
+
+<!-- Old headings. Do not remove or links may break. -->
+<a id="writing-a-failing-test-for-the-case-insensitive-search-function"></a>
 
 ### Writing a Failing Test for Case-Insensitive Search
 
@@ -27,41 +19,13 @@ We’ll add a new test for the new `search_case_insensitive` function and rename
 our old test from `one_result` to `case_sensitive` to clarify the differences
 between the two tests, as shown in Listing 12-20.
 
-**Listing 12-20: Adding a new failing test for the case-insensitive function we’re about to add** (src/lib.rs)
+<Listing number="12-20" file-name="src/lib.rs" caption="Adding a new failing test for the case-insensitive function we’re about to add">
 
-```rust
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn case_sensitive() {
-        let query = "duct";
-        let contents = "\
-Rust:
-safe, fast, productive.
-Pick three.
-Duct tape.";
-
-        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
-    }
-
-    #[test]
-    fn case_insensitive() {
-        let query = "rUsT";
-        let contents = "\
-Rust:
-safe, fast, productive.
-Pick three.
-Trust me.";
-
-        assert_eq!(
-            vec!["Rust:", "Trust me."],
-            search_case_insensitive(query, contents)
-        );
-    }
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-20/src/lib.rs:here}}
 ```
+
+</Listing>
 
 Note that we’ve edited the old test’s `contents` too. We’ve added a new line
 with the text `"Duct tape."` using a capital _D_ that shouldn’t match the query
@@ -86,31 +50,19 @@ the same as the `search` function. The only difference is that we’ll lowercase
 the `query` and each `line` so that whatever the case of the input arguments,
 they’ll be the same case when we check whether the line contains the query.
 
-**Listing 12-21: Defining the `search_case_insensitive` function to lowercase the query and the line before comparing them** (src/lib.rs)
+<Listing number="12-21" file-name="src/lib.rs" caption="Defining the `search_case_insensitive` function to lowercase the query and the line before comparing them">
 
-```rust
-pub fn search_case_insensitive<'a>(
-    query: &str,
-    contents: &'a str,
-) -> Vec<&'a str> {
-    let query = query.to_lowercase();
-    let mut results = Vec::new();
-
-    for line in contents.lines() {
-        if line.to_lowercase().contains(&query) {
-            results.push(line);
-        }
-    }
-
-    results
-}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-21/src/lib.rs:here}}
 ```
+
+</Listing>
 
 First, we lowercase the `query` string and store it in a new variable with the
 same name, shadowing the original `query`. Calling `to_lowercase` on the query
 is necessary so that no matter whether the user’s query is `"rust"`, `"RUST"`,
 `"Rust"`, or `"rUsT"`, we’ll treat the query as if it were `"rust"` and be
-insensitive to the case. While `to_lowercase` will handle basic <example-value>, it
+insensitive to the case. While `to_lowercase` will handle basic Unicode, it
 won’t be 100 percent accurate. If we were writing a real application, we’d want
 to do a bit more work here, but this section is about environment variables,
 not Unicode, so we’ll leave it at that here.
@@ -130,28 +82,7 @@ find matches no matter what the case of the query is.
 Let’s see if this implementation passes the tests:
 
 ```console
-$ cargo test
-   Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.33s
-     Running unittests src/lib.rs (target/debug/deps/minigrep-9cd200e5fac0fc94)
-
-running 2 tests
-test tests::case_insensitive ... ok
-test tests::case_sensitive ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-     Running unittests src/main.rs (target/debug/deps/minigrep-9cd200e5fac0fc94)
-
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-   Doc-tests minigrep
-
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+{{#include ../listings/ch12-an-io-project/listing-12-21/output.txt}}
 ```
 
 Great! They passed. Now let’s call the new `search_case_insensitive` function
@@ -160,14 +91,10 @@ struct to switch between case-sensitive and case-insensitive search. Adding
 this field will cause compiler errors because we aren’t initializing this field
 anywhere yet:
 
-Filename: src/main.rs
+<span class="filename">Filename: src/main.rs</span>
 
-```rust
-pub struct Config {
-    pub query: String,
-    pub file_path: String,
-    pub ignore_case: bool,
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-22/src/main.rs:here}}
 ```
 
 We added the `ignore_case` field that holds a Boolean. Next, we need the `run`
@@ -175,13 +102,13 @@ function to check the `ignore_case` field’s value and use that to decide
 whether to call the `search` function or the `search_case_insensitive`
 function, as shown in Listing 12-22. This still won’t compile yet.
 
-**Listing 12-22: Calling either `search` or `search_case_insensitive` based on the value in `config.ignore_case`** (src/main.rs)
+<Listing number="12-22" file-name="src/main.rs" caption="Calling either `search` or `search_case_insensitive` based on the value in `config.ignore_case`">
 
-```rust
-use minigrep::{search, search_case_insensitive};
-
-// --snip--
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-22/src/main.rs:there}}
 ```
+
+</Listing>
 
 Finally, we need to check for the environment variable. The functions for
 working with environment variables are in the `env` module in the standard
@@ -189,28 +116,13 @@ library, which is already in scope at the top of _src/main.rs_. We’ll use the
 `var` function from the `env` module to check to see if any value has been set
 for an environment variable named `IGNORE_CASE`, as shown in Listing 12-23.
 
-**Listing 12-23: Checking for any value in an environment variable named `IGNORE_CASE`** (src/main.rs)
+<Listing number="12-23" file-name="src/main.rs" caption="Checking for any value in an environment variable named `IGNORE_CASE`">
 
-```rust
-impl Config {
-    fn build(args: &[String]) -> Result<Config, &'static str> {
-        if args.len() < 3 {
-            return Err("not enough arguments");
-        }
-
-        let query = args[1].clone();
-        let file_path = args[2].clone();
-
-        let ignore_case = env::var("IGNORE_CASE").is_ok();
-
-        Ok(Config {
-            query,
-            file_path,
-            ignore_case,
-        })
-    }
-}
+```rust,ignore,noplayground
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-23/src/main.rs:here}}
 ```
+
+</Listing>
 
 Here, we create a new variable, `ignore_case`. To set its value, we call the
 `env::var` function and pass it the name of the `IGNORE_CASE` environment
@@ -236,12 +148,7 @@ variable set and with the query `to`, which should match any line that contains
 the word _to_ in all lowercase:
 
 ```console
-$ cargo run -- to poem.txt
-   Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
-     Running `target/debug/minigrep to poem.txt`
-Are you nobody, too?
-How dreary to be somebody!
+{{#include ../listings/ch12-an-io-project/listing-12-23/output.txt}}
 ```
 
 Looks like that still works! Now let’s run the program with `IGNORE_CASE` set
@@ -266,6 +173,12 @@ PS> Remove-Item Env:IGNORE_CASE
 ```
 
 We should get lines that contain _to_ that might have uppercase letters:
+
+<!-- manual-regeneration
+cd listings/ch12-an-io-project/listing-12-23
+IGNORE_CASE=1 cargo run -- to poem.txt
+can't extract because of the environment variable
+-->
 
 ```console
 Are you nobody, too?

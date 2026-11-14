@@ -1,14 +1,12 @@
 ---
-title: "Table-Valued Functions (TVFs) - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/modeling/designer/advanced/tvfs.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Table-Valued Functions (TVFs) - EF6
+description: Table-Valued Functions (TVFs) in Entity Framework 6
+author: SamMonoRT
+ms.date: 10/23/2016
+uid: ef6/modeling/designer/advanced/tvfs
 ---
-
 # Table-Valued Functions (TVFs)
-> **Note:**
+> [!NOTE]
 > **EF5 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 5. If you are using an earlier version, some or all of the information does not apply.
 
 The video and step-by-step walkthrough shows how to map table-valued functions (TVFs) using the Entity Framework Designer. It also demonstrates how to call a TVF from a LINQ query.
@@ -17,19 +15,19 @@ TVFs are currently only supported in the Database First workflow.
 
 TVF support was introduced in Entity Framework version 5. Note that to use the new features like table-valued functions, enums, and spatial types you must target .NET Framework 4.5. Visual Studio 2012 targets .NET 4.5 by default.
 
-TVFs are very similar to stored procedures with one key <example-value>: the result of a TVF is composable. That means the results from a TVF can be used in a LINQ query while the results of a stored procedure cannot.
+TVFs are very similar to stored procedures with one key difference: the result of a TVF is composable. That means the results from a TVF can be used in a LINQ query while the results of a stored procedure cannot.
 
 ## Watch the video
 
 **Presented By**: Julia Kornich
 
-WMV | MP4 | WMV (ZIP)
+[WMV](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-winvideo-tvf.wmv) | [MP4](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-mp4video-tvf.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/6/0/A/60A6E474-5EF3-4E1E-B9EA-F51D2DDB446A/HDI-ITPro-MSDN-winvideo-tvf.zip)
 
 ## Pre-Requisites
 
 To complete this walkthrough, you need to:
 
-- Install the School database.
+- Install the [School database](xref:ef6/resources/school-database).
 
 - Have a recent version of Visual Studio
 
@@ -42,7 +40,7 @@ To complete this walkthrough, you need to:
 
 ## Add a TVF to the Database
 
--   Select **View -> SQL Server Object Explorer**
+-   Select **View -&gt; SQL Server Object Explorer**
 -   If LocalDB is not in the list of servers:
     Right-click on **SQL Server** and select **Add SQL Server**
     Use the default **Windows Authentication** to connect to the LocalDB server
@@ -50,7 +48,7 @@ To complete this walkthrough, you need to:
 -   Under the Databases node, right-click the School database node and select **New Query…**
 -   In T-SQL Editor, paste the following TVF definition
 
-```sql
+``` SQL
 CREATE FUNCTION [dbo].[GetStudentGradesForCourse]
 
 (@CourseID INT)
@@ -97,7 +95,7 @@ Open the file where the Main method is defined. Add the following code into the 
 
 The following code demonstrates how to build a query that uses a Table-valued Function. The query projects the results into an anonymous type that contains the related Course title and related students with a grade greater or equal to 3.5.
 
-```csharp
+``` csharp
 using (var context = new SchoolEntities())
 {
     var CourseID = 4022;

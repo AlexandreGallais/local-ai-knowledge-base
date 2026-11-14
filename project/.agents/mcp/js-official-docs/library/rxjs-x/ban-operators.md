@@ -1,19 +1,12 @@
----
-title: "Disallow banned operators (rxjs-x/ban-operators)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/ban-operators.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Disallow banned operators (`rxjs-x/ban-operators`)
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule can be configured so that developers can ban `rxjs` operators they want to avoid in their project.
 
-> **Note:**
+> [!NOTE]
 > Operators outside of a `pipe` or not directly exported by `rxjs` are ignored.
 
 ## Options
@@ -43,9 +36,9 @@ Type checked lint rules are more powerful than traditional lint rules, but also 
 
 ## Related To
 
-- `ban-observables`
+- [`ban-observables`](./ban-observables.md)
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/ban-operators.ts)
+- [Test source](/tests/rules/ban-operators.test.ts)

@@ -1,33 +1,22 @@
----
-title: "UnresolvedPermission class (java.security)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/UnresolvedPermission.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # UnresolvedPermission class (java.security)
 
 ```java
 public final class UnresolvedPermission extends Permission implements java.io.Serializable
 ```
 
-The `UnresolvedPermission` class used to hold Permissions that were
-"unresolved" when the `Policy` was initialized. Installing a
-system-wide `Policy` object is no longer supported.
+The {@code UnresolvedPermission} class used to hold Permissions that were
+"unresolved" when the {@code Policy} was initialized. Installing a
+system-wide {@code Policy} object is no longer supported.
 
-**See also:** java.security.Permission
+@see java.security.Permission
+@see java.security.Permissions
+@see java.security.PermissionCollection
+@see java.security.Policy
 
-**See also:** java.security.Permissions
+@author Roland Schemers
+@since 1.2
 
-**See also:** java.security.PermissionCollection
-
-**See also:** java.security.Policy
-
-**Since:** 1.2
-
-**Deprecated:** This permission cannot be used for controlling access to
+@deprecated This permission cannot be used for controlling access to
       resources as the Security Manager is no longer supported.
 
 ## UnresolvedPermission.UnresolvedPermission(String, String, String, java.security.cert.Certificate[])
@@ -36,16 +25,21 @@ system-wide `Policy` object is no longer supported.
 public UnresolvedPermission(String type, String name, String actions, java.security.cert.Certificate[] certs)
 ```
 
-Creates a new `UnresolvedPermission` containing the permission
+Creates a new {@code UnresolvedPermission} containing the permission
 information needed later to actually create a Permission of the
 specified class, when the permission is resolved.
 
-Parameters:
-
-- `type`: the class name of the Permission class that will be created when this unresolved permission is resolved.
-- `name`: the name of the permission.
-- `actions`: the actions of the permission.
-- `certs`: the certificates the permission's class was signed with. This is a list of certificate chains, where each chain is composed of a signer certificate and optionally its supporting certificate chain. Each chain is ordered bottom-to-top (i.e., with the signer certificate first and the (root) certificate authority last). The signer certificates are copied from the array. Subsequent changes to the array will not affect this UnresolvedPermission.
+@param type the class name of the Permission class that will be
+created when this unresolved permission is resolved.
+@param name the name of the permission.
+@param actions the actions of the permission.
+@param certs the certificates the permission's class was signed with.
+This is a list of certificate chains, where each chain is composed of a
+signer certificate and optionally its supporting certificate chain.
+Each chain is ordered bottom-to-top (i.e., with the signer certificate
+first and the (root) certificate authority last). The signer
+certificates are copied from the array. Subsequent changes to
+the array will not affect this UnresolvedPermission.
 
 ## UnresolvedPermission.implies(Permission)
 
@@ -53,15 +47,13 @@ Parameters:
 public boolean implies(Permission p)
 ```
 
-This method always returns `false` for unresolved permissions.
-That is, an `UnresolvedPermission` is never considered to
+This method always returns {@code false} for unresolved permissions.
+That is, an {@code UnresolvedPermission} is never considered to
 imply another permission.
 
-Parameters:
+@param p the permission to check against.
 
-- `p`: the permission to check against.
-
-**Returns:** `false`.
+@return {@code false}.
 
 ## UnresolvedPermission.equals(Object)
 
@@ -69,20 +61,18 @@ Parameters:
 public boolean equals(Object obj)
 ```
 
-Checks two `UnresolvedPermission` objects for equality.
-Checks that `obj` is an `UnresolvedPermission`, and has
+Checks two {@code UnresolvedPermission} objects for equality.
+Checks that {@code obj} is an {@code UnresolvedPermission}, and has
 the same type (class) name, permission name, actions, and
 certificates as this object.
 
- To determine certificate equality, this method only compares
+<p> To determine certificate equality, this method only compares
 actual signer certificates.  Supporting certificate chains
 are not taken into consideration by this method.
 
-Parameters:
+@param obj the object we are testing for equality with this object.
 
-- `obj`: the object we are testing for equality with this object.
-
-**Returns:** true if `obj` is an `UnresolvedPermission`,
+@return true if {@code obj} is an {@code UnresolvedPermission},
 and has the same type (class) name, permission name, actions, and
 certificates as this object.
 
@@ -92,6 +82,8 @@ certificates as this object.
 public int hashCode()
 ```
 
+{@return the hash code value for this object}
+
 ## UnresolvedPermission.getActions()
 
 ```java
@@ -100,12 +92,12 @@ public String getActions()
 
 Returns the canonical string representation of the actions,
 which currently is the empty string "", since there are no actions for
-an `UnresolvedPermission`. That is, the actions for the
-permission that will be created when this `UnresolvedPermission`
-is resolved may be non-null, but an `UnresolvedPermission`
+an {@code UnresolvedPermission}. That is, the actions for the
+permission that will be created when this {@code UnresolvedPermission}
+is resolved may be non-null, but an {@code UnresolvedPermission}
 itself is never considered to have any actions.
 
-**Returns:** the empty string "".
+@return the empty string "".
 
 ## UnresolvedPermission.getUnresolvedType()
 
@@ -116,10 +108,10 @@ public String getUnresolvedType()
 Get the type (class name) of the underlying permission that
 has not been resolved.
 
-**Returns:** the type (class name) of the underlying permission that
+@return the type (class name) of the underlying permission that
  has not been resolved
 
-**Since:** 1.5
+@since 1.5
 
 ## UnresolvedPermission.getUnresolvedName()
 
@@ -130,11 +122,11 @@ public String getUnresolvedName()
 Get the target name of the underlying permission that
 has not been resolved.
 
-**Returns:** the target name of the underlying permission that
-         has not been resolved, or `null`,
+@return the target name of the underlying permission that
+         has not been resolved, or {@code null},
          if there is no target name
 
-**Since:** 1.5
+@since 1.5
 
 ## UnresolvedPermission.getUnresolvedActions()
 
@@ -145,11 +137,11 @@ public String getUnresolvedActions()
 Get the actions for the underlying permission that
 has not been resolved.
 
-**Returns:** the actions for the underlying permission that
-         has not been resolved, or `null`
+@return the actions for the underlying permission that
+         has not been resolved, or {@code null}
          if there are no actions
 
-**Since:** 1.5
+@since 1.5
 
 ## UnresolvedPermission.getUnresolvedCerts()
 
@@ -160,12 +152,12 @@ public java.security.cert.Certificate[] getUnresolvedCerts()
 Get the signer certificates (without any supporting chain)
 for the underlying permission that has not been resolved.
 
-**Returns:** the signer certificates for the underlying permission that
-has not been resolved, or `null`, if there are no signer
+@return the signer certificates for the underlying permission that
+has not been resolved, or {@code null}, if there are no signer
 certificates.
 Returns a new array each time this method is called.
 
-**Since:** 1.5
+@since 1.5
 
 ## UnresolvedPermission.toString()
 
@@ -173,12 +165,12 @@ Returns a new array each time this method is called.
 public String toString()
 ```
 
-Returns a string describing this `UnresolvedPermission`.
+Returns a string describing this {@code UnresolvedPermission}.
 The convention is to specify the class name, the permission name,
 and the actions, in the following format:
 '(unresolved "ClassName" "name" "actions")'.
 
-**Returns:** information about this `UnresolvedPermission`.
+@return information about this {@code UnresolvedPermission}.
 
 ## UnresolvedPermission.newPermissionCollection()
 
@@ -187,7 +179,7 @@ public PermissionCollection newPermissionCollection()
 ```
 
 Returns a new PermissionCollection object for storing
-`UnresolvedPermission` objects.
+{@code UnresolvedPermission} objects.
 
-**Returns:** a new PermissionCollection object suitable for
-storing `UnresolvedPermissions`.
+@return a new PermissionCollection object suitable for
+storing {@code UnresolvedPermissions}.

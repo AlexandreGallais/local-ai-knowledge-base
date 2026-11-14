@@ -1,12 +1,16 @@
 ---
 title: "MSTEST0042: Avoid duplicated 'DataRow' entries"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0042.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0042: Avoid duplicated 'DataRow' entries"
+ms.date: 04/11/2025
+f1_keywords:
+- MSTEST0042
+- DuplicateDataRowAnalyzer
+helpviewer_keywords:
+- DuplicateDataRowAnalyzer
+- MSTEST0042
+author: Youssef1313
+ms.author: ygerges
 ---
-
 # MSTEST0042: Avoid duplicated 'DataRow' entries
 
 | Property                            | Value                                                                  |
@@ -22,11 +26,11 @@ license: "CC-BY-4.0"
 
 ## Cause
 
-A test method has two or more DataRow attributes that are equivalent.
+A test method has two or more [DataRow](xref:Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute) attributes that are equivalent.
 
 ## Rule description
 
-`Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute` is used to denote inputs to test methods. It's not expected that a test will intentionally run twice with the exact same data. Duplicated `DataRow`s are often a copy/paste error.
+<xref:Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute> is used to denote inputs to test methods. It's not expected that a test will intentionally run twice with the exact same data. Duplicated `DataRow`s are often a copy/paste error.
 
 ## How to fix violations
 

@@ -1,10 +1,6 @@
 ---
+id: pages
 title: "Pages"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/pages.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
 
 ## Pages
@@ -42,7 +38,7 @@ page.locator("#submit").click();
 System.out.println(page.url());
 ```
 
-```python
+```python async
 page = await context.new_page()
 
 # Navigate explicitly, similar to entering a URL in the browser.
@@ -56,7 +52,7 @@ await page.locator('#submit').click()
 print(page.url)
 ```
 
-```python
+```python sync
 page = context.new_page()
 
 # Navigate explicitly, similar to entering a URL in the browser.
@@ -110,7 +106,7 @@ Page pageTwo = context.newPage();
 List<Page> allPages = context.pages();
 ```
 
-```python
+```python async
 # create two pages
 page_one = await context.new_page()
 page_two = await context.new_page()
@@ -119,7 +115,7 @@ page_two = await context.new_page()
 all_pages = context.pages
 ```
 
-```python
+```python sync
 # create two pages
 page_one = context.new_page()
 page_two = context.new_page()
@@ -162,7 +158,7 @@ newPage.getByRole(AriaRole.BUTTON).click();
 System.out.println(newPage.title());
 ```
 
-```python
+```python async
 # Get page after a specific action (e.g. clicking a link)
 async with context.expect_page() as new_page_info:
     await page.get_by_text("open new tab").click() # Opens a new tab
@@ -173,7 +169,7 @@ await new_page.get_by_role("button").click()
 print(await new_page.title())
 ```
 
-```python
+```python sync
 # Get page after a specific action (e.g. clicking a link)
 with context.expect_page() as new_page_info:
     page.get_by_text("open new tab").click() # Opens a new tab
@@ -213,7 +209,7 @@ context.onPage(page -> {
 });
 ```
 
-```python
+```python async
 # Get all new pages (including popups) in the context
 async def handle_page(page):
     await page.wait_for_load_state()
@@ -222,7 +218,7 @@ async def handle_page(page):
 context.on("page", handle_page)
 ```
 
-```python
+```python sync
 # Get all new pages (including popups) in the context
 def handle_page(page):
     page.wait_for_load_state()
@@ -238,6 +234,7 @@ context.Page += async  (_, page) => {
     Console.WriteLine(await page.TitleAsync());
 };
 ```
+
 
 ## Handling popups
 
@@ -265,7 +262,7 @@ popup.getByRole(AriaRole.BUTTON).click();
 System.out.println(popup.title());
 ```
 
-```python
+```python async
 # Get popup after a specific action (e.g., click)
 async with page.expect_popup() as popup_info:
     await page.get_by_text("open the popup").click()
@@ -276,7 +273,7 @@ await popup.get_by_role("button").click()
 print(await popup.title())
 ```
 
-```python
+```python sync
 # Get popup after a specific action (e.g., click)
 with page.expect_popup() as popup_info:
     page.get_by_text("open the popup").click()
@@ -316,7 +313,7 @@ page.onPopup(popup -> {
 });
 ```
 
-```python
+```python async
 # Get all popups when they open
 async def handle_popup(popup):
     await popup.wait_for_load_state()
@@ -325,7 +322,7 @@ async def handle_popup(popup):
 page.on("popup", handle_popup)
 ```
 
-```python
+```python sync
 # Get all popups when they open
 def handle_popup(popup):
     popup.wait_for_load_state()

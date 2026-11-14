@@ -1,40 +1,30 @@
----
-title: "CollectionCertStoreParameters class (java.security.cert)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/cert/CollectionCertStoreParameters.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # CollectionCertStoreParameters class (java.security.cert)
 
 ```java
 public class CollectionCertStoreParameters implements CertStoreParameters
 ```
 
-Parameters used as input for the Collection `CertStore`
+Parameters used as input for the Collection {@code CertStore}
 algorithm.
-
+<p>
 This class is used to provide necessary configuration parameters
-to implementations of the Collection `CertStore`
+to implementations of the Collection {@code CertStore}
 algorithm. The only parameter included in this class is the
-`Collection` from which the `CertStore` will
+{@code Collection} from which the {@code CertStore} will
 retrieve certificates and CRLs.
-
-**Concurrent Access**
-
+<p>
+<b>Concurrent Access</b>
+<p>
 Unless otherwise specified, the methods defined in this class are not
 thread-safe. Multiple threads that need to access a single
 object concurrently should synchronize amongst themselves and
 provide the necessary locking. Multiple threads each manipulating
 separate objects need not synchronize.
 
-**Since:** 1.4
-
-**See also:** java.util.Collection
-
-**See also:** CertStore
+@since       1.4
+@author      Steve Hanna
+@see         java.util.Collection
+@see         CertStore
 
 ## CollectionCertStoreParameters.CollectionCertStoreParameters(Collection<?>)
 
@@ -42,33 +32,30 @@ separate objects need not synchronize.
 public CollectionCertStoreParameters(Collection<?> collection)
 ```
 
-Creates an instance of `CollectionCertStoreParameters`
+Creates an instance of {@code CollectionCertStoreParameters}
 which will allow certificates and CRLs to be retrieved from the
-specified `Collection`. If the specified
-`Collection` contains an object that is not a
-`Certificate` or `CRL`, that object will be
-ignored by the Collection `CertStore`.
-
-The `Collection` is **not** copied. Instead, a
+specified {@code Collection}. If the specified
+{@code Collection} contains an object that is not a
+{@code Certificate} or {@code CRL}, that object will be
+ignored by the Collection {@code CertStore}.
+<p>
+The {@code Collection} is <b>not</b> copied. Instead, a
 reference is used. This allows the caller to subsequently add or
-remove `Certificates` or `CRL`s from the
-`Collection`, thus changing the set of
-`Certificates` or `CRL`s available to the
-Collection `CertStore`. The Collection `CertStore`
-will not modify the contents of the `Collection`.
+remove {@code Certificates} or {@code CRL}s from the
+{@code Collection}, thus changing the set of
+{@code Certificates} or {@code CRL}s available to the
+Collection {@code CertStore}. The Collection {@code CertStore}
+will not modify the contents of the {@code Collection}.
+<p>
+If the {@code Collection} will be modified by one thread while
+another thread is calling a method of a Collection {@code CertStore}
+that has been initialized with this {@code Collection}, the
+{@code Collection} must have fail-fast iterators.
 
-If the `Collection` will be modified by one thread while
-another thread is calling a method of a Collection `CertStore`
-that has been initialized with this `Collection`, the
-`Collection` must have fail-fast iterators.
-
-Parameters:
-
-- `collection`: a `Collection` of `Certificate`s and `CRL`s
-
-Throws:
-
-- `NullPointerException`: if `collection` is `null`
+@param collection a {@code Collection} of
+       {@code Certificate}s and {@code CRL}s
+@throws    NullPointerException if {@code collection} is
+{@code null}
 
 ## CollectionCertStoreParameters.CollectionCertStoreParameters()
 
@@ -76,9 +63,9 @@ Throws:
 public CollectionCertStoreParameters()
 ```
 
-Creates an instance of `CollectionCertStoreParameters` with
+Creates an instance of {@code CollectionCertStoreParameters} with
 the default parameter values (an empty and immutable
-`Collection`).
+{@code Collection}).
 
 ## CollectionCertStoreParameters.getCollection()
 
@@ -86,13 +73,13 @@ the default parameter values (an empty and immutable
 public Collection<?> getCollection()
 ```
 
-Returns the `Collection` from which `Certificate`s
-and `CRL`s are retrieved. This is **not** a copy of the
-`Collection`, it is a reference. This allows the caller to
-subsequently add or remove `Certificates` or
-`CRL`s from the `Collection`.
+Returns the {@code Collection} from which {@code Certificate}s
+and {@code CRL}s are retrieved. This is <b>not</b> a copy of the
+{@code Collection}, it is a reference. This allows the caller to
+subsequently add or remove {@code Certificates} or
+{@code CRL}s from the {@code Collection}.
 
-**Returns:** the `Collection` (never null)
+@return the {@code Collection} (never null)
 
 ## CollectionCertStoreParameters.clone()
 
@@ -101,9 +88,9 @@ public Object clone()
 ```
 
 Returns a copy of this object. Note that only a reference to the
-`Collection` is copied, and not the contents.
+{@code Collection} is copied, and not the contents.
 
-**Returns:** the copy
+@return the copy
 
 ## CollectionCertStoreParameters.toString()
 
@@ -113,4 +100,4 @@ public String toString()
 
 Returns a formatted string describing the parameters.
 
-**Returns:** a formatted string describing the parameters
+@return a formatted string describing the parameters

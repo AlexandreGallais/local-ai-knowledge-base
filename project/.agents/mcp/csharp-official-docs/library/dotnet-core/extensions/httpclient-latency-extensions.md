@@ -1,16 +1,14 @@
 ---
-title: "Monitor and analyze HTTP client performance"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/httpclient-latency-extensions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Monitor and analyze HTTP client performance
+description: Learn how to use the HttpClientLatency with dependency injection in your .NET workloads.
+ms.date: 09/29/2025
+ai-usage: ai-assisted
 ---
 
 # HTTP client latency telemetry in .NET
 
 When you build applications that communicate over HTTP, it's important to observe request performance characteristics.
-The `Microsoft.Extensions.DependencyInjection.HttpClientLatencyTelemetryExtensions.AddHttpClientLatencyTelemetry*`
+The <xref:Microsoft.Extensions.DependencyInjection.HttpClientLatencyTelemetryExtensions.AddHttpClientLatencyTelemetry*>
 extension enables collection of detailed timing information for outgoing HTTP calls with no changes to calling code.
 It plugs into the existing `HttpClientFactory` pipeline to capture stage timings across the request lifecycle, record
 HTTP protocol details, measure garbage collection impact where the runtime exposes that data, and emit a uniform
@@ -21,63 +19,21 @@ and export to your metrics backend. Example:
 
 Register extension method:
 
-```csharp
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Http.Diagnostics;
-using Microsoft.Extensions.Hosting;
+:::code language="csharp" source="snippets/http/latency/RegisterHandler.cs" range="3-24" highlight="11":::
 
-var builder = Host.CreateApplicationBuilder(args);
-
-// An example of some accessor that is able to read latency context
-builder.Services.AddSingleton<ILatencyContextAccessor, LatencyContextAccessor>();
-
-// Register HTTP client latency telemetry first so its delegating handler runs earlier.
-builder.Services.AddHttpClientLatencyTelemetry();
-
-// Register export handler (runs after telemetry; sees finalized ILatencyContext).
-builder.Services.AddTransient<HttpLatencyExportHandler>();
-
-// Register an HttpClient that will emit and export latency measures.
-builder.Services
-    .AddHttpClient("observed")
-    .AddHttpMessageHandler<HttpLatencyExportHandler>();
-
-var host = builder.Build();
-await host.RunAsync();
-```
 Access the context:
 
-```csharp
-public sealed class HttpLatencyExportHandler : DelegatingHandler
-{
-    // ILatencyContextAccessor is just an example of some accessor that is able to read latency context
-    private readonly ILatencyContextAccessor _latency;
+:::code language="csharp" source="snippets/http/latency/HttpLatencyExportHandler.cs" range="4-23" highlight="12,15":::
 
-    public HttpLatencyExportHandler(ILatencyContextAccessor latency) => _latency = latency;
-
-    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken ct)
-    {
-        var rsp = await base.SendAsync(request, ct).ConfigureAwait(false);
-
-        var ctx = _latency.Current;
-        if (ctx != null)
-        {
-            var data = ctx.LatencyData;
-            // Record/export gc and conn with version as a dimension here.
-        }
-        return rsp;
-    }
-}
-```
 ## Add the package
 
-### .NET CLI
+### [.NET CLI](#tab/dotnet-cli)
 
 ```dotnetcli
 dotnet add package Microsoft.Extensions.Http.Diagnostics --version 9.10.0
 ```
 
-### PackageReference
+### [PackageReference](#tab/package-reference)
 
 ```xml
 <PackageReference Include="Microsoft.Extensions.Http.Diagnostics" Version="9.10.0" />
@@ -85,43 +41,27 @@ dotnet add package Microsoft.Extensions.Http.Diagnostics --version 9.10.0
 
 ---
 
-For more information, see dotnet package add or Manage package dependencies in .NET applications.
+For more information, see [dotnet package add](../tools/dotnet-package-add.md) or [Manage package dependencies in .NET applications](../tools/dependencies.md).
 
 ## Register HTTP client latency telemetry
 
-To add HTTP client latency telemetry to your application, call the `Microsoft.Extensions.DependencyInjection.HttpClientLatencyTelemetryExtensions.AddHttpClientLatencyTelemetry*` extension method when configuring your services:
+To add HTTP client latency telemetry to your application, call the <xref:Microsoft.Extensions.DependencyInjection.HttpClientLatencyTelemetryExtensions.AddHttpClientLatencyTelemetry*> extension method when configuring your services:
 
-```csharp
-      var builder = WebApplication.CreateBuilder(args);
+:::code language="csharp" source="snippets/http/latency/Program.cs" id="extensions" highlight="7":::
 
-// Add HTTP client factory
-builder.Services.AddHttpClient();
-
-// Add HTTP client latency telemetry
-builder.Services.AddHttpClientLatencyTelemetry();
-```
-This registration adds a `DelegatingHandler` to all HTTP clients created through `System.Net.Http.IHttpClientFactory`, collecting detailed latency information for each request.
+This registration adds a `DelegatingHandler` to all HTTP clients created through <xref:System.Net.Http.IHttpClientFactory>, collecting detailed latency information for each request.
 
 ## Configure telemetry options
 
-You configure telemetry collection through the `Microsoft.Extensions.Http.Latency.HttpClientLatencyTelemetryOptions` (standard options pattern).
+You configure telemetry collection through the <xref:Microsoft.Extensions.Http.Latency.HttpClientLatencyTelemetryOptions> ([standard options pattern](options.md)).
 You can supply values either with a delegate or by binding configuration (for example, `appsettings.json`).
 The options instance is resolved once per handler pipeline so changes apply to new clients/handlers.
 
-```csharp
-// Configure with delegate
-builder.Services.AddHttpClientLatencyTelemetry(options =>
-{
-    options.EnableDetailedLatencyBreakdown = true;
-});
+:::code language="csharp" source="snippets/http/latency/Program.cs" range="23-31" highlight="1-5,8,9":::
 
-// Or configure from configuration
-builder.Services.AddHttpClientLatencyTelemetry(
-builder.Configuration.GetSection("HttpClientTelemetry"));
-```
 ## Configuration options
 
-The `Microsoft.Extensions.Http.Latency.HttpClientLatencyTelemetryOptions` class offers the following settings:
+The <xref:Microsoft.Extensions.Http.Latency.HttpClientLatencyTelemetryOptions> class offers the following settings:
 
 | Option                         | Type    | Default | Description                                                                                                                                                                                                                                          | When to disable                                                                                                                  |
 |--------------------------------|---------|---------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
@@ -133,7 +73,7 @@ When HTTP client latency telemetry is enabled, it captures phase timestamps, sel
 
 ### Timing checkpoints
 
-Timestamps are recorded for key <example-value> of the HTTP request lifecycle:
+Timestamps are recorded for key stages of the HTTP request lifecycle:
 
 | Phase                   | Start Event                | End Event                  | Notes                                                   |
 |-------------------------|----------------------------|----------------------------|---------------------------------------------------------|
@@ -170,12 +110,8 @@ in the latency context and, if HTTP client log enrichment is enabled, serialized
 Enable enrichment at application startup by adding the logging extension (for all clients or per client) along with
 latency telemetry, for example:
 
-```csharp
-var builder = Host.CreateApplicationBuilder(args);
-builder.Services.AddHttpClientLatencyTelemetry(); // enables latency context + measures/tags
-builder.Services.AddExtendedHttpClientLogging();
-var app = builder.Build();
-```
+:::code language="csharp" source="snippets/http/latency/Program.cs" range="36-39" highlight="2,3":::
+
 After this, outbound requests logged through the structured logging pipeline will include the `LatencyInfo` property
 containing the flattened tags, checkpoints, and measures. No metrics or traces are emitted automatically for tags;
 export them yourself (e.g., turn tag values into metric dimensions or `Activity` tags) if you need them outside logs.
@@ -190,40 +126,12 @@ These components enable tracking and reporting the latency of HTTP client reques
 
 You can register the services using the following methods:
 
-```csharp
-public static IServiceCollection AddHttpClientLatencyTelemetry(
-    this IServiceCollection services);
+:::code language="csharp" source="snippets/http/latency/Program.cs" range="44-53" highlight="1,2,4-6, 8-10":::
 
-public static IServiceCollection AddHttpClientLatencyTelemetry(
-    this IServiceCollection services,
-    IConfigurationSection section);
-
-public static IServiceCollection AddHttpClientLatencyTelemetry(
-    this IServiceCollection services,
-    Action<HttpClientLatencyTelemetryOptions> configure);
-```
 For example:
 
-```csharp
-var builder = Host.CreateApplicationBuilder(args);
+:::code language="csharp" source="snippets/http/latency/Program.cs" range="58-75" highlight="10,13,16":::
 
-// Register IHttpClientFactory:
-builder.Services.AddHttpClient();
-
-// Register redaction services:
-builder.Services.AddRedaction();
-
-// Register latency context services:
-builder.Services.AddLatencyContext();
-
-// Register HttpClient logging enrichment & redaction services:
-builder.Services.AddExtendedHttpClientLogging();
-
-// Register HttpClient latency telemetry services:
-builder.Services.AddHttpClientLatencyTelemetry();
-
-var host = builder.Build();
-```
 ## Platform considerations
 
 HTTP client latency telemetry runs on all supported targets (.NET 9, .NET 8, .NET Standard 2.0, and .NET Framework 4.6.2).

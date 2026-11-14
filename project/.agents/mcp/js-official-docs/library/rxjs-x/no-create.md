@@ -1,17 +1,10 @@
----
-title: "Disallow the static Observable.create and Subject.create functions (rxjs-x/no-create)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/no-create.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Disallow the static `Observable.create` and `Subject.create` functions (`rxjs-x/no-create`)
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, 🔒 `strict`.
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule prevents the use of the static `create` function on both `Observable` of `Subject`.
 
@@ -68,10 +61,10 @@ Type checked lint rules are more powerful than traditional lint rules, but also 
 
 ## Further reading
 
-- GitHub: Deprecate `create` static methods
-- Stack Overflow: what should I use instead?
+- GitHub: [Deprecate `create` static methods](https://github.com/ReactiveX/rxjs/issues/3982)
+- Stack Overflow: [what should I use instead?](https://stackoverflow.com/questions/55551870/rxjs-subject-create-deprecated-what-should-i-use-instead)
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/no-create.ts)
+- [Test source](/tests/rules/no-create.test.ts)

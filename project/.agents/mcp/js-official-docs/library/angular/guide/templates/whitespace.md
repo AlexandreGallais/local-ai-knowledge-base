@@ -1,12 +1,3 @@
----
-title: "Whitespace in templates"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/templates/whitespace.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Whitespace in templates
 
 By default, Angular templates do not preserve whitespace that the framework considers unnecessary. This commonly occurs in two situations: whitespace between elements, and collapsible whitespace inside of text.
@@ -27,17 +18,19 @@ Most developers prefer to format their templates with newlines and indentation t
 
 This template contains whitespace between all of the elements. The following snippet shows the same HTML with each whitespace character replaced with the hash (`#`) character to highlight how much whitespace is present:
 
+<!-- prettier-ignore -->
 ```html
 <!-- Total Whitespace: 20 -->
 <section>###<h3>User profile</h3>###<label>#####User name#####<input>###</label>#</section>
 ```
 
-Preserving the whitespace as written in the template would result in many unnecessary text nodes and increase page rendering overhead. By ignoring this whitespace between elements, Angular performs less work when rendering the template on the page, improving overall performance.
+Preserving the whitespace as written in the template would result in many unnecessary [text nodes](https://developer.mozilla.org/en-US/docs/Web/API/Text) and increase page rendering overhead. By ignoring this whitespace between elements, Angular performs less work when rendering the template on the page, improving overall performance.
 
 ## Collapsible whitespace inside text
 
 When your web browser renders HTML on a page, it collapses multiple consecutive whitespace characters to a single character:
 
+<!-- prettier-ignore -->
 ```html
 <!-- What it looks like in the template -->
 <p>Hello         world</p>
@@ -50,7 +43,7 @@ In this example, the browser displays only a single space between "Hello" and "w
 <p>Hello world</p>
 ```
 
-See How whitespace is handled by HTML, CSS, and in the DOM for more context on how this works.
+See [How whitespace is handled by HTML, CSS, and in the DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Whitespace) for more context on how this works.
 
 Angular avoids sending these unnecessary whitespace characters to the browser in the first place by collapsing them to a single character when it compiles the template.
 

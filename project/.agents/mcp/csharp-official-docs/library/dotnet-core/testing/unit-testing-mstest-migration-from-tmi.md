@@ -1,10 +1,9 @@
 ---
-title: "MSTest migration from Legacy Test runner"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/unit-testing-mstest-migration-from-tmi.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: MSTest migration from Legacy Test runner
+description: Learn about migrating from Legacy test runner to latest MSTest.
+author: nohwnd
+ms.author: jajares
+ms.date: 08/21/2025
 ---
 
 # MSTest legacy runner migration guide
@@ -33,20 +32,20 @@ Version 18 of VSTest removed the ability to run MSTest v1 tests via the legacy r
 
 The error can appear for multiple reasons:
 
-- Using a .testsettings file
-- Setting ForcedLegacyMode
-- Web and Load tests (WLT)
-- Coded UI tests (CUIT)
-- Manual tests
-- Generic tests
+- [Using a .testsettings file](#using-a-testsettings-file)
+- [Setting ForcedLegacyMode](#setting-forcedlegacymode)
+- [Web and Load tests (WLT)](#web-and-load-tests-wlt)
+- [Coded UI tests (CUIT)](#coded-ui-tests-cuit)
+- [Manual tests](#manual-tests)
+- [Generic tests](#generic-tests)
 
 #### Using a .testsettings file
 
 Providing a `.testsettings` file to the run triggers this error. Test settings files are no longer supported in VSTest. Replace them with `.runsettings` files.
 
-To migrate from testsettings to runsettings, you can use the TestSettings migrator tool that shipped with Visual Studio 2022. For more information, see Upgrade from .testsettings to .runsettings.
+To migrate from testsettings to runsettings, you can use the TestSettings migrator tool that shipped with Visual Studio 2022. For more information, see [Upgrade from .testsettings to .runsettings](/visualstudio/test/migrate-testsettings-to-runsettings).
 
-When moving away from testsettings, consider upgrading from MSTest v1 to latest MSTest following this migration guide.
+When moving away from testsettings, consider upgrading from MSTest v1 to latest MSTest following [this migration guide](unit-testing-mstest-migration-from-v1-to-v3.md).
 
 #### Setting ForcedLegacyMode
 

@@ -1,17 +1,17 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/no-missing-g-flag"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/no-missing-g-flag.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "disallow missing `g` flag in patterns used in `String#matchAll` and `String#replaceAll`"
+since: "v1.10.0"
 ---
-
 # regexp/no-missing-g-flag
 
 💼 This rule is enabled in the following configs: 🟢 `flat/recommended`, 🔵 `recommended`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 > disallow missing `g` flag in patterns used in `String#matchAll` and `String#replaceAll`
 
@@ -30,6 +30,7 @@ const text = 'The quick brown fox jumps over the lazy dog. If the dog reacted, w
 /* ✓ GOOD */
 var m = games.matchAll(/foo/g);
 var newText = text.replaceAll(/Dog/ig, 'cat');
+
 
 /* ✗ BAD */
 var m = games.matchAll(/foo/);
@@ -56,8 +57,11 @@ var newText = text.replaceAll(/Dog/i, 'cat');
 
 ## :books: Further reading
 
-- MDN Web Docs - String.prototype.matchAll()
-- MDN Web Docs - String.prototype.replaceAll()
+- [MDN Web Docs - String.prototype.matchAll()][`String#matchAll()`]
+- [MDN Web Docs - String.prototype.replaceAll()][`String#replaceAll()`]
+
+[`String#matchAll()`]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/matchAll
+[`String#replaceAll()`]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replaceAll
 
 ## :rocket: Version
 
@@ -65,5 +69,5 @@ This rule was introduced in eslint-plugin-regexp v1.10.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/no-missing-g-flag.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/no-missing-g-flag.ts)

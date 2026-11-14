@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: 'dotnet restore' produces security vulnerability warnings"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/8.0/dotnet-restore-audit.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in the .NET 8 SDK where 'dotnet restore' produces security vulnerability warnings by default.
+ms.date: 08/15/2023
 ---
-
 # 'dotnet restore' produces security vulnerability warnings
 
-The `dotnet restore` command, which restores the dependencies and tools of a project, now produces security vulnerability warnings by default.
+The [`dotnet restore` command](../../../tools/dotnet-restore.md), which restores the dependencies and tools of a project, now produces security vulnerability warnings by default.
 
 ## Previous behavior
 
@@ -25,7 +21,7 @@ If you're developing with the .NET 8 SDK or a later version, `dotnet restore` pr
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -74,5 +70,5 @@ The properties mentioned in the recommended actions can be set either in your pr
 
 ## See also
 
-- Audit for security vulnerabilities (`dotnet restore`)
-- Auditing package dependencies for security vulnerabilities
+- [Audit for security vulnerabilities (`dotnet restore`)](../../../tools/dotnet-restore.md#audit-for-security-vulnerabilities)
+- [Auditing package dependencies for security vulnerabilities](/nuget/concepts/auditing-packages)

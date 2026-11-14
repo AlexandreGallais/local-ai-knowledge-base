@@ -1,12 +1,3 @@
----
-title: "DoubleAdder class (java.util.concurrent.atomic)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/atomic/DoubleAdder.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # DoubleAdder class (java.util.concurrent.atomic)
 
 ```java
@@ -14,24 +5,27 @@ public class DoubleAdder extends Striped64 implements Serializable
 ```
 
 One or more variables that together maintain an initially zero
-`double` sum.  When updates (method `add`) are
+{@code double} sum.  When updates (method {@link #add}) are
 contended across threads, the set of variables may grow dynamically
-to reduce contention.  Method `sum` (or, equivalently `doubleValue`) returns the current total combined across the
+to reduce contention.  Method {@link #sum} (or, equivalently {@link
+#doubleValue}) returns the current total combined across the
 variables maintaining the sum. The order of accumulation within or
 across threads is not guaranteed. Thus, this class may not be
 applicable if numerical stability is required, especially when
 combining values of substantially different orders of magnitude.
 
-This class is usually preferable to alternatives when multiple
+<p>This class is usually preferable to alternatives when multiple
 threads update a common value that is used for purposes such as
 summary statistics that are frequently updated but less frequently
 read.
 
-This class extends `Number`, but does *not* define
-methods such as `equals`, `hashCode` and `compareTo` because instances are expected to be mutated, and so are
+<p>This class extends {@link Number}, but does <em>not</em> define
+methods such as {@code equals}, {@code hashCode} and {@code
+compareTo} because instances are expected to be mutated, and so are
 not useful as collection keys.
 
-**Since:** 1.8
+@since 1.8
+@author Doug Lea
 
 ## DoubleAdder.DoubleAdder()
 
@@ -49,9 +43,7 @@ public void add(double x)
 
 Adds the given value.
 
-Parameters:
-
-- `x`: the value to add
+@param x the value to add
 
 ## DoubleAdder.sum()
 
@@ -59,7 +51,7 @@ Parameters:
 public double sum()
 ```
 
-Returns the current sum.  The returned value is *NOT* an
+Returns the current sum.  The returned value is <em>NOT</em> an
 atomic snapshot; invocation in the absence of concurrent
 updates returns an accurate result, but concurrent updates that
 occur while the sum is being calculated might not be
@@ -68,7 +60,7 @@ strictly associative, the returned result need not be identical
 to the value that would be obtained in a sequential series of
 updates to a single variable.
 
-**Returns:** the sum
+@return the sum
 
 ## DoubleAdder.reset()
 
@@ -88,13 +80,14 @@ known that no threads are concurrently updating.
 public double sumThenReset()
 ```
 
-Equivalent in effect to `sum` followed by `reset`. This method may apply for example during quiescent
+Equivalent in effect to {@link #sum} followed by {@link
+#reset}. This method may apply for example during quiescent
 points between multithreaded computations.  If there are
 updates concurrent with this method, the returned value is
-*not* guaranteed to be the final value occurring before
+<em>not</em> guaranteed to be the final value occurring before
 the reset.
 
-**Returns:** the sum
+@return the sum
 
 ## DoubleAdder.toString()
 
@@ -102,9 +95,8 @@ the reset.
 public String toString()
 ```
 
-Returns the String representation of the `sum`.
-
-**Returns:** the String representation of the `sum`
+Returns the String representation of the {@link #sum}.
+@return the String representation of the {@link #sum}
 
 ## DoubleAdder.doubleValue()
 
@@ -112,9 +104,9 @@ Returns the String representation of the `sum`.
 public double doubleValue()
 ```
 
-Equivalent to `sum`.
+Equivalent to {@link #sum}.
 
-**Returns:** the sum
+@return the sum
 
 ## DoubleAdder.longValue()
 
@@ -122,7 +114,7 @@ Equivalent to `sum`.
 public long longValue()
 ```
 
-Returns the `sum` as a `long` after a
+Returns the {@link #sum} as a {@code long} after a
 narrowing primitive conversion.
 
 ## DoubleAdder.intValue()
@@ -131,7 +123,7 @@ narrowing primitive conversion.
 public int intValue()
 ```
 
-Returns the `sum` as an `int` after a
+Returns the {@link #sum} as an {@code int} after a
 narrowing primitive conversion.
 
 ## DoubleAdder.floatValue()
@@ -140,5 +132,5 @@ narrowing primitive conversion.
 public float floatValue()
 ```
 
-Returns the `sum` as a `float`
+Returns the {@link #sum} as a {@code float}
 after a narrowing primitive conversion.

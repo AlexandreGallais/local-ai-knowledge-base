@@ -1,38 +1,74 @@
 {
   "csharp": {
     "commit": "94b7dca39d8dca4374f326176874381661f4dd59",
-    "files": 1389,
-    "bytes": 8300636,
+    "files": 998,
+    "bytes": 4762100,
     "built": "2026-11-14"
   },
   "dotnet-core": {
     "commit": "94b7dca39d8dca4374f326176874381661f4dd59",
-    "files": 2584,
-    "bytes": 9586938,
+    "files": 2377,
+    "bytes": 9683420,
     "built": "2026-11-14"
   },
   "dotnet-standard": {
     "commit": "94b7dca39d8dca4374f326176874381661f4dd59",
-    "files": 1642,
-    "bytes": 12739517,
+    "files": 896,
+    "bytes": 6817136,
     "built": "2026-11-14"
   },
   "aspnetcore": {
     "commit": "692feee601358eeb5d8915b46143303f45e83887",
-    "files": 1903,
-    "bytes": 12163636,
+    "files": 1418,
+    "bytes": 17350028,
     "built": "2026-11-14"
   },
   "efcore": {
     "commit": "1459c99ecffb85202e1bbcf32504d074c430bfde",
-    "files": 503,
-    "bytes": 4437678,
+    "files": 311,
+    "bytes": 4668104,
     "built": "2026-11-14"
   },
   "dotnet-api": {
     "commit": "a010100852b71f33d67d913d7a9ed69f83a639b1",
-    "files": 4718,
-    "bytes": 33882289,
+    "files": 3321,
+    "bytes": 134740728,
+    "built": "2026-11-14"
+  },
+  "dotnet-fundamentals": {
+    "commit": "94b7dca39d8dca4374f326176874381661f4dd59",
+    "files": 664,
+    "bytes": 3108832,
+    "built": "2026-11-14"
+  },
+  "dotnet-architecture": {
+    "commit": "94b7dca39d8dca4374f326176874381661f4dd59",
+    "files": 164,
+    "bytes": 1877260,
+    "built": "2026-11-14"
+  },
+  "aspire": {
+    "commit": "1839b5aeecb4221c47b0a9678e5f95d79e2e55a5",
+    "files": 93,
+    "bytes": 257025,
+    "built": "2026-11-14"
+  },
+  "aspnetcore-api": {
+    "commit": "995b7e921ab269b1e34eaaf23c38532b0d389e01",
+    "files": 249,
+    "bytes": 44220734,
+    "built": "2026-11-14"
+  },
+  "efcore-api": {
+    "commit": "c850a0eff414ec1ba34b208d4de6ddcb1b477fe7",
+    "files": 1,
+    "bytes": 8741477,
+    "built": "2026-11-14"
+  },
+  "efcore-relational-api": {
+    "commit": "5778d7446be4fa564b2e5085848c6242845eed35",
+    "files": 1,
+    "bytes": 4946588,
     "built": "2026-11-14"
   }
 }

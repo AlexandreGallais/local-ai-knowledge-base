@@ -1,16 +1,19 @@
 ---
+description: "Learn more about: Event Design"
 title: "Event Design"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/event.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "pre-events"
+  - "events [.NET Framework], design guidelines"
+  - "member design guidelines, events"
+  - "event handlers [.NET Framework], event design guidelines"
+  - "post-events"
+  - "signatures, event handling"
+ms.assetid: 67b3c6e2-6a8f-480d-a78f-ebeeaca1b95a
 ---
-
 # Event Design
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
 Events are the most commonly used form of callbacks (constructs that allow the framework to call into user code). Other callback mechanisms include members taking delegates, virtual members, and interface-based plug-ins. Data from usability studies indicate that the majority of developers are more comfortable using events than they are using the other callback mechanisms. Events are nicely integrated with Visual Studio and many languages.
 
@@ -18,9 +21,9 @@ Events are the most commonly used form of callbacks (constructs that allow the f
 
  ✔️ DO use the term "raise" for events rather than "fire" or "trigger."
 
- ✔️ DO use `System.EventHandler`1` instead of manually creating new delegates to be used as event handlers.
+ ✔️ DO use <xref:System.EventHandler`1?displayProperty=nameWithType> instead of manually creating new delegates to be used as event handlers.
 
- ✔️ CONSIDER using a subclass of `System.EventArgs` as the event argument, unless you are absolutely sure the event will never need to carry any data to the event handling method, in which case you can use the `EventArgs` type directly.
+ ✔️ CONSIDER using a subclass of <xref:System.EventArgs> as the event argument, unless you are absolutely sure the event will never need to carry any data to the event handling method, in which case you can use the `EventArgs` type directly.
 
  If you ship an API using `EventArgs` directly, you will never be able to add any data to be carried with the event without breaking compatibility. If you use a subclass, even if initially completely empty, you will be able to add properties to the subclass when needed.
 
@@ -44,7 +47,7 @@ Events are the most commonly used form of callbacks (constructs that allow the f
 
  ✔️ CONSIDER raising events that the end user can cancel. This only applies to pre-events.
 
- Use `System.ComponentModel.CancelEventArgs` or its subclass as the event argument to allow the end user to cancel events.
+ Use <xref:System.ComponentModel.CancelEventArgs?displayProperty=nameWithType> or its subclass as the event argument to allow the end user to cancel events.
 
 ### Custom Event Handler Design
 
@@ -56,15 +59,15 @@ Events are the most commonly used form of callbacks (constructs that allow the f
 
  ✔️ DO use `object` as the type of the first parameter of the event handler, and call it `sender`.
 
- ✔️ DO use `System.EventArgs` or its subclass as the type of the second parameter of the event handler, and call it `e`.
+ ✔️ DO use <xref:System.EventArgs?displayProperty=nameWithType> or its subclass as the type of the second parameter of the event handler, and call it `e`.
 
  ❌ DO NOT have more than two parameters on event handlers.
 
  *Portions © 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Member Design Guidelines
-- Framework Design Guidelines
+- [Member Design Guidelines](member.md)
+- [Framework Design Guidelines](index.md)

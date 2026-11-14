@@ -1,12 +1,8 @@
 ---
-title: "dotnet new uninstall"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-new-uninstall.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet new uninstall
+description: The dotnet new uninstall command uninstalls a template package.
+ms.date: 04/29/2021
 ---
-
 # dotnet new uninstall
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -24,20 +20,10 @@ dotnet new uninstall <PATH|NUGET_ID>
 
 ## Description
 
-The `dotnet new uninstall` command uninstalls a template package at the `PATH` or `NUGET_ID` provided. When the `` value isn't specified, all currently installed template packages and their associated templates are displayed. When specifying `NUGET_ID`, don't include the version number.
+The `dotnet new uninstall` command uninstalls a template package at the `PATH` or `NUGET_ID` provided. When the `<PATH|NUGET_ID>` value isn't specified, all currently installed template packages and their associated templates are displayed. When specifying `NUGET_ID`, don't include the version number.
 
-> **Note:**
-> Starting with the .NET 7 SDK, the `dotnet new` syntax has changed:
-
-- The `--list`, `--search`, `--install`, and `--uninstall` options became `list`, `search`, `install`, and `uninstall` subcommands.
-- The `--update-apply` option became the `update` subcommand.
-- To use `--update-check`, use the `update` subcommand with the `--check-only` option.
-
-Other options that were available before are still available to use with their respective subcommands.
-Separate help for each subcommand is available via the `-h` or `--help` option: `dotnet new <subcommand> --help` lists all supported options for the subcommand.
-
-Additionally, tab completion is now available for `dotnet new`. It supports completion for installed template names and for the options a selected template provides.
-To activate tab completion for the .NET SDK, see Enable tab completion.
+> [!NOTE]
+> [!INCLUDE [new syntax](includes/dotnet-new-7-0-syntax.md)]
 >
 > Examples of the old syntax:
 >
@@ -55,7 +41,7 @@ To activate tab completion for the .NET SDK, see Enable tab completion.
 
 ## Arguments
 
-- **``**
+- **`<PATH|NUGET_ID>`**
 
   The folder on the file system or the NuGet package identifier the package was installed from. Note that the version for the NuGet package should not be specified.
 
@@ -65,13 +51,9 @@ To activate tab completion for the .NET SDK, see Enable tab completion.
 
   Enables diagnostic output. Available since .NET SDK 7.0.100.
 
-- **`-?|-h|--help`**
+- [!INCLUDE [help](includes/cli-help.md)]
 
-Prints out a description of how to use the command.
-
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+- [!INCLUDE [verbosity](includes/cli-verbosity.md)]
 
 ## Examples
 
@@ -89,7 +71,7 @@ Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal
 
 ## See also
 
-- dotnet new command
-- dotnet new list command
-- dotnet new search command
-- .NET templates for authors
+- [dotnet new command](dotnet-new.md)
+- [dotnet new list command](dotnet-new-list.md)
+- [dotnet new search command](dotnet-new-search.md)
+- [.NET templates for authors](templates.md)

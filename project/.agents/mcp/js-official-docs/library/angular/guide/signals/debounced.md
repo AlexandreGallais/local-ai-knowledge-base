@@ -1,15 +1,6 @@
----
-title: "Debouncing signals with debounced"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/signals/debounced.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Debouncing signals with `debounced`
 
-IMPORTANT: `debounced` is experimental. It's ready for you to try, but it might change before it is stable.
+IMPORTANT: `debounced` is [experimental](reference/releases#experimental). It's ready for you to try, but it might change before it is stable.
 
 Use `debounced` to delay reacting to a signal's value until it stops changing. It returns a `Resource` whose value reflects the debounced value of the source signal.
 
@@ -48,7 +39,7 @@ While the debounce timer is counting down after a resolved value, `status()` is 
 
 If the source signal throws, the resource enters `'error'` immediately, `value()` throws, and no timer runs. After the source signal stops throwing, the resource stays in `'error'` until the new wait settles, then becomes `'resolved'`.
 
-See Resource status for the full list of statuses and their `value()` behavior.
+See [Resource status](/guide/signals/resource#resource-status) for the full list of statuses and their `value()` behavior.
 
 ## Custom wait function
 
@@ -80,7 +71,7 @@ debouncedFilter = debounced(filter, 200, {
 
 ## Injection context
 
-`debounced` must be called inside an injection context. Angular automatically destroys the debounced resource and cancels any pending timer when the injector is destroyed.
+`debounced` must be called inside an [injection context](guide/di/dependency-injection-context). Angular automatically destroys the debounced resource and cancels any pending timer when the injector is destroyed.
 
 To use `debounced` outside of an injection context, pass an explicit `Injector` via the options:
 

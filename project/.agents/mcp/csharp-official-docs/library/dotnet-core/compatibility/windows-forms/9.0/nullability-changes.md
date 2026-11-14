@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Changes to nullability annotations (Windows Forms)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/windows-forms/9.0/nullability-changes.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 9 breaking change in Windows Forms where some nullable reference type annotations have changed.
+ms.date: 01/16/2024
 ---
-
 # Changes to nullability annotations (Windows Forms)
 
 In .NET 9, some nullability annotations on the Windows Forms APIs have changed.
@@ -25,11 +21,11 @@ Starting in .NET 9, these parameters are marked as non-nullable. If you pass an 
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
-The parameter on `System.Windows.Forms.Design.IWindowsFormsEditorService.DropDownControl(System.Windows.Forms.Control)` was previously marked as nullable, but there's no guidance for implementers on how they should handle null input. Also, logically this method should not accept `null`.
+The parameter on <xref:System.Windows.Forms.Design.IWindowsFormsEditorService.DropDownControl(System.Windows.Forms.Control)?displayProperty=nameWithType> was previously marked as nullable, but there's no guidance for implementers on how they should handle null input. Also, logically this method should not accept `null`.
 
 ## Affected APIs
 
@@ -37,4 +33,4 @@ The following table lists the affected APIs:
 
 | API | What changed | Recommended action |
 | - | - | - |
-| `System.Windows.Forms.Design.IWindowsFormsEditorService.DropDownControl(System.Windows.Forms.Control)` | The `control` parameter is non-nullable | Make sure you're not passing a nullable `Control` to this method. Also, update any implementations of `System.Windows.Forms.Design.IWindowsFormsEditorService` to remove nullability of the `DropDownControl` method's parameter. |
+| <xref:System.Windows.Forms.Design.IWindowsFormsEditorService.DropDownControl(System.Windows.Forms.Control)?displayProperty=nameWithType> | The `control` parameter is non-nullable | Make sure you're not passing a nullable `Control` to this method. Also, update any implementations of <xref:System.Windows.Forms.Design.IWindowsFormsEditorService> to remove nullability of the `DropDownControl` method's parameter. |

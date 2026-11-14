@@ -1,12 +1,11 @@
 ---
 title: "When to Use a Thread-Safe Collection"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/collections/thread-safe/when-to-use-a-thread-safe-collection.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Know when to use a thread-safe collection in .NET. There are 5 collection types that are specially designed to support multithreaded add & remove operations.
+ms.date: "03/30/2017"
+helpviewer_keywords:
+  - "thread-safe collections, when to upgrade"
+ms.assetid: a9babe97-e457-4ff3-b528-a1bc940d5320
 ---
-
 # When to use a thread-safe collection
 
 .NET Framework 4 introduced five collection types that are specially designed to support multi-threaded add and remove operations. To achieve thread-safety, these types use various kinds of efficient locking and lock-free synchronization mechanisms. Synchronization adds overhead to an operation. The amount of overhead depends on the kind of synchronization that is used, the kind of operations that are performed, and other factors such as the number of threads that are trying to concurrently access the collection.
@@ -29,40 +28,40 @@ license: "CC-BY-4.0"
 
 ## ConcurrentQueue(T) vs. Queue(T)
 
- In pure producer-consumer scenarios, where the processing time for each element is very small (a few instructions), then `System.Collections.Concurrent.ConcurrentQueue`1` can offer modest performance benefits over a `System.Collections.Generic.Queue`1` that has an external lock. In this scenario, `System.Collections.Concurrent.ConcurrentQueue`1` performs best when one dedicated thread is queuing and one dedicated thread is de-queuing. If you do not enforce this rule, then `System.Collections.Generic.Queue`1` might even perform slightly faster than `System.Collections.Concurrent.ConcurrentQueue`1` on computers that have multiple cores.
+ In pure producer-consumer scenarios, where the processing time for each element is very small (a few instructions), then <xref:System.Collections.Concurrent.ConcurrentQueue`1?displayProperty=nameWithType> can offer modest performance benefits over a <xref:System.Collections.Generic.Queue`1?displayProperty=nameWithType> that has an external lock. In this scenario, <xref:System.Collections.Concurrent.ConcurrentQueue`1> performs best when one dedicated thread is queuing and one dedicated thread is de-queuing. If you do not enforce this rule, then <xref:System.Collections.Generic.Queue`1> might even perform slightly faster than <xref:System.Collections.Concurrent.ConcurrentQueue`1> on computers that have multiple cores.
 
- When processing time is around 500 FLOPS (floating point operations) or more, then the two-thread rule does not apply to `System.Collections.Concurrent.ConcurrentQueue`1`, which then has very good scalability. `System.Collections.Generic.Queue`1` does not scale well in this scenario.
+ When processing time is around 500 FLOPS (floating point operations) or more, then the two-thread rule does not apply to <xref:System.Collections.Concurrent.ConcurrentQueue`1>, which then has very good scalability. <xref:System.Collections.Generic.Queue`1> does not scale well in this scenario.
 
- In mixed producer-consumer scenarios, when the processing time is very small, a `System.Collections.Generic.Queue`1` that has an external lock scales better than `System.Collections.Concurrent.ConcurrentQueue`1` does. However, when processing time is around 500 FLOPS or more, then the `System.Collections.Concurrent.ConcurrentQueue`1` scales better.
+ In mixed producer-consumer scenarios, when the processing time is very small, a <xref:System.Collections.Generic.Queue`1> that has an external lock scales better than <xref:System.Collections.Concurrent.ConcurrentQueue`1> does. However, when processing time is around 500 FLOPS or more, then the <xref:System.Collections.Concurrent.ConcurrentQueue`1> scales better.
 
 ## ConcurrentStack vs. Stack
 
- In pure producer-consumer scenarios, when processing time is very small, then `System.Collections.Concurrent.ConcurrentStack`1` and `System.Collections.Generic.Stack`1` that has an external lock will probably perform about the same with one dedicated pushing thread and one dedicated popping thread. However, as the number of threads increases, both types slow down because of increased contention, and `System.Collections.Generic.Stack`1` might perform better than `System.Collections.Concurrent.ConcurrentStack`1`. When processing time is around 500 FLOPS or more, then both types scale at about the same rate.
+ In pure producer-consumer scenarios, when processing time is very small, then <xref:System.Collections.Concurrent.ConcurrentStack`1?displayProperty=nameWithType> and <xref:System.Collections.Generic.Stack`1?displayProperty=nameWithType> that has an external lock will probably perform about the same with one dedicated pushing thread and one dedicated popping thread. However, as the number of threads increases, both types slow down because of increased contention, and <xref:System.Collections.Generic.Stack`1> might perform better than <xref:System.Collections.Concurrent.ConcurrentStack`1>. When processing time is around 500 FLOPS or more, then both types scale at about the same rate.
 
- In mixed producer-consumer scenarios, `System.Collections.Concurrent.ConcurrentStack`1` is faster for both small and large workloads.
+ In mixed producer-consumer scenarios, <xref:System.Collections.Concurrent.ConcurrentStack`1> is faster for both small and large workloads.
 
- The use of the `System.Collections.Concurrent.ConcurrentStack`1.PushRange*` and `System.Collections.Concurrent.ConcurrentStack`1.TryPopRange*` may greatly speed up access times.
+ The use of the <xref:System.Collections.Concurrent.ConcurrentStack`1.PushRange*> and <xref:System.Collections.Concurrent.ConcurrentStack`1.TryPopRange*> may greatly speed up access times.
 
 ## ConcurrentDictionary vs. Dictionary
 
- In general, use a `System.Collections.Concurrent.ConcurrentDictionary`2` in any scenario where you are adding and updating keys or values concurrently from multiple threads. In scenarios that involve frequent updates and relatively few reads, the `System.Collections.Concurrent.ConcurrentDictionary`2` generally offers modest benefits. In scenarios that involve many reads and many updates, the `System.Collections.Concurrent.ConcurrentDictionary`2` generally is significantly faster on computers that have any number of cores.
+ In general, use a <xref:System.Collections.Concurrent.ConcurrentDictionary`2?displayProperty=nameWithType> in any scenario where you are adding and updating keys or values concurrently from multiple threads. In scenarios that involve frequent updates and relatively few reads, the <xref:System.Collections.Concurrent.ConcurrentDictionary`2> generally offers modest benefits. In scenarios that involve many reads and many updates, the <xref:System.Collections.Concurrent.ConcurrentDictionary`2> generally is significantly faster on computers that have any number of cores.
 
- In scenarios that involve frequent updates, you can increase the degree of concurrency in the `System.Collections.Concurrent.ConcurrentDictionary`2` and then measure to see whether performance increases on computers that have more cores. If you change the concurrency level, avoid global operations as much as possible.
+ In scenarios that involve frequent updates, you can increase the degree of concurrency in the <xref:System.Collections.Concurrent.ConcurrentDictionary`2> and then measure to see whether performance increases on computers that have more cores. If you change the concurrency level, avoid global operations as much as possible.
 
- If you are only reading key or values, the `System.Collections.Generic.Dictionary`2` is faster because no synchronization is required if the dictionary is not being modified by any threads.
+ If you are only reading key or values, the <xref:System.Collections.Generic.Dictionary`2> is faster because no synchronization is required if the dictionary is not being modified by any threads.
 
 ## ConcurrentBag
 
- In pure producer-consumer scenarios, `System.Collections.Concurrent.ConcurrentBag`1` will probably perform more slowly than the other concurrent collection types.
+ In pure producer-consumer scenarios, <xref:System.Collections.Concurrent.ConcurrentBag`1?displayProperty=nameWithType> will probably perform more slowly than the other concurrent collection types.
 
- In mixed producer-consumer scenarios, `System.Collections.Concurrent.ConcurrentBag`1` is generally much faster and more scalable than any other concurrent collection type for both large and small workloads.
+ In mixed producer-consumer scenarios, <xref:System.Collections.Concurrent.ConcurrentBag`1> is generally much faster and more scalable than any other concurrent collection type for both large and small workloads.
 
 ## BlockingCollection
 
- When bounding and blocking semantics are required, `System.Collections.Concurrent.BlockingCollection`1` will probably perform faster than any custom implementation. It also supports rich cancellation, enumeration, and exception handling.
+ When bounding and blocking semantics are required, <xref:System.Collections.Concurrent.BlockingCollection`1?displayProperty=nameWithType> will probably perform faster than any custom implementation. It also supports rich cancellation, enumeration, and exception handling.
 
 ## See also
 
-- `System.Collections.Concurrent`
-- Thread-Safe Collections
-- Parallel Programming
+- <xref:System.Collections.Concurrent?displayProperty=nameWithType>
+- [Thread-Safe Collections](index.md)
+- [Parallel Programming](../../parallel-programming/index.md)

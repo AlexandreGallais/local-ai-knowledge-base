@@ -1,21 +1,15 @@
----
-title: "check-indentation"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/check-indentation.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-check-indentation"></a>
+<a name="check-indentation"></a>
+# <code>check-indentation</code>
 
-# `check-indentation`
+* [Options](#user-content-check-indentation-options)
+    * [`allowIndentedSections`](#user-content-check-indentation-options-allowindentedsections)
+    * [`allowNoSpaceAfterAsterisk`](#user-content-check-indentation-options-allownospaceafterasterisk)
+    * [`excludeTags`](#user-content-check-indentation-options-excludetags)
+* [Context and settings](#user-content-check-indentation-context-and-settings)
+* [Failing examples](#user-content-check-indentation-failing-examples)
+* [Passing examples](#user-content-check-indentation-passing-examples)
 
-* Options
-    * `allowIndentedSections`
-    * `allowNoSpaceAfterAsterisk`
-    * `excludeTags`
-* Context and settings
-* Failing examples
-* Passing examples
 
 Reports invalid padding inside JSDoc blocks.
 
@@ -33,19 +27,27 @@ the following description is not reported:
  */
 ```
 
+<a name="user-content-check-indentation-options"></a>
+<a name="check-indentation-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `allowIndentedSections`
+<a name="user-content-check-indentation-options-allowindentedsections"></a>
+<a name="check-indentation-options-allowindentedsections"></a>
+### <code>allowIndentedSections</code>
 
 Allows indentation of nested sections on subsequent lines (like bullet lists)
 
-### `allowNoSpaceAfterAsterisk`
+<a name="user-content-check-indentation-options-allownospaceafterasterisk"></a>
+<a name="check-indentation-options-allownospaceafterasterisk"></a>
+### <code>allowNoSpaceAfterAsterisk</code>
 
 Allows there to be no space after asterisks and before content.
 
-### `excludeTags`
+<a name="user-content-check-indentation-options-excludetags"></a>
+<a name="check-indentation-options-excludetags"></a>
+### <code>excludeTags</code>
 
 Array of tags (e.g., `['example', 'description']`) whose content will be
 "hidden" from the `check-indentation` rule. Defaults to `['example']`.
@@ -67,6 +69,9 @@ report a padding issue:
  */
 ```
 
+
+<a name="user-content-check-indentation-context-and-settings"></a>
+<a name="check-indentation-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -76,6 +81,8 @@ report a padding issue:
 |Recommended|false|
 |Options|`allowIndentedSections`, `allowNoSpaceAfterAsterisk`, `excludeTags`|
 
+<a name="user-content-check-indentation-failing-examples"></a>
+<a name="check-indentation-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -258,6 +265,10 @@ function quux () {
 // Message: There must be no indentation.
 ````
 
+
+
+<a name="user-content-check-indentation-passing-examples"></a>
+<a name="check-indentation-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -453,3 +464,4 @@ function MyDecorator(options: { myOptions: number }) {
  */
 // "jsdoc/check-indentation": ["error"|"warn", {"allowIndentedSections":true}]
 ````
+

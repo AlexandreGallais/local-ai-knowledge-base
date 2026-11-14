@@ -1,17 +1,8 @@
----
-title: "Migration to the inject function"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/reference/migrations/inject-function.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Migration to the `inject` function
 
-Angular's `inject` function offers more accurate types and better compatibility with standard decorators, compared to constructor-based injection.
+Angular's [`inject`](/api/core/inject) function offers more accurate types and better compatibility with standard decorators, compared to constructor-based injection.
 
-This schematic converts constructor-based injection in your classes to use the `inject` function instead.
+This schematic converts constructor-based injection in your classes to use the [`inject`](/api/core/inject) function instead.
 
 Run the schematic using the following command:
 
@@ -24,13 +15,13 @@ ng generate @angular/core:inject
 ```typescript
 import {Component, Inject, Optional} from '@angular/core';
 import {MyService} from './service';
-import {DI_TOKEN} from '<example-value>';
+import {DI_TOKEN} from './token';
 
 @Component({template: ''})
 export class MyComp {
   constructor(
     private service: MyService,
-    @Inject(DI_TOKEN) @Optional() readonly token: <example-value>,
+    @Inject(DI_TOKEN) @Optional() readonly token: string,
   ) {}
 }
 ```
@@ -40,7 +31,7 @@ export class MyComp {
 ```typescript
 import {Component, inject} from '@angular/core';
 import {MyService} from './service';
-import {DI_TOKEN} from '<example-value>';
+import {DI_TOKEN} from './token';
 
 @Component({template: ''})
 export class MyComp {
@@ -61,7 +52,7 @@ migrate the entire directory.
 ### `migrateAbstractClasses`
 
 Angular doesn't validate that parameters of abstract classes are injectable. This means that the
-migration can't reliably migrate them to `inject` without risking breakages which is why they're
+migration can't reliably migrate them to [`inject`](/api/core/inject) without risking breakages which is why they're
 disabled by default. Enable this option if you want abstract classes to be migrated, but note
 that you may have to **fix some breakages manually**.
 
@@ -118,7 +109,7 @@ because the code that depends on them likely already accounts for their nullabil
 
 ```typescript
 import {Component, Inject, Optional} from '@angular/core';
-import {TOKEN_ONE, TOKEN_TWO} from '<example-value>';
+import {TOKEN_ONE, TOKEN_TWO} from './token';
 
 @Component({template: ''})
 export class MyComp {
@@ -133,7 +124,7 @@ export class MyComp {
 
 ```typescript
 import {Component, inject} from '@angular/core';
-import {TOKEN_ONE, TOKEN_TWO} from '<example-value>';
+import {TOKEN_ONE, TOKEN_TWO} from './token';
 
 @Component({template: ''})
 export class MyComp {

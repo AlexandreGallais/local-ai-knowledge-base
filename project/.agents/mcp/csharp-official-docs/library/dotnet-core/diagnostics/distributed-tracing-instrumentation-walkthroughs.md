@@ -1,25 +1,24 @@
 ---
-title: "Add distributed tracing instrumentation - .NET (part 1 of 2)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/distributed-tracing-instrumentation-walkthroughs.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Add distributed tracing instrumentation - .NET
+description: A tutorial to instrument distributed traces in .NET applications
+ms.topic: tutorial
+ms.date: 06/05/2024
+ms.custom: sfi-image-nochange
 ---
 
 # Adding distributed tracing instrumentation
 
 **This article applies to: ✔️** .NET Core 2.1 and later versions **✔️** .NET Framework 4.5 and later versions
 
-.NET applications can be instrumented using the `System.Diagnostics.Activity` API to produce
+.NET applications can be instrumented using the <xref:System.Diagnostics.Activity?displayProperty=nameWithType> API to produce
 distributed tracing telemetry. Some instrumentation is built into standard .NET libraries, but you may want to add more to make
 your code more easily diagnosable. In this tutorial, you will add new custom distributed tracing instrumentation. See
-the collection tutorial to learn more about recording the telemetry
+[the collection tutorial](distributed-tracing-collection-walkthroughs.md) to learn more about recording the telemetry
 produced by this instrumentation.
 
 ## Prerequisites
 
-- .NET Core 2.1 SDK or a later version
+- [.NET Core 2.1 SDK](https://dotnet.microsoft.com/download/dotnet) or a later version
 
 ## Create initial app
 
@@ -30,15 +29,15 @@ dotnet new console
 ```
 
 Applications that target .NET 5 and later already have the necessary distributed tracing APIs included. For apps targeting older
-.NET versions, add the System.Diagnostics.DiagnosticSource NuGet package
+.NET versions, add the [System.Diagnostics.DiagnosticSource NuGet package](https://www.nuget.org/packages/System.Diagnostics.DiagnosticSource/)
 version 5 or greater. For libraries targeting netstandard, we recommend referencing the oldest version of the package which is still supported and contains the APIs your library needs.
 
 ```dotnetcli
 dotnet add package System.Diagnostics.DiagnosticSource
 ```
 
-Add the OpenTelemetry and
-OpenTelemetry.Exporter.Console NuGet packages, which will be used to collect the telemetry.
+Add the [OpenTelemetry](https://www.nuget.org/packages/OpenTelemetry/) and
+[OpenTelemetry.Exporter.Console](https://www.nuget.org/packages/OpenTelemetry.Exporter.Console/) NuGet packages, which will be used to collect the telemetry.
 
 ```dotnetcli
 dotnet add package OpenTelemetry
@@ -106,11 +105,11 @@ of .NET runtime. This ensures that libraries will run in a wide range of .NET ap
 of the app developer's preferences about which library or vendor to use for collecting
 telemetry.
 
-## Add basic <example-value>
+## Add basic instrumentation
 
 Applications and libraries add distributed tracing instrumentation using the
-`System.Diagnostics.ActivitySource` and
-`System.Diagnostics.Activity` classes.
+<xref:System.Diagnostics.ActivitySource?displayProperty=nameWithType> and
+<xref:System.Diagnostics.Activity?displayProperty=nameWithType> classes.
 
 ### ActivitySource
 
@@ -153,7 +152,7 @@ assembly that defines the ActivitySource, not the assembly whose code is being i
 - The version parameter is optional. We recommend that you provide the version in case you release multiple
 versions of the library and make changes to the instrumented telemetry.
 
-> **Note:**
+> [!NOTE]
 > OpenTelemetry uses alternate terms 'Tracer' and 'Span'. In .NET 'ActivitySource' is the implementation
 > of Tracer and Activity is the implementation of 'Span'. .NET's Activity type long pre-dates
 > the OpenTelemetry specification and the original .NET naming has been preserved for
@@ -191,13 +190,13 @@ Resource associated with Activity:
 
 #### Notes
 
-- `System.Diagnostics.ActivitySource.StartActivity*` creates and starts
+- <xref:System.Diagnostics.ActivitySource.StartActivity*?displayProperty=nameWithType> creates and starts
 the activity at the same time. The listed code pattern is using the `using` block, which automatically disposes
 the created Activity object after executing the block. Disposing the Activity object will stop it so the code
-doesn't need to explicitly call `System.Diagnostics.Activity.Stop`.
+doesn't need to explicitly call <xref:System.Diagnostics.Activity.Stop?displayProperty=nameWithType>.
 That simplifies the coding pattern.
 
-- `System.Diagnostics.ActivitySource.StartActivity*` internally determines if there are any listeners recording the Activity. If there are no registered listeners or there are listeners that are not interested, `StartActivity()` will return `null` and avoid creating the Activity object. This is a performance optimization so that the code pattern can still be used in functions that are called frequently.
+- <xref:System.Diagnostics.ActivitySource.StartActivity*?displayProperty=nameWithType> internally determines if there are any listeners recording the Activity. If there are no registered listeners or there are listeners that are not interested, `StartActivity()` will return `null` and avoid creating the Activity object. This is a performance optimization so that the code pattern can still be used in functions that are called frequently.
 
 ## Optional: Populate tags
 
@@ -235,9 +234,9 @@ Example work done
 
 ### Best practices
 
-- As mentioned above, `activity` returned by `System.Diagnostics.ActivitySource.StartActivity*`
+- As mentioned above, `activity` returned by <xref:System.Diagnostics.ActivitySource.StartActivity*?displayProperty=nameWithType>
 may be null. The null-coalescing operator `?.` in C# is a convenient short-hand to only invoke
-`System.Diagnostics.Activity.SetTag*` if `activity` is not null. The behavior is identical to
+<xref:System.Diagnostics.Activity.SetTag*?displayProperty=nameWithType> if `activity` is not null. The behavior is identical to
 writing:
 
 ```csharp
@@ -248,11 +247,11 @@ if(activity != null)
 ```
 
 - OpenTelemetry provides a set of recommended
-conventions
+[conventions](https://github.com/open-telemetry/semantic-conventions/blob/main/docs/general/trace.md)
 for setting Tags on Activities that represent common types of application work.
 
 - If you're instrumenting functions with high-performance requirements,
-`System.Diagnostics.Activity.IsAllDataRequested` is a hint that indicates whether any
+<xref:System.Diagnostics.Activity.IsAllDataRequested?displayProperty=nameWithType> is a hint that indicates whether any
 of the code listening to Activities intends to read auxiliary information such as Tags. If no listener will read it, then there
 is no need for the instrumented code to spend CPU cycles populating it. For simplicity, this sample doesn't apply that
 optimization.
@@ -301,7 +300,7 @@ Example work done
 
 - Events are stored in an in-memory list until they can be transmitted which makes this mechanism only suitable for
 recording a modest number of events. For a large or unbounded volume of events, it's better to use a logging API focused on this task,
-such as ILogger. ILogger also ensures
+such as [ILogger](/aspnet/core/fundamentals/logging/). ILogger also ensures
 that the logging information will be available regardless whether the app developer opts to use distributed tracing.
 ILogger supports automatically capturing the active Activity IDs so messages logged via that API can still be correlated
 with the distributed trace.
@@ -309,10 +308,10 @@ with the distributed trace.
 ## Optional: Add status
 
 OpenTelemetry allows each Activity to report a
-Status
+[Status](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/api.md#set-status)
 that represents the pass/fail result of the work. .NET has a strongly-typed API for this purpose:
 
-The `System.Diagnostics.ActivityStatusCode` values are represented as either, `Unset`, `Ok`, and `Error`.
+The <xref:System.Diagnostics.ActivityStatusCode> values are represented as either, `Unset`, `Ok`, and `Error`.
 
 Update DoSomeWork() to set status:
 
@@ -406,17 +405,48 @@ Example work done
 
 Notice that both StepOne and StepTwo include a ParentId that refers to SomeWork. The console is
 not a great visualization of nested trees of work, but many GUI viewers such as
-Zipkin
+[Zipkin](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Exporter.Zipkin/README.md)
 can show this as a Gantt chart:
 
-[](media/zipkin-nested-activities.jpg)
+[![Zipkin Gantt chart](media/zipkin-nested-activities.jpg)](media/zipkin-nested-activities.jpg)
 
 ## Optional: ActivityKind
 
-Activities have an `System.Diagnostics.Activity.Kind` property, which
+Activities have an <xref:System.Diagnostics.Activity.Kind?displayProperty=nameWithType> property, which
 describes the relationship between the Activity, its parent, and its children. By default, all new Activities are
-set to `System.Diagnostics.ActivityKind.Internal`, which is appropriate for Activities that are an
+set to <xref:System.Diagnostics.ActivityKind.Internal>, which is appropriate for Activities that are an
 internal operation within an application with no remote parent or children. Other kinds can be set using the
 kind parameter on
-`System.Diagnostics.ActivitySource.StartActivity*`. For other options, see
-`System.Diagnostics.ActivityKind`.
+<xref:System.Diagnostics.ActivitySource.StartActivity*?displayProperty=nameWithType>. For other options, see
+<xref:System.Diagnostics.ActivityKind?displayProperty=nameWithType>.
+
+## Optional: Links
+
+When work occurs in batch processing systems, a single Activity might represent work on behalf of many
+different requests simultaneously, each of which has its own trace-id. Although Activity is restricted
+to have a single parent, it can link to additional trace-ids using
+<xref:System.Diagnostics.ActivityLink?displayProperty=nameWithType>. Each ActivityLink is
+populated with an <xref:System.Diagnostics.ActivityContext> that
+stores ID information about the Activity being linked to. ActivityContext can be retrieved from in-process
+Activity objects using <xref:System.Diagnostics.Activity.Context?displayProperty=nameWithType> or
+it can be parsed from serialized ID information using
+<xref:System.Diagnostics.ActivityContext.Parse(System.String,System.String)?displayProperty=nameWithType>.
+
+```csharp
+void DoBatchWork(ActivityContext[] requestContexts)
+{
+    // Assume each context in requestContexts encodes the trace-id that was sent with a request
+    using(Activity activity = s_source.StartActivity(name: "BigBatchOfWork",
+                                                     kind: ActivityKind.Internal,
+                                                     parentContext: default,
+                                                     links: requestContexts.Select(ctx => new ActivityLink(ctx))))
+    {
+        // do the batch of work here
+    }
+}
+```
+
+Unlike events and Tags that can be added on-demand, links must be added during `StartActivity()` and are immutable afterwards.
+
+> [!IMPORTANT]
+> As per the [OpenTelemetry specification](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/sdk.md#span-limits), the suggested limit for the number of links is 128. However, it's important to note that this limit is not enforced.

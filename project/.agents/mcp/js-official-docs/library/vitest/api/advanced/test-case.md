@@ -1,15 +1,6 @@
----
-title: "TestCase"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/api/advanced/test-case.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # TestCase
 
-The `TestCase` class represents a single test. This class is only available in the main thread. Refer to the "Runner API" if you are working with runtime tasks.
+The `TestCase` class represents a single test. This class is only available in the main thread. Refer to the ["Runner API"](/api/advanced/runner#tasks) if you are working with runtime tasks.
 
 The `TestCase` instance always has a `type` property with the value of `test`. You can use it to distinguish between different task types:
 
@@ -21,11 +12,11 @@ if (task.type === 'test') {
 
 ## project
 
-This references the `TestProject` that the test belongs to.
+This references the [`TestProject`](/api/advanced/test-project) that the test belongs to.
 
 ## module
 
-This is a direct reference to the `TestModule` where the test is defined.
+This is a direct reference to the [`TestModule`](/api/advanced/test-module) where the test is defined.
 
 ## name
 
@@ -58,7 +49,7 @@ describe('the validation logic', () => {
 
 ## id
 
-This is test's unique identifier. This ID is deterministic and will be the same for the same test across multiple runs. The ID is based on the project name, module ID and test order.
+This is test's unique identifier. This ID is deterministic and will be the same for the same test across multiple runs. The ID is based on the [project](/api/advanced/test-project) name, module ID and test order.
 
 The ID looks like this:
 
@@ -69,7 +60,7 @@ The ID looks like this:
              ^ test index
 ```
 
-**Tip:**
+::: tip
 You can generate file hash with `generateFileHash` function from `vitest/node` which is available since Vitest 3:
 
 ```ts
@@ -81,16 +72,19 @@ const hash = generateFileHash(
 )
 ```
 
-**Danger:**
+:::
+
+::: danger
 Don't try to parse the ID. It can have a minus at the start: `-1223128da3_0_0_0`.
+:::
 
 ## location
 
-The location in the module where the test was defined. Locations are collected only if `includeTaskLocation` is enabled in the config. Note that this option is automatically enabled if `--reporter=html`, `--ui` or `--browser` flags are used.
+The location in the module where the test was defined. Locations are collected only if [`includeTaskLocation`](/config/includetasklocation) is enabled in the config. Note that this option is automatically enabled if `--reporter=html`, `--ui` or `--browser` flags are used.
 
 The location of this test will be equal to `{ line: 3, column: 1 }`:
 
-```ts
+```ts:line-numbers {3}
 import { test } from 'vitest'
 
 test('the validation works correctly', () => {
@@ -100,7 +94,7 @@ test('the validation works correctly', () => {
 
 ## parent
 
-Parent suite. If the test was called directly inside the module, the parent will be the module itself.
+Parent [suite](/api/advanced/test-suite). If the test was called directly inside the [module](/api/advanced/test-module), the parent will be the module itself.
 
 ## options
 
@@ -122,7 +116,7 @@ The options that test was collected with.
 
 ## tags <Version>4.1.0</Version> {#tags}
 
-Tags that were implicitly or explicitly assigned to the test.
+[Tags](/guide/test-tags) that were implicitly or explicitly assigned to the test.
 
 ## ok
 
@@ -138,9 +132,9 @@ Checks if the test did not fail the suite. If the test is not finished yet or wa
 function meta(): TaskMeta
 ```
 
-Custom metadata that was attached to the test during its execution. The meta can be attached by assigning a property to the `ctx.task.meta` object during a test run:
+Custom [metadata](/api/advanced/metadata) that was attached to the test during its execution. The meta can be attached by assigning a property to the `ctx.task.meta` object during a test run:
 
-```ts
+```ts {3,6}
 import { test } from 'vitest'
 
 test('the validation works correctly', ({ task }) => {
@@ -156,7 +150,7 @@ If the test did not finish running yet, the meta will be an empty object, unless
 test('the validation works correctly', { meta: { decorated: true } })
 ```
 
-Since Vitest 4.1, Vitest inherits `meta` property defined on the suite.
+Since Vitest 4.1, Vitest inherits [`meta`](/api/advanced/test-suite#meta) property defined on the [suite](/api/advanced/test-suite).
 
 ## result
 
@@ -199,8 +193,9 @@ interface TestResultSkipped {
 }
 ```
 
-**Tip:**
+::: tip
 If the test was skipped because another test has `only` flag, the `options.mode` will be equal to `skip`.
+:::
 
 If the test failed, the return value will be `TestResultFailed`:
 
@@ -232,8 +227,9 @@ interface TestResultPassed {
 }
 ```
 
-**Warning:**
-Note that the test with `passed` state can still have errors attached - this can happen if `retry` was triggered at least once. Use `attempts()` to see which run produced each error.
+::: warning
+Note that the test with `passed` state can still have errors attached - this can happen if `retry` was triggered at least once. Use [`attempts()`](#attempts) to see which run produced each error.
+:::
 
 ## diagnostic
 
@@ -278,8 +274,9 @@ interface TestDiagnostic {
 }
 ```
 
-**Info:**
+::: info
 `diagnostic()` will return `undefined` if the test was not scheduled to run yet.
+:::
 
 ## attempts <Version>5.1.0</Version> {#attempts}
 
@@ -287,7 +284,7 @@ interface TestDiagnostic {
 function attempts(): ReadonlyArray<TestAttempt>
 ```
 
-Results of every run of the test, in execution order. A test runs more than once when `retry` or `repeats` is configured, and each run produces one entry. Unlike `result()`, which only reports the final outcome and merges errors from all runs, each attempt keeps its own state, errors and timing.
+Results of every run of the test, in execution order. A test runs more than once when [`retry`](/config/retry) or [`repeats`](/api/test#repeats) is configured, and each run produces one entry. Unlike `result()`, which only reports the final outcome and merges errors from all runs, each attempt keeps its own state, errors and timing.
 
 ```ts
 interface TestAttempt {
@@ -329,8 +326,9 @@ For example, a test with `retry: 2` that passes on its third run returns:
 ]
 ```
 
-**Info:**
+::: info
 `attempts()` returns an empty array if the test has not run yet.
+:::
 
 ## annotations
 
@@ -338,7 +336,7 @@ For example, a test with `retry: 2` that passes on its third run returns:
 function annotations(): ReadonlyArray<TestAnnotation>
 ```
 
-Test annotations added via the `task.annotate` API during the test execution.
+[Test annotations](/guide/test-annotations) added via the [`task.annotate`](/guide/test-context#annotate) API during the test execution.
 
 ## artifacts <Version type="experimental">4.0.11</Version> <Experimental /> {#artifacts}
 
@@ -346,7 +344,7 @@ Test annotations added via the `task.annotate` API during the test execution.
 function artifacts(): ReadonlyArray<TestArtifact>
 ```
 
-Test artifacts recorded via the `recordArtifact` API during the test execution.
+[Test artifacts](/api/advanced/artifacts) recorded via the `recordArtifact` API during the test execution.
 
 ## toTestSpecification <Version>4.1.0</Version> {#totestspecification}
 
@@ -354,7 +352,7 @@ Test artifacts recorded via the `recordArtifact` API during the test execution.
 function toTestSpecification(): TestSpecification
 ```
 
-Returns a new test specification that can be used to filter or run this specific test case.
+Returns a new [test specification](/api/advanced/test-specification) that can be used to filter or run this specific test case.
 
 ## logs <Version>5.0.0</Version> {#logs}
 

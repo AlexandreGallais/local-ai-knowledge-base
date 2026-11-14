@@ -1,12 +1,3 @@
----
-title: "Debugging tests"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/testing/debugging.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Debugging tests
 
 If your tests aren't working as you expect, you can debug them in both the default Node.js environment and in a real browser.
@@ -24,6 +15,6 @@ Debugging in the default Node.js environment is often the quickest way to diagno
 
 ## Debugging in a browser
 
-The same way you start a debugging session with in Node, you can use `ng test` with the `--debug` flag with Vitest and browser mode.
+The same way you start a debugging session with in Node, you can use `ng test` with the `--debug` flag with Vitest and [browser mode](/guide/testing/migrating-to-vitest#5-configure-browser-mode-optional).
 
 The test runner will start in debug mode and wait for you to open the browser devtools to debug the tests.

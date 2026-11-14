@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: `OutputType` no longer automatically set to WinExe"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/6.0/outputtype-not-set-automatically.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 6 where `OutputType` for WPF and Windows Forms projects is no longer automatically set to `WinExe`.
+ms.date: 08/17/2021
 ---
-
 # OutputType not changed from Exe to WinExe for Windows Forms and WPF projects
 
 In .NET 5, a change was made to automatically change `OutputType` from `Exe` to `WinExe` for WPF and Windows Forms apps. In .NET 6, we are reverting that change and `OutputType` will no longer be changed by the SDK.
@@ -31,13 +27,13 @@ If a project targeted .NET 5 or higher, `OutputType` was set to `Exe`, and `UseW
 
 ## Change category
 
-This change might affect *source compatibility*.
+This change might affect [*source compatibility*](../../categories.md#source-compatibility).
 
 ## Reason for change
 
-The .NET 5 change was intended to simplify .NET MAUI apps, so that `OutputType` wouldn't need to be conditioned on the target framework. However:
+The [.NET 5 change](../5.0/automatically-infer-winexe-output-type.md) was intended to simplify .NET MAUI apps, so that `OutputType` wouldn't need to be conditioned on the target framework. However:
 
-- Automatically inferring `OutputType` broke user expectations and frustrated developers. For more information, see dotnet/sdk#16563 and its linked issues.
+- Automatically inferring `OutputType` broke user expectations and frustrated developers. For more information, see [dotnet/sdk#16563](https://github.com/dotnet/sdk/issues/16563) and its linked issues.
 - .NET MAUI apps will use WinUI by default, not Windows Forms or WPF, so the automatic inference doesn't even apply to .NET MAUI apps.
 
 ## Recommended action
@@ -52,4 +48,4 @@ N/A
 
 ## See also
 
-- OutputType set to WinExe for WPF and WinForms apps
+- [OutputType set to WinExe for WPF and WinForms apps](../5.0/automatically-infer-winexe-output-type.md)

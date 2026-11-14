@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugRegisterSet::GetThreadContext Method"
 title: "ICorDebugRegisterSet::GetThreadContext Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugregisterset-getthreadcontext-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugRegisterSet.GetThreadContext"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugRegisterSet::GetThreadContext"
+helpviewer_keywords:
+  - "GetThreadContext method, ICorDebugRegisterSet interface [.NET debugging]"
+  - "ICorDebugRegisterSet::GetThreadContext method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugRegisterSet::GetThreadContext Method
 
 Gets the context of the current thread.
@@ -33,11 +42,11 @@ HRESULT GetThreadContext(
 
 The debugger should call this function instead of the Win32 `GetThreadContext` function, because the thread may be in a "hijacked" state where its context has been temporarily changed. The data returned is a Win32 `CONTEXT` structure for the current platform.
 
-For non-leaf frames, clients should check which registers are valid by using ICorDebugRegisterSet::GetRegistersAvailable.
+For non-leaf frames, clients should check which registers are valid by using [ICorDebugRegisterSet::GetRegistersAvailable](icordebugregisterset-getregistersavailable-method.md).
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -47,5 +56,5 @@ For non-leaf frames, clients should check which registers are valid by using ICo
 
 ## See also
 
-- ICorDebugRegisterSet Interface
-- ICorDebugRegisterSet2 Interface
+- [ICorDebugRegisterSet Interface](icordebugregisterset-interface.md)
+- [ICorDebugRegisterSet2 Interface](icordebugregisterset2-interface.md)

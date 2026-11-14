@@ -1,23 +1,24 @@
 ---
-title: "How to chain axis method calls - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/chain-axis-method-calls.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to chain axis method calls - LINQ to XML
+description: Learn how to use the XContainer.Elements and Extensions.Elements methods to find all elements of a specified name at a given depth in the tree.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to chain axis method calls (LINQ to XML)
 
 A common pattern that you will use in your code is to call an axis method, then call one of the extension method axes.
 
-There are two axes with the name of `Elements` that return a collection of elements: the `System.Xml.Linq.XContainer.Elements*` method and the `System.Xml.Linq.Extensions.Elements*` method. You can combine these two axes to find all elements of a specified name at a given depth in the tree.
+There are two axes with the name of `Elements` that return a collection of elements: the <xref:System.Xml.Linq.XContainer.Elements*?displayProperty=nameWithType> method and the <xref:System.Xml.Linq.Extensions.Elements*?displayProperty=nameWithType> method. You can combine these two axes to find all elements of a specified name at a given depth in the tree.
 
 ## Example: Retrieve all name elements
 
-This example uses `System.Xml.Linq.XContainer.Elements*` and `System.Xml.Linq.Extensions.Elements*` to retrieve all `Name` elements in all `Address` elements in all `PurchaseOrder` elements.
+This example uses <xref:System.Xml.Linq.XContainer.Elements*?displayProperty=nameWithType> and <xref:System.Xml.Linq.Extensions.Elements*?displayProperty=nameWithType> to retrieve all `Name` elements in all `Address` elements in all `PurchaseOrder` elements.
 
-This example uses XML document Sample XML file: Multiple purchase orders.
+This example uses XML document [Sample XML file: Multiple purchase orders](sample-xml-file-multiple-purchase-orders.md).
 
 ```csharp
 XElement purchaseOrders = XElement.Load("PurchaseOrders.xml");
@@ -52,7 +53,7 @@ This example produces the following output:
 <Name>Jessica Arnold</Name>
 ```
 
-This works because one of the implementations of the `Elements` axis is as an extension method on `System.Collections.Generic.IEnumerable`1` of `System.Xml.Linq.XContainer`. `System.Xml.Linq.XElement` derives from `System.Xml.Linq.XContainer`, so you can call the `System.Xml.Linq.Extensions.Elements*` method on the results of a call to the `System.Xml.Linq.XContainer.Elements*` method.
+This works because one of the implementations of the `Elements` axis is as an extension method on <xref:System.Collections.Generic.IEnumerable`1> of <xref:System.Xml.Linq.XContainer>. <xref:System.Xml.Linq.XElement> derives from <xref:System.Xml.Linq.XContainer>, so you can call the <xref:System.Xml.Linq.Extensions.Elements*?displayProperty=nameWithType> method on the results of a call to the <xref:System.Xml.Linq.XContainer.Elements*?displayProperty=nameWithType> method.
 
 ## Example: Retrieve all elements at a particular depth
 
@@ -80,7 +81,7 @@ Sometimes you want to retrieve all elements at a particular element depth when t
 </Root>
 ```
 
- To do this, you can use the `System.Xml.Linq.Extensions.Elements*` axis, as follows:
+ To do this, you can use the <xref:System.Xml.Linq.Extensions.Elements*?displayProperty=nameWithType> axis, as follows:
 
 ```csharp
 XElement root = XElement.Load("Irregular.xml");
@@ -109,9 +110,9 @@ This example produces the following output:
 
 ## Example: Retrieve elements for XML that's in a namespace
 
-The following example shows the same technique for XML that's in a namespace. For more information, see Namespaces overview.
+The following example shows the same technique for XML that's in a namespace. For more information, see [Namespaces overview](namespaces-overview.md).
 
-This example uses XML document Sample XML file: Multiple purchase orders in a namespace.
+This example uses XML document [Sample XML file: Multiple purchase orders in a namespace](sample-xml-file-multiple-purchase-orders-namespace.md).
 
 ```csharp
 XNamespace aw = "http://www.adventure-works.com";
@@ -155,4 +156,4 @@ This example produces the following output:
 
 ## See also
 
-- LINQ to XML axes overview
+- [LINQ to XML axes overview](linq-xml-axes-overview.md)

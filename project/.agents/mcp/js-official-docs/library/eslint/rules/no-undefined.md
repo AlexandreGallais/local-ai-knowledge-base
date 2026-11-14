@@ -1,13 +1,17 @@
 ---
-title: "no-undefined"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-undefined.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-undefined
+rule_type: suggestion
+related_rules:
+- no-undef-init
+- no-void
+- no-shadow-restricted-names
+- no-global-assign
+further_reading:
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined
+- https://javascriptweblog.wordpress.com/2010/08/16/understanding-undefined-and-preventing-referenceerrors/
+- https://es5.github.io/#x15.1.1.3
 ---
 
-# no-undefined
 
 The `undefined` variable in JavaScript is actually a property of the global object. As such, in ECMAScript 3 it was possible to overwrite the value of `undefined`. While ECMAScript 5 disallows overwriting `undefined`, it's still possible to shadow `undefined`, such as:
 
@@ -29,7 +33,7 @@ Because `undefined` can be overwritten or shadowed, reading `undefined` can give
 * Checking if a value is `undefined` should be done with `typeof`.
 * Using the `void` operator to generate the value of `undefined` if necessary.
 
-As an alternative, you can use the no-global-assign and no-shadow-restricted-names rules to prevent `undefined` from being shadowed or assigned a different value. This ensures that `undefined` will always hold its original, expected value.
+As an alternative, you can use the [no-global-assign](no-global-assign) and [no-shadow-restricted-names](no-shadow-restricted-names) rules to prevent `undefined` from being shadowed or assigned a different value. This ensures that `undefined` will always hold its original, expected value.
 
 ## Rule Details
 
@@ -37,7 +41,7 @@ This rule aims to eliminate the use of `undefined`, and as such, generates a war
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-undefined: "error"*/
@@ -57,9 +61,11 @@ function baz(undefined) {
 bar(undefined, "lorem");
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-undefined: "error"*/
@@ -76,6 +82,8 @@ global.undefined = "foo";
 
 bar(void 0, "lorem");
 ```
+
+:::
 
 ## Options
 

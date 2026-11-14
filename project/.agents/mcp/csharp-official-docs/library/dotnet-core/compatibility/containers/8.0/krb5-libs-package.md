@@ -1,12 +1,8 @@
 ---
 title: "Kerberos package removed from Alpine and Debian images"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/containers/8.0/krb5-libs-package.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in containers where the 'krb5-libs' package was removed from .NET container images.
+ms.date: 08/01/2023
 ---
-
 # Kerberos package removed from Alpine and Debian images
 
 Kerberos is no longer installed in .NET Alpine and Debian container images. Kerberos provides secure networking using the Kerberos protocol.
@@ -33,7 +29,7 @@ Prior to .NET 8, the Kerberos package was explicitly installed in all .NET conta
 
 ## Type of change
 
-This change can affect binary compatibility.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 
@@ -55,8 +51,8 @@ For Debian:
 RUN apt update && apt -y upgrade libkrb5-3
 ```
 
-For Ubuntu Chiseled, follow pattern to install additional slices.
+For Ubuntu Chiseled, follow [pattern to install additional slices](https://github.com/ubuntu-rocks/dotnet/issues/21).
 
 ## Affected APIs
 
-- `System.DirectoryServices.Protocols`
+- <xref:System.DirectoryServices.Protocols?displayProperty=fullName>

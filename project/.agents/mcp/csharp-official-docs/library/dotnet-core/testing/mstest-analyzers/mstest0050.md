@@ -1,12 +1,17 @@
 ---
 title: "MSTEST0050: Global test fixture should be valid"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0050.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0050: Global test fixture should be valid"
+ms.date: 11/05/2026
+f1_keywords:
+- MSTEST0050
+- GlobalTestFixtureShouldBeValidAnalyzer
+helpviewer_keywords:
+- GlobalTestFixtureShouldBeValidAnalyzer
+- MSTEST0050
+author: Evangelink
+ms.author: amauryleve
+ai-usage: ai-assisted
 ---
-
 # MSTEST0050: Global test fixture should be valid
 
 | Property                            | Value                                                                                    |
@@ -36,7 +41,7 @@ A global test fixture method (marked with `GlobalTestInitializeAttribute` or `Gl
 | The return type is `void`, `Task`, or `ValueTask`, and the method isn't `async void`. | MSTest must wait for setup or cleanup and observe failures before it proceeds with the current test's lifecycle. |
 | The declaring type is a public, non-generic class marked with `[TestClass]` or a derived attribute. | MSTest discovers global callbacks through a known test-class container. The class can be static, but doesn't have to be, because the callback itself doesn't require an instance. |
 
-For the callback order, see Global test-level lifecycle.
+For the callback order, see [Global test-level lifecycle](../unit-testing-mstest-writing-tests-lifecycle.md#global-test-level-lifecycle).
 
 ## How to fix violations
 

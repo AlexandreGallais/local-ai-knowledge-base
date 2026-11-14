@@ -1,23 +1,26 @@
 ---
-title: "Default Marshalling for Arrays (part 1 of 2)"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/native-interop/default-marshalling-for-arrays.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: "Default Marshalling for Arrays"
+description: Understand default marshalling for arrays. Review managed arrays, unmanaged arrays, passing array parameters to .NET code, and passing arrays to COM.
+ms.date: 07/08/2026
+ai-usage: ai-assisted
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "interop marshalling, arrays"
+  - "arrays, interop marshalling"
 ---
-
 # Default Marshalling for Arrays
 
 In an application consisting entirely of managed code, the common language runtime passes array types as In/Out parameters. In contrast, the interop marshaller passes an array as In parameters by default.
 
- With pinning optimization, a blittable array can appear to operate as an In/Out parameter when interacting with objects in the same apartment. However, if you later export the code to a type library used to generate the cross-machine proxy, and that library is used to marshal your calls across apartments, the calls can revert to true In parameter behavior.
+ With [pinning optimization](copying-and-pinning.md), a blittable array can appear to operate as an In/Out parameter when interacting with objects in the same apartment. However, if you later export the code to a type library used to generate the cross-machine proxy, and that library is used to marshal your calls across apartments, the calls can revert to true In parameter behavior.
 
  Arrays are complex by nature, and the distinctions between managed and unmanaged arrays warrant more information than other non-blittable types.
 
 ## Managed Arrays
 
- Managed array types can vary; however, the `System.Array` class is the base class of all array types. The **System.Array** class has properties for determining the rank, length, and lower and upper bounds of an array, as well as methods for accessing, sorting, searching, copying, and creating arrays.
+ Managed array types can vary; however, the <xref:System.Array?displayProperty=nameWithType> class is the base class of all array types. The **System.Array** class has properties for determining the rank, length, and lower and upper bounds of an array, as well as methods for accessing, sorting, searching, copying, and creating arrays.
 
  These array types are dynamic and do not have a corresponding static type defined in the base class library. It is convenient to think of each combination of element type and rank as a distinct type of array. Therefore, a one-dimensional array of integers is of a different type than a one-dimensional array of double types. Similarly a two-dimensional array of integers is different from a one-dimensional array of integers. The bounds of the array are not considered when comparing types.
 
@@ -39,14 +42,14 @@ In an application consisting entirely of managed code, the common language runti
 
 | Unmanaged type | Imported type |
 |----------------|---------------|
-|**SafeArray(** *Type* **)**|**ELEMENT_TYPE_SZARRAY** **\<** *ConvertedType* **>** Rank = 1, lower bound = 0. Size is known only if provided in the managed signature. Safe arrays that are not rank = 1 or lower bound = 0 cannot be marshalled as **SZARRAY**.|
-|*Type*  **[]**|**ELEMENT_TYPE_SZARRAY** **\<** *ConvertedType* **>** Rank = 1, lower bound = 0. Size is known only if provided in the managed signature.|
+|**SafeArray(** *Type* **)**|**ELEMENT_TYPE_SZARRAY** **\<** *ConvertedType* **>**<br /><br /> Rank = 1, lower bound = 0. Size is known only if provided in the managed signature. Safe arrays that are not rank = 1 or lower bound = 0 cannot be marshalled as **SZARRAY**.|
+|*Type*  **[]**|**ELEMENT_TYPE_SZARRAY** **\<** *ConvertedType* **>**<br /><br /> Rank = 1, lower bound = 0. Size is known only if provided in the managed signature.|
 
 ### Safe Arrays
 
- When a safe array is imported from a type library to a .NET assembly, the array is converted to a one-dimensional array of a known type (such as **int**). The same type conversion rules that apply to parameters also apply to array elements. For example, a safe array of `BSTR` types becomes a managed array of strings and a safe array of variants becomes a managed array of objects. The `SAFEARRAY` element type is captured from the type library and saved in the `SAFEARRAY` value of the `System.Runtime.InteropServices.UnmanagedType` enumeration.
+ When a safe array is imported from a type library to a .NET assembly, the array is converted to a one-dimensional array of a known type (such as **int**). The same type conversion rules that apply to parameters also apply to array elements. For example, a safe array of `BSTR` types becomes a managed array of strings and a safe array of variants becomes a managed array of objects. The `SAFEARRAY` element type is captured from the type library and saved in the `SAFEARRAY` value of the <xref:System.Runtime.InteropServices.UnmanagedType> enumeration.
 
- Because the rank and bounds of the safe array cannot be determined from the type library, the rank is assumed to equal 1 and the lower bound is assumed to equal 0. The rank and bounds must be defined in the managed signature produced by the Type Library Importer (Tlbimp.exe). If the rank passed to the method at runtime differs, a `System.Runtime.InteropServices.SafeArrayRankMismatchException` is thrown. If the type of the array passed at runtime differs, a `System.Runtime.InteropServices.SafeArrayTypeMismatchException` is thrown. The following example shows safe arrays in managed and unmanaged code.
+ Because the rank and bounds of the safe array cannot be determined from the type library, the rank is assumed to equal 1 and the lower bound is assumed to equal 0. The rank and bounds must be defined in the managed signature produced by the [Type Library Importer (Tlbimp.exe)](../../framework/tools/tlbimp-exe-type-library-importer.md). If the rank passed to the method at runtime differs, a <xref:System.Runtime.InteropServices.SafeArrayRankMismatchException> is thrown. If the type of the array passed at runtime differs, a <xref:System.Runtime.InteropServices.SafeArrayTypeMismatchException> is thrown. The following example shows safe arrays in managed and unmanaged code.
 
  **Unmanaged signature**
 
@@ -75,13 +78,13 @@ void New3([MarshalAs(UnmanagedType.SafeArray, SafeArraySubType=VT_BSTR)]
    ref String[] ar);
 ```
 
- Multidimensional, or nonzero-bound safe arrays, can be marshalled into managed code if the method signature produced by Tlbimp.exe is modified to indicate an element type of `ELEMENT_TYPE_ARRAY` instead of **ELEMENT_TYPE_SZARRAY**. Alternatively, you can use the **/sysarray** switch with Tlbimp.exe to import all arrays as `System.Array` objects. In cases where the array being passed is known to be multidimensional, you can edit the common intermediate language (CIL) code produced by Tlbimp.exe and then recompile it. For details about how to modify CIL code, see Customizing Runtime Callable Wrappers.
+ Multidimensional, or nonzero-bound safe arrays, can be marshalled into managed code if the method signature produced by Tlbimp.exe is modified to indicate an element type of `ELEMENT_TYPE_ARRAY` instead of **ELEMENT_TYPE_SZARRAY**. Alternatively, you can use the **/sysarray** switch with Tlbimp.exe to import all arrays as <xref:System.Array?displayProperty=nameWithType> objects. In cases where the array being passed is known to be multidimensional, you can edit the common intermediate language (CIL) code produced by Tlbimp.exe and then recompile it. For details about how to modify CIL code, see [Customizing Runtime Callable Wrappers](/previous-versions/dotnet/netframework-4.0/e753eftz(v=vs.100)).
 
 ### C-Style Arrays
 
  When a C-style array is imported from a type library to a .NET assembly, the array is converted to **ELEMENT_TYPE_SZARRAY**.
 
- The array element type is determined from the type library and preserved during the import. The same conversion rules that apply to parameters also apply to array elements. For example, an array of `LPStr` types becomes an array of `String` types. Tlbimp.exe captures the array element type and applies the `System.Runtime.InteropServices.MarshalAsAttribute` attribute to the parameter.
+ The array element type is determined from the type library and preserved during the import. The same conversion rules that apply to parameters also apply to array elements. For example, an array of `LPStr` types becomes an array of `String` types. Tlbimp.exe captures the array element type and applies the <xref:System.Runtime.InteropServices.MarshalAsAttribute> attribute to the parameter.
 
  The array rank is assumed to equal 1. If the rank is greater than 1, the array is marshalled as a one-dimensional array in column-major order. The lower bound always equals 0.
 
@@ -140,7 +143,7 @@ void New2(ref double ar);
 void New3(ref String ar);
 ```
 
- You can provide the marshaller with the array size by editing the common intermediate language (CIL) code produced by Tlbimp.exe and then recompiling it. For details about how to modify CIL code, see Customizing Runtime Callable Wrappers. To indicate the number of elements in the array, apply the `System.Runtime.InteropServices.MarshalAsAttribute` type to the array parameter of the managed method definition in one of the following ways:
+ You can provide the marshaller with the array size by editing the common intermediate language (CIL) code produced by Tlbimp.exe and then recompiling it. For details about how to modify CIL code, see [Customizing Runtime Callable Wrappers](/previous-versions/dotnet/netframework-4.0/e753eftz(v=vs.100)). To indicate the number of elements in the array, apply the <xref:System.Runtime.InteropServices.MarshalAsAttribute> type to the array parameter of the managed method definition in one of the following ways:
 
 - Identify another parameter that contains the number of elements in the array. The parameters are identified by position, starting with the first parameter as number 0.
 
@@ -170,7 +173,200 @@ void New3(ref String ar);
 
  When marshalling arrays from unmanaged code to managed code, the marshaller checks the `MarshalAsAttribute` associated with the parameter to determine the array size. If the array size is not specified, only one element is marshalled.
 
-> **Note:**
+> [!NOTE]
 > The `MarshalAsAttribute` has no effect on marshalling managed arrays to unmanaged code. In that direction, the array size is determined by examination. There is no way to marshal a subset of a managed array.
 
  The interop marshaller uses the `CoTaskMemAlloc` and `CoTaskMemFree` methods on Windows or `malloc` and `free` methods on other operating systems to allocate and retrieve memory. Memory allocation performed by unmanaged code must also use these methods.
+
+## Passing Arrays to COM
+
+ All managed array types can be passed to unmanaged code from managed code. Depending on the managed type and the attributes applied to it, the array can be accessed as a safe array or a C-style array, as shown in the following table.
+
+|Managed array type|Exported as|
+|------------------------|-----------------|
+|**ELEMENT_TYPE_SZARRAY** **\<** *type* **>**|<xref:System.Runtime.InteropServices.UnmanagedType> **.SafeArray(** *type* **)**<br /><br /> **UnmanagedType.LPArray**<br /><br /> Type is provided in the signature. Rank is always 1, lower bound is always 0. Size is always known at runtime.|
+|**ELEMENT_TYPE_ARRAY** **\<** *type* **>** **\<** *rank* **>**[**\<** *bounds* **>**]|**UnmanagedType.SafeArray(** *type* **)**<br /><br /> **UnmanagedType.LPArray**<br /><br /> Type, rank, bounds are provided in the signature. Size is always known at runtime.|
+|**ELEMENT_TYPE_CLASS** **\<**<xref:System.Array?displayProperty=nameWithType>**>**|**UT_Interface**<br /><br /> **UnmanagedType.SafeArray(** *type* **)**<br /><br /> Type, rank, bounds, and size are always known at runtime.|
+
+ There is a limitation in OLE Automation relating to arrays of structures that contain LPSTR or LPWSTR.  Therefore, `String` fields have to be marshalled as **UnmanagedType.BSTR**. Otherwise, an exception will be thrown.
+
+### ELEMENT_TYPE_SZARRAY
+
+ When a method containing an `ELEMENT_TYPE_SZARRAY` parameter (one-dimensional array) is exported from a .NET assembly to a type library, the array parameter is converted to a `SAFEARRAY` of a given type. The same conversion rules apply to the array element types. The contents of the managed array are automatically copied from managed memory into the **SAFEARRAY**. For example:
+
+#### Managed signature
+
+```vb
+Sub [New](ar() As Long)
+Sub [New](ar() As String)
+```
+
+```csharp
+void New(long[] ar );
+void New(String[] ar );
+```
+
+#### Unmanaged signature
+
+```cpp
+HRESULT New([in] SAFEARRAY( long ) ar);
+HRESULT New([in] SAFEARRAY( BSTR ) ar);
+```
+
+ The rank of the safe arrays is always 1 and the lower bound is always 0. The size is determined at runtime by the size of the managed array being passed.
+
+ The array can also be marshalled as a C-style array by using the <xref:System.Runtime.InteropServices.MarshalAsAttribute> attribute. For example:
+
+#### Managed signature
+
+```vb
+Sub [New](<MarshalAs(UnmanagedType.LPArray, SizeParamIndex:=1)> _
+   ar() As Long, size as Integer)
+Sub [New](<MarshalAs(UnmanagedType.LPArray, SizeParamIndex:=1)> _
+   ar() As String, size as Integer)
+Sub [New](<MarshalAs(UnmanagedType.LPArray, _
+   ArraySubType= UnmanagedType.LPStr, SizeParamIndex:=1)> _
+   ar() As String, size as Integer)
+```
+
+```csharp
+void New([MarshalAs(UnmanagedType.LPArray, SizeParamIndex=1)]
+   long [] ar, int size );
+void New([MarshalAs(UnmanagedType.LPArray, SizeParamIndex=1)]
+   String [] ar, int size );
+void New([MarshalAs(UnmanagedType.LPArray, ArraySubType=
+   UnmanagedType.LPStr, SizeParamIndex=1)]
+   String [] ar, int size );
+```
+
+#### Unmanaged signature
+
+```cpp
+HRESULT New(long ar[]);
+HRESULT New(BSTR ar[]);
+HRESULT New(LPStr ar[]);
+```
+
+ Although the marshaller has the length information needed to marshal the array, the array length is usually passed as a separate argument to convey the length to the callee.
+
+### ELEMENT_TYPE_ARRAY
+
+ When a method containing an `ELEMENT_TYPE_ARRAY` parameter is exported from a .NET assembly to a type library, the array parameter is converted to a `SAFEARRAY` of a given type. The contents of the managed array are automatically copied from managed memory into the **SAFEARRAY**. For example:
+
+#### Managed signature
+
+```vb
+Sub [New](ar(,) As Long)
+Sub [New](ar(,) As String)
+```
+
+```csharp
+void New( long [,] ar );
+void New( String [,] ar );
+```
+
+#### Unmanaged signature
+
+```cpp
+HRESULT New([in] SAFEARRAY( long ) ar);
+HRESULT New([in] SAFEARRAY( BSTR ) ar);
+```
+
+ The rank, size, and bounds of the safe arrays are determined at runtime by the characteristics of the managed array.
+
+ The array can also be marshalled as a C-style array by applying the <xref:System.Runtime.InteropServices.MarshalAsAttribute> attribute. For example:
+
+#### Managed signature
+
+```vb
+Sub [New](<MarshalAs(UnmanagedType.LPARRAY, SizeParamIndex:=1)> _
+   ar(,) As Long, size As Integer)
+Sub [New](<MarshalAs(UnmanagedType.LPARRAY, _
+   ArraySubType:=UnmanagedType.LPStr, SizeParamIndex:=1)> _
+   ar(,) As String, size As Integer)
+```
+
+```csharp
+void New([MarshalAs(UnmanagedType.LPARRAY, SizeParamIndex=1)]
+   long [,] ar, int size );
+void New([MarshalAs(UnmanagedType.LPARRAY,
+   ArraySubType= UnmanagedType.LPStr, SizeParamIndex=1)]
+   String [,] ar, int size );
+```
+
+#### Unmanaged signature
+
+```cpp
+HRESULT New(long ar[]);
+HRESULT New(LPStr ar[]);
+```
+
+ Nested arrays cannot be marshalled. For example, the following signature generates an error when exported with the [Type Library Exporter (Tlbexp.exe)](../../framework/tools/tlbexp-exe-type-library-exporter.md).
+
+#### Managed signature
+
+```vb
+Sub [New](ar()()() As Long)
+```
+
+```csharp
+void New(long [][][] ar );
+```
+
+### ELEMENT_TYPE_CLASS \<System.Array>
+
+ When a method containing a <xref:System.Array?displayProperty=nameWithType> parameter is exported from a .NET assembly to a type library, the array parameter is converted to an `_Array` interface. The contents of the managed array are accessible only through the methods and properties of the `_Array` interface. **System.Array** can also be marshalled as a `SAFEARRAY` by using the <xref:System.Runtime.InteropServices.MarshalAsAttribute> attribute. When marshalled as a safe array, the array elements are marshalled as variants. For example:
+
+#### Managed signature
+
+```vb
+Sub New1( ar As System.Array )
+Sub New2( <MarshalAs(UnmanagedType.SafeArray)> ar As System.Array )
+```
+
+```csharp
+void New1( System.Array ar );
+void New2( [MarshalAs(UnmanagedType.SafeArray)] System.Array ar );
+```
+
+#### Unmanaged signature
+
+```cpp
+HRESULT New([in] _Array *ar);
+HRESULT New([in] SAFEARRAY(VARIANT) ar);
+```
+
+### Arrays within Structures
+
+ Unmanaged structures can contain embedded arrays. By default, these embedded array fields are marshalled as a SAFEARRAY. In the following example, `s1` is an embedded array that is allocated directly within the structure itself.
+
+#### Unmanaged representation
+
+```cpp
+struct MyStruct {
+    short s1[128];
+}
+```
+
+ Arrays can be marshalled as <xref:System.Runtime.InteropServices.UnmanagedType>, which requires you to set the <xref:System.Runtime.InteropServices.MarshalAsAttribute> field. The size can be set only as a constant. The following code shows the corresponding managed definition of `MyStruct`.
+
+```vb
+Public Structure <StructLayout(LayoutKind.Sequential)> MyStruct
+   Public <MarshalAs(UnmanagedType.ByValArray, SizeConst := 128)> _
+     s1() As Short
+End Structure
+```
+
+```csharp
+[StructLayout(LayoutKind.Sequential)]
+public struct MyStruct {
+   [MarshalAs(UnmanagedType.ByValArray, SizeConst=128)] public short[] s1;
+}
+```
+
+## See also
+
+- [Default Marshalling Behavior](default-marshalling-behavior.md)
+- [Blittable and Non-Blittable Types](blittable-and-non-blittable-types.md)
+- [Directional Attributes](/previous-versions/dotnet/netframework-4.0/77e6taeh(v=vs.100))
+- [Copying and Pinning](copying-and-pinning.md)

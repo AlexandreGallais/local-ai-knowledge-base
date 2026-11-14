@@ -1,15 +1,8 @@
----
-title: "std::os::linux::fs"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/os/linux/fs.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::os::linux::fs
 
-Linux-specific extensions to primitives in the `std::fs` module.
+Linux-specific extensions to primitives in the [`std::fs`] module.
+
+[`std::fs`]: crate::fs
 
 ## trait MetadataExt
 
@@ -17,7 +10,9 @@ Linux-specific extensions to primitives in the `std::fs` module.
 pub trait MetadataExt
 ```
 
-OS-specific extensions to `fs::Metadata`.
+OS-specific extensions to [`fs::Metadata`].
+
+[`fs::Metadata`]: crate::fs::Metadata
 
 ## MetadataExt::as_raw_stat
 
@@ -34,7 +29,7 @@ fn main() -> io::Result<()> {
     let stat = meta.as_raw_stat();
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::st_dev
 
@@ -51,7 +46,7 @@ fn main() -> io::Result<()> {
     println!("{}", meta.st_dev());
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::st_ino
 
@@ -68,7 +63,7 @@ fn main() -> io::Result<()> {
     println!("{}", meta.st_ino());
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::st_mode
 
@@ -85,7 +80,7 @@ fn main() -> io::Result<()> {
     println!("{}", meta.st_mode());
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::st_nlink
 
@@ -102,7 +97,7 @@ fn main() -> io::Result<()> {
     println!("{}", meta.st_nlink());
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::st_uid
 
@@ -119,7 +114,7 @@ fn main() -> io::Result<()> {
     println!("{}", meta.st_uid());
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::st_gid
 
@@ -136,7 +131,7 @@ fn main() -> io::Result<()> {
     println!("{}", meta.st_gid());
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::st_rdev
 
@@ -153,7 +148,7 @@ fn main() -> io::Result<()> {
     println!("{}", meta.st_rdev());
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::st_size
 
@@ -170,7 +165,7 @@ fn main() -> io::Result<()> {
     println!("{}", meta.st_size());
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::st_atime
 
@@ -187,7 +182,7 @@ fn main() -> io::Result<()> {
     println!("{}", meta.st_atime());
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::st_atime_nsec
 
@@ -204,7 +199,7 @@ fn main() -> io::Result<()> {
     println!("{}", meta.st_atime_nsec());
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::st_mtime
 
@@ -221,7 +216,7 @@ fn main() -> io::Result<()> {
     println!("{}", meta.st_mtime());
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::st_mtime_nsec
 
@@ -238,7 +233,7 @@ fn main() -> io::Result<()> {
     println!("{}", meta.st_mtime_nsec());
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::st_ctime
 
@@ -255,7 +250,7 @@ fn main() -> io::Result<()> {
     println!("{}", meta.st_ctime());
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::st_ctime_nsec
 
@@ -272,7 +267,7 @@ fn main() -> io::Result<()> {
     println!("{}", meta.st_ctime_nsec());
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::st_blksize
 
@@ -289,7 +284,7 @@ fn main() -> io::Result<()> {
     println!("{}", meta.st_blksize());
     Ok(())
 }
-```rust
+```
 
 ## MetadataExt::st_blocks
 
@@ -306,4 +301,4 @@ fn main() -> io::Result<()> {
     println!("{}", meta.st_blocks());
     Ok(())
 }
-```rust
+```

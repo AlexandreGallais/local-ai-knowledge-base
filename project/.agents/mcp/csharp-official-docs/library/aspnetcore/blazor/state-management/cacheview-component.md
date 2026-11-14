@@ -1,13 +1,13 @@
 ---
-title: "ASP.NET Core Blazor CacheView component (part 1 of 2)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/state-management/cacheview-component.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core Blazor CacheView component
+ai-usage: ai-assisted
+description: Learn how to use the CacheView component to cache the rendered output of a Razor component subtree during static server-side rendering (static SSR).
+monikerRange: '>= aspnetcore-11.0'
+ms.date: 10/20/2026
 ---
-
 # ASP.NET Core Blazor `CacheView` component
+
+<!-- UPDATE 11.0 - Edit this new article -->
 
 The `CacheView` component caches the rendered output of a Razor component subtree during static server-side rendering (static SSR). On a cache hit, cached markup is replayed without instantiating or running the lifecycle of the child components that were included in the cached output.
 
@@ -37,7 +37,7 @@ For example, every `CacheView` produced by this loop has the same position in th
 }
 ```
 
-The instances therefore resolve to the same key <example-value> the request, and `CacheView` throws an `InvalidOperationException`. Assign a unique `CacheKey` to each iteration, as demonstrated by the CacheView E2E tests:
+The instances therefore resolve to the same key during the request, and `CacheView` throws an `InvalidOperationException`. Assign a unique `CacheKey` to each iteration, as demonstrated by the CacheView E2E tests:
 
 ```razor
 @for (var i = 0; i < 3; i++)
@@ -54,7 +54,7 @@ Each iteration now creates and reuses an independent cache entry.
 
 The default tree-position key is computed from the immediate parent component type and sequence number, not the full ancestor chain. Multiple `CacheView` instances with the same immediate parent component, such as `<ErrorBoundary>` or a custom wrapper component, and the same position in its render tree produce the same tree-position key. Unless `VaryBy*` parameters, such as `VaryByRoute`, already differentiate the calculated cache key, the instances resolve to the same cache key:
 
-* Within the same request (on the same page), `CacheView` throws an `System.InvalidOperationException` (`Multiple CacheView components resolved to the same cache key`).
+* Within the same request (on the same page), `CacheView` throws an <xref:System.InvalidOperationException> (`Multiple CacheView components resolved to the same cache key`).
 * Across different pages or requests, no exception is thrown, and the instances silently share the same cache entry.
 
 When the calculated keys would otherwise be the same, set `CacheKey` to distinguish between them.
@@ -103,7 +103,7 @@ Here, `currentPermission` is the current permission value used by the child cont
 
 Without a matching vary-by parameter, requests with different values share the same cached output.
 
-If a `<form>` or `Microsoft.AspNetCore.Components.Forms.EditForm` without an explicit `action` attribute is rendered inside a `CacheView`, its automatically generated `action` URL, including the query string, is cached with the markup. Configure `VaryByQuery` on the `CacheView` so that requests with different query strings don't share a cached form `action`.
+If a `<form>` or <xref:Microsoft.AspNetCore.Components.Forms.EditForm> without an explicit `action` attribute is rendered inside a `CacheView`, its [automatically generated `action` URL](../forms/index.md#handle-form-submission), including the query string, is cached with the markup. Configure `VaryByQuery` on the `CacheView` so that requests with different query strings don't share a cached form `action`.
 
 ## Expiration and cache storage
 
@@ -251,3 +251,114 @@ Built-in components use these policies:
 | Antiforgery tokens, `HeadOutlet`, interactive render mode boundaries, and streaming children | Render fresh on every request while surrounding content remains cached. |
 
 When `CacheBehavior.Throw` rejects a component, the exception identifies the component and either lists the required vary-by dimensions or directs the developer to move the component outside the `CacheView`.
+
+## Limitations
+
+### Request and streaming rendering restrictions
+
+`CacheView` only caches static SSR output for `GET` requests. Caching is skipped for other HTTP methods or interactive renders.
+
+A `CacheView` rendered inside a streaming rendering subtree also isn't cached. However, a streaming child inside a `CacheView` is supported: the streaming child renders fresh on each request while the surrounding content is cached.
+
+### Nested cache views
+
+A `CacheView` can't be nested inside another `CacheView`. The inner output would become part of the outer cache entry, which could freeze per-request content such as antiforgery tokens, authentication-dependent output, or interactive component markers.
+
+Move the inner `CacheView` outside the outer cached subtree.
+
+### Live component parameters are captured once
+
+Components marked with `CacheBehavior.Rerender` run their lifecycle on every request, but their parameter values are captured when the cache entry is created and replayed unchanged on cache hits.
+
+For example, this live component receives the current user's name as a parameter:
+
+```razor
+@attribute [CacheBehavior(CacheBehavior.Rerender)]
+
+<p>Welcome, @UserName!</p>
+
+@code {
+    [Parameter]
+    public string? UserName { get; set; }
+}
+```
+
+The following usage is unsafe:
+
+```razor
+<CacheView>
+    <UserGreeting UserName="@CurrentUserName" />
+</CacheView>
+
+@code {
+    [CascadingParameter]
+    private HttpContext? HttpContext { get; set; }
+
+    private string? CurrentUserName => HttpContext?.User.Identity?.Name;
+}
+```
+
+If Alice creates the cache entry, `"Alice"` is captured as the `UserName` parameter. When Bob requests the page, `UserGreeting` runs its lifecycle again, but it receives the captured `"Alice"` value. Vary the cache by user so that each identity has a separate entry:
+
+```razor
+<CacheView VaryByUser="true">
+    <UserGreeting UserName="@CurrentUserName" />
+</CacheView>
+```
+
+Alternatively, move `UserGreeting` outside the `CacheView`.
+
+### Live components can't have render fragment parameters
+
+A live component can't have a `RenderFragment` or `RenderFragment<T>` parameter, including `ChildContent`. The parameter would capture content and references from the request that created the cache entry and couldn't be safely replayed on later requests.
+
+For example, the following live component exposes a `ChildContent` parameter:
+
+```razor
+@attribute [CacheBehavior(CacheBehavior.Rerender)]
+
+<div class="current-request-panel">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}
+```
+
+Using the component inside a `CacheView` isn't supported:
+
+```razor
+<CacheView>
+    <CurrentRequestPanel>
+        <p>Content for @DateTimeOffset.Now</p>
+    </CurrentRequestPanel>
+</CacheView>
+```
+
+`CacheView` throws an `InvalidOperationException` instead of creating the cache entry. Remove the `ChildContent` parameter, move `CurrentRequestPanel` outside the `CacheView`, or introduce a live wrapper without render fragment parameters.
+
+For example, the wrapper can render `CurrentRequestPanel` and its child content internally:
+
+```razor
+@attribute [CacheBehavior(CacheBehavior.Rerender)]
+
+<CurrentRequestPanel>
+    <p>Content for @DateTimeOffset.Now</p>
+</CurrentRequestPanel>
+```
+
+The wrapper itself has no `ChildContent` or other `RenderFragment` parameter, so it can be used as the live component inside the cache:
+
+```razor
+<CacheView>
+    <CurrentRequestPanelWrapper />
+</CacheView>
+```
+
+On a cache hit, `CurrentRequestPanelWrapper` and its subtree render fresh. The wrapper provides a component boundary between the cached content and the component that receives `ChildContent`.
+
+### Sliding expiration with HybridCache
+
+`ExpiresSliding` isn't supported when the backing store uses `HybridCache`. Use `ExpiresAfter` or `ExpiresOn` for absolute expiration.

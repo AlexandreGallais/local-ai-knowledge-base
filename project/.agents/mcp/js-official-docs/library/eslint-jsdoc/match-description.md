@@ -1,32 +1,26 @@
----
-title: "match-description (part 1 of 2)"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/match-description.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-match-description"></a>
+<a name="match-description"></a>
+# <code>match-description</code>
 
-# `match-description`
+* [Options](#user-content-match-description-options)
+    * [`contexts`](#user-content-match-description-options-contexts)
+    * [`mainDescription`](#user-content-match-description-options-maindescription)
+    * [`matchDescription`](#user-content-match-description-options-matchdescription)
+    * [`message`](#user-content-match-description-options-message)
+    * [`nonemptyTags`](#user-content-match-description-options-nonemptytags)
+    * [`tags`](#user-content-match-description-options-tags)
+* [Context and settings](#user-content-match-description-context-and-settings)
+* [Failing examples](#user-content-match-description-failing-examples)
+* [Passing examples](#user-content-match-description-passing-examples)
 
-* Options
-    * `contexts`
-    * `mainDescription`
-    * `matchDescription`
-    * `message`
-    * `nonemptyTags`
-    * `tags`
-* Context and settings
-* Failing examples
-* Passing examples
 
 Enforces a regular expression pattern on descriptions.
 
-The default is this basic <example-value> to match English sentences (Support
+The default is this basic expression to match English sentences (Support
 for Unicode upper case may be added in a future version when it can be handled
 by our supported Node versions):
 
-``^\n?(A-Z`\\d_*[.?!`\\p{RGI_Emoji}]\\s*)?$``
+``^\n?([A-Z`\\d_][\\s\\S]*[.?!`\\p{RGI_Emoji}]\\s*)?$``
 
 Applies by default to the JSDoc block description and to the following tags:
 
@@ -50,11 +44,15 @@ case-insensitive unless one opts in to add the `i` flag.
 You can add the `s` flag if you want `.` to match newlines. Note, however,
 that the trailing newlines of a description will not be matched.
 
+<a name="user-content-match-description-options"></a>
+<a name="match-description-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `contexts`
+<a name="user-content-match-description-options-contexts"></a>
+<a name="match-description-options-contexts"></a>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
 optional `context` and `comment` properties) where you wish the rule to be applied (e.g.,
@@ -66,10 +64,12 @@ Overrides the default contexts (`ArrowFunctionExpression`, `FunctionDeclaration`
 `FunctionExpression`). Set to `"any"` if you want the rule to apply to any
 JSDoc block throughout your files.
 
-See the "AST and Selectors"
+See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
 section of our Advanced docs for more on the expected format.
 
-### `mainDescription`
+<a name="user-content-match-description-options-maindescription"></a>
+<a name="match-description-options-maindescription"></a>
+### <code>mainDescription</code>
 
 If you wish to override the main block description without changing the
 default `match-description` (which can cascade to the `tags` with `true`),
@@ -108,7 +108,9 @@ You may also provide an object with `message`:
 }
 ```
 
-### `matchDescription`
+<a name="user-content-match-description-options-matchdescription"></a>
+<a name="match-description-options-matchdescription"></a>
+### <code>matchDescription</code>
 
 You can supply your own expression to override the default, passing a
 `matchDescription` string on the options object.
@@ -123,7 +125,9 @@ literal, e.g., `/[A-Z].*\./vi`.
 }
 ```
 
-### `message`
+<a name="user-content-match-description-options-message"></a>
+<a name="match-description-options-message"></a>
+### <code>message</code>
 
 You may provide a custom default message by using the following format:
 
@@ -138,7 +142,9 @@ You may provide a custom default message by using the following format:
 This can be overridden per tag or for the main block description by setting
 `message` within `tags` or `mainDescription`, respectively.
 
-### `nonemptyTags`
+<a name="user-content-match-description-options-nonemptytags"></a>
+<a name="match-description-options-nonemptytags"></a>
+### <code>nonemptyTags</code>
 
 If not set to `false`, will enforce that the following tags have at least
 some content:
@@ -151,7 +157,9 @@ some content:
 If you supply your own tag description for any of the above tags in `tags`,
 your description will take precedence.
 
-### `tags`
+<a name="user-content-match-description-options-tags"></a>
+<a name="match-description-options-tags"></a>
+### <code>tags</code>
 
 If you want different regular expressions to apply to tags, you may use
 the `tags` option object:
@@ -199,6 +207,9 @@ its "description" (e.g., for `@returns {someType} some description`, the
 description is `some description` while for `@some-tag xyz`, the description
 is `xyz`).
 
+
+<a name="user-content-match-description-context-and-settings"></a>
+<a name="match-description-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -210,6 +221,8 @@ is `xyz`).
 |Settings||
 |Options|`contexts`, `mainDescription`, `matchDescription`, `message`, `nonemptyTags`, `tags`|
 
+<a name="user-content-match-description-failing-examples"></a>
+<a name="match-description-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -622,3 +635,384 @@ function quux () {
 }
 // Message: JSDoc description must not be empty.
 ````
+
+
+
+<a name="user-content-match-description-passing-examples"></a>
+<a name="match-description-passing-examples"></a>
+## Passing examples
+
+The following patterns are not considered problems:
+
+````ts
+/**
+ *
+ */
+
+/**
+ *
+ */
+ function quux () {
+
+ }
+
+/**
+ * @param foo - Foo.
+ */
+function quux () {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"param":true}}]
+
+/**
+ * Foo.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo.
+ * Bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo.
+ *
+ * Bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo.
+ *
+ * Bar.
+ */
+function quux () {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"message":"This won't be shown"}]
+
+/**
+ * Тест.
+ */
+function quux () {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"matchDescription":"[А-Я][А-я]+\\."}]
+
+/**
+ * @param notRet
+ * @returns Тест.
+ */
+function quux () {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"returns":"[А-Я][А-я]+\\."}}]
+
+/**
+ * @param notRet
+ * @description Тест.
+ */
+function quux () {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"description":"[А-Я][А-я]+\\."}}]
+
+/**
+ * Foo
+ * bar.
+ */
+function quux () {
+
+}
+
+/**
+ * @returns Foo bar.
+ */
+function quux () {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"returns":true}}]
+
+/**
+ * @returns {type1} Foo bar.
+ */
+function quux () {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"returns":true}}]
+
+/**
+ * @description Foo bar.
+ */
+function quux () {
+
+}
+
+/**
+ * @description Foo
+ * bar.
+ * @param
+ */
+function quux () {
+
+}
+
+/** @description Foo bar. */
+function quux () {
+
+}
+
+/**
+ * @description Foo
+ * bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo. {@see Math.sin}.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo {@see Math.sin} bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo?
+ *
+ * Bar!
+ *
+ * Baz:
+ *   1. Foo.
+ *   2. Bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Hello:
+ * World.
+ */
+function quux () {
+
+}
+
+/**
+ * Hello: world.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo
+ * Bar.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo.
+ *
+ * foo.
+ */
+function quux () {
+
+}
+
+/**
+ * foo.
+ */
+function quux () {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"mainDescription":false}]
+
+/**
+ * foo.
+ */
+class quux {
+
+}
+
+/**
+ * foo.
+ */
+class quux {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"mainDescription":true}]
+
+class MyClass {
+  /**
+   * Abc.
+   */
+  myClassField = 1
+}
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["PropertyDefinition"]}]
+
+/**
+ * Foo.
+ */
+interface quux {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["TSInterfaceDeclaration"]}]
+
+const myObject = {
+  /**
+   * Bad description
+   */
+  myProp: true
+};
+// "jsdoc/match-description": ["error"|"warn", {"contexts":[]}]
+
+/**
+ * foo.
+ */
+const q = class {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"contexts":[]}]
+
+/**
+ * foo.
+ */
+const q = {
+
+};
+// "jsdoc/match-description": ["error"|"warn", {"contexts":[]}]
+
+/**
+ * @deprecated foo.
+ */
+function quux () {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"param":true}}]
+
+/**
+ * Foo.
+ *
+ * @summary Foo.
+ */
+function quux () {
+
+}
+
+/**
+ * Foo.
+ *
+ * @author Somebody
+ */
+function quux () {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"author":".+"}}]
+
+/**
+ * Foo.
+ *
+ * @x-tag something
+ */
+function quux () {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"x-tag":".+"}}]
+
+/**
+ * Foo.
+ *
+ * @prop foo Foo.
+ */
+function quux (foo) {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"prop":true}}]
+
+/**
+ * @param foo Foo bar.
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
+
+/**
+ *
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"description":false}}}
+
+/**
+ * Foo.
+ *
+ * @template Abc, Def Foo.
+ */
+function quux (foo) {
+
+}
+// "jsdoc/match-description": ["error"|"warn", {"tags":{"template":true}}]
+
+/**
+ * Enable or disable plugin.
+ *
+ * When enabling with this function, the script will be attached to the `document` if:.
+ * - the script runs in browser context.
+ * - the `document` doesn't have the script already attached.
+ * - the `loadScript` option is set to `true`.
+ * @param enabled `true` to enable, `false` to disable. Default: `true`.
+ */
+// "jsdoc/match-description": ["error"|"warn", {"contexts":["any"],"mainDescription":"/^[A-Z`\\-].*\\.$/vs","matchDescription":"^([A-Z`\\-].*(\\.|:)|-\\s.*)$","tags":{"param":true,"returns":true}}]
+
+/**
+ * @constructor
+ * @todo Ok.
+ */
+function quux () {
+}
+// "jsdoc/match-description": ["error"|"warn", {"mainDescription":false,"tags":{"todo":true}}]
+
+/** Does something very important. */
+function foo(): string;
+// "jsdoc/match-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[endLine!=0]"}],"matchDescription":"^\\S[\\s\\S]*\\S$"}]
+
+/**
+ * This is my favorite function, foo.
+ *
+ * @returns Nothing.
+ */
+function foo(): void;
+// "jsdoc/match-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[endLine!=0]:not(:has(JsdocTag))"}],"matchDescription":"^\\S[\\s\\S]*\\S$"}]
+
+/**
+ * @copyright
+ */
+function quux () {
+}
+// "jsdoc/match-description": ["error"|"warn", {"nonemptyTags":false}]
+
+/**
+ * Example text. 🙂
+ */
+export const example = () => { };
+````
+

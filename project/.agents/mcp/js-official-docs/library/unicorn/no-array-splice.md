@@ -1,21 +1,15 @@
----
-title: "no-array-splice"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-array-splice.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-array-splice
 
 📝 Prefer `Array#toSpliced()` over `Array#splice()`.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-Prefer using `Array#toSpliced()` over `Array#splice()` when the return value of `splice()` is unused.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+Prefer using [`Array#toSpliced()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/toSpliced) over [`Array#splice()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice) when the return value of `splice()` is unused.
 
 `Array#splice()` modifies the original array and returns the removed elements, while `Array#toSpliced()` returns a changed copy and leaves the original array untouched.
 
@@ -23,7 +17,7 @@ This rule only reports unused `splice()` calls when the receiver is a `let` or `
 
 It also skips arrays that _escape_ the scope (passed as an argument, aliased to another binding, returned, or stored in an array or object literal), since an outside reference could observe the in-place mutation.
 
-This rule ignores `splice()` patterns that have simpler mutating alternatives covered by `no-unnecessary-splice`, such as `array.splice(0, 1)` and `array.splice(array.length, 0, item)`.
+This rule ignores `splice()` patterns that have simpler mutating alternatives covered by [`no-unnecessary-splice`](./no-unnecessary-splice.md), such as `array.splice(0, 1)` and `array.splice(array.length, 0, item)`.
 
 When TypeScript type annotations or type information show that the receiver is not an array, or that assigning a plain array back could be type-invalid, this rule does not report it. This includes tuples, type aliases, generic type parameters, and readonly array types. Complex inferred TypeScript types require type information to be skipped reliably.
 

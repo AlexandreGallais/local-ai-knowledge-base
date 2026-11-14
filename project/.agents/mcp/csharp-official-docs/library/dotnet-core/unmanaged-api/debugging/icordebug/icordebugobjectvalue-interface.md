@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugObjectValue Interface"
 title: "ICorDebugObjectValue Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugobjectvalue-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugObjectValue"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugObjectValue"
+helpviewer_keywords:
+  - "ICorDebugObjectValue interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugObjectValue Interface
 
 A subclass of "ICorDebugValue" that represents a value that contains an object.
@@ -15,24 +23,24 @@ A subclass of "ICorDebugValue" that represents a value that contains an object.
 
 |Method|Description|
 |------------|-----------------|
-|GetClass Method|Gets an interface pointer to the common language runtime (CLR) `System.Type` of the object that this `ICorDebugObjectValue` references.|
-|GetContext Method|Not implemented.|
-|GetFieldValue Method|Gets an interface pointer to an ICorDebugValue that represents the value of the specified field of the specified class.|
-|GetManagedCopy Method|Obsolete. Do not call this method.|
-|GetVirtualMethod Method|Not implemented.|
-|IsValueClass Method|Gets a value that indicates whether the object referenced by this `ICorDebugObjectValue` is a value type.|
-|SetFromManagedCopy Method|Obsolete. Do not call this method.|
+|[GetClass Method](icordebugobjectvalue-getclass-method.md)|Gets an interface pointer to the common language runtime (CLR) <xref:System.Type> of the object that this `ICorDebugObjectValue` references.|
+|[GetContext Method](icordebugobjectvalue-getcontext-method.md)|Not implemented.|
+|[GetFieldValue Method](icordebugobjectvalue-getfieldvalue-method.md)|Gets an interface pointer to an [ICorDebugValue](icordebugvalue-interface.md) that represents the value of the specified field of the specified class.|
+|[GetManagedCopy Method](icordebugobjectvalue-getmanagedcopy-method.md)|Obsolete. Do not call this method.|
+|[GetVirtualMethod Method](icordebugobjectvalue-getvirtualmethod-method.md)|Not implemented.|
+|[IsValueClass Method](icordebugobjectvalue-isvalueclass-method.md)|Gets a value that indicates whether the object referenced by this `ICorDebugObjectValue` is a value type.|
+|[SetFromManagedCopy Method](icordebugobjectvalue-setfrommanagedcopy-method.md)|Obsolete. Do not call this method.|
 
 ## Remarks
 
 An `ICorDebugObjectValue` remains valid until the process being debugged is continued.
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

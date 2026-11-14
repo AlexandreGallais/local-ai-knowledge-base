@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugGuidToTypeEnum::Next Method"
 title: "ICorDebugGuidToTypeEnum::Next Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugguidtotypeenum-next-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugGuidToTypeEnum.Next"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugGuidToTypeEnum::Next"
+helpviewer_keywords:
+  - "ICorDebugGuidToTypeEnum::Next method [.NET debugging]"
+  - "Next method, ICorDebugGuidToTypeEnum interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugGuidToTypeEnum::Next Method
 
-Gets the specified number of CorDebugGuidToTypeMapping instances that map GUIDs to type information.
+Gets the specified number of [CorDebugGuidToTypeMapping](cordebugguidtotypemapping-structure.md) instances that map GUIDs to type information.
 
 ## Syntax
 
@@ -27,10 +36,12 @@ HRESULT Next(
  [in] The number of GUID-to-type mapping objects to be retrieved.
 
  `values`
- [out] An array of pointers, each of which points to a CorDebugGuidToTypeMapping object that maps a Windows Runtime GUID to its corresponding ICorDebugType object.
+ [out] An array of pointers, each of which points to a [CorDebugGuidToTypeMapping](cordebugguidtotypemapping-structure.md) object that maps a Windows Runtime GUID to its corresponding ICorDebugType object.
 
  `pceltFetched`
- [out] A pointer to the number of CorDebugGuidToTypeMapping objects actually returned in `values`.
+ [out] A pointer to the number of [CorDebugGuidToTypeMapping](cordebugguidtotypemapping-structure.md) objects actually returned in `values`.
+
+## Remarks
 
 ## Requirements
 
@@ -44,4 +55,4 @@ HRESULT Next(
 
 ## See also
 
-- ICorDebugGuidToTypeEnum Interface
+- [ICorDebugGuidToTypeEnum Interface](icordebugguidtotypeenum-interface.md)

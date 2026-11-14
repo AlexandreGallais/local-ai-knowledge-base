@@ -1,13 +1,11 @@
 ---
-title: "no-misleading-character-class"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-misleading-character-class.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-misleading-character-class
+rule_type: problem
 ---
 
-# no-misleading-character-class
+
+
+
 
 Unicode includes characters which are made by multiple code points.
 RegExp character class syntax (`/[abc]/`) cannot handle characters which are made by multiple code points as a character; those characters will be dissolved to each code point. For example, `❇️` is made by `❇` (`U+2747`) and VARIATION SELECTOR-16 (`U+FE0F`). If this character is in a RegExp character class, it will match either `❇` (`U+2747`) or VARIATION SELECTOR-16 (`U+FE0F`) rather than `❇️`.
@@ -16,7 +14,7 @@ This rule reports regular expressions which include multiple code point characte
 
 **A character with combining characters:**
 
-The combining characters are characters which belong to one of `Mc`, `Me`, and `Mn` Unicode general categories.
+The combining characters are characters which belong to one of `Mc`, `Me`, and `Mn` [Unicode general categories](https://www.unicode.org/L2/L1999/UnicodeData.html#General%20Category).
 
 ```js
 /^[Á]$/u.test("Á"); //→ false
@@ -57,7 +55,7 @@ This rule reports regular expressions which include multiple code point characte
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-misleading-character-class: error */
@@ -71,9 +69,11 @@ Examples of **incorrect** code for this rule:
 new RegExp("[🎵]");
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-misleading-character-class: error */
@@ -85,6 +85,8 @@ new RegExp("^[]$");
 new RegExp(`[Á-${z}]`, "u"); // variable pattern
 ```
 
+:::
+
 ## Options
 
 This rule has an object option:
@@ -95,7 +97,7 @@ This rule has an object option:
 
 Examples of **incorrect** code for this rule with the `{ "allowEscape": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint no-misleading-character-class: ["error", { "allowEscape": true }] */
@@ -108,9 +110,11 @@ const pattern = "[\ud83d\udc4d]";
 new RegExp(pattern);
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "allowEscape": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-misleading-character-class: ["error", { "allowEscape": true }] */
@@ -122,6 +126,8 @@ new RegExp("[\x41\u0301]");
 new RegExp(`[\u{1F1EF}\u{1F1F5}]`, "u");
 new RegExp("[\\u{1F1EF}\\u{1F1F5}]", "u");
 ```
+
+:::
 
 ## When Not To Use It
 

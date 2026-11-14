@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: NuGet locks directory moved on Linux"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/11/nuget-locks-directory-linux.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where the NuGet inter-process lock directory on Linux moves to the user's home directory."
+ms.date: 11/06/2026
+ai-usage: ai-assisted
 ---
 
 # NuGet locks directory moved on Linux
@@ -29,7 +27,7 @@ In every version, `NUGET_SCRATCH` overrides the default location. Its value spec
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -39,7 +37,7 @@ To prevent other users on shared Linux computers from blocking NuGet for a targe
 
 To ensure concurrent restores coordinate access to shared files, use .NET SDK 11.0.200 or later everywhere, even for projects that specify an earlier `TargetFramework`.
 
-Alternatively, set the same `NUGET_SCRATCH` value for all concurrent NuGet processes, regardless of SDK version. Specify the parent directory without a trailing `locks` component. For more information, see NuGet environment variables.
+Alternatively, set the same `NUGET_SCRATCH` value for all concurrent NuGet processes, regardless of SDK version. Specify the parent directory without a trailing `locks` component. For more information, see [NuGet environment variables](/nuget/reference/cli-reference/cli-ref-environment-variables).
 
 ## Affected APIs
 

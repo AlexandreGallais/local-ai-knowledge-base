@@ -1,34 +1,24 @@
----
-title: "EnclosingMethodAttribute interface (java.lang.classfile.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/attribute/EnclosingMethodAttribute.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # EnclosingMethodAttribute interface (java.lang.classfile.attribute)
 
 ```java
 public sealed interface EnclosingMethodAttribute extends Attribute<EnclosingMethodAttribute>, ClassElement permits BoundAttribute.BoundEnclosingMethodAttribute, UnboundAttribute.UnboundEnclosingMethodAttribute
 ```
 
-Models the EnclosingMethod attribute
-(JVMS ), which indicates that this class is a local or
+Models the {@link Attributes#enclosingMethod() EnclosingMethod} attribute
+(JVMS {@jvms 4.7.7}), which indicates that this class is a local or
 anonymous class, and indicates the enclosing method or constructor of this
 class if this class is enclosed in exactly one method or constructor.
-
-This attribute only appears on classes, and does not permit multiple instances in a class.  It has a
-data dependency on the constant pool.
-
+<p>
+This attribute only appears on classes, and does not permit {@linkplain
+AttributeMapper#allowMultiple multiple instances} in a class.  It has a
+data dependency on the {@linkplain AttributeStability#CP_REFS constant pool}.
+<p>
 The attribute was introduced in the Java SE Platform version 5.0, major
-version `ClassFile#JAVA_5_VERSION`.
+version {@value ClassFile#JAVA_5_VERSION}.
 
-**See also:** Attributes#enclosingMethod()
-
-**jvms:** 4.7.7 The `EnclosingMethod` Attribute
-
-**Since:** 24
+@see Attributes#enclosingMethod()
+@jvms 4.7.7 The {@code EnclosingMethod} Attribute
+@since 24
 
 ## EnclosingMethodAttribute.enclosingClass()
 
@@ -36,10 +26,11 @@ version `ClassFile#JAVA_5_VERSION`.
 ClassEntry enclosingClass()
 ```
 
-If the `enclosingMethod()` is present, this is the
+{@return the class that encloses the declaration of the current
+class}  If the {@link #enclosingMethod()} is present, this is the
 declaring class of that enclosing method or constructor.
 
-**See also:** Class#getEnclosingClass()
+@see Class#getEnclosingClass()
 
 ## EnclosingMethodAttribute.enclosingMethod()
 
@@ -47,15 +38,15 @@ declaring class of that enclosing method or constructor.
 Optional<NameAndTypeEntry> enclosingMethod()
 ```
 
-This may
+{@return the name and type of the enclosing method, if the class is
+immediately enclosed by exactly one method or constructor}  This may
 be empty if the anonymous or local class appears in a field initializer
-(JLS ), an instance initializer (JLS ), or a static
-initializer (JLS ).  As a result, this never describes a class
-initialization method `ConstantDescs#CLASS_INIT_NAME`.
+(JLS {@jls 8.3.2}), an instance initializer (JLS {@jls 8.6}), or a static
+initializer (JLS {@jls 8.7}).  As a result, this never describes a class
+initialization method {@value ConstantDescs#CLASS_INIT_NAME}.
 
-**See also:** Class#getEnclosingMethod()
-
-**See also:** Class#getEnclosingConstructor()
+@see Class#getEnclosingMethod()
+@see Class#getEnclosingConstructor()
 
 ## EnclosingMethodAttribute.enclosingMethodName()
 
@@ -63,7 +54,10 @@ initialization method `ConstantDescs#CLASS_INIT_NAME`.
 default Optional<Utf8Entry> enclosingMethodName()
 ```
 
-**See also:** #enclosingMethod()
+{@return the name of the enclosing method, if the class is immediately
+enclosed by exactly one method or constructor}
+
+@see #enclosingMethod()
 
 ## EnclosingMethodAttribute.enclosingMethodType()
 
@@ -71,7 +65,10 @@ default Optional<Utf8Entry> enclosingMethodName()
 default Optional<Utf8Entry> enclosingMethodType()
 ```
 
-**See also:** #enclosingMethod()
+{@return the name of the enclosing method, if the class is immediately
+enclosed by exactly one method or constructor}
+
+@see #enclosingMethod()
 
 ## EnclosingMethodAttribute.enclosingMethodTypeSymbol()
 
@@ -79,7 +76,10 @@ default Optional<Utf8Entry> enclosingMethodType()
 default Optional<MethodTypeDesc> enclosingMethodTypeSymbol()
 ```
 
-**See also:** #enclosingMethod()
+{@return the name of the enclosing method, if the class is immediately
+enclosed by exactly one method or constructor}
+
+@see #enclosingMethod()
 
 ## EnclosingMethodAttribute.of(ClassEntry, Optional<NameAndTypeEntry>)
 
@@ -87,10 +87,10 @@ default Optional<MethodTypeDesc> enclosingMethodTypeSymbol()
 static EnclosingMethodAttribute of(ClassEntry className, Optional<NameAndTypeEntry> method)
 ```
 
-Parameters:
-
-- `className`: the class name
-- `method`: the name and type of the enclosing method or `Optional.empty()` if the class is not immediately enclosed by exactly one method or constructor
+{@return an {@code EnclosingMethod} attribute}
+@param className the class name
+@param method the name and type of the enclosing method or {@code Optional.empty()} if
+              the class is not immediately enclosed by exactly one method or constructor
 
 ## EnclosingMethodAttribute.of(ClassDesc, Optional<String>, Optional<MethodTypeDesc>)
 
@@ -98,12 +98,10 @@ Parameters:
 static EnclosingMethodAttribute of(ClassDesc className, Optional<String> methodName, Optional<MethodTypeDesc> methodType)
 ```
 
-Parameters:
-
-- `className`: the class name
-- `methodName`: the name of the enclosing method or `Optional.empty()` if the class is not immediately enclosed by exactly one method or constructor
-- `methodType`: the type of the enclosing method or `Optional.empty()` if the class is not immediately enclosed by exactly one method or constructor
-
-Throws:
-
-- `IllegalArgumentException`: if `className` represents a primitive type
+{@return an {@code EnclosingMethod} attribute}
+@param className the class name
+@param methodName the name of the enclosing method or {@code Optional.empty()} if
+                  the class is not immediately enclosed by exactly one method or constructor
+@param methodType the type of the enclosing method or {@code Optional.empty()} if
+                  the class is not immediately enclosed by exactly one method or constructor
+@throws IllegalArgumentException if {@code className} represents a primitive type

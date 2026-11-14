@@ -1,12 +1,3 @@
----
-title: "std::os::fd::owned"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/os/fd/owned.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::os::fd::owned
 
 Owned and borrowed Unix-like file descriptors.
@@ -28,13 +19,13 @@ descriptor, so it can be used in FFI in places where a file descriptor is
 passed as an argument, it is not captured or consumed, and it never has the
 value `-1`.
 
-This type does not have a `ToOwned`[crate::borrow::ToOwned]
+This type does not have a [`ToOwned`][crate::borrow::ToOwned]
 implementation. Calling `.to_owned()` on a variable of this type will call
 it on `&BorrowedFd` and use `Clone::clone()` like `ToOwned` does for all
 types implementing `Clone`. The result will be descriptor borrowed under
 the same lifetime.
 
-To obtain an `OwnedFd`, you can use `BorrowedFd::try_clone_to_owned`
+To obtain an [`OwnedFd`], you can use [`BorrowedFd::try_clone_to_owned`]
 instead, but this is not supported on all platforms.
 
 ## struct OwnedFd
@@ -53,7 +44,7 @@ descriptor, so it can be used in FFI in places where a file descriptor is
 passed as a consumed argument or returned as an owned value, and it never
 has the value `-1`.
 
-You can use `AsFd::as_fd` to obtain a `BorrowedFd`.
+You can use [`AsFd::as_fd`] to obtain a [`BorrowedFd`].
 
 ## BorrowedFd::borrow_raw
 
@@ -130,9 +121,14 @@ Borrows the file descriptor.
 
 # Example
 
-```rust
+```rust,no_run
 use std::fs::File;
+# use std::io;
+# #[cfg(any(unix, target_os = "wasi"))]
+# use std::os::fd::{AsFd, BorrowedFd};
 
 let mut f = File::open("foo.txt")?;
+# #[cfg(any(unix, target_os = "wasi"))]
 let borrowed_fd: BorrowedFd<'_> = f.as_fd();
+# Ok::<(), io::Error>(())
 ```

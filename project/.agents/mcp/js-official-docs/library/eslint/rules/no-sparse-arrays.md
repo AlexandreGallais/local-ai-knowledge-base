@@ -1,13 +1,11 @@
 ---
-title: "no-sparse-arrays"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-sparse-arrays.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-sparse-arrays
+rule_type: problem
+further_reading:
+- https://www.nczonline.net/blog/2007/09/09/inconsistent-array-literals/
 ---
 
-# no-sparse-arrays
+
 
 Sparse arrays contain empty slots, most frequently due to multiple commas being used in an array literal, such as:
 
@@ -31,7 +29,7 @@ This rule disallows sparse array literals which have "holes" where commas are no
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-sparse-arrays: "error"*/
@@ -40,9 +38,11 @@ const items = [,];
 const colors = [ "red",, "blue" ];
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-sparse-arrays: "error"*/
@@ -53,6 +53,8 @@ const arr = new Array(23);
 // trailing comma (after the last element) is not a problem
 const colors = [ "red", "blue", ];
 ```
+
+:::
 
 ## Options
 

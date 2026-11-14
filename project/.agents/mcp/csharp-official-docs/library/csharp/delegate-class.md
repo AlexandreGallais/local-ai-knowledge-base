@@ -1,21 +1,20 @@
 ---
-title: "System.Delegate and the `delegate` keyword"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/delegate-class.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: System.Delegate and the `delegate` keyword
+description: Learn about the classes in .NET that support delegates and how those map to the 'delegate' keyword.
+ms.date: 06/20/2016
+ms.subservice: fundamentals
+ms.assetid: f3742fda-13c2-4283-8966-9e21c2674393
 ---
 
 # System.Delegate and the `delegate` keyword
 
-Previous
+[Previous](delegates-overview.md)
 
 This article covers the classes in .NET that support delegates, and how those map to the `delegate` keyword.
 
 ## What are delegates?
 
-Think of a delegate as a way to store a reference to a method, similar to how you might store a reference to an object. Just as you can pass <example-value> to methods, you can pass <example-value> references using delegates. This is useful when you want to write flexible code where different methods can be "plugged in" to provide different behaviors.
+Think of a delegate as a way to store a reference to a method, similar to how you might store a reference to an object. Just as you can pass objects to methods, you can pass method references using delegates. This is useful when you want to write flexible code where different methods can be "plugged in" to provide different behaviors.
 
 For example, imagine you have a calculator that can perform operations on two numbers. Instead of hard-coding addition, subtraction, multiplication, and division into separate methods, you could use delegates to represent any operation that takes two numbers and returns a result.
 
@@ -46,11 +45,11 @@ This `Comparison<T>` delegate can hold references to any method that:
 
 When you define a delegate type like this, the compiler automatically generates a class derived from `System.Delegate` that matches your signature. This class handles all the complexity of storing and invoking the method references for you.
 
-The `Comparison` delegate type is a generic type, which means it can work with any type `T`. For more information about generics, see Generic classes and methods.
+The `Comparison` delegate type is a generic type, which means it can work with any type `T`. For more information about generics, see [Generic classes and methods](./fundamentals/types/generics.md).
 
 Notice that even though the syntax looks similar to declaring a variable, you're actually declaring a new *type*. You can define delegate types inside classes, directly inside namespaces, or even in the global namespace.
 
-> **Note:**
+> [!NOTE]
 > Declaring delegate types (or other types) directly in
 > the global namespace is not recommended.
 
@@ -83,7 +82,7 @@ int result = comparator(left, right);
 
 In this line, the code *invokes* the method attached to the delegate. You treat the delegate variable as if it were a method name and call it using normal method call syntax.
 
-However, this line of code makes an unsafe assumption: it assumes that a target method has been added to the delegate. If no methods have been attached, the line above would cause a `NullReferenceException` to be thrown. The patterns used to address this problem are more sophisticated than a simple null-check, and are covered later in this series.
+However, this line of code makes an unsafe assumption: it assumes that a target method has been added to the delegate. If no methods have been attached, the line above would cause a `NullReferenceException` to be thrown. The patterns used to address this problem are more sophisticated than a simple null-check, and are covered later in this [series](delegates-patterns.md).
 
 ## Assign, add, and remove invocation targets
 
@@ -117,20 +116,20 @@ phrases.Sort(comparer);
 
 Both approaches accomplish the same thing. The first approach is more concise, while the second makes the delegate assignment more explicit.
 
-For simple methods, it's common to use lambda expressions instead of defining a separate method:
+For simple methods, it's common to use [lambda expressions](language-reference/operators/lambda-expressions.md) instead of defining a separate method:
 
 ```csharp
 Comparison<string> comparer = (left, right) => left.Length.CompareTo(right.Length);
 phrases.Sort(comparer);
 ```
 
-Lambda expressions provide a compact way to define simple methods inline. Using lambda expressions for delegate targets is covered in more detail in a later section.
+Lambda expressions provide a compact way to define simple methods inline. Using lambda expressions for delegate targets is covered in more detail in a [later section](delegates-patterns.md).
 
 The examples so far show delegates with a single target method. However, delegate objects can support invocation lists that have multiple target methods attached to a single delegate object. This capability is particularly useful for event handling scenarios.
 
 ## Delegate and MulticastDelegate classes
 
-Behind the scenes, the delegate features you've been using are built on two key <example-value> in the .NET framework: `System.Delegate` and `System.MulticastDelegate`. You don't usually work with these classes directly, but they provide the foundation that makes delegates work.
+Behind the scenes, the delegate features you've been using are built on two key classes in the .NET framework: <xref:System.Delegate> and <xref:System.MulticastDelegate>. You don't usually work with these classes directly, but they provide the foundation that makes delegates work.
 
 The `System.Delegate` class and its direct subclass `System.MulticastDelegate` provide the framework support for creating delegates, registering methods as delegate targets, and invoking all methods that are registered with a delegate.
 
@@ -161,10 +160,10 @@ The most commonly used methods when working with delegates are:
 - `Invoke()`: Calls all the methods attached to the delegate
 - `BeginInvoke()` / `EndInvoke()`: Used for asynchronous invocation patterns (though `async`/`await` is now preferred)
 
-In most cases, you won't call these methods directly. Instead, you'll use the method call syntax on the delegate variable, as shown in the examples above. However, as you'll see later in this series, there are patterns that work directly with these methods.
+In most cases, you won't call these methods directly. Instead, you'll use the method call syntax on the delegate variable, as shown in the examples above. However, as you'll see [later in this series](delegates-patterns.md), there are patterns that work directly with these methods.
 
 ## Summary
 
 Now that you've seen how the C# language syntax maps to the underlying .NET classes, you're ready to explore how strongly typed delegates are used, created, and invoked in more complex scenarios.
 
-Next
+[Next](delegates-strongly-typed.md)

@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugClass Interface"
 title: "ICorDebugClass Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugclass-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugClass"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugClass"
+helpviewer_keywords:
+  - "ICorDebugClass interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugClass Interface
 
 Represents a type, which can be either basic or complex (that is, user-defined). If the type is generic, `ICorDebugClass` represents the uninstantiated generic type.
@@ -15,9 +23,9 @@ Represents a type, which can be either basic or complex (that is, user-defined).
 
 |Method|Description|
 |------------|-----------------|
-|GetModule Method|Gets the module that defines this class.|
-|GetStaticFieldValue Method|Gets the value of the specified static field.|
-|GetToken <example-value>|Gets the `TypeDef` metadata token for this class.|
+|[GetModule Method](icordebugclass-getmodule-method.md)|Gets the module that defines this class.|
+|[GetStaticFieldValue Method](icordebugclass-getstaticfieldvalue-method.md)|Gets the value of the specified static field.|
+|[GetToken Method](icordebugclass-gettoken-method.md)|Gets the `TypeDef` metadata token for this class.|
 
 ## Remarks
 
@@ -25,12 +33,12 @@ The `ICorDebugClass` interface represents an uninstantiated generic type. The `I
 
 Non-generic types are represented by both `ICorDebugClass` and `ICorDebugType`. The latter interface was introduced in .NET Framework 2.0 to deal with type instantiation.
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

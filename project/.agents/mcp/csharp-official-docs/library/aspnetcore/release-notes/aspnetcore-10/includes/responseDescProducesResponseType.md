@@ -1,17 +1,6 @@
----
-title: "responseDescProducesResponseType"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-10/includes/responseDescProducesResponseType.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# responseDescProducesResponseType
-
 ### Response description on `ProducesResponseType` for API controllers
 
-The `Microsoft.AspNetCore.Mvc.ProducesAttribute`, `Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute`, and `Microsoft.AspNetCore.Mvc.ProducesDefaultResponseTypeAttribute` now accept an optional string parameter, `Description`, that sets the description of the response:
+The <xref:Microsoft.AspNetCore.Mvc.ProducesAttribute>, <xref:Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute>, and <xref:Microsoft.AspNetCore.Mvc.ProducesDefaultResponseTypeAttribute> now accept an optional string parameter, `Description`, that sets the description of the response:
 
 ```csharp
 [HttpGet(Name = "GetWeatherForecast")]
@@ -30,6 +19,6 @@ Generated OpenAPI data:
     "content": {
 ```
 
-This functionality is supported in both API controllers and Minimal APIs. For Minimal APIs, the `Description` property is correctly set even when the attribute's type and the inferred return type aren't an exact match.
+This functionality is supported in both [API controllers](../../../web-api/index.md#apicontroller-attribute) and [Minimal APIs](../../../fundamentals/apis.md). For Minimal APIs, the `Description` property is correctly set even when the attribute's type and the inferred return type aren't an exact match.
 
-Community contribution (`dotnet/aspnetcore` #58193) by Sander ten Brinke.
+[Community contribution (`dotnet/aspnetcore` #58193)](https://github.com/dotnet/aspnetcore/pull/58193) by [Sander ten Brinke](https://github.com/sander1095).

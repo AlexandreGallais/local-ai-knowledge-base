@@ -1,12 +1,3 @@
----
-title: "Common Programming Concepts"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch03-00-common-programming-concepts.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
 # Common Programming Concepts
 
 This chapter covers concepts that appear in almost every programming language
@@ -27,4 +18,6 @@ them early will give you a strong core to start from.
 > special meanings, and you’ll be using them to do various tasks in your Rust
 > programs; a few have no current functionality associated with them but have
 > been reserved for functionality that might be added to Rust in the future. You
-> can find the list of the keywords in Appendix A.
+> can find the list of the keywords in [Appendix A][appendix_a]<!-- ignore -->.
+
+[appendix_a]: appendix-01-keywords.md

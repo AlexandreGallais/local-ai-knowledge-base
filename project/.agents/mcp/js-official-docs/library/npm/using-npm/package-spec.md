@@ -1,13 +1,9 @@
 ---
-title: "Package spec"
-tool: "npm"
-version: "12.2"
-source: "https://github.com/npm/cli/blob/60e11343e61316d966c86805d803df5a0eb99230/docs/lib/content/using-npm/package-spec.md"
-commit: "60e11343e61316d966c86805d803df5a0eb99230"
-license: "Artistic-2.0"
+title: Package spec
+section: 7
+description: Package name specifier
 ---
 
-# Package spec
 
 ### Description
 
@@ -23,13 +19,13 @@ These will generally be referred to as `<package-spec>` in the help output for t
 * `[<@scope>/]<pkg>@<version range>`
 
 Refers to a package by name, with or without a scope, and optionally tag, version, or version range.
-This is typically used in combination with the registry config to refer to a package in a registry.
+This is typically used in combination with the [registry](/using-npm/config#registry) config to refer to a package in a registry.
 
 Examples:
 * `npm`
 * `@npmcli/arborist`
 * `@npmcli/arborist@latest`
-* `user@example.com`
+* `npm@6.13.1`
 * `npm@^4.0.0`
 
 ### Aliases
@@ -39,11 +35,11 @@ Examples:
 Primarily used by commands like `npm install` and in the dependency sections in the `package.json`, this refers to a package by an alias.
 The `<alias>` is the name of the package as it is reified in the `node_modules` folder, and the `<name>` refers to a package name as found in the configured registry.
 
-See `Package name` above for more info on referring to a package by name, and registry for configuring which registry is used when referring to a package by name.
+See `Package name` above for more info on referring to a package by name, and [registry](/using-npm/config#registry) for configuring which registry is used when referring to a package by name.
 
 Examples:
 * `semver@npm:@npmcli/semver-with-patch`
-* `semver@npm:user@example.com`
+* `semver@npm:semver@7.2.2`
 * `semver@npm:semver@legacy`
 
 ### Folders
@@ -85,13 +81,13 @@ You can specify a git tag, branch, or other git ref by appending `#ref`.
 Examples:
 
 * `https://github.com/npm/cli.git`
-* `user@example.com:npm/cli.git`
-* `git+ssh://user@example.com/npm/cli#v6.0.0`
+* `git@github.com:npm/cli.git`
+* `git+ssh://git@github.com/npm/cli#v6.0.0`
 * `github:npm/cli#HEAD`
 * `npm/cli#c12ea07`
 
 ### See also
 
-* npm-package-arg
-* scope
-* config
+* [npm-package-arg](https://npm.im/npm-package-arg)
+* [scope](/using-npm/scope)
+* [config](/using-npm/config)

@@ -1,12 +1,3 @@
----
-title: "AssertionError class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/AssertionError.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AssertionError class (java.lang)
 
 ```java
@@ -15,19 +6,17 @@ public class AssertionError extends Error
 
 Thrown to indicate that an assertion has failed.
 
-The seven one-argument public constructors provided by this
+<p>The seven one-argument public constructors provided by this
 class ensure that the assertion error returned by the invocation:
-
-```java
+<pre>
     new AssertionError(<i>expression</i>)
-```
+</pre>
+has as its detail message the <i>string conversion</i> of
+<i>expression</i> (as defined in section {@jls 5.1.11} of
+<cite>The Java Language Specification</cite>),
+regardless of the type of <i>expression</i>.
 
-has as its detail message the *string conversion* of
-*expression* (as defined in section  of
-*The Java Language Specification*),
-regardless of the type of *expression*.
-
-**Since:** 1.4
+@since   1.4
 
 ## AssertionError.AssertionError()
 
@@ -45,17 +34,14 @@ public AssertionError(Object detailMessage)
 
 Constructs an AssertionError with its detail message derived
 from the specified object, which is converted to a string as
-defined in section  of
-*The Java Language Specification*.
+defined in section {@jls 5.1.11} of
+<cite>The Java Language Specification</cite>.
+<p>
+If the specified object is an instance of {@code Throwable}, it
+becomes the <i>cause</i> of the newly constructed assertion error.
 
-If the specified object is an instance of `Throwable`, it
-becomes the *cause* of the newly constructed assertion error.
-
-Parameters:
-
-- `detailMessage`: value to be used in constructing detail message
-
-**See also:** Throwable#getCause()
+@param detailMessage value to be used in constructing detail message
+@see   Throwable#getCause()
 
 ## AssertionError.AssertionError(boolean)
 
@@ -64,13 +50,11 @@ public AssertionError(boolean detailMessage)
 ```
 
 Constructs an AssertionError with its detail message derived
-from the specified `boolean`, which is converted to
-a string as defined in section  of
-*The Java Language Specification*.
+from the specified {@code boolean}, which is converted to
+a string as defined in section {@jls 5.1.11} of
+<cite>The Java Language Specification</cite>.
 
-Parameters:
-
-- `detailMessage`: value to be used in constructing detail message
+@param detailMessage value to be used in constructing detail message
 
 ## AssertionError.AssertionError(char)
 
@@ -79,13 +63,11 @@ public AssertionError(char detailMessage)
 ```
 
 Constructs an AssertionError with its detail message derived
-from the specified `char`, which is converted to a
-string as defined in section  of
-*The Java Language Specification*.
+from the specified {@code char}, which is converted to a
+string as defined in section {@jls 5.1.11} of
+<cite>The Java Language Specification</cite>.
 
-Parameters:
-
-- `detailMessage`: value to be used in constructing detail message
+@param detailMessage value to be used in constructing detail message
 
 ## AssertionError.AssertionError(int)
 
@@ -94,13 +76,11 @@ public AssertionError(int detailMessage)
 ```
 
 Constructs an AssertionError with its detail message derived
-from the specified `int`, which is converted to a
-string as defined in section  of
-*The Java Language Specification*.
+from the specified {@code int}, which is converted to a
+string as defined in section {@jls 5.1.11} of
+<cite>The Java Language Specification</cite>.
 
-Parameters:
-
-- `detailMessage`: value to be used in constructing detail message
+@param detailMessage value to be used in constructing detail message
 
 ## AssertionError.AssertionError(long)
 
@@ -109,13 +89,11 @@ public AssertionError(long detailMessage)
 ```
 
 Constructs an AssertionError with its detail message derived
-from the specified `long`, which is converted to a
-string as defined in section  of
-*The Java Language Specification*.
+from the specified {@code long}, which is converted to a
+string as defined in section {@jls 5.1.11} of
+<cite>The Java Language Specification</cite>.
 
-Parameters:
-
-- `detailMessage`: value to be used in constructing detail message
+@param detailMessage value to be used in constructing detail message
 
 ## AssertionError.AssertionError(float)
 
@@ -124,13 +102,11 @@ public AssertionError(float detailMessage)
 ```
 
 Constructs an AssertionError with its detail message derived
-from the specified `float`, which is converted to a
-string as defined in section  of
-*The Java Language Specification*.
+from the specified {@code float}, which is converted to a
+string as defined in section {@jls 5.1.11} of
+<cite>The Java Language Specification</cite>.
 
-Parameters:
-
-- `detailMessage`: value to be used in constructing detail message
+@param detailMessage value to be used in constructing detail message
 
 ## AssertionError.AssertionError(double)
 
@@ -139,13 +115,11 @@ public AssertionError(double detailMessage)
 ```
 
 Constructs an AssertionError with its detail message derived
-from the specified `double`, which is converted to a
-string as defined in section  of
-*The Java Language Specification*.
+from the specified {@code double}, which is converted to a
+string as defined in section {@jls 5.1.11} of
+<cite>The Java Language Specification</cite>.
 
-Parameters:
-
-- `detailMessage`: value to be used in constructing detail message
+@param detailMessage value to be used in constructing detail message
 
 ## AssertionError.AssertionError(String, Throwable)
 
@@ -153,16 +127,14 @@ Parameters:
 public AssertionError(String message, Throwable cause)
 ```
 
-Constructs a new `AssertionError` with the specified
+Constructs a new {@code AssertionError} with the specified
 detail message and cause.
 
-Note that the detail message associated with
-`cause` is *not* automatically incorporated in
+<p>Note that the detail message associated with
+{@code cause} is <i>not</i> automatically incorporated in
 this error's detail message.
 
-Parameters:
+@param  message the detail message, may be {@code null}
+@param  cause the cause, may be {@code null}
 
-- `message`: the detail message, may be `null`
-- `cause`: the cause, may be `null`
-
-**Since:** 1.7
+@since 1.7

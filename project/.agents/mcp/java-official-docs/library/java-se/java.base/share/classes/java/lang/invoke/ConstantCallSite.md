@@ -1,23 +1,14 @@
----
-title: "ConstantCallSite class (java.lang.invoke)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/invoke/ConstantCallSite.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ConstantCallSite class (java.lang.invoke)
 
 ```java
 public non-sealed class ConstantCallSite extends CallSite
 ```
 
-A `ConstantCallSite` is a `CallSite` whose target is permanent, and can never be changed.
-An `invokedynamic` instruction linked to a `ConstantCallSite` is permanently
+A {@code ConstantCallSite} is a {@link CallSite} whose target is permanent, and can never be changed.
+An {@code invokedynamic} instruction linked to a {@code ConstantCallSite} is permanently
 bound to the call site's target.
-
-**Since:** 1.7
+@author John Rose, JSR 292 EG
+@since 1.7
 
 ## ConstantCallSite.ConstantCallSite(MethodHandle)
 
@@ -26,14 +17,8 @@ public ConstantCallSite(MethodHandle target)
 ```
 
 Creates a call site with a permanent target.
-
-Parameters:
-
-- `target`: the target to be permanently associated with this call site
-
-Throws:
-
-- `NullPointerException`: if the proposed target is null
+@param target the target to be permanently associated with this call site
+@throws NullPointerException if the proposed target is null
 
 ## ConstantCallSite.ConstantCallSite(MethodType, MethodHandle)
 
@@ -42,40 +27,36 @@ protected ConstantCallSite(MethodType targetType, MethodHandle createTargetHook)
 ```
 
 Creates a call site with a permanent target, possibly bound to the call site itself.
-
-During construction of the call site, the `createTargetHook` is invoked to
+<p>
+During construction of the call site, the {@code createTargetHook} is invoked to
 produce the actual target, as if by a call of the form
-`(MethodHandle) createTargetHook.invoke(this)`.
-
+{@code (MethodHandle) createTargetHook.invoke(this)}.
+<p>
 Note that user code cannot perform such an action directly in a subclass constructor,
-since the target must be fixed before the `ConstantCallSite` constructor returns.
-
+since the target must be fixed before the {@code ConstantCallSite} constructor returns.
+<p>
 The hook is said to bind the call site to a target method handle,
-and a typical action would be `someTarget.bindTo(this)`.
+and a typical action would be {@code someTarget.bindTo(this)}.
 However, the hook is free to take any action whatever,
 including ignoring the call site and returning a constant target.
-
+<p>
 The result returned by the hook must be a method handle of exactly
 the same type as the call site.
-
-While the hook is being called, the new `ConstantCallSite`
+<p>
+While the hook is being called, the new {@code ConstantCallSite}
 object is in a partially constructed state.
 In this state,
-a call to `getTarget`, or any other attempt to use the target,
-will result in an `IllegalStateException`.
-It is legal at all times to obtain the call site's type using the `type` method.
+a call to {@code getTarget}, or any other attempt to use the target,
+will result in an {@code IllegalStateException}.
+It is legal at all times to obtain the call site's type using the {@code type} method.
 
-Parameters:
-
-- `targetType`: the type of the method handle to be permanently associated with this call site
-- `createTargetHook`: a method handle to invoke (on the call site) to produce the call site's target
-
-Throws:
-
-- `WrongMethodTypeException`: if the hook cannot be invoked on the required arguments, or if the target returned by the hook is not of the given `targetType`
-- `NullPointerException`: if the hook returns a null value
-- `ClassCastException`: if the hook returns something other than a `MethodHandle`
-- `Throwable`: anything else thrown by the hook function
+@param targetType the type of the method handle to be permanently associated with this call site
+@param createTargetHook a method handle to invoke (on the call site) to produce the call site's target
+@throws WrongMethodTypeException if the hook cannot be invoked on the required arguments,
+        or if the target returned by the hook is not of the given {@code targetType}
+@throws NullPointerException if the hook returns a null value
+@throws ClassCastException if the hook returns something other than a {@code MethodHandle}
+@throws Throwable anything else thrown by the hook function
 
 ## ConstantCallSite.getTarget()
 
@@ -84,15 +65,12 @@ public final MethodHandle getTarget()
 ```
 
 Returns the target method of the call site, which behaves
-like a `final` field of the `ConstantCallSite`.
+like a {@code final} field of the {@code ConstantCallSite}.
 That is, the target is always the original value passed
 to the constructor call which created this instance.
 
-**Returns:** the immutable linkage state of this call site, a constant method handle
-
-Throws:
-
-- `IllegalStateException`: if the `ConstantCallSite` constructor has not completed
+@return the immutable linkage state of this call site, a constant method handle
+@throws IllegalStateException if the {@code ConstantCallSite} constructor has not completed
 
 ## ConstantCallSite.setTarget(MethodHandle)
 
@@ -100,16 +78,10 @@ Throws:
 public final void setTarget(MethodHandle ignore)
 ```
 
-Always throws an `UnsupportedOperationException`.
+Always throws an {@link UnsupportedOperationException}.
 This kind of call site cannot change its target.
-
-Parameters:
-
-- `ignore`: a new target proposed for the call site, which is ignored
-
-Throws:
-
-- `UnsupportedOperationException`: because this kind of call site cannot change its target
+@param ignore a new target proposed for the call site, which is ignored
+@throws UnsupportedOperationException because this kind of call site cannot change its target
 
 ## ConstantCallSite.dynamicInvoker()
 
@@ -119,10 +91,6 @@ public final MethodHandle dynamicInvoker()
 
 Returns this call site's permanent target.
 Since that target will never change, this is a correct implementation
-of CallSite.dynamicInvoker.
-
-**Returns:** the immutable linkage state of this call site, a constant method handle
-
-Throws:
-
-- `IllegalStateException`: if the `ConstantCallSite` constructor has not completed
+of {@link CallSite#dynamicInvoker CallSite.dynamicInvoker}.
+@return the immutable linkage state of this call site, a constant method handle
+@throws IllegalStateException if the {@code ConstantCallSite} constructor has not completed

@@ -1,13 +1,8 @@
 ---
-title: "no-inline-comments"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-inline-comments.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-inline-comments
+rule_type: suggestion
 ---
 
-# no-inline-comments
 
 Some style guides disallow comments on the same line as code. Code can become difficult to read if comments immediately follow the code on the same line.
 On the other hand, it is sometimes faster and more obvious to put comments immediately following code.
@@ -18,7 +13,7 @@ This rule disallows comments on the same line as code.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-inline-comments: "error"*/
@@ -35,9 +30,11 @@ function getRandomNumber(){
 const c = 3; /* A block comment after code */
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-inline-comments: "error"*/
@@ -49,13 +46,15 @@ const bar = 5;
 //This is a comment below a line of code
 ```
 
+:::
+
 ### JSX exception
 
 Comments inside the curly braces in JSX are allowed to be on the same line as the braces, but only if they are not on the same line with other code, and the braces do not enclose an actual expression.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect { "parserOptions": { "ecmaFeatures": { "jsx": true } } }
 
 ```jsx
 /*eslint no-inline-comments: "error"*/
@@ -71,9 +70,11 @@ const bar = (
 );
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct { "parserOptions": { "ecmaFeatures": { "jsx": true } } }
 
 ```jsx
 /*eslint no-inline-comments: "error"*/
@@ -105,15 +106,17 @@ const quux = (
 )
 ```
 
+:::
+
 ## Options
 
 ### ignorePattern
 
-To make this rule ignore specific comments, set the `ignorePattern` option to a string pattern that will be passed to the `RegExp` constructor.
+To make this rule ignore specific comments, set the `ignorePattern` option to a string pattern that will be passed to the [`RegExp` constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/RegExp).
 
 Examples of **correct** code for the `ignorePattern` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-inline-comments: ["error", { "ignorePattern": "webpackChunkName:\\s.+" }]*/
@@ -121,12 +124,16 @@ Examples of **correct** code for the `ignorePattern` option:
 import(/* webpackChunkName: "my-chunk-name" */ './locale/en');
 ```
 
+:::
+
 Examples of **incorrect** code for the `ignorePattern` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-inline-comments: ["error", { "ignorePattern": "something" }] */
 
 const foo = 4; // other thing
 ```
+
+:::

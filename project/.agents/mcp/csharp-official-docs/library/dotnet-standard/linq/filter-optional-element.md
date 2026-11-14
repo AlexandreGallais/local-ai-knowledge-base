@@ -1,10 +1,11 @@
 ---
-title: "How to filter on an optional element - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/filter-optional-element.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to filter on an optional element - LINQ to XML
+description: You can write a search for a child element in such a way that the search doesn't trigger an exception when the element doesn't exist.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to filter on an optional element (LINQ to XML)
@@ -13,7 +14,7 @@ Sometimes you want to filter for an element even though you're not sure it exist
 
 ## Example: Search that doesn't trigger an exception when the target element doesn't exist
 
-In the following example, the `Child5` element doesn't have a `Type` child element, but the query still executes correctly. The example uses the `System.Xml.Linq.Extensions.Elements*` extension method.
+In the following example, the `Child5` element doesn't have a `Type` child element, but the query still executes correctly. The example uses the <xref:System.Xml.Linq.Extensions.Elements*> extension method.
 
 ```csharp
 XElement root = XElement.Parse(@"<Root>
@@ -88,7 +89,7 @@ Child Four Text
 
 ## Example: Same search but for XML in a namespace
 
-The following example is the same query but for XML that's in a namespace. For more information, see Namespaces overview.
+The following example is the same query but for XML that's in a namespace. For more information, see [Namespaces overview](namespaces-overview.md).
 
 ```csharp
 XElement root = XElement.Parse(@"<Root xmlns='http://www.adatum.com'>
@@ -170,14 +171,14 @@ Child Four Text
 
 ## See also
 
-- `System.Xml.Linq.XElement.Attribute*`
-- `System.Xml.Linq.XContainer.Elements*`
-- `System.Xml.Linq.Extensions.Elements*`
-- Standard Query Operators Overview (C#)
-- Projection Operations (C#)
-- Basic <example-value> (LINQ to XML) (Visual Basic)
-- XML Child Axis Property (Visual Basic)
-- XML Attribute Axis Property (Visual Basic)
-- XML Value Property
-- Standard Query Operators Overview (Visual Basic)
-- Projection Operations (Visual Basic)
+- <xref:System.Xml.Linq.XElement.Attribute*?displayProperty=nameWithType>
+- <xref:System.Xml.Linq.XContainer.Elements*?displayProperty=nameWithType>
+- <xref:System.Xml.Linq.Extensions.Elements*?displayProperty=nameWithType>
+- [Standard Query Operators Overview (C#)](../../csharp/linq/standard-query-operators/index.md)
+- [Projection Operations (C#)](../../csharp/linq/standard-query-operators/projection-operations.md)
+- [Basic Queries (LINQ to XML) (Visual Basic)](./find-element-specific-attribute.md)
+- [XML Child Axis Property (Visual Basic)](../../visual-basic/language-reference/xml-axis/xml-child-axis-property.md)
+- [XML Attribute Axis Property (Visual Basic)](../../visual-basic/language-reference/xml-axis/xml-attribute-axis-property.md)
+- [XML Value Property](../../visual-basic/language-reference/xml-axis/xml-value-property.md)
+- [Standard Query Operators Overview (Visual Basic)](../../visual-basic/programming-guide/concepts/linq/standard-query-operators-overview.md)
+- [Projection Operations (Visual Basic)](../../visual-basic/programming-guide/concepts/linq/projection-operations.md)

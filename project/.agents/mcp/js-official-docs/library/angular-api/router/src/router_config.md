@@ -1,0 +1,365 @@
+# router/src/router_config
+
+## InitialNavigation
+
+```ts
+export type InitialNavigation = 'disabled' | 'enabledBlocking' | 'enabledNonBlocking'
+```
+
+Allowed values in an `ExtraOptions` object that configure
+when the router performs the initial navigation operation.
+
+* 'enabledNonBlocking' - (default) The initial navigation starts after the
+root component has been created. The bootstrap is not blocked on the completion of the initial
+navigation.
+* 'enabledBlocking' - The initial navigation starts before the root component is created.
+The bootstrap is blocked until the initial navigation is complete. This value should be set in
+case you use [server-side rendering](guide/ssr), but do not enable [hydration](guide/hydration)
+for your application.
+* 'disabled' - The initial navigation is not performed. The location listener is set up before
+the root component gets created. Use if there is a reason to have
+more control over when the router starts its initial navigation due to some complex
+initialization logic.
+
+@see {@link /api/router/RouterModule#forRoot forRoot}
+
+@publicApi
+
+## RouterConfigOptions
+
+```ts
+export interface RouterConfigOptions
+```
+
+Extra configuration options that can be used with the `withRouterConfig` function.
+
+@see [Router configuration options](guide/routing/customizing-route-behavior#router-configuration-options)
+
+@publicApi
+
+## RouterConfigOptions.canceledNavigationResolution
+
+```ts
+canceledNavigationResolution?: 'replace' | 'computed'
+```
+
+Configures how the Router attempts to restore state when a navigation is cancelled.
+
+'replace' - Always uses `location.replaceState` to set the browser state to the state of the
+router before the navigation started. This means that if the URL of the browser is updated
+_before_ the navigation is canceled, the Router will simply replace the item in history rather
+than trying to restore to the previous location in the session history. This happens most
+frequently with `urlUpdateStrategy: 'eager'` and navigations with the browser back/forward
+buttons.
+
+'computed' - Will attempt to return to the same index in the session history that corresponds
+to the Angular route when the navigation gets cancelled. For example, if the browser back
+button is clicked and the navigation is cancelled, the Router will trigger a forward navigation
+and vice versa.
+
+Note: the 'computed' option is incompatible with any `UrlHandlingStrategy` which only
+handles a portion of the URL because the history restoration navigates to the previous place in
+the browser history rather than simply resetting a portion of the URL.
+
+The default value is `replace` when not set.
+
+@see [Handle canceled navigations](guide/routing/customizing-route-behavior#handle-canceled-navigations)
+
+## RouterConfigOptions.onSameUrlNavigation
+
+```ts
+onSameUrlNavigation?: OnSameUrlNavigation
+```
+
+Configures the default for handling a navigation request to the current URL.
+
+If unset, the `Router` will use `'ignore'`.
+
+@see {@link OnSameUrlNavigation}
+
+@see [React to same-URL navigations](guide/routing/customizing-route-behavior#react-to-same-url-navigations)
+
+## RouterConfigOptions.paramsInheritanceStrategy
+
+```ts
+paramsInheritanceStrategy?: 'emptyOnly' | 'always'
+```
+
+Defines how the router merges parameters, data, and resolved data from parent to child
+routes.
+
+By default ('always'), a route inherits all parameters from its parent routes.
+
+Set to 'emptyOnly' to preserve the legacy behavior where a route only inherits the parent
+route's parameters when the route itself has an empty path or when the parent route doesn't
+have any component set.
+
+Note that when dealing with matrix parameters, "parent" refers to the parent `Route`
+config which does not necessarily mean the "URL segment to the left". When the `Route` `path`
+contains multiple segments, the matrix parameters must appear on the last segment. For example,
+matrix parameters for `{path: 'a/b', component: MyComp}` should appear as `a/b;foo=bar` and not
+`a;foo=bar/b`.
+
+@see [Control parameter inheritance](guide/routing/customizing-route-behavior#control-parameter-inheritance)
+
+## RouterConfigOptions.urlUpdateStrategy
+
+```ts
+urlUpdateStrategy?: 'deferred' | 'eager'
+```
+
+Defines when the router updates the browser URL. By default ('deferred'),
+update after successful navigation.
+Set to 'eager' if prefer to update the URL at the beginning of navigation.
+Updating the URL early allows you to handle a failure of navigation by
+showing an error message with the URL that failed.
+
+@see [Decide when the URL updates](guide/routing/customizing-route-behavior#decide-when-the-url-updates)
+
+## RouterConfigOptions.defaultQueryParamsHandling
+
+```ts
+defaultQueryParamsHandling?: QueryParamsHandling
+```
+
+The default strategy to use for handling query params in `Router.createUrlTree` when one is not provided.
+
+The `createUrlTree` method is used internally by `Router.navigate` and `RouterLink`.
+Note that `QueryParamsHandling` does not apply to `Router.navigateByUrl`.
+
+When neither the default nor the queryParamsHandling option is specified in the call to `createUrlTree`,
+the current parameters will be replaced by new parameters.
+
+@see {@link Router#createUrlTree}
+@see {@link QueryParamsHandling}
+
+@see [Choose default query parameter handling](guide/routing/customizing-route-behavior#choose-default-query-parameter-handling)
+
+## RouterConfigOptions.resolveNavigationPromiseOnError
+
+```ts
+resolveNavigationPromiseOnError?: boolean
+```
+
+When `true`, the `Promise` will instead resolve with `false`, as it does with other failed
+navigations (for example, when guards are rejected).
+
+Otherwise the `Promise` returned by the Router's navigation with be rejected
+if an error occurs.
+
+## InMemoryScrollingOptions
+
+```ts
+export interface InMemoryScrollingOptions
+```
+
+Configuration options for the scrolling feature which can be used with `withInMemoryScrolling`
+function or `RouterModule.forRoot`.
+
+@publicApi
+@see withInMemoryScrolling
+@see RouterModule#forRoot
+
+## InMemoryScrollingOptions.anchorScrolling
+
+```ts
+anchorScrolling?: 'disabled' | 'enabled'
+```
+
+When set to 'enabled', scrolls to the anchor element when the URL has a fragment.
+Anchor scrolling is disabled by default.
+
+Anchor scrolling does not happen on 'popstate'. Instead, we restore the position
+that we stored or scroll to the top.
+
+## InMemoryScrollingOptions.scrollPositionRestoration
+
+```ts
+scrollPositionRestoration?: 'disabled' | 'enabled' | 'top'
+```
+
+Configures if the scroll position needs to be restored when navigating back.
+
+* 'disabled'- (Default) Does nothing. Scroll position is maintained on navigation.
+* 'top'- Sets the scroll position to x = 0, y = 0 on all navigation.
+* 'enabled'- Restores the previous scroll position on backward navigation, else sets the
+position to the anchor if one is provided, or sets the scroll position to [0, 0] (forward
+navigation). This option will be the default in the future.
+
+You can implement custom scroll restoration behavior by adapting the enabled behavior as
+in the following example.
+
+```ts
+class App {
+  movieData = signal<MovieData | null>(null);
+  private router = inject(Router);
+  private viewportScroller = inject(ViewportScroller);
+  private changeDetectorRef = inject(ChangeDetectorRef);
+
+  constructor() {
+   this.router.events.pipe(filter((event: Event): event is Scroll => event instanceof Scroll)
+    ).subscribe(e => {
+      fetch('http://example.com/movies.json').then(response => {
+        this.movieData.set(response.json());
+
+        if (e.position) {
+          this.viewportScroller.scrollToPosition(e.position);
+        }
+      });
+    });
+  }
+}
+```
+
+## ComponentInputBindingOptions
+
+```ts
+export interface ComponentInputBindingOptions
+```
+
+Configuration options for the component input binding feature which can be used
+with `withComponentInputBinding` function or `RouterModule.forRoot`
+
+@publicApi
+@see withComponentInputBinding
+@see RouterModule#forRoot
+@see [Disable query parameter binding](guide/routing/common-router-tasks#disable-query-parameter-binding)
+
+## ComponentInputBindingOptions.queryParams
+
+```ts
+queryParams?: boolean
+```
+
+When true (default), will configure query parameters to bind to component
+inputs.
+
+## ComponentInputBindingOptions.unmatchedInputBehavior
+
+```ts
+unmatchedInputBehavior?: 'alwaysUndefined' | 'undefinedIfStale'
+```
+
+Configures the behavior when an input is not matched by any key in the router data.
+
+- `'alwaysUndefined'`: (Default) Binds `undefined` to the input. This ensures that stale data
+  is not retained.
+- `'undefinedIfStale'`: Binds `undefined` only if the input was previously available
+  in the router data during the lifetime of the active route in this outlet. This avoids
+  setting `undefined` for inputs that were never expected to be set by the router.
+
+## ExtraOptions
+
+```ts
+export interface ExtraOptions extends InMemoryScrollingOptions, RouterConfigOptions
+```
+
+A set of configuration options for a router module, provided in the
+`forRoot()` method.
+
+@see {@link /api/router/RouterModule#forRoot forRoot}
+
+
+@publicApi
+
+## ExtraOptions.enableTracing
+
+```ts
+enableTracing?: boolean
+```
+
+When true, log all internal navigation events to the console.
+Use for debugging.
+
+## ExtraOptions.useHash
+
+```ts
+useHash?: boolean
+```
+
+When true, enable the location strategy that uses the URL fragment
+instead of the history API.
+
+## ExtraOptions.initialNavigation
+
+```ts
+initialNavigation?: InitialNavigation
+```
+
+One of `enabled`, `enabledBlocking`, `enabledNonBlocking` or `disabled`.
+When set to `enabled` or `enabledBlocking`, the initial navigation starts before the root
+component is created. The bootstrap is blocked until the initial navigation is complete. This
+value should be set in case you use [server-side rendering](guide/ssr), but do not enable
+[hydration](guide/hydration) for your application. When set to `enabledNonBlocking`,
+the initial navigation starts after the root component has been created.
+The bootstrap is not blocked on the completion of the initial navigation. When set to
+`disabled`, the initial navigation is not performed. The location listener is set up before the
+root component gets created. Use if there is a reason to have more control over when the router
+starts its initial navigation due to some complex initialization logic.
+
+## ExtraOptions.bindToComponentInputs
+
+```ts
+bindToComponentInputs?: boolean | ComponentInputBindingOptions
+```
+
+When true, enables binding information from the `Router` state directly to the inputs of the
+component in `Route` configurations. Can also accept an `ComponentInputBindingOptions` object
+to set whether to exclude queryParams from binding.
+
+## ExtraOptions.enableViewTransitions
+
+```ts
+enableViewTransitions?: boolean
+```
+
+When true, enables view transitions in the Router by running the route activation and
+deactivation inside of `document.startViewTransition`.
+
+@see https://developer.chrome.com/docs/web-platform/view-transitions/
+@see https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API
+@experimental 17.0
+
+## ExtraOptions.errorHandler
+
+```ts
+errorHandler?: (error: any)
+```
+
+A custom error handler for failed navigations.
+If the handler returns a value, the navigation Promise is resolved with this value.
+If the handler throws an exception, the navigation Promise is rejected with the exception.
+
+@see RouterConfigOptions
+
+## ExtraOptions.preloadingStrategy
+
+```ts
+preloadingStrategy?: any
+```
+
+Configures a preloading strategy.
+One of `PreloadAllModules` or `NoPreloading` (the default).
+
+## ExtraOptions.scrollOffset
+
+```ts
+scrollOffset?: [number, number] | (()
+```
+
+Configures the scroll offset the router will use when scrolling to an element.
+
+When given a tuple with x and y position value,
+the router uses that offset each time it scrolls.
+When given a function, the router invokes the function every time
+it restores scroll position.
+
+## ROUTER_CONFIGURATION
+
+```ts
+export const ROUTER_CONFIGURATION = new InjectionToken<ExtraOptions>( typeof ngDevMode === 'undefined' || ngDevMode ? 'router config' : '',
+```
+
+A DI token for the router service.
+
+@publicApi

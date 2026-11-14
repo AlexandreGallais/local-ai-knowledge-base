@@ -1,18 +1,17 @@
 ---
-title: "valid-jsdoc"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/valid-jsdoc.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: valid-jsdoc
+rule_type: suggestion
+related_rules:
+- require-jsdoc
+further_reading:
+- https://jsdoc.app
 ---
 
-# valid-jsdoc
+:::important
+This rule was removed in ESLint v9.0.0 and replaced by the [`eslint-plugin-jsdoc`](https://github.com/gajus/eslint-plugin-jsdoc) equivalent.
+:::
 
-**Important:**
-This rule was removed in ESLint v9.0.0 and replaced by the `eslint-plugin-jsdoc` equivalent.
-
-JSDoc generates application programming interface (API) documentation from specially-formatted comments in JavaScript code. For example, this is a JSDoc comment for a function:
+[JSDoc](https://jsdoc.app) generates application programming interface (API) documentation from specially-formatted comments in JavaScript code. For example, this is a JSDoc comment for a function:
 
 ```js
 /**
@@ -47,7 +46,7 @@ This rule does not report missing JSDoc comments for classes, functions, or meth
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint valid-jsdoc: "error"*/
@@ -87,9 +86,11 @@ function sum(num1, num2) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint valid-jsdoc: "error"*/
@@ -165,6 +166,8 @@ class WonderfulWidget extends Widget {
 }
 ```
 
+:::
+
 ## Options
 
 This rule has an object option:
@@ -184,7 +187,7 @@ This rule has an object option:
 
 Examples of additional **incorrect** code for this rule with sample `"prefer": { "arg": "param", "argument": "param", "class": "constructor", "return": "returns", "virtual": "abstract" }` options:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint valid-jsdoc: ["error", { "prefer": { "arg": "param", "argument": "param", "class": "constructor", "return": "returns", "virtual": "abstract" } }]*/
@@ -223,11 +226,13 @@ class Widget {
 }
 ```
 
+:::
+
 ### preferType
 
 Examples of additional **incorrect** code for this rule with sample `"preferType": { "Boolean": "boolean", "Number": "number", "object": "Object", "String": "string" }` options:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint valid-jsdoc: ["error", { "preferType": { "Boolean": "boolean", "Number": "number", "object": "Object", "String": "string" } }]*/
@@ -264,11 +269,13 @@ class Widget {
 }
 ```
 
+:::
+
 ### requireReturn
 
 Examples of additional **incorrect** code for this rule with the `"requireReturn": false` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint valid-jsdoc: ["error", { "requireReturn": false }]*/
@@ -295,9 +302,11 @@ class Widget {
 }
 ```
 
+:::
+
 Example of additional **correct** code for this rule with the `"requireReturn": false` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint valid-jsdoc: ["error", { "requireReturn": false }]*/
@@ -310,11 +319,13 @@ function greet(name) {
 }
 ```
 
+:::
+
 ### requireReturnType
 
 Example of additional **correct** code for this rule with the `"requireReturnType": false` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint valid-jsdoc: ["error", { "requireReturnType": false }]*/
@@ -330,11 +341,13 @@ function add(num1, num2) {
 }
 ```
 
+:::
+
 ### requireParamType
 
 Example of additional **correct** code for this rule with the `"requireParamType": false` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint valid-jsdoc: ["error", { "requireParamType": false }]*/
@@ -350,11 +363,13 @@ function add(num1, num2) {
 }
 ```
 
+:::
+
 ### matchDescription
 
 Example of additional **incorrect** code for this rule with a sample `"matchDescription": ".+"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint valid-jsdoc: ["error", { "matchDescription": ".+" }]*/
@@ -369,11 +384,13 @@ function greet(name) {
 }
 ```
 
+:::
+
 ### requireParamDescription
 
 Example of additional **correct** code for this rule with the `"requireParamDescription": false` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint valid-jsdoc: ["error", { "requireParamDescription": false }]*/
@@ -389,11 +406,13 @@ function add(num1, num2) {
 }
 ```
 
+:::
+
 ### requireReturnDescription
 
 Example of additional **correct** code for this rule with the `"requireReturnDescription": false` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint valid-jsdoc: ["error", { "requireReturnDescription": false }]*/
@@ -408,6 +427,8 @@ function add(num1, num2) {
     return num1 + num2;
 }
 ```
+
+:::
 
 ## When Not To Use It
 

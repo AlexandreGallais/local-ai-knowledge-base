@@ -1,12 +1,3 @@
----
-title: "StructLayout interface (java.lang.foreign)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/foreign/StructLayout.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # StructLayout interface (java.lang.foreign)
 
 ```java
@@ -15,10 +6,11 @@ public sealed interface StructLayout extends GroupLayout permits StructLayoutImp
 
 A group layout whose member layouts are laid out one after the other.
 
-**Implementation requirements:** Implementing classes are immutable, thread-safe and
-value-based.
+@implSpec
+Implementing classes are immutable, thread-safe and
+<a href="{@docRoot}/java.base/java/lang/doc-files/ValueBased.html">value-based</a>.
 
-**Since:** 22
+@since 22
 
 ## StructLayout.withName(String)
 
@@ -26,7 +18,7 @@ value-based.
 StructLayout withName(String name)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
 ## StructLayout.withoutName()
 
@@ -34,7 +26,7 @@ StructLayout withName(String name)
 StructLayout withoutName()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
 ## StructLayout.withByteAlignment(long)
 
@@ -42,8 +34,5 @@ StructLayout withoutName()
 StructLayout withByteAlignment(long byteAlignment)
 ```
 
-(inherited documentation)
-
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+{@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}

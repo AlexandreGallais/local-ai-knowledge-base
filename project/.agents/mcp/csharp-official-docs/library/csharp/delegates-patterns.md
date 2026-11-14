@@ -1,15 +1,13 @@
 ---
-title: "Common Patterns for Delegates"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/delegates-patterns.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Common Patterns for Delegates
+description: Learn about common patterns for using delegates in your code to avoid strong coupling between your components.
+ms.date: 06/20/2016
+ms.assetid: 0ff8fdfd-6a11-4327-b061-0f2526f35b43
 ---
 
 # Common patterns for delegates
 
-Previous
+[Previous](delegates-strongly-typed.md)
 
 Delegates provide a mechanism that enables software designs
 involving minimal coupling between components.
@@ -80,18 +78,18 @@ Let's start small: the initial implementation will accept new messages,
 and write them using any attached delegate. You can start with one delegate
 that writes messages to the console.
 
-_Code sample not included: ../../samples/snippets/csharp/delegates-and-events/Logger.cs._
+[!code-csharp[LoggerImplementation](../../samples/snippets/csharp/delegates-and-events/Logger.cs#FirstImplementation "A first Logger implementation.")]
 
 The static class above is the simplest thing that can work. We need to
 write the single implementation for the method that writes messages
 to the console:
 
-_Code sample not included: ../../samples/snippets/csharp/delegates-and-events/LoggingMethods.cs._
+[!code-csharp[LogToConsole](../../samples/snippets/csharp/delegates-and-events/LoggingMethods.cs#LogToConsole "A Console logger.")]
 
 Finally, you need to hook up the delegate by attaching it to
 the WriteMessage delegate declared in the logger:
 
-_Code sample not included: ../../samples/snippets/csharp/delegates-and-events/Program.cs._
+[!code-csharp[ConnectDelegate](../../samples/snippets/csharp/delegates-and-events/Program.cs#ConnectDelegate "Connect to the delegate")]
 
 ### Practices
 
@@ -115,13 +113,13 @@ creating other logging mechanisms.
 Next, let's add a few arguments to the `LogMessage()` method so that
 your log class creates more structured messages:
 
-_Code sample not included: ../../samples/snippets/csharp/delegates-and-events/Logger.cs._
-_Code sample not included: ../../samples/snippets/csharp/delegates-and-events/Logger.cs._
+[!code-csharp[Severity](../../samples/snippets/csharp/delegates-and-events/Logger.cs#Severity "Define severities")]
+[!code-csharp[NextLogger](../../samples/snippets/csharp/delegates-and-events/Logger.cs#LoggerTwo "Refine the Logger")]
 
 Next, let's make use of that `Severity` argument to filter the messages
 that are sent to the log's output.
 
-_Code sample not included: ../../samples/snippets/csharp/delegates-and-events/Logger.cs._
+[!code-csharp[FinalLogger](../../samples/snippets/csharp/delegates-and-events/Logger.cs#LoggerFinal "Finish the Logger")]
 
 ### Practices
 
@@ -147,12 +145,12 @@ each message is generated.
 
 Here is that file-based logger:
 
-_Code sample not included: ../../samples/snippets/csharp/delegates-and-events/FileLogger.cs._
+[!code-csharp[FileLogger](../../samples/snippets/csharp/delegates-and-events/FileLogger.cs#FileLogger "Log to files")]
 
 Once you've created this class, you can instantiate it and it attaches
 its LogMessage method to the Logger component:
 
-_Code sample not included: ../../samples/snippets/csharp/delegates-and-events/Program.cs._
+[!code-csharp[FileLogger](../../samples/snippets/csharp/delegates-and-events/Program.cs#FileLogger "Log to files")]
 
 These two are not mutually exclusive. You could attach both log
 methods and generate messages to the console and a file:
@@ -243,4 +241,4 @@ coupling between the logger and any output engines is only through
 the delegate, no other types (like interfaces or base classes) are
 involved. The coupling is as small as possible.
 
-Next
+[Next](events-overview.md)

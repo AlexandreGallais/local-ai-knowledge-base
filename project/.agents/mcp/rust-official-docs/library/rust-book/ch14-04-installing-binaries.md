@@ -1,20 +1,13 @@
----
-title: "ch14-04-installing-binaries"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch14-04-installing-binaries.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
+<!-- Old headings. Do not remove or links may break. -->
 
-# ch14-04-installing-binaries
+<a id="installing-binaries-from-cratesio-with-cargo-install"></a>
 
 ## Installing Binaries with `cargo install`
 
 The `cargo install` command allows you to install and use binary crates
 locally. This isn’t intended to replace system packages; it’s meant to be a
 convenient way for Rust developers to install tools that others have shared on
-crates.io. Note that you can only install
+[crates.io](https://crates.io/)<!-- ignore -->. Note that you can only install
 packages that have binary targets. A _binary target_ is the runnable program
 that is created if the crate has a _src/main.rs_ file or another file specified
 as a binary, as opposed to a library target that isn’t runnable on its own but
@@ -31,6 +24,10 @@ with `cargo install`.
 For example, in Chapter 12 we mentioned that there’s a Rust implementation of
 the `grep` tool called `ripgrep` for searching files. To install `ripgrep`, we
 can run the following:
+
+<!-- manual-regeneration
+cargo install something you don't have, copy relevant output below
+-->
 
 ```console
 $ cargo install ripgrep

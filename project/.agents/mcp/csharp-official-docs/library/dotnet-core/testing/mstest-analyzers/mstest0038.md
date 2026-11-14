@@ -1,12 +1,16 @@
 ---
 title: "MSTEST0038: Don't use 'Assert.AreSame' or 'Assert.AreNotSame' with value types"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0038.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0038: Don't use 'Assert.AreSame' or 'Assert.AreNotSame' with value types"
+ms.date: 01/06/2025
+f1_keywords:
+- MSTEST0038
+- AvoidAssertAreSameWithValueTypesAnalyzer
+helpviewer_keywords:
+- AvoidAssertAreSameWithValueTypesAnalyzer
+- MSTEST0038
+author: Youssef1313
+ms.author: ygerges
 ---
-
 # MSTEST0038: Don't use 'Assert.AreSame' or 'Assert.AreNotSame' with value types
 
 | Property                            | Value                                                                  |
@@ -22,11 +26,11 @@ license: "CC-BY-4.0"
 
 ## Cause
 
-The use of `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreSame*` or `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreNotSame*` with one or both arguments being a value type.
+The use of <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreSame*?displayProperty=nameWithType> or <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreNotSame*?displayProperty=nameWithType> with one or both arguments being a value type.
 
 ## Rule description
 
-`Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreSame*` and `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreNotSame*` work by comparing the *reference* of the given `expected`/`notExpected` and actual arguments via `ReferenceEquals`. Hence, when you pass a value type, it is boxed.
+<xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreSame*?displayProperty=nameWithType> and <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreNotSame*?displayProperty=nameWithType> work by comparing the *reference* of the given `expected`/`notExpected` and actual arguments via `ReferenceEquals`. Hence, when you pass a value type, it is [boxed](../../../csharp/programming-guide/types/boxing-and-unboxing.md#boxing).
 
 If using `AreSame`, the assert will always fail. If using `AreNotSame`, the assert will always pass.
 

@@ -1,19 +1,13 @@
----
-title: "no-array-callback-reference"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-array-callback-reference.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-array-callback-reference
 
 📝 Prevent passing a function reference directly to iterator methods.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Passing functions to iterator methods can cause issues when the function is changed without realizing that the iterator passes 2 more parameters to it. **This also applies when using TypeScript,** albeit only if the function accepts the same parameter type used by the iterator method.
 
@@ -21,7 +15,7 @@ This rule intentionally reports locally declared callbacks too. Use an inline wr
 
 Type predicate callbacks are allowed for `.every()`, `.filter()`, `.find()`, and `.findLast()` because wrapping them can fail to preserve TypeScript's predicate overload narrowing.
 
-A receiver known to be neither an array nor a typed array, such as a `Set` or a locally declared class with a same-named method, is ignored. A locally declared type is recognized from its annotation alone, while a receiver whose type comes from another module needs type information. Unknown receivers are still reported, so use the `ignore` option or an inline disable for non-array APIs that intentionally share array method names.
+A receiver known to be neither an array nor a typed array, such as a `Set` or a locally declared class with a same-named method, is ignored. A locally declared type is recognized from its annotation alone, while a receiver whose type comes from another module needs [type information](https://typescript-eslint.io/getting-started/typed-linting/). Unknown receivers are still reported, so use the `ignore` option or an inline disable for non-array APIs that intentionally share array method names.
 
 Suppose you have a `unicorn` module:
 

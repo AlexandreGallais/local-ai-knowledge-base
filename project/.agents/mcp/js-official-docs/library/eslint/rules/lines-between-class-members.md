@@ -1,21 +1,17 @@
 ---
-title: "lines-between-class-members"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/lines-between-class-members.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: lines-between-class-members
+rule_type: layout
+related_rules:
+- padded-blocks
+- padding-line-between-statements
 ---
-
-# lines-between-class-members
-
 This rule improves readability by enforcing lines between class members. It will not check empty lines before the first member and after the last member, since that is already taken care of by padded-blocks.
 
 ## Rule Details
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint lines-between-class-members: ["error", "always"]*/
@@ -29,10 +25,12 @@ class MyClass {
   }
 }
 ```
+
+:::
 
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint lines-between-class-members: ["error", "always"]*/
@@ -49,9 +47,11 @@ class MyClass {
 }
 ```
 
+:::
+
 Examples of additional **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint lines-between-class-members: ["error", "always"]*/
@@ -61,6 +61,8 @@ class MyClass {
   ;in = 2
 }
 ```
+
+:::
 
 ### Options
 
@@ -83,7 +85,7 @@ Second option is an object with a property named `exceptAfterSingleLine`:
 
 Examples of **incorrect** code for this rule with the string option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint lines-between-class-members: ["error", "always"]*/
@@ -94,7 +96,9 @@ class Foo{
 }
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /* eslint lines-between-class-members: ["error", "never"]*/
@@ -106,10 +110,12 @@ class Bar{
   baz(){}
 }
 ```
+
+:::
 
 Examples of **correct** code for this rule with the string option:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint lines-between-class-members: ["error", "always"]*/
@@ -122,7 +128,9 @@ class Foo{
 }
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /* eslint lines-between-class-members: ["error", "never"]*/
@@ -133,9 +141,11 @@ class Bar{
 }
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the array of configurations option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 // disallows blank lines between methods
@@ -167,7 +177,9 @@ class MyClass {
 }
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 // requires blank lines around fields, disallows blank lines between methods
@@ -198,10 +210,12 @@ class MyClass {
   method2() {}
 }
 ```
+
+:::
 
 Examples of **correct** code for this rule with the array of configurations option:
 
-**Correct:**
+::: correct
 
 ```js
 // disallows blank lines between methods
@@ -232,7 +246,9 @@ class MyClass {
 }
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 // requires blank lines around fields, disallows blank lines between methods
@@ -265,9 +281,11 @@ class MyClass {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the object option:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint lines-between-class-members: ["error", "always", { "exceptAfterSingleLine": true }]*/
@@ -282,7 +300,9 @@ class Foo{
 }
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint lines-between-class-members: [
@@ -314,11 +334,13 @@ class MyClass {
 }
 ```
 
+:::
+
 ## When Not To Use It
 
 If you don't want to enforce empty lines between class members, you can disable this rule.
 
 ## Compatibility
 
-* requirePaddingNewLinesAfterBlocks
-* disallowPaddingNewLinesAfterBlocks
+* [requirePaddingNewLinesAfterBlocks](https://jscs-dev.github.io/rule/requirePaddingNewLinesAfterBlocks)
+* [disallowPaddingNewLinesAfterBlocks](https://jscs-dev.github.io/rule/disallowPaddingNewLinesAfterBlocks)

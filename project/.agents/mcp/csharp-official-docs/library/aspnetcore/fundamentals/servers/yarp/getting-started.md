@@ -1,20 +1,21 @@
 ---
-title: "Get started with YARP"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/getting-started.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
+title: Get started with YARP
+description: Get started with the YARP library that provides core proxy functionality, customize library modules, and create a project that uses the YARP package.
+ms.date: 08/05/2026
+ms.topic: concept-article
+content_well_notification: AI-contribution
+ai-usage: ai-assisted
 
+# customer intent: As an ASP.NET developer, I want to get started with the YARP library, so I can learn how to customize the modules for my project.
+---
 # Get started with YARP
 
 YARP is designed as a .NET library that provides core proxy functionality. You can customize the library by adding or replacing modules. YARP is currently provided as a NuGet package and code samples, but a project template and prebuilt executable (`.exe`) are planned for the future.
 
-YARP is implemented on top of .NET infrastructure. You can develop apps on Windows, Linux, or macOS with the .NET SDK and your favorite editor: Microsoft Visual Studio or Visual Studio Code. For production hosting, use Windows or Linux server distributions.
+YARP is implemented on top of .NET infrastructure. You can develop apps on Windows, Linux, or macOS with the .NET SDK and your favorite editor: [Microsoft Visual Studio](https://visualstudio.microsoft.com/vs/) or [Visual Studio Code](https://code.visualstudio.com/). For production hosting, use Windows or Linux server distributions.
 
-> **Note:**
-> macOS is supported for ASP.NET Core development, testing, continuous integration (CI), and local services without external access, but not for production server workloads. There is no server edition of macOS, and Apple discontinued macOS Server. For production hosting, use Windows or Linux server distributions.
+> [!NOTE]
+> macOS is supported for ASP.NET Core development, testing, continuous integration (CI), and local services without external access, but not for production server workloads. There is no server edition of macOS, and [Apple discontinued macOS Server](https://support.apple.com/101601). For production hosting, use Windows or Linux server distributions.
 
 YARP 2.3.0 supports .NET 8 or later. You can download the .NET SDK from https://dotnet.microsoft.com/download/dotnet/.
 
@@ -30,19 +31,18 @@ dotnet new web -n MyProxy
 
 Or, build a new ASP.NET Core web app in Visual Studio 2022 by selecting **Empty** for the project template.
 
-> **Note:**
-> For the complete version of the project implemented in this article, download the Basic YARP Sample on GitHub.
+> [!NOTE]
+> For the complete version of the project implemented in this article, download the [Basic YARP Sample](https://github.com/dotnet/yarp/tree/release/latest/samples/BasicYarpSample) on GitHub.
 
 ## Add the YARP package reference
 
-Add a package reference for Yarp.ReverseProxy version 2.3.0 or later.
+Add a package reference for [Yarp.ReverseProxy](https://www.nuget.org/packages/Yarp.ReverseProxy) version 2.3.0 or later.
 
 ```dotnetcli
 dotnet add package Yarp.ReverseProxy
 ```
 
-> **Note:**
-> For guidance on adding packages to .NET apps, see the articles under *Install and manage packages* at Package consumption workflow (NuGet documentation). Confirm correct package versions at NuGet.org.
+[!INCLUDE[](~/includes/package-reference.md)]
 
 ## Add the YARP middleware
 
@@ -57,14 +57,14 @@ app.MapReverseProxy();
 app.Run();
 ```
 
-## Customize the YARP configuration
+## Customize the YARP configuration 
 
-The configuration for YARP is defined in the _appsettings.json_ file. For more information, see YARP configuration files.
+The configuration for YARP is defined in the _appsettings.json_ file. For more information, see [YARP configuration files](config-files.md).
 
-You can also specify the configuration programmatically. For more information, see YARP extensibility: Configuration providers.
+You can also specify the configuration programmatically. For more information, see [YARP extensibility: Configuration providers](config-providers.md).
 
-To learn more about the available configuration options, see the `Yarp.ReverseProxy.Configuration.RouteConfig` and `Yarp.ReverseProxy.Configuration.ClusterConfig` reference articles.
-
+To learn more about the available configuration options, see the <xref:Yarp.ReverseProxy.Configuration.RouteConfig> and <xref:Yarp.ReverseProxy.Configuration.ClusterConfig> reference articles.
+ 
 ```json
  {
   "Logging": {
@@ -101,12 +101,12 @@ To learn more about the available configuration options, see the `Yarp.ReversePr
 
 To run your new YARP project:
 
-- **.NET CLI**: Run the `dotnet run` command within the sample's directory, or use the `dotnet run --project ` command.
+- **.NET CLI**: Run the `dotnet run` command within the sample's directory, or use the `dotnet run --project <path to .csproj file>` command.
 
 - **Visual Studio**: Start the app by selecting **Run** on the main menubar.
 
 ## Related content
 
-- Basic YARP sample on GitHub
-- YARP Configuration Files
-- YARP extensibility: Configuration providers
+- [Basic YARP sample on GitHub](https://github.com/dotnet/yarp/tree/release/latest/samples/BasicYarpSample)
+- [YARP Configuration Files](config-files.md)
+- [YARP extensibility: Configuration providers](config-providers.md)

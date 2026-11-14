@@ -1,13 +1,13 @@
 ---
-title: "object-shorthand"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/object-shorthand.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: object-shorthand
+rule_type: suggestion
+related_rules:
+- no-useless-rename
+further_reading:
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer
 ---
 
-# object-shorthand
+
 
 ECMAScript 6 provides a concise form for defining object literal methods and properties. This
 syntax can make defining complex object literals much cleaner.
@@ -123,7 +123,7 @@ Object methods that provide the binding for a `super` reference are ignored when
 
 Example of **incorrect** code for this rule with the `"always", { "avoidQuotes": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint object-shorthand: ["error", "always", { "avoidQuotes": true }]*/
@@ -133,9 +133,11 @@ const foo = {
 };
 ```
 
+:::
+
 Example of **correct** code for this rule with the `"always", { "avoidQuotes": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint object-shorthand: ["error", "always", { "avoidQuotes": true }]*/
@@ -145,6 +147,8 @@ const foo = {
     "qux": qux
 };
 ```
+
+:::
 
 ### ignoreConstructors
 
@@ -156,7 +160,7 @@ const foo = {
 
 Example of **correct** code for this rule with the `"always", { "ignoreConstructors": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint object-shorthand: ["error", "always", { "ignoreConstructors": true }]*/
@@ -166,6 +170,8 @@ const foo = {
 };
 ```
 
+:::
+
 ```json
 {
     "object-shorthand": ["error", "methods", { "ignoreConstructors": false }]
@@ -174,7 +180,7 @@ const foo = {
 
 Example of **incorrect** code for this rule with the `"methods", { "ignoreConstructors": false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint object-shorthand: ["error", "methods", { "ignoreConstructors": false }]*/
@@ -184,9 +190,11 @@ const foo = {
 };
 ```
 
+:::
+
 Example of **correct** code for this rule with the `"methods", { "ignoreConstructors": false }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint object-shorthand: ["error", "methods", { "ignoreConstructors": false }]*/
@@ -196,11 +204,13 @@ const foo = {
 };
 ```
 
+:::
+
 ### methodsIgnorePattern
 
 Example of **correct** code for this rule with the `"always", { "methodsIgnorePattern": "^bar$" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint object-shorthand: ["error", "always", { "methodsIgnorePattern": "^bar$" }]*/
@@ -209,6 +219,8 @@ const foo = {
     bar: function() {}
 };
 ```
+
+:::
 
 ### avoidExplicitReturnArrows
 
@@ -220,7 +232,7 @@ const foo = {
 
 Example of **incorrect** code for this rule with the `"always", { "avoidExplicitReturnArrows": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint object-shorthand: ["error", "always", { "avoidExplicitReturnArrows": true }]*/
@@ -236,9 +248,11 @@ const foo = {
 };
 ```
 
+:::
+
 Example of **correct** code for this rule with the `"always", { "avoidExplicitReturnArrows": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint object-shorthand: ["error", "always", { "avoidExplicitReturnArrows": true }]*/
@@ -252,9 +266,11 @@ const foo = {
 };
 ```
 
+:::
+
 Example of **incorrect** code for this rule with the `"consistent"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint object-shorthand: [2, "consistent"]*/
@@ -265,9 +281,11 @@ const foo = {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"consistent"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint object-shorthand: [2, "consistent"]*/
@@ -283,9 +301,11 @@ const bar = {
 };
 ```
 
+:::
+
 Example of **incorrect** code with the `"consistent-as-needed"` option, which is very similar to `"consistent"`:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint object-shorthand: [2, "consistent-as-needed"]*/
@@ -295,6 +315,8 @@ const foo = {
     b: b,
 };
 ```
+
+:::
 
 ## When Not To Use It
 

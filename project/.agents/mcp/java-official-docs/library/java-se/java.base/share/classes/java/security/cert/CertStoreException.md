@@ -1,12 +1,3 @@
----
-title: "CertStoreException class (java.security.cert)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/cert/CertStoreException.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # CertStoreException class (java.security.cert)
 
 ```java
@@ -14,23 +5,24 @@ public class CertStoreException extends GeneralSecurityException
 ```
 
 An exception indicating one of a variety of problems retrieving
-certificates and CRLs from a `CertStore`.
-
-A `CertStoreException` provides support for wrapping
-exceptions. The getCause method returns the throwable,
+certificates and CRLs from a {@code CertStore}.
+<p>
+A {@code CertStoreException} provides support for wrapping
+exceptions. The {@link #getCause getCause} method returns the throwable,
 if any, that caused this exception to be thrown.
-
-**Concurrent Access**
-
+<p>
+<b>Concurrent Access</b>
+<p>
 Unless otherwise specified, the methods defined in this class are not
 thread-safe. Multiple threads that need to access a single
 object concurrently should synchronize amongst themselves and
 provide the necessary locking. Multiple threads each manipulating
 separate objects need not synchronize.
 
-**See also:** CertStore
+@see CertStore
 
-**Since:** 1.4
+@since       1.4
+@author      Sean Mullan
 
 ## CertStoreException.CertStoreException()
 
@@ -38,7 +30,7 @@ separate objects need not synchronize.
 public CertStoreException()
 ```
 
-Creates a `CertStoreException` with `null` as
+Creates a {@code CertStoreException} with {@code null} as
 its detail message.
 
 ## CertStoreException.CertStoreException(String)
@@ -47,13 +39,11 @@ its detail message.
 public CertStoreException(String msg)
 ```
 
-Creates a `CertStoreException` with the given detail
-message. A detail message is a `String` that describes this
+Creates a {@code CertStoreException} with the given detail
+message. A detail message is a {@code String} that describes this
 particular exception.
 
-Parameters:
-
-- `msg`: the detail message
+@param msg the detail message
 
 ## CertStoreException.CertStoreException(Throwable)
 
@@ -61,16 +51,16 @@ Parameters:
 public CertStoreException(Throwable cause)
 ```
 
-Creates a `CertStoreException` that wraps the specified
+Creates a {@code CertStoreException} that wraps the specified
 throwable. This allows any exception to be converted into a
-`CertStoreException`, while retaining information about the
+{@code CertStoreException}, while retaining information about the
 cause, which may be useful for debugging. The detail message is
-set to (`cause==null ? null : cause.toString()`) (which
+set to ({@code cause==null ? null : cause.toString()}) (which
 typically contains the class and detail message of cause).
 
-Parameters:
-
-- `cause`: the cause (which is saved for later retrieval by the getCause() method). (A `null` value is permitted, and indicates that the cause is nonexistent or unknown.)
+@param cause the cause (which is saved for later retrieval by the
+{@link #getCause getCause()} method). (A {@code null} value is
+permitted, and indicates that the cause is nonexistent or unknown.)
 
 ## CertStoreException.CertStoreException(String, Throwable)
 
@@ -78,10 +68,10 @@ Parameters:
 public CertStoreException(String msg, Throwable cause)
 ```
 
-Creates a `CertStoreException` with the specified detail
+Creates a {@code CertStoreException} with the specified detail
 message and cause.
 
-Parameters:
-
-- `msg`: the detail message
-- `cause`: the cause (which is saved for later retrieval by the getCause() method). (A `null` value is permitted, and indicates that the cause is nonexistent or unknown.)
+@param msg the detail message
+@param cause the cause (which is saved for later retrieval by the
+{@link #getCause getCause()} method). (A {@code null} value is
+permitted, and indicates that the cause is nonexistent or unknown.)

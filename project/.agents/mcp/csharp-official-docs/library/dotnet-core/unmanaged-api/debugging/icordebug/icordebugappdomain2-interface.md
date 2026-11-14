@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugAppDomain2 Interface"
 title: "ICorDebugAppDomain2 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugappdomain2-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugAppDomain2"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugAppDomain2"
+helpviewer_keywords:
+  - "ICorDebugAppDomain2 interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugAppDomain2 Interface
 
 Provides methods to work with arrays, pointers, function pointers, and reference types. This interface is an extension of the ICorDebugAppDomain interface.
@@ -15,17 +23,17 @@ Provides methods to work with arrays, pointers, function pointers, and reference
 
 |Method|Description|
 |------------|-----------------|
-|GetArrayOrPointerType Method|Gets an array of the specified type, or a pointer or reference to the specified type.|
-|GetFunctionPointerType|Gets a pointer to a function that has a given signature.|
+|[GetArrayOrPointerType Method](icordebugappdomain2-getarrayorpointertype-method.md)|Gets an array of the specified type, or a pointer or reference to the specified type.|
+|[GetFunctionPointerType](icordebugappdomain2-getfunctionpointertype-method.md)|Gets a pointer to a function that has a given signature.|
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

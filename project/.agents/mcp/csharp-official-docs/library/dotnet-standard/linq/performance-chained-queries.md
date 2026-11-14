@@ -1,10 +1,11 @@
 ---
-title: "Performance of chained queries - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/performance-chained-queries.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Performance of chained queries - LINQ to XML
+description: Learn about chained queries can perform as well as a single larger, more complicated query.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: b2f1d715-8946-4dc0-8d56-fb3d1bba54a6
 ---
 
 # Performance of chained queries (LINQ to XML)
@@ -53,13 +54,13 @@ This example produces the following output:
 
 This chained query provides the same performance profile as iterating through a linked list.
 
-- The `System.Xml.Linq.XContainer.Elements*` axis has essentially the same performance as iterating through a linked list. `System.Xml.Linq.XContainer.Elements*` is implemented as an iterator with deferred execution. This means that it does some work in addition to iterating through the linked list, such as allocating the iterator object and keeping track of execution state. This work can be divided into two categories: the work that is done at the time the iterator is set up, and the work that is done during each iteration. The setup work is a small, fixed amount of work and the work done during each iteration is proportional to the number of items in the source collection.
-- In `query1`, the `where` clause (`Where` in Visual Basic) causes the query to call the `System.Linq.Enumerable.Where*` method. This method is also implemented as an iterator. The setup work consists of instantiating the delegate that will reference the lambda expression, plus the normal setup for an iterator. With each iteration, the delegate is called to execute the predicate. The setup work and the work done during each iteration is similar to the work done while iterating through the axis.
-- In `query1`, the select clause causes the query to call the `System.Linq.Enumerable.Select*` method. This method has the same performance profile as the `System.Linq.Enumerable.Where*` method.
+- The <xref:System.Xml.Linq.XContainer.Elements*> axis has essentially the same performance as iterating through a linked list. <xref:System.Xml.Linq.XContainer.Elements*> is implemented as an iterator with deferred execution. This means that it does some work in addition to iterating through the linked list, such as allocating the iterator object and keeping track of execution state. This work can be divided into two categories: the work that is done at the time the iterator is set up, and the work that is done during each iteration. The setup work is a small, fixed amount of work and the work done during each iteration is proportional to the number of items in the source collection.
+- In `query1`, the `where` clause (`Where` in Visual Basic) causes the query to call the <xref:System.Linq.Enumerable.Where*> method. This method is also implemented as an iterator. The setup work consists of instantiating the delegate that will reference the lambda expression, plus the normal setup for an iterator. With each iteration, the delegate is called to execute the predicate. The setup work and the work done during each iteration is similar to the work done while iterating through the axis.
+- In `query1`, the select clause causes the query to call the <xref:System.Linq.Enumerable.Select*> method. This method has the same performance profile as the <xref:System.Linq.Enumerable.Where*> method.
 - In `query2`, both the `where` clause (`Where` in Visual Basic) and the `select` clause have the same performance profile as in `query1`.
 
 The iteration through `query2` is therefore directly proportional to the number of items in the source of the first query, in other words, linear time.
 
-For more information on iterators, see yield.
+For more information on iterators, see [yield](../../csharp/language-reference/statements/yield.md).
 
-For a more detailed tutorial on chaining queries together, see Tutorial: Chain queries together (C#).
+For a more detailed tutorial on chaining queries together, see [Tutorial: Chain queries together (C#)](chain-queries-example.md).

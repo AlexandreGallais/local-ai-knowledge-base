@@ -1,12 +1,3 @@
----
-title: "alloc::io::error"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/alloc/src/io/error.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # alloc::io::error
 
 ## Error::new
@@ -20,7 +11,7 @@ arbitrary error payload.
 
 This function is used to generically create I/O errors which do not
 originate from the OS itself. The `error` argument is an arbitrary
-payload which will be contained in this `Error`.
+payload which will be contained in this [`Error`].
 
 Note that this function allocates memory on the heap.
 If no extra payload is required, use the `From` conversion from
@@ -28,7 +19,7 @@ If no extra payload is required, use the `From` conversion from
 
 # Examples
 
-```rust
+```
 use std::io::{Error, ErrorKind};
 
 // errors can be created from strings
@@ -47,9 +38,11 @@ let eof_error = Error::from(ErrorKind::UnexpectedEof);
 pub fn other<E>(error: E) -> Error where E: Into<Box<dyn error::Error + Send + Sync>>,
 ```
 
+[new]: struct.Error.html#method.new
+
 # Examples
 
-```rust
+```
 use std::io::Error;
 
 // errors can be created from strings
@@ -65,9 +58,12 @@ let custom_error2 = Error::other(custom_error);
 pub fn into_inner(self) -> Option<Box<dyn error::Error + Send + Sync>>
 ```
 
+[new]: struct.Error.html#method.new
+[other]: struct.Error.html#method.other
+
 # Examples
 
-```rust
+```
 use std::io::{Error, ErrorKind};
 
 fn print_error(err: Error) {
@@ -92,9 +88,11 @@ fn main() {
 pub fn downcast<E>(self) -> result::Result<E, Self> where E: error::Error + Send + Sync + 'static,
 ```
 
+[into_inner]: struct.Error.html#method.into_inner
+
 # Examples
 
-```rust
+```
 use std::fmt;
 use std::io;
 use std::error::Error;
@@ -107,6 +105,9 @@ enum E {
 
 impl fmt::Display for E {
    // ...
+#    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+#        todo!()
+#    }
 }
 impl Error for E {}
 
@@ -126,6 +127,7 @@ impl From<E> for io::Error {
     }
 }
 
+# fn main() {
 let e = E::SomeOtherVariant;
 // Convert it to an io::Error
 let io_error = io::Error::from(e);
@@ -141,4 +143,5 @@ let io_error = io::Error::from(e);
 assert_eq!(io_error.kind(), io::ErrorKind::AlreadyExists);
 assert!(io_error.get_ref().is_none());
 assert!(io_error.raw_os_error().is_none());
+# }
 ```

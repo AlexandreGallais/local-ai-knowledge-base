@@ -1,13 +1,8 @@
 ---
-title: "no-restricted-exports"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-restricted-exports.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-restricted-exports
+rule_type: suggestion
 ---
 
-# no-restricted-exports
 
 In a project, certain names may be disallowed from being used as exported names for various reasons.
 
@@ -34,7 +29,7 @@ This rule has an object option:
 
 Examples of **incorrect** code for the `"restrictedNamedExports"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-restricted-exports: ["error", {
@@ -62,9 +57,11 @@ export { something as e } from "some_module";
 export { "👍" } from "some_module";
 ```
 
+:::
+
 Examples of **correct** code for the `"restrictedNamedExports"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-restricted-exports: ["error", {
@@ -92,13 +89,15 @@ export { something } from "some_module";
 export { "👍" as thumbsUp } from "some_module";
 ```
 
+:::
+
 #### Default exports
 
 By design, the `"restrictedNamedExports"` option doesn't disallow `export default` declarations. If you configure `"default"` as a restricted name, that restriction will apply only to named export declarations.
 
 Examples of additional **incorrect** code for the `"restrictedNamedExports": ["default"]` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-restricted-exports: ["error", { "restrictedNamedExports": ["default"] }]*/
@@ -108,7 +107,9 @@ function foo() {}
 export { foo as default };
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint no-restricted-exports: ["error", { "restrictedNamedExports": ["default"] }]*/
@@ -116,9 +117,11 @@ export { foo as default };
 export { default } from "some_module";
 ```
 
+:::
+
 Examples of additional **correct** code for the `"restrictedNamedExports": ["default"]` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-restricted-exports: ["error", { "restrictedNamedExports": ["default", "foo"] }]*/
@@ -126,11 +129,13 @@ Examples of additional **correct** code for the `"restrictedNamedExports": ["def
 export default function foo() {}
 ```
 
+:::
+
 ### restrictedNamedExportsPattern
 
 Example of **incorrect** code for the `"restrictedNamedExportsPattern"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-restricted-exports: ["error", {
@@ -140,9 +145,11 @@ Example of **incorrect** code for the `"restrictedNamedExportsPattern"` option:
 export const foobar = 1;
 ```
 
+:::
+
 Example of **correct** code for the `"restrictedNamedExportsPattern"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-restricted-exports: ["error", {
@@ -151,6 +158,8 @@ Example of **correct** code for the `"restrictedNamedExportsPattern"` option:
 
 export const abc = 1;
 ```
+
+:::
 
 Note that this option does not apply to `export default` or any `default` named exports. If you want to also restrict `default` exports, use the `restrictDefaultExports` option.
 
@@ -162,7 +171,7 @@ This option allows you to restrict certain `default` declarations. The option wo
 
 Examples of **incorrect** code for the `"restrictDefaultExports": { "direct": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-restricted-exports: ["error", { "restrictDefaultExports": { "direct": true } }]*/
@@ -170,7 +179,9 @@ Examples of **incorrect** code for the `"restrictDefaultExports": { "direct": tr
 export default foo;
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint no-restricted-exports: ["error", { "restrictDefaultExports": { "direct": true } }]*/
@@ -178,7 +189,9 @@ export default foo;
 export default 42;
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint no-restricted-exports: ["error", { "restrictDefaultExports": { "direct": true } }]*/
@@ -186,11 +199,13 @@ export default 42;
 export default function foo() {}
 ```
 
+:::
+
 #### named
 
 Examples of **incorrect** code for the `"restrictDefaultExports": { "named": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-restricted-exports: ["error", { "restrictDefaultExports": { "named": true } }]*/
@@ -200,11 +215,13 @@ const foo = 123;
 export { foo as default };
 ```
 
+:::
+
 #### defaultFrom
 
 Examples of **incorrect** code for the `"restrictDefaultExports": { "defaultFrom": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-restricted-exports: ["error", { "restrictDefaultExports": { "defaultFrom": true } }]*/
@@ -212,7 +229,9 @@ Examples of **incorrect** code for the `"restrictDefaultExports": { "defaultFrom
 export { default } from 'foo';
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint no-restricted-exports: ["error", { "restrictDefaultExports": { "defaultFrom": true } }]*/
@@ -220,11 +239,13 @@ export { default } from 'foo';
 export { default as default } from 'foo';
 ```
 
+:::
+
 #### namedFrom
 
 Examples of **incorrect** code for the `"restrictDefaultExports": { "namedFrom": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-restricted-exports: ["error", { "restrictDefaultExports": { "namedFrom": true } }]*/
@@ -232,17 +253,21 @@ Examples of **incorrect** code for the `"restrictDefaultExports": { "namedFrom":
 export { foo as default } from 'foo';
 ```
 
+:::
+
 #### namespaceFrom
 
 Examples of **incorrect** code for the `"restrictDefaultExports": { "namespaceFrom": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-restricted-exports: ["error", { "restrictDefaultExports": { "namespaceFrom": true } }]*/
 
 export * as default from 'foo';
 ```
+
+:::
 
 ## Known Limitations
 

@@ -4,5 +4,5 @@
   "search": "Search the official documentation of C# and .NET: the C# language, .NET guides, ASP.NET Core, EF Core and the .NET API reference. Returns 10 section ids at most.",
   "queryExample": "\"List<T> Add\" or \"IHostedService\"",
   "toolExample": "\"dotnet-api\" or \"aspnetcore\"",
-  "idExample": "library/dotnet-api/System.Collections.Generic/List-1-p2.md#listtaddt-method"
+  "idExample": "library/efcore-api/Microsoft.EntityFrameworkCore.xml#dbcontext-type-microsoftentityframeworkcoredbcontext"
 }

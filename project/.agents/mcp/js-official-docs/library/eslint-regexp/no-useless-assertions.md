@@ -1,17 +1,17 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/no-useless-assertions"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/no-useless-assertions.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "disallow assertions that are known to always accept (or reject)"
+since: "v0.9.0"
 ---
-
 # regexp/no-useless-assertions
 
 💼 This rule is enabled in the following configs: 🟢 `flat/recommended`, 🔵 `recommended`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
 
 > disallow assertions that are known to always accept (or reject)
 
@@ -54,11 +54,14 @@ Nothing.
 This rule was taken from [eslint-plugin-clean-regex].\
 This rule is compatible with [clean-regex/no-unnecessary-assertions] rule.
 
+[eslint-plugin-clean-regex]: https://github.com/RunDevelopment/eslint-plugin-clean-regex
+[clean-regex/no-unnecessary-assertions]: https://github.com/RunDevelopment/eslint-plugin-clean-regex/blob/master/docs/rules/no-unnecessary-assertions.md
+
 ## :rocket: Version
 
 This rule was introduced in eslint-plugin-regexp v0.9.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/no-useless-assertions.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/no-useless-assertions.ts)

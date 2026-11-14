@@ -1,25 +1,21 @@
 ---
 title: "Breaking change: Vector<T> throws NotSupportedException"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/5.0/vectort-throws-notsupportedexception.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 5 breaking change in core .NET libraries where Vector<T> always throws an exception for unsupported type parameters.
+ms.date: 11/01/2020
 ---
-
 # Vector\<T> always throws NotSupportedException for unsupported types
 
-`System.Numerics.Vector`1` now always throws a `System.NotSupportedException` for unsupported type parameters.
+<xref:System.Numerics.Vector`1?displayProperty=nameWithType> now always throws a <xref:System.NotSupportedException> for unsupported type parameters.
 
 ## Change description
 
-Previously, members of `System.Numerics.Vector`1` would not always throw a `System.NotSupportedException` when `T` was an unsupported type. The exception wasn't always thrown because of code paths that supported hardware acceleration. For example, `Vector<bool> + Vector<bool>` returned `default` instead of throwing an exception on platforms that have no hardware acceleration, such as Arm32. For unsupported types, `System.Numerics.Vector`1` members exhibited inconsistent behavior across different platforms and hardware configurations.
+Previously, members of <xref:System.Numerics.Vector`1> would not always throw a <xref:System.NotSupportedException> when `T` was an [unsupported type](#unsupported-types). The exception wasn't always thrown because of code paths that supported hardware acceleration. For example, `Vector<bool> + Vector<bool>` returned `default` instead of throwing an exception on platforms that have no hardware acceleration, such as Arm32. For unsupported types, <xref:System.Numerics.Vector`1> members exhibited inconsistent behavior across different platforms and hardware configurations.
 
-Starting in .NET 5, `System.Numerics.Vector`1` members always throw a `System.NotSupportedException` on all hardware configurations when `T` is not a supported type.
+Starting in .NET 5, <xref:System.Numerics.Vector`1> members always throw a <xref:System.NotSupportedException> on all hardware configurations when `T` is not a supported type.
 
 ### Unsupported types
 
-The supported types for the type parameter of `System.Numerics.Vector`1` are:
+The supported types for the type parameter of <xref:System.Numerics.Vector`1> are:
 
 - `byte`
 - `sbyte`
@@ -40,8 +36,20 @@ The supported types have not changed, however, they may change in the future.
 
 ## Recommended action
 
-Don't use an unsupported type for the type parameter of `System.Numerics.Vector`1`.
+Don't use an unsupported type for the type parameter of <xref:System.Numerics.Vector`1>.
 
 ## Affected APIs
 
-- `System.Numerics.Vector`1` and all its members
+- <xref:System.Numerics.Vector`1?displayProperty=fullName> and all its members
+
+<!--
+
+#### Category
+
+Core .NET libraries
+
+### Affected APIs
+
+- ``T:System.Numerics.Vector`1``
+
+-->

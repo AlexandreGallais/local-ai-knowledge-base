@@ -1,17 +1,16 @@
 ---
-title: "Create Protobuf messages for .NET apps (part 1 of 2)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/grpc/protobuf.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Create Protobuf messages for .NET apps
+description: Learn how to create Protobuf messages for .NET apps.
+monikerRange: '>= aspnetcore-3.0'
+ms.date: 04/07/2026
 ---
-
 # Create Protobuf messages for .NET apps
 
-By James Newton-King and Mark Rendle
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
-gRPC uses Protobuf as its Interface Definition Language (IDL). Protobuf IDL is a language neutral format for specifying the messages sent and received by gRPC services. Protobuf messages are defined in `.proto` files. This document explains how Protobuf concepts map to .NET.
+By [James Newton-King](https://twitter.com/jamesnk) and [Mark Rendle](https://twitter.com/markrendle)
+
+gRPC uses [Protobuf](https://developers.google.com/protocol-buffers) as its Interface Definition Language (IDL). Protobuf IDL is a language neutral format for specifying the messages sent and received by gRPC services. Protobuf messages are defined in `.proto` files. This document explains how Protobuf concepts map to .NET.
 
 ## Protobuf messages
 
@@ -29,11 +28,11 @@ message Person {
 }  
 ```
 
-The preceding message definition specifies three fields as name-value pairs. Like properties on .NET types, each field has a name and a type. The field type can be a Protobuf scalar value type, for example `int32`, or another message.
+The preceding message definition specifies three fields as name-value pairs. Like properties on .NET types, each field has a name and a type. The field type can be a [Protobuf scalar value type](#scalar-value-types), for example `int32`, or another message.
 
-The Protobuf style guide recommends using `underscore_separated_names` for field names. New Protobuf messages created for .NET apps should follow the Protobuf style guidelines. .NET tooling automatically generates .NET types that use .NET naming standards. For example, a `first_name` Protobuf field generates a `FirstName` .NET property.
+The [Protobuf style guide](https://developers.google.com/protocol-buffers/docs/style) recommends using `underscore_separated_names` for field names. New Protobuf messages created for .NET apps should follow the Protobuf style guidelines. .NET tooling automatically generates .NET types that use .NET naming standards. For example, a `first_name` Protobuf field generates a `FirstName` .NET property.
 
-In addition to a name, each field in the message definition has a unique number. Field numbers are used to identify fields when the message is serialized to Protobuf. Serializing a small number is faster than serializing the entire field name. Because field numbers identify a field it is important to take care when changing them. For more information about changing Protobuf messages see Versioning gRPC services.
+In addition to a name, each field in the message definition has a unique number. Field numbers are used to identify fields when the message is serialized to Protobuf. Serializing a small number is faster than serializing the entire field name. Because field numbers identify a field it is important to take care when changing them. For more information about changing Protobuf messages see [Versioning gRPC services](versioning.md).
 
 When an app is built the Protobuf tooling generates .NET types from `.proto` files. The `Person` message generates a .NET class:
 
@@ -46,7 +45,7 @@ public class Person
 }
 ```
 
-For more information about Protobuf messages see the Protobuf language guide.
+For more information about Protobuf messages see the [Protobuf language guide](https://developers.google.com/protocol-buffers/docs/proto3#simple).
 
 ## Scalar Value Types
 
@@ -72,11 +71,11 @@ Protobuf supports a range of native scalar value types. The following table list
 
 Scalar values always have a default value and can't be set to `null`. This constraint includes `string` and `ByteString` which are C# classes. `string` defaults to an empty string value and `ByteString` defaults to an empty bytes value. Attempting to set them to `null` throws an error.
 
-Nullable wrapper types can be used to support null values.
+[Nullable wrapper types](#nullable-types) can be used to support null values.
 
 ### Dates and times
 
-The native scalar types don't provide for date and time values, equivalent to .NET's `System.DateTimeOffset`, `System.DateTime`, and `System.TimeSpan`. These types can be specified by using some of Protobuf's *Well-Known Types* extensions. These extensions provide code generation and runtime support for complex field types across the supported platforms.
+The native scalar types don't provide for date and time values, equivalent to .NET's <xref:System.DateTimeOffset>, <xref:System.DateTime>, and <xref:System.TimeSpan>. These types can be specified by using some of Protobuf's *Well-Known Types* extensions. These extensions provide code generation and runtime support for complex field types across the supported platforms.
 
 The following table shows the date and time types:
 
@@ -86,7 +85,7 @@ The following table shows the date and time types:
 | `DateTime`       | `google.protobuf.Timestamp` |
 | `TimeSpan`       | `google.protobuf.Duration`  |
 
-```protobuf
+```protobuf  
 syntax = "proto3";
 
 import "google/protobuf/duration.proto";  
@@ -114,7 +113,7 @@ var time = meeting.Start.ToDateTimeOffset();
 var duration = meeting.Duration?.ToTimeSpan();
 ```
 
-> **Note:**
+> [!NOTE]
 > The `Timestamp` type works with UTC times. `DateTimeOffset` values always have an offset of zero, and the `DateTime.Kind` property is always `DateTimeKind.Utc`.
 
 ### Nullable types
@@ -123,7 +122,7 @@ The Protobuf code generation for C# uses the native types, such as `int` for `in
 
 For values that require explicit `null`, such as using `int?` in C# code, Protobuf's Well-Known Types include wrappers that are compiled to nullable C# types. To use them, import `wrappers.proto` into your `.proto` file, like the following code:
 
-```protobuf
+```protobuf  
 syntax = "proto3";
 
 import "google/protobuf/wrappers.proto";
@@ -196,9 +195,9 @@ message DecimalValue {
 
 The `nanos` field represents values from `0.999_999_999` to `-0.999_999_999`. For example, the `decimal` value `1.5m` would be represented as `{ units = 1, nanos = 500_000_000 }`. This is why the `nanos` field in this example uses the `sfixed32` type, which encodes more efficiently than `int32` for larger values. If the `units` field is negative, the `nanos` field should also be negative.
 
-> **Note:**
+> [!NOTE]
 > Additional algorithms are available for encoding `decimal` values as byte strings. The algorithm used by `DecimalValue`:
->
+> 
 > * Is easy to understand.
 > * Isn't affected by big-endian or little-endian on different platforms.
 > * Supports decimal numbers ranging from positive `9,223,372,036,854,775,807.999999999` to negative `9,223,372,036,854,775,808.999999999` with a maximum precision of nine decimal places, which isn't the full range of a `decimal`.
@@ -260,7 +259,7 @@ public class Person
 }
 ```
 
-`RepeatedField<T>` implements `System.Collections.Generic.IList`1`. So you can use LINQ queries or convert it to an array or a list. `RepeatedField<T>` properties don't have a public setter. Items should be added to the existing collection.
+`RepeatedField<T>` implements <xref:System.Collections.Generic.IList`1>. So you can use LINQ queries or convert it to an array or a list. `RepeatedField<T>` properties don't have a public setter. Items should be added to the existing collection.
 
 ```csharp
 var person = new Person();
@@ -275,7 +274,7 @@ person.Roles.Add(roles);
 
 ### Dictionaries
 
-The .NET `System.Collections.Generic.IDictionary`2` type is represented in Protobuf using `map<key_type, value_type>`.
+The .NET <xref:System.Collections.Generic.IDictionary`2> type is represented in Protobuf using `map<key_type, value_type>`.
 
 ```protobuf
 message Person {
@@ -284,7 +283,7 @@ message Person {
 }
 ```
 
-In generated .NET code, `map` fields are represented by the `Google.Protobuf.Collections.MapField<TKey, TValue>` generic type. `MapField<TKey, TValue>` implements `System.Collections.Generic.IDictionary`2`. Like `repeated` properties, `map` properties don't have a public setter. Items should be added to the existing collection.
+In generated .NET code, `map` fields are represented by the `Google.Protobuf.Collections.MapField<TKey, TValue>` generic type. `MapField<TKey, TValue>` implements <xref:System.Collections.Generic.IDictionary`2>. Like `repeated` properties, `map` properties don't have a public setter. Items should be added to the existing collection.
 
 ```csharp
 var person = new Person();
@@ -299,3 +298,143 @@ var attributes = new Dictionary<string, string>
 };
 person.Attributes.Add(attributes);
 ```
+
+## Unstructured and conditional messages
+
+Protobuf is a contract-first messaging format. An app's messages, including its fields and types, must be specified in `.proto` files when the app is built. Protobuf's contract-first design is great at enforcing message content but can limit scenarios where a strict contract isn't required:
+
+* Messages with unknown payloads. For example, a message with a field that could contain any message.
+* Conditional messages. For example, a message returned from a gRPC service might be a success result or an error result.
+* Dynamic values. For example, a message with a field that contains an unstructured collection of values, similar to JSON.
+
+Protobuf offers language features and types to support these scenarios.
+
+### Any
+
+The `Any` type lets you use messages as embedded types without having their `.proto` definition. To use the `Any` type, import `any.proto`.
+
+```protobuf
+import "google/protobuf/any.proto";
+
+message Status {
+    string message = 1;
+    google.protobuf.Any detail = 2;
+}
+```
+
+```csharp
+// Create a status with a Person message set to detail.
+var status = new ErrorStatus();
+status.Detail = Any.Pack(new Person { FirstName = "James" });
+
+// Read Person message from detail.
+if (status.Detail.Is(Person.Descriptor))
+{
+    var person = status.Detail.Unpack<Person>();
+    // ...
+}
+```
+
+### Oneof
+
+`oneof` fields are a language feature. The compiler handles the `oneof` keyword when it generates the message class. Using `oneof` to specify a response message that could either return a `Person` or `Error` might look like this:
+
+```protobuf
+message Person {
+    // ...
+}
+
+message Error {
+    // ...
+}
+
+message ResponseMessage {
+  oneof result {
+    Error error = 1;
+    Person person = 2;
+  }
+}
+```
+
+Fields within the `oneof` set must have unique field numbers in the overall message declaration.
+
+When using `oneof`, the generated C# code includes an enum that specifies which of the fields has been set. You can test the enum to find which field is set. Fields that aren't set return `null` or the default value, rather than throwing an exception.
+
+```csharp
+var response = await client.GetPersonAsync(new RequestMessage());
+
+switch (response.ResultCase)
+{
+    case ResponseMessage.ResultOneofCase.Person:
+        HandlePerson(response.Person);
+        break;
+    case ResponseMessage.ResultOneofCase.Error:
+        HandleError(response.Error);
+        break;
+    default:
+        throw new ArgumentException("Unexpected result.");
+}
+```
+
+### Value
+
+The `Value` type represents a dynamically typed value. It can be either `null`, a number, a string, a boolean, a dictionary of values (`Struct`), or a list of values (`ValueList`). `Value` is a Protobuf Well-Known Type that uses the previously discussed `oneof` feature. To use the `Value` type, import `struct.proto`.
+
+```protobuf
+import "google/protobuf/struct.proto";
+
+message Status {
+    // ...
+    google.protobuf.Value data = 3;
+}
+```
+
+```csharp
+// Create dynamic values.
+var status = new Status();
+status.Data = Value.ForStruct(new Struct
+{
+    Fields =
+    {
+        ["enabled"] = Value.ForBool(true),
+        ["metadata"] = Value.ForList(
+            Value.ForString("value1"),
+            Value.ForString("value2"))
+    }
+});
+
+// Read dynamic values.
+switch (status.Data.KindCase)
+{
+    case Value.KindOneofCase.StructValue:
+        foreach (var field in status.Data.StructValue.Fields)
+        {
+            // Read struct fields...
+        }
+        break;
+    // ...
+}
+```
+
+Using `Value` directly can be verbose. An alternative way to use `Value` is with Protobuf's built-in support for mapping messages to JSON. Protobuf's `JsonFormatter` and `JsonWriter` types can be used with any Protobuf message. `Value` is particularly well suited to being converted to and from JSON.
+
+This is the JSON equivalent of the previous code:
+
+```csharp
+// Create dynamic values from JSON.
+var status = new Status();
+status.Data = Value.Parser.ParseJson(@"{
+    ""enabled"": true,
+    ""metadata"": [ ""value1"", ""value2"" ]
+}");
+
+// Convert dynamic values to JSON.
+// JSON can be read with a library like System.Text.Json or Newtonsoft.Json
+var json = JsonFormatter.Default.Format(status.Data);
+var document = JsonDocument.Parse(json);
+```
+
+## Related content
+
+* [Protobuf language guide](https://developers.google.com/protocol-buffers/docs/proto3#simple)
+* [Versioning gRPC services](versioning.md)

@@ -1,13 +1,6 @@
----
-title: "escape-inline-tags"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/escape-inline-tags.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
-
-# `escape-inline-tags`
+<a name="user-content-escape-inline-tags"></a>
+<a name="escape-inline-tags"></a>
+# <code>escape-inline-tags</code>
 
 Reports use of JSDoc tags in non-tag positions (in the default "typescript" mode).
 
@@ -22,19 +15,27 @@ wrapped with ` to be normal text. E.g.
 /** Supports shorthands such as `@yearly` to simplify setup. */
 ```
 
+<a name="user-content-escape-inline-tags-options"></a>
+<a name="escape-inline-tags-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `allowedInlineTags`
+<a name="user-content-escape-inline-tags-options-allowedinlinetags"></a>
+<a name="escape-inline-tags-options-allowedinlinetags"></a>
+### <code>allowedInlineTags</code>
 
 A listing of tags you wish to allow unescaped. Defaults to an empty array.
 
-### `enableFixer`
+<a name="user-content-escape-inline-tags-options-enablefixer"></a>
+<a name="escape-inline-tags-options-enablefixer"></a>
+### <code>enableFixer</code>
 
 Whether to enable the fixer. Defaults to `false`.
 
-### `fixType`
+<a name="user-content-escape-inline-tags-options-fixtype"></a>
+<a name="escape-inline-tags-options-fixtype"></a>
+### <code>fixType</code>
 
 How to escape the inline tag.
 
@@ -42,6 +43,7 @@ May be "backticks" to enclose tags in backticks (treating as code segments), or
 "backslash" to escape tags with a backslash, i.e., `\@`
 
 Defaults to "backslash".
+
 
 |||
 |---|---|
@@ -51,6 +53,8 @@ Defaults to "backslash".
 |Settings|`mode`|
 |Options|`allowedInlineTags`, `enableFixer`, `fixType`|
 
+<a name="user-content-escape-inline-tags-failing-examples"></a>
+<a name="escape-inline-tags-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -178,6 +182,10 @@ The following patterns are considered problems:
 // Message: Unexpected inline JSDoc tag. Did you mean to use {@sth}, \@sth, or `@sth`?
 ````
 
+
+
+<a name="user-content-escape-inline-tags-passing-examples"></a>
+<a name="escape-inline-tags-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -258,3 +266,4 @@ The following patterns are not considered problems:
  */
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
 ````
+

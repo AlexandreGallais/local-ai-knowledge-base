@@ -1,10 +1,6 @@
 ---
-title: "browser.instances | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/browser/instances.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: browser.instances | Config
+outline: deep
 ---
 
 # browser.instances
@@ -14,12 +10,12 @@ license: "MIT"
 
 Defines multiple browser setups. Every config has to have at least a `browser` field.
 
-You can specify most of the project options (not marked with a <CRoot /> icon) and some of the `browser` options like `browser.testerHtmlPath`.
+You can specify most of the [project options](/config/) (not marked with a <CRoot /> icon) and some of the `browser` options like `browser.testerHtmlPath`.
 
-**Warning:**
+::: warning
 Every browser config inherits options from the root config:
 
-```ts
+```ts{3,9} [vitest.config.ts]
 export default defineConfig({
   test: {
     setupFile: ['./root-setup-file.js'],
@@ -39,19 +35,20 @@ export default defineConfig({
 })
 ```
 
-For more examples, refer to the "Multiple Setups" guide.
+For more examples, refer to the ["Multiple Setups" guide](/guide/browser/multiple-setups).
+:::
 
-The `globalSetup` files of the config that defines `instances` run once for all of them, not once per instance, and receive the project of that config. Values they provide with `project.provide` are available in every instance. Global setup files defined in an instance run only for that instance.
+The [`globalSetup`](/config/globalsetup) files of the config that defines `instances` run once for all of them, not once per instance, and receive the project of that config. Values they provide with `project.provide` are available in every instance. Global setup files defined in an instance run only for that instance.
 
 List of available `browser` options:
 
 - `browser` (the name of the browser)
-- `headless`
-- `locators`
-- `viewport`
-- `testerHtmlPath`
-- `screenshotDirectory`
-- `screenshotFailures`
-- `provider`
+- [`headless`](/config/browser/headless)
+- [`locators`](/config/browser/locators)
+- [`viewport`](/config/browser/viewport)
+- [`testerHtmlPath`](/config/browser/testerhtmlpath)
+- [`screenshotDirectory`](/config/browser/screenshotdirectory)
+- [`screenshotFailures`](/config/browser/screenshotfailures)
+- [`provider`](/config/browser/provider)
 
-Under the hood, Vitest transforms these instances into separate test projects sharing a single Vite server for better caching performance.
+Under the hood, Vitest transforms these instances into separate [test projects](/api/advanced/test-project) sharing a single Vite server for better caching performance.

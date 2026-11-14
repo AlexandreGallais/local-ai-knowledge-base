@@ -1,12 +1,3 @@
----
-title: "Env Variables and Modes"
-tool: "vite"
-version: "8.3"
-source: "https://github.com/vitejs/vite/blob/b39e6e63dcbfc3cf4be871acf3554efbd6d0e268/docs/guide/env-and-mode.md"
-commit: "b39e6e63dcbfc3cf4be871acf3554efbd6d0e268"
-license: "MIT"
----
-
 # Env Variables and Modes
 
 Vite exposes certain constants under the special `import.meta.env` object. These constants are defined as global variables during dev and statically replaced at build time to make tree-shaking effective.
@@ -20,21 +11,23 @@ if (import.meta.env.DEV) {
 }
 ```
 
+:::
+
 <ScrimbaLink href="https://scrimba.com/intro-to-vite-c03p6pbbdq/~05an?via=vite" title="Env Variables in Vite">Watch an interactive lesson on Scrimba</ScrimbaLink>
 
 ## Built-in Constants
 
 Some built-in constants are available in all cases:
 
-- **`import.meta.env.MODE`**: {string} the mode the app is running in.
+- **`import.meta.env.MODE`**: {string} the [mode](#modes) the app is running in.
 
-- **`import.meta.env.BASE_URL`**: {string} the base url the app is being served from. This is determined by the `base` config option.
+- **`import.meta.env.BASE_URL`**: {string} the base url the app is being served from. This is determined by the [`base` config option](/config/shared-options.md#base).
 
 - **`import.meta.env.PROD`**: {boolean} whether the app is running in production (running the dev server with `NODE_ENV='production'` or running an app built with `NODE_ENV='production'`).
 
 - **`import.meta.env.DEV`**: {boolean} whether the app is running in development (always the opposite of `import.meta.env.PROD`)
 
-- **`import.meta.env.SSR`**: {boolean} whether the app is running in the server.
+- **`import.meta.env.SSR`**: {boolean} whether the app is running in the [server](./ssr.md#conditional-logic).
 
 ## Env Variables
 
@@ -42,30 +35,33 @@ Vite exposes env variables under the `import.meta.env` object as strings automat
 
 Variables prefixed with `VITE_` will be exposed in client-side source code after Vite bundling. To prevent accidentally leaking env variables to the client, avoid using this prefix. As an example, consider the following:
 
-```
+```[.env]
 VITE_SOME_KEY=123
-DB_PASSWORD=<example-value>
+DB_PASSWORD=foobar
 ```
 
-The parsed value of `VITE_SOME_KEY` – `"<example-value>"` – will be exposed on the client, but the value of `DB_PASSWORD` will not. You can test this by adding the following to your code:
+The parsed value of `VITE_SOME_KEY` – `"123"` – will be exposed on the client, but the value of `DB_PASSWORD` will not. You can test this by adding the following to your code:
 
 ```js
 console.log(import.meta.env.VITE_SOME_KEY) // "123"
 console.log(import.meta.env.DB_PASSWORD) // undefined
 ```
 
-If you want to customize the env variables prefix, see the envPrefix option.
+If you want to customize the env variables prefix, see the [envPrefix](/config/shared-options.html#envprefix) option.
 
-**Env parsing**
+:::tip Env parsing
 As shown above, `VITE_SOME_KEY` is a number but returns a string when parsed. The same would also happen for boolean env variables. Make sure to convert to the desired type when using it in your code.
+:::
 
-**Protecting secrets**
+:::warning Protecting secrets
 
 `VITE_*` variables should _not_ contain sensitive information such as API keys. The values of these variables are bundled into your source code at build time. For production deployments, consider a backend server or serverless/edge functions to properly secure secrets.
 
+:::
+
 ### `.env` Files
 
-Vite uses dotenv to load additional environment variables from the following files in your environment directory:
+Vite uses [dotenv](https://github.com/motdotla/dotenv) to load additional environment variables from the following files in your [environment directory](/config/shared-options.md#envdir):
 
 ```
 .env                # loaded in all cases
@@ -74,7 +70,7 @@ Vite uses dotenv to load additional environment variables from the following fil
 .env.[mode].local   # only loaded in specified mode, ignored by git
 ```
 
-**Env Loading Priorities**
+:::tip Env Loading Priorities
 
 An env file for a specific mode (e.g. `.env.production`) will take higher priority than a generic one (e.g. `.env`).
 
@@ -84,15 +80,19 @@ In addition, environment variables that already exist when Vite is executed have
 
 `.env` files are loaded at the start of Vite. Restart the server after making changes.
 
-**Bun users**
+:::
 
-When using Bun, be aware that Bun automatically loads `.env` files before your script runs. This built-in behavior loads environment variables directly into `process.env` and can interfere with Vite's feature, as it respects existing `process.env` values. See oven-sh/bun#5515 for workarounds.
+:::warning Bun users
 
-Also, Vite uses dotenv-expand to expand variables written in env files out of the box. To learn more about the syntax, check out their docs.
+When using [Bun](https://bun.sh), be aware that Bun automatically loads `.env` files before your script runs. This built-in behavior loads environment variables directly into `process.env` and can interfere with Vite's feature, as it respects existing `process.env` values. See [oven-sh/bun#5515](https://github.com/oven-sh/bun/issues/5515) for workarounds.
+
+:::
+
+Also, Vite uses [dotenv-expand](https://github.com/motdotla/dotenv-expand) to expand variables written in env files out of the box. To learn more about the syntax, check out [their docs](https://github.com/motdotla/dotenv-expand#what-rules-does-the-expansion-engine-follow).
 
 Note that if you want to use `$` inside your environment value, you have to escape it with `\`.
 
-```
+```[.env]
 KEY=123
 NEW_KEY1=test$foo   # test
 NEW_KEY2=test\$foo  # test$foo
@@ -104,7 +104,7 @@ NEW_KEY3=test$KEY   # test123
 Vite supports expanding variables in reverse order.
 For example, the `.env` below will be evaluated as `VITE_FOO=foobar`, `VITE_BAR=bar`.
 
-```
+```[.env]
 VITE_FOO=foo${VITE_BAR}
 VITE_BAR=bar
 ```
@@ -114,17 +114,21 @@ That said, Vite supports this behavior as this has been supported by `dotenv-exp
 
 To avoid interop issues, it is recommended to avoid relying on this behavior. Vite may start emitting warnings for this behavior in the future.
 
-**Ignoring local `.env` files**
+:::
+
+:::warning Ignoring local `.env` files
 
 `.env.*.local` files are local-only and can contain sensitive variables. You should add `*.local` to your `.gitignore` to avoid them being checked into git.
 
+:::
+
 ## IntelliSense for TypeScript
 
-By default, Vite provides type definitions for `import.meta.env` in `vite/client.d.ts`. While you can define more custom env variables in `.env.[mode]` files, you may want to get TypeScript IntelliSense for user-defined env variables that are prefixed with `VITE_`.
+By default, Vite provides type definitions for `import.meta.env` in [`vite/client.d.ts`](https://github.com/vitejs/vite/blob/main/packages/vite/client.d.ts). While you can define more custom env variables in `.env.[mode]` files, you may want to get TypeScript IntelliSense for user-defined env variables that are prefixed with `VITE_`.
 
 To achieve this, you can create a `vite-env.d.ts` in the `src` directory, then augment `ImportMetaEnv` like this:
 
-```typescript
+```typescript [vite-env.d.ts]
 interface ViteTypeOptions {
   // By adding this line, you can make the type of ImportMetaEnv strict
   // to disallow unknown keys.
@@ -141,17 +145,19 @@ interface ImportMeta {
 }
 ```
 
-If your code relies on types from browser environments such as DOM and WebWorker, you can update the lib field in `tsconfig.json`.
+If your code relies on types from browser environments such as [DOM](https://github.com/microsoft/TypeScript/blob/main/tsc/internal/bundled/libs/lib.dom.d.ts) and [WebWorker](https://github.com/microsoft/TypeScript/blob/main/tsc/internal/bundled/libs/lib.webworker.d.ts), you can update the [lib](https://www.typescriptlang.org/tsconfig#lib) field in `tsconfig.json`.
 
-```json
+```json [tsconfig.json]
 {
   "lib": ["WebWorker"]
 }
 ```
 
-**Imports will break type augmentation**
+:::warning Imports will break type augmentation
 
-If the `ImportMetaEnv` augmentation does not work, make sure you do not have any `import` statements in `vite-env.d.ts`. See the TypeScript documentation for more information.
+If the `ImportMetaEnv` augmentation does not work, make sure you do not have any `import` statements in `vite-env.d.ts`. See the [TypeScript documentation](https://www.typescriptlang.org/docs/handbook/2/modules.html#how-javascript-modules-are-defined) for more information.
+
+:::
 
 ## HTML Constant Replacement
 
@@ -164,7 +170,7 @@ Vite also supports replacing constants in HTML files. Any properties in `import.
 
 If the env doesn't exist in `import.meta.env`, e.g. `%NON_EXISTENT%`, it will be ignored and not replaced, unlike `import.meta.env.NON_EXISTENT` in JS where it's replaced as `undefined`.
 
-Given that Vite is used by many frameworks, it is intentionally unopinionated about complex replacements like conditionals. Vite can be extended using an existing userland plugin or a custom plugin that implements the `transformIndexHtml` hook.
+Given that Vite is used by many frameworks, it is intentionally unopinionated about complex replacements like conditionals. Vite can be extended using [an existing userland plugin](https://github.com/vitejs/awesome-vite#transformers) or a custom plugin that implements the [`transformIndexHtml` hook](./api-plugin#transformindexhtml).
 
 ## Modes
 
@@ -172,7 +178,7 @@ By default, the dev server (`dev` command) runs in `development` mode and the `b
 
 This means when running `vite build`, it will load the env variables from `.env.production` if there is one:
 
-```
+```[.env.production]
 VITE_APP_TITLE=My App
 ```
 
@@ -186,13 +192,13 @@ vite build --mode staging
 
 And create a `.env.staging` file:
 
-```
+```[.env.staging]
 VITE_APP_TITLE=My App (staging)
 ```
 
 As `vite build` runs a production build by default, you can also change this and run a development build by using a different mode and `.env` file configuration:
 
-```
+```[.env.testing]
 NODE_ENV=development
 ```
 
@@ -221,8 +227,9 @@ The different values of `NODE_ENV` and mode also reflect on its corresponding `i
 | `--mode development` | `"development"`        |
 | `--mode staging`     | `"staging"`            |
 
-**`NODE_ENV` in `.env` files**
+:::tip `NODE_ENV` in `.env` files
 
 `NODE_ENV=...` can be set in the command, and also in your `.env` file. If `NODE_ENV` is specified in a `.env.[mode]` file, the mode can be used to control its value. However, both `NODE_ENV` and modes remain as two different concepts.
 
 The main benefit with `NODE_ENV=...` in the command is that it allows Vite to detect the value early. It also allows you to read `process.env.NODE_ENV` in your Vite config as Vite can only load the env files once the config is evaluated.
+:::

@@ -1,13 +1,7 @@
 ---
-title: "arrow-body-style"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/arrow-body-style.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: arrow-body-style
+rule_type: suggestion
 ---
-
-# arrow-body-style
 
 Arrow functions have two syntactic forms for their function bodies.  They may be defined with a *block* body (denoted by curly braces) `() => { ... }` or with a single expression `() => ...`, whose value is implicitly returned.
 
@@ -33,7 +27,7 @@ The second one is an object for more fine-grained configuration when the first o
 
 Examples of **incorrect** code for this rule with the `"always"` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint arrow-body-style: ["error", "always"]*/
@@ -41,9 +35,11 @@ Examples of **incorrect** code for this rule with the `"always"` option:
 const foo = () => 0;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"always"` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint arrow-body-style: ["error", "always"]*/
@@ -58,11 +54,13 @@ const bar = (retv, name) => {
 };
 ```
 
+:::
+
 ### as-needed
 
 Examples of **incorrect** code for this rule with the default `"as-needed"` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint arrow-body-style: ["error", "as-needed"]*/
@@ -81,9 +79,11 @@ const bar = () => {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"as-needed"` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint arrow-body-style: ["error", "as-needed"]*/
@@ -113,13 +113,15 @@ const foo7 = () => {
 const foo8 = () => ({ bar: 0 });
 ```
 
+:::
+
 #### requireReturnForObjectLiteral
 
 > This option is only applicable when used in conjunction with the `"as-needed"` option.
 
 Examples of **incorrect** code for this rule with the `{ "requireReturnForObjectLiteral": true }` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint arrow-body-style: ["error", "as-needed", { "requireReturnForObjectLiteral": true }]*/
@@ -129,9 +131,11 @@ const foo = () => ({});
 const bar = () => ({ bar: 0 });
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "requireReturnForObjectLiteral": true }` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint arrow-body-style: ["error", "as-needed", { "requireReturnForObjectLiteral": true }]*/
@@ -141,11 +145,13 @@ const foo = () => {};
 const bar = () => { return { bar: 0 }; };
 ```
 
+:::
+
 ### never
 
 Examples of **incorrect** code for this rule with the `"never"` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint arrow-body-style: ["error", "never"]*/
@@ -160,9 +166,11 @@ const bar = (retv, name) => {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"never"` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint arrow-body-style: ["error", "never"]*/
@@ -171,3 +179,5 @@ const foo = () => 0;
 
 const bar = () => ({ foo: 0 });
 ```
+
+:::

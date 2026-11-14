@@ -1,21 +1,19 @@
 ---
-title: "MCP Server Setup"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/use/mcp.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: MCP Server Setup
+eleventyNavigation:
+    key: mcp server
+    parent: use eslint
+    title: MCP Server Setup
+    order: 5
 ---
-
-# MCP Server Setup
 
 {%- from 'components/npm_tabs.macro.html' import npm_tabs with context %}
 
-Model Context Protocol (MCP) is an open standard that enables AI models to interact with external tools and services through a unified interface. The ESLint CLI contains an MCP server that you can register with your code editor to allow LLMs to use ESLint directly.
+[Model Context Protocol](https://modelcontextprotocol.io) (MCP) is an open standard that enables AI models to interact with external tools and services through a unified interface. The ESLint CLI contains an MCP server that you can register with your code editor to allow LLMs to use ESLint directly.
 
 ## Set Up ESLint MCP Server in VS Code
 
-To use MCP servers in VS Code, you must have the Copilot Chat extension installed. After that, follow these steps so add the ESLint MCP server:
+To use MCP servers in VS Code, you must have the [Copilot Chat](https://code.visualstudio.com/docs/copilot/copilot-chat) extension installed. After that, follow these steps so add the ESLint MCP server:
 
 ### 1. Create MCP Configuration File
 
@@ -48,7 +46,7 @@ If you want to use the ESLint MCP server across all workspaces, you can follow t
 
 ### Use the ESLint MCP Server with GitHub Copilot
 
-Once your MCP server is configured, you can use it with GitHub Copilot's agent mode:
+Once your MCP server is configured, you can use it with [GitHub Copilot's agent mode](https://code.visualstudio.com/docs/copilot/chat/chat-agent-mode):
 
 1. Open the Copilot Chat view in VS Code
 2. Ensure agent mode is enabled (look for the agent icon in the chat input)
@@ -69,7 +67,7 @@ If you encounter issues with the ESLint MCP server:
 
 ## Set Up ESLint MCP Server in Cursor
 
-To configure the ESLint MCP server in Cursor, follow these steps:
+To configure the ESLint MCP server in [Cursor](https://cursor.com), follow these steps:
 
 ### 1. Create MCP Configuration File
 
@@ -97,7 +95,7 @@ Once configured, the ESLint MCP server should appear in the "Available Tools" se
 
 ## Set Up ESLint MCP Server in Windsurf
 
-To configure the ESLint MCP server in Windsurf, follow these steps:
+To configure the ESLint MCP server in [Windsurf](https://docs.windsurf.com/), follow these steps:
 
 ### 1. Access Windsurf Settings
 
@@ -138,7 +136,7 @@ Note: MCP tool calls in Windsurf will consume credits regardless of success or f
 
 ## Use TypeScript Configuration Files
 
-If your project uses a TypeScript configuration file (`eslint.config.ts`, `eslint.config.mts`, or `eslint.config.cts`), additional setup is required for the MCP server to load it. There are two approaches depending on your environment. For more details, see TypeScript Configuration Files.
+If your project uses a TypeScript configuration file (`eslint.config.ts`, `eslint.config.mts`, or `eslint.config.cts`), additional setup is required for the MCP server to load it. There are two approaches depending on your environment. For more details, see [TypeScript Configuration Files](configure/configuration-files#typescript-configuration-files).
 
 ### Option A: Local Installation with jiti (Node.js)
 
@@ -242,8 +240,8 @@ Lint and fix #file:index.js
 
 ## Additional Resources
 
-- Model Context Protocol Documentation
-- VS Code MCP Servers Documentation
-- GitHub Copilot in VS Code Documentation
-- Model Context Protocol in Cursor documentation
-- Model Context Protocol in Windsurf documentation
+- [Model Context Protocol Documentation](https://modelcontextprotocol.io/introduction)
+- [VS Code MCP Servers Documentation](https://code.visualstudio.com/docs/copilot/chat/mcp-servers)
+- [GitHub Copilot in VS Code Documentation](https://code.visualstudio.com/docs/copilot/copilot-chat)
+- [Model Context Protocol in Cursor documentation](https://docs.cursor.com/context/model-context-protocol)
+- [Model Context Protocol in Windsurf documentation](https://docs.windsurf.com/)

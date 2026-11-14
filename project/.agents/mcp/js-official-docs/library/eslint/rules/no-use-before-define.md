@@ -1,13 +1,8 @@
 ---
-title: "no-use-before-define"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-use-before-define.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-use-before-define
+rule_type: problem
 ---
 
-# no-use-before-define
 
 In JavaScript, prior to ES6, variable and function declarations are hoisted to the top of a scope, so it's possible to use identifiers before their formal declarations in code. This can be confusing and some believe it is best to always declare variables and functions before using them.
 
@@ -19,7 +14,7 @@ This rule will warn when it encounters a reference to an identifier that has not
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-use-before-define: "error"*/
@@ -69,9 +64,11 @@ export { foo };
 const foo = 1;
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-use-before-define: "error"*/
@@ -123,6 +120,8 @@ const foo = 1;
 export { foo };
 ```
 
+:::
+
 ## Options
 
 ```json
@@ -143,7 +142,7 @@ export { foo };
   This flag determines whether or not the rule checks function declarations.
   If this is `true`, the rule warns on every reference to a function before the function declaration.
   Otherwise, the rule ignores those references.
-  Function declarations are hoisted, so it's safe to disable this option (note that some idiomatic patterns, such as mutual recursion, are incompatible with enabling this option).
+  Function declarations are hoisted, so it's safe to disable this option (note that some idiomatic patterns, such as [mutual recursion](https://en.wikipedia.org/wiki/Mutual_recursion), are incompatible with enabling this option).
   Default is `true`.
 * `classes` (`boolean`) -
   This flag determines whether or not the rule checks class declarations of upper scopes.
@@ -182,7 +181,7 @@ This rule accepts `"nofunc"` string as an option.
 
 Examples of **correct** code for the `{ "functions": false }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-use-before-define: ["error", { "functions": false }]*/
@@ -191,13 +190,15 @@ f();
 function f() {}
 ```
 
-This option allows references to function declarations. For function expressions and arrow functions, please see the `variables` option.
+:::
+
+This option allows references to function declarations. For function expressions and arrow functions, please see the [`variables`](#variables) option.
 
 ### classes
 
 Examples of **incorrect** code for the `{ "classes": false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-use-before-define: ["error", { "classes": false }]*/
@@ -232,9 +233,11 @@ class A {
 }
 ```
 
+:::
+
 Examples of **correct** code for the `{ "classes": false }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-use-before-define: ["error", { "classes": false }]*/
@@ -247,11 +250,13 @@ class A {
 }
 ```
 
+:::
+
 ### variables
 
 Examples of **incorrect** code for the `{ "variables": false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-use-before-define: ["error", { "variables": false }]*/
@@ -295,9 +300,11 @@ const g = function() {};
 }
 ```
 
+:::
+
 Examples of **correct** code for the `{ "variables": false }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-use-before-define: ["error", { "variables": false }]*/
@@ -323,11 +330,13 @@ const g = function() {}
 }
 ```
 
+:::
+
 ### allowNamedExports
 
 Examples of **correct** code for the `{ "allowNamedExports": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-use-before-define: ["error", { "allowNamedExports": true }]*/
@@ -343,9 +352,11 @@ function f () {}
 class C {}
 ```
 
+:::
+
 Examples of **incorrect** code for the `{ "allowNamedExports": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-use-before-define: ["error", { "allowNamedExports": true }]*/
@@ -362,11 +373,13 @@ export function foo() {
 const d = 1;
 ```
 
+:::
+
 ### enums (TypeScript only)
 
 Examples of **incorrect** code for the `{ "enums": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /*eslint no-use-before-define: ["error", { "enums": true }]*/
@@ -377,10 +390,12 @@ enum Foo {
   FOO,
 }
 ```
+
+:::
 
 Examples of **correct** code for the `{ "enums": true }` option:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint no-use-before-define: ["error", { "enums": true }]*/
@@ -391,12 +406,14 @@ enum Foo {
 
 const x = Foo.FOO;
 ```
+
+:::
 
 ### typedefs (TypeScript only)
 
 Examples of **incorrect** code for the `{ "enums": true }` with `{ "ignoreTypeReferences": false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /*eslint no-use-before-define: ["error", { "typedefs": true, "ignoreTypeReferences": false }]*/
@@ -409,10 +426,12 @@ const x: Foo = {};
 
 interface Foo {}
 ```
+
+:::
 
 Examples of **correct** code for the `{ "typedefs": true }` with `{ "ignoreTypeReferences": false }` option:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint no-use-before-define: ["error", { "typedefs": true, "ignoreTypeReferences": false }]*/
@@ -425,12 +444,14 @@ interface Foo {}
 
 const x: Foo = {};
 ```
+
+:::
 
 ### ignoreTypeReferences (TypeScript only)
 
 Examples of **incorrect** code for the `{ "ignoreTypeReferences": false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /*eslint no-use-before-define: ["error", { "ignoreTypeReferences": false }]*/
@@ -444,9 +465,11 @@ let var2: Enum;
 enum Enum {}
 ```
 
+:::
+
 Examples of **correct** code for the `{ "ignoreTypeReferences": false }` option:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint no-use-before-define: ["error", { "ignoreTypeReferences": false }]*/
@@ -462,7 +485,7 @@ let var2: Enum;
 
 Examples of **correct** code for the `{ "ignoreTypeReferences": false }` with `{ "typedefs": false }` option:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint no-use-before-define: ["error", { "ignoreTypeReferences": false, "typedefs": false, }]*/
@@ -476,11 +499,13 @@ const x: Foo = {};
 interface Foo {}
 ```
 
+:::
+
 ### nofunc
 
 Examples of **incorrect** code for the `"nofunc"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-use-before-define: ["error", "nofunc"]*/
@@ -513,7 +538,9 @@ export { baz };
 const baz = 1;
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```ts
 /*eslint no-use-before-define: ["error", "nofunc"]*/
@@ -527,9 +554,11 @@ enum Foo {
 }
 ```
 
+:::
+
 Examples of **correct** code for the `"nofunc"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-use-before-define: ["error", "nofunc"]*/
@@ -551,7 +580,9 @@ const bar = 1;
 export default bar;
 ``` 
 
-**Correct:**
+:::
+
+::: correct
 
 ```ts
 /*eslint no-use-before-define: ["error", "nofunc"]*/
@@ -561,4 +592,6 @@ enum Foo {
 }
 
 const foo = Foo.Foo;
-```
+``` 
+
+:::

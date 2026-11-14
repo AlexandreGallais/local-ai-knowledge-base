@@ -1,12 +1,3 @@
----
-title: "Limits"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/attributes/limits.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[attributes.limits]
 # Limits
 
@@ -25,10 +16,10 @@ r[attributes.limits.recursion_limit.syntax]
 It uses the [MetaNameValueStr]
 syntax to specify the recursion depth.
 
-> **Note:**
+> [!NOTE]
 > The default in `rustc` is 128.
 
-```rust
+```rust,compile_fail
 #![recursion_limit = "4"]
 
 macro_rules! a {
@@ -43,26 +34,27 @@ macro_rules! a {
 a!{}
 ```
 
-```rust
+```rust,compile_fail
 #![recursion_limit = "1"]
 
 // This fails because it requires two recursive steps to auto-dereference.
 (|_: &u8| {})(&&&1);
 ```
 
+<!-- template:attributes -->
 r[attributes.limits.type_length_limit]
 ## The `type_length_limit` attribute
 
 r[attributes.limits.type_length_limit.intro]
-The *`type_length_limit` attribute* sets the maximum number of type substitutions allowed when constructing a concrete type during monomorphization.
+The *`type_length_limit` [attribute][attributes]* sets the maximum number of type substitutions allowed when constructing a concrete type during monomorphization.
 
-> **Note:**
+> [!NOTE]
 > `rustc` only enforces the limit when the nightly `-Zenforce-type-length-limit` flag is active.
 >
-> For more information, see Rust PR #127670.
+> For more information, see [Rust PR #127670](https://github.com/rust-lang/rust/pull/127670).
 
 > [!EXAMPLE]
->
+> <!-- ignore: not enforced without nightly flag -->
 > ```rust,ignore
 > #![type_length_limit = "4"]
 >
@@ -74,7 +66,7 @@ The *`type_length_limit` attribute* sets the maximum number of type substitution
 > f(((((1,), 2), 3), 4));
 > ```
 
-> **Note:**
+> [!NOTE]
 > The default value in `rustc` is `1048576`.
 
 r[attributes.limits.type_length_limit.syntax]
@@ -83,11 +75,14 @@ The `type_length_limit` attribute uses the [MetaNameValueStr] syntax. The value 
 r[attributes.limits.type_length_limit.allowed-positions]
 The `type_length_limit` attribute may only be applied to the crate root.
 
-> **Note:**
+> [!NOTE]
 > `rustc` ignores use in other positions but lints against it. This may become an error in the future.
 
 r[attributes.limits.type_length_limit.duplicates]
 Only the first use of `type_length_limit` on an item has effect.
 
-> **Note:**
+> [!NOTE]
 > `rustc` lints against any use following the first. This may become an error in the future.
+
+[attributes]: ../attributes.md
+[crate]: ../crates-and-source-files.md

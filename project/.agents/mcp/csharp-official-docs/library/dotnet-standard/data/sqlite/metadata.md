@@ -1,19 +1,16 @@
 ---
-title: "Metadata (Sqlite)"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/sqlite/metadata.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Metadata (Sqlite)
+titleSuffix: ""
+ms.date: 12/13/2019
+description: Learn how to retrieve metadata about a Sqlite database.
 ---
-
 # Metadata (Sqlite)
 
 There are two APIs for retrieving metadata in ADO.NET. One retrieves metadata about query results. The other retrieves metadata about the database schema.
 
 ## Query result metadata
 
-You can retrieve metadata about the results of a query using the `Microsoft.Data.Sqlite.SqliteDataReader.GetSchemaTable*` method on `SqliteDataReader`. The returned `System.Data.DataTable` contains the following columns:
+You can retrieve metadata about the results of a query using the <xref:Microsoft.Data.Sqlite.SqliteDataReader.GetSchemaTable*> method on `SqliteDataReader`. The returned <xref:System.Data.DataTable> contains the following columns:
 
 | Column             | Type    | Description                                                               |
 | ------------------ | ------- | ------------------------------------------------------------------------- |
@@ -38,7 +35,7 @@ You can retrieve metadata about the results of a query using the `Microsoft.Data
 
 The following example shows how to use `GetSchemaTable` to create a debug string that shows metadata about a result:
 
-_Code sample not included: ../../../../samples/snippets/standard/data/sqlite/ResultMetadataSample/Program.cs._
+[!code-csharp[](../../../../samples/snippets/standard/data/sqlite/ResultMetadataSample/Program.cs?name=snippet_ResultMetadata)]
 
 For example, this query would produce the following debug string:
 
@@ -51,7 +48,7 @@ FROM post
 ```
 
 ```output
-post.id AS post_id INTEGER PRIMARY KEY <example-value>
+post.id AS post_id INTEGER PRIMARY KEY AUTOINCREMENT
 post.title TEXT NOT NULL UNIQUE
 post.body TEXT
 (expression) AS random BLOB
@@ -59,7 +56,7 @@ post.body TEXT
 
 ## Schema metadata
 
-Microsoft.Data.Sqlite doesn't implement the GetSchema method on DbConnection. Instead, you can query directly for schema information using the sqlite_master table and PRAGMA statements like table_info and foreign_key_list.
+Microsoft.Data.Sqlite doesn't implement the GetSchema method on DbConnection. Instead, you can query directly for schema information using the [sqlite_master](https://www.sqlite.org/fileformat.html#storage_of_the_sql_database_schema) table and PRAGMA statements like [table_info](https://www.sqlite.org/pragma.html#pragma_table_info) and [foreign_key_list](https://www.sqlite.org/pragma.html#pragma_foreign_key_list).
 
 For example, this query will retrieve metadata about all the columns in the database.
 
@@ -72,6 +69,6 @@ WHERE t.type = 'table';
 
 ## See also
 
-* Storage of the SQL Database Schema
-* PRAGMA Statements
-* Data types
+* [Storage of the SQL Database Schema](https://www.sqlite.org/fileformat.html#storage_of_the_sql_database_schema)
+* [PRAGMA Statements](https://www.sqlite.org/pragma.html)
+* [Data types](types.md)

@@ -1,14 +1,3 @@
----
-title: "ch08-01-vectors"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch08-01-vectors.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch08-01-vectors
-
 ## Storing Lists of Values with Vectors
 
 The first collection type we’ll look at is `Vec<T>`, also known as a vector.
@@ -22,11 +11,13 @@ lines of text in a file or the prices of items in a shopping cart.
 To create a new, empty vector, we call the `Vec::new` function, as shown in
 Listing 8-1.
 
-**Listing 8-1: Creating a new, empty vector to hold values of type `i32`**
+<Listing number="8-1" caption="Creating a new, empty vector to hold values of type `i32`">
 
 ```rust
-let v: Vec<i32> = Vec::new();
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-01/src/main.rs:here}}
 ```
+
+</Listing>
 
 Note that we added a type annotation here. Because we aren’t inserting any
 values into this vector, Rust doesn’t know what kind of elements we intend to
@@ -42,14 +33,16 @@ the type of value you want to store, so you rarely need to do this type
 annotation. Rust conveniently provides the `vec!` macro, which will create a
 new vector that holds the values you give it. Listing 8-2 creates a new
 `Vec<i32>` that holds the values `1`, `2`, and `3`. The integer type is `i32`
-because that’s the default integer type, as we discussed in the “Data
-Types” section of Chapter 3.
+because that’s the default integer type, as we discussed in the [“Data
+Types”][data-types]<!-- ignore --> section of Chapter 3.
 
-**Listing 8-2: Creating a new vector containing values**
+<Listing number="8-2" caption="Creating a new vector containing values">
 
 ```rust
-let v = vec![1, 2, 3];
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-02/src/main.rs:here}}
 ```
+
+</Listing>
 
 Because we’ve given initial `i32` values, Rust can infer that the type of `v`
 is `Vec<i32>`, and the type annotation isn’t necessary. Next, we’ll look at how
@@ -60,16 +53,13 @@ to modify a vector.
 To create a vector and then add elements to it, we can use the `push` method,
 as shown in Listing 8-3.
 
-**Listing 8-3: Using the `push` method to add values to a vector**
+<Listing number="8-3" caption="Using the `push` method to add values to a vector">
 
 ```rust
-let mut v = Vec::new();
-
-v.push(5);
-v.push(6);
-v.push(7);
-v.push(8);
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-03/src/main.rs:here}}
 ```
+
+</Listing>
 
 As with any variable, if we want to be able to change its value, we need to
 make it mutable using the `mut` keyword, as discussed in Chapter 3. The numbers
@@ -85,20 +75,13 @@ the values that are returned from these functions for extra clarity.
 Listing 8-4 shows both methods of accessing a value in a vector, with indexing
 syntax and the `get` method.
 
-**Listing 8-4: Using indexing syntax and using the `get` method to access an item in a vector**
+<Listing number="8-4" caption="Using indexing syntax and using the `get` method to access an item in a vector">
 
 ```rust
-let v = vec![1, 2, 3, 4, 5];
-
-let third: &i32 = &v[2];
-println!("The third element is {third}");
-
-let third: Option<&i32> = v.get(2);
-match third {
-    Some(third) => println!("The third element is {third}"),
-    None => println!("There is no third element."),
-}
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-04/src/main.rs:here}}
 ```
+
+</Listing>
 
 Note a few details here. We use the index value of `2` to get the third element
 because vectors are indexed by number, starting at zero. Using `&` and `[]`
@@ -112,14 +95,13 @@ existing elements. As an example, let’s see what happens when we have a vector
 of five elements and then we try to access an element at index 100 with each
 technique, as shown in Listing 8-5.
 
-**Listing 8-5: Attempting to access the element at index 100 in a vector containing five elements**
+<Listing number="8-5" caption="Attempting to access the element at index 100 in a vector containing five elements">
 
-```rust
-let v = vec![1, 2, 3, 4, 5];
-
-let does_not_exist = &v[100];
-let does_not_exist = v.get(100);
+```rust,should_panic,panics
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-05/src/main.rs:here}}
 ```
+
+</Listing>
 
 When we run this code, the first `[]` method will cause the program to panic
 because it references a nonexistent element. This method is best used when you
@@ -146,37 +128,18 @@ reference to the first element in a vector and try to add an element to the
 end. This program won’t work if we also try to refer to that element later in
 the function.
 
-**Listing 8-6: Attempting to add an element to a vector while holding a reference to an item**
+<Listing number="8-6" caption="Attempting to add an element to a vector while holding a reference to an item">
 
-```rust
-let mut v = vec![1, 2, 3, 4, 5];
-
-let first = &v[0];
-
-v.push(6);
-
-println!("The first element is: {first}");
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-06/src/main.rs:here}}
 ```
+
+</Listing>
 
 Compiling this code will result in this error:
 
 ```console
-$ cargo run
-   Compiling collections v0.1.0 (file:///projects/collections)
-error[E0502]: cannot borrow `v` as mutable because it is also borrowed as immutable
- --> src/main.rs:6:5
-  |
-4 |     let first = &v[0];
-  |                  - immutable borrow occurs here
-5 |
-6 |     v.push(6);
-  |     ^^^^^^^^^ mutable borrow occurs here
-7 |
-8 |     println!("The first element is: {first}");
-  |                                      ----- immutable borrow later used here
-
-For more information about this error, try `rustc --explain E0502`.
-error: could not compile `collections` (bin "collections") due to 1 previous error
+{{#include ../listings/ch08-common-collections/listing-08-06/output.txt}}
 ```
 
 The code in Listing 8-6 might look like it should work: Why should a reference
@@ -189,8 +152,8 @@ is currently stored. In that case, the reference to the first element would be
 pointing to deallocated memory. The borrowing rules prevent programs from
 ending up in that situation.
 
-> Note: For more on the implementation details of the `Vec<T>` type, see “The
-> Rustonomicon”.
+> Note: For more on the implementation details of the `Vec<T>` type, see [“The
+> Rustonomicon”][nomicon].
 
 ### Iterating Over the Values in a Vector
 
@@ -199,32 +162,30 @@ elements rather than use indices to access one at a time. Listing 8-7 shows how
 to use a `for` loop to get immutable references to each element in a vector of
 `i32` values and print them.
 
-**Listing 8-7: Printing each element in a vector by iterating over the elements using a `for` loop**
+<Listing number="8-7" caption="Printing each element in a vector by iterating over the elements using a `for` loop">
 
 ```rust
-let v = vec![100, 32, 57];
-for i in &v {
-    println!("{i}");
-}
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-07/src/main.rs:here}}
 ```
+
+</Listing>
 
 We can also iterate over mutable references to each element in a mutable vector
 in order to make changes to all the elements. The `for` loop in Listing 8-8
 will add `50` to each element.
 
-**Listing 8-8: Iterating over mutable references to elements in a vector**
+<Listing number="8-8" caption="Iterating over mutable references to elements in a vector">
 
 ```rust
-let mut v = vec![100, 32, 57];
-for i in &mut v {
-    *i += 50;
-}
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-08/src/main.rs:here}}
 ```
+
+</Listing>
 
 To change the value that the mutable reference refers to, we have to use the
 `*` dereference operator to get to the value in `i` before we can use the `+=`
-operator. We’ll talk more about the dereference operator in the “Following the
-Reference to the Value” section of Chapter 15.
+operator. We’ll talk more about the dereference operator in the [“Following the
+Reference to the Value”][deref]<!-- ignore --> section of Chapter 15.
 
 Iterating over a vector, whether immutably or mutably, is safe because of the
 borrow checker’s rules. If we attempted to insert or remove items in the `for`
@@ -248,21 +209,13 @@ value types, and all the enum variants will be considered the same type: that
 of the enum. Then, we can create a vector to hold that enum and so, ultimately,
 hold different types. We’ve demonstrated this in Listing 8-9.
 
-**Listing 8-9: Defining an enum to store values of different types in one vector**
+<Listing number="8-9" caption="Defining an enum to store values of different types in one vector">
 
 ```rust
-enum SpreadsheetCell {
-    Int(i32),
-    Float(f64),
-    Text(String),
-}
-
-let row = vec![
-    SpreadsheetCell::Int(3),
-    SpreadsheetCell::Text(String::from("blue")),
-    SpreadsheetCell::Float(10.12),
-];
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-09/src/main.rs:here}}
 ```
+
+</Listing>
 
 Rust needs to know what types will be in the vector at compile time so that it
 knows exactly how much memory on the heap will be needed to store each element.
@@ -277,7 +230,7 @@ store in a vector, the enum technique won’t work. Instead, you can use a trait
 object, which we’ll cover in Chapter 18.
 
 Now that we’ve discussed some of the most common ways to use vectors, be sure
-to review the API documentation for all of the many
+to review [the API documentation][vec-api]<!-- ignore --> for all of the many
 useful methods defined on `Vec<T>` by the standard library. For example, in
 addition to `push`, a `pop` method removes and returns the last element.
 
@@ -286,15 +239,13 @@ addition to `push`, a `pop` method removes and returns the last element.
 Like any other `struct`, a vector is freed when it goes out of scope, as
 annotated in Listing 8-10.
 
-**Listing 8-10: Showing where the vector and its elements are dropped**
+<Listing number="8-10" caption="Showing where the vector and its elements are dropped">
 
 ```rust
-{
-    let v = vec![1, 2, 3, 4];
-
-    // do stuff with v
-} // <- v goes out of scope and is freed here
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-10/src/main.rs:here}}
 ```
+
+</Listing>
 
 When the vector gets dropped, all of its contents are also dropped, meaning the
 integers it holds will be cleaned up. The borrow checker ensures that any
@@ -302,3 +253,8 @@ references to contents of a vector are only used while the vector itself is
 valid.
 
 Let’s move on to the next collection type: `String`!
+
+[data-types]: ch03-02-data-types.html#data-types
+[nomicon]: ../nomicon/vec/vec.html
+[vec-api]: ../std/vec/struct.Vec.html
+[deref]: ch15-02-deref.html#following-the-pointer-to-the-value-with-the-dereference-operator

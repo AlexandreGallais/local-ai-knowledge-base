@@ -1,12 +1,3 @@
----
-title: "Type parameters"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/types/parameters.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[type.generic]
 # Type parameters
 
@@ -24,4 +15,4 @@ fn to_vec<A: Clone>(xs: &[A]) -> Vec<A> {
 }
 ```
 
-Here, `first` has type `A`, referring to `to_vec`'s `A` type parameter; and `rest` has type `Vec`, a vector with element type `A`.
+Here, `first` has type `A`, referring to `to_vec`'s `A` type parameter; and `rest` has type `Vec<A>`, a vector with element type `A`.

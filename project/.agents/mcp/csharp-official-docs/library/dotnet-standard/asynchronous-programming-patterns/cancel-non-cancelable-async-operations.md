@@ -1,15 +1,21 @@
 ---
 title: "Cancel non-cancelable async operations"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/asynchronous-programming-patterns/cancel-non-cancelable-async-operations.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn practical patterns for cancellation when an async operation doesn't accept a cancellation token, including canceling the wait, canceling the operation, or both.
+ms.date: 04/13/2026
+ai-usage: ai-assisted
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "cancellation, async"
+  - "Task.WhenAny"
+  - "WithCancellation"
+  - "CancellationToken"
+  - "NetworkStream, cancellation"
 ---
-
 # Cancel non-cancelable async operations
 
-Sometimes you need cancellation, but the operation you'<example-value>'t accept a `System.Threading.CancellationToken`. In that case, choose the behavior you need:
+Sometimes you need cancellation, but the operation you're waiting on doesn't accept a <xref:System.Threading.CancellationToken>. In that case, choose the behavior you need:
 
 - Cancel the operation itself.
 - Cancel only your wait.
@@ -29,101 +35,21 @@ Treat these meanings as separate design decisions. If you mix them, cancellation
 
 ## Prefer token-aware APIs when available
 
-Before you add a wrapper, check whether the API already supports cancellation tokens. Modern .NET APIs have much broader token <example-value> than older .NET Framework code. For example, many stream APIs in .NET now support cancellation, and `NetworkStream` async operations honor cancellation tokens.
+Before you add a wrapper, check whether the API already supports cancellation tokens. Modern .NET APIs have much broader token support than older .NET Framework code. For example, many stream APIs in .NET now support cancellation, and `NetworkStream` async operations honor cancellation tokens.
 
-Use token <example-value> whenever they exist:
+Use token overloads whenever they exist:
 
-```csharp
-public static class StreamExamples
-{
-    public static async Task<int> ReadOnceAsync(
-        NetworkStream stream,
-        byte[] buffer,
-        CancellationToken <example-value>)
-    {
-        return await stream.ReadAsync(
-            buffer.AsMemory(0, buffer.Length),
-            cancellationToken);
-    }
-}
-```
-```vb
-Public Module StreamExamples
-    Public Async Function ReadOnceAsync(
-        stream As NetworkStream,
-        buffer As Byte(),
-        cancellationToken As CancellationToken) As Task(Of Integer)
+:::code language="csharp" source="./snippets/cancel-non-cancelable-async-operations/csharp/Program.cs" id="PreferTokenAwareApis":::
+:::code language="vb" source="./snippets/cancel-non-cancelable-async-operations/vb/Program.vb" id="PreferTokenAwareApis":::
 
-        Return Await stream.ReadAsync(
-            buffer.AsMemory(0, buffer.Length),
-            cancellationToken)
-    End Function
-End Module
-```
 ## Cancel only the wait by using `Task.WhenAny`
 
 When an operation doesn't accept a token, cancel your wait by racing the operation against a token-backed task. This pattern often appears as a `WithCancellation` helper:
 
-```csharp
-public static class TaskCancellationExtensions
-{
-    public static async Task<T> WithCancellation<T>(
-        this Task<T> task,
-        CancellationToken <example-value>)
-    {
-        if (task.IsCompleted)
-            return await task.ConfigureAwait(false);
+:::code language="csharp" source="./snippets/cancel-non-cancelable-async-operations/csharp/Program.cs" id="WithCancellation":::
+:::code language="vb" source="./snippets/cancel-non-cancelable-async-operations/vb/Program.vb" id="WithCancellation":::
 
-        var cancellationTaskSource = new TaskCompletionSource<bool>(
-            TaskCreationOptions.RunContinuationsAsynchronously);
-
-        using var registration = cancellationToken.Register(
-            static state =>
-                ((TaskCompletionSource<bool>)state!).TrySetResult(true),
-            cancellationTaskSource);
-
-        Task completed = await Task.WhenAny(task, cancellationTaskSource.Task)
-            .ConfigureAwait(false);
-
-        if (completed != task)
-            throw new OperationCanceledException(cancellationToken);
-
-        return await task.ConfigureAwait(false);
-    }
-}
-```
-```vb
-Public Module TaskCancellationExtensions
-    <Extension()>
-    Public Async Function WithCancellation(Of T)(
-        operationTask As Task(Of T),
-        cancellationToken As CancellationToken) As Task(Of T)
-
-        If operationTask.IsCompleted Then
-            Return Await operationTask
-        End If
-
-        Dim cancellationTaskSource =
-            New TaskCompletionSource(Of Boolean)(TaskCreationOptions.RunContinuationsAsynchronously)
-
-        Using registration = cancellationToken.Register(
-            Sub(state)
-                DirectCast(state, TaskCompletionSource(Of Boolean)).TrySetResult(True)
-            End Sub,
-            cancellationTaskSource)
-
-            Dim completed = Await Task.WhenAny(operationTask, cancellationTaskSource.Task)
-
-            If completed IsNot operationTask Then
-                Throw New OperationCanceledException(cancellationToken)
-            End If
-        End Using
-
-        Return Await operationTask
-    End Function
-End Module
-```
-This pattern uses `System.Threading.Tasks.Task.WhenAny*` to return as soon as either task completes.
+This pattern uses <xref:System.Threading.Tasks.Task.WhenAny*> to return as soon as either task completes.
 
 Use this approach only when it's safe for the original operation to continue in the background.
 
@@ -131,124 +57,22 @@ Use this approach only when it's safe for the original operation to continue in 
 
 If you own the operation and it accepts a token, pass the token and still use a cancelable wait when needed:
 
-```csharp
-public static class CancelBothDemo
-{
-    public static async Task<string> FetchDataAsync(CancellationToken <example-value>)
-    {
-        await Task.Delay(500, cancellationToken);
-        return "payload";
-    }
+:::code language="csharp" source="./snippets/cancel-non-cancelable-async-operations/csharp/Program.cs" id="CancelBoth":::
+:::code language="vb" source="./snippets/cancel-non-cancelable-async-operations/vb/Program.vb" id="CancelBoth":::
 
-    public static async Task RunAsync()
-    {
-        using var cts = new CancellationTokenSource();
-        cts.CancelAfter(100);
-
-        try
-        {
-            string payload = await FetchDataAsync(cts.Token)
-                .WithCancellation(cts.Token);
-            Console.WriteLine(payload);
-        }
-        catch (OperationCanceledException)
-        {
-            Console.WriteLine("Canceled operation and wait.");
-        }
-    }
-}
-```
-```vb
-Public Module CancelBothDemo
-    Public Async Function FetchDataAsync(cancellationToken As CancellationToken) As Task(Of String)
-        Await Task.Delay(500, cancellationToken)
-        Return "payload"
-    End Function
-
-    Public Async Function RunAsync() As Task
-        Using cts = New CancellationTokenSource()
-            cts.CancelAfter(100)
-
-            Try
-                Dim payload = Await FetchDataAsync(cts.Token).WithCancellation(cts.Token)
-                Console.WriteLine(payload)
-            Catch ex As OperationCanceledException
-                Console.WriteLine("Canceled operation and wait.")
-            End Try
-        End Using
-    End Function
-End Module
-```
 This combination gives responsive cancellation for callers and cooperative shutdown for the underlying work.
 
 ## Handle abandoned operations safely
 
 If you cancel only the wait, the original task might later fault. Keep a reference so you can observe completion and log exceptions. Otherwise, you can miss failures and make troubleshooting harder.
 
-```csharp
-public static class ObserveLateFaultDemo
-{
-    private static async Task<int> FaultLaterAsync()
-    {
-        await Task.Delay(250);
-        throw new InvalidOperationException("Background operation failed.");
-    }
+:::code language="csharp" source="./snippets/cancel-non-cancelable-async-operations/csharp/Program.cs" id="ObserveLateFault":::
+:::code language="vb" source="./snippets/cancel-non-cancelable-async-operations/vb/Program.vb" id="ObserveLateFault":::
 
-    public static async Task RunAsync()
-    {
-        Task<int> operation = FaultLaterAsync();
-
-        using var cts = new CancellationTokenSource(50);
-
-        try
-        {
-            await operation.WithCancellation(cts.Token);
-        }
-        catch (OperationCanceledException)
-        {
-            Console.WriteLine("Stopped waiting; operation still running.");
-        }
-
-        _ = operation.ContinueWith(
-            t => Console.WriteLine($"Observed late fault: {t.Exception!.InnerException!.Message}"),
-            TaskContinuationOptions.OnlyOnFaulted);
-
-        await Task.Delay(300);
-    }
-}
-```
-```vb
-Public Module ObserveLateFaultDemo
-    Private Async Function FaultLaterAsync() As Task(Of Integer)
-        Await Task.Delay(250)
-        Throw New InvalidOperationException("Background operation failed.")
-    End Function
-
-    Public Async Function RunAsync() As Task
-        Dim operation As Task(Of Integer) = FaultLaterAsync()
-
-        Using cts = New CancellationTokenSource(50)
-            Try
-                Await operation.WithCancellation(cts.Token)
-            Catch ex As OperationCanceledException
-                Console.WriteLine("Stopped waiting; operation still running.")
-            End Try
-        End Using
-
-        Dim observed = operation.ContinueWith(
-            Sub(t)
-                Console.WriteLine($"Observed late fault: {t.Exception.InnerException.Message}")
-            End Sub,
-            TaskContinuationOptions.OnlyOnFaulted)
-
-        Await observed
-    End Function
-End Module
-```
 ## See also
 
-- Consume the task-based asynchronous pattern
-- Task cancellation
-- Cancellation in managed threads
-- `System.Threading.CancellationToken`
-- `System.Threading.Tasks.Task.WhenAny*`
+- [Consume the task-based asynchronous pattern](consuming-the-task-based-asynchronous-pattern.md)
+- [Task cancellation](../parallel-programming/task-cancellation.md)
+- [Cancellation in managed threads](../threading/cancellation-in-managed-threads.md)
+- <xref:System.Threading.CancellationToken>
+- <xref:System.Threading.Tasks.Task.WhenAny*>

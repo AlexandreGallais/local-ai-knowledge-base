@@ -1,19 +1,12 @@
----
-title: "vitest/no-done-callback"
-tool: "eslint-vitest"
-version: "1.6"
-source: "https://github.com/vitest-dev/eslint-plugin-vitest/blob/c5df1054a25044a7ca5baf07461b7aee1f15f5f2/docs/rules/no-done-callback.md"
-commit: "c5df1054a25044a7ca5baf07461b7aee1f15f5f2"
-license: "MIT"
----
-
 # vitest/no-done-callback
 
 📝 Disallow using a callback in asynchronous tests and hooks.
 
 ❌ This rule is deprecated.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
 
 ## Rule Details
 

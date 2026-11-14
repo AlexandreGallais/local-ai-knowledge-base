@@ -1,291 +1,64 @@
 ---
 title: "How to: Round-trip Date and Time Values"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/base-types/how-to-round-trip-date-and-time-values.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn how to round-trip date and time values"
+ms.date: 11/15/2022
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "round-trip date and time values"
+  - "dates [.NET], round-trip values"
+  - "time [.NET], round-trip values"
+  - "formatting strings [.NET], round-trip values"
+ms.assetid: b609b277-edc6-4c74-b03e-ea73324ecbdb
 ---
-
 # How to: Round-trip Date and time values
 
-In many applications, a date and time value is intended to unambiguously identify a single point in time. This article shows how to save and restore a `System.DateTime` value, a `System.DateTimeOffset` value, and a date and time value with time zone information so that the restored value identifies the same time as the saved value.
+In many applications, a date and time value is intended to unambiguously identify a single point in time. This article shows how to save and restore a <xref:System.DateTime> value, a <xref:System.DateTimeOffset> value, and a date and time value with time zone information so that the restored value identifies the same time as the saved value.
 
 ## Round-trip a DateTime value
 
-1. Convert the `System.DateTime` value to its string representation by calling the `System.DateTime.ToString(System.String)` method with the "o" format specifier.
+1. Convert the <xref:System.DateTime> value to its string representation by calling the <xref:System.DateTime.ToString%28System.String%29?displayProperty=nameWithType> method with the "o" format specifier.
 
-2. Save the string representation of the `System.DateTime` value to a file, or pass it across a process, application domain, or machine boundary.
+2. Save the string representation of the <xref:System.DateTime> value to a file, or pass it across a process, application domain, or machine boundary.
 
-3. Retrieve the string that represents the `System.DateTime` value.
+3. Retrieve the string that represents the <xref:System.DateTime> value.
 
-4. Call the `System.DateTime.Parse(System.String,System.IFormatProvider,System.Globalization.DateTimeStyles)` method, and pass `System.Globalization.DateTimeStyles.RoundtripKind` as the value of the `styles` parameter.
+4. Call the <xref:System.DateTime.Parse%28System.String%2CSystem.IFormatProvider%2CSystem.Globalization.DateTimeStyles%29?displayProperty=nameWithType> method, and pass <xref:System.Globalization.DateTimeStyles.RoundtripKind?displayProperty=nameWithType> as the value of the `styles` parameter.
 
-The following example illustrates how to round-trip a `System.DateTime` value.
+The following example illustrates how to round-trip a <xref:System.DateTime> value.
 
-```csharp
-using System;
-using System.Globalization;
-using System.IO;
+[!code-csharp[Formatting.HowTo.RoundTrip#1](../../../samples/snippets/csharp/VS_Snippets_CLR/Formatting.HowTo.RoundTrip/cs/RoundTrip.cs#1)]
+[!code-vb[Formatting.HowTo.RoundTrip#1](../../../samples/snippets/visualbasic/VS_Snippets_CLR/Formatting.HowTo.RoundTrip/vb/RoundTrip.vb#1)]
 
-public class Class1
-{
-    public static void Main()
-    {
-        RoundTripDateTime();
-        Console.WriteLine();
-        RoundTripDateTimeOffset();
-        Console.WriteLine();
-    }
-
-    private static void RoundTripDateTime()
-    {
-        const string fileName = @".\DateFile.txt";
-
-        StreamWriter outFile = new StreamWriter(fileName);
-
-        // Save DateTime value.
-        DateTime dateToSave = DateTime.SpecifyKind(new DateTime(2008, 6, 12, 18, 45, 15),
-                                                   DateTimeKind.Local);
-        string? dateString = dateToSave.ToString("o");
-        Console.WriteLine($"Converted {dateToSave.ToString()} ({dateToSave.Kind.ToString()}) to {dateString}.");
-        outFile.WriteLine(dateString);
-        Console.WriteLine($"Wrote {dateString} to {fileName}.");
-        outFile.Close();
-
-        // Restore DateTime value.
-        DateTime restoredDate;
-
-        using StreamReader inFile = new StreamReader(fileName);
-        dateString = inFile.ReadLine();
-
-        if (dateString is not null)
-        {
-            restoredDate = DateTime.Parse(dateString, null, DateTimeStyles.RoundtripKind);
-            Console.WriteLine($"Read {restoredDate.ToString()} ({restoredDate.Kind.ToString()}) from {fileName}.");
-        }
-
-        // The example displays the following output:
-        //    Converted 6/12/2008 6:45:15 PM (Local) to 2008-06-12T18:45:15.0000000-05:00.
-        //    Wrote 2008-06-12T18:45:15.0000000-05:00 to .\DateFile.txt.
-        //    Read 6/12/2008 6:45:15 PM (Local) from .\DateFile.txt.
-    }
-
-    private static void RoundTripDateTimeOffset()
-    {
-        const string fileName = @".\DateOff.txt";
-
-        StreamWriter outFile = new StreamWriter(fileName);
-
-        // Save DateTime value.
-        DateTimeOffset dateToSave = new DateTimeOffset(2008, 6, 12, 18, 45, 15,
-                                                       new TimeSpan(7, 0, 0));
-        string? dateString = dateToSave.ToString("o");
-        Console.WriteLine($"Converted {dateToSave.ToString()} to {dateString}.");
-        outFile.WriteLine(dateString);
-        Console.WriteLine($"Wrote {dateString} to {fileName}.");
-        outFile.Close();
-
-        // Restore DateTime value.
-        DateTimeOffset restoredDateOff;
-
-        using StreamReader inFile = new StreamReader(fileName);
-        dateString = inFile.ReadLine();
-
-        if (dateString is not null)
-        {
-            restoredDateOff = DateTimeOffset.Parse(dateString, null,
-                                                   DateTimeStyles.RoundtripKind);
-            Console.WriteLine($"Read {restoredDateOff.ToString()} from {fileName}.");
-        }
-
-        // The example displays the following output:
-        //    Converted 6/12/2008 6:45:15 PM +07:00 to 2008-06-12T18:45:15.0000000+07:00.
-        //    Wrote 2008-06-12T18:45:15.0000000+07:00 to .\DateOff.txt.
-        //    Read 6/12/2008 6:45:15 PM +07:00 from .\DateOff.txt.
-    }
-}
-
-[Serializable]
-public class DateInTimeZone
-{
-    private TimeZoneInfo? tz;
-    private DateTimeOffset thisDate;
-
-    public DateInTimeZone() { }
-
-    public DateInTimeZone(DateTimeOffset date, TimeZoneInfo timeZone)
-    {
-        if (timeZone is null)
-            throw new ArgumentNullException("timeZone", "The time zone cannot be null.");
-
-        this.thisDate = date;
-        this.tz = timeZone;
-    }
-
-    public DateTimeOffset DateAndTime
-    {
-        get
-        {
-            return thisDate;
-        }
-        set
-        {
-            if ((tz is not null) && (value.Offset != tz.GetUtcOffset(value)))
-                thisDate = TimeZoneInfo.ConvertTime(value, tz);
-            else
-                thisDate = value;
-        }
-    }
-
-    public TimeZoneInfo? TimeZone => tz;
-}
-```
-
-When round-tripping a `System.DateTime` value, this technique successfully preserves the time for all local and universal times. For example, if a local `System.DateTime` value is saved on a system in the U.S. Pacific Standard Time zone and is restored on a system in the U.S. Central Standard Time zone, the restored date and time will be two hours later than the original time, which reflects the time difference between the two time zones. However, this technique is not necessarily accurate for unspecified times. All `System.DateTime` values whose `System.DateTime.Kind` property is `System.DateTimeKind.Unspecified` are treated as if they are local times. If it's not a local time, the `System.DateTime` doesn't successfully identify the correct point in time. The workaround for this limitation is to tightly couple a date and time value with its time zone for the save and restore operation.
+When round-tripping a <xref:System.DateTime> value, this technique successfully preserves the time for all local and universal times. For example, if a local <xref:System.DateTime> value is saved on a system in the U.S. Pacific Standard Time zone and is restored on a system in the U.S. Central Standard Time zone, the restored date and time will be two hours later than the original time, which reflects the time difference between the two time zones. However, this technique is not necessarily accurate for unspecified times. All <xref:System.DateTime> values whose <xref:System.DateTime.Kind> property is <xref:System.DateTimeKind.Unspecified> are treated as if they are local times. If it's not a local time, the <xref:System.DateTime> doesn't successfully identify the correct point in time. The workaround for this limitation is to tightly couple a date and time value with its time zone for the save and restore operation.
 
 ## Round-trip a DateTimeOffset value
 
-1. Convert the `System.DateTimeOffset` value to its string representation by calling the `System.DateTimeOffset.ToString(System.String)` method with the "o" format specifier.
+1. Convert the <xref:System.DateTimeOffset> value to its string representation by calling the <xref:System.DateTimeOffset.ToString%28System.String%29?displayProperty=nameWithType> method with the "o" format specifier.
 
-2. Save the string representation of the `System.DateTimeOffset` value to a file, or pass it across a process, application domain, or machine boundary.
+2. Save the string representation of the <xref:System.DateTimeOffset> value to a file, or pass it across a process, application domain, or machine boundary.
 
-3. Retrieve the string that represents the `System.DateTimeOffset` value.
+3. Retrieve the string that represents the <xref:System.DateTimeOffset> value.
 
-4. Call the `System.DateTimeOffset.Parse(System.String,System.IFormatProvider,System.Globalization.DateTimeStyles)` method, and pass `System.Globalization.DateTimeStyles.RoundtripKind` as the value of the `styles` parameter.
+4. Call the <xref:System.DateTimeOffset.Parse%28System.String%2CSystem.IFormatProvider%2CSystem.Globalization.DateTimeStyles%29?displayProperty=nameWithType> method, and pass <xref:System.Globalization.DateTimeStyles.RoundtripKind?displayProperty=nameWithType> as the value of the `styles` parameter.
 
-The following example illustrates how to round-trip a `System.DateTimeOffset` value.
+The following example illustrates how to round-trip a <xref:System.DateTimeOffset> value.
 
-```csharp
-using System;
-using System.Globalization;
-using System.IO;
+[!code-csharp[Formatting.HowTo.RoundTrip#2](../../../samples/snippets/csharp/VS_Snippets_CLR/Formatting.HowTo.RoundTrip/cs/RoundTrip.cs#2)]
+[!code-vb[Formatting.HowTo.RoundTrip#2](../../../samples/snippets/visualbasic/VS_Snippets_CLR/Formatting.HowTo.RoundTrip/vb/RoundTrip.vb#2)]
 
-public class Class1
-{
-    public static void Main()
-    {
-        RoundTripDateTime();
-        Console.WriteLine();
-        RoundTripDateTimeOffset();
-        Console.WriteLine();
-    }
-
-    private static void RoundTripDateTime()
-    {
-        const string fileName = @".\DateFile.txt";
-
-        StreamWriter outFile = new StreamWriter(fileName);
-
-        // Save DateTime value.
-        DateTime dateToSave = DateTime.SpecifyKind(new DateTime(2008, 6, 12, 18, 45, 15),
-                                                   DateTimeKind.Local);
-        string? dateString = dateToSave.ToString("o");
-        Console.WriteLine($"Converted {dateToSave.ToString()} ({dateToSave.Kind.ToString()}) to {dateString}.");
-        outFile.WriteLine(dateString);
-        Console.WriteLine($"Wrote {dateString} to {fileName}.");
-        outFile.Close();
-
-        // Restore DateTime value.
-        DateTime restoredDate;
-
-        using StreamReader inFile = new StreamReader(fileName);
-        dateString = inFile.ReadLine();
-
-        if (dateString is not null)
-        {
-            restoredDate = DateTime.Parse(dateString, null, DateTimeStyles.RoundtripKind);
-            Console.WriteLine($"Read {restoredDate.ToString()} ({restoredDate.Kind.ToString()}) from {fileName}.");
-        }
-
-        // The example displays the following output:
-        //    Converted 6/12/2008 6:45:15 PM (Local) to 2008-06-12T18:45:15.0000000-05:00.
-        //    Wrote 2008-06-12T18:45:15.0000000-05:00 to .\DateFile.txt.
-        //    Read 6/12/2008 6:45:15 PM (Local) from .\DateFile.txt.
-    }
-
-    private static void RoundTripDateTimeOffset()
-    {
-        const string fileName = @".\DateOff.txt";
-
-        StreamWriter outFile = new StreamWriter(fileName);
-
-        // Save DateTime value.
-        DateTimeOffset dateToSave = new DateTimeOffset(2008, 6, 12, 18, 45, 15,
-                                                       new TimeSpan(7, 0, 0));
-        string? dateString = dateToSave.ToString("o");
-        Console.WriteLine($"Converted {dateToSave.ToString()} to {dateString}.");
-        outFile.WriteLine(dateString);
-        Console.WriteLine($"Wrote {dateString} to {fileName}.");
-        outFile.Close();
-
-        // Restore DateTime value.
-        DateTimeOffset restoredDateOff;
-
-        using StreamReader inFile = new StreamReader(fileName);
-        dateString = inFile.ReadLine();
-
-        if (dateString is not null)
-        {
-            restoredDateOff = DateTimeOffset.Parse(dateString, null,
-                                                   DateTimeStyles.RoundtripKind);
-            Console.WriteLine($"Read {restoredDateOff.ToString()} from {fileName}.");
-        }
-
-        // The example displays the following output:
-        //    Converted 6/12/2008 6:45:15 PM +07:00 to 2008-06-12T18:45:15.0000000+07:00.
-        //    Wrote 2008-06-12T18:45:15.0000000+07:00 to .\DateOff.txt.
-        //    Read 6/12/2008 6:45:15 PM +07:00 from .\DateOff.txt.
-    }
-}
-
-[Serializable]
-public class DateInTimeZone
-{
-    private TimeZoneInfo? tz;
-    private DateTimeOffset thisDate;
-
-    public DateInTimeZone() { }
-
-    public DateInTimeZone(DateTimeOffset date, TimeZoneInfo timeZone)
-    {
-        if (timeZone is null)
-            throw new ArgumentNullException("timeZone", "The time zone cannot be null.");
-
-        this.thisDate = date;
-        this.tz = timeZone;
-    }
-
-    public DateTimeOffset DateAndTime
-    {
-        get
-        {
-            return thisDate;
-        }
-        set
-        {
-            if ((tz is not null) && (value.Offset != tz.GetUtcOffset(value)))
-                thisDate = TimeZoneInfo.ConvertTime(value, tz);
-            else
-                thisDate = value;
-        }
-    }
-
-    public TimeZoneInfo? TimeZone => tz;
-}
-```
-
-This technique always unambiguously identifies a `System.DateTimeOffset` value as a single point in time. The value can then be converted to Coordinated Universal Time (UTC) by calling the `System.DateTimeOffset.ToUniversalTime*` method, or it can be converted to the time in a particular time zone by calling the `System.DateTimeOffset.ToOffset*` or `System.TimeZoneInfo.ConvertTime(System.DateTimeOffset,System.TimeZoneInfo)` method. The major limitation of this technique is that date and time arithmetic, when performed on a `System.DateTimeOffset` value that represents the time in a particular time zone, may not produce accurate results for that time zone. This is because when a `System.DateTimeOffset` value is instantiated, it is disassociated from its time zone. Therefore, that time zone's adjustment rules can no longer be applied when you perform date and time calculations. You can work around this problem by defining a custom type that includes both a date and time value and its accompanying time zone.
+This technique always unambiguously identifies a <xref:System.DateTimeOffset> value as a single point in time. The value can then be converted to Coordinated Universal Time (UTC) by calling the <xref:System.DateTimeOffset.ToUniversalTime*?displayProperty=nameWithType> method, or it can be converted to the time in a particular time zone by calling the <xref:System.DateTimeOffset.ToOffset*?displayProperty=nameWithType> or <xref:System.TimeZoneInfo.ConvertTime%28System.DateTimeOffset%2CSystem.TimeZoneInfo%29?displayProperty=nameWithType> method. The major limitation of this technique is that date and time arithmetic, when performed on a <xref:System.DateTimeOffset> value that represents the time in a particular time zone, may not produce accurate results for that time zone. This is because when a <xref:System.DateTimeOffset> value is instantiated, it is disassociated from its time zone. Therefore, that time zone's adjustment rules can no longer be applied when you perform date and time calculations. You can work around this problem by defining a custom type that includes both a date and time value and its accompanying time zone.
 
 ## Compile the code
 
 These examples require that the following namespaces be imported with C# `using` directives or Visual Basic `Imports` statements:
 
-- `System` (C# only)
-- `System.Globalization`
-- `System.IO`
+- <xref:System> (C# only)
+- <xref:System.Globalization?displayProperty=nameWithType>
+- <xref:System.IO?displayProperty=nameWithType>
 
 ## See also
 
-- Choosing Between DateTime, DateTimeOffset, TimeSpan, and TimeZoneInfo
-- Standard Date and Time Format Strings
+- [Choosing Between DateTime, DateTimeOffset, TimeSpan, and TimeZoneInfo](../datetime/choosing-between-datetime.md)
+- [Standard Date and Time Format Strings](standard-date-and-time-format-strings.md)

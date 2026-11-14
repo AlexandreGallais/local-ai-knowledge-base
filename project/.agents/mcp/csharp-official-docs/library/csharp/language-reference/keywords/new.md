@@ -1,20 +1,22 @@
 ---
+description: "new - C# Reference"
 title: "new keyword"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/keywords/new.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 01/22/2026
+f1_keywords:
+  - "new"
+  - "new_CSharpKeyword"
+helpviewer_keywords:
+  - "new keyword [C#]"
 ---
 
 # new (C# reference)
 
 Use the `new` keyword as an operator, modifier, or constraint:
 
-- new operator
-- new modifier
-- new constraint
+- [new operator](../operators/new-operator.md)
+- [new modifier](new-modifier.md)
+- [new constraint](new-constraint.md)
 
 ## See also
 
-- C# Keywords
+- [C# Keywords](index.md)

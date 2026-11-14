@@ -1,12 +1,3 @@
----
-title: "Macros"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/macros.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[macro]
 # Macros
 
@@ -22,7 +13,7 @@ r[macro.invocation]
 ## Macro invocation
 
 r[macro.invocation.syntax]
-```grammar
+```grammar,macros
 MacroInvocation ->
     SimplePath `!` DelimTokenTree
 
@@ -32,7 +23,7 @@ DelimTokenTree ->
     | `{` TokenTree* `}`
 
 TokenTree ->
-    Token <example-value> [delimiters][lex.token.delim]_ | DelimTokenTree
+    Token _except [delimiters][lex.token.delim]_ | DelimTokenTree
 
 MacroInvocationSemi ->
       SimplePath `!` `(` TokenTree* `)` `;`
@@ -112,7 +103,20 @@ r[macro.invocation.name-resolution]
 Macros invocations can be resolved via two kinds of scopes:
 
 - Textual Scope
-  - Textual scope `macro_rules`
+  - [Textual scope `macro_rules`](macros-by-example.md#r-macro.decl.scope.textual)
 - Path-based scope
-  - Path-based scope `macro_rules`
+  - [Path-based scope `macro_rules`](macros-by-example.md#r-macro.decl.scope.path-based)
   - [Procedural macros]
+
+[External blocks]: items/external-blocks.md
+[Macros by Example]: macros-by-example.md
+[Procedural Macros]: procedural-macros.md
+[`macro_rules`]: macros-by-example.md
+[associated items]: items/associated-items.md
+[delimiters]: tokens.md#delimiters
+[expressions]: expressions.md
+[items]: items.md
+[patterns]: patterns.md
+[statements]: statements.md
+[types]: types.md
+[visibility qualifiers]: visibility-and-privacy.md

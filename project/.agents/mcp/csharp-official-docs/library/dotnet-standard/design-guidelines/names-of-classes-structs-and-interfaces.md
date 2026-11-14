@@ -1,16 +1,22 @@
 ---
 title: "Names of Classes, Structs, and Interfaces"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/names-of-classes-structs-and-interfaces.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Use these guidelines for naming Classes, Structs, and Interfaces as part of guidelines for designing libraries that extend and interact .NET libraries.
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "type names, guidelines"
+  - "classes [.NET Framework], names"
+  - "enumerations [.NET Framework], names"
+  - "names [.NET Framework], interfaces"
+  - "common type names"
+  - "names [.NET Framework], type names"
+  - "names [.NET Framework], classes"
+  - "interfaces [.NET Framework], names"
+  - "generic type parameters"
+ms.assetid: 87a4b0da-ed64-43b1-ac43-968576c444ce
 ---
-
 # Names of Classes, Structs, and Interfaces
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
 The naming guidelines that follow apply to general type naming.
 
@@ -67,12 +73,12 @@ public interface ISessionChannel<TSession> where TSession : ISession {
 |Base Type|Derived/Implementing Type Guideline|
 |---------------|------------------------------------------|
 |`System.Attribute`|✔️ DO add the suffix "Attribute" to names of custom attribute classes.|
-|`System.Delegate`|✔️ DO add the suffix "EventHandler" to names of delegates that are used in events. ✔️ DO add the suffix "Callback" to names of delegates other than those used as event handlers. ❌ DO NOT add the suffix "Delegate" to a delegate.|
+|`System.Delegate`|✔️ DO add the suffix "EventHandler" to names of delegates that are used in events.<br /><br /> ✔️ DO add the suffix "Callback" to names of delegates other than those used as event handlers.<br /><br /> ❌ DO NOT add the suffix "Delegate" to a delegate.|
 |`System.EventArgs`|✔️ DO add the suffix "EventArgs."|
-|`System.Enum`|❌ DO NOT derive from this class; use the keyword supported by your language instead; for example, in C#, use the `enum` keyword. ❌ DO NOT add the suffix "Enum" or "Flag."|
+|`System.Enum`|❌ DO NOT derive from this class; use the keyword supported by your language instead; for example, in C#, use the `enum` keyword.<br /><br /> ❌ DO NOT add the suffix "Enum" or "Flag."|
 |`System.Exception`|✔️ DO add the suffix "Exception."|
-|`IDictionary`  `IDictionary<TKey,TValue>`|✔️ DO add the suffix "Dictionary." Note that `IDictionary` is a specific type of collection, but this guideline takes precedence over the more general collections guideline that follows.|
-|`IEnumerable`  `ICollection`  `IList`  `IEnumerable<T>`  `ICollection<T>`  `IList<T>`|✔️ DO add the suffix "Collection."|
+|`IDictionary` <br /> `IDictionary<TKey,TValue>`|✔️ DO add the suffix "Dictionary." Note that `IDictionary` is a specific type of collection, but this guideline takes precedence over the more general collections guideline that follows.|
+|`IEnumerable` <br /> `ICollection` <br /> `IList` <br /> `IEnumerable<T>` <br /> `ICollection<T>` <br /> `IList<T>`|✔️ DO add the suffix "Collection."|
 |`System.IO.Stream`|✔️ DO add the suffix "Stream."|
 |`CodeAccessPermission IPermission`|✔️ DO add the suffix "Permission."|
 
@@ -92,9 +98,9 @@ public interface ISessionChannel<TSession> where TSession : ISession {
 
  *Portions © 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Framework Design Guidelines
-- Naming Guidelines
+- [Framework Design Guidelines](index.md)
+- [Naming Guidelines](naming-guidelines.md)

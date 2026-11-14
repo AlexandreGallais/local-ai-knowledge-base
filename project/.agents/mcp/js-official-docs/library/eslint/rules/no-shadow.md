@@ -1,13 +1,12 @@
 ---
-title: "no-shadow"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-shadow.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-shadow
+rule_type: suggestion
+related_rules:
+- no-shadow-restricted-names
+further_reading:
+- https://en.wikipedia.org/wiki/Variable_shadowing
 ---
 
-# no-shadow
 
 Shadowing is the process by which a local variable shares the same name as a variable in its containing scope. For example:
 
@@ -26,7 +25,7 @@ This rule aims to eliminate shadowed variable declarations.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-shadow: "error"*/
@@ -54,9 +53,11 @@ const f = wrap(function f() {});
 const C = wrap(class C {});
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-shadow: "error"*/
@@ -81,6 +82,8 @@ function qux(i = function i() {}) {}
 const C = class C {};
 ```
 
+:::
+
 ## Options
 
 This rule takes one option, an object, with the following properties:
@@ -104,7 +107,7 @@ If it is `true`, the rule prevents shadowing of built-in global variables: `Obje
 
 Examples of **incorrect** code for the `{ "builtinGlobals": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-shadow: ["error", { "builtinGlobals": true }]*/
@@ -113,6 +116,8 @@ function foo() {
     const Object = 0;
 }
 ```
+
+:::
 
 ### hoist
 
@@ -128,7 +133,7 @@ The `hoist` option has five settings:
 
 Examples of **incorrect** code for the default `{ "hoist": "functions" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-shadow: ["error", { "hoist": "functions" }]*/
@@ -140,11 +145,13 @@ if (true) {
 function b() {}
 ```
 
+:::
+
 Although `const b` in the `if` statement is before the *function* declaration in the outer scope, it is incorrect.
 
 Examples of **correct** code for the default `{ "hoist": "functions" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-shadow: ["error", { "hoist": "functions" }]*/
@@ -156,13 +163,15 @@ if (true) {
 const a = 5;
 ```
 
+:::
+
 Because `const a` in the `if` statement is before the *variable* declaration in the outer scope, it is correct.
 
 #### hoist: all
 
 Examples of **incorrect** code for the `{ "hoist": "all" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-shadow: ["error", { "hoist": "all" }]*/
@@ -176,11 +185,13 @@ const a = 5;
 function b() {}
 ```
 
+:::
+
 #### hoist: never
 
 Examples of **correct** code for the `{ "hoist": "never" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-shadow: ["error", { "hoist": "never" }]*/
@@ -194,13 +205,15 @@ const a = 5;
 function b() {}
 ```
 
+:::
+
 Because `const a` and `const b` in the `if` statement are before the declarations in the outer scope, they are correct.
 
 #### hoist: types
 
 Examples of **incorrect** code for the `{ "hoist": "types" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /*eslint no-shadow: ["error", { "hoist": "types" }]*/
@@ -209,11 +222,13 @@ type Bar<Foo> = 1;
 type Foo = 1;
 ```
 
+:::
+
 #### hoist: functions-and-types
 
 Examples of **incorrect** code for the `{ "hoist": "functions-and-types" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /*eslint no-shadow: ["error", { "hoist": "functions-and-types" }]*/
@@ -230,13 +245,15 @@ if (true) {
 function b() {}
 ```
 
+:::
+
 ### allow
 
 The `allow` option is an array of identifier names for which shadowing is allowed. For example, `"resolve"`, `"reject"`, `"done"`, `"cb"`.
 
 Examples of **correct** code for the `{ "allow": ["done"] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-shadow: ["error", { "allow": ["done"] }]*/
@@ -254,6 +271,8 @@ foo(function (err, result) {
 });
 ```
 
+:::
+
 ### ignoreOnInitialization
 
 The `ignoreOnInitialization` option is `false` by default. If it is `true`, it prevents reporting shadowing of variables in their initializers when the shadowed variable is presumably still uninitialized.
@@ -262,7 +281,7 @@ The shadowed variable must be on the left side. The shadowing variable must be o
 
 Examples of **incorrect** code for the `{ "ignoreOnInitialization": "true" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-shadow: ["error", { "ignoreOnInitialization": true }]*/
@@ -270,11 +289,13 @@ Examples of **incorrect** code for the `{ "ignoreOnInitialization": "true" }` op
 const x = x => x;
 ```
 
+:::
+
 Because the shadowing variable `x` will shadow the already initialized shadowed variable `x`.
 
 Examples of **correct** code for the `{ "ignoreOnInitialization": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-shadow: ["error", { "ignoreOnInitialization": true }]*/
@@ -283,6 +304,8 @@ const x = foo(x => x)
 
 const y = (y => y)()
 ```
+
+:::
 
 The rationale for callback functions is the assumption that they will be called during the initialization, so that at the time when the shadowing variable will be used, the shadowed variable has not yet been initialized.
 
@@ -294,7 +317,7 @@ This is generally safe because you cannot use variables in type locations withou
 
 Examples of **correct** code with `{ "ignoreTypeValueShadow": true }`:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint no-shadow: ["error", { "ignoreTypeValueShadow": true }]*/
@@ -310,7 +333,10 @@ function f() {
 }
 ```
 
-**Note:** Shadowing specifically refers to two identical identifiers that are in different, nested scopes. This is different from redeclaration, which is when two identical identifiers are in the same scope. Redeclaration is covered by the `no-redeclare` rule instead.
+:::
+
+**Note:** Shadowing specifically refers to two identical identifiers that are in different, nested scopes. This is different from redeclaration, which is when two identical identifiers are in the same scope. Redeclaration is covered by the [`no-redeclare`](/rules/no-redeclare) rule instead.
+
 
 ### ignoreFunctionTypeParameterNameValueShadow
 
@@ -340,7 +366,7 @@ If you do not use the `typeof` operator in a function type return type position,
 
 Examples of **correct** code with `{ "ignoreFunctionTypeParameterNameValueShadow": true }`:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint no-shadow: ["error", { "ignoreFunctionTypeParameterNameValueShadow": true }]*/
@@ -348,6 +374,8 @@ Examples of **correct** code with `{ "ignoreFunctionTypeParameterNameValueShadow
 const test = 1;
 type Func = (test: string) => typeof test;
 ```
+
+:::
 
 ### Why does the rule report on enum members that share the same name as a variable in a parent scope?
 

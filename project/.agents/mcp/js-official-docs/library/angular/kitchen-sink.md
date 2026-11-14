@@ -1,21 +1,13 @@
----
-title: "Kitchen sink"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/kitchen-sink.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
-# Kitchen sink
+<docs-decorative-header title="Kitchen sink" imgSrc="adev/src/assets/images/components.svg"> <!-- markdownlint-disable-line -->
 This is a visual list of all custom components and styles for Angular.dev.
+</docs-decorative-header>
 
 As a design system, this page contains visual and Markdown authoring guidance for:
 
-- Custom Angular docs elements: `docs-card`, `docs-callout`, `docs-pill`, and `docs-steps`
-- Custom text elements: alerts
-- Code examples: `docs-code`
-- Built-in Markdown styled elements: links, lists, headers, horizontal lines
+- Custom Angular docs elements: [`docs-card`](#cards), [`docs-callout`](#callouts), [`docs-pill`](#pills), and [`docs-steps`](#workflow)
+- Custom text elements: [alerts](#alerts)
+- Code examples: [`docs-code`](#code)
+- Built-in Markdown styled elements: links, lists, [headers](#headers-h2), [horizontal lines](#horizontal-line-divider)
 - and more!
 
 Get ready to:
@@ -36,56 +28,64 @@ Get ready to:
 
 ## Cards
 
-  **What is Angular?**
+<docs-card-container>
+  <docs-card title="What is Angular?" link="Platform Overview" href="tutorials/first-app">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ornare ligula nisi
-
-  **Second Card**
+  </docs-card>
+  <docs-card title="Second Card" link="Try It Now" href="essentials/what-is-angular">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ornare ligula nisi
-
-    **No Link Card**
+  </docs-card>
+    <docs-card title="No Link Card">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ornare ligula nisi
+  </docs-card>
+</docs-card-container>
 
-### `` Attributes
+### `<docs-card>` Attributes
 
 | Attributes              | Details                                           |
 | :---------------------- | :------------------------------------------------ |
-| `` | All cards must be nested inside a container       |
+| `<docs-card-container>` | All cards must be nested inside a container       |
 | `title`                 | Card title                                        |
-| card body contents      | Anything between `` and `` |
+| card body contents      | Anything between `<docs-card>` and `</docs-card>` |
 | `link`                  | (Optional) Call to Action link text               |
 | `href`                  | (Optional) Call to Action link href               |
 
 ## Callouts
 
-**Title of a callout that is helpful**
+<docs-callout title="Title of a callout that is helpful">
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla luctus metus blandit semper faucibus. Sed blandit diam quis tellus maximus, ac scelerisque ex egestas. Ut euismod lobortis mauris pretium iaculis. Quisque ullamcorper, elit ut lacinia blandit, magna sem finibus urna, vel suscipit tortor dolor id risus.
+</docs-callout>
 
-**Title of a callout that is critical**
+<docs-callout critical title="Title of a callout that is critical">
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla luctus metus blandit semper faucibus. Sed blandit diam quis tellus maximus, ac scelerisque ex egestas. Ut euismod lobortis mauris pretium iaculis. Quisque ullamcorper, elit ut lacinia blandit, magna sem finibus urna, vel suscipit tortor dolor id risus.
+</docs-callout>
 
-**Title of a callout that is important**
+<docs-callout important title="Title of a callout that is important">
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla luctus metus blandit semper faucibus. Sed blandit diam quis tellus maximus, ac scelerisque ex egestas. Ut euismod lobortis mauris pretium iaculis. Quisque ullamcorper, elit ut lacinia blandit, magna sem finibus urna, vel suscipit tortor dolor id risus.
+</docs-callout>
 
-### `` Attributes
+### `<docs-callout>` Attributes
 
 | Attributes                                       | Details                                                   |
 | :----------------------------------------------- | :-------------------------------------------------------- |
 | `title`                                          | Callout title                                             |
-| card body contents                               | Anything between `` and ``   |
+| card body contents                               | Anything between `<docs-callout>` and `</docs-callout>`   |
 | `helpful` (default) \| `critical` \| `important` | (Optional) Adds styling and icons based on severity level |
 
 ## Pills
 
 Pill rows are helpful as a sort of navigation with links to helpful resources.
 
-  - Link
-  - Link
-  - Link
-  - Link
-  - Link
-  - Link
+<docs-pill-row id=pill-row>
+  <docs-pill href="#pill-row" title="Link"/>
+  <docs-pill href="#pill-row" title="Link"/>
+  <docs-pill href="#pill-row" title="Link"/>
+  <docs-pill href="#pill-row" title="Link"/>
+  <docs-pill href="#pill-row" title="Link"/>
+  <docs-pill href="#pill-row" title="Link"/>
+</docs-pill-row>
 
-### `- ` Attributes
+### `<docs-pill>` Attributes
 
 | Attributes       | Details                                    |
 | :--------------- | :----------------------------------------- |
@@ -119,7 +119,7 @@ IMPORTANT: Use Important for information that's crucial to comprehending the tex
 
 HELPFUL: Use Best practice to call out practices that are known to be successful or better than alternatives.
 
-NOTE: Heads up `developers`! Alerts _can_ have a link and other nested styles (but try to **use this sparingly**)!.
+NOTE: Heads up `developers`! Alerts _can_ have a [link](#alerts) and other nested styles (but try to **use this sparingly**)!.
 
 ## Code
 
@@ -129,9 +129,9 @@ You can display `code` using the built in triple backtick:
 example code
 ```
 
-Or using the ````
-` element.
+Or using the `<docs-code>` element.
 
+<docs-code header="Your first example" language="ts" linenums>
 import { Component } from '@angular/core';
 
 @Component({
@@ -139,26 +139,21 @@ selector: 'example-code',
 template: '<h1>Hello World!</h1>',
 })
 export class ComponentOverviewComponent {}
-```
+</docs-code>
 
 ### Styling the example
 
 Here's a code example fully styled:
 
-File: `A styled code example`
-
-```ts
-import {Component} from '@angular/core';
-
-@Component({
-  selector: 'hello-world',
-  templateUrl: 'app.component.html',
-  styleUrl: 'app.component.css',
-})
-export class HelloWorldComponent {
-  message = 'Hello World!';
-}
-```
+<docs-code
+  path="adev/src/content/examples/hello-world/src/app/app.component-old.ts"
+  header="A styled code example"
+  language='ts'
+  linenums
+  highlight="[[3,7], 9]"
+  preview
+  visibleLines="[3,10]">
+</docs-code>
 
 We also have styling for the terminal, just set the language as `shell`:
 
@@ -168,12 +163,12 @@ npm install @angular/material --save
 
 You can style standard Markdown triple backticks with attributes for enhanced presentation:
 
-```ts
+```ts {header:"Awesome Title", linenums, highlight: [2], hideCopy}
 console.log('Hello, World!');
 console.log('Awesome Angular Docs!');
 ```
 
-#### `` Attributes
+#### `<docs-code>` Attributes
 
 | Attributes     | Type                 | Details                                                         |
 | :------------- | :------------------- | :-------------------------------------------------------------- |
@@ -191,20 +186,20 @@ console.log('Awesome Angular Docs!');
 
 ### Multifile examples
 
-You can create multifile examples by wrapping the examples inside a ``.
+You can create multifile examples by wrapping the examples inside a `<docs-code-multifile>`.
 
-```html
-<h1>{{ message }}</h1>
-```
-```css
-h1 {
- background-image: linear-gradient(to right, oklch(53.18% 0.28 296.97), oklch(69.02% 0.277 332.77)); 
- background-clip: text;
- color: transparent;
-}
-```
+<docs-code-multifile
+  path="adev/src/content/examples/hello-world/src/app/app.component.ts"
+  preview>
+<docs-code
+    path="adev/src/content/examples/hello-world/src/app/app.component.html"
+    highlight="[1]"
+    linenums/>
+<docs-code
+    path="adev/src/content/examples/hello-world/src/app/app.component.css" />
+</docs-code-multifile>
 
-#### `` Attributes
+#### `<docs-code-multifile>` Attributes
 
 | Attributes    | Type      | Details                                              |
 | :------------ | :-------- | :--------------------------------------------------- |
@@ -223,58 +218,47 @@ NOTE: `preview` only works with standalone.
 
 Tailwind utility classes can be used within code examples.
 
-```html
-<h1 class="text-pink-500 dark:text-violet-500 underline">{{ message }}</h1>
-```
-```ts
-import {Component} from '@angular/core';
-
-@Component({
-  selector: 'hello-world',
-  templateUrl: 'tailwind-app.component.html',
-})
-export class HelloWorldComponent {
-  message = 'Hello Angular World!';
-}
-```
+<docs-code-multifile
+  path="adev/src/content/examples/hello-world/src/app/tailwind-app.component.ts"
+  preview>
+<docs-code path="adev/src/content/examples/hello-world/src/app/tailwind-app.component.html" />
+<docs-code path="adev/src/content/examples/hello-world/src/app/tailwind-app.component.ts" />
+</docs-code-multifile>
 
 ## Tabs
 
-  **Code Example**
-
-    ```html
-<h1 class="text-pink-500 dark:text-violet-500 underline">{{ message }}</h1>
-```
-    ```ts
-import {Component} from '@angular/core';
-
-@Component({
-  selector: 'hello-world',
-  templateUrl: 'tailwind-app.component.html',
-})
-export class HelloWorldComponent {
-  message = 'Hello Angular World!';
-}
-```
-
-  **Some Text**
+<docs-tab-group>
+  <docs-tab label="Code Example">
+    <docs-code-multifile
+      path="adev/src/content/examples/hello-world/src/app/tailwind-app.component.ts"
+      hideCode="true"
+      preview>
+    <docs-code path="adev/src/content/examples/hello-world/src/app/tailwind-app.component.html" />
+    <docs-code path="adev/src/content/examples/hello-world/src/app/tailwind-app.component.ts" />
+    </docs-code-multifile>
+  </docs-tab>
+  <docs-tab label="Some Text">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla luctus metus blandit semper faucibus. Sed blandit diam quis tellus maximus, ac scelerisque ex egestas. Ut euismod lobortis mauris pretium iaculis. Quisque ullamcorper, elit ut lacinia blandit, magna sem finibus urna, vel suscipit tortor dolor id risus.
+  </docs-tab>
+</docs-tab-group>
 
 ## Workflow
 
-Style numbered steps using `### `. Numbering is created using CSS (handy!).
+Style numbered steps using `<docs-step>`. Numbering is created using CSS (handy!).
 
-### `` and `### ` Attributes
+### `<docs-workflow>` and `<docs-step>` Attributes
 
 | Attributes         | Details                                           |
 | :----------------- | :------------------------------------------------ |
-| ``  | All steps must be nested inside a workflow        |
+| `<docs-workflow>`  | All steps must be nested inside a workflow        |
 | `title`            | Step title                                        |
-| step body contents | Anything between `### ` and `` |
+| step body contents | Anything between `<docs-step>` and `</docs-step>` |
 
 Steps must start on a new line, and can contain `docs-code`s and other nested elements and styles.
 
-### Install the Angular CLI
+<docs-workflow>
+
+<docs-step title="Install the Angular CLI">
   You use the Angular CLI to create projects, generate application and library code, and perform a variety of ongoing development tasks such as testing, bundling, and deployment.
 
 To install the Angular CLI, open a terminal window and run the following command:
@@ -283,7 +267,9 @@ To install the Angular CLI, open a terminal window and run the following command
 npm install -g @angular/cli
 ```
 
-### Create a workspace and initial application
+</docs-step>
+
+<docs-step title="Create a workspace and initial application">
   You develop apps in the context of an Angular workspace.
 
 To create a new workspace and initial starter app:
@@ -299,8 +285,9 @@ To create a new workspace and initial starter app:
   The Angular CLI installs the necessary Angular npm packages and other dependencies. This can take a few minutes.
 
   The CLI creates a new workspace and a simple Welcome app, ready to run.
+  </docs-step>
 
-### Run the application
+<docs-step title="Run the application">
   The Angular CLI includes a server, for you to build and serve your app locally.
 
 1. Navigate to the workspace folder, such as `my-app`.
@@ -315,26 +302,44 @@ The `ng serve` command launches the server, watches your files, and rebuilds the
 
 The `--open` (or just `-o`) option automatically opens your browser to <http://localhost:4200/>.
 If your installation and setup was successful, you should see a page similar to the following.
+</docs-step>
 
-### Final step
+<docs-step title="Final step">
   That's all the docs components! Now:
 
-    - Go
-    - write
-    - great
-    - docs!
+  <docs-pill-row>
+    <docs-pill href="#pill-row" title="Go"/>
+    <docs-pill href="#pill-row" title="write"/>
+    <docs-pill href="#pill-row" title="great"/>
+    <docs-pill href="#pill-row" title="docs!"/>
+  </docs-pill-row>
+</docs-step>
+
+</docs-workflow>
 
 ## Images and video
 
 You can add images using the semantic Markdown image:
 
+![Rhubarb the cat](assets/images/kitchen-sink/rhubarb.jpg 'Optional title')
+
+### Add `#small` and `#medium` to change the image size
+
+![Rhubarb the small cat](assets/images/kitchen-sink/rhubarb.jpg#small)
+![Rhubarb the medium cat](assets/images/kitchen-sink/rhubarb.jpg#medium)
+
 ## Add attributes using curly braces syntax
+
+![Lazy loaded image](assets/images/kitchen-sink/rhubarb.jpg {loading: 'lazy'})
+![Combined attributes](assets/images/kitchen-sink/rhubarb.jpg#small {loading: 'lazy', decoding: 'async', fetchpriority: 'low'})
 
 Embedded videos are created with `docs-video` and just need a `src` and `title`:
 
+<docs-video src="https://www.youtube.com/embed/O47uUnJjbJc" title="Expression changed after checked"/>
+
 ## Charts & Graphs
 
-Write diagrams and charts using Mermaid by setting the code language to `mermaid`, all theming is built-in.
+Write diagrams and charts using [Mermaid](https://mermaid.js.org/) by setting the code language to `mermaid`, all theming is built-in.
 
 ```mermaid
     graph TD;
@@ -363,33 +368,29 @@ Write diagrams and charts using Mermaid by setting the code language to `mermaid
 
 This can be used to separate page sections, like we're about to do below. These styles will be added by default, nothing custom needed.
 
+<hr/>
+
 The end!
 
 ## Prefer / Avoid
 
-```ts
+```ts {prefer}
 const foo = 'bar';
 ```
 
-```ts
+```ts {avoid}
 const bar = 'foo';
 ```
 
-```ts
+```ts {avoid, header: 'with a header'}
 const baz = 42;
 ```
 
-File: `A styled code example`
-
-```ts
-import {Component} from '@angular/core';
-
-@Component({
-  selector: 'hello-world',
-  templateUrl: 'app.component.html',
-  styleUrl: 'app.component.css',
-})
-export class HelloWorldComponent {
-  message = 'Hello World!';
-}
-```
+<docs-code
+  path="adev/src/content/examples/hello-world/src/app/app.component-old.ts"
+  header="A styled code example"
+  language='ts'
+  linenums
+  highlight="[[3,7], 9]"
+  prefer>
+</docs-code>

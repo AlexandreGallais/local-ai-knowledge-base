@@ -1,38 +1,29 @@
 ---
-title: "Breaking changes in ASP.NET Core 7"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/7/overview.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Breaking changes in ASP.NET Core 7
+description: Navigate to the breaking changes in ASP.NET Core 7.
+ms.date: 07/28/2023
+no-loc: [Blazor, Razor, Kestrel]
 ---
-
 # Breaking changes in ASP.NET Core 7
 
 If you're migrating an app to ASP.NET Core 7, the breaking changes listed here might affect you.
 
-This article categorizes each breaking change as *binary incompatible* or *source incompatible*, or as a *behavioral change*:
-
-- **Binary incompatible** - When run against the new runtime or component, existing binaries may encounter a breaking change in behavior, such as failure to load or execute, and if so, require recompilation.
-
-- **Source incompatible** - When recompiled using the new SDK or component or to target the new runtime, existing source code may require source changes to compile successfully.
-
-- **Behavioral change** - Existing code and binaries may behave differently at runtime. If the new behavior is undesirable, existing code would need to be updated and recompiled.
+[!INCLUDE [binary-source-behavioral](../includes/binary-source-behavioral.md)]
 
 | Title                                                                                            | Type of change      |
 |--------------------------------------------------------------------------------------------------|:-------------------:|
-| API controller actions try to infer parameters from DI | Source incompatible |
-| ASPNET-prefixed environment variable precedence            | Behavioral change   |
-| AuthenticateAsync for remote auth providers            | Source incompatible |
-| Authentication in WebAssembly apps                                 | Binary incompatible |
-| Default authentication scheme                                | Binary incompatible |
-| Event IDs for some Microsoft.AspNetCore.Mvc.Core log messages changed | Binary incompatible |
-| Fallback file endpoints                                            | Binary incompatible |
-| IHubClients and IHubCallerClients hide members               | Source incompatible |
-| Kestrel: Default HTTPS binding removed                               | Binary incompatible |
-| Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv and libuv.dll removed | Binary/source incompatible |
-| Microsoft.Data.SqlClient updated to 4.0.1        | Source incompatible |
-| Middleware no longer defers to endpoint with null request delegate | Binary incompatible |
-| MVC's detection of an empty body in model binding changed     | Binary incompatible |
-| Output caching API changes                                          | Binary/source incompatible |
-| SignalR Hub methods try to resolve parameters from DI     | Source incompatible |
+| [API controller actions try to infer parameters from DI](api-controller-action-parameters-di.md) | Source incompatible |
+| [ASPNET-prefixed environment variable precedence](environment-variable-precedence.md)            | Behavioral change   |
+| [AuthenticateAsync for remote auth providers](authenticateasync-anonymous-request.md)            | Source incompatible |
+| [Authentication in WebAssembly apps](wasm-app-authentication.md)                                 | Binary incompatible |
+| [Default authentication scheme](default-authentication-scheme.md)                                | Binary incompatible |
+| [Event IDs for some Microsoft.AspNetCore.Mvc.Core log messages changed](microsoft-aspnetcore-mvc-core-log-event-ids.md) | Binary incompatible |
+| [Fallback file endpoints](fallback-file-endpoints.md)                                            | Binary incompatible |
+| [IHubClients and IHubCallerClients hide members](ihubclients-ihubcallerclients.md)               | Source incompatible |
+| [Kestrel: Default HTTPS binding removed](https-binding-kestrel.md)                               | Binary incompatible |
+| [Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv and libuv.dll removed](libuv-transport-dll-removed.md) | Binary/source incompatible |
+| [Microsoft.Data.SqlClient updated to 4.0.1](microsoft-data-sqlclient-updated-to-4-0-1.md)        | Source incompatible |
+| [Middleware no longer defers to endpoint with null request delegate](middleware-null-requestdelegate.md) | Binary incompatible |
+| [MVC's detection of an empty body in model binding changed](mvc-empty-body-model-binding.md)     | Binary incompatible |
+| [Output caching API changes](output-caching-renames.md)                                          | Binary/source incompatible |
+| [SignalR Hub methods try to resolve parameters from DI](signalr-hub-method-parameters-di.md)     | Source incompatible |

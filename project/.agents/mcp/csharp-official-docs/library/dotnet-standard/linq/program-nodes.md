@@ -1,10 +1,11 @@
 ---
-title: "Programming with nodes - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/program-nodes.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Programming with nodes - LINQ to XML
+description: Learn how to code at the node level of an XML tree.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: c38df0f2-c805-431a-93ff-9103a4284c2f
 ---
 
 # Programming with nodes (LINQ to XML)
@@ -13,7 +14,7 @@ LINQ to XML developers who need to write programs such as an XML editor, a trans
 
 ## Example: The `Parent` property values of the child nodes of XDocument are set to `null`
 
-The `System.Xml.Linq.XObject.Parent` property contains the parent `System.Xml.Linq.XElement`, not the parent node. Child nodes of `System.Xml.Linq.XDocument` have no parent `System.Xml.Linq.XElement`. Their parent is the document, so the `System.Xml.Linq.XObject.Parent` property for those nodes is set to `null`.
+The <xref:System.Xml.Linq.XObject.Parent> property contains the parent <xref:System.Xml.Linq.XElement>, not the parent node. Child nodes of <xref:System.Xml.Linq.XDocument> have no parent <xref:System.Xml.Linq.XElement>. Their parent is the document, so the <xref:System.Xml.Linq.XObject.Parent> property for those nodes is set to `null`.
 
 The following example demonstrates this:
 
@@ -38,7 +39,7 @@ True
 
 ## Example: Adding text may or may not create a new text node
 
-In a number of XML programming models, adjacent text nodes are always merged. This is sometimes called normalization of text nodes. LINQ to XML doesn't normalize text nodes. If you add two text nodes to the same element, it will result in adjacent text nodes. However, if you add content specified as a string rather than as an `System.Xml.Linq.XText` node, LINQ to XML might merge the string with an adjacent text node. The following example demonstrates this.
+In a number of XML programming models, adjacent text nodes are always merged. This is sometimes called normalization of text nodes. LINQ to XML doesn't normalize text nodes. If you add two text nodes to the same element, it will result in adjacent text nodes. However, if you add content specified as a string rather than as an <xref:System.Xml.Linq.XText> node, LINQ to XML might merge the string with an adjacent text node. The following example demonstrates this.
 
 ```csharp
 XElement xmlTree = new XElement("Root", "Content");
@@ -138,7 +139,7 @@ This example produces the following output:
 
 ## Example: Namespaces are attributes in the LINQ to XML tree
 
-Even though namespace declarations have identical syntax to attributes, in some programming interfaces, such as XSLT and XPath, namespace declarations aren't considered to be attributes. However, in LINQ to XML, namespaces are stored as `System.Xml.Linq.XAttribute` objects in the XML tree. If you iterate through the attributes of an element that contains a namespace declaration, the namespace declaration is one of the items in the returned collection. The `System.Xml.Linq.XAttribute.IsNamespaceDeclaration` property indicates whether an attribute is a namespace declaration.
+Even though namespace declarations have identical syntax to attributes, in some programming interfaces, such as XSLT and XPath, namespace declarations aren't considered to be attributes. However, in LINQ to XML, namespaces are stored as <xref:System.Xml.Linq.XAttribute> objects in the XML tree. If you iterate through the attributes of an element that contains a namespace declaration, the namespace declaration is one of the items in the returned collection. The <xref:System.Xml.Linq.XAttribute.IsNamespaceDeclaration> property indicates whether an attribute is a namespace declaration.
 
 ```csharp
 XElement root = XElement.Parse(
@@ -172,7 +173,7 @@ AnAttribute="abc"  IsNamespaceDeclaration:False
 
 ## Example: XPath axis methods don't return the child text nodes of XDocument
 
-LINQ to XML allows for child text nodes of an `System.Xml.Linq.XDocument`, as long as the text nodes contain only white space. However, the XPath object model doesn't include white space as child nodes of a document, so when you iterate through the children of an `System.Xml.Linq.XDocument` using the `System.Xml.Linq.XContainer.Nodes*` axis, white space text nodes will be returned. However, when you iterate through the children of an `System.Xml.Linq.XDocument` using the XPath axis methods, white space text nodes won't be returned.
+LINQ to XML allows for child text nodes of an <xref:System.Xml.Linq.XDocument>, as long as the text nodes contain only white space. However, the XPath object model doesn't include white space as child nodes of a document, so when you iterate through the children of an <xref:System.Xml.Linq.XDocument> using the <xref:System.Xml.Linq.XContainer.Nodes*> axis, white space text nodes will be returned. However, when you iterate through the children of an <xref:System.Xml.Linq.XDocument> using the XPath axis methods, white space text nodes won't be returned.
 
 ```csharp
 // Create a document with some white space child nodes of the document.
@@ -215,7 +216,7 @@ This example produces the following output:
 
 ### The XML declaration node of an XDocument is a property, not a child node
 
-When you iterate through the child nodes of an `System.Xml.Linq.XDocument`, you won't see the XML declaration object. It's a property of the document, not a child node of it.
+When you iterate through the child nodes of an <xref:System.Xml.Linq.XDocument>, you won't see the XML declaration object. It's a property of the document, not a child node of it.
 
 ```csharp
 XDocument doc = new XDocument(

@@ -1,12 +1,3 @@
----
-title: "MinguoEra enum (java.time.chrono)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/time/chrono/MinguoEra.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # MinguoEra enum (java.time.chrono)
 
 ```java
@@ -14,33 +5,45 @@ public enum MinguoEra implements Era
 ```
 
 An era in the Minguo calendar system.
-
+<p>
 The Minguo calendar system has two eras.
 The current era, for years from 1 onwards, is known as the 'Republic of China' era.
 All previous years, zero or earlier in the proleptic count or one and greater
 in the year-of-era count, are part of the 'Before Republic of China' era.
 
-Minguo years and eras
+<table class="striped" style="text-align:left">
+<caption style="display:none">Minguo years and eras</caption>
+<thead>
+<tr>
+<th>year-of-era</th>
+<th>era</th>
+<th>proleptic-year</th>
+<th>ISO proleptic-year</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td><td>ROC</td><th scope="row">2</th><td>1913</td>
+</tr>
+<tr>
+<td>1</td><td>ROC</td><th scope="row">1</th><td>1912</td>
+</tr>
+<tr>
+<td>1</td><td>BEFORE_ROC</td><th scope="row">0</th><td>1911</td>
+</tr>
+<tr>
+<td>2</td><td>BEFORE_ROC</td><th scope="row">-1</th><td>1910</td>
+</tr>
+</tbody>
+</table>
+<p>
+<b>Do not use {@code ordinal()} to obtain the numeric representation of {@code MinguoEra}.
+Use {@code getValue()} instead.</b>
 
-year-of-era
-era
-proleptic-year
-ISO proleptic-year
+@implSpec
+This is an immutable and thread-safe enum.
 
-2ROC21913
-
-1ROC11912
-
-1BEFORE_ROC01911
-
-2BEFORE_ROC-11910
-
-**Do not use `ordinal()` to obtain the numeric representation of `MinguoEra`.
-Use `getValue()` instead.**
-
-**Implementation requirements:** This is an immutable and thread-safe enum.
-
-**Since:** 1.8
+@since 1.8
 
 ## MinguoEra.of(int)
 
@@ -48,20 +51,14 @@ Use `getValue()` instead.**
 public static MinguoEra of(int minguoEra)
 ```
 
-Obtains an instance of `MinguoEra` from an `int` value.
+Obtains an instance of {@code MinguoEra} from an {@code int} value.
+<p>
+{@code MinguoEra} is an enum representing the Minguo eras of BEFORE_ROC/ROC.
+This factory allows the enum to be obtained from the {@code int} value.
 
-`MinguoEra` is an enum representing the Minguo eras of BEFORE_ROC/ROC.
-This factory allows the enum to be obtained from the `int` value.
-
-Parameters:
-
-- `minguoEra`: the BEFORE_ROC/ROC value to represent, from 0 (BEFORE_ROC) to 1 (ROC)
-
-**Returns:** the era singleton, not null
-
-Throws:
-
-- `DateTimeException`: if the value is invalid
+@param minguoEra  the BEFORE_ROC/ROC value to represent, from 0 (BEFORE_ROC) to 1 (ROC)
+@return the era singleton, not null
+@throws DateTimeException if the value is invalid
 
 ## MinguoEra.getValue()
 
@@ -69,11 +66,11 @@ Throws:
 public int getValue()
 ```
 
-Gets the numeric era `int` value.
-
+Gets the numeric era {@code int} value.
+<p>
 The era BEFORE_ROC has the value 0, while the era ROC has the value 1.
 
-**Returns:** the era value, from 0 (BEFORE_ROC) to 1 (ROC)
+@return the era value, from 0 (BEFORE_ROC) to 1 (ROC)
 
 ## MinguoEra.getDisplayName(TextStyle, Locale)
 
@@ -81,9 +78,7 @@ The era BEFORE_ROC has the value 0, while the era ROC has the value 1.
 public String getDisplayName(TextStyle style, Locale locale)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-Parameters:
-
-- `style`: (inherited documentation)
-- `locale`: (inherited documentation)
+@param style {@inheritDoc}
+@param locale {@inheritDoc}

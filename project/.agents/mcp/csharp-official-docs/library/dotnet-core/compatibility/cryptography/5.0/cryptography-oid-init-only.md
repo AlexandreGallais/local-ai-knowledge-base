@@ -1,25 +1,21 @@
 ---
 title: "Breaking change: Cryptography.Oid is functionally init-only"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/cryptography/5.0/cryptography-oid-init-only.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 5 where property setters on the Cryptography.Oid class now throw an exception if you attempt to change a value.
+ms.date: 08/16/2020
 ---
-
 # System.Security.Cryptography.Oid is functionally init-only
 
-The `System.Security.Cryptography.Oid` class, which is used to represent ASN.1 Object Identifier values and their "friendly" names, was previously fully mutable. This mutability was often overlooked or came as a surprise. The property setters now throw a `System.PlatformNotSupportedException` when you attempt to change the value after it's already been assigned.
+The <xref:System.Security.Cryptography.Oid?displayProperty=fullName> class, which is used to represent ASN.1 Object Identifier values and their "friendly" names, was previously fully mutable. This mutability was often overlooked or came as a surprise. The property setters now throw a <xref:System.PlatformNotSupportedException> when you attempt to change the value after it's already been assigned.
 
 ## Change description
 
-In previous versions, the property setters on `System.Security.Cryptography.Oid` can be used to change the value of the `System.Security.Cryptography.Oid.FriendlyName` and `System.Security.Cryptography.Oid.Value` properties.
+In previous versions, the property setters on <xref:System.Security.Cryptography.Oid> can be used to change the value of the <xref:System.Security.Cryptography.Oid.FriendlyName> and <xref:System.Security.Cryptography.Oid.Value> properties.
 
-In .NET 5 and later versions, the property setters can only be used to initialize the value. Once the property has a value, either from a constructor or a previous call to the property setter, the property setter always throws a `System.PlatformNotSupportedException`.
+In .NET 5 and later versions, the property setters can only be used to initialize the value. Once the property has a value, either from a constructor or a previous call to the property setter, the property setter always throws a <xref:System.PlatformNotSupportedException>.
 
 ## Reason for change
 
-This change enables the reuse of `System.Security.Cryptography.Oid` objects as part of return values in public APIs to reduce object allocation profiles. It avoids the need to create temporary "defensive" copies when `System.Security.Cryptography.Oid` values are used as inputs.
+This change enables the reuse of <xref:System.Security.Cryptography.Oid> objects as part of return values in public APIs to reduce object allocation profiles. It avoids the need to create temporary "defensive" copies when <xref:System.Security.Cryptography.Oid> values are used as inputs.
 
 ## Version introduced
 
@@ -27,9 +23,22 @@ This change enables the reuse of `System.Security.Cryptography.Oid` objects as p
 
 ## Recommended action
 
-Avoid using the `System.Security.Cryptography.Oid` property setters other than for object initialization. To represent a new value, use a new instance instead of changing the value on an existing object.
+Avoid using the <xref:System.Security.Cryptography.Oid> property setters other than for object initialization. To represent a new value, use a new instance instead of changing the value on an existing object.
 
 ## Affected APIs
 
-- `System.Security.Cryptography.Oid.FriendlyName`
-- `System.Security.Cryptography.Oid.Value`
+- <xref:System.Security.Cryptography.Oid.FriendlyName?displayProperty=fullName>
+- <xref:System.Security.Cryptography.Oid.Value?displayProperty=fullName>
+
+<!--
+
+### Affected APIs
+
+- `P:System.Security.Cryptography.Oid.FriendlyName`
+- `P:System.Security.Cryptography.Oid.Value`
+
+### Category
+
+Cryptography
+
+-->

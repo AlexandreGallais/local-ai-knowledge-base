@@ -1,23 +1,17 @@
----
-title: "no-computed-property-existence-check"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-computed-property-existence-check.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-computed-property-existence-check
 
 📝 Disallow dynamic object property existence checks.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-Dynamic property access and the `in` operator check inherited properties too. This can make values like `constructor` and `toString` look present even when the object does not define them.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
-Use `Object.hasOwn()` when you need to check whether an object has its own property. Prefer `Map#has()` or `Set#has()` when the value is really a lookup table.
+Dynamic property access and the [`in` operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/in) check inherited properties too. This can make values like `constructor` and `toString` look present even when the object does not define them.
+
+Use [`Object.hasOwn()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn) when you need to check whether an object has its own property. Prefer `Map#has()` or `Set#has()` when the value is really a lookup table.
 
 ## Examples
 

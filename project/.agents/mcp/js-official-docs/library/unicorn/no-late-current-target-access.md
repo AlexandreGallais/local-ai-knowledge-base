@@ -1,19 +1,13 @@
----
-title: "no-late-current-target-access"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-late-current-target-access.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-late-current-target-access
 
 📝 Disallow accessing `event.currentTarget` after the synchronous event dispatch has finished.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-`event.currentTarget` is only set while the event is being dispatched synchronously. As soon as the handler yields, for example after an `await` or inside a deferred callback like `setTimeout()` or `.then()`, `currentTarget` is reset to `null`. Reading it then returns `null` instead of the element you expect.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+[`event.currentTarget`](https://developer.mozilla.org/en-US/docs/Web/API/Event/currentTarget) is only set while the event is being dispatched synchronously. As soon as the handler yields, for example after an `await` or inside a deferred callback like `setTimeout()` or `.then()`, `currentTarget` is reset to `null`. Reading it then returns `null` instead of the element you expect.
 
 Assign `event.currentTarget` to a variable synchronously and use that variable instead.
 

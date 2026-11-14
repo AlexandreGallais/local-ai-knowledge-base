@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugRegisterSet Interface"
 title: "ICorDebugRegisterSet Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugregisterset-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugRegisterSet"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugRegisterSet"
+helpviewer_keywords:
+  - "ICorDebugRegisterSet interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugRegisterSet Interface
 
 Represents the set of registers available on the computer that is currently executing code.
@@ -15,22 +23,22 @@ Represents the set of registers available on the computer that is currently exec
 
 | Method                                                                     | Description                             |
 |----------------------------------------------------------------------------|-----------------------------------------|
-| GetRegisters Method         | Gets the value of each register (on the computer that's currently executing code) that's specified by the bit mask. |
-| GetRegistersAvailable Method | Gets a bit mask indicating which registers in this `ICorDebugRegisterSet` are currently available. |
-| GetThreadContext Method | Gets the context of the current thread. |
-| SetRegisters Method         | Not implemented.                        |
-| SetThreadContext Method | Not implemented.                        |
+| [GetRegisters Method](icordebugregisterset-getregisters-method.md)         | Gets the value of each register (on the computer that's currently executing code) that's specified by the bit mask. |
+| [GetRegistersAvailable Method](icordebugregisterset-getregistersavailable-method.md) | Gets a bit mask indicating which registers in this `ICorDebugRegisterSet` are currently available. |
+| [GetThreadContext Method](icordebugregisterset-getthreadcontext-method.md) | Gets the context of the current thread. |
+| [SetRegisters Method](icordebugregisterset-setregisters-method.md)         | Not implemented.                        |
+| [SetThreadContext Method](icordebugregisterset-setthreadcontext-method.md) | Not implemented.                        |
 
 ## Remarks
 
-The `ICorDebugRegisterSet` interface supports only 32-bit registers. Use the ICorDebugRegisterSet2 interface on platforms such as IA-64 that require additional registers.
+The `ICorDebugRegisterSet` interface supports only 32-bit registers. Use the [ICorDebugRegisterSet2](icordebugregisterset2-interface.md) interface on platforms such as IA-64 that require additional registers.
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -40,4 +48,4 @@ The `ICorDebugRegisterSet` interface supports only 32-bit registers. Use the ICo
 
 ## See also
 
-- ICorDebugRegisterSet2 Interface
+- [ICorDebugRegisterSet2 Interface](icordebugregisterset2-interface.md)

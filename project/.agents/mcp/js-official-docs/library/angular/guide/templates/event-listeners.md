@@ -1,12 +1,3 @@
----
-title: "Adding event listeners"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/templates/event-listeners.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Adding event listeners
 
 Angular supports defining event listeners on an element in your template by specifying the event name inside parentheses along with a statement that runs every time the event occurs.
@@ -29,9 +20,9 @@ export class App{
 }
 ```
 
-In this example, Angular calls `updateField` every time the `` element emits a `keyup` event.
+In this example, Angular calls `updateField` every time the `<input>` element emits a `keyup` event.
 
-You can add listeners for any native events, such as: `click`, `keydown`, `mouseover`, etc. To learn more, check out the all available events on elements on MDN.
+You can add listeners for any native events, such as: `click`, `keydown`, `mouseover`, etc. To learn more, check out the [all available events on elements on MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element#events).
 
 ## Accessing the event argument
 
@@ -51,7 +42,7 @@ export class App {
 }
 ```
 
-## Using key <example-value>
+## Using key modifiers
 
 When you want to capture specific keyboard events for a specific key, you might write some code like the following:
 
@@ -87,7 +78,7 @@ export class App{
 }
 ```
 
-You can also add additional key <example-value>:
+You can also add additional key modifiers:
 
 ```angular-html
 <!-- Matches shift and enter -->
@@ -96,9 +87,9 @@ You can also add additional key <example-value>:
 
 Angular supports the modifiers `alt`, `control`, `meta`, and `shift`.
 
-You can specify the key or code that you would like to bind to keyboard events. The key and code fields are a native part of the browser keyboard event object. By default, event binding assumes you want to use the Key <example-value> for keyboard events.
+You can specify the key or code that you would like to bind to keyboard events. The key and code fields are a native part of the browser keyboard event object. By default, event binding assumes you want to use the [Key values for keyboard events](https://developer.mozilla.org/docs/Web/API/UI_Events/Keyboard_event_key_values).
 
-Angular also allows you to specify Code values for keyboard events by providing a built-in `code` suffix.
+Angular also allows you to specify [Code values for keyboard events](https://developer.mozilla.org/docs/Web/API/UI_Events/Keyboard_event_code_values) by providing a built-in `code` suffix.
 
 ```angular-html
 <!-- Matches alt and left shift -->
@@ -125,7 +116,7 @@ export class MyView {}
 
 ## Preventing event default behavior
 
-If your event handler should replace the native browser behavior, you can use the event object's `preventDefault` method:
+If your event handler should replace the native browser behavior, you can use the event object's [`preventDefault` method](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault):
 
 ```angular-ts
 @Component({
@@ -142,7 +133,7 @@ export class App{
 }
 ```
 
-If the event handler statement evaluates to `false`, Angular automatically calls `preventDefault()`, similar to native event handler attributes. _Always prefer explicitly calling `preventDefault`_, as this approach makes the code's intent obvious.
+If the event handler statement evaluates to `false`, Angular automatically calls `preventDefault()`, similar to [native event handler attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes#event_handler_attributes). _Always prefer explicitly calling `preventDefault`_, as this approach makes the code's intent obvious.
 
 ## Extend event handling
 

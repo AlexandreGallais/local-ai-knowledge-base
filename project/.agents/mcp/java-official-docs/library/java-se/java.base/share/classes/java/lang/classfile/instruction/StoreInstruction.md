@@ -1,35 +1,33 @@
----
-title: "StoreInstruction interface (java.lang.classfile.instruction)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/instruction/StoreInstruction.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # StoreInstruction interface (java.lang.classfile.instruction)
 
 ```java
 public sealed interface StoreInstruction extends Instruction permits AbstractInstruction.BoundStoreInstruction, AbstractInstruction.UnboundStoreInstruction
 ```
 
-Models a local variable store instruction in the `code` array of a
-`Code` attribute.  Corresponding opcodes have a kind of
-`Opcode.Kind.STORE`.  Delivered as a `CodeElement` when
-traversing the elements of a `CodeModel`.
-
+Models a local variable store instruction in the {@code code} array of a
+{@code Code} attribute.  Corresponding opcodes have a {@linkplain Opcode#kind() kind} of
+{@link Opcode.Kind#STORE}.  Delivered as a {@link CodeElement} when
+traversing the elements of a {@link CodeModel}.
+<p>
 A local variable store instruction is composite:
+{@snippet lang=text :
+// @link substring="StoreInstruction" target="#of(TypeKind, int)" :
+StoreInstruction(
+    TypeKind typeKind, // @link substring="typeKind" target="#typeKind"
+    int slot // @link substring="slot" target="#slot"
+)
+}
+where {@code TypeKind} is {@linkplain TypeKind##computational-type
+computational}, and {@code slot} is within {@code [0, 65535]}.
+<p>
+{@code astore} series of instructions, or {@code reference} type store
+instructions, can also operate on the {@link TypeKind##returnAddress
+returnAddress} type from discontinued {@linkplain
+DiscontinuedInstruction.JsrInstruction jump subroutine instructions}.
 
-where `TypeKind` is computational, and `slot` is within `[0, 65535]`.
-
-`astore` series of instructions, or `reference` type store
-instructions, can also operate on the returnAddress type from discontinued jump subroutine instructions.
-
-**See also:** Opcode.Kind#STORE
-
-**See also:** CodeBuilder#storeLocal CodeBuilder::storeLocal
-
-**Since:** 24
+@see Opcode.Kind#STORE
+@see CodeBuilder#storeLocal CodeBuilder::storeLocal
+@since 24
 
 ## StoreInstruction.slot()
 
@@ -37,7 +35,8 @@ instructions, can also operate on the returnAddress type from discontinued jump 
 int slot()
 ```
 
-The value is within `[0, 65535]`.
+{@return the local variable slot to store to}
+The value is within {@code [0, 65535]}.
 
 ## StoreInstruction.typeKind()
 
@@ -45,9 +44,10 @@ The value is within `[0, 65535]`.
 TypeKind typeKind()
 ```
 
-The reference
-type store instructions also operate on the `returnAddress` type,
-which does not apply to `reference` type load instructions.
+{@return the {@linkplain TypeKind##computational-type computational type}
+of the value to be stored}  The {@link TypeKind#REFERENCE reference}
+type store instructions also operate on the {@code returnAddress} type,
+which does not apply to {@code reference} type load instructions.
 
 ## StoreInstruction.of(TypeKind, int)
 
@@ -55,18 +55,15 @@ which does not apply to `reference` type load instructions.
 static StoreInstruction of(TypeKind kind, int slot)
 ```
 
-`kind` is converted to its
+{@return a local variable store instruction}
+{@code kind} is {@linkplain TypeKind#asLoadable() converted} to its
 computational type.
-`slot` must be within `[0, 65535]`.
+{@code slot} must be within {@code [0, 65535]}.
 
-Parameters:
-
-- `kind`: the type of the value to be stored
-- `slot`: the local variable slot to store to
-
-Throws:
-
-- `IllegalArgumentException`: if `kind` is void or `slot` is out of range
+@param kind the type of the value to be stored
+@param slot the local variable slot to store to
+@throws IllegalArgumentException if {@code kind} is {@link
+        TypeKind#VOID void} or {@code slot} is out of range
 
 ## StoreInstruction.of(Opcode, int)
 
@@ -74,25 +71,24 @@ Throws:
 static StoreInstruction of(Opcode op, int slot)
 ```
 
-The range of `slot` is restricted by the `op` and its
-size:
-
-- If `op` has size 1, `slot` must be exactly the slot value
+{@return a local variable store instruction}
+<p>
+The range of {@code slot} is restricted by the {@code op} and its
+{@linkplain Opcode#sizeIfFixed() size}:
+<ul>
+<li>If {@code op} has size 1, {@code slot} must be exactly the slot value
 implied by the opcode.
+<li>If {@code op} has size 2, {@code slot} must be within {@code [0, 255]}.
+<li>If {@code op} has size 4, {@code slot} must be within {@code [0, 65535]}.
+</ul>
 
-- If `op` has size 2, `slot` must be within `[0, 255]`.
-
-- If `op` has size 4, `slot` must be within `[0, 65535]`.
-
-Parameters:
-
-- `op`: the opcode for the specific type of store instruction, which must be of kind `Opcode.Kind.STORE`
-- `slot`: the local variable slot to store to
-
-**API note:** The explicit `op` argument allows creating `wide` or
-regular store instructions when the `slot` can be encoded
+@apiNote
+The explicit {@code op} argument allows creating {@code wide} or
+regular store instructions when the {@code slot} can be encoded
 with more optimized store instructions.
 
-Throws:
-
-- `IllegalArgumentException`: if the opcode kind is not `Opcode.Kind.STORE` or `slot` is out of range
+@param op the opcode for the specific type of store instruction,
+          which must be of kind {@link Opcode.Kind#STORE}
+@param slot the local variable slot to store to
+@throws IllegalArgumentException if the opcode kind is not
+        {@link Opcode.Kind#STORE} or {@code slot} is out of range

@@ -1,12 +1,8 @@
 ---
-title: "dotnet workload history command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-workload-history.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet workload history command
+description: "The `dotnet workload history` command shows a history of workload installation actions."
+ms.date: 09/29/2025
 ---
-
 # dotnet workload history
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -27,7 +23,7 @@ dotnet workload history -?|-h|--help
 
 The `dotnet workload history` shows a history of workload installation actions.
 
-For more information about the `dotnet workload` commands, see the dotnet workload install command.
+For more information about the `dotnet workload` commands, see the [dotnet workload install](dotnet-workload-install.md#description) command.
 
 ## Options
 
@@ -35,9 +31,7 @@ For more information about the `dotnet workload` commands, see the dotnet worklo
 
   Removes and uninstalls all workload components from all SDK versions. Defaults to `false`.
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Examples
 

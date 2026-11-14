@@ -1,13 +1,11 @@
 ---
-title: "no-useless-rename"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-useless-rename.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-useless-rename
+rule_type: suggestion
+related_rules:
+- object-shorthand
 ---
 
-# no-useless-rename
+
 
 ES2015 allows for the renaming of references in import and export statements as well as destructuring assignments. This gives programmers a concise syntax for performing these operations while renaming these references:
 
@@ -57,7 +55,7 @@ By default, all options are set to `false`:
 
 Examples of **incorrect** code for this rule by default:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-useless-rename: "error"*/
@@ -74,9 +72,11 @@ function foo({ bar: bar }) {}
 ({ foo: foo }) => {}
 ```
 
+:::
+
 Examples of **correct** code for this rule by default:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-useless-rename: "error"*/
@@ -103,9 +103,11 @@ function foo4({ bar: baz }) {}
 ({ foo: bar }) => {}
 ```
 
+:::
+
 Examples of **correct** code for this rule with `{ ignoreImport: true }`:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-useless-rename: ["error", { ignoreImport: true }]*/
@@ -113,9 +115,11 @@ Examples of **correct** code for this rule with `{ ignoreImport: true }`:
 import { foo as foo } from "bar";
 ```
 
+:::
+
 Examples of **correct** code for this rule with `{ ignoreExport: true }`:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-useless-rename: ["error", { ignoreExport: true }]*/
@@ -125,9 +129,11 @@ export { foo as foo };
 export { bar as bar } from "bar";
 ```
 
+:::
+
 Examples of **correct** code for this rule with `{ ignoreDestructuring: true }`:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-useless-rename: ["error", { ignoreDestructuring: true }]*/
@@ -137,10 +143,12 @@ function baz({ bar: bar }) {}
 ({ foo: foo }) => {}
 ```
 
+:::
+
 ## When Not To Use It
 
 You can safely disable this rule if you do not care about redundantly renaming import, export, and destructuring assignments.
 
 ## Compatibility
 
-* **JSCS**: disallowIdenticalDestructuringNames
+* **JSCS**: [disallowIdenticalDestructuringNames](https://jscs-dev.github.io/rule/disallowIdenticalDestructuringNames)

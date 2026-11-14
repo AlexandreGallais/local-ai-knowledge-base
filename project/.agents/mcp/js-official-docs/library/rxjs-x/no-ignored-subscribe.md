@@ -1,15 +1,8 @@
----
-title: "Disallow calling subscribe without specifying arguments (rxjs-x/no-ignored-subscribe)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/no-ignored-subscribe.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Disallow calling `subscribe` without specifying arguments (`rxjs-x/no-ignored-subscribe`)
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule effects failures whenever `subscribe` is called without handlers.
 
@@ -38,16 +31,16 @@ of(42, 54).subscribe((value) => console.log(value));
 
 If you don't care about errors or output of some observables in your project, you may not need this rule.
 Alternatively, you may require all logic to go in the `pipe` section of your observables.
-In that case, you should not use this rule and should enable `no-subscribe-handlers` instead,
+In that case, you should not use this rule and should enable [`no-subscribe-handlers`](./no-subscribe-handlers.md) instead,
 which is the opposite of this rule.
 
 Type checked lint rules are more powerful than traditional lint rules, but also require configuring type checked linting.
 
 ## Related To
 
-- `no-subscribe-handlers`
+- [`no-subscribe-handlers`](./no-subscribe-handlers.md)
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/no-ignored-subscribe.ts)
+- [Test source](/tests/rules/no-ignored-subscribe.test.ts)

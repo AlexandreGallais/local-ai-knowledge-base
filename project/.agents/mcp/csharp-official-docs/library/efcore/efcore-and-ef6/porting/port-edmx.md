@@ -1,12 +1,10 @@
 ---
-title: "Porting from EF6 to EF Core - Porting an EDMX-Based Model - EF"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/efcore-and-ef6/porting/port-edmx.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Porting from EF6 to EF Core - Porting an EDMX-Based Model - EF
+description: Specific information on porting an Entity Framework 6 EDMX-based model application to Entity Framework Core
+author: SamMonoRT
+ms.date: 12/09/2021
+uid: efcore-and-ef6/porting/port-edmx
 ---
-
 # Porting an EF6 EDMX-Based Model to EF Core
 
 EF Core does not support the EDMX file format for models. The best option to port these models, is to generate a new code-based model from the database for your application.
@@ -19,7 +17,7 @@ Install the `Microsoft.EntityFrameworkCore.Tools` NuGet package.
 
 You can now use the reverse engineer functionality to create a model based on your existing database.
 
-Run the following command in Package Manager Console (Tools –> NuGet Package Manager –> Package Manager Console). See Package Manager Console (Visual Studio) for command options to scaffold a subset of tables etc.
+Run the following command in Package Manager Console (Tools –> NuGet Package Manager –> Package Manager Console). See [Package Manager Console (Visual Studio)](xref:core/cli/powershell) for command options to scaffold a subset of tables etc.
 
 ```powershell
 Scaffold-DbContext "<connection string>" <database provider name>
@@ -47,8 +45,8 @@ Just because your application compiles, does not mean it is successfully ported 
 
 ## Other considerations
 
-EF Core does not support the `EntityClient` provider and therefore any EntitySQL queries must be migrated to LINQ or `FromRawSql`.
+EF Core does not support the `EntityClient` provider and therefore any [EntitySQL](/dotnet/framework/data/adonet/ef/language-reference/entity-sql-language) queries must be migrated to LINQ or `FromRawSql`.
 
-Furthermore, there is no support for EntityClient connection strings.
+Furthermore, there is no support for [EntityClient connection strings](xref:ef6/fundamentals/configuring/connection-strings#databasemodel-first-with-connection-string-in-appconfigwebconfig-file).
 
-For more considerations, read the complete guide to differences between EF6 and EF Core.
+For more considerations, read the complete guide to [differences between EF6 and EF Core](xref:efcore-and-ef6/porting/port-detailed-cases).

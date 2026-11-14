@@ -1,13 +1,15 @@
 ---
-title: "max-params"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/max-params.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: max-params
+rule_type: suggestion
+related_rules:
+- complexity
+- max-depth
+- max-lines
+- max-lines-per-function
+- max-nested-callbacks
+- max-statements
 ---
 
-# max-params
 
 Functions that take numerous parameters can be difficult to read and write because it requires the memorization of what each parameter is, its type, and the order they should appear in. As a result, many coders adhere to a convention that caps the number of parameters a function can take.
 
@@ -35,7 +37,7 @@ This rule has a number or object option:
 
 Examples of **incorrect** code for this rule with the default `{ "max": 3 }` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint max-params: ["error", 3]*/
@@ -49,9 +51,11 @@ let foo2 = (bar, baz, qux, qxx) => {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `{ "max": 3 }` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint max-params: ["error", 3]*/
@@ -65,6 +69,8 @@ let foo2 = (bar, baz, qux) => {
 };
 ```
 
+:::
+
 ### countThis (TypeScript only)
 
 This rule has a TypeScript-specific option `countThis` that allows you to count a `this` declaration.
@@ -76,7 +82,7 @@ Valid values are:
 
 Examples of **correct** TypeScript code for this rule:
 
-**Correct:**
+:::correct
 
 ```ts
 /*eslint max-params: ["error", { "max": 2, "countThis": "except-void" }]*/
@@ -86,7 +92,9 @@ function hasNoThis(this: void, first: string, second: string) {
 }
 ```
 
-**Correct:**
+:::
+
+:::correct
 
 ```ts
 /*eslint max-params: ["error", { "max": 2, "countThis": "never" }]*/
@@ -96,9 +104,11 @@ function hasThis(this: unknown[], first: string, second: string) {
 }
 ```
 
+:::
+
 Examples of **incorrect** TypeScript code for this rule:
 
-**Incorrect:**
+:::incorrect
 
 ```ts
 /*eslint max-params: ["error", { "max": 2, "countThis": "always" }]*/
@@ -108,7 +118,9 @@ function hasNoThis(this: void, first: string, second: string) {
 }
 ```
 
-**Incorrect:**
+:::
+
+:::incorrect
 
 ```ts
 /*eslint max-params: ["error", { "max": 2, "countThis": "except-void" }]*/
@@ -117,3 +129,5 @@ function hasThis(this: unknown[], first: string, second: string) {
 	// ...
 }
 ```
+
+:::

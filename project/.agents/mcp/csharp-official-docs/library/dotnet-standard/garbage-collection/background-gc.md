@@ -1,20 +1,19 @@
 ---
-title: "Background garbage collection"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/garbage-collection/background-gc.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Background garbage collection
+description: Learn about background garbage collection in .NET and how it differs in workstation and server garbage collection.
+ms.date: 04/21/2020
+helpviewer_keywords:
+  - garbage collection, background
+  - background garbage collection
 ---
-
 # Background garbage collection
 
 In background garbage collection (GC), ephemeral generations (0 and 1) are collected as needed while the collection of generation 2 is in progress. Background garbage collection is performed on one or more dedicated threads, depending on whether it's workstation or server GC, and applies only to generation 2 collections.
 
-Background garbage collection is enabled by default. It can be enabled or disabled with the gcConcurrent configuration setting in .NET Framework apps or the System.GC.Concurrent setting in .NET Core and .NET 5 and later apps.
+Background garbage collection is enabled by default. It can be enabled or disabled with the [gcConcurrent](../../framework/configure-apps/file-schema/runtime/gcconcurrent-element.md) configuration setting in .NET Framework apps or the [System.GC.Concurrent](../../core/runtime-config/garbage-collector.md#background-gc) setting in .NET Core and .NET 5 and later apps.
 
-> **Note:**
-> Background garbage collection replaces concurrent garbage collection and is available in .NET Framework 4 and later versions. In .NET Framework 4, it's supported only for *workstation* garbage collection. Starting with .NET Framework 4.5, background garbage collection is available for both *workstation* and *server* garbage collection.
+> [!NOTE]
+> Background garbage collection replaces [concurrent garbage collection](#concurrent-garbage-collection) and is available in .NET Framework 4 and later versions. In .NET Framework 4, it's supported only for *workstation* garbage collection. Starting with .NET Framework 4.5, background garbage collection is available for both *workstation* and *server* garbage collection.
 
 A collection on ephemeral generations during background garbage collection is known as *foreground* garbage collection. When foreground garbage collections occur, all managed threads are suspended.
 
@@ -34,11 +33,15 @@ Background server garbage collection functions similarly to background workstati
 
 The following illustration shows background *workstation* garbage collection performed on a separate, dedicated thread:
 
+![Background workstation garbage collection](media/fundamentals/background-workstation-garbage-collection.png)
+
 The following illustration shows background *server* garbage collection performed on separate, dedicated threads:
+
+![Background server garbage collection](media/fundamentals/background-server-garbage-collection.png)
 
 ## Concurrent garbage collection
 
-> **Tip:**
+> [!TIP]
 > This section applies to:
 >
 > - .NET Framework 3.5 and earlier for workstation garbage collection
@@ -46,7 +49,7 @@ The following illustration shows background *server* garbage collection performe
 >
 > Concurrent garbage is replaced by background garbage collection in later versions.
 
-In workstation or server garbage collection, you can enable concurrent garbage collection, which enables threads to run concurrently with a dedicated thread that performs the garbage collection for most of the duration of the collection. This option affects only garbage collections in generation 2; generations 0 and 1 are always non-concurrent because they finish fast.
+In workstation or server garbage collection, you can [enable concurrent garbage collection](../../framework/configure-apps/file-schema/runtime/gcconcurrent-element.md), which enables threads to run concurrently with a dedicated thread that performs the garbage collection for most of the duration of the collection. This option affects only garbage collections in generation 2; generations 0 and 1 are always non-concurrent because they finish fast.
 
 Concurrent garbage collection enables interactive applications to be more responsive by minimizing pauses for a collection. Managed threads can continue to run most of the time while the concurrent garbage collection thread is running. This design results in shorter pauses while a garbage collection is occurring.
 
@@ -54,7 +57,9 @@ Concurrent garbage collection is performed on a dedicated thread. By default, th
 
 The following illustration shows concurrent garbage collection performed on a separate dedicated thread.
 
+![Concurrent Garbage Collection Threads](media/gc-concurrent.png)
+
 ## See also
 
-- Workstation and server garbage collection
-- Runtime configuration options for garbage collection
+- [Workstation and server garbage collection](workstation-server-gc.md)
+- [Runtime configuration options for garbage collection](../../core/runtime-config/garbage-collector.md)

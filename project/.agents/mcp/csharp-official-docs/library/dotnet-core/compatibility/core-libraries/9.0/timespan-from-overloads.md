@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: New TimeSpan.From*() overloads that take integers"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/9.0/timespan-from-overloads.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 9 breaking change in core .NET libraries where new TimeSpan.From*() overloads were introduced that take integer arguments.
+ms.date: 10/03/2024
 ---
-
 # New TimeSpan.From*() overloads that take integers
 
 New `TimeSpan.From*()` overloads that accept integers were introduced in .NET 9. This change can cause ambiguity for the F# compiler and result in compile-time errors.
@@ -15,12 +11,12 @@ New `TimeSpan.From*()` overloads that accept integers were introduced in .NET 9.
 
 Previously, there was a single overload for each `TimeSpan.From*()` method, namely:
 
-- `System.TimeSpan.FromDays(System.Double)`
-- `System.TimeSpan.FromHours(System.Double)`
-- `System.TimeSpan.FromMicroseconds(System.Double)`
-- `System.TimeSpan.FromMilliseconds(System.Double)`
-- `System.TimeSpan.FromMinutes(System.Double)`
-- `System.TimeSpan.FromSeconds(System.Double)`
+- <xref:System.TimeSpan.FromDays(System.Double)>
+- <xref:System.TimeSpan.FromHours(System.Double)>
+- <xref:System.TimeSpan.FromMicroseconds(System.Double)>
+- <xref:System.TimeSpan.FromMilliseconds(System.Double)>
+- <xref:System.TimeSpan.FromMinutes(System.Double)>
+- <xref:System.TimeSpan.FromSeconds(System.Double)>
 
 ## New behavior
 
@@ -34,11 +30,11 @@ Starting in .NET 9, new overloads have been added that accept integer arguments.
 
 ## Type of breaking change
 
-This change can affect source compatibility for F# code.
+This change can affect [source compatibility](../../categories.md#source-compatibility) for F# code.
 
 ## Reason for change
 
-The pre-existing overloads accepted a `System.Double` argument. However, `System.Double` is a binary-based, floating-point format and thus has natural imprecision that can introduce error. This behavior has led to user confusion and bugs in the API surface. It's also one of the less efficient ways to represent this data. To produce the intended behavior, new overloads were introduced that allow users to pass in integers.
+The pre-existing overloads accepted a <xref:System.Double> argument. However, <xref:System.Double> is a binary-based, floating-point format and thus has natural imprecision that can introduce error. This behavior has led to user confusion and bugs in the API surface. It's also one of the less efficient ways to represent this data. To produce the intended behavior, new overloads were introduced that allow users to pass in integers.
 
 ## Recommended action
 
@@ -46,9 +42,9 @@ If this change affects your F# code, specify the type of argument so the compile
 
 ## Affected APIs
 
-- `System.TimeSpan.FromDays*`
-- `System.TimeSpan.FromHours*`
-- `System.TimeSpan.FromMicroseconds*`
-- `System.TimeSpan.FromMilliseconds*`
-- `System.TimeSpan.FromMinutes*`
-- `System.TimeSpan.FromSeconds*`
+- <xref:System.TimeSpan.FromDays*>
+- <xref:System.TimeSpan.FromHours*>
+- <xref:System.TimeSpan.FromMicroseconds*>
+- <xref:System.TimeSpan.FromMilliseconds*>
+- <xref:System.TimeSpan.FromMinutes*>
+- <xref:System.TimeSpan.FromSeconds*>

@@ -1,10 +1,6 @@
 ---
-title: "Migrating from Jest | Guide"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/migration/jest.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Migrating from Jest | Guide
+outline: deep
 ---
 
 # Migrating from Jest {#jest}
@@ -13,16 +9,16 @@ Vitest has been designed with a Jest compatible API, in order to make the migrat
 
 ## Globals as a Default
 
-Jest has their globals API enabled by default. Vitest does not. You can either enable globals via the `globals` configuration setting or update your code to use imports from the `vitest` module instead.
+Jest has their [globals API](https://jestjs.io/docs/api) enabled by default. Vitest does not. You can either enable globals via [the `globals` configuration setting](/config/globals) or update your code to use imports from the `vitest` module instead.
 
-If you decide to keep globals disabled, be aware that common libraries like `testing-library` will not run auto DOM cleanup.
+If you decide to keep globals disabled, be aware that common libraries like [`testing-library`](https://testing-library.com/) will not run auto DOM [cleanup](https://testing-library.com/docs/svelte-testing-library/api/#cleanup).
 
 ## `mock.mockReset`
 
-Jest's `mockReset` replaces the mock implementation with an
+Jest's [`mockReset`](https://jestjs.io/docs/mock-function-api#mockfnmockreset) replaces the mock implementation with an
 empty function that returns `undefined`.
 
-Vitest's `mockReset` resets the mock implementation to its original.
+Vitest's [`mockReset`](/api/mock#mockreset) resets the mock implementation to its original.
 That is, resetting a mock created by `vi.fn(impl)` will reset the mock implementation to `impl`.
 
 ## `mock.mock` is Persistent
@@ -48,11 +44,11 @@ vi.mock('./some-path', () => ({ // [!code ++]
 })) // [!code ++]
 ```
 
-For more details please refer to the `vi.mock` api section.
+For more details please refer to the [`vi.mock` api section](/api/vi#vi-mock).
 
 ## Auto-Mocking Behaviour
 
-Unlike Jest, mocked modules in `<root>/__mocks__` are not loaded unless `vi.mock()` is called. If you need them to be mocked in every test, like in Jest, you can mock them inside `setupFiles`.
+Unlike Jest, mocked modules in `<root>/__mocks__` are not loaded unless `vi.mock()` is called. If you need them to be mocked in every test, like in Jest, you can mock them inside [`setupFiles`](/config/setupfiles).
 
 ## Importing the Original of a Mocked Package
 
@@ -65,7 +61,7 @@ const { cloneDeep } = await vi.importActual('lodash/cloneDeep') // [!code ++]
 
 ## Extends mocking to external libraries
 
-Where Jest does it by default, when mocking a module and wanting this mocking to be extended to other external libraries that use the same module, you should explicitly tell which 3rd-party library you want to be mocked, so the external library would be part of your source code, by using server.deps.inline.
+Where Jest does it by default, when mocking a module and wanting this mocking to be extended to other external libraries that use the same module, you should explicitly tell which 3rd-party library you want to be mocked, so the external library would be part of your source code, by using [server.deps.inline](/config/server#inline).
 
 ```
 server.deps.inline: ["lib-name"]
@@ -80,7 +76,7 @@ Vitest's `test` names are joined with a `>` symbol to make it easier to distingu
 + `${describeTitle} > ${testTitle}`
 ```
 
-The same applies to `testNamePattern` (the `-t` flag): Vitest matches against the `>`-joined full name, while Jest matches the space-joined name. Update patterns that span a suite and a test accordingly, or match a single segment (`-t adds`) or use a wildcard between segments (`-t 'math.*adds'`).
+The same applies to [`testNamePattern`](/config/testnamepattern) (the `-t` flag): Vitest matches against the `>`-joined full name, while Jest matches the space-joined name. Update patterns that span a suite and a test accordingly, or match a single segment (`-t adds`) or use a wildcard between segments (`-t 'math.*adds'`).
 
 ```diff
 - vitest -t 'math adds'
@@ -93,22 +89,24 @@ Just like Jest, Vitest sets `NODE_ENV` to `test`, if it wasn't set before. Vites
 
 ## Replace property
 
-If you want to modify the object, you will use replaceProperty API in Jest, you can use `vi.stubEnv` or `vi.spyOn` to do the same also in Vitest.
+If you want to modify the object, you will use [replaceProperty API](https://jestjs.io/docs/jest-object#jestreplacepropertyobject-propertykey-value) in Jest, you can use [`vi.stubEnv`](/api/vi#vi-stubenv) or [`vi.spyOn`](/api/vi#vi-spyon) to do the same also in Vitest.
 
 ## Done Callback
 
 Vitest does not support the callback style of declaring tests. You can rewrite them to use `async`/`await` functions, or use Promise to mimic the callback style.
 
+<!--@include: ../examples/promise-done.md-->
+
 ## Hooks
 
-`beforeAll`/`beforeEach` hooks may return teardown function in Vitest. Because of that you may need to rewrite your hooks declarations, if they return something other than `undefined` or `null`:
+`beforeAll`/`beforeEach` hooks may return [teardown function](/api/hooks#beforeach) in Vitest. Because of that you may need to rewrite your hooks declarations, if they return something other than `undefined` or `null`:
 
 ```ts
 beforeEach(() => setActivePinia(createTestingPinia())) // [!code --]
 beforeEach(() => { setActivePinia(createTestingPinia()) }) // [!code ++]
 ```
 
-In Jest hooks are called sequentially (one after another). By default, Vitest runs hooks in a stack. To use Jest's behavior, update `sequence.hooks` option:
+In Jest hooks are called sequentially (one after another). By default, Vitest runs hooks in a stack. To use Jest's behavior, update [`sequence.hooks`](/config/sequence#sequence-hooks) option:
 
 ```ts
 export default defineConfig({
@@ -145,9 +143,9 @@ vi.setConfig({ testTimeout: 5_000 }) // [!code ++]
 
 ## Vue Snapshots
 
-This is not a Jest-specific feature, but if you previously were using Jest with vue-cli preset, you will need to install `jest-serializer-vue` package, and specify it in `snapshotSerializers`:
+This is not a Jest-specific feature, but if you previously were using Jest with vue-cli preset, you will need to install [`jest-serializer-vue`](https://github.com/eddyerburgh/jest-serializer-vue) package, and specify it in [`snapshotSerializers`](/config/snapshotserializers):
 
-```js
+```js [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -189,4 +187,4 @@ expect.extend({
 })
 ```
 
-See Custom Snapshot Matchers for the full guide.
+See [Custom Snapshot Matchers](/guide/snapshot#custom-snapshot-matchers) for the full guide.

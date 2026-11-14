@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugILFrame::GetIP Method"
 title: "ICorDebugILFrame::GetIP Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugilframe-getip-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugILFrame.GetIP"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugILFrame::GetIP"
+helpviewer_keywords:
+  - "GetIP method, ICorDebugILFrame interface [.NET debugging]"
+  - "ICorDebugILFrame::GetIP method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugILFrame::GetIP Method
 
 Gets the value of the instruction pointer and a bitwise combination value that describes how the value of the instruction pointer was obtained.
@@ -36,7 +45,7 @@ If this frame is a just-in-time (JIT) compiled frame, the value of the instructi
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

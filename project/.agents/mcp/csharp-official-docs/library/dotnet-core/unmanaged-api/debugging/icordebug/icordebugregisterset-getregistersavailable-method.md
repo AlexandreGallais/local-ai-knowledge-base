@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugRegisterSet::GetRegistersAvailable Method"
 title: "ICorDebugRegisterSet::GetRegistersAvailable Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugregisterset-getregistersavailable-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugRegisterSet.GetRegistersAvailable"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugRegisterSet::GetRegistersAvailable"
+helpviewer_keywords:
+  - "ICorDebugRegisterSet::GetRegistersAvailable method [.NET debugging]"
+  - "GetRegistersAvailable method, ICorDebugRegisterSet interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugRegisterSet::GetRegistersAvailable Method
 
-Gets a bit mask indicating which registers in this ICorDebugRegisterSet are currently available.
+Gets a bit mask indicating which registers in this [ICorDebugRegisterSet](icordebugregisterset-interface.md) are currently available.
 
 ## Syntax
 
@@ -32,7 +41,7 @@ The returned mask contains a bit for each register (1 << the register index). Th
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -42,5 +51,5 @@ The returned mask contains a bit for each register (1 << the register index). Th
 
 ## See also
 
-- ICorDebugRegisterSet Interface
-- ICorDebugRegisterSet2 Interface
+- [ICorDebugRegisterSet Interface](icordebugregisterset-interface.md)
+- [ICorDebugRegisterSet2 Interface](icordebugregisterset2-interface.md)

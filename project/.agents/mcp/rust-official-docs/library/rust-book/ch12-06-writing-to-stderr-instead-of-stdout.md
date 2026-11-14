@@ -1,13 +1,6 @@
----
-title: "ch12-06-writing-to-stderr-instead-of-stdout"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch12-06-writing-to-stderr-instead-of-stdout.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
+<!-- Old headings. Do not remove or links may break. -->
 
-# ch12-06-writing-to-stderr-instead-of-stdout
+<a id="writing-error-messages-to-standard-error-instead-of-standard-output"></a>
 
 ## Redirecting Errors to Standard Error
 
@@ -66,23 +59,13 @@ the `eprintln!` macro that prints to the standard error stream, so let’s chang
 the two places we were calling `println!` to print errors to use `eprintln!`
 instead.
 
-**Listing 12-24: Writing error messages to standard error instead of standard output using `eprintln!`** (src/main.rs)
+<Listing number="12-24" file-name="src/main.rs" caption="Writing error messages to standard error instead of standard output using `eprintln!`">
 
-```rust
-fn main() {
-    let args: Vec<String> = env::args().collect();
-
-    let config = Config::build(&args).unwrap_or_else(|err| {
-        eprintln!("Problem parsing arguments: {err}");
-        process::exit(1);
-    });
-
-    if let Err(e) = run(config) {
-        eprintln!("Application error: {e}");
-        process::exit(1);
-    }
-}
+```rust,ignore
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-24/src/main.rs:here}}
 ```
+
+</Listing>
 
 Let’s now run the program again in the same way, without any arguments and
 redirecting standard output with `>`:
@@ -105,7 +88,7 @@ $ cargo run -- to poem.txt > output.txt
 We won’t see any output to the terminal, and _output.txt_ will contain our
 results:
 
-Filename: output.txt
+<span class="filename">Filename: output.txt</span>
 
 ```text
 Are you nobody, too?

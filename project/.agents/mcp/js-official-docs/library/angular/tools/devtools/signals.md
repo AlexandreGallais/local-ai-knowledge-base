@@ -1,16 +1,9 @@
----
-title: "Debug the signal graph"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/tools/devtools/signals.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Debug the signal graph
 
 The **Components** tab can display a live signal graph for the selected component or directive.
 The graph shows how the signals, computeds, effects, and other reactive nodes in that component depend on each other, which makes it easier to understand and debug reactive data flows.
+
+<img src="assets/images/guide/devtools/signal-graph.png" alt="A screenshot of the 'Components' tab in Angular DevTools with the signal graph open for the selected component. The graph shows a signal node connected by edges to three computed nodes which the component's template reads, and the properties of the component are listed in a sidebar to the right.">
 
 ## Open the signal graph
 

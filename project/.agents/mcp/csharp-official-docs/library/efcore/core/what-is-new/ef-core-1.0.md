@@ -1,12 +1,10 @@
 ---
-title: "What is new in EF Core 1.0 - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/what-is-new/ef-core-1.0.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: What is new in EF Core 1.0 - EF Core
+description: Changes and improvements in Entity Framework Core 1.0
+author: SamMonoRT
+ms.date: 10/27/2016
+uid: core/what-is-new/ef-core-1.0
 ---
-
 # Features included in EF Core 1.0
 
 ## Platforms
@@ -21,7 +19,7 @@ Including ASP.NET Core targeting both .NET Framework and .NET Core on Windows, O
 
 ## Modelling
 
-### Basic <example-value>
+### Basic modelling
 
 Based on POCO entities with get/set properties of common scalar types (`int`, `string`, etc.).
 
@@ -67,7 +65,7 @@ Defining indexes in the model automatically introduces indexes in the database. 
 
 ### Shadow state properties
 
-Allows for properties to be defined in the model that are not declared and are not stored in the .NET class but can be tracked and updated by EF Core. Commonly used for foreign key <example-value> when exposing these in the object is not desired.
+Allows for properties to be defined in the model that are not declared and are not stored in the .NET class but can be tracked and updated by EF Core. Commonly used for foreign key properties when exposing these in the object is not desired.
 
 ### Table-Per-Hierarchy inheritance pattern
 
@@ -173,4 +171,4 @@ Is designed to easily enable testing without connecting to a real database.
 
 ### 3rd party providers
 
-Several providers are available for other database engines. See Database Providers for a complete list.
+Several providers are available for other database engines. See [Database Providers](xref:core/providers/index) for a complete list.

@@ -1,12 +1,3 @@
----
-title: "core::panicking"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/panicking.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::panicking
 
 Panic support for core
@@ -23,8 +14,9 @@ This means that the functions inside of core are allowed to panic, but to be
 useful an upstream crate must define panicking for core to use. The current
 interface for panicking is:
 
-```rust
+```
 fn panic_impl(pi: &core::panic::PanicInfo<'_>) -> !
+# { loop {} }
 ```
 
 This module contains a few other panicking functions, but these are just the

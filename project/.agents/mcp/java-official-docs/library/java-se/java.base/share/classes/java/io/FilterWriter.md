@@ -1,12 +1,3 @@
----
-title: "FilterWriter class (java.io)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/io/FilterWriter.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # FilterWriter class (java.io)
 
 ```java
@@ -14,13 +5,14 @@ public abstract class FilterWriter extends Writer
 ```
 
 Abstract class for writing filtered character streams.
-The abstract class `FilterWriter` itself
+The abstract class {@code FilterWriter} itself
 provides default methods that pass all requests to the
-contained stream. Subclasses of `FilterWriter`
+contained stream. Subclasses of {@code FilterWriter}
 should override some of these methods and may also
 provide additional methods and fields.
 
-**Since:** 1.1
+@author      Mark Reinhold
+@since       1.1
 
 ## FilterWriter.out
 
@@ -38,13 +30,8 @@ protected FilterWriter(Writer out)
 
 Create a new filtered writer.
 
-Parameters:
-
-- `out`: a Writer object to provide the underlying stream.
-
-Throws:
-
-- `NullPointerException`: if `out` is `null`
+@param out  a Writer object to provide the underlying stream.
+@throws NullPointerException if {@code out} is {@code null}
 
 ## FilterWriter.write(int)
 
@@ -54,9 +41,7 @@ public void write(int c) throws IOException
 
 Writes a single character.
 
-Throws:
-
-- `IOException`: If an I/O error occurs
+@throws     IOException  If an I/O error occurs
 
 ## FilterWriter.write(char[], int, int)
 
@@ -66,16 +51,16 @@ public void write(char[] cbuf, int off, int len) throws IOException
 
 Writes a portion of an array of characters.
 
-Parameters:
+@param  cbuf  Buffer of characters to be written
+@param  off   Offset from which to start reading characters
+@param  len   Number of characters to be written
 
-- `cbuf`: Buffer of characters to be written
-- `off`: Offset from which to start reading characters
-- `len`: Number of characters to be written
+@throws  IndexOutOfBoundsException
+         If the values of the {@code off} and {@code len} parameters
+         cause the corresponding method of the underlying {@code Writer}
+         to throw an {@code IndexOutOfBoundsException}
 
-Throws:
-
-- `IndexOutOfBoundsException`: If the values of the `off` and `len` parameters cause the corresponding method of the underlying `Writer` to throw an `IndexOutOfBoundsException`
-- `IOException`: If an I/O error occurs
+@throws  IOException  If an I/O error occurs
 
 ## FilterWriter.write(String, int, int)
 
@@ -85,16 +70,16 @@ public void write(String str, int off, int len) throws IOException
 
 Writes a portion of a string.
 
-Parameters:
+@param  str  String to be written
+@param  off  Offset from which to start reading characters
+@param  len  Number of characters to be written
 
-- `str`: String to be written
-- `off`: Offset from which to start reading characters
-- `len`: Number of characters to be written
+@throws  IndexOutOfBoundsException
+         If the values of the {@code off} and {@code len} parameters
+         cause the corresponding method of the underlying {@code Writer}
+         to throw an {@code IndexOutOfBoundsException}
 
-Throws:
-
-- `IndexOutOfBoundsException`: If the values of the `off` and `len` parameters cause the corresponding method of the underlying `Writer` to throw an `IndexOutOfBoundsException`
-- `IOException`: If an I/O error occurs
+@throws  IOException  If an I/O error occurs
 
 ## FilterWriter.flush()
 
@@ -104,6 +89,4 @@ public void flush() throws IOException
 
 Flushes the stream.
 
-Throws:
-
-- `IOException`: If an I/O error occurs
+@throws     IOException  If an I/O error occurs

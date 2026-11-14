@@ -1,10 +1,11 @@
 ---
-title: "How to find related elements - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/find-related-elements.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to find related elements - LINQ to XML
+description: Learn how to use LINQ to XML query and XPath, in C# and Visual Basic, to find the value of one element and an element whose attribute has the same value.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to find related elements (LINQ to XML)
@@ -13,9 +14,9 @@ This article shows how to use LINQ to XML query and XPath, in C# and Visual Basi
 
 ## Example: Find the value of one element and an element whose attribute has the same value
 
-This example finds the 12th `Order` element in XML document Sample XML file: Customers and orders, and then finds the customer for that order. The XPath expression is `.//Customer[@CustomerID=/Root/Orders/Order[12]/CustomerID]`.
+This example finds the 12th `Order` element in XML document [Sample XML file: Customers and orders](sample-xml-file-customers-orders.md), and then finds the customer for that order. The XPath expression is `.//Customer[@CustomerID=/Root/Orders/Order[12]/CustomerID]`.
 
-> **Note:**
+> [!NOTE]
 > In .NET, the indexing into a list is zero-based; that is, an index of 0 refers to the initial element. Indexing into a collection of nodes in an XPath predicate is one-based. This example accounts for this difference.
 
 ```csharp
@@ -111,4 +112,4 @@ Results are identical
 
 ## See also
 
-- LINQ to XML for XPath Users (Visual Basic)
+- [LINQ to XML for XPath Users (Visual Basic)](./comparison-xpath-linq-xml.md)

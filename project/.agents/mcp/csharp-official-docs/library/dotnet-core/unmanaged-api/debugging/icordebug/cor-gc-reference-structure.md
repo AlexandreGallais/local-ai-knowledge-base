@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: COR_GC_REFERENCE Structure"
 title: "COR_GC_REFERENCE Structure"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cor-gc-reference-structure.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "COR_GC_REFERENCE"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "COR_GC_REFERENCE"
+helpviewer_keywords:
+  - "COR_GC_REFERENCE structure [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # COR_GC_REFERENCE Structure
 
 Contains information about an object that is to be garbage-collected.
@@ -28,12 +36,12 @@ typedef struct _COR_GC_REFERENCE {
 |--------|-------------|
 | `domain` | A pointer to the application domain to which the handle or object belongs. Its value may be `null`. |
 |`location`|Either an ICorDebugValue or an ICorDebugReferenceValue interface that corresponds to the object to be garbage-collected.|
-|`type`|A CorGCReferenceType enumeration value that indicates where the root came from. For more information, see the Remarks section.|
+|`type`|A [CorGCReferenceType](corgcreferencetype-enumeration.md) enumeration value that indicates where the root came from. For more information, see the Remarks section.|
 |`extraData`|Additional data about the object to be garbage-collected. This information depends on the source of the object, as indicated by the `type` field. For more information, see the Remarks section.|
 
 ## Remarks
 
-The `type` field is a CorGCReferenceType enumeration value that indicates where the reference came from. A particular `COR_GC_REFERENCE` value can reflect any of the following kinds of managed objects:
+The `type` field is a [CorGCReferenceType](corgcreferencetype-enumeration.md) enumeration value that indicates where the reference came from. A particular `COR_GC_REFERENCE` value can reflect any of the following kinds of managed objects:
 
 - Objects from all managed stacks (`CorGCReferenceType.CorReferenceStack`). This includes live references in managed code, as well as objects created by the common language runtime.
 - Objects from the handle table (`CorGCReferenceType.CorHandle*`). This includes strong references (`HNDTYPE_STRONG` and `HNDTYPE_REFCOUNT`) and static variables in a module.
@@ -47,7 +55,7 @@ The `extraData` field contains extra data depending on the source (or type) of t
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

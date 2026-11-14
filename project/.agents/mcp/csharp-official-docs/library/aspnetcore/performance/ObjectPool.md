@@ -1,17 +1,18 @@
 ---
-title: "Object reuse with ObjectPool in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/performance/ObjectPool.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Object reuse with ObjectPool in ASP.NET Core
+description: Tips for increasing performance in ASP.NET Core apps using ObjectPool.
+monikerRange: '>= aspnetcore-1.1'
+ms.date: 4/21/2023
 ---
-
 # Object reuse with ObjectPool in ASP.NET Core
 
-By Günther Foidl, Steve Gordon, and Samson Amaugo
+By [Günther Foidl](https://github.com/gfoidl), [Steve Gordon](https://twitter.com/stevejgordon), and [Samson Amaugo](https://github.com/sammychinedu2ky)
 
-`Microsoft.Extensions.ObjectPool` is part of the ASP.NET Core infrastructure that supports keeping a group of objects in memory for reuse rather than allowing the objects to be garbage collected. All the static and instance methods in `Microsoft.Extensions.ObjectPool` are thread-safe.
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+:::moniker range=">= aspnetcore-8.0"
+
+<xref:Microsoft.Extensions.ObjectPool> is part of the ASP.NET Core infrastructure that supports keeping a group of objects in memory for reuse rather than allowing the objects to be garbage collected. All the static and instance methods in `Microsoft.Extensions.ObjectPool` are thread-safe.
 
 Apps might want to use the object pool if the objects that are being managed are:
 
@@ -19,7 +20,7 @@ Apps might want to use the object pool if the objects that are being managed are
 * Represent a limited resource.
 * Used predictably and frequently.
 
-For example, the ASP.NET Core framework uses the object pool in some places to reuse `System.Text.StringBuilder` instances. `StringBuilder` allocates and manages its own buffers to hold character data. ASP.NET Core regularly uses `StringBuilder` to implement features, and reusing them provides a performance benefit.
+For example, the ASP.NET Core framework uses the object pool in some places to reuse <xref:System.Text.StringBuilder> instances. `StringBuilder` allocates and manages its own buffers to hold character data. ASP.NET Core regularly uses `StringBuilder` to implement features, and reusing them provides a performance benefit.
 
 Object pooling doesn't always improve performance:
 
@@ -32,7 +33,7 @@ Use object pooling only after collecting performance data using realistic scenar
 
 ## ObjectPool concepts
 
-When `Microsoft.Extensions.ObjectPool.DefaultObjectPoolProvider` is used and `T` implements `IDisposable`:
+When <xref:Microsoft.Extensions.ObjectPool.DefaultObjectPoolProvider> is used and `T` implements `IDisposable`:
 
 * Items that are ***not*** returned to the pool will be disposed.
 * When the pool gets disposed by DI, all items in the pool are disposed.
@@ -44,83 +45,33 @@ NOTE: After the pool is disposed:
 
 Important `ObjectPool` types and interfaces:
 
-* `Microsoft.Extensions.ObjectPool.ObjectPool`1` : The basic <example-value> pool abstraction. Used to get and return objects.
-* `Microsoft.Extensions.ObjectPool.PooledObjectPolicy`1` : Implement this to customize how an object is created and how it's reset when returned to the pool. This can be passed into an object pool that's constructed directly.
-* `Microsoft.Extensions.ObjectPool.IResettable` : Automatically resets the object when returned to an object pool.
+* <xref:Microsoft.Extensions.ObjectPool.ObjectPool`1> : The basic object pool abstraction. Used to get and return objects.
+* <xref:Microsoft.Extensions.ObjectPool.PooledObjectPolicy`1> : Implement this to customize how an object is created and how it's reset when returned to the pool. This can be passed into an object pool that's constructed directly.
+* <xref:Microsoft.Extensions.ObjectPool.IResettable> : Automatically resets the object when returned to an object pool.
 
 The ObjectPool can be used in an app in multiple ways:
 
 * Instantiating a pool.
-* Registering a pool in Dependency injection (DI) as an instance.
+* Registering a pool in [Dependency injection](../fundamentals/dependency-injection.md) (DI) as an instance.
 * Registering the `ObjectPoolProvider<>` in DI and using it as a factory.
 
 ## How to use ObjectPool
 
-Call `Microsoft.Extensions.ObjectPool.ObjectPool`1.Get*` to get an object and `Microsoft.Extensions.ObjectPool.ObjectPool`1.Return*` to return the object.  There's no requirement to return every object. If an object isn't returned, it will be garbage collected.
+Call <xref:Microsoft.Extensions.ObjectPool.ObjectPool`1.Get*> to get an object and <xref:Microsoft.Extensions.ObjectPool.ObjectPool`1.Return*> to return the object.  There's no requirement to return every object. If an object isn't returned, it will be garbage collected.
 
 ## ObjectPool sample
 
 The following code:
 
-* Adds `ObjectPoolProvider` to the Dependency injection (DI) container.
+* Adds `ObjectPoolProvider` to the [Dependency injection](../fundamentals/dependency-injection.md) (DI) container.
 * Implements the `IResettable` interface to automatically clear the contents of the buffer when returned to the object pool.
 
-```csharp
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.ObjectPool;
-using System.Security.Cryptography;
-
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.TryAddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>();
-
-builder.Services.TryAddSingleton<ObjectPool<ReusableBuffer>>(serviceProvider =>
-{
-    var provider = serviceProvider.GetRequiredService<ObjectPoolProvider>();
-    var policy = new DefaultPooledObjectPolicy<ReusableBuffer>();
-    return provider.Create(policy);
-});
-
-var app = builder.Build();
-
-app.MapGet("/", () => "Hello World!");
-
-// return the SHA256 hash of a word 
-// https://localhost:7214/hash/SamsonAmaugo
-app.MapGet("/hash/{name}", (string name, ObjectPool<ReusableBuffer> bufferPool) =>
-{
-
-    var buffer = bufferPool.Get();
-    try
-    {
-        // Set the buffer data to the ASCII values of a word
-        for (var i = 0; i < name.Length; i++)
-        {
-            buffer.Data[i] = (byte)name[i];
-        }
-
-        Span<byte> hash = stackalloc byte[32];
-        SHA256.HashData(buffer.Data.AsSpan(0, name.Length), hash);
-        return "Hash: " + Convert.ToHexString(hash);
-    }
-    finally
-    {
-        // Data is automatically reset because this type implemented IResettable
-        bufferPool.Return(buffer); 
-    }
-});
-app.Run();
-
-public class ReusableBuffer : IResettable
-{
-    public byte[] Data { get; } = new byte[1024 * 1024]; // 1 MB
-
-    public bool TryReset()
-    {
-        Array.Clear(Data);
-        return true;
-    }
-}
-```
+[!code-csharp[](~/performance/ObjectPool/ObjectPoolSample8/Program.cs)]
 
 **NOTE:** When the pooled type `T` doesn't implement `IResettable`, then a custom `PooledObjectPolicy<T>` can be used to reset the state of the objects before they are returned to the pool.
+
+:::moniker-end
+
+[!INCLUDE[](~/performance/ObjectPool/includes/ObjectPool6.md)]
+
+[!INCLUDE[](~/performance/ObjectPool/includes/ObjectPool1-5.md)]

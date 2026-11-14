@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Trimming may not be used with .NET Standard or .NET Framework"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/8.0/trimming-unsupported-targetframework.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in the .NET 8 SDK where trimming settings produce new warnings or errors in .NET Standard or .NET Framework projects.
+ms.date: 08/21/2023
 ---
-
 # Trimming may not be used with .NET Standard or .NET Framework
 
 Projects that set `<PublishTrimmed>true</PublishTrimmed>`, `<IsTrimmable>true</IsTrimmable>` or `<EnableTrimAnalyzer>true</EnableTrimAnalyzer>` with a `TargetFramework` that is any version of .NET Standard or .NET Framework produce a warning or error because trimming is unsupported for these target frameworks.
@@ -32,7 +28,7 @@ Starting in the .NET 8 SDK, in a project targeting .NET Standard or .NET Framewo
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -57,4 +53,4 @@ For example, these settings multi-target to include `net8.0`, and set `<IsTrimma
 
 ## See also
 
-- Prepare .NET libraries for trimming
+- [Prepare .NET libraries for trimming](../../../deploying/trimming/prepare-libraries-for-trimming.md)

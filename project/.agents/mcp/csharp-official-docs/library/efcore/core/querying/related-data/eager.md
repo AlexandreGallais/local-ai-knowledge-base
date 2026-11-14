@@ -1,163 +1,61 @@
 ---
-title: "Eager Loading of Related Data - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/querying/related-data/eager.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Eager Loading of Related Data - EF Core
+description: Eager loading of related data with Entity Framework Core
+author: SamMonoRT
+ms.date: 11/11/2021
+uid: core/querying/related-data/eager
 ---
-
 # Eager Loading of Related Data
 
 ## The model
 
 The examples in this article use a blogging model with a `Blog` that has many `Post`s. Each `Blog` also has an owner and a `Theme`, and each `Post` has an author and a set of tags:
 
-```csharp
-﻿using System.Collections.Generic;
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Blog.cs)]
 
-namespace EFQuerying.RelatedData;
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Post.cs)]
 
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
-    public int? Rating { get; set; }
-
-    public List<Post> Posts { get; set; }
-
-    public int OwnerId { get; set; }
-    public Person Owner { get; set; }
-
-    public int ThemeId { get; set; }
-    public Theme Theme { get; set; }
-}
-```
-
-```csharp
-﻿using System.Collections.Generic;
-
-namespace EFQuerying.RelatedData;
-
-public class Post
-{
-    public int PostId { get; set; }
-    public string Title { get; set; }
-    public string Content { get; set; }
-    public int Rating { get; set; }
-
-    public int BlogId { get; set; }
-    public Blog Blog { get; set; }
-
-    public int AuthorId { get; set; }
-    public Person Author { get; set; }
-
-    public List<PostTag> Tags { get; set; }
-}
-```
-
-> **Tip:**
-> You can view the sample for this article on GitHub.
+> [!TIP]
+> You can view the [sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Querying/RelatedData) for this article on GitHub.
 
 ## Eager loading
 
 You can use the `Include` method to specify related data to be included in query results. In the following example, the blogs that are returned in the results will have their `Posts` property populated with the related posts.
 
-```csharp
-using (var context = new BloggingContext())
-{
-    var blogs = await context.Blogs
-        .Include(blog => blog.Posts)
-        .ToListAsync();
-}
-```
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#SingleInclude)]
 
-> **Tip:**
+> [!TIP]
 > Entity Framework Core will automatically fix-up navigation properties to any other entities that were previously loaded into the context instance. So even if you don't explicitly include the data for a navigation property, the property may still be populated if some or all of the related entities were previously loaded.
 
 You can include related data from multiple relationships in a single query.
 
-```csharp
-using (var context = new BloggingContext())
-{
-    var blogs = await context.Blogs
-        .Include(blog => blog.Posts)
-        .Include(blog => blog.Owner)
-        .ToListAsync();
-}
-```
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#MultipleIncludes)]
 
-> **Caution:**
-> Eager loading a collection navigation in a single query may cause performance issues. For more information, see Single vs. split queries.
+> [!CAUTION]
+> Eager loading a collection navigation in a single query may cause performance issues. For more information, see [Single vs. split queries](xref:core/querying/single-split-queries).
 
 ## Including multiple levels
 
 You can drill down through relationships to include multiple levels of related data using the `ThenInclude` method. The following example loads all blogs, their related posts, and the author of each post.
 
-```csharp
-using (var context = new BloggingContext())
-{
-    var blogs = await context.Blogs
-        .Include(blog => blog.Posts)
-        .ThenInclude(post => post.Author)
-        .ToListAsync();
-}
-```
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#SingleThenInclude)]
 
 You can chain multiple calls to `ThenInclude` to continue including further levels of related data.
 
-```csharp
-using (var context = new BloggingContext())
-{
-    var blogs = await context.Blogs
-        .Include(blog => blog.Posts)
-        .ThenInclude(post => post.Author)
-        .ThenInclude(author => author.Photo)
-        .ToListAsync();
-}
-```
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#MultipleThenIncludes)]
 
 You can combine all of the calls to include related data from multiple levels and multiple roots in the same query.
 
-```csharp
-using (var context = new BloggingContext())
-{
-    var blogs = await context.Blogs
-        .Include(blog => blog.Posts)
-        .ThenInclude(post => post.Author)
-        .ThenInclude(author => author.Photo)
-        .Include(blog => blog.Owner)
-        .ThenInclude(owner => owner.Photo)
-        .ToListAsync();
-}
-```
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#IncludeTree)]
 
 You may want to include multiple related entities for one of the entities that is being included. For example, when querying `Blogs`, you include `Posts` and then want to include both the `Author` and `Tags` of the `Posts`. To include both, you need to specify each include path starting at the root. For example, `Blog -> Posts -> Author` and `Blog -> Posts -> Tags`. It doesn't mean you'll get redundant joins; in most cases, EF will combine the joins when generating SQL.
 
-```csharp
-using (var context = new BloggingContext())
-{
-    var blogs = await context.Blogs
-        .Include(blog => blog.Posts)
-        .ThenInclude(post => post.Author)
-        .Include(blog => blog.Posts)
-        .ThenInclude(post => post.Tags)
-        .ToListAsync();
-}
-```
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#MultipleLeafIncludes)]
 
-> **Tip:**
+> [!TIP]
 > You can also load multiple navigations using a single `Include` method. This is possible for navigation "chains" that are all references, or when they end with a single collection.
 
-```csharp
-using (var context = new BloggingContext())
-{
-    var blogs = await context.Blogs
-        .Include(blog => blog.Owner.AuthoredPosts)
-        .ThenInclude(post => post.Blog.Owner.Photo)
-        .ToListAsync();
-}
-```
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#IncludeMultipleNavigationsWithSingleInclude)]
 
 ## Filtered include
 
@@ -167,49 +65,18 @@ Supported operations are: `Where`, `OrderBy`, `OrderByDescending`, `ThenBy`, `Th
 
 Such operations should be applied on the collection navigation in the lambda passed to the Include method, as shown in example below:
 
-```csharp
-using (var context = new BloggingContext())
-{
-    var filteredBlogs = await context.Blogs
-        .Include(
-            blog => blog.Posts
-                .Where(post => post.BlogId == 1)
-                .OrderByDescending(post => post.Title)
-                .Take(5))
-        .ToListAsync();
-}
-```
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#FilteredInclude)]
 
 Each included navigation allows only one unique set of filter operations. In cases where multiple Include operations are applied for a given collection navigation (`blog.Posts` in the examples below), filter operations can only be specified on one of them:
 
-```csharp
-using (var context = new BloggingContext())
-{
-    var filteredBlogs = await context.Blogs
-        .Include(blog => blog.Posts.Where(post => post.BlogId == 1))
-        .ThenInclude(post => post.Author)
-        .Include(blog => blog.Posts)
-        .ThenInclude(post => post.Tags.OrderBy(postTag => postTag.TagId).Skip(3))
-        .ToListAsync();
-}
-```
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#MultipleLeafIncludesFiltered1)]
 
 Alternatively, identical operations can be applied for each navigation that is included multiple times:
 
-```csharp
-using (var context = new BloggingContext())
-{
-    var filteredBlogs = await context.Blogs
-        .Include(blog => blog.Posts.Where(post => post.BlogId == 1))
-        .ThenInclude(post => post.Author)
-        .Include(blog => blog.Posts.Where(post => post.BlogId == 1))
-        .ThenInclude(post => post.Tags.OrderBy(postTag => postTag.TagId).Skip(3))
-        .ToListAsync();
-}
-```
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#MultipleLeafIncludesFiltered2)]
 
-> **Caution:**
-> In case of tracking queries, results of Filtered Include may be unexpected due to navigation fixup. All relevant entities that have been queried for previously and have been stored in the Change Tracker will be present in the results of Filtered Include query, even if they don't meet the requirements of the filter. Consider using `NoTracking` queries or re-create the DbContext when using Filtered Include in those situations.
+> [!CAUTION]
+> In case of tracking queries, results of Filtered Include may be unexpected due to [navigation fixup](xref:core/querying/tracking). All relevant entities that have been queried for previously and have been stored in the Change Tracker will be present in the results of Filtered Include query, even if they don't meet the requirements of the filter. Consider using `NoTracking` queries or re-create the DbContext when using Filtered Include in those situations.
 
 Example:
 
@@ -220,8 +87,8 @@ var orders = await context.Orders.Where(o => o.Id > 1000).ToListAsync();
 var filtered = await context.Customers.Include(c => c.Orders.Where(o => o.Id > 5000)).ToListAsync();
 ```
 
-> **Note:**
-> In case of tracking queries, the navigation on which filtered include was applied is considered to be loaded. This means that EF Core will not attempt to re-load its values using explicit loading or lazy loading, even though some elements could still be missing.
+> [!NOTE]
+> In case of tracking queries, the navigation on which filtered include was applied is considered to be loaded. This means that EF Core will not attempt to re-load its values using [explicit loading](xref:core/querying/related-data/explicit) or [lazy loading](xref:core/querying/related-data/lazy), even though some elements could still be missing.
 
 ## Include on derived types
 
@@ -285,29 +152,17 @@ Contents of `School` navigation of all People who are Students can be eagerly lo
 
 You can configure a navigation in the model to be included every time the entity is loaded from the database using `AutoInclude` method. It has same effect as specifying `Include` with the navigation in every query where the entity type is returned in the results. Following example shows how to configure a navigation to be automatically included.
 
-```csharp
-modelBuilder.Entity<Theme>().Navigation(e => e.ColorScheme).AutoInclude();
-```
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/BloggingContext.cs#AutoInclude)]
 
 After above configuration, running a query like below will load `ColorScheme` navigation for all the themes in the results.
 
-```csharp
-using (var context = new BloggingContext())
-{
-    var themes = await context.Themes.ToListAsync();
-}
-```
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#AutoIncludes)]
 
 This configuration is applied on every entity returned in the result no matter how it appeared in the results. That means if an entity is in the result because of use of a navigation, using `Include` over another entity type or auto-include configuration, it will load all the auto-included navigations for it. The same rule extends to the navigations configured as auto-included on derived type of the entity.
 
 If for a particular query you don't want to load the related data through a navigation, which is configured at model level to be auto-included, you can use `IgnoreAutoIncludes` method in your query. Using this method will stop loading all the navigations configured as auto-include by the user. Running a query like below will bring back all themes from database but won't load `ColorScheme` even though it's configured as auto-included navigation.
 
-```csharp
-using (var context = new BloggingContext())
-{
-    var themes = await context.Themes.IgnoreAutoIncludes().ToListAsync();
-}
-```
+[!code-csharp[Main](../../../../samples/core/Querying/RelatedData/Program.cs#IgnoreAutoIncludes)]
 
-> **Note:**
+> [!NOTE]
 > Navigations to owned types are also configured as auto-included by convention and using `IgnoreAutoIncludes` API doesn't stop them from being included. They will still be included in query results.

@@ -1,26 +1,24 @@
----
-title: "ts-prefer-function-type"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/ts-prefer-function-type.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-ts-prefer-function-type"></a>
+<a name="ts-prefer-function-type"></a>
+# <code>ts-prefer-function-type</code>
 
-# `ts-prefer-function-type`
-
-Inspired by `typescript-eslint`'s prefer-function-type rule.
+Inspired by `typescript-eslint`'s [prefer-function-type](https://typescript-eslint.io/rules/prefer-function-type/) rule.
 
 Chooses the more succinct function property over a call signature if there are
 no other properties on the signature.
 
+<a name="user-content-ts-prefer-function-type-options"></a>
+<a name="ts-prefer-function-type-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `enableFixer`
+<a name="user-content-ts-prefer-function-type-options-enablefixer"></a>
+<a name="ts-prefer-function-type-options-enablefixer"></a>
+### <code>enableFixer</code>
 
 Whether to enable the fixer or not
+
 
 |||
 |---|---|
@@ -30,6 +28,8 @@ Whether to enable the fixer or not
 |Settings||
 |Options|`enableFixer`|
 
+<a name="user-content-ts-prefer-function-type-failing-examples"></a>
+<a name="ts-prefer-function-type-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -83,6 +83,10 @@ The following patterns are considered problems:
 // Message: Call signature found; function type preferred.
 ````
 
+
+
+<a name="user-content-ts-prefer-function-type-passing-examples"></a>
+<a name="ts-prefer-function-type-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -110,3 +114,4 @@ The following patterns are not considered problems:
  * @param {BadType<} someName
  */
 ````
+

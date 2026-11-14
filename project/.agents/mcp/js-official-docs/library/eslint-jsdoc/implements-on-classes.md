@@ -1,19 +1,13 @@
----
-title: "implements-on-classes"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/implements-on-classes.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-implements-on-classes"></a>
+<a name="implements-on-classes"></a>
+# <code>implements-on-classes</code>
 
-# `implements-on-classes`
+* [Options](#user-content-implements-on-classes-options)
+    * [`contexts`](#user-content-implements-on-classes-options-contexts)
+* [Context and settings](#user-content-implements-on-classes-context-and-settings)
+* [Failing examples](#user-content-implements-on-classes-failing-examples)
+* [Passing examples](#user-content-implements-on-classes-passing-examples)
 
-* Options
-    * `contexts`
-* Context and settings
-* Failing examples
-* Passing examples
 
 Reports an issue with any non-constructor function using `@implements`.
 
@@ -24,11 +18,15 @@ To indicate that a function follows another function's signature, one might
 instead use `@type` to indicate the `@function` or `@callback` to which the
 function is adhering.
 
+<a name="user-content-implements-on-classes-options"></a>
+<a name="implements-on-classes-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `contexts`
+<a name="user-content-implements-on-classes-options-contexts"></a>
+<a name="implements-on-classes-options-contexts"></a>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -42,9 +40,12 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
-See the "AST and Selectors"
+See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
 section of our Advanced docs for more on the expected format.
 
+
+<a name="user-content-implements-on-classes-context-and-settings"></a>
+<a name="implements-on-classes-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -54,6 +55,8 @@ section of our Advanced docs for more on the expected format.
 |Recommended|true|
 |Options|`contexts`|
 
+<a name="user-content-implements-on-classes-failing-examples"></a>
+<a name="implements-on-classes-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -131,6 +134,10 @@ class Foo {
 // Message: @implements used on a non-constructor function
 ````
 
+
+
+<a name="user-content-implements-on-classes-passing-examples"></a>
+<a name="implements-on-classes-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -215,3 +222,4 @@ function quux () {
  * @implements {SomeClass}
  */
 ````
+

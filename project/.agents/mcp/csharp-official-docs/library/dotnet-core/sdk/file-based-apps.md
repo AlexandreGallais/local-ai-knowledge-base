@@ -1,19 +1,16 @@
 ---
-title: "File-based apps (part 1 of 2)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/sdk/file-based-apps.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: File-based apps
+description: Learn how to create, build, and run C# applications from a single file without a project file.
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
-
 # File-based apps
 
 **This article applies to:** ✔️ .NET 10 SDK and later versions
 
 File-based apps let you build, run, and publish .NET applications from a single C# file without creating a traditional project file. They offer a lightweight alternative to traditional .NET projects. This approach simplifies development for scripts, utilities, and small applications. The .NET SDK automatically generates the necessary project configuration based on the directives in your source file.
 
-Key <example-value> include:
+Key benefits include:
 
 - Reduced boilerplate for simple applications.
 - Self-contained source files with embedded configuration.
@@ -28,7 +25,7 @@ File-based apps use directives prefixed with `#:` to configure the build and run
 
 ### `#:include`
 
-> **Note:**
+> [!NOTE]
 > This directive is available in .NET 11 and .NET SDK 10.0.300 and later.
 
 Includes another file in the file-based app.
@@ -50,9 +47,9 @@ The compiler includes `.cs` files as part of app compilation. These files can ad
 #:include $(MSBuildProjectName).*.cs
 ```
 
-The `#:include` directive supports literal paths, glob patterns, and MSBuild properties. When you use glob patterns, file-based app build caching is currently disabled. For more information about available properties, see MSBuild reserved and well-known properties.
+The `#:include` directive supports literal paths, glob patterns, and MSBuild properties. When you use glob patterns, file-based app build caching is currently disabled. For more information about available properties, see [MSBuild reserved and well-known properties](/visualstudio/msbuild/msbuild-reserved-and-well-known-properties).
 
-> **Note:**
+> [!NOTE]
 > Referencing a compiled DLL with `#:include` is available in .NET 11 and later.
 
 You can also use `#:include` to reference a compiled DLL directly, without a feature flag:
@@ -69,11 +66,11 @@ Adds a NuGet package reference to your application.
 
 ```csharp
 #:package Newtonsoft.Json
-#:package user@example.com
+#:package Serilog@3.1.1
 #:package Spectre.Console@*
 ```
 
-> **Note:**
+> [!NOTE]
 > Omitting the version number after the package name currently only works when you use central package management with a `Directory.Packages.props` file. Otherwise, specify the version number explicitly, or add `@*` after the package name to use the latest version.
 
 ### `#:project`
@@ -86,7 +83,7 @@ References another project file or directory that contains a project file.
 
 Instead of manually editing `#:project` directives, you can use the `dotnet reference` command to manage project references in a file-based app. Use the `--file` option to specify the file-based app:
 
-> **Note:**
+> [!NOTE]
 > `dotnet reference` support for file-based apps is available in .NET 11 and later.
 
 ```dotnetcli
@@ -124,7 +121,7 @@ The `ValueOrDefault` function provides a default value when an environment varia
 #:property EnableLogging=$([System.Convert]::ToBoolean($([MSBuild]::ValueOrDefault('$(ENABLE_LOGGING)', 'true'))))
 ```
 
-For more information about MSBuild property functions, see Property functions.
+For more information about MSBuild property functions, see [Property functions](/visualstudio/msbuild/property-functions).
 
 ### `#:sdk`
 
@@ -132,7 +129,7 @@ Specifies the SDK to use. Defaults to `Microsoft.NET.Sdk`.
 
 ```csharp
 #:sdk Microsoft.NET.Sdk.Web
-#:sdk user@example.com
+#:sdk Aspire.AppHost.Sdk@13.0.2
 ```
 
 ## CLI commands
@@ -153,7 +150,7 @@ Or use the `dotnet run` command followed by the name of the file:
 dotnet run file.cs
 ```
 
-> **Note:**
+> [!NOTE]
 > When a project file exists in the current working directory, `dotnet run file.cs` without the `--file` option runs that project and passes `file.cs` as an argument to the target app to preserve backwards compatibility.
 
 Or use the shorthand syntax:
@@ -162,9 +159,9 @@ Or use the shorthand syntax:
 dotnet file.cs
 ```
 
-#### Pass <example-value>
+#### Pass arguments
 
-Pass <example-value> to your application by placing them after `--`:
+Pass arguments to your application by placing them after `--`:
 
 ```dotnetcli
 dotnet run file.cs -- arg1 arg2
@@ -279,11 +276,11 @@ If you need to disable native AOT, use the following setting:
 #:property PublishAot=false
 ```
 
-For more information about native AOT, see Native AOT deployment.
+For more information about native AOT, see [Native AOT deployment](../deploying/native-aot/index.md).
 
 ### Reuse Native AOT build outputs
 
-> **Note:**
+> [!NOTE]
 > This behavior is available in .NET 11 and later.
 
 The native AOT command-line path can reuse existing build outputs when it runs an unchanged file-based app. Supported cached launches include `dotnet run --file app.cs`, `dotnet run app.cs`, and `dotnet app.cs`. If the cached output doesn't match the current command arguments, the CLI falls back to the managed path.
@@ -303,7 +300,7 @@ File-based apps generate a stable user secrets ID based on a hash of the full fi
 Access user secrets the same way as traditional projects:
 
 ```dotnetcli
-dotnet user-secrets set "<example-value>" "<example-value>" --file file.cs
+dotnet user-secrets set "ApiKey" "your-secret-value" --file file.cs
 ```
 
 List user secrets for file-based apps:
@@ -314,13 +311,13 @@ dotnet user-secrets list --file file.cs
 
 The `dotnet user-secrets list` command prints the value of your secrets. Don't put this command in scripts that run in public contexts.
 
-For more information, see Safe storage of app secrets in development.
+For more information, see [Safe storage of app secrets in development](/aspnet/core/security/app-secrets).
 
 ## Launch profiles
 
 File-based apps support launch profiles for configuring how the application runs during development. Instead of placing launch profiles in `Properties/launchSettings.json`, file-based apps can use a flat launch settings file named `[ApplicationName].run.json` in the same directory as the source file.
 
-For the general profile format and properties that `dotnet run` supports, see Launch profiles.
+For the general profile format and properties that `dotnet run` supports, see [Launch profiles](../tools/dotnet-run.md#launch-profiles).
 
 ### Flat launch settings file
 
@@ -355,7 +352,7 @@ Create a launch settings file named after your application. For example, if your
 
 When you have multiple file-based apps in the same directory, each app can have its own launch settings file:
 
-```directory
+```Directory
 📁 myapps/
 ├── foo.cs
 ├── foo.run.json
@@ -408,10 +405,131 @@ Run directly:
 ./file.cs
 ```
 
-> **Note:**
+> [!NOTE]
 > Use `LF` line endings instead of `CRLF` when you add a shebang. Don't include a BOM in the file.
 
 To prevent `dotnet` from consuming arguments that match its own parameters (such as `--help`), the shebang uses `--` as a separator. The `--` separator tells `dotnet` to forward all subsequent command-line arguments directly to your app. The `-S` flag lets `env` split the remaining text into separate arguments so you can include `--` in the shebang.
 
-> **Note:**
+> [!NOTE]
 > If `-S` isn't supported on your system, use `#!/usr/bin/env dotnet` instead. With this shebang, `dotnet` might consume arguments that match its own CLI parameters.
+
+## Implicit build files
+
+File-based apps respect MSBuild and NuGet configuration files in the same directory or parent directories. These files affect how the SDK builds your application. Be mindful of these files when organizing your file-based apps.
+
+### `Directory.Build.props`
+
+Defines MSBuild properties that apply to all projects in a directory tree. File-based apps inherit these properties.
+
+### `Directory.Build.targets`
+
+Defines MSBuild targets and custom build logic. File-based apps execute these targets during build.
+
+### `Directory.Packages.props`
+
+Enables central package management for NuGet dependencies. File-based apps can use centrally managed package versions.
+
+### `nuget.config`
+
+Configures NuGet package sources and settings. File-based apps use these configurations when restoring packages.
+
+### `global.json`
+
+Specifies the .NET SDK version to use. File-based apps respect this version selection.
+
+## Build caching
+
+The .NET SDK caches build outputs to improve performance on subsequent invocations of `dotnet run`. This caching system is unique to file-based apps.
+
+### Cache behavior
+
+The SDK caches build outputs based on:
+
+- Source file content.
+- Directive configuration.
+- SDK version.
+- Implicit build file existence and content.
+
+Caching improves build performance but can cause confusion when:
+
+- Changes to implicit build files don't trigger rebuilds.
+- Moving files to different directories doesn't invalidate cache.
+
+> [!NOTE]
+> Concurrent invocations of a file-based app (for example, running more than one instance of the same file-based app in parallel) can cause errors due to contention over the build output files. To avoid this, first build the file-based app via `dotnet build file.cs` before starting the concurrent instances via `dotnet run file.cs --no-build`.
+
+### Workarounds
+
+- Clear cache artifacts for file-based apps by using the following command:
+
+  ```dotnetcli
+  dotnet clean file-based-apps
+  ```
+
+- Force a clean build to bypass cache:
+
+  ```dotnetcli
+  dotnet clean file.cs
+  dotnet build file.cs
+  ```
+
+## Folder layout recommendations
+
+Organize your file-based apps carefully to avoid conflicts with traditional projects and implicit build files.
+
+### Avoid project file cones
+
+Don't place file-based apps within the directory structure of a `.csproj` project. The project file's implicit build files and settings can interfere with your file-based app.
+
+❌ **Not recommended:**
+
+```Directory
+📁 MyProject/
+├── MyProject.csproj
+├── Program.cs
+└──📁 scripts/
+    └── utility.cs  // File-based app - bad location
+```
+
+✅ **Recommended:**
+
+```Directory
+📁 MyProject/
+├── MyProject.csproj
+└── Program.cs
+📁 scripts/
+└── utility.cs  // File-based app - good location
+```
+
+### Be mindful of implicit files
+
+Implicit build files in parent directories affect all file-based apps in subdirectories. Create isolated directories for file-based apps when you need different build configurations.
+
+❌ **Not recommended:**
+
+```Directory
+📁 repo/
+├── Directory.Build.props  // Affects everything below
+├── app1.cs
+└── app2.cs
+```
+
+✅ **Recommended:**
+
+```Directory
+📁 repo/
+├── Directory.Build.props
+├──📁 projects/
+│   └── MyProject.csproj
+└──📁 scripts/
+    ├── Directory.Build.props  // Isolated configuration
+    ├── app1.cs
+    └── app2.cs
+```
+
+## See also
+
+- [.NET SDK overview](../sdk.md)
+- [dotnet run command](../tools/dotnet-run.md)
+- [dotnet build command](../tools/dotnet-build.md)
+- [Native AOT deployment](../deploying/native-aot/index.md)

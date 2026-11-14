@@ -1,17 +1,17 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/negation"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/negation.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "enforce use of escapes on negation"
+since: "v0.4.0"
 ---
-
 # regexp/negation
 
 💼 This rule is enabled in the following configs: 🟢 `flat/recommended`, 🔵 `recommended`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 > enforce use of escapes on negation
 
@@ -57,11 +57,13 @@ Nothing.
 
 - [regexp/simplify-set-operations]
 
+[regexp/simplify-set-operations]: ./simplify-set-operations.md
+
 ## :rocket: Version
 
 This rule was introduced in eslint-plugin-regexp v0.4.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/negation.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/negation.ts)

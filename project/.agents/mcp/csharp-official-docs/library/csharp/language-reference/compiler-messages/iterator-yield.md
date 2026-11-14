@@ -1,29 +1,56 @@
 ---
-title: "Errors and warnings for iterator methods and `yield return`"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/compiler-messages/iterator-yield.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Errors and warnings for iterator methods and `yield return`
+description: Use this article to diagnose and correct compiler errors and warnings when you write iterator methods that use `yield return` to enumerate a sequence of elements.
+f1_keywords:
+  - "CS1622"
+  - "CS1624"
+  - "CS1625"
+  - "CS1626"
+  - "CS1627"
+  - "CS1629"
+  - "CS1631"
+  - "CS1637"
+  - "CS4013"
+  - "CS8154"
+  - "CS8176"
+  - "CS9238"
+  - "CS9239"
+helpviewer_keywords:
+  - "CS1622"
+  - "CS1624"
+  - "CS1625"
+  - "CS1626"
+  - "CS1627"
+  - "CS1629"
+  - "CS1631"
+  - "CS1637"
+  - "CS4013"
+  - "CS8154"
+  - "CS8176"
+  - "CS9238"
+  - "CS9239"
+ms.date: 07/02/2024
 ---
-
 # Errors and warnings related to the `yield return` statement and iterator methods
 
 There are numerous *errors* related to the `yield return` statement and iterator methods:
 
-- **CS1622**: *Cannot return a value from an iterator. Use the yield return statement to return a value, or yield break to end the iteration.*
-- **CS1624**: *The body of 'accessor' cannot be an iterator block because 'type' is not an iterator interface type*
-- **CS1625**: *Cannot yield in the body of a finally clause*
-- **CS1626**: *Cannot yield a value in the body of a try block with a catch clause*
-- **CS1627**: *Expression expected after yield return*
-- **CS1629**: *Unsafe code may not appear in iterators*
-- **CS1631**: *Cannot yield a value in the body of a catch clause*
-- **CS1637**: *Iterators cannot have unsafe parameters or yield types*
-- **CS4013**: *Instance of type cannot be used inside a nested function, query expression, iterator block or async method*
-- **CS8154**: *The body cannot be an iterator block because it returns by reference*
-- **CS8176**: *Iterators cannot have by-reference locals*
-- **CS9238**: *Cannot use 'yield return' in an 'unsafe' block*
-- **CS9239**: *The `&` operator cannot be used on parameters or local variables in iterator methods.*
+<!-- The text in this list generates issues for Acrolinx, because they don't use contractions.
+That's by design. The text closely matches the text of the compiler error / warning for SEO purposes.
+ -->
+- [**CS1622**](#structure-of-an-iterator-method): *Cannot return a value from an iterator. Use the yield return statement to return a value, or yield break to end the iteration.*
+- [**CS1624**](#structure-of-an-iterator-method): *The body of 'accessor' cannot be an iterator block because 'type' is not an iterator interface type*
+- [**CS1625**](#restrictions-on-iterator-methods): *Cannot yield in the body of a finally clause*
+- [**CS1626**](#restrictions-on-iterator-methods): *Cannot yield a value in the body of a try block with a catch clause*
+- [**CS1627**](#structure-of-an-iterator-method): *Expression expected after yield return*
+- [**CS1629**](#restrictions-on-iterator-methods): *Unsafe code may not appear in iterators*
+- [**CS1631**](#restrictions-on-iterator-methods): *Cannot yield a value in the body of a catch clause*
+- [**CS1637**](#structure-of-an-iterator-method): *Iterators cannot have unsafe parameters or yield types*
+- [**CS4013**](#ref-safety-in-iterator-methods): *Instance of type cannot be used inside a nested function, query expression, iterator block or async method*
+- [**CS8154**](#structure-of-an-iterator-method): *The body cannot be an iterator block because it returns by reference*
+- [**CS8176**](#ref-safety-in-iterator-methods): *Iterators cannot have by-reference locals*
+- [**CS9238**](#restrictions-on-iterator-methods): *Cannot use 'yield return' in an 'unsafe' block*
+- [**CS9239**](#restrictions-on-iterator-methods): *The `&` operator cannot be used on parameters or local variables in iterator methods.*
 
 ## Structure of an iterator method
 
@@ -38,7 +65,7 @@ An iterator method must conform to several rules in C#. The compiler issues the 
 Your iterator method must follow the following rules:
 
 - An iterator method (using `yield return` and optionally `yield break`) can't also use a `return` statement to return a sequence.
-- An iterator method must declare an *iterator interface type* as the return type. The *iterator interface types* are: `System.Collections.IEnumerable`, `System.Collections.Generic.IEnumerable`1`, `System.Collections.IEnumerator`, `System.Collections.Generic.IEnumerator`1`.
+- An iterator method must declare an *iterator interface type* as the return type. The *iterator interface types* are: <xref:System.Collections.IEnumerable>, <xref:System.Collections.Generic.IEnumerable`1>, <xref:System.Collections.IEnumerator>, <xref:System.Collections.Generic.IEnumerator`1>.
 - A `yield return` statement must include an expression to return as part of a sequence. `yield return;` isn't valid.
 - An iterator method can't use unsafe types as parameters, such as pointers.
 - An iterator method can't `yield return` unsafe type, such as pointers.

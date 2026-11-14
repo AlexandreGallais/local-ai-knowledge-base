@@ -1,14 +1,9 @@
 ---
-title: "generator-star-spacing"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/generator-star-spacing.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: generator-star-spacing
+rule_type: layout
+further_reading:
+- https://leanpub.com/understandinges6/read/#leanpub-auto-generators
 ---
-
-# generator-star-spacing
-
 Generators are a new type of function in ECMAScript 6 that can return multiple values over time.
 These special functions are indicated by placing an `*` after the `function` keyword.
 
@@ -103,7 +98,7 @@ Overrides can be either an object with `"before"` and `"after"`, or a shorthand 
 
 Examples of **correct** code for this rule with the `"before"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint generator-star-spacing: ["error", {"before": true, "after": false}]*/
@@ -115,11 +110,13 @@ var anonymous = function *() {};
 var shorthand = { *generator() {} };
 ```
 
+:::
+
 ### after
 
 Examples of **correct** code for this rule with the `"after"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint generator-star-spacing: ["error", {"before": false, "after": true}]*/
@@ -131,11 +128,13 @@ var anonymous = function* () {};
 var shorthand = { * generator() {} };
 ```
 
+:::
+
 ### both
 
 Examples of **correct** code for this rule with the `"both"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint generator-star-spacing: ["error", {"before": true, "after": true}]*/
@@ -147,11 +146,13 @@ var anonymous = function * () {};
 var shorthand = { * generator() {} };
 ```
 
+:::
+
 ### neither
 
 Examples of **correct** code for this rule with the `"neither"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint generator-star-spacing: ["error", {"before": false, "after": false}]*/
@@ -163,9 +164,11 @@ var anonymous = function*() {};
 var shorthand = { *generator() {} };
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with overrides present:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint generator-star-spacing: ["error", {
@@ -184,9 +187,11 @@ var shorthand = { *generator() {} };
 class Class { static* method() {} }
 ```
 
+:::
+
 Examples of **correct** code for this rule with overrides present:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint generator-star-spacing: ["error", {
@@ -204,6 +209,8 @@ var shorthand = { * generator() {} };
 
 class Class { static * method() {} }
 ```
+
+:::
 
 ## When Not To Use It
 

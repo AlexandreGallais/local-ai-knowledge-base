@@ -1,17 +1,8 @@
----
-title: "Type aliases"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/items/type-aliases.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[items.type]
 # Type aliases
 
 r[items.type.syntax]
-```grammar
+```grammar,items
 TypeAlias ->
     `type` IDENTIFIER GenericParams? ( `:` Bounds? )?
         WhereClause?
@@ -31,7 +22,7 @@ let p: Point = (41, 68);
 r[items.type.constructor-alias]
 A type alias to a tuple-struct or unit-struct cannot be used to qualify that type's constructor:
 
-```rust
+```rust,compile_fail
 struct MyStruct(u32);
 
 use MyStruct as UseAlias;
@@ -42,13 +33,19 @@ let _ = TypeAlias(5); // Doesn't work
 ```
 
 r[items.type.associated-type]
-A type alias, when not used as an [associated type], must include a Type and may not include [Bounds].
+A type alias, when not used as an [associated type], must include a [Type][grammar-Type] and may not include [Bounds].
 
 r[items.type.associated-trait]
-A type alias, when used as an [associated type] in a [trait], must not include a Type specification but may include [Bounds].
+A type alias, when used as an [associated type] in a [trait], must not include a [Type][grammar-Type] specification but may include [Bounds].
 
 r[items.type.associated-impl]
-A type alias, when used as an [associated type] in a [trait impl], must include a Type specification and may not include [Bounds].
+A type alias, when used as an [associated type] in a [trait impl], must include a [Type][grammar-Type] specification and may not include [Bounds].
 
 r[items.type.deprecated]
 Where clauses before the equals sign on a type alias in a [trait impl] (like `type TypeAlias<T> where T: Foo = Bar<T>`) are deprecated. Where clauses after the equals sign (like `type TypeAlias<T> = Bar<T> where T: Foo`) are preferred.
+
+[associated type]: associated-items.md#associated-types
+[trait impl]: implementations.md#trait-implementations
+[trait]: traits.md
+[type namespace]: ../names/namespaces.md
+[type]: ../types.md

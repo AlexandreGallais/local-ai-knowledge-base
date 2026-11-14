@@ -1,15 +1,16 @@
 ---
-title: "Modernize your upgraded .NET Framework apps"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/modernize.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Modernize your upgraded .NET Framework apps
+description: This article demonstrates some of the ways you can modernize a .NET Framework app after you've upgraded to .NET
+author: adegeo
+ms.date: 05/25/2023
+dev_langs: ["csharp", "vb"]
+no-loc: ["package.config", PackageReference]
+ms.custom: sfi-ropc-nochange
 ---
 
 # Modernize after upgrading to .NET from .NET Framework
 
-In this article, you'll learn about different ways you can modernize your app after it's been upgraded from .NET Framework to .NET. Use the GitHub Copilot modernization chat agent to upgrade your app to .NET.
+In this article, you'll learn about different ways you can modernize your app after it's been upgraded from .NET Framework to .NET. Use the [GitHub Copilot modernization](github-copilot-upgrade/overview.md) chat agent to upgrade your app to .NET.
 
 ## Missing APIs
 
@@ -17,17 +18,17 @@ When upgrading a .NET Framework app, you'll most likely have some incompatibilit
 
 ### Windows Compatibility Pack
 
-If after migration you have some dependencies on .NET Framework APIs that are not supported on your new version of .NET, you might find them in the `Microsoft.Windows.Compatibility` NuGet package. It adds around 20,000 APIs to your .NET project, significantly increasing the API set available to your project. These APIs include Windows-only APIs such as those related to Windows Management Instrumentation (WMI) and the Windows EventLog. For more information, see Use the Windows Compatibility Pack to port code to .NET.
+If after migration you have some dependencies on .NET Framework APIs that are not supported on your new version of .NET, you might find them in the [`Microsoft.Windows.Compatibility` NuGet package](https://www.nuget.org/packages/Microsoft.Windows.Compatibility). It adds around 20,000 APIs to your .NET project, significantly increasing the API set available to your project. These APIs include Windows-only APIs such as those related to Windows Management Instrumentation (WMI) and the Windows EventLog. For more information, see [Use the Windows Compatibility Pack to port code to .NET](windows-compat-pack.md).
 
 ## Web browser control
 
-Projects that target a Windows desktop technology, such as Windows Presentation Foundation or Windows Forms, may include a web browser control. The web browser control provided was most likely designed prior to HTML5 and other modern web technologies and is considered obsolete. Microsoft publishes the `Microsoft.Web.WebView2` NuGet package as modern web browser control replacement.
+Projects that target a Windows desktop technology, such as Windows Presentation Foundation or Windows Forms, may include a web browser control. The web browser control provided was most likely designed prior to HTML5 and other modern web technologies and is considered obsolete. Microsoft publishes the [`Microsoft.Web.WebView2` NuGet package](https://www.nuget.org/packages/Microsoft.Web.WebView2) as modern web browser control replacement.
 
 ## App.config
 
 .NET Framework uses the _App.config_ file to load settings for your app, such as connection strings and log provider configuration. Modern .NET uses the _appsettings.json_ file for app settings.
 
-> **Tip:**
+> [!TIP]
 > If you don't want to use the _appsettings.json_ file, you can add the `System.Configuration.ConfigurationManager` NuGet package to your app and your code will compile and use the _App.config_ file.
 
 Even though _appsettings.json_ is the modern way to store and retrieve settings and connection strings, your app still has code that uses the _App.config_ file. When your app was migrated, the `System.Configuration.ConfigurationManager` NuGet package was added to the project so that your code using the _App.config_ file continues to compile.
@@ -120,5 +121,5 @@ Perform the following steps to use the _appsettings.json_ file as your configura
 01. Update the rest of your code to use the new configuration APIs.
 01. Delete the _App.config_ file from the project.
 
-    > **Caution:**
+    > [!CAUTION]
     > Make sure that your app runs correctly without the _App.config_ file. Back up the _App.config_ file through source control or by copying the file elsewhere. After you've thoroughly tested your app, delete the _App.config_ file.

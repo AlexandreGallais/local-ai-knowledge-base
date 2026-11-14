@@ -1,14 +1,13 @@
 ---
-title: "space-before-blocks"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/space-before-blocks.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: space-before-blocks
+rule_type: layout
+related_rules:
+- keyword-spacing
+- arrow-spacing
+- switch-colon-spacing
+- block-spacing
+- brace-style
 ---
-
-# space-before-blocks
-
 Consistency is an important part of any style guide.
 While it is a personal preference where to put the opening brace of blocks,
 it should be consistent across a whole project.
@@ -37,7 +36,7 @@ The default is `"always"`.
 
 Examples of **incorrect** code for this rule with the "always" option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint space-before-blocks: "error"*/
@@ -59,9 +58,11 @@ class Foo{
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"always"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint space-before-blocks: "error"*/
@@ -89,11 +90,13 @@ for (;;) {
 try {} catch(a) {}
 ```
 
+:::
+
 ### "never"
 
 Examples of **incorrect** code for this rule with the `"never"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint space-before-blocks: ["error", "never"]*/
@@ -111,9 +114,11 @@ for (;;) {
 try {} catch(a) {}
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"never"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint space-before-blocks: ["error", "never"]*/
@@ -135,9 +140,11 @@ class Foo{
 }
 ```
 
+:::
+
 Examples of **incorrect** code for this rule when configured `{ "functions": "never", "keywords": "always", "classes": "never" }`:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint space-before-blocks: ["error", { "functions": "never", "keywords": "always", "classes": "never" }]*/
@@ -151,9 +158,11 @@ class Foo{
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule when configured `{ "functions": "never", "keywords": "always", "classes": "never" }`:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint space-before-blocks: ["error", { "functions": "never", "keywords": "always", "classes": "never" }]*/
@@ -171,9 +180,11 @@ class Foo{
 }
 ```
 
+:::
+
 Examples of **incorrect** code for this rule when configured `{ "functions": "always", "keywords": "never", "classes": "never" }`:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint space-before-blocks: ["error", { "functions": "always", "keywords": "never", "classes": "never" }]*/
@@ -187,9 +198,11 @@ class Foo {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule when configured `{ "functions": "always", "keywords": "never", "classes": "never" }`:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint space-before-blocks: ["error", { "functions": "always", "keywords": "never", "classes": "never" }]*/
@@ -205,9 +218,11 @@ class Foo{
 }
 ```
 
+:::
+
 Examples of **incorrect** code for this rule when configured `{ "functions": "never", "keywords": "never", "classes": "always" }`:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint space-before-blocks: ["error", { "functions": "never", "keywords": "never", "classes": "always" }]*/
@@ -217,9 +232,11 @@ class Foo{
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule when configured `{ "functions": "never", "keywords": "never", "classes": "always" }`:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint space-before-blocks: ["error", { "functions": "never", "keywords": "never", "classes": "always" }]*/
@@ -228,6 +245,8 @@ class Foo {
   constructor(){}
 }
 ```
+
+:::
 
 ## When Not To Use It
 

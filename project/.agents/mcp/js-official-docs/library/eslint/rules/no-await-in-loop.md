@@ -1,20 +1,15 @@
 ---
-title: "no-await-in-loop"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-await-in-loop.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-await-in-loop
+rule_type: problem
 ---
 
-# no-await-in-loop
 
 Performing an operation on each element of an iterable is a common task. However, performing an
 `await` as part of each operation may indicate that the program is not taking full advantage of
 the parallelization benefits of `async`/`await`.
 
 Often, the code can be refactored to create all the promises at once, then get access to the
-results using `Promise.all()` (or one of the other promise concurrency methods). Otherwise, each successive operation will not start until the
+results using `Promise.all()` (or one of the other [promise concurrency methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#promise_concurrency)). Otherwise, each successive operation will not start until the
 previous one has completed.
 
 Concretely, the following function could be refactored as shown:
@@ -46,7 +41,7 @@ async function foo(things) {
 This can be beneficial for subtle error-handling reasons as well. Given an array of promises that might reject,
 sequential awaiting puts the program at risk of unhandled promise rejections. The exact behavior of unhandled
 rejections depends on the environment running your code, but they are generally considered harmful regardless.
-In Node.js, for example, unhandled rejections cause a program to terminate unless configured otherwise.
+In Node.js, for example, [unhandled rejections cause a program to terminate](https://nodejs.org/api/cli.html#--unhandled-rejectionsmode) unless configured otherwise.
 
 ```js
 async function foo() {
@@ -80,7 +75,7 @@ This rule disallows the use of `await` within loop bodies.
 
 Examples of **correct** code for this rule:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint no-await-in-loop: "error"*/
@@ -97,9 +92,11 @@ async function foo(things) {
 }
 ```
 
+:::
+
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint no-await-in-loop: "error"*/
@@ -119,6 +116,8 @@ async function bar(things) {
   }
 }
 ```
+
+:::
 
 ## Options
 

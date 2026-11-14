@@ -1,13 +1,11 @@
 ---
-title: "The Basics (part 1 of 2)"
-tool: "typescript"
-version: "6.0"
-source: "https://github.com/microsoft/TypeScript-Website/blob/4ec663ac4412c3a7086401bd5a8811565589b11d/packages/documentation/copy/en/handbook-v2/Basics.md"
-commit: "4ec663ac4412c3a7086401bd5a8811565589b11d"
-license: "CC-BY-4.0"
+title: The Basics
+layout: docs
+permalink: /docs/handbook/2/basic-types.html
+oneline: "Step one in learning TypeScript: The basic types."
+preamble: >
+  <p>Welcome to the first page of the handbook. If this is your first experience with TypeScript - you may want to start at one of the '<a href='https://www.typescriptlang.org/docs/handbook/intro.html#get-started'>Getting Started</a>' guides</a>
 ---
-
-# The Basics
 
 Each and every value in JavaScript has a set of behaviors you can observe from running different operations.
 That sounds abstract, but as a quick example, consider some operations we might run on a variable named `message`.
@@ -88,7 +86,8 @@ That's what a static type-checker like TypeScript does.
 _Static type systems_ describe the shapes and behaviors of what our values will be when we run our programs.
 A type-checker like TypeScript uses that information and tells us when things might be going off the rails.
 
-```ts
+```ts twoslash
+// @errors: 2349
 const message = "hello!";
 
 message();
@@ -99,7 +98,7 @@ Running that last sample with TypeScript will give us an error message before we
 ## Non-exception Failures
 
 So far we've been discussing certain things like runtime errors - cases where the JavaScript runtime tells us that it thinks something is nonsensical.
-Those cases come up because the ECMAScript specification has explicit instructions on how the language should behave when it runs into something unexpected.
+Those cases come up because [the ECMAScript specification](https://tc39.github.io/ecma262/) has explicit instructions on how the language should behave when it runs into something unexpected.
 
 For example, the specification says that trying to call something that isn't callable should throw an error.
 Maybe that sounds like "obvious behavior", but you could imagine that accessing a property that doesn't exist on an object should throw an error too.
@@ -117,7 +116,8 @@ user.location; // returns undefined
 Ultimately, a static type system has to make the call over what code should be flagged as an error in its system, even if it's "valid" JavaScript that won't immediately throw an error.
 In TypeScript, the following code produces an error about `location` not being defined:
 
-```ts
+```ts twoslash
+// @errors: 2339
 const user = {
   name: "Daniel",
   age: 26,
@@ -131,7 +131,8 @@ And TypeScript catches _a lot_ of legitimate bugs.
 
 For example: typos,
 
-```ts
+```ts twoslash
+// @noErrors
 const announcement = "Hello World!";
 
 // How quickly can you spot the typos?
@@ -144,7 +145,9 @@ announcement.toLocaleLowerCase();
 
 uncalled functions,
 
-```ts
+```ts twoslash
+// @noUnusedLocals
+// @errors: 2365
 function flipCoin() {
   // Meant to be Math.random()
   return Math.random < 0.5;
@@ -153,7 +156,8 @@ function flipCoin() {
 
 or basic logic errors.
 
-```ts
+```ts twoslash
+// @errors: 2367
 const value = Math.random() < 0.5 ? "a" : "b";
 if (value !== "a") {
   // ...
@@ -173,12 +177,16 @@ Once it has that information, it can also start _suggesting_ which properties yo
 That means TypeScript can be leveraged for editing code too, and the core type-checker can provide error messages and code completion as you type in the editor.
 That's part of what people often refer to when they talk about tooling in TypeScript.
 
-```ts
+<!-- prettier-ignore -->
+```ts twoslash
+// @noErrors
+// @esModuleInterop
 import express from "express";
 const app = express();
 
 app.get("/", function (req, res) {
   res.sen
+//       ^|
 });
 
 app.listen(3000);
@@ -186,7 +194,7 @@ app.listen(3000);
 
 TypeScript takes tooling seriously, and that goes beyond completions and errors as you type.
 An editor that supports TypeScript can deliver "quick fixes" to automatically fix errors, refactorings to easily re-organize code, and useful navigation features for jumping to definitions of a variable, or finding all references to a given variable.
-All of this is built on top of the type-checker and is fully cross-platform, so it's likely that your favorite editor has TypeScript support available.
+All of this is built on top of the type-checker and is fully cross-platform, so it's likely that [your favorite editor has TypeScript support available](https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support).
 
 ## `tsc`, the TypeScript compiler
 
@@ -203,7 +211,7 @@ npm install -g typescript
 
 Now let's move to an empty folder and try writing our first TypeScript program: `hello.ts`:
 
-```ts
+```ts twoslash
 // Greets the world.
 console.log("Hello world!");
 ```
@@ -238,7 +246,8 @@ While that's not always so easy, TypeScript indents consistently, is mindful of 
 What about if we _did_ introduce a type-checking error?
 Let's rewrite `hello.ts`:
 
-```ts
+```ts twoslash
+// @noErrors
 // This is an industrial-grade general-purpose greeter function:
 function greet(person, date) {
   console.log(`Hello ${person}, today is ${date}!`);
@@ -271,7 +280,7 @@ Why should converting it over to TypeScript stop you from running it?
 
 So TypeScript doesn't get in your way.
 Of course, over time, you may want to be a bit more defensive against mistakes, and make TypeScript act a bit more strictly.
-In that case, you can use the `noEmitOnError` compiler option.
+In that case, you can use the [`noEmitOnError`](/tsconfig#noEmitOnError) compiler option.
 Try changing your `hello.ts` file and running `tsc` with that flag:
 
 ```sh
@@ -286,7 +295,7 @@ Up until now, we haven't told TypeScript what `person` or `date` are.
 Let's edit the code to tell TypeScript that `person` is a `string`, and that `date` should be a `Date` object.
 We'll also use the `toDateString()` method on `date`.
 
-```ts
+```ts twoslash
 function greet(person: string, date: Date) {
   console.log(`Hello ${person}, today is ${date.toDateString()}!`);
 }
@@ -298,7 +307,8 @@ You can read that signature as "`greet` takes a `person` of type `string`, and a
 With this, TypeScript can tell us about other cases where `greet` might have been called incorrectly.
 For example...
 
-```ts
+```ts twoslash
+// @errors: 2345
 function greet(person: string, date: Date) {
   console.log(`Hello ${person}, today is ${date.toDateString()}!`);
 }
@@ -314,7 +324,7 @@ On the other hand, constructing a `Date` with `new Date()` actually gives us wha
 
 Anyway, we can quickly fix up the error:
 
-```ts
+```ts twoslash {4}
 function greet(person: string, date: Date) {
   console.log(`Hello ${person}, today is ${date.toDateString()}!`);
 }
@@ -325,8 +335,9 @@ greet("Maddison", new Date());
 Keep in mind, we don't always have to write explicit type annotations.
 In many cases, TypeScript can even just _infer_ (or "figure out") the types for us even if we omit them.
 
-```ts
+```ts twoslash
 let msg = "hello there!";
+//  ^?
 ```
 
 Even though we didn't tell TypeScript that `msg` had the type `string` it was able to figure that out.
@@ -338,7 +349,9 @@ That's a feature, and it's best not to add annotations when the type system woul
 
 Let's take a look at what happens when we compile the above function `greet` with `tsc` to output JavaScript:
 
-```ts
+```ts twoslash
+// @showEmit
+// @target: es5
 function greet(person: string, date: Date) {
   console.log(`Hello ${person}, today is ${date.toDateString()}!`);
 }
@@ -357,3 +370,71 @@ That's why TypeScript needs a compiler in the first place - it needs some way to
 Most TypeScript-specific code gets erased away, and likewise, here our type annotations were completely erased.
 
 > **Remember**: Type annotations never change the runtime behavior of your program.
+
+## Downleveling
+
+One other difference from the above was that our template string was rewritten from
+
+```js
+`Hello ${person}, today is ${date.toDateString()}!`;
+```
+
+to
+
+```js
+"Hello ".concat(person, ", today is ").concat(date.toDateString(), "!");
+```
+
+Why did this happen?
+
+Template strings are a feature from a version of ECMAScript called ECMAScript 2015 (a.k.a. ECMAScript 6, ES2015, ES6, etc. - _don't ask_).
+TypeScript has the ability to rewrite code from newer versions of ECMAScript to older ones such as ECMAScript 3 or ECMAScript 5 (a.k.a. ES5).
+This process of moving from a newer or "higher" version of ECMAScript down to an older or "lower" one is sometimes called _downleveling_.
+
+By default TypeScript targets ES5, an extremely old version of ECMAScript.
+We could have chosen something a little bit more recent by using the [`target`](/tsconfig#target) option.
+Running with `--target es2015` changes TypeScript to target ECMAScript 2015, meaning code should be able to run wherever ECMAScript 2015 is supported.
+So running `tsc --target es2015 hello.ts` gives us the following output:
+
+```js
+function greet(person, date) {
+  console.log(`Hello ${person}, today is ${date.toDateString()}!`);
+}
+greet("Maddison", new Date());
+```
+
+> While the default target is ES5, the great majority of current browsers support ES2015.
+> Most developers can therefore safely specify ES2015 or above as a target, unless compatibility with certain ancient browsers is important.
+
+## Strictness
+
+Different users come to TypeScript looking for different things in a type-checker.
+Some people are looking for a more loose opt-in experience which can help validate only some parts of their program, and still have decent tooling.
+This is the default experience with TypeScript, where types are optional, inference takes the most lenient types, and there's no checking for potentially `null`/`undefined` values.
+Much like how `tsc` emits in the face of errors, these defaults are put in place to stay out of your way.
+If you're migrating existing JavaScript, that might be a desirable first step.
+
+In contrast, a lot of users prefer to have TypeScript validate as much as it can straight away, and that's why the language provides strictness settings as well.
+These strictness settings turn static type-checking from a switch (either your code is checked or not) into something closer to a dial.
+The further you turn this dial up, the more TypeScript will check for you.
+This can require a little extra work, but generally speaking it pays for itself in the long run, and enables more thorough checks and more accurate tooling.
+When possible, a new codebase should always turn these strictness checks on.
+
+TypeScript has several type-checking strictness flags that can be turned on or off, and all of our examples will be written with all of them enabled unless otherwise stated.
+The [`strict`](/tsconfig#strict) flag in the CLI, or `"strict": true` in a [`tsconfig.json`](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) toggles them all on simultaneously, but we can opt out of them individually.
+The two biggest ones you should know about are [`noImplicitAny`](/tsconfig#noImplicitAny) and [`strictNullChecks`](/tsconfig#strictNullChecks).
+
+## `noImplicitAny`
+
+Recall that in some places, TypeScript doesn't try to infer types for us and instead falls back to the most lenient type: `any`.
+This isn't the worst thing that can happen - after all, falling back to `any` is just the plain JavaScript experience anyway.
+
+However, using `any` often defeats the purpose of using TypeScript in the first place.
+The more typed your program is, the more validation and tooling you'll get, meaning you'll run into fewer bugs as you code.
+Turning on the [`noImplicitAny`](/tsconfig#noImplicitAny) flag will issue an error on any variables whose type is implicitly inferred as `any`.
+
+## `strictNullChecks`
+
+By default, values like `null` and `undefined` are assignable to any other type.
+This can make writing some code easier, but forgetting to handle `null` and `undefined` is the cause of countless bugs in the world - some consider it a [billion dollar mistake](https://www.youtube.com/watch?v=ybrQvs4x0Ps)!
+The [`strictNullChecks`](/tsconfig#strictNullChecks) flag makes handling `null` and `undefined` more explicit, and _spares_ us from worrying about whether we _forgot_ to handle `null` and `undefined`.

@@ -1,23 +1,20 @@
 ---
 title: "Breaking change: Globalization APIs use ICU libraries on Windows 10"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/globalization/5.0/icu-globalization-api.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the globalization breaking change in .NET 5 where ICU libraries are used for globalization functionality instead of NLS on Windows 10.
+ms.date: 03/10/2026
+ai-usage: ai-assisted
 ---
-
 # Globalization APIs use ICU libraries on Windows 10
 
-.NET 5 and later versions use International Components for Unicode (ICU) libraries for globalization functionality when running on Windows 10 May 2019 Update or later.
+.NET 5 and later versions use [International Components for Unicode (ICU)](https://icu.unicode.org/) libraries for globalization functionality when running on Windows 10 May 2019 Update or later.
 
 ## Change description
 
-In .NET Core 1.0 - 3.1 and .NET Framework 4 and later, .NET libraries use National Language Support (NLS) APIs for globalization functionality on Windows. For example, NLS functions were used to compare strings, get culture information, and perform string casing in the appropriate culture.
+In .NET Core 1.0 - 3.1 and .NET Framework 4 and later, .NET libraries use [National Language Support (NLS)](/windows/win32/intl/national-language-support) APIs for globalization functionality on Windows. For example, NLS functions were used to compare strings, get culture information, and perform string casing in the appropriate culture.
 
-Starting in .NET 5, if an app is running on Windows 10 May 2019 Update or later, .NET libraries use ICU globalization APIs, by default.
+Starting in .NET 5, if an app is running on Windows 10 May 2019 Update or later, .NET libraries use [ICU](https://icu.unicode.org/) globalization APIs, by default.
 
-> **Note:**
+> [!NOTE]
 > Windows 10 May 2019 Update and later versions ship with the ICU native library. If the .NET runtime can't load ICU, it uses NLS instead.
 
 ## Behavioral differences
@@ -26,7 +23,7 @@ You might see changes in your app even if you don't realize you're using globali
 
 ### String.IndexOf
 
-Consider the following code that calls `System.String.IndexOf(System.String)` to find the index of the newline character in a string.
+Consider the following code that calls <xref:System.String.IndexOf(System.String)?displayProperty=nameWithType> to find the index of the newline character in a string.
 
 ```csharp
 string s = "Hello\r\nworld!";
@@ -38,11 +35,11 @@ Console.WriteLine(idx);
 - In .NET 5 and on Windows 10 May 2019 Update and later versions, the snippet prints `-1`.
 - In .NET 6 and later versions, the snippet prints `6`, however, ICU libraries are still used.
 
-To fix this code by conducting an ordinal search instead of a culture-sensitive search, call the `System.String.IndexOf(System.String,System.StringComparison)` overload and pass in `System.StringComparison.Ordinal` as an argument.
+To fix this code by conducting an ordinal search instead of a culture-sensitive search, call the <xref:System.String.IndexOf(System.String,System.StringComparison)> overload and pass in <xref:System.StringComparison.Ordinal?displayProperty=nameWithType> as an argument.
 
-You can run code analysis rules CA1307: Specify StringComparison for clarity and CA1309: Use ordinal StringComparison to find these call sites in your code.
+You can run code analysis rules [CA1307: Specify StringComparison for clarity](../../../../fundamentals/code-analysis/quality-rules/ca1307.md) and [CA1309: Use ordinal StringComparison](../../../../fundamentals/code-analysis/quality-rules/ca1309.md) to find these call sites in your code.
 
-For more information, see Best practices for comparing strings in .NET.
+For more information, see [Best practices for comparing strings in .NET](../../../../standard/base-types/best-practices-strings.md).
 
 ### Currency symbol
 
@@ -58,7 +55,7 @@ string text = string.Format("{0:C}", 100);
 
 ### IdnMapping.GetAscii
 
-Consider the following code that calls `System.Globalization.IdnMapping.GetAscii(System.String)` to convert an internationalized domain name label to its ASCII-compatible encoding.
+Consider the following code that calls <xref:System.Globalization.IdnMapping.GetAscii(System.String)?displayProperty=nameWithType> to convert an internationalized domain name label to its ASCII-compatible encoding.
 
 ```csharp
 var mapping = new System.Globalization.IdnMapping();
@@ -73,7 +70,7 @@ ICU lowercases domain name labels as part of the ASCII-compatible encoding proce
 
 ### Day-of-week abbreviations
 
-The `System.Globalization.DateTimeFormatInfo.GetShortestDayName(System.DayOfWeek)` method obtains the shortest abbreviated day name for a specified day of the week.
+The <xref:System.Globalization.DateTimeFormatInfo.GetShortestDayName(System.DayOfWeek)?displayProperty=nameWithType> method obtains the shortest abbreviated day name for a specified day of the week.
 
 - In .NET Core 3.1 and earlier versions on Windows, these day-of-week abbreviations consisted of two characters, for example, "Su".
 - In .NET 5 and later versions, these day-of-week abbreviations consist of only one character, for example, "S".
@@ -88,19 +85,19 @@ This change was introduced to unify .NET's globalization behavior across all sup
 
 ## Recommended action
 
-No action is required on the part of the developer. However, if you wish to continue using NLS globalization APIs, you can set a runtime switch to revert to that behavior. For more information about the available switches, see the .NET globalization and ICU article.
+No action is required on the part of the developer. However, if you wish to continue using NLS globalization APIs, you can set a [runtime switch](../../../runtime-config/globalization.md#nls) to revert to that behavior. For more information about the available switches, see the [.NET globalization and ICU](../../../../core/extensions/globalization-icu.md) article.
 
 ## Affected APIs
 
-- `System.Span`1`
-- `System.String`
-- Most types in the `System.Globalization` namespace
-- `System.Array.Sort*` (when sorting an array of strings)
-- `System.Collections.Generic.List`1.Sort` (when the list elements are strings)
-- `System.Collections.Generic.SortedDictionary`2` (when the keys are strings)
-- `System.Collections.Generic.SortedList`2` (when the keys are strings)
-- `System.Collections.Generic.SortedSet`1` (when the set contains strings)
+- <xref:System.Span`1?displayProperty=fullName>
+- <xref:System.String?displayProperty=fullName>
+- Most types in the <xref:System.Globalization?displayProperty=fullName> namespace
+- <xref:System.Array.Sort*?displayProperty=fullName> (when sorting an array of strings)
+- <xref:System.Collections.Generic.List`1.Sort?displayProperty=fullName> (when the list elements are strings)
+- <xref:System.Collections.Generic.SortedDictionary`2?displayProperty=fullName> (when the keys are strings)
+- <xref:System.Collections.Generic.SortedList`2?displayProperty=fullName> (when the keys are strings)
+- <xref:System.Collections.Generic.SortedSet`1?displayProperty=fullName> (when the set contains strings)
 
 ## See also
 
-- Globalization APIs use ICU libraries on Windows Server
+- [Globalization APIs use ICU libraries on Windows Server](../7.0/icu-globalization-api.md)

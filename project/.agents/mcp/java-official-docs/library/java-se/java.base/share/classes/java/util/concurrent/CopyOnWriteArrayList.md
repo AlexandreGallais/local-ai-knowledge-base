@@ -1,23 +1,14 @@
----
-title: "CopyOnWriteArrayList class (java.util.concurrent) (part 1 of 2)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/CopyOnWriteArrayList.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # CopyOnWriteArrayList class (java.util.concurrent)
 
 ```java
 public class CopyOnWriteArrayList<E> implements List<E>, RandomAccess, Cloneable, java.io.Serializable
 ```
 
-A thread-safe variant of `java.util.ArrayList` in which all mutative
-operations (`add`, `set`, and so on) are implemented by
+A thread-safe variant of {@link java.util.ArrayList} in which all mutative
+operations ({@code add}, {@code set}, and so on) are implemented by
 making a fresh copy of the underlying array.
 
-This is ordinarily too costly, but may be *more* efficient
+<p>This is ordinarily too costly, but may be <em>more</em> efficient
 than alternatives when traversal operations vastly outnumber
 mutations, and is useful when you cannot or don't want to
 synchronize traversals, yet need to preclude interference among
@@ -25,31 +16,29 @@ concurrent threads.  The "snapshot" style iterator method uses a
 reference to the state of the array at the point that the iterator
 was created. This array never changes during the lifetime of the
 iterator, so interference is impossible and the iterator is
-guaranteed not to throw `ConcurrentModificationException`.
+guaranteed not to throw {@code ConcurrentModificationException}.
 The iterator will not reflect additions, removals, or changes to
 the list since the iterator was created.  Element-changing
-operations on iterators themselves (`remove`, `set`, and
-`add`) are not supported. These methods throw
-`UnsupportedOperationException`.
+operations on iterators themselves ({@code remove}, {@code set}, and
+{@code add}) are not supported. These methods throw
+{@code UnsupportedOperationException}.
 
-All elements are permitted, including `null`.
+<p>All elements are permitted, including {@code null}.
 
-Memory consistency effects: As with other concurrent
+<p>Memory consistency effects: As with other concurrent
 collections, actions in a thread prior to placing an object into a
-`CopyOnWriteArrayList`
-*happen-before*
+{@code CopyOnWriteArrayList}
+<a href="package-summary.html#MemoryVisibility"><i>happen-before</i></a>
 actions subsequent to the access or removal of that element from
-the `CopyOnWriteArrayList` in another thread.
+the {@code CopyOnWriteArrayList} in another thread.
 
-This class is a member of the
+<p>This class is a member of the
+<a href="{@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+Java Collections Framework</a>.
 
-Java Collections Framework.
-
-Parameters:
-
-- `<E>`: the type of elements held in this list
-
-**Since:** 1.5
+@since 1.5
+@author Doug Lea
+@param <E> the type of elements held in this list
 
 ## CopyOnWriteArrayList.CopyOnWriteArrayList()
 
@@ -69,13 +58,8 @@ Creates a list containing the elements of the specified
 collection, in the order they are returned by the collection's
 iterator.
 
-Parameters:
-
-- `c`: the collection of initially held elements
-
-Throws:
-
-- `NullPointerException`: if the specified collection is null
+@param c the collection of initially held elements
+@throws NullPointerException if the specified collection is null
 
 ## CopyOnWriteArrayList.CopyOnWriteArrayList(E[])
 
@@ -85,13 +69,9 @@ public CopyOnWriteArrayList(E[] toCopyIn)
 
 Creates a list holding a copy of the given array.
 
-Parameters:
-
-- `toCopyIn`: the array (a copy of this array is used as the internal array)
-
-Throws:
-
-- `NullPointerException`: if the specified array is null
+@param toCopyIn the array (a copy of this array is used as the
+       internal array)
+@throws NullPointerException if the specified array is null
 
 ## CopyOnWriteArrayList.size()
 
@@ -101,7 +81,7 @@ public int size()
 
 Returns the number of elements in this list.
 
-**Returns:** the number of elements in this list
+@return the number of elements in this list
 
 ## CopyOnWriteArrayList.isEmpty()
 
@@ -109,9 +89,9 @@ Returns the number of elements in this list.
 public boolean isEmpty()
 ```
 
-Returns `true` if this list contains no elements.
+Returns {@code true} if this list contains no elements.
 
-**Returns:** `true` if this list contains no elements
+@return {@code true} if this list contains no elements
 
 ## CopyOnWriteArrayList.contains(Object)
 
@@ -119,15 +99,12 @@ Returns `true` if this list contains no elements.
 public boolean contains(Object o)
 ```
 
-Returns `true` if this list contains the specified element.
-More formally, returns `true` if and only if this list contains
-at least one element `e` such that `Objects.equals(o, e)`.
+Returns {@code true} if this list contains the specified element.
+More formally, returns {@code true} if and only if this list contains
+at least one element {@code e} such that {@code Objects.equals(o, e)}.
 
-Parameters:
-
-- `o`: element whose presence in this list is to be tested
-
-**Returns:** `true` if this list contains the specified element
+@param o element whose presence in this list is to be tested
+@return {@code true} if this list contains the specified element
 
 ## CopyOnWriteArrayList.indexOf(Object)
 
@@ -135,7 +112,7 @@ Parameters:
 public int indexOf(Object o)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
 ## CopyOnWriteArrayList.indexOf(E, int)
 
@@ -144,24 +121,18 @@ public int indexOf(E e, int index)
 ```
 
 Returns the index of the first occurrence of the specified element in
-this list, searching forwards from `index`, or returns -1 if
+this list, searching forwards from {@code index}, or returns -1 if
 the element is not found.
-More formally, returns the lowest index `i` such that
-`i >= index && Objects.equals(get(i), e)`,
+More formally, returns the lowest index {@code i} such that
+{@code i >= index && Objects.equals(get(i), e)},
 or -1 if there is no such index.
 
-Parameters:
-
-- `e`: element to search for
-- `index`: index to start searching from
-
-**Returns:** the index of the first occurrence of the element in
-        this list at position `index` or later in the list;
-        `-1` if the element is not found.
-
-Throws:
-
-- `IndexOutOfBoundsException`: if the specified index is negative
+@param e element to search for
+@param index index to start searching from
+@return the index of the first occurrence of the element in
+        this list at position {@code index} or later in the list;
+        {@code -1} if the element is not found.
+@throws IndexOutOfBoundsException if the specified index is negative
 
 ## CopyOnWriteArrayList.lastIndexOf(Object)
 
@@ -169,7 +140,7 @@ Throws:
 public int lastIndexOf(Object o)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
 ## CopyOnWriteArrayList.lastIndexOf(E, int)
 
@@ -178,24 +149,19 @@ public int lastIndexOf(E e, int index)
 ```
 
 Returns the index of the last occurrence of the specified element in
-this list, searching backwards from `index`, or returns -1 if
+this list, searching backwards from {@code index}, or returns -1 if
 the element is not found.
-More formally, returns the highest index `i` such that
-`i <= index && Objects.equals(get(i), e)`,
+More formally, returns the highest index {@code i} such that
+{@code i <= index && Objects.equals(get(i), e)},
 or -1 if there is no such index.
 
-Parameters:
-
-- `e`: element to search for
-- `index`: index to start searching backwards from
-
-**Returns:** the index of the last occurrence of the element at position
-        less than or equal to `index` in this list;
+@param e element to search for
+@param index index to start searching backwards from
+@return the index of the last occurrence of the element at position
+        less than or equal to {@code index} in this list;
         -1 if the element is not found.
-
-Throws:
-
-- `IndexOutOfBoundsException`: if the specified index is greater than or equal to the current size of this list
+@throws IndexOutOfBoundsException if the specified index is greater
+        than or equal to the current size of this list
 
 ## CopyOnWriteArrayList.clone()
 
@@ -206,7 +172,7 @@ public Object clone()
 Returns a shallow copy of this list.  (The elements themselves
 are not copied.)
 
-**Returns:** a clone of this list
+@return a clone of this list
 
 ## CopyOnWriteArrayList.toArray()
 
@@ -217,14 +183,14 @@ public Object[] toArray()
 Returns an array containing all of the elements in this list
 in proper sequence (from first to last element).
 
-The returned array will be "safe" in that no references to it are
+<p>The returned array will be "safe" in that no references to it are
 maintained by this list.  (In other words, this method must allocate
 a new array).  The caller is thus free to modify the returned array.
 
-This method acts as bridge between array-based and collection-based
+<p>This method acts as bridge between array-based and collection-based
 APIs.
 
-**Returns:** an array containing all the elements in this list
+@return an array containing all the elements in this list
 
 ## CopyOnWriteArrayList.toArray(T[])
 
@@ -239,39 +205,35 @@ in the specified array, it is returned therein.  Otherwise, a new
 array is allocated with the runtime type of the specified array and
 the size of this list.
 
-If this list fits in the specified array with room to spare
+<p>If this list fits in the specified array with room to spare
 (i.e., the array has more elements than this list), the element in
 the array immediately following the end of the list is set to
-`null`.  (This is useful in determining the length of this
-list *only* if the caller knows that this list does not contain
+{@code null}.  (This is useful in determining the length of this
+list <i>only</i> if the caller knows that this list does not contain
 any null elements.)
 
-Like the `toArray()` method, this method acts as bridge between
+<p>Like the {@link #toArray()} method, this method acts as bridge between
 array-based and collection-based APIs.  Further, this method allows
 precise control over the runtime type of the output array, and may,
 under certain circumstances, be used to save allocation costs.
 
-Suppose `x` is a list known to contain only strings.
+<p>Suppose {@code x} is a list known to contain only strings.
 The following code can be used to dump the list into a newly
-allocated array of `String`:
+allocated array of {@code String}:
 
-```java
-String[] y = x.toArray(new String[0]);
-```
+<pre> {@code String[] y = x.toArray(new String[0]);}</pre>
 
-Note that `toArray(new Object[0])` is identical in function to
-`toArray()`.
+Note that {@code toArray(new Object[0])} is identical in function to
+{@code toArray()}.
 
-Parameters:
-
-- `a`: the array into which the elements of the list are to be stored, if it is big enough; otherwise, a new array of the same runtime type is allocated for this purpose.
-
-**Returns:** an array containing all the elements in this list
-
-Throws:
-
-- `ArrayStoreException`: if the runtime type of the specified array is not a supertype of the runtime type of every element in this list
-- `NullPointerException`: if the specified array is null
+@param a the array into which the elements of the list are to
+         be stored, if it is big enough; otherwise, a new array of the
+         same runtime type is allocated for this purpose.
+@return an array containing all the elements in this list
+@throws ArrayStoreException if the runtime type of the specified array
+        is not a supertype of the runtime type of every element in
+        this list
+@throws NullPointerException if the specified array is null
 
 ## CopyOnWriteArrayList.get(int)
 
@@ -279,11 +241,9 @@ Throws:
 public E get(int index)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-Throws:
-
-- `IndexOutOfBoundsException`: (inherited documentation)
+@throws IndexOutOfBoundsException {@inheritDoc}
 
 ## CopyOnWriteArrayList.getFirst()
 
@@ -291,13 +251,10 @@ Throws:
 public E getFirst()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Since:** 21
-
-Throws:
-
-- `NoSuchElementException`: (inherited documentation)
+@throws NoSuchElementException {@inheritDoc}
+@since 21
 
 ## CopyOnWriteArrayList.getLast()
 
@@ -305,13 +262,10 @@ Throws:
 public E getLast()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Since:** 21
-
-Throws:
-
-- `NoSuchElementException`: (inherited documentation)
+@throws NoSuchElementException {@inheritDoc}
+@since 21
 
 ## CopyOnWriteArrayList.set(int, E)
 
@@ -322,9 +276,7 @@ public E set(int index, E element)
 Replaces the element at the specified position in this list with the
 specified element.
 
-Throws:
-
-- `IndexOutOfBoundsException`: (inherited documentation)
+@throws IndexOutOfBoundsException {@inheritDoc}
 
 ## CopyOnWriteArrayList.add(E)
 
@@ -334,11 +286,8 @@ public boolean add(E e)
 
 Appends the specified element to the end of this list.
 
-Parameters:
-
-- `e`: element to be appended to this list
-
-**Returns:** `true` (as specified by `Collection.add`)
+@param e element to be appended to this list
+@return {@code true} (as specified by {@link Collection#add})
 
 ## CopyOnWriteArrayList.add(int, E)
 
@@ -350,9 +299,7 @@ Inserts the specified element at the specified position in this
 list. Shifts the element currently at that position (if any) and
 any subsequent elements to the right (adds one to their indices).
 
-Throws:
-
-- `IndexOutOfBoundsException`: (inherited documentation)
+@throws IndexOutOfBoundsException {@inheritDoc}
 
 ## CopyOnWriteArrayList.addFirst(E)
 
@@ -360,9 +307,9 @@ Throws:
 public void addFirst(E e)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Since:** 21
+@since 21
 
 ## CopyOnWriteArrayList.addLast(E)
 
@@ -370,9 +317,9 @@ public void addFirst(E e)
 public void addLast(E e)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Since:** 21
+@since 21
 
 ## CopyOnWriteArrayList.remove(int)
 
@@ -384,9 +331,7 @@ Removes the element at the specified position in this list.
 Shifts any subsequent elements to the left (subtracts one from their
 indices).  Returns the element that was removed from the list.
 
-Throws:
-
-- `IndexOutOfBoundsException`: (inherited documentation)
+@throws IndexOutOfBoundsException {@inheritDoc}
 
 ## CopyOnWriteArrayList.removeFirst()
 
@@ -394,13 +339,10 @@ Throws:
 public E removeFirst()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Since:** 21
-
-Throws:
-
-- `NoSuchElementException`: (inherited documentation)
+@throws NoSuchElementException {@inheritDoc}
+@since 21
 
 ## CopyOnWriteArrayList.removeLast()
 
@@ -408,13 +350,10 @@ Throws:
 public E removeLast()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Since:** 21
-
-Throws:
-
-- `NoSuchElementException`: (inherited documentation)
+@throws NoSuchElementException {@inheritDoc}
+@since 21
 
 ## CopyOnWriteArrayList.remove(Object)
 
@@ -425,16 +364,13 @@ public boolean remove(Object o)
 Removes the first occurrence of the specified element from this list,
 if it is present.  If this list does not contain the element, it is
 unchanged.  More formally, removes the element with the lowest index
-`i` such that `Objects.equals(o, get(i))`
-(if such an element exists).  Returns `true` if this list
+{@code i} such that {@code Objects.equals(o, get(i))}
+(if such an element exists).  Returns {@code true} if this list
 contained the specified element (or equivalently, if this list
 changed as a result of the call).
 
-Parameters:
-
-- `o`: element to be removed from this list, if present
-
-**Returns:** `true` if this list contained the specified element
+@param o element to be removed from this list, if present
+@return {@code true} if this list contained the specified element
 
 ## CopyOnWriteArrayList.addIfAbsent(E)
 
@@ -444,11 +380,8 @@ public boolean addIfAbsent(E e)
 
 Appends the element, if not present.
 
-Parameters:
-
-- `e`: element to be added to this list, if absent
-
-**Returns:** `true` if the element was added
+@param e element to be added to this list, if absent
+@return {@code true} if the element was added
 
 ## CopyOnWriteArrayList.containsAll(Collection<?>)
 
@@ -456,21 +389,14 @@ Parameters:
 public boolean containsAll(Collection<?> c)
 ```
 
-Returns `true` if this list contains all of the elements of the
+Returns {@code true} if this list contains all of the elements of the
 specified collection.
 
-Parameters:
-
-- `c`: collection to be checked for containment in this list
-
-**Returns:** `true` if this list contains all of the elements of the
+@param c collection to be checked for containment in this list
+@return {@code true} if this list contains all of the elements of the
         specified collection
-
-**See also:** #contains(Object)
-
-Throws:
-
-- `NullPointerException`: if the specified collection is null
+@throws NullPointerException if the specified collection is null
+@see #contains(Object)
 
 ## CopyOnWriteArrayList.removeAll(Collection<?>)
 
@@ -482,18 +408,16 @@ Removes from this list all of its elements that are contained in
 the specified collection. This is a particularly expensive operation
 in this class because of the need for an internal temporary array.
 
-Parameters:
-
-- `c`: collection containing elements to be removed from this list
-
-**Returns:** `true` if this list changed as a result of the call
-
-**See also:** #remove(Object)
-
-Throws:
-
-- `ClassCastException`: if the class of an element of this list is incompatible with the specified collection (optional)
-- `NullPointerException`: if this list contains a null element and the specified collection does not permit null elements (optional), or if the specified collection is null
+@param c collection containing elements to be removed from this list
+@return {@code true} if this list changed as a result of the call
+@throws ClassCastException if the class of an element of this list
+        is incompatible with the specified collection
+(<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
+@throws NullPointerException if this list contains a null element and the
+        specified collection does not permit null elements
+(<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>),
+        or if the specified collection is null
+@see #remove(Object)
 
 ## CopyOnWriteArrayList.retainAll(Collection<?>)
 
@@ -505,18 +429,16 @@ Retains only the elements in this list that are contained in the
 specified collection.  In other words, removes from this list all of
 its elements that are not contained in the specified collection.
 
-Parameters:
-
-- `c`: collection containing elements to be retained in this list
-
-**Returns:** `true` if this list changed as a result of the call
-
-**See also:** #remove(Object)
-
-Throws:
-
-- `ClassCastException`: if the class of an element of this list is incompatible with the specified collection (optional)
-- `NullPointerException`: if this list contains a null element and the specified collection does not permit null elements (optional), or if the specified collection is null
+@param c collection containing elements to be retained in this list
+@return {@code true} if this list changed as a result of the call
+@throws ClassCastException if the class of an element of this list
+        is incompatible with the specified collection
+(<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
+@throws NullPointerException if this list contains a null element and the
+        specified collection does not permit null elements
+(<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>),
+        or if the specified collection is null
+@see #remove(Object)
 
 ## CopyOnWriteArrayList.addAllAbsent(Collection<? extends E>)
 
@@ -529,17 +451,10 @@ are not already contained in this list, to the end of
 this list, in the order that they are returned by the
 specified collection's iterator.
 
-Parameters:
-
-- `c`: collection containing elements to be added to this list
-
-**Returns:** the number of elements added
-
-**See also:** #addIfAbsent(Object)
-
-Throws:
-
-- `NullPointerException`: if the specified collection is null
+@param c collection containing elements to be added to this list
+@return the number of elements added
+@throws NullPointerException if the specified collection is null
+@see #addIfAbsent(Object)
 
 ## CopyOnWriteArrayList.clear()
 
@@ -560,17 +475,10 @@ Appends all of the elements in the specified collection to the end
 of this list, in the order that they are returned by the specified
 collection's iterator.
 
-Parameters:
-
-- `c`: collection containing elements to be added to this list
-
-**Returns:** `true` if this list changed as a result of the call
-
-**See also:** #add(Object)
-
-Throws:
-
-- `NullPointerException`: if the specified collection is null
+@param c collection containing elements to be added to this list
+@return {@code true} if this list changed as a result of the call
+@throws NullPointerException if the specified collection is null
+@see #add(Object)
 
 ## CopyOnWriteArrayList.addAll(int, Collection<? extends E>)
 
@@ -585,19 +493,13 @@ the right (increases their indices).  The new elements will appear
 in this list in the order that they are returned by the
 specified collection's iterator.
 
-Parameters:
-
-- `index`: index at which to insert the first element from the specified collection
-- `c`: collection containing elements to be added to this list
-
-**Returns:** `true` if this list changed as a result of the call
-
-**See also:** #add(int,Object)
-
-Throws:
-
-- `IndexOutOfBoundsException`: (inherited documentation)
-- `NullPointerException`: if the specified collection is null
+@param index index at which to insert the first element
+       from the specified collection
+@param c collection containing elements to be added to this list
+@return {@code true} if this list changed as a result of the call
+@throws IndexOutOfBoundsException {@inheritDoc}
+@throws NullPointerException if the specified collection is null
+@see #add(int,Object)
 
 ## CopyOnWriteArrayList.forEach(Consumer<? super E>)
 
@@ -605,6 +507,186 @@ Throws:
 public void forEach(Consumer<? super E> action)
 ```
 
-Throws:
+@throws NullPointerException {@inheritDoc}
 
-- `NullPointerException`: (inherited documentation)
+## CopyOnWriteArrayList.removeIf(Predicate<? super E>)
+
+```java
+public boolean removeIf(Predicate<? super E> filter)
+```
+
+@throws NullPointerException {@inheritDoc}
+
+## CopyOnWriteArrayList.toString()
+
+```java
+public String toString()
+```
+
+Returns a string representation of this list.  The string
+representation consists of the string representations of the list's
+elements in the order they are returned by its iterator, enclosed in
+square brackets ({@code "[]"}).  Adjacent elements are separated by
+the characters {@code ", "} (comma and space).  Elements are
+converted to strings as by {@link String#valueOf(Object)}.
+
+@return a string representation of this list
+
+## CopyOnWriteArrayList.equals(Object)
+
+```java
+public boolean equals(Object o)
+```
+
+Compares the specified object with this list for equality.
+Returns {@code true} if the specified object is the same object
+as this object, or if it is also a {@link List} and the sequence
+of elements returned by an {@linkplain List#iterator() iterator}
+over the specified list is the same as the sequence returned by
+an iterator over this list.  The two sequences are considered to
+be the same if they have the same length and corresponding
+elements at the same position in the sequence are <em>equal</em>.
+Two elements {@code e1} and {@code e2} are considered
+<em>equal</em> if {@code Objects.equals(e1, e2)}.
+
+@param o the object to be compared for equality with this list
+@return {@code true} if the specified object is equal to this list
+
+## CopyOnWriteArrayList.hashCode()
+
+```java
+public int hashCode()
+```
+
+Returns the hash code value for this list.
+
+<p>This implementation uses the definition in {@link List#hashCode}.
+
+@return the hash code value for this list
+
+## CopyOnWriteArrayList.iterator()
+
+```java
+public Iterator<E> iterator()
+```
+
+Returns an iterator over the elements in this list in proper sequence.
+
+<p>The returned iterator provides a snapshot of the state of the list
+when the iterator was constructed. No synchronization is needed while
+traversing the iterator. The iterator does <em>NOT</em> support the
+{@code remove} method.
+
+@return an iterator over the elements in this list in proper sequence
+
+## CopyOnWriteArrayList.listIterator()
+
+```java
+public ListIterator<E> listIterator()
+```
+
+{@inheritDoc}
+
+<p>The returned iterator provides a snapshot of the state of the list
+when the iterator was constructed. No synchronization is needed while
+traversing the iterator. The iterator does <em>NOT</em> support the
+{@code remove}, {@code set} or {@code add} methods.
+
+## CopyOnWriteArrayList.listIterator(int)
+
+```java
+public ListIterator<E> listIterator(int index)
+```
+
+{@inheritDoc}
+
+<p>The returned iterator provides a snapshot of the state of the list
+when the iterator was constructed. No synchronization is needed while
+traversing the iterator. The iterator does <em>NOT</em> support the
+{@code remove}, {@code set} or {@code add} methods.
+
+@throws IndexOutOfBoundsException {@inheritDoc}
+
+## CopyOnWriteArrayList.spliterator()
+
+```java
+public Spliterator<E> spliterator()
+```
+
+Returns a {@link Spliterator} over the elements in this list.
+
+<p>The {@code Spliterator} reports {@link Spliterator#IMMUTABLE},
+{@link Spliterator#ORDERED}, {@link Spliterator#SIZED}, and
+{@link Spliterator#SUBSIZED}.
+
+<p>The spliterator provides a snapshot of the state of the list
+when the spliterator was constructed. No synchronization is needed while
+operating on the spliterator.
+
+@return a {@code Spliterator} over the elements in this list
+@since 1.8
+
+## CopyOnWriteArrayList.remove()
+
+```java
+public void remove()
+```
+
+Not supported. Always throws UnsupportedOperationException.
+@throws UnsupportedOperationException always; {@code remove}
+        is not supported by this iterator.
+
+## CopyOnWriteArrayList.set(E)
+
+```java
+public void set(E e)
+```
+
+Not supported. Always throws UnsupportedOperationException.
+@throws UnsupportedOperationException always; {@code set}
+        is not supported by this iterator.
+
+## CopyOnWriteArrayList.add(E)
+
+```java
+public void add(E e)
+```
+
+Not supported. Always throws UnsupportedOperationException.
+@throws UnsupportedOperationException always; {@code add}
+        is not supported by this iterator.
+
+## CopyOnWriteArrayList.subList(int, int)
+
+```java
+public List<E> subList(int fromIndex, int toIndex)
+```
+
+Returns a view of the portion of this list between
+{@code fromIndex}, inclusive, and {@code toIndex}, exclusive.
+The returned list is backed by this list, so changes in the
+returned list are reflected in this list.
+
+<p>The semantics of the list returned by this method become
+undefined if the backing list (i.e., this list) is modified in
+any way other than via the returned list.
+
+@param fromIndex low endpoint (inclusive) of the subList
+@param toIndex high endpoint (exclusive) of the subList
+@return a view of the specified range within this list
+@throws IndexOutOfBoundsException {@inheritDoc}
+
+## CopyOnWriteArrayList.reversed()
+
+```java
+public List<E> reversed()
+```
+
+{@inheritDoc}
+<p>
+Modifications to the reversed view are permitted and will be propagated
+to this list. In addition, modifications to this list will be visible
+in the reversed view. Sublists and iterators of the reversed view have
+the same restrictions as those of this list.
+
+@since 21

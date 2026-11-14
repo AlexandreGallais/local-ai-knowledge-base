@@ -1,12 +1,15 @@
 ---
+description: "Learn more about: ICorProfilerInfo13::DestroyHandle Method"
 title: "ICorProfilerInfo13::DestroyHandle Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/profiling/icorprofilerinfo13-destroyhandle-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/19/2021"
+api_name:
+  - "ICorProfilerInfo13.DestroyHandle"
+api_location:
+  - "coreclr.dll"
+  - "corprof.idl"
+api_type:
+  - "COM"
 ---
-
 # ICorProfilerInfo13::DestroyHandle method
 
 Destroys a handle that wraps an object.
@@ -28,7 +31,7 @@ Once destroyed, a handle can no longer be used.
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** CorProf.idl, CorProf.h
 
@@ -36,5 +39,5 @@ Once destroyed, a handle can no longer be used.
 
 ## See also
 
-- ICorProfilerInfo13 Interface
-- CreateHandle Method
+- [ICorProfilerInfo13 Interface](icorprofilerinfo13-interface.md)
+- [CreateHandle Method](icorprofilerinfo13-createhandle-method.md)

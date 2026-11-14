@@ -1,20 +1,26 @@
 ---
+description: "Learn more about: How to: Create GenericPrincipal and GenericIdentity Objects"
 title: "How to: Create GenericPrincipal and GenericIdentity Objects"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/security/how-to-create-genericprincipal-and-genericidentity-objects.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 07/15/2020
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "Creating Generic Identity Objects"
+  - "GenericPrincipal Objects"
+  - "Creating GenericPrincipal Objects"
+  - "GenericIdentity Objects"
+ms.assetid: 465694cf-258b-4747-9dae-35b01a5bcdbb
 ---
 
 # How to: Create GenericPrincipal and GenericIdentity Objects
 
-> **Note:**
+> [!NOTE]
 > This article applies to Windows.
 >
-> For information about ASP.NET Core, see Overview of ASP.NET Core Security.
+> For information about ASP.NET Core, see [Overview of ASP.NET Core Security](/aspnet/core/security/).
 
-You can use the `System.Security.Principal.GenericIdentity` class in conjunction with the `System.Security.Principal.GenericPrincipal` class to create an authorization scheme that exists independent of a Windows domain.
+You can use the <xref:System.Security.Principal.GenericIdentity> class in conjunction with the <xref:System.Security.Principal.GenericPrincipal> class to create an authorization scheme that exists independent of a Windows domain.
 
 ### To create a GenericPrincipal object
 
@@ -40,7 +46,7 @@ You can use the `System.Security.Principal.GenericIdentity` class in conjunction
     GenericPrincipal myPrincipal = new GenericPrincipal(myIdentity, myStringArray);
     ```
 
-3. Use the following code to attach the principal to the current thread. This is valuable in situations where the principal must be validated several times, it must be validated by other code running in your application, or it must be validated by a `System.Security.Permissions.PrincipalPermission` object. You can still perform role-based validation on the principal object without attaching it to the thread. For more information, see Replacing a Principal Object.
+3. Use the following code to attach the principal to the current thread. This is valuable in situations where the principal must be validated several times, it must be validated by other code running in your application, or it must be validated by a <xref:System.Security.Permissions.PrincipalPermission> object. You can still perform role-based validation on the principal object without attaching it to the thread. For more information, see [Replacing a Principal Object](replacing-a-principal-object.md).
 
     ```vb
     Thread.CurrentPrincipal = myPrincipal
@@ -135,8 +141,8 @@ Is this a Manager? True
 
 ## See also
 
-- `System.Security.Principal.GenericIdentity`
-- `System.Security.Principal.GenericPrincipal`
-- `System.Security.Permissions.PrincipalPermission`
-- Replacing a Principal Object
-- Principal and Identity Objects
+- <xref:System.Security.Principal.GenericIdentity>
+- <xref:System.Security.Principal.GenericPrincipal>
+- <xref:System.Security.Permissions.PrincipalPermission>
+- [Replacing a Principal Object](replacing-a-principal-object.md)
+- [Principal and Identity Objects](principal-and-identity-objects.md)

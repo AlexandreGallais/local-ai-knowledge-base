@@ -1,12 +1,10 @@
 ---
-title: "What is new in EF Core 1.1 - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/what-is-new/ef-core-1.1.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: What is new in EF Core 1.1 - EF Core
+description: Changes and improvements in Entity Framework Core 1.1
+author: SamMonoRT
+ms.date: 10/27/2016
+uid: core/what-is-new/ef-core-1.1
 ---
-
 # New features in EF Core 1.1
 
 ## Modeling

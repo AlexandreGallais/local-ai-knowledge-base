@@ -1,12 +1,10 @@
 ---
-title: "dotnet-gcdump diagnostic tool - .NET CLI"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/dotnet-gcdump.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet-gcdump diagnostic tool - .NET CLI
+description: Learn how to install and use dotnet-gcdump CLI tool to collect GC (Garbage Collector) dumps of live .NET processes using the .NET EventPipe.
+ms.date: 08/24/2026
+ms.topic: reference
+ai-usage: ai-assisted
 ---
-
 # Heap analysis tool (dotnet-gcdump)
 
 **This article applies to:** ✔️ `dotnet-gcdump` version 10.0 and later versions
@@ -17,7 +15,7 @@ There are two ways to download and install `dotnet-gcdump`:
 
 - **dotnet global tool:**
 
-  To install the latest release version of the `dotnet-gcdump` NuGet package, use the dotnet tool install command:
+  To install the latest release version of the `dotnet-gcdump` [NuGet package](https://www.nuget.org/packages/dotnet-gcdump), use the [dotnet tool install](../tools/dotnet-tool-install.md) command:
 
   ```dotnetcli
   dotnet tool install --global dotnet-gcdump
@@ -29,10 +27,10 @@ There are two ways to download and install `dotnet-gcdump`:
 
   | OS  | Platform |
   | --- | -------- |
-  | Windows | x86 \| x64 \| Arm \| Arm64 |
-  | Linux   | x64 \| Arm \| Arm64 \| musl-x64 \| musl-Arm64 |
+  | Windows | [x86](https://aka.ms/dotnet-gcdump/win-x86) \| [x64](https://aka.ms/dotnet-gcdump/win-x64) \| [Arm](https://aka.ms/dotnet-gcdump/win-arm) \| [Arm64](https://aka.ms/dotnet-gcdump/win-arm64) |
+  | Linux   | [x64](https://aka.ms/dotnet-gcdump/linux-x64) \| [Arm](https://aka.ms/dotnet-gcdump/linux-arm) \| [Arm64](https://aka.ms/dotnet-gcdump/linux-arm64) \| [musl-x64](https://aka.ms/dotnet-gcdump/linux-musl-x64) \| [musl-Arm64](https://aka.ms/dotnet-gcdump/linux-musl-arm64) |
 
-> **Note:**
+> [!NOTE]
 > To use `dotnet-gcdump` on an x86 app, you need a corresponding x86 version of the tool.
 
 ## Synopsis
@@ -43,7 +41,7 @@ dotnet-gcdump [-h|--help] [--version] <command>
 
 ## Description
 
-The `dotnet-gcdump` global tool collects GC (Garbage Collector) dumps of live .NET processes using EventPipe. GC dumps are created by triggering a GC in the target process, turning on special events, and regenerating the graph of object roots from the event stream. This process allows for GC dumps to be collected while the process is running and with minimal overhead. These dumps are useful for several scenarios:
+The `dotnet-gcdump` global tool collects GC (Garbage Collector) dumps of live .NET processes using [EventPipe](./eventpipe.md). GC dumps are created by triggering a GC in the target process, turning on special events, and regenerating the graph of object roots from the event stream. This process allows for GC dumps to be collected while the process is running and with minimal overhead. These dumps are useful for several scenarios:
 
 - Comparing the number of objects on the heap at several points in time.
 - Analyzing roots of objects (answering questions like, "what still has a reference to this type?").
@@ -51,7 +49,7 @@ The `dotnet-gcdump` global tool collects GC (Garbage Collector) dumps of live .N
 
 ### View the GC dump captured from dotnet-gcdump
 
-On Windows, `.gcdump` files can be viewed in PerfView for analysis or in Visual Studio. Currently, there is no way of opening a `.gcdump` on non-Windows platforms.
+On Windows, `.gcdump` files can be viewed in [PerfView](https://github.com/microsoft/perfview) for analysis or in Visual Studio. Currently, there is no way of opening a `.gcdump` on non-Windows platforms.
 
 You can collect multiple `.gcdump`s and open them simultaneously in Visual Studio to get a comparison experience.
 
@@ -64,20 +62,20 @@ You can collect multiple `.gcdump`s and open them simultaneously in Visual Studi
 - **`-h|--help`**
 
   Shows command-line help.
-
+  
 ## Commands
 
 | Command                                                        |
 |------------------------------------------------                |
-| dotnet-gcdump collect                |
-| dotnet-gcdump ps                          |
-| dotnet-gcdump report  |
+| [dotnet-gcdump collect](#dotnet-gcdump-collect)                |
+| [dotnet-gcdump ps](#dotnet-gcdump-ps)                          |
+| [dotnet-gcdump report](#dotnet-gcdump-report-gcdump_filename)  |
 
 ## `dotnet-gcdump collect`
 
 Collects a GC dump from a currently running process.
 
-> **Warning:**
+> [!WARNING]
 > To walk the GC heap, this command triggers a generation 2 (full) garbage collection, which can suspend the runtime for a long time, especially when the GC heap is large. Don't use this command in performance-sensitive environments when the GC heap is large.
 
 ### Synopsis
@@ -96,7 +94,7 @@ dotnet-gcdump collect [-h|--help] [-p|--process-id <pid>] [-o|--output <gcdump-f
 
   The process ID to collect the GC dump from.
 
-  > **Note:**
+  > [!NOTE]
   > On Linux and macOS, using this option requires the target application and `dotnet-gcdump` to share the same `TMPDIR` environment variable. Otherwise, the command will time out.
 
 - **`-o|--output <gcdump-file-path>`**
@@ -115,26 +113,26 @@ dotnet-gcdump collect [-h|--help] [-p|--process-id <pid>] [-o|--output <gcdump-f
 
   The name of the process to collect the GC dump from.
 
-  > **Note:**
+  > [!NOTE]
   > On Linux and macOS, using this option requires the target application and `dotnet-gcdump` to share the same `TMPDIR` environment variable. Otherwise, the command will time out.
 
 - **`--diagnostic-port <port-address[,(listen|connect)]>`**
 
-  Sets the diagnostic port used to communicate with the process to be dumped. dotnet-gcdump and the .NET runtime inside the target process must agree on the port-address, with one listening and the other connecting. dotnet-gcdump automatically determines the correct port when attaching using the `--process-id` or `--name` options. It's usually only necessary to specify the port explicitly when communicating to a process that's running inside a container that isn't part of the current process namespace.
+  Sets the [diagnostic port](diagnostic-port.md) used to communicate with the process to be dumped. dotnet-gcdump and the .NET runtime inside the target process must agree on the port-address, with one listening and the other connecting. dotnet-gcdump automatically determines the correct port when attaching using the `--process-id` or `--name` options. It's usually only necessary to specify the port explicitly when communicating to a process that's running inside a container that isn't part of the current process namespace.
 
   The `port-address` differs by OS:
 
   - Linux and macOS - a path to a Unix domain socket such as `/foo/tool1.socket`.
   - Windows - a path to a named pipe such as `\\.\pipe\my_diag_port1`.
   - Android, iOS, and tvOS - an IP:port such as `127.0.0.1:9000`.
-
+  
   By default, dotnet-gcdump listens at the specified address. You can request dotnet-gcdump to connect instead by appending `,connect` after the address. For example, `--diagnostic-port /foo/tool1.socket,connect` will connect to a .NET runtime process that's listening to the `/foo/tool1.socket` Unix domain socket.
 
 - **`--dsrouter <ios|ios-sim|android|android-emu>`**
 
-  Starts dotnet-dsrouter and connects to it. Requires dotnet-dsrouter to be installed. Run `dotnet-dsrouter -h` for more information.
+  Starts [dotnet-dsrouter](dotnet-dsrouter.md) and connects to it. Requires [dotnet-dsrouter](dotnet-dsrouter.md) to be installed. Run `dotnet-dsrouter -h` for more information.
 
-> **Note:**
+> [!NOTE]
 > To collect a GC dump using `dotnet-gcdump`, it needs to be run as the same user as the user running target process or as root. Otherwise, the tool will fail to establish a connection with the target process.
 
 ### Examples

@@ -1,12 +1,3 @@
----
-title: "ObjectStreamConstants interface (java.io)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/io/ObjectStreamConstants.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ObjectStreamConstants interface (java.io)
 
 ```java
@@ -15,7 +6,7 @@ public interface ObjectStreamConstants
 
 Constants written into the Object Serialization Stream.
 
-**Since:** 1.1
+@since 1.1
 
 ## ObjectStreamConstants.STREAM_MAGIC
 
@@ -162,8 +153,7 @@ static final byte TC_ENUM
 ```
 
 new Enum constant.
-
-**Since:** 1.5
+@since 1.5
 
 ## ObjectStreamConstants.TC_MAX
 
@@ -200,9 +190,8 @@ Bit mask for ObjectStreamClass flag. Indicates Externalizable data
 written in Block Data mode.
 Added for PROTOCOL_VERSION_2.
 
-**See also:** #PROTOCOL_VERSION_2
-
-**Since:** 1.2
+@see #PROTOCOL_VERSION_2
+@since 1.2
 
 ## ObjectStreamConstants.SC_SERIALIZABLE
 
@@ -227,8 +216,7 @@ static final byte SC_ENUM
 ```
 
 Bit mask for ObjectStreamClass flag. Indicates class is an enum type.
-
-**Since:** 1.5
+@since 1.5
 
 ## ObjectStreamConstants.SUBSTITUTION_PERMISSION
 
@@ -239,11 +227,9 @@ static final SerializablePermission SUBSTITUTION_PERMISSION
 Enable substitution of one object for another during
 serialization/deserialization.
 
-**See also:** java.io.ObjectOutputStream#enableReplaceObject(boolean)
-
-**See also:** java.io.ObjectInputStream#enableResolveObject(boolean)
-
-**Since:** 1.2
+@see java.io.ObjectOutputStream#enableReplaceObject(boolean)
+@see java.io.ObjectInputStream#enableResolveObject(boolean)
+@since 1.2
 
 ## ObjectStreamConstants.SUBCLASS_IMPLEMENTATION_PERMISSION
 
@@ -253,11 +239,9 @@ static final SerializablePermission SUBCLASS_IMPLEMENTATION_PERMISSION
 
 Enable overriding of readObject and writeObject.
 
-**See also:** java.io.ObjectOutputStream#writeObjectOverride(Object)
-
-**See also:** java.io.ObjectInputStream#readObjectOverride()
-
-**Since:** 1.2
+@see java.io.ObjectOutputStream#writeObjectOverride(Object)
+@see java.io.ObjectInputStream#readObjectOverride()
+@since 1.2
 
 ## ObjectStreamConstants.SERIAL_FILTER_PERMISSION
 
@@ -267,9 +251,8 @@ static final SerializablePermission SERIAL_FILTER_PERMISSION
 
 Enable setting the system-wide serial filter.
 
-**See also:** java.io.ObjectInputFilter.Config#setSerialFilter(ObjectInputFilter)
-
-**Since:** 9
+@see java.io.ObjectInputFilter.Config#setSerialFilter(ObjectInputFilter)
+@since 9
 
 ## ObjectStreamConstants.PROTOCOL_VERSION_1
 
@@ -277,16 +260,15 @@ Enable setting the system-wide serial filter.
 public static final int PROTOCOL_VERSION_1
 ```
 
-A Stream Protocol Version.
+A Stream Protocol Version. <p>
 
 All externalizable data is written in JDK 1.1 external data
 format after calling this method. This version is needed to write
 streams containing Externalizable data that can be read by
 pre-JDK 1.1.6 JVMs.
 
-**See also:** java.io.ObjectOutputStream#useProtocolVersion(int)
-
-**Since:** 1.2
+@see java.io.ObjectOutputStream#useProtocolVersion(int)
+@since 1.2
 
 ## ObjectStreamConstants.PROTOCOL_VERSION_2
 
@@ -294,21 +276,19 @@ pre-JDK 1.1.6 JVMs.
 public static final int PROTOCOL_VERSION_2
 ```
 
-A Stream Protocol Version.
+A Stream Protocol Version. <p>
 
 This protocol is written by JVM 1.2.
-
+<p>
 Externalizable data is written in block data mode and is
 terminated with TC_ENDBLOCKDATA. Externalizable class descriptor
 flags has SC_BLOCK_DATA enabled. JVM 1.1.6 and greater can
 read this format change.
-
+<p>
 Enables writing a nonSerializable class descriptor into the
 stream. The serialVersionUID of a nonSerializable class is
 set to 0L.
 
-**See also:** java.io.ObjectOutputStream#useProtocolVersion(int)
-
-**See also:** #SC_BLOCK_DATA
-
-**Since:** 1.2
+@see java.io.ObjectOutputStream#useProtocolVersion(int)
+@see #SC_BLOCK_DATA
+@since 1.2

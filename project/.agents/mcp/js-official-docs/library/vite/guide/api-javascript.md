@@ -1,12 +1,3 @@
----
-title: "JavaScript API"
-tool: "vite"
-version: "8.3"
-source: "https://github.com/vitejs/vite/blob/b39e6e63dcbfc3cf4be871acf3554efbd6d0e268/docs/guide/api-javascript.md"
-commit: "b39e6e63dcbfc3cf4be871acf3554efbd6d0e268"
-license: "MIT"
----
-
 # JavaScript API
 
 Vite's JavaScript APIs are fully typed, and it's recommended to use TypeScript or enable JS type checking in VS Code to leverage the IntelliSense and validation.
@@ -21,7 +12,7 @@ async function createServer(inlineConfig?: InlineConfig): Promise<ViteDevServer>
 
 **Example Usage:**
 
-```ts
+```ts twoslash
 import { createServer } from 'vite'
 
 const server = await createServer({
@@ -38,15 +29,17 @@ server.printUrls()
 server.bindCLIShortcuts({ print: true })
 ```
 
-**NOTE**
+::: tip NOTE
 When using `createServer` and `build` in the same Node.js process, both functions rely on `process.env.NODE_ENV` to work properly, which also depends on the `mode` config option. To prevent conflicting behavior, set `process.env.NODE_ENV` or the `mode` of the two APIs to `development`. Otherwise, you can spawn a child process to run the APIs separately.
+:::
 
-**NOTE**
-When using middleware mode combined with proxy config for WebSocket, the parent http server should be provided in `middlewareMode` to bind the proxy correctly.
+::: tip NOTE
+When using [middleware mode](/config/server-options.html#server-middlewaremode) combined with [proxy config for WebSocket](/config/server-options.html#server-proxy), the parent http server should be provided in `middlewareMode` to bind the proxy correctly.
 
-**Example**
+<details>
+<summary>Example</summary>
 
-```ts
+```ts twoslash
 import http from 'http'
 import { createServer } from 'vite'
 
@@ -72,6 +65,9 @@ const vite = await createServer({
 // @noErrors: 2339
 parentServer.use(vite.middlewares)
 ```
+
+</details>
+:::
 
 ## `InlineConfig`
 
@@ -193,8 +189,9 @@ interface ViteDevServer {
 }
 ```
 
-**Info:**
+:::info
 `waitForRequestsIdle` is meant to be used as an escape hatch to improve DX for features that can't be implemented following the on-demand nature of the Vite dev server. It can be used during startup by tools like Tailwind to delay generating the app CSS classes until the app code has been seen, avoiding flashes of style changes. When this function is used in a load or transform hook, and the default HTTP1 server is used, one of the six http channels will be blocked until the server processes all static imports. Vite's dependency optimizer currently uses this function to avoid full-page reloads on missing dependencies by delaying loading of pre-bundled dependencies until all imported dependencies have been collected from static imported sources. Vite may switch to a different strategy in a future major release, setting `optimizeDeps.holdUntilCrawlEnd: false` by default to avoid the performance hit in large applications during cold start.
+:::
 
 ## `build`
 
@@ -208,7 +205,7 @@ async function build(
 
 **Example Usage:**
 
-```ts
+```ts twoslash
 import path from 'node:path'
 import { build } from 'vite'
 
@@ -233,7 +230,7 @@ async function preview(inlineConfig?: InlineConfig): Promise<PreviewServer>
 
 **Example Usage:**
 
-```ts
+```ts twoslash
 import { preview } from 'vite'
 
 const previewServer = await preview({
@@ -317,12 +314,12 @@ Deeply merge two Vite configs. `isRoot` represents the level within the Vite con
 
 Note that `null` and `undefined` values in `overrides` are skipped and not merged. If you need to explicitly clear a value from `defaults`, modify the result of `mergeConfig` directly.
 
-**NOTE**
+::: tip NOTE
 `mergeConfig` accepts only config in object form. If you have a config in callback form, you should call it before passing into `mergeConfig`.
 
 You can use the `defineConfig` helper to merge a config in callback form with another config:
 
-```ts
+```ts twoslash
 import {
   defineConfig,
   mergeConfig,
@@ -338,6 +335,8 @@ export default defineConfig((configEnv) =>
 )
 ```
 
+:::
+
 ## `searchForWorkspaceRoot`
 
 **Type Signature:**
@@ -349,7 +348,7 @@ function searchForWorkspaceRoot(
 ): string
 ```
 
-**Related:** server.fs.allow
+**Related:** [server.fs.allow](/config/server-options.md#server-fs-allow)
 
 Search for the root of the potential workspace if it meets the following conditions, otherwise it would fallback to `root`:
 
@@ -370,7 +369,7 @@ function loadEnv(
 ): Record<string, string>
 ```
 
-**Related:** `.env` Files
+**Related:** [`.env` Files](./env-and-mode.md#env-files)
 
 Load `.env` files within the `envDir` and merge them with the matching variables already present in `process.env`. By default, only env variables prefixed with `VITE_` are loaded, unless `prefixes` is changed.
 
@@ -382,7 +381,7 @@ Load `.env` files within the `envDir` and merge them with the matching variables
 function normalizePath(id: string): string
 ```
 
-**Related:** Path Normalization
+**Related:** [Path Normalization](./api-plugin.md#path-normalization)
 
 Normalizes a path to interoperate between Vite plugins.
 
@@ -399,7 +398,7 @@ async function transformWithOxc(
 ): Promise<Omit<OxcTransformResult, 'errors'> & { warnings: string[] }>
 ```
 
-Transform JavaScript or TypeScript with Oxc Transformer. Useful for plugins that prefer matching Vite's internal Oxc Transformer transform.
+Transform JavaScript or TypeScript with [Oxc Transformer](https://oxc.rs/docs/guide/usage/transformer). Useful for plugins that prefer matching Vite's internal Oxc Transformer transform.
 
 ## `transformWithEsbuild`
 
@@ -440,7 +439,7 @@ Load a Vite config file manually with Rolldown.
 
 ## `preprocessCSS`
 
-- **Experimental:** Give Feedback
+- **Experimental:** [Give Feedback](https://github.com/vitejs/vite/discussions/13815)
 
 **Type Signature:**
 
@@ -459,9 +458,9 @@ interface PreprocessCSSResult {
 }
 ```
 
-Pre-processes `.css`, `.scss`, `.sass`, `.less`, `.styl` and `.stylus` files to plain CSS so it can be used in browsers or parsed by other tools. Similar to the built-in CSS pre-processing support, the corresponding pre-processor must be installed if used.
+Pre-processes `.css`, `.scss`, `.sass`, `.less`, `.styl` and `.stylus` files to plain CSS so it can be used in browsers or parsed by other tools. Similar to the [built-in CSS pre-processing support](/guide/features#css-pre-processors), the corresponding pre-processor must be installed if used.
 
-The pre-processor used is inferred from the `filename` extension. If the `filename` ends with `.module.{ext}`, it is inferred as a CSS module and the returned result will include a `modules` object mapping the original class names to the transformed ones.
+The pre-processor used is inferred from the `filename` extension. If the `filename` ends with `.module.{ext}`, it is inferred as a [CSS module](https://github.com/css-modules/css-modules) and the returned result will include a `modules` object mapping the original class names to the transformed ones.
 
 Note that pre-processing will not resolve URLs in `url()` or `image-set()`.
 
@@ -475,7 +474,7 @@ The current version of Vite as a string (e.g. `"8.0.0"`).
 
 **Type:** `string`
 
-The version of Rolldown used by Vite as a string (e.g. `"1.0.0"`). A re-export of `VERSION` from `rolldown`.
+The version of Rolldown used by Vite as a string (e.g. `"1.0.0"`). A re-export of [`VERSION`](https://rolldown.rs/reference/Variable.VERSION) from `rolldown`.
 
 ## `esbuildVersion`
 

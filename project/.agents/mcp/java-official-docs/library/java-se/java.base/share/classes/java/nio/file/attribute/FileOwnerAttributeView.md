@@ -1,12 +1,3 @@
----
-title: "FileOwnerAttributeView interface (java.nio.file.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/file/attribute/FileOwnerAttributeView.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # FileOwnerAttributeView interface (java.nio.file.attribute)
 
 ```java
@@ -19,16 +10,16 @@ support a file attribute that represents an identity that is the owner of
 the file. Often the owner of a file is the identity of the entity that
 created the file.
 
- The getOwner or setOwner methods may
+<p> The {@link #getOwner getOwner} or {@link #setOwner setOwner} methods may
 be used to read or update the owner of the file.
 
- The getAttribute and
-setAttribute methods may also be
+<p> The {@link java.nio.file.Files#getAttribute getAttribute} and
+{@link java.nio.file.Files#setAttribute setAttribute} methods may also be
 used to read or update the owner. In that case, the owner attribute is
-identified by the name `"owner"`, and the value of the attribute is
-a `UserPrincipal`.
+identified by the name {@code "owner"}, and the value of the attribute is
+a {@link UserPrincipal}.
 
-**Since:** 1.7
+@since 1.7
 
 ## FileOwnerAttributeView.name()
 
@@ -37,7 +28,7 @@ String name()
 ```
 
 Returns the name of the attribute view. Attribute views of this type
-have the name `"owner"`.
+have the name {@code "owner"}.
 
 ## FileOwnerAttributeView.getOwner()
 
@@ -47,13 +38,13 @@ UserPrincipal getOwner() throws IOException
 
 Read the file owner.
 
- It is implementation specific if the file owner can be a group.
+<p> It is implementation specific if the file owner can be a {@link
+GroupPrincipal group}.
 
-**Returns:** the file owner
+@return  the file owner
 
-Throws:
-
-- `IOException`: if an I/O error occurs
+@throws  IOException
+         if an I/O error occurs
 
 ## FileOwnerAttributeView.setOwner(UserPrincipal)
 
@@ -63,14 +54,15 @@ void setOwner(UserPrincipal owner) throws IOException
 
 Updates the file owner.
 
- It is implementation specific if the file owner can be a group. To ensure consistent and correct behavior
+<p> It is implementation specific if the file owner can be a {@link
+GroupPrincipal group}. To ensure consistent and correct behavior
 across platforms it is recommended that this method should only be used
 to set the file owner to a user principal that is not a group.
 
-Parameters:
+@param   owner
+         the new file owner
 
-- `owner`: the new file owner
-
-Throws:
-
-- `IOException`: if an I/O error occurs, or the `owner` parameter is a group and this implementation does not support setting the owner to a group
+@throws  IOException
+         if an I/O error occurs, or the {@code owner} parameter is a
+         group and this implementation does not support setting the owner
+         to a group

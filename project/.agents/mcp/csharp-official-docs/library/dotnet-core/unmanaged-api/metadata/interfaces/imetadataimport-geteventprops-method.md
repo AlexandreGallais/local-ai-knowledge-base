@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataImport::GetEventProps Method"
 title: "IMetaDataImport::GetEventProps Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-geteventprops-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.GetEventProps"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::GetEventProps"
+  - "GetEventProps method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::GetEventProps Method
 
 Gets metadata information for the event represented by the specified event token, including the declaring type, the add and remove methods for delegates, and any flags and other associated data.
@@ -34,10 +41,10 @@ HRESULT GetEventProps (
 ## Parameters
 
  `ev`
- [in] The event metadata token <example-value> the event to get metadata for.
+ [in] The event metadata token representing the event to get metadata for.
 
  `pClass`
- [out] A pointer to the TypeDef token <example-value> the class that declares the event.
+ [out] A pointer to the TypeDef token representing the class that declares the event.
 
  `szEvent`
  [out] The name of the event referenced by `ev`.
@@ -49,19 +56,19 @@ HRESULT GetEventProps (
  [out] The returned length in wide characters of `szEvent`.
 
  `ptkEventType`
- [out] A pointer to a TypeRef or TypeDef metadata token <example-value> the `System.Delegate` type of the event.
+ [out] A pointer to a TypeRef or TypeDef metadata token representing the <xref:System.Delegate> type of the event.
 
  `pmdAddOn`
- [out] A pointer to the metadata token <example-value> the method that adds handlers for the event.
+ [out] A pointer to the metadata token representing the method that adds handlers for the event.
 
  `pmdRemoveOn`
- [out] A pointer to the metadata token <example-value> the method that removes handlers for the event.
+ [out] A pointer to the metadata token representing the method that removes handlers for the event.
 
  `pmdFire`
- [out] A pointer to the metadata token <example-value> the method that raises the event.
+ [out] A pointer to the metadata token representing the method that raises the event.
 
  `rmdOtherMethod`
- [out] An array of token <example-value> to other methods associated with the event.
+ [out] An array of token pointers to other methods associated with the event.
 
  `cMax`
  [in] The maximum size of the `rmdOtherMethod` array.
@@ -71,7 +78,7 @@ HRESULT GetEventProps (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -79,5 +86,5 @@ HRESULT GetEventProps (
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

@@ -1,21 +1,12 @@
----
-title: "Keywords"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/keywords.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[lex.keywords]
 # Keywords
 
 r[lex.keywords.intro]
 Rust divides keywords into three categories:
 
-* strict
-* reserved
-* weak
+* [strict](#strict-keywords)
+* [reserved](#reserved-keywords)
+* [weak](#weak-keywords)
 
 r[lex.keywords.strict]
 ## Strict keywords
@@ -33,7 +24,7 @@ Strict keywords can only be used in their correct contexts. They cannot be used 
 * [Crates]
 
 r[lex.keywords.strict.syntax]
-```grammar
+```grammar,lexer
 @root STRICT_KEYWORDS ->
       `_`
     | `as`
@@ -91,7 +82,7 @@ r[lex.keywords.reserved.intro]
 Reserved keywords aren't used yet, but they are reserved for future use. They have the same restrictions as strict keywords. The reasoning behind this is to make current programs forward compatible with future versions of Rust by forbidding them to use these keywords.
 
 r[lex.keywords.reserved.syntax]
-```grammar
+```grammar,lexer
 @root RESERVED_KEYWORDS ->
       `abstract`
     | `become`
@@ -124,7 +115,7 @@ r[lex.keywords.weak.intro]
 Weak keywords have special meaning only in certain contexts. For example, it is possible to declare a variable or method with the name `union`.
 
 r[lex.keywords.weak.syntax]
-```grammar
+```grammar,lexer
 @root WEAK_KEYWORDS ->
       `'static`
     | `macro_rules`
@@ -158,3 +149,19 @@ r[lex.keywords.weak.dyn.edition2018]
 > In the 2015 edition, [`dyn`] is a keyword when used in a type position followed by a path that does not start with `::` or `<`, a lifetime, a question mark, a `for` keyword or an opening parenthesis.
 >
 > Beginning in the 2018 edition, `dyn` has been promoted to a strict keyword.
+
+[items]: items.md
+[Variables]: variables.md
+[Type parameters]: types/parameters.md
+[loop labels]: expressions/loop-expr.md#loop-labels
+[Macros]: macros.md
+[attributes]: attributes.md
+[Macro placeholders]: macros-by-example.md
+[Crates]: crates-and-source-files.md
+[union]: items/unions.md
+[variants]: items/enumerations.md
+[`dyn`]: types/trait-object.md
+[loop label]: expressions/loop-expr.md#loop-labels
+[generic lifetime parameter]: items/generics.md
+[external blocks]: items/external-blocks.md
+[raw borrow operators]: expressions/operator-expr.md#raw-borrow-operators

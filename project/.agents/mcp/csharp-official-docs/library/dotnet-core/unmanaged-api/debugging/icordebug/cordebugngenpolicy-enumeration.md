@@ -1,12 +1,22 @@
 ---
+description: "Learn more about: CorDebugNGenPolicy Enumeration"
 title: "CorDebugNGenPolicy Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cordebugngenpolicy-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "cpp"
+api_name:
+  - "CorDebugNGenPolicy"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "CorDebugNGenPolicy"
+helpviewer_keywords:
+  - "CorDebugNgenPolicy enumeration [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # CorDebugNGenPolicy Enumeration
 
 Provides a value that determines whether a debugger loads native (NGen) images from the native image cache.
@@ -27,11 +37,11 @@ enum CorDebugNGENPolicy {
 
 ## Remarks
 
- The `CorDebugNGENPolicy` enumeration is used by the ICorDebugProcess5::EnableNGENPolicy method. Disabling the use of images from the local native image cache provides for a consistent debugging experience by ensuring that the debugger loads debuggable JIT-compiled images instead of optimized native images.
+ The `CorDebugNGENPolicy` enumeration is used by the [ICorDebugProcess5::EnableNGENPolicy](icordebugprocess5-enablengenpolicy-method.md) method. Disabling the use of images from the local native image cache provides for a consistent debugging experience by ensuring that the debugger loads debuggable JIT-compiled images instead of optimized native images.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

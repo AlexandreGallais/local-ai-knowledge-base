@@ -1,10 +1,11 @@
 ---
-title: "Deferred execution example - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/deferred-execution-example.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Deferred execution example - LINQ to XML
+description: Learn how deferred execution and lazy evaluation affect the execution of your LINQ to XML queries.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: 50f4fbac-81fe-4f26-aedf-506e21419b19
 ---
 
 # Deferred execution example (LINQ to XML)
@@ -90,5 +91,5 @@ You can see that the entire array of strings isn't converted to uppercase before
 
 ## See also
 
-- Deferred execution and lazy evaluation
-- Tutorial: Chain queries together (C#)
+- [Deferred execution and lazy evaluation](deferred-execution-lazy-evaluation.md)
+- [Tutorial: Chain queries together (C#)](chain-queries-example.md)

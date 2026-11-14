@@ -1,12 +1,3 @@
----
-title: "core::iter::traits::collect"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/iter/traits/collect.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::iter::traits::collect
 
 ## trait FromIterator
@@ -15,25 +6,25 @@ license: "MIT OR Apache-2.0"
 pub trait FromIterator<T>: Sized
 ```
 
-Conversion from an `Iterator`.
+Conversion from an [`Iterator`].
 
 By implementing `FromIterator` for a type, you define how it will be
 created from an iterator. This is common for types which describe a
 collection of some kind.
 
 If you want to create a collection from the contents of an iterator, the
-`Iterator::collect()` method is preferred. However, when you need to
-specify the container type, `FromIterator::from_iter()` can be more
+[`Iterator::collect()`] method is preferred. However, when you need to
+specify the container type, [`FromIterator::from_iter()`] can be more
 readable than using a turbofish (e.g. `::<Vec<_>>()`). See the
-`Iterator::collect()` documentation for more examples of its use.
+[`Iterator::collect()`] documentation for more examples of its use.
 
-See also: `IntoIterator`.
+See also: [`IntoIterator`].
 
 # Examples
 
 Basic usage:
 
-```rust
+```
 let five_fives = std::iter::repeat(5).take(5);
 
 let v = Vec::from_iter(five_fives);
@@ -41,9 +32,9 @@ let v = Vec::from_iter(five_fives);
 assert_eq!(v, vec![5, 5, 5, 5, 5]);
 ```
 
-Using `Iterator::collect()` to implicitly use `FromIterator`:
+Using [`Iterator::collect()`] to implicitly use `FromIterator`:
 
-```rust
+```
 let five_fives = std::iter::repeat(5).take(5);
 
 let v: Vec<i32> = five_fives.collect();
@@ -51,10 +42,10 @@ let v: Vec<i32> = five_fives.collect();
 assert_eq!(v, vec![5, 5, 5, 5, 5]);
 ```
 
-Using `FromIterator::from_iter()` as a more readable alternative to
-`Iterator::collect()`:
+Using [`FromIterator::from_iter()`] as a more readable alternative to
+[`Iterator::collect()`]:
 
-```rust
+```
 use std::collections::VecDeque;
 let first = (0..10).collect::<VecDeque<i32>>();
 let second = VecDeque::from_iter(0..10);
@@ -64,7 +55,7 @@ assert_eq!(first, second);
 
 Implementing `FromIterator` for your type:
 
-```rust
+```
 // A sample collection, that's just a wrapper over Vec<T>
 #[derive(Debug)]
 struct MyCollection(Vec<i32>);
@@ -120,9 +111,11 @@ Creates a value from an iterator.
 
 See the [module-level documentation] for more.
 
+[module-level documentation]: crate::iter
+
 # Examples
 
-```rust
+```
 let five_fives = std::iter::repeat(5).take(5);
 
 let v = Vec::from_iter(five_fives);
@@ -136,22 +129,22 @@ assert_eq!(v, vec![5, 5, 5, 5, 5]);
 pub const trait IntoIterator
 ```
 
-Conversion into an `Iterator`.
+Conversion into an [`Iterator`].
 
 By implementing `IntoIterator` for a type, you define how it will be
 converted to an iterator. This is common for types which describe a
 collection of some kind.
 
-One benefit of implementing `IntoIterator` is that your type will work
-with Rust's `for` loop syntax.
+One benefit of implementing `IntoIterator` is that your type will [work
+with Rust's `for` loop syntax](crate::iter#for-loops-and-intoiterator).
 
-See also: `FromIterator`.
+See also: [`FromIterator`].
 
 # Examples
 
 Basic usage:
 
-```rust
+```
 let v = [1, 2, 3];
 let mut iter = v.into_iter();
 
@@ -162,7 +155,7 @@ assert_eq!(None, iter.next());
 ```
 Implementing `IntoIterator` for your type:
 
-```rust
+```
 // A sample collection, that's just a wrapper over Vec<T>
 #[derive(Debug)]
 struct MyCollection(Vec<i32>);
@@ -240,7 +233,7 @@ keys, that entry is inserted.
 
 Basic usage:
 
-```rust
+```
 // You can extend a String with some chars:
 let mut message = String::from("The first three letters are: ");
 
@@ -251,7 +244,7 @@ assert_eq!("abc", &message[29..32]);
 
 Implementing `Extend`:
 
-```rust
+```
 // A sample collection, that's just a wrapper over Vec<T>
 #[derive(Debug)]
 struct MyCollection(Vec<i32>);
@@ -308,9 +301,11 @@ Extends a collection with the contents of an iterator.
 As this is the only required method for this trait, the [trait-level] docs
 contain more details.
 
+[trait-level]: Extend
+
 # Examples
 
-```rust
+```
 // You can extend a String with some chars:
 let mut message = String::from("abc");
 

@@ -1,17 +1,11 @@
----
-title: "no-array-front-mutation"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-array-front-mutation.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-array-front-mutation
 
 📝 Disallow front-of-array mutation.
 
 🚫 Disabled by default.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Forbid `Array#shift()` and `Array#unshift()` in projects that want to avoid mutating the front of arrays.
 
@@ -22,7 +16,7 @@ Use intent-specific alternatives:
 - Iterate without consuming the array.
 - Keep an index cursor instead of repeatedly calling `shift()`.
 - Use `pop()` and `push()` when processing from the end preserves the intended order.
-- Use a queue, such as `yocto-queue`, for repeated FIFO work.
+- Use a queue, such as [`yocto-queue`](https://github.com/sindresorhus/yocto-queue), for repeated FIFO work.
 
 This rule is disabled in both the `recommended` and `unopinionated` configs because `shift()` and `unshift()` can be readable and acceptable outside hot paths.
 

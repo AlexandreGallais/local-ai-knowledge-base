@@ -1,12 +1,3 @@
----
-title: "InstantSource interface (java.time)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/time/InstantSource.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # InstantSource interface (java.time)
 
 ```java
@@ -14,23 +5,22 @@ public interface InstantSource
 ```
 
 Provides access to the current instant.
-
+<p>
 Instances of this interface are used to access a pluggable representation of the current instant.
-For example, `InstantSource` can be used instead of `System.currentTimeMillis()`.
-
+For example, {@code InstantSource} can be used instead of {@link System#currentTimeMillis()}.
+<p>
 The primary purpose of this abstraction is to allow alternate instant sources to be
 plugged in as and when required. Applications use an object to obtain the
 current time rather than a static method. This can simplify testing.
-
+<p>
 As such, this interface does not guarantee the result actually represents the current instant
 on the time-line. Instead, it allows the application to provide a controlled view as to what
 the current instant is.
-
-Best practice for applications is to pass an `InstantSource` into any method
+<p>
+Best practice for applications is to pass an {@code InstantSource} into any method
 that requires the current instant. A dependency injection framework is one
 way to achieve this:
-
-```java
+<pre>
  public class MyBean {
    private InstantSource source;  // dependency inject
    ...
@@ -39,44 +29,46 @@ way to achieve this:
        ...
      }
    }
-```
-
-This approach allows an alternative source, such as fixed
-or Duration) offset to be used during testing.
-
-The `system` factory method provides a source based on the best available
-system clock. This may use `System.currentTimeMillis()`, or a higher
+ }
+</pre>
+This approach allows an alternative source, such as {@link #fixed(Instant) fixed}
+or {@link #offset(InstantSource, Duration) offset} to be used during testing.
+<p>
+The {@code system} factory method provides a source based on the best available
+system clock. This may use {@link System#currentTimeMillis()}, or a higher
 resolution clock if one is available.
 
-**Implementation requirements:** This interface must be implemented with care to ensure other classes operate correctly.
+@implSpec
+This interface must be implemented with care to ensure other classes operate correctly.
 All implementations must be thread-safe - a single instance must be capable of be invoked
 from multiple threads without negative consequences such as race conditions.
-
+<p>
 The principal methods are defined to allow the throwing of an exception.
 In normal use, no exceptions will be thrown, however one possible implementation would be to
 obtain the time from a central time server across the network. Obviously, in this case the
 lookup could fail, and so the method is permitted to throw an exception.
-
-The returned instants from `InstantSource` work on a time-scale that ignores leap seconds,
-as described in `Instant`. If the implementation wraps a source that provides leap
+<p>
+The returned instants from {@code InstantSource} work on a time-scale that ignores leap seconds,
+as described in {@link Instant}. If the implementation wraps a source that provides leap
 second information, then a mechanism should be used to "smooth" the leap second.
 The Java Time-Scale mandates the use of UTC-SLS, however implementations may choose
 how accurate they are with the time-scale so long as they document how they work.
 Implementations are therefore not required to actually perform the UTC-SLS slew or to
 otherwise be aware of leap seconds.
-
-Implementations should implement `Serializable` wherever possible and must
+<p>
+Implementations should implement {@code Serializable} wherever possible and must
 document whether or not they do support serialization.
 
-**Implementation note:** The implementation provided here is based on the same underlying system clock
-as `System.currentTimeMillis()`, but may have a precision finer than
+@implNote
+The implementation provided here is based on the same underlying system clock
+as {@link System#currentTimeMillis()}, but may have a precision finer than
 milliseconds if available.
 However, little to no guarantee is provided about the accuracy of the
 underlying system clock. Applications requiring a more accurate system clock must
 implement this abstract class themselves using a different external system clock,
 such as an NTP server.
 
-**Since:** 17
+@since 17
 
 ## InstantSource.system()
 
@@ -86,15 +78,15 @@ static InstantSource system()
 
 Obtains a source that returns the current instant using the best available
 system clock.
-
+<p>
 This source is based on the best available system clock. This may use
-`System.currentTimeMillis()`, or a higher resolution system clock if
+{@link System#currentTimeMillis()}, or a higher resolution system clock if
 one is available.
-
+<p>
 The returned implementation is immutable, thread-safe and
-`Serializable`.
+{@code Serializable}.
 
-**Returns:** a source that uses the best available system clock, not null
+@return a source that uses the best available system clock, not null
 
 ## InstantSource.tick(InstantSource, Duration)
 
@@ -104,38 +96,34 @@ static InstantSource tick(InstantSource baseSource, Duration tickDuration)
 
 Obtains a source that returns instants from the specified source truncated to
 the nearest occurrence of the specified duration.
-
+<p>
 This source will only tick as per the specified duration. Thus, if the
 duration is half a second, the source will return instants truncated to the
 half second.
-
+<p>
 The tick duration must be positive. If it has a part smaller than a whole
 millisecond, then the whole duration must divide into one second without
 leaving a remainder. All normal tick durations will match these criteria,
 including any multiple of hours, minutes, seconds and milliseconds, and
 sensible nanosecond durations, such as 20ns, 250,000ns and 500,000ns.
-
+<p>
 A duration of zero or one nanosecond would have no truncation effect. Passing
 one of these will return the underlying source.
-
+<p>
 Implementations may use a caching strategy for performance reasons. As such,
 it is possible that the start of the requested duration observed via this
 source will be later than that observed directly via the underlying source.
-
+<p>
 The returned implementation is immutable, thread-safe and
-`Serializable` providing that the base source is.
+{@code Serializable} providing that the base source is.
 
-Parameters:
-
-- `baseSource`: the base source to base the ticking source on, not null
-- `tickDuration`: the duration of each visible tick, not negative, not null
-
-**Returns:** a source that ticks in whole units of the duration, not null
-
-Throws:
-
-- `IllegalArgumentException`: if the duration is negative, or has a part smaller than a whole millisecond such that the whole duration is not divisible into one second
-- `ArithmeticException`: if the duration is too large to be represented as nanos
+@param baseSource  the base source to base the ticking source on, not null
+@param tickDuration  the duration of each visible tick, not negative, not null
+@return a source that ticks in whole units of the duration, not null
+@throws IllegalArgumentException if the duration is negative, or has a
+ part smaller than a whole millisecond such that the whole duration is not
+ divisible into one second
+@throws ArithmeticException if the duration is too large to be represented as nanos
 
 ## InstantSource.fixed(Instant)
 
@@ -144,19 +132,16 @@ static InstantSource fixed(Instant fixedInstant)
 ```
 
 Obtains a source that always returns the same instant.
-
+<p>
 This source simply returns the specified instant.
 As such, it is not a source that represents the current instant.
 The main use case for this is in testing, where the fixed source ensures
 tests are not dependent on the current source.
+<p>
+The returned implementation is immutable, thread-safe and {@code Serializable}.
 
-The returned implementation is immutable, thread-safe and `Serializable`.
-
-Parameters:
-
-- `fixedInstant`: the instant to use, not null
-
-**Returns:** a source that always returns the same instant, not null
+@param fixedInstant  the instant to use, not null
+@return a source that always returns the same instant, not null
 
 ## InstantSource.offset(InstantSource, Duration)
 
@@ -166,24 +151,21 @@ static InstantSource offset(InstantSource baseSource, Duration offsetDuration)
 
 Obtains a source that returns instants from the specified source with the
 specified duration added.
-
+<p>
 This source wraps another source, returning instants that are later by the
 specified duration. If the duration is negative, the instants will be
 earlier than the current date and time.
 The main use case for this is to simulate running in the future or in the past.
-
+<p>
 A duration of zero would have no offsetting effect.
 Passing zero will return the underlying source.
-
-The returned implementation is immutable, thread-safe and `Serializable`
+<p>
+The returned implementation is immutable, thread-safe and {@code Serializable}
 providing that the base source is.
 
-Parameters:
-
-- `baseSource`: the base source to add the duration to, not null
-- `offsetDuration`: the duration to add, not null
-
-**Returns:** a source based on the base source with the duration added, not null
+@param baseSource  the base source to add the duration to, not null
+@param offsetDuration  the duration to add, not null
+@return a source based on the base source with the duration added, not null
 
 ## InstantSource.instant()
 
@@ -192,14 +174,11 @@ Instant instant()
 ```
 
 Gets the current instant of the source.
-
+<p>
 This returns an instant representing the current instant as defined by the source.
 
-**Returns:** the current instant from this source, not null
-
-Throws:
-
-- `DateTimeException`: if the instant cannot be obtained, not thrown by most implementations
+@return the current instant from this source, not null
+@throws DateTimeException if the instant cannot be obtained, not thrown by most implementations
 
 ## InstantSource.millis()
 
@@ -208,23 +187,21 @@ default long millis()
 ```
 
 Gets the current millisecond instant of the source.
-
+<p>
 This returns the millisecond-based instant, measured from 1970-01-01T00:00Z (UTC).
-This is equivalent to the definition of `System.currentTimeMillis()`.
-
-Most applications should avoid this method and use `Instant` to represent
+This is equivalent to the definition of {@link System#currentTimeMillis()}.
+<p>
+Most applications should avoid this method and use {@link Instant} to represent
 an instant on the time-line rather than a raw millisecond value.
 This method is provided to allow the use of the source in high performance use cases
 where the creation of an object would be unacceptable.
 
-**Implementation requirements:** The default implementation calls `instant()`.
+@implSpec
+The default implementation calls {@link #instant()}.
 
-**Returns:** the current millisecond instant from this source, measured from
+@return the current millisecond instant from this source, measured from
  the Java epoch of 1970-01-01T00:00Z (UTC), not null
-
-Throws:
-
-- `DateTimeException`: if the instant cannot be obtained, not thrown by most implementations
+@throws DateTimeException if the instant cannot be obtained, not thrown by most implementations
 
 ## InstantSource.withZone(ZoneId)
 
@@ -233,19 +210,17 @@ default Clock withZone(ZoneId zone)
 ```
 
 Returns a clock with the specified time-zone.
-
-This returns a `Clock`, which is an extension of this interface
+<p>
+This returns a {@link Clock}, which is an extension of this interface
 that combines this source and the specified time-zone.
-
-The returned implementation is immutable, thread-safe and `Serializable`
+<p>
+The returned implementation is immutable, thread-safe and {@code Serializable}
 providing that this source is.
 
-Parameters:
-
-- `zone`: the time-zone to use, not null
-
-**Implementation requirements:** The default implementation returns an immutable, thread-safe and
-`Serializable` subclass of `Clock` that combines this
+@implSpec
+The default implementation returns an immutable, thread-safe and
+{@code Serializable} subclass of {@link Clock} that combines this
 source and the specified zone.
 
-**Returns:** a clock based on this source with the specified time-zone, not null
+@param zone  the time-zone to use, not null
+@return a clock based on this source with the specified time-zone, not null

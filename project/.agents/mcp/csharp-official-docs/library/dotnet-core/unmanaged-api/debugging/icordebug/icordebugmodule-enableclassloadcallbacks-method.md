@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugModule::EnableClassLoadCallbacks Method"
 title: "ICorDebugModule::EnableClassLoadCallbacks Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmodule-enableclassloadcallbacks-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugModule.EnableClassLoadCallbacks"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugModule::EnableClassLoadCallbacks"
+helpviewer_keywords:
+  - "ICorDebugModule::EnableClassLoadCallbacks method [.NET debugging]"
+  - "EnableClassLoadCallbacks method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugModule::EnableClassLoadCallbacks Method
 
-Controls whether the ICorDebugManagedCallback::LoadClass and ICorDebugManagedCallback::UnloadClass callbacks are called for this module.
+Controls whether the [ICorDebugManagedCallback::LoadClass](icordebugmanagedcallback-loadclass-method.md) and [ICorDebugManagedCallback::UnloadClass](icordebugmanagedcallback-unloadclass-method.md) callbacks are called for this module.
 
 ## Syntax
 
@@ -32,10 +41,12 @@ The `ICorDebugManagedCallback::LoadClass` and `ICorDebugManagedCallback::UnloadC
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
  **Library:** CorGuids.lib
 
  **.NET versions:** Available since .NET Framework 2.0
+
+## See also

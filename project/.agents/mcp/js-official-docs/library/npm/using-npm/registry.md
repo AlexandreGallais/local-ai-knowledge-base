@@ -1,13 +1,8 @@
 ---
-title: "Registry"
-tool: "npm"
-version: "12.2"
-source: "https://github.com/npm/cli/blob/60e11343e61316d966c86805d803df5a0eb99230/docs/lib/content/using-npm/registry.md"
-commit: "60e11343e61316d966c86805d803df5a0eb99230"
-license: "Artistic-2.0"
+title: Registry
+section: 7
+description: The JavaScript Package Registry
 ---
-
-# Registry
 
 ### Description
 
@@ -22,11 +17,11 @@ Use of someone else's registry may be governed by their terms of use.
 
 npm's package registry implementation supports several write APIs as well, to allow for publishing packages and managing user account information.
 
-The registry URL used is determined by the scope of the package (see `scope`.
-If no scope is specified, the default registry is used, which is supplied by the `registry` config parameter.
-See `npm config`, `npmrc`, and `config` for more on managing npm's configuration.
+The registry URL used is determined by the scope of the package (see [`scope`](/using-npm/scope).
+If no scope is specified, the default registry is used, which is supplied by the [`registry` config](/using-npm/config#registry) parameter.
+See [`npm config`](/commands/npm-config), [`npmrc`](/configuring-npm/npmrc), and [`config`](/using-npm/config) for more on managing npm's configuration.
 Authentication configuration such as auth tokens and certificates are configured specifically scoped to an individual registry.
-See Auth Related Configuration
+See [Auth Related Configuration](/configuring-npm/npmrc#auth-related-configuration)
 
 When the default registry is used in a package-lock it has the special meaning of "the currently configured registry". If you create a lock file while using the default registry you can switch to another registry and npm will install packages from the new registry, but if you create a lock file while using a custom registry packages will be installed from that registry even after you change to another registry.
 
@@ -41,7 +36,7 @@ In the future npm hopes to build registry features that use this information to 
 * `Npm-In-CI` – Set to "true" if npm believes this install is running in a continuous integration environment, "false" otherwise.
 This is detected by looking for the following environment variables: `CI`, `TDDIUM`,
   `JENKINS_URL`, `bamboo.buildKey`.
-If you'd like to learn more you may find the original PR interesting.
+If you'd like to learn more you may find the [original PR](https://github.com/npm/npm-registry-client/pull/129) interesting.
   This is used to gather better metrics on how npm is used by humans, versus build farms.
 
 The npm registry does not try to correlate the information in these headers with any authenticated accounts that may be used in the same requests.
@@ -52,7 +47,7 @@ Set `"private": true` in your `package.json` to prevent it from being published 
 `"publishConfig":{"registry":"http://my-internal-registry.local"}`
 to force it to be published only to your internal/private registry.
 
-See `package.json` for more info on what goes in the package.json file.
+See [`package.json`](/configuring-npm/package-json) for more info on what goes in the package.json file.
 
 ### Where can I find my (and others') published packages?
 
@@ -60,7 +55,7 @@ See `package.json` for more info on what goes in the package.json file.
 
 ### See also
 
-* npm config
-* config
-* npmrc
-* npm developers
+* [npm config](/commands/npm-config)
+* [config](/using-npm/config)
+* [npmrc](/configuring-npm/npmrc)
+* [npm developers](/using-npm/developers)

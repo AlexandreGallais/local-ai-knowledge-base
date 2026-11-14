@@ -1,17 +1,8 @@
----
-title: "Use declarations"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/items/use-declarations.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[items.use]
 # Use declarations
 
 r[items.use.syntax]
-```grammar
+```grammar,items
 UseDeclaration -> `use` UseTree `;`
 
 UseTree ->
@@ -22,6 +13,10 @@ UseTree ->
 
 r[items.use.intro]
 A _use declaration_ creates one or more local name bindings synonymous with some other [path]. Usually a `use` declaration is used to shorten the path required to refer to a module item. These declarations may appear in [modules] and [blocks], usually at the top. A `use` declaration is also sometimes called an _import_, or, if it is public, a _re-export_.
+
+[path]: ../paths.md
+[modules]: modules.md
+[blocks]: ../expressions/block-expr.md
 
 r[items.use.forms]
 Use declarations support a number of convenient shortcuts:
@@ -177,6 +172,7 @@ use std::collections::{BTreeSet, hash_map::{self, HashMap}};
 
 r[items.use.multiple-syntax.empty]
 An empty brace does not import anything, though the leading path is validated that it is accessible.
+<!-- This is slightly wrong, see: https://github.com/rust-lang/rust/issues/61826 -->
 
 r[items.use.multiple-syntax.edition2018]
 > [!EDITION-2018]
@@ -204,7 +200,7 @@ mod example {
 # fn main() {}
 ```
 
-> **Note:**
+> [!NOTE]
 > `self` may also be used as the first segment of a path. The use of `self` as the first segment and inside a `use` brace is logically the same; it means the current module of the parent segment, or the current module if there is no parent segment. See [`self`] in the paths chapter for more information on the meaning of a leading `self`.
 
 r[items.use.self.trailing]
@@ -219,7 +215,7 @@ use m::E::self; // Equivalent to `use m::E::{self};`.
 # fn main() {}
 ```
 
-> **Note:**
+> [!NOTE]
 > See [paths.qualifiers.mod-self.trailing] for restrictions on the preceding path.
 
 r[items.use.self.module]
@@ -236,7 +232,7 @@ use m::Tr::{self}; // OK: Traits can be parents of `self`.
 # fn main() {}
 ```
 
-```rust
+```rust,compile_fail,E0432
 struct S {}
 use S::{self as _}; // ERROR: Structs cannot be parents of `self`.
 # fn main() {}
@@ -245,7 +241,7 @@ use S::{self as _}; // ERROR: Structs cannot be parents of `self`.
 r[items.use.self.namespace]
 `self` only creates a binding from the [type namespace] of the parent entity. For example, in the following, only the `foo` mod is imported:
 
-```rust
+```rust,compile_fail
 mod bar {
     pub mod foo {}
     pub fn foo() {}
@@ -315,7 +311,7 @@ mod clashing {
 }
 ```
 
-> **Note:**
+> [!NOTE]
 > For areas where shadowing is not allowed, see [name resolution ambiguities].
 
 r[items.use.glob.last-segment-only]
@@ -470,3 +466,28 @@ r[items.use.restrictions.variant]
 > use MyEnum::MyVariant; //~ OK
 > use TypeAlias::MyVariant; //~ ERROR
 > ```
+
+[`$crate`]: paths.qualifiers.macro-crate
+[Attributes]: ../attributes.md
+[brace syntax]: items.use.multiple-syntax
+[Built-in types]: ../types.md
+[Derive macros]: macro.proc.derive
+[Enum variants]: enumerations.md
+[enumeration]: items.enum
+[`extern crate`]: extern-crates.md
+[`macro_rules`]: ../macros-by-example.md
+[`self`]: ../paths.md#self
+[associated items]: associated-items.md
+[extern prelude]: ../names/preludes.md#extern-prelude
+[generic parameters]: generics.md
+[items]: ../items.md
+[local variables]: ../variables.md
+[module]: items.mod
+[name resolution ambiguities]: names.resolution.expansion.imports.ambiguity
+[namespace]: ../names/namespaces.md
+[namespaces]: ../names/namespaces.md
+[paths]: ../paths.md
+[tool attributes]: ../attributes.md#tool-attributes
+[trait]: items.traits
+[type alias]: type-aliases.md
+[type namespace]: ../names/namespaces.md

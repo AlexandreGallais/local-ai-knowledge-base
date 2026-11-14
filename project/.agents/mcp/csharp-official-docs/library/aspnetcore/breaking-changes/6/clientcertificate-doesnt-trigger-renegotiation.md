@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: ClientCertificate property no longer triggers renegotiation for HttpSys"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/6/clientcertificate-doesnt-trigger-renegotiation.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 6.0 where the ClientCertificate property no longer triggers renegotiation for HttpSys."
+ms.date: 07/20/2021
+ms.custom: https://github.com/aspnet/Announcements/issues/466
+no-loc: [ Kestrel ]
 ---
-
 # ClientCertificate property no longer triggers renegotiation for HttpSys
 
-The `HttpContext.Connection.ClientCertificate` property no longer triggers TLS renegotiations for HttpSys.
+The [`HttpContext.Connection.ClientCertificate`](xref:Microsoft.AspNetCore.Http.ConnectionInfo.ClientCertificate?displayProperty=nameWithType) property no longer triggers TLS renegotiations for HttpSys.
 
 ## Version introduced
 
@@ -37,14 +35,26 @@ if (connection.ClientCertificate == null)
 
 ## Recommended action
 
-Apps that use delayed client-certificate negotiation should call `Microsoft.AspNetCore.Http.ConnectionInfo.GetClientCertificateAsync(System.Threading.CancellationToken)` to trigger renegotiation.
+Apps that use delayed client-certificate negotiation should call <xref:Microsoft.AspNetCore.Http.ConnectionInfo.GetClientCertificateAsync(System.Threading.CancellationToken)> to trigger renegotiation.
 
 ## Affected APIs
 
-- `Microsoft.AspNetCore.Server.HttpSys.HttpSysOptions.ClientCertificateMethod`
-- `Microsoft.AspNetCore.Http.ConnectionInfo.ClientCertificate`
-- `Microsoft.AspNetCore.Http.ConnectionInfo.GetClientCertificateAsync(System.Threading.CancellationToken)`
+- <xref:Microsoft.AspNetCore.Server.HttpSys.HttpSysOptions.ClientCertificateMethod?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Http.ConnectionInfo.ClientCertificate?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Http.ConnectionInfo.GetClientCertificateAsync(System.Threading.CancellationToken)?displayProperty=fullName>
 
 ## See also
 
-- dotnet/aspnetcore issue number 34124
+- [dotnet/aspnetcore issue number 34124](https://github.com/dotnet/aspnetcore/issues/34124)
+
+<!--
+
+## Category
+
+ASP.NET Core
+
+## Affected APIs
+
+Not detectable via API analysis
+
+-->

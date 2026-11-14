@@ -1,13 +1,12 @@
 ---
-title: "Why migrate WCF to ASP.NET Core gRPC"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/grpc/why-migrate-wcf-to-dotnet-grpc.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Why migrate WCF to ASP.NET Core gRPC
+description: This article provides a summary of why ASP.NET Core gRPC is a good fit for Windows Communication Foundation (WCF) developers who want to migrate to modern architectures and platforms.
+monikerRange: '>= aspnetcore-3.0'
+ms.date: 09/02/2020
 ---
-
 # gRPC for Windows Communication Foundation (WCF) developers
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
 This article provides a summary of why ASP.NET Core gRPC is a good fit for Windows Communication Foundation (WCF) developers who want to migrate to modern architectures and platforms.
 
@@ -18,7 +17,7 @@ Although the implementation and approach are different for gRPC, the experience 
 * Make it possible to code as though the client and server are on the same platform.
 * Provide a simplified portable networking API.
 
-Both platforms share the requirement of declaring and implementing an interface, although the process for declaring the interface is different. The many types of RPC calls that gRPC supports map well to the bindings available to WCF services. For more information and examples, see Migrate a WCF solution to gRPC.
+Both platforms share the requirement of declaring and implementing an interface, although the process for declaring the interface is different. The many types of RPC calls that gRPC supports map well to the bindings available to WCF services. For more information and examples, see [Migrate a WCF solution to gRPC](/dotnet/architecture/grpc-for-wcf-developers/migrate-wcf-to-grpc).
 
 ## Benefits of gRPC
 
@@ -34,7 +33,7 @@ gRPC uses HTTP/2. In contrast to HTTP/1.1, HTTP/2:
 
 gRPC uses Protobuf, an efficient binary format, to serialize messages. Protobuf messages are:
 * Fast to serialize and deserialize.
-* Use less bandwidth than text-based formats.
+* Use less bandwidth than text-based formats. 
 
 gRPC is a good solution for mobile devices and networks with bandwidth restrictions.
 
@@ -64,8 +63,8 @@ There are two recommended paths for modernizing WCF apps:
 
 * gRPC is built on modern technologies and has emerged as the most popular choice across the developer community for RPC apps. Starting with .NET Core 3.0, modern .NET platforms have excellent support for gRPC. Migrating WCF services to use gRPC helps provide the RPC features, performance, an interoperability needed in modern apps.
 
-* CoreWCF is a community effort to bring support for hosting WCF services to .NET. CoreWCF only supports a subset of WCF's features, and .NET Framework apps that migrate to use it will need code changes and testing to be successful. CoreWCF is a good choice if an app has to maintain compatibility with existing clients that call WCF services.
+* [CoreWCF](https://github.com/CoreWCF/CoreWCF) is a community effort to bring support for hosting WCF services to .NET. CoreWCF only supports a subset of WCF's features, and .NET Framework apps that migrate to use it will need code changes and testing to be successful. CoreWCF is a good choice if an app has to maintain compatibility with existing clients that call WCF services.
 
 ## Get started
 
-For detailed guidance on building gRPC services in ASP.NET Core for WCF developers, see ASP.NET Core gRPC for WCF Developers
+For detailed guidance on building gRPC services in ASP.NET Core for WCF developers, see [ASP.NET Core gRPC for WCF Developers](/dotnet/architecture/grpc-for-wcf-developers)

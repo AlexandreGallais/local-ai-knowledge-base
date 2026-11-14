@@ -1,15 +1,6 @@
----
-title: "Migration from @Injectable to @Service"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/reference/migrations/injectable-to-service.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Migration from `@Injectable` to `@Service`
 
-This schematic converts eligible `@Injectable` classes to the `@Service` decorator, an ergonomic shorthand for `@Injectable({providedIn: 'root'})`.
+This schematic converts eligible `@Injectable` classes to the [`@Service`](/api/core/Service) decorator, an ergonomic shorthand for `@Injectable({providedIn: 'root'})`.
 It is available as of v22.1, and only migrates classes that are considered safe to migrate.
 
 Run the schematic using the following command:
@@ -59,7 +50,7 @@ import {Service} from '@angular/core';
 export class MyService {}
 ```
 
-For more details, see Opting out of automatic provisioning.
+For more details, see [Opting out of automatic provisioning](guide/di/creating-and-using-services#opting-out-of-automatic-provisioning).
 
 ## Configuration options
 
@@ -85,4 +76,4 @@ A file with both migrated and skipped classes keeps both imports.
 
 If the migration reports that it did not find any files to migrate, it did not change any file.
 Either it found no `@Injectable` class it could convert, or the code is already migrated.
-Constructor injection is the most common reason for a skip, and you can run the migration to the `inject` function first, then run this one again.
+Constructor injection is the most common reason for a skip, and you can run the [migration to the `inject` function](reference/migrations/inject-function) first, then run this one again.

@@ -1,19 +1,14 @@
 ---
-title: ".npm-extension"
-tool: "npm"
-version: "12.2"
-source: "https://github.com/npm/cli/blob/60e11343e61316d966c86805d803df5a0eb99230/docs/lib/content/configuring-npm/npm-extension.md"
-commit: "60e11343e61316d966c86805d803df5a0eb99230"
-license: "Artistic-2.0"
+title: .npm-extension
+section: 5
+description: Imperative, root-owned manifest repairs
 ---
-
-# .npm-extension
 
 ### Description
 
 A root-owned `.npm-extension.mjs` or `.npm-extension.cjs` file lets a project imperatively repair the manifests of third-party dependencies before npm resolves the dependency tree. It exports a `transformManifest(pkg, context)` function that receives a candidate dependency manifest and returns the effective manifest npm should use.
 
-`.npm-extension` is the imperative counterpart to the declarative `packageExtensions` field, and runs in the same pre-resolution phase, **before** `packageExtensions`. Prefer `packageExtensions` for simple, data-only repairs; reach for `.npm-extension` when you need comments and links explaining a repair, conditional logic, repeated repairs expressed as code, deletion or range rewrites, stale-repair guards, or a policy location outside `package.json`.
+`.npm-extension` is the imperative counterpart to the declarative [`packageExtensions`](/configuring-npm/package-json#packageextensions) field, and runs in the same pre-resolution phase, **before** `packageExtensions`. Prefer `packageExtensions` for simple, data-only repairs; reach for `.npm-extension` when you need comments and links explaining a repair, conditional logic, repeated repairs expressed as code, deletion or range rewrites, stale-repair guards, or a policy location outside `package.json`.
 
 ### Example
 
@@ -66,7 +61,7 @@ Within those fields you may add, replace, or delete entries. Changing any other 
 
 npm looks for a single `.npm-extension.mjs` or `.npm-extension.cjs` at the project root (the workspace root in a workspace project). Having both files present is an error. A `.npm-extension` file in a dependency or in a non-root workspace is ignored; a non-root workspace file produces a warning.
 
-The `extension-file` config selects a different project-local file. It must resolve inside the project root and use a `.mjs` or `.cjs` extension, and it is honored only from project config or the command line — never from user, global, or builtin config.
+The [`extension-file`](/using-npm/config#extension-file) config selects a different project-local file. It must resolve inside the project root and use a `.mjs` or `.cjs` extension, and it is honored only from project config or the command line — never from user, global, or builtin config.
 
 ### Interaction with `packageExtensions` and `overrides`
 
@@ -82,7 +77,7 @@ The hash proves only that the install uses the same extension file bytes that ge
 
 ### Disabling
 
-Set `ignore-extension` to skip importing and executing `.npm-extension`. `ignore-scripts` implies `ignore-extension`, since both disable root-owned install-time code. `npm ci` still verifies the file hash even when execution is disabled.
+Set [`ignore-extension`](/using-npm/config#ignore-extension) to skip importing and executing `.npm-extension`. [`ignore-scripts`](/using-npm/config#ignore-scripts) implies `ignore-extension`, since both disable root-owned install-time code. `npm ci` still verifies the file hash even when execution is disabled.
 
 ### Publishing
 
@@ -90,6 +85,6 @@ Set `ignore-extension` to skip importing and executing `.npm-extension`. `ignore
 
 ### See also
 
-* package.json `packageExtensions`
-* package-lock.json
-* config
+* [package.json `packageExtensions`](/configuring-npm/package-json#packageextensions)
+* [package-lock.json](/configuring-npm/package-lock-json)
+* [config](/using-npm/config)

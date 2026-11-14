@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: Microsoft.OpenApi upgraded to 3.x"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/11/microsoft-openapi-3x.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+ai-usage: ai-assisted
+description: "Learn about the breaking change in ASP.NET Core 11 where Microsoft.AspNetCore.OpenApi takes a dependency on Microsoft.OpenApi 3.x. Document and operation transformers might need updates."
+ms.date: 06/04/2026
 ---
-
 # Microsoft.OpenApi upgraded to 3.x
 
 `Microsoft.AspNetCore.OpenApi` in ASP.NET Core 11 takes a dependency on `Microsoft.OpenApi` 3.x. The previous release (.NET 10) depended on `Microsoft.OpenApi` 2.x. This is a major-version bump of a transitive dependency, and several types that document and operation transformers receive have changed shape.
@@ -42,7 +39,7 @@ builder.Services.AddOpenApi(options =>
 Starting in ASP.NET Core 11, `Microsoft.AspNetCore.OpenApi` depends on `Microsoft.OpenApi` 3.x. The `IOpenApiDocumentTransformer`, `IOpenApiOperationTransformer`, and `IOpenApiSchemaTransformer` interface signatures still expose the concrete `OpenApiDocument`, `OpenApiOperation`, and `OpenApiSchema` parameter types, but the surface area of those types has changed:
 
 - Several formerly concrete types that nested types expose are now interfaces (for example, `IOpenApiSchema`, `IOpenApiAny`).
-- The 2.x `OpenApiAny` types (such as `OpenApiString`, `OpenApiInteger`) were removed in favor of `System.Text.Json.Nodes.JsonNode`-based extension values.
+- The 2.x `OpenApiAny` types (such as `OpenApiString`, `OpenApiInteger`) were removed in favor of <xref:System.Text.Json.Nodes.JsonNode>-based extension values.
 - The `ParseNode` parsing infrastructure was removed in favor of visitor- and writer-based APIs.
 - The `OpenApiReference` model was reshaped to better distinguish between local and external references.
 
@@ -50,11 +47,11 @@ Transformer code that does anything more than read-only inspection—sets extens
 
 ## Type of breaking change
 
-This change can affect source compatibility, and also binary compatibility for libraries that were compiled against `Microsoft.OpenApi` 2.x and are loaded into an app that resolves the 3.x assembly at runtime.
+This change can affect [source compatibility](/dotnet/core/compatibility/categories#source-compatibility), and also [binary compatibility](/dotnet/core/compatibility/categories#binary-compatibility) for libraries that were compiled against `Microsoft.OpenApi` 2.x and are loaded into an app that resolves the 3.x assembly at runtime.
 
 ## Reason for change
 
-The new `Microsoft.OpenApi` 3.x release adds support for OpenAPI 3.1.0 and 3.2.0 specifications, fixes long-standing issues in the object model, and adopts interface-based abstractions that are easier to extend. For more information, see dotnet/aspnetcore#65415 and dotnet/aspnetcore#66998.
+The new `Microsoft.OpenApi` 3.x release adds support for OpenAPI 3.1.0 and 3.2.0 specifications, fixes long-standing issues in the object model, and adopts interface-based abstractions that are easier to extend. For more information, see [dotnet/aspnetcore#65415](https://github.com/dotnet/aspnetcore/pull/65415) and [dotnet/aspnetcore#66998](https://github.com/dotnet/aspnetcore/pull/66998).
 
 ## Recommended action
 
@@ -65,11 +62,11 @@ Update any custom document, operation, or schema transformer to compile against 
 - Update code that used the removed `ParseNode` parsing infrastructure to use the new visitor- and writer-based APIs.
 - Review use of `OpenApiReference`, which was reshaped to better distinguish between local and external references.
 
-For step-by-step migration instructions, see the Microsoft.OpenApi 3.x upgrade guide. For the per-release notes covering the 3.0, 3.1, 3.2, and later releases, see the OpenAPI.NET release notes.
+For step-by-step migration instructions, see the [Microsoft.OpenApi 3.x upgrade guide](https://github.com/microsoft/OpenAPI.NET/blob/main/docs/upgrade-guide-3.md). For the per-release notes covering the 3.0, 3.1, 3.2, and later releases, see the [OpenAPI.NET release notes](https://github.com/microsoft/OpenAPI.NET/releases).
 
 ## Affected APIs
 
-- `Microsoft.AspNetCore.OpenApi.IOpenApiDocumentTransformer`
-- `Microsoft.AspNetCore.OpenApi.IOpenApiOperationTransformer`
-- `Microsoft.AspNetCore.OpenApi.IOpenApiSchemaTransformer`
-- `Microsoft.AspNetCore.OpenApi.OpenApiOptions`
+- <xref:Microsoft.AspNetCore.OpenApi.IOpenApiDocumentTransformer>
+- <xref:Microsoft.AspNetCore.OpenApi.IOpenApiOperationTransformer>
+- <xref:Microsoft.AspNetCore.OpenApi.IOpenApiSchemaTransformer>
+- <xref:Microsoft.AspNetCore.OpenApi.OpenApiOptions>

@@ -1,12 +1,3 @@
----
-title: "std::os::windows::io::raw"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/os/windows/io/raw.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::os::windows::io::raw
 
 Windows-specific extensions to general I/O primitives.
@@ -44,15 +35,19 @@ fn as_raw_handle(&self) -> RawHandle
 Extracts the raw handle.
 
 This function is typically used to **borrow** an owned handle.
-When used in this way, this method does **not** pass <example-value> of the
+When used in this way, this method does **not** pass ownership of the
 raw handle to the caller, and the handle is only guaranteed
 to be valid while the original object has not yet been destroyed.
 
-This function may return null, such as when called on `Stdin`,
-`Stdout`, or `Stderr` when the console is detached.
+This function may return null, such as when called on [`Stdin`],
+[`Stdout`], or [`Stderr`] when the console is detached.
 
-However, borrowing is not strictly required. See `AsHandle::as_handle`
+However, borrowing is not strictly required. See [`AsHandle::as_handle`]
 for an API which strictly borrows a handle.
+
+[`Stdin`]: io::Stdin
+[`Stdout`]: io::Stdout
+[`Stderr`]: io::Stderr
 
 ## trait FromRawHandle
 
@@ -83,12 +78,16 @@ consumes ownership.
 # Safety
 
 The `handle` passed in must:
-  - be an owned handle; in particular, it must be open.
-  - be a handle for a resource that may be freed via `CloseHandle`
+  - be an [owned handle][io-safety]; in particular, it must be open.
+  - be a handle for a resource that may be freed via [`CloseHandle`]
     (as opposed to `RegCloseKey` or other close functions).
 
 Note that the handle *may* have the value `INVALID_HANDLE_VALUE` (-1),
 which is sometimes a valid handle value. See [here] for the full story.
+
+[`CloseHandle`]: https://docs.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-closehandle
+[here]: https://devblogs.microsoft.com/oldnewthing/20040302-00/?p=40443
+[io-safety]: io#io-safety
 
 ## trait IntoRawHandle
 
@@ -132,11 +131,11 @@ fn as_raw_socket(&self) -> RawSocket
 Extracts the raw socket.
 
 This function is typically used to **borrow** an owned socket.
-When used in this way, this method does **not** pass <example-value> of the
+When used in this way, this method does **not** pass ownership of the
 raw socket to the caller, and the socket is only guaranteed
 to be valid while the original object has not yet been destroyed.
 
-However, borrowing is not strictly required. See `AsSocket::as_socket`
+However, borrowing is not strictly required. See [`AsSocket::as_socket`]
 for an API which strictly borrows a socket.
 
 ## trait FromRawSocket
@@ -168,8 +167,11 @@ consumes ownership.
 # Safety
 
 The `socket` passed in must:
-  - be an owned socket; in particular, it must be open.
-  - be a socket that may be freed via `closesocket`.
+  - be an [owned socket][io-safety]; in particular, it must be open.
+  - be a socket that may be freed via [`closesocket`].
+
+[`closesocket`]: https://docs.microsoft.com/en-us/windows/win32/api/winsock2/nf-winsock2-closesocket
+[io-safety]: io#io-safety
 
 ## trait IntoRawSocket
 

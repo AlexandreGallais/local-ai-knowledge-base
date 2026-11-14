@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: Binding config to dictionary extends values"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/extensions/7.0/config-bind-dictionary.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 7 breaking change in .NET extensions where binding a configuration to a dictionary extends collection values instead of replacing the entire collection for a key.
+ms.date: 08/02/2023
 ---
-
 # Binding config to dictionary extends values
 
-When binding a configuration using a `System.Collections.Generic.Dictionary`2` object where the value is a mutable collection type, binding to the same key more than once now extends the values collection instead of replacing the whole collection with the new value.
+When binding a configuration using a <xref:System.Collections.Generic.Dictionary`2> object where the value is a mutable collection type, binding to the same key more than once now extends the values collection instead of replacing the whole collection with the new value.
 
 ## Version introduced
 
@@ -46,7 +42,7 @@ Bind again: NewValue
 
 ## New behavior
 
-Starting in .NET 7, the dictionary value is extended each time the same key is bound, adding the new value but also keeping any existing values in the array. The same code from the Previous behavior section produces the following output:
+Starting in .NET 7, the dictionary value is extended each time the same key is bound, adding the new value but also keeping any existing values in the array. The same code from the [Previous behavior](#previous-behavior) section produces the following output:
 
 ```output
 Initially: InitialValue
@@ -56,7 +52,7 @@ Bind again: InitialValue, NewValue, NewValue
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -68,4 +64,4 @@ If the new behavior is not satisfactory, you can manually manipulate the values 
 
 ## Affected APIs
 
-- ConfigurationBinder methods
+- [ConfigurationBinder methods](xref:Microsoft.Extensions.Configuration.ConfigurationBinder#methods)

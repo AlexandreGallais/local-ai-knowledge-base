@@ -1,26 +1,18 @@
----
-title: "Array class (java.lang.reflect) (part 1 of 2)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/reflect/Array.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Array class (java.lang.reflect)
 
 ```java
 public final class Array
 ```
 
-The `Array` class provides static methods to dynamically create and
+The {@code Array} class provides static methods to dynamically create and
 access Java arrays.
 
-`Array` permits widening conversions to occur during a get or set
-operation, but throws an `IllegalArgumentException` if a narrowing
+<p>{@code Array} permits widening conversions to occur during a get or set
+operation, but throws an {@code IllegalArgumentException} if a narrowing
 conversion would occur.
 
-**Since:** 1.1
+@author Nakul Saraiya
+@since 1.1
 
 ## Array.newInstance(Class<?>, int)
 
@@ -30,27 +22,27 @@ public static Object newInstance(Class<?> componentType, int length) throws Nega
 
 Creates a new array with the specified component type and
 length.
-
-Parameters:
-
-- `componentType`: the `Class` object representing the component type of the new array
-- `length`: the length of the new array
-
-**Implementation requirements:** Invoking this method is equivalent to creating an array
+@implSpec
+Invoking this method is equivalent to creating an array
 as follows:
+<blockquote>
+{@code Array.newInstance(componentType, new int[]{length});}
+</blockquote>
 
-`Array.newInstance(componentType, new int[]{length});`
-
-The number of dimensions of the new array must not
+<p>The number of dimensions of the new array must not
 exceed 255.
 
-**Returns:** the new array
-
-Throws:
-
-- `NullPointerException`: if the specified `componentType` parameter is null
-- `IllegalArgumentException`: if componentType is `Void.TYPE` or if the number of dimensions of the requested array instance exceed 255.
-- `NegativeArraySizeException`: if the specified `length` is negative
+@param  componentType the {@code Class} object representing the
+        component type of the new array
+@param  length the length of the new array
+@return the new array
+@throws NullPointerException if the specified
+        {@code componentType} parameter is null
+@throws IllegalArgumentException if componentType is {@link
+        Void#TYPE} or if the number of dimensions of the requested array
+        instance exceed 255.
+@throws NegativeArraySizeException if the specified {@code length}
+        is negative
 
 ## Array.newInstance(Class<?>, int...)
 
@@ -60,32 +52,33 @@ public static Object newInstance(Class<?> componentType, int... dimensions) thro
 
 Creates a new array
 with the specified component type and dimensions.
-If `componentType`
+If {@code componentType}
 represents a non-array class or interface, the new array
-has `dimensions.length` dimensions and
-`componentType` as its component type. If
-`componentType` represents an array class, the
+has {@code dimensions.length} dimensions and
+{@code componentType} as its component type. If
+{@code componentType} represents an array class, the
 number of dimensions of the new array is equal to the sum
-of `dimensions.length` and the number of
-dimensions of `componentType`. In this case, the
+of {@code dimensions.length} and the number of
+dimensions of {@code componentType}. In this case, the
 component type of the new array is the component type of
-`componentType`.
+{@code componentType}.
 
-The number of dimensions of the new array must not
+<p>The number of dimensions of the new array must not
 exceed 255.
 
-Parameters:
-
-- `componentType`: the `Class` object representing the component type of the new array
-- `dimensions`: an array of `int` representing the dimensions of the new array
-
-**Returns:** the new array
-
-Throws:
-
-- `NullPointerException`: if the specified `componentType` argument is null
-- `IllegalArgumentException`: if the specified `dimensions` argument is a zero-dimensional array, if componentType is `Void.TYPE`, or if the number of dimensions of the requested array instance exceed 255.
-- `NegativeArraySizeException`: if any of the components in the specified `dimensions` argument is negative.
+@param componentType the {@code Class} object representing the component
+type of the new array
+@param dimensions an array of {@code int} representing the dimensions of
+the new array
+@return the new array
+@throws    NullPointerException if the specified
+{@code componentType} argument is null
+@throws    IllegalArgumentException if the specified {@code dimensions}
+argument is a zero-dimensional array, if componentType is {@link
+Void#TYPE}, or if the number of dimensions of the requested array
+instance exceed 255.
+@throws    NegativeArraySizeException if any of the components in
+the specified {@code dimensions} argument is negative.
 
 ## Array.getLength(Object)
 
@@ -93,17 +86,12 @@ Throws:
 public static native int getLength(Object array) throws IllegalArgumentException
 ```
 
-Returns the length of the specified array object, as an `int`.
+Returns the length of the specified array object, as an {@code int}.
 
-Parameters:
-
-- `array`: the array
-
-**Returns:** the length of the array
-
-Throws:
-
-- `IllegalArgumentException`: if the object argument is not an array
+@param array the array
+@return the length of the array
+@throws    IllegalArgumentException if the object argument is not
+an array
 
 ## Array.get(Object, int)
 
@@ -115,19 +103,16 @@ Returns the value of the indexed component in the specified
 array object.  The value is automatically wrapped in an object
 if it has a primitive type.
 
-Parameters:
-
-- `array`: the array
-- `index`: the index
-
-**Returns:** the (possibly wrapped) value of the indexed component in
+@param array the array
+@param index the index
+@return the (possibly wrapped) value of the indexed component in
 the specified array
-
-Throws:
-
-- `NullPointerException`: If the specified object is null
-- `IllegalArgumentException`: If the specified object is not an array
-- `ArrayIndexOutOfBoundsException`: If the specified `index` argument is negative, or if it is greater than or equal to the length of the specified array
+@throws    NullPointerException If the specified object is null
+@throws    IllegalArgumentException If the specified object is not
+an array
+@throws    ArrayIndexOutOfBoundsException If the specified {@code index}
+argument is negative, or if it is greater than or equal to the
+length of the specified array
 
 ## Array.getBoolean(Object, int)
 
@@ -136,22 +121,19 @@ public static native boolean getBoolean(Object array, int index) throws IllegalA
 ```
 
 Returns the value of the indexed component in the specified
-array object, as a `boolean`.
+array object, as a {@code boolean}.
 
-Parameters:
-
-- `array`: the array
-- `index`: the index
-
-**Returns:** the value of the indexed component in the specified array
-
-**See also:** Array#get
-
-Throws:
-
-- `NullPointerException`: If the specified object is null
-- `IllegalArgumentException`: If the specified object is not an array, or if the indexed element cannot be converted to the return type by an identity or widening conversion
-- `ArrayIndexOutOfBoundsException`: If the specified `index` argument is negative, or if it is greater than or equal to the length of the specified array
+@param array the array
+@param index the index
+@return the value of the indexed component in the specified array
+@throws    NullPointerException If the specified object is null
+@throws    IllegalArgumentException If the specified object is not
+an array, or if the indexed element cannot be converted to the
+return type by an identity or widening conversion
+@throws    ArrayIndexOutOfBoundsException If the specified {@code index}
+argument is negative, or if it is greater than or equal to the
+length of the specified array
+@see Array#get
 
 ## Array.getByte(Object, int)
 
@@ -160,22 +142,19 @@ public static native byte getByte(Object array, int index) throws IllegalArgumen
 ```
 
 Returns the value of the indexed component in the specified
-array object, as a `byte`.
+array object, as a {@code byte}.
 
-Parameters:
-
-- `array`: the array
-- `index`: the index
-
-**Returns:** the value of the indexed component in the specified array
-
-**See also:** Array#get
-
-Throws:
-
-- `NullPointerException`: If the specified object is null
-- `IllegalArgumentException`: If the specified object is not an array, or if the indexed element cannot be converted to the return type by an identity or widening conversion
-- `ArrayIndexOutOfBoundsException`: If the specified `index` argument is negative, or if it is greater than or equal to the length of the specified array
+@param array the array
+@param index the index
+@return the value of the indexed component in the specified array
+@throws    NullPointerException If the specified object is null
+@throws    IllegalArgumentException If the specified object is not
+an array, or if the indexed element cannot be converted to the
+return type by an identity or widening conversion
+@throws    ArrayIndexOutOfBoundsException If the specified {@code index}
+argument is negative, or if it is greater than or equal to the
+length of the specified array
+@see Array#get
 
 ## Array.getChar(Object, int)
 
@@ -184,22 +163,19 @@ public static native char getChar(Object array, int index) throws IllegalArgumen
 ```
 
 Returns the value of the indexed component in the specified
-array object, as a `char`.
+array object, as a {@code char}.
 
-Parameters:
-
-- `array`: the array
-- `index`: the index
-
-**Returns:** the value of the indexed component in the specified array
-
-**See also:** Array#get
-
-Throws:
-
-- `NullPointerException`: If the specified object is null
-- `IllegalArgumentException`: If the specified object is not an array, or if the indexed element cannot be converted to the return type by an identity or widening conversion
-- `ArrayIndexOutOfBoundsException`: If the specified `index` argument is negative, or if it is greater than or equal to the length of the specified array
+@param array the array
+@param index the index
+@return the value of the indexed component in the specified array
+@throws    NullPointerException If the specified object is null
+@throws    IllegalArgumentException If the specified object is not
+an array, or if the indexed element cannot be converted to the
+return type by an identity or widening conversion
+@throws    ArrayIndexOutOfBoundsException If the specified {@code index}
+argument is negative, or if it is greater than or equal to the
+length of the specified array
+@see Array#get
 
 ## Array.getShort(Object, int)
 
@@ -208,22 +184,19 @@ public static native short getShort(Object array, int index) throws IllegalArgum
 ```
 
 Returns the value of the indexed component in the specified
-array object, as a `short`.
+array object, as a {@code short}.
 
-Parameters:
-
-- `array`: the array
-- `index`: the index
-
-**Returns:** the value of the indexed component in the specified array
-
-**See also:** Array#get
-
-Throws:
-
-- `NullPointerException`: If the specified object is null
-- `IllegalArgumentException`: If the specified object is not an array, or if the indexed element cannot be converted to the return type by an identity or widening conversion
-- `ArrayIndexOutOfBoundsException`: If the specified `index` argument is negative, or if it is greater than or equal to the length of the specified array
+@param array the array
+@param index the index
+@return the value of the indexed component in the specified array
+@throws    NullPointerException If the specified object is null
+@throws    IllegalArgumentException If the specified object is not
+an array, or if the indexed element cannot be converted to the
+return type by an identity or widening conversion
+@throws    ArrayIndexOutOfBoundsException If the specified {@code index}
+argument is negative, or if it is greater than or equal to the
+length of the specified array
+@see Array#get
 
 ## Array.getInt(Object, int)
 
@@ -232,22 +205,19 @@ public static native int getInt(Object array, int index) throws IllegalArgumentE
 ```
 
 Returns the value of the indexed component in the specified
-array object, as an `int`.
+array object, as an {@code int}.
 
-Parameters:
-
-- `array`: the array
-- `index`: the index
-
-**Returns:** the value of the indexed component in the specified array
-
-**See also:** Array#get
-
-Throws:
-
-- `NullPointerException`: If the specified object is null
-- `IllegalArgumentException`: If the specified object is not an array, or if the indexed element cannot be converted to the return type by an identity or widening conversion
-- `ArrayIndexOutOfBoundsException`: If the specified `index` argument is negative, or if it is greater than or equal to the length of the specified array
+@param array the array
+@param index the index
+@return the value of the indexed component in the specified array
+@throws    NullPointerException If the specified object is null
+@throws    IllegalArgumentException If the specified object is not
+an array, or if the indexed element cannot be converted to the
+return type by an identity or widening conversion
+@throws    ArrayIndexOutOfBoundsException If the specified {@code index}
+argument is negative, or if it is greater than or equal to the
+length of the specified array
+@see Array#get
 
 ## Array.getLong(Object, int)
 
@@ -256,22 +226,19 @@ public static native long getLong(Object array, int index) throws IllegalArgumen
 ```
 
 Returns the value of the indexed component in the specified
-array object, as a `long`.
+array object, as a {@code long}.
 
-Parameters:
-
-- `array`: the array
-- `index`: the index
-
-**Returns:** the value of the indexed component in the specified array
-
-**See also:** Array#get
-
-Throws:
-
-- `NullPointerException`: If the specified object is null
-- `IllegalArgumentException`: If the specified object is not an array, or if the indexed element cannot be converted to the return type by an identity or widening conversion
-- `ArrayIndexOutOfBoundsException`: If the specified `index` argument is negative, or if it is greater than or equal to the length of the specified array
+@param array the array
+@param index the index
+@return the value of the indexed component in the specified array
+@throws    NullPointerException If the specified object is null
+@throws    IllegalArgumentException If the specified object is not
+an array, or if the indexed element cannot be converted to the
+return type by an identity or widening conversion
+@throws    ArrayIndexOutOfBoundsException If the specified {@code index}
+argument is negative, or if it is greater than or equal to the
+length of the specified array
+@see Array#get
 
 ## Array.getFloat(Object, int)
 
@@ -280,22 +247,19 @@ public static native float getFloat(Object array, int index) throws IllegalArgum
 ```
 
 Returns the value of the indexed component in the specified
-array object, as a `float`.
+array object, as a {@code float}.
 
-Parameters:
-
-- `array`: the array
-- `index`: the index
-
-**Returns:** the value of the indexed component in the specified array
-
-**See also:** Array#get
-
-Throws:
-
-- `NullPointerException`: If the specified object is null
-- `IllegalArgumentException`: If the specified object is not an array, or if the indexed element cannot be converted to the return type by an identity or widening conversion
-- `ArrayIndexOutOfBoundsException`: If the specified `index` argument is negative, or if it is greater than or equal to the length of the specified array
+@param array the array
+@param index the index
+@return the value of the indexed component in the specified array
+@throws    NullPointerException If the specified object is null
+@throws    IllegalArgumentException If the specified object is not
+an array, or if the indexed element cannot be converted to the
+return type by an identity or widening conversion
+@throws    ArrayIndexOutOfBoundsException If the specified {@code index}
+argument is negative, or if it is greater than or equal to the
+length of the specified array
+@see Array#get
 
 ## Array.getDouble(Object, int)
 
@@ -304,22 +268,19 @@ public static native double getDouble(Object array, int index) throws IllegalArg
 ```
 
 Returns the value of the indexed component in the specified
-array object, as a `double`.
+array object, as a {@code double}.
 
-Parameters:
-
-- `array`: the array
-- `index`: the index
-
-**Returns:** the value of the indexed component in the specified array
-
-**See also:** Array#get
-
-Throws:
-
-- `NullPointerException`: If the specified object is null
-- `IllegalArgumentException`: If the specified object is not an array, or if the indexed element cannot be converted to the return type by an identity or widening conversion
-- `ArrayIndexOutOfBoundsException`: If the specified `index` argument is negative, or if it is greater than or equal to the length of the specified array
+@param array the array
+@param index the index
+@return the value of the indexed component in the specified array
+@throws    NullPointerException If the specified object is null
+@throws    IllegalArgumentException If the specified object is not
+an array, or if the indexed element cannot be converted to the
+return type by an identity or widening conversion
+@throws    ArrayIndexOutOfBoundsException If the specified {@code index}
+argument is negative, or if it is greater than or equal to the
+length of the specified array
+@see Array#get
 
 ## Array.set(Object, int, Object)
 
@@ -331,18 +292,17 @@ Sets the value of the indexed component of the specified array
 object to the specified new value.  The new value is first
 automatically unwrapped if the array has a primitive component
 type.
-
-Parameters:
-
-- `array`: the array
-- `index`: the index into the array
-- `value`: the new value of the indexed component
-
-Throws:
-
-- `NullPointerException`: If the specified object argument is null
-- `IllegalArgumentException`: If the specified object argument is not an array, or if the array component type is primitive and an unwrapping conversion fails
-- `ArrayIndexOutOfBoundsException`: If the specified `index` argument is negative, or if it is greater than or equal to the length of the specified array
+@param array the array
+@param index the index into the array
+@param value the new value of the indexed component
+@throws    NullPointerException If the specified object argument
+is null
+@throws    IllegalArgumentException If the specified object argument
+is not an array, or if the array component type is primitive and
+an unwrapping conversion fails
+@throws    ArrayIndexOutOfBoundsException If the specified {@code index}
+argument is negative, or if it is greater than or equal to
+the length of the specified array
 
 ## Array.setBoolean(Object, int, boolean)
 
@@ -351,21 +311,20 @@ public static native void setBoolean(Object array, int index, boolean z) throws 
 ```
 
 Sets the value of the indexed component of the specified array
-object to the specified `boolean` value.
-
-Parameters:
-
-- `array`: the array
-- `index`: the index into the array
-- `z`: the new value of the indexed component
-
-**See also:** Array#set
-
-Throws:
-
-- `NullPointerException`: If the specified object argument is null
-- `IllegalArgumentException`: If the specified object argument is not an array, or if the specified value cannot be converted to the underlying array's component type by an identity or a primitive widening conversion
-- `ArrayIndexOutOfBoundsException`: If the specified `index` argument is negative, or if it is greater than or equal to the length of the specified array
+object to the specified {@code boolean} value.
+@param array the array
+@param index the index into the array
+@param z the new value of the indexed component
+@throws    NullPointerException If the specified object argument
+is null
+@throws    IllegalArgumentException If the specified object argument
+is not an array, or if the specified value cannot be converted
+to the underlying array's component type by an identity or a
+primitive widening conversion
+@throws    ArrayIndexOutOfBoundsException If the specified {@code index}
+argument is negative, or if it is greater than or equal to
+the length of the specified array
+@see Array#set
 
 ## Array.setByte(Object, int, byte)
 
@@ -374,21 +333,20 @@ public static native void setByte(Object array, int index, byte b) throws Illega
 ```
 
 Sets the value of the indexed component of the specified array
-object to the specified `byte` value.
-
-Parameters:
-
-- `array`: the array
-- `index`: the index into the array
-- `b`: the new value of the indexed component
-
-**See also:** Array#set
-
-Throws:
-
-- `NullPointerException`: If the specified object argument is null
-- `IllegalArgumentException`: If the specified object argument is not an array, or if the specified value cannot be converted to the underlying array's component type by an identity or a primitive widening conversion
-- `ArrayIndexOutOfBoundsException`: If the specified `index` argument is negative, or if it is greater than or equal to the length of the specified array
+object to the specified {@code byte} value.
+@param array the array
+@param index the index into the array
+@param b the new value of the indexed component
+@throws    NullPointerException If the specified object argument
+is null
+@throws    IllegalArgumentException If the specified object argument
+is not an array, or if the specified value cannot be converted
+to the underlying array's component type by an identity or a
+primitive widening conversion
+@throws    ArrayIndexOutOfBoundsException If the specified {@code index}
+argument is negative, or if it is greater than or equal to
+the length of the specified array
+@see Array#set
 
 ## Array.setChar(Object, int, char)
 
@@ -397,21 +355,20 @@ public static native void setChar(Object array, int index, char c) throws Illega
 ```
 
 Sets the value of the indexed component of the specified array
-object to the specified `char` value.
-
-Parameters:
-
-- `array`: the array
-- `index`: the index into the array
-- `c`: the new value of the indexed component
-
-**See also:** Array#set
-
-Throws:
-
-- `NullPointerException`: If the specified object argument is null
-- `IllegalArgumentException`: If the specified object argument is not an array, or if the specified value cannot be converted to the underlying array's component type by an identity or a primitive widening conversion
-- `ArrayIndexOutOfBoundsException`: If the specified `index` argument is negative, or if it is greater than or equal to the length of the specified array
+object to the specified {@code char} value.
+@param array the array
+@param index the index into the array
+@param c the new value of the indexed component
+@throws    NullPointerException If the specified object argument
+is null
+@throws    IllegalArgumentException If the specified object argument
+is not an array, or if the specified value cannot be converted
+to the underlying array's component type by an identity or a
+primitive widening conversion
+@throws    ArrayIndexOutOfBoundsException If the specified {@code index}
+argument is negative, or if it is greater than or equal to
+the length of the specified array
+@see Array#set
 
 ## Array.setShort(Object, int, short)
 
@@ -420,18 +377,105 @@ public static native void setShort(Object array, int index, short s) throws Ille
 ```
 
 Sets the value of the indexed component of the specified array
-object to the specified `short` value.
+object to the specified {@code short} value.
+@param array the array
+@param index the index into the array
+@param s the new value of the indexed component
+@throws    NullPointerException If the specified object argument
+is null
+@throws    IllegalArgumentException If the specified object argument
+is not an array, or if the specified value cannot be converted
+to the underlying array's component type by an identity or a
+primitive widening conversion
+@throws    ArrayIndexOutOfBoundsException If the specified {@code index}
+argument is negative, or if it is greater than or equal to
+the length of the specified array
+@see Array#set
 
-Parameters:
+## Array.setInt(Object, int, int)
 
-- `array`: the array
-- `index`: the index into the array
-- `s`: the new value of the indexed component
+```java
+public static native void setInt(Object array, int index, int i) throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+```
 
-**See also:** Array#set
+Sets the value of the indexed component of the specified array
+object to the specified {@code int} value.
+@param array the array
+@param index the index into the array
+@param i the new value of the indexed component
+@throws    NullPointerException If the specified object argument
+is null
+@throws    IllegalArgumentException If the specified object argument
+is not an array, or if the specified value cannot be converted
+to the underlying array's component type by an identity or a
+primitive widening conversion
+@throws    ArrayIndexOutOfBoundsException If the specified {@code index}
+argument is negative, or if it is greater than or equal to
+the length of the specified array
+@see Array#set
 
-Throws:
+## Array.setLong(Object, int, long)
 
-- `NullPointerException`: If the specified object argument is null
-- `IllegalArgumentException`: If the specified object argument is not an array, or if the specified value cannot be converted to the underlying array's component type by an identity or a primitive widening conversion
-- `ArrayIndexOutOfBoundsException`: If the specified `index` argument is negative, or if it is greater than or equal to the length of the specified array
+```java
+public static native void setLong(Object array, int index, long l) throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+```
+
+Sets the value of the indexed component of the specified array
+object to the specified {@code long} value.
+@param array the array
+@param index the index into the array
+@param l the new value of the indexed component
+@throws    NullPointerException If the specified object argument
+is null
+@throws    IllegalArgumentException If the specified object argument
+is not an array, or if the specified value cannot be converted
+to the underlying array's component type by an identity or a
+primitive widening conversion
+@throws    ArrayIndexOutOfBoundsException If the specified {@code index}
+argument is negative, or if it is greater than or equal to
+the length of the specified array
+@see Array#set
+
+## Array.setFloat(Object, int, float)
+
+```java
+public static native void setFloat(Object array, int index, float f) throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+```
+
+Sets the value of the indexed component of the specified array
+object to the specified {@code float} value.
+@param array the array
+@param index the index into the array
+@param f the new value of the indexed component
+@throws    NullPointerException If the specified object argument
+is null
+@throws    IllegalArgumentException If the specified object argument
+is not an array, or if the specified value cannot be converted
+to the underlying array's component type by an identity or a
+primitive widening conversion
+@throws    ArrayIndexOutOfBoundsException If the specified {@code index}
+argument is negative, or if it is greater than or equal to
+the length of the specified array
+@see Array#set
+
+## Array.setDouble(Object, int, double)
+
+```java
+public static native void setDouble(Object array, int index, double d) throws IllegalArgumentException, ArrayIndexOutOfBoundsException
+```
+
+Sets the value of the indexed component of the specified array
+object to the specified {@code double} value.
+@param array the array
+@param index the index into the array
+@param d the new value of the indexed component
+@throws    NullPointerException If the specified object argument
+is null
+@throws    IllegalArgumentException If the specified object argument
+is not an array, or if the specified value cannot be converted
+to the underlying array's component type by an identity or a
+primitive widening conversion
+@throws    ArrayIndexOutOfBoundsException If the specified {@code index}
+argument is negative, or if it is greater than or equal to
+the length of the specified array
+@see Array#set

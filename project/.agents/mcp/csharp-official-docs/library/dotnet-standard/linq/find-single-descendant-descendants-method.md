@@ -1,19 +1,20 @@
 ---
-title: "How to find a single descendant using the Descendants method - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/find-single-descendant-descendants-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to find a single descendant using the Descendants method - LINQ to XML
+description: Use the XContainer.Descendants axis method to find a single uniquely-named descendant element.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to find a single descendant using the Descendants method (LINQ to XML)
 
-You can use the `System.Xml.Linq.XContainer.Descendants*` axis method to find a single uniquely-named descendant element. This technique is especially useful when you want to find a particular descendant with a specific name, and may be faster and easier to use than navigating the XML tree.
+You can use the <xref:System.Xml.Linq.XContainer.Descendants*> axis method to find a single uniquely-named descendant element. This technique is especially useful when you want to find a particular descendant with a specific name, and may be faster and easier to use than navigating the XML tree.
 
 ## Example: Use XContainer.Descendants to find a single uniquely-named descendant element
 
-This example uses the `System.Linq.Enumerable.First*` standard query operator.
+This example uses the <xref:System.Linq.Enumerable.First*> standard query operator.
 
 ```csharp
 XElement root = XElement.Parse(@"<Root>
@@ -66,7 +67,7 @@ GC3 Value
 
 ## Example: Find when the XML is in a namespace
 
-The following example does the same as the previous one, but for XML that's  in a namespace. For more information, see Namespaces overview.
+The following example does the same as the previous one, but for XML that's  in a namespace. For more information, see [Namespaces overview](namespaces-overview.md).
 
 ```csharp
 XElement root = XElement.Parse(@"<aw:Root xmlns:aw='http://www.adventure-works.com'>

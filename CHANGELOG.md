@@ -5,6 +5,73 @@ Versioning. Version 0.1 keeps its own changelog in `archive/v0.1/CHANGELOG.md`.
 
 ## [Unreleased]
 
+### Changed: the official documentation taken as it is
+
+- Every documentation file is the official file, unchanged, in its own format: Markdown, MDX,
+  reStructuredText, AsciiDoc, LaTeX, Texinfo, PreTeXt, XML, HTML. No header added, no markup removed,
+  no file cut. What describes a source (version, commit, license) is beside its files:
+  `library/<tool>.index.md`, `library/lock.json`, `library/README.md`, `THIRD_PARTY_NOTICES.md`.
+- The search cuts each file into sections by its format, at search time: Markdown headings of levels
+  2 to 4, underlined headings of reStructuredText and AsciiDoc, `\section` of LaTeX, `@section` of
+  Texinfo, `<section>` of PreTeXt, the members of an XML documentation of .NET, `<h2>` of HTML.
+- An API reference that lives only in the comments of the code is taken from them, unchanged, with the
+  declaration it documents: Angular (`@publicApi`), RxJS, NgRx Signals, the Rust standard library,
+  the JDK, the `inkex` package of Inkscape.
+- An exact API name written with the same case comes first (`inject` before `Inject`).
+
+### Added: the official documentation that was missing
+
+- JavaScript and TypeScript: the API reference of Angular, RxJS and NgRx Signals, the Angular CLI,
+  the `tsconfig` reference, the guides of typescript-eslint, Prettier, EditorConfig,
+  eslint-plugin-import-x, eslint-config-prettier, stylelint-config-recess-order,
+  eslint-plugin-headers, Sass, Storybook, the ARIA Authoring Practices Guide.
+- C# and .NET: the API reference of ASP.NET Core and EF Core (the XML documentation of their NuGet
+  packages), the .NET fundamentals and architecture guides, .NET Aspire.
+- Rust: the Cargo book and Rust by Example. Java: Gradle and Maven.
+- Four new bricks, each with its server and its export pack: `containers-official-docs` (Dockerfile,
+  Docker, Podman, Compose, Dev Containers, OCI), `git-official-docs`, `cpp-official-docs`
+  (cppreference.com, CMake, Clang, GNU Make, GCC) and `math-docs` (free textbooks of linear algebra,
+  discrete mathematics and combinatorics, in their LaTeX and PreTeXt source).
+- A source may be an archive (a NuGet package, a ZIP) instead of a Git repository.
+- `scripts/sync-docs-bricks.ts` copies the shared code of the documentation bricks.
+
+### Removed with the documentation taken as it is
+
+- The cleaning of each flavor of documentation, the converters to Markdown (reStructuredText, XML of
+  .NET), the files cut at 16 KB, and the documentation of the plugins the kit no longer uses.
+
+### Changed: Prettier lays out the code, and the lint has no opinion
+
+- Prettier and EditorConfig are the base of the format, with the defaults of an Angular project: 2
+  spaces, single quotes in TypeScript, LF, a final newline, templates read by the Angular parser.
+- The format adds what Prettier does not do, without ever fighting it (eslint-config-prettier first,
+  and a test with its own checker): imports, exports, types and class members sorted, blank lines,
+  braces, the copyright line (eslint-plugin-headers), the notation of the standard Stylelint config,
+  CSS properties in the order of Recess (stylelint-config-recess-order).
+- The lint keeps real errors and recognised good practice only. Rules that were a matter of taste are
+  gone: no ban on classes, `enum` or bitwise operators, no return type asked everywhere, no single
+  function per file, no sorted object keys.
+- The rules are grouped by theme, one file each in `lint/eslint/` and `lint/stylelint/`, each with a
+  short introduction and a comment per rule. `lint/settings.mjs` switches each theme on or off: turn
+  off what blocks the team today without uninstalling its package.
+- eslint-plugin-import-x replaces import-lite and the local import rules: cycles, duplicates,
+  packages not declared in `package.json`.
+- JavaScript files (`.mjs`, `.js`) are formatted and linted, without the rules that need the types.
+- `tsconfig.json` targets ES2025 with the strictest options.
+- Scripts `format:js`, `format:scss`, `lint:js`, `lint:scss`, then `format`, `lint` and `check`. The
+  output is that of ESLint and Stylelint, one line per error.
+- OpenCode formats `.ts`, `.mts`, `.js`, `.mjs`, `.html`, `.json`, `.css` and `.scss`: ESLint, then
+  Prettier, then Stylelint.
+- The kit is a project of its own, with `package.json`, `tsconfig.json` and example code: `npm install`
+  then `npm run check` work in it as they are. The import writes it whole in an empty folder; in a
+  project that exists, it replaces nothing, leaves the example code aside, and lists what it left.
+
+### Removed with Prettier
+
+- `lint/formatter.cjs`, `lint/packages.json`, `lint/optional.mjs`, `lint/project.mjs`,
+  `lint/local-rules.mjs` and `lint/tsconfig.strict.json`; the merge of `package.json` by the import;
+  ESLint Stylistic layout rules, `@stylistic/stylelint-plugin` and eslint-plugin-jsonc.
+
 ### Added: the official documentation of C#, Python, Rust and Java
 
 - Four documentation bricks, each with its own MCP server and its own export pack:

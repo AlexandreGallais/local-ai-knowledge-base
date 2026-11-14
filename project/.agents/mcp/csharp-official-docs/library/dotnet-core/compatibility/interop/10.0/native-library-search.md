@@ -1,17 +1,15 @@
 ---
 title: "Breaking change - Single-file apps no longer look for native libraries in executable directory"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/interop/10.0/native-library-search.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where single-file apps no longer look for native libraries in the executable directory."
+ms.date: 06/25/2025
+ms.custom: https://github.com/dotnet/docs/issues/46356
 ---
 
 # Single-file apps no longer look for native libraries in executable directory
 
-Previously, in single-file .NET applications, the directory of the single-file executable was added to the `NATIVE_DLL_SEARCH_DIRECTORIES` property during startup. Consequently, .NET always probed the application directory when unmanaged libraries were loaded. On non-Windows with NativeAOT, the `rpath` was set to the application directory by default, such that it also always looked for native libraries in the application directory.
+Previously, in [single-file .NET applications](../../../deploying/single-file/overview.md), the directory of the single-file executable was added to the `NATIVE_DLL_SEARCH_DIRECTORIES` property during startup. Consequently, .NET always [probed](../../../dependency-loading/default-probing.md#unmanaged-native-library-probing) the application directory when unmanaged libraries were loaded. On non-Windows with [NativeAOT](../../../deploying/native-aot/index.md), the `rpath` was set to the application directory by default, such that it also always looked for native libraries in the application directory.
 
-The application directory is no longer added to `NATIVE_DLL_SEARCH_DIRECTORIES` in single-file apps, and the `rpath` setting has been removed in NativeAOT. In both cases, `System.Runtime.InteropServices.DllImportSearchPath.AssemblyDirectory` (included in the default behaviour for P/Invokes) means the application directory. If you specify that value or leave the default, .NET looks in the application directory. If you specify flags without that value, .NET no longer looks in the application directory.
+The application directory is no longer added to `NATIVE_DLL_SEARCH_DIRECTORIES` in single-file apps, and the `rpath` setting has been removed in NativeAOT. In both cases, <xref:System.Runtime.InteropServices.DllImportSearchPath.AssemblyDirectory?displayProperty=nameWithType> (included in the default behaviour for P/Invokes) means the application directory. If you specify that value or leave the default, .NET looks in the application directory. If you specify flags without that value, .NET no longer looks in the application directory.
 
 ## Version introduced
 
@@ -54,7 +52,7 @@ static extern void Method()
 
 ## Type of breaking change
 
-This is a behavioral change.
+This is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -62,16 +60,16 @@ The existing behavior (always look in the application directory even if search p
 
 ## Recommended action
 
-If the application/assembly directory is desired for a P/Invoke or native library load and wasn't previously specified, specify `System.Runtime.InteropServices.DllImportSearchPath.AssemblyDirectory`.
+If the application/assembly directory is desired for a P/Invoke or native library load and wasn't previously specified, specify <xref:System.Runtime.InteropServices.DllImportSearchPath.AssemblyDirectory?displayProperty=nameWithType>.
 
-If the `RPATH` setting is desired in NativeAOT, explicitly add the corresponding linker arguments to your project.
+If the `RPATH` setting is desired in NativeAOT, explicitly add the corresponding [linker arguments](../../../deploying/native-aot/interop.md#linking) to your project.
 
 ## Affected APIs
 
 - P/Invokes
-- `System.Runtime.InteropServices.NativeLibrary.Load*`
-- `System.Runtime.InteropServices.NativeLibrary.TryLoad*`
+- <xref:System.Runtime.InteropServices.NativeLibrary.Load*?displayProperty=fullName>
+- <xref:System.Runtime.InteropServices.NativeLibrary.TryLoad*?displayProperty=fullName>
 
 ## See also
 
-- Specifying DllImportSearchPath.AssemblyDirectory only searches the assembly directory
+- [Specifying DllImportSearchPath.AssemblyDirectory only searches the assembly directory](search-assembly-directory.md)

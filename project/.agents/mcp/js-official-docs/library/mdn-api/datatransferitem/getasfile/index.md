@@ -1,0 +1,68 @@
+---
+title: "DataTransferItem: getAsFile() method"
+short-title: getAsFile()
+slug: Web/API/DataTransferItem/getAsFile
+page-type: web-api-instance-method
+browser-compat: api.DataTransferItem.getAsFile
+---
+
+{{APIRef("HTML Drag and Drop API")}}
+
+The **`getAsFile()`** method of the {{domxref("DataTransferItem")}} interface returns the drag data item's {{domxref("File")}} object if the item is a file. If the item is not a file, this method returns `null`.
+
+During a drag operation, this method can only read data in the handlers for the {{domxref("HTMLElement/dragstart_event", "dragstart")}} and {{domxref("HTMLElement/drop_event", "drop")}} events, because those are the only times the drag data store is readable. Calling it from any other drag event returns `null`. See [Reading the drag data store](/en-US/docs/Web/API/HTML_Drag_and_Drop_API/Drag_data_store#reading_the_drag_data_store) for details.
+
+## Syntax
+
+```js-nolint
+getAsFile()
+```
+
+### Parameters
+
+None.
+
+### Return value
+
+If the drag data item is a file, a {{domxref("File")}} object is returned; otherwise `null` is returned.
+
+## Examples
+
+This example shows the use of the `getAsFile()` method in a {{domxref("HTMLElement/drop_event", "drop")}} event handler.
+
+```js
+function dropHandler(ev) {
+  console.log("Drop");
+  ev.preventDefault();
+  for (const item of ev.dataTransfer.items) {
+    if (item.kind === "string" && item.type === "text/plain") {
+      // This item is the target node
+      item.getAsString((s) => {
+        ev.target.appendChild(document.getElementById(s));
+      });
+    } else if (item.kind === "string" && item.type === "text/html") {
+      // Drag data item is HTML
+      console.log("… Drop: HTML");
+    } else if (item.kind === "string" && item.type === "text/uri-list") {
+      // Drag data item is URI
+      console.log("… Drop: URI");
+    } else if (item.kind === "file" && item.type.startsWith("image/")) {
+      // Drag data item is an image file
+      const f = item.getAsFile();
+      console.log("… Drop: File");
+    }
+  }
+}
+```
+
+## Specifications
+
+{{Specifications}}
+
+## Browser compatibility
+
+{{Compat}}
+
+## See also
+
+- {{domxref("DataTransfer.files")}}

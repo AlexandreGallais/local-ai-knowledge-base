@@ -1,25 +1,14 @@
----
-title: "developer-exception-page"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/developer-exception-page.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# developer-exception-page
-
-The *Developer Exception Page* displays detailed information about unhandled request exceptions. It uses `Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware` to capture synchronous and asynchronous exceptions from the HTTP pipeline and to generate error responses. The developer exception page runs early in the middleware pipeline, so that it can catch unhandled exceptions thrown in middleware that follows.
+The *Developer Exception Page* displays detailed information about unhandled request exceptions. It uses <xref:Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware> to capture synchronous and asynchronous exceptions from the HTTP pipeline and to generate error responses. The developer exception page runs early in the middleware pipeline, so that it can catch unhandled exceptions thrown in middleware that follows.
 
 ASP.NET Core apps enable the developer exception page by default when both:
 
-* Running in the `Development` environment.
-* The app was created with the current templates, that is, by using `Microsoft.AspNetCore.Builder.WebApplication.CreateBuilder*`.
+* Running in the [`Development` environment](../fundamentals/environments.md).
+* The app was created with the current templates, that is, by using <xref:Microsoft.AspNetCore.Builder.WebApplication.CreateBuilder*?displayProperty=nameWithType>.
 
-Apps created using earlier templates, that is, by using `Microsoft.AspNetCore.WebHost.CreateDefaultBuilder*`, can enable the developer exception page by calling `app.UseDeveloperExceptionPage`).
+Apps created using earlier templates, that is, by using <xref:Microsoft.AspNetCore.WebHost.CreateDefaultBuilder*?displayProperty=nameWithType>, can enable the developer exception page by calling [`app.UseDeveloperExceptionPage`](xref:Microsoft.AspNetCore.Builder.DeveloperExceptionPageExtensions.UseDeveloperExceptionPage(Microsoft.AspNetCore.Builder.IApplicationBuilder)).
 
-> **Warning:**
-> Don't enable the Developer Exception Page **unless the app is running in the `Development` environment**. Don't share detailed exception information publicly when the app runs in production. For more information on configuring environments, see ASP.NET Core runtime environments.
+> [!WARNING]
+> Don't enable the Developer Exception Page **unless the app is running in the `Development` environment**. Don't share detailed exception information publicly when the app runs in production. For more information on configuring environments, see [ASP.NET Core runtime environments](../fundamentals/environments.md).
 
 The Developer Exception Page can include the following information about the exception and the request:
 
@@ -29,9 +18,11 @@ The Developer Exception Page can include the following information about the exc
 * Headers
 * Endpoint metadata, if any
 
-The Developer Exception Page isn't guaranteed to provide any information. Use Logging for complete error information.
+The Developer Exception Page isn't guaranteed to provide any information. Use [Logging](../fundamentals/logging/index.md) for complete error information.
 
 The following image shows a sample developer exception page with animation to show the tabs and the information displayed:
+
+:::image type="content" source="~/fundamentals/error-handling/_static/aspnetcore-developer-page-improvements.gif" alt-text="Developer exception page animated to show each tab selected.":::
 
 In response to a request with an `Accept: text/plain` header, the Developer Exception Page returns plain text instead of HTML. For example:
 

@@ -1,10 +1,11 @@
 ---
-title: "How to parse a string - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/parse-string.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to parse a string - LINQ to XML
+description: You can parse a string with XElement.Parse to create an XML tree in C# and Visual Basic, and you can create an XML tree with XML literals in Visual Basic.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to parse a string (LINQ to XML)
@@ -49,7 +50,7 @@ You can parse a string in Visual Basic in a similar manner. However, it's more e
 
 By using XML literals, you can just copy and paste your XML into your Visual Basic program.
 
-> **Note:**
+> [!NOTE]
 > Parsing text or loading an XML document from a text file is less efficient than functional construction. If you're initializing an XML tree from code, it takes less processor time to use functional construction than to parse text.
 
 ```vb
@@ -81,7 +82,7 @@ Dim contacts as XElement = _
     </Contacts>
 ```
 
-The root `Contacts` node has two `Contact` nodes. To access some specific data in your parsed XML, use the XElement.Elements() method, which in this case returns the child elements of the root `Contacts` node. The following example prints the first `Contact` node to the console:
+The root `Contacts` node has two `Contact` nodes. To access some specific data in your parsed XML, use the [XElement.Elements()](xref:System.Xml.Linq.XContainer.Elements) method, which in this case returns the child elements of the root `Contacts` node. The following example prints the first `Contact` node to the console:
 
 ```csharp
 List<XElement> contactNodes = contacts.Elements("Contact").ToList();
@@ -95,4 +96,4 @@ Console.WriteLine(contactNodes(0))
 
 ## See also
 
-- How to find an element with a specific attribute
+- [How to find an element with a specific attribute](find-element-specific-attribute.md)

@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataImport::GetScopeProps Method"
 title: "IMetaDataImport::GetScopeProps Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-getscopeprops-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.GetScopeProps"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::GetScopeProps"
+  - "GetScopeProps method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::GetScopeProps Method
 
 Gets the name and optionally the version identifier of the assembly or module in the current metadata scope.
@@ -38,11 +45,11 @@ HRESULT GetScopeProps (
 
 ## Remarks
 
- The IMetaDataEmit::SetModuleProps method is used to set these properties.
+ The [IMetaDataEmit::SetModuleProps](imetadataemit-setmoduleprops-method.md) method is used to set these properties.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -50,5 +57,5 @@ HRESULT GetScopeProps (
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

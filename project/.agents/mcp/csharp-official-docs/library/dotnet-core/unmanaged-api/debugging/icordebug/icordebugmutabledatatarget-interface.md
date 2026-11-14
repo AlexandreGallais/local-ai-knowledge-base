@@ -1,27 +1,23 @@
 ---
+description: "Learn more about: ICorDebugMutableDataTarget Interface"
 title: "ICorDebugMutableDataTarget Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmutabledatatarget-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugMutableDataTarget Interface
 
-Extends the ICorDebugDataTarget interface to support mutable data targets.
+Extends the [ICorDebugDataTarget](icordebugdatatarget-interface.md) interface to support mutable data targets.
 
 ## Methods
 
 |Method|Description|
 |------------|-----------------|
-|ContinueStatusChanged Method|Changes the continuation status for the outstanding debug event on the specified thread.|
-|SetThreadContext Method|Sets the context (register values) for a thread.|
-|WriteVirtual Method|Writes memory into the target process address space.|
+|[ContinueStatusChanged Method](icordebugmutabledatatarget-continuestatuschanged-method.md)|Changes the continuation status for the outstanding debug event on the specified thread.|
+|[SetThreadContext Method](icordebugmutabledatatarget-setthreadcontext-method.md)|Sets the context (register values) for a thread.|
+|[WriteVirtual Method](icordebugmutabledatatarget-writevirtual-method.md)|Writes memory into the target process address space.|
 
 ## Remarks
 
-This extension to the ICorDebugDataTarget interface can be implemented by debugging tools that wish to modify the target process (for example, to perform live invasive debugging).
+This extension to the [ICorDebugDataTarget](icordebugdatatarget-interface.md) interface can be implemented by debugging tools that wish to modify the target process (for example, to perform live invasive debugging).
 
 All of these methods are optional in the sense that no core inspection-based debugging functionality is lost by not implementing this interface or by the failure of calls to these methods.  Any failure `HRESULT` from these methods will propagate out as the `HRESULT` from the ICorDebug method call.
 
@@ -29,7 +25,7 @@ Note that a single ICorDebug method call may result in multiple mutations, and t
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

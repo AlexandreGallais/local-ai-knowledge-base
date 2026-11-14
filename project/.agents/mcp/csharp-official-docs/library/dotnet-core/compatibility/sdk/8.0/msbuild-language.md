@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: MSBuild respects DOTNET_CLI_UI_LANGUAGE"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/8.0/msbuild-language.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in the .NET 8 SDK where MSBuild now respects the 'DOTNET_CLI_UI_LANGUAGE' environment variable.
+ms.date: 06/07/2023
 ---
-
 # MSBuild respects DOTNET_CLI_UI_LANGUAGE
 
 MSBuild now respects the `DOTNET_CLI_UI_LANGUAGE` environment variable and uses the language specified by `DOTNET_CLI_UI_LANGUAGE` for its command-line output. This change affects the output of the `msbuild.exe`, `dotnet build`, and `dotnet msbuild` commands.
@@ -27,7 +23,7 @@ On Windows, MSBuild output uses UTF-8 encoding now if `DOTNET_CLI_UI_LANGUAGE` i
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

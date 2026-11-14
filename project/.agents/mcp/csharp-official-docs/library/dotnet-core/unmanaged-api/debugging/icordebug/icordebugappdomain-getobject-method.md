@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugAppDomain::GetObject Method"
 title: "ICorDebugAppDomain::GetObject Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugappdomain-getobject-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugAppDomain.GetObject"
+api_location:
+  - "corguids.lib"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugAppDomain::GetObject"
+helpviewer_keywords:
+  - "ICorDebugAppDomain::GetObject method [.NET debugging]"
+  - "GetObject method, ICorDebugAppDomain interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugAppDomain::GetObject Method
 
 Gets an interface pointer to the common language runtime (CLR) application domain.
@@ -26,15 +35,15 @@ HRESULT GetObject (
 
 ## Return Value
 
-If a managed `System.AppDomain` object hasn't been constructed for this application domain, the method returns `S_FALSE` and places `NULL` in `*ppObject`.
+If a managed <xref:System.AppDomain?displayProperty=nameWithType> object hasn't been constructed for this application domain, the method returns `S_FALSE` and places `NULL` in `*ppObject`.
 
 ## Remarks
 
-Each application domain in a process may have a managed `System.AppDomain` object in the runtime that represents it. This function gets an ICorDebugValue interface object that corresponds to this managed `System.AppDomain` object.
+Each application domain in a process may have a managed <xref:System.AppDomain?displayProperty=nameWithType> object in the runtime that represents it. This function gets an ICorDebugValue interface object that corresponds to this managed <xref:System.AppDomain?displayProperty=nameWithType> object.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

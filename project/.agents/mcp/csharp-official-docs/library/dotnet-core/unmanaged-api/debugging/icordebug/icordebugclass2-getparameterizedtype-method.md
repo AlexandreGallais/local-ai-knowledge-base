@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugClass2::GetParameterizedType Method"
 title: "ICorDebugClass2::GetParameterizedType Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugclass2-getparameterizedtype-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugClass2.GetParameterizedType"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugClass2::GetParameterizedType"
+helpviewer_keywords:
+  - "GetParameterizedType method [.NET debugging]"
+  - "ICorDebugClass2::GetParameterizedType method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugClass2::GetParameterizedType Method
 
 Gets the type declaration for this class.
@@ -34,7 +43,7 @@ HRESULT GetParameterizedType (
  [in] An array of pointers, each of which points to an ICorDebugType object that represents a type parameter. If the class is non-generic, this value is null.
 
  `ppType`
- [out] A pointer to the address of an `ICorDebugType` object that represents the type declaration. This object is equivalent to a `System.Type` object in managed code.
+ [out] A pointer to the address of an `ICorDebugType` object that represents the type declaration. This object is equivalent to a <xref:System.Type> object in managed code.
 
 ## Remarks
 
@@ -50,7 +59,7 @@ The introduction of the `ICorDebugType` object to represent the runtime notion o
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

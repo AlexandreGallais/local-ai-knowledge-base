@@ -1,19 +1,12 @@
----
-title: "vitest/prefer-expect-assertions"
-tool: "eslint-vitest"
-version: "1.6"
-source: "https://github.com/vitest-dev/eslint-plugin-vitest/blob/c5df1054a25044a7ca5baf07461b7aee1f15f5f2/docs/rules/prefer-expect-assertions.md"
-commit: "c5df1054a25044a7ca5baf07461b7aee1f15f5f2"
-license: "MIT"
----
-
 # vitest/prefer-expect-assertions
 
 📝 Enforce using expect assertions instead of callbacks.
 
 ⚠️ This rule _warns_ in the 🌐 `all` config.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
 
 Ensure every test to have either `expect.assertions(<number of assertions>)` OR
 `expect.hasAssertions()` as its first expression.
@@ -51,12 +44,16 @@ test('assertions first', () => {
 
 ## Options
 
+<!-- begin auto-generated rule options list -->
+
 | Name                                | Description                                                                  | Type    | Default |
 | :---------------------------------- | :--------------------------------------------------------------------------- | :------ | :------ |
 | `disallowHasAssertions`             | Warn when `expect.hasAssertions()` is used instead of `expect.assertions()`. | Boolean | `false` |
 | `onlyFunctionsWithAsyncKeyword`     | Only check test functions declared with the async keyword.                   | Boolean | `false` |
 | `onlyFunctionsWithExpectInCallback` | Only check test functions that contain `expect` in callbacks.                | Boolean | `false` |
 | `onlyFunctionsWithExpectInLoop`     | Only check test functions that contain `expect` inside loops.                | Boolean | `false` |
+
+<!-- end auto-generated rule options list -->
 
 `onlyFunctionsWithAsyncKeyword` (default: `false`)
 

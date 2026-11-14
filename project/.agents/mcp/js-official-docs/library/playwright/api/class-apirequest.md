@@ -1,12 +1,3 @@
----
-title: "class: APIRequest"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-apirequest.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: APIRequest
 * since: v1.16
 
@@ -64,7 +55,7 @@ Maximum time in milliseconds to wait for the response. Defaults to
 * since: v1.16
 - `baseURL` <[string]>
 
-Methods like [`method: APIRequestContext.get`] take the base URL into consideration by using the `URL()` constructor for building the corresponding URL. Examples:
+Methods like [`method: APIRequestContext.get`] take the base URL into consideration by using the [`URL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL/URL) constructor for building the corresponding URL. Examples:
 * baseURL: `http://localhost:3000` and sending request to `/bar.html` results in `http://localhost:3000/bar.html`
 * baseURL: `http://localhost:3000/foo/` and sending request to `./bar.html` results in `http://localhost:3000/foo/bar.html`
 * baseURL: `http://localhost:3000/foo` (without trailing slash) and navigating to `./bar.html` results in `http://localhost:3000/bar.html`

@@ -1,15 +1,12 @@
 ---
-title: "class-methods-use-this"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/class-methods-use-this.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: class-methods-use-this
+rule_type: suggestion
+further_reading:
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static
 ---
 
-# class-methods-use-this
-
-Classes are often used to encapsulate reusable logic, especially stateful logic, into an object where each instance's state is accessed via `this`. When an API is written with an instance method, it signals to consumers:
+[Classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) are often used to encapsulate reusable logic, especially stateful logic, into an object where each instance's state is accessed via `this`. When an API is written with an instance method, it signals to consumers:
 
 - The method's outcome is related to the object on which it's invoked, including possibly its state.
 
@@ -42,7 +39,7 @@ person.sayHi(); // => "Hi!"
 ```
 
 If a class instance method does not use `this`, that normally means that it does not access any instance state and therefore doesn't need to be a method.
-Therefore, it can *sometimes* be refactored into an ordinary function or a static method, which may better communicate intent to users of the API.
+Therefore, it can *sometimes* be refactored into an [ordinary function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions) or a [static method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static), which may better communicate intent to users of the API.
 
 In the example above, the `sayHi` method doesn't use `this`, so we can make it an ordinary function:
 
@@ -97,7 +94,7 @@ This rule flags class instance methods that do not use `this`.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint class-methods-use-this: "error"*/
@@ -109,9 +106,11 @@ class A {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint class-methods-use-this: "error"*/
@@ -139,14 +138,16 @@ class C {
 }
 ```
 
+:::
+
 ## Options
 
 This rule has four options:
 
 - `"exceptMethods"` allows specified method names to be ignored with this rule.
-- `"enforceForClassFields"` enforces that arrow functions and function expressions used as instance field initializers utilize `this`. This also applies to auto-accessor fields (fields declared with the `accessor` keyword) which are part of the stage 3 decorators proposal. (default: `true`)
-- `"ignoreOverrideMethods"` ignores members that are marked with the `override` modifier. (TypeScript only, default: `false`)
-- `"ignoreClassesWithImplements"` ignores class members that are defined within a class that `implements` an interface. (TypeScript only)
+- `"enforceForClassFields"` enforces that arrow functions and function expressions used as instance field initializers utilize `this`. This also applies to auto-accessor fields (fields declared with the `accessor` keyword) which are part of the [stage 3 decorators proposal](https://github.com/tc39/proposal-decorators). (default: `true`)
+- `"ignoreOverrideMethods"` ignores members that are marked with the [`override` modifier](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-3.html#override-and-the---noimplicitoverride-flag). (TypeScript only, default: `false`)
+- `"ignoreClassesWithImplements"` ignores class members that are defined within a class that [`implements`](https://www.typescriptlang.org/docs/handbook/2/classes.html#implements-clauses) an interface. (TypeScript only)
 
 ### exceptMethods
 
@@ -158,7 +159,7 @@ The `"exceptMethods"` option allows you to pass an array of method names for whi
 
 Examples of **incorrect** code for this rule when used without `"exceptMethods"`:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint class-methods-use-this: "error"*/
@@ -169,9 +170,11 @@ class A {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule when used with exceptMethods:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint class-methods-use-this: ["error", { "exceptMethods": ["foo", "#bar"] }] */
@@ -184,17 +187,19 @@ class A {
 }
 ```
 
+:::
+
 ### enforceForClassFields
 
 ```ts
 "class-methods-use-this": [<enabled>, { "enforceForClassFields": true | false }]
 ```
 
-The `enforceForClassFields` option enforces that arrow functions and function expressions used as instance field initializers utilize `this`. This also applies to auto-accessor fields (fields declared with the `accessor` keyword) which are part of the stage 3 decorators proposal. (default: `true`)
+The `enforceForClassFields` option enforces that arrow functions and function expressions used as instance field initializers utilize `this`. This also applies to auto-accessor fields (fields declared with the `accessor` keyword) which are part of the [stage 3 decorators proposal](https://github.com/tc39/proposal-decorators). (default: `true`)
 
 Examples of **incorrect** code for this rule with the `{ "enforceForClassFields": true }` option (default):
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint class-methods-use-this: ["error", { "enforceForClassFields": true }] */
@@ -204,9 +209,11 @@ class A {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "enforceForClassFields": true }` option (default):
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint class-methods-use-this: ["error", { "enforceForClassFields": true }] */
@@ -216,9 +223,11 @@ class A {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "enforceForClassFields": false }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint class-methods-use-this: ["error", { "enforceForClassFields": false }] */
@@ -228,9 +237,11 @@ class A {
 }
 ```
 
+:::
+
 Examples of **incorrect** TypeScript code for this rule with the `{ "enforceForClassFields": true }` option (default):
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /*eslint class-methods-use-this: ["error", { "enforceForClassFields": true }] */
@@ -241,9 +252,11 @@ class A {
 }
 ```
 
+:::
+
 Examples of **correct** TypeScript code for this rule with the `{ "enforceForClassFields": true }` option (default):
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint class-methods-use-this: ["error", { "enforceForClassFields": true }] */
@@ -254,9 +267,11 @@ class A {
 }
 ```
 
+:::
+
 Examples of **correct** TypeScript code for this rule with the `{ "enforceForClassFields": false }` option:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint class-methods-use-this: ["error", { "enforceForClassFields": false }] */
@@ -266,6 +281,8 @@ class A {
     accessor bar = () => {}
 }
 ```
+
+:::
 
 ### ignoreOverrideMethods
 
@@ -277,7 +294,7 @@ The `ignoreOverrideMethods` option ignores members that are marked with the `ove
 
 Examples of **incorrect** TypeScript code for this rule with the `{ "ignoreOverrideMethods": false }` option (default):
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /*eslint class-methods-use-this: ["error", { "ignoreOverrideMethods": false }] */
@@ -293,9 +310,11 @@ class Derived extends Base {
 }
 ```
 
+:::
+
 Examples of **correct** TypeScript code for this rule with the `{ "ignoreOverrideMethods": false }` option (default):
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint class-methods-use-this: ["error", { "ignoreOverrideMethods": false }] */
@@ -315,9 +334,11 @@ class Derived extends Base {
 }
 ```
 
+:::
+
 Examples of **correct** TypeScript code for this rule with the `{ "ignoreOverrideMethods": true }` option:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint class-methods-use-this: ["error", { "ignoreOverrideMethods": true }] */
@@ -333,6 +354,8 @@ class Derived extends Base {
 }
 ```
 
+:::
+
 ### ignoreClassesWithImplements
 
 ```ts
@@ -346,7 +369,7 @@ The `ignoreClassesWithImplements` ignores class members that are defined within 
 
 Examples of **incorrect** TypeScript code for this rule with the `{ "ignoreClassesWithImplements": "all" }`:
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /*eslint class-methods-use-this: ["error", { "ignoreClassesWithImplements": "all" }] */
@@ -357,9 +380,11 @@ class Standalone {
 }
 ```
 
+:::
+
 Examples of **correct** TypeScript code for this rule with the `{ "ignoreClassesWithImplements": "all" }` option:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint class-methods-use-this: ["error", { "ignoreClassesWithImplements": "all" }] */
@@ -374,9 +399,11 @@ class Derived implements Base {
 }
 ```
 
+:::
+
 Examples of **incorrect** TypeScript code for this rule with the `{ "ignoreClassesWithImplements": "public-fields" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /*eslint class-methods-use-this: ["error", { "ignoreClassesWithImplements": "public-fields" }] */
@@ -397,9 +424,11 @@ class Derived implements Base {
 }
 ```
 
+:::
+
 Examples of **correct** TypeScript code for this rule with the `{ "ignoreClassesWithImplements": "public-fields" }` option:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint class-methods-use-this: ["error", { "ignoreClassesWithImplements": "public-fields" }] */
@@ -413,6 +442,9 @@ class Derived implements Base {
     property = () => {};
 }
 ```
+
+:::
+
 
 ## When Not To Use It
 

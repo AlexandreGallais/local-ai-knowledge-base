@@ -1,0 +1,128 @@
+<Type Name="IHashCodeProvider" FullName="System.Collections.IHashCodeProvider">
+  <TypeSignature Language="C#" Value="public interface IHashCodeProvider" />
+  <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract beforefieldinit IHashCodeProvider" />
+  <TypeSignature Language="DocId" Value="T:System.Collections.IHashCodeProvider" />
+  <TypeSignature Language="VB.NET" Value="Public Interface IHashCodeProvider" />
+  <TypeSignature Language="F#" Value="type IHashCodeProvider = interface" />
+  <TypeSignature Language="C++ CLI" Value="public interface class IHashCodeProvider" />
+  <AssemblyInfo>
+    <AssemblyName>mscorlib</AssemblyName>
+    <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.5.0</AssemblyVersion>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>netstandard</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>System.Runtime.Extensions</AssemblyName>
+    <AssemblyVersion>4.2.0.0</AssemblyVersion>
+    <AssemblyVersion>4.2.1.0</AssemblyVersion>
+    <AssemblyVersion>4.2.2.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>System.Runtime</AssemblyName>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+    <AssemblyVersion>11.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>System.Collections.NonGeneric</AssemblyName>
+  </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
+    <TypeForwarding From="System.Collections.NonGeneric" FromVersion="10.0.0.0" To="System.Runtime" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
+    <TypeForwarding From="System.Runtime.Extensions" FromVersion="10.0.0.0" To="System.Runtime" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
+    <TypeForwarding From="System.Collections.NonGeneric" FromVersion="11.0.0.0" To="System.Runtime" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
+    <TypeForwarding From="System.Runtime.Extensions" FromVersion="11.0.0.0" To="System.Runtime" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="System.Collections.NonGeneric" FromVersion="8.0.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="System.Runtime.Extensions" FromVersion="8.0.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+    <TypeForwarding From="System.Collections.NonGeneric" FromVersion="9.0.0.0" To="System.Runtime" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+    <TypeForwarding From="System.Runtime.Extensions" FromVersion="9.0.0.0" To="System.Runtime" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+  </TypeForwardingChain>
+  <Interfaces />
+  <Attributes>
+    <Attribute>
+      <AttributeName Language="C#">[System.Obsolete("IHashCodeProvider has been deprecated. Use IEqualityComparer instead.")]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Obsolete("IHashCodeProvider has been deprecated. Use IEqualityComparer instead.")&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>Supplies a hash code for an object, using a custom hash function.</summary>
+    <remarks>To be added.</remarks>
+    <altmember cref="T:System.Collections.Hashtable" />
+    <altmember cref="T:System.Collections.IComparer" />
+    <altmember cref="T:System.Collections.IEqualityComparer" />
+    <altmember cref="T:System.Collections.Generic.IEqualityComparer`1" />
+  </Docs>
+  <Members>
+    <Member MemberName="GetHashCode">
+      <MemberSignature Language="C#" Value="public int GetHashCode (object obj);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance int32 GetHashCode(object obj) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Collections.IHashCodeProvider.GetHashCode(System.Object)" />
+      <MemberSignature Language="VB.NET" Value="Public Function GetHashCode (obj As Object) As Integer" />
+      <MemberSignature Language="F#" Value="abstract member GetHashCode : obj -&gt; int" Usage="iHashCodeProvider.GetHashCode obj" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; int GetHashCode(System::Object ^ obj);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Extensions</AssemblyName>
+        <AssemblyVersion>4.2.0.0</AssemblyVersion>
+        <AssemblyVersion>4.2.1.0</AssemblyVersion>
+        <AssemblyVersion>4.2.2.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Collections.NonGeneric</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="obj" Type="System.Object" />
+      </Parameters>
+      <Docs>
+        <param name="obj">The <see cref="T:System.Object" /> for which a hash code is to be returned.</param>
+        <summary>Returns a hash code for the specified object.</summary>
+        <returns>A hash code for the specified object.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The return value from this method must not be persisted for two reasons. First, the hash function of a class might be altered to generate a better distribution, rendering any values from the old hash function useless. Second, the default implementation of this class does not guarantee that the same value will be returned by different instances.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">The type of <paramref name="obj" /> is a reference type and <paramref name="obj" /> is <see langword="null" />.</exception>
+        <altmember cref="M:System.Object.GetHashCode" />
+      </Docs>
+    </Member>
+  </Members>
+</Type>

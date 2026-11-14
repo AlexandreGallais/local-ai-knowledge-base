@@ -1,21 +1,15 @@
----
-title: "no-invalid-style-set-property"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-invalid-style-set-property.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-invalid-style-set-property
 
 📝 Disallow invalid arguments to `CSSStyleDeclaration#setProperty()`.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-`CSSStyleDeclaration#setProperty()` uses CSS property names and a separate priority argument. Invalid arguments can silently leave the declaration unchanged.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+[`CSSStyleDeclaration#setProperty()`](https://drafts.csswg.org/cssom/#dom-cssstyledeclaration-setproperty) uses CSS property names and a separate priority argument. Invalid arguments can silently leave the declaration unchanged.
 
 This rule reports:
 
@@ -64,7 +58,7 @@ Quoted CSS content, URLs, comments, and nested functions or blocks are preserved
 ```js
 style.setProperty('content', '"!important"');
 style.setProperty('background-image', 'url("!important")');
-style.setProperty('<example-value>', '<example-value>');
+style.setProperty('--tokens', 'var(--other, !important)');
 ```
 
 An empty string or `null` value removes the property regardless of priority. Dynamic values suppress priority checks because they could be empty. `undefined` becomes the nonempty string `"undefined"`.

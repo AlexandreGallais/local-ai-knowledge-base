@@ -1,14 +1,10 @@
 ---
-title: "block-spacing"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/block-spacing.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: block-spacing
+rule_type: layout
+related_rules:
+- space-before-blocks
+- brace-style
 ---
-
-# block-spacing
-
 ## Rule Details
 
 This rule enforces consistent spacing inside an open block token and the next token on the same line. This rule also enforces consistent spacing inside a close block token and previous token on the same line.
@@ -24,7 +20,7 @@ This rule has a string option:
 
 Examples of **incorrect** code for this rule with the default `"always"` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint block-spacing: "error"*/
@@ -40,9 +36,11 @@ class C {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"always"` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint block-spacing: "error"*/
@@ -55,11 +53,13 @@ class C {
 }
 ```
 
+:::
+
 ### never
 
 Examples of **incorrect** code for this rule with the `"never"` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint block-spacing: ["error", "never"]*/
@@ -72,9 +72,11 @@ class C {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"never"` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint block-spacing: ["error", "never"]*/
@@ -86,6 +88,8 @@ class C {
     static {this.bar = 0;}
 }
 ```
+
+:::
 
 ## When Not To Use It
 

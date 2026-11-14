@@ -1,12 +1,10 @@
 ---
-title: "Single vs. Split Queries - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/querying/single-split-queries.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Single vs. Split Queries - EF Core
+description: Translating LINQ queries into single and split SQL queries with Entity Framework Core
+author: SamMonoRT
+ms.date: 1/9/2023
+uid: core/querying/single-split-queries
 ---
-
 # Single vs. Split Queries
 
 ## Performance issues with single queries
@@ -93,15 +91,7 @@ It's worth noting that unlike cartesian explosion, the data duplication caused b
 
 To work around the performance issues described above, EF allows you to specify that a given LINQ query should be *split* into multiple SQL queries. Instead of JOINs, split queries generate an additional SQL query for each included collection navigation:
 
-```csharp
-using (var context = new BloggingContext())
-{
-    var blogs = await context.Blogs
-        .Include(blog => blog.Posts)
-        .AsSplitQuery()
-        .ToListAsync();
-}
-```
+[!code-csharp[Main](../../../samples/core/Querying/RelatedData/Program.cs?name=AsSplitQuery&highlight=5)]
 
 It will produce the following SQL:
 
@@ -116,37 +106,21 @@ INNER JOIN [Posts] AS [p] ON [b].[BlogId] = [p].[BlogId]
 ORDER BY [b].[BlogId]
 ```
 
-> **Warning:**
+> [!WARNING]
 > When using split queries with Skip/Take on EF versions prior to 10, pay special attention to making your query ordering fully unique; not doing so could cause incorrect data to be returned. For example, if results are ordered only by date, but there can be multiple results with the same date, then each one of the split queries could get different results from the database. Ordering by both date and ID (or any other unique property or combination of properties) makes the ordering fully unique and avoids this problem. Note that relational databases do not apply any ordering by default, even on the primary key.
 
-> **Note:**
+> [!NOTE]
 > One-to-one related entities are always loaded via JOINs in the same query, as it has no performance impact.
 
 ## Enabling split queries globally
 
 You can also configure split queries as the default for your application's context:
 
-```csharp
-protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-{
-    optionsBuilder
-        .UseSqlServer(
-            @"Server=(localdb)\mssqllocaldb;Database=EFQuerying;Trusted_Connection=True;ConnectRetryCount=0",
-            o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
-}
-```
+[!code-csharp[Main](../../../samples/core/Querying/RelatedData/SplitQueriesBloggingContext.cs?name=QuerySplittingBehaviorSplitQuery&highlight=6)]
 
 When split queries are configured as the default, it's still possible to configure specific queries to execute as single queries:
 
-```csharp
-using (var context = new SplitQueriesBloggingContext())
-{
-    var blogs = await context.Blogs
-        .Include(blog => blog.Posts)
-        .AsSingleQuery()
-        .ToListAsync();
-}
-```
+[!code-csharp[Main](../../../samples/core/Querying/RelatedData/Program.cs?name=AsSingleQuery&highlight=5)]
 
 EF Core uses single query mode by default in the absence of any configuration. Since it may cause performance issues, EF Core generates a warning whenever following conditions are met:
 
@@ -163,6 +137,6 @@ While split query avoids the performance issues associated with JOINs and cartes
 - While most databases guarantee data consistency for single queries, no such guarantees exist for multiple queries. If the database is updated concurrently when executing your queries, resulting data may not be consistent. You can mitigate it by wrapping the queries in a serializable or snapshot transaction, although doing so may create performance issues of its own. For more information, see your database's documentation.
 - Each query currently implies an additional network roundtrip to your database. Multiple network roundtrips can degrade performance, especially where latency to the database is high (for example, cloud services).
 - While some databases allow consuming the results of multiple queries at the same time (SQL Server with MARS, Sqlite), most allow only a single query to be active at any given point. So all results from earlier queries must be buffered in your application's memory before executing later queries, which leads to increased memory requirements.
-- When including reference navigations as well as collection navigations, each one of the split queries will include joins to the reference navigations. This can degrade performance, particularly if there are many reference navigations. Please upvote #29182 if this is something you'd like to see fixed.
+- When including reference navigations as well as collection navigations, each one of the split queries will include joins to the reference navigations. This can degrade performance, particularly if there are many reference navigations. Please upvote [#29182](https://github.com/dotnet/efcore/issues/29182) if this is something you'd like to see fixed.
 
 Unfortunately, there isn't one strategy for loading related entities that fits all scenarios. Carefully consider the advantages and disadvantages of single and split queries to select the one that fits your needs.

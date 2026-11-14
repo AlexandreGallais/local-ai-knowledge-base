@@ -1,31 +1,30 @@
 ---
-title: "Manage dependencies in .NET"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dependencies.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Manage dependencies in .NET
+description: Explains how to manage package, project, and assembly dependencies for a .NET application.
+no-loc: [dotnet package add, dotnet package remove, dotnet package list, dotnet reference add, dotnet reference remove, dotnet add package, dotnet remove package, dotnet add reference, dotnet remove reference]
+ms.topic: how-to
+ms.date: 09/16/2026
+ai-usage: ai-assisted
 ---
-
 # Manage dependencies in .NET applications
 
 This article explains how to add and remove package, project, and assembly dependencies.
 
 ## Add and remove package dependencies
 
-You can add and remove dependencies by editing your project file or through .NET CLI commands.
+You can add and remove dependencies by editing your project file or through [.NET CLI](index.md) commands.
 
 ### Use the CLI
 
 To add a dependency, run the `dotnet package` command for your SDK version:
 
-# .NET 10 and later
+# [.NET 10 and later](#tab/dotnet10)
 
 ```dotnetcli
 dotnet package add Microsoft.EntityFrameworkCore
 ```
 
-# .NET 9 and previous
+# [.NET 9 and previous](#tab/dotnet9)
 
 ```dotnetcli
 dotnet add package Microsoft.EntityFrameworkCore
@@ -35,13 +34,13 @@ dotnet add package Microsoft.EntityFrameworkCore
 
 To remove a dependency, run the `dotnet package` command for your SDK version:
 
-# .NET 10 and later
+# [.NET 10 and later](#tab/dotnet10)
 
 ```dotnetcli
 dotnet package remove Microsoft.EntityFrameworkCore
 ```
 
-# .NET 9 and previous
+# [.NET 9 and previous](#tab/dotnet9)
 
 ```dotnetcli
 dotnet remove package Microsoft.EntityFrameworkCore
@@ -67,7 +66,7 @@ To add a dependency, add a `<PackageReference>` item inside an `<ItemGroup>` ele
 </Project>
 ```
 
-The `Include` attribute specifies the ID of the package to add to the project. The `Version` attribute specifies the version to get. Versions are specified as per NuGet version rules.
+The `Include` attribute specifies the ID of the package to add to the project. The `Version` attribute specifies the version to get. Versions are specified as per [NuGet version rules](/nuget/create-packages/dependency-versions#version-ranges).
 
 Use conditions to add a dependency that's available only in a specific target, as shown in the following example:
 
@@ -79,7 +78,7 @@ The dependency in the preceding example will only be valid if the build is happe
 
 To remove a dependency, remove its `<PackageReference>` item from the project file.
 
-For more information about the `PackageReference` item, see the MSBuild reference for .NET SDK projects.
+For more information about the `PackageReference` item, see the [MSBuild reference for .NET SDK projects](../project-sdk/msbuild-props.md#packagereference).
 
 ## Add and remove project references
 
@@ -89,13 +88,13 @@ Use a project-to-project reference when your project depends on another project.
 
 To add a project reference, run the `dotnet reference` command for your SDK version.
 
-# .NET 10 and later
+# [.NET 10 and later](#tab/dotnet10)
 
 ```dotnetcli
 dotnet reference add ../MyLibrary/MyLibrary.csproj
 ```
 
-# .NET 9 and previous
+# [.NET 9 and previous](#tab/dotnet9)
 
 ```dotnetcli
 dotnet add reference ../MyLibrary/MyLibrary.csproj
@@ -105,13 +104,13 @@ dotnet add reference ../MyLibrary/MyLibrary.csproj
 
 To remove a project reference, run the following command for your SDK version:
 
-# .NET 10 and later
+# [.NET 10 and later](#tab/dotnet10)
 
 ```dotnetcli
 dotnet reference remove ../MyLibrary/MyLibrary.csproj
 ```
 
-# .NET 9 and previous
+# [.NET 9 and previous](#tab/dotnet9)
 
 ```dotnetcli
 dotnet remove reference ../MyLibrary/MyLibrary.csproj
@@ -131,7 +130,7 @@ dotnet remove reference ../MyLibrary/MyLibrary.csproj
 
 To remove a project reference, remove the `<ProjectReference>` element from the project file.
 
-For more information about the `ProjectReference` item, see the Common MSBuild project items.
+For more information about the `ProjectReference` item, see the [Common MSBuild project items](/visualstudio/msbuild/common-msbuild-project-items#projectreference).
 
 ## Add and remove assembly references
 
@@ -149,20 +148,20 @@ To reference a .NET assembly that isn't part of a project or package, add a `<Re
 
 To remove an assembly reference, remove its `<Reference>` element from the project file.
 
-For more information about the `Reference` item, see the Common MSBuild project items.
+For more information about the `Reference` item, see the [Common MSBuild project items](/visualstudio/msbuild/common-msbuild-project-items#reference).
 
 ## Tips
 
 - Don't include inputs to the restore operation in the *.targets* or *.props* file of a referenced package. These inputs can include `PackageReference` items, `ExcludeAssets` attributes, the NuGet feeds to use, or other NuGet configuration. The *.targets* and *.props* files from packages aren't used until after NuGet restore is complete. Anything needed for restore needs to be in the project file or *.targets* file of the project itself, not a package dependency.
-- If you want to use ASP.NET APIs in a console application or class library, add a FrameworkReference item to your project file:
+- If you want to use ASP.NET APIs in a console application or class library, add a [FrameworkReference](../project-sdk/msbuild-props.md#frameworkreference) item to your project file:
 
   `<FrameworkReference Include="Microsoft.AspNetCore.App" />`
 
-  For more information, see Use the ASP.NET Core shared framework.
+  For more information, see [Use the ASP.NET Core shared framework](/aspnet/core/fundamentals/target-aspnetcore#use-the-aspnet-core-shared-framework).
 
 ## See also
 
-* Reference-related project items
-* Common MSBuild project items
-* dotnet package list command
-* Dependencies (library guidance)
+* [Reference-related project items](../project-sdk/msbuild-props.md#reference-related-properties)
+* [Common MSBuild project items](/visualstudio/msbuild/common-msbuild-project-items)
+* [dotnet package list command](dotnet-package-list.md)
+* [Dependencies (library guidance)](../../standard/library-guidance/dependencies.md)

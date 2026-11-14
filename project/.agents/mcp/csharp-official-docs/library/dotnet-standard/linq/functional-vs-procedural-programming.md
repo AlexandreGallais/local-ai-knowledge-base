@@ -1,10 +1,8 @@
 ---
-title: "Functional vs. procedural programming"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/functional-vs-procedural-programming.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Functional vs. procedural programming
+description: LINQ to XML supports both functional construction and procedural techniques for creating XML applications. Functional construction is a declarative approach. The procedural techniques support in-memory modification of XML trees.
+ms.date: 07/20/2015
+ms.assetid: fc64e39c-a487-4882-9169-da4de97917d9
 ---
 
 # Functional vs. procedural programming (LINQ to XML)
@@ -31,6 +29,6 @@ When modifying an XML tree in place, you write code that traverses and navigates
 
 You can use LINQ to XML with either approach. You use the same classes, and in some cases the same methods. However, the structure and goals of the two approaches are different. For example, in different situations, one or the other approach will often have better performance, and use more or less memory. In addition, one or the other approach will be easier to write and yield more maintainable code.
 
-To see the two approaches contrasted, see In-memory XML tree modification vs. functional construction.
+To see the two approaches contrasted, see [In-memory XML tree modification vs. functional construction](in-memory-xml-tree-modification-vs-functional-construction.md).
 
-For a tutorial on writing functional transformations, see Introduction to pure functional transformations.
+For a tutorial on writing functional transformations, see [Introduction to pure functional transformations](introduction-pure-functional-transformations.md).

@@ -1,19 +1,13 @@
----
-title: "prefer-regexp-escape"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-regexp-escape.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-regexp-escape
 
 📝 Prefer `RegExp.escape()` for escaping strings to use in regular expressions.
 
 🚫 Disabled by default.
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 `RegExp.escape()` escapes a string so it can be safely used as a literal pattern in the `RegExp` constructor.
 

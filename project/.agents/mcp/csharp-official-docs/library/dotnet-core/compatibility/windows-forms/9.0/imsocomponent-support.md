@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: IMsoComponent support is opt-in"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/windows-forms/9.0/imsocomponent-support.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 9 for Windows Forms where IMsoComponent support is now opt-in.
+ms.date: 09/05/2024
 ---
-
 # IMsoComponent support is opt-in
 
-A change was made to avoid Windows Forms threads always registering with existing IMsoComponentManager instances. However, you can opt in to register existing `IMsoComponentManager` instances to your Windows Forms threads.
+A change was made to avoid Windows Forms threads always registering with existing [IMsoComponentManager](/previous-versions/office/developer/office-2007/ff518963(v=office.12)) instances. However, you can opt in to register existing `IMsoComponentManager` instances to your Windows Forms threads.
 
 ## Version introduced
 
@@ -25,7 +21,7 @@ Starting in .NET 9, Windows Forms threads don't automatically integrate with pro
 
 ## Change category
 
-This change is a *behavioral change*.
+This change is a [*behavioral change*](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -55,5 +51,5 @@ Project file:
 
 ## Affected APIs
 
-- IMsoComponent interface
-- IMsoComponentManager interface
+- [IMsoComponent interface](/previous-versions/office/developer/office-2007/ff518955(v=office.12))
+- [IMsoComponentManager interface](/previous-versions/office/developer/office-2007/ff518963(v=office.12))

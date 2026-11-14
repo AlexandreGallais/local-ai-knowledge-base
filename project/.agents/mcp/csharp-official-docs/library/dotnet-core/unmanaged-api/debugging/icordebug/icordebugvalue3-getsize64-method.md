@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugValue3::GetSize64 Method"
 title: "ICorDebugValue3::GetSize64 Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugvalue3-getsize64-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugValue3::GetSize64"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugValue3::GetSize64"
+helpviewer_keywords:
+  - "GetSize64 method, ICorDebugValue3 interface [.NET debugging]"
+  - "ICorDebugValue3::GetSize64 method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugValue3::GetSize64 Method
 
-Gets the size, in bytes, of this ICorDebugValue3 object.
+Gets the size, in bytes, of this [ICorDebugValue3](icordebugvalue3-interface.md) object.
 
 ## Syntax
 
@@ -28,11 +37,11 @@ pSize
 
 If this value's type is a reference type, this method returns the size of the pointer rather than the size of the object.
 
-The `ICorDebugValue3::GetSize` method differs from the ICorDebugValue::GetSize method in the type of its output parameter. In ICorDebugValue::GetSize, the output parameter is a `ULONG32`; in `ICorDebugValue3::GetSize`, it is a `ULONG64`. This enables the ICorDebugValue3 interface to report the size of arrays that exceed 2GB.
+The `ICorDebugValue3::GetSize` method differs from the [ICorDebugValue::GetSize](icordebugvalue-getsize-method.md) method in the type of its output parameter. In [ICorDebugValue::GetSize](icordebugvalue-getsize-method.md), the output parameter is a `ULONG32`; in `ICorDebugValue3::GetSize`, it is a `ULONG64`. This enables the [ICorDebugValue3](icordebugvalue3-interface.md) interface to report the size of arrays that exceed 2GB.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -42,4 +51,4 @@ The `ICorDebugValue3::GetSize` method differs from the ICorDebugValue::GetSize m
 
 ## See also
 
-- ICorDebugValue3 Interface
+- [ICorDebugValue3 Interface](icordebugvalue3-interface.md)

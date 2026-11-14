@@ -1,15 +1,17 @@
 ---
-title: "Serialize union types with System.Text.Json"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/serialization/system-text-json/union-types.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Serialize union types with System.Text.Json
+description: Learn how System.Text.Json serializes and deserializes C# union types in .NET 11.
+ms.date: 09/24/2026
+no-loc: [System.Text.Json]
+dev_langs:
+  - "csharp"
+ms.topic: how-to
+ai-usage: ai-assisted
 ---
 
 # Serialize union types with System.Text.Json
 
-Starting in .NET 11, `System.Text.Json.JsonSerializer` supports C# 15 union types. A union holds one of the case types in its declaration. `JsonSerializer` writes the active case value and can read it back.
+Starting in .NET 11, <xref:System.Text.Json.JsonSerializer> supports [C# 15 union types](../../../csharp/language-reference/builtin-types/union.md). A union holds one of the case types in its declaration. `JsonSerializer` writes the active case value and can read it back.
 
 ## Serialize and deserialize union values
 
@@ -36,11 +38,11 @@ The serialized JSON contains the active case value rather than a wrapper or disc
 
 By default, the serializer classifies incoming JSON by token type. In the preceding union, a JSON number selects `int`, a JSON string selects `string`, and a JSON object selects `Message`.
 
-With `System.Text.Json.JsonSerializerOptions.Web`, an `int` can also be read from a JSON string. Both the `int` and `string` cases of `Payload` then claim the string token type. Even `"<example-value>"` throws `System.Text.Json.JsonException` for ambiguity before the serializer parses either case. To read strings with web defaults, provide a custom classifier that chooses the case.
+With <xref:System.Text.Json.JsonSerializerOptions.Web?displayProperty=nameWithType>, an `int` can also be read from a JSON string. Both the `int` and `string` cases of `Payload` then claim the string token type. Even `"25%"` throws <xref:System.Text.Json.JsonException> for ambiguity before the serializer parses either case. To read strings with web defaults, [provide a custom classifier](#provide-a-custom-classifier) that chooses the case.
 
 ## Distinguish cases with the same JSON token type
 
-Token <example-value> can't distinguish two cases that both serialize as JSON objects. Apply `System.Text.Json.Serialization.JsonUnionAttribute` and select `System.Text.Json.Serialization.JsonUnionTypeStructuralClassifier` to classify object cases by their property names:
+Token classification can't distinguish two cases that both serialize as JSON objects. Apply <xref:System.Text.Json.Serialization.JsonUnionAttribute> and select <xref:System.Text.Json.Serialization.JsonUnionTypeStructuralClassifier> to classify object cases by their property names:
 
 ```csharp
 [JsonUnion(TypeClassifier = typeof(JsonUnionTypeStructuralClassifier))]
@@ -58,23 +60,23 @@ Pet pet = JsonSerializer.Deserialize<Pet>(
     """{"Name":"Rex","Breed":"Husky"}""");
 ```
 
-For JSON objects, the structural classifier starts with the compatible object cases and narrows that set as it reads recognized root-level property names. Required properties remove cases when they're absent. `System.Text.Json.Serialization.JsonUnmappedMemberHandling.Disallow` removes a case when the payload contains a property that the case doesn't declare. Classification succeeds only when one case remains.
+For JSON objects, the structural classifier starts with the compatible object cases and narrows that set as it reads recognized root-level property names. Required properties remove cases when they're absent. <xref:System.Text.Json.Serialization.JsonUnmappedMemberHandling.Disallow?displayProperty=nameWithType> removes a case when the payload contains a property that the case doesn't declare. Classification succeeds only when one case remains.
 
 The structural classifier doesn't inspect property values, nested objects, string contents, or array elements. Keep these consequences in mind:
 
-* A payload that leaves zero or multiple candidates throws `System.Text.Json.JsonException`.
+* A payload that leaves zero or multiple candidates throws <xref:System.Text.Json.JsonException>.
 * Overlapping or shadowed object contracts might be rejected when the classifier is created.
 * Multiple non-object cases that use the same JSON token type aren't supported. For example, `Guid` and `string` both use JSON strings.
 * A plain object case can't be mixed with a dictionary, `JsonObject`, or another non-POCO object-shaped case.
 * Nested union cases and polymorphic cases aren't supported.
-* `System.Text.Json.Serialization.ReferenceHandler.Preserve` isn't supported.
-* A configuration that can't distinguish its cases throws `System.NotSupportedException` when the serializer builds the classifier.
+* <xref:System.Text.Json.Serialization.ReferenceHandler.Preserve?displayProperty=nameWithType> isn't supported.
+* A configuration that can't distinguish its cases throws <xref:System.NotSupportedException> when the serializer builds the classifier.
 
 ## Choose unions or closed hierarchies
 
 Use a union when you need to preserve a discriminator-free JSON format you don't control, or when the cases have distinct JSON shapes. For example, the `int` and `string` cases of `Payload` are distinguishable by JSON token type. For object cases such as `Pet(Dog, Cat)`, however, changes to property names can affect which case a structural classifier selects.
 
-When you control the types and JSON contract, a closed hierarchy with inferred polymorphism can identify object cases with a discriminator instead:
+When you control the types and JSON contract, a [closed hierarchy with inferred polymorphism](polymorphism.md#infer-polymorphism-from-a-closed-hierarchy) can identify object cases with a discriminator instead:
 
 ```csharp
 [JsonPolymorphic(InferClosedTypePolymorphism = true)]
@@ -87,14 +89,14 @@ public sealed record Deleted(int Id) : Event;
 
 ## Provide a custom classifier
 
-Derive from `System.Text.Json.Serialization.JsonTypeClassifierFactory` when default token <example-value> or the built-in `System.Text.Json.Serialization.JsonUnionTypeStructuralClassifier` doesn't meet your requirements. A custom classifier can use other structural rules to select a union case. Register the factory in one of these locations:
+Derive from <xref:System.Text.Json.Serialization.JsonTypeClassifierFactory> when default token classification or the built-in <xref:System.Text.Json.Serialization.JsonUnionTypeStructuralClassifier> doesn't meet your requirements. A custom classifier can use other structural rules to select a union case. Register the factory in one of these locations:
 
-* Assign a delegate to `System.Text.Json.Serialization.Metadata.JsonTypeInfo.TypeClassifier` when you customize the contract.
-* Set `System.Text.Json.Serialization.JsonUnionAttribute.TypeClassifier` for one union.
-* Add the factory to `System.Text.Json.JsonSerializerOptions.TypeClassifiers` for reflection-based serialization.
-* Set `System.Text.Json.Serialization.JsonSourceGenerationOptionsAttribute.TypeClassifiers` for a source-generation context.
+* Assign a delegate to <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfo.TypeClassifier?displayProperty=nameWithType> when you customize the contract.
+* Set <xref:System.Text.Json.Serialization.JsonUnionAttribute.TypeClassifier?displayProperty=nameWithType> for one union.
+* Add the factory to <xref:System.Text.Json.JsonSerializerOptions.TypeClassifiers?displayProperty=nameWithType> for reflection-based serialization.
+* Set <xref:System.Text.Json.Serialization.JsonSourceGenerationOptionsAttribute.TypeClassifiers?displayProperty=nameWithType> for a source-generation context.
 
-A classifier reads the current JSON value and returns one of the case types from `System.Text.Json.Serialization.JsonTypeClassifierContext.UnionCases`. The serializer checks the contract delegate first, followed by the per-union factory, the options-level factories, and built-in token classification.
+A classifier reads the current JSON value and returns one of the case types from <xref:System.Text.Json.Serialization.JsonTypeClassifierContext.UnionCases?displayProperty=nameWithType>. The serializer checks the contract delegate first, followed by the per-union factory, the options-level factories, and built-in token classification.
 
 For ambiguous unions, the source generator reports a diagnostic unless a classifier is configured at generation time.
 
@@ -104,18 +106,18 @@ A union can declare nullable case types. JSON `null` selects the first nullable 
 
 ## Customize a union contract
 
-For advanced scenarios, customize the union metadata through `System.Text.Json.Serialization.Metadata.JsonTypeInfo`. A union's `System.Text.Json.Serialization.Metadata.JsonTypeInfo.Kind` value is `System.Text.Json.Serialization.Metadata.JsonTypeInfoKind.Union`. Its contract exposes:
+For advanced scenarios, customize the union metadata through <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfo>. A union's <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfo.Kind?displayProperty=nameWithType> value is <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfoKind.Union?displayProperty=nameWithType>. Its contract exposes:
 
-* `System.Text.Json.Serialization.Metadata.JsonTypeInfo.UnionCases`, which contains `System.Text.Json.Serialization.Metadata.JsonUnionCaseInfo` entries.
-* `System.Text.Json.Serialization.Metadata.JsonTypeInfo.UnionConstructor`, which creates a union from a case type and value.
-* `System.Text.Json.Serialization.Metadata.JsonTypeInfo.UnionDeconstructor`, which returns the active case type and value.
-* `System.Text.Json.Serialization.Metadata.JsonTypeInfo.TypeClassifier`, which selects a case during deserialization.
+* <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfo.UnionCases?displayProperty=nameWithType>, which contains <xref:System.Text.Json.Serialization.Metadata.JsonUnionCaseInfo> entries.
+* <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfo.UnionConstructor?displayProperty=nameWithType>, which creates a union from a case type and value.
+* <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfo.UnionDeconstructor?displayProperty=nameWithType>, which returns the active case type and value.
+* <xref:System.Text.Json.Serialization.Metadata.JsonTypeInfo.TypeClassifier?displayProperty=nameWithType>, which selects a case during deserialization.
 
-For more information about modifying `JsonTypeInfo`, see Customize a JSON contract.
+For more information about modifying `JsonTypeInfo`, see [Customize a JSON contract](custom-contracts.md).
 
 ## See also
 
-* Union types (C# reference)
-* Serialize polymorphic types
-* Use source generation
-* Use C# unions and closed hierarchies in ASP.NET Core (.NET Blog)
+* [Union types (C# reference)](../../../csharp/language-reference/builtin-types/union.md)
+* [Serialize polymorphic types](polymorphism.md)
+* [Use source generation](source-generation.md)
+* [Use C# unions and closed hierarchies in ASP.NET Core (.NET Blog)](https://devblogs.microsoft.com/dotnet/unions-and-closed-hierarchies-in-aspnetcore/)

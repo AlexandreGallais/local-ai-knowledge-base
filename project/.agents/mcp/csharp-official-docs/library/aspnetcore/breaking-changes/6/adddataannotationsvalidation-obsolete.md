@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: AddDataAnnotationsValidation method obsoleted"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/6/adddataannotationsvalidation-obsolete.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 6.0 where the AddDataAnnotationsValidation method is replaced with EnableDataAnnotationsValidation."
+ms.date: 04/21/2021
+ms.custom: https://github.com/aspnet/Announcements/issues/458
 ---
-
 # AddDataAnnotationsValidation method made obsolete
 
-The extension method `Microsoft.AspNetCore.Components.Forms.EditContextDataAnnotationsExtensions.AddDataAnnotationsValidation(Microsoft.AspNetCore.Components.Forms.EditContext)` is marked as obsolete starting in ASP.NET Core 6. Developers should use the new extension method `EditContextDataAnnotationsExtensions.EnableDataAnnotationsValidation` instead.
+The extension method <xref:Microsoft.AspNetCore.Components.Forms.EditContextDataAnnotationsExtensions.AddDataAnnotationsValidation(Microsoft.AspNetCore.Components.Forms.EditContext)?displayProperty=nameWithType> is marked as obsolete starting in ASP.NET Core 6. Developers should use the new extension method `EditContextDataAnnotationsExtensions.EnableDataAnnotationsValidation` instead.
 
 The only difference between these two APIs is their return value:
 
@@ -25,11 +22,11 @@ ASP.NET Core 6.0
 
 ## Old behavior
 
-The older API, `Microsoft.AspNetCore.Components.Forms.EditContextDataAnnotationsExtensions.AddDataAnnotationsValidation(Microsoft.AspNetCore.Components.Forms.EditContext)`, returns its `EditContext` (as a kind of fluent API).
+The older API, <xref:Microsoft.AspNetCore.Components.Forms.EditContextDataAnnotationsExtensions.AddDataAnnotationsValidation(Microsoft.AspNetCore.Components.Forms.EditContext)>, returns its `EditContext` (as a kind of fluent API).
 
 ## New behavior
 
-The new API, `EnableDataAnnotationsValidation`, returns an `System.IDisposable` whose disposal can be used to remove the data-annotations validation support from the `EditContext`.
+The new API, `EnableDataAnnotationsValidation`, returns an <xref:System.IDisposable> whose disposal can be used to remove the data-annotations validation support from the `EditContext`.
 
 ## Reason for change
 
@@ -43,4 +40,16 @@ However, if you do call `editContext.AddDataAnnotationsValidation()`, then repla
 
 ## Affected APIs
 
-- `Microsoft.AspNetCore.Components.Forms.EditContextDataAnnotationsExtensions.AddDataAnnotationsValidation(Microsoft.AspNetCore.Components.Forms.EditContext)`
+- <xref:Microsoft.AspNetCore.Components.Forms.EditContextDataAnnotationsExtensions.AddDataAnnotationsValidation(Microsoft.AspNetCore.Components.Forms.EditContext)?displayProperty=fullName>
+
+<!--
+
+## Category
+
+ASP.NET Core
+
+## Affected APIs
+
+- `M:Microsoft.AspNetCore.Components.Forms.EditContextDataAnnotationsExtensions.AddDataAnnotationsValidation(Microsoft.AspNetCore.Components.Forms.EditContext)`
+
+-->

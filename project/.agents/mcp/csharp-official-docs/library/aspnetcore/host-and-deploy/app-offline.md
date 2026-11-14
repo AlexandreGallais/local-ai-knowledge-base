@@ -1,13 +1,12 @@
 ---
-title: "App Offline file (app_offline.htm)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/host-and-deploy/app-offline.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: App Offline file (app_offline.htm)
+description: Learn how the App Offline file (`app_offline.htm`) works with the ASP.NET Core Module.
+monikerRange: '>= aspnetcore-5.0'
+ms.date: 1/13/2020
 ---
-
 # App Offline file (`app_offline.htm`)
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
 The App Offline file (`app_offline.htm`) is used by the ASP.NET Core Module to shut down an app.
 
@@ -27,6 +26,7 @@ Files in the deployment folder are locked when the app is running. Locked files 
 
 ```powershell
 $pathToApp = '{PATH TO APP}'
+
 
 New-Item -Path $pathToApp -Name "app_offline.htm" -ItemType "file"
 

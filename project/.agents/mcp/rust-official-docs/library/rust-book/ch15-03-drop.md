@@ -1,14 +1,3 @@
----
-title: "ch15-03-drop"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch15-03-drop.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch15-03-drop
-
 ## Running Code on Cleanup with the `Drop` Trait
 
 The second trait important to the smart pointer pattern is `Drop`, which lets
@@ -39,29 +28,13 @@ Listing 15-14 shows a `CustomSmartPointer` struct whose only custom
 functionality is that it will print `Dropping CustomSmartPointer!` when the
 instance goes out of scope, to show when Rust runs the `drop` method.
 
-**Listing 15-14: A `CustomSmartPointer` struct that implements the `Drop` trait where we would put our cleanup code** (src/main.rs)
+<Listing number="15-14" file-name="src/main.rs" caption="A `CustomSmartPointer` struct that implements the `Drop` trait where we would put our cleanup code">
 
 ```rust
-struct CustomSmartPointer {
-    data: String,
-}
-
-impl Drop for CustomSmartPointer {
-    fn drop(&mut self) {
-        println!("Dropping CustomSmartPointer with data `{}`!", self.data);
-    }
-}
-
-fn main() {
-    let c = CustomSmartPointer {
-        data: String::from("my stuff"),
-    };
-    let d = CustomSmartPointer {
-        data: String::from("other stuff"),
-    };
-    println!("CustomSmartPointers created");
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-14/src/main.rs}}
 ```
+
+</Listing>
 
 The `Drop` trait is included in the prelude, so we don’t need to bring it into
 scope. We implement the `Drop` trait on `CustomSmartPointer` and provide an
@@ -79,13 +52,7 @@ call the `drop` method explicitly.
 When we run this program, we’ll see the following output:
 
 ```console
-$ cargo run
-   Compiling drop-example v0.1.0 (file:///projects/drop-example)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.60s
-     Running `target/debug/drop-example`
-CustomSmartPointers created
-Dropping CustomSmartPointer with data `other stuff`!
-Dropping CustomSmartPointer with data `my stuff`!
+{{#include ../listings/ch15-smart-pointers/listing-15-14/output.txt}}
 ```
 
 Rust automatically called `drop` for us when our instances went out of scope,
@@ -94,6 +61,10 @@ their creation, so `d` was dropped before `c`. This example’s purpose is to
 give you a visual guide to how the `drop` method works; usually you would
 specify the cleanup code that your type needs to run rather than a print
 message.
+
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="dropping-a-value-early-with-std-mem-drop"></a>
 
 Unfortunately, it’s not straightforward to disable the automatic `drop`
 functionality. Disabling `drop` isn’t usually necessary; the whole point of the
@@ -108,38 +79,18 @@ if you want to force a value to be dropped before the end of its scope.
 Trying to call the `Drop` trait’s `drop` method manually by modifying the
 `main` function from Listing 15-14 won’t work, as shown in Listing 15-15.
 
-**Listing 15-15: Attempting to call the `drop` method from the `Drop` trait manually to clean up early** (src/main.rs)
+<Listing number="15-15" file-name="src/main.rs" caption="Attempting to call the `drop` method from the `Drop` trait manually to clean up early">
 
-```rust
-fn main() {
-    let c = CustomSmartPointer {
-        data: String::from("some data"),
-    };
-    println!("CustomSmartPointer created");
-    c.drop();
-    println!("CustomSmartPointer dropped before the end of main");
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-15/src/main.rs:here}}
 ```
+
+</Listing>
 
 When we try to compile this code, we’ll get this error:
 
 ```console
-$ cargo run
-   Compiling drop-example v0.1.0 (file:///projects/drop-example)
-error[E0040]: explicit use of destructor method
-  --> src/main.rs:16:7
-   |
-16 |     c.drop();
-   |       ^^^^ explicit destructor calls not allowed
-   |
-help: consider using `drop` function
-   |
-16 -     c.drop();
-16 +     drop(c);
-   |
-
-For more information about this error, try `rustc --explain E0040`.
-error: could not compile `drop-example` (bin "drop-example") due to 1 previous error
+{{#include ../listings/ch15-smart-pointers/listing-15-15/output.txt}}
 ```
 
 This error message states that we’re not allowed to explicitly call `drop`. The
@@ -161,29 +112,18 @@ trait. We call it by passing as an argument the value we want to force-drop.
 The function is in the prelude, so we can modify `main` in Listing 15-15 to
 call the `drop` function, as shown in Listing 15-16.
 
-**Listing 15-16: Calling `std::mem::drop` to explicitly drop a value before it goes out of scope** (src/main.rs)
+<Listing number="15-16" file-name="src/main.rs" caption="Calling `std::mem::drop` to explicitly drop a value before it goes out of scope">
 
 ```rust
-fn main() {
-    let c = CustomSmartPointer {
-        data: String::from("some data"),
-    };
-    println!("CustomSmartPointer created");
-    drop(c);
-    println!("CustomSmartPointer dropped before the end of main");
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-16/src/main.rs:here}}
 ```
+
+</Listing>
 
 Running this code will print the following:
 
 ```console
-$ cargo run
-   Compiling drop-example v0.1.0 (file:///projects/drop-example)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.73s
-     Running `target/debug/drop-example`
-CustomSmartPointer created
-Dropping CustomSmartPointer with data `some data`!
-CustomSmartPointer dropped before the end of main
+{{#include ../listings/ch15-smart-pointers/listing-15-16/output.txt}}
 ```
 
 The text ``Dropping CustomSmartPointer with data `some data`!`` is printed

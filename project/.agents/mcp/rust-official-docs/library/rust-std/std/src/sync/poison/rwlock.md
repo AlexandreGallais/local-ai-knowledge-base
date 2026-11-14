@@ -1,12 +1,3 @@
----
-title: "std::sync::poison::rwlock"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sync/poison/rwlock.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::sync::poison::rwlock
 
 ## struct RwLock
@@ -18,9 +9,9 @@ pub struct RwLock<T: ?Sized>
 let mut writable_data = data.write().unwrap();
 println!("Writer proceeds...");
 *writable_data += 1;
-```rust
+```
 
-`Mutex`: super::Mutex
+[`Mutex`]: super::Mutex
 
 ## ::RwLockReadGuard
 
@@ -31,8 +22,11 @@ pub struct RwLockReadGuard<'rwlock, T: ?Sized + 'rwlock>
 RAII structure used to release the shared read access of a lock when
 dropped.
 
-This structure is created by the `read` and `try_read` methods on
-`RwLock`.
+This structure is created by the [`read`] and [`try_read`] methods on
+[`RwLock`].
+
+[`read`]: RwLock::read
+[`try_read`]: RwLock::try_read
 
 ## ::RwLockWriteGuard
 
@@ -43,8 +37,11 @@ pub struct RwLockWriteGuard<'rwlock, T: ?Sized + 'rwlock>
 RAII structure used to release the exclusive write access of a lock when
 dropped.
 
-This structure is created by the `write` and `try_write` methods
-on `RwLock`.
+This structure is created by the [`write`] and [`try_write`] methods
+on [`RwLock`].
+
+[`write`]: RwLock::write
+[`try_write`]: RwLock::try_write
 
 ## RwLock::new
 
@@ -56,7 +53,7 @@ Creates a new instance of an `RwLock<T>` which is unlocked.
 
 # Examples
 
-```rust
+```
 use std::sync::RwLock;
 
 let lock = RwLock::new(5);
@@ -95,7 +92,7 @@ in read or write mode.
 
 # Examples
 
-```rust
+```
 use std::sync::{Arc, RwLock};
 use std::thread;
 
@@ -130,18 +127,21 @@ of whether contentious readers or writers will acquire the lock first.
 
 # Errors
 
-This function will return the `Poisoned` error if the `RwLock` is
+This function will return the [`Poisoned`] error if the `RwLock` is
 poisoned. An `RwLock` is poisoned whenever a writer panics while holding
 an exclusive lock. `Poisoned` will only be returned if the lock would
 have otherwise been acquired. An acquired lock guard will be contained
 in the returned error.
 
-This function will return the `WouldBlock` error if the `RwLock` could
+This function will return the [`WouldBlock`] error if the `RwLock` could
 not be acquired because it was already locked exclusively.
+
+[`Poisoned`]: TryLockError::Poisoned
+[`WouldBlock`]: TryLockError::WouldBlock
 
 # Examples
 
-```rust
+```
 use std::sync::RwLock;
 
 let lock = RwLock::new(1);
@@ -181,7 +181,7 @@ in read or write mode.
 
 # Examples
 
-```rust
+```
 use std::sync::RwLock;
 
 let lock = RwLock::new(1);
@@ -211,18 +211,22 @@ of whether contentious readers or writers will acquire the lock first.
 
 # Errors
 
-This function will return the `Poisoned` error if the `RwLock` is
+This function will return the [`Poisoned`] error if the `RwLock` is
 poisoned. An `RwLock` is poisoned whenever a writer panics while holding
 an exclusive lock. `Poisoned` will only be returned if the lock would
 have otherwise been acquired. An acquired lock guard will be contained
 in the returned error.
 
-This function will return the `WouldBlock` error if the `RwLock` could
+This function will return the [`WouldBlock`] error if the `RwLock` could
 not be acquired because it was already locked.
+
+[`Poisoned`]: TryLockError::Poisoned
+[`WouldBlock`]: TryLockError::WouldBlock
+
 
 # Examples
 
-```rust
+```
 use std::sync::RwLock;
 
 let lock = RwLock::new(1);
@@ -247,7 +251,7 @@ without additional synchronization.
 
 # Examples
 
-```rust
+```
 use std::sync::{Arc, RwLock};
 use std::thread;
 
@@ -277,7 +281,7 @@ so the poison is removed.
 
 # Examples
 
-```rust
+```
 use std::sync::{Arc, RwLock};
 use std::thread;
 
@@ -316,7 +320,7 @@ if the lock would have otherwise been acquired.
 
 # Examples
 
-```rust
+```
 use std::sync::RwLock;
 
 let lock = RwLock::new(String::new());
@@ -338,7 +342,7 @@ Returns a mutable reference to the underlying data.
 Since this call borrows the `RwLock` mutably, no actual locking needs to
 take place -- the mutable borrow statically guarantees no new locks can be acquired
 while this reference exists. Note that this method does not clear any previously abandoned
-locks (e.g., via `forget()` on a `RwLockReadGuard` or `RwLockWriteGuard`).
+locks (e.g., via [`forget()`] on a [`RwLockReadGuard`] or [`RwLockWriteGuard`]).
 
 # Errors
 
@@ -350,7 +354,7 @@ acquired.
 
 # Examples
 
-```rust
+```
 use std::sync::RwLock;
 
 let mut lock = RwLock::new(0);
@@ -364,18 +368,18 @@ assert_eq!(*lock.read().unwrap(), 10);
 pub fn downgrade(s: Self) -> RwLockReadGuard<'rwlock, T>
 ```
 
-Downgrades a write-locked `RwLockWriteGuard` into a read-locked `RwLockReadGuard`.
+Downgrades a write-locked `RwLockWriteGuard` into a read-locked [`RwLockReadGuard`].
 
-Since we have the `RwLockWriteGuard`, the `RwLock` must already be locked for writing, so
+Since we have the `RwLockWriteGuard`, the [`RwLock`] must already be locked for writing, so
 this method cannot fail.
 
 After downgrading, other readers will be allowed to read the protected data.
 
 # Examples
 
-`downgrade` takes ownership of the `RwLockWriteGuard` and returns a `RwLockReadGuard`.
+`downgrade` takes ownership of the `RwLockWriteGuard` and returns a [`RwLockReadGuard`].
 
-```rust
+```
 use std::sync::{RwLock, RwLockWriteGuard};
 
 let rw = RwLock::new(0);
@@ -387,11 +391,11 @@ let read_guard = RwLockWriteGuard::downgrade(write_guard);
 assert_eq!(42, *read_guard);
 ```
 
-`downgrade` will _atomically_ change the state of the `RwLock` from exclusive mode into
+`downgrade` will _atomically_ change the state of the [`RwLock`] from exclusive mode into
 shared mode. This means that it is impossible for another writing thread to get in between a
 thread calling `downgrade` and any reads it performs after downgrading.
 
-```rust
+```
 use std::sync::{Arc, RwLock, RwLockWriteGuard};
 
 let rw = Arc::new(RwLock::new(1));
@@ -415,4 +419,10 @@ let main_read_guard = RwLockWriteGuard::downgrade(main_write_guard);
 
 // Since `downgrade` is atomic, the writer thread cannot have changed the protected data.
 assert_eq!(*main_read_guard, 2, "`downgrade` was not atomic");
+#
+# drop(main_read_guard);
+# evil_handle.join().unwrap();
+#
+# let final_check = rw.read().unwrap();
+# assert_eq!(*final_check, 3);
 ```

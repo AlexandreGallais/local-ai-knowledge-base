@@ -1,19 +1,15 @@
 ---
 title: "Breaking change: Default ASP.NET Core port changed from 80 to 8080"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/containers/8.0/aspnet-port.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in containers where the default ASP.NET Core port changed from 80 to 8080.
+ms.date: 07/12/2023
 ---
-
 # Default ASP.NET Core port changed from 80 to 8080
 
 The default ASP.NET Core port configured in .NET container images has been updated from port 80 to 8080.
 
 We also added the new `ASPNETCORE_HTTP_PORTS` environment variable as a simpler alternative to `ASPNETCORE_URLS`. The new variable expects a semicolon delimited list of ports numbers, while the older variable expects a more complicated syntax.
 
-Apps built using the older `Microsoft.AspNetCore.WebHost.CreateDefaultBuilder` API won't respect the new `ASPNETCORE_HTTP_PORTS` environment variable. And now that `ASPNETCORE_URLS` is no longer set automatically, they'll switch to use a default URL of `http://localhost:5000`, rather than `http://*:80`, as formerly.
+Apps built using the older <xref:Microsoft.AspNetCore.WebHost.CreateDefaultBuilder?displayProperty=nameWithType> API won't respect the new `ASPNETCORE_HTTP_PORTS` environment variable. And now that `ASPNETCORE_URLS` is no longer set automatically, they'll switch to use a default URL of `http://localhost:5000`, rather than `http://*:80`, as formerly.
 
 ## Previous behavior
 
@@ -76,7 +72,7 @@ $ docker kill 3cc86b4b3ea1a7303d83171c132b0645d4adf61d80131152936b01661ae82a09
 
 ## Type of change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -86,18 +82,18 @@ The change to the port number was made because of the need to provide a good usa
 
 There are two ways to respond to this breaking change:
 
-- (Recommended action) In addition to using the non-root `app` user, explicitly set the `ASPNETCORE_HTTP_PORTS`, `ASPNETCORE_HTTPS_PORTS`, and `ASPNETCORE_URLS` environment variables to the desired port. Example: `docker run --rm -it -p 8000:80 -e ASPNETCORE_HTTP_PORTS=80 <my-app>`
+- (Recommended action) [In addition to using the non-root `app` user](https://devblogs.microsoft.com/dotnet/securing-containers-with-rootless/), explicitly set the `ASPNETCORE_HTTP_PORTS`, `ASPNETCORE_HTTPS_PORTS`, and `ASPNETCORE_URLS` environment variables to the desired port. Example: `docker run --rm -it -p 8000:80 -e ASPNETCORE_HTTP_PORTS=80 <my-app>`
 - Update existing commands and configuration that rely on the expected default port of port 80 to reference port 8080 instead. Example: `docker run --rm -it -p 8000:8080 <my-app>`
 
-If your app was built using the older `Microsoft.AspNetCore.WebHost.CreateDefaultBuilder` method, set `ASPNETCORE_URLS` (not `ASPNETCORE_HTTP_PORTS`). Example: `docker run --rm -it -p 8000:80 -e ASPNETCORE_URLS=http://*:80 <my-app>`.
+If your app was built using the older <xref:Microsoft.AspNetCore.WebHost.CreateDefaultBuilder?displayProperty=nameWithType> method, set `ASPNETCORE_URLS` (not `ASPNETCORE_HTTP_PORTS`). Example: `docker run --rm -it -p 8000:80 -e ASPNETCORE_URLS=http://*:80 <my-app>`.
 
-If you're using Kubernetes or Docker Compose, you need to change the port per those schemas. For examples, see Using .NET with Kubernetes.
+If you're using [Kubernetes](https://kubernetes.io/docs/tutorials/services/connect-applications-service/) or [Docker Compose](https://docs.docker.com/compose/compose-file/05-services/#ports), you need to change the port per those schemas. For examples, see [Using .NET with Kubernetes](https://github.com/dotnet/dotnet-docker/blob/main/samples/kubernetes/README.md).
 
 If you use Azure container services to host your ASP.NET Core container app, you need to update your container environment to set the desired port:
 
-- For Azure App Service, set `WEBSITES_PORT` using the CLI or in the portal.
-- For Azure Container Apps, you can change the port as part of resource creation.
-- For Azure Container Instances, you can change the port as part of resource creation.
+- For Azure App Service, set `WEBSITES_PORT` [using the CLI](/azure/app-service/configure-custom-container?tabs=debian&pivots=container-linux#configure-port-number) or in the portal.
+- For Azure Container Apps, you can change the port as part of [resource creation](/azure/container-apps/get-started-existing-container-image-portal?pivots=container-apps-public-registry#application-ingress-settings).
+- For Azure Container Instances, you can change the port as part of [resource creation](/azure/container-instances/container-instances-quickstart-portal#create-a-container-instance).
 
 ## Affected APIs
 
@@ -105,7 +101,7 @@ None.
 
 ## See also
 
-- New non-root 'app' user in Linux images
-- Containerize a .NET app with dotnet publish
-- Blog: Secure your .NET cloud apps with rootless Linux containers
-- Blog: Running non-root .NET containers with Kubernetes
+- [New non-root 'app' user in Linux images](app-user.md)
+- [Containerize a .NET app with dotnet publish](../../../containers/sdk-publish.md)
+- [Blog: Secure your .NET cloud apps with rootless Linux containers](https://devblogs.microsoft.com/dotnet/securing-containers-with-rootless/#switching-to-port-8080)
+- [Blog: Running non-root .NET containers with Kubernetes](https://devblogs.microsoft.com/dotnet/running-nonroot-kubernetes-with-dotnet/)

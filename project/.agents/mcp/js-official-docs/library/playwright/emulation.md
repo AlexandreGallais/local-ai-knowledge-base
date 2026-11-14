@@ -1,10 +1,6 @@
 ---
-title: "Emulation (part 1 of 2)"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/emulation.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
+id: emulation
+title: "Emulation"
 ---
 
 ## Introduction
@@ -14,9 +10,9 @@ With Playwright you can test your app on any browser as well as emulate a real d
 ## Devices
 * langs: js, csharp, python
 
-Playwright comes with a registry of device parameters using [`property: Playwright.devices`] for selected desktop, tablet and mobile devices. It can be used to simulate browser behavior for a specific device such as user agent, screen size, viewport and if it has touch enabled. All tests will run with the specified device parameters.
+Playwright comes with a [registry of device parameters](https://github.com/microsoft/playwright/blob/main/packages/isomorphic/deviceDescriptorsSource.json) using [`property: Playwright.devices`] for selected desktop, tablet and mobile devices. It can be used to simulate browser behavior for a specific device such as user agent, screen size, viewport and if it has touch enabled. All tests will run with the specified device parameters.
 
-```js
+```js tab=js-test title="playwright.config.ts"
 import { defineConfig, devices } from '@playwright/test'; // import devices
 
 export default defineConfig({
@@ -37,7 +33,7 @@ export default defineConfig({
 });
 ```
 
-```js
+```js tab=js-library
 const { chromium, devices } = require('playwright');
 const browser = await chromium.launch();
 
@@ -47,7 +43,7 @@ const context = await browser.newContext({
 });
 ```
 
-```python
+```python async
 import asyncio
 from playwright.async_api import async_playwright, Playwright
 
@@ -64,7 +60,7 @@ async def main():
 asyncio.run(main())
 ```
 
-```python
+```python sync
 from playwright.sync_api import sync_playwright, Playwright
 
 def run(playwright: Playwright):
@@ -90,6 +86,9 @@ await using var browser = await playwright.Chromium.LaunchAsync(new()
 var iphone13 = playwright.Devices["iPhone 13"];
 await using var context = await browser.NewContextAsync(iphone13);
 ```
+
+
+<img height="1582" width="916" alt="playwright.dev website emulated for iPhone 13" src="https://user-images.githubusercontent.com/13063165/220411073-76fe59f9-9a2d-463d-8e30-c19a7deca133.png" />
 
 **Note**: Pre-configured devices assume a specific platform. For example, "Desktop Chrome" will provide a Windows-specific user agent string.
 
@@ -122,7 +121,7 @@ Playwright can emulate various devices by specifying `setDeviceScaleFactor`, `se
 
 The viewport is included in the device but you can override it for some tests with [`method: Page.setViewportSize`].
 
-```js
+```js tab=js-test title="playwright.config.ts"
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
@@ -140,7 +139,7 @@ export default defineConfig({
 });
 ```
 
-```js
+```js tab=js-library
 // Create context with given viewport
 const context = await browser.newContext({
   viewport: { width: 1280, height: 1024 }
@@ -149,7 +148,7 @@ const context = await browser.newContext({
 
 Test file:
 
-```js
+```js tab=js-test title="tests/example.spec.ts"
 import { test, expect } from '@playwright/test';
 
 test.use({
@@ -161,7 +160,7 @@ test('my test', async ({ page }) => {
 });
 ```
 
-```js
+```js tab=js-library
 // Create context with given viewport
 const context = await browser.newContext({
   viewport: { width: 1280, height: 1024 }
@@ -179,7 +178,7 @@ const context = await browser.newContext({
 
 The same works inside a test file.
 
-```js
+```js tab=js-test title="tests/example.spec.ts"
 import { test, expect } from '@playwright/test';
 
 test.describe('specific viewport block', () => {
@@ -191,7 +190,7 @@ test.describe('specific viewport block', () => {
 });
 ```
 
-```js
+```js tab=js-library
 // Create context with given viewport
 const context = await browser.newContext({
   viewport: { width: 1600, height: 1200 }
@@ -213,7 +212,7 @@ BrowserContext context = browser.newContext(new Browser.NewContextOptions()
   .setDeviceScaleFactor(2));
 ```
 
-```python
+```python async
 # Create context with given viewport
 context = await browser.new_context(
   viewport={ 'width': 1280, 'height': 1024 }
@@ -229,7 +228,7 @@ context = await browser.new_context(
 )
 ```
 
-```python
+```python sync
 # Create context with given viewport
 context = browser.new_context(
   viewport={ 'width': 1280, 'height': 1024 }
@@ -267,7 +266,7 @@ await using var context = await browser.NewContextAsync(new()
 
 Whether the meta viewport tag is taken into account and touch events are enabled.
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
@@ -290,13 +289,13 @@ BrowserContext context = browser.newContext(new Browser.NewContextOptions()
   .isMobile(false));
 ```
 
-```python
+```python async
 context = await browser.new_context(
   is_mobile=False
 )
 ```
 
-```python
+```python sync
 context = browser.new_context(
   is_mobile=False
 )
@@ -313,7 +312,7 @@ await using var context = await browser.NewContextAsync(new()
 
 Emulate the browser Locale and Timezone which can be set globally for all tests in the config and then overridden for particular tests.
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -327,7 +326,7 @@ export default defineConfig({
 });
 ```
 
-```js
+```js tab=js-test title="tests/example.spec.ts"
 import { test, expect } from '@playwright/test';
 
 test.use({
@@ -341,7 +340,7 @@ test('my test for de lang in Berlin timezone', async ({ page }) => {
 });
 ```
 
-```js
+```js tab=js-library
 const context = await browser.newContext({
   locale: 'de-DE',
   timezoneId: 'Europe/Berlin',
@@ -354,14 +353,14 @@ BrowserContext context = browser.newContext(new Browser.NewContextOptions()
   .setTimezoneId("Europe/Berlin"));
 ```
 
-```python
+```python async
 context = await browser.new_context(
   locale='de-DE',
   timezone_id='Europe/Berlin',
 )
 ```
 
-```python
+```python sync
 context = browser.new_context(
   locale='de-DE',
   timezone_id='Europe/Berlin',
@@ -376,17 +375,19 @@ await using var context = await browser.NewContextAsync(new()
 });
 ```
 
+<img height="1824" width="2788" alt="Bing in german lang and timezone" src="https://user-images.githubusercontent.com/13063165/220416571-ccc96ab1-44bb-4579-8430-64502fc24a15.png" />
+
 ######
 * langs: js
 
 Note that this only affects the browser timezone and locale, not the test runner timezone.
-To set the test runner timezone, you can use the `TZ` environment variable.
+To set the test runner timezone, you can use the [`TZ` environment variable](https://nodejs.org/api/cli.html#tz).
 
 ## Permissions
 
 Allow app to show system notifications.
 
-```js
+```js tab=js-test title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -397,7 +398,7 @@ export default defineConfig({
 });
 ```
 
-```js
+```js tab=js-library
 const context = await browser.newContext({
   permissions: ['notifications'],
 });
@@ -408,13 +409,13 @@ BrowserContext context = browser.newContext(new Browser.NewContextOptions()
   .setPermissions(Arrays.asList("notifications")));
 ```
 
-```python
+```python async
 context = await browser.new_context(
   permissions=['notifications'],
 )
 ```
 
-```python
+```python sync
 context = browser.new_context(
   permissions=['notifications'],
 )
@@ -422,7 +423,7 @@ context = browser.new_context(
 
 Allow notifications for a specific domain.
 
-```js
+```js tab=js-test title="tests/example.spec.ts"
 import { test } from '@playwright/test';
 
 test.beforeEach(async ({ context }) => {
@@ -435,7 +436,7 @@ test('first', async ({ page }) => {
 });
 ```
 
-```js
+```js tab=js-library
 await context.grantPermissions(['notifications'], { origin: 'https://skype.com' });
 ```
 
@@ -444,11 +445,11 @@ context.grantPermissions(Arrays.asList("notifications"),
   new BrowserContext.GrantPermissionsOptions().setOrigin("https://skype.com"));
 ```
 
-```python
+```python async
 await context.grant_permissions(['notifications'], origin='https://skype.com')
 ```
 
-```python
+```python sync
 context.grant_permissions(['notifications'], origin='https://skype.com')
 ```
 
@@ -467,11 +468,11 @@ await context.clearPermissions();
 context.clearPermissions();
 ```
 
-```python
+```python async
 await context.clear_permissions()
 ```
 
-```python
+```python sync
 context.clear_permissions()
 ```
 
@@ -483,7 +484,7 @@ await context.ClearPermissionsAsync();
 
 Grant `"geolocation"` permissions and set geolocation to a specific area.
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -495,7 +496,7 @@ export default defineConfig({
 });
 ```
 
-```js
+```js tab=js-test title="tests/example.spec.ts"
 import { test, expect } from '@playwright/test';
 
 test.use({
@@ -508,7 +509,7 @@ test('my test with geolocation', async ({ page }) => {
 });
 ```
 
-```js
+```js tab=js-library
 const context = await browser.newContext({
   geolocation: { longitude: 41.890221, latitude: 12.492348 },
   permissions: ['geolocation']
@@ -522,14 +523,14 @@ BrowserContext context = browser.newContext(new Browser.NewContextOptions()
   .setPermissions(Arrays.asList("geolocation")));
 ```
 
-```python
+```python async
 context = await browser.new_context(
   geolocation={"longitude": 41.890221, "latitude": 12.492348},
   permissions=["geolocation"]
 )
 ```
 
-```python
+```python sync
 context = browser.new_context(
   geolocation={"longitude": 41.890221, "latitude": 12.492348},
   permissions=["geolocation"]
@@ -544,9 +545,11 @@ await using var context = await browser.NewContextAsync(new()
 });
 ```
 
+<img height="1824" width="2788" alt="geolocation for italy on bing maps" src="https://user-images.githubusercontent.com/13063165/220417670-bb22d815-f5cd-47c4-8562-0b88165eac27.png" />
+
 Change the location later:
 
-```js
+```js tab=js-test title="tests/example.spec.ts"
 import { test, expect } from '@playwright/test';
 
 test.use({
@@ -560,7 +563,7 @@ test('my test with geolocation', async ({ page, context }) => {
 });
 ```
 
-```js
+```js tab=js-library
 await context.setGeolocation({ longitude: 48.858455, latitude: 2.294474 });
 ```
 
@@ -568,11 +571,11 @@ await context.setGeolocation({ longitude: 48.858455, latitude: 2.294474 });
 context.setGeolocation(new Geolocation(48.858455, 2.294474));
 ```
 
-```python
+```python async
 await context.set_geolocation({"longitude": 48.858455, "latitude": 2.294474})
 ```
 
-```python
+```python sync
 context.set_geolocation({"longitude": 48.858455, "latitude": 2.294474})
 ```
 
@@ -581,3 +584,342 @@ await context.SetGeolocationAsync(new Geolocation() { Longitude = 48.858455, Lat
 ```
 
 **Note** you can only change geolocation for all pages in the context.
+## Color Scheme and Media
+
+Emulate the users `"colorScheme"`. Supported values are 'light', 'dark', and 'no-preference'. You can also emulate the media type with [`method: Page.emulateMedia`].
+
+```js title="playwright.config.ts"
+import { defineConfig } from '@playwright/test';
+
+export default defineConfig({
+  use: {
+    colorScheme: 'dark',
+  },
+});
+```
+
+```js tab=js-test title="tests/example.spec.ts"
+import { test, expect } from '@playwright/test';
+
+test.use({
+  colorScheme: 'dark' // or 'light'
+});
+
+test('my test with dark mode', async ({ page }) => {
+  // ...
+});
+```
+
+```js tab=js-library
+// Create context with dark mode
+const context = await browser.newContext({
+  colorScheme: 'dark' // or 'light'
+});
+
+// Create page with dark mode
+const page = await browser.newPage({
+  colorScheme: 'dark' // or 'light'
+});
+
+// Change color scheme for the page
+await page.emulateMedia({ colorScheme: 'dark' });
+
+// Change media for page
+await page.emulateMedia({ media: 'print' });
+```
+
+```java
+// Create context with dark mode
+BrowserContext context = browser.newContext(new Browser.NewContextOptions()
+  .setColorScheme(ColorScheme.DARK)); // or "light"
+
+// Create page with dark mode
+Page page = browser.newPage(new Browser.NewPageOptions()
+  .setColorScheme(ColorScheme.DARK)); // or "light"
+
+// Change color scheme for the page
+page.emulateMedia(new Page.EmulateMediaOptions().setColorScheme(ColorScheme.DARK));
+
+// Change media for page
+page.emulateMedia(new Page.EmulateMediaOptions().setMedia(Media.PRINT));
+```
+
+```python async
+# Create context with dark mode
+context = await browser.new_context(
+  color_scheme='dark' # or 'light'
+)
+
+# Create page with dark mode
+page = await browser.new_page(
+  color_scheme='dark' # or 'light'
+)
+
+# Change color scheme for the page
+await page.emulate_media(color_scheme='dark')
+
+# Change media for page
+await page.emulate_media(media='print')
+```
+
+```python sync
+# Create context with dark mode
+context = browser.new_context(
+  color_scheme='dark' # or 'light'
+)
+
+# Create page with dark mode
+page = browser.new_page(
+  color_scheme='dark' # or 'light'
+)
+
+# Change color scheme for the page
+page.emulate_media(color_scheme='dark')
+
+# Change media for page
+page.emulate_media(media='print')
+```
+
+```csharp
+// Create context with dark mode
+await using var context = await browser.NewContextAsync(new()
+{
+    ColorScheme = ColorScheme.Dark
+});
+
+// Create page with dark mode
+var page = await browser.NewPageAsync(new()
+{
+    ColorScheme = ColorScheme.Dark
+});
+
+// Change color scheme for the page
+await page.EmulateMediaAsync(new()
+{
+    ColorScheme = ColorScheme.Dark
+});
+
+// Change media for page
+await page.EmulateMediaAsync(new()
+{
+    Media = Media.Print
+});
+```
+
+<img height="1824" width="2788" alt="playwright web in dark mode" src="https://user-images.githubusercontent.com/13063165/220411638-55d2b051-4678-4da7-9f0b-ed22f5a3c47c.png" />
+
+The `"reducedMotion"`, `"forcedColors"` and `"contrast"` options emulate the `prefers-reduced-motion`, `forced-colors` and `prefers-contrast` media features the same way. Supported values are `'reduce'` and `'no-preference'` for reduced motion, `'active'` and `'none'` for forced colors, and `'more'` and `'no-preference'` for contrast. [`method: Page.emulateMedia`] changes them for a single page.
+
+```js title="playwright.config.ts"
+import { defineConfig } from '@playwright/test';
+
+export default defineConfig({
+  use: {
+    reducedMotion: 'reduce',
+    forcedColors: 'active',
+    contrast: 'more',
+  },
+});
+```
+
+```js tab=js-test title="tests/example.spec.ts"
+import { test, expect } from '@playwright/test';
+
+test.use({
+  reducedMotion: 'reduce', // or 'no-preference'
+  forcedColors: 'active', // or 'none'
+  contrast: 'more', // or 'no-preference'
+});
+
+test('my test with reduced motion, forced colors and more contrast', async ({ page }) => {
+  // ...
+});
+```
+
+```js tab=js-library
+// Create context with reduced motion, forced colors and more contrast
+const context = await browser.newContext({
+  reducedMotion: 'reduce', // or 'no-preference'
+  forcedColors: 'active', // or 'none'
+  contrast: 'more', // or 'no-preference'
+});
+
+// Change the media features for the page
+await page.emulateMedia({ reducedMotion: 'reduce', forcedColors: 'active', contrast: 'more' });
+```
+
+```java
+// Create context with reduced motion, forced colors and more contrast
+BrowserContext context = browser.newContext(new Browser.NewContextOptions()
+  .setReducedMotion(ReducedMotion.REDUCE) // or NO_PREFERENCE
+  .setForcedColors(ForcedColors.ACTIVE) // or NONE
+  .setContrast(Contrast.MORE)); // or NO_PREFERENCE
+
+// Change the media features for the page
+page.emulateMedia(new Page.EmulateMediaOptions()
+  .setReducedMotion(ReducedMotion.REDUCE)
+  .setForcedColors(ForcedColors.ACTIVE)
+  .setContrast(Contrast.MORE));
+```
+
+```python async
+# Create context with reduced motion, forced colors and more contrast
+context = await browser.new_context(
+  reduced_motion='reduce', # or 'no-preference'
+  forced_colors='active', # or 'none'
+  contrast='more' # or 'no-preference'
+)
+
+# Change the media features for the page
+await page.emulate_media(reduced_motion='reduce', forced_colors='active', contrast='more')
+```
+
+```python sync
+# Create context with reduced motion, forced colors and more contrast
+context = browser.new_context(
+  reduced_motion='reduce', # or 'no-preference'
+  forced_colors='active', # or 'none'
+  contrast='more' # or 'no-preference'
+)
+
+# Change the media features for the page
+page.emulate_media(reduced_motion='reduce', forced_colors='active', contrast='more')
+```
+
+```csharp
+// Create context with reduced motion, forced colors and more contrast
+await using var context = await browser.NewContextAsync(new()
+{
+    ReducedMotion = ReducedMotion.Reduce, // or NoPreference
+    ForcedColors = ForcedColors.Active, // or None
+    Contrast = Contrast.More // or NoPreference
+});
+
+// Change the media features for the page
+await page.EmulateMediaAsync(new()
+{
+    ReducedMotion = ReducedMotion.Reduce,
+    ForcedColors = ForcedColors.Active,
+    Contrast = Contrast.More
+});
+```
+## User Agent
+
+The User Agent is included in the device and therefore you  will rarely need to change it however if you do need to test a different user agent you can override it with the `userAgent` property.
+
+```js tab=js-test title="tests/example.spec.ts"
+import { test, expect } from '@playwright/test';
+
+test.use({ userAgent: 'My user agent' });
+
+test('my user agent test', async ({ page }) => {
+  // ...
+});
+```
+
+```js tab=js-library
+const context = await browser.newContext({
+  userAgent: 'My user agent'
+});
+```
+
+```java
+BrowserContext context = browser.newContext(new Browser.NewContextOptions()
+  .setUserAgent("My user agent"));
+```
+
+```python async
+context = await browser.new_context(
+  user_agent='My user agent'
+)
+```
+
+```python sync
+context = browser.new_context(
+  user_agent='My user agent'
+)
+```
+
+```csharp
+var context = await browser.NewContextAsync(new() { UserAgent = "My User Agent" });
+```
+
+## Offline
+
+Emulate the network being offline.
+
+```js title="playwright.config.ts"
+import { defineConfig } from '@playwright/test';
+
+export default defineConfig({
+  use: {
+    offline: true
+  },
+});
+```
+
+```java
+BrowserContext context = browser.newContext(new Browser.NewContextOptions()
+  .setOffline(true));
+```
+
+```python async
+context = await browser.new_context(
+  offline=True
+)
+```
+
+```python sync
+context = browser.new_context(
+  offline=True
+)
+```
+
+```csharp
+var context = await browser.NewContextAsync(new() { Offline = true });
+```
+
+:::note
+Offline emulation only affects requests that go through the browser's regular network stack, such as page navigations, `fetch()`, `XMLHttpRequest` and WebSockets. It does not affect WebRTC traffic: established `RTCPeerConnection`s keep sending and receiving media over UDP. To test WebRTC connection loss, interrupt the connection outside the browser, for example by stopping the TURN server or using an OS-level firewall.
+:::
+
+## JavaScript Enabled
+
+Emulate a user scenario where JavaScript is disabled.
+
+```js tab=js-test title="tests/example.spec.ts"
+import { test, expect } from '@playwright/test';
+
+test.use({ javaScriptEnabled: false });
+
+test('test with no JavaScript', async ({ page }) => {
+  // ...
+});
+```
+
+```js tab=js-library
+const context = await browser.newContext({
+  javaScriptEnabled: false
+});
+```
+
+```java
+BrowserContext context = browser.newContext(new Browser.NewContextOptions()
+  .javaScriptEnabled(false));
+```
+
+```python async
+context = await browser.new_context(
+  java_script_enabled=False
+)
+```
+
+```python sync
+context = browser.new_context(
+  java_script_enabled=False
+)
+```
+
+```csharp
+var context = await browser.NewContextAsync(new() { JavaScriptEnabled = false });
+```

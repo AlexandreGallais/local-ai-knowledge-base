@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: RegisterForRuntimeStartup3 Function"
 title: "RegisterForRuntimeStartup3 Function"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/registerforruntimestartup3-function.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/21/2022"
+f1_keywords:
+  - "RegisterForRuntimeStartup3"
+api_location:
+  - "dbgshim.dll"
+  - "libdbgshim.so"
+  - "libdbgshim.dylib"
+helpviewer_keywords:
+  - "RegisterForRuntimeStartup3 function"
+  - "debugging API [.NET Core]"
+  - ".NET Core, debugging"
+ms.assetid: 35c7a18f-133a-4584-bd25-bb338568b0c6
 ---
-
 # RegisterForRuntimeStartup3 function
 
 Executes the callback when the .NET runtime starts in the specified process.
@@ -33,16 +40,16 @@ HRESULT RegisterForRuntimeStartup3 (
  [in] A string representing the application group ID of a sandboxed process running in Mac. Pass NULL if the process is not running in a sandbox and other platforms.
 
  `pLibraryProvider`\
- [in] A callback interface instance for locating DBI and DAC. See ICLRDebuggingLibraryProvider3 interface.
+ [in] A callback interface instance for locating DBI and DAC. See [ICLRDebuggingLibraryProvider3](iclrdebugginglibraryprovider3-interface.md) interface.
 
  `pfnCallback`\
- [in] A callback that is invoked when the runtime starts. See PSTARTUP_CALLBACK function pointer.
+ [in] A callback that is invoked when the runtime starts. See [PSTARTUP_CALLBACK](pstartup_callback-function-pointer.md) function pointer.
 
  `parameter`\
  [in] data pointer passed to pfnCallback.
 
  `ppUnregisterToken`\
- [out] pointer to return the UnregisterForRuntimeStartup token.
+ [out] pointer to return the [UnregisterForRuntimeStartup](unregisterforruntimestartup-function.md) token.
 
 ## Return value
 
@@ -63,7 +70,7 @@ This is the only register function that works for single-file applications.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** dbgshim.h
 

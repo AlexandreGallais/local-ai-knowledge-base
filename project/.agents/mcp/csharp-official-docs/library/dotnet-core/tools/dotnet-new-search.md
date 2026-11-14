@@ -1,12 +1,8 @@
 ---
-title: "dotnet new search"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-new-search.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet new search
+description: The dotnet new search command searches for templates on NuGet.org.
+ms.date: 10/28/2025
 ---
-
 # dotnet new search
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -30,18 +26,8 @@ dotnet new search [<TEMPLATE_NAME>] [--author <AUTHOR>] [-lang|--language <langu
 
 The `dotnet new search` command searches for templates supported by `dotnet new` on NuGet.org. When the <TEMPLATE_NAME> is specified, searches for templates containing the specified name.
 
-> **Note:**
-> Starting with the .NET 7 SDK, the `dotnet new` syntax has changed:
-
-- The `--list`, `--search`, `--install`, and `--uninstall` options became `list`, `search`, `install`, and `uninstall` subcommands.
-- The `--update-apply` option became the `update` subcommand.
-- To use `--update-check`, use the `update` subcommand with the `--check-only` option.
-
-Other options that were available before are still available to use with their respective subcommands.
-Separate help for each subcommand is available via the `-h` or `--help` option: `dotnet new <subcommand> --help` lists all supported options for the subcommand.
-
-Additionally, tab completion is now available for `dotnet new`. It supports completion for installed template names and for the options a selected template provides.
-To activate tab completion for the .NET SDK, see Enable tab completion.
+> [!NOTE]
+> [!INCLUDE [new syntax](includes/dotnet-new-7-0-syntax.md)]
 >
 > Examples of the old syntax:
 >
@@ -58,7 +44,7 @@ To activate tab completion for the .NET SDK, see Enable tab completion.
   If the argument is specified, only templates containing `<TEMPLATE_NAME>` in the template name or short name will be shown.
   The argument is mandatory when `--author`, `--language`, `--package`, `--tag`, or `--type` options are not specified.
 
-  > **Note:**
+  > [!NOTE]
   > Starting with .NET SDK 6.0.100, you can put the `<TEMPLATE_NAME>` argument after the `--search` option. For example, `dotnet new --search web` provides the same result as `dotnet new web --search`.
   > Using more than one argument is not allowed.
 
@@ -75,7 +61,7 @@ To activate tab completion for the .NET SDK, see Enable tab completion.
   - `language` - The template language.
   - `tags` - The list of template tags.
   - `type` - The template type.
-
+  
   The template name, short name, package name, an indication if it's a trusted source, and total downloads count are always shown. The default list of columns is template name, short name, language, package, an indication if it's a trusted source, and total downloads. To specify multiple columns, use the `--columns` option multiple times.
 
 - **`--columns-all`**
@@ -86,15 +72,13 @@ To activate tab completion for the .NET SDK, see Enable tab completion.
 
   Enables diagnostic output. Available since .NET SDK 7.0.100.
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 - **`-lang|--language <language>`**
 
   Filters templates based on language supported by the template. The language accepted varies by the template, possible languages are C#, F#, VB, SQL, JSON, TypeScript, and more. Not valid for some templates.
 
-  > **Note:**
+  > [!NOTE]
   > Some shells interpret `#` as a special character. In those cases, enclose the language parameter value in quotes. For example, `dotnet new --search --language "F#"`.
 
 - **`--package <PACKAGE>`**
@@ -113,8 +97,8 @@ Prints out a description of how to use the command.
 
   Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, and `diag[nostic]`. Available since .NET SDK 7.0.100.
 
-> **Note:**
-> To ensure that the template package appears in `dotnet new --search` result, set the NuGet package type to `Template`.
+> [!NOTE]
+> To ensure that the template package appears in `dotnet new --search` result, set [the NuGet package type](/nuget/create-packages/set-package-type) to `Template`.
 
 ## Examples
 
@@ -144,6 +128,6 @@ Prints out a description of how to use the command.
 
 ## See also
 
-- dotnet new command
-- dotnet new list command
-- .NET templates for authors
+- [dotnet new command](dotnet-new.md)
+- [dotnet new list command](dotnet-new-list.md)
+- [.NET templates for authors](templates.md)

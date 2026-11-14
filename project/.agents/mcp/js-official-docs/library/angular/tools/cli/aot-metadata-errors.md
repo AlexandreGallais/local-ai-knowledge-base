@@ -1,12 +1,3 @@
----
-title: "AOT metadata errors"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/tools/cli/aot-metadata-errors.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # AOT metadata errors
 
 The following are metadata errors you may encounter, with explanations and suggested corrections.
@@ -15,7 +6,7 @@ The following are metadata errors you may encounter, with explanations and sugge
 
 HELPFUL: The compiler encountered an expression it didn't understand while evaluating Angular metadata.
 
-Language features outside of the compiler's restricted expression syntax
+Language features outside of the compiler's [restricted expression syntax](tools/cli/aot-compiler)
 can produce this error, as seen in the following example:
 
 ```ts
@@ -25,14 +16,14 @@ export class Fooish { … }
 const prop = typeof Fooish; // typeof is not valid in metadata
   …
   // bracket notation is not valid in metadata
-  { provide: '<example-value>', useValue: { [prop]: '<example-value>' } };
+  { provide: 'token', useValue: { [prop]: 'value' } };
   …
 ```
 
 You can use `typeof` and bracket notation in normal application code.
 You just can't use those features within expressions that define Angular metadata.
 
-Avoid this error by sticking to the compiler's restricted expression syntax
+Avoid this error by sticking to the compiler's [restricted expression syntax](tools/cli/aot-compiler)
 when writing Angular metadata
 and be wary of new or unusual TypeScript features.
 
@@ -68,7 +59,7 @@ You could fix the problem by initializing `foo`.
 let foo = 42; // initialized
 ```
 
-The compiler will fold the expression into the provider as if you had written this.
+The compiler will [fold](tools/cli/aot-compiler#code-folding) the expression into the provider as if you had written this.
 
 ```ts
 providers: [{provide: Foo, useValue: 42}];
@@ -109,7 +100,7 @@ export class MyComponent {}
 
 The compiler needs the value of the `template` property _right now_ to generate the component factory.
 The variable reference alone is insufficient.
-Prefixing the declaration with `export` merely produces a new error, "`Only initialized variables and constants can be referenced`".
+Prefixing the declaration with `export` merely produces a new error, "[`Only initialized variables and constants can be referenced`](#only-initialized-variables-and-constants)".
 
 ## Only initialized variables and constants
 
@@ -181,7 +172,7 @@ abstract class MyStrategy { }
   …
 ```
 
-Angular generates a class factory in a separate module and that factory can only access exported classes.
+Angular generates a class factory in a separate module and that factory [can only access exported classes](tools/cli/aot-compiler#public-or-protected-symbols).
 To correct this error, export the referenced class.
 
 ```ts
@@ -199,7 +190,7 @@ export abstract class MyStrategy { }
 
 HELPFUL: _Referencing an exported destructured variable or constant is not supported by the template compiler. Consider simplifying this to avoid destructuring._
 
-The compiler does not support references to variables assigned by destructuring.
+The compiler does not support references to variables assigned by [destructuring](https://www.typescriptlang.org/docs/handbook/variable-declarations.html#destructuring).
 
 For example, you cannot write something like this:
 
@@ -266,9 +257,9 @@ Here's an illustrative example.
 
 ```ts
 // CORRECTED
-import {Inject, InjectionToken, Component} from '<example-value>';
+import {Inject, InjectionToken, Component} from '@angular/core';
 
-export const WINDOW = new InjectionToken('<example-value>');
+export const WINDOW = new InjectionToken('Window');
 export function _window() { return window; }
 
 @Component({
@@ -317,7 +308,7 @@ provider: [{provide: Foo, useValue: {'0': 'test'}}];
 
 ## Unsupported enum member name
 
-HELPFUL: _Angular couldn't determine the value of the enum member that you referenced in metadata._
+HELPFUL: _Angular couldn't determine the value of the [enum member](https://www.typescriptlang.org/docs/handbook/enums.html) that you referenced in metadata._
 
 The compiler can understand simple enum values but not complex values such as those derived from computed properties.
 
@@ -344,7 +335,7 @@ Avoid referring to enums with complicated initializers or computed properties.
 
 HELPFUL: _Tagged template expressions are not supported in metadata._
 
-The compiler encountered a JavaScript ES2015 tagged template expression such as the following.
+The compiler encountered a JavaScript ES2015 [tagged template expression](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals) such as the following.
 
 ```ts
 
@@ -357,7 +348,7 @@ const raw = String.raw`A tagged template ${expression} string`;
 
 ```
 
-`String.raw()` is a _tag function_ native to JavaScript ES2015.
+[`String.raw()`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String/raw) is a _tag function_ native to JavaScript ES2015.
 
 The AOT compiler does not support tagged template expressions; avoid them in metadata expressions.
 
@@ -366,3 +357,5 @@ The AOT compiler does not support tagged template expressions; avoid them in met
 HELPFUL: _The compiler expected a reference to a symbol at the location specified in the error message._
 
 This error can occur if you use an expression in the `extends` clause of a class.
+
+<!--todo: Chuck: After reviewing your PR comment I'm still at a loss. See [comment there](https://github.com/angular/angular/pull/17712#discussion_r132025495). -->

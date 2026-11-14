@@ -1,13 +1,9 @@
 ---
-title: "dot-notation"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/dot-notation.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: dot-notation
+rule_type: suggestion
 ---
 
-# dot-notation
+
 
 In JavaScript, one can access properties using the dot notation (`foo.bar`) or square-bracket notation (`foo["bar"]`). However, the dot notation is often preferred because it is easier to read, less verbose, and works better with aggressive JavaScript minimizers.
 
@@ -21,7 +17,7 @@ This rule is aimed at maintaining code consistency and improving code readabilit
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint dot-notation: "error"*/
@@ -29,9 +25,11 @@ Examples of **incorrect** code for this rule:
 const x = foo["bar"];
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint dot-notation: "error"*/
@@ -40,6 +38,8 @@ const x = foo.bar;
 
 const y = foo[bar];    // Property name is a variable, square-bracket notation required
 ```
+
+:::
 
 ## Options
 
@@ -52,7 +52,7 @@ This rule accepts a single options argument:
 
 Examples of **correct** code for the `{ "allowKeywords": false }` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint dot-notation: ["error", { "allowKeywords": false }]*/
@@ -61,9 +61,11 @@ const foo = { "class": "CS 101" }
 const x = foo["class"]; // Property name is a reserved word, square-bracket notation required
 ```
 
+:::
+
 Examples of additional **correct** code for the `{ "allowKeywords": false }` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint dot-notation: ["error", { "allowKeywords": false }]*/
@@ -76,13 +78,15 @@ class C {
 }
 ```
 
+:::
+
 ### allowPattern
 
-For example, when preparing data to be sent to an external API, it is often required to use property names that include underscores.  If the `camelcase` rule is in effect, these snake case properties would not be allowed.  By providing an `allowPattern` to the `dot-notation` rule, these snake case properties can be accessed with bracket notation.
+For example, when preparing data to be sent to an external API, it is often required to use property names that include underscores.  If the `camelcase` rule is in effect, these [snake case](https://en.wikipedia.org/wiki/Snake_case) properties would not be allowed.  By providing an `allowPattern` to the `dot-notation` rule, these snake case properties can be accessed with bracket notation.
 
 Examples of **incorrect** code for the sample `{ "allowPattern": "^[a-z]+(_[a-z]+)+$" }` (pattern to find snake case named properties) option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint dot-notation: ["error", { "allowPattern": "^[a-z]+(_[a-z]+)+$" }]*/
@@ -91,9 +95,10 @@ const data = {};
 data["fooBar"] = 42;
 ```
 
+:::
 Examples of **correct** code for the sample `{ "allowPattern": "^[a-z]+(_[a-z]+)+$" }` (pattern to find snake case named properties) option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint dot-notation: ["error", { "allowPattern": "^[a-z]+(_[a-z]+)+$" }]*/
@@ -101,3 +106,5 @@ Examples of **correct** code for the sample `{ "allowPattern": "^[a-z]+(_[a-z]+)
 const data = {};
 data["foo_bar"] = 42;
 ```
+
+:::

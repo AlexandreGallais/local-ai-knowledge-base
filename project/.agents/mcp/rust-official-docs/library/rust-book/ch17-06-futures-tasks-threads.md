@@ -1,17 +1,6 @@
----
-title: "ch17-06-futures-tasks-threads"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch17-06-futures-tasks-threads.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch17-06-futures-tasks-threads
-
 ## Putting It All Together: Futures, Tasks, and Threads
 
-As we saw in Chapter 16, threads provide one approach to
+As we saw in [Chapter 16][ch16]<!-- ignore -->, threads provide one approach to
 concurrency. We’ve seen another approach in this chapter: using async with
 futures and streams. If you’re wondering when to choose one method over the other,
 the answer is: it depends! And in many cases, the choice isn’t threads _or_
@@ -73,28 +62,13 @@ between threads and async. You can use them together freely, letting each
 play the part it’s best at. For example, Listing 17-25 shows a fairly common
 example of this kind of mix in real-world Rust code.
 
-**Listing 17-25: Sending messages with blocking code in a thread and awaiting the messages in an async block** (src/main.rs)
+<Listing number="17-25" caption="Sending messages with blocking code in a thread and awaiting the messages in an async block" file-name="src/main.rs">
 
 ```rust
-use std::{thread, time::Duration};
-
-fn main() {
-    let (tx, mut rx) = trpl::channel();
-
-    thread::spawn(move || {
-        for i in 1..11 {
-            tx.send(i).unwrap();
-            thread::sleep(Duration::from_secs(1));
-        }
-    });
-
-    trpl::block_on(async {
-        while let Some(message) = rx.recv().await {
-            println!("{message}");
-        }
-    });
-}
+{{#rustdoc_include ../listings/ch17-async-await/listing-17-25/src/main.rs:all}}
 ```
+
+</Listing>
 
 We begin by creating an async channel, then spawning a thread that takes
 ownership of the sender side of the channel using the `move` keyword. Within
@@ -113,7 +87,7 @@ real-world use cases.
 ## Summary
 
 This isn’t the last you’ll see of concurrency in this book. The project in
-Chapter 21 will apply these concepts in a more realistic
+[Chapter 21][ch21]<!-- ignore --> will apply these concepts in a more realistic
 situation than the simpler examples discussed here and compare problem-solving
 with threading versus tasks and futures more directly.
 
@@ -124,3 +98,8 @@ server or an embedded operating system.
 Next, we’ll talk about idiomatic ways to model problems and structure solutions
 as your Rust programs get bigger. In addition, we’ll discuss how Rust’s idioms
 relate to those you might be familiar with from object-oriented programming.
+
+[ch16]: ch16-00-concurrency.html
+[combining-futures]: ch17-03-more-futures.html#building-our-own-async-abstractions
+[streams]: ch17-04-streams.html#composing-streams
+[ch21]: ch21-00-final-project-a-web-server.html

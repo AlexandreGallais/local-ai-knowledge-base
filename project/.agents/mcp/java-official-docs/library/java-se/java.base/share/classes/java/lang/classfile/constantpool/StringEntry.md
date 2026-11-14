@@ -1,30 +1,24 @@
----
-title: "StringEntry interface (java.lang.classfile.constantpool)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/constantpool/StringEntry.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # StringEntry interface (java.lang.classfile.constantpool)
 
 ```java
 public sealed interface StringEntry extends ConstantValueEntry permits AbstractPoolEntry.StringEntryImpl
 ```
 
-Models a `CONSTANT_String_info` structure, or a string constant, in the
-constant pool of a `class` file.
-
-The use of a `StringEntry` is represented by a `String`.
-Conversions are through `ConstantPoolBuilder.stringEntry(String)` and
-`stringValue()`.
-
+Models a {@code CONSTANT_String_info} structure, or a string constant, in the
+constant pool of a {@code class} file.
+<p>
+The use of a {@code StringEntry} is represented by a {@link String}.
+Conversions are through {@link ConstantPoolBuilder#stringEntry(String)} and
+{@link #stringValue()}.
+<p>
 A string entry is composite:
+{@snippet lang=text :
+// @link substring="StringEntry" target="ConstantPoolBuilder#stringEntry(Utf8Entry)" :
+StringEntry(Utf8Entry utf8) // @link substring="utf8" target="#utf8()"
+}
 
-**jvms:** 4.4.3 The `CONSTANT_String_info` Structure
-
-**Since:** 24
+@jvms 4.4.3 The {@code CONSTANT_String_info} Structure
+@since 24
 
 ## StringEntry.utf8()
 
@@ -32,7 +26,9 @@ A string entry is composite:
 Utf8Entry utf8()
 ```
 
-**See also:** ConstantPoolBuilder#stringEntry(Utf8Entry)
+{@return the UTF constant pool entry describing the string contents}
+
+@see ConstantPoolBuilder#stringEntry(Utf8Entry)
 
 ## StringEntry.stringValue()
 
@@ -40,12 +36,16 @@ Utf8Entry utf8()
 String stringValue()
 ```
 
-**API note:** A `Utf8Entry` can be used directly as a `CharSequence` if
-`String` functionalities are not strictly desired.  If only string
-equivalence is desired, equalsString should
-be used.  Reduction of string processing can significantly improve `class` file reading performance.
+{@return the string value for this entry}
 
-**See also:** ConstantPoolBuilder#stringEntry(String)
+@apiNote
+A {@code Utf8Entry} can be used directly as a {@link CharSequence} if
+{@code String} functionalities are not strictly desired.  If only string
+equivalence is desired, {@link #equalsString(String) equalsString} should
+be used.  Reduction of string processing can significantly improve {@code
+class} file reading performance.
+
+@see ConstantPoolBuilder#stringEntry(String)
 
 ## StringEntry.equalsString(String)
 
@@ -53,8 +53,7 @@ be used.  Reduction of string processing can significantly improve `class` file 
 boolean equalsString(String value)
 ```
 
-Parameters:
+{@return whether this entry describes the same string as the provided string}
 
-- `value`: the string to compare to
-
-**Since:** 25
+@param value the string to compare to
+@since 25

@@ -1,31 +1,22 @@
----
-title: "DiscontinuedInstruction interface (java.lang.classfile.instruction)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/instruction/DiscontinuedInstruction.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # DiscontinuedInstruction interface (java.lang.classfile.instruction)
 
 ```java
 public sealed interface DiscontinuedInstruction extends Instruction
 ```
 
-Marker interface for instruction discontinued from the `code` array of
-a `Code` attribute.  Delivered as a `CodeElement` when traversing
-the elements of a `CodeModel`.
+Marker interface for instruction discontinued from the {@code code} array of
+a {@code Code} attribute.  Delivered as a {@link CodeElement} when traversing
+the elements of a {@link CodeModel}.
 
-**API note:** While most instructions have convenience factory methods in `CodeBuilder`, discontinued instructions can only be supplied to code builders
-explicitly with CodeBuilder::with to discourage
+@apiNote
+While most instructions have convenience factory methods in {@link
+CodeBuilder}, discontinued instructions can only be supplied to code builders
+explicitly with {@link CodeBuilder#with CodeBuilder::with} to discourage
 their use.
 
-**jvms:** 4.9.1 Static Constraints
-
-**sealedGraph:**
-
-**Since:** 24
+@jvms 4.9.1 Static Constraints
+@sealedGraph
+@since 24
 
 ## DiscontinuedInstruction.target()
 
@@ -33,22 +24,25 @@ their use.
 Label target()
 ```
 
+{@return the target of the jump subroutine instruction}
+
 ## DiscontinuedInstruction.of(Opcode, Label)
 
 ```java
 static JsrInstruction of(Opcode op, Label target)
 ```
 
-Parameters:
+{@return a jump subroutine instruction}
 
-- `op`: the opcode for the specific type of jump subroutine instruction, which must be of kind `Opcode.Kind.DISCONTINUED_JSR`
-- `target`: target label of the subroutine
+@apiNote
+The explicit {@code op} argument allows creating {@link Opcode#JSR_W
+jsr_w} instructions to avoid short jumps.
 
-**API note:** The explicit `op` argument allows creating jsr_w instructions to avoid short jumps.
-
-Throws:
-
-- `IllegalArgumentException`: if the opcode kind is not `Opcode.Kind.DISCONTINUED_JSR`.
+@param op the opcode for the specific type of jump subroutine instruction,
+          which must be of kind {@link Opcode.Kind#DISCONTINUED_JSR}
+@param target target label of the subroutine
+@throws IllegalArgumentException if the opcode kind is not
+        {@link Opcode.Kind#DISCONTINUED_JSR}.
 
 ## DiscontinuedInstruction.of(Label)
 
@@ -56,9 +50,9 @@ Throws:
 static JsrInstruction of(Label target)
 ```
 
-Parameters:
+{@return a jump subroutine instruction}
 
-- `target`: target label of the subroutine
+@param target target label of the subroutine
 
 ## DiscontinuedInstruction.slot()
 
@@ -66,7 +60,8 @@ Parameters:
 int slot()
 ```
 
-The value is within `[0, 65535]`.
+{@return the local variable slot with return address}
+The value is within {@code [0, 65535]}.
 
 ## DiscontinuedInstruction.of(Opcode, int)
 
@@ -74,21 +69,22 @@ The value is within `[0, 65535]`.
 static RetInstruction of(Opcode op, int slot)
 ```
 
-`slot` must be in the closed range of `[0, 255]` for
-ret, or within `[0, 65535]` for wide ret.
+{@return a return from subroutine instruction}
+<p>
+{@code slot} must be in the closed range of {@code [0, 255]} for
+{@link Opcode#RET ret}, or within {@code [0, 65535]} for {@link
+Opcode#RET_W wide ret}.
 
-Parameters:
-
-- `op`: the opcode for the specific type of return from subroutine instruction, which must be of kind `Opcode.Kind.DISCONTINUED_RET`
-- `slot`: the local variable slot to load return address from
-
-**API note:** The explicit `op` argument allows creating `wide ret`
-instructions with `slot` in the range of regular `ret`
+@apiNote
+The explicit {@code op} argument allows creating {@code wide ret}
+instructions with {@code slot} in the range of regular {@code ret}
 instructions.
 
-Throws:
-
-- `IllegalArgumentException`: if the opcode kind is not `Opcode.Kind.DISCONTINUED_RET` or if `slot` is out of range
+@param op the opcode for the specific type of return from subroutine instruction,
+          which must be of kind {@link Opcode.Kind#DISCONTINUED_RET}
+@param slot the local variable slot to load return address from
+@throws IllegalArgumentException if the opcode kind is not
+        {@link Opcode.Kind#DISCONTINUED_RET} or if {@code slot} is out of range
 
 ## DiscontinuedInstruction.of(int)
 
@@ -96,12 +92,9 @@ Throws:
 static RetInstruction of(int slot)
 ```
 
-`slot` must be within `[0, 65535]`.
+{@return a return from subroutine instruction}
+<p>
+{@code slot} must be within {@code [0, 65535]}.
 
-Parameters:
-
-- `slot`: the local variable slot to load return address from
-
-Throws:
-
-- `IllegalArgumentException`: if `slot` is out of range
+@param slot the local variable slot to load return address from
+@throws IllegalArgumentException if {@code slot} is out of range

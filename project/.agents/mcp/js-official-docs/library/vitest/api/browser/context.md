@@ -1,10 +1,5 @@
 ---
-title: "Context API | Browser Mode"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/api/browser/context.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Context API | Browser Mode
 ---
 
 # Context API
@@ -13,8 +8,9 @@ Vitest exposes a context module via `vitest/browser` entry point. As of 2.0, it 
 
 ## `userEvent`
 
-**Tip:**
-The `userEvent` API is explained in detail at Interactivity API.
+::: tip
+The `userEvent` API is explained in detail at [Interactivity API](/api/browser/interactivity).
+:::
 
 ```ts
 /**
@@ -46,8 +42,9 @@ export const userEvent: {
 
 ## `commands`
 
-**Tip:**
-This API is explained in detail at Commands API.
+::: tip
+This API is explained in detail at [Commands API](/api/browser/commands).
+:::
 
 ```ts
 /**
@@ -61,10 +58,11 @@ export const commands: BrowserCommands
 
 The `page` export provides utilities to interact with the current `page`.
 
-**Warning:**
+::: warning
 While it exposes some utilities from Playwright's `page`, it is not the same object. Since the browser context is evaluated in the browser, your tests don't have access to Playwright's `page` because it runs on the server.
 
-Use Commands API if you need to have access to Playwright's `page` object.
+Use [Commands API](/api/browser/commands) if you need to have access to Playwright's `page` object.
+:::
 
 ```ts
 export const page: {
@@ -117,12 +115,14 @@ export const page: {
 }
 ```
 
-**Tip:**
-The `getBy*` API is explained at Locators API.
+::: tip
+The `getBy*` API is explained at [Locators API](/api/browser/locators).
+:::
 
-**WARNING <Version>3.2.0</Version>**
+::: warning WARNING <Version>3.2.0</Version>
 Note that `screenshot` will always return a base64 string if `save` is set to `false`.
 The `path` is also ignored in that case.
+:::
 
 ### mark
 
@@ -151,15 +151,16 @@ await page.getByRole('button', { name: 'Submit' }).click()
 await page.mark('after submit')
 
 await page.mark('submit flow', async () => {
-  await page.getByRole('textbox', { name: 'Email' }).fill('user@example.com')
+  await page.getByRole('textbox', { name: 'Email' }).fill('john@example.com')
   await page.getByRole('button', { name: 'Submit' }).click()
 }, { kind: 'action' })
 ```
 
-**Tip:**
-This method is useful only when `browser.trace` is enabled.
+::: tip
+This method is useful only when [`browser.trace`](/config/browser/trace) is enabled.
 
-A server-side equivalent is available on the `BrowserCommandContext` so custom commands can record markers attributed to the test that triggered them.
+A server-side equivalent is available on the [`BrowserCommandContext`](/api/browser/commands#recording-trace-markers) so [custom commands](/api/browser/commands#custom-commands) can record markers attributed to the test that triggered them.
+:::
 
 ### frameLocator
 
@@ -180,7 +181,7 @@ await frame.getByText('Hello World').click() // ✅
 await frame.click() // ❌ Not available
 ```
 
-**IMPORTANT**
+::: danger IMPORTANT
 By default `frameLocator` does not support querying elements with `expect.element()` in cross-origin iframes. Interactive methods, such as `.click()` work fine. This is different behaviour than Playwright.
 
 ```ts
@@ -191,12 +192,14 @@ await button.click() // Interactive methods work fine ✅
 await expect.element(button).toBeVisible() // Querying elements does not work ❌
 ```
 
-If you need to work with cross-origin iframes, you'll need to pass `args: ["--disable-web-security"]` in `launchOptions`. Or alternatively create a custom browser command that accesses the iframe on server side where it's available.
+If you need to work with cross-origin iframes, you'll need to pass `args: ["--disable-web-security"]` in [`launchOptions`](/config/browser/playwright#launchoptions). Or alternatively create a custom [browser command](/api/browser/commands#custom-commands) that accesses the iframe on server side where it's available.
+:::
 
-**IMPORTANT**
+::: danger IMPORTANT
 At the moment, the `frameLocator` method is only supported by the `playwright` provider.
 
-The interactive methods (like `click` or `fill`) are always available on elements within the iframe, but assertions with `expect.element` require the iframe to have the same-origin policy.
+The interactive methods (like `click` or `fill`) are always available on elements within the iframe, but assertions with `expect.element` require the iframe to have the [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
+:::
 
 ## `cdp`
 
@@ -206,10 +209,11 @@ function cdp(): CDPSession
 
 The `cdp` export returns the current Chrome DevTools Protocol session. It is mostly useful to library authors to build tools on top of it.
 
-**Warning:**
-CDP session works only with `playwright` provider and only when using `chromium` browser. You can read more about it in playwright's `CDPSession` documentation.
+::: warning
+CDP session works only with `playwright` provider and only when using `chromium` browser. You can read more about it in playwright's [`CDPSession`](https://playwright.dev/docs/api/class-cdpsession) documentation.
 
-CDP is a privileged debugging API. It is available only when browser API write and exec operations are enabled through `api.allowWrite`, and `api.allowExec`.
+CDP is a privileged debugging API. It is available only when browser API write and exec operations are enabled through [`api.allowWrite`](/config/api#api-allowwrite), and [`api.allowExec`](/config/api#api-allowexec).
+:::
 
 ```ts
 export const cdp: () => CDPSession
@@ -295,7 +299,7 @@ export const utils: {
     renderAriaTree(root: AriaNode): string
     renderAriaTemplate(template: AriaTemplateNode): string
     parseAriaTemplate(text: string): AriaTemplateNode
-    matchAriaTree(root: AriaNode, template: AriaTemplateNode): { pass: <example-value>; resolved: string }
+    matchAriaTree(root: AriaNode, template: AriaTemplateNode): { pass: boolean; resolved: string }
   }
 }
 ```
@@ -319,7 +323,7 @@ utils.configurePrettyDOM({
 - **`maxLength`** - Maximum length of the output string (default: `7000`)
 - **`filterNode`** - A CSS selector string or function to filter out nodes from the output. When a string is provided, elements matching the selector will be excluded. When a function is provided, it should return `false` to exclude a node.
 - **`highlight`** - Enable syntax highlighting (default: `true`)
-- And other options from `@vitest/pretty-format`
+- And other options from [`@vitest/pretty-format`](https://npmx.dev/package/@vitest/pretty-format)
 
 #### Filtering with CSS Selectors <Version>4.1.0</Version> {#filtering-with-css-selectors}
 
@@ -368,8 +372,9 @@ utils.configurePrettyDOM({
 })
 ```
 
-**Tip:**
-This feature is inspired by Testing Library's `defaultIgnore` configuration.
+::: tip
+This feature is inspired by Testing Library's [`defaultIgnore`](https://testing-library.com/docs/dom-testing-library/api-configuration/#defaultignore) configuration.
+:::
 
 ### aria <Version type="experimental">5.0.0</Version> {#aria}
 

@@ -1,10 +1,6 @@
 ---
+id: test-typescript
 title: "TypeScript"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/test-typescript-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
 
 ## Introduction
@@ -25,7 +21,7 @@ jobs:
       run: npx playwright test
 ```
 
-For local development, you can run `tsc` in watch mode like this:
+For local development, you can run `tsc` in [watch](https://www.typescriptlang.org/docs/handbook/configuring-watch.html) mode like this:
 ```sh
 npx tsc -p tsconfig.json --noEmit -w
 ```
@@ -51,11 +47,11 @@ playwright.config.ts
 
 ### tsconfig path mapping
 
-Playwright supports path mapping declared in the `tsconfig.json`.
+Playwright supports [path mapping](https://www.typescriptlang.org/docs/handbook/module-resolution.html#path-mapping) declared in the `tsconfig.json`.
 
 Here is an example `tsconfig.json` that works with Playwright:
 
-```json
+```json title="tsconfig.json"
 {
   "compilerOptions": {
     "paths": {
@@ -67,13 +63,13 @@ Here is an example `tsconfig.json` that works with Playwright:
 
 You can now import using the mapped paths:
 
-```js
+```js title="example.spec.ts"
 import { test, expect } from '@playwright/test';
-import { username, password } from '<example-value>';
+import { username, password } from '@myhelper/credentials';
 
 test('example', async ({ page }) => {
   await page.getByLabel('User Name').fill(username);
-  await page.getByLabel('<example-value>').fill(password);
+  await page.getByLabel('Password').fill(password);
 });
 ```
 
@@ -81,7 +77,7 @@ test('example', async ({ page }) => {
 
 Playwright compiles JSX in `.tsx` and `.jsx` files according to the `jsx`, `jsxFactory`, `jsxFragmentFactory` and `jsxImportSource` options in the `tsconfig.json`. When `jsx` is not specified, or is set to `preserve` or `react-native`, Playwright uses the automatic runtime from `react/jsx-runtime`.
 
-```json
+```json title="tsconfig.json"
 {
   "compilerOptions": {
     "jsx": "react-jsx",
@@ -96,7 +92,7 @@ Playwright compiles TypeScript class fields according to the `useDefineForClassF
 
 With `useDefineForClassFields` enabled, class fields follow the JavaScript semantics, so field initializers run before the constructor body and can not access constructor parameter properties. Disable it to keep the legacy TypeScript semantics.
 
-```json
+```json title="tsconfig.json"
 {
   "compilerOptions": {
     "useDefineForClassFields": false
@@ -122,7 +118,7 @@ npx playwright test --tsconfig=tsconfig.test.json
 
 You can specify a single tsconfig file in the config file, that will be used for loading test files, reporters, etc. However, it will not be used while loading the playwright config itself or any files imported from it.
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({

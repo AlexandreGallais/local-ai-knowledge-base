@@ -1,12 +1,3 @@
----
-title: "AbstractSelector class (java.nio.channels.spi)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/channels/spi/AbstractSelector.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AbstractSelector class (java.nio.channels.spi)
 
 ```java
@@ -15,21 +6,34 @@ public abstract class AbstractSelector extends Selector
 
 Base implementation class for selectors.
 
- This class encapsulates the low-level machinery required to implement
+<p> This class encapsulates the low-level machinery required to implement
 the interruption of selection operations.  A concrete selector class must
-invoke the begin and end methods before and
+invoke the {@link #begin begin} and {@link #end end} methods before and
 after, respectively, invoking an I/O operation that might block
-indefinitely.  In order to ensure that the end method is always
+indefinitely.  In order to ensure that the {@link #end end} method is always
 invoked, these methods should be used within a
-`try` ... `finally` block:
+{@code try}&nbsp;...&nbsp;{@code finally} block:
 
- This class also defines methods for maintaining a selector's
+{@snippet lang=java id="be" :
+    try {
+        begin();
+        // Perform blocking I/O operation here
+        ...
+    } finally {
+        end();
+    }
+}
+
+<p> This class also defines methods for maintaining a selector's
 cancelled-key set and for removing a key from its channel's key set, and
-declares the abstract register method that is invoked by a
-selectable channel's register
-method in order to perform the actual work of registering a channel.
+declares the abstract {@link #register register} method that is invoked by a
+selectable channel's {@link AbstractSelectableChannel#register register}
+method in order to perform the actual work of registering a channel.  </p>
 
-**Since:** 1.4
+
+@author Mark Reinhold
+@author JSR-51 Expert Group
+@since 1.4
 
 ## AbstractSelector.AbstractSelector(SelectorProvider)
 
@@ -39,9 +43,8 @@ protected AbstractSelector(SelectorProvider provider)
 
 Initializes a new instance of this class.
 
-Parameters:
-
-- `provider`: The provider that created this selector
+@param  provider
+        The provider that created this selector
 
 ## AbstractSelector.close()
 
@@ -51,14 +54,13 @@ public final void close() throws IOException
 
 Closes this selector.
 
- If the selector has already been closed then this method returns
+<p> If the selector has already been closed then this method returns
 immediately.  Otherwise it marks the selector as closed and then invokes
-the implCloseSelector method in order to
-complete the close operation.
+the {@link #implCloseSelector implCloseSelector} method in order to
+complete the close operation.  </p>
 
-Throws:
-
-- `IOException`: If an I/O error occurs
+@throws  IOException
+         If an I/O error occurs
 
 ## AbstractSelector.implCloseSelector()
 
@@ -68,18 +70,18 @@ protected abstract void implCloseSelector() throws IOException
 
 Closes this selector.
 
- This method is invoked by the close method in order
+<p> This method is invoked by the {@link #close close} method in order
 to perform the actual work of closing the selector.  This method is only
 invoked if the selector has not yet been closed, and it is never invoked
 more than once.
 
- An implementation of this method must arrange for any other thread
+<p> An implementation of this method must arrange for any other thread
 that is blocked in a selection operation upon this selector to return
-immediately as if by invoking the wakeup method.
+immediately as if by invoking the {@link
+java.nio.channels.Selector#wakeup wakeup} method. </p>
 
-Throws:
-
-- `IOException`: If an I/O error occurs while closing the selector
+@throws  IOException
+         If an I/O error occurs while closing the selector
 
 ## AbstractSelector.provider()
 
@@ -89,7 +91,7 @@ public final SelectorProvider provider()
 
 Returns the provider that created this channel.
 
-**Returns:** The provider that created this channel
+@return  The provider that created this channel
 
 ## AbstractSelector.cancelledKeys()
 
@@ -99,9 +101,9 @@ protected final Set<SelectionKey> cancelledKeys()
 
 Retrieves this selector's cancelled-key set.
 
- This set should only be used while synchronized upon it.
+<p> This set should only be used while synchronized upon it.  </p>
 
-**Returns:** The cancelled-key set
+@return  The cancelled-key set
 
 ## AbstractSelector.register(AbstractSelectableChannel, int, Object)
 
@@ -111,16 +113,20 @@ protected abstract SelectionKey register(AbstractSelectableChannel ch, int ops, 
 
 Registers the given channel with this selector.
 
- This method is invoked by a channel's register method in order to perform
-the actual work of registering the channel with this selector.
+<p> This method is invoked by a channel's {@link
+AbstractSelectableChannel#register register} method in order to perform
+the actual work of registering the channel with this selector.  </p>
 
-Parameters:
+@param  ch
+        The channel to be registered
 
-- `ch`: The channel to be registered
-- `ops`: The initial interest set, which must be valid
-- `att`: The initial attachment for the resulting key
+@param  ops
+        The initial interest set, which must be valid
 
-**Returns:** A new key <example-value> the registration of the given channel
+@param  att
+        The initial attachment for the resulting key
+
+@return  A new key representing the registration of the given channel
          with this selector
 
 ## AbstractSelector.deregister(AbstractSelectionKey)
@@ -131,12 +137,11 @@ protected final void deregister(AbstractSelectionKey key)
 
 Removes the given key from its channel's key set.
 
- This method must be invoked by the selector for each channel that it
-deregisters.
+<p> This method must be invoked by the selector for each channel that it
+deregisters.  </p>
 
-Parameters:
-
-- `key`: The selection key to be removed
+@param  key
+        The selection key to be removed
 
 ## AbstractSelector.begin()
 
@@ -146,13 +151,15 @@ protected final void begin()
 
 Marks the beginning of an I/O operation that might block indefinitely.
 
- This method should be invoked in tandem with the end
-method, using a `try` ... `finally` block as
-shown above, in order to implement interruption for
+<p> This method should be invoked in tandem with the {@link #end end}
+method, using a {@code try}&nbsp;...&nbsp;{@code finally} block as
+shown <a href="#be">above</a>, in order to implement interruption for
 this selector.
 
- Invoking this method arranges for the selector's wakeup method to be invoked if a thread's interrupt method is invoked while the thread is
-blocked in an I/O operation upon the selector.
+<p> Invoking this method arranges for the selector's {@link
+Selector#wakeup wakeup} method to be invoked if a thread's {@link
+Thread#interrupt interrupt} method is invoked while the thread is
+blocked in an I/O operation upon the selector.  </p>
 
 ## AbstractSelector.end()
 
@@ -162,7 +169,7 @@ protected final void end()
 
 Marks the end of an I/O operation that might block indefinitely.
 
- This method should be invoked in tandem with the begin
-method, using a `try` ... `finally` block as
-shown above, in order to implement interruption for
-this selector.
+<p> This method should be invoked in tandem with the {@link #begin begin}
+method, using a {@code try}&nbsp;...&nbsp;{@code finally} block as
+shown <a href="#be">above</a>, in order to implement interruption for
+this selector.  </p>

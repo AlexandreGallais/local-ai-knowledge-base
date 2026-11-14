@@ -1,12 +1,3 @@
----
-title: "Scopes"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/names/scopes.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[names.scopes]
 # Scopes
 
@@ -17,7 +8,7 @@ r[names.scopes.items]
 ## Item scopes
 
 r[names.scopes.items.module]
-The name of an item declared directly in a [module] has a scope that extends from the start of the module to the end of the module. These items are also members of the module and can be referred to with a [path] leading from their module.
+The name of an [item][items] declared directly in a [module] has a scope that extends from the start of the module to the end of the module. These items are also members of the module and can be referred to with a [path] leading from their module.
 
 r[names.scopes.items.statement]
 The name of an item declared as a [statement] has a scope that extends from the start of the block the item statement is in until the end of the block.
@@ -26,7 +17,7 @@ r[names.scopes.items.duplicate]
 It is an error to introduce an item with a duplicate name of another item in the same [namespace] within the same module or block. [Asterisk glob imports] have special behavior for dealing with duplicate names and shadowing, see the linked chapter for more details.
 
 r[names.scopes.items.shadow-prelude]
-Items in a module may shadow items in a prelude.
+Items in a module may shadow items in a [prelude](#prelude-scopes).
 
 r[names.scopes.items.nested-modules]
 Item names from outer modules are not in scope within a nested module. A [path] may be used to refer to an item in another module.
@@ -63,6 +54,7 @@ r[names.scopes.pattern-bindings.match-guard-let]
 
 r[names.scopes.pattern-bindings.items]
 Local variable scopes do not extend into item declarations.
+<!-- Not entirely, see https://github.com/rust-lang/rust/issues/33118 -->
 
 ### Pattern binding shadowing
 
@@ -121,7 +113,7 @@ fn where_scope<'a, T, U>()
 r[names.scopes.generic-parameters.inner-items]
 It is an error for [items] declared inside a function to refer to a generic parameter from their outer scope.
 
-```rust
+```rust,compile_fail
 fn example<T>() {
     fn inner(x: T) {} // ERROR: can't use generic parameters from outer function
 }
@@ -141,7 +133,7 @@ fn example<'a, T, const N: usize>() {
 }
 ```
 
-```rust
+```rust,compile_fail
 trait SomeTrait<'a, T, const N: usize> {
     fn example_lifetime<'a>() {} // ERROR: 'a is already in use
     fn example_type<T>() {} // ERROR: T is already in use
@@ -154,7 +146,7 @@ r[names.scopes.lifetimes]
 ### Lifetime scopes
 
 r[names.scopes.lifetimes.intro]
-Lifetime parameters are declared in a [GenericParams] list and higher-ranked trait bounds.
+Lifetime parameters are declared in a [GenericParams] list and [higher-ranked trait bounds][hrtb].
 
 r[names.scopes.lifetimes.special]
 The `'static` lifetime and [placeholder lifetime] `'_` have a special meaning and cannot be declared as a parameter.
@@ -167,7 +159,7 @@ r[names.scopes.lifetimes.generic]
 #### Higher-ranked trait bound scopes
 
 r[names.scopes.lifetimes.higher-ranked]
-The scope of a lifetime parameter declared as a higher-ranked trait bound depends on the scenario where it is used.
+The scope of a lifetime parameter declared as a [higher-ranked trait bound][hrtb] depends on the scenario where it is used.
 
 * As a [TypeBoundWhereClauseItem] the declared lifetimes are in scope in the type and the type bounds.
 * As a [TraitBound] the declared lifetimes are in scope within the bound type path.
@@ -199,6 +191,9 @@ type FnExample = for<'a> fn(x: Example<'a>) -> Example<'a>;
 r[names.scopes.lifetimes.impl-trait]
 [Impl trait] types can only reference lifetimes declared on a function or implementation.
 
+<!-- not able to demonstrate the scope error because the compiler panics
+     https://github.com/rust-lang/rust/issues/67830
+-->
 ```rust
 # trait Trait1 {
 #     type Item;
@@ -295,7 +290,7 @@ r[names.scopes.derive]
 ## Derive macro helper attributes
 
 r[names.scopes.derive.scope]
-[Derive macro helper attributes] are in scope in the item where their corresponding [`derive` attribute] is specified. The scope extends from just after the `derive` attribute to the end of the item.
+[Derive macro helper attributes] are in scope in the item where their corresponding [`derive` attribute] is specified. The scope extends from just after the `derive` attribute to the end of the item. <!-- Note: Not strictly true, see https://github.com/rust-lang/rust/issues/79202, but this is the intention. -->
 
 r[names.scopes.derive.shadow]
 Helper attributes shadow other attributes of the same name in scope.
@@ -307,7 +302,7 @@ r[names.scopes.self.intro]
 Although [`Self`] is a keyword with special meaning, it interacts with name resolution in a way similar to normal names.
 
 r[names.scopes.self.def-scope]
-The implicit `Self` type in the definition of a [struct], [enum], [union], [trait], or [implementation] is treated similarly to a generic parameter, and is in scope in the same way as a generic type parameter.
+The implicit `Self` type in the definition of a [struct], [enum], [union], [trait], or [implementation] is treated similarly to a [generic parameter](#generic-parameter-scopes), and is in scope in the same way as a generic type parameter.
 
 r[names.scopes.self.impl-scope]
 The implicit `Self` constructor in the value [namespace] of an [implementation] is in scope within the body of the implementation (the implementation's [associated items]).
@@ -329,3 +324,61 @@ impl ImplExample {
     }
 }
 ```
+
+[`derive` attribute]: ../attributes/derive.md
+[`for` loop]: ../expressions/loop-expr.md#iterator-loops
+[`for`]: ../expressions/loop-expr.md#iterator-loops
+[`if let`]: ../expressions/if-expr.md#if-let-patterns
+[`while let`]: ../expressions/loop-expr.md#while-let-patterns
+[`let` statement]: ../statements.md#let-statements
+[`macro_export`]: ../macros-by-example.md#the-macro_export-attribute
+[`macro_use` prelude]: preludes.md#macro_use-prelude
+[`macro_use`]: ../macros-by-example.md#the-macro_use-attribute
+[`match` arms]: ../expressions/match-expr.md
+[`match` guard `let`]: expr.match.guard.let
+[`Self`]: ../paths.md#self-1
+[Associated consts]: ../items/associated-items.md#associated-constants
+[associated items]: ../items/associated-items.md
+[Asterisk glob imports]: ../items/use-declarations.md
+[async blocks]: ../expressions/block-expr.md#async-blocks
+[call expressions]: ../expressions/call-expr.md
+[Closure parameter]: ../expressions/closure-expr.md
+[closures]: ../expressions/closure-expr.md
+[const arguments]: ../items/generics.md#const-generics
+[const contexts]: ../const_eval.md#const-context
+[Const generic parameters]: ../items/generics.md#const-generics
+[Const items]: ../items/constant-items.md
+[Constant]: ../items/constant-items.md
+[Derive macro helper attributes]: ../procedural-macros.md#derive-macro-helper-attributes
+[destructors]: ../destructors.md
+[entity]: ../names.md
+[enum]: ../items/enumerations.mdr
+[enums]: ../items/enumerations.md
+[Extern prelude]: preludes.md#extern-prelude
+[Function parameter]: ../items/functions.md#function-parameters
+[hrtb]: ../trait-bounds.md#higher-ranked-trait-bounds
+[Impl trait]: ../types/impl-trait.md
+[implementation]: ../items/implementations.md
+[items]: ../items.md
+[Language prelude]: preludes.md#language-prelude
+[loop expression]: ../expressions/loop-expr.md
+[Loop labels]: ../expressions/loop-expr.md#loop-labels
+[Macros By Example]: ../macros-by-example.md
+[match guard]: ../expressions/match-expr.md#match-guards
+[methods]: ../items/associated-items.md#methods
+[module]: ../items/modules.md
+[name resolution]: name-resolution.md
+[namespace]: namespaces.md
+[path]: ../paths.md
+[pattern]: ../patterns.md
+[placeholder lifetime]: ../lifetime-elision.md
+[preludes]: preludes.md
+[Standard library prelude]: preludes.md#standard-library-prelude
+[statement]: ../statements.md
+[Static items]: ../items/static-items.md
+[static]: ../items/static-items.md
+[struct]: ../items/structs.md
+[structs]: ../items/structs.md
+[Tool prelude]: preludes.md#tool-prelude
+[trait]: ../items/traits.md
+[union]: ../items/unions.md

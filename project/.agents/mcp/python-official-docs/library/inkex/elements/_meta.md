@@ -1,12 +1,3 @@
----
-title: "inkex.elements._meta"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/elements/_meta.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.elements._meta
 
 Provide extra utility to each svg element type specific to its type.
@@ -110,24 +101,24 @@ def add_guide(self, position, orient=True, name=None) -> Guide
 
 Creates a new guide in this namedview
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 Args:
-position: a float containing the y position for `orient is True`, or
-the x position for `orient is False`. The position is specified in the
-post-1.0 coordinate system, i.e. y=0 is at the top left of the viewbox,
-positive y axis pointing down.
+    position: a float containing the y position for ``orient is True``, or
+        the x position for ``orient is False``. The position is specified in the
+        post-1.0 coordinate system, i.e. y=0 is at the top left of the viewbox,
+        positive y axis pointing down.
 
-Alternatively, the position may be given as Tuple (or VectorLike)
-orient: True for horizontal, False for Vertical
+        Alternatively, the position may be given as Tuple (or VectorLike)
+    orient: True for horizontal, False for Vertical
 
-alternatively: Tuple / Vector specifying x and y coordinates of the
-normal vector of the guide, or the (clockwise) angle between the
-horizontal axis and the guide. Defaults to True (horizontal)
-name: label of the guide
+        alternatively: Tuple / Vector specifying x and y coordinates of the
+        normal vector of the guide, or the (clockwise) angle between the
+        horizontal axis and the guide. Defaults to True (horizontal)
+    name: label of the guide
 
 Returns:
-the created guide
+    the created guide
 
 ## NamedView.new_guide
 
@@ -135,28 +126,26 @@ the created guide
 def new_guide(self, position, orient=True, name=None)
 ```
 
-> *Deprecated since version 1.3.*
-> Use `add_guide()` instead.
+.. deprecated:: 1.3
+    Use :func:`add_guide` instead.
 
 Creates a new guide in this namedview
 
 Args:
-position: a float containing the y position for `orient is True`, or
-the x position for `orient is False`
+    position: a float containing the y position for ``orient is True``, or
+        the x position for ``orient is False``
 
-> *Changed in version 1.2.*
-> Alternatively, the position may be given as Tuple (or VectorLike)
+        .. versionchanged:: 1.2
+            Alternatively, the position may be given as Tuple (or VectorLike)
+    orient: True for horizontal, False for Vertical
 
-orient: True for horizontal, False for Vertical
-
-> *Changed in version 1.2.*
-> Tuple / Vector specifying x and y coordinates of the normal vector
-> of the guide.
-
-name: label of the guide
+        .. versionchanged:: 1.2
+            Tuple / Vector specifying x and y coordinates of the normal vector
+            of the guide.
+    name: label of the guide
 
 Returns:
-the created guide
+    the created guide
 
 ## NamedView.new_unique_guide
 
@@ -164,12 +153,12 @@ the created guide
 def new_unique_guide(self, position: Vector2d, orientation: Vector2d) -> Optional[Guide]
 ```
 
-> *Deprecated since version 1.3.*
-> Use `add_unique_guide()` instead.
+.. deprecated:: 1.3
+    Use :func:`add_unique_guide` instead.
 
 Add a guide iif there is no guide that looks the same.
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## NamedView.add_unique_guide
 
@@ -179,13 +168,13 @@ def add_unique_guide(self, position: Vector2d, orientation: Vector2d) -> Optiona
 
 Add a guide iif there is no guide that looks the same.
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 Args:
-position: Position as Tuple / Vector
-orientation: Tuple / Vector specifying x and y coordinates of the normal
-vector of the guide.
-name: label of the guide
+    position: Position as Tuple / Vector
+    orientation: Tuple / Vector specifying x and y coordinates of the normal
+        vector of the guide.
+    name: label of the guide
 
 ## NamedView.get_similar_guide
 
@@ -197,7 +186,7 @@ Check if the namedview contains a guide that looks identical to one
 defined by (position, orientation) and is not identity (same element) as the
 first one. If such a guide exists, return it; otherwise, return None.
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## NamedView.get_pages
 
@@ -209,11 +198,11 @@ Returns a list of pages within the document. For single page documents,
 a detached page element with dimensions according to the viewbox will be
 returned.
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
-> *Changed in version 1.3.*
-> For single-page documents, this function now returns the viewbox
-> dimensions.
+.. versionchanged:: 1.3
+    For single-page documents, this function now returns the viewbox
+    dimensions.
 
 ## NamedView.new_page
 
@@ -224,11 +213,11 @@ def new_page(self, x, y, width, height, label=None)
 Creates a new page in this namedview. Always add pages through this
 function to ensure that single-page documents are treated correctly.
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
-> *Changed in version 1.3.*
-> If none exists, a page element with the viewbox dimensions will be
-> inserted before the new page.
+.. versionchanged:: 1.3
+    If none exists, a page element with the viewbox dimensions will be
+    inserted before the new page.
 
 ## class Guide
 
@@ -246,7 +235,7 @@ def orientation(self) -> Vector2d
 
 Vector normal to the guide, in the pre-1.0 coordinate system (y axis upwards)
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## Guide.angle
 
@@ -257,7 +246,7 @@ def angle(self) -> float
 (Clockwise) angle between the guide and the horizontal axis in degrees
 (i.e. what Inkscape 1.2+ shows as "Angle" in the guide properties)
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 ## Guide.raw_position
 
@@ -305,25 +294,25 @@ top left corner, y axis pointing down), which also defines the sense of
 rotation.
 
 The guide must be rooted for this function to be used. Preferably, use
-`inkex.elements._meta.add_guide()` to create a new guide.
+:func:`inkex.elements._meta.add_guide` to create a new guide.
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 Args:
-pos_x (Union[str, int, float]): x position of the guide's reference point
-pos_y (Union[str, int, float]): y position of the guide's reference point
-angle (Union[str, float, int, tuple, list], optional): Angle may be a
-string, float or integer, which will set the clockwise angle between the
-horizontal axis and the guide.
+    pos_x (Union[str, int, float]): x position of the guide's reference point
+    pos_y (Union[str, int, float]): y position of the guide's reference point
+    angle (Union[str, float, int, tuple, list], optional): Angle may be a
+        string, float or integer, which will set the clockwise angle between the
+        horizontal axis and the guide.
 
-Alternatively, it may be a pair of numbers (tuple) which will be set
-as normal vector.
+        Alternatively, it may be a pair of numbers (tuple) which will be set
+        as normal vector.
 
-If not given at all, the orientation remains unchanged.
-Defaults to None.
+        If not given at all, the orientation remains unchanged.
+        Defaults to None.
 
 Returns:
-Guide: the modified guide
+    Guide: the modified guide
 
 ## Guide.move_to
 
@@ -331,8 +320,8 @@ Guide: the modified guide
 def move_to(self, pos_x, pos_y, angle=None)
 ```
 
-> *Deprecated since version 1.3.*
-> Use `set_position()` instead.
+.. deprecated:: 1.3
+    Use :func:`set_position` instead.
 
 Move this guide to the given x,y position,
 
@@ -350,10 +339,10 @@ Check if two guides defined by (position, orientation) and (opos, oor) look
 identical.
 
 Returns:
-True if the position lies on the other guide AND the guide is
-(anti)parallel to the other guide.
+    True if the position lies on the other guide AND the guide is
+    (anti)parallel to the other guide.
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## class Metadata
 
@@ -395,7 +384,7 @@ class Page(BaseElement)
 
 A namedview page child
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## Page.new
 

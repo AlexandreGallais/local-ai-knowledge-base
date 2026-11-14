@@ -1,12 +1,15 @@
 ---
+description: "Learn more about: ICorProfilerInfo12::EventPipeWriteEvent Method"
 title: "ICorProfilerInfo12::EventPipeWriteEvent Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/profiling/icorprofilerinfo12-eventpipewriteevent-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/19/2021"
+api_name:
+  - "ICorProfilerInfo12.EventPipeWriteEvent"
+api_location:
+  - "coreclr.dll"
+  - "corprof.idl"
+api_type:
+  - "COM"
 ---
-
 # ICorProfilerInfo12::EventPipeWriteEvent method
 
 Writes an EventPipe event to any listeners who have enabled this event.
@@ -42,7 +45,7 @@ Writes an EventPipe event to any listeners who have enabled this event.
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** CorProf.idl, CorProf.h
 
@@ -50,6 +53,6 @@ Writes an EventPipe event to any listeners who have enabled this event.
 
 ## See also
 
-- ICorProfilerCallback10 Interface
-- ICorProfilerInfo12 Interface
-- COR_PRF_EVENT_DATA Structure
+- [ICorProfilerCallback10 Interface](icorprofilercallback10-interface.md)
+- [ICorProfilerInfo12 Interface](icorprofilerinfo12-interface.md)
+- [COR_PRF_EVENT_DATA Structure](cor-prf-event-data-structure.md)

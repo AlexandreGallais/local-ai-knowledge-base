@@ -1,12 +1,3 @@
----
-title: "core::iter::sources::repeat"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/iter/sources/repeat.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::iter::sources::repeat
 
 ## fn repeat
@@ -20,23 +11,27 @@ Creates a new iterator that endlessly repeats a single element.
 The `repeat()` function repeats a single value over and over again.
 
 Infinite iterators like `repeat()` are often used with adapters like
-`Iterator::take()`, in order to make them finite.
+[`Iterator::take()`], in order to make them finite.
 
-If you know the number of repetitions in advance, consider using `repeat_n()`
+If you know the number of repetitions in advance, consider using [`repeat_n()`]
 instead, as it is more efficient and conveys the intent more clearly.
 
-Use `str::repeat()` instead of this function if you just want to repeat
+Use [`str::repeat()`] instead of this function if you just want to repeat
 a char/string `n` times.
 
 If the element type of the iterator you need does not implement `Clone`,
 or if you do not want to keep the repeated element in memory, you can
-instead use the `repeat_with()` function.
+instead use the [`repeat_with()`] function.
+
+[`repeat_n()`]: crate::iter::repeat_n
+[`repeat_with()`]: crate::iter::repeat_with
+[`str::repeat()`]: ../../std/primitive.str.html#method.repeat
 
 # Examples
 
 Basic usage:
 
-```rust
+```
 use std::iter;
 
 // the number four 4ever:
@@ -52,9 +47,9 @@ assert_eq!(Some(4), fours.next());
 assert_eq!(Some(4), fours.next());
 ```
 
-Going finite with `Iterator::take()`:
+Going finite with [`Iterator::take()`]:
 
-```rust
+```
 use std::iter;
 
 // that last example was too many fours. Let's only have four fours.
@@ -77,4 +72,4 @@ pub struct Repeat<A>
 
 An iterator that repeats an element endlessly.
 
-This `struct` is created by the `repeat()` function. See its documentation for more.
+This `struct` is created by the [`repeat()`] function. See its documentation for more.

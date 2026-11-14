@@ -1,19 +1,19 @@
 ---
-title: "YARP Header Based Routing"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/header-routing.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: YARP Header Based Routing
+description: YARP Header Based Routing
+ms.date: 07/13/2026
+ms.topic: concept-article
+content_well_notification: AI-contribution
+ai-usage: ai-assisted
 ---
 
 # YARP Header Based Routing
 
-Proxy routes specified in config or via code must include at least a path or host to match against. In addition to these, a route can also specify one or more headers that must be present on the request.
+Proxy routes specified in [config](config-files.md) or via [code](config-providers.md) must include at least a path or host to match against. In addition to these, a route can also specify one or more headers that must be present on the request.
 
 ### Precedence
 
-The default route match precedence order is
+The default route match precedence order is 
 
 1. path
 2. method
@@ -21,7 +21,7 @@ The default route match precedence order is
 4. headers
 5. query parameters
 
- That means a route which specifies methods and no headers will match before a route which specifies headers and no methods. This can be overridden by setting the `Order` property on a route (see example in config properties).
+ That means a route which specifies methods and no headers will match before a route which specifies headers and no methods. This can be overridden by setting the `Order` property on a route (see example in [config properties](config-files.md#review-all-config-properties)).
 
 ## Configuration
 
@@ -274,13 +274,13 @@ var routes = new[]
 
 ## Contract
 
-RouteHeader defines the code contract and is mapped from config.
+[RouteHeader](xref:Yarp.ReverseProxy.Configuration.RouteHeader) defines the code contract and is mapped from config.
 
 ### Name
 
 The header name to check for on the request. A non-empty value is required. This field is case-insensitive per the HTTP RFCs.
 
-> **Note:**
+> [!NOTE]
 > YARP doesn't normalize dashes (`-`) and underscores (`_`) in header names. They're treated as different characters, so a name such as `my-header` doesn't match a request header named `my_header`.
 
 ### Values
@@ -289,7 +289,7 @@ A list of possible values to search for. The header must match at least one of t
 
 ### Mode
 
-HeaderMatchMode specifies how to match the values against the request header. The default is `ExactHeader`.
+[HeaderMatchMode](xref:Yarp.ReverseProxy.Configuration.HeaderMatchMode) specifies how to match the values against the request header. The default is `ExactHeader`.
 
 * ExactHeader - Any of the headers with the given name must match in its entirety, subject to the value of `IsCaseSensitive`. If a header contains multiple values (separated by `,` or `;`), they are split before matching. A single pair of quotes will also be stripped from the value before matching.
 * HeaderPrefix - Any of the headers with the given name must match by prefix, subject to the value of `IsCaseSensitive`. If a header contains multiple values (separated by `,` or `;`), they are split before matching. A single pair of quotes will also be stripped from the value before matching.
@@ -420,6 +420,7 @@ The following headers will match route7:
 ```
 NotHeader7: AnyValue
 ```
+
 
 The following headers will _not_ match route7 because the header "Header7" exists.
 

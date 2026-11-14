@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataEmit::DefinePermissionSet Method"
 title: "IMetaDataEmit::DefinePermissionSet Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataemit-definepermissionset-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataEmit.DefinePermissionSet"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataEmit::DefinePermissionSet"
+  - "IMetaDataEmit::DefinePermissionSet method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataEmit::DefinePermissionSet Method
 
 Creates a definition for a permission set with the specified metadata signature, and gets a token to that permission set definition.
@@ -29,7 +36,7 @@ HRESULT DefinePermissionSet (
  [in] The object to be decorated.
 
  `dwAction`
- [in] A CorDeclSecurity value that specifies the type of declarative security to be used.
+ [in] A [CorDeclSecurity](../enumerations/cordeclsecurity-enumeration.md) value that specifies the type of declarative security to be used.
 
  `pvPermission`
  [in] The permission BLOB.
@@ -42,7 +49,7 @@ HRESULT DefinePermissionSet (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -50,5 +57,5 @@ HRESULT DefinePermissionSet (
 
 ## See also
 
-- IMetaDataEmit Interface
-- IMetaDataEmit2 Interface
+- [IMetaDataEmit Interface](imetadataemit-interface.md)
+- [IMetaDataEmit2 Interface](imetadataemit2-interface.md)

@@ -1,15 +1,11 @@
 ---
-title: "coverage | Config (part 1 of 2)"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/coverage.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: coverage | Config
+outline: deep
 ---
 
 # coverage <CRoot /> {#coverage}
 
-You can use `v8`, `istanbul` or a custom coverage solution for coverage collection.
+You can use [`v8`](/guide/coverage#v8-provider), [`istanbul`](/guide/coverage#istanbul-provider) or [a custom coverage solution](/guide/coverage#custom-coverage-provider) for coverage collection.
 
 You can provide coverage options to CLI with dot notation:
 
@@ -17,8 +13,9 @@ You can provide coverage options to CLI with dot notation:
 npx vitest --coverage.enabled --coverage.provider=istanbul
 ```
 
-**Warning:**
+::: warning
 If you are using coverage options with dot notation, don't forget to specify `--coverage.enabled`. Do not provide a single `--coverage` option in that case.
+:::
 
 ## coverage.provider
 
@@ -50,18 +47,18 @@ It is recommended to pass file extensions in the pattern.
 
 Patterns are matched against each file's path relative to the project root. A pattern with no glob wildcard is treated as a directory and matches everything inside it, so `include: ['src']` is equivalent to `include: ['src/**']`.
 
-See Including and excluding files from coverage report for examples.
+See [Including and excluding files from coverage report](/guide/coverage#including-and-excluding-files-from-coverage-report) for examples.
 
 ## coverage.exclude
 
 - **Type:** `string[]`
 - **Default:** : `[]`
 - **Available for providers:** `'v8' | 'istanbul'`
-- **CLI:** `--coverage.exclude=`, `--coverage.exclude=<path1> --coverage.exclude=<path2>`
+- **CLI:** `--coverage.exclude=<path>`, `--coverage.exclude=<path1> --coverage.exclude=<path2>`
 
-List of files excluded from coverage as glob patterns. Patterns are matched the same way as `coverage.include`.
+List of files excluded from coverage as glob patterns. Patterns are matched the same way as [`coverage.include`](#coverage-include).
 
-See Including and excluding files from coverage report for examples.
+See [Including and excluding files from coverage report](/guide/coverage#including-and-excluding-files-from-coverage-report) for examples.
 
 ## coverage.clean
 
@@ -86,21 +83,22 @@ Clean coverage report on watch rerun. Set to `false` to preserve coverage result
 - **Type:** `string`
 - **Default:** `'./coverage'`
 - **Available for providers:** `'v8' | 'istanbul'`
-- **CLI:** `--coverage.reportsDirectory=`
+- **CLI:** `--coverage.reportsDirectory=<path>`
 
-**Warning:**
+::: warning
 Vitest will delete this directory before running tests if `coverage.clean` is enabled (default value).
+:::
 
 Directory to write coverage report to.
 
 ## coverage.reporter
 
-- **Type:** `string | string[] | string, {}`
+- **Type:** `string | string[] | [string, {}][]`
 - **Default:** `['text', 'html', 'clover', 'json']`
 - **Available for providers:** `'v8' | 'istanbul'`
 - **CLI:** `--coverage.reporter=<reporter>`, `--coverage.reporter=<reporter1> --coverage.reporter=<reporter2>`
 
-Coverage reporters to use. See istanbul documentation for detailed list of all reporters. See `@vitest/istanbul-lib-report` for details about reporter specific options.
+Coverage reporters to use. See [istanbul documentation](https://istanbul.js.org/docs/advanced/alternative-reporters/) for detailed list of all reporters. See [`@vitest/istanbul-lib-report`](https://github.com/vitest-dev/istanbuljs/tree/main/packages/istanbul-lib-report/src/reports) for details about reporter specific options.
 
 The reporter has three different types:
 
@@ -117,7 +115,7 @@ The reporter has three different types:
   }
   ```
 
-You can also pass <example-value> coverage reporters. See Guide - Custom Coverage Reporter for more information.
+You can also pass custom coverage reporters. See [Guide - Custom Coverage Reporter](/guide/coverage#custom-coverage-reporter) for more information.
 
 ```ts
   {
@@ -133,10 +131,11 @@ You can also pass <example-value> coverage reporters. See Guide - Custom Coverag
   }
 ```
 
-You can check your coverage report in Vitest UI: check Vitest UI Coverage for more details.
+You can check your coverage report in Vitest UI: check [Vitest UI Coverage](/guide/coverage#vitest-ui) for more details.
 
-**AI coding agents**
+::: tip AI coding agents
 When Vitest detects it is running inside an AI coding agent, it automatically adds the `text-summary` reporter and sets `skipFull: true` on the `text` reporter to reduce output and minimize token usage.
+:::
 
 ## coverage.reportOnFailure {#coverage-reportonfailure}
 
@@ -154,7 +153,7 @@ Generate coverage report even when tests fail.
 - **Available for providers:** `'v8' | 'istanbul'`
 - **CLI:** `--coverage.allowExternal`, `--coverage.allowExternal=false`
 
-Collect coverage of files outside the project `root`.
+Collect coverage of files outside the [project `root`](/config/root).
 
 ## coverage.excludeAfterRemap
 
@@ -274,7 +273,7 @@ When `true`, each file is checked against the top-level thresholds instead of th
 }
 ```
 
-`perFile` can also be set on an individual glob-pattern threshold. Glob patterns do **not** inherit the top-level `perFile`; set it on each glob explicitly.
+`perFile` can also be set on an individual [glob-pattern threshold](/config/coverage#coverage-thresholds-glob-pattern). Glob patterns do **not** inherit the top-level `perFile`; set it on each glob explicitly.
 
 ```ts
 {
@@ -341,9 +340,10 @@ Sets thresholds for files matching the glob pattern.
 
 Each glob pattern can set its own `perFile` (`boolean | object`), checked exactly like the top-level `perFile` but scoped to the matched files. Glob patterns do not inherit the top-level `perFile` — set it per glob.
 
-**NOTE**
+::: tip NOTE
 Vitest counts all files, including those covered by glob-patterns, into the global coverage thresholds.
 This is different from Jest behavior.
+:::
 
 ```ts
 {
@@ -405,7 +405,7 @@ Sets thresholds to 100 for files matching the glob pattern.
 - **CLI:** `--coverage.ignoreClassMethods=<method>`
 
 Set to array of class method names to ignore for coverage.
-See istanbul documentation for more information.
+See [istanbul documentation](https://github.com/istanbuljs/nyc#ignoring-methods) for more information.
 
 ## coverage.ignoreNode <Version>5.1.0</Version> {#coverage-ignorenode}
 
@@ -414,7 +414,7 @@ See istanbul documentation for more information.
 
 Filter to ignore code from coverage based on its AST node. Vitest calls it for each node of the transformed code, together with the kind of coverage the node counts for. Return `true` to ignore the node, or `'ignore-this-and-nested-nodes'` to also ignore all nodes inside it.
 
-This is useful for code that doesn't exist in the source file and can't carry an ignore hint, like code that compilers or other plugins generate. Since the nodes come from the code after Vite's transforms, the filter sees exactly what the plugins generated.
+This is useful for code that doesn't exist in the source file and can't carry an [ignore hint](/guide/coverage#ignoring-code), like code that compilers or other plugins generate. Since the nodes come from the code after Vite's transforms, the filter sees exactly what the plugins generated.
 
 Vitest's built-in filters run first, so nodes that Vitest already ignores, like its own transform artifacts, are never passed to this function.
 
@@ -463,7 +463,7 @@ export default defineConfig({
 - **Available for providers:** `'v8' | 'istanbul'`
 - **CLI:** `--coverage.watermarks.statements=50,80`, `--coverage.watermarks.branches=50,80`
 
-Watermarks for statements, lines, branches and functions. See istanbul documentation for more information.
+Watermarks for statements, lines, branches and functions. See [istanbul documentation](https://github.com/istanbuljs/nyc#high-and-low-watermarks) for more information.
 
 ## coverage.processingConcurrency
 
@@ -473,3 +473,81 @@ Watermarks for statements, lines, branches and functions. See istanbul documenta
 - **CLI:** `--coverage.processingConcurrency=<number>`
 
 Concurrency limit used when processing the coverage results.
+
+## coverage.instrumenter <Version type="experimental">4.1.5</Version> {#coverage-instrumenter}
+
+- **Type:** `(options: InstrumenterOptions) => CoverageInstrumenter`
+- **Available for providers:** `'istanbul'`
+
+Factory for a custom instrumenter to use in place of the default `@vitest/istanbul-lib-instrument`. Vitest calls the factory once during initialization and reuses the returned instrumenter for every file. The rest of the Istanbul pipeline (collection, merging, reporting) is unchanged.
+
+The factory receives an `InstrumenterOptions` object with Vitest's runtime coverage settings, and must return an object implementing the `CoverageInstrumenter` interface. Both types are exported from `vitest/node`.
+
+```ts
+interface InstrumenterOptions {
+  coverageVariable: string
+  coverageGlobalScope: string
+  coverageGlobalScopeFunc: boolean
+  ignoreClassMethods: string[]
+}
+
+interface CoverageInstrumenter {
+  instrumentSync: (code: string, filename: string, inputSourceMap?: any) => string
+  lastSourceMap: () => any
+  lastFileCoverage: () => any
+}
+```
+
+```ts
+import { defineConfig } from 'vitest/config'
+import { createInstrumenter } from '@vitest/some-custom-instrumenter'
+
+export default defineConfig({
+  test: {
+    coverage: {
+      provider: 'istanbul',
+      instrumenter: options => createInstrumenter(options),
+    }
+  }
+})
+```
+
+## coverage.customProviderModule
+
+- **Type:** `string`
+- **Available for providers:** `'custom'`
+- **CLI:** `--coverage.customProviderModule=<path or module name>`
+
+Specifies the module name or path for the custom coverage provider module. See [Guide - Custom Coverage Provider](/guide/coverage#custom-coverage-provider) for more information.
+
+## coverage.htmlDir
+
+- **Type:** `string`
+- **Default:** Automatically inferred from `html`, `html-spa`, or `lcov` coverage reporters
+- **CLI:** `--coverage.htmlDir=<path>`
+
+Directory of HTML coverage output to be served in [Vitest UI](/guide/ui) and [HTML reporter](/guide/reporters#html-reporter).
+
+This is automatically configured when using builtin coverage reporters that produce HTML output (`html`, `html-spa`, and `lcov`). Use this option to override with a custom coverage reporting location when using custom coverage reporters.
+
+Note that setting this option does not change where coverage HTML report is generated. Configure the `coverage.reporter` option to change the directory instead.
+
+## coverage.changed
+
+- **Type:** `boolean | string`
+- **Default:** `false` (inherits from `test.changed`)
+- **Available for providers:** `'v8' | 'istanbul'`
+- **CLI:** `--coverage.changed`, `--coverage.changed=<commit/branch>`
+
+Collect coverage only for files changed since a specified commit or branch. When set to `true`, it uses staged and unstaged changes.
+
+## coverage.autoAttachSubprocess <Version>5.0.0</Version> {#coverage-autoattachsubprocess}
+
+- **Type:** `boolean`
+- **Default:** `false`
+- **Available for providers:** `'v8'`
+- **CLI:** `--coverage.autoAttachSubprocess`
+
+Track coverage of the `node:child_process` and `node:worker_threads` spawned during test run.
+
+Note that this option has some performance overhead as its using [`NODE_V8_COVERAGE`](https://nodejs.org/api/cli.html#node-v8-coveragedir) internally. This triggers Node to write lots of unnecessary files on file system.

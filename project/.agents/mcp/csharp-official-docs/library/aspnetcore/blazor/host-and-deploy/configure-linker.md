@@ -1,26 +1,23 @@
 ---
-title: "Configure the Linker for ASP.NET Core Blazor"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/host-and-deploy/configure-linker.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Configure the Linker for ASP.NET Core Blazor
+description: Learn how to control the Intermediate Language (IL) Linker when building a Blazor app.
+monikerRange: '= aspnetcore-3.1'
+ms.date: 11/11/2025
 ---
-
 # Configure the Linker for ASP.NET Core Blazor
 
 This article explains how to control the Intermediate Language (IL) Linker for client-side scenarios when building a Blazor app.
 
-Blazor WebAssembly performs Intermediate Language (IL) linking during a build to trim unnecessary IL from the app's output assemblies. The linker is disabled when building in Debug configuration. Apps must build in Release configuration to enable the linker. We recommend building in Release when deploying your Blazor WebAssembly apps.
+Blazor WebAssembly performs [Intermediate Language (IL)](/dotnet/standard/glossary#il) linking during a build to trim unnecessary IL from the app's output assemblies. The linker is disabled when building in Debug configuration. Apps must build in Release configuration to enable the linker. We recommend building in Release when deploying your Blazor WebAssembly apps. 
 
-Linking an app optimizes for size but may have detrimental effects. Apps that use reflection or related dynamic features may break when trimmed because the linker doesn't know about this dynamic behavior and can't determine in general which types are required for reflection at runtime. To trim such apps, the linker must be informed about any types required by reflection in the code and in packages or frameworks that the app depends on.
+Linking an app optimizes for size but may have detrimental effects. Apps that use [reflection](/dotnet/csharp/advanced-topics/reflection-and-attributes/) or related dynamic features may break when trimmed because the linker doesn't know about this dynamic behavior and can't determine in general which types are required for reflection at runtime. To trim such apps, the linker must be informed about any types required by reflection in the code and in packages or frameworks that the app depends on.
 
 To ensure the trimmed app works correctly once deployed, it's important to test Release builds of the app frequently while developing.
 
 Linking for Blazor apps can be configured using these MSBuild features:
 
-* Configure linking globally with a MSBuild property.
-* Control linking on a per-assembly basis with a configuration file.
+* Configure linking globally with a [MSBuild property](#control-linking-with-an-msbuild-property).
+* Control linking on a per-assembly basis with a [configuration file](#control-linking-with-a-configuration-file).
 
 ## Control linking with an MSBuild property
 
@@ -74,7 +71,7 @@ Control linking on a per-assembly basis by providing an XML configuration file a
 </linker>
 ```
 
-For more information and examples, see Data Formats (`dotnet/runtime` GitHub repository).
+For more information and examples, see [Data Formats (`dotnet/runtime` GitHub repository)](https://github.com/dotnet/runtime/blob/main/docs/tools/illink/data-formats.md).
 
 ## Add an XML linker configuration file to a library
 
@@ -114,10 +111,10 @@ To control which I18N assemblies are retained, set the `<BlazorWebAssemblyI18NAs
 
 Use a comma to separate multiple values (for example, `mideast,west`).
 
-For more information, see I18N: Pnetlib Internationalization Framework Library (mono/mono GitHub repository).
+For more information, see [I18N: Pnetlib Internationalization Framework Library (mono/mono GitHub repository)](https://github.com/mono/mono/tree/main/mcs/class/I18N).
 
 ## Related content
 
-* ASP.NET Core Blazor app download size performance best practices
-* IL trimmer concepts and related tools (`dotnet/runtime` GitHub repository)
-* Trim self-contained deployments and executables (server-side Blazor apps only)
+* [ASP.NET Core Blazor app download size performance best practices](../performance/app-download-size.md#intermediate-language-il-trimming)
+* [IL trimmer concepts and related tools (`dotnet/runtime` GitHub repository)](https://github.com/dotnet/runtime/tree/main/docs/tools/illink)
+* [Trim self-contained deployments and executables (server-side Blazor apps only)](/dotnet/core/deploying/trimming/trim-self-contained)

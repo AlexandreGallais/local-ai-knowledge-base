@@ -1,12 +1,3 @@
----
-title: "Overview of Angular libraries"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/tools/libraries/overview.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Overview of Angular libraries
 
 Many applications need to solve the same general problems, such as presenting a unified user interface, presenting data, and allowing data entry.
@@ -17,21 +8,21 @@ An Angular library is an Angular project that differs from an application in tha
 A library must be imported and used in an application.
 
 Libraries extend Angular's base features.
-For example, to add reactive forms to an application, add the library package using `ng add @angular/forms`, then import the `ReactiveFormsModule` from the `@angular/forms` library in your application code.
-Similarly, adding the service worker library to an Angular application is one of the steps for turning an application into a Progressive Web App \(PWA\).
-Angular Material is an example of a large, general-purpose library that provides sophisticated, reusable, and adaptable UI components.
+For example, to add [reactive forms](guide/forms/reactive-forms) to an application, add the library package using `ng add @angular/forms`, then import the `ReactiveFormsModule` from the `@angular/forms` library in your application code.
+Similarly, adding the [service worker](ecosystem/service-workers) library to an Angular application is one of the steps for turning an application into a [Progressive Web App](https://developers.google.com/web/progressive-web-apps) \(PWA\).
+[Angular Material](https://material.angular.dev) is an example of a large, general-purpose library that provides sophisticated, reusable, and adaptable UI components.
 
 Any application developer can use these and other libraries that have been published as npm packages by the Angular team or by third parties.
-See Using Published Libraries.
+See [Using Published Libraries](tools/libraries/using-libraries).
 
-HELPFUL: Libraries are intended to be used by Angular applications. To add Angular features to non-Angular web applications, use Angular custom elements.
+HELPFUL: Libraries are intended to be used by Angular applications. To add Angular features to non-Angular web applications, use [Angular custom elements](guide/elements).
 
 ## Creating libraries
 
 If you have developed features that are suitable for reuse, you can create your own libraries.
-These libraries can be used locally in your workspace, or you can publish them as npm packages to share with other projects or other Angular developers.
+These libraries can be used locally in your workspace, or you can publish them as [npm packages](reference/configs/npm-packages) to share with other projects or other Angular developers.
 These packages can be published to the npm registry, a private npm Enterprise registry, or a private package management system that supports npm packages.
-See Creating Libraries.
+See [Creating Libraries](tools/libraries/creating-libraries).
 
 Deciding to package features as a library is an architectural decision. It is comparable to deciding whether a feature is a component or a service, or deciding on the scope of a component.
 

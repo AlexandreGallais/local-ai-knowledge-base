@@ -1,21 +1,15 @@
----
-title: "require-param-type"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/require-param-type.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-require-param-type"></a>
+<a name="require-param-type"></a>
+# <code>require-param-type</code>
 
-# `require-param-type`
+* [Options](#user-content-require-param-type-options)
+    * [`contexts`](#user-content-require-param-type-options-contexts)
+    * [`defaultDestructuredRootType`](#user-content-require-param-type-options-defaultdestructuredroottype)
+    * [`setDefaultDestructuredRootType`](#user-content-require-param-type-options-setdefaultdestructuredroottype)
+* [Context and settings](#user-content-require-param-type-context-and-settings)
+* [Failing examples](#user-content-require-param-type-failing-examples)
+* [Passing examples](#user-content-require-param-type-passing-examples)
 
-* Options
-    * `contexts`
-    * `defaultDestructuredRootType`
-    * `setDefaultDestructuredRootType`
-* Context and settings
-* Failing examples
-* Passing examples
 
 Requires that each `@param` tag has a `type` value (within curly brackets).
 
@@ -24,11 +18,15 @@ Will exempt destructured roots and their children if
 `@param props` will be exempted from requiring a type given
 `function someFunc ({child1, child2})`).
 
+<a name="user-content-require-param-type-options"></a>
+<a name="require-param-type-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `contexts`
+<a name="user-content-require-param-type-options-contexts"></a>
+<a name="require-param-type-options-contexts"></a>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
 optional `context` and `comment` properties) where you wish the rule to be applied.
@@ -42,14 +40,18 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
-See the "AST and Selectors"
+See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
 section of our Advanced docs for more on the expected format.
 
-### `defaultDestructuredRootType`
+<a name="user-content-require-param-type-options-defaultdestructuredroottype"></a>
+<a name="require-param-type-options-defaultdestructuredroottype"></a>
+### <code>defaultDestructuredRootType</code>
 
 The type string to set by default for destructured roots. Defaults to "object".
 
-### `setDefaultDestructuredRootType`
+<a name="user-content-require-param-type-options-setdefaultdestructuredroottype"></a>
+<a name="require-param-type-options-setdefaultdestructuredroottype"></a>
+### <code>setDefaultDestructuredRootType</code>
 
 Whether to set a default destructured root type. For example, you may wish
 to avoid manually having to set the type for a `@param`
@@ -57,6 +59,9 @@ corresponding to a destructured root object as it is always going to be an
 object. Uses `defaultDestructuredRootType` for the type string. Defaults to
 `false`.
 
+
+<a name="user-content-require-param-type-context-and-settings"></a>
+<a name="require-param-type-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -68,6 +73,8 @@ object. Uses `defaultDestructuredRootType` for the type string. Defaults to
 |Options|`contexts`, `defaultDestructuredRootType`, `setDefaultDestructuredRootType`|
 |Settings|`exemptDestructuredRootsFromChecks`|
 
+<a name="user-content-require-param-type-failing-examples"></a>
+<a name="require-param-type-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -163,6 +170,10 @@ function quux (foo, {bar}, baz) {
 // Message: Missing JSDoc @param "root" type.
 ````
 
+
+
+<a name="user-content-require-param-type-passing-examples"></a>
+<a name="require-param-type-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -220,3 +231,4 @@ function quux (foo, {bar: {baz}}) {
 }
 // Settings: {"jsdoc":{"exemptDestructuredRootsFromChecks":true}}
 ````
+

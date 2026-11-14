@@ -1,12 +1,17 @@
 ---
 title: "MSTEST0039: Use newer 'Assert.Throws' methods"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0039.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0039: Use 'Assert.ThrowsExactly' instead of 'Assert.ThrowsException'"
+ms.date: 11/05/2026
+ai-usage: ai-assisted
+f1_keywords:
+- MSTEST0039
+- UseNewerAssertThrowsAnalyzer
+helpviewer_keywords:
+- UseNewerAssertThrowsAnalyzer
+- MSTEST0039
+author: Youssef1313
+ms.author: ygerges
 ---
-
 # MSTEST0039: Use newer 'Assert.Throws' methods
 
 | Property                            | Value                                                                  |
@@ -20,7 +25,7 @@ license: "CC-BY-4.0"
 | **Introduced in version**           | 3.8.0                                                                  |
 | **Is there a code fix**             | Yes                                                                    |
 
-> **Note:**
+> [!NOTE]
 > This analyzer is no longer relevant for MSTest 4 as the old assertion APIs were removed.
 
 ## Cause
@@ -35,7 +40,7 @@ To preserve the exact-type behavior of `Assert.ThrowsException` and `Assert.Thro
 
 ## How to fix violations
 
-Use `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ThrowsExactly*` or `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ThrowsExactlyAsync*` instead of `Assert.ThrowsException` or `Assert.ThrowsExceptionAsync`.
+Use <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ThrowsExactly*?displayProperty=nameWithType> or <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ThrowsExactlyAsync*?displayProperty=nameWithType> instead of `Assert.ThrowsException` or `Assert.ThrowsExceptionAsync`.
 
 ## When to suppress warnings
 

@@ -1,12 +1,14 @@
 ---
-title: "Explore closed hierarchies in C#"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/whats-new/tutorials/closed-hierarchies.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Explore closed hierarchies in C#
+description: "A closed hierarchy restricts a base type's direct subtypes to one assembly so the compiler can verify exhaustive matches. Learn to declare closed hierarchies, decide what to seal, and use them with generics."
+author: billwagner
+ms.author: wiwagn
+ms.service: dotnet-csharp
+ms.topic: tutorial
+ms.date: 10/19/2026
+ai-usage: ai-assisted
+#customer intent: As a C# developer, I model a fixed set of related types so the compiler enforces that I handle every subtype.
 ---
-
 # Tutorial: Explore C# closed hierarchies
 
 A *closed hierarchy* restricts the direct subtypes of a base type to the assembly that declares it. Because the compiler knows the full set of subtypes, it can verify that a `switch` expression is exhaustive without a default arm. Closed hierarchies suit domains where the set of cases is stable and you want the compiler to flag every place that needs to change when you add a case.
@@ -15,6 +17,7 @@ In this tutorial, you build the sensor model of a smart-home telemetry monitor. 
 
 In this tutorial, you:
 
+> [!div class="checklist"]
 >
 > * Declare a closed hierarchy and match its cases exhaustively.
 > * Decide which subtypes to seal and which to leave open.
@@ -25,7 +28,7 @@ In this tutorial, you:
 
 This tutorial uses C# 15 closed hierarchies. To get started, you need:
 
-- The .NET 11 SDK.
+- The [.NET 11 SDK](https://dotnet.microsoft.com/download/dotnet/11.0).
 - An editor such as Visual Studio or Visual Studio Code with the C# Dev Kit.
 
 Projects that target `net11.0` use C# 15 by default. You don't need to set `LangVersion` to `preview`.
@@ -60,32 +63,15 @@ Start with the sensor model. The monitor supports a fixed set of sensor kinds, s
 
 1. In `SmartHome.Core`, add a file named `Sensors.cs` and declare the `Sensor` base type with the `closed` modifier and its three derived types:
 
-```csharp
-// A closed class restricts its direct subtypes to this assembly. A 'closed'
-// class is implicitly abstract.
-public closed record class Sensor;
+   :::code language="csharp" source="snippets/shared/telemetry-monitor/SmartHome.Core/Sensors.cs" id="ClosedSensor":::
 
-// Seal the cases whose shape is final.
-public sealed record class Temperature(double Celsius) : Sensor;
-public sealed record class Humidity(double Percent) : Sensor;
-
-// Leave a case unsealed as an "escape hatch" so other assemblies can specialize it.
-public record class Contact(bool Open) : Sensor;
-```
 1. In the same file, add a method that matches every sensor with a switch expression:
 
-```csharp
-public static string Describe(Sensor sensor) => sensor switch
-{
-    Temperature temperature => $"{temperature.Celsius:F1}°C",
-    Humidity humidity => $"{humidity.Percent:F0}% RH",
-    Contact contact => contact.Open ? "open" : "closed",
-    // No default arm is needed. Sensor is closed, so these cases are exhaustive.
-};
-```
+   :::code language="csharp" source="snippets/shared/telemetry-monitor/SmartHome.Core/Sensors.cs" id="SensorExhaustive":::
+
 1. Build the project to check the declarations and the exhaustive switch.
 
-The `closed` modifier restricts the direct subtypes of `Sensor` to the declaring assembly, and a `closed` type is implicitly abstract, so you can't instantiate it directly. Because the compiler knows the complete set of subtypes, the switch needs no default arm. If you add a new sensor type later, the compiler reports that this switch no longer covers every case. That feedback is the central benefit of a closed hierarchy. The compiler points you to every match that needs to change. The `Temperature` and `Humidity` cases are sealed because their shape is final, while `Contact` stays open as an extension point that the next section covers. For more information, see the `closed` modifier and Closed hierarchy patterns.
+The `closed` modifier restricts the direct subtypes of `Sensor` to the declaring assembly, and a `closed` type is implicitly abstract, so you can't instantiate it directly. Because the compiler knows the complete set of subtypes, the switch needs no default arm. If you add a new sensor type later, the compiler reports that this switch no longer covers every case. That feedback is the central benefit of a closed hierarchy. The compiler points you to every match that needs to change. The `Temperature` and `Humidity` cases are sealed because their shape is final, while `Contact` stays open as an extension point that the next section covers. For more information, see the [`closed` modifier](../../language-reference/keywords/closed.md) and [Closed hierarchy patterns](../../language-reference/operators/patterns.md#closed-hierarchy-patterns).
 
 ## Decide what to seal
 
@@ -99,21 +85,13 @@ You left `Contact` unmarked for that reason, so now you extend it from another a
 
 1. In `SmartHome.Extensions`, add a file named `DoorContact.cs` that derives from the open `Contact` case:
 
-```csharp
-// This type lives in a different assembly than the closed Sensor hierarchy.
-// It can't derive from Sensor directly, but it can extend the unsealed Contact
-// leaf. A DoorContact still matches the 'Contact' case, so switches over Sensor
-// stay exhaustive.
-public sealed record class DoorContact(bool Open, string Door) : Contact(Open);
-```
+   :::code language="csharp" source="snippets/shared/telemetry-monitor/SmartHome.Extensions/DoorContact.cs" id="DoorContact":::
+
 1. In `SmartHome.App`, add code that matches a `DoorContact` through the existing `Sensor` switch:
 
-```csharp
-// A DoorContact from another assembly still matches the Contact case.
-Sensor frontDoor = new DoorContact(Open: false, Door: "Front");
-Console.WriteLine($"Sensor: {SensorReporter.Describe(frontDoor)}");
-```
-A `DoorContact` can't derive from `Sensor` directly, because it's closed to other assemblies. `DoorContact` extends the open `Contact` leaf instead. A `DoorContact` still matches the `Contact` case, so the exhaustive switch over `Sensor` stays correct without any change. When you choose what to seal, weigh the trade-off: seal a case to lock its shape and keep the hierarchy fully known, or leave a case open to allow extension at the cost of a less precise match, because the switch sees the open base case rather than the derived type. For more information, see the `closed` modifier.
+   :::code language="csharp" source="snippets/shared/telemetry-monitor/SmartHome.App/Program.cs" id="DoorContactConsume":::
+
+A `DoorContact` can't derive from `Sensor` directly, because it's closed to other assemblies. `DoorContact` extends the open `Contact` leaf instead. A `DoorContact` still matches the `Contact` case, so the exhaustive switch over `Sensor` stays correct without any change. When you choose what to seal, weigh the trade-off: seal a case to lock its shape and keep the hierarchy fully known, or leave a case open to allow extension at the cost of a less precise match, because the switch sees the open base case rather than the derived type. For more information, see the [`closed` modifier](../../language-reference/keywords/closed.md).
 
 ## Use a closed hierarchy with generics
 
@@ -121,52 +99,20 @@ A closed hierarchy can be generic. A report from the monitor is either a single 
 
 1. In `SmartHome.Core`, add a file named `Report.cs` and declare the closed `Report<T>` base with its two cases. A derived type can't introduce a type parameter that the base type doesn't have, but it can supply fixed arguments for one or more of the base type's type parameters:
 
-```csharp
-// A generic closed hierarchy. Every type parameter of a derived type must appear
-// in the base type, so a single derived construction exhausts each Report<T>.
-public closed record class Report<T>;
-public sealed record class Single<T>(T Value) : Report<T>;
-public sealed record class Group<T>(Report<T> Left, Report<T> Right) : Report<T>;
-```
+   :::code language="csharp" source="snippets/shared/telemetry-monitor/SmartHome.Core/Report.cs" id="ClosedReport":::
+
 1. Add a recursive method that accumulates the report by switching over its cases:
 
-```csharp
-public static int Count<T>(Report<T> report) => report switch
-{
-    Single<T> => 1,
-    Group<T> group => Count(group.Left) + Count(group.Right),
-    // Exhaustive: Report<T> is closed and both subtypes are handled.
-};
-```
-The switch over `Single<T>` and `Group<T>` is exhaustive because `Report<T>` is closed, so the recursive accumulator needs no default arm. For more information, see Closed hierarchy patterns.
+   :::code language="csharp" source="snippets/shared/telemetry-monitor/SmartHome.Core/Report.cs" id="ReportFold":::
+
+The switch over `Single<T>` and `Group<T>` is exhaustive because `Report<T>` is closed, so the recursive accumulator needs no default arm. For more information, see [Closed hierarchy patterns](../../language-reference/operators/patterns.md#closed-hierarchy-patterns).
 
 ## Run the sample
 
 The console app builds each sensor and report, then prints them through the exhaustive switches. Open `Program.cs` and add the following code:
 
-```csharp
-// Closed hierarchy with an exhaustive switch.
-Sensor[] sensors =
-[
-    new Temperature(21.4),
-    new Humidity(55),
-    new Contact(Open: true),
-];
-foreach (Sensor sensor in sensors)
-{
-    Console.WriteLine($"Sensor: {SensorReporter.Describe(sensor)}");
-}
+:::code language="csharp" source="snippets/shared/telemetry-monitor/SmartHome.App/Program.cs" id="ClosedMain":::
 
-// A DoorContact from another assembly still matches the Contact case.
-Sensor frontDoor = new DoorContact(Open: false, Door: "Front");
-Console.WriteLine($"Sensor: {SensorReporter.Describe(frontDoor)}");
-
-// Generic closed hierarchy.
-Report<string> report = new Group<string>(
-    new Single<string>("Kitchen"),
-    new Group<string>(new Single<string>("Garage"), new Single<string>("Attic")));
-Console.WriteLine($"Report leaves: {ReportReporter.Count(report)}");
-```
 Then, run the app:
 
 ```dotnetcli
@@ -194,6 +140,6 @@ You built the sensor model of a smart-home telemetry monitor and, in the process
 
 ## Related content
 
-- Union types tutorial
-- Pattern matching overview
-- What's new in C# 15
+- [Union types tutorial](unions.md)
+- [Pattern matching overview](../../fundamentals/patterns/pattern-matching.md)
+- [What's new in C# 15](../csharp-15.md)

@@ -1,12 +1,11 @@
 ---
-title: "Overview of YARP"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/yarp-overview.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Overview of YARP
+description: Overview of YARP
+ms.date: 04/03/2025
+ms.topic: concept-article
+content_well_notification: AI-contribution
+ai-usage: ai-assisted
 ---
-
 # Overview of YARP
 
 ## Introduction to YARP
@@ -20,15 +19,15 @@ A reverse proxy is a server that sits between client devices and backend servers
 * Routing: Directs requests to different backend servers based on predefined rules, such as URL patterns or request headers. For example, `/images`, `/api`, and `/db` requests can be routed image, api, and database servers.
 * Load Balancing: Distributes incoming traffic across multiple backend servers to prevent overloading a specific server. Distribution increases performance and reliability.
 * Scalability: By distributing traffic across multiple servers, a reverse proxy helps scale apps to handle more users and higher loads. Backend servers scaled (added or removed) without impacting the client.
-* SSL/TLS Termination: Offloads the TLS encryption and decryption processes from backend servers, reducing their workload.
+* [SSL/TLS Termination](/azure/application-gateway/ssl-overview): Offloads the TLS encryption and decryption processes from backend servers, reducing their workload.
 * Connection abstraction, decoupling and control over URL-space: Inbound requests from external clients and outbound responses from the backend are independent. This independence allows for different:
   * Versions of HTTP, ie, HTTP/1.1, HTTP/2, HTTP/3. The proxy can upgrade or downgrade HTTP versions.
   * Connection lifetimes, which enables having long-lived connections on the backend while maintaining short client connections.
   * Control Over URL-Space: Incoming URLs can be transformed before forwarding to the backend. This abstracts the external URLs from how they are mapped to internal services. Internal service endpoints can change without affecting external URLs.
-* Security: Internal service endpoints can be hidden from external exposure, protecting against some types of cyber attacks such as DDoS attacks.
+* Security: Internal service endpoints can be hidden from external exposure, protecting against some types of cyber attacks such as [DDoS attacks](https://www.microsoft.com/security/business/security-101/what-is-a-ddos-attack?msockid=3e35ed3aa4666d8003aaf830a5006c74).
 * Caching: Frequently requested resources can be cached to reduce the load on backend servers and improve response times.
 * Versioning: Different versions of an API can be supported using different URL mappings.
-* Simplified maintenance: Reverse proxies can handle SSL/TLS Termination and other tasks, simplifying the configuration and maintenance of backend servers. For example, SSL certificates and security policies can be managed at the reverse proxy level instead of on each individual server.
+* Simplified maintenance: Reverse proxies can handle [SSL/TLS Termination](/azure/application-gateway/ssl-overview) and other tasks, simplifying the configuration and maintenance of backend servers. For example, SSL certificates and security policies can be managed at the reverse proxy level instead of on each individual server.
 
 ## How a reverse proxy handles HTTP
 
@@ -52,6 +51,6 @@ YARP offers several unique benefits that make it an attractive choice for develo
 * Integration with .NET: Built on ASP.NET Core, YARP seamlessly integrates with the .NET ecosystem, making it an ideal choice for .NET developers.
 * Extensibility: YARP provides a rich set of extensibility points, enabling developers to add custom logic and features as needed, using familiar C# code.
 * Scalability: The direct forwarding extensibility option enables YARP to scale to support domain name and backend scaling that are not viable with most reverse proxies.
-* Active development: YARP is actively maintained and developed by Microsoft, ensuring it stays up-to-date with the latest technologies and best practices.
+* Active development: [YARP is actively maintained](https://github.com/dotnet/yarp) and developed by Microsoft, ensuring it stays up-to-date with the latest technologies and best practices.
 * Comprehensive maintained documentation: YARP comes with extensive documentation and examples, making it easy to get started and implement advanced features.
-* Open source. YARP and the YARP documentation are open source. Contributions, reviews, and feedback are welcome.
+* [Open source](https://github.com/dotnet/yarp). YARP and the YARP documentation are open source. [Contributions](https://github.com/dotnet/yarp/blob/main/README.md), reviews, and feedback are welcome.

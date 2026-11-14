@@ -1,26 +1,30 @@
 ---
-title: "ASP.NET Core Request Delegate Generator (RDG) for Native AOT"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/aot/request-delegate-generator/rdg.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core Request Delegate Generator (RDG) for Native AOT
+description: Turn Map methods into request delegates with the ASP.NET Core Request Delegate Generator (RDG) for Native AOT.
+content_well_notification: AI-contribution
+monikerRange: '>= aspnetcore-8.0'
+ms.topic: concept-article
+ms.date: 03/01/2025
+ai-usage: ai-assisted
 ---
-
 # Turn Map methods into request delegates with the ASP.NET Core Request Delegate Generator
+
+<!-- UPDATE 9.0 Activate after release and INCLUDE is updated
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
 -->
 
-The ASP.NET Core Request Delegate Generator (RDG) is a compile-time source generator that compiles route handlers provided to a Minimal API to request delegates that can be processed by ASP.NET Core's routing infrastructure. The RDG is implicitly enabled when applications are published with AoT enabled or when trimming is enabled. The RDG generates trim and native AoT-friendly code.
+The ASP.NET Core Request Delegate Generator (RDG) is a compile-time source generator that compiles route handlers provided to a Minimal API to request delegates that can be processed by ASP.NET Core's routing infrastructure. The RDG is implicitly enabled when applications are published with AoT enabled or when [trimming is enabled](/dotnet/core/deploying/trimming/trimming-options#enable-trimming). The RDG generates trim and native AoT-friendly code.
 
-> **Note:**
+> [!NOTE]
 > * The Native AOT feature is currently in preview.
 > * In .NET 8, not all ASP.NET Core features are compatible with Native AOT.
 
 The RDG:
 
-* Is a source generator.
-* Turns each `Map` method into a `Microsoft.AspNetCore.Http.RequestDelegate` associated with the specific route. `Map` methods include the methods in the `Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions`, such as `Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions.MapGet*`, `Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions.MapPost*`, `Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions.MapPatch*`, `Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions.MapPut*`, and `Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions.MapDelete*`.
+* Is a [source generator](/dotnet/csharp/roslyn-sdk/source-generators-overview).
+* Turns each `Map` method into a <xref:Microsoft.AspNetCore.Http.RequestDelegate> associated with the specific route. `Map` methods include the methods in the <xref:Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions>, such as <xref:Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions.MapGet*>, <xref:Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions.MapPost*>, <xref:Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions.MapPatch*>, <xref:Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions.MapPut*>, and <xref:Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions.MapDelete*>.
 
 When publishing and Native AOT is ***not*** enabled:
 
@@ -40,63 +44,37 @@ The RDG:
 * Is enabled automatically in projects when publishing with Native AOT is enabled or when trimming is enabled.
 * Can be manually enabled even when not using Native AOT by setting `<EnableRequestDelegateGenerator>true</EnableRequestDelegateGenerator>` in the project file:
 
-```xml
-<Project Sdk="Microsoft.NET.Sdk.Web">
+:::moniker range=">= aspnetcore-10.0"
 
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-	<EnableRequestDelegateGenerator>true</EnableRequestDelegateGenerator>
-  </PropertyGroup>
-	
-</Project>
-```
+:::code language="xml" source="~/fundamentals/aot/samples/10.0/rdg/RDG.csproj" highlight="7":::
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-10.0"
+
+:::code language="xml" source="~/fundamentals/aot/samples/8.0/rdg/RDG.csproj" highlight="7":::
+
+:::moniker-end
+
 Manually enabling RDG can be useful for:
 
 * Evaluating a project's compatibility with Native AOT.
 * Reducing the app's startup time by pregenerating the request delegates.
 
-Minimal APIs are optimized for using `System.Text.Json`, which requires using the System.Text.Json source generator. All types accepted as parameters to or returned from request delegates in Minimal APIs must be configured on a `System.Text.Json.Serialization.JsonSerializerContext` that's registered via ASP.NET Core's dependency injection:
+Minimal APIs are optimized for using <xref:System.Text.Json>, which requires using the [System.Text.Json source generator](/dotnet/standard/serialization/system-text-json/source-generation). All types accepted as parameters to or returned from request delegates in Minimal APIs must be configured on a <xref:System.Text.Json.Serialization.JsonSerializerContext> that's registered via ASP.NET Core's dependency injection:
 
-```csharp
-using System.Text.Json.Serialization;
+:::moniker range=">= aspnetcore-10.0"
 
-var builder = WebApplication.CreateSlimBuilder(args);
+:::code language="csharp" source="~/fundamentals/aot/samples/10.0/rdg/Program.cs" highlight="5-9,34-36":::
 
-builder.Services.ConfigureHttpJsonOptions(options =>
-{
-    options.SerializerOptions.TypeInfoResolverChain.Insert(
-                         0, AppJsonSerializerContext.Default);
-});
+:::moniker-end
 
-var app = builder.Build();
+:::moniker range="< aspnetcore-10.0"
 
-Todo[] sampleTodos =
-[
-    new(1, "Walk the dog"),
-    new(2, "Do the dishes", DateOnly.FromDateTime(DateTime.Now)),
-    new(3, "Do the laundry", DateOnly.FromDateTime(DateTime.Now.AddDays(1))),
-    new(4, "Clean the bathroom"),
-    new(5, "Clean the car", DateOnly.FromDateTime(DateTime.Now.AddDays(2)))
-];
+:::code language="csharp" source="~/fundamentals/aot/samples/8.0/rdg/Program.cs" highlight="5-9,32-35":::
 
-var todosApi = app.MapGroup("/todos");
-todosApi.MapGet("/", () => sampleTodos);
-todosApi.MapGet("/{id}", (int id) =>
-    sampleTodos.FirstOrDefault(a => a.Id == id) is { } todo
-        ? Results.Ok(todo)
-        : Results.NotFound());
+:::moniker-end
 
-app.Run();
-
-public record Todo(int Id, string? Title, DateOnly? DueBy = null, bool IsComplete = false);
-
-[JsonSerializable(typeof(Todo[]))]
-internal partial class AppJsonSerializerContext : JsonSerializerContext
-{
-}
-```
 ## Diagnostics for unsupported RDG scenarios
 
-When the app is built, the RDG emits diagnostics for scenarios that aren't supported by Native AOT. The diagnostics are emitted as warnings and don't prevent the app from building. For the list of diagnostics, see ASP.NET Core Request Delegate Generator diagnostics.
+When the app is built, the RDG emits diagnostics for scenarios that aren't supported by Native AOT. The diagnostics are emitted as warnings and don't prevent the app from building. For the list of diagnostics, see [ASP.NET Core Request Delegate Generator diagnostics](rdg-ids.md).

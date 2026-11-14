@@ -1,10 +1,8 @@
 ---
-title: "Preserve white space while loading or parsing XML - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/preserve-white-space-loading-parsing-xml.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Preserve white space while loading or parsing XML - LINQ to XML
+description: You can control the white space behavior of LINQ to XML methods that populate XML trees. For instance, you can remove indentation for in-memory processing, or leave it as is.
+ms.date: 07/20/2015
+ms.topic: how-to
 ---
 
 # Preserve white space while loading or parsing XML (LINQ to XML)
@@ -15,21 +13,21 @@ A common scenario is to read indented XML, create an in-memory XML tree without 
 
 Another common scenario is to read and modify XML that has already been intentionally indented. You might not want to change this indentation in any way. To do this in LINQ to XML, you preserve white space when you load or parse the XML and disable formatting when you serialize the XML.
 
-This article describes the white space behavior of methods that populate XML trees. For information about controlling white space when you serialize XML trees, see Preserve white space while serializing.
+This article describes the white space behavior of methods that populate XML trees. For information about controlling white space when you serialize XML trees, see [Preserve white space while serializing](preserve-white-space-serializing.md).
 
 ## Behavior of methods that populate XML trees
 
-The following methods in the `System.Xml.Linq.XElement` and `System.Xml.Linq.XDocument` classes populate an XML tree. You can populate an XML tree from a file, a `System.IO.TextReader`, an `System.Xml.XmlReader`, or a string:
+The following methods in the <xref:System.Xml.Linq.XElement> and <xref:System.Xml.Linq.XDocument> classes populate an XML tree. You can populate an XML tree from a file, a <xref:System.IO.TextReader>, an <xref:System.Xml.XmlReader>, or a string:
 
-- `System.Xml.Linq.XElement.Load*`
-- `System.Xml.Linq.XElement.Parse*`
-- `System.Xml.Linq.XDocument.Load*`
-- `System.Xml.Linq.XDocument.Parse*`
+- <xref:System.Xml.Linq.XElement.Load*?displayProperty=nameWithType>
+- <xref:System.Xml.Linq.XElement.Parse*?displayProperty=nameWithType>
+- <xref:System.Xml.Linq.XDocument.Load*?displayProperty=nameWithType>
+- <xref:System.Xml.Linq.XDocument.Parse*?displayProperty=nameWithType>
 
-If the method doesn't take `System.Xml.Linq.LoadOptions` as an argument, the method won't preserve insignificant white space.
+If the method doesn't take <xref:System.Xml.Linq.LoadOptions> as an argument, the method won't preserve insignificant white space.
 
-In most cases, if the method takes `System.Xml.Linq.LoadOptions` as an argument, you can optionally preserve insignificant white space as text nodes in the XML tree. However, if the method is loading the XML from an `System.Xml.XmlReader`, then the `System.Xml.XmlReader` determines whether white space will be preserved or not. Setting `System.Xml.Linq.LoadOptions.PreserveWhitespace` will have no effect.
+In most cases, if the method takes <xref:System.Xml.Linq.LoadOptions> as an argument, you can optionally preserve insignificant white space as text nodes in the XML tree. However, if the method is loading the XML from an <xref:System.Xml.XmlReader>, then the <xref:System.Xml.XmlReader> determines whether white space will be preserved or not. Setting <xref:System.Xml.Linq.LoadOptions.PreserveWhitespace> will have no effect.
 
-With these methods, if white space is preserved, insignificant white space is inserted into the XML tree as `System.Xml.Linq.XText` nodes. If white space isn't preserved, text nodes aren't inserted.
+With these methods, if white space is preserved, insignificant white space is inserted into the XML tree as <xref:System.Xml.Linq.XText> nodes. If white space isn't preserved, text nodes aren't inserted.
 
-You can create an XML tree by using an `System.Xml.XmlWriter`. Nodes that are written to the `System.Xml.XmlWriter` are populated in the tree. However, when you build an XML tree using this method, all nodes are preserved, regardless of whether the node is white space or not, or whether the white space is significant or not.
+You can create an XML tree by using an <xref:System.Xml.XmlWriter>. Nodes that are written to the <xref:System.Xml.XmlWriter> are populated in the tree. However, when you build an XML tree using this method, all nodes are preserved, regardless of whether the node is white space or not, or whether the white space is significant or not.

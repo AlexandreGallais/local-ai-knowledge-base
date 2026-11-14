@@ -1,43 +1,42 @@
----
-title: "LocalVariable interface (java.lang.classfile.instruction)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/instruction/LocalVariable.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # LocalVariable interface (java.lang.classfile.instruction)
 
 ```java
 public sealed interface LocalVariable extends PseudoInstruction permits AbstractPseudoInstruction.UnboundLocalVariable, BoundLocalVariable
 ```
 
-A pseudo-instruction which models a single entry in the LocalVariableTable attribute.  Delivered as a
-`CodeElement` during traversal of the elements of a `CodeModel`,
-according to the setting of the `ClassFile.DebugElementsOption` option.
-
+A pseudo-instruction which models a single entry in the {@link
+LocalVariableTableAttribute LocalVariableTable} attribute.  Delivered as a
+{@link CodeElement} during traversal of the elements of a {@link CodeModel},
+according to the setting of the {@link ClassFile.DebugElementsOption} option.
+<p>
 A local variable entry is composite:
+{@snippet lang=text :
+// @link substring="LocalVariable" target="#of(int, String, ClassDesc, Label, Label)" :
+LocalVariable(
+    int slot, // @link substring="slot" target="#slot"
+    String name, // @link substring="name" target="#name"
+    ClassDesc type, // @link substring="type" target="#type"
+    Label startScope, // @link substring="startScope" target="#startScope"
+    Label endScope // @link substring="endScope" target="#endScope"
+)
+}
+Where {@code slot} is within {@code [0, 65535]}.
+<p>
+Another model, {@link LocalVariableInfo}, also models a local variable
+entry; it has no dependency on a {@code CodeModel} and represents of bci
+values as {@code int}s instead of {@code Label}s, and is used as components
+of a {@link LocalVariableTableAttribute}.
 
-Where `slot` is within `[0, 65535]`.
-
-Another model, `LocalVariableInfo`, also models a local variable
-entry; it has no dependency on a `CodeModel` and represents of bci
-values as `int`s instead of `Label`s, and is used as components
-of a `LocalVariableTableAttribute`.
-
-**API note:** `LocalVariable` is used for all local variables in Java source code.
+@apiNote
+{@code LocalVariable} is used for all local variables in Java source code.
 If a local variable has a parameterized type, a type argument, or an array
-type of one of the previous types, a `LocalVariableType` should be
+type of one of the previous types, a {@link LocalVariableType} should be
 created for that local variable as well.
 
-**See also:** LocalVariableInfo
-
-**See also:** CodeBuilder#localVariable CodeBuilder::localVariable
-
-**See also:** ClassFile.DebugElementsOption
-
-**Since:** 24
+@see LocalVariableInfo
+@see CodeBuilder#localVariable CodeBuilder::localVariable
+@see ClassFile.DebugElementsOption
+@since 24
 
 ## LocalVariable.slot()
 
@@ -45,7 +44,8 @@ created for that local variable as well.
 int slot()
 ```
 
-The value is within `[0, 65535]`.
+{@return the local variable slot}
+The value is within {@code [0, 65535]}.
 
 ## LocalVariable.name()
 
@@ -53,14 +53,19 @@ The value is within `[0, 65535]`.
 Utf8Entry name()
 ```
 
+{@return the local variable name}
+
 ## LocalVariable.type()
 
 ```java
 Utf8Entry type()
 ```
 
-**API note:** A symbolic descriptor for the type of the local variable is available
-through typeSymbol().
+{@return the local variable field descriptor string}
+
+@apiNote
+A symbolic descriptor for the type of the local variable is available
+through {@link #typeSymbol() typeSymbol()}.
 
 ## LocalVariable.typeSymbol()
 
@@ -68,11 +73,15 @@ through typeSymbol().
 default ClassDesc typeSymbol()
 ```
 
+{@return the local variable type, as a symbolic descriptor}
+
 ## LocalVariable.startScope()
 
 ```java
 Label startScope()
 ```
+
+{@return the start range of the local variable scope}
 
 ## LocalVariable.endScope()
 
@@ -80,25 +89,23 @@ Label startScope()
 Label endScope()
 ```
 
+{@return the end range of the local variable scope}
+
 ## LocalVariable.of(int, Utf8Entry, Utf8Entry, Label, Label)
 
 ```java
 static LocalVariable of(int slot, Utf8Entry nameEntry, Utf8Entry descriptorEntry, Label startScope, Label endScope)
 ```
 
-`slot` must be within `[0, 65535]`.
+{@return a local variable pseudo-instruction}
+{@code slot} must be within {@code [0, 65535]}.
 
-Parameters:
-
-- `slot`: the local variable slot
-- `nameEntry`: the local variable name
-- `descriptorEntry`: the local variable descriptor
-- `startScope`: the start range of the local variable scope
-- `endScope`: the end range of the local variable scope
-
-Throws:
-
-- `IllegalArgumentException`: if `slot` is out of range
+@param slot the local variable slot
+@param nameEntry the local variable name
+@param descriptorEntry the local variable descriptor
+@param startScope the start range of the local variable scope
+@param endScope the end range of the local variable scope
+@throws IllegalArgumentException if {@code slot} is out of range
 
 ## LocalVariable.of(int, String, ClassDesc, Label, Label)
 
@@ -106,16 +113,12 @@ Throws:
 static LocalVariable of(int slot, String name, ClassDesc descriptor, Label startScope, Label endScope)
 ```
 
-`slot` must be within `[0, 65535]`.
+{@return a local variable pseudo-instruction}
+{@code slot} must be within {@code [0, 65535]}.
 
-Parameters:
-
-- `slot`: the local variable slot
-- `name`: the local variable name
-- `descriptor`: the local variable descriptor
-- `startScope`: the start range of the local variable scope
-- `endScope`: the end range of the local variable scope
-
-Throws:
-
-- `IllegalArgumentException`: if `slot` is out of range
+@param slot the local variable slot
+@param name the local variable name
+@param descriptor the local variable descriptor
+@param startScope the start range of the local variable scope
+@param endScope the end range of the local variable scope
+@throws IllegalArgumentException if {@code slot} is out of range

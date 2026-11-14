@@ -1,12 +1,15 @@
 ---
+description: "Learn more about: COR_PRF_EVENTPIPE_PARAM_TYPE Enumeration"
 title: "COR_PRF_EVENTPIPE_PARAM_TYPE Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/profiling/cor-prf-eventpipe-param-type-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/19/2021"
+api_name:
+  - "COR_PRF_EVENTPIPE_PARAM_TYPE"
+api_location:
+  - "coreclr.dll"
+  - "corprof.idl"
+api_type:
+  - "COM"
 ---
-
 # COR_PRF_EVENTPIPE_PARAM_TYPE enumeration
 
 Describes the type of a parameter for an EventPipe event.
@@ -62,11 +65,11 @@ typedef enum
 
 ## Remarks
 
- The `COR_PRF_EVENTPIPE_PARAM_TYPE` enumeration is used by the COR_PRF_EVENTPIPE_PARAM_DESC structure to indicate the type of the parameter.
+ The `COR_PRF_EVENTPIPE_PARAM_TYPE` enumeration is used by the [COR_PRF_EVENTPIPE_PARAM_DESC](cor-prf-eventpipe-param-desc-structure.md) structure to indicate the type of the parameter.
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** CorProf.idl, CorProf.h
 

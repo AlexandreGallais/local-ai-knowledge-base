@@ -1,10 +1,11 @@
 ---
-title: "Upgrade JavaScript and TypeScript dependencies"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/github-copilot-upgrade/javascript-typescript-upgrade-dependencies.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Upgrade JavaScript and TypeScript dependencies
+description: Use GitHub Copilot upgrade to update npm dependencies and repair compatibility problems in JavaScript and TypeScript projects.
+ms.topic: how-to
+ms.date: 09/21/2026
+ai-usage: ai-generated
+
+#customer intent: As a JavaScript or TypeScript developer, I want to update project dependencies and resolve breaking changes with GitHub Copilot.
 ---
 
 # Upgrade JavaScript and TypeScript dependencies
@@ -13,7 +14,7 @@ Use GitHub Copilot upgrade to update selected npm packages or all dependencies i
 
 ## Start the upgrade
 
-1. Install GitHub Copilot upgrade. For instructions, see Install GitHub Copilot upgrade.
+1. Install GitHub Copilot upgrade. For instructions, see [Install GitHub Copilot upgrade](install.md).
 1. Open the repository in a supported GitHub Copilot environment.
 1. Ask the agent to update all dependencies or name the packages that you want to update. For example:
 
@@ -33,7 +34,7 @@ For supported frameworks, the agent applies framework-specific migration guidanc
 
 ## Validate the result
 
-After the dependency updates, the agent repeats the project checks it captured before the upgrade. For details about the available checks, see Validate a JavaScript or TypeScript application.
+After the dependency updates, the agent repeats the project checks it captured before the upgrade. For details about the available checks, see [Validate a JavaScript or TypeScript application](javascript-typescript-validate-application.md).
 
 Review the final summary for:
 
@@ -45,6 +46,6 @@ Review the final summary for:
 
 ## Related content
 
-- Upgrade JavaScript and TypeScript projects
-- Upgrade the TypeScript compiler
-- JavaScript and TypeScript capabilities
+- [Upgrade JavaScript and TypeScript projects](javascript-typescript-overview.md)
+- [Upgrade the TypeScript compiler](javascript-typescript-upgrade-typescript.md)
+- [JavaScript and TypeScript capabilities](javascript-typescript-capabilities.md)

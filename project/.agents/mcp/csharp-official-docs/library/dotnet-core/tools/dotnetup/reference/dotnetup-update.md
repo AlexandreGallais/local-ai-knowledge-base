@@ -1,16 +1,14 @@
 ---
-title: "dotnetup update command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/reference/dotnetup-update.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnetup update command
+description: Command reference for updating all tracked dotnetup installations.
+ms.topic: reference
+ms.date: 10/13/2026
+ai-usage: ai-assisted
 ---
 
 # dotnetup update command
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 ## Name
 
@@ -32,7 +30,7 @@ The command continues after an individual update failure. It returns a
 failure after it processes the remaining specifications.
 
 This command doesn't update the dotnetup executable itself. Use
-`dotnetup self update` to update the tool.
+[`dotnetup self update`](dotnetup-self-update.md) to update the tool.
 
 ## Options
 

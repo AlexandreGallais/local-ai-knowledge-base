@@ -1,18 +1,20 @@
 ---
-title: ".NET Upgrade Assistant code analysis overview"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/upgrade-assistant-analyze-overview.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: .NET Upgrade Assistant code analysis overview
+description: "Describes how the code analysis function of .NET Upgrade Assistant works. The analysis generates a report that lists what aspects of your project will be upgraded, and if any manual work is involved."
+author: adegeo
+ms.author: adegeo
+ms.topic: overview
+ms.date: 03/19/2026
+
+#customer intent: As a developer, I need to understand what the analyze function of .NET Upgrade Assistant does.
+
 ---
 
 # What is code analysis with .NET Upgrade Assistant?
 
 This article provides an overview of the code analysis function of .NET Upgrade Assistant. Code analysis generates a report based on your project configuration, dependencies, and code. The report contains information about potential issues and problems you might encounter during the upgrade, and what steps you could take to remediate those problems.
 
-> **Important:**
-> .NET Upgrade Assistant is officially deprecated. Use the GitHub Copilot modernization chat agent instead, which is included with Visual Studio 2026 and Visual Studio 2022 17.14.16 or later. This agent analyzes your projects and dependencies, produces a step-by-step migration plan with targeted recommendations and automated code fixes, and commits each change so you can validate or roll back. It automates common porting tasks—updating project files, replacing deprecated APIs, and resolving build issues—so you can modernize faster with less manual effort.
+[!INCLUDE [github-copilot-suggestion](includes/github-copilot-suggestion.md)]
 
 ## Types of analysis
 
@@ -28,18 +30,20 @@ There are two types of analysis you can perform on your code:
 
 ## Reports
 
-A dashboard report is generated after the analysis completes. This report breaks down the results by project, file, incident, and story points. An aggregate view is also available, to group like-issues together regardless of what project they were detected in.
+A dashboard report is generated after the analysis completes. This report breaks down the results by project, file, incident, and [story points](#incident-story-points). An aggregate view is also available, to group like-issues together regardless of what project they were detected in.
 
-> **Tip:**
-> Story points are an Agile concept that helps estimate complexity and effort required to fix a problem. For more information, see the Incident story points section.
+> [!TIP]
+> Story points are an Agile concept that helps estimate complexity and effort required to fix a problem. For more information, see the [Incident story points](#incident-story-points) section.
 
-Each issue in the report is categorized by severity to assist you in prioritizing any fixes you need to make. Issues are either mandatory or optional. Mandatory issues block the upgrade. Optional issues provide an opportunity to upgrade to a newer feature, library, or code enhancement.
+Each issue in the report is categorized by [severity](#incident-severity) to assist you in prioritizing any fixes you need to make. Issues are either mandatory or optional. Mandatory issues block the upgrade. Optional issues provide an opportunity to upgrade to a newer feature, library, or code enhancement.
 
 The following sections describe areas of the report in detail.
 
 ### Dashboard
 
 The **Dashboard** page provides a view of the incidents detected by the scan, grouped into panels:
+
+:::image type="content" source="./media/upgrade-assistant-analyze-overview/dashboard.png" alt-text="The .NET Upgrade Assistant Analyze results, showing the dashboard's starting page.":::
 
 - **Summary**
 
@@ -57,19 +61,23 @@ The **Dashboard** page provides a view of the incidents detected by the scan, gr
 
   - **Story Points**
 
-    The total number of story points required to complete the upgrade. For more information about what a story point is, see the Incident story points section.
+    The total number of story points required to complete the upgrade. For more information about what a story point is, see the [Incident story points](#incident-story-points) section.
 
 - **Severity** and **Categories**
 
-  These two panels show charts that group the incidents by severity and category. For more information about severity, see the Incident severity section.
+  These two panels show charts that group the incidents by severity and category. For more information about severity, see the [Incident severity](#incident-severity) section.
 
 ### Projects
 
 The **Projects** page breaks down the issues, incidents, and story points, by project. Each project is a link that opens a drill-down report filtered to that project.
 
+:::image type="content" source="./media/upgrade-assistant-analyze-overview/projects.png" alt-text="The .NET Upgrade Assistant Analyze results, showing the dashboard's 'Projects' page.":::
+
 ### Aggregate issues
 
 The **Aggregate issues** page details each issue that was triggered. Each issue can be expanded to list every incident of that issue. The **State** column helps you track which issues you've fixed or deemed not applicable.
+
+:::image type="content" source="./media/upgrade-assistant-analyze-overview/aggregate-issues.png" alt-text="The .NET Upgrade Assistant Analyze results, showing the dashboard's 'Aggregate issues' page.":::
 
 ## Incident severity
 
@@ -96,4 +104,4 @@ Each issue incident has an associated story point. A story point is a unit of me
 
 ## Related content
 
-- Analyze projects with .NET Upgrade Assistant
+- [Analyze projects with .NET Upgrade Assistant](upgrade-assistant-how-to-analyze.md)

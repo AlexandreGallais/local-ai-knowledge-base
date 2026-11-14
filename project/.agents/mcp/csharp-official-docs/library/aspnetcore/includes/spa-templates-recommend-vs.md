@@ -1,15 +1,8 @@
 ---
-title: "spa-templates-recommend-vs"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/spa-templates-recommend-vs.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+ms.date: 10/10/2023
+ms.topic: include
 ---
-
-# spa-templates-recommend-vs
-
-Visual Studio provides project templates for creating single-page apps (SPAs) based on JavaScript technologies, such as Angular, React, and Vue that have an ASP.NET Core backend. These templates:
+Visual Studio provides project templates for creating single-page apps (SPAs) based on JavaScript technologies, such as [Angular](https://angular.dev/), [React](https://react.dev/), and [Vue](https://vuejs.org/) that have an ASP.NET Core backend. These templates:
 
 * Create a Visual Studio solution with a frontend project and a backend project.
 * Use the Visual Studio project type for JavaScript and TypeScript (*.esproj*) for the frontend.

@@ -1,30 +1,32 @@
 ---
-title: "Create a template package for dotnet new"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tutorials/cli-templates-create-template-package.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Create a template package for dotnet new
+description: Learn how to create a csproj file that builds a template package for the dotnet new command.
+author: adegeo
+ms.date: 10/23/2025
+ai-usage: ai-assisted
+ms.topic: tutorial
+ms.author: adegeo
 ---
 
 # Tutorial: Create a template package
 
 With .NET, you can create and deploy templates that generate projects, files, and resources. This tutorial is part three of a series that teaches you how to create, install, and uninstall templates for use with the `dotnet new` command.
 
-You can view the completed template in the .NET Samples GitHub repository.
+You can view the completed template in the [.NET Samples GitHub repository](https://github.com/dotnet/samples/tree/main/core/tutorials/cli-templates-create-item-template).
 
 In this part of the series, you learn how to:
 
+> [!div class="checklist"]
 >
-> * Create a template package by using the Microsoft.TemplateEngine.Authoring.Templates NuGet package.
+> * Create a template package by using the [Microsoft.TemplateEngine.Authoring.Templates](https://www.nuget.org/packages/Microsoft.TemplateEngine.Authoring.Templates) NuGet package.
 > * Install a template package from a NuGet package file.
 > * Uninstall a template package by package ID.
 
 ## Prerequisites
 
-- .NET 9 or a later version.
+- [.NET 9](https://dotnet.microsoft.com/download) or a later version.
 
-- Complete part 1 and part 2 of this tutorial series.
+- Complete [part 1](cli-templates-create-item-template.md) and [part 2](cli-templates-create-project-template.md) of this tutorial series.
 
   This tutorial uses the two templates created in the first two parts of this tutorial series. You can use a different template as long as you copy the template, as a folder, into the _working\content_ folder.
 
@@ -37,13 +39,13 @@ In this part of the series, you learn how to:
 
 A template package is one or more templates packed into a NuGet package. When you install or uninstall a template package, all templates contained in the package are added or removed, respectively.
 
-Template packages are represented by a NuGet package (_.nupkg_) file. And, like any NuGet package, you can upload the template package to a NuGet feed. The `dotnet new install` command supports installing template packages from a NuGet package feed, a _.nupkg_ file, or a directory with a template.
+Template packages are represented by a NuGet package (_.nupkg_) file. And, like any NuGet package, you can upload the template package to a NuGet feed. The [`dotnet new install`](../tools/dotnet-new-install.md) command supports installing template packages from a NuGet package feed, a _.nupkg_ file, or a directory with a template.
 
 Normally you use a C# project file to compile code and produce a binary. However, the project can also be used to generate a template package. By changing the settings of the _.csproj_, you can prevent it from compiling any code and instead include all the assets of your templates as resources. When this project is built, it produces a template package NuGet package.
 
-The package you're going to generate includes the item and project templates previously created.
+The package you're going to generate includes the [item](cli-templates-create-item-template.md) and [project](cli-templates-create-project-template.md) templates previously created.
 
-The Microsoft.TemplateEngine.Authoring.Templates package contains templates useful for template authoring. To install this package, nuget.org should be available as NuGet feed in the working directory.
+The [Microsoft.TemplateEngine.Authoring.Templates](https://www.nuget.org/packages/Microsoft.TemplateEngine.Authoring.Templates) package contains templates useful for template authoring. To install this package, nuget.org should be available as NuGet feed in the working directory.
 
 1. In the _working_ folder, run the following command to create the template package:
 
@@ -91,9 +93,9 @@ The Microsoft.TemplateEngine.Authoring.Templates package contains templates usef
 
 The settings under `<PropertyGroup>` in the XML snippet are broken into two groups.
 
-The first group deals with properties required for a NuGet package. The four `<Package*>` settings have to do with the NuGet package properties to identify your package on a NuGet feed. The `<PackageId>` value, while used by NuGet, is also used to uninstall the template package. The remaining settings, such as `<Title>` and `<PackageTags>`, have to do with metadata displayed on the NuGet feed and .NET package manager. For more information about NuGet settings, see NuGet and MSBuild properties.
+The first group deals with properties required for a NuGet package. The four `<Package*>` settings have to do with the NuGet package properties to identify your package on a NuGet feed. The `<PackageId>` value, while used by NuGet, is also used to uninstall the template package. The remaining settings, such as `<Title>` and `<PackageTags>`, have to do with metadata displayed on the NuGet feed and .NET package manager. For more information about NuGet settings, see [NuGet and MSBuild properties](/nuget/reference/msbuild-targets).
 
-> **Note:**
+> [!NOTE]
 > To ensure that the template package appears in `dotnet new search` results, `<PackageType>` must be set to `Template`.
 
 In the second group, the `<TargetFramework>` setting ensures that MSBuild runs properly when you run the pack command to compile and pack the project. The group also includes settings that have to do with configuring the project to include the templates in the appropriate folder in the NuGet package when it's created:
@@ -104,10 +106,10 @@ In the second group, the `<TargetFramework>` setting ensures that MSBuild runs p
 
 `<ItemGroup>` contains two items. First, the `<Content>` item includes everything in the _templates_ folder as content. It's also set to exclude any _bin_ folder or _obj_ folder to prevent any compiled code (if you tested and compiled your templates) from being included. Second, the `<Compile>` item excludes all code files from compiling no matter where they're located. This setting prevents the project that's used to create the template package from trying to compile the code in the _templates_ folder hierarchy.
 
-> **Tip:**
-> For more information about NuGet metadata settings, see Template packages.
+> [!TIP]
+> For more information about NuGet metadata settings, see [Template packages](../tools/templates.md#template-packages).
 
-The created project file includes template authoring MSBuild tasks and localization settings.
+The created project file includes [template authoring MSBuild tasks](https://aka.ms/templating-authoring-tools) and localization settings.
 
 ```xml
   <PropertyGroup>
@@ -119,10 +121,10 @@ The created project file includes template authoring MSBuild tasks and localizat
   </ItemGroup>
 ```
 
-> **Important:**
+> [!IMPORTANT]
 > The _content_ content folder contains a _SampleTemplate_ folder. **Delete** this folder, as it was added to the authoring template for demonstration purposes.
 
-These MSBuild tasks provide template validation and localization of the templates capabilities. Localization is disabled by default. To enable creation of localization files, set `LocalizeTemplates` to `true`.
+These MSBuild tasks provide template validation and [localization of the templates](https://aka.ms/templating-localization) capabilities. Localization is disabled by default. To enable creation of localization files, set `LocalizeTemplates` to `true`.
 
 ## Pack and install
 
@@ -207,9 +209,9 @@ Congratulations! You've installed and uninstalled a template package.
 
 ## Next steps
 
-To learn more about templates, see .NET templates for authors.
+To learn more about templates, see [.NET templates for authors](../tools/templates.md).
 
-* Template Authoring Tools
-* dotnet/templating GitHub repo Wiki
-* Template samples
-* _template.json_ schema at the JSON Schema Store
+* [Template Authoring Tools](https://aka.ms/templating-authoring-tools)
+* [dotnet/templating GitHub repo Wiki](https://github.com/dotnet/templating/wiki)
+* [Template samples](https://aka.ms/template-samples)
+* [_template.json_ schema at the JSON Schema Store](http://json.schemastore.org/template)

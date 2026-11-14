@@ -1,22 +1,15 @@
----
-title: "Refer to locales by ID"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/i18n/locale-id.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Refer to locales by ID
 
 Angular uses the Unicode _locale identifier_ \(Unicode locale ID\) to find the correct locale data for internationalization of text strings.
 
-**Unicode locale ID**
+<docs-callout title="Unicode locale ID">
 
-- A locale ID conforms to the Unicode Common Locale Data Repository (CLDR) core specification.
-  For more information about locale IDs, see Unicode Language and Locale Identifiers.
+- A locale ID conforms to the [Unicode Common Locale Data Repository (CLDR) core specification][UnicodeCldrDevelopmentCoreSpecification].
+  For more information about locale IDs, see [Unicode Language and Locale Identifiers][UnicodeCldrDevelopmentCoreSpecificationLocaleID].
 
-- CLDR and Angular use BCP 47 tags as the base for the locale ID
+- CLDR and Angular use [BCP 47 tags][RfcEditorInfoBcp47] as the base for the locale ID
+
+</docs-callout>
 
 A locale ID specifies the language, country, and an optional code for further variants or subdivisions.
 A locale ID consists of the language identifier, a hyphen \(`-`\) character, and the locale extension.
@@ -39,9 +32,11 @@ For the examples in this guide, use the following languages and locales.
 | French   | Canada                   | `fr-CA`           |
 | French   | France                   | `fr-FR`           |
 
-The Angular repository includes common locales.
+The [Angular repository][GithubAngularAngularTreeMasterPackagesCommonLocales] includes common locales.
 
-For a list of language codes, see ISO 639-2.
+<docs-callout>
+For a list of language codes, see [ISO 639-2](https://www.loc.gov/standards/iso639-2).
+</docs-callout>
 
 ## Set the source locale ID
 
@@ -51,7 +46,7 @@ By default, Angular uses `en-US` as the source locale of your project.
 
 To change the source locale of your project for the build, complete the following actions.
 
-1. Open the `angular.json` workspace build configuration file.
+1. Open the [`angular.json`][GuideWorkspaceConfig] workspace build configuration file.
 2. Add or modify the `sourceLocale` field inside the `i18n` section:
 
 ```json
@@ -84,4 +79,12 @@ Put this in a file that has an `import` or `export`. If your project already inc
 
 ## What's next
 
-  - Format data based on locale
+<docs-pill-row>
+  <docs-pill href="guide/i18n/format-data-locale" title="Format data based on locale"/>
+</docs-pill-row>
+
+[GuideWorkspaceConfig]: reference/configs/workspace-config 'Angular workspace configuration | Angular'
+[GithubAngularAngularTreeMasterPackagesCommonLocales]: https://github.com/angular/angular/tree/main/packages/common/locales 'angular/packages/common/locales | angular/angular | GitHub'
+[RfcEditorInfoBcp47]: https://www.rfc-editor.org/info/bcp47 'BCP 47 | RFC Editor'
+[UnicodeCldrDevelopmentCoreSpecification]: https://cldr.unicode.org/index/cldr-spec 'Core Specification | Unicode CLDR Project'
+[UnicodeCldrDevelopmentCoreSpecificationLocaleID]: https://cldr.unicode.org/index/cldr-spec/picking-the-right-language-code 'Unicode Language and Locale Identifiers - Core Specification | Unicode CLDR Project'

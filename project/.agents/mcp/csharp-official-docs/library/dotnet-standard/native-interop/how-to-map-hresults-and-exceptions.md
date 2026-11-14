@@ -1,12 +1,18 @@
 ---
 title: "How to: Map HRESULTs and exceptions"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/native-interop/how-to-map-hresults-and-exceptions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Review how to map HRESULT values returned from COM methods to exceptions thrown by .NET methods. The runtime handles the transition between COM and .NET.
+ms.date: 07/08/2026
+ai-usage: ai-assisted
+dev_langs:
+  - "cpp"
+helpviewer_keywords:
+  - "interoperation with unmanaged code, HRESULTs"
+  - "exceptions, HRESULTs"
+  - "interoperation with unmanaged code, exceptions"
+  - "HRESULTs"
+  - "COM interop, HRESULTs"
+  - "COM interop, exceptions"
 ---
-
 # How to: Map HRESULTs and exceptions
 
 COM methods report errors by returning HRESULTs; .NET methods report them by throwing exceptions. The runtime handles the transition between the two. Each exception class in .NET maps to an HRESULT.
@@ -43,7 +49,7 @@ CMyClass::MethodThatThrows
 }
 ```
 
- The following table provides the common mappings from HRESULT to its comparable exception class in .NET. HRESULT values without explicit mappings are mapped to `COMException`. The complete up-to-date mapping can be found in the dotnet/runtime repository.
+ The following table provides the common mappings from HRESULT to its comparable exception class in .NET. HRESULT values without explicit mappings are mapped to `COMException`. The complete up-to-date mapping can be found in the [dotnet/runtime repository](https://github.com/dotnet/runtime/blob/main/src/coreclr/vm/rexcep.h).
 
 |HRESULT|.NET exception|
 |-------------|--------------------|
@@ -78,7 +84,7 @@ CMyClass::MethodThatThrows
 |`E_NOTIMPL`|`NotImplementedException`|
 |`COR_E_NOTSUPPORTED`|`NotSupportedException`|
 |`COR_E_NULLREFERENCE orE_POINTER`|`NullReferenceException`|
-|`COR_E_OUTOFMEMORY or` `E_OUTOFMEMORY`|`OutOfMemoryException`|
+|`COR_E_OUTOFMEMORY or`<br /><br /> `E_OUTOFMEMORY`|`OutOfMemoryException`|
 |`COR_E_OVERFLOW`|`OverflowException`|
 |`COR_E_PATHTOOLONG or ERROR_FILENAME_EXCED_RANGE`|`PathTooLongException`|
 |`COR_E_RANK`|`RankException`|
@@ -117,5 +123,5 @@ CMyClass::MethodThatThrows
 
 ## See also
 
-- Advanced COM Interoperability
-- Exceptions
+- [Advanced COM Interoperability](/previous-versions/dotnet/netframework-4.0/bd9cdfyx(v=vs.100))
+- [Exceptions](../../standard/exceptions/index.md)

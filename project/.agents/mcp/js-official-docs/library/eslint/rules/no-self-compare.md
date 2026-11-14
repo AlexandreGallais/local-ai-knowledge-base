@@ -1,17 +1,12 @@
 ---
-title: "no-self-compare"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-self-compare.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-self-compare
+rule_type: problem
 ---
 
-# no-self-compare
 
 Comparing a variable against itself is usually an error, either a typo or refactoring error. It is confusing to the reader and may potentially introduce a runtime error.
 
-The only time you would compare a variable against itself is when you are testing for `NaN`. However, it is far more appropriate to use `typeof x === 'number' && isNaN(x)` or the Number.isNaN ES2015 function for that use case rather than leaving the reader of the code to determine the intent of self comparison.
+The only time you would compare a variable against itself is when you are testing for `NaN`. However, it is far more appropriate to use `typeof x === 'number' && isNaN(x)` or the [Number.isNaN ES2015 function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN) for that use case rather than leaving the reader of the code to determine the intent of self comparison.
 
 ## Rule Details
 
@@ -19,7 +14,7 @@ This error is raised to highlight a potentially confusing and potentially pointl
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-self-compare: "error"*/
@@ -30,6 +25,8 @@ if (x === x) {
 }
 ```
 
+:::
+
 ## Options
 
 This rule has no options.
@@ -38,7 +35,7 @@ This rule has no options.
 
 This rule works by directly comparing the tokens on both sides of the operator. It flags them as problematic if they are structurally identical. However, it doesn't consider possible side effects or that functions may return different objects even when called with the same arguments. As a result, it can produce false positives in some cases, such as:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-self-compare: "error"*/
@@ -60,3 +57,5 @@ if (incrementUnlessReachedMaximum() === incrementUnlessReachedMaximum()) {
   // ...
 }
 ```
+
+:::

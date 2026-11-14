@@ -1,12 +1,23 @@
 ---
+description: "Learn more about: LIBRARY_PROVIDER_INDEX_TYPE Enumeration"
 title: "LIBRARY_PROVIDER_INDEX_TYPE Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/libraryproviderindextype-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "LIBRARY_PROVIDER_INDEX_TYPE"
+api_location:
+  - "dbgshim.dll"
+  - "libdbgshim.so"
+  - "libdbgshim.dylib"
+api_type:
+  - "COM"
+f1_keywords:
+  - "LIBRARY_PROVIDER_INDEX_TYPE"
+helpviewer_keywords:
+  - "LIBRARY_PROVIDER_INDEX_TYPE enumeration [.NET Core debugging]"
+ms.assetid: a6ac2531-ddfe-46fd-88fe-8b1eabe0b255
+topic_type:
+  - "apiref"
 ---
-
 # LIBRARY_PROVIDER_INDEX_TYPE enumeration
 
 The type of index information passed to the library provider is either the identity of the requested module or of the runtime (CoreCLR) module.
@@ -36,7 +47,7 @@ The "index information" is the timestamp or file size on Windows, or the build I
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** dbgshim.h
 

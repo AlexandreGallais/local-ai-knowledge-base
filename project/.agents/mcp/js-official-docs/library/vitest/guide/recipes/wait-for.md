@@ -1,10 +1,5 @@
 ---
-title: "Waiting for Async Conditions | Recipes"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/recipes/wait-for.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Waiting for Async Conditions | Recipes
 ---
 
 # Waiting for Async Conditions
@@ -15,7 +10,7 @@ Vitest provides helpers that poll on your behalf, retrying on a fixed interval u
 
 ## `expect.poll`: retry an assertion
 
-Use `expect.poll` when the wait condition is an assertion. The callback returns the value to assert on, the matcher does the comparison, and Vitest retries the whole expression at each interval until the matcher passes.
+Use [`expect.poll`](/api/expect#poll) when the wait condition is an assertion. The callback returns the value to assert on, the matcher does the comparison, and Vitest retries the whole expression at each interval until the matcher passes.
 
 ```ts
 import { expect, test } from 'vitest'
@@ -37,7 +32,7 @@ The failure message is the standard `expect` diff, with no manual `throw new Err
 
 ## `vi.waitFor`: wait and capture the value
 
-`vi.waitFor` is the right tool when the wait condition is the work itself succeeding rather than an assertion you write. It runs the callback at each interval; a thrown error queues another attempt, and the first call that doesn't throw resolves the wait with whatever the callback returned.
+[`vi.waitFor`](/api/vi#vi-waitfor) is the right tool when the wait condition is the work itself succeeding rather than an assertion you write. It runs the callback at each interval; a thrown error queues another attempt, and the first call that doesn't throw resolves the wait with whatever the callback returned.
 
 ```ts
 import { expect, test, vi } from 'vitest'
@@ -59,7 +54,7 @@ The throw that drives the retry comes from `connect` itself, not from an `expect
 
 ## `vi.waitUntil`: poll until truthy, fail fast on errors
 
-Use `vi.waitUntil` for a value lookup where any thrown error should fail the test on the spot rather than be retried away. Each interval calls the callback again. A truthy return resolves the wait; a falsy return waits for the next interval. A thrown error fails the test immediately.
+Use [`vi.waitUntil`](/api/vi#vi-waituntil) for a value lookup where any thrown error should fail the test on the spot rather than be retried away. Each interval calls the callback again. A truthy return resolves the wait; a falsy return waits for the next interval. A thrown error fails the test immediately.
 
 ```ts
 import { expect, test, vi } from 'vitest'
@@ -80,7 +75,7 @@ test('worker completes the job', async () => {
 
 `jobResults.get('build-42')` returns `JobResult | undefined`. `waitUntil` polls until it returns a truthy value, narrows the resolved type to `JobResult`, and hands it back for further assertions. If the lookup itself throws because of a programming error like a typo in the import, `waitUntil` surfaces the error on the first attempt rather than retrying past it.
 
-In browser mode, prefer `page.locator` and `expect.element` over `waitUntil` for DOM queries: locators retry on their own and produce richer failure messages.
+In browser mode, prefer [`page.locator`](/api/browser/locators) and [`expect.element`](/api/browser/assertions) over `waitUntil` for DOM queries: locators retry on their own and produce richer failure messages.
 
 ## Picking between them
 
@@ -94,11 +89,11 @@ Each of these accepts `{ timeout, interval }` options, defaulting to a 1000 ms t
 
 ## Fake timers
 
-If `vi.useFakeTimers` is active, `vi.waitFor` automatically calls `vi.advanceTimersByTime(interval)` between attempts. That keeps `setTimeout`-based code under test reachable without leaking real time into the test.
+If [`vi.useFakeTimers`](/api/vi#vi-usefaketimers) is active, `vi.waitFor` automatically calls `vi.advanceTimersByTime(interval)` between attempts. That keeps `setTimeout`-based code under test reachable without leaking real time into the test.
 
 ## See also
 
-- `expect.poll`
-- `vi.waitFor`
-- `vi.waitUntil`
-- `vi.useFakeTimers`
+- [`expect.poll`](/api/expect#poll)
+- [`vi.waitFor`](/api/vi#vi-waitfor)
+- [`vi.waitUntil`](/api/vi#vi-waituntil)
+- [`vi.useFakeTimers`](/api/vi#vi-usefaketimers)

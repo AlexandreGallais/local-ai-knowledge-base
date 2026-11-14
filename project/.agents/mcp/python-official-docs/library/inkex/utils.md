@@ -1,15 +1,6 @@
----
-title: "inkex.utils"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/utils.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.utils
 
-Basic <example-value> utility functions for calculated things
+Basic common utility functions for calculated things
 
 ## get_user_directory
 
@@ -19,7 +10,7 @@ def get_user_directory()
 
 Return the user directory where extensions are stored.
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## get_inkscape_directory
 
@@ -29,7 +20,7 @@ def get_inkscape_directory()
 
 Return the system directory where inkscape's core is.
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## class KeyDict
 
@@ -49,7 +40,7 @@ def parse_percent(val: str)
 Parse strings that are either values (i.e., '3.14159') or percentages
 (i.e. '75%') to a float.
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## Boolean
 
@@ -67,7 +58,7 @@ def to_bytes(content)
 
 Ensures the content is bytes
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## debug
 
@@ -89,13 +80,11 @@ Intended for end-user-visible error messages.
 something better in future: e.g. could add markup to distinguish error
 messages from status messages or debugging output.)
 
-Note that this should always be combined with translation:
+Note that this should always be combined with translation::
 
-```
-import inkex
-...
-inkex.errormsg(_("This extension requires two selected paths."))
-```
+  import inkex
+  ...
+  inkex.errormsg(_("This extension requires two selected paths."))
 
 ## errormsg
 
@@ -109,13 +98,11 @@ Intended for end-user-visible error messages.
 something better in future: e.g. could add markup to distinguish error
 messages from status messages or debugging output.)
 
-Note that this should always be combined with translation:
+Note that this should always be combined with translation::
 
-```
-import inkex
-...
-inkex.errormsg(_("This extension requires two selected paths."))
-```
+  import inkex
+  ...
+  inkex.errormsg(_("This extension requires two selected paths."))
 
 ## class AbortExtension
 
@@ -149,12 +136,12 @@ def strargs(string, kind=float)
 
 Returns a list of floats from a string
 
-> *Changed in version 1.1.*
-> also splits at -(minus) signs by adding a space in front of the - sign
+.. versionchanged:: 1.1
+    also splits at -(minus) signs by adding a space in front of the - sign
 
-> *Changed in version 1.2.*
-> Full support for the `SVG Path data BNF
-> <https://www.w3.org/Graphics/SVG/1.1/paths.html#PathDataBNF>`_
+.. versionchanged:: 1.2
+    Full support for the `SVG Path data BNF
+    <https://www.w3.org/Graphics/SVG/1.1/paths.html#PathDataBNF>`_
 
 ## filename_arg
 
@@ -173,6 +160,8 @@ def circular_pairwise(l)
 Iterate over a list with overlapping pairs in a periodic way, i.e.
 [1, 2, 3] -> [(1, 2), (2, 3), (3, 1)]
 
+..versionadded:: 1.3.1
+
 ## math_eval
 
 ```python
@@ -181,10 +170,10 @@ def math_eval(function, variable="x")
 
 Interpret a function string. All functions from math and random may be used.
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 Returns:
-a lambda expression if sucessful; otherwise None.
+    a lambda expression if sucessful; otherwise None.
 
 ## is_number
 
@@ -194,7 +183,7 @@ def is_number(string)
 
 Checks if a value is a number
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## rational_limit
 
@@ -205,7 +194,7 @@ def rational_limit(f: np.poly1d, g: np.poly1d, t0)
 Computes the limit of the rational function (f/g)(t)
 as t approaches t0.
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## class NotifyList
 
@@ -217,7 +206,7 @@ A list that calls a callback after it is modified
 (to notify a parent about the modification).
 Modified from https://stackoverflow.com/a/13259435/3298143
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## NotifyList.toggle
 
@@ -235,7 +224,7 @@ class NotifyOrderedDict(OrderedDict)
 
 An OrderedDict that notifies a callback after a value is changed
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## class NotifyDefaultDict
 
@@ -245,4 +234,4 @@ class NotifyDefaultDict(defaultdict)
 
 A defaultdict that notifies a callback after a value is changed
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4

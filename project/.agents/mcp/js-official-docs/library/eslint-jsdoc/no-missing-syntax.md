@@ -1,19 +1,13 @@
----
-title: "no-missing-syntax"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/no-missing-syntax.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-no-missing-syntax"></a>
+<a name="no-missing-syntax"></a>
+# <code>no-missing-syntax</code>
 
-# `no-missing-syntax`
+* [Options](#user-content-no-missing-syntax-options)
+    * [`contexts`](#user-content-no-missing-syntax-options-contexts)
+* [Context and settings](#user-content-no-missing-syntax-context-and-settings)
+* [Failing examples](#user-content-no-missing-syntax-failing-examples)
+* [Passing examples](#user-content-no-missing-syntax-passing-examples)
 
-* Options
-    * `contexts`
-* Context and settings
-* Failing examples
-* Passing examples
 
 This rule lets you report if certain always expected comment structures are
 missing.
@@ -23,11 +17,11 @@ XML or jsontron for JSON--you can validate expectations of there being
 arbitrary structures.
 
 This differs from the rule of the same name in
-`eslint-plugin-query`
+[`eslint-plugin-query`](https://github.com/brettz9/eslint-plugin-query)
 in that this rule always looks for a comment above a structure (whether or not
 you have a `comment` condition).
 
-This rule might be especially useful with `overrides`
+This rule might be especially useful with [`overrides`](https://eslint.org/docs/user-guide/configuring/configuration-files#how-do-overrides-work)
 where you need only require tags and/or types within specific directories
 (e.g., to enforce that a plugins or locale directory always has a certain form
 of export and comment therefor).
@@ -49,11 +43,15 @@ which are not adequate to satisfy a condition, e.g.,
 not report if there were only a function declaration of the name "ignoreMe"
 (though it would report by function declarations of other names).
 
+<a name="user-content-no-missing-syntax-options"></a>
+<a name="no-missing-syntax-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `contexts`
+<a name="user-content-no-missing-syntax-options-contexts"></a>
+<a name="no-missing-syntax-options-contexts"></a>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
 optional `context` and `comment` properties) where you wish the rule to be applied.
@@ -74,9 +72,12 @@ your files (as is necessary for finding function blocks not attached to a
 function declaration or expression, i.e., `@callback` or `@function` (or its
 aliases `@func` or `@method`) (including those associated with an `@interface`).
 
-See the "AST and Selectors"
+See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
 section of our Advanced docs for more on the expected format.
 
+
+<a name="user-content-no-missing-syntax-context-and-settings"></a>
+<a name="no-missing-syntax-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -86,6 +87,8 @@ section of our Advanced docs for more on the expected format.
 |Recommended|false|
 |Options|`contexts`|
 
+<a name="user-content-no-missing-syntax-failing-examples"></a>
+<a name="no-missing-syntax-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -201,6 +204,10 @@ function quux () {}
 // Message: Syntax is required: FunctionDeclaration
 ````
 
+
+
+<a name="user-content-no-missing-syntax-passing-examples"></a>
+<a name="no-missing-syntax-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -293,3 +300,4 @@ function quux () {
  */
 // "jsdoc/no-missing-syntax": ["error"|"warn", {"contexts":["any"]}]
 ````
+

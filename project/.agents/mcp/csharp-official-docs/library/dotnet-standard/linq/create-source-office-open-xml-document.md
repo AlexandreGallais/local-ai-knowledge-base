@@ -1,10 +1,11 @@
 ---
-title: "Create the source Office Open XML document - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/create-source-office-open-xml-document.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Create the source Office Open XML document - LINQ to XML
+description: Learn how to create the Office Open XML WordprocessingML document used by the other examples in this tutorial.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # Create the source Office Open XML document (LINQ to XML)
@@ -67,9 +68,9 @@ Use the following steps to create the WordprocessingML document:
 1. Finally, select the entire line that contains the output, and format it with the `Code` style.
 1. Save the document, and name it SampleDoc.docx.
 
-> **Note:**
+> [!NOTE]
 > If you're using Microsoft Word 2003, select **Word 2007 Document** in the **Save as Type** drop-down list.
 
 ## See also
 
-- Tutorial: Manipulate content in a WordprocessingML document
+- [Tutorial: Manipulate content in a WordprocessingML document](xml-shape-wordprocessingml-documents.md)

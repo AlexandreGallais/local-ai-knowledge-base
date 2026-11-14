@@ -1,12 +1,15 @@
 ---
+description: "Learn more about: ICorProfilerInfo11::SetEnvironmentVariable Method"
 title: "ICorProfilerInfo11::SetEnvironmentVariable Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/profiling/icorprofilerinfo11-setenvironmentvariable-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/19/2021"
+api_name:
+  - "ICorProfilerInfo11.SetEnvironmentVariable"
+api_location:
+  - "coreclr.dll"
+  - "corprof.idl"
+api_type:
+  - "COM"
 ---
-
 # ICorProfilerInfo11::SetEnvironmentVariable method
 
 Sets an environment variable in the process. On non-Windows platforms the runtime keeps an internal cache of environment variables to ensure thread safety. This means that if the profiler calls `setenv` the new environment variable will not be picked up by managed code running in the process.
@@ -29,7 +32,7 @@ Sets an environment variable in the process. On non-Windows platforms the runtim
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** CorProf.idl, CorProf.h
 

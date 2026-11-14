@@ -1,13 +1,8 @@
 ---
-title: "no-new"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-new.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-new
+rule_type: suggestion
 ---
 
-# no-new
 
 The goal of using `new` with a constructor is typically to create an object of a particular type and store that object in a variable, such as:
 
@@ -29,7 +24,7 @@ This rule is aimed at maintaining consistency and convention by disallowing cons
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-new: "error"*/
@@ -37,9 +32,11 @@ Examples of **incorrect** code for this rule:
 new Thing();
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-new: "error"*/
@@ -48,6 +45,8 @@ const thing = new Thing();
 
 Foo();
 ```
+
+:::
 
 ## Options
 

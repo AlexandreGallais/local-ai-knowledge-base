@@ -1,12 +1,9 @@
 ---
-title: "dotnet nuget config paths command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-nuget-config-paths.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet nuget config paths command
+description: The dotnet-nuget-config command helps list nuget configuration files.
+author: martinrrm
+ms.date: 05/14/2024
 ---
-
 # dotnet nuget config paths
 
 **This article applies to:** ✔️ .NET 8.0.2xx SDK and later versions
@@ -33,9 +30,7 @@ The `dotnet nuget config paths` Lists the paths to all NuGet configuration files
 
   Specifies the directory to start from when listing configuration files. If not specified, the current directory is used.
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Examples
 
@@ -53,4 +48,4 @@ Prints out a description of how to use the command.
 
 ## See also
 
-- nuGet.config reference
+- [nuGet.config reference](/nuget/reference/nuget-config-file)

@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugStepper::SetInterceptMask Method"
 title: "ICorDebugStepper::SetInterceptMask Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugstepper-setinterceptmask-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugStepper.SetInterceptMask"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugStepper::SetInterceptMask"
+helpviewer_keywords:
+  - "SetInterceptMask method [.NET debugging]"
+  - "ICorDebugStepper::SetInterceptMask method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugStepper::SetInterceptMask Method
 
 Sets a value that specifies the types of code that are stepped into.
@@ -28,11 +37,11 @@ HRESULT SetInterceptMask (
 
 If the bit for an interceptor is set, the stepper will complete when the given type of intercepting code is encountered. If the bit is cleared, the intercepting code will be skipped.
 
-The `SetInterceptMask` method may have unforeseen interactions with ICorDebugStepper::SetUnmappedStopMask (from the user's point of view). For example, if the only visible (that is, non-internal) portion of class initialization code lacks mapping information and STOP_NO_MAPPING_INFO isn't set (see the ICorDebugStepper::SetUnmappedStopMask method and the CorDebugUnmappedStop enumeration), the stepper will step over the class initialization. By default, only the INTERCEPT_NONE value of the `CorDebugIntercept` enumeration will be used.
+The `SetInterceptMask` method may have unforeseen interactions with [ICorDebugStepper::SetUnmappedStopMask](icordebugstepper-setunmappedstopmask-method.md) (from the user's point of view). For example, if the only visible (that is, non-internal) portion of class initialization code lacks mapping information and STOP_NO_MAPPING_INFO isn't set (see the [ICorDebugStepper::SetUnmappedStopMask](icordebugstepper-setunmappedstopmask-method.md) method and the CorDebugUnmappedStop enumeration), the stepper will step over the class initialization. By default, only the INTERCEPT_NONE value of the `CorDebugIntercept` enumeration will be used.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

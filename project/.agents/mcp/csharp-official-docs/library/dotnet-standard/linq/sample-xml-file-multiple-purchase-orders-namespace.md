@@ -1,12 +1,9 @@
 ---
 title: "Sample XML file: Multiple purchase orders in a namespace- LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/sample-xml-file-multiple-purchase-orders-namespace.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: This XML file—which is used in examples—has data, in a namespace, about purchase orders.
+ms.date: 07/20/2015
+ms.assetid: 595024f2-374a-4615-acb5-64fa1600f377
 ---
-
 # Sample XML file: Multiple purchase orders in a namespace (LINQ to XML)
 
 The following XML file is used in various examples in the LINQ to XML documentation. This file contains several purchase orders. The XML is in a namespace.

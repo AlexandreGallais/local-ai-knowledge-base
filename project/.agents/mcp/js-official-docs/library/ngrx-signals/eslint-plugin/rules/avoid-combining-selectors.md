@@ -1,12 +1,3 @@
----
-title: "avoid-combining-selectors"
-tool: "ngrx-signals"
-version: "22.0"
-source: "https://github.com/ngrx/platform/blob/a4995391ef631f1bd60d539f436a1aa5c23c4fe5/projects/www/src/app/pages/guide/eslint-plugin/rules/avoid-combining-selectors.md"
-commit: "a4995391ef631f1bd60d539f436a1aa5c23c4fe5"
-license: "MIT"
----
-
 # avoid-combining-selectors
 
 Prefer combining selectors at the selector level.
@@ -16,6 +7,9 @@ Prefer combining selectors at the selector level.
 - **Suggestion**: No
 - **Requires type checking**: No
 - **Configurable**: No
+
+<!-- Everything above this generated, do not edit -->
+<!-- MANUAL-DOC:START -->
 
 ## Rule Details
 
@@ -110,4 +104,4 @@ export class Component {
 
 ## Further reading
 
-- Maximizing and Simplifying Component Views with NgRx Selectors - by Brandon Roberts
+- [Maximizing and Simplifying Component Views with NgRx Selectors - by Brandon Roberts](https://brandonroberts.dev/blog/posts/2020-12-14-maximizing-simplifying-component-views-ngrx-selectors/#building-view-models)

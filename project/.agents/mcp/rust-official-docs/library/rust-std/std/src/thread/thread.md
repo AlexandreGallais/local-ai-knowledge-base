@@ -1,12 +1,3 @@
----
-title: "std::thread::thread"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/thread/thread.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::thread::thread
 
 ## struct Thread
@@ -20,16 +11,23 @@ A handle to a thread.
 Threads are represented via the `Thread` type, which you can get in one of
 two ways:
 
-* By spawning a new thread, e.g., using the `thread::spawn`
-  function, and calling `thread` on the `JoinHandle`.
-* By requesting the current thread, using the `thread::current` function.
+* By spawning a new thread, e.g., using the [`thread::spawn`]
+  function, and calling [`thread`] on the [`JoinHandle`].
+* By requesting the current thread, using the [`thread::current`] function.
 
-The `thread::current` function is available even for threads not spawned
+The [`thread::current`] function is available even for threads not spawned
 by the APIs of this module.
 
 There is usually no need to create a `Thread` struct yourself, one
 should instead use a function like `spawn` to create new threads, see the
-docs of `Builder` and `spawn` for more details.
+docs of [`Builder`] and [`spawn`] for more details.
+
+[`thread::spawn`]: super::spawn
+[`thread`]: super::JoinHandle::thread
+[`JoinHandle`]: super::JoinHandle
+[`thread::current`]: super::current::current
+[`Builder`]: super::Builder
+[`spawn`]: super::spawn
 
 ## Thread::unpark
 
@@ -37,17 +35,17 @@ docs of `Builder` and `spawn` for more details.
 pub fn unpark(&self)
 ```
 
-Atomically makes the handle's token <example-value> if it is not already.
+Atomically makes the handle's token available if it is not already.
 
-Every thread is equipped with some basic <example-value> blocking support, via
-the `park` function and the `unpark()` method. These can be used as a
+Every thread is equipped with some basic low-level blocking support, via
+the [`park`] function and the `unpark()` method. These can be used as a
 more CPU-efficient implementation of a spinlock.
 
 See the [park documentation] for more details.
 
 # Examples
 
-```rust
+```
 use std::thread;
 use std::time::Duration;
 use std::sync::atomic::{AtomicBool, Ordering};
@@ -81,6 +79,9 @@ parked_thread.thread().unpark();
 parked_thread.join().unwrap();
 ```
 
+[`park`]: super::park
+[park documentation]: super::park
+
 ## Thread::id
 
 ```rust
@@ -91,7 +92,7 @@ Gets the thread's unique identifier.
 
 # Examples
 
-```rust
+```
 use std::thread;
 
 let other_thread = thread::spawn(|| {
@@ -111,13 +112,13 @@ pub fn name(&self) -> Option<&str>
 Gets the thread's name.
 
 For more information about named threads, see
-this module-level documentation.
+[this module-level documentation][naming-threads].
 
 # Examples
 
 Threads by default have no name specified:
 
-```rust
+```
 use std::thread;
 
 let builder = thread::Builder::new();
@@ -131,7 +132,7 @@ handler.join().unwrap();
 
 Thread with a specified name:
 
-```rust
+```
 use std::thread;
 
 let builder = thread::Builder::new()
@@ -143,3 +144,5 @@ let handler = builder.spawn(|| {
 
 handler.join().unwrap();
 ```
+
+[naming-threads]: ./index.html#naming-threads

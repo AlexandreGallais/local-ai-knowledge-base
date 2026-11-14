@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataEmit::DefineMethodImpl Method"
 title: "IMetaDataEmit::DefineMethodImpl Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataemit-definemethodimpl-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataEmit.DefineMethodImpl"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataEmit::DefineMethodImpl"
+  - "IMetaDataEmit::DefineMethodImpl method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataEmit::DefineMethodImpl Method
 
 Creates a definition for implementation of a method inherited from an interface, and returns a token to that method-implementation definition.
@@ -16,8 +23,8 @@ Creates a definition for implementation of a method inherited from an interface,
 ```cpp
 HRESULT DefineMethodImpl (
     [in]  mdTypeDef         td,
-    [in]  mdToken           <example-value>,
-    [in]  mdToken           <example-value>
+    [in]  mdToken           tkBody,
+    [in]  mdToken           tkDecl
 );
 ```
 
@@ -34,7 +41,7 @@ HRESULT DefineMethodImpl (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -42,5 +49,5 @@ HRESULT DefineMethodImpl (
 
 ## See also
 
-- IMetaDataEmit Interface
-- IMetaDataEmit2 Interface
+- [IMetaDataEmit Interface](imetadataemit-interface.md)
+- [IMetaDataEmit2 Interface](imetadataemit2-interface.md)

@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataImport::GetCustomAttributeByName Method"
 title: "IMetaDataImport::GetCustomAttributeByName Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-getcustomattributebyname-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.GetCustomAttributeByName"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::GetCustomAttributeByName"
+  - "GetCustomAttributeByName method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::GetCustomAttributeByName Method
 
 Gets the custom attribute, given its name and owner.
@@ -25,7 +32,7 @@ HRESULT GetCustomAttributeByName (
 ## Parameters
 
  `tkObj`
- [in] A metadata token <example-value> the object that owns the custom attribute.
+ [in] A metadata token representing the object that owns the custom attribute.
 
  `szName`
  [in] The name of the custom attribute.
@@ -38,11 +45,11 @@ HRESULT GetCustomAttributeByName (
 
 ## Remarks
 
- It is legal to define multiple custom attributes for the same owner; they may even have the same name. However, `GetCustomAttributeByName` returns only one instance. (`GetCustomAttributeByName` returns the first instance that it encounters.) To find all instances of a custom attribute, call the IMetaDataImport::EnumCustomAttributes method.
+ It is legal to define multiple custom attributes for the same owner; they may even have the same name. However, `GetCustomAttributeByName` returns only one instance. (`GetCustomAttributeByName` returns the first instance that it encounters.) To find all instances of a custom attribute, call the [IMetaDataImport::EnumCustomAttributes](imetadataimport-enumcustomattributes-method.md) method.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -50,5 +57,5 @@ HRESULT GetCustomAttributeByName (
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

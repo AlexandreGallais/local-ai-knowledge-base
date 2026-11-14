@@ -1,17 +1,8 @@
----
-title: "Attributes"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/attributes.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[attributes]
 # Attributes
 
 r[attributes.syntax]
-```grammar
+```grammar,attributes
 InnerAttribute -> `#` `!` `[` Attr `]`
 
 OuterAttribute -> `#` `[` Attr `]`
@@ -69,7 +60,7 @@ _Outer attributes_ apply to the form that follows the attribute.
 > ```
 
 r[attributes.input]
-The attribute consists of a path to the attribute, followed by an optional delimited token tree whose interpretation is defined by the attribute. Attributes other than macro attributes also allow the input to be an equals sign (`=`) followed by an expression. See the meta item syntax below for more details.
+The attribute consists of a path to the attribute, followed by an optional delimited token tree whose interpretation is defined by the attribute. Attributes other than macro attributes also allow the input to be an equals sign (`=`) followed by an expression. See the [meta item syntax](#meta-item-attribute-syntax) below for more details.
 
 r[attributes.safety]
 An attribute may be unsafe to apply. To avoid undefined behavior when using these attributes, certain obligations that cannot be checked by the compiler must be met. To assert these have been, the attribute is wrapped in `unsafe(..)`, e.g. `#[unsafe(no_mangle)]`.
@@ -85,9 +76,9 @@ r[attributes.kind]
 Attributes can be classified into the following kinds:
 
 * [Built-in attributes]
-* Proc macro attributes
+* [Proc macro attributes][attribute macros]
 * [Derive macro helper attributes]
-* Tool attributes
+* [Tool attributes](#tool-attributes)
 
 r[attributes.allowed-position]
 Attributes may be applied to many forms in the language:
@@ -96,10 +87,10 @@ Attributes may be applied to many forms in the language:
 * Most [statements] accept outer attributes (see [Expression Attributes] for limitations on expression statements).
 * [Block expressions] accept outer and inner attributes, but only when they are the outer expression of an [expression statement] or the final expression of another block expression.
 * [Enum] variants and [struct] and [union] fields accept outer attributes.
-* Match expression arms accept outer attributes.
-* Generic lifetime or type parameter accept outer attributes.
+* [Match expression arms][match expressions] accept outer attributes.
+* [Generic lifetime or type parameter][generics] accept outer attributes.
 * Expressions accept outer attributes in limited situations, see [Expression Attributes] for details.
-* Function, [closure] and [function pointer] parameters accept outer attributes. This includes attributes on variadic parameters denoted with `...` in function pointers and external blocks.
+* [Function][functions], [closure] and [function pointer] parameters accept outer attributes. This includes attributes on variadic parameters denoted with `...` in function pointers and [external blocks][variadic functions].
 * [Inline assembly] template strings and operands accept outer attributes. Only certain attributes are accepted semantically; for details, see [asm.attributes.supported-attributes].
 
 r[attributes.meta]
@@ -109,7 +100,7 @@ r[attributes.meta.intro]
 A "meta item" is the syntax used for the [Attr] rule by most [built-in attributes]. It has the following grammar:
 
 r[attributes.meta.syntax]
-```grammar
+```grammar,attributes
 @root MetaItem ->
       SimplePath
     | SimplePath `=` Expression
@@ -129,7 +120,7 @@ Expressions in meta items must macro-expand to literal expressions, which must n
 r[attributes.meta.order]
 Note that if the attribute appears within another macro, it will be expanded after that outer macro. For example, the following code will expand the `Serialize` proc-macro first, which must preserve the `include_str!` call in order for it to be expanded:
 
-```rust
+```rust ignore
 #[derive(Serialize)]
 struct Foo {
     #[doc = include_str!("x.md")]
@@ -140,7 +131,7 @@ struct Foo {
 r[attributes.meta.order-macro]
 Additionally, macros in attributes will be expanded only after all other attributes applied to the item:
 
-```rust
+```rust ignore
 #[macro_attr1] // expanded first
 #[doc = mac!()] // `mac!` is expanded fourth.
 #[macro_attr2] // expanded second
@@ -152,7 +143,7 @@ r[attributes.meta.builtin]
 Various built-in attributes use different subsets of the meta item syntax to specify their inputs. The following grammar rules show some commonly used forms:
 
 r[attributes.meta.builtin-syntax]
-```grammar
+```grammar,attributes
 @root MetaWord ->
     IDENTIFIER
 
@@ -210,7 +201,7 @@ struct S {
 pub fn f() {}
 ```
 
-> **Note:**
+> [!NOTE]
 > `rustc` currently recognizes the tools "clippy", "rustfmt", "diagnostic", "miri", and "rust_analyzer".
 
 r[attributes.builtin]
@@ -297,3 +288,83 @@ The following is an index of all built-in attributes.
 - Debugger
   - [`debugger_visualizer`] --- Embeds a file that specifies debugger output for a type.
   - [`collapse_debuginfo`] --- Controls how macro invocations are encoded in debuginfo.
+
+[Doc comments]: comments.md#doc-comments
+[ECMA-334]: https://www.ecma-international.org/publications-and-standards/standards/ecma-334/
+[ECMA-335]: https://www.ecma-international.org/publications-and-standards/standards/ecma-335/
+[Expression Attributes]: expressions.md#expression-attributes
+[The Rustdoc Book]: ../rustdoc/the-doc-attribute.html
+[The Unstable Book]: ../unstable-book/index.html
+[`allow`]: attributes/diagnostics.md#lint-check-attributes
+[`automatically_derived`]: attributes/derive.md#the-automatically_derived-attribute
+[`cfg_attr`]: conditional-compilation.md#the-cfg_attr-attribute
+[`cfg`]: conditional-compilation.md#the-cfg-attribute
+[`cold`]: attributes/codegen.md#the-cold-attribute
+[`collapse_debuginfo`]: attributes/debugger.md#the-collapse_debuginfo-attribute
+[`crate_name`]: crates-and-source-files.md#the-crate_name-attribute
+[`crate_type`]: linkage.md
+[`debugger_visualizer`]: attributes/debugger.md#the-debugger_visualizer-attribute
+[`deny`]: attributes/diagnostics.md#lint-check-attributes
+[`deprecated`]: attributes/diagnostics.md#the-deprecated-attribute
+[`derive`]: attributes/derive.md
+[`export_name`]: abi.md#the-export_name-attribute
+[`expect`]: attributes/diagnostics.md#lint-check-attributes
+[`forbid`]: attributes/diagnostics.md#lint-check-attributes
+[`global_allocator`]: runtime.md#the-global_allocator-attribute
+[`ignore`]: attributes/testing.md#the-ignore-attribute
+[`inline`]: attributes/codegen.md#the-inline-attribute
+[`instruction_set`]: attributes/codegen.md#the-instruction_set-attribute
+[`link_name`]: items/external-blocks.md#the-link_name-attribute
+[`link_ordinal`]: items/external-blocks.md#the-link_ordinal-attribute
+[`link_section`]: abi.md#the-link_section-attribute
+[`link`]: items/external-blocks.md#the-link-attribute
+[`macro_export`]: macros-by-example.md#the-macro_export-attribute
+[`macro_use`]: macros-by-example.md#the-macro_use-attribute
+[`must_use`]: attributes/diagnostics.md#the-must_use-attribute
+[`naked`]: attributes/codegen.md#the-naked-attribute
+[`no_builtins`]: attributes/codegen.md#the-no_builtins-attribute
+[`no_implicit_prelude`]: names/preludes.md#the-no_implicit_prelude-attribute
+[`no_link`]: items/extern-crates.md#the-no_link-attribute
+[`no_main`]: crates-and-source-files.md#the-no_main-attribute
+[`no_mangle`]: abi.md#the-no_mangle-attribute
+[`no_std`]: names/preludes.md#the-no_std-attribute
+[`non_exhaustive`]: attributes/type_system.md#the-non_exhaustive-attribute
+[`optimize`]: attributes.codegen.optimize
+[`panic_handler`]: panic.md#the-panic_handler-attribute
+[`path`]: items/modules.md#the-path-attribute
+[`proc_macro_attribute`]: procedural-macros.md#the-proc_macro_attribute-attribute
+[`proc_macro_derive`]: macro.proc.derive
+[`proc_macro`]: procedural-macros.md#the-proc_macro-attribute
+[`recursion_limit`]: attributes/limits.md#the-recursion_limit-attribute
+[`repr`]: type-layout.md#representations
+[`should_panic`]: attributes/testing.md#the-should_panic-attribute
+[`target_feature`]: attributes/codegen.md#the-target_feature-attribute
+[`test`]: attributes/testing.md#the-test-attribute
+[`track_caller`]: attributes/codegen.md#the-track_caller-attribute
+[`type_length_limit`]: attributes/limits.md#the-type_length_limit-attribute
+[`used`]: abi.md#the-used-attribute
+[`warn`]: attributes/diagnostics.md#lint-check-attributes
+[`windows_subsystem`]: runtime.md#the-windows_subsystem-attribute
+[attribute macros]: procedural-macros.md#the-proc_macro_attribute-attribute
+[block expressions]: expressions/block-expr.md
+[built-in attributes]: #built-in-attributes-index
+[derive macro helper attributes]: procedural-macros.md#derive-macro-helper-attributes
+[enum]: items/enumerations.md
+[expression statement]: statements.md#expression-statements
+[external blocks]: items/external-blocks.md
+[functions]: items/functions.md
+[generics]: items/generics.md
+[implementations]: items/implementations.md
+[item declarations]: items.md
+[match expressions]: expressions/match-expr.md
+[modules]: items/modules.md
+[statements]: statements.md
+[struct]: items/structs.md
+[tool prelude]: names/preludes.md#tool-prelude
+[union]: items/unions.md
+[closure]: expressions/closure-expr.md
+[function pointer]: types/function-pointer.md
+[variadic functions]: items/external-blocks.html#variadic-functions
+[`diagnostic::on_unimplemented`]: attributes/diagnostics.md#the-diagnosticon_unimplemented-attribute
+[`diagnostic::do_not_recommend`]: attributes/diagnostics.md#the-diagnosticdo_not_recommend-attribute
+[Inline assembly]: inline-assembly.md

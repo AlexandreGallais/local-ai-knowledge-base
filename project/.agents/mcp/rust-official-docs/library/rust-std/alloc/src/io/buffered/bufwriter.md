@@ -1,12 +1,3 @@
----
-title: "alloc::io::buffered::bufwriter"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/alloc/src/io/buffered/bufwriter.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # alloc::io::buffered::bufwriter
 
 ## struct BufWriter
@@ -14,6 +5,10 @@ license: "MIT OR Apache-2.0"
 ```rust
 pub struct BufWriter<W: ?Sized + Write>
 ```
+
+[`TcpStream::write`]: ../../std/net/struct.TcpStream.html#method.write
+[`TcpStream`]: ../../std/net/struct.TcpStream.html
+[`flush`]: BufWriter::flush
 
 ## BufWriter::new
 
@@ -26,10 +21,11 @@ but may change in the future.
 
 # Examples
 
-```rust
+```no_run
 use std::io::BufWriter;
 use std::net::TcpStream;
 
+# #[expect(unused_mut)]
 let mut buffer = BufWriter::new(TcpStream::connect("127.0.0.1:34254").unwrap());
 ```
 
@@ -45,11 +41,12 @@ Creates a new `BufWriter<W>` with at least the specified buffer capacity.
 
 Creating a buffer with a buffer of at least a hundred bytes.
 
-```rust
+```no_run
 use std::io::BufWriter;
 use std::net::TcpStream;
 
 let stream = TcpStream::connect("127.0.0.1:34254").unwrap();
+# #[expect(unused_mut)]
 let mut buffer = BufWriter::with_capacity(100, stream);
 ```
 
@@ -65,14 +62,15 @@ The buffer is written out before returning the writer.
 
 # Errors
 
-An `Err` will be returned if an error occurs while flushing the buffer.
+An [`Err`] will be returned if an error occurs while flushing the buffer.
 
 # Examples
 
-```rust
+```no_run
 use std::io::BufWriter;
 use std::net::TcpStream;
 
+# #[expect(unused_mut)]
 let mut buffer = BufWriter::new(TcpStream::connect("127.0.0.1:34254").unwrap());
 
 // unwrap the TcpStream and flush the buffer
@@ -96,7 +94,7 @@ contents can still be recovered).
 
 # Examples
 
-```rust
+```
 use std::io::{BufWriter, Write};
 
 let mut buffer = [0u8; 10];
@@ -118,10 +116,11 @@ Gets a reference to the underlying writer.
 
 # Examples
 
-```rust
+```no_run
 use std::io::BufWriter;
 use std::net::TcpStream;
 
+# #[expect(unused_mut)]
 let mut buffer = BufWriter::new(TcpStream::connect("127.0.0.1:34254").unwrap());
 
 // we can use reference just like buffer
@@ -140,7 +139,7 @@ It is inadvisable to directly write to the underlying writer.
 
 # Examples
 
-```rust
+```no_run
 use std::io::BufWriter;
 use std::net::TcpStream;
 
@@ -160,7 +159,7 @@ Returns a reference to the internally buffered data.
 
 # Examples
 
-```rust
+```no_run
 use std::io::BufWriter;
 use std::net::TcpStream;
 
@@ -180,7 +179,7 @@ Returns the number of bytes the internal buffer can hold without flushing.
 
 # Examples
 
-```rust
+```no_run
 use std::io::BufWriter;
 use std::net::TcpStream;
 
@@ -203,7 +202,11 @@ writer has previously panicked.  Contains the (possibly partly written) buffered
 
 # Example
 
-```rust
+```
+# // This test requires unwinding to work.
+# // Disable it when unwinding isn't available.
+# #[cfg(panic = "unwind")]
+# fn main() {
 use std::io::{self, BufWriter, Write};
 use std::panic::{catch_unwind, AssertUnwindSafe};
 
@@ -222,6 +225,9 @@ assert!(result.is_err());
 let (recovered_writer, buffered_data) = stream.into_parts();
 assert!(matches!(recovered_writer, PanickingWriter));
 assert_eq!(buffered_data.unwrap_err().into_inner(), b"some data");
+# }
+# #[cfg(not(panic = "unwind"))]
+# fn main() {}
 ```
 
 ## WriterPanicked::into_inner

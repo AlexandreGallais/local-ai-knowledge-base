@@ -1,13 +1,7 @@
 ---
+id: test-webserver
 title: "Web server"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/test-webserver-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# Web server
 
 ## Introduction
 
@@ -17,7 +11,7 @@ Playwright comes with a `webServer` option in the config file which gives you th
 
 Use the `webServer` property in your Playwright config to launch a development web server during the tests.
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -53,7 +47,7 @@ export default defineConfig({
 
 Webservers can sometimes take longer to boot up. In this case, you can increase the timeout to wait for the server to start.
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -71,11 +65,11 @@ export default defineConfig({
 
 ## Adding a baseURL
 
-It is also recommended to specify the `baseURL` in the `use: {}` section of your config, so that tests can use relative urls and you don't have to specify the full URL over and over again.
+It is also recommended to specify the `baseURL` in the `use: {}` section of your config, so that tests can use relative urls and you don't have to specify the full URL over and over again. 
 
-When using [`method: Page.goto`], [`method: Page.route`], [`method: Page.waitForURL`], [`method: Page.waitForRequest`], or [`method: Page.waitForResponse`] it takes the base URL in consideration by using the `URL()` constructor for building the corresponding URL. For Example, by setting the baseURL to `http://localhost:3000` and navigating to `/login` in your tests, Playwright will run the test using `http://localhost:3000/login`.
+When using [`method: Page.goto`], [`method: Page.route`], [`method: Page.waitForURL`], [`method: Page.waitForRequest`], or [`method: Page.waitForResponse`] it takes the base URL in consideration by using the [`URL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL/URL) constructor for building the corresponding URL. For Example, by setting the baseURL to `http://localhost:3000` and navigating to `/login` in your tests, Playwright will run the test using `http://localhost:3000/login`.
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -95,7 +89,7 @@ export default defineConfig({
 
 Now you can use a relative path when navigating the page:
 
-```js
+```js title="test.spec.ts"
 import { test } from '@playwright/test';
 
 test('test', async ({ page }) => {
@@ -108,7 +102,8 @@ test('test', async ({ page }) => {
 
 Multiple web servers (or background processes) can be launched simultaneously by providing an array of `webServer` configurations. See [`property: TestConfig.webServer`] for more info.
 
-```js
+
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({

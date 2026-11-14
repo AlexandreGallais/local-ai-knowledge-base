@@ -1,19 +1,17 @@
 ---
-title: ".NET SDK container creation overview"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/containers/overview.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: .NET SDK container creation overview
+description: Learn about the .NET SDK container creation feature, including telemetry, publishing considerations, and build properties.
+ms.date: 01/07/2025
+ms.topic: overview
 ---
 
 # .NET SDK container creation overview
 
-While it's possible to containerize .NET apps with a _Dockerfile_, there are compelling reasons for containerizing apps directly with the .NET SDK. This article provides an overview of the .NET SDK container creation feature, with details related to telemetry, publishing considerations, build properties, and authentication to container registries.
+While it's possible to [containerize .NET apps with a _Dockerfile_](../docker/build-container.md), there are compelling reasons for [containerizing apps directly with the .NET SDK](sdk-publish.md). This article provides an overview of the .NET SDK container creation feature, with details related to telemetry, publishing considerations, build properties, and authentication to container registries.
 
 ## Publishing project considerations
 
-Now that you have a .NET app, you can publish it as a container. Before doing so, there are several important considerations to keep in mind. Prior to .NET SDK version 8.0.200, you needed the 📦 Microsoft.NET.Build.Containers NuGet package. This package isn't required for .NET SDK version 8.0.200 and later, as the container support is included by default.
+Now that you have a .NET app, you can publish it as a container. Before doing so, there are several important considerations to keep in mind. Prior to .NET SDK version 8.0.200, you needed the [📦 Microsoft.NET.Build.Containers](https://www.nuget.org/packages/Microsoft.NET.Build.Containers) NuGet package. This package isn't required for .NET SDK version 8.0.200 and later, as the container support is included by default.
 
 To enable publishing a .NET app as a container, the following build properties are required:
 
@@ -31,7 +29,7 @@ To explicitly enable SDK container support, consider the following project file 
 
 ## Publish switches and build properties
 
-As with all .NET CLI commands, you can specify MSBuild properties on the command line. There are many valid syntax forms available to provide properties, such as:
+As with all .NET CLI commands, you can specify [MSBuild properties on the command line](/visualstudio/msbuild/msbuild-command-line-reference). There are many valid syntax forms available to provide properties, such as:
 
 - `/p:PropertyName=Value`
 - `-p:PropertyName=Value`
@@ -40,8 +38,8 @@ As with all .NET CLI commands, you can specify MSBuild properties on the command
 
 You're free to use whichever syntax you prefer, but the documentation shows examples using the `-p` form.
 
-> **Tip:**
-> To help troubleshoot, consider using the MSBuid logs. To generate a binary log (binlog) file, add the `-bl` switch to the `dotnet publish` command. Binlog files are useful for diagnosing build issues and can be opened in the MSBuild Structured Log Viewer. They provide a detailed trace of the build process, essential for MSBuild analysis. For more information, see Troubleshoot and create logs for MSBuild.
+> [!TIP]
+> To help troubleshoot, consider using the MSBuid logs. To generate a binary log (binlog) file, add the `-bl` switch to the `dotnet publish` command. Binlog files are useful for diagnosing build issues and can be opened in the [MSBuild Structured Log Viewer](https://msbuildlog.com/). They provide a detailed trace of the build process, essential for MSBuild analysis. For more information, see [Troubleshoot and create logs for MSBuild](/visualstudio/ide/msbuild-logs#provide-msbuild-binary-logs-for-investigation).
 
 ### Publish profiles and targets
 
@@ -67,39 +65,39 @@ One key issue is that not all project types support profiles or have the same se
 
 Interacting with private container registries requires authenticating with those registries.
 
-Docker has an established pattern with this via the `docker login` command, which is a way of interacting with a Docker config file that contains rules for authenticating with specific registries. This file, and the authentication types it encodes, are supported by Microsoft.Net.Build.Containers for registry authentication. This should ensure that this package works seamlessly with any registry you can `docker pull` from and `docker push`. This file is normally stored at _~/.docker/config.json_, but it can be specified additionally through the `DOCKER_CONFIG` variable, which points to a directory containing a _config.json_ file.
+Docker has an established pattern with this via the [`docker login`](https://docs.docker.com/engine/reference/commandline/login/) command, which is a way of interacting with a Docker config file that contains rules for authenticating with specific registries. This file, and the authentication types it encodes, are supported by Microsoft.Net.Build.Containers for registry authentication. This should ensure that this package works seamlessly with any registry you can `docker pull` from and `docker push`. This file is normally stored at _~/.docker/config.json_, but it can be specified additionally through the `DOCKER_CONFIG` variable, which points to a directory containing a _config.json_ file.
 
 ## Kinds of authentication
 
 The _config.json_ file contains three kinds of authentication:
 
-- Explicit username/password
-- Credential <example-value>
-- System keychain
+- [Explicit username/password](#explicit-usernamepassword)
+- [Credential helpers](#credential-helpers)
+- [System keychain](#system-keychains)
 
 ### Explicit username/password
 
 The `auths` section of the _config.json_ file is a key/value map between registry names and Base64-encoded username:password strings. In a common Docker scenario, running `docker login <registry> -u <username> -p <password>` creates new items in this map. These credentials are popular in continuous integration (CI) systems, where logging in is done by tokens at the start of a run. However, they are less popular for end-user development machines due to the security risk of having bare credentials in a file.
 
-### Credential <example-value>
+### Credential helpers
 
 The `credHelpers` section of the _config.json_ file is a key/value map between registry names and the names of specific programs that can be used to create and retrieve credentials for that registry. This is often used when particular registries have complex authentication requirements. In order for this kind of authentication to work, you must have an application named `docker-credential-{name}` on your system's `PATH`. These kinds of credentials tend to be secure, but can be hard to set up on development or CI machines.
 
 ### System keychains
 
-The `credsStore` section is a single string property whose value is the name of a docker credential <example-value> program that knows how to interface with the system's password manager. For Windows this might be `wincred` for example. These are popular with Docker installers for macOS and Windows.
+The `credsStore` section is a single string property whose value is the name of a docker credential helper program that knows how to interface with the system's password manager. For Windows this might be `wincred` for example. These are popular with Docker installers for macOS and Windows.
 
 ## Authentication via environment variables
 
-In some scenarios the standard Docker authentication mechanism described above just doesn't cut it. This tooling has an additional mechanism for providing credentials to registries: environment variables. If environment variables are used, the credential <example-value> mechanism won't be used at all. The following environment variables are supported:
+In some scenarios the standard Docker authentication mechanism described above just doesn't cut it. This tooling has an additional mechanism for providing credentials to registries: environment variables. If environment variables are used, the credential provide mechanism won't be used at all. The following environment variables are supported:
 
-- `DOTNET_CONTAINER_REGISTRY_UNAME`: This should be the username for the registry. If the password for the registry is a token, then the username should be `"<example-value>"`.
+- `DOTNET_CONTAINER_REGISTRY_UNAME`: This should be the username for the registry. If the password for the registry is a token, then the username should be `"<token>"`.
 - `DOTNET_CONTAINER_REGISTRY_PWORD`: This should be the password or token for the registry.
 
-> **Note:**
+> [!NOTE]
 > As of .NET SDK 8.0.400, the environment variables for container operations have been updated. The `SDK_CONTAINER_*` variables are now prefixed with `DOTNET_CONTAINER_*`.
 
-This mechanism is potentially vulnerable to credential <example-value>, so it should only be used in scenarios where the other mechanism isn't available. For example, if you're using the SDK Container tooling inside a Docker container itself. In addition, this mechanism isn't namespaced—it attempts to use the same credentials for both the _source_ registry (where your base image is located) and the _destination_ registry (where you're pushing your final image).
+This mechanism is potentially vulnerable to credential leakage, so it should only be used in scenarios where the other mechanism isn't available. For example, if you're using the SDK Container tooling inside a Docker container itself. In addition, this mechanism isn't namespaced—it attempts to use the same credentials for both the _source_ registry (where your base image is located) and the _destination_ registry (where you're pushing your final image).
 
 ## Using insecure registries
 
@@ -111,7 +109,7 @@ Configuring a registry for insecure communication varies based on your container
 
 ### Docker
 
-Docker stores its registry configuration in the daemon configuration. To add new insecure registries, new hosts are added to the `"insecure-registries"` array property:
+Docker stores its registry configuration in the [daemon configuration](https://docs.docker.com/config/daemon/#configuration-file). To add new insecure registries, new hosts are added to the `"insecure-registries"` array property:
 
 ```json
 {
@@ -121,12 +119,12 @@ Docker stores its registry configuration in the daemon configuration. To add new
 }
 ```
 
-> **Note:**
+> [!NOTE]
 > You must restart the Docker daemon to apply any changes to this file.
 
 ### Podman
 
-Podman uses a `registries.conf` TOML file to store registry connection information. This file typically lives at `/etc/containers/registries.conf`. To add new insecure registries, a TOML section is added to hold the settings for the registry, then the `insecure` option must be set to `true`.
+Podman uses a [`registries.conf`](https://podman-desktop.io/docs/containers/registries#setting-up-a-registry-with-an-insecure-certificate) TOML file to store registry connection information. This file typically lives at `/etc/containers/registries.conf`. To add new insecure registries, a TOML section is added to hold the settings for the registry, then the `insecure` option must be set to `true`.
 
 ```toml
 [[registry]]
@@ -134,20 +132,20 @@ location = "registry.mycorp.net"
 insecure = true
 ```
 
-> **Note:**
+> [!NOTE]
 > You must restart Podman to apply any changes to the _registries.conf_ file.
 
 ### Environment variables
 
 Starting in 9.0.100, the .NET SDK recognizes insecure registries passed through the `DOTNET_CONTAINER_INSECURE_REGISTRIES` environment variable. This variable takes a comma-separated list of domains to treat as insecure in the same manner as the Docker and Podman examples above.
 
-#### Windows
+#### [Windows](#tab/windows)
 
 ```powershell
 $Env:DOTNET_CONTAINER_INSECURE_REGISTRIES=localhost:5000,registry.mycorp.com; dotnet publish -t:PublishContainer -p:ContainerRegistry=registry.mycorp.com -p:ContainerBaseImage=localhost:5000/dotnet/runtime:9.0
 ```
 
-#### Linux
+#### [Linux](#tab/linux)
 
 ```bash
 DOTNET_CONTAINER_INSECURE_REGISTRIES=localhost:5000,registry.mycorp.com dotnet publish -t:PublishContainer -p:ContainerRegistry=registry.mycorp.com -p:ContainerBaseImage=localhost:5000/dotnet/runtime:9.0
@@ -157,7 +155,7 @@ DOTNET_CONTAINER_INSECURE_REGISTRIES=localhost:5000,registry.mycorp.com dotnet p
 
 ## Telemetry
 
-When you publish a .NET app as a container, the .NET SDK container tooling collects and sends usage telemetry about how the tools are used. The collected data is in addition to the telemetry sent by the .NET CLI, but uses the same mechanisms and, importantly, adheres to the same opt-out controls.
+When you publish a .NET app as a container, the .NET SDK container tooling collects and sends usage telemetry about how the tools are used. The collected data is in addition to the [telemetry sent by the .NET CLI](../tools/telemetry.md), but uses the same mechanisms and, importantly, adheres to the same [opt-out controls](../tools/telemetry.md#how-to-opt-out).
 
 The telemetry gathered is intended to be general in nature and not leak any personal information—the intended purpose is to help measure:
 
@@ -165,7 +163,7 @@ The telemetry gathered is intended to be general in nature and not leak any pers
 - Success and failure rates, along with general information about what kinds of failures happen most frequently.
 - Usage of specific features of the tech, like publishing to various registry kinds, or how the publish was invoked.
 
-To opt-out of telemetry, set the `DOTNET_CLI_TELEMETRY_OPTOUT` environment variable to `true`. For more information, see .NET CLI telemetry.
+To opt-out of telemetry, set the `DOTNET_CLI_TELEMETRY_OPTOUT` environment variable to `true`. For more information, see [.NET CLI telemetry](../tools/telemetry.md).
 
 ### Inference telemetry
 
@@ -205,5 +203,5 @@ In addition, if various kinds of errors occur during the process that data is co
 
 ## See also
 
-- Publish .NET apps as containers
-- Containerize a .NET app reference
+- [Publish .NET apps as containers](sdk-publish.md)
+- [Containerize a .NET app reference](publish-configuration.md)

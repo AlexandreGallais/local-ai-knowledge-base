@@ -1,13 +1,12 @@
 ---
-title: "radix"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/radix.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: radix
+rule_type: suggestion
+further_reading:
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt
+- https://davidwalsh.name/parseint-radix
 ---
 
-# radix
+
 
 When using the `parseInt()` function it is common to omit the second argument, the radix, and let the function try to determine from the first argument what type of number it is. By default, `parseInt()` will autodetect decimal and hexadecimal (via `0x` prefix). Prior to ECMAScript 5, `parseInt()` also autodetected octal literals, which caused problems because many developers assumed a leading `0` would be ignored.
 
@@ -31,7 +30,7 @@ This rule is aimed at preventing the unintended conversion of a string to a numb
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint radix: "error"*/
@@ -47,9 +46,11 @@ const num3 = parseInt("071", 37);
 const num4 = parseInt();
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint radix: "error"*/
@@ -60,6 +61,8 @@ const num1 = parseInt("071", 8);
 
 const num2 = parseFloat(someValue);
 ```
+
+:::
 
 ## Options
 

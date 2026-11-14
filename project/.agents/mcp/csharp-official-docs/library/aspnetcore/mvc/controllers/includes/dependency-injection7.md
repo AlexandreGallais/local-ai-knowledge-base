@@ -1,10 +1,170 @@
----
-title: "dependency-injection7"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/mvc/controllers/includes/dependency-injection7.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
 
-# dependency-injection7
+:::moniker range=">= aspnetcore-3.0 < aspnetcore-8.0"
+
+By [Rick Anderson](https://twitter.com/RickAndMSFT) and [Steve Smith](https://github.com/ardalis)
+
+ASP.NET Core MVC controllers request dependencies explicitly via constructors. ASP.NET Core has built-in support for [dependency injection (DI)](../../../fundamentals/dependency-injection.md). DI makes apps easier to test and maintain.
+
+[View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/mvc/controllers/dependency-injection/samples) ([how to download](../../../fundamentals/index.md#how-to-download-a-sample))
+
+## Constructor injection
+
+Services are added as a constructor parameter, and the runtime resolves the service from the service container. Services are typically defined using interfaces. For example, consider an app that requires the current time. The following interface exposes the `IDateTime` service:
+
+[!code-csharp[](~/mvc/controllers/dependency-injection/samples/3.1/ControllerDI/Interfaces/IDateTime.cs?name=snippet)]
+
+The following code implements the `IDateTime` interface:
+
+[!code-csharp[](~/mvc/controllers/dependency-injection/samples/3.1/ControllerDI/Services/SystemDateTime.cs?name=snippet)]
+
+Add the service to the service container:
+
+[!code-csharp[](~/mvc/controllers/dependency-injection/samples/3.1/ControllerDI/Startup1.cs?name=snippet&highlight=3)]
+
+For more information on <xref:Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton*>, see [DI service lifetimes](../../../fundamentals/dependency-injection.md#service-lifetimes).
+
+The following code displays a greeting to the user based on the time of day:
+
+[!code-csharp[](~/mvc/controllers/dependency-injection/samples/3.1/ControllerDI/Controllers/HomeController.cs?name=snippet)]
+
+Run the app and a message is displayed based on the time.
+
+## Action injection with `FromServices`
+
+The <xref:Microsoft.AspNetCore.Mvc.FromServicesAttribute> enables injecting a service directly into an action method without using constructor injection:
+
+[!code-csharp[](~/mvc/controllers/dependency-injection/samples/3.1/ControllerDI/Controllers/HomeController.cs?name=snippet2)]
+
+## Access settings from a controller
+
+Accessing app or configuration settings from within a controller is a common pattern. The *options pattern* described in [Options pattern in ASP.NET Core](../../../fundamentals/configuration/options.md) is the preferred approach to manage settings. Generally, don't directly inject <xref:Microsoft.Extensions.Configuration.IConfiguration> into a controller.
+
+Create a class that represents the options. For example:
+
+[!code-csharp[](~/mvc/controllers/dependency-injection/samples/3.1/ControllerDI/Models/SampleWebSettings.cs?name=snippet)]
+
+Add the configuration class to the services collection:
+
+[!code-csharp[](~/mvc/controllers/dependency-injection/samples/3.1/ControllerDI/Startup.cs?highlight=4&name=snippet1)]
+
+Configure the app to read the settings from a JSON-formatted file:
+
+[!code-csharp[](~/mvc/controllers/dependency-injection/samples/3.1/ControllerDI/Program.cs?name=snippet&range=10-15)]
+
+The following code requests the `IOptions<SampleWebSettings>` settings from the service container and uses them in the `Index` method:
+
+[!code-csharp[](~/mvc/controllers/dependency-injection/samples/3.1/ControllerDI/Controllers/SettingsController.cs?name=snippet)]
+
+## Controllers as services
+
+By default, ASP.NET Core doesn't register controllers as services in the DI container. The runtime uses the [DefaultControllerActivator](https://source.dot.net/#Microsoft.AspNetCore.Mvc.Core/Controllers/DefaultControllerActivator.cs) to create controller instances and resolves services from the DI container for constructor parameters, but the controller itself isn't resolved from the container.
+
+Calling `AddControllersAsServices` registers all controllers as services in the DI container:
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddControllersWithViews().AddControllersAsServices();
+}
+```
+
+Registering controllers as services enables:
+
+* Intercepting controller creation with a custom `IControllerActivator`.
+* Using any DI lifetime management for controllers.
+* Injecting services into controllers using any registered constructor, since the DI container selects the constructor.
+
+> [!NOTE]
+> Configure the `ApplicationPartManager` **before** calling `AddControllersAsServices`. See [Share controllers, views, Razor Pages and more with Application Parts in ASP.NET Core](../../advanced/app-parts.md#prevent-loading-resources) for details.
+
+## Additional resources
+
+* See [Test controller logic in ASP.NET Core](../testing.md) to learn how to make code easier to test by explicitly requesting dependencies in controllers.
+
+* [Replace the default dependency injection container with a third party implementation](../../../fundamentals/dependency-injection.md#default-service-container-replacement).
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-3.0"
+
+ASP.NET Core MVC controllers request dependencies explicitly via constructors. ASP.NET Core has built-in support for [dependency injection (DI)](../../../fundamentals/dependency-injection.md). DI makes apps easier to test and maintain.
+
+[View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/mvc/controllers/dependency-injection/samples) ([how to download](../../../fundamentals/index.md#how-to-download-a-sample))
+
+## Constructor injection
+
+Services are added as a constructor parameter, and the runtime resolves the service from the service container. Services are typically defined using interfaces. For example, consider an app that requires the current time. The following interface exposes the `IDateTime` service:
+
+[!code-csharp[](~/mvc/controllers/dependency-injection/samples/ControllerDI/Interfaces/IDateTime.cs?name=snippet)]
+
+The following code implements the `IDateTime` interface:
+
+[!code-csharp[](~/mvc/controllers/dependency-injection/samples/ControllerDI/Services/SystemDateTime.cs?name=snippet)]
+
+Add the service to the service container:
+
+[!code-csharp[](~/mvc/controllers/dependency-injection/samples/ControllerDI/Startup1.cs?name=snippet&highlight=3)]
+
+For more information on <xref:Microsoft.Extensions.DependencyInjection.ServiceCollectionServiceExtensions.AddSingleton*>, see [DI service lifetimes](../../../fundamentals/dependency-injection.md#service-lifetimes).
+
+The following code displays a greeting to the user based on the time of day:
+
+[!code-csharp[](~/mvc/controllers/dependency-injection/samples/ControllerDI/Controllers/HomeController.cs?name=snippet)]
+
+Run the app and a message is displayed based on the time.
+
+## Action injection with `FromServices`
+
+The <xref:Microsoft.AspNetCore.Mvc.FromServicesAttribute> enables injecting a service directly into an action method without using constructor injection:
+
+[!code-csharp[](~/mvc/controllers/dependency-injection/samples/ControllerDI/Controllers/HomeController.cs?name=snippet2)]
+
+## Access settings from a controller
+
+Accessing app or configuration settings from within a controller is a common pattern. The *options pattern* described in [Options pattern in ASP.NET Core](../../../fundamentals/configuration/options.md) is the preferred approach to manage settings. Generally, don't directly inject <xref:Microsoft.Extensions.Configuration.IConfiguration> into a controller.
+
+Create a class that represents the options. For example:
+
+[!code-csharp[](~/mvc/controllers/dependency-injection/samples/ControllerDI/Models/SampleWebSettings.cs?name=snippet)]
+
+Add the configuration class to the services collection:
+
+[!code-csharp[](~/mvc/controllers/dependency-injection/samples/ControllerDI/Startup.cs?highlight=4&name=snippet1)]
+
+Configure the app to read the settings from a JSON-formatted file:
+
+[!code-csharp[](~/mvc/controllers/dependency-injection/samples/ControllerDI/Program.cs?name=snippet&range=10-15)]
+
+The following code requests the `IOptions<SampleWebSettings>` settings from the service container and uses them in the `Index` method:
+
+[!code-csharp[](~/mvc/controllers/dependency-injection/samples/ControllerDI/Controllers/SettingsController.cs?name=snippet)]
+
+## Controllers as services
+
+By default, ASP.NET Core doesn't register controllers as services in the DI container. The runtime uses the [DefaultControllerActivator](https://source.dot.net/#Microsoft.AspNetCore.Mvc.Core/Controllers/DefaultControllerActivator.cs) to create controller instances and resolves services from the DI container for constructor parameters, but the controller itself isn't resolved from the container.
+
+Calling `AddControllersAsServices` registers all controllers as services in the DI container:
+
+```csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMvc().AddControllersAsServices();
+}
+```
+
+Registering controllers as services enables:
+
+* Intercepting controller creation with a custom `IControllerActivator`.
+* Using any DI lifetime management for controllers.
+* Injecting services into controllers using any registered constructor, since the DI container selects the constructor.
+
+> [!NOTE]
+> Configure the `ApplicationPartManager` **before** calling `AddControllersAsServices`. See [Share controllers, views, Razor Pages and more with Application Parts in ASP.NET Core](../../advanced/app-parts.md#prevent-loading-resources) for details.
+
+## Additional resources
+
+* See [Test controller logic in ASP.NET Core](../testing.md) to learn how to make code easier to test by explicitly requesting dependencies in controllers.
+
+* [Replace the default dependency injection container with a third party implementation](../../../fundamentals/dependency-injection.md#default-service-container-replacement).
+
+:::moniker-end

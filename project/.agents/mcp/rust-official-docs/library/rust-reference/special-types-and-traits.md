@@ -1,12 +1,3 @@
----
-title: "Special types and traits"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/special-types-and-traits.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[lang-types]
 # Special types and traits
 
@@ -28,6 +19,8 @@ r[lang-types.box.receiver]
 r[lang-types.box.fundamental]
 * A trait may be implemented for `Box<T>` in the same crate as `T`, which the [orphan rules] prevent for other generic types.
 
+<!-- Editor Note: This is nowhere close to an exhaustive list -->
+
 r[lang-types.rc]
 ## `Rc<T>`
 
@@ -41,10 +34,10 @@ r[lang-types.arc.receiver]
 [Methods] can take [`Arc<Self>`] as a receiver.
 
 r[lang-types.pin]
-## `Pin`
+## `Pin<P>`
 
 r[lang-types.pin.receiver]
-[Methods] can take [`Pin`] as a receiver.
+[Methods] can take [`Pin<P>`] as a receiver.
 
 r[lang-types.unsafe-cell]
 ## `UnsafeCell<T>`
@@ -70,14 +63,14 @@ r[lang-types.maybe-uninit.layout]
 r[lang-types.phantom-data]
 ## `PhantomData<T>`
 
-[`std::marker::PhantomData<T>`] is a [zero-sized], [1-aligned] type that is considered to own a `T` for the purposes of [variance], [drop check], and auto traits.
+[`std::marker::PhantomData<T>`] is a [zero-sized], [1-aligned] type that is considered to own a `T` for the purposes of [variance], [drop check], and [auto traits](#auto-traits).
 
 r[lang-types.va-list]
 ## `VaList<'_>`
 
 [`VaList`] is used for [C-variadic functions].
 
-> **Note:**
+> [!NOTE]
 > [`VaList`] is ABI compatible with the C `va_list` type; see [items.fn.c-variadic.abi-compatibility].
 
 r[lang-types.ops]
@@ -203,3 +196,50 @@ r[lang-types.sized.implicit-impl]
 
 r[lang-types.sized.relaxation]
 These implicit `Sized` bounds may be relaxed by using the special `?Sized` bound.
+
+[`Arc<Self>`]: std::sync::Arc
+[`Deref`]: std::ops::Deref
+[`DerefMut`]: std::ops::DerefMut
+[`MaybeUninit<T>`]: core::mem::MaybeUninit
+[`Pin<P>`]: std::pin::Pin
+[`Rc<Self>`]: std::rc::Rc
+[`RefUnwindSafe`]: std::panic::RefUnwindSafe
+[`Termination`]: std::process::Termination
+[`UnwindSafe`]: std::panic::UnwindSafe
+[`Unpin`]: std::marker::Unpin
+
+[1-aligned]: layout.properties.align
+[ABI]: glossary.abi
+[alignment]: layout.properties.align
+[Arrays]: types/array.md
+[associated types]: items/associated-items.md#associated-types
+[call expressions]: expressions/call-expr.md
+[C-variadic functions]: items.fn.c-variadic
+[deref coercions]: type-coercions.md#coercion-types
+[dereference operator]: expressions/operator-expr.md#the-dereference-operator
+[destructor]: destructors.md
+[drop check]: ../nomicon/dropck.html
+[dynamically sized type]: dynamically-sized-types.md
+[Function pointers]: types/function-pointer.md
+[Function items]: types/function-item.md
+[implementation items]: items/implementations.md
+[indexing expressions]: expressions/array-expr.md#array-and-slice-indexing-expressions
+[interior mutability]: interior-mutability.md
+[main function]: crates-and-source-files.md#main-functions
+[Methods]: items/associated-items.md#associated-functions-and-methods
+[method resolution]: expressions/method-call-expr.md
+[moved from]: expr.move.movable-place
+[operators]: expressions/operator-expr.md
+[orphan rules]: items/implementations.md#trait-implementation-coherence
+[size]: layout.properties.size
+[`static` items]: items/static-items.md
+[test functions]: attributes/testing.md#the-test-attribute
+[the standard library]: std
+[trait object]: types/trait-object.md
+[Tuples]: types/tuple.md
+[Type parameters]: types/parameters.md
+[valid]: undefined.validity
+[`VaList`]: core::ffi::VaList
+[variance]: subtyping.md#variance
+[zero-sized]: glossary.zst
+[Closures]: types/closure.md

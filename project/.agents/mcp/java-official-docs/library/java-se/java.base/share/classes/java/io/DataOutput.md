@@ -1,38 +1,28 @@
----
-title: "DataOutput interface (java.io)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/io/DataOutput.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # DataOutput interface (java.io)
 
 ```java
 public interface DataOutput
 ```
 
-The `DataOutput` interface provides
+The {@code DataOutput} interface provides
 for converting data from any of the Java
 primitive types to a series of bytes and
 writing these bytes to a binary stream.
 There is  also a facility for converting
-a `String` into
-modified UTF-8
+a {@code String} into
+<a href="DataInput.html#modified-utf-8">modified UTF-8</a>
 format and writing the resulting series
 of bytes.
-
+<p>
 For all the methods in this interface that
 write bytes, it is generally true that if
 a byte cannot be written for any reason,
-an `IOException` is thrown.
+an {@code IOException} is thrown.
 
-**See also:** java.io.DataInput
-
-**See also:** java.io.DataOutputStream
-
-**Since:** 1.0
+@author  Frank Yellin
+@see     java.io.DataInput
+@see     java.io.DataOutputStream
+@since   1.0
 
 ## DataOutput.write(int)
 
@@ -41,17 +31,12 @@ void write(int b) throws IOException
 ```
 
 Writes to the output stream the eight
-low-order bits of the argument `b`.
-The 24 high-order  bits of `b`
+low-order bits of the argument {@code b}.
+The 24 high-order  bits of {@code b}
 are ignored.
 
-Parameters:
-
-- `b`: the byte to be written.
-
-Throws:
-
-- `IOException`: if an I/O error occurs.
+@param      b   the byte to be written.
+@throws     IOException  if an I/O error occurs.
 
 ## DataOutput.write(byte[])
 
@@ -59,22 +44,17 @@ Throws:
 void write(byte[] b) throws IOException
 ```
 
-Writes to the output stream all the bytes in array `b`.
-If `b` is `null`,
-a `NullPointerException` is thrown.
-If `b.length` is zero, then
+Writes to the output stream all the bytes in array {@code b}.
+If {@code b} is {@code null},
+a {@code NullPointerException} is thrown.
+If {@code b.length} is zero, then
 no bytes are written. Otherwise, the byte
-`b[0]` is written first, then
-`b[1]`, and so on; the last byte
-written is `b[b.length-1]`.
+{@code b[0]} is written first, then
+{@code b[1]}, and so on; the last byte
+written is {@code b[b.length-1]}.
 
-Parameters:
-
-- `b`: the data.
-
-Throws:
-
-- `IOException`: if an I/O error occurs.
+@param      b   the data.
+@throws     IOException  if an I/O error occurs.
 
 ## DataOutput.write(byte[], int, int)
 
@@ -82,30 +62,27 @@ Throws:
 void write(byte[] b, int off, int len) throws IOException
 ```
 
-Writes `len` bytes from array
-`b`, in order,  to
-the output stream.  If `b`
-is `null`, a `NullPointerException`
-is thrown.  If `off` is negative,
-or `len` is negative, or `off+len`
+Writes {@code len} bytes from array
+{@code b}, in order,  to
+the output stream.  If {@code b}
+is {@code null}, a {@code NullPointerException}
+is thrown.  If {@code off} is negative,
+or {@code len} is negative, or {@code off+len}
 is greater than the length of the array
-`b`, then an `IndexOutOfBoundsException`
-is thrown.  If `len` is zero,
+{@code b}, then an {@code IndexOutOfBoundsException}
+is thrown.  If {@code len} is zero,
 then no bytes are written. Otherwise, the
-byte `b[off]` is written first,
-then `b[off+1]`, and so on; the
-last byte written is `b[off+len-1]`.
+byte {@code b[off]} is written first,
+then {@code b[off+1]}, and so on; the
+last byte written is {@code b[off+len-1]}.
 
-Parameters:
-
-- `b`: the data.
-- `off`: the start offset in the data.
-- `len`: the number of bytes to write.
-
-Throws:
-
-- `IOException`: if an I/O error occurs.
-- `IndexOutOfBoundsException`: If `off` is negative, `len` is negative, or `len` is greater than `b.length - off`
+@param      b     the data.
+@param      off   the start offset in the data.
+@param      len   the number of bytes to write.
+@throws     IOException  if an I/O error occurs.
+@throws     IndexOutOfBoundsException If {@code off} is negative,
+            {@code len} is negative, or {@code len} is greater than
+            {@code b.length - off}
 
 ## DataOutput.writeBoolean(boolean)
 
@@ -113,24 +90,19 @@ Throws:
 void writeBoolean(boolean v) throws IOException
 ```
 
-Writes a `boolean` value to this output stream.
-If the argument `v`
-is `true`, the value `(byte)1`
-is written; if `v` is `false`,
-the  value `(byte)0` is written.
+Writes a {@code boolean} value to this output stream.
+If the argument {@code v}
+is {@code true}, the value {@code (byte)1}
+is written; if {@code v} is {@code false},
+the  value {@code (byte)0} is written.
 The byte written by this method may
-be read by the `readBoolean`
-method of interface `DataInput`,
-which will then return a `boolean`
-equal to `v`.
+be read by the {@code readBoolean}
+method of interface {@code DataInput},
+which will then return a {@code boolean}
+equal to {@code v}.
 
-Parameters:
-
-- `v`: the boolean to be written.
-
-Throws:
-
-- `IOException`: if an I/O error occurs.
+@param      v   the boolean to be written.
+@throws     IOException  if an I/O error occurs.
 
 ## DataOutput.writeByte(int)
 
@@ -139,23 +111,18 @@ void writeByte(int v) throws IOException
 ```
 
 Writes to the output stream the eight low-order
-bits of the argument `v`.
-The 24 high-order bits of `v`
-are ignored. (This means  that `writeByte`
-does exactly the same thing as `write`
+bits of the argument {@code v}.
+The 24 high-order bits of {@code v}
+are ignored. (This means  that {@code writeByte}
+does exactly the same thing as {@code write}
 for an integer argument.) The byte written
-by this method may be read by the `readByte`
-method of interface `DataInput`,
-which will then return a `byte`
-equal to `(byte)v`.
+by this method may be read by the {@code readByte}
+method of interface {@code DataInput},
+which will then return a {@code byte}
+equal to {@code (byte)v}.
 
-Parameters:
-
-- `v`: the byte value to be written.
-
-Throws:
-
-- `IOException`: if an I/O error occurs.
+@param      v   the byte value to be written.
+@throws     IOException  if an I/O error occurs.
 
 ## DataOutput.writeShort(int)
 
@@ -167,25 +134,18 @@ Writes two bytes to the output
 stream to represent the value of the argument.
 The byte values to be written, in the  order
 shown, are:
-
-```java
+<pre>{@code
 (byte)(0xff & (v >> 8))
 (byte)(0xff & v)
-```
-
+}</pre> <p>
 The bytes written by this method may be
-read by the `readShort` method
-of interface `DataInput`, which
-will then return a `short` equal
-to `(short)v`.
+read by the {@code readShort} method
+of interface {@code DataInput}, which
+will then return a {@code short} equal
+to {@code (short)v}.
 
-Parameters:
-
-- `v`: the `short` value to be written.
-
-Throws:
-
-- `IOException`: if an I/O error occurs.
+@param      v   the {@code short} value to be written.
+@throws     IOException  if an I/O error occurs.
 
 ## DataOutput.writeChar(int)
 
@@ -193,30 +153,23 @@ Throws:
 void writeChar(int v) throws IOException
 ```
 
-Writes a `char` value, which
+Writes a {@code char} value, which
 is comprised of two bytes, to the
 output stream.
 The byte values to be written, in the  order
 shown, are:
-
-```java
+<pre>{@code
 (byte)(0xff & (v >> 8))
 (byte)(0xff & v)
-```
-
+}</pre><p>
 The bytes written by this method may be
-read by the `readChar` method
-of interface `DataInput`, which
-will then return a `char` equal
-to `(char)v`.
+read by the {@code readChar} method
+of interface {@code DataInput}, which
+will then return a {@code char} equal
+to {@code (char)v}.
 
-Parameters:
-
-- `v`: the `char` value to be written.
-
-Throws:
-
-- `IOException`: if an I/O error occurs.
+@param      v   the {@code char} value to be written.
+@throws     IOException  if an I/O error occurs.
 
 ## DataOutput.writeInt(int)
 
@@ -224,30 +177,23 @@ Throws:
 void writeInt(int v) throws IOException
 ```
 
-Writes an `int` value, which is
+Writes an {@code int} value, which is
 comprised of four bytes, to the output stream.
 The byte values to be written, in the  order
 shown, are:
-
-```java
+<pre>{@code
 (byte)(0xff & (v >> 24))
 (byte)(0xff & (v >> 16))
 (byte)(0xff & (v >>  8))
 (byte)(0xff & v)
-```
-
+}</pre><p>
 The bytes written by this method may be read
-by the `readInt` method of interface
-`DataInput`, which will then
-return an `int` equal to `v`.
+by the {@code readInt} method of interface
+{@code DataInput}, which will then
+return an {@code int} equal to {@code v}.
 
-Parameters:
-
-- `v`: the `int` value to be written.
-
-Throws:
-
-- `IOException`: if an I/O error occurs.
+@param      v   the {@code int} value to be written.
+@throws     IOException  if an I/O error occurs.
 
 ## DataOutput.writeLong(long)
 
@@ -255,12 +201,11 @@ Throws:
 void writeLong(long v) throws IOException
 ```
 
-Writes a `long` value, which is
+Writes a {@code long} value, which is
 comprised of eight bytes, to the output stream.
 The byte values to be written, in the  order
 shown, are:
-
-```java
+<pre>{@code
 (byte)(0xff & (v >> 56))
 (byte)(0xff & (v >> 48))
 (byte)(0xff & (v >> 40))
@@ -269,21 +214,15 @@ shown, are:
 (byte)(0xff & (v >> 16))
 (byte)(0xff & (v >>  8))
 (byte)(0xff & v)
-```
-
+}</pre><p>
 The bytes written by this method may be
-read by the `readLong` method
-of interface `DataInput`, which
-will then return a `long` equal
-to `v`.
+read by the {@code readLong} method
+of interface {@code DataInput}, which
+will then return a {@code long} equal
+to {@code v}.
 
-Parameters:
-
-- `v`: the `long` value to be written.
-
-Throws:
-
-- `IOException`: if an I/O error occurs.
+@param      v   the {@code long} value to be written.
+@throws     IOException  if an I/O error occurs.
 
 ## DataOutput.writeFloat(float)
 
@@ -291,26 +230,21 @@ Throws:
 void writeFloat(float v) throws IOException
 ```
 
-Writes a `float` value,
+Writes a {@code float} value,
 which is comprised of four bytes, to the output stream.
 It does this as if it first converts this
-`float` value to an `int`
-in exactly the manner of the `Float.floatToIntBits`
-method  and then writes the `int`
-value in exactly the manner of the  `writeInt`
+{@code float} value to an {@code int}
+in exactly the manner of the {@code Float.floatToIntBits}
+method  and then writes the {@code int}
+value in exactly the manner of the  {@code writeInt}
 method.  The bytes written by this method
-may be read by the `readFloat`
-method of interface `DataInput`,
-which will then return a `float`
-equal to `v`.
+may be read by the {@code readFloat}
+method of interface {@code DataInput},
+which will then return a {@code float}
+equal to {@code v}.
 
-Parameters:
-
-- `v`: the `float` value to be written.
-
-Throws:
-
-- `IOException`: if an I/O error occurs.
+@param      v   the {@code float} value to be written.
+@throws     IOException  if an I/O error occurs.
 
 ## DataOutput.writeDouble(double)
 
@@ -318,26 +252,21 @@ Throws:
 void writeDouble(double v) throws IOException
 ```
 
-Writes a `double` value,
+Writes a {@code double} value,
 which is comprised of eight bytes, to the output stream.
 It does this as if it first converts this
-`double` value to a `long`
-in exactly the manner of the `Double.doubleToLongBits`
-method  and then writes the `long`
-value in exactly the manner of the  `writeLong`
+{@code double} value to a {@code long}
+in exactly the manner of the {@code Double.doubleToLongBits}
+method  and then writes the {@code long}
+value in exactly the manner of the  {@code writeLong}
 method. The bytes written by this method
-may be read by the `readDouble`
-method of interface `DataInput`,
-which will then return a `double`
-equal to `v`.
+may be read by the {@code readDouble}
+method of interface {@code DataInput},
+which will then return a {@code double}
+equal to {@code v}.
 
-Parameters:
-
-- `v`: the `double` value to be written.
-
-Throws:
-
-- `IOException`: if an I/O error occurs.
+@param      v   the {@code double} value to be written.
+@throws     IOException  if an I/O error occurs.
 
 ## DataOutput.writeBytes(String)
 
@@ -347,29 +276,22 @@ void writeBytes(String s) throws IOException
 
 Writes a string to the output stream.
 For every character in the string
-`s`,  taken in order, one byte
+{@code s},  taken in order, one byte
 is written to the output stream.  If
-`s` is `null`, a `NullPointerException`
-is thrown.
-
-  If `s.length`
+{@code s} is {@code null}, a {@code NullPointerException}
+is thrown.<p>  If {@code s.length}
 is zero, then no bytes are written. Otherwise,
-the character `s[0]` is written
-first, then `s[1]`, and so on;
-the last character written is `s[s.length-1]`.
+the character {@code s[0]} is written
+first, then {@code s[1]}, and so on;
+the last character written is {@code s[s.length-1]}.
 For each character, one byte is written,
 the low-order byte, in exactly the manner
-of the `writeByte` method . The
+of the {@code writeByte} method . The
 high-order eight bits of each character
 in the string are ignored.
 
-Parameters:
-
-- `s`: the string of bytes to be written.
-
-Throws:
-
-- `IOException`: if an I/O error occurs.
+@param      s   the string of bytes to be written.
+@throws     IOException  if an I/O error occurs.
 
 ## DataOutput.writeChars(String)
 
@@ -377,27 +299,22 @@ Throws:
 void writeChars(String s) throws IOException
 ```
 
-Writes every character in the string `s`,
+Writes every character in the string {@code s},
 to the output stream, in order,
-two bytes per character. If `s`
-is `null`, a `NullPointerException`
-is thrown.  If `s.length`
+two bytes per character. If {@code s}
+is {@code null}, a {@code NullPointerException}
+is thrown.  If {@code s.length}
 is zero, then no characters are written.
-Otherwise, the character `s[0]`
-is written first, then `s[1]`,
+Otherwise, the character {@code s[0]}
+is written first, then {@code s[1]},
 and so on; the last character written is
-`s[s.length-1]`. For each character,
+{@code s[s.length-1]}. For each character,
 two bytes are actually written, high-order
 byte first, in exactly the manner of the
-`writeChar` method.
+{@code writeChar} method.
 
-Parameters:
-
-- `s`: the string value to be written.
-
-Throws:
-
-- `IOException`: if an I/O error occurs.
+@param      s   the string value to be written.
+@throws     IOException  if an I/O error occurs.
 
 ## DataOutput.writeUTF(String)
 
@@ -408,70 +325,50 @@ void writeUTF(String s) throws IOException
 Writes two bytes of length information
 to the output stream, followed
 by the
-modified UTF-8
+<a href="DataInput.html#modified-utf-8">modified UTF-8</a>
 representation
-of  every character in the string `s`.
-If `s` is `null`,
-a `NullPointerException` is thrown.
-Each character in the string `s`
+of  every character in the string {@code s}.
+If {@code s} is {@code null},
+a {@code NullPointerException} is thrown.
+Each character in the string {@code s}
 is converted to a group of one, two, or
 three bytes, depending on the value of the
-character.
-
-If a character `c`
-is in the range `\u0001` through
-`\u007f`, it is represented
+character.<p>
+If a character {@code c}
+is in the range <code>&#92;u0001</code> through
+<code>&#92;u007f</code>, it is represented
 by one byte:
-
-```java
-(byte)c
-```
-
-If a character `c` is `\u0000`
-or is in the range `\u0080`
-through `\u07ff`, then it is
+<pre>(byte)c </pre>  <p>
+If a character {@code c} is <code>&#92;u0000</code>
+or is in the range <code>&#92;u0080</code>
+through <code>&#92;u07ff</code>, then it is
 represented by two bytes, to be written
-in the order shown:
-
-```java
+in the order shown: <pre>{@code
 (byte)(0xc0 | (0x1f & (c >> 6)))
 (byte)(0x80 | (0x3f & c))
-```
-
- If a character
-`c` is in the range `\u0800`
-through `uffff`, then it is
+}</pre> <p> If a character
+{@code c} is in the range <code>&#92;u0800</code>
+through {@code uffff}, then it is
 represented by three bytes, to be written
-in the order shown:
-
-```java
+in the order shown: <pre>{@code
 (byte)(0xe0 | (0x0f & (c >> 12)))
 (byte)(0x80 | (0x3f & (c >>  6)))
 (byte)(0x80 | (0x3f & c))
-```
-
- First,
+}</pre>  <p> First,
 the total number of bytes needed to represent
-all the characters of `s` is
+all the characters of {@code s} is
 calculated. If this number is larger than
-`65535`, then a `UTFDataFormatException`
+{@code 65535}, then a {@code UTFDataFormatException}
 is thrown. Otherwise, this length is written
 to the output stream in exactly the manner
-of the `writeShort` method;
+of the {@code writeShort} method;
 after this, the one-, two-, or three-byte
 representation of each character in the
-string `s` is written.
-
-  The
+string {@code s} is written.<p>  The
 bytes written by this method may be read
-by the `readUTF` method of interface
-`DataInput`, which will then
-return a `String` equal to `s`.
+by the {@code readUTF} method of interface
+{@code DataInput}, which will then
+return a {@code String} equal to {@code s}.
 
-Parameters:
-
-- `s`: the string value to be written.
-
-Throws:
-
-- `IOException`: if an I/O error occurs.
+@param      s   the string value to be written.
+@throws     IOException  if an I/O error occurs.

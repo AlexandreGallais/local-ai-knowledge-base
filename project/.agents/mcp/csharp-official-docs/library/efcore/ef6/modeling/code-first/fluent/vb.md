@@ -1,32 +1,30 @@
 ---
-title: "Fluent API with VB.NET - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/modeling/code-first/fluent/vb.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Fluent API with VB.NET - EF6
+description: Fluent API with VB.NET in Entity Framework 6
+author: SamMonoRT
+ms.date: 10/23/2016
+uid: ef6/modeling/code-first/fluent/vb
 ---
-
 # Fluent API with VB.NET
 Code First allows you to define your model using C\# or VB.NET classes. Additional configuration can optionally be performed using attributes on your classes and properties or by using a fluent API. This walkthrough shows how to perform fluent API configuration using VB.NET.
 
-This page assumes you have a basic <example-value> of Code First. Check out the following walkthroughs for more information on Code First:
+This page assumes you have a basic understanding of Code First. Check out the following walkthroughs for more information on Code First:
 
--   Code First to a New Database
--   Code First to an Existing Database
+-   [Code First to a New Database](xref:ef6/modeling/code-first/workflows/new-database)
+-   [Code First to an Existing Database](xref:ef6/modeling/code-first/workflows/existing-database)
 
 ## Pre-Requisites
 
 You will need to have at least Visual Studio 2010 or Visual Studio 2012 installed to complete this walkthrough.
 
-If you are using Visual Studio 2010, you will also need to have NuGet installed
+If you are using Visual Studio 2010, you will also need to have [NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c) installed
 
 ## Create the Application
 
-To keep things simple we’re going to build a basic <example-value> application that uses Code First to perform data access.
+To keep things simple we’re going to build a basic console application that uses Code First to perform data access.
 
 -   Open Visual Studio
--   **File -> New -> Project…**
+-   **File -&gt; New -&gt; Project…**
 -   Select **Windows** from the left menu and **Console Application**
 -   Enter **CodeFirstVBSample** as the name
 -   Select **OK**
@@ -38,7 +36,7 @@ In this step you will define VB.NET POCO entity types that represent the concept
 -   Add a new class to the project, enter **SchoolModel** for the class name
 -   Replace the contents of the new class with the following code
 
-```vb
+``` vb
 Public Class Department
     Public Sub New()
         Me.Courses = New List(Of Course)()
@@ -119,7 +117,7 @@ End Class
 
 Public Class OfficeAssignment
     ' Primary key that does not follow the Code First convention.
-    ' The HasKey <example-value> is used later to configure the primary key for the entity.
+    ' The HasKey method is used later to configure the primary key for the entity.
     Public Property InstructorID() As Integer
 
     Public Property Location() As String
@@ -134,14 +132,14 @@ End Class
 
 We’re about to start to using types from the Entity Framework so we need to add the EntityFramework NuGet package.
 
--   **Project –> **Manage NuGet Packages…**
-> **Note:**
-> If you don’t have the **Manage NuGet Packages…** option you should install the latest version of NuGet
+-   **Project –&gt; **Manage NuGet Packages…**
+> [!NOTE]
+> If you don’t have the **Manage NuGet Packages…** option you should install the [latest version of NuGet](https://visualstudiogallery.msdn.microsoft.com/27077b70-9dad-4c64-adcf-c7cf6bc9970c)
 -   Select the **Online** tab
 -   Select the **EntityFramework** package
 -   Click **Install**
 
-Now it’s time to define a derived context, which represents a session with the database, allowing us to query and save data. We define a context that derives from System.Data.Entity.DbContext and exposes a typed DbSet<TEntity> for each class in our model.
+Now it’s time to define a derived context, which represents a session with the database, allowing us to query and save data. We define a context that derives from System.Data.Entity.DbContext and exposes a typed DbSet&lt;TEntity&gt; for each class in our model.
 
 -   Add a new class to the project, enter **SchoolContext** for the class name
 -   Replace the contents of the new class with the following code
@@ -173,16 +171,17 @@ This section demonstrates how to use the fluent APIs to configure types to table
 -   Copy the following code and add it to the **OnModelCreating** method defined on the **SchoolContext** class
     The comments explain what each mapping does
 
-```vb
+``` vb
 ' Configure Code First to ignore PluralizingTableName convention
 ' If you keep this convention then the generated tables
 ' will have pluralized names.
 modelBuilder.Conventions.Remove(Of PluralizingTableNameConvention)()
 
+
 ' Specifying that a Class is a Complex Type
 
 ' The model defined in this topic defines a type OnsiteCourseDetails.
-' By convention, a type that has no primary key <example-value>
+' By convention, a type that has no primary key specified
 ' is treated as a complex type.
 ' There are some scenarios where Code First will not
 ' detect a complex type (for example, if you do have a property
@@ -191,11 +190,13 @@ modelBuilder.Conventions.Remove(Of PluralizingTableNameConvention)()
 ' explicitly specify that a type is a complex type.
 modelBuilder.ComplexType(Of OnsiteCourseDetails)()
 
+
 ' Mapping a CLR Entity Type to a Specific Table in the Database.
 
 ' All properties of OfficeAssignment will be mapped
 ' to columns  in a table called t_OfficeAssignment.
 modelBuilder.Entity(Of OfficeAssignment)().ToTable("t_OfficeAssignment")
+
 
 ' Mapping the Table-Per-Hierarchy (TPH) Inheritance
 
@@ -216,6 +217,7 @@ modelBuilder.Entity(Of Person)().
         Map(Of Instructor)(Function(t) t.Requires("Type").
         HasValue("Instructor"))
 
+
 ' Mapping the Table-Per-Type (TPT) Inheritance
 
 ' In the TPT mapping scenario, all types are mapped to individual tables.
@@ -226,15 +228,17 @@ modelBuilder.Entity(Of Course)().ToTable("Course")
 modelBuilder.Entity(Of OnsiteCourse)().ToTable("OnsiteCourse")
 modelBuilder.Entity(Of OnlineCourse)().ToTable("OnlineCourse")
 
+
 ' Configuring a Primary Key
 
 ' If your class defines a property whose name is “ID” or “Id”,
 ' or a class name followed by “ID” or “Id”,
 ' the Entity Framework treats this property as a primary key by convention.
-' If your property name does not follow this pattern, use the HasKey <example-value>
+' If your property name does not follow this pattern, use the HasKey method
 ' to configure the primary key for the entity.
 modelBuilder.Entity(Of OfficeAssignment)().
     HasKey(Function(t) t.InstructorID)
+
 
 ' Specifying the Maximum Length on a Property
 
@@ -245,6 +249,7 @@ modelBuilder.Entity(Of OfficeAssignment)().
 modelBuilder.Entity(Of Department)().Property(Function(t) t.Name).
     HasMaxLength(60)
 
+
 ' Configuring the Property to be Required
 
 ' In the following example, the Name property is required.
@@ -253,6 +258,7 @@ modelBuilder.Entity(Of Department)().Property(Function(t) t.Name).
 ' The database column used to store this property will be non-nullable.
 modelBuilder.Entity(Of Department)().Property(Function(t) t.Name).
     IsRequired()
+
 
 ' Switching off Identity for Numeric Primary Keys
 
@@ -282,6 +288,7 @@ modelBuilder.Entity(Of OnsiteCourse)().Property(Function(t) t.Details.Location).
 modelBuilder.Entity(Of OnsiteCourse)().Property(Function(t) t.Details.Time).
     HasColumnName("Time")
 
+
 ' Map one-to-zero or one relationship
 
 ' The OfficeAssignment has the InstructorID
@@ -289,6 +296,7 @@ modelBuilder.Entity(Of OnsiteCourse)().Property(Function(t) t.Details.Time).
 modelBuilder.Entity(Of OfficeAssignment)().
     HasRequired(Function(t) t.Instructor).
     WithOptional(Function(t) t.OfficeAssignment)
+
 
 ' Configuring a Many-to-Many Relationship
 
@@ -301,6 +309,7 @@ modelBuilder.Entity(Of OfficeAssignment)().
 modelBuilder.Entity(Of Course)().
     HasMany(Function(t) t.Instructors).
     WithMany(Function(t) t.Courses)
+
 
 ' Configuring a Many-to-Many Relationship and specifying the names
 ' of the columns in the join table
@@ -319,15 +328,17 @@ modelBuilder.Entity(Of Course)().
             m.MapRightKey("InstructorID")
         End Sub)
 
+
 ' Configuring a foreign key name that does not follow the Code First convention
 
-' The foreign key <example-value> on the Course class is called DepartmentID_FK
+' The foreign key property on the Course class is called DepartmentID_FK
 ' since that does not follow Code First conventions you need to explicitly specify
 ' that you want DepartmentID_FK to be the foreign key.
 modelBuilder.Entity(Of Course)().
     HasRequired(Function(t) t.Department).
     WithMany(Function(t) t.Courses).
     HasForeignKey(Function(t) t.DepartmentID_FK)
+
 
 ' Enabling Cascade Delete
 
@@ -355,7 +366,7 @@ Let's perform some data access using the **SchoolContext** to see out model in a
 -   Open the Module1.vb file where the Main function is defined
 -   Copy and paste the following Module1 definition
 
-```vb
+``` vb
 Imports System.Data.Entity
 
 Module Module1

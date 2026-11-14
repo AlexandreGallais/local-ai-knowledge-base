@@ -1,12 +1,3 @@
----
-title: "Scheduler"
-tool: "rxjs"
-version: "7.8"
-source: "https://github.com/ReactiveX/rxjs/blob/e5351d02e225e275ac0e497c7b66eaa5f0c88791/docs_app/content/guide/scheduler.md"
-commit: "e5351d02e225e275ac0e497c7b66eaa5f0c88791"
-license: "Apache-2.0"
----
-
 # Scheduler
 
 **What is a Scheduler?** A scheduler controls when a subscription starts and when notifications are delivered. It consists of three components.
@@ -15,10 +6,11 @@ license: "Apache-2.0"
 - **A Scheduler is an execution context.** It denotes where and when the task is executed (e.g. immediately, or in another callback mechanism such as setTimeout or process.nextTick, or the animation frame).
 - **A Scheduler has a (virtual) clock.** It provides a notion of "time" by a getter method `now()` on the scheduler. Tasks being scheduled on a particular scheduler will adhere only to the time denoted by that clock.
 
-A Scheduler lets you define in what execution context will an Observable deliver notifications to its Observer.
+<span class="informal">A Scheduler lets you define in what execution context will an Observable deliver notifications to its Observer.</span>
 
 In the example below, we take the usual simple Observable that emits values `1`, `2`, `3` synchronously, and use the operator `observeOn` to specify the `async` scheduler to use for delivering those values.
 
+<!-- prettier-ignore -->
 ```ts
 import { Observable, observeOn, asyncScheduler } from 'rxjs';
 
@@ -59,6 +51,7 @@ done
 
 Notice how the notifications `got value...` were delivered after `just after subscribe`, which is different to the default behavior we have seen so far. This is because `observeOn(asyncScheduler)` introduces a proxy Observer between `new Observable` and the final Observer. Let's rename some identifiers to make that distinction obvious in the example code:
 
+<!-- prettier-ignore -->
 ```ts
 import { Observable, observeOn, asyncScheduler } from 'rxjs';
 
@@ -90,6 +83,7 @@ console.log('just after subscribe');
 
 The `proxyObserver` is created in `observeOn(asyncScheduler)`, and its `next(val)` function is approximately the following:
 
+<!-- prettier-ignore -->
 ```ts
 const proxyObserver = {
   next(val) {

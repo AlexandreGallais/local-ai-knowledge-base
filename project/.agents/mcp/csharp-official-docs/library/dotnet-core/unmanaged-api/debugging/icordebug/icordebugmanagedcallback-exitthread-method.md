@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugManagedCallback::ExitThread Method"
 title: "ICorDebugManagedCallback::ExitThread Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmanagedcallback-exitthread-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugManagedCallback.ExitThread"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugManagedCallback::ExitThread"
+helpviewer_keywords:
+  - "ExitThread method [.NET debugging]"
+  - "ICorDebugManagedCallback::ExitThread method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugManagedCallback::ExitThread Method
 
 Notifies the debugger that a thread that was executing managed code has exited.
@@ -34,7 +43,7 @@ Once the `ExitThread` callback is fired, the thread will no longer appear in thr
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -44,4 +53,4 @@ Once the `ExitThread` callback is fired, the thread will no longer appear in thr
 
 ## See also
 
-- ICorDebugManagedCallback Interface
+- [ICorDebugManagedCallback Interface](icordebugmanagedcallback-interface.md)

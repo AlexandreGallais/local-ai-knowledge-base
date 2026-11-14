@@ -1,12 +1,3 @@
----
-title: "class: APIResponseAssertions"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-apiresponseassertions.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: APIResponseAssertions
 * since: v1.18
 
@@ -37,7 +28,7 @@ public class TestPage {
 }
 ```
 
-```python
+```python async
 from playwright.async_api import Page, expect
 
 async def test_navigates_to_login_page(page: Page) -> None:
@@ -46,7 +37,7 @@ async def test_navigates_to_login_page(page: Page) -> None:
     await expect(response).to_be_ok()
 ```
 
-```python
+```python sync
 from playwright.sync_api import Page, expect
 
 def test_navigates_to_login_page(page: Page) -> None:
@@ -119,14 +110,14 @@ await expect(response).toBeOK();
 assertThat(response).isOK();
 ```
 
-```python
+```python async
 from playwright.async_api import expect
 
 # ...
 await expect(response).to_be_ok()
 ```
 
-```python
+```python sync
 import re
 from playwright.sync_api import expect
 

@@ -1,21 +1,23 @@
 ---
-title: "Inter-process communication with gRPC and Named pipes"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/grpc/interprocess-namedpipes.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Inter-process communication with gRPC and Named pipes
+ai-usage: ai-assisted
+description: Learn how to use gRPC for inter-process communication with Named pipes.
+monikerRange: '>= aspnetcore-8.0'
+ms.date: 09/24/2026
 ---
-
 # Inter-process communication with gRPC and Named pipes
+
+<!-- UPDATE 9.0 Activate after release and INCLUDE is updated
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
 -->
 
-By James Newton-King
+By [James Newton-King](https://twitter.com/jamesnk)
 
-.NET supports inter-process communication (IPC) using gRPC. For more information about getting started with using gRPC to communicate between processes, see Inter-process communication with gRPC.
+.NET supports inter-process communication (IPC) using gRPC. For more information about getting started with using gRPC to communicate between processes, see [Inter-process communication with gRPC](interprocess.md).
 
-Named pipes is an IPC transport that is supported on all versions of Windows. Named pipes integrate well with Windows security to control client access to the pipe. This article discusses how to configure gRPC communication over named pipes.
+[Named pipes](https://wikipedia.org/wiki/Named_pipe) is an IPC transport that is supported on all versions of Windows. Named pipes integrate well with [Windows security](/windows/win32/ipc/named-pipe-security-and-access-rights) to control client access to the pipe. This article discusses how to configure gRPC communication over named pipes.
 
 ## Prerequisites
 
@@ -24,7 +26,7 @@ Named pipes is an IPC transport that is supported on all versions of Windows. Na
 
 ## Server configuration
 
-Named pipes are supported by Kestrel, which is configured in `Program.cs`:
+Named pipes are supported by [Kestrel](../fundamentals/servers/kestrel.md), which is configured in `Program.cs`:
 
 ```csharp
 var builder = WebApplication.CreateBuilder(args);
@@ -39,13 +41,13 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
 
 The preceding example:
 
-* Configures Kestrel's endpoints in `Microsoft.AspNetCore.Hosting.WebHostBuilderKestrelExtensions.ConfigureKestrel*`.
+* Configures Kestrel's endpoints in <xref:Microsoft.AspNetCore.Hosting.WebHostBuilderKestrelExtensions.ConfigureKestrel*>.
 * Calls `ListenNamedPipe` to listen to a named pipe with the specified name.
-* Creates a named pipe endpoint that isn't configured to use HTTPS. For information about enabling HTTPS, see Kestrel HTTPS endpoint configuration.
+* Creates a named pipe endpoint that isn't configured to use HTTPS. For information about enabling HTTPS, see [Kestrel HTTPS endpoint configuration](../fundamentals/servers/kestrel/endpoints.md#listenoptionsusehttps).
 
 ### Configuring `PipeSecurity` for named pipes
 
-To control which users or groups can connect, use the `Microsoft.AspNetCore.Server.Kestrel.Transport.NamedPipes.NamedPipeTransportOptions` class. This allows a custom `PipeSecurity` object to be specified.
+To control which users or groups can connect, use the <xref:Microsoft.AspNetCore.Server.Kestrel.Transport.NamedPipes.NamedPipeTransportOptions> class. This allows a custom [`PipeSecurity`](xref:System.IO.Pipes.PipeSecurity) object to be specified.
 
 Example:
 
@@ -94,25 +96,25 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
 
 The preceding example:
 
-* Calls `UseNamedPipes` on the `Microsoft.AspNetCore.Hosting.IWebHostBuilder` to access and configure `Microsoft.AspNetCore.Server.Kestrel.Transport.NamedPipes.NamedPipeTransportOptions`.
-* Sets `Microsoft.AspNetCore.Server.Kestrel.Transport.NamedPipes.NamedPipeTransportOptions.CurrentUserOnly` to `false`, which is required when providing a custom `System.IO.Pipes.PipeSecurity` object.
-* Sets the `System.IO.Pipes.PipeSecurity` property to control which users or groups can connect to the named pipe.
+* Calls `UseNamedPipes` on the <xref:Microsoft.AspNetCore.Hosting.IWebHostBuilder> to access and configure <xref:Microsoft.AspNetCore.Server.Kestrel.Transport.NamedPipes.NamedPipeTransportOptions>.
+* Sets <xref:Microsoft.AspNetCore.Server.Kestrel.Transport.NamedPipes.NamedPipeTransportOptions.CurrentUserOnly> to `false`, which is required when providing a custom <xref:System.IO.Pipes.PipeSecurity> object.
+* Sets the <xref:System.IO.Pipes.PipeSecurity> property to control which users or groups can connect to the named pipe.
 * Grants the account the server runs as read/write and `CreateNewInstance` access. Kestrel creates several instances of the pipe to accept connections in parallel, and Windows requires `CreateNewInstance` to create each instance after the first.
 * Grants the client security group read/write access only, where the `{CLIENT GROUP}` placeholder is a group containing the accounts allowed to call the service. Additional security rules can be added as needed for the scenario.
 
-> **Important:**
-> Unless the app also configures authentication and authorization, the pipe's security descriptor is the only thing that prevents other accounts from calling the server. Grant access to the narrowest principal the scenario requires. Avoid broad groups such as `Users`, which resolves to `BUILTIN\Users` and includes every authenticated and interactive account on the machine, plus `Domain Users` on a domain-joined machine. For information about authenticating callers, see Authentication and authorization in gRPC for ASP.NET Core.
+> [!IMPORTANT]
+> Unless the app also configures authentication and authorization, the pipe's security descriptor is the only thing that prevents other accounts from calling the server. Grant access to the narrowest principal the scenario requires. Avoid broad groups such as `Users`, which resolves to `BUILTIN\Users` and includes every authenticated and interactive account on the machine, plus `Domain Users` on a domain-joined machine. For information about authenticating callers, see [Authentication and authorization in gRPC for ASP.NET Core](authn-and-authz.md).
 
-> **Warning:**
+> [!WARNING]
 > Don't grant `PipeAccessRights.CreateNewInstance` to client accounts or to groups that contain untrusted users. `CreateNewInstance` corresponds to the Windows `FILE_CREATE_PIPE_INSTANCE` right, which authorizes a grantee to create *additional server instances* under the same pipe name. Windows distributes incoming client connections across all instances of a pipe, so a process holding that right can accept genuine client connections and impersonate the service. Grant `CreateNewInstance` only to the account the server runs as.
 
-Inspecting the connected pipe'<example-value>'t detect an impostor created this way. Every instance of a named pipe shares the security descriptor supplied when the first instance was created, so an instance added by another process reports the same owner as the genuine server. To let clients verify which server they're talking to, authenticate the channel itself. For example, enable HTTPS on the endpoint and validate the server certificate, or require a secret that only the genuine server can present. For more information, see Kestrel HTTPS endpoint configuration.
+Inspecting the connected pipe's owner SID from the client doesn't detect an impostor created this way. Every instance of a named pipe shares the security descriptor supplied when the first instance was created, so an instance added by another process reports the same owner as the genuine server. To let clients verify which server they're talking to, authenticate the channel itself. For example, enable HTTPS on the endpoint and validate the server certificate, or require a secret that only the genuine server can present. For more information, see [Kestrel HTTPS endpoint configuration](../fundamentals/servers/kestrel/endpoints.md#listenoptionsusehttps).
 
-> **Important:**
+> [!IMPORTANT]
 > `CurrentUserOnly` defaults to `true`, which restricts the pipe to the account the server runs as. Setting a custom `PipeSecurity` requires `CurrentUserOnly` to be `false`, otherwise an `ArgumentException` is thrown. Setting it to `false` replaces that built-in restriction, so the supplied `PipeSecurity` becomes the only access control on the pipe.
 
-> **Note:**
-> Account names are resolved to security identifiers (SIDs) when the access rule is added. Resolution is locale-dependent and can fail on a localized installation of Windows or on a domain-joined machine that can't reach a domain controller. Constructing a `System.Security.Principal.SecurityIdentifier` directly from the group's SID avoids both problems.
+> [!NOTE]
+> Account names are resolved to security identifiers (SIDs) when the access rule is added. Resolution is locale-dependent and can fail on a localized installation of Windows or on a domain-joined machine that can't reach a domain controller. Constructing a <xref:System.Security.Principal.SecurityIdentifier> directly from the group's SID avoids both problems.
 
 ### Customize Kestrel named pipe endpoints
 
@@ -172,16 +174,16 @@ static PipeSecurity CreatePipeSecurity(string pipeName)
 }
 ```
 
-The preceding example applies the same principle per endpoint: only the server's own account is granted `CreateNewInstance`, and each pipe grants read/write access to a different set of callers. `CurrentUserOnly` is set to `false` because `context.PipeOptions` is passed to `System.IO.Pipes.NamedPipeServerStreamAcl.Create*` along with a `PipeSecurity` object.
+The preceding example applies the same principle per endpoint: only the server's own account is granted `CreateNewInstance`, and each pipe grants read/write access to a different set of callers. `CurrentUserOnly` is set to `false` because `context.PipeOptions` is passed to <xref:System.IO.Pipes.NamedPipeServerStreamAcl.Create*> along with a `PipeSecurity` object.
 
-> **Warning:**
-> A pipe's security descriptor controls which accounts can *connect* to that pipe. It doesn't control which services a connected caller can invoke. Every endpoint mapped in the app is served on every named pipe endpoint, so a caller that connects to any pipe can call every mapped service. Don't rely on per-pipe access control to restrict access to individual services. Use authentication and authorization instead, or host the restricted services in a separate process with its own pipe. For more information, see Authentication and authorization in gRPC for ASP.NET Core.
+> [!WARNING]
+> A pipe's security descriptor controls which accounts can *connect* to that pipe. It doesn't control which services a connected caller can invoke. Every endpoint mapped in the app is served on every named pipe endpoint, so a caller that connects to any pipe can call every mapped service. Don't rely on per-pipe access control to restrict access to individual services. Use authentication and authorization instead, or host the restricted services in a separate process with its own pipe. For more information, see [Authentication and authorization in gRPC for ASP.NET Core](authn-and-authz.md).
 
 ## Client configuration
 
-`GrpcChannel` supports making gRPC calls over custom transports. When a channel is created, it can be configured with a `System.Net.Http.SocketsHttpHandler` that has a custom `System.Net.Http.SocketsHttpHandler.ConnectCallback`. The callback allows the client to make connections over custom transports and then send HTTP requests over that transport.
+`GrpcChannel` supports making gRPC calls over custom transports. When a channel is created, it can be configured with a <xref:System.Net.Http.SocketsHttpHandler> that has a custom <xref:System.Net.Http.SocketsHttpHandler.ConnectCallback>. The callback allows the client to make connections over custom transports and then send HTTP requests over that transport.
 
-> **Note:**
+> [!NOTE]
 > Some connectivity features of `GrpcChannel`, such as client side load balancing and channel status, can't be used together with named pipes.
 
 Named pipes connection factory example:
@@ -197,7 +199,7 @@ public class NamedPipesConnectionFactory
     }
 
     public async ValueTask<Stream> ConnectAsync(SocketsHttpConnectionContext _,
-        CancellationToken <example-value> = default)
+        CancellationToken cancellationToken = default)
     {
         var clientStream = new NamedPipeClientStream(
             serverName: ".",

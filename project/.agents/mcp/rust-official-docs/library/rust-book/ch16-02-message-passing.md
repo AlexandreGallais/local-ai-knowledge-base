@@ -1,19 +1,12 @@
----
-title: "ch16-02-message-passing"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch16-02-message-passing.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
+<!-- Old headings. Do not remove or links may break. -->
 
-# ch16-02-message-passing
+<a id="using-message-passing-to-transfer-data-between-threads"></a>
 
 ## Transfer Data Between Threads with Message Passing
 
 One increasingly popular approach to ensuring safe concurrency is message
 passing, where threads or actors communicate by sending each other messages
-containing data. Here’s the idea in a slogan from the Go language documentation:
+containing data. Here’s the idea in a slogan from [the Go language documentation](https://golang.org/doc/effective_go.html#concurrency):
 “Do not communicate by sharing memory; instead, share memory by communicating.”
 
 To accomplish message-sending concurrency, Rust’s standard library provides an
@@ -43,15 +36,13 @@ First, in Listing 16-6, we’ll create a channel but not do anything with it.
 Note that this won’t compile yet because Rust can’t tell what type of values we
 want to send over the channel.
 
-**Listing 16-6: Creating a channel and assigning the two halves to `tx` and `rx`** (src/main.rs)
+<Listing number="16-6" file-name="src/main.rs" caption="Creating a channel and assigning the two halves to `tx` and `rx`">
 
-```rust
-use std::sync::mpsc;
-
-fn main() {
-    let (tx, rx) = mpsc::channel();
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-06/src/main.rs}}
 ```
+
+</Listing>
 
 We create a new channel using the `mpsc::channel` function; `mpsc` stands for
 _multiple producer, single consumer_. In short, the way Rust’s standard library
@@ -77,21 +68,13 @@ string so that the spawned thread is communicating with the main thread, as
 shown in Listing 16-7. This is like putting a rubber duck in the river upstream
 or sending a chat message from one thread to another.
 
-**Listing 16-7** (src/main.rs)
+<Listing number="16-7" file-name="src/main.rs" caption='Moving `tx` to a spawned thread and sending `"hi"`'>
 
 ```rust
-use std::sync::mpsc;
-use std::thread;
-
-fn main() {
-    let (tx, rx) = mpsc::channel();
-
-    thread::spawn(move || {
-        let val = String::from("hi");
-        tx.send(val).unwrap();
-    });
-}
+{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-07/src/main.rs}}
 ```
+
+</Listing>
 
 Again, we’re using `thread::spawn` to create a new thread and then using `move`
 to move `tx` into the closure so that the spawned thread owns `tx`. The spawned
@@ -109,24 +92,13 @@ In Listing 16-8, we’ll get the value from the receiver in the main thread. Thi
 is like retrieving the rubber duck from the water at the end of the river or
 receiving a chat message.
 
-**Listing 16-8** (src/main.rs)
+<Listing number="16-8" file-name="src/main.rs" caption='Receiving the value `"hi"` in the main thread and printing it'>
 
 ```rust
-use std::sync::mpsc;
-use std::thread;
-
-fn main() {
-    let (tx, rx) = mpsc::channel();
-
-    thread::spawn(move || {
-        let val = String::from("hi");
-        tx.send(val).unwrap();
-    });
-
-    let received = rx.recv().unwrap();
-    println!("Got: {received}");
-}
+{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-08/src/main.rs}}
 ```
+
+</Listing>
 
 The receiver has two useful methods: `recv` and `try_recv`. We’re using `recv`,
 short for _receive_, which will block the main thread’s execution and wait
@@ -149,11 +121,19 @@ thread is appropriate.
 When we run the code in Listing 16-8, we’ll see the value printed from the main
 thread:
 
+<!-- Not extracting output because changes to this output aren't significant;
+the changes are likely to be due to the threads running differently rather than
+changes in the compiler -->
+
 ```text
 Got: hi
 ```
 
 Perfect!
+
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="channels-and-ownership-transference"></a>
 
 ### Transferring Ownership Through Channels
 
@@ -165,25 +145,13 @@ problems: We’ll try to use a `val` value in the spawned thread _after_ we’ve
 sent it down the channel. Try compiling the code in Listing 16-9 to see why
 this code isn’t allowed.
 
-**Listing 16-9: Attempting to use `val` after we’ve sent it down the channel** (src/main.rs)
+<Listing number="16-9" file-name="src/main.rs" caption="Attempting to use `val` after we’ve sent it down the channel">
 
-```rust
-use std::sync::mpsc;
-use std::thread;
-
-fn main() {
-    let (tx, rx) = mpsc::channel();
-
-    thread::spawn(move || {
-        let val = String::from("hi");
-        tx.send(val).unwrap();
-        println!("val is {val}");
-    });
-
-    let received = rx.recv().unwrap();
-    println!("Got: {received}");
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-09/src/main.rs}}
 ```
+
+</Listing>
 
 Here, we try to print `val` after we’ve sent it down the channel via `tx.send`.
 Allowing this would be a bad idea: Once the value has been sent to another
@@ -193,26 +161,17 @@ unexpected results due to inconsistent or nonexistent data. However, Rust gives
 us an error if we try to compile the code in Listing 16-9:
 
 ```console
-$ cargo run
-   Compiling message-passing v0.1.0 (file:///projects/message-passing)
-error[E0382]: borrow of moved value: `val`
-  --> src/main.rs:10:27
-   |
- 8 |         let val = String::from("hi");
-   |             --- move occurs because `val` has type `String`, which does not implement the `Copy` trait
- 9 |         tx.send(val).unwrap();
-   |                 --- value moved here
-10 |         println!("val is {val}");
-   |                           ^^^ value borrowed here after move
-
-For more information about this error, try `rustc --explain E0382`.
-error: could not compile `message-passing` (bin "message-passing") due to 1 previous error
+{{#include ../listings/ch16-fearless-concurrency/listing-16-09/output.txt}}
 ```
 
 Our concurrency mistake has caused a compile-time error. The `send` function
 takes ownership of its parameter, and when the value is moved the receiver
 takes ownership of it. This stops us from accidentally using the value again
 after sending it; the ownership system checks that everything is okay.
+
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="sending-multiple-values-and-seeing-the-receiver-waiting"></a>
 
 ### Sending Multiple Values
 
@@ -223,35 +182,13 @@ In Listing 16-10, we’ve made some modifications that will prove the code in
 Listing 16-8 is running concurrently: The spawned thread will now send multiple
 messages and pause for a second between each message.
 
-**Listing 16-10: Sending multiple messages and pausing between each one** (src/main.rs)
+<Listing number="16-10" file-name="src/main.rs" caption="Sending multiple messages and pausing between each one">
 
-```rust
-use std::sync::mpsc;
-use std::thread;
-use std::time::Duration;
-
-fn main() {
-    let (tx, rx) = mpsc::channel();
-
-    thread::spawn(move || {
-        let vals = vec![
-            String::from("hi"),
-            String::from("from"),
-            String::from("the"),
-            String::from("thread"),
-        ];
-
-        for val in vals {
-            tx.send(val).unwrap();
-            thread::sleep(Duration::from_secs(1));
-        }
-    });
-
-    for received in rx {
-        println!("Got: {received}");
-    }
-}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-10/src/main.rs}}
 ```
+
+</Listing>
 
 This time, the spawned thread has a vector of strings that we want to send to
 the main thread. We iterate over them, sending each individually, and pause
@@ -265,6 +202,10 @@ printing it. When the channel is closed, iteration will end.
 When running the code in Listing 16-10, you should see the following output
 with a one-second pause in between each line:
 
+<!-- Not extracting output because changes to this output aren't significant;
+the changes are likely to be due to the threads running differently rather than
+changes in the compiler -->
+
 ```text
 Got: hi
 Got: from
@@ -276,6 +217,10 @@ Because we don’t have any code that pauses or delays in the `for` loop in the
 main thread, we can tell that the main thread is waiting to receive values from
 the spawned thread.
 
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="creating-multiple-producers-by-cloning-the-transmitter"></a>
+
 ### Creating Multiple Producers
 
 Earlier we mentioned that `mpsc` was an acronym for _multiple producer, single
@@ -283,48 +228,13 @@ consumer_. Let’s put `mpsc` to use and expand the code in Listing 16-10 to
 create multiple threads that all send values to the same receiver. We can do so
 by cloning the transmitter, as shown in Listing 16-11.
 
-**Listing 16-11: Sending multiple messages from multiple producers** (src/main.rs)
+<Listing number="16-11" file-name="src/main.rs" caption="Sending multiple messages from multiple producers">
 
-```rust
-// --snip--
-
-let (tx, rx) = mpsc::channel();
-
-let tx1 = tx.clone();
-thread::spawn(move || {
-    let vals = vec![
-        String::from("hi"),
-        String::from("from"),
-        String::from("the"),
-        String::from("thread"),
-    ];
-
-    for val in vals {
-        tx1.send(val).unwrap();
-        thread::sleep(Duration::from_secs(1));
-    }
-});
-
-thread::spawn(move || {
-    let vals = vec![
-        String::from("more"),
-        String::from("messages"),
-        String::from("for"),
-        String::from("you"),
-    ];
-
-    for val in vals {
-        tx.send(val).unwrap();
-        thread::sleep(Duration::from_secs(1));
-    }
-});
-
-for received in rx {
-    println!("Got: {received}");
-}
-
-// --snip--
+```rust,noplayground
+{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-11/src/main.rs:here}}
 ```
+
+</Listing>
 
 This time, before we create the first spawned thread, we call `clone` on the
 transmitter. This will give us a new transmitter we can pass to the first
@@ -332,6 +242,10 @@ spawned thread. We pass the original transmitter to a second spawned thread.
 This gives us two threads, each sending different messages to the one receiver.
 
 When you run the code, your output should look something like this:
+
+<!-- Not extracting output because changes to this output aren't significant;
+the changes are likely to be due to the threads running differently rather than
+changes in the compiler -->
 
 ```text
 Got: hi

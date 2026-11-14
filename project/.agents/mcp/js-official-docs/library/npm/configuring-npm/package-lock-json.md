@@ -1,13 +1,8 @@
 ---
-title: "package-lock.json"
-tool: "npm"
-version: "12.2"
-source: "https://github.com/npm/cli/blob/60e11343e61316d966c86805d803df5a0eb99230/docs/lib/content/configuring-npm/package-lock-json.md"
-commit: "60e11343e61316d966c86805d803df5a0eb99230"
-license: "Artistic-2.0"
+title: package-lock.json
+section: 5
+description: A manifestation of the manifest
 ---
-
-# package-lock.json
 
 ### Description
 
@@ -36,7 +31,7 @@ rename it to `package-lock.json`; the file format is identical. When
 npm v12 encounters a dependency that ships an `npm-shrinkwrap.json`
 inside its tarball, the file is ignored — publishers who need to ship
 a locked tree should use
-`bundleDependencies`
+[`bundleDependencies`](/configuring-npm/package-json#bundledependencies)
 instead.
 
 ### Hidden Lockfiles
@@ -105,7 +100,7 @@ Package descriptors have the following fields:
   In the case of link dependencies, this will be the location of the link target.
   `registry.npmjs.org` is a magic value meaning "the currently configured registry".
 
-* integrity: A `sha512` or `sha1` Standard Subresource Integrity string for the artifact that was unpacked in this location.
+* integrity: A `sha512` or `sha1` [Standard Subresource Integrity](https://w3c.github.io/webappsec/specs/subresourceintegrity/) string for the artifact that was unpacked in this location.
 
 * link: A flag to indicate that this is a symbolic link.
   If this is present, no other fields are specified, since the link target will also be included in the lockfile.
@@ -155,7 +150,7 @@ Dependency objects have the following fields:
 
     **Note:** The `version` field may be omitted for certain types of dependencies, such as optional peer dependencies that are not installed. In these cases, only metadata fields like `dev`, `optional`, and `peer` will be present.
 
-* integrity: A `sha512` or `sha1` Standard Subresource Integrity string for the artifact that was unpacked in this location.
+* integrity: A `sha512` or `sha1` [Standard Subresource Integrity](https://w3c.github.io/webappsec/specs/subresourceintegrity/) string for the artifact that was unpacked in this location.
   For git dependencies, this is the commit sha.
 
 * resolved: For registry sources this is path of the tarball relative to the registry URL.
@@ -179,5 +174,5 @@ Dependency objects have the following fields:
 
 ### See also
 
-* package.json
-* npm install
+* [package.json](/configuring-npm/package-json)
+* [npm install](/commands/npm-install)

@@ -1,12 +1,3 @@
----
-title: "core::error"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/error.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::error
 
 ## trait Error
@@ -15,21 +6,21 @@ license: "MIT OR Apache-2.0"
 pub trait Error: Debug + Display
 ```
 
-`Error` is a trait representing the basic <example-value> for error values,
-i.e., values of type `E` in `Result<T, E>`.
+`Error` is a trait representing the basic expectations for error values,
+i.e., values of type `E` in [`Result<T, E>`].
 
-Errors must describe themselves through the `Display` and `Debug`
+Errors must describe themselves through the [`Display`] and [`Debug`]
 traits. Error messages are typically concise lowercase sentences without
 trailing punctuation:
 
-```rust
+```
 let err = "NaN".parse::<u32>().unwrap_err();
 assert_eq!(err.to_string(), "invalid digit found in string");
 ```
 
 # Error source
 
-Errors may provide cause information. `Error::source()` is generally
+Errors may provide cause information. [`Error::source()`] is generally
 used when errors cross "abstraction boundaries". If one module must report
 an error that is caused by an error from a lower-level module, it can allow
 accessing that error via `Error::source()`. This makes it possible for the
@@ -44,7 +35,7 @@ by the outer error's `Display` implementation, but not both.
 
 Implementing the `Error` trait only requires that `Debug` and `Display` are implemented too.
 
-```rust
+```
 use std::error::Error;
 use std::fmt;
 use std::path::PathBuf;
@@ -74,7 +65,7 @@ Returns the lower-level source of this error, if any.
 
 # Examples
 
-```rust
+```
 use std::error::Error;
 use std::fmt;
 
@@ -127,7 +118,7 @@ fn main() {
 fn description(&self) -> &str
 ```
 
-```rust
+```
 if let Err(e) = "xc".parse::<u32>() {
     // Print `e` itself, no need for description().
     eprintln!("Error: {e}");

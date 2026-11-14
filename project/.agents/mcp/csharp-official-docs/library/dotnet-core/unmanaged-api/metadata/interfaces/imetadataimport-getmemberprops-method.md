@@ -1,15 +1,22 @@
 ---
+description: "Learn more about: IMetaDataImport::GetMemberProps Method"
 title: "IMetaDataImport::GetMemberProps Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-getmemberprops-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.GetMemberProps"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::GetMemberProps"
+  - "GetMemberProps method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::GetMemberProps Method
 
-Gets information stored in the metadata for a specified member definition, including the name, binary signature, and relative virtual address, of the `System.Type` member referenced by the specified metadata token. This is a simple helper method: if *mb* is a MethodDef, then **GetMethodProps** is called; if *mb* is a FieldDef, then **GetFieldProps** is called. See these other methods for details.
+Gets information stored in the metadata for a specified member definition, including the name, binary signature, and relative virtual address, of the <xref:System.Type> member referenced by the specified metadata token. This is a simple helper method: if *mb* is a MethodDef, then **GetMethodProps** is called; if *mb* is a FieldDef, then **GetFieldProps** is called. See these other methods for details.
 
 ## Syntax
 
@@ -64,7 +71,7 @@ HRESULT GetMemberProps (
  [out] Any method implementation flags associated with the member.
 
  `pdwCPlusTypeFlag`
- [out] A flag that marks a `System.ValueType`. It is one of the `ELEMENT_TYPE_*` values.
+ [out] A flag that marks a <xref:System.ValueType>. It is one of the `ELEMENT_TYPE_*` values.
 
  `ppValue`
  [out] A constant string value returned by this member.
@@ -74,7 +81,7 @@ HRESULT GetMemberProps (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -82,5 +89,5 @@ HRESULT GetMemberProps (
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

@@ -1,13 +1,10 @@
 ---
-title: "no-useless-call"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-useless-call.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-useless-call
+rule_type: suggestion
+related_rules:
+- prefer-spread
 ---
 
-# no-useless-call
 
 The function invocation can be written by `Function.prototype.call()` and `Function.prototype.apply()`.
 But `Function.prototype.call()` and `Function.prototype.apply()` are slower than the normal function invocation.
@@ -18,7 +15,7 @@ This rule is aimed to flag usage of `Function.prototype.call()` and `Function.pr
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-useless-call: "error"*/
@@ -34,9 +31,11 @@ obj.foo.call(obj, 1, 2, 3);
 obj.foo.apply(obj, [1, 2, 3]);
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-useless-call: "error"*/
@@ -56,6 +55,8 @@ foo.apply(null, args);
 obj.foo.apply(obj, args);
 ```
 
+:::
+
 ## Options
 
 This rule has no options.
@@ -67,7 +68,7 @@ So if the code about `thisArg` is a dynamic expression, this rule cannot judge c
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-useless-call: "error"*/
@@ -75,15 +76,19 @@ Examples of **incorrect** code for this rule:
 a[i++].foo.call(a[i++], 1, 2, 3);
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-useless-call: "error"*/
 
 a[++i].foo.call(a[i], 1, 2, 3);
 ```
+
+:::
 
 ## When Not To Use It
 

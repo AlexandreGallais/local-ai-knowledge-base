@@ -1,113 +1,32 @@
 ---
 title: "Anonymous types"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/programming-guide/classes-and-structs/anonymous-types.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about C# anonymous types, which provide a way to create objects with read-only properties without defining a named type first.
+ms.date: 04/10/2026
+helpviewer_keywords:
+  - "anonymous types [C#]"
+  - "C# Language, anonymous types"
+  - "C# Language, var and anonymous types"
+ai-usage: ai-assisted
 ---
-
 # Anonymous types (C# Programming Guide)
 
 Anonymous types provide a convenient way to encapsulate a set of read-only properties into a single object without defining a named type first. The compiler generates a type name at compile time that you can't access in your source code. The compiler infers the type of each property.
 
-Create anonymous types by using the `new` operator together with an object initializer. The following example shows an anonymous type that's initialized with two properties, `Name` and `Age`:
+Create anonymous types by using the [`new`](../../language-reference/operators/new-operator.md) operator together with an object initializer. The following example shows an anonymous type that's initialized with two properties, `Name` and `Age`:
 
-```csharp
-var person = new { Name = "Alice", Age = 30 };
-Console.WriteLine($"{person.Name} is {person.Age} years old.");
-// Output:
-// Alice is 30 years old.
+:::code language="csharp" source="./snippets/anonymous-types/csharp/Program.cs" id="BasicAnonymousType":::
 
-string productName = "Laptop";
-decimal price = 999.99m;
-var product = new { productName, price };
-Console.WriteLine($"{product.productName}: {product.price:C}");
-// Output:
-// Laptop: $999.99
-
-var words = new[] { "apple", "blueberry", "cherry" };
-
-var results = words.Select(w => new { Word = w, Length = w.Length });
-
-foreach (var item in results)
-{
-    Console.WriteLine($"{item.Word} has {item.Length} letters.");
-}
-// Output:
-// apple has 5 letters.
-// blueberry has 9 letters.
-// cherry has 6 letters.
-
-var a = new { Name = "Alice", Age = 30 };
-var b = new { Name = "Alice", Age = 30 };
-var c = new { Name = "Bob", Age = 25 };
-
-Console.WriteLine(a.Equals(b));  // True
-Console.WriteLine(a.Equals(c));  // False
-
-var order = new
-{
-    OrderId = 1,
-    Customer = new { Name = "Alice", City = "Seattle" },
-    Total = 150.00m
-};
-Console.WriteLine($"Order {order.OrderId} for {order.Customer.Name} in {order.Customer.City}");
-// Output:
-// Order 1 for Alice in Seattle
-```
 ## Inferred property names
 
 You can specify property names explicitly by using the `Name = value` syntax. When you initialize an anonymous type with a variable or member access expression, the compiler infers the property name from that expression:
 
-```csharp
-var person = new { Name = "Alice", Age = 30 };
-Console.WriteLine($"{person.Name} is {person.Age} years old.");
-// Output:
-// Alice is 30 years old.
+:::code language="csharp" source="./snippets/anonymous-types/csharp/Program.cs" id="InferredNames":::
 
-string productName = "Laptop";
-decimal price = 999.99m;
-var product = new { productName, price };
-Console.WriteLine($"{product.productName}: {product.price:C}");
-// Output:
-// Laptop: $999.99
-
-var words = new[] { "apple", "blueberry", "cherry" };
-
-var results = words.Select(w => new { Word = w, Length = w.Length });
-
-foreach (var item in results)
-{
-    Console.WriteLine($"{item.Word} has {item.Length} letters.");
-}
-// Output:
-// apple has 5 letters.
-// blueberry has 9 letters.
-// cherry has 6 letters.
-
-var a = new { Name = "Alice", Age = 30 };
-var b = new { Name = "Alice", Age = 30 };
-var c = new { Name = "Bob", Age = 25 };
-
-Console.WriteLine(a.Equals(b));  // True
-Console.WriteLine(a.Equals(c));  // False
-
-var order = new
-{
-    OrderId = 1,
-    Customer = new { Name = "Alice", City = "Seattle" },
-    Total = 150.00m
-};
-Console.WriteLine($"Order {order.OrderId} for {order.Customer.Name} in {order.Customer.City}");
-// Output:
-// Order 1 for Alice in Seattle
-```
 In the preceding example, the compiler infers `productName` and `price` as the property names from the variable names used in the initializer.
 
 ## Declare anonymous types with var
 
-Because the compiler generates the type name and you can't access it in source code, you must use `var` to declare the local variable. You can't specify the type name explicitly:
+Because the compiler generates the type name and you can't access it in source code, you must use [`var`](../../language-reference/statements/declarations.md#implicitly-typed-local-variables) to declare the local variable. You can't specify the type name explicitly:
 
 ```csharp
 // You must use var — you can't write a named type here.
@@ -116,154 +35,31 @@ var person = new { Name = "Alice", Age = 30 };
 
 ## Use anonymous types in LINQ queries
 
-Anonymous types appear most often in the `select` clause of a query expression, where they project a subset of properties from each source element:
+Anonymous types appear most often in the [`select`](../../language-reference/keywords/select-clause.md) clause of a query expression, where they project a subset of properties from each source element:
 
-```csharp
-var person = new { Name = "Alice", Age = 30 };
-Console.WriteLine($"{person.Name} is {person.Age} years old.");
-// Output:
-// Alice is 30 years old.
+:::code language="csharp" source="./snippets/anonymous-types/csharp/Program.cs" id="LinqProjection":::
 
-string productName = "Laptop";
-decimal price = 999.99m;
-var product = new { productName, price };
-Console.WriteLine($"{product.productName}: {product.price:C}");
-// Output:
-// Laptop: $999.99
-
-var words = new[] { "apple", "blueberry", "cherry" };
-
-var results = words.Select(w => new { Word = w, Length = w.Length });
-
-foreach (var item in results)
-{
-    Console.WriteLine($"{item.Word} has {item.Length} letters.");
-}
-// Output:
-// apple has 5 letters.
-// blueberry has 9 letters.
-// cherry has 6 letters.
-
-var a = new { Name = "Alice", Age = 30 };
-var b = new { Name = "Alice", Age = 30 };
-var c = new { Name = "Bob", Age = 25 };
-
-Console.WriteLine(a.Equals(b));  // True
-Console.WriteLine(a.Equals(c));  // False
-
-var order = new
-{
-    OrderId = 1,
-    Customer = new { Name = "Alice", City = "Seattle" },
-    Total = 150.00m
-};
-Console.WriteLine($"Order {order.OrderId} for {order.Customer.Name} in {order.Customer.City}");
-// Output:
-// Order 1 for Alice in Seattle
-```
 ## Equality
 
-Two anonymous type instances that have the same property names and types in the same order share the same compiler-generated type. The compiler overrides `System.Object.Equals*` and `System.Object.GetHashCode*` so that equality compares property values rather than reference identity:
+Two anonymous type instances that have the same property names and types in the same order share the same compiler-generated type. The compiler overrides <xref:System.Object.Equals*> and <xref:System.Object.GetHashCode*> so that equality compares property values rather than reference identity:
 
-```csharp
-var person = new { Name = "Alice", Age = 30 };
-Console.WriteLine($"{person.Name} is {person.Age} years old.");
-// Output:
-// Alice is 30 years old.
+:::code language="csharp" source="./snippets/anonymous-types/csharp/Program.cs" id="Equality":::
 
-string productName = "Laptop";
-decimal price = 999.99m;
-var product = new { productName, price };
-Console.WriteLine($"{product.productName}: {product.price:C}");
-// Output:
-// Laptop: $999.99
-
-var words = new[] { "apple", "blueberry", "cherry" };
-
-var results = words.Select(w => new { Word = w, Length = w.Length });
-
-foreach (var item in results)
-{
-    Console.WriteLine($"{item.Word} has {item.Length} letters.");
-}
-// Output:
-// apple has 5 letters.
-// blueberry has 9 letters.
-// cherry has 6 letters.
-
-var a = new { Name = "Alice", Age = 30 };
-var b = new { Name = "Alice", Age = 30 };
-var c = new { Name = "Bob", Age = 25 };
-
-Console.WriteLine(a.Equals(b));  // True
-Console.WriteLine(a.Equals(c));  // False
-
-var order = new
-{
-    OrderId = 1,
-    Customer = new { Name = "Alice", City = "Seattle" },
-    Total = 150.00m
-};
-Console.WriteLine($"Order {order.OrderId} for {order.Customer.Name} in {order.Customer.City}");
-// Output:
-// Order 1 for Alice in Seattle
-```
 ## Nested anonymous types
 
 Anonymous types can contain other anonymous types as property values:
 
-```csharp
-var person = new { Name = "Alice", Age = 30 };
-Console.WriteLine($"{person.Name} is {person.Age} years old.");
-// Output:
-// Alice is 30 years old.
+:::code language="csharp" source="./snippets/anonymous-types/csharp/Program.cs" id="Nested":::
 
-string productName = "Laptop";
-decimal price = 999.99m;
-var product = new { productName, price };
-Console.WriteLine($"{product.productName}: {product.price:C}");
-// Output:
-// Laptop: $999.99
-
-var words = new[] { "apple", "blueberry", "cherry" };
-
-var results = words.Select(w => new { Word = w, Length = w.Length });
-
-foreach (var item in results)
-{
-    Console.WriteLine($"{item.Word} has {item.Length} letters.");
-}
-// Output:
-// apple has 5 letters.
-// blueberry has 9 letters.
-// cherry has 6 letters.
-
-var a = new { Name = "Alice", Age = 30 };
-var b = new { Name = "Alice", Age = 30 };
-var c = new { Name = "Bob", Age = 25 };
-
-Console.WriteLine(a.Equals(b));  // True
-Console.WriteLine(a.Equals(c));  // False
-
-var order = new
-{
-    OrderId = 1,
-    Customer = new { Name = "Alice", City = "Seattle" },
-    Total = 150.00m
-};
-Console.WriteLine($"Order {order.OrderId} for {order.Customer.Name} in {order.Customer.City}");
-// Output:
-// Order 1 for Alice in Seattle
-```
 ## Characteristics
 
 Anonymous types have the following characteristics:
 
-- The compiler generates them as `internal sealed class` types that derive from `System.Object`.
+- The compiler generates them as `internal sealed class` types that derive from <xref:System.Object>.
 - All properties are `public` and read-only.
-- Anonymous types support `with` expressions for nondestructive mutation.
-- The compiler generates value-based `System.Object.Equals*`, `System.Object.GetHashCode*`, and `System.Object.ToString*` overrides.
-- Anonymous types support expression trees, while tuples don't.
+- Anonymous types support [`with` expressions](../../language-reference/operators/with-expression.md) for nondestructive mutation.
+- The compiler generates value-based <xref:System.Object.Equals*>, <xref:System.Object.GetHashCode*>, and <xref:System.Object.ToString*> overrides.
+- Anonymous types support [expression trees](../../advanced-topics/expression-trees/index.md), while tuples don't.
 
 ## Limitations
 
@@ -276,12 +72,12 @@ Anonymous types have several limitations:
 
 ## When to use tuples instead
 
-For most new code, consider using tuples instead of anonymous types. As value types, tuples provide better performance. They also provide deconstruction support and more flexible syntax. Anonymous types remain the better choice when you need expression tree support or reference-type semantics. For a detailed comparison, see Choosing between anonymous and tuple types.
+For most new code, consider using [tuples](../../fundamentals/types/tuples.md#tuples-vs-anonymous-types) instead of anonymous types. As value types, tuples provide better performance. They also provide deconstruction support and more flexible syntax. Anonymous types remain the better choice when you need expression tree support or reference-type semantics. For a detailed comparison, see [Choosing between anonymous and tuple types](../../../standard/base-types/choosing-between-anonymous-and-tuple.md).
 
 ## See also
 
-- Object and collection initializers
-- Implicitly typed local variables
-- Tuples and deconstruction
-- LINQ in C#
-- Choosing between anonymous and tuple types
+- [Object and collection initializers](object-and-collection-initializers.md)
+- [Implicitly typed local variables](implicitly-typed-local-variables.md)
+- [Tuples and deconstruction](../../fundamentals/types/tuples.md)
+- [LINQ in C#](../../linq/index.md)
+- [Choosing between anonymous and tuple types](../../../standard/base-types/choosing-between-anonymous-and-tuple.md)

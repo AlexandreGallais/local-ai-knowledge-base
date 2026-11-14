@@ -1,12 +1,8 @@
 ---
-title: "dotnet nuget disable source command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-nuget-disable-source.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet nuget disable source command
+description: The dotnet nuget disable source command disables an existing source in your NuGet configuration files. 
+ms.date: 10/28/2025
 ---
-
 # dotnet nuget disable source
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -35,9 +31,7 @@ The `dotnet nuget disable source` command disables an existing source in your Nu
 
 ## Options
 
-- **`--configfile <FILE>`**
-
-The NuGet configuration file (*nuget.config*) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see Common NuGet Configurations.
+- [!INCLUDE [configfile](includes/cli-configfile.md)]
 
 ## Examples
 
@@ -49,6 +43,6 @@ The NuGet configuration file (*nuget.config*) to use. If specified, only the set
 
 ## See also
 
-- Package source sections in NuGet.config files
+- [Package source sections in NuGet.config files](/nuget/reference/nuget-config-file#package-source-sections)
 
-- sources command (nuget.exe)
+- [sources command (nuget.exe)](/nuget/reference/cli-reference/cli-ref-sources)

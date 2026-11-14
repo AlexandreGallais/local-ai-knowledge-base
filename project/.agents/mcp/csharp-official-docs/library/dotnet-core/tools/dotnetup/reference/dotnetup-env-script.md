@@ -1,16 +1,14 @@
 ---
-title: "dotnetup env script command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/reference/dotnetup-env-script.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnetup env script command
+description: Command reference for generating a dotnetup shell activation script.
+ms.topic: reference
+ms.date: 08/07/2026
+ai-usage: ai-assisted
 ---
 
 # dotnetup env script command
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 ## Name
 
@@ -35,7 +33,7 @@ With selection options, it includes only the requested parts.
 | Option | Description |
 | --- | --- |
 | `-s`, `--shell [<bash\|zsh\|fish\|pwsh>]` | Select the script syntax. If omitted, detect the current shell. |
-| `-d`, `--dotnet-install-path ` | Use a specific .NET installation root. The default is the default dotnetup-managed installation root. |
+| `-d`, `--dotnet-install-path <PATH>` | Use a specific .NET installation root. The default is the default dotnetup-managed installation root. |
 | `--dotnet` | Add the selected .NET root to `PATH` and set `DOTNET_ROOT`. |
 | `--dotnetup` | Add the directory that contains `dotnetup` to `PATH`. |
 | `-?`, `-h`, `--help` | Show command help. |

@@ -1,41 +1,29 @@
----
-title: "RuntimeVisibleAnnotationsAttribute interface (java.lang.classfile.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/attribute/RuntimeVisibleAnnotationsAttribute.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # RuntimeVisibleAnnotationsAttribute interface (java.lang.classfile.attribute)
 
 ```java
 public sealed interface RuntimeVisibleAnnotationsAttribute extends Attribute<RuntimeVisibleAnnotationsAttribute>, ClassElement, MethodElement, FieldElement permits BoundAttribute.BoundRuntimeVisibleAnnotationsAttribute, UnboundAttribute.UnboundRuntimeVisibleAnnotationsAttribute
 ```
 
-Models the RuntimeVisibleAnnotations attribute (JVMS ), which stores
+Models the {@link Attributes#runtimeVisibleAnnotations()
+RuntimeVisibleAnnotations} attribute (JVMS {@jvms 4.7.16}), which stores
 declaration annotations on this structure that are visible to both
-`class` file consumers and core reflection.
-
+{@code class} file consumers and {@linkplain AnnotatedElement core reflection}.
+<p>
 This attribute appears on classes, fields, methods, and record components,
-and does not permit multiple instances in one structure.  It has a data dependency on the constant pool.
-
+and does not permit {@linkplain AttributeMapper#allowMultiple multiple
+instances} in one structure.  It has a data dependency on the {@linkplain
+AttributeStability#CP_REFS constant pool}.
+<p>
 The attribute was introduced in the Java SE Platform version 5.0, major
-version `ClassFile#JAVA_5_VERSION`.
+version {@value ClassFile#JAVA_5_VERSION}.
 
-**See also:** Attributes#runtimeVisibleAnnotations()
-
-**See also:** java.compiler/javax.lang.model.element.Element
-
-**See also:** AnnotatedElement
-
-**See also:** ElementType
-
-**See also:** RetentionPolicy#RUNTIME
-
-**jvms:** 4.7.16 The `RuntimeVisibleAnnotations` Attribute
-
-**Since:** 24
+@see Attributes#runtimeVisibleAnnotations()
+@see java.compiler/javax.lang.model.element.Element
+@see AnnotatedElement
+@see ElementType
+@see RetentionPolicy#RUNTIME
+@jvms 4.7.16 The {@code RuntimeVisibleAnnotations} Attribute
+@since 24
 
 ## RuntimeVisibleAnnotationsAttribute.annotations()
 
@@ -43,15 +31,16 @@ version `ClassFile#JAVA_5_VERSION`.
 List<Annotation> annotations()
 ```
 
+{@return the run-time visible declaration annotations on this structure}
+
 ## RuntimeVisibleAnnotationsAttribute.of(List<Annotation>)
 
 ```java
 static RuntimeVisibleAnnotationsAttribute of(List<Annotation> annotations)
 ```
 
-Parameters:
-
-- `annotations`: the annotations
+{@return a {@code RuntimeVisibleAnnotations} attribute}
+@param annotations the annotations
 
 ## RuntimeVisibleAnnotationsAttribute.of(Annotation...)
 
@@ -59,6 +48,5 @@ Parameters:
 static RuntimeVisibleAnnotationsAttribute of(Annotation... annotations)
 ```
 
-Parameters:
-
-- `annotations`: the annotations
+{@return a {@code RuntimeVisibleAnnotations} attribute}
+@param annotations the annotations

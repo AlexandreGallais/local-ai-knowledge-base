@@ -1,12 +1,17 @@
 ---
 title: "MSTEST0052: Avoid passing an explicit 'DynamicDataSourceType' and use the default auto detect behavior"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0052.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0052: Avoid passing an explicit 'DynamicDataSourceType' and use the default auto detect behavior"
+ms.date: 10/01/2025
+f1_keywords:
+- MSTEST0052
+- AvoidExplicitDynamicDataSourceTypeAnalyzer
+helpviewer_keywords:
+- AvoidExplicitDynamicDataSourceTypeAnalyzer
+- MSTEST0052
+author: Youssef1313
+ms.author: ygerges
+ai-usage: ai-generated
 ---
-
 # MSTEST0052: Avoid passing an explicit 'DynamicDataSourceType' and use the default auto detect behavior
 
 | Property                            | Value                                                                                      |
@@ -22,7 +27,7 @@ license: "CC-BY-4.0"
 
 ## Cause
 
-A `Microsoft.VisualStudio.TestTools.UnitTesting.DynamicDataAttribute` explicitly specifies `Microsoft.VisualStudio.TestTools.UnitTesting.DynamicDataSourceType.Property` or `Microsoft.VisualStudio.TestTools.UnitTesting.DynamicDataSourceType.Method` instead of using the default `Microsoft.VisualStudio.TestTools.UnitTesting.DynamicDataSourceType.AutoDetect`.
+A <xref:Microsoft.VisualStudio.TestTools.UnitTesting.DynamicDataAttribute> explicitly specifies <xref:Microsoft.VisualStudio.TestTools.UnitTesting.DynamicDataSourceType.Property> or <xref:Microsoft.VisualStudio.TestTools.UnitTesting.DynamicDataSourceType.Method> instead of using the default <xref:Microsoft.VisualStudio.TestTools.UnitTesting.DynamicDataSourceType.AutoDetect>.
 
 ## Rule description
 

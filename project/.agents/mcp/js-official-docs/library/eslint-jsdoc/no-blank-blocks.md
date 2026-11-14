@@ -1,32 +1,33 @@
----
-title: "no-blank-blocks"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/no-blank-blocks.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-no-blank-blocks"></a>
+<a name="no-blank-blocks"></a>
+# <code>no-blank-blocks</code>
 
-# `no-blank-blocks`
+* [Fixer](#user-content-no-blank-blocks-fixer)
+    * [`enableFixer`](#user-content-no-blank-blocks-fixer-enablefixer)
+* [Failing examples](#user-content-no-blank-blocks-failing-examples)
+* [Passing examples](#user-content-no-blank-blocks-passing-examples)
 
-* Fixer
-    * `enableFixer`
-* Failing examples
-* Passing examples
 
 Reports and optionally removes blocks with whitespace only.
 
+<a name="user-content-no-blank-blocks-fixer"></a>
+<a name="no-blank-blocks-fixer"></a>
 ## Fixer
 
 Auto-removes blank blocks with whitespace only.
 
+<a name="user-content-no-blank-blocks-fixer-options"></a>
+<a name="no-blank-blocks-fixer-options"></a>
 #### Options
 
 A single options object has the following properties.
 
-### `enableFixer`
+<a name="user-content-no-blank-blocks-fixer-enablefixer"></a>
+<a name="no-blank-blocks-fixer-enablefixer"></a>
+### <code>enableFixer</code>
 
 Whether or not to auto-remove the blank block. Defaults to `false`.
+
 
 |||
 |---|---|
@@ -36,6 +37,8 @@ Whether or not to auto-remove the blank block. Defaults to `false`.
 |Settings||
 |Options|`enableFixer`|
 
+<a name="user-content-no-blank-blocks-failing-examples"></a>
+<a name="no-blank-blocks-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -77,6 +80,10 @@ The following patterns are considered problems:
 // Message: No empty blocks
 ````
 
+
+
+<a name="user-content-no-blank-blocks-passing-examples"></a>
+<a name="no-blank-blocks-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -92,3 +99,4 @@ The following patterns are not considered problems:
  * @tag
  */
 ````
+

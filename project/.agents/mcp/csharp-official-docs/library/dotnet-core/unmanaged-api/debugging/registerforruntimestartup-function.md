@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: RegisterForRuntimeStartup Function"
 title: "RegisterForRuntimeStartup Function"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/registerforruntimestartup-function.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/21/2022"
+f1_keywords:
+  - "RegisterForRuntimeStartup"
+api_location:
+  - "dbgshim.dll"
+  - "libdbgshim.so"
+  - "libdbgshim.dylib"
+helpviewer_keywords:
+  - "RegisterForRuntimeStartup function"
+  - "debugging API [.NET Core]"
+  - ".NET Core, debugging"
+ms.assetid: 35c7a18f-133a-4584-bd25-bb338568b0c6
 ---
-
 # RegisterForRuntimeStartup function
 
 Executes the callback when the .NET runtime starts in the specified process.
@@ -28,13 +35,13 @@ HRESULT RegisterForRuntimeStartup (
  [in] The process id of the target process.
 
  `pfnCallback`\
- [in] A callback that is invoked when the runtime starts. See PSTARTUP_CALLBACK function pointer.
+ [in] A callback that is invoked when the runtime starts. See [PSTARTUP_CALLBACK](pstartup_callback-function-pointer.md) function pointer.
 
  `parameter`\
  [in] data pointer passed to `pfnCallback`.
 
  `ppUnregisterToken`\
- [out] pointer to return the UnregisterForRuntimeStartup token.
+ [out] pointer to return the [UnregisterForRuntimeStartup](unregisterforruntimestartup-function.md) token.
 
 ## Return value
 
@@ -53,7 +60,7 @@ The callback is passed the proper ICorDebug instance for the version of the runt
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** dbgshim.h
 

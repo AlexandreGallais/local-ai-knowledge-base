@@ -1,17 +1,17 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/optimal-lookaround-quantifier"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/optimal-lookaround-quantifier.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "disallow the alternatives of lookarounds that end with a non-constant quantifier"
+since: "v0.8.0"
 ---
-
 # regexp/optimal-lookaround-quantifier
 
 ⚠️ This rule _warns_ in the following configs: 🟢 `flat/recommended`, 🔵 `recommended`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
 
 > disallow the alternatives of lookarounds that end with a non-constant quantifier
 
@@ -69,11 +69,14 @@ Nothing.
 This rule was taken from [eslint-plugin-clean-regex].\
 This rule is compatible with [clean-regex/optimal-lookaround-quantifier] rule.
 
+[eslint-plugin-clean-regex]: https://github.com/RunDevelopment/eslint-plugin-clean-regex
+[clean-regex/optimal-lookaround-quantifier]: https://github.com/RunDevelopment/eslint-plugin-clean-regex/blob/master/docs/rules/optimal-lookaround-quantifier.md
+
 ## :rocket: Version
 
 This rule was introduced in eslint-plugin-regexp v0.8.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/optimal-lookaround-quantifier.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/optimal-lookaround-quantifier.ts)

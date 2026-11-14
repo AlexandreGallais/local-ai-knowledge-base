@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: Metadata and Self-Describing Components"
 title: "Metadata and Self-Describing Components"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/metadata-and-self-describing-components.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "runtime, metadata"
+  - "languages, interoperability"
+  - "portable executable files, metadata"
+  - "self-describing files"
+  - "metadata, about metadata"
+  - "common language runtime, metadata"
+  - "PE files, metadata"
+  - "components [.NET], metadata"
+ms.assetid: 3dd13c5d-a508-455b-8dce-0a852882a5a7
 ---
-
 # Metadata and Self-Describing Components
 
 In the past, a software component (.exe or .dll) that was written in one language could not easily use a software component that was written in another language. COM provided a step towards solving this problem. .NET makes component interoperation even easier by allowing compilers to emit additional declarative information into all modules and assemblies. This information, called metadata, helps components to interact seamlessly.
@@ -49,11 +58,11 @@ Metadata is the key to a simpler programming model, and eliminates the need for 
 
 - Attributes.
 
-  .NET lets you declare specific kinds of metadata, called attributes, in your compiled file. Attributes can be found throughout .NET and are used to control in more detail how your program behaves at runtime. Additionally, you can emit your own custom metadata into .NET files through user-defined custom attributes. For more information, see Attributes.
+  .NET lets you declare specific kinds of metadata, called attributes, in your compiled file. Attributes can be found throughout .NET and are used to control in more detail how your program behaves at runtime. Additionally, you can emit your own custom metadata into .NET files through user-defined custom attributes. For more information, see [Attributes](attributes/index.md).
 
 ## Metadata and the PE File Structure
 
-Metadata is stored in one section of a .NET portable executable (PE) file, while common intermediate language (CIL) is stored in another section of the PE file. The metadata portion of the file contains a series of table and heap data structures. The CIL portion contains CIL and metadata tokens that reference the metadata portion of the PE file. You might encounter metadata tokens when you use tools such as the IL Disassembler (Ildasm.exe) to view your code's CIL, for example.
+Metadata is stored in one section of a .NET portable executable (PE) file, while common intermediate language (CIL) is stored in another section of the PE file. The metadata portion of the file contains a series of table and heap data structures. The CIL portion contains CIL and metadata tokens that reference the metadata portion of the PE file. You might encounter metadata tokens when you use tools such as the [IL Disassembler (Ildasm.exe)](../framework/tools/ildasm-exe-il-disassembler.md) to view your code's CIL, for example.
 
 ### Metadata Tables and Heaps
 
@@ -65,7 +74,7 @@ Metadata also stores information in four heap structures: string, blob, user str
 
 Each row of each metadata table is uniquely identified in the CIL portion of the PE file by a metadata token. Metadata tokens are conceptually similar to pointers, persisted in CIL, that reference a particular metadata table.
 
-A metadata token is a four-byte number. The top byte denotes the metadata table to which a particular token <example-value> (method, type, and so on). The remaining three bytes specify the row in the metadata table that corresponds to the programming element being described. If you define a method in C# and compile it into a PE file, the following metadata token might exist in the CIL portion of the PE file:
+A metadata token is a four-byte number. The top byte denotes the metadata table to which a particular token refers (method, type, and so on). The remaining three bytes specify the row in the metadata table that corresponds to the programming element being described. If you define a method in C# and compile it into a PE file, the following metadata token might exist in the CIL portion of the PE file:
 
 `0x06000004`
 
@@ -77,7 +86,7 @@ When a program is compiled for the common language runtime, it is converted to a
 
 |PE section|Contents of PE section|
 |----------------|----------------------------|
-|PE header|The index of the PE file's main sections and the address of the entry point. The runtime uses this information to identify the file as a PE file and to determine where execution starts when loading the program into memory.|
+|PE header|The index of the PE file's main sections and the address of the entry point.<br /><br /> The runtime uses this information to identify the file as a PE file and to determine where execution starts when loading the program into memory.|
 |CIL instructions|The Microsoft intermediate language instructions (CIL) that make up your code. Many CIL instructions are accompanied by metadata tokens.|
 |Metadata|Metadata tables and heaps. The runtime uses this section to record information about every type and member in your code. This section also includes custom attributes and security information.|
 
@@ -119,7 +128,7 @@ public class MyApp
 
 When the code runs, the runtime loads the module into memory and consults the metadata for this class. Once loaded, the runtime performs extensive analysis of the method's common intermediate language (CIL) stream to convert it to fast native machine instructions. The runtime uses a just-in-time (JIT) compiler to convert the CIL instructions to native machine code one method at a time as needed.
 
-The following example shows part of the CIL produced from the previous code's `Main` function. You can view the CIL and metadata from any .NET application using the IL Disassembler (Ildasm.exe).
+The following example shows part of the CIL produced from the previous code's `Main` function. You can view the CIL and metadata from any .NET application using the [IL Disassembler (Ildasm.exe)](../framework/tools/ildasm-exe-il-disassembler.md).
 
 ```console
 .entrypoint
@@ -142,11 +151,11 @@ The JIT compiler reads the CIL for the whole method, analyzes it thoroughly, and
 
 The following table shows part of the **MethodDef** table referenced by the metadata token that describes the `Add` method. While other metadata tables exist in this assembly and have their own unique values, only this table is discussed.
 
-|Row|Relative Virtual Address (RVA)|ImplFlags|Flags|Name (Points to string heap.)|Signature (Points to blob heap.)|
+|Row|Relative Virtual Address (RVA)|ImplFlags|Flags|Name<br /><br /> (Points to string heap.)|Signature (Points to blob heap.)|
 |---------|--------------------------------------|---------------|-----------|-----------------------------------------|----------------------------------------|
-|1|0x00002050|IL Managed|Public ReuseSlot SpecialName RTSpecialName .ctor|.ctor (constructor)||
-|2|0x00002058|IL Managed|Public Static ReuseSlot|Main|String|
-|3|0x0000208c|IL Managed|Public Static ReuseSlot|Add|int, int, int|
+|1|0x00002050|IL<br /><br /> Managed|Public<br /><br /> ReuseSlot<br /><br /> SpecialName<br /><br /> RTSpecialName<br /><br /> .ctor|.ctor (constructor)||
+|2|0x00002058|IL<br /><br /> Managed|Public<br /><br /> Static<br /><br /> ReuseSlot|Main|String|
+|3|0x0000208c|IL<br /><br /> Managed|Public<br /><br /> Static<br /><br /> ReuseSlot|Add|int, int, int|
 
 Each column of the table contains important information about your code. The **RVA** column allows the runtime to calculate the starting memory address of the CIL that defines this method. The **ImplFlags** and **Flags** columns contain bitmasks that describe the method (for example, whether the method is public or private). The **Name** column indexes the name of the method from the string heap. The **Signature** column indexes the definition of the method's signature in the blob heap.
 

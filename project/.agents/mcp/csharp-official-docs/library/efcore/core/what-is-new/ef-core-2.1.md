@@ -1,10 +1,9 @@
 ---
-title: "What is new in EF Core 2.1 - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/what-is-new/ef-core-2.1.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: What is new in EF Core 2.1 - EF Core
+description: Changes and improvements in Entity Framework Core 2.1
+author: SamMonoRT
+ms.date: 02/20/2018
+uid: core/what-is-new/ef-core-2.1
 ---
 
 # New features in EF Core 2.1
@@ -15,13 +14,13 @@ Besides numerous bug fixes and small functional and performance enhancements, EF
 
 EF Core now contains the necessary building blocks for anyone to author entity classes that can load their navigation properties on demand. We have also created a new package, Microsoft.EntityFrameworkCore.Proxies, that leverages those building blocks to produce lazy loading proxy classes based on minimally modified entity classes (for example, classes with virtual navigation properties).
 
-Read the section on lazy loading for more information about this topic.
+Read the [section on lazy loading](xref:core/querying/related-data#lazy-loading) for more information about this topic.
 
 ## Parameters in entity constructors
 
 As one of the required building blocks for lazy loading, we enabled the creation of entities that take parameters in their constructors. You can use parameters to inject property values, lazy loading delegates, and services.
 
-Read the section on entity constructor with parameters for more information about this topic.
+Read the [section on entity constructor with parameters](xref:core/modeling/constructors) for more information about this topic.
 
 ## Value conversions
 
@@ -31,7 +30,7 @@ Until now, EF Core could only map properties of types natively supported by the 
 - Mapping unsigned integers with SQL Server
 - Automatic encryption and decryption of property values
 
-Read the section on value conversions for more information about this topic.
+Read the [section on value conversions](xref:core/modeling/value-conversions) for more information about this topic.
 
 ## LINQ GroupBy translation
 
@@ -72,7 +71,7 @@ As an example, you can use this to configure seed data for a Post in `OnModelCre
 modelBuilder.Entity<Post>().HasData(new Post{ Id = 1, Text = "Hello World!" });
 ```
 
-Read the section on data seeding for more information about this topic.
+Read the [section on data seeding](xref:core/modeling/data-seeding) for more information about this topic.
 
 ## Query types
 
@@ -83,7 +82,7 @@ An EF Core model can now include query types. Unlike entity types, query types d
 - Mapping to queries defined in the model
 - Serving as the return type for `FromSql()` queries
 
-Read the section on query types for more information about this topic.
+Read the [section on query types](xref:core/modeling/keyless-entity-types) for more information about this topic.
 
 ## Include for derived types
 
@@ -95,13 +94,13 @@ var option2 = context.People.Include(p => (p as Student).School);
 var option3 = context.People.Include("School");
 ```
 
-Read the section on Include with derived types for more information about this topic.
+Read the [section on Include with derived types](xref:core/querying/related-data#include-on-derived-types) for more information about this topic.
 
 ## System.Transactions support
 
 We have added the ability to work with System.Transactions features such as TransactionScope. This will work on both .NET Framework and .NET Core when using database providers that support it.
 
-Read the section on System.Transactions for more information about this topic.
+Read the [section on System.Transactions](xref:core/saving/transactions#using-systemtransactions) for more information about this topic.
 
 ## Better column ordering in initial migration
 
@@ -129,7 +128,7 @@ Note that this query will be translated to only two SQL queries: One for Custome
 
 ## [Owned] attribute
 
-It is now possible to configure owned entity types by simply annotating the type with `[Owned]` and then making sure the owner entity is added to the model:
+It is now possible to configure [owned entity types](xref:core/modeling/owned-entities) by simply annotating the type with `[Owned]` and then making sure the owner entity is added to the model:
 
 ```csharp
 [Owned]
@@ -150,7 +149,7 @@ public class Order
 
 The _dotnet-ef_ commands are now part of the .NET Core SDK, therefore it will no longer be necessary to use DotNetCliToolReference in the project to be able to use migrations or to scaffold a DbContext from an existing database.
 
-See the section on installing the tools for more details on how to enable command line tools for different versions of the .NET Core SDK and EF Core.
+See the section on [installing the tools](xref:core/cli/dotnet#installing-the-tools) for more details on how to enable command line tools for different versions of the .NET Core SDK and EF Core.
 
 ## Microsoft.EntityFrameworkCore.Abstractions package
 
@@ -173,5 +172,5 @@ var query = context.People.FromSql(sql);
 
 It is recommended that you use EF Core 2.1 with providers that have been updated or at least tested to work with EF Core 2.1.
 
-> **Tip:**
-> If you find any unexpected incompatibility or any issue in the new features, or if you have feedback on them, please report it using our issue tracker.
+> [!TIP]
+> If you find any unexpected incompatibility or any issue in the new features, or if you have feedback on them, please report it using [our issue tracker](https://github.com/dotnet/efcore/issues/new).

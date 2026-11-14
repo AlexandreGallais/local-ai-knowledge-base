@@ -1,27 +1,26 @@
 ---
-title: "Writing a Database Provider - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/providers/writing-a-provider.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Writing a Database Provider - EF Core
+description: Information on writing a new Entity Framework Core provider
+author: SamMonoRT
+ms.date: 10/27/2016
+uid: core/providers/writing-a-provider
 ---
 
 # Writing a Database Provider
 
-For information about writing an Entity Framework Core database provider, see So You (Still) Want to Write an EF Core Provider by Anas Ismail Khan. For the original post covering EF Core 1.1, see So you want to write an EF Core provider by Arthur Vickers.
+For information about writing an Entity Framework Core database provider, see [So You (Still) Want to Write an EF Core Provider](https://anasismail.com/so-you-still-want-to-write-an-ef-core-provider/) by [Anas Ismail Khan](https://github.com/anasik). For the original post covering EF Core 1.1, see [So you want to write an EF Core provider](https://blog.oneunicorn.com/2016/11/11/so-you-want-to-write-an-ef-core-provider/) by [Arthur Vickers](https://github.com/ajcvickers).
 
-The EF Core codebase is open source and contains several database providers that can be used as a reference. You can find the source code at <https://github.com/dotnet/efcore>. It may also be helpful to look at the code for commonly used third-party providers, such as Npgsql, Pomelo MySQL, and SQL Server Compact. In particular, these projects are set up to extend from and run functional tests that we publish on NuGet. This kind of setup is strongly recommended.
+The EF Core codebase is open source and contains several database providers that can be used as a reference. You can find the source code at <https://github.com/dotnet/efcore>. It may also be helpful to look at the code for commonly used third-party providers, such as [Npgsql](https://github.com/npgsql/Npgsql.EntityFrameworkCore.PostgreSQL), [Pomelo MySQL](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql), and [SQL Server Compact](https://github.com/ErikEJ/EntityFramework.SqlServerCompact). In particular, these projects are set up to extend from and run functional tests that we publish on NuGet. This kind of setup is strongly recommended.
 
 ## Community standup videos
 
 The EF team produces "community standup" videos, where we discuss various aspects of .NET and data access. Some of these have explored EF internals, and can be a good way to understand the general architecture of EF when writing a provider:
 
-* How to Add a Feature to EF Core
-* Internal Dependency Injection
-* DbContext Configuration and Lifetime
-* IQueryable, LINQ and the EF Core query pipeline
-* Model Building
+* [How to Add a Feature to EF Core](https://www.youtube.com/watch?v=9OMxy1wal1s&list=PLdo4fOcmZ0oX0ObHwBrJ0vJpZ7PiYMqeA)
+* [Internal Dependency Injection](https://www.youtube.com/watch?v=pYhe-Mt0HzI&list=PLdo4fOcmZ0oX0ObHwBrJ0vJpZ7PiYMqeA)
+* [DbContext Configuration and Lifetime](https://www.youtube.com/watch?v=NPgFlqXPbK8&list=PLdo4fOcmZ0oX0ObHwBrJ0vJpZ7PiYMqeA)
+* [IQueryable, LINQ and the EF Core query pipeline](https://www.youtube.com/watch?v=1Ld3dtnTrMw&list=PLdo4fOcmZ0oX0ObHwBrJ0vJpZ7PiYMqeA)
+* [Model Building](https://www.youtube.com/watch?v=FYz0rAxQkC8&list=PLdo4fOcmZ0oX0ObHwBrJ0vJpZ7PiYMqeA)
 
 ## Suggested naming of third party providers
 
@@ -42,9 +41,9 @@ EF Core provides a specification test suite project, which all providers are enc
 To start using the specification tests, follow these steps:
 
 * Create an xUnit test project in your provider solution. We suggest the name `<Provider>.FunctionalTests` for consistency, so if your provider is called `AcmeSoftware.EntityFramework.AcmeDb`, call the test project `AcmeSoftware.EntityFramework.AcmeDb.FunctionalTests`.
-* From your new test project, reference the EF specification tests, which are published as regular Nuget packages. For relational providers, the specification test suite is Microsoft.EntityFrameworkCore.Relational.Specification.Tests, for non-relational provider, use Microsoft.EntityFrameworkCore.Specification.Tests).
-* Pick a test class from the EF specification tests, and extend it from a corresponding test class in your own project. The available test classes can be seen in the EF source code. Your class should be named based on the EF test class, with your provider name inserted where appropriate. For example, `NorthwindWhereQueryRelationalTestBase` (which is a good place to start), would be extended by `NorthwindWhereQueryAcmeDbTest`.
-* At the very beginning, you'll have a bit of test infrastructure to implement - once that's done once, things will become easier. For example, for `NorthwindWhereQueryAcmeDbTest` you'll have to implement `NorthwindWhereQueryAcmeDbFixture`, which will require a `AcmeDbNorthwindTestStoreFactory`, which would need a Northwind.sql script to seed the AcmeDb version of the Northwind database. We strongly suggest keeping another EF Core provider's test suite open nearby, and following what it does. For example, the SQL Server implementation of the specification tests is visible here.
+* From your new test project, reference the EF specification tests, which are published as regular Nuget packages. For relational providers, the specification test suite is [Microsoft.EntityFrameworkCore.Relational.Specification.Tests](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Relational.Specification.Tests), for non-relational provider, use [Microsoft.EntityFrameworkCore.Specification.Tests](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Specification.Tests)).
+* Pick a test class from the EF specification tests, and extend it from a corresponding test class in your own project. The available test classes can be seen in the [EF source code](https://github.com/dotnet/efcore/tree/main/test/EFCore.Relational.Specification.Tests). Your class should be named based on the EF test class, with your provider name inserted where appropriate. For example, `NorthwindWhereQueryRelationalTestBase` (which is a good place to start), would be extended by `NorthwindWhereQueryAcmeDbTest`.
+* At the very beginning, you'll have a bit of test infrastructure to implement - once that's done once, things will become easier. For example, for `NorthwindWhereQueryAcmeDbTest` you'll have to implement `NorthwindWhereQueryAcmeDbFixture`, which will require a `AcmeDbNorthwindTestStoreFactory`, which would need a Northwind.sql script to seed the AcmeDb version of the Northwind database. We strongly suggest keeping another EF Core provider's test suite open nearby, and following what it does. For example, the SQL Server implementation of the specification tests is visible [here](https://github.com/dotnet/efcore/tree/main/test/EFCore.SqlServer.FunctionalTests).
 * Once the infrastructure for the test class is done, you'll start seeing some green tests on it. You can investigate the failing tests, or temporarily skip them for later investigation. In this way you can add more and more test classes.
 * At some point, when you've extended most of the upstream test classes, you can also create `AcmeDbComplianceTest`, which extends `RelationalComplianceTestBase`. This test class will fail if your own test project doesn't extend an EF Core test class - it's a great way to know whether your test suite is complete, and also whether EF added a new test class in a new version. You can also opt out of extending specific test classes if they're not ready (or not relevant).
 
@@ -52,7 +51,7 @@ To start using the specification tests, follow these steps:
 
 When implementing the specification tests, you have the option of additionally asserting the SQL that EF Core produces. This isn't mandatory: the specification test implementation already checks that your provider returned the expected rows from the database, so if it passes, your provider is likely doing the right thing. However, asserting that the SQL is what you expect it to be can add additional coverage in some cases, especially where some SQL construct is being used that's specific to your database.
 
-For example, here's the `Where_simple` test in NorthwindWhereQuerySqlServerTest test class:
+For example, here's the `Where_simple` test in [NorthwindWhereQuerySqlServerTest](https://github.com/dotnet/efcore/blob/main/test/EFCore.SqlServer.FunctionalTests/Query/NorthwindWhereQuerySqlServerTest.cs) test class:
 
 ```c#
 public override async Task Where_simple(bool async)

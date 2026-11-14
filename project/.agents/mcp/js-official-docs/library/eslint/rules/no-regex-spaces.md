@@ -1,13 +1,14 @@
 ---
-title: "no-regex-spaces"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-regex-spaces.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-regex-spaces
+rule_type: suggestion
+related_rules:
+- no-div-regex
+- no-control-regex
 ---
 
-# no-regex-spaces
+
+
+
 
 Regular expressions can be very complex and difficult to understand, which is why it's important to keep them as simple as possible in order to avoid mistakes. One of the more error-prone things you can do with a regular expression is to use more than one space, such as:
 
@@ -29,7 +30,7 @@ This rule disallows multiple spaces in regular expression literals.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-regex-spaces: "error"*/
@@ -38,9 +39,11 @@ const re = /foo   bar/;
 const re1 = new RegExp("foo   bar");
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-regex-spaces: "error"*/
@@ -48,6 +51,8 @@ Examples of **correct** code for this rule:
 const re = /foo {3}bar/;
 const re1 = new RegExp("foo {3}bar");
 ```
+
+:::
 
 ## Options
 

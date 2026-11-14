@@ -1,15 +1,6 @@
----
-title: "Getting started with service workers"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/ecosystem/service-workers/getting-started.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Getting started with service workers
 
-This document explains how to enable Angular service worker support in projects that you created with the Angular CLI. It then uses an example to show you a service worker in action, demonstrating loading and basic caching.
+This document explains how to enable Angular service worker support in projects that you created with the [Angular CLI](tools/cli). It then uses an example to show you a service worker in action, demonstrating loading and basic caching.
 
 ## Adding a service worker to your project
 
@@ -30,7 +21,7 @@ The CLI configures your application to use service workers with the following ac
    - Includes a link to add the `manifest.webmanifest` file
    - Adds a meta tag for `theme-color`
 1. Installs icon files to support the installed Progressive Web App (PWA).
-1. Creates the service worker configuration file called `ngsw-config.json`,
+1. Creates the service worker configuration file called [`ngsw-config.json`](ecosystem/service-workers/config),
    which specifies the caching behaviors and other settings.
 
 Now, build the project:
@@ -54,7 +45,7 @@ ng serve --configuration=production
 
 ```
 
-Alternatively, you can use the `http-server package` from
+Alternatively, you can use the [`http-server package`](https://www.npmjs.com/package/http-server) from
 npm, which supports service worker applications. Run it without installation using:
 
 ```shell
@@ -84,6 +75,8 @@ In Chrome:
 1. Go to the **Network tab**.
 1. Select **Offline** in the **Throttling** dropdown menu.
 
+<img alt="The offline option in the Network tab is selected" src="assets/images/guide/service-worker/offline-option.png">
+
 Now the application has no access to network interaction.
 
 For applications that do not use the Angular service worker, refreshing now would display Chrome's Internet disconnected page that says "There is no Internet connection".
@@ -92,6 +85,8 @@ With the addition of an Angular service worker, the application behavior changes
 On a refresh, the page loads normally.
 
 Look at the Network tab to verify that the service worker is active.
+
+<img alt="Requests are marked as from ServiceWorker" src="assets/images/guide/service-worker/sw-active.png">
 
 HELPFUL: Under the "Size" column, the requests state is `(ServiceWorker)`.
 This means that the resources are not being loaded from the network.
@@ -134,8 +129,10 @@ Make a change to the application, and watch the service worker install the updat
 
 Now look at how the browser and service worker handle the updated application.
 
-1. Open http://localhost:8080 again in the same window.
+1. Open [http://localhost:8080](http://localhost:8080) again in the same window.
    What happens?
+
+   <img alt="It still says Welcome to Service Workers!" src="assets/images/guide/service-worker/welcome-msg-en.png">
 
    What went wrong?
    _Nothing, actually!_
@@ -151,6 +148,8 @@ Now look at how the browser and service worker handle the updated application.
    This is how the service worker checks for updates.
 
 1. Refresh the page.
+
+   <img alt="The text has changed to say Bienvenue à app!" src="assets/images/guide/service-worker/welcome-msg-fr.png">
 
    The service worker installed the updated version of your application _in the background_, and the next time the page is loaded or reloaded, the service worker switches to the latest version.
 
@@ -300,8 +299,10 @@ export const customConfig: ApplicationConfig = {
 
 You might also be interested in the following:
 
-  - Configuration file
-  - Communicating with the Service Worker
-  - Push notifications
-  - Service Worker devops
-  - App shell pattern
+<docs-pill-row>
+  <docs-pill href="ecosystem/service-workers/config" title="Configuration file"/>
+  <docs-pill href="ecosystem/service-workers/communications" title="Communicating with the Service Worker"/>
+  <docs-pill href="ecosystem/service-workers/push-notifications" title="Push notifications"/>
+  <docs-pill href="ecosystem/service-workers/devops" title="Service Worker devops"/>
+  <docs-pill href="ecosystem/service-workers/app-shell" title="App shell pattern"/>
+</docs-pill-row>

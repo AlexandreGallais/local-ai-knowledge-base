@@ -1,19 +1,25 @@
 ---
 title: "Global .d.ts"
-tool: "typescript"
-version: "6.0"
-source: "https://github.com/microsoft/TypeScript-Website/blob/4ec663ac4412c3a7086401bd5a8811565589b11d/packages/documentation/copy/en/declaration-files/templates/global.d.ts.md"
-commit: "4ec663ac4412c3a7086401bd5a8811565589b11d"
-license: "CC-BY-4.0"
+layout: docs
+permalink: /docs/handbook/declaration-files/templates/global-d-ts.html
 ---
-
-# Global .d.ts
 
 ## Global Libraries
 
+<!-- 
+TODO:
+
+1. mention that global nearly always means 'browser'
+2. if you have a global library that you suspect is UMD, look for instructions on
+   a. how to import it
+   b. -OR- how to make it work with webpack
+3. Make the page follow the structure of documentation,usage,source example.
+
+-->
+
 A _global_ library is one that can be accessed from the global scope (i.e. without using any form of `import`).
 Many libraries simply expose one or more global variables for use.
-For example, if you were using jQuery, the `$` variable can be used by simply referring to it:
+For example, if you were using [jQuery](https://jquery.com/), the `$` variable can be used by simply referring to it:
 
 ```ts
 $(() => {

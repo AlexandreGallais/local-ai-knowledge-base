@@ -1,12 +1,3 @@
----
-title: "std::sys::thread_local::native"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sys/thread_local/native/mod.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::sys::thread_local::native
 
 Thread local support for platforms with native TLS.
@@ -31,7 +22,7 @@ Upon accessing the TLS variable, the current state is compared:
 2. If the state is `Alive`, initialization was previously completed, so
    return a reference to the value.
 3. If the state is `Destroyed`, the destructor has been run already, so
-   return `None`.
+   return [`None`].
 
 The TLS destructor sets the state to `Destroyed` and drops the current value.
 

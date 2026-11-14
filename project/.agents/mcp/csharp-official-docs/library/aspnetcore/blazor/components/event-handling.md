@@ -1,89 +1,236 @@
 ---
-title: "ASP.NET Core Blazor event handling (part 1 of 2)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/components/event-handling.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core Blazor event handling
+description: Learn about Blazor's event handling features, including event argument types, event callbacks, and managing default browser events.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 07/02/2026
 ---
-
 # ASP.NET Core Blazor event handling
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
 This article explains Blazor's event handling features, including event argument types, event callbacks, and managing default browser events.
 
-The `Microsoft.AspNetCore.Components.Web` NuGet package (`Microsoft.AspNetCore.Components.Web` namespace) contains types for supplying information about browser events to the Blazor framework. Blazor apps target the package implicitly, while Razor class libraries include an explicit package reference in the library's project file (`.csproj`).
+The [`Microsoft.AspNetCore.Components.Web` NuGet package](https://www.nuget.org/packages/Microsoft.AspNetCore.Components.Web) (<xref:Microsoft.AspNetCore.Components.Web?displayProperty=fullName> namespace) contains types for supplying information about browser events to the Blazor framework. Blazor apps target the package implicitly, while [Razor class libraries](class-libraries.md) include an explicit package reference in the library's project file (`.csproj`).
 
 ## Delegate event handlers
 
-Specify delegate event handlers in Razor component markup with `@on{DOM EVENT}="{DELEGATE}"` Razor syntax:
+Specify delegate event handlers in Razor component markup with [`@on{DOM EVENT}="{DELEGATE}"`](../../mvc/views/razor.md#onevent) Razor syntax:
 
-* The `{DOM EVENT}` placeholder is a DOM event (for example, `click`).
+* The `{DOM EVENT}` placeholder is a [DOM event](https://developer.mozilla.org/docs/Web/Events) (for example, `click`).
 * The `{DELEGATE}` placeholder is the C# delegate event handler.
 
-For supported events, see `Microsoft.AspNetCore.Components.Web.EventHandlers`.
+For supported events, see <xref:Microsoft.AspNetCore.Components.Web.EventHandlers>.
 
 For event handling:
 
-* Delegate event handlers in Blazor Web Apps are only called in components that adopt an interactive render mode. The examples throughout this article assume that the app adopts an interactive render mode globally in the app's root component, typically the `App` component. For more information, see ASP.NET Core Blazor render modes.
-* Asynchronous delegate event handlers that return a `System.Threading.Tasks.Task` (`async Task`) are supported by Blazor and adopted by Blazor Web App and Blazor WebAssembly documentation examples.
-* Delegate event handlers automatically trigger a UI render, so there's no need to manually call `StateHasChanged`.
+:::moniker range=">= aspnetcore-8.0"
+
+* Delegate event handlers in Blazor Web Apps are only called in components that adopt an interactive render mode. The examples throughout this article assume that the app adopts an interactive render mode globally in the app's root component, typically the `App` component. For more information, see [ASP.NET Core Blazor render modes](render-modes.md#apply-a-render-mode-to-the-entire-app).
+* Asynchronous delegate event handlers that return a <xref:System.Threading.Tasks.Task> (`async Task`) are supported by Blazor and adopted by Blazor Web App and Blazor WebAssembly documentation examples.
+* Delegate event handlers automatically trigger a UI render, so there's no need to manually call [`StateHasChanged`](lifecycle.md#state-changes-statehaschanged).
 * Exceptions are logged.
 
-> **Important:**
-> The Blazor framework doesn't track `void`-returning asynchronous methods (`async`). As a result, the entire process fails when an exception isn't caught if `void` is returned. Always return a `System.Threading.Tasks.Task`/`System.Threading.Tasks.ValueTask` from asynchronous methods.
+:::moniker-end
+
+:::moniker range="< aspnetcore-8.0"
+
+* Asynchronous delegate event handlers that return a <xref:System.Threading.Tasks.Task> (`async Task`) are supported by Blazor and adopted by Blazor Server and Blazor WebAssembly documentation examples.
+* Delegate event handlers automatically trigger a UI render, so there's no need to manually call [`StateHasChanged`](lifecycle.md#state-changes-statehaschanged).
+* Exceptions are logged.
+
+:::moniker-end
+
+> [!IMPORTANT]
+> The Blazor framework doesn't track `void`-returning asynchronous methods (`async`). As a result, the entire process fails when an exception isn't caught if `void` is returned. Always return a <xref:System.Threading.Tasks.Task>/<xref:System.Threading.Tasks.ValueTask> from asynchronous methods.
 
 The following code:
 
 * Calls the `UpdateHeading` method when the button is selected in the UI.
 * Calls the `CheckChanged` method when the checkbox is changed in the UI.
 
+:::moniker range=">= aspnetcore-9.0"
+
 `EventHandler1.razor`:
 
-_Code sample not included: ~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler1.razor._
+:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler1.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
+
+`EventHandler1.razor`:
+
+:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler1.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
+
+`EventHandlerExample1.razor`:
+
+:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample1.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
+
+`EventHandlerExample1.razor`:
+
+:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample1.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
+
+`EventHandlerExample1.razor`:
+
+:::code language="razor" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample1.razor":::
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-5.0"
+
+`EventHandlerExample1.razor`:
+
+:::code language="razor" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample1.razor":::
+
+:::moniker-end
+
 In the following example, `UpdateHeading`:
 
 * Is called asynchronously when the button is selected.
 * Waits two seconds before updating the heading.
 
+:::moniker range=">= aspnetcore-9.0"
+
 `EventHandler2.razor`:
 
-_Code sample not included: ~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler2.razor._
+:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler2.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
+
+`EventHandler2.razor`:
+
+:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler2.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
+
+`EventHandlerExample2.razor`:
+
+:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample2.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
+
+`EventHandlerExample2.razor`:
+
+:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample2.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
+
+`EventHandlerExample2.razor`:
+
+:::code language="razor" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample2.razor":::
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-5.0"
+
+`EventHandlerExample2.razor`:
+
+:::code language="razor" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample2.razor":::
+
+:::moniker-end
+
 ## Built-in event arguments
 
-For events that support an event argument type, specifying an event parameter in the event method definition is only necessary if the event type is used in the method. In the following example, `Microsoft.AspNetCore.Components.Web.MouseEventArgs` is used in the `ReportPointerLocation` method to set message text that reports the mouse coordinates when the user selects a button in the UI.
+For events that support an event argument type, specifying an event parameter in the event method definition is only necessary if the event type is used in the method. In the following example, <xref:Microsoft.AspNetCore.Components.Web.MouseEventArgs> is used in the `ReportPointerLocation` method to set message text that reports the mouse coordinates when the user selects a button in the UI.
+
+:::moniker range=">= aspnetcore-9.0"
 
 `EventHandler3.razor`:
 
-_Code sample not included: ~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler3.razor._
-Supported `System.EventArgs` are shown in the following table.
+:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler3.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
+
+`EventHandler3.razor`:
+
+:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler3.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
+
+`EventHandlerExample3.razor`:
+
+:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample3.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
+
+`EventHandlerExample3.razor`:
+
+:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample3.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
+
+`EventHandlerExample3.razor`:
+
+:::code language="razor" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample3.razor":::
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-5.0"
+
+`EventHandlerExample3.razor`:
+
+:::code language="razor" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample3.razor":::
+
+:::moniker-end
+
+Supported <xref:System.EventArgs> are shown in the following table.
 
 | Event            | Class  | DOM notes |
 | ---------------- | ------ | --- |
-| Clipboard        | `Microsoft.AspNetCore.Components.Web.ClipboardEventArgs` | |
-| Drag             | `Microsoft.AspNetCore.Components.Web.DragEventArgs` | `Microsoft.AspNetCore.Components.Web.DataTransfer` and `Microsoft.AspNetCore.Components.Web.DataTransferItem` hold dragged item data.Implement drag and drop in Blazor apps using JS interop with HTML Drag and Drop API. |
-| Error            | `Microsoft.AspNetCore.Components.Web.ErrorEventArgs` | |
-| Event            | `System.EventArgs` | `Microsoft.AspNetCore.Components.Web.EventHandlers` holds attributes to configure the mappings between event names and event argument types. |
-| Focus            | `Microsoft.AspNetCore.Components.Web.FocusEventArgs` | Doesn't include support for `relatedTarget`. |
-| Input            | `Microsoft.AspNetCore.Components.ChangeEventArgs` | |
-| Keyboard         | `Microsoft.AspNetCore.Components.Web.KeyboardEventArgs` | |
-| Mouse            | `Microsoft.AspNetCore.Components.Web.MouseEventArgs` | |
-| Mouse pointer    | `Microsoft.AspNetCore.Components.Web.PointerEventArgs` | |
-| Mouse wheel      | `Microsoft.AspNetCore.Components.Web.WheelEventArgs` | |
-| Progress         | `Microsoft.AspNetCore.Components.Web.ProgressEventArgs` | |
-| Touch            | `Microsoft.AspNetCore.Components.Web.TouchEventArgs` | `Microsoft.AspNetCore.Components.Web.TouchPoint` represents a single contact point on a touch-sensitive device. |
+| Clipboard        | <xref:Microsoft.AspNetCore.Components.Web.ClipboardEventArgs> | |
+| Drag             | <xref:Microsoft.AspNetCore.Components.Web.DragEventArgs> | <xref:Microsoft.AspNetCore.Components.Web.DataTransfer> and <xref:Microsoft.AspNetCore.Components.Web.DataTransferItem> hold dragged item data.<br><br>Implement drag and drop in Blazor apps using [JS interop](../javascript-interoperability/call-javascript-from-dotnet.md) with [HTML Drag and Drop API](https://developer.mozilla.org/docs/Web/API/HTML_Drag_and_Drop_API). |
+| Error            | <xref:Microsoft.AspNetCore.Components.Web.ErrorEventArgs> | |
+| Event            | <xref:System.EventArgs> | <xref:Microsoft.AspNetCore.Components.Web.EventHandlers> holds attributes to configure the mappings between event names and event argument types. |
+| Focus            | <xref:Microsoft.AspNetCore.Components.Web.FocusEventArgs> | Doesn't include support for `relatedTarget`. |
+| Input            | <xref:Microsoft.AspNetCore.Components.ChangeEventArgs> | |
+| Keyboard         | <xref:Microsoft.AspNetCore.Components.Web.KeyboardEventArgs> | |
+| Mouse            | <xref:Microsoft.AspNetCore.Components.Web.MouseEventArgs> | |
+| Mouse pointer    | <xref:Microsoft.AspNetCore.Components.Web.PointerEventArgs> | |
+| Mouse wheel      | <xref:Microsoft.AspNetCore.Components.Web.WheelEventArgs> | |
+| Progress         | <xref:Microsoft.AspNetCore.Components.Web.ProgressEventArgs> | |
+| Touch            | <xref:Microsoft.AspNetCore.Components.Web.TouchEventArgs> | <xref:Microsoft.AspNetCore.Components.Web.TouchPoint> represents a single contact point on a touch-sensitive device. |
 
 For more information, see the following resources:
 
-* `EventArgs` classes in the ASP.NET Core reference source (dotnet/aspnetcore `main` branch)
+* [`EventArgs` classes in the ASP.NET Core reference source (dotnet/aspnetcore `main` branch)](https://github.com/dotnet/aspnetcore/tree/main/src/Components/Web/src/Web)
 
-  > **Note:**
-> Documentation links to .NET reference source usually load the repository's default branch, which represents the current development for the next release of .NET. To select a tag for a specific release, use the **Switch branches or tags** dropdown list.
+  [!INCLUDE[](~/includes/aspnetcore-repo-ref-source-links.md)]
 
-* `Microsoft.AspNetCore.Components.Web.EventHandlers` holds attributes to configure the mappings between event names and event argument types.
+* <xref:Microsoft.AspNetCore.Components.Web.EventHandlers> holds attributes to configure the mappings between event names and event argument types.
+
+:::moniker range=">= aspnetcore-6.0"
 
 ## Custom event arguments
 
-Blazor supports custom event arguments, which enable you to pass <example-value> data to .NET event handlers with custom events.
+Blazor supports custom event arguments, which enable you to pass arbitrary data to .NET event handlers with custom events.
 
 ### General configuration
 
@@ -100,11 +247,15 @@ function eventArgsCreator(event) {
 }
 ```
 
-The `event` parameter is a DOM Event.
+The `event` parameter is a [DOM Event](https://developer.mozilla.org/docs/Web/API/Event).
 
-Register the custom event with the preceding handler in a JavaScript initializer. Provide the appropriate browser event name to `browserEventName`, which for the example shown in this section is `click` for a button selection in the UI.
+Register the custom event with the preceding handler in a [JavaScript initializer](../fundamentals/startup.md#javascript-initializers). Provide the appropriate browser event name to `browserEventName`, which for the example shown in this section is `click` for a button selection in the UI.
 
 `wwwroot/{PACKAGE ID/ASSEMBLY NAME}.lib.module.js` (the `{PACKAGE ID/ASSEMBLY NAME}` placeholder is the package ID or assembly name of the app):
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0"
 
 For a Blazor Web App:
 
@@ -119,6 +270,10 @@ export function afterWebStarted(blazor) {
 
 For a Blazor Server or Blazor WebAssembly app:
 
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0"
+
 ```javascript
 export function afterStarted(blazor) {
   blazor.registerCustomEventType('customevent', {
@@ -132,10 +287,9 @@ The call to `registerCustomEventType` is performed in a script only once per eve
 
 For the call to `registerCustomEventType`, use the `blazor` parameter (lowercase `b`) provided by the Blazor start event. Although the registration is valid when using the `Blazor` object (uppercase `B`), the preferred approach is to use the parameter.
 
-The custom event name, `customevent` in the preceding example, must not match a reserved Blazor event name. The reserved names can be found in the Blazor framework reference source (see the calls to the `registerBuiltInEventType` function).
+The custom event name, `customevent` in the preceding example, must not match a reserved Blazor event name. The reserved names can be found in the [Blazor framework reference source (see the calls to the `registerBuiltInEventType` function)](https://github.com/dotnet/aspnetcore/blob/main/src/Components/Web.JS/src/Rendering/Events/EventTypes.ts).
 
-> **Note:**
-> Documentation links to .NET reference source usually load the repository's default branch, which represents the current development for the next release of .NET. To select a tag for a specific release, use the **Switch branches or tags** dropdown list.
+[!INCLUDE[](~/includes/aspnetcore-repo-ref-source-links.md)]
 
 Define a class for the event arguments:
 
@@ -149,7 +303,7 @@ public class CustomEventArgs : EventArgs
 }
 ```
 
-Wire up the custom event with the event arguments by adding an `[EventHandler]` attribute annotation for the custom event:
+Wire up the custom event with the event arguments by adding an [`[EventHandler]` attribute](xref:Microsoft.AspNetCore.Components.EventHandlerAttribute) annotation for the custom event:
 
 * In order for the compiler to find the `[EventHandler]` class, it must be placed into a C# class file (`.cs`), making it a normal top-level class.
 * Mark the class `public`.
@@ -198,11 +352,11 @@ Register the event handler on one or more HTML elements. Access the data that wa
 }
 ```
 
-If the `@oncustomevent` attribute isn't recognized by IntelliSense, make sure that the component or the imports file (`_Imports.razor`) contains an `@using` statement for the namespace containing the `EventHandler` class.
+If the `@oncustomevent` attribute isn't recognized by [IntelliSense](/visualstudio/ide/using-intellisense), make sure that the component or the imports file (`_Imports.razor`) contains an `@using` statement for the namespace containing the `EventHandler` class.
 
 Whenever the custom event is fired on the DOM, the event handler is called with the data passed from the JavaScript.
 
-If you're attempting to fire a custom event, `bubbles` must be enabled by setting its value to `true`. Otherwise, the event doesn't reach the Blazor handler for processing into the C# custom `[EventHandler]` attribute class. For more information, see MDN Web Docs: Event bubbling.
+If you're attempting to fire a custom event, [`bubbles`](https://developer.mozilla.org/docs/Web/API/Event/bubbles) must be enabled by setting its value to `true`. Otherwise, the event doesn't reach the Blazor handler for processing into the C# custom [`[EventHandler]` attribute](xref:Microsoft.AspNetCore.Components.EventHandlerAttribute) class. For more information, see [MDN Web Docs: Event bubbling](https://developer.mozilla.org/docs/Web/Guide/Events/Creating_and_triggering_events#event_bubbling).
 
 ### Custom clipboard paste event example
 
@@ -230,9 +384,13 @@ public class CustomPasteEventArgs : EventArgs
 }
 ```
 
-Add JavaScript code to supply data for the `System.EventArgs` subclass with the preceding handler in a JavaScript initializer. The following example only handles pasting text, but you could use arbitrary JavaScript APIs to deal with users pasting other types of data, such as images.
+Add JavaScript code to supply data for the <xref:System.EventArgs> subclass with the preceding handler in a [JavaScript initializer](../fundamentals/startup.md#javascript-initializers). The following example only handles pasting text, but you could use arbitrary JavaScript APIs to deal with users pasting other types of data, such as images.
 
 `wwwroot/{PACKAGE ID/ASSEMBLY NAME}.lib.module.js`:
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0"
 
 For a Blazor Web App:
 
@@ -252,6 +410,10 @@ export function afterWebStarted(blazor) {
 
 For a Blazor Server or Blazor WebAssembly app:
 
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0"
+
 ```javascript
 export function afterStarted(blazor) {
   blazor.registerCustomEventType('custompaste', {
@@ -268,15 +430,15 @@ export function afterStarted(blazor) {
 
 In the preceding example, the `{PACKAGE ID/ASSEMBLY NAME}` placeholder of the file name represents the package ID or assembly name of the app.
 
-> **Note:**
+> [!NOTE]
 > For the call to `registerCustomEventType`, use the `blazor` parameter (lowercase `b`) provided by the Blazor start event. Although the registration is valid when using the `Blazor` object (uppercase `B`), the preferred approach is to use the parameter.
 
-The preceding code tells the browser that when a native `paste` event occurs:
+The preceding code tells the browser that when a native [`paste`](https://developer.mozilla.org/docs/Web/API/Element/paste_event) event occurs:
 
 * Raise a `custompaste` event.
 * Supply the event arguments data using the custom logic stated:
   * For the `eventTimestamp`, create a new date.
-  * For the `pastedData`, get the clipboard data as text. For more information, see MDN Web Docs: ClipboardEvent.clipboardData.
+  * For the `pastedData`, get the clipboard data as text. For more information, see [MDN Web Docs: ClipboardEvent.clipboardData](https://developer.mozilla.org/docs/Web/API/ClipboardEvent/clipboardData).
 
 Event name conventions differ between .NET and JavaScript:
 
@@ -311,29 +473,121 @@ In a Razor component, attach the custom handler to an element.
 }
 ```
 
+:::moniker-end
+
 ## Lambda expressions
 
-Lambda expressions are supported as the delegate event handler.
+[Lambda expressions](/dotnet/csharp/programming-guide/statements-expressions-operators/lambda-expressions) are supported as the delegate event handler.
+
+:::moniker range=">= aspnetcore-9.0"
 
 `EventHandler4.razor`:
 
-_Code sample not included: ~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler4.razor._
+:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler4.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
+
+`EventHandler4.razor`:
+
+:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler4.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
+
+`EventHandlerExample4.razor`:
+
+:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample4.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
+
+`EventHandlerExample4.razor`:
+
+:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample4.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
+
+`EventHandlerExample4.razor`:
+
+:::code language="razor" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample4.razor":::
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-5.0"
+
+`EventHandlerExample4.razor`:
+
+:::code language="razor" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample4.razor":::
+
+:::moniker-end
+
 It's often convenient to close over additional values using C# method parameters, such as when iterating over a set of elements. The following example creates three buttons, each of which calls `UpdateHeading` and passes the following data:
 
-* An event argument (`Microsoft.AspNetCore.Components.Web.MouseEventArgs`) in `e`.
+* An event argument (<xref:Microsoft.AspNetCore.Components.Web.MouseEventArgs>) in `e`.
 * The button number in `buttonNumber`.
+
+:::moniker range=">= aspnetcore-9.0"
 
 `EventHandler5.razor`:
 
-_Code sample not included: ~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler5.razor._
-Creating a large number of event delegates in a loop may cause poor rendering performance. For more information, see ASP.NET Core Blazor rendering performance best practices.
+:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler5.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
+
+`EventHandler5.razor`:
+
+:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler5.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
+
+`EventHandlerExample5.razor`:
+
+:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample5.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
+
+`EventHandlerExample5.razor`:
+
+:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample5.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
+
+`EventHandlerExample5.razor`:
+
+:::code language="razor" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample5.razor":::
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-5.0"
+
+`EventHandlerExample5.razor`:
+
+:::code language="razor" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample5.razor":::
+
+:::moniker-end
+
+Creating a large number of event delegates in a loop may cause poor rendering performance. For more information, see [ASP.NET Core Blazor rendering performance best practices](../performance/rendering.md#avoid-recreating-delegates-for-many-repeated-elements-or-components).
 
 Avoid using a loop variable directly in a lambda expression, such as `i` in the preceding `for` loop example. Otherwise, the same variable is used by all lambda expressions, which results in use of the same value in all lambdas. Capture the variable's value in a local variable. In the preceding example:
 
 * The loop variable `i` is assigned to `buttonNumber`.
 * `buttonNumber` is used in the lambda expression.
 
-Alternatively, use a `foreach` loop with `System.Linq.Enumerable.Range*`, which doesn't suffer from the preceding problem:
+Alternatively, use a `foreach` loop with <xref:System.Linq.Enumerable.Range*?displayProperty=nameWithType>, which doesn't suffer from the preceding problem:
 
 ```razor
 @foreach (var buttonNumber in Enumerable.Range(1, 3))
@@ -345,3 +599,331 @@ Alternatively, use a `foreach` loop with `System.Linq.Enumerable.Range*`, which 
     </p>
 }
 ```
+
+## EventCallback
+
+A common scenario with nested components is executing a method in a parent component when a child component event occurs. An `onclick` event occurring in the child component is a common use case. To expose events across components, use an <xref:Microsoft.AspNetCore.Components.EventCallback>. A parent component can assign a callback method to a child component's <xref:Microsoft.AspNetCore.Components.EventCallback>.
+
+The following `Child` component demonstrates how a button's `onclick` handler is set up to receive an <xref:Microsoft.AspNetCore.Components.EventCallback> delegate from the sample's `ParentComponent`. The <xref:Microsoft.AspNetCore.Components.EventCallback> is typed with <xref:Microsoft.AspNetCore.Components.Web.MouseEventArgs>, which is appropriate for an `onclick` event from a peripheral device.
+
+`Child.razor`:
+
+:::moniker range=">= aspnetcore-9.0"
+
+:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Child.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
+
+:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Child.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
+
+:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Shared/event-handling/Child.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
+
+:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Shared/event-handling/Child.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
+
+:::code language="razor" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/Shared/event-handling/Child.razor":::
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-5.0"
+
+:::code language="razor" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/Shared/event-handling/Child.razor":::
+
+:::moniker-end
+
+The parent component sets the child's <xref:Microsoft.AspNetCore.Components.EventCallback`1> (`OnClickCallback`) to its `ShowMessage` method.
+
+:::moniker range=">= aspnetcore-9.0"
+
+`ParentChild.razor`:
+
+:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/ParentChild.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
+
+`ParentChild.razor`:
+
+:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/ParentChild.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
+
+`Parent.razor`:
+
+:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/event-handling/Parent.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
+
+`Parent.razor`:
+
+:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Pages/event-handling/Parent.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
+
+`Parent.razor`:
+
+:::code language="razor" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/Pages/event-handling/Parent.razor":::
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-5.0"
+
+`Parent.razor`:
+
+:::code language="razor" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/Pages/event-handling/Parent.razor":::
+
+:::moniker-end
+
+When the button is selected in the `ChildComponent`:
+
+* The `Parent` component's `ShowMessage` method is called. `message` is updated and displayed in the `Parent` component.
+* A call to [`StateHasChanged`](lifecycle.md#state-changes-statehaschanged) isn't required in the callback's method (`ShowMessage`). <xref:Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*> is called automatically to rerender the `Parent` component, just as child events trigger component rerendering in event handlers that execute within the child. For more information, see [ASP.NET Core Razor component rendering](rendering.md#statehaschanged).
+
+Use <xref:Microsoft.AspNetCore.Components.EventCallback> and <xref:Microsoft.AspNetCore.Components.EventCallback`1> for event handling and binding component parameters.
+
+Prefer the strongly typed <xref:Microsoft.AspNetCore.Components.EventCallback`1> over <xref:Microsoft.AspNetCore.Components.EventCallback>. <xref:Microsoft.AspNetCore.Components.EventCallback`1> provides enhanced error feedback when an inappropriate type is used, guiding users of the component towards correct implementation. Similar to other UI event handlers, specifying the event parameter is optional. Use <xref:Microsoft.AspNetCore.Components.EventCallback> when there's no value passed to the callback.
+
+<xref:Microsoft.AspNetCore.Components.EventCallback> and <xref:Microsoft.AspNetCore.Components.EventCallback`1> permit asynchronous delegates. <xref:Microsoft.AspNetCore.Components.EventCallback> is weakly typed and allows passing any type argument in `InvokeAsync(Object)`. <xref:Microsoft.AspNetCore.Components.EventCallback`1> is strongly typed and requires passing a `T` argument in `InvokeAsync(T)` that's assignable to `TValue`.
+
+Invoke an <xref:Microsoft.AspNetCore.Components.EventCallback> or <xref:Microsoft.AspNetCore.Components.EventCallback`1> with <xref:Microsoft.AspNetCore.Components.EventCallback.InvokeAsync*> and await the <xref:System.Threading.Tasks.Task>:
+
+```csharp
+await OnClickCallback.InvokeAsync({ARGUMENT});
+```
+
+In the preceding example, the `{ARGUMENT}` placeholder is an optional argument.
+
+The following parent-child example demonstrates the technique.
+
+`Child2.razor`:
+
+```razor
+<h3>Child2 Component</h3>
+
+<button @onclick="TriggerEvent">Click Me</button>
+
+@code {
+    [Parameter]
+    public EventCallback<string> OnClickCallback { get; set; }
+
+    private async Task TriggerEvent()
+    {
+        await OnClickCallback.InvokeAsync("Blaze It!");
+    }
+}
+```
+
+`ParentChild2.razor`:
+
+```razor
+@page "/parent-child-2"
+
+<PageTitle>Parent Child 2</PageTitle>
+
+<h1>Parent Child 2 Example</h1>
+
+<div>
+    <Child2 OnClickCallback="(value) => { message1 = value; }" />
+    @message1
+</div>
+
+<div>
+    <Child2 OnClickCallback=
+        "async (value) => { await Task.Delay(2000); message2 = value; }" /> 
+    @message2
+</div>
+
+@code {
+    private string message1 = string.Empty;
+    private string message2 = string.Empty;
+}
+```
+
+The second occurrence of the `Child2` component demonstrates an asynchronous callback, and the new `message2` value is assigned and rendered with a delay of two seconds.
+
+## Prevent default actions
+
+Use the [`@on{DOM EVENT}:preventDefault`](../../mvc/views/razor.md#oneventpreventdefault) directive attribute to prevent the default action for an event, where the `{DOM EVENT}` placeholder is a [DOM event](https://developer.mozilla.org/docs/Web/Events).
+
+When a key is selected on an input device and the element focus is on a text box, a browser normally displays the key's character in the text box. In the following example, the default behavior is prevented by specifying the `@onkeydown:preventDefault` directive attribute. When the focus is on the `<input>` element, the counter increments with the key sequence <kbd>Shift</kbd>+<kbd>+</kbd>. The `+` character isn't assigned to the `<input>` element's value. For more information on `keydown`, see [`MDN Web Docs: Document: keydown` event](https://developer.mozilla.org/docs/Web/API/Document/keydown_event).
+
+:::moniker range=">= aspnetcore-9.0"
+
+`EventHandler6.razor`:
+
+:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler6.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
+
+`EventHandler6.razor`:
+
+:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler6.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
+
+`EventHandlerExample6.razor`:
+
+:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample6.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
+
+`EventHandlerExample6.razor`:
+
+:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample6.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
+
+`EventHandlerExample6.razor`:
+
+:::code language="razor" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample6.razor":::
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-5.0"
+
+`EventHandlerExample6.razor`:
+
+:::code language="razor" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample6.razor":::
+
+:::moniker-end
+
+Specifying the `@on{DOM EVENT}:preventDefault` attribute without a value is equivalent to `@on{DOM EVENT}:preventDefault="true"`.
+
+An expression is also a permitted value of the attribute. In the following example, `shouldPreventDefault` is a `bool` field set to either `true` or `false`:
+
+```razor
+<input @onkeydown:preventDefault="shouldPreventDefault" />
+
+...
+
+@code {
+    private bool shouldPreventDefault = true;
+}
+```
+
+## Stop event propagation
+
+Use the [`@on{DOM EVENT}:stopPropagation`](../../mvc/views/razor.md#oneventstoppropagation) directive attribute to stop event propagation within the Blazor scope. `{DOM EVENT}` is a placeholder for a [DOM event](https://developer.mozilla.org/docs/Web/Events).
+
+The `stopPropagation` directive attribute's effect is limited to the Blazor scope and doesn't extend to the HTML DOM. Events must propagate to the HTML DOM root before Blazor can act upon them. For a mechanism to prevent HTML DOM event propagation, consider the following approach:
+
+* Obtain the event's path by calling [`Event.composedPath()`](https://developer.mozilla.org/docs/Web/API/Event/composedPath).
+* Filter events based on the composed [event targets (`EventTarget`)](https://developer.mozilla.org/docs/Web/API/EventTarget). 
+
+In the following example, selecting the checkbox prevents click events from the second child `<div>` from propagating to the parent `<div>`. Since propagated click events normally fire the `OnSelectParentDiv` method, selecting the second child `<div>` results in the parent `<div>` message appearing unless the checkbox is selected.
+
+:::moniker range=">= aspnetcore-9.0"
+
+`EventHandler7.razor`:
+
+:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler7.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
+
+`EventHandler7.razor`:
+
+:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler7.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
+
+`EventHandlerExample7.razor`:
+
+:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample7.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
+
+`EventHandlerExample7.razor`:
+
+:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample7.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
+
+`EventHandlerExample7.razor`:
+
+:::code language="razor" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample7.razor":::
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-5.0"
+
+`EventHandlerExample7.razor`:
+
+:::code language="razor" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample7.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0"
+
+## Focus an element
+
+Call <xref:Microsoft.AspNetCore.Components.ElementReferenceExtensions.FocusAsync*> on an [element reference](../javascript-interoperability/call-javascript-from-dotnet.md#capture-references-to-elements) to focus an element in code. In the following example, select the button to focus the `<input>` element.
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-9.0"
+
+`EventHandler8.razor`:
+
+:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler8.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
+
+`EventHandler8.razor`:
+
+:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/EventHandler8.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
+
+`EventHandlerExample8.razor`:
+
+:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample8.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
+
+`EventHandlerExample8.razor`:
+
+:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Pages/event-handling/EventHandlerExample8.razor":::
+
+:::moniker-end

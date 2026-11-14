@@ -1,12 +1,3 @@
----
-title: "inkex.base"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/base.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.base
 
 The ultimate base functionality for every Inkscape extension.
@@ -27,18 +18,18 @@ def arg_number_ranges()
 ```
 
 Parses a number descriptor. e.g:
-`1,2,4-5,7,9-` is parsed to `1, 2, 4, 5, 7, 9, 10, ..., lastvalue`
+``1,2,4-5,7,9-`` is parsed to ``1, 2, 4, 5, 7, 9, 10, ..., lastvalue``
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 Usage:
 
-```python
-#### in add_arguments()
-pars.add_argument("--pages", type=self.arg_number_ranges(), default=1-)
-#### later on, pages is then a list of ints
-pages = self.options.pages(lastvalue)
-```
+.. code-block:: python
+
+    # in add_arguments()
+    pars.add_argument("--pages", type=self.arg_number_ranges(), default=1-)
+    # later on, pages is then a list of ints
+    pages = self.options.pages(lastvalue)
 
 ## InkscapeExtension.arg_class
 
@@ -50,14 +41,14 @@ Used by add_argument to match an option with a class
 
 Types to choose from are given by the options list
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 Usage:
 
-```python
-pars.add_argument("--class", type=self.arg_class([ClassA, ClassB]),
-                  default="ClassA")
-```
+.. code-block:: python
+
+    pars.add_argument("--class", type=self.arg_class([ClassA, ClassB]),
+                      default="ClassA")
 
 ## class SvgOutputMixin
 

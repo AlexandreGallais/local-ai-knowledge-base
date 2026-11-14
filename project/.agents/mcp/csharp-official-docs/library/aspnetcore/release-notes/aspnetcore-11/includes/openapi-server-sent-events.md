@@ -1,20 +1,9 @@
----
-title: "openapi-server-sent-events"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-11/includes/openapi-server-sent-events.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# openapi-server-sent-events
-
 ### Server-Sent Events support in OpenAPI 3.2
 
 Endpoints that return `SseItem<T>` are described in the generated OpenAPI document with the OpenAPI 3.2 `itemSchema` shape for `text/event-stream` responses. The `itemSchema` describes a stream's per-event payload shape instead of falling back to a plain `string` schema.
 
 ```csharp
-app.MapGet("<example-value>", (CancellationToken ct) =>
+app.MapGet("/todos/stream", (CancellationToken ct) =>
     TypedResults.ServerSentEvents(GetTodosAsync(ct)))
    .WithName("StreamTodos");
 

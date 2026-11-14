@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugEval::NewString Method"
 title: "ICorDebugEval::NewString Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugeval-newstring-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugEval.NewString"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugEval::NewString"
+helpviewer_keywords:
+  - "NewString method [.NET debugging]"
+  - "ICorDebugEval::NewString method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugEval::NewString Method
 
 Allocates a new string instance with the specified contents.
@@ -30,7 +39,7 @@ The string is always created in the application domain in which the thread is cu
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

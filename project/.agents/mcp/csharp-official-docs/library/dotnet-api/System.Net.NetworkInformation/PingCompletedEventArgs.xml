@@ -1,0 +1,117 @@
+<Type Name="PingCompletedEventArgs" FullName="System.Net.NetworkInformation.PingCompletedEventArgs">
+  <TypeSignature Language="C#" Value="public class PingCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit PingCompletedEventArgs extends System.ComponentModel.AsyncCompletedEventArgs" />
+  <TypeSignature Language="DocId" Value="T:System.Net.NetworkInformation.PingCompletedEventArgs" />
+  <TypeSignature Language="VB.NET" Value="Public Class PingCompletedEventArgs&#xA;Inherits AsyncCompletedEventArgs" />
+  <TypeSignature Language="F#" Value="type PingCompletedEventArgs = class&#xA;    inherit AsyncCompletedEventArgs" />
+  <TypeSignature Language="C++ CLI" Value="public ref class PingCompletedEventArgs : System::ComponentModel::AsyncCompletedEventArgs" />
+  <AssemblyInfo>
+    <AssemblyName>System</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.5.0</AssemblyVersion>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>netstandard</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>System.Net.Ping</AssemblyName>
+    <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <AssemblyVersion>4.1.1.0</AssemblyVersion>
+    <AssemblyVersion>4.1.2.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+    <AssemblyVersion>11.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Net.Ping" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Net.Ping" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Net.Ping" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Net.Ping" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+  </TypeForwardingChain>
+  <Base>
+    <BaseTypeName>System.ComponentModel.AsyncCompletedEventArgs</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Attributes>
+    <Attribute>
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>Provides data for the <see cref="E:System.Net.NetworkInformation.Ping.PingCompleted" /> event.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Instances of this class are passed to a <xref:System.Net.NetworkInformation.PingCompletedEventHandler> method that is called when a <xref:System.Net.NetworkInformation.Ping.SendAsync*> call completes. The <xref:System.Net.NetworkInformation.Ping.SendAsync*> methods send an Internet Control Message Protocol (ICMP) echo request asynchronously and wait for a corresponding ICMP echo reply message. The <xref:System.Net.NetworkInformation.PingCompletedEventArgs.Reply> property contains the results of the ICMP echo request.
+
+
+
+## Examples
+ The following code example demonstrates sending an ICMP echo request asynchronously.
+
+ :::code language="csharp" source="~/snippets/csharp/System.Net.NetworkInformation/Ping/Overview/asyncping.cs" id="Snippet1":::
+
+ ]]></format>
+    </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Reply">
+      <MemberSignature Language="C#" Value="public System.Net.NetworkInformation.PingReply? Reply { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Net.NetworkInformation.PingReply Reply" />
+      <MemberSignature Language="DocId" Value="P:System.Net.NetworkInformation.PingCompletedEventArgs.Reply" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Reply As PingReply" />
+      <MemberSignature Language="F#" Value="member this.Reply : System.Net.NetworkInformation.PingReply" Usage="System.Net.NetworkInformation.PingCompletedEventArgs.Reply" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Net::NetworkInformation::PingReply ^ Reply { System::Net::NetworkInformation::PingReply ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Net.Ping</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Net.NetworkInformation.PingReply</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets an object that contains data that describes an attempt to send an Internet Control Message Protocol (ICMP) echo request message and receive a corresponding ICMP echo reply message.</summary>
+        <value>A <see cref="T:System.Net.NetworkInformation.PingReply" /> object that describes the results of the ICMP echo request.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ If the value of <xref:System.Net.NetworkInformation.PingReply.Status*> is not <xref:System.Net.NetworkInformation.IPStatus.Success>, you should not use the values that are returned by the <xref:System.Net.NetworkInformation.PingReply.RoundtripTime*>, <xref:System.Net.NetworkInformation.PingReply.Options*>, and <xref:System.Net.NetworkInformation.PingReply.Buffer*> properties. The <xref:System.Net.NetworkInformation.PingReply.RoundtripTime*> and <xref:System.Net.NetworkInformation.PingReply.Buffer*> properties will return zero, and the <xref:System.Net.NetworkInformation.PingReply.Options> property will return `null`.
+
+
+
+## Examples
+ The following code example implements a method that is used to respond to a <xref:System.Net.NetworkInformation.Ping.PingCompleted> event. For the complete example, see the <xref:System.Net.NetworkInformation.PingCompletedEventArgs> class overview.
+
+ :::code language="csharp" source="~/snippets/csharp/System.Net.NetworkInformation/Ping/Overview/asyncping.cs" id="Snippet4":::
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

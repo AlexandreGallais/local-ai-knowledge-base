@@ -1,10 +1,6 @@
 ---
-title: "Migrating from Mocha + Chai + Sinon | Guide"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/migration/mocha.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Migrating from Mocha + Chai + Sinon | Guide
+outline: deep
 ---
 
 # Migrating from Mocha + Chai + Sinon {#mocha-chai-sinon}
@@ -101,7 +97,7 @@ Vitest supports all common sinon-chai assertions:
 | `spy.calledOnceWith(...)` | `calledOnceWith(...)` | Spy was called once with specific args |
 | `spy.returned(value)`     | `returned`            | Spy returned specific value            |
 
-See the Chai-Style Spy Assertions documentation for the complete list.
+See the [Chai-Style Spy Assertions](/api/expect#chai-style-spy-assertions) documentation for the complete list.
 
 ## Creating Spies and Mocks
 
@@ -174,14 +170,14 @@ vi.advanceTimersByTime(1000)
 vi.useRealTimers()
 ```
 
-## Key <example-value>
+## Key Differences
 
-1. **Globals**: Mocha provides globals by default. In Vitest, either import from `vitest` or enable `globals` config
+1. **Globals**: Mocha provides globals by default. In Vitest, either import from `vitest` or enable [`globals`](/config/globals) config
 2. **Assertion style**: You can use both Chai-style (`expect(spy).to.have.been.called`) and Jest-style (`expect(spy).toHaveBeenCalled()`)
 3. **Parallel execution**: Vitest runs tests in parallel by default, Mocha runs sequentially
 
 For more information, see:
 
-- Chai-Style Spy Assertions
-- Mocking Guide
-- Vi API
+- [Chai-Style Spy Assertions](/api/expect#chai-style-spy-assertions)
+- [Mocking Guide](/guide/mocking)
+- [Vi API](/api/vi)

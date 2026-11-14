@@ -1,0 +1,61 @@
+<Type Name="IStartupValidator" FullName="Microsoft.Extensions.Options.IStartupValidator">
+  <TypeSignature Language="C#" Value="public interface IStartupValidator" />
+  <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract beforefieldinit IStartupValidator" />
+  <TypeSignature Language="DocId" Value="T:Microsoft.Extensions.Options.IStartupValidator" />
+  <TypeSignature Language="VB.NET" Value="Public Interface IStartupValidator" />
+  <TypeSignature Language="F#" Value="type IStartupValidator = interface" />
+  <TypeSignature Language="C++ CLI" Value="public interface class IStartupValidator" />
+  <AssemblyInfo>
+    <AssemblyName>Microsoft.Extensions.Options</AssemblyName>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.1</AssemblyVersion>
+    <AssemblyVersion>10.0.0.2</AssemblyVersion>
+    <AssemblyVersion>11.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Interfaces />
+  <Attributes>
+    <Attribute FrameworkAlternate="net-10.0-pp;net-11.0;net-11.0-pp">
+      <AttributeName Language="C#">[System.Obsolete("Implement IAsyncStartupValidator instead.", DiagnosticId="SYSLIB0066", UrlFormat="https://aka.ms/dotnet-warnings/{0}")]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Obsolete("Implement IAsyncStartupValidator instead.", DiagnosticId="SYSLIB0066", UrlFormat="https://aka.ms/dotnet-warnings/{0}")&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>
+            Provides synchronous options validation during host startup.
+            </summary>
+    <remarks>
+            Options are enabled to be validated during startup by calling <see cref="M:Microsoft.Extensions.DependencyInjection.OptionsBuilderExtensions.ValidateOnStart``1(Microsoft.Extensions.Options.OptionsBuilder{``0})" />.
+            This interface is retained for compatibility. New startup validators should implement and register
+            <see cref="T:Microsoft.Extensions.Options.IAsyncStartupValidator" /> instead. When migrating, replace the obsolete registration rather than
+            registering a custom validator under both startup contracts.
+            </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Validate">
+      <MemberSignature Language="C#" Value="public void Validate ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void Validate() cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.Options.IStartupValidator.Validate" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Validate ()" />
+      <MemberSignature Language="F#" Value="abstract member Validate : unit -&gt; unit" Usage="iStartupValidator.Validate " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Validate();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.Options</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+            Validates options during host startup.
+            </summary>
+        <remarks>To be added.</remarks>
+        <exception cref="T:Microsoft.Extensions.Options.OptionsValidationException">One or more <see cref="T:Microsoft.Extensions.Options.IValidateOptions`1" /> return failed <see cref="T:Microsoft.Extensions.Options.ValidateOptionsResult" /> when validating.</exception>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

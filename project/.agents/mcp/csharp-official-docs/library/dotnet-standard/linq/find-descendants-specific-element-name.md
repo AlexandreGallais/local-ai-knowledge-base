@@ -1,15 +1,13 @@
 ---
-title: "How to find descendants with a specific element name - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/find-descendants-specific-element-name.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to find descendants with a specific element name - LINQ to XML
+description: To find all descendants that have a specific name, it's easier to use XContainer.Descendants than to iterate through all the descendants.
+ms.date: 07/20/2015
+ms.topic: how-to
 ---
 
 # How to find descendants with a specific element name (LINQ to XML)
 
-Sometimes you want to find all descendants with a specific name. You could write code to iterate through all of the descendants, but it's easier to use the `System.Xml.Linq.XContainer.Descendants*` axis.
+Sometimes you want to find all descendants with a specific name. You could write code to iterate through all of the descendants, but it's easier to use the <xref:System.Xml.Linq.XContainer.Descendants*> axis.
 
 ## Example: Find descendants with a specific element name
 
@@ -85,7 +83,7 @@ Some text that's broken up into multiple segments.
 
 ## Example: Find when the XML is in a namespace
 
-The following example shows the same query for XML that's in a namespace. For more information, see Namespaces overview.
+The following example shows the same query for XML that's in a namespace. For more information, see [Namespaces overview](namespaces-overview.md).
 
 ```csharp
 XElement root = XElement.Parse(@"<root xmlns='http://www.adatum.com'>
@@ -164,4 +162,4 @@ Some text that's broken up into multiple segments.
 
 ## See also
 
-- `System.Xml.Linq.XContainer.Descendants*`
+- <xref:System.Xml.Linq.XContainer.Descendants*>

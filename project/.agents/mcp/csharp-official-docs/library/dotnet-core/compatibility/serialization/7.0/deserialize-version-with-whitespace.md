@@ -1,23 +1,19 @@
 ---
 title: "Breaking change: Deserialize Version with leading/trailing whitespace"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/serialization/7.0/deserialize-version-with-whitespace.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 7 breaking change for deserializing Version types with leading or trailing whitespace.
+ms.date: 01/11/2022
 ---
-
 # Deserialize Version type with leading or trailing whitespace
 
-`System.Text.Json.JsonSerializer` now throws an exception while deserializing `System.Version` types that have leading or trailing whitespace.
+<xref:System.Text.Json.JsonSerializer> now throws an exception while deserializing <xref:System.Version> types that have leading or trailing whitespace.
 
 ## Previous behavior
 
-Prior to .NET 7, deserializing `System.Version` types that have leading or trailing whitespace was permitted.
+Prior to .NET 7, deserializing <xref:System.Version> types that have leading or trailing whitespace was permitted.
 
 ## New behavior
 
-Started in .NET 7, `System.Text.Json.JsonSerializer` throws a `System.FormatException` when deserializing `System.Version` types that have leading or trailing whitespace.
+Started in .NET 7, <xref:System.Text.Json.JsonSerializer> throws a <xref:System.FormatException> when deserializing <xref:System.Version> types that have leading or trailing whitespace.
 
 ## Version introduced
 
@@ -25,15 +21,15 @@ Started in .NET 7, `System.Text.Json.JsonSerializer` throws a `System.FormatExce
 
 ## Type of breaking change
 
-This change can affect binary compatibility.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 
-.NET has optimized the implementation of the underlying `System.Version` converter. This resulted in the implementation being made to align with the behavior for other primitive types supported by `System.Text.Json`, for example, `System.DateTime` and `System.Guid`, which also disallow leading and trailing spaces.
+.NET has optimized the implementation of the underlying <xref:System.Version> converter. This resulted in the implementation being made to align with the behavior for other primitive types supported by <xref:System.Text.Json?displayProperty=fullName>, for example, <xref:System.DateTime> and <xref:System.Guid>, which also disallow leading and trailing spaces.
 
 ## Recommended action
 
-To get the old behavior back, add a custom converter for the `System.Version` type that permits whitespace:
+To get the old behavior back, add a custom converter for the <xref:System.Version> type that permits whitespace:
 
 ```csharp
 internal sealed class VersionConverter : JsonConverter<Version>
@@ -59,5 +55,5 @@ internal sealed class VersionConverter : JsonConverter<Version>
 
 ## Affected APIs
 
-- `System.Text.Json.JsonSerializer.Deserialize*`
-- `System.Text.Json.JsonSerializer.DeserializeAsync*`
+- <xref:System.Text.Json.JsonSerializer.Deserialize*?displayProperty=fullName>
+- <xref:System.Text.Json.JsonSerializer.DeserializeAsync*?displayProperty=fullName>

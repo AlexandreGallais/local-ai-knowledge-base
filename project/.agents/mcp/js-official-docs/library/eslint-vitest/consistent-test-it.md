@@ -1,19 +1,12 @@
----
-title: "vitest/consistent-test-it"
-tool: "eslint-vitest"
-version: "1.6"
-source: "https://github.com/vitest-dev/eslint-plugin-vitest/blob/c5df1054a25044a7ca5baf07461b7aee1f15f5f2/docs/rules/consistent-test-it.md"
-commit: "c5df1054a25044a7ca5baf07461b7aee1f15f5f2"
-license: "MIT"
----
-
 # vitest/consistent-test-it
 
 📝 Enforce using test or it but not both.
 
 ⚠️ This rule _warns_ in the 🌐 `all` config.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 ## Rule Details
 
@@ -46,10 +39,14 @@ test('using only test function', () => {
 
 ### Options
 
+<!-- begin auto-generated rule options list -->
+
 | Name             | Description                                        | Type   | Choices      |
 | :--------------- | :------------------------------------------------- | :----- | :----------- |
 | `fn`             | Preferred global test function keyword.            | String | `test`, `it` |
 | `withinDescribe` | Preferred test function keyword inside `describe`. | String | `test`, `it` |
+
+<!-- end auto-generated rule options list -->
 
 ```json
 {

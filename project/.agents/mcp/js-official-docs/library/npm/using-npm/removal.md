@@ -1,13 +1,8 @@
 ---
-title: "Removal"
-tool: "npm"
-version: "12.2"
-source: "https://github.com/npm/cli/blob/60e11343e61316d966c86805d803df5a0eb99230/docs/lib/content/using-npm/removal.md"
-commit: "60e11343e61316d966c86805d803df5a0eb99230"
-license: "Artistic-2.0"
+title: Removal
+section: 7
+description: Cleaning the slate
 ---
-
-# Removal
 
 ### Synopsis
 
@@ -56,5 +51,5 @@ find /usr/local/{lib/node,bin} -exec grep -l npm \{\} \; ;
 
 ### See also
 
-* npm uninstall
-* npm prune
+* [npm uninstall](/commands/npm-uninstall)
+* [npm prune](/commands/npm-prune)

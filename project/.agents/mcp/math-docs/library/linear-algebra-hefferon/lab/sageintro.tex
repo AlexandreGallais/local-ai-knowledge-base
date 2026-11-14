@@ -1,0 +1,721 @@
+\chapter{\python{} and \Sage{}}
+
+\Sage{} is based on \python{} so we'll start with that.
+\python{} is a popular language\footnote{Written by a fan of
+Monty Python.} 
+with a simple style and powerful libraries.
+It is often used for scripting, as a glue to bring together separate parts.
+% \Sage{} uses it in this way.
+
+This assumes 
+that you already know some programming, so
+here you will just see enough \python{} to get started. 
+For a more comprehensive introduction, work through \python's excellent tutorial,
+\cite{PythonTeam19b}.
+
+
+
+\section{Python basics}
+Start \python, for instance by giving the command
+\inlinecode{python3}
+in a terminal.
+You'll get a couple of lines of initial
+information followed by a prompt, three greater-than
+characters.
+\begin{lstlisting}[style=python]
+>>>   
+\end{lstlisting}
+This is the \python{} interpreter.
+If you type 
+\python{} code and \keyboardkey{Enter} then the system
+will read your code, evaluate it, and print the result.
+We will see below how to write and run whole programs
+but for now we will experiment in the interpreter.
+When you are done you can 
+leave this prompt with \textit{\keyboardkey{Ctrl}-D}.
+
+Try entering these expressions.
+\python{} responds with the results shown
+(double star is exponentiation).
+\begin{pythonconsole}
+2 - (-1)
+1 + 2*3
+2**3  
+\end{pythonconsole}
+
+Part of \python's appeal is that simple things tend to be simple.
+Here is how you print something to the screen.\footnote{%
+  \protect\python{} comes in two versions.
+  Version~3 is what we use.
+  Version~2 is quite old but you may still see it, for example if
+  you look in a search engine for code.
+  One difference between the two is that in version~2 the
+  print statement did not have parentheses.}
+\begin{pythonconsole}
+print(1, "plus", 2, "equals", 3)
+\end{pythonconsole}
+% Often you can debug just by putting in commands to print things, 
+% and having a straightforward print operator helps with that. 
+
+As in other computer languages, 
+variables give you a named place to keep values.
+The first line below puts $1$ in the place called \inlinecode{i}
+and the second line involves fetching that $1$.
+\begin{pythonconsole}
+i = 1
+i + 1
+\end{pythonconsole}
+In some programming languages you must declare the `type' of a variable
+before you use it; for instance above you would have to declare 
+that \inlinecode{i} is an integer before you could set \inlinecode{i=1}.
+In contrast, \python{} deduces the type 
+based on what you do to it\Dash above we assigned $1$ to it
+so \python{} figured that \inlinecode{i} must be a place to put an integer.
+If we change how we use a variable then \python{} will 
+refigure; here we change what is kept in $x$ from an integer to a string.
+\begin{pythonconsole}
+x = 1
+x
+x = 'a'
+x
+\end{pythonconsole}
+
+You can do multiple things on a single line.
+\begin{pythonconsole}
+first_day, last_day = 0, 365
+first_day
+last_day   
+\end{pythonconsole}
+\python{} computes the right side, left to right, and then assigns 
+those values to the variables on the left.
+
+If you do something not allowed then 
+\python{} complains, signaling its unhappiness by 
+raising an exception and in the final line giving an error 
+message.
+\begin{pythonconsole}
+"a'' + 1
+\end{pythonconsole}
+
+Besides integers, 
+\python{} gives you real numbers and complex numbers.\footnote{%
+  These operations
+  are done with floating points, a system 
+  built into your computer's hardware that
+  models the real numbers.
+  In the example, the distinction leaks through
+  since the decimal for $0.3$ is not perfectly accurate.
+  While issues brought out floating point representations are fascinating\protect\Dash
+  see \protect\cite{PythonTeam19a} and \protect\cite{Goldberg91}\protect\Dash
+  we shall ignore them, just to keep the focus on 
+  linear algebra.}
+\begin{pythonconsole}
+1/5
+0.1 + 0.2
+(3+2j) - (1-4j)
+\end{pythonconsole}
+As engineers do, \python{} uses the letter~$j$ for the square
+root of~$-1$, not~$i$ as is traditional in Mathematics.
+(Although \protect\Sage{} lets you use~$i$.)
+
+Variables can also represent truth values.
+\begin{pythonconsole}
+yankees_stink = True
+yankees_stink
+\end{pythonconsole}
+You need the initial capital letter:~it is
+\inlinecode{True}
+or \inlinecode{False}, not
+\inlinecode{true}
+or \inlinecode{false}.
+ 
+Above we saw a couple of strings consisting of text between quotes.
+(They just had a single character, \inlinecode{'a'},
+but \python{} doesn't worry about the difference between a character
+and a length one string.)
+To make a string, you can use either double or single quotes, as long as you use
+the same at both ends. 
+Here \inlinecode{x} and \inlinecode{y}
+are double-quoted, which works because each contains
+an apostrophe, and the comma and period strings are single-quoted. 
+\begin{pythonconsole}
+x = "I'm Popeye the sailor man"
+y = "I yam what I yam and that's all what I yam"
+x + ', ' + y + '.'
+\end{pythonconsole}
+The last line shows that~\inlinecode{+} 
+does string concatenation.
+It also shows that you can mix single-quoted strings
+with double-quoted ones.
+
+To get a newline, you can use use slash-n, \inlinecode{\\n}, 
+inside a double-quoted string.
+If you need a lot of newlines then
+put explicit line breaks inside a string marked by three double quotes.
+\begin{pythonconsole}
+a = """THE ROAD TO WISDOM
+ 
+The road to wisdom?
+-- Well, it's plain
+and simple to express:
+Err
+and err
+and err again
+but less
+and less
+and less. --Piet Hein"""
+\end{pythonconsole} 
+The three dots that start the lines after the first
+is \python's
+interpreter prompting you that what you have typed is not complete,
+that you've started a string but not yet finished it.
+
+A \python{} \textit{dictionary} is a finite function,
+a finite
+set of pairs $\langle\textit{key},\textit{value}\rangle$,
+subject to the restriction that no key can appear twice.
+You can use a dictionary as a simple database.
+\begin{pythonconsole}
+english_words = {'one': 1, 'two': 2, 'three': 3}
+english_words['one']
+english_words['four'] = 4  
+english_words
+english_words['two'] = -1
+english_words
+\end{pythonconsole} 
+Dictionaries are central to \python, in part because looking up values 
+in a dictionary is very fast, due to the way that they are 
+organized internally.
+%% But because of that internal organization,
+%% if you ask to see a dictionary then \python{} may show its pairs in 
+%% a jumbled-up order. % This changes in 3.6 and 3.7 in Cython, but discussion of insertion order seems out of place
+
+While dictionaries are made of pairs, a \python{} list is a sequence of single entries.
+\begin{pythonconsole}
+a = ['alpha', 'beta', 'gamma']
+a
+b = ['delta']
+c = []
+\end{pythonconsole}
+Lists can contain anything, including other lists.
+\begin{pythonconsole}
+x = 4
+a = ['alpha', [True, x]]
+a
+len(a)
+\end{pythonconsole}
+Get an element from a list by specifying its index, its place in the list,
+inside square brackets.
+Lists indices are zero-based, that is, the initial element of the
+list is numbered~$0$.
+\begin{pythonconsole}
+a = ['alpha', 'beta', 'gamma']
+a[0]
+a[1]
+a[0] = 'Alpha'
+a[0]
+\end{pythonconsole}
+Count from the back by using negative indices.
+\begin{pythonconsole}
+a = ['alpha', 'beta', 'gamma']
+a[-1]
+\end{pythonconsole}
+Specifying two indices separated by a colon gets a \textit{slice} 
+of the list. 
+\begin{pythonconsole} 
+a = ['alpha', 'beta', 'gamma', 'delta']
+a[1:3]
+a[1:-1]
+a[1:1]
+\end{pythonconsole}
+You can lengthen a list.
+\begin{pythonconsole}
+c = ['delta']
+c.append('epsilon')
+c
+a = ['beta', 'gamma']
+a.insert(0,'alpha')
+a+c
+\end{pythonconsole}
+
+A \textit{tuple} is like a list in that it is ordered.
+\begin{pythonconsole}
+a = ('fee', 'fie', 'foe', 'fum')
+a[0]
+\end{pythonconsole}
+However a tuple is unlike a list 
+in that it is not mutable, it cannot change.
+\begin{pythonconsole}
+a = ('fee', 'fie', 'foe', 'fum')
+a[0] = 'phooey'
+\end{pythonconsole}
+One reason that non-mutability is useful is that 
+tuples can be keys in dictionaries while lists cannot be keys.
+\begin{pythonconsole}
+a = ['ke1az', 5418]
+b = ('ke1az', 5418)
+d = {a: 'active'}
+d = {b: 'active'}
+d
+\end{pythonconsole}
+
+\python{} has a special value, \inlinecode{None}, that
+means something has no sensible value.
+For instance, if your program keeps track of a person's address and
+includes a variable \inlinecode{apartment_num} then   
+for a person who does not live in an
+apartment you should say \inlinecode{apartment_num = None}.
+
+
+
+\subsection{Flow of control}
+\python{} supports the traditional ways of changing the order of 
+statement execution, with a twist.
+The twist is that while many languages use braces or some other syntax to
+mark a block of code, \python{} uses indentation.
+Always indent with four spaces. % (Don't use tabs.)
+\begin{pythonconsole}
+x = 4
+if (x == 0):
+    delta = 1
+else:
+    delta = 0
+
+delta
+\end{pythonconsole}
+Here, \python{} sets \inlinecode{delta} to  $1$ if $x$
+equals $0$, otherwise \python{} sets \inlinecode{delta} to~$0$. 
+
+After \inlinecode{delta = 0} you must enter 
+a blank line so that \python{} knows there is nothing more in that block.
+Notice also that double equals, \inlinecode{==}, means `is equal to'. 
+% (We cannot use just a single equals because, as we have already seen, 
+% \inlinecode{x = 0} 
+% means ``$x$ is assigned the value~$0$.'') 
+For `not equal', use\inlinecode{!=}. 
+
+\python{} has two more variants on the \inlinecode{if} statement.
+It could have a single branch
+\begin{pythonconsole}
+x = 0
+if (x == 0):
+    print("Division by x is not allowed.")
+
+\end{pythonconsole}
+or it could have more than two branches.
+\begin{pythonconsole}
+x = 2
+if (x == 0):
+    sgn = 0
+elif (x > 0):
+    sgn = 1
+else:
+    sgn = -1
+
+sgn
+\end{pythonconsole}
+
+Computers excel at iteration, at looping through a sequence of statements.
+A \inlinecode{for} loop often involves a \inlinecode{range}.
+\begin{pythonconsole}
+for i in range(4):
+    print(i, "squared is", i**2)
+
+\end{pythonconsole}
+By default the lowest number produced by \inlinecode{range} is $0$, which
+fits with the fact that list numbering is zero-based.
+Change the initial number by calling \inlinecode{range} 
+with two arguments.
+\begin{pythonconsole}
+for i in range(1, 4):
+    print(i, "cubed is", i**3)
+
+\end{pythonconsole}
+The highest number produced by \inlinecode{range} is one less than its 
+input, so that the highest number
+given by \inlinecode{range(4)} or \inlinecode{range(1,4)} is $3$.
+This is convenient because it makes the 
+combination of two lists \inlinecode{range(4)+range(4,10)} give 
+the same as the single list \inlinecode{range(10)}.
+
+You can iterate over a list by working with element indices.
+\begin{pythonconsole}
+x = [4, 0, 3, 0]
+for i in range(len(x)):
+    if (x[i] == 0):
+        print("item", i, "is zero")
+    else:
+        print("item", i, "is nonzero")
+
+\end{pythonconsole}
+However, an experienced  \python{} person who was not trying to illustrate 
+the \inlinecode{range} command
+would replace \inlinecode{for i in range(len(x))}
+with \inlinecode{for c in x} because
+\inlinecode{for} can iterate over any sequence, not just
+a list of numbers.
+Here is a simple text formatter that fills a line with words until
+the line would exceed $40$ characters, and then
+prints that line and starts a new one.
+\begin{pythonconsole}
+quote = """Victorious warriors win first and then go to war, 
+while defeated warriors go to war first and then seek to win. 
+--Sun Tzu"""
+line, line_length = [], 0
+for wd in quote.split():
+    if line_length+len(wd) > 40:
+        print(" ".join(line))
+        line, line_length = [], 0
+    line_length = line_length + len(wd) + 1
+    line.append(wd)
+
+if line:
+    print(" ".join(line))
+
+\end{pythonconsole}
+\python{} has lot of string operations.
+Above, the \inlinecode{quote.split()} divides the string into separate words while
+\inlinecode{" ".join(line)} makes a string by putting  space between the words in the list 
+\inlinecode{line}.
+Thus, the final \inlinecode{if line:} above ejects any material left over
+when the \inlinecode{for} loop is finished.
+
+A \inlinecode{for} loop is designed to execute a certain
+number of times.
+For a loop that runs a number of times that you don't know in advance, 
+use \inlinecode{while}.%% \footnote{%
+  %% The Collatz conjecture is 
+  %% that this loop will 
+  %% terminate for any starting~$n$.
+  %% No one knows if the conjecture is true.}
+\begin{pythonconsole}
+n, i = 12, 0
+while (n != 1):
+    if (n % 2 == 0):  
+        n = n // 2
+    else:
+        n = 3*n + 1
+    i = i + 1
+    print("after", i, "steps, n=", n)
+    
+\end{pythonconsole}
+The \inlinecode{//} operation divides the left integer by the right and then returns the floor.
+
+Exit from a loop immediately with the \inlinecode{break} command.
+\begin{pythonconsole}
+for i in range(10):
+    if (i == 3):
+        break
+        print("inside the loop: i is", i)
+        
+\end{pythonconsole}
+
+A common loop construct is to perform some action
+on each list element.
+\python{} has a shortcut for this, called list comprehension.
+\begin{pythonconsole}
+a = [2**n for n in range(4)]
+a
+[i-1 for i in a]
+\end{pythonconsole}
+
+
+
+\subsection{Functions}
+You can make your own functions.
+This implements the quadratic formula.\footnote{%
+  This code is naive, for instance in that it does not address the
+  potential floating point issues.}
+\begin{pythonconsole}
+def quad_formula(a, b, c):
+    """Find the roots of a quadratic 
+      a, b, c  real numbers  Coefficients, as in ax^2 + bx + c
+    """
+    discriminant = (b**2 - 4*a*c)**(0.5)  # power 0.5 is square root
+    r1 = (-1*b-discriminant) / (2.0*a)
+    r2 = (-1*b+discriminant) / (2.0*a)
+    return (r1, r2)
+
+quad_formula(1, -6, 5)
+quad_formula(1, 2, 1)
+quad_formula(1, -1, -1)
+\end{pythonconsole}
+When you write programs in \python{}, most of what you write
+is inside of functions. 
+
+Functions always return something; 
+if a function never executes a \inlinecode{return} then it will
+return the value \inlinecode{None}.
+They can also contain multiple \inlinecode{return} statements, for instance 
+one for an \inlinecode{if} branch and one for an \inlinecode{else}.
+
+About comments:~the \inlinecode{quad_formula} function has two kinds of 
+comments.
+Inside the code, inline comments start with a hash mark, \inlinecode{\#}
+(programmers often write comments that take up an entire line, by starting 
+that line with a hash). 
+The second kind is that
+after the \inlinecode{def} line is a triple-quoted string that
+briefly describes
+what the function does and lists its parameters.
+
+At the end of the \inlinecode{def} line, in parentheses, are
+the function's parameters. 
+These take the values 
+passed into the function by the caller.
+Functions can also have optional parameters that have a default value.
+\begin{pythonconsole}
+def greet(name="Sir or Madam"):
+    """Say hello.
+      name  string  Person's name
+    """
+    print("Hello", name+".")
+
+greet("Fred")
+greet()
+\end{pythonconsole}
+\Sage{}  heavily uses this feature of \python{}.
+
+
+
+
+
+
+
+\subsection{Objects and modules}
+In Mathematics, a structure is a set of things that have associated operations.
+For example, a vector space is a set with the operations
+of addition and scalar multiplication.
+\python{} is object-oriented, which means that we can similarly bundle
+together data and actions (in this context the actions, the functions, 
+are called methods).
+\begin{pythonconsole}
+class DatabaseRecord(object):
+    """Hold information about a person.
+    """
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    def salutation(self):
+        print("Dear", self.name)
+
+a = DatabaseRecord("Jim", 62)
+a.name
+a.age
+a.salutation()
+b = DatabaseRecord("Marie", 20)
+b.salutation()
+\end{pythonconsole}
+Above, we create two instances of 
+\inlinecode{DatabaseRecord}, instance~\inlinecode{a} and
+instance~\inlinecode{b}.
+To get the age data of instance~\inlinecode{a}, write 
+\inlinecode{a.age}.
+(The \protect\inlinecode{self} variable 
+can be puzzling.
+Suppose that at the prompt you type \inlinecode{a.name="James"}.
+Then you've used the name~\inlinecode{a} 
+for the instance, so that the computer knows where to
+make the change.
+But
+inside the \inlinecode{class} description code there isn't any fixed instance name.
+That is, \inlinecode{self} refers to the current instance. 
+For example, if you are working with the instance \inlinecode{a} then 
+in the \inlinecode{salutation} the \inlinecode{self.name} refers
+to \inlinecode{a.name}.)
+
+You won't be writing your own classes here 
+but you will be using ones from
+the libraries of code that others have written, including the
+code for \Sage, so you must know how to use 
+classes provided by other people.
+A library, a collection of related data, functions, and classes, in this context
+is called a module.
+For instance, \python{} comes with a \inlinecode{math} module that you can use.
+\begin{pythonconsole}
+import math
+math.pi
+math.factorial(5)
+math.cos(math.pi)
+\end{pythonconsole}
+The \inlinecode{import} statement makes the module's
+contents available.
+
+Another module does random numbers.
+\begin{pythonconsole}
+import random
+print(random.randint(1,10))
+print(random.randint(0,100)/100)
+\end{pythonconsole}
+
+
+
+\subsection{Programs}
+The read-eval-print loop is great for small experiments but
+for code with more than a few lines, or for code that you want to
+keep, you want to put your work in a separate file.
+Here we will sketch how to write a stand-alone program.
+
+To write the code, 
+don't use a word processor.
+Instead, a text editor has the correct features for this.
+Use one with support for \python{}, including
+automatic indentation and  
+syntax highlighting, where the editor colors your code to make it easier to
+read.
+There are many excellent editors; one is Emacs.\footnote{%
+  It may come with your operating system or 
+  see \protect\url{www.gnu.org/software/emacs}.}
+
+Here is a first example of a \python{} program.
+Start your editor, open a new file called \path{month.py}, and enter these lines.
+(Notice that the first line describes the program in a comment.
+You may want to also name the author, the date, and the license for the code.
+In addition, the triple-quoted documentation string at the top of the file
+is a good practice.
+You should include such a string in each program.)
+\begin{lstlisting}[style=python]
+# month.py
+"""Print the number of the current month. """
+import datetime
+current = datetime.datetime.now()  # get a datetime object, call its method
+print("The month number is", current.month)
+\end{lstlisting}
+Run it through \python{},
+One way is to open a command line terminal,
+change to the directory containing \path{month.py},  
+type \inlinecode{python3 month.py}, and hit \keyboardkey{Enter}. 
+You should see
+output like \inlinecode{The month number is 10}.
+
+Next is a small game. 
+(It uses the \python{} function \inlinecode{input} that prompts the user
+and then collects their response.)
+\lstinputlisting{python/guessing_game.py}
+(The \inlinecode{int} converts the string from \inlinecode{input} to an integer.)
+Here is output from running this game.
+\begin{lstlisting}
+$ python3 guessing_game.py
+Guess an integer between 1 and 10: 3
+  Sorry, your guess is too low
+Guess an integer between 1 and 10: 8
+  Sorry, your guess is too high
+Guess an integer between 1 and 10: 5
+  You are right!
+\end{lstlisting}  % $
+
+Note the triple-quoted documentation strings both for the 
+file as a whole and for the function.
+Besides being useful to a programmer editing the file, 
+they integrate with \python's help system. 
+Go to the directory containing \path{guessing_game.py} and start 
+the \python{} interpreter.
+At the \inlinecode{>>>} prompt, enter \inlinecode{import guessing_game}.
+You will play through a round of the game (there is a way to avoid this
+but we will ignore the point).
+You are now using \inlinecode{guessing_game.py} as a module.
+Type
+\inlinecode{help("guessing_game")}.
+You will see documentation on \inlinecode{guessing_game}, 
+including these lines
+(to see more than one page use the space bar and to quit the viewer use \textit{q}).
+\begin{lstlisting}
+Help on module guessing_game:
+
+NAME
+    guessing_game - guessing_game.py
+
+DESCRIPTION
+    Guess the number between 1 and 10.
+
+FUNCTIONS
+    test_guess(guess)
+        Decide if the guess is correct and print a message.
+\end{lstlisting}
+\python{} got this information from the documentation strings.
+\Sage's programmers follow this practice and so 
+you can use \inlinecode{help(...)} 
+whenever you need more information on \Sage's routines.
+
+
+
+
+
+%----------------------------------
+\section{\Sage{} basics}
+Learning about \Sage's capabilities is the goal of much of this manual.
+But \Sage{} is built on \python{} and so a brief comparison here makes sense.
+See \citep{SageTeam19} for a more broad-based introduction, and 
+be aware of the reference \citep{SageTeam19ref}.
+
+
+
+\subsection{Command line}
+\Sage's command line is like \python's but adapted to 
+mathematical work.
+First start \Sage,
+for instance by entering \inlinecode{sage} into a command line window.
+You get some initial text and a prompt.
+\begin{lstlisting}[style=python]
+sage:  
+\end{lstlisting}
+Leave the prompt with the command \inlinecode{exit}
+followed by \keyboardkey{Enter}.
+
+As with Python, you can use the interpreter to experiment.
+\begin{sagecommandline}
+sage: 2**3                                                                      
+sage: 2^3
+sage: 3*1 + 4*2
+sage: 5 == 3+3
+sage: sin(pi/3)
+\end{sagecommandline}
+The second expression 
+shows that \Sage{} adds a convenient shortcut for exponentiation beyond
+\python's \inlinecode{2**3}.
+The final expression
+shows that \Sage{} sometimes returns exact results rather than an
+approximation.
+You can still get the approximation; here are three ways.
+\begin{sagecommandline}
+sage: sin(pi/3).numerical_approx()
+sage: sin(pi/3).n()
+sage: n(sin(pi/3), digits=4)  
+\end{sagecommandline}
+The final way shows that there is an option to limit the number of digits
+that you see.\footnote{%
+  If you don't use the option then you see the number of digits matching 
+  $53$ bits of precision, which is the standard for  
+  floating point numbers.}
+
+
+\subsection{Script}
+You can group \Sage{} commands together in a file, 
+to reuse them without having to retype.
+Create the file \path{sage_normal.sage}, 
+enter this function, and save.
+\lstinputlisting{sage/normal_curve.sage}
+Start \Sage{} and bring the contents in with \inlinecode{load(...)}.
+\begin{sagecommandline}
+sage: load("normal_curve.sage")
+sage: normal_curve(1.0)
+\end{sagecommandline}
+
+
+\subsection{Notebook}
+In this manual we will stick to the interpreter.
+But we'll mention that another way to use \Sage{} is in   
+a browser-based graphical interface, 
+inside a Jupyter Notebook, \cite{JupyterTeam19}.
+You can set up
+worksheets to use alone or with other people, you can easily
+go back and edit prior commands, view plots integrated with the text, 
+and many other nice features.
+To fire it up, instead of just issuing the \inlinecode{sage}
+command, say
+\inlinecode{sage -n jupyter}
+(of course, you must have the Jupyter software
+installed).\footnote{%
+  If your operating system doesn't offer it then you can 
+  visit \protect\url{https://jupyter.org}.}
+\endinput

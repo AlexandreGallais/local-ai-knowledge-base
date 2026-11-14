@@ -1,102 +1,38 @@
 ---
-title: "Part 10, examine the Details and Delete methods of an ASP.NET Core app"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/tutorials/first-mvc-app/details.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Part 10, examine the Details and Delete methods of an ASP.NET Core app
+ai-usage: ai-assisted
+description: Part 10 of tutorial series on ASP.NET Core MVC.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 01/22/2026
 ---
 
 # Part 10, examine the Details and Delete methods of an ASP.NET Core app
 
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+:::moniker range=">= aspnetcore-10.0"
+
 Open the Movie controller and examine the `Details` method:
 
-```csharp
-// GET: Movies/Details/5
-public async Task<IActionResult> Details(int? id)
-{
-    if (id == null)
-    {
-        return NotFound();
-    }
-
-    var movie = await _context.Movie
-        .FirstOrDefaultAsync(m => m.Id == id);
-    if (movie == null)
-    {
-        return NotFound();
-    }
-
-    return View(movie);
-}
-```
+[!code-csharp[](~/tutorials/first-mvc-app/start-mvc/samples/MvcMovie10/Controllers/MoviesController.cs?name=snippet_Details)]
 
 The MVC scaffolding engine that created this action method adds a comment showing an HTTP request that invokes the method. In this case it's a GET request with three URL segments, the `Movies` controller, the `Details` method, and an `id` value. Recall these segments are defined in `Program.cs`.
 
-```csharp
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
-```
+[!code-csharp[](~/tutorials/first-mvc-app/start-mvc/samples/MvcMovie10/Program.cs?highlight=3&name=snippet_MapControllerRoute)]
 
 EF makes it easy to search for data using the `FirstOrDefaultAsync` method. An important security feature built into the method is that the code verifies that the search method has found a movie before it tries to do anything with it. For example, a hacker could introduce errors into the site by changing the URL created by the links from `http://localhost:{PORT}/Movies/Details/1` to something like  `http://localhost:{PORT}/Movies/Details/12345` (or some other value that doesn't represent an actual movie). If you didn't check for a null movie, the app would throw an exception.
 
 Examine the `Delete` and `DeleteConfirmed` methods.
 
-```csharp
-     // GET: Movies/Delete/5
-     public async Task<IActionResult> Delete(int? id)
-     {
-
-         if (id == null)
-         {
-             return NotFound();
-         }
-
-         var movie = await _context.Movie
-             .FirstOrDefaultAsync(m => m.Id == id);
-         if (movie == null)
-         {
-             return NotFound();
-         }
-
-         return View(movie);
-     }
-
-     // POST: Movies/Delete/5
-     [HttpPost, ActionName("Delete")]
-     [ValidateAntiForgeryToken]
-     public async Task<IActionResult> DeleteConfirmed(int id)
-     {
-var movie = await _context.Movie.FindAsync(id);
-         if (movie != null)
-         {
-             _context.Movie.Remove(movie);
-         }
-
-         await _context.SaveChangesAsync();
-         return RedirectToAction(nameof(Index));
-     }
-```
+[!code-csharp[](~/tutorials/first-mvc-app/start-mvc/samples/MvcMovie10/Controllers/MoviesController.cs?name=snippet_Delete)]
 
 Note that the `HTTP GET Delete` method doesn't delete the specified movie, it returns a view of the movie where you can submit (HttpPost) the deletion. Performing a delete operation in response to a GET request (or for that matter, performing an edit operation, create operation, or any other operation that changes data) opens up a security hole.
 
 The `[HttpPost]` method that deletes the data is named `DeleteConfirmed` to give the HTTP POST method a unique signature or name. The two method signatures are shown below:
 
-```csharp
-// GET: Movies/Delete/5
-public async Task<IActionResult> Delete(int? id)
-{
-```
+[!code-csharp[](~/tutorials/first-mvc-app/start-mvc/samples/MvcMovie10/Controllers/MoviesController.cs?name=snippet_DeleteSignature)]
 
-```csharp
-// POST: Movies/Delete/5
-[HttpPost, ActionName("Delete")]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult> DeleteConfirmed(int id)
-{
-```
+[!code-csharp[](~/tutorials/first-mvc-app/start-mvc/samples/MvcMovie10/Controllers/MoviesController.cs?name=snippet_DeleteConfirmedSignature)]
 
 The common language runtime (CLR) requires overloaded methods to have a unique parameter signature (same method name but different list of parameters). However, here you need two `Delete` methods -- one for GET and one for POST -- that both have the same parameter signature. (They both need to accept a single integer as a parameter.)
 
@@ -113,10 +49,19 @@ public async Task<IActionResult> Delete(int id, bool notUsed)
 
 ### Publish to Azure
 
-For information on deploying to Azure, see Tutorial: Build an ASP.NET Core and SQL Database app in Azure App Service.
+For information on deploying to Azure, see [Tutorial: Build an ASP.NET Core and SQL Database app in Azure App Service](/azure/app-service/tutorial-dotnetcore-sqldb-app).
 
-## Enterprise web app patterns
+[!INCLUDE[](~/includes/reliableWAP_H2.md)]
 
-For guidance on creating a reliable, secure, performant, testable, and scalable ASP.NET Core app, see Enterprise web app patterns. A complete production-quality sample web app that implements the patterns is available.
+> [!div class="step-by-step"]
+> [Previous](~/tutorials/first-mvc-app/validation.md)
 
-> Previous
+:::moniker-end
+
+[!INCLUDE[](~/tutorials/first-mvc-app/details/includes/details8.md)]
+
+[!INCLUDE[](~/tutorials/first-mvc-app/details/includes/details7.md)]
+
+[!INCLUDE[](~/tutorials/first-mvc-app/details/includes/details6.md)]
+
+[!INCLUDE[](~/tutorials/first-mvc-app/details/includes/details3-5.md)]

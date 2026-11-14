@@ -1,18 +1,19 @@
 ---
+description: "Learn more about: Abstractions (Abstract Types and Interfaces)"
 title: "Abstractions (Abstract Types and Interfaces)"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/abstractions-abstract-types-and-interfaces.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "interfaces [.NET Framework], abstract"
+  - "abstract interfaces [.NET Framework]"
+  - "abstract types [.NET Framework]"
+  - "types [.NET Framework], abstract"
+ms.assetid: 0a632bc7-9b03-44ee-8842-c82f88672a45
 ---
-
 # Abstractions (Abstract Types and Interfaces)
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
-An abstraction is a type that describes a contract but does not provide a full implementation of the contract. Abstractions are usually implemented as abstract classes or interfaces, and they come with a well-defined set of reference documentation describing the required semantics of the types implementing the contract. Some of the most important abstractions in the .NET Framework include `System.IO.Stream`, `System.Collections.Generic.IEnumerable`1`, and `System.Object`.
+An abstraction is a type that describes a contract but does not provide a full implementation of the contract. Abstractions are usually implemented as abstract classes or interfaces, and they come with a well-defined set of reference documentation describing the required semantics of the types implementing the contract. Some of the most important abstractions in the .NET Framework include <xref:System.IO.Stream>, <xref:System.Collections.Generic.IEnumerable`1>, and <xref:System.Object>.
 
  You can extend frameworks by implementing a concrete type that supports the contract of an abstraction and using this concrete type with framework APIs consuming (operating on) the abstraction.
 
@@ -30,9 +31,9 @@ An abstraction is a type that describes a contract but does not provide a full i
 
  *Portions © 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Framework Design Guidelines
-- Designing for Extensibility
+- [Framework Design Guidelines](index.md)
+- [Designing for Extensibility](designing-for-extensibility.md)

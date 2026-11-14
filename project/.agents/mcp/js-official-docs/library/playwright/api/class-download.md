@@ -1,12 +1,3 @@
----
-title: "class: Download"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-download.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: Download
 * since: v1.8
 
@@ -38,7 +29,7 @@ Download download = page.waitForDownload(() -> {
 download.saveAs(Paths.get("/path/to/save/at/", download.suggestedFilename()));
 ```
 
-```python
+```python async
 # Start waiting for the download
 async with page.expect_download() as download_info:
     # Perform the action that initiates download
@@ -49,7 +40,7 @@ download = await download_info.value
 await download.save_as("/path/to/save/at/" + download.suggested_filename)
 ```
 
-```python
+```python sync
 # Start waiting for the download
 with page.expect_download() as download_info:
     # Perform the action that initiates download
@@ -129,11 +120,11 @@ await download.saveAs('/path/to/save/at/' + download.suggestedFilename());
 download.saveAs(Paths.get("/path/to/save/at/", download.suggestedFilename()));
 ```
 
-```python
+```python async
 await download.save_as("/path/to/save/at/" + download.suggested_filename)
 ```
 
-```python
+```python sync
 download.save_as("/path/to/save/at/" + download.suggested_filename)
 ```
 
@@ -152,8 +143,8 @@ Path where the download should be copied.
 - returns: <[string]>
 
 Returns suggested filename for this download. It is typically computed by the browser from the
-`Content-Disposition` response header
-or the `download` attribute. See the spec on whatwg. Different
+[`Content-Disposition`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition) response header
+or the `download` attribute. See the spec on [whatwg](https://html.spec.whatwg.org/#downloading-resources). Different
 browsers can use different logic for computing it.
 
 ## method: Download.url

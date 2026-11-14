@@ -1,18 +1,18 @@
 ---
+description: "Learn more about: XML Schema (XSD) Validation with XmlSchemaCollection"
 title: "XML Schema (XSD) Validation with XmlSchemaCollection"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/xml-schema-xsd-validation-with-xmlschemacollection.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: ad0b5717-3d32-41ad-a4d7-072c3e492b82
 ---
-
 # XML Schema (XSD) Validation with XmlSchemaCollection
 
-You can use the `System.Xml.Schema.XmlSchemaCollection` to validate an XML document against XML Schema definition language (XSD) schemas. The `System.Xml.Schema.XmlSchemaCollection` improves performance by storing schemas in the collection so they are not loaded into memory each time validation occurs. If the schema exists in the schema collection, the `schemaLocation` attribute is used to look up the schema in the collection.
+You can use the <xref:System.Xml.Schema.XmlSchemaCollection> to validate an XML document against XML Schema definition language (XSD) schemas. The <xref:System.Xml.Schema.XmlSchemaCollection> improves performance by storing schemas in the collection so they are not loaded into memory each time validation occurs. If the schema exists in the schema collection, the `schemaLocation` attribute is used to look up the schema in the collection.
 
-> **Important:**
-> The `System.Xml.Schema.XmlSchemaCollection` class is now obsolete and has been replaced with the `System.Xml.Schema.XmlSchemaSet` class. For more information about the `System.Xml.Schema.XmlSchemaSet` class see, XmlSchemaSet for Schema Compilation.
+> [!IMPORTANT]
+> The <xref:System.Xml.Schema.XmlSchemaCollection> class is now obsolete and has been replaced with the <xref:System.Xml.Schema.XmlSchemaSet> class. For more information about the <xref:System.Xml.Schema.XmlSchemaSet> class see, [XmlSchemaSet for Schema Compilation](xmlschemaset-for-schema-compilation.md).
 
  The following example shows the root element of a data file.
 
@@ -23,9 +23,9 @@ You can use the `System.Xml.Schema.XmlSchemaCollection` to validate an XML docum
     targetNamespace="urn:bookstore-schema">
 ```
 
- For this example, the value of the `targetNamespace` attribute is `urn:bookstore-schema`, which is the same namespace that is used when adding the schema to the `System.Xml.Schema.XmlSchemaCollection`.
+ For this example, the value of the `targetNamespace` attribute is `urn:bookstore-schema`, which is the same namespace that is used when adding the schema to the <xref:System.Xml.Schema.XmlSchemaCollection>.
 
- The following code example adds an XML Schema to the `System.Xml.Schema.XmlSchemaCollection`.
+ The following code example adds an XML Schema to the <xref:System.Xml.Schema.XmlSchemaCollection>.
 
 ```vb
 Dim xsc As New XmlSchemaCollection()
@@ -45,9 +45,9 @@ vreader = new XmlValidatingReader (reader);
 vreader.Schemas.Add(xsc);
 ```
 
- The `targetNamespace` attribute is generally used when you add the `namespaceURI` property in the `System.Xml.Schema.XmlSchemaCollection.Add*` method for the `System.Xml.Schema.XmlSchemaCollection`. You can specify a null reference before adding the schema to the `System.Xml.Schema.XmlSchemaCollection`. An empty string ("") should be used for schemas without a namespace. The `System.Xml.Schema.XmlSchemaCollection` can have only one schema without a namespace.
+ The `targetNamespace` attribute is generally used when you add the `namespaceURI` property in the <xref:System.Xml.Schema.XmlSchemaCollection.Add*> method for the <xref:System.Xml.Schema.XmlSchemaCollection>. You can specify a null reference before adding the schema to the <xref:System.Xml.Schema.XmlSchemaCollection>. An empty string ("") should be used for schemas without a namespace. The <xref:System.Xml.Schema.XmlSchemaCollection> can have only one schema without a namespace.
 
- The following code example adds an XML Schema, HeadCount.xsd, to the `System.Xml.Schema.XmlSchemaCollection` and validates HeadCount.xml.
+ The following code example adds an XML Schema, HeadCount.xsd, to the <xref:System.Xml.Schema.XmlSchemaCollection> and validates HeadCount.xml.
 
 ```vb
 Imports System
@@ -142,7 +142,7 @@ namespace ValidationSample
 </xs:schema>
 ```
 
- The following code example creates an `System.Xml.XmlValidatingReader` that takes an `System.Xml.XmlTextReader`. The input file, sample4.xml, is validated against the XML Schema, sample4.xsd.
+ The following code example creates an <xref:System.Xml.XmlValidatingReader> that takes an <xref:System.Xml.XmlTextReader>. The input file, sample4.xml, is validated against the XML Schema, sample4.xsd.
 
 ```vb
 Dim tr As New XmlTextReader("sample4.xml")
@@ -203,7 +203,7 @@ while(vr.Read()) {
 
 ## See also
 
-- `System.Xml.XmlParserContext`
-- `System.Xml.XmlValidatingReader.ValidationEventHandler`
-- `System.Xml.XmlValidatingReader.Schemas*`
-- XmlSchemaCollection Schema Compilation
+- <xref:System.Xml.XmlParserContext>
+- <xref:System.Xml.XmlValidatingReader.ValidationEventHandler?displayProperty=nameWithType>
+- <xref:System.Xml.XmlValidatingReader.Schemas*?displayProperty=nameWithType>
+- [XmlSchemaCollection Schema Compilation](xmlschemacollection-schema-compilation.md)

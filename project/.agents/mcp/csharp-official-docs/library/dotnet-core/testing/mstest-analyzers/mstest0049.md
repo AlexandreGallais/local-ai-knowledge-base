@@ -1,12 +1,16 @@
 ---
 title: "MSTEST0049: Flow TestContext cancellation token"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0049.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0049: Flow TestContext cancellation token"
+ms.date: 07/24/2025
+f1_keywords:
+- MSTEST0049
+- FlowTestContextCancellationTokenAnalyzer
+helpviewer_keywords:
+- FlowTestContextCancellationTokenAnalyzer
+- MSTEST0049
+author: Evangelink
+ms.author: amauryleve
 ---
-
 # MSTEST0049: Flow TestContext cancellation token
 
 | Property                            | Value                                                                                    |
@@ -22,27 +26,27 @@ license: "CC-BY-4.0"
 
 ## Cause
 
-A method call within a test context doesn't use the `System.Threading.CancellationToken` available from `Microsoft.VisualStudio.TestTools.UnitTesting.TestContext` when the called method has a parameter or overload that accepts a `System.Threading.CancellationToken`.
+A method call within a test context doesn't use the <xref:System.Threading.CancellationToken> available from <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext> when the called method has a parameter or overload that accepts a <xref:System.Threading.CancellationToken>.
 
 ## Rule description
 
-When `Microsoft.VisualStudio.TestTools.UnitTesting.TestContext` is available in your test methods, you should flow its `System.Threading.CancellationToken` to async operations. This enables cooperative cancellation when timeouts occur and ensures proper resource cleanup. The `Microsoft.VisualStudio.TestTools.UnitTesting.TestContext` cancellation token is especially important when using cooperative cancellation with timeout attributes.
+When <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext> is available in your test methods, you should flow its <xref:System.Threading.CancellationToken> to async operations. This enables cooperative cancellation when timeouts occur and ensures proper resource cleanup. The <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext> cancellation token is especially important when using cooperative cancellation with timeout attributes.
 
 This rule triggers when:
 
-- A method call has an optional `System.Threading.CancellationToken` parameter that isn't explicitly provided.
-- A method call has an overload that accepts a `System.Threading.CancellationToken` but the non-cancellable overload is used instead.
+- A method call has an optional <xref:System.Threading.CancellationToken> parameter that isn't explicitly provided.
+- A method call has an overload that accepts a <xref:System.Threading.CancellationToken> but the non-cancellable overload is used instead.
 
 ## How to fix violations
 
-Use the provided code fixer to automatically pass the `System.Threading.CancellationToken` from `Microsoft.VisualStudio.TestTools.UnitTesting.TestContext` to method calls that support cancellation. You can also manually update method calls to include `TestContext.CancellationToken` as a parameter.
+Use the provided code fixer to automatically pass the <xref:System.Threading.CancellationToken> from <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext> to method calls that support cancellation. You can also manually update method calls to include `TestContext.CancellationToken` as a parameter.
 
-> **Note:**
+> [!NOTE]
 > The following examples use `TestContext.CancellationToken`, which is available in MSTest 3.11 and later. In MSTest 3.10, use `TestContext.CancellationTokenSource.Token` instead. For constructor injection, use `_testContext.CancellationTokenSource.Token` instead of `_testContext.CancellationToken`.
 
 ### Example: TestContext property
 
-The following code triggers MSTEST0049 because `Task.Delay` and `HttpClient.GetAsync` accept a `System.Threading.CancellationToken` but none is passed:
+The following code triggers MSTEST0049 because `Task.Delay` and `HttpClient.GetAsync` accept a <xref:System.Threading.CancellationToken> but none is passed:
 
 ```csharp
 [TestClass]
@@ -63,58 +67,14 @@ public class MyTestClass
 
 The fix is to pass `TestContext.CancellationToken` to each call:
 
-```csharp
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+:::code language="csharp" source="../snippets/testcontext/csharp-cancellation/CancellationToken.cs":::
 
-[TestClass]
-public class TestClassCancellationToken
-{
-    // MSTest automatically sets the TestContext property before each test runs.
-    // MSTest.Analyzers includes a diagnostic suppressor that removes CS8618
-    // (non-nullable property uninitialized) for this property.
-    public TestContext TestContext { get; set; }
-
-    [TestMethod]
-    [Timeout(5000, CooperativeCancellation = true)]
-    public async Task MyAsyncTest()
-    {
-        using var client = new HttpClient();
-        var response = await client.GetAsync(
-            "<example-value>", TestContext.CancellationToken);
-
-        Assert.IsTrue(response.IsSuccessStatusCode);
-    }
-}
-```
 ### Example: constructor injection (MSTest 3.6+)
 
 With constructor injection, use the `_testContext` field to access the cancellation token:
 
-```csharp
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+:::code language="csharp" source="../snippets/testcontext/csharp-cancellation/CancellationTokenCtor.cs":::
 
-[TestClass]
-public class TestClassCancellationTokenCtor
-{
-    private readonly TestContext _testContext;
-
-    public TestClassCancellationTokenCtor(TestContext testContext)
-    {
-        _testContext = testContext;
-    }
-
-    [TestMethod]
-    [Timeout(5000, CooperativeCancellation = true)]
-    public async Task MyAsyncTest()
-    {
-        using var client = new HttpClient();
-        var response = await client.GetAsync(
-            "<example-value>", _testContext.CancellationToken);
-
-        Assert.IsTrue(response.IsSuccessStatusCode);
-    }
-}
-```
 ## When to suppress warnings
 
 Suppress this warning if you intentionally don't want to support cancellation for specific operations, or if the operation should continue even when the test is cancelled.
@@ -129,11 +89,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0049
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0049.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

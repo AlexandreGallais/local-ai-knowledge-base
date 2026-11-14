@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: SDK local container runtime selection prefers platform-native tools"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/11/native-local-container-runtimes.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where SDK local container runtime selection prefers platform-native tools on Windows and macOS."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # SDK local container runtime selection prefers platform-native tools
@@ -27,13 +25,13 @@ You can explicitly select Docker, Podman, `wslc`, or Apple's `container` CLI thr
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
 Windows and macOS now provide platform-native container tooling. The SDK gives you the native platform experience while it preserves Docker and Podman fallback behavior.
 
-For more information, see the related implementation and tracking issues dotnet/sdk-container-builds#651 and dotnet/sdk-container-builds#636.
+For more information, see the [related implementation](https://github.com/dotnet/sdk/pull/55249) and tracking issues [dotnet/sdk-container-builds#651](https://github.com/dotnet/sdk-container-builds/issues/651) and [dotnet/sdk-container-builds#636](https://github.com/dotnet/sdk-container-builds/issues/636).
 
 ## Recommended action
 

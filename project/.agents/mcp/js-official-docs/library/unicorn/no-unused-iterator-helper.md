@@ -1,19 +1,13 @@
----
-title: "no-unused-iterator-helper"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-unused-iterator-helper.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-unused-iterator-helper
 
 📝 Disallow discarding lazy iterator helpers.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Iterator helpers `.map()`, `.filter()`, `.flatMap()`, `.take()`, and `.drop()` are lazy. They return another iterator without reading the source. If that iterator is discarded, callbacks never run and `.drop()` does not advance the source.
 
@@ -40,7 +34,7 @@ for (const item of filtered) {
 
 For a discarded `.map(callback)`, the rule can suggest `.forEach(callback)`. This is not an autofix because it starts consuming the iterator. The suggestion requires exactly one non-spread argument and is omitted for explicit type arguments or TypeScript wrappers around the result.
 
-The `no-for-each` rule may prefer a `for…of` loop instead.
+The [`no-for-each`](./no-for-each.md) rule may prefer a `for…of` loop instead.
 
 ## Detection
 
@@ -50,4 +44,4 @@ The rule recognizes iterators from `.values()`, `.keys()`, `.entries()`, `.match
 
 Without type information, it does not infer mutable or destructured bindings, imported functions, object methods, async generators, or ordinary function return values. Computed helper calls and discards nested in logical, conditional, or comma expressions are also ignored. The rule does not track whether a stored or returned iterator is eventually consumed, and syntax-only method matches may include custom APIs.
 
-`no-unused-builtin-method-return` skips lazy helpers handled here. To discard one intentionally, use an ESLint disable comment; `void` still reports.
+[`no-unused-builtin-method-return`](./no-unused-builtin-method-return.md) skips lazy helpers handled here. To discard one intentionally, use an ESLint disable comment; `void` still reports.

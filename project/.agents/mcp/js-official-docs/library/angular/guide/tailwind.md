@@ -1,15 +1,6 @@
----
-title: "Using Tailwind CSS with Angular"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/tailwind.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Using Tailwind CSS with Angular
 
-Tailwind CSS is a utility-first CSS framework that can be used to build modern websites without ever leaving your HTML. This guide will walk you through setting up Tailwind CSS in your Angular project.
+[Tailwind CSS](https://tailwindcss.com/) is a utility-first CSS framework that can be used to build modern websites without ever leaving your HTML. This guide will walk you through setting up Tailwind CSS in your Angular project.
 
 ## Automated Setup with `ng add`
 
@@ -46,32 +37,27 @@ cd my-project
 
 Next, open a terminal in your Angular project's root directory and run the following command to install Tailwind CSS and its peer dependencies:
 
-```
-  
+<docs-code-multifile>
+  <docs-code header="npm" language="shell">
     npm install tailwindcss @tailwindcss/postcss postcss
-```
-  File: `yarn`
-
-```shell
+  </docs-code>
+  <docs-code header="yarn" language="shell">
     yarn add tailwindcss @tailwindcss/postcss postcss
-```
-  File: `pnpm`
-
-```shell
+  </docs-code>
+  <docs-code header="pnpm" language="shell">
     pnpm add tailwindcss @tailwindcss/postcss postcss
-```
-  File: `bun`
-
-```shell
+  </docs-code>
+  <docs-code header="bun" language="shell">
     bun add tailwindcss @tailwindcss/postcss postcss
-```
+  </docs-code>
+</docs-code-multifile>
 
 ### 3. Configure PostCSS Plugins
 
 Next, add a `.postcssrc.json` file in the file root of the project.
 Add the `@tailwindcss/postcss` plugin into your PostCSS configuration.
 
-```json
+```json {header: '.postcssrc.json'}
 {
   "plugins": {
     "@tailwindcss/postcss": {}
@@ -83,13 +69,13 @@ Add the `@tailwindcss/postcss` plugin into your PostCSS configuration.
 
 Add an `@import` to `./src/styles.css` that imports Tailwind CSS.
 
-```css
+```css {header: "src/styles.css"}
 @import 'tailwindcss';
 ```
 
 If you're using SCSS, add `@use` to `./src/styles.scss`.
 
-```scss
+```scss {header: "src/styles.scss"}
 @use 'tailwindcss';
 ```
 
@@ -105,4 +91,4 @@ For example, you can add the following to your `app.html` file:
 
 ## Additional Resources
 
-- Tailwind CSS Documentation
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)

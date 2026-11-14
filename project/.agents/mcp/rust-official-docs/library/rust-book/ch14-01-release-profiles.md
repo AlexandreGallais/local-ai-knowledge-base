@@ -1,14 +1,3 @@
----
-title: "ch14-01-release-profiles"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch14-01-release-profiles.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch14-01-release-profiles
-
 ## Customizing Builds with Release Profiles
 
 In Rust, _release profiles_ are predefined, customizable profiles with
@@ -22,6 +11,13 @@ build`, and the `release` profile Cargo uses when you run `cargo build
 and the `release` profile has good defaults for release builds.
 
 These profile names might be familiar from the output of your builds:
+
+<!-- manual-regeneration
+anywhere, run:
+cargo build
+cargo build --release
+and ensure output below is accurate
+-->
 
 ```console
 $ cargo build
@@ -38,7 +34,7 @@ By adding `[profile.*]` sections for any profile you want to customize, you
 override any subset of the default settings. For example, here are the default
 values for the `opt-level` setting for the `dev` and `release` profiles:
 
-Filename: Cargo.toml
+<span class="filename">Filename: Cargo.toml</span>
 
 ```toml
 [profile.dev]
@@ -63,7 +59,7 @@ _Cargo.toml_. For example, if we want to use optimization level 1 in the
 development profile, we can add these two lines to our project’s _Cargo.toml_
 file:
 
-Filename: Cargo.toml
+<span class="filename">Filename: Cargo.toml</span>
 
 ```toml
 [profile.dev]
@@ -76,4 +72,4 @@ Cargo will use the defaults for the `dev` profile plus our customization to
 optimizations than the default, but not as many as in a release build.
 
 For the full list of configuration options and defaults for each profile, see
-Cargo’s documentation.
+[Cargo’s documentation](https://doc.rust-lang.org/cargo/reference/profiles.html).

@@ -1,12 +1,3 @@
----
-title: "Private Store Members"
-tool: "ngrx-signals"
-version: "22.0"
-source: "https://github.com/ngrx/platform/blob/a4995391ef631f1bd60d539f436a1aa5c23c4fe5/projects/www/src/app/pages/guide/signals/signal-store/private-store-members.md"
-commit: "a4995391ef631f1bd60d539f436a1aa5c23c4fe5"
-license: "MIT"
----
-
 # Private Store Members
 
 SignalStore allows defining private members that cannot be accessed from outside the store by using the `_` prefix.

@@ -1,10 +1,9 @@
 ---
-title: "dotnet-core-uninstall remove command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/additional-tools/uninstall-tool-cli-remove.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet-core-uninstall remove command
+description: The dotnet-core-uninstall remove command uninstalls the target .NET SDK or Runtime. Learn about this command's syntax.
+author: adegeo
+ms.date: 05/27/2026
+zone_pivot_groups: operating-systems-set-three
 ---
 
 # dotnet-core-uninstall remove
@@ -21,7 +20,7 @@ license: "CC-BY-4.0"
 
 ```
 
-**os-windows:**
+::: zone pivot="os-windows"
 
 ```dotnetcli
 dotnet-core-uninstall remove <TARGET> <FILTER> [-v|--verbosity <LEVEL>]
@@ -30,7 +29,9 @@ dotnet-core-uninstall remove <TARGET> <FILTER> [-v|--verbosity <LEVEL>]
 dotnet-core-uninstall remove -h|--help
 ```
 
-**os-macos:**
+::: zone-end
+
+::: zone pivot="os-macos"
 
 ```dotnetcli
 dotnet-core-uninstall remove <TARGET> <FILTER> [-v|--verbosity <LEVEL>]
@@ -38,6 +39,8 @@ dotnet-core-uninstall remove <TARGET> <FILTER> [-v|--verbosity <LEVEL>]
 
 dotnet-core-uninstall remove -h|--help
 ```
+
+::: zone-end
 
 ## Description
 
@@ -47,22 +50,22 @@ The `dotnet-core-uninstall remove` command removes .NET SDKs and runtimes from t
 
 **`TARGET`**
 
-  The type you want to uninstall. Valid options are listed in the Options - TARGET section.
+  The type you want to uninstall. Valid options are listed in the [Options - TARGET](#options---target) section.
 
 **`VERSION`**
 
   The version to uninstall. You can list several versions separated by a space. Response files are also supported.
 
-  > **Tip:**
+  > [!TIP]
   > Response files are an alternative to placing all the versions on the command line. They're text files, typically with a *\*.rsp* extension, and each version is listed on a separate line. To specify a response file for the `VERSION` argument, use the \@ character immediately followed by the response file name.
 
 **`FILTER`**
 
-  Specifies a value used to filter the `TARGET`. Valid options are listed in the Options - FILTER section.
+  Specifies a value used to filter the `TARGET`. Valid options are listed in the [Options - FILTER](#options---filter) section.
 
 ## Options - TARGET
 
-**os-windows:**
+::: zone pivot="os-windows"
 
 - **`--arm64`**
 
@@ -96,7 +99,9 @@ The `dotnet-core-uninstall remove` command removes .NET SDKs and runtimes from t
 
   Can be used with `--sdk`, `--runtime`, `--aspnet-runtime`, and `--windows-desktop-runtime` to remove x86.
 
-**os-macos:**
+::: zone-end
+
+::: zone pivot="os-macos"
 
 - **`--runtime`**
 
@@ -105,6 +110,8 @@ The `dotnet-core-uninstall remove` command removes .NET SDKs and runtimes from t
 - **`--sdk`**
 
   Removes .NET SDKs only.
+
+::: zone-end
 
 ## Options - FILTER
 
@@ -152,7 +159,9 @@ These options are exclusive.
 
   Forces removal of versions that might be used by Visual Studio.
 
-**os-macos:**
+::: zone-end
+
+::: zone pivot="os-macos"
 
 - **`--force`**
 
@@ -162,8 +171,10 @@ These options are exclusive.
 
   Prevents removal of SDKs and runtimes that have a high probability of being used by Visual Studio for Mac.
 
-  > **Note:**
+  > [!NOTE]
   > Visual Studio for Mac is out of support.
+
+::: zone-end
 
 - **`-v, --verbosity <LEVEL>`**
 
@@ -181,7 +192,7 @@ These options are exclusive.
 
 ## Examples
 
-> **Note:**
+> [!NOTE]
 > By default, .NET SDKs and runtimes that might be required by Visual Studio or other SDKs are kept. In the following examples, and depending on the state of the machine, some of the specified SDKs and runtimes might remain. To remove all the SDKs and runtimes, list them explicitly as arguments or use the `--force` option.
 
 - Remove all the .NET runtimes except the version `3.0.0-preview6-27804-01` without requiring yes or no confirmation:
@@ -229,6 +240,6 @@ These options are exclusive.
 
 ## See also
 
-- .NET uninstall tool overview
-- dotnet-core-uninstall list
-- dotnet-core-uninstall dry-run
+- [.NET uninstall tool overview](uninstall-tool-overview.md)
+- [dotnet-core-uninstall list](uninstall-tool-cli-list.md)
+- [dotnet-core-uninstall dry-run](uninstall-tool-cli-dry-run.md)

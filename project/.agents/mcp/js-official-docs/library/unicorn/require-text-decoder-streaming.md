@@ -1,23 +1,19 @@
----
-title: "require-text-decoder-streaming"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/require-text-decoder-streaming.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # require-text-decoder-streaming
 
 📝 Require streaming decoding of fetch-body chunks with `TextDecoder`.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+<!-- The examples use UTF-8; the rule also checks other encodings. -->
 
 Fetch-body chunks can split a multibyte character. Decoding each chunk independently can turn `€` into `���`.
 
-The Encoding Standard describes incremental decoding with the same `TextDecoder` instance: pass `{stream: true}` for each chunk, then consume the result of a final `decoder.decode()` call. The final call flushes any buffered bytes and handles incomplete final characters according to the decoder's `fatal` option.
+The [Encoding Standard](https://encoding.spec.whatwg.org/#interface-textdecoder) describes incremental decoding with the same `TextDecoder` instance: pass `{stream: true}` for each chunk, then consume the result of a final `decoder.decode()` call. The final call flushes any buffered bytes and handles incomplete final characters according to the decoder's `fatal` option.
 
 This rule reports missing streaming options or statically falsy `stream` values when decoding native fetch-body chunks, including incremental processing. It does not independently verify decoder reuse or final flushing.
 
@@ -68,7 +64,7 @@ while (true) {
 text += decoder.decode();
 ```
 
-Alternatively, use `TextDecoderStream`, which preserves decoder state and flushes when the input stream ends:
+Alternatively, use [`TextDecoderStream`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoderStream), which preserves decoder state and flushes when the input stream ends:
 
 ```js
 // ✅

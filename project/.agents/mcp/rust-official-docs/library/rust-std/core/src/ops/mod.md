@@ -1,12 +1,3 @@
----
-title: "core::ops"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/ops/mod.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::ops
 
 Overloadable operators.
@@ -15,7 +6,7 @@ Implementing these traits allows you to overload certain operators.
 
 Some of these traits are imported by the prelude, so they are available in
 every Rust program. Only operators backed by traits can be overloaded. For
-example, the addition operator (`+`) can be overloaded through the `Add`
+example, the addition operator (`+`) can be overloaded through the [`Add`]
 trait, but since the assignment operator (`=`) has no backing trait, there
 is no way of overloading its semantics. Additionally, this module does not
 provide any mechanism to create new operators. If traitless overloading or
@@ -24,30 +15,30 @@ Rust's syntax.
 
 Implementations of operator traits should be unsurprising in their
 respective contexts, keeping in mind their usual meanings and
-[operator precedence]. For example, when implementing `Mul`, the operation
+[operator precedence]. For example, when implementing [`Mul`], the operation
 should have some resemblance to multiplication (and share expected
 properties like associativity).
 
 Note that the `&&` and `||` operators are currently not supported for
 overloading. Due to their short circuiting nature, they require a different
-design from traits for other operators like `BitAnd`. Designs for them are
+design from traits for other operators like [`BitAnd`]. Designs for them are
 under discussion.
 
 Many of the operators take their operands by value. In non-generic
 contexts involving built-in types, this is usually not a problem.
 However, using these operators in generic code, requires some
 attention if values have to be reused as opposed to letting the operators
-consume them. One option is to occasionally use `clone`.
+consume them. One option is to occasionally use [`clone`].
 Another option is to rely on the types involved providing additional
 operator implementations for references. For example, for a user-defined
 type `T` which is supposed to support addition, it is probably a good
-idea to have both `T` and `&T` implement the traits `Add<T>``Add` and
-`Add<&T>``Add` so that generic code can be written without unnecessary
+idea to have both `T` and `&T` implement the traits [`Add<T>`][`Add`] and
+[`Add<&T>`][`Add`] so that generic code can be written without unnecessary
 cloning.
 
-#### Examples
+# Examples
 
-This example creates a `Point` struct that implements `Add` and `Sub`,
+This example creates a `Point` struct that implements [`Add`] and [`Sub`],
 and then demonstrates adding and subtracting two `Point`s.
 
 ```rust
@@ -81,15 +72,15 @@ assert_eq!(Point {x: -1, y: -3}, Point {x: 1, y: 0} - Point {x: 2, y: 3});
 
 See the documentation for each trait for an example implementation.
 
-The `Fn`, `FnMut`, and `FnOnce` traits are implemented by types that can be
-invoked like functions. Note that `Fn` takes `&self`, `FnMut` takes `&mut
-self` and `FnOnce` takes `self`. These correspond to the three kinds of
+The [`Fn`], [`FnMut`], and [`FnOnce`] traits are implemented by types that can be
+invoked like functions. Note that [`Fn`] takes `&self`, [`FnMut`] takes `&mut
+self` and [`FnOnce`] takes `self`. These correspond to the three kinds of
 methods that can be invoked on an instance: call-by-reference,
 call-by-mutable-reference, and call-by-value. The most common use of these
 traits is to act as bounds to higher-level functions that take functions or
 closures as arguments.
 
-Taking a `Fn` as a parameter:
+Taking a [`Fn`] as a parameter:
 
 ```rust
 fn call_with_one<F>(func: F) -> usize
@@ -102,7 +93,7 @@ let double = |x| x * 2;
 assert_eq!(call_with_one(double), 2);
 ```
 
-Taking a `FnMut` as a parameter:
+Taking a [`FnMut`] as a parameter:
 
 ```rust
 fn do_twice<F>(mut func: F)
@@ -121,7 +112,7 @@ let mut x: usize = 1;
 assert_eq!(x, 5);
 ```
 
-Taking a `FnOnce` as a parameter:
+Taking a [`FnOnce`] as a parameter:
 
 ```rust
 fn consume_with_relish<F>(func: F)
@@ -143,3 +134,6 @@ consume_with_relish(consume_and_return_x);
 
 // `consume_and_return_x` can no longer be invoked at this point
 ```
+
+[`clone`]: Clone::clone
+[operator precedence]: ../../reference/expressions.html#expression-precedence

@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataImport::EnumUserStrings Method"
 title: "IMetaDataImport::EnumUserStrings Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-enumuserstrings-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.EnumUserStrings"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::EnumUserStrings"
+  - "EnumUserStrings method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::EnumUserStrings Method
 
 Enumerates String tokens representing hard-coded strings in the current metadata scope.
@@ -45,11 +52,11 @@ HRESULT EnumUserStrings (
 
 ## Remarks
 
- The String tokens are created by the IMetaDataEmit::DefineUserString method. This method is designed to be used by a metadata browser rather than by a compiler.
+ The String tokens are created by the [IMetaDataEmit::DefineUserString](imetadataemit-defineuserstring-method.md) method. This method is designed to be used by a metadata browser rather than by a compiler.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -57,5 +64,5 @@ HRESULT EnumUserStrings (
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

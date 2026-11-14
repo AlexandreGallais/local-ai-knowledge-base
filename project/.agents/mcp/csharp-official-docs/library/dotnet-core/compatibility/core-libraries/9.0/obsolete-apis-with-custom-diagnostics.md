@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: .NET 9 obsoletions with custom IDs"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/9.0/obsolete-apis-with-custom-diagnostics.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+titleSuffix: ""
+description: Learn about the APIs that have been marked as obsolete in .NET 9 with a custom diagnostic ID.
+ms.date: 11/06/2024
 ---
-
 # API obsoletions with non-default diagnostic IDs (.NET 9)
 
-Some APIs have been marked as obsolete, starting in .NET 9. This breaking change is specific to APIs that have been marked as obsolete *with a custom diagnostic ID*. Suppressing the default obsoletion diagnostic ID, which is CS0618 for the C# compiler, does not suppress the warnings that the compiler generates when these APIs are used.
+Some APIs have been marked as obsolete, starting in .NET 9. This breaking change is specific to APIs that have been marked as obsolete *with a custom diagnostic ID*. Suppressing the default obsoletion diagnostic ID, which is [CS0618](../../../../csharp/language-reference/compiler-messages/cs0618.md) for the C# compiler, does not suppress the warnings that the compiler generates when these APIs are used.
 
 ## Change description
 
@@ -19,12 +16,12 @@ The following table lists the custom diagnostic IDs and their corresponding warn
 
 | Diagnostic ID | Description | Severity |
 |---------------|-------------|----------|
-| SYSLIB0009 | `System.Net.AuthenticationManager` is not supported. Methods will no-op or throw `System.PlatformNotSupportedException`. | Warning |
-| SYSLIB0014 | `System.Net.ServicePointManager` is fully obsolete. Settings on `System.Net.ServicePointManager` don't affect `System.Net.Security.SslStream` or `System.Net.Http.HttpClient` (this behavior hasn't changed since .NET 6). | Warning |
-| SYSLIB0054 | `System.Threading.Thread.VolatileRead*` and `System.Threading.Thread.VolatileWrite*` are obsolete. Use `System.Threading.Volatile.Read*` or `System.Threading.Volatile.Write*` instead. | Warning |
-| SYSLIB0055 | `AdvSimd.ShiftRightLogicalRoundedNarrowingSaturate*` methods with signed parameters are obsolete. Use the unsigned overloads instead. | Warning |
-| SYSLIB0056 | `Assembly.LoadFrom` with a custom `AssemblyHashAlgorithm` is obsolete. Use overloads without an `AssemblyHashAlgorithm`. | Warning |
-| SYSLIB0057 | `X509Certificate2` and `X509Certificate` constructors for binary and file content are obsolete. | Warning |
+| [SYSLIB0009](../../../../fundamentals/syslib-diagnostics/syslib0009.md) | <xref:System.Net.AuthenticationManager> is not supported. Methods will no-op or throw <xref:System.PlatformNotSupportedException>. | Warning |
+| [SYSLIB0014](../../../../fundamentals/syslib-diagnostics/syslib0014.md) | <xref:System.Net.ServicePointManager> is fully obsolete. Settings on <xref:System.Net.ServicePointManager> don't affect <xref:System.Net.Security.SslStream> or <xref:System.Net.Http.HttpClient> (this behavior hasn't changed since .NET 6). | Warning |
+| [SYSLIB0054](../../../../fundamentals/syslib-diagnostics/syslib0054.md) | <xref:System.Threading.Thread.VolatileRead*?displayProperty=nameWithType> and <xref:System.Threading.Thread.VolatileWrite*?displayProperty=nameWithType> are obsolete. Use <xref:System.Threading.Volatile.Read*?displayProperty=nameWithType> or <xref:System.Threading.Volatile.Write*?displayProperty=nameWithType> instead. | Warning |
+| [SYSLIB0055](../../../../fundamentals/syslib-diagnostics/syslib0055.md) | `AdvSimd.ShiftRightLogicalRoundedNarrowingSaturate*` methods with signed parameters are obsolete. Use the unsigned overloads instead. | Warning |
+| [SYSLIB0056](../../../../fundamentals/syslib-diagnostics/syslib0056.md) | `Assembly.LoadFrom` with a custom `AssemblyHashAlgorithm` is obsolete. Use overloads without an `AssemblyHashAlgorithm`. | Warning |
+| [SYSLIB0057](../../../../fundamentals/syslib-diagnostics/syslib0057.md) | `X509Certificate2` and `X509Certificate` constructors for binary and file content are obsolete. | Warning |
 
 ## Version introduced
 
@@ -32,7 +29,7 @@ The following table lists the custom diagnostic IDs and their corresponding warn
 
 ## Type of breaking change
 
-These obsoletions can affect source compatibility.
+These obsoletions can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Recommended action
 
@@ -44,74 +41,74 @@ These obsoletions can affect source compatibility.
 
 ### SYSLIB0009
 
-- `System.Net.AuthenticationManager`
+- <xref:System.Net.AuthenticationManager?displayProperty=fullName>
 
 ### SYSLIB0014
 
-- `System.Net.ServicePointManager`
+- <xref:System.Net.ServicePointManager?displayProperty=fullName>
 
 ### SYSLIB0054
 
-- `System.Threading.Thread.VolatileRead*`
-- `System.Threading.Thread.VolatileWrite*`
+- <xref:System.Threading.Thread.VolatileRead*?displayProperty=fullName>
+- <xref:System.Threading.Thread.VolatileWrite*?displayProperty=fullName>
 
 ### SYSLIB0055
 
-- `System.Runtime.Intrinsics.Arm.AdvSimd.Arm64.ShiftRightLogicalRoundedNarrowingSaturateScalar(System.Runtime.Intrinsics.Vector64{System.Int64},System.Byte)`
-- `System.Runtime.Intrinsics.Arm.AdvSimd.Arm64.ShiftRightLogicalRoundedNarrowingSaturateScalar(System.Runtime.Intrinsics.Vector64{System.Int16},System.Byte)`
-- `System.Runtime.Intrinsics.Arm.AdvSimd.Arm64.ShiftRightLogicalRoundedNarrowingSaturateScalar(System.Runtime.Intrinsics.Vector64{System.Int32},System.Byte)`
-- `System.Runtime.Intrinsics.Arm.AdvSimd.ShiftRightLogicalRoundedNarrowingSaturateLower(System.Runtime.Intrinsics.Vector128{System.Int16},System.Byte)`
-- `System.Runtime.Intrinsics.Arm.AdvSimd.ShiftRightLogicalRoundedNarrowingSaturateLower(System.Runtime.Intrinsics.Vector128{System.Int64},System.Byte)`
-- `System.Runtime.Intrinsics.Arm.AdvSimd.ShiftRightLogicalRoundedNarrowingSaturateLower(System.Runtime.Intrinsics.Vector128{System.Int32},System.Byte)`
-- `System.Runtime.Intrinsics.Arm.AdvSimd.ShiftRightLogicalRoundedNarrowingSaturateUpper(System.Runtime.Intrinsics.Vector64{System.SByte},System.Runtime.Intrinsics.Vector128{System.Int16},System.Byte)`
-- `System.Runtime.Intrinsics.Arm.AdvSimd.ShiftRightLogicalRoundedNarrowingSaturateUpper(System.Runtime.Intrinsics.Vector64{System.Int16},System.Runtime.Intrinsics.Vector128{System.Int32},System.Byte)`
-- `System.Runtime.Intrinsics.Arm.AdvSimd.ShiftRightLogicalRoundedNarrowingSaturateUpper(System.Runtime.Intrinsics.Vector64{System.Int32},System.Runtime.Intrinsics.Vector128{System.Int64},System.Byte)`
+- <xref:System.Runtime.Intrinsics.Arm.AdvSimd.Arm64.ShiftRightLogicalRoundedNarrowingSaturateScalar(System.Runtime.Intrinsics.Vector64{System.Int64},System.Byte)?displayProperty=fullName>
+- <xref:System.Runtime.Intrinsics.Arm.AdvSimd.Arm64.ShiftRightLogicalRoundedNarrowingSaturateScalar(System.Runtime.Intrinsics.Vector64{System.Int16},System.Byte)?displayProperty=fullName>
+- <xref:System.Runtime.Intrinsics.Arm.AdvSimd.Arm64.ShiftRightLogicalRoundedNarrowingSaturateScalar(System.Runtime.Intrinsics.Vector64{System.Int32},System.Byte)?displayProperty=fullName>
+- <xref:System.Runtime.Intrinsics.Arm.AdvSimd.ShiftRightLogicalRoundedNarrowingSaturateLower(System.Runtime.Intrinsics.Vector128{System.Int16},System.Byte)?displayProperty=fullName>
+- <xref:System.Runtime.Intrinsics.Arm.AdvSimd.ShiftRightLogicalRoundedNarrowingSaturateLower(System.Runtime.Intrinsics.Vector128{System.Int64},System.Byte)?displayProperty=fullName>
+- <xref:System.Runtime.Intrinsics.Arm.AdvSimd.ShiftRightLogicalRoundedNarrowingSaturateLower(System.Runtime.Intrinsics.Vector128{System.Int32},System.Byte)?displayProperty=fullName>
+- <xref:System.Runtime.Intrinsics.Arm.AdvSimd.ShiftRightLogicalRoundedNarrowingSaturateUpper(System.Runtime.Intrinsics.Vector64{System.SByte},System.Runtime.Intrinsics.Vector128{System.Int16},System.Byte)?displayProperty=fullName>
+- <xref:System.Runtime.Intrinsics.Arm.AdvSimd.ShiftRightLogicalRoundedNarrowingSaturateUpper(System.Runtime.Intrinsics.Vector64{System.Int16},System.Runtime.Intrinsics.Vector128{System.Int32},System.Byte)?displayProperty=fullName>
+- <xref:System.Runtime.Intrinsics.Arm.AdvSimd.ShiftRightLogicalRoundedNarrowingSaturateUpper(System.Runtime.Intrinsics.Vector64{System.Int32},System.Runtime.Intrinsics.Vector128{System.Int64},System.Byte)?displayProperty=fullName>
 
 ### SYSLIB0056
 
-- `System.Reflection.Assembly.LoadFrom(System.String,System.Byte[],System.Configuration.Assemblies.AssemblyHashAlgorithm)`
+- <xref:System.Reflection.Assembly.LoadFrom(System.String,System.Byte[],System.Configuration.Assemblies.AssemblyHashAlgorithm)>
 
 ### SYSLIB0057
 
-- `System.Security.Cryptography.X509Certificates.X509Certificate2.#ctor(System.Byte[])`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2.#ctor(System.ReadOnlySpan{System.Byte})`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2.#ctor(System.String)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2.#ctor(System.Byte[],System.Security.SecureString)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2.#ctor(System.Byte[],System.String)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2.#ctor(System.String,System.Security.SecureString)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2.#ctor(System.String,System.String)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2.#ctor(System.Byte[],System.Security.SecureString,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2.#ctor(System.Byte[],System.String,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2.#ctor(System.ReadOnlySpan{System.Byte},System.ReadOnlySpan{System.Char},System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2.#ctor(System.String,System.ReadOnlySpan{System.Char},System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2.#ctor(System.String,System.Security.SecureString,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2.#ctor(System.String,System.String,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate.#ctor(System.Byte[])`
-- `System.Security.Cryptography.X509Certificates.X509Certificate.#ctor(System.String)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate.#ctor(System.Byte[],System.Security.SecureString)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate.#ctor(System.Byte[],System.String)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate.#ctor(System.String,System.String,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate.#ctor(System.String,System.Security.SecureString)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate.#ctor(System.String,System.String)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate.#ctor(System.Byte[],System.Security.SecureString,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate.#ctor(System.Byte[],System.String,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate.#ctor(System.String,System.Security.SecureString,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate.#ctor(System.String,System.String,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import(System.Byte[])`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import(System.ReadOnlySpan{System.Byte})`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import(System.ReadOnlySpan{System.Byte})`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import(System.Byte[],System.String,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import(System.ReadOnlySpan{System.Byte},System.ReadOnlySpan{System.Char},System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import(System.ReadOnlySpan{System.Byte},System.String,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import(System.String,System.ReadOnlySpan{System.Char},System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import(System.String,System.String,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)`
-- `System.Security.Cryptography.X509Certificates.X509Certificate.CreateFromSignedFile(System.String)`
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.%23ctor(System.Byte[])>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.%23ctor(System.ReadOnlySpan{System.Byte})>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.%23ctor(System.String)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.%23ctor(System.Byte[],System.Security.SecureString)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.%23ctor(System.Byte[],System.String)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.%23ctor(System.String,System.Security.SecureString)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.%23ctor(System.String,System.String)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.%23ctor(System.Byte[],System.Security.SecureString,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.%23ctor(System.Byte[],System.String,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.%23ctor(System.ReadOnlySpan{System.Byte},System.ReadOnlySpan{System.Char},System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.%23ctor(System.String,System.ReadOnlySpan{System.Char},System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.%23ctor(System.String,System.Security.SecureString,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.%23ctor(System.String,System.String,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate.%23ctor(System.Byte[])>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate.%23ctor(System.String)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate.%23ctor(System.Byte[],System.Security.SecureString)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate.%23ctor(System.Byte[],System.String)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate.%23ctor(System.String,System.String,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate.%23ctor(System.String,System.Security.SecureString)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate.%23ctor(System.String,System.String)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate.%23ctor(System.Byte[],System.Security.SecureString,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate.%23ctor(System.Byte[],System.String,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate.%23ctor(System.String,System.Security.SecureString,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate.%23ctor(System.String,System.String,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import(System.Byte[])>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import(System.ReadOnlySpan{System.Byte})>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import(System.ReadOnlySpan{System.Byte})>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import(System.Byte[],System.String,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import(System.ReadOnlySpan{System.Byte},System.ReadOnlySpan{System.Char},System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import(System.ReadOnlySpan{System.Byte},System.String,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import(System.String,System.ReadOnlySpan{System.Char},System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import(System.String,System.String,System.Security.Cryptography.X509Certificates.X509KeyStorageFlags)>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate.CreateFromSignedFile(System.String)>
 
 ## See also
 
-- API obsoletions with non-default diagnostic IDs (.NET 10)
-- API obsoletions with non-default diagnostic IDs (.NET 8)
-- API obsoletions with non-default diagnostic IDs (.NET 7)
-- API obsoletions with non-default diagnostic IDs (.NET 6)
-- API obsoletions with non-default diagnostic IDs (.NET 5)
-- Obsolete features in .NET 5+
+- [API obsoletions with non-default diagnostic IDs (.NET 10)](../10.0/obsolete-apis.md)
+- [API obsoletions with non-default diagnostic IDs (.NET 8)](../8.0/obsolete-apis-with-custom-diagnostics.md)
+- [API obsoletions with non-default diagnostic IDs (.NET 7)](../7.0/obsolete-apis-with-custom-diagnostics.md)
+- [API obsoletions with non-default diagnostic IDs (.NET 6)](../6.0/obsolete-apis-with-custom-diagnostics.md)
+- [API obsoletions with non-default diagnostic IDs (.NET 5)](../5.0/obsolete-apis-with-custom-diagnostics.md)
+- [Obsolete features in .NET 5+](../../../../fundamentals/syslib-diagnostics/obsoletions-overview.md)

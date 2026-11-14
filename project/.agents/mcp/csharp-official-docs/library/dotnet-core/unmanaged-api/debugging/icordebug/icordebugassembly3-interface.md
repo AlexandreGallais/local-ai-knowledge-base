@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: ICorDebugAssembly3 Interface"
 title: "ICorDebugAssembly3 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugassembly3-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugAssembly3 Interface
 
 Logically extends the ICorDebugAssembly interface to provide support for container assemblies and their contained assemblies.
@@ -15,17 +11,17 @@ Logically extends the ICorDebugAssembly interface to provide support for contain
 
 |Method|Description|
 |------------|-----------------|
-|EnumerateContainedAssemblies Method|Gets an enumerator for the assemblies contained in this assembly.|
-|GetContainerAssembly Method|Returns the container assembly of this `ICorDebugAssembly3` object.|
+|[EnumerateContainedAssemblies Method](icordebugassembly3-enumeratecontainedassemblies-method.md)|Gets an enumerator for the assemblies contained in this assembly.|
+|[GetContainerAssembly Method](icordebugassembly3-getcontainerassembly-method.md)|Returns the container assembly of this `ICorDebugAssembly3` object.|
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > The interface is available with .NET Native only. Attempting to call `QueryInterface` to retrieve an interface pointer returns `E_NOINTERFACE` for ICorDebug scenarios outside of .NET Native.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

@@ -1,31 +1,34 @@
 ---
-title: "Implement passkeys in ASP.NET Core Blazor Web Apps"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/authentication/passkeys/blazor.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Implement passkeys in ASP.NET Core Blazor Web Apps
+ai-usage: ai-assisted
+description: Learn how to implement passkeys authentication in ASP.NET Core Blazor Web Apps.
+monikerRange: '>= aspnetcore-10.0'
+ms.date: 09/01/2026
+zone_pivot_groups: implementation
 ---
-
 # Implement passkeys in ASP.NET Core Blazor Web Apps
 
-This guide explains how to implement passkey <example-value> for a new or existing Blazor Web App with ASP.NET Core Identity.
+<!-- UPDATE 11.0 - Confirm that the 'BlazorWebCSharp.1' folder 
+                   locations for links in this article are
+                   still correct for release -->
 
-For an overview of passkeys and general configuration guidance, see Enable Web Authentication API (WebAuthn) passkeys.
+This guide explains how to implement [passkey support](index.md) for a new or existing Blazor Web App with ASP.NET Core Identity.
 
-**new-development:**
+For an overview of passkeys and general configuration guidance, see [Enable Web Authentication API (WebAuthn) passkeys](index.md).
+
+:::zone pivot="new-development"
 
 ## Prerequisites
 
-.NET SDK (.NET 10 or later)
+[.NET SDK](https://dotnet.microsoft.com/download) (.NET 10 or later)
 
 ## Create a Blazor Web App
 
 Use the following guidance to create a new Blazor Web App with ASP.NET Core Identity, which includes passkeys support.
 
-# Visual Studio
+# [Visual Studio](#tab/visual-studio)
 
-> **Note:**
+> [!NOTE]
 > Visual Studio 2022 or later and .NET 10 or later SDK are required.
 
 In Visual Studio:
@@ -44,13 +47,13 @@ In Visual Studio:
   * **Use the .dev.localhost TLD in the application URL**: Not selected
   * Select **Create**.
 
-# Visual Studio Code
+# [Visual Studio Code](#tab/visual-studio-code)
 
-This guidance assumes that you have familiarity with VS Code. If you're new to VS Code, see the VS Code documentation. The videos listed by the Introductory Videos page are designed to give you an overview of VS Code's features.
+This guidance assumes that you have familiarity with VS Code. If you're new to VS Code, see the [VS Code documentation](https://code.visualstudio.com/docs). The videos listed by the [Introductory Videos page](https://code.visualstudio.com/docs/getstarted/introvideos) are designed to give you an overview of VS Code's features.
 
 In VS Code:
 
-* Go to the **Explorer** view and select the **Create .NET Project** button. Alternatively, you can bring up the **Command Palette** using `Ctrl`+`Shift`+`P`, and then type "`.NET`" and find and select the **.NET: New Project** command.
+* Go to the **Explorer** view and select the **Create .NET Project** button. Alternatively, you can bring up the **Command Palette** using <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>, and then type "`.NET`" and find and select the **.NET: New Project** command.
 
 * Select the **Blazor Web App** project template from the list.
 
@@ -60,15 +63,15 @@ In VS Code:
 
 * Select **Create project** from the **Command Palette**.
 
-# .NET CLI
+# [.NET CLI](#tab/net-cli/)
 
 In a command shell:
 
 Change to the directory using the `cd` command to where you want to create the project folder (for example, `cd c:/users/Bernie_Kopell/Documents`).
 
-Use the `dotnet new` command with the `blazor` project template to create a new Blazor Web App project. The `-o|--output` option passed to the command creates the project in a new folder named `BlazorWebAppPasskeys` at the current directory location.
+Use the [`dotnet new` command](/dotnet/core/tools/dotnet-new) with the [`blazor` project template](/dotnet/core/tools/dotnet-new-sdk-templates#blazor) to create a new Blazor Web App project. The [`-o|--output` option](/dotnet/core/tools/dotnet-new#options) passed to the command creates the project in a new folder named `BlazorWebAppPasskeys` at the current directory location.
 
-> **Important:**
+> [!IMPORTANT]
 > Name the project `BlazorWebAppPasskeys`, including matching the capitalization, so the namespaces match for code that you copy from the article to the app.
 
 ```dotnetcli
@@ -79,23 +82,25 @@ dotnet new blazor -au Individual -o BlazorWebAppPasskeys
 
 The preceding instructions create a Blazor Web App with:
 
-* ASP.NET Core Identity configured for user authentication using the `-au|--authentication` option.
+* ASP.NET Core Identity configured for user authentication using the [`-au|--authentication` option](/dotnet/core/tools/dotnet-new-sdk-templates#blazor).
 * Entity Framework Core with SQLite for data storage.
-* Passkey <example-value> and authentication endpoints.
+* Passkey registration and authentication endpoints.
 * UI components for managing passkeys.
 
-> **Note:**
+> [!NOTE]
 > Currently, only the Blazor Web App project template includes built-in passkey support.
 
-# Visual Studio
+## Run the application
 
-Press `F5` to run the app with debugging or `Ctrl`+`F5` to run the app without debugging.
+# [Visual Studio](#tab/visual-studio)
 
-# Visual Studio Code
+Press <kbd>F5</kbd> to run the app with debugging or <kbd>Ctrl</kbd>+<kbd>F5</kbd> to run the app without debugging.
 
-Press `F5` to run the app with debugging or `Ctrl`+`F5` to run the app without debugging.
+# [Visual Studio Code](#tab/visual-studio-code)
 
-# .NET CLI
+Press <kbd>F5</kbd> to run the app with debugging or <kbd>Ctrl</kbd>+<kbd>F5</kbd> to run the app without debugging.
+
+# [.NET CLI](#tab/net-cli/)
 
 In a command shell opened to the root folder of the server `BlazorWebAppPasskeys` project, execute the following command:
 
@@ -103,16 +108,18 @@ In a command shell opened to the root folder of the server `BlazorWebAppPasskeys
 dotnet watch
 ```
 
-**existing-app:**
+:::zone-end
 
-The following guidance relies upon an app that was created with **Individual Accounts** for the app's **Authentication type** or scaffolding Identity into an existing app.
+:::zone pivot="existing-app"
+
+The following guidance relies upon an app that was created with **Individual Accounts** for the app's **Authentication type** or [scaffolding Identity into an existing app](../scaffold-identity.md#scaffold-identity-into-a-blazor-project).
 
 ## Prerequisites
 
 * An existing Blazor Web App (.NET 10 or later) with ASP.NET Core Identity
-* .NET SDK (.NET 10 or later)
+* [.NET SDK](https://dotnet.microsoft.com/download) (.NET 10 or later)
 
-For migration guidance, see Migrate an ASP.NET Core app.
+For migration guidance, see [Migrate an ASP.NET Core app](../../../migration/index.md).
 
 ## Reference source guidance
 
@@ -120,7 +127,7 @@ The links in this article to .NET reference source load the repository's default
 
 ## Update Identity schema version
 
-In `Program.cs`, update the Identity configuration to use schema version 3, which includes passkey <example-value>:
+In `Program.cs`, update the Identity configuration to use schema version 3, which includes passkey support:
 
 ```csharp
 builder.Services.AddIdentityCore<ApplicationUser>(options =>
@@ -133,7 +140,9 @@ builder.Services.AddIdentityCore<ApplicationUser>(options =>
 .AddDefaultTokenProviders();
 ```
 
-# Visual Studio
+## Create and run a database migration
+
+# [Visual Studio](#tab/visual-studio)
 
 In Visual Studio **Solution Explorer**, double-click **Connected Services**. In the **Service Dependencies** area, select the ellipsis (`...`) followed by **Add migration** in the **SQL Server Express LocalDB** area.
 
@@ -143,7 +152,7 @@ Select the ellipsis (`...`) again followed by the **Update database** command.
 
 The **Update database with the latest migration** dialog opens. Wait for the **DbContext class names** field to update and for prior migrations to load. Select the **Finish** button. Select the **Close** button when the operation completes.
 
-# Visual Studio Code
+# [Visual Studio Code](#tab/visual-studio-code)
 
 Use the following command in the **Terminal** (**Terminal** menu > **New Terminal**) to add a migration for the new data annotations:
 
@@ -157,7 +166,7 @@ To apply the migration to the database, execute the following command:
 dotnet ef database update
 ```
 
-# .NET CLI
+# [.NET CLI](#tab/net-cli/)
 
 To add a migration for the new data annotations, execute the following command in a command shell opened to the project's root folder:
 
@@ -177,51 +186,55 @@ dotnet ef database update
 
 Add the following model classes to the project in the `Components/Account` folder and update the `BlazorWebCSharp._1.Components.Account` namespace to match the app (for example: `Contoso.Components.Account`):
 
-* `Components/Account/PasskeyInputModel.cs`: Holds the JSON passkey <example-value> for passkey <example-value> operations (`Login` component) and adding passkeys (`Passkeys` component).
+* [`Components/Account/PasskeyInputModel.cs`](https://github.com/dotnet/aspnetcore/blob/main/src/ProjectTemplates/Web.ProjectTemplates/content/BlazorWeb-CSharp/BlazorWebCSharp.1/Components/Account/PasskeyInputModel.cs): Holds the JSON passkey credential for passkey sign-in operations (`Login` component) and adding passkeys (`Passkeys` component).
 
-* `Components/Account/PasskeyOperation.cs`: Defines the authentication action to be performed (`PassKeySubmit` component), either registering a new passkey (`Create`/0) or authenticating with an existing passkey (`Request`/1).
+* [`Components/Account/PasskeyOperation.cs`](https://github.com/dotnet/aspnetcore/blob/main/src/ProjectTemplates/Web.ProjectTemplates/content/BlazorWeb-CSharp/BlazorWebCSharp.1/Components/Account/PasskeyOperation.cs): Defines the authentication action to be performed (`PassKeySubmit` component), either registering a new passkey (`Create`/0) or authenticating with an existing passkey (`Request`/1).
 
-* `Components/Account/PasskeyAuthenticators.cs`: Maps Authenticator Attestation GUIDs (AAGUIDs) to friendly display names, so a new passkey from a known authenticator is named automatically instead of prompting the user.
+:::moniker range=">= aspnetcore-11.0"
+
+* [`Components/Account/PasskeyAuthenticators.cs`](https://github.com/dotnet/aspnetcore/blob/main/src/ProjectTemplates/Web.ProjectTemplates/content/BlazorWeb-CSharp/BlazorWebCSharp.1/Components/Account/PasskeyAuthenticators.cs): Maps Authenticator Attestation GUIDs (AAGUIDs) to friendly display names, so a new passkey from a known authenticator is named automatically instead of prompting the user.
+
+:::moniker-end
 
 ## Create the `PasskeySubmit` component
 
-Add the following `PasskeySubmit` component to handle passkey <example-value>:
+Add the following `PasskeySubmit` component to handle passkey operations:
 
-`Components/Account/Shared/PasskeySubmit.razor`
+[`Components/Account/Shared/PasskeySubmit.razor`](https://github.com/dotnet/aspnetcore/blob/main/src/ProjectTemplates/Web.ProjectTemplates/content/BlazorWeb-CSharp/BlazorWebCSharp.1/Components/Account/Shared/PasskeySubmit.razor)
 
-## Add the JavaScript for passkey <example-value>
+## Add the JavaScript for passkey operations
 
 Add the following JavaScript file to handle WebAuthn API interactions:
 
-`Components/Account/Shared/PasskeySubmit.razor.js`
+[`Components/Account/Shared/PasskeySubmit.razor.js`](https://github.com/dotnet/aspnetcore/blob/main/src/ProjectTemplates/Web.ProjectTemplates/content/BlazorWeb-CSharp/BlazorWebCSharp.1/Components/Account/Shared/PasskeySubmit.razor.js)
 
-## Add passkey <example-value>
+## Add passkey endpoints
 
-Update the `IdentityComponentsEndpointRouteBuilderExtensions.cs` file (or create the file if it doesn't exist and call `MapAdditionalIdentityEndpoints` in the `Program` file) to include the passkey-specific endpoints:
+Update the `IdentityComponentsEndpointRouteBuilderExtensions.cs` file (or create the file if it doesn't exist and call `MapAdditionalIdentityEndpoints` in the [`Program` file](https://github.com/dotnet/aspnetcore/blob/main/src/ProjectTemplates/Web.ProjectTemplates/content/BlazorWeb-CSharp/BlazorWebCSharp.1/Program.cs#L129-L130)) to include the passkey-specific endpoints:
 
-`/PasskeyCreationOptions` and `/PasskeyRequestOptions` endpoints
+[`/PasskeyCreationOptions` and `/PasskeyRequestOptions` endpoints](https://github.com/dotnet/aspnetcore/blob/main/src/ProjectTemplates/Web.ProjectTemplates/content/BlazorWeb-CSharp/BlazorWebCSharp.1/Components/Account/IdentityComponentsEndpointRouteBuilderExtensions.cs#L80-L132)
 
 ## Update the Login page
 
 Replace the existing `Login` component with the following component and update the `BlazorWebCSharp._1.Data` namespace to match the app (for example: `Contoso.Components.Account.Data`):
 
-`Components/Account/Pages/Login.razor`
+[`Components/Account/Pages/Login.razor`](https://github.com/dotnet/aspnetcore/blob/main/src/ProjectTemplates/Web.ProjectTemplates/content/BlazorWeb-CSharp/BlazorWebCSharp.1/Components/Account/Pages/Login.razor)
 
-## Create passkey <example-value> pages for adding and renaming passkeys
+## Create passkey management pages for adding and renaming passkeys
 
 Add the following `Passkeys` component for managing passkeys and update the `BlazorWebCSharp._1.Data` namespace to match the app (for example: `Contoso.Components.Account.Data`):
 
-`Components/Account/Pages/Manage/Passkeys.razor`
+[`Components/Account/Pages/Manage/Passkeys.razor`](https://github.com/dotnet/aspnetcore/blob/main/src/ProjectTemplates/Web.ProjectTemplates/content/BlazorWeb-CSharp/BlazorWebCSharp.1/Components/Account/Pages/Manage/Passkeys.razor)
 
 Add the following `RenamePasskey` component for renaming passkeys and update the `BlazorWebCSharp._1.Data` namespace to match the app (for example: `Contoso.Components.Account.Data`):
 
-`Components/Account/Pages/Manage/RenamePasskey.razor`
+[`Components/Account/Pages/Manage/RenamePasskey.razor`](https://github.com/dotnet/aspnetcore/blob/main/src/ProjectTemplates/Web.ProjectTemplates/content/BlazorWeb-CSharp/BlazorWebCSharp.1/Components/Account/Pages/Manage/RenamePasskey.razor)
 
 ## Update the manage navigation menu
 
-Add a link to the passkey <example-value> page in the app's `ManageNavMenu` component.
+Add a link to the passkey management page in the app's `ManageNavMenu` component.
 
-In `Components/Account/Shared/ManageNavMenu.razor`, add the following `NavLink` component for the `Passkeys` component:
+In `Components/Account/Shared/ManageNavMenu.razor`, add the following [`NavLink` component](../../../blazor/fundamentals/navigation.md#navlink-component) for the `Passkeys` component:
 
 ```razor
 <li class="nav-item">
@@ -231,7 +244,7 @@ In `Components/Account/Shared/ManageNavMenu.razor`, add the following `NavLink` 
 
 ## Include the JavaScript file
 
-In the `App` component (`Components/App.razor`), locate the Blazor script tag:
+In the `App` component (`Components/App.razor`), locate the [Blazor script](../../../blazor/project-structure.md#location-of-the-blazor-script) tag:
 
 ```razor
 <script src="@Assets["_framework/blazor.web.js"]"></script>
@@ -243,9 +256,11 @@ Immediately after the Blazor script tag, add a reference to the `PasskeySubmit` 
 <script src="@Assets["Components/Account/Shared/PasskeySubmit.razor.js"]" type="module"></script>
 ```
 
+:::zone-end
+
 ## Register a passkey
 
-To test passkey <example-value>:
+To test passkey functionality:
 
 1. Register a new account or sign in with an existing account.
 1. Navigate to **Manage your account** (select the username in the navigation menu).
@@ -262,17 +277,17 @@ After a passkey is registered:
 1. Select **Log in with a passkey**.
 1. Follow the browser's prompts to authenticate with your passkey.
 1. Navigate to `Account/Manage/Passkeys` to add, rename, or delete passkeys.
-1. If the passkey <example-value> passkey <example-value> (conditional UI) for login, test the passkey <example-value> feature by selecting the email input field when you have saved passkeys.
+1. If the passkey supports passkey autofill (conditional UI) for login, test the passkey autofill feature by selecting the email input field when you have saved passkeys.
 
 ## Mitigate `PublicKeyCredential.toJSON` error (`TypeError: Illegal invocation`)
 
-Some password <example-value> don't implement the `PublicKeyCredential.toJSON` method correctly, which is required for `JSON.stringify` to work when serializing passkey credentials. When registering or authenticating a user with an app based on the Blazor Web App project template, the following error is thrown when attempting to add a passkey:
+Some password managers don't implement the [`PublicKeyCredential.toJSON` method](https://developer.mozilla.org/docs/Web/API/PublicKeyCredential/toJSON) correctly, which is required for [`JSON.stringify`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) to work when serializing passkey credentials. When registering or authenticating a user with an app based on the Blazor Web App project template, the following error is thrown when attempting to add a passkey:
 
-> :::no-loc text="Error: Could not add a passkey: <example-value> invocation":::
+> :::no-loc text="Error: Could not add a passkey: Illegal invocation":::
 
-For guidance on mitigating this error, see Enable Web Authentication API (WebAuthn) passkeys.
+For guidance on mitigating this error, see [Enable Web Authentication API (WebAuthn) passkeys](index.md#mitigate-publickeycredentialtojson-error-typeerror-illegal-invocation).
 
 ## Related content
 
-* Web Authentication API (MDN documentation)
-* Get started with phishing-resistant passwordless authentication deployment in Microsoft Entra ID
+* [Web Authentication API (MDN documentation)](https://developer.mozilla.org/docs/Web/API/Web_Authentication_API)
+* [Get started with phishing-resistant passwordless authentication deployment in Microsoft Entra ID](/entra/identity/authentication/how-to-plan-prerequisites-phishing-resistant-passwordless-authentication)

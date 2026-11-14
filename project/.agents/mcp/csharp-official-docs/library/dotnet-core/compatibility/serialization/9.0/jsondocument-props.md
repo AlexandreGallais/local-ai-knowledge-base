@@ -1,15 +1,14 @@
 ---
 title: "Breaking change: Nullable JsonDocument properties deserialize to JsonValueKind.Null"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/serialization/9.0/jsondocument-props.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in serialization in .NET 9 where nullable JsonDocument values deserialize to JsonValueKind.Null instead of null.
+ms.date: 12/5/2024
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/43869
 ---
 
 # Nullable JsonDocument properties deserialize to JsonValueKind.Null
 
-Starting with .NET 9, deserializing `null` JSON values into `System.Text.Json.JsonDocument` results in non-null documents of type `System.Text.Json.JsonValueKind.Null`.
+Starting with .NET 9, deserializing `null` JSON values into <xref:System.Text.Json.JsonDocument> results in non-null documents of type <xref:System.Text.Json.JsonValueKind.Null?displayProperty=nameWithType>.
 
 ```csharp
 using System.Text.Json;
@@ -48,11 +47,11 @@ Console.WriteLine(doc is { RootElement.ValueKind: JsonValueKind.Null }); // True
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-This change addresses an inconsistency between root-level JSON nulls and nested nulls in a document. It also makes it consistent with the behavior of the `System.Text.Json.JsonDocument.Parse*` methods. The behavior of returning `null` was considered a bug and updated for alignment with the expected result.
+This change addresses an inconsistency between root-level JSON nulls and nested nulls in a document. It also makes it consistent with the behavior of the <xref:System.Text.Json.JsonDocument.Parse*?displayProperty=nameWithType> methods. The behavior of returning `null` was considered a bug and updated for alignment with the expected result.
 
 ## Recommended action
 
@@ -60,5 +59,5 @@ Update code that consumes deserialized objects containing `JsonDocument` types t
 
 ## Affected APIs
 
-* `System.Text.Json.JsonSerializer.Deserialize*`
-* `System.Text.Json.JsonDocument`
+* <xref:System.Text.Json.JsonSerializer.Deserialize*?displayProperty=fullName>
+* <xref:System.Text.Json.JsonDocument?displayProperty=fullName>

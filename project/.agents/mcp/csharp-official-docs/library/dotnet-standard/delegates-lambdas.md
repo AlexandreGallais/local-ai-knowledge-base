@@ -1,12 +1,11 @@
 ---
-title: "Delegates and lambdas"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/delegates-lambdas.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Delegates and lambdas
+description: Learn how delegates, which define a type that specifies a particular method signature, can be called directly or passed to another method and called.
+author: richlander
+ms.author: wiwagn
+ms.date: 06/20/2016
+ms.assetid: fe2e4b4c-6483-4106-a4b4-a33e2e306591
 ---
-
 # Delegates and lambdas
 
 A delegate defines a type that represents references to methods that have a particular parameter list and return type. A method (static or instance) whose parameter list and return type match can be assigned to a variable of that type, then called directly (with the appropriate arguments) or passed as an argument itself to another method and then called. The following example demonstrates delegate use.
@@ -100,7 +99,7 @@ public class Program
 }
 ```
 
-As you can see, the body of the delegate is just a set of expressions, as any other delegate. But instead of it being a separate definition, we've introduced it _ad hoc_ in our call to the `System.Collections.Generic.List`1.FindAll*` method.
+As you can see, the body of the delegate is just a set of expressions, as any other delegate. But instead of it being a separate definition, we've introduced it _ad hoc_ in our call to the <xref:System.Collections.Generic.List`1.FindAll*?displayProperty=nameWithType> method.
 
 However, even with this approach, there is still much code that we can throw away. This is where *lambda expressions* come into play. Lambda expressions, or just "lambdas" for short, were introduced in C# 3.0 as one of the core building blocks of Language Integrated Query (LINQ). They are just a more convenient syntax for using delegates. They declare a parameter list and method body, but don't have a formal identity of their own, unless they are assigned to a delegate. Unlike delegates, they can be directly assigned as the right-hand side of event registration or in various LINQ clauses and methods.
 
@@ -147,9 +146,9 @@ public MainWindow()
 }
 ```
 
-The `+=` operator in this context is used to subscribe to an event. For more information, see How to subscribe to and unsubscribe from events.
+The `+=` operator in this context is used to subscribe to an [event](../csharp/language-reference/keywords/event.md). For more information, see [How to subscribe to and unsubscribe from events](../csharp/programming-guide/events/how-to-subscribe-to-and-unsubscribe-from-events.md).
 
 ## Further reading and resources
 
-* Delegates
-* Lambda expressions
+* [Delegates](../csharp/programming-guide/delegates/index.md)
+* [Lambda expressions](../csharp/language-reference/operators/lambda-expressions.md)

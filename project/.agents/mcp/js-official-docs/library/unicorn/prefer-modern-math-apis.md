@@ -1,19 +1,13 @@
----
-title: "prefer-modern-math-apis"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-modern-math-apis.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-modern-math-apis
 
 📝 Prefer modern `Math` APIs over legacy patterns.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Standard `Math` methods express mathematical intent directly and are less error-prone than reimplementing them.
 
@@ -21,27 +15,27 @@ Replacements can change rounding, overflow, or underflow behavior. The rule prov
 
 Math additions in ES2015:
 
-- Math.sign()
-- Math.trunc()
-- Math.cbrt()
-- Math.expm1()
-- Math.log1p()
-- Math.log10()
-- Math.log2()
-- Math.sinh()
-- Math.cosh()
-- Math.tanh()
-- Math.asinh()
-- Math.acosh()
-- Math.atanh()
-- Math.hypot()
-- Math.clz32()
-- Math.imul()
-- Math.fround()
+- [Math.sign()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sign)
+- [Math.trunc()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/trunc)
+- [Math.cbrt()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/cbrt)
+- [Math.expm1()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/expm1)
+- [Math.log1p()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log1p)
+- [Math.log10()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log10)
+- [Math.log2()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/log2)
+- [Math.sinh()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sinh)
+- [Math.cosh()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/cosh)
+- [Math.tanh()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/tanh)
+- [Math.asinh()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/asinh)
+- [Math.acosh()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/acosh)
+- [Math.atanh()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/atanh)
+- [Math.hypot()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/hypot)
+- [Math.clz32()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/clz32)
+- [Math.imul()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/imul)
+- [Math.fround()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/fround)
 
 Currently, we only check a few known cases, but we are open to adding more patterns.
 
-If you find a suitable case for this rule, please open an issue.
+If you find a suitable case for this rule, please [open an issue](https://github.com/sindresorhus/eslint-plugin-unicorn/issues/new?title=%20%60prefer-modern-math-apis%60%20%20change%20request&labels=evaluating).
 
 ## Examples
 
@@ -94,4 +88,4 @@ Math.abs(x)
 
 ## Separate rule for `Math.trunc()`
 
-See `unicorn/prefer-math-trunc` rule.
+See [`unicorn/prefer-math-trunc`](./prefer-math-trunc.md) rule.

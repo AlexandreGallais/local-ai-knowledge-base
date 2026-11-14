@@ -1,22 +1,17 @@
----
-title: "core::hash"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/hash/mod.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::hash
 
 Generic hashing support.
 
 This module provides a generic way to compute the [hash] of a value.
-Hashes are most commonly used with `HashMap` and `HashSet`.
+Hashes are most commonly used with [`HashMap`] and [`HashSet`].
+
+[hash]: https://en.wikipedia.org/wiki/Hash_function
+[`HashMap`]: ../../std/collections/struct.HashMap.html
+[`HashSet`]: ../../std/collections/struct.HashSet.html
 
 The simplest way to make a type hashable is to use `#[derive(Hash)]`:
 
-#### Examples
+# Examples
 
 ```rust
 use std::hash::{DefaultHasher, Hash, Hasher};
@@ -49,13 +44,14 @@ fn calculate_hash<T: Hash>(t: &T) -> u64 {
 ```
 
 If you need more control over how a value is hashed, you need to implement
-the `Hash` trait:
+the [`Hash`] trait:
 
 ```rust
 use std::hash::{DefaultHasher, Hash, Hasher};
 
 struct Person {
     id: u32,
+    # #[allow(dead_code)]
     name: String,
     phone: u64,
 }
@@ -95,16 +91,16 @@ pub trait Hash: marker::PointeeSized
 
 A hashable type.
 
-Types implementing `Hash` are able to be `hash`ed with an instance of
-`Hasher`.
+Types implementing `Hash` are able to be [`hash`]ed with an instance of
+[`Hasher`].
 
 ## Implementing `Hash`
 
 You can derive `Hash` with `#[derive(Hash)]` if all fields implement `Hash`.
 The resulting hash will be the combination of the values from calling
-`hash` on each field.
+[`hash`] on each field.
 
-```rust
+```
 #[derive(Hash)]
 struct Rustacean {
     name: String,
@@ -115,7 +111,7 @@ struct Rustacean {
 If you need more control over how a value is hashed, you can of course
 implement the `Hash` trait yourself:
 
-```rust
+```
 use std::hash::{Hash, Hasher};
 
 struct Person {
@@ -134,18 +130,18 @@ impl Hash for Person {
 
 ## `Hash` and `Eq`
 
-When implementing both `Hash` and `Eq`, it is important that the following
+When implementing both `Hash` and [`Eq`], it is important that the following
 property holds:
 
-```
+```text
 k1 == k2 -> hash(k1) == hash(k2)
-```rust
+```
 
 In other words, if two keys are equal, their hashes must also be equal.
-`HashMap` and `HashSet` both rely on this behavior.
+[`HashMap`] and [`HashSet`] both rely on this behavior.
 
 Thankfully, you won't need to worry about upholding this property when
-deriving both `Eq` and `Hash` with `#[derive(PartialEq, Eq, Hash)]`.
+deriving both [`Eq`] and `Hash` with `#[derive(PartialEq, Eq, Hash)]`.
 
 Violating this property is a logic error. The behavior resulting from a logic error is not
 specified, but users of the trait must ensure that such logic errors do *not* result in
@@ -176,9 +172,9 @@ Serialization formats intended to be portable between platforms or compiler vers
 either avoid encoding hashes or only rely on `Hash` and `Hasher` implementations that
 provide additional guarantees.
 
-`HashMap`: ../../std/collections/struct.HashMap.html
-`HashSet`: ../../std/collections/struct.HashSet.html
-`hash`: Hash::hash
+[`HashMap`]: ../../std/collections/struct.HashMap.html
+[`HashSet`]: ../../std/collections/struct.HashSet.html
+[`hash`]: Hash::hash
 [impl]: ../../std/primitive.str.html#impl-Hash-for-str
 
 ## Hash::hash
@@ -187,11 +183,11 @@ provide additional guarantees.
 fn hash<H: Hasher>(&self, state: &mut H)
 ```
 
-Feeds this value into the given `Hasher`.
+Feeds this value into the given [`Hasher`].
 
 # Examples
 
-```rust
+```
 use std::hash::{DefaultHasher, Hash, Hasher};
 
 let mut hasher = DefaultHasher::new();
@@ -205,26 +201,26 @@ println!("Hash is {:x}!", hasher.finish());
 fn hash_slice<H: Hasher>(data: &[Self], state: &mut H) where Self: Sized,
 ```
 
-Feeds a slice of this type into the given `Hasher`.
+Feeds a slice of this type into the given [`Hasher`].
 
 This method is meant as a convenience, but its implementation is
 also explicitly left unspecified. It isn't guaranteed to be
-equivalent to repeated calls of `hash` and implementations of
-`Hash` should keep that in mind and call `hash` themselves
-if the slice isn't treated as a whole unit in the `PartialEq`
+equivalent to repeated calls of [`hash`] and implementations of
+[`Hash`] should keep that in mind and call [`hash`] themselves
+if the slice isn't treated as a whole unit in the [`PartialEq`]
 implementation.
 
-For example, a `VecDeque` implementation might naïvely call
-`as_slices` and then `hash_slice` on each slice, but this
+For example, a [`VecDeque`] implementation might naïvely call
+[`as_slices`] and then [`hash_slice`] on each slice, but this
 is wrong since the two slices can change with a call to
-`make_contiguous` without affecting the `PartialEq`
+[`make_contiguous`] without affecting the [`PartialEq`]
 result. Since these slices aren't treated as singular
 units, and instead part of a larger deque, this method cannot
 be used.
 
 # Examples
 
-```rust
+```
 use std::hash::{DefaultHasher, Hash, Hasher};
 
 let mut hasher = DefaultHasher::new();
@@ -232,6 +228,12 @@ let numbers = [6, 28, 496, 8128];
 Hash::hash_slice(&numbers, &mut hasher);
 println!("Hash is {:x}!", hasher.finish());
 ```
+
+[`VecDeque`]: ../../std/collections/struct.VecDeque.html
+[`as_slices`]: ../../std/collections/struct.VecDeque.html#method.as_slices
+[`make_contiguous`]: ../../std/collections/struct.VecDeque.html#method.make_contiguous
+[`hash`]: Hash::hash
+[`hash_slice`]: Hash::hash_slice
 
 ## trait Hasher
 
@@ -244,34 +246,38 @@ A trait for hashing an arbitrary stream of bytes.
 Instances of `Hasher` usually represent state that is changed while hashing
 data.
 
-`Hasher` provides a fairly basic <example-value> for retrieving the generated hash
-(with `finish`), and writing integers as well as slices of bytes into an
-instance (with `write` and `write_u8` etc.). Most of the time, `Hasher`
-instances are used in conjunction with the `Hash` trait.
+`Hasher` provides a fairly basic interface for retrieving the generated hash
+(with [`finish`]), and writing integers as well as slices of bytes into an
+instance (with [`write`] and [`write_u8`] etc.). Most of the time, `Hasher`
+instances are used in conjunction with the [`Hash`] trait.
 
 This trait provides no guarantees about how the various `write_*` methods are
-defined and implementations of `Hash` should not assume that they work one
-way or another. You cannot assume, for example, that a `write_u32` call is
-equivalent to four calls of `write_u8`.  Nor can you assume that adjacent
+defined and implementations of [`Hash`] should not assume that they work one
+way or another. You cannot assume, for example, that a [`write_u32`] call is
+equivalent to four calls of [`write_u8`].  Nor can you assume that adjacent
 `write` calls are merged, so it's possible, for example, that
-```rust
+```
+# fn foo(hasher: &mut impl std::hash::Hasher) {
 hasher.write(&[1, 2]);
 hasher.write(&[3, 4, 5, 6]);
+# }
 ```
 and
-```rust
+```
+# fn foo(hasher: &mut impl std::hash::Hasher) {
 hasher.write(&[1, 2, 3, 4]);
 hasher.write(&[5, 6]);
+# }
 ```
 end up producing different hashes.
 
-Thus to produce the same hash value, `Hash` implementations must ensure
+Thus to produce the same hash value, [`Hash`] implementations must ensure
 for equivalent items that exactly the same sequence of calls is made -- the
 same methods with the same parameters in the same order.
 
 # Examples
 
-```rust
+```
 use std::hash::{DefaultHasher, Hasher};
 
 let mut hasher = DefaultHasher::new();
@@ -284,6 +290,11 @@ hasher.write(b"Huh?");
 println!("Hash is {:x}!", hasher.finish());
 ```
 
+[`finish`]: Hasher::finish
+[`write`]: Hasher::write
+[`write_u8`]: Hasher::write_u8
+[`write_u32`]: Hasher::write_u32
+
 ## Hasher::finish
 
 ```rust
@@ -293,13 +304,13 @@ fn finish(&self) -> u64
 Returns the hash value for the values written so far.
 
 Despite its name, the method does not reset the hasher’s internal
-state. Additional `write`s will continue from the current value.
+state. Additional [`write`]s will continue from the current value.
 If you need to start a fresh hash value, you will have to create
 a new hasher.
 
 # Examples
 
-```rust
+```
 use std::hash::{DefaultHasher, Hasher};
 
 let mut hasher = DefaultHasher::new();
@@ -307,6 +318,8 @@ hasher.write(b"Cool!");
 
 println!("Hash is {:x}!", hasher.finish());
 ```
+
+[`write`]: Hasher::write
 
 ## Hasher::write
 
@@ -318,7 +331,7 @@ Writes some data into this `Hasher`.
 
 # Examples
 
-```rust
+```
 use std::hash::{DefaultHasher, Hasher};
 
 let mut hasher = DefaultHasher::new();
@@ -332,8 +345,8 @@ println!("Hash is {:x}!", hasher.finish());
 # Note to Implementers
 
 You generally should not do length-prefixing as part of implementing
-this method.  It's up to the `Hash` implementation to call
-`Hasher::write_length_prefix` before sequences that need it.
+this method.  It's up to the [`Hash`] implementation to call
+[`Hasher::write_length_prefix`] before sequences that need it.
 
 ## Hasher::write_u8
 
@@ -437,19 +450,19 @@ Writes a single `isize` into this hasher.
 pub trait BuildHasher
 ```
 
-A trait for creating instances of `Hasher`.
+A trait for creating instances of [`Hasher`].
 
-A `BuildHasher` is typically used (e.g., by `HashMap`) to create
-`Hasher`s for each key such that they are hashed independently of one
-another, since `Hasher`s contain state.
+A `BuildHasher` is typically used (e.g., by [`HashMap`]) to create
+[`Hasher`]s for each key such that they are hashed independently of one
+another, since [`Hasher`]s contain state.
 
-For each instance of `BuildHasher`, the `Hasher`s created by
-`build_hasher` should be identical. That is, if the same stream of bytes
+For each instance of `BuildHasher`, the [`Hasher`]s created by
+[`build_hasher`] should be identical. That is, if the same stream of bytes
 is fed into each hasher, the same output will also be generated.
 
 # Examples
 
-```rust
+```
 use std::hash::{BuildHasher, Hasher, RandomState};
 
 let s = RandomState::new();
@@ -461,6 +474,9 @@ hasher_2.write_u32(8128);
 
 assert_eq!(hasher_1.finish(), hasher_2.finish());
 ```
+
+[`build_hasher`]: BuildHasher::build_hasher
+[`HashMap`]: ../../std/collections/struct.HashMap.html
 
 ## BuildHasher::Hasher
 
@@ -479,11 +495,11 @@ fn build_hasher(&self) -> Self::Hasher
 Creates a new hasher.
 
 Each call to `build_hasher` on the same instance should produce identical
-`Hasher`s.
+[`Hasher`]s.
 
 # Examples
 
-```rust
+```
 use std::hash::{BuildHasher, RandomState};
 
 let s = RandomState::new();
@@ -500,16 +516,16 @@ Calculates the hash of a single value.
 
 This is intended as a convenience for code which *consumes* hashes, such
 as the implementation of a hash table or in unit tests that check
-whether a custom `Hash` implementation behaves as expected.
+whether a custom [`Hash`] implementation behaves as expected.
 
 This must not be used in any code which *creates* hashes, such as in an
-implementation of `Hash`.  The way to create a combined hash of
-multiple values is to call `Hash::hash` multiple times using the same
-`Hasher`, not to call this method repeatedly and combine the results.
+implementation of [`Hash`].  The way to create a combined hash of
+multiple values is to call [`Hash::hash`] multiple times using the same
+[`Hasher`], not to call this method repeatedly and combine the results.
 
 # Example
 
-```rust
+```
 use std::cmp::{max, min};
 use std::hash::{BuildHasher, Hash, Hasher};
 struct OrderAmbivalentPair<T: Ord>(T, T);
@@ -538,24 +554,24 @@ assert_eq!(
 pub struct BuildHasherDefault<H>(marker::PhantomData<fn() -> H>)
 ```
 
-Used to create a default `BuildHasher` instance for types that implement
-`Hasher` and `Default`.
+Used to create a default [`BuildHasher`] instance for types that implement
+[`Hasher`] and [`Default`].
 
-`BuildHasherDefault<H>` can be used when a type `H` implements `Hasher` and
-`Default`, and you need a corresponding `BuildHasher` instance, but none is
+`BuildHasherDefault<H>` can be used when a type `H` implements [`Hasher`] and
+[`Default`], and you need a corresponding [`BuildHasher`] instance, but none is
 defined.
 
 Any `BuildHasherDefault` is [zero-sized]. It can be created with
-`default`[method.default]. When using `BuildHasherDefault` with `HashMap` or
-`HashSet`, this doesn't need to be done, since they implement appropriate
-`Default` instances themselves.
+[`default`][method.default]. When using `BuildHasherDefault` with [`HashMap`] or
+[`HashSet`], this doesn't need to be done, since they implement appropriate
+[`Default`] instances themselves.
 
 # Examples
 
-Using `BuildHasherDefault` to specify a custom `BuildHasher` for
-`HashMap`:
+Using `BuildHasherDefault` to specify a custom [`BuildHasher`] for
+[`HashMap`]:
 
-```rust
+```
 use std::collections::HashMap;
 use std::hash::{BuildHasherDefault, Hasher};
 
@@ -578,6 +594,11 @@ type MyBuildHasher = BuildHasherDefault<MyHasher>;
 
 let hash_map = HashMap::<u32, u32, MyBuildHasher>::default();
 ```
+
+[method.default]: BuildHasherDefault::default
+[`HashMap`]: ../../std/collections/struct.HashMap.html
+[`HashSet`]: ../../std/collections/struct.HashSet.html
+[zero-sized]: https://doc.rust-lang.org/nomicon/exotic-sizes.html#zero-sized-types-zsts
 
 ## BuildHasherDefault::new
 

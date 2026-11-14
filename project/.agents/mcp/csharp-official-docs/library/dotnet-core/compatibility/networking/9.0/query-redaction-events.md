@@ -1,15 +1,13 @@
 ---
 title: "URI query redaction in HttpClient EventSource events"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/networking/9.0/query-redaction-events.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in networking in .NET 9 where HttpClient EventSource events scrub query strings by default to enhance privacy."
+ms.date: 11/5/2024
+ai-usage: ai-assisted
 ---
 
 # URI query and fragment redaction in HttpClient EventSource events
 
-In .NET 9, the default behavior of `System.Diagnostics.Tracing.EventSource` events emitted by `System.Net.Http.HttpClient` and `System.Net.Http.SocketsHttpHandler` (`EventSource` name: `System.Net.Http`) has been modified to scrub the query, user info, and fragment parts of the URI. This change enhances privacy by preventing the logging of potentially sensitive information contained in query strings while keeping the performance costs of the redaction minimal. If necessary, you can override this behavior.
+In .NET 9, the default behavior of <xref:System.Diagnostics.Tracing.EventSource> events emitted by <xref:System.Net.Http.HttpClient> and <xref:System.Net.Http.SocketsHttpHandler> (`EventSource` name: `System.Net.Http`) has been modified to scrub the query, user info, and fragment parts of the URI. This change enhances privacy by preventing the logging of potentially sensitive information contained in query strings while keeping the performance costs of the redaction minimal. If necessary, you can override this behavior.
 
 ## Version introduced
 
@@ -21,11 +19,11 @@ Previously, events emitted by `HttpClient` and `SocketsHttpHandler` included que
 
 ## New behavior
 
-With the change in dotnet/runtime#104741, the query part is replaced by a `*` character, and the user info and fragment parts are removed in `HttpClient` and `SocketsHttpHandler` events by default. This change affects specific events and parameters, such as `pathAndQuery` in `RequestStart` and `redirectUri` in `Redirect`.
+With the change in [dotnet/runtime#104741](https://github.com/dotnet/runtime/pull/104741), the query part is replaced by a `*` character, and the user info and fragment parts are removed in `HttpClient` and `SocketsHttpHandler` events by default. This change affects specific events and parameters, such as `pathAndQuery` in `RequestStart` and `redirectUri` in `Redirect`.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -61,10 +59,10 @@ If you need query string information when consuming `HttpClient` or `SocketsHttp
 
 Otherwise, no action is required, and the default behavior will help enhance the privacy aspects of your application.
 
-> **Note:**
-> This switch also skips URI redaction in the default `IHttpClientFactory` logs. For more information, see URI query redaction in IHttpClientFactory logs.
+> [!NOTE]
+> This switch also skips URI redaction in the default `IHttpClientFactory` logs. For more information, see [URI query redaction in IHttpClientFactory logs](query-redaction-logs.md).
 
 ## Affected APIs
 
-- System.Net.Http.SocketsHttpHandler.Send)
-- System.Net.Http.SocketsHttpHandler.SendAsync)
+- [System.Net.Http.SocketsHttpHandler.Send](xref:System.Net.Http.HttpMessageHandler.Send(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken))
+- [System.Net.Http.SocketsHttpHandler.SendAsync](xref:System.Net.Http.HttpMessageHandler.SendAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken))

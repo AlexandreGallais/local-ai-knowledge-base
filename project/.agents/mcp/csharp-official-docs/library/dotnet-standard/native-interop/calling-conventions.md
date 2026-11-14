@@ -1,15 +1,13 @@
 ---
-title: "Unmanaged calling conventions"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/native-interop/calling-conventions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Unmanaged calling conventions
+description: Learn how to specify unmanaged calling conventions in .NET
+author: jkotas
+ms.date: 08/19/2023
 ---
 
 # Unmanaged calling conventions
 
-Calling conventions describe low-level details for how method arguments and return values
+[Calling conventions](https://en.wikipedia.org/wiki/Calling_convention) describe low-level details for how method arguments and return values
 are passed between the caller and the called method.
 
 It's important that the unmanaged calling convention declared in a P/Invoke declaration matches the unmanaged calling convention
@@ -38,12 +36,12 @@ On x64, ARM, and ARM64 architectures, there is only one calling convention, so s
 
 The calling conventions are specified by types in the `System.Runtime.CompilerServices` namespace or their combinations:
 
-- CallConvCdecl
-- CallConvFastcall
-- CallConvMemberFunction
-- CallConvStdcall
-- CallConvSuppressGCTransition
-- CallConvThiscall
+- [CallConvCdecl](xref:System.Runtime.CompilerServices.CallConvCdecl)
+- [CallConvFastcall](xref:System.Runtime.CompilerServices.CallConvFastcall)
+- [CallConvMemberFunction](xref:System.Runtime.CompilerServices.CallConvMemberFunction)
+- [CallConvStdcall](xref:System.Runtime.CompilerServices.CallConvStdcall)
+- [CallConvSuppressGCTransition](xref:System.Runtime.CompilerServices.CallConvSuppressGCTransition)
+- [CallConvThiscall](xref:System.Runtime.CompilerServices.CallConvThiscall)
 
 Examples of explicitly specified calling conventions:
 
@@ -66,7 +64,7 @@ static unsafe delegate* unmanaged[Cdecl, MemberFunction]<int> GetHandler();
 
 ## Specifying calling conventions in earlier .NET versions
 
-.NET Framework and .NET versions prior to .NET 5 are limited to a subset of calling conventions that can described by the CallingConvention enumeration.
+.NET Framework and .NET versions prior to .NET 5 are limited to a subset of calling conventions that can described by the [CallingConvention](xref:System.Runtime.InteropServices.CallingConvention) enumeration.
 
 Examples of explicitly specified calling conventions:
 
@@ -84,4 +82,4 @@ delegate void Callback(IntPtr context);
 
 ## See also
 
-- Platform Invoke (P/Invoke)
+- [Platform Invoke (P/Invoke)](pinvoke.md)

@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataAssemblyImport::FindExportedTypeByName Method"
 title: "IMetaDataAssemblyImport::FindExportedTypeByName Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataassemblyimport-findexportedtypebyname-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataAssemblyImport.FindExportedTypeByName"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataAssemblyImport::FindExportedTypeByName"
+  - "IMetaDataAssemblyImport::FindExportedTypeByName method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataAssemblyImport::FindExportedTypeByName Method
 
 Gets a pointer to an exported type, given its name and enclosing type.
@@ -16,7 +23,7 @@ Gets a pointer to an exported type, given its name and enclosing type.
 ```cpp
 HRESULT FindExportedTypeByName (
     [in]  LPCWSTR           szName,
-    [in]  mdToken           <example-value>,
+    [in]  mdToken           mdtExportedType,
     [out] mdExportedType    *ptkExportedType
 );
 ```
@@ -38,7 +45,7 @@ HRESULT FindExportedTypeByName (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -46,5 +53,5 @@ HRESULT FindExportedTypeByName (
 
 ## See also
 
-- IMetaDataAssemblyImport Interface
-- How the Runtime Locates Assemblies
+- [IMetaDataAssemblyImport Interface](imetadataassemblyimport-interface.md)
+- [How the Runtime Locates Assemblies](../../../../framework/deployment/how-the-runtime-locates-assemblies.md)

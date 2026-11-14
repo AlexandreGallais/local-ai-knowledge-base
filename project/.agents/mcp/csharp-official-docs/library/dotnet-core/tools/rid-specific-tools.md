@@ -1,10 +1,9 @@
 ---
-title: "Create RID-specific, self-contained, and AOT .NET tools"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/rid-specific-tools.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Create RID-specific, self-contained, and AOT .NET tools
+description: Learn how to create and package RID-specific, self-contained, and AOT .NET tools for platform-specific distribution.
+ms.topic: how-to
+ms.date: 01/26/2026
+ai-usage: ai-assisted
 ---
 
 # Create RID-specific, self-contained, and AOT .NET tools
@@ -60,7 +59,7 @@ Alternatively, use `ToolPackageRuntimeIdentifiers` for tool-specific RID configu
 </Project>
 ```
 
-Use a semicolon-delimited list of RID values. For a list of Runtime Identifiers, see the RID catalog.
+Use a semicolon-delimited list of RID values. For a list of Runtime Identifiers, see the [RID catalog](../rid-catalog.md).
 
 ### Provide a framework-dependent version
 
@@ -113,7 +112,7 @@ Notes:
 
 ## Package your tool
 
-The packaging process differs depending on whether you're using AOT compilation. To build a NuGet package, or *.nupkg* file from the project, run the dotnet pack command.
+The packaging process differs depending on whether you're using AOT compilation. To build a NuGet package, or *.nupkg* file from the project, run the [dotnet pack](dotnet-pack.md) command.
 
 ### RID-specific and self-contained tools
 
@@ -162,7 +161,7 @@ Pack for each specific RID on the corresponding platform, for example:
 dotnet pack -r linux-x64
 ```
 
-You must run each RID-specific pack command on a platform where the OS matches the target RID's OS. For more information about the prerequisites for Native AOT compilation, see Native AOT deployment.
+You must run each RID-specific pack command on a platform where the OS matches the target RID's OS. For more information about the prerequisites for Native AOT compilation, see [Native AOT deployment](../deploying/native-aot/index.md).
 
 When you set `PublishAot` to `true`, the packing behavior changes:
 
@@ -217,7 +216,7 @@ You can achieve this "hybrid" model with the following pattern:
 
    This produces a portable CoreCLR package (for example, `yourtool.any.<version>.nupkg`) that can run on platforms that don't have a dedicated AOT build.
 
-> **Note:**
+> [!NOTE]
 > You can also use the `.NET SDK 10.0-noble-aot` container images to build and package Linux Native AOT tools from any host that supports Linux containers. For example:
 >
 > - `mcr.microsoft.com/dotnet/sdk:10.0-noble-aot`
@@ -233,7 +232,7 @@ In this hybrid setup:
 
 #### Example: `dotnet10-hybrid-tool`
 
-The `dotnet10-hybrid-tool` repository demonstrates this hybrid packaging pattern with Native AOT packages for `osx-arm64`, `linux-arm64`, and `linux-x64`, plus a CoreCLR fallback package for the `any` RID (used, for example, on Windows when no AOT build is available).
+The [`dotnet10-hybrid-tool` repository](https://github.com/richlander/dotnet10-hybrid-tool) demonstrates this hybrid packaging pattern with Native AOT packages for `osx-arm64`, `linux-arm64`, and `linux-x64`, plus a CoreCLR fallback package for the `any` RID (used, for example, on Windows when no AOT build is available).
 
 You can install and try the tool yourself:
 
@@ -320,8 +319,8 @@ When a tool uses RID-specific packaging, the .NET CLI automatically selects the 
 
 ## See also
 
-- Tutorial: Create a .NET tool
-- .NET tools overview
-- dotnet pack command
-- RID catalog
-- Native AOT deployment
+- [Tutorial: Create a .NET tool](global-tools-how-to-create.md)
+- [.NET tools overview](global-tools.md)
+- [dotnet pack command](dotnet-pack.md)
+- [RID catalog](../rid-catalog.md)
+- [Native AOT deployment](../deploying/native-aot/index.md)

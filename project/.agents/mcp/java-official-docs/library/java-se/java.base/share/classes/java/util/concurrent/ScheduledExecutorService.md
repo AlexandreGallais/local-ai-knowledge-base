@@ -1,50 +1,44 @@
----
-title: "ScheduledExecutorService interface (java.util.concurrent)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/ScheduledExecutorService.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ScheduledExecutorService interface (java.util.concurrent)
 
 ```java
 public interface ScheduledExecutorService extends ExecutorService
 ```
 
-An `ExecutorService` that can schedule commands to run after a given
+An {@link ExecutorService} that can schedule commands to run after a given
 delay, or to execute periodically.
 
-The `schedule` methods create tasks with various delays
+<p>The {@code schedule} methods create tasks with various delays
 and return a task object that can be used to cancel or check
-execution. The `scheduleAtFixedRate` and
-`scheduleWithFixedDelay` methods create and execute tasks
+execution. The {@code scheduleAtFixedRate} and
+{@code scheduleWithFixedDelay} methods create and execute tasks
 that run periodically until cancelled.
 
-Commands submitted using the `Executor.execute(Runnable)`
-and `ExecutorService` `submit` methods are scheduled
+<p>Commands submitted using the {@link Executor#execute(Runnable)}
+and {@link ExecutorService} {@code submit} methods are scheduled
 with a requested delay of zero. Zero and negative delays (but not
-periods) are also allowed in `schedule` methods, and are
+periods) are also allowed in {@code schedule} methods, and are
 treated as requests for immediate execution.
 
-All `schedule` methods accept *relative* delays and
+<p>All {@code schedule} methods accept <em>relative</em> delays and
 periods as arguments, not absolute times or dates. It is a simple
-matter to transform an absolute time represented as a `java.util.Date` to the required form. For example, to schedule at
-a certain future `date`, you can use: `schedule(task, date.getTime() - System.currentTimeMillis(), TimeUnit.MILLISECONDS)`. Beware however that expiration of a
-relative delay need not coincide with the current `Date` at
+matter to transform an absolute time represented as a {@link
+java.util.Date} to the required form. For example, to schedule at
+a certain future {@code date}, you can use: {@code schedule(task,
+date.getTime() - System.currentTimeMillis(),
+TimeUnit.MILLISECONDS)}. Beware however that expiration of a
+relative delay need not coincide with the current {@code Date} at
 which the task is enabled due to network time synchronization
 protocols, clock drift, or other factors.
 
-The `Executors` class provides convenient factory methods for
+<p>The {@link Executors} class provides convenient factory methods for
 the ScheduledExecutorService implementations provided in this package.
 
-#### Usage Example
+<h2>Usage Example</h2>
 
 Here is a class with a method that sets up a ScheduledExecutorService
 to beep every ten seconds for an hour:
 
-```java
+<pre> {@code
 import static java.util.concurrent.TimeUnit.*;
 class BeeperControl {
   private final ScheduledExecutorService scheduler =
@@ -57,10 +51,10 @@ class BeeperControl {
     Runnable canceller = () -> beeperHandle.cancel(false);
     scheduler.schedule(canceller, 1, HOURS);
   }
-}
-```
+}}</pre>
 
-**Since:** 1.5
+@since 1.5
+@author Doug Lea
 
 ## ScheduledExecutorService.schedule(Runnable, long, TimeUnit)
 
@@ -70,20 +64,15 @@ public ScheduledFuture<?> schedule(Runnable command, long delay, TimeUnit unit)
 
 Submits a one-shot task that becomes enabled after the given delay.
 
-Parameters:
-
-- `command`: the task to execute
-- `delay`: the time from now to delay execution
-- `unit`: the time unit of the delay parameter
-
-**Returns:** a ScheduledFuture representing pending completion of
-        the task and whose `get()` method will return
-        `null` upon completion
-
-Throws:
-
-- `RejectedExecutionException`: if the task cannot be scheduled for execution
-- `NullPointerException`: if command or unit is null
+@param command the task to execute
+@param delay the time from now to delay execution
+@param unit the time unit of the delay parameter
+@return a ScheduledFuture representing pending completion of
+        the task and whose {@code get()} method will return
+        {@code null} upon completion
+@throws RejectedExecutionException if the task cannot be
+        scheduled for execution
+@throws NullPointerException if command or unit is null
 
 ## ScheduledExecutorService.schedule(Callable<V>, long, TimeUnit)
 
@@ -94,19 +83,14 @@ public <V> ScheduledFuture<V> schedule(Callable<V> callable, long delay, TimeUni
 Submits a value-returning one-shot task that becomes enabled
 after the given delay.
 
-Parameters:
-
-- `callable`: the function to execute
-- `delay`: the time from now to delay execution
-- `unit`: the time unit of the delay parameter
-- `<V>`: the type of the callable's result
-
-**Returns:** a ScheduledFuture that can be used to extract result or cancel
-
-Throws:
-
-- `RejectedExecutionException`: if the task cannot be scheduled for execution
-- `NullPointerException`: if callable or unit is null
+@param callable the function to execute
+@param delay the time from now to delay execution
+@param unit the time unit of the delay parameter
+@param <V> the type of the callable's result
+@return a ScheduledFuture that can be used to extract result or cancel
+@throws RejectedExecutionException if the task cannot be
+        scheduled for execution
+@throws NullPointerException if callable or unit is null
 
 ## ScheduledExecutorService.scheduleAtFixedRate(Runnable, long, long, TimeUnit)
 
@@ -117,46 +101,40 @@ public ScheduledFuture<?> scheduleAtFixedRate(Runnable command, long initialDela
 Submits a periodic action that becomes enabled first after the
 given initial delay, and subsequently with the given period;
 that is, executions will commence after
-`initialDelay`, then `initialDelay + period`, then
-`initialDelay + 2 * period`, and so on.
+{@code initialDelay}, then {@code initialDelay + period}, then
+{@code initialDelay + 2 * period}, and so on.
 
-The sequence of task executions continues indefinitely until
+<p>The sequence of task executions continues indefinitely until
 one of the following exceptional completions occur:
-
-- The task is explicitly cancelled
+<ul>
+<li>The task is {@linkplain Future#cancel explicitly cancelled}
 via the returned future.
-
-- The executor terminates, also resulting in task cancellation.
-
-- An execution of the task throws an exception.  In this case
-calling get on the returned future will throw
-`ExecutionException`, holding the exception as its cause.
-
+<li>The executor terminates, also resulting in task cancellation.
+<li>An execution of the task throws an exception.  In this case
+calling {@link Future#get() get} on the returned future will throw
+{@link ExecutionException}, holding the exception as its cause.
+</ul>
 Subsequent executions are suppressed.  Subsequent calls to
-isDone() on the returned future will
-return `true`.
+{@link Future#isDone isDone()} on the returned future will
+return {@code true}.
 
-If any execution of this task takes longer than its period, then
+<p>If any execution of this task takes longer than its period, then
 subsequent executions may start late, but will not concurrently
 execute.
 
-Parameters:
-
-- `command`: the task to execute
-- `initialDelay`: the time to delay first execution
-- `period`: the period between successive executions
-- `unit`: the time unit of the initialDelay and period parameters
-
-**Returns:** a ScheduledFuture representing pending completion of
-        the series of repeated tasks.  The future's get() method will never return normally,
+@param command the task to execute
+@param initialDelay the time to delay first execution
+@param period the period between successive executions
+@param unit the time unit of the initialDelay and period parameters
+@return a ScheduledFuture representing pending completion of
+        the series of repeated tasks.  The future's {@link
+        Future#get() get()} method will never return normally,
         and will throw an exception upon task cancellation or
         abnormal termination of a task execution.
-
-Throws:
-
-- `RejectedExecutionException`: if the task cannot be scheduled for execution
-- `NullPointerException`: if command or unit is null
-- `IllegalArgumentException`: if period less than or equal to zero
+@throws RejectedExecutionException if the task cannot be
+        scheduled for execution
+@throws NullPointerException if command or unit is null
+@throws IllegalArgumentException if period less than or equal to zero
 
 ## ScheduledExecutorService.scheduleWithFixedDelay(Runnable, long, long, TimeUnit)
 
@@ -169,36 +147,31 @@ given initial delay, and subsequently with the given delay
 between the termination of one execution and the commencement of
 the next.
 
-The sequence of task executions continues indefinitely until
+<p>The sequence of task executions continues indefinitely until
 one of the following exceptional completions occur:
-
-- The task is explicitly cancelled
+<ul>
+<li>The task is {@linkplain Future#cancel explicitly cancelled}
 via the returned future.
-
-- The executor terminates, also resulting in task cancellation.
-
-- An execution of the task throws an exception.  In this case
-calling get on the returned future will throw
-`ExecutionException`, holding the exception as its cause.
-
+<li>The executor terminates, also resulting in task cancellation.
+<li>An execution of the task throws an exception.  In this case
+calling {@link Future#get() get} on the returned future will throw
+{@link ExecutionException}, holding the exception as its cause.
+</ul>
 Subsequent executions are suppressed.  Subsequent calls to
-isDone() on the returned future will
-return `true`.
+{@link Future#isDone isDone()} on the returned future will
+return {@code true}.
 
-Parameters:
-
-- `command`: the task to execute
-- `initialDelay`: the time to delay first execution
-- `delay`: the delay between the termination of one execution and the commencement of the next
-- `unit`: the time unit of the initialDelay and delay parameters
-
-**Returns:** a ScheduledFuture representing pending completion of
-        the series of repeated tasks.  The future's get() method will never return normally,
+@param command the task to execute
+@param initialDelay the time to delay first execution
+@param delay the delay between the termination of one
+execution and the commencement of the next
+@param unit the time unit of the initialDelay and delay parameters
+@return a ScheduledFuture representing pending completion of
+        the series of repeated tasks.  The future's {@link
+        Future#get() get()} method will never return normally,
         and will throw an exception upon task cancellation or
         abnormal termination of a task execution.
-
-Throws:
-
-- `RejectedExecutionException`: if the task cannot be scheduled for execution
-- `NullPointerException`: if command or unit is null
-- `IllegalArgumentException`: if delay less than or equal to zero
+@throws RejectedExecutionException if the task cannot be
+        scheduled for execution
+@throws NullPointerException if command or unit is null
+@throws IllegalArgumentException if delay less than or equal to zero

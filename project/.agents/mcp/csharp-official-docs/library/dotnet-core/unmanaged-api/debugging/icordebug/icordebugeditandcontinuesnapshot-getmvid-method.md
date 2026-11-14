@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugEditAndContinueSnapshot::GetMvid Method"
 title: "ICorDebugEditAndContinueSnapshot::GetMvid Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugeditandcontinuesnapshot-getmvid-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugEditAndContinueSnapshot.GetMvid"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugEditAndContinueSnapshot::GetMvid"
+helpviewer_keywords:
+  - "ICorDebugEditAndContinueSnapshot::GetMvid method [.NET debugging]"
+  - "GetMvid method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugEditAndContinueSnapshot::GetMvid Method
 
 `GetMvid` is obsolete. Do not call this method.

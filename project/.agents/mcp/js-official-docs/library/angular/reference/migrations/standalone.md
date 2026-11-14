@@ -1,15 +1,8 @@
----
-title: "Migrate an existing Angular project to standalone"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/reference/migrations/standalone.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Migrate an existing Angular project to standalone
 
 **Standalone components** provide a simplified way to build Angular applications. Standalone components, directives, and pipes aim to streamline the authoring experience by reducing the need for `NgModule`s. Existing applications can optionally and incrementally adopt the new standalone style without any breaking changes.
+
+<docs-video src="https://www.youtube.com/embed/x5PZwb4XurU" title="Getting started with standalone components"/>
 
 This schematic helps to transform components, directive and pipes in existing projects to become standalone. The schematic aims to transform as much code as possible automatically, but it may require some manual fixes by the project author.
 
@@ -31,7 +24,7 @@ Before using the schematic, please ensure that the project:
 
 | Option | Details                                                                                                                       |
 | :----- | :---------------------------------------------------------------------------------------------------------------------------- |
-| `mode` | The transformation to perform. See Migration modes below for details on the available options.            |
+| `mode` | The transformation to perform. See [Migration modes](#migration-modes) below for details on the available options.            |
 | `path` | The path to migrate, relative to the project root. You can use this option to migrate sections of your project incrementally. |
 
 ## Migrations steps
@@ -52,7 +45,7 @@ Run the migration in the order listed below, verifying that your code builds and
 
 Congratulations, your application has been converted to standalone 🎉. These are some optional follow-up steps you may want to take now:
 
-- Find and remove any remaining `NgModule` declarations: since the "Remove unnecessary NgModules" step cannot remove all modules automatically, you may have to remove the remaining declarations manually.
+- Find and remove any remaining `NgModule` declarations: since the ["Remove unnecessary NgModules" step](#remove-unnecessary-ngmodules) cannot remove all modules automatically, you may have to remove the remaining declarations manually.
 - Run the project's unit tests and fix any failures.
 - Run any code formatters, if the project uses automatic formatting.
 - Run any linters in your project and fix new warnings. Some linters support a `--fix` flag that may resolve some of your warnings automatically.
@@ -70,11 +63,11 @@ The migration has the following modes:
 
 In this mode, the migration converts all components, directives and pipes to standalone by removing `standalone: false` and adding dependencies to their `imports` array.
 
-HELPFUL: The schematic ignores NgModules which bootstrap a component during this step because they are likely root modules used by `bootstrapModule` rather than the standalone-compatible `bootstrapApplication`. The schematic converts these declarations automatically as a part of the "Switch to standalone bootstrapping API" step.
+HELPFUL: The schematic ignores NgModules which bootstrap a component during this step because they are likely root modules used by `bootstrapModule` rather than the standalone-compatible `bootstrapApplication`. The schematic converts these declarations automatically as a part of the ["Switch to standalone bootstrapping API"](#switch-to-standalone-bootstrapping-api) step.
 
 **Before:**
 
-```typescript
+```typescript {header: "shared.module.ts"}
 @NgModule({
   imports: [CommonModule],
   declarations: [Greeter],
@@ -83,7 +76,7 @@ HELPFUL: The schematic ignores NgModules which bootstrap a component during this
 export class SharedModule {}
 ```
 
-```angular-ts
+```angular-ts {header: "greeter.ts"}
 @Component({
   selector: 'greeter',
   template: '<div *ngIf="showGreeting">Hello</div>',
@@ -96,7 +89,7 @@ export class Greeter {
 
 **After:**
 
-```typescript
+```typescript {header: "shared.module.ts"}
 @NgModule({
   imports: [CommonModule, Greeter],
   exports: [Greeter],
@@ -104,7 +97,7 @@ export class Greeter {
 export class SharedModule {}
 ```
 
-```angular-ts
+```angular-ts {header: "greeter.ts"}
 @Component({
   selector: 'greeter',
   template: '<div *ngIf="showGreeting">Hello</div>',
@@ -133,7 +126,7 @@ The migration considers a module safe to remove if that module:
 
 **Before:**
 
-```typescript
+```typescript {header: "importer.module.ts"}
 @NgModule({
   imports: [FooComponent, BarPipe],
   exports: [FooComponent, BarPipe],
@@ -143,7 +136,7 @@ export class ImporterModule {}
 
 **After:**
 
-```typescript
+```typescript {header: "importer.module.ts"}
 // Does not exist!
 ```
 
@@ -153,7 +146,7 @@ This step converts any usages of `bootstrapModule` to the new, standalone-based 
 
 **Before:**
 
-```typescript
+```typescript {header: "./app/app.module.ts"}
 import {NgModule} from '@angular/core';
 import {App} from './app';
 
@@ -164,7 +157,7 @@ import {App} from './app';
 export class AppModule {}
 ```
 
-```typescript
+```typescript {header: "./app/app.ts"}
 @Component({
   selector: 'app',
   template: 'hello',
@@ -173,7 +166,7 @@ export class AppModule {}
 export class App {}
 ```
 
-```typescript
+```typescript {header: "./main.ts"}
 import {platformBrowser} from '@angular/platform-browser';
 import {AppModule} from './app/app.module';
 
@@ -184,11 +177,11 @@ platformBrowser()
 
 **After:**
 
-```typescript
+```typescript {header: "./app/app.module.ts"}
 // Does not exist!
 ```
 
-```typescript
+```typescript {header: "./app/app.ts"}
 @Component({
   selector: 'app',
   template: 'hello',
@@ -196,7 +189,7 @@ platformBrowser()
 export class App {}
 ```
 
-```typescript
+```typescript {header: "./main.ts"}
 import {bootstrapApplication} from '@angular/platform-browser';
 import {App} from './app/app';
 

@@ -1,13 +1,10 @@
 ---
-title: "dotnet new <TEMPLATE>"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-new.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet new <TEMPLATE>
+description: The dotnet new command creates new .NET projects based on the specified template.
+no-loc: [Blazor, WebAssembly]
+ms.date: 10/28/2025
 ---
-
-# dotnet new <TEMPLATE>
+# dotnet new &lt;TEMPLATE&gt;
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
 
@@ -30,45 +27,31 @@ dotnet new -h|--help
 
 The `dotnet new` command creates a .NET project or other artifacts based on a template.
 
-The command calls the template engine to create the artifacts on disk based on the specified template and options.
+The command calls the [template engine](https://github.com/dotnet/templating) to create the artifacts on disk based on the specified template and options.
 
-> **Note:**
-> Starting with the .NET 7 SDK, the `dotnet new` syntax has changed:
-
-- The `--list`, `--search`, `--install`, and `--uninstall` options became `list`, `search`, `install`, and `uninstall` subcommands.
-- The `--update-apply` option became the `update` subcommand.
-- To use `--update-check`, use the `update` subcommand with the `--check-only` option.
-
-Other options that were available before are still available to use with their respective subcommands.
-Separate help for each subcommand is available via the `-h` or `--help` option: `dotnet new <subcommand> --help` lists all supported options for the subcommand.
-
-Additionally, tab completion is now available for `dotnet new`. It supports completion for installed template names and for the options a selected template provides.
-To activate tab completion for the .NET SDK, see Enable tab completion.
+> [!NOTE]
+> [!INCLUDE [new syntax](includes/dotnet-new-7-0-syntax.md)]
 
 ### Tab completion
 
 Starting with .NET SDK 7.0.100, tab completion is available for `dotnet new`. It supports completion for installed template names, as well as completion for the options a selected template provides.
-To activate tab completion for the .NET SDK, see Enable tab completion.
+To activate tab completion for the .NET SDK, see [Enable tab completion](enable-tab-autocomplete.md).
 
 ### Implicit restore
 
-You don't have to run `dotnet restore` because it's run implicitly by all commands that require a restore to occur, such as `dotnet new`, `dotnet build`, `dotnet run`, `dotnet test`, `dotnet publish`, and `dotnet pack`. To disable implicit restore, use the `--no-restore` option.
-
-The `dotnet restore` command is still useful in certain scenarios where explicitly restoring makes sense, such as continuous integration builds in Azure DevOps Services or in build systems that need to explicitly control when the restore occurs.
-
-For information about how to manage NuGet feeds, see the `dotnet restore` documentation.
+[!INCLUDE[dotnet restore note](~/includes/dotnet-restore-note.md)]
 
 ## Arguments
 
 - **`TEMPLATE`**
 
-  The template to instantiate when the command is invoked. Each template might have specific options you can pass. For more information, see Template options.
+  The template to instantiate when the command is invoked. Each template might have specific options you can pass. For more information, see [Template options](#template-options).
 
-  You can run `dotnet new list` to see a list of all installed templates.
+  You can run [`dotnet new list`](dotnet-new-list.md) to see a list of all installed templates.
 
-  The `search` command should be used to search for templates in NuGet.org.
+  The [`search` command](dotnet-new-search.md) should be used to search for templates in NuGet.org.
 
-  For a list of templates that ship with the .NET SDK, see Preinstalled templates.
+  For a list of templates that ship with the .NET SDK, see [Preinstalled templates](dotnet-new-sdk-templates.md#preinstalled-templates).
 
 ## Options
 
@@ -80,15 +63,13 @@ For information about how to manage NuGet feeds, see the `dotnet restore` docume
 
   Forces content to be generated even if it would change existing files. This is required when the template chosen would override existing files in the output directory.
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 - **`-lang|--language {C#|F#|VB}`**
 
-  The language of the template to create. The language accepted varies by the template (see defaults in the arguments section). Not valid for some templates.
+  The language of the template to create. The language accepted varies by the template (see defaults in the [arguments](#arguments) section). Not valid for some templates.
 
-  > **Note:**
+  > [!NOTE]
   > Some shells interpret `#` as a special character. In those cases, enclose the language parameter value in quotes. For example, `dotnet new console -lang "F#"`.
 
 - **`-n|--name <OUTPUT_NAME>`**
@@ -97,7 +78,7 @@ Prints out a description of how to use the command.
 
 - **`-f|--framework <FRAMEWORK>`**
 
-  Specifies the target framework. It expects a target framework moniker (TFM). Examples: "net6.0", "net7.0-macos". This value will be reflected in the project file.
+  Specifies the [target framework](../../standard/frameworks.md). It expects a target framework moniker (TFM). Examples: "net6.0", "net7.0-macos". This value will be reflected in the project file.
 
 - **`-no-update-check`**
 
@@ -117,13 +98,11 @@ Prints out a description of how to use the command.
 
   Enables diagnostic output. Available since .NET SDK 7.0.100.
 
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+- [!INCLUDE [verbosity](includes/cli-verbosity.md)]
 
 ## Template options
 
-Each template may have additional options defined. For more information, see .NET default templates for `dotnet new`.
+Each template may have additional options defined. For more information, see [.NET default templates for `dotnet new`](dotnet-new-sdk-templates.md).
 
 ## Examples
 
@@ -177,9 +156,9 @@ Each template may have additional options defined. For more information, see .NE
 
 ## See also
 
-- dotnet new list command
-- dotnet new search command
-- dotnet new install command
-- .NET default templates for dotnet new
-- .NET templates for authors
-- Create a custom template for dotnet new
+- [dotnet new list command](dotnet-new-list.md)
+- [dotnet new search command](dotnet-new-search.md)
+- [dotnet new install command](dotnet-new-install.md)
+- [.NET default templates for dotnet new](dotnet-new-sdk-templates.md)
+- [.NET templates for authors](templates.md)
+- [Create a custom template for dotnet new](../tutorials/cli-templates-create-item-template.md)

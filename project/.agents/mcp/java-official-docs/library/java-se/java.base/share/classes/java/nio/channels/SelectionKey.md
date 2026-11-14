@@ -1,49 +1,44 @@
----
-title: "SelectionKey class (java.nio.channels)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/channels/SelectionKey.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # SelectionKey class (java.nio.channels)
 
 ```java
 public abstract class SelectionKey
 ```
 
-A token <example-value> the registration of a `SelectableChannel` with a
-`Selector`.
+A token representing the registration of a {@link SelectableChannel} with a
+{@link Selector}.
 
- A selection key is created each time a channel is registered with a
-selector.  A key <example-value> valid until it is *cancelled* by invoking its
-cancel method, by closing its channel, or by closing its
+<p> A selection key is created each time a channel is registered with a
+selector.  A key remains valid until it is <i>cancelled</i> by invoking its
+{@link #cancel cancel} method, by closing its channel, or by closing its
 selector.  Cancelling a key does not immediately remove it from its
-selector; it is instead added to the selector's *cancelled-key set* for removal during the
+selector; it is instead added to the selector's <a
+href="Selector.html#ks"><i>cancelled-key set</i></a> for removal during the
 next selection operation.  The validity of a key may be tested by invoking
-its isValid method.
+its {@link #isValid isValid} method.
 
- A selection key <example-value> two *operation sets* represented as
+<a id="opsets"></a>
+
+<p> A selection key contains two <i>operation sets</i> represented as
 integer values.  Each bit of an operation set denotes a category of
 selectable operations that are supported by the key's channel.
 
--
+<ul>
 
- The *interest set* determines which operation categories will
+  <li><p> The <i>interest set</i> determines which operation categories will
   be tested for readiness the next time one of the selector's selection
   methods is invoked.  The interest set is initialized with the value given
-  when the key is created; it may later be changed via the `interestOps(int)` method.
+  when the key is created; it may later be changed via the {@link
+  #interestOps(int)} method. </p></li>
 
--
-
- The *ready set* identifies the operation categories for which
+  <li><p> The <i>ready set</i> identifies the operation categories for which
   the key's channel has been detected to be ready by the key's selector.
   The ready set is initialized to zero when the key is created; it may later
   be updated by the selector during a selection operation, but it cannot be
-  updated directly.
+  updated directly. </p></li>
 
- That a selection key's ready set indicates that its channel is ready for
+</ul>
+
+<p> That a selection key's ready set indicates that its channel is ready for
 some operation category is a hint, but not a guarantee, that an operation in
 such a category may be performed by a thread without causing the thread to
 block.  A ready set is most likely to be accurate immediately after the
@@ -51,30 +46,33 @@ completion of a selection operation.  It is likely to be made inaccurate by
 external events and by I/O operations that are invoked upon the
 corresponding channel.
 
- This class defines all known operation-set bits, but precisely which
+<p> This class defines all known operation-set bits, but precisely which
 bits are supported by a given channel depends upon the type of the channel.
-Each subclass of `SelectableChannel` defines a validOps() method which returns a set
+Each subclass of {@link SelectableChannel} defines a {@link
+SelectableChannel#validOps() validOps()} method which returns a set
 identifying just those operations that are supported by the channel.  An
 attempt to set or test an operation-set bit that is not supported by a key's
 channel will result in an appropriate run-time exception.
 
- It is often necessary to associate some application-specific data with a
+<p> It is often necessary to associate some application-specific data with a
 selection key, for example an object that represents the state of a
 higher-level protocol and handles readiness notifications in order to
 implement that protocol.  Selection keys therefore support the
-*attachment* of a single arbitrary object to a key.  An object can be
-attached via the attach method and then later retrieved via
-the attachment method.
+<i>attachment</i> of a single arbitrary object to a key.  An object can be
+attached via the {@link #attach attach} method and then later retrieved via
+the {@link #attachment() attachment} method.
 
- Selection keys are safe for use by multiple concurrent threads.  A
+<p> Selection keys are safe for use by multiple concurrent threads.  A
 selection operation will always use the interest-set value that was current
-at the moment that the operation began.
+at the moment that the operation began.  </p>
 
-**Since:** 1.4
 
-**See also:** SelectableChannel
+@author Mark Reinhold
+@author JSR-51 Expert Group
+@since 1.4
 
-**See also:** Selector
+@see SelectableChannel
+@see Selector
 
 ## SelectionKey.SelectionKey()
 
@@ -93,7 +91,7 @@ public abstract SelectableChannel channel()
 Returns the channel for which this key was created.  This method will
 continue to return the channel even after the key is cancelled.
 
-**Returns:** This key's channel
+@return  This key's channel
 
 ## SelectionKey.selector()
 
@@ -104,7 +102,7 @@ public abstract Selector selector()
 Returns the selector for which this key was created.  This method will
 continue to return the selector even after the key is cancelled.
 
-**Returns:** This key's selector
+@return  This key's selector
 
 ## SelectionKey.isValid()
 
@@ -114,10 +112,10 @@ public abstract boolean isValid()
 
 Tells whether or not this key is valid.
 
- A key is valid upon creation and remains so until it is cancelled,
-its channel is closed, or its selector is closed.
+<p> A key is valid upon creation and remains so until it is cancelled,
+its channel is closed, or its selector is closed.  </p>
 
-**Returns:** `true` if, and only if, this key is valid
+@return  {@code true} if, and only if, this key is valid
 
 ## SelectionKey.cancel()
 
@@ -130,13 +128,13 @@ be cancelled.  Upon return the key will be invalid and will have been
 added to its selector's cancelled-key set.  The key will be removed from
 all of the selector's key sets during the next selection operation.
 
- If this key has already been cancelled then invoking this method has
-no effect.  Once cancelled, a key <example-value> forever invalid.
+<p> If this key has already been cancelled then invoking this method has
+no effect.  Once cancelled, a key remains forever invalid. </p>
 
- This method may be invoked at any time.  It synchronizes on the
+<p> This method may be invoked at any time.  It synchronizes on the
 selector's cancelled-key set, and therefore may block briefly if invoked
 concurrently with a cancellation or selection operation involving the
-same selector.
+same selector.  </p>
 
 ## SelectionKey.interestOps()
 
@@ -146,14 +144,13 @@ public abstract int interestOps()
 
 Retrieves this key's interest set.
 
- It is guaranteed that the returned set will only contain operation
-bits that are valid for this key's channel.
+<p> It is guaranteed that the returned set will only contain operation
+bits that are valid for this key's channel. </p>
 
-**Returns:** This key's interest set
+@return  This key's interest set
 
-Throws:
-
-- `CancelledKeyException`: If this key has been cancelled
+@throws  CancelledKeyException
+         If this key has been cancelled
 
 ## SelectionKey.interestOps(int)
 
@@ -163,21 +160,22 @@ public abstract SelectionKey interestOps(int ops)
 
 Sets this key's interest set to the given value.
 
- This method may be invoked at any time.  If this method is invoked
+<p> This method may be invoked at any time.  If this method is invoked
 while a selection operation is in progress then it has no effect upon
 that operation; the change to the key's interest set will be seen by the
 next selection operation.
 
-Parameters:
+@param  ops  The new interest set
 
-- `ops`: The new interest set
+@return  This selection key
 
-**Returns:** This selection key
+@throws  IllegalArgumentException
+         If a bit in the set does not correspond to an operation that
+         is supported by this key's channel, that is, if
+         {@code (ops & ~channel().validOps()) != 0}
 
-Throws:
-
-- `IllegalArgumentException`: If a bit in the set does not correspond to an operation that is supported by this key's channel, that is, if `(ops & ~channel().validOps()) != 0`
-- `CancelledKeyException`: If this key has been cancelled
+@throws  CancelledKeyException
+         If this key has been cancelled
 
 ## SelectionKey.interestOpsOr(int)
 
@@ -188,29 +186,30 @@ public int interestOpsOr(int ops)
 Atomically sets this key's interest set to the bitwise union ("or") of
 the existing interest set and the given value. This method is guaranteed
 to be atomic with respect to other concurrent calls to this method or to
-`interestOpsAnd(int)`.
+{@link #interestOpsAnd(int)}.
 
- This method may be invoked at any time.  If this method is invoked
+<p> This method may be invoked at any time.  If this method is invoked
 while a selection operation is in progress then it has no effect upon
 that operation; the change to the key's interest set will be seen by the
 next selection operation.
 
-Parameters:
-
-- `ops`: The interest set to apply
-
-**Implementation requirements:** The default implementation synchronizes on this key and invokes
-`interestOps()` and `interestOps(int)` to retrieve and set
+@implSpec The default implementation synchronizes on this key and invokes
+{@code interestOps()} and {@code interestOps(int)} to retrieve and set
 this key's interest set.
 
-**Returns:** The previous interest set
+@param  ops  The interest set to apply
 
-**Since:** 11
+@return  The previous interest set
 
-Throws:
+@throws  IllegalArgumentException
+         If a bit in the set does not correspond to an operation that
+         is supported by this key's channel, that is, if
+         {@code (ops & ~channel().validOps()) != 0}
 
-- `IllegalArgumentException`: If a bit in the set does not correspond to an operation that is supported by this key's channel, that is, if `(ops & ~channel().validOps()) != 0`
-- `CancelledKeyException`: If this key has been cancelled
+@throws  CancelledKeyException
+         If this key has been cancelled
+
+@since 11
 
 ## SelectionKey.interestOpsAnd(int)
 
@@ -221,36 +220,33 @@ public int interestOpsAnd(int ops)
 Atomically sets this key's interest set to the bitwise intersection ("and")
 of the existing interest set and the given value. This method is guaranteed
 to be atomic with respect to other concurrent calls to this method or to
-`interestOpsOr(int)`.
+{@link #interestOpsOr(int)}.
 
- This method may be invoked at any time.  If this method is invoked
+<p> This method may be invoked at any time.  If this method is invoked
 while a selection operation is in progress then it has no effect upon
 that operation; the change to the key's interest set will be seen by the
 next selection operation.
 
-Parameters:
-
-- `ops`: The interest set to apply
-
-**API note:** Unlike the `interestOps(int)` and `interestOpsOr(int)`
-methods, this method does not throw `IllegalArgumentException` when
+@apiNote Unlike the {@code interestOps(int)} and {@code interestOpsOr(int)}
+methods, this method does not throw {@code IllegalArgumentException} when
 invoked with bits in the interest set that do not correspond to an
 operation that is supported by this key's channel. This is to allow
 operation bits in the interest set to be cleared using bitwise complement
-values, e.g., `interestOpsAnd(~SelectionKey.OP_READ)` will remove
-the `OP_READ` from the interest set without affecting other bits.
+values, e.g., {@code interestOpsAnd(~SelectionKey.OP_READ)} will remove
+the {@code OP_READ} from the interest set without affecting other bits.
 
-**Implementation requirements:** The default implementation synchronizes on this key and invokes
-`interestOps()` and `interestOps(int)` to retrieve and set
+@implSpec The default implementation synchronizes on this key and invokes
+{@code interestOps()} and {@code interestOps(int)} to retrieve and set
 this key's interest set.
 
-**Returns:** The previous interest set
+@param  ops  The interest set to apply
 
-**Since:** 11
+@return  The previous interest set
 
-Throws:
+@throws  CancelledKeyException
+         If this key has been cancelled
 
-- `CancelledKeyException`: If this key has been cancelled
+@since 11
 
 ## SelectionKey.readyOps()
 
@@ -260,14 +256,13 @@ public abstract int readyOps()
 
 Retrieves this key's ready-operation set.
 
- It is guaranteed that the returned set will only contain operation
-bits that are valid for this key's channel.
+<p> It is guaranteed that the returned set will only contain operation
+bits that are valid for this key's channel.  </p>
 
-**Returns:** This key's ready-operation set
+@return  This key's ready-operation set
 
-Throws:
-
-- `CancelledKeyException`: If this key has been cancelled
+@throws  CancelledKeyException
+         If this key has been cancelled
 
 ## SelectionKey.OP_READ
 
@@ -277,12 +272,13 @@ public static final int OP_READ
 
 Operation-set bit for read operations.
 
- Suppose that a selection key's interest set contains
-`OP_READ` at the start of a selection operation.  If the selector
+<p> Suppose that a selection key's interest set contains
+{@code OP_READ} at the start of a <a
+href="Selector.html#selop">selection operation</a>.  If the selector
 detects that the corresponding channel is ready for reading, has reached
 end-of-stream, has been remotely shut down for further writing, or has
-an error pending, then it will add `OP_READ` to the key's
-ready-operation set.
+an error pending, then it will add {@code OP_READ} to the key's
+ready-operation set.  </p>
 
 ## SelectionKey.OP_WRITE
 
@@ -292,11 +288,12 @@ public static final int OP_WRITE
 
 Operation-set bit for write operations.
 
- Suppose that a selection key's interest set contains
-`OP_WRITE` at the start of a selection operation.  If the selector
+<p> Suppose that a selection key's interest set contains
+{@code OP_WRITE} at the start of a <a
+href="Selector.html#selop">selection operation</a>.  If the selector
 detects that the corresponding channel is ready for writing, has been
 remotely shut down for further reading, or has an error pending, then it
-will add `OP_WRITE` to the key's ready set.
+will add {@code OP_WRITE} to the key's ready set.  </p>
 
 ## SelectionKey.OP_CONNECT
 
@@ -306,11 +303,12 @@ public static final int OP_CONNECT
 
 Operation-set bit for socket-connect operations.
 
- Suppose that a selection key's interest set contains
-`OP_CONNECT` at the start of a selection operation.  If the selector
+<p> Suppose that a selection key's interest set contains
+{@code OP_CONNECT} at the start of a <a
+href="Selector.html#selop">selection operation</a>.  If the selector
 detects that the corresponding socket channel is ready to complete its
 connection sequence, or has an error pending, then it will add
-`OP_CONNECT` to the key's ready set.
+{@code OP_CONNECT} to the key's ready set.  </p>
 
 ## SelectionKey.OP_ACCEPT
 
@@ -320,11 +318,12 @@ public static final int OP_ACCEPT
 
 Operation-set bit for socket-accept operations.
 
- Suppose that a selection key's interest set contains
-`OP_ACCEPT` at the start of a selection operation.  If the selector
+<p> Suppose that a selection key's interest set contains
+{@code OP_ACCEPT} at the start of a <a
+href="Selector.html#selop">selection operation</a>.  If the selector
 detects that the corresponding server-socket channel is ready to accept
 another connection, or has an error pending, then it will add
-`OP_ACCEPT` to the key's ready set.
+{@code OP_ACCEPT} to the key's ready set.  </p>
 
 ## SelectionKey.isReadable()
 
@@ -334,18 +333,21 @@ public final boolean isReadable()
 
 Tests whether this key's channel is ready for reading.
 
- An invocation of this method of the form `k.isReadable()`
+<p> An invocation of this method of the form {@code k.isReadable()}
 behaves in exactly the same way as the expression
 
- If this key's channel does not support read operations then this
-method always returns `false`.
+{@snippet lang=java :
+    k.readyOps() & OP_READ != 0
+}
 
-**Returns:** `true` if, and only if,
-         `readyOps() & OP_READ` is nonzero
+<p> If this key's channel does not support read operations then this
+method always returns {@code false}.  </p>
 
-Throws:
+@return  {@code true} if, and only if,
+         {@code readyOps() & OP_READ} is nonzero
 
-- `CancelledKeyException`: If this key has been cancelled
+@throws  CancelledKeyException
+         If this key has been cancelled
 
 ## SelectionKey.isWritable()
 
@@ -355,18 +357,21 @@ public final boolean isWritable()
 
 Tests whether this key's channel is ready for writing.
 
- An invocation of this method of the form `k.isWritable()`
+<p> An invocation of this method of the form {@code k.isWritable()}
 behaves in exactly the same way as the expression
 
- If this key's channel does not support write operations then this
-method always returns `false`.
+{@snippet lang=java :
+    k.readyOps() & OP_WRITE != 0
+}
 
-**Returns:** `true` if, and only if,
-         `readyOps() & OP_WRITE` is nonzero
+<p> If this key's channel does not support write operations then this
+method always returns {@code false}.  </p>
 
-Throws:
+@return  {@code true} if, and only if,
+         {@code readyOps() & OP_WRITE} is nonzero
 
-- `CancelledKeyException`: If this key has been cancelled
+@throws  CancelledKeyException
+         If this key has been cancelled
 
 ## SelectionKey.isConnectable()
 
@@ -377,18 +382,21 @@ public final boolean isConnectable()
 Tests whether this key's channel has either finished, or failed to
 finish, its socket-connection operation.
 
- An invocation of this method of the form `k.isConnectable()`
+<p> An invocation of this method of the form {@code k.isConnectable()}
 behaves in exactly the same way as the expression
 
- If this key's channel does not support socket-connect operations
-then this method always returns `false`.
+{@snippet lang=java :
+    k.readyOps() & OP_CONNECT != 0
+}
 
-**Returns:** `true` if, and only if,
-         `readyOps() & OP_CONNECT` is nonzero
+<p> If this key's channel does not support socket-connect operations
+then this method always returns {@code false}.  </p>
 
-Throws:
+@return  {@code true} if, and only if,
+         {@code readyOps() & OP_CONNECT} is nonzero
 
-- `CancelledKeyException`: If this key has been cancelled
+@throws  CancelledKeyException
+         If this key has been cancelled
 
 ## SelectionKey.isAcceptable()
 
@@ -399,18 +407,21 @@ public final boolean isAcceptable()
 Tests whether this key's channel is ready to accept a new socket
 connection.
 
- An invocation of this method of the form `k.isAcceptable()`
+<p> An invocation of this method of the form {@code k.isAcceptable()}
 behaves in exactly the same way as the expression
 
- If this key's channel does not support socket-accept operations then
-this method always returns `false`.
+{@snippet lang=java :
+    k.readyOps() & OP_ACCEPT != 0
+}
 
-**Returns:** `true` if, and only if,
-         `readyOps() & OP_ACCEPT` is nonzero
+<p> If this key's channel does not support socket-accept operations then
+this method always returns {@code false}.  </p>
 
-Throws:
+@return  {@code true} if, and only if,
+         {@code readyOps() & OP_ACCEPT} is nonzero
 
-- `CancelledKeyException`: If this key has been cancelled
+@throws  CancelledKeyException
+         If this key has been cancelled
 
 ## SelectionKey.attach(Object)
 
@@ -420,16 +431,16 @@ public final Object attach(Object ob)
 
 Attaches the given object to this key.
 
- An attached object may later be retrieved via the attachment method.  Only one object may be attached at a time; invoking
+<p> An attached object may later be retrieved via the {@link #attachment()
+attachment} method.  Only one object may be attached at a time; invoking
 this method causes any previous attachment to be discarded.  The current
-attachment may be discarded by attaching `null`.
+attachment may be discarded by attaching {@code null}.  </p>
 
-Parameters:
+@param  ob
+        The object to be attached; may be {@code null}
 
-- `ob`: The object to be attached; may be `null`
-
-**Returns:** The previously-attached object, if any,
-         otherwise `null`
+@return  The previously-attached object, if any,
+         otherwise {@code null}
 
 ## SelectionKey.attachment()
 
@@ -439,5 +450,5 @@ public final Object attachment()
 
 Retrieves the current attachment.
 
-**Returns:** The object currently attached to this key,
-         or `null` if there is no attachment
+@return  The object currently attached to this key,
+         or {@code null} if there is no attachment

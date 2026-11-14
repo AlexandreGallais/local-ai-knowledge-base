@@ -1,10 +1,10 @@
 ---
-title: "Microsoft.Testing.Platform vs VSTest - .NET test platform comparison"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/test-platforms-overview.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Microsoft.Testing.Platform vs VSTest - .NET test platform comparison
+description: Compare Microsoft.Testing.Platform (MTP) and VSTest to choose the right .NET test platform for your projects, CI pipelines, and IDE integration.
+author: Evangelink
+ms.author: amauryleve
+ms.date: 11/05/2026
+ai-usage: ai-assisted
 ---
 
 # Test platforms overview for .NET
@@ -19,7 +19,7 @@ You can choose between two test platforms:
 - **VSTest**
 - **Microsoft.Testing.Platform (MTP)**
 
-> **Tip:**
+> [!TIP]
 > For the simplest setup, choose one platform for your repository, and configure test projects, CI, and tooling consistently for that platform. Don't mix VSTest-based and MTP-based .NET test projects in the same solution or run configuration because that scenario isn't supported. If you also run non-.NET tests that depend on VSTest (for example, C++ or JavaScript tests), run those tests in separate configurations from your MTP-based .NET tests.
 
 ## How to choose your platform
@@ -50,30 +50,30 @@ The complete Windows application matrix across classic UWP, modern UWP, packaged
 | IDE integration | Mature integration across Visual Studio and other tools that depend on VSTest protocol and adapters. | Supported in Visual Studio and Visual Studio Code scenarios, with ongoing integration work in parts of the ecosystem. |
 | CI and external tools | Broad support across long-established Microsoft and non-Microsoft tools and tasks. In Azure DevOps, you can use either the VSTest task (`VSTest@3`, `vstest.console`) or the .NET task (`DotNetCoreCLI@2`, `dotnet test`). | Works in CI and modern .NET workflows, but some third-party integrations might still lag behind VSTest. In Azure DevOps, use the .NET task (`DotNetCoreCLI@2`, `dotnet test`). |
 | `dotnet test` behavior | Default VSTest mode. VSTest arguments and behavior apply. | Native MTP mode is available in .NET 10 SDK and later. |
-| Programmatic discovery and execution | `Microsoft.TestPlatform.TranslationLayer` provides `VsTestConsoleWrapper` for VSTest discovery and execution. | A source-only .NET client drives JSON-RPC discovery and execution starting with MTP 2.4. For one-shot structured discovery, use `--list-tests json` starting with MTP 2.3. |
+| Programmatic discovery and execution | `Microsoft.TestPlatform.TranslationLayer` provides `VsTestConsoleWrapper` for VSTest discovery and execution. | A [source-only .NET client](./microsoft-testing-platform-server-mode.md#discover-and-run-tests-from-net) drives JSON-RPC discovery and execution starting with MTP 2.4. For one-shot structured discovery, use [`--list-tests json`](./microsoft-testing-platform-cli-options.md#discover-tests-as-json) starting with MTP 2.3. |
 
-For complete details about `dotnet test` modes and arguments, see Testing with `dotnet test`.
+For complete details about `dotnet test` modes and arguments, see [Testing with `dotnet test`](./unit-testing-with-dotnet-test.md).
 
 ## Start from your test framework
 
 ### If you choose VSTest
 
-- MSTest: Run tests with MSTest
-- NUnit: NUnit and Microsoft.Testing.Platform
-- xUnit.net: Get started with xUnit.net
+- MSTest: [Run tests with MSTest](./unit-testing-mstest-running-tests.md)
+- NUnit: [NUnit and Microsoft.Testing.Platform](https://docs.nunit.org/articles/vs-test-adapter/NUnit-And-Microsoft-Test-Platform.html)
+- xUnit.net: [Get started with xUnit.net](https://xunit.net/docs/getting-started/v2/getting-started)
 - TUnit: Not supported on VSTest. Use MTP.
 
 ### If you choose MTP
 
-- MSTest: Run tests with MSTest
-- NUnit: MTP support in NUnit (NUnit runner)
-- xUnit.net: Microsoft Testing Platform (xUnit.net v3)
-- TUnit: TUnit documentation
+- MSTest: [Run tests with MSTest](./unit-testing-mstest-running-tests.md)
+- NUnit: [MTP support in NUnit (NUnit runner)](./unit-testing-nunit-runner-intro.md)
+- xUnit.net: [Microsoft Testing Platform (xUnit.net v3)](https://xunit.net/docs/getting-started/v3/microsoft-testing-platform)
+- TUnit: [TUnit documentation](https://thomhurst.github.io/TUnit/)
 
 ## Next steps
 
-- Learn MTP concepts: MTP overview
-- Understand VSTest options: VSTest options
-- Migrate from VSTest: Migrate from VSTest to MTP
-- Add capabilities: MTP features
-- Test Windows apps: Test UWP and WinUI 3 apps with MSTest and MTP
+- Learn MTP concepts: [MTP overview](./microsoft-testing-platform-intro.md)
+- Understand VSTest options: [VSTest options](/visualstudio/test/vstest-console-options)
+- Migrate from VSTest: [Migrate from VSTest to MTP](./migrating-vstest-microsoft-testing-platform.md)
+- Add capabilities: [MTP features](./microsoft-testing-platform-features.md)
+- Test Windows apps: [Test UWP and WinUI 3 apps with MSTest and MTP](./unit-testing-mstest-winui.md)

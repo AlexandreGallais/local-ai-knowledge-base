@@ -1,12 +1,3 @@
----
-title: "alloc::wtf8"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/alloc/src/wtf8/mod.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # alloc::wtf8
 
 Heap-allocated counterpart to core `wtf8` module.
@@ -37,7 +28,7 @@ Creates a WTF-8 string from a WTF-8 byte vec.
 
 # Safety
 
-`value` must contain well-formed WTF-8.
+`value` must contain [well-formed WTF-8](https://wtf-8.codeberg.page/#well-formed).
 
 ## Wtf8Buf::from_string
 
@@ -120,7 +111,9 @@ Does nothing if the capacity is already sufficient.
 
 Note that the allocator may give the `Wtf8Buf` more space than it
 requests. Therefore, capacity can not be relied upon to be precisely
-minimal. Prefer `try_reserve` if future insertions are expected.
+minimal. Prefer [`try_reserve`] if future insertions are expected.
+
+[`try_reserve`]: Wtf8Buf::try_reserve
 
 # Errors
 
@@ -252,7 +245,7 @@ full mutable access to the core `Vec`.
 
 # Safety
 
-`self` and `other` must contain well-formed WTF-8,
+`self` and `other` must contain [well-formed WTF-8](https://wtf-8.codeberg.page/#well-formed),
 and appending `other` to `self` must preserve that invariant.
 In particular, `self` must not end with a leading surrogate,
 or `other` must not start with a trailing surrogate.

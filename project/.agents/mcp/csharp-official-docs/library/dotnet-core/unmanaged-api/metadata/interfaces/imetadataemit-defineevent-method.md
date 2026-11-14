@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataEmit::DefineEvent Method"
 title: "IMetaDataEmit::DefineEvent Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataemit-defineevent-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataEmit.DefineEvent"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataEmit::DefineEvent"
+  - "DefineEvent method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataEmit::DefineEvent Method
 
 Creates a definition for an event with the specified metadata signature, and gets a token to that event definition.
@@ -18,7 +25,7 @@ HRESULT DefineEvent (
     [in]  mdTypeDef    td,
     [in]  LPCWSTR      szEvent,
     [in]  DWORD        dwEventFlags,
-    [in]  mdToken      <example-value>,
+    [in]  mdToken      tkEventType,
     [in]  mdMethodDef  mdAddOn,
     [in]  mdMethodDef  mdRemoveOn,
     [in]  mdMethodDef  mdFire,
@@ -54,11 +61,11 @@ HRESULT DefineEvent (
  [in] An array of tokens for other methods associated with the event. The array is terminated with a `mdMethodDefNil` token.
 
  `pmdEvent`
- [out] The metadata token <example-value> to the event.
+ [out] The metadata token assigned to the event.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -66,5 +73,5 @@ HRESULT DefineEvent (
 
 ## See also
 
-- IMetaDataEmit Interface
-- IMetaDataEmit2 Interface
+- [IMetaDataEmit Interface](imetadataemit-interface.md)
+- [IMetaDataEmit2 Interface](imetadataemit2-interface.md)

@@ -1,15 +1,15 @@
 ---
-title: "ASPDEPR002 warning"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/diagnostics/aspdepr002.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASPDEPR002 warning
+description: Learn about the obsoletions that generate compile-time warning ASPDEPR002.
+ai-usage: ai-assisted
+monikerRange: '>= aspnetcore-10.0'
+ms.date: 03/03/2026
+f1_keywords:
+  - aspdepr002
 ---
-
 # ASPDEPR002: `WithOpenApi` is deprecated
 
-The `Microsoft.AspNetCore.Builder.OpenApiEndpointConventionBuilderExtensions.WithOpenApi*` extension methods are deprecated starting in .NET 10. Using these methods produces the `ASPDEPR002` diagnostic at compile time. The functionality they provided is now available through the built-in OpenAPI document generation pipeline.
+The <xref:Microsoft.AspNetCore.Builder.OpenApiEndpointConventionBuilderExtensions.WithOpenApi*> extension methods are deprecated starting in .NET 10. Using these methods produces the `ASPDEPR002` diagnostic at compile time. The functionality they provided is now available through the built-in OpenAPI document generation pipeline.
 
 ## Workarounds
 
@@ -90,4 +90,4 @@ To suppress all the `ASPDEPR002` warnings in your project, add a `<NoWarn>` prop
 
 ## See also
 
-- Deprecation of WithOpenApi extension method
+- [Deprecation of WithOpenApi extension method](../breaking-changes/10/withopenapi-deprecated.md)

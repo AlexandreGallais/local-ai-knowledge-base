@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: ICorDebugMergedAssemblyRecord::GetCulture Method"
 title: "ICorDebugMergedAssemblyRecord::GetCulture Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmergedassemblyrecord-getculture-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugMergedAssemblyRecord::GetCulture Method
 
 Gets the culture name string of the assembly.
@@ -36,12 +32,12 @@ HRESULT GetCulture(
 
 The culture name is a unique string that identifies a culture, such as "en-US" (for the English (United States) culture), or "neutral" (for a neutral culture).
 
-> **Note:**
+> [!NOTE]
 > This method is available with .NET Native only.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -51,4 +47,4 @@ The culture name is a unique string that identifies a culture, such as "en-US" (
 
 ## See also
 
-- ICorDebugMergedAssemblyRecord Interface
+- [ICorDebugMergedAssemblyRecord Interface](icordebugmergedassemblyrecord-interface.md)

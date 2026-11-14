@@ -1,17 +1,8 @@
----
-title: "Tuple types"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/types/tuple.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[type.tuple]
 # Tuple types
 
 r[type.tuple.syntax]
-```grammar
+```grammar,types
 TupleType ->
       `(` `)`
     | `(` ( Type `,` )+ Type? `)`
@@ -48,3 +39,11 @@ Values of this type are constructed using a [tuple expression]. Furthermore, var
 
 r[type.tuple.access]
 Tuple fields can be accessed by either a [tuple index expression] or [pattern matching].
+
+[^1]: Structural types are always equivalent if their internal types are equivalent. For a nominal version of tuples, see [tuple structs].
+
+[parenthesized type]: ../types.md#parenthesized-types
+[pattern matching]: ../patterns.md#tuple-patterns
+[tuple expression]: ../expressions/tuple-expr.md#tuple-expressions
+[tuple index expression]: ../expressions/tuple-expr.md#tuple-indexing-expressions
+[tuple structs]: ./struct.md

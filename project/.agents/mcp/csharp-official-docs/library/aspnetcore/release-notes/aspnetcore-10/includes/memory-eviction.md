@@ -1,14 +1,3 @@
----
-title: "memory-eviction"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-10/includes/memory-eviction.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# memory-eviction
-
 ### Automatic eviction from memory pool
 
 The memory pools used by Kestrel, IIS, and HTTP.sys now automatically evict memory blocks when the application is idle or under less load. The feature runs automatically and doesn't need to be enabled or configured manually.
@@ -21,11 +10,11 @@ Previously, memory allocated by the pool would remain reserved, even when not in
 
 Metrics have been added to the default memory pool used by our server implementations. The new metrics are under the name `"Microsoft.AspNetCore.MemoryPool"`.
 
-For information about metrics and how to use them, see ASP.NET Core metrics.
+For information about metrics and how to use them, see [ASP.NET Core metrics](../../../metrics/overview.md).
 
 #### Manage memory pools
 
-Besides using memory pools more efficiently by evicting unneeded memory blocks, .NET 10 improves the experience of creating memory pools. It does this by providing a built-in IMemoryPoolFactory and a `MemoryPoolFactory` implementation. It makes the implementation available to your application through dependency injection.
+Besides using memory pools more efficiently by evicting unneeded memory blocks, .NET 10 improves the experience of creating memory pools. It does this by providing a built-in [IMemoryPoolFactory](https://source.dot.net/#Microsoft.AspNetCore.Connections.Abstractions/IMemoryPoolFactory.cs) and a `MemoryPoolFactory` implementation. It makes the implementation available to your application through dependency injection.
 
 The following code example shows a simple background service that uses the built-in memory pool factory implementation to create memory pools. These pools benefit from the automatic eviction feature:
 
@@ -39,7 +28,7 @@ public class MyBackgroundService : BackgroundService
         _memoryPool = factory.Create();
     }
 
-    protected override async Task ExecuteAsync(CancellationToken <example-value>)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         while (!stoppingToken.IsCancellationRequested)
         {

@@ -1,27 +1,18 @@
----
-title: "Formattable interface (java.util)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/Formattable.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Formattable interface (java.util)
 
 ```java
 public interface Formattable
 ```
 
-The `Formattable` interface must be implemented by any class that
-needs to perform custom formatting using the `'s'` conversion
-specifier of `java.util.Formatter`.  This interface allows basic
+The {@code Formattable} interface must be implemented by any class that
+needs to perform custom formatting using the {@code 's'} conversion
+specifier of {@link java.util.Formatter}.  This interface allows basic
 control for formatting arbitrary objects.
 
 For example, the following class prints out different representations of a
 stock's name depending on the flags and length constraints:
 
-```java
+<pre> {@code
   import java.nio.CharBuffer;
   import java.util.Formatter;
   import java.util.Formattable;
@@ -74,12 +65,12 @@ stock's name depending on the flags and length constraints:
           return String.format("%s - %s", symbol, companyName);
       }
   }
-```
+}</pre>
 
- When used in conjunction with the `java.util.Formatter`, the above
+<p> When used in conjunction with the {@link java.util.Formatter}, the above
 class produces the following output for various format strings.
 
-```java
+<pre> {@code
   Formatter fmt = new Formatter();
   StockName sn = new StockName("HUGE", "Huge Fruit, Inc.",
                                "Fruit Titanesque, Inc.");
@@ -89,16 +80,17 @@ class produces the following output for various format strings.
   fmt.format("%-10.8s", sn);              //   -> "HUGE      "
   fmt.format("%.12s", sn);                //   -> "Huge Fruit,*"
   fmt.format(Locale.FRANCE, "%25s", sn);  //   -> "   Fruit Titanesque, Inc."
-```
+}</pre>
 
- Formattables are not necessarily safe for multithreaded access.  Thread
+<p> Formattables are not necessarily safe for multithreaded access.  Thread
 safety is optional and may be enforced by classes that extend and implement
 this interface.
 
- Unless otherwise specified, passing a `null` argument to
-any method in this interface will cause a `NullPointerException` to be thrown.
+<p> Unless otherwise specified, passing a {@code null} argument to
+any method in this interface will cause a {@link
+NullPointerException} to be thrown.
 
-**Since:** 1.5
+@since  1.5
 
 ## Formattable.formatTo(Formatter, int, int, int)
 
@@ -106,15 +98,43 @@ any method in this interface will cause a `NullPointerException` to be thrown.
 void formatTo(Formatter formatter, int flags, int width, int precision)
 ```
 
-Formats the object using the provided formatter.
+Formats the object using the provided {@link Formatter formatter}.
 
-Parameters:
+@param  formatter
+        The {@link Formatter formatter}.  Implementing classes may call
+        {@link Formatter#out() formatter.out()} or {@link
+        Formatter#locale() formatter.locale()} to obtain the {@link
+        Appendable} or {@link Locale} used by this
+        {@code formatter} respectively.
 
-- `formatter`: The formatter. Implementing classes may call formatter.out() or formatter.locale() to obtain the `Appendable` or `Locale` used by this `formatter` respectively.
-- `flags`: The flags modify the output format. The value is interpreted as a bitmask. Any combination of the following flags may be set: `FormattableFlags.LEFT_JUSTIFY`, `FormattableFlags.UPPERCASE`, and `FormattableFlags.ALTERNATE`. If no flags are set, the default formatting of the implementing class will apply.
-- `width`: The minimum number of characters to be written to the output. If the length of the converted value is less than the `width` then the output will be padded by `'  '` until the total number of characters equals width. The padding is at the beginning by default. If the `FormattableFlags.LEFT_JUSTIFY` flag is set then the padding will be at the end. If `width` is `-1` then there is no minimum.
-- `precision`: The maximum number of characters to be written to the output. The precision is applied before the width, thus the output will be truncated to `precision` characters even if the `width` is greater than the `precision`. If `precision` is `-1` then there is no explicit limit on the number of characters.
+@param  flags
+        The flags modify the output format.  The value is interpreted as
+        a bitmask.  Any combination of the following flags may be set:
+        {@link FormattableFlags#LEFT_JUSTIFY}, {@link
+        FormattableFlags#UPPERCASE}, and {@link
+        FormattableFlags#ALTERNATE}.  If no flags are set, the default
+        formatting of the implementing class will apply.
 
-Throws:
+@param  width
+        The minimum number of characters to be written to the output.
+        If the length of the converted value is less than the
+        {@code width} then the output will be padded by
+        <code>'&nbsp;&nbsp;'</code> until the total number of characters
+        equals width.  The padding is at the beginning by default.  If
+        the {@link FormattableFlags#LEFT_JUSTIFY} flag is set then the
+        padding will be at the end.  If {@code width} is {@code -1}
+        then there is no minimum.
 
-- `IllegalFormatException`: If any of the parameters are invalid. For specification of all possible formatting errors, see the Details section of the formatter class specification.
+@param  precision
+        The maximum number of characters to be written to the output.
+        The precision is applied before the width, thus the output will
+        be truncated to {@code precision} characters even if the
+        {@code width} is greater than the {@code precision}.  If
+        {@code precision} is {@code -1} then there is no explicit
+        limit on the number of characters.
+
+@throws  IllegalFormatException
+         If any of the parameters are invalid.  For specification of all
+         possible formatting errors, see the <a
+         href="../util/Formatter.html#detail">Details</a> section of the
+         formatter class specification.

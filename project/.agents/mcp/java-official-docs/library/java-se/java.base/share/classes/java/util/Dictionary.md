@@ -1,45 +1,30 @@
----
-title: "Dictionary class (java.util)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/Dictionary.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Dictionary class (java.util)
 
 ```java
 public abstract class Dictionary<K,V>
 ```
 
-The `Dictionary` class is the abstract parent of any
-class, such as `Hashtable`, which maps keys to values.
-Every key and every value is an object. In any one `Dictionary`
+The {@code Dictionary} class is the abstract parent of any
+class, such as {@code Hashtable}, which maps keys to values.
+Every key and every value is an object. In any one {@code Dictionary}
 object, every key is associated with at most one value. Given a
-`Dictionary` and a key, the associated element can be looked up.
-Any non-`null` object can be used as a key and as a value.
-
-As a rule, the `equals` method should be used by
+{@code Dictionary} and a key, the associated element can be looked up.
+Any non-{@code null} object can be used as a key and as a value.
+<p>
+As a rule, the {@code equals} method should be used by
 implementations of this class to decide if two keys are the same.
+<p>
+<strong>NOTE: This class is obsolete.  New implementations should
+implement the Map interface, rather than extending this class.</strong>
 
-**NOTE: This class is obsolete.  New implementations should
-implement the Map interface, rather than extending this class.**
+@param <K> the type of keys
+@param <V> the type of mapped values
 
-Parameters:
-
-- `<K>`: the type of keys
-- `<V>`: the type of mapped values
-
-**See also:** java.util.Map
-
-**See also:** java.lang.Object#equals(java.lang.Object)
-
-**See also:** java.lang.Object#hashCode()
-
-**See also:** java.util.Hashtable
-
-**Since:** 1.0
+@see     java.util.Map
+@see     java.lang.Object#equals(java.lang.Object)
+@see     java.lang.Object#hashCode()
+@see     java.util.Hashtable
+@since   1.0
 
 ## Dictionary.Dictionary()
 
@@ -58,7 +43,7 @@ public abstract int size()
 
 Returns the number of entries (distinct keys) in this dictionary.
 
-**Returns:** the number of keys in this dictionary.
+@return  the number of keys in this dictionary.
 
 ## Dictionary.isEmpty()
 
@@ -67,11 +52,11 @@ public abstract boolean isEmpty()
 ```
 
 Tests if this dictionary maps no keys to value. The general contract
-for the `isEmpty` method is that the result is true if and only
+for the {@code isEmpty} method is that the result is true if and only
 if this dictionary contains no entries.
 
-**Returns:** `true` if this dictionary maps no keys to values;
-         `false` otherwise.
+@return  {@code true} if this dictionary maps no keys to values;
+         {@code false} otherwise.
 
 ## Dictionary.keys()
 
@@ -80,15 +65,13 @@ public abstract Enumeration<K> keys()
 ```
 
 Returns an enumeration of the keys in this dictionary. The general
-contract for the keys method is that an `Enumeration` object
+contract for the keys method is that an {@code Enumeration} object
 is returned that will generate all the keys for which this dictionary
 contains entries.
 
-**Returns:** an enumeration of the keys in this dictionary.
-
-**See also:** java.util.Dictionary#elements()
-
-**See also:** java.util.Enumeration
+@return  an enumeration of the keys in this dictionary.
+@see     java.util.Dictionary#elements()
+@see     java.util.Enumeration
 
 ## Dictionary.elements()
 
@@ -97,15 +80,13 @@ public abstract Enumeration<V> elements()
 ```
 
 Returns an enumeration of the values in this dictionary. The general
-contract for the `elements` method is that an
-`Enumeration` is returned that will generate all the elements
+contract for the {@code elements} method is that an
+{@code Enumeration} is returned that will generate all the elements
 contained in entries in this dictionary.
 
-**Returns:** an enumeration of the values in this dictionary.
-
-**See also:** java.util.Dictionary#keys()
-
-**See also:** java.util.Enumeration
+@return  an enumeration of the values in this dictionary.
+@see     java.util.Dictionary#keys()
+@see     java.util.Enumeration
 
 ## Dictionary.get(Object)
 
@@ -114,21 +95,16 @@ public abstract V get(Object key)
 ```
 
 Returns the value to which the key is mapped in this dictionary.
-The general contract for the `isEmpty` method is that if this
+The general contract for the {@code isEmpty} method is that if this
 dictionary contains an entry for the specified key, the associated
-value is returned; otherwise, `null` is returned.
+value is returned; otherwise, {@code null} is returned.
 
-Parameters:
-
-- `key`: a key in this dictionary. `null` if the key is not mapped to any value in this dictionary.
-
-**Returns:** the value to which the key is mapped in this dictionary;
-
-**See also:** java.util.Dictionary#put(java.lang.Object, java.lang.Object)
-
-Throws:
-
-- `NullPointerException`: if the `key` is `null`.
+@return  the value to which the key is mapped in this dictionary;
+@param   key   a key in this dictionary.
+         {@code null} if the key is not mapped to any value in
+         this dictionary.
+@throws    NullPointerException if the {@code key} is {@code null}.
+@see     java.util.Dictionary#put(java.lang.Object, java.lang.Object)
 
 ## Dictionary.put(K, V)
 
@@ -136,40 +112,31 @@ Throws:
 public abstract V put(K key, V value)
 ```
 
-Maps the specified `key` to the specified
-`value` in this dictionary. Neither the key nor the
-value can be `null`.
-
+Maps the specified {@code key} to the specified
+{@code value} in this dictionary. Neither the key nor the
+value can be {@code null}.
+<p>
 If this dictionary already contains an entry for the specified
-`key`, the value already in this dictionary for that
-`key` is returned, after modifying the entry to contain the
- new element.
-
-If this dictionary does not already have an entry
- for the specified `key`, an entry is created for the
- specified `key` and `value`, and `null` is
+{@code key}, the value already in this dictionary for that
+{@code key} is returned, after modifying the entry to contain the
+ new element. <p>If this dictionary does not already have an entry
+ for the specified {@code key}, an entry is created for the
+ specified {@code key} and {@code value}, and {@code null} is
  returned.
+<p>
+The {@code value} can be retrieved by calling the
+{@code get} method with a {@code key} that is equal to
+the original {@code key}.
 
-The `value` can be retrieved by calling the
-`get` method with a `key` that is equal to
-the original `key`.
-
-Parameters:
-
-- `key`: the hashtable key.
-- `value`: the value.
-
-**Returns:** the previous value to which the `key` was mapped
-            in this dictionary, or `null` if the key did not
+@param      key     the hashtable key.
+@param      value   the value.
+@return     the previous value to which the {@code key} was mapped
+            in this dictionary, or {@code null} if the key did not
             have a previous mapping.
-
-**See also:** java.lang.Object#equals(java.lang.Object)
-
-**See also:** java.util.Dictionary#get(java.lang.Object)
-
-Throws:
-
-- `NullPointerException`: if the `key` or `value` is `null`.
+@throws     NullPointerException  if the {@code key} or
+              {@code value} is {@code null}.
+@see        java.lang.Object#equals(java.lang.Object)
+@see        java.util.Dictionary#get(java.lang.Object)
 
 ## Dictionary.remove(Object)
 
@@ -177,18 +144,12 @@ Throws:
 public abstract V remove(Object key)
 ```
 
-Removes the `key` (and its corresponding
-`value`) from this dictionary. This method does nothing
-if the `key` is not in this dictionary.
+Removes the {@code key} (and its corresponding
+{@code value}) from this dictionary. This method does nothing
+if the {@code key} is not in this dictionary.
 
-Parameters:
-
-- `key`: the key that needs to be removed.
-
-**Returns:** the value to which the `key` had been mapped in this
-         dictionary, or `null` if the key did not have a
+@param   key   the key that needs to be removed.
+@return  the value to which the {@code key} had been mapped in this
+         dictionary, or {@code null} if the key did not have a
          mapping.
-
-Throws:
-
-- `NullPointerException`: if `key` is `null`.
+@throws    NullPointerException if {@code key} is {@code null}.

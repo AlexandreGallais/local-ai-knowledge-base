@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugManagedCallback::LoadClass Method"
 title: "ICorDebugManagedCallback::LoadClass Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmanagedcallback-loadclass-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugManagedCallback.LoadClass"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugManagedCallback::LoadClass"
+helpviewer_keywords:
+  - "ICorDebugManagedCallback::LoadClass method [.NET debugging]"
+  - "LoadClass method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugManagedCallback::LoadClass Method
 
 Notifies the debugger that a class has been loaded.
@@ -36,7 +45,7 @@ The `LoadClass` callback provides an appropriate time to bind breakpoints to new
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -46,5 +55,5 @@ The `LoadClass` callback provides an appropriate time to bind breakpoints to new
 
 ## See also
 
-- UnloadClass Method
-- ICorDebugManagedCallback Interface
+- [UnloadClass Method](icordebugmanagedcallback-unloadclass-method.md)
+- [ICorDebugManagedCallback Interface](icordebugmanagedcallback-interface.md)

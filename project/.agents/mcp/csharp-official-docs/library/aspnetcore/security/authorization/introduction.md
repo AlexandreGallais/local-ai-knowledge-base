@@ -1,37 +1,34 @@
 ---
-title: "Introduction to authorization in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/authorization/introduction.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Introduction to authorization in ASP.NET Core
+ai-usage: ai-assisted
+description: Learn the basics of authorization and how authorization works in ASP.NET Core apps.
+ms.date: 09/18/2026
 ---
-
 # Introduction to authorization in ASP.NET Core
 
 Authorization refers to the process that determines what a user is able to do. For example, an administrative user is allowed to create a document library, add documents, edit documents, and delete them. A nonadministrative user working with the library is only authorized to read the documents.
 
 Authorization is separate and distinct from authentication. However, authorization relies on an authentication mechanism. Authentication is the process of verifying a user's identity, which might result in the creation of one or more identity objects for the user.
 
-Configuring authentication doesn't automatically restrict access to endpoints. To require authenticated users by default in a server-side app, configure a fallback authorization policy. For information about how authorization metadata selects named, default, and fallback policies, see Policy-based authorization in ASP.NET Core.
+Configuring authentication doesn't automatically restrict access to endpoints. To [require authenticated users by default](policies.md#require-global-user-authentication) in a server-side app, configure a fallback authorization policy. For information about how authorization metadata selects named, default, and fallback policies, see [Policy-based authorization in ASP.NET Core](policies.md#default-and-fallback-policies).
 
-For more information about authentication in ASP.NET Core, see Overview of ASP.NET Core Authentication.
+For more information about authentication in ASP.NET Core, see [Overview of ASP.NET Core Authentication](../authentication/index.md).
 
 ## Authorization types
 
-ASP.NET Core authorization provides a simple declarative role and a rich policy-based model. Authorization is expressed in requirements, and handlers evaluate a user's claims against requirements. Imperative checks can be based on simple policies or policies that evaluate both the user identity and properties of the resource that the user is attempting to access.
+ASP.NET Core authorization provides a simple declarative [role](roles.md) and a rich [policy-based](policies.md) model. Authorization is expressed in requirements, and handlers evaluate a user's claims against requirements. Imperative checks can be based on simple policies or policies that evaluate both the user identity and properties of the resource that the user is attempting to access.
 
 ## Namespaces
 
-Authorization components, including the `[Authorize]` attribute and `[AllowAnonymous]` attribute, are defined in the `Microsoft.AspNetCore.Authorization` namespace.
+Authorization components, including the [`[Authorize]` attribute](xref:Microsoft.AspNetCore.Authorization.AuthorizeAttribute) and [`[AllowAnonymous]` attribute](xref:Microsoft.AspNetCore.Authorization.AllowAnonymousAttribute), are defined in the <xref:Microsoft.AspNetCore.Authorization?displayProperty=fullName> namespace.
 
-For more information, see Simple authorization in ASP.NET Core.
+For more information, see [Simple authorization in ASP.NET Core](simple.md).
 
 ## Related content
 
-* Authentication and authorization in Minimal APIs
-* ASP.NET Core Blazor authentication and authorization
-* Razor Pages authorization conventions in ASP.NET Core
+* [Authentication and authorization in Minimal APIs](../../fundamentals/minimal-apis/security.md)
+* [ASP.NET Core Blazor authentication and authorization](../../blazor/security/index.md)
+* [Razor Pages authorization conventions in ASP.NET Core](../../razor-pages/security/authorization/conventions.md)
 * Blazor app authorization patterns
-  * Server-side Blazor (Blazor Web Apps, Blazor Server apps)
-  * Blazor WebAssembly
+  * [Server-side Blazor (Blazor Web Apps, Blazor Server apps)](../../blazor/security/additional-scenarios.md#server-side-blazor-app-authorization-patterns)
+  * [Blazor WebAssembly](../../blazor/security/webassembly/index.md#blazor-webassembly-authorization-patterns)

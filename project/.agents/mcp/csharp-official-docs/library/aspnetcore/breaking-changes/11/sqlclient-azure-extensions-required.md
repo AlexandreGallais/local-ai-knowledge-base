@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: SqlClient Active Directory authentication moved to a separate package"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/11/sqlclient-azure-extensions-required.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+ai-usage: ai-assisted
+description: "Learn about the breaking change in ASP.NET Core 11 where Microsoft.Data.SqlClient 7.x extracts Active Directory authentication providers into the Microsoft.Data.SqlClient.Extensions.Azure package."
+ms.date: 06/04/2026
 ---
-
 # SqlClient Active Directory authentication moved to a separate package
 
-ASP.NET Core 11 transitively brings in `Microsoft.Data.SqlClient` 7.x (up from 5.x in .NET 10). Starting in `Microsoft.Data.SqlClient` 6.0, the Microsoft Entra ID (formerly Azure Active Directory) authentication providers are no longer in the main `Microsoft.Data.SqlClient` package; they ship in a separate `Microsoft.Data.SqlClient.Extensions.Azure` package. Apps that use an Entra ID `Authentication=` value in their SQL connection string must add a reference to this package.
+ASP.NET Core 11 transitively brings in `Microsoft.Data.SqlClient` 7.x (up from 5.x in .NET 10). Starting in `Microsoft.Data.SqlClient` 6.0, the Microsoft Entra ID (formerly Azure Active Directory) authentication providers are no longer in the main `Microsoft.Data.SqlClient` package; they ship in a separate [`Microsoft.Data.SqlClient.Extensions.Azure`](https://www.nuget.org/packages/Microsoft.Data.SqlClient.Extensions.Azure) package. Apps that use an Entra ID `Authentication=` value in their SQL connection string must add a reference to this package.
 
 ## Version introduced
 
@@ -32,11 +29,11 @@ This affects apps that use `Microsoft.Extensions.Caching.SqlServer` (`Distribute
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](/dotnet/core/compatibility/categories#behavioral-change).
 
 ## Reason for change
 
-The change to move Microsoft Entra ID authentication out of `Microsoft.Data.SqlClient` was made in the upstream `Microsoft.Data.SqlClient` 6.0 release. ASP.NET Core 11 picks up that change by upgrading the SqlClient version it depends on transitively. For more information, see dotnet/aspnetcore#66179.
+The change to move Microsoft Entra ID authentication out of `Microsoft.Data.SqlClient` was made in the upstream `Microsoft.Data.SqlClient` 6.0 release. ASP.NET Core 11 picks up that change by upgrading the SqlClient version it depends on transitively. For more information, see [dotnet/aspnetcore#66179](https://github.com/dotnet/aspnetcore/pull/66179).
 
 ## Recommended action
 

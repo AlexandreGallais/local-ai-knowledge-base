@@ -1,30 +1,37 @@
 ---
+description: "C# Compiler Options for errors and warnings. These options suppress or enable warnings, and control warnings as errors."
 title: "Compiler Options - errors and warnings"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/compiler-options/errors-warnings.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 05/30/2025
+f1_keywords: 
+  - "cs.build.options"
+helpviewer_keywords: 
+  - "WarningLevel compiler option [C#]"
+  - "TreatWarningsAsErrors compiler option [C#]"
+  - "WarningsAsErrors compiler option [C#]"
+  - "WarningsNotAsErrors compiler option [C#]"
+  - "NoWarn compiler option [C#]"
+  - "CodeAnalysisRuleSet compiler option [C#]"
+  - "ErrorLog compiler option [C#]"
+  - "ReportAnalyzer compiler option [C#]"
 ---
-
 # C# Compiler Options to report errors and warnings
 
 The following options control how the compiler reports errors and warnings.
 
 | MSBuild syntax          | _csc.exe_ syntax  | Description                                                                                       |
 | ----------------------- | ----------------- | ------------------------------------------------------------------------------------------------- |
-| `WarningLevel`          | `-warn`           | Set warning level. More info.                                                    |
-| `AnalysisLevel`         | /                 | Set optional warning level. More info.                                         |
-| `TreatWarningsAsErrors` | `-warnaserror`    | Treat all warnings as errors. More info.                                |
-| `WarningsAsErrors`      | `-warnaserror+`   | Treat one or more warnings as errors. More info.     |
-| `WarningsNotAsErrors`   | `-warnaserror-`   | Treat one or more warnings not as errors. More info. |
-| `NoWarn`                | `-nowarn`         | Set a list of disabled warnings. More info.                                            |
-| `CodeAnalysisRuleSet`   | `-ruleset`        | Specify a ruleset file that disables specific diagnostics. More info.     |
-| `ErrorLog`              | `-errorlog`       | Specify a file to log all compiler and analyzer diagnostics. More info.              |
-| `ReportAnalyzer`        | `-reportanalyzer` | Report extra analyzer information, such as execution time. More info.     |
+| `WarningLevel`          | `-warn`           | Set warning level. [More info.](#warninglevel)                                                    |
+| `AnalysisLevel`         | /                 | Set optional warning level. [More info.](#analysis-level)                                         |
+| `TreatWarningsAsErrors` | `-warnaserror`    | Treat all warnings as errors. [More info.](#treatwarningsaserrors)                                |
+| `WarningsAsErrors`      | `-warnaserror+`   | Treat one or more warnings as errors. [More info.](#warningsaserrors-and-warningsnotaserrors)     |
+| `WarningsNotAsErrors`   | `-warnaserror-`   | Treat one or more warnings not as errors. [More info.](#warningsaserrors-and-warningsnotaserrors) |
+| `NoWarn`                | `-nowarn`         | Set a list of disabled warnings. [More info.](#nowarn)                                            |
+| `CodeAnalysisRuleSet`   | `-ruleset`        | Specify a ruleset file that disables specific diagnostics. [More info.](#codeanalysisruleset)     |
+| `ErrorLog`              | `-errorlog`       | Specify a file to log all compiler and analyzer diagnostics. [More info.](#errorlog)              |
+| `ReportAnalyzer`        | `-reportanalyzer` | Report extra analyzer information, such as execution time. [More info.](#reportanalyzer)     |
 
-> **Note:**
-> For more information about configuring these options for your project, see the Compiler options. For more information on the available switches, see the MSBuild command line switches article in the Visual Studio documentation.
+> [!NOTE]
+> For more information about configuring these options for your project, see the [Compiler options](index.md#how-to-set-options). For more information on the available switches, see the [MSBuild command line switches](/visualstudio/msbuild/msbuild-command-line-reference#switches) article in the Visual Studio documentation.
 
 ## WarningLevel
 
@@ -44,14 +51,14 @@ The element value is the warning level you want displayed for the compilation: L
 | 3 | Displays level 2 warnings plus certain, less-severe warnings, such as warnings about expressions that always evaluate to `true` or `false`. |
 | 4 (default) | Displays all level 3 warnings plus informational warnings. |
 
-> **Warning:**
-> The compiler command line accepts values greater than 4 to enable warning wave warnings.
+> [!WARNING]
+> The compiler command line accepts values greater than 4 to enable [warning wave warnings](../compiler-messages/warning-waves.md).
 
-To get information about an error or warning, you can look up the error code in the Help Index. For other ways to get information about an error or warning, see C# Compiler Errors. Use **TreatWarningsAsErrors** to treat all warnings as errors. Use **DisabledWarnings** to disable certain warnings.
+To get information about an error or warning, you can look up the error code in the [Help Index](/visualstudio/help-viewer/install-manage-local-content). For other ways to get information about an error or warning, see [C# Compiler Errors](../compiler-messages/index.md). Use [**TreatWarningsAsErrors**](#treatwarningsaserrors) to treat all warnings as errors. Use [**DisabledWarnings**](#nowarn) to disable certain warnings.  
 
 ## Analysis level
 
-The **AnalysisLevel** option specifies higher warning waves and analyzers to enable in .NET 7 and later projects. Warning wave warnings are extra checks that improve your code, or ensure it remains compatible with upcoming releases. Analyzers provide lint-like capability to improve your code.
+The **AnalysisLevel** option specifies higher [warning waves](../compiler-messages/warning-waves.md) and analyzers to enable in .NET 7 and later projects. Warning wave warnings are extra checks that improve your code, or ensure it remains compatible with upcoming releases. Analyzers provide lint-like capability to improve your code.
 
 Beginning with the .NET 7 SDK, **AnalysisLevel** and **WarningLevel** are set based on these rules:
 
@@ -67,16 +74,16 @@ Before the .NET 7 SDK, the **AnalysisLevel** overwrote the **WarningLevel**.
 
 | Analysis level   | Meaning |
 |------------------|---------|
-| 5                | Displays all optional warning wave 5 warnings. |
-| 6                | Displays all optional warning wave 6 warnings. |
-| 7                | Displays all optional warning wave 7 warnings. |
+| 5                | Displays all optional [warning wave 5 warnings](../compiler-messages/warning-waves.md#cs7023---the-second-operand-of-an-is-or-as-operator-may-not-be-static-type). |
+| 6                | Displays all optional [warning wave 6 warnings](../compiler-messages/warning-waves.md#cs8826---partial-method-declarations-have-signature-differences). |
+| 7                | Displays all optional [warning wave 7 warnings](../compiler-messages/warning-waves.md#cs8981---the-type-name-only-contains-lower-cased-ascii-characters-such-names-may-become-reserved-for-the-language). |
 | latest (default) | Displays all informational warnings up to and including the current release. |
 | preview          | Displays all informational warnings up to and including the latest preview release. |
 | none             | Turns off all informational warnings. |
 
-For more information on optional warnings, see Warning waves.
+For more information on optional warnings, see [Warning waves](../compiler-messages/warning-waves.md).
 
-To get information about an error or warning, you can look up the error code in the Help Index. For other ways to get information about an error or warning, see C# Compiler Errors. Use **TreatWarningsAsErrors** to treat all warnings as errors. Use **NoWarn** to disable certain warnings.
+To get information about an error or warning, you can look up the error code in the Help Index. For other ways to get information about an error or warning, see [C# Compiler Errors](../compiler-messages/index.md). Use [**TreatWarningsAsErrors**](#treatwarningsaserrors) to treat all warnings as errors. Use [**NoWarn**](#nowarn) to disable certain warnings.  
 
 ## TreatWarningsAsErrors
 
@@ -86,14 +93,14 @@ The **TreatWarningsAsErrors** option treats all warnings as errors. You can also
 <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 ```
 
-All warning messages are instead reported as errors. The build process halts (no output files are built). By default, **TreatWarningsAsErrors** isn't in effect, which means warnings don't prevent the generation of an output file. Optionally, if you want only a few specific warnings to be treated as errors, you can specify a comma-separated list of warning numbers to treat as errors. The set of all nullability warnings can be specified with the **Nullable** shorthand. Use **WarningLevel** to specify the level of warnings that you want the compiler to display. Use **NoWarn** to disable certain warnings.
+All warning messages are instead reported as errors. The build process halts (no output files are built). By default, **TreatWarningsAsErrors** isn't in effect, which means warnings don't prevent the generation of an output file. Optionally, if you want only a few specific warnings to be treated as errors, you can specify a comma-separated list of warning numbers to treat as errors. The set of all nullability warnings can be specified with the [**Nullable**](language.md#nullable) shorthand. Use [**WarningLevel**](#warninglevel) to specify the level of warnings that you want the compiler to display. Use [**NoWarn**](#nowarn) to disable certain warnings.
 
-> **Important:**
+> [!IMPORTANT]
 > There are two subtle differences between using the `<TreatWarningsAsErrors>` element in your *csproj* file, and using the `warnaserror` MSBuild command line switch. *TreatWarningsAsErrors* only impacts the C# compiler, not any other MSBuild tasks in your *csproj* file. The `warnaserror` command line switch impacts all tasks. Secondly, the compiler doesn't produce any output on any warnings when *TreatWarningsAsErrors* is used. The compiler produces output when the `warnaserror` command line switch is used.
 
 ## WarningsAsErrors and WarningsNotAsErrors
 
-The **WarningsAsErrors** and **WarningsNotAsErrors** options override the **TreatWarningsAsErrors** option for a list of warnings. This option can be used with all *CS* warnings. The "CS" prefix is optional. You can use either the number, or "CS" followed by the error or warning number. For other elements that affect warnings, see the Common MSBuild properties. In addition to the list of warning IDs, you can also specify the string `nullable`, which treats all warnings related to nullability as errors.
+The **WarningsAsErrors** and **WarningsNotAsErrors** options override the **TreatWarningsAsErrors** option for a list of warnings. This option can be used with all *CS* warnings. The "CS" prefix is optional. You can use either the number, or "CS" followed by the error or warning number. For other elements that affect warnings, see the [Common MSBuild properties](/visualstudio/msbuild/common-msbuild-project-properties). In addition to the list of warning IDs, you can also specify the string `nullable`, which treats all warnings related to nullability as errors.
 
 Enable warnings 0219, 0168, and all nullable warnings as errors:
 
@@ -121,7 +128,7 @@ You need to specify only the numeric part of the warning identifier. For example
 
 The following warnings can't be suppressed by the **NoWarn** option:
 
-- Compiler Warning (level 1) CS2002
+- Compiler Warning (level 1) CS2002  
 - Compiler Warning (level 1) CS2023
 - Compiler Warning (level 1) CS2029
 
@@ -129,8 +136,8 @@ Warnings are intended to be an indication of a potential problem with your code,
 
 You might want to use a more targeted approach to disabling warnings:
 
-- Most compilers provide ways to disable warnings just for certain lines of code, so that you can still review the warnings if they occur elsewhere in the same project. To suppress a warning only in a specific part of the code in C#, use #pragma warning.
-- If your goal is to see more concise and focused output in your build log, you might want to change the build log verbosity. For more information, see How to: View, save, and configure build log files.
+- Most compilers provide ways to disable warnings just for certain lines of code, so that you can still review the warnings if they occur elsewhere in the same project. To suppress a warning only in a specific part of the code in C#, use [#pragma warning](../preprocessor-directives.md#pragma-warning).
+- If your goal is to see more concise and focused output in your build log, you might want to change the build log verbosity. For more information, see [How to: View, save, and configure build log files](/visualstudio/ide/how-to-view-save-and-configure-build-log-files).
 
 To add warning numbers to any previously set value for **NoWarn** without overwriting it, reference `$(NoWarn)` as shown in the following example:
 
@@ -146,7 +153,7 @@ Specify a ruleset file that configures specific diagnostics.
 <CodeAnalysisRuleSet>MyConfiguration.ruleset</CodeAnalysisRuleSet>
 ```
 
-Where `MyConfiguration.ruleset` is the path to the ruleset file. For more information on using rule sets, see the article in the Visual Studio documentation on Rule sets.
+Where `MyConfiguration.ruleset` is the path to the ruleset file. For more information on using rule sets, see the article in the [Visual Studio documentation on Rule sets](/visualstudio/code-quality/using-rule-sets-to-group-code-analysis-rules).
 
 ## ErrorLog
 
@@ -156,11 +163,11 @@ Specify a file to log all compiler and analyzer diagnostics.
 <ErrorLog>compiler-diagnostics.sarif</ErrorLog>
 ```
 
-The **ErrorLog** option causes the compiler to output a Static Analysis Results Interchange Format (SARIF) log. Tools that analyze compiler and analyzer results read SARIF logs.
+The **ErrorLog** option causes the compiler to output a [Static Analysis Results Interchange Format (SARIF) log](https://github.com/microsoft/sarif-tutorials/blob/main/docs/1-Introduction.md#:~:text=What%20is%20SARIF%3F,for%20use%20by%20simpler%20tools). Tools that analyze compiler and analyzer results read SARIF logs.
 
 You can specify the SARIF format using the `version` argument to the `ErrorLog` element:
 
-```xml
+```XML
 <ErrorLog>logVersion21.json,version=2.1</ErrorLog>
 ```
 
@@ -176,5 +183,5 @@ Report extra analyzer information, such as execution time.
 
 The **ReportAnalyzer** option causes the compiler to emit extra MSBuild log information that details the performance characteristics of analyzers in the build. It's typically used by analyzer authors as part of validating the analyzer.
 
-> **Important:**
-> The extra log information generated by this flag is only generated when the `-verbosity:detailed` command line option is used. For more information, see the switches article in the MSBuild documentation.
+> [!IMPORTANT]
+> The extra log information generated by this flag is only generated when the `-verbosity:detailed` command line option is used. For more information, see the [switches](/visualstudio/msbuild/msbuild-command-line-reference#switches) article in the MSBuild documentation.

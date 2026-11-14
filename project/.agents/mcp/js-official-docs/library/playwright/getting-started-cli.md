@@ -1,10 +1,6 @@
 ---
+id: getting-started-cli
 title: "Coding agents"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/getting-started-cli.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
 
 ## Introduction
@@ -14,12 +10,12 @@ Playwright comes with `playwright-cli`, a command-line interface for browser aut
 ### `playwright-cli` vs Playwright MCP
 
 - **`playwright-cli`** is best for **coding agents** (Claude Code, GitHub Copilot, etc.) that favor token-efficient, skill-based workflows. CLI commands avoid loading large tool schemas and verbose accessibility trees into the model context.
-- **MCP** is best for specialized agentic loops that benefit from persistent state and iterative reasoning over page structure, such as exploratory automation or long-running autonomous workflows. See the MCP getting started guide.
+- **MCP** is best for specialized agentic loops that benefit from persistent state and iterative reasoning over page structure, such as exploratory automation or long-running autonomous workflows. See the [MCP getting started guide](./getting-started-mcp.md).
 
 ## Prerequisites
 
 Before you begin, make sure you have the following installed:
-- Node.js 20 or newer
+- [Node.js](https://nodejs.org/) 20 or newer
 - A coding agent: Claude Code, GitHub Copilot, or similar
 
 ## Installation
@@ -219,7 +215,7 @@ playwright-cli video-stop --filename=f  # stop video recording
 
 ### WebMCP
 
-Pages can register their own tools for agents through the experimental WebMCP API. The tools a page registers are listed at the top of the page snapshot, and they can be called directly:
+Pages can register their own tools for agents through the experimental [WebMCP](https://webmachinelearning.github.io/webmcp/) API. The tools a page registers are listed at the top of the page snapshot, and they can be called directly:
 
 ```bash
 playwright-cli webmcp-list                       # list tools registered by the page
@@ -309,7 +305,7 @@ Connect to your existing browser tabs instead of launching a new browser:
 playwright-cli attach --extension
 ```
 
-This requires the Playwright Extension to be installed.
+This requires the [Playwright Extension](https://github.com/microsoft/playwright/blob/main/packages/extension/README.md) to be installed.
 
 ## Quick Reference
 
@@ -329,6 +325,6 @@ This requires the Playwright Extension to be installed.
 
 ## What's Next
 
-- Write tests using web-first assertions, page fixtures, and locators
-- Run your tests on CI
-- Learn more about the Trace Viewer
+- [Write tests using web-first assertions, page fixtures, and locators](./writing-tests.md)
+- [Run your tests on CI](./ci-intro.md)
+- [Learn more about the Trace Viewer](./trace-viewer.md)

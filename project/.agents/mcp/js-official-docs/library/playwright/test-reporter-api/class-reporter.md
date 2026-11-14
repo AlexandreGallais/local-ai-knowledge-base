@@ -1,12 +1,3 @@
----
-title: "class: Reporter"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/test-reporter-api/class-reporter.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: Reporter
 * since: v1.10
 * langs: js
@@ -15,7 +6,7 @@ Test runner notifies the reporter about various events during test execution. Al
 
 You can create a custom reporter by implementing a class with some of the reporter methods. Make sure to export this class as default.
 
-```js
+```js tab=js-js title="my-awesome-reporter.js"
 // @ts-check
 
 /** @implements {import('@playwright/test/reporter').Reporter} */
@@ -44,7 +35,7 @@ class MyReporter {
 module.exports = MyReporter;
 ```
 
-```js
+```js tab=js-ts title="my-awesome-reporter.ts"
 import type {
   Reporter, FullConfig, Suite, TestCase, TestResult, FullResult
 } from '@playwright/test/reporter';
@@ -73,9 +64,9 @@ class MyReporter implements Reporter {
 export default MyReporter;
 ```
 
-Now use this reporter with [`property: TestConfig.reporter`]. Learn more about using reporters.
+Now use this reporter with [`property: TestConfig.reporter`]. Learn more about [using reporters](../test-reporters.md).
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -84,7 +75,7 @@ export default defineConfig({
 ```
 
 Here is a typical order of reporter calls:
-* [`method: Reporter.onBegin`] is called once with a root suite that contains all other suites and tests. Learn more about suites hierarchy.
+* [`method: Reporter.onBegin`] is called once with a root suite that contains all other suites and tests. Learn more about [suites hierarchy][Suite].
 * [`method: Reporter.onTestBegin`] is called for each test run. It is given a [TestCase] that is executed, and a [TestResult] that is almost empty. Test result will be populated while the test runs (for example, with steps and stdio) and will get final `status` once the test finishes.
 * [`method: Reporter.onStepBegin`] and [`method: Reporter.onStepEnd`] are called for each executed step inside the test. When steps are executed, test run has not finished yet.
 * [`method: Reporter.onTestEnd`] is called when test run has finished. By this time, [TestResult] is complete and you can use [`property: TestResult.status`], [`property: TestResult.error`] and more.
@@ -103,7 +94,7 @@ errors, you must wrap and handle them yourself.
 
 **Merged report API notes**
 
-When merging multiple `blob` reports via `merge-reports` CLI
+When merging multiple [`blob`](../test-reporters#blob-reporter) reports via [`merge-reports`](../test-sharding#merge-reports-cli) CLI
 command, the same [Reporter] API is called to produce final reports and all existing reporters
 should work without any changes. There some subtle differences though which might affect some custom
 reporters.
@@ -195,6 +186,7 @@ Test that was running. Note that output may happen when no test is running, in w
 
 Result of the test run, this object gets populated while the test runs.
 
+
 ## optional method: Reporter.onStdOut
 * since: v1.10
 
@@ -281,6 +273,7 @@ Test that has been started.
 
 Result of the test run, this object gets populated while the test runs.
 
+
 ## optional method: Reporter.onTestEnd
 * since: v1.10
 
@@ -297,6 +290,7 @@ Test that has been finished.
 - `result` <[TestResult]>
 
 Result of the test run.
+
 
 ## optional method: Reporter.printsToStdio
 * since: v1.10
@@ -315,6 +309,7 @@ Called after the configuration has been resolved and before [`method: Reporter.o
   - `config` <[FullConfig]> Resolved configuration.
   - `suite` <[Suite]> The root suite that contains the projects, files and test cases that will run.
   - `testRun` <[TestRun]> Control which tests will run and their expected status.
+
 
 The suite reflects `--project`, `--grep`/`--grep-invert` and `.only` filtering, so it only contains tests that match the current invocation. Setup and dependency projects are readonly and cannot be changed through [TestRun].
 

@@ -1,13 +1,10 @@
 ---
-title: "no-dupe-keys"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-dupe-keys.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-dupe-keys
+rule_type: problem
+handled_by_typescript: true
 ---
 
-# no-dupe-keys
+
 
 Multiple properties with the same key in object literals can cause unexpected behavior in your application.
 
@@ -24,7 +21,7 @@ This rule disallows duplicate keys in object literals.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-dupe-keys: "error"*/
@@ -45,9 +42,11 @@ const baz = {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-dupe-keys: "error"*/
@@ -62,6 +61,8 @@ const obj = {
     ["__proto__"]: qux // defines a property named "__proto__"
 };
 ```
+
+:::
 
 ## Options
 

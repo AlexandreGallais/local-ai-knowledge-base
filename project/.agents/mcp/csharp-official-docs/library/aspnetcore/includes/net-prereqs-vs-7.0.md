@@ -1,12 +1,4 @@
----
-title: "net-prereqs-vs-7.0"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/net-prereqs-vs-7.0.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
 
-# net-prereqs-vs-7.0
+* [Visual Studio 2022](https://visualstudio.microsoft.com/vs/#download) with the **ASP.NET and web development** workload.
 
-* Visual Studio 2022 with the **ASP.NET and web development** workload.
+  ![VS22 installer workloads](~/tutorials/min-web-api/static/asp-net-web-dev.png)

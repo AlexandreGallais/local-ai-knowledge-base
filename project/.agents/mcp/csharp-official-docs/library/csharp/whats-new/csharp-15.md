@@ -1,53 +1,51 @@
 ---
-title: "What's new in C# 15"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/whats-new/csharp-15.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: What's new in C# 15
+description: "Discover what's new in C# 15, including union types, closed hierarchies, extension indexers, collection expression arguments, and static interface compatibility."
+ms.date: 11/10/2026
+ms.topic: whats-new
+ms.update-cycle: 365-days
+ai-usage: ai-assisted
 ---
-
 # What's new in C# 15
 
-C# 15 includes the following new features. Try these features by using the .NET 11 SDK or a compatible version of Visual Studio 2026:
+C# 15 includes the following new features. Try these features by using the [.NET 11 SDK](https://dotnet.microsoft.com/download/dotnet/11.0) or a compatible version of [Visual Studio 2026](https://visualstudio.microsoft.com/):
 
-- Collection expression arguments
-- Union types
-- Closed hierarchies
-- Extension indexers
-- Labeled `break` and `continue`
-- Non-virtual static interface members on older runtimes
-- Memory safety (preview feature)
+- [Collection expression arguments](#collection-expression-arguments)
+- [Union types](#union-types)
+- [Closed hierarchies](#closed-hierarchies)
+- [Extension indexers](#extension-indexers)
+- [Labeled `break` and `continue`](#labeled-break-and-continue)
+- [Non-virtual static interface members on older runtimes](#non-virtual-static-interface-members-on-older-runtimes)
+- [Memory safety (preview feature)](#memory-safety)
 
-C# 15 is the default language version for projects that target `net11.0` in the .NET 11 SDK. Except for memory safety, these features don't require `<LangVersion>preview</LangVersion>`. For more information, see C# language versioning.
+C# 15 is the default language version for projects that target `net11.0` in the .NET 11 SDK. Except for memory safety, these features don't require `<LangVersion>preview</LangVersion>`. For more information, see [C# language versioning](../language-reference/configure-language-version.md).
 
-You can also try the memory safety preview feature. Enable the preview language version for the syntax and pointer relaxations, and the `updated-memory-safety-rules` feature flag for the updated safety rules.
+You can also try the [memory safety preview feature](#memory-safety). Enable the preview language version for the syntax and pointer relaxations, and the `updated-memory-safety-rules` feature flag for the updated safety rules.
 
-The "What's new in C#" page adds new features when they're available in public preview releases. The working set section of the roslyn feature status page tracks when upcoming features are merged into the main branch.
+The "What's new in C#" page adds new features when they're available in public preview releases. The [working set](https://github.com/dotnet/roslyn/blob/main/docs/Language%20Feature%20Status.md#working-set) section of the [roslyn feature status page](https://github.com/dotnet/roslyn/blob/main/docs/Language%20Feature%20Status.md) tracks when upcoming features are merged into the main branch.
 
-You can find any breaking changes introduced in C# 15 in our article on breaking changes.
+You can find any breaking changes introduced in C# 15 in our article on [breaking changes](~/_roslyn/docs/compilers/CSharp/Compiler%20Breaking%20Changes%20-%20DotNet%2011.md).
 
-> **Note:**
-> We're interested in your feedback on these features. If you find issues with any of these new features, create a new issue in the dotnet/roslyn repository.
+[!INCLUDE [released-version-feedback](./includes/released-feedback.md)]
 
 ## Collection expression arguments
 
-Use a `with(...)` element as the first element in a collection expression to pass <example-value> to the underlying collection's constructor or factory method. This feature enables you to specify capacity, comparers, or other constructor parameters directly within the collection expression syntax.
+Use a `with(...)` element as the first element in a collection expression to pass arguments to the underlying collection's constructor or factory method. This feature enables you to specify capacity, comparers, or other constructor parameters directly within the collection expression syntax.
 
 The following example shows how to pass a capacity argument to a `List<T>` constructor and a comparer to a `HashSet<T>`:
 
 ```csharp
 string[] values = ["one", "two", "three"];
 
-// Pass <example-value> argument to List<T> constructor
+// Pass capacity argument to List<T> constructor
 List<string> names = [with(capacity: values.Length * 2), .. values];
 
-// Pass <example-value> argument to HashSet<T> constructor
+// Pass comparer argument to HashSet<T> constructor
 HashSet<string> set = [with(StringComparer.OrdinalIgnoreCase), "Hello", "HELLO", "hello"];
 // set contains only one element because all strings are equal with OrdinalIgnoreCase
 ```
 
-To learn more about collection expression arguments, see the language reference article on collection expressions or the feature specification. For information on using collection expression arguments in collection initializers, see Object and Collection Initializers.
+To learn more about collection expression arguments, see the [language reference article on collection expressions](../language-reference/operators/collection-expressions.md#collection-expression-arguments) or the [feature specification](~/_csharplang/proposals/csharp-15.0/collection-expression-arguments.md). For information on using collection expression arguments in collection initializers, see [Object and Collection Initializers](../programming-guide/classes-and-structs/object-and-collection-initializers.md#collection-expression-arguments).
 
 ## Union types
 
@@ -74,7 +72,7 @@ string name = pet switch
 };
 ```
 
-For more information, see Union types in the language reference or the feature specification.
+For more information, see [Union types](../language-reference/builtin-types/union.md) in the language reference or the [feature specification](~/_csharplang/proposals/csharp-15.0/unions.md).
 
 ## Closed hierarchies
 
@@ -99,7 +97,7 @@ string Describe(GateState state) => state switch
 
 The `closed` modifier is a contextual keyword. A `closed` class is implicitly `abstract` and can't be combined with `sealed`, `static`, or an explicit `abstract` modifier. Derivation isn't transitive: a non-closed descendant of a closed class can still be derived from in other assemblies. To extend exhaustiveness checking down the hierarchy, mark intermediate descendants `closed` as well.
 
-For more information, see the closed modifier and Closed hierarchy patterns in the language reference, or the feature specification.
+For more information, see the [closed modifier](../language-reference/keywords/closed.md) and [Closed hierarchy patterns](../language-reference/operators/patterns.md#closed-hierarchy-patterns) in the language reference, or the [feature specification](~/_csharplang/proposals/csharp-15.0/closed-hierarchies.md).
 
 ## Extension indexers
 
@@ -124,7 +122,7 @@ IEnumerable<int> numbers = Enumerable.Range(1, 10);
 int third = numbers[2];
 ```
 
-For more information, see Extension declaration in the language reference or the feature specification.
+For more information, see [Extension declaration](../language-reference/keywords/extension.md#extension-indexers) in the language reference or the [feature specification](~/_csharplang/proposals/csharp-15.0/extension-indexers.md).
 
 ## Labeled `break` and `continue`
 
@@ -152,9 +150,9 @@ outer: for (int row = 0; row < grid.Height; row++)
 
 Place the label directly on the loop or `switch` statement it identifies. Without a label, `break` and `continue` keep their original behavior and target the innermost applicable statement.
 
-The IDE0410 style rule flags the Boolean flag and `goto` patterns that a labeled jump statement can replace, and shows before-and-after examples of each.
+The [IDE0410](../../fundamentals/code-analysis/style-rules/ide0410.md) style rule flags the Boolean flag and `goto` patterns that a labeled jump statement can replace, and shows before-and-after examples of each.
 
-For more information, see Jump statements in the language reference or the feature specification.
+For more information, see [Jump statements](../language-reference/statements/jump-statements.md) in the language reference or the [feature specification](~/_csharplang/proposals/csharp-15.0/labeled-break-continue.md).
 
 ## Non-virtual static interface members on older runtimes
 
@@ -169,7 +167,7 @@ public interface IMeasurement
 
 Call this helper directly on the interface, for example, `IMeasurement.ToMeters(250)`. Instance default implementations, `static abstract` and `static virtual` members, and protected interface members still require runtime support.
 
-For more information, see Static interface members and runtime support.
+For more information, see [Static interface members and runtime support](../language-reference/keywords/interface.md#static-interface-members-and-runtime-support).
 
 ## Memory safety
 
@@ -221,10 +219,10 @@ class Header
 
 Like the rest of the memory safety preview, `unsafe` expressions require the `preview` language version and the `AllowUnsafeBlocks` compiler option.
 
-The compiler also recognizes the `safe` contextual keyword on declarations that can carry a safety contract, including `extern` members and fields in explicit or extended layout types. Set `LangVersion` to `preview` to enable the new syntax and pointer relaxations. To also enable the updated rules, including *requires-unsafe* caller obligations, enable the `updated-memory-safety-rules` compiler feature. For project and file-based program syntax, see Enable the updated memory safety rules.
+The compiler also recognizes the `safe` contextual keyword on declarations that can carry a safety contract, including `extern` members and fields in explicit or extended layout types. Set `LangVersion` to `preview` to enable the new syntax and pointer relaxations. To also enable the updated rules, including *requires-unsafe* caller obligations, enable the `updated-memory-safety-rules` compiler feature. For project and file-based program syntax, see [Enable the updated memory safety rules](../language-reference/compiler-options/language.md#enable-the-updated-memory-safety-rules).
 
-For more information, see Unsafe code, pointer types, and function pointers in the language reference or the feature specification.
+For more information, see [Unsafe code, pointer types, and function pointers](../language-reference/unsafe-code.md#the-updated-memory-safety-model-preview) in the language reference or the [feature specification](~/_csharplang/proposals/unsafe-evolution.md).
 
 ## See also
 
-- What's new in .NET 11
+- [What's new in .NET 11](../../core/whats-new/dotnet-11/overview.md)

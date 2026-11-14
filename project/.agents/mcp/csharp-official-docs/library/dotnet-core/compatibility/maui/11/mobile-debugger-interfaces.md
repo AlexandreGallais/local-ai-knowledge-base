@@ -1,10 +1,9 @@
 ---
 title: "Breaking change - Debugging interfaces on mobile platforms changing to ICorDebug"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/maui/11/mobile-debugger-interfaces.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the .NET 11 breaking change where debugging interfaces on mobile platforms change to ICorDebug."
+ms.date: 10/21/2026
+ai-usage: ai-generated
+ms.custom: https://github.com/dotnet/docs/issues/56485
 ---
 
 # Debugging interfaces on mobile platforms changing to `ICorDebug`
@@ -27,7 +26,7 @@ debugging interface used by other CoreCLR platforms.
 
 ## Type of breaking change
 
-This change is source incompatible, binary incompatible, and a behavioral change.
+This change is [source incompatible](../../categories.md#source-compatibility), [binary incompatible](../../categories.md#binary-compatibility), and a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -37,7 +36,7 @@ Mono and CoreCLR use different debugger interfaces and components.
 
 - Replace Mono soft-debugger integration with `ICorDebug`.
 - Follow the
-  mobile CoreCLR debugger initialization guidance
+  [mobile CoreCLR debugger initialization guidance](../../../unmanaged-api/debugging/initialize-debugger-mobile.md)
   for the target-side component and `ICorDebug` initialization sequence.
 - Microsoft's Visual Studio mobile debugger proxy is not a public debugging
   protocol. The Visual Studio license doesn't allow third parties to redistribute

@@ -1,12 +1,3 @@
----
-title: "Parameter class (java.lang.reflect)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/reflect/Parameter.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Parameter class (java.lang.reflect)
 
 ```java
@@ -15,11 +6,11 @@ public final class Parameter implements AnnotatedElement
 
 Information about method parameters.
 
-A `Parameter` provides information about method parameters,
+A {@code Parameter} provides information about method parameters,
 including its name and modifiers.  It also provides an alternate
 means of obtaining attributes for the parameter.
 
-**Since:** 1.8
+@since 1.8
 
 ## Parameter.equals(Object)
 
@@ -29,11 +20,8 @@ public boolean equals(Object obj)
 
 Compares based on the executable and the index.
 
-Parameters:
-
-- `obj`: The object to compare.
-
-**Returns:** Whether or not this is equal to the argument.
+@param obj The object to compare.
+@return Whether or not this is equal to the argument.
 
 ## Parameter.hashCode()
 
@@ -44,7 +32,7 @@ public int hashCode()
 Returns a hash code based on the executable's hash code and the
 index.
 
-**Returns:** A hash code based on the executable's hash code.
+@return A hash code based on the executable's hash code.
 
 ## Parameter.isNamePresent()
 
@@ -54,10 +42,10 @@ public boolean isNamePresent()
 
 Returns true if the parameter has a name according to the class
 file; returns false otherwise. Whether a parameter has a name
-is determined by the MethodParameters attribute of
+is determined by the {@literal MethodParameters} attribute of
 the method which declares the parameter.
 
-**Returns:** true if and only if the parameter has a name according
+@return true if and only if the parameter has a name according
 to the class file.
 
 ## Parameter.toString()
@@ -68,14 +56,14 @@ public String toString()
 
 Returns a string describing this parameter.  The format is the
 modifiers for the parameter, if any, in canonical order as
-recommended by *The Java Language
-Specification*, followed by the fully-qualified type of
+recommended by <cite>The Java Language
+Specification</cite>, followed by the fully-qualified type of
 the parameter (excluding the last [] if the parameter is
 variable arity), followed by "..." if the parameter is variable
 arity, followed by a space, followed by the name of the
 parameter.
 
-**Returns:** A string representation of the parameter and associated
+@return A string representation of the parameter and associated
 information.
 
 ## Parameter.getDeclaringExecutable()
@@ -84,16 +72,21 @@ information.
 public Executable getDeclaringExecutable()
 ```
 
+{@return the {@code Executable} declaring this parameter}
+
 ## Parameter.getModifiers()
 
 ```java
 public int getModifiers()
 ```
 
-**JLS:** 8.4.1 Formal Parameters
+{@return the Java language {@linkplain Modifier modifiers} for
+the parameter represented by this object}
 
-**See also:** Java
-programming language and JVM modeling in core reflection
+@jls 8.4.1 Formal Parameters
+@see <a
+href="{@docRoot}/java.base/java/lang/reflect/package-summary.html#LanguageJvmModel">Java
+programming language and JVM modeling in core reflection</a>
 
 ## Parameter.accessFlags()
 
@@ -101,11 +94,13 @@ programming language and JVM modeling in core reflection
 public Set<AccessFlag> accessFlags()
 ```
 
-**See also:** #getModifiers()
+{@return an unmodifiable set of the {@linkplain AccessFlag
+access flags} for the parameter represented by this object,
+possibly empty}
 
-**jvms:** 4.7.24 The MethodParameters Attribute
-
-**Since:** 20
+@see #getModifiers()
+@jvms 4.7.24 The MethodParameters Attribute
+@since 20
 
 ## Parameter.getName()
 
@@ -114,13 +109,13 @@ public String getName()
 ```
 
 Returns the name of the parameter.  If the parameter's name is
-present, then this method returns
+{@linkplain #isNamePresent() present}, then this method returns
 the name provided by the class file. Otherwise, this method
 synthesizes a name of the form argN, where N is the index of
 the parameter in the descriptor of the method which declares
 the parameter.
 
-**Returns:** The name of the parameter, either provided by the class
+@return The name of the parameter, either provided by the class
         file or synthesized if the class file does not provide
         a name.
 
@@ -130,11 +125,11 @@ the parameter.
 public Type getParameterizedType()
 ```
 
-Returns a `Type` object that identifies the parameterized
-type for the parameter represented by this `Parameter`
+Returns a {@code Type} object that identifies the parameterized
+type for the parameter represented by this {@code Parameter}
 object.
 
-**Returns:** a `Type` object identifying the parameterized
+@return a {@code Type} object identifying the parameterized
 type of the parameter represented by this object
 
 ## Parameter.getType()
@@ -143,11 +138,11 @@ type of the parameter represented by this object
 public Class<?> getType()
 ```
 
-Returns a `Class` object that identifies the
+Returns a {@code Class} object that identifies the
 declared type for the parameter represented by this
-`Parameter` object.
+{@code Parameter} object.
 
-**Returns:** a `Class` object identifying the declared
+@return a {@code Class} object identifying the declared
 type of the parameter represented by this object
 
 ## Parameter.getAnnotatedType()
@@ -159,7 +154,7 @@ public AnnotatedType getAnnotatedType()
 Returns an AnnotatedType object that represents the use of a type to
 specify the type of the formal parameter represented by this Parameter.
 
-**Returns:** an `AnnotatedType` object representing the use of a type
+@return an {@code AnnotatedType} object representing the use of a type
         to specify the type of the formal parameter represented by this
         Parameter
 
@@ -169,12 +164,12 @@ specify the type of the formal parameter represented by this Parameter.
 public boolean isImplicit()
 ```
 
-Returns `true` if this parameter is implicitly declared
-in source code; returns `false` otherwise.
+Returns {@code true} if this parameter is implicitly declared
+in source code; returns {@code false} otherwise.
 
-**Returns:** true if and only if this parameter is implicitly
-declared as defined by *The Java Language
-Specification*.
+@return true if and only if this parameter is implicitly
+declared as defined by <cite>The Java Language
+Specification</cite>.
 
 ## Parameter.isSynthetic()
 
@@ -182,18 +177,17 @@ Specification*.
 public boolean isSynthetic()
 ```
 
-Returns `true` if this parameter is neither implicitly
-nor explicitly declared in source code; returns `false`
+Returns {@code true} if this parameter is neither implicitly
+nor explicitly declared in source code; returns {@code false}
 otherwise.
 
-**Returns:** true if and only if this parameter is a synthetic
+@return true if and only if this parameter is a synthetic
 construct as defined by
-*The Java Language Specification*.
-
-**JLS:** 13.1 The Form of a Binary
-
-**See also:** Java
-programming language and JVM modeling in core reflection
+<cite>The Java Language Specification</cite>.
+@jls 13.1 The Form of a Binary
+@see <a
+href="{@docRoot}/java.base/java/lang/reflect/package-summary.html#LanguageJvmModel">Java
+programming language and JVM modeling in core reflection</a>
 
 ## Parameter.isVarArgs()
 
@@ -201,10 +195,10 @@ programming language and JVM modeling in core reflection
 public boolean isVarArgs()
 ```
 
-Returns `true` if this parameter represents a variable
-argument list; returns `false` otherwise.
+Returns {@code true} if this parameter represents a variable
+argument list; returns {@code false} otherwise.
 
-**Returns:** `true` if an only if this parameter represents a
+@return {@code true} if an only if this parameter represents a
 variable argument list.
 
 ## Parameter.getAnnotation(Class<T>)
@@ -213,14 +207,10 @@ variable argument list.
 public <T extends Annotation> T getAnnotation(Class<T> annotationClass)
 ```
 
-(inherited documentation)
-
-Note that any annotation returned by this method is a
+{@inheritDoc}
+<p>Note that any annotation returned by this method is a
 declaration annotation.
-
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## Parameter.getAnnotationsByType(Class<T>)
 
@@ -228,14 +218,11 @@ Throws:
 public <T extends Annotation> T[] getAnnotationsByType(Class<T> annotationClass)
 ```
 
-(inherited documentation)
-
-Note that any annotations returned by this method are
+{@inheritDoc}
+<p>Note that any annotations returned by this method are
 declaration annotations.
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## Parameter.getDeclaredAnnotations()
 
@@ -243,9 +230,8 @@ Throws:
 public Annotation[] getDeclaredAnnotations()
 ```
 
-(inherited documentation)
-
-Note that any annotations returned by this method are
+{@inheritDoc}
+<p>Note that any annotations returned by this method are
 declaration annotations.
 
 ## Parameter.getDeclaredAnnotation(Class<T>)
@@ -254,14 +240,11 @@ declaration annotations.
 public <T extends Annotation> T getDeclaredAnnotation(Class<T> annotationClass)
 ```
 
-(inherited documentation)
-
-Note that any annotation returned by this method is a
+{@inheritDoc}
+<p>Note that any annotation returned by this method is a
 declaration annotation.
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## Parameter.getDeclaredAnnotationsByType(Class<T>)
 
@@ -269,14 +252,11 @@ Throws:
 public <T extends Annotation> T[] getDeclaredAnnotationsByType(Class<T> annotationClass)
 ```
 
-(inherited documentation)
-
-Note that any annotations returned by this method are
+{@inheritDoc}
+<p>Note that any annotations returned by this method are
 declaration annotations.
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## Parameter.getAnnotations()
 
@@ -284,7 +264,6 @@ Throws:
 public Annotation[] getAnnotations()
 ```
 
-(inherited documentation)
-
-Note that any annotations returned by this method are
+{@inheritDoc}
+<p>Note that any annotations returned by this method are
 declaration annotations.

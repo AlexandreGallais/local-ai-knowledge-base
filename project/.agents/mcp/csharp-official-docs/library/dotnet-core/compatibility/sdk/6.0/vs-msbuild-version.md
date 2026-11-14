@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Version requirements for .NET 6 SDK"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/6.0/vs-msbuild-version.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in the .NET 6 SDK where version 17.0 or newer of Visual Studio and MSBuild is required.
+ms.date: 03/25/2022
 ---
-
 # Version requirements for .NET 6 SDK
 
 Starting with the .NET SDK 6.0.300, the .NET SDK no longer loads in version 16.11 or earlier of Visual Studio or MSBuild.

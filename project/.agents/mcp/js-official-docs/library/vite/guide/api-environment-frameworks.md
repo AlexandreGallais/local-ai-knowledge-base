@@ -1,25 +1,17 @@
----
-title: "Environment API for Frameworks (part 1 of 2)"
-tool: "vite"
-version: "8.3"
-source: "https://github.com/vitejs/vite/blob/b39e6e63dcbfc3cf4be871acf3554efbd6d0e268/docs/guide/api-environment-frameworks.md"
-commit: "b39e6e63dcbfc3cf4be871acf3554efbd6d0e268"
-license: "MIT"
----
-
 # Environment API for Frameworks
 
-**Release Candidate**
-The Environment API is generally in the release candidate phase. We'll maintain stability in the APIs between major releases to allow the ecosystem to experiment and build upon them. However, note that some specific APIs are still considered experimental.
+:::info Release Candidate
+The Environment API is generally in the release candidate phase. We'll maintain stability in the APIs between major releases to allow the ecosystem to experiment and build upon them. However, note that [some specific APIs](/changes/#considering) are still considered experimental.
 
 We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment with the new features and validate them.
 
 Resources:
 
-- Feedback discussion where we are gathering feedback about the new APIs.
-- Environment API PR where the new APIs were implemented and reviewed.
+- [Feedback discussion](https://github.com/vitejs/vite/discussions/16358) where we are gathering feedback about the new APIs.
+- [Environment API PR](https://github.com/vitejs/vite/pull/16471) where the new APIs were implemented and reviewed.
 
 Please share your feedback with us.
+:::
 
 ## DevEnvironment Communication Levels
 
@@ -31,8 +23,9 @@ Since environments may run in different runtimes, communication against the envi
 
 Its `runner` is a `ModuleRunner`. You import modules through it with `runner.import(url)`, which fetches, transforms, and evaluates a module from the Vite module graph (the `url` accepts a file path, server path, or id relative to the root) and returns the instantiated module with full HMR support. It is the modern replacement for `server.ssrLoadModule`, so frameworks can migrate to it to enable HMR for their SSR dev story.
 
-**Why it can communicate arbitrary values**
-A `RunnableDevEnvironment` evaluates modules in the same runtime as the Vite server, so values cross the boundary in-process instead of being serialized. This is what distinguishes it from `FetchableDevEnvironment`, which can only communicate through serialized `Request`/`Response` objects over the Fetch API. As a result, using a `RunnableDevEnvironment` requires the runner's runtime to be the same as the one the Vite server is running in.
+:::info Why it can communicate arbitrary values
+A `RunnableDevEnvironment` evaluates modules in the same runtime as the Vite server, so values cross the boundary in-process instead of being serialized. This is what distinguishes it from [`FetchableDevEnvironment`](#fetchabledevenvironment), which can only communicate through serialized `Request`/`Response` objects over the Fetch API. As a result, using a `RunnableDevEnvironment` requires the runner's runtime to be the same as the one the Vite server is running in.
+:::
 
 ```ts
 export class RunnableDevEnvironment extends DevEnvironment {
@@ -56,10 +49,11 @@ if (isRunnableDevEnvironment(server.environments.ssr)) {
 }
 ```
 
-**Warning:**
+:::warning
 The `runner` is evaluated lazily only when it's accessed for the first time. Beware that Vite enables source map support when the `runner` is created by calling `process.setSourceMapsEnabled` or by overriding `Error.prepareStackTrace` if it's not available.
+:::
 
-Given a Vite server configured in middleware mode as described by the SSR setup guide, let's implement the SSR middleware using the environment API. Remember that it doesn't have to be called `ssr`, so we'll name it `server` in this example. Error handling is omitted.
+Given a Vite server configured in middleware mode as described by the [SSR setup guide](/guide/ssr#setting-up-the-dev-server), let's implement the SSR middleware using the environment API. Remember that it doesn't have to be called `ssr`, so we'll name it `server` in this example. Error handling is omitted.
 
 ```js
 import fs from 'node:fs'
@@ -125,11 +119,13 @@ if (import.meta.hot) {
 
 ### `FetchableDevEnvironment`
 
-**Info:**
+:::info
 
-We are looking for feedback on the `FetchableDevEnvironment` proposal.
+We are looking for feedback on [the `FetchableDevEnvironment` proposal](https://github.com/vitejs/vite/discussions/18191).
 
-`FetchableDevEnvironment` is an environment that can communicate with its runtime via the Fetch API interface. Since the `RunnableDevEnvironment` is only possible to implement in a limited set of runtimes, we recommend to use the `FetchableDevEnvironment` instead of the `RunnableDevEnvironment`.
+:::
+
+`FetchableDevEnvironment` is an environment that can communicate with its runtime via the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch) interface. Since the `RunnableDevEnvironment` is only possible to implement in a limited set of runtimes, we recommend to use the `FetchableDevEnvironment` instead of the `RunnableDevEnvironment`.
 
 A common reason to reach for it is a framework that wants to support a runtime that can't run Vite directly (e.g. Cloudflare Workers). A `RunnableDevEnvironment` can't be used there, since it requires the runner to share the Vite server's runtime so values can cross the boundary in-process. Standardizing on the Fetch API lets the framework keep a single request-handling path across all of its target runtimes: its dev middleware forwards each incoming browser request as a `Request` and sends the returned `Response` back to the browser, mirroring how the app handles requests in production.
 
@@ -168,10 +164,11 @@ if (isFetchableDevEnvironment(server.environments.custom)) {
 }
 ```
 
-**Warning:**
+:::warning
 Vite validates the input and output of the `dispatchFetch` method: the request must be an instance of the global `Request` class and the response must be the instance of the global `Response` class. Vite will throw a `TypeError` if this is not the case.
 
 Note that although the `FetchableDevEnvironment` is implemented as a class, it is considered an implementation detail by the Vite team and might change at any moment.
+:::
 
 ### raw `DevEnvironment`
 
@@ -220,7 +217,7 @@ export function createHandler(input) {
 
 For example, to call `transformIndexHtml` on the user module, the following plugin can be used:
 
-```ts
+```ts {13-21}
 function vitePluginVirtualIndexHtml(): Plugin {
   let server: ViteDevServer | undefined
   return {
@@ -320,7 +317,7 @@ When the `builder` option is set (even to an empty object `{}`, which is what `v
 
 A framework or user can control how the environments are built through the `builder.buildApp` option. It receives the `ViteBuilder` instance (named `builder` in the example below) and is responsible for building each environment; for instance, to build some of them in parallel:
 
-```js
+```js [vite.config.js]
 import { defineConfig } from 'vite'
 
 export default defineConfig({
@@ -339,7 +336,7 @@ export default defineConfig({
 
 - **Type:** `(this: MinimalPluginContextWithoutEnvironment, builder: ViteBuilder) => Promise<void>`
 - **Kind:** `async`, `sequential`
-- **Scope:** Global
+- **Scope:** [Global](/guide/api-environment-plugins#per-environment-hooks-and-global-hooks)
 
 Besides the `builder.buildApp` config option, plugins can define a `buildApp` hook to participate in the app build. The config option and the plugin hooks run in a defined order: hooks with order `'pre'` or `null` run first, then the configured `builder.buildApp`, then hooks with order `'post'`. Within a hook, `environment.isBuilt` tells you whether an environment has already been built, which lets a plugin avoid building it twice.
 
@@ -347,7 +344,7 @@ Besides the `builder.buildApp` config option, plugins can define a `buildApp` ho
 
 To trigger an app build from your own code, use `createBuilder` instead of the standalone `build` function. `createBuilder` is the build-time equivalent of `createServer`: it resolves the config and returns a `ViteBuilder`, whose `buildApp` method builds every configured environment. You can also build a single environment with `builder.build(environment)`.
 
-```js
+```js [build.js]
 import { createBuilder } from 'vite'
 
 const builder = await createBuilder()
@@ -355,3 +352,7 @@ await builder.buildApp()
 ```
 
 `createBuilder` supersedes the standalone `build` function for environment-aware builds. `build` still works as the simple entry point for the legacy client-only and ssr-only builds described above, but it cannot build arbitrary environments. Running `builder.buildApp()` is the programmatic equivalent of `vite build --app`.
+
+## Environment Agnostic Code
+
+Most of the time, the current `environment` instance will be available as part of the context of the code being run so the need to access them through `server.environments` should be rare. For example, inside plugin hooks the environment is exposed as part of the `PluginContext`, so it can be accessed using `this.environment`. See [Environment API for Plugins](./api-environment-plugins.md) to learn about how to build environment aware plugins.

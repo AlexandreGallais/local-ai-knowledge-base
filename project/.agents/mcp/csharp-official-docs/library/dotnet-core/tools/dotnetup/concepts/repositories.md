@@ -1,16 +1,14 @@
 ---
-title: "Repository SDK requirements with dotnetup"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/concepts/repositories.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Repository SDK requirements with dotnetup
+description: Learn how dotnetup reads global.json and tracks repository SDK requirements.
+ms.topic: concept-article
+ms.date: 08/07/2026
+ai-usage: ai-assisted
 ---
 
 # Repository SDK requirements with dotnetup
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 `dotnetup` uses `global.json` to associate an SDK requirement with a
 repository or directory tree. It searches from the current directory through
@@ -94,6 +92,6 @@ root. Add `--install-path` to select a custom root.
 
 ## See also
 
-- Manage repository SDK requirements
-- `global.json` overview
-- `dotnetup sdk install`
+- [Manage repository SDK requirements](../usecases/install-with-global-json.md)
+- [`global.json` overview](https://learn.microsoft.com/dotnet/core/tools/global-json)
+- [`dotnetup sdk install`](../reference/dotnetup-sdk-install.md)

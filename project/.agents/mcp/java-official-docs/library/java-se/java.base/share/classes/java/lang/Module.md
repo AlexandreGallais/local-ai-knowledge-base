@@ -1,43 +1,33 @@
----
-title: "Module class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/Module.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Module class (java.lang)
 
 ```java
 public final class Module implements AnnotatedElement
 ```
 
-Represents a run-time module, either named or unnamed.
+Represents a run-time module, either {@link #isNamed() named} or unnamed.
 
- Named modules have a name and are constructed by the
+<p> Named modules have a {@link #getName() name} and are constructed by the
 Java Virtual Machine when a graph of modules is defined to the Java virtual
-machine to create a module layer.
+machine to create a {@linkplain ModuleLayer module layer}. </p>
 
- An unnamed module does not have a name. There is an unnamed module for
-each ClassLoader, obtained by invoking its getUnnamedModule method. All types that are
+<p> An unnamed module does not have a name. There is an unnamed module for
+each {@link ClassLoader ClassLoader}, obtained by invoking its {@link
+ClassLoader#getUnnamedModule() getUnnamedModule} method. All types that are
 not in a named module are members of their defining class loader's unnamed
-module.
+module. </p>
 
- The package names that are parameters or returned by methods defined in
+<p> The package names that are parameters or returned by methods defined in
 this class are the fully-qualified names of the packages as defined in
-section  of *The Java Language Specification*, for
-example, `"java.lang"`.
+section {@jls 6.5.3} of <cite>The Java Language Specification</cite>, for
+example, {@code "java.lang"}. </p>
 
- Unless otherwise specified, passing a `null` argument to a method
-in this class causes a NullPointerException to
-be thrown.
+<p> Unless otherwise specified, passing a {@code null} argument to a method
+in this class causes a {@link NullPointerException NullPointerException} to
+be thrown. </p>
 
-**Since:** 9
-
-**See also:** Class#getModule()
-
-**JLS:** 7.7 Module Declarations
+@since 9
+@see Class#getModule()
+@jls 7.7 Module Declarations
 
 ## Module.isNamed()
 
@@ -45,13 +35,12 @@ be thrown.
 public boolean isNamed()
 ```
 
-Returns `true` if this module is a named module.
+Returns {@code true} if this module is a named module.
 
-**Returns:** `true` if this is a named module
+@return {@code true} if this is a named module
 
-**See also:** ClassLoader#getUnnamedModule()
-
-**JLS:** 7.7.5 Unnamed Modules
+@see ClassLoader#getUnnamedModule()
+@jls 7.7.5 Unnamed Modules
 
 ## Module.getName()
 
@@ -59,10 +48,10 @@ Returns `true` if this module is a named module.
 public String getName()
 ```
 
-Returns the module name or `null` if this module is an unnamed
+Returns the module name or {@code null} if this module is an unnamed
 module.
 
-**Returns:** The module name
+@return The module name
 
 ## Module.getClassLoader()
 
@@ -70,9 +59,9 @@ module.
 public ClassLoader getClassLoader()
 ```
 
-Returns the `ClassLoader` for this module.
+Returns the {@code ClassLoader} for this module.
 
-**Returns:** The class loader for this module
+@return The class loader for this module
 
 ## Module.getDescriptor()
 
@@ -80,10 +69,10 @@ Returns the `ClassLoader` for this module.
 public ModuleDescriptor getDescriptor()
 ```
 
-Returns the module descriptor for this module or `null` if this
+Returns the module descriptor for this module or {@code null} if this
 module is an unnamed module.
 
-**Returns:** The module descriptor for this module
+@return The module descriptor for this module
 
 ## Module.getLayer()
 
@@ -91,19 +80,19 @@ module is an unnamed module.
 public ModuleLayer getLayer()
 ```
 
-Returns the module layer that contains this module or `null` if
+Returns the module layer that contains this module or {@code null} if
 this module is not in a module layer.
 
 A module layer contains named modules and therefore this method always
-returns `null` when invoked on an unnamed module.
+returns {@code null} when invoked on an unnamed module.
 
- Dynamic modules are
+<p> <a href="reflect/Proxy.html#dynamicmodule">Dynamic modules</a> are
 named modules that are generated at runtime. A dynamic module may or may
-not be in a module layer.
+not be in a module layer. </p>
 
-**Returns:** The module layer that contains this module
+@return The module layer that contains this module
 
-**See also:** java.lang.reflect.Proxy
+@see java.lang.reflect.Proxy
 
 ## Module.isNativeAccessEnabled()
 
@@ -111,12 +100,11 @@ not be in a module layer.
 public boolean isNativeAccessEnabled()
 ```
 
-Returns `true` if this module can access
-*restricted* methods.
+Returns {@code true} if this module can access
+<a href="{@docRoot}/java.base/java/lang/doc-files/RestrictedMethods.html#restricted"><em>restricted</em></a> methods.
 
-**Returns:** `true` if this module can access *restricted* methods.
-
-**Since:** 22
+@return {@code true} if this module can access <em>restricted</em> methods.
+@since 22
 
 ## Module.canRead(Module)
 
@@ -125,17 +113,16 @@ public boolean canRead(Module other)
 ```
 
 Indicates if this module reads the given module. This method returns
-`true` if invoked to test if this module reads itself. It also
-returns `true` if invoked on an unnamed module (as unnamed
+{@code true} if invoked to test if this module reads itself. It also
+returns {@code true} if invoked on an unnamed module (as unnamed
 modules read all modules).
 
-Parameters:
+@param  other
+        The other module
 
-- `other`: The other module
+@return {@code true} if this module reads {@code other}
 
-**Returns:** `true` if this module reads `other`
-
-**See also:** #addReads(Module)
+@see #addReads(Module)
 
 ## Module.addReads(Module)
 
@@ -146,25 +133,24 @@ public Module addReads(Module other)
 If the caller's module is this module then update this module to read
 the given module.
 
-This method is a no-op if `other` is this module (all modules read
+This method is a no-op if {@code other} is this module (all modules read
 themselves), this module is an unnamed module (as unnamed modules read
-all modules), or this module already reads `other`.
+all modules), or this module already reads {@code other}.
 
-Parameters:
-
-- `other`: The other module
-
-**Implementation note:** *Read edges* added by this method are *weak* and
-do not prevent `other` from being GC'ed when this module is
+@implNote <em>Read edges</em> added by this method are <em>weak</em> and
+do not prevent {@code other} from being GC'ed when this module is
 strongly reachable.
 
-**Returns:** this module
+@param  other
+        The other module
 
-**See also:** #canRead
+@return this module
 
-Throws:
+@throws IllegalCallerException
+        If this is a named module and the caller's module is not this
+        module
 
-- `IllegalCallerException`: If this is a named module and the caller's module is not this module
+@see #canRead
 
 ## Module.isExported(String, Module)
 
@@ -172,29 +158,28 @@ Throws:
 public boolean isExported(String pn, Module other)
 ```
 
-Returns `true` if this module exports the given package to at
+Returns {@code true} if this module exports the given package to at
 least the given module.
 
- This method returns `true` if invoked to test if a package in
-this module is exported to itself. It always returns `true` when
-invoked on an unnamed module. A package that is open to
+<p> This method returns {@code true} if invoked to test if a package in
+this module is exported to itself. It always returns {@code true} when
+invoked on an unnamed module. A package that is {@link #isOpen open} to
 the given module is considered exported to that module at run-time and
-so this method returns `true` if the package is open to the given
-module.
+so this method returns {@code true} if the package is open to the given
+module. </p>
 
- This method does not check if the given module reads this module.
+<p> This method does not check if the given module reads this module. </p>
 
-Parameters:
+@param  pn
+        The package name
+@param  other
+        The other module
 
-- `pn`: The package name
-- `other`: The other module
-
-**Returns:** `true` if this module exports the package to at least the
+@return {@code true} if this module exports the package to at least the
         given module
 
-**See also:** ModuleDescriptor#exports()
-
-**See also:** #addExports(String,Module)
+@see ModuleDescriptor#exports()
+@see #addExports(String,Module)
 
 ## Module.isOpen(String, Module)
 
@@ -202,38 +187,36 @@ Parameters:
 public boolean isOpen(String pn, Module other)
 ```
 
-Returns `true` if this module has *opened* a package to at
+Returns {@code true} if this module has <em>opened</em> a package to at
 least the given module.
 
- This method returns `true` if invoked to test if a package in
-this module is open to itself. It returns `true` when invoked on an
-open module with a package in the module.
-It always returns `true` when invoked on an unnamed module.
+<p> This method returns {@code true} if invoked to test if a package in
+this module is open to itself. It returns {@code true} when invoked on an
+{@link ModuleDescriptor#isOpen open} module with a package in the module.
+It always returns {@code true} when invoked on an unnamed module. </p>
 
- This method does not check if the given module reads this module.
+<p> This method does not check if the given module reads this module. </p>
 
-Parameters:
+@apiNote A package {@code p} opened to module {@code M} allows code in
+{@code M} do {@linkplain java.lang.reflect.AccessibleObject#setAccessible(boolean)
+deep reflection} on all types in the package.
+Further, if {@code M} reads this module, it can obtain a
+{@link java.lang.invoke.MethodHandles.Lookup Lookup} object that is allowed to
+{@link java.lang.invoke.MethodHandles.Lookup#defineClass(byte[]) define classes}
+in package {@code p}.
 
-- `pn`: The package name
-- `other`: The other module
+@param  pn
+        The package name
+@param  other
+        The other module
 
-**API note:** A package `p` opened to module `M` allows code in
-`M` do deep reflection on all types in the package.
-Further, if `M` reads this module, it can obtain a
-Lookup object that is allowed to
-define classes
-in package `p`.
-
-**Returns:** `true` if this module has *opened* the package
+@return {@code true} if this module has <em>opened</em> the package
         to at least the given module
 
-**See also:** ModuleDescriptor#opens()
-
-**See also:** #addOpens(String,Module)
-
-**See also:** java.lang.reflect.AccessibleObject#setAccessible(boolean)
-
-**See also:** java.lang.invoke.MethodHandles#privateLookupIn
+@see ModuleDescriptor#opens()
+@see #addOpens(String,Module)
+@see java.lang.reflect.AccessibleObject#setAccessible(boolean)
+@see java.lang.invoke.MethodHandles#privateLookupIn
 
 ## Module.isExported(String)
 
@@ -241,23 +224,22 @@ in package `p`.
 public boolean isExported(String pn)
 ```
 
-Returns `true` if this module exports the given package
+Returns {@code true} if this module exports the given package
 unconditionally.
 
- This method always returns `true` when invoked on an unnamed
-module. A package that is opened unconditionally
+<p> This method always returns {@code true} when invoked on an unnamed
+module. A package that is {@link #isOpen(String) opened} unconditionally
 is considered exported unconditionally at run-time and so this method
-returns `true` if the package is opened unconditionally.
+returns {@code true} if the package is opened unconditionally. </p>
 
- This method does not check if the given module reads this module.
+<p> This method does not check if the given module reads this module. </p>
 
-Parameters:
+@param  pn
+        The package name
 
-- `pn`: The package name
+@return {@code true} if this module exports the package unconditionally
 
-**Returns:** `true` if this module exports the package unconditionally
-
-**See also:** ModuleDescriptor#exports()
+@see ModuleDescriptor#exports()
 
 ## Module.isOpen(String)
 
@@ -265,35 +247,33 @@ Parameters:
 public boolean isOpen(String pn)
 ```
 
-Returns `true` if this module has *opened* a package
+Returns {@code true} if this module has <em>opened</em> a package
 unconditionally.
 
- This method always returns `true` when invoked on an unnamed
-module. Additionally, it always returns `true` when invoked on an
-open module with a package in the
-module.
+<p> This method always returns {@code true} when invoked on an unnamed
+module. Additionally, it always returns {@code true} when invoked on an
+{@link ModuleDescriptor#isOpen open} module with a package in the
+module. </p>
 
- This method does not check if the given module reads this module.
+<p> This method does not check if the given module reads this module. </p>
 
-Parameters:
+@apiNote A package {@code p} opened to module {@code M} allows code in
+{@code M} do {@linkplain java.lang.reflect.AccessibleObject#setAccessible(boolean)
+deep reflection} on all types in the package.
+Further, if {@code M} reads this module, it can obtain a
+{@link java.lang.invoke.MethodHandles.Lookup Lookup} object that is allowed to
+{@link java.lang.invoke.MethodHandles.Lookup#defineClass(byte[]) define classes}
+in package {@code p}.
 
-- `pn`: The package name
+@param  pn
+        The package name
 
-**API note:** A package `p` opened to module `M` allows code in
-`M` do deep reflection on all types in the package.
-Further, if `M` reads this module, it can obtain a
-Lookup object that is allowed to
-define classes
-in package `p`.
-
-**Returns:** `true` if this module has *opened* the package
+@return {@code true} if this module has <em>opened</em> the package
         unconditionally
 
-**See also:** ModuleDescriptor#opens()
-
-**See also:** java.lang.reflect.AccessibleObject#setAccessible(boolean)
-
-**See also:** java.lang.invoke.MethodHandles#privateLookupIn
+@see ModuleDescriptor#opens()
+@see java.lang.reflect.AccessibleObject#setAccessible(boolean)
+@see java.lang.invoke.MethodHandles#privateLookupIn
 
 ## Module.addExports(String, Module)
 
@@ -304,30 +284,31 @@ public Module addExports(String pn, Module other)
 If the caller's module is this module then update this module to export
 the given package to the given module.
 
- This method has no effect if the package is already exported (or
-*open*) to the given module.
+<p> This method has no effect if the package is already exported (or
+<em>open</em>) to the given module. </p>
 
-Parameters:
-
-- `pn`: The package name
-- `other`: The module
-
-**API note:** As specified in section  of the *The Java
-Virtual Machine Specification *, if an attempt to resolve a
+@apiNote As specified in section {@jvms 5.4.3} of the <cite>The Java
+Virtual Machine Specification </cite>, if an attempt to resolve a
 symbolic reference fails because of a linkage error, then subsequent
 attempts to resolve the reference always fail with the same error that
 was thrown as a result of the initial resolution attempt.
 
-**Returns:** this module
+@param  pn
+        The package name
+@param  other
+        The module
 
-**jvms:** 5.4.3 Resolution
+@return this module
 
-**See also:** #isExported(String,Module)
+@throws IllegalArgumentException
+        If {@code pn} is {@code null}, or this is a named module and the
+        package {@code pn} is not a package in this module
+@throws IllegalCallerException
+        If this is a named module and the caller's module is not this
+        module
 
-Throws:
-
-- `IllegalArgumentException`: If `pn` is `null`, or this is a named module and the package `pn` is not a package in this module
-- `IllegalCallerException`: If this is a named module and the caller's module is not this module
+@jvms 5.4.3 Resolution
+@see #isExported(String,Module)
 
 ## Module.addOpens(String, Module)
 
@@ -335,7 +316,7 @@ Throws:
 public Module addOpens(String pn, Module other)
 ```
 
-If this module has *opened* a package to at least the caller
+If this module has <em>opened</em> a package to at least the caller
 module then update this module to open the package to the given module.
 Opening a package with this method allows all types in the package,
 and all their members, not just public types and their public members,
@@ -343,33 +324,33 @@ to be reflected on by the given module when using APIs that support
 private access or a way to bypass or suppress default Java language
 access control checks.
 
- This method has no effect if the package is already *open*
-to the given module.
+<p> This method has no effect if the package is already <em>open</em>
+to the given module. </p>
 
-Parameters:
-
-- `pn`: The package name
-- `other`: The module
-
-**API note:** This method can be used for cases where a *consumer
-module* uses a qualified opens to open a package to an *API
-module* but where the reflective access to the members of classes in
+@apiNote This method can be used for cases where a <em>consumer
+module</em> uses a qualified opens to open a package to an <em>API
+module</em> but where the reflective access to the members of classes in
 the consumer module is delegated to code in another module. Code in the
 API module can use this method to open the package in the consumer module
 to the other module.
 
-**Returns:** this module
+@param  pn
+        The package name
+@param  other
+        The module
 
-**See also:** #isOpen(String,Module)
+@return this module
 
-**See also:** java.lang.reflect.AccessibleObject#setAccessible(boolean)
+@throws IllegalArgumentException
+        If {@code pn} is {@code null}, or this is a named module and the
+        package {@code pn} is not a package in this module
+@throws IllegalCallerException
+        If this is a named module and this module has not opened the
+        package to at least the caller's module
 
-**See also:** java.lang.invoke.MethodHandles#privateLookupIn
-
-Throws:
-
-- `IllegalArgumentException`: If `pn` is `null`, or this is a named module and the package `pn` is not a package in this module
-- `IllegalCallerException`: If this is a named module and this module has not opened the package to at least the caller's module
+@see #isOpen(String,Module)
+@see java.lang.reflect.AccessibleObject#setAccessible(boolean)
+@see java.lang.invoke.MethodHandles#privateLookupIn
 
 ## Module.addUses(Class<?>)
 
@@ -379,25 +360,25 @@ public Module addUses(Class<?> service)
 
 If the caller's module is this module then update this module to add a
 service dependence on the given service type. This method is intended
-for use by frameworks that invoke ServiceLoader on behalf of other modules or where the framework is
+for use by frameworks that invoke {@link java.util.ServiceLoader
+ServiceLoader} on behalf of other modules or where the framework is
 passed a reference to the service type by other code. This method is
 a no-op when invoked on an unnamed module or an automatic module.
 
- This method does not cause resolveAndBind to be re-run.
+<p> This method does not cause {@link Configuration#resolveAndBind
+resolveAndBind} to be re-run. </p>
 
-Parameters:
+@param  service
+        The service type
 
-- `service`: The service type
+@return this module
 
-**Returns:** this module
+@throws IllegalCallerException
+        If this is a named module and the caller's module is not this
+        module
 
-**See also:** #canUse(Class)
-
-**See also:** ModuleDescriptor#uses()
-
-Throws:
-
-- `IllegalCallerException`: If this is a named module and the caller's module is not this module
+@see #canUse(Class)
+@see ModuleDescriptor#uses()
 
 ## Module.canUse(Class<?>)
 
@@ -406,16 +387,15 @@ public boolean canUse(Class<?> service)
 ```
 
 Indicates if this module has a service dependence on the given service
-type. This method always returns `true` when invoked on an unnamed
+type. This method always returns {@code true} when invoked on an unnamed
 module or an automatic module.
 
-Parameters:
+@param  service
+        The service type
 
-- `service`: The service type
+@return {@code true} if this module uses service type {@code st}
 
-**Returns:** `true` if this module uses service type `st`
-
-**See also:** #addUses(Class)
+@see #addUses(Class)
 
 ## Module.getPackages()
 
@@ -425,14 +405,14 @@ public Set<String> getPackages()
 
 Returns the set of package names for the packages in this module.
 
- For named modules, the returned set contains an element for each
-package in the module.
+<p> For named modules, the returned set contains an element for each
+package in the module. </p>
 
- For unnamed modules, the returned set contains an element for
-each package that has been defined
-in the unnamed module.
+<p> For unnamed modules, the returned set contains an element for
+each package that {@link ClassLoader#getDefinedPackages() has been defined}
+in the unnamed module.</p>
 
-**Returns:** the set of the package names of the packages in this module
+@return the set of the package names of the packages in this module
 
 ## Module.getAnnotation(Class<T>)
 
@@ -440,10 +420,10 @@ in the unnamed module.
 public <T extends Annotation> T getAnnotation(Class<T> annotationClass)
 ```
 
-(inherited documentation)
-This method returns `null` when invoked on an unnamed module.
+{@inheritDoc}
+This method returns {@code null} when invoked on an unnamed module.
 
- Note that any annotation returned by this method is a
+<p> Note that any annotation returned by this method is a
 declaration annotation.
 
 ## Module.getAnnotations()
@@ -452,10 +432,10 @@ declaration annotation.
 public Annotation[] getAnnotations()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 This method returns an empty array when invoked on an unnamed module.
 
- Note that any annotations returned by this method are
+<p> Note that any annotations returned by this method are
 declaration annotations.
 
 ## Module.getDeclaredAnnotations()
@@ -464,10 +444,10 @@ declaration annotations.
 public Annotation[] getDeclaredAnnotations()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 This method returns an empty array when invoked on an unnamed module.
 
- Note that any annotations returned by this method are
+<p> Note that any annotations returned by this method are
 declaration annotations.
 
 ## Module.getResourceAsStream(String)
@@ -477,50 +457,52 @@ public InputStream getResourceAsStream(String name) throws IOException
 ```
 
 Returns an input stream for reading a resource in this module.
-The `name` parameter is a `'/'`-separated path name that
-identifies the resource. As with Class.getResourceAsStream, this method delegates to the module's class
-loader findResource(String,String) method, invoking it with the module name
-(or `null` when the module is unnamed) and the name of the
+The {@code name} parameter is a {@code '/'}-separated path name that
+identifies the resource. As with {@link Class#getResourceAsStream
+Class.getResourceAsStream}, this method delegates to the module's class
+loader {@link ClassLoader#findResource(String,String)
+findResource(String,String)} method, invoking it with the module name
+(or {@code null} when the module is unnamed) and the name of the
 resource. If the resource name has a leading slash then it is dropped
 before delegation.
 
- A resource in a named module may be *encapsulated* so that
+<p> A resource in a named module may be <em>encapsulated</em> so that
 it cannot be located by code in other modules. Whether a resource can be
-located or not is determined as follows:
+located or not is determined as follows: </p>
 
--  If the resource name ends with  "`.class`" then it is not
-    encapsulated.
+<ul>
+    <li> If the resource name ends with  "{@code .class}" then it is not
+    encapsulated. </li>
 
--  A *package name* is derived from the resource name. If
-    the package name is a package in the
+    <li> A <em>package name</em> is derived from the resource name. If
+    the package name is a {@linkplain #getPackages() package} in the
     module then the resource can only be located by the caller of this
-    method when the package is open
+    method when the package is {@linkplain #isOpen(String,Module) open}
     to at least the caller's module. If the resource is not in a
-    package in the module then the resource is not encapsulated.
+    package in the module then the resource is not encapsulated. </li>
+</ul>
 
- In the above, the *package name* for a resource is derived
-from the subsequence of characters that precedes the last `'/'` in
-the name and then replacing each `'/'` character in the subsequence
-with `'.'`. A leading slash is ignored when deriving the package
+<p> In the above, the <em>package name</em> for a resource is derived
+from the subsequence of characters that precedes the last {@code '/'} in
+the name and then replacing each {@code '/'} character in the subsequence
+with {@code '.'}. A leading slash is ignored when deriving the package
 name. As an example, the package name derived for a resource named
-"`a/b/c/foo.properties`" is "`a.b.c`". A resource name
-with the name "`META-INF/MANIFEST.MF`" is never encapsulated
-because "`META-INF`" is not a legal package name.
+"{@code a/b/c/foo.properties}" is "{@code a.b.c}". A resource name
+with the name "{@code META-INF/MANIFEST.MF}" is never encapsulated
+because "{@code META-INF}" is not a legal package name. </p>
 
- This method returns `null` if the resource is not in this module
-or the resource is encapsulated and cannot be located by the caller.
+<p> This method returns {@code null} if the resource is not in this module
+or the resource is encapsulated and cannot be located by the caller. </p>
 
-Parameters:
+@param  name
+        The resource name
 
-- `name`: The resource name
+@return An input stream for reading the resource or {@code null}
 
-**Returns:** An input stream for reading the resource or `null`
+@throws IOException
+        If an I/O error occurs
 
-**See also:** Class#getResourceAsStream(String)
-
-Throws:
-
-- `IOException`: If an I/O error occurs
+@see Class#getResourceAsStream(String)
 
 ## Module.toString()
 
@@ -529,9 +511,9 @@ public String toString()
 ```
 
 Returns the string representation of this module. For a named module,
-the representation is the string `"module"`, followed by a space,
+the representation is the string {@code "module"}, followed by a space,
 and then the module name. For an unnamed module, the representation is
-the string `"unnamed module"`, followed by a space, and then an
+the string {@code "unnamed module"}, followed by a space, and then an
 implementation specific string that identifies the unnamed module.
 
-**Returns:** The string representation of this module
+@return The string representation of this module

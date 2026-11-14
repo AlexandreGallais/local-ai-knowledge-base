@@ -1,13 +1,15 @@
 ---
 title: "Module: Class"
-tool: "typescript"
-version: "6.0"
-source: "https://github.com/microsoft/TypeScript-Website/blob/4ec663ac4412c3a7086401bd5a8811565589b11d/packages/documentation/copy/en/declaration-files/templates/module-class.d.ts.md"
-commit: "4ec663ac4412c3a7086401bd5a8811565589b11d"
-license: "CC-BY-4.0"
+layout: docs
+permalink: /docs/handbook/declaration-files/templates/module-class-d-ts.html
 ---
 
-# Module: Class
+<!--
+TODO:
+
+1. Not clear why UMD is thrown in here.
+2. Give both commonjs and ES module examples.
+-->
 
 For example, when you want to work with JavaScript code which looks like:
 

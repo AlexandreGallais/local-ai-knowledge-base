@@ -1,18 +1,15 @@
 ---
-title: "Tutorial: Build algorithms using pattern matching (part 1 of 3)"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/fundamentals/tutorials/build-algorithms-using-pattern-matching.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: "Tutorial: Build algorithms using pattern matching"
+description: This advanced tutorial demonstrates how to use pattern matching techniques to create functionality using data and algorithms that are created separately.
+ms.date: 02/25/2022
 ---
-
 # Tutorial: Build algorithms using pattern matching
 
 Pattern matching lets you add functionality for types defined in other libraries without modifying those types. Another use for patterns is to create functionality your application requires that isn't a fundamental feature of the type being extended.
 
 In this tutorial, you learn how to:
 
+> [!div class="checklist"]
 >
 > - Recognize situations where pattern matching should be used.
 > - Use pattern matching expressions to implement behavior based on types and property values.
@@ -20,23 +17,7 @@ In this tutorial, you learn how to:
 
 ## Prerequisites
 
-- The latest .NET SDK
-- Visual Studio Code editor
-- The C# DevKit
-
-### Installation instructions
-
-On Windows, this WinGet configuration file to install all prerequisites. If you already have something installed, WinGet will skip that step.
-
-1. Download the file and double-click to run it.
-1. Read the license agreement, type `y`, and select `Enter` when prompted to accept.
-1. If you get a flashing User Account Control (UAC) prompt in your Taskbar, allow the installation to continue.
-
-On other platforms, you need to install each of these components separately.
-
-1. Download the recommended installer from the .NET SDK download page and double-click to run it. The download page detects your platform and recommends the latest installer for your platform.
-1. Download the latest installer from the Visual Studio Code home page and double click to run it. That page also detects your platform and the link should be correct for your system.
-1. Click the "Install" button on the C# DevKit extension page. That opens Visual Studio code, and asks if you want to install or enable the extension. Select "install".
+[!INCLUDE [Prerequisites](../../../../includes/prerequisites-basic-winget.md)]
 
 ## Scenarios for pattern matching
 
@@ -50,38 +31,9 @@ Consider a major metropolitan area that uses tolls and peak time pricing to mana
 
 From that brief description, you might quickly sketch out an object hierarchy to model this system. However, your data comes from multiple sources like other vehicle registration management systems. These systems provide different classes to model that data, and those systems don't share a single object model. In this tutorial, you use these simplified classes to model the vehicle data from these external systems, as shown in the following code:
 
-```csharp
-﻿namespace ConsumerVehicleRegistration
-{
-    public class Car
-    {
-        public int Passengers { get; set; }
-    }
-}
+:::code language="csharp" source="./snippets/patterns/start/toll-calculator/ExternalSystems.cs":::
 
-namespace CommercialRegistration
-{
-    public class DeliveryTruck
-    {
-        public int GrossWeightClass { get; set; }
-    }
-}
-
-namespace LiveryRegistration
-{
-    public class Taxi
-    {
-        public int Fares { get; set; }
-    }
-
-    public class Bus
-    {
-        public int Capacity { get; set; }
-        public int Riders { get; set; }
-    }
-}
-```
-You can download the starter code from the dotnet/samples GitHub repository. You can see that the vehicle classes are from different systems and are in different namespaces. You can't use a common base class other than `System.Object`.
+You can download the starter code from the [dotnet/samples](https://github.com/dotnet/samples/tree/main/csharp/tutorials/patterns/start) GitHub repository. You can see that the vehicle classes are from different systems and are in different namespaces. You can't use a common base class other than `System.Object`.
 
 ## Pattern matching designs
 
@@ -126,7 +78,7 @@ public class TollCalculator
 }
 ```
 
-The preceding code uses a `switch` expression (not the same as a `switch` statement) that tests the declaration pattern. A **switch expression** begins with the variable, `vehicle` in the preceding code, followed by the `switch` keyword. Next comes all the **switch arms** inside curly braces. The `switch` expression makes other refinements to the syntax that surrounds the `switch` statement. The `case` keyword is omitted, and the result of each arm is an expression. The last two arms show a new language feature. The `{ }` case matches any non-null object that didn't match an earlier arm. This arm catches any incorrect types passed to this method. The `{ }` case must follow the cases for each vehicle type. If the order were reversed, the `{ }` case would take precedence. Finally, the `null` constant pattern detects when `null` is passed to this method. The `null` pattern can be last because the other patterns match only a non-null object of the correct type.
+The preceding code uses a [`switch` expression](../../language-reference/operators/switch-expression.md) (not the same as a [`switch` statement](../../language-reference/statements/selection-statements.md#the-switch-statement)) that tests the [declaration pattern](../../language-reference/operators/patterns.md#declaration-and-type-patterns). A **switch expression** begins with the variable, `vehicle` in the preceding code, followed by the `switch` keyword. Next comes all the **switch arms** inside curly braces. The `switch` expression makes other refinements to the syntax that surrounds the `switch` statement. The `case` keyword is omitted, and the result of each arm is an expression. The last two arms show a new language feature. The `{ }` case matches any non-null object that didn't match an earlier arm. This arm catches any incorrect types passed to this method. The `{ }` case must follow the cases for each vehicle type. If the order were reversed, the `{ }` case would take precedence. Finally, the `null` [constant pattern](../../language-reference/operators/patterns.md#constant-pattern) detects when `null` is passed to this method. The `null` pattern can be last because the other patterns match only a non-null object of the correct type.
 
 You can test this code by using the following code in `Program.cs`:
 
@@ -182,7 +134,7 @@ The toll authority wants to encourage vehicles to travel at maximum capacity. Th
 - Buses that are less than 50% full pay an extra $2.00.
 - Buses that are more than 90% full get a $1.00 discount.
 
-You can implement these rules by using a property pattern in the same switch expression. A property pattern compares a property value to a constant value. The property pattern examines properties of the object once the type is determined. `Car {Passengers: 0}` is itself a **recursive pattern**: the outer property pattern on `Car` contains an inner constant pattern that tests the `Passengers` value. The single case for a `Car` expands to four different cases:
+You can implement these rules by using a [property pattern](../../language-reference/operators/patterns.md#property-pattern) in the same switch expression. A property pattern compares a property value to a constant value. The property pattern examines properties of the object once the type is determined. `Car {Passengers: 0}` is itself a **recursive pattern**: the outer property pattern on `Car` contains an inner constant pattern that tests the `Passengers` value. The single case for a `Car` expands to four different cases:
 
 ```csharp
 vehicle switch
@@ -313,3 +265,114 @@ public decimal CalculateToll(object vehicle) =>
 ```
 
 In the preceding sample, nesting a switch expression inside another switch arm means you don't repeat the `Car` and `Taxi` arms containing child arms that test the property value. This technique isn't used for the `Bus` and `DeliveryTruck` arms because those arms test ranges for the property, not discrete values.
+
+## Add peak pricing
+
+For the final feature, the toll authority wants to add time-sensitive peak pricing. During the morning and evening rush hours, the tolls are doubled. That rule only affects traffic in one direction: inbound to the city in the morning, and outbound in the evening rush hour. During other times during the workday, tolls increase by 50%. Late night and early morning, tolls are reduced by 25%. During the weekend, it's the normal rate, regardless of the time. You could use a series of `if` and `else` statements to express this rule using the following code:
+
+:::code language="csharp" source="./snippets/patterns/finished/toll-calculator/TollCalculator.cs" id="SnippetPremiumWithoutPattern":::
+
+The preceding code works correctly, but isn't readable. You have to chain through all the input cases and the nested `if` statements to reason about the code. Instead, you'll use pattern matching for this feature, but you'll integrate it with other techniques. You could build a single pattern match expression that accounts for all the combinations of direction, day of the week, and time. The result would be a complicated expression. It would be hard to read and difficult to understand. That makes it hard to ensure correctness. Instead, combine those methods to build a tuple of values that concisely describes all those states. Then use pattern matching to calculate a multiplier for the toll. The tuple contains three discrete conditions:
+
+- The day is either a weekday or a weekend.
+- The band of time when the toll is collected.
+- The direction is into the city or out of the city.
+
+The following table shows the combinations of input values and the peak pricing multiplier:
+
+| Day        | Time         | Direction | Premium |
+| ---------- | ------------ | --------- |--------:|
+| Weekday    | morning rush | inbound   | x 2.00  |
+| Weekday    | morning rush | outbound  | x 1.00  |
+| Weekday    | daytime      | inbound   | x 1.50  |
+| Weekday    | daytime      | outbound  | x 1.50  |
+| Weekday    | evening rush | inbound   | x 1.00  |
+| Weekday    | evening rush | outbound  | x 2.00  |
+| Weekday    | overnight    | inbound   | x 0.75  |
+| Weekday    | overnight    | outbound  | x 0.75  |
+| Weekend    | morning rush | inbound   | x 1.00  |
+| Weekend    | morning rush | outbound  | x 1.00  |
+| Weekend    | daytime      | inbound   | x 1.00  |
+| Weekend    | daytime      | outbound  | x 1.00  |
+| Weekend    | evening rush | inbound   | x 1.00  |
+| Weekend    | evening rush | outbound  | x 1.00  |
+| Weekend    | overnight    | inbound   | x 1.00  |
+| Weekend    | overnight    | outbound  | x 1.00  |
+
+There are 16 different combinations of the three variables. By combining some of the conditions, you simplify the final switch expression.
+
+The system that collects the tolls uses a <xref:System.DateTime> structure for the time when the toll was collected. Build member methods that create the variables from the preceding table. The following function uses a pattern matching switch expression to express whether a <xref:System.DateTime> represents a weekend or a weekday:
+
+```csharp
+private static bool IsWeekDay(DateTime timeOfToll) =>
+    timeOfToll.DayOfWeek switch
+    {
+        DayOfWeek.Monday    => true,
+        DayOfWeek.Tuesday   => true,
+        DayOfWeek.Wednesday => true,
+        DayOfWeek.Thursday  => true,
+        DayOfWeek.Friday    => true,
+        DayOfWeek.Saturday  => false,
+        DayOfWeek.Sunday    => false
+    };
+```
+
+That method is correct, but it's repetitious. You can simplify it, as shown in the following code:
+
+:::code language="csharp" source="./snippets/patterns/finished/toll-calculator/TollCalculator.cs" ID="IsWeekDay":::
+
+Next, add a similar function to categorize the time into the blocks:
+
+:::code language="csharp" source="./snippets/patterns/finished/toll-calculator/TollCalculator.cs" ID="GetTimeBand":::
+
+You add a private `enum` to convert each range of time to a discrete value. Then, the `GetTimeBand` method uses [relational patterns](../../language-reference/operators/patterns.md#relational-patterns) and [logical patterns](../../language-reference/operators/patterns.md#logical-patterns). A relational pattern lets you test a numeric value using `<`, `>`, `<=`, or `>=`. Logical patterns combine other patterns: an `or` pattern tests if an expression matches one or more patterns, an `and` pattern tests that an expression matches two distinct patterns, and a `not` pattern tests that an expression doesn't match a pattern.
+
+After you create those methods, you can use another `switch` expression with a **tuple pattern** — a positional pattern that matches each element of a tuple — to calculate the pricing premium. You could build a `switch` expression with all 16 arms:
+
+:::code language="csharp" source="./snippets/patterns/finished/toll-calculator/TollCalculator.cs" ID="TuplePatternOne":::
+
+The preceding code works, but it can be simplified. All eight combinations for the weekend have the same toll. You can replace all eight with the following line:
+
+```csharp
+(false, _, _) => 1.0m,
+```
+
+Both inbound and outbound traffic have the same multiplier during the weekday daytime and overnight hours. You can replace those four switch arms with the following two lines:
+
+```csharp
+(true, TimeBand.Overnight, _) => 0.75m,
+(true, TimeBand.Daytime, _)   => 1.5m,
+```
+
+The code should look like the following code after those two changes:
+
+```csharp
+public decimal PeakTimePremium(DateTime timeOfToll, bool inbound) =>
+    (IsWeekDay(timeOfToll), GetTimeBand(timeOfToll), inbound) switch
+    {
+        (true, TimeBand.MorningRush, true)  => 2.00m,
+        (true, TimeBand.MorningRush, false) => 1.00m,
+        (true, TimeBand.Daytime,     _)     => 1.50m,
+        (true, TimeBand.EveningRush, true)  => 1.00m,
+        (true, TimeBand.EveningRush, false) => 2.00m,
+        (true, TimeBand.Overnight,   _)     => 0.75m,
+        (false, _,                   _)     => 1.00m,
+    };
+```
+
+Finally, remove the two rush hour times that pay the regular price. After you remove those arms, replace the `false` with a discard (`_`) in the final switch arm. You get the following finished method:
+
+:::code language="csharp" source="./snippets/patterns/finished/toll-calculator/TollCalculator.cs" id="FinalTuplePattern":::
+
+This example highlights one of the advantages of pattern matching: the pattern branches are evaluated in order. If you rearrange them so that an earlier branch handles one of your later cases, the compiler warns you about the unreachable code. Those language rules made it easier to do the preceding simplifications with confidence that the code didn't change.
+
+Pattern matching makes some types of code more readable and offers an alternative to object-oriented techniques when you can't add code to your classes. The cloud is causing data and functionality to live apart. The *shape* of the data and the *operations* on it aren't necessarily described together. In this tutorial, you consumed existing data in entirely different ways from its original function. Pattern matching gave you the ability to write functionality that overrode those types, even though you couldn't extend them.
+
+## Next steps
+
+You can download the finished code from the [dotnet/samples](https://github.com/dotnet/samples/tree/main/csharp/tutorials/patterns/finished) GitHub repository. Explore patterns on your own and add this technique into your regular coding activities. Learning these techniques gives you another way to approach problems and create new functionality.
+
+## See also
+
+- [Patterns](../../language-reference/operators/patterns.md)
+- [`switch` expression](../../language-reference/operators/switch-expression.md)

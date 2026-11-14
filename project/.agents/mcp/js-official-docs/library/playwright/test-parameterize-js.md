@@ -1,19 +1,14 @@
 ---
+id: test-parameterize
 title: "Parameterize tests"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/test-parameterize-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
 ## Introduction
 
 You can either parameterize tests on a test level or on a project level.
 
 ## Parameterized Tests
 
-```js
+```js title="example.spec.ts"
 [
   { name: 'Alice', expected: 'Hello, Alice!' },
   { name: 'Bob', expected: 'Hello, Bob!' },
@@ -31,7 +26,7 @@ You can either parameterize tests on a test level or on a project level.
 
 Most of the time you should put `beforeEach`, `beforeAll`, `afterEach` and `afterAll` hooks outside of `forEach`, so that hooks are executed just once:
 
-```js
+```js title="example.spec.ts"
 test.beforeEach(async ({ page }) => {
   // ...
 });
@@ -54,7 +49,7 @@ test.afterEach(async ({ page }) => {
 
 If you want to have hooks for each test, you can put them inside a `describe()` - so they are executed for each iteration / each individual test:
 
-```js
+```js title="example.spec.ts"
 [
   { name: 'Alice', expected: 'Hello, Alice!' },
   { name: 'Bob', expected: 'Hello, Bob!' },
@@ -77,7 +72,7 @@ Playwright Test supports running multiple test projects at the same time. In the
 
 We declare the option `person` and set the value in the config. The first project runs with the value `Alice` and the second with the value `Bob`.
 
-```js
+```js tab=js-js title="my-test.js"
 const base = require('@playwright/test');
 
 exports.test = base.test.extend({
@@ -87,7 +82,7 @@ exports.test = base.test.extend({
 });
 ```
 
-```js
+```js tab=js-ts title="my-test.ts"
 import { test as base } from '@playwright/test';
 
 export type TestOptions = {
@@ -101,9 +96,9 @@ export const test = base.extend<TestOptions>({
 });
 ```
 
-We can use this option in the test, similarly to fixtures.
+We can use this option in the test, similarly to [fixtures](./test-fixtures.md).
 
-```js
+```js title="example.spec.ts"
 import { test } from './my-test';
 
 test('test 1', async ({ page, person }) => {
@@ -115,7 +110,7 @@ test('test 1', async ({ page, person }) => {
 
 Now, we can run tests in multiple configurations by using projects.
 
-```js
+```js tab=js-js title="playwright.config.ts"
 // @ts-check
 
 module.exports = defineConfig({
@@ -132,7 +127,7 @@ module.exports = defineConfig({
 });
 ```
 
-```js
+```js tab=js-ts title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 import type { TestOptions } from './my-test';
 
@@ -150,9 +145,9 @@ export default defineConfig<TestOptions>({
 });
 ```
 
-We can also use the option in a fixture. Learn more about fixtures.
+We can also use the option in a fixture. Learn more about [fixtures](./test-fixtures.md).
 
-```js
+```js tab=js-js title="my-test.js"
 const base = require('@playwright/test');
 
 exports.test = base.test.extend({
@@ -172,7 +167,7 @@ exports.test = base.test.extend({
 });
 ```
 
-```js
+```js tab=js-ts title="my-test.ts"
 import { test as base } from '@playwright/test';
 
 export type TestOptions = {
@@ -197,44 +192,44 @@ export const test = base.extend<TestOptions>({
 ```
 
 :::note
-Parameterized projects behavior has changed in version 1.18. Learn more.
+Parameterized projects behavior has changed in version 1.18. [Learn more](./release-notes#breaking-change-custom-config-options).
 :::
 
 ## Passing Environment Variables
 
 You can use environment variables to configure tests from the command line.
 
-For example, consider the following test file that needs a username and a password. It is usually a good idea not to store your secrets in the source code, so we'll need a way to pass <example-value> from outside.
+For example, consider the following test file that needs a username and a password. It is usually a good idea not to store your secrets in the source code, so we'll need a way to pass secrets from outside.
 
-```js
+```js title="example.spec.ts"
 test(`example test`, async ({ page }) => {
   // ...
   await page.getByLabel('User Name').fill(process.env.USER_NAME);
-  await page.getByLabel('<example-value>').fill(process.env.PASSWORD);
+  await page.getByLabel('Password').fill(process.env.PASSWORD);
 });
 ```
 
-You can run this test with your secret <example-value> and password set in the command line.
+You can run this test with your secret username and password set in the command line.
 
-```bash
-USER_NAME=me PASSWORD=<example-value> npx playwright test
+```bash tab=bash-bash
+USER_NAME=me PASSWORD=secret npx playwright test
 ```
 
-```batch
+```batch tab=bash-batch
 set USER_NAME=me
-set PASSWORD=<example-value>
+set PASSWORD=secret
 npx playwright test
 ```
 
-```powershell
+```powershell tab=bash-powershell
 $env:USER_NAME=me
-$env:PASSWORD=<example-value>
+$env:PASSWORD=secret
 npx playwright test
 ```
 
 Similarly, configuration file can also read environment variables passed through the command line.
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -246,25 +241,25 @@ export default defineConfig({
 
 Now, you can run tests against a staging or a production environment:
 
-```bash
+```bash tab=bash-bash
 STAGING=1 npx playwright test
 ```
 
-```batch
+```batch tab=bash-batch
 set STAGING=1
 npx playwright test
 ```
 
-```powershell
+```powershell tab=bash-powershell
 $env:STAGING=1
 npx playwright test
 ```
 
 ### .env files
 
-To make environment variables easier to manage, consider something like `.env` files. Here is an example that uses `dotenv` package to read environment variables directly in the configuration file.
+To make environment variables easier to manage, consider something like `.env` files. Here is an example that uses [`dotenv`](https://www.npmjs.com/package/dotenv) package to read environment variables directly in the configuration file.
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 import dotenv from 'dotenv';
 import path from 'path';
@@ -288,7 +283,7 @@ Now, you can just edit `.env` file to set any variables you'd like.
 # .env file
 STAGING=0
 USER_NAME=me
-PASSWORD=<example-value>
+PASSWORD=secret
 ```
 
 Run tests as usual, your environment variables should be picked up.
@@ -311,9 +306,9 @@ See for example this CSV file, in our example `input.csv`:
 "value 4","value 44","foobar4321"
 ```
 
-Based on this we'll generate some tests by using the csv-parse library from NPM:
+Based on this we'll generate some tests by using the [csv-parse](https://www.npmjs.com/package/csv-parse) library from NPM:
 
-```js
+```js title="test.spec.ts"
 import fs from 'fs';
 import path from 'path';
 import { test } from '@playwright/test';

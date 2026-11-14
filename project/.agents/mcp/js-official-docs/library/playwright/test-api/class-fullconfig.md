@@ -1,12 +1,3 @@
----
-title: "class: FullConfig"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/test-api/class-fullconfig.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: FullConfig
 * since: v1.10
 * langs: js
@@ -17,7 +8,7 @@ Resolved configuration which is accessible via [`property: TestInfo.config`] and
 * since: v1.61
 - type: <[Array]<[string]>>
 
-Snapshot of `process.argv`
+Snapshot of [`process.argv`](https://nodejs.org/api/process.html#processargv)
 captured in the runner process. Useful for reading custom command-line
 arguments — for example, args supplied after the `--` separator
 (`npx playwright test -- --build-path=./out`). Playwright does not parse

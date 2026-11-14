@@ -1,13 +1,9 @@
 ---
-title: "no-useless-return"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-useless-return.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-useless-return
+rule_type: suggestion
 ---
 
-# no-useless-return
+
 
 A `return;` statement with nothing after it is redundant, and has no effect on the runtime behavior of a function. This can be confusing, so it's better to disallow these redundant statements.
 
@@ -17,7 +13,7 @@ This rule aims to report redundant `return` statements.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint no-useless-return: "error" */
@@ -50,9 +46,11 @@ const item = function() {
 
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-useless-return: "error" */
@@ -90,6 +88,8 @@ const func = function() {
 }
 
 ```
+
+:::
 
 ## Options
 

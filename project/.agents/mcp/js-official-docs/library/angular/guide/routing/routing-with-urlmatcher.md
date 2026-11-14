@@ -1,12 +1,3 @@
----
-title: "Creating custom route matches"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/routing/routing-with-urlmatcher.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Creating custom route matches
 
 The Angular Router supports a powerful matching strategy that you can use to help users navigate your application.
@@ -46,23 +37,11 @@ In addition to the default Angular application framework, you will also create a
 
 1. In your code editor, locate the file, `profile.html` and replace the placeholder content with the following HTML.
 
-   File: `profile.html`
-
-```html
-<p>Hello {{ username() }}!</p>
-```
+   <docs-code header="profile.html" path="adev/src/content/examples/routing-with-urlmatcher/src/app/profile/profile.html"/>
 
 1. In your code editor, locate the file, `app.html` and replace the placeholder content with the following HTML.
 
-   File: `app.html`
-
-```html
-<h2>Routing with Custom Matching</h2>
-
-Navigate to <a routerLink="/@Angular">my profile</a>
-
-<router-outlet />
-```
+   <docs-code header="app.html" path="adev/src/content/examples/routing-with-urlmatcher/src/app/app.html"/>
 
 ## Configure your routes for your application
 
@@ -83,20 +62,7 @@ This handle is identified by a preceding `@` symbol.
 
 1. Define the custom route matcher by adding the following code to the application routes.
 
-   File: `app.routes.ts`
-
-```ts
-{
-  matcher: (url) => {
-    if (url.length === 1 && url[0].path.match(/^@[\w]+$/gm)) {
-      return {consumed: url, posParams: {username: new UrlSegment(url[0].path.slice(1), {})}};
-    }
-
-    return null;
-  },
-  component: Profile,
-},
-```
+   <docs-code header="app.routes.ts" path="adev/src/content/examples/routing-with-urlmatcher/src/app/app.routes.ts" region="matcher"/>
 
 This custom matcher is a function that performs the following tasks:
 
@@ -142,7 +108,9 @@ With your code in place, you can now test your custom URL matcher.
 Pattern matching with the Angular Router provides you with a lot of flexibility when you have dynamic URLs in your application.
 To learn more about the Angular Router, see the following topics:
 
-  - In-app Routing and Navigation
-  - Router API
+<docs-pill-row>
+  <docs-pill href="guide/routing/common-router-tasks" title="In-app Routing and Navigation"/>
+  <docs-pill href="api/router/Router" title="Router API"/>
+</docs-pill-row>
 
-HELPFUL: This content is based on Custom Route Matching with the Angular Router, by Brandon Roberts.
+HELPFUL: This content is based on [Custom Route Matching with the Angular Router](https://medium.com/@brandontroberts/custom-route-matching-with-the-angular-router-fbdd48665483), by [Brandon Roberts](https://x.com/brandontroberts).

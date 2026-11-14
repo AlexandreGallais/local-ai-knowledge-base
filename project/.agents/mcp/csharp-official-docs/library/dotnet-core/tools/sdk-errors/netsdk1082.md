@@ -1,15 +1,14 @@
 ---
 title: "NETSDK1082: There was no runtime pack available"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/sdk-errors/netsdk1082.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about .NET SDK error NETSDK1082, which warns about an unavailable runtime pack for the specified RID.
+ms.topic: error-reference
+ms.date: 07/08/2022
+f1_keywords:
+- NETSDK1082
 ---
-
 # NETSDK1082: There was no runtime pack available
 
-NETSDK1082 warns you that the runtime pack for your runtime identifier (RID) could not be found in your NuGet feed. The full error message is similar to the following example:
+NETSDK1082 warns you that the runtime pack for your [runtime identifier](../../rid-catalog.md) (RID) could not be found in your NuGet feed. The full error message is similar to the following example:
 
 >There was no runtime pack for \<RuntimePack> available for the specified RuntimeIdentifier '\<RID>'.
 
@@ -23,4 +22,4 @@ NETSDK1082 warns you that the runtime pack for your runtime identifier (RID) cou
 </ItemGroup>
 ```
 
-In this example, `TARGETFRAMEWORK` represents values like `net8.0` or `net6.0` -- basically anything that’s in the **.NET 5+ (and .NET Core)** list in Supported target frameworks. `EXISTINGVERSION` needs to be a valid version that's been released. For example, `6.0.7` for `net6.0`.
+In this example, `TARGETFRAMEWORK` represents values like `net8.0` or `net6.0` -- basically anything that’s in the **.NET 5+ (and .NET Core)** list in [Supported target frameworks](../../../standard/frameworks.md#supported-target-frameworks). `EXISTINGVERSION` needs to be a valid version that's been released. For example, `6.0.7` for `net6.0`.

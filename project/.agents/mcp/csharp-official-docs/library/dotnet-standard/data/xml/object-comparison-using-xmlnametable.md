@@ -1,15 +1,15 @@
 ---
+description: "Learn more about: Object Comparison Using XmlNameTable"
 title: "Object Comparison Using XmlNameTable"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/object-comparison-using-xmlnametable.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: 8d94e041-d340-4ddf-9a2c-d7319e3f4f86
 ---
-
 # Object Comparison Using XmlNameTable
 
-**XmlDocuments**, when created, have a name table created specifically for that document. When XML is loaded into the document, or new elements or attributes are created, the attribute and element names are put into the **XmlNameTable**. You can also create an **XmlDocument** using an existing **NameTable** from another document. When **XmlDocuments** are created with the constructor that takes an **XmlNameTable** parameter, the document has access to the node names, namespaces, and prefixes already stored in the **XmlNameTable**. Regardless of how the name table is loaded with names, once the names are stored in the table, names can be compared quickly using object comparison instead of string comparison. Strings can also be added to the name table using the `System.Xml.NameTable.Add*`. The following code sample shows a name table being created and the string **MyString** being added to the table. After that, an **XmlDocument** is created using that table, and the element and attribute names in **Myfile.xml** are added to the existing name table.
+**XmlDocuments**, when created, have a name table created specifically for that document. When XML is loaded into the document, or new elements or attributes are created, the attribute and element names are put into the **XmlNameTable**. You can also create an **XmlDocument** using an existing **NameTable** from another document. When **XmlDocuments** are created with the constructor that takes an **XmlNameTable** parameter, the document has access to the node names, namespaces, and prefixes already stored in the **XmlNameTable**. Regardless of how the name table is loaded with names, once the names are stored in the table, names can be compared quickly using object comparison instead of string comparison. Strings can also be added to the name table using the <xref:System.Xml.NameTable.Add*>. The following code sample shows a name table being created and the string **MyString** being added to the table. After that, an **XmlDocument** is created using that table, and the element and attribute names in **Myfile.xml** are added to the existing name table.
 
 ```vb
 Dim nt As New NameTable()
@@ -48,4 +48,4 @@ if (((object)node1.Name) == ((object)node2.Name))
 
 ## See also
 
-- XML Document Object Model (DOM)
+- [XML Document Object Model (DOM)](xml-document-object-model-dom.md)

@@ -1,22 +1,22 @@
 ---
-title: "Microsoft.Testing.Platform (MTP) OpenTelemetry"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/microsoft-testing-platform-open-telemetry.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Microsoft.Testing.Platform (MTP) OpenTelemetry
+description: Learn how to use the OpenTelemetry extension to emit traces and metrics from MTP.
+author: Evangelink
+ms.author: amauryleve
+ms.date: 10/01/2026
+ai-usage: ai-assisted
 ---
 
 # OpenTelemetry
 
-This feature requires the Microsoft.Testing.Extensions.OpenTelemetry NuGet package.
+This feature requires the [Microsoft.Testing.Extensions.OpenTelemetry](https://nuget.org/packages/Microsoft.Testing.Extensions.OpenTelemetry) NuGet package.
 
-This extension integrates OpenTelemetry with Microsoft.Testing.Platform (MTP), allowing test runs to emit traces and metrics through the standard OpenTelemetry SDK.
+This extension integrates [OpenTelemetry](https://opentelemetry.io/) with Microsoft.Testing.Platform (MTP), allowing test runs to emit traces and metrics through the standard OpenTelemetry SDK.
 
-> **Note:**
+> [!NOTE]
 > This extension is available in MTP starting with version 2.1.0.
 
-> **Important:**
+> [!IMPORTANT]
 > Starting with MTP 2.4.0, the OpenTelemetry extension follows the MTP release version and its public entry points are no longer experimental.
 
 ## Choose provider ownership
@@ -63,7 +63,7 @@ For an MSBuild-generated hosted entry point, reference `Microsoft.Testing.Extens
 <TestingPlatformOpenTelemetryMode>HostOwned</TestingPlatformOpenTelemetryMode>
 ```
 
-`HostOwned` calls only `AddTestingPlatformDiagnostics`; it doesn't create providers or replace the host's resource identity. For host lifecycle and factory requirements, see Host integration.
+`HostOwned` calls only `AddTestingPlatformDiagnostics`; it doesn't create providers or replace the host's resource identity. For host lifecycle and factory requirements, see [Host integration](microsoft-testing-platform-extensions-integration.md#host-integration).
 
 ## API
 

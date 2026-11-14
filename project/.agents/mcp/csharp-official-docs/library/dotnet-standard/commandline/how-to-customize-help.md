@@ -1,39 +1,21 @@
 ---
-title: "How to customize help in System.CommandLine"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/commandline/how-to-customize-help.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to customize help in System.CommandLine
+description: "Learn how to use and customize help in apps that are built with the System.Commandline library."
+ms.date: 06/19/2025
+no-loc: [System.CommandLine]
+helpviewer_keywords:
+  - "command line interface"
+  - "command line"
+  - "System.CommandLine"
+ms.topic: how-to
 ---
 
 # Customize help output
 
-Command-line apps typically provide an option to display a brief description of the available commands, options, and arguments. `System.CommandLine` provides `System.CommandLine.Help.HelpOption`, which is included in the RootCommand options by default. `HelpOption` generates help output for defined symbols by using the information exposed by `System.CommandLine.Symbol.Name`, `System.CommandLine.Option.HelpName`, `System.CommandLine.Symbol.Description`, and other properties like default value or completion sources.
+Command-line apps typically provide an option to display a brief description of the available commands, options, and arguments. `System.CommandLine` provides <xref:System.CommandLine.Help.HelpOption>, which is included in the [RootCommand](syntax.md#root-command) options by default. `HelpOption` generates help output for defined symbols by using the information exposed by <xref:System.CommandLine.Symbol.Name>, <xref:System.CommandLine.Option.HelpName>, <xref:System.CommandLine.Symbol.Description>, and other properties like default value or completion sources.
 
-```csharp
-Option<FileInfo> fileOption = new("--file")
-{
-    Description = "The file to print out",
-};
-Option<bool> lightModeOption = new("--light-mode")
-{
-    Description = "Determines whether the background color will be black or white"
-};
-Option<ConsoleColor> foregroundColorOption = new("--color")
-{
-    Description = "Specifies the foreground color of console output",
-    DefaultValueFactory = _ => ConsoleColor.White
-};
+:::code language="csharp" source="snippets/customize-help/csharp/Program.cs" id="original" :::
 
-RootCommand rootCommand = new("Read a file")
-{
-    fileOption,
-    lightModeOption,
-    foregroundColorOption
-};
-rootCommand.Parse("-h").Invoke();
-```
 ```dotnetcli
 Description:
   Read a file
@@ -63,7 +45,7 @@ dotnet -?
 dotnet /?
 ```
 
-Help output doesn't necessarily show all available commands, arguments, and options. Some of them might be *hidden* via the `System.CommandLine.Symbol.Hidden` property, which means they don't show up in help output (and completions) but can be specified on the command line.
+Help output doesn't necessarily show all available commands, arguments, and options. Some of them might be *hidden* via the <xref:System.CommandLine.Symbol.Hidden> property, which means they don't show up in help output (and completions) but can be specified on the command line.
 
 ## Help customization
 
@@ -75,15 +57,8 @@ In the sample app, `--light-mode` is explained adequately, but changes to the `-
 
 To make these changes, extend the previous code with the following code:
 
-```csharp
-fileOption.HelpName = "FILEPATH";
-foregroundColorOption.AcceptOnlyFromAmong(
-    ConsoleColor.Black.ToString(),
-    ConsoleColor.White.ToString(),
-    ConsoleColor.Red.ToString(),
-    ConsoleColor.Yellow.ToString()
-);
-```
+:::code language="csharp" source="snippets/customize-help/csharp/Program.cs" id="allowedvalues" :::
+
 The app now produces the following help output:
 
 ```output
@@ -103,43 +78,16 @@ Options:
 
 ## Add sections to help output
 
-You can add first or last sections to the help output. For example, suppose you want to add some ASCII art to the description section by using the Spectre.Console NuGet package.
+You can add first or last sections to the help output. For example, suppose you want to add some ASCII art to the description section by using the [Spectre.Console](https://www.nuget.org/packages/Spectre.Console/) NuGet package.
 
 Define a custom action that performs some extra logic before and after calling the default `HelpAction`:
 
-```csharp
-internal class CustomHelpAction : SynchronousCommandLineAction
-{
-    private readonly HelpAction _defaultHelp;
+:::code language="csharp" source="snippets/customize-help/csharp/Program.cs" id="customaction" :::
 
-    public CustomHelpAction(HelpAction action) => _defaultHelp = action;
-
-    public override int Invoke(ParseResult parseResult)
-    {
-        Spectre.Console.AnsiConsole.Write(new FigletText(parseResult.RootCommandResult.Command.Description!));
-
-        int result = _defaultHelp.Invoke(parseResult);
-
-        Spectre.Console.AnsiConsole.WriteLine("Sample usage: --file input.txt");
-
-        return result;
-
-    }
-}
-```
 Update the `HelpAction` defined by `RootCommand` to use the custom action:
 
-```csharp
-for (int i = 0; i < rootCommand.Options.Count; i++)
-{
-    // RootCommand has a default HelpOption; update its Action.
-    if (rootCommand.Options[i] is HelpOption defaultHelpOption)
-    {
-        defaultHelpOption.Action = new CustomHelpAction((HelpAction)defaultHelpOption.Action!);
-        break;
-    }
-}
-```
+:::code language="csharp" source="snippets/customize-help/csharp/Program.cs" id="setcustomaction" highlight="6" :::
+
 The help output now looks like this:
 
 ```output
@@ -167,4 +115,4 @@ Sample usage: --file input.txt
 
 ## See also
 
-System.CommandLine overview
+[System.CommandLine overview](index.md)

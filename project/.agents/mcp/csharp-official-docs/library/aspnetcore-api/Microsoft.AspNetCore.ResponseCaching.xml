@@ -1,0 +1,370 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.AspNetCore.ResponseCaching</name>
+    </assembly>
+    <members>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.IResponseCache.Get(System.String)">
+            <summary>
+            Gets the cached response for the given key, if it exists.
+            If no cached response exists for the given key, <c>null</c> is returned.
+            </summary>
+            <param name="key">The cache key to look up.</param>
+            <returns>The response cache entry if it exists; otherwise <c>null</c>.</returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.IResponseCache.Set(System.String,Microsoft.AspNetCore.ResponseCaching.IResponseCacheEntry,System.TimeSpan)">
+            <summary>
+            Stores the given response in the response cache.
+            </summary>
+            <param name="key">The cache key to store the response under.</param>
+            <param name="entry">The response cache entry to store.</param>
+            <param name="validFor">The amount of time the entry will be kept in the cache before expiring, relative to now.</param>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.IResponseCachingKeyProvider.CreateBaseKey(Microsoft.AspNetCore.ResponseCaching.ResponseCachingContext)">
+            <summary>
+            Create a base key for a response cache entry.
+            </summary>
+            <param name="context">The <see cref="T:Microsoft.AspNetCore.ResponseCaching.ResponseCachingContext"/>.</param>
+            <returns>The created base key.</returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.IResponseCachingKeyProvider.CreateStorageVaryByKey(Microsoft.AspNetCore.ResponseCaching.ResponseCachingContext)">
+            <summary>
+            Create a vary key for storing cached responses.
+            </summary>
+            <param name="context">The <see cref="T:Microsoft.AspNetCore.ResponseCaching.ResponseCachingContext"/>.</param>
+            <returns>The created vary key.</returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.IResponseCachingKeyProvider.CreateLookupVaryByKeys(Microsoft.AspNetCore.ResponseCaching.ResponseCachingContext)">
+            <summary>
+            Create one or more vary keys for looking up cached responses.
+            </summary>
+            <param name="context">The <see cref="T:Microsoft.AspNetCore.ResponseCaching.ResponseCachingContext"/>.</param>
+            <returns>An ordered <see cref="T:System.Collections.Generic.IEnumerable`1"/> containing the vary keys to try when looking up items.</returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.IResponseCachingPolicyProvider.AttemptResponseCaching(Microsoft.AspNetCore.ResponseCaching.ResponseCachingContext)">
+            <summary>
+            Determine whether the response caching logic should be attempted for the incoming HTTP request.
+            </summary>
+            <param name="context">The <see cref="T:Microsoft.AspNetCore.ResponseCaching.ResponseCachingContext"/>.</param>
+            <returns><c>true</c> if response caching logic should be attempted; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.IResponseCachingPolicyProvider.AllowCacheLookup(Microsoft.AspNetCore.ResponseCaching.ResponseCachingContext)">
+            <summary>
+            Determine whether a cache lookup is allowed for the incoming HTTP request.
+            </summary>
+            <param name="context">The <see cref="T:Microsoft.AspNetCore.ResponseCaching.ResponseCachingContext"/>.</param>
+            <returns><c>true</c> if cache lookup for this request is allowed; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.IResponseCachingPolicyProvider.AllowCacheStorage(Microsoft.AspNetCore.ResponseCaching.ResponseCachingContext)">
+            <summary>
+            Determine whether storage of the response is allowed for the incoming HTTP request.
+            </summary>
+            <param name="context">The <see cref="T:Microsoft.AspNetCore.ResponseCaching.ResponseCachingContext"/>.</param>
+            <returns><c>true</c> if storage of the response for this request is allowed; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.IResponseCachingPolicyProvider.IsResponseCacheable(Microsoft.AspNetCore.ResponseCaching.ResponseCachingContext)">
+            <summary>
+            Determine whether the response received by the middleware can be cached for future requests.
+            </summary>
+            <param name="context">The <see cref="T:Microsoft.AspNetCore.ResponseCaching.ResponseCachingContext"/>.</param>
+            <returns><c>true</c> if the response is cacheable; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.IResponseCachingPolicyProvider.IsCachedEntryFresh(Microsoft.AspNetCore.ResponseCaching.ResponseCachingContext)">
+            <summary>
+            Determine whether the response retrieved from the response cache is fresh and can be served.
+            </summary>
+            <param name="context">The <see cref="T:Microsoft.AspNetCore.ResponseCaching.ResponseCachingContext"/>.</param>
+            <returns><c>true</c> if the cached entry is fresh; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="T:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions">
+            <summary>
+            Defines *all* the logger messages produced by response caching
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.RequestMethodNotCacheable(Microsoft.Extensions.Logging.ILogger,System.String)">
+            <summary>
+            <para><b>Message:</b> The request cannot be served from cache because it uses the HTTP method: {Method}.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.RequestWithAuthorizationNotCacheable(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            <para><b>Message:</b> The request cannot be served from cache because it contains an &apos;Authorization&apos; header.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.RequestWithNoCacheNotCacheable(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            <para><b>Message:</b> The request cannot be served from cache because it contains a &apos;no-cache&apos; cache directive.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.RequestWithPragmaNoCacheNotCacheable(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            <para><b>Message:</b> The request cannot be served from cache because it contains a &apos;no-cache&apos; pragma directive.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.ExpirationMinFreshAdded(Microsoft.Extensions.Logging.ILogger,System.TimeSpan)">
+            <summary>
+            <para><b>Message:</b> Adding a minimum freshness requirement of {Duration} specified by the &apos;min-fresh&apos; cache directive.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.ExpirationSharedMaxAgeExceeded(Microsoft.Extensions.Logging.ILogger,System.TimeSpan,System.TimeSpan)">
+            <summary>
+            <para><b>Message:</b> The age of the entry is {Age} and has exceeded the maximum age for shared caches of {SharedMaxAge} specified by the &apos;s-maxage&apos; cache directive.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.ExpirationMustRevalidate(Microsoft.Extensions.Logging.ILogger,System.TimeSpan,System.TimeSpan)">
+            <summary>
+            <para><b>Message:</b> The age of the entry is {Age} and has exceeded the maximum age of {MaxAge} specified by the &apos;max-age&apos; cache directive. It must be revalidated because the &apos;must-revalidate&apos; or &apos;proxy-revalidate&apos; cache directive is specified.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.ExpirationMaxStaleSatisfied(Microsoft.Extensions.Logging.ILogger,System.TimeSpan,System.TimeSpan,System.TimeSpan)">
+            <summary>
+            <para><b>Message:</b> The age of the entry is {Age} and has exceeded the maximum age of {MaxAge} specified by the &apos;max-age&apos; cache directive. However, it satisfied the maximum stale allowance of {MaxStale} specified by the &apos;max-stale&apos; cache directive.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.ExpirationMaxAgeExceeded(Microsoft.Extensions.Logging.ILogger,System.TimeSpan,System.TimeSpan)">
+            <summary>
+            <para><b>Message:</b> The age of the entry is {Age} and has exceeded the maximum age of {MaxAge} specified by the &apos;max-age&apos; cache directive.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.ExpirationExpiresExceeded(Microsoft.Extensions.Logging.ILogger,System.DateTimeOffset,System.DateTimeOffset)">
+            <summary>
+            <para><b>Message:</b> The response time of the entry is {ResponseTime} and has exceeded the expiry date of {Expired} specified by the &apos;Expires&apos; header.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.ResponseWithoutPublicNotCacheable(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            <para><b>Message:</b> Response is not cacheable because it does not contain the &apos;public&apos; cache directive.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.ResponseWithNoStoreNotCacheable(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            <para><b>Message:</b> Response is not cacheable because it or its corresponding request contains a &apos;no-store&apos; cache directive.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.ResponseWithNoCacheNotCacheable(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            <para><b>Message:</b> Response is not cacheable because it contains a &apos;no-cache&apos; cache directive.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.ResponseWithSetCookieNotCacheable(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            <para><b>Message:</b> Response is not cacheable because it contains a &apos;SetCookie&apos; header.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.ResponseWithVaryStarNotCacheable(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            <para><b>Message:</b> Response is not cacheable because it contains a &apos;.Vary&apos; header with a value of *.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.ResponseWithPrivateNotCacheable(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            <para><b>Message:</b> Response is not cacheable because it contains the &apos;private&apos; cache directive.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.ResponseWithUnsuccessfulStatusCodeNotCacheable(Microsoft.Extensions.Logging.ILogger,System.Int32)">
+            <summary>
+            <para><b>Message:</b> Response is not cacheable because its status code {StatusCode} does not indicate success.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.NotModifiedIfNoneMatchStar(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            <para><b>Message:</b> The &apos;IfNoneMatch&apos; header of the request contains a value of *.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.NotModifiedIfNoneMatchMatched(Microsoft.Extensions.Logging.ILogger,Microsoft.Net.Http.Headers.EntityTagHeaderValue)">
+            <summary>
+            <para><b>Message:</b> The ETag {ETag} in the &apos;IfNoneMatch&apos; header matched the ETag of a cached entry.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.NotModifiedIfModifiedSinceSatisfied(Microsoft.Extensions.Logging.ILogger,System.DateTimeOffset,System.DateTimeOffset)">
+            <summary>
+            <para><b>Message:</b> The last modified date of {LastModified} is before the date {IfModifiedSince} specified in the &apos;IfModifiedSince&apos; header.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.NotModifiedServed(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            <para><b>Message:</b> The content requested has not been modified.</para>
+            <para><b>Level:</b> Information</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.CachedResponseServed(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            <para><b>Message:</b> Serving response from cache.</para>
+            <para><b>Level:</b> Information</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.GatewayTimeoutServed(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            <para><b>Message:</b> No cached response available for this request and the &apos;only-if-cached&apos; cache directive was specified.</para>
+            <para><b>Level:</b> Information</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.NoResponseServed(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            <para><b>Message:</b> No cached response available for this request.</para>
+            <para><b>Level:</b> Information</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.VaryByRulesUpdated(Microsoft.Extensions.Logging.ILogger,System.String,System.String)">
+            <summary>
+            <para><b>Message:</b> Vary by rules were updated. Headers: {Headers}, Query keys: {QueryKeys}</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.ResponseCached(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            <para><b>Message:</b> The response has been cached.</para>
+            <para><b>Level:</b> Information</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.LogResponseNotCached(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            <para><b>Message:</b> The response could not be cached for this request.</para>
+            <para><b>Level:</b> Information</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.ResponseContentLengthMismatchNotCached(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            <para><b>Message:</b> The response could not be cached for this request because the &apos;Content-Length&apos; did not match the body length.</para>
+            <para><b>Level:</b> Warning</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.ExpirationInfiniteMaxStaleSatisfied(Microsoft.Extensions.Logging.ILogger,System.TimeSpan,System.TimeSpan)">
+            <summary>
+            <para><b>Message:</b> The age of the entry is {Age} and has exceeded the maximum age of {MaxAge} specified by the &apos;max-age&apos; cache directive. However, the &apos;max-stale&apos; cache directive was specified without an assigned value and a stale response of any age is accepted.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.LoggerExtensions.RequestContainsInvalidCacheSymbols(Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            <para><b>Message:</b> The request contains invalid characters and will not be cached.</para>
+            <para><b>Level:</b> Debug</para>
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.ResponseCaching.ResponseCachingFeature">
+            Default implementation for <see cref="T:Microsoft.AspNetCore.ResponseCaching.IResponseCachingFeature" />
+        </member>
+        <member name="P:Microsoft.AspNetCore.ResponseCaching.ResponseCachingFeature.VaryByQueryKeys">
+            <inheritdoc />
+        </member>
+        <member name="T:Microsoft.AspNetCore.ResponseCaching.ResponseCachingMiddleware">
+            <summary>
+            Enable HTTP response caching.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.ResponseCachingMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,Microsoft.Extensions.Options.IOptions{Microsoft.AspNetCore.ResponseCaching.ResponseCachingOptions},Microsoft.Extensions.Logging.ILoggerFactory,Microsoft.Extensions.ObjectPool.ObjectPoolProvider)">
+            <summary>
+            Creates a new <see cref="T:Microsoft.AspNetCore.ResponseCaching.ResponseCachingMiddleware"/>.
+            </summary>
+            <param name="next">The <see cref="T:Microsoft.AspNetCore.Http.RequestDelegate"/> representing the next middleware in the pipeline.</param>
+            <param name="options">The options for this middleware.</param>
+            <param name="loggerFactory">The <see cref="T:Microsoft.Extensions.Logging.ILoggerFactory"/> used for logging.</param>
+            <param name="poolProvider">The <see cref="T:Microsoft.Extensions.ObjectPool.ObjectPoolProvider"/> used for creating <see cref="T:Microsoft.Extensions.ObjectPool.ObjectPool"/> instances.</param>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.ResponseCachingMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Invokes the logic of the middleware.
+            </summary>
+            <param name="httpContext">The <see cref="T:Microsoft.AspNetCore.Http.HttpContext"/>.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> that completes when the middleware has completed processing.</returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.ResponseCachingMiddleware.OnFinalizeCacheHeaders(Microsoft.AspNetCore.ResponseCaching.ResponseCachingContext)">
+            <summary>
+            Finalize cache headers.
+            </summary>
+            <param name="context"></param>
+            <returns><c>true</c> if a vary by entry needs to be stored in the cache; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.ResponseCaching.ResponseCachingMiddleware.OnStartResponse(Microsoft.AspNetCore.ResponseCaching.ResponseCachingContext)">
+            <summary>
+            Mark the response as started and set the response time if no response was started yet.
+            </summary>
+            <param name="context"></param>
+            <returns><c>true</c> if the response was not started before this call; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="T:Microsoft.AspNetCore.ResponseCaching.ResponseCachingOptions">
+            <summary>
+            Options for configuring the <see cref="T:Microsoft.AspNetCore.ResponseCaching.ResponseCachingMiddleware"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.ResponseCaching.ResponseCachingOptions.SizeLimit">
+            <summary>
+            The size limit for the response cache middleware in bytes. The default is set to 100 MB.
+            When this limit is exceeded, no new responses will be cached until older entries are
+            evicted.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.ResponseCaching.ResponseCachingOptions.MaximumBodySize">
+            <summary>
+            The largest cacheable size for the response body in bytes. The default is set to 64 MB.
+            If the response body exceeds this limit, it will not be cached by the <see cref="T:Microsoft.AspNetCore.ResponseCaching.ResponseCachingMiddleware"/>.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.ResponseCaching.ResponseCachingOptions.UseCaseSensitivePaths">
+            <summary>
+            <c>true</c> if request paths are case-sensitive; otherwise <c>false</c>. The default is to treat paths as case-insensitive.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.ResponseCaching.ResponseCachingOptions.TimeProvider">
+            <summary>
+            For testing purposes only.
+            </summary>
+        </member>
+        <member name="P:Microsoft.AspNetCore.ResponseCaching.StreamUtilities.BodySegmentSize">
+            <summary>
+            The segment size for buffering the response body in bytes. The default is set to 80 KB (81920 Bytes) to avoid allocations on the LOH.
+            </summary>
+        </member>
+        <member name="T:Microsoft.AspNetCore.Builder.ResponseCachingExtensions">
+            <summary>
+            Extension methods for adding the <see cref="T:Microsoft.AspNetCore.ResponseCaching.ResponseCachingMiddleware"/> to an application.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Builder.ResponseCachingExtensions.UseResponseCaching(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Adds the <see cref="T:Microsoft.AspNetCore.ResponseCaching.ResponseCachingMiddleware"/> for caching HTTP responses.
+            </summary>
+            <param name="app">The <see cref="T:Microsoft.AspNetCore.Builder.IApplicationBuilder"/>.</param>
+        </member>
+        <member name="T:Microsoft.Extensions.DependencyInjection.ResponseCachingServicesExtensions">
+            <summary>
+            Extension methods for the ResponseCaching middleware.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ResponseCachingServicesExtensions.AddResponseCaching(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Add response caching services.
+            </summary>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> for adding services.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Extensions.DependencyInjection.ResponseCachingServicesExtensions.AddResponseCaching(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Microsoft.AspNetCore.ResponseCaching.ResponseCachingOptions})">
+            <summary>
+            Add response caching services and configure the related options.
+            </summary>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> for adding services.</param>
+            <param name="configureOptions">A delegate to configure the <see cref="T:Microsoft.AspNetCore.ResponseCaching.ResponseCachingOptions"/>.</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

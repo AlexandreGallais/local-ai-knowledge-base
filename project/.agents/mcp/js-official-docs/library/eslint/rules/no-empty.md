@@ -1,13 +1,11 @@
 ---
-title: "no-empty"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-empty.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-empty
+rule_type: suggestion
+related_rules:
+- no-empty-function
 ---
 
-# no-empty
+
 
 Empty block statements, while not technically errors, usually occur due to refactoring that wasn't completed. They can cause confusion when reading code.
 
@@ -17,7 +15,7 @@ This rule disallows empty block statements. This rule ignores block statements w
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-empty: "error"*/
@@ -40,9 +38,11 @@ try {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-empty: "error"*/
@@ -72,6 +72,8 @@ try {
 }
 ```
 
+:::
+
 ## Options
 
 This rule has an object option for exceptions:
@@ -82,7 +84,7 @@ This rule has an object option for exceptions:
 
 Examples of additional **correct** code for this rule with the `{ "allowEmptyCatch": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
@@ -98,6 +100,8 @@ finally {
     /* continue regardless of error */
 }
 ```
+
+:::
 
 ## When Not To Use It
 

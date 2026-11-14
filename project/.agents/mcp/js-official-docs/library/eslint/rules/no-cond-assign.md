@@ -1,13 +1,9 @@
 ---
-title: "no-cond-assign"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-cond-assign.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-cond-assign
+rule_type: problem
 ---
 
-# no-cond-assign
+
 
 In conditional statements, it is very easy to mistype a comparison operator (such as `==`) as an assignment operator (such as `=`). For example:
 
@@ -35,7 +31,7 @@ This rule has a string option:
 
 Examples of **incorrect** code for this rule with the default `"except-parens"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-cond-assign: "error"*/
@@ -54,9 +50,11 @@ const setHeight = function (someNode) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"except-parens"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-cond-assign: "error"*/
@@ -82,11 +80,13 @@ const set_height = function (someNode) {
 }
 ```
 
+:::
+
 ### always
 
 Examples of **incorrect** code for this rule with the `"always"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-cond-assign: ["error", "always"]*/
@@ -119,9 +119,11 @@ const heightSetter = function (someNode) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"always"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-cond-assign: ["error", "always"]*/
@@ -132,3 +134,5 @@ if (x === 0) {
     const b = 1;
 }
 ```
+
+:::

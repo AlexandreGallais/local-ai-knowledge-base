@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: ICorDebugInstanceFieldSymbol Interface"
 title: "ICorDebugInstanceFieldSymbol Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebuginstancefieldsymbol-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugInstanceFieldSymbol Interface
 
 Represents the debug symbol information for an instance field.
@@ -15,20 +11,20 @@ Represents the debug symbol information for an instance field.
 
 |Method|Description|
 |------------|-----------------|
-|GetName Method|Gets the name of the instance field.|
-|GetOffset Method|Gets the offset in bytes of this instance field in its parent class.|
-|GetSize Method|Gets the size in bytes of the instance field.|
+|[GetName Method](icordebuginstancefieldsymbol-getname-method.md)|Gets the name of the instance field.|
+|[GetOffset Method](icordebuginstancefieldsymbol-getoffset-method.md)|Gets the offset in bytes of this instance field in its parent class.|
+|[GetSize Method](icordebuginstancefieldsymbol-getsize-method.md)|Gets the size in bytes of the instance field.|
 
 ## Remarks
 
 The `ICorDebugInstanceFieldSymbol` interface is used to retrieve the debug symbol information for an instance field.
 
-> **Note:**
+> [!NOTE]
 > This interface is available with .NET Native only. If you implement this interface for ICorDebug scenarios outside of .NET Native, the common language runtime will ignore this interface.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -38,4 +34,4 @@ The `ICorDebugInstanceFieldSymbol` interface is used to retrieve the debug symbo
 
 ## See also
 
-- ICorDebugStaticFieldSymbol Interface
+- [ICorDebugStaticFieldSymbol Interface](icordebugstaticfieldsymbol-interface.md)

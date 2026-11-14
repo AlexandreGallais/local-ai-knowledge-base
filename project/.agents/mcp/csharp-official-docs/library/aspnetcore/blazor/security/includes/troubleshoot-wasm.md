@@ -1,51 +1,40 @@
----
-title: "troubleshoot-wasm"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/security/includes/troubleshoot-wasm.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# troubleshoot-wasm
-
 ### Logging
 
-To enable debug or trace logging for Blazor WebAssembly authentication, see the *Client-side authentication logging* section of ASP.NET Core Blazor logging with the article version selector set to ASP.NET Core in .NET 7 or later.
+To enable debug or trace logging for Blazor WebAssembly authentication, see the *Client-side authentication logging* section of [ASP.NET Core Blazor logging](../../fundamentals/logging.md) with the article version selector set to ASP.NET Core in .NET 7 or later.
 
 ### Common errors
 
 * Misconfiguration of the app or Identity Provider (IP)
 
   The most common errors are caused by incorrect configuration. The following are a few examples:
-
+  
   * Depending on the requirements of the scenario, a missing or incorrect Authority, Instance, Tenant ID, Tenant domain, Client ID, or Redirect URI prevents an app from authenticating clients.
   * Incorrect request scopes prevent clients from accessing server web API endpoints.
   * Incorrect or missing server API permissions prevent clients from accessing server web API endpoints.
   * Running the app at a different port than is configured in the Redirect URI of the IP's app registration. Note that a port isn't required for Microsoft Entra ID and an app running at a `localhost` development testing address, but the app's port configuration and the port where the app is running must match for non-`localhost` addresses.
-
+  
   Configuration sections of this article's guidance show examples of the correct configuration. Carefully check each section of the article looking for app and IP misconfiguration.
-
+  
   If the configuration appears correct:
-
+  
   * Analyze application logs.
   * Examine the network traffic between the client app and the IP or server app with the browser's developer tools. Often, an exact error message or a message with a clue to what's causing the problem is returned to the client by the IP or server app after making a request. Developer tools guidance is found in the following articles:
 
-    * Google Chrome (Google documentation)
-    * Microsoft Edge
-    * Mozilla Firefox (Mozilla documentation)
+    * [Google Chrome](https://developers.google.com/web/tools/chrome-devtools/network) (Google documentation)
+    * [Microsoft Edge](/microsoft-edge/devtools-guide-chromium/network/)
+    * [Mozilla Firefox](https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/index.html) (Mozilla documentation)
 
-  * For releases of Blazor where a JSON Web Token (JWT) is used, decode the contents of the token used for authenticating a client or accessing a server web API, depending on where the problem is occurring. For more information, see Inspect the content of a JSON Web Token (JWT).
-
+  * For releases of Blazor where a JSON Web Token (JWT) is used, decode the contents of the token used for authenticating a client or accessing a server web API, depending on where the problem is occurring. For more information, see [Inspect the content of a JSON Web Token (JWT)](#inspect-the-content-of-a-json-web-token-jwt).
+  
   The documentation team responds to document feedback and bugs in articles (open an issue from the **This page** feedback section) but is unable to provide product support. Several public support forums are available to assist with troubleshooting an app. We recommend the following:
-
-  * Stack Overflow (tag: `blazor`)
-  * ASP.NET Core Slack Team
-  * Blazor Gitter
-
+  
+  * [Stack Overflow (tag: `blazor`)](https://stackoverflow.com/questions/tagged/blazor)
+  * [ASP.NET Core Slack Team](https://join.slack.com/t/aspnetcore/shared_invite/zt-1mv5487zb-EOZxJ1iqb0A0ajowEbxByQ)
+  * [Blazor Gitter](https://gitter.im/aspnet/Blazor)
+  
   *The preceding forums are not owned or controlled by Microsoft.*
-
-  For non-security, non-sensitive, and non-confidential reproducible framework bug reports, open an issue with the ASP.NET Core product unit. Don't open an issue with the product unit until you've thoroughly investigated the cause of a problem and can't resolve it on your own and with the help of the community on a public support forum. The product unit isn't able to troubleshoot individual apps that are broken due to simple misconfiguration or use cases involving third-party services. If a report is sensitive or confidential in nature or describes a potential security flaw in the product that cyberattackers may exploit, see Reporting security issues and bugs (`dotnet/aspnetcore` GitHub repository).
+  
+  For non-security, non-sensitive, and non-confidential reproducible framework bug reports, [open an issue with the ASP.NET Core product unit](https://github.com/dotnet/aspnetcore/issues). Don't open an issue with the product unit until you've thoroughly investigated the cause of a problem and can't resolve it on your own and with the help of the community on a public support forum. The product unit isn't able to troubleshoot individual apps that are broken due to simple misconfiguration or use cases involving third-party services. If a report is sensitive or confidential in nature or describes a potential security flaw in the product that cyberattackers may exploit, see [Reporting security issues and bugs (`dotnet/aspnetcore` GitHub repository)](https://github.com/dotnet/aspnetcore/blob/main/CONTRIBUTING.md#reporting-security-issues-and-bugs).
 
 * Unauthorized client for ME-ID
 
@@ -60,8 +49,8 @@ To enable debug or trace logging for Blazor WebAssembly authentication, see the 
 
   To resolve the error:
 
-  1. In the Azure portal, access the app's manifest.
-  1. Set the `allowPublicClient` attribute to `null` or `true`.
+  1. In the Azure portal, access the [app's manifest](/entra/identity-platform/reference-app-manifest).
+  1. Set the [`allowPublicClient` attribute](/entra/identity-platform/reference-app-manifest#allowpublicclient-attribute) to `null` or `true`.
 
 ### Cookies and site data
 
@@ -96,13 +85,21 @@ One approach to prevent lingering cookies and site data from interfering with te
 
 A functioning app may fail immediately after upgrading either the .NET SDK on the development machine or changing package versions within the app. In some cases, incoherent packages may break an app when performing major upgrades. Most of these issues can be fixed by following these instructions:
 
-1. Clear the local system's NuGet package caches by executing `dotnet nuget locals all --clear` from a command shell.
+1. Clear the local system's NuGet package caches by executing [`dotnet nuget locals all --clear`](/dotnet/core/tools/dotnet-nuget-locals) from a command shell.
 1. Delete the project's `bin` and `obj` folders.
 1. Restore and rebuild the project.
 1. Delete all of the files in the deployment folder on the server prior to redeploying the app.
 
-> **Note:**
-> Use of package versions incompatible with the app's target framework isn't supported. For information on a package, use the NuGet Gallery.
+> [!NOTE]
+> Use of package versions incompatible with the app's target framework isn't supported. For information on a package, use the [NuGet Gallery](https://www.nuget.org).
+
+:::moniker range="< aspnetcore-8.0"
+
+### Run the `Server` app
+
+When testing and troubleshooting a hosted Blazor WebAssembly [solution](../../tooling.md#visual-studio-solution-file-sln), make sure that you're running the app from the **`Server`** project.
+
+:::moniker-end
 
 ### Inspect the user
 
@@ -128,9 +125,9 @@ The following `User` component can be used directly in apps or serve as the basi
 
 <h2>Access token</h2>
 
-<p id="<example-value>">@AccessToken?.Value</p>
+<p id="access-token">@AccessToken?.Value</p>
 
-<h2>Access token <example-value></h2>
+<h2>Access token claims</h2>
 
 @foreach (var claim in GetAccessTokenClaims())
 {
@@ -139,12 +136,12 @@ The following `User` component can be used directly in apps or serve as the basi
 
 @if (AccessToken != null)
 {
-    <h2>Access token <example-value></h2>
+    <h2>Access token expires</h2>
 
     <p>Current time: <span id="current-time">@DateTimeOffset.Now</span></p>
-    <p id="<example-value>">@AccessToken.Expires</p>
+    <p id="access-token-expires">@AccessToken.Expires</p>
 
-    <h2>Access token <example-value> scopes (as reported by the API)</h2>
+    <h2>Access token granted scopes (as reported by the API)</h2>
 
     @foreach (var scope in AccessToken.GrantedScopes)
     {
@@ -157,7 +154,7 @@ The following `User` component can be used directly in apps or serve as the basi
     private Task<AuthenticationState> AuthenticationState { get; set; }
 
     public ClaimsPrincipal AuthenticatedUser { get; set; }
-    public AccessToken <example-value> { get; set; }
+    public AccessToken AccessToken { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -168,7 +165,7 @@ The following `User` component can be used directly in apps or serve as the basi
         if (!accessTokenResult.TryGetToken(out var token))
         {
             throw new InvalidOperationException(
-                "<example-value>");
+                "Failed to provision the access token.");
         }
 
         AccessToken = token;
@@ -184,7 +181,7 @@ The following `User` component can be used directly in apps or serve as the basi
         }
 
         // header.payload.signature
-        var payload = AccessToken.Value.Split("<example-value>")[1];
+        var payload = AccessToken.Value.Split(".")[1];
         var base64Payload = payload.Replace('-', '+').Replace('_', '/')
             .PadRight(payload.Length + (4 - payload.Length % 4) % 4, '=');
 
@@ -196,11 +193,11 @@ The following `User` component can be used directly in apps or serve as the basi
 
 ### Inspect the content of a JSON Web Token (JWT)
 
-To decode a JSON Web Token (JWT), use Microsoft's jwt.ms tool. Values in the UI never leave your browser.
+To decode a JSON Web Token (JWT), use Microsoft's [jwt.ms](https://jwt.ms/) tool. Values in the UI never leave your browser.
 
 Example encoded JWT (shortened for display):
 
-> <example-jwt> ... bQdHBHGcQQRbW7Wmo6SWYG4V_bU55Ug_PW4pLPr20tTS8Ct7_uwy9DWrzCMzpD-EiwT5IjXwlGX3IXVjHIlX50IVIydBoPQtadvT7saKo1G5Jmutgq41o-dmz6-yBMKV2_nXA25Q
+> eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ilg1ZVhrNHh5b2pORnVtMWtsMll0djhkbE5QNC1j ... bQdHBHGcQQRbW7Wmo6SWYG4V_bU55Ug_PW4pLPr20tTS8Ct7_uwy9DWrzCMzpD-EiwT5IjXwlGX3IXVjHIlX50IVIydBoPQtadvT7saKo1G5Jmutgq41o-dmz6-yBMKV2_nXA25Q
 
 Example JWT decoded by the tool for an app that authenticates against Azure AAD B2C:
 

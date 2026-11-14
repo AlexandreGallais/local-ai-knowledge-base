@@ -1,15 +1,16 @@
 ---
 title: "Breaking change: System.Drawing OutOfMemoryException changed to ExternalException"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/windows-forms/10.0/system-drawing-outofmemory-externalexception.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where System.Drawing GDI+ OutOfMemory errors now throw ExternalException instead of OutOfMemoryException."
+ms.date: 08/15/2025
+ai-usage: ai-assisted
+dev_langs:
+- CSharp
+- VB
 ---
 
 # System.Drawing OutOfMemoryException changed to ExternalException
 
-GDI+ error handling in System.Drawing has been updated to throw `System.Runtime.InteropServices.ExternalException` instead of `System.OutOfMemoryException` for `Status.OutOfMemory` errors.
+GDI+ error handling in System.Drawing has been updated to throw <xref:System.Runtime.InteropServices.ExternalException> instead of <xref:System.OutOfMemoryException> for `Status.OutOfMemory` errors.
 
 ## Version introduced
 
@@ -17,15 +18,15 @@ GDI+ error handling in System.Drawing has been updated to throw `System.Runtime.
 
 ## Previous behavior
 
-Previously, when GDI+ encountered `Status.OutOfMemory` errors (often due to invalid input rather than actual memory issues), System.Drawing APIs threw `System.OutOfMemoryException`.
+Previously, when GDI+ encountered `Status.OutOfMemory` errors (often due to invalid input rather than actual memory issues), System.Drawing APIs threw <xref:System.OutOfMemoryException>.
 
 ## New behavior
 
-Starting in .NET 10, when GDI+ encounters `Status.OutOfMemory` errors, System.Drawing APIs now throw `System.Runtime.InteropServices.ExternalException`.
+Starting in .NET 10, when GDI+ encounters `Status.OutOfMemory` errors, System.Drawing APIs now throw <xref:System.Runtime.InteropServices.ExternalException>.
 
 ## Type of breaking change
 
-This is a behavioral change.
+This is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -66,8 +67,8 @@ End Try
 
 All System.Drawing APIs that interact with GDI+ and previously could throw `OutOfMemoryException` for `Status.OutOfMemory` errors, including but not limited to:
 
-- `System.Drawing.Bitmap` constructors and methods
-- `System.Drawing.Graphics` methods
-- `System.Drawing.Image` methods
-- `System.Drawing.Icon` constructors and methods
+- <xref:System.Drawing.Bitmap?displayProperty=fullName> constructors and methods
+- <xref:System.Drawing.Graphics?displayProperty=fullName> methods
+- <xref:System.Drawing.Image?displayProperty=fullName> methods
+- <xref:System.Drawing.Icon?displayProperty=fullName> constructors and methods
 - Other System.Drawing types that use GDI+ internally

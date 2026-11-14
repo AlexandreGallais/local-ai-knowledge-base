@@ -1,16 +1,14 @@
 ---
-title: "dotnetup init command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/reference/dotnetup-init.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnetup init command
+description: Command reference for interactive dotnetup setup.
+ms.topic: reference
+ms.date: 08/07/2026
+ai-usage: ai-assisted
 ---
 
 # dotnetup init command
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 ## Name
 
@@ -29,7 +27,7 @@ The setup flow presents the effective install path and starter SDK channel.
 It lets you select an access mode and whether the `dotnetup` executable is on
 `PATH`. It can also offer to migrate matching native-architecture
 system-managed installations. For descriptions of the access modes, see
-dotnetup environment configuration.
+[dotnetup environment configuration](../concepts/environment.md).
 
 The current public-preview build first asks whether to install with the
 recommended settings. Select **No, customize setup** to choose another SDK

@@ -1,248 +1,79 @@
 ---
-title: "Using DisplayTemplates and EditorTemplates"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/mvc/views/display-templates.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Using DisplayTemplates and EditorTemplates
+ai-usage: ai-assisted
+description: How to use DisplayTemplates and EditorTemplates in ASP.NET Core.
+monikerRange: '>= aspnetcore-2.1'
+ms.date: 05/22/2022
 ---
 
 # Display and Editor templates in ASP.NET Core
 
-By Alexander Wicht
+By [Alexander Wicht](https://github.com/Ducki/)
 
 Display and Editor templates specify the user interface layout of custom types. Consider the following `Address` model:
 
-```csharp
-public class Address
-{
-    public int Id { get; set; }
-    public string FirstName { get; set; } = null!;
-    public string MiddleName { get; set; } = null!;
-    public string LastName { get; set; } = null!;
-    public string Street { get; set; } = null!;
-    public string City { get; set; } = null!;
-    public string State { get; set; } = null!;
-    public string Zipcode { get; set; } = null!;
-}
-```
+[!code-csharp[](display-templates/samples/Address.cs)]
 
-A project that scaffolds the `Address` model displays the `Address` in the following form:
+A project that [scaffolds](../../tutorials/razor-pages/model.md#scaffold-the-movie-model) the `Address` model displays the `Address` in the following form:
+
+![view of default scaffolding layout of model](display-templates/_static/addr.png)
 
 A web site could use a Display Template to show the `Address` in standard format:
 
+![view of default scaffolding layout using Address template](display-templates/_static/addr2.png)
+
 Display and Editor templates can also reduce code duplication and maintenance costs. Consider a web site that displays the `Address` model on 20 different pages. If the `Address` model changes, the 20 pages will all need to be updated. If a Display Template is used for the `Address` model, only the Display Template needs to be updated. For example, the `Address` model might be updated to include the country or region.
 
-Tag Helpers provide an alternative way that enables server-side code to participate in creating and rendering HTML elements in Razor files. For more information, see Tag Helpers compared to HTML Helpers.
+[Tag Helpers](tag-helpers/intro.md) provide an alternative way that enables server-side code to participate in creating and rendering HTML elements in Razor files. For more information, see [Tag Helpers compared to HTML Helpers](tag-helpers/intro.md#tag-helpers-compared-to-html-helpers).
 
 ## Display templates
 
 `DisplayTemplates` customize the display of model fields or create a layer of abstraction between the model values and their display.
 
-A `DisplayTemplate` is a Razor file placed in the`DisplayTemplates`folder:
+A `DisplayTemplate` is a [Razor](razor.md) file placed in the`DisplayTemplates`folder:
 
 * For Razor Pages apps, in the `Pages/Shared/DisplayTemplates` folder.
 * For MVC apps, in the `Views/Shared/DisplayTemplates` folder or the `Views/ControllerName/DisplayTemplates` folder. Display templates in the `Views/Shared/DisplayTemplates` are used by all controllers in the app. Display templates in the `Views/ControllerName/DisplayTemplates` folder are resolved only by the `ControllerName` controller.
 
 By convention, the `DisplayTemplate` file is named after the type to be displayed. The `Address.cshtml` template used in this sample:
 
-```cshtml
-﻿@model Address
-
-<dl>
-    <dd>@Model.FirstName @Model.MiddleName @Model.LastName</dd>
-    <dd>@Model.Street</dd>
-    <dd>@Model.City @Model.State @Model.Zipcode</dd>
-</dl>
-```
+[!code-cshtml[](display-templates/samples/Pages/Shared/DisplayTemplates/Address.cshtml)]
 
 The view engine automatically looks for a file in the `DisplayTemplates` folder that matches the name of the type. If it doesn't find a matching template, it falls back to the built in templates.
 
 The following code shows the Details view of the scaffolded project:
 
-```cshtml
-﻿@page
-@model WebAddress.Pages.Adr.DetailsModel
-
-@{
-    ViewData["Title"] = "Details";
-}
-
-<h1>Details</h1>
-
-<div>
-    <h4>Address</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address.FirstName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Address.FirstName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address.MiddleName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Address.MiddleName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address.LastName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Address.LastName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address.Street)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Address.Street)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address.City)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Address.City)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address.State)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Address.State)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address.Zipcode)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Address.Zipcode)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Address?.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
-</div>
-```
+[!code-cshtml[](display-templates/samples/Pages/Adr/Details.cshtml)]
 
 The following code shows the Details view using the Address Display Template:
 
-```cshtml
-@page
-@model WebAddress.Pages.Adr2.DetailsModel
+[!code-cshtml[](display-templates/samples/Pages/Adr2/Details.cshtml?highlight=15)]
 
-@{
-    ViewData["Title"] = "Details";
-}
+To reference a template whose name doesn't match the type name, use the `templateName` parameter in the <xref:Microsoft.AspNetCore.Mvc.Rendering.HtmlHelperDisplayExtensions.DisplayFor*> method. For example, the following markup displays the `Address` model with the `AddressShort` template:
 
-<h1>Details</h1>
+[!code-cshtml[](display-templates/samples/Pages/Adr2/DetailsCC.cshtml?highlight=15)]
 
-<div>
-    <h4>Address DM</h4>
-    <hr />
-    <dl class="row">
-        <dd class="col-sm-10">
-           @Html.DisplayFor(model => model.Address)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Address?.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
-</div>
-```
-
-To reference a template whose name doesn't match the type name, use the `templateName` parameter in the `Microsoft.AspNetCore.Mvc.Rendering.HtmlHelperDisplayExtensions.DisplayFor*` method. For example, the following markup displays the `Address` model with the `AddressShort` template:
-
-```cshtml
-@page
-@model WebAddress.Pages.Adr2.DetailsCCModel
-
-@{
-    ViewData["Title"] = "Details Short";
-}
-
-<h1>Details Short</h1>
-
-<div>
-    <h4>Address Short</h4>
-    <hr />
-    <dl class="row">
-        <dd class="col-sm-10">
-           @Html.DisplayFor(model => model.Address,"AddressShort")
-        </dd>
-    </dl>
-</div>
-```
-
-Use one of the available DisplayFor overloads that expose the `additionalViewData` parameter to pass <example-value> view data that is merged into the View Data Dictionary instance created for the template.
+Use one of the available [DisplayFor overloads](xref:Microsoft.AspNetCore.Mvc.Rendering.HtmlHelperDisplayExtensions.DisplayFor*#overloads) that expose the `additionalViewData` parameter to pass additional view data that is merged into the [View Data Dictionary](overview.md#viewdata) instance created for the template.
 
 ## Editor templates
 
 Editor templates are used in form controls when the model is edited or updated.
 
-An `EditorTemplate` is a Razor file placed in the`EditorTemplates` folder:
+An `EditorTemplate` is a [Razor](razor.md) file placed in the`EditorTemplates` folder:
 
 * For Razor Pages apps, in the `Pages/Shared/EditorTemplates` folder.
 * For MVC apps, in the `Views/Shared/EditorTemplates` folder or the `Views/ControllerName/EditorTemplates` folder.
 
 The following markup shows the `Pages/Shared/EditorTemplates/Address.cshtml` used in the sample:
 
-```cshtml
-@model Address
-
-<dl>
-    <dd>    Name:
-        <input asp-for="FirstName" /> <input asp-for="MiddleName" /> <input asp-for="LastName" /> 
-    </dd>
-        <dd>    Street:
-        <input asp-for="Street" /> 
-    </dd>
-
-        <dd>    city/state/zip:
-        <input asp-for="City" /> <input asp-for="State" /> <input asp-for="Zipcode" /> 
-    </dd>
-
-</dl>
-```
+[!code-cshtml[](display-templates/samples/Pages/Shared/EditorTemplates/Address.cshtml)]
 
 The following markup shows the *Edit.cshtml* page which uses the `Pages/Shared/EditorTemplates/Address.cshtml` template:
 
-```cshtml
-﻿@page
-@model WebAddress.Pages.Adr.EditModel
-
-@{
-    ViewData["Title"] = "Edit";
-}
-
-<h1>Edit</h1>
-
-<h4>Address</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Address.Id" />
-             @Html.EditorFor(model => model.Address)
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-```
+[!code-cshtml[](display-templates/samples/Pages/Adr2/Edit.cshtml?highlight=17)]
 
 ## Related content
 
-* View or download sample code (how to download)
-* Tag Helpers
-* Tag Helpers compared to HTML Helpers
+* [View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/mvc/views/display-templates/samples) ([how to download](../../fundamentals/index.md#how-to-download-a-sample))
+* [Tag Helpers](tag-helpers/intro.md)
+* [Tag Helpers compared to HTML Helpers](tag-helpers/intro.md#tag-helpers-compared-to-html-helpers)

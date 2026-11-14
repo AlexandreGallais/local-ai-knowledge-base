@@ -1,0 +1,82 @@
+<Type Name="ConditionalWeakTable&lt;TKey,TValue&gt;+CreateValueCallback" FullName="System.Runtime.CompilerServices.ConditionalWeakTable&lt;TKey,TValue&gt;+CreateValueCallback">
+  <TypeSignature Language="C#" Value="public delegate TValue ConditionalWeakTable&lt;TKey,TValue&gt;.CreateValueCallback(TKey key) where TKey : class where TValue : class;" />
+  <TypeSignature Language="ILAsm" Value=".class nested public auto ansi sealed ConditionalWeakTable`2/CreateValueCallback&lt;class TKey, class TValue&gt; extends System.MulticastDelegate" />
+  <TypeSignature Language="DocId" Value="T:System.Runtime.CompilerServices.ConditionalWeakTable`2.CreateValueCallback" />
+  <TypeSignature Language="VB.NET" Value="Public Delegate Function ConditionalWeakTable(Of TKey, TValue).CreateValueCallback(key As TKey) As TValue " />
+  <TypeSignature Language="F#" Value="type ConditionalWeakTable&lt;'Key, 'Value (requires 'Key : null and 'Value : null)&gt;.CreateValueCallback = delegate of 'Key -&gt; 'Value" />
+  <TypeSignature Language="C++ CLI" Value="public:  where TKey : class where TValue : classdelegate TValue ConditionalWeakTable&lt;TKey, TValue&gt;::CreateValueCallback(TKey key);" />
+  <AssemblyInfo>
+    <AssemblyName>System.Runtime</AssemblyName>
+    <AssemblyVersion>4.0.20.0</AssemblyVersion>
+    <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <AssemblyVersion>4.2.0.0</AssemblyVersion>
+    <AssemblyVersion>4.2.1.0</AssemblyVersion>
+    <AssemblyVersion>4.2.2.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+    <AssemblyVersion>11.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>mscorlib</AssemblyName>
+    <AssemblyVersion>2.0.5.0</AssemblyVersion>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>netstandard</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
+    <TypeForwarding From="System.Dynamic.Runtime" FromVersion="10.0.0.0" To="System.Runtime" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
+    <TypeForwarding From="System.Dynamic.Runtime" FromVersion="11.0.0.0" To="System.Runtime" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="System.Dynamic.Runtime" FromVersion="8.0.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+    <TypeForwarding From="System.Dynamic.Runtime" FromVersion="9.0.0.0" To="System.Runtime" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+  </TypeForwardingChain>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Attributes>
+    <Attribute FrameworkAlternate="net-10.0;net-11.0">
+      <AttributeName Language="C#">[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Parameters>
+    <Parameter Name="key" Type="TKey" Index="0" FrameworkAlternate="net-9.0" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>TValue</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="key">The key that belongs to the value to create.</param>
+    <summary>Represents a method that creates a non-default value to add as part of a key/value pair to a <see cref="T:System.Runtime.CompilerServices.ConditionalWeakTable`2" /> object.</summary>
+    <returns>An instance of a reference type that represents the value to attach to the specified key.</returns>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Runtime.CompilerServices.ConditionalWeakTable`2.CreateValueCallback> delegate encapsulates a callback method that is invoked by the <xref:System.Runtime.CompilerServices.ConditionalWeakTable`2.GetValue*?displayProperty=nameWithType> method when the key passed to the method is not found in the <xref:System.Runtime.CompilerServices.ConditionalWeakTable`2> object. The <xref:System.Runtime.CompilerServices.ConditionalWeakTable`2.GetValue*> method passes the callback method the key that represents a managed object to which a property value is to be dynamically attached. The method is responsible for returning the property value to its caller, which, in turn, adds the key/value pair to the table.
+
+ The <xref:System.Runtime.CompilerServices.ConditionalWeakTable`2.CreateValueCallback> method is used to return an instance of a reference type that can be attached to the specified key. It enables that instance to be initialized using non-default values. If the key is not found in the table, the <xref:System.Runtime.CompilerServices.ConditionalWeakTable`2.GetOrCreateValue*?displayProperty=nameWithType> method adds a key/value pair in which the value is initialized using default values.
+
+
+
+## Examples
+ The following example defines a `MainClass` class and a `MainInfo` class. `MainInfo` provides information about the `MainClass` instance. It also defines a static (`Shared` in Visual Basic) `CreateAttachedValue` method that can be assigned to the <xref:System.Runtime.CompilerServices.ConditionalWeakTable`2.CreateValueCallback> delegate and passed to the <xref:System.Runtime.CompilerServices.ConditionalWeakTable`2.GetValue*> method. The example calls the <xref:System.Runtime.CompilerServices.ConditionalWeakTable`2.GetValue*> method to add a `MainClass` object and its corresponding `MainInfo` object to a <xref:System.Runtime.CompilerServices.ConditionalWeakTable`2> table. The example also illustrates calls to the <xref:System.Runtime.CompilerServices.ConditionalWeakTable`2.Add*> and <xref:System.Runtime.CompilerServices.ConditionalWeakTable`2.GetOrCreateValue*> methods to add key/value pairs to the table, and a call to the <xref:System.Runtime.CompilerServices.ConditionalWeakTable`2.TryGetValue*> method to retrieve the value that belongs to an existing key.
+
+ :::code language="csharp" source="~/snippets/csharp/System.Runtime.CompilerServices/ConditionalWeakTableTKey,TValue+CreateValueCallback/Overview/getvalue1.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Runtime.CompilerServices/ConditionalWeakTableTKey,TValue+CreateValueCallback/Overview/getvalue1.vb" id="Snippet1":::
+
+ ]]></format>
+    </remarks>
+    <altmember cref="M:System.Runtime.CompilerServices.ConditionalWeakTable`2.GetValue(`0,System.Runtime.CompilerServices.ConditionalWeakTable{`0,`1}.CreateValueCallback)" />
+  </Docs>
+</Type>

@@ -1,16 +1,15 @@
 ---
-title: "Configure Language Options"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/use/configure/language-options.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: Configure Language Options
+eleventyNavigation:
+    key: configure language options
+    parent: configure
+    title: Configure Language Options
+    order: 2
 ---
 
-# Configure Language Options
-
-**Tip:**
+::: tip
 This page explains how to configure language options using the flat config format.
+:::
 
 The JavaScript ecosystem has a variety of runtimes, versions, extensions, and frameworks. Each of these can have different supported syntax and global variables. ESLint lets you configure language options specific to the JavaScript used in your project, like custom global variables. You can also use plugins to extend ESLint to support your project's language options.
 
@@ -24,7 +23,7 @@ ESLint allows you to specify the JavaScript language options you want to support
     - `commonjs` - CommonJS module (useful if your code uses `require()`). Your code has a top-level function scope and runs in non-strict mode.
     - `script` - non-module. Your code has a shared global scope and runs in non-strict mode.
 
-Here's an example configuration file you might use when linting ECMAScript 5 code:
+Here's an example [configuration file](./configuration-files#configuration-file) you might use when linting ECMAScript 5 code:
 
 ```js
 // eslint.config.js
@@ -47,10 +46,10 @@ If you are using the built-in ESLint parser, you can additionally change how ESL
 - `allowReserved` - allow the use of reserved words as identifiers (if `ecmaVersion` is `3`).
 - `ecmaFeatures` - an object indicating which additional language features you'd like to use:
     - `globalReturn` - allow `return` statements in the global scope. This option only applies when `languageOptions.sourceType` is set to `"script"`. When `languageOptions.sourceType` is set to `"commonjs"`, top-level `return` statements are allowed regardless of this option. When `languageOptions.sourceType` is set to `"module"`, top-level `return` statements are not allowed even if this option is set to `true`.
-    - `impliedStrict` - enable global strict mode (if `ecmaVersion` is `5` or greater).
-    - `jsx` - enable JSX.
+    - `impliedStrict` - enable global [strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) (if `ecmaVersion` is `5` or greater).
+    - `jsx` - enable [JSX](https://react.github.io/jsx/).
 
-Here's an example configuration file that enables JSX parsing in the default parser:
+Here's an example [configuration file](./configuration-files#configuration-file) that enables JSX parsing in the default parser:
 
 ```js
 // eslint.config.js
@@ -69,11 +68,13 @@ export default defineConfig([
 ]);
 ```
 
-**Tip:**
+::: tip
 Although it's possible to pass `ecmaVersion` and `sourceType` in `languageOptions.parserOptions`, we do not recommend doing so for the default parser. Instead, configure these options directly in `languageOptions`. If both are specified, the options in `languageOptions.parserOptions` take precedence over those in `languageOptions` for the parser.
+:::
 
-**Important:**
-Please note that supporting JSX syntax is not the same as supporting React. React applies specific semantics to JSX syntax that ESLint doesn't recognize. We recommend using `eslint-plugin-react` or `@eslint-react/eslint-plugin` if you are using React.
+::: important
+Please note that supporting JSX syntax is not the same as supporting React. React applies specific semantics to JSX syntax that ESLint doesn't recognize. We recommend using [`eslint-plugin-react`](https://github.com/jsx-eslint/eslint-plugin-react) or [`@eslint-react/eslint-plugin`](https://github.com/rel1cx/eslint-react) if you are using React.
+:::
 
 ## Specify Globals
 
@@ -95,7 +96,7 @@ This defines two global variables, `var1` and `var2`. If you want to optionally 
 
 ### Use configuration files
 
-To configure global variables inside of a configuration file, set the `languageOptions.globals` configuration property to an object containing keys named for each of the global variables you want to use. For each global variable key, set the corresponding value equal to `"writable"` to allow the variable to be overwritten or `"readonly"` to disallow overwriting. For example:
+To configure global variables inside of a [configuration file](./configuration-files#configuration-file), set the `languageOptions.globals` configuration property to an object containing keys named for each of the global variables you want to use. For each global variable key, set the corresponding value equal to `"writable"` to allow the variable to be overwritten or `"readonly"` to disallow overwriting. For example:
 
 ```js
 // eslint.config.js
@@ -132,12 +133,13 @@ export default defineConfig([
 ]);
 ```
 
-**Tip:**
+::: tip
 For historical reasons, the boolean value `false` and the string value `"readable"` are equivalent to `"readonly"`. Similarly, the boolean value `true` and the string value `"writeable"` are equivalent to `"writable"`. However, the use of these older values is deprecated.
+:::
 
 ### Predefined global variables
 
-Apart from the ECMAScript standard built-in globals, which are automatically enabled based on the configured `languageOptions.ecmaVersion`, ESLint doesn't provide predefined sets of global variables. You can use the `globals` package to additionally enable all globals for a specific environment. For example, here is how you can add `console`, amongst other browser globals, into your configuration.
+Apart from the ECMAScript standard built-in globals, which are automatically enabled based on the configured `languageOptions.ecmaVersion`, ESLint doesn't provide predefined sets of global variables. You can use the [`globals`](https://www.npmjs.com/package/globals) package to additionally enable all globals for a specific environment. For example, here is how you can add `console`, amongst other browser globals, into your configuration.
 
 ```js
 // eslint.config.js
@@ -155,7 +157,7 @@ export default defineConfig([
 ]);
 ```
 
-You can include multiple different collections of globals in the same way. The following example includes globals both for web browsers and for Jest:
+You can include multiple different collections of globals in the same way. The following example includes globals both for web browsers and for [Jest](https://jestjs.io/):
 
 ```js
 // eslint.config.js

@@ -19,24 +19,26 @@ import {
 } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
+  DOCUMENT_FILE,
   indexText,
   type Section,
   sections,
 } from './search.ts';
 
-function markdownFiles(folder: string): string[] {
+// The documentation files of a folder, whatever their format.
+function documentFiles(folder: string): string[] {
   return readdirSync(folder, { withFileTypes: true }).flatMap((entry) => {
     const path = join(folder, entry.name);
 
     if (entry.isDirectory()) {
-      return markdownFiles(path);
+      return documentFiles(path);
     }
-    return entry.name.endsWith('.md') ? [path] : [];
+    return DOCUMENT_FILE.test(entry.name) ? [path] : [];
   });
 }
 
 function folderSections(brick: string, folder: string): Section[] {
-  return markdownFiles(folder).flatMap((path) => sections(
+  return documentFiles(folder).flatMap((path) => sections(
     relative(brick, path)
       .split(sep)
       .join('/'),

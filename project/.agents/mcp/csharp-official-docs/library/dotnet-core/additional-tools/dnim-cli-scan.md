@@ -1,10 +1,9 @@
 ---
-title: "dnim scan command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/additional-tools/dnim-cli-scan.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dnim scan command
+description: The scan command identifies .NET installations.
+author: joeloff
+ms.date: 08/11/2026
+ai-usage: ai-assisted
 ---
 
 # dnim scan
@@ -35,61 +34,27 @@ Results can be filtered using the product version and support phase options to o
 
 ## Options
 
-- **`-a|--accept-license`**
+- [!INCLUDE [accept-license](includes/dnim-cli-accept-license.md)]
 
-Automatically accept the license agreement. On first run, the user will be prompted to accept the license. The command will fail if the verbosity is set to `quiet` and the tool is executed for the first time. Administrators should include this option when deploying DNIM across their network.
+- [!INCLUDE [bin-deployed-installs](includes/dnim-cli-include-bin-deployed-installs.md)]
 
-- **`-b|--include-bin-deployed-installs`**
+- [!INCLUDE [except-product-version](includes/dnim-cli-except-product-version.md)]
+  
+- [!INCLUDE [except-support-phase](includes/dnim-cli-except-support-phase.md)]
 
-Search for bin-deployed installations under Program Files. This option will incur additional overhead to verify installations that aren't backed by an MSI.
+- [!INCLUDE [log-file](includes/dnim-cli-log-file.md)]
 
-- **`--epv|--except-product-version <PRODUCT_VERSION>`**
+- [!INCLUDE [output-file](includes/dnim-cli-output-file.md)]
 
-Exclude installations that match the specified product version. Product versions contain a major and minor version, such as `2.2` or `5.0`. Specify the option once for each product version.
+- [!INCLUDE [offline](includes/dnim-cli-offline.md)]
 
-> **Note:**
-> The `--product-version` and `--except-product-version` options are mutually exclusive.
+- [!INCLUDE [output-format](includes/dnim-cli-output-format.md)]
 
-- **`--esp|--except-support-phase <active|eol|golive|maintenance|preview>`**
+- [!INCLUDE [product-version](includes/dnim-cli-product-version.md)]
 
-Exclude installations that match the specified support phase. Specify the option once for each support phase.
+- [!INCLUDE [support-phase](includes/dnim-cli-support-phase.md)]
 
-> **Note:**
-> The `--support-phase` and `--except-support-phase` options are mutually exclusive.
-
-- **`-l|--log-file <LOG_FILE>`**
-
-Specify the path of the log file. By default, DNIM creates a timestamped log file in the user's temporary directory.
-
-- **`-o|--output-file <OUTPUT_FILE>`**
-
-Specify the full path of the file where DNIM writes the command results.
-
-- **`--offline <LAYOUT_DIRECTORY>`**
-
-Use files from the specified layout directory instead of retrieving required files from the internet.
-
-- **`--output-format <text|csv|html|json>`**
-
-Specify the output format for command results. The default format is `csv`.
-
-- **`--pv|--product-version <PRODUCT_VERSION>`**
-
-Include installations that match the specified product version. Product versions contain a major and minor version, such as `2.2` or `5.0`. Specify the option once for each product version. By default, all known product versions are included.
-
-> **Note:**
-> The `--product-version` and `--except-product-version` options are mutually exclusive.
-
-- **`--sp|--support-phase <active|eol|golive|maintenance|preview>`**
-
-Include only products, releases, or installations that match the specified support phase. Specify the option once for each support phase. By default, all support phases are included.
-
-> **Note:**
-> The `--support-phase` and `--except-support-phase` options are mutually exclusive.
-
-- **`-v|--verbosity <quiet|normal|diagnostic>`**
-
-Set the console output verbosity. Log files always contain diagnostic output. The default value is `normal`.
+- [!INCLUDE [verbosity](includes/dnim-cli-verbosity.md)]
 
 ## Results
 
@@ -123,4 +88,4 @@ The results present a summary of each installation, including its type (for exam
 
 ## See also
 
-.NET Installs
+[.NET Installs](dnim-net-installs.md)

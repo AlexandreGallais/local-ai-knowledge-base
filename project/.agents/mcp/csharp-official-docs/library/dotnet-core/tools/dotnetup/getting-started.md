@@ -1,16 +1,14 @@
 ---
-title: "Get started with dotnetup"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/getting-started.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Get started with dotnetup
+description: Install dotnetup, choose an SDK channel, and configure access to .NET installations.
+ms.topic: tutorial
+ms.date: 10/13/2026
+ai-usage: ai-assisted
 ---
 
 # Get started with dotnetup
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](includes/public-preview.md)]
 
 `dotnetup` is a cross-platform toolchain manager for user-level .NET
 installations. It installs, updates, and removes .NET SDKs and runtimes without
@@ -33,11 +31,11 @@ using a system package manager.
   `shasum` to verify them.
 
 `dotnetup` has the same operating-system requirements as the .NET Runtime.
-For OS-specific requirements, see Install .NET on Windows,
-Install .NET on macOS, or
-Install .NET on Linux.
+For OS-specific requirements, see [Install .NET on Windows](../../install/windows.md),
+[Install .NET on macOS](../../install/macos.md), or
+[Install .NET on Linux](../../install/linux.md).
 
-> **Important:**
+> [!IMPORTANT]
 > On Windows, the default setup uses the `everywhere` access mode. This mode:
 >
 > - Requires elevation to update the system `PATH`.
@@ -51,7 +49,7 @@ Install .NET on Linux.
 > To avoid these effects, choose the `none` or `shell` access mode during setup.
 > If you choose `everywhere`, migrate your existing installations when setup
 > offers to. For details, see
-> Everywhere mode considerations.
+> [Everywhere mode considerations](concepts/environment.md#everywhere-mode-considerations).
 
 ## Download dotnetup
 
@@ -84,7 +82,7 @@ To install the latest `daily` build on Windows, run:
 iex "& { $(irm https://aka.ms/dotnetup/get-dotnetup.ps1) } -Quality daily"
 ```
 
-> **Important:**
+> [!IMPORTANT]
 > Daily builds have not completed release validation and are not code-signed.
 > Use daily builds only for short-lived testing.
 
@@ -141,7 +139,7 @@ An SDK channel tells `dotnetup` which SDK to install and how to update it.
 | No initial SDK | `none` | Skip installation during setup |
 
 Exact versions do not advance during updates. For all accepted forms, see
-dotnetup channels and versions.
+[dotnetup channels and versions](concepts/channels.md).
 
 ### Choose how to access .NET
 
@@ -155,13 +153,13 @@ dotnetup-managed .NET installation.
 | `everywhere` | Modifies the system `PATH` and sets the user-level `DOTNET_ROOT` environment variable. Only available on Windows. |
 
 For more details and considerations for `everywhere` mode, see
-dotnetup environment configuration.
+[dotnetup environment configuration](concepts/environment.md).
 
 ### Migrate existing installations
 
 Setup can offer to migrate existing machine-wide .NET SDK and Runtime
 installations into the dotnetup-managed installation. See
-Everywhere mode considerations
+[Everywhere mode considerations](concepts/environment.md#everywhere-mode-considerations)
 for why migration is especially important with `everywhere` mode.
 
 ## Verify setup
@@ -190,4 +188,4 @@ To update the tool itself, run `dotnetup self update`.
 For daily builds, use `dotnetup self update --channel daily`.
 These commands don't update managed SDKs or runtimes.
 For options and older-version recovery, see
-Update or remove dotnetup.
+[Update or remove dotnetup](usecases/manage-dotnetup.md).

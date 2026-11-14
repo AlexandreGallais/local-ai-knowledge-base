@@ -1,10 +1,6 @@
 ---
+id: test-cli
 title: "Command line"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/test-cli-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
 
 Playwright provides a powerful command line interface for running tests, generating code, debugging, and more. The most up to date list of commands and arguments available on the CLI can always be retrieved via `npx playwright --help`.
@@ -13,7 +9,7 @@ Playwright provides a powerful command line interface for running tests, generat
 
 ### Run Tests
 
-Run your Playwright tests. Read more about running tests.
+Run your Playwright tests. [Read more about running tests](./running-tests.md).
 
 #### Syntax
 
@@ -49,19 +45,19 @@ npx playwright test --project=chromium
 npx playwright test --help
 ```
 
-**Disable parallelization**
+**Disable [parallelization](./test-parallel.md)**
 
 ```bash
 npx playwright test --workers=1
 ```
 
-**Run in debug mode with Playwright Inspector**
+**Run in debug mode with [Playwright Inspector](./debug.md)**
 
 ```bash
 npx playwright test --debug
 ```
 
-**Run tests in interactive UI mode**
+**Run tests in interactive [UI mode](./test-ui-mode.md)**
 
 ```bash
 npx playwright test --ui
@@ -108,14 +104,14 @@ npx playwright test --ui
 | `--repeat-each <N>` | Run each test `N` times (default: 1). |
 | `--reporter <reporter>` | Reporter to use, comma-separated, can be "dot", "line", "list", "failures", or others (default: "list" locally and "dot" on CI). You can also pass a path to a custom reporter file. |
 | `--retries <retries>` | Maximum retry count for flaky tests, zero for no retries (default: no retries). |
-| `--run-agents <mode>` | Run agents to generate the code for `page.perform`. Possible values are "missing", "all" and "none" (default: "none"). See test-agents. |
+| `--run-agents <mode>` | Run agents to generate the code for `page.perform`. Possible values are "missing", "all" and "none" (default: "none"). See [test-agents](./test-agents.md). |
 | `--shard <shard>` | Shard tests and execute only the selected shard, specified in the form "current/all", 1-based, e.g., "3/5". |
-| `--shuffle [seed]` | Schedule tests in a random order: test files are shuffled, and so are individual tests in parallel mode. Tests that must run together, for example in a serial suite, keep their order. The seed is printed at the start of the run, pass it to reproduce the same order. |
-| `--test-list <file>` | Path to a file containing a list of tests to run. See test list for details. |
-| `--test-list-invert <file>` | Path to a file containing a list of tests to skip. See test list for details.  |
+| `--shuffle [seed]` | Schedule tests in a random order: test files are shuffled, and so are individual tests in [parallel mode](./test-parallel.md). Tests that must run together, for example in a serial suite, keep their order. The seed is printed at the start of the run, pass it to reproduce the same order. |
+| `--test-list <file>` | Path to a file containing a list of tests to run. See [test list](#test-list) for details. |
+| `--test-list-invert <file>` | Path to a file containing a list of tests to skip. See [test list](#test-list) for details.  |
 | `--timeout <timeout>` | Specify test timeout threshold in milliseconds, zero for unlimited (default: 30 seconds). |
 | `--trace <mode>` | Force tracing mode, can be `on`, `off`, `on-first-retry`, `on-all-retries`, `retain-on-failure`, `retain-on-first-failure`, `retain-on-failure-and-retries`. |
-| `--tsconfig ` | Path to a single tsconfig applicable to all imported files (default: look up tsconfig for each imported file separately). |
+| `--tsconfig <path>` | Path to a single tsconfig applicable to all imported files (default: look up tsconfig for each imported file separately). |
 | `--ui` | Run tests in interactive UI mode. |
 | `--ui-host <host>` | Host to serve UI on; specifying this option opens UI in a browser tab. |
 | `--ui-port <port>` | Port to serve UI on, 0 for any free port; specifying this option opens UI in a browser tab. |
@@ -161,7 +157,7 @@ example.spec.ts:42:42 › example test
 
 ### Show Report
 
-Display HTML report from previous test run. Read more about the HTML reporter.
+Display HTML report from previous test run. [Read more about the HTML reporter](./test-reporters#html-reporter).
 
 #### Syntax
 
@@ -191,7 +187,7 @@ npx playwright show-report --port 8080
 
 ### Install Browsers
 
-Install browsers required by Playwright. Read more about Playwright's browser support.
+Install browsers required by Playwright. [Read more about Playwright's browser support](./browsers.md).
 
 #### Syntax
 
@@ -240,7 +236,7 @@ npx playwright install --with-deps
 
 ### Code Generation
 
-Record actions and generate tests for multiple languages. Read more about Codegen.
+Record actions and generate tests for multiple languages. [Read more about Codegen](./codegen-intro.md).
 
 #### Syntax
 
@@ -272,7 +268,7 @@ npx playwright codegen --target=python
 
 ### Trace Viewer
 
-Analyze and view test traces for debugging. Read more about Trace Viewer.
+Analyze and view test traces for debugging. [Read more about Trace Viewer](./trace-viewer.md).
 
 #### Syntax
 
@@ -307,7 +303,7 @@ When you pass `--port`, other users on your machine can open the trace on that p
 
 ### Merge Reports
 
-Read blob reports and combine them. Read more about merge-reports.
+Read [blob](./test-reporters#blob-reporter) reports and combine them. [Read more about merge-reports](./test-sharding.md).
 
 #### Syntax
 

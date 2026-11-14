@@ -1,15 +1,22 @@
 ---
+description: "Learn more about: IMetaDataEmit::SetPermissionSetProps Method"
 title: "IMetaDataEmit::SetPermissionSetProps Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataemit-setpermissionsetprops-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataEmit.SetPermissionSetProps"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataEmit::SetPermissionSetProps"
+  - "IMetaDataEmit::SetPermissionSetProps method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataEmit::SetPermissionSetProps Method
 
-Sets or updates features of the metadata signature of a permission set defined by a prior call to IMetaDataEmit::DefinePermissionSet.
+Sets or updates features of the metadata signature of a permission set defined by a prior call to [IMetaDataEmit::DefinePermissionSet](imetadataemit-definepermissionset-method.md).
 
 ## Syntax
 
@@ -29,7 +36,7 @@ HRESULT SetPermissionSetProps (
  [in] A metadata token that represents the object to be decorated.
 
  `dwAction`
- [in] A CorDeclSecurity value that specifies the type of declarative security to be used.
+ [in] A [CorDeclSecurity](../enumerations/cordeclsecurity-enumeration.md) value that specifies the type of declarative security to be used.
 
  `pvPermission`
  [in] The permission BLOB.
@@ -42,7 +49,7 @@ HRESULT SetPermissionSetProps (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -50,5 +57,5 @@ HRESULT SetPermissionSetProps (
 
 ## See also
 
-- IMetaDataEmit Interface
-- IMetaDataEmit2 Interface
+- [IMetaDataEmit Interface](imetadataemit-interface.md)
+- [IMetaDataEmit2 Interface](imetadataemit2-interface.md)

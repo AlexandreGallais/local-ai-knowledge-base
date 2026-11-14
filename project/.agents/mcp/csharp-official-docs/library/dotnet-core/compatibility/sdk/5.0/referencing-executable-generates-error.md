@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Error generated when executable references executable"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/5.0/referencing-executable-generates-error.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 5 where compile-time errors are generated when an executable references an executable whose SelfContained value is different.
+ms.date: 05/26/2021
 ---
-
 # Error generated when executable project references mismatched executable
 
 Generally, an executable project references library projects, not other executable projects. An executable project can also reference another executable project to use APIs that are defined in it. Some developers want to reference an executable project from another executable project so that both apps are placed in and are runnable from the same output folder. However, this scenario does not work if a self-contained executable references a non-self-contained executable, or vice versa. Because of how the application host works, neither app can be launched. To prevent situations where apps aren't runnable, .NET SDK 5+ produces compile-time errors NETSDK1150 and NETSDK1151 when it detects mismatched executable references.
@@ -31,8 +27,20 @@ If the referenced project doesn't need to be runnable from the output folder, yo
 <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
 ```
 
-For more information, see ValidateExecutableReferencesMatchSelfContained.
+For more information, see [ValidateExecutableReferencesMatchSelfContained](../../../project-sdk/msbuild-props.md#validateexecutablereferencesmatchselfcontained).
 
 ## Affected APIs
 
 None.
+
+<!--
+
+### Affected APIs
+
+Not detectable via API analysis.
+
+### Category
+
+- SDK
+
+-->

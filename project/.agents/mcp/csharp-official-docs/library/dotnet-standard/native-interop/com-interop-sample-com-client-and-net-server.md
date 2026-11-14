@@ -1,15 +1,20 @@
 ---
 title: "COM interop sample: COM client and .NET server"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/native-interop/com-interop-sample-com-client-and-net-server.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Read a code sample that shows the interoperation of a COM client and a .NET server that performs mortgage calculations.
+ms.date: 07/08/2026
+ai-usage: ai-assisted
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "interoperation with unmanaged code, samples"
+  - "COM interop, samples"
 ---
-
 # COM interop sample: COM client and .NET server
 
-This sample demonstrates the interoperation of a COM client and a .NET server that performs mortgage calculations. In this example, the client creates and calls an instance of the managed `Loan` class, passes four arguments (one of those four being equal to zero) to the instance, and displays the computations. Code examples from this sample appear throughout this section.
+This sample demonstrates the interoperation of a [COM client](#cpconcominteropsamplecomclientnetserveranchor1) and a [.NET server](#cpconcominteropsamplecomclientnetserveranchor2) that performs mortgage calculations. In this example, the client creates and calls an instance of the managed `Loan` class, passes four arguments (one of those four being equal to zero) to the instance, and displays the computations. Code examples from this sample appear throughout this section.
+
+<a name="cpconcominteropsamplecomclientnetserveranchor1"></a>
 
 ## COM client
 
@@ -76,6 +81,8 @@ int main(int argc, char* argv[])
     return 0;
 }
 ```
+
+<a name="cpconcominteropsamplecomclientnetserveranchor2"></a>
 
 ## .NET server
 
@@ -380,4 +387,4 @@ namespace LoanLib {
 
 ## See also
 
-- Expose .NET components to COM
+- [Expose .NET components to COM](exposing-dotnet-components-to-com.md)

@@ -1,12 +1,3 @@
----
-title: "class: TimeoutError"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-timeouterror.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: TimeoutError
 * since: v1.8
 * extends: [Error]
@@ -32,7 +23,7 @@ const playwright = require('playwright');
 })();
 ```
 
-```python
+```python async
 import asyncio
 from playwright.async_api import async_playwright, TimeoutError as PlaywrightTimeoutError, Playwright
 
@@ -52,7 +43,7 @@ async def main():
 asyncio.run(main())
 ```
 
-```python
+```python sync
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 
 with sync_playwright() as p:

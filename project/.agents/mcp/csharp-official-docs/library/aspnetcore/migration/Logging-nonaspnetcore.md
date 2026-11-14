@@ -1,10 +1,7 @@
 ---
-title: "Migrate from Microsoft.Extensions.Logging 2.1 to 2.2 or 3.0"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/migration/Logging-nonaspnetcore.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Migrate from Microsoft.Extensions.Logging 2.1 to 2.2 or 3.0
+description: Learn how to migrate a non-ASP.NET Core application that uses Microsoft.Extensions.Logging from 2.1 to 2.2 or 3.0.
+ms.date: 01/04/2019
 ---
 
 # Migrate from Microsoft.Extensions.Logging 2.1 to 2.2 or 3.0
@@ -65,5 +62,5 @@ using (var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole())
 
 ## Related content
 
-* Microsoft.Extensions.Logging.Console NuGet package.
-* Logging in .NET and ASP.NET Core
+* [Microsoft.Extensions.Logging.Console NuGet package](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/).
+* [Logging in .NET and ASP.NET Core](../fundamentals/logging/index.md)

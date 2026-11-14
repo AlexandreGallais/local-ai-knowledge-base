@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: TwoDigitYearMax default is 2049"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/globalization/8.0/twodigityearmax-default.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the globalization breaking change in .NET 8 where the default value of the TwoDigitYearMax property for Gregorian calendars has changed from 2029 to 2049.
+ms.date: 01/25/2023
 ---
-
 # TwoDigitYearMax default is 2049
 
-Calendar classes, such as `System.Globalization.GregorianCalendar`, have a `TwoDigitYearMax` property that defines the last year of a 100-year range that can be represented by a two-digit year. This property is often used to translate a two-digit year to a four-digit year. Previously, `System.Globalization.Calendar.TwoDigitYearMax` defaulted to 2029 for `System.Globalization.GregorianCalendar` and other Gregorian-like calendars, such as `System.Globalization.JulianCalendar` and `System.Globalization.EastAsianLunisolarCalendar`. That value meant that two-digit years from 00 to 29 translated to 2000-2029. Two-digit years from 30 to 99 translated to 1930-1999. The default `TwoDigitYearMax` property value for `System.Globalization.GregorianCalendar` and other Gregorian-like calendars has now changed from 2029 to 2049. The new value means that two-digit years from 00 to 49 are translated to 2000-2049. Any year from 50 to 99 will be translated to 1950-1999.
+Calendar classes, such as <xref:System.Globalization.GregorianCalendar>, have a `TwoDigitYearMax` property that defines the last year of a 100-year range that can be represented by a two-digit year. This property is often used to translate a two-digit year to a four-digit year. Previously, <xref:System.Globalization.Calendar.TwoDigitYearMax?displayProperty=nameWithType> defaulted to 2029 for <xref:System.Globalization.GregorianCalendar> and other Gregorian-like calendars, such as <xref:System.Globalization.JulianCalendar> and <xref:System.Globalization.EastAsianLunisolarCalendar>. That value meant that two-digit years from 00 to 29 translated to 2000-2029. Two-digit years from 30 to 99 translated to 1930-1999. The default `TwoDigitYearMax` property value for <xref:System.Globalization.GregorianCalendar> and other Gregorian-like calendars has now changed from 2029 to 2049. The new value means that two-digit years from 00 to 49 are translated to 2000-2049. Any year from 50 to 99 will be translated to 1950-1999.
 
 In addition, on Windows, the default value of the `TwoDigitYearMax` property is now obtained from the corresponding Windows setting (the default value for which is now also 2049). This matches the behavior prior to .NET 5.
 
@@ -17,7 +13,7 @@ Date parsing is the functionality that's most affected by this change.
 
 ## Previous behavior
 
-In .NET 6 and .NET 7, if you didn't specify a value for `System.Globalization.Calendar.TwoDigitYearMax`, parsing a string like "12/10/35" with the Gregorian calendar produced the date "December 10th, 1935".
+In .NET 6 and .NET 7, if you didn't specify a value for <xref:System.Globalization.Calendar.TwoDigitYearMax>, parsing a string like "12/10/35" with the Gregorian calendar produced the date "December 10th, 1935".
 
 ## New behavior
 
@@ -29,7 +25,7 @@ Starting in .NET 8, parsing a string like "12/10/35" with the Gregorian calendar
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -37,7 +33,7 @@ It's more logical to parse a two-digit year that's relatively close to the two d
 
 ## Recommended action
 
-If you don't want your app to depend on the default value when parsing a string to a date, you can control how a two-digit year is translated to a four-digit year by setting the `System.Globalization.GregorianCalendar.TwoDigitYearMax` property. The following code shows how to set it for the invariant culture.
+If you don't want your app to depend on the default value when parsing a string to a date, you can control how a two-digit year is translated to a four-digit year by setting the <xref:System.Globalization.GregorianCalendar.TwoDigitYearMax> property. The following code shows how to set it for the invariant culture.
 
 ```csharp
 CultureInfo clonedInvariantCulture = (CultureInfo)(CultureInfo.InvariantCulture.Clone());
@@ -48,22 +44,22 @@ DateTime dt = DateTime.Parse("12/25/45", clonedInvariantCulture);
 
 ## Affected APIs
 
-- `System.DateOnly.Parse*`
-- `System.DateOnly.ParseExact*`
-- `System.DateOnly.TryParse*`
-- `System.DateOnly.TryParseExact*`
-- `System.DateTime.Parse*`
-- `System.DateTime.ParseExact*`
-- `System.DateTime.TryParse*`
-- `System.DateTime.TryParseExact*`
-- `System.DateTimeOffset.Parse*`
-- `System.DateTimeOffset.ParseExact*`
-- `System.DateTimeOffset.TryParse*`
-- `System.DateTimeOffset.TryParseExact*`
-- `System.Globalization.GregorianCalendar.TwoDigitYearMax` (and other Gregorian-like calendar types)
-- `System.Globalization.GregorianCalendar.ToDateTime*` (and other Gregorian-like calendar types)
-- `System.Globalization.GregorianCalendar.ToFourDigitYear(System.Int32)` (and other Gregorian-like calendar types)
+- <xref:System.DateOnly.Parse*?displayProperty=fullName>
+- <xref:System.DateOnly.ParseExact*?displayProperty=fullName>
+- <xref:System.DateOnly.TryParse*?displayProperty=fullName>
+- <xref:System.DateOnly.TryParseExact*?displayProperty=fullName>
+- <xref:System.DateTime.Parse*?displayProperty=fullName>
+- <xref:System.DateTime.ParseExact*?displayProperty=fullName>
+- <xref:System.DateTime.TryParse*?displayProperty=fullName>
+- <xref:System.DateTime.TryParseExact*?displayProperty=fullName>
+- <xref:System.DateTimeOffset.Parse*?displayProperty=fullName>
+- <xref:System.DateTimeOffset.ParseExact*?displayProperty=fullName>
+- <xref:System.DateTimeOffset.TryParse*?displayProperty=fullName>
+- <xref:System.DateTimeOffset.TryParseExact*?displayProperty=fullName>
+- <xref:System.Globalization.GregorianCalendar.TwoDigitYearMax?displayProperty=fullName> (and other Gregorian-like calendar types)
+- <xref:System.Globalization.GregorianCalendar.ToDateTime*?displayProperty=fullName> (and other Gregorian-like calendar types)
+- <xref:System.Globalization.GregorianCalendar.ToFourDigitYear(System.Int32)?displayProperty=fullName> (and other Gregorian-like calendar types)
 
 ## See also
 
-- Parse date and time strings in .NET
+- [Parse date and time strings in .NET](../../../../standard/base-types/parsing-datetime.md)

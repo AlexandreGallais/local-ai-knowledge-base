@@ -1,13 +1,6 @@
----
-title: "ch18-02-trait-objects"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch18-02-trait-objects.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
+<!-- Old headings. Do not remove or links may break. -->
 
-# ch18-02-trait-objects
+<a id="using-trait-objects-that-allow-for-values-of-different-types"></a>
 
 ## Using Trait Objects to Abstract over Shared Behavior
 
@@ -55,8 +48,8 @@ of a type implementing our specified trait and a table used to look up trait
 methods on that type at runtime. We create a trait object by specifying some
 sort of pointer, such as a reference or a `Box<T>` smart pointer, then the
 `dyn` keyword, and then specifying the relevant trait. (We’ll talk about the
-reason trait objects must use a pointer in “Dynamically Sized Types and the
-`Sized` Trait” in Chapter 20.) We can use
+reason trait objects must use a pointer in [“Dynamically Sized Types and the
+`Sized` Trait”][dynamically-sized]<!-- ignore --> in Chapter 20.) We can use
 trait objects in place of a generic or concrete type. Wherever we use a trait
 object, Rust’s type system will ensure at compile time that any value used in
 that context will implement the trait object’s trait. Consequently, we don’t
@@ -74,13 +67,13 @@ allow abstraction across common behavior.
 Listing 18-3 shows how to define a trait named `Draw` with one method named
 `draw`.
 
-**Listing 18-3: Definition of the `Draw` trait** (src/lib.rs)
+<Listing number="18-3" file-name="src/lib.rs" caption="Definition of the `Draw` trait">
 
-```rust
-pub trait Draw {
-    fn draw(&self);
-}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch18-oop/listing-18-03/src/lib.rs}}
 ```
+
+</Listing>
 
 This syntax should look familiar from our discussions on how to define traits
 in Chapter 10. Next comes some new syntax: Listing 18-4 defines a struct named
@@ -88,28 +81,24 @@ in Chapter 10. Next comes some new syntax: Listing 18-4 defines a struct named
 `Box<dyn Draw>`, which is a trait object; it’s a stand-in for any type inside a
 `Box` that implements the `Draw` trait.
 
-**Listing 18-4: Definition of the `Screen` struct with a `components` field holding a vector of trait objects that implement the `Draw` trait** (src/lib.rs)
+<Listing number="18-4" file-name="src/lib.rs" caption="Definition of the `Screen` struct with a `components` field holding a vector of trait objects that implement the `Draw` trait">
 
-```rust
-pub struct Screen {
-    pub components: Vec<Box<dyn Draw>>,
-}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch18-oop/listing-18-04/src/lib.rs:here}}
 ```
+
+</Listing>
 
 On the `Screen` struct, we’ll define a method named `run` that will call the
 `draw` method on each of its `components`, as shown in Listing 18-5.
 
-**Listing 18-5: A `run` method on `Screen` that calls the `draw` method on each component** (src/lib.rs)
+<Listing number="18-5" file-name="src/lib.rs" caption="A `run` method on `Screen` that calls the `draw` method on each component">
 
-```rust
-impl Screen {
-    pub fn run(&self) {
-        for component in self.components.iter() {
-            component.draw();
-        }
-    }
-}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch18-oop/listing-18-05/src/lib.rs:here}}
 ```
+
+</Listing>
 
 This works differently from defining a struct that uses a generic type
 parameter with trait bounds. A generic type parameter can be substituted with
@@ -118,24 +107,13 @@ concrete types to fill in for the trait object at runtime. For example, we
 could have defined the `Screen` struct using a generic type and a trait bound,
 as in Listing 18-6.
 
-**Listing 18-6: An alternate implementation of the `Screen` struct and its `run` method using generics and trait bounds** (src/lib.rs)
+<Listing number="18-6" file-name="src/lib.rs" caption="An alternate implementation of the `Screen` struct and its `run` method using generics and trait bounds">
 
-```rust
-pub struct Screen<T: Draw> {
-    pub components: Vec<T>,
-}
-
-impl<T> Screen<T>
-where
-    T: Draw,
-{
-    pub fn run(&self) {
-        for component in self.components.iter() {
-            component.draw();
-        }
-    }
-}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch18-oop/listing-18-06/src/lib.rs:here}}
 ```
+
+</Listing>
 
 This restricts us to a `Screen` instance that has a list of components all of
 type `Button` or all of type `TextField`. If you’ll only ever have homogeneous
@@ -143,7 +121,7 @@ collections, using generics and trait bounds is preferable because the
 definitions will be monomorphized at compile time to use the concrete types.
 
 On the other hand, with the method using trait objects, one `Screen` instance
-can hold a `Vec<T>` that contains a `Box` as well as a
+can hold a `Vec<T>` that contains a `Box<Button>` as well as a
 `Box<TextField>`. Let’s look at how this works, and then we’ll talk about the
 runtime performance implications.
 
@@ -155,21 +133,13 @@ of this book, so the `draw` method won’t have any useful implementation in its
 body. To imagine what the implementation might look like, a `Button` struct
 might have fields for `width`, `height`, and `label`, as shown in Listing 18-7.
 
-**Listing 18-7: A `Button` struct that implements the `Draw` trait** (src/lib.rs)
+<Listing number="18-7" file-name="src/lib.rs" caption="A `Button` struct that implements the `Draw` trait">
 
-```rust
-pub struct Button {
-    pub width: u32,
-    pub height: u32,
-    pub label: String,
-}
-
-impl Draw for Button {
-    fn draw(&self) {
-        // code to actually draw a button
-    }
-}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch18-oop/listing-18-07/src/lib.rs:here}}
 ```
+
+</Listing>
 
 The `width`, `height`, and `label` fields on `Button` will differ from the
 fields on other components; for example, a `TextField` type might have those
@@ -185,23 +155,13 @@ If someone using our library decides to implement a `SelectBox` struct that has
 `width`, `height`, and `options` fields, they would implement the `Draw` trait
 on the `SelectBox` type as well, as shown in Listing 18-8.
 
-**Listing 18-8: Another crate using `gui` and implementing the `Draw` trait on a `SelectBox` struct** (src/main.rs)
+<Listing number="18-8" file-name="src/main.rs" caption="Another crate using `gui` and implementing the `Draw` trait on a `SelectBox` struct">
 
-```rust
-use gui::Draw;
-
-struct SelectBox {
-    width: u32,
-    height: u32,
-    options: Vec<String>,
-}
-
-impl Draw for SelectBox {
-    fn draw(&self) {
-        // code to actually draw a select box
-    }
-}
+```rust,ignore
+{{#rustdoc_include ../listings/ch18-oop/listing-18-08/src/main.rs:here}}
 ```
+
+</Listing>
 
 Our library’s user can now write their `main` function to create a `Screen`
 instance. To the `Screen` instance, they can add a `SelectBox` and a `Button`
@@ -209,34 +169,13 @@ by putting each in a `Box<T>` to become a trait object. They can then call the
 `run` method on the `Screen` instance, which will call `draw` on each of the
 components. Listing 18-9 shows this implementation.
 
-**Listing 18-9: Using trait objects to store values of different types that implement the same trait** (src/main.rs)
+<Listing number="18-9" file-name="src/main.rs" caption="Using trait objects to store values of different types that implement the same trait">
 
-```rust
-use gui::{Button, Screen};
-
-fn main() {
-    let screen = Screen {
-        components: vec![
-            Box::new(SelectBox {
-                width: 75,
-                height: 10,
-                options: vec![
-                    String::from("Yes"),
-                    String::from("Maybe"),
-                    String::from("No"),
-                ],
-            }),
-            Box::new(Button {
-                width: 50,
-                height: 10,
-                label: String::from("OK"),
-            }),
-        ],
-    };
-
-    screen.run();
-}
+```rust,ignore
+{{#rustdoc_include ../listings/ch18-oop/listing-18-09/src/main.rs:here}}
 ```
+
+</Listing>
 
 When we wrote the library, we didn’t know that someone might add the
 `SelectBox` type, but our `Screen` implementation was able to operate on the
@@ -263,50 +202,32 @@ our code if the values don’t implement the traits that the trait objects need.
 For example, Listing 18-10 shows what happens if we try to create a `Screen`
 with a `String` as a component.
 
-**Listing 18-10: Attempting to use a type that doesn’t implement the trait object’s trait** (src/main.rs)
+<Listing number="18-10" file-name="src/main.rs" caption="Attempting to use a type that doesn’t implement the trait object’s trait">
 
-```rust
-use gui::Screen;
-
-fn main() {
-    let screen = Screen {
-        components: vec![Box::new(String::from("Hi"))],
-    };
-
-    screen.run();
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch18-oop/listing-18-10/src/main.rs}}
 ```
+
+</Listing>
 
 We’ll get this error because `String` doesn’t implement the `Draw` trait:
 
 ```console
-$ cargo run
-   Compiling gui v0.1.0 (file:///projects/gui)
-error[E0277]: the trait bound `String: Draw` is not satisfied
-  --> src/main.rs:5:26
-   |
- 5 |         components: vec![Box::new(String::from("Hi"))],
-   |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Draw` is not implemented for `String`
-   |
-help: the trait `Draw` is implemented for `Button`
-  --> src/lib.rs:23:1
-   |
-23 | impl Draw for Button {
-   | ^^^^^^^^^^^^^^^^^^^^
-   = note: required for the cast from `Box<String>` to `Box<dyn Draw>`
-
-For more information about this error, try `rustc --explain E0277`.
-error: could not compile `gui` (bin "gui") due to 1 previous error
+{{#include ../listings/ch18-oop/listing-18-10/output.txt}}
 ```
 
 This error lets us know that either we’re passing something to `Screen` that we
 didn’t mean to pass and so should pass a different type, or we should implement
 `Draw` on `String` so that `Screen` is able to call `draw` on it.
 
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="trait-objects-perform-dynamic-dispatch"></a>
+
 ### Performing Dynamic Dispatch
 
-Recall in “Performance of Code Using
-Generics” in Chapter 10 our
+Recall in [“Performance of Code Using
+Generics”][performance-of-code-using-generics]<!-- ignore --> in Chapter 10 our
 discussion on the monomorphization process performed on generics by the
 compiler: The compiler generates nongeneric implementations of functions and
 methods for each concrete type that we use in place of a generic type
@@ -325,6 +246,10 @@ Dynamic dispatch also prevents the compiler from choosing to inline a method’s
 code, which in turn prevents some optimizations, and Rust has some rules about
 where you can and cannot use dynamic dispatch, called _dyn compatibility_. Those
 rules are beyond the scope of this discussion, but you can read more about them
-in the reference. However, we did get extra
+[in the reference][dyn-compatibility]<!-- ignore -->. However, we did get extra
 flexibility in the code that we wrote in Listing 18-5 and were able to support
 in Listing 18-9, so it’s a trade-off to consider.
+
+[performance-of-code-using-generics]: ch10-01-syntax.html#performance-of-code-using-generics
+[dynamically-sized]: ch20-03-advanced-types.html#dynamically-sized-types-and-the-sized-trait
+[dyn-compatibility]: https://doc.rust-lang.org/reference/items/traits.html#dyn-compatibility

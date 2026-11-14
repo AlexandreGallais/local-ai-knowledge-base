@@ -1,12 +1,3 @@
----
-title: "core::future::into_future"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/future/into_future.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::future::into_future
 
 ## trait IntoFuture
@@ -27,12 +18,14 @@ first before polling the future to completion. `IntoFuture` is implemented
 for all `T: Future` which means the `into_future` method will be available
 on all futures.
 
-```rust
+```no_run
 use std::future::IntoFuture;
 
+# async fn foo() {
 let v = async { "meow" };
 let mut fut = v.into_future();
 assert_eq!("meow", fut.await);
+# }
 ```
 
 # Async builders
@@ -140,10 +133,12 @@ Creates a future from a value.
 
 Basic usage:
 
-```rust
+```no_run
 use std::future::IntoFuture;
 
+# async fn foo() {
 let v = async { "meow" };
 let mut fut = v.into_future();
 assert_eq!("meow", fut.await);
+# }
 ```

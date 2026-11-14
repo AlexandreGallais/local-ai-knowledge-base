@@ -1,12 +1,3 @@
----
-title: "Serving Angular apps for development"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/tools/cli/serve.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Serving Angular apps for development
 
 You can serve your Angular CLI application with the `ng serve` command.
@@ -37,7 +28,7 @@ You can determine which builder is being used for a particular project by lookin
 
 ## Proxying to a backend server
 
-Use proxying support to divert certain URLs to a backend server, by passing a file to the `--proxy-config` build option.
+Use [proxying support](https://vite.dev/config/server-options#server-proxy) to divert certain URLs to a backend server, by passing a file to the `--proxy-config` build option.
 For example, to divert all calls for `http://localhost:4200/api` to a server running on `http://localhost:3000/api`, take the following steps.
 
 1. Create a file `proxy.conf.json` in your project's `src/` folder.

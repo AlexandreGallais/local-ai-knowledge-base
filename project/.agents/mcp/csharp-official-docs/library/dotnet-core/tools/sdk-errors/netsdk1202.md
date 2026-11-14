@@ -1,12 +1,11 @@
 ---
 title: "NETSDK1202: Workload is out of support and will not receive security updates in the future"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/sdk-errors/netsdk1202.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about .NET SDK warning NETSDK1202, which occurs when a project depends on an optional workload that is out of support.
+ms.topic: error-reference
+ms.date: 10/10/2023
+f1_keywords:
+- NETSDK1202
 ---
-
 # NETSDK1202: workload is out of support and will not receive security updates in the future
 
 NETSDK1202 indicates your project is using an optional workload that is out of
@@ -34,4 +33,4 @@ a project with the setting:
 </PropertyGroup>
 ```
 
-For information about the .NET MAUI product lifecycle, see .NET MAUI support policy.
+For information about the .NET MAUI product lifecycle, see [.NET MAUI support policy](https://aka.ms/maui-support-policy).

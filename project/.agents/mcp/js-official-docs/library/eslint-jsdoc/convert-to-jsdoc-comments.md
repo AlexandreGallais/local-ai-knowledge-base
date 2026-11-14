@@ -1,28 +1,27 @@
----
-title: "convert-to-jsdoc-comments"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/convert-to-jsdoc-comments.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
-
-# `convert-to-jsdoc-comments`
+<a name="user-content-convert-to-jsdoc-comments"></a>
+<a name="convert-to-jsdoc-comments"></a>
+# <code>convert-to-jsdoc-comments</code>
 
 Converts single line or non-JSDoc, multiline comments into JSDoc comments.
 
 Note that this rule is experimental. As usual with fixers, please confirm
 the results before committing.
 
+<a name="user-content-convert-to-jsdoc-comments-fixer"></a>
+<a name="convert-to-jsdoc-comments-fixer"></a>
 ## Fixer
 
 Converts comments into JSDoc comments.
 
+<a name="user-content-convert-to-jsdoc-comments-options"></a>
+<a name="convert-to-jsdoc-comments-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `allowedPrefixes`
+<a name="user-content-convert-to-jsdoc-comments-options-allowedprefixes"></a>
+<a name="convert-to-jsdoc-comments-options-allowedprefixes"></a>
+### <code>allowedPrefixes</code>
 
 An array of prefixes to allow at the beginning of a comment.
 
@@ -30,7 +29,9 @@ Defaults to `['@ts-', '@license', '@license-end', 'istanbul ', 'c8 ', 'v8 ', 'es
 
 Supplying your own value overrides the defaults.
 
-### `contexts`
+<a name="user-content-convert-to-jsdoc-comments-options-contexts"></a>
+<a name="convert-to-jsdoc-comments-options-contexts"></a>
+### <code>contexts</code>
 
 The contexts array which will be checked for preceding content.
 
@@ -39,7 +40,9 @@ Can either be strings or an object with a `context` string and an optional, defa
 Defaults to `ArrowFunctionExpression`, `FunctionDeclaration`,
 `FunctionExpression`, `TSDeclareFunction`.
 
-### `contextsAfter`
+<a name="user-content-convert-to-jsdoc-comments-options-contextsafter"></a>
+<a name="convert-to-jsdoc-comments-options-contextsafter"></a>
+### <code>contextsAfter</code>
 
 The contexts array which will be checked for content on the same line after.
 
@@ -47,7 +50,9 @@ Can either be strings or an object with a `context` string and an optional, defa
 
 Defaults to an empty array.
 
-### `contextsBeforeAndAfter`
+<a name="user-content-convert-to-jsdoc-comments-options-contextsbeforeandafter"></a>
+<a name="convert-to-jsdoc-comments-options-contextsbeforeandafter"></a>
+### <code>contextsBeforeAndAfter</code>
 
 The contexts array which will be checked for content before and on the same
 line after.
@@ -56,11 +61,15 @@ Can either be strings or an object with a `context` string and an optional, defa
 
 Defaults to `VariableDeclarator`, `TSPropertySignature`, `PropertyDefinition`.
 
-### `enableFixer`
+<a name="user-content-convert-to-jsdoc-comments-options-enablefixer"></a>
+<a name="convert-to-jsdoc-comments-options-enablefixer"></a>
+### <code>enableFixer</code>
 
 Set to `false` to disable fixing.
 
-### `enforceJsdocLineStyle`
+<a name="user-content-convert-to-jsdoc-comments-options-enforcejsdoclinestyle"></a>
+<a name="convert-to-jsdoc-comments-options-enforcejsdoclinestyle"></a>
+### <code>enforceJsdocLineStyle</code>
 
 What policy to enforce on the conversion of non-JSDoc comments without
 line breaks. (Non-JSDoc (mulitline) comments with line breaks will always
@@ -79,7 +88,9 @@ be converted to `multi` style JSDoc comments.)
 
 Defaults to `multi`.
 
-### `lineOrBlockStyle`
+<a name="user-content-convert-to-jsdoc-comments-options-lineorblockstyle"></a>
+<a name="convert-to-jsdoc-comments-options-lineorblockstyle"></a>
+### <code>lineOrBlockStyle</code>
 
 What style of comments to which to apply JSDoc conversion.
 
@@ -89,6 +100,7 @@ What style of comments to which to apply JSDoc conversion.
 
 Defaults to `both`.
 
+
 |||
 |---|---|
 |Context|`ArrowFunctionExpression`, `FunctionDeclaration`, `FunctionExpression`|
@@ -97,6 +109,8 @@ Defaults to `both`.
 |Settings|`minLines`, `maxLines`|
 |Options|`enableFixer`, `enforceJsdocLineStyle`, `lineOrBlockStyle`, `allowedPrefixes`, `contexts`, `contextsAfter`, `contextsBeforeAndAfter`|
 
+<a name="user-content-convert-to-jsdoc-comments-failing-examples"></a>
+<a name="convert-to-jsdoc-comments-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -253,6 +267,10 @@ function quux () {}
 // Message: Line comments should be JSDoc-style.
 ````
 
+
+
+<a name="user-content-convert-to-jsdoc-comments-passing-examples"></a>
+<a name="convert-to-jsdoc-comments-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -293,3 +311,4 @@ function quux () {}
 var a = [];
 // "jsdoc/convert-to-jsdoc-comments": ["error"|"warn", {"contextsAfter":["VariableDeclarator"],"contextsBeforeAndAfter":[]}]
 ````
+

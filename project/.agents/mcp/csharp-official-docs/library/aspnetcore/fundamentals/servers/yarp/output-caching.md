@@ -1,10 +1,10 @@
 ---
-title: "YARP Output Caching"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/output-caching.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: YARP Output Caching
+description: YARP Output Caching
+ms.date: 2/6/2025
+ms.topic: concept-article
+content_well_notification: AI-contribution
+ai-usage: ai-assisted
 ---
 
 # YARP Output Caching
@@ -19,7 +19,7 @@ The reverse proxy can be used to cache proxied responses and serve requests befo
 No output caching is performed unless enabled in the route or application configuration.
 
 ## Configuration
-Output Cache policies can be specified per route via RouteConfig.OutputCachePolicy and can be bound from the `Routes` sections of the config file. As with other route properties, this can be modified and reloaded without restarting the proxy. Policy names are case insensitive.
+Output Cache policies can be specified per route via [RouteConfig.OutputCachePolicy](xref:Yarp.ReverseProxy.Configuration.RouteConfig) and can be bound from the `Routes` sections of the config file. As with other route properties, this can be modified and reloaded without restarting the proxy. Policy names are case insensitive.
 
 Example:
 ```json
@@ -47,7 +47,7 @@ Example:
 }
 ```
 
-Output cache policies are an ASP.NET Core concept that the proxy utilizes. The proxy provides the above configuration to specify a policy per route and the rest is handled by existing ASP.NET Core output caching middleware.
+[Output cache policies](../../../performance/caching/output.md) are an ASP.NET Core concept that the proxy utilizes. The proxy provides the above configuration to specify a policy per route and the rest is handled by existing ASP.NET Core output caching middleware.
 
 Output cache policies can be configured in Program.cs as follows:
 ```csharp
@@ -69,4 +69,4 @@ app.UseOutputCache();
 app.MapReverseProxy();
 ```
 
-See the Output Caching docs for setting up your preferred kind of output caching.
+See the [Output Caching](../../../performance/caching/output.md) docs for setting up your preferred kind of output caching.

@@ -1,10 +1,9 @@
 ---
-title: "Query Tags - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/querying/tags.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Query Tags - EF Core
+description: Using query tags to help identify specific queries in log messages emitted by Entity Framework Core
+author: SamMonoRT
+ms.date: 11/14/2018
+uid: core/querying/tags
 ---
 
 # Query tags
@@ -12,15 +11,10 @@ license: "CC-BY-4.0"
 Query tags help correlate LINQ queries in code with generated SQL queries captured in logs.
 You annotate a LINQ query using the new `TagWith()` method:
 
-> **Tip:**
-> You can view this article's sample on GitHub.
+> [!TIP]
+> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Querying/Tags) on GitHub.
 
-```csharp
-var myLocation = new Point(1, 2);
-var nearestPeople = await (from f in context.People.TagWith("This is my spatial query!")
-                     orderby f.Location.Distance(myLocation) descending
-                     select f).Take(5).ToListAsync();
-```
+[!code-csharp[Main](../../../samples/core/Querying/Tags/Program.cs#BasicQueryTag)]
 
 This LINQ query is translated to the following SQL statement:
 
@@ -36,20 +30,11 @@ It's possible to call `TagWith()` many times on the same query.
 Query tags are cumulative.
 For example, given the following methods:
 
-```csharp
-private static IQueryable<Person> GetNearestPeople(SpatialContext context, Point myLocation)
-    => from f in context.People.TagWith("GetNearestPeople")
-       orderby f.Location.Distance(myLocation) descending
-       select f;
-
-private static IQueryable<T> Limit<T>(IQueryable<T> source, int limit) => source.TagWith("Limit").Take(limit);
-```
+[!code-csharp[Main](../../../samples/core/Querying/Tags/Program.cs#QueryableMethods)]
 
 The following query:
 
-```csharp
-var results = await Limit(GetNearestPeople(context, new Point(1, 2)), 25).ToListAsync();
-```
+[!code-csharp[Main](../../../samples/core/Querying/Tags/Program.cs#ChainedQueryTags)]
 
 Translates to:
 
@@ -65,11 +50,7 @@ ORDER BY [p].[Location].STDistance(@__myLocation_0) DESC
 It's also possible to use multi-line strings as query tags.
 For example:
 
-```csharp
-            var results = await Limit(GetNearestPeople(context, new Point(1, 2)), 25).TagWith(
-                @"This is a multi-line
-string").ToListAsync();
-```
+[!code-csharp[Main](../../../samples/core/Querying/Tags/Program.cs#MultilineQueryTag)]
 
 Produces the following SQL:
 
@@ -86,7 +67,7 @@ ORDER BY [p].[Location].STDistance(@__myLocation_0) DESC
 
 ## Tagging with file name and line number
 
-Queries can be automatically tagged with the file name and line number where the LINQ query is defined in source code. This is done using the `Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.TagWithCallSite*` method:
+Queries can be automatically tagged with the file name and line number where the LINQ query is defined in source code. This is done using the <xref:Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.TagWithCallSite*> method:
 
 ```csharp
 var myLocation = new Point(1, 2);

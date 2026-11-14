@@ -1,13 +1,8 @@
 ---
-title: "no-new-func"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-new-func.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-new-func
+rule_type: suggestion
 ---
 
-# no-new-func
 
 It's possible to create functions in JavaScript from strings at runtime using the `Function` constructor, such as:
 
@@ -27,7 +22,7 @@ This error is raised to highlight the use of a bad practice. By passing a string
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-new-func: "error"*/
@@ -40,9 +35,11 @@ const x = Function.bind(null, "a", "b", "return a + b")();
 const y = Function.bind(null, "a", "b", "return a + b"); // assuming that the result of Function.bind(...) will be eventually called.
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-new-func: "error"*/
@@ -51,6 +48,8 @@ const x = function (a, b) {
     return a + b;
 };
 ```
+
+:::
 
 ## Options
 

@@ -1,13 +1,31 @@
----
-title: "Modules: TypeScript"
-tool: "node"
-version: "26.13"
-source: "https://github.com/nodejs/node/blob/e9c277643b0249c50f6e6de5413be8a88ea11b6a/doc/api/typescript.md"
-commit: "e9c277643b0249c50f6e6de5413be8a88ea11b6a"
-license: "MIT"
----
-
 # Modules: TypeScript
+
+<!-- YAML
+changes:
+  - version: v26.0.0
+    pr-url: https://github.com/nodejs/node/pull/61803
+    description: Removed `--experimental-transform-types` flag.
+  - version:
+      - v25.2.0
+      - v24.12.0
+    pr-url: https://github.com/nodejs/node/pull/60600
+    description: Type stripping is now stable.
+  - version:
+     - v24.3.0
+     - v22.18.0
+    pr-url: https://github.com/nodejs/node/pull/58643
+    description: Type stripping no longer emits an experimental warning.
+  - version:
+     - v23.6.0
+     - v22.18.0
+    pr-url: https://github.com/nodejs/node/pull/56350
+    description: Type stripping is enabled by default.
+  - version: v22.7.0
+    pr-url: https://github.com/nodejs/node/pull/54283
+    description: Added `--experimental-transform-types` flag.
+-->
+
+<!--introduced_in=v22.6.0-->
 
 > Stability: 2 - Stable
 
@@ -15,17 +33,17 @@ license: "MIT"
 
 There are two ways to enable runtime TypeScript support in Node.js:
 
-1. For full support of all of TypeScript's syntax and features, including
+1. For [full support][] of all of TypeScript's syntax and features, including
    using any version of TypeScript, use a third-party package.
 
 2. For lightweight support, you can use the built-in support for
-   type stripping.
+   [type stripping][].
 
 ## Full TypeScript support
 
 To use TypeScript with full support for all TypeScript features, including
 `tsconfig.json`, you can use a third-party package. These instructions use
-`tsx` as an example but there are many other similar libraries available.
+[`tsx`][] as an example but there are many other similar libraries available.
 
 1. Install the package as a development dependency using whatever package
    manager you're using for your project. For example, with `npm`:
@@ -48,21 +66,31 @@ To use TypeScript with full support for all TypeScript features, including
 
 ## Type stripping
 
+<!-- YAML
+added: v22.6.0
+changes:
+  - version:
+      - v25.2.0
+      - v24.12.0
+    pr-url: https://github.com/nodejs/node/pull/60600
+    description: Type stripping is now stable.
+-->
+
 By default Node.js will execute TypeScript files that contains only
 erasable TypeScript syntax.
 Node.js will replace TypeScript syntax with whitespace,
 and no type checking is performed.
-To disable this feature, use the flag `--no-strip-types`.
+To disable this feature, use the flag [`--no-strip-types`][].
 
 The built-in TypeScript parser requires WebAssembly. If WebAssembly is
 unavailable, parsing throws
-`ERR_WEBASSEMBLY_NOT_SUPPORTED`.
+[`ERR_WEBASSEMBLY_NOT_SUPPORTED`](errors.md#err_webassembly_not_supported).
 Node.js does not provide a non-WebAssembly parser as a fallback.
 
 Node.js ignores `tsconfig.json` files and therefore
 features that depend on settings within `tsconfig.json`,
 such as paths or converting newer JavaScript syntax to older standards, are
-intentionally unsupported. To get full TypeScript support, see Full TypeScript support.
+intentionally unsupported. To get full TypeScript support, see [Full TypeScript support][].
 
 The type stripping feature is designed to be lightweight.
 By intentionally not supporting syntaxes that require JavaScript code
@@ -91,20 +119,20 @@ files.
 
 ### Determining module system
 
-Node.js supports both CommonJS and ES Modules syntax in TypeScript
+Node.js supports both [CommonJS][] and [ES Modules][] syntax in TypeScript
 files. Node.js will not convert from one module system to another; if you want
 your code to run as an ES module, you must use `import` and `export` syntax, and
 if you want your code to run as CommonJS you must use `require` and
 `module.exports`.
 
-* `.ts` files will have their module system determined the same way as `.js`
-  files. To use `import` and `export` syntax, add `"type": "module"` to the
+* `.ts` files will have their module system determined [the same way as `.js`
+  files.][] To use `import` and `export` syntax, add `"type": "module"` to the
   nearest parent `package.json`.
 * `.mts` files will always be run as ES modules, similar to `.mjs` files.
 * `.cts` files will always be run as CommonJS modules, similar to `.cjs` files.
 * `.tsx` files are unsupported.
 
-As in JavaScript files, file extensions are mandatory in `import` statements
+As in JavaScript files, [file extensions are mandatory][] in `import` statements
 and `import()` expressions: `import './file.ts'`, not `import './file'`. Because
 of backward compatibility, file extensions are also mandatory in `require()`
 calls: `require('./file.ts')`, not `require('./file')`, similar to how the
@@ -136,7 +164,7 @@ namespace TypeOnly {
 }
 ```
 
-This will result in `ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX` error:
+This will result in [`ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX`][] error:
 
 ```ts
 // This namespace is exporting a value
@@ -145,7 +173,7 @@ namespace A {
 }
 ```
 
-Since Decorators are currently a TC39 Stage 3 proposal,
+Since Decorators are currently a [TC39 Stage 3 proposal](https://github.com/tc39/proposal-decorators),
 they are not transformed and will result in a parser error.
 Node.js does not provide polyfills and thus will not support decorators until
 they are supported natively in JavaScript.
@@ -159,7 +187,7 @@ converting newer JavaScript syntax into older standards.
 Due to the nature of type stripping, the `type` keyword is necessary to
 correctly strip type imports. Without the `type` keyword, Node.js will treat the
 import as a value import, which will result in a runtime error. The tsconfig
-option `verbatimModuleSyntax` can be used to match this behavior.
+option [`verbatimModuleSyntax`][] can be used to match this behavior.
 
 This example will work correctly:
 
@@ -196,6 +224,20 @@ path.
 
 ### Paths aliases
 
-`tsconfig` "paths" won't be transformed and therefore produce an error. The closest
-feature available is subpath imports with the limitation that they need to start
+[`tsconfig` "paths"][] won't be transformed and therefore produce an error. The closest
+feature available is [subpath imports][] with the limitation that they need to start
 with `#`.
+
+[CommonJS]: modules.md
+[ES Modules]: esm.md
+[Full TypeScript support]: #full-typescript-support
+[`--no-strip-types`]: cli.md#--no-strip-types
+[`ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX`]: errors.md#err_unsupported_typescript_syntax
+[`tsconfig` "paths"]: https://www.typescriptlang.org/tsconfig/#paths
+[`tsx`]: https://tsx.hirok.io/
+[`verbatimModuleSyntax`]: https://www.typescriptlang.org/tsconfig/#verbatimModuleSyntax
+[file extensions are mandatory]: esm.md#mandatory-file-extensions
+[full support]: #full-typescript-support
+[subpath imports]: packages.md#subpath-imports
+[the same way as `.js` files.]: packages.md#determining-module-system
+[type stripping]: #type-stripping

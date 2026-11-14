@@ -1,27 +1,28 @@
 ---
-title: "Atomized XName and XNamespace objects - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/atomized-xname-xnamespace-objects.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Atomized XName and XNamespace objects - LINQ to XML
+description: Learn how atomized XName and XNamespace objects of the same name share an instance.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: a5b21433-b49d-415c-b00e-bcbfb0d267d7
 ---
 
 # Atomized XName and XNamespace objects (LINQ to XML)
 
-`System.Xml.Linq.XName` and `System.Xml.Linq.XNamespace` objects are *atomized*; that is, if they contain the same qualified name, they refer to the same object. This yields performance benefits for queries: when you compare two atomized names for equality, the underlying intermediate language only has to determine whether the two references point to the same object. The underlying code doesn't have to do string comparisons, which would take longer.
+<xref:System.Xml.Linq.XName> and <xref:System.Xml.Linq.XNamespace> objects are *atomized*; that is, if they contain the same qualified name, they refer to the same object. This yields performance benefits for queries: when you compare two atomized names for equality, the underlying intermediate language only has to determine whether the two references point to the same object. The underlying code doesn't have to do string comparisons, which would take longer.
 
 ## Atomization semantics
 
-Atomization means that if two `System.Xml.Linq.XName` objects have the same local name, and they're in the same namespace, they share the same instance. In the same way, if two `System.Xml.Linq.XNamespace` objects have the same namespace URI, they share the same instance.
+Atomization means that if two <xref:System.Xml.Linq.XName> objects have the same local name, and they're in the same namespace, they share the same instance. In the same way, if two <xref:System.Xml.Linq.XNamespace> objects have the same namespace URI, they share the same instance.
 
-For a class to enable atomized objects, the constructor for the class must be private, not public. This is because if the constructor were public, you could create a non-atomized object. The `System.Xml.Linq.XName` and `System.Xml.Linq.XNamespace` classes implement an implicit conversion operator to convert a string into an `System.Xml.Linq.XName` or `System.Xml.Linq.XNamespace`. This is how you get an instance of these objects. You can't get an instance by using a constructor, because the constructor is inaccessible.
+For a class to enable atomized objects, the constructor for the class must be private, not public. This is because if the constructor were public, you could create a non-atomized object. The <xref:System.Xml.Linq.XName> and <xref:System.Xml.Linq.XNamespace> classes implement an implicit conversion operator to convert a string into an <xref:System.Xml.Linq.XName> or <xref:System.Xml.Linq.XNamespace>. This is how you get an instance of these objects. You can't get an instance by using a constructor, because the constructor is inaccessible.
 
-`System.Xml.Linq.XName` and `System.Xml.Linq.XNamespace` also implement the equality and inequality operators, which determine whether the two objects being compared are references to the same instance.
+<xref:System.Xml.Linq.XName> and <xref:System.Xml.Linq.XNamespace> also implement the equality and inequality operators, which determine whether the two objects being compared are references to the same instance.
 
 ## Example: Create objects and show that identical names share an instance
 
-The following code creates some `System.Xml.Linq.XElement` objects and demonstrates that identical names share the same instance.
+The following code creates some <xref:System.Xml.Linq.XElement> objects and demonstrates that identical names share the same instance.
 
 ```csharp
 var r1 = new XElement("Root", "data1");
@@ -66,9 +67,9 @@ r1 and r2 have names that refer to the same instance.
 The name of r1 and the name in 'n' refer to the same instance.
 ```
 
-As mentioned earlier, the benefit of atomized objects is that when you use one of the axis methods that take an `System.Xml.Linq.XName` as a parameter, the axis method only has to determine that two names reference the same instance to select the desired elements.
+As mentioned earlier, the benefit of atomized objects is that when you use one of the axis methods that take an <xref:System.Xml.Linq.XName> as a parameter, the axis method only has to determine that two names reference the same instance to select the desired elements.
 
-The following example passes an `System.Xml.Linq.XName` to the `System.Xml.Linq.XContainer.Descendants*` method call, which then has better performance because of the atomization pattern.
+The following example passes an <xref:System.Xml.Linq.XName> to the <xref:System.Xml.Linq.XContainer.Descendants*> method call, which then has better performance because of the atomization pattern.
 
 ```csharp
 var root = new XElement("Root",

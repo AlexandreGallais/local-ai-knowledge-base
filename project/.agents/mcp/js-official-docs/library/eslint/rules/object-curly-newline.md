@@ -1,14 +1,12 @@
 ---
-title: "object-curly-newline"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/object-curly-newline.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: object-curly-newline
+rule_type: layout
+related_rules:
+- comma-spacing
+- key-spacing
+- object-curly-spacing
+- object-property-newline
 ---
-
-# object-curly-newline
-
 A number of style guides require or disallow line breaks inside of object braces and other tokens.
 
 ## Rule Details
@@ -50,7 +48,7 @@ You can specify different options for object literals, destructuring assignments
 
 Examples of **incorrect** code for this rule with the `"always"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint object-curly-newline: ["error", "always"]*/
@@ -74,9 +72,11 @@ let {k = function() {
 }} = obj;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"always"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint object-curly-newline: ["error", "always"]*/
@@ -118,11 +118,13 @@ let {
 } = obj;
 ```
 
+:::
+
 ### never
 
 Examples of **incorrect** code for this rule with the `"never"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint object-curly-newline: ["error", "never"]*/
@@ -164,9 +166,11 @@ let {
 } = obj;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"never"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint object-curly-newline: ["error", "never"]*/
@@ -189,12 +193,14 @@ let {k = function() {
     dosomething();
 }} = obj;
 ```
+
+:::
 
 ### multiline
 
 Examples of **incorrect** code for this rule with the `{ "multiline": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint object-curly-newline: ["error", { "multiline": true }]*/
@@ -228,9 +234,11 @@ let {k = function() {
 }} = obj;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "multiline": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint object-curly-newline: ["error", { "multiline": true }]*/
@@ -261,12 +269,14 @@ let {
     }
 } = obj;
 ```
+
+:::
 
 ### minProperties
 
 Examples of **incorrect** code for this rule with the `{ "minProperties": 2 }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint object-curly-newline: ["error", { "minProperties": 2 }]*/
@@ -300,9 +310,11 @@ let {
 } = obj;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "minProperties": 2 }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint object-curly-newline: ["error", { "minProperties": 2 }]*/
@@ -334,11 +346,13 @@ let {k = function() {
 }} = obj;
 ```
 
+:::
+
 ### consistent
 
 Examples of **incorrect** code for this rule with the default `{ "consistent": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint object-curly-newline: ["error", { "consistent": true }]*/
@@ -381,9 +395,11 @@ let {
     }} = obj;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `{ "consistent": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint object-curly-newline: ["error", { "consistent": true }]*/
@@ -434,11 +450,13 @@ let {
 } = obj;
 ```
 
+:::
+
 ### ObjectExpression and ObjectPattern
 
 Examples of **incorrect** code for this rule with the `{ "ObjectExpression": "always", "ObjectPattern": "never" }` options:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint object-curly-newline: ["error", { "ObjectExpression": "always", "ObjectPattern": "never" }]*/
@@ -471,9 +489,11 @@ let {
 } = obj;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "ObjectExpression": "always", "ObjectPattern": "never" }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint object-curly-newline: ["error", { "ObjectExpression": "always", "ObjectPattern": "never" }]*/
@@ -506,11 +526,13 @@ let {k = function() {
 }} = obj;
 ```
 
+:::
+
 ### ImportDeclaration and ExportDeclaration
 
 Examples of **incorrect** code for this rule with the `{ "ImportDeclaration": "always", "ExportDeclaration": "never" }` options:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint object-curly-newline: ["error", { "ImportDeclaration": "always", "ExportDeclaration": "never" }]*/
@@ -530,9 +552,11 @@ export {
 } from 'foo-bar';
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "ImportDeclaration": "always", "ExportDeclaration": "never" }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint object-curly-newline: ["error", { "ImportDeclaration": "always", "ExportDeclaration": "never" }]*/
@@ -553,11 +577,13 @@ export { foo, bar } from 'foo-bar';
 export { foo as f, baz } from 'foo-bar';
 ```
 
+:::
+
 ## When Not To Use It
 
 If you don't want to enforce consistent line breaks after opening and before closing braces, then it's safe to disable this rule.
 
 ## Compatibility
 
-* **JSCS**: requirePaddingNewLinesInObjects
-* **JSCS**: disallowPaddingNewLinesInObjects
+* **JSCS**: [requirePaddingNewLinesInObjects](https://jscs-dev.github.io/rule/requirePaddingNewLinesInObjects)
+* **JSCS**: [disallowPaddingNewLinesInObjects](https://jscs-dev.github.io/rule/disallowPaddingNewLinesInObjects)

@@ -1,28 +1,18 @@
----
-title: "IntUnaryOperator interface (java.util.function)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/function/IntUnaryOperator.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # IntUnaryOperator interface (java.util.function)
 
 ```java
 public interface IntUnaryOperator
 ```
 
-Represents an operation on a single `int`-valued operand that produces
-an `int`-valued result.  This is the primitive type specialization of
-`UnaryOperator` for `int`.
+Represents an operation on a single {@code int}-valued operand that produces
+an {@code int}-valued result.  This is the primitive type specialization of
+{@link UnaryOperator} for {@code int}.
 
-This is a functional interface
-whose functional method is `applyAsInt(int)`.
+<p>This is a <a href="package-summary.html">functional interface</a>
+whose functional method is {@link #applyAsInt(int)}.
 
-**See also:** UnaryOperator
-
-**Since:** 1.8
+@see UnaryOperator
+@since 1.8
 
 ## IntUnaryOperator.applyAsInt(int)
 
@@ -32,11 +22,8 @@ int applyAsInt(int operand)
 
 Applies this operator to the given operand.
 
-Parameters:
-
-- `operand`: the operand
-
-**Returns:** the operator result
+@param operand the operand
+@return the operator result
 
 ## IntUnaryOperator.compose(IntUnaryOperator)
 
@@ -44,23 +31,17 @@ Parameters:
 default IntUnaryOperator compose(IntUnaryOperator before)
 ```
 
-Returns a composed operator that first applies the `before`
+Returns a composed operator that first applies the {@code before}
 operator to its input, and then applies this operator to the result.
 If evaluation of either operator throws an exception, it is relayed to
 the caller of the composed operator.
 
-Parameters:
-
-- `before`: the operator to apply before this operator is applied
-
-**Returns:** a composed operator that first applies the `before`
+@param before the operator to apply before this operator is applied
+@return a composed operator that first applies the {@code before}
 operator and then applies this operator
+@throws NullPointerException if before is null
 
-**See also:** #andThen(IntUnaryOperator)
-
-Throws:
-
-- `NullPointerException`: if before is null
+@see #andThen(IntUnaryOperator)
 
 ## IntUnaryOperator.andThen(IntUnaryOperator)
 
@@ -69,22 +50,16 @@ default IntUnaryOperator andThen(IntUnaryOperator after)
 ```
 
 Returns a composed operator that first applies this operator to
-its input, and then applies the `after` operator to the result.
+its input, and then applies the {@code after} operator to the result.
 If evaluation of either operator throws an exception, it is relayed to
 the caller of the composed operator.
 
-Parameters:
+@param after the operator to apply after this operator is applied
+@return a composed operator that first applies this operator and then
+applies the {@code after} operator
+@throws NullPointerException if after is null
 
-- `after`: the operator to apply after this operator is applied
-
-**Returns:** a composed operator that first applies this operator and then
-applies the `after` operator
-
-**See also:** #compose(IntUnaryOperator)
-
-Throws:
-
-- `NullPointerException`: if after is null
+@see #compose(IntUnaryOperator)
 
 ## IntUnaryOperator.identity()
 
@@ -94,4 +69,4 @@ static IntUnaryOperator identity()
 
 Returns a unary operator that always returns its input argument.
 
-**Returns:** a unary operator that always returns its input argument
+@return a unary operator that always returns its input argument

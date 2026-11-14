@@ -1,15 +1,13 @@
 ---
 title: "Breaking change - PrunePackageReference privatizes direct prunable references"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/prune-packagereference-privateassets.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in the .NET 10 SDK where PrunePackageReference automatically marks directly prunable PackageReference with PrivateAssets=all and IncludeAssets=none."
+ms.date: 09/04/2025
+ai-usage: ai-assisted
 ---
 
 # PrunePackageReference privatizes direct prunable references
 
-The PrunePackageReference feature automatically removes *transitive* packages that are provided by the target platform. With this change, the feature also marks *directly* prunable `PackageReference` items with `PrivateAssets=all` and `IncludeAssets=none` attributes. These attributes prevent the packages from appearing in generated dependency lists for packages.
+The [PrunePackageReference](/nuget/consume-packages/package-references-in-project-files#prunepackagereference) feature automatically removes *transitive* packages that are provided by the target platform. With this change, the feature also marks *directly* prunable `PackageReference` items with `PrivateAssets=all` and `IncludeAssets=none` attributes. These attributes prevent the packages from appearing in generated dependency lists for packages.
 
 ## Version introduced
 
@@ -17,7 +15,7 @@ The PrunePackageReference feature automatically removes *transitive* packages th
 
 ## Previous behavior
 
-Previously, if pruning was enabled, directly prunable `PackageReference` items still appeared in the generated *.nuspec* dependencies list, even if the package was provided by the platform. (And if your project targeted .NET 10, they might have generated a `NU1510` warning.)
+Previously, if pruning was enabled, directly prunable `PackageReference` items still appeared in the generated *.nuspec* dependencies list, even if the package was provided by the platform. (And if your project targeted .NET 10, they might have generated a [`NU1510` warning](/nuget/reference/errors-and-warnings/nu1510).)
 
 For example, consider a multi-targeting project with the following configuration:
 
@@ -46,7 +44,7 @@ Such a project file generated a *.nuspec* file with dependencies for both target
 
 ## New behavior
 
-Starting in .NET 10, when pruning is enabled, directly prunable `PackageReference` items are automatically marked with `PrivateAssets=all` and `IncludeAssets=none`, which excludes them from the generated dependencies for target frameworks where they're provided by the platform. (However, if your project targets .NET 10 or later, you'll still get a `NU1510` warning until you remove the reference from your project.)
+Starting in .NET 10, when pruning is enabled, directly prunable `PackageReference` items are automatically marked with `PrivateAssets=all` and `IncludeAssets=none`, which excludes them from the generated dependencies for target frameworks where they're provided by the platform. (However, if your project targets .NET 10 or later, you'll still get a [`NU1510` warning](/nuget/reference/errors-and-warnings/nu1510) until you remove the reference from your project.)
 
 The same project configuration now generates a *.nuspec* file with the prunable dependency removed from the target framework that provides it (.NET 10):
 
@@ -62,7 +60,7 @@ The same project configuration now generates a *.nuspec* file with the prunable 
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -70,7 +68,7 @@ This change ensures that package dependencies accurately reflect the actual requ
 
 ## Recommended action
 
-- If you create a package and get a `NU1510` warning, follow the instructions there.
+- If you create a package and get a [`NU1510` warning](/nuget/reference/errors-and-warnings/nu1510), follow the instructions there.
 - If you create a package and the generated *.nuspec* dependencies don't contain a referenced package for *any* target framework, remove the reference from the project file as it's not needed.
 - If the referenced package appears in the *.nuspec* file, no action is needed.
 
@@ -80,5 +78,5 @@ None.
 
 ## See also
 
-- PrunePackageReference
-- NU1510 is raised for direct references pruned by NuGet
+- [PrunePackageReference](/nuget/consume-packages/package-references-in-project-files#prunepackagereference)
+- [NU1510 is raised for direct references pruned by NuGet](nu1510-pruned-references.md)

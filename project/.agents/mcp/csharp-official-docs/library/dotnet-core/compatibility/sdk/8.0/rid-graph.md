@@ -1,19 +1,15 @@
 ---
 title: "Breaking change: .NET SDK uses a smaller RID graph"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/8.0/rid-graph.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in the .NET 8 SDK where the SDK uses a smaller, portable RID graph for projects that target .NET 8 or later.
+ms.date: 04/01/2024
 ---
-
 # .NET SDK uses a smaller RID graph
 
 Projects that target .NET 8 or later versions now use a smaller, "portable" runtime identifier (RID) graph.
 
 ## Previous behavior
 
-The .NET SDK used a complex RID graph to determine assets when building or publishing a project.
+The .NET SDK used a complex [RID graph](../../../rid-catalog.md) to determine assets when building or publishing a project.
 
 ## New behavior
 
@@ -27,7 +23,7 @@ Starting in .NET 8, the .NET SDK uses a smaller graph consisting of only portabl
 
 ## Type of breaking change
 
-This change is a behavioral change and can also affect source compatibility.
+This change is a [behavioral change](../../categories.md#behavioral-change) and can also affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
@@ -37,7 +33,7 @@ The RID graph was costly to maintain and understand, requiring .NET itself to be
 
 Use portable RIDs, for example, `linux-<arch>`, `linux-musl-<arch>`, `osx-<arch>`, and `win-<arch>`, instead of version-specific or distro-specific RIDs, such as `ubuntu.16.04-<arch>`, `osx.10.11-<arch>`, and `win10-<arch>`.
 
-If you specify the RID by using the RuntimeIdentifier MSBuild property in your project file (\*.csproj, \*.vbproj, or \*.fsproj), change it accordingly. For example, change `<RuntimeIdentifier>win10-x64</RuntimeIdentifier>` to `<RuntimeIdentifier>win-x64</RuntimeIdentifier>` in your project file:
+If you specify the RID by using the [RuntimeIdentifier](../../../project-sdk/msbuild-props.md#runtimeidentifier) MSBuild property in your project file (\*.csproj, \*.vbproj, or \*.fsproj), change it accordingly. For example, change `<RuntimeIdentifier>win10-x64</RuntimeIdentifier>` to `<RuntimeIdentifier>win-x64</RuntimeIdentifier>` in your project file:
 
 ```xml
 <PropertyGroup>
@@ -58,6 +54,6 @@ If you need to revert to the previous behavior of using the old, full RID graph,
 
 ## See also
 
-- NETSDK1083: The specified RuntimeIdentifier is not recognized
-- Host determines RID-specific assets
-- RuntimeIdentifier returns platform for which the runtime was built
+- [NETSDK1083: The specified RuntimeIdentifier is not recognized](../../../tools/sdk-errors/netsdk1083.md)
+- [Host determines RID-specific assets](../../deployment/8.0/rid-asset-list.md)
+- [RuntimeIdentifier returns platform for which the runtime was built](../../core-libraries/8.0/runtimeidentifier.md)

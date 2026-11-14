@@ -1,30 +1,24 @@
----
-title: "prefer-spread"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-spread.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-spread
 
 📝 Prefer the spread operator over `Array.from(…)`, `Array#concat(…)`, `Array#{slice,toSpliced}()`, and trivial `for…of` copies.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 In TypeScript, spread can change inferred types, so method rewrites use suggestions. With type information, safe copies into unannotated variables can be autofixed.
 
-Enforces the use of the spread operator (`...`) over outdated patterns. This also helps keep consistency by using a single flexible operator instead of:
+Enforces the use of [the spread operator (`...`)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) over outdated patterns. This also helps keep consistency by using a single flexible operator instead of:
 
 - `Array.from(…)`
 
 	Convert `Iterable` to `Array`.
 
-	This rule adds on to the built-in prefer-spread rule, which only flags uses of `.apply()`. Does not enforce for `TypedArray.from()`.
-	Multi-spread array literals like `Array.from([...foo, ...bar])` are handled by `prefer-iterator-concat`.
+	This rule adds on to the built-in [prefer-spread](https://eslint.org/docs/rules/prefer-spread) rule, which only flags uses of `.apply()`. Does not enforce for `TypedArray.from()`.
+	Multi-spread array literals like `Array.from([...foo, ...bar])` are handled by [`prefer-iterator-concat`](./prefer-iterator-concat.md).
 
 	`Array.from()` also accepts an array-like, which the spread operator does not, so the argument has to be iterable for the rewrite to work. A number, a boolean, a `new ArrayBuffer(…)` and a `new DataView(…)` are already skipped, and a value behind an identifier cannot be checked:
 
@@ -56,9 +50,9 @@ Enforces the use of the spread operator (`...`) over outdated patterns. This als
 
 	Indexed `.entries()` copies are only checked when the receiver is syntactically known or typed as an array. When a function that can run during the loop references the destination array, loop copies offer suggestions, because the function could run while the iterable is spread, before the array is initialized.
 
-This rule intentionally does not check `String#split('')`. Spreading a string and splitting on an empty string segment text differently, and neither is generally correct for user-perceived characters. Use `Intl.Segmenter` when grapheme-aware segmentation is needed.
+This rule intentionally does not check `String#split('')`. Spreading a string and splitting on an empty string segment text differently, and neither is generally correct for user-perceived characters. Use [`Intl.Segmenter`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Segmenter) when grapheme-aware segmentation is needed.
 
-To enforce the spread operator over `Object#assign()`, use the built-in `prefer-object-spread` rule.
+To enforce the spread operator over `Object#assign()`, use the built-in [`prefer-object-spread` rule](https://eslint.org/docs/rules/prefer-object-spread).
 
 ## Examples
 
@@ -110,7 +104,7 @@ const tail = array.slice(1);
 
 ## With the `unicorn/no-useless-spread` rule
 
-Some cases are fixed using extra spread syntax. Therefore we recommend enabling the `unicorn/no-useless-spread` rule to fix it.
+Some cases are fixed using extra spread syntax. Therefore we recommend enabling the [`unicorn/no-useless-spread`](./no-useless-spread.md) rule to fix it.
 
 For example:
 

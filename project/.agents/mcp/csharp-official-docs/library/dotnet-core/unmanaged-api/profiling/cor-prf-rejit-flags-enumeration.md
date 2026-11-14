@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: COR_PRF_REJIT_FLAGS Enumeration"
 title: "COR_PRF_REJIT_FLAGS Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/profiling/cor-prf-rejit-flags-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "08/06/2019"
+api_name:
+  - "COR_PRF_REJIT_FLAGS Enumeration"
+api_location:
+  - "mscorwks.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "COR_PRF_REJIT_FLAGS"
+helpviewer_keywords:
+  - "COR_PRF_REJIT_FLAGS enumeration [.NET Framework profiling]"
+topic_type:
+  - "apiref"
+author: "davmason"
 ---
-
 # COR_PRF_REJIT_FLAGS enumeration
 
-Contains values that indicate how the ICorProfilerInfo10::RequestReJITWithInliners API should behave.
+Contains values that indicate how the [ICorProfilerInfo10::RequestReJITWithInliners](icorprofilerinfo10-requestrejitwithinliners-method.md) API should behave.
 
 ## Syntax
 
@@ -30,7 +39,7 @@ typedef enum
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorProf.idl, CorProf.h
 

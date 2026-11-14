@@ -1,10 +1,7 @@
 ---
-title: "Choosing diagnostic IDs"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/roslyn-sdk/choosing-diagnostic-ids.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Choosing diagnostic IDs
+description: This overview provides an understanding of how to choose a diagnostic ID
+ms.date: 11/2/2023
 ---
 
 # Choose diagnostic IDs
@@ -14,9 +11,9 @@ compiler error or a diagnostic that is produced by an analyzer.
 
 The IDs are surfaced from various APIs, such as:
 
-* `Microsoft.CodeAnalysis.DiagnosticDescriptor.Id`
-* `System.ObsoleteAttribute.DiagnosticId`
-* `System.Diagnostics.CodeAnalysis.ExperimentalAttribute.DiagnosticId`
+* <xref:Microsoft.CodeAnalysis.DiagnosticDescriptor.Id?displayProperty=nameWithType>
+* <xref:System.ObsoleteAttribute.DiagnosticId?displayProperty=nameWithType>
+* <xref:System.Diagnostics.CodeAnalysis.ExperimentalAttribute.DiagnosticId?displayProperty=nameWithType>
 
 Diagnostic IDs are also used as identifiers in source, for example, from
 [#pragma warning disable] or [.editorconfig] files.
@@ -30,10 +27,13 @@ Diagnostic IDs are also used as identifiers in source, for example, from
   - The prefix is specific to your project
   - The number represents the specific diagnostic
 
-> **Note:**
+> [!NOTE]
 > It's a source breaking change to change diagnostic IDs, as existing
 > suppressions would be ignored if the ID changed.
 
 Don't limit your prefix to two-characters (such as `CSXXX`and `CAXXXX`).
 Instead, use a longer prefix to avoid conflicts. For example, the `System.*`
 diagnostics use `SYSLIB` as their prefix.
+
+[#pragma warning disable]: ../language-reference/preprocessor-directives.md#pragma-warning
+[.editorconfig]: ../../fundamentals/code-analysis/code-style-rule-options.md

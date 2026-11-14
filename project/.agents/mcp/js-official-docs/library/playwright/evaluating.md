@@ -1,10 +1,6 @@
 ---
+id: evaluating
 title: "Evaluating JavaScript"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/evaluating.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
 
 ## Introduction
@@ -23,11 +19,11 @@ const href = await page.evaluate(() => document.location.href);
 String href = (String) page.evaluate("document.location.href");
 ```
 
-```python
+```python async
 href = await page.evaluate('() => document.location.href')
 ```
 
-```python
+```python sync
 href = page.evaluate('() => document.location.href')
 ```
 
@@ -51,14 +47,14 @@ int status = (int) page.evaluate("async () => {\n" +
   "}");
 ```
 
-```python
+```python async
 status = await page.evaluate("""async () => {
   response = await fetch(location.href)
   return response.status
 }""")
 ```
 
-```python
+```python sync
 status = page.evaluate("""async () => {
   response = await fetch(location.href)
   return response.status
@@ -94,7 +90,7 @@ Object result = page.evaluate("() => {\n" +
   "}");
 ```
 
-```python
+```python async
 data = "some data"
 result = await page.evaluate("""() => {
   // WRONG: there is no "data" in the web page.
@@ -102,7 +98,7 @@ result = await page.evaluate("""() => {
 }""")
 ```
 
-```python
+```python sync
 data = "some data"
 result = page.evaluate("""() => {
   // WRONG: there is no "data" in the web page.
@@ -136,7 +132,7 @@ Object result = page.evaluate("data => {\n" +
   "}", data);
 ```
 
-```python
+```python async
 data = "some data"
 # Pass |data| as a parameter.
 result = await page.evaluate("""data => {
@@ -144,7 +140,7 @@ result = await page.evaluate("""data => {
 }""", data)
 ```
 
-```python
+```python sync
 data = "some data"
 # Pass |data| as a parameter.
 result = page.evaluate("""data => {
@@ -256,7 +252,7 @@ page.evaluate(
   arg);
 ```
 
-```python
+```python async
 # A primitive value.
 await page.evaluate('num => num', 42)
 
@@ -299,7 +295,7 @@ await page.evaluate("""
     { 'button1': button1, 'list': [button2], 'foo': None })
 ```
 
-```python
+```python sync
 # A primitive value.
 page.evaluate('num => num', 42)
 
@@ -384,7 +380,7 @@ In this case, use [`method: Page.addInitScript`] or [`method: BrowserContext.add
 
 First, create a `preload.js` file that contains the mock.
 
-```js
+```js browser
 // preload.js
 Math.random = () => 42;
 ```
@@ -407,12 +403,12 @@ test.beforeEach(async ({ page }) => {
 page.addInitScript(Paths.get("mocks/preload.js"));
 ```
 
-```python
+```python async
 # In your test, assuming the "preload.js" file is in the "mocks" directory.
 await page.add_init_script(path="mocks/preload.js")
 ```
 
-```python
+```python sync
 # In your test, assuming the "preload.js" file is in the "mocks" directory.
 page.add_init_script(path="mocks/preload.js")
 ```

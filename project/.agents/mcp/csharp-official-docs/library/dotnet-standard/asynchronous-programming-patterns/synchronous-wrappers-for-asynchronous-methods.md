@@ -1,106 +1,57 @@
 ---
 title: "Synchronous wrappers for asynchronous methods"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/asynchronous-programming-patterns/synchronous-wrappers-for-asynchronous-methods.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn why you should avoid exposing synchronous wrappers for asynchronous methods in .NET libraries, and how to mitigate issues when sync-over-async is unavoidable.
+ms.date: 04/06/2026
+ai-usage: ai-assisted
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "sync over async"
+  - "async deadlock"
+  - "ConfigureAwait"
+  - "asynchronous programming, wrappers"
+  - "TAP, synchronous wrappers"
 ---
-
 # Synchronous wrappers for asynchronous methods
 
 When a library exposes only asynchronous APIs, consumers sometimes wrap them in synchronous calls to satisfy a synchronous interface or contract. This "sync-over-async" pattern can seem straightforward, but it's a common source of deadlocks and performance problems.
 
-## Basic <example-value> patterns
+## Basic wrapping patterns
 
-A synchronous wrapper around a Task-based Asynchronous Pattern (TAP) method accesses the task's `System.Threading.Tasks.Task`1.Result` property, which blocks the calling thread:
+A synchronous wrapper around a Task-based Asynchronous Pattern (TAP) method accesses the task's <xref:System.Threading.Tasks.Task`1.Result> property, which blocks the calling thread:
 
-```csharp
-public class TapWrapper
-{
-    public static int Foo(Func<Task<int>> fooAsync)
-    {
-        return fooAsync().Result;
-    }
-}
-```
-```vb
-Public Module TapWrapper
-    Public Function Foo(fooAsync As Func(Of Task(Of Integer))) As Integer
-        Return fooAsync().Result
-    End Function
-End Module
-```
+:::code language="csharp" source="./snippets/synchronous-wrappers-for-async-methods/csharp/Program.cs" id="SyncOverAsyncTAP":::
+:::code language="vb" source="./snippets/synchronous-wrappers-for-async-methods/vb/Program.vb" id="SyncOverAsyncTAP":::
+
 This approach looks simple, but it can cause serious problems depending on the environment in which it runs.
 
 ## Deadlocks with single-threaded contexts
 
-The most dangerous scenario occurs when you call a synchronous wrapper from a thread that has a single-threaded `System.Threading.SynchronizationContext`. This scenario is typically a UI thread in WPF, Windows Forms, or MAUI applications.
+The most dangerous scenario occurs when you call a synchronous wrapper from a thread that has a single-threaded <xref:System.Threading.SynchronizationContext>. This scenario is typically a UI thread in WPF, Windows Forms, or MAUI applications.
 
-```csharp
-public static class DeadlockExample
-{
-    private static void Delay(int milliseconds)
-    {
-        DelayAsync(milliseconds).Wait();
-    }
+:::code language="csharp" source="./snippets/synchronous-wrappers-for-async-methods/csharp/Program.cs" id="DeadlockExample":::
+:::code language="vb" source="./snippets/synchronous-wrappers-for-async-methods/vb/Program.vb" id="DeadlockExample":::
 
-    private static async Task DelayAsync(int milliseconds)
-    {
-        await Task.Delay(milliseconds);
-    }
-}
-```
-```vb
-Public Module DeadlockExample
-    Private Sub Delay(milliseconds As Integer)
-        DelayAsync(milliseconds).Wait()
-    End Sub
-
-    Private Async Function DelayAsync(milliseconds As Integer) As Task
-        Await Task.Delay(milliseconds)
-    End Function
-End Module
-```
 Here's what happens step by step:
 
 1. The UI thread calls `Delay`, which calls `DelayAsync(milliseconds).Wait()`.
 1. `DelayAsync` runs synchronously until it reaches `await Task.Delay(milliseconds)`.
-1. Because the delay isn't complete yet, `await` captures the current `System.Threading.SynchronizationContext` and suspends. `DelayAsync` returns a `System.Threading.Tasks.Task` to the caller.
+1. Because the delay isn't complete yet, `await` captures the current <xref:System.Threading.SynchronizationContext> and suspends. `DelayAsync` returns a <xref:System.Threading.Tasks.Task> to the caller.
 1. The UI thread blocks in `.Wait()`, waiting for that task to complete.
 1. When the delay finishes, the continuation needs to run on the original `SynchronizationContext` which is the UI thread.
 1. The UI thread can't process the continuation because it's blocked in `.Wait()`.
 1. **Deadlock.**
 
-> **Important:**
+> [!IMPORTANT]
 > The success or failure of sync-over-async code depends on the environment in which it runs. Code that works in a console app might deadlock on a UI thread or in ASP.NET (on .NET Framework). This environmental dependency is a core reason to avoid exposing synchronous wrappers.
 
 ## Thread pool exhaustion
 
 Deadlocks aren't limited to UI threads. If an asynchronous method depends on the thread pool to complete its work, for example, by queuing a final processing step, blocking many pool threads with synchronous wrappers can starve the pool:
 
-```csharp
-public static class ThreadPoolDeadlockExample
-{
-    public static int Foo(Func<Task<int>> fooAsync)
-    {
-        return fooAsync().Result;
-    }
+:::code language="csharp" source="./snippets/synchronous-wrappers-for-async-methods/csharp/Program.cs" id="ThreadPoolDeadlock":::
 
-    public static async Task DemonstrateDeadlockRiskAsync()
-    {
-        var tasks = Enumerable.Range(0, 25)
-            .Select(_ => Task.Run(() => Foo(() => SomeIOOperationAsync())));
-        await Task.WhenAll(tasks);
-    }
-
-    private static async Task<int> SomeIOOperationAsync()
-    {
-        await Task.Delay(100);
-        return 42;
-    }
-}
-```
 In this scenario:
 
 1. Many thread pool threads call `Foo`, which blocks in `.Result`.
@@ -122,40 +73,16 @@ Sometimes sync-over-async is truly unavoidable. For example, it's unavoidable wh
 
 ### Use `ConfigureAwait(false)` in the async implementation
 
-If you control the async method, use `System.Threading.Tasks.Task.ConfigureAwait*` with `false` on every `await` to prevent the continuation from marshaling back to the original `SynchronizationContext`:
+If you control the async method, use <xref:System.Threading.Tasks.Task.ConfigureAwait*?displayProperty=nameWithType> with `false` on every `await` to prevent the continuation from marshaling back to the original `SynchronizationContext`:
 
-```csharp
-public static class ConfigureAwaitMitigation
-{
-    public static async Task<int> LibraryMethodAsync()
-    {
-        await Task.Delay(100).ConfigureAwait(false);
-        return 42;
-    }
+:::code language="csharp" source="./snippets/synchronous-wrappers-for-async-methods/csharp/Program.cs" id="ConfigureAwaitMitigation":::
+:::code language="vb" source="./snippets/synchronous-wrappers-for-async-methods/vb/Program.vb" id="ConfigureAwaitMitigation":::
 
-    public static int Sync()
-    {
-        return LibraryMethodAsync().GetAwaiter().GetResult();
-    }
-}
-```
-```vb
-Public Module ConfigureAwaitMitigation
-    Public Async Function LibraryMethodAsync() As Task(Of Integer)
-        Await Task.Delay(100).ConfigureAwait(False)
-        Return 42
-    End Function
-
-    Public Function Sync() As Integer
-        Return LibraryMethodAsync().Result
-    End Function
-End Module
-```
 As a library author, use `ConfigureAwait(false)` on all awaits unless your code specifically needs to resume on the captured context. Using `ConfigureAwait(false)` is a best practice for performance and helps prevent deadlocks when consumers block.
 
 ### Offload to the thread pool
 
-If you don't control the async implementation (and it might not use `ConfigureAwait(false)`), offload the call to the thread pool. The thread pool doesn't have a `System.Threading.SynchronizationContext`, so the await won't try to marshal back to a blocked thread:
+If you don't control the async implementation (and it might not use `ConfigureAwait(false)`), offload the call to the thread pool. The thread pool doesn't have a <xref:System.Threading.SynchronizationContext>, so the await won't try to marshal back to a blocked thread:
 
 ```csharp
 public int Sync()
@@ -183,6 +110,6 @@ Behavior that works in one environment might deadlock in another.
 
 ## See also
 
-- Task-based asynchronous pattern (TAP)
-- Consume the task-based asynchronous pattern
-- Asynchronous wrappers for synchronous methods
+- [Task-based asynchronous pattern (TAP)](task-based-asynchronous-pattern-tap.md)
+- [Consume the task-based asynchronous pattern](consuming-the-task-based-asynchronous-pattern.md)
+- [Asynchronous wrappers for synchronous methods](async-wrappers-for-synchronous-methods.md)

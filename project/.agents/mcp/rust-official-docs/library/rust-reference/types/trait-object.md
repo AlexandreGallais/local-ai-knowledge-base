@@ -1,21 +1,15 @@
----
-title: "Trait objects"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/types/trait-object.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[type.trait-object]
 # Trait objects
 
 r[type.trait-object.syntax]
-```grammar
+```grammar,types
 TraitObjectType -> Bounds[^bare-2021] | `dyn`[^dyn-2018] Bounds?
 
 TraitObjectTypeOneBound -> TraitBound[^bare-2021] | `dyn`[^dyn-2018] TraitBound?
 ```
+
+[^bare-2021]: See [type.trait-object.syntax-edition2021].
+[^dyn-2018]: See [type.trait-object.syntax-edition2018].
 
 r[type.trait-object.intro]
 A *trait object* is an opaque value of another type that implements a set of traits. The set of traits is made up of a [dyn compatible] *base trait* plus any number of [auto traits].
@@ -53,7 +47,7 @@ r[type.trait-object.alias]
 Two trait object types alias each other if the base traits alias each other and if the sets of auto traits are the same and the lifetime bounds are the same. For example, `dyn Trait + Send + UnwindSafe` is the same as `dyn Trait + UnwindSafe + Send`.
 
 r[type.trait-object.unsized]
-Due to the opaqueness of which concrete type the value is of, trait objects are [dynamically sized types]. Like all DSTs, trait objects are used behind some type of pointer; for example `&dyn SomeTrait` or `Box<dyn SomeTrait>`. Each instance of a pointer to a trait object includes:
+Due to the opaqueness of which concrete type the value is of, trait objects are [dynamically sized types]. Like all <abbr title="dynamically sized types">DSTs</abbr>, trait objects are used behind some type of pointer; for example `&dyn SomeTrait` or `Box<dyn SomeTrait>`. Each instance of a pointer to a trait object includes:
 
  - a pointer to an instance of a type `T` that implements `SomeTrait`
  - a _virtual method table_, often just called a _vtable_, which contains, for each method of `SomeTrait` and its [supertraits] that `T` implements, a pointer to `T`'s implementation (i.e. a function pointer).
@@ -86,3 +80,9 @@ r[type.trait-object.lifetime-bounds]
 ## Trait object lifetime bounds
 
 Since a trait object can contain references, the lifetimes of those references need to be expressed as part of the trait object. This lifetime is written as `Trait + 'a`. There are [defaults] that allow this lifetime to usually be inferred with a sensible choice.
+
+[auto traits]: ../special-types-and-traits.md#auto-traits
+[defaults]: ../lifetime-elision.md#default-trait-object-lifetimes
+[dyn compatible]: ../items/traits.md#dyn-compatibility
+[dynamically sized types]: ../dynamically-sized-types.md
+[supertraits]: ../items/traits.md#supertraits

@@ -1,28 +1,28 @@
 ---
-title: "Use XSLT to transform an XML tree - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/use-xslt-transform-xml-tree.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Use XSLT to transform an XML tree - LINQ to XML
+description: Learn to use XSLT to transform an XML tree, using XmlReader to read and XmlWriter to write.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
-
 # Use XSLT to transform an XML tree (LINQ to XML)
 
-You can use XSLT to transform an XML tree, using `System.Xml.XmlReader` to read and `System.Xml.XmlWriter` to write.
+You can use XSLT to transform an XML tree, using <xref:System.Xml.XmlReader> to read and <xref:System.Xml.XmlWriter> to write.
 
 ## Example: Use XSLT to transform an XML tree, using `XMLReader` to read and `XMLWriter` to write
 
-This example creates an XML tree and uses XSLT to transform it. It makes use of an `System.Xml.XmlReader` to read the original tree, and an `System.Xml.XmlWriter` to write the transformed version.
+This example creates an XML tree and uses XSLT to transform it. It makes use of an <xref:System.Xml.XmlReader> to read the original tree, and an <xref:System.Xml.XmlWriter> to write the transformed version.
 
 It starts by creating:
 
 - An XML tree.
-- An `System.Xml.XmlReader` of the XML tree.
+- An <xref:System.Xml.XmlReader> of the XML tree.
 - A new document to hold the XSLT output.
-- An `System.Xml.XmlWriter` to write the transformed tree to the new document.
+- An <xref:System.Xml.XmlWriter> to write the transformed tree to the new document.
 
-It then invokes an XSLT transformation that uses the `System.Xml.XmlReader` to read the original XML tree, and the `System.Xml.XmlWriter` to write the transformed tree to the new document.
+It then invokes an XSLT transformation that uses the <xref:System.Xml.XmlReader> to read the original XML tree, and the <xref:System.Xml.XmlWriter> to write the transformed tree to the new document.
 
 ```csharp
 string xslt = @"<?xml version='1.0'?>
@@ -116,5 +116,5 @@ This example produces the following output:
 
 ## See also
 
-- `System.Xml.Linq.XContainer.CreateWriter*`
-- `System.Xml.Linq.XNode.CreateReader*`
+- <xref:System.Xml.Linq.XContainer.CreateWriter*?displayProperty=nameWithType>
+- <xref:System.Xml.Linq.XNode.CreateReader*?displayProperty=nameWithType>

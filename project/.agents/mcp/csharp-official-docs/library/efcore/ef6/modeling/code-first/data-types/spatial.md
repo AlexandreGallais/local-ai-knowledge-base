@@ -1,23 +1,21 @@
 ---
-title: "Spatial - Code First - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/modeling/code-first/data-types/spatial.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Spatial - Code First - EF6
+description: Spatial - Code First in Entity Framework 6
+author: SamMonoRT
+ms.date: 10/23/2016
+uid: ef6/modeling/code-first/data-types/spatial
 ---
-
 # Spatial - Code First
-> **Note:**
+> [!NOTE]
 > **EF5 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 5. If you are using an earlier version, some or all of the information does not apply.
 
 The video and step-by-step walkthrough shows how to map spatial types with Entity Framework Code First. It also demonstrates how to use a LINQ query to find a distance between two locations.
 
-This walkthrough will use Code First to create a new database, but you can also use Code First to an existing database.
+This walkthrough will use Code First to create a new database, but you can also use [Code First to an existing database](xref:ef6/modeling/code-first/workflows/existing-database).
 
 Spatial type support was introduced in Entity Framework 5. Note that to use the new features like spatial type, enums, and Table-valued functions, you must target .NET Framework 4.5. Visual Studio 2012 targets .NET 4.5 by default.
 
-To use spatial data types you must also use an Entity Framework provider that has spatial support. See provider support for spatial types for more information.
+To use spatial data types you must also use an Entity Framework provider that has spatial support. See [provider support for spatial types](xref:ef6/fundamentals/providers/spatial-support) for more information.
 
 There are two main spatial data types: geography and geometry. The geography data type stores ellipsoidal data (for example, GPS latitude and longitude coordinates). The geometry data type represents Euclidean (flat) coordinate system.
 
@@ -26,7 +24,7 @@ This video shows how to map spatial types with Entity Framework Code First. It a
 
 **Presented By**: Julia Kornich
 
-**Video**: WMV | MP4 | WMV (ZIP)
+**Video**: [WMV](https://download.microsoft.com/download/9/1/3/913EA17E-6F97-41D8-A4FE-805A0D83D26A/HDI-ITPro-MSDN-winvideo-spatialwithcodefirst.wmv) | [MP4](https://download.microsoft.com/download/9/1/3/913EA17E-6F97-41D8-A4FE-805A0D83D26A/HDI-ITPro-MSDN-mp4video-spatialwithcodefirst.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/9/1/3/913EA17E-6F97-41D8-A4FE-805A0D83D26A/HDI-ITPro-MSDN-winvideo-spatialwithcodefirst.zip)
 
 ## Pre-Requisites
 
@@ -47,13 +45,13 @@ The University has the Location property of the DbGeography type. To use the DbG
 
 Open the Program.cs file and paste the following using statements at the top of the file:
 
-```csharp
+``` csharp
 using System.Data.Spatial;
 ```
 
 Add the following University class definition to the Program.cs file.
 
-```csharp
+``` csharp
 public class University  
 {
     public int UniversityID { get; set; }
@@ -64,7 +62,7 @@ public class University
 
 ## Define the DbContext Derived Type
 
-In addition to defining entities, you need to define a class that derives from DbContext and exposes DbSet<TEntity> properties. The DbSet<TEntity> properties let the context know which types you want to include in the model.
+In addition to defining entities, you need to define a class that derives from DbContext and exposes DbSet&lt;TEntity&gt; properties. The DbSet&lt;TEntity&gt; properties let the context know which types you want to include in the model.
 
 An instance of the DbContext derived type manages the entity objects during run time, which includes populating objects with data from a database, change tracking, and persisting data to the database.
 
@@ -79,13 +77,13 @@ Note, that in addition to the EntityFramework  assembly, a reference to the Sys
 
 At the top of the Program.cs file, add the following using statement:
 
-```csharp
+``` csharp
 using System.Data.Entity;
 ```
 
 In the Program.cs add the context definition. 
 
-```csharp
+``` csharp
 public partial class UniversityContext : DbContext
 {
     public DbSet<University> Universities { get; set; }
@@ -98,7 +96,7 @@ Open the Program.cs file where the Main method is defined. Add the following cod
 
 The code adds two new University objects to the context. Spatial properties are initialized by using the DbGeography.FromText method. The geography point represented as WellKnownText is passed to the method. The code then saves the data. Then, the LINQ query that returns a University object where its location is closest to the specified location, is constructed and executed.
 
-```csharp
+``` csharp
 using (var context = new UniversityContext ())
 {
     context.Universities.Add(new University()
@@ -137,11 +135,11 @@ The closest University to you is: School of Fine Art.
 
 When you run the application the first time, the Entity Framework creates a database for you. Because we have Visual Studio 2012 installed, the database will be created on the LocalDB instance. By default, the Entity Framework names the database after the fully qualified name of the derived context (in this example that is **SpatialCodeFirst.UniversityContext**). The subsequent times the existing database will be used.  
 
-Note, that if you make any changes to your model after the database has been created, you should use Code First Migrations to update the database schema. See Code First to a New Database for an example of using Migrations.
+Note, that if you make any changes to your model after the database has been created, you should use Code First Migrations to update the database schema. See [Code First to a New Database](xref:ef6/modeling/code-first/workflows/new-database) for an example of using Migrations.
 
 To view the database and data, do the following:
 
-1.  In the Visual Studio 2012 main menu, select **View** -> **SQL Server Object Explorer**.
+1.  In the Visual Studio 2012 main menu, select **View** -&gt; **SQL Server Object Explorer**.
 2.  If LocalDB is not in the list of servers, click the right mouse button on **SQL Server** and select **Add SQL Server**
     Use the default **Windows Authentication** to connect to the LocalDB instance
 3.  Expand the LocalDB node
@@ -150,4 +148,4 @@ To view the database and data, do the following:
 
 ## Summary
 
-In this walkthrough we looked at how to use spatial types with Entity Framework Code First.
+In this walkthrough we looked at how to use spatial types with Entity Framework Code First. 

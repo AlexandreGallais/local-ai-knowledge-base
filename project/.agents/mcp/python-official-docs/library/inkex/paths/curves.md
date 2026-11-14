@@ -1,12 +1,3 @@
----
-title: "inkex.paths.curves"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/paths/curves.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.paths.curves
 
 Curve and Smooth Path Commands
@@ -35,7 +26,7 @@ def poly(self, prev, prev_control, return_coeffs=False)
 
 Returns a the cubic as a complex Polynomial object.
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## class Curve
 

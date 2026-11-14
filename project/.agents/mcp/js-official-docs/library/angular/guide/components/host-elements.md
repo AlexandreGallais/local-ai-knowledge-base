@@ -1,15 +1,6 @@
----
-title: "Component host elements"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/components/host-elements.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Component host elements
 
-TIP: This guide assumes you've already read the Essentials Guide. Read that first if you're new to Angular.
+TIP: This guide assumes you've already read the [Essentials Guide](essentials). Read that first if you're new to Angular.
 
 Angular creates an instance of a component for every HTML element that matches the component's
 selector. The DOM element that matches a component's selector is that component's **host element**.
@@ -74,9 +65,9 @@ export class CustomSlider {
 NOTE: The global target names that can be used to prefix an event name are `document:`, `window:` and `body:`.
 
 NOTE: Key names like `'(keydown.enter)'` are matched against `KeyboardEvent.key`, which depends on
-the user's keyboard layout and input language. To match a physical key <example-value> of layout, use
+the user's keyboard layout and input language. To match a physical key regardless of layout, use
 the `code` modifier instead, e.g. `'(keydown.code.Enter)'`. See
-Using key <example-value> for details.
+[Using key modifiers](guide/templates/event-listeners#using-key-modifiers) for details.
 
 ## The `@HostBinding` and `@HostListener` decorators
 
@@ -112,9 +103,10 @@ export class CustomSlider {
 }
 ```
 
-**Prefer using the `host` property over the decorators**
+<docs-callout critical title="Prefer using the `host` property over the decorators">
   **Always prefer using the `host` property over `@HostBinding` and `@HostListener`.** These
 decorators exist exclusively for backwards compatibility.
+</docs-callout>
 
 ## Binding collisions
 
@@ -144,8 +136,8 @@ For non-styling properties and attributes (such as `id`, `role`, or `[attr.aria-
 
 ## Styling with CSS custom properties
 
-Developers often rely on CSS Custom Properties to enable a flexible configuration of their component's styles.
-You can set such custom properties on a host element with a style binding.
+Developers often rely on [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_cascading_variables/Using_CSS_custom_properties) to enable a flexible configuration of their component's styles.
+You can set such custom properties on a host element with a [style binding](guide/templates/binding#css-style-properties).
 
 ```angular-ts
 @Component({
@@ -163,7 +155,7 @@ In this example, the `--my-background` CSS custom property is bound to the `colo
 
 ### Setting custom properties on children components
 
-Alternatively, it is also possible to set css custom properties on the host element of children components with a style binding.
+Alternatively, it is also possible to set css custom properties on the host element of children components with a [style binding](guide/templates/binding#css-style-properties).
 
 ```angular-ts
 @Component({
@@ -177,17 +169,17 @@ export class MyComponent {
 
 ## Injecting host element attributes
 
-Components and directives can read static attributes from their host element by using `HostAttributeToken` together with the `inject` function.
+Components and directives can read static attributes from their host element by using `HostAttributeToken` together with the [`inject`](api/core/inject) function.
 
 ```ts
-import { Component, HostAttributeToken, inject } from '<example-value>';
+import { Component, HostAttributeToken, inject } from '@angular/core';
 
 @Component({
   selector: 'app-button',
   ...,
 })
 export class Button {
-  variation = inject(new HostAttributeToken('<example-value>'));
+  variation = inject(new HostAttributeToken('variation'));
 }
 ```
 

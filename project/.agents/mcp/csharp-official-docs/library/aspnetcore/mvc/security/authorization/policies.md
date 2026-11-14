@@ -1,29 +1,39 @@
 ---
-title: "Policy-based authorization in ASP.NET Core MVC"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/mvc/security/authorization/policies.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Policy-based authorization in ASP.NET Core MVC
+ai-usage: ai-assisted
+description: Learn how to create and use authorization policy handlers for enforcing authorization requirements in an ASP.NET Core MVC app.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 07/21/2026
 ---
-
 # Policy-based authorization in ASP.NET Core MVC
 
-This article provides additional MVC policy-based authorization scenarios following Policy-based authorization in ASP.NET Core, which should be read before this article when learning about policy-based authorization.
+This article provides additional MVC policy-based authorization scenarios following [Policy-based authorization in ASP.NET Core](../../../security/authorization/policies.md), which should be read before this article when learning about policy-based authorization.
 
 ## Apply policies to MVC controllers
 
 Apply policies to controllers using the `[Authorize]` attribute with the policy name:
 
-_Code sample not included: ~/../AspNetCore.Docs.Samples/security/authorization/policies/6.0/AuthorizationPoliciesSample/Controllers/AtLeast21Controller.cs._
-If multiple policies are applied at the controller and action levels, ***all*** policies must pass <example-value> access is granted:
+:::moniker range=">= aspnetcore-6.0"
 
-_Code sample not included: ~/../AspNetCore.Docs.Samples/security/authorization/policies/6.0/AuthorizationPoliciesSample/Controllers/AtLeast21Controller2.cs._
+:::code language="csharp" source="~/../AspNetCore.Docs.Samples/security/authorization/policies/6.0/AuthorizationPoliciesSample/Controllers/AtLeast21Controller.cs" id="snippet" highlight="1":::
+
+If multiple policies are applied at the controller and action levels, ***all*** policies must pass before access is granted:
+
+:::code language="csharp" source="~/../AspNetCore.Docs.Samples/security/authorization/policies/6.0/AuthorizationPoliciesSample/Controllers/AtLeast21Controller2.cs" id="snippet" highlight="1,4":::
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-6.0"
+
+:::code language="csharp" source="~/../AspNetCore.Docs.Samples/security/authorization/policies/PoliciesAuthApp1/Controllers/AlcoholPurchaseController.cs" id="snippet_AlcoholPurchaseControllerClass" highlight="4":::
+
+:::moniker-end
+
 ## Access MVC request context in handlers
 
-The `Microsoft.AspNetCore.Authorization.AuthorizationHandler`1.HandleRequirementAsync*` method has two parameters: an `Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext` and the `TRequirement` being handled. Frameworks such as MVC or SignalR are free to add any object to the `Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext.Resource` property to pass extra information.
+The <xref:Microsoft.AspNetCore.Authorization.AuthorizationHandler`1.HandleRequirementAsync*?displayProperty=nameWithType> method has two parameters: an <xref:Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext> and the `TRequirement` being handled. Frameworks such as MVC or SignalR are free to add any object to the <xref:Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext.Resource?displayProperty=nameWithType> property to pass extra information.
 
-When using endpoint routing, authorization is typically handled by the Authorization Middleware, and the `Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext.Resource` property is an instance of `Microsoft.AspNetCore.Http.HttpContext`. The context is used to access the current endpoint, which can be used to probe the underlying resource to which you're routing:
+When using endpoint routing, authorization is typically handled by the Authorization Middleware, and the <xref:Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext.Resource> property is an instance of <xref:Microsoft.AspNetCore.Http.HttpContext>. The context is used to access the current endpoint, which can be used to probe the underlying resource to which you're routing:
 
 ```csharp
 if (context.Resource is HttpContext httpContext)
@@ -35,9 +45,9 @@ if (context.Resource is HttpContext httpContext)
 }
 ```
 
-With traditional routing, or when authorization happens as part of MVC's authorization filter, the value of `Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext.Resource` is an `Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext` instance. This property provides access to `Microsoft.AspNetCore.Http.HttpContext`, `Microsoft.AspNetCore.Routing.RouteData`, and everything else provided by MVC and Razor Pages.
+With traditional routing, or when authorization happens as part of MVC's authorization filter, the value of <xref:Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext.Resource> is an <xref:Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext> instance. This property provides access to <xref:Microsoft.AspNetCore.Http.HttpContext>, <xref:Microsoft.AspNetCore.Routing.RouteData>, and everything else provided by MVC and Razor Pages.
 
-The use of the `Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext.Resource` property is framework-specific. Using information in the property limits your authorization policies to particular frameworks. Cast the property using the `is` keyword, and then confirm the cast has succeeded to ensure your code doesn't crash with an `System.InvalidCastException` when run on other frameworks. When the cast succeeds, examine MVC-specific data, such as routing data:
+The use of the <xref:Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext.Resource> property is framework-specific. Using information in the property limits your authorization policies to particular frameworks. Cast the property using the `is` keyword, and then confirm the cast has succeeded to ensure your code doesn't crash with an <xref:System.InvalidCastException> when run on other frameworks. When the cast succeeds, examine MVC-specific data, such as routing data:
 
 ```csharp
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -51,5 +61,5 @@ if (context.Resource is AuthorizationFilterContext mvcContext)
 }
 ```
 
-> **Note:**
-> Endpoint routing passes `Microsoft.AspNetCore.Routing.RouteEndpoint` to authorization handlers, unlike traditional routing in MVC apps, which use an authorization handler context resource of type `Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext`. If the app uses MVC authorization filters along with endpoint routing authorization, it may be necessary to handle both types of resources.
+> [!NOTE]
+> Endpoint routing passes <xref:Microsoft.AspNetCore.Routing.RouteEndpoint> to authorization handlers, unlike traditional routing in MVC apps, which use an authorization handler context resource of type <xref:Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext>. If the app uses MVC authorization filters along with endpoint routing authorization, it may be necessary to handle both types of resources.

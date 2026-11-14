@@ -1,50 +1,43 @@
 ---
-title: "External OAuth authentication providers"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/authentication/social/other-logins.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: External OAuth authentication providers
+description: Discover External OAuth authentication providers that work with ASP.NET Core apps.
+ms.date: 11/11/2018
 ---
-
 # External OAuth authentication providers
 
-By Rick Anderson, Pranav Rastogi, and Valeriy Novytskyy
+By [Rick Anderson](https://twitter.com/RickAndMSFT), [Pranav Rastogi](https://github.com/rustd), and [Valeriy Novytskyy](https://github.com/01binary)
 
-The following list includes common external OAuth authentication providers that work with ASP.NET Core apps. Third-party NuGet packages, such as the ones maintained by OpenIddict or aspnet-contrib, can be used to complement the authentication providers implemented by the ASP.NET Core team.
+The following list includes common external OAuth authentication providers that work with ASP.NET Core apps. Third-party NuGet packages, such as the ones maintained by [OpenIddict](https://documentation.openiddict.com/integrations/web-providers) or [aspnet-contrib](https://www.nuget.org/packages?q=owners%3Aaspnet-contrib+title%3AOAuth), can be used to complement the authentication providers implemented by the ASP.NET Core team.
 
-* LinkedIn
+* [LinkedIn](https://www.linkedin.com/developer/apps)
 
-* Instagram
+* [Instagram](https://www.instagram.com/developer/register/)
 
-* Reddit (Instructions)
+<!-- DOC AUTHOR NOTE: The preferences page at https://www.reddit.com/login?dest=https%3A%2F%2Fwww.reddit.com%2Fprefs%2Fapps 
+                      was linked to 'Reddit', but the URL makes a bad POST that ultimately causes our build system to claim 
+                      that the link is broken.
+-->
 
-* Github (Instructions)
+* Reddit ([Instructions](https://github.com/reddit/reddit/wiki/OAuth2-Quick-Start-Example))
 
-* Yahoo (Instructions)
+* [Github](https://github.com/login?return_to=https%3A%2F%2Fgithub.com%2Fsettings%2Fapplications%2Fnew) ([Instructions](https://developer.github.com/v3/oauth/))
 
-* Tumblr (Instructions)
+* [Yahoo](https://login.yahoo.com/config/login?src=devnet&.done=http%3A%2F%2Fdeveloper.yahoo.com%2Fapps%2Fcreate%2F) ([Instructions](https://developer.yahoo.com/oauth2/guide/))
 
-* Pinterest (Instructions)
+* [Tumblr](https://www.tumblr.com/oauth/apps) ([Instructions](https://www.tumblr.com/docs/api/v2#auth))
 
-* Flickr (Instructions)
+* [Pinterest](https://www.pinterest.com/login/?next=http%3A%2F%2Fdevsite%2Fapps%2F) ([Instructions](https://developers.pinterest.com/docs/api/overview/?))
 
-* Dribbble (Instructions)
+* [Flickr](https://www.flickr.com/services/apps/create) ([Instructions](https://www.flickr.com/services/api/auth.oauth.html))
 
-* Vimeo (Instructions)
+* [Dribbble](https://dribbble.com/signup) ([Instructions](https://developer.dribbble.com))
 
-* SoundCloud (Instructions)
+* [Vimeo](https://vimeo.com/join) ([Instructions](https://developer.vimeo.com/api/authentication))
 
-* VK (Instructions)
+* [SoundCloud](https://soundcloud.com/you/apps/new) ([Instructions](https://developers.soundcloud.com/blog/we-love-oauth-2))
 
-To use multiple authentication providers, see Using external login providers with Identity in ASP.NET Core.
+* [VK](https://vk.com/apps?act=manage) ([Instructions](https://vk.com/pages?oid=-17680044&p=Authorizing_Sites))
 
-## Forward request information with a proxy or load balancer
+To use multiple authentication providers, see [Using external login providers with Identity in ASP.NET Core](index.md#multiple-authentication-providers).
 
-If the app is deployed behind a proxy server or load balancer, some of the original request information might be forwarded to the app in request headers. This information usually includes the secure request scheme (`https`), host, and client IP address. Apps don't automatically read these request headers to discover and use the original request information.
-
-The scheme is used in link generation that affects the authentication flow with external providers. Losing the secure scheme (`https`) results in the app generating incorrect insecure redirect URLs.
-
-Use forwarded headers middleware to make the original request information available to the app for request processing.
-
-For more information, see Configure ASP.NET Core to work with proxy servers and load balancers.
+[!INCLUDE[Forward request information when behind a proxy or load balancer section](includes/forwarded-headers-middleware.md)]

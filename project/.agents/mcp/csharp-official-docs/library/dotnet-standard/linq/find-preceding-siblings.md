@@ -1,21 +1,22 @@
 ---
-title: "How to find preceding siblings - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/find-preceding-siblings.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to find preceding siblings - LINQ to XML
+description: "Learn how to find sibling elements that precede a given element. Two methods are shown: one uses XPathSelectElements along the preceding-sibling axis, the other uses XNode.ElementsBeforeSelf."
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to find preceding siblings (LINQ to XML)
 
-This article shows how to use `System.Xml.XPath.Extensions.XPathSelectElements*` along the preceding-sibling axis to find sibling elements that precede a given element, and how to use `System.Xml.Linq.XNode.ElementsBeforeSelf*` to find the same elements.
+This article shows how to use <xref:System.Xml.XPath.Extensions.XPathSelectElements*> along the preceding-sibling axis to find sibling elements that precede a given element, and how to use <xref:System.Xml.Linq.XNode.ElementsBeforeSelf*?displayProperty=nameWithType> to find the same elements.
 
 ## Example: Use two methods to find sibling elements that precede an element
 
-The following example finds the `FullAddress` element in XML document Sample XML file: Customers and orders, and retrieves the preceding sibling elements in two different ways. It then compares the results and finds them identical.
+The following example finds the `FullAddress` element in XML document [Sample XML file: Customers and orders](sample-xml-file-customers-orders.md), and retrieves the preceding sibling elements in two different ways. It then compares the results and finds them identical.
 
-> **Note:**
+> [!NOTE]
 > Both methods provide results that are in document order.
 
 The XPath expression used is `preceding-sibling::*`.
@@ -74,4 +75,4 @@ Results are identical
 
 ## See also
 
-- LINQ to XML for XPath Users (Visual Basic)
+- [LINQ to XML for XPath Users (Visual Basic)](./comparison-xpath-linq-xml.md)

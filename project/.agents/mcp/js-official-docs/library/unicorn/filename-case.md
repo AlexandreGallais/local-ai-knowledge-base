@@ -1,23 +1,17 @@
----
-title: "filename-case"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/filename-case.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # filename-case
 
 📝 Enforce a case style for filenames and directory names.
 
-💼🚫 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `recommended-css`, 🌐 `recommended-html`, 🧩 `recommended-json`, 📚 `recommended-markdown`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, 📋 `recommended-yaml`. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, 🎨 `recommended-css`, 🌐 `recommended-html`, 🧩 `recommended-json`, 📚 `recommended-markdown`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, 📋 `recommended-yaml`. This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Enforces filenames and directory names of linted files to use a certain case style and lowercase file extension. The default is `kebabCase`.
 
 Consistent paths make files predictable to find and import, including on case-sensitive filesystems.
 
-Because this rule only inspects the path, it applies to files of any language, not just JavaScript, as long as they are linted with the matching ESLint language plugin (for example `@eslint/css` or `@eslint/markdown`).
+Because this rule only inspects the path, it applies to files of any language, not just JavaScript, as long as they are linted with the matching ESLint language plugin (for example [`@eslint/css`](https://github.com/eslint/css) or [`@eslint/markdown`](https://github.com/eslint/markdown)).
 
 Named virtual files created by processors are ignored to avoid duplicate reports for one physical file.
 

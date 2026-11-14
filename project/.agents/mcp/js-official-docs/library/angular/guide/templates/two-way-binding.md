@@ -1,12 +1,3 @@
----
-title: "Two-way binding"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/templates/two-way-binding.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Two-way binding
 
 **Two way binding** is a shorthand to simultaneously bind a value into an element, while also giving that element the ability to propagate changes back through this binding.
@@ -47,7 +38,7 @@ To use two-way binding with native form controls, you need to:
 
 Once that is set up, Angular will ensure that any updates in the text input will reflect correctly inside of the component state!
 
-Learn more about `NgModel` in the official docs.
+Learn more about [`NgModel`](/api/forms/NgModel) in the official docs.
 
 ## Two-way binding between components
 
@@ -55,7 +46,7 @@ Leveraging two-way binding between a parent and child component requires more co
 
 Here is an example where the `App` is responsible for setting the initial count state, but the logic for updating and rendering the UI for the counter primarily resides inside its child `Counter`.
 
-```angular-ts
+```angular-ts {header: 'app.ts'}
 import {Component} from '@angular/core';
 import {Counter} from './counter';
 
@@ -74,7 +65,7 @@ export class App {
 }
 ```
 
-```angular-ts
+```angular-ts {header: 'counter.ts'}
 import {Component, model} from '@angular/core';
 
 @Component({
@@ -102,7 +93,7 @@ The child component must contain a `model` property.
 
 Here is a simplified example:
 
-```angular-ts
+```angular-ts {header: 'counter.ts'}
 import {Component, model} from '@angular/core';
 
 @Component({
@@ -124,7 +115,7 @@ The parent component must:
 
 Here is a simplified example:
 
-```angular-ts
+```angular-ts {header: 'app.ts'}
 import {Component} from '@angular/core';
 import {Counter} from './counter';
 

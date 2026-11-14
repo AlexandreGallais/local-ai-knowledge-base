@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugAppDomain2::GetArrayOrPointerType Method"
 title: "ICorDebugAppDomain2::GetArrayOrPointerType Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugappdomain2-getarrayorpointertype-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugAppDomain2.GetArrayOrPointerType"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugAppDomain2::GetArrayOrPointerType"
+helpviewer_keywords:
+  - "GetArrayOrPointerType method [.NET debugging]"
+  - "ICorDebugAppDomain2::GetArrayOrPointerType method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugAppDomain2::GetArrayOrPointerType Method
 
 Gets an array of the specified type, or a pointer or reference to the specified type.
@@ -50,7 +59,7 @@ If the value of *elementType* is ELEMENT_TYPE_PTR or ELEMENT_TYPE_BYREF, *nRank*
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

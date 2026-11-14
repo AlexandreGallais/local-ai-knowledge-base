@@ -1,19 +1,13 @@
 ---
+id: test-configuration
 title: "Configuration"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/test-configuration-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# Configuration
 
 ## Introduction
 
 Playwright has many options to configure how your tests are run. You can specify these options in the configuration file. Note that test runner options are **top-level**, do not put them into the `use` section.
 
-## Basic <example-value>
+## Basic Configuration
 
 Here are some of the most common configuration options.
 
@@ -68,21 +62,21 @@ export default defineConfig({
 | Option | Description |
 | :- | :- |
 | [`property: TestConfig.forbidOnly`] | Whether to exit with an error if any tests are marked as `test.only`. Useful on CI.|
-| [`property: TestConfig.fullyParallel`] | have all tests in all files to run in parallel. See Parallelism and Sharding for more details. |
-| [`property: TestConfig.globalTimeout`] | Maximum time the whole test run can take. When reached, Playwright stops the run and reporters still produce a report. See Timeouts to learn more. |
+| [`property: TestConfig.fullyParallel`] | have all tests in all files to run in parallel. See [Parallelism](./test-parallel) and [Sharding](./test-sharding) for more details. |
+| [`property: TestConfig.globalTimeout`] | Maximum time the whole test run can take. When reached, Playwright stops the run and reporters still produce a report. See [Timeouts](./test-timeouts.md) to learn more. |
 | [`property: TestConfig.projects`] | Run tests in multiple configurations or on multiple browsers |
-| [`property: TestConfig.reporter`] | Reporter to use. See Test Reporters to learn more about which reporters are available. |
-| [`property: TestConfig.retries`] | The maximum number of retry attempts per test. See Test Retries to learn more about retries.|
+| [`property: TestConfig.reporter`] | Reporter to use. See [Test Reporters](/test-reporters.md) to learn more about which reporters are available. |
+| [`property: TestConfig.retries`] | The maximum number of retry attempts per test. See [Test Retries](/test-retries.md) to learn more about retries.|
 | [`property: TestConfig.testDir`] | Directory with the test files. |
 | [`property: TestConfig.use`]  | Options with `use{}` |
 | [`property: TestConfig.webServer`] | To launch a server during the tests, use the `webServer` option |
-| [`property: TestConfig.workers`] | The maximum number of concurrent worker processes to use for parallelizing tests. Can also be set as percentage of logical CPU cores, e.g. `'50%'.`. See Parallelism and Sharding for more details. |
+| [`property: TestConfig.workers`] | The maximum number of concurrent worker processes to use for parallelizing tests. Can also be set as percentage of logical CPU cores, e.g. `'50%'.`. See [Parallelism](./test-parallel) and [Sharding](./test-sharding) for more details. |
 
 ## Filtering Tests
 
 Filter tests by glob patterns or regular expressions.
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -97,11 +91,11 @@ export default defineConfig({
 | Option | Description |
 | :- | :- |
 | [`property: TestConfig.testIgnore`] | Glob patterns or regular expressions that should be ignored when looking for the test files. For example, `'*test-assets'` |
-| [`property: TestConfig.testMatch`] | Glob patterns or regular expressions that match test files. For example, `'*todo-tests/*.spec.ts'`. By default, Playwright runs `**/*.@(spec&#124;test).?(c&#124;m)[jt]s?(x)` files. |
+| [`property: TestConfig.testMatch`] | Glob patterns or regular expressions that match test files. For example, `'*todo-tests/*.spec.ts'`. By default, Playwright runs <code>**/*.@(spec&#124;test).?(c&#124;m)[jt]s?(x)</code> files. |
 
 ## Advanced Configuration
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -125,13 +119,13 @@ export default defineConfig({
 | [`property: TestConfig.globalSetup`] | Path to the global setup file. This file will be required and run before all the tests. It must export a single function. |
 | [`property: TestConfig.globalTeardown`] |Path to the global teardown file. This file will be required and run after all the tests. It must export a single function. |
 | [`property: TestConfig.outputDir`] | Folder for test artifacts such as screenshots, videos, traces, etc. |
-| [`property: TestConfig.timeout`] | Playwright enforces a timeout for each test, 30 seconds by default. Time spent by the test function, test fixtures and beforeEach hooks is included in the test timeout. |
+| [`property: TestConfig.timeout`] | Playwright enforces a [timeout](./test-timeouts.md) for each test, 30 seconds by default. Time spent by the test function, test fixtures and beforeEach hooks is included in the test timeout. |
 
 ## Expect Options
 
 Configuration for the expect assertion library.
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -156,6 +150,7 @@ export default defineConfig({
 
 | Option | Description |
 | :- | :- |
-| [`property: TestConfig.expect`] | Web first assertions like `expect(locator).toHaveText()` have a separate timeout of 5 seconds by default. This is the maximum time the `expect()` should wait for the condition to be met. Learn more about test and expect timeouts and how to set them for a single test. |
+| [`property: TestConfig.expect`] | [Web first assertions](./test-assertions.md) like `expect(locator).toHaveText()` have a separate timeout of 5 seconds by default. This is the maximum time the `expect()` should wait for the condition to be met. Learn more about [test and expect timeouts](./test-timeouts.md) and how to set them for a single test. |
 | [`method: PageAssertions.toHaveScreenshot#1`] | Configuration for the `expect(locator).toHaveScreenshot()` method. |
 | [`method: SnapshotAssertions.toMatchSnapshot#1`]| Configuration for the `expect(locator).toMatchSnapshot()` method.|
+

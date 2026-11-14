@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugMDA::GetName Method"
 title: "ICorDebugMDA::GetName Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmda-getname-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugMDA.GetName"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugMDA::GetName"
+helpviewer_keywords:
+  - "ICorDebugMDA::GetName method [.NET debugging]"
+  - "GetName method, ICorDebugMDA interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugMDA::GetName Method
 
-Gets a string containing the name of the managed debugging assistant (MDA) represented by ICorDebugMDA.
+Gets a string containing the name of the managed debugging assistant (MDA) represented by [ICorDebugMDA](icordebugmda-interface.md).
 
 ## Syntax
 
@@ -39,7 +48,7 @@ MDA names are unique values. The `GetName` method is a convenient performance al
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -49,5 +58,5 @@ MDA names are unique values. The `GetName` method is a convenient performance al
 
 ## See also
 
-- ICorDebugMDA Interface
-- Diagnose Errors with Managed Debugging Assistants
+- [ICorDebugMDA Interface](icordebugmda-interface.md)
+- [Diagnose Errors with Managed Debugging Assistants](../../../../framework/debug-trace-profile/diagnosing-errors-with-managed-debugging-assistants.md)

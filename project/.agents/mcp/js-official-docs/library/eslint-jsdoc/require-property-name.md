@@ -1,20 +1,16 @@
----
-title: "require-property-name"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/require-property-name.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-require-property-name"></a>
+<a name="require-property-name"></a>
+# <code>require-property-name</code>
 
-# `require-property-name`
+* [Context and settings](#user-content-require-property-name-context-and-settings)
+* [Failing examples](#user-content-require-property-name-failing-examples)
+* [Passing examples](#user-content-require-property-name-passing-examples)
 
-* Context and settings
-* Failing examples
-* Passing examples
 
 Requires that all `@property` tags have names.
 
+<a name="user-content-require-property-name-context-and-settings"></a>
+<a name="require-property-name-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -24,6 +20,8 @@ Requires that all `@property` tags have names.
 |Aliases|`prop`|
 |Recommended|true|
 
+<a name="user-content-require-property-name-failing-examples"></a>
+<a name="require-property-name-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -49,6 +47,10 @@ The following patterns are considered problems:
 // Message: Unexpected tag `@property`
 ````
 
+
+
+<a name="user-content-require-property-name-passing-examples"></a>
+<a name="require-property-name-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -74,3 +76,4 @@ The following patterns are not considered problems:
  * @property {string} foo
  */
 ````
+

@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugBreakpointEnum::Next Method"
 title: "ICorDebugBreakpointEnum::Next Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugbreakpointenum-next-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugBreakpointEnum.Next"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugBreakpointEnum::Next"
+helpviewer_keywords:
+  - "Next method, ICorDebugBreakpointEnum interface [.NET debugging]"
+  - "ICorDebugBreakpointEnum::Next method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugBreakpointEnum::Next Method
 
 Gets the specified number of ICorDebugBreakpoint instances from the enumeration, starting at the current position.
@@ -35,7 +44,7 @@ HRESULT Next (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

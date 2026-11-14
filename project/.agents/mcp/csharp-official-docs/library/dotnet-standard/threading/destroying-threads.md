@@ -1,32 +1,36 @@
 ---
 title: "Destroying threads"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/threading/destroying-threads.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Know your options when you need to destroy a thread in .NET, such as cooperative cancellation or the Thread.Abort method. Learn to handle ThreadAbortException.
+ms.date: 03/13/2026
+ai-usage: ai-assisted
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "destroying threads"
+  - "threading [.NET], destroying threads"
+ms.topic: how-to
 ---
-
 # Destroy threads
 
-To terminate the execution of the thread, you usually use the cooperative cancellation model. However, sometimes it's not possible to stop a thread cooperatively, because it runs third-party code not designed for cooperative cancellation. In .NET Framework apps, you can use the `System.Threading.Thread.Abort*` method to terminate a managed thread forcibly. When you call `System.Threading.Thread.Abort*`, the Common Language Runtime throws a `System.Threading.ThreadAbortException` in the target thread, which the target thread can catch. (However, the .NET Framework runtime always automatically rethrows the exception after the `catch` block.) For more information, see `System.Threading.Thread.Abort*`.
+To terminate the execution of the thread, you usually use the [cooperative cancellation model](cancellation-in-managed-threads.md). However, sometimes it's not possible to stop a thread cooperatively, because it runs third-party code not designed for cooperative cancellation. In .NET Framework apps, you can use the <xref:System.Threading.Thread.Abort*?displayProperty=nameWithType> method to terminate a managed thread forcibly. When you call <xref:System.Threading.Thread.Abort*>, the Common Language Runtime throws a <xref:System.Threading.ThreadAbortException> in the target thread, which the target thread can catch. (However, the .NET Framework runtime always automatically rethrows the exception after the `catch` block.) For more information, see <xref:System.Threading.Thread.Abort*?displayProperty=nameWithType>.
 
-The `System.Threading.Thread.Abort*` method throws a `System.PlatformNotSupportedException` at runtime in .NET Core and .NET 5 and later versions. Starting in .NET 5, it's also marked obsolete (SYSLIB0006), so calling it generates a compile-time warning. If you need to terminate the execution of third-party code forcibly in modern .NET implementations, run it in the separate process and use `System.Diagnostics.Process.Kill*`.
+The <xref:System.Threading.Thread.Abort*?displayProperty=nameWithType> method throws a <xref:System.PlatformNotSupportedException> at runtime in .NET Core and .NET 5 and later versions. Starting in .NET 5, it's also marked obsolete ([SYSLIB0006](../../fundamentals/syslib-diagnostics/syslib0006.md)), so calling it generates a compile-time warning. If you need to terminate the execution of third-party code forcibly in modern .NET implementations, run it in the separate process and use <xref:System.Diagnostics.Process.Kill*?displayProperty=nameWithType>.
 
-> **Note:**
+> [!NOTE]
 >
-> - When you call `System.Threading.Thread.Abort*` to abort a thread other than the current thread, you don't know what code has executed or failed to execute when the `System.Threading.ThreadAbortException` is thrown. You also cannot be certain of the state of your application or any application and user state that it's responsible for preserving. For example, calling `System.Threading.Thread.Abort*` may prevent the execution of static constructors or the release of managed or unmanaged resources.
-> - If a thread is executing unmanaged code when its `System.Threading.Thread.Abort*` method is called, the runtime marks it `System.Threading.ThreadState.AbortRequested`. The exception is thrown when the thread returns to managed code.
+> - When you call <xref:System.Threading.Thread.Abort*?displayProperty=nameWithType> to abort a thread other than the current thread, you don't know what code has executed or failed to execute when the <xref:System.Threading.ThreadAbortException> is thrown. You also cannot be certain of the state of your application or any application and user state that it's responsible for preserving. For example, calling <xref:System.Threading.Thread.Abort*?displayProperty=nameWithType> may prevent the execution of static constructors or the release of managed or unmanaged resources.
+> - If a thread is executing unmanaged code when its <xref:System.Threading.Thread.Abort*> method is called, the runtime marks it <xref:System.Threading.ThreadState.AbortRequested?displayProperty=nameWithType>. The exception is thrown when the thread returns to managed code.
 
  Once a thread is aborted, it cannot be restarted.
 
- The `System.Threading.Thread.Abort*` method does not cause the thread to abort immediately, because the target thread can catch the `System.Threading.ThreadAbortException` and execute arbitrary amounts of code in a `finally` block. You can call `System.Threading.Thread.Join*` if you need to wait until the thread has ended. `System.Threading.Thread.Join*` is a blocking call that does not return until the thread has actually stopped executing or an optional timeout interval has elapsed. The aborted thread could call the `System.Threading.Thread.ResetAbort*` method or perform unbounded processing in a `finally` block, so if you do not specify a timeout, the wait is not guaranteed to end.
+ The <xref:System.Threading.Thread.Abort*> method does not cause the thread to abort immediately, because the target thread can catch the <xref:System.Threading.ThreadAbortException> and execute arbitrary amounts of code in a `finally` block. You can call <xref:System.Threading.Thread.Join*?displayProperty=nameWithType> if you need to wait until the thread has ended. <xref:System.Threading.Thread.Join*?displayProperty=nameWithType> is a blocking call that does not return until the thread has actually stopped executing or an optional timeout interval has elapsed. The aborted thread could call the <xref:System.Threading.Thread.ResetAbort*> method or perform unbounded processing in a `finally` block, so if you do not specify a timeout, the wait is not guaranteed to end.
 
- Threads that are waiting on a call to the `System.Threading.Thread.Join*` method can be interrupted by other threads that call `System.Threading.Thread.Interrupt*`.
+ Threads that are waiting on a call to the <xref:System.Threading.Thread.Join*?displayProperty=nameWithType> method can be interrupted by other threads that call <xref:System.Threading.Thread.Interrupt*?displayProperty=nameWithType>.
 
 ## Handling ThreadAbortException
 
- If you expect your thread to be aborted, either as a result of calling `System.Threading.Thread.Abort*` from your own code or as a result of unloading an application domain in which the thread is running (`System.AppDomain.Unload*` uses `System.Threading.Thread.Abort*` to terminate threads), your thread must handle the `System.Threading.ThreadAbortException` and perform any final processing in a `finally` clause, as shown in the following code.
+ If you expect your thread to be aborted, either as a result of calling <xref:System.Threading.Thread.Abort*> from your own code or as a result of unloading an application domain in which the thread is running (<xref:System.AppDomain.Unload*?displayProperty=nameWithType> uses <xref:System.Threading.Thread.Abort*?displayProperty=nameWithType> to terminate threads), your thread must handle the <xref:System.Threading.ThreadAbortException> and perform any final processing in a `finally` clause, as shown in the following code.
 
 ```vb
 Try
@@ -57,14 +61,14 @@ catch (ThreadAbortException ex)
 // is rethrown at the end of the Finally clause.
 ```
 
- Your clean-up code must be in the `catch` clause or the `finally` clause, because a `System.Threading.ThreadAbortException` is rethrown by the system at the end of the `finally` clause, or at the end of the `catch` clause if there is no `finally` clause.
+ Your clean-up code must be in the `catch` clause or the `finally` clause, because a <xref:System.Threading.ThreadAbortException> is rethrown by the system at the end of the `finally` clause, or at the end of the `catch` clause if there is no `finally` clause.
 
- You can prevent the system from rethrowing the exception by calling the `System.Threading.Thread.ResetAbort*` method. However, you should do this only if your own code caused the `System.Threading.ThreadAbortException`.
+ You can prevent the system from rethrowing the exception by calling the <xref:System.Threading.Thread.ResetAbort*?displayProperty=nameWithType> method. However, you should do this only if your own code caused the <xref:System.Threading.ThreadAbortException>.
 
 ## See also
 
-- Thread.Abort is obsolete
-- SYSLIB0006: Thread.Abort is not supported
-- `System.Threading.ThreadAbortException`
-- `System.Threading.Thread`
-- Using Threads and Threading
+- [Thread.Abort is obsolete](../../core/compatibility/core-libraries/5.0/thread-abort-obsolete.md)
+- [SYSLIB0006: Thread.Abort is not supported](../../fundamentals/syslib-diagnostics/syslib0006.md)
+- <xref:System.Threading.ThreadAbortException>
+- <xref:System.Threading.Thread>
+- [Using Threads and Threading](using-threads-and-threading.md)

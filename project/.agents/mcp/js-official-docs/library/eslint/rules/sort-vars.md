@@ -1,13 +1,12 @@
 ---
-title: "sort-vars"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/sort-vars.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: sort-vars
+rule_type: suggestion
+related_rules:
+- sort-keys
+- sort-imports
 ---
 
-# sort-vars
+
 
 When declaring multiple variables within the same block, some developers prefer to sort variable names alphabetically to be able to find necessary variable easier at the later time. Others feel that it adds complexity and becomes burden to maintain.
 
@@ -18,7 +17,7 @@ The default configuration of the rule is case-sensitive.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint sort-vars: "error"*/
@@ -30,9 +29,11 @@ let c, D, e;
 let f, F;
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint sort-vars: "error"*/
@@ -46,6 +47,8 @@ let E, e;
 
 let G, f, h;
 ```
+
+:::
 
 Alphabetical list is maintained starting from the first variable and excluding any that are considered problems. So the following code will produce two problems:
 
@@ -73,7 +76,7 @@ This rule has an object option:
 
 Examples of **correct** code for this rule with the `{ "ignoreCase": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint sort-vars: ["error", { "ignoreCase": true }]*/
@@ -82,6 +85,8 @@ let a, A;
 
 let c, D, e;
 ```
+
+:::
 
 ## When Not To Use It
 

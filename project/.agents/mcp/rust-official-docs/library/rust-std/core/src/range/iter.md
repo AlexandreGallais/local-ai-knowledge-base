@@ -1,12 +1,3 @@
----
-title: "core::range::iter"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/range/iter.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::range::iter
 
 ## struct RangeIter
@@ -15,7 +6,7 @@ license: "MIT OR Apache-2.0"
 pub struct RangeIter<A>(pub(crate) legacy::Range<A>)
 ```
 
-By-value `Range` iterator.
+By-value [`Range`] iterator.
 
 ## RangeIter::remainder
 
@@ -27,7 +18,7 @@ Returns the remainder of the range being iterated over.
 
 # Examples
 
-```rust
+```
 #![feature(new_range_remainder)]
 
 let range = core::range::Range::from(3..11);
@@ -54,7 +45,7 @@ which have an exact `size_hint()` where the upper bound must not be `None`.
 pub struct RangeInclusiveIter<A>(legacy::RangeInclusive<A>)
 ```
 
-By-value `RangeInclusive` iterator.
+By-value [`RangeInclusive`] iterator.
 
 ## struct RangeFromIter
 
@@ -62,4 +53,4 @@ By-value `RangeInclusive` iterator.
 pub struct RangeFromIter<A>
 ```
 
-By-value `RangeFrom` iterator.
+By-value [`RangeFrom`] iterator.

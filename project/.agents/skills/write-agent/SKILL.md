@@ -81,7 +81,7 @@ You are the reviewer of the Angular templates of this project.
 ## Steps
 
 1. List the templates of the change.
-2. For each one, check the rules of `docs/components/component-rules.md`.
+2. For each one, read its ARIA pattern with `js-official-docs` and check the template against it.
 ```
 
 ## Pitfalls

@@ -1,15 +1,11 @@
 ---
 title: ".NET 8 breaking change: GC.GetGeneration might return Int32.MaxValue"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/8.0/getgeneration-return-value.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 8 breaking change in core .NET libraries where GC.GetGeneration might return Int32.MaxValue for certain object types.
+ms.date: 05/02/2023
 ---
-
 # GC.GetGeneration might return Int32.MaxValue
 
-Starting in .NET 8, `System.GC.GetGeneration*` might return `System.Int32.MaxValue` for objects allocated on non-GC heaps (also referred as "frozen" heaps), where previously it returned 2. When and how the runtime allocates objects on non-GC heaps is an internal implementation detail. String literals, for example, are allocated on a non-GC heap, and the following method call might return `System.Int32.MaxValue`.
+Starting in .NET 8, <xref:System.GC.GetGeneration*?displayProperty=nameWithType> might return <xref:System.Int32.MaxValue?displayProperty=nameWithType> for objects allocated on non-GC heaps (also referred as "frozen" heaps), where previously it returned 2. When and how the runtime allocates objects on non-GC heaps is an internal implementation detail. String literals, for example, are allocated on a non-GC heap, and the following method call might return <xref:System.Int32.MaxValue?displayProperty=nameWithType>.
 
 ```csharp
 int gen = GC.GetGeneration("string");
@@ -17,11 +13,11 @@ int gen = GC.GetGeneration("string");
 
 ## Previous behavior
 
-Previously, `System.GC.GetGeneration*` returned integer values in the range of 0-2.
+Previously, <xref:System.GC.GetGeneration*?displayProperty=nameWithType> returned integer values in the range of 0-2.
 
 ## New behavior
 
-Starting in .NET 8, `System.GC.GetGeneration*` can return a value of 0, 1, 2, or `System.Int32.MaxValue`.
+Starting in .NET 8, <xref:System.GC.GetGeneration*?displayProperty=nameWithType> can return a value of 0, 1, 2, or <xref:System.Int32.MaxValue?displayProperty=nameWithType>.
 
 ## Version introduced
 
@@ -29,7 +25,7 @@ Starting in .NET 8, `System.GC.GetGeneration*` can return a value of 0, 1, 2, or
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -37,9 +33,9 @@ This change is a behavioral change.
 
 ## Recommended action
 
-Make sure you're not using the return value from `GC.GetGeneration()` as an array indexer or for anything else where `System.Int32.MaxValue` is unexpected.
+Make sure you're not using the return value from `GC.GetGeneration()` as an array indexer or for anything else where <xref:System.Int32.MaxValue?displayProperty=nameWithType> is unexpected.
 
 ## Affected APIs
 
-- `System.GC.GetGeneration(System.Object)`
-- `System.GC.GetGeneration(System.WeakReference)`
+- <xref:System.GC.GetGeneration(System.Object)?displayProperty=fullName>
+- <xref:System.GC.GetGeneration(System.WeakReference)?displayProperty=fullName>

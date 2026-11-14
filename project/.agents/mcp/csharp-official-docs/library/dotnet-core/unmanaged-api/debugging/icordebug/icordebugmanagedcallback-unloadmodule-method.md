@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugManagedCallback::UnloadModule Method"
 title: "ICorDebugManagedCallback::UnloadModule Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmanagedcallback-unloadmodule-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugManagedCallback.UnloadModule"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugManagedCallback::UnloadModule"
+helpviewer_keywords:
+  - "ICorDebugManagedCallback::UnloadModule method [.NET debugging]"
+  - "UnloadModule method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugManagedCallback::UnloadModule Method
 
 Notifies the debugger that a common language runtime module (DLL) has been unloaded.
@@ -34,7 +43,7 @@ The module should not be used after this call.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -44,5 +53,5 @@ The module should not be used after this call.
 
 ## See also
 
-- LoadModule Method
-- ICorDebugManagedCallback Interface
+- [LoadModule Method](icordebugmanagedcallback-loadmodule-method.md)
+- [ICorDebugManagedCallback Interface](icordebugmanagedcallback-interface.md)

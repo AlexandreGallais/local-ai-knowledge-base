@@ -1,10 +1,12 @@
 ---
-title: "How to upgrade a .NET app with GitHub Copilot upgrade"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/github-copilot-upgrade/dotnet-how-to-upgrade-with-github-copilot.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to upgrade a .NET app with GitHub Copilot upgrade
+description: "Learn how to upgrade your .NET applications to newer versions using GitHub Copilot upgrade. This step-by-step guide covers assessment and the three-stage workflow: assessment, planning, and execution."
+ms.topic: how-to
+ms.date: 07/07/2026
+ai-usage: ai-assisted
+
+#customer intent: As a developer, I want to upgrade my .NET app using GitHub Copilot upgrade so that I can modernize my codebase efficiently with AI assistance through a structured three-stage process.
+
 ---
 
 # Upgrade a .NET app with GitHub Copilot upgrade
@@ -15,20 +17,13 @@ The agent analyzes your projects and dependencies, creates detailed upgrade docu
 
 ## Prerequisites
 
-Set up GitHub Copilot upgrade in your development environment before starting an upgrade. For installation steps, see Install GitHub Copilot upgrade.
+Set up GitHub Copilot upgrade in your development environment before starting an upgrade. For installation steps, see [Install GitHub Copilot upgrade](install.md).
 
 ## Initiate the upgrade
 
 To start the upgrade, follow these steps:
 
-1. Start the agent by using one of these methods:
-
-   - **Visual Studio**: Right-click the solution or project in **Solution Explorer** and select **Modernize**. Alternatively, open the **GitHub Copilot Chat** window and type `@Modernize`.
-   - **Visual Studio Code**: Open the **GitHub Copilot Chat** panel and type `@upgrade`.
-   - **GitHub Copilot CLI**: Type `@upgrade` followed by your upgrade or migration request.
-   - **GitHub Copilot app**: In the **Agent** picker, select `Upgrade`.
-
-1. Tell the agent what to upgrade or migrate.
+[!INCLUDE[github-copilot-how-to-initiate](./includes/how-to-initiate.md)]
 
 When you start the upgrade, Copilot collects pre-initialization information: the target framework version, Git branching strategy, and workflow mode (automatic or guided by you). Copilot then assesses your project and runs a three-stage workflow, writing Markdown files for each stage under `.github/upgrades/{scenarioId}` in your repository. The `{scenarioId}` value is a unique identifier for the upgrade type, such as `dotnet-version-upgrade`. If `.github/upgrades/{scenarioId}` already exists from a prior attempt, Copilot asks whether to continue or start fresh.
 
@@ -139,7 +134,7 @@ To review and customize the plan:
 1. Review the upgrade strategies and dependency updates.
 1. Edit the plan to adjust upgrade steps or add context as needed.
 
-   > **Caution:**
+   > [!CAUTION]
    > The plan depends on project interdependencies. The upgrade doesn't succeed if you modify the plan in a way that prevents the upgrade path from completing. For example, if **Project A** depends on **Project B** and you remove **Project B** from the upgrade plan, upgrading **Project A** might fail.
 
 1. Tell Copilot to _move to the execution stage._
@@ -244,9 +239,9 @@ To verify the upgrade:
 
 ## Related content
 
-- What is GitHub Copilot upgrade?
-- Install GitHub Copilot upgrade
-- Core concepts
-- Best practices
-- Troubleshoot GitHub Copilot upgrade
-- GitHub Copilot upgrade FAQ
+- [What is GitHub Copilot upgrade?](overview.md)
+- [Install GitHub Copilot upgrade](install.md)
+- [Core concepts](concepts.md)
+- [Best practices](best-practices.md)
+- [Troubleshoot GitHub Copilot upgrade](troubleshooting.md)
+- [GitHub Copilot upgrade FAQ](faq.yml)

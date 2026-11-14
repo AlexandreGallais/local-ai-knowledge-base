@@ -1,15 +1,13 @@
 ---
-title: "Keyless Entity Types - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/modeling/keyless-entity-types.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Keyless Entity Types - EF Core
+description: How to configure keyless entity types using Entity Framework Core
+author: AndriySvyryd
+ms.date: 10/10/2022
+uid: core/modeling/keyless-entity-types
 ---
-
 # Keyless Entity Types
 
-> **Note:**
+> [!NOTE]
 > This feature was added under the name of query types. It was later renamed to keyless entity types.
 
 In addition to regular entity types, an EF Core model can contain _keyless entity types_, which can be used to carry out database queries against data that doesn't contain key values.
@@ -18,50 +16,13 @@ In addition to regular entity types, an EF Core model can contain _keyless entit
 
 Keyless entity types can be defined as follows:
 
-### Data Annotations
+### [Data Annotations](#tab/data-annotations)
 
-```csharp
-﻿using Microsoft.EntityFrameworkCore;
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/DataAnnotations/Keyless.cs?Name=Keyless&highlight=1)]
 
-namespace EFModeling.KeylessEntityTypes.DataAnnotations.Keyless;
+### [Fluent API](#tab/fluent-api)
 
-internal class BlogsContext : DbContext
-{
-    public DbSet<BlogPostsCount> BlogPostCounts { get; set; }
-}
-
-[Keyless]
-public class BlogPostsCount
-{
-    public string BlogName { get; set; }
-    public int PostCount { get; set; }
-}
-```
-
-### Fluent API
-
-```csharp
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace EFModeling.KeylessEntityTypes.FluentAPI.Keyless;
-
-internal class BlogsContext : DbContext
-{
-    public DbSet<BlogPostsCount> BlogPostCounts { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<BlogPostsCount>()
-            .HasNoKey();
-    }
-}
-
-public class BlogPostsCount
-{
-    public string BlogName { get; set; }
-    public int PostCount { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/FluentAPI/Keyless.cs?Name=Keyless&highlight=4)]
 
 ***
 
@@ -88,7 +49,7 @@ However, they are different from regular entity types in that they:
 
 Some of the main usage scenarios for keyless entity types are:
 
-- Serving as the return type for SQL queries.
+- Serving as the return type for [SQL queries](xref:core/querying/sql-queries).
 - Mapping to database views that do not contain a primary key.
 - Mapping to tables that do not have a primary key defined.
 - Mapping to queries defined in the model.
@@ -101,87 +62,36 @@ Mapping a keyless entity type to a database object is achieved using the `ToTabl
 
 The following example shows how to use keyless entity types to query a database view.
 
-> **Tip:**
-> You can view this article's sample on GitHub.
+> [!TIP]
+> You can view this article's [sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/KeylessEntityTypes) on GitHub.
 
 First, we define a simple Blog and Post model:
 
-```csharp
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Name { get; set; }
-    public string Url { get; set; }
-    public ICollection<Post> Posts { get; set; }
-}
-
-public class Post
-{
-    public int PostId { get; set; }
-    public string Title { get; set; }
-    public string Content { get; set; }
-    public int BlogId { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/Program.cs#Entities)]
 
 Next, we define a simple database view that will allow us to query the number of posts associated with each blog:
 
-```csharp
-await db.Database.ExecuteSqlRawAsync(
-    @"CREATE VIEW View_BlogPostCounts AS
-                SELECT b.Name, Count(p.PostId) as PostCount
-                FROM Blogs b
-                JOIN Posts p on p.BlogId = b.BlogId
-                GROUP BY b.Name");
-```
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/Program.cs#View)]
 
 Next, we define a class to hold the result from the database view:
 
-```csharp
-public class BlogPostsCount
-{
-    public string BlogName { get; set; }
-    public int PostCount { get; set; }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/Program.cs#KeylessEntityType)]
 
 Next, we configure the keyless entity type in _OnModelCreating_ using the `HasNoKey` API.
 We use fluent configuration API to configure the mapping for the keyless entity type:
 
-```csharp
-protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    modelBuilder
-        .Entity<BlogPostsCount>(
-            eb =>
-            {
-                eb.HasNoKey();
-                eb.ToView("View_BlogPostCounts");
-                eb.Property(v => v.BlogName).HasColumnName("Name");
-            });
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/Program.cs#Configuration)]
 
 Next, we configure the `DbContext` to include the `DbSet<T>`:
 
-```csharp
-public DbSet<BlogPostsCount> BlogPostCounts { get; set; }
-```
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/Program.cs#DbSet)]
 
 Finally, we can query the database view in the standard way:
 
-```csharp
-var postCounts = await db.BlogPostCounts.ToListAsync();
+[!code-csharp[Main](../../../samples/core/Modeling/KeylessEntityTypes/Program.cs#Query)]
 
-foreach (var postCount in postCounts)
-{
-    Console.WriteLine($"{postCount.BlogName} has {postCount.PostCount} posts.");
-    Console.WriteLine();
-}
-```
-
-> **Tip:**
+> [!TIP]
 > Note we have also defined a context level query property (DbSet) to act as a root for queries against this type.
 
-> **Tip:**
-> To test keyless entity types mapped to views using the in-memory provider, map them to a query via `Microsoft.EntityFrameworkCore.InMemoryEntityTypeBuilderExtensions.ToInMemoryQuery*`. See the in-memory provider docs for more information.
+> [!TIP]
+> To test keyless entity types mapped to views using the in-memory provider, map them to a query via <xref:Microsoft.EntityFrameworkCore.InMemoryEntityTypeBuilderExtensions.ToInMemoryQuery*>. See the [in-memory provider docs](xref:core/testing/testing-without-the-database#in-memory-provider) for more information.

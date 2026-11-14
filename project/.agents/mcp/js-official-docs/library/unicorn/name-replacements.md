@@ -1,25 +1,19 @@
----
-title: "name-replacements"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/name-replacements.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # name-replacements
 
 📝 Enforce replacements for variable, property, and filenames.
 
-💼🚫 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `recommended-css`, 🌐 `recommended-html`, 🧩 `recommended-json`, 📚 `recommended-markdown`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, 📋 `recommended-yaml`. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, 🎨 `recommended-css`, 🌐 `recommended-html`, 🧩 `recommended-json`, 📚 `recommended-markdown`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, 📋 `recommended-yaml`. This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Using clear names results in more readable code. Code is written only once, but read many times.
 
-This rule enforces replacements for names, including variables, properties, imports, and filenames. The default replacements focus on common abbreviations, but the rule can also be used to replace terms, disallow words, etc. See the `replacements` and `extendDefaultReplacements` options.
+This rule enforces replacements for names, including variables, properties, imports, and filenames. The default replacements focus on common abbreviations, but the rule can also be used to replace terms, disallow words, etc. See the [`replacements`](#replacements) and [`extendDefaultReplacements`](#extenddefaultreplacements) options.
 
-You can find the default replacements here.
+You can find the default replacements [here](https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/rules/shared/name-replacements.js).
 
 This rule is automatically fixable only for variable names with exactly one replacement defined. Ambiguous variable names and checked property names can be manually fixed with editor suggestions when the rename is local to source text. Filename reports and exported-name property reports do not provide editor suggestions.
 
@@ -97,7 +91,7 @@ this.evt = 'click';
 
 ## Data keys, CSS, and HTML
 
-With `checkProperties: true`, the rule checks JSON object keys, YAML string keys, TOML key <example-value> (including table names), and SOML keys. It skips YAML non-string, tagged, anchored, and alias keys, plus string values.
+With `checkProperties: true`, the rule checks JSON object keys, YAML string keys, TOML key segments (including table names), and SOML keys. It skips YAML non-string, tagged, anchored, and alias keys, plus string values.
 
 With `checkVariables` (enabled by default), it checks CSS class and ID selectors, custom properties, keyframes, animation names, layers, containers, and custom media, plus HTML `id` and individual `class` names. Built-in CSS property names and value keywords, and `animation` shorthand values are skipped. CSS escapes and HTML character references are decoded; templated HTML values are skipped.
 
@@ -113,7 +107,7 @@ Type: `object`
 
 You can extend default replacements by passing the `replacements` option.
 
-Use this to configure discouraged terms and their replacements. To allow a specific full identifier, use `allowList` instead.
+Use this to configure discouraged terms and their replacements. To allow a specific full identifier, use [`allowList`](#allowlist) instead.
 
 Lowercase replacements will match both camelcase and pascalcase identifiers. For example, `err` will match both `err` and `Err`. `errCb` will match both `errCb` and `ErrCb`.
 

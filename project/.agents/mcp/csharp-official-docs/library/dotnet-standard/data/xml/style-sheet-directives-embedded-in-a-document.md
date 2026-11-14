@@ -1,12 +1,9 @@
 ---
+description: "Learn more about: Style Sheet Directives Embedded in a Document"
 title: "Style Sheet Directives Embedded in a Document"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/style-sheet-directives-embedded-in-a-document.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+ms.assetid: d79fb295-ebc7-438d-ba1b-05be7d534834
 ---
-
 # Style Sheet Directives Embedded in a Document
 
 Occasionally, existing XML contains the style sheet directive of `<?xml:stylesheet?>` (notice the use of a colon instead of a hyphen). When the XML data contains an `<?xml:stylesheet?>` directive, as shown in the following data, attempting to load this data into the XML Document Object Model (DOM) throws an exception.
@@ -30,8 +27,8 @@ From Section 6 of the Namespaces in XML specification, the effect of having the 
 
 With the `<?xml:stylesheet?>` containing a colon, you now violate the rule in the second bullet.
 
-According to the World Wide Web Consortium (W3C) Associating Style Sheets with XML documents Version 1.0 Recommendation, the processing instruction to associate an XSLT style sheet with an XML document is `<?xml-stylesheet?>`, with a dash replacing the colon.
+According to the World Wide Web Consortium (W3C) [Associating Style Sheets with XML documents Version 1.0 Recommendation](https://www.w3.org/TR/xml-stylesheet/), the processing instruction to associate an XSLT style sheet with an XML document is `<?xml-stylesheet?>`, with a dash replacing the colon.
 
 ## See also
 
-- XML Document Object Model (DOM)
+- [XML Document Object Model (DOM)](xml-document-object-model-dom.md)

@@ -1,10 +1,10 @@
 ---
-title: "YARP Load Balancing"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/load-balancing.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: YARP Load Balancing
+description: YARP Load Balancing
+ms.date: 2/6/2025
+ms.topic: concept-article
+content_well_notification: AI-contribution
+ai-usage: ai-assisted
 ---
 
 # YARP Load Balancing

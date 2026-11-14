@@ -1,27 +1,25 @@
----
-title: "Frequently Asked Questions"
-tool: "ngrx-signals"
-version: "22.0"
-source: "https://github.com/ngrx/platform/blob/a4995391ef631f1bd60d539f436a1aa5c23c4fe5/projects/www/src/app/pages/guide/signals/faq.md"
-commit: "a4995391ef631f1bd60d539f436a1aa5c23c4fe5"
-license: "MIT"
----
-
 # Frequently Asked Questions
 
-  **#1 How to connect my SignalStore(s) with Redux DevTools?**
+<details>
+  <summary><b>#1</b> How to connect my SignalStore(s) with Redux DevTools?</summary>
 
 There's no official connection between `@ngrx/signals` and the Redux Devtools.
 We expect the Angular Devtools will provide support for signals soon, which can be used to track the state.
-However, you could create a feature for this, or you can make use of the `withDevtools` feature from the `@angular-architects/ngrx-toolkit` package.
+However, you could create a feature for this, or you can make use of the [`withDevtools` feature](https://github.com/angular-architects/ngrx-toolkit?tab=readme-ov-file#devtools-withdevtools) from the `@angular-architects/ngrx-toolkit` package.
 
-  **#2 Can I use the Flux/Redux pattern with SignalStore?**
+</details>
+
+<details>
+  <summary><b>#2</b> Can I use the Flux/Redux pattern with SignalStore?</summary>
 
 Yes. Starting from NgRx version 19.2, the Events plugin introduces support for a Flux-style state management with SignalStore.
 It enables defining and dispatching events, handling them through reducers and effects, and maintaining a unidirectional data flow similar to the traditional Redux pattern.
 For more information, see the Events Plugin documentation.
 
-  **#3 Can I define my SignalStore as a class?**
+</details>
+
+<details>
+  <summary><b>#3</b> Can I define my SignalStore as a class?</summary>
 
 Yes, it is possible to define a SignalStore using a class-based approach.
 However, the NgRx team recommends using the functional style for defining SignalStores.
@@ -46,7 +44,10 @@ export class CounterStore extends signalStore(
 
 </ngrx-code-example>
 
-  **#4 How can I get the type of a SignalStore?**
+</details>
+
+<details>
+  <summary><b>#4</b> How can I get the type of a SignalStore?</summary>
 
 To get the type of a SignalStore, use the `InstanceType` utility type.
 
@@ -60,7 +61,10 @@ function logCount(store: CounterStore): void {
 }
 ```
 
-  **#5 Can I inject a SignalStore via the constructor?**
+</details>
+
+<details>
+  <summary><b>#5</b> Can I inject a SignalStore via the constructor?</summary>
 
 Yes. To inject a SignalStore via the constructor, define and export its type with the same name.
 
@@ -81,7 +85,10 @@ export class Counter {
 }
 ```
 
-  **#6 Can features like `withComputed` or `withMethods` reference other members inside the same feature?**
+</details>
+
+<details>
+  <summary><b>#6</b> Can features like `withComputed` or `withMethods` reference other members inside the same feature?</summary>
 
 It may be necessary for a computed in a `withComputed` feature to need to reference another computed value,
 or a method in a `withMethods` feature to refer to another method. To do so, you can break out the common piece
@@ -110,3 +117,5 @@ export const BooksStore = signalStore(
 ```
 
 </ngrx-code-example>
+
+</details>

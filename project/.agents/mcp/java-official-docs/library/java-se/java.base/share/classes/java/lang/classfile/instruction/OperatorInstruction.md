@@ -1,28 +1,22 @@
----
-title: "OperatorInstruction interface (java.lang.classfile.instruction)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/instruction/OperatorInstruction.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # OperatorInstruction interface (java.lang.classfile.instruction)
 
 ```java
 public sealed interface OperatorInstruction extends Instruction permits AbstractInstruction.UnboundOperatorInstruction
 ```
 
-Models an arithmetic operator instruction in the `code` array of a
-`Code` attribute.  Corresponding opcodes have a kind of
-`Opcode.Kind.OPERATOR`.  Delivered as a `CodeElement` when
-traversing the elements of a `CodeModel`.
-
+Models an arithmetic operator instruction in the {@code code} array of a
+{@code Code} attribute.  Corresponding opcodes have a {@linkplain Opcode#kind() kind} of
+{@link Opcode.Kind#OPERATOR}.  Delivered as a {@link CodeElement} when
+traversing the elements of a {@link CodeModel}.
+<p>
 An operator instruction is composite:
+{@snippet lang=text :
+// @link substring="OperatorInstruction" target="#of" :
+OperatorInstruction(Opcode opcode) // @link substring="opcode" target="#opcode()"
+}
 
-**See also:** Opcode.Kind#OPERATOR
-
-**Since:** 24
+@see Opcode.Kind#OPERATOR
+@since 24
 
 ## OperatorInstruction.typeKind()
 
@@ -30,7 +24,8 @@ An operator instruction is composite:
 TypeKind typeKind()
 ```
 
-This is derived from the opcode.
+{@return the operand type of the instruction}
+This is derived from the {@link #opcode opcode}.
 
 ## OperatorInstruction.of(Opcode)
 
@@ -38,10 +33,9 @@ This is derived from the opcode.
 static OperatorInstruction of(Opcode op)
 ```
 
-Parameters:
+{@return an operator instruction}
 
-- `op`: the opcode for the specific type of operator instruction, which must be of kind `Opcode.Kind.OPERATOR`
-
-Throws:
-
-- `IllegalArgumentException`: if the opcode kind is not `Opcode.Kind.OPERATOR`.
+@param op the opcode for the specific type of operator instruction,
+          which must be of kind {@link Opcode.Kind#OPERATOR}
+@throws IllegalArgumentException if the opcode kind is not
+        {@link Opcode.Kind#OPERATOR}.

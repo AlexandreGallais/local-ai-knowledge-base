@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: Support for empty environment variables"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/9.0/empty-env-variable.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 9 breaking change in core .NET libraries where passing `string.Empty` to `Environment.SetEnvironmentVariable` no longer deletes the environment variable.
+ms.date: 07/10/2024
 ---
-
 # Support for empty environment variables
 
-Support was added to be able to set an environment variable to the empty string using `System.Environment.SetEnvironmentVariable(System.String,System.String)`. As part of this work, the behavior of setting the `System.Diagnostics.ProcessStartInfo.Environment` and `System.Diagnostics.ProcessStartInfo.EnvironmentVariables` properties was changed to be consistent with that of `System.Environment.SetEnvironmentVariable(System.String,System.String)`.
+Support was added to be able to set an environment variable to the empty string using <xref:System.Environment.SetEnvironmentVariable(System.String,System.String)?displayProperty=nameWithType>. As part of this work, the behavior of setting the <xref:System.Diagnostics.ProcessStartInfo.Environment?displayProperty=nameWithType> and <xref:System.Diagnostics.ProcessStartInfo.EnvironmentVariables?displayProperty=nameWithType> properties was changed to be consistent with that of <xref:System.Environment.SetEnvironmentVariable(System.String,System.String)?displayProperty=nameWithType>.
 
 ## Previous behavior
 
@@ -31,20 +27,20 @@ Starting in .NET 9:
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-Before this change, it wasn't possible to use `System.Environment.SetEnvironmentVariable(System.String,System.String)` to set an environment variable to an empty value, which is a valid environment variable value on all supported platforms.
+Before this change, it wasn't possible to use <xref:System.Environment.SetEnvironmentVariable(System.String,System.String)?displayProperty=nameWithType> to set an environment variable to an empty value, which is a valid environment variable value on all supported platforms.
 
 ## Recommended action
 
-To delete an environment variable using `System.Environment.SetEnvironmentVariable(System.String,System.String)`, change your code to pass `null` instead of `string.Empty` as the value argument.
+To delete an environment variable using <xref:System.Environment.SetEnvironmentVariable(System.String,System.String)?displayProperty=nameWithType>, change your code to pass `null` instead of `string.Empty` as the value argument.
 
-To set the environment variable to an empty value using `System.Diagnostics.ProcessStartInfo.Environment` or `System.Diagnostics.ProcessStartInfo.EnvironmentVariables`, change your code to set these properties to `string.Empty` instead of to `null`.
+To set the environment variable to an empty value using <xref:System.Diagnostics.ProcessStartInfo.Environment?displayProperty=nameWithType> or <xref:System.Diagnostics.ProcessStartInfo.EnvironmentVariables?displayProperty=nameWithType>, change your code to set these properties to `string.Empty` instead of to `null`.
 
 ## Affected APIs
 
-- `System.Environment.SetEnvironmentVariable(System.String,System.String)`
-- `System.Diagnostics.ProcessStartInfo.Environment`
-- `System.Diagnostics.ProcessStartInfo.EnvironmentVariables`
+- <xref:System.Environment.SetEnvironmentVariable(System.String,System.String)?displayProperty=fullName>
+- <xref:System.Diagnostics.ProcessStartInfo.Environment?displayProperty=fullName>
+- <xref:System.Diagnostics.ProcessStartInfo.EnvironmentVariables?displayProperty=fullName>

@@ -1,12 +1,3 @@
----
-title: "core::iter"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/iter/mod.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::iter
 
 Composable external iteration.
@@ -18,7 +9,7 @@ it's worth becoming familiar with them.
 
 Before explaining more, let's talk about how this module is structured:
 
-#### Organization
+# Organization
 
 This module is largely organized by type:
 
@@ -29,38 +20,46 @@ This module is largely organized by type:
 * [Structs] are often the return types of the various methods on this
   module's traits. You'll usually want to look at the method that creates
   the `struct`, rather than the `struct` itself. For more detail about why,
-  see 'Implementing Iterator'.
+  see '[Implementing Iterator](#implementing-iterator)'.
+
+[Traits]: #traits
+[Functions]: #functions
+[Structs]: #structs
 
 That's it! Let's dig into iterators.
 
-#### Iterator
+# Iterator
 
-The heart and soul of this module is the `Iterator` trait. The core of
-`Iterator` looks like this:
+The heart and soul of this module is the [`Iterator`] trait. The core of
+[`Iterator`] looks like this:
 
-```rust
+```
 trait Iterator {
     type Item;
     fn next(&mut self) -> Option<Self::Item>;
 }
 ```
 
-An iterator has a method, `next`, which when called, returns an
-<code>[Option]\<Item></code>. Calling `next` will return `Some(Item)` as long as there
+An iterator has a method, [`next`], which when called, returns an
+<code>[Option]\<Item></code>. Calling [`next`] will return [`Some(Item)`] as long as there
 are elements, and once they've all been exhausted, will return `None` to
 indicate that iteration is finished. Individual iterators may choose to
-resume iteration, and so calling `next` again may or may not eventually
-start returning `Some(Item)` again at some point (for example, see `TryIter`).
+resume iteration, and so calling [`next`] again may or may not eventually
+start returning [`Some(Item)`] again at some point (for example, see [`TryIter`]).
 
-`Iterator`'s full definition includes a number of other methods as well,
-but they are default methods, built on top of `next`, and so you get
+[`Iterator`]'s full definition includes a number of other methods as well,
+but they are default methods, built on top of [`next`], and so you get
 them for free.
 
 Iterators are also composable, and it's common to chain them together to do
-more complex forms of processing. See the Adapters section
+more complex forms of processing. See the [Adapters](#adapters) section
 below for more details.
 
-#### The three forms of iteration
+[`Some(Item)`]: Some
+[`next`]: Iterator::next
+[`TryIter`]: ../../std/sync/mpsc/struct.TryIter.html
+
+# The three forms of iteration
 
 There are three common methods which can create iterators from a collection:
 
@@ -71,16 +70,16 @@ There are three common methods which can create iterators from a collection:
 Various things in the standard library may implement one or more of the
 three, where appropriate.
 
-#### Implementing Iterator
+# Implementing Iterator
 
 Creating an iterator of your own involves two steps: creating a `struct` to
-hold the iterator's state, and then implementing `Iterator` for that `struct`.
+hold the iterator's state, and then implementing [`Iterator`] for that `struct`.
 This is why there are so many `struct`s in this module: there is one for
 each iterator and iterator adapter.
 
 Let's make an iterator named `Counter` which counts from `1` to `5`:
 
-```rust
+```
 // First, the struct:
 
 /// An iterator which counts from one to five
@@ -129,8 +128,8 @@ assert_eq!(counter.next(), Some(5));
 assert_eq!(counter.next(), None);
 ```
 
-Calling `next` this way gets repetitive. Rust has a construct which can
-call `next` on your iterator, until it reaches `None`. Let's go over that
+Calling [`next`] this way gets repetitive. Rust has a construct which can
+call [`next`] on your iterator, until it reaches `None`. Let's go over that
 next.
 
 Also note that `Iterator` provides a default implementation of methods such as `nth` and `fold`
@@ -138,12 +137,12 @@ which call `next` internally. However, it is also possible to write a custom imp
 methods like `nth` and `fold` if an iterator can compute them more efficiently without calling
 `next`.
 
-#### `for` loops and `IntoIterator`
+# `for` loops and `IntoIterator`
 
 Rust's `for` loop syntax is actually sugar for iterators. Here's a basic
 example of `for`:
 
-```rust
+```
 let values = vec![1, 2, 3, 4, 5];
 
 for x in values {
@@ -156,12 +155,14 @@ you'll notice something here: we never called anything on our vector to
 produce an iterator. What gives?
 
 There's a trait in the standard library for converting something into an
-iterator: `IntoIterator`. This trait has one method, `into_iter`,
-which converts the thing implementing `IntoIterator` into an iterator.
+iterator: [`IntoIterator`]. This trait has one method, [`into_iter`],
+which converts the thing implementing [`IntoIterator`] into an iterator.
 Let's take a look at that `for` loop again, and what the compiler converts
 it into:
 
-```rust
+[`into_iter`]: IntoIterator::into_iter
+
+```
 let values = vec![1, 2, 3, 4, 5];
 
 for x in values {
@@ -171,7 +172,7 @@ for x in values {
 
 Rust de-sugars this into:
 
-```rust
+```
 let values = vec![1, 2, 3, 4, 5];
 {
     let result = match IntoIterator::into_iter(values) {
@@ -190,24 +191,26 @@ let values = vec![1, 2, 3, 4, 5];
 ```
 
 First, we call `into_iter()` on the value. Then, we match on the iterator
-that returns, calling `next` over and over until we see a `None`. At
+that returns, calling [`next`] over and over until we see a `None`. At
 that point, we `break` out of the loop, and we're done iterating.
 
 There's one more subtle bit here: the standard library contains an
-interesting implementation of `IntoIterator`:
+interesting implementation of [`IntoIterator`]:
 
-```
+```ignore (only-for-syntax-highlight)
 impl<I: Iterator> IntoIterator for I
-```rust
+```
 
-In other words, all `Iterator`s implement `IntoIterator`, by just
+In other words, all [`Iterator`]s implement [`IntoIterator`], by just
 returning themselves. This means two things:
 
-1. If you're writing an `Iterator`, you can use it with a `for` loop.
-2. If you're creating a collection, implementing `IntoIterator` for it
+1. If you're writing an [`Iterator`], you can use it with a `for` loop.
+2. If you're creating a collection, implementing [`IntoIterator`] for it
    will allow your collection to be used with the `for` loop.
 
-Since `into_iter()` takes `self` by value, using a `for` loop to iterate
+# Iterating by reference
+
+Since [`into_iter()`] takes `self` by value, using a `for` loop to iterate
 over a collection consumes that collection. Often, you may want to iterate
 over a collection without consuming it. Many collections offer methods that
 provide iterators over references, conventionally called `iter()` and
@@ -222,7 +225,7 @@ for x in values.iter() {
     assert_eq!(*x, 42);
 }
 assert_eq!(values.len(), 1); // `values` is still owned by this function.
-```rust
+```
 
 If a collection type `C` provides `iter()`, it usually also implements
 `IntoIterator` for `&C`, with an implementation that just calls `iter()`.
@@ -241,21 +244,23 @@ for x in &values {
     assert_eq!(*x, 42);
 }
 assert_eq!(values.len(), 1);
-```rust
+```
 
 While many collections offer `iter()`, not all offer `iter_mut()`. For
-example, mutating the keys of a `HashSet<T>` could put the collection
-into an inconsistent state if the key <example-value> change, so this collection
+example, mutating the keys of a [`HashSet<T>`] could put the collection
+into an inconsistent state if the key hashes change, so this collection
 only offers `iter()`.
 
-`into_iter()`: IntoIterator::into_iter
-`HashSet<T>`: ../../std/collections/struct.HashSet.html
+[`into_iter()`]: IntoIterator::into_iter
+[`HashSet<T>`]: ../../std/collections/struct.HashSet.html
 
-Functions which take an `Iterator` and return another `Iterator` are
+# Adapters
+
+Functions which take an [`Iterator`] and return another [`Iterator`] are
 often called 'iterator adapters', as they're a form of the 'adapter
 pattern'.
 
-Common iterator adapters include `map`, `take`, and `filter`.
+Common iterator adapters include [`map`], [`take`], and [`filter`].
 For more, see their documentation.
 
 If an iterator adapter panics, the iterator will be in an unspecified (but
@@ -263,33 +268,35 @@ memory safe) state.  This state is also not guaranteed to stay the same
 across versions of Rust, so you should avoid relying on the exact values
 returned by an iterator which panicked.
 
-`map`: Iterator::map
-`take`: Iterator::take
-`filter`: Iterator::filter
+[`map`]: Iterator::map
+[`take`]: Iterator::take
+[`filter`]: Iterator::filter
+
+# Laziness
 
 Iterators (and iterator [adapters](#adapters)) are *lazy*. This means that
 just creating an iterator doesn't _do_ a whole lot. Nothing really happens
-until you call `next`. This is sometimes a source of confusion when
-creating an iterator solely for its side effects. For example, the `map`
+until you call [`next`]. This is sometimes a source of confusion when
+creating an iterator solely for its side effects. For example, the [`map`]
 method calls a closure on each element it iterates over:
 
 ```
-#### #![allow(unused_must_use)]
-#### #![allow(map_unit_fn)]
+# #![allow(unused_must_use)]
+# #![allow(map_unit_fn)]
 let v = vec![1, 2, 3, 4, 5];
 v.iter().map(|x| println!("{x}"));
-```rust
+```
 
 This will not print any values, as we only created an iterator, rather than
 using it. The compiler will warn us about this kind of behavior:
 
-```
+```text
 warning: unused result that must be used: iterators are lazy and
 do nothing unless consumed
-```rust
+```
 
-The idiomatic way to write a `map` for its side effects is to use a
-`for` loop or call the `for_each` method:
+The idiomatic way to write a [`map`] for its side effects is to use a
+`for` loop or call the [`for_each`] method:
 
 ```
 let v = vec![1, 2, 3, 4, 5];
@@ -299,24 +306,26 @@ v.iter().for_each(|x| println!("{x}"));
 for x in &v {
     println!("{x}");
 }
-```rust
+```
 
-`map`: Iterator::map
-`for_each`: Iterator::for_each
+[`map`]: Iterator::map
+[`for_each`]: Iterator::for_each
 
-Another common way to evaluate an iterator is to use the `collect`
+Another common way to evaluate an iterator is to use the [`collect`]
 method to produce a new collection.
 
-`collect`: Iterator::collect
+[`collect`]: Iterator::collect
+
+# Infinity
 
 Iterators do not have to be finite. As an example, an open-ended range is
 an infinite iterator:
 
 ```
 let numbers = 0..;
-```rust
+```
 
-It is common to use the `take` iterator adapter to turn an infinite
+It is common to use the [`take`] iterator adapter to turn an infinite
 iterator into a finite one:
 
 ```
@@ -326,22 +335,22 @@ let five_numbers = numbers.take(5);
 for number in five_numbers {
     println!("{number}");
 }
-```rust
+```
 
 This will print the numbers `0` through `4`, each on their own line.
 
 Bear in mind that methods on infinite iterators, even those for which a
 result can be determined mathematically in finite time, might not terminate.
-Specifically, methods such as `min`, which in the general case require
+Specifically, methods such as [`min`], which in the general case require
 traversing every element in the iterator, are likely not to return
 successfully for any infinite iterators.
 
-```
+```no_run
 let ones = std::iter::repeat(1);
 let least = ones.min().unwrap(); // Oh no! An infinite loop!
 // `ones.min()` causes an infinite loop, so we won't reach this point!
 println!("The smallest number one is {least}.");
-```rust
+```
 
-`take`: Iterator::take
-`min`: Iterator::min
+[`take`]: Iterator::take
+[`min`]: Iterator::min

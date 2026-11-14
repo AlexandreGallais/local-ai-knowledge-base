@@ -1,12 +1,16 @@
 ---
+description: "Learn more about: Apply attributes"
 title: "Applying Attributes"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/attributes/applying-attributes.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/02/2026"
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "assemblies [.NET], attributes"
+  - "attributes [.NET], applying"
+ms.topic: how-to
+ai-usage: ai-assisted
 ---
-
 # Apply attributes
 
 Use the following process to apply an attribute to an element of your code.
@@ -23,11 +27,11 @@ Use the following process to apply an attribute to an element of your code.
 
  The attribute is emitted into metadata when you compile your code and is available to the common language runtime and any custom tool or application through the runtime reflection services.
 
- By convention, all attribute names end with "Attribute". However, several languages that target the runtime, such as Visual Basic and C#, do not require you to specify the full name of an attribute. For example, if you want to initialize `System.ObsoleteAttribute`, you only need to reference it as **Obsolete**.
+ By convention, all attribute names end with "Attribute". However, several languages that target the runtime, such as Visual Basic and C#, do not require you to specify the full name of an attribute. For example, if you want to initialize <xref:System.ObsoleteAttribute?displayProperty=nameWithType>, you only need to reference it as **Obsolete**.
 
 ## Valid attribute arguments
 
-When you pass <example-value> to an attribute, use one of the following kinds of expressions:
+When you pass arguments to an attribute, use one of the following kinds of expressions:
 
 - Constant expressions (literals, `const`/`Const` values, and enum values).
 - Type expressions (`typeof` in C#, `GetType` in Visual Basic).
@@ -36,26 +40,26 @@ When you pass <example-value> to an attribute, use one of the following kinds of
 
 The following types are valid as attribute parameter types:
 
-- Simple types (C# keyword / Visual Basic <example-value> / .NET runtime type):
+- Simple types (C# keyword / Visual Basic keyword / .NET runtime type):
 
   | C# | Visual Basic | .NET runtime type |
   |----|-------------|-------------------|
-  | `bool` | `Boolean` | `System.Boolean` |
-  | `byte` | `Byte` | `System.Byte` |
-  | `char` | `Char` | `System.Char` |
-  | `double` | `Double` | `System.Double` |
-  | `float` | `Single` | `System.Single` |
-  | `int` | `Integer` | `System.Int32` |
-  | `long` | `Long` | `System.Int64` |
-  | `short` | `Short` | `System.Int16` |
-  | `string` | `String` | `System.String` |
+  | `bool` | `Boolean` | <xref:System.Boolean> |
+  | `byte` | `Byte` | <xref:System.Byte> |
+  | `char` | `Char` | <xref:System.Char> |
+  | `double` | `Double` | <xref:System.Double> |
+  | `float` | `Single` | <xref:System.Single> |
+  | `int` | `Integer` | <xref:System.Int32> |
+  | `long` | `Long` | <xref:System.Int64> |
+  | `short` | `Short` | <xref:System.Int16> |
+  | `string` | `String` | <xref:System.String> |
 
 - `object` (in C#, when the value is one of the valid attribute argument types or a single-dimensional array of them).
-- `System.Type`.
+- <xref:System.Type>.
 - Enum types that are accessible at the usage site.
 - Single-dimensional arrays of any of the preceding types.
 
-> **Note:**
+> [!NOTE]
 > The types `sbyte`, `ushort`, `uint`, `ulong`, `decimal`, `nint`, and `nuint` aren't valid attribute parameter types, even though they support literal constants.
 
 The following examples show valid attribute arguments:
@@ -91,70 +95,24 @@ string value = "test";
 
 ## Apply an attribute to a method
 
- The following code example shows how to use `System.ObsoleteAttribute`, which marks code as obsolete. The string `"Will be removed in next version"` is passed to the attribute. This attribute causes a compiler warning that displays the passed string when code that the attribute describes is called.
+ The following code example shows how to use <xref:System.ObsoleteAttribute?displayProperty=fullName>, which marks code as obsolete. The string `"Will be removed in next version"` is passed to the attribute. This attribute causes a compiler warning that displays the passed string when code that the attribute describes is called.
 
- ```csharp
-using System;
-using System.Reflection;
-[assembly:AssemblyTitle("My Assembly")]
-
-public class Example
-{
-    // Specify attributes between square brackets in C#.
-    // This attribute is applied only to the Add method.
-    [Obsolete("Will be removed in next version.")]
-    public static int Add(int a, int b)
-    {
-        return (a + b);
-    }
-}
-
-class Test
-{
-    public static void Main()
-    {
-        // This generates a compile-time warning.
-        int i = Example.Add(2, 2);
-    }
-}
-```
+ [!code-csharp[Conceptual.Attributes.Usage#3](../../../samples/snippets/csharp/VS_Snippets_CLR/conceptual.attributes.usage/cs/source1.cs#3)]
+ [!code-vb[Conceptual.Attributes.Usage#3](../../../samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.attributes.usage/vb/source1.vb#3)]
 
 ## Apply attributes at the assembly level
 
- If you want to apply an attribute at the assembly level, use the `assembly` (`Assembly` in Visual Basic) keyword. The following code shows the `System.Reflection.AssemblyTitleAttribute` applied at the assembly level.
+ If you want to apply an attribute at the assembly level, use the `assembly` (`Assembly` in Visual Basic) keyword. The following code shows the <xref:System.Reflection.AssemblyTitleAttribute> applied at the assembly level.
 
- ```csharp
-using System;
-using System.Reflection;
-[assembly:AssemblyTitle("My Assembly")]
+ [!code-csharp[Conceptual.Attributes.Usage#2](../../../samples/snippets/csharp/VS_Snippets_CLR/conceptual.attributes.usage/cs/source1.cs#2)]
+ [!code-vb[Conceptual.Attributes.Usage#2](../../../samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.attributes.usage/vb/source1.vb#2)]
 
-public class Example
-{
-    // Specify attributes between square brackets in C#.
-    // This attribute is applied only to the Add method.
-    [Obsolete("Will be removed in next version.")]
-    public static int Add(int a, int b)
-    {
-        return (a + b);
-    }
-}
-
-class Test
-{
-    public static void Main()
-    {
-        // This generates a compile-time warning.
-        int i = Example.Add(2, 2);
-    }
-}
-```
-
- When this attribute is applied, the string `"My Assembly"` is placed in the assembly manifest in the metadata portion of the file. You can view the attribute either by using the IL Disassembler (Ildasm.exe) or by creating a custom program to retrieve the attribute.
+ When this attribute is applied, the string `"My Assembly"` is placed in the assembly manifest in the metadata portion of the file. You can view the attribute either by using the [IL Disassembler (Ildasm.exe)](../../framework/tools/ildasm-exe-il-disassembler.md) or by creating a custom program to retrieve the attribute.
 
 ## See also
 
-- Attributes
-- Retrieving Information Stored in Attributes
-- Concepts
-- Attributes (C#)
-- Attributes overview (Visual Basic)
+- [Attributes](index.md)
+- [Retrieving Information Stored in Attributes](retrieving-information-stored-in-attributes.md)
+- [Concepts](/cpp/windows/attributed-programming-concepts)
+- [Attributes (C#)](/dotnet/csharp/advanced-topics/reflection-and-attributes)
+- [Attributes overview (Visual Basic)](../../visual-basic/programming-guide/concepts/attributes/index.md)

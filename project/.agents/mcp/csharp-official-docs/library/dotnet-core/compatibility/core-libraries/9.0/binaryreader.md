@@ -1,19 +1,15 @@
 ---
-title: "Breaking change: BinaryReader.ReadString() returns '\\uFFFD' on malformed sequences"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/9.0/binaryreader.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: "Breaking change: BinaryReader.ReadString() returns '\uFFFD' on malformed sequences"
+description: Learn about the .NET 9 breaking change in core .NET libraries where BinaryReader.ReadString() returns "\uFFFD" on malformed encoded string sequences.
+ms.date: 10/03/2024
 ---
-
 # BinaryReader.ReadString() returns "\uFFFD" on malformed sequences
 
 A minor breaking change was introduced that only affects malformed encoded payloads.
 
-Prior to .NET 9, a malformed encoded string `[0x01, 0xC2]` that was parsed with `System.IO.BinaryReader.ReadString` returned an empty string.
+Prior to .NET 9, a malformed encoded string `[0x01, 0xC2]` that was parsed with <xref:System.IO.BinaryReader.ReadString?displayProperty=nameWithType> returned an empty string.
 
-Starting in .NET 9, `System.IO.BinaryReader.ReadString` returns "\uFFFD", which is the `REPLACEMENT CHARACTER` used to replace an unknown, unrecognized, or unrepresentable character. This change only affects malformed payloads and matches Unicode standards.
+Starting in .NET 9, <xref:System.IO.BinaryReader.ReadString?displayProperty=nameWithType> returns "\uFFFD", which is the `REPLACEMENT CHARACTER` used to replace an unknown, unrecognized, or unrepresentable character. This change only affects malformed payloads and matches Unicode standards.
 
 ## Previous behavior
 
@@ -47,7 +43,7 @@ using (var br = new BinaryReader(ms))
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -59,4 +55,4 @@ If you want to keep the previous behavior where incomplete byte sequence were om
 
 ## Affected APIs
 
-- `System.IO.BinaryReader.ReadString`
+- <xref:System.IO.BinaryReader.ReadString?displayProperty=fullName>

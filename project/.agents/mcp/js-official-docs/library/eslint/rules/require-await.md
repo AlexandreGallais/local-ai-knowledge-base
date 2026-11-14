@@ -1,13 +1,10 @@
 ---
-title: "require-await"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/require-await.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: require-await
+rule_type: suggestion
+related_rules:
+- require-yield
 ---
 
-# require-await
 
 Asynchronous functions in JavaScript behave differently than other functions in two important ways:
 
@@ -35,7 +32,7 @@ This rule warns async functions which have no `await` expression.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint require-await: "error"*/
@@ -49,9 +46,11 @@ bar(async () => {
 });
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint require-await: "error"*/
@@ -80,6 +79,8 @@ async function resourceManagement() {
 // Allow empty functions.
 async function noop() {}
 ```
+
+:::
 
 ## Options
 

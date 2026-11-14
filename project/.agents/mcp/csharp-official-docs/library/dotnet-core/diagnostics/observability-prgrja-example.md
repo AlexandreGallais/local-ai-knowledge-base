@@ -1,10 +1,8 @@
 ---
-title: "Example: Use OpenTelemetry with Prometheus, Grafana, and Jaeger (part 1 of 2)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/observability-prgrja-example.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: "Example: Use OpenTelemetry with Prometheus, Grafana, and Jaeger"
+description: A walkthrough of how to use OpenTelemetry in .NET to export telemetry to Prometheus, Grafana, and Jaeger
+ms.date: 6/14/2023
+ms.topic: how-to
 ---
 
 # Example: Use OpenTelemetry with Prometheus, Grafana, and Jaeger
@@ -23,38 +21,15 @@ dotnet new web
 
 The following code defines a new metric (`greetings.count`) for the number of times the API has been called, and a new activity source (`OtPrGrYa.Example`).
 
-```csharp
-// Custom metrics for the application
-var greeterMeter = new Meter("OtPrGrYa.Example", "1.0.0");
-var countGreetings = greeterMeter.CreateCounter<int>("greetings.count", description: "Counts the number of greetings");
+:::code language="csharp" source="snippets/OTel-Prometheus-Grafana-Jaeger/csharp/Program.cs" id="Snippet_CustomMetrics":::
 
-// Custom ActivitySource for the application
-var greeterActivitySource = new ActivitySource("OtPrGrJa.Example");
-```
 ## 3. Create an API endpoint
 
-```csharp
-app.MapGet("/", SendGreeting);
-```
-```csharp
-async Task<string> SendGreeting(ILogger<Program> logger)
-{
-    // Create a new Activity scoped to the method
-    using var activity = greeterActivitySource.StartActivity("GreeterActivity");
+:::code language="csharp" source="snippets/OTel-Prometheus-Grafana-Jaeger/csharp/Program.cs" id="Snippet_MapGet":::
 
-    // Log a message
-    logger.LogInformation("Sending greeting");
+:::code language="csharp" source="snippets/OTel-Prometheus-Grafana-Jaeger/csharp/Program.cs" id="Snippet_SendGreeting":::
 
-    // Increment the custom counter
-    countGreetings.Add(1);
-
-    // Add a tag to the Activity
-    activity?.SetTag("greeting", "Hello World!");
-
-    return "Hello World!";
-}
-```
-> **Note:**
+> [!NOTE]
 > The API definition doesn't use anything specific to OpenTelemetry. It uses the .NET APIs for observability.
 
 ## 4. Reference the OpenTelemetry packages
@@ -73,54 +48,14 @@ dotnet add package OpenTelemetry.Instrumentation.Http
 
 ## 5. Configure OpenTelemetry with the correct providers
 
-```csharp
-var tracingOtlpEndpoint = builder.Configuration["OTLP_ENDPOINT_URL"];
-var otel = builder.Services.AddOpenTelemetry();
+:::code language="csharp" source="snippets/OTel-Prometheus-Grafana-Jaeger/csharp/Program.cs" id="Snippet_OTEL":::
 
-// Configure OpenTelemetry Resources with the application name
-otel.ConfigureResource(resource => resource
-    .AddService(serviceName: builder.Environment.ApplicationName));
-
-// Add Metrics for ASP.NET Core and our custom metrics and export to Prometheus
-otel.WithMetrics(metrics => metrics
-    // Metrics provider from OpenTelemetry
-    .AddAspNetCoreInstrumentation()
-    .AddMeter(greeterMeter.Name)
-    // Metrics provides by ASP.NET Core in .NET 8
-    .AddMeter("Microsoft.AspNetCore.Hosting")
-    .AddMeter("Microsoft.AspNetCore.Server.Kestrel")
-    // Metrics provided by System.Net libraries
-    .AddMeter("System.Net.Http")
-    .AddMeter("System.Net.NameResolution")
-    .AddPrometheusExporter());
-
-// Add Tracing for ASP.NET Core and our custom ActivitySource and export to Jaeger
-otel.WithTracing(tracing =>
-{
-    tracing.AddAspNetCoreInstrumentation();
-    tracing.AddHttpClientInstrumentation();
-    tracing.AddSource(greeterActivitySource.Name);
-    if (tracingOtlpEndpoint != null)
-    {
-        tracing.AddOtlpExporter(otlpOptions =>
-         {
-             otlpOptions.Endpoint = new Uri(tracingOtlpEndpoint);
-         });
-    }
-    else
-    {
-        tracing.AddConsoleExporter();
-    }
-});
-```
 This code uses ASP.NET Core instrumentation to get metrics and activities from ASP.NET Core. It also registers the `Metrics` and `ActivitySource` providers for metrics and tracing respectively.
 
 The code uses the Prometheus exporter for metrics, which uses ASP.NET Core to host the endpoint, so you also need to add:
 
-```csharp
-// Configure the Prometheus scraping endpoint
-app.MapPrometheusScrapingEndpoint();
-```
+:::code language="csharp" source="snippets/OTel-Prometheus-Grafana-Jaeger/csharp/Program.cs" id="Snippet_Prometheus":::
+
 ## 6. Run the project
 
 Run the project and then access the API with the browser or curl.
@@ -133,12 +68,12 @@ Each time you request the page, it increments the count for the number of greeti
 
 ### 6.1 Log output
 
-The logging statements from the code are output using `ILogger`. By default, the Console Provider is enabled so that output is directed to the console.
+The logging statements from the code are output using `ILogger`. By default, the [Console Provider](../extensions/logging/overview.md?tabs=command-line#configure-logging) is enabled so that output is directed to the console.
 
 There are a few options for how logs can be egressed from .NET:
 
-- `stdout` and `stderr` output is redirected to log files by container systems such as Kubernetes.
-- Using logging libraries that integrate with ILogger. These libraries include Serilog and NLog.
+- `stdout` and `stderr` output is redirected to log files by container systems such as [Kubernetes](https://kubernetes.io/docs/concepts/cluster-administration/logging/#how-nodes-handle-container-logs).
+- Using logging libraries that integrate with ILogger. These libraries include [Serilog](https://serilog.net/) and [NLog](https://nlog-project.org/).
 - Using logging providers for OTel, such as OTLP, or the Azure Monitor exporter shown later.
 
 ### 6.2 Access the metrics
@@ -162,7 +97,7 @@ current_connections{endpoint="[::1]:5212"} 1 1686894204856
 ...
 ```
 
-The metrics output is a snapshot of the metrics at the time the endpoint is requested. The results are provided in Prometheus exposition format, which is human readable but better understood by Prometheus. That topic is covered in the next stage.
+The metrics output is a snapshot of the metrics at the time the endpoint is requested. The results are provided in [Prometheus exposition format](https://github.com/prometheus/docs/blob/main/docs/instrumenting/exposition_formats.md), which is human readable but better understood by Prometheus. That topic is covered in the next stage.
 
 ### 6.3 Access the tracing
 
@@ -227,7 +162,7 @@ The process doesn't store any history of these metric snapshots. Adding that cap
 
 ### 7.1 Install and configure Prometheus
 
-Download Prometheus for your platform from https://prometheus.io/download/ and extract the contents of the download.
+Download Prometheus for your platform from [https://prometheus.io/download/](https://prometheus.io/download/) and extract the contents of the download.
 
 Look at the top of the output of your running server to get the port number for the HTTP endpoint. For example:
 
@@ -263,21 +198,21 @@ ts=2023-06-16T05:29:02.789Z caller=web.go:562 level=info component=web msg="Star
 
 Open this URL in your browser. In the Prometheus UI, you should now be able to query for your metrics. Use the highlighted button in the following image to open the metrics explorer, which shows all the available metrics.
 
-[](./media/prometheus-metrics-explorer.png#lightbox)
+[![Prometheus Metrics Explorer](./media/prometheus-metrics-explorer.thumb.png)](./media/prometheus-metrics-explorer.png#lightbox)
 
 Select the `greetings_count` metric to see a graph of values.
 
-[](./media/prometheus-graph.png#lightbox)
+[![Graph of greetings_count](./media/prometheus-graph.thumb.png)](./media/prometheus-graph.png#lightbox)
 
 ## 8. Use Grafana to create a metrics dashboard
 
 Grafana is a dashboarding product that can create dashboards and alerts based on Prometheus or other data sources.
 
-Download and install the OSS version of Grafana from https://grafana.com/oss/grafana/ following the instructions for your platform. Once installed, Grafana is typically run on port 3000, so open `http://localhost:3000` in your browser. You'll need to log in; the default username and password are both `admin`.
+Download and install the OSS version of Grafana from [https://grafana.com/oss/grafana/](https://grafana.com/oss/grafana/) following the instructions for your platform. Once installed, Grafana is typically run on port 3000, so open `http://localhost:3000` in your browser. You'll need to log in; the default username and password are both `admin`.
 
 From the hamburger menu, choose connections, and then enter the text `prometheus` to select your endpoint type. Select **Create a Prometheus data source** to add a new data source.
 
-[](./media/grafana-connections.png#lightbox)
+[![Grafana connection to prometheus](./media/grafana-connections.thumb.png)](./media/grafana-connections.png#lightbox)
 
 Set the Prometheus server URL to `http://localhost:9090/`, changing the port as applicable.
 
@@ -289,7 +224,7 @@ Select **Add a Visualization**, and then choose the Prometheus data source you j
 
 The dashboard panel designer should appear. In the lower half of the screen, you can define the query.
 
-[](./media/grafana-greetings-count-metric.png#lightbox)
+[![Grafana query using greetings_count](./media/grafana-greetings-count-metric.thumb.png)](./media/grafana-greetings-count-metric.png#lightbox)
 
 Select the `greetings_count` metric, and then select **Run Queries** to see the results.
 
@@ -306,4 +241,62 @@ Each metric in .NET can have additional dimensions, which are key-value pairs th
 
 The graphs in Grafana are usually partitioned based on each unique combination of dimensions. The dimensions can be used in the Grafana queries to filter or aggregate the data. For example, if you graph `current_requests`, you'll see values partitioned based on each combination of dimensions. To filter based only on the host, add an operation of `Sum` and use `host` as the label value.
 
-[](./media/grafana-request-count-by-host.png#lightbox)
+[![Grafana current_requests by host](./media/grafana-request-count-by-host.thumb.png)](./media/grafana-request-count-by-host.png#lightbox)
+
+## 9. Distributed tracing with Jaeger
+
+In [step 6](#6-run-the-project), you saw that distributed tracing information was being exposed to the console. This information tracks units of work with activities. Some activities are created automatically by the platform, such as the one by ASP.NET to represent the handling of a request, and libraries and app code can also create activities. The greetings example has a `Greeter` activity. The activities are correlated using the `TraceId`, `SpanId`, and `ParentId` tags.
+
+Each process in a distributed system produces its own stream of activity information, and like metrics, you need a system to collect, store, and correlate the activities to be able to visualize the work done for each transaction. Jaeger is an open-source project to enable this collection and visualization.
+
+Download the latest binary distribution archive of Jaeger for your platform from [https://www.jaegertracing.io/download/](https://www.jaegertracing.io/download/).
+
+Then, extract the download to a local location that's easy to access. Run the *jaeger-all-in-one(.exe)* executable:
+
+```dotnetcli
+./jaeger-all-in-one --collector.otlp.enabled
+```
+
+Look through the console output to find the port where it's listening for OTLP traffic via gRPC. For example:
+
+```json
+{"level":"info","ts":1686963686.3854616,"caller":"otlpreceiver@v0.78.2/otlp.go:83","msg":"Starting GRPC server","endpoint":"0.0.0.0:4317"}
+```
+
+This output tells you it's listening on `0.0.0.0:4317`, so you can configure that port as the destination for your OTLP exporter.
+
+Open the `AppSettings.json` file for our project, and add the following line, changing the port if applicable.
+
+```json
+"OTLP_ENDPOINT_URL" :  "http://localhost:4317/"
+```
+
+Restart the greeter process so that it can pick up the property change and start directing tracing information to Jaeger.
+
+Now, you should be able to see the Jaeger UI at `http://localhost:16686/` from a web browser.
+
+[![Jaeger query for traces](./media/jaeger-search-results.thumb.png)](./media/jaeger-search-results.png#lightbox)
+
+To see a list of traces, select `OTel-Prometheus-grafana-Jaeger` from the **Service** dropdown. Selecting a trace should show a gantt chart of the activities as part of that trace. Clicking on each of the operations shows more details about the activity.
+
+[![Jaeger Operation Details](./media/jaeger-activity-details.thumb.png)](./media/jaeger-activity-details.png#lightbox)
+
+In a distributed system, you want to send traces from all processes to the same Jaeger installation so that it can correlate the transactions across the system.
+
+You can make your app a little more interesting by having it make HTTP calls to itself.
+
+- Add an `HttpClient` factory to the application:
+
+   :::code language="csharp" source="snippets/OTel-Prometheus-Grafana-Jaeger/csharp/Program.cs" id="Snippet_HttpClientFactory":::
+
+- Add a new endpoint for making nested greeting calls:
+
+   :::code language="csharp" source="snippets/OTel-Prometheus-Grafana-Jaeger/csharp/Program.cs" id="Snippet_MapNested":::
+
+- Implement the endpoint so that it makes HTTP calls that can also be traced. In this case, it calls back to itself in an artificial loop (really only applicable to demo scenarios):
+
+   :::code language="csharp" source="snippets/OTel-Prometheus-Grafana-Jaeger/csharp/Program.cs" id="Snippet_SendNestedGreeting":::
+
+This results in a more interesting graph with a pyramid shape for the requests, as each level waits for the response from the previous call.
+
+[![Jaeger nested dependency results](./media/jaeger-nested-activity-details.thumb.png)](./media/jaeger-nested-activity-details.png#lightbox)

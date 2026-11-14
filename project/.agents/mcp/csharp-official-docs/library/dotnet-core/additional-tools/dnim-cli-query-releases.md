@@ -1,10 +1,9 @@
 ---
-title: "dnim query releases command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/additional-tools/dnim-cli-query-releases.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dnim query releases command
+description: The query releases command provides information about specific .NET releases.
+author: joeloff
+ms.date: 08/11/2026
+ai-usage: ai-assisted
 ---
 
 # dnim query releases
@@ -33,69 +32,32 @@ dnim-win-[x86|x64|arm64] query releases -?|-h|--help
 
 The command can be used to obtain information for specific .NET releases.
 
-> **Important:**
+> [!IMPORTANT]
 > The information provided by this command depends on the published releases JSON data.
 
 ## Options
 
-- **`-a|--accept-license`**
+- [!INCLUDE [accept-license](includes/dnim-cli-accept-license.md)]
 
-Automatically accept the license agreement. On first run, the user will be prompted to accept the license. The command will fail if the verbosity is set to `quiet` and the tool is executed for the first time. Administrators should include this option when deploying DNIM across their network.
+- [!INCLUDE [cve](includes/dnim-cli-cve.md)]
 
-- **`--cve <CVE_ID>`**
+- [!INCLUDE [except-product-version](includes/dnim-cli-except-product-version.md)]
+  
+- [!INCLUDE [except-support-phase](includes/dnim-cli-except-support-phase.md)]
 
-Filter releases using the Common Vulnerabilities and Exposures (CVE) identifier. Only releases that address the specified CVEs are included. Specify the option once for each CVE.
+- [!INCLUDE [output-file](includes/dnim-cli-output-file.md)]
 
-> **Important:**
-> This option depends on the release information published by .NET.
+- [!INCLUDE [offline](includes/dnim-cli-offline.md)]
 
-- **`--epv|--except-product-version <PRODUCT_VERSION>`**
+- [!INCLUDE [output-format](includes/dnim-cli-output-format.md)]
 
-Exclude installations that match the specified product version. Product versions contain a major and minor version, such as `2.2` or `5.0`. Specify the option once for each product version.
+- [!INCLUDE [product-version](includes/dnim-cli-product-version.md)]
 
-> **Note:**
-> The `--product-version` and `--except-product-version` options are mutually exclusive.
+- [!INCLUDE [security](includes/dnim-cli-security.md)]
 
-- **`--esp|--except-support-phase <active|eol|golive|maintenance|preview>`**
+- [!INCLUDE [support-phase](includes/dnim-cli-support-phase.md)]
 
-Exclude installations that match the specified support phase. Specify the option once for each support phase.
-
-> **Note:**
-> The `--support-phase` and `--except-support-phase` options are mutually exclusive.
-
-- **`-o|--output-file <OUTPUT_FILE>`**
-
-Specify the full path of the file where DNIM writes the command results.
-
-- **`--offline <LAYOUT_DIRECTORY>`**
-
-Use files from the specified layout directory instead of retrieving required files from the internet.
-
-- **`--output-format <text|csv|html|json>`**
-
-Specify the output format for command results. The default format is `csv`.
-
-- **`--pv|--product-version <PRODUCT_VERSION>`**
-
-Include installations that match the specified product version. Product versions contain a major and minor version, such as `2.2` or `5.0`. Specify the option once for each product version. By default, all known product versions are included.
-
-> **Note:**
-> The `--product-version` and `--except-product-version` options are mutually exclusive.
-
-- **`--security`**
-
-Only include releases that contain security updates.
-
-- **`--sp|--support-phase <active|eol|golive|maintenance|preview>`**
-
-Include only products, releases, or installations that match the specified support phase. Specify the option once for each support phase. By default, all support phases are included.
-
-> **Note:**
-> The `--support-phase` and `--except-support-phase` options are mutually exclusive.
-
-- **`-v|--verbosity <quiet|normal|diagnostic>`**
-
-Set the console output verbosity. Log files always contain diagnostic output. The default value is `normal`.
+- [!INCLUDE [verbosity](includes/dnim-cli-verbosity.md)]
 
 ## Results
 
@@ -130,4 +92,4 @@ SDK 3.1.426
 
 ## See also
 
-The `query products` command.
+The [`query products`](dnim-cli-query-products.md) command.

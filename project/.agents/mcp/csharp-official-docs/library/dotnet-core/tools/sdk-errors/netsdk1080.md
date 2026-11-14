@@ -1,12 +1,11 @@
 ---
 title: "NETSDK1080: PackageReference to Microsoft.AspNetCore.App is not necessary"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/sdk-errors/netsdk1080.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about .NET SDK error NETSDK1080, which warns about an unnecessary entry in your project file.
+ms.topic: error-reference
+ms.date: 02/25/2021
+f1_keywords:
+- NETSDK1080
 ---
-
 # NETSDK1080: PackageReference to Microsoft.AspNetCore.App is not necessary
 
 NETSDK1080 warns you that the `PackageReference` element for `Microsoft.AspNetCore.App` in your project file is not necessary. The full error message is similar to the following example:
@@ -47,7 +46,7 @@ After updating to .NET Core 3.1 the project file for the same project should loo
 </Project>
 ```
 
-Make these changes, in particular delete the `PackageReference` element, to eliminate the warning. For more information, see Remove obsolete package references.
+Make these changes, in particular delete the `PackageReference` element, to eliminate the warning. For more information, see [Remove obsolete package references](/aspnet/core/migration/22-to-30#remove-obsolete-package-references).
 
 ## Class library project
 
@@ -67,4 +66,4 @@ In a class library project that uses ASP.NET Core APIs, replace the `PackageRefe
 </Project>
 ```
 
-For more information, see Use ASP.NET Core APIs in a class library.
+For more information, see [Use ASP.NET Core APIs in a class library](/aspnet/core/fundamentals/target-aspnetcore).

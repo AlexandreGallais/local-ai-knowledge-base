@@ -1,20 +1,12 @@
----
-title: "Configuring WebdriverIO"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/browser/webdriverio.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # Configuring WebdriverIO
 
-**Community maintained**
-The WebdriverIO provider (`@vitest/browser-webdriverio`) is maintained by the Vitest community in the `vitest-community` organization, separately from the core Vitest packages. Please report provider-specific issues to its repository.
+::: info Community maintained
+The WebdriverIO provider ([`@vitest/browser-webdriverio`](https://github.com/vitest-community/vitest-webdriverio)) is maintained by the Vitest community in the [`vitest-community`](https://github.com/vitest-community) organization, separately from the core Vitest packages. Please report provider-specific issues to its repository.
+:::
 
-To run tests using WebdriverIO, you need to install the `@vitest/browser-webdriverio` npm package and specify its `webdriverio` export in the `test.browser.provider` property of your config:
+To run tests using WebdriverIO, you need to install the [`@vitest/browser-webdriverio`](https://npmx.dev/package/@vitest/browser-webdriverio) npm package and specify its `webdriverio` export in the `test.browser.provider` property of your config:
 
-```ts
+```ts [vitest.config.js]
 import { webdriverio } from '@vitest/browser-webdriverio'
 import { defineConfig } from 'vitest/config'
 
@@ -28,9 +20,9 @@ export default defineConfig({
 })
 ```
 
-You can configure all the parameters that `remote` function accepts:
+You can configure all the parameters that [`remote`](https://webdriver.io/docs/api/modules/#remoteoptions-modifier) function accepts:
 
-```ts
+```ts{8-12,19-25} [vitest.config.js]
 import { webdriverio } from '@vitest/browser-webdriverio'
 import { defineConfig } from 'vitest/config'
 
@@ -63,16 +55,17 @@ export default defineConfig({
 })
 ```
 
-You can find most available options in the WebdriverIO documentation. Note that Vitest will ignore all test runner options because we only use `webdriverio`'s browser capabilities.
+You can find most available options in the [WebdriverIO documentation](https://webdriver.io/docs/configuration/). Note that Vitest will ignore all test runner options because we only use `webdriverio`'s browser capabilities.
 
-**Tip:**
+::: tip
 Most useful options are located on `capabilities` object. WebdriverIO allows nested capabilities, but Vitest will ignore those options because we rely on a different mechanism to spawn several browsers.
 
-Note that Vitest will ignore `capabilities.browserName`; use `test.browser.instances.browser` instead.
+Note that Vitest will ignore `capabilities.browserName`; use [`test.browser.instances.browser`](/config/browser/instances#browser) instead.
+:::
 
 ## Headful Chrome in CI
 
-Vitest enables `browser.headless` automatically in CI.
+Vitest enables [`browser.headless`](/config/browser/headless) automatically in CI.
 If you explicitly set `headless: false` for Chrome on a Linux CI runner, Chrome
 still needs a display server. Without one, WebDriverIO or ChromeDriver can fail
 with a misleading error such as `session not created: probably user data

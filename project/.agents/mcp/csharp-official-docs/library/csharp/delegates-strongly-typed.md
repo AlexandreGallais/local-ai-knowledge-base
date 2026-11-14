@@ -1,15 +1,14 @@
 ---
-title: "Strongly Typed Delegates"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/delegates-strongly-typed.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Strongly Typed Delegates
+description: Learn how to use generic delegate types to declare custom types when creating a feature requiring delegates.
+ms.date: 06/20/2016
+ms.subservice: fundamentals
+ms.assetid: 564a683d-352b-4e57-8bac-b466529daf6b
 ---
 
 # Strongly Typed Delegates
 
-Previous
+[Previous](delegate-class.md)
 
 In the previous article, you saw that you create specific delegate
 types using the `delegate` keyword.
@@ -26,10 +25,10 @@ after a time. Every new feature requires new delegate types.
 
 Thankfully, this isn't necessary. The .NET Core framework contains several
 types that you can reuse whenever you need delegate types. These are
-generic definitions so you can declare customizations
+[generic](fundamentals/types/generics.md) definitions so you can declare customizations
 when you need new method declarations.
 
-The first of these types is the `System.Action` type, and several variations:
+The first of these types is the <xref:System.Action> type, and several variations:
 
 ```csharp
 public delegate void Action();
@@ -42,7 +41,7 @@ The `in` modifier on the generic type argument is covered in the article
 on covariance.
 
 There are variations of the `Action` delegate that contain up to
-16 arguments such as `System.Action`16`.
+16 arguments such as <xref:System.Action`16>.
 It's important that these definitions use different generic arguments for each of the
 delegate arguments: That gives you maximum flexibility. The method arguments need not be, but may be, the same type.
 
@@ -62,14 +61,14 @@ The `out` modifier on the result generic type argument is covered in the
 article on covariance.
 
 There are variations of the `Func` delegate with up to
-16 input arguments such as `System.Func`17`.
+16 input arguments such as <xref:System.Func`17>.
 The type of the result is always the last type parameter in all the `Func`
 declarations, by convention.
 
 Use one of the `Func` types for any delegate type that returns a value.
 
 There's also a specialized
-`System.Predicate`1`
+<xref:System.Predicate`1>
 type for a delegate that returns a test on a single value:
 
 ```csharp
@@ -102,4 +101,4 @@ to create in order to work with delegates.
 In the next article, you'll see several common patterns for working
 with delegates in practice.
 
-Next
+[Next](delegates-patterns.md)

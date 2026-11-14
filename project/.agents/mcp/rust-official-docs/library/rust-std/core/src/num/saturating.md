@@ -1,12 +1,3 @@
----
-title: "core::num::saturating"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/num/saturating.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::num::saturating
 
 Definitions of `Saturating<T>`.
@@ -34,7 +25,7 @@ The underlying value can be retrieved through the `.0` index of the
 
 # Examples
 
-```rust
+```
 use std::num::Saturating;
 
 let max = Saturating(u32::MAX);
@@ -49,7 +40,7 @@ assert_eq!(u32::MAX, (max + one).0);
 pub const MIN: Self = Self(<$t>::MIN)
 ```
 
-```rust
+```
 
 ## Saturating::MAX
 
@@ -57,7 +48,7 @@ pub const MIN: Self = Self(<$t>::MIN)
 pub const MAX: Self = Self(<$t>::MAX)
 ```
 
-```rust
+```
 
 ## Saturating::BITS
 
@@ -65,7 +56,7 @@ pub const MAX: Self = Self(<$t>::MAX)
 pub const BITS: u32 = <$t>::BITS
 ```
 
-```rust
+```
 
 ## Saturating::count_ones
 
@@ -74,7 +65,7 @@ pub const fn count_ones(self) -> u32
 ```
 
 assert_eq!(n.count_ones(), 3);
-```rust
+```
 
 ## Saturating::count_zeros
 
@@ -82,7 +73,7 @@ assert_eq!(n.count_ones(), 3);
 pub const fn count_zeros(self) -> u32
 ```
 
-```rust
+```
 
 ## Saturating::trailing_zeros
 
@@ -91,7 +82,7 @@ pub const fn trailing_zeros(self) -> u32
 ```
 
 assert_eq!(n.trailing_zeros(), 3);
-```rust
+```
 
 ## Saturating::rotate_left
 
@@ -108,7 +99,7 @@ operator!
 
 # Examples
 
-```rust
+```
 use std::num::Saturating;
 
 let n: Saturating<i64> = Saturating(0x0123456789ABCDEF);
@@ -132,7 +123,7 @@ operator!
 
 # Examples
 
-```rust
+```
 use std::num::Saturating;
 
 let n: Saturating<i64> = Saturating(0x0123456789ABCDEF);
@@ -151,7 +142,7 @@ Reverses the byte order of the integer.
 
 # Examples
 
-```rust
+```
 use std::num::Saturating;
 
 let n: Saturating<i16> = Saturating(0b0000000_01010101);
@@ -176,7 +167,7 @@ Reverses the bit pattern of the integer.
 Please note that this example is shared among integer types, which is why `i16`
 is used.
 
-```rust
+```
 use std::num::Saturating;
 
 let n = Saturating(0b0000000_01010101i16);
@@ -195,7 +186,7 @@ pub const fn from_be(x: Self) -> Self
 ```
 
 }
-```rust
+```
 
 ## Saturating::from_le
 
@@ -204,7 +195,7 @@ pub const fn from_le(x: Self) -> Self
 ```
 
 }
-```rust
+```
 
 ## Saturating::to_be
 
@@ -217,7 +208,7 @@ if cfg!(target_endian = "big") {
 } else {
     assert_eq!(n.to_be(), n.swap_bytes())
 }
-```rust
+```
 
 ## Saturating::to_le
 
@@ -230,7 +221,7 @@ if cfg!(target_endian = "little") {
 } else {
     assert_eq!(n.to_le(), n.swap_bytes())
 }
-```rust
+```
 
 ## Saturating::pow
 
@@ -238,7 +229,7 @@ if cfg!(target_endian = "little") {
 pub const fn pow(self, exp: u32) -> Self
 ```
 
-```rust
+```
 
 Results that are too large are saturated:
 
@@ -247,7 +238,7 @@ use std::num::Saturating;
 
 assert_eq!(Saturating(3i8).pow(5), Saturating(127));
 assert_eq!(Saturating(3i8).pow(6), Saturating(127));
-```rust
+```
 
 ## Saturating::leading_zeros
 
@@ -256,7 +247,7 @@ pub const fn leading_zeros(self) -> u32
 ```
 
 assert_eq!(n.leading_zeros(), 3);
-```rust
+```
 
 ## Saturating::abs
 
@@ -264,7 +255,7 @@ assert_eq!(n.leading_zeros(), 3);
 pub const fn abs(self) -> Saturating<$t>
 ```
 
-```rust
+```
 
 ## Saturating::signum
 
@@ -272,7 +263,7 @@ pub const fn abs(self) -> Saturating<$t>
 pub const fn signum(self) -> Saturating<$t>
 ```
 
-```rust
+```
 
 ## Saturating::is_positive
 
@@ -280,7 +271,7 @@ pub const fn signum(self) -> Saturating<$t>
 pub const fn is_positive(self) -> bool
 ```
 
-```rust
+```
 
 ## Saturating::is_negative
 
@@ -288,7 +279,7 @@ pub const fn is_positive(self) -> bool
 pub const fn is_negative(self) -> bool
 ```
 
-```rust
+```
 
 ## Saturating::leading_zeros
 
@@ -297,7 +288,7 @@ pub const fn leading_zeros(self) -> u32
 ```
 
 assert_eq!(n.leading_zeros(), 2);
-```rust
+```
 
 ## Saturating::is_power_of_two
 
@@ -305,4 +296,4 @@ assert_eq!(n.leading_zeros(), 2);
 pub const fn is_power_of_two(self) -> bool
 ```
 
-```rust
+```

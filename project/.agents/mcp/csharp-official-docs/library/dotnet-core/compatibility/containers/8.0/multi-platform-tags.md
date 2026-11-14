@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: Multi-platform container tags are Linux-only"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/containers/8.0/multi-platform-tags.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in containers where multi-platform container tags are now Linux-only.
+ms.date: 07/11/2023
+ms.custom: linux-related-content
 ---
-
 # Multi-platform container tags are Linux-only
 
 The .NET 8 multi-platform container tags have been updated to be Linux-only. This means that the `latest`, `<major>.<minor>`, and `<major>.<minor>.<patch>` tags are Linux-only going forward.
@@ -27,7 +24,7 @@ Starting in .NET 8, the `8.0` tag will only retrieve a Linux-based image.
 
 ## Type of change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -42,7 +39,7 @@ Update your tag usage to indicate which Windows version you're targeting. Instea
 - `mcr.microsoft.com/dotnet/aspnet:8.0-windowsservercore-ltsc2019`
 - `mcr.microsoft.com/dotnet/aspnet:8.0-windowsservercore-ltsc2022`
 
-Select an image name based on whether you're using Nano Server or Windows Server Core and which version of that OS. You can find a full list of all supported tags on .NET's Docker Hub page.
+Select an image name based on whether you're using Nano Server or Windows Server Core and which version of that OS. You can find a full list of all supported tags on .NET's [Docker Hub page](https://hub.docker.com/_/microsoft-dotnet).
 
 ## Affected APIs
 
@@ -50,4 +47,4 @@ None.
 
 ## See also
 
-- dotnet/dotnet-docker issue 4492
+- [dotnet/dotnet-docker issue 4492](https://github.com/dotnet/dotnet-docker/issues/4492)

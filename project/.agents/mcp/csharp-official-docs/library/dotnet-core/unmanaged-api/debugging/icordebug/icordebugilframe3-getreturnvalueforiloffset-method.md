@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: ICorDebugILFrame3::GetReturnValueForILOffset Method"
 title: "ICorDebugILFrame3::GetReturnValueForILOffset Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugilframe3-getreturnvalueforiloffset-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+api_name:
+  - "ICorDebugILFrame3.GetReturnValueForILOffset"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugILFrame3::GetReturnValueForILOffset Method
 
 Gets an "ICorDebugValue" object that encapsulates the return value of a function.
@@ -30,20 +37,22 @@ A pointer to the address of an "ICorDebugValue" interface object that provides i
 
 ## Remarks
 
-This method is used along with the ICorDebugCode3::GetReturnValueLiveOffset method to get the return value of a method. It is particularly useful in the case of methods whose return values are ignored, as in the following two code examples. The first example calls the `System.Int32.TryParse*` method, but ignores the method's return value.
+This method is used along with the [ICorDebugCode3::GetReturnValueLiveOffset](icordebugcode3-getreturnvalueliveoffset-method.md) method to get the return value of a method. It is particularly useful in the case of methods whose return values are ignored, as in the following two code examples. The first example calls the <xref:System.Int32.TryParse*?displayProperty=nameWithType> method, but ignores the method's return value.
 
- _Code sample not included: ../../../../../samples/snippets/csharp/VS_Snippets_CLR/unmanaged.debugging.mrv/cs/mrv1.cs._
+ [!code-csharp[Unmanaged.Debugging.MRV#1](../../../../../samples/snippets/csharp/VS_Snippets_CLR/unmanaged.debugging.mrv/cs/mrv1.cs#1)]
+ [!code-vb[Unmanaged.Debugging.MRV#1](../../../../../samples/snippets/visualbasic/VS_Snippets_CLR/unmanaged.debugging.mrv/vb/mrv1.vb#1)]
 
 The second example illustrates a much more common problem in debugging. Because a method is used as an argument in a method call, its return value is accessible only when the debugger steps through the called method. In many cases, particularly when the called method is defined in an external library, that is not possible.
 
- _Code sample not included: ../../../../../samples/snippets/csharp/VS_Snippets_CLR/unmanaged.debugging.mrv/cs/mrv2.cs._
+ [!code-csharp[Unmanaged.Debugging.MRV#2](../../../../../samples/snippets/csharp/VS_Snippets_CLR/unmanaged.debugging.mrv/cs/mrv2.cs#2)]
+ [!code-vb[Unmanaged.Debugging.MRV#2](../../../../../samples/snippets/visualbasic/VS_Snippets_CLR/unmanaged.debugging.mrv/vb/mrv2.vb#2)]
 
-If you pass the ICorDebugCode3::GetReturnValueLiveOffset method an IL offset to a function call site, it returns one or more native offsets. The debugger can then set breakpoints on these native offsets in the function. When the debugger hits one of the breakpoints, you can then pass the same IL offset that you passed to this method to get the return value. The debugger should then clear all the breakpoints that it set.
+If you pass the [ICorDebugCode3::GetReturnValueLiveOffset](icordebugcode3-getreturnvalueliveoffset-method.md) method an IL offset to a function call site, it returns one or more native offsets. The debugger can then set breakpoints on these native offsets in the function. When the debugger hits one of the breakpoints, you can then pass the same IL offset that you passed to this method to get the return value. The debugger should then clear all the breakpoints that it set.
 
-> **Warning:**
-> The ICorDebugCode3::GetReturnValueLiveOffset Method and `ICorDebugILFrame3::GetReturnValueForILOffset` methods allow you to get return value information for reference types only. Retrieving return value information from value types (that is, all types that derive from `System.ValueType`) is not supported.
+> [!WARNING]
+> The [ICorDebugCode3::GetReturnValueLiveOffset Method](icordebugcode3-getreturnvalueliveoffset-method.md) and `ICorDebugILFrame3::GetReturnValueForILOffset` methods allow you to get return value information for reference types only. Retrieving return value information from value types (that is, all types that derive from <xref:System.ValueType>) is not supported.
 
-The IL offset specified by the `ILOffset` parameter should be at a function call site, and the debuggee should be stopped at a breakpoint set at the native offset returned by the ICorDebugCode3::GetReturnValueLiveOffset method for the same IL offset. If the debuggee is not stopped at the correct location for the specified IL offset, the API will fail.
+The IL offset specified by the `ILOffset` parameter should be at a function call site, and the debuggee should be stopped at a breakpoint set at the native offset returned by the [ICorDebugCode3::GetReturnValueLiveOffset](icordebugcode3-getreturnvalueliveoffset-method.md) method for the same IL offset. If the debuggee is not stopped at the correct location for the specified IL offset, the API will fail.
 
 If the function call doesn't return a value, the API will fail.
 
@@ -51,7 +60,7 @@ The `ICorDebugILFrame3::GetReturnValueForILOffset` method is available only on x
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -61,5 +70,5 @@ The `ICorDebugILFrame3::GetReturnValueForILOffset` method is available only on x
 
 ## See also
 
-- GetReturnValueLiveOffset Method
-- ICorDebugILFrame3 Interface
+- [GetReturnValueLiveOffset Method](icordebugcode3-getreturnvalueliveoffset-method.md)
+- [ICorDebugILFrame3 Interface](icordebugilframe3-interface.md)

@@ -1,24 +1,24 @@
 ---
-title: ".NET Compiler Platform SDK concepts and object model"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/roslyn-sdk/compiler-api-model.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: .NET Compiler Platform SDK concepts and object model
+description: This overview provides the background you need to work effectively with the .NET compiler SDK. You'll learn the API layers, the major types involved, and the overall object model.
+ms.date: 07/13/2020
+ms.custom: mvc
 ---
 
 # Understand the .NET Compiler Platform SDK model
 
 Compilers process the code you write following structured rules that often
-differ from the way humans read and understand code. A basic <example-value>
+differ from the way humans read and understand code. A basic understanding
 of the model used by compilers is essential to understanding the APIs
 you use when building Roslyn-based tools.
 
 ## Compiler pipeline functional areas
 
-The .NET Compiler Platform SDK exposes the C# and Visual Basic <example-value>' code analysis to you
+The .NET Compiler Platform SDK exposes the C# and Visual Basic compilers' code analysis to you
 as a consumer by providing an API layer that mirrors a traditional compiler
 pipeline.
+
+![steps of the compiler pipeline processing source code to object code](media/compiler-api-model/compiler-pipeline.png)
 
 Each phase of this pipeline is a separate component. First, the
 parse phase tokenizes and parses source text into syntax that follows
@@ -27,11 +27,15 @@ imported metadata to form named symbols. Next, the bind phase matches identifier
 in the code to symbols. Finally, the emit phase emits an assembly with
 all the information built up by the compiler.
 
+![compiler pipeline api provides access to each step that is part of the compiler pipeline](media/compiler-api-model/compiler-pipeline-api.png)
+
 Corresponding to each of those phases, the .NET Compiler Platform SDK exposes an
 object model that allows access to the information at that phase. The parsing
 phase exposes a syntax tree, the declaration phase exposes a hierarchical
 symbol table, the binding phase exposes the result of the compiler's semantic
 analysis, and the emit phase is an API that produces IL byte codes.
+
+![the language services available from the compiler api at each step of the compiler pipeline](media/compiler-api-model/compiler-pipeline-lang-svc.png)
 
 Each compiler combines these components together as a single end-to-end whole.
 

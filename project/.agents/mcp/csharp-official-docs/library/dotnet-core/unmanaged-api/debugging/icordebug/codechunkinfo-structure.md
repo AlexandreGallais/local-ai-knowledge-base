@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: CodeChunkInfo Structure"
 title: "CodeChunkInfo Structure"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/codechunkinfo-structure.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "CodeChunkInfo"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "CodeChunkInfo"
+helpviewer_keywords:
+  - "CodeChunkInfo structure [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # CodeChunkInfo Structure
 
 Represents a single chunk of code in memory.
@@ -33,7 +41,7 @@ typedef struct _CodeChunkInfo {
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl
 
@@ -43,4 +51,4 @@ typedef struct _CodeChunkInfo {
 
 ## See also
 
-- GetCodeChunks Method
+- [GetCodeChunks Method](icordebugcode2-getcodechunks-method.md)

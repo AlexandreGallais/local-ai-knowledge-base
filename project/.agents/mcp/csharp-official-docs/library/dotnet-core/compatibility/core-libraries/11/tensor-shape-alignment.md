@@ -1,17 +1,16 @@
 ---
 title: "Breaking change - Tensor operations align equivalent shapes and empty tensors"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/11/tensor-shape-alignment.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where tensor operations use consistent shape-alignment rules."
+ms.date: 10/06/2026
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/56305
 ---
 
 # Tensor operations align equivalent shapes and empty tensors
 
 Starting in .NET 11, tensor operations use consistent shape-alignment rules. Default rank-zero empty tensors and spans have an effective shape of `[0]` during computations, and operations can ignore redundant leading singleton dimensions when they align shapes.
 
-The change is delivered in the System.Numerics.Tensors package, including its supported target frameworks. Updating the package can affect apps that target earlier .NET versions.
+The change is delivered in the [System.Numerics.Tensors](https://www.nuget.org/packages/System.Numerics.Tensors) package, including its supported target frameworks. Updating the package can affect apps that target earlier .NET versions.
 
 ## Version introduced
 
@@ -40,13 +39,13 @@ Native-backed tensor spans can now be traversed with native-sized lengths and of
 
 ## Type of breaking change
 
-This is a behavioral change.
+This is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
 Consistent shape rules make tensor operations more predictable and preserve explicitly requested dimensions while allowing equivalent shapes to work together. Native-sized traversal also lets operations cover the full logical range of spans backed by larger storage.
 
-For more information, see dotnet/runtime#135060.
+For more information, see [dotnet/runtime#135060](https://github.com/dotnet/runtime/pull/135060).
 
 ## Recommended action
 
@@ -56,9 +55,9 @@ For stack and concatenate operations, interpret the axis relative to the first i
 
 ## Affected APIs
 
-- `System.Numerics.Tensors.Tensor.Broadcast*`, `System.Numerics.Tensors.Tensor.BroadcastTo*`, and `System.Numerics.Tensors.Tensor.TryBroadcastTo*`
-- Elementwise and copy operations on `System.Numerics.Tensors.Tensor` that align tensor shapes or write to a caller-provided destination
-- `System.Numerics.Tensors.Tensor.Concatenate*`, `System.Numerics.Tensors.Tensor.ConcatenateOnDimension*`, `System.Numerics.Tensors.Tensor.Stack*`, and `System.Numerics.Tensors.Tensor.StackAlongDimension*`
-- `System.Numerics.Tensors.Tensor.Reshape*`, `System.Numerics.Tensors.Tensor.Split*`, `System.Numerics.Tensors.Tensor.SqueezeDimension*`, `System.Numerics.Tensors.Tensor.Unsqueeze*`, `System.Numerics.Tensors.Tensor.PermuteDimensions*`, `System.Numerics.Tensors.Tensor.SetSlice*`, `System.Numerics.Tensors.Tensor.SequenceEqual*`, `System.Numerics.Tensors.Tensor.ResizeTo*`, `System.Numerics.Tensors.Tensor.Reverse*`, and `System.Numerics.Tensors.Tensor.ReverseDimension*`
-- `System.Numerics.Tensors.Tensor.EqualsAny*`, `System.Numerics.Tensors.Tensor.GreaterThanAny*`, `System.Numerics.Tensors.Tensor.GreaterThanOrEqualAny*`, `System.Numerics.Tensors.Tensor.LessThanAny*`, and `System.Numerics.Tensors.Tensor.LessThanOrEqualAny*`
-- `System.Numerics.Tensors.Tensor.IndexOfMax*`, `System.Numerics.Tensors.Tensor.IndexOfMaxMagnitude*`, `System.Numerics.Tensors.Tensor.IndexOfMin*`, and `System.Numerics.Tensors.Tensor.IndexOfMinMagnitude*`
+- <xref:System.Numerics.Tensors.Tensor.Broadcast*?displayProperty=nameWithType>, <xref:System.Numerics.Tensors.Tensor.BroadcastTo*?displayProperty=nameWithType>, and <xref:System.Numerics.Tensors.Tensor.TryBroadcastTo*?displayProperty=nameWithType>
+- Elementwise and copy operations on <xref:System.Numerics.Tensors.Tensor> that align tensor shapes or write to a caller-provided destination
+- <xref:System.Numerics.Tensors.Tensor.Concatenate*?displayProperty=nameWithType>, <xref:System.Numerics.Tensors.Tensor.ConcatenateOnDimension*?displayProperty=nameWithType>, <xref:System.Numerics.Tensors.Tensor.Stack*?displayProperty=nameWithType>, and <xref:System.Numerics.Tensors.Tensor.StackAlongDimension*?displayProperty=nameWithType>
+- <xref:System.Numerics.Tensors.Tensor.Reshape*?displayProperty=nameWithType>, <xref:System.Numerics.Tensors.Tensor.Split*?displayProperty=nameWithType>, <xref:System.Numerics.Tensors.Tensor.SqueezeDimension*?displayProperty=nameWithType>, <xref:System.Numerics.Tensors.Tensor.Unsqueeze*?displayProperty=nameWithType>, <xref:System.Numerics.Tensors.Tensor.PermuteDimensions*?displayProperty=nameWithType>, <xref:System.Numerics.Tensors.Tensor.SetSlice*?displayProperty=nameWithType>, <xref:System.Numerics.Tensors.Tensor.SequenceEqual*?displayProperty=nameWithType>, <xref:System.Numerics.Tensors.Tensor.ResizeTo*?displayProperty=nameWithType>, <xref:System.Numerics.Tensors.Tensor.Reverse*?displayProperty=nameWithType>, and <xref:System.Numerics.Tensors.Tensor.ReverseDimension*?displayProperty=nameWithType>
+- <xref:System.Numerics.Tensors.Tensor.EqualsAny*?displayProperty=nameWithType>, <xref:System.Numerics.Tensors.Tensor.GreaterThanAny*?displayProperty=nameWithType>, <xref:System.Numerics.Tensors.Tensor.GreaterThanOrEqualAny*?displayProperty=nameWithType>, <xref:System.Numerics.Tensors.Tensor.LessThanAny*?displayProperty=nameWithType>, and <xref:System.Numerics.Tensors.Tensor.LessThanOrEqualAny*?displayProperty=nameWithType>
+- <xref:System.Numerics.Tensors.Tensor.IndexOfMax*?displayProperty=nameWithType>, <xref:System.Numerics.Tensors.Tensor.IndexOfMaxMagnitude*?displayProperty=nameWithType>, <xref:System.Numerics.Tensors.Tensor.IndexOfMin*?displayProperty=nameWithType>, and <xref:System.Numerics.Tensors.Tensor.IndexOfMinMagnitude*?displayProperty=nameWithType>

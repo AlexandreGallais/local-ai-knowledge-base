@@ -1,13 +1,10 @@
 ---
-title: "no-class-assign"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-class-assign.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-class-assign
+rule_type: problem
+handled_by_typescript: true
 ---
 
-# no-class-assign
+
 
 `ClassDeclaration` creates a variable, and we can modify the variable.
 
@@ -24,7 +21,7 @@ This rule is aimed to flag modifying variables of class declarations.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-class-assign: "error"*/
@@ -33,7 +30,9 @@ class A { }
 A = 0;
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint no-class-assign: "error"*/
@@ -42,7 +41,9 @@ A = 0;
 class A { }
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint no-class-assign: "error"*/
@@ -54,7 +55,9 @@ class A {
 }
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint no-class-assign: "error"*/
@@ -67,9 +70,11 @@ let A = class A {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-class-assign: "error"*/
@@ -78,7 +83,9 @@ let A = class A { }
 A = 0; // A is a variable.
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint no-class-assign: "error"*/
@@ -90,7 +97,9 @@ let A = class {
 }
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint no-class-assign: 2*/
@@ -101,6 +110,8 @@ class A {
     }
 }
 ```
+
+:::
 
 ## Options
 

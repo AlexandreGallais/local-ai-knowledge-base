@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Custom marshallers require additional members"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/interop/8.0/marshal-modes.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in interop in .NET 8 where custom marshallers with MarshalMode.ElementIn or MarshalMode.ElementOut now must have both managed-to-unmanaged and unmanaged-to-managed shapes.
+ms.date: 09/06/2023
 ---
-
 # Custom marshallers require additional members
 
 The custom marshaller analyzer has changed to require all element-focused marshal modes to satisfy both the managed-to-unmanaged and unmanaged-to-managed shapes.
@@ -17,7 +13,7 @@ Custom marshallers with `MarshalMode.ElementIn` only needed a `ConvertToUnmanage
 
 ## New behavior
 
-Starting in .NET 8, SYSLIB1057 is reported for custom marshallers with `MarshalMode.ElementIn` or `MarshalMode.ElementOut` that don't have both a `ConvertToUnmanaged` and `ConvertToManaged` method.
+Starting in .NET 8, [SYSLIB1057](../../../../fundamentals/syslib-diagnostics/syslib1050-1069.md) is reported for custom marshallers with `MarshalMode.ElementIn` or `MarshalMode.ElementOut` that don't have both a `ConvertToUnmanaged` and `ConvertToManaged` method.
 
 ## Version introduced
 
@@ -25,7 +21,7 @@ Starting in .NET 8, SYSLIB1057 is reported for custom marshallers with `MarshalM
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
@@ -37,4 +33,4 @@ Add both a `ConvertToManaged` and `ConvertToUnmanaged` method to the marshaller 
 
 ## Affected APIs
 
-- `System.Runtime.InteropServices.Marshalling.CustomMarshallerAttribute`
+- <xref:System.Runtime.InteropServices.Marshalling.CustomMarshallerAttribute?displayProperty=fullName>

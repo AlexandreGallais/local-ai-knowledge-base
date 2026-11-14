@@ -1,10 +1,11 @@
 ---
-title: "Upgrade JavaScript and TypeScript projects with GitHub Copilot"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/github-copilot-upgrade/javascript-typescript-overview.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Upgrade JavaScript and TypeScript projects with GitHub Copilot
+description: Learn how GitHub Copilot upgrade updates JavaScript and TypeScript dependencies, upgrades the TypeScript compiler, and validates applications.
+ms.topic: overview
+ms.date: 09/21/2026
+ai-usage: ai-generated
+
+#customer intent: As a JavaScript or TypeScript developer, I want to understand which upgrades GitHub Copilot can perform so that I can choose the right workflow for my project.
 ---
 
 # Upgrade JavaScript and TypeScript projects with GitHub Copilot
@@ -15,10 +16,10 @@ JavaScript-only projects don't need a `tsconfig.json`. For these projects, the a
 
 ## Choose an upgrade workflow
 
-- To update one package, a group of packages, or all project dependencies, see Upgrade JavaScript and TypeScript dependencies.
-- To move a project through TypeScript compiler versions, see Upgrade the TypeScript compiler.
-- To check an application before or after an upgrade, see Validate a JavaScript or TypeScript application.
-- To compare the available workflows, see JavaScript and TypeScript capabilities.
+- To update one package, a group of packages, or all project dependencies, see [Upgrade JavaScript and TypeScript dependencies](javascript-typescript-upgrade-dependencies.md).
+- To move a project through TypeScript compiler versions, see [Upgrade the TypeScript compiler](javascript-typescript-upgrade-typescript.md).
+- To check an application before or after an upgrade, see [Validate a JavaScript or TypeScript application](javascript-typescript-validate-application.md).
+- To compare the available workflows, see [JavaScript and TypeScript capabilities](javascript-typescript-capabilities.md).
 
 ## What the agent validates
 
@@ -26,7 +27,7 @@ The agent establishes a baseline before it changes dependencies or the compiler.
 
 ## Related content
 
-- GitHub Copilot upgrade overview
-- Install GitHub Copilot upgrade
-- GitHub Copilot upgrade concepts
-- Troubleshoot GitHub Copilot upgrade
+- [GitHub Copilot upgrade overview](overview.md)
+- [Install GitHub Copilot upgrade](install.md)
+- [GitHub Copilot upgrade concepts](concepts.md)
+- [Troubleshoot GitHub Copilot upgrade](troubleshooting.md)

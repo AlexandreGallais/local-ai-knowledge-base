@@ -1,10 +1,7 @@
 ---
-title: "Data redaction in .NET"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/data-redaction.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Data redaction in .NET
+description: Learn how to use .NET data redaction libraries to protect your application's sensitive data.
+ms.date: 03/21/2025
 ---
 
 # Data redaction in .NET
@@ -13,9 +10,9 @@ Redaction helps you sanitize or mask sensitive information in logs, error messag
 
 ## Install redaction package
 
-To get started, install the 📦 Microsoft.Extensions.Compliance.Redaction NuGet package:
+To get started, install the [📦 Microsoft.Extensions.Compliance.Redaction](https://www.nuget.org/packages/Microsoft.Extensions.Compliance.Redaction) NuGet package:
 
-### .NET CLI
+### [.NET CLI](#tab/dotnet-cli)
 
 ```dotnetcli
 dotnet add package Microsoft.Extensions.Compliance.Redaction
@@ -27,7 +24,7 @@ Or, if you're using .NET 10+ SDK:
 dotnet package add Microsoft.Extensions.Compliance.Redaction
 ```
 
-### PackageReference
+### [PackageReference](#tab/package-reference)
 
 ```xml
 <ItemGroup>
@@ -42,19 +39,19 @@ dotnet package add Microsoft.Extensions.Compliance.Redaction
 
 Redactors are responsible for the act of redacting sensitive data. They redact, replace, or mask sensitive information. Consider the following available redactors provided by the library:
 
-- The `Microsoft.Extensions.Compliance.Redaction.ErasingRedactor` replaces any input with an empty string.
-- The `Microsoft.Extensions.Compliance.Redaction.HmacRedactor` uses `HMACSHA256` to encode data being redacted.
+- The <xref:Microsoft.Extensions.Compliance.Redaction.ErasingRedactor> replaces any input with an empty string.
+- The <xref:Microsoft.Extensions.Compliance.Redaction.HmacRedactor> uses `HMACSHA256` to encode data being redacted.
 
 ## Usage example
 
 To use the built-in redactors, you have to register the required services. Register the services using one of the available `AddRedaction` methods as described in the following list:
 
-- `Microsoft.Extensions.DependencyInjection.RedactionServiceCollectionExtensions.AddRedaction(Microsoft.Extensions.DependencyInjection.IServiceCollection)`: Registers an implementation of `Microsoft.Extensions.Compliance.Redaction.IRedactorProvider` in the `Microsoft.Extensions.DependencyInjection.IServiceCollection`.
-- `Microsoft.Extensions.DependencyInjection.RedactionServiceCollectionExtensions.AddRedaction(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Microsoft.Extensions.Compliance.Redaction.IRedactionBuilder})`: Registers an implementation of `Microsoft.Extensions.Compliance.Redaction.IRedactorProvider` in the `Microsoft.Extensions.DependencyInjection.IServiceCollection` and configures available redactors with the given `configure` delegate.
+- <xref:Microsoft.Extensions.DependencyInjection.RedactionServiceCollectionExtensions.AddRedaction(Microsoft.Extensions.DependencyInjection.IServiceCollection)>: Registers an implementation of <xref:Microsoft.Extensions.Compliance.Redaction.IRedactorProvider> in the <xref:Microsoft.Extensions.DependencyInjection.IServiceCollection>.
+- <xref:Microsoft.Extensions.DependencyInjection.RedactionServiceCollectionExtensions.AddRedaction(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Microsoft.Extensions.Compliance.Redaction.IRedactionBuilder})>: Registers an implementation of <xref:Microsoft.Extensions.Compliance.Redaction.IRedactorProvider> in the <xref:Microsoft.Extensions.DependencyInjection.IServiceCollection> and configures available redactors with the given `configure` delegate.
 
 ### Configure a redactor
 
-Fetch redactors at runtime using an `Microsoft.Extensions.Compliance.Redaction.IRedactorProvider`. You can implement your own provider and register it inside the `AddRedaction` call, or use the default provider. Configure redactors using these `Microsoft.Extensions.Compliance.Redaction.IRedactionBuilder` methods:
+Fetch redactors at runtime using an <xref:Microsoft.Extensions.Compliance.Redaction.IRedactorProvider>. You can implement your own provider and register it inside the `AddRedaction` call, or use the default provider. Configure redactors using these <xref:Microsoft.Extensions.Compliance.Redaction.IRedactionBuilder> methods:
 
 ```csharp
 // This will use the default redactor, which is the ErasingRedactor
@@ -92,7 +89,7 @@ public static class MyTaxonomyClassifications
 
 ### Configure the HMAC redactor
 
-Configure the HMAC redactor using these `Microsoft.Extensions.Compliance.Redaction.IRedactionBuilder` methods:
+Configure the HMAC redactor using these <xref:Microsoft.Extensions.Compliance.Redaction.IRedactionBuilder> methods:
 
 ```csharp
 var serviceCollection = new ServiceCollection();
@@ -138,18 +135,18 @@ Include this section in your JSON config file:
 }
 ```
 
-- The `Microsoft.Extensions.Compliance.Redaction.HmacRedactorOptions` requires its `Microsoft.Extensions.Compliance.Redaction.HmacRedactorOptions.Key` and `Microsoft.Extensions.Compliance.Redaction.HmacRedactorOptions.KeyId` properties to be set.
-- The `Key` should be in base 64 format and at least 44 characters long. Use a distinct key for each major deployment of a service. Keep the key <example-value> secret and rotate it regularly.
+- The <xref:Microsoft.Extensions.Compliance.Redaction.HmacRedactorOptions> requires its <xref:Microsoft.Extensions.Compliance.Redaction.HmacRedactorOptions.Key?displayProperty=nameWithType> and <xref:Microsoft.Extensions.Compliance.Redaction.HmacRedactorOptions.KeyId?displayProperty=nameWithType> properties to be set.
+- The `Key` should be in base 64 format and at least 44 characters long. Use a distinct key for each major deployment of a service. Keep the key material secret and rotate it regularly.
 - The `KeyId` is appended to each redacted value to identify the key used to hash the data.
 - Different key IDs mean the values are unrelated and can't be used for correlation.
 
-> **Note:**
-> The `Microsoft.Extensions.Compliance.Redaction.HmacRedactor` is still experimental, so the preceding methods will cause the `EXTEXP0002` warning indicating it's not yet stable.
+> [!NOTE]
+> The <xref:Microsoft.Extensions.Compliance.Redaction.HmacRedactor> is still experimental, so the preceding methods will cause the `EXTEXP0002` warning indicating it's not yet stable.
 > To use it, add `<NoWarn>$(NoWarn);EXTEXP0002</NoWarn>` to your project file or add `#pragma warning disable EXTEXP0002` around the calls to `SetHmacRedactor`.
 
 ### Configure a custom redactor
 
-To create a custom redactor, define a subclass that inherits from `Microsoft.Extensions.Compliance.Redaction.Redactor`:
+To create a custom redactor, define a subclass that inherits from <xref:Microsoft.Extensions.Compliance.Redaction.Redactor>:
 
 ```csharp
 public sealed class StarRedactor : Redactor
@@ -169,7 +166,7 @@ public sealed class StarRedactor : Redactor
 
 ### Create a custom redactor provider
 
-The `Microsoft.Extensions.Compliance.Redaction.IRedactorProvider` interface provides instances of redactors based on data classification. To create a custom redactor provider, inherit from `Microsoft.Extensions.Compliance.Redaction.IRedactorProvider` as shown in the following example:
+The <xref:Microsoft.Extensions.Compliance.Redaction.IRedactorProvider> interface provides instances of redactors based on data classification. To create a custom redactor provider, inherit from <xref:Microsoft.Extensions.Compliance.Redaction.IRedactorProvider> as shown in the following example:
 
 ```csharp
 using Microsoft.Extensions.Compliance.Classification;
@@ -191,14 +188,14 @@ Logging is a common source of accidental data exposure. Sensitive information su
 
 ### Steps for logging sensitive data
 
-1. **Install the telemetry extensions package**: Install Microsoft.Extensions.Telemetry to be able to use the extended logger to enable redaction feature.
-2. **Set up redaction**: Integrate redactors with your logging pipeline by calling the `Microsoft.Extensions.DependencyInjection.RedactionServiceCollectionExtensions.AddRedaction(Microsoft.Extensions.DependencyInjection.IServiceCollection)` method, to automatically sanitize or mask sensitive fields before they are written to logs.
+1. **Install the telemetry extensions package**: Install [Microsoft.Extensions.Telemetry](https://www.nuget.org/packages/Microsoft.Extensions.Telemetry) to be able to use the extended logger to enable redaction feature.
+2. **Set up redaction**: Integrate redactors with your logging pipeline by calling the <xref:Microsoft.Extensions.DependencyInjection.RedactionServiceCollectionExtensions.AddRedaction(Microsoft.Extensions.DependencyInjection.IServiceCollection)> method, to automatically sanitize or mask sensitive fields before they are written to logs.
 3. **Identify sensitive fields**: Know which data in your application is sensitive and requires protection, and mark them with appropriate data classification.
 4. **Review log output**: Regularly audit your logs to ensure no sensitive data is exposed.
 
 ### Example: Redacting data in logs
 
-When using Microsoft.Extensions.Logging, you can combine redaction with logging as follows:
+When using [Microsoft.Extensions.Logging](https://www.nuget.org/packages/Microsoft.Extensions.Logging), you can combine redaction with logging as follows:
 
 ```csharp
 using Microsoft.Extensions.Telemetry;

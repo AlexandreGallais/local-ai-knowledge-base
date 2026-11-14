@@ -1,21 +1,15 @@
----
-title: "logical-assignment-operators"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/logical-assignment-operators.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # logical-assignment-operators
 
 📝 Require or disallow logical assignment operator shorthand.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-This rule is the same as the built-in ESLint `logical-assignment-operators` rule, but when `enforceForIfStatements` is enabled, falsy `if` assignments are reported with suggestions for both `||=` and `??=` instead of being autofixed.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+This rule is the same as the built-in ESLint [`logical-assignment-operators`](https://eslint.org/docs/latest/rules/logical-assignment-operators) rule, but when `enforceForIfStatements` is enabled, falsy `if` assignments are reported with suggestions for both `||=` and `??=` instead of being autofixed.
 
 Consistently choosing logical-assignment shorthand or an explicit assignment or conditional makes updates easier to scan and avoids mixing the same pattern in different forms.
 

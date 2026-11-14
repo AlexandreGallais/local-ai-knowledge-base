@@ -1,12 +1,12 @@
 ---
 title: "NETSDK1022: Duplicate items were included"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/sdk-errors/netsdk1022.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: How to resolve the duplicate item message based on default includes.
+author: marcpopMSFT
+ms.topic: error-reference
+ms.date: 04/26/2024
+f1_keywords:
+- NETSDK1022
 ---
-
 # NETSDK1022: Duplicate items were included
 
 **This article applies to:** ✔️ .NET Core 2.1.100 SDK and later versions
@@ -23,7 +23,7 @@ To resolve the errors, do one of the following:
 
 - Remove the explicit `Compile`, `EmbeddedResource`, or `None` items that match the implicit ones listed on the previous table.
 
-- Set the EnableDefaultItems property to `false` to disable all implicit file inclusion:
+- Set the [EnableDefaultItems property](../../project-sdk/msbuild-props.md#enabledefaultitems) to `false` to disable all implicit file inclusion:
 
   ```xml
   <PropertyGroup>
@@ -33,7 +33,7 @@ To resolve the errors, do one of the following:
 
   If you want to specify files to be published with your app, you can still use the known MSBuild mechanisms for that, for example, the `Content` element.
 
-- Selectively disable only `Compile`, `EmbeddedResource`, or `None` globs by setting the EnableDefaultCompileItems, EnableDefaultEmbeddedResourceItems, or EnableDefaultNoneItems property to `false`:
+- Selectively disable only `Compile`, `EmbeddedResource`, or `None` globs by setting the [EnableDefaultCompileItems](../../project-sdk/msbuild-props.md#enabledefaultcompileitems), [EnableDefaultEmbeddedResourceItems](../../project-sdk/msbuild-props.md#enabledefaultembeddedresourceitems), or [EnableDefaultNoneItems](../../project-sdk/msbuild-props.md#enabledefaultnoneitems) property to `false`:
 
   ```xml
   <PropertyGroup>
@@ -55,4 +55,4 @@ You might hit this error in a WPF project due to duplicate `ApplicationDefinitio
 </PropertyGroup>
 ```
 
-For more information, see Errors related to duplicate items (WPF).
+For more information, see [Errors related to duplicate items (WPF)](../../project-sdk/msbuild-props-desktop.md#errors-related-to-duplicate-items).

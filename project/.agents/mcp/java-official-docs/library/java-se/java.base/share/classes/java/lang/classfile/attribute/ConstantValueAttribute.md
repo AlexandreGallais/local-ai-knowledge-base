@@ -1,33 +1,23 @@
----
-title: "ConstantValueAttribute interface (java.lang.classfile.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/attribute/ConstantValueAttribute.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ConstantValueAttribute interface (java.lang.classfile.attribute)
 
 ```java
 public sealed interface ConstantValueAttribute extends Attribute<ConstantValueAttribute>, FieldElement permits BoundAttribute.BoundConstantValueAttribute, UnboundAttribute.UnboundConstantValueAttribute
 ```
 
-Models the ConstantValue attribute (JVMS
-), which indicates this field's value is a constant and that
+Models the {@link Attributes#constantValue() ConstantValue} attribute (JVMS
+{@jvms 4.7.2}), which indicates this field's value is a constant and that
 constant value.
-
-This attribute only appears on fields, and does not permit multiple instances in a field.  It has a
-data dependency on the constant pool.
-
+<p>
+This attribute only appears on fields, and does not permit {@linkplain
+AttributeMapper#allowMultiple multiple instances} in a field.  It has a
+data dependency on the {@linkplain AttributeStability#CP_REFS constant pool}.
+<p>
 This attribute was introduced in the Java Platform version 1.0.2, major
-version `ClassFile#JAVA_1_VERSION`.
+version {@value ClassFile#JAVA_1_VERSION}.
 
-**See also:** Attributes#constantValue()
-
-**jvms:** 4.7.2 The `ConstantValue` Attribute
-
-**Since:** 24
+@see Attributes#constantValue()
+@jvms 4.7.2 The {@code ConstantValue} Attribute
+@since 24
 
 ## ConstantValueAttribute.constant()
 
@@ -35,15 +25,16 @@ version `ClassFile#JAVA_1_VERSION`.
 ConstantValueEntry constant()
 ```
 
+{@return the constant value of the field}
+
 ## ConstantValueAttribute.of(ConstantValueEntry)
 
 ```java
 static ConstantValueAttribute of(ConstantValueEntry value)
 ```
 
-Parameters:
-
-- `value`: the constant value
+{@return a {@code ConstantValue} attribute}
+@param value the constant value
 
 ## ConstantValueAttribute.of(ConstantDesc)
 
@@ -51,6 +42,5 @@ Parameters:
 static ConstantValueAttribute of(ConstantDesc value)
 ```
 
-Parameters:
-
-- `value`: the constant value
+{@return a {@code ConstantValue} attribute}
+@param value the constant value

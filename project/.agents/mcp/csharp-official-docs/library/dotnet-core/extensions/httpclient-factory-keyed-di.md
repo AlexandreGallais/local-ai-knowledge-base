@@ -1,56 +1,33 @@
 ---
-title: "Keyed DI Support in IHttpClientFactory (part 1 of 2)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/httpclient-factory-keyed-di.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Keyed DI Support in IHttpClientFactory
+description: Learn how to integrate IHttpClientFactory with Keyed Services.
+author: CarnaViire
+ms.author: knatalia
+ms.date: 01/27/2025
 ---
 
 # Keyed DI support in `IHttpClientFactory`
 
 In this article, you learn how to integrate `IHttpClientFactory` with Keyed Services.
 
-_Keyed Services_ (also called _Keyed DI_) is a dependency injection (DI) feature that allows you to conveniently operate with multiple implementations of a single service. Upon registration, you can associate different _service keys_ with the specific implementations. At runtime, this key is used in lookup in combination with a service type, which means you can retrieve a specific implementation by passing the matching key. For more information on Keyed Services, and DI in general, see .NET dependency injection.
+[_Keyed Services_](dependency-injection/overview.md#keyed-services) (also called _Keyed DI_) is a dependency injection (DI) feature that allows you to conveniently operate with multiple implementations of a single service. Upon registration, you can associate different _service keys_ with the specific implementations. At runtime, this key is used in lookup in combination with a service type, which means you can retrieve a specific implementation by passing the matching key. For more information on Keyed Services, and DI in general, see [.NET dependency injection][di].
 
-For an overview on how to use `IHttpClientFactory` in your .NET application, see IHttpClientFactory with .NET.
+For an overview on how to use `IHttpClientFactory` in your .NET application, see [IHttpClientFactory with .NET][hcf].
 
 ## Background
 
-`IHttpClientFactory` and Named `HttpClient` instances, unsurprisingly, align well with the Keyed Services idea. Historically, among other things, `IHttpClientFactory` was a way to overcome this long-missing DI feature. But plain Named clients require you to obtain, store, and query the `IHttpClientFactory` instance—instead of injecting a configured `HttpClient`—which might be inconvenient. While Typed clients attempt to simplify that part, it comes with a catch: Typed clients are easy to misconfigure and misuse, and the supporting infrastructure can also be a tangible overhead in certain scenarios (for example, on mobile platforms).
+`IHttpClientFactory` and Named `HttpClient` instances, unsurprisingly, align well with the Keyed Services idea. Historically, among other things, `IHttpClientFactory` was a way to overcome this long-missing DI feature. But plain Named clients require you to obtain, store, and query the `IHttpClientFactory` instance&mdash;instead of injecting a configured `HttpClient`&mdash;which might be inconvenient. While Typed clients attempt to simplify that part, it comes with a catch: Typed clients are easy to [misconfigure](httpclient-factory-troubleshooting.md#typed-client-has-the-wrong-httpclient-injected) and [misuse](httpclient-factory.md#avoid-typed-clients-in-singleton-services), and the supporting infrastructure can also be a tangible overhead in certain scenarios (for example, on mobile platforms).
 
 Starting from .NET 9 (`Microsoft.Extensions.Http` and `Microsoft.Extensions.DependencyInjection` packages version `9.0.0+`), `IHttpClientFactory` can leverage Keyed DI directly, introducing a new "Keyed DI approach" (as opposed to "Named" and "Typed" approaches). "Keyed DI approach" pairs the convenient, highly configurable `HttpClient` registrations with the straightforward injection of the specific configured `HttpClient` instances.
 
 ## Basic Usage
 
-As of .NET 9, you need to _opt in_ to the feature by calling the `Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.AddAsKeyed*` extension method. If opted in, the Named client applying the configuration is added to the DI container as a Keyed `HttpClient` service, using the client's name as a service key, so you can use the standard Keyed Services APIs (for example, `Microsoft.Extensions.DependencyInjection.FromKeyedServicesAttribute`) to obtain the desired Named `HttpClient` instances (created and configured by `IHttpClientFactory`). By default, the clients are registered with _Scoped_ lifetime.
+As of .NET 9, you need to _opt in_ to the feature by calling the <xref:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.AddAsKeyed*> extension method. If opted in, the Named client applying the configuration is added to the DI container as a Keyed `HttpClient` service, using the client's name as a service key, so you can use the standard Keyed Services APIs (for example, <xref:Microsoft.Extensions.DependencyInjection.FromKeyedServicesAttribute>) to obtain the desired Named `HttpClient` instances (created and configured by `IHttpClientFactory`). By default, the clients are registered with _Scoped_ lifetime.
 
 The following code illustrates the integration between `IHttpClientFactory`, Keyed DI, and ASP.NET Core 9.0 Minimal APIs:
 
-```csharp
-﻿var builder = WebApplication.CreateBuilder(args);
+:::code source="snippets/http/keyedservices/Program.cs" highlight="4,10,16":::
 
-// --- (1) Registration ---
-builder.Services.AddHttpClient("github", c =>
-    {
-        c.BaseAddress = new Uri("https://api.github.com/");
-        c.DefaultRequestHeaders.Add("Accept", "application/vnd.github.v3+json");
-        c.DefaultRequestHeaders.Add("User-Agent", "dotnet");
-    })
-    .AddAsKeyed(); // Add HttpClient as a Keyed Scoped service for key="github"
-
-var app = builder.Build();
-
-// --- (2) Obtaining HttpClient instance ---
-// Directly inject the Keyed HttpClient by its name
-app.MapGet("/", ([FromKeyedServices("github")] HttpClient httpClient) =>
-    // --- (3) Using HttpClient instance ---
-    httpClient.GetFromJsonAsync<Repo>("/repos/dotnet/runtime"));
-
-app.Run();
-
-record Repo(string Name, string Url);
-```
 Endpoint response:
 
 ```sh
@@ -58,11 +35,11 @@ Endpoint response:
 {"name":"runtime","url":"https://api.github.com/repos/dotnet/runtime"}
 ```
 
-In the example, the configured `HttpClient` is injected into the request handler through the standard Keyed DI infrastructure, which is integrated into ASP.NET Core parameter binding. For more information on Keyed Services in ASP.NET Core, see Dependency injection in ASP.NET Core.
+In the example, the configured `HttpClient` is injected into the request handler through the standard Keyed DI infrastructure, which is integrated into ASP.NET Core parameter binding. For more information on Keyed Services in ASP.NET Core, see [Dependency injection in ASP.NET Core](/aspnet/core/fundamentals/dependency-injection#keyed-services).
 
 ## Comparison of Keyed, Named, and Typed approaches
 
-Consider only the `IHttpClientFactory`-related code from the Basic Usage example:
+Consider only the `IHttpClientFactory`-related code from the [Basic Usage](#basic-usage) example:
 
 ```csharp
 services.AddHttpClient("github", /* ... */).AddAsKeyed();                // (1)
@@ -153,23 +130,23 @@ If you call `AddAsKeyed()` within a Typed client registration, only the underlyi
 
 ### Avoid transient HttpClient memory leak
 
-> **Important:**
+> [!IMPORTANT]
 > `HttpClient` is `IDisposable`, so we strongly recommend _avoiding_ Transient lifetime for Keyed `HttpClient` instances.
 >
 > Registering the client as a Keyed Transient service leads to the `HttpClient` and `HttpMessageHandler` instances being _captured by DI container_, as both implement `IDisposable`. This can result in _memory leaks_ if the client is resolved multiple times within Singleton services.
 
 ### Avoid captive dependency
 
-> **Important:**
+> [!IMPORTANT]
 > If `HttpClient` is registered either:
 >
 > - as a Keyed _Singleton_, -OR-
 > - as a Keyed _Scoped_ or _Transient_, and injected within a _long-running_ (longer than `HandlerLifetime`) application Scope, -OR-
 > - as a Keyed _Transient_, and injected into a _Singleton_ service,
 >
-> —the `HttpClient` instance becomes _captive_, and will likely outlive its expected `HandlerLifetime`. `IHttpClientFactory` has no control over captive clients, they're NOT able to participate in the handler rotation, and it can result in the loss of DNS changes. A similar issue already exists for Typed clients, which are registered as Transient services.
+> &mdash;the `HttpClient` instance becomes _captive_, and will likely outlive its expected `HandlerLifetime`. `IHttpClientFactory` has no control over captive clients, they're NOT able to participate in the handler rotation, and it can result in [the loss of DNS changes](httpclient-factory-troubleshooting.md#httpclient-doesnt-respect-dns-changes). A similar issue [already exists](httpclient-factory.md#avoid-typed-clients-in-singleton-services) for Typed clients, which are registered as Transient services.
 
-In cases when client's longevity can't be avoided—or if it's consciously desired, for example, for a Keyed Singleton—it's advised to leverage `SocketsHttpHandler` by setting `PooledConnectionLifetime` to a reasonable value.
+In cases when client's longevity can't be avoided&mdash;or if it's consciously desired, for example, for a Keyed Singleton&mdash;it's advised to [leverage `SocketsHttpHandler`](httpclient-factory.md#using-ihttpclientfactory-together-with-socketshttphandler) by setting `PooledConnectionLifetime` to a reasonable value.
 
 ```csharp
 services.AddHttpClient("shared")
@@ -185,11 +162,11 @@ public class MySingleton([FromKeyedServices("shared")] HttpClient shared) // { .
 
 While Scoped lifetime is much less problematic for the Named `HttpClient`s (compared to Singleton and Transient pitfalls), it has its own catch.
 
-> **Important:**
-> Keyed Scoped lifetime of a specific `HttpClient` instance is bound—as expected—to the "ordinary" application scope (for example, incoming request scope) where it was resolved from. However, it does NOT apply to the underlying message handler chain, which is still managed by the `IHttpClientFactory`, in the same way it is for the Named clients created directly from factory. `HttpClient`s with the _same_ name, but resolved (within a `HandlerLifetime` timeframe) in two different scopes (for example, two concurrent requests to the same endpoint), can reuse the _same_ `HttpMessageHandler` instance. That instance, in turn, has its own separate scope, as illustrated in the Message handler scopes.
+> [!IMPORTANT]
+> Keyed Scoped lifetime of a specific `HttpClient` instance is bound&mdash;as expected&mdash;to the "ordinary" application scope (for example, incoming request scope) where it was resolved from. However, it does NOT apply to the underlying message handler chain, which is still managed by the `IHttpClientFactory`, in the same way it is for the Named clients created directly from factory. `HttpClient`s with the _same_ name, but resolved (within a `HandlerLifetime` timeframe) in two different scopes (for example, two concurrent requests to the same endpoint), can reuse the _same_ `HttpMessageHandler` instance. That instance, in turn, has its own separate scope, as illustrated in the [Message handler scopes](httpclient-factory.md#message-handler-scopes-in-ihttpclientfactory).
 
-> **Note:**
-> The Scope Mismatch problem is nasty and long-existing one, and as of .NET 9 still remains unsolved. From a service injected through the regular DI infra, you would expect all the dependencies to be satisfied from the same scope—but for the Keyed Scoped `HttpClient` instances, that's unfortunately not the case.
+> [!NOTE]
+> The [Scope Mismatch](httpclient-factory-troubleshooting.md#httpclient-doesnt-respect-scoped-lifetime) problem is nasty and long-existing one, and as of .NET 9 still remains [unsolved](https://github.com/dotnet/runtime/issues/47091). From a service injected through the regular DI infra, you would expect all the dependencies to be satisfied from the same scope&mdash;but for the Keyed Scoped `HttpClient` instances, that's unfortunately not the case.
 
 ## Keyed message handler chain
 
@@ -204,7 +181,7 @@ var invoker = new HttpMessageInvoker(handler, disposeHandler: false);
 
 ## How to: Switch from Typed approach to Keyed DI
 
-> **Note:**
+> [!NOTE]
 > We currently recommend using Keyed DI approach instead of Typed clients.
 
 A minimal-change switch from an existing Typed client to a Keyed dependency can look as follows:
@@ -235,3 +212,91 @@ In the example:
 The name doesn't have to be `nameof(Service)`, but the example aimed to minimize the behavioral changes. Internally, typed clients use Named clients, and by default, such "hidden" Named clients go by the linked Typed client's type name. In this case, the "hidden" name was `nameof(Service)`, so the example preserved it.
 
 Technically, the example "unwraps" the Typed client, so that the previously "hidden" Named client becomes "exposed," and the dependency is satisfied via the Keyed DI infra instead of the Typed client infra.
+
+## How to: Opt in to Keyed DI by default
+
+You don't have to call <xref:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.AddAsKeyed*> for every single client&mdash;you can easily opt in "globally" (for any client name) via <xref:Microsoft.Extensions.DependencyInjection.HttpClientFactoryServiceCollectionExtensions.ConfigureHttpClientDefaults*>. From Keyed Services perspective, it results in the <xref:Microsoft.Extensions.DependencyInjection.KeyedService.AnyKey?displayProperty=nameWithType> registration.
+
+```csharp
+services.ConfigureHttpClientDefaults(b => b.AddAsKeyed());
+
+services.AddHttpClient("first", /* ... */);
+services.AddHttpClient("second", /* ... */);
+services.AddHttpClient("third", /* ... */);
+
+public class MyController(
+    [FromKeyedServices("first")] HttpClient first,
+    [FromKeyedServices("second")] HttpClient second,
+    [FromKeyedServices("third")] HttpClient third)
+//{ ...
+```
+
+### Beware Of "Unknown" clients
+
+> [!NOTE]
+> `KeyedService.AnyKey` registrations define a mapping from _any_ key value to some service instance. However, as a result, the Container validation doesn't apply, and an _erroneous_ key value _silently_ leads to a _wrong instance_ being injected.
+
+> [!IMPORTANT]
+> For Keyed `HttpClient` clients, a mistake in the client name can result in erroneously injecting an "unknown" client&mdash;meaning, a client whose name was never registered.
+
+The same is true for the plain Named clients: `IHttpClientFactory` doesn't require the client name to be explicitly registered (aligning with the way the [Options pattern](options.md) works). The factory gives you an unconfigured&mdash;or, more precisely, default-configured&mdash;`HttpClient` for any unknown name.
+
+> [!NOTE]
+> Therefore, it's important to keep in mind: the "Keyed by default" approach covers not only all _registered_ `HttpClient` clients, but all the clients that `IHttpClientFactory` is _able to create_.
+
+```csharp
+services.ConfigureHttpClientDefaults(b => b.AddAsKeyed());
+services.AddHttpClient("known", /* ... */);
+
+provider.GetRequiredKeyedService<HttpClient>("known");   // OK
+provider.GetRequiredKeyedService<HttpClient>("unknown"); // OK (unconfigured instance)
+```
+
+### "Opt-in" strategy considerations
+
+Even though the "global" opt-in is a one-liner, it's unfortunate that the feature still requires it, instead of just working "out of the box." For full context and reasoning on that decision, see [dotnet/runtime#89755](https://github.com/dotnet/runtime/issues/89755) and [dotnet/runtime#104943](https://github.com/dotnet/runtime/pull/104943). In short, the main blocker for "on by default" is the `ServiceLifetime` "controversy": for the current (`9.0.0`) state of the DI and `IHttpClientFactory` implementations, there's no single `ServiceLifetime` that would be reasonably safe for all `HttpClient`s in all possible situations. There's an intention, however, to address the caveats in the upcoming releases, and switch the strategy from "opt-in" to "opt-out".
+
+## How to: Opt out from keyed registration
+
+You can explicitly opt out from Keyed DI for `HttpClient`s by calling the <xref:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.RemoveAsKeyed*> extension method, either per client name:
+
+```csharp
+services.ConfigureHttpClientDefaults(b => b.AddAsKeyed());      // opt IN by default
+services.AddHttpClient("keyed", /* ... */);
+services.AddHttpClient("not-keyed", /* ... */).RemoveAsKeyed(); // opt OUT per name
+
+provider.GetRequiredKeyedService<HttpClient>("keyed");     // OK
+provider.GetRequiredKeyedService<HttpClient>("not-keyed"); // Throws: No service for type 'System.Net.Http.HttpClient' has been registered.
+provider.GetRequiredKeyedService<HttpClient>("unknown");   // OK (unconfigured instance)
+```
+
+Or "globally" with <xref:Microsoft.Extensions.DependencyInjection.HttpClientFactoryServiceCollectionExtensions.ConfigureHttpClientDefaults*>:
+
+```csharp
+services.ConfigureHttpClientDefaults(b => b.RemoveAsKeyed()); // opt OUT by default
+services.AddHttpClient("keyed", /* ... */).AddAsKeyed();      // opt IN per name
+services.AddHttpClient("not-keyed", /* ... */);
+
+provider.GetRequiredKeyedService<HttpClient>("keyed");     // OK
+provider.GetRequiredKeyedService<HttpClient>("not-keyed"); // Throws: No service for type 'System.Net.Http.HttpClient' has been registered.
+provider.GetRequiredKeyedService<HttpClient>("unknown");   // Throws: No service for type 'System.Net.Http.HttpClient' has been registered.
+```
+
+## Order of precedence
+
+If called together or any of them more than once, `AddAsKeyed()` and `RemoveAsKeyed()` generally follow the rules of `IHttpClientFactory` configs and DI registrations:
+
+1. If called for the same name, the last setting wins: the lifetime from the last `AddAsKeyed()` is used to create the Keyed registration (unless `RemoveAsKeyed()` was called last, in which case the name is excluded).
+2. If used only within `ConfigureHttpClientDefaults`, the last setting wins.
+3. If both `ConfigureHttpClientDefaults` and specific client name were used, all defaults are considered to happen before all per-name settings. Thus, defaults can be disregarded, and the last of the per-name settings wins.
+
+## See also
+
+- [IHttpClientFactory with .NET][hcf]
+- [Dependency injection in .NET][di]
+- <xref:System.Net.Http.IHttpClientFactory>
+- [Common `IHttpClientFactory` usage issues][hcf-troubleshooting]
+
+[hcf]: httpclient-factory.md
+[di]: dependency-injection/overview.md
+[hcf-troubleshooting]: httpclient-factory-troubleshooting.md

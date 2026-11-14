@@ -1,12 +1,3 @@
----
-title: "Writing Automated Tests"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch11-00-testing.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
 # Writing Automated Tests
 
 In his 1972 essay “The Humble Programmer,” Edsger W. Dijkstra said that “program

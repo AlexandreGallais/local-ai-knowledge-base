@@ -1,12 +1,10 @@
 ---
-title: "Designer TPH Inheritance - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/modeling/designer/inheritance/tph.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Designer TPH Inheritance - EF6
+description: Designer TPH Inheritance in Entity Framework 6
+author: SamMonoRT
+ms.date: 10/23/2016
+uid: ef6/modeling/designer/inheritance/tph
 ---
-
 # Designer TPH Inheritance
 This step-by-step walkthrough shows how to implement table-per-hierarchy (TPH) inheritance in your conceptual model with the Entity Framework Designer (EF Designer). TPH inheritance uses one database table to maintain data for all of the entity types in an inheritance hierarchy.
 
@@ -16,7 +14,7 @@ It is possible to map to a TPH inheritance using Model First but you would have 
 
 ## Other Inheritance Options
 
-Table-per-Type (TPT) is another type of inheritance in which separate tables in the database are mapped to entities that participate in the inheritance.  For information about how to map Table-per-Type inheritance with the EF Designer, see EF Designer TPT Inheritance.
+Table-per-Type (TPT) is another type of inheritance in which separate tables in the database are mapped to entities that participate in the inheritance.  For information about how to map Table-per-Type inheritance with the EF Designer, see [EF Designer TPT Inheritance](xref:ef6/modeling/designer/inheritance/tpt).
 
 Table-per-Concrete Type Inheritance (TPC) and mixed inheritance models are supported by the Entity Framework runtime but are not supported by the EF Designer. If you want to use TPC or mixed inheritance, you have two options: use Code First, or manually edit the EDMX file. If you choose to work with the EDMX file, the Mapping Details Window will be put into “safe mode” and you will not be able to use the designer to change the mappings.
 
@@ -25,19 +23,19 @@ Table-per-Concrete Type Inheritance (TPC) and mixed inheritance models are su
 To complete this walkthrough, you will need:
 
 - A recent version of Visual Studio.
-- The School sample database.
+- The [School sample database](xref:ef6/resources/school-database).
 
 ## Set up the Project
 
 -   Open Visual Studio 2012.
--   Select **File-> New -> Project**
+-   Select **File-&gt; New -&gt; Project**
 -   In the left pane, click **Visual C\#**, and then select the **Console** template.
 -   Enter **TPHDBFirstSample** as the name.
 -   Select **OK**.
 
 ## Create a Model
 
--   Right-click the project name in Solution Explorer, and select **Add -> New Item**.
+-   Right-click the project name in Solution Explorer, and select **Add -&gt; New Item**.
 -   Select **Data** from the left menu and then select **ADO.NET Entity Data Model** in the Templates pane.
 -   Enter **TPHModel.edmx** for the file name, and then click **Add**.
 -   In the Choose Model Contents dialog box, select **Generate from database**, and then click **Next**.
@@ -51,7 +49,7 @@ The Entity Designer, which provides a design surface for editing your model, is 
 
 That is how the **Person** table looks in the database.
 
- 
+![Person Table](~/ef6/media/persontable.png) 
 
 ## Implement Table-per-Hierarchy Inheritance
 
@@ -60,7 +58,7 @@ The **Person** table has the **Discriminator** column, which can have one of t
 ### Add new Entities
 
 -   Add a new entity.
-    To do this, right-click on an empty space of the design surface of the Entity Framework Designer, and select **Add->Entity**.
+    To do this, right-click on an empty space of the design surface of the Entity Framework Designer, and select **Add-&gt;Entity**.
 -   Type **Instructor** for the **Entity name** and select **Person** from the drop-down list for the **Base type**.
 -   Click **OK**.
 -   Add another new entity. Type **Student** for the **Entity name** and select **Person** from the drop-down list for the **Base type**.
@@ -81,26 +79,30 @@ Two new entity types were added to the design surface. An arrow points from the 
 
 -   Right-click the **Instructor** and select **Table Mapping.**
     The Instructor entity is selected in the Mapping Details window.
--   Click **<Add a Table or View>** in the **Mapping Details** window.
-    The **<Add a Table or View>** field becomes a drop-down list of tables or views to which the selected entity can be mapped.
+-   Click **&lt;Add a Table or View&gt;** in the **Mapping Details** window.
+    The **&lt;Add a Table or View&gt;** field becomes a drop-down list of tables or views to which the selected entity can be mapped.
 -   Select **Person** from the drop-down list.
 -   The **Mapping Details** window is updated with default column mappings and an option for adding a condition.
--   Click on **<Add a Condition>**.
-    The **<Add a Condition>** field becomes a drop-down list of columns for which conditions can be set.
+-   Click on **&lt;Add a Condition&gt;**.
+    The **&lt;Add a Condition&gt;** field becomes a drop-down list of columns for which conditions can be set.
 -   Select **Discriminator** from the drop-down list.
 -   In the **Operator** column of the **Mapping Details** window, select = from the drop-down list.
 -   In the **Value/Property** column, type **Instructor**. The end result should look like this:
 
--   Repeat these steps for the **Student** entity type, but make the condition equal to **Student** value.
+    ![Mapping Details](~/ef6/media/mappingdetails2.png)
+
+-   Repeat these steps for the **Student** entity type, but make the condition equal to **Student** value.  
     *The reason we wanted to remove the **Discriminator** property, is because you cannot map a table column more than once. This column will be used for conditional mapping, so it cannot be used for property mapping as well. The only way it can be used for both, if a condition uses an **Is Null** or **Is Not Null** comparison.*
 
 Table-per-hierarchy inheritance is now implemented.
+
+![Final TPH](~/ef6/media/finaltph.png)
 
 ## Use the Model
 
 Open the **Program.cs** file where the **Main** method is defined. Paste the following code into the **Main** function. The code executes three queries. The first query brings back all **Person** objects. The second query uses the **OfType** method to return **Instructor** objects. The third query uses the **OfType** method to return **Student** objects.
 
-```csharp
+``` csharp
     using (var context = new SchoolEntities())
     {
         Console.WriteLine("All people:");

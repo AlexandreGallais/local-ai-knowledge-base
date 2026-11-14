@@ -1,10 +1,8 @@
 ---
-title: "Build apps with .NET"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/apps.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Build apps with .NET
+description: .NET can be used for building many kinds of apps.
+ms.date: 1/3/2024
+ms.custom: "updateeachrelease"
 ---
 
 # Build apps with .NET
@@ -13,19 +11,19 @@ license: "CC-BY-4.0"
 
 ## Cloud apps
 
-* Aspire
-* Serverless functions
-* Web and microservices
+* [Aspire](https://aspire.dev/)
+* [Serverless functions](/azure/azure-functions/functions-create-first-function-vs-code?pivots=programming-language-csharp)
+* [Web and microservices](/aspnet/core/introduction-to-aspnet-core#recommended-learning-path)
 
 ## Client apps
 
-* Mobile
-* Games
-* Desktop apps
+* [Mobile](/dotnet/maui)
+* [Games](https://dotnet.microsoft.com/apps/games)
+* [Desktop apps](/dotnet/desktop/)
 
 ## Other app types
 
-* Console apps
-* Internet of Things (IoT)
-* Machine learning
-* Windows services
+* [Console apps](tutorials/create-console-app.md)
+* [Internet of Things (IoT)](../iot/index.yml)
+* [Machine learning](../machine-learning/index.yml)
+* [Windows services](/aspnet/core/host-and-deploy/windows-service)

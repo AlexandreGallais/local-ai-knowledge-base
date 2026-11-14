@@ -1,16 +1,7 @@
----
-title: "class: Worker"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-worker.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: Worker
 * since: v1.8
 
-The Worker class represents a WebWorker. `worker`
+The Worker class represents a [WebWorker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API). `worker`
 event is emitted on the page object to signal a worker creation. `close` event is emitted on the worker object when the
 worker is gone.
 
@@ -65,7 +56,7 @@ foreach(var pageWorker in page.Workers)
 * since: v1.8
 - argument: <[Worker]>
 
-Emitted when this dedicated WebWorker is terminated.
+Emitted when this dedicated [WebWorker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) is terminated.
 
 ## event: Worker.console
 * since: v1.57
@@ -135,6 +126,7 @@ Performs action and waits for the Worker to close.
 
 ### option: Worker.waitForClose.timeout = %%-wait-for-event-timeout-%%
 * since: v1.9
+### option: Worker.waitForClose.signal = %%-wait-for-event-signal-%%
 
 ### param: Worker.waitForClose.callback = %%-java-wait-for-event-callback-%%
 * since: v1.9
@@ -154,6 +146,7 @@ Receives the [ConsoleMessage] object and resolves to true when the waiting shoul
 
 ### option: Worker.waitForConsoleMessage.timeout = %%-wait-for-event-timeout-%%
 * since: v1.57
+### option: Worker.waitForConsoleMessage.signal = %%-wait-for-event-signal-%%
 
 ### param: Worker.waitForConsoleMessage.callback = %%-java-wait-for-event-callback-%%
 * since: v1.57
@@ -178,13 +171,13 @@ await worker.evaluate('console.log(42)');
 const consoleMessage = await consolePromise;
 ```
 
-```python
+```python async
 async with worker.expect_event("console") as event_info:
     await worker.evaluate("console.log(42)")
 message = await event_info.value
 ```
 
-```python
+```python sync
 with worker.expect_event("console") as event_info:
     worker.evaluate("console.log(42)")
 message = event_info.value
@@ -212,3 +205,4 @@ Either a predicate that receives an event or an options object. Optional.
 
 ### option: Worker.waitForEvent.timeout = %%-wait-for-event-timeout-%%
 * since: v1.57
+### option: Worker.waitForEvent.signal = %%-wait-for-event-signal-%%

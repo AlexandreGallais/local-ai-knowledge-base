@@ -1,10 +1,9 @@
 ---
-title: "Define the OS version, name, and codename"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/install/includes/package-manager-failed-to-find-deb-classic.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+author: adegeo
+ms.author: adegeo
+ms.date: 03/29/2024
+ms.topic: include
+ms.custom: linux-related-content
 ---
 
 ```bash
@@ -30,5 +29,5 @@ sudo apt-get update && \
   sudo apt-get install -y {dotnet-package}
 ```
 
-> **Note:**
+> [!NOTE]
 > If you're using a derived distribution, such as Linux Mint, the `$ID` and `$VERSION_ID` variables from `/etc/os-release` might not match any directory on the Microsoft packages server, causing a 404 error. To resolve the error, check which Ubuntu or Debian version your distribution is based on and use those values instead. For example, Linux Mint 22 is based on Ubuntu 24.04, so use `ubuntu` for `$ID` and `24.04` for `$VERSION_ID`.

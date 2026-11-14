@@ -1,28 +1,22 @@
----
-title: "Open Telemetry Support <Experimental /> {#open-telemetry-support}"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/open-telemetry.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # Open Telemetry Support <Experimental /> {#open-telemetry-support}
 
-**FEEDBACK**
-Please, leave feedback regarding this feature in a GitHub Discussion.
+::: tip FEEDBACK
+Please, leave feedback regarding this feature in a [GitHub Discussion](https://github.com/vitest-dev/vitest/discussions/9222).
+:::
 
-**Example Project**
-GitHub
+::: tip Example Project
+[GitHub](https://github.com/vitest-dev/vitest/tree/main/examples/opentelemetry)
+:::
 
-OpenTelemetry traces can be a useful tool to debug the performance and behavior of your application inside tests.
+[OpenTelemetry](https://opentelemetry.io/) traces can be a useful tool to debug the performance and behavior of your application inside tests.
 
 If enabled, Vitest integration generates spans that are scoped to your test's worker.
 
-**Warning:**
-OpenTelemetry initialization increases the startup time of every test unless Vitest runs without isolation. You can see it as the `vitest.runtime.traces` span inside `vitest.worker.start`.
+::: warning
+OpenTelemetry initialization increases the startup time of every test unless Vitest runs without [isolation](/config/isolate). You can see it as the `vitest.runtime.traces` span inside `vitest.worker.start`.
+:::
 
-To start using OpenTelemetry in Vitest, specify an SDK module path via `experimental.openTelemetry.sdkPath` and set `experimental.openTelemetry.enabled` to `true`. Vitest will automatically instrument the whole process and each individual test worker.
+To start using OpenTelemetry in Vitest, specify an SDK module path via [`experimental.openTelemetry.sdkPath`](/config/experimental#experimental-opentelemetry) and set `experimental.openTelemetry.enabled` to `true`. Vitest will automatically instrument the whole process and each individual test worker.
 
 Make sure to export the SDK as a default export, so that Vitest can flush the network requests before the process is closed. Note that Vitest doesn't automatically call `start`.
 
@@ -36,7 +30,7 @@ npm i @opentelemetry/sdk-node @opentelemetry/auto-instrumentations-node @opentel
 
 ::: code-group
 
-```js
+```js{12} [otel.js]
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node'
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto'
 import { NodeSDK } from '@opentelemetry/sdk-node'
@@ -51,7 +45,7 @@ sdk.start()
 export default sdk
 ```
 
-```js
+```js [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -66,12 +60,15 @@ export default defineConfig({
 })
 ```
 
-**FAKE TIMERS**
+:::
+
+::: danger FAKE TIMERS
 If you are using fake timers, it is important to reset them before the test ends, otherwise traces might not be tracked properly.
+:::
 
 Vitest doesn't process the `sdkPath` module, so it is important that the SDK can be imported within your Node.js environment. It is ideal to use the `.js` extension for this file. Using another extension will slow down your tests and may require providing additional Node.js arguments.
 
-If you want to provide a TypeScript file, make sure to familiarize yourself with TypeScript page in the Node.js documentation.
+If you want to provide a TypeScript file, make sure to familiarize yourself with [TypeScript](https://nodejs.org/api/typescript.html#type-stripping) page in the Node.js documentation.
 
 ## Custom Traces
 
@@ -92,7 +89,7 @@ test('db connects properly', async () => {
 
 ## Browser Mode
 
-When running tests in browser mode, Vitest propagates trace context between Node.js and the browser. Node.js side traces (test orchestration, browser driver communication) are available without additional configuration.
+When running tests in [browser mode](/guide/browser/), Vitest propagates trace context between Node.js and the browser. Node.js side traces (test orchestration, browser driver communication) are available without additional configuration.
 
 To capture traces from the browser runtime, provide a browser-compatible SDK via `browserSdkPath`:
 
@@ -102,7 +99,7 @@ npm i @opentelemetry/sdk-trace-web @opentelemetry/exporter-trace-otlp-proto
 
 ::: code-group
 
-```js
+```js [otel-browser.js]
 import {
   BatchSpanProcessor,
   WebTracerProvider,
@@ -119,7 +116,7 @@ provider.register()
 export default provider
 ```
 
-```js
+```js [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -140,14 +137,19 @@ export default defineConfig({
 })
 ```
 
-**ASYNC CONTEXT**
+:::
+
+::: warning ASYNC CONTEXT
 Unlike Node.js, browsers do not have automatic async context propagation. Vitest handles this internally for test execution, but custom spans in deeply nested async code may not propagate context automatically.
+:::
 
 ## View Traces
 
 To generate traces, run Vitest as usual. You can run Vitest in either watch mode or run mode. Vitest will call `sdk.shutdown()` manually after everything is finished to make sure traces are handled properly.
 
-You can view traces using any of the open source or commercial products that support OpenTelemetry API. If you did not use OpenTelemetry before, we recommend starting with Jaeger because it is really easy to setup.
+You can view traces using any of the open source or commercial products that support OpenTelemetry API. If you did not use OpenTelemetry before, we recommend starting with [Jaeger](https://www.jaegertracing.io/docs/2.11/getting-started/#all-in-one) because it is really easy to setup.
+
+<img src="/otel-jaeger.png" alt="an example of open telemetry result in jaeger" />
 
 ## `@opentelemetry/api`
 
@@ -157,4 +159,4 @@ When configuring Vitest to use OpenTelemetry, you will typically install `@opent
 
 ## Inter-Process Context Propagation
 
-Vitest supports automatic context propagation from parent processes via the `TRACEPARENT` and `TRACESTATE` environment variables as defined in the OpenTelemetry specification. This is particularly useful when running Vitest as part of a larger distributed tracing system (e.g., CI/CD pipelines with OpenTelemetry instrumentation).
+Vitest supports automatic context propagation from parent processes via the `TRACEPARENT` and `TRACESTATE` environment variables as defined in the [OpenTelemetry specification](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/context/env-carriers.md). This is particularly useful when running Vitest as part of a larger distributed tracing system (e.g., CI/CD pipelines with OpenTelemetry instrumentation).

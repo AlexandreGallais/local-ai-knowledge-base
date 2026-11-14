@@ -1,12 +1,3 @@
----
-title: "class: PlaywrightAssertions"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-playwrightassertions.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: PlaywrightAssertions
 * langs: js, java, csharp
 * since: v1.17
@@ -25,7 +16,7 @@ test('status becomes submitted', async ({ page }) => {
 });
 ```
 
-```python
+```python async
 from playwright.async_api import Page, expect
 
 async def test_status_becomes_submitted(page: Page) -> None:
@@ -34,7 +25,7 @@ async def test_status_becomes_submitted(page: Page) -> None:
     await expect(page.locator(".status")).to_have_text("Submitted")
 ```
 
-```python
+```python sync
 from playwright.sync_api import Page, expect
 
 def test_status_becomes_submitted(page: Page) -> None:

@@ -1,13 +1,9 @@
 ---
-title: "no-unsafe-finally"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-unsafe-finally.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-unsafe-finally
+rule_type: problem
 ---
 
-# no-unsafe-finally
+
 
 JavaScript suspends the control flow statements of `try` and `catch` blocks until the execution of `finally` block finishes. So, when `return`, `throw`, `break`, or `continue` is used in `finally`, control flow statements inside `try` and `catch` are overwritten, which is considered as unexpected behavior. Such as:
 
@@ -74,7 +70,7 @@ This rule disallows `return`, `throw`, `break`, and `continue` statements inside
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-unsafe-finally: "error"*/
@@ -89,7 +85,9 @@ let foo = function() {
 };
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint no-unsafe-finally: "error"*/
@@ -104,9 +102,11 @@ let foo = function() {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-unsafe-finally: "error"*/
@@ -121,7 +121,9 @@ let foo = function() {
 };
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint no-unsafe-finally: "error"*/
@@ -138,7 +140,9 @@ let foo = function() {
 };
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint no-unsafe-finally: "error"*/
@@ -158,6 +162,8 @@ let foo = function(a) {
 };
 ```
 
+:::
+
 ## Options
 
 This rule has no options.
@@ -166,5 +172,5 @@ This rule has no options.
 
 If you want to allow control flow operations in `finally` blocks, you can turn this rule off.
 
-Note that using `return` with `try`/`finally` in generator functions can be used to override the value returned.
+Note that [using `return` with `try`/`finally` in generator functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator/return#using_return_with_try...finally) can be used to override the value returned.
 If you want to use this feature of generator functions, you can disable this rule using an `eslint-disable` comment.

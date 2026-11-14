@@ -1,50 +1,48 @@
 ---
-title: "Testing with your own test doubles - EF6 (part 1 of 2)"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/fundamentals/testing/writing-test-doubles.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Testing with your own test doubles - EF6
+description: Testing with your own test doubles in Entity Framework 6
+author: SamMonoRT
+ms.date: 10/23/2016
+uid: ef6/fundamentals/testing/writing-test-doubles
 ---
-
 # Testing with your own test doubles
-> **Note:**
-> **EF6 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 6. If you are using an earlier version, some or all of the information does not apply.
+> [!NOTE]
+> **EF6 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 6. If you are using an earlier version, some or all of the information does not apply.  
 
-When writing tests for your application it is often desirable to avoid hitting the database.  Entity Framework allows you to achieve this by creating a context – with behavior defined by your tests – that makes use of in-memory data.
+When writing tests for your application it is often desirable to avoid hitting the database.  Entity Framework allows you to achieve this by creating a context – with behavior defined by your tests – that makes use of in-memory data.  
 
-## Options for creating test doubles
+## Options for creating test doubles  
 
-There are two different approaches that can be used to create an in-memory version of your context.
+There are two different approaches that can be used to create an in-memory version of your context.  
 
-- **Create your own test doubles** – This approach involves writing your own in-memory implementation of your context and DbSets. This gives you a lot of control over how the classes behave but can involve writing and owning a reasonable amount of code.
-- **Use a mocking framework to create test doubles** – Using a mocking framework (such as Moq) you can have the in-memory implementations of you context and sets created dynamically at runtime for you.
+- **Create your own test doubles** – This approach involves writing your own in-memory implementation of your context and DbSets. This gives you a lot of control over how the classes behave but can involve writing and owning a reasonable amount of code.  
+- **Use a mocking framework to create test doubles** – Using a mocking framework (such as Moq) you can have the in-memory implementations of you context and sets created dynamically at runtime for you.  
 
-This article will deal with creating your own test double. For information on using a mocking framework see Testing with a Mocking Framework.
+This article will deal with creating your own test double. For information on using a mocking framework see [Testing with a Mocking Framework](xref:ef6/fundamentals/testing/mocking).  
 
-## Testing with pre-EF6 versions
+## Testing with pre-EF6 versions  
 
-The code shown in this article is compatible with EF6. For testing with EF5 and earlier version see Testing with a Fake Context.
+The code shown in this article is compatible with EF6. For testing with EF5 and earlier version see [Testing with a Fake Context](https://romiller.com/2012/02/14/testing-with-a-fake-dbcontext/).  
 
-## Limitations of EF in-memory test doubles
+## Limitations of EF in-memory test doubles  
 
-In-memory test doubles can be a good way to provide unit test level coverage of bits of your application that use EF. However, when doing this you are using LINQ to Objects to execute queries against in-memory data. This can result in different behavior than using EF’s LINQ provider (LINQ to Entities) to translate queries into SQL that is run against your database.
+In-memory test doubles can be a good way to provide unit test level coverage of bits of your application that use EF. However, when doing this you are using LINQ to Objects to execute queries against in-memory data. This can result in different behavior than using EF’s LINQ provider (LINQ to Entities) to translate queries into SQL that is run against your database.  
 
-One example of such a difference is loading related data. If you create a series of Blogs that each have related Posts, then when using in-memory data the related Posts will always be loaded for each Blog. However, when running against a database the data will only be loaded if you use the Include method.
+One example of such a difference is loading related data. If you create a series of Blogs that each have related Posts, then when using in-memory data the related Posts will always be loaded for each Blog. However, when running against a database the data will only be loaded if you use the Include method.  
 
-For this reason, it is recommended to always include some level of end-to-end testing (in addition to your unit tests) to ensure your application works correctly against a database.
+For this reason, it is recommended to always include some level of end-to-end testing (in addition to your unit tests) to ensure your application works correctly against a database.  
 
-## Following along with this article
+## Following along with this article  
 
-This article gives complete code listings that you can copy into Visual Studio to follow along if you wish. It's easiest to create a **Unit Test Project** and you will need to target **.NET Framework 4.5** to complete the sections that use async.
+This article gives complete code listings that you can copy into Visual Studio to follow along if you wish. It's easiest to create a **Unit Test Project** and you will need to target **.NET Framework 4.5** to complete the sections that use async.  
 
-## Creating a context interface
+## Creating a context interface  
 
 We're going to look at testing a service that makes use of an EF model. In order to be able to replace our EF context with an in-memory version for testing, we'll define an interface that our EF context (and it's in-memory double) will implement.
 
-The service we are going to test will query and modify data using the DbSet properties of our context and also call SaveChanges to push changes to the database. So we're including these members on the interface.
+The service we are going to test will query and modify data using the DbSet properties of our context and also call SaveChanges to push changes to the database. So we're including these members on the interface.  
 
-```csharp
+``` csharp
 using System.Data.Entity;
 
 namespace TestingDemo
@@ -58,11 +56,11 @@ namespace TestingDemo
 }
 ```  
 
-## The EF model
+## The EF model  
 
-The service we're going to test makes use of an EF model made up of the BloggingContext and the Blog and Post classes. This code may have been generated by the EF Designer or be a Code First model.
+The service we're going to test makes use of an EF model made up of the BloggingContext and the Blog and Post classes. This code may have been generated by the EF Designer or be a Code First model.  
 
-```csharp
+``` csharp
 using System.Collections.Generic;
 using System.Data.Entity;
 
@@ -95,21 +93,21 @@ namespace TestingDemo
 }
 ```  
 
-### Implementing the context interface with the EF Designer
+### Implementing the context interface with the EF Designer  
 
-Note that our context implements the IBloggingContext interface.
+Note that our context implements the IBloggingContext interface.  
 
-If you are using Code First then you can edit your context directly to implement the interface. If you are using the EF Designer then you’ll need to edit the T4 template that generates your context. Open up the \<model_name\>.Context.tt file that is nested under you edmx file, find the following fragment of code and add in the interface as shown.
+If you are using Code First then you can edit your context directly to implement the interface. If you are using the EF Designer then you’ll need to edit the T4 template that generates your context. Open up the \<model_name\>.Context.tt file that is nested under you edmx file, find the following fragment of code and add in the interface as shown.  
 
-```csharp
+``` csharp  
 <#=Accessibility.ForType(container)#> partial class <#=code.Escape(container)#> : DbContext, IBloggingContext
 ```  
 
-## Service to be tested
+## Service to be tested  
 
-To demonstrate testing with in-memory test doubles we are going to be writing a couple of tests for a BlogService. The service is capable of creating new blogs (AddBlog) and returning all Blogs ordered by name (GetAllBlogs). In addition to GetAllBlogs, we’ve also provided a method that will asynchronously get all blogs ordered by name (GetAllBlogsAsync).
+To demonstrate testing with in-memory test doubles we are going to be writing a couple of tests for a BlogService. The service is capable of creating new blogs (AddBlog) and returning all Blogs ordered by name (GetAllBlogs). In addition to GetAllBlogs, we’ve also provided a method that will asynchronously get all blogs ordered by name (GetAllBlogsAsync).  
 
-```csharp
+``` csharp
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -156,15 +154,15 @@ namespace TestingDemo
 }
 ```
 
-## Creating the in-memory test doubles
+## Creating the in-memory test doubles  
 
-Now that we have the real EF model and the service that can use it, it's time to create the in-memory test double that we can use for testing. We've created a TestContext test double for our context. In test doubles we get to choose the behavior we want in order to support the tests we are going to run. In this example we're just capturing the number of times SaveChanges is called, but you can include whatever logic is needed to verify the scenario you are testing.
+Now that we have the real EF model and the service that can use it, it's time to create the in-memory test double that we can use for testing. We've created a TestContext test double for our context. In test doubles we get to choose the behavior we want in order to support the tests we are going to run. In this example we're just capturing the number of times SaveChanges is called, but you can include whatever logic is needed to verify the scenario you are testing.  
 
-We've also created a TestDbSet that provides an in-memory implementation of DbSet. We've provided a complete implementation for all the methods on DbSet (except for Find), but you only need to implement the members that your test scenario will use.
+We've also created a TestDbSet that provides an in-memory implementation of DbSet. We've provided a complete implementation for all the methods on DbSet (except for Find), but you only need to implement the members that your test scenario will use.  
 
-TestDbSet makes use of some other infrastructure classes that we've included to ensure that async queries can be processed.
+TestDbSet makes use of some other infrastructure classes that we've included to ensure that async queries can be processed.  
 
-```csharp
+``` csharp
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -300,12 +298,12 @@ namespace TestingDemo
             return _inner.Execute<TResult>(expression);
         }
 
-        public Task<object> ExecuteAsync(Expression expression, CancellationToken <example-value>)
+        public Task<object> ExecuteAsync(Expression expression, CancellationToken cancellationToken)
         {
             return Task.FromResult(Execute(expression));
         }
 
-        public Task<TResult> ExecuteAsync<TResult>(Expression expression, CancellationToken <example-value>)
+        public Task<TResult> ExecuteAsync<TResult>(Expression expression, CancellationToken cancellationToken)
         {
             return Task.FromResult(Execute<TResult>(expression));
         }
@@ -351,7 +349,7 @@ namespace TestingDemo
             _inner.Dispose();
         }
 
-        public Task<bool> MoveNextAsync(CancellationToken <example-value>)
+        public Task<bool> MoveNextAsync(CancellationToken cancellationToken)
         {
             return Task.FromResult(_inner.MoveNext());
         }
@@ -369,11 +367,11 @@ namespace TestingDemo
 }
 ```  
 
-### Implementing Find
+### Implementing Find  
 
-The Find method is difficult to implement in a generic fashion. If you need to test code that makes use of the Find method it is easiest to create a test DbSet for each of the entity types that need to support find. You can then write logic to find that particular type of entity, as shown below.
+The Find method is difficult to implement in a generic fashion. If you need to test code that makes use of the Find method it is easiest to create a test DbSet for each of the entity types that need to support find. You can then write logic to find that particular type of entity, as shown below.  
 
-```csharp
+``` csharp
 using System.Linq;
 
 namespace TestingDemo
@@ -387,4 +385,99 @@ namespace TestingDemo
         }
     }
 }
-```
+```  
+
+## Writing some tests  
+
+That’s all we need to do to start testing. The following test creates a TestContext and then a service based on this context. The service is then used to create a new blog – using the AddBlog method. Finally, the test verifies that the service added a new Blog to the context's Blogs property and called SaveChanges on the context.  
+
+This is just an example of the types of things you can test with an in-memory test double and you can adjust the logic of the test doubles and the verification to meet your requirements.  
+
+``` csharp
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
+
+namespace TestingDemo
+{
+    [TestClass]
+    public class NonQueryTests
+    {
+        [TestMethod]
+        public void CreateBlog_saves_a_blog_via_context()
+        {
+            var context = new TestContext();
+
+            var service = new BlogService(context);
+            service.AddBlog("ADO.NET Blog", "http://blogs.msdn.com/adonet");
+
+            Assert.AreEqual(1, context.Blogs.Count());
+            Assert.AreEqual("ADO.NET Blog", context.Blogs.Single().Name);
+            Assert.AreEqual("http://blogs.msdn.com/adonet", context.Blogs.Single().Url);
+            Assert.AreEqual(1, context.SaveChangesCount);
+        }
+    }
+}
+```  
+
+Here is another example of a test - this time one that performs a query. The test starts by creating a test context with some data in its Blog property - note that the data is not in alphabetical order. We can then create a BlogService based on our test context and ensure that the data we get back from GetAllBlogs is ordered by name.  
+
+``` csharp
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace TestingDemo
+{
+    [TestClass]
+    public class QueryTests
+    {
+        [TestMethod]
+        public void GetAllBlogs_orders_by_name()
+        {
+            var context = new TestContext();
+            context.Blogs.Add(new Blog { Name = "BBB" });
+            context.Blogs.Add(new Blog { Name = "ZZZ" });
+            context.Blogs.Add(new Blog { Name = "AAA" });
+
+            var service = new BlogService(context);
+            var blogs = service.GetAllBlogs();
+
+            Assert.AreEqual(3, blogs.Count);
+            Assert.AreEqual("AAA", blogs[0].Name);
+            Assert.AreEqual("BBB", blogs[1].Name);
+            Assert.AreEqual("ZZZ", blogs[2].Name);
+        }
+    }
+}
+```  
+
+Finally, we'll write one more test that uses our async method to ensure that the async infrastructure we included in [TestDbSet](#creating-the-in-memory-test-doubles) is working.  
+
+``` csharp
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace TestingDemo
+{
+    [TestClass]
+    public class AsyncQueryTests
+    {
+        [TestMethod]
+        public async Task GetAllBlogsAsync_orders_by_name()
+        {
+            var context = new TestContext();
+            context.Blogs.Add(new Blog { Name = "BBB" });
+            context.Blogs.Add(new Blog { Name = "ZZZ" });
+            context.Blogs.Add(new Blog { Name = "AAA" });
+
+            var service = new BlogService(context);
+            var blogs = await service.GetAllBlogsAsync();
+
+            Assert.AreEqual(3, blogs.Count);
+            Assert.AreEqual("AAA", blogs[0].Name);
+            Assert.AreEqual("BBB", blogs[1].Name);
+            Assert.AreEqual("ZZZ", blogs[2].Name);
+        }
+    }
+}
+```  

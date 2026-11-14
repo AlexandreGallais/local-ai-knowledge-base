@@ -1,23 +1,26 @@
 ---
-title: "Microsoft.AspNetCore.All metapackage for ASP.NET Core 2.0"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/metapackage.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Microsoft.AspNetCore.All metapackage for ASP.NET Core 2.0
+description: The Microsoft.AspNetCore.All metapackage is not recommended for ASP.NET Core 2.1 or later.
+monikerRange: '>= aspnetcore-2.0'
+ms.date: 10/25/2018
 ---
-
 # Microsoft.AspNetCore.All metapackage for ASP.NET Core 2.0
 
-> **Note:**
-> The `Microsoft.AspNetCore.All` metapackage isn't used in ASP.NET Core 3.0 or later. For more information, see this GitHub issue.
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
-> **Note:**
-> We recommend applications targeting ASP.NET Core 2.1 or later use the Microsoft.AspNetCore.App metapackage rather than this package. See Migrating from Microsoft.AspNetCore.All to Microsoft.AspNetCore.App in this article.
+:::moniker range=">= aspnetcore-3.0"
+
+> [!NOTE]
+> The `Microsoft.AspNetCore.All` metapackage isn't used in ASP.NET Core 3.0 or later. For more information, see [this GitHub issue](https://github.com/aspnet/Announcements/issues/314).
+
+:::moniker-end
+
+> [!NOTE]
+> We recommend applications targeting ASP.NET Core 2.1 or later use the [Microsoft.AspNetCore.App metapackage](metapackage-app.md) rather than this package. See [Migrating from Microsoft.AspNetCore.All to Microsoft.AspNetCore.App](#migrate) in this article.
 
 This feature requires ASP.NET Core 2.x targeting .NET Core 2.x.
 
-`Microsoft.AspNetCore.All` is a metapackage that refers to a shared framework. A *shared framework* is a set of assemblies (*.dll* files) that are not in the app's folders. The shared framework must be installed on the machine to run the app.
+[`Microsoft.AspNetCore.All`](https://www.nuget.org/packages/Microsoft.AspNetCore.All) is a metapackage that refers to a shared framework. A *shared framework* is a set of assemblies (*.dll* files) that are not in the app's folders. The shared framework must be installed on the machine to run the app.
 
 The shared framework that `Microsoft.AspNetCore.All` refers to includes:
 
@@ -31,33 +34,27 @@ The version number of the `Microsoft.AspNetCore.All` metapackage represents the 
 
 The following `.csproj` file references the `Microsoft.AspNetCore.All` metapackage for ASP.NET Core:
 
-```xml
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+[!code-xml[](metapackage/samples/Metapackage.All.Example.csproj?highlight=8)]
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
-  </ItemGroup>
-
-</Project>
-```
+:::moniker range=">= aspnetcore-2.1"
 
 ## Implicit versioning
 
-In ASP.NET Core 2.1 or later, you can specify the `Microsoft.AspNetCore.All` package reference without a version. When the version isn't specified, an implicit version is specified by the SDK (`Microsoft.NET.Sdk.Web`). We recommend relying on the implicit version specified by the SDK and not explicitly setting the version number on the package reference. If you have questions about this approach, leave a GitHub comment at the Discussion for the Microsoft.AspNetCore.App implicit version.
+In ASP.NET Core 2.1 or later, you can specify the `Microsoft.AspNetCore.All` package reference without a version. When the version isn't specified, an implicit version is specified by the SDK (`Microsoft.NET.Sdk.Web`). We recommend relying on the implicit version specified by the SDK and not explicitly setting the version number on the package reference. If you have questions about this approach, leave a GitHub comment at the [Discussion for the Microsoft.AspNetCore.App implicit version](https://github.com/dotnet/AspNetCore.Docs/issues/6430).
 
 The implicit version is set to `major.minor.0` for portable apps. The shared framework roll-forward mechanism runs the app on the latest compatible version among the installed shared frameworks. To guarantee the same version is used in development, test, and production, ensure the same version of the shared framework is installed in all environments. For self-contained apps, the implicit version number is set to the `major.minor.patch` of the shared framework bundled in the installed SDK.
 
-Specifying a version number on the `Microsoft.AspNetCore.All` package reference does **not** guarantee that version of the shared framework is chosen. For example, suppose version "2.1.1" is specified, but "2.1.3" is installed. In that case, the app will use "2.1.3". Although not recommended, you can disable roll forward (patch and/or minor). For more information regarding dotnet host roll-forward and how to configure its behavior, see dotnet host roll forward.
+Specifying a version number on the `Microsoft.AspNetCore.All` package reference does **not** guarantee that version of the shared framework is chosen. For example, suppose version "2.1.1" is specified, but "2.1.3" is installed. In that case, the app will use "2.1.3". Although not recommended, you can disable roll forward (patch and/or minor). For more information regarding dotnet host roll-forward and how to configure its behavior, see [dotnet host roll forward](https://github.com/dotnet/core-setup/blob/master/Documentation/design-docs/roll-forward-on-no-candidate-fx.md).
 
 The project's SDK must be set to `Microsoft.NET.Sdk.Web` in the project file to use the implicit version of `Microsoft.AspNetCore.All`. When the `Microsoft.NET.Sdk` SDK is specified (`<Project Sdk="Microsoft.NET.Sdk">` at the top of the project file), the following warning is generated:
 
 *Warning NU1604: Project dependency Microsoft.AspNetCore.All does not contain an inclusive lower bound. Include a lower bound in the dependency version to ensure consistent restore results.*
 
 This is a known issue with the .NET Core 2.1 SDK and will be fixed in the .NET Core 2.2 SDK.
+
+:::moniker-end
+
+<a name="migrate"></a>
 
 ## Migrating from Microsoft.AspNetCore.All to Microsoft.AspNetCore.App
 
@@ -90,6 +87,6 @@ Any dependencies of the preceding packages that otherwise aren't dependencies of
 
 We recommend migrating to the `Microsoft.AspNetCore.App` metapackage for 2.1 or later. To keep using the `Microsoft.AspNetCore.All` metapackage and ensure the latest patch version is deployed:
 
-* On development machines and build servers: Install the latest .NET Core SDK.
-* On deployment servers: Install the latest .NET Core runtime.
+* On development machines and build servers: Install the latest [.NET Core SDK](https://dotnet.microsoft.com/download).
+* On deployment servers: Install the latest [.NET Core runtime](https://dotnet.microsoft.com/download).
  Your app will roll forward to the latest installed version on an application restart.

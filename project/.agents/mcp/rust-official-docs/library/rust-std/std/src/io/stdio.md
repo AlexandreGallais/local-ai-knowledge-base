@@ -1,12 +1,3 @@
----
-title: "std::io::stdio"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/io/stdio.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::io::stdio
 
 ## struct Stdin
@@ -18,14 +9,16 @@ pub struct Stdin
 A handle to the standard input stream of a process.
 
 Each handle is a shared reference to a global buffer of input data to this
-process. A handle can be `lock`'d to gain full access to `BufRead` methods
+process. A handle can be `lock`'d to gain full access to [`BufRead`] methods
 (e.g., `.lines()`). Reads to this handle are otherwise locked with respect
 to other reads.
 
 This handle implements the `Read` trait, but beware that concurrent reads
 of `Stdin` must be executed with care.
 
-Created by the `io::stdin` method.
+Created by the [`io::stdin`] method.
+
+[`io::stdin`]: stdin
 
 ### Note: Windows Portability Considerations
 
@@ -41,7 +34,7 @@ standard library or via raw Windows API calls, will fail.
 
 # Examples
 
-```rust
+```no_run
 use std::io;
 
 fn main() -> io::Result<()> {
@@ -58,10 +51,10 @@ fn main() -> io::Result<()> {
 pub struct StdinLock<'a>
 ```
 
-A locked reference to the `Stdin` handle.
+A locked reference to the [`Stdin`] handle.
 
-This handle implements both the `Read` and `BufRead` traits, and
-is constructed via the `Stdin::lock` method.
+This handle implements both the [`Read`] and [`BufRead`] traits, and
+is constructed via the [`Stdin::lock`] method.
 
 ### Note: Windows Portability Considerations
 
@@ -77,7 +70,7 @@ standard library or via raw Windows API calls, will fail.
 
 # Examples
 
-```rust
+```no_run
 use std::io::{self, BufRead};
 
 fn main() -> io::Result<()> {
@@ -101,7 +94,7 @@ Constructs a new handle to the standard input of the current process.
 
 Each handle returned is a reference to a shared global buffer whose access
 is synchronized via a mutex. If you need more explicit control over
-locking, see the `Stdin::lock` method.
+locking, see the [`Stdin::lock`] method.
 
 ### Note: Windows Portability Considerations
 
@@ -119,7 +112,7 @@ standard library or via raw Windows API calls, will fail.
 
 Using implicit synchronization:
 
-```rust
+```no_run
 use std::io;
 
 fn main() -> io::Result<()> {
@@ -131,7 +124,7 @@ fn main() -> io::Result<()> {
 
 Using explicit synchronization:
 
-```rust
+```no_run
 use std::io::{self, BufRead};
 
 fn main() -> io::Result<()> {
@@ -154,12 +147,12 @@ Locks this handle to the standard input stream, returning a readable
 guard.
 
 The lock is released when the returned lock goes out of scope. The
-returned guard also implements the `Read` and `BufRead` traits for
+returned guard also implements the [`Read`] and [`BufRead`] traits for
 accessing the underlying data.
 
 # Examples
 
-```rust
+```no_run
 use std::io::{self, BufRead};
 
 fn main() -> io::Result<()> {
@@ -181,14 +174,16 @@ pub fn read_line(&self, buf: &mut String) -> io::Result<usize>
 Locks this handle and reads a line of input, appending it to the specified buffer.
 
 For detailed semantics of this method, see the documentation on
-`BufRead::read_line`. In particular:
+[`BufRead::read_line`]. In particular:
 * Previous content of the buffer will be preserved. To avoid appending
-  to the buffer, you need to `clear` it first.
+  to the buffer, you need to [`clear`] it first.
 * The trailing newline character, if any, is included in the buffer.
+
+[`clear`]: String::clear
 
 # Examples
 
-```rust
+```no_run
 use std::io;
 
 let mut input = String::new();
@@ -217,11 +212,11 @@ pub fn lines(self) -> Lines<StdinLock<'static>>
 Consumes this handle and returns an iterator over input lines.
 
 For detailed semantics of this method, see the documentation on
-`BufRead::lines`.
+[`BufRead::lines`].
 
 # Examples
 
-```rust
+```no_run
 use std::io;
 
 let lines = io::stdin().lines();
@@ -240,14 +235,14 @@ A handle to the global standard output stream of the current process.
 
 Each handle shares a global buffer of data to be written to the standard
 output stream. Access is also synchronized via a lock and explicit control
-over locking is available via the `lock` method.
+over locking is available via the [`lock`] method.
 
 By default, the handle is line-buffered when connected to a terminal, meaning
 it flushes automatically when a newline (`\n`) is encountered. For immediate
-output, you can manually call the `flush` method. When the handle goes out
+output, you can manually call the [`flush`] method. When the handle goes out
 of scope, the buffer is automatically flushed.
 
-Created by the `io::stdout` method.
+Created by the [`io::stdout`] method.
 
 ### Note: Windows Portability Considerations
 
@@ -260,6 +255,10 @@ In a process with a detached console, such as one using
 the contained handle will be null. In such cases, the standard library's `Read` and
 `Write` will do nothing and silently succeed. All other I/O operations, via the
 standard library or via raw Windows API calls, will fail.
+
+[`lock`]: Stdout::lock
+[`flush`]: Write::flush
+[`io::stdout`]: stdout
 
 ## struct StdoutLock
 
@@ -267,14 +266,14 @@ standard library or via raw Windows API calls, will fail.
 pub struct StdoutLock<'a>
 ```
 
-A locked reference to the `Stdout` handle.
+A locked reference to the [`Stdout`] handle.
 
-This handle implements the `Write` trait, and is constructed via
-the `Stdout::lock` method. See its documentation for more.
+This handle implements the [`Write`] trait, and is constructed via
+the [`Stdout::lock`] method. See its documentation for more.
 
 By default, the handle is line-buffered when connected to a terminal, meaning
 it flushes automatically when a newline (`\n`) is encountered. For immediate
-output, you can manually call the `flush` method. When the handle goes out
+output, you can manually call the [`flush`] method. When the handle goes out
 of scope, the buffer is automatically flushed.
 
 ### Note: Windows Portability Considerations
@@ -288,6 +287,8 @@ In a process with a detached console, such as one using
 the contained handle will be null. In such cases, the standard library's `Read` and
 `Write` will do nothing and silently succeed. All other I/O operations, via the
 standard library or via raw Windows API calls, will fail.
+
+[`flush`]: Write::flush
 
 ## fn stdout
 
@@ -299,11 +300,11 @@ Constructs a new handle to the standard output of the current process.
 
 Each handle returned is a reference to a shared global buffer whose access
 is synchronized via a mutex. If you need more explicit control over
-locking, see the `Stdout::lock` method.
+locking, see the [`Stdout::lock`] method.
 
 By default, the handle is line-buffered when connected to a terminal, meaning
 it flushes automatically when a newline (`\n`) is encountered. For immediate
-output, you can manually call the `flush` method. When the handle goes out
+output, you can manually call the [`flush`] method. When the handle goes out
 of scope, the buffer is automatically flushed.
 
 ### Note: Windows Portability Considerations
@@ -322,7 +323,7 @@ standard library or via raw Windows API calls, will fail.
 
 Using implicit synchronization:
 
-```rust
+```no_run
 use std::io::{self, Write};
 
 fn main() -> io::Result<()> {
@@ -334,7 +335,7 @@ fn main() -> io::Result<()> {
 
 Using explicit synchronization:
 
-```rust
+```no_run
 use std::io::{self, Write};
 
 fn main() -> io::Result<()> {
@@ -349,7 +350,7 @@ fn main() -> io::Result<()> {
 
 Ensuring output is flushed immediately:
 
-```rust
+```no_run
 use std::io::{self, Write};
 
 fn main() -> io::Result<()> {
@@ -360,6 +361,8 @@ fn main() -> io::Result<()> {
     Ok(())
 }
 ```
+
+[`flush`]: Write::flush
 
 ## Stdout::lock
 
@@ -375,7 +378,7 @@ returned guard also implements the `Write` trait for writing data.
 
 # Examples
 
-```rust
+```no_run
 use std::io::{self, Write};
 
 fn main() -> io::Result<()> {
@@ -395,7 +398,9 @@ pub struct Stderr
 
 A handle to the standard error stream of a process.
 
-For more information, see the `io::stderr` method.
+For more information, see the [`io::stderr`] method.
+
+[`io::stderr`]: stderr
 
 ### Note: Windows Portability Considerations
 
@@ -415,10 +420,10 @@ standard library or via raw Windows API calls, will fail.
 pub struct StderrLock<'a>
 ```
 
-A locked reference to the `Stderr` handle.
+A locked reference to the [`Stderr`] handle.
 
-This handle implements the `Write` trait and is constructed via
-the `Stderr::lock` method. See its documentation for more.
+This handle implements the [`Write`] trait and is constructed via
+the [`Stderr::lock`] method. See its documentation for more.
 
 ### Note: Windows Portability Considerations
 
@@ -458,7 +463,7 @@ standard library or via raw Windows API calls, will fail.
 
 Using implicit synchronization:
 
-```rust
+```no_run
 use std::io::{self, Write};
 
 fn main() -> io::Result<()> {
@@ -470,7 +475,7 @@ fn main() -> io::Result<()> {
 
 Using explicit synchronization:
 
-```rust
+```no_run
 use std::io::{self, Write};
 
 fn main() -> io::Result<()> {
@@ -493,11 +498,11 @@ Locks this handle to the standard error stream, returning a writable
 guard.
 
 The lock is released when the returned lock goes out of scope. The
-returned guard also implements the `Write` trait for writing data.
+returned guard also implements the [`Write`] trait for writing data.
 
 # Examples
 
-```rust
+```
 use std::io::{self, Write};
 
 fn foo() -> io::Result<()> {

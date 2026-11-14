@@ -1,12 +1,3 @@
----
-title: "class: BrowserType (part 1 of 2)"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-browsertype.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: BrowserType
 * since: v1.8
 
@@ -42,7 +33,7 @@ public class Example {
 }
 ```
 
-```python
+```python async
 import asyncio
 from playwright.async_api import async_playwright, Playwright
 
@@ -60,7 +51,7 @@ async def main():
 asyncio.run(main())
 ```
 
-```python
+```python sync
 from playwright.sync_api import sync_playwright, Playwright
 
 def run(playwright: Playwright):
@@ -180,13 +171,13 @@ BrowserContext defaultContext = browser.contexts().get(0);
 Page page = defaultContext.pages().get(0);
 ```
 
-```python
+```python async
 browser = await playwright.chromium.connect_over_cdp("http://localhost:9222")
 default_context = browser.contexts[0]
 page = default_context.pages[0]
 ```
 
-```python
+```python sync
 browser = playwright.chromium.connect_over_cdp("http://localhost:9222")
 default_context = browser.contexts[0]
 page = default_context.pages[0]
@@ -257,6 +248,7 @@ browser where these overrides would interfere with existing browser state. New c
 
 If specified, browser artifacts (such as traces and downloads) are saved into this directory.
 
+
 ## method: BrowserType.executablePath
 * since: v1.8
 - returns: <[string]>
@@ -285,13 +277,13 @@ Browser browser = chromium.launch(new BrowserType.LaunchOptions()
   .setIgnoreDefaultArgs(Arrays.asList("--mute-audio")));
 ```
 
-```python
+```python async
 browser = await playwright.chromium.launch( # or "firefox" or "webkit".
     ignore_default_args=["--mute-audio"]
 )
 ```
 
-```python
+```python sync
 browser = playwright.chromium.launch( # or "firefox" or "webkit".
     ignore_default_args=["--mute-audio"]
 )
@@ -308,11 +300,11 @@ Chromium it is bundled with. There is no guarantee it will work with any other v
 option with extreme caution.
 >
 > If Google Chrome (rather than Chromium) is preferred, a
-Chrome Canary or
-Dev Channel build is suggested.
+[Chrome Canary](https://www.google.com/chrome/browser/canary.html) or
+[Dev Channel](https://www.chromium.org/getting-involved/dev-channel) build is suggested.
 >
-> Stock browsers like Google Chrome and Microsoft Edge are suitable for tests that require proprietary media codecs for video playback. See this article for other differences between Chromium and Chrome.
-This article
+> Stock browsers like Google Chrome and Microsoft Edge are suitable for tests that require proprietary media codecs for video playback. See [this article](https://www.howtogeek.com/202825/what%E2%80%99s-the-difference-between-chromium-and-chrome/) for other differences between Chromium and Chrome.
+[This article](https://chromium.googlesource.com/chromium/src/+/lkgr/docs/chromium_browser_vs_google_chrome.md)
 describes some differences for Linux users.
 
 ### option: BrowserType.launch.-inline- = %%-shared-browser-options-list-v1.8-%%
@@ -352,8 +344,8 @@ this context will automatically close the browser.
 Path to a User Data Directory, which stores browser session data like cookies and local storage. Pass an empty string to create a temporary directory.
 
 More details for
-Chromium and
-Firefox. Chromium's user data directory is the **parent** directory of the "Profile Path" seen at `chrome://version`.
+[Chromium](https://chromium.googlesource.com/chromium/src/+/master/docs/user_data_dir.md#introduction) and
+[Firefox](https://wiki.mozilla.org/Firefox/CommandLineOptions#User_profile). Chromium's user data directory is the **parent** directory of the "Profile Path" seen at `chrome://version`.
 
 Note that browsers do not allow launching multiple instances with the same User Data Directory.
 
@@ -387,3 +379,71 @@ Chromium/Chrome: Due to recent Chrome policy changes, automating the default Chr
 
 ### option: BrowserType.launchPersistentContext.recordVideoFps = %%-context-option-recordvideo-fps-%%
 * since: v1.64
+
+## async method: BrowserType.launchServer
+* since: v1.8
+* langs: js
+- returns: <[BrowserServer]>
+
+Returns the browser app instance. You can connect to it via [`method: BrowserType.connect`], which requires the major/minor client/server version to match (1.2.3 → is compatible with 1.2.x).
+
+**Usage**
+
+Launches browser server that client can connect to. An example of launching a browser executable and connecting to it
+later:
+
+```js
+const { chromium } = require('playwright');  // Or 'webkit' or 'firefox'.
+
+(async () => {
+  const browserServer = await chromium.launchServer();
+  const wsEndpoint = browserServer.wsEndpoint();
+  // Use web socket endpoint later to establish a connection.
+  const browser = await chromium.connect(wsEndpoint);
+  // Close browser instance.
+  await browserServer.close();
+})();
+```
+
+### option: BrowserType.launchServer.-inline- = %%-shared-browser-options-list-v1.8-%%
+* since: v1.8
+
+### option: BrowserType.launchServer.firefoxUserPrefs = %%-js-python-browser-option-firefoxuserprefs-%%
+* since: v1.8
+
+### option: BrowserType.launchServer.firefoxUserPrefs2 = %%-csharp-java-browser-option-firefoxuserprefs-%%
+* since: v1.8
+
+### option: BrowserType.launchServer.logger = %%-browser-option-logger-%%
+* since: v1.8
+
+### option: BrowserType.launchServer.host
+* since: v1.45
+- `host` <[string]>
+
+Host to use for the web socket. It is optional and defaults to `localhost`, accepting connections only from the loopback interface. Pass an explicit address (e.g. `0.0.0.0`) to accept connections from the network — be aware this exposes the browser RPC to anything that can reach the listening port.
+
+### option: BrowserType.launchServer.port
+* since: v1.8
+- `port` <[int]>
+
+Port to use for the web socket. Defaults to 0 that picks any available port.
+
+### option: BrowserType.launchServer.wsPath
+* since: v1.15
+- `wsPath` <[string]>
+
+Path at which to serve the Browser Server. For security, this defaults to an
+unguessable string.
+
+:::warning
+Any process or web page (including those running in Playwright) with knowledge
+of the `wsPath` can take control of the OS user. For this reason, you should
+use an unguessable token when using this option.
+:::
+
+## method: BrowserType.name
+* since: v1.8
+- returns: <[string]>
+
+Returns browser name. For example: `'chromium'`, `'webkit'` or `'firefox'`.

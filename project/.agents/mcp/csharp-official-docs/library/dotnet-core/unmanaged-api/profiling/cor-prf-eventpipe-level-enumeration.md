@@ -1,12 +1,15 @@
 ---
+description: "Learn more about: COR_PRF_EVENTPIPE_LEVEL Enumeration"
 title: "COR_PRF_EVENTPIPE_LEVEL Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/profiling/cor-prf-eventpipe-level-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/19/2021"
+api_name:
+  - "COR_PRF_EVENTPIPE_LEVEL"
+api_location:
+  - "coreclr.dll"
+  - "corprof.idl"
+api_type:
+  - "COM"
 ---
-
 # COR_PRF_EVENTPIPE_LEVEL enumeration
 
 Describes the level of an EventPipe event.
@@ -38,11 +41,11 @@ typedef enum
 
 ## Remarks
 
- The `COR_PRF_EVENTPIPE_LEVEL` enumeration is used by the ICorProfilerInfo12::EventPipeDefineEvent method to indicate the level of the event being defined.
+ The `COR_PRF_EVENTPIPE_LEVEL` enumeration is used by the [ICorProfilerInfo12::EventPipeDefineEvent](icorprofilerinfo12-eventpipedefineevent-method.md) method to indicate the level of the event being defined.
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** CorProf.idl, CorProf.h
 
@@ -50,4 +53,4 @@ typedef enum
 
 ## See also
 
-- ICorProfilerInfo12::EventPipeDefineEvent
+- [ICorProfilerInfo12::EventPipeDefineEvent](icorprofilerinfo12-eventpipedefineevent-method.md)

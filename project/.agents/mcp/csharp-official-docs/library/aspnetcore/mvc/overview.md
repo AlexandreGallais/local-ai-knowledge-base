@@ -1,28 +1,26 @@
 ---
-title: "Overview of ASP.NET Core MVC"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/mvc/overview.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Overview of ASP.NET Core MVC
+description: Learn how ASP.NET Core MVC is a rich framework for building web apps and APIs using the Model-View-Controller design pattern.
+ms.date: 08/05/2026
 ---
-
 # Overview of ASP.NET Core MVC
 
-By Steve Smith
+By [Steve Smith](https://ardalis.com/)
 
 ASP.NET Core MVC is a rich framework for building web apps and APIs using the Model-View-Controller design pattern.
 
 ## MVC pattern
 
-The Model-View-Controller (MVC) architectural pattern separates an application into three main groups of components: Models, Views, and Controllers. This pattern helps to achieve separation of concerns. Using this pattern, user requests are routed to a Controller, which is responsible for working with the Model to perform user actions and/or retrieve results of queries. The Controller chooses the View to display to the user, and provides it with any Model data it requires.
+The Model-View-Controller (MVC) architectural pattern separates an application into three main groups of components: Models, Views, and Controllers. This pattern helps to achieve [separation of concerns](/dotnet/architecture/modern-web-apps-azure/architectural-principles#separation-of-concerns). Using this pattern, user requests are routed to a Controller, which is responsible for working with the Model to perform user actions and/or retrieve results of queries. The Controller chooses the View to display to the user, and provides it with any Model data it requires.
 
 The following diagram shows the three main components and which ones reference the others:
 
+![MVC Pattern](overview/_static/mvc.png)
+
 This delineation of responsibilities helps you scale the application in terms of complexity because it's easier to code, debug, and test something (model, view, or controller) that has a single job. It's more difficult to update, test, and debug code that has dependencies spread across two or more of these three areas. For example, user interface logic tends to change more frequently than business logic. If presentation code and business logic are combined in a single object, an object containing business logic must be modified every time the user interface is changed. This often introduces errors and requires the retesting of business logic after every minimal user interface change.
 
-> **Note:**
-> Both the view and the controller depend on the model. However, the model doesn't depend on the view or the controller. This is one of the key <example-value> of the separation. This separation allows the model to be built and tested independent of the visual presentation.
+> [!NOTE]
+> Both the view and the controller depend on the model. However, the model doesn't depend on the view or the controller. This is one of the key benefits of the separation. This separation allows the model to be built and tested independent of the visual presentation.
 
 ### Model Responsibilities
 
@@ -30,17 +28,17 @@ The Model in an MVC application represents the state of the application and any 
 
 ### View Responsibilities
 
-Views are responsible for presenting content through the user interface. They use the Razor view engine to embed .NET code in HTML markup. There should be minimal logic within views, and any logic in them should relate to presenting content. If you find the need to perform a great deal of logic in view files in order to display data from a complex model, consider using a View Component, ViewModel, or view template to simplify the view.
+Views are responsible for presenting content through the user interface. They use the [Razor view engine](#razor-view-engine) to embed .NET code in HTML markup. There should be minimal logic within views, and any logic in them should relate to presenting content. If you find the need to perform a great deal of logic in view files in order to display data from a complex model, consider using a [View Component](views/view-components.md), ViewModel, or view template to simplify the view.
 
 ### Controller Responsibilities
 
 Controllers are the components that handle user interaction, work with the model, and ultimately select a view to render. In an MVC application, the view only displays information; the controller handles and responds to user input and interaction. In the MVC pattern, the controller is the initial entry point, and is responsible for selecting which model types to work with and which view to render (hence its name - it controls how the app responds to a given request).
 
-> **Note:**
+> [!NOTE]
 > Controllers shouldn't be overly complicated by too many responsibilities. To keep controller logic from becoming overly complex, push business logic out of the controller and into the domain model.
 >
-> **Tip:**
-> If you find that your controller actions frequently perform the same kinds of actions, move these common actions into filters.
+> [!TIP]
+> If you find that your controller actions frequently perform the same kinds of actions, move these common actions into [filters](#filters).
 
 ## ASP.NET Core MVC
 
@@ -50,7 +48,7 @@ ASP.NET Core MVC provides a patterns-based way to build dynamic websites that en
 
 ## Routing
 
-ASP.NET Core MVC is built on top of ASP.NET Core's routing, a powerful URL-mapping component that lets you build applications that have comprehensible and searchable URLs. This enables you to define your application's URL naming patterns that work well for search engine optimization (SEO) and for link generation, without regard for how the files on your web server are organized. You can define your routes using a convenient route template syntax that supports route value constraints, defaults and optional values.
+ASP.NET Core MVC is built on top of [ASP.NET Core's routing](../fundamentals/routing.md), a powerful URL-mapping component that lets you build applications that have comprehensible and searchable URLs. This enables you to define your application's URL naming patterns that work well for search engine optimization (SEO) and for link generation, without regard for how the files on your web server are organized. You can define your routes using a convenient route template syntax that supports route value constraints, defaults and optional values.
 
 *Convention-based routing* enables you to globally define the URL formats that your application accepts and how each of those formats maps to a specific action method on a given controller. When an incoming request is received, the routing engine parses the URL and matches it to one of the defined URL formats, and then calls the associated controller's action method.
 
@@ -74,7 +72,7 @@ public class ProductsController : Controller
 
 ## Model binding
 
-ASP.NET Core MVC model binding converts client request data  (form values, route data, query string parameters, HTTP headers) into objects that the controller can handle. As a result, your controller logic doesn't have to do the work of figuring out the incoming request data; it simply has the data as parameters to its action methods.
+ASP.NET Core MVC [model binding](models/model-binding.md) converts client request data  (form values, route data, query string parameters, HTTP headers) into objects that the controller can handle. As a result, your controller logic doesn't have to do the work of figuring out the incoming request data; it simply has the data as parameters to its action methods.
 
 ```csharp
 public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null) { ... }
@@ -82,7 +80,7 @@ public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = 
 
 ## Model validation
 
-ASP.NET Core MVC supports validation by decorating your model object with data annotation validation attributes. The validation attributes are checked on the client side before values are posted to the server, as well as on the server before the controller action is called.
+ASP.NET Core MVC supports [validation](models/validation.md) by decorating your model object with data annotation validation attributes. The validation attributes are checked on the client side before values are posted to the server, as well as on the server before the controller action is called.
 
 ```csharp
 using System.ComponentModel.DataAnnotations;
@@ -115,13 +113,13 @@ public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = 
 }
 ```
 
-The framework handles validating request data both on the client and on the server. Validation logic specified on model types is added to the rendered views as unobtrusive annotations and is enforced in the browser with jQuery Validation.
+The framework handles validating request data both on the client and on the server. Validation logic specified on model types is added to the rendered views as unobtrusive annotations and is enforced in the browser with [jQuery Validation](https://github.com/jquery-validation/jquery-validation).
 
 ## Dependency injection
 
-ASP.NET Core has built-in support for dependency injection (DI). In ASP.NET Core MVC, controllers can request needed services through their constructors, allowing them to follow the Explicit Dependencies Principle.
+ASP.NET Core has built-in support for [dependency injection (DI)](../fundamentals/dependency-injection.md). In ASP.NET Core MVC, [controllers](controllers/dependency-injection.md) can request needed services through their constructors, allowing them to follow the [Explicit Dependencies Principle](/dotnet/architecture/modern-web-apps-azure/architectural-principles#explicit-dependencies).
 
-Your app can also use dependency injection in view files, using the `@inject` directive:
+Your app can also use [dependency injection in view files](views/dependency-injection.md), using the `@inject` directive:
 
 ```cshtml
 @inject SomeService ServiceName
@@ -139,7 +137,7 @@ Your app can also use dependency injection in view files, using the `@inject` di
 
 ## Filters
 
-Filters help developers encapsulate cross-cutting concerns, like exception handling or authorization. Filters enable running custom pre- and post-processing logic for action methods, and can be configured to run at certain points within the execution pipeline for a given request. Filters can be applied to controllers or actions as attributes (or can be run globally). Several filters (such as `Authorize`) are included in the framework. `[Authorize]` is the attribute that is used to create MVC authorization filters.
+[Filters](controllers/filters.md) help developers encapsulate cross-cutting concerns, like exception handling or authorization. Filters enable running custom pre- and post-processing logic for action methods, and can be configured to run at certain points within the execution pipeline for a given request. Filters can be applied to controllers or actions as attributes (or can be run globally). Several filters (such as `Authorize`) are included in the framework. `[Authorize]` is the attribute that is used to create MVC authorization filters.
 
 ```csharp
 [Authorize]
@@ -148,23 +146,23 @@ public class AccountController : Controller
 
 ## Areas
 
-Areas provide a way to partition a large ASP.NET Core MVC Web app into smaller functional groupings. An area is an MVC structure inside an application. In an MVC project, logical components like Model, Controller, and View are kept in different folders, and MVC uses naming conventions to create the relationship between these components. For a large app, it might be advantageous to partition the app into separate high level areas of functionality. For instance, an e-commerce app with multiple business units, such as checkout, billing, and search etc. Each of these units have their own logical component views, controllers, and models.
+[Areas](controllers/areas.md) provide a way to partition a large ASP.NET Core MVC Web app into smaller functional groupings. An area is an MVC structure inside an application. In an MVC project, logical components like Model, Controller, and View are kept in different folders, and MVC uses naming conventions to create the relationship between these components. For a large app, it might be advantageous to partition the app into separate high level areas of functionality. For instance, an e-commerce app with multiple business units, such as checkout, billing, and search etc. Each of these units have their own logical component views, controllers, and models.
 
 ## Web APIs
 
 In addition to being a great platform for building web sites, ASP.NET Core MVC has great support for building Web APIs. You can build services that reach a broad range of clients including browsers and mobile devices.
 
-The framework includes support for HTTP content-negotiation with built-in support to format data as JSON or XML. Write custom formatters to add support for your own formats.
+The framework includes support for HTTP content-negotiation with built-in support to [format data](../web-api/advanced/formatting.md) as JSON or XML. Write [custom formatters](../web-api/advanced/custom-formatters.md) to add support for your own formats.
 
-Use link generation to enable support for hypermedia. Easily enable support for Cross-Origin Resource Sharing (CORS) so that your Web APIs can be shared across multiple Web applications.
+Use link generation to enable support for hypermedia. Easily enable support for [Cross-Origin Resource Sharing (CORS)](https://fetch.spec.whatwg.org/#http-cors-protocol) so that your Web APIs can be shared across multiple Web applications.
 
 ## Testability
 
-The framework's use of interfaces and dependency injection make it well-suited to unit testing, and the framework includes features (like a TestHost and InMemory provider for Entity Framework) that make integration tests quick and easy as well. Learn more about how to test controller logic.
+The framework's use of interfaces and dependency injection make it well-suited to unit testing, and the framework includes features (like a TestHost and InMemory provider for Entity Framework) that make [integration tests](../test/integration-tests.md) quick and easy as well. Learn more about [how to test controller logic](controllers/testing.md).
 
 ## Razor view engine
 
-ASP.NET Core MVC views use the Razor view engine to render views. Razor is a compact, expressive, and fluid template markup language for defining views using embedded C# code. Razor is used to dynamically generate web content on the server. You can cleanly mix server code with client side content and code.
+[ASP.NET Core MVC views](views/overview.md) use the [Razor view engine](views/razor.md) to render views. Razor is a compact, expressive, and fluid template markup language for defining views using embedded C# code. Razor is used to dynamically generate web content on the server. You can cleanly mix server code with client side content and code.
 
 ```cshtml
 <ul>
@@ -174,7 +172,7 @@ ASP.NET Core MVC views use the Razor view engine to render views. Razor is a com
 </ul>
 ```
 
-Using the Razor view engine you can define layouts, partial views and replaceable sections.
+Using the Razor view engine you can define [layouts](views/layout.md), [partial views](views/partial.md) and replaceable sections.
 
 ## Strongly typed views
 
@@ -194,7 +192,7 @@ For example, the following view renders a model of type `IEnumerable<Product>`:
 
 ## Tag Helpers
 
-Tag Helpers enable server side code to participate in creating and rendering HTML elements in Razor files. You can use tag helpers to define custom tags (for example, `<environment>`) or to modify the behavior of existing tags (for example, ``). Tag Helpers bind to specific elements based on the element name and its attributes. They provide the benefits of server-side rendering while still preserving an HTML editing experience.
+[Tag Helpers](views/tag-helpers/intro.md) enable server side code to participate in creating and rendering HTML elements in Razor files. You can use tag helpers to define custom tags (for example, `<environment>`) or to modify the behavior of existing tags (for example, `<label>`). Tag Helpers bind to specific elements based on the element name and its attributes. They provide the benefits of server-side rendering while still preserving an HTML editing experience.
 
 There are many built-in Tag Helpers for common tasks - such as creating forms, links, loading assets and more - and even more available in public GitHub repositories and as NuGet packages. Tag Helpers are authored in C#, and they target HTML elements based on element name, attribute name, or parent tag. For example, the built-in LinkTagHelper can be used to create a link to the `Login` action of the `AccountsController`:
 
@@ -223,13 +221,13 @@ Tag Helpers provide an HTML-friendly development experience and a rich IntelliSe
 
 ## View Components
 
-View Components allow you to package rendering logic and reuse it throughout the application. They're similar to partial views, but with associated logic.
+[View Components](views/view-components.md) allow you to package rendering logic and reuse it throughout the application. They're similar to [partial views](views/partial.md), but with associated logic.
 
 ## Compatibility version
 
-The `SetCompatibilityVersion` method allowed an app to opt in or opt out of potentially breaking behavior changes introduced in ASP.NET Core MVC 2.1 or later. The method is a no-op for ASP.NET Core 3.0 and later apps, and it's removed in ASP.NET Core 11. For more information, see Compatibility version for ASP.NET Core MVC and MVC compatibility options removed.
+The `SetCompatibilityVersion` method allowed an app to opt in or opt out of potentially breaking behavior changes introduced in ASP.NET Core MVC 2.1 or later. The method is a no-op for ASP.NET Core 3.0 and later apps, and it's removed in ASP.NET Core 11. For more information, see [Compatibility version for ASP.NET Core MVC](compatibility-version.md) and [MVC compatibility options removed](../breaking-changes/11/mvc-compatibility-options-removed.md).
 
 ## Related content
 
-* MyTested.AspNetCore.Mvc - Fluent Testing Library for ASP.NET Core MVC: Strongly-typed unit testing library, providing a fluent interface for testing MVC and web API apps. (*Not maintained or supported by Microsoft.*)
-* Dependency injection in ASP.NET Core
+* [MyTested.AspNetCore.Mvc - Fluent Testing Library for ASP.NET Core MVC](https://github.com/ivaylokenov/MyTested.AspNetCore.Mvc): Strongly-typed unit testing library, providing a fluent interface for testing MVC and web API apps. (*Not maintained or supported by Microsoft.*)
+* [Dependency injection in ASP.NET Core](../fundamentals/dependency-injection.md)

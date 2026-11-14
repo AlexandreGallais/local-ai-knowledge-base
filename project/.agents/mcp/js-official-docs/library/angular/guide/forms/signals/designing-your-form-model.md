@@ -1,12 +1,3 @@
----
-title: "Designing your form model (part 1 of 2)"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/forms/signals/designing-your-form-model.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Designing your form model
 
 Signal Forms uses a model-driven approach, deriving the form's state and structure directly from the model you provide. Because it serves as the foundation of the entire form, it is important to start with a well-designed form model. This guide explores best practices for designing form models.
@@ -36,13 +27,13 @@ Forms should use a form model tailored to the input experience, rather than simp
 
 ### Use specific types
 
-Always define interfaces or types for your models as shown in Using TypeScript types. Explicit types provide better IntelliSense, catch errors at compile time, and serve as documentation for what data the form contains.
+Always define interfaces or types for your models as shown in [Using TypeScript types](/guide/forms/signals/models#using-typescript-types). Explicit types provide better IntelliSense, catch errors at compile time, and serve as documentation for what data the form contains.
 
 ### Initialize all fields
 
 Provide initial values for every field in your model:
 
-```ts
+```ts {prefer, header: 'All fields initialized'}
 const taskModel = signal({
   title: '',
   description: '',
@@ -51,7 +42,7 @@ const taskModel = signal({
 });
 ```
 
-```ts
+```ts {avoid, header: 'Partial initialization'}
 const taskModel = signal({
   title: '',
   // Missing description, priority, completed
@@ -64,14 +55,14 @@ Missing initial values mean those fields won't exist in the field tree, making t
 
 Each model should represent a single form or a cohesive set of related data:
 
-```ts
+```ts {prefer, header: 'Focused on a single purpose'}
 const loginModel = signal({
   email: '',
   password: '',
 });
 ```
 
-```ts
+```ts {avoid, header: 'Mixing unrelated concerns'}
 const appModel = signal({
   // Login data
   email: '',
@@ -90,12 +81,12 @@ Separate models for different concerns makes forms easier to understand and reus
 
 Design models with validation in mind. Group fields that validate together:
 
-```ts
-// Password <example-value> grouped for comparison
+```ts {prefer, header: 'Related fields grouped for comparison'}
+// Password fields grouped for comparison
 interface PasswordChangeData {
-  currentPassword: <example-value>;
-  newPassword: <example-value>;
-  confirmPassword: <example-value>;
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
 }
 ```
 
@@ -105,11 +96,11 @@ This structure makes cross-field validation (like checking if `newPassword` matc
 
 Properties on your form model should match the data types expected by your UI controls.
 
-For example, consider a beverage order form with a `size` field (6, 12, or 24 pack) and a `quantity` field. The UI uses a dropdown (`<select>`) for size and a number input (``) for quantity.
+For example, consider a beverage order form with a `size` field (6, 12, or 24 pack) and a `quantity` field. The UI uses a dropdown (`<select>`) for size and a number input (`<input type="number">`) for quantity.
 
-Although the size options look numeric, `<select>` elements work with string values, so `size` should be modeled as a string. An `` on the other hand, does work with numbers, so `quantity` can be modeled as a number.
+Although the size options look numeric, `<select>` elements work with string values, so `size` should be modeled as a string. An `<input type="number">` on the other hand, does work with numbers, so `quantity` can be modeled as a number.
 
-```ts
+```ts {prefer, header: 'Appropriate data types for the bound UI controls'}
 interface BeverageOrderFormModel {
   size: string; // Bound to: <select> (option values: "6", "12", "24")
   quantity: number; // Bound to: <input type="number">
@@ -120,9 +111,9 @@ interface BeverageOrderFormModel {
 
 A form model must not contain `undefined` values or properties. In Signal Forms the structure of the form is derived from the structure of the model, and `undefined` signifies the _absence of a field_, rather than a field with an empty value. This means you must also avoid optional fields (e.g., `{property?: string}`), as they implicitly allow `undefined`.
 
-To represent a property with an empty value in your form model, use a value that the UI control understands to mean "empty" (e.g. `""` for a ``). If you're designing a custom UI control, `null` often works as a good value to signify "empty".
+To represent a property with an empty value in your form model, use a value that the UI control understands to mean "empty" (e.g. `""` for a `<input type="text">`). If you're designing a custom UI control, `null` often works as a good value to signify "empty".
 
-```ts
+```ts {prefer, header: 'Appropriate empty values'}
 interface UserFormModel {
   name: string; // Bound to <input type="text">
   birthday: Date | null; // Bound to <input type="date">
@@ -152,13 +143,13 @@ interface CreateAccountFormModel {
 
 When creating the form we encounter a dilemma, what should the initial value in the model be? It may be tempting to create a `form<CreateAccountFormModel | null>()` since we don't have any input from the user yet.
 
-```ts
+```ts {avoid, header: 'Using null as empty value for complex object'}
 createAccountForm = form<CreateAccountFormModel | null>(signal(/* what goes here, null? */));
 ```
 
 However, it is important to remember that Signal Forms is _model driven_. If our model is `null` and `null` doesn't have a `name` or `username` property, that means our form won't have those subfields either. Instead what we really want is an instance of `CreateAccountFormModel` with all of its leaf fields set to an empty value.
 
-```ts
+```ts {prefer, header: 'Same shape value with empty values for properties'}
 createAccountForm = form<CreateAccountFormModel>(
   signal({
     name: {
@@ -201,7 +192,7 @@ Name: <input type="text" />
 
 The best way to handle this is to use a form model with a static structure that includes fields for _all_ potential payment methods. In our schema, we can hide or disable the fields that are not currently available.
 
-```ts
+```ts {prefer, header: 'Static structure model'}
 interface BillPayFormModel {
   name: string;
   method: {
@@ -230,7 +221,7 @@ Using this model, both `card` and `bank` objects are always present in the form'
 
 In contrast, a dynamic form model may initially seem like a good fit for this use case. After all, we don't need fields for account and routing number if the user selected "Credit Card". We may be tempted to model this as a discriminated union:
 
-```ts
+```ts {avoid, header: 'Dynamic structure model'}
 interface BillPayFormModel {
   name: string;
   method:
@@ -281,7 +272,7 @@ Another case where dynamic structure is acceptable is when a complex object is t
 
 For example, consider a user profile form that includes a `location` field. The location is selected using a complex "location picker" widget (perhaps a map or a search-ahead dropdown) that returns a coordinate object. In the case where the location is not yet selected, or the user chooses not to share their location, the picker indicates the location as `null`.
 
-```ts
+```ts {prefer, header: 'Dynamic structure is ok when field is treated as atomic'}
 interface Location {
   lat: number;
   lng: number;
@@ -303,3 +294,129 @@ Username: <input [formField]="userForm.username" /> Location:
 ```
 
 Here, `<location-picker>` consumes and produces the entire `Location` object (or `null`), and doesn't access `userForm.location.lat` or `userForm.location.lng`. Therefore, `location` can safely have a dynamic shape without violating the principles of model-driven forms.
+
+## Translating between form model and domain model
+
+Given that the form model and domain model represent the same concept differently, we need to have a way to translate between these different representations. When we want to present some existing data in the system to the user in a form, we need to transform it from the domain model representation to the form model representation. Conversely when we want to save a user's changes, we need to transform the data from the form model representation to the domain model representation.
+
+Let's imagine that we have a domain model and a form model and we've written some functions to convert between them.
+
+```ts
+interface MyDomainModel { ... }
+
+interface MyFormModel { ... }
+
+// Instance of `MyFormModel` populated with empty input (e.g. `''` for string inputs, etc.)
+const EMPTY_MY_FORM_MODEL: MyFormModel = { ... };
+
+function domainModelToFormModel(domainModel: MyDomainModel): MyFormModel { ... }
+
+function formModelToDomainModel(formModel: MyFormModel): MyDomainModel { ... }
+```
+
+### Domain model to form model
+
+When we're creating a form to edit some existing domain model in the system, we'll typically receive that domain model either as an `input()` to our form component or from a backend (e.g. via a resource). In either case, `linkedSignal` provides an excellent way to apply our transform.
+
+In the case where we receive the domain model as an `input()`, we can use `linkedSignal` to create a writable form model from the input signal.
+
+```ts {prefer, header: 'Use linkedSignal to convert domain model to form model'}
+@Component(...)
+class MyForm {
+  // The domain model to initialize the form with, if not given we start with an empty form.
+  readonly domainModel = input<MyDomainModel>();
+
+  private readonly formModel = linkedSignal({
+    // Linked signal based on the domain model
+    source: this.domainModel,
+    // If domain model is defined convert it to a form model, otherwise use an empty form model.
+    computation: (domainModel) => domainModel
+      ? domainModelToFormModel(domainModel)
+      : EMPTY_MY_FORM_MODEL
+  });
+
+  protected readonly myForm = form(this.formModel);
+}
+```
+
+Similarly, when we receive the domain model from the backend via a resource, we can create a `linkedSignal` based on its value to create our `formModel`. In this scenario, the domain model may take some time to fetch, and we should disable the form until the data is loaded.
+
+```ts {prefer, header: 'Disable or hide the form when data is unavailable'}
+@Component(...)
+class MyForm {
+  // Fetch the domain model from the backend.
+  readonly domainModelResource: ResourceRef<MyDomainModel | undefined> = httpResource(...);
+
+  private readonly formModel = linkedSignal({
+    // Linked signal based on the domain model resource
+    source: this.domainModelResource.value,
+    // Convert the domain model once it loads, use an empty form model while loading.
+    computation: (domainModel) => domainModel
+      ? domainModelToFormModel(domainModel)
+      : EMPTY_MY_FORM_MODEL
+  });
+
+  protected readonly myForm = form(this.formModel, (root) => {
+    // Disable the entire form when the resource is loading.
+    disabled(root, {when: () => this.domainModelResource.isLoading()});
+  });
+}
+```
+
+The examples above show a pure derivation of the form model, directly from the domain model. However, in some cases you may wish to do a more advanced diff operation between the new domain model value and the previous domain model and form model values. This can be implemented based on the `linkedSignal` [previous state](/guide/signals/linked-signal#accounting-for-previous-state).
+
+### Form model to domain model
+
+When we're ready to save the user's input back to the system, we need to convert it to the domain model representation. This would typically happen when the user submits the form, or continuously as the user edits for an auto-saving form.
+
+To save on submit, we can handle the conversion in the `submit` function.
+
+```ts {prefer, header: 'Convert form model to domain model on submit'}
+@Component(...)
+class MyForm {
+  private readonly myDataService = inject(MyDataService);
+
+  protected readonly myForm = form<MyFormModel>(...);
+
+  handleSubmit() {
+    submit(this.myForm, async () => {
+      await this.myDataService.update(formModelToDomainModel(this.myForm().value()));
+    });
+  };
+}
+```
+
+Alternatively, you could also send the form model directly to the server and do the conversion from
+form model to domain model on the server.
+
+For continuous saving, update the domain model in an `effect`.
+
+```ts {prefer, header: 'Convert form model to domain model in an effect for auto-saving'}
+@Component(...)
+class MyForm {
+  readonly domainModel = model.required<MyDomainModel>()
+
+  protected readonly myForm = form(...);
+
+  constructor() {
+    effect(() => {
+      // When the form model changes to a valid value, update the domain model.
+      if (this.myForm().valid()) {
+        this.domainModel.set(formModelToDomainModel(this.myForm().value()));
+      }
+    });
+  };
+}
+```
+
+The examples above show a pure conversion from the form model to the domain model. However, it is perfectly acceptable to consider the full form state in addition to just the form model value. For example, to save bytes we might want to only send partial updates to the server based on what the user changed. In this case our conversion function could be designed to take the entire form state and return a sparse domain model based on the form's values and dirtiness.
+
+```ts
+type Sparse<T> = T extends object ? {
+    [P in keyof T]?: Sparse<T[P]>;
+} : T;
+
+function formStateToPartialDomainModel(
+  formState: FieldState<MyFormModel>
+): Sparse<MyDomainModel> { ... }
+```

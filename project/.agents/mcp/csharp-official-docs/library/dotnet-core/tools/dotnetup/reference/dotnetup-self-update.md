@@ -1,16 +1,14 @@
 ---
-title: "dotnetup self update command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/reference/dotnetup-self-update.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnetup self update command
+description: Command reference for updating the dotnetup executable and configuring update notifications.
+ms.topic: reference
+ms.date: 10/13/2026
+ai-usage: ai-assisted
 ---
 
 # dotnetup self update command
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 ## Name
 
@@ -30,7 +28,7 @@ The command updates the running standalone `dotnetup` executable in place.
 It downloads the latest available build for the selected release channel and
 the current operating system and architecture.
 It doesn't update managed .NET SDKs or runtimes. For those installations, use
-`dotnetup update`.
+[`dotnetup update`](dotnetup-update.md).
 
 On the same version channel, an equal or older available version doesn't
 replace the installed executable unless you specify `--force`.
@@ -49,7 +47,7 @@ Retry those commands after self-update finishes.
 
 For older versions that don't recognize `self update`, or for recovery when
 the executable no longer starts, use the
-download scripts.
+[download scripts](../getting-started.md#download-dotnetup).
 
 ## Options
 
@@ -119,6 +117,6 @@ dotnetup self update --channel preview --force
 
 ## See also
 
-- Update or remove dotnetup
-- How dotnetup verifies downloads
-- Troubleshoot dotnetup
+- [Update or remove dotnetup](../usecases/manage-dotnetup.md)
+- [How dotnetup verifies downloads](../concepts/download-verification.md#the-dotnetup-executable)
+- [Troubleshoot dotnetup](../troubleshooting.md)

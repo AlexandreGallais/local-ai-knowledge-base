@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataAssemblyImport::GetManifestResourceProps Method"
 title: "IMetaDataAssemblyImport::GetManifestResourceProps Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataassemblyimport-getmanifestresourceprops-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataAssemblyImport.GetManifestResourceProps"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataAssemblyImport::GetManifestResourceProps"
+  - "IMetaDataAssemblyImport::GetManifestResourceProps method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataAssemblyImport::GetManifestResourceProps Method
 
 Gets the set of properties of the manifest resource with the specified metadata signature.
@@ -46,11 +53,11 @@ HRESULT GetManifestResourceProps (
  [out] A pointer to a value that specifies the offset to the beginning of the resource within the file.
 
  `pdwResourceFlags`
- [out] A pointer to flags that describe the metadata applied to a resource. The flags value is a combination of one or more CorManifestResourceFlags values.
+ [out] A pointer to flags that describe the metadata applied to a resource. The flags value is a combination of one or more [CorManifestResourceFlags](../enumerations/cormanifestresourceflags-enumeration.md) values.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -58,4 +65,4 @@ HRESULT GetManifestResourceProps (
 
 ## See also
 
-- IMetaDataAssemblyImport Interface
+- [IMetaDataAssemblyImport Interface](imetadataassemblyimport-interface.md)

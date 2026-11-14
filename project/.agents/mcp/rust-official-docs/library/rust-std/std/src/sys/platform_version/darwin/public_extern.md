@@ -1,15 +1,6 @@
----
-title: "std::sys::platform_version::darwin::public_extern"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sys/platform_version/darwin/public_extern.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::sys::platform_version::darwin::public_extern
 
-#### Runtime version checking ABI for other compilers.
+# Runtime version checking ABI for other compilers.
 
 The symbols in this file are useful for us to expose to allow linking code written in the
 following languages when using their version checking functionality:
@@ -25,7 +16,7 @@ should not be relied upon to be available. The intended effect is that linking w
 with Clang's `__builtin_available` (or similar) will continue to work. For example, we may
 decide to remove `__isOSVersionAtLeast` if support for Clang 11 (Xcode 11) is dropped.
 
-#### Background
+## Background
 
 The original discussion of this feature can be found at:
 - <https://lists.llvm.org/pipermail/cfe-dev/2016-July/049851.html>
@@ -56,7 +47,7 @@ The workaround would be to link `libclang_rt.osx.a` or otherwise use Clang's `co
 
 See also discussion in <https://github.com/rust-lang/compiler-builtins/pull/794>.
 
-#### Implementation details
+## Implementation details
 
 NOTE: Since macOS 10.15, `libSystem.dylib` _has_ actually provided the undocumented
 `_availability_version_check` via `libxpc` for doing the version lookup (zippered, which is why

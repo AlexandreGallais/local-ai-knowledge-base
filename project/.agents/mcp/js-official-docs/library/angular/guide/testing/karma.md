@@ -1,15 +1,6 @@
----
-title: "Testing with Karma and Jasmine"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/testing/karma.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Testing with Karma and Jasmine
 
-While Vitest is the default test runner for new Angular projects, Karma is still a supported and widely used test runner. This guide provides instructions for testing your Angular application using the Karma test runner with the Jasmine testing framework.
+While [Vitest](https://vitest.dev) is the default test runner for new Angular projects, [Karma](https://karma-runner.github.io) is still a supported and widely used test runner. This guide provides instructions for testing your Angular application using the Karma test runner with the [Jasmine](https://jasmine.github.io) testing framework.
 
 ## Setting Up Karma and Jasmine
 
@@ -29,25 +20,20 @@ To add Karma and Jasmine to an existing project, follow these steps:
 
 1.  **Install the necessary packages:**
 
-    ```
-      
+    <docs-code-multifile>
+      <docs-code header="npm" language="shell">
         npm install --save-dev karma karma-chrome-launcher karma-coverage karma-jasmine karma-jasmine-html-reporter jasmine-core @types/jasmine
-```
-      File: `yarn`
-
-```shell
+      </docs-code>
+      <docs-code header="yarn" language="shell">
         yarn add --dev karma karma-chrome-launcher karma-coverage karma-jasmine karma-jasmine-html-reporter jasmine-core @types/jasmine
-```
-      File: `pnpm`
-
-```shell
+      </docs-code>
+      <docs-code header="pnpm" language="shell">
         pnpm add -D karma karma-chrome-launcher karma-coverage karma-jasmine karma-jasmine-html-reporter jasmine-core @types/jasmine
-```
-      File: `bun`
-
-```shell
+      </docs-code>
+      <docs-code header="bun" language="shell">
         bun add --dev karma karma-chrome-launcher karma-coverage karma-jasmine karma-jasmine-html-reporter jasmine-core @types/jasmine
-```
+      </docs-code>
+    </docs-code-multifile>
 
 2.  **Configure the test runner in `angular.json`:**
 
@@ -90,13 +76,13 @@ To add Karma and Jasmine to an existing project, follow these steps:
 
 ## Running Tests
 
-Once your project is configured, run the tests using the `ng test` command:
+Once your project is configured, run the tests using the [`ng test`](cli/test) command:
 
 ```shell
 ng test
 ```
 
-The `ng test` command builds the application in _watch mode_ and launches the Karma test runner.
+The `ng test` command builds the application in _watch mode_ and launches the [Karma test runner](https://karma-runner.github.io).
 
 The console output looks like below:
 
@@ -111,7 +97,9 @@ TOTAL: 3 SUCCESS
 
 ```
 
-The test output is displayed in the browser using Karma Jasmine HTML Reporter.
+The test output is displayed in the browser using [Karma Jasmine HTML Reporter](https://github.com/dfederm/karma-jasmine-html-reporter).
+
+<img alt="Jasmine HTML Reporter in the browser" src="assets/images/guide/testing/initial-jasmine-html-reporter.png">
 
 Click on a test row to re-run just that test or click on a description to re-run the tests in the selected test group ("test suite").
 
@@ -129,7 +117,7 @@ If you want to customize Karma, you can create a `karma.conf.js` by running the 
 ng generate config karma
 ```
 
-HELPFUL: Read more about Karma configuration in the Karma configuration guide.
+HELPFUL: Read more about Karma configuration in the [Karma configuration guide](https://karma-runner.github.io/6.4/config/configuration-file.html).
 
 ### Setting the Test Runner in `angular.json`
 
@@ -198,10 +186,12 @@ If your tests aren't working as you expect, you can inspect and debug them in th
 
 To debug an application with the Karma test runner:
 
-1.  Reveal the Karma browser window. See Set up for testing if you need help with this step.
+1.  Reveal the Karma browser window. See [Set up for testing](guide/testing#set-up-for-testing) if you need help with this step.
 2.  Click the **DEBUG** button to open a new browser tab and re-run the tests.
 3.  Open the browser's **Developer Tools**. On Windows, press `Ctrl-Shift-I`. On macOS, press `Command-Option-I`.
 4.  Pick the **Sources** section.
 5.  Press `Control/Command-P`, and then start typing the name of your test file to open it.
 6.  Set a breakpoint in the test.
 7.  Refresh the browser, and notice how it stops at the breakpoint.
+
+<img alt="Karma debugging" src="assets/images/guide/testing/karma-1st-spec-debug.png">

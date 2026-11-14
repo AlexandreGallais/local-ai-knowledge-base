@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: WebAssemblyHostBuilder loads environment variables into IConfiguration"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/11/wasm-env-vars-in-configuration.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+ai-usage: ai-assisted
+description: "Learn about the breaking change in ASP.NET Core 11 where WebAssemblyHostBuilder.CreateDefault adds environment variables to IConfiguration by default."
+ms.date: 06/04/2026
 ---
-
 # WebAssemblyHostBuilder loads environment variables into IConfiguration
 
-`WebAssemblyHostBuilder.CreateDefault` now calls `AddEnvironmentVariables()` on the configuration builder. Environment variables that are passed into the Blazor WebAssembly runtime through `MonoConfig.environmentVariables` are now visible through `IConfiguration` in addition to `System.Environment.GetEnvironmentVariable*`.
+`WebAssemblyHostBuilder.CreateDefault` now calls `AddEnvironmentVariables()` on the configuration builder. Environment variables that are passed into the Blazor WebAssembly runtime through `MonoConfig.environmentVariables` are now visible through `IConfiguration` in addition to <xref:System.Environment.GetEnvironmentVariable*>.
 
 ## Version introduced
 
@@ -17,7 +14,7 @@ license: "CC-BY-4.0"
 
 ## Previous behavior
 
-Previously, environment variables that were available to a Blazor WebAssembly app through `System.Environment.GetEnvironmentVariable*` weren't loaded into `IConfiguration`. To read them through `IConfiguration`, you had to add the environment-variables provider manually:
+Previously, environment variables that were available to a Blazor WebAssembly app through <xref:System.Environment.GetEnvironmentVariable*> weren't loaded into `IConfiguration`. To read them through `IConfiguration`, you had to add the environment-variables provider manually:
 
 ```csharp
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -44,11 +41,11 @@ The configuration sources are still ordered so that environment variables overri
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](/dotnet/core/compatibility/categories#behavioral-change).
 
 ## Reason for change
 
-This change aligns the Blazor WebAssembly host with the server-side `WebApplication.CreateBuilder()` configuration sources and unblocks .NET Aspire integration for Blazor WebAssembly. Aspire reads configuration values such as `OTEL_EXPORTER_OTLP_ENDPOINT` from `IConfiguration` for service discovery and OpenTelemetry. For more information, see dotnet/aspnetcore#64578.
+This change aligns the Blazor WebAssembly host with the server-side `WebApplication.CreateBuilder()` configuration sources and unblocks .NET Aspire integration for Blazor WebAssembly. Aspire reads configuration values such as `OTEL_EXPORTER_OTLP_ENDPOINT` from `IConfiguration` for service discovery and OpenTelemetry. For more information, see [dotnet/aspnetcore#64578](https://github.com/dotnet/aspnetcore/pull/64578).
 
 ## Recommended action
 
@@ -65,5 +62,5 @@ builder.Configuration["Logging:LogLevel:Default"] = "Information";
 
 ## Affected APIs
 
-- `Microsoft.AspNetCore.Components.WebAssembly.Hosting.WebAssemblyHostBuilder.CreateDefault*`
-- `Microsoft.Extensions.Configuration.EnvironmentVariablesExtensions.AddEnvironmentVariables*`
+- <xref:Microsoft.AspNetCore.Components.WebAssembly.Hosting.WebAssemblyHostBuilder.CreateDefault*?displayProperty=fullName>
+- <xref:Microsoft.Extensions.Configuration.EnvironmentVariablesExtensions.AddEnvironmentVariables*?displayProperty=fullName>

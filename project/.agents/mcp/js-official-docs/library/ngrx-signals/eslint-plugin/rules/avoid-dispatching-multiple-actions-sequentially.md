@@ -1,12 +1,3 @@
----
-title: "avoid-dispatching-multiple-actions-sequentially"
-tool: "ngrx-signals"
-version: "22.0"
-source: "https://github.com/ngrx/platform/blob/a4995391ef631f1bd60d539f436a1aa5c23c4fe5/projects/www/src/app/pages/guide/eslint-plugin/rules/avoid-dispatching-multiple-actions-sequentially.md"
-commit: "a4995391ef631f1bd60d539f436a1aa5c23c4fe5"
-license: "MIT"
----
-
 # avoid-dispatching-multiple-actions-sequentially
 
 It is recommended to only dispatch one `Action` at a time.
@@ -16,6 +7,9 @@ It is recommended to only dispatch one `Action` at a time.
 - **Suggestion**: No
 - **Requires type checking**: No
 - **Configurable**: No
+
+<!-- Everything above this generated, do not edit -->
+<!-- MANUAL-DOC:START -->
 
 ## Rule Details
 

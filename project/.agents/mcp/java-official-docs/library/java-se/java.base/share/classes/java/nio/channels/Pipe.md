@@ -1,12 +1,3 @@
----
-title: "Pipe class (java.nio.channels)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/channels/Pipe.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Pipe class (java.nio.channels)
 
 ```java
@@ -15,17 +6,21 @@ public abstract class Pipe
 
 A pair of channels that implements a unidirectional pipe.
 
- A pipe consists of a pair of channels: A writable sink channel and a readable source
+<p> A pipe consists of a pair of channels: A writable {@link
+Pipe.SinkChannel sink} channel and a readable {@link Pipe.SourceChannel source}
 channel.  Once some bytes are written to the sink channel they can be read
 from the source channel in exactly the order in which they were written.
 
- Whether or not a thread writing bytes to a pipe will block until another
+<p> Whether or not a thread writing bytes to a pipe will block until another
 thread reads those bytes, or some previously-written bytes, from the pipe is
 system-dependent and therefore unspecified.  Many pipe implementations will
 buffer up to a certain number of bytes between the sink and source channels,
-but such buffering should not be assumed.
+but such buffering should not be assumed.  </p>
 
-**Since:** 1.4
+
+@author Mark Reinhold
+@author JSR-51 Expert Group
+@since 1.4
 
 ## Pipe.SourceChannel(SelectorProvider)
 
@@ -35,9 +30,8 @@ protected SourceChannel(SelectorProvider provider)
 
 Constructs a new instance of this class.
 
-Parameters:
-
-- `provider`: The selector provider
+@param  provider
+        The selector provider
 
 ## Pipe.validOps()
 
@@ -48,10 +42,10 @@ public final int validOps()
 Returns an operation set identifying this channel's supported
 operations.
 
- Pipe-source channels only support reading, so this method
-returns `SelectionKey.OP_READ`.
+<p> Pipe-source channels only support reading, so this method
+returns {@link SelectionKey#OP_READ}.  </p>
 
-**Returns:** The valid-operation set
+@return  The valid-operation set
 
 ## Pipe.SinkChannel(SelectorProvider)
 
@@ -61,9 +55,8 @@ protected SinkChannel(SelectorProvider provider)
 
 Initializes a new instance of this class.
 
-Parameters:
-
-- `provider`: The selector provider
+@param  provider
+        The selector provider
 
 ## Pipe.validOps()
 
@@ -74,10 +67,10 @@ public final int validOps()
 Returns an operation set identifying this channel's supported
 operations.
 
- Pipe-sink channels only support writing, so this method returns
-`SelectionKey.OP_WRITE`.
+<p> Pipe-sink channels only support writing, so this method returns
+{@link SelectionKey#OP_WRITE}.  </p>
 
-**Returns:** The valid-operation set
+@return  The valid-operation set
 
 ## Pipe.Pipe()
 
@@ -95,7 +88,7 @@ public abstract SourceChannel source()
 
 Returns this pipe's source channel.
 
-**Returns:** This pipe's source channel
+@return  This pipe's source channel
 
 ## Pipe.sink()
 
@@ -105,7 +98,7 @@ public abstract SinkChannel sink()
 
 Returns this pipe's sink channel.
 
-**Returns:** This pipe's sink channel
+@return  This pipe's sink channel
 
 ## Pipe.open()
 
@@ -115,12 +108,12 @@ public static Pipe open() throws IOException
 
 Opens a pipe.
 
- The new pipe is created by invoking the openPipe method of the
-system-wide default `java.nio.channels.spi.SelectorProvider`
-object.
+<p> The new pipe is created by invoking the {@link
+java.nio.channels.spi.SelectorProvider#openPipe openPipe} method of the
+system-wide default {@link java.nio.channels.spi.SelectorProvider}
+object.  </p>
 
-**Returns:** A new pipe
+@return  A new pipe
 
-Throws:
-
-- `IOException`: If an I/O error occurs
+@throws  IOException
+         If an I/O error occurs

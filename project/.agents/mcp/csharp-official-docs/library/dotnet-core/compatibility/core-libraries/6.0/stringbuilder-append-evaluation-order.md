@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: New StringBuilder.Append overloads"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/6.0/stringbuilder-append-evaluation-order.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 6 breaking change where new overloads were added to StringBuilder.Append and StringBuilder.AppendLine that may result in different runtime behavior.
+ms.date: 10/14/2021
 ---
-
 # StringBuilder.Append overloads and evaluation order
 
-C# 10 adds support for better string interpolation, including the ability to target custom "handlers" in addition to strings. `System.Text.StringBuilder` takes advantage of this with new overloads of `System.Text.StringBuilder.Append*` and `System.Text.StringBuilder.AppendLine*` that accept a custom interpolated string handler. Existing calls to these methods may now start binding to the new overloads. In general, behavior is identical but with improved performance. For example, rather than a string first being created and then that string appended, the individual components of the interpolated string are appended directly to the builder. However, this can change the evaluation order of objects used as format items, which can manifest as a difference in behavior.
+C# 10 adds support for [better string interpolation](https://devblogs.microsoft.com/dotnet/string-interpolation-in-c-10-and-net-6/), including the ability to target custom "handlers" in addition to strings. <xref:System.Text.StringBuilder> takes advantage of this with new overloads of <xref:System.Text.StringBuilder.Append*> and <xref:System.Text.StringBuilder.AppendLine*> that accept a custom interpolated string handler. Existing calls to these methods may now start binding to the new overloads. In general, behavior is identical but with improved performance. For example, rather than a string first being created and then that string appended, the individual components of the interpolated string are appended directly to the builder. However, this can change the evaluation order of objects used as format items, which can manifest as a difference in behavior.
 
 ## Previous behavior
 
@@ -59,15 +55,15 @@ stringBuilder.Append($"{a} {stringBuilder}");
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
-It's common for developers to pass <example-value> strings to `System.Text.StringBuilder`, as it's more convenient than manually splitting the string up and calling `System.Text.StringBuilder.Append*` for each part. These new overloads enable the concise syntax and most of the performance of doing the individual calls.
+It's common for developers to pass interpolated strings to <xref:System.Text.StringBuilder>, as it's more convenient than manually splitting the string up and calling <xref:System.Text.StringBuilder.Append*?displayProperty=nameWithType> for each part. These new overloads enable the concise syntax and most of the performance of doing the individual calls.
 
 ## Recommended action
 
-In most cases where `System.Text.StringBuilder.Append*` and `System.Text.StringBuilder.AppendLine*` are used, you won't notice a functional difference. If you find a difference that proves to be problematic, you can restore the previous behavior by adding a cast to `(string)` prior to the interpolated string. For example:
+In most cases where <xref:System.Text.StringBuilder.Append*?displayProperty=nameWithType> and <xref:System.Text.StringBuilder.AppendLine*?displayProperty=nameWithType> are used, you won't notice a functional difference. If you find a difference that proves to be problematic, you can restore the previous behavior by adding a cast to `(string)` prior to the interpolated string. For example:
 
 ```csharp
 stringBuilder.Append((string)$"{a} {b}")
@@ -77,9 +73,9 @@ This is not recommended, however, unless it's actually required for compatibilit
 
 ## Affected APIs
 
-- `System.Text.StringBuilder.Append*`
-- `System.Text.StringBuilder.AppendLine*`
+- <xref:System.Text.StringBuilder.Append*?displayProperty=fullName>
+- <xref:System.Text.StringBuilder.AppendLine*?displayProperty=fullName>
 
 ## See also
 
-- String Interpolation in C# 10 and .NET 6
+- [String Interpolation in C# 10 and .NET 6](https://devblogs.microsoft.com/dotnet/string-interpolation-in-c-10-and-net-6/)

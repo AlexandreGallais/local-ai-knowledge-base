@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugDataTarget::ReadVirtual Method"
 title: "ICorDebugDataTarget::ReadVirtual Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugdatatarget-readvirtual-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugDataTarget.ReadVirtual Method"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugDataTarget::ReadVirtual"
+helpviewer_keywords:
+  - "ICorDebugDataTarget::ReadVirtual method [.NET debugging]"
+  - "ReadVirtual method, ICorDebugDataTarget interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugDataTarget::ReadVirtual Method
 
 Gets a block of contiguous memory starting at the specified address, and returns it in the supplied buffer.
@@ -42,7 +51,7 @@ If the first byte (at the specified start address) can be read, the call should 
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -52,4 +61,4 @@ If the first byte (at the specified start address) can be read, the call should 
 
 ## See also
 
-- ICorDebugDataTarget Interface
+- [ICorDebugDataTarget Interface](icordebugdatatarget-interface.md)

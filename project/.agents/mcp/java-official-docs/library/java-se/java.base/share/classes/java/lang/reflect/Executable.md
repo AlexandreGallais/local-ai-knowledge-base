@@ -1,24 +1,14 @@
----
-title: "Executable class (java.lang.reflect)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/reflect/Executable.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Executable class (java.lang.reflect)
 
 ```java
 public abstract sealed class Executable extends AccessibleObject implements Member, GenericDeclaration permits Constructor, Method
 ```
 
-A shared superclass for the common functionality of `Method`
-and `Constructor`.
+A shared superclass for the common functionality of {@link Method}
+and {@link Constructor}.
 
-**sealedGraph:**
-
-**Since:** 1.8
+@sealedGraph
+@since 1.8
 
 ## Executable.getDeclaringClass()
 
@@ -26,7 +16,7 @@ and `Constructor`.
 public abstract Class<?> getDeclaringClass()
 ```
 
-Returns the `Class` object representing the class or interface
+Returns the {@code Class} object representing the class or interface
 that declares the executable represented by this object.
 
 ## Executable.getName()
@@ -43,7 +33,9 @@ Returns the name of the executable represented by this object.
 public abstract int getModifiers()
 ```
 
-**See also:** #accessFlags
+{@return the Java language {@linkplain Modifier modifiers} for
+the executable represented by this object}
+@see #accessFlags
 
 ## Executable.accessFlags()
 
@@ -51,11 +43,13 @@ public abstract int getModifiers()
 public Set<AccessFlag> accessFlags()
 ```
 
-**See also:** #getModifiers()
+{@return an unmodifiable set of the {@linkplain AccessFlag
+access flags} for the executable represented by this object,
+possibly empty}
 
-**jvms:** 4.6 Methods
-
-**Since:** 20
+@see #getModifiers()
+@jvms 4.6 Methods
+@since 20
 
 ## Executable.getTypeParameters()
 
@@ -63,18 +57,18 @@ public Set<AccessFlag> accessFlags()
 public abstract TypeVariable<?>[] getTypeParameters()
 ```
 
-Returns an array of `TypeVariable` objects that represent the
+Returns an array of {@code TypeVariable} objects that represent the
 type variables declared by the generic declaration represented by this
-`GenericDeclaration` object, in declaration order.  Returns an
+{@code GenericDeclaration} object, in declaration order.  Returns an
 array of length 0 if the underlying generic declaration declares no type
 variables.
 
-**Returns:** an array of `TypeVariable` objects that represent
+@return an array of {@code TypeVariable} objects that represent
     the type variables declared by this generic declaration
-
-Throws:
-
-- `GenericSignatureFormatError`: if the generic signature of this generic declaration does not conform to the format specified in *The Java Virtual Machine Specification*
+@throws GenericSignatureFormatError if the generic
+    signature of this generic declaration does not conform to
+    the format specified in
+    <cite>The Java Virtual Machine Specification</cite>
 
 ## Executable.getParameterTypes()
 
@@ -82,17 +76,19 @@ Throws:
 public abstract Class<?>[] getParameterTypes()
 ```
 
-Returns an array of `Class` objects that represent the formal
+Returns an array of {@code Class} objects that represent the formal
 parameter types, in declaration order, of the executable
 represented by this object.  Returns an array of length
 0 if the underlying executable takes no parameters.
 Note that the constructors of some inner classes
-may have an implicitly declared parameter in addition to explicitly
+may have an {@linkplain java.compiler/javax.lang.model.util.Elements.Origin#MANDATED
+implicitly declared} parameter in addition to explicitly
 declared ones.
 Also note that compact constructors of a record class may have
-implicitly declared parameters.
+{@linkplain java.compiler/javax.lang.model.util.Elements.Origin#MANDATED
+implicitly declared} parameters.
 
-**Returns:** the parameter types for the executable this object
+@return the parameter types for the executable this object
 represents
 
 ## Executable.getParameterCount()
@@ -105,7 +101,7 @@ Returns the number of formal parameters (whether explicitly
 declared or implicitly declared or neither) for the executable
 represented by this object.
 
-**Returns:** The number of formal parameters for the executable this
+@return The number of formal parameters for the executable this
 object represents
 
 ## Executable.getGenericParameterTypes()
@@ -114,17 +110,19 @@ object represents
 public Type[] getGenericParameterTypes()
 ```
 
-Returns an array of `Type` objects that represent the
+Returns an array of {@code Type} objects that represent the
 formal parameter types, in declaration order, of the executable
 represented by this object. An array of length 0 is returned if the
 underlying executable takes no parameters.  Note that the
 constructors of some inner classes may have an implicitly
 declared parameter in addition to explicitly declared ones.
 Compact constructors of a record class may also have
-implicitly declared parameters,
+{@linkplain java.compiler/javax.lang.model.util.Elements.Origin#MANDATED
+implicitly declared} parameters,
 but they are a special case and thus considered as if they had
 been explicitly declared in the source.
-Finally note that as a modeling artifact, the number of returned parameters can differ
+Finally note that as a {@link java.lang.reflect##LanguageJvmModel
+modeling artifact}, the number of returned parameters can differ
 depending on whether or not generic information is present. If
 generic information is present, parameters explicitly
 present in the source or parameters of compact constructors
@@ -132,28 +130,34 @@ of a record class will be returned.
 Note that parameters of compact constructors of a record class are a special case,
 as they are not explicitly present in the source, and its type will be returned
 regardless of the parameters being
-implicitly declared or not.
+{@linkplain java.compiler/javax.lang.model.util.Elements.Origin#MANDATED
+implicitly declared} or not.
 If generic information is not present, implicit and synthetic parameters may be
 returned as well.
 
-If a formal parameter type is a parameterized type,
-the `Type` object returned for it must accurately reflect
+<p>If a formal parameter type is a parameterized type,
+the {@code Type} object returned for it must accurately reflect
 the actual type arguments used in the source code. This assertion also
 applies to the parameters of compact constructors of a record class,
 independently of them being
-implicitly declared or not.
+{@linkplain java.compiler/javax.lang.model.util.Elements.Origin#MANDATED
+implicitly declared} or not.
 
-If a formal parameter type is a type variable or a parameterized
+<p>If a formal parameter type is a type variable or a parameterized
 type, it is created. Otherwise, it is resolved.
 
-**Returns:** an array of `Type`s that represent the formal
+@return an array of {@code Type}s that represent the formal
     parameter types of the underlying executable, in declaration order
-
-Throws:
-
-- `GenericSignatureFormatError`: if the generic method signature does not conform to the format specified in *The Java Virtual Machine Specification*
-- `TypeNotPresentException`: if any of the parameter types of the underlying executable refers to a non-existent type declaration
-- `MalformedParameterizedTypeException`: if any of the underlying executable's parameter types refer to a parameterized type that cannot be instantiated for any reason
+@throws GenericSignatureFormatError
+    if the generic method signature does not conform to the format
+    specified in
+    <cite>The Java Virtual Machine Specification</cite>
+@throws TypeNotPresentException if any of the parameter
+    types of the underlying executable refers to a non-existent type
+    declaration
+@throws MalformedParameterizedTypeException if any of
+    the underlying executable's parameter types refer to a parameterized
+    type that cannot be instantiated for any reason
 
 ## Executable.getParameters()
 
@@ -161,16 +165,17 @@ Throws:
 public Parameter[] getParameters()
 ```
 
-An array of length 0 is returned if the executable
+{@return an array of {@code Parameter} objects representing
+all the parameters to the underlying executable represented by
+this object} An array of length 0 is returned if the executable
 has no parameters.
 
-The parameters of the underlying executable do not necessarily
+<p>The parameters of the underlying executable do not necessarily
 have unique names, or names that are legal identifiers in the
-Java programming language (JLS ).
+Java programming language (JLS {@jls 3.8}).
 
-Throws:
-
-- `MalformedParametersException`: if the class file contains a MethodParameters attribute that is improperly formatted.
+@throws MalformedParametersException if the class file contains
+a MethodParameters attribute that is improperly formatted.
 
 ## Executable.getExceptionTypes()
 
@@ -178,12 +183,13 @@ Throws:
 public abstract Class<?>[] getExceptionTypes()
 ```
 
-Returns an array of `Class` objects that represent the
+Returns an array of {@code Class} objects that represent the
 types of exceptions declared to be thrown by the underlying
 executable represented by this object.  Returns an array of
-length 0 if the executable declares no exceptions in its `throws` clause.
+length 0 if the executable declares no exceptions in its {@code
+throws} clause.
 
-**Returns:** the exception types declared as being thrown by the
+@return the exception types declared as being thrown by the
 executable this object represents
 
 ## Executable.getGenericExceptionTypes()
@@ -192,22 +198,25 @@ executable this object represents
 public Type[] getGenericExceptionTypes()
 ```
 
-Returns an array of `Type` objects that represent the
+Returns an array of {@code Type} objects that represent the
 exceptions declared to be thrown by this executable object.
 Returns an array of length 0 if the underlying executable declares
-no exceptions in its `throws` clause.
+no exceptions in its {@code throws} clause.
 
-If an exception type is a type variable or a parameterized
+<p>If an exception type is a type variable or a parameterized
 type, it is created. Otherwise, it is resolved.
 
-**Returns:** an array of Types that represent the exception types
+@return an array of Types that represent the exception types
     thrown by the underlying executable
-
-Throws:
-
-- `GenericSignatureFormatError`: if the generic method signature does not conform to the format specified in *The Java Virtual Machine Specification*
-- `TypeNotPresentException`: if the underlying executable's `throws` clause refers to a non-existent type declaration
-- `MalformedParameterizedTypeException`: if the underlying executable's `throws` clause refers to a parameterized type that cannot be instantiated for any reason
+@throws GenericSignatureFormatError
+    if the generic method signature does not conform to the format
+    specified in
+    <cite>The Java Virtual Machine Specification</cite>
+@throws TypeNotPresentException if the underlying executable's
+    {@code throws} clause refers to a non-existent type declaration
+@throws MalformedParameterizedTypeException if
+    the underlying executable's {@code throws} clause refers to a
+    parameterized type that cannot be instantiated for any reason
 
 ## Executable.toGenericString()
 
@@ -215,11 +224,17 @@ Throws:
 public abstract String toGenericString()
 ```
 
+{@return a string describing this {@code Executable}, including
+any type parameters}
+
 ## Executable.isVarArgs()
 
 ```java
 public boolean isVarArgs()
 ```
+
+{@return {@code true} if this executable was declared to take a
+variable number of arguments; returns {@code false} otherwise}
 
 ## Executable.isSynthetic()
 
@@ -227,16 +242,14 @@ public boolean isVarArgs()
 public boolean isSynthetic()
 ```
 
-Returns `true` if this executable is a synthetic
-construct; returns `false` otherwise.
+Returns {@code true} if this executable is a synthetic
+construct; returns {@code false} otherwise.
 
-**Returns:** true if and only if this executable is a synthetic
+@return true if and only if this executable is a synthetic
 construct as defined by
-*The Java Language Specification*.
-
-**JLS:** 13.1 The Form of a Binary
-
-**jvms:** 4.6 Methods
+<cite>The Java Language Specification</cite>.
+@jls 13.1 The Form of a Binary
+@jvms 4.6 Methods
 
 ## Executable.getParameterAnnotations()
 
@@ -244,15 +257,15 @@ construct as defined by
 public abstract Annotation[][] getParameterAnnotations()
 ```
 
-Returns an array of arrays of `Annotation`s that
+Returns an array of arrays of {@code Annotation}s that
 represent the annotations on the formal parameters, in
-declaration order, of the `Executable` represented by
+declaration order, of the {@code Executable} represented by
 this object.  Synthetic and mandated parameters (see
 explanation below), such as the outer "this" parameter to an
 inner class constructor will be represented in the returned
 array.  If the executable has no parameters (meaning no formal,
 no synthetic, and no mandated parameters), a zero-length array
-will be returned.  If the `Executable` has one or more
+will be returned.  If the {@code Executable} has one or more
 parameters, a nested array of length zero is returned for each
 parameter with no annotations. The annotation objects contained
 in the returned arrays are serializable.  The caller of this
@@ -262,16 +275,15 @@ effect on the arrays returned to other callers.
 A compiler may add extra parameters that are implicitly
 declared in source ("mandated"), as well as parameters that
 are neither implicitly nor explicitly declared in source
-("synthetic") to the parameter list for a method.  See `java.lang.reflect.Parameter` for more information.
+("synthetic") to the parameter list for a method.  See {@link
+java.lang.reflect.Parameter} for more information.
 
-Note that any annotations returned by this method are
+<p>Note that any annotations returned by this method are
 declaration annotations.
 
-**See also:** java.lang.reflect.Parameter
-
-**See also:** java.lang.reflect.Parameter#getAnnotations
-
-**Returns:** an array of arrays that represent the annotations on
+@see java.lang.reflect.Parameter
+@see java.lang.reflect.Parameter#getAnnotations
+@return an array of arrays that represent the annotations on
    the formal and implicit parameters, in declaration order, of
    the executable represented by this object
 
@@ -281,11 +293,8 @@ declaration annotations.
 public <T extends Annotation> T getAnnotation(Class<T> annotationClass)
 ```
 
-(inherited documentation)
-
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+{@inheritDoc}
+@throws NullPointerException  {@inheritDoc}
 
 ## Executable.getAnnotationsByType(Class<T>)
 
@@ -293,11 +302,9 @@ Throws:
 public <T extends Annotation> T[] getAnnotationsByType(Class<T> annotationClass)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## Executable.getDeclaredAnnotations()
 
@@ -305,7 +312,7 @@ Throws:
 public Annotation[] getDeclaredAnnotations()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
 ## Executable.getAnnotatedReturnType()
 
@@ -313,17 +320,19 @@ public Annotation[] getDeclaredAnnotations()
 public abstract AnnotatedType getAnnotatedReturnType()
 ```
 
-Returns an `AnnotatedType` object that represents the use of a type to
+Returns an {@code AnnotatedType} object that represents the use of a type to
 specify the return type of the method/constructor represented by this
 Executable.
 
-If this `Executable` object represents a constructor, the `AnnotatedType` object represents the type of the constructed object.
+If this {@code Executable} object represents a constructor, the {@code
+AnnotatedType} object represents the type of the constructed object.
 
-If this `Executable` object represents a method, the `AnnotatedType` object represents the use of a type to specify the return
+If this {@code Executable} object represents a method, the {@code
+AnnotatedType} object represents the use of a type to specify the return
 type of the method.
 
-**Returns:** an object representing the return type of the method
-or constructor represented by this `Executable`
+@return an object representing the return type of the method
+or constructor represented by this {@code Executable}
 
 ## Executable.getAnnotatedReceiverType()
 
@@ -331,31 +340,30 @@ or constructor represented by this `Executable`
 public AnnotatedType getAnnotatedReceiverType()
 ```
 
-Returns an `AnnotatedType` object that represents the use of a
+Returns an {@code AnnotatedType} object that represents the use of a
 type to specify the receiver type of the method/constructor represented
-by this `Executable` object.
+by this {@code Executable} object.
 
 The receiver type of a method/constructor is available only if the
-method/constructor has a receiver parameter (JLS ). If this `Executable` object *represents an instance method or represents a
-constructor of an inner member class*, and the
-method/constructor *either* has no receiver parameter or has a
+method/constructor has a receiver parameter (JLS {@jls 8.4.1}). If this {@code
+Executable} object <em>represents an instance method or represents a
+constructor of an inner member class</em>, and the
+method/constructor <em>either</em> has no receiver parameter or has a
 receiver parameter with no annotations on its type, then the return
-value is an `AnnotatedType` object representing an element with no
+value is an {@code AnnotatedType} object representing an element with no
 annotations.
 
-If this `Executable` object represents a static method or
+If this {@code Executable} object represents a static method or
 represents a constructor of a top level, static member, local, or
 anonymous class, then the return value is null.
 
-**Returns:** an object representing the receiver type of the method or
-constructor represented by this `Executable` or `null` if
-this `Executable` can not have a receiver parameter
+@return an object representing the receiver type of the method or
+constructor represented by this {@code Executable} or {@code null} if
+this {@code Executable} can not have a receiver parameter
 
-**JLS:** 8.4 Method Declarations
-
-**JLS:** 8.4.1 Formal Parameters
-
-**JLS:** 8.8 Constructor Declarations
+@jls 8.4 Method Declarations
+@jls 8.4.1 Formal Parameters
+@jls 8.8 Constructor Declarations
 
 ## Executable.getAnnotatedParameterTypes()
 
@@ -363,7 +371,7 @@ this `Executable` can not have a receiver parameter
 public AnnotatedType[] getAnnotatedParameterTypes()
 ```
 
-Returns an array of `AnnotatedType` objects that represent the use
+Returns an array of {@code AnnotatedType} objects that represent the use
 of types to specify formal parameter types of the method/constructor
 represented by this Executable. The order of the objects in the array
 corresponds to the order of the formal parameter types in the
@@ -373,13 +381,15 @@ Returns an array of length 0 if the method/constructor declares no
 parameters.
 Note that the constructors of some inner classes
 may have an
-implicitly declared parameter in addition to explicitly declared ones.
+{@linkplain java.compiler/javax.lang.model.util.Elements.Origin#MANDATED
+implicitly declared} parameter in addition to explicitly declared ones.
 Also note that compact constructors of a record class may have
-implicitly declared parameters.
+{@linkplain java.compiler/javax.lang.model.util.Elements.Origin#MANDATED
+implicitly declared} parameters.
 
-**Returns:** an array of objects representing the types of the
+@return an array of objects representing the types of the
 formal parameters of the method or constructor represented by this
-`Executable`
+{@code Executable}
 
 ## Executable.getAnnotatedExceptionTypes()
 
@@ -387,7 +397,7 @@ formal parameters of the method or constructor represented by this
 public AnnotatedType[] getAnnotatedExceptionTypes()
 ```
 
-Returns an array of `AnnotatedType` objects that represent the use
+Returns an array of {@code AnnotatedType} objects that represent the use
 of types to specify the declared exceptions of the method/constructor
 represented by this Executable. The order of the objects in the array
 corresponds to the order of the exception types in the declaration of
@@ -396,5 +406,6 @@ the method/constructor.
 Returns an array of length 0 if the method/constructor declares no
 exceptions.
 
-**Returns:** an array of objects representing the declared
-exceptions of the method or constructor represented by this `Executable`
+@return an array of objects representing the declared
+exceptions of the method or constructor represented by this {@code
+Executable}

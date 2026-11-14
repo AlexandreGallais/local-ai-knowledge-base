@@ -1,58 +1,49 @@
 ---
-title: "Microsoft Account external login setup with ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/authentication/social/microsoft-logins.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Microsoft Account external login setup with ASP.NET Core
+description: This sample demonstrates the integration of Microsoft account user authentication into an existing ASP.NET Core app.
+ms.date: 04/07/2026
+monikerRange: '>= aspnetcore-3.1'
 ---
-
 # Microsoft Account external login setup with ASP.NET Core
 
-By Valeriy Novytskyy and Rick Anderson
+By [Valeriy Novytskyy](https://github.com/01binary) and [Rick Anderson](https://twitter.com/RickAndMSFT)
 
-This sample shows how to enable users to sign in with their work, school, or personal Microsoft account using the ASP.NET Core  project created on the previous page.
+:::moniker range=">= aspnetcore-6.0"
+
+This sample shows how to enable users to sign in with their work, school, or personal Microsoft account using the ASP.NET Core  project created on the [previous page](index.md).
 
 ## Create the app in the Microsoft Entra admin center
 
-* Add the Microsoft.AspNetCore.Authentication.MicrosoftAccount NuGet package to the project.
-* Register the application in the Microsoft Entra admin center by following the steps in Register an application with the Microsoft identity platform
+* Add the [Microsoft.AspNetCore.Authentication.MicrosoftAccount](https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.MicrosoftAccount/) NuGet package to the project.
+* Register the application in the Microsoft Entra admin center by following the steps in [Register an application with the Microsoft identity platform](/entra/identity-platform/quickstart-register-app?tabs=client-secret)
 
 ### Create a client secret
 
-Generate a client secret in the Microsoft Entra admin center by following the steps in Add and manage application credentials in Microsoft Entra ID.
+Generate a client secret in the Microsoft Entra admin center by following the steps in [Add and manage application credentials in Microsoft Entra ID](/entra/identity-platform/how-to-add-credentials).
 
 ## Store the Microsoft client ID and secret
 
-Store sensitive settings such as the Microsoft **Application (client) ID** and **Client Secret** created in the previous step with Secret Manager. For this sample, use the following steps:
+Store sensitive settings such as the Microsoft **Application (client) ID** and **Client Secret** created in the previous step with [Secret Manager](../../app-secrets.md). For this sample, use the following steps:
 
-1. Initialize the project for secret <example-value> per the instructions at Enable secret storage.
-1. Store the sensitive settings in the local secret store with the secret keys `Authentication:Microsoft:ClientId` and `Authentication:Microsoft:ClientSecret`. The `<client-id>` is listed on the Azure App registrations blade under **Application (client) ID**. The `<client-secret>` is on listed under **Certificates & secrets** as the **Value**, not the **Secret ID**.
+1. Initialize the project for secret storage per the instructions at [Enable secret storage](../../app-secrets.md#enable-secret-storage).
+1. Store the sensitive settings in the local secret store with the secret keys `Authentication:Microsoft:ClientId` and `Authentication:Microsoft:ClientSecret`. The `<client-id>` is listed on the Azure App registrations blade under **Application (client) ID**. The `<client-secret>` is on listed under **Certificates & secrets** as the **Value**, not the **Secret ID**. 
 
     ```dotnetcli
-    dotnet user-secrets set "<example-value>" "<example-value>"
-    dotnet user-secrets set "<example-value>" "<example-value>"
+    dotnet user-secrets set "Authentication:Microsoft:ClientId" "<client-id>"
+    dotnet user-secrets set "Authentication:Microsoft:ClientSecret" "<client-secret>"
     ```
 
-The colon (`:`) separator doesn't work with environment variable hierarchical keys on all platforms. For example, Bash doesn't support colon (`:`) as a separator. All platforms support the double underscore (`__`) syntax and automatically replace it with a colon (`:`).
+[!INCLUDE[](~/includes/environmentVarableColon.md)]
 
 ## Configure Microsoft Account Authentication
 
 Add the Authentication service to the `Program`:
 
-```csharp
-builder.Services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
-{
-    microsoftOptions.ClientId = configuration["Authentication:Microsoft:ClientId"];
-    microsoftOptions.ClientSecret = <example-value>["<example-value>"];
-});
-```
+:::code language="csharp" source="~/security/authentication/social/social-code/6.x/ProgramMS.cs" id="snippet_AddServices":::
 
-The `Microsoft.Extensions.DependencyInjection.AuthenticationServiceCollectionExtensions.AddAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)` overload sets the `Microsoft.AspNetCore.Authentication.AuthenticationOptions.DefaultScheme` property. The `Microsoft.Extensions.DependencyInjection.AuthenticationServiceCollectionExtensions.AddAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Microsoft.AspNetCore.Authentication.AuthenticationOptions})` overload allows configuring authentication options, which can be used to set up default authentication schemes for different purposes. Subsequent calls to `AddAuthentication` override previously configured `Microsoft.AspNetCore.Builder.AuthenticationOptions` properties.
+[!INCLUDE [default settings configuration](includes/default-settings.md)]
 
-`Microsoft.AspNetCore.Authentication.AuthenticationBuilder` extension methods that register an authentication handler may only be called once per authentication scheme. Overloads exist that allow configuring the scheme properties, scheme name, and display name.
-
-For more information about configuration options supported by Microsoft Account authentication, see the `Microsoft.AspNetCore.Builder.MicrosoftAccountOptions` API reference. This can be used to request different information about the user.
+For more information about configuration options supported by Microsoft Account authentication, see the <xref:Microsoft.AspNetCore.Builder.MicrosoftAccountOptions> API reference. This can be used to request different information about the user.
 
 ## Sign in with Microsoft Account
 
@@ -62,17 +53,9 @@ For more information about configuration options supported by Microsoft Account 
 
 You're now logged in using your Microsoft credentials.
 
-To use multiple authentication providers, see Using external login providers with Identity in ASP.NET Core.
+To use multiple authentication providers, see [Using external login providers with Identity in ASP.NET Core](index.md#multiple-authentication-providers).
 
-## Forward request information with a proxy or load balancer
-
-If the app is deployed behind a proxy server or load balancer, some of the original request information might be forwarded to the app in request headers. This information usually includes the secure request scheme (`https`), host, and client IP address. Apps don't automatically read these request headers to discover and use the original request information.
-
-The scheme is used in link generation that affects the authentication flow with external providers. Losing the secure scheme (`https`) results in the app generating incorrect insecure redirect URLs.
-
-Use forwarded headers middleware to make the original request information available to the app for request processing.
-
-For more information, see Configure ASP.NET Core to work with proxy servers and load balancers.
+[!INCLUDE[Forward request information when behind a proxy or load balancer section](includes/forwarded-headers-middleware.md)]
 
 ## Troubleshooting
 
@@ -86,10 +69,75 @@ For more information, see Configure ASP.NET Core to work with proxy servers and 
 
 ## Next steps
 
-* This article showed how to authenticate with Microsoft. Follow a similar approach to authenticate with other providers listed on the previous page.
+* This article showed how to authenticate with Microsoft. Follow a similar approach to authenticate with other providers listed on the [previous page](index.md).
 * Once the web site is published to Azure web app, create a new client secrets in the Microsoft Entra admin center.
 * Set the `Authentication:Microsoft:ClientId` and `Authentication:Microsoft:ClientSecret` as application settings in the Microsoft Entra admin center. The configuration system is set up to read keys from environment variables.
 
+:::moniker-end
+
+:::moniker range="< aspnetcore-6.0"
+
+This sample shows you how to enable users to sign in with their work, school, or personal Microsoft account using the ASP.NET Core 3.0 project created on the [previous page](index.md).
+
+## Create the app in the Microsoft Entra admin center
+
+* Add the [Microsoft.AspNetCore.Authentication.MicrosoftAccount](https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.MicrosoftAccount/) NuGet package to the project.
+* Register the application in the Microsoft Entra admin center by following the steps in [Register an application with the Microsoft identity platform](/entra/identity-platform/quickstart-register-app?tabs=client-secret#register-an-application)
+
+### Create client secret
+
+Generate a client secret in the Microsoft Entra admin center by following the steps in [Add and manage application credentials in Microsoft Entra ID](/entra/identity-platform/how-to-add-credentials).
+
+## Store the Microsoft client ID and secret
+
+Store sensitive settings such as the Microsoft **Application (client) ID** and **Client Secret** you created in the previous step with [Secret Manager](../../app-secrets.md). For this sample, use the following steps:
+
+1. Initialize the project for secret storage per the instructions at [Enable secret storage](../../app-secrets.md#enable-secret-storage).
+1. Store the sensitive settings in the local secret store with the secret keys `Authentication:Microsoft:ClientId` and `Authentication:Microsoft:ClientSecret`:
+
+    ```dotnetcli
+    dotnet user-secrets set "Authentication:Microsoft:ClientId" "<client-id>"
+    dotnet user-secrets set "Authentication:Microsoft:ClientSecret" "<client-secret>"
+    ```
+
+[!INCLUDE[](~/includes/environmentVarableColon.md)]
+
+## Configure Microsoft Account Authentication
+
+Add the Microsoft Account service to the `Startup.ConfigureServices`:
+
+:::code language="csharp" source="~/security/authentication/social/social-code/3.x/StartupMS3x.cs" id="snippet" highlight="10-14":::
+
+[!INCLUDE [default settings configuration](includes/default-settings.md)]
+
+For more information about configuration options supported by Microsoft Account authentication, see the <xref:Microsoft.AspNetCore.Builder.MicrosoftAccountOptions> API reference. This can be used to request different information about the user.
+
+## Sign in with Microsoft Account
+
+Run the app and select **Log in**. An option to sign in with Microsoft appears. Select **Microsoft** to navigate to Microsoft for authentication. After signing in with your Microsoft Account, you'll be prompted to let the app access your info:
+
+Tap **Yes** and you'll be redirected back to the web site where you can set your email.
+
+You're now logged in using your Microsoft credentials.
+
+[!INCLUDE[Forward request information when behind a proxy or load balancer section](includes/forwarded-headers-middleware.md)]
+
+## Troubleshooting
+
+* If the Microsoft Account provider redirects you to a sign in error page, note the error title and description query string parameters directly following the `#` (hashtag) in the Uri.
+
+  Although the error message seems to indicate a problem with Microsoft authentication, the most common cause is your application Uri not matching any of the **Redirect URIs** specified for the **Web** platform.
+* If Identity isn't configured by calling `services.AddIdentity` in `ConfigureServices`, attempting to authenticate will result in *ArgumentException: The 'SignInScheme' option must be provided*. The project template used in this sample ensures that this is done.
+* If the site database hasn't been created by applying the initial migration, you'll get *A database operation failed while processing the request* error. Tap **Apply Migrations** to create the database and refresh to continue past the error.
+
+## Next steps
+
+* This article showed how you can authenticate with Microsoft. You can follow a similar approach to authenticate with other providers listed on the [previous page](index.md).
+* Once you publish your web site to Azure web app, create a new client secrets in the Microsoft Entra admin center.
+* Set the `Authentication:Microsoft:ClientId` and `Authentication:Microsoft:ClientSecret` as application settings in Microsoft Entra admin center. The configuration system is set up to read keys from environment variables.
+
+:::moniker-end
+
 ## Related content
 
-Multiple authentication providers
+[Multiple authentication providers](index.md#multiple-authentication-providers)

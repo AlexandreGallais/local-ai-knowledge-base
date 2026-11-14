@@ -1,26 +1,17 @@
----
-title: "Tuple and tuple indexing expressions"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/expressions/tuple-expr.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[expr.tuple]
 # Tuple and tuple indexing expressions
 
 ## Tuple expressions
 
 r[expr.tuple.syntax]
-```grammar
+```grammar,expressions
 TupleExpression -> `(` TupleElements? `)`
 
 TupleElements -> ( Expression `,` )+ Expression?
 ```
 
 r[expr.tuple.result]
-A *tuple expression* constructs tuple values.
+A *tuple expression* constructs [tuple values][tuple type].
 
 r[expr.tuple.intro]
 The syntax for tuple expressions is a parenthesized, comma separated list of expressions, called the *tuple initializer operands*.
@@ -53,12 +44,12 @@ r[expr.tuple-index]
 ## Tuple indexing expressions
 
 r[expr.tuple-index.syntax]
-```grammar
+```grammar,expressions
 TupleIndexingExpression -> Expression `.` TUPLE_INDEX
 ```
 
 r[expr.tuple-index.intro]
-A *tuple indexing expression* accesses fields of tuples and tuple structs.
+A *tuple indexing expression* accesses fields of [tuples][tuple type] and [tuple structs][tuple struct].
 
 The syntax for a tuple index expression is an expression, called the *tuple operand*, then a `.`, then finally a tuple index.
 
@@ -88,8 +79,20 @@ assert_eq!(point.0, 1.0);
 assert_eq!(point.1, 0.0);
 ```
 
-> **Note:**
+> [!NOTE]
 > Unlike field access expressions, tuple index expressions can be the function operand of a [call expression] as it cannot be confused with a method call since method names cannot be numbers.
 
-> **Note:**
+> [!NOTE]
 > Although arrays and slices also have elements, you must use an [array or slice indexing expression] or a [slice pattern] to access their elements.
+
+[array or slice indexing expression]: array-expr.md#array-and-slice-indexing-expressions
+[call expression]: ./call-expr.md
+[decimal literal]: ../tokens.md#integer-literals
+[field access expressions]: ./field-expr.html#field-access-expressions
+[operands]: ../expressions.md
+[parenthetical expression]: grouped-expr.md
+[place expression]: ../expressions.md#place-expressions-and-value-expressions
+[slice pattern]: ../patterns.md#slice-patterns
+[tuple type]: ../types/tuple.md
+[tuple struct]: ../types/struct.md
+[value expression]: ../expressions.md#place-expressions-and-value-expressions

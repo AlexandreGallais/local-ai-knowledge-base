@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: Default TLS cipher suites for .NET on Linux"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/cryptography/5.0/default-cipher-suites-for-tls-on-linux.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 5 where .NET, on Linux, now respects the OpenSSL configuration for default cipher suites when doing TLS/SSL.
+ms.date: 12/01/2022
+ms.custom: linux-related-content
 ---
-
 # Default TLS cipher suites for .NET on Linux
 
-.NET, on Linux, now respects the OpenSSL configuration for default cipher suites when doing TLS/SSL via the `System.Net.Security.SslStream` class or higher-level operations, such as HTTPS via the `System.Net.Http.HttpClient` class. When default cipher suites aren't explicitly configured, .NET on Linux uses a tightly restricted list of permitted cipher suites.
+.NET, on Linux, now respects the OpenSSL configuration for default cipher suites when doing TLS/SSL via the <xref:System.Net.Security.SslStream> class or higher-level operations, such as HTTPS via the <xref:System.Net.Http.HttpClient> class. When default cipher suites aren't explicitly configured, .NET on Linux uses a tightly restricted list of permitted cipher suites.
 
 ## Change description
 
@@ -33,7 +30,7 @@ Supplying a CipherSuitePolicy value to SslStream for a specific session will sti
 
 ## Reason for change
 
-Users running .NET on Linux requested that the default configuration for `System.Net.Security.SslStream` be changed to one that provided a high security rating from third-party assessment tools.
+Users running .NET on Linux requested that the default configuration for <xref:System.Net.Security.SslStream> be changed to one that provided a high security rating from third-party assessment tools.
 
 ## Version introduced
 
@@ -43,7 +40,7 @@ Users running .NET on Linux requested that the default configuration for `System
 
 The new defaults are likely to work when communicating with modern clients or servers. If you need to expand the default cipher suite list to accept legacy clients (or to contact legacy servers), use one of the following workarounds:
 
-- Specify a cryptography policy by configuring the `System.Net.Security.CipherSuitesPolicy` type as it pertains to `System.Net.Security.SslServerAuthenticationOptions.CipherSuitesPolicy` or `System.Net.Security.SslClientAuthenticationOptions.CipherSuitesPolicy`.
+- Specify a cryptography policy by configuring the <xref:System.Net.Security.CipherSuitesPolicy> type as it pertains to <xref:System.Net.Security.SslServerAuthenticationOptions.CipherSuitesPolicy?displayProperty=nameWithType> or <xref:System.Net.Security.SslClientAuthenticationOptions.CipherSuitesPolicy?displayProperty=nameWithType>.
 
   ```csharp
   var clientOpts = new SslClientAuthenticationOptions
@@ -64,7 +61,7 @@ The new defaults are likely to work when communicating with modern clients or se
   }
   ```
 
-  Or, for `System.Net.Http.HttpClient`:
+  Or, for <xref:System.Net.Http.HttpClient>:
 
   ```csharp
   var handler = new SocketsHttpHandler

@@ -1,29 +1,21 @@
----
-title: "BootstrapMethodError class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/BootstrapMethodError.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # BootstrapMethodError class (java.lang)
 
 ```java
 public class BootstrapMethodError extends LinkageError
 ```
 
-Thrown to indicate that an `invokedynamic` instruction or a dynamic
+Thrown to indicate that an {@code invokedynamic} instruction or a dynamic
 constant failed to resolve its bootstrap method and arguments,
-or for `invokedynamic` instruction the bootstrap method has failed to
+or for {@code invokedynamic} instruction the bootstrap method has failed to
 provide a
-call site with a
-target
-of the correct method type,
+{@linkplain java.lang.invoke.CallSite call site} with a
+{@linkplain java.lang.invoke.CallSite#getTarget target}
+of the correct {@linkplain java.lang.invoke.MethodHandle#type() method type},
 or for a dynamic constant the bootstrap method has failed to provide a
 constant value of the required type.
 
-**Since:** 1.7
+@author John Rose, JSR 292 EG
+@since 1.7
 
 ## BootstrapMethodError.BootstrapMethodError()
 
@@ -31,7 +23,7 @@ constant value of the required type.
 public BootstrapMethodError()
 ```
 
-Constructs a `BootstrapMethodError` with no detail message.
+Constructs a {@code BootstrapMethodError} with no detail message.
 
 ## BootstrapMethodError.BootstrapMethodError(String)
 
@@ -39,12 +31,10 @@ Constructs a `BootstrapMethodError` with no detail message.
 public BootstrapMethodError(String s)
 ```
 
-Constructs a `BootstrapMethodError` with the specified
+Constructs a {@code BootstrapMethodError} with the specified
 detail message.
 
-Parameters:
-
-- `s`: the detail message.
+@param s the detail message.
 
 ## BootstrapMethodError.BootstrapMethodError(String, Throwable)
 
@@ -52,13 +42,11 @@ Parameters:
 public BootstrapMethodError(String s, Throwable cause)
 ```
 
-Constructs a `BootstrapMethodError` with the specified
+Constructs a {@code BootstrapMethodError} with the specified
 detail message and cause.
 
-Parameters:
-
-- `s`: the detail message.
-- `cause`: the cause, may be `null`.
+@param s the detail message.
+@param cause the cause, may be {@code null}.
 
 ## BootstrapMethodError.BootstrapMethodError(Throwable)
 
@@ -66,9 +54,7 @@ Parameters:
 public BootstrapMethodError(Throwable cause)
 ```
 
-Constructs a `BootstrapMethodError` with the specified
+Constructs a {@code BootstrapMethodError} with the specified
 cause.
 
-Parameters:
-
-- `cause`: the cause, may be `null`.
+@param cause the cause, may be {@code null}.

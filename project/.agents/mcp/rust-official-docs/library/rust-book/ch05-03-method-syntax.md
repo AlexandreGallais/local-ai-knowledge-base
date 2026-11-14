@@ -1,24 +1,17 @@
----
-title: "ch05-03-method-syntax"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch05-03-method-syntax.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch05-03-method-syntax
-
 ## Methods
 
 Methods are similar to functions: We declare them with the `fn` keyword and a
 name, they can have parameters and a return value, and they contain some code
 that’s run when the method is called from somewhere else. Unlike functions,
 methods are defined within the context of a struct (or an enum or a trait
-object, which we cover in Chapter 6 and Chapter
-18, respectively), and their first parameter is
+object, which we cover in [Chapter 6][enums]<!-- ignore --> and [Chapter
+18][trait-objects]<!-- ignore -->, respectively), and their first parameter is
 always `self`, which represents the instance of the struct the method is being
 called on.
+
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="defining-methods"></a>
 
 ### Method Syntax
 
@@ -26,33 +19,13 @@ Let’s change the `area` function that has a `Rectangle` instance as a paramete
 and instead make an `area` method defined on the `Rectangle` struct, as shown
 in Listing 5-13.
 
-**Listing 5-13: Defining an `area` method on the `Rectangle` struct** (src/main.rs)
+<Listing number="5-13" file-name="src/main.rs" caption="Defining an `area` method on the `Rectangle` struct">
 
 ```rust
-#[derive(Debug)]
-struct Rectangle {
-    width: u32,
-    height: u32,
-}
-
-impl Rectangle {
-    fn area(&self) -> u32 {
-        self.width * self.height
-    }
-}
-
-fn main() {
-    let rect1 = Rectangle {
-        width: 30,
-        height: 50,
-    };
-
-    println!(
-        "The area of the rectangle is {} square pixels.",
-        rect1.area()
-    );
-}
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-13/src/main.rs}}
 ```
+
+</Listing>
 
 To define the function within the context of `Rectangle`, we start an `impl`
 (implementation) block for `Rectangle`. Everything within this `impl` block
@@ -95,26 +68,13 @@ Note that we can choose to give a method the same name as one of the struct’s
 fields. For example, we can define a method on `Rectangle` that is also named
 `width`:
 
-**Listing** (src/main.rs)
+<Listing file-name="src/main.rs">
 
 ```rust
-impl Rectangle {
-    fn width(&self) -> bool {
-        self.width > 0
-    }
-}
-
-fn main() {
-    let rect1 = Rectangle {
-        width: 30,
-        height: 50,
-    };
-
-    if rect1.width() {
-        println!("The rectangle has a nonzero width; it is {}", rect1.width);
-    }
-}
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-06-method-field-interaction/src/main.rs:here}}
 ```
+
+</Listing>
 
 Here, we’re choosing to make the `width` method return `true` if the value in
 the instance’s `width` field is greater than `0` and `false` if the value is
@@ -129,8 +89,8 @@ are called _getters_, and Rust does not implement them automatically for struct
 fields as some other languages do. Getters are useful because you can make the
 field private but the method public and thus enable read-only access to that
 field as part of the type’s public API. We will discuss what public and private
-are and how to designate a field or method as public or private in Chapter
-7.
+are and how to designate a field or method as public or private in [Chapter
+7][public]<!-- ignore -->.
 
 > ### Where’s the `->` Operator?
 >
@@ -148,7 +108,7 @@ are and how to designate a field or method as public or private in Chapter
 > automatically adds in `&`, `&mut`, or `*` so that `object` matches the
 > signature of the method. In other words, the following are the same:
 >
->
+> <!-- CAN'T EXTRACT SEE BUG https://github.com/rust-lang/mdBook/issues/1127 -->
 >
 > ```rust
 > # #[derive(Debug,Copy,Clone)]
@@ -187,27 +147,13 @@ within `self` (the first `Rectangle`); otherwise, it should return `false`.
 That is, once we’ve defined the `can_hold` method, we want to be able to write
 the program shown in Listing 5-14.
 
-**Listing 5-14: Using the as-yet-unwritten `can_hold` method** (src/main.rs)
+<Listing number="5-14" file-name="src/main.rs" caption="Using the as-yet-unwritten `can_hold` method">
 
-```rust
-fn main() {
-    let rect1 = Rectangle {
-        width: 30,
-        height: 50,
-    };
-    let rect2 = Rectangle {
-        width: 10,
-        height: 40,
-    };
-    let rect3 = Rectangle {
-        width: 60,
-        height: 45,
-    };
-
-    println!("Can rect1 hold rect2? {}", rect1.can_hold(&rect2));
-    println!("Can rect1 hold rect3? {}", rect1.can_hold(&rect3));
-}
+```rust,ignore
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-14/src/main.rs}}
 ```
+
+</Listing>
 
 The expected output would look like the following because both dimensions of
 `rect2` are smaller than the dimensions of `rect1`, but `rect3` is wider than
@@ -232,19 +178,13 @@ Boolean, and the implementation will check whether the width and height of
 respectively. Let’s add the new `can_hold` method to the `impl` block from
 Listing 5-13, shown in Listing 5-15.
 
-**Listing 5-15: Implementing the `can_hold` method on `Rectangle` that takes another `Rectangle` instance as a parameter** (src/main.rs)
+<Listing number="5-15" file-name="src/main.rs" caption="Implementing the `can_hold` method on `Rectangle` that takes another `Rectangle` instance as a parameter">
 
 ```rust
-impl Rectangle {
-    fn area(&self) -> u32 {
-        self.width * self.height
-    }
-
-    fn can_hold(&self, other: &Rectangle) -> bool {
-        self.width > other.width && self.height > other.height
-    }
-}
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-15/src/main.rs:here}}
 ```
+
+</Listing>
 
 When we run this code with the `main` function in Listing 5-14, we’ll get our
 desired output. Methods can take multiple parameters that we add to the
@@ -268,17 +208,10 @@ one dimension parameter and use that as both width and height, thus making it
 easier to create a square `Rectangle` rather than having to specify the same
 value twice:
 
-Filename: src/main.rs
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
-impl Rectangle {
-    fn square(size: u32) -> Self {
-        Self {
-            width: size,
-            height: size,
-        }
-    }
-}
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/no-listing-03-associated-functions/src/main.rs:here}}
 ```
 
 The `Self` keywords in the return type and in the body of the function are
@@ -288,8 +221,8 @@ is `Rectangle`.
 To call this associated function, we use the `::` syntax with the struct name;
 `let sq = Rectangle::square(3);` is an example. This function is namespaced by
 the struct: The `::` syntax is used for both associated functions and
-namespaces created by modules. We’ll discuss modules in Chapter
-7.
+namespaces created by modules. We’ll discuss modules in [Chapter
+7][modules]<!-- ignore -->.
 
 ### Multiple `impl` Blocks
 
@@ -297,21 +230,13 @@ Each struct is allowed to have multiple `impl` blocks. For example, Listing
 5-15 is equivalent to the code shown in Listing 5-16, which has each method in
 its own `impl` block.
 
-**Listing 5-16: Rewriting Listing 5-15 using multiple `impl` blocks**
+<Listing number="5-16" caption="Rewriting Listing 5-15 using multiple `impl` blocks">
 
 ```rust
-impl Rectangle {
-    fn area(&self) -> u32 {
-        self.width * self.height
-    }
-}
-
-impl Rectangle {
-    fn can_hold(&self, other: &Rectangle) -> bool {
-        self.width > other.width && self.height > other.height
-    }
-}
+{{#rustdoc_include ../listings/ch05-using-structs-to-structure-related-data/listing-05-16/src/main.rs:here}}
 ```
+
+</Listing>
 
 There’s no reason to separate these methods into multiple `impl` blocks here,
 but this is valid syntax. We’ll see a case in which multiple `impl` blocks are
@@ -328,3 +253,8 @@ structs have.
 
 But structs aren’t the only way you can create custom types: Let’s turn to
 Rust’s enum feature to add another tool to your toolbox.
+
+[enums]: ch06-00-enums.html
+[trait-objects]: ch18-02-trait-objects.md
+[public]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html#exposing-paths-with-the-pub-keyword
+[modules]: ch07-02-defining-modules-to-control-scope-and-privacy.html

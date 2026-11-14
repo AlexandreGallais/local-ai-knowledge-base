@@ -1,15 +1,21 @@
 ---
 title: "Keep async methods alive"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/asynchronous-programming-patterns/keep-async-methods-alive.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to avoid lifetime bugs in fire-and-forget async code by keeping task ownership explicit, observing failures, and coordinating shutdown.
+ms.date: 04/15/2026
+ai-usage: ai-assisted
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "fire-and-forget"
+  - "async lifetime"
+  - "unobserved task exception"
+  - "background task tracking"
+  - "TAP best practices"
 ---
-
 # Keep async methods alive
 
-Fire-and-forget work is easy to start and easy to lose. If you start an asynchronous operation and drop the returned `System.Threading.Tasks.Task`, you lose visibility into completion, cancellation, and failures.
+Fire-and-forget work is easy to start and easy to lose. If you start an asynchronous operation and drop the returned <xref:System.Threading.Tasks.Task>, you lose visibility into completion, cancellation, and failures.
 
 Most lifetime bugs in async code are ownership bugs, not compiler bugs. The `async` state machine and its `Task` stay alive while work is still reachable through continuations. Problems happen when your app no longer tracks that work.
 
@@ -27,111 +33,17 @@ Use fire-and-forget only when the work is truly optional and failure is acceptab
 
 This sample defines `BackgroundTaskTracker`, a custom helper class that holds a thread-safe dictionary of in-flight tasks. When you call `Track`, it registers a `ContinueWith` continuation on the task that removes the task from the dictionary when it completes and logs any failure. When you call `DrainAsync`, it calls `Task.WhenAll` on every task still in the dictionary and returns the resulting task.
 
-```csharp
-public sealed class BackgroundTaskTracker
-{
-    private readonly ConcurrentDictionary<int, Task> _inFlight = new();
+:::code language="csharp" source="./snippets/keeping-async-methods-alive/csharp/Program.cs" id="BackgroundTaskTracker":::
+:::code language="vb" source="./snippets/keeping-async-methods-alive/vb/Program.vb" id="BackgroundTaskTracker":::
 
-    public void Track(Task operationTask, string name)
-    {
-        int id = operationTask.Id;
-        _inFlight[id] = operationTask;
-
-        _ = operationTask.ContinueWith(completedTask =>
-        {
-            _inFlight.TryRemove(id, out _);
-
-            if (completedTask.IsFaulted)
-            {
-                Console.WriteLine($"{name} failed: {completedTask.Exception?.GetBaseException().Message}");
-            }
-        }, TaskScheduler.Default);
-    }
-
-    public Task DrainAsync()
-    {
-        Task[] snapshot = _inFlight.Values.ToArray();
-        return snapshot.Length == 0 ? Task.CompletedTask : Task.WhenAll(snapshot);
-    }
-}
-```
-```vb
-Public NotInheritable Class BackgroundTaskTracker
-    Private ReadOnly _inFlight As New ConcurrentDictionary(Of Integer, Task)()
-
-    Public Sub Track(operationTask As Task, name As String)
-        Dim id As Integer = operationTask.Id
-        _inFlight(id) = operationTask
-
-        Dim continuationTask As Task = operationTask.ContinueWith(Sub(completedTask)
-                                                                      Dim removedTask As Task = Nothing
-                                                                      _inFlight.TryRemove(id, removedTask)
-
-                                                                      If completedTask.IsFaulted Then
-                                                                          Console.WriteLine($"{name} failed: {completedTask.Exception.GetBaseException().Message}")
-                                                                      End If
-                                                                  End Sub,
-                                                                  TaskScheduler.Default)
-    End Sub
-
-    Public Function DrainAsync() As Task
-        Dim snapshot As Task() = _inFlight.Values.ToArray()
-
-        If snapshot.Length = 0 Then
-            Return Task.CompletedTask
-        End If
-
-        Return Task.WhenAll(snapshot)
-    End Function
-End Class
-```
 The following example uses `BackgroundTaskTracker` to start, observe, and drain a background operation:
 
-```csharp
-public static class FireAndForgetFix
-{
-    public static async Task RunAsync(BackgroundTaskTracker tracker)
-    {
-        Task backgroundTask = Task.Run(async () =>
-        {
-            await Task.Delay(100);
-            throw new InvalidOperationException("Background operation failed.");
-        });
+:::code language="csharp" source="./snippets/keeping-async-methods-alive/csharp/Program.cs" id="FireAndForgetFix":::
+:::code language="vb" source="./snippets/keeping-async-methods-alive/vb/Program.vb" id="FireAndForgetFix":::
 
-        tracker.Track(backgroundTask, "Cache refresh");
-
-        try
-        {
-            await tracker.DrainAsync();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Drain observed failure: {ex.GetBaseException().Message}");
-        }
-    }
-}
-```
-```vb
-Public Module FireAndForgetFix
-    Public Async Function RunAsync(tracker As BackgroundTaskTracker) As Task
-        Dim backgroundTask As Task = Task.Run(Async Function()
-                                                  Await Task.Delay(100)
-                                                  Throw New InvalidOperationException("Background operation failed.")
-                                              End Function)
-
-        tracker.Track(backgroundTask, "Cache refresh")
-
-        Try
-            Await tracker.DrainAsync()
-        Catch ex As Exception
-            Console.WriteLine($"Drain observed failure: {ex.GetBaseException().Message}")
-        End Try
-    End Function
-End Module
-```
 You might ask: if `DrainAsync` just awaits the one task you started, why not `await backgroundTask` directly and skip the tracker entirely? For a single task in a single method, you could. The tracker becomes valuable when tasks are started from many different places across a component's lifetime. Each caller hands its task to the shared tracker, and a single `DrainAsync` call at shutdown awaits all of them without knowing how many were started or who started them. The tracker also enforces a consistent exception-observation policy: every registered task gets the same failure-logging continuation, so no exception can slip through unnoticed regardless of which code path started the work.
 
-The three key <example-value> of the tracked pattern are:
+The three key components of the tracked pattern are:
 
 - **Assign the task to a variable** — keeping a reference to `backgroundTask` is what makes tracking possible. A task you can't refer to is a task you can't drain or observe.
 - **Register with the tracker** — `tracker.Track` attaches the failure-logging continuation and adds the task to the in-flight set. Any exception the background work throws surfaces through that continuation rather than disappearing silently.
@@ -141,38 +53,12 @@ The three key <example-value> of the tracked pattern are:
 
 If you discard the returned `Task` instead of tracking it, you create silent failure:
 
-```csharp
-public static class FireAndForgetPitfall
-{
-    public static async Task RunAsync()
-    {
-        _ = Task.Run(async () =>
-        {
-            await Task.Delay(100);
-            throw new InvalidOperationException("Background operation failed.");
-        });
+:::code language="csharp" source="./snippets/keeping-async-methods-alive/csharp/Program.cs" id="FireAndForgetPitfall":::
+:::code language="vb" source="./snippets/keeping-async-methods-alive/vb/Program.vb" id="FireAndForgetPitfall":::
 
-        await Task.Delay(150);
-        Console.WriteLine("Caller finished without observing background completion.");
-    }
-}
-```
-```vb
-Public Module FireAndForgetPitfall
-    Public Async Function RunAsync() As Task
-        Dim discardedTask As Task = Task.Run(Async Function()
-                                                 Await Task.Delay(100)
-                                                 Throw New InvalidOperationException("Background operation failed.")
-                                             End Function)
-
-        Await Task.Delay(150)
-        Console.WriteLine("Caller finished without observing background completion.")
-    End Function
-End Module
-```
 Three problems follow from dropping the task:
 
-- **Silent exceptions** — the `InvalidOperationException` from the background operation is never observed. The runtime routes it to `System.Threading.Tasks.TaskScheduler.UnobservedTaskException` at finalization, which is non-deterministic and far too late to handle gracefully.
+- **Silent exceptions** — the `InvalidOperationException` from the background operation is never observed. The runtime routes it to <xref:System.Threading.Tasks.TaskScheduler.UnobservedTaskException> at finalization, which is non-deterministic and far too late to handle gracefully.
 - **No shutdown coordination** — the caller continues and exits without waiting for the operation to finish. On a short-lived process or a host with a shutdown timeout, the background work is canceled or lost entirely.
 - **No visibility** — without a reference to the task, you can't determine whether the operation succeeded, failed, or is still running.
 
@@ -194,7 +80,7 @@ Dropped tasks can fail silently until finalization and unobserved-exception hand
 
 Attach observation logic when you queue background work. At minimum, log failures in a continuation. Prefer a centralized tracker so every queued operation gets the same policy.
 
-For exception propagation details, see Task exception handling.
+For exception propagation details, see [Task exception handling](task-exception-handling.md).
 
 ## Coordinate cancellation and shutdown
 
@@ -215,8 +101,8 @@ You can still lose correctness if you lose ownership of the returned task, dispo
 
 ## See also
 
-- Task-based asynchronous pattern (TAP)
-- Consuming the Task-based Asynchronous Pattern
-- Common async/await bugs
-- ExecutionContext and SynchronizationContext
-- Task exception handling
+- [Task-based asynchronous pattern (TAP)](task-based-asynchronous-pattern-tap.md)
+- [Consuming the Task-based Asynchronous Pattern](consuming-the-task-based-asynchronous-pattern.md)
+- [Common async/await bugs](common-async-bugs.md)
+- [ExecutionContext and SynchronizationContext](executioncontext-synchronizationcontext.md)
+- [Task exception handling](task-exception-handling.md)

@@ -1,15 +1,22 @@
 ---
+description: "Learn more about: IMetaDataEmit::SetClassLayout Method"
 title: "IMetaDataEmit::SetClassLayout Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataemit-setclasslayout-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataEmit.SetClassLayout"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataEmit::SetClassLayout"
+  - "SetClassLayout method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataEmit::SetClassLayout Method
 
-Completes the layout of fields for a class that has been defined by a prior call to DefineTypeDef Method.
+Completes the layout of fields for a class that has been defined by a prior call to [DefineTypeDef Method](imetadataemit-definetypedef-method.md).
 
 ## Syntax
 
@@ -31,14 +38,14 @@ HRESULT SetClassLayout (
  [in] The packing size: 1, 2, 4, 8 or 16 bytes. The packing size is the number of bytes between adjacent fields.
 
  `rFieldOffsets`
- [in] An array of COR_FIELD_OFFSET structures, each of which specifies a field of the class and the field's offset within the class. Terminate the array with `mdTokenNil`.
+ [in] An array of [COR_FIELD_OFFSET](../structures/cor-field-offset-structure.md) structures, each of which specifies a field of the class and the field's offset within the class. Terminate the array with `mdTokenNil`.
 
  `ulClassSize`
  [in] The size, in bytes, of the class.
 
 ## Remarks
 
- The class is initially defined by calling the IMetaDataEmit::DefineTypeDef method, and specifying one of three layouts for the fields of the class: automatic, sequential, or explicit. Normally, you would use automatic layout and let the runtime choose the best way to lay out the fields.
+ The class is initially defined by calling the [IMetaDataEmit::DefineTypeDef](imetadataemit-definetypedef-method.md) method, and specifying one of three layouts for the fields of the class: automatic, sequential, or explicit. Normally, you would use automatic layout and let the runtime choose the best way to lay out the fields.
 
  However, you might want the fields laid out according to the arrangement that unmanaged code uses. In this case, choose either sequential or explicit layout and call `SetClassLayout` to complete the layout of the fields:
 
@@ -48,7 +55,7 @@ HRESULT SetClassLayout (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -56,5 +63,5 @@ HRESULT SetClassLayout (
 
 ## See also
 
-- IMetaDataEmit Interface
-- IMetaDataEmit2 Interface
+- [IMetaDataEmit Interface](imetadataemit-interface.md)
+- [IMetaDataEmit2 Interface](imetadataemit2-interface.md)

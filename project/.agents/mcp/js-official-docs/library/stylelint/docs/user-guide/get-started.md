@@ -1,26 +1,17 @@
----
-title: "Getting started"
-tool: "stylelint"
-version: "18.0"
-source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/docs/user-guide/get-started.md"
-commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
-license: "MIT"
----
-
 # Getting started
 
 You can quickly get started by extending an appropriate shared config.
 
 ## Linting CSS
 
-Use npm and our `create` tool to automatically setup Stylelint and extend our standard config:
+Use [npm](https://docs.npmjs.com/about-npm/) and [our `create` tool](https://www.npmjs.com/package/create-stylelint) to automatically setup Stylelint and extend [our standard config](https://www.npmjs.com/package/stylelint-config-standard):
 
 ```shell
 npm create stylelint@latest
 ```
 
-> **Note:**
-> Stylelint is also compatible with the Bun, pnpm, and Yarn package managers. You can use your preferred one to set up Stylelint, e.g. `bun create stylelint` or `pnpm create stylelint`.
+> [!NOTE]
+> Stylelint is also compatible with the [Bun](https://bun.sh/package-manager), [pnpm](https://pnpm.io/), and [Yarn](https://yarnpkg.com/) package managers. You can use your preferred one to set up Stylelint, e.g. `bun create stylelint` or `pnpm create stylelint`.
 
 ### Manual setup
 
@@ -33,7 +24,7 @@ Alternatively, you can manually setup Stylelint to lint CSS.
      extends: ["stylelint-config-standard"]
    };
    ```
-2. Use npm (or your preferred package manager) to add the related dependencies:
+2. Use [npm](https://docs.npmjs.com/about-npm/) (or your preferred package manager) to add the related dependencies:
    ```shell
    npm add -D stylelint stylelint-config-standard
    ```
@@ -42,12 +33,12 @@ Alternatively, you can manually setup Stylelint to lint CSS.
    npx stylelint "**/*.css"
    ```
 
-> **Note:**
-> The `npx` command allows you to run locally installed tools.
+> [!NOTE]
+> The [`npx`](https://docs.npmjs.com/cli/commands/npx) command allows you to run locally installed tools.
 > You can also use your preferred package manager's equivalent, e.g. `bunx stylelint "**/*.css"` or `pnpm dlx stylelint "**/*.css"`.
 > We'll omit `npx` in the rest of this guide.
 
-Once you're up and running, you can customize Stylelint.
+Once you're up and running, you can [customize](./customize.md) Stylelint.
 
 ## Linting CSS-like languages and CSS within containers
 
@@ -56,7 +47,7 @@ You can extend a community config to lint:
 - CSS-like languages, e.g. SCSS, Sass and Less
 - CSS within containers, e.g. in HTML, CSS-in-JS and Vue SFCs
 
-For example, to lint SCSS you can extend the SCSS community config:
+For example, to lint SCSS you can extend the [SCSS community config](https://www.npmjs.com/package/stylelint-config-standard-scss):
 
 1. Create a `stylelint.config.mjs` configuration file in the root of your project with the following content:
    ```js
@@ -65,7 +56,7 @@ For example, to lint SCSS you can extend the SCSS community config:
      extends: ["stylelint-config-standard-scss"]
    };
    ```
-2. Use npm (or your preferred package manager) to add the related dependencies:
+2. Use [npm](https://docs.npmjs.com/about-npm/) (or your preferred package manager) to add the related dependencies:
    ```shell
    npm add -D stylelint stylelint-config-standard-scss
    ```
@@ -76,16 +67,16 @@ For example, to lint SCSS you can extend the SCSS community config:
 
 The config includes the:
 
-- SCSS syntax - a custom syntax to parse SCSS
-- SCSS plugin - a set of custom rules for SCSS
+- [SCSS syntax](https://www.npmjs.com/package/postcss-scss) - a custom syntax to parse SCSS
+- [SCSS plugin](https://www.npmjs.com/package/stylelint-scss) - a set of custom rules for SCSS
 
-You'll find more community configs in Awesome Stylelint.
+You'll find more community configs in [Awesome Stylelint](https://github.com/stylelint/awesome-stylelint#readme).
 
 ### Using a custom syntax directly
 
-If a shared config isn't available for your preferred language or container, you can install the appropriate custom syntax and use the `customSyntax` option yourself.
+If a shared config isn't available for your preferred language or container, you can install the appropriate custom syntax and use the [`customSyntax` option](../user-guide/options.md#customsyntax) yourself.
 
-For example, to lint CSS inside of Lit elements using the Lit custom syntax:
+For example, to lint CSS inside of [Lit elements](https://lit.dev/) using the [Lit custom syntax](https://www.npmjs.com/package/postcss-lit):
 
 1. Create a `stylelint.config.mjs` configuration file in the root of your project with the following content:
    ```js
@@ -95,7 +86,7 @@ For example, to lint CSS inside of Lit elements using the Lit custom syntax:
      customSyntax: "postcss-lit"
    };
    ```
-2. Use npm (or your preferred package manager) to add the related dependencies:
+2. Use [npm](https://docs.npmjs.com/about-npm/) (or your preferred package manager) to add the related dependencies:
    ```shell
    npm add -D stylelint stylelint-config-standard postcss-lit
    ```
@@ -104,11 +95,11 @@ For example, to lint CSS inside of Lit elements using the Lit custom syntax:
    stylelint "**/*.js"
    ```
 
-You'll find more custom syntaxes in Awesome Stylelint.
+You'll find more custom syntaxes in [Awesome Stylelint](https://github.com/stylelint/awesome-stylelint#custom-syntaxes).
 
 #### Using more than one custom syntax
 
-If you want to lint more than one language or container, you can use the `overrides` property.
+If you want to lint more than one language or container, you can use the [`overrides`](configure.md#overrides) property.
 
 For example, to lint CSS files and the CSS within Lit Elements you can update your configuration to:
 

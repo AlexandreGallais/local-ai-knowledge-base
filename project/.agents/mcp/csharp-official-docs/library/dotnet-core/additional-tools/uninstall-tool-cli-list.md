@@ -1,10 +1,9 @@
 ---
-title: "dotnet-core-uninstall list command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/additional-tools/uninstall-tool-cli-list.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet-core-uninstall list command
+description: The dotnet-core-uninstall list command lists .NET SDKs and runtimes that can be removed with the tool.
+author: adegeo
+ms.date: 05/27/2026
+zone_pivot_groups: operating-systems-set-three
 ---
 
 # dotnet-core-uninstall list
@@ -17,7 +16,7 @@ license: "CC-BY-4.0"
 
 ## Synopsis
 
-**os-windows:**
+::: zone pivot="os-windows"
 
 ```dotnetcli
 dotnet-core-uninstall list [--arm64] [--aspnet-runtime] [--hosting-bundle]
@@ -27,7 +26,9 @@ dotnet-core-uninstall list [--arm64] [--aspnet-runtime] [--hosting-bundle]
 dotnet-core-uninstall list -?|-h|--help
 ```
 
-**os-macos:**
+::: zone-end
+
+::: zone pivot="os-macos"
 
 ```dotnetcli
 dotnet-core-uninstall list [--preserve-vs-for-mac-sdks] [--runtime] [--sdk]
@@ -36,13 +37,15 @@ dotnet-core-uninstall list [--preserve-vs-for-mac-sdks] [--runtime] [--sdk]
 dotnet-core-uninstall list -?|-h|--help
 ```
 
+::: zone-end
+
 ## Description
 
-The `dotnet-core-uninstall list` command lists installed .NET SDKs or runtimes that can be removed with this tool. For more information about the limitations of this tool, see .NET uninstall tool overview.
+The `dotnet-core-uninstall list` command lists installed .NET SDKs or runtimes that can be removed with this tool. For more information about the limitations of this tool, see [.NET uninstall tool overview](uninstall-tool-overview.md).
 
 ## Options
 
-**os-windows:**
+::: zone pivot="os-windows"
 
 - **`--arm64`**
 
@@ -90,13 +93,15 @@ The `dotnet-core-uninstall list` command lists installed .NET SDKs or runtimes t
 
   Shows help and usage information.
 
-**os-macos:**
+::: zone-end
+
+::: zone pivot="os-macos"
 
 - **`--preserve-vs-for-mac-sdks`**
 
   Prevents removal of SDKs and runtimes that have a high probability of being used by Visual Studio for Mac.
 
-  > **Note:**
+  > [!NOTE]
   > Visual Studio for Mac is out of support.
 
 - **`--runtime`**
@@ -121,6 +126,8 @@ The `dotnet-core-uninstall list` command lists installed .NET SDKs or runtimes t
 
   Shows help and usage information.
 
+::: zone-end
+
 ## Examples
 
 - List all the .NET SDKs and runtimes that can be removed with this tool:
@@ -143,6 +150,6 @@ The `dotnet-core-uninstall list` command lists installed .NET SDKs or runtimes t
 
 ## See also
 
-- .NET uninstall tool overview
-- dotnet-core-uninstall dry-run
-- dotnet-core-uninstall remove
+- [.NET uninstall tool overview](uninstall-tool-overview.md)
+- [dotnet-core-uninstall dry-run](uninstall-tool-cli-dry-run.md)
+- [dotnet-core-uninstall remove](uninstall-tool-cli-remove.md)

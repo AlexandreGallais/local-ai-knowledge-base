@@ -1,24 +1,18 @@
----
-title: "require-description"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/require-description.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-require-description"></a>
+<a name="require-description"></a>
+# <code>require-description</code>
 
-# `require-description`
+* [Options](#user-content-require-description-options)
+    * [`checkConstructors`](#user-content-require-description-options-checkconstructors)
+    * [`checkGetters`](#user-content-require-description-options-checkgetters)
+    * [`checkSetters`](#user-content-require-description-options-checksetters)
+    * [`contexts`](#user-content-require-description-options-contexts)
+    * [`descriptionStyle`](#user-content-require-description-options-descriptionstyle)
+    * [`exemptedBy`](#user-content-require-description-options-exemptedby)
+* [Context and settings](#user-content-require-description-context-and-settings)
+* [Failing examples](#user-content-require-description-failing-examples)
+* [Passing examples](#user-content-require-description-passing-examples)
 
-* Options
-    * `checkConstructors`
-    * `checkGetters`
-    * `checkSetters`
-    * `contexts`
-    * `descriptionStyle`
-    * `exemptedBy`
-* Context and settings
-* Failing examples
-* Passing examples
 
 Requires that all functions (or optionally other structures) with a JSDoc block
 have a description.
@@ -30,26 +24,36 @@ have a description.
   is `"tag"`) must have a non-empty description that explains the purpose of
   the method.
 
+<a name="user-content-require-description-options"></a>
+<a name="require-description-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `checkConstructors`
+<a name="user-content-require-description-options-checkconstructors"></a>
+<a name="require-description-options-checkconstructors"></a>
+### <code>checkConstructors</code>
 
 A value indicating whether `constructor`s should be
 checked. Defaults to `true`.
 
-### `checkGetters`
+<a name="user-content-require-description-options-checkgetters"></a>
+<a name="require-description-options-checkgetters"></a>
+### <code>checkGetters</code>
 
 A value indicating whether getters should be checked.
 Defaults to `true`.
 
-### `checkSetters`
+<a name="user-content-require-description-options-checksetters"></a>
+<a name="require-description-options-checksetters"></a>
+### <code>checkSetters</code>
 
 A value indicating whether setters should be checked.
 Defaults to `true`.
 
-### `contexts`
+<a name="user-content-require-description-options-contexts"></a>
+<a name="require-description-options-contexts"></a>
+### <code>contexts</code>
 
 Set to an array of strings representing the AST context
 where you wish the rule to be applied (e.g., `ClassDeclaration` for ES6
@@ -64,16 +68,20 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
-See the "AST and Selectors"
+See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
 section of our Advanced docs for more on the expected format.
 
-### `descriptionStyle`
+<a name="user-content-require-description-options-descriptionstyle"></a>
+<a name="require-description-options-descriptionstyle"></a>
+### <code>descriptionStyle</code>
 
 Whether to accept implicit descriptions (`"body"`) or
 `@description` tags (`"tag"`) as satisfying the rule. Set to `"any"` to
 accept either style. Defaults to `"body"`.
 
-### `exemptedBy`
+<a name="user-content-require-description-options-exemptedby"></a>
+<a name="require-description-options-exemptedby"></a>
+### <code>exemptedBy</code>
 
 Array of tags (e.g., `['type']`) whose presence on the
 document block avoids the need for a `@description`. Defaults to an
@@ -81,6 +89,9 @@ array with `inheritdoc`. If you set this array, it will overwrite the
 default, so be sure to add back `inheritdoc` if you wish its presence
 to cause exemption of the rule.
 
+
+<a name="user-content-require-description-context-and-settings"></a>
+<a name="require-description-context-and-settings"></a>
 ## Context and settings
 
 | | |
@@ -92,6 +103,8 @@ to cause exemption of the rule.
 | Options  |`checkConstructors`, `checkGetters`, `checkSetters`, `contexts`, `descriptionStyle`, `exemptedBy`|
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
+<a name="user-content-require-description-failing-examples"></a>
+<a name="require-description-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -386,6 +399,10 @@ this.treeViewSelection = [];
 // Message: Missing JSDoc block description.
 ````
 
+
+
+<a name="user-content-require-description-passing-examples"></a>
+<a name="require-description-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -617,3 +634,4 @@ class quux {
  */
 // "jsdoc/require-description": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[rawType=\"{Bar}\"])","context":"any"}],"descriptionStyle":"tag"}]
 ````
+

@@ -1,18 +1,15 @@
 ---
-title: "Namespaces"
-tool: "typescript"
-version: "6.0"
-source: "https://github.com/microsoft/TypeScript-Website/blob/4ec663ac4412c3a7086401bd5a8811565589b11d/packages/documentation/copy/en/reference/Namespaces.md"
-commit: "4ec663ac4412c3a7086401bd5a8811565589b11d"
-license: "CC-BY-4.0"
+title: Namespaces
+layout: docs
+permalink: /docs/handbook/namespaces.html
+oneline: How TypeScript namespaces work
+translatable: true
 ---
-
-# Namespaces
 
 > **A note about terminology:**
 > It's important to note that in TypeScript 1.5, the nomenclature has changed.
 > "Internal modules" are now "namespaces".
-> "External modules" are now simply "modules", as to align with ECMAScript 2015's terminology, (namely that `module X {` is equivalent to the now-preferred `namespace X {`).
+> "External modules" are now simply "modules", as to align with [ECMAScript 2015](https://www.ecma-international.org/ecma-262/6.0/)'s terminology, (namely that `module X {` is equivalent to the now-preferred `namespace X {`).
 
 This post outlines the various ways to organize your code using namespaces (previously "internal modules") in TypeScript.
 As we alluded in our note about terminology, "internal modules" are now referred to as "namespaces".
@@ -196,15 +193,15 @@ for (let s of strings) {
 Once there are multiple files involved, we'll need to make sure all of the compiled code gets loaded.
 There are two ways of doing this.
 
-First, we can use concatenated output using the `outFile` option to compile all of the input files into a single JavaScript output file:
+First, we can use concatenated output using the [`outFile`](/tsconfig#outFile) option to compile all of the input files into a single JavaScript output file:
 
-```shell
+```Shell
 tsc --outFile sample.js Test.ts
 ```
 
 The compiler will automatically order the output file based on the reference tags present in the files. You can also specify each file individually:
 
-```shell
+```Shell
 tsc --outFile sample.js Validation.ts LettersOnlyValidator.ts ZipCodeValidator.ts Test.ts
 ```
 

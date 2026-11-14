@@ -1,12 +1,3 @@
----
-title: "MatchResult interface (java.util.regex)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/regex/MatchResult.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # MatchResult interface (java.util.regex)
 
 ```java
@@ -15,22 +6,23 @@ public interface MatchResult
 
 The result of a match operation.
 
-This interface contains query methods used to determine the
+<p>This interface contains query methods used to determine the
 results of a match against a regular expression. The match boundaries,
 groups and group boundaries can be seen but not modified through
-a `MatchResult`.
+a {@code MatchResult}.
 
-**Implementation note:** Support for named groups is implemented by the default methods
-`start(String)`, `end(String)` and `group(String)`.
-They all make use of the map returned by `namedGroups()`, whose
-default implementation simply throws `UnsupportedOperationException`.
-It is thus sufficient to override `namedGroups()` for these methods
+@implNote
+Support for named groups is implemented by the default methods
+{@link #start(String)}, {@link #end(String)} and {@link #group(String)}.
+They all make use of the map returned by {@link #namedGroups()}, whose
+default implementation simply throws {@link UnsupportedOperationException}.
+It is thus sufficient to override {@link #namedGroups()} for these methods
 to work. However, overriding them directly might be preferable for
 performance or other reasons.
 
-**See also:** Matcher
-
-**Since:** 1.5
+@author  Michael McCloskey
+@see Matcher
+@since 1.5
 
 ## MatchResult.start()
 
@@ -40,11 +32,11 @@ int start()
 
 Returns the start index of the match.
 
-**Returns:** The index of the first character matched
+@return  The index of the first character matched
 
-Throws:
-
-- `IllegalStateException`: If no match has yet been attempted, or if the previous match operation failed
+@throws  IllegalStateException
+         If no match has yet been attempted,
+         or if the previous match operation failed
 
 ## MatchResult.start(int)
 
@@ -55,23 +47,25 @@ int start(int group)
 Returns the start index of the subsequence captured by the given group
 during this match.
 
- Capturing groups are indexed from left
+<p> <a href="Pattern.html#cg">Capturing groups</a> are indexed from left
 to right, starting at one.  Group zero denotes the entire pattern, so
-the expression *m.*`start(0)` is equivalent to
-*m.*`start()`.
+the expression <i>m.</i>{@code start(0)} is equivalent to
+<i>m.</i>{@code start()}.  </p>
 
-Parameters:
+@param  group
+        The index of a capturing group in this matcher's pattern
 
-- `group`: The index of a capturing group in this matcher's pattern
-
-**Returns:** The index of the first character captured by the group,
-         or `-1` if the match was successful but the group
+@return  The index of the first character captured by the group,
+         or {@code -1} if the match was successful but the group
          itself did not match anything
 
-Throws:
+@throws  IllegalStateException
+         If no match has yet been attempted,
+         or if the previous match operation failed
 
-- `IllegalStateException`: If no match has yet been attempted, or if the previous match operation failed
-- `IndexOutOfBoundsException`: If there is no capturing group in the pattern with the given index
+@throws  IndexOutOfBoundsException
+         If there is no capturing group in the pattern
+         with the given index
 
 ## MatchResult.start(String)
 
@@ -80,27 +74,30 @@ default int start(String name)
 ```
 
 Returns the start index of the subsequence captured by the given
-named-capturing group during the
+<a href="Pattern.html#groupname">named-capturing group</a> during the
 previous match operation.
 
-Parameters:
+@param  name
+        The name of a named-capturing group in this matcher's pattern
 
-- `name`: The name of a named-capturing group in this matcher's pattern
-
-**Returns:** The index of the first character captured by the group,
-         or `-1` if the match was successful but the group
+@return  The index of the first character captured by the group,
+         or {@code -1} if the match was successful but the group
          itself did not match anything
 
-**Implementation requirements:** The default implementation of this method invokes `namedGroups()`
-to obtain the group number from the `name` argument, and uses it
-as argument to an invocation of `start(int)`.
+@throws  IllegalStateException
+         If no match has yet been attempted,
+         or if the previous match operation failed
 
-**Since:** 20
+@throws  IllegalArgumentException
+         If there is no capturing group in the pattern
+         with the given name
 
-Throws:
+@implSpec
+The default implementation of this method invokes {@link #namedGroups()}
+to obtain the group number from the {@code name} argument, and uses it
+as argument to an invocation of {@link #start(int)}.
 
-- `IllegalStateException`: If no match has yet been attempted, or if the previous match operation failed
-- `IllegalArgumentException`: If there is no capturing group in the pattern with the given name
+@since 20
 
 ## MatchResult.end()
 
@@ -110,11 +107,11 @@ int end()
 
 Returns the offset after the last character matched.
 
-**Returns:** The offset after the last character matched
+@return  The offset after the last character matched
 
-Throws:
-
-- `IllegalStateException`: If no match has yet been attempted, or if the previous match operation failed
+@throws  IllegalStateException
+         If no match has yet been attempted,
+         or if the previous match operation failed
 
 ## MatchResult.end(int)
 
@@ -125,23 +122,25 @@ int end(int group)
 Returns the offset after the last character of the subsequence
 captured by the given group during this match.
 
- Capturing groups are indexed from left
+<p> <a href="Pattern.html#cg">Capturing groups</a> are indexed from left
 to right, starting at one.  Group zero denotes the entire pattern, so
-the expression *m.*`end(0)` is equivalent to
-*m.*`end()`.
+the expression <i>m.</i>{@code end(0)} is equivalent to
+<i>m.</i>{@code end()}.  </p>
 
-Parameters:
+@param  group
+        The index of a capturing group in this matcher's pattern
 
-- `group`: The index of a capturing group in this matcher's pattern
-
-**Returns:** The offset after the last character captured by the group,
-         or `-1` if the match was successful
+@return  The offset after the last character captured by the group,
+         or {@code -1} if the match was successful
          but the group itself did not match anything
 
-Throws:
+@throws  IllegalStateException
+         If no match has yet been attempted,
+         or if the previous match operation failed
 
-- `IllegalStateException`: If no match has yet been attempted, or if the previous match operation failed
-- `IndexOutOfBoundsException`: If there is no capturing group in the pattern with the given index
+@throws  IndexOutOfBoundsException
+         If there is no capturing group in the pattern
+         with the given index
 
 ## MatchResult.end(String)
 
@@ -150,27 +149,30 @@ default int end(String name)
 ```
 
 Returns the offset after the last character of the subsequence
-captured by the given named-capturing
-group during the previous match operation.
+captured by the given <a href="Pattern.html#groupname">named-capturing
+group</a> during the previous match operation.
 
-Parameters:
+@param  name
+        The name of a named-capturing group in this matcher's pattern
 
-- `name`: The name of a named-capturing group in this matcher's pattern
-
-**Returns:** The offset after the last character captured by the group,
-         or `-1` if the match was successful
+@return  The offset after the last character captured by the group,
+         or {@code -1} if the match was successful
          but the group itself did not match anything
 
-**Implementation requirements:** The default implementation of this method invokes `namedGroups()`
-to obtain the group number from the `name` argument, and uses it
-as argument to an invocation of `end(int)`.
+@throws  IllegalStateException
+         If no match has yet been attempted,
+         or if the previous match operation failed
 
-**Since:** 20
+@throws  IllegalArgumentException
+         If there is no capturing group in the pattern
+         with the given name
 
-Throws:
+@implSpec
+The default implementation of this method invokes {@link #namedGroups()}
+to obtain the group number from the {@code name} argument, and uses it
+as argument to an invocation of {@link #end(int)}.
 
-- `IllegalStateException`: If no match has yet been attempted, or if the previous match operation failed
-- `IllegalArgumentException`: If there is no capturing group in the pattern with the given name
+@since 20
 
 ## MatchResult.group()
 
@@ -180,21 +182,21 @@ String group()
 
 Returns the input subsequence matched by the previous match.
 
- For a matcher *m* with input sequence *s*,
-the expressions *m.*`group()` and
-*s.*`substring(`*m.*`start(),` *m.*`end())`
-are equivalent.
+<p> For a matcher <i>m</i> with input sequence <i>s</i>,
+the expressions <i>m.</i>{@code group()} and
+<i>s.</i>{@code substring(}<i>m.</i>{@code start(),}&nbsp;<i>m.</i>{@code end())}
+are equivalent.  </p>
 
- Note that some patterns, for example `a*`, match the empty
+<p> Note that some patterns, for example {@code a*}, match the empty
 string.  This method will return the empty string when the pattern
-successfully matches the empty string in the input.
+successfully matches the empty string in the input.  </p>
 
-**Returns:** The (possibly empty) subsequence matched by the previous match,
+@return The (possibly empty) subsequence matched by the previous match,
         in string form
 
-Throws:
-
-- `IllegalStateException`: If no match has yet been attempted, or if the previous match operation failed
+@throws  IllegalStateException
+         If no match has yet been attempted,
+         or if the previous match operation failed
 
 ## MatchResult.group(int)
 
@@ -205,33 +207,37 @@ String group(int group)
 Returns the input subsequence captured by the given group during the
 previous match operation.
 
- For a matcher *m*, input sequence *s*, and group index
-*g*, the expressions *m.*`group(`*g*`)` and
-*s.*`substring(`*m.*`start(`*g*`),` *m.*`end(`*g*`))`
-are equivalent.
+<p> For a matcher <i>m</i>, input sequence <i>s</i>, and group index
+<i>g</i>, the expressions <i>m.</i>{@code group(}<i>g</i>{@code )} and
+<i>s.</i>{@code substring(}<i>m.</i>{@code start(}<i>g</i>{@code
+),}&nbsp;<i>m.</i>{@code end(}<i>g</i>{@code ))}
+are equivalent.  </p>
 
- Capturing groups are indexed from left
+<p> <a href="Pattern.html#cg">Capturing groups</a> are indexed from left
 to right, starting at one.  Group zero denotes the entire pattern, so
-the expression `m.group(0)` is equivalent to `m.group()`.
+the expression {@code m.group(0)} is equivalent to {@code m.group()}.
+</p>
 
- If the match was successful but the group specified failed to match
-any part of the input sequence, then `null` is returned. Note
-that some groups, for example `(a*)`, match the empty string.
+<p> If the match was successful but the group specified failed to match
+any part of the input sequence, then {@code null} is returned. Note
+that some groups, for example {@code (a*)}, match the empty string.
 This method will return the empty string when such a group successfully
-matches the empty string in the input.
+matches the empty string in the input.  </p>
 
-Parameters:
+@param  group
+        The index of a capturing group in this matcher's pattern
 
-- `group`: The index of a capturing group in this matcher's pattern
-
-**Returns:** The (possibly empty) subsequence captured by the group
-         during the previous match, or `null` if the group
+@return  The (possibly empty) subsequence captured by the group
+         during the previous match, or {@code null} if the group
          failed to match part of the input
 
-Throws:
+@throws  IllegalStateException
+         If no match has yet been attempted,
+         or if the previous match operation failed
 
-- `IllegalStateException`: If no match has yet been attempted, or if the previous match operation failed
-- `IndexOutOfBoundsException`: If there is no capturing group in the pattern with the given index
+@throws  IndexOutOfBoundsException
+         If there is no capturing group in the pattern
+         with the given index
 
 ## MatchResult.group(String)
 
@@ -240,33 +246,36 @@ default String group(String name)
 ```
 
 Returns the input subsequence captured by the given
-named-capturing group during the
+<a href="Pattern.html#groupname">named-capturing group</a> during the
 previous match operation.
 
- If the match was successful but the group specified failed to match
-any part of the input sequence, then `null` is returned. Note
-that some groups, for example `(a*)`, match the empty string.
+<p> If the match was successful but the group specified failed to match
+any part of the input sequence, then {@code null} is returned. Note
+that some groups, for example {@code (a*)}, match the empty string.
 This method will return the empty string when such a group successfully
-matches the empty string in the input.
+matches the empty string in the input.  </p>
 
-Parameters:
+@param  name
+        The name of a named-capturing group in this matcher's pattern
 
-- `name`: The name of a named-capturing group in this matcher's pattern
-
-**Returns:** The (possibly empty) subsequence captured by the named group
-         during the previous match, or `null` if the group
+@return  The (possibly empty) subsequence captured by the named group
+         during the previous match, or {@code null} if the group
          failed to match part of the input
 
-**Implementation requirements:** The default implementation of this method invokes `namedGroups()`
-to obtain the group number from the `name` argument, and uses it
-as argument to an invocation of `group(int)`.
+@throws  IllegalStateException
+         If no match has yet been attempted,
+         or if the previous match operation failed
 
-**Since:** 20
+@throws  IllegalArgumentException
+         If there is no capturing group in the pattern
+         with the given name
 
-Throws:
+@implSpec
+The default implementation of this method invokes {@link #namedGroups()}
+to obtain the group number from the {@code name} argument, and uses it
+as argument to an invocation of {@link #group(int)}.
 
-- `IllegalStateException`: If no match has yet been attempted, or if the previous match operation failed
-- `IllegalArgumentException`: If there is no capturing group in the pattern with the given name
+@since 20
 
 ## MatchResult.groupCount()
 
@@ -276,14 +285,14 @@ int groupCount()
 
 Returns the number of capturing groups in this match result's pattern.
 
- Group zero denotes the entire pattern by convention. It is not
+<p> Group zero denotes the entire pattern by convention. It is not
 included in this count.
 
- Any non-negative integer smaller than or equal to the value
+<p> Any non-negative integer smaller than or equal to the value
 returned by this method is guaranteed to be a valid group index for
-this matcher.
+this matcher.  </p>
 
-**Returns:** The number of capturing groups in this matcher's pattern
+@return The number of capturing groups in this matcher's pattern
 
 ## MatchResult.namedGroups()
 
@@ -294,19 +303,19 @@ default Map<String,Integer> namedGroups()
 Returns an unmodifiable map from capturing group names to group numbers.
 If there are no named groups, returns an empty map.
 
-**Returns:** an unmodifiable map from capturing group names to group numbers
+@return an unmodifiable map from capturing group names to group numbers
 
-**Implementation requirements:** The default implementation of this method always throws
-         `UnsupportedOperationException`
+@throws UnsupportedOperationException if the implementation does not
+         support named groups.
 
-**API note:** This method must be overridden by an implementation that supports
+@implSpec The default implementation of this method always throws
+         {@link UnsupportedOperationException}
+
+@apiNote
+This method must be overridden by an implementation that supports
 named groups.
 
-**Since:** 20
-
-Throws:
-
-- `UnsupportedOperationException`: if the implementation does not support named groups.
+@since 20
 
 ## MatchResult.hasMatch()
 
@@ -314,16 +323,15 @@ Throws:
 default boolean hasMatch()
 ```
 
-Returns whether `this` contains a valid match from
+Returns whether {@code this} contains a valid match from
 a previous match or find operation.
 
-**Returns:** whether `this` contains a valid match
+@return whether {@code this} contains a valid match
 
-**Implementation requirements:** The default implementation of this method always throws
-         `UnsupportedOperationException`
+@throws UnsupportedOperationException if the implementation cannot report
+         whether it has a match
 
-**Since:** 20
+@implSpec The default implementation of this method always throws
+         {@link UnsupportedOperationException}
 
-Throws:
-
-- `UnsupportedOperationException`: if the implementation cannot report whether it has a match
+@since 20

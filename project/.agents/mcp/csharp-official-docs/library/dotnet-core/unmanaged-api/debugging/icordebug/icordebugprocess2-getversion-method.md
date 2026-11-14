@@ -1,10 +1,20 @@
 ---
+description: "Learn more about: ICorDebugProcess2::GetVersion Method"
 title: "ICorDebugProcess2::GetVersion Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess2-getversion-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugProcess2.GetVersion"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugProcess2::GetVersion"
+helpviewer_keywords:
+  - "GetVersion method, ICorDebugProcess2 interface [.NET debugging]"
+  - "ICorDebugProcess2::GetVersion method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
 
 # ICorDebugProcess2::GetVersion Method
@@ -30,7 +40,7 @@ The `GetVersion` method returns an error code if no runtime has been loaded in t
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** CorDebug.idl, CorDebug.h
 

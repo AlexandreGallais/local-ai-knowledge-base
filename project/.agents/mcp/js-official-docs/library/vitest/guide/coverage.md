@@ -1,15 +1,10 @@
 ---
-title: "Coverage | Guide (part 1 of 2)"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/coverage.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Coverage | Guide
 ---
 
 # Coverage
 
-Vitest supports Native code coverage via `v8` and instrumented code coverage via `istanbul`.
+Vitest supports Native code coverage via [`v8`](https://v8.dev/blog/javascript-code-coverage) and instrumented code coverage via [`istanbul`](https://istanbul.js.org/).
 
 ## Coverage Providers
 
@@ -17,7 +12,7 @@ Both `v8` and `istanbul` support are optional. By default, `v8` will be used.
 
 You can select the coverage tool by setting `test.coverage.provider` to `v8` or `istanbul`:
 
-```ts
+```ts [vitest.config.ts]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -35,36 +30,45 @@ Or if you prefer to install them manually:
 
 ::: code-group
 
-```bash
+```bash [v8]
 npm i -D @vitest/coverage-v8
 ```
 
-```bash
+```bash [istanbul]
 npm i -D @vitest/coverage-istanbul
 ```
 
+:::
+
 ## V8 Provider
 
-**Info:**
+::: info
 The description of V8 coverage below is Vitest specific and does not apply to other test runners.
-Since `v3.2.0` Vitest has used AST based coverage remapping for V8 coverage, which produces identical coverage reports to Istanbul.
+Since `v3.2.0` Vitest has used [AST based coverage remapping](/blog/vitest-3-2#coverage-v8-ast-aware-remapping) for V8 coverage, which produces identical coverage reports to Istanbul.
 
 This allows users to have the speed of V8 coverage with accuracy of Istanbul coverage.
+:::
 
 By default Vitest uses `'v8'` coverage provider.
-This provider requires Javascript runtime that's implemented on top of V8 engine, such as NodeJS, Deno or any Chromium based browsers such as Google Chrome.
+This provider requires Javascript runtime that's implemented on top of [V8 engine](https://v8.dev/), such as NodeJS, Deno or any Chromium based browsers such as Google Chrome.
 
-Coverage collection is performed during runtime by instructing V8 using `node:inspector` and Chrome DevTools Protocol in browsers. User's source files can be executed as-is without any pre-instrumentation steps.
+Coverage collection is performed during runtime by instructing V8 using [`node:inspector`](https://nodejs.org/api/inspector.html) and [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/) in browsers. User's source files can be executed as-is without any pre-instrumentation steps.
 
 - ✅ Recommended option to use
 - ✅ No pre-transpile step. Test files can be executed as-is.
 - ✅ Faster execute times than Istanbul.
 - ✅ Lower memory usage than Istanbul.
-- ✅ Coverage report accuracy is as good as with Istanbul (since Vitest `v3.2.0`).
+- ✅ Coverage report accuracy is as good as with Istanbul ([since Vitest `v3.2.0`](/blog/vitest-3-2#coverage-v8-ast-aware-remapping)).
 - ⚠️ In some cases can be slower than Istanbul, e.g. when loading lots of different modules. V8 does not support limiting coverage collection to specific modules.
-- ⚠️ There are some minor limitations set by V8 engine. See `ast-v8-to-istanbul` | Limitations.
+- ⚠️ There are some minor limitations set by V8 engine. See [`ast-v8-to-istanbul` | Limitations](https://github.com/AriPerkkio/ast-v8-to-istanbul?tab=readme-ov-file#limitations).
 - ❌ Does not work on environments that don't use V8, such as Firefox or Bun. Or on environments that don't expose V8 coverage via profiler, such as Cloudflare Workers.
 
+<script setup>
+import ArrowDown from '../.vitepress/components/ArrowDown.vue'
+import Box from '../.vitepress/components/Box.vue'
+</script>
+
+<div style="display: flex; flex-direction: column; align-items: center; padding: 2rem 0; max-width: 20rem;">
   <Box>Test file</Box>
   <ArrowDown />
   <Box>Enable V8 runtime coverage collection</Box>
@@ -76,10 +80,11 @@ Coverage collection is performed during runtime by instructing V8 using `node:in
   <Box>Remap coverage results to source files</Box>
   <ArrowDown />
   <Box>Coverage report</Box>
+</div>
 
 ## Istanbul Provider
 
-Istanbul code coverage tooling has existed since 2012 and is very well battle-tested. Vitest uses its own `@vitest/istanbuljs` that is a fork of the original `istanbuljs/istanbuljs` project. This provider works on any JavaScript runtime as coverage tracking works by transforming your source code to add instrumentation logic. In practice, the code Vitest will end up running looks something like this:
+[Istanbul code coverage tooling](https://istanbul.js.org/) has existed since 2012 and is very well battle-tested. Vitest uses its own [`@vitest/istanbuljs`](https://github.com/vitest-dev/istanbuljs) that is a fork of the original [`istanbuljs/istanbuljs`](https://github.com/istanbuljs/istanbuljs) project. This provider works on any JavaScript runtime as coverage tracking works by transforming your source code to add instrumentation logic. In practice, the code Vitest will end up running looks something like this:
 
 ```js
 // Simplified example of branch and function coverage counters
@@ -115,6 +120,7 @@ globalThis.__VITEST_COVERAGE__[filename] = coverage // [!code ++]
 - ❌ Execution speed is slower than V8 due to instrumentation overhead
 - ❌ Memory usage is higher than V8
 
+<div style="display: flex; flex-direction: column; align-items: center; padding: 2rem 0; max-width: 20rem;">
   <Box>Test file</Box>
   <ArrowDown />
   <Box>Pre‑instrumentation on Javascript side</Box>
@@ -126,17 +132,19 @@ globalThis.__VITEST_COVERAGE__[filename] = coverage // [!code ++]
   <Box>Remap coverage results to source files</Box>
   <ArrowDown />
   <Box>Coverage report</Box>
+</div>
 
 ## Coverage Setup
 
-**Tip:**
-All coverage options are listed in Coverage Config Reference.
+::: tip
+All coverage options are listed in [Coverage Config Reference](/config/coverage).
+:::
 
 To test with coverage enabled, you can pass the `--coverage` flag in CLI or set `coverage.enabled` in `vitest.config.ts`:
 
 ::: code-group
 
-```json
+```json [package.json]
 {
   "scripts": {
     "test": "vitest",
@@ -145,7 +153,7 @@ To test with coverage enabled, you can pass the `--coverage` flag in CLI or set 
 }
 ```
 
-```ts
+```ts [vitest.config.ts]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -157,16 +165,18 @@ export default defineConfig({
 })
 ```
 
+:::
+
 ## Including and Excluding Files from Coverage Report
 
-You can define what files are shown in coverage report by configuring `coverage.include` and `coverage.exclude`.
+You can define what files are shown in coverage report by configuring [`coverage.include`](/config/coverage#coverage-include) and [`coverage.exclude`](/config/coverage#coverage-exclude).
 
 By default Vitest will show only files that were imported during test run.
-To include uncovered files in the report, you'll need to configure `coverage.include` with a pattern that will pick your source files:
+To include uncovered files in the report, you'll need to configure [`coverage.include`](/config/coverage#coverage-include) with a pattern that will pick your source files:
 
 ::: code-group
 
-```ts
+```ts [vitest.config.ts] {6}
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -178,7 +188,7 @@ export default defineConfig({
 })
 ```
 
-```sh
+```sh [Covered Files]
 ├── src
 │   ├── components
 │   │   └── counter.tsx   # [!code ++]
@@ -197,11 +207,13 @@ export default defineConfig({
 └── vitest.config.ts      # [!code error]
 ```
 
-To exclude files that are matching `coverage.include`, you can define an additional `coverage.exclude`:
+:::
+
+To exclude files that are matching `coverage.include`, you can define an additional [`coverage.exclude`](/config/coverage#coverage-exclude):
 
 ::: code-group
 
-```ts
+```ts [vitest.config.ts] {7}
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -214,7 +226,7 @@ export default defineConfig({
 })
 ```
 
-```sh
+```sh [Covered Files]
 ├── src
 │   ├── components
 │   │   └── counter.tsx   # [!code ++]
@@ -233,11 +245,13 @@ export default defineConfig({
 └── vitest.config.ts      # [!code error]
 ```
 
+:::
+
 ## Custom Coverage Reporter
 
 You can use custom coverage reporters by passing either the name of the package or absolute path in `test.coverage.reporter`:
 
-```ts
+```ts [vitest.config.ts]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -255,11 +269,11 @@ export default defineConfig({
 })
 ```
 
-Custom reporters are loaded by `@vitest/istanbul-lib-report` and must match its reporter interface. See built-in reporters' implementation for reference.
+Custom reporters are loaded by `@vitest/istanbul-lib-report` and must match its reporter interface. See [built-in reporters' implementation](https://github.com/vitest-dev/istanbuljs/tree/main/packages/istanbul-lib-report/src/reports) for reference.
 
 ::: code-group
 
-```js
+```js [custom-reporter.mjs]
 import { ReportBase } from '@vitest/istanbul-lib-report'
 
 export default class CustomReporter extends ReportBase {
@@ -285,7 +299,7 @@ export default class CustomReporter extends ReportBase {
 }
 ```
 
-```js
+```js [custom-reporter.cjs]
 const { ReportBase } = require('@vitest/istanbul-lib-report')
 
 module.exports = class CustomReporter extends ReportBase {
@@ -308,11 +322,13 @@ module.exports = class CustomReporter extends ReportBase {
 }
 ```
 
+:::
+
 ## Custom Coverage Provider
 
 It's also possible to provide your custom coverage provider by passing `'custom'` in `test.coverage.provider`:
 
-```ts
+```ts [vitest.config.ts]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -327,7 +343,7 @@ export default defineConfig({
 
 The custom providers require a `customProviderModule` option which is a module name or path where to load the `CoverageProviderModule` from. It must export an object that implements `CoverageProviderModule` as default export:
 
-```ts
+```ts [my-custom-coverage-provider.ts]
 import type {
   CoverageProvider,
   CoverageProviderModule,
@@ -363,17 +379,18 @@ Please refer to the type definition for more details.
 
 Both coverage providers have their own ways how to ignore code from coverage reports:
 
-- `v8`
-- `istanbul`
+- [`v8`](https://github.com/AriPerkkio/ast-v8-to-istanbul?tab=readme-ov-file#ignoring-code)
+- [`istanbul`](https://github.com/istanbuljs/nyc#parsing-hints-ignoring-lines)
 
-When using TypeScript the source codes are transpiled using `esbuild`, which strips all comments from the source codes (esbuild#516).
-Comments which are considered as legal comments are preserved.
+When using TypeScript the source codes are transpiled using `esbuild`, which strips all comments from the source codes ([esbuild#516](https://github.com/evanw/esbuild/issues/516)).
+Comments which are considered as [legal comments](https://esbuild.github.io/api/#legal-comments) are preserved.
 
 You can include a `@preserve` keyword in the ignore hint.
 Beware that these ignore hints may now be included in final production build as well.
 
-**Tip:**
+::: tip
 Follow https://github.com/vitest-dev/vitest/issues/2021 for updates about `@preserve` usage.
+:::
 
 ```diff
 -/* istanbul ignore if */
@@ -389,7 +406,7 @@ if (condition) {
 
 ::: code-group
 
-```ts
+```ts [lines: start/stop]
 /* istanbul ignore start -- @preserve */
 if (parameter) { // [!code error]
   console.log('Ignored') // [!code error]
@@ -413,7 +430,7 @@ else { // [!code error]
 console.log('Included')
 ```
 
-```ts
+```ts [if else]
 /* v8 ignore if -- @preserve */
 if (parameter) { // [!code error]
   console.log('Ignored') // [!code error]
@@ -431,7 +448,7 @@ else { // [!code error]
 } // [!code error]
 ```
 
-```ts
+```ts [next node]
 /* v8 ignore next -- @preserve */
 console.log('Ignored') // [!code error]
 console.log('Included')
@@ -459,7 +476,7 @@ condition // [!code error]
   : console.log('also ignored') // [!code error]
 ```
 
-```ts
+```ts [try catch]
 /* v8 ignore next -- @preserve */
 try { // [!code error]
   console.log('Ignored') // [!code error]
@@ -488,7 +505,7 @@ catch (error) /* v8 ignore next */ { // [!code error]
 } // [!code error]
 ```
 
-```ts
+```ts [switch case]
 switch (type) {
   case 1:
     return 'Included'
@@ -506,22 +523,24 @@ switch (type) {
 }
 ```
 
-```ts
+```ts [whole file]
 /* v8 ignore file -- @preserve */
 export function ignored() { // [!code error]
   return 'Whole file is ignored'// [!code error]
 }// [!code error]
 ```
 
+:::
+
 ## Coverage Performance
 
-If code coverage generation is slow on your project, see Profiling Test Performance | Code coverage.
+If code coverage generation is slow on your project, see [Profiling Test Performance | Code coverage](/guide/profiling-test-performance#code-coverage).
 
 ## HTML Report Theme
 
 By default Vitest's HTML coverage report uses Vitest-styled themes. The color theme, dark or light, is set by following order:
 
-- Reporter options: `coverage.reporter: [['html', { theme: 'light' | 'dark' | 'legacy' }]]`
+- [Reporter options](/config/coverage#coverage-reporter): `coverage.reporter: [['html', { theme: 'light' | 'dark' | 'legacy' }]]`
 - Your previous selection from the theme picker
 - OS color preference
 
@@ -529,15 +548,34 @@ When coverage report is viewed through Vitest UI, it will inherit the UI's color
 
 If you do not want to use Vitest-styled reports, you can always set `coverage.reporter: [['html', { theme: 'legacy' }]]` to force the original Istanbul themed styles.
 
-::: tabs key:<example-value>
+::: tabs key:coverage-report-theme
 == Light
+<img alt="HTML coverage report in light theme" src="/coverage-report-theme-light.png">
 
 == Dark
+<img alt="HTML coverage report in dark theme" src="/coverage-report-theme-dark.png">
 
 == Legacy
+<img alt="HTML coverage report in legacy istanbuljs theme" src="/coverage-report-theme-legacy.png">
+:::
 
 ## Vitest UI
 
-You can check your coverage report in Vitest UI and HTML reporter.
+You can check your coverage report in [Vitest UI](/guide/ui) and [HTML reporter](/guide/reporters#html-reporter).
 
-This is integrated with builtin coverage reporters with HTML output (`html`, `html-spa`, and `lcov` reporters). `html` reporter is enabled by default and this works out of the box. To integrate with custom reporters, you can configure `coverage.htmlDir`.
+This is integrated with builtin coverage reporters with HTML output (`html`, `html-spa`, and `lcov` reporters). `html` reporter is enabled by default and this works out of the box. To integrate with custom reporters, you can configure [`coverage.htmlDir`](/config/coverage#coverage-htmldir).
+
+<img alt="html coverage activation in Vitest UI" img-light src="/vitest-ui-show-coverage-light.png">
+<img alt="html coverage activation in Vitest UI" img-dark src="/vitest-ui-show-coverage-dark.png">
+
+<img alt="html coverage in Vitest UI" img-light src="/ui-coverage-1-light.png">
+<img alt="html coverage in Vitest UI" img-dark src="/ui-coverage-1-dark.png">
+
+## Coverage in Agent Environments
+
+When Vitest detects it is running inside an AI coding agent, it automatically adjusts the default `text` reporter to reduce output and minimize token usage:
+
+- `skipFull: true` is set on the `text` reporter, so files with 100% coverage are omitted from the terminal output.
+- The [`text-summary`](/config/coverage#coverage-reporter) reporter is added automatically, so the agent always sees a concise totals table even when `skipFull` hides all individual files.
+
+These adjustments only apply when the `text` reporter is already part of the active reporter list (it is included in the default). Explicitly configured reporters are never removed.

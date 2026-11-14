@@ -1,26 +1,15 @@
----
-title: "AtomicReference class (java.util.concurrent.atomic)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/atomic/AtomicReference.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AtomicReference class (java.util.concurrent.atomic)
 
 ```java
 public class AtomicReference<V> implements java.io.Serializable
 ```
 
-An object reference that may be updated atomically.  See the `VarHandle` specification for descriptions of the properties of
+An object reference that may be updated atomically.  See the {@link
+VarHandle} specification for descriptions of the properties of
 atomic accesses.
-
-Parameters:
-
-- `<V>`: The type of object referred to by this reference
-
-**Since:** 1.5
+@since 1.5
+@author Doug Lea
+@param <V> The type of object referred to by this reference
 
 ## AtomicReference.AtomicReference(V)
 
@@ -30,9 +19,7 @@ public AtomicReference(V initialValue)
 
 Creates a new AtomicReference with the given initial value.
 
-Parameters:
-
-- `initialValue`: the initial value
+@param initialValue the initial value
 
 ## AtomicReference.AtomicReference()
 
@@ -49,9 +36,9 @@ public final V get()
 ```
 
 Returns the current value,
-with memory effects as specified by `VarHandle.getVolatile`.
+with memory effects as specified by {@link VarHandle#getVolatile}.
 
-**Returns:** the current value
+@return the current value
 
 ## AtomicReference.set(V)
 
@@ -59,12 +46,10 @@ with memory effects as specified by `VarHandle.getVolatile`.
 public final void set(V newValue)
 ```
 
-Sets the value to `newValue`,
-with memory effects as specified by `VarHandle.setVolatile`.
+Sets the value to {@code newValue},
+with memory effects as specified by {@link VarHandle#setVolatile}.
 
-Parameters:
-
-- `newValue`: the new value
+@param newValue the new value
 
 ## AtomicReference.lazySet(V)
 
@@ -72,14 +57,11 @@ Parameters:
 public final void lazySet(V newValue)
 ```
 
-Sets the value to `newValue`,
-with memory effects as specified by `VarHandle.setRelease`.
+Sets the value to {@code newValue},
+with memory effects as specified by {@link VarHandle#setRelease}.
 
-Parameters:
-
-- `newValue`: the new value
-
-**Since:** 1.6
+@param newValue the new value
+@since 1.6
 
 ## AtomicReference.compareAndSet(V, V)
 
@@ -87,16 +69,13 @@ Parameters:
 public final boolean compareAndSet(V expectedValue, V newValue)
 ```
 
-Atomically sets the value to `newValue`
-if the current value `== expectedValue`,
-with memory effects as specified by `VarHandle.compareAndSet`.
+Atomically sets the value to {@code newValue}
+if the current value {@code == expectedValue},
+with memory effects as specified by {@link VarHandle#compareAndSet}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** `true` if successful. False return indicates that
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful. False return indicates that
 the actual value was not equal to the expected value.
 
 ## AtomicReference.weakCompareAndSet(V, V)
@@ -105,24 +84,20 @@ the actual value was not equal to the expected value.
 public final boolean weakCompareAndSet(V expectedValue, V newValue)
 ```
 
-Possibly atomically sets the value to `newValue`
-if the current value `== expectedValue`,
-with memory effects as specified by `VarHandle.weakCompareAndSetPlain`.
+Possibly atomically sets the value to {@code newValue}
+if the current value {@code == expectedValue},
+with memory effects as specified by {@link VarHandle#weakCompareAndSetPlain}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Deprecated:** This method has plain memory effects but the method
+@deprecated This method has plain memory effects but the method
 name implies volatile memory effects (see methods such as
-`compareAndExchange` and `compareAndSet`).  To avoid
+{@link #compareAndExchange} and {@link #compareAndSet}).  To avoid
 confusion over plain or volatile memory effects it is recommended that
-the method `weakCompareAndSetPlain` be used instead.
+the method {@link #weakCompareAndSetPlain} be used instead.
 
-**Returns:** `true` if successful
-
-**See also:** #weakCompareAndSetPlain
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful
+@see #weakCompareAndSetPlain
 
 ## AtomicReference.weakCompareAndSetPlain(V, V)
 
@@ -130,18 +105,14 @@ the method `weakCompareAndSetPlain` be used instead.
 public final boolean weakCompareAndSetPlain(V expectedValue, V newValue)
 ```
 
-Possibly atomically sets the value to `newValue`
-if the current value `== expectedValue`,
-with memory effects as specified by `VarHandle.weakCompareAndSetPlain`.
+Possibly atomically sets the value to {@code newValue}
+if the current value {@code == expectedValue},
+with memory effects as specified by {@link VarHandle#weakCompareAndSetPlain}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** `true` if successful
-
-**Since:** 9
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful
+@since 9
 
 ## AtomicReference.getAndSet(V)
 
@@ -149,14 +120,11 @@ Parameters:
 public final V getAndSet(V newValue)
 ```
 
-Atomically sets the value to `newValue` and returns the old value,
-with memory effects as specified by `VarHandle.getAndSet`.
+Atomically sets the value to {@code newValue} and returns the old value,
+with memory effects as specified by {@link VarHandle#getAndSet}.
 
-Parameters:
-
-- `newValue`: the new value
-
-**Returns:** the previous value
+@param newValue the new value
+@return the previous value
 
 ## AtomicReference.getAndUpdate(UnaryOperator<V>)
 
@@ -164,18 +132,15 @@ Parameters:
 public final V getAndUpdate(UnaryOperator<V> updateFunction)
 ```
 
-Atomically updates (with memory effects as specified by `VarHandle.compareAndSet`) the current value with the results of
+Atomically updates (with memory effects as specified by {@link
+VarHandle#compareAndSet}) the current value with the results of
 applying the given function, returning the previous value. The
 function should be side-effect-free, since it may be re-applied
 when attempted updates fail due to contention among threads.
 
-Parameters:
-
-- `updateFunction`: a side-effect-free function
-
-**Returns:** the previous value
-
-**Since:** 1.8
+@param updateFunction a side-effect-free function
+@return the previous value
+@since 1.8
 
 ## AtomicReference.updateAndGet(UnaryOperator<V>)
 
@@ -183,18 +148,15 @@ Parameters:
 public final V updateAndGet(UnaryOperator<V> updateFunction)
 ```
 
-Atomically updates (with memory effects as specified by `VarHandle.compareAndSet`) the current value with the results of
+Atomically updates (with memory effects as specified by {@link
+VarHandle#compareAndSet}) the current value with the results of
 applying the given function, returning the updated value. The
 function should be side-effect-free, since it may be re-applied
 when attempted updates fail due to contention among threads.
 
-Parameters:
-
-- `updateFunction`: a side-effect-free function
-
-**Returns:** the updated value
-
-**Since:** 1.8
+@param updateFunction a side-effect-free function
+@return the updated value
+@since 1.8
 
 ## AtomicReference.getAndAccumulate(V, BinaryOperator<V>)
 
@@ -202,7 +164,8 @@ Parameters:
 public final V getAndAccumulate(V x, BinaryOperator<V> accumulatorFunction)
 ```
 
-Atomically updates (with memory effects as specified by `VarHandle.compareAndSet`) the current value with the results of
+Atomically updates (with memory effects as specified by {@link
+VarHandle#compareAndSet}) the current value with the results of
 applying the given function to the current and given values,
 returning the previous value. The function should be
 side-effect-free, since it may be re-applied when attempted
@@ -210,14 +173,10 @@ updates fail due to contention among threads.  The function is
 applied with the current value as its first argument, and the
 given update as the second argument.
 
-Parameters:
-
-- `x`: the update value
-- `accumulatorFunction`: a side-effect-free function of two arguments
-
-**Returns:** the previous value
-
-**Since:** 1.8
+@param x the update value
+@param accumulatorFunction a side-effect-free function of two arguments
+@return the previous value
+@since 1.8
 
 ## AtomicReference.accumulateAndGet(V, BinaryOperator<V>)
 
@@ -225,7 +184,8 @@ Parameters:
 public final V accumulateAndGet(V x, BinaryOperator<V> accumulatorFunction)
 ```
 
-Atomically updates (with memory effects as specified by `VarHandle.compareAndSet`) the current value with the results of
+Atomically updates (with memory effects as specified by {@link
+VarHandle#compareAndSet}) the current value with the results of
 applying the given function to the current and given values,
 returning the updated value. The function should be
 side-effect-free, since it may be re-applied when attempted
@@ -233,20 +193,18 @@ updates fail due to contention among threads.  The function is
 applied with the current value as its first argument, and the
 given update as the second argument.
 
-Parameters:
-
-- `x`: the update value
-- `accumulatorFunction`: a side-effect-free function of two arguments
-
-**Returns:** the updated value
-
-**Since:** 1.8
+@param x the update value
+@param accumulatorFunction a side-effect-free function of two arguments
+@return the updated value
+@since 1.8
 
 ## AtomicReference.toString()
 
 ```java
 public String toString()
 ```
+
+{@return the String representation of the current value}
 
 ## AtomicReference.getPlain()
 
@@ -255,11 +213,10 @@ public final V getPlain()
 ```
 
 Returns the current value, with memory semantics of reading as
-if the variable was declared non-`volatile`.
+if the variable was declared non-{@code volatile}.
 
-**Returns:** the value
-
-**Since:** 9
+@return the value
+@since 9
 
 ## AtomicReference.setPlain(V)
 
@@ -267,15 +224,12 @@ if the variable was declared non-`volatile`.
 public final void setPlain(V newValue)
 ```
 
-Sets the value to `newValue`, with memory semantics
-of setting as if the variable was declared non-`volatile`
-and non-`final`.
+Sets the value to {@code newValue}, with memory semantics
+of setting as if the variable was declared non-{@code volatile}
+and non-{@code final}.
 
-Parameters:
-
-- `newValue`: the new value
-
-**Since:** 9
+@param newValue the new value
+@since 9
 
 ## AtomicReference.getOpaque()
 
@@ -284,11 +238,10 @@ public final V getOpaque()
 ```
 
 Returns the current value,
-with memory effects as specified by `VarHandle.getOpaque`.
+with memory effects as specified by {@link VarHandle#getOpaque}.
 
-**Returns:** the value
-
-**Since:** 9
+@return the value
+@since 9
 
 ## AtomicReference.setOpaque(V)
 
@@ -296,14 +249,11 @@ with memory effects as specified by `VarHandle.getOpaque`.
 public final void setOpaque(V newValue)
 ```
 
-Sets the value to `newValue`,
-with memory effects as specified by `VarHandle.setOpaque`.
+Sets the value to {@code newValue},
+with memory effects as specified by {@link VarHandle#setOpaque}.
 
-Parameters:
-
-- `newValue`: the new value
-
-**Since:** 9
+@param newValue the new value
+@since 9
 
 ## AtomicReference.getAcquire()
 
@@ -312,11 +262,10 @@ public final V getAcquire()
 ```
 
 Returns the current value,
-with memory effects as specified by `VarHandle.getAcquire`.
+with memory effects as specified by {@link VarHandle#getAcquire}.
 
-**Returns:** the value
-
-**Since:** 9
+@return the value
+@since 9
 
 ## AtomicReference.setRelease(V)
 
@@ -324,14 +273,11 @@ with memory effects as specified by `VarHandle.getAcquire`.
 public final void setRelease(V newValue)
 ```
 
-Sets the value to `newValue`,
-with memory effects as specified by `VarHandle.setRelease`.
+Sets the value to {@code newValue},
+with memory effects as specified by {@link VarHandle#setRelease}.
 
-Parameters:
-
-- `newValue`: the new value
-
-**Since:** 9
+@param newValue the new value
+@since 9
 
 ## AtomicReference.compareAndExchange(V, V)
 
@@ -339,20 +285,16 @@ Parameters:
 public final V compareAndExchange(V expectedValue, V newValue)
 ```
 
-Atomically sets the value to `newValue` if the current value,
-referred to as the *witness value*, `== expectedValue`,
+Atomically sets the value to {@code newValue} if the current value,
+referred to as the <em>witness value</em>, {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.compareAndExchange`.
+{@link VarHandle#compareAndExchange}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** the *witness value*, which will be the same as the
+@param expectedValue the expected value
+@param newValue the new value
+@return the <em>witness value</em>, which will be the same as the
 expected value if successful
-
-**Since:** 9
+@since 9
 
 ## AtomicReference.compareAndExchangeAcquire(V, V)
 
@@ -360,20 +302,16 @@ expected value if successful
 public final V compareAndExchangeAcquire(V expectedValue, V newValue)
 ```
 
-Atomically sets the value to `newValue` if the current value,
-referred to as the *witness value*, `== expectedValue`,
+Atomically sets the value to {@code newValue} if the current value,
+referred to as the <em>witness value</em>, {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.compareAndExchangeAcquire`.
+{@link VarHandle#compareAndExchangeAcquire}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** the *witness value*, which will be the same as the
+@param expectedValue the expected value
+@param newValue the new value
+@return the <em>witness value</em>, which will be the same as the
 expected value if successful
-
-**Since:** 9
+@since 9
 
 ## AtomicReference.compareAndExchangeRelease(V, V)
 
@@ -381,20 +319,16 @@ expected value if successful
 public final V compareAndExchangeRelease(V expectedValue, V newValue)
 ```
 
-Atomically sets the value to `newValue` if the current value,
-referred to as the *witness value*, `== expectedValue`,
+Atomically sets the value to {@code newValue} if the current value,
+referred to as the <em>witness value</em>, {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.compareAndExchangeRelease`.
+{@link VarHandle#compareAndExchangeRelease}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** the *witness value*, which will be the same as the
+@param expectedValue the expected value
+@param newValue the new value
+@return the <em>witness value</em>, which will be the same as the
 expected value if successful
-
-**Since:** 9
+@since 9
 
 ## AtomicReference.weakCompareAndSetVolatile(V, V)
 
@@ -402,19 +336,15 @@ expected value if successful
 public final boolean weakCompareAndSetVolatile(V expectedValue, V newValue)
 ```
 
-Possibly atomically sets the value to `newValue`
-if the current value `== expectedValue`,
+Possibly atomically sets the value to {@code newValue}
+if the current value {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.weakCompareAndSet`.
+{@link VarHandle#weakCompareAndSet}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** `true` if successful
-
-**Since:** 9
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful
+@since 9
 
 ## AtomicReference.weakCompareAndSetAcquire(V, V)
 
@@ -422,19 +352,15 @@ Parameters:
 public final boolean weakCompareAndSetAcquire(V expectedValue, V newValue)
 ```
 
-Possibly atomically sets the value to `newValue`
-if the current value `== expectedValue`,
+Possibly atomically sets the value to {@code newValue}
+if the current value {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.weakCompareAndSetAcquire`.
+{@link VarHandle#weakCompareAndSetAcquire}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** `true` if successful
-
-**Since:** 9
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful
+@since 9
 
 ## AtomicReference.weakCompareAndSetRelease(V, V)
 
@@ -442,16 +368,12 @@ Parameters:
 public final boolean weakCompareAndSetRelease(V expectedValue, V newValue)
 ```
 
-Possibly atomically sets the value to `newValue`
-if the current value `== expectedValue`,
+Possibly atomically sets the value to {@code newValue}
+if the current value {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.weakCompareAndSetRelease`.
+{@link VarHandle#weakCompareAndSetRelease}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** `true` if successful
-
-**Since:** 9
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful
+@since 9

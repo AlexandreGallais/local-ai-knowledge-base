@@ -1,13 +1,9 @@
 ---
-title: "prefer-numeric-literals"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/prefer-numeric-literals.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: prefer-numeric-literals
+rule_type: suggestion
 ---
 
-# prefer-numeric-literals
+
 
 The `parseInt()` and `Number.parseInt()` functions can be used to turn binary, octal, and hexadecimal strings into integers. As binary, octal, and hexadecimal literals are supported in ES6, this rule encourages use of those numeric literals instead of `parseInt()` or `Number.parseInt()`.
 
@@ -22,7 +18,7 @@ This rule disallows calls to `parseInt()` or `Number.parseInt()` if called with 
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint prefer-numeric-literals: "error"*/
@@ -36,9 +32,11 @@ Number.parseInt("767", 8) === 503;
 Number.parseInt("1F7", 16) === 503;
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint prefer-numeric-literals: "error"*/
@@ -60,6 +58,8 @@ Number.parseInt(foo);
 Number.parseInt(foo, 2);
 ```
 
+:::
+
 ## Options
 
 This rule has no options.
@@ -70,4 +70,4 @@ If you want to allow use of `parseInt()` or `Number.parseInt()` for binary, octa
 
 ## Compatibility
 
-* **JSCS**: requireNumericLiterals
+* **JSCS**: [requireNumericLiterals](https://jscs-dev.github.io/rule/requireNumericLiterals)

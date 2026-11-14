@@ -1,28 +1,24 @@
 ---
-title: "Manage Protobuf references with dotnet-grpc"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/grpc/dotnet-grpc.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Manage Protobuf references with dotnet-grpc
+description: Learn about adding, updating, removing, and listing Protobuf references with the dotnet-grpc global tool.
+monikerRange: '>= aspnetcore-3.0'
+ms.date: 10/17/2019
 ---
-
 # Manage Protobuf references with dotnet-grpc
 
-`dotnet-grpc` is a .NET Global Tool for managing Protobuf (`.proto`) references within a .NET gRPC project. The tool can be used to add, refresh, remove, and list Protobuf references.
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+`dotnet-grpc` is a .NET Global Tool for managing [Protobuf (`.proto`)](basics.md#proto-file) references within a .NET gRPC project. The tool can be used to add, refresh, remove, and list Protobuf references.
 
 ## Installation
 
-To install the `dotnet-grpc` .NET Global Tool, run the following command:
+To install the `dotnet-grpc` [.NET Global Tool](/dotnet/core/tools/global-tools), run the following command:
 
 ```dotnetcli
 dotnet tool install -g dotnet-grpc
 ```
 
-> **Note:**
-> By default, the architecture of the .NET binaries to install represents the currently running operating system architecture.
-> To specify a different architecture, review how to use the `dotnet tool install` command with the '--arch' option.
-> For more information, see GitHub dotnet/aspnetcore.docs issue #29262 - _Add '-a arm64' on Apple Silicon_.
+[!INCLUDE[](~/includes/dotnet-tool-install-arch-options.md)]
 
 ## Add references
 
@@ -45,7 +41,7 @@ For example, the `Grpc.AspNetCore` package is added to a web app. `Grpc.AspNetCo
 The `add-file` command is used to add local files on disk as Protobuf references. The file paths provided:
 
 * Can be relative to the current directory or absolute paths.
-* May contain wild cards for pattern-based file globbing.
+* May contain wild cards for pattern-based file [globbing](https://wikipedia.org/wiki/Glob_(programming)).
 
 If any files are outside the project directory, a `Link` element is added to display the file under the folder `Protos` in Visual Studio.
 
@@ -167,6 +163,6 @@ dotnet-grpc list [options]
 
 ## Related content
 
-* Overview for gRPC on .NET
-* gRPC Services with C#
-* gRPC services with ASP.NET Core
+* [Overview for gRPC on .NET](index.md)
+* [gRPC Services with C#](basics.md)
+* [gRPC services with ASP.NET Core](aspnetcore.md)

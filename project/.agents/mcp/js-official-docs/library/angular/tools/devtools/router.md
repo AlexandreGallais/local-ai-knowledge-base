@@ -1,15 +1,8 @@
----
-title: "Inspect the Router Tree"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/tools/devtools/router.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Inspect the Router Tree
 
 The **Router Tree** tab lets you visualize the routing tree of your application. You can explore how routes are nested and view details about specific routes.
+
+<img src="assets/images/guide/devtools/router-tree.png" alt="A screenshot of the 'Router Tree' tab in Angular DevTools showing a tree of configured routes. The active routes are highlighted in green, while inactive ones are white.">
 
 ### View route details
 
@@ -33,3 +26,5 @@ NOTE: Properties like Path Match, Data, Resolvers, Guards, Providers, Title, and
 ### Navigate to a specific route
 
 You can easily trigger navigation directly from the DevTools. While inspecting a route's details in the right sidebar, click on the **Navigate** icon next to the path string. This triggers the Angular router to navigate to that URL in your application.
+
+<img src="assets/images/guide/devtools/router-tree-navigate.png" alt="A screenshot showing the 'Navigate to' tooltip on the route path in the 'Routes Details' sidebar.">

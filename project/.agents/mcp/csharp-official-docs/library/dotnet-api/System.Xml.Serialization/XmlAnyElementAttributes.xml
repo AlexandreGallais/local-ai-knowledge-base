@@ -1,0 +1,414 @@
+<Type Name="XmlAnyElementAttributes" FullName="System.Xml.Serialization.XmlAnyElementAttributes">
+  <TypeSignature Language="C#" Value="public class XmlAnyElementAttributes : System.Collections.CollectionBase" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit XmlAnyElementAttributes extends System.Collections.CollectionBase" />
+  <TypeSignature Language="DocId" Value="T:System.Xml.Serialization.XmlAnyElementAttributes" />
+  <TypeSignature Language="VB.NET" Value="Public Class XmlAnyElementAttributes&#xA;Inherits CollectionBase" />
+  <TypeSignature Language="F#" Value="type XmlAnyElementAttributes = class&#xA;    inherit CollectionBase" />
+  <TypeSignature Language="C++ CLI" Value="public ref class XmlAnyElementAttributes : System::Collections::CollectionBase" />
+  <AssemblyInfo>
+    <AssemblyName>System.Xml.XmlSerializer</AssemblyName>
+    <AssemblyVersion>4.0.10.0</AssemblyVersion>
+    <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <AssemblyVersion>4.1.1.0</AssemblyVersion>
+    <AssemblyVersion>4.1.2.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+    <AssemblyVersion>11.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>System.Xml</AssemblyName>
+    <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.5.0</AssemblyVersion>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>netstandard</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Xml.XmlSerializer" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Xml.XmlSerializer" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Xml.XmlSerializer" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Xml.XmlSerializer" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+  </TypeForwardingChain>
+  <Base>
+    <BaseTypeName>System.Collections.CollectionBase</BaseTypeName>
+  </Base>
+  <Interfaces>
+  </Interfaces>
+  <Attributes>
+    <Attribute>
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>Represents a collection of <see cref="T:System.Xml.Serialization.XmlAnyElementAttribute" /> objects.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Use the <xref:System.Xml.Serialization.XmlAnyElementAttributes> to override the behavior of a set of <xref:System.Xml.Serialization.XmlAnyElementAttribute> objects. Multiple instances of the <xref:System.Xml.Serialization.XmlAnyElementAttribute> class can be applied to a class member, as long as each instance has a distinct <xref:System.Xml.Serialization.XmlAnyElementAttribute.Name> property value; this instructs the <xref:System.Xml.Serialization.XmlSerializer> to collect unknown elements under the named element into the appropriate array. It is for this reason that multiple instances of the <xref:System.Xml.Serialization.XmlAnyElementAttribute> class can be added to the <xref:System.Xml.Serialization.XmlAnyElementAttributes>.
+
+ To override a set of <xref:System.Xml.Serialization.XmlAnyElementAttribute> objects:
+
+1.  Create an <xref:System.Xml.Serialization.XmlAnyElementAttributes>.
+
+2.  Create the set of <xref:System.Xml.Serialization.XmlAnyElementAttribute> objects, and add each object to the collection using the <xref:System.Xml.Serialization.XmlAnyElementAttributes.Add*> method.
+
+3.  Create an <xref:System.Xml.Serialization.XmlAttributes>.
+
+4.  Set the <xref:System.Xml.Serialization.XmlAttributes.XmlAnyElements> property to the <xref:System.Xml.Serialization.XmlAnyElementAttributes>.
+
+5.  Create an <xref:System.Xml.Serialization.XmlAttributeOverrides>.
+
+6.  Add the <xref:System.Xml.Serialization.XmlAttributes> to the <xref:System.Xml.Serialization.XmlAttributeOverrides> using the <xref:System.Xml.Serialization.XmlAttributeOverrides.Add*> method.
+
+7.  Create an instance of the <xref:System.Xml.Serialization.XmlSerializer> using the <xref:System.Xml.Serialization.XmlAttributeOverrides>.
+
+8.  Serialize or deserialize an object that contains the set of <xref:System.Xml.Serialization.XmlAnyElementAttribute> objects.
+
+
+
+## Examples
+ The following example creates a new <xref:System.Xml.Serialization.XmlAnyElementAttribute> and adds it to the collection of objects accessed through the <xref:System.Xml.Serialization.XmlAttributes.XmlAnyElements> property. The <xref:System.Xml.Serialization.XmlAttributes> is then added to a <xref:System.Xml.Serialization.XmlAttributeOverrides>, which is used to create an <xref:System.Xml.Serialization.XmlSerializer>. The <xref:System.Xml.Serialization.XmlSerializer> is used to serialize or deserialize an object. To see the effect of using the <xref:System.Xml.Serialization.XmlAnyElementAttributes> property, create an XML document named UnknownElements.xml by running the `SerializeObject` method in the `Main` method. Edit the resulting document to include other (unknown) elements. Comment out the `SerializeObject` call in the `Main` method, and uncomment the call to the `DeserializeObject` method, which prints out the name and value of any unknown XML element.
+
+ :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlAnyElementAttributes/Overview/xmlanyover.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Xml.Serialization/XmlAnyElementAttributes/Overview/xmlanyover.vb" id="Snippet1":::
+
+ ]]></format>
+    </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public XmlAnyElementAttributes ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Xml.Serialization.XmlAnyElementAttributes.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; XmlAnyElementAttributes();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Xml.XmlSerializer</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Xml</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>Initializes a new instance of the <see cref="T:System.Xml.Serialization.XmlAnyElementAttributes" /> class.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Add">
+      <MemberSignature Language="C#" Value="public int Add (System.Xml.Serialization.XmlAnyElementAttribute? attribute);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance int32 Add(class System.Xml.Serialization.XmlAnyElementAttribute attribute) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Xml.Serialization.XmlAnyElementAttributes.Add(System.Xml.Serialization.XmlAnyElementAttribute)" />
+      <MemberSignature Language="VB.NET" Value="Public Function Add (attribute As XmlAnyElementAttribute) As Integer" />
+      <MemberSignature Language="F#" Value="member this.Add : System.Xml.Serialization.XmlAnyElementAttribute -&gt; int" Usage="xmlAnyElementAttributes.Add attribute" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; int Add(System::Xml::Serialization::XmlAnyElementAttribute ^ attribute);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Xml.XmlSerializer</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Xml</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="attribute" Type="System.Xml.Serialization.XmlAnyElementAttribute" />
+      </Parameters>
+      <Docs>
+        <param name="attribute">The <see cref="T:System.Xml.Serialization.XmlAnyElementAttribute" /> to add.</param>
+        <summary>Adds an <see cref="T:System.Xml.Serialization.XmlAnyElementAttribute" /> to the collection.</summary>
+        <returns>The index of the newly added <see cref="T:System.Xml.Serialization.XmlAnyElementAttribute" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Examples
+ The following example creates a new <xref:System.Xml.Serialization.XmlAnyElementAttribute> and adds it to the collection of objects accessed through the <xref:System.Xml.Serialization.XmlAttributes.XmlAnyElements> property. The <xref:System.Xml.Serialization.XmlAttributes> is then added to an <xref:System.Xml.Serialization.XmlAttributeOverrides>, which is used to create an <xref:System.Xml.Serialization.XmlSerializer>. The <xref:System.Xml.Serialization.XmlSerializer> is used to serialize or deserialize an object. To see the effect of using the <xref:System.Xml.Serialization.XmlAnyElementAttributes> property, create an XML document named UnknownElements.xml by running the `SerializeObject` method in the `Main` method. Edit the resulting document to include other (unknown) elements. Comment out the `SerializeObject` call in the `Main` method, and uncomment the call to the `DeserializeObject` method, which prints out the name and value of any unknown XML element.
+
+ :::code language="csharp" source="~/snippets/csharp/System.Xml.Serialization/XmlAnyElementAttributes/Overview/xmlanyover.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Xml.Serialization/XmlAnyElementAttributes/Overview/xmlanyover.vb" id="Snippet1":::
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Contains">
+      <MemberSignature Language="C#" Value="public bool Contains (System.Xml.Serialization.XmlAnyElementAttribute? attribute);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance bool Contains(class System.Xml.Serialization.XmlAnyElementAttribute attribute) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Xml.Serialization.XmlAnyElementAttributes.Contains(System.Xml.Serialization.XmlAnyElementAttribute)" />
+      <MemberSignature Language="VB.NET" Value="Public Function Contains (attribute As XmlAnyElementAttribute) As Boolean" />
+      <MemberSignature Language="F#" Value="member this.Contains : System.Xml.Serialization.XmlAnyElementAttribute -&gt; bool" Usage="xmlAnyElementAttributes.Contains attribute" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; bool Contains(System::Xml::Serialization::XmlAnyElementAttribute ^ attribute);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Xml.XmlSerializer</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Xml</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="attribute" Type="System.Xml.Serialization.XmlAnyElementAttribute" />
+      </Parameters>
+      <Docs>
+        <param name="attribute">The <see cref="T:System.Xml.Serialization.XmlAnyElementAttribute" /> you are interested in.</param>
+        <summary>Gets a value that indicates whether the specified <see cref="T:System.Xml.Serialization.XmlAnyElementAttribute" /> exists in the collection.</summary>
+        <returns>
+          <see langword="true" /> if the <see cref="T:System.Xml.Serialization.XmlAnyElementAttribute" /> exists in the collection; otherwise, <see langword="false" />.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CopyTo">
+      <MemberSignature Language="C#" Value="public void CopyTo (System.Xml.Serialization.XmlAnyElementAttribute[] array, int index);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void CopyTo(class System.Xml.Serialization.XmlAnyElementAttribute[] array, int32 index) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Xml.Serialization.XmlAnyElementAttributes.CopyTo(System.Xml.Serialization.XmlAnyElementAttribute[],System.Int32)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub CopyTo (array As XmlAnyElementAttribute(), index As Integer)" />
+      <MemberSignature Language="F#" Value="member this.CopyTo : System.Xml.Serialization.XmlAnyElementAttribute[] * int -&gt; unit" Usage="xmlAnyElementAttributes.CopyTo (array, index)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void CopyTo(cli::array &lt;System::Xml::Serialization::XmlAnyElementAttribute ^&gt; ^ array, int index);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Xml.XmlSerializer</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Xml</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="array" Type="System.Xml.Serialization.XmlAnyElementAttribute[]" />
+        <Parameter Name="index" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="array">The one-dimensional array of <see cref="T:System.Xml.Serialization.XmlElementAttribute" /> objects that is the destination of the elements copied from the collection. The array must have zero-based indexing.</param>
+        <param name="index">The zero-based index in <paramref name="array" /> at which copying begins.</param>
+        <summary>Copies the entire collection to a compatible one-dimensional array of <see cref="T:System.Xml.Serialization.XmlElementAttribute" /> objects, starting at the specified index of the target array.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IndexOf">
+      <MemberSignature Language="C#" Value="public int IndexOf (System.Xml.Serialization.XmlAnyElementAttribute? attribute);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance int32 IndexOf(class System.Xml.Serialization.XmlAnyElementAttribute attribute) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Xml.Serialization.XmlAnyElementAttributes.IndexOf(System.Xml.Serialization.XmlAnyElementAttribute)" />
+      <MemberSignature Language="VB.NET" Value="Public Function IndexOf (attribute As XmlAnyElementAttribute) As Integer" />
+      <MemberSignature Language="F#" Value="member this.IndexOf : System.Xml.Serialization.XmlAnyElementAttribute -&gt; int" Usage="xmlAnyElementAttributes.IndexOf attribute" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; int IndexOf(System::Xml::Serialization::XmlAnyElementAttribute ^ attribute);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Xml.XmlSerializer</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Xml</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="attribute" Type="System.Xml.Serialization.XmlAnyElementAttribute" />
+      </Parameters>
+      <Docs>
+        <param name="attribute">The <see cref="T:System.Xml.Serialization.XmlAnyElementAttribute" /> whose index you want.</param>
+        <summary>Gets the index of the specified <see cref="T:System.Xml.Serialization.XmlAnyElementAttribute" />.</summary>
+        <returns>The index of the specified <see cref="T:System.Xml.Serialization.XmlAnyElementAttribute" />.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Insert">
+      <MemberSignature Language="C#" Value="public void Insert (int index, System.Xml.Serialization.XmlAnyElementAttribute? attribute);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Insert(int32 index, class System.Xml.Serialization.XmlAnyElementAttribute attribute) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Xml.Serialization.XmlAnyElementAttributes.Insert(System.Int32,System.Xml.Serialization.XmlAnyElementAttribute)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Insert (index As Integer, attribute As XmlAnyElementAttribute)" />
+      <MemberSignature Language="F#" Value="member this.Insert : int * System.Xml.Serialization.XmlAnyElementAttribute -&gt; unit" Usage="xmlAnyElementAttributes.Insert (index, attribute)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Insert(int index, System::Xml::Serialization::XmlAnyElementAttribute ^ attribute);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Xml.XmlSerializer</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Xml</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="index" Type="System.Int32" />
+        <Parameter Name="attribute" Type="System.Xml.Serialization.XmlAnyElementAttribute" />
+      </Parameters>
+      <Docs>
+        <param name="index">The index where the <see cref="T:System.Xml.Serialization.XmlAnyElementAttribute" /> is inserted.</param>
+        <param name="attribute">The <see cref="T:System.Xml.Serialization.XmlAnyElementAttribute" /> to insert.</param>
+        <summary>Inserts an <see cref="T:System.Xml.Serialization.XmlAnyElementAttribute" /> into the collection at the specified index.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Item">
+      <MemberSignature Language="C#" Value="public System.Xml.Serialization.XmlAnyElementAttribute? this[int index] { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Xml.Serialization.XmlAnyElementAttribute Item(int32)" />
+      <MemberSignature Language="DocId" Value="P:System.Xml.Serialization.XmlAnyElementAttributes.Item(System.Int32)" />
+      <MemberSignature Language="VB.NET" Value="Default Public Property Item(index As Integer) As XmlAnyElementAttribute" />
+      <MemberSignature Language="F#" Value="member this.Item(int) : System.Xml.Serialization.XmlAnyElementAttribute with get, set" Usage="System.Xml.Serialization.XmlAnyElementAttributes.Item" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property System::Xml::Serialization::XmlAnyElementAttribute ^ default[int] { System::Xml::Serialization::XmlAnyElementAttribute ^ get(int index); void set(int index, System::Xml::Serialization::XmlAnyElementAttribute ^ value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Xml.XmlSerializer</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Xml</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Xml.Serialization.XmlAnyElementAttribute</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="index" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="index">The index of the <see cref="T:System.Xml.Serialization.XmlAnyElementAttribute" />.</param>
+        <summary>Gets or sets the <see cref="T:System.Xml.Serialization.XmlAnyElementAttribute" /> at the specified index.</summary>
+        <value>An <see cref="T:System.Xml.Serialization.XmlAnyElementAttribute" /> at the specified index.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Remove">
+      <MemberSignature Language="C#" Value="public void Remove (System.Xml.Serialization.XmlAnyElementAttribute? attribute);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Remove(class System.Xml.Serialization.XmlAnyElementAttribute attribute) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Xml.Serialization.XmlAnyElementAttributes.Remove(System.Xml.Serialization.XmlAnyElementAttribute)" />
+      <MemberSignature Language="VB.NET" Value="Public Sub Remove (attribute As XmlAnyElementAttribute)" />
+      <MemberSignature Language="F#" Value="member this.Remove : System.Xml.Serialization.XmlAnyElementAttribute -&gt; unit" Usage="xmlAnyElementAttributes.Remove attribute" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; void Remove(System::Xml::Serialization::XmlAnyElementAttribute ^ attribute);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Xml.XmlSerializer</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Xml</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="attribute" Type="System.Xml.Serialization.XmlAnyElementAttribute" />
+      </Parameters>
+      <Docs>
+        <param name="attribute">The <see cref="T:System.Xml.Serialization.XmlAnyElementAttribute" /> to remove.</param>
+        <summary>Removes the specified <see cref="T:System.Xml.Serialization.XmlAnyElementAttribute" /> from the collection.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

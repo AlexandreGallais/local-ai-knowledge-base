@@ -1,36 +1,28 @@
----
-title: "core::result (part 1 of 3)"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/result.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::result
 
 Error handling with the `Result` type.
 
-`Result<T, E>``Result` is the type used for returning and propagating
-errors. It is an enum with the variants, `Ok(T)`, representing
-success and containing a value, and `Err(E)`, representing error
+[`Result<T, E>`][`Result`] is the type used for returning and propagating
+errors. It is an enum with the variants, [`Ok(T)`], representing
+success and containing a value, and [`Err(E)`], representing error
 and containing an error value.
 
-```rust
+```
+# #[allow(dead_code)]
 enum Result<T, E> {
    Ok(T),
    Err(E),
 }
 ```
 
-Functions return `Result` whenever errors are expected and
-recoverable. In the `std` crate, `Result` is most prominently used
-for I/O.
+Functions return [`Result`] whenever errors are expected and
+recoverable. In the `std` crate, [`Result`] is most prominently used
+for [I/O](../../std/io/index.html).
 
-A simple function returning `Result` might be
+A simple function returning [`Result`] might be
 defined and used like so:
 
-```rust
+```
 #[derive(Debug)]
 enum Version { Version1, Version2 }
 
@@ -50,11 +42,11 @@ match version {
 }
 ```
 
-Pattern matching on `Result`s is clear and straightforward for
-simple cases, but `Result` comes with some convenience methods
+Pattern matching on [`Result`]s is clear and straightforward for
+simple cases, but [`Result`] comes with some convenience methods
 that make working with it more succinct.
 
-```rust
+```
 // The `is_ok` and `is_err` methods do what they say.
 let good_result: Result<i32, i32> = Ok(10);
 let bad_result: Result<i32, i32> = Err(10);
@@ -80,20 +72,20 @@ let final_awesome_result = good_result.unwrap();
 assert!(final_awesome_result)
 ```
 
-#### Results must be used
+# Results must be used
 
 A common problem with using return values to indicate errors is
 that it is easy to ignore the return value, thus failing to handle
-the error. `Result` is annotated with the `#[must_use]` attribute,
+the error. [`Result`] is annotated with the `#[must_use]` attribute,
 which will cause the compiler to issue a warning when a Result
-value is ignored. This makes `Result` especially useful with
+value is ignored. This makes [`Result`] especially useful with
 functions that may encounter errors but don't otherwise return a
 useful value.
 
-Consider the `write_all` method defined for I/O types
-by the `Write` trait:
+Consider the [`write_all`] method defined for I/O types
+by the [`Write`] trait:
 
-```rust
+```
 use std::io;
 
 trait Write {
@@ -101,14 +93,15 @@ trait Write {
 }
 ```
 
-*Note: The actual definition of `Write` uses `io::Result`, which
+*Note: The actual definition of [`Write`] uses [`io::Result`], which
 is just a synonym for <code>[Result]<T, [io::Error]></code>.*
 
 This method doesn't produce a value, but the write may
 fail. It's crucial to handle the error case, and *not* write
 something like this:
 
-```rust
+```no_run
+# #![allow(unused_must_use)] // \o/
 use std::fs::File;
 use std::io::prelude::*;
 
@@ -122,11 +115,11 @@ If you *do* write that in Rust, the compiler will give you a
 warning (by default, controlled by the `unused_must_use` lint).
 
 You might instead, if you don't want to handle the error, simply
-assert success with `expect`. This will panic if the
+assert success with [`expect`]. This will panic if the
 write fails, providing a message explaining why the write was expected
 to succeed:
 
-```rust
+```no_run
 use std::fs::File;
 use std::io::prelude::*;
 
@@ -136,13 +129,20 @@ file.write_all(b"important message").expect("writing to the file should succeed"
 
 You might also simply assert success:
 
-```rust
+```no_run
+# use std::fs::File;
+# use std::io::prelude::*;
+# let mut file = File::create("valuable_data.txt").unwrap();
 assert!(file.write_all(b"important message").is_ok());
 ```
 
-Or propagate the error up the call stack with `?`:
+Or propagate the error up the call stack with [`?`]:
 
-```rust
+```
+# use std::fs::File;
+# use std::io::prelude::*;
+# use std::io;
+# #[allow(dead_code)]
 fn write_message() -> io::Result<()> {
     let mut file = File::create("valuable_data.txt")?;
     file.write_all(b"important message")?;
@@ -150,16 +150,17 @@ fn write_message() -> io::Result<()> {
 }
 ```
 
-#### The question mark operator, `?`
+# The question mark operator, `?`
 
 When writing code that calls many functions that return the
-`Result` type, the error handling can be tedious. The question mark
-operator, `?`, hides some of the boilerplate of propagating errors
+[`Result`] type, the error handling can be tedious. The question mark
+operator, [`?`], hides some of the boilerplate of propagating errors
 up the call stack.
 
 It replaces this:
 
-```rust
+```
+# #![allow(dead_code)]
 use std::fs::File;
 use std::io::prelude::*;
 use std::io;
@@ -191,7 +192,8 @@ fn write_info(info: &Info) -> io::Result<()> {
 
 With this:
 
-```rust
+```
+# #![allow(dead_code)]
 use std::fs::File;
 use std::io::prelude::*;
 use std::io;
@@ -214,22 +216,31 @@ fn write_info(info: &Info) -> io::Result<()> {
 
 *It's much nicer!*
 
-Ending the expression with `?` will result in the `Ok`'s unwrapped value, unless the result
-is `Err`, in which case `Err` is returned early from the enclosing function.
+Ending the expression with [`?`] will result in the [`Ok`]'s unwrapped value, unless the result
+is [`Err`], in which case [`Err`] is returned early from the enclosing function.
 
-`?` can be used in functions that return `Result` because of the
-early return of `Err` that it provides.
+[`?`] can be used in functions that return [`Result`] because of the
+early return of [`Err`] that it provides.
 
-#### Representation
+[`expect`]: Result::expect
+[`Write`]: ../../std/io/trait.Write.html "io::Write"
+[`write_all`]: ../../std/io/trait.Write.html#method.write_all "io::Write::write_all"
+[`io::Result`]: ../../std/io/type.Result.html "io::Result"
+[`?`]: crate::ops::Try
+[`Ok(T)`]: Ok
+[`Err(E)`]: Err
+[io::Error]: ../../std/io/struct.Error.html "io::Error"
 
-In some cases, `Result<T, E>` comes with size, alignment, and ABI
+# Representation
+
+In some cases, [`Result<T, E>`] comes with size, alignment, and ABI
 guarantees. Specifically, one of either the `T` or `E` type must be a type
-that qualifies for the `Option` representation guarantees (let's
+that qualifies for the `Option` [representation guarantees][opt-rep] (let's
 call that type `I`), and the *other* type is a zero-sized type with
 alignment 1 (a "1-ZST").
 
 If that is the case, then `Result<T, E>` has the same size, alignment, and
-[function call ABI] as `I` (and therefore, as `Option`). If `I` is `T`,
+[function call ABI] as `I` (and therefore, as `Option<I>`). If `I` is `T`,
 it is therefore sound to transmute a value `t` of type `I` to type
 `Result<T, E>` (producing the value `Ok(t)`) and to transmute a value
 `Ok(t)` of type `Result<T, E>` to type `I` (producing the value `t`). If `I`
@@ -245,139 +256,189 @@ only difference between these is in the implied semantics:
 * `Result<NonZeroI32, ()>` is "a non-zero i32 success result, if any"
 * `Result<(), NonZeroI32>` is "a non-zero i32 error result, if any"
 
-#### Method overview
+[opt-rep]: ../option/index.html#representation "Option Representation"
+[function call ABI]: ../primitive.fn.html#abi-compatibility
 
-In addition to working with pattern matching, `Result` provides a
+# Method overview
+
+In addition to working with pattern matching, [`Result`] provides a
 wide variety of different methods.
 
-#### Querying the variant
+## Querying the variant
 
-The `is_ok` and `is_err` methods return `true` if the `Result`
-is `Ok` or `Err`, respectively.
+The [`is_ok`] and [`is_err`] methods return [`true`] if the [`Result`]
+is [`Ok`] or [`Err`], respectively.
 
-The `is_ok_and` and `is_err_and` methods apply the provided function
-to the contents of the `Result` to produce a boolean value. If the `Result` does not have the expected variant
-then `false` is returned instead without executing the function.
+The [`is_ok_and`] and [`is_err_and`] methods apply the provided function
+to the contents of the [`Result`] to produce a boolean value. If the [`Result`] does not have the expected variant
+then [`false`] is returned instead without executing the function.
 
-#### Adapters for working with references
+[`is_err`]: Result::is_err
+[`is_ok`]: Result::is_ok
+[`is_ok_and`]: Result::is_ok_and
+[`is_err_and`]: Result::is_err_and
 
-* `as_ref` converts from `&Result<T, E>` to `Result<&T, &E>`
-* `as_mut` converts from `&mut Result<T, E>` to `Result<&mut T, &mut E>`
-* `as_deref` converts from `&Result<T, E>` to `Result<&T::Target, &E>`
-* `as_deref_mut` converts from `&mut Result<T, E>` to
+## Adapters for working with references
+
+* [`as_ref`] converts from `&Result<T, E>` to `Result<&T, &E>`
+* [`as_mut`] converts from `&mut Result<T, E>` to `Result<&mut T, &mut E>`
+* [`as_deref`] converts from `&Result<T, E>` to `Result<&T::Target, &E>`
+* [`as_deref_mut`] converts from `&mut Result<T, E>` to
   `Result<&mut T::Target, &mut E>`
 
-#### Extracting contained values
+[`as_deref`]: Result::as_deref
+[`as_deref_mut`]: Result::as_deref_mut
+[`as_mut`]: Result::as_mut
+[`as_ref`]: Result::as_ref
 
-These methods extract the contained value in a `Result<T, E>` when it
-is the `Ok` variant. If the `Result` is `Err`:
+## Extracting contained values
 
-* `expect` panics with a provided custom message
-* `unwrap` panics with a generic message
-* `unwrap_or` returns the provided default value
-* `unwrap_or_default` returns the default value of the type `T`
-  (which must implement the `Default` trait)
-* `unwrap_or_else` returns the result of evaluating the provided
+These methods extract the contained value in a [`Result<T, E>`] when it
+is the [`Ok`] variant. If the [`Result`] is [`Err`]:
+
+* [`expect`] panics with a provided custom message
+* [`unwrap`] panics with a generic message
+* [`unwrap_or`] returns the provided default value
+* [`unwrap_or_default`] returns the default value of the type `T`
+  (which must implement the [`Default`] trait)
+* [`unwrap_or_else`] returns the result of evaluating the provided
   function
-* `unwrap_unchecked` produces *[undefined behavior]*
+* [`unwrap_unchecked`] produces *[undefined behavior]*
 
-The panicking methods `expect` and `unwrap` require `E` to
-implement the `Debug` trait.
+The panicking methods [`expect`] and [`unwrap`] require `E` to
+implement the [`Debug`] trait.
 
-These methods extract the contained value in a `Result<T, E>` when it
-is the `Err` variant. They require `T` to implement the `Debug`
-trait. If the `Result` is `Ok`:
+[`Debug`]: crate::fmt::Debug
+[`expect`]: Result::expect
+[`unwrap`]: Result::unwrap
+[`unwrap_or`]: Result::unwrap_or
+[`unwrap_or_default`]: Result::unwrap_or_default
+[`unwrap_or_else`]: Result::unwrap_or_else
+[`unwrap_unchecked`]: Result::unwrap_unchecked
+[undefined behavior]: https://doc.rust-lang.org/reference/behavior-considered-undefined.html
 
-* `expect_err` panics with a provided custom message
-* `unwrap_err` panics with a generic message
-* `unwrap_err_unchecked` produces *[undefined behavior]*
+These methods extract the contained value in a [`Result<T, E>`] when it
+is the [`Err`] variant. They require `T` to implement the [`Debug`]
+trait. If the [`Result`] is [`Ok`]:
 
-#### Transforming contained values
+* [`expect_err`] panics with a provided custom message
+* [`unwrap_err`] panics with a generic message
+* [`unwrap_err_unchecked`] produces *[undefined behavior]*
 
-These methods transform `Result` to `Option`:
+[`Debug`]: crate::fmt::Debug
+[`expect_err`]: Result::expect_err
+[`unwrap_err`]: Result::unwrap_err
+[`unwrap_err_unchecked`]: Result::unwrap_err_unchecked
+[undefined behavior]: https://doc.rust-lang.org/reference/behavior-considered-undefined.html
 
-* `err`[Result::err] transforms `Result<T, E>` into `Option<E>`,
-  mapping `Err(e)` to `Some(e)` and `Ok(v)` to `None`
-* `ok`[Result::ok] transforms `Result<T, E>` into `Option<T>`,
-  mapping `Ok(v)` to `Some(v)` and `Err(e)` to `None`
-* `transpose` transposes a `Result` of an `Option` into an
-  `Option` of a `Result`
+## Transforming contained values
 
-These methods transform the contained value of the `Ok` variant:
+These methods transform [`Result`] to [`Option`]:
 
-* `map` transforms `Result<T, E>` into `Result` by applying
-  the provided function to the contained value of `Ok` and leaving
-  `Err` values unchanged
-* `inspect` takes ownership of the `Result`, applies the
+* [`err`][Result::err] transforms [`Result<T, E>`] into [`Option<E>`],
+  mapping [`Err(e)`] to [`Some(e)`] and [`Ok(v)`] to [`None`]
+* [`ok`][Result::ok] transforms [`Result<T, E>`] into [`Option<T>`],
+  mapping [`Ok(v)`] to [`Some(v)`] and [`Err(e)`] to [`None`]
+* [`transpose`] transposes a [`Result`] of an [`Option`] into an
+  [`Option`] of a [`Result`]
+
+
+[`Err(e)`]: Err
+[`Ok(v)`]: Ok
+[`Some(e)`]: Option::Some
+[`Some(v)`]: Option::Some
+[`transpose`]: Result::transpose
+
+These methods transform the contained value of the [`Ok`] variant:
+
+* [`map`] transforms [`Result<T, E>`] into [`Result<U, E>`] by applying
+  the provided function to the contained value of [`Ok`] and leaving
+  [`Err`] values unchanged
+* [`inspect`] takes ownership of the [`Result`], applies the
   provided function to the contained value by reference,
-  and then returns the `Result`
+  and then returns the [`Result`]
 
-These methods transform the contained value of the `Err` variant:
+[`map`]: Result::map
+[`inspect`]: Result::inspect
 
-* `map_err` transforms `Result<T, E>` into `Result<T, F>` by
-  applying the provided function to the contained value of `Err` and
-  leaving `Ok` values unchanged
-* `inspect_err` takes ownership of the `Result`, applies the
-  provided function to the contained value of `Err` by reference,
-  and then returns the `Result`
+These methods transform the contained value of the [`Err`] variant:
 
-These methods transform a `Result<T, E>` into a value of a possibly
+* [`map_err`] transforms [`Result<T, E>`] into [`Result<T, F>`] by
+  applying the provided function to the contained value of [`Err`] and
+  leaving [`Ok`] values unchanged
+* [`inspect_err`] takes ownership of the [`Result`], applies the
+  provided function to the contained value of [`Err`] by reference,
+  and then returns the [`Result`]
+
+[`map_err`]: Result::map_err
+[`inspect_err`]: Result::inspect_err
+
+These methods transform a [`Result<T, E>`] into a value of a possibly
 different type `U`:
 
-* `map_or` applies the provided function to the contained value of
-  `Ok`, or returns the provided default value if the `Result` is
-  `Err`
-* `map_or_else` applies the provided function to the contained value
-  of `Ok`, or applies the provided default fallback function to the
-  contained value of `Err`
+* [`map_or`] applies the provided function to the contained value of
+  [`Ok`], or returns the provided default value if the [`Result`] is
+  [`Err`]
+* [`map_or_else`] applies the provided function to the contained value
+  of [`Ok`], or applies the provided default fallback function to the
+  contained value of [`Err`]
 
-#### Boolean operators
+[`map_or`]: Result::map_or
+[`map_or_else`]: Result::map_or_else
 
-These methods treat the `Result` as a boolean value, where `Ok`
-acts like `true` and `Err` acts like `false`. There are two
-categories of these methods: ones that take a `Result` as input, and
+## Boolean operators
+
+These methods treat the [`Result`] as a boolean value, where [`Ok`]
+acts like [`true`] and [`Err`] acts like [`false`]. There are two
+categories of these methods: ones that take a [`Result`] as input, and
 ones that take a function as input (to be lazily evaluated).
 
-The `and` and `or` methods take another `Result` as input, and
-produce a `Result` as output. The `and` method can produce a
-`Result` value having a different inner type `U` than
-`Result<T, E>`. The `or` method can produce a `Result<T, F>`
-value having a different error type `F` than `Result<T, E>`.
+The [`and`] and [`or`] methods take another [`Result`] as input, and
+produce a [`Result`] as output. The [`and`] method can produce a
+[`Result<U, E>`] value having a different inner type `U` than
+[`Result<T, E>`]. The [`or`] method can produce a [`Result<T, F>`]
+value having a different error type `F` than [`Result<T, E>`].
 
 | method  | self     | input     | output   |
 |---------|----------|-----------|----------|
-| `and` | `Err(e)` | (ignored) | `Err(e)` |
-| `and` | `Ok(x)`  | `Err(d)`  | `Err(d)` |
-| `and` | `Ok(x)`  | `Ok(y)`   | `Ok(y)`  |
-| `or`  | `Err(e)` | `Err(d)`  | `Err(d)` |
-| `or`  | `Err(e)` | `Ok(y)`   | `Ok(y)`  |
-| `or`  | `Ok(x)`  | (ignored) | `Ok(x)`  |
+| [`and`] | `Err(e)` | (ignored) | `Err(e)` |
+| [`and`] | `Ok(x)`  | `Err(d)`  | `Err(d)` |
+| [`and`] | `Ok(x)`  | `Ok(y)`   | `Ok(y)`  |
+| [`or`]  | `Err(e)` | `Err(d)`  | `Err(d)` |
+| [`or`]  | `Err(e)` | `Ok(y)`   | `Ok(y)`  |
+| [`or`]  | `Ok(x)`  | (ignored) | `Ok(x)`  |
 
-The `and_then` and `or_else` methods take a function as input, and
+[`and`]: Result::and
+[`or`]: Result::or
+
+The [`and_then`] and [`or_else`] methods take a function as input, and
 only evaluate the function when they need to produce a new value. The
-`and_then` method can produce a `Result` value having a
-different inner type `U` than `Result<T, E>`. The `or_else` method
-can produce a `Result<T, F>` value having a different error type `F`
-than `Result<T, E>`.
+[`and_then`] method can produce a [`Result<U, E>`] value having a
+different inner type `U` than [`Result<T, E>`]. The [`or_else`] method
+can produce a [`Result<T, F>`] value having a different error type `F`
+than [`Result<T, E>`].
 
 | method       | self     | function input | function result | output   |
 |--------------|----------|----------------|-----------------|----------|
-| `and_then` | `Err(e)` | (not provided) | (not evaluated) | `Err(e)` |
-| `and_then` | `Ok(x)`  | `x`            | `Err(d)`        | `Err(d)` |
-| `and_then` | `Ok(x)`  | `x`            | `Ok(y)`         | `Ok(y)`  |
-| `or_else`  | `Err(e)` | `e`            | `Err(d)`        | `Err(d)` |
-| `or_else`  | `Err(e)` | `e`            | `Ok(y)`         | `Ok(y)`  |
-| `or_else`  | `Ok(x)`  | (not provided) | (not evaluated) | `Ok(x)`  |
+| [`and_then`] | `Err(e)` | (not provided) | (not evaluated) | `Err(e)` |
+| [`and_then`] | `Ok(x)`  | `x`            | `Err(d)`        | `Err(d)` |
+| [`and_then`] | `Ok(x)`  | `x`            | `Ok(y)`         | `Ok(y)`  |
+| [`or_else`]  | `Err(e)` | `e`            | `Err(d)`        | `Err(d)` |
+| [`or_else`]  | `Err(e)` | `e`            | `Ok(y)`         | `Ok(y)`  |
+| [`or_else`]  | `Ok(x)`  | (not provided) | (not evaluated) | `Ok(x)`  |
 
-#### Comparison operators
+[`and_then`]: Result::and_then
+[`or_else`]: Result::or_else
 
-If `T` and `E` both implement `PartialOrd` then `Result<T, E>` will
-derive its `PartialOrd` implementation.  With this order, an `Ok`
-compares as less than any `Err`, while two `Ok` or two `Err`
+## Comparison operators
+
+If `T` and `E` both implement [`PartialOrd`] then [`Result<T, E>`] will
+derive its [`PartialOrd`] implementation.  With this order, an [`Ok`]
+compares as less than any [`Err`], while two [`Ok`] or two [`Err`]
 compare as their contained values would in `T` or `E` respectively.  If `T`
-and `E` both also implement `Ord`, then so does `Result<T, E>`.
+and `E` both also implement [`Ord`], then so does [`Result<T, E>`].
 
-```rust
+```
 assert!(Ok(1) < Err(0));
 let x: Result<i32, ()> = Ok(0);
 let y = Ok(1);
@@ -387,33 +448,43 @@ let y = Err(1);
 assert!(x < y);
 ```
 
-#### Iterating over `Result`
+## Iterating over `Result`
 
-A `Result` can be iterated over. This can be helpful if you need an
+A [`Result`] can be iterated over. This can be helpful if you need an
 iterator that is conditionally empty. The iterator will either produce
-a single value (when the `Result` is `Ok`), or produce no values
-(when the `Result` is `Err`). For example, `into_iter` acts like
-`once(v)` if the `Result` is `Ok(v)`, and like `empty()` if the
-`Result` is `Err`.
+a single value (when the [`Result`] is [`Ok`]), or produce no values
+(when the [`Result`] is [`Err`]). For example, [`into_iter`] acts like
+[`once(v)`] if the [`Result`] is [`Ok(v)`], and like [`empty()`] if the
+[`Result`] is [`Err`].
 
-Iterators over `Result<T, E>` come in three types:
+[`Ok(v)`]: Ok
+[`empty()`]: crate::iter::empty
+[`once(v)`]: crate::iter::once
 
-* `into_iter` consumes the `Result` and produces the contained
+Iterators over [`Result<T, E>`] come in three types:
+
+* [`into_iter`] consumes the [`Result`] and produces the contained
   value
-* `iter` produces an immutable reference of type `&T` to the
+* [`iter`] produces an immutable reference of type `&T` to the
   contained value
-* `iter_mut` produces a mutable reference of type `&mut T` to the
+* [`iter_mut`] produces a mutable reference of type `&mut T` to the
   contained value
 
 See [Iterating over `Option`] for examples of how this can be useful.
 
+[Iterating over `Option`]: crate::option#iterating-over-option
+[`into_iter`]: Result::into_iter
+[`iter`]: Result::iter
+[`iter_mut`]: Result::iter_mut
+
 You might want to use an iterator chain to do multiple instances of an
 operation that can fail, but would like to ignore failures while
 continuing to process the successful results. In this example, we take
-advantage of the iterable nature of `Result` to select only the
-`Ok` values using `flatten`[Iterator::flatten].
+advantage of the iterable nature of [`Result`] to select only the
+[`Ok`] values using [`flatten`][Iterator::flatten].
 
-```rust
+```
+# use std::str::FromStr;
 let mut results = vec![];
 let mut errs = vec![];
 let nums: Vec<_> = ["17", "not a number", "99", "-27", "768"]
@@ -432,9 +503,1040 @@ println!("errs {errs:?}");
 println!("nums {nums:?}");
 ```
 
-#### Collecting into `Result`
+## Collecting into `Result`
 
-`Result` implements the `FromIterator`[impl-FromIterator] trait,
-which allows an iterator over `Result` values to be collected into a
-`Result` of a collection of each contained value of the original
-`Result` values, or `Err` if any of the elements was `Err`.
+[`Result`] implements the [`FromIterator`][impl-FromIterator] trait,
+which allows an iterator over [`Result`] values to be collected into a
+[`Result`] of a collection of each contained value of the original
+[`Result`] values, or [`Err`] if any of the elements was [`Err`].
+
+[impl-FromIterator]: Result#impl-FromIterator%3CResult%3CT,+E%3E%3E-for-Result%3CV,+E%3E
+
+```
+let v = [Ok(2), Ok(4), Err("err!"), Ok(8)];
+let res: Result<Vec<_>, &str> = v.into_iter().collect();
+assert_eq!(res, Err("err!"));
+let v = [Ok(2), Ok(4), Ok(8)];
+let res: Result<Vec<_>, &str> = v.into_iter().collect();
+assert_eq!(res, Ok(vec![2, 4, 8]));
+```
+
+[`Result`] also implements the [`Product`][impl-Product] and
+[`Sum`][impl-Sum] traits, allowing an iterator over [`Result`] values
+to provide the [`product`][Iterator::product] and
+[`sum`][Iterator::sum] methods.
+
+[impl-Product]: Result#impl-Product%3CResult%3CU,+E%3E%3E-for-Result%3CT,+E%3E
+[impl-Sum]: Result#impl-Sum%3CResult%3CU,+E%3E%3E-for-Result%3CT,+E%3E
+
+```
+let v = [Err("error!"), Ok(1), Ok(2), Ok(3), Err("foo")];
+let res: Result<i32, &str> = v.into_iter().sum();
+assert_eq!(res, Err("error!"));
+let v = [Ok(1), Ok(2), Ok(21)];
+let res: Result<i32, &str> = v.into_iter().product();
+assert_eq!(res, Ok(42));
+```
+
+## enum Result
+
+```rust
+pub enum Result<T, E>
+```
+
+`Result` is a type that represents either success ([`Ok`]) or failure ([`Err`]).
+
+See the [module documentation](self) for details.
+
+## Result::is_ok
+
+```rust
+pub const fn is_ok(&self) -> bool
+```
+
+Returns `true` if the result is [`Ok`].
+
+# Examples
+
+```
+let x: Result<i32, &str> = Ok(-3);
+assert_eq!(x.is_ok(), true);
+
+let x: Result<i32, &str> = Err("Some error message");
+assert_eq!(x.is_ok(), false);
+```
+
+## Result::is_ok_and
+
+```rust
+pub const fn is_ok_and<F>(self, f: F) -> bool where F: [const] FnOnce(T) -> bool + [const] Destruct, T: [const] Destruct, E: [const] Destruct,
+```
+
+Returns `true` if the result is [`Ok`] and the value inside of it matches a predicate.
+
+# Examples
+
+```
+let x: Result<u32, &str> = Ok(2);
+assert_eq!(x.is_ok_and(|x| x > 1), true);
+
+let x: Result<u32, &str> = Ok(0);
+assert_eq!(x.is_ok_and(|x| x > 1), false);
+
+let x: Result<u32, &str> = Err("hey");
+assert_eq!(x.is_ok_and(|x| x > 1), false);
+
+let x: Result<String, &str> = Ok("ownership".to_string());
+assert_eq!(x.as_ref().is_ok_and(|x| x.len() > 1), true);
+println!("still alive {:?}", x);
+```
+
+## Result::is_err
+
+```rust
+pub const fn is_err(&self) -> bool
+```
+
+Returns `true` if the result is [`Err`].
+
+# Examples
+
+```
+let x: Result<i32, &str> = Ok(-3);
+assert_eq!(x.is_err(), false);
+
+let x: Result<i32, &str> = Err("Some error message");
+assert_eq!(x.is_err(), true);
+```
+
+## Result::is_err_and
+
+```rust
+pub const fn is_err_and<F>(self, f: F) -> bool where F: [const] FnOnce(E) -> bool + [const] Destruct, E: [const] Destruct, T: [const] Destruct,
+```
+
+Returns `true` if the result is [`Err`] and the value inside of it matches a predicate.
+
+# Examples
+
+```
+use std::io::{Error, ErrorKind};
+
+let x: Result<u32, Error> = Err(Error::new(ErrorKind::NotFound, "!"));
+assert_eq!(x.is_err_and(|x| x.kind() == ErrorKind::NotFound), true);
+
+let x: Result<u32, Error> = Err(Error::new(ErrorKind::PermissionDenied, "!"));
+assert_eq!(x.is_err_and(|x| x.kind() == ErrorKind::NotFound), false);
+
+let x: Result<u32, Error> = Ok(123);
+assert_eq!(x.is_err_and(|x| x.kind() == ErrorKind::NotFound), false);
+
+let x: Result<u32, String> = Err("ownership".to_string());
+assert_eq!(x.as_ref().is_err_and(|x| x.len() > 1), true);
+println!("still alive {:?}", x);
+```
+
+## Result::ok
+
+```rust
+pub const fn ok(self) -> Option<T> where T: [const] Destruct, E: [const] Destruct,
+```
+
+Converts from `Result<T, E>` to [`Option<T>`].
+
+Converts `self` into an [`Option<T>`], consuming `self`,
+and converting the error to `None`, if any.
+
+# Examples
+
+```
+let x: Result<u32, &str> = Ok(2);
+assert_eq!(x.ok(), Some(2));
+
+let x: Result<u32, &str> = Err("Nothing here");
+assert_eq!(x.ok(), None);
+```
+
+## Result::err
+
+```rust
+pub const fn err(self) -> Option<E> where T: [const] Destruct, E: [const] Destruct,
+```
+
+Converts from `Result<T, E>` to [`Option<E>`].
+
+Converts `self` into an [`Option<E>`], consuming `self`,
+and discarding the success value, if any.
+
+# Examples
+
+```
+let x: Result<u32, &str> = Ok(2);
+assert_eq!(x.err(), None);
+
+let x: Result<u32, &str> = Err("Nothing here");
+assert_eq!(x.err(), Some("Nothing here"));
+```
+
+## Result::as_ref
+
+```rust
+pub const fn as_ref(&self) -> Result<&T, &E>
+```
+
+Converts from `&Result<T, E>` to `Result<&T, &E>`.
+
+Produces a new `Result`, containing a reference
+into the original, leaving the original in place.
+
+# Examples
+
+```
+let x: Result<u32, &str> = Ok(2);
+assert_eq!(x.as_ref(), Ok(&2));
+
+let x: Result<u32, &str> = Err("Error");
+assert_eq!(x.as_ref(), Err(&"Error"));
+```
+
+## Result::as_mut
+
+```rust
+pub const fn as_mut(&mut self) -> Result<&mut T, &mut E>
+```
+
+Converts from `&mut Result<T, E>` to `Result<&mut T, &mut E>`.
+
+# Examples
+
+```
+fn mutate(r: &mut Result<i32, i32>) {
+    match r.as_mut() {
+        Ok(v) => *v = 42,
+        Err(e) => *e = 0,
+    }
+}
+
+let mut x: Result<i32, i32> = Ok(2);
+mutate(&mut x);
+assert_eq!(x.unwrap(), 42);
+
+let mut x: Result<i32, i32> = Err(13);
+mutate(&mut x);
+assert_eq!(x.unwrap_err(), 0);
+```
+
+## Result::map
+
+```rust
+pub const fn map<U, F>(self, op: F) -> Result<U, E> where F: [const] FnOnce(T) -> U + [const] Destruct,
+```
+
+Maps a `Result<T, E>` to `Result<U, E>` by applying a function to a
+contained [`Ok`] value, leaving an [`Err`] value untouched.
+
+This function can be used to compose the results of two functions.
+
+# Examples
+
+Print the numbers on each line of a string multiplied by two.
+
+```
+let line = "1\n2\n3\n4\n";
+
+for num in line.lines() {
+    match num.parse::<i32>().map(|i| i * 2) {
+        Ok(n) => println!("{n}"),
+        Err(..) => {}
+    }
+}
+```
+
+## Result::map_or
+
+```rust
+pub const fn map_or<U, F>(self, default: U, f: F) -> U where F: [const] FnOnce(T) -> U + [const] Destruct, T: [const] Destruct, E: [const] Destruct, U: [const] Destruct,
+```
+
+Returns the provided default (if [`Err`]), or
+applies a function to the contained value (if [`Ok`]).
+
+Arguments passed to `map_or` are eagerly evaluated; if you are passing
+the result of a function call, it is recommended to use [`map_or_else`],
+which is lazily evaluated.
+
+[`map_or_else`]: Result::map_or_else
+
+# Examples
+
+```
+let x: Result<_, &str> = Ok("foo");
+assert_eq!(x.map_or(42, |v| v.len()), 3);
+
+let x: Result<&str, _> = Err("bar");
+assert_eq!(x.map_or(42, |v| v.len()), 42);
+```
+
+## Result::map_or_else
+
+```rust
+pub const fn map_or_else<U, D, F>(self, default: D, f: F) -> U where D: [const] FnOnce(E) -> U + [const] Destruct, F: [const] FnOnce(T) -> U + [const] Destruct,
+```
+
+Maps a `Result<T, E>` to `U` by applying fallback function `default` to
+a contained [`Err`] value, or function `f` to a contained [`Ok`] value.
+
+This function can be used to unpack a successful result
+while handling an error.
+
+
+# Examples
+
+```
+let k = 21;
+
+let x : Result<_, &str> = Ok("foo");
+assert_eq!(x.map_or_else(|e| k * 2, |v| v.len()), 3);
+
+let x : Result<&str, _> = Err("bar");
+assert_eq!(x.map_or_else(|e| k * 2, |v| v.len()), 42);
+```
+
+## Result::map_or_default
+
+```rust
+pub const fn map_or_default<U, F>(self, f: F) -> U where F: [const] FnOnce(T) -> U + [const] Destruct, U: [const] Default, T: [const] Destruct, E: [const] Destruct,
+```
+
+Maps a `Result<T, E>` to a `U` by applying function `f` to the contained
+value if the result is [`Ok`], otherwise if [`Err`], returns the
+[default value] for the type `U`.
+
+# Examples
+
+```
+let x: Result<_, &str> = Ok("foo");
+let y: Result<&str, _> = Err("bar");
+
+assert_eq!(x.map_or_default(|x| x.len()), 3);
+assert_eq!(y.map_or_default(|y| y.len()), 0);
+```
+
+[default value]: Default::default
+
+## Result::map_err
+
+```rust
+pub const fn map_err<F, O>(self, op: O) -> Result<T, F> where O: [const] FnOnce(E) -> F + [const] Destruct,
+```
+
+Maps a `Result<T, E>` to `Result<T, F>` by applying a function to a
+contained [`Err`] value, leaving an [`Ok`] value untouched.
+
+This function can be used to pass through a successful result while handling
+an error.
+
+
+# Examples
+
+```
+fn stringify(x: u32) -> String { format!("error code: {x}") }
+
+let x: Result<u32, u32> = Ok(2);
+assert_eq!(x.map_err(stringify), Ok(2));
+
+let x: Result<u32, u32> = Err(13);
+assert_eq!(x.map_err(stringify), Err("error code: 13".to_string()));
+```
+
+## Result::inspect
+
+```rust
+pub const fn inspect<F>(self, f: F) -> Self where F: [const] FnOnce(&T) + [const] Destruct,
+```
+
+Calls a function with a reference to the contained value if [`Ok`].
+
+Returns the original result.
+
+# Examples
+
+```
+let x: u8 = "4"
+    .parse::<u8>()
+    .inspect(|x| println!("original: {x}"))
+    .map(|x| x.pow(3))
+    .expect("literal `4` should parse as a `u8`");
+```
+
+## Result::inspect_err
+
+```rust
+pub const fn inspect_err<F>(self, f: F) -> Self where F: [const] FnOnce(&E) + [const] Destruct,
+```
+
+Calls a function with a reference to the contained value if [`Err`].
+
+Returns the original result.
+
+# Examples
+
+```
+use std::{fs, io};
+
+fn read() -> io::Result<String> {
+    fs::read_to_string("address.txt")
+        .inspect_err(|e| eprintln!("failed to read file: {e}"))
+}
+```
+
+## Result::as_deref
+
+```rust
+pub const fn as_deref(&self) -> Result<&T::Target, &E> where T: [const] Deref,
+```
+
+Converts from `Result<T, E>` (or `&Result<T, E>`) to `Result<&<T as Deref>::Target, &E>`.
+
+Coerces the [`Ok`] variant of the original [`Result`] via [`Deref`](crate::ops::Deref)
+and returns the new [`Result`].
+
+# Examples
+
+```
+let x: Result<String, u32> = Ok("hello".to_string());
+let y: Result<&str, &u32> = Ok("hello");
+assert_eq!(x.as_deref(), y);
+
+let x: Result<String, u32> = Err(42);
+let y: Result<&str, &u32> = Err(&42);
+assert_eq!(x.as_deref(), y);
+```
+
+## Result::as_deref_mut
+
+```rust
+pub const fn as_deref_mut(&mut self) -> Result<&mut T::Target, &mut E> where T: [const] DerefMut,
+```
+
+Converts from `Result<T, E>` (or `&mut Result<T, E>`) to `Result<&mut <T as DerefMut>::Target, &mut E>`.
+
+Coerces the [`Ok`] variant of the original [`Result`] via [`DerefMut`](crate::ops::DerefMut)
+and returns the new [`Result`].
+
+# Examples
+
+```
+let mut s = "HELLO".to_string();
+let mut x: Result<String, u32> = Ok("hello".to_string());
+let y: Result<&mut str, &mut u32> = Ok(&mut s);
+assert_eq!(x.as_deref_mut().map(|x| { x.make_ascii_uppercase(); x }), y);
+
+let mut i = 42;
+let mut x: Result<String, u32> = Err(42);
+let y: Result<&mut str, &mut u32> = Err(&mut i);
+assert_eq!(x.as_deref_mut().map(|x| { x.make_ascii_uppercase(); x }), y);
+```
+
+## Result::iter
+
+```rust
+pub const fn iter(&self) -> Iter<'_, T>
+```
+
+Returns an iterator over the possibly contained value.
+
+The iterator yields one value if the result is [`Result::Ok`], otherwise none.
+
+# Examples
+
+```
+let x: Result<u32, &str> = Ok(7);
+assert_eq!(x.iter().next(), Some(&7));
+
+let x: Result<u32, &str> = Err("nothing!");
+assert_eq!(x.iter().next(), None);
+```
+
+## Result::iter_mut
+
+```rust
+pub const fn iter_mut(&mut self) -> IterMut<'_, T>
+```
+
+Returns a mutable iterator over the possibly contained value.
+
+The iterator yields one value if the result is [`Result::Ok`], otherwise none.
+
+# Examples
+
+```
+let mut x: Result<u32, &str> = Ok(7);
+match x.iter_mut().next() {
+    Some(v) => *v = 40,
+    None => {},
+}
+assert_eq!(x, Ok(40));
+
+let mut x: Result<u32, &str> = Err("nothing!");
+assert_eq!(x.iter_mut().next(), None);
+```
+
+## Result::expect
+
+```rust
+pub fn expect(self, msg: &str) -> T where E: fmt::Debug,
+```
+
+Returns the contained [`Ok`] value, consuming the `self` value.
+
+Because this function may panic, its use is generally discouraged.
+Instead, prefer to use pattern matching and handle the [`Err`]
+case explicitly, or call [`unwrap_or`], [`unwrap_or_else`], or
+[`unwrap_or_default`].
+
+[`unwrap_or`]: Result::unwrap_or
+[`unwrap_or_else`]: Result::unwrap_or_else
+[`unwrap_or_default`]: Result::unwrap_or_default
+
+# Panics
+
+Panics if the value is an [`Err`], with a panic message including the
+passed message, and the content of the [`Err`].
+
+
+# Examples
+
+```should_panic
+let x: Result<u32, &str> = Err("emergency failure");
+x.expect("Testing expect"); // panics with `Testing expect: emergency failure`
+```
+
+# Recommended Message Style
+
+We recommend that `expect` messages are used to describe the reason you
+_expect_ the `Result` should be `Ok`.
+
+```should_panic
+let path = std::env::var("IMPORTANT_PATH")
+    .expect("env variable `IMPORTANT_PATH` should be set by `wrapper_script.sh`");
+```
+
+**Hint**: If you're having trouble remembering how to phrase expect
+error messages remember to focus on the word "should" as in "env
+variable should be set by blah" or "the given binary should be available
+and executable by the current user".
+
+For more detail on expect message styles and the reasoning behind our recommendation please
+refer to the section on ["Common Message
+Styles"](../../std/error/index.html#common-message-styles) in the
+[`std::error`](../../std/error/index.html) module docs.
+
+## Result::unwrap
+
+```rust
+pub fn unwrap(self) -> T where E: fmt::Debug,
+```
+
+Returns the contained [`Ok`] value, consuming the `self` value.
+
+Because this function may panic, its use is generally discouraged.
+Panics are meant for unrecoverable errors, and
+[may abort the entire program][panic-abort].
+
+Instead, prefer to use [the `?` (try) operator][try-operator], or pattern matching
+to handle the [`Err`] case explicitly, or call [`unwrap_or`],
+[`unwrap_or_else`], or [`unwrap_or_default`].
+
+[panic-abort]: https://doc.rust-lang.org/book/ch09-01-unrecoverable-errors-with-panic.html
+[try-operator]: https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#a-shortcut-for-propagating-errors-the--operator
+[`unwrap_or`]: Result::unwrap_or
+[`unwrap_or_else`]: Result::unwrap_or_else
+[`unwrap_or_default`]: Result::unwrap_or_default
+
+# Panics
+
+Panics if the value is an [`Err`], with a panic message provided by the
+[`Err`]'s value.
+
+
+# Examples
+
+Basic usage:
+
+```
+let x: Result<u32, &str> = Ok(2);
+assert_eq!(x.unwrap(), 2);
+```
+
+```should_panic
+let x: Result<u32, &str> = Err("emergency failure");
+x.unwrap(); // panics with `emergency failure`
+```
+
+## Result::unwrap_or_default
+
+```rust
+pub const fn unwrap_or_default(self) -> T where T: [const] Default + [const] Destruct, E: [const] Destruct,
+```
+
+Returns the contained [`Ok`] value or a default
+
+Consumes the `self` argument then, if [`Ok`], returns the contained
+value, otherwise if [`Err`], returns the default value for that
+type.
+
+# Examples
+
+Converts a string to an integer, turning poorly-formed strings
+into 0 (the default value for integers). [`parse`] converts
+a string to any other type that implements [`FromStr`], returning an
+[`Err`] on error.
+
+```
+let good_year_from_input = "1909";
+let bad_year_from_input = "190blarg";
+let good_year = good_year_from_input.parse().unwrap_or_default();
+let bad_year = bad_year_from_input.parse().unwrap_or_default();
+
+assert_eq!(1909, good_year);
+assert_eq!(0, bad_year);
+```
+
+[`parse`]: str::parse
+[`FromStr`]: crate::str::FromStr
+
+## Result::expect_err
+
+```rust
+pub fn expect_err(self, msg: &str) -> E where T: fmt::Debug,
+```
+
+Returns the contained [`Err`] value, consuming the `self` value.
+
+# Panics
+
+Panics if the value is an [`Ok`], with a panic message including the
+passed message, and the content of the [`Ok`].
+
+
+# Examples
+
+```should_panic
+let x: Result<u32, &str> = Ok(10);
+x.expect_err("Testing expect_err"); // panics with `Testing expect_err: 10`
+```
+
+## Result::unwrap_err
+
+```rust
+pub fn unwrap_err(self) -> E where T: fmt::Debug,
+```
+
+Returns the contained [`Err`] value, consuming the `self` value.
+
+# Panics
+
+Panics if the value is an [`Ok`], with a custom panic message provided
+by the [`Ok`]'s value.
+
+# Examples
+
+```should_panic
+let x: Result<u32, &str> = Ok(2);
+x.unwrap_err(); // panics with `2`
+```
+
+```
+let x: Result<u32, &str> = Err("emergency failure");
+assert_eq!(x.unwrap_err(), "emergency failure");
+```
+
+## Result::and
+
+```rust
+pub const fn and<U>(self, res: Result<U, E>) -> Result<U, E> where T: [const] Destruct, E: [const] Destruct, U: [const] Destruct,
+```
+
+Returns `res` if the result is [`Ok`], otherwise returns the [`Err`] value of `self`.
+
+Arguments passed to `and` are eagerly evaluated; if you are passing the
+result of a function call, it is recommended to use [`and_then`], which is
+lazily evaluated.
+
+[`and_then`]: Result::and_then
+
+# Examples
+
+```
+let x: Result<u32, &str> = Ok(2);
+let y: Result<&str, &str> = Err("late error");
+assert_eq!(x.and(y), Err("late error"));
+
+let x: Result<u32, &str> = Err("early error");
+let y: Result<&str, &str> = Ok("foo");
+assert_eq!(x.and(y), Err("early error"));
+
+let x: Result<u32, &str> = Err("not a 2");
+let y: Result<&str, &str> = Err("late error");
+assert_eq!(x.and(y), Err("not a 2"));
+
+let x: Result<u32, &str> = Ok(2);
+let y: Result<&str, &str> = Ok("different result type");
+assert_eq!(x.and(y), Ok("different result type"));
+```
+
+## Result::and_then
+
+```rust
+pub const fn and_then<U, F>(self, op: F) -> Result<U, E> where F: [const] FnOnce(T) -> Result<U, E> + [const] Destruct,
+```
+
+Calls `op` if the result is [`Ok`], otherwise returns the [`Err`] value of `self`.
+
+
+This function can be used for control flow based on `Result` values.
+
+# Examples
+
+```
+fn sq_then_to_string(x: u32) -> Result<String, &'static str> {
+    x.checked_mul(x).map(|sq| sq.to_string()).ok_or("overflowed")
+}
+
+assert_eq!(Ok(2).and_then(sq_then_to_string), Ok(4.to_string()));
+assert_eq!(Ok(1_000_000).and_then(sq_then_to_string), Err("overflowed"));
+assert_eq!(Err("not a number").and_then(sq_then_to_string), Err("not a number"));
+```
+
+Often used to chain fallible operations that may return [`Err`].
+
+```
+use std::{io::ErrorKind, path::Path};
+
+// Note: on Windows "/" maps to "C:\"
+let root_modified_time = Path::new("/").metadata().and_then(|md| md.modified());
+assert!(root_modified_time.is_ok());
+
+let should_fail = Path::new("/bad/path").metadata().and_then(|md| md.modified());
+assert!(should_fail.is_err());
+assert_eq!(should_fail.unwrap_err().kind(), ErrorKind::NotFound);
+```
+
+## Result::or
+
+```rust
+pub const fn or<F>(self, res: Result<T, F>) -> Result<T, F> where T: [const] Destruct, E: [const] Destruct, F: [const] Destruct,
+```
+
+Returns `res` if the result is [`Err`], otherwise returns the [`Ok`] value of `self`.
+
+Arguments passed to `or` are eagerly evaluated; if you are passing the
+result of a function call, it is recommended to use [`or_else`], which is
+lazily evaluated.
+
+[`or_else`]: Result::or_else
+
+# Examples
+
+```
+let x: Result<u32, &str> = Ok(2);
+let y: Result<u32, &str> = Err("late error");
+assert_eq!(x.or(y), Ok(2));
+
+let x: Result<u32, &str> = Err("early error");
+let y: Result<u32, &str> = Ok(2);
+assert_eq!(x.or(y), Ok(2));
+
+let x: Result<u32, &str> = Err("not a 2");
+let y: Result<u32, &str> = Err("late error");
+assert_eq!(x.or(y), Err("late error"));
+
+let x: Result<u32, &str> = Ok(2);
+let y: Result<u32, &str> = Ok(100);
+assert_eq!(x.or(y), Ok(2));
+```
+
+## Result::or_else
+
+```rust
+pub const fn or_else<F, O>(self, op: O) -> Result<T, F> where O: [const] FnOnce(E) -> Result<T, F> + [const] Destruct,
+```
+
+Calls `op` if the result is [`Err`], otherwise returns the [`Ok`] value of `self`.
+
+This function can be used for control flow based on result values.
+
+
+# Examples
+
+```
+fn sq(x: u32) -> Result<u32, u32> { Ok(x * x) }
+fn err(x: u32) -> Result<u32, u32> { Err(x) }
+
+assert_eq!(Ok(2).or_else(sq).or_else(sq), Ok(2));
+assert_eq!(Ok(2).or_else(err).or_else(sq), Ok(2));
+assert_eq!(Err(3).or_else(sq).or_else(err), Ok(9));
+assert_eq!(Err(3).or_else(err).or_else(err), Err(3));
+```
+
+## Result::unwrap_or
+
+```rust
+pub const fn unwrap_or(self, default: T) -> T where T: [const] Destruct, E: [const] Destruct,
+```
+
+Returns the contained [`Ok`] value or a provided default.
+
+Arguments passed to `unwrap_or` are eagerly evaluated; if you are passing
+the result of a function call, it is recommended to use [`unwrap_or_else`],
+which is lazily evaluated.
+
+[`unwrap_or_else`]: Result::unwrap_or_else
+
+# Examples
+
+```
+let default = 2;
+let x: Result<u32, &str> = Ok(9);
+assert_eq!(x.unwrap_or(default), 9);
+
+let x: Result<u32, &str> = Err("error");
+assert_eq!(x.unwrap_or(default), default);
+```
+
+## Result::unwrap_or_else
+
+```rust
+pub const fn unwrap_or_else<F>(self, op: F) -> T where F: [const] FnOnce(E) -> T + [const] Destruct,
+```
+
+Returns the contained [`Ok`] value or computes it from a closure.
+
+
+# Examples
+
+```
+fn count(x: &str) -> usize { x.len() }
+
+assert_eq!(Ok(2).unwrap_or_else(count), 2);
+assert_eq!(Err("foo").unwrap_or_else(count), 3);
+```
+
+## Result::unwrap_unchecked
+
+```rust
+pub const unsafe fn unwrap_unchecked(self) -> T
+```
+
+Returns the contained [`Ok`] value, consuming the `self` value,
+without checking that the value is not an [`Err`].
+
+# Safety
+
+Calling this method on an [`Err`] is *[undefined behavior]*.
+
+[undefined behavior]: https://doc.rust-lang.org/reference/behavior-considered-undefined.html
+
+# Examples
+
+```
+let x: Result<u32, &str> = Ok(2);
+assert_eq!(unsafe { x.unwrap_unchecked() }, 2);
+```
+
+```no_run
+let x: Result<u32, &str> = Err("emergency failure");
+unsafe { x.unwrap_unchecked() }; // Undefined behavior!
+```
+
+## Result::unwrap_err_unchecked
+
+```rust
+pub const unsafe fn unwrap_err_unchecked(self) -> E where T: [const] Destruct, E: [const] Destruct,
+```
+
+Returns the contained [`Err`] value, consuming the `self` value,
+without checking that the value is not an [`Ok`].
+
+# Safety
+
+Calling this method on an [`Ok`] is *[undefined behavior]*.
+
+[undefined behavior]: https://doc.rust-lang.org/reference/behavior-considered-undefined.html
+
+# Examples
+
+```no_run
+let x: Result<u32, &str> = Ok(2);
+unsafe { x.unwrap_err_unchecked() }; // Undefined behavior!
+```
+
+```
+let x: Result<u32, &str> = Err("emergency failure");
+assert_eq!(unsafe { x.unwrap_err_unchecked() }, "emergency failure");
+```
+
+## Result::copied
+
+```rust
+pub const fn copied(self) -> Result<T, E> where T: Copy,
+```
+
+Maps a `Result<&T, E>` to a `Result<T, E>` by copying the contents of the
+`Ok` part.
+
+# Examples
+
+```
+let val = 12;
+let x: Result<&i32, i32> = Ok(&val);
+assert_eq!(x, Ok(&12));
+let copied = x.copied();
+assert_eq!(copied, Ok(12));
+```
+
+## Result::cloned
+
+```rust
+pub fn cloned(self) -> Result<T, E> where T: Clone,
+```
+
+Maps a `Result<&T, E>` to a `Result<T, E>` by cloning the contents of the
+`Ok` part.
+
+# Examples
+
+```
+let val = 12;
+let x: Result<&i32, i32> = Ok(&val);
+assert_eq!(x, Ok(&12));
+let cloned = x.cloned();
+assert_eq!(cloned, Ok(12));
+```
+
+## Result::copied
+
+```rust
+pub const fn copied(self) -> Result<T, E> where T: Copy,
+```
+
+Maps a `Result<&mut T, E>` to a `Result<T, E>` by copying the contents of the
+`Ok` part.
+
+# Examples
+
+```
+let mut val = 12;
+let x: Result<&mut i32, i32> = Ok(&mut val);
+assert_eq!(x, Ok(&mut 12));
+let copied = x.copied();
+assert_eq!(copied, Ok(12));
+```
+
+## Result::cloned
+
+```rust
+pub fn cloned(self) -> Result<T, E> where T: Clone,
+```
+
+Maps a `Result<&mut T, E>` to a `Result<T, E>` by cloning the contents of the
+`Ok` part.
+
+# Examples
+
+```
+let mut val = 12;
+let x: Result<&mut i32, i32> = Ok(&mut val);
+assert_eq!(x, Ok(&mut 12));
+let cloned = x.cloned();
+assert_eq!(cloned, Ok(12));
+```
+
+## Result::transpose
+
+```rust
+pub const fn transpose(self) -> Option<Result<T, E>>
+```
+
+Transposes a `Result` of an `Option` into an `Option` of a `Result`.
+
+`Ok(None)` will be mapped to `None`.
+`Ok(Some(_))` and `Err(_)` will be mapped to `Some(Ok(_))` and `Some(Err(_))`.
+
+# Examples
+
+```
+#[derive(Debug, Eq, PartialEq)]
+struct SomeErr;
+
+let x: Result<Option<i32>, SomeErr> = Ok(Some(5));
+let y: Option<Result<i32, SomeErr>> = Some(Ok(5));
+assert_eq!(x.transpose(), y);
+```
+
+## Result::flatten
+
+```rust
+pub const fn flatten(self) -> Result<T, E>
+```
+
+Converts from `Result<Result<T, E>, E>` to `Result<T, E>`
+
+# Examples
+
+```
+let x: Result<Result<&'static str, u32>, u32> = Ok(Ok("hello"));
+assert_eq!(Ok("hello"), x.flatten());
+
+let x: Result<Result<&'static str, u32>, u32> = Ok(Err(6));
+assert_eq!(Err(6), x.flatten());
+
+let x: Result<Result<&'static str, u32>, u32> = Err(6);
+assert_eq!(Err(6), x.flatten());
+```
+
+Flattening only removes one level of nesting at a time:
+
+```
+let x: Result<Result<Result<&'static str, u32>, u32>, u32> = Ok(Ok(Ok("hello")));
+assert_eq!(Ok(Ok("hello")), x.flatten());
+assert_eq!(Ok("hello"), x.flatten().flatten());
+```
+
+## struct Iter
+
+```rust
+pub struct Iter<'a, T: 'a>
+```
+
+An iterator over a reference to the [`Ok`] variant of a [`Result`].
+
+The iterator yields one value if the result is [`Ok`], otherwise none.
+
+Created by [`Result::iter`].
+
+## struct IterMut
+
+```rust
+pub struct IterMut<'a, T: 'a>
+```
+
+An iterator over a mutable reference to the [`Ok`] variant of a [`Result`].
+
+Created by [`Result::iter_mut`].
+
+## ::IntoIter
+
+```rust
+pub struct IntoIter<T>
+```
+
+An iterator over the value in a [`Ok`] variant of a [`Result`].
+
+The iterator yields one value if the result is [`Ok`], otherwise none.
+
+This struct is created by the [`into_iter`] method on
+[`Result`] (provided by the [`IntoIterator`] trait).
+
+[`into_iter`]: IntoIterator::into_iter

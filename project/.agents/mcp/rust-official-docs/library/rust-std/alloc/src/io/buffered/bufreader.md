@@ -1,12 +1,3 @@
----
-title: "alloc::io::buffered::bufreader"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/alloc/src/io/buffered/bufreader.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # alloc::io::buffered::bufreader
 
 ## struct BufReader
@@ -15,9 +6,12 @@ license: "MIT OR Apache-2.0"
 pub struct BufReader<R: ?Sized>
 ```
 
+[`TcpStream::read`]: ../../std/net/struct.TcpStream.html#method.read
+[`TcpStream`]: ../../std/net/struct.TcpStream.html
+
 # Examples
 
-```rust
+```no_run
 use std::io::prelude::*;
 use std::io::BufReader;
 use std::fs::File;
@@ -44,7 +38,7 @@ but may change in the future.
 
 # Examples
 
-```rust
+```no_run
 use std::io::BufReader;
 use std::fs::File;
 
@@ -67,7 +61,7 @@ Creates a new `BufReader<R>` with the specified buffer capacity.
 
 Creating a buffer with ten bytes of capacity:
 
-```rust
+```no_run
 use std::io::BufReader;
 use std::fs::File;
 
@@ -90,7 +84,7 @@ It is inadvisable to directly read from the underlying reader.
 
 # Examples
 
-```rust
+```no_run
 use std::io::BufReader;
 use std::fs::File;
 
@@ -115,7 +109,7 @@ It is inadvisable to directly read from the underlying reader.
 
 # Examples
 
-```rust
+```no_run
 use std::io::BufReader;
 use std::fs::File;
 
@@ -136,11 +130,13 @@ pub fn buffer(&self) -> &[u8]
 
 Returns a reference to the internally buffered data.
 
-Unlike `fill_buf`, this will not attempt to fill the buffer if it is empty.
+Unlike [`fill_buf`], this will not attempt to fill the buffer if it is empty.
+
+[`fill_buf`]: BufRead::fill_buf
 
 # Examples
 
-```rust
+```no_run
 use std::io::{BufReader, BufRead};
 use std::fs::File;
 
@@ -166,7 +162,7 @@ Returns the number of bytes the internal buffer can hold at once.
 
 # Examples
 
-```rust
+```no_run
 use std::io::{BufReader, BufRead};
 use std::fs::File;
 
@@ -194,7 +190,7 @@ a following read from the underlying reader may lead to data loss.
 
 # Examples
 
-```rust
+```no_run
 use std::io::BufReader;
 use std::fs::File;
 

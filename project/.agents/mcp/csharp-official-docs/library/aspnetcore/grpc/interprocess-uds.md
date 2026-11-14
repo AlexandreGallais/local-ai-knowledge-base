@@ -1,28 +1,27 @@
 ---
-title: "Inter-process communication with gRPC and Unix domain sockets"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/grpc/interprocess-uds.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Inter-process communication with gRPC and Unix domain sockets
+description: Learn how to use gRPC for inter-process communication with Unix domain sockets.
+monikerRange: '>= aspnetcore-5.0'
+ms.date: 01/18/2023
 ---
-
 # Inter-process communication with gRPC and Unix domain sockets
 
-By James Newton-King
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
-.NET supports inter-process communication (IPC) using gRPC. For more information about getting started with using gRPC to communicate between processes, see Inter-process communication with gRPC.
+By [James Newton-King](https://twitter.com/jamesnk)
 
-Unix domain sockets (UDS) is a widely supported IPC transport that's more efficient than TCP when the client and server are on the same machine. This article discusses how to configure gRPC communication over UDS.
+.NET supports inter-process communication (IPC) using gRPC. For more information about getting started with using gRPC to communicate between processes, see [Inter-process communication with gRPC](interprocess.md).
+
+[Unix domain sockets (UDS)](https://wikipedia.org/wiki/Unix_domain_socket) is a widely supported IPC transport that's more efficient than TCP when the client and server are on the same machine. This article discusses how to configure gRPC communication over UDS.
 
 ## Prerequisites
 
 * .NET 5 or later
-* Linux, macOS, or Windows 10/Windows Server 2019 or later
+* Linux, macOS, or [Windows 10/Windows Server 2019 or later](https://devblogs.microsoft.com/commandline/af_unix-comes-to-windows/)
 
 ## Server configuration
 
-Unix domain sockets are supported by Kestrel, which is configured in `Program.cs`:
+Unix domain sockets are supported by [Kestrel](../fundamentals/servers/kestrel.md), which is configured in `Program.cs`:
 
 ```csharp
 var socketPath = Path.Combine(Path.GetTempPath(), "socket.tmp");
@@ -39,15 +38,15 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
 
 The preceding example:
 
-* Configures Kestrel's endpoints in `Microsoft.AspNetCore.Hosting.WebHostBuilderKestrelExtensions.ConfigureKestrel*`.
-* Calls `Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions.ListenUnixSocket*` to listen to a UDS with the specified path.
-* Creates a UDS endpoint that isn't configured to use HTTPS. For information about enabling HTTPS, see Kestrel HTTPS endpoint configuration.
+* Configures Kestrel's endpoints in <xref:Microsoft.AspNetCore.Hosting.WebHostBuilderKestrelExtensions.ConfigureKestrel*>.
+* Calls <xref:Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerOptions.ListenUnixSocket*> to listen to a UDS with the specified path.
+* Creates a UDS endpoint that isn't configured to use HTTPS. For information about enabling HTTPS, see [Kestrel HTTPS endpoint configuration](../fundamentals/servers/kestrel/endpoints.md#listenoptionsusehttps).
 
 ## Client configuration
 
-`GrpcChannel` supports making gRPC calls over custom transports. When a channel is created, it can be configured with a `System.Net.Http.SocketsHttpHandler` that has a custom `System.Net.Http.SocketsHttpHandler.ConnectCallback`. The callback allows the client to make connections over custom transports and then send HTTP requests over that transport.
+`GrpcChannel` supports making gRPC calls over custom transports. When a channel is created, it can be configured with a <xref:System.Net.Http.SocketsHttpHandler> that has a custom <xref:System.Net.Http.SocketsHttpHandler.ConnectCallback>. The callback allows the client to make connections over custom transports and then send HTTP requests over that transport.
 
-> **Note:**
+> [!NOTE]
 > Some connectivity features of `GrpcChannel`, such as client side load balancing and channel status, can't be used together with Unix domain sockets.
 
 Unix domain sockets connection factory example:
@@ -63,7 +62,7 @@ public class UnixDomainSocketsConnectionFactory
     }
 
     public async ValueTask<Stream> ConnectAsync(SocketsHttpConnectionContext _,
-        CancellationToken <example-value> = default)
+        CancellationToken cancellationToken = default)
     {
         var socket = new Socket(AddressFamily.Unix, SocketType.Stream, ProtocolType.Unspecified);
 

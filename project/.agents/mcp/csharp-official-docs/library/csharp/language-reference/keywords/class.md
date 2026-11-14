@@ -1,12 +1,13 @@
 ---
+description: "class keyword - C# Reference"
 title: "class keyword"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/keywords/class.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 01/21/2026
+f1_keywords: 
+  - "class_CSharpKeyword"
+  - "class"
+helpviewer_keywords: 
+  - "class keyword [C#]"
 ---
-
 # class (C# Reference)
 
 Declare classes by using the `class` keyword, as shown in the following example:
@@ -21,127 +22,41 @@ class TestClass
 
 C# supports only single inheritance. In other words, a class can inherit implementation from one base class only. However, a class can implement more than one interface.
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
+For more information on classes, interfaces, and inheritance see the article on [inheritance](../../fundamentals/object-oriented/inheritance.md) in the fundamentals section.
 
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+You can declare classes directly within a namespace. Don't nest these classes within other classes. You can make these classes either [`public`](./public.md) or [`internal`](./internal.md). By default, classes are `internal`.
 
-For more information on classes, interfaces, and inheritance see the article on inheritance in the fundamentals section.
+You can declare class members, including nested classes, as [`public`](public.md), [`protected internal`](protected-internal.md), [`protected`](protected.md), [`internal`](internal.md), [`private`](private.md), or [`private protected`](private-protected.md). By default, members are `private`.
 
-You can declare classes directly within a namespace. Don't nest these classes within other classes. You can make these classes either `public` or `internal`. By default, classes are `internal`.
+For more information, see [Access Modifiers](../../programming-guide/classes-and-structs/access-modifiers.md).
 
-You can declare class members, including nested classes, as `public`, `protected internal`, `protected`, `internal`, `private`, or `private protected`. By default, members are `private`.
-
-For more information, see Access Modifiers.
-
-You can declare generic classes that have type parameters. For more information, see Generic Classes.
+You can declare generic classes that have type parameters. For more information, see [Generic Classes](../../programming-guide/generics/generic-classes.md).
 
 A class can contain declarations of the following members:
 
-- Constructors
-- Constants
-- Fields
-- Finalizers
-- Methods
-- Properties
-- Indexers
-- Operators
-- Events
-- Delegates
-- Classes
-- Interfaces
-- Structure types
-- Enumeration types
+- [Constructors](../../programming-guide/classes-and-structs/constructors.md)
+- [Constants](../../programming-guide/classes-and-structs/constants.md)
+- [Fields](../../programming-guide/classes-and-structs/fields.md)
+- [Finalizers](../../programming-guide/classes-and-structs/finalizers.md)
+- [Methods](../../programming-guide/classes-and-structs/methods.md)
+- [Properties](../../programming-guide/classes-and-structs/properties.md)
+- [Indexers](../../programming-guide/indexers/index.md)
+- [Operators](../operators/index.md)
+- [Events](../../programming-guide/events/index.md)
+- [Delegates](../../programming-guide/delegates/index.md)
+- [Classes](../../fundamentals/types/classes.md)
+- [Interfaces](../../fundamentals/types/interfaces.md)
+- [Structure types](../builtin-types/struct.md)
+- [Enumeration types](../builtin-types/enum.md)
 
 ## Example
 
 The following example demonstrates declaring class fields, constructors, and methods. It also demonstrates object instantiation and printing instance data. In this example, two classes are declared. The first class, `Child`, contains two private fields (`name` and `age`), two public constructors, and one public method. The second class, `StringTest`, contains `Main`.
 
-```csharp
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+:::code language="csharp" source="./snippets/keywordsTypes.cs" id="5":::
 
-namespace csrefKeywordsMethodParams
-{
-    class Child
-    {
-        private int age;
-        private string name;
-
-        // Default constructor:
-        public Child()
-        {
-            name = "N/A";
-        }
-
-        // Constructor:
-        public Child(string name, int age)
-        {
-            this.name = name;
-            this.age = age;
-        }
-
-        // Printing method:
-        public void PrintChild()
-        {
-            Console.WriteLine("{0}, {1} years old.", name, age);
-        }
-    }
-
-    class StringTest
-    {
-        static void Main()
-        {
-            // Create objects by using the new operator:
-            Child child1 = new Child("Craig", 11);
-            Child child2 = new Child("Sally", 10);
-
-            // Create an object using the default constructor:
-            Child child3 = new Child();
-
-            // Display results:
-            Console.Write("Child #1: ");
-            child1.PrintChild();
-            Console.Write("Child #2: ");
-            child2.PrintChild();
-            Console.Write("Child #3: ");
-            child3.PrintChild();
-        }
-    }
-    /* Output:
-        Child #1: Craig, 11 years old.
-        Child #2: Sally, 10 years old.
-        Child #3: N/A, 0 years old.
-    */
-
-    interface ISampleInterface
-    {
-        void SampleMethod();
-    }
-
-    class ImplementationClass : ISampleInterface
-    {
-        // Explicit interface member implementation:
-        void ISampleInterface.SampleMethod()
-        {
-            // Method implementation.
-        }
-
-        static void Main()
-        {
-            // Declare an interface instance.
-            ISampleInterface obj = new ImplementationClass();
-
-            // Call the member.
-            obj.SampleMethod();
-        }
-    }
-}
-```
 ## Comments
 
 You can only access the private fields (`name` and `age`) through the public method of the `Child` class. For example, you can't print the child's name from the `Main` method by using a statement like this:
@@ -154,9 +69,9 @@ Accessing private members of `Child` from `Main` is only possible if `Main` is a
 
 ## C# language specification
 
-For more information, see the C# Language Specification. The language specification is the definitive source for C# syntax and usage.
+[!INCLUDE[CSharplangspec](~/includes/csharplangspec-md.md)]
 
 ## See also
 
-- C# Keywords
-- Reference Types
+- [C# Keywords](./index.md)
+- [Reference Types](./reference-types.md)

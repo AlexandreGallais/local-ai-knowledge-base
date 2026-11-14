@@ -1,14 +1,3 @@
----
-title: "blazor-page-script"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/includes/js-interop/blazor-page-script.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# blazor-page-script
-
 ```javascript
 const pageScriptInfoBySrc = new Map();
 

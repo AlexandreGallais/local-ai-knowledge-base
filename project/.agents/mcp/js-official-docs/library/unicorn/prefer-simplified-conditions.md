@@ -1,19 +1,13 @@
----
-title: "prefer-simplified-conditions"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-simplified-conditions.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-simplified-conditions
 
 📝 Prefer simplified conditions.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Prefer simpler logical conditions when they are equivalent and easier to read.
 
@@ -21,7 +15,7 @@ This rule applies De Morgan's laws, factors leading common terms in boolean cond
 
 The rule also checks quoted `v-if`, `v-else-if`, and `v-show` conditions in Vue templates.
 
-By default, it applies De Morgan's laws only when they reduce negation noise. It does not expand plain negated groups like `!(a && b)`, because those are not consistently easier to read. Use the `negatedConditions` option to prefer expanded conditions.
+By default, it applies De Morgan's laws only when they reduce negation noise. It does not expand plain negated groups like `!(a && b)`, because those are not consistently easier to read. Use the [`negatedConditions`](#negatedconditions) option to prefer expanded conditions.
 
 Factoring is intentionally limited to leading common terms in adjacent groups. Groups can appear within longer chains and contain more than two operands. The rule does not reorder operands to find a common term. Member objects and computed keys must be simple expressions, such as identifiers, member reads, or calls. Ordinary member reads are automatically fixed. If an operand contains a call that is not known to be repeatable, the rule offers a suggestion because factoring can change the result or number of calls. Optional chains are excluded from factoring.
 

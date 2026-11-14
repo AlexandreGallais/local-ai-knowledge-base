@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Some SVE APIs removed"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/jit/9.0/sve-apis.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 9 where some SVE APIs that take 32-bit address have been removed.
+ms.date: 10/02/2024
 ---
-
 # Some SVE APIs removed
 
 Several APIs that take a 32-bit address as an input parameter have been removed because of lack of testing with such addresses. These APIs might be re-enabled in the future when relevant test coverage is added.
@@ -25,7 +21,7 @@ Starting in .NET 9, these APIs aren't available.
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 

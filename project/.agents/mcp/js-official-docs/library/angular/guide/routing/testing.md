@@ -1,12 +1,3 @@
----
-title: "Testing routing and navigation"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/routing/testing.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Testing routing and navigation
 
 Testing routing and navigation is essential to ensure your application behaves correctly when users navigate between different routes. This guide covers various strategies for testing routing functionality in Angular applications.
@@ -15,9 +6,9 @@ Testing routing and navigation is essential to ensure your application behaves c
 
 This guide assumes you are familiar with the following tools and libraries:
 
-- **Vitest** - JavaScript testing framework that provides the testing syntax (`describe`, `it`, `expect`)
-- **Angular Testing Utilities** - Angular's built-in testing tools (`TestBed`, `ComponentFixture`)
-- **`RouterTestingHarness`** - Test harness for testing routed components with built-in navigation and component testing capabilities
+- **[Vitest](https://vitest.dev/)** - JavaScript testing framework that provides the testing syntax (`describe`, `it`, `expect`)
+- **[Angular Testing Utilities](guide/testing)** - Angular's built-in testing tools ([`TestBed`](api/core/testing/TestBed), [`ComponentFixture`](api/core/testing/ComponentFixture))
+- **[`RouterTestingHarness`](api/router/testing/RouterTestingHarness)** - Test harness for testing routed components with built-in navigation and component testing capabilities
 
 ## Testing scenarios
 
@@ -27,7 +18,7 @@ Components often rely on route parameters from the URL to fetch data, like a use
 
 The following example shows how to test a `UserProfile` component that displays a user ID from the route.
 
-```ts
+```ts { header: 'user-profile.spec.ts'}
 import {TestBed} from '@angular/core/testing';
 import {provideRouter, Router} from '@angular/router';
 import {RouterTestingHarness} from '@angular/router/testing';
@@ -48,7 +39,7 @@ describe('UserProfile', () => {
 });
 ```
 
-```angular-ts
+```angular-ts {header: 'user-profile.ts'}
 import {Component, inject} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
@@ -67,7 +58,7 @@ Route guards control access to routes based on conditions like authentication or
 
 The following example tests an `authGuard` that allows navigation for authenticated users and redirects unauthenticated users to a login page.
 
-```ts
+```ts {header: 'auth.guard.spec.ts'}
 import {describe, expect, it, vi, type Mocked} from 'vitest';
 import {RouterTestingHarness} from '@angular/router/testing';
 import {provideRouter, Router} from '@angular/router';
@@ -118,7 +109,7 @@ describe('authGuard', () => {
 });
 ```
 
-```ts
+```ts {header: 'auth.guard.ts'}
 import {inject} from '@angular/core';
 import {CanActivateFn, Router} from '@angular/router';
 import {AuthStore} from './auth-store';
@@ -132,11 +123,11 @@ export const authGuard: CanActivateFn = () => {
 
 ### Router outlets
 
-Router outlet tests are more of an integration test since you're essentially testing the integration between the `Router`, the outlet, and the components being displayed.
+Router outlet tests are more of an integration test since you're essentially testing the integration between the [`Router`](api/router/Router), the outlet, and the components being displayed.
 
 Here's an example of how to set up a test that verifies different components are displayed for different routes:
 
-```ts
+```ts {header: 'app.spec.ts'}
 import {TestBed} from '@angular/core/testing';
 import {RouterTestingHarness} from '@angular/router/testing';
 import {provideRouter} from '@angular/router';
@@ -184,7 +175,7 @@ describe('App Router Outlet', () => {
 });
 ```
 
-```angular-ts
+```angular-ts {header: 'app.ts'}
 import {Component} from '@angular/core';
 import {RouterOutlet, RouterLink} from '@angular/router';
 
@@ -213,7 +204,7 @@ You need to verify that:
 
 Here's an example of testing a parent-child route structure:
 
-```ts
+```ts {header: 'nested-routes.spec.ts'}
 import {TestBed} from '@angular/core/testing';
 import {RouterTestingHarness} from '@angular/router/testing';
 import {provideRouter} from '@angular/router';
@@ -248,7 +239,7 @@ describe('Nested Routes', () => {
 });
 ```
 
-```angular-ts
+```angular-ts {header: 'nested.ts'}
 import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 
@@ -269,13 +260,13 @@ export class Child {}
 
 ### Query parameters and fragments
 
-Query parameters (like `?search=angular&category=web`) and URL fragments (like `#section1`) provide additional data through the URL that doesn't affect which component loads, but does affect how the component behaves. Components that read query parameters through `ActivatedRoute.queryParams` need to be tested to ensure they handle different parameter scenarios correctly.
+Query parameters (like `?search=angular&category=web`) and URL fragments (like `#section1`) provide additional data through the URL that doesn't affect which component loads, but does affect how the component behaves. Components that read query parameters through [`ActivatedRoute.queryParams`](api/router/ActivatedRoute#queryParams) need to be tested to ensure they handle different parameter scenarios correctly.
 
 Unlike route parameters that are part of the route definition, query parameters are optional and can change without triggering route navigation. This means you need to test both the initial loading and the reactive updates when query parameters change.
 
 Here's an example of how to test query parameters and fragments:
 
-```ts
+```ts {header: 'search.spec.ts'}
 import {TestBed} from '@angular/core/testing';
 import {Router, provideRouter} from '@angular/router';
 import {RouterTestingHarness} from '@angular/router/testing';
@@ -302,7 +293,7 @@ describe('Search', () => {
 });
 ```
 
-```angular-ts
+```angular-ts {header: 'search.ts'}
 import {Component, inject, computed} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {toSignal} from '@angular/core/rxjs-interop';
@@ -320,7 +311,7 @@ export class Search {
 
 ## Best practices for router testing
 
-1. **Use RouterTestingHarness** - For testing routed components, use `RouterTestingHarness` which provides a cleaner API and eliminates the need for test host components. It offers direct component access, built-in navigation, and better type safety. However, it isn't as suitable for some scenarios, such as testing named outlets, where you may need to create custom host components.
+1. **Use RouterTestingHarness** - For testing routed components, use [`RouterTestingHarness`](api/router/testing/RouterTestingHarness) which provides a cleaner API and eliminates the need for test host components. It offers direct component access, built-in navigation, and better type safety. However, it isn't as suitable for some scenarios, such as testing named outlets, where you may need to create custom host components.
 2. **Handle external dependencies thoughtfully** - Prefer real implementations when possible for more realistic tests. If real implementations aren't feasible (e.g., external APIs), use fakes that approximate the real behavior. Use mocks or stubs only as a last resort, as they can make tests brittle and less reliable.
 3. **Test navigation state** - Verify both the navigation action and the resulting application state, including URL changes and component rendering.
 4. **Handle asynchronous operations** - Router navigation is asynchronous. Use `async/await` to properly handle timing in your tests.

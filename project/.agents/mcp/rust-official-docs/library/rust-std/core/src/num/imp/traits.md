@@ -1,12 +1,3 @@
----
-title: "core::num::imp::traits"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/num/imp/traits.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::num::imp::traits
 
 Numeric traits used for internal implementations.
@@ -123,7 +114,7 @@ or 2m+1 > 2^24 (32-bit case). Hence,we must have 2^53×5^−q < 2^64
 or q ≥ −4 (64-bit case) and 5^−q < 2^40 or q ≥ −17 (32-bit case).
 
 Thus we have that we only need to round ties to even when
-we have that q ∈ −4,23 or q∈[−17,10]
+we have that q ∈ [−4,23](in the 64-bit case) or q∈[−17,10]
 (in the 32-bit case). In both cases,the power of five(5^|q|)
 fits in a 64-bit word.
 

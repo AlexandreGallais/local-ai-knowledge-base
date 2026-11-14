@@ -1,12 +1,16 @@
 ---
+description: "Learn more about: ICorDebugILFrame4 Interface"
 title: "ICorDebugILFrame4 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugilframe4-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugILFrame4"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugILFrame4 Interface
 
 Provides methods that allow you to access the local variables and code in a stack frame of intermediate language (IL) code. A parameter specifies whether the debugger has access to variables and code added in profiler ReJIT instrumentation.
@@ -15,17 +19,17 @@ Provides methods that allow you to access the local variables and code in a stac
 
 |Method|Description|
 |------------|-----------------|
-|EnumerateLocalVariablesEx Method|Returns a list of the local variables available in the current frame.|
-|GetCodeEx Method|Returns the code that this stack frame is running.|
-|GetLocalVariableEx Method|Returns the value of a local variable in the IL frame.|
+|[EnumerateLocalVariablesEx Method](icordebugilframe4-enumeratelocalvariablesex-method.md)|Returns a list of the local variables available in the current frame.|
+|[GetCodeEx Method](icordebugilframe4-getcodeex-method.md)|Returns the code that this stack frame is running.|
+|[GetLocalVariableEx Method](icordebugilframe4-getlocalvariableex-method.md)|Returns the value of a local variable in the IL frame.|
 
 ## Remarks
 
-These methods offer functionality in addition to that provided by the EnumerateLocalVariables, GetCode, and GetLocalVariable methods. Each method includes a `flags` parameter that specifies whether additional local variables or code defined by a profiler's ReJIT request are visible.
+These methods offer functionality in addition to that provided by the [EnumerateLocalVariables](icordebugilframe-enumeratelocalvariables-method.md), [GetCode](icordebugframe-getcode-method.md), and [GetLocalVariable](icordebugilframe-getlocalvariable-method.md) methods. Each method includes a `flags` parameter that specifies whether additional local variables or code defined by a profiler's ReJIT request are visible.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

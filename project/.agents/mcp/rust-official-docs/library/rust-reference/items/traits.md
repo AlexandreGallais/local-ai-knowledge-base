@@ -1,17 +1,8 @@
----
-title: "Traits"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/items/traits.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[items.traits]
 # Traits
 
 r[items.traits.syntax]
-```grammar
+```grammar,items
 Trait ->
     `unsafe`? `trait` IDENTIFIER GenericParams? ( `:` Bounds? )? WhereClause?
     `{`
@@ -23,9 +14,9 @@ Trait ->
 r[items.traits.intro]
 A _trait_ describes an abstract interface that types can implement. This interface consists of [associated items], which come in three varieties:
 
-- functions
-- types
-- constants
+- [functions](associated-items.md#associated-functions-and-methods)
+- [types](associated-items.md#associated-types)
+- [constants](associated-items.md#associated-constants)
 
 r[items.traits.namespace]
 The trait declaration defines a trait in the [type namespace] of the module or block where it is located.
@@ -34,7 +25,7 @@ r[items.traits.associated-item-namespaces]
 Associated items are defined as members of the trait within their respective namespaces. Associated types are defined in the type namespace. Associated constants and associated functions are defined in the value namespace.
 
 r[items.traits.self-param]
-All traits define an implicit type parameter `Self` that refers to "the type that is implementing this interface". Traits may also contain additional type parameters. These type parameters, including `Self`, may be constrained by other traits and so forth as usual.
+All traits define an implicit type parameter `Self` that refers to "the type that is implementing this interface". Traits may also contain additional type parameters. These type parameters, including `Self`, may be constrained by other traits and so forth [as usual][generics].
 
 r[items.traits.impls]
 Traits are implemented for specific types through separate [implementations].
@@ -74,6 +65,7 @@ trait Seq<T> {
 }
 ```
 
+<a id="object-safety"></a>
 r[items.traits.dyn-compatible]
 ## Dyn compatibility
 
@@ -84,7 +76,7 @@ r[items.traits.dyn-compatible.supertraits]
 * All [supertraits] must also be dyn compatible.
 
 r[items.traits.dyn-compatible.sized]
-* `Sized` must not be a supertrait. In other words, it must not require `Self: Sized`.
+* `Sized` must not be a [supertrait][supertraits]. In other words, it must not require `Self: Sized`.
 
 r[items.traits.dyn-compatible.associated-consts]
 * It must not have any associated constants.
@@ -103,7 +95,7 @@ r[items.traits.dyn-compatible.associated-functions]
             * [`Box<Self>`]
             * [`Rc<Self>`]
             * [`Arc<Self>`]
-            * [`Pin`] where `P` is one of the types above
+            * [`Pin<P>`] where `P` is one of the types above
         * Not have an opaque return type; that is,
             * Not be an `async fn` (which has a hidden `Future` type).
             * Not have a return position `impl Trait` type (`fn example(&self) -> impl Trait`).
@@ -115,7 +107,7 @@ r[items.traits.dyn-compatible.associated-functions]
 r[items.traits.dyn-compatible.async-traits]
 * The [`AsyncFn`], [`AsyncFnMut`], and [`AsyncFnOnce`] traits are not dyn-compatible.
 
-> **Note:**
+> [!NOTE]
 > This concept was formerly known as *object safety*.
 
 ```rust
@@ -138,7 +130,7 @@ trait TraitMethods {
 # let t: Box<dyn TraitMethods> = Box::new(S);
 ```
 
-```rust
+```rust,compile_fail
 // This trait is dyn compatible, but these methods cannot be dispatched on a trait object.
 trait NonDispatchable {
     // Non-methods cannot be dispatched.
@@ -161,7 +153,7 @@ obj.param(S);  // ERROR: cannot call with Self parameter
 obj.typed(1);  // ERROR: cannot call with generic type
 ```
 
-```rust
+```rust,compile_fail
 # use std::rc::Rc;
 // Examples of dyn-incompatible traits.
 trait DynIncompatible {
@@ -180,7 +172,7 @@ impl DynIncompatible for S {
 let obj: Box<dyn DynIncompatible> = Box::new(S); // ERROR
 ```
 
-```rust
+```rust,compile_fail
 // `Self: Sized` traits are dyn-incompatible.
 trait TraitWithSize where Self: Sized {}
 
@@ -189,7 +181,7 @@ impl TraitWithSize for S {}
 let obj: Box<dyn TraitWithSize> = Box::new(S); // ERROR
 ```
 
-```rust
+```rust,compile_fail
 // Dyn-incompatible if `Self` is a type argument.
 trait Super<A> {}
 trait WithSelf: Super<Self> where Self: Sized {}
@@ -204,7 +196,7 @@ r[items.traits.supertraits]
 ## Supertraits
 
 r[items.traits.supertraits.intro]
-**Supertraits** are traits that are required to be implemented for a type to implement a specific trait. Furthermore, anywhere a generic or [trait object] is bounded by a trait, it has access to the associated items of its supertraits.
+**Supertraits** are traits that are required to be implemented for a type to implement a specific trait. Furthermore, anywhere a [generic][generics] or [trait object] is bounded by a trait, it has access to the associated items of its supertraits.
 
 r[items.traits.supertraits.decl]
 Supertraits are declared by trait bounds on the `Self` type of a trait and transitively the supertraits of the traits declared in those trait bounds. It is an error for a trait to be its own supertrait.
@@ -277,7 +269,8 @@ r[items.traits.params]
 ## Parameter patterns
 
 r[items.traits.params.patterns-no-body]
-Parameters in associated functions without a body only allow [IDENTIFIER] or `_` wild card patterns, as well as the form allowed by [SelfParam]. `mut` [IDENTIFIER] is currently allowed, but it is deprecated and will become a hard error in the future.
+Parameters in associated functions without a body only allow [IDENTIFIER] or `_` [wild card][WildcardPattern] patterns, as well as the form allowed by [SelfParam]. `mut` [IDENTIFIER] is currently allowed, but it is deprecated and will become a hard error in the future.
+<!-- https://github.com/rust-lang/rust/issues/35203 -->
 
 ```rust
 trait T {
@@ -286,7 +279,7 @@ trait T {
 }
 ```
 
-```rust
+```rust,compile_fail,E0642
 trait T {
     fn f2(&x: &i32); // ERROR: patterns aren't allowed in functions without bodies
 }
@@ -301,7 +294,7 @@ trait T {
 }
 ```
 
-```rust
+```rust,compile_fail,E0005
 trait T {
     fn f1(123: i32) {} // ERROR: pattern is refutable
     fn f2(Some(x): Option<i32>) {} // ERROR: pattern is refutable
@@ -327,7 +320,7 @@ r[items.traits.params.restriction-patterns.edition2018]
 >
 > * [IDENTIFIER]
 > * `mut` [IDENTIFIER]
-> * `_`
+> * [`_`][WildcardPattern]
 > * `&` [IDENTIFIER]
 > * `&&` [IDENTIFIER]
 >
@@ -373,3 +366,25 @@ fn main() {
     s.method_of_s();
 }
 ```
+
+[WildcardPattern]: ../patterns.md#wildcard-pattern
+[bounds]: ../trait-bounds.md
+[trait object]: ../types/trait-object.md
+[associated items]: associated-items.md
+[method]: associated-items.md#methods
+[supertraits]: #supertraits
+[implementations]: implementations.md
+[generics]: generics.md
+[where clauses]: generics.md#where-clauses
+[generic functions]: functions.md#generic-functions
+[unsafe]: ../unsafety.md
+[trait implementation]: implementations.md#trait-implementations
+[`Send`]: ../special-types-and-traits.md#send
+[`Sync`]: ../special-types-and-traits.md#sync
+[`Arc<Self>`]: ../special-types-and-traits.md#arct
+[`Box<Self>`]: ../special-types-and-traits.md#boxt
+[`Pin<P>`]: ../special-types-and-traits.md#pinp
+[`Rc<Self>`]: ../special-types-and-traits.md#rct
+[`async`]: functions.md#async-functions
+[`const`]: functions.md#const-functions
+[type namespace]: ../names/namespaces.md

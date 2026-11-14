@@ -1,7 +1,9 @@
-// Local search over Markdown documents, without a black box: sections are indexed in plain text
-// files that a person can read, and ranked with BM25. No package; Node 22.18 or later.
+// Local search over the official documentation, kept in its own format, without a black box:
+// sections are indexed in plain text files that a person can read, and ranked with BM25. No package;
+// Node 22.18 or later.
 //   tokenize:   words of a query or a text, names of variables split as a person reads them
-//   sections:   one entry per H2 section of a Markdown file
+//   sections:   the sections of a file, by its format: Markdown, reStructuredText, AsciiDoc, LaTeX,
+//               Texinfo, PreTeXt, XML documentation of .NET, HTML
 //   indexText:  the plain-text index of sections, the same text for the same input
 //   search:     the best sections for a query, 10 at most
 export interface Section {
@@ -81,6 +83,7 @@ const NAME_WEIGHT = 3;
 // Points given to a title that names the API of a one-name query, exactly or as its start.
 const EXACT_WEIGHT = 40;
 const PREFIX_WEIGHT = 15;
+const CASE_WEIGHT = 10;
 
 export const MAX_HITS = 10;
 
@@ -141,46 +144,376 @@ export function slug(heading: string): string {
     .replaceAll(/\s/g, '-');
 }
 
-function stripHeader(text: string): string {
-  return text.startsWith('---\n') ? text.slice(Math.max(text.indexOf('\n---', 4) + 4, 0)) : text;
+// A place where a section starts in a file: the line it starts at, and its heading.
+interface Cut {
+  line: number;
+  heading: string;
 }
 
-// One section per H2 heading; the text before the first H2 belongs to the H1 of the file.
-export function sections(path: string, markdown: string): Section[] {
-  const lines = stripHeader(markdown).split('\n');
-  const fileTitle = lines
-    .find((line) => line.startsWith('# '))
-    ?.slice(2)
-    .trim() ?? path;
-  const result: Section[] = [];
-  let current: Section = {
-    id: path,
-    title: fileTitle,
-    text: '',
+// The extensions of the files the search reads, the documentation kept as its authors wrote it.
+export const DOCUMENT_FILE = /\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|ptx|xml|html?|json)(?:\.in)?$/;
+const MARKDOWN_FILE = /\.(?:md|mdx|markdown)(?:\.in)?$/;
+
+// The YAML header of a Markdown file (MDN, Vite...), and the title it may give.
+function frontMatter(text: string): {
+  body: string;
+  title: string | undefined;
+} {
+  if (!text.startsWith('---\n')) {
+    return {
+      body: text,
+      title: undefined,
+    };
+  }
+  const end = text.indexOf('\n---', 4);
+  const block = end < 0 ? '' : text.slice(4, end);
+  const title = /^title:\s*["']?(.*?)["']?\s*$/m.exec(block)?.[1];
+
+  return {
+    body: end < 0 ? text : text.slice(end + 4),
+    title,
   };
+}
+
+const decodeXml = (text: string): string => text
+  .replaceAll('&lt;', '<')
+  .replaceAll('&gt;', '>')
+  .replaceAll('&quot;', '"')
+  .replaceAll('&apos;', "'")
+  .replaceAll('&amp;', '&');
+
+// Markdown: "# " gives the title, each "##", "###" or "####" outside a code block a section.
+function markdownCuts(lines: string[]): {
+  title: string | undefined;
+  cuts: Cut[];
+} {
+  const cuts: Cut[] = [];
+  let title: string | undefined;
   let fence = false;
 
-  for (const line of lines) {
-    fence = line
-      .trimStart()
-      .startsWith('```') ? !fence : fence;
-    if (!fence && line.startsWith('## ')) {
-      result.push(current);
-      const heading = line
-        .slice(3)
-        .trim();
-
-      current = {
-        id: `${path}#${slug(heading)}`,
-        title: `${fileTitle} > ${heading}`,
-        text: '',
-      };
-      continue;
+  lines.forEach((line, index) => {
+    fence = /^\s*(?:```|~~~)/.test(line) ? !fence : fence;
+    if (fence) {
+      return;
     }
-    current.text += `${line}\n`;
+    // "# Title", or "% title" on the first line of a manual page written for pandoc (Podman).
+    if (title === undefined && (line.startsWith('# ') || (index === 0 && line.startsWith('% ')))) {
+      title = line
+        .slice(2)
+        .trim();
+    } else if (/^#{2,4} /.test(line)) {
+      // Levels 2 to 4: a long reference page (the options of a command) gives one section per entry.
+      cuts.push({
+        line: index,
+        heading: line
+          .replace(/^#+ /, '')
+          .trim(),
+      });
+    }
+  });
+  return {
+    title,
+    cuts,
+  };
+}
+
+// reStructuredText and AsciiDoc: a heading is a line underlined (and maybe overlined) with one
+// repeated punctuation; AsciiDoc also writes "= Title" and "== Section". The first style met is the
+// title, the second the sections.
+function underlinedCuts(lines: string[]): {
+  title: string | undefined;
+  cuts: Cut[];
+} {
+  const headings: {
+    line: number;
+    text: string;
+    style: string;
+  }[] = [];
+
+  lines.forEach((line, index) => {
+    const next = lines[index + 1] ?? '';
+    const atx = /^(={1,6})\s+(\S.*)$/.exec(line);
+
+    if (atx !== null) {
+      headings.push({
+        line: index,
+        text: atx[2] ?? '',
+        style: atx[1] ?? '',
+      });
+      return;
+    }
+    const mark = /^([!-/:-@[-`{-~])\1{2,}\s*$/.exec(next);
+    const text = line.trim();
+
+    if (mark !== null && text !== '' && !/^[!-/:-@[-`{-~]+$/.test(text) && next.trim().length >= text.length) {
+      const over = (lines[index - 1] ?? '').trim() === next.trim();
+
+      headings.push({
+        line: over ? index - 1 : index,
+        text,
+        style: `${over ? 'over' : ''}${mark[1] ?? ''}`,
+      });
+    }
+  });
+  const styles = [...new Set(headings.map((heading) => heading.style))];
+  const [
+    first,
+    second,
+  ] = styles;
+  const sectionStyle = second ?? first;
+
+  return {
+    title: headings.find((heading) => heading.style === first)?.text,
+    cuts: headings
+      .filter((heading, position) => heading.style === sectionStyle && (second !== undefined || position > 0))
+      .map((heading) => ({
+        line: heading.line,
+        heading: heading.text,
+      })),
+  };
+}
+
+// LaTeX: \chapter or the first \section gives the title; each \section, or each \subsection in a
+// file of one section, starts a section.
+function latexCuts(lines: string[]): {
+  title: string | undefined;
+  cuts: Cut[];
+} {
+  const commands = lines.flatMap((line, index) => {
+    const match = /^\s*\\(chapter|section|subsection)\*?(?:\[[^\]]*\])?\{(.+?)\}\s*(?:%.*)?$/.exec(line);
+
+    return match === null ? [] : [
+      {
+        line: index,
+        level: match[1] ?? '',
+        heading: match[2] ?? '',
+      },
+    ];
+  });
+  const chapter = commands.find((command) => command.level === 'chapter');
+  const level = commands.filter((command) => command.level === 'section').length > 1 || chapter !== undefined ? 'section' : 'subsection';
+  const cuts = commands.filter((command) => command.level === level);
+
+  return {
+    title: chapter?.heading ?? commands.find((command) => command.level === 'section')?.heading,
+    cuts: chapter === undefined && level === 'section' ? cuts.slice(1) : cuts,
+  };
+}
+
+// XML: PreTeXt (a <title> per chapter, section, subsection) or the documentation of a .NET API
+// (one <Member> per member of a type, or one <member name="..."> per member of an assembly).
+function xmlCuts(lines: string[]): {
+  title: string | undefined;
+  cuts: Cut[];
+} {
+  const typeName = /<Type\s[^>]*FullName="([^"]+)"/.exec(lines
+    .slice(0, 20)
+    .join('\n'))?.[1];
+  const cuts: Cut[] = [];
+  let title = typeName === undefined ? undefined : decodeXml(typeName);
+
+  lines.forEach((line, index) => {
+    const member = /<Member\s[^>]*MemberName="([^"]+)"|<member\s+name="([^"]+)"/.exec(line);
+    const division = /<(chapter|section|subsection|appendix)\b/.exec(line);
+
+    if (member !== null) {
+      const name = decodeXml(member[1] ?? member[2] ?? '');
+      // "M:System.String.Trim(System.Char[])" is "String.Trim (method)": the name a person looks for.
+      const kind = /^([TMPFEN]):(.+)$/.exec(name);
+
+      cuts.push({
+        line: index,
+        heading: kind === null ? name : intellisenseHeading(kind[1] ?? '', kind[2] ?? ''),
+      });
+      return;
+    }
+    if (division === null) {
+      return;
+    }
+    const heading = /<title>(.*?)<\/title>/
+      .exec(lines
+        .slice(index, index + 4)
+        .join(' '))?.[1]
+      ?.replaceAll(/<[^>]+>/g, '')
+      .replaceAll(/\s+/g, ' ')
+      .trim();
+
+    if (heading === undefined) {
+      return;
+    }
+    // The first division of the file names it: a chapter, or a section kept in its own file.
+    if (title === undefined && cuts.length === 0) {
+      title = heading;
+    } else {
+      cuts.push({
+        line: index,
+        heading,
+      });
+    }
+  });
+  return {
+    title,
+    cuts,
+  };
+}
+
+const KINDS_OF_MEMBERS: Record<string, string> = {
+  T: 'type',
+  M: 'method',
+  P: 'property',
+  F: 'field',
+  E: 'event',
+  N: 'namespace',
+};
+
+function intellisenseHeading(kind: string, name: string): string {
+  const withoutParameters = name.replace(/\(.*$/, '');
+  const parts = withoutParameters.split('.');
+  const short = kind === 'T' || kind === 'N' ? parts.at(-1) ?? name : parts
+    .slice(-2)
+    .join('.');
+
+  return `${short.replaceAll(/`\d+/g, '<T>').replace('.#ctor', ' constructor')} (${KINDS_OF_MEMBERS[kind] ?? kind}: ${withoutParameters})`;
+}
+
+// Texinfo (GNU manuals): @settitle or the first @chapter gives the title; each @section, or each
+// @chapter in a manual without sections, starts a section.
+function texinfoCuts(lines: string[]): {
+  title: string | undefined;
+  cuts: Cut[];
+} {
+  const commands = lines.flatMap((line, index) => {
+    const match = /^@(settitle|chapter|unnumbered|appendix|section|unnumberedsec|appendixsec)\s+(.+)$/.exec(line);
+
+    return match === null ? [] : [
+      {
+        line: index,
+        level: match[1] ?? '',
+        heading: (match[2] ?? '').trim(),
+      },
+    ];
+  });
+  const isSection = (level: string): boolean => /sec(?:tion)?$/.test(level);
+  const isChapter = (level: string): boolean => /^(?:chapter|unnumbered|appendix)$/.test(level);
+  const level = commands.filter((command) => isSection(command.level)).length > 1 ? isSection : isChapter;
+
+  return {
+    title: commands.find((command) => command.level === 'settitle')?.heading ?? commands.find((command) => isChapter(command.level))?.heading,
+    cuts: commands
+      .filter((command) => level(command.level))
+      .map((command) => ({
+        line: command.line,
+        heading: command.heading,
+      })),
+  };
+}
+
+const textOf = (html: string): string => decodeXml(html.replaceAll(/<[^>]+>/g, ''))
+  .replaceAll(/\s+/g, ' ')
+  .trim();
+
+// HTML: <title> or the first <h1> gives the title; each <h2>, or each <h3> in a page without <h2>,
+// starts a section.
+function htmlCuts(lines: string[]): {
+  title: string | undefined;
+  cuts: Cut[];
+} {
+  const headings = (tag: string): Cut[] => lines.flatMap((line, index) => {
+    const match = new RegExp(`<${tag}\\b[^>]*>(.*?)(?:</${tag}>|$)`, 'i').exec(line);
+
+    return match === null ? [] : [
+      {
+        line: index,
+        heading: textOf(match[1] ?? ''),
+      },
+    ];
+  });
+  const page = lines
+    .slice(0, 200)
+    .join('\n');
+  const title = /<title>([\s\S]*?)<\/title>/i.exec(page)?.[1] ?? /<h1\b[^>]*>([\s\S]*?)<\/h1>/i.exec(page)?.[1];
+  const second = headings('h2');
+
+  return {
+    title: title === undefined ? undefined : textOf(title),
+    cuts: (second.length > 0 ? second : headings('h3')).filter((cut) => cut.heading !== ''),
+  };
+}
+
+function cutsOf(path: string, lines: string[]): {
+  title: string | undefined;
+  cuts: Cut[];
+} {
+  if (/\.(?:rst|txt|adoc)$/.test(path)) {
+    return underlinedCuts(lines);
   }
-  result.push(current);
-  return result.filter((section) => section.text.trim() !== '' || section.id.includes('#'));
+  if (path.endsWith('.tex')) {
+    return latexCuts(lines);
+  }
+  if (path.endsWith('.texi')) {
+    return texinfoCuts(lines);
+  }
+  if (/\.html?$/.test(path)) {
+    return htmlCuts(lines);
+  }
+  if (path.endsWith('.json')) {
+    // A JSON schema (the options of an Angular schematic): one section, titled by its "title".
+    return {
+      title: /"title"\s*:\s*"([^"]+)"/.exec(lines
+        .slice(0, 40)
+        .join('\n'))?.[1],
+      cuts: [],
+    };
+  }
+  return /\.(?:ptx|xml)$/.test(path) ? xmlCuts(lines) : markdownCuts(lines);
+}
+
+// The sections of a documentation file, by its format; the text before the first section belongs
+// to the title of the file. An anchor met twice gets "-2", "-3"...
+export function sections(path: string, text: string): Section[] {
+  const header = MARKDOWN_FILE.test(path) ? frontMatter(text) : {
+    body: text,
+    title: undefined,
+  };
+  const lines = header.body.split('\n');
+  const {
+    title,
+    cuts,
+  } = cutsOf(path, lines);
+  const fileTitle = header.title ?? title ?? path.replace(/^.*\//, '');
+  const seen = new Map<string, number>();
+  const starts = [
+    {
+      line: 0,
+      heading: '',
+    },
+    ...cuts,
+  ];
+
+  return starts
+    .map((cut, position) => {
+      const body = lines
+        .slice(cut.line, starts[position + 1]?.line ?? lines.length)
+        .join('\n');
+
+      if (cut.heading === '') {
+        return {
+          id: path,
+          title: fileTitle,
+          text: body,
+        };
+      }
+      const anchor = slug(cut.heading) || 'section';
+      const count = (seen.get(anchor) ?? 0) + 1;
+
+      seen.set(anchor, count);
+      return {
+        id: `${path}#${count === 1 ? anchor : `${anchor}-${String(count)}`}`,
+        title: `${fileTitle} > ${cut.heading}`,
+        text: body,
+      };
+    })
+    .filter((section) => section.text.trim() !== '' || section.id.includes('#'));
 }
 
 function counts(words: string[]): Map<string, number> {
@@ -311,15 +644,20 @@ function exactNames(query: string): string[] {
 }
 
 // A title that names the API of the query exactly comes first; one that starts with it comes next.
-function nameBonus(title: string, names: string[]): number {
+// The same name written with the same case ("inject" the function, not "Inject" the decorator)
+// comes first among the exact ones.
+function nameBonus(title: string, names: string[], query: string): number {
   const parts = title
     .split(' > ')
     .map((part) => bareName(part));
   const exact = (name: string): boolean => parts.some((part) => part === name || part.startsWith(`${name}(`));
   const prefix = (name: string): boolean => parts.some((part) => part.startsWith(`${name} `) || part.startsWith(`${name}.`) || part.startsWith(`${name}::`));
+  const sameCase = title
+    .split(' > ')
+    .some((part) => part.replaceAll(KINDS, '').trim() === query.trim());
 
   if (names.some((name) => exact(name))) {
-    return EXACT_WEIGHT;
+    return EXACT_WEIGHT + (sameCase ? CASE_WEIGHT : 0);
   }
   return names.some((name) => prefix(name)) ? PREFIX_WEIGHT : 0;
 }
@@ -350,7 +688,7 @@ export function search(entries: IndexEntry[], query: string, limit = MAX_HITS): 
         score += entry.titleTerms.has(term) ? TITLE_WEIGHT * idf(term) : 0;
       }
       score += names.filter((name) => entry.titleTerms.has(name)).length * NAME_WEIGHT * Math.max(...names.map((name) => idf(name)), 1);
-      score += score > 0 ? nameBonus(entry.title, exact) : 0;
+      score += score > 0 ? nameBonus(entry.title, exact, query) : 0;
       return {
         id: entry.id,
         title: entry.title,

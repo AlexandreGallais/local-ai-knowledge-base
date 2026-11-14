@@ -1,21 +1,20 @@
 ---
-title: "NuGet and .NET libraries"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/library-guidance/nuget.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: NuGet and .NET libraries
+description: Best practice recommendations for packaging with NuGet for .NET libraries.
+ms.date: 03/19/2026
+ai-usage: ai-assisted
 ---
-
 # NuGet
 
-NuGet is a package manager for the .NET ecosystem and is the primary way developers discover and acquire .NET open-source libraries. NuGet.org, a free service provided by Microsoft for hosting NuGet packages, is the primary host for public NuGet packages, but you can publish to custom NuGet services like MyGet and Azure Artifacts.
+NuGet is a package manager for the .NET ecosystem and is the primary way developers discover and acquire .NET open-source libraries. [NuGet.org](https://www.nuget.org/), a free service provided by Microsoft for hosting NuGet packages, is the primary host for public NuGet packages, but you can publish to custom NuGet services like [MyGet](https://www.myget.org/) and [Azure Artifacts](https://azure.microsoft.com/services/devops/artifacts/).
+
+![NuGet](./media/nuget/nuget-logo.png "NuGet")
 
 ## Create a NuGet package
 
 A NuGet package (`*.nupkg`) is a zip file that contains .NET assemblies and associated metadata.
 
-There are two main ways to create a NuGet package. The newer and recommended way is to create a package from an SDK-style project (project file whose content starts with `<Project Sdk="Microsoft.NET.Sdk">`). Assemblies and targets are automatically added to the package and remaining metadata is added to the MSBuild file, like package name and version number. Compiling with the `dotnet pack` command outputs a `*.nupkg` file instead of assemblies.
+There are two main ways to create a NuGet package. The newer and recommended way is to create a package from an SDK-style project (project file whose content starts with `<Project Sdk="Microsoft.NET.Sdk">`). Assemblies and targets are automatically added to the package and remaining metadata is added to the MSBuild file, like package name and version number. Compiling with the [`dotnet pack`](../../core/tools/dotnet-pack.md) command outputs a `*.nupkg` file instead of assemblies.
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
@@ -34,28 +33,28 @@ The older way of creating a NuGet package is with a `*.nuspec` file and the `nug
 
 ## Package dependencies
 
-NuGet package dependencies are covered in detail in the Dependencies article.
+NuGet package dependencies are covered in detail in the [Dependencies](./dependencies.md) article.
 
 ## Important NuGet package metadata
 
-A NuGet package supports many metadata properties. The following table contains the core metadata that every package on NuGet.org should provide:
+A NuGet package supports many [metadata properties](/nuget/reference/nuspec). The following table contains the core metadata that every package on NuGet.org should provide:
 
 | MSBuild Property name              | Nuspec name              | Description  |
 | ---------------------------------- | ------------------------ | ------------ |
-| `PackageId`                        | `id`                       | The package identifier. A prefix from the identifier can be reserved if it meets the criteria. |
-| `PackageVersion`                   | `version`                  | NuGet package version. For more information, see NuGet package version.             |
+| `PackageId`                        | `id`                       | The package identifier. A prefix from the identifier can be reserved if it meets the [criteria](/nuget/reference/id-prefix-reservation). |
+| `PackageVersion`                   | `version`                  | NuGet package version. For more information, see [NuGet package version](./versioning.md#nuget-package-version).             |
 | `Title`                            | `title`                    | A human-friendly title of the package. It defaults to the `PackageId`.             |
 | `Description`                      | `description`              | A long description of the package displayed in UI.             |
 | `Authors`                          | `authors`                  | A comma-separated list of package author display names (for example, `James Newton-King`). These names are displayed as plain text on NuGet.org and are not linked to NuGet.org profiles. |
 | `PackageTags`                      | `tags`                     | A space or semicolon-delimited list of tags and keywords that describe the package. Tags are used when searching for packages.             |
-| `PackageIcon`                   | `icon`                  | A path to an image in the package to use as a package icon. Read more about `icon` metadata. |
+| `PackageIcon`                   | `icon`                  | A path to an image in the package to use as a package icon. Read more about [`icon` metadata](/nuget/reference/nuspec#icon). |
 | `PackageProjectUrl`                | `projectUrl`               | A URL for the project homepage or source repository.             |
-| `PackageLicenseExpression`         | `license`                  | The project license's SPDX identifier. Only OSI and FSF approved licenses can use an identifier. Other licenses should use `PackageLicenseFile`. Read more about `license` metadata. |
+| `PackageLicenseExpression`         | `license`                  | The project license's [SPDX identifier](https://spdx.org/licenses/). Only OSI and FSF approved licenses can use an identifier. Other licenses should use `PackageLicenseFile`. Read more about [`license` metadata](/nuget/reference/nuspec#license). |
 
-> **Important:**
-> A project without a license defaults to exclusive copyright, making it legally impossible for other people to use.
+> [!IMPORTANT]
+> A project without a license defaults to [exclusive copyright](https://choosealicense.com/no-permission/), making it legally impossible for other people to use.
 
-✔️ CONSIDER choosing a NuGet package name with a prefix that meets NuGet's prefix reservation criteria.
+✔️ CONSIDER choosing a NuGet package name with a prefix that meets NuGet's prefix reservation [criteria](/nuget/reference/id-prefix-reservation).
 
 ✔️ DO use an HTTPS href to your package icon.
 
@@ -63,20 +62,22 @@ A NuGet package supports many metadata properties. The following table contains 
 
 ✔️ DO use a package icon image that is 64x64 and has a transparent background for best viewing results.
 
-✔️ CONSIDER setting up Source Link to add source control metadata to your assemblies and NuGet package.
+✔️ CONSIDER setting up [Source Link](./sourcelink.md) to add source control metadata to your assemblies and NuGet package.
 
 > Source Link automatically adds `RepositoryUrl` and `RepositoryType` metadata to the NuGet package. Source Link also adds information about the exact source code the package was built from. For example, a package created from a Git repository will have the commit hash added as metadata.
 
 ## Prerelease packages
 
-NuGet packages with a version suffix are considered prerelease. By default, the NuGet Package Manager UI shows stable releases unless a user opts-in to prerelease packages, making prerelease packages ideal for limited user testing.
+NuGet packages with a version suffix are considered [prerelease](/nuget/create-packages/prerelease-packages). By default, the NuGet Package Manager UI shows stable releases unless a user opts-in to prerelease packages, making prerelease packages ideal for limited user testing.
 
 ```xml
 <PackageVersion>1.0.1-beta1</PackageVersion>
 ```
 
-> **Note:**
+> [!NOTE]
 > A stable package cannot depend on a prerelease package. You must either make your own package prerelease or depend on an older stable version.
+
+![NuGet prerelease package dependency](./media/nuget/nuget-prerelease-package.png "NuGet prerelease package dependency")
 
 ✔️ DO publish a prerelease package when testing, previewing, or experimenting.
 
@@ -84,12 +85,12 @@ NuGet packages with a version suffix are considered prerelease. By default, the 
 
 ## Symbol packages
 
-Symbol files (`*.pdb`) are produced by the .NET compiler alongside assemblies. Symbol files map execution locations to the original source code so you can step through source code as it is running using a debugger. NuGet supports generating a separate symbol package (`*.snupkg`) containing symbol files alongside the main package containing .NET assemblies. The idea of symbol packages is they're hosted on a symbol server and are only downloaded by a tool like Visual Studio on demand.
+Symbol files (`*.pdb`) are produced by the .NET compiler alongside assemblies. Symbol files map execution locations to the original source code so you can step through source code as it is running using a debugger. NuGet supports [generating a separate symbol package (`*.snupkg`)](/nuget/create-packages/symbol-packages-snupkg) containing symbol files alongside the main package containing .NET assemblies. The idea of symbol packages is they're hosted on a symbol server and are only downloaded by a tool like Visual Studio on demand.
 
-NuGet.org hosts its own symbols server repository. Developers can use the symbols published to the NuGet.org symbol server by adding `https://symbols.nuget.org/download/symbols` to their symbol sources in Visual Studio.
+NuGet.org hosts its own [symbols server repository](/nuget/create-packages/symbol-packages-snupkg#nugetorg-symbol-server). Developers can use the symbols published to the NuGet.org symbol server by adding `https://symbols.nuget.org/download/symbols` to their [symbol sources in Visual Studio](/visualstudio/debugger/specify-symbol-dot-pdb-and-source-files-in-the-visual-studio-debugger).
 
-> **Important:**
-> The NuGet.org symbol server only supports the new portable symbol files (`*.pdb`) created by SDK-style projects.
+> [!IMPORTANT]
+> The NuGet.org symbol server only supports the new [portable symbol files](https://github.com/dotnet/core/blob/main/Documentation/diagnostics/portable_pdb.md) (`*.pdb`) created by SDK-style projects.
 >
 > To use the NuGet.org symbol server when debugging a .NET library, developers must have Visual Studio 2017 version 15.9 or later.
 
@@ -112,5 +113,6 @@ The downside of embedding symbol files is that they increase the package size by
 >
 > The caveat is that users may need to find and configure the NuGet symbol server in their IDE (as a one-time setup) to get symbol files. Visual Studio 2019 version 16.1 added NuGet.org's symbol server to the list of default symbol servers.
 
->Previous
->Next
+>[!div class="step-by-step"]
+>[Previous](strong-naming.md)
+>[Next](dependencies.md)

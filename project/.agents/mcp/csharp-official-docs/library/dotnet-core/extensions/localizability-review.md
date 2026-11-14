@@ -1,10 +1,21 @@
 ---
-title: "Localizability review"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/localizability-review.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Localizability review
+description: Learn about localizability reviews, and when they should occur and how to use them.
+ms.date: 03/13/2023
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "world-ready applications, localizability"
+  - "application development [.NET], localization"
+  - "localizability [.NET]"
+  - "international applications [.NET], localizability"
+  - "globalization [.NET], localizability"
+  - "culture, localizability"
+  - "localization [.NET], localizability"
+  - "global applications, localizability"
+  - "localizing resources"
+ms.assetid: 3aee2fbb-de47-4e37-8fe4-ddebb9719247
 ---
 
 # Localizability review
@@ -13,14 +24,19 @@ The localizability review is an intermediate step in the development of a world-
 
 The localizability review consists of the following three checks:
 
+> [!div class="checklist"]
 >
-> * Are the globalization recommendations implemented?
-> * Are culture-sensitive features handled correctly?
-> * Have you tested your application with international data?
+> * [Are the globalization recommendations implemented?](#global)
+> * [Are culture-sensitive features handled correctly?](#culture)
+> * [Have you tested your application with international data?](#test)
+
+<a name="global"></a>
 
 ## Implement globalization recommendations
 
-If you have designed and developed your application with localization in mind, and if you have followed the recommendations discussed in the Globalization article, the localizability review will largely be a quality assurance pass. Otherwise, during this stage you should review and implement the recommendations for globalization and fix the errors in source code that prevent localization.
+If you have designed and developed your application with localization in mind, and if you have followed the recommendations discussed in the [Globalization](globalization.md) article, the localizability review will largely be a quality assurance pass. Otherwise, during this stage you should review and implement the recommendations for [globalization](globalization.md) and fix the errors in source code that prevent localization.
+
+<a name="culture"></a>
 
 ## Handle culture-sensitive features
 
@@ -34,9 +50,12 @@ If you have designed and developed your application with localization in mind, a
 
 - Units of measure used for lengths, weights, area, volume, and temperatures
 
-   Although .NET does not offer built-in support for converting between units of measure, you can use the `System.Globalization.RegionInfo.IsMetric` property to determine whether a particular country or region uses the metric system, as the following example illustrates.
+   Although .NET does not offer built-in support for converting between units of measure, you can use the <xref:System.Globalization.RegionInfo.IsMetric?displayProperty=nameWithType> property to determine whether a particular country or region uses the metric system, as the following example illustrates.
 
-   _Code sample not included: ../../../samples/snippets/csharp/VS_Snippets_CLR/conceptual.localizability/cs/ismetric1.cs._
+   [!code-csharp[Conceptual.Localizability#1](../../../samples/snippets/csharp/VS_Snippets_CLR/conceptual.localizability/cs/ismetric1.cs#1)]
+   [!code-vb[Conceptual.Localizability#1](../../../samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.localizability/vb/ismetric1.vb#1)]
+
+<a name="test"></a>
 
 ## Test your application
 
@@ -54,11 +73,11 @@ Before you localize your application, you should test it by using international 
 
 - String comparisons or comparisons for equality that return unexpected results.
 
-If you've followed the globalization recommendations when developing your application, handled culture-sensitive features correctly, and identified and addressed the localization issues that arose during testing, you can proceed to the next step, Localization.
+If you've followed the globalization recommendations when developing your application, handled culture-sensitive features correctly, and identified and addressed the localization issues that arose during testing, you can proceed to the next step, [Localization](localization.md).
 
 ## See also
 
-- Globalization and Localization
-- Localization
-- Globalization
-- Resources in .NET apps
+- [Globalization and Localization](globalization-and-localization.md)
+- [Localization](localization.md)
+- [Globalization](globalization.md)
+- [Resources in .NET apps](resources.md)

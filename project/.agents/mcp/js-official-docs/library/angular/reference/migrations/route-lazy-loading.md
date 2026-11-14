@@ -1,12 +1,3 @@
----
-title: "Migration to lazy-loaded routes"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/reference/migrations/route-lazy-loading.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Migration to lazy-loaded routes
 
 This schematic helps developers to convert eagerly loaded component routes to lazy loaded routes. This allows the build process to split the production bundle into smaller chunks, to avoid a big JS bundle that includes all routes, which negatively affects initial page load of an application.
@@ -40,7 +31,7 @@ The migration will check all the components in the routes, check if they are sta
 
 #### Before
 
-```typescript
+```typescript {header: "app.module.ts"}
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {Home} from './home';
@@ -61,7 +52,7 @@ export class AppModule {}
 
 #### After
 
-```typescript
+```typescript {header: "app.module.ts"}
 @NgModule({
   imports: [
     RouterModule.forRoot([
@@ -76,4 +67,4 @@ export class AppModule {}
 export class AppModule {}
 ```
 
-This migration will also collect information about all the components declared in NgModules and output the list of routes that use them (including corresponding location of the file). Consider making those components standalone and run this migration again. You can use an existing migration (see) to convert those components to standalone.
+This migration will also collect information about all the components declared in NgModules and output the list of routes that use them (including corresponding location of the file). Consider making those components standalone and run this migration again. You can use an existing migration ([see](reference/migrations/standalone)) to convert those components to standalone.

@@ -1,19 +1,20 @@
 ---
-title: "Globalization and localization in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/localization.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Globalization and localization in ASP.NET Core
+description: Learn how ASP.NET Core provides services and middleware for localizing content into different languages and cultures.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 06/20/2025
 ---
-
 # Globalization and localization in ASP.NET Core
 
-By Rick Anderson, Damien Bowden, Bart Calixto, Nadeem Afana, and Hisham Bin Ateya
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+:::moniker range="> aspnetcore-5.0"
+
+By [Rick Anderson](https://twitter.com/RickAndMSFT), [Damien Bowden](https://github.com/damienbod), [Bart Calixto](https://twitter.com/bartmax), [Nadeem Afana](https://afana.me/), and [Hisham Bin Ateya](https://twitter.com/hishambinateya)
 
 A multilingual website allows a website to reach a wider audience. ASP.NET Core provides services and middleware for localizing into different languages and cultures.
 
-For Blazor localization guidance, which adds to or supersedes the guidance in this article, see ASP.NET Core Blazor globalization and localization.
+For Blazor localization guidance, which adds to or supersedes the guidance in this article, see [ASP.NET Core Blazor globalization and localization](../blazor/globalization-localization.md).
 
 ## Terms
 
@@ -28,27 +29,60 @@ For Blazor localization guidance, which adds to or supersedes the guidance in th
 
 ## Language and country/region codes
 
-The RFC 4646 format for the culture name is `<language code>-<country/region code>`, where `<language code>` identifies the language and `<country/region code>` identifies the subculture. For example, `es-CL` for Spanish (Chile), `en-US` for English (United States), and `en-AU` for English (Australia). RFC 4646 is a combination of an ISO 639 two-letter lowercase culture code associated with a language and an ISO 3166 two-letter uppercase subculture code associated with a country or region. For more information, see `System.Globalization.CultureInfo`.
+The [RFC 4646](https://www.ietf.org/rfc/rfc4646.txt) format for the culture name is `<language code>-<country/region code>`, where `<language code>` identifies the language and `<country/region code>` identifies the subculture. For example, `es-CL` for Spanish (Chile), `en-US` for English (United States), and `en-AU` for English (Australia). [RFC 4646](https://www.ietf.org/rfc/rfc4646.txt) is a combination of an ISO 639 two-letter lowercase culture code associated with a language and an ISO 3166 two-letter uppercase subculture code associated with a country or region. For more information, see <xref:System.Globalization.CultureInfo?displayProperty=fullName>.
 
 ## Tasks to localize an app
 
 Globalizing and localizing an app involves the following tasks:
 
-* Make an ASP.NET Core app's content localizable.
-* Provide localized resources for the cultures the app supports
-* Implement a strategy to select the culture for each request
+* [Make an ASP.NET Core app's content localizable](localization/make-content-localizable.md).
+* [Provide localized resources for the cultures the app supports](localization/provide-resources.md)
+* [Implement a strategy to select the culture for each request](localization/select-language-culture.md)
 
-View or download sample code (how to download)
+[View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/fundamentals/localization/samples) ([how to download](index.md#how-to-download-a-sample))
+
+:::moniker-end
+
+[!INCLUDE [localization35](~/fundamentals/localization/includes/localization35.md)]
 
 ## Related content
 
-* Url culture provider using middleware as filters in ASP.NET Core
-* Applying the RouteDataRequest CultureProvider globally with middleware as filters
-* `IStringLocalizer` : Uses the `System.Resources.ResourceManager` and `System.Resources.ResourceReader` to provide culture-specific resources at run time. The interface has an indexer and an `IEnumerable` for returning localized strings.
-* `IHtmlLocalizer`: For resources that contain HTML.
-* View and DataAnnotations
-* Troubleshoot ASP.NET Core localization
-* Globalizing and localizing .NET applications
-* Resources in .resx Files
-* Localization & Generics
-* Tim Heuer's ResX Viewer and Editor (Visual Studio Code)
+:::moniker range="> aspnetcore-5.0"
+
+* [Url culture provider using middleware as filters in ASP.NET Core](https://andrewlock.net/url-culture-provider-using-middleware-as-mvc-filter-in-asp-net-core-1-1-0/)
+* [Applying the RouteDataRequest CultureProvider globally with middleware as filters](https://andrewlock.net/applying-the-routedatarequest-cultureprovider-globally-with-middleware-as-filters/)
+* [`IStringLocalizer`](localization/make-content-localizable.md) : Uses the <xref:System.Resources.ResourceManager> and <xref:System.Resources.ResourceReader> to provide culture-specific resources at run time. The interface has an indexer and an `IEnumerable` for returning localized strings.
+* [`IHtmlLocalizer`](localization/make-content-localizable.md#ihtmllocalizer): For resources that contain HTML.
+* [View and DataAnnotations](localization/make-content-localizable.md#view-localization)
+* [Troubleshoot ASP.NET Core localization](troubleshoot-aspnet-core-localization.md)
+* [Globalizing and localizing .NET applications](/dotnet/standard/globalization-localization/index)
+* [Resources in .resx Files](/dotnet/framework/resources/working-with-resx-files-programmatically)
+* [Localization & Generics](http://hishambinateya.com/localization-and-generics)
+* [Tim Heuer's ResX Viewer and Editor (Visual Studio Code)](https://marketplace.visualstudio.com/items?itemName=TimHeuer.resx-editor)
+
+:::moniker-end
+
+:::moniker range="= aspnetcore-5.0"
+
+* [Make an ASP.NET Core app's content localizable](localization/make-content-localizable.md)
+* [Provide localized resources for languages and cultures in an ASP.NET Core app](localization/provide-resources.md)
+* [Strategies for selecting language and culture in a localized ASP.NET Core app](localization/select-language-culture.md)
+* [Troubleshoot ASP.NET Core localization](troubleshoot-aspnet-core-localization.md)
+* [Globalizing and localizing .NET applications](/dotnet/standard/globalization-localization/index)
+* [Localization.StarterWeb project](https://github.com/aspnet/Entropy/tree/master/samples/Localization.StarterWeb) used in the article.
+* [Resources in .resx Files](/dotnet/framework/resources/working-with-resx-files-programmatically)
+* [Localization & Generics](http://hishambinateya.com/localization-and-generics)
+* [Tim Heuer's ResX Viewer and Editor (Visual Studio Code)](https://marketplace.visualstudio.com/items?itemName=TimHeuer.resx-editor)
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-5.0"
+
+* [Troubleshoot ASP.NET Core localization](troubleshoot-aspnet-core-localization.md)
+* [Localization.StarterWeb project](https://github.com/aspnet/Entropy/tree/master/samples/Localization.StarterWeb) used in the article.
+* [Globalizing and localizing .NET applications](/dotnet/standard/globalization-localization/index)
+* [Resources in .resx Files](/dotnet/framework/resources/working-with-resx-files-programmatically)
+* [Localization & Generics](http://hishambinateya.com/localization-and-generics)
+* [Tim Heuer's ResX Viewer and Editor (Visual Studio Code)](https://marketplace.visualstudio.com/items?itemName=TimHeuer.resx-editor)
+
+:::moniker-end

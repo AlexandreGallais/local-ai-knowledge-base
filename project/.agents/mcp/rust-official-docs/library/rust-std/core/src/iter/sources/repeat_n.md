@@ -1,12 +1,3 @@
----
-title: "core::iter::sources::repeat_n"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/iter/sources/repeat_n.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::iter::sources::repeat_n
 
 ## fn repeat_n
@@ -19,14 +10,16 @@ Creates a new iterator that repeats a single element a given number of times.
 
 The `repeat_n()` function repeats a single value exactly `n` times.
 
-This is very similar to using `repeat()` with `Iterator::take()`,
+This is very similar to using [`repeat()`] with [`Iterator::take()`],
 but `repeat_n()` can return the original value, rather than always cloning.
+
+[`repeat()`]: crate::iter::repeat
 
 # Examples
 
 Basic usage:
 
-```rust
+```
 use std::iter;
 
 // four of the number four:
@@ -43,7 +36,7 @@ assert_eq!(None, four_fours.next());
 
 For non-`Copy` types,
 
-```rust
+```
 use std::iter;
 
 let v: Vec<i32> = Vec::with_capacity(123);
@@ -73,5 +66,5 @@ pub struct RepeatN<A>
 
 An iterator that repeats an element an exact number of times.
 
-This `struct` is created by the `repeat_n()` function.
+This `struct` is created by the [`repeat_n()`] function.
 See its documentation for more.

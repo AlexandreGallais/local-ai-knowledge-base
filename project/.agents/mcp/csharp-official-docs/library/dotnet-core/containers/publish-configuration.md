@@ -1,10 +1,9 @@
 ---
-title: "Containerize a .NET app reference (part 1 of 3)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/containers/publish-configuration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Containerize a .NET app reference
+description: Reference material for containerizing a .NET app and configuring the container image.
+ms.topic: reference
+ms.date: 08/04/2026
+ai-usage: ai-assisted
 ---
 
 # Containerize a .NET app reference
@@ -15,44 +14,44 @@ The following MSBuild properties and items are available for container configura
 
 | Property or item | Description |
 |---|---|
-| `ContainerAppCommand` | The logical entry point of the app. |
-| `ContainerAppCommandArgs` | Logically required arguments for the app. |
-| `ContainerAppCommandInstruction` | Controls how the entrypoint and command are combined. |
-| `ContainerArchiveOutputPath` | Path to write the container image as a _tar.gz_ archive. |
-| `ContainerBaseImage` | The base image to use for the container. |
-| `ContainerDefaultArgs` | User-overridable default arguments for the app. |
-| `ContainerEntrypoint` | (**Deprecated**) The binary run when the container starts. |
-| `ContainerEntrypointArgs` | (**Deprecated**) Default arguments for `ContainerEntrypoint`. |
-| `ContainerEnvironmentVariable` | Environment variables added to the container. |
-| `ContainerFamily` | The family variant of the base image, for example `alpine`. |
-| `ContainerImageFormat` | The image format: `Docker` or `OCI`. |
-| `ContainerImageTag` | The tag or tags generated for the image. |
-| `ContainerLabel` | Metadata labels added to the container image. |
-| `ContainerPort` | TCP or UDP ports exposed by the container. |
-| `ContainerPublishInParallel` | Controls whether multi-RID publishing runs in parallel. |
-| `ContainerRegistry` | The destination registry for the published image. |
-| `ContainerRepository` | The name of the container image. |
-| `ContainerRuntimeIdentifier(s)` | The OS and architecture for the container. |
-| `ContainerUser` | The default user the container runs as. |
-| `ContainerWorkingDirectory` | The working directory inside the container. |
-| `LocalRegistry` | The local container tool to use, such as Docker, Podman, `wslc`, or Apple's `container` CLI. |
+| [`ContainerAppCommand`](#containerappcommand) | The logical entry point of the app. |
+| [`ContainerAppCommandArgs`](#containerappcommandargs) | Logically required arguments for the app. |
+| [`ContainerAppCommandInstruction`](#containerappcommandinstruction) | Controls how the entrypoint and command are combined. |
+| [`ContainerArchiveOutputPath`](#containerarchiveoutputpath) | Path to write the container image as a _tar.gz_ archive. |
+| [`ContainerBaseImage`](#containerbaseimage) | The base image to use for the container. |
+| [`ContainerDefaultArgs`](#containerdefaultargs) | User-overridable default arguments for the app. |
+| [`ContainerEntrypoint`](#containerentrypoint) | (**Deprecated**) The binary run when the container starts. |
+| [`ContainerEntrypointArgs`](#containerentrypointargs) | (**Deprecated**) Default arguments for `ContainerEntrypoint`. |
+| [`ContainerEnvironmentVariable`](#containerenvironmentvariable) | Environment variables added to the container. |
+| [`ContainerFamily`](#containerfamily) | The family variant of the base image, for example `alpine`. |
+| [`ContainerImageFormat`](#containerimageformat) | The image format: `Docker` or `OCI`. |
+| [`ContainerImageTag`](#containerimagetag) | The tag or tags generated for the image. |
+| [`ContainerLabel`](#containerlabel) | Metadata labels added to the container image. |
+| [`ContainerPort`](#containerport) | TCP or UDP ports exposed by the container. |
+| [`ContainerPublishInParallel`](#containerpublishinparallel) | Controls whether multi-RID publishing runs in parallel. |
+| [`ContainerRegistry`](#containerregistry) | The destination registry for the published image. |
+| [`ContainerRepository`](#containerrepository) | The name of the container image. |
+| [`ContainerRuntimeIdentifier(s)`](#containerruntimeidentifiers) | The OS and architecture for the container. |
+| [`ContainerUser`](#containeruser) | The default user the container runs as. |
+| [`ContainerWorkingDirectory`](#containerworkingdirectory) | The working directory inside the container. |
+| [`LocalRegistry`](#localregistry) | The local container tool to use, such as Docker, Podman, `wslc`, or Apple's `container` CLI. |
 
 ## Configure container properties
 
 You can control many aspects of the generated container through MSBuild properties. In general, if you can use a command in a _Dockerfile_ to set some configuration, you can do the same via MSBuild.
 
-> **Note:**
+> [!NOTE]
 > The only exceptions to this are `RUN` commands. Due to the way containers are built, those commands can't be emulated. If you need this functionality, consider using a _Dockerfile_ to build your container images.
 
-There's no way of performing `RUN` commands with the .NET SDK. These commands are often used to install some OS packages or create a new OS user, or any number of arbitrary things. If you would like to keep using the .NET SDK container building feature, you can instead create a custom base image with these changes and then using this base image. For more information, see `ContainerBaseImage`.
+There's no way of performing `RUN` commands with the .NET SDK. These commands are often used to install some OS packages or create a new OS user, or any number of arbitrary things. If you would like to keep using the .NET SDK container building feature, you can instead create a custom base image with these changes and then using this base image. For more information, see [`ContainerBaseImage`](#containerbaseimage).
 
 ## Flags that control the base image
 
 The following properties control which base image is used for your container and how it's selected:
 
-- `ContainerBaseImage`
-- `ContainerFamily`
-- `ContainerRuntimeIdentifier(s)`
+- [`ContainerBaseImage`](#containerbaseimage)
+- [`ContainerFamily`](#containerfamily)
+- [`ContainerRuntimeIdentifier(s)`](#containerruntimeidentifiers)
 
 ### `ContainerBaseImage`
 
@@ -78,7 +77,7 @@ Starting with .NET SDK version 8.0.200, the `ContainerBaseImage` inference is im
   - If the project uses `PublishAot=true` then the `nightly/runtime-deps` `jammy-chiseled-aot` variant of the base image for best size and security.
   - If the project uses `InvariantGlobalization=false` then the `-extra` variants is used to ensure localization still works.
 
-For more information regarding the image variants sizes and characteristics, see .NET 8.0 Container Image Size Report.
+For more information regarding the image variants sizes and characteristics, see [.NET 8.0 Container Image Size Report](https://github.com/dotnet/dotnet-docker/blob/main/documentation/sample-image-size-report.md).
 
 ### `ContainerFamily`
 
@@ -92,7 +91,7 @@ Starting with .NET 8, you can use the `ContainerFamily` MSBuild property to choo
 
 The preceding project configuration results in a final tag of `8.0-alpine` for a .NET 8-targeting app.
 
-This field is free-form, and often can be used to select different operating system distributions, default package configurations, or any other _flavor_ of changes to a base image. This field is ignored when `ContainerBaseImage` is set. For more information, see .NET container images.
+This field is free-form, and often can be used to select different operating system distributions, default package configurations, or any other _flavor_ of changes to a base image. This field is ignored when `ContainerBaseImage` is set. For more information, see [.NET container images](../docker/container-images.md).
 
 ### `ContainerRuntimeIdentifier(s)`
 
@@ -114,15 +113,15 @@ To specify multiple container runtime identifiers for multi-architecture images,
 </PropertyGroup>
 ```
 
-> **Important:**
+> [!IMPORTANT]
 > The `ContainerRuntimeIdentifiers` property must be a subset of the `RuntimeIdentifiers` property. If this condition isn't met, critical parts of the build pipeline might fail.
 >
-> Setting multiple `ContainerRuntimeIdentifiers` results in a multi-architecture image being created. For more information, see Multi-architecture images.
+> Setting multiple `ContainerRuntimeIdentifiers` results in a multi-architecture image being created. For more information, see [Multi-architecture images](#multi-architecture-images).
 
-> **Note:**
+> [!NOTE]
 > Starting with .NET 8, Microsoft's container images no longer include Windows variants in the manifest list. To target Windows, use a specific image tag as your `ContainerBaseImage`, for example `mcr.microsoft.com/dotnet/aspnet:8.0-nanoserver-ltsc2022`.
 
-For more information regarding the runtime identifiers supported by .NET, see RID catalog.
+For more information regarding the runtime identifiers supported by .NET, see [RID catalog](../rid-catalog.md).
 
 #### Multi-architecture images
 
@@ -131,10 +130,10 @@ Multi-architecture images enable a single container image to support multiple ar
 Beginning with SDK versions 8.0.405, 9.0.102, and 9.0.2xx, multi-RID container publishing is supported. When publishing with `/t:PublishContainer`:
 
 - If a single `RuntimeIdentifier` or `ContainerRuntimeIdentifier` is specified, a single-architecture container is generated as before.
-- If no single `RuntimeIdentifier` is specified but multiple `RuntimeIdentifiers` or `ContainerRuntimeIdentifiers` are set, the SDK publishes the app for each specified RID and combines the resulting images into an OCI Image Index. This index allows multiple architecture-specific images to share a single name.
+- If no single `RuntimeIdentifier` is specified but multiple `RuntimeIdentifiers` or `ContainerRuntimeIdentifiers` are set, the SDK publishes the app for each specified RID and combines the resulting images into an [OCI Image Index](https://specs.opencontainers.org/image-spec/image-index/). This index allows multiple architecture-specific images to share a single name.
 
-> **Note:**
-> The `ContainerRuntimeIdentifiers` property must be a subset of the `RuntimeIdentifiers` property. For more information, see ContainerRuntimeIdentifiers.
+> [!NOTE]
+> The `ContainerRuntimeIdentifiers` property must be a subset of the `RuntimeIdentifiers` property. For more information, see [ContainerRuntimeIdentifiers](#containerruntimeidentifiers).
 
 This feature streamlines container workflows in mixed-architecture environments. For example, a developer on a `linux-x64` host can publish a container supporting both `linux-x64` and `linux-arm64`, enabling deployment to either architecture without changing image names or labels.
 
@@ -144,10 +143,10 @@ The generated OCI Image Index is widely supported with modern container tooling,
 
 The following properties control metadata and configuration that applies to the generated container image regardless of the target runtime identifier:
 
-- `ContainerImageFormat`
-- `ContainerImageTag`
-- `ContainerLabel`
-- `ContainerRepository`
+- [`ContainerImageFormat`](#containerimageformat)
+- [`ContainerImageTag`](#containerimagetag)
+- [`ContainerLabel`](#containerlabel)
+- [`ContainerRepository`](#containerrepository)
 
 ### `ContainerImageFormat`
 
@@ -161,14 +160,14 @@ You can use the `ContainerImageFormat` MSBuild property to specify the image for
 
 Both formats are largely interchangeable without loss of information.
 
-> **Note:**
+> [!NOTE]
 > When building a multi-architecture image, the resulting image format is always OCI.
 
 ### `ContainerImageTag`
 
 The container image tag property controls the tags that are generated for the image. To specify a single tag use `ContainerImageTag` and for multiple tags use `ContainerImageTags`.
 
-> **Important:**
+> [!IMPORTANT]
 > When you use `ContainerImageTags`, you end up with multiple images, one per unique tag.
 
 Tags are often used to refer to different versions of an app, but they can also refer to different operating system distributions, or even different configurations.
@@ -193,7 +192,7 @@ To specify multiple tags, use a semicolon-delimited set of tags in the `Containe
 
 Tags can only contain up to 127 alphanumeric characters, periods, underscores, and dashes. They must start with an alphanumeric character or an underscore. Any other form results in an error being thrown.
 
-> **Note:**
+> [!NOTE]
 > When using `ContainerImageTags` or any MSBuild property requiring `;`-delimited values, ensure proper escaping when calling `dotnet publish` from the command line, especially in CI/CD environments. Escaping rules differ between PowerShell and Bash. For example:
 >
 > ```powershell
@@ -210,7 +209,7 @@ Tags can only contain up to 127 alphanumeric characters, periods, underscores, a
 >
 > This results in two images being generated: `my-app:1.2.3-alpha2` and `my-app:latest`.
 
-> **Tip:**
+> [!TIP]
 > If you experience issues with the `ContainerImageTags` property, consider scoping an environment variable `ContainerImageTags` instead:
 >
 > ```powershell
@@ -232,7 +231,7 @@ The `ContainerLabel` node has two attributes:
 </ItemGroup>
 ```
 
-For a list of labels that are created by default, see default container labels.
+For a list of labels that are created by default, see [default container labels](#default-container-labels).
 
 ### `ContainerRepository`
 
@@ -245,3 +244,351 @@ The container repository is the name of the image itself, for example, `dotnet/r
 ```
 
 Image names consist of one or more slash-delimited segments, each of which can only contain lowercase alphanumeric characters, periods, underscores, and dashes, and must start with a letter or number. Any other characters result in an error being thrown.
+
+## Flags that control execution metadata
+
+The following properties control runtime-specific execution behavior and multi-architecture image generation:
+
+- [`ContainerAppCommand`](#containerappcommand)
+- [`ContainerAppCommandArgs`](#containerappcommandargs)
+- [`ContainerAppCommandInstruction`](#containerappcommandinstruction)
+- [`ContainerDefaultArgs`](#containerdefaultargs)
+- [`ContainerEntrypoint`](#containerentrypoint) (deprecated)
+- [`ContainerEntrypointArgs`](#containerentrypointargs) (deprecated)
+- [`ContainerEnvironmentVariable`](#containerenvironmentvariable)
+- [`ContainerPort`](#containerport)
+- [`ContainerPublishInParallel`](#containerpublishinparallel)
+- [`ContainerUser`](#containeruser)
+- [`ContainerWorkingDirectory`](#containerworkingdirectory)
+
+### `ContainerAppCommand`
+
+The app command configuration item is the logical entry point of your app. For most apps, this is the AppHost, the generated executable binary for your app. If your app doesn't generate an AppHost, then this command is typically `dotnet <your project dll>`. These values are applied after any `ENTRYPOINT` in your base container, or directly if no `ENTRYPOINT` is defined.
+
+The `ContainerAppCommand` configuration has a single `Include` property, which represents the command, option, or argument to use in the entrypoint command:
+
+```xml
+<ItemGroup Label="ContainerAppCommand Assignment">
+  <!-- This is how you would start the dotnet ef tool in your container -->
+  <ContainerAppCommand Include="dotnet" />
+  <ContainerAppCommand Include="ef" />
+
+  <!-- This shorthand syntax means the same thing, note the semicolon separating the tokens. -->
+  <ContainerAppCommand Include="dotnet;ef" />
+</ItemGroup>
+```
+
+### `ContainerAppCommandArgs`
+
+This app command args configuration item represents any logically required arguments for your app that should be applied to the `ContainerAppCommand`. By default, none are generated for an app. When present, the args are applied to your container when it runs.
+
+The `ContainerAppCommandArgs` configuration has a single `Include` property, which represents the option or argument to apply to the `ContainerAppCommand` command.
+
+```xml
+<ItemGroup>
+  <!-- Assuming the ContainerAppCommand defined above,
+       this would be the way to force the database to update.
+  -->
+  <ContainerAppCommandArgs Include="database" />
+  <ContainerAppCommandArgs Include="update" />
+
+  <!-- This is the shorthand syntax for the same idea -->
+  <ContainerAppCommandArgs Include="database;update" />
+</ItemGroup>
+```
+
+### `ContainerAppCommandInstruction`
+
+The app command instruction configuration helps control the way the `ContainerEntrypoint`, `ContainerEntrypointArgs`, `ContainerAppCommand`, `ContainerAppCommandArgs`, and `ContainerDefaultArgs` are combined to form the final command that is run in the container. This depends greatly on if an `ENTRYPOINT` is present in the base image. This property takes one of three values: `"DefaultArgs"`, `"Entrypoint"`, or `"None"`.
+
+- `Entrypoint`:
+  - In this mode, the entrypoint is defined by `ContainerAppCommand`, `ContainerAppCommandArgs`, and `ContainerDefaultArgs`.
+- `None`:
+  - In this mode, the entrypoint is defined by `ContainerEntrypoint`, `ContainerEntrypointArgs`, and `ContainerDefaultArgs`.
+- `DefaultArgs`:
+  - This is the most complex mode—if none of the `ContainerEntrypoint[Args]` items are present, the `ContainerAppCommand[Args]` and `ContainerDefaultArgs` are used to create the entrypoint and command. The base image entrypoint for base images that have it hard-coded to `dotnet` or `/usr/bin/dotnet` is skipped so that you have complete control.
+  - If both `ContainerEntrypoint` and `ContainerAppCommand` are present, then `ContainerEntrypoint` becomes the entrypoint, and `ContainerAppCommand` becomes the command.
+
+> [!NOTE]
+> The `ContainerEntrypoint` and `ContainerEntrypointArgs` configuration items are deprecated as of .NET 8.
+
+> [!IMPORTANT]
+> This is for advanced users-most apps shouldn't need to customize their entrypoint to this degree. For more information and if you'd like to provide use cases for your scenarios, see [GitHub: .NET SDK container builds discussions](https://github.com/dotnet/sdk-container-builds/discussions).
+
+### `ContainerDefaultArgs`
+
+This default args configuration item represents any user-overridable arguments for your app. This is a good way to provide defaults that your app might need to run in a way that makes it easy to start, yet still easy to customize.
+
+The `ContainerDefaultArgs` configuration has a single `Include` property, which represents the option or argument to apply to the `ContainerAppCommand` command.
+
+```xml
+<ItemGroup>
+  <!-- Assuming the ContainerAppCommand defined above,
+       this would be the way to force the database to update.
+  -->
+  <ContainerDefaultArgs Include="database" />
+  <ContainerDefaultArgs Include="update" />
+
+  <!-- This is the shorthand syntax for the same idea -->
+  <ContainerDefaultArgs Include="database;update" />
+</ItemGroup>
+```
+
+### `ContainerEntrypoint`
+
+> [!NOTE]
+> This item is deprecated as of .NET 8. Use [`ContainerAppCommand`](#containerappcommand) instead, with [`ContainerAppCommandInstruction`](#containerappcommandinstruction) set to `Entrypoint` or `DefaultArgs`.
+
+The container entrypoint controls the binary that runs by default when the container starts. By default, for builds that create an executable binary, that binary is set as the `ContainerEntrypoint`. For builds that don't create an executable binary, `dotnet path/to/application.dll` is used.
+
+The `ContainerEntrypoint` configuration has a single `Include` property, which represents the command, option, or argument to use in the entrypoint command:
+
+```xml
+<ItemGroup>
+  <ContainerEntrypoint Include="dotnet" />
+  <ContainerEntrypoint Include="ef" />
+
+  <!-- This shorthand syntax means the same thing, note the semicolon separating the tokens. -->
+  <ContainerEntrypoint Include="dotnet;ef" />
+</ItemGroup>
+```
+
+### `ContainerEntrypointArgs`
+
+> [!NOTE]
+> This item is deprecated as of .NET 8. Use [`ContainerAppCommandArgs`](#containerappcommandargs) instead, with [`ContainerAppCommandInstruction`](#containerappcommandinstruction) set to `Entrypoint` or `DefaultArgs`.
+
+The container entrypoint args item controls the default arguments provided to the `ContainerEntrypoint`. Use this when the `ContainerEntrypoint` is a program the user might want to use on its own.
+
+The `ContainerEntrypointArgs` configuration has a single `Include` property, which represents the option or argument to apply to the `ContainerEntrypoint` command:
+
+```xml
+<ItemGroup>
+  <ContainerEntrypointArgs Include="database" />
+  <ContainerEntrypointArgs Include="update" />
+
+  <!-- This is the shorthand syntax for the same idea -->
+  <ContainerEntrypointArgs Include="database;update" />
+</ItemGroup>
+```
+
+### `ContainerEnvironmentVariable`
+
+The container environment variable node allows you to add environment variables to the container. Environment variables are accessible to the app running in the container immediately, and are often used to change the runtime behavior of the running app.
+
+The `ContainerEnvironmentVariable` node has two attributes:
+
+- `Include`: The name of the environment variable.
+- `Value`: The value of the environment variable.
+
+```xml
+<ItemGroup>
+  <ContainerEnvironmentVariable Include="LOGGER_VERBOSITY" Value="Trace" />
+</ItemGroup>
+```
+
+For more information, see [.NET environment variables](../tools/dotnet-environment-variables.md).
+
+> [!NOTE]
+> It's currently not possible to set environment variables from the .NET CLI when publishing a container image. For more information, see [GitHub: .NET SDK container builds](https://github.com/dotnet/sdk-container-builds/issues/451).
+
+### `ContainerPort`
+
+The container port adds Transmission Control Protocol (TCP) or User Datagram Protocol (UDP) ports to the list of known ports for the container. This enables container runtimes like Docker to map these ports to the host machine automatically. This is often used as documentation for the container, but can also be used to enable automatic port mapping.
+
+The `ContainerPort` node has two attributes:
+
+- `Include`: The port number to expose.
+- `Type`: Defaults to `tcp`, valid values are either `tcp` or `udp`.
+
+```xml
+<ItemGroup>
+    <ContainerPort Include="80" Type="tcp" />
+</ItemGroup>
+```
+
+Starting with .NET 8, the `ContainerPort` is inferred when not explicitly provided based on several well-known ASP.NET environment variables:
+
+- `ASPNETCORE_URLS`
+- `ASPNETCORE_HTTP_PORTS`
+- `ASPNETCORE_HTTPS_PORTS`
+
+If these environment variables are present, their values are parsed and converted to TCP port mappings. These environment variables are read from your base image, if present, or from the environment variables defined in your project through `ContainerEnvironmentVariable` items. For more information, see [ContainerEnvironmentVariable](#containerenvironmentvariable).
+
+### `ContainerPublishInParallel`
+
+For multi-RID containers, certain project types (like Blazor WebAssembly) might encounter build race conditions. To address this, starting with .NET SDK versions 8.0.408, 9.0.300, and 10.0, you can control the parallelism of the publish process using the `ContainerPublishInParallel` property. By default, publishing occurs in parallel for each Runtime Identifier (RID). Setting this property to `false` ensures sequential publishing, which increases stability but might take longer.
+
+```xml
+<PropertyGroup>
+  <ContainerPublishInParallel>false</ContainerPublishInParallel>
+</PropertyGroup>
+```
+
+For more information on multi-RID publishing, see [ContainerRuntimeIdentifier(s)](#containerruntimeidentifiers).
+
+### `ContainerUser`
+
+The user configuration property controls the default user that the container runs as. This is often used to run the container as a non-root user, which is a best practice for security. There are a few constraints for this configuration to be aware of:
+
+- It can take various forms—username, linux user IDs, group name, linux group ID, `username:groupname`, and other ID variants.
+- There's no verification that the user or group specified exists on the image.
+- Changing the user can alter the behavior of the app, especially in regards to things like _File System_ permissions.
+
+The default value of this field varies by project TFM and target operating system:
+
+- If you're targeting .NET 8 or higher and using the Microsoft runtime images, then:
+  - on Linux, the rootless user `app` is used (though it's referenced by its user ID)
+  - on Windows the rootless user `ContainerUser` is used
+- Otherwise, no default `ContainerUser` is used
+
+```xml
+<PropertyGroup>
+  <ContainerUser>my-existing-app-user</ContainerUser>
+</PropertyGroup>
+```
+
+> [!TIP]
+> The `APP_UID` environment variable is used to set user information in your container. This value can come from environment variables defined in your base image (like that Microsoft .NET images do), or you can set it yourself via the `ContainerEnvironmentVariable` syntax.
+
+To configure your app to run as a root user, set the `ContainerUser` property to `root`. In your project file, add the following:
+
+```xml
+<PropertyGroup>
+  <ContainerUser>root</ContainerUser>
+</PropertyGroup>
+```
+
+Alternatively, you can set this value when calling `dotnet publish` from the command line:
+
+```dotnetcli
+dotnet publish -p ContainerUser=root
+```
+
+### `ContainerWorkingDirectory`
+
+The container working directory node controls the working directory of the container, the directory that commands are executed within if not other command is run.
+
+By default, the `/app` directory value is used as the working directory.
+
+```xml
+<PropertyGroup>
+    <ContainerWorkingDirectory>/bin</ContainerWorkingDirectory>
+</PropertyGroup>
+```
+
+## Flags that control the destination of the generated image
+
+The following properties control where the generated container image is stored or published:
+
+- [`ContainerArchiveOutputPath`](#containerarchiveoutputpath)
+- [`ContainerRegistry`](#containerregistry)
+- [`LocalRegistry`](#localregistry)
+
+### `ContainerArchiveOutputPath`
+
+To create a container image within a _tar.gz_ archive, use the `ContainerArchiveOutputPath` property. This feature is useful if your workflow isn't straightforward and requires that you, for example, run a scanning tool over your images before pushing them. Once the archive is created, you can move it, scan it, or load it into a local Docker toolchain.
+
+To publish to an archive, add the `ContainerArchiveOutputPath` property to your `dotnet publish` command, for example:
+
+```dotnetcli
+dotnet publish \
+  -p PublishProfile=DefaultContainer \
+  -p ContainerArchiveOutputPath=./images/sdk-container-demo.tar.gz
+```
+
+You can specify either a folder name or a path with a specific file name. If you specify the folder name, the filename generated for the image archive file is named `$(ContainerRepository).tar.gz`. These archives can contain multiple tags inside them, only as single file is created for all `ContainerImageTags`.
+
+### `ContainerRegistry`
+
+The container registry property controls the destination registry, the place that the newly created image is to be pushed to. By default it's pushed to the local Docker daemon, but you can also specify a remote registry. When using a remote registry that requires authentication, you authenticate using the well-known `docker login` mechanisms. For more information, See [authenticating to container registries](https://aka.ms/dotnet/containers/auth) for more details. For a concrete example of using this property, consider the following XML example:
+
+```xml
+<PropertyGroup>
+    <ContainerRegistry>registry.mycorp.com:1234</ContainerRegistry>
+</PropertyGroup>
+```
+
+This tooling supports publishing to any registry that supports the [Docker Registry HTTP API V2](https://distribution.github.io/distribution/spec/api/). This includes the following registries explicitly (and likely many more implicitly):
+
+- [Azure Container Registry](https://azure.microsoft.com/products/container-registry)
+- [Amazon Elastic Container Registry](https://aws.amazon.com/ecr/)
+- [Google Artifact Registry](https://cloud.google.com/artifact-registry)
+- [Docker Hub](https://hub.docker.com/)
+- [GitHub Packages](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)
+- [GitLab-hosted Container Registry](https://docs.gitlab.com/ee/user/packages/container_registry/)
+- [Quay.io](https://quay.io/)
+
+For notes on working with these registries, see the [registry-specific notes](https://aka.ms/dotnet/containers/auth#notes-for-specific-registries).
+
+### `LocalRegistry`
+
+The `LocalRegistry` MSBuild property specifies the local container tooling to use when pushing to local sources. Supported values are `Docker`, `Podman`, `Wslc`, and `MacOSContainer`.
+
+If not set, the SDK determines the tool based on availability. Starting in .NET 11, the SDK prefers platform-native tools before Docker and Podman:
+
+- On Windows, if `wslc` exists and its service runs, `wslc` is used.
+- On macOS, if Apple's `container` CLI exists and its service runs, `container` is used.
+- If both `docker` and `podman` exist, and `docker` is an alias for `podman`, then `podman` is used.
+- If only `docker` exists, `docker` is used.
+- If only `podman` exists, `podman` is used.
+- If no supported local tool exists, an error is thrown.
+
+To explicitly set the local registry tool, use the following configuration:
+
+```xml
+<PropertyGroup>
+  <LocalRegistry>Podman</LocalRegistry>
+</PropertyGroup>
+```
+
+## Container image naming configuration
+
+Container images follow a specific naming convention. The name of the image is composed of several parts, the registry, optional port, repository, and optional tag and family.
+
+```dockerfile
+REGISTRY[:PORT]/REPOSITORY[:TAG[-FAMILY]]
+```
+
+For example, consider the fully qualified `mcr.microsoft.com/dotnet/runtime:8.0-alpine` image name:
+
+- `mcr.microsoft.com` is the registry (and in this case represents the Microsoft container registry).
+- `dotnet/runtime` is the repository (but some consider this the `user/repository`).
+- `8.0-alpine` is the tag and family (the family is an optional specifier that helps disambiguate OS packaging).
+
+Some properties described in the following sections correspond to managing parts of the generated image name. Consider the following table that maps the relationship between the image name and the build properties:
+
+| Image name part   | MSBuild property                              | Example values          |
+|-------------------|-----------------------------------------------|-------------------------|
+| `REGISTRY[:PORT]` | [`ContainerRegistry`](#containerregistry)     | `mcr.microsoft.com:443` |
+| `PORT`            | [`ContainerPort`](#containerport)             | `:443`                  |
+| `REPOSITORY`      | [`ContainerRepository`](#containerrepository) | `dotnet/runtime`        |
+| `TAG`             | [`ContainerImageTag`](#containerimagetag)     | `8.0`                   |
+| `FAMILY`          | [`ContainerFamily`](#containerfamily)         | `-alpine`               |
+
+## Default container labels
+
+Labels are often used to provide consistent metadata on container images. The built-in container tools provide some default labels to increase the quality of the generated images. All default label generation can be disabled by setting `ContainerGenerateLabels` to `false`. In addition, each default label has an individual enablement flag that can be set to `false` to disable that specific label.
+
+Where possible, existing MSBuild properties provide the values for these labels. Other properties allow for explicit control of their values.
+
+| Annotation | Default value | Dedicated property name | Fallback property name | Enabled property name | Notes |
+|------------|---------------|-------------------------|------------------------|-----------------------|-------|
+| `org.opencontainers.image.created` and `org.opencontainers.artifact.created` | The [RFC 3339](https://tools.ietf.org/html/rfc3339#section-5.6) format of the current UTC DateTime | | | `ContainerGenerateLabelsImageCreated` | |
+| `org.opencontainers.artifact.description` and `org.opencontainers.image.description` | | `ContainerDescription` | `Description` | `ContainerGenerateLabelsImageDescription` | |
+| `org.opencontainers.image.authors` | | `ContainerAuthors` | `Authors` | `ContainerGenerateLabelsImageAuthors` | |
+| `org.opencontainers.image.url` | | `ContainerInformationUrl` | `PackageProjectUrl` | `ContainerGenerateLabelsImageUrl` | |
+| `org.opencontainers.image.documentation` |                                                                                                    | `ContainerDocumentationUrl`  | `PackageProjectUrl` | `ContainerGenerateLabelsImageDocumentation` | |
+| `org.opencontainers.image.version` | | `ContainerVersion` | `PackageVersion` | `ContainerGenerateLabelsImageVersion` | |
+| `org.opencontainers.image.vendor` | | `ContainerVendor` | | `ContainerGenerateLabelsImageVendor` | |
+| `org.opencontainers.image.licenses` |                                                                                                    | `ContainerLicenseExpression` | `PackageLicenseExpression` | `ContainerGenerateLabelsImageLicenses` | |
+| `org.opencontainers.image.title` | | `ContainerTitle` | `Title` | `ContainerGenerateLabelsImageTitle` | |
+| `org.opencontainers.image.base.name` | | `ContainerBaseImage` | |`ContainerGenerateLabelsImageBaseName` | |
+| `org.opencontainers.image.base.digest` | | | | `ContainerGenerateLabelsImageBaseDigest` | This is the SHA digest of the chosen base image. Available from .NET SDK 9.0.100 onwards. |
+| `org.opencontainers.image.source` |                                                                                                    | `PrivateRepositoryUrl` | | `ContainerGenerateLabelsImageSource` | Only written if `PublishRepositoryUrl` is `true`. Also relies on Sourcelink infrastructure being part of the build. |
+| `org.opencontainers.image.revision` | | `SourceRevisionId` | | `ContainerGenerateLabelsImageRevision` | Only written if `PublishRepositoryUrl` is `true`. Also relies on Sourcelink infrastructure being part of the build. |
+
+## See also
+
+- [Containerize a .NET app with dotnet publish](sdk-publish.md)
+- [.NET container images](../docker/container-images.md)

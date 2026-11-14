@@ -1,12 +1,3 @@
----
-title: "class: JSHandle"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-jshandle.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: JSHandle
 * since: v1.8
 
@@ -23,12 +14,12 @@ JSHandle windowHandle = page.evaluateHandle("() => window");
 // ...
 ```
 
-```python
+```python async
 window_handle = await page.evaluate_handle("window")
 # ...
 ```
 
-```python
+```python sync
 window_handle = page.evaluate_handle("window")
 # ...
 ```
@@ -78,12 +69,12 @@ ElementHandle tweetHandle = page.querySelector(".tweet .retweets");
 assertEquals("10 retweets", tweetHandle.evaluate("node => node.innerText"));
 ```
 
-```python
+```python async
 tweet_handle = await page.query_selector(".tweet .retweets")
 assert await tweet_handle.evaluate("node => node.innerText") == "10 retweets"
 ```
 
-```python
+```python sync
 tweet_handle = page.query_selector(".tweet .retweets")
 assert tweet_handle.evaluate("node => node.innerText") == "10 retweets"
 ```
@@ -162,7 +153,7 @@ JSHandle documentHandle = properties.get("document");
 handle.dispose();
 ```
 
-```python
+```python async
 handle = await page.evaluate_handle("({ window, document })")
 properties = await handle.get_properties()
 window_handle = properties.get("window")
@@ -170,7 +161,7 @@ document_handle = properties.get("document")
 await handle.dispose()
 ```
 
-```python
+```python sync
 handle = page.evaluate_handle("({ window, document })")
 properties = handle.get_properties()
 window_handle = properties.get("window")

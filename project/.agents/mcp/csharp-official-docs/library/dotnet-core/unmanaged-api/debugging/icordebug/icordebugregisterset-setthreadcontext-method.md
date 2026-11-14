@@ -1,18 +1,27 @@
 ---
+description: "Learn more about: ICorDebugRegisterSet::SetThreadContext Method"
 title: "ICorDebugRegisterSet::SetThreadContext Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugregisterset-setthreadcontext-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugRegisterSet.SetThreadContext"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugRegisterSet::SetThreadContext"
+helpviewer_keywords:
+  - "ICorDebugRegisterSet::SetThreadContext method [.NET debugging]"
+  - "SetThreadContext method, ICorDebugRegisterSet interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugRegisterSet::SetThreadContext Method
 
 `SetThreadContext` is not implemented.
 
-> **Note:**
-> Use the higher-level operation ICorDebugNativeFrame::SetIP to set the context of a thread.
+> [!NOTE]
+> Use the higher-level operation [ICorDebugNativeFrame::SetIP](icordebugnativeframe-setip-method.md) to set the context of a thread.
 
 ## Syntax
 
@@ -26,7 +35,7 @@ HRESULT SetThreadContext (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -36,5 +45,5 @@ HRESULT SetThreadContext (
 
 ## See also
 
-- ICorDebugRegisterSet Interface
-- ICorDebugRegisterSet2 Interface
+- [ICorDebugRegisterSet Interface](icordebugregisterset-interface.md)
+- [ICorDebugRegisterSet2 Interface](icordebugregisterset2-interface.md)

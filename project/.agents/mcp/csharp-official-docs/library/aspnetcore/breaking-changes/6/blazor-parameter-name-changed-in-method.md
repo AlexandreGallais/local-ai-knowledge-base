@@ -1,12 +1,10 @@
 ---
 title: "Breaking change: Blazor: Parameter name changed in RequestImageFileAsync method"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/6/blazor-parameter-name-changed-in-method.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 6.0 titled Blazor: Parameter name changed in RequestImageFileAsync method"
+no-loc: [ Blazor ]
+ms.date: 02/09/2021
+ms.custom: https://github.com/aspnet/Announcements/issues/451
 ---
-
 # Blazor: Parameter name changed in RequestImageFileAsync method
 
 The `RequestImageFileAsync` method's `maxWith` parameter was renamed from `maxWith` to `maxWidth`.
@@ -33,4 +31,16 @@ If you're using named parameters in the `RequestImageFile` API, update the `maxW
 
 ## Affected APIs
 
-`Microsoft.AspNetCore.Components.Forms.BrowserFileExtensions.RequestImageFileAsync*`
+<xref:Microsoft.AspNetCore.Components.Forms.BrowserFileExtensions.RequestImageFileAsync*?displayProperty=nameWithType>
+
+<!--
+
+## Category
+
+ASP.NET Core
+
+## Affected APIs
+
+`Overload:Microsoft.AspNetCore.Components.Forms.BrowserFileExtensions.RequestImageFileAsync`
+
+-->

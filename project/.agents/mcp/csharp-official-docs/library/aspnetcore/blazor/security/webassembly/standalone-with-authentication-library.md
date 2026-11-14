@@ -1,21 +1,20 @@
 ---
-title: "Secure an ASP.NET Core Blazor WebAssembly standalone app with the Authentication library (part 1 of 3)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/security/webassembly/standalone-with-authentication-library.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Secure an ASP.NET Core Blazor WebAssembly standalone app with the Authentication library
+description: Learn how to secure an ASP.NET Core Blazor WebAssembly standalone app with the Blazor WebAssembly Authentication library.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 11/11/2025
 ---
-
 # Secure an ASP.NET Core Blazor WebAssembly standalone app with the Authentication library
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
 This article explains how to secure an ASP.NET Core Blazor WebAssembly standalone app with the Blazor WebAssembly Authentication library.
 
-The Blazor WebAssembly Authentication library (`Authentication.js`) only supports the Proof Key for Code Exchange (PKCE) authorization code flow via the Microsoft Authentication Library (MSAL, `msal.js`). To implement other grant flows, access the MSAL guidance to implement MSAL directly, but we don't support or recommend the use of grant flows other than PKCE for Blazor apps.
+The Blazor WebAssembly Authentication library (`Authentication.js`) only supports the Proof Key for Code Exchange (PKCE) authorization code flow via the [Microsoft Authentication Library (MSAL, `msal.js`)](/entra/identity-platform/msal-overview). To implement other grant flows, access the MSAL guidance to implement MSAL directly, but we don't support or recommend the use of grant flows other than PKCE for Blazor apps.
 
-*For Microsoft Entra (ME-ID) guidance, don't follow the guidance in this topic. See Secure an ASP.NET Core Blazor WebAssembly standalone app with Microsoft Entra ID.*
+*For Microsoft Entra (ME-ID) guidance, don't follow the guidance in this topic. See [Secure an ASP.NET Core Blazor WebAssembly standalone app with Microsoft Entra ID](standalone-with-microsoft-entra-id.md).*
 
-For additional security scenario coverage after reading this article, see ASP.NET Core Blazor WebAssembly additional security scenarios.
+For additional security scenario coverage after reading this article, see [ASP.NET Core Blazor WebAssembly additional security scenarios](additional-scenarios.md).
 
 ## Walkthrough
 
@@ -27,7 +26,7 @@ The subsections of the walkthrough explain how to:
 
 ### Register an app
 
-Register an app with an OpenID Connect (OIDC) Identity Provider (IP) following the guidance provided by the maintainer of the IP.
+Register an app with an [OpenID Connect (OIDC)](https://openid.net/developers/how-connect-works/) Identity Provider (IP) following the guidance provided by the maintainer of the IP.
 
 Record the following information:
 
@@ -35,24 +34,34 @@ Record the following information:
 * Application (client) ID (for example, `2...7-e...q.apps.googleusercontent.com`).
 * Additional IP configuration (see the IP's documentation).
 
-> **Note:**
-> The IP must use OIDC. For example, Facebook's IP isn't an OIDC-compliant provider, so the guidance in this topic doesn't work with the Facebook IP. For more information, see Secure ASP.NET Core Blazor WebAssembly.
+> [!NOTE]
+> The IP must use OIDC. For example, Facebook's IP isn't an OIDC-compliant provider, so the guidance in this topic doesn't work with the Facebook IP. For more information, see [Secure ASP.NET Core Blazor WebAssembly](index.md#authentication-library).
 
 ### Create the Blazor app
 
-To create a standalone Blazor WebAssembly app that uses the `Microsoft.AspNetCore.Components.WebAssembly.Authentication` library, follow the guidance for your choice of tooling. If adding support for authentication, see the Parts of the app section of this article for guidance on setting up and configuring the app.
+To create a [standalone Blazor WebAssembly app](../../hosting-models.md#blazor-webassembly) that uses the [`Microsoft.AspNetCore.Components.WebAssembly.Authentication`](https://www.nuget.org/packages/Microsoft.AspNetCore.Components.WebAssembly.Authentication) library, follow the guidance for your choice of tooling. If adding support for authentication, see the [Parts of the app](#parts-of-the-app) section of this article for guidance on setting up and configuring the app.
 
-# Visual Studio
+# [Visual Studio](#tab/visual-studio)
 
 To create a new Blazor WebAssembly project with an authentication mechanism:
 
+:::moniker range=">= aspnetcore-8.0"
+
 After choosing the **Blazor WebAssembly App** template, set the **Authentication type** to **Individual Accounts**.
 
-The **Individual Accounts** selection uses ASP.NET Core's Identity system. This selection adds authentication support and doesn't result in storing users in a database. The following sections of this article provide further details.
+:::moniker-end
 
-# Visual Studio Code / .NET CLI
+:::moniker range="< aspnetcore-8.0"
 
-Create a new Blazor WebAssembly project with an authentication mechanism in an empty folder. Specify the `Individual` authentication mechanism with the `-au|--auth` option to use ASP.NET Core's Identity system. This selection adds authentication support and doesn't result in storing users in a database. The following sections of this article provide further details.
+After choosing the **Blazor WebAssembly App** template, set the **Authentication type** to **Individual Accounts**. Confirm that the **ASP.NET Core Hosted** checkbox isn't selected.
+
+:::moniker-end
+
+The **Individual Accounts** selection uses ASP.NET Core's [Identity](../../../security/authentication/identity.md) system. This selection adds authentication support and doesn't result in storing users in a database. The following sections of this article provide further details.
+
+# [Visual Studio Code / .NET CLI](#tab/visual-studio-code+net-cli)
+
+Create a new Blazor WebAssembly project with an authentication mechanism in an empty folder. Specify the `Individual` authentication mechanism with the `-au|--auth` option to use ASP.NET Core's [Identity](../../../security/authentication/identity.md) system. This selection adds authentication support and doesn't result in storing users in a database. The following sections of this article provide further details.
 
 ```dotnetcli
 dotnet new blazorwasm -au Individual -o {PROJECT NAME}
@@ -64,7 +73,7 @@ dotnet new blazorwasm -au Individual -o {PROJECT NAME}
 
 The output location specified with the `-o|--output` option creates a project folder if it doesn't exist and becomes part of the project's name.
 
-For more information, see the `dotnet new` command in the .NET Guide.
+For more information, see the [`dotnet new`](/dotnet/core/tools/dotnet-new) command in the .NET Guide.
 
 ---
 
@@ -95,10 +104,10 @@ Google OAuth 2.0 OIDC example for an app that runs on the `localhost` address at
 }
 ```
 
-The redirect URI (`https://localhost:5001/authentication/login-callback`) is registered in the Google APIs console in **Credentials** > **`{NAME}`** > **Authorized redirect URIs**, where `{NAME}` is the app's client name in the **OAuth 2.0 Client IDs** app list of the Google APIs console.
+The redirect URI (`https://localhost:5001/authentication/login-callback`) is registered in the [Google APIs console](https://console.developers.google.com/apis/dashboard) in **Credentials** > **`{NAME}`** > **Authorized redirect URIs**, where `{NAME}` is the app's client name in the **OAuth 2.0 Client IDs** app list of the Google APIs console.
 
-> **Note:**
-> Supplying the port number for a `localhost` redirect URI isn't required for some OIDC IPs per the OAuth 2.0 specification. Some IPs permit the redirect URI for loopback addresses to omit the port. Others allow the use of a wildcard for the port number (for example, `*`). For additional information, see the IP's documentation.
+> [!NOTE]
+> Supplying the port number for a `localhost` redirect URI isn't required for some OIDC IPs per the [OAuth 2.0 specification](https://datatracker.ietf.org/doc/html/rfc8252#section-7.3). Some IPs permit the redirect URI for loopback addresses to omit the port. Others allow the use of a wildcard for the port number (for example, `*`). For additional information, see the IP's documentation.
 
 ### Run the app
 
@@ -107,36 +116,114 @@ Use one of the following approaches to run the app:
 * Visual Studio
   * Select the **Run** button.
   * Use **Debug** > **Start Debugging** from the menu.
-  * Press `F5`.
+  * Press <kbd>F5</kbd>.
 * .NET CLI command shell: Execute the `dotnet watch` (or `dotnet run`) command from the app's folder.
 
 ## Remote authentication paths
 
-Remote authentication paths are customized using `Microsoft.AspNetCore.Components.WebAssembly.Authentication.RemoteAuthenticationApplicationPathsOptions` on the `Microsoft.AspNetCore.Components.WebAssembly.Authentication.RemoteAuthenticationOptions`1.AuthenticationPaths` property in the app's `Program` file. For the framework's default path values, see the `dotnet/aspnetcore` reference source.
+[!INCLUDE[](~/blazor/security/includes/remote-authentication-paths.md)]
 
-> **Note:**
-> Documentation links to .NET reference source usually load the repository's default branch, which represents the current development for the next release of .NET. To select a tag for a specific release, use the **Switch branches or tags** dropdown list.
+## Parts of the app
 
-If an app customizes a remote authentication path, take either of the following approaches:
+This section describes the parts of an app generated from the Blazor WebAssembly project template and how the app is configured. There's no specific guidance to follow in this section for a basic working application if you created the app using the guidance in the [Walkthrough](#walkthrough) section. The guidance in this section is helpful for updating an app to authenticate and authorize users. However, an alternative approach to updating an app is to create a new app from the guidance in the [Walkthrough](#walkthrough) section and moving the app's components, classes, and resources to the new app.
 
-* Match the path in hard-coded strings around the app.
+### Authentication package
 
-* Inject `Microsoft.AspNetCore.Components.WebAssembly.Authentication.RemoteAuthenticationOptions`1` to obtain the configured value around the app. The following example demonstrates the approach for the `RedirectToLogin` component.
+When an app is created to use Individual Accounts, the app automatically receives a package reference for the [`Microsoft.AspNetCore.Components.WebAssembly.Authentication` package](https://www.nuget.org/packages/Microsoft.AspNetCore.Components.WebAssembly.Authentication). The package provides a set of primitives that help the app authenticate users and obtain tokens to call protected APIs.
 
-  Add the following Razor directives to the top of the component's Razor file:
+If adding authentication to an app, manually add the [`Microsoft.AspNetCore.Components.WebAssembly.Authentication` package](https://www.nuget.org/packages/Microsoft.AspNetCore.Components.WebAssembly.Authentication) to the app.
 
-  ```razor
-  @using Microsoft.Extensions.Options
-  @inject IOptionsSnapshot<RemoteAuthenticationOptions<ApiAuthorizationProviderOptions>> RemoteOptions
-  ```
+[!INCLUDE[](~/includes/package-reference.md)]
 
-  Modify the component's redirect in the `OnInitialized` method:
+### Authentication service support
 
-  ```diff
-  - Navigation.NavigateToLogin("authentication/login");
-  + Navigation.NavigateToLogin(RemoteOptions.Get(Options.DefaultName)
-  +     .AuthenticationPaths.LogInPath);
-  ```
+Support for authenticating users using OpenID Connect (OIDC) is registered in the service container with the <xref:Microsoft.Extensions.DependencyInjection.WebAssemblyAuthenticationServiceCollectionExtensions.AddOidcAuthentication*> extension method provided by the [`Microsoft.AspNetCore.Components.WebAssembly.Authentication` package](https://www.nuget.org/packages/Microsoft.AspNetCore.Components.WebAssembly.Authentication).
 
-  > **Note:**
-  > If other paths differ from the project template's paths or framework's default paths, manage them in the same fashion.
+The <xref:Microsoft.Extensions.DependencyInjection.WebAssemblyAuthenticationServiceCollectionExtensions.AddOidcAuthentication*> method accepts a callback to configure the parameters required to authenticate an app using OIDC. The values required for configuring the app can be obtained from the OIDC-compliant IP. Obtain the values when you register the app, which typically occurs in their online portal.
+
+For a new app, provide values for the `{AUTHORITY}` and `{CLIENT ID}` placeholders in the following configuration. Provide other configuration values that are required for use with the app's IP. The example is for Google, which requires `PostLogoutRedirectUri`, `RedirectUri`, and `ResponseType`. If adding authentication to an app, manually add the following code and configuration to the app with values for the placeholders and other configuration values.
+
+In the `Program` file:
+
+```csharp
+builder.Services.AddOidcAuthentication(options =>
+{
+    builder.Configuration.Bind("Local", options.ProviderOptions);
+});
+```
+
+### `wwwroot/appsettings.json` configuration
+
+Configuration is supplied by the `wwwroot/appsettings.json` file:
+
+```json
+{
+  "Local": {
+    "Authority": "{AUTHORITY}",
+    "ClientId": "{CLIENT ID}"
+  }
+}
+```
+
+### Access token scopes
+
+The Blazor WebAssembly template automatically configures default scopes for `openid` and `profile`.
+
+The Blazor WebAssembly template doesn't automatically configure the app to request an access token for a secure API. To provision an access token as part of the sign-in flow, add the scope to the default token scopes of the <xref:Microsoft.AspNetCore.Components.WebAssembly.Authentication.OidcProviderOptions>. If adding authentication to an app, manually add the following code and configure the scope URI.
+
+In the `Program` file:
+
+```csharp
+builder.Services.AddOidcAuthentication(options =>
+{
+    ...
+    options.ProviderOptions.DefaultScopes.Add("{SCOPE URI}");
+});
+```
+
+For more information, see the following sections of the *Additional scenarios* article:
+
+* [Request additional access tokens](additional-scenarios.md#request-additional-access-tokens)
+* [Attach tokens to outgoing requests](additional-scenarios.md#attach-tokens-to-outgoing-requests)
+
+### Imports file
+
+The <xref:Microsoft.AspNetCore.Components.Authorization?displayProperty=fullName> namespace is made available throughout the app via the imports file (`_Imports.razor`):
+
+```razor
+...
+@using Microsoft.AspNetCore.Components.Authorization
+...
+```
+
+### Index page
+
+[!INCLUDE[](~/blazor/security/includes/index-page-authentication.md)]
+
+### App component
+
+[!INCLUDE[](~/blazor/security/includes/app-component.md)]
+
+### RedirectToLogin component
+
+[!INCLUDE[](~/blazor/security/includes/redirecttologin-component.md)]
+
+### LoginDisplay component
+
+[!INCLUDE[](~/blazor/security/includes/logindisplay-component.md)]
+
+### Authentication component
+
+[!INCLUDE[](~/blazor/security/includes/authentication-component.md)]
+
+## Troubleshoot
+
+[!INCLUDE[](~/blazor/security/includes/troubleshoot-wasm.md)]
+
+## Related content
+
+* [ASP.NET Core Blazor WebAssembly additional security scenarios](additional-scenarios.md)
+* [Unauthenticated or unauthorized web API requests in an app with a secure default client](additional-scenarios.md#unauthenticated-or-unauthorized-web-api-requests-in-an-app-with-a-secure-default-client)
+* [Configure ASP.NET Core to work with proxy servers and load balancers](../../../host-and-deploy/proxy-load-balancer.md): Includes guidance on:
+  * Using forwarded headers middleware to preserve HTTPS scheme information across proxy servers and internal networks.
+  * Additional scenarios and use cases, including manual scheme configuration, request path changes for correct request routing, and forwarding the request scheme for Linux and non-IIS reverse proxies.

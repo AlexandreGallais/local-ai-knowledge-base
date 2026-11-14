@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: Some Microsoft.Extensions packages included in shared framework"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/extensions/11/extensions-in-shared-framework.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where nine Microsoft.Extensions.* libraries are now part of the base shared framework."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # Some Microsoft.Extensions packages included in shared framework
 
-To reduce application size, simplify package dependencies, and streamline servicing, .NET 11 includes nine `Microsoft.Extensions.*` libraries in the base shared framework. Projects that explicitly reference these packages receive build warning NU1510. You can resolve the warning by removing the `PackageReference`. If you depend on an older version of these packages, upgrading to the .NET 11 version might expose breaking changes introduced between older versions and .NET 11.
+To reduce application size, simplify package dependencies, and streamline servicing, .NET 11 includes nine `Microsoft.Extensions.*` libraries in the base shared framework. Projects that explicitly reference these packages receive build warning [NU1510](/nuget/reference/errors-and-warnings/nu1510). You can resolve the warning by removing the `PackageReference`. If you depend on an older version of these packages, upgrading to the .NET 11 version might expose breaking changes introduced between older versions and .NET 11.
 
 ## Version introduced
 
@@ -17,30 +15,30 @@ To reduce application size, simplify package dependencies, and streamline servic
 
 ## Previous behavior
 
-Previously, the following `Microsoft.Extensions.*` libraries weren't part of the .NET shared framework. (You get the shared framework by using `Sdk="Microsoft.NET.Sdk"`, or similarly referencing any of the other .NET SDKs.) Projects that needed them required explicit `PackageReference` entries, and the build process copied the assemblies to the output folder:
+Previously, the following `Microsoft.Extensions.*` libraries weren't part of the .NET shared framework. (You get the shared framework by using `Sdk="Microsoft.NET.Sdk"`, or similarly referencing any of [the other .NET SDKs](../../../project-sdk/overview.md#available-sdks).) Projects that needed them required explicit `PackageReference` entries, and the build process copied the assemblies to the output folder:
 
-- Microsoft.Extensions.Caching.Abstractions
-- Microsoft.Extensions.Configuration.Abstractions
-- Microsoft.Extensions.DependencyInjection.Abstractions
-- Microsoft.Extensions.Diagnostics.Abstractions
-- Microsoft.Extensions.FileProviders.Abstractions
-- Microsoft.Extensions.Hosting.Abstractions
-- Microsoft.Extensions.Logging.Abstractions
-- Microsoft.Extensions.Options
-- Microsoft.Extensions.Primitives
+- [Microsoft.Extensions.Caching.Abstractions](https://www.nuget.org/packages/Microsoft.Extensions.Caching.Abstractions)
+- [Microsoft.Extensions.Configuration.Abstractions](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.Abstractions)
+- [Microsoft.Extensions.DependencyInjection.Abstractions](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection.Abstractions)
+- [Microsoft.Extensions.Diagnostics.Abstractions](https://www.nuget.org/packages/Microsoft.Extensions.Diagnostics.Abstractions)
+- [Microsoft.Extensions.FileProviders.Abstractions](https://www.nuget.org/packages/Microsoft.Extensions.FileProviders.Abstractions)
+- [Microsoft.Extensions.Hosting.Abstractions](https://www.nuget.org/packages/Microsoft.Extensions.Hosting.Abstractions)
+- [Microsoft.Extensions.Logging.Abstractions](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Abstractions)
+- [Microsoft.Extensions.Options](https://www.nuget.org/packages/Microsoft.Extensions.Options)
+- [Microsoft.Extensions.Primitives](https://www.nuget.org/packages/Microsoft.Extensions.Primitives)
 
 ## New behavior
 
 Starting in .NET 11, these nine libraries are part of the .NET base shared framework:
 
 - You don't need a `PackageReference` for these libraries when you target `net11.0` or later.
-- If you reference these packages explicitly, you receive build warning NU1510.
+- If you reference these packages explicitly, you receive build warning [NU1510](/nuget/reference/errors-and-warnings/nu1510).
 - These assemblies are no longer copied to the output folder.
 - In rare cases, the additional APIs in the default load set might cause name or type conflicts. To resolve a conflict, add more explicit `using` directives, use an alias, or use a fully qualified type name.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -83,21 +81,21 @@ The following breaking changes from previous versions might surface when upgradi
 
 *Microsoft.Extensions.DependencyInjection.Abstractions*
 
-- ActivatorUtilities.CreateInstance behaves consistently
-- ActivatorUtilities.CreateInstance requires non-null provider
-- FromKeyedServicesAttribute.Key <example-value> nullable
-- Non-keyed service used when keyed not found
-- GetKeyedService and GetKeyedServices with AnyKey
+- [ActivatorUtilities.CreateInstance behaves consistently](../8.0/activatorutilities-createinstance-behavior.md)
+- [ActivatorUtilities.CreateInstance requires non-null provider](../8.0/activatorutilities-createinstance-null-provider.md)
+- [FromKeyedServicesAttribute.Key property nullable](../8.0/fromkeyedservicesattribute-key-nullable.md)
+- [Non-keyed service used when keyed not found](../../core-libraries/9.0/non-keyed-params.md)
+- [GetKeyedService and GetKeyedServices with AnyKey](../10.0/getkeyedservice-anykey.md)
 
 *Microsoft.Extensions.Logging.Abstractions*
 
-- ProviderAliasAttribute moved assembly
+- [ProviderAliasAttribute moved assembly](../10.0/provideraliasattribute-moved-assembly.md)
 
 *Microsoft.Extensions.Hosting.Abstractions*
 
-- Unhandled exceptions from a BackgroundService
-- BackgroundService runs all of ExecuteAsync as a Task
-- IHost.RunAsync and IHost.StopAsync throw when a BackgroundService fails
+- [Unhandled exceptions from a BackgroundService](../../core-libraries/6.0/hosting-exception-handling.md)
+- [BackgroundService runs all of ExecuteAsync as a Task](../10.0/backgroundservice-executeasync-task.md)
+- [IHost.RunAsync and IHost.StopAsync throw when a BackgroundService fails](ihost-runasync-stopasync-throw-backgroundservice-failure.md)
 
 ## Affected APIs
 

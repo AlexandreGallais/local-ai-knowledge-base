@@ -1,13 +1,8 @@
 ---
-title: "id-denylist"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/id-denylist.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: id-denylist
+rule_type: suggestion
 ---
 
-# id-denylist
 
 > "There are only two hard things in Computer Science: cache invalidation and naming things." — Phil Karlton
 
@@ -42,11 +37,11 @@ For example, to restrict the use of common generic identifiers:
 }
 ```
 
-**Note:** The first element of the array is for the rule severity (see Configure Rules). The other elements in the array are the identifiers that you want to disallow.
+**Note:** The first element of the array is for the rule severity (see [Configure Rules](../use/configure/rules)). The other elements in the array are the identifiers that you want to disallow.
 
 Examples of **incorrect** code for this rule with sample `"data", "callback"` restricted identifiers:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint id-denylist: ["error", "data", "callback"] */
@@ -82,9 +77,11 @@ class Qux {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with sample `"data", "callback"` restricted identifiers:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint id-denylist: ["error", "data", "callback"] */
@@ -125,6 +122,8 @@ class Qux {
     #method() {}
 }
 ```
+
+:::
 
 ## When Not To Use It
 

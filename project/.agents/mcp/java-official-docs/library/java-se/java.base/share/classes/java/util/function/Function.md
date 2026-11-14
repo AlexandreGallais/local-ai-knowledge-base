@@ -1,12 +1,3 @@
----
-title: "Function interface (java.util.function)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/function/Function.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Function interface (java.util.function)
 
 ```java
@@ -15,15 +6,13 @@ public interface Function<T, R>
 
 Represents a function that accepts one argument and produces a result.
 
-This is a functional interface
-whose functional method is `apply(Object)`.
+<p>This is a <a href="package-summary.html">functional interface</a>
+whose functional method is {@link #apply(Object)}.
 
-Parameters:
+@param <T> the type of the input to the function
+@param <R> the type of the result of the function
 
-- `<T>`: the type of the input to the function
-- `<R>`: the type of the result of the function
-
-**Since:** 1.8
+@since 1.8
 
 ## Function.apply(T)
 
@@ -33,11 +22,8 @@ R apply(T t)
 
 Applies this function to the given argument.
 
-Parameters:
-
-- `t`: the function argument
-
-**Returns:** the function result
+@param t the function argument
+@return the function result
 
 ## Function.compose(Function<? super V, ? extends T>)
 
@@ -45,24 +31,19 @@ Parameters:
 default <V> Function<V, R> compose(Function<? super V, ? extends T> before)
 ```
 
-Returns a composed function that first applies the `before`
+Returns a composed function that first applies the {@code before}
 function to its input, and then applies this function to the result.
 If evaluation of either function throws an exception, it is relayed to
 the caller of the composed function.
 
-Parameters:
-
-- `<V>`: the type of input to the `before` function, and to the composed function
-- `before`: the function to apply before this function is applied
-
-**Returns:** a composed function that first applies the `before`
+@param <V> the type of input to the {@code before} function, and to the
+          composed function
+@param before the function to apply before this function is applied
+@return a composed function that first applies the {@code before}
 function and then applies this function
+@throws NullPointerException if before is null
 
-**See also:** #andThen(Function)
-
-Throws:
-
-- `NullPointerException`: if before is null
+@see #andThen(Function)
 
 ## Function.andThen(Function<? super R, ? extends V>)
 
@@ -71,23 +52,18 @@ default <V> Function<T, V> andThen(Function<? super R, ? extends V> after)
 ```
 
 Returns a composed function that first applies this function to
-its input, and then applies the `after` function to the result.
+its input, and then applies the {@code after} function to the result.
 If evaluation of either function throws an exception, it is relayed to
 the caller of the composed function.
 
-Parameters:
+@param <V> the type of output of the {@code after} function, and of the
+          composed function
+@param after the function to apply after this function is applied
+@return a composed function that first applies this function and then
+applies the {@code after} function
+@throws NullPointerException if after is null
 
-- `<V>`: the type of output of the `after` function, and of the composed function
-- `after`: the function to apply after this function is applied
-
-**Returns:** a composed function that first applies this function and then
-applies the `after` function
-
-**See also:** #compose(Function)
-
-Throws:
-
-- `NullPointerException`: if after is null
+@see #compose(Function)
 
 ## Function.identity()
 
@@ -97,8 +73,5 @@ static <T> Function<T, T> identity()
 
 Returns a function that always returns its input argument.
 
-Parameters:
-
-- `<T>`: the type of the input and output objects to the function
-
-**Returns:** a function that always returns its input argument
+@param <T> the type of the input and output objects to the function
+@return a function that always returns its input argument

@@ -1,17 +1,17 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/no-invisible-character"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/no-invisible-character.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "disallow invisible raw character"
+since: "v0.1.0"
 ---
-
 # regexp/no-invisible-character
 
 💼 This rule is enabled in the following configs: 🟢 `flat/recommended`, 🔵 `recommended`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 > disallow invisible raw character
 
@@ -20,6 +20,8 @@ license: "MIT"
 This rule disallows using invisible characters other than SPACE (`U+0020`) without using escapes.
 
 <eslint-code-block fix>
+
+<!-- markdownlint-disable no-hard-tabs -->
 
 ```js
 /* eslint regexp/no-invisible-character: "error" */
@@ -38,6 +40,8 @@ var foo = //;
 var foo = /　/;
 ```
 
+<!-- markdownlint-enable no-hard-tabs -->
+
 </eslint-code-block>
 
 ## :wrench: Options
@@ -50,5 +54,5 @@ This rule was introduced in eslint-plugin-regexp v0.1.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/no-invisible-character.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/no-invisible-character.ts)

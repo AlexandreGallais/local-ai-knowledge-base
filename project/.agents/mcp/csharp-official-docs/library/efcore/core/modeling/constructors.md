@@ -1,17 +1,15 @@
 ---
-title: "Entity types with constructors - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/modeling/constructors.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Entity types with constructors - EF Core
+description: Using constructors to bind data with Entity Framework Core model
+author: SamMonoRT
+ms.date: 02/23/2018
+uid: core/modeling/constructors
 ---
-
 # Entity types with constructors
 
 It's possible to define a constructor with parameters and have EF Core call this constructor when creating an instance of the entity. The constructor parameters can be bound to mapped properties, or to various kinds of services to facilitate behaviors like lazy-loading.
 
-> **Note:**
+> [!NOTE]
 > Currently, all constructor binding is by convention. Configuration of specific constructors to use is planned for a future release.
 
 ## Binding to mapped properties
@@ -92,7 +90,7 @@ Some things to note:
 Once properties are being set via the constructor it can make sense to make some of them read-only. EF Core supports this, but there are some things to look out for:
 
 * Properties without setters are not mapped by convention. (Doing so tends to map properties that should not be mapped, such as computed properties.)
-* Using automatically generated key <example-value> requires a key <example-value> that is read-write, since the key value needs to be set by the key <example-value> when inserting new entities.
+* Using automatically generated key values requires a key property that is read-write, since the key value needs to be set by the key generator when inserting new entities.
 
 An easy way to avoid these things is to use private setters. For example:
 
@@ -201,7 +199,7 @@ Things to note:
 * The other properties are read-only properties set only in the constructor.
 * If the primary key value is only ever set by EF or read from the database, then there is no need to include it in the constructor. This leaves the key "property" as a simple field and makes it clear that it should not be set explicitly when creating new blogs or posts.
 
-> **Note:**
+> [!NOTE]
 > This code will result in compiler warning '169' indicating that the field is never used. This can be ignored since in reality EF Core is using the field in an extralinguistic manner.
 
 ## Injecting services
@@ -209,11 +207,11 @@ Things to note:
 EF Core can also inject "services" into an entity type's constructor. For example, the following can be injected:
 
 * `DbContext` - the current context instance, which can also be typed as your derived DbContext type
-* `ILazyLoader` - the lazy-loading service--see the lazy-loading documentation for more details
-* `Action<object, string>` - a lazy-loading delegate--see the lazy-loading documentation for more details
+* `ILazyLoader` - the lazy-loading service--see the [lazy-loading documentation](xref:core/querying/related-data) for more details
+* `Action<object, string>` - a lazy-loading delegate--see the [lazy-loading documentation](xref:core/querying/related-data) for more details
 * `IEntityType` - the EF Core metadata associated with this entity type
 
-> **Note:**
+> [!NOTE]
 > Currently, only services known by EF Core can be injected. Support for injecting application services is being considered for a future release.
 
 For example, an injected DbContext can be used to selectively access the database to obtain information about related entities without loading them all. In the example below this is used to obtain the number of posts in a blog without loading the posts:
@@ -261,5 +259,5 @@ A few things to notice about this:
 * The code using the injected service (that is, the context) is defensive against it being `null` to handle cases where EF Core is not creating the instance.
 * Because service is stored in a read/write property it will be reset when the entity is attached to a new context instance.
 
-> **Warning:**
+> [!WARNING]
 > Injecting the DbContext like this is often considered an anti-pattern since it couples your entity types directly to EF Core. Carefully consider all options before using service injection like this.

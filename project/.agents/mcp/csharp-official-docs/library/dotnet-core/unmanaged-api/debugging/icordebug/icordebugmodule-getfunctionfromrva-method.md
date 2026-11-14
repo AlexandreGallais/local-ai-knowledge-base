@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugModule::GetFunctionFromRVA Method"
 title: "ICorDebugModule::GetFunctionFromRVA Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmodule-getfunctionfromrva-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugModule.GetFunctionFromRVA"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugModule::GetFunctionFromRVA"
+helpviewer_keywords:
+  - "GetFunctionFromRVA method [.NET debugging]"
+  - "ICorDebugModule::GetFunctionFromRVA method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugModule::GetFunctionFromRVA Method
 
 This method has not been implemented.
@@ -23,3 +32,5 @@ HRESULT GetFunctionFromRVA(
 ## Requirements
 
  **Header:** CorDebug.idl, CorDebug.h
+
+## See also

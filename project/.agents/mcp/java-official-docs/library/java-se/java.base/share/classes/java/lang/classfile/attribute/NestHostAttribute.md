@@ -1,38 +1,26 @@
----
-title: "NestHostAttribute interface (java.lang.classfile.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/attribute/NestHostAttribute.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # NestHostAttribute interface (java.lang.classfile.attribute)
 
 ```java
 public sealed interface NestHostAttribute extends Attribute<NestHostAttribute>, ClassElement permits BoundAttribute.BoundNestHostAttribute, UnboundAttribute.UnboundNestHostAttribute
 ```
 
-Models the NestHost attribute (JVMS ), which indicates this class is a member of a nest and the host
+Models the {@link Attributes#nestHost() NestHost} attribute (JVMS {@jvms
+4.7.28}), which indicates this class is a member of a nest and the host
 class of the nest.
-
-This attribute only appears on classes, and does not permit multiple instances in a class.  It has a
-data dependency on the constant pool.
-
+<p>
+This attribute only appears on classes, and does not permit {@linkplain
+AttributeMapper#allowMultiple multiple instances} in a class.  It has a
+data dependency on the {@linkplain AttributeStability#CP_REFS constant pool}.
+<p>
 The attribute was introduced in the Java SE Platform version 11, major
-version `ClassFile#JAVA_11_VERSION`.
+version {@value ClassFile#JAVA_11_VERSION}.
 
-**See also:** Attributes#nestHost()
-
-**See also:** NestMembersAttribute
-
-**See also:** Class#getNestHost()
-
-**See also:** Class#isNestmateOf(Class)
-
-**jvms:** 4.7.28 The `NestHost` Attribute
-
-**Since:** 24
+@see Attributes#nestHost()
+@see NestMembersAttribute
+@see Class#getNestHost()
+@see Class#isNestmateOf(Class)
+@jvms 4.7.28 The {@code NestHost} Attribute
+@since 24
 
 ## NestHostAttribute.nestHost()
 
@@ -40,7 +28,9 @@ version `ClassFile#JAVA_11_VERSION`.
 ClassEntry nestHost()
 ```
 
-**See also:** Class#getNestHost()
+{@return the host class of the nest to which this class belongs}
+
+@see Class#getNestHost()
 
 ## NestHostAttribute.of(ClassEntry)
 
@@ -48,9 +38,9 @@ ClassEntry nestHost()
 static NestHostAttribute of(ClassEntry nestHost)
 ```
 
-Parameters:
+{@return a {@code NestHost} attribute}
 
-- `nestHost`: the host class of the nest
+@param nestHost the host class of the nest
 
 ## NestHostAttribute.of(ClassDesc)
 
@@ -58,10 +48,7 @@ Parameters:
 static NestHostAttribute of(ClassDesc nestHost)
 ```
 
-Parameters:
+{@return a {@code NestHost} attribute}
 
-- `nestHost`: the host class of the nest
-
-Throws:
-
-- `IllegalArgumentException`: if `nestHost` represents a primitive type
+@param nestHost the host class of the nest
+@throws IllegalArgumentException if {@code nestHost} represents a primitive type

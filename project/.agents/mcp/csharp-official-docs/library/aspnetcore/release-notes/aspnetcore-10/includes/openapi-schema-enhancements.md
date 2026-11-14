@@ -1,14 +1,3 @@
----
-title: "openapi-schema-enhancements"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-10/includes/openapi-schema-enhancements.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# openapi-schema-enhancements
-
 ### OpenAPI Schema Generation Enhancements
 
 #### Model nullable types using oneOf in OpenAPI schema

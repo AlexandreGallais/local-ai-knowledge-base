@@ -1,25 +1,20 @@
 ---
-title: "Porting approaches"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/porting-approaches.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Porting approaches
+description: Create a porting plan that best reflects your project and context.
+author: StephenBonikowsky
+ms.date: 09/15/2025
 ---
-
 # Create a porting plan
 
 Before you jump straight into the code, take the time to go through the recommended pre-migration steps. This article gives you insight into the kinds of issues you might come across, and helps you decide on an approach that makes the most sense.
 
-> **Important:**
-> API Port has been deprecated in favor of binary analysis with the .NET Upgrade Assistant tool. The backend service of API Port has been shut down, so to use the tool, you must use it offline. For more information, see .NET API Port README.
+[!INCLUDE[](../../../includes/deprecating-api-port.md)]
 
 ## Port your code
 
-Make sure that you follow the prerequisites to porting code before you continue any further. Be ready to decide on the best approach for you and begin porting code.
+Make sure that you follow the [prerequisites to porting code](premigration-needed-changes.md) before you continue any further. Be ready to decide on the best approach for you and begin porting code.
 
-> **Important:**
-> .NET Upgrade Assistant is officially deprecated. Use the GitHub Copilot modernization chat agent instead, which is included with Visual Studio 2026 and Visual Studio 2022 17.14.16 or later. This agent analyzes your projects and dependencies, produces a step-by-step migration plan with targeted recommendations and automated code fixes, and commits each change so you can validate or roll back. It automates common porting tasks—updating project files, replacing deprecated APIs, and resolving build issues—so you can modernize faster with less manual effort.
+[!INCLUDE [github-copilot-suggestion](includes/github-copilot-suggestion.md)]
 
 ### Deal primarily with the compiler
 
@@ -54,8 +49,8 @@ This approach might be best for larger and more complex projects, where restruct
     - Understand the nature of those types. Are they small in number but used frequently? Are they large in number but used infrequently? Is their use concentrated, or is it spread throughout your code?
     - Is it easy to isolate code that isn't portable so that you can deal with it more effectively?
     - Do you need to refactor your code?
-    - For those types that aren't portable, are there alternative APIs that accomplish the same task? For example, if you're using the `System.Net.WebClient` class, use the `System.Net.Http.HttpClient` class instead.
-    - Are there different portable APIs available to accomplish a task, even if it's not a drop-in replacement? For example, if you're using `System.Xml.Schema.XmlSchema` to parse XML but don't require XML schema discovery, you could use `System.Xml.Linq` APIs and implement parsing yourself instead of relying on an API.
+    - For those types that aren't portable, are there alternative APIs that accomplish the same task? For example, if you're using the <xref:System.Net.WebClient> class, use the <xref:System.Net.Http.HttpClient> class instead.
+    - Are there different portable APIs available to accomplish a task, even if it's not a drop-in replacement? For example, if you're using <xref:System.Xml.Schema.XmlSchema> to parse XML but don't require XML schema discovery, you could use <xref:System.Xml.Linq> APIs and implement parsing yourself instead of relying on an API.
 
 01. If you have assemblies that are difficult to port, is it worth leaving them on .NET Framework for now? Here are some things to consider:
 
@@ -64,7 +59,7 @@ This approach might be best for larger and more complex projects, where restruct
 
 01. Is it reasonable to write your own implementation of an unavailable .NET Framework API?
 
-    You could consider copying, modifying, and using code from the .NET Framework reference source. The reference source code is licensed under the MIT License, so you have significant freedom to use the source as a basis for your own code. Just be sure to properly attribute Microsoft in your code.
+    You could consider copying, modifying, and using code from the [.NET Framework reference source](https://github.com/Microsoft/referencesource). The reference source code is licensed under the [MIT License](https://github.com/Microsoft/referencesource/blob/master/LICENSE.txt), so you have significant freedom to use the source as a basis for your own code. Just be sure to properly attribute Microsoft in your code.
 
 01. Repeat this process as needed for different projects.
 
@@ -80,13 +75,13 @@ It's likely that you'll mix the above approaches on a per-project basis. Do what
 
 The best way to make sure everything works when you've ported your code is to test your code as you port it to .NET. To do this, you'll need to use a testing framework that builds and runs tests for .NET. Currently, you have three options:
 
-- xUnit
-  - Getting Started
-  - Tool to convert an MSTest project to xUnit
-- NUnit
-  - Getting Started
-  - Blog post about migrating from MSTest to NUnit
-- MSTest
+- [xUnit](https://xunit.net/)
+  - [Getting Started](https://xunit.net/docs/getting-started/netcore/cmdline)
+  - [Tool to convert an MSTest project to xUnit](https://github.com/dotnet/codeformatter/tree/main/src/XUnitConverter)
+- [NUnit](https://nunit.org/)
+  - [Getting Started](https://docs.nunit.org/articles/nunit/getting-started/installation)
+  - [Blog post about migrating from MSTest to NUnit](https://www.florian-rappl.de/News/Page/275/convert-mstest-to-nunit)
+- [MSTest](/visualstudio/test/unit-test-basics)
 
 ## Recommended approach
 
@@ -102,5 +97,5 @@ If you start with the base of your library and move outward from the base and te
 
 ## Next steps
 
-- What is GitHub Copilot modernization
-- Organize your project to support both .NET Framework and .NET Core
+- [What is GitHub Copilot modernization](github-copilot-upgrade/overview.md)
+- [Organize your project to support both .NET Framework and .NET Core](project-structure.md)

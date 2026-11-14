@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: OpenAPI document includes all ProducesResponseType entries per status code"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/11/openapi-multiple-produces-per-status.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+ai-usage: ai-assisted
+description: "Learn about the breaking change in ASP.NET Core 11 where the generated OpenAPI document contains multiple response variants for a single status code instead of dropping all but the last declaration."
+ms.date: 06/05/2026
 ---
-
 # OpenAPI document includes all ProducesResponseType entries per status code
 
-ASP.NET Core 11 changes how MVC's `ApiExplorer` and Minimal API's metadata-collection step handle multiple `[ProducesResponseType]` or `Microsoft.AspNetCore.Http.OpenApiRouteHandlerBuilderExtensions.Produces*` declarations for the same status code. Previously, all but one declaration per status code were dropped before the OpenAPI document was generated. Starting in ASP.NET Core 11, all declarations are preserved, and the generated OpenAPI document reflects every declared content type and schema for each status code.
+ASP.NET Core 11 changes how MVC's `ApiExplorer` and Minimal API's metadata-collection step handle multiple `[ProducesResponseType]` or <xref:Microsoft.AspNetCore.Http.OpenApiRouteHandlerBuilderExtensions.Produces*> declarations for the same status code. Previously, all but one declaration per status code were dropped before the OpenAPI document was generated. Starting in ASP.NET Core 11, all declarations are preserved, and the generated OpenAPI document reflects every declared content type and schema for each status code.
 
 ## Version introduced
 
@@ -48,11 +45,11 @@ Controller-level `[Produces]` content types continue to apply as the shared defa
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](/dotnet/core/compatibility/categories#behavioral-change).
 
 ## Reason for change
 
-Dropping all but one declared response variant produced incomplete OpenAPI documents and surprised users who expected each `[ProducesResponseType]` or `.Produces<T>(...)` call to be reflected in the generated schema. The new behavior matches the developer's stated intent and is consistent with how OpenAPI represents multiple content types per status code. For more information, see dotnet/aspnetcore#65650.
+Dropping all but one declared response variant produced incomplete OpenAPI documents and surprised users who expected each `[ProducesResponseType]` or `.Produces<T>(...)` call to be reflected in the generated schema. The new behavior matches the developer's stated intent and is consistent with how OpenAPI represents multiple content types per status code. For more information, see [dotnet/aspnetcore#65650](https://github.com/dotnet/aspnetcore/pull/65650).
 
 ## Recommended action
 
@@ -66,8 +63,8 @@ If you intentionally want the old single-variant shape for a specific endpoint, 
 
 ## Affected APIs
 
-- `Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute`
-- `Microsoft.AspNetCore.Mvc.ProducesAttribute`
-- `Microsoft.AspNetCore.Http.OpenApiRouteHandlerBuilderExtensions.Produces*`
-- `Microsoft.AspNetCore.Http.OpenApiRouteHandlerBuilderExtensions.ProducesProblem*`
-- Generated `responses` entries in the OpenAPI document produced by `AddOpenApi`.
+- <xref:Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Mvc.ProducesAttribute?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Http.OpenApiRouteHandlerBuilderExtensions.Produces*?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Http.OpenApiRouteHandlerBuilderExtensions.ProducesProblem*?displayProperty=fullName>
+- Generated `responses` entries in the OpenAPI document produced by [`AddOpenApi`](../../fundamentals/openapi/aspnetcore-openapi.md).

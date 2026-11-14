@@ -1,17 +1,15 @@
 ---
-title: "Return Razor component HTML from a web API in ASP.NET Core Blazor"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/components/return-component-html-from-a-web-api.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Return Razor component HTML from a web API in ASP.NET Core Blazor
+ai-usage: ai-assisted
+description: Learn how to return HTML (as a string) from a web API (Minimal API) using the RazorComponentResult class.
+monikerRange: '>= aspnetcore-8.0'
+ms.date: 07/31/2026
 ---
-
 # Return Razor component HTML from a web API in ASP.NET Core Blazor
 
-This article demonstrates how to return Razor component HTML (as a `string`) from a web API (Minimal API) using the `Microsoft.AspNetCore.Http.HttpResults.RazorComponentResult` class.
+This article demonstrates how to return Razor component HTML (as a `string`) from a web API (Minimal API) using the <xref:Microsoft.AspNetCore.Http.HttpResults.RazorComponentResult> class.
 
-Components returned via `Microsoft.AspNetCore.Http.HttpResults.RazorComponentResult` are rendered as static HTML strings. Features requiring an active SignalR connection for component interactivity can't execute in this context.
+Components returned via <xref:Microsoft.AspNetCore.Http.HttpResults.RazorComponentResult> are rendered as static HTML strings. Features requiring an active SignalR connection for component interactivity can't execute in this context.
 
 ## Add the Razor components to the web API
 
@@ -38,7 +36,7 @@ Components returned via `Microsoft.AspNetCore.Http.HttpResults.RazorComponentRes
 
 ## Add Razor component services and endpoints to the web API
 
-For components with parameters, pass <example-value> keys that exactly match the names of properties decorated with the `[Parameter]` attribute.
+For components with parameters, pass dictionary keys that exactly match the names of properties decorated with the [`[Parameter]` attribute](xref:Microsoft.AspNetCore.Components.ParameterAttribute).
 
 ```csharp
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -65,16 +63,16 @@ app.MapGet("/user/{id:int}", (int id) =>
 
 ## Consume the API and read the component HTML from the `RazorComponentResult`
 
-In the app's `Program` file, set up HTTP client services. The following example assumes that the web API responds to requests at `https://localhost:7286` using a named `HttpClient`:
+In the app's `Program` file, set up HTTP client services. The following example assumes that the web API responds to requests at `https://localhost:7286` using a [named `HttpClient`](../call-web-api.md#named-httpclient-with-ihttpclientfactory):
 
 ```csharp
 builder.Services.AddHttpClient("WebAPI", client =>
     client.BaseAddress = new Uri("https://localhost:7286"));
 ```
 
-In a component, inject an `System.Net.Http.IHttpClientFactory` and request the component HTML (as `string`s), casting each to a `Microsoft.AspNetCore.Components.MarkupString` for rendering:
+In a component, inject an <xref:System.Net.Http.IHttpClientFactory> and request the component HTML (as `string`s), casting each to a <xref:Microsoft.AspNetCore.Components.MarkupString> for rendering:
 
-> **Warning:**
+> [!WARNING]
 > Rendering raw HTML constructed from any untrusted source is a **security risk** and should **always** be avoided.
 
 ```razor

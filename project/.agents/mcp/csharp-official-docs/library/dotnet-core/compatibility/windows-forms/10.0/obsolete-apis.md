@@ -1,19 +1,16 @@
 ---
 title: "Breaking change: .NET 10 obsoletions in Windows Forms"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/windows-forms/10.0/obsolete-apis.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+titleSuffix: ""
+description: Learn about the .NET 10 breaking change where some Windows Forms APIs have been marked as obsolete.
+ms.date: 03/10/2025
 ---
-
 # Windows Forms obsoletions (.NET 10)
 
 Some Windows Forms APIs have been marked as obsolete, starting in .NET 10.
 
 ## Previous behavior
 
-Previously, the affected APIs could be used without any build warnings.
+Previously, the [affected APIs](#affected-apis) could be used without any build warnings.
 
 ## New behavior
 
@@ -23,9 +20,9 @@ The following table lists the custom diagnostic IDs and their corresponding warn
 
 | Diagnostic ID | Description | Severity |
 |---------------|-------------|----------|
-| WFDEV004 | `System.Windows.Forms.Form.OnClosing(System.ComponentModel.CancelEventArgs)`, `System.Windows.Forms.Form.OnClosed(System.EventArgs)` and the corresponding events are obsolete. Use `System.Windows.Forms.Form.OnFormClosing(System.Windows.Forms.FormClosingEventArgs)`, `System.Windows.Forms.Form.OnFormClosed(System.Windows.Forms.FormClosedEventArgs)`, `System.Windows.Forms.Form.FormClosing` and `System.Windows.Forms.Form.FormClosed` instead. | Warning |
-| WFDEV005 | `System.Windows.Clipboard.GetData(System.String)` method is obsolete. Use `System.Windows.Forms.Clipboard.TryGetData*` methods instead. | Warning |
-| WFDEV006 | `System.Windows.Forms.ContextMenu`, `System.Windows.Forms.DataGrid`, `System.Windows.Forms.MainMenu`, `System.Windows.Forms.Menu`, `System.Windows.Forms.StatusBar`, `System.Windows.Forms.ToolBar` are obsolete. They're provided for binary compatibility with .NET Framework. | Warning |
+| [WFDEV004](/dotnet/desktop/winforms/wfdev-diagnostics/wfdev004) | <xref:System.Windows.Forms.Form.OnClosing(System.ComponentModel.CancelEventArgs)?displayProperty=nameWithType>, <xref:System.Windows.Forms.Form.OnClosed(System.EventArgs)?displayProperty=nameWithType> and the corresponding events are obsolete. Use <xref:System.Windows.Forms.Form.OnFormClosing(System.Windows.Forms.FormClosingEventArgs)?displayProperty=nameWithType>, <xref:System.Windows.Forms.Form.OnFormClosed(System.Windows.Forms.FormClosedEventArgs)?displayProperty=nameWithType>, <xref:System.Windows.Forms.Form.FormClosing?displayProperty=nameWithType> and <xref:System.Windows.Forms.Form.FormClosed?displayProperty=nameWithType> instead. | Warning |
+| [WFDEV005](/dotnet/desktop/winforms/wfdev-diagnostics/wfdev005) | <xref:System.Windows.Clipboard.GetData(System.String)?displayProperty=nameWithType> method is obsolete. Use <xref:System.Windows.Forms.Clipboard.TryGetData*?displayProperty=nameWithType> methods instead. | Warning |
+| [WFDEV006](/dotnet/desktop/winforms/wfdev-diagnostics/wfdev006) | <xref:System.Windows.Forms.ContextMenu>, <xref:System.Windows.Forms.DataGrid>, <xref:System.Windows.Forms.MainMenu>, <xref:System.Windows.Forms.Menu>, <xref:System.Windows.Forms.StatusBar>, <xref:System.Windows.Forms.ToolBar> are obsolete. They're provided for binary compatibility with .NET Framework. | Warning |
 
 ## Version introduced
 
@@ -33,7 +30,7 @@ The following table lists the custom diagnostic IDs and their corresponding warn
 
 ## Type of breaking change
 
-These obsoletion warnings can affect source compatibility.
+These obsoletion warnings can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Recommended action
 
@@ -44,22 +41,22 @@ These obsoletion warnings can affect source compatibility.
 
 ### WFDEV004
 
-- `System.Windows.Forms.Form.OnClosing(System.ComponentModel.CancelEventArgs)`
-- `System.Windows.Forms.Form.OnClosed(System.EventArgs)`
+- <xref:System.Windows.Forms.Form.OnClosing(System.ComponentModel.CancelEventArgs)>
+- <xref:System.Windows.Forms.Form.OnClosed(System.EventArgs)?displayProperty=fullName>
 
 ### WFDEV005
 
-- `System.Windows.Clipboard.GetData(System.String)`
+- <xref:System.Windows.Clipboard.GetData(System.String)?displayProperty=fullName>
 
 ### WFDEV006
 
-- `System.Windows.Forms.ContextMenu`
-- `System.Windows.Forms.DataGrid`
-- `System.Windows.Forms.MainMenu`
-- `System.Windows.Forms.Menu`
-- `System.Windows.Forms.StatusBar`
-- `System.Windows.Forms.ToolBar`
+- <xref:System.Windows.Forms.ContextMenu?displayProperty=fullName>
+- <xref:System.Windows.Forms.DataGrid?displayProperty=fullName>
+- <xref:System.Windows.Forms.MainMenu?displayProperty=fullName>
+- <xref:System.Windows.Forms.Menu?displayProperty=fullName>
+- <xref:System.Windows.Forms.StatusBar?displayProperty=fullName>
+- <xref:System.Windows.Forms.ToolBar?displayProperty=fullName>
 
 ## See also
 
-- Obsolete Windows Forms features in .NET 10+
+- [Obsolete Windows Forms features in .NET 10+](/dotnet/desktop/winforms/wfdev-diagnostics/obsoletions-overview)

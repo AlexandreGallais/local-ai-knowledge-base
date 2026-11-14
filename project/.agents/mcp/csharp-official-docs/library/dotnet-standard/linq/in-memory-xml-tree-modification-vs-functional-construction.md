@@ -1,17 +1,18 @@
 ---
-title: "In-memory XML tree modification vs. functional construction - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/in-memory-xml-tree-modification-vs-functional-construction.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: In-memory XML tree modification vs. functional construction - LINQ to XML
+description: See examples of two different approaches to modifying XML trees.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: b5afc31d-a325-4ec6-bf17-0ff90a20ffca
 ---
 
 # In-memory XML tree modification vs. functional construction (LINQ to XML)
 
 Modifying an XML tree in place is a traditional approach to changing the shape of an XML document. A typical application loads a document into a data store such as DOM or LINQ to XML; uses a programming interface to insert or delete nodes, or change their content; and then saves the XML to a file or transmits it over a network.
 
-LINQ to XML enables another approach that is useful in many scenarios: *functional construction*. Functional construction treats modifying data as a problem of transformation, rather than as detailed manipulation of a data store. If you can take a representation of data and transform it efficiently from one form to another, the result is the same as if you took one data store and manipulated it in some way to take another shape. A key to the functional construction approach is to pass the results of queries to `System.Xml.Linq.XDocument` and `System.Xml.Linq.XElement` constructors.
+LINQ to XML enables another approach that is useful in many scenarios: *functional construction*. Functional construction treats modifying data as a problem of transformation, rather than as detailed manipulation of a data store. If you can take a representation of data and transform it efficiently from one form to another, the result is the same as if you took one data store and manipulated it in some way to take another shape. A key to the functional construction approach is to pass the results of queries to <xref:System.Xml.Linq.XDocument> and <xref:System.Xml.Linq.XElement> constructors.
 
 In many cases you can write the transformational code in a fraction of the time that it would take to manipulate the data store, and the resulting code is more robust and easier to maintain. In these cases, even though the transformational approach can take more processing power, it's a more effective way to modify data. If a developer is familiar with the functional approach, the resulting code in many cases is easier to understand, and it's easy to find the code that modifies each part of the tree.
 

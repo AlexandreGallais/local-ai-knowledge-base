@@ -1,25 +1,14 @@
----
-title: "InnerClassInfo interface (java.lang.classfile.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/attribute/InnerClassInfo.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # InnerClassInfo interface (java.lang.classfile.attribute)
 
 ```java
 public sealed interface InnerClassInfo permits UnboundAttribute.UnboundInnerClassInfo
 ```
 
-Models a single entry in the `InnerClassesAttribute`.
+Models a single entry in the {@link InnerClassesAttribute}.
 
-**See also:** InnerClassesAttribute#classes()
-
-**jvms:** 4.7.6 The `InnerClasses` Attribute
-
-**Since:** 24
+@see InnerClassesAttribute#classes()
+@jvms 4.7.6 The {@code InnerClasses} Attribute
+@since 24
 
 ## InnerClassInfo.innerClass()
 
@@ -27,16 +16,19 @@ Models a single entry in the `InnerClassesAttribute`.
 ClassEntry innerClass()
 ```
 
+{@return the nested class described by this entry}
+
 ## InnerClassInfo.outerClass()
 
 ```java
 Optional<ClassEntry> outerClass()
 ```
 
-This may be empty if this class is
+{@return the class or interface of which this class is a member, if it is
+a member of a class or interface}  This may be empty if this class is
 local or anonymous.
 
-**See also:** Class#getDeclaringClass()
+@see Class#getDeclaringClass()
 
 ## InnerClassInfo.innerName()
 
@@ -44,7 +36,9 @@ local or anonymous.
 Optional<Utf8Entry> innerName()
 ```
 
-**See also:** Class#getSimpleName()
+{@return the simple name of this class, or empty if this class is anonymous}
+
+@see Class#getSimpleName()
 
 ## InnerClassInfo.flagsMask()
 
@@ -52,11 +46,12 @@ Optional<Utf8Entry> innerName()
 int flagsMask()
 ```
 
-It is in the range of unsigned short, `[0, 0xFFFF]`.
+{@return a bit mask of flags denoting access permissions and properties
+of the inner class}  It is in the range of unsigned short, {@code [0,
+0xFFFF]}.
 
-**See also:** Class#getModifiers()
-
-**See also:** AccessFlag.Location#INNER_CLASS
+@see Class#getModifiers()
+@see AccessFlag.Location#INNER_CLASS
 
 ## InnerClassInfo.flags()
 
@@ -64,13 +59,12 @@ It is in the range of unsigned short, `[0, 0xFFFF]`.
 default Set<AccessFlag> flags()
 ```
 
-**See also:** Class#accessFlags()
+{@return a set of flag enums denoting access permissions and properties
+of the nested class}
 
-**See also:** AccessFlag.Location#INNER_CLASS
-
-Throws:
-
-- `IllegalArgumentException`: if the flags mask has any undefined bit set
+@throws IllegalArgumentException if the flags mask has any undefined bit set
+@see Class#accessFlags()
+@see AccessFlag.Location#INNER_CLASS
 
 ## InnerClassInfo.has(AccessFlag)
 
@@ -78,11 +72,10 @@ Throws:
 default boolean has(AccessFlag flag)
 ```
 
-Parameters:
+{@return whether a specific access flag is set}
 
-- `flag`: the access flag
-
-**See also:** AccessFlag.Location#INNER_CLASS
+@param flag the access flag
+@see AccessFlag.Location#INNER_CLASS
 
 ## InnerClassInfo.of(ClassEntry, Optional<ClassEntry>, Optional<Utf8Entry>, int)
 
@@ -90,12 +83,11 @@ Parameters:
 static InnerClassInfo of(ClassEntry innerClass, Optional<ClassEntry> outerClass, Optional<Utf8Entry> innerName, int flags)
 ```
 
-Parameters:
-
-- `innerClass`: the nested class being described
-- `outerClass`: the class that has the nested class as a member, if it exists
-- `innerName`: the simple name of the nested class, if it is not anonymous
-- `flags`: the inner class access flags
+{@return a nested class description}
+@param innerClass the nested class being described
+@param outerClass the class that has the nested class as a member, if it exists
+@param innerName the simple name of the nested class, if it is not anonymous
+@param flags the inner class access flags
 
 ## InnerClassInfo.of(ClassDesc, Optional<ClassDesc>, Optional<String>, int)
 
@@ -103,16 +95,12 @@ Parameters:
 static InnerClassInfo of(ClassDesc innerClass, Optional<ClassDesc> outerClass, Optional<String> innerName, int flags)
 ```
 
-Parameters:
-
-- `innerClass`: the nested class being described
-- `outerClass`: the class that has the nested class as a member, if it exists
-- `innerName`: the simple name of the nested class, if it is not anonymous
-- `flags`: the inner class access flags
-
-Throws:
-
-- `IllegalArgumentException`: if `innerClass` or `outerClass` represents a primitive type
+{@return a nested class description}
+@param innerClass the nested class being described
+@param outerClass the class that has the nested class as a member, if it exists
+@param innerName the simple name of the nested class, if it is not anonymous
+@param flags the inner class access flags
+@throws IllegalArgumentException if {@code innerClass} or {@code outerClass} represents a primitive type
 
 ## InnerClassInfo.of(ClassDesc, Optional<ClassDesc>, Optional<String>, AccessFlag...)
 
@@ -120,13 +108,11 @@ Throws:
 static InnerClassInfo of(ClassDesc innerClass, Optional<ClassDesc> outerClass, Optional<String> innerName, AccessFlag... flags)
 ```
 
-Parameters:
-
-- `innerClass`: the nested class being described
-- `outerClass`: the class that has the nested class as a member, if it exists
-- `innerName`: the name of the nested class, if it is not anonymous
-- `flags`: the inner class access flags
-
-Throws:
-
-- `IllegalArgumentException`: if `innerClass` or `outerClass` represents a primitive type, or if any flag cannot be applied to the `AccessFlag.Location.INNER_CLASS` location
+{@return a nested class description}
+@param innerClass the nested class being described
+@param outerClass the class that has the nested class as a member, if it exists
+@param innerName the name of the nested class, if it is not anonymous
+@param flags the inner class access flags
+@throws IllegalArgumentException if {@code innerClass} or {@code outerClass}
+        represents a primitive type, or if any flag cannot be applied to
+        the {@link AccessFlag.Location#INNER_CLASS} location

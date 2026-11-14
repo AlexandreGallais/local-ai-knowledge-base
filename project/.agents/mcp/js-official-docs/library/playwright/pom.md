@@ -1,10 +1,6 @@
 ---
+id: pom
 title: "Page object models"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/pom.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
 
 ## Introduction
@@ -20,7 +16,7 @@ Page objects **simplify authoring** by creating a higher-level API which suits y
 
 We will create a `PlaywrightDevPage` helper class to encapsulate common operations on the `playwright.dev` page. Internally, it will use the `page` object.
 
-```js
+```js tab=js-test title="playwright-dev-page.ts"
 import { expect, type Locator, type Page } from '@playwright/test';
 
 export class PlaywrightDevPage {
@@ -58,7 +54,7 @@ export class PlaywrightDevPage {
 }
 ```
 
-```js
+```js tab=js-library title="models/PlaywrightDevPage.js"
 class PlaywrightDevPage {
   /**
    * @param {import('playwright').Page} page
@@ -89,7 +85,7 @@ module.exports = { PlaywrightDevPage };
 
 Now we can use the `PlaywrightDevPage` class in our tests.
 
-```js
+```js tab=js-test title="example.spec.ts"
 import { test, expect } from '@playwright/test';
 import { PlaywrightDevPage } from './playwright-dev-page';
 
@@ -117,7 +113,7 @@ test('should show Page Object Model article', async ({ page }) => {
 });
 ```
 
-```js
+```js tab=js-library title="example.spec.js"
 const { PlaywrightDevPage } = require('./playwright-dev-page');
 
 // In the test
@@ -141,7 +137,7 @@ await expect(playwrightDev.tocList).toHaveText([
 
 Page object models wrap over a Playwright [Page].
 
-```java
+```java title="models/SearchPage.java"
 package models;
 
 import com.microsoft.playwright;
@@ -166,7 +162,7 @@ public class SearchPage {
 }
 ```
 
-```python
+```python async title="models/search.py"
 class SearchPage:
     def __init__(self, page):
         self.page = page
@@ -180,7 +176,7 @@ class SearchPage:
         await self.search_term_input.press("Enter")
 ```
 
-```python
+```python sync title="models/search.py"
 class SearchPage:
     def __init__(self, page):
         self.page = page
@@ -238,7 +234,7 @@ searchPage.navigate();
 searchPage.search("search query");
 ```
 
-```python
+```python async title="test_search.py"
 from models.search import SearchPage
 
 # in the test
@@ -248,7 +244,7 @@ await search_page.navigate()
 await search_page.search("search query")
 ```
 
-```python
+```python sync title="test_search.py"
 from models.search import SearchPage
 
 # in the test

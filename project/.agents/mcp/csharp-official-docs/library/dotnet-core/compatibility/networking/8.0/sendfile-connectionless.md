@@ -1,31 +1,27 @@
 ---
 title: "Breaking change: SendFile throws NotSupportedException for connectionless sockets"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/networking/8.0/sendfile-connectionless.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 8 breaking change in networking where the SendFile, SendFileAsync, and EndSendFile methods now throw a NotSupportedException for connectionless sockets on all platforms.
+ms.date: 11/03/2023
 ---
-
 # SendFile throws NotSupportedException for connectionless sockets
 
-The behavior of the `System.Net.Sockets.Socket.SendFile*` method family for connectionless (for example, UDP) sockets is now consistent across all platforms. The affected methods now throw a `System.NotSupportedException` on all platforms.
+The behavior of the <xref:System.Net.Sockets.Socket.SendFile*> method family for connectionless (for example, UDP) sockets is now consistent across all platforms. The [affected methods](#affected-apis) now throw a <xref:System.NotSupportedException> on all platforms.
 
 ## Previous behavior
 
-Previously, for a connectionless `System.Net.Sockets.Socket` (for example, UDP), the following behaviors were observed:
+Previously, for a connectionless <xref:System.Net.Sockets.Socket> (for example, UDP), the following behaviors were observed:
 
-- `System.Net.Sockets.Socket.SendFile*` threw a `System.NotSupportedException` on Windows, but not on Unix-like platforms.
-- The `System.Threading.Tasks.ValueTask` returned from `System.Net.Sockets.Socket.SendFileAsync*` stored a `System.Net.Sockets.SocketException` on all platforms.
-- Calling `System.Net.Sockets.Socket.EndSendFile*` on an `System.IAsyncResult` returned from `System.Net.Sockets.Socket.BeginSendFile*` threw a `System.Net.Sockets.SocketException` on all platforms.
+- <xref:System.Net.Sockets.Socket.SendFile*> threw a <xref:System.NotSupportedException> on Windows, but not on Unix-like platforms.
+- The <xref:System.Threading.Tasks.ValueTask> returned from <xref:System.Net.Sockets.Socket.SendFileAsync*> stored a <xref:System.Net.Sockets.SocketException> on all platforms.
+- Calling <xref:System.Net.Sockets.Socket.EndSendFile*> on an <xref:System.IAsyncResult> returned from <xref:System.Net.Sockets.Socket.BeginSendFile*> threw a <xref:System.Net.Sockets.SocketException> on all platforms.
 
 ## New behavior
 
-Starting in .NET 8, for a connectionless `System.Net.Sockets.Socket` (for example, UDP), the following behaviors are observed:
+Starting in .NET 8, for a connectionless <xref:System.Net.Sockets.Socket> (for example, UDP), the following behaviors are observed:
 
-- `System.Net.Sockets.Socket.SendFile*` throws a `System.NotSupportedException` on all platforms.
-- The `System.Threading.Tasks.ValueTask` returned from `System.Net.Sockets.Socket.SendFileAsync*` stores a `System.NotSupportedException` on all platforms.
-- Calling `System.Net.Sockets.Socket.EndSendFile*` on an `System.IAsyncResult` returned from `System.Net.Sockets.Socket.BeginSendFile*` throws a `System.NotSupportedException` on all platforms.
+- <xref:System.Net.Sockets.Socket.SendFile*> throws a <xref:System.NotSupportedException> on all platforms.
+- The <xref:System.Threading.Tasks.ValueTask> returned from <xref:System.Net.Sockets.Socket.SendFileAsync*> stores a <xref:System.NotSupportedException> on all platforms.
+- Calling <xref:System.Net.Sockets.Socket.EndSendFile*> on an <xref:System.IAsyncResult> returned from <xref:System.Net.Sockets.Socket.BeginSendFile*> throws a <xref:System.NotSupportedException> on all platforms.
 
 ## Version introduced
 
@@ -33,7 +29,7 @@ Starting in .NET 8, for a connectionless `System.Net.Sockets.Socket` (for exampl
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -45,6 +41,6 @@ Do not use `SendFile` methods for connectionless sockets.
 
 ## Affected APIs
 
-- `System.Net.Sockets.Socket.SendFile*`
-- `System.Net.Sockets.Socket.SendFileAsync*`
-- `System.Net.Sockets.Socket.EndSendFile*`
+- <xref:System.Net.Sockets.Socket.SendFile*?displayProperty=fullName>
+- <xref:System.Net.Sockets.Socket.SendFileAsync*?displayProperty=fullName>
+- <xref:System.Net.Sockets.Socket.EndSendFile*?displayProperty=fullName>

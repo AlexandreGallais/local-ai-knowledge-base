@@ -1,14 +1,9 @@
 ---
-title: "jsx-quotes"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/jsx-quotes.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: jsx-quotes
+rule_type: layout
+related_rules:
+- quotes
 ---
-
-# jsx-quotes
-
 JSX attribute values can contain string literals, which are delimited with single or double quotes.
 
 ```jsx
@@ -39,7 +34,7 @@ This rule has a string option:
 
 Examples of **incorrect** code for this rule with the default `"prefer-double"` option:
 
-**Incorrect:**
+:::incorrect { "parserOptions": { "ecmaFeatures": { "jsx": true } } }
 
 ```jsx
 /*eslint jsx-quotes: ["error", "prefer-double"]*/
@@ -47,9 +42,11 @@ Examples of **incorrect** code for this rule with the default `"prefer-double"` 
 <a b='c' />;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"prefer-double"` option:
 
-**Correct:**
+:::correct { "parserOptions": { "ecmaFeatures": { "jsx": true } } }
 
 ```jsx
 /*eslint jsx-quotes: ["error", "prefer-double"]*/
@@ -58,11 +55,13 @@ Examples of **correct** code for this rule with the default `"prefer-double"` op
 <a b='"' />;
 ```
 
+:::
+
 ### prefer-single
 
 Examples of **incorrect** code for this rule with the `"prefer-single"` option:
 
-**Incorrect:**
+:::incorrect { "parserOptions": { "ecmaFeatures": { "jsx": true } } }
 
 ```jsx
 /*eslint jsx-quotes: ["error", "prefer-single"]*/
@@ -70,9 +69,11 @@ Examples of **incorrect** code for this rule with the `"prefer-single"` option:
 <a b="c" />;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"prefer-single"` option:
 
-**Correct:**
+:::correct { "parserOptions": { "ecmaFeatures": { "jsx": true } } }
 
 ```jsx
 /*eslint jsx-quotes: ["error", "prefer-single"]*/
@@ -80,6 +81,8 @@ Examples of **correct** code for this rule with the `"prefer-single"` option:
 <a b='c' />;
 <a b="'" />;
 ```
+
+:::
 
 ## When Not To Use It
 

@@ -1,22 +1,24 @@
 ---
+description: "Learn more about: Equality Operators"
 title: "Equality Operators"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/equality-operators.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "class library design guidelines [.NET Framework], Equals method"
+  - "class library design guidelines [.NET Framework], equality operator"
+  - "equality operator (==) [.NET Framework]"
+  - "Equals method"
+  - "== operator (equality) [.NET Framework]"
+ms.assetid: bc496a91-fefb-4ce0-ab4c-61f09964119a
 ---
-
 # Equality Operators
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
 This section discusses overloading equality operators and refers to `operator==` and `operator!=` as equality operators.
 
  ❌ DO NOT overload one of the equality operators and not the other.
 
- ✔️ DO ensure that `System.Object.Equals*` and the equality operators have exactly the same semantics and similar performance characteristics.
+ ✔️ DO ensure that <xref:System.Object.Equals*?displayProperty=nameWithType> and the equality operators have exactly the same semantics and similar performance characteristics.
 
  This often means that `Object.Equals` needs to be overridden when the equality operators are overloaded.
 
@@ -42,9 +44,9 @@ This section discusses overloading equality operators and refers to `operator==`
 
  *Portions © 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Framework Design Guidelines
-- Usage Guidelines
+- [Framework Design Guidelines](index.md)
+- [Usage Guidelines](usage-guidelines.md)

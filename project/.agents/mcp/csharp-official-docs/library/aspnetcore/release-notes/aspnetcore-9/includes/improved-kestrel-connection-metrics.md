@@ -1,17 +1,6 @@
----
-title: "improved-kestrel-connection-metrics"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-9/includes/improved-kestrel-connection-metrics.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# improved-kestrel-connection-metrics
-
 ### Improved Kestrel connection metrics
 
-We've made a significant improvement to Kestrel's connection metrics by including metadata about why a connection failed. The `kestrel.connection.duration` metric now includes the connection close reason in the `error.type` attribute.
+We've made a significant improvement to Kestrel's connection metrics by including metadata about why a connection failed. The [`kestrel.connection.duration`](/dotnet/core/diagnostics/built-in-metrics-aspnetcore#metric-kestrelconnectionduration) metric now includes the connection close reason in the `error.type` attribute.
 
 Here is a small sample of the `error.type` values:
 
@@ -22,7 +11,7 @@ Here is a small sample of the `error.type` values:
 
 Previously, diagnosing Kestrel connection issues required a server to record detailed, low-level logging. However, logs can be expensive to generate and store, and it can be difficult to find the right information among the noise.
 
-Metrics are a much cheaper alternative that can be left on in a production environment with minimal impact. Collected metrics can drive dashboards and alerts. Once a problem is identified at a high-level with metrics, further investigation using logging and other tooling can begin.
+Metrics are a much cheaper alternative that can be left on in a production environment with minimal impact. Collected metrics can [drive dashboards and alerts](../../../metrics/overview.md#show-metrics-on-a-grafana-dashboard). Once a problem is identified at a high-level with metrics, further investigation using logging and other tooling can begin.
 
 We expect improved connection metrics to be useful in many scenarios:
 
@@ -30,4 +19,4 @@ We expect improved connection metrics to be useful in many scenarios:
 * Observing ongoing external attacks on Kestrel that impact performance and stability.
 * Recording attempted external attacks on Kestrel that Kestrel's built-in security hardening prevented.
 
-For more information, see ASP.NET Core metrics.
+For more information, see [ASP.NET Core metrics](../../../metrics/overview.md).

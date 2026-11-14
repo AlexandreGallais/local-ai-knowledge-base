@@ -1,22 +1,20 @@
 ---
-title: "Troubleshoot and debug ASP.NET Core projects"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/test/troubleshoot.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Troubleshoot and debug ASP.NET Core projects
+description: Understand and troubleshoot warnings and errors with ASP.NET Core projects.
+ms.date: 5/2/2025
 ---
-
 # Troubleshoot and debug ASP.NET Core projects
 
-By Rick Anderson
+:::moniker range=">= aspnetcore-6.0"
+
+By [Rick Anderson](https://twitter.com/RickAndMSFT)
 
 The following links provide troubleshooting guidance:
 
-* Troubleshoot ASP.NET Core on Azure App Service and IIS
-* Common error troubleshooting for Azure App Service and IIS with ASP.NET Core
-* NDC Conference (London, 2018): Diagnosing issues in ASP.NET Core Applications
-* ASP.NET Blog: Troubleshooting ASP.NET Core Performance Problems
+* [Troubleshoot ASP.NET Core on Azure App Service and IIS](troubleshoot-azure-iis.md)
+* [Common error troubleshooting for Azure App Service and IIS with ASP.NET Core](../host-and-deploy/azure-iis-errors-reference.md)
+* [NDC Conference (London, 2018): Diagnosing issues in ASP.NET Core Applications](https://www.youtube.com/watch?v=RYI0DHoIVaA)
+* [ASP.NET Blog: Troubleshooting ASP.NET Core Performance Problems](https://blogs.msdn.microsoft.com/webdev/2018/05/23/asp-net-core-performance-improvements/)
 
 ## .NET Core SDK warnings
 
@@ -26,7 +24,7 @@ In the **New Project** dialog for ASP.NET Core, you may see the following warnin
 
 > Both 32-bit and 64-bit versions of the .NET Core SDK are installed. Only templates from the 64-bit versions installed at 'C:\\Program Files\\dotnet\\sdk\\' are displayed.
 
-This warning appears when both 32-bit (x86) and 64-bit (x64) versions of the .NET Core SDK are installed. Common reasons both versions may be installed include:
+This warning appears when both 32-bit (x86) and 64-bit (x64) versions of the [.NET Core SDK](https://dotnet.microsoft.com/download/dotnet-core) are installed. Common reasons both versions may be installed include:
 
 * You originally downloaded the .NET Core SDK installer using a 32-bit machine but then copied it across and installed it on a 64-bit machine.
 * The 32-bit .NET Core SDK was installed by another application.
@@ -56,12 +54,12 @@ Uninstall all 32-bit .NET Core SDKs and runtimes to prevent this warning. Uninst
 
 These warnings appear when the environment variable `PATH` doesn't point to any .NET Core SDKs on the machine. To resolve this problem:
 
-* Install the .NET Core SDK. Obtain the latest installer from .NET Downloads.
+* Install the .NET Core SDK. Obtain the latest installer from [.NET Downloads](https://dotnet.microsoft.com/download).
 * Verify that the `PATH` environment variable points to the location where the SDK is installed (`C:\Program Files\dotnet\` for 64-bit/x64 or `C:\Program Files (x86)\dotnet\` for 32-bit/x86). The SDK installer normally sets the `PATH`. Always install the same bitness SDKs and runtimes on the same machine.
 
 ### Missing SDK after installing the .NET Core Hosting Bundle
 
-Installing the .NET Core Hosting Bundle modifies the `PATH` when it installs the .NET Core runtime to point to the 32-bit (x86) version of .NET Core (`C:\Program Files (x86)\dotnet\`). This can result in missing SDKs when the 32-bit (x86) .NET Core `dotnet` command is used (No .NET Core SDKs were detected). To resolve this problem, move `C:\Program Files\dotnet\` to a position before `C:\Program Files (x86)\dotnet\` on the `PATH`.
+Installing the [.NET Core Hosting Bundle](../host-and-deploy/iis/index.md#install-the-net-hosting-bundle) modifies the `PATH` when it installs the .NET Core runtime to point to the 32-bit (x86) version of .NET Core (`C:\Program Files (x86)\dotnet\`). This can result in missing SDKs when the 32-bit (x86) .NET Core `dotnet` command is used ([No .NET Core SDKs were detected](#no-net-core-sdks-were-detected)). To resolve this problem, move `C:\Program Files\dotnet\` to a position before `C:\Program Files (x86)\dotnet\` on the `PATH`.
 
 ## Obtain data from an app
 
@@ -73,104 +71,21 @@ If an app is capable of responding to requests, you can obtain the following dat
 * Configuration settings
 * Environment variables
 
-Place the following middleware code at the beginning of the `Startup.Configure` method's request processing pipeline. The environment is checked before the middleware is run to ensure that the code is only executed in the `Development` environment.
+Place the following [middleware](../fundamentals/middleware/index.md#create-a-middleware-pipeline-with-iapplicationbuilder) code at the beginning of the `Startup.Configure` method's request processing pipeline. The environment is checked before the middleware is run to ensure that the code is only executed in the `Development` environment.
 
 Get the environment from the `Environment` property of `WebApplication`. For example, `if (app.Environment.IsDevelopment())` as in the following sample code.
 
-```csharp
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Server.IISIntegration;
-using System.Text;
+:::code language="csharp" source="~/test/troubleshoot/code/9.x/Program.cs" highlight="13-85":::
 
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddAuthentication();
-
-var app = builder.Build();
-
-app.MapGet("/", () => "Hello World!");
-
-if (app.Environment.IsDevelopment())
-{
-    app.Run(async (context) =>
-    {
-        var sb = new StringBuilder();
-        var nl = System.Environment.NewLine;
-        var rule = string.Concat(nl, new string('-', 40), nl);
-
-        var authSchemeProvider = app.Services.
-                       GetRequiredService<IAuthenticationSchemeProvider>();
-
-        sb.Append($"Request{rule}");
-        sb.Append($"{DateTimeOffset.Now}{nl}");
-        sb.Append($"{context.Request.Method} {context.Request.Path}{nl}");
-        sb.Append($"Scheme: {context.Request.Scheme}{nl}");
-        sb.Append($"Host: {context.Request.Headers["Host"]}{nl}");
-        sb.Append($"PathBase: {context.Request.PathBase.Value}{nl}");
-        sb.Append($"Path: {context.Request.Path.Value}{nl}");
-        sb.Append($"Query: {context.Request.QueryString.Value}{nl}{nl}");
-
-        sb.Append($"Connection{rule}");
-        sb.Append($"RemoteIp: {context.Connection.RemoteIpAddress}{nl}");
-        sb.Append($"RemotePort: {context.Connection.RemotePort}{nl}");
-        sb.Append($"LocalIp: {context.Connection.LocalIpAddress}{nl}");
-        sb.Append($"LocalPort: {context.Connection.LocalPort}{nl}");
-        sb.Append($"ClientCert: {context.Connection.ClientCertificate}{nl}{nl}");
-
-        sb.Append($"Identity{rule}");
-        sb.Append($"User: {context.User.Identity.Name}{nl}");
-        var scheme = await authSchemeProvider
-            .GetSchemeAsync(IISDefaults.AuthenticationScheme);
-        sb.Append($"DisplayName: {scheme?.DisplayName}{nl}{nl}");
-
-        sb.Append($"Headers{rule}");
-        foreach (var header in context.Request.Headers)
-        {
-            sb.Append($"{header.Key}: {header.Value}{nl}");
-        }
-        sb.Append(nl);
-
-        sb.Append($"WebSockets{rule}");
-        if (context.Features.Get<IHttpUpgradeFeature>() != null)
-        {
-            sb.Append($"Status: Enabled{nl}{nl}");
-        }
-        else
-        {
-            sb.Append($"Status: Disabled{nl}{nl}");
-        }
-
-        sb.Append($"Configuration{rule}");
-        var config = builder.Configuration;
-
-         foreach (var pair in config.AsEnumerable())
-        {
-            sb.Append($"{pair.Key}: {pair.Value}{nl}"); 
-        }
-        sb.Append(nl);
-        sb.Append(nl);
-
-        sb.Append($"Environment Variables{rule}");
-        var vars = System.Environment.GetEnvironmentVariables();
-        foreach (var key in vars.Keys.Cast<string>().OrderBy(key => key,
-            StringComparer.OrdinalIgnoreCase))
-        {
-            var value = vars[key];
-            sb.Append($"{key}: {value}{nl}");
-        }
-
-        context.Response.ContentType = "text/plain";
-        await context.Response.WriteAsync(sb.ToString());
-    });
-}
-
-app.Run();
-```
 ## Debug ASP.NET Core apps
 
 The following links provide information on debugging ASP.NET Core apps.
 
-* Debugging ASP Core on Linux
-* Debugging .NET Core on Unix over SSH
-* Quickstart: Debug ASP.NET with the Visual Studio debugger
-* See this GitHub issue for more debugging information.
+* [Debugging ASP Core on Linux](https://devblogs.microsoft.com/premier-developer/debugging-asp-core-on-linux-with-visual-studio-2017/)
+* [Debugging .NET Core on Unix over SSH](https://devblogs.microsoft.com/devops/debugging-net-core-on-unix-over-ssh/)
+* [Quickstart: Debug ASP.NET with the Visual Studio debugger](/visualstudio/debugger/quickstart-debug-aspnet)
+* See [this GitHub issue](https://github.com/dotnet/AspNetCore.Docs/issues/2960) for more debugging information.
+
+:::moniker-end
+
+[!INCLUDE[](~/test/troubleshoot/includes/troubleshoot5.md)]

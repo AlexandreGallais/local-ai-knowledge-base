@@ -1,16 +1,17 @@
 ---
+description: "Learn more about: Operator Overloads"
 title: "Operator Overloads"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/operator-overloads.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "operators [.NET Framework], overloads"
+  - "names [.NET Framework], overloaded operators"
+  - "member design guidelines, operators"
+  - "overloaded operators"
+ms.assetid: 37585bf2-4c27-4dee-849a-af70e3338cc1
 ---
-
 # Operator Overloads
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
 Operator overloads allow framework types to appear as if they were built-in language primitives.
 
@@ -20,13 +21,13 @@ Operator overloads allow framework types to appear as if they were built-in lang
 
  ✔️ CONSIDER defining operator overloads in a type that should feel like a primitive type.
 
- For example, `System.String` has `operator==` and `operator!=` defined.
+ For example, <xref:System.String?displayProperty=nameWithType> has `operator==` and `operator!=` defined.
 
- ✔️ DO define operator overloads in structs that represent numbers (such as `System.Decimal`).
+ ✔️ DO define operator overloads in structs that represent numbers (such as <xref:System.Decimal?displayProperty=nameWithType>).
 
  ❌ DO NOT be cute when defining operator overloads.
 
- Operator overloading is useful in cases in which it is immediately obvious what the result of the operation will be. For example, it makes sense to be able to subtract one `System.DateTime` from another `DateTime` and get a `System.TimeSpan`. However, it is not appropriate to use the logical union operator to union two database queries, or to use the shift operator to write to a stream.
+ Operator overloading is useful in cases in which it is immediately obvious what the result of the operation will be. For example, it makes sense to be able to subtract one <xref:System.DateTime> from another `DateTime` and get a <xref:System.TimeSpan>. However, it is not appropriate to use the logical union operator to union two database queries, or to use the shift operator to write to a stream.
 
  ❌ DO NOT provide operator overloads unless at least one of the operands is of the type defining the overload.
 
@@ -51,9 +52,9 @@ Operator overloads allow framework types to appear as if they were built-in lang
 |`%`|`op_Modulus`|`Mod or Remainder`|
 |`^`|`op_ExclusiveOr`|`Xor`|
 |`& (binary)`|`op_BitwiseAnd`|`BitwiseAnd`|
-|`&#124;`|`op_BitwiseOr`|`BitwiseOr`|
+|<code>&#124;</code>|`op_BitwiseOr`|`BitwiseOr`|
 |`&&`|`op_LogicalAnd`|`And`|
-|`&#124;&#124;`|`op_LogicalOr`|`Or`|
+|<code>&#124;&#124;</code>|`op_LogicalOr`|`Or`|
 |`=`|`op_Assign`|`Assign`|
 |`<<`|`op_LeftShift`|`LeftShift`|
 |`>>`|`op_RightShift`|`RightShift`|
@@ -72,7 +73,7 @@ Operator overloads allow framework types to appear as if they were built-in lang
 |`%=`|`op_ModulusAssignment`|`Mod`|
 |`+=`|`op_AdditionAssignment`|`Add`|
 |`&=`|`op_BitwiseAndAssignment`|`BitwiseAnd`|
-|`&#124;=`|`op_BitwiseOrAssignment`|`BitwiseOr`|
+|<code>&#124;=</code>|`op_BitwiseOrAssignment`|`BitwiseOr`|
 |`,`|`op_Comma`|`Comma`|
 |`/=`|`op_DivisionAssignment`|`Divide`|
 |`--`|`op_Decrement`|`Decrement`|
@@ -83,7 +84,7 @@ Operator overloads allow framework types to appear as if they were built-in lang
 
 ### Overloading Operator ==
 
- Overloading `operator ==` is quite complicated. The semantics of the operator need to be compatible with several other members, such as `System.Object.Equals*`.
+ Overloading `operator ==` is quite complicated. The semantics of the operator need to be compatible with several other members, such as <xref:System.Object.Equals*?displayProperty=nameWithType>.
 
 ### Conversion Operators
 
@@ -93,7 +94,7 @@ Operator overloads allow framework types to appear as if they were built-in lang
 
  ❌ DO NOT define conversion operators outside of a type’s domain.
 
- For example, `System.Int32`, `System.Double`, and `System.Decimal` are all numeric types, whereas `System.DateTime` is not. Therefore, there should be no conversion operator to convert a `Double(long)` to a `DateTime`. A constructor is preferred in such a case.
+ For example, <xref:System.Int32>, <xref:System.Double>, and <xref:System.Decimal> are all numeric types, whereas <xref:System.DateTime> is not. Therefore, there should be no conversion operator to convert a `Double(long)` to a `DateTime`. A constructor is preferred in such a case.
 
  ❌ DO NOT provide an implicit conversion operator if the conversion is potentially lossy.
 
@@ -103,13 +104,13 @@ Operator overloads allow framework types to appear as if they were built-in lang
 
  It is very difficult for end users to understand what is happening, because they might not be aware that a conversion is taking place.
 
- ✔️ DO throw `System.InvalidCastException` if a call to a cast operator results in a lossy conversion and the contract of the operator does not allow lossy conversions.
+ ✔️ DO throw <xref:System.InvalidCastException?displayProperty=nameWithType> if a call to a cast operator results in a lossy conversion and the contract of the operator does not allow lossy conversions.
 
  *Portions © 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Member Design Guidelines
-- Framework Design Guidelines
+- [Member Design Guidelines](member.md)
+- [Framework Design Guidelines](index.md)

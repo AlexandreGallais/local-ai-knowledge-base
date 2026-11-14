@@ -1,29 +1,25 @@
 ---
-title: "What's new in ASP.NET Core 2.2"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-2.2.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: What's new in ASP.NET Core 2.2
+description: Learn about the new features in ASP.NET Core 2.2.
+ms.date: 12/5/2019
 ---
-
 # What's new in ASP.NET Core 2.2
 
 This article highlights the most significant changes in ASP.NET Core 2.2, with links to relevant documentation.
 
 ## OpenAPI Analyzers & Conventions
 
-OpenAPI (formerly known as Swagger) is a language-agnostic specification for describing REST APIs. The OpenAPI ecosystem has tools that allow for discovering, testing, and producing client code using the specification. Support for generating and visualizing OpenAPI documents in ASP.NET Core MVC is provided via community driven projects such as NSwag and Swashbuckle.AspNetCore. ASP.NET Core 2.2 provides improved tooling and runtime experiences for creating OpenAPI documents.
+OpenAPI (formerly known as Swagger) is a language-agnostic specification for describing REST APIs. The OpenAPI ecosystem has tools that allow for discovering, testing, and producing client code using the specification. Support for generating and visualizing OpenAPI documents in ASP.NET Core MVC is provided via community driven projects such as [NSwag](https://github.com/RicoSuter/NSwag) and [Swashbuckle.AspNetCore](https://github.com/domaindrivendev/Swashbuckle.AspNetCore). ASP.NET Core 2.2 provides improved tooling and runtime experiences for creating OpenAPI documents.
 
 For more information, see the following resources:
 
-* Use web API analyzers
-* Use web API conventions
-* ASP.NET Core 2.2.0-preview1: OpenAPI Analyzers & Conventions
+* [Use web API analyzers](../web-api/advanced/analyzers.md)
+* [Use web API conventions](../web-api/advanced/conventions.md)
+* [ASP.NET Core 2.2.0-preview1: OpenAPI Analyzers & Conventions](https://blogs.msdn.microsoft.com/webdev/2018/08/23/asp-net-core-2-20-preview1-open-api-analyzers-conventions/)
 
 ## Problem details support
 
-ASP.NET Core 2.1 introduced `ProblemDetails`, based on the RFC 7807 specification for carrying details of an error with an HTTP Response. In 2.2, `ProblemDetails` is the standard response for client error codes in controllers attributed with `ApiControllerAttribute`. An `IActionResult` returning a client error status code (4xx) now returns a `ProblemDetails` body. The result also includes a correlation ID that can be used to correlate the error using request logs. For client errors, `ProducesResponseType` defaults to using `ProblemDetails` as the response type. This is documented in OpenAPI / Swagger output generated using NSwag or Swashbuckle.AspNetCore.
+ASP.NET Core 2.1 introduced `ProblemDetails`, based on the [RFC 7807](https://tools.ietf.org/html/rfc7807) specification for carrying details of an error with an HTTP Response. In 2.2, `ProblemDetails` is the standard response for client error codes in controllers attributed with `ApiControllerAttribute`. An `IActionResult` returning a client error status code (4xx) now returns a `ProblemDetails` body. The result also includes a correlation ID that can be used to correlate the error using request logs. For client errors, `ProducesResponseType` defaults to using `ProblemDetails` as the response type. This is documented in OpenAPI / Swagger output generated using NSwag or Swashbuckle.AspNetCore.
 
 ## Endpoint Routing
 
@@ -31,9 +27,9 @@ ASP.NET Core 2.2 uses a new *endpoint routing* system for improved dispatching o
 
 For more information, see the following resources:
 
-* Endpoint routing in 2.2
-* Route parameter transformers (see **Routing** section)
-* Routing in ASP.NET Core
+* [Endpoint routing in 2.2](https://blogs.msdn.microsoft.com/webdev/2018/08/27/asp-net-core-2-2-0-preview1-endpoint-routing/)
+* [Route parameter transformers](https://www.hanselman.com/blog/ASPNETCore22ParameterTransformersForCleanURLGenerationAndSlugsInRazorPagesOrMVC.aspx) (see **Routing** section)
+* [Routing in ASP.NET Core](../fundamentals/routing.md)
 
 ## Health checks
 
@@ -41,9 +37,9 @@ A new health checks service makes it easier to use ASP.NET Core in environments 
 
 Health checks are used by a container orchestrator or load balancer to quickly determine if a system is responding to requests normally. A container orchestrator might respond to a failing health check by halting a rolling deployment or restarting a container. A load balancer might respond to a health check by routing traffic away from the failing instance of the service.
 
-Health checks are exposed by an application as an HTTP endpoint used by monitoring systems. Health checks can be configured for a variety of real-time monitoring scenarios and monitoring systems. The health checks service integrates with the BeatPulse project. which makes it easier to add checks for dozens of popular systems and dependencies.
+Health checks are exposed by an application as an HTTP endpoint used by monitoring systems. Health checks can be configured for a variety of real-time monitoring scenarios and monitoring systems. The health checks service integrates with the [BeatPulse project](https://github.com/Xabaril/BeatPulse). which makes it easier to add checks for dozens of popular systems and dependencies.
 
-For more information, see Health checks in ASP.NET Core.
+For more information, see [Health checks in ASP.NET Core](../host-and-deploy/health-checks.md).
 
 ## HTTP/2 in Kestrel
 
@@ -58,42 +54,44 @@ While HTTP/2 preserves HTTP's semantics (for example, HTTP headers and methods),
 
 As a consequence of this change in framing, servers and clients need to negotiate the protocol version used. Application-Layer Protocol Negotiation (ALPN) is a TLS extension that allows the server and client to negotiate the protocol version used as part of their TLS handshake. While it is possible to have prior knowledge between the server and the client on the protocol, all major browsers support ALPN as the only way to establish an HTTP/2 connection.
 
-For more information, see HTTP/2 support.
+For more information, see [HTTP/2 support](../fundamentals/servers/index.md?view=aspnetcore-2.2&preserve-view=true#http2-support).
 
 ## Kestrel configuration
 
 In earlier versions of ASP.NET Core, Kestrel options are configured by calling `UseKestrel`. In 2.2, Kestrel options are configured by calling `ConfigureKestrel` on the host builder. This change resolves an issue with the order of `IServer` registrations for in-process hosting. For more information, see the following resources:
 
-* Mitigate UseIIS conflict
-* Configure Kestrel server options with ConfigureKestrel
+* [Mitigate UseIIS conflict](https://github.com/aspnet/KestrelHttpServer/issues/2760)
+* [Configure Kestrel server options with ConfigureKestrel](../fundamentals/servers/kestrel.md?view=aspnetcore-2.2&preserve-view=true#kestrel-in-aspnet-core-apps)
 
 ## IIS in-process hosting
 
 In earlier versions of ASP.NET Core, IIS serves as a reverse proxy. In 2.2, the ASP.NET Core Module can boot the CoreCLR and host an app inside the IIS worker process (*w3wp.exe*). In-process hosting provides performance and diagnostic gains when running with IIS.
 
-For more information, see in-process hosting for IIS.
+For more information, see [in-process hosting for IIS](../host-and-deploy/aspnet-core-module.md?view=aspnetcore-2.2&preserve-view=true#in-process-hosting-model).
 
 ## SignalR Java client
 
 ASP.NET Core 2.2 introduces a Java Client for SignalR. This client supports connecting to an ASP.NET Core SignalR Server from Java code, including Android apps.
 
-For more information, see ASP.NET Core SignalR Java client.
+For more information, see [ASP.NET Core SignalR Java client](../signalr/java-client.md?view=aspnetcore-2.2&preserve-view=true).
 
 ## CORS improvements
 
 In earlier versions of ASP.NET Core, CORS middleware allows `Accept`, `Accept-Language`, `Content-Language`, and `Origin` headers to be sent regardless of the values configured in `CorsPolicy.Headers`. In 2.2, a CORS middleware policy match is only possible when the headers sent in `Access-Control-Request-Headers` exactly match the headers stated in `WithHeaders`.
 
-For more information, see CORS middleware.
+For more information, see [CORS middleware](../security/cors.md#set-the-allowed-request-headers).
 
 ## Response compression
 
-ASP.NET Core 2.2 can compress responses with the Brotli compression format.
+ASP.NET Core 2.2 can compress responses with the [Brotli compression format](https://tools.ietf.org/html/rfc7932).
 
-For more information, see response compression middleware supports Brotli compression.
+For more information, see [response compression middleware supports Brotli compression](../performance/response-compression.md?view=aspnetcore-2.2&preserve-view=true#brotli-compression-provider).
 
 ## Project templates
 
-ASP.NET Core web project templates were updated to Bootstrap 4 and Angular 6. The new look is visually simpler and makes it easier to see the important structures of the app.
+ASP.NET Core web project templates were updated to [Bootstrap 4](https://getbootstrap.com/docs/4.1/migration/) and Angular 6. The new look is visually simpler and makes it easier to see the important structures of the app.
+
+![Home or Index page](~/tutorials/razor-pages/razor-pages-start/_static/home2.2.png)
 
 ## Validation performance
 
@@ -105,12 +103,12 @@ In ASP.NET Core 2.2, MVC can short-circuit validation if it determines that a gi
 
 In ASP.NET Core 2.2, the performance of `SocketsHttpHandler` was improved by reducing connection pool locking contention. For apps that make many outgoing HTTP requests, such as some microservices architectures, throughput is improved. Under load, `HttpClient` throughput can be improved by up to 60% on Linux and 20% on Windows.
 
-For more information, see the pull request that made this improvement.
+For more information, see [the pull request that made this improvement](https://github.com/dotnet/corefx/pull/32568).
 
 ## Breaking changes
 
-Use the articles in Breaking changes in .NET to find breaking changes that might apply when upgrading an app to a newer version of .NET.
+Use the articles in [Breaking changes in .NET](/dotnet/core/compatibility/breaking-changes) to find breaking changes that might apply when upgrading an app to a newer version of .NET.
 
 ## Related content
 
-For the complete list of changes, see the ASP.NET Core 2.2 Release Notes.
+For the complete list of changes, see the [ASP.NET Core 2.2 Release Notes](https://github.com/dotnet/aspnetcore/releases/tag/2.2.0).

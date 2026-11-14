@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebug::CreateProcess Method"
 title: "ICorDebug::CreateProcess Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebug-createprocess-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebug.CreateProcess"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebug::CreateProcess"
+helpviewer_keywords:
+  - "ICorDebug::CreateProcess method [.NET debugging]"
+  - "CreateProcess method, ICorDebugProcess interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebug::CreateProcess Method
 
 Launches a process and its primary thread under the control of the debugger.
@@ -48,7 +57,7 @@ HRESULT CreateProcess (
  [in] Set to `true` to indicate that each inheritable handle in the calling process is inherited by the launched process, or `false` to indicate that the handles are not inherited. The inherited handles have the same value and access rights as the original handles.
 
  `dwCreationFlags`
- [in] A bitwise combination of the Win32 Process Creation Flags that control the priority class and the behavior of the launched process.
+ [in] A bitwise combination of the [Win32 Process Creation Flags](/windows/win32/procthread/process-creation-flags) that control the priority class and the behavior of the launched process.
 
  `lpEnvironment`
  [in] Pointer to an environment block for the new process.
@@ -80,7 +89,7 @@ Interop debugging is not supported on Win9x and non-x86 platforms such as IA-64-
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -90,4 +99,4 @@ Interop debugging is not supported on Win9x and non-x86 platforms such as IA-64-
 
 ## See also
 
-- ICorDebug Interface
+- [ICorDebug Interface](icordebug-interface.md)

@@ -1,12 +1,3 @@
----
-title: "core::slice::ascii"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/slice/ascii.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::slice::ascii
 
 Operations on ASCII `[u8]`.
@@ -44,7 +35,9 @@ ASCII letters 'a' to 'z' are mapped to 'A' to 'Z',
 but non-ASCII letters are unchanged.
 
 To return a new uppercased value without modifying the existing one, use
-`to_ascii_uppercase`.
+[`to_ascii_uppercase`].
+
+[`to_ascii_uppercase`]: #method.to_ascii_uppercase
 
 ## u8::make_ascii_lowercase
 
@@ -58,7 +51,9 @@ ASCII letters 'A' to 'Z' are mapped to 'a' to 'z',
 but non-ASCII letters are unchanged.
 
 To return a new lowercased value without modifying the existing one, use
-`to_ascii_lowercase`.
+[`to_ascii_lowercase`].
+
+[`to_ascii_lowercase`]: #method.to_ascii_lowercase
 
 ## u8::escape_ascii
 
@@ -71,7 +66,7 @@ treating it as an ASCII string.
 
 # Examples
 
-```rust
+```
 let s = b"0\t\r\n'\"\\\x9d";
 let escaped = s.escape_ascii().to_string();
 assert_eq!(escaped, "0\\t\\r\\n\\'\\\"\\\\\\x9d");
@@ -86,13 +81,15 @@ pub const fn trim_ascii_start(&self) -> &[u8]
 Returns a byte slice with leading ASCII whitespace bytes removed.
 
 'Whitespace' refers to the definition used by
-`u8::is_ascii_whitespace`. Importantly, this definition excludes
-the `\0x0B` byte even though it has the Unicode `White_Space` property
-and is removed by `str::trim_start`.
+[`u8::is_ascii_whitespace`]. Importantly, this definition excludes
+the `\0x0B` byte even though it has the Unicode [`White_Space`] property
+and is removed by [`str::trim_start`].
+
+[`White_Space`]: https://www.unicode.org/reports/tr44/#White_Space
 
 # Examples
 
-```rust
+```
 assert_eq!(b" \t hello world\n".trim_ascii_start(), b"hello world\n");
 assert_eq!(b"  ".trim_ascii_start(), b"");
 assert_eq!(b"".trim_ascii_start(), b"");
@@ -107,13 +104,15 @@ pub const fn trim_ascii_end(&self) -> &[u8]
 Returns a byte slice with trailing ASCII whitespace bytes removed.
 
 'Whitespace' refers to the definition used by
-`u8::is_ascii_whitespace`. Importantly, this definition excludes
-the `\0x0B` byte even though it has the Unicode `White_Space` property
-and is removed by `str::trim_end`.
+[`u8::is_ascii_whitespace`]. Importantly, this definition excludes
+the `\0x0B` byte even though it has the Unicode [`White_Space`] property
+and is removed by [`str::trim_end`].
+
+[`White_Space`]: https://www.unicode.org/reports/tr44/#White_Space
 
 # Examples
 
-```rust
+```
 assert_eq!(b"\r hello world\n ".trim_ascii_end(), b"\r hello world");
 assert_eq!(b"  ".trim_ascii_end(), b"");
 assert_eq!(b"".trim_ascii_end(), b"");
@@ -129,13 +128,15 @@ Returns a byte slice with leading and trailing ASCII whitespace bytes
 removed.
 
 'Whitespace' refers to the definition used by
-`u8::is_ascii_whitespace`. Importantly, this definition excludes
-the `\0x0B` byte even though it has the Unicode `White_Space` property
-and is removed by `str::trim`.
+[`u8::is_ascii_whitespace`]. Importantly, this definition excludes
+the `\0x0B` byte even though it has the Unicode [`White_Space`] property
+and is removed by [`str::trim`].
+
+[`White_Space`]: https://www.unicode.org/reports/tr44/#White_Space
 
 # Examples
 
-```rust
+```
 assert_eq!(b"\r hello world\n ".trim_ascii(), b"hello world");
 assert_eq!(b"  ".trim_ascii(), b"");
 assert_eq!(b"".trim_ascii(), b"");
@@ -149,5 +150,5 @@ pub struct EscapeAscii<'a>
 
 An iterator over the escaped version of a byte slice.
 
-This `struct` is created by the `slice::escape_ascii` method. See its
+This `struct` is created by the [`slice::escape_ascii`] method. See its
 documentation for more information.

@@ -1,12 +1,3 @@
----
-title: "CountDownLatch class (java.util.concurrent)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/CountDownLatch.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # CountDownLatch class (java.util.concurrent)
 
 ```java
@@ -16,38 +7,39 @@ public class CountDownLatch
 A synchronization aid that allows one or more threads to wait until
 a set of operations being performed in other threads completes.
 
-A `CountDownLatch` is initialized with a given *count*.
-The await methods block until the current count reaches
-zero due to invocations of the `countDown` method, after which
+<p>A {@code CountDownLatch} is initialized with a given <em>count</em>.
+The {@link #await await} methods block until the current count reaches
+zero due to invocations of the {@link #countDown} method, after which
 all waiting threads are released and any subsequent invocations of
-await return immediately.  This is a one-shot phenomenon
+{@link #await await} return immediately.  This is a one-shot phenomenon
 -- the count cannot be reset.  If you need a version that resets the
-count, consider using a `CyclicBarrier`.
+count, consider using a {@link CyclicBarrier}.
 
-A `CountDownLatch` is a versatile synchronization tool
+<p>A {@code CountDownLatch} is a versatile synchronization tool
 and can be used for a number of purposes.  A
-`CountDownLatch` initialized with a count of one serves as a
-simple on/off latch, or gate: all threads invoking await
-wait at the gate until it is opened by a thread invoking `countDown`.  A `CountDownLatch` initialized to *N*
-can be used to make one thread wait until *N* threads have
+{@code CountDownLatch} initialized with a count of one serves as a
+simple on/off latch, or gate: all threads invoking {@link #await await}
+wait at the gate until it is opened by a thread invoking {@link
+#countDown}.  A {@code CountDownLatch} initialized to <em>N</em>
+can be used to make one thread wait until <em>N</em> threads have
 completed some action, or some action has been completed N times.
 
-A useful property of a `CountDownLatch` is that it
-doesn't require that threads calling `countDown` wait for
+<p>A useful property of a {@code CountDownLatch} is that it
+doesn't require that threads calling {@code countDown} wait for
 the count to reach zero before proceeding, it simply prevents any
-thread from proceeding past an await until all
+thread from proceeding past an {@link #await await} until all
 threads could pass.
 
-**Sample usage:** Here is a pair of classes in which a group
+<p><b>Sample usage:</b> Here is a pair of classes in which a group
 of worker threads use two countdown latches:
-
-- The first is a start signal that prevents any worker from proceeding
+<ul>
+<li>The first is a start signal that prevents any worker from proceeding
 until the driver is ready for them to proceed;
-
-- The second is a completion signal that allows the driver to wait
+<li>The second is a completion signal that allows the driver to wait
 until all workers have completed.
+</ul>
 
-```java
+<pre> {@code
 class Driver { // ...
   void main() throws InterruptedException {
     CountDownLatch startSignal = new CountDownLatch(1);
@@ -79,17 +71,16 @@ class Worker implements Runnable {
   }
 
   void doWork() { ... }
-}
-```
+}}</pre>
 
-Another typical usage would be to divide a problem into N parts,
+<p>Another typical usage would be to divide a problem into N parts,
 describe each part with a Runnable that executes that portion and
 counts down on the latch, and queue all the Runnables to an
 Executor.  When all sub-parts are complete, the coordinating thread
-will be able to pass <example-value> await. (When threads must repeatedly
-count down in this way, instead use a `CyclicBarrier`.)
+will be able to pass through await. (When threads must repeatedly
+count down in this way, instead use a {@link CyclicBarrier}.)
 
-```java
+<pre> {@code
 class Driver2 { // ...
   void main() throws InterruptedException {
     CountDownLatch doneSignal = new CountDownLatch(N);
@@ -115,17 +106,17 @@ class WorkerRunnable implements Runnable {
   }
 
   void doWork() { ... }
-}
-```
+}}</pre>
 
-Memory consistency effects: Until the count reaches
+<p>Memory consistency effects: Until the count reaches
 zero, actions in a thread prior to calling
-`countDown()`
-*happen-before*
+{@code countDown()}
+<a href="package-summary.html#MemoryVisibility"><i>happen-before</i></a>
 actions following a successful return from a corresponding
-`await()` in another thread.
+{@code await()} in another thread.
 
-**Since:** 1.5
+@since 1.5
+@author Doug Lea
 
 ## CountDownLatch.CountDownLatch(int)
 
@@ -133,15 +124,11 @@ actions following a successful return from a corresponding
 public CountDownLatch(int count)
 ```
 
-Constructs a `CountDownLatch` initialized with the given count.
+Constructs a {@code CountDownLatch} initialized with the given count.
 
-Parameters:
-
-- `count`: the number of times `countDown` must be invoked before threads can pass <example-value> `await`
-
-Throws:
-
-- `IllegalArgumentException`: if `count` is negative
+@param count the number of times {@link #countDown} must be invoked
+       before threads can pass through {@link #await}
+@throws IllegalArgumentException if {@code count} is negative
 
 ## CountDownLatch.await()
 
@@ -150,32 +137,30 @@ public void await() throws InterruptedException
 ```
 
 Causes the current thread to wait until the latch has counted down to
-zero, unless the thread is interrupted.
+zero, unless the thread is {@linkplain Thread#interrupt interrupted}.
 
-If the current count is zero then this method returns immediately.
+<p>If the current count is zero then this method returns immediately.
 
-If the current count is greater than zero then the current
+<p>If the current count is greater than zero then the current
 thread becomes disabled for thread scheduling purposes and lies
 dormant until one of two things happen:
-
-- The count reaches zero due to invocations of the
-`countDown` method; or
-
-- Some other thread interrupts
+<ul>
+<li>The count reaches zero due to invocations of the
+{@link #countDown} method; or
+<li>Some other thread {@linkplain Thread#interrupt interrupts}
 the current thread.
+</ul>
 
-If the current thread:
-
-- has its interrupted status set on entry to this method; or
-
-- is interrupted while waiting,
-
-then `InterruptedException` is thrown and the current thread's
+<p>If the current thread:
+<ul>
+<li>has its interrupted status set on entry to this method; or
+<li>is {@linkplain Thread#interrupt interrupted} while waiting,
+</ul>
+then {@link InterruptedException} is thrown and the current thread's
 interrupted status is cleared.
 
-Throws:
-
-- `InterruptedException`: if the current thread is interrupted while waiting
+@throws InterruptedException if the current thread is interrupted
+        while waiting
 
 ## CountDownLatch.await(long, TimeUnit)
 
@@ -184,51 +169,44 @@ public boolean await(long timeout, TimeUnit unit) throws InterruptedException
 ```
 
 Causes the current thread to wait until the latch has counted down to
-zero, unless the thread is interrupted,
+zero, unless the thread is {@linkplain Thread#interrupt interrupted},
 or the specified waiting time elapses.
 
-If the current count is zero then this method returns immediately
-with the value `true`.
+<p>If the current count is zero then this method returns immediately
+with the value {@code true}.
 
-If the current count is greater than zero then the current
+<p>If the current count is greater than zero then the current
 thread becomes disabled for thread scheduling purposes and lies
 dormant until one of three things happen:
-
-- The count reaches zero due to invocations of the
-`countDown` method; or
-
-- Some other thread interrupts
+<ul>
+<li>The count reaches zero due to invocations of the
+{@link #countDown} method; or
+<li>Some other thread {@linkplain Thread#interrupt interrupts}
 the current thread; or
+<li>The specified waiting time elapses.
+</ul>
 
-- The specified waiting time elapses.
+<p>If the count reaches zero then the method returns with the
+value {@code true}.
 
-If the count reaches zero then the method returns with the
-value `true`.
-
-If the current thread:
-
-- has its interrupted status set on entry to this method; or
-
-- is interrupted while waiting,
-
-then `InterruptedException` is thrown and the current thread's
+<p>If the current thread:
+<ul>
+<li>has its interrupted status set on entry to this method; or
+<li>is {@linkplain Thread#interrupt interrupted} while waiting,
+</ul>
+then {@link InterruptedException} is thrown and the current thread's
 interrupted status is cleared.
 
-If the specified waiting time elapses then the value `false`
+<p>If the specified waiting time elapses then the value {@code false}
 is returned.  If the time is less than or equal to zero, the method
 will not wait at all.
 
-Parameters:
-
-- `timeout`: the maximum time to wait
-- `unit`: the time unit of the `timeout` argument
-
-**Returns:** `true` if the count reached zero and `false`
+@param timeout the maximum time to wait
+@param unit the time unit of the {@code timeout} argument
+@return {@code true} if the count reached zero and {@code false}
         if the waiting time elapsed before the count reached zero
-
-Throws:
-
-- `InterruptedException`: if the current thread is interrupted while waiting
+@throws InterruptedException if the current thread is interrupted
+        while waiting
 
 ## CountDownLatch.countDown()
 
@@ -239,11 +217,11 @@ public void countDown()
 Decrements the count of the latch, releasing all waiting threads if
 the count reaches zero.
 
-If the current count is greater than zero then it is decremented.
+<p>If the current count is greater than zero then it is decremented.
 If the new count is zero then all waiting threads are re-enabled for
 thread scheduling purposes.
 
-If the current count equals zero then nothing happens.
+<p>If the current count equals zero then nothing happens.
 
 ## CountDownLatch.getCount()
 
@@ -253,9 +231,9 @@ public long getCount()
 
 Returns the current count.
 
-This method is typically used for debugging and testing purposes.
+<p>This method is typically used for debugging and testing purposes.
 
-**Returns:** the current count
+@return the current count
 
 ## CountDownLatch.toString()
 
@@ -264,7 +242,7 @@ public String toString()
 ```
 
 Returns a string identifying this latch, as well as its state.
-The state, in brackets, includes the String `"Count ="`
+The state, in brackets, includes the String {@code "Count ="}
 followed by the current count.
 
-**Returns:** a string identifying this latch, as well as its state
+@return a string identifying this latch, as well as its state

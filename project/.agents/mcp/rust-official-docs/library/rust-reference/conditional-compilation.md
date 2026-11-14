@@ -1,17 +1,8 @@
----
-title: "Conditional compilation"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/conditional-compilation.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[cfg]
 # Conditional compilation
 
 r[cfg.syntax]
-```grammar
+```grammar,configuration
 ConfigurationPredicate ->
       ConfigurationOption
     | ConfigurationAll
@@ -72,7 +63,7 @@ Names are written as a single identifier, such as `unix`.
 r[cfg.option-key-value]
 Key-value pairs are written as an identifier, `=`, and then a string, such as `target_arch = "x86_64"`.
 
-> **Note:**
+> [!NOTE]
 > Whitespace around the `=` is ignored, so `foo="bar"` and `foo = "bar"` are equivalent.
 
 r[cfg.option-key-uniqueness]
@@ -93,11 +84,11 @@ Other options are _arbitrarily-set_ based on input passed to the compiler outsid
 r[cfg.options.crate]
 It is not possible to set a configuration option from within the source code of the crate being compiled.
 
-> **Note:**
+> [!NOTE]
 > For `rustc`, arbitrary-set configuration options are set using the [`--cfg`] flag. Configuration values for a specified target can be displayed with `rustc --print cfg --target $TARGET`.
 
-> **Note:**
-> Configuration options with the key `feature` are a convention used by Cargo for specifying compile-time options and optional dependencies.
+> [!NOTE]
+> Configuration options with the key `feature` are a convention used by [Cargo][cargo-feature] for specifying compile-time options and optional dependencies.
 
 r[cfg.target_arch]
 ### `target_arch`
@@ -269,10 +260,10 @@ r[cfg.target_has_atomic_primitive_alignment]
 ### `target_has_atomic_primitive_alignment`
 
 r[cfg.target_has_atomic_primitive_alignment.def]
-Key-value option set for each bit width where the atomic type has the same alignment as the corresponding integer type.
+Key-value option set for each bit width where the [atomic][core::sync::atomic] type has the same alignment as the corresponding integer type.
 
-> **Note:**
-> The alignment is usually the same for a given bit width. However, on some targets such as 32-bit x86, 64-bit atomic types such as `AtomicI64` have an alignment of 8 bytes while `i64` is only aligned to 4 bytes. In this situation, `target_has_atomic_primitive_alignment = "64"` is not set.
+> [!NOTE]
+> The alignment is usually the same for a given bit width. However, on some targets such as 32-bit x86, 64-bit atomic types such as [`AtomicI64`][core::sync::atomic::AtomicI64] have an alignment of 8 bytes while `i64` is only aligned to 4 bytes. In this situation, `target_has_atomic_primitive_alignment = "64"` is not set.
 
 r[cfg.target_has_atomic_primitive_alignment.values]
 Possible values:
@@ -311,8 +302,11 @@ Example values:
 * `"abort"`
 * `"unwind"`
 
+[panic strategy]: panic.md#panic-strategy
+
 ## Forms of conditional compilation
 
+<!-- template:attributes -->
 r[cfg.attr]
 ### The `cfg` attribute
 
@@ -356,7 +350,7 @@ The *`cfg` [attribute]* conditionally includes the form to which it is attached 
 r[cfg.attr.syntax]
 The syntax for the `cfg` attribute is:
 
-```grammar
+```grammar,configuration
 @root CfgAttribute -> `cfg` `(` ConfigurationPredicate `)`
 ```
 
@@ -375,7 +369,7 @@ When a crate-level `cfg` has a false predicate, the crate itself still exists. A
 > [!EXAMPLE]
 > The behavior of not removing the preceding attributes allows you to do things such as include `#![no_std]` to avoid linking `std` even if a `#![cfg(...)]` has otherwise removed the contents of the crate. For example:
 >
->
+> <!-- ignore: test infrastructure can't handle no_std -->
 > ```rust,ignore
 > // This `no_std` attribute is kept even though the crate-level `cfg`
 > // attribute is false.
@@ -386,6 +380,7 @@ When a crate-level `cfg` has a false predicate, the crate itself still exists. A
 > pub fn example() {}
 > ```
 
+<!-- template:attributes -->
 r[cfg.cfg_attr]
 ### The `cfg_attr` attribute
 
@@ -395,7 +390,7 @@ The *`cfg_attr` [attribute]* conditionally includes attributes based on a config
 > [!EXAMPLE]
 > The following module will either be found at `linux.rs` or `windows.rs` based on the target.
 >
->
+> <!-- ignore: `mod` needs multiple files -->
 > ```rust,ignore
 > #[cfg_attr(target_os = "linux", path = "linux.rs")]
 > #[cfg_attr(windows, path = "windows.rs")]
@@ -405,7 +400,7 @@ The *`cfg_attr` [attribute]* conditionally includes attributes based on a config
 r[cfg.cfg_attr.syntax]
 The syntax for the `cfg_attr` attribute is:
 
-```grammar
+```grammar,configuration
 @root CfgAttrAttribute -> `cfg_attr` `(` ConfigurationPredicate `,` CfgAttrs? `)`
 
 CfgAttrs -> Attr (`,` Attr)* `,`?
@@ -427,7 +422,7 @@ r[cfg.cfg_attr.attribute-list]
 Zero, one, or more attributes may be listed. Multiple attributes will each be expanded into separate attributes.
 
 > [!EXAMPLE]
->
+> <!-- ignore: fake attributes -->
 > ```rust,ignore
 > #[cfg_attr(feature = "magic", sparkles, crackles)]
 > fn bewitched() {}
@@ -438,7 +433,7 @@ Zero, one, or more attributes may be listed. Multiple attributes will each be ex
 > fn bewitched() {}
 > ```
 
-> **Note:**
+> [!NOTE]
 > The `cfg_attr` can expand to another `cfg_attr`. For example, `#[cfg_attr(target_os = "linux", cfg_attr(feature = "multithreaded", some_other_attribute))]` is valid. This example would be equivalent to `#[cfg_attr(all(target_os = "linux", feature = "multithreaded"), some_other_attribute)]`.
 
 r[cfg.macro]
@@ -464,7 +459,7 @@ r[cfg.cfg_select]
 ### The `cfg_select` macro
 
 r[cfg.cfg_select.intro]
-The built-in `cfg_select!` macro can be used to select code at compile-time based on multiple configuration predicates.
+The built-in [`cfg_select!`][std::cfg_select] macro can be used to select code at compile-time based on multiple configuration predicates.
 
 > [!EXAMPLE]
 > ```rust
@@ -487,7 +482,7 @@ The built-in `cfg_select!` macro can be used to select code at compile-time base
 > ```
 
 r[cfg.cfg_select.syntax]
-```grammar
+```grammar,configuration
 @root CfgSelect -> CfgSelectArms?
 
 CfgSelectArms ->
@@ -516,3 +511,20 @@ It is a compile error if none of the predicates evaluate to true.
 
 r[cfg.cfg_select.well-formed]
 Each right-hand side must be a syntactically valid expansion for the position in which the macro is invoked.
+
+[Testing]: attributes/testing.md
+[`--cfg`]: ../rustc/command-line-arguments.html#--cfg-configure-the-compilation-environment
+[`--test`]: ../rustc/command-line-arguments.html#--test-build-a-test-harness
+[`cfg`]: #the-cfg-attribute
+[`cfg!`]: #the-cfg-macro
+[`cfg_attr`]: #the-cfg_attr-attribute
+[`cfg_select!`]: #the-cfg_select-macro
+[`crate_name`]: crates-and-source-files.md#the-crate_name-attribute
+[`crate_type`]: linkage.md
+[`target_feature` attribute]: attributes/codegen.md#the-target_feature-attribute
+[attribute]: attributes.md
+[attributes]: attributes.md
+[cargo-feature]: ../cargo/reference/features.html
+[crate type]: linkage.md
+[macros]: macros.md
+[static C runtime]: linkage.md#static-and-dynamic-c-runtimes

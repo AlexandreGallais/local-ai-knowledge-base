@@ -1,19 +1,13 @@
----
-title: "no-null"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-null.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-null
 
 📝 Disallow the use of the `null` literal.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Disallow the use of the `null` literal, to encourage using `undefined` instead. Using one absence value within a codebase reduces ambiguity when APIs exchange missing values. You can learn more in <https://github.com/sindresorhus/meta/discussions/7>
 
@@ -88,7 +82,7 @@ if (foo === null) {}
 
 ## Why
 
-- “Intent to stop using `null` in my JS code”.
-- TypeScript coding guidelines.
-- ESLint rule proposal.
-- Douglas Crockford on bottom values in JavaScript.
+- [“Intent to stop using `null` in my JS code”](https://github.com/sindresorhus/meta/issues/7).
+- [TypeScript coding guidelines](https://github.com/Microsoft/TypeScript/wiki/Coding-guidelines#null-and-undefined).
+- [ESLint rule proposal](https://github.com/eslint/eslint/issues/6701).
+- [Douglas Crockford](https://www.youtube.com/watch?v=PSGEjv3Tqo0&t=9m21s) on bottom values in JavaScript.

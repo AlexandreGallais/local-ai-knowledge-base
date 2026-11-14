@@ -1,14 +1,3 @@
----
-title: "ch12-02-reading-a-file"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch12-02-reading-a-file.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch12-02-reading-a-file
-
 ## Reading a File
 
 Now we’ll add functionality to read the file specified in the `file_path`
@@ -18,32 +7,24 @@ has an Emily Dickinson poem that will work well! Create a file called
 _poem.txt_ at the root level of your project, and enter the poem “I’m Nobody!
 Who are you?”
 
-**Listing 12-3: A poem by Emily Dickinson makes a good test case.** (poem.txt)
+<Listing number="12-3" file-name="poem.txt" caption="A poem by Emily Dickinson makes a good test case.">
 
 ```text
-I'm nobody! Who are you?
-Are you nobody, too?
-Then there's a pair of us - don't tell!
-They'd banish us, you know.
-
-How dreary to be somebody!
-How public, like a frog
-To tell your name the livelong day
-To an admiring bog!
+{{#include ../listings/ch12-an-io-project/listing-12-03/poem.txt}}
 ```
+
+</Listing>
 
 With the text in place, edit _src/main.rs_ and add code to read the file, as
 shown in Listing 12-4.
 
-**Listing 12-4: Reading the contents of the file specified by the second argument** (src/main.rs)
+<Listing number="12-4" file-name="src/main.rs" caption="Reading the contents of the file specified by the second argument">
 
-```rust
-use std::env;
-use std::fs;
-
-fn main() {
-    // --snip--
+```rust,should_panic,noplayground
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-04/src/main.rs:here}}
 ```
+
+</Listing>
 
 First, we bring in a relevant part of the standard library with a `use`
 statement: We need `std::fs` to handle files.
@@ -61,22 +42,7 @@ we haven’t implemented the searching part yet) and the _poem.txt_ file as the
 second argument:
 
 ```console
-$ cargo run -- the poem.txt
-   Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
-     Running `target/debug/minigrep the poem.txt`
-Searching for the
-In file poem.txt
-With text:
-I'm nobody! Who are you?
-Are you nobody, too?
-Then there's a pair of us - don't tell!
-They'd banish us, you know.
-
-How dreary to be somebody!
-How public, like a frog
-To tell your name the livelong day
-To an admiring bog!
+{{#rustdoc_include ../listings/ch12-an-io-project/listing-12-04/output.txt}}
 ```
 
 Great! The code read and then printed the contents of the file. But the code

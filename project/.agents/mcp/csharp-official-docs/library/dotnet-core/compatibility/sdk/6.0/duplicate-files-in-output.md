@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Generate error for duplicate files in publish output"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/6.0/duplicate-files-in-output.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 6 where the .NET SDK generates an error when files from different source paths would be copied to the same location in the publish output.
+ms.date: 11/15/2021
 ---
-
 # Generate error for duplicate files in publish output
 
 The .NET SDK generates a new error (`NETSDK1152`) in cases where files from different source paths would be copied to the same file path in the publish output. This can happen when a project and its project references include a file with the same name that's included in the publish output.
@@ -19,7 +15,7 @@ The .NET SDK generates a new error (`NETSDK1152`) in cases where files from diff
 
 Both files were copied to the same destination. The second file to be copied overwrote the first file, and which file "won" was mostly arbitrary.
 
-In some cases, the build failed. For example, when trying to create a single-file app, the bundler failed with an `System.ArgumentException`, as shown in the following build output:
+In some cases, the build failed. For example, when trying to create a single-file app, the bundler failed with an <xref:System.ArgumentException>, as shown in the following build output:
 
 ```shell
 C:\Program Files\dotnet\sdk\5.0.403\Sdks\Microsoft.NET.Sdk\targets\Microsoft.NET.Publish.targets(962,5): error MSB4018: The "GenerateBundle" task failed unexpectedly. [C:\repro\repro.csproj]
@@ -41,10 +37,10 @@ Duplicate files in the publish output sometimes caused build breaks or unpredict
 
   - An ASP.NET Core project that references an ASP.NET Core web service, and each has its own *appsettings.json* file.
   - A project item where `CopyToOutputDirectory` is unnecessarily set to `Always`.
+  
+  [Binary log files](https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Providing-Binary-Logs.md) can be useful for finding the cause of the duplicated files.
 
-  Binary log files can be useful for finding the cause of the duplicated files.
-
-- Alternatively, you can set the ErrorOnDuplicatePublishOutputFiles property to `false`.
+- Alternatively, you can set the [ErrorOnDuplicatePublishOutputFiles](../../../project-sdk/msbuild-props.md#erroronduplicatepublishoutputfiles) property to `false`.
 
 ## Affected APIs
 

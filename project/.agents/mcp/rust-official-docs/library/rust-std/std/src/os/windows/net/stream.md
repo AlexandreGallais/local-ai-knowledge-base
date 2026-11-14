@@ -1,12 +1,3 @@
----
-title: "std::os::windows::net::stream"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/os/windows/net/stream.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::os::windows::net::stream
 
 ## struct UnixStream
@@ -27,7 +18,7 @@ fn main() -> std::io::Result<()> {
     println!("{response}");
     Ok(())
 }
-```rust
+```
 
 ## UnixStream::connect
 
@@ -45,7 +36,7 @@ let socket = match UnixStream::connect("/tmp/sock") {
         return
     }
 };
-```rust
+```
 
 ## UnixStream::connect_addr
 
@@ -69,7 +60,7 @@ fn main() -> std::io::Result<()> {
     };
     Ok(())
 }
-```
+````
 
 ## UnixStream::local_addr
 
@@ -85,7 +76,7 @@ fn main() -> std::io::Result<()> {
     let addr = socket.local_addr().expect("Couldn't get local address");
     Ok(())
 }
-```rust
+```
 
 ## UnixStream::peer_addr
 
@@ -101,7 +92,7 @@ fn main() -> std::io::Result<()> {
     let addr = socket.peer_addr().expect("Couldn't get peer address");
     Ok(())
 }
-```rust
+```
 
 ## UnixStream::read_timeout
 
@@ -119,7 +110,7 @@ fn main() -> std::io::Result<()> {
     assert_eq!(socket.read_timeout()?, Some(Duration::new(1, 0)));
     Ok(())
 }
-```rust
+```
 
 ## UnixStream::set_nonblocking
 
@@ -135,7 +126,7 @@ fn main() -> std::io::Result<()> {
     socket.set_nonblocking(true).expect("Couldn't set nonblocking");
     Ok(())
 }
-```rust
+```
 
 ## UnixStream::set_read_timeout
 
@@ -155,7 +146,7 @@ fn main() -> std::io::Result<()> {
     assert_eq!(err.kind(), io::ErrorKind::InvalidInput);
     Ok(())
 }
-```rust
+```
 
 ## UnixStream::set_write_timeout
 
@@ -175,7 +166,7 @@ fn main() -> std::io::Result<()> {
     assert_eq!(err.kind(), io::ErrorKind::InvalidInput);
     Ok(())
 }
-```rust
+```
 
 ## UnixStream::shutdown
 
@@ -192,7 +183,7 @@ fn main() -> std::io::Result<()> {
     socket.shutdown(Shutdown::Both).expect("shutdown function failed");
     Ok(())
 }
-```rust
+```
 
 ## UnixStream::take_error
 
@@ -210,7 +201,7 @@ fn main() -> std::io::Result<()> {
     }
     Ok(())
 }
-```rust
+```
 
 ## UnixStream::try_clone
 
@@ -226,7 +217,7 @@ fn main() -> std::io::Result<()> {
     let sock_copy = socket.try_clone().expect("Couldn't clone socket");
     Ok(())
 }
-```rust
+```
 
 ## UnixStream::write_timeout
 
@@ -245,4 +236,4 @@ fn main() -> std::io::Result<()> {
     assert_eq!(socket.write_timeout()?, Some(Duration::new(1, 0)));
     Ok(())
 }
-```rust
+```

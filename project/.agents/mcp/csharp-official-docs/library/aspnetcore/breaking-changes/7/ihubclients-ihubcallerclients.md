@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: IHubClients and IHubCallerClients hide members"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/7/ihubclients-ihubcallerclients.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in ASP.NET Core 7.0 where IHubClients and IHubCallerClients hide two interface members.
+ms.date: 06/22/2022
+ms.custom: https://github.com/aspnet/Announcements/issues/487
 ---
-
 # IHubClients and IHubCallerClients hide members
 
-To add support for client results, `Microsoft.AspNetCore.SignalR.IHubClients` and `Microsoft.AspNetCore.SignalR.IHubCallerClients` now hide interface members `IClientProxy Client(string connectionId);` and `IClientProxy Caller { get; }` with `ISingleClientProxy Client(string connectionId);` and `ISingleClientProxy Caller { get; }`.
+To add support for client results, <xref:Microsoft.AspNetCore.SignalR.IHubClients> and <xref:Microsoft.AspNetCore.SignalR.IHubCallerClients> now hide interface members `IClientProxy Client(string connectionId);` and `IClientProxy Caller { get; }` with `ISingleClientProxy Client(string connectionId);` and `ISingleClientProxy Caller { get; }`.
 
 This is not a breaking change to production code unless you use reflection to call the affected `Client` or `Caller` methods. You may need to update unit testing SignalR Hubs.
 
@@ -45,7 +42,7 @@ class MyHub : Hub { }
 
 ## Type of breaking change
 
-This change affects source compatibility.
+This change affects [source compatibility](/dotnet/core/compatibility/categories#source-compatibility).
 
 ## Reason for change
 
@@ -57,5 +54,5 @@ Update test code to use the `ISingleClientProxy` interface when using reflection
 
 ## Affected APIs
 
-- `Microsoft.AspNetCore.SignalR.IHubClients`
-- `Microsoft.AspNetCore.SignalR.IHubCallerClients`
+- <xref:Microsoft.AspNetCore.SignalR.IHubClients?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.SignalR.IHubCallerClients?displayProperty=fullName>

@@ -1,10 +1,6 @@
 ---
-title: "testNamePattern | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/testnamepattern.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: testNamePattern | Config
+outline: deep
 ---
 
 # testNamePattern <CRoot /> {#testnamepattern}
@@ -41,5 +37,6 @@ describe('math', () => {
 })
 ```
 
-**Warning:**
-Before Vitest 5, the segments were joined with a single space (`math adds`) to mirror Jest. See the migration guide for details.
+::: warning
+Before Vitest 5, the segments were joined with a single space (`math adds`) to mirror Jest. See the [migration guide](/guide/migration/#vitest-5) for details.
+:::

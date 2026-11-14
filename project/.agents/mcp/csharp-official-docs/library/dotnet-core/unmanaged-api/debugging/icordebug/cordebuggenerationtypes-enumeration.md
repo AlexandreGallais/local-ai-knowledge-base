@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: CorDebugGenerationTypes Enumeration"
 title: "CorDebugGenerationTypes Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cordebuggenerationtypes-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "CorDebugGenerationTypes"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "CorDebugGenerationTypes"
+helpviewer_keywords:
+  - "CorDebugGenerationTypes enumeration [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # CorDebugGenerationTypes Enumeration
 
 Specifies the generation of a region of memory on the managed heap.
@@ -31,9 +39,11 @@ typedef enum CorDebugGenerationTypes {
 |`CorDebug_Gen2`|Generation 2.|
 |`CorDebug_LOH`|The large object heap.|
 
+## Remarks
+
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

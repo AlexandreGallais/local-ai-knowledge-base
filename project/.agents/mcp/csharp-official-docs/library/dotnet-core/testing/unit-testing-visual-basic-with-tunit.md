@@ -1,24 +1,23 @@
 ---
-title: "Unit testing Visual Basic in .NET with dotnet test and TUnit"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/unit-testing-visual-basic-with-tunit.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Unit testing Visual Basic in .NET with dotnet test and TUnit
+description: Learn unit test concepts in .NET through an interactive experience building a sample Visual Basic solution step-by-step using dotnet test and TUnit.
+author: thomhurst
+ms.author: wiwagn
+ms.date: 11/03/2026
+ai-usage: ai-assisted
 ---
-
 # Unit testing Visual Basic .NET libraries using dotnet test and TUnit
 
 This tutorial takes you through an interactive experience building a sample solution step-by-step to learn unit testing concepts.
 
-This article is about testing a .NET Core project. If you're testing an ASP.NET Core project, see Integration tests in ASP.NET Core.
+[!INCLUDE [testing an ASP.NET Core project from .NET Core](../../../includes/core-testing-note-aspnet.md)]
 
 ## Prerequisites
 
-- .NET 10 SDK or later versions.
+- [.NET 10 SDK](https://dotnet.microsoft.com/download) or later versions.
 - A text editor or code editor of your choice.
 
-TUnit is built entirely on Microsoft.Testing.Platform (MTP) and doesn't support VSTest. This tutorial uses the MTP mode of `dotnet test`, which requires the .NET 10 SDK.
+TUnit is built entirely on [Microsoft.Testing.Platform (MTP)](microsoft-testing-platform-intro.md) and doesn't support VSTest. This tutorial uses the MTP mode of `dotnet test`, which requires the .NET 10 SDK.
 
 ## Creating the source project
 
@@ -85,14 +84,14 @@ Make the *PrimeService.Tests* directory the current directory and create a new p
 dotnet new TUnit -lang VB
 ```
 
-> **Note:**
+> [!NOTE]
 > Template short names are case-sensitive. Use `TUnit`, not `tunit`.
 
-The dotnet new command creates a test project that uses TUnit as the test library. The generated *PrimeService.Tests.vbproj* file is an executable project that references the `TUnit` package, which includes the test framework, the assertion library, and the MTP test runner, so the project doesn't need any other test packages.
+The [dotnet new](../tools/dotnet-new.md) command creates a test project that uses TUnit as the test library. The generated *PrimeService.Tests.vbproj* file is an executable project that references the `TUnit` package, which includes the test framework, the assertion library, and the MTP test runner, so the project doesn't need any other test packages.
 
 The template also adds sample tests. Delete all the *.vb* files and the *Data* directory from the *PrimeService.Tests* directory, because this tutorial replaces them with its own tests.
 
-Now, add the `PrimeService` class library as another dependency to the project. Use the `dotnet reference add` command:
+Now, add the `PrimeService` class library as another dependency to the project. Use the [`dotnet reference add`](../tools/dotnet-reference-add.md) command:
 
 ```dotnetcli
 dotnet reference add ../PrimeService/PrimeService.vbproj
@@ -129,7 +128,7 @@ Because TUnit doesn't support VSTest, `dotnet test` must run in its MTP mode. In
 }
 ```
 
-For more information, see MTP mode of dotnet test.
+For more information, see [MTP mode of dotnet test](unit-testing-with-dotnet-test.md#mtp-mode-of-dotnet-test).
 
 ## Creating the first test
 
@@ -157,9 +156,9 @@ End Namespace
 
 The `<Test>` attribute denotes a method that is run by the test runner. TUnit doesn't need an attribute on the class. TUnit assertions are asynchronous, so the test is an `Async Function` that returns a `Task` and awaits `Assert.That`.
 
-Visual Basic <example-value> the code in each project under the project's root namespace, so the `PrimeService` class is in the `PrimeService.Prime.Services` namespace. The test refers to it as `Prime.Services.PrimeService` because, inside the test project's namespaces, the name `PrimeService` refers to a namespace rather than to the class.
+Visual Basic places the code in each project under the project's root namespace, so the `PrimeService` class is in the `PrimeService.Prime.Services` namespace. The test refers to it as `Prime.Services.PrimeService` because, inside the test project's namespaces, the name `PrimeService` refers to a namespace rather than to the class.
 
-From the *unit-testing-vb-tunit* directory, execute `dotnet test` to build the tests and the class library and then run the tests. The TUnit test project contains the program entry point to run your tests. `dotnet test` starts the test application using the unit test project you've created.
+From the *unit-testing-vb-tunit* directory, execute [`dotnet test`](../tools/dotnet-test.md) to build the tests and the class library and then run the tests. The TUnit test project contains the program entry point to run your tests. `dotnet test` starts the test application using the unit test project you've created.
 
 Your test fails. You haven't created the implementation yet. Make this test pass by writing the simplest code in the `PrimeService` class that works:
 
@@ -204,6 +203,6 @@ You've built a small library and a set of unit tests for that library. You've st
 
 ## See also
 
-- TUnit documentation
-- dotnet reference add
-- dotnet test
+- [TUnit documentation](https://tunit.dev/)
+- [dotnet reference add](../tools/dotnet-reference-add.md)
+- [dotnet test](../tools/dotnet-test.md)

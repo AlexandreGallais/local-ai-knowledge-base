@@ -1,12 +1,10 @@
 ---
 title: "Breaking change: NuGet logs an error for invalid package IDs"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/nuget-packageid-validation.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where NuGet validates package IDs when constructing URLs and throws exceptions for invalid formats."
+ms.date: 09/08/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/47984
 ---
-
 # NuGet logs an error for invalid package IDs
 
 NuGet now validates package IDs when they're used to create URLs in .NET 10. If a package ID isn't in the correct format, NuGet shows an error instead of continuing. This ensures only valid package IDs are used when constructing URLs.
@@ -25,7 +23,7 @@ Starting with the .NET 10 SDK, any package ID used to construct a URL via NuGet 
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

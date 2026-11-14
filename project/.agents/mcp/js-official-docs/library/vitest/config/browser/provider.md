@@ -1,10 +1,6 @@
 ---
-title: "browser.provider | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/browser/provider.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: browser.provider | Config
+outline: deep
 ---
 
 # browser.provider {#browser-provider}
@@ -13,7 +9,7 @@ license: "MIT"
 
 The return value of the provider factory. You can import the factory from `@vitest/browser-<provider-name>` or make your own provider:
 
-```ts
+```ts{8-10}
 import { playwright } from '@vitest/browser-playwright'
 import { webdriverio } from '@vitest/browser-webdriverio'
 import { preview } from '@vitest/browser-preview'
@@ -31,7 +27,7 @@ export default defineConfig({
 
 To configure how provider initializes the browser, you can pass down options to the factory function:
 
-```ts
+```ts{7-13,20-26}
 import { playwright } from '@vitest/browser-playwright'
 
 export default defineConfig({
@@ -67,8 +63,9 @@ export default defineConfig({
 
 ## Custom Provider <Badge type="danger">advanced</Badge> {#custom-provider}
 
-**ADVANCED API**
-The custom provider API is highly experimental and can change between patches. If you just need to run tests in a browser, use the `browser.instances` option instead.
+::: danger ADVANCED API
+The custom provider API is highly experimental and can change between patches. If you just need to run tests in a browser, use the [`browser.instances`](/config/browser/instances) option instead.
+:::
 
 ```ts
 export interface BrowserProvider {

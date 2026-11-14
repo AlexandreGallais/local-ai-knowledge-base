@@ -1,16 +1,7 @@
----
-title: "class: WebMCP"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-webmcp.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: WebMCP
 * since: v1.64
 
-[WebMCP] exposes the tools that a frame registers through the experimental WebMCP browser API, `navigator.modelContext`. It lists the tools and calls them.
+[WebMCP] exposes the tools that a frame registers through the experimental [WebMCP](https://webmachinelearning.github.io/webmcp/) browser API, `navigator.modelContext`. It lists the tools and calls them.
 
 Instances are accessed through [`property: Frame.webmcp`]. [`property: Page.webmcp`] is the instance of the main frame.
 

@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataTables2::GetMetaDataStreamInfo Method"
 title: "IMetaDataTables2::GetMetaDataStreamInfo Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadatatables2-getmetadatastreaminfo-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataTables2.GetMetaDataStreamInfo"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataTables2::GetMetaDataStreamInfo"
+  - "IMetaDataTables2::GetMetaDataStreamInfo method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataTables2::GetMetaDataStreamInfo Method
 
 Gets the name, size, and contents of the metadata stream at the specified index.
@@ -38,7 +45,7 @@ HRESULT GetMetaDataStreamInfo (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -48,5 +55,5 @@ HRESULT GetMetaDataStreamInfo (
 
 ## See also
 
-- IMetaDataTables2 Interface
-- IMetaDataTables Interface
+- [IMetaDataTables2 Interface](imetadatatables2-interface.md)
+- [IMetaDataTables Interface](imetadatatables-interface.md)

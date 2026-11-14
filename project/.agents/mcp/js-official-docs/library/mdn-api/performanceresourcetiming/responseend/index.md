@@ -1,0 +1,78 @@
+---
+title: "PerformanceResourceTiming: responseEnd property"
+short-title: responseEnd
+slug: Web/API/PerformanceResourceTiming/responseEnd
+page-type: web-api-instance-property
+browser-compat: api.PerformanceResourceTiming.responseEnd
+---
+
+{{APIRef("Performance API")}}{{AvailableInWorkers}}
+
+The **`responseEnd`** read-only property returns a {{domxref("DOMHighResTimeStamp","timestamp")}} immediately after the browser receives the last byte of the resource or immediately before the transport connection is closed, whichever comes first.
+
+## Value
+
+A {{domxref("DOMHighResTimeStamp")}} immediately after the browser receives the last byte of the resource or immediately before the transport connection is closed, whichever comes first.
+
+## Description
+
+The `responseEnd` property is available for cross-origin requests without the {{HTTPHeader("Timing-Allow-Origin")}} HTTP response header, except for navigations of cross-origin {{HTMLElement("iframe")}} elements.
+
+### Cross-origin iframes
+
+For a cross-origin {{HTMLElement("iframe")}}, if the iframe's document is served with a {{HTTPHeader("Timing-Allow-Origin")}} header that allows the embedding page's origin, `responseEnd` is the time immediately after the browser receives the last byte of that document.
+
+Without this header, the precise time isn't reported, because it could reveal how the user interacted with the frame.
+Instead, the browser reports a fallback entry once the iframe's {{domxref("HTMLElement/load_event", "load")}} event fires.
+In this entry, {{domxref("PerformanceEntry.startTime", "startTime")}} is the time the iframe started navigating, and `responseEnd` is the time the iframe finished loading, including all of its subresources.
+The other timestamps, as well as the {{domxref("PerformanceResourceTiming.encodedBodySize", "encodedBodySize")}} and {{domxref("PerformanceResourceTiming.decodedBodySize", "decodedBodySize")}} properties, are `0`.
+
+## Examples
+
+### Measuring time to fetch (without redirects)
+
+The `responseEnd` and {{domxref("PerformanceResourceTiming.fetchStart", "fetchStart")}} properties can be used to measure the overall time it took to fetch the final resource (without redirects). If you want to include redirects, the overall time to fetch is provided in the {{domxref("PerformanceEntry.duration", "duration")}} property.
+
+```js
+const timeToFetch = entry.responseEnd - entry.fetchStart;
+```
+
+Example using a {{domxref("PerformanceObserver")}}, which notifies of new `resource` performance entries as they are recorded in the browser's performance timeline. Use the `buffered` option to access entries from before the observer creation.
+
+```js
+const observer = new PerformanceObserver((list) => {
+  list.getEntries().forEach((entry) => {
+    const timeToFetch = entry.responseEnd - entry.fetchStart;
+    if (timeToFetch > 0) {
+      console.log(`${entry.name}: Time to fetch: ${timeToFetch}ms`);
+    }
+  });
+});
+
+observer.observe({ type: "resource", buffered: true });
+```
+
+Example using {{domxref("Performance.getEntriesByType()")}}, which only shows `resource` performance entries present in the browser's performance timeline at the time you call this method:
+
+```js
+const resources = performance.getEntriesByType("resource");
+resources.forEach((entry) => {
+  const timeToFetch = entry.responseEnd - entry.fetchStart;
+  if (timeToFetch > 0) {
+    console.log(`${entry.name}: Time to fetch: ${timeToFetch}ms`);
+  }
+});
+```
+
+## Specifications
+
+{{Specifications}}
+
+## Browser compatibility
+
+{{Compat}}
+
+## See also
+
+- {{HTTPHeader("Timing-Allow-Origin")}}
+- [Resource timing](/en-US/docs/Web/API/Performance_API/Resource_timing)

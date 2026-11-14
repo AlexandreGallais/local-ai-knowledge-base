@@ -1,20 +1,16 @@
 ---
 title: "Breaking change: Culture creation and case mapping in globalization-invariant mode"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/globalization/6.0/culture-creation-invariant-mode.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the globalization breaking change in .NET 6 where the creation of new cultures is restricted and case mapping support extends to all characters in globalization-invariant mode.
+ms.date: 07/23/2021
 ---
-
 # Culture creation and case mapping in globalization-invariant mode
 
-This breaking change affects *globalization-invariant mode* in two ways:
+This breaking change affects *[globalization-invariant mode](https://github.com/dotnet/runtime/blob/main/docs/design/features/globalization-invariant-mode.md)* in two ways:
 
-- Previously, .NET allowed any culture to be created in globalization-invariant mode, as long as the culture name conformed to BCP-47. However, the invariant culture data was used instead of the real culture data. Starting in .NET 6, an exception is thrown if you create any culture other than the invariant culture in globalization-invariant mode.
+- Previously, .NET allowed any culture to be created in globalization-invariant mode, as long as the culture name conformed to [BCP-47](https://www.rfc-editor.org/info/bcp47/). However, [the invariant culture](/dotnet/api/system.globalization.cultureinfo#invariant-neutral-and-specific-cultures) data was used instead of the real culture data. Starting in .NET 6, an exception is thrown if you create any culture other than the invariant culture in globalization-invariant mode.
 - Previously, globalization-invariant mode only supported case mapping for ASCII characters. Starting in .NET 6, globalization-invariant mode provides full case-mapping support for all Unicode-defined characters. Case mapping is used in operations such as string comparisons, string searches, and upper or lower casing strings.
 
-Globalization-invariant mode is used for apps that don't require any globalization support. That is, the app runs without access to culture-specific data and behavior. Globalization-invariant mode is enabled by default on some Docker containers, for example, Alpine containers.
+[Globalization-invariant mode](https://github.com/dotnet/runtime/blob/main/docs/design/features/globalization-invariant-mode.md) is used for apps that don't require any globalization support. That is, the app runs without access to culture-specific data and behavior. Globalization-invariant mode is enabled by default on some Docker containers, for example, Alpine containers.
 
 ## Old behavior
 
@@ -31,7 +27,7 @@ In previous .NET versions when globalization-invariant mode is enabled:
 
 Starting in .NET 6 when globalization-invariant mode is enabled:
 
-- If an app attempts to create a culture that's not the invariant culture, a `System.Globalization.CultureNotFoundException` exception is thrown.
+- If an app attempts to create a culture that's not the invariant culture, a <xref:System.Globalization.CultureNotFoundException> exception is thrown.
 - Case mapping is performed for all Unicode-defined characters. For example:
 
   ```csharp
@@ -50,17 +46,17 @@ The full case-mapping support was introduced for better usability and experience
 
 ## Recommended action
 
-In most cases, no action is needed. However, if you desire the previous culture-creation behavior, you can set a runtime configuration option to allow creation of any culture in globalization-invariant mode. For more information, see Predefined cultures.
+In most cases, no action is needed. However, if you desire the previous culture-creation behavior, you can set a runtime configuration option to allow creation of any culture in globalization-invariant mode. For more information, see [Predefined cultures](../../../runtime-config/globalization.md#predefined-cultures).
 
 ## Affected APIs
 
-- `System.Globalization.CultureInfo.#ctor*`
-- `System.Globalization.CultureInfo.CreateSpecificCulture(System.String)`
-- `System.Globalization.CultureInfo.GetCultureInfo*`
-- `System.Globalization.RegionInfo.#ctor*`
+- <xref:System.Globalization.CultureInfo.%23ctor*>
+- <xref:System.Globalization.CultureInfo.CreateSpecificCulture(System.String)?displayProperty=fullName>
+- <xref:System.Globalization.CultureInfo.GetCultureInfo*?displayProperty=fullName>
+- <xref:System.Globalization.RegionInfo.%23ctor*>
 - Any APIs that perform string casing, comparison, or searching
 
 ## See also
 
-- .NET globalization invariant mode
-- Invariant, neutral, and specific cultures
+- [.NET globalization invariant mode](https://github.com/dotnet/runtime/blob/main/docs/design/features/globalization-invariant-mode.md)
+- [Invariant, neutral, and specific cultures](/dotnet/api/system.globalization.cultureinfo#invariant-neutral-and-specific-cultures)

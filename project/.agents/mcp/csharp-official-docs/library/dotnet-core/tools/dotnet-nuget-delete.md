@@ -1,12 +1,9 @@
 ---
-title: "dotnet nuget delete command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-nuget-delete.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet nuget delete command
+description: The dotnet-nuget-delete command deletes or unlists a package from the server.
+author: karann-msft
+ms.date: 10/28/2025
 ---
-
 # dotnet nuget delete
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -27,7 +24,7 @@ dotnet nuget delete -h|--help
 
 ## Description
 
-The `dotnet nuget delete` command deletes or unlists a package from the server. For nuget.org, the action is to unlist the package.
+The `dotnet nuget delete` command deletes or unlists a package from the server. For [nuget.org](https://www.nuget.org/), the action is to unlist the package.
 
 ## Arguments
 
@@ -45,13 +42,9 @@ The `dotnet nuget delete` command deletes or unlists a package from the server. 
 
   Forces the application to run using an invariant, English-based culture.
 
-* **`-?|-h|--help`**
+* [!INCLUDE [help](includes/cli-help.md)]
 
-Prints out a description of how to use the command.
-
-* **`--interactive`**
-
-Allows the command to stop and wait for user input or action. For example, to complete authentication.
+* [!INCLUDE [interactive](includes/cli-interactive.md)]
 
 * **`-k|--api-key <API_KEY>`**
 
@@ -65,7 +58,7 @@ Allows the command to stop and wait for user input or action. For example, to co
 
   Doesn't prompt for user input or confirmations.
 
-* **`-s|--source `**
+* **`-s|--source <SOURCE>`**
 
   Specifies the server URL. The URL specified by using this option can be either V2 (`https://www.nuget.org/api/v2/`) or V3 (`https://api.nuget.org/v3/index.json`). For private feeds, replace the host name (for example, `%hostname%/api/v3/index.json`).
 

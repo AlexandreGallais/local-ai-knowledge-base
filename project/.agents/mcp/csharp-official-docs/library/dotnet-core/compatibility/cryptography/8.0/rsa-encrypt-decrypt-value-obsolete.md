@@ -1,30 +1,26 @@
 ---
 title: "RSA.EncryptValue and RSA.DecryptValue are obsolete"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/cryptography/8.0/rsa-encrypt-decrypt-value-obsolete.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 8 breaking change in cryptography where RSA.EncryptValue and RSA.DecryptValue are marked obsolete.
+ms.date: 01/24/2023
 ---
-
 # RSA.EncryptValue and RSA.DecryptValue are obsolete
 
 The following methods are obsolete in .NET 8 (and later versions):
 
-- `System.Security.Cryptography.RSA.EncryptValue(System.Byte[])`
-- `System.Security.Cryptography.RSA.DecryptValue(System.Byte[])`
-- `System.Security.Cryptography.RSACryptoServiceProvider.EncryptValue(System.Byte[])`
-- `System.Security.Cryptography.RSACryptoServiceProvider.DecryptValue(System.Byte[])`
+- <xref:System.Security.Cryptography.RSA.EncryptValue(System.Byte[])?displayProperty=nameWithType>
+- <xref:System.Security.Cryptography.RSA.DecryptValue(System.Byte[])?displayProperty=nameWithType>
+- <xref:System.Security.Cryptography.RSACryptoServiceProvider.EncryptValue(System.Byte[])?displayProperty=nameWithType>
+- <xref:System.Security.Cryptography.RSACryptoServiceProvider.DecryptValue(System.Byte[])?displayProperty=nameWithType>
 
-All references to these methods will result in a SYSLIB0048 warning at compile time.
+All references to these methods will result in a [SYSLIB0048](../../../../fundamentals/syslib-diagnostics/syslib0048.md) warning at compile time.
 
 ## Previous behavior
 
-Previously, code could call the affected methods without any compilation warnings. However, they threw a `System.NotSupportedException` at runtime.
+Previously, code could call the [affected methods](#affected-apis) without any compilation warnings. However, they threw a <xref:System.NotSupportedException> at runtime.
 
 ## New behavior
 
-Starting in .NET 8, calling the affected methods produces a `SYSLIB0048` compilation warning.
+Starting in .NET 8, calling the [affected methods](#affected-apis) produces a `SYSLIB0048` compilation warning.
 
 ## Version introduced
 
@@ -32,19 +28,19 @@ Starting in .NET 8, calling the affected methods produces a `SYSLIB0048` compila
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
-The affected methods were never implemented and always threw a `System.NotSupportedException`. Since the purpose of these methods is unclear and they shouldn't be called, they were marked as obsolete.
+The affected methods were never implemented and always threw a <xref:System.NotSupportedException>. Since the purpose of these methods is unclear and they shouldn't be called, they were marked as obsolete.
 
 ## Recommended action
 
-To encrypt or decrypt with RSA, use `System.Security.Cryptography.RSA.Encrypt*` or `System.Security.Cryptography.RSA.Decrypt*` instead.
+To encrypt or decrypt with RSA, use <xref:System.Security.Cryptography.RSA.Encrypt*?displayProperty=nameWithType> or <xref:System.Security.Cryptography.RSA.Decrypt*?displayProperty=nameWithType> instead.
 
 ## Affected APIs
 
-- `System.Security.Cryptography.RSA.EncryptValue(System.Byte[])`
-- `System.Security.Cryptography.RSA.DecryptValue(System.Byte[])`
-- `System.Security.Cryptography.RSACryptoServiceProvider.EncryptValue(System.Byte[])`
-- `System.Security.Cryptography.RSACryptoServiceProvider.DecryptValue(System.Byte[])`
+- <xref:System.Security.Cryptography.RSA.EncryptValue(System.Byte[])?displayProperty=fullName>
+- <xref:System.Security.Cryptography.RSA.DecryptValue(System.Byte[])?displayProperty=fullName>
+- <xref:System.Security.Cryptography.RSACryptoServiceProvider.EncryptValue(System.Byte[])?displayProperty=fullName>
+- <xref:System.Security.Cryptography.RSACryptoServiceProvider.DecryptValue(System.Byte[])?displayProperty=fullName>

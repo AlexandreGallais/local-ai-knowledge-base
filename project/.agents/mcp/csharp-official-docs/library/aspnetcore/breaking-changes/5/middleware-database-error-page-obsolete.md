@@ -1,17 +1,14 @@
 ---
 title: "Breaking change: Middleware: Database error page marked as obsolete"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/5/middleware-database-error-page-obsolete.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 5.0 titled Middleware: Database error page marked as obsolete"
+ms.date: 10/01/2020
+ms.custom: https://github.com/aspnet/Announcements/issues/432
 ---
-
 # Middleware: Database error page marked as obsolete
 
-The DatabaseErrorPageMiddleware and its associated extension methods were marked as obsolete in ASP.NET Core 5.0. The middleware and extension methods will be removed in ASP.NET Core 6.0. The functionality will instead be provided by `DatabaseDeveloperPageExceptionFilter` and its extension methods.
+The [DatabaseErrorPageMiddleware](/dotnet/api/microsoft.aspnetcore.diagnostics.entityframeworkcore.databaseerrorpagemiddleware?view=aspnetcore-3.0&preserve-view=false) and its associated extension methods were marked as obsolete in ASP.NET Core 5.0. The middleware and extension methods will be removed in ASP.NET Core 6.0. The functionality will instead be provided by `DatabaseDeveloperPageExceptionFilter` and its extension methods.
 
-For discussion, see the GitHub issue at dotnet/aspnetcore#24987.
+For discussion, see the GitHub issue at [dotnet/aspnetcore#24987](https://github.com/dotnet/aspnetcore/issues/24987).
 
 ## Version introduced
 
@@ -27,7 +24,7 @@ For discussion, see the GitHub issue at dotnet/aspnetcore#24987.
 
 ## Reason for change
 
-`DatabaseErrorPageMiddleware` was migrated to an extensible API for the developer exception page. For more information on the extensible API, see GitHub issue dotnet/aspnetcore#8536.
+`DatabaseErrorPageMiddleware` was migrated to an extensible API for the [developer exception page](../../fundamentals/error-handling.md#developer-exception-page). For more information on the extensible API, see GitHub issue [dotnet/aspnetcore#8536](https://github.com/dotnet/aspnetcore/issues/8536).
 
 ## Recommended action
 
@@ -45,7 +42,7 @@ Complete the following steps:
     }
     ```
 
-1. Add the developer exception page to your project. For example, call the `Microsoft.AspNetCore.Builder.DeveloperExceptionPageExtensions.UseDeveloperExceptionPage*` method in `Startup.Configure`:
+1. Add the developer exception page to your project. For example, call the <xref:Microsoft.AspNetCore.Builder.DeveloperExceptionPageExtensions.UseDeveloperExceptionPage*> method in `Startup.Configure`:
 
     ```csharp
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -57,7 +54,7 @@ Complete the following steps:
     }
     ```
 
-1. Add the Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore NuGet package to the project file.
+1. Add the [Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore](https://www.nuget.org/packages/Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore) NuGet package to the project file.
 
 1. Add the database developer page exception filter to the services collection. For example, call the `AddDatabaseDeveloperPageExceptionFilter` method in `Startup.ConfigureServices`:
 
@@ -70,5 +67,18 @@ Complete the following steps:
 
 ## Affected APIs
 
-- Microsoft.AspNetCore.Builder.DatabaseErrorPageExtensions.UseDatabaseErrorPage
-- Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.DatabaseErrorPageMiddleware
+- [Microsoft.AspNetCore.Builder.DatabaseErrorPageExtensions.UseDatabaseErrorPage](/dotnet/api/microsoft.aspnetcore.builder.databaseerrorpageextensions.usedatabaseerrorpage?view=aspnetcore-3.0&preserve-view=false)
+- [Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.DatabaseErrorPageMiddleware](/dotnet/api/microsoft.aspnetcore.diagnostics.entityframeworkcore.databaseerrorpagemiddleware?view=aspnetcore-3.0&preserve-view=false)
+
+<!--
+
+### Category
+
+ASP.NET Core
+
+### Affected APIs
+
+- `Overload:Microsoft.AspNetCore.Builder.DatabaseErrorPageExtensions.UseDatabaseErrorPage`
+- `T:Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.DatabaseErrorPageMiddleware`
+
+-->

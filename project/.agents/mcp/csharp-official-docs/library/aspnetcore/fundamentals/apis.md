@@ -1,13 +1,17 @@
 ---
-title: "APIs overview"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/apis.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: APIs overview
+description: Learn how to build fast HTTP APIs with ASP.NET Core using Minimal APIs, the recommended approach for new projects.
+ai-usage: ai-assisted
+ms.date: 05/04/2026
+ms.reviewer: jeliknes
+monikerRange: '>= aspnetcore-6.0'
 ---
 
 # APIs overview
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+ :::moniker range=">= aspnetcore-7.0"
 
 ASP.NET Core provides two approaches for building HTTP APIs: **Minimal APIs** and controller-based APIs. **For new projects, we recommend using Minimal APIs** as they provide a simplified, high-performance approach for building APIs with minimal code and configuration.
 
@@ -42,13 +46,13 @@ Minimal APIs support the configuration and customization needed to scale to mult
 
 ### Getting started with Minimal APIs
 
-* **Tutorial**: Tutorial: Create a Minimal API with ASP.NET Core
-* **Quick reference**: Minimal APIs quick reference
-* **Examples**: For a full list of common scenarios with code examples, see Minimal APIs quick reference
+* **Tutorial**: [Tutorial: Create a Minimal API with ASP.NET Core](../tutorials/min-web-api.md)
+* **Quick reference**: [Minimal APIs quick reference](minimal-apis.md)
+* **Examples**: For a full list of common scenarios with code examples, see [Minimal APIs quick reference](minimal-apis.md)
 
 ## Controller-based APIs - Alternative approach
 
-ASP.NET Core also supports a controller-based approach where controllers are classes that derive from `Microsoft.AspNetCore.Mvc.ControllerBase`. This approach follows traditional object-oriented patterns and may be preferred for:
+ASP.NET Core also supports a controller-based approach where controllers are classes that derive from <xref:Microsoft.AspNetCore.Mvc.ControllerBase>. This approach follows traditional object-oriented patterns and may be preferred for:
 
 * Large applications with complex business logic
 * Teams familiar with the MVC pattern
@@ -56,114 +60,18 @@ ASP.NET Core also supports a controller-based approach where controllers are cla
 
 Here's sample code for an API based on controllers:
 
-```csharp
+:::code language="csharp" source="~/fundamentals/apis/APIWithControllers/Program.cs":::
 
-namespace APIWithControllers;
+:::code language="csharp" source="~/fundamentals/apis/APIWithControllers/Controllers/WeatherForecastController.cs":::
 
-public class Program
-{
-    public static void Main(string[] args)
-    {
-        var builder = WebApplication.CreateBuilder(args);
-
-        builder.Services.AddControllers();
-        var app = builder.Build();
-
-        app.UseHttpsRedirection();
-
-        app.MapControllers();
-
-        app.Run();
-    }
-}
-```
-```csharp
-using Microsoft.AspNetCore.Mvc;
-
-namespace APIWithControllers.Controllers;
-[ApiController]
-[Route("[controller]")]
-public class WeatherForecastController : ControllerBase
-{
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
-    private readonly ILogger<WeatherForecastController> _logger;
-
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
-    {
-        _logger = logger;
-    }
-
-    [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
-    {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        {
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        })
-        .ToArray();
-    }
-}
-```
 The following code provides the same functionality using the recommended Minimal API approach:
 
-```csharp
+:::code language="csharp" source="~/fundamentals/apis/MinimalAPI/Program.cs":::
 
-namespace MinimalAPI;
-
-public class Program
-{
-    public static void Main(string[] args)
-    {
-        var builder = WebApplication.CreateBuilder(args);
-
-        var app = builder.Build();
-
-        app.UseHttpsRedirection();
-
-        var summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        app.MapGet("/weatherforecast", (HttpContext httpContext) =>
-        {
-            var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                {
-                    Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    TemperatureC = Random.Shared.Next(-20, 55),
-                    Summary = summaries[Random.Shared.Next(summaries.Length)]
-                })
-                .ToArray();
-            return forecast;
-        });
-
-        app.Run();
-    }
-}
-```
 Both API projects refer to the following class:
 
-```csharp
-namespace APIWithControllers;
+:::code language="csharp" source="~/fundamentals/apis/APIWithControllers/WeatherForecast.cs":::
 
-public class WeatherForecast
-{
-    public DateOnly Date { get; set; }
-
-    public int TemperatureC { get; set; }
-
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-
-    public string? Summary { get; set; }
-}
-```
 ## Choosing between approaches
 
 **Start with Minimal APIs** for new projects. They offer:
@@ -175,16 +83,78 @@ public class WeatherForecast
 
 **Consider controller-based APIs** if you need:
 
-* Model binding extensibility (`Microsoft.AspNetCore.Mvc.ModelBinding.IModelBinderProvider`, `Microsoft.AspNetCore.Mvc.ModelBinding.IModelBinder`)
-* Advanced validation features (`Microsoft.AspNetCore.Mvc.ModelBinding.Validation.IModelValidator`)
-* Application parts or the application model
-* OData support
+* Model binding extensibility (<xref:Microsoft.AspNetCore.Mvc.ModelBinding.IModelBinderProvider>, <xref:Microsoft.AspNetCore.Mvc.ModelBinding.IModelBinder>)
+* Advanced validation features (<xref:Microsoft.AspNetCore.Mvc.ModelBinding.Validation.IModelValidator>)
+* [Application parts](../mvc/advanced/app-parts.md) or the [application model](../mvc/controllers/application-model.md)
+* [OData](https://www.nuget.org/packages/Microsoft.AspNetCore.OData/) support
 
 Most of these features can be implemented in Minimal APIs with custom solutions, but controllers provide them out of the box.
 
 ## See also
 
-* Tutorial: Create a Minimal API with ASP.NET Core - Minimal API tutorial
-* Minimal APIs quick reference - Minimal APIs quick reference
-* Create web APIs with ASP.NET Core - Controller-based APIs overview
-* Tutorial: Create a controller-based web API with ASP.NET Core - Controller-based API tutorial
+* [Tutorial: Create a Minimal API with ASP.NET Core](../tutorials/min-web-api.md) - Minimal API tutorial
+* [Minimal APIs quick reference](minimal-apis.md) - Minimal APIs quick reference
+* [Create web APIs with ASP.NET Core](../web-api/index.md) - Controller-based APIs overview
+* [Tutorial: Create a controller-based web API with ASP.NET Core](../tutorials/first-web-api.md) - Controller-based API tutorial
+
+:::moniker-end
+
+:::moniker range="= aspnetcore-6.0"
+
+ASP.NET Core provides two approaches for building HTTP APIs: **Minimal APIs** and controller-based APIs. **For new projects, we recommend using Minimal APIs** as they provide a simplified, high-performance approach for building APIs with minimal code and configuration.
+
+## Minimal APIs - Recommended for new projects
+
+Minimal APIs are the recommended approach for building fast HTTP APIs with ASP.NET Core. They allow you to build fully functioning REST endpoints with minimal code and configuration.
+
+Here's a simple example:
+
+```csharp
+var app = WebApplication.Create(args);
+
+app.MapGet("/", () => "Hello World!");
+
+app.Run();
+```
+
+### Getting started with Minimal APIs
+
+* **Tutorial**: [Tutorial: Create a Minimal API with ASP.NET Core](../tutorials/min-web-api.md)
+* **Quick reference**: [Minimal APIs quick reference](minimal-apis.md)
+
+## Controller-based APIs - Alternative approach
+
+Controllers are classes that derive from <xref:Microsoft.AspNetCore.Mvc.ControllerBase>. This approach follows traditional object-oriented patterns.
+
+Here's sample code for an API based on controllers:
+
+:::code language="csharp" source="~/fundamentals/apis/APIWithControllers/Program.cs":::
+
+:::code language="csharp" source="~/fundamentals/apis/APIWithControllers/Controllers/WeatherForecastController.cs":::
+
+The following code provides the same functionality using the recommended Minimal API approach:
+
+:::code language="csharp" source="~/fundamentals/apis/MinimalAPI/Program.cs":::
+
+Both API projects refer to the following class:
+
+:::code language="csharp" source="~/fundamentals/apis/APIWithControllers/WeatherForecast.cs":::
+
+## Choosing between approaches
+
+**Start with Minimal APIs** for new projects. Consider controller-based APIs if you need:
+
+* Model binding extensibility (<xref:Microsoft.AspNetCore.Mvc.ModelBinding.IModelBinderProvider>, <xref:Microsoft.AspNetCore.Mvc.ModelBinding.IModelBinder>)
+* Form binding support, including <xref:Microsoft.AspNetCore.Http.IFormFile>
+* Advanced validation features (<xref:Microsoft.AspNetCore.Mvc.ModelBinding.Validation.IModelValidator>)
+* [Application parts](../mvc/advanced/app-parts.md) or the [application model](../mvc/controllers/application-model.md)
+* [OData](https://www.nuget.org/packages/Microsoft.AspNetCore.OData/) support
+
+## See also
+
+* [Tutorial: Create a Minimal API with ASP.NET Core](../tutorials/min-web-api.md)
+* [Minimal APIs quick reference](minimal-apis.md)
+* [Create web APIs with ASP.NET Core](../web-api/index.md) - Controller-based APIs overview
+* [Tutorial: Create a controller-based web API with ASP.NET Core](../tutorials/first-web-api.md)
+
+:::moniker-end

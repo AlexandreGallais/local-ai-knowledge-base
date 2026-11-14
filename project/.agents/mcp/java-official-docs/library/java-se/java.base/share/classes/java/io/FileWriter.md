@@ -1,12 +1,3 @@
----
-title: "FileWriter class (java.io)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/io/FileWriter.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # FileWriter class (java.io)
 
 ```java
@@ -14,25 +5,26 @@ public class FileWriter extends OutputStreamWriter
 ```
 
 Writes text to character files using a default buffer size. Encoding from characters
-to bytes uses either a specified charset
-or the default charset.
+to bytes uses either a specified {@linkplain Charset charset}
+or the {@linkplain Charset#defaultCharset() default charset}.
 
+<p>
 Whether or not a file is available or may be created depends upon the
 underlying platform.  Some platforms, in particular, allow a file to be
-opened for writing by only one `FileWriter` (or other file-writing
+opened for writing by only one {@code FileWriter} (or other file-writing
 object) at a time.  In such situations the constructors in this class
 will fail if the file involved is already open.
 
-The `FileWriter` is meant for writing streams of characters. For writing
-streams of raw bytes, consider using a `FileOutputStream`.
+<p>
+The {@code FileWriter} is meant for writing streams of characters. For writing
+streams of raw bytes, consider using a {@code FileOutputStream}.
 
-**See also:** OutputStreamWriter
+@see OutputStreamWriter
+@see FileOutputStream
+@see Charset#defaultCharset()
 
-**See also:** FileOutputStream
-
-**See also:** Charset#defaultCharset()
-
-**Since:** 1.1
+@author      Mark Reinhold
+@since       1.1
 
 ## FileWriter.FileWriter(String)
 
@@ -40,18 +32,14 @@ streams of raw bytes, consider using a `FileOutputStream`.
 public FileWriter(String fileName) throws IOException
 ```
 
-Constructs a `FileWriter` given a file name, using the
-default charset
+Constructs a {@code FileWriter} given a file name, using the
+{@linkplain Charset#defaultCharset() default charset}
 
-Parameters:
-
-- `fileName`: String The system-dependent filename.
-
-**See also:** Charset#defaultCharset()
-
-Throws:
-
-- `IOException`: if the named file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
+@param fileName  String The system-dependent filename.
+@throws IOException  if the named file exists but is a directory rather
+                 than a regular file, does not exist but cannot be
+                 created, or cannot be opened for any other reason
+@see Charset#defaultCharset()
 
 ## FileWriter.FileWriter(String, boolean)
 
@@ -59,20 +47,17 @@ Throws:
 public FileWriter(String fileName, boolean append) throws IOException
 ```
 
-Constructs a `FileWriter` given a file name and a boolean indicating
+Constructs a {@code FileWriter} given a file name and a boolean indicating
 whether to append the data written, using the
-default charset.
+{@linkplain Charset#defaultCharset() default charset}.
 
-Parameters:
-
-- `fileName`: String The system-dependent filename.
-- `append`: boolean if `true`, then data will be written to the end of the file rather than the beginning.
-
-**See also:** Charset#defaultCharset()
-
-Throws:
-
-- `IOException`: if the named file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
+@param fileName  String The system-dependent filename.
+@param append    boolean if {@code true}, then data will be written
+                 to the end of the file rather than the beginning.
+@throws IOException  if the named file exists but is a directory rather
+                 than a regular file, does not exist but cannot be
+                 created, or cannot be opened for any other reason
+@see Charset#defaultCharset()
 
 ## FileWriter.FileWriter(File)
 
@@ -80,18 +65,14 @@ Throws:
 public FileWriter(File file) throws IOException
 ```
 
-Constructs a `FileWriter` given the `File` to write,
-using the default charset
+Constructs a {@code FileWriter} given the {@code File} to write,
+using the {@linkplain Charset#defaultCharset() default charset}
 
-Parameters:
-
-- `file`: the `File` to write.
-
-**See also:** Charset#defaultCharset()
-
-Throws:
-
-- `IOException`: if the file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
+@param file  the {@code File} to write.
+@throws IOException  if the file exists but is a directory rather than
+                 a regular file, does not exist but cannot be created,
+                 or cannot be opened for any other reason
+@see Charset#defaultCharset()
 
 ## FileWriter.FileWriter(File, boolean)
 
@@ -99,22 +80,18 @@ Throws:
 public FileWriter(File file, boolean append) throws IOException
 ```
 
-Constructs a `FileWriter` given the `File` to write and
+Constructs a {@code FileWriter} given the {@code File} to write and
 a boolean indicating whether to append the data written, using the
-default charset.
+{@linkplain Charset#defaultCharset() default charset}.
 
-Parameters:
-
-- `file`: the `File` to write
-- `append`: if `true`, then bytes will be written to the end of the file rather than the beginning
-
-**See also:** Charset#defaultCharset()
-
-**Since:** 1.4
-
-Throws:
-
-- `IOException`: if the file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
+@param file  the {@code File} to write
+@param     append    if {@code true}, then bytes will be written
+                     to the end of the file rather than the beginning
+@throws IOException  if the file exists but is a directory rather than
+                 a regular file, does not exist but cannot be created,
+                 or cannot be opened for any other reason
+@see Charset#defaultCharset()
+@since 1.4
 
 ## FileWriter.FileWriter(FileDescriptor)
 
@@ -122,14 +99,11 @@ Throws:
 public FileWriter(FileDescriptor fd)
 ```
 
-Constructs a `FileWriter` given a file descriptor,
-using the default charset.
+Constructs a {@code FileWriter} given a file descriptor,
+using the {@linkplain Charset#defaultCharset() default charset}.
 
-Parameters:
-
-- `fd`: the `FileDescriptor` to write.
-
-**See also:** Charset#defaultCharset()
+@param fd  the {@code FileDescriptor} to write.
+@see Charset#defaultCharset()
 
 ## FileWriter.FileWriter(String, Charset)
 
@@ -137,19 +111,16 @@ Parameters:
 public FileWriter(String fileName, Charset charset) throws IOException
 ```
 
-Constructs a `FileWriter` given a file name and
-charset.
+Constructs a {@code FileWriter} given a file name and
+{@linkplain Charset charset}.
 
-Parameters:
+@param fileName  the name of the file to write
+@param charset the {@linkplain Charset charset}
+@throws IOException  if the named file exists but is a directory rather
+                 than a regular file, does not exist but cannot be
+                 created, or cannot be opened for any other reason
 
-- `fileName`: the name of the file to write
-- `charset`: the charset
-
-**Since:** 11
-
-Throws:
-
-- `IOException`: if the named file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
+@since 11
 
 ## FileWriter.FileWriter(String, Charset, boolean)
 
@@ -157,21 +128,19 @@ Throws:
 public FileWriter(String fileName, Charset charset, boolean append) throws IOException
 ```
 
-Constructs a `FileWriter` given a file name,
-charset and a boolean indicating
+Constructs a {@code FileWriter} given a file name,
+{@linkplain Charset charset} and a boolean indicating
 whether to append the data written.
 
-Parameters:
+@param fileName  the name of the file to write
+@param charset the {@linkplain Charset charset}
+@param append    a boolean. If {@code true}, the writer will write the data
+                 to the end of the file rather than the beginning.
+@throws IOException  if the named file exists but is a directory rather
+                 than a regular file, does not exist but cannot be
+                 created, or cannot be opened for any other reason
 
-- `fileName`: the name of the file to write
-- `charset`: the charset
-- `append`: a boolean. If `true`, the writer will write the data to the end of the file rather than the beginning.
-
-**Since:** 11
-
-Throws:
-
-- `IOException`: if the named file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
+@since 11
 
 ## FileWriter.FileWriter(File, Charset)
 
@@ -179,19 +148,16 @@ Throws:
 public FileWriter(File file, Charset charset) throws IOException
 ```
 
-Constructs a `FileWriter` given the `File` to write and
-charset.
+Constructs a {@code FileWriter} given the {@code File} to write and
+{@linkplain Charset charset}.
 
-Parameters:
+@param file  the {@code File} to write
+@param charset the {@linkplain Charset charset}
+@throws IOException  if the file exists but is a directory rather than
+                 a regular file, does not exist but cannot be created,
+                 or cannot be opened for any other reason
 
-- `file`: the `File` to write
-- `charset`: the charset
-
-**Since:** 11
-
-Throws:
-
-- `IOException`: if the file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
+@since 11
 
 ## FileWriter.FileWriter(File, Charset, boolean)
 
@@ -199,18 +165,15 @@ Throws:
 public FileWriter(File file, Charset charset, boolean append) throws IOException
 ```
 
-Constructs a `FileWriter` given the `File` to write,
-charset and a boolean indicating
+Constructs a {@code FileWriter} given the {@code File} to write,
+{@linkplain Charset charset} and a boolean indicating
 whether to append the data written.
 
-Parameters:
-
-- `file`: the `File` to write
-- `charset`: the charset
-- `append`: a boolean. If `true`, the writer will write the data to the end of the file rather than the beginning.
-
-**Since:** 11
-
-Throws:
-
-- `IOException`: if the file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
+@param file  the {@code File} to write
+@param charset the {@linkplain Charset charset}
+@param append    a boolean. If {@code true}, the writer will write the data
+                 to the end of the file rather than the beginning.
+@throws IOException  if the file exists but is a directory rather than
+                 a regular file, does not exist but cannot be created,
+                 or cannot be opened for any other reason
+@since 11

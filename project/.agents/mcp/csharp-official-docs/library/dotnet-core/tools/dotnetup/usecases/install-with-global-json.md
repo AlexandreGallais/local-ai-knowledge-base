@@ -1,16 +1,14 @@
 ---
-title: "Install an SDK for a repository with dotnetup"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/usecases/install-with-global-json.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Install an SDK for a repository with dotnetup
+description: Use global.json to install and track the SDK requirement for a repository.
+ms.topic: how-to
+ms.date: 08/07/2026
+ai-usage: ai-assisted
 ---
 
 # Install an SDK for a repository with dotnetup
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 When you do not supply an SDK channel, `dotnetup sdk install` searches from
 the current directory toward the file system root. It uses the nearest
@@ -121,6 +119,6 @@ dotnetup sdk uninstall 10.0.1xx --source globaljson --install-path <INSTALL_PATH
 
 ## See also
 
-- Repository and global.json integration
-- dotnetup sdk install
-- Update tracked installations
+- [Repository and global.json integration](../concepts/repositories.md)
+- [dotnetup sdk install](../reference/dotnetup-sdk-install.md)
+- [Update tracked installations](update-installations.md)

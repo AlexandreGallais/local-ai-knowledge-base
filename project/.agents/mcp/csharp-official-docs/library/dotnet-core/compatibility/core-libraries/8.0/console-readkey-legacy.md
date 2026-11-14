@@ -1,23 +1,19 @@
 ---
 title: ".NET 8 breaking change: Legacy Console.ReadKey removed"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/8.0/console-readkey-legacy.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 8 breaking change in core .NET libraries where the legacy Console.ReadKey implementation has been removed.
+ms.date: 01/27/2023
 ---
+# Legacy Console.ReadKey removed
 
-# Legacy Console.ReadKey <example-value>
-
-The ability to use the legacy `System.Console.ReadKey*` implementation exposed via the `System.Console.UseNet6CompatReadKey` JSON setting and the `DOTNET_SYSTEM_CONSOLE_USENET6COMPATREADKEY` environment variable has been removed.
+The ability to use the legacy <xref:System.Console.ReadKey*?displayProperty=nameWithType> implementation exposed via the `System.Console.UseNet6CompatReadKey` JSON setting and the `DOTNET_SYSTEM_CONSOLE_USENET6COMPATREADKEY` environment variable has been removed.
 
 ## Previous behavior
 
-Previously, you could request the .NET 6 console key <example-value> logic via a runtime configuration switch.
+Previously, you could request the .NET 6 console key parsing logic via a runtime configuration switch.
 
 ## New behavior
 
-Starting in .NET 8, you can't request the .NET 6 compatibility mode for `System.Console.ReadKey*`.
+Starting in .NET 8, you can't request the .NET 6 compatibility mode for <xref:System.Console.ReadKey*?displayProperty=nameWithType>.
 
 ## Version introduced
 
@@ -25,11 +21,11 @@ Starting in .NET 8, you can't request the .NET 6 compatibility mode for `System.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-The compatibility mode was introduced as a safety switch in case the `System.Console.ReadKey*` implementation rewrite introduced any bugs. Only one bug was reported, and it was fixed in .NET 7, so there's no need to keep the previous implementation anymore.
+The compatibility mode was introduced as a safety switch in case the <xref:System.Console.ReadKey*?displayProperty=nameWithType> implementation rewrite introduced any bugs. Only one bug was reported, and it was fixed in .NET 7, so there's no need to keep the previous implementation anymore.
 
 ## Recommended action
 
@@ -37,4 +33,4 @@ If the new implementation doesn't work as expected, open a bug at <https://githu
 
 ## Affected APIs
 
-- `System.Console.ReadKey*`
+- <xref:System.Console.ReadKey*?displayProperty=fullName>

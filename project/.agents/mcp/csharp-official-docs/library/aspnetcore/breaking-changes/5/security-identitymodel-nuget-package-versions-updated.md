@@ -1,20 +1,17 @@
 ---
 title: "Breaking change: Security: IdentityModel NuGet package versions updated"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/5/security-identitymodel-nuget-package-versions-updated.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 5.0 titled Security: IdentityModel NuGet package versions updated"
+ms.date: 10/01/2020
+ms.custom: https://github.com/aspnet/Announcements/issues/428
 ---
-
 # Security: IdentityModel NuGet package versions updated
 
 The following packages were updated to version 6.6.0:
 
-- Microsoft.IdentityModel.Logging
-- Microsoft.IdentityModel.Protocols.OpenIdConnect
-- Microsoft.IdentityModel.Protocols.WsFederation
-- System.IdentityModel.Tokens.Jwt
+- [Microsoft.IdentityModel.Logging](https://www.nuget.org/packages/Microsoft.IdentityModel.Logging)
+- [Microsoft.IdentityModel.Protocols.OpenIdConnect](https://www.nuget.org/packages/Microsoft.IdentityModel.Protocols.OpenIdConnect)
+- [Microsoft.IdentityModel.Protocols.WsFederation](https://www.nuget.org/packages/Microsoft.IdentityModel.Protocols.WsFederation)
+- [System.IdentityModel.Tokens.Jwt](https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt)
 
 ## Version introduced
 
@@ -26,7 +23,7 @@ The package version used is 5.5.0.
 
 ## New behavior
 
-For details about changes between package versions, see the 6.6.0 release notes.
+For details about changes between package versions, see the [6.6.0 release notes](https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/releases/tag/6.6.0).
 
 ## Reason for change
 
@@ -39,3 +36,15 @@ The package updates don't introduce public API changes to ASP.NET Core. However,
 ## Affected APIs
 
 None
+
+<!--
+
+### Category
+
+ASP.NET Core
+
+### Affected APIs
+
+Not detectable via API analysis
+
+-->

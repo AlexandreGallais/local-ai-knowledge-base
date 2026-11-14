@@ -1,17 +1,10 @@
----
-title: "no-unnecessary-polyfills"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-unnecessary-polyfills.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-unnecessary-polyfills
 
 📝 Enforce the use of built-in methods instead of unnecessary polyfills.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
+
+<!-- end auto-generated rule header -->
 
 Unneeded polyfills add dependencies and code paths while providing no benefit on targets that already support the method.
 
@@ -57,9 +50,9 @@ Type: `object`
 
 Type: `string | string[] | object`
 
-Specify the target versions, which could be a Browserslist query or a targets object. See the core-js-compat `targets` option for more info.
+Specify the target versions, which could be a Browserslist query or a targets object. See the [core-js-compat `targets` option](https://github.com/zloirock/core-js/tree/HEAD/packages/core-js-compat#targets-option) for more info.
 
-If the option is not specified, the target versions are defined using standard `Browserslist` config discovery with the `production` environment, or as a last resort, the `engines` field in package.json.
+If the option is not specified, the target versions are defined using standard [`Browserslist`](https://browsersl.ist) config discovery with the `production` environment, or as a last resort, the `engines` field in package.json.
 
 ```js
 'unicorn/no-unnecessary-polyfills': [

@@ -1,15 +1,22 @@
 ---
+description: "Learn more about: IMetaDataImport::FindMethod Method"
 title: "IMetaDataImport::FindMethod Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-findmethod-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.FindMethod"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::FindMethod"
+  - "IMetaDataImport::FindMethod method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::FindMethod Method
 
-Gets a pointer to the MethodDef token for the method that is enclosed by the specified `System.Type` and that has the specified name and metadata signature.
+Gets a pointer to the MethodDef token for the method that is enclosed by the specified <xref:System.Type> and that has the specified name and metadata signature.
 
 ## Syntax
 
@@ -50,7 +57,7 @@ HRESULT FindMethod (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -58,6 +65,6 @@ HRESULT FindMethod (
 
 ## See also
 
-- `System.Reflection.MethodInfo`
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- <xref:System.Reflection.MethodInfo>
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

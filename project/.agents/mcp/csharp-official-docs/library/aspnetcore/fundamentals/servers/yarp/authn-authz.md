@@ -1,10 +1,10 @@
 ---
-title: "YARP authentication and authorization"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/authn-authz.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: YARP authentication and authorization
+ai-usage: ai-assisted
+content_well_notification: AI-contribution
+description: Learn how to configure authentication and authorization for YARP routes.
+ms.date: 09/18/2026
+ms.topic: concept-article
 ---
 
 # YARP authentication and authorization
@@ -17,7 +17,7 @@ The reverse proxy can be used to authenticate and authorize requests before they
 No authentication or authorization is performed on requests unless enabled in the route or application configuration.
 
 ## Configuration
-Authorization policies can be specified per route via RouteConfig.AuthorizationPolicy and can be bound from the `Routes` sections of the config file. As with other route properties, this can be modified and reloaded without restarting the proxy. Policy names are case insensitive.
+Authorization policies can be specified per route via [RouteConfig.AuthorizationPolicy](xref:Yarp.ReverseProxy.Configuration.RouteConfig) and can be bound from the `Routes` sections of the config file. As with other route properties, this can be modified and reloaded without restarting the proxy. Policy names are case insensitive.
 
 Example:
 ```json
@@ -45,7 +45,7 @@ Example:
 }
 ```
 
-Authorization policies are an ASP.NET Core concept that the proxy utilizes. The proxy provides the above configuration to specify a policy per route and the rest is handled by existing ASP.NET Core authentication and authorization components.
+[Authorization policies](../../../security/authorization/policies.md) are an ASP.NET Core concept that the proxy utilizes. The proxy provides the above configuration to specify a policy per route and the rest is handled by existing ASP.NET Core authentication and authorization components.
 
 Authorization policies can be configured in the application as follows:
 
@@ -66,7 +66,7 @@ app.UseAuthorization();
 app.MapReverseProxy();
 ```
 
-See Overview of ASP.NET Core Authentication for setting up your preferred type of authentication.
+See [Overview of ASP.NET Core Authentication](../../../security/authentication/index.md) for setting up your preferred type of authentication.
 
 ### Special values
 
@@ -74,7 +74,7 @@ In addition to custom policy names, YARP supports two special values for a route
 
 #### `default`
 
-The `default` value uses the `Microsoft.AspNetCore.Authorization.AuthorizationOptions.DefaultPolicy`. By default, this policy requires an authenticated user.
+The `default` value uses the <xref:Microsoft.AspNetCore.Authorization.AuthorizationOptions.DefaultPolicy?displayProperty=nameWithType>. By default, this policy requires an authenticated user.
 
 #### `anonymous`
 
@@ -82,7 +82,7 @@ The `anonymous` value allows anonymous access to the route regardless of the con
 
 #### Fallback policy
 
-The `Microsoft.AspNetCore.Authorization.AuthorizationOptions.FallbackPolicy` is used for a route that doesn't specify an authorization parameter. By default, the fallback policy is `null`, so such a route doesn't require authorization. For complete policy selection rules, see Policy-based authorization in ASP.NET Core.
+The <xref:Microsoft.AspNetCore.Authorization.AuthorizationOptions.FallbackPolicy?displayProperty=nameWithType> is used for a route that doesn't specify an authorization parameter. By default, the fallback policy is `null`, so such a route doesn't require authorization. For complete policy selection rules, see [Policy-based authorization in ASP.NET Core](../../../security/authorization/policies.md#default-and-fallback-policies).
 
 ## Flowing Credentials
 
@@ -98,14 +98,14 @@ These protocols are commonly used with remote identity providers. The authentica
 
 ### Windows, Negotiate, NTLM, Kerberos
 
-These authentication types are often bound to a specific connection. They are not supported as means of authenticating a user in a destination server behind the YARP proxy (see #166. They can be used to authenticate an incoming request to the proxy, but that identity information will have to be communicated to the destination server in another form. They can also be used to authenticate the proxy to the destination servers, but only as the proxy's own user, impersonating the client is not supported.
+These authentication types are often bound to a specific connection. They are not supported as means of authenticating a user in a destination server behind the YARP proxy (see [#166](https://github.com/microsoft/reverse-proxy/issues/166). They can be used to authenticate an incoming request to the proxy, but that identity information will have to be communicated to the destination server in another form. They can also be used to authenticate the proxy to the destination servers, but only as the proxy's own user, impersonating the client is not supported.
 
 ### Client Certificates
 
-Client certificates are a TLS feature and are negotiated as part of a connection. See these docs for additional information. The certificate can be forwarded to the destination server as an HTTP header using the ClientCert transform.
+Client certificates are a TLS feature and are negotiated as part of a connection. See [these docs](../../../security/authentication/certauth.md) for additional information. The certificate can be forwarded to the destination server as an HTTP header using the [ClientCert](transforms-request.md#clientcert) transform.
 
 ### Swapping authentication types
 
 Authentication types like Windows that don't flow naturally to the destination server will need to be converted in the proxy to an alternate form. For example a JWT bearer token can be created with the user information and set on the proxy request.
 
-These swaps can be performed using custom request transforms. Detailed examples can be developed for specific scenarios if there is enough community interest. We need more community feedback on how you want to convert and flow identity information.
+These swaps can be performed using [custom request transforms](transforms.md#from-code). Detailed examples can be developed for specific scenarios if there is enough community interest. We need more community feedback on how you want to convert and flow identity information.

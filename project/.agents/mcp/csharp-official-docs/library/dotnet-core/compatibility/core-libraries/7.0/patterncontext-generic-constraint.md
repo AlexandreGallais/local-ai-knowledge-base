@@ -1,23 +1,19 @@
 ---
 title: ".NET 7 breaking change: Generic type constraint on PatternContext<T>"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/7.0/patterncontext-generic-constraint.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 7 breaking change in core .NET libraries where the generic type parameter on PatternContext<T> is constrained to be a struct type.
+ms.date: 03/16/2022
 ---
-
 # Generic type constraint on PatternContext\<T>
 
-As part of annotating the .NET library for nullable reference types, a new generic constraint was added to `Microsoft.Extensions.FileSystemGlobbing.Internal.PatternContexts.PatternContext`1`. If you're consuming this class directly, your code may break if the `TFrame` type is not a struct.
+As part of annotating the .NET library for nullable reference types, a new generic constraint was added to <xref:Microsoft.Extensions.FileSystemGlobbing.Internal.PatternContexts.PatternContext`1>. If you're consuming this class directly, your code may break if the `TFrame` type is not a struct.
 
 ## Previous behavior
 
-Previously, `Microsoft.Extensions.FileSystemGlobbing.Internal.PatternContexts.PatternContext`1` allowed any type to fill the `TFrame` type parameter.
+Previously, <xref:Microsoft.Extensions.FileSystemGlobbing.Internal.PatternContexts.PatternContext`1> allowed any type to fill the `TFrame` type parameter.
 
 ## New behavior
 
-Starting in .NET 7, the generic type parameter on `Microsoft.Extensions.FileSystemGlobbing.Internal.PatternContexts.PatternContext`1`, `TFrame`, is constrained to be a struct.
+Starting in .NET 7, the generic type parameter on <xref:Microsoft.Extensions.FileSystemGlobbing.Internal.PatternContexts.PatternContext`1>, `TFrame`, is constrained to be a [struct](../../../../csharp/language-reference/builtin-types/struct.md).
 
 ## Version introduced
 
@@ -25,7 +21,7 @@ Starting in .NET 7, the generic type parameter on `Microsoft.Extensions.FileSyst
 
 ## Type of breaking change
 
-This change can affect source compatibility and binary compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility) and [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 
@@ -37,4 +33,4 @@ If you're currently using this type in your code, we recommend that you remove i
 
 ## Affected APIs
 
-- `Microsoft.Extensions.FileSystemGlobbing.Internal.PatternContexts.PatternContext`1`
+- <xref:Microsoft.Extensions.FileSystemGlobbing.Internal.PatternContexts.PatternContext`1?displayProperty=fullName>

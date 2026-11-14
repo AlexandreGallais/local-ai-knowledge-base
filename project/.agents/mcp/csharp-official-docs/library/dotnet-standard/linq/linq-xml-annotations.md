@@ -1,17 +1,14 @@
 ---
-title: "Annotations - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/linq-xml-annotations.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Annotations - LINQ to XML
+description: Learn how to use annotations in LINQ to XML to associate any arbitrary object of any arbitrary type with any XML component in an XML tree.
+ms.date: 07/20/2015
+ms.assetid: 54e7b9d0-07f5-488f-9065-b6e6b870f810
 ---
-
 # LINQ to XML annotations (LINQ to XML)
 
 Annotations in LINQ to XML enable you to associate any arbitrary object of any arbitrary type with any XML component in an XML tree.
 
-To add an annotation to an XML component, such as an `System.Xml.Linq.XElement` or `System.Xml.Linq.XAttribute`, you call the `System.Xml.Linq.XObject.AddAnnotation*` method. You retrieve annotations by type.
+To add an annotation to an XML component, such as an <xref:System.Xml.Linq.XElement> or <xref:System.Xml.Linq.XAttribute>, you call the <xref:System.Xml.Linq.XObject.AddAnnotation*> method. You retrieve annotations by type.
 
 Note that annotations aren't part of the XML infoset; they're not serialized or deserialized.
 
@@ -21,7 +18,7 @@ You can use the following methods when working with annotations:
 
 |Method|Description|
 |------------|-----------------|
-|`System.Xml.Linq.XObject.AddAnnotation*`|Adds an object to the annotation list of an `System.Xml.Linq.XObject`.|
-|`System.Xml.Linq.XObject.Annotation*`|Gets the first annotation object of the specified type from an `System.Xml.Linq.XObject`.|
-|`System.Xml.Linq.XObject.Annotations*`|Gets a collection of annotations of the specified type for an `System.Xml.Linq.XObject`.|
-|`System.Xml.Linq.XObject.RemoveAnnotations*`|Removes the annotations of the specified type from an `System.Xml.Linq.XObject`.|
+|<xref:System.Xml.Linq.XObject.AddAnnotation*>|Adds an object to the annotation list of an <xref:System.Xml.Linq.XObject>.|
+|<xref:System.Xml.Linq.XObject.Annotation*>|Gets the first annotation object of the specified type from an <xref:System.Xml.Linq.XObject>.|
+|<xref:System.Xml.Linq.XObject.Annotations*>|Gets a collection of annotations of the specified type for an <xref:System.Xml.Linq.XObject>.|
+|<xref:System.Xml.Linq.XObject.RemoveAnnotations*>|Removes the annotations of the specified type from an <xref:System.Xml.Linq.XObject>.|

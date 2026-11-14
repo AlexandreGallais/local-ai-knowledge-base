@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebug::SetUnmanagedHandler Method"
 title: "ICorDebug::SetUnmanagedHandler Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebug-setunmanagedhandler-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebug.SetUnmanagedHandler"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebug::SetUnmanagedHandler"
+helpviewer_keywords:
+  - "SetUnmanagedHandler method [.NET debugging]"
+  - "ICorDebug::SetUnmanagedHandler method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebug::SetUnmanagedHandler Method
 
 Specifies the event handler object for unmanaged events.
@@ -22,15 +31,15 @@ HRESULT SetUnmanagedHandler (
 ## Parameters
 
  `pCallback`
- [in] A pointer to an ICorDebugUnmanagedCallback object that represents the event handler for unmanaged events.
+ [in] A pointer to an [ICorDebugUnmanagedCallback](icordebugunmanagedcallback-interface.md) object that represents the event handler for unmanaged events.
 
 ## Remarks
 
-The event handler object for unmanaged events must be set after a call to ICorDebug::Initialize and before any calls to ICorDebug::CreateProcess or ICorDebug::DebugActiveProcess. However, for legacy purposes, you are not required to set the event handler object for unmanaged events until the first native debug event is raised. Specifically, if `ICorDebug::CreateProcess` has set the CREATE_SUSPENDED flag, native debug events cannot be dispatched until the main thread is resumed.
+The event handler object for unmanaged events must be set after a call to [ICorDebug::Initialize](icordebug-initialize-method.md) and before any calls to [ICorDebug::CreateProcess](icordebug-createprocess-method.md) or [ICorDebug::DebugActiveProcess](icordebug-debugactiveprocess-method.md). However, for legacy purposes, you are not required to set the event handler object for unmanaged events until the first native debug event is raised. Specifically, if `ICorDebug::CreateProcess` has set the CREATE_SUSPENDED flag, native debug events cannot be dispatched until the main thread is resumed.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -40,4 +49,4 @@ The event handler object for unmanaged events must be set after a call to ICorDe
 
 ## See also
 
-- ICorDebug Interface
+- [ICorDebug Interface](icordebug-interface.md)

@@ -1,13 +1,13 @@
 ---
-title: "no-empty-static-block"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-empty-static-block.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-empty-static-block
+layout: doc
+rule_type: suggestion
+related_rules:
+- no-empty
+- no-empty-function
+further_reading:
+- https://github.com/tc39/proposal-class-static-block
 ---
-
-# no-empty-static-block
 
 Empty static blocks, while not technically errors, usually occur due to refactoring that wasn't completed. They can cause confusion when reading code.
 
@@ -17,7 +17,7 @@ This rule disallows empty static blocks. This rule ignores static blocks which c
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-empty-static-block: "error"*/
@@ -27,9 +27,11 @@ class Foo {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint no-empty-static-block: "error"*/
@@ -46,6 +48,8 @@ class Bar {
     }
 }
 ```
+
+:::
 
 ## Options
 

@@ -1,19 +1,20 @@
 ---
-title: "IHttpContextAccessor/HttpContext in ASP.NET Core Blazor apps"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/components/httpcontext.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: IHttpContextAccessor/HttpContext in ASP.NET Core Blazor apps
+description: Learn about IHttpContextAccessor and HttpContext in ASP.NET Core Blazor apps.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 11/11/2025
 ---
-
 # `IHttpContextAccessor`/`HttpContext` in ASP.NET Core Blazor apps
 
-`Microsoft.AspNetCore.Http.IHttpContextAccessor` generally should be avoided with interactive rendering because a valid `Microsoft.AspNetCore.Http.HttpContext` isn't always available.
+[!INCLUDE[](~/includes/not-latest-version-without-not-supported-content.md)]
 
-`Microsoft.AspNetCore.Http.IHttpContextAccessor` can be used during static server-side rendering (static SSR), for example in statically-rendered root components, and when using a token <example-value> for web API calls on the server. **We recommend avoiding `Microsoft.AspNetCore.Http.IHttpContextAccessor` when static SSR or code running on the server can't be guaranteed.**
+:::moniker range=">= aspnetcore-8.0"
 
-`Microsoft.AspNetCore.Http.HttpContext` can be used as a cascading parameter only in statically-rendered root components or during static SSR for general tasks, such as inspecting and modifying headers or other properties in the `App` component (`App.razor`). The value is `null` during interactive rendering.
+<xref:Microsoft.AspNetCore.Http.IHttpContextAccessor> generally should be avoided with interactive rendering because a valid <xref:Microsoft.AspNetCore.Http.HttpContext> isn't always available.
+
+<xref:Microsoft.AspNetCore.Http.IHttpContextAccessor> can be used during static server-side rendering (static SSR), for example in statically-rendered root components, and when [using a token handler for web API calls](../security/additional-scenarios.md#use-a-token-handler-for-web-api-calls) on the server. **We recommend avoiding <xref:Microsoft.AspNetCore.Http.IHttpContextAccessor> when static SSR or code running on the server can't be guaranteed.**
+
+<xref:Microsoft.AspNetCore.Http.HttpContext> can be used as a [cascading parameter](xref:Microsoft.AspNetCore.Components.CascadingParameterAttribute) only in statically-rendered root components or during static SSR for general tasks, such as inspecting and modifying headers or other properties in the `App` component (`App.razor`). The value is `null` during interactive rendering.
 
 ```csharp
 [CascadingParameter]
@@ -22,10 +23,10 @@ private HttpContext? HttpContext { get; set; }
 
 For additional context in *advanced* edge cases&dagger;, see the discussion in the following articles:
 
-* HttpContext is valid in Interactive Server Rendering Blazor page (`dotnet/AspNetCore.Docs` #34301)
-* Security implications of using IHttpContextAccessor in Blazor Server (`dotnet/aspnetcore` #45699)
+* [HttpContext is valid in Interactive Server Rendering Blazor page (`dotnet/AspNetCore.Docs` #34301)](https://github.com/dotnet/AspNetCore.Docs/issues/34301)
+* [Security implications of using IHttpContextAccessor in Blazor Server (`dotnet/aspnetcore` #45699)](https://github.com/dotnet/aspnetcore/issues/45699)
 
-&dagger;Most developers building and maintaining Blazor apps don't need to delve into advanced concepts when the general guidance in this article is followed. The most important concept to keep in mind is that `Microsoft.AspNetCore.Http.HttpContext` is fundamentally a server-based, request-response feature that's only generally available on the server during static SSR and only created when a user's circuit is established.
+&dagger;Most developers building and maintaining Blazor apps don't need to delve into advanced concepts when the general guidance in this article is followed. The most important concept to keep in mind is that <xref:Microsoft.AspNetCore.Http.HttpContext> is fundamentally a server-based, request-response feature that's only generally available on the server during static SSR and only created when a user's circuit is established.
 
 ## Don't set or modify headers after the response starts
 
@@ -35,9 +36,21 @@ Attempting to set or modify a header after the first rendering (after the respon
 
 Examples of situations that result in this error include:
 
-* Calling `Microsoft.AspNetCore.Identity.SignInManager`1.PasswordSignInAsync*`, which must set headers for Identity to function correctly, while adopting streaming rendering.
+* Calling <xref:Microsoft.AspNetCore.Identity.SignInManager`1.PasswordSignInAsync*?displayProperty=nameWithType>, which must set headers for Identity to function correctly, while adopting [streaming rendering](rendering.md#streaming-rendering).
 * Attempting to set or modify a header after the response has started during interactive rendering.
 
-For guidance on setting headers before the response starts, see ASP.NET Core Blazor startup.
+For guidance on setting headers before the response starts, see [ASP.NET Core Blazor startup](../fundamentals/startup.md#control-headers-in-c-code).
 
-For guidance on `Microsoft.AspNetCore.Http.IHttpContextAccessor` and `Microsoft.AspNetCore.Http.HttpContext` in ASP.NET Core SignalR, see IHttpContextAccessor/HttpContext in ASP.NET Core SignalR.
+:::moniker-end
+
+:::moniker range="< aspnetcore-8.0"
+
+**Don't use <xref:Microsoft.AspNetCore.Http.IHttpContextAccessor>/<xref:Microsoft.AspNetCore.Http.HttpContext> directly or indirectly in the Razor components of server-side Blazor apps.** Blazor apps run outside of the ASP.NET Core pipeline context. The <xref:Microsoft.AspNetCore.Http.HttpContext> isn't guaranteed to be available within the <xref:Microsoft.AspNetCore.Http.IHttpContextAccessor>, and <xref:Microsoft.AspNetCore.Http.HttpContext> isn't guaranteed to hold the context that started the Blazor app.
+
+The recommended approach for passing request state to the Blazor app is through root component parameters during the app's initial rendering. Alternatively, the app can copy the data into a scoped service in the root component's initialization lifecycle event for use across the app. For more information, see [ASP.NET Core Blazor additional server-side security scenarios](../security/additional-scenarios.md#pass-tokens-to-a-server-side-blazor-app).
+
+A critical aspect of server-side Blazor security is that the user attached to a given circuit might become updated at some point after the Blazor circuit is established but the <xref:Microsoft.AspNetCore.Http.IHttpContextAccessor> ***isn't updated***. For more information on addressing this situation with custom services, see [ASP.NET Core Blazor additional server-side security scenarios](../security/additional-scenarios.md#circuit-handler-to-capture-users-for-custom-services).
+
+:::moniker-end
+
+For guidance on <xref:Microsoft.AspNetCore.Http.IHttpContextAccessor> and <xref:Microsoft.AspNetCore.Http.HttpContext> in ASP.NET Core SignalR, see [IHttpContextAccessor/HttpContext in ASP.NET Core SignalR](../../signalr/httpcontext.md).

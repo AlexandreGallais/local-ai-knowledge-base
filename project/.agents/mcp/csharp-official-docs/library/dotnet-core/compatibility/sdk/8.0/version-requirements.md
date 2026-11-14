@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: Version requirements for .NET 8 SDK"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/8.0/version-requirements.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in the .NET 8 SDK where specific versions of Visual Studio and MSBuild are required.
+ms.date: 02/09/2024
 ---
-
 # Version requirements for .NET 8 SDK
 
-Per the published support rules, the minimum Visual Studio and MSBuild version for each new major release is updated with a one quarter delay. For the .NET 8 release:
+Per the [published support rules](../../../porting/versioning-sdk-msbuild-vs.md#targeting-and-support-rules), the minimum Visual Studio and MSBuild version for each new major release is updated with a one quarter delay. For the .NET 8 release:
 
 - 8.0.100 requires version 17.7 to be loaded but only supports targeting .NET 7 in that version.
 - 8.0.200 requires version 17.8.
@@ -39,7 +35,7 @@ The following table shows the minimum version of Visual Studio and MSBuild you n
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
@@ -55,4 +51,4 @@ N/A
 
 ## See also
 
-- Targeting and support rules
+- [Targeting and support rules](../../../porting/versioning-sdk-msbuild-vs.md#targeting-and-support-rules)

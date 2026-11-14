@@ -1,12 +1,22 @@
 ---
+description: "Learn more about: ICorDebugModule4::IsMappedLayout Method"
 title: "ICorDebugModule4::IsMappedLayout Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmodule4-ismappedlayout-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "06/06/2022"
+api_name:
+  - "ICorDebugModule4.IsMappedLayout"
+api_location:
+  - "CorDebug.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugModule4::IsMappedLayout"
+helpviewer_keywords:
+  - "IsMappedLayout method, ICorDebugModule4 interface [.NET debugging]"
+  - "ICorDebugModule4::IsMappedLayout method [.NET debugging]"
+ms.assetid:
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugModule4::IsMappedLayout Method
 
 Determines whether a module is loaded into memory in mapped/hydrated format.
@@ -39,7 +49,7 @@ The `pIsMapped` value should only be interpreted as valid when this function ret
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -49,5 +59,5 @@ The `pIsMapped` value should only be interpreted as valid when this function ret
 
 ## See also
 
-- ICorDebugRemoteTarget Interface
-- ICorDebug Interface
+- [ICorDebugRemoteTarget Interface](icordebugremotetarget-interface.md)
+- [ICorDebug Interface](icordebug-interface.md)

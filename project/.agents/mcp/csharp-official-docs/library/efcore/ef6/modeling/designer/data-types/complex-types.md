@@ -1,18 +1,18 @@
 ---
-title: "Complex Types - EF Designer - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/modeling/designer/data-types/complex-types.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Complex Types - EF Designer - EF6
+description: Complex Types - EF Designer in Entity Framework 6
+author: SamMonoRT
+ms.date: 10/23/2016
+uid: ef6/modeling/designer/data-types/complex-types
 ---
-
 # Complex Types - EF Designer
 This topic shows how to map complex types with the Entity Framework Designer (EF Designer) and how to query for entities that contain properties of complex type.
 
 The following image shows the main windows that are used when working with the EF Designer.
 
-> **Note:**
+![EF Designer](~/ef6/media/efdesigner.png)
+
+> [!NOTE]
 > When you build the conceptual model, warnings about unmapped entities and associations may appear in the Error List. You can ignore these warnings because after you choose to generate the database from the model, the errors will go away.
 
 ## What is a Complex Type
@@ -32,17 +32,23 @@ When you work with objects that represent complex types, be aware of the followi
 
 If you already have an entity in your conceptual model you may want to refactor some of the properties into a complex type property.
 
-On the designer surface, select one or more properties (excluding navigation properties) of an entity, then right-click and select **Refactor -> Move to New Complex Type**.
+On the designer surface, select one or more properties (excluding navigation properties) of an entity, then right-click and select **Refactor -&gt; Move to New Complex Type**.
+
+![Refactor Into New Complex Type](~/ef6/media/refactor.png)
 
 A new complex type with the selected properties is added to the **Model Browser**. The complex type is given a default name.
 
 A complex property of the newly created type replaces the selected properties. All property mappings are preserved.
+
+![Refactor Into New Complex Type 2](~/ef6/media/refactor2.png)
 
 ## Create a New Complex Type
 
 You can also create a new complex type that does not contain properties of an existing entity.
 
 Right-click the **Complex Types** folder in the Model Browser, point to **AddNew Complex Type…**. Alternatively, you can select the **Complex Types** folder and press the **Insert** key on your keyboard.
+
+![Add New Complex type](~/ef6/media/addnewcomplextype.png)
 
 A new complex type is added to the folder with a default name. You can now add properties to the type.
 
@@ -52,7 +58,9 @@ Properties of a complex type can be scalar types or existing complex types. Howe
 
 You can add a property to a complex type in any of the ways listed below.
 
--   Right-click a complex type in the Model Browser, point to **Add**, then point to **Scalar Property** or **Complex Property**, then select the desired property type. Alternatively, you can select a complex type and then press the **Insert** key on your keyboard.
+-   Right-click a complex type in the Model Browser, point to **Add**, then point to **Scalar Property** or **Complex Property**, then select the desired property type. Alternatively, you can select a complex type and then press the **Insert** key on your keyboard.  
+
+    ![Add Properties to Complex Type](~/ef6/media/addpropertiestocomplextype.png)
 
     A new property is added to the complex type with a default name.
 
@@ -87,7 +95,7 @@ When you rename a complex type, all references to the type are updated throughou
     After adding a complex type property to an entity, you must map its properties to table columns.
 3.  Right-click an entity type on the design surface or in the **Model Browser** and select **Table Mappings**.
     The table mappings are displayed in the **Mapping Details** window.
-4.  Expand the **Maps to <Table Name>** node.
+4.  Expand the **Maps to &lt;Table Name&gt;** node.
     A **Column Mappings** node appears.
 5.  Expand the **Column Mappings** node.
     A list of all the columns in the table appears. The default properties (if any) to which the columns map are listed under the **Value/Property** heading.
@@ -95,9 +103,11 @@ When you rename a complex type, all references to the type are updated throughou
     A drop-down list of all the scalar properties is displayed.
 7.  Select the appropriate property.
 
+    ![Map Complex Type](~/ef6/media/mapcomplextype.png)
+
 8.  Repeat steps 6 and 7 for each table column.
 
->**Note:**
+>[!NOTE]
 > To delete a column mapping, select the column that you want to map, and then click the **Value/Property** field. Then, select **Delete** from the drop-down list.
 
 ## Map a Function Import to a Complex Type
@@ -106,10 +116,14 @@ Function imports are based on stored procedures. To map a function import to a c
 
 -   Double-click on an imported function that you want to map to a complex type.
 
+    ![Function Imports](~/ef6/media/functionimports.png)
+
 -   Fill in the settings for the new function import, as follows:
     -   Specify the stored procedure for which you are creating a function import in the **Stored Procedure Name** field. This field is a drop-down list that displays all the stored procedures in the storage model.
     -   Specify the name of the function import in the **Function Import Name** field.
     -   Select **Complex** as the return type and then specify the specific complex return type by choosing the appropriate type from the drop-down list.
+
+        ![Edit Function Import](~/ef6/media/editfunctionimport.png)
 
 -   Click **OK**.
     The function import entry is created in the conceptual model.
@@ -134,7 +148,7 @@ When you delete a complex type, the type is deleted from the conceptual model an
 
 The following code shows how to execute a query that returns a collection of entity type objects that contain a complex type property.
 
-```csharp
+``` csharp
     using (SchoolEntities context = new SchoolEntities())
     {
         var courses =

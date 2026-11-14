@@ -1,12 +1,3 @@
----
-title: "prefer-action-creator-in-dispatch"
-tool: "ngrx-signals"
-version: "22.0"
-source: "https://github.com/ngrx/platform/blob/a4995391ef631f1bd60d539f436a1aa5c23c4fe5/projects/www/src/app/pages/guide/eslint-plugin/rules/prefer-action-creator-in-dispatch.md"
-commit: "a4995391ef631f1bd60d539f436a1aa5c23c4fe5"
-license: "MIT"
----
-
 # prefer-action-creator-in-dispatch
 
 Using `action creator` in `dispatch` is preferred over `object` or old `Action`.
@@ -16,6 +7,9 @@ Using `action creator` in `dispatch` is preferred over `object` or old `Action`.
 - **Suggestion**: No
 - **Requires type checking**: No
 - **Configurable**: No
+
+<!-- Everything above this generated, do not edit -->
+<!-- MANUAL-DOC:START -->
 
 ## Rule Details
 

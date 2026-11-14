@@ -1,10 +1,9 @@
 ---
 title: "Breaking change - MSBuild custom culture resource handling"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/msbuild-custom-culture.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in MSBuild 17.14 where custom culture resource handling now requires explicit opt-in."
+ms.date: 3/26/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/45501
 ---
 
 # MSBuild custom culture resource handling
@@ -15,7 +14,7 @@ Starting in MSBuild 17.14, custom culture resource handling is no longer enabled
 
 MSBuild 17.14
 
-> **Note:**
+> [!NOTE]
 > As this change affects the behavior of MSBuild, it affects two supported versions of .NET: .NET 10 Preview 1 and .NET 9.0.2. The transparent support for custom culture change was introduced in .NET SDK 9.0.200 and the change making it opt-in is in .NET SDK 9.0.300.
 
 ## Previous behavior
@@ -30,7 +29,7 @@ To exclude directories from custom culture processing, use the `CustomCultureExc
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

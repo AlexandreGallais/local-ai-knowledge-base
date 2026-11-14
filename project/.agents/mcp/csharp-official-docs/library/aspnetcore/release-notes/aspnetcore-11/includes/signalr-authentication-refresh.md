@@ -1,17 +1,8 @@
----
-title: "signalr-authentication-refresh"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-11/includes/signalr-authentication-refresh.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# signalr-authentication-refresh
-
 ### SignalR authentication refresh
 
-SignalR connections can refresh authentication without dropping the connection when the access token expires. The server exposes a `/refresh` endpoint alongside `/negotiate` and reports the token <example-value> in the negotiate response. A client re-authenticates before the token <example-value>, so a hub connection that previously closed when its bearer token aged out can stay open.
+SignalR connections can refresh authentication without dropping the connection when the access token expires. The server exposes a `/refresh` endpoint alongside `/negotiate` and reports the token lifetime in the negotiate response. A client re-authenticates before the token expires, so a hub connection that previously closed when its bearer token aged out can stay open.
+
+<!-- TODO: Update `EnableAuthenticationRefresh`, `CloseOnAuthenticationExpiration`, `OnAuthenticationRefresh`, `OnAuthenticationRefreshedAsync`, `WithAuthenticationRefresh`, `AuthenticationRefreshed`, `AuthenticationRefreshFailed`, and `RefreshAuthenticationAsync` to <xref:> once API docs are published. -->
 
 Enable the feature per hub on the server. The server can inspect or reject a refreshed identity by returning a value from `OnAuthenticationRefresh`:
 
@@ -51,7 +42,7 @@ public class ChatHub : Hub
 }
 ```
 
-Automatic refresh is on by default in the .NET client and is configurable with `WithAuthenticationRefresh`. Refresh notifications are events on `Microsoft.AspNetCore.SignalR.Client.HubConnection`, and `RefreshAuthenticationAsync` requests an immediate refresh after the app obtains new claims:
+Automatic refresh is on by default in the .NET client and is configurable with `WithAuthenticationRefresh`. Refresh notifications are events on <xref:Microsoft.AspNetCore.SignalR.Client.HubConnection>, and `RefreshAuthenticationAsync` requests an immediate refresh after the app obtains new claims:
 
 ```csharp
 await using var connection = new HubConnectionBuilder()

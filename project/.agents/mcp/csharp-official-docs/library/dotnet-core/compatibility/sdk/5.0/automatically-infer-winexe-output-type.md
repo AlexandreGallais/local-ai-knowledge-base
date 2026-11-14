@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: OutputType set to WinExe for WPF and WinForms apps"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/5.0/automatically-infer-winexe-output-type.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET SDK 5.0.100 where OutputType is automatically set to WinExe for Windows Forms apps.
+ms.date: 02/08/2021
 ---
-
 # OutputType set to WinExe for WPF and WinForms apps
 
 `OutputType` is automatically set to `WinExe` for Windows Presentation Foundation (WPF) and Windows Forms apps. When `OutputType` is set to `WinExe`, a console window doesn't open when the app is executed.
@@ -33,7 +29,7 @@ If `OutputType` is not specified in the project file, it defaults to `Library` a
 
 ## Reason for change
 
-It's assumed that most users don't want a console window to open when a WPF or Windows Forms app is executed. In addition, now that these application types use the .NET SDK instead of the Windows Desktop SDK, the correct default will be set. Further, when support for targeting iOS and Android is added, it will be easier to multi-target between multiple platforms if they all use the same output type.
+It's assumed that most users don't want a console window to open when a WPF or Windows Forms app is executed. In addition, [now that these application types use the .NET SDK](sdk-and-target-framework-change.md) instead of the Windows Desktop SDK, the correct default will be set. Further, when support for targeting iOS and Android is added, it will be easier to multi-target between multiple platforms if they all use the same output type.
 
 ## Version introduced
 
@@ -50,3 +46,17 @@ No action is required in your part. However, if you want to revert to the old be
 ## Affected APIs
 
 Not detectable via API analysis.
+
+<!--
+
+### Affected APIs
+
+Not detectable via API analysis.
+
+### Category
+
+- SDK
+- Windows Forms
+- Windows Presentation Framework (WPF)
+
+-->

@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Tool manifests in root folder"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/7.0/manifest-search.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change where the .NET SDK no longer looks for local tool manifests in the root folder on Windows.
+ms.date: 07/28/2023
 ---
-
 # Tool manifests in root folder
 
 .NET no longer looks for local tool manifest files in the root folder on Windows, unless overridden via the `DOTNET_TOOLS_ALLOW_MANIFEST_IN_ROOT` environment variable. This change does not impact Linux or macOS.
@@ -30,7 +26,7 @@ Previously, .NET SDK local tools checked the root folder on all platforms when s
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -42,4 +38,4 @@ To disable the new behavior, set the `DOTNET_TOOLS_ALLOW_MANIFEST_IN_ROOT` envir
 
 ## See also
 
-- Tutorial: Install and use a .NET local tool using the .NET CLI
+- [Tutorial: Install and use a .NET local tool using the .NET CLI](../../../tools/local-tools-how-to-use.md)

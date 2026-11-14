@@ -1,14 +1,10 @@
 ---
-title: "dot-location"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/dot-location.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: dot-location
+rule_type: layout
+related_rules:
+- newline-after-var
+- dot-notation
 ---
-
-# dot-location
-
 JavaScript allows you to place newlines before or after a dot in a member expression.
 
 Consistency in placing a newline before or after the dot can greatly increase readability.
@@ -38,7 +34,7 @@ The default `"object"` option requires the dot to be on the same line as the obj
 
 Examples of **incorrect** code for the default `"object"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint dot-location: ["error", "object"]*/
@@ -47,9 +43,11 @@ var foo = object
 .property;
 ```
 
+:::
+
 Examples of **correct** code for the default `"object"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint dot-location: ["error", "object"]*/
@@ -65,13 +63,15 @@ property;
 var baz = object.property;
 ```
 
+:::
+
 ### property
 
 The `"property"` option requires the dot to be on the same line as the property.
 
 Examples of **incorrect** code for the `"property"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint dot-location: ["error", "property"]*/
@@ -80,9 +80,11 @@ var foo = object.
 property;
 ```
 
+:::
+
 Examples of **correct** code for the `"property"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint dot-location: ["error", "property"]*/
@@ -91,6 +93,8 @@ var foo = object
 .property;
 var bar = object.property;
 ```
+
+:::
 
 ## When Not To Use It
 

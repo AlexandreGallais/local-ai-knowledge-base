@@ -1,29 +1,25 @@
 ---
 title: "Breaking change: SafeHandle types must have public constructor"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/interop/8.0/safehandle-constructor.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in interop in .NET 8 where SafeHandle-derived types used as 'ref' or 'out' parameters or as return types in 'LibraryImport' or 'GeneratedComInterface' methods must have a public constructor.
+ms.date: 06/06/2023
 ---
-
 # SafeHandle types must have public constructor
 
-Historically, passing `System.Runtime.InteropServices.SafeHandle`-derived types to P/Invokes and COM methods has implicitly required a parameterless constructor of any visibility when a `SafeHandle`-derived type is passed as a `ref` or `out` parameter or a return type. Source-generated interop in .NET 7 allowed this behavior to enable easier migration from `System.Runtime.InteropServices.DllImportAttribute`-based P/Invokes. At the same time, we updated the SafeHandle documentation to tell implementers to provide a `public` parameterless constructor in their derived type. This breaking change makes that recommendation a requirement for source-generated marshalling.
+Historically, passing <xref:System.Runtime.InteropServices.SafeHandle>-derived types to P/Invokes and COM methods has implicitly required a parameterless constructor of any visibility when a `SafeHandle`-derived type is passed as a `ref` or `out` parameter or a return type. Source-generated interop in .NET 7 allowed this behavior to enable easier migration from <xref:System.Runtime.InteropServices.DllImportAttribute>-based P/Invokes. At the same time, we updated the [SafeHandle documentation](/dotnet/api/system.runtime.interopservices.safehandle#notes-to-implementers) to tell implementers to provide a `public` parameterless constructor in their derived type. This breaking change makes that recommendation a requirement for source-generated marshalling.
 
 ## Previous behavior
 
-A `System.Runtime.InteropServices.SafeHandle`-derived type was required to have a parameterless constructor *of any visibility* when it was used:
+A <xref:System.Runtime.InteropServices.SafeHandle>-derived type was required to have a parameterless constructor *of any visibility* when it was used:
 
-- As a `ref` or `out` parameter or a return type in a `System.Runtime.InteropServices.LibraryImportAttribute`-attributed method.
-- In a method on a `System.Runtime.InteropServices.Marshalling.GeneratedComInterfaceAttribute`-attributed interface.
+- As a `ref` or `out` parameter or a return type in a <xref:System.Runtime.InteropServices.LibraryImportAttribute>-attributed method.
+- In a method on a <xref:System.Runtime.InteropServices.Marshalling.GeneratedComInterfaceAttribute>-attributed interface.
 
 ## New behavior
 
-A `System.Runtime.InteropServices.SafeHandle`-derived type is required to have a `public` parameterless constructor when it's used:
+A <xref:System.Runtime.InteropServices.SafeHandle>-derived type is required to have a `public` parameterless constructor when it's used:
 
-- As a `ref` or `out` parameter or a return type in a `System.Runtime.InteropServices.LibraryImportAttribute`-attributed method.
-- In a method on a `System.Runtime.InteropServices.Marshalling.GeneratedComInterfaceAttribute`-attributed interface.
+- As a `ref` or `out` parameter or a return type in a <xref:System.Runtime.InteropServices.LibraryImportAttribute>-attributed method.
+- In a method on a <xref:System.Runtime.InteropServices.Marshalling.GeneratedComInterfaceAttribute>-attributed interface.
 
 If the type doesn't have a `public` parameterless constructor, the interop source generator emits a compile error.
 
@@ -33,7 +29,7 @@ If the type doesn't have a `public` parameterless constructor, the interop sourc
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
@@ -45,5 +41,5 @@ Change the existing non-`public` parameterless constructor on the `SafeHandle`-d
 
 ## Affected APIs
 
-- `System.Runtime.InteropServices.LibraryImportAttribute`
-- `System.Runtime.InteropServices.Marshalling.GeneratedComInterfaceAttribute`
+- <xref:System.Runtime.InteropServices.LibraryImportAttribute?displayProperty=fullName>
+- <xref:System.Runtime.InteropServices.Marshalling.GeneratedComInterfaceAttribute?displayProperty=fullName>

@@ -1,14 +1,3 @@
----
-title: "ch08-03-hash-maps"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch08-03-hash-maps.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch08-03-hash-maps
-
 ## Storing Keys with Associated Values in Hash Maps
 
 The last of our common collections is the hash map. The type `HashMap<K, V>`
@@ -35,16 +24,13 @@ One way to create an empty hash map is to use `new` and to add elements with
 names are _Blue_ and _Yellow_. The Blue team starts with 10 points, and the
 Yellow team starts with 50.
 
-**Listing 8-20: Creating a new hash map and inserting some keys and values**
+<Listing number="8-20" caption="Creating a new hash map and inserting some keys and values">
 
 ```rust
-use std::collections::HashMap;
-
-let mut scores = HashMap::new();
-
-scores.insert(String::from("Blue"), 10);
-scores.insert(String::from("Yellow"), 50);
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-20/src/main.rs:here}}
 ```
+
+</Listing>
 
 Note that we need to first `use` the `HashMap` from the collections portion of
 the standard library. Of our three common collections, this one is the least
@@ -62,19 +48,13 @@ must have the same type.
 We can get a value out of the hash map by providing its key to the `get`
 method, as shown in Listing 8-21.
 
-**Listing 8-21: Accessing the score for the Blue team stored in the hash map**
+<Listing number="8-21" caption="Accessing the score for the Blue team stored in the hash map">
 
 ```rust
-use std::collections::HashMap;
-
-let mut scores = HashMap::new();
-
-scores.insert(String::from("Blue"), 10);
-scores.insert(String::from("Yellow"), 50);
-
-let team_name = String::from("Blue");
-let score = scores.get(&team_name).copied().unwrap_or(0);
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-21/src/main.rs:here}}
 ```
+
+</Listing>
 
 Here, `score` will have the value that’s associated with the Blue team, and the
 result will be `10`. The `get` method returns an `Option<&V>`; if there’s no
@@ -87,16 +67,7 @@ We can iterate over each key-value pair in a hash map in a similar manner as we
 do with vectors, using a `for` loop:
 
 ```rust
-use std::collections::HashMap;
-
-let mut scores = HashMap::new();
-
-scores.insert(String::from("Blue"), 10);
-scores.insert(String::from("Yellow"), 50);
-
-for (key, value) in &scores {
-    println!("{key}: {value}");
-}
+{{#rustdoc_include ../listings/ch08-common-collections/no-listing-03-iterate-over-hashmap/src/main.rs:here}}
 ```
 
 This code will print each pair in an arbitrary order:
@@ -106,25 +77,23 @@ Yellow: 50
 Blue: 10
 ```
 
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="hash-maps-and-ownership"></a>
+
 ### Managing Ownership in Hash Maps
 
 For types that implement the `Copy` trait, like `i32`, the values are copied
 into the hash map. For owned values like `String`, the values will be moved and
 the hash map will be the owner of those values, as demonstrated in Listing 8-22.
 
-**Listing 8-22: Showing that keys and values are owned by the hash map once they’re inserted**
+<Listing number="8-22" caption="Showing that keys and values are owned by the hash map once they’re inserted">
 
 ```rust
-use std::collections::HashMap;
-
-let field_name = String::from("Favorite color");
-let field_value = String::from("Blue");
-
-let mut map = HashMap::new();
-map.insert(field_name, field_value);
-// field_name and field_value are invalid at this point, try using them and
-// see what compiler error you get!
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-22/src/main.rs:here}}
 ```
+
+</Listing>
 
 We aren’t able to use the variables `field_name` and `field_value` after
 they’ve been moved into the hash map with the call to `insert`.
@@ -132,8 +101,8 @@ they’ve been moved into the hash map with the call to `insert`.
 If we insert references to values into the hash map, the values won’t be moved
 into the hash map. The values that the references point to must be valid for at
 least as long as the hash map is valid. We’ll talk more about these issues in
-“Validating References with
-Lifetimes” in Chapter 10.
+[“Validating References with
+Lifetimes”][validating-references-with-lifetimes]<!-- ignore --> in Chapter 10.
 
 ### Updating a Hash Map
 
@@ -143,10 +112,10 @@ example, both the Blue team and the Yellow team could have the value `10`
 stored in the `scores` hash map).
 
 When you want to change the data in a hash map, you have to decide how to
-handle the case when a key <example-value> has a value assigned. You could replace the
+handle the case when a key already has a value assigned. You could replace the
 old value with the new value, completely disregarding the old value. You could
 keep the old value and ignore the new value, only adding the new value if the
-key <example-value>’t_ already have a value. Or you could combine the old value and the
+key _doesn’t_ already have a value. Or you could combine the old value and the
 new value. Let’s look at how to do each of these!
 
 #### Overwriting a Value
@@ -157,25 +126,24 @@ Even though the code in Listing 8-23 calls `insert` twice, the hash map will
 only contain one key-value pair because we’re inserting the value for the Blue
 team’s key both times.
 
-**Listing 8-23: Replacing a value stored with a particular key**
+<Listing number="8-23" caption="Replacing a value stored with a particular key">
 
 ```rust
-use std::collections::HashMap;
-
-let mut scores = HashMap::new();
-
-scores.insert(String::from("Blue"), 10);
-scores.insert(String::from("Blue"), 25);
-
-println!("{scores:?}");
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-23/src/main.rs:here}}
 ```
+
+</Listing>
 
 This code will print `{"Blue": 25}`. The original value of `10` has been
 overwritten.
 
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="only-inserting-a-value-if-the-key-has-no-value"></a>
+
 #### Adding a Key and Value Only If a Key Isn’t Present
 
-It’s common to check whether a particular key <example-value> exists in the hash map
+It’s common to check whether a particular key already exists in the hash map
 with a value and then to take the following actions: If the key does exist in
 the hash map, the existing value should remain the way it is; if the key
 doesn’t exist, insert it and a value for it.
@@ -187,22 +155,16 @@ we want to check whether the key for the Yellow team has a value associated
 with it. If it doesn’t, we want to insert the value `50`, and the same for the
 Blue team. Using the `entry` API, the code looks like Listing 8-24.
 
-**Listing 8-24: Using the `entry` method to only insert if the key does not already have a value**
+<Listing number="8-24" caption="Using the `entry` method to only insert if the key does not already have a value">
 
 ```rust
-use std::collections::HashMap;
-
-let mut scores = HashMap::new();
-scores.insert(String::from("Blue"), 10);
-
-scores.entry(String::from("Yellow")).or_insert(50);
-scores.entry(String::from("Blue")).or_insert(50);
-
-println!("{scores:?}");
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-24/src/main.rs:here}}
 ```
 
+</Listing>
+
 The `or_insert` method on `Entry` is defined to return a mutable reference to
-the value for the corresponding `Entry` key if that key <example-value>, and if not, it
+the value for the corresponding `Entry` key if that key exists, and if not, it
 inserts the parameter as the new value for this key and returns a mutable
 reference to the new value. This technique is much cleaner than writing the
 logic ourselves and, in addition, plays more nicely with the borrow checker.
@@ -222,26 +184,17 @@ the words as keys and increment the value to keep track of how many times we’v
 seen that word. If it’s the first time we’ve seen a word, we’ll first insert
 the value `0`.
 
-**Listing 8-25: Counting occurrences of words using a hash map that stores words and counts**
+<Listing number="8-25" caption="Counting occurrences of words using a hash map that stores words and counts">
 
 ```rust
-use std::collections::HashMap;
-
-let text = "hello world wonderful world";
-
-let mut map = HashMap::new();
-
-for word in text.split_whitespace() {
-    let count = map.entry(word).or_insert(0);
-    *count += 1;
-}
-
-println!("{map:?}");
+{{#rustdoc_include ../listings/ch08-common-collections/listing-08-25/src/main.rs:here}}
 ```
 
+</Listing>
+
 This code will print `{"world": 2, "hello": 1, "wonderful": 1}`. You might see
-the same key-value pairs printed in a different order: Recall from “Accessing
-Values in a Hash Map” that iterating over a hash map
+the same key-value pairs printed in a different order: Recall from [“Accessing
+Values in a Hash Map”][access]<!-- ignore --> that iterating over a hash map
 happens in an arbitrary order.
 
 The `split_whitespace` method returns an iterator over subslices, separated by
@@ -256,16 +209,18 @@ changes are safe and allowed by the borrowing rules.
 
 By default, `HashMap` uses a hashing function called _SipHash_ that can provide
 resistance to denial-of-service (DoS) attacks involving hash
-tables[^siphash]. This is not the fastest hashing algorithm
+tables[^siphash]<!-- ignore -->. This is not the fastest hashing algorithm
 available, but the trade-off for better security that comes with the drop in
 performance is worth it. If you profile your code and find that the default
 hash function is too slow for your purposes, you can switch to another function
 by specifying a different hasher. A _hasher_ is a type that implements the
 `BuildHasher` trait. We’ll talk about traits and how to implement them in
-Chapter 10. You don’t necessarily have to implement
-your own hasher from scratch; crates.io
+[Chapter 10][traits]<!-- ignore -->. You don’t necessarily have to implement
+your own hasher from scratch; [crates.io](https://crates.io/)<!-- ignore -->
 has libraries shared by other Rust users that provide hashers implementing many
 common hashing algorithms.
+
+[^siphash]: [https://en.wikipedia.org/wiki/SipHash](https://en.wikipedia.org/wiki/SipHash)
 
 ## Summary
 
@@ -291,3 +246,7 @@ and hash maps have that will be helpful for these exercises!
 
 We’re getting into more complex programs in which operations can fail, so it’s
 a perfect time to discuss error handling. We’ll do that next!
+
+[validating-references-with-lifetimes]: ch10-03-lifetime-syntax.html#validating-references-with-lifetimes
+[access]: #accessing-values-in-a-hash-map
+[traits]: ch10-02-traits.html

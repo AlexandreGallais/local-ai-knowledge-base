@@ -1,39 +1,32 @@
----
-title: "Modifier class (java.lang.reflect)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/reflect/Modifier.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Modifier class (java.lang.reflect)
 
 ```java
 public final class Modifier
 ```
 
-The Modifier class provides `static` methods and
+The Modifier class provides {@code static} methods and
 constants to decode class and member access modifiers.  The sets of
 modifiers are represented as integers with distinct bit positions
 representing different modifiers.  The values for the constants
 representing the modifiers are taken from the tables in sections
-, , , and  of
-*The Java Virtual Machine Specification*.
+{@jvms 4.1}, {@jvms 4.4}, {@jvms 4.5}, and {@jvms 4.7} of
+<cite>The Java Virtual Machine Specification</cite>.
 
-**API note:** Not all modifiers that are syntactic Java language modifiers are
-represented in this class, only those modifiers that *also*
-have a corresponding JVM access flag are
-included. In particular the `default` method modifier (JLS
-) and the `sealed` and `non-sealed` class
-(JLS ) and interface (JLS ) modifiers
-are *not* represented in this class.
+@apiNote
+Not all modifiers that are syntactic Java language modifiers are
+represented in this class, only those modifiers that <em>also</em>
+have a corresponding JVM {@linkplain AccessFlag access flag} are
+included. In particular the {@code default} method modifier (JLS
+{@jls 9.4.3}) and the {@code sealed} and {@code non-sealed} class
+(JLS {@jls 8.1.1.2}) and interface (JLS {@jls 9.1.1.4}) modifiers
+are <em>not</em> represented in this class.
 
-**See also:** Class#getModifiers()
+@see Class#getModifiers()
+@see Member#getModifiers()
 
-**See also:** Member#getModifiers()
-
-**Since:** 1.1
+@author Nakul Saraiya
+@author Kenneth Russell
+@since 1.1
 
 ## Modifier.isPublic(int)
 
@@ -41,15 +34,12 @@ are *not* represented in this class.
 public static boolean isPublic(int mod)
 ```
 
-Return `true` if the integer argument includes the
-`public` modifier, `false` otherwise.
+Return {@code true} if the integer argument includes the
+{@code public} modifier, {@code false} otherwise.
 
-Parameters:
-
-- `mod`: a set of modifiers
-
-**Returns:** `true` if `mod` includes the
-`public` modifier; `false` otherwise.
+@param   mod a set of modifiers
+@return {@code true} if {@code mod} includes the
+{@code public} modifier; {@code false} otherwise.
 
 ## Modifier.isPrivate(int)
 
@@ -57,15 +47,12 @@ Parameters:
 public static boolean isPrivate(int mod)
 ```
 
-Return `true` if the integer argument includes the
-`private` modifier, `false` otherwise.
+Return {@code true} if the integer argument includes the
+{@code private} modifier, {@code false} otherwise.
 
-Parameters:
-
-- `mod`: a set of modifiers
-
-**Returns:** `true` if `mod` includes the
-`private` modifier; `false` otherwise.
+@param   mod a set of modifiers
+@return {@code true} if {@code mod} includes the
+{@code private} modifier; {@code false} otherwise.
 
 ## Modifier.isProtected(int)
 
@@ -73,15 +60,12 @@ Parameters:
 public static boolean isProtected(int mod)
 ```
 
-Return `true` if the integer argument includes the
-`protected` modifier, `false` otherwise.
+Return {@code true} if the integer argument includes the
+{@code protected} modifier, {@code false} otherwise.
 
-Parameters:
-
-- `mod`: a set of modifiers
-
-**Returns:** `true` if `mod` includes the
-`protected` modifier; `false` otherwise.
+@param   mod a set of modifiers
+@return {@code true} if {@code mod} includes the
+{@code protected} modifier; {@code false} otherwise.
 
 ## Modifier.isStatic(int)
 
@@ -89,15 +73,12 @@ Parameters:
 public static boolean isStatic(int mod)
 ```
 
-Return `true` if the integer argument includes the
-`static` modifier, `false` otherwise.
+Return {@code true} if the integer argument includes the
+{@code static} modifier, {@code false} otherwise.
 
-Parameters:
-
-- `mod`: a set of modifiers
-
-**Returns:** `true` if `mod` includes the
-`static` modifier; `false` otherwise.
+@param   mod a set of modifiers
+@return {@code true} if {@code mod} includes the
+{@code static} modifier; {@code false} otherwise.
 
 ## Modifier.isFinal(int)
 
@@ -105,15 +86,12 @@ Parameters:
 public static boolean isFinal(int mod)
 ```
 
-Return `true` if the integer argument includes the
-`final` modifier, `false` otherwise.
+Return {@code true} if the integer argument includes the
+{@code final} modifier, {@code false} otherwise.
 
-Parameters:
-
-- `mod`: a set of modifiers
-
-**Returns:** `true` if `mod` includes the
-`final` modifier; `false` otherwise.
+@param   mod a set of modifiers
+@return {@code true} if {@code mod} includes the
+{@code final} modifier; {@code false} otherwise.
 
 ## Modifier.isSynchronized(int)
 
@@ -121,15 +99,12 @@ Parameters:
 public static boolean isSynchronized(int mod)
 ```
 
-Return `true` if the integer argument includes the
-`synchronized` modifier, `false` otherwise.
+Return {@code true} if the integer argument includes the
+{@code synchronized} modifier, {@code false} otherwise.
 
-Parameters:
-
-- `mod`: a set of modifiers
-
-**Returns:** `true` if `mod` includes the
-`synchronized` modifier; `false` otherwise.
+@param   mod a set of modifiers
+@return {@code true} if {@code mod} includes the
+{@code synchronized} modifier; {@code false} otherwise.
 
 ## Modifier.isVolatile(int)
 
@@ -137,15 +112,12 @@ Parameters:
 public static boolean isVolatile(int mod)
 ```
 
-Return `true` if the integer argument includes the
-`volatile` modifier, `false` otherwise.
+Return {@code true} if the integer argument includes the
+{@code volatile} modifier, {@code false} otherwise.
 
-Parameters:
-
-- `mod`: a set of modifiers
-
-**Returns:** `true` if `mod` includes the
-`volatile` modifier; `false` otherwise.
+@param   mod a set of modifiers
+@return {@code true} if {@code mod} includes the
+{@code volatile} modifier; {@code false} otherwise.
 
 ## Modifier.isTransient(int)
 
@@ -153,15 +125,12 @@ Parameters:
 public static boolean isTransient(int mod)
 ```
 
-Return `true` if the integer argument includes the
-`transient` modifier, `false` otherwise.
+Return {@code true} if the integer argument includes the
+{@code transient} modifier, {@code false} otherwise.
 
-Parameters:
-
-- `mod`: a set of modifiers
-
-**Returns:** `true` if `mod` includes the
-`transient` modifier; `false` otherwise.
+@param   mod a set of modifiers
+@return {@code true} if {@code mod} includes the
+{@code transient} modifier; {@code false} otherwise.
 
 ## Modifier.isNative(int)
 
@@ -169,15 +138,12 @@ Parameters:
 public static boolean isNative(int mod)
 ```
 
-Return `true` if the integer argument includes the
-`native` modifier, `false` otherwise.
+Return {@code true} if the integer argument includes the
+{@code native} modifier, {@code false} otherwise.
 
-Parameters:
-
-- `mod`: a set of modifiers
-
-**Returns:** `true` if `mod` includes the
-`native` modifier; `false` otherwise.
+@param   mod a set of modifiers
+@return {@code true} if {@code mod} includes the
+{@code native} modifier; {@code false} otherwise.
 
 ## Modifier.isInterface(int)
 
@@ -185,15 +151,12 @@ Parameters:
 public static boolean isInterface(int mod)
 ```
 
-Return `true` if the integer argument includes the
-`interface` modifier, `false` otherwise.
+Return {@code true} if the integer argument includes the
+{@code interface} modifier, {@code false} otherwise.
 
-Parameters:
-
-- `mod`: a set of modifiers
-
-**Returns:** `true` if `mod` includes the
-`interface` modifier; `false` otherwise.
+@param   mod a set of modifiers
+@return {@code true} if {@code mod} includes the
+{@code interface} modifier; {@code false} otherwise.
 
 ## Modifier.isAbstract(int)
 
@@ -201,15 +164,12 @@ Parameters:
 public static boolean isAbstract(int mod)
 ```
 
-Return `true` if the integer argument includes the
-`abstract` modifier, `false` otherwise.
+Return {@code true} if the integer argument includes the
+{@code abstract} modifier, {@code false} otherwise.
 
-Parameters:
-
-- `mod`: a set of modifiers
-
-**Returns:** `true` if `mod` includes the
-`abstract` modifier; `false` otherwise.
+@param   mod a set of modifiers
+@return {@code true} if {@code mod} includes the
+{@code abstract} modifier; {@code false} otherwise.
 
 ## Modifier.isStrict(int)
 
@@ -217,15 +177,12 @@ Parameters:
 public static boolean isStrict(int mod)
 ```
 
-Return `true` if the integer argument includes the
-`strictfp` modifier, `false` otherwise.
+Return {@code true} if the integer argument includes the
+{@code strictfp} modifier, {@code false} otherwise.
 
-Parameters:
-
-- `mod`: a set of modifiers
-
-**Returns:** `true` if `mod` includes the
-`strictfp` modifier; `false` otherwise.
+@param   mod a set of modifiers
+@return {@code true} if {@code mod} includes the
+{@code strictfp} modifier; {@code false} otherwise.
 
 ## Modifier.toString(int)
 
@@ -235,18 +192,19 @@ public static String toString(int mod)
 
 Return a string describing the access modifier flags in
 the specified modifier. For example:
-
-```java
+<blockquote><pre>
    public final synchronized strictfp
-```
-
+</pre></blockquote>
 The modifier names are returned in an order consistent with the
 suggested modifier orderings given in sections 8.1.1, 8.3.1, 8.4.3, 8.8.3, and 9.1.1 of
-*The Java Language Specification*.
+<cite>The Java Language Specification</cite>.
 The full modifier ordering used by this method is:
- `public protected private abstract static final transient volatile synchronized native strictfp interface`
+<blockquote> {@code
+public protected private abstract static final transient
+volatile synchronized native strictfp
+interface } </blockquote>
 
-The `interface` modifier discussed in this class is
+The {@code interface} modifier discussed in this class is
 not a true modifier in the Java language and it appears after
 all other modifiers listed by this method.  This method may
 return a string of modifiers that are not valid modifiers of a
@@ -256,27 +214,28 @@ by the input.
 
 Note that to perform such checking for a known kind of entity,
 such as a constructor or method, first AND the argument of
-`toString` with the appropriate mask from a method like
-`constructorModifiers` or `methodModifiers`.
+{@code toString} with the appropriate mask from a method like
+{@link #constructorModifiers} or {@link #methodModifiers}.
 
-Parameters:
-
-- `mod`: a set of modifiers
-
-**API note:** To make a high-fidelity representation of the Java source
+@apiNote
+To make a high-fidelity representation of the Java source
 modifiers of a class or member, source-level modifiers that do
-*not* have a constant in this class should be included
+<em>not</em> have a constant in this class should be included
 and appear in an order consistent with the full recommended
-ordering for that kind of declaration as given in *The
-Java Language Specification*. For example, for a
-method the "default" modifier is ordered immediately
-before "`static`" (JLS ). For a class object, the "sealed" or `"non-sealed"` modifier is
-ordered immediately after "`final`" for a class (JLS
-) and immediately after "`static`" for an
-interface (JLS ).
+ordering for that kind of declaration as given in <cite>The
+Java Language Specification</cite>. For example, for a
+{@linkplain Method#toGenericString() method} the "{@link
+Method#isDefault() default}" modifier is ordered immediately
+before "{@code static}" (JLS {@jls 9.4}). For a {@linkplain
+Class#toGenericString() class object}, the "{@link
+Class#isSealed() sealed}" or {@code "non-sealed"} modifier is
+ordered immediately after "{@code final}" for a class (JLS
+{@jls 8.1.1}) and immediately after "{@code static}" for an
+interface (JLS {@jls 9.1.1}).
 
-**Returns:** a string representation of the set of modifiers
-represented by `mod`
+@param   mod a set of modifiers
+@return  a string representation of the set of modifiers
+represented by {@code mod}
 
 ## Modifier.PUBLIC
 
@@ -284,10 +243,9 @@ represented by `mod`
 public static final int PUBLIC
 ```
 
-The `int` value representing the `public`
+The {@code int} value representing the {@code public}
 modifier.
-
-**See also:** AccessFlag#PUBLIC
+@see AccessFlag#PUBLIC
 
 ## Modifier.PRIVATE
 
@@ -295,10 +253,9 @@ modifier.
 public static final int PRIVATE
 ```
 
-The `int` value representing the `private`
+The {@code int} value representing the {@code private}
 modifier.
-
-**See also:** AccessFlag#PRIVATE
+@see AccessFlag#PRIVATE
 
 ## Modifier.PROTECTED
 
@@ -306,10 +263,9 @@ modifier.
 public static final int PROTECTED
 ```
 
-The `int` value representing the `protected`
+The {@code int} value representing the {@code protected}
 modifier.
-
-**See also:** AccessFlag#PROTECTED
+@see AccessFlag#PROTECTED
 
 ## Modifier.STATIC
 
@@ -317,10 +273,9 @@ modifier.
 public static final int STATIC
 ```
 
-The `int` value representing the `static`
+The {@code int} value representing the {@code static}
 modifier.
-
-**See also:** AccessFlag#STATIC
+@see AccessFlag#STATIC
 
 ## Modifier.FINAL
 
@@ -328,10 +283,9 @@ modifier.
 public static final int FINAL
 ```
 
-The `int` value representing the `final`
+The {@code int} value representing the {@code final}
 modifier.
-
-**See also:** AccessFlag#FINAL
+@see AccessFlag#FINAL
 
 ## Modifier.SYNCHRONIZED
 
@@ -339,10 +293,9 @@ modifier.
 public static final int SYNCHRONIZED
 ```
 
-The `int` value representing the `synchronized`
+The {@code int} value representing the {@code synchronized}
 modifier.
-
-**See also:** AccessFlag#SYNCHRONIZED
+@see AccessFlag#SYNCHRONIZED
 
 ## Modifier.VOLATILE
 
@@ -350,10 +303,9 @@ modifier.
 public static final int VOLATILE
 ```
 
-The `int` value representing the `volatile`
+The {@code int} value representing the {@code volatile}
 modifier.
-
-**See also:** AccessFlag#VOLATILE
+@see AccessFlag#VOLATILE
 
 ## Modifier.TRANSIENT
 
@@ -361,10 +313,9 @@ modifier.
 public static final int TRANSIENT
 ```
 
-The `int` value representing the `transient`
+The {@code int} value representing the {@code transient}
 modifier.
-
-**See also:** AccessFlag#TRANSIENT
+@see AccessFlag#TRANSIENT
 
 ## Modifier.NATIVE
 
@@ -372,10 +323,9 @@ modifier.
 public static final int NATIVE
 ```
 
-The `int` value representing the `native`
+The {@code int} value representing the {@code native}
 modifier.
-
-**See also:** AccessFlag#NATIVE
+@see AccessFlag#NATIVE
 
 ## Modifier.INTERFACE
 
@@ -383,10 +333,9 @@ modifier.
 public static final int INTERFACE
 ```
 
-The `int` value representing the `interface`
+The {@code int} value representing the {@code interface}
 modifier.
-
-**See also:** AccessFlag#INTERFACE
+@see AccessFlag#INTERFACE
 
 ## Modifier.ABSTRACT
 
@@ -394,10 +343,9 @@ modifier.
 public static final int ABSTRACT
 ```
 
-The `int` value representing the `abstract`
+The {@code int} value representing the {@code abstract}
 modifier.
-
-**See also:** AccessFlag#ABSTRACT
+@see AccessFlag#ABSTRACT
 
 ## Modifier.STRICT
 
@@ -405,10 +353,9 @@ modifier.
 public static final int STRICT
 ```
 
-The `int` value representing the `strictfp`
+The {@code int} value representing the {@code strictfp}
 modifier.
-
-**See also:** AccessFlag#STRICT
+@see AccessFlag#STRICT
 
 ## Modifier.classModifiers()
 
@@ -416,19 +363,15 @@ modifier.
 public static int classModifiers()
 ```
 
-Return an `int` value OR-ing together the source language
+Return an {@code int} value OR-ing together the source language
+modifiers that can be applied to a class.
+@return an {@code int} value OR-ing together the source language
 modifiers that can be applied to a class.
 
-**Returns:** an `int` value OR-ing together the source language
-modifiers that can be applied to a class.
-
-**See also:** AccessFlag.Location#CLASS
-
-**See also:** AccessFlag.Location#INNER_CLASS
-
-**JLS:** 8.1.1 Class Modifiers
-
-**Since:** 1.7
+@see AccessFlag.Location#CLASS
+@see AccessFlag.Location#INNER_CLASS
+@jls 8.1.1 Class Modifiers
+@since 1.7
 
 ## Modifier.interfaceModifiers()
 
@@ -436,19 +379,15 @@ modifiers that can be applied to a class.
 public static int interfaceModifiers()
 ```
 
-Return an `int` value OR-ing together the source language
+Return an {@code int} value OR-ing together the source language
+modifiers that can be applied to an interface.
+@return an {@code int} value OR-ing together the source language
 modifiers that can be applied to an interface.
 
-**Returns:** an `int` value OR-ing together the source language
-modifiers that can be applied to an interface.
-
-**See also:** AccessFlag.Location#CLASS
-
-**See also:** AccessFlag.Location#INNER_CLASS
-
-**JLS:** 9.1.1 Interface Modifiers
-
-**Since:** 1.7
+@see AccessFlag.Location#CLASS
+@see AccessFlag.Location#INNER_CLASS
+@jls 9.1.1 Interface Modifiers
+@since 1.7
 
 ## Modifier.constructorModifiers()
 
@@ -456,17 +395,14 @@ modifiers that can be applied to an interface.
 public static int constructorModifiers()
 ```
 
-Return an `int` value OR-ing together the source language
+Return an {@code int} value OR-ing together the source language
+modifiers that can be applied to a constructor.
+@return an {@code int} value OR-ing together the source language
 modifiers that can be applied to a constructor.
 
-**Returns:** an `int` value OR-ing together the source language
-modifiers that can be applied to a constructor.
-
-**See also:** AccessFlag.Location#METHOD
-
-**JLS:** 8.8.3 Constructor Modifiers
-
-**Since:** 1.7
+@see AccessFlag.Location#METHOD
+@jls 8.8.3 Constructor Modifiers
+@since 1.7
 
 ## Modifier.methodModifiers()
 
@@ -474,17 +410,14 @@ modifiers that can be applied to a constructor.
 public static int methodModifiers()
 ```
 
-Return an `int` value OR-ing together the source language
+Return an {@code int} value OR-ing together the source language
+modifiers that can be applied to a method.
+@return an {@code int} value OR-ing together the source language
 modifiers that can be applied to a method.
 
-**Returns:** an `int` value OR-ing together the source language
-modifiers that can be applied to a method.
-
-**See also:** AccessFlag.Location#METHOD
-
-**JLS:** 8.4.3 Method Modifiers
-
-**Since:** 1.7
+@see AccessFlag.Location#METHOD
+@jls 8.4.3 Method Modifiers
+@since 1.7
 
 ## Modifier.fieldModifiers()
 
@@ -492,17 +425,14 @@ modifiers that can be applied to a method.
 public static int fieldModifiers()
 ```
 
-Return an `int` value OR-ing together the source language
+Return an {@code int} value OR-ing together the source language
+modifiers that can be applied to a field.
+@return an {@code int} value OR-ing together the source language
 modifiers that can be applied to a field.
 
-**Returns:** an `int` value OR-ing together the source language
-modifiers that can be applied to a field.
-
-**See also:** AccessFlag.Location#FIELD
-
-**JLS:** 8.3.1 Field Modifiers
-
-**Since:** 1.7
+@see AccessFlag.Location#FIELD
+@jls 8.3.1 Field Modifiers
+@since 1.7
 
 ## Modifier.parameterModifiers()
 
@@ -510,14 +440,11 @@ modifiers that can be applied to a field.
 public static int parameterModifiers()
 ```
 
-Return an `int` value OR-ing together the source language
+Return an {@code int} value OR-ing together the source language
+modifiers that can be applied to a parameter.
+@return an {@code int} value OR-ing together the source language
 modifiers that can be applied to a parameter.
 
-**Returns:** an `int` value OR-ing together the source language
-modifiers that can be applied to a parameter.
-
-**See also:** AccessFlag.Location#METHOD_PARAMETER
-
-**JLS:** 8.4.1 Formal Parameters
-
-**Since:** 1.8
+@see AccessFlag.Location#METHOD_PARAMETER
+@jls 8.4.1 Formal Parameters
+@since 1.8

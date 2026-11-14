@@ -1,191 +1,76 @@
-# mdn-accessibility library index
+---
+title: Accessibility
+slug: Web/Accessibility
+page-type: landing-page
+sidebar: accessibilitysidebar
+---
 
-MDN Web Docs: accessibility, ARIA roles, states and properties. Version 2026-11, from <https://github.com/mdn/content> at main, commit c44f591049bc129b356acb0a9ce281974c035113.
-License: CC-BY-SA-2.5, by Mozilla Contributors; see THIRD_PARTY_NOTICES.md. The text was converted to plain Markdown and cut into files of 16 KB at most.
+**Accessibility** (often abbreviated to **A11y** — as in, "a", then 11 characters, and then "y") in web development means enabling as many people as possible to use websites, even when those people's abilities are limited in some way.
 
-This index is long: search it with grep for your words, never read it whole. Then open one file and read only the section you need.
+For many people, technology makes things easier. For people with disabilities, technology makes things possible. Accessibility means developing content to be as accessible as possible, no matter an individual's physical and cognitive abilities and how they access the web.
 
-- [ARIA guides](library/mdn-accessibility/aria/guides.md): Accessible Rich Internet Applications (ARIA) define ways to make the web more accessible to people with disabilities. (1 KB)
-- [ARIA live regions](library/mdn-accessibility/aria/guides/live_regions.md): Using JavaScript, it is possible to dynamically change parts of a page without requiring the entire page to reload — for instance, to update… (12 KB)
-- [Multipart labels: Using ARIA for labels with embedded fields inside them](library/mdn-accessibility/aria/guides/multipart_labels.md): You have a form where you ask your user a question, but the answer is mentioned in the question itself. (3 KB)
-- [ARIA Screen Reader Implementors Guide](library/mdn-accessibility/aria/guides/screen_reader_implementors.md): This is just a guide. (3 KB)
-- [Using ARIA: Roles, states, and properties](library/mdn-accessibility/aria/guides/techniques.md): ARIA defines semantics that can be applied to elements, with these divided into roles (defining a type of user interface element) and states and… (3 KB)
-- [ARIA](library/mdn-accessibility/aria.md): Accessible Rich Internet Applications (ARIA) is a set of roles and attributes that define ways to make web content and web applications (especially those… (6 KB)
-- [ARIA: aria-activedescendant attribute](library/mdn-accessibility/aria/reference/attributes/aria-activedescendant.md): The aria-activedescendant attribute identifies the currently active element when focus is on a composite widget, combobox, textbox, group, or application. (4 KB)
-- [ARIA: aria-atomic attribute](library/mdn-accessibility/aria/reference/attributes/aria-atomic.md): In ARIA live regions, the global aria-atomic attribute indicates whether assistive technologies such as a screen reader will present all, or only parts of,… (2 KB)
-- [ARIA: aria-autocomplete attribute](library/mdn-accessibility/aria/reference/attributes/aria-autocomplete.md): The aria-autocomplete attribute indicates whether inputting text could trigger display of one or more predictions of the user's intended value for a combobox, searchbox,… (5 KB)
-- [ARIA: aria-braillelabel attribute](library/mdn-accessibility/aria/reference/attributes/aria-braillelabel.md): The global aria-braillelabel property defines a string value that labels the current element, which is intended to be converted into Braille. (3 KB)
-- [ARIA: aria-brailleroledescription attribute](library/mdn-accessibility/aria/reference/attributes/aria-brailleroledescription.md): The global aria-brailleroledescription attribute defines a human-readable, author-localized abbreviated description for the role of an element intended to be converted into Braille. (5 KB)
-- [ARIA: aria-busy attribute](library/mdn-accessibility/aria/reference/attributes/aria-busy.md): The aria-busy attribute is a global ARIA state that indicates whether an element is currently being modified. (4 KB)
-- [ARIA: aria-checked attribute](library/mdn-accessibility/aria/reference/attributes/aria-checked.md): The aria-checked attribute indicates the current "checked" state of checkboxes, radio buttons, and other widgets. (3 KB)
-- [ARIA: aria-colcount attribute](library/mdn-accessibility/aria/reference/attributes/aria-colcount.md): The aria-colcount attribute defines the total number of columns in a table, grid, or treegrid when not all columns are present in the DOM. (4 KB)
-- [ARIA: aria-colindex attribute](library/mdn-accessibility/aria/reference/attributes/aria-colindex.md): The aria-colindex attribute defines an element's column index or position with respect to the total number of columns within a table, grid, or treegrid. (5 KB)
-- [ARIA: aria-colindextext attribute](library/mdn-accessibility/aria/reference/attributes/aria-colindextext.md): The aria-colindextext attribute defines a human-readable text alternative of the numeric aria-colindex. (4 KB)
-- [ARIA: aria-colspan attribute](library/mdn-accessibility/aria/reference/attributes/aria-colspan.md): The aria-colspan attribute defines the number of columns spanned by a cell or gridcell within a table, grid, or treegrid. (7 KB)
-- [ARIA: aria-controls attribute](library/mdn-accessibility/aria/reference/attributes/aria-controls.md): The global aria-controls property identifies the element (or elements) whose contents or presence are controlled by the element on which this attribute is set. (4 KB)
-- [ARIA: aria-current attribute](library/mdn-accessibility/aria/reference/attributes/aria-current.md): A non-null aria-current state on an element indicates that this element represents the current item within a container or set of related elements. (4 KB)
-- [ARIA: aria-describedby attribute](library/mdn-accessibility/aria/reference/attributes/aria-describedby.md): The global aria-describedby attribute identifies the element (or elements) that describes the element on which the attribute is set. (4 KB)
-- [ARIA: aria-description attribute](library/mdn-accessibility/aria/reference/attributes/aria-description.md): The global aria-description attribute defines a string value that describes or annotates the current element. (3 KB)
-- [ARIA: aria-details attribute](library/mdn-accessibility/aria/reference/attributes/aria-details.md): The global aria-details attribute identifies the element (or elements) that provide additional information related to the object. (5 KB)
-- [ARIA: aria-disabled attribute](library/mdn-accessibility/aria/reference/attributes/aria-disabled.md): The aria-disabled state indicates that the element is perceivable but disabled, so it is not editable or otherwise operable. (8 KB)
-- [ARIA: aria-dropeffect attribute](library/mdn-accessibility/aria/reference/attributes/aria-dropeffect.md): The global aria-dropeffect attribute indicates what functions may be performed when a dragged object is released on the drop target. (4 KB)
-- [ARIA: aria-errormessage attribute](library/mdn-accessibility/aria/reference/attributes/aria-errormessage.md): The aria-errormessage attribute on an object identifies the element(s) that provides an error message for that object. (4 KB)
-- [ARIA: aria-expanded attribute](library/mdn-accessibility/aria/reference/attributes/aria-expanded.md): The aria-expanded attribute is set on an element to indicate if a control is expanded or collapsed, and whether or not the controlled elements… (5 KB)
-- [ARIA: aria-flowto attribute](library/mdn-accessibility/aria/reference/attributes/aria-flowto.md): The global aria-flowto attribute identifies the next element (or elements) in an alternate reading order of content. (3 KB)
-- [ARIA: aria-grabbed attribute](library/mdn-accessibility/aria/reference/attributes/aria-grabbed.md): The aria-grabbed state indicates an element's "grabbed" state in a drag-and-drop operation. (2 KB)
-- [ARIA: aria-haspopup attribute](library/mdn-accessibility/aria/reference/attributes/aria-haspopup.md): The aria-haspopup attribute indicates the availability and type of interactive popup element that can be triggered by the element on which the attribute is… (4 KB)
-- [ARIA: aria-hidden attribute](library/mdn-accessibility/aria/reference/attributes/aria-hidden.md): The aria-hidden state indicates whether the element is exposed to an accessibility API. (5 KB)
-- [ARIA: aria-invalid attribute](library/mdn-accessibility/aria/reference/attributes/aria-invalid.md): The aria-invalid state indicates the entered value does not conform to the format expected by the application. (6 KB)
-- [ARIA: aria-keyshortcuts attribute](library/mdn-accessibility/aria/reference/attributes/aria-keyshortcuts.md): The global aria-keyshortcuts attribute indicates keyboard shortcuts that an author has implemented to activate or give focus to an element. (9 KB)
-- [ARIA: aria-label attribute](library/mdn-accessibility/aria/reference/attributes/aria-label.md): The aria-label attribute defines a string value that can be used to name an element, as long as the element's role does not prohibit… (6 KB)
-- [ARIA: aria-labelledby attribute](library/mdn-accessibility/aria/reference/attributes/aria-labelledby.md): The aria-labelledby attribute identifies the element (or elements) that labels the element it is applied to. (8 KB)
-- [ARIA: aria-level attribute](library/mdn-accessibility/aria/reference/attributes/aria-level.md): The aria-level attribute defines the hierarchical level of an element within a structure. (4 KB)
-- [ARIA: aria-live attribute](library/mdn-accessibility/aria/reference/attributes/aria-live.md): The global aria-live attribute indicates that an element will be updated, and describes the types of updates the user agents, assistive technologies, and user… (6 KB)
-- [ARIA: aria-modal attribute](library/mdn-accessibility/aria/reference/attributes/aria-modal.md): The aria-modal attribute indicates whether an element is modal when displayed. (6 KB)
-- [ARIA: aria-multiline attribute](library/mdn-accessibility/aria/reference/attributes/aria-multiline.md): The aria-multiline attribute indicates whether a textbox accepts multiple lines of input or only a single line. (3 KB)
-- [ARIA: aria-multiselectable attribute](library/mdn-accessibility/aria/reference/attributes/aria-multiselectable.md): The aria-multiselectable attribute indicates that the user may select more than one item from the current selectable descendants. (7 KB)
-- [ARIA: aria-orientation attribute](library/mdn-accessibility/aria/reference/attributes/aria-orientation.md): The aria-orientation attribute indicates whether the element's orientation is horizontal, vertical, or unknown/ambiguous. (3 KB)
-- [ARIA: aria-owns attribute](library/mdn-accessibility/aria/reference/attributes/aria-owns.md): The aria-owns attribute identifies an element (or elements) in order to define a visual, functional, or contextual relationship between a parent and its child… (5 KB)
-- [ARIA: aria-placeholder attribute](library/mdn-accessibility/aria/reference/attributes/aria-placeholder.md): The aria-placeholder attribute defines a short hint (a word or short phrase) intended to help the user with data entry when a form control… (3 KB)
-- [ARIA: aria-posinset attribute](library/mdn-accessibility/aria/reference/attributes/aria-posinset.md): The aria-posinset attribute defines an element's number or position in the current set of listitems or treeitems when not all items are present in… (3 KB)
-- [ARIA: aria-pressed attribute](library/mdn-accessibility/aria/reference/attributes/aria-pressed.md): The aria-pressed attribute indicates the current "pressed" state of a toggle button. (3 KB)
-- [ARIA: aria-readonly attribute](library/mdn-accessibility/aria/reference/attributes/aria-readonly.md): The aria-readonly attribute indicates that the element is not editable, but is otherwise operable. (2 KB)
-- [ARIA: aria-relevant attribute](library/mdn-accessibility/aria/reference/attributes/aria-relevant.md): Used in ARIA live regions, the global aria-relevant attribute indicates what notifications the user agent will trigger when the accessibility tree within a live… (3 KB)
-- [ARIA: aria-required attribute](library/mdn-accessibility/aria/reference/attributes/aria-required.md): The aria-required attribute indicates that user input is required on the element before a form may be submitted. (5 KB)
-- [ARIA: aria-roledescription attribute](library/mdn-accessibility/aria/reference/attributes/aria-roledescription.md): The aria-roledescription attribute defines a human-readable, author-localized description for the role of an element. (4 KB)
-- [ARIA: aria-rowcount attribute](library/mdn-accessibility/aria/reference/attributes/aria-rowcount.md): The aria-rowcount attribute defines the total number of rows in a table, grid, or treegrid. (3 KB)
-- [ARIA: aria-rowindex attribute](library/mdn-accessibility/aria/reference/attributes/aria-rowindex.md): The aria-rowindex attribute defines an element's position with respect to the total number of rows within a table, grid, or treegrid. (4 KB)
-- [ARIA: aria-rowindextext attribute](library/mdn-accessibility/aria/reference/attributes/aria-rowindextext.md): The aria-rowindextext attribute defines a human-readable text alternative of aria-rowindex. (2 KB)
-- [ARIA: aria-rowspan attribute](library/mdn-accessibility/aria/reference/attributes/aria-rowspan.md): The aria-rowspan attribute defines the number of rows spanned by a cell or gridcell within a table, grid, or treegrid. (2 KB)
-- [ARIA: aria-selected attribute](library/mdn-accessibility/aria/reference/attributes/aria-selected.md): The aria-selected attribute indicates the current "selected" state of various widgets. (5 KB)
-- [ARIA: aria-setsize attribute](library/mdn-accessibility/aria/reference/attributes/aria-setsize.md): The aria-setsize attribute defines the number of items in the current set of listitems or treeitems when not all items in the set are… (5 KB)
-- [ARIA: aria-sort attribute](library/mdn-accessibility/aria/reference/attributes/aria-sort.md): The aria-sort attribute indicates if items in a table or grid are sorted in ascending or descending order. (3 KB)
-- [ARIA: aria-valuemax attribute](library/mdn-accessibility/aria/reference/attributes/aria-valuemax.md): The aria-valuemax attribute defines the maximum allowed value for a range widget. (2 KB)
-- [ARIA: aria-valuemin attribute](library/mdn-accessibility/aria/reference/attributes/aria-valuemin.md): The aria-valuemin attribute defines the minimum allowed value for a range widget. (2 KB)
-- [ARIA: aria-valuenow attribute](library/mdn-accessibility/aria/reference/attributes/aria-valuenow.md): The aria-valuenow attribute defines the current value for a range widget. (4 KB)
-- [ARIA: aria-valuetext attribute](library/mdn-accessibility/aria/reference/attributes/aria-valuetext.md): The aria-valuetext attribute defines the human-readable text alternative of aria-valuenow for a range widget. (2 KB)
-- [ARIA states and properties (attributes)](library/mdn-accessibility/aria/reference/attributes.md): This page lists reference pages covering all the WAI-ARIA attributes discussed on MDN. (3 KB)
-- [ARIA reference](library/mdn-accessibility/aria/reference.md): This page lists reference documentation for Accessible Rich Internet Applications (ARIA). (1 KB)
-- [ARIA: alert role](library/mdn-accessibility/aria/reference/roles/alert_role.md): The alert role is for important, and usually time-sensitive, information. (6 KB)
-- [ARIA: alertdialog role](library/mdn-accessibility/aria/reference/roles/alertdialog_role.md): The alertdialog role is to be used on modal alert dialogs that interrupt a user's workflow to communicate an important message and require a… (4 KB)
-- [ARIA: application role](library/mdn-accessibility/aria/reference/roles/application_role.md): The application role indicates to assistive technologies that an element and all of its children should be treated similar to a desktop application, and… (8 KB)
-- [ARIA: article role](library/mdn-accessibility/aria/reference/roles/article_role.md): The article role indicates a section of a page that could easily stand on its own on a page, in a document, or on… (4 KB)
-- [ARIA: banner role](library/mdn-accessibility/aria/reference/roles/banner_role.md): The banner role is for defining a global site header, which usually includes a logo, company name, search feature, and possibly the global navigation… (3 KB)
-- [ARIA: button role](library/mdn-accessibility/aria/reference/roles/button_role.md): The button role is for clickable elements that trigger a response when activated by the user. (14 KB)
-- [ARIA: cell role](library/mdn-accessibility/aria/reference/roles/cell_role.md): The cell value of the ARIA role attribute identifies an element as being a cell in a tabular container that does not contain column… (9 KB)
-- [ARIA: checkbox role](library/mdn-accessibility/aria/reference/roles/checkbox_role.md): The checkbox role is for checkable interactive controls. (7 KB)
-- [ARIA: columnheader role](library/mdn-accessibility/aria/reference/roles/columnheader_role.md): The columnheader value of the ARIA role attribute identifies an element as being a cell in a row contains header information for a column,… (3 KB)
-- [ARIA: combobox role](library/mdn-accessibility/aria/reference/roles/combobox_role.md): The combobox role identifies an element as either an input or a button that controls another element, such as a listbox or grid, that… (8 KB)
-- [ARIA: command role](library/mdn-accessibility/aria/reference/roles/command_role.md): The command role defines a widget that performs an action but does not receive input data. (1 KB)
-- [ARIA: comment role](library/mdn-accessibility/aria/reference/roles/comment_role.md): The comment role semantically denotes a comment/reaction to some content on the page, or to a previous comment. (3 KB)
-- [ARIA: complementary role](library/mdn-accessibility/aria/reference/roles/complementary_role.md): The complementary landmark role is used to designate a supporting section that relates to the main content, yet can stand alone when separated. (4 KB)
-- [ARIA: composite role](library/mdn-accessibility/aria/reference/roles/composite_role.md): The composite abstract role indicates a widget that may contain navigable descendants or owned children. (1 KB)
-- [ARIA: contentinfo role](library/mdn-accessibility/aria/reference/roles/contentinfo_role.md): The contentinfo role defines a footer, containing identifying information such as copyright information, navigation links, and privacy statements, found on every document within a… (4 KB)
-- [ARIA: definition role](library/mdn-accessibility/aria/reference/roles/definition_role.md): The definition ARIA role indicates the element is a definition of a term or concept. (2 KB)
-- [ARIA: dialog role](library/mdn-accessibility/aria/reference/roles/dialog_role.md): The dialog role is used to mark up an HTML based application dialog or window that separates content or UI from the rest of… (8 KB)
-- [ARIA: directory role](library/mdn-accessibility/aria/reference/roles/directory_role.md): The directory role was for a list of references to members of a group, such as a static table of contents. (1 KB)
-- [ARIA: document role](library/mdn-accessibility/aria/reference/roles/document_role.md): The document role is for focusable content within complex composite widgets or applications for which assistive technologies can switch reading context back to a… (5 KB)
-- [ARIA: feed role](library/mdn-accessibility/aria/reference/roles/feed_role.md): A feed is a dynamic scrollable list of articles in which articles are added to or removed from either end of the list as… (6 KB)
-- [ARIA: figure role](library/mdn-accessibility/aria/reference/roles/figure_role.md): The ARIA figure role can be used to identify a figure inside page content where appropriate semantics do not already exist. (4 KB)
-- [ARIA: form role](library/mdn-accessibility/aria/reference/roles/form_role.md): The form role can be used to identify a group of elements on a page that provide equivalent functionality to an HTML form. (5 KB)
-- [ARIA: generic role](library/mdn-accessibility/aria/reference/roles/generic_role.md): The generic role creates a nameless container element which has no semantic meaning on its own. (2 KB)
-- [ARIA: graphics-document role](library/mdn-accessibility/aria/reference/roles/graphics-document_role.md): The graphics-document role identifies a type of document in which the visual appearance or layout of content conveys meaning. (6 KB)
-- [ARIA: graphics-object role](library/mdn-accessibility/aria/reference/roles/graphics-object_role.md): The graphics-object role identifies a section of a graphics-document that represents a distinct object or sub-component with semantic meaning. (3 KB)
-- [ARIA: graphics-symbol role](library/mdn-accessibility/aria/reference/roles/graphics-symbol_role.md): The graphics-symbol role identifies a graphical object that conveys a simple meaning or category, where the meaning is more important than the particular visual… (4 KB)
-- [ARIA: grid role (part 1 of 2)](library/mdn-accessibility/aria/reference/roles/grid_role.md): The grid role is for a widget that contains one or more rows of cells. (9 KB)
-- [ARIA: grid role (part 2 of 2)](library/mdn-accessibility/aria/reference/roles/grid_role-p2.md): tbody th, tbody td { padding: 5px; } (7 KB)
-- [ARIA: gridcell role](library/mdn-accessibility/aria/reference/roles/gridcell_role.md): The gridcell role is used to make a cell in a grid or treegrid. (7 KB)
-- [ARIA: group role](library/mdn-accessibility/aria/reference/roles/group_role.md): The group role identifies a set of user interface objects that is not intended to be included in a page summary or table of… (4 KB)
-- [ARIA: heading role](library/mdn-accessibility/aria/reference/roles/heading_role.md): The heading role defines this element as a heading to a page or section, with the aria-level attribute providing for more structure. (5 KB)
-- [ARIA: img role](library/mdn-accessibility/aria/reference/roles/img_role.md): The ARIA img role can be used to identify multiple elements inside page content that should be considered as a single image. (6 KB)
-- [WAI-ARIA Roles](library/mdn-accessibility/aria/reference/roles.md): ARIA roles provide semantic meaning to content, allowing screen readers and other tools to present and support interaction with an object in a way… (7 KB)
-- [ARIA: input role](library/mdn-accessibility/aria/reference/roles/input_role.md): The input abstract role is a generic type of widget that allows user input. (1 KB)
-- [ARIA: landmark role](library/mdn-accessibility/aria/reference/roles/landmark_role.md): A landmark is an important subsection of a page. (3 KB)
-- [ARIA: link role](library/mdn-accessibility/aria/reference/roles/link_role.md): A link widget provides an interactive reference to a resource. (4 KB)
-- [ARIA: list role](library/mdn-accessibility/aria/reference/roles/list_role.md): The ARIA list role can be used to identify a list of items. (3 KB)
-- [ARIA: listbox role](library/mdn-accessibility/aria/reference/roles/listbox_role.md): The listbox role is used for lists from which a user may select one or more items which are static and, unlike HTML <select>… (12 KB)
-- [ARIA: listitem role](library/mdn-accessibility/aria/reference/roles/listitem_role.md): The ARIA listitem role can be used to identify an item inside a list of items. (3 KB)
-- [ARIA: log role](library/mdn-accessibility/aria/reference/roles/log_role.md): The log role is used to identify an element that creates a live region where new information is added in a meaningful order and… (3 KB)
-- [ARIA: main role](library/mdn-accessibility/aria/reference/roles/main_role.md): The main landmark role is used to indicate the primary content of a document. (5 KB)
-- [ARIA: mark role](library/mdn-accessibility/aria/reference/roles/mark_role.md): The mark role denotes content which is marked or highlighted for reference or notation purposes, due to the content's relevance in the enclosing context. (2 KB)
-- [ARIA: marquee role](library/mdn-accessibility/aria/reference/roles/marquee_role.md): A marquee is a type of live region containing non-essential information which changes frequently. (2 KB)
-- [ARIA: math role](library/mdn-accessibility/aria/reference/roles/math_role.md): The math role indicates that the content represents a mathematical expression. (2 KB)
-- [ARIA: menu role](library/mdn-accessibility/aria/reference/roles/menu_role.md): The menu role is a type of composite widget that offers a list of choices to the user. (10 KB)
-- [ARIA: menubar role](library/mdn-accessibility/aria/reference/roles/menubar_role.md): A menubar is a presentation of menu that usually remains visible and is usually presented horizontally. (6 KB)
-- [ARIA: menuitem role](library/mdn-accessibility/aria/reference/roles/menuitem_role.md): The menuitem role indicates the element is an option in a set of choices contained by a menu or menubar. (7 KB)
-- [ARIA: menuitemcheckbox role](library/mdn-accessibility/aria/reference/roles/menuitemcheckbox_role.md): A menuitemcheckbox is a menuitem with a checkable state whose possible values are true, false, or mixed. (8 KB)
-- [ARIA: menuitemradio role](library/mdn-accessibility/aria/reference/roles/menuitemradio_role.md): A menuitemradio is checkable menuitem in a set of elements with the same role, only one of which can be checked at a time. (9 KB)
-- [ARIA: meter role](library/mdn-accessibility/aria/reference/roles/meter_role.md): The meter role is used to identify an element being used as a meter. (4 KB)
-- [ARIA: navigation role](library/mdn-accessibility/aria/reference/roles/navigation_role.md): The navigation role is used to identify major groups of links used for navigating through a website or page content. (4 KB)
-- [ARIA: none role](library/mdn-accessibility/aria/reference/roles/none_role.md): The none role is a synonym for the presentation role; they both remove an element's implicit ARIA semantics from being exposed to the accessibility… (1 KB)
-- [ARIA: note role](library/mdn-accessibility/aria/reference/roles/note_role.md): A note role suggests a section whose content is parenthetic or ancillary to the main content. (2 KB)
-- [ARIA: option role](library/mdn-accessibility/aria/reference/roles/option_role.md): The option role is used for selectable items in a listbox. (4 KB)
-- [ARIA: presentation role](library/mdn-accessibility/aria/reference/roles/presentation_role.md): The presentation role and its synonym none remove an element's implicit ARIA semantics from being exposed to the accessibility tree. (4 KB)
-- [ARIA: progressbar role](library/mdn-accessibility/aria/reference/roles/progressbar_role.md): The progressbar role defines an element that displays the progress status for tasks that take a long time. (5 KB)
-- [ARIA: radio role](library/mdn-accessibility/aria/reference/roles/radio_role.md): The radio role is one of a group of checkable radio buttons, in a radiogroup, where no more than a single radio button can… (12 KB)
-- [ARIA: radiogroup role](library/mdn-accessibility/aria/reference/roles/radiogroup_role.md): The radiogroup role is a group of radio buttons. (8 KB)
-- [ARIA: range role](library/mdn-accessibility/aria/reference/roles/range_role.md): The range abstract role is a generic type of structure role representing a range of values. (1 KB)
-- [ARIA: region role](library/mdn-accessibility/aria/reference/roles/region_role.md): The region role is used to identify document areas the author deems significant. (4 KB)
-- [ARIA: roletype role](library/mdn-accessibility/aria/reference/roles/roletype_role.md): The roletype role, an abstract role, is the base role from which all other ARIA roles inherit. (1 KB)
-- [ARIA: row role](library/mdn-accessibility/aria/reference/roles/row_role.md): An element with role="row" is a row of cells within a tabular structure. (11 KB)
-- [ARIA: rowgroup role](library/mdn-accessibility/aria/reference/roles/rowgroup_role.md): An element with role="rowgroup" is a group of rows within a tabular structure. (6 KB)
-- [ARIA: rowheader role](library/mdn-accessibility/aria/reference/roles/rowheader_role.md): An element with role="rowheader" is a cell containing header information for a row within a tabular structure of a grid, table or treegrid. (5 KB)
-- [ARIA: scrollbar role](library/mdn-accessibility/aria/reference/roles/scrollbar_role.md): A scrollbar is a graphical object that controls the scrolling of content within a viewing area. (12 KB)
-- [ARIA: search role](library/mdn-accessibility/aria/reference/roles/search_role.md): The search role is used to identify the search functionality; the section of the page used to search the page, site, or collection of… (3 KB)
-- [ARIA: searchbox role](library/mdn-accessibility/aria/reference/roles/searchbox_role.md): The searchbox role indicates an element is a type of textbox intended for specifying search criteria. (2 KB)
-- [ARIA: section role](library/mdn-accessibility/aria/reference/roles/section_role.md): The section role, an abstract role, is a superclass role for renderable structural containment components. (2 KB)
-- [ARIA: sectionhead role](library/mdn-accessibility/aria/reference/roles/sectionhead_role.md): The sectionhead role, an abstract role, is superclass role for labels or summaries of the topic of its related section. (1 KB)
-- [ARIA: select role](library/mdn-accessibility/aria/reference/roles/select_role.md): The select role, an abstract role, is superclass role for form widgets that allows the user to make selections from a set of choices. (1 KB)
-- [ARIA: separator role](library/mdn-accessibility/aria/reference/roles/separator_role.md): The separator role indicates the element is a divider that separates and distinguishes sections of content or groups of menuitems. (5 KB)
-- [ARIA: slider role](library/mdn-accessibility/aria/reference/roles/slider_role.md): The slider role defines an input where the user selects a value from within a given range. (13 KB)
-- [ARIA: spinbutton role](library/mdn-accessibility/aria/reference/roles/spinbutton_role.md): The spinbutton role defines a type of range that expects the user to select a value from among discrete choices. (11 KB)
-- [ARIA: status role](library/mdn-accessibility/aria/reference/roles/status_role.md): The status role defines a live region containing advisory information for the user that is not important enough to be an alert. (2 KB)
-- [ARIA: document structural roles](library/mdn-accessibility/aria/reference/roles/structural_roles.md): ARIA document-structure roles are used to provide a structural description for a section of content. (15 KB)
-- [ARIA: structure role](library/mdn-accessibility/aria/reference/roles/structure_role.md): The structure role is for document structural elements. (2 KB)
-- [ARIA: suggestion role](library/mdn-accessibility/aria/reference/roles/suggestion_role.md): The suggestion role semantically denotes a single proposed change to an editable document. (2 KB)
-- [ARIA: switch role](library/mdn-accessibility/aria/reference/roles/switch_role.md): The ARIA switch role is functionally identical to the checkbox role, except that instead of representing "checked" and "unchecked" states, which are fairly generic… (8 KB)
-- [ARIA: tab role](library/mdn-accessibility/aria/reference/roles/tab_role.md): The ARIA tab role indicates an interactive element inside a tablist that, when activated, displays its associated tabpanel. (13 KB)
-- [ARIA: table role](library/mdn-accessibility/aria/reference/roles/table_role.md): The table value of the ARIA role attribute identifies the element containing the role as having a non-interactive table structure containing data arranged in… (7 KB)
-- [ARIA: tablist role](library/mdn-accessibility/aria/reference/roles/tablist_role.md): The tablist role identifies the element that serves as the container for a set of tabs. (6 KB)
-- [ARIA: tabpanel role](library/mdn-accessibility/aria/reference/roles/tabpanel_role.md): The ARIA tabpanel is a container for the resources of layered content associated with a tab. (6 KB)
-- [ARIA: term role](library/mdn-accessibility/aria/reference/roles/term_role.md): The term role can be used for a word or phrase with an optional corresponding definition. (3 KB)
-- [ARIA: textbox role](library/mdn-accessibility/aria/reference/roles/textbox_role.md): The textbox role is used to identify an element that allows the input of free-form text. (8 KB)
-- [ARIA: timer role](library/mdn-accessibility/aria/reference/roles/timer_role.md): The timer role indicates to assistive technologies that an element is a numerical counter listing the amount of elapsed time from a starting point… (4 KB)
-- [ARIA: toolbar role](library/mdn-accessibility/aria/reference/roles/toolbar_role.md): The toolbar role defines the containing element as a collection of commonly used function buttons or controls represented in a compact visual form. (7 KB)
-- [ARIA: tooltip role](library/mdn-accessibility/aria/reference/roles/tooltip_role.md): A tooltip is a contextual text bubble that displays a description for an element that appears on pointer hover or keyboard focus. (9 KB)
-- [ARIA: tree role](library/mdn-accessibility/aria/reference/roles/tree_role.md): A tree is a widget that allows the user to select one or more items from a hierarchically organized collection. (9 KB)
-- [ARIA: treegrid role](library/mdn-accessibility/aria/reference/roles/treegrid_role.md): The treegrid role identifies an element as being grid whose rows can be expanded and collapsed in the same manner as for a tree. (13 KB)
-- [ARIA: treeitem role](library/mdn-accessibility/aria/reference/roles/treeitem_role.md): A treeitem is an item in a tree. (11 KB)
-- [ARIA: widget role](library/mdn-accessibility/aria/reference/roles/widget_role.md): The widget role, an abstract role, is an interactive component of a graphical user interface (GUI). (2 KB)
-- [ARIA: window role](library/mdn-accessibility/aria/reference/roles/window_role.md): The window role defines a browser or app window. (1 KB)
-- [Accessibility and spatial patterns](library/mdn-accessibility/guides/accessibility_and_spatial_patterns.md): This document describes visual patterns that can induce physical symptoms in people who have photosensitive epilepsy, vestibular disorders, or other perceptual issues. (5 KB)
-- [An overview of accessible web applications and widgets](library/mdn-accessibility/guides/accessible_web_applications_and_widgets.md): Most JavaScript libraries offer a library of client-side widgets that mimic the behavior of familiar desktop interfaces. (10 KB)
-- [Accessibility: What personalization helps browse more safely](library/mdn-accessibility/guides/browsing_safely.md): This article discusses making web content accessible for those with vestibular disorders, and those who support them, by taking advantage of personalization and accessibility… (6 KB)
-- [Cognitive accessibility (part 1 of 2)](library/mdn-accessibility/guides/cognitive_accessibility.md): Cognitive accessibility covers accessibility considerations for people with cognition and learning disabilities. (13 KB)
-- [Cognitive accessibility (part 2 of 2)](library/mdn-accessibility/guides/cognitive_accessibility-p2.md): Guideline 3.1 states "make text content readable and understandable". (11 KB)
-- [Web Accessibility: Understanding Colors and Luminance (part 1 of 3)](library/mdn-accessibility/guides/colors_and_luminance.md): While understanding color, luminance, and saturation is important for design and readability for all sighted users, they are essential for those with reduced vision… (13 KB)
-- [Web Accessibility: Understanding Colors and Luminance (part 2 of 3)](library/mdn-accessibility/guides/colors_and_luminance-p2.md): The contrast between colors ("hues") is a critical component, but the use of color ("hues") alone is not enough to create accessible content. (14 KB)
-- [Web Accessibility: Understanding Colors and Luminance (part 3 of 3)](library/mdn-accessibility/guides/colors_and_luminance-p3.md): Not all colors ("hue") are processed similarly by our brains. (5 KB)
-- [Accessibility guides](library/mdn-accessibility/guides.md): This page lists guides for web accessibility. (1 KB)
-- [Accessibility information for web authors](library/mdn-accessibility/guides/information_for_web_authors.md): This document lists guidelines and regulations, how-to's, and tools for checking and repairing accessibility problems with websites. (3 KB)
-- [Keyboard-navigable JavaScript widgets](library/mdn-accessibility/guides/keyboard-navigable_javascript_widgets.md): Web applications often use JavaScript to mimic desktop widgets such as menus, tree views, rich text fields, and tab panels. (9 KB)
-- [Mobile accessibility checklist](library/mdn-accessibility/guides/mobile_accessibility_checklist.md): This document provides a concise checklist of accessibility requirements for mobile app developers. (4 KB)
-- [Web accessibility for seizures and physical reactions (part 1 of 6)](library/mdn-accessibility/guides/seizure_disorders.md): This article introduces concepts behind making web content accessible for those with vestibular disorders, and how to measure and prevent content leading to seizures… (7 KB)
-- [Web accessibility for seizures and physical reactions (part 2 of 6)](library/mdn-accessibility/guides/seizure_disorders-p2.md): Although "flashing" and "blinking" are sometimes used interchangeably, they are not the same. (10 KB)
-- [Web accessibility for seizures and physical reactions (part 3 of 6)](library/mdn-accessibility/guides/seizure_disorders-p3.md): Measuring the potential for harm is a good starting point. (7 KB)
-- [Web accessibility for seizures and physical reactions (part 4 of 6)](library/mdn-accessibility/guides/seizure_disorders-p4.md): All animations are potentially dangerous. (11 KB)
-- [Web accessibility for seizures and physical reactions (part 5 of 6)](library/mdn-accessibility/guides/seizure_disorders-p5.md): JavaScript is often used to control <canvas> elements and SVGs. (13 KB)
-- [Web accessibility for seizures and physical reactions (part 6 of 6)](library/mdn-accessibility/guides/seizure_disorders-p6.md): EnvironmentMQ (Planned in Media Queries Level 5) (7 KB)
-- [Understanding the Web Content Accessibility Guidelines (WCAG)](library/mdn-accessibility/guides/understanding_wcag.md): This set of articles provides quick explanations to help you understand the steps that need to be taken to conform to the recommendations outlined… (3 KB)
-- [Keyboard accessible](library/mdn-accessibility/guides/understanding_wcag/keyboard.md): To be fully accessible, a web page must be operable by someone using only a keyboard to access and control it. (5 KB)
-- [Operable (part 1 of 2)](library/mdn-accessibility/guides/understanding_wcag/operable.md): This article provides practical advice on how to write your web content so that it conforms to the success criteria outlined in the Operable… (15 KB)
-- [Operable (part 2 of 2)](library/mdn-accessibility/guides/understanding_wcag/operable-p2.md): The conformance criteria under this guideline ensures that users are able to interact with digital technology using different input methods beyond a keyboard or… (4 KB)
-- [Color contrast](library/mdn-accessibility/guides/understanding_wcag/perceivable/color_contrast.md): The color contrast between background and foreground content (that is, usually text) should be great enough to ensure legibility. (5 KB)
-- [Perceivable (part 1 of 2)](library/mdn-accessibility/guides/understanding_wcag/perceivable.md): This article provides practical advice on how to write your web content so that it conforms to the success criteria outlined in the Perceivable… (11 KB)
-- [Perceivable (part 2 of 2)](library/mdn-accessibility/guides/understanding_wcag/perceivable-p2.md): This guideline relates to making sure core content is easy to discern from backgrounds and other decoration. (6 KB)
-- [Use of color](library/mdn-accessibility/guides/understanding_wcag/perceivable/use_of_color.md): While color contrast is often primarily an aesthetic choice, the use of color on a website pertains to using color to communicate information. (2 KB)
-- [Robust](library/mdn-accessibility/guides/understanding_wcag/robust.md): This article provides practical advice on how to write your web content so that it conforms to the success criteria outlined in the Robust… (3 KB)
-- [Text labels and names](library/mdn-accessibility/guides/understanding_wcag/text_labels_and_names.md): There are many situations in which a control, dialog, or other website feature should be given a descriptive name or label to allow users… (14 KB)
-- [Understandable (part 1 of 2)](library/mdn-accessibility/guides/understanding_wcag/understandable.md): This article provides practical advice on how to write your web content so that it conforms to the success criteria outlined in the Understandable… (9 KB)
-- [Understandable (part 2 of 2)](library/mdn-accessibility/guides/understanding_wcag/understandable-p2.md): This guideline centers around helping users enter correct information when required with the minimum of mistakes. (7 KB)
-- [Accessibility](library/mdn-accessibility/overview.md): For many people, technology makes things easier. (7 KB)
+> **The Web is fundamentally designed to work for all people**, whatever their hardware, software, language, location, or ability.
+> When the Web meets this goal, it is accessible to people with a diverse range of hearing, movement, sight, and cognitive ability. \
+> – ([W3C - Accessibility](https://www.w3.org/standards/webdesign/accessibility))
+
+## Beginner's tutorials
+
+Our learn web development [Accessibility module](/en-US/docs/Learn_web_development/Core/Accessibility) contains modern, up-to-date tutorials covering accessibility fundamentals.
+
+- [What is accessibility?](/en-US/docs/Learn_web_development/Core/Accessibility/What_is_accessibility)
+  - : This article starts off the module with a good look at what accessibility is — this includes what groups of people we need to consider and why, what tools different people use to interact with the web, and how we can make accessibility part of our web development workflow.
+- [Accessibility tooling and assistive technology](/en-US/docs/Learn_web_development/Core/Accessibility/Tooling)
+  - : Next we turn our attention to accessibility tooling, providing information on the kinds of tools you can use to help solve accessibility issues, and the assistive technologies used by people with disabilities as they browse the web. You'll be using these tools throughout subsequent articles.
+- [HTML: A good basis for accessibility](/en-US/docs/Learn_web_development/Core/Accessibility/HTML)
+  - : A great deal of web content can be made accessible just by making sure the correct HTML elements are always used for the correct purpose. This article looks in detail at how HTML can be used to ensure maximum accessibility.
+- [CSS and JavaScript accessibility best practices](/en-US/docs/Learn_web_development/Core/Accessibility/CSS_and_JavaScript)
+  - : CSS and JavaScript, when used properly, also have the potential to allow for accessible web experiences, but if misused they can significantly harm accessibility. This article outlines some CSS and JavaScript best practices that should be considered to ensure that even complex content is as accessible as possible.
+- [WAI-ARIA basics](/en-US/docs/Learn_web_development/Core/Accessibility/WAI-ARIA_basics)
+  - : Following on from the previous article, sometimes making complex UI controls that involve unsemantic HTML and dynamic JavaScript-updated content can be difficult. WAI-ARIA is a technology that can help with such problems by adding in further semantics that browsers and assistive technologies can recognize and use to let users know what is going on. Here we'll show how to use it at a basic level to improve accessibility.
+- [Accessible multimedia](/en-US/docs/Learn_web_development/Core/Accessibility/Multimedia)
+  - : Another category of content that can create accessibility problems is multimedia — video, audio, and image content need to be given proper textual alternatives, so they can be understood by assistive technologies and their users. This article shows how.
+- [Mobile accessibility](/en-US/docs/Learn_web_development/Core/Accessibility/Mobile)
+  - : With web access on mobile devices being so popular, and popular platforms such as iOS and Android having fully-fledged accessibility tools, it is important to consider the accessibility of your web content on these platforms. This article looks at mobile-specific accessibility considerations.
+
+## Accessibility guides
+
+The [Accessibility guides](/en-US/docs/Web/Accessibility/Guides) cover authoring principles, WCAG compliance, accessible widgets and navigation, mobile accessibility, and other key topics that will help you understand why accessibility is crucial for the web and how to improve it in your projects.
+
+- [Accessibility information for web authors](/en-US/docs/Web/Accessibility/Guides/Information_for_Web_authors)
+  - : This document lists guidelines and regulations, how-to's, and tools for checking and repairing accessibility problems with websites.
+- [Personalization to help browse safely](/en-US/docs/Web/Accessibility/Guides/Browsing_safely)
+  - : This article discusses making web content accessible for those with vestibular disorders, and those who support them, by taking advantage of personalization and accessibility settings built into the operating systems.
+- [Accessible web applications and widgets](/en-US/docs/Web/Accessibility/Guides/Accessible_web_applications_and_widgets)
+  - : Most JavaScript libraries offer a library of client-side widgets that mimic the behavior of familiar desktop interfaces.
+    While this results in a widget that looks like its desktop counterpart, there usually isn't enough semantic information in the markup to be usable by an assistive technology.
+    This document describes techniques to improve accessibility of such widgets.
+- [Keyboard-navigable JavaScript widgets](/en-US/docs/Web/Accessibility/Guides/Keyboard-navigable_JavaScript_widgets)
+  - : Until now, web developers who wanted to make their styled `<div>` and `<span>` based widgets accessible have lacked proper techniques.
+    **Keyboard accessibility** is part of the minimum accessibility requirements, which a developer should be aware of.
+    This document describes techniques to make JavaScript widgets accessible with the keyboard.
+- [Mobile accessibility checklist](/en-US/docs/Web/Accessibility/Guides/Mobile_accessibility_checklist)
+  - : This document provides a concise checklist of accessibility requirements for mobile app developers.
+- [Understanding the Web Content Accessibility Guidelines (WCAG)](/en-US/docs/Web/Accessibility/Guides/Understanding_WCAG)
+  - : A set of articles that provide quick explanations to help you understand the steps that need to be taken to conform to the recommendations outlined in the Web Content Accessibility Guidelines (WCAG).
+- [Cognitive accessibility](/en-US/docs/Web/Accessibility/Guides/Cognitive_accessibility)
+  - : Cognitive accessibility covers accessibility considerations for people with cognition and learning disabilities.
+    This document introduces cognitive accessibility and improving accessibility of the web for people with cognitive and learning differences.
+- [Accessibility and spatial patterns](/en-US/docs/Web/Accessibility/Guides/Accessibility_and_Spatial_Patterns)
+  - : This document describes visual patterns that can induce physical symptoms in people who have photosensitive epilepsy, vestibular disorders, or other perceptual issues.
+- [Web Accessibility: Understanding Colors and Luminance](/en-US/docs/Web/Accessibility/Guides/Colors_and_Luminance)
+  - : While understanding color, luminance, and saturation is important for design and readability for all sighted users, they are essential for those with reduced vision and color-deficient vision and those with specific neurological, cognitive, and other impairments.
+- [Web accessibility for seizures and physical reactions](/en-US/docs/Web/Accessibility/Guides/Seizure_disorders)
+  - : Some types of visual web content can induce seizures in people with certain brain disorders.
+    This article helps you understand the types of content that can be problematic and find tools and strategies to help you avoid them.
+- [ARIA](/en-US/docs/Web/Accessibility/ARIA)
+  - : This is a collection of articles to learn how to use Accessible Rich Internet Applications (ARIA) to make your HTML documents more accessible.
+
+## References
+
+- [ARIA reference](/en-US/docs/Web/Accessibility/ARIA/Reference)
+  - : Reference documentation for Accessible Rich Internet Applications (ARIA) attributes and roles.
+
+## See also
+
+- [Developer guides](/en-US/docs/MDN/Guides)
+- [WAI Interest Group](https://www.w3.org/WAI/about/groups/waiig/)

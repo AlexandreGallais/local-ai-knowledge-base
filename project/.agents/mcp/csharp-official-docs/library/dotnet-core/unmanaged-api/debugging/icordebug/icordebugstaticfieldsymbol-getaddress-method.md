@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: ICorDebugStaticFieldSymbol::GetAddress Method"
 title: "ICorDebugStaticFieldSymbol::GetAddress Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugstaticfieldsymbol-getaddress-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugStaticFieldSymbol::GetAddress Method
 
 Gets the address of a static field.
@@ -26,12 +22,12 @@ pRVA
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This method is available with .NET Native only.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -41,4 +37,4 @@ pRVA
 
 ## See also
 
-- ICorDebugStaticFieldSymbol Interface
+- [ICorDebugStaticFieldSymbol Interface](icordebugstaticfieldsymbol-interface.md)

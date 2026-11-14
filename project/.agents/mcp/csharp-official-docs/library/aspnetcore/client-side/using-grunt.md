@@ -1,12 +1,8 @@
 ---
-title: "Use Grunt in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/client-side/using-grunt.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Use Grunt in ASP.NET Core
+description: Use Grunt in ASP.NET Core
+ms.date: 12/05/2019
 ---
-
 # Use Grunt in ASP.NET Core
 
 Grunt is a JavaScript task runner that automates script minification, TypeScript compilation, code quality "lint" tools, CSS pre-processors, and just about any repetitive chore that needs doing to support client development. Grunt is fully supported in Visual Studio.
@@ -37,9 +33,13 @@ To begin, set up a new empty web application and add TypeScript example files. T
 
 3. In the Solution Explorer, review the project structure. The `\src` folder includes empty `wwwroot` and `Dependencies` nodes.
 
+    ![empty web solution](using-grunt/_static/grunt-solution-explorer.png)
+
 4. Add a new folder named `TypeScript` to your project directory.
 
 5. Before adding any files, make sure that Visual Studio has the option 'compile on save' for TypeScript files checked. Navigate to **Tools** > **Options** > **Text Editor** > **Typescript** > **Project**:
+
+    ![options setting auto compilation of TypeScript files](using-grunt/_static/typescript-options.png)
 
 6. Right-click the `TypeScript` directory and select **Add > New Item** from the context menu. Select the **JavaScript file** item and name the file `Tastes.ts` (note the \*.ts extension). Copy the line of TypeScript code below into the file (when you save, a new `Tastes.js` file will appear with the JavaScript source).
 
@@ -82,8 +82,10 @@ Next, configure npm to download grunt and grunt-tasks.
 
 2. In the `package.json` file, inside the `devDependencies` object braces, enter "grunt". Select `grunt` from the Intellisense list and press the Enter key. Visual Studio will quote the grunt package name, and add a colon. To the right of the colon, select the latest stable version of the package from the top of the Intellisense list (press `Ctrl-Space` if Intellisense doesn't appear).
 
-    > **Note:**
-    > npm uses semantic versioning to organize dependencies. Semantic versioning, also known as SemVer, identifies packages with the numbering scheme \<major>.\<minor>.\<patch>. Intellisense simplifies semantic versioning by showing only a few common choices. The top item in the Intellisense list (0.4.5 in the example above) is considered the latest stable version of the package. The caret (^) symbol matches the most recent major version and the tilde (~) matches the most recent minor version. See the npm semver version parser reference as a guide to the full expressivity that SemVer provides.
+    ![grunt Intellisense](using-grunt/_static/devdependencies-grunt.png)
+
+    > [!NOTE]
+    > npm uses [semantic versioning](https://semver.org/) to organize dependencies. Semantic versioning, also known as SemVer, identifies packages with the numbering scheme \<major>.\<minor>.\<patch>. Intellisense simplifies semantic versioning by showing only a few common choices. The top item in the Intellisense list (0.4.5 in the example above) is considered the latest stable version of the package. The caret (^) symbol matches the most recent major version and the tilde (~) matches the most recent minor version. See the [npm semver version parser reference](https://www.npmjs.com/package/semver) as a guide to the full expressivity that SemVer provides.
 
 3. Add more dependencies to load grunt-contrib-\* packages for *clean*, *jshint*, *concat*, *uglify*, and *watch* as shown in the example below. The versions don't need to match the example.
 
@@ -102,8 +104,12 @@ Next, configure npm to download grunt and grunt-tasks.
 
 The packages for each `devDependencies` item will download, along with any files that each package requires. You can find the package files in the *node_modules* directory by enabling the **Show All Files** button in **Solution Explorer**.
 
-> **Note:**
+![grunt node_modules](using-grunt/_static/node-modules.png)
+
+> [!NOTE]
 > If you need to, you can manually restore dependencies in **Solution Explorer** by right-clicking on `Dependencies\npm` and selecting the **Restore Packages** menu option.
+
+![restore packages](using-grunt/_static/restore-packages.png)
 
 ## Configuring Grunt
 
@@ -138,13 +144,21 @@ Grunt is configured using a manifest named `Gruntfile.js` that defines, loads an
 
 1. Save `Gruntfile.js`. The file should look something like the screenshot below.
 
+    ![initial gruntfile](using-grunt/_static/gruntfile-js-initial.png)
+
 1. Right-click `Gruntfile.js` and select **Task Runner Explorer** from the context menu. The **Task Runner Explorer** window will open.
+
+    ![task runner explorer menu](using-grunt/_static/task-runner-explorer-menu.png)
 
 1. Verify that `clean` shows under **Tasks** in the **Task Runner Explorer**.
 
+    ![task runner explorer tasks list](using-grunt/_static/task-runner-explorer-tasks.png)
+
 1. Right-click the clean task and select **Run** from the context menu. A command window displays progress of the task.
 
-    > **Note:**
+    ![task runner explorer run clean task](using-grunt/_static/task-runner-explorer-run-clean.png)
+
+    > [!NOTE]
     > There are no files or directories to clean yet. If you like, you can manually create them in the Solution Explorer and then run the clean task as a test.
 
 1. In the `initConfig` function, add an entry for `concat` using the code below.
@@ -160,7 +174,7 @@ Grunt is configured using a manifest named `Gruntfile.js` that defines, loads an
     },
     ```
 
-    > **Note:**
+    > [!NOTE]
     > The `all` property in the code above is the name of a target. Targets are used in some Grunt tasks to allow multiple build environments. You can view the built-in targets using IntelliSense or assign your own.
 
 1. Add the `jshint` task using the code below.
@@ -176,7 +190,7 @@ Grunt is configured using a manifest named `Gruntfile.js` that defines, loads an
     },
     ```
 
-    > **Note:**
+    > [!NOTE]
     > The option "-W069" is an error produced by jshint when JavaScript uses bracket syntax to assign a property instead of dot notation, `Tastes["Sweet"]` instead of `Tastes.Sweet`. The option turns off the warning to allow the rest of the process to continue.
 
 1. Add the `uglify` task using the code below.
@@ -202,12 +216,18 @@ Grunt is configured using a manifest named `Gruntfile.js` that defines, loads an
 
 1. Save `Gruntfile.js`. The file should look something like the example below.
 
+    ![complete grunt file example](using-grunt/_static/gruntfile-js-complete.png)
+
 1. Notice that the **Task Runner Explorer** Tasks list includes `clean`, `concat`, `jshint` and `uglify` tasks. Run each task in order and observe the results in **Solution Explorer**. Each task should run without errors.
+
+    ![task runner explorer run each task](using-grunt/_static/task-runner-explorer-run-each-task.png)
 
     The concat task creates a new `combined.js` file and places it into the temp directory. The `jshint` task simply runs and doesn't produce output. The `uglify` task creates a new `combined.min.js` file and places it into *wwwroot/lib*. On completion, the solution should look something like the screenshot below:
 
-    > **Note:**
-    > For more information on the options for each package, visit https://www.npmjs.com/ and lookup the package name in the search box on the main page. For example, you can look up the grunt-contrib-clean package to get a documentation link that explains all of its parameters.
+    ![solution explorer after all tasks](using-grunt/_static/solution-explorer-after-all-tasks.png)
+
+    > [!NOTE]
+    > For more information on the options for each package, visit [https://www.npmjs.com/](https://www.npmjs.com/) and lookup the package name in the search box on the main page. For example, you can look up the grunt-contrib-clean package to get a documentation link that explains all of its parameters.
 
 ### All together now
 
@@ -218,6 +238,8 @@ grunt.registerTask("all", ['clean', 'concat', 'jshint', 'uglify']);
 ```
 
 The new task shows up in Task Runner Explorer under Alias Tasks. You can right-click and run it just as you would other tasks. The `all` task will run `clean`, `concat`, `jshint` and `uglify`, in order.
+
+![alias grunt tasks](using-grunt/_static/alias-tasks.png)
 
 ## Watching for changes
 
@@ -238,11 +260,15 @@ grunt.loadNpmTasks('grunt-contrib-watch');
 
 Right-click the watch task in Task Runner Explorer and select Run from the context menu. The command window that shows the watch task running will display a "Waiting…" message. Open one of the TypeScript files, add a space, and then save the file. This will trigger the watch task and trigger the other tasks to run in order. The screenshot below shows a sample run.
 
+![running tasks output](using-grunt/_static/watch-running.png)
+
 ## Binding to Visual Studio events
 
 Unless you want to manually start your tasks every time you work in Visual Studio, bind tasks to **Before Build**, **After Build**, **Clean**, and **Project Open** events.
 
 Bind `watch` so that it runs every time Visual Studio opens. In Task Runner Explorer, right-click the watch task and select **Bindings** > **Project Open** from the context menu.
+
+![bind a task to the project opening](using-grunt/_static/bindings-project-open.png)
 
 Unload and reload the project. When the project loads again, the watch task starts running automatically.
 

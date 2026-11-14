@@ -1,13 +1,9 @@
 ---
-title: "no-useless-catch"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-useless-catch.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-useless-catch
+rule_type: suggestion
 ---
 
-# no-useless-catch
+
 
 A `catch` clause that only rethrows the original error is redundant, and has no effect on the runtime behavior of the program. These redundant clauses can be a source of confusion and code bloat, so it's better to disallow these unnecessary `catch` clauses.
 
@@ -17,7 +13,7 @@ This rule reports `catch` clauses that only `throw` the caught error.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-useless-catch: "error"*/
@@ -37,9 +33,11 @@ try {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-useless-catch: "error"*/
@@ -63,6 +61,8 @@ try {
   cleanUp();
 }
 ```
+
+:::
 
 ## Options
 

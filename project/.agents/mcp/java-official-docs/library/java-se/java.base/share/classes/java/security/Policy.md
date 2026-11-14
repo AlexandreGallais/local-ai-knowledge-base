@@ -1,31 +1,23 @@
----
-title: "Policy class (java.security)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/Policy.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Policy class (java.security)
 
 ```java
 public abstract class Policy
 ```
 
-A `Policy` object was responsible for determining whether code
+A {@code Policy} object was responsible for determining whether code
 executing in the Java runtime environment had permission to perform a
 security-sensitive operation. This feature no longer exists.
 
-**Since:** 1.2
-
-**Deprecated:** This class was only useful in conjunction with
-      the Security Manager, which is no longer
-      supported. Installing a system-wide `Policy` object is no longer
-      supported. The setPolicy method has been
-      changed to always throw `UnsupportedOperationException`. The
-      getPolicy method has been changed to always
-      return a `Policy` object that grants no permissions. There is no
+@author Roland Schemers
+@author Gary Ellison
+@since 1.2
+@deprecated This class was only useful in conjunction with
+      {@linkplain SecurityManager the Security Manager}, which is no longer
+      supported. Installing a system-wide {@code Policy} object is no longer
+      supported. The {@linkplain #setPolicy setPolicy} method has been
+      changed to always throw {@code UnsupportedOperationException}. The
+      {@linkplain #getPolicy getPolicy} method has been changed to always
+      return a {@code Policy} object that grants no permissions. There is no
       replacement for the Security Manager or this class.
 
 ## Policy.Policy()
@@ -43,8 +35,7 @@ public static final PermissionCollection UNSUPPORTED_EMPTY_COLLECTION
 ```
 
 A read-only empty PermissionCollection instance.
-
-**Since:** 1.6
+@since 1.6
 
 ## Policy.getPolicy()
 
@@ -52,29 +43,29 @@ A read-only empty PermissionCollection instance.
 public static Policy getPolicy()
 ```
 
-Returns a `Policy` object that grants no permissions.
+Returns a {@code Policy} object that grants no permissions.
 Specifically:
 
--  The `getParameters` method returns `null`.
+<ul>
+    <li> The {@code getParameters} method returns {@code null}. </li>
+    <li> The {@code getPermissions(CodeSource)} and
+    {@code getPermissions(ProtectionDomain)} methods return a read-only
+    empty {@code PermissionCollection}. </li>
+    <li> The {@code implies} method always returns {@code false}. </li>
+</ul>
 
--  The `getPermissions(CodeSource)` and
-    `getPermissions(ProtectionDomain)` methods return a read-only
-    empty `PermissionCollection`.
+@return a {@code Policy} object that grants no permissions
 
--  The `implies` method always returns `false`.
-
-**Returns:** a `Policy` object that grants no permissions
-
-**API note:** This method originally returned the installed `Policy`
-   object, or if no `Policy` object had been installed, a default
-   `Policy` implementation. Installing a system-wide `Policy`
+@apiNote This method originally returned the installed {@code Policy}
+   object, or if no {@code Policy} object had been installed, a default
+   {@code Policy} implementation. Installing a system-wide {@code Policy}
    object is no longer supported. This method always returns a
-   default `Policy` object that grants no permissions. A
-   `Policy` object was only useful in conjunction with
-   the Security Manager, which is no
+   default {@code Policy} object that grants no permissions. A
+   {@code Policy} object was only useful in conjunction with
+   {@linkplain SecurityManager the Security Manager}, which is no
    longer supported. There is no replacement for this method.
 
-**See also:** #setPolicy(java.security.Policy)
+@see #setPolicy(java.security.Policy)
 
 ## Policy.setPolicy(Policy)
 
@@ -82,24 +73,18 @@ Specifically:
 public static void setPolicy(Policy p)
 ```
 
-Throws `UnsupportedOperationException`. Setting a system-wide
-`Policy` object is not supported.
+Throws {@code UnsupportedOperationException}. Setting a system-wide
+{@code Policy} object is not supported.
 
-Parameters:
-
-- `p`: ignored
-
-**API note:** This method originally installed the system-wide
-   `Policy` object. Installing a system-wide `Policy` object
-   is no longer supported. A `Policy` object was only useful in
-   conjunction with the Security Manager,
+@param p ignored
+@throws UnsupportedOperationException always
+@apiNote This method originally installed the system-wide
+   {@code Policy} object. Installing a system-wide {@code Policy} object
+   is no longer supported. A {@code Policy} object was only useful in
+   conjunction with {@linkplain SecurityManager the Security Manager},
    which is no longer supported. There is no replacement for this method.
 
-**See also:** #getPolicy()
-
-Throws:
-
-- `UnsupportedOperationException`: always
+@see #getPolicy()
 
 ## Policy.getInstance(String, Policy.Parameters)
 
@@ -109,38 +94,41 @@ public static Policy getInstance(String type, Policy.Parameters params) throws N
 
 Returns a Policy object of the specified type.
 
- This method traverses the list of registered security providers,
+<p> This method traverses the list of registered security providers,
 starting with the most preferred provider.
-A new `Policy` object encapsulating the
-`PolicySpi` implementation from the first
+A new {@code Policy} object encapsulating the
+{@code PolicySpi} implementation from the first
 provider that supports the specified type is returned.
 
- Note that the list of registered providers may be retrieved via
-the Security.getProviders() method.
+<p> Note that the list of registered providers may be retrieved via
+the {@link Security#getProviders() Security.getProviders()} method.
 
-Parameters:
-
-- `type`: the specified Policy type
-- `params`: parameters for the `Policy`, which may be `null`.
-
-**Implementation note:** The JDK Reference Implementation additionally uses the
-`jdk.security.provider.preferred`
-Security property to determine
+@implNote
+The JDK Reference Implementation additionally uses the
+{@code jdk.security.provider.preferred}
+{@link Security#getProperty(String) Security} property to determine
 the preferred provider order for the specified algorithm. This
 may be different than the order of providers returned by
-Security.getProviders().
+{@link Security#getProviders() Security.getProviders()}.
 
-**Returns:** the new `Policy` object
+@param type the specified Policy type
 
-**See also:** Provider
+@param params parameters for the {@code Policy}, which may be
+{@code null}.
 
-**Since:** 1.6
+@return the new {@code Policy} object
 
-Throws:
+@throws IllegalArgumentException if the specified parameters
+        are not understood by the {@code PolicySpi} implementation
+        from the selected {@code Provider}
 
-- `IllegalArgumentException`: if the specified parameters are not understood by the `PolicySpi` implementation from the selected `Provider`
-- `NoSuchAlgorithmException`: if no `Provider` supports a `PolicySpi` implementation for the specified type
-- `NullPointerException`: if `type` is `null`
+@throws NoSuchAlgorithmException if no {@code Provider} supports
+        a {@code PolicySpi} implementation for the specified type
+
+@throws NullPointerException if {@code type} is {@code null}
+
+@see Provider
+@since 1.6
 
 ## Policy.getInstance(String, Policy.Parameters, String)
 
@@ -148,34 +136,41 @@ Throws:
 public static Policy getInstance(String type, Policy.Parameters params, String provider) throws NoSuchProviderException, NoSuchAlgorithmException
 ```
 
-Returns a `Policy` object of the specified type.
+Returns a {@code Policy} object of the specified type.
 
- A new `Policy` object encapsulating the
-`PolicySpi` implementation from the specified provider
+<p> A new {@code Policy} object encapsulating the
+{@code PolicySpi} implementation from the specified provider
 is returned.   The specified provider must be registered
 in the provider list.
 
- Note that the list of registered providers may be retrieved via
-the Security.getProviders() method.
+<p> Note that the list of registered providers may be retrieved via
+the {@link Security#getProviders() Security.getProviders()} method.
 
-Parameters:
+@param type the specified Policy type
 
-- `type`: the specified Policy type
-- `params`: parameters for the `Policy`, which may be `null`.
-- `provider`: the provider.
+@param params parameters for the {@code Policy}, which may be
+{@code null}.
 
-**Returns:** the new `Policy` object
+@param provider the provider.
 
-**See also:** Provider
+@return the new {@code Policy} object
 
-**Since:** 1.6
+@throws IllegalArgumentException if the specified provider
+        is {@code null} or empty, or if the specified parameters are
+        not understood by the {@code PolicySpi} implementation from
+        the specified provider
 
-Throws:
+@throws NoSuchAlgorithmException if the specified provider does not
+        support a {@code PolicySpi} implementation for the specified
+        type
 
-- `IllegalArgumentException`: if the specified provider is `null` or empty, or if the specified parameters are not understood by the `PolicySpi` implementation from the specified provider
-- `NoSuchAlgorithmException`: if the specified provider does not support a `PolicySpi` implementation for the specified type
-- `NoSuchProviderException`: if the specified provider is not registered in the security provider list
-- `NullPointerException`: if `type` is `null`
+@throws NoSuchProviderException if the specified provider is not
+        registered in the security provider list
+
+@throws NullPointerException if {@code type} is {@code null}
+
+@see Provider
+@since 1.6
 
 ## Policy.getInstance(String, Policy.Parameters, Provider)
 
@@ -183,30 +178,35 @@ Throws:
 public static Policy getInstance(String type, Policy.Parameters params, Provider provider) throws NoSuchAlgorithmException
 ```
 
-Returns a `Policy` object of the specified type.
+Returns a {@code Policy} object of the specified type.
 
- A new `Policy` object encapsulating the
-`PolicySpi` implementation from the specified provider
+<p> A new {@code Policy} object encapsulating the
+{@code PolicySpi} implementation from the specified provider
 is returned.  Note that the specified provider does not
 have to be registered in the provider list.
 
-Parameters:
+@param type the specified Policy type
 
-- `type`: the specified Policy type
-- `params`: parameters for the `Policy`, which may be `null`.
-- `provider`: the `Provider`.
+@param params parameters for the {@code Policy}, which may be
+{@code null}.
 
-**Returns:** the new `Policy` object
+@param provider the {@code Provider}.
 
-**See also:** Provider
+@return the new {@code Policy} object
 
-**Since:** 1.6
+@throws IllegalArgumentException if the specified {@code Provider}
+        is {@code null}, or if the specified parameters are not
+        understood by the {@code PolicySpi} implementation from the
+        specified {@code Provider}
 
-Throws:
+@throws NoSuchAlgorithmException if the specified {@code Provider}
+        does not support a {@code PolicySpi} implementation for
+        the specified type
 
-- `IllegalArgumentException`: if the specified `Provider` is `null`, or if the specified parameters are not understood by the `PolicySpi` implementation from the specified `Provider`
-- `NoSuchAlgorithmException`: if the specified `Provider` does not support a `PolicySpi` implementation for the specified type
-- `NullPointerException`: if `type` is `null`
+@throws NullPointerException if {@code type} is {@code null}
+
+@see Provider
+@since 1.6
 
 ## Policy.getProvider()
 
@@ -214,15 +214,15 @@ Throws:
 public Provider getProvider()
 ```
 
-Return the `Provider` of this policy.
+Return the {@code Provider} of this policy.
 
- This `Policy` instance will only have a provider if it
-was obtained via a call to `Policy.getInstance`.
-Otherwise this method returns `null`.
+<p> This {@code Policy} instance will only have a provider if it
+was obtained via a call to {@code Policy.getInstance}.
+Otherwise this method returns {@code null}.
 
-**Returns:** the `Provider` of this policy, or `null`.
+@return the {@code Provider} of this policy, or {@code null}.
 
-**Since:** 1.6
+@since 1.6
 
 ## Policy.getType()
 
@@ -230,15 +230,15 @@ Otherwise this method returns `null`.
 public String getType()
 ```
 
-Return the type of this `Policy`.
+Return the type of this {@code Policy}.
 
- This `Policy` instance will only have a type if it
-was obtained via a call to `Policy.getInstance`.
-Otherwise this method returns `null`.
+<p> This {@code Policy} instance will only have a type if it
+was obtained via a call to {@code Policy.getInstance}.
+Otherwise this method returns {@code null}.
 
-**Returns:** the type of this `Policy`, or `null`.
+@return the type of this {@code Policy}, or {@code null}.
 
-**Since:** 1.6
+@since 1.6
 
 ## Policy.getParameters()
 
@@ -246,15 +246,15 @@ Otherwise this method returns `null`.
 public Policy.Parameters getParameters()
 ```
 
-Return `Policy` parameters.
+Return {@code Policy} parameters.
 
- This `Policy` instance will only have parameters if it
-was obtained via a call to `Policy.getInstance`.
-Otherwise this method returns `null`.
+<p> This {@code Policy} instance will only have parameters if it
+was obtained via a call to {@code Policy.getInstance}.
+Otherwise this method returns {@code null}.
 
-**Returns:** `Policy` parameters, or `null`.
+@return {@code Policy} parameters, or {@code null}.
 
-**Since:** 1.6
+@since 1.6
 
 ## Policy.getPermissions(CodeSource)
 
@@ -265,14 +265,12 @@ public PermissionCollection getPermissions(CodeSource codesource)
 Return a PermissionCollection object containing the set of
 permissions granted to the specified CodeSource.
 
- The default implementation of this method ignores the
+<p> The default implementation of this method ignores the
 CodeSource and returns Policy.UNSUPPORTED_EMPTY_COLLECTION.
 
-Parameters:
+@param codesource ignored
 
-- `codesource`: ignored
-
-**Returns:** a set of permissions granted to the specified CodeSource.
+@return a set of permissions granted to the specified CodeSource.
          If this operation is supported, the returned
          set of permissions must be a new mutable instance
          and it must support heterogeneous Permission types.
@@ -288,21 +286,19 @@ public PermissionCollection getPermissions(ProtectionDomain domain)
 Return a PermissionCollection object containing the set of
 permissions granted to the specified ProtectionDomain.
 
- The default implementation of this method ignores the
+<p> The default implementation of this method ignores the
 ProtectionDomain and returns Policy.UNSUPPORTED_EMPTY_COLLECTION.
 
-Parameters:
+@param domain ignored
 
-- `domain`: ignored
-
-**Returns:** a set of permissions granted to the specified ProtectionDomain.
+@return a set of permissions granted to the specified ProtectionDomain.
          If this operation is supported, the returned
          set of permissions must be a new mutable instance
          and it must support heterogeneous Permission types.
          If this operation is not supported,
          Policy.UNSUPPORTED_EMPTY_COLLECTION is returned.
 
-**Since:** 1.4
+@since 1.4
 
 ## Policy.implies(ProtectionDomain, Permission)
 
@@ -313,19 +309,16 @@ public boolean implies(ProtectionDomain domain, Permission permission)
 Evaluates the permissions granted to the ProtectionDomain and tests
 whether the permission is granted.
 
- The default implementation of this method ignores the
+<p> The default implementation of this method ignores the
 ProtectionDomain and Permission parameters and always returns false.
 
-Parameters:
+@param domain ignored
+@param permission ignored
 
-- `domain`: ignored
-- `permission`: ignored
+@return {@code false} always
 
-**Returns:** `false` always
-
-**See also:** java.security.ProtectionDomain
-
-**Since:** 1.4
+@see java.security.ProtectionDomain
+@since 1.4
 
 ## Policy.refresh()
 
@@ -335,7 +328,7 @@ public void refresh()
 
 Refreshes/reloads the policy configuration.
 
- The default implementation of this method does nothing.
+<p> The default implementation of this method does nothing.
 
 ## Policy.UnsupportedEmptyCollection()
 
@@ -354,13 +347,10 @@ public void add(Permission permission)
 Adds a permission object to the current collection of permission
 objects.
 
-Parameters:
+@param permission the Permission object to add.
 
-- `permission`: the Permission object to add.
-
-Throws:
-
-- `SecurityException`: if this PermissionCollection object has been marked readonly
+@throws    SecurityException   if this PermissionCollection object
+                               has been marked readonly
 
 ## Policy.implies(Permission)
 
@@ -371,12 +361,10 @@ public boolean implies(Permission permission)
 Checks to see if the specified permission is implied by the
 collection of Permission objects held in this PermissionCollection.
 
-Parameters:
+@param permission the Permission object to compare.
 
-- `permission`: the Permission object to compare.
-
-**Returns:** `true` if "permission" is implied by the permissions in
-the collection, `false` if not.
+@return {@code true} if "permission" is implied by the permissions in
+the collection, {@code false} if not.
 
 ## Policy.elements()
 
@@ -387,7 +375,7 @@ public Enumeration<Permission> elements()
 Returns an enumeration of all the Permission objects in the
 collection.
 
-**Returns:** an enumeration of all the Permissions.
+@return an enumeration of all the Permissions.
 
 ## Policy.isReadOnly()
 
@@ -395,6 +383,6 @@ collection.
 public boolean isReadOnly()
 ```
 
-If this object is readonly, no new objects can be added to it using `add`.
+If this object is readonly, no new objects can be added to it using {@code add}.
 
-**Returns:** `true` if this object is marked as readonly, `false` otherwise.
+@return {@code true} if this object is marked as readonly, {@code false} otherwise.

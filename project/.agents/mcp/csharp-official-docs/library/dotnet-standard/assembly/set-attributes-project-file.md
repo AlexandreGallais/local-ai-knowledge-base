@@ -1,19 +1,17 @@
 ---
 title: "Set assembly attributes in project files"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/assembly/set-attributes-project-file.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how you can set assembly attributes using a project file.
+ms.date: 03/03/2026
+ai-usage: ai-assisted
 ---
 
 # Set assembly attributes in a project file
 
-You can use an MSBuild property to transform package-related project properties into assembly attributes in a generated code file. Further, you can use MSBuild items to add arbitrary assembly attributes to the generated file.
+You can use an MSBuild property to [transform package-related project properties](#use-package-properties-as-assembly-attributes) into assembly attributes in a generated code file. Further, you can use MSBuild items to add [arbitrary assembly attributes](#set-arbitrary-attributes) to the generated file.
 
 ## Use package properties as assembly attributes
 
-The `GenerateAssemblyInfo` MSBuild property controls `AssemblyInfo` attribute generation for a project. When the `GenerateAssemblyInfo` value is `true` (which is the default), package-related project properties are transformed into assembly attributes. The following table lists the project properties that generate the attributes. It also lists the properties that you can use to disable that generation on a per-attribute basis, for example:
+The [`GenerateAssemblyInfo` MSBuild property](../../core/project-sdk/msbuild-props.md#generateassemblyinfo) controls `AssemblyInfo` attribute generation for a project. When the `GenerateAssemblyInfo` value is `true` (which is the default), [package-related project properties](../../core/project-sdk/msbuild-props.md#package-properties) are transformed into assembly attributes. The following table lists the project properties that generate the attributes. It also lists the properties that you can use to disable that generation on a per-attribute basis, for example:
 
 ```xml
 <PropertyGroup>
@@ -23,30 +21,30 @@ The `GenerateAssemblyInfo` MSBuild property controls `AssemblyInfo` attribute ge
 
 | MSBuild property       | Assembly attribute                                             | Property to disable attribute generation        |
 | ---------------------- | -------------------------------------------------------------- | ----------------------------------------------- |
-| `Company`              | `System.Reflection.AssemblyCompanyAttribute`              | `GenerateAssemblyCompanyAttribute`              |
-| `Configuration`        | `System.Reflection.AssemblyConfigurationAttribute`        | `GenerateAssemblyConfigurationAttribute`        |
-| `Copyright`            | `System.Reflection.AssemblyCopyrightAttribute`            | `GenerateAssemblyCopyrightAttribute`            |
-| `Description`          | `System.Reflection.AssemblyDescriptionAttribute`          | `GenerateAssemblyDescriptionAttribute`          |
-| `FileVersion`          | `System.Reflection.AssemblyFileVersionAttribute`          | `GenerateAssemblyFileVersionAttribute`          |
-| `InformationalVersion` | `System.Reflection.AssemblyInformationalVersionAttribute` | `GenerateAssemblyInformationalVersionAttribute` |
-| `Product`              | `System.Reflection.AssemblyProductAttribute`              | `GenerateAssemblyProductAttribute`              |
-| `AssemblyTitle`        | `System.Reflection.AssemblyTitleAttribute`                | `GenerateAssemblyTitleAttribute`                |
-| `AssemblyVersion`      | `System.Reflection.AssemblyVersionAttribute`              | `GenerateAssemblyVersionAttribute`              |
-| `NeutralLanguage`      | `System.Resources.NeutralResourcesLanguageAttribute`      | `GenerateNeutralResourcesLanguageAttribute`     |
-| `SourceRevisionId`     | `System.Reflection.AssemblyInformationalVersionAttribute` | N/A |
+| `Company`              | <xref:System.Reflection.AssemblyCompanyAttribute>              | `GenerateAssemblyCompanyAttribute`              |
+| `Configuration`        | <xref:System.Reflection.AssemblyConfigurationAttribute>        | `GenerateAssemblyConfigurationAttribute`        |
+| `Copyright`            | <xref:System.Reflection.AssemblyCopyrightAttribute>            | `GenerateAssemblyCopyrightAttribute`            |
+| `Description`          | <xref:System.Reflection.AssemblyDescriptionAttribute>          | `GenerateAssemblyDescriptionAttribute`          |
+| `FileVersion`          | <xref:System.Reflection.AssemblyFileVersionAttribute>          | `GenerateAssemblyFileVersionAttribute`          |
+| `InformationalVersion` | <xref:System.Reflection.AssemblyInformationalVersionAttribute> | `GenerateAssemblyInformationalVersionAttribute` |
+| `Product`              | <xref:System.Reflection.AssemblyProductAttribute>              | `GenerateAssemblyProductAttribute`              |
+| `AssemblyTitle`        | <xref:System.Reflection.AssemblyTitleAttribute>                | `GenerateAssemblyTitleAttribute`                |
+| `AssemblyVersion`      | <xref:System.Reflection.AssemblyVersionAttribute>              | `GenerateAssemblyVersionAttribute`              |
+| `NeutralLanguage`      | <xref:System.Resources.NeutralResourcesLanguageAttribute>      | `GenerateNeutralResourcesLanguageAttribute`     |
+| `SourceRevisionId`     | <xref:System.Reflection.AssemblyInformationalVersionAttribute> | N/A |
 
 Notes about these settings:
 
 - `AssemblyVersion` and `FileVersion` default to the value of `$(Version)` without the suffix. For example, if `$(Version)` is `1.2.3-beta.4`, then the value would be `1.2.3`.
 - `InformationalVersion` defaults to the value of `$(Version)`.
-- `SourceRevisionId` is always appended to `InformationalVersion` when building with the .NET 8 SDK or later. The .NET 8 SDK includes Source Link, which automatically sets `SourceRevisionId` to the commit hash for git repository builds. For non-repository builds, `SourceRevisionId` is empty. You can disable this behavior by setting `IncludeSourceRevisionInInformationalVersion` to `false`.
+- `SourceRevisionId` is always appended to `InformationalVersion` when building with the .NET 8 SDK or later. The .NET 8 SDK includes [Source Link](https://github.com/dotnet/sourcelink), which automatically sets `SourceRevisionId` to the commit hash for git repository builds. For non-repository builds, `SourceRevisionId` is empty. You can disable this behavior by setting `IncludeSourceRevisionInInformationalVersion` to `false`.
 - `Copyright` and `Description` properties are also used for NuGet metadata.
-- `Configuration`, which defaults to `Debug`, is shared with all MSBuild targets. You can set it via the `--configuration` option of `dotnet` commands, for example, dotnet pack.
-- Some of the properties are used when creating a NuGet package. For more information, see Package properties.
+- `Configuration`, which defaults to `Debug`, is shared with all MSBuild targets. You can set it via the `--configuration` option of `dotnet` commands, for example, [dotnet pack](../../core/tools/dotnet-pack.md).
+- Some of the properties are used when creating a NuGet package. For more information, see [Package properties](../../core/project-sdk/msbuild-props.md#package-properties).
 
 ## Set arbitrary attributes
 
-It's possible to add your own assembly attributes to the generated file as well. To do so, define `<AssemblyAttribute>` MSBuild items that tell the SDK what type of attribute to create. These items should also include any constructor parameters that are required for that attribute. For example, the `System.Reflection.AssemblyMetadataAttribute` attribute has a constructor that takes two strings:
+It's possible to add your own assembly attributes to the generated file as well. To do so, define `<AssemblyAttribute>` MSBuild items that tell the SDK what type of attribute to create. These items should also include any constructor parameters that are required for that attribute. For example, the <xref:System.Reflection.AssemblyMetadataAttribute?displayProperty=fullName> attribute has a constructor that takes two strings:
 
 - A name to describe an arbitrary value.
 - The value to store.
@@ -73,7 +71,7 @@ This item tells the .NET SDK to emit the following C# (or equivalent F# or Visua
 
 (The actual date string would be whatever you provided at the time of the build.)
 
-If the attribute has parameter types other than `System.String`, you can specify the parameters by using a particular pattern of XML elements supported by the MSBuild `WriteCodeFragment` task. See WriteCodeFragment task - Generate assembly-level attributes.
+If the attribute has parameter types other than `System.String`, you can specify the parameters by using a particular pattern of XML elements supported by the MSBuild `WriteCodeFragment` task. See [WriteCodeFragment task - Generate assembly-level attributes](/visualstudio/msbuild/writecodefragment-task#generate-assembly-level-attributes).
 
 ## Migrate from .NET Framework
 

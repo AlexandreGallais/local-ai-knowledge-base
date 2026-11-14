@@ -1,17 +1,8 @@
----
-title: "Associated items (part 1 of 2)"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/items/associated-items.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[items.associated]
 # Associated items
 
 r[items.associated.syntax]
-```grammar
+```grammar,items
 AssociatedItem ->
     OuterAttribute* (
         MacroInvocationSemi
@@ -20,10 +11,14 @@ AssociatedItem ->
 ```
 
 r[items.associated.intro]
-*Associated Items* are the items declared in [traits] or defined in [implementations]. They are called this because they are defined on an associate type — the type in the implementation.
+*Associated Items* are the items declared in [traits] or defined in [implementations]. They are called this because they are defined on an associate type &mdash; the type in the implementation.
 
 r[items.associated.kinds]
 They are a subset of the kinds of items you can declare in a module. Specifically, there are [associated functions] (including methods), [associated types], and [associated constants].
+
+[associated functions]: #associated-functions-and-methods
+[associated types]: #associated-types
+[associated constants]: #associated-constants
 
 r[items.associated.related]
 Associated items are useful when the associated item is logically related to the associating item. For example, the `is_some` method on `Option` is intrinsically related to Options, so should be associated.
@@ -52,7 +47,7 @@ The generics, parameter list, return type, and where clause of the associated fu
 r[items.associated.fn.def]
 An *associated function definition* defines a function associated with another type. It is written the same as a [function item].
 
-> **Note:**
+> [!NOTE]
 > A common example is an associated function named `new` that returns a value of the type with which it is associated.
 
 ```rust
@@ -141,7 +136,7 @@ Shorthand             | Equivalent
 `&'lifetime self`     | `self: &'lifetime Self`
 `&'lifetime mut self` | `self: &'lifetime mut Self`
 
-> **Note:**
+> [!NOTE]
 > Lifetimes can be, and usually are, elided with this shorthand.
 
 r[associated.fn.method.self-pat-mut]
@@ -214,7 +209,8 @@ Associated types cannot be defined in [inherent implementations] nor can they be
 r[items.associated.type.decl]
 An *associated type declaration* declares a signature for associated type definitions. It is written in one of the following forms, where `Assoc` is the name of the associated type, `Params` is a comma-separated list of type, lifetime or const parameters, `Bounds` is a plus-separated list of trait bounds that the associated type must meet, and `WhereBounds` is a comma-separated list of bounds that the parameters must meet:
 
-```rust
+<!-- ignore: illustrative example forms -->
+```rust,ignore
 type Assoc;
 type Assoc: Bounds;
 type Assoc<Params>;
@@ -238,7 +234,8 @@ An *associated type definition* defines a type alias for the implementation of a
 r[items.associated.type.def-restriction]
 They are written similarly to an *associated type declaration*, but cannot contain `Bounds`, but instead must contain a `Type`:
 
-```rust
+<!-- ignore: illustrative example forms -->
+```rust,ignore
 type Assoc = Type;
 type Assoc<Params> = Type; // the type `Type` here may reference `Params`
 type Assoc<Params> = Type where WhereBounds;
@@ -355,7 +352,7 @@ r[items.associated.type.generic-where-clause]
 ### Required where clauses on generic associated types
 
 r[items.associated.type.generic-where-clause.intro]
-Generic associated type declarations on traits currently may require a list of where clauses, dependent on functions in the trait and how the GAT is used. These rules may be loosened in the future; updates can be found on the generic associated types initiative repository.
+Generic associated type declarations on traits currently may require a list of where clauses, dependent on functions in the trait and how the GAT is used. These rules may be loosened in the future; updates can be found [on the generic associated types initiative repository](https://rust-lang.github.io/generic-associated-types-initiative/explainer/required_bounds.html).
 
 r[items.associated.type.generic-where-clause.valid-fn]
 In a few words, these where clauses are required in order to maximize the allowed definitions of the associated type in impls. To do this, any clauses that *can be proven to hold* on functions (using the parameters of the function or trait) where a GAT appears as an input or output must also be written on the GAT itself.
@@ -406,3 +403,112 @@ trait StaticReturn {
 ```
 
 r[items.associated.const]
+## Associated constants
+
+r[items.associated.const.intro]
+*Associated constants* are [constants] associated with a type.
+
+r[items.associated.const.decl]
+An *associated constant declaration* declares a signature for associated constant definitions. It is written as `const`, then an identifier, then `:`, then a type, finished by a `;`.
+
+r[items.associated.const.name]
+The identifier is the name of the constant used in the path. The type is the type that the definition has to implement.
+
+r[items.associated.const.def]
+An *associated constant definition* defines a constant associated with a type. It is written the same as a [constant item].
+
+r[items.associated.const.eval]
+Associated constant definitions undergo [constant evaluation] only when referenced. Further, definitions that include [generic parameters] are evaluated after monomorphization.
+
+```rust,compile_fail
+struct Struct;
+struct GenericStruct<const ID: i32>;
+
+impl Struct {
+    // Definition not immediately evaluated
+    const PANIC: () = panic!("compile-time panic");
+}
+
+impl<const ID: i32> GenericStruct<ID> {
+    // Definition not immediately evaluated
+    const NON_ZERO: () = if ID == 0 {
+        panic!("contradiction")
+    };
+}
+
+fn main() {
+    // Referencing Struct::PANIC causes compilation error
+    let _ = Struct::PANIC;
+
+    // Fine, ID is not 0
+    let _ = GenericStruct::<1>::NON_ZERO;
+
+    // Compilation error from evaluating NON_ZERO with ID=0
+    let _ = GenericStruct::<0>::NON_ZERO;
+}
+```
+
+### Associated constants examples
+
+A basic example:
+
+```rust
+trait ConstantId {
+    const ID: i32;
+}
+
+struct Struct;
+
+impl ConstantId for Struct {
+    const ID: i32 = 1;
+}
+
+fn main() {
+    assert_eq!(1, Struct::ID);
+}
+```
+
+Using default values:
+
+```rust
+trait ConstantIdDefault {
+    const ID: i32 = 1;
+}
+
+struct Struct;
+struct OtherStruct;
+
+impl ConstantIdDefault for Struct {}
+
+impl ConstantIdDefault for OtherStruct {
+    const ID: i32 = 5;
+}
+
+fn main() {
+    assert_eq!(1, Struct::ID);
+    assert_eq!(5, OtherStruct::ID);
+}
+```
+
+[`Arc<Self>`]: ../special-types-and-traits.md#arct
+[`Box<Self>`]: ../special-types-and-traits.md#boxt
+[`Pin<P>`]: ../special-types-and-traits.md#pinp
+[`Rc<Self>`]: ../special-types-and-traits.md#rct
+[`Sized`]: ../special-types-and-traits.md#sized
+[traits]: traits.md
+[type aliases]: type-aliases.md
+[inherent implementations]: implementations.md#inherent-implementations
+[identifier]: ../identifiers.md
+[identifier pattern]: ../patterns.md#identifier-patterns
+[implementations]: implementations.md
+[type]: ../types.md#type-expressions
+[constants]: constant-items.md
+[constant item]: constant-items.md
+[functions]: functions.md
+[function item]: ../types/function-item.md
+[method call operator]: ../expressions/method-call-expr.md
+[path]: ../paths.md
+[regular function parameters]: functions.md#attributes-on-function-parameters
+[generic parameters]: generics.md
+[where clauses]: generics.md#where-clauses
+[constant evaluation]: ../const_eval.md

@@ -1,19 +1,10 @@
----
-title: "MemberName class (java.lang.invoke)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/invoke/MemberName.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # MemberName class (java.lang.invoke)
 
 ```java
 /*non-public*/ final class MemberName implements Member, Cloneable
 ```
 
-A `MemberName` is a compact symbolic datum which fully characterizes
+A {@code MemberName} is a compact symbolic datum which fully characterizes
 a method or field reference.
 A member name refers to a field, method, constructor, or member type.
 Every member name has a simple name (a string) and a type (either a Class or MethodType).
@@ -22,21 +13,22 @@ a naked name/type pair.
 A member name may also have non-zero modifier flags.
 Finally, a member name may be either resolved or unresolved.
 If it is resolved, the existence of the named member has been determined by the JVM.
-
+<p>
 Whether resolved or not, a member name provides no access rights or
 invocation capability to its possessor.  It is merely a compact
 representation of all symbolic information necessary to link to
 and properly use the named member.
-
+<p>
 When resolved, a member name's internal implementation may include references to JVM metadata.
 This representation is stateless and only descriptive.
 It provides no private information and no capability to use the member.
-
-By contrast, a `java.lang.reflect.Method` contains fuller information
+<p>
+By contrast, a {@linkplain java.lang.reflect.Method} contains fuller information
 about the internals of a method (except its bytecodes) and also
 allows invocation.  A MemberName is much lighter than a Method,
 since it contains about 7 fields to the 16 of Method (plus its sub-arrays),
 and those seven fields omit much of the information in Method.
+@author jrose
 
 ## MemberName.getDeclaringClass()
 
@@ -62,9 +54,9 @@ public String getName()
 ```
 
 Return the simple name of this member.
- For a type, it is the same as `Class.getSimpleName`.
+ For a type, it is the same as {@link Class#getSimpleName}.
  For a method or field, it is the simple name of the member.
- For a constructor, it is always `"<init>"`.
+ For a constructor, it is always {@code "<init>"}.
 
 ## MemberName.getMethodType()
 
@@ -110,8 +102,7 @@ public int getModifiers()
 ```
 
 Return the modifier flags of this member.
-
-**See also:** java.lang.reflect.Modifier
+ @see java.lang.reflect.Modifier
 
 ## MemberName.getReferenceKind()
 
@@ -295,7 +286,7 @@ Query whether this member is a trusted final field.
 public boolean refersTo(Class<?> declc, String n)
 ```
 
-Check if MemberName is a call to a method named `name` in class `declaredClass`.
+Check if MemberName is a call to a method named {@code name} in class {@code declaredClass}.
 
 ## MemberName.MemberName(Method)
 
@@ -391,7 +382,7 @@ public MemberName(Class<?> defClass, String name, MethodType type, byte refKind)
 
 Create a method or constructor name from the given components:
  Declaring class, name, type, reference kind.
- It will be a constructor if and only if the name is `"<init>"`.
+ It will be a constructor if and only if the name is {@code "<init>"}.
  The declaring class may be supplied as null if this is to be a bare name and type.
  The last argument is optional, a boolean which requests REF_invokeSpecial.
  The resulting name will in an unresolved state.
@@ -423,11 +414,11 @@ public String toString()
 ```
 
 Produce a string form of this member name.
- For types, it is simply the type's own string (as reported by `toString`).
- For fields, it is `"DeclaringClass.name/type"`.
- For methods and constructors, it is `"DeclaringClass.name(ptype...)rtype"`.
- If the declaring class is null, the prefix `"DeclaringClass."` is omitted.
- If the member is unresolved, a prefix `"*."` is prepended.
+ For types, it is simply the type's own string (as reported by {@code toString}).
+ For fields, it is {@code "DeclaringClass.name/type"}.
+ For methods and constructors, it is {@code "DeclaringClass.name(ptype...)rtype"}.
+ If the declaring class is null, the prefix {@code "DeclaringClass."} is omitted.
+ If the member is unresolved, a prefix {@code "*."} is prepended.
 
 ## MemberName.getFactory()
 
@@ -444,9 +435,9 @@ public <NoSuchMemberException extends ReflectiveOperationException> MemberName r
 ```
 
 Produce a resolved version of the given member.
- Super types are searched (for inherited members) if `searchSupers` is true.
- Access checking is performed on behalf of the given `lookupClass`.
- If lookup fails or access is not permitted, a `ReflectiveOperationException` is thrown.
+ Super types are searched (for inherited members) if {@code searchSupers} is true.
+ Access checking is performed on behalf of the given {@code lookupClass}.
+ If lookup fails or access is not permitted, a {@linkplain ReflectiveOperationException} is thrown.
  Otherwise a fresh copy of the given member is returned, with modifier bits filled in.
 
 ## MemberName.resolveOrNull(byte, MemberName, Class<?>, int)
@@ -456,7 +447,7 @@ public MemberName resolveOrNull(byte refKind, MemberName m, Class<?> lookupClass
 ```
 
 Produce a resolved version of the given member.
- Super types are searched (for inherited members) if `searchSupers` is true.
- Access checking is performed on behalf of the given `lookupClass`.
+ Super types are searched (for inherited members) if {@code searchSupers} is true.
+ Access checking is performed on behalf of the given {@code lookupClass}.
  If lookup fails or access is not permitted, return null.
  Otherwise a fresh copy of the given member is returned, with modifier bits filled in.

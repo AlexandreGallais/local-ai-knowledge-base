@@ -1,17 +1,8 @@
----
-title: "Union types"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/types/union.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[type.union]
 # Union types
 
 r[type.union.intro]
-A *union type* is a nominal, heterogeneous C-like union, denoted by the name of a `union` item.
+A *union type* is a nominal, heterogeneous C-like union, denoted by the name of a [`union` item][item].
 
 r[type.union.access]
 Unions have no notion of an "active field". Instead, every union access transmutes parts of the content of the union to the type of the accessed field.
@@ -24,3 +15,6 @@ Union field types are also restricted to a subset of types which ensures that th
 
 r[type.union.layout]
 The memory layout of a `union` is undefined by default (in particular, fields do *not* have to be at offset 0), but the `#[repr(...)]` attribute can be used to fix a layout.
+
+[`Copy`]: ../special-types-and-traits.md#copy
+[item]: ../items/unions.md

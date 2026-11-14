@@ -1,15 +1,15 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/confusing-quantifier"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/confusing-quantifier.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "disallow confusing quantifiers"
+since: "v0.8.0"
 ---
-
 # regexp/confusing-quantifier
 
 ⚠️ This rule _warns_ in the following configs: 🟢 `flat/recommended`, 🔵 `recommended`.
+
+<!-- end auto-generated rule header -->
 
 > disallow confusing quantifiers
 
@@ -49,11 +49,14 @@ Nothing.
 This rule was taken from [eslint-plugin-clean-regex].\
 This rule is compatible with [clean-regex/confusing-quantifier] rule.
 
+[eslint-plugin-clean-regex]: https://github.com/RunDevelopment/eslint-plugin-clean-regex
+[clean-regex/confusing-quantifier]: https://github.com/RunDevelopment/eslint-plugin-clean-regex/blob/master/docs/rules/confusing-quantifier.md
+
 ## :rocket: Version
 
 This rule was introduced in eslint-plugin-regexp v0.8.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/confusing-quantifier.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/confusing-quantifier.ts)

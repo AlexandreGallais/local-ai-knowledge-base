@@ -1,17 +1,8 @@
----
-title: "Call expressions"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/expressions/call-expr.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[expr.call]
 # Call expressions
 
 r[expr.call.syntax]
-```grammar
+```grammar,expressions
 CallExpression -> Expression `(` CallParams? `)`
 
 CallParams -> Expression ( `,` Expression )* `,`?
@@ -50,7 +41,7 @@ All function calls are sugar for a more explicit [fully-qualified syntax].
 r[expr.call.desugar.ambiguity]
 Function calls may need to be fully qualified, depending on the ambiguity of a call in light of in-scope items.
 
-> **Note:**
+> [!NOTE]
 > In the past, the terms "Unambiguous Function Call Syntax", "Universal Function Call Syntax", or "UFCS", have been used in documentation, issues, RFCs, and other community writings. However, these terms lack descriptive power and potentially confuse the issue at hand. We mention them here for searchability's sake.
 
 r[expr.call.desugar.limits]
@@ -107,3 +98,10 @@ fn main() {
 ```
 
 Refer to [RFC 132] for further details and motivations.
+
+[RFC 132]: https://github.com/rust-lang/rfcs/blob/master/text/0132-ufcs.md
+[`default()`]: std::default::Default::default
+[`size_of()`]: std::mem::size_of
+[automatically dereferenced]: field-expr.md#automatic-dereferencing
+[fully-qualified syntax]: ../paths.md#qualified-paths
+[non-function types]: ../types/function-item.md

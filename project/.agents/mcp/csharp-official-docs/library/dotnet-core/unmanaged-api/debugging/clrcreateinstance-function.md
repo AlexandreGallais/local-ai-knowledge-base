@@ -1,15 +1,28 @@
 ---
+description: "Learn more about: CLRCreateInstance Function"
 title: "CLRCreateInstance Function"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/clrcreateinstance-function.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/25/2022"
+api_name:
+  - "CLRCreateInstance"
+api_location:
+  - "dbgshim.dll"
+  - "libdbgshim.so"
+  - "libdbgshim.dylib"
+api_type:
+  - "COM"
+f1_keywords:
+  - "CLRCreateInstance"
+  - "CreateInterface"
+helpviewer_keywords:
+  - "CLRCreateInstance function [.NET Core Debugging]"
+  - "CreateInterface function"
+ms.assetid: 5de13327-96c6-4697-a89e-b8bf40717855
+topic_type:
+  - "apiref"
 ---
-
 # CLRCreateInstance function
 
-Provides the ICLRDebugging interface.
+Provides the [ICLRDebugging](../../../framework/unmanaged-api/debugging/iclrdebugging-interface.md) interface.
 
 ## Syntax
 
@@ -30,7 +43,7 @@ HRESULT CLRCreateInstance (
  [in] Supports only the IID_ICLRDebugging interface identifiers.
 
  `ppInterface`\
- [out] A ICLRDebugging instance.
+ [out] A [ICLRDebugging](../../../framework/unmanaged-api/debugging/iclrdebugging-interface.md) instance.
 
 ## Return value
 
@@ -63,7 +76,7 @@ hr = CLRCreateInstance (CLSID_CLRDebugging, IID_ICLRDebugging,
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** dbgshim.h
 

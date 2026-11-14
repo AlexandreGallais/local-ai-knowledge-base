@@ -1,12 +1,9 @@
 ---
-title: "dotnet nuget why command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-nuget-why.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet nuget why command
+description: Shows the dependency graph for a particular package for a given project or solution.
+author: advay26
+ms.date: 05/30/2024
 ---
-
 # dotnet nuget why
 
 **This article applies to:** ✔️ .NET 8.0.4xx SDK and later versions
@@ -54,11 +51,9 @@ To use the command with projects that can't be restored with the .NET SDK, you c
 
 - **`-f|--framework <FRAMEWORK>`**
 
-    The target framework(s) for which dependency graphs are shown. You can pass <example-value> `--framework` options to see graphs for more than one framework.
+    The target framework(s) for which dependency graphs are shown. You can pass multiple `--framework` options to see graphs for more than one framework.
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Examples
 
@@ -67,6 +62,8 @@ Prints out a description of how to use the command.
     ```dotnetcli
     dotnet nuget why System.Text.Json
     ```
+
+    ![Example: Solution with multiple projects](media/dotnet-nuget-why/dotnet-nuget-why-solution-with-multiple-projects.png)
 
 - Show the dependency graph for the package "System.Text.Json" for a specific project:
 

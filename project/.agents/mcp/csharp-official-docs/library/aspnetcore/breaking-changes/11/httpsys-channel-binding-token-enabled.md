@@ -1,13 +1,10 @@
 ---
 title: "Breaking change: HttpSys enables TLS channel binding token exposure by default"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/11/httpsys-channel-binding-token-enabled.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+ai-usage: ai-assisted
+description: "Learn about the breaking change in ASP.NET Core 11 where HttpSys configures HttpServerChannelBindProperty on every startup, enabling per-request TLS channel binding tokens and the new ITlsConnectionFeature.TryGetChannelBindingBytes API."
+ms.date: 07/09/2026
 ---
-
-# HttpSys enables TLS channel binding token <example-value> by default
+# HttpSys enables TLS channel binding token exposure by default
 
 In ASP.NET Core 11, `Microsoft.AspNetCore.Server.HttpSys` unconditionally configures the URL group with `HttpServerChannelBindProperty` at startup. This exposes the RFC 5929 endpoint TLS channel binding token (CBT) to the app through the new `ITlsConnectionFeature.TryGetChannelBindingBytes` API, enabling Extended Protection for Authentication (EPA) scenarios.
 
@@ -17,9 +14,9 @@ In ASP.NET Core 11, `Microsoft.AspNetCore.Server.HttpSys` unconditionally config
 
 ## Previous behavior
 
-HttpSys-backed servers didn'<example-value>'t exposed to the app.
+HttpSys-backed servers didn't configure `HttpServerChannelBindProperty` on the URL group at startup, and the RFC 5929 TLS channel binding token wasn't exposed to the app.
 
-Applications could opt in by enabling the `Microsoft.AspNetCore.Server.HttpSys.EnableCBTHardening` `AppContext` switch. That switch set the hardening level to `Medium`, but it didn'<example-value>'t deliver a per-request CBT.
+Applications could opt in by enabling the `Microsoft.AspNetCore.Server.HttpSys.EnableCBTHardening` `AppContext` switch. That switch set the hardening level to `Medium`, but it didn't set the `HTTP_CHANNEL_BIND_SECURE_CHANNEL_TOKEN` flag, so http.sys didn't deliver a per-request CBT.
 
 `ITlsConnectionFeature` had no way to retrieve the token. The only related API was the now-obsolete `ITlsTokenBindingFeature`, which is a different, unrelated feature.
 
@@ -35,13 +32,13 @@ If the `HttpSetUrlGroupProperty` call fails (for example, on an old or blocked k
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](/dotnet/core/compatibility/categories#behavioral-change).
 
 ## Reason for change
 
 This change exposes the RFC 5929 endpoint channel binding to authentication middleware so it can implement Extended Protection for Authentication (EPA). EPA cryptographically binds Kerberos, NTLM, or Negotiate authentication to the underlying TLS channel, mitigating authentication-relay attacks. Previously, no ASP.NET Core server exposed the CBT to managed code.
 
-For more information, see dotnet/aspnetcore#67436.
+For more information, see [dotnet/aspnetcore#67436](https://github.com/dotnet/aspnetcore/pull/67436).
 
 ## Recommended action
 

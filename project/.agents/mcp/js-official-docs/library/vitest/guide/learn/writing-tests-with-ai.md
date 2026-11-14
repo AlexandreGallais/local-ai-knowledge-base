@@ -1,10 +1,11 @@
 ---
-title: "Writing Tests with AI | Guide"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/learn/writing-tests-with-ai.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Writing Tests with AI | Guide
+prev:
+  text: Debugging Tests
+  link: /guide/learn/debugging-tests
+next:
+  text: Why Browser Mode
+  link: /guide/browser/why
 ---
 
 # Writing Tests with AI
@@ -21,12 +22,13 @@ Start with the source file itself. The AI needs to see the actual implementation
 
 Share existing test files from the same project. This helps the AI match your conventions: whether you use `test` or `it`, how you structure `describe` blocks, whether you prefer `test.extend` fixtures or `beforeEach`, and how you name your tests. AI tools are good at pattern matching, but they need patterns to match against.
 
-Include your Vitest config, especially if you've enabled `globals`, set a custom `environment`, or configured `setupFiles`. Without this context, the AI might generate unnecessary imports, use the wrong test environment, or miss setup that your tests depend on.
+Include your Vitest config, especially if you've enabled [`globals`](/config/globals), set a custom [`environment`](/config/environment), or configured [`setupFiles`](/config/setupfiles). Without this context, the AI might generate unnecessary imports, use the wrong test environment, or miss setup that your tests depend on.
 
 If the code under test has dependencies that need mocking, share those files too (or at least their type signatures). The AI can't write a useful mock for a database client it's never seen.
 
-**Tip:**
+::: tip
 If your project has an `AGENTS.md` or similar file with coding conventions, include that as well. Many AI tools pick up on these automatically and will follow the rules defined there.
+:::
 
 ## Writing Good Prompts
 
@@ -36,7 +38,7 @@ Specific prompts produce better tests than generic ones. Compare these two:
 
 This will produce tests, but they'll likely be shallow: one happy-path test per function, minimal edge case coverage, and generic test names.
 
-**Better:** "<example-value>"
+**Better:** "Write tests for the `createUser` function in `userService.js`. Cover validation errors (missing name, invalid email format, duplicate email), the successful creation path, and verify that the password is hashed before being stored."
 
 This tells the AI exactly which function to focus on, which scenarios matter, and what behavior to verify. The output will be more thorough and more relevant.
 
@@ -60,7 +62,7 @@ Watch for tests that call a function but only check that it doesn't throw, or te
 
 ```js
 test('creates a user', () => {
-  const user = createUser('Alice', 'user@example.com')
+  const user = createUser('Alice', 'alice@example.com')
   expect(user).toBeDefined() // this passes for almost anything
 })
 ```
@@ -69,10 +71,10 @@ A better assertion checks the actual properties:
 
 ```js
 test('creates a user with the correct fields', () => {
-  const user = createUser('Alice', 'user@example.com')
+  const user = createUser('Alice', 'alice@example.com')
   expect(user).toMatchObject({
     name: 'Alice',
-    email: 'user@example.com',
+    email: 'alice@example.com',
   })
   expect(user.id).toBeTypeOf('string')
 })
@@ -82,7 +84,7 @@ test('creates a user with the correct fields', () => {
 
 AI tends to over-mock. If you see a test that mocks every dependency and then asserts that specific internal methods were called in a specific order, that's testing implementation details. These tests break every time you refactor, even if the behavior stays the same.
 
-Ask yourself: if someone changed the internals but the function still returned the correct result, would this test break? If yes, it's probably too coupled to the implementation. See Testing in Practice for more on this distinction.
+Ask yourself: if someone changed the internals but the function still returned the correct result, would this test break? If yes, it's probably too coupled to the implementation. See [Testing in Practice](/guide/learn/testing-in-practice#what-to-test) for more on this distinction.
 
 ### Do the tests actually run?
 
@@ -116,13 +118,13 @@ Over time, as the AI sees more of your codebase and test patterns, its output wi
 
 The most frequent issue with AI-generated Vitest tests is using the wrong API surface. AI models are trained on a lot of Jest code, so they sometimes generate `jest.fn()` instead of `vi.fn()`, or `jest.mock` instead of `vi.mock`. These will fail immediately.
 
-A related problem is imports: if your config has `globals: true`, the AI might still add `import { test, expect } from 'vitest'` (harmless but unnecessary), or the reverse, generating tests without imports when globals aren't enabled. If you keep seeing Jest APIs, point the AI to the Vitest API reference or include it in the context.
+A related problem is imports: if your config has `globals: true`, the AI might still add `import { test, expect } from 'vitest'` (harmless but unnecessary), or the reverse, generating tests without imports when globals aren't enabled. If you keep seeing Jest APIs, point the AI to the [Vitest API reference](/api/vi) or include it in the context.
 
 ### Mock Cleanup
 
-AI-generated tests often set up spies with `vi.spyOn` or replace modules with `vi.mock` but never restore them. If your config doesn't have `restoreMocks: true`, these mocks leak between tests and cause confusing failures. The easiest fix is enabling that config option globally.
+AI-generated tests often set up spies with `vi.spyOn` or replace modules with `vi.mock` but never restore them. If your config doesn't have [`restoreMocks: true`](/config/restoremocks), these mocks leak between tests and cause confusing failures. The easiest fix is enabling that config option globally.
 
-On a related note, AI tools tend to mock modules using string paths (`vi.mock('./module.js')`) when the `import()` form (`vi.mock(import('./module.js'))`) is preferable for type safety and automatic refactoring. See Mock Functions for why this matters.
+On a related note, AI tools tend to mock modules using string paths (`vi.mock('./module.js')`) when the `import()` form (`vi.mock(import('./module.js'))`) is preferable for type safety and automatic refactoring. See [Mock Functions](/guide/learn/mock-functions#mocking-modules) for why this matters.
 
 ### Verbose Test Names
 

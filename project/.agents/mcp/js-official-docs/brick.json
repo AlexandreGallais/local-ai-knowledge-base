@@ -4,5 +4,5 @@
   "search": "Search the official documentation: MDN, Angular, TypeScript, NgRx Signals, RxJS, Node.js, npm, Vite, Vitest, Playwright, ESLint and its plugins, Stylelint. Returns 10 section ids at most.",
   "queryExample": "\"DOMMatrix multiply\" or \"signalStoreFeature\"",
   "toolExample": "\"angular\" or \"mdn-api\"",
-  "idExample": "library/mdn-api/dommatrix.md#syntax"
+  "idExample": "library/mdn-api/dommatrix/index.md#instance-methods"
 }

@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: ConfigurationManager package no longer references System.Security.Permissions"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/extensions/8.0/configurationmanager-package.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 8 breaking change in .NET extensions where the System.Configuration.ConfigurationManager package no longer references the System.Security.Permissions package.
+ms.date: 08/22/2023
 ---
-
 # ConfigurationManager package no longer references System.Security.Permissions
 
 The `System.Configuration.ConfigurationManager` package no longer references the `System.Security.Permissions` package.
@@ -25,7 +21,7 @@ Starting in .NET 8, the `System.Configuration.ConfigurationManager` package *doe
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 

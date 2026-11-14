@@ -1,17 +1,17 @@
 ---
-title: "A/B Testing Migrated Endpoints"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/migration/fx-to-core/inc/ab-testing.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: A/B Testing Migrated Endpoints
+description: A/B Testing Migrated Endpoints
+ms.reviewer: tasou
+monikerRange: '>= aspnetcore-6.0'
+ms.date: 07/17/2025
+ms.topic: concept-article
 ---
 
 # A/B Testing endpoints during migration
 
-During incremental migration, new endpoints are brought over to a YARP enabled ASP.NET Core app. With the default setup, these endpoints are automatically served for all requests once deployed. In order to test these endpoints, or be able to turn them off if needed, additional setup is needed.
+During incremental migration, new endpoints are brought over to a [YARP](https://dotnet.github.io/yarp/) enabled ASP.NET Core app. With the default setup, these endpoints are automatically served for all requests once deployed. In order to test these endpoints, or be able to turn them off if needed, additional setup is needed.
 
-This document describes how to setup a conditional endpoint selection system to enable A/B testing during incremental migration. It assumes a setup as described in incremental migration overview as a starting point.
+This document describes how to setup a conditional endpoint selection system to enable A/B testing during incremental migration. It assumes a setup as described in [incremental migration overview](../index.md) as a starting point.
 
 ## Conditional endpoint selection
 
@@ -19,7 +19,7 @@ To enable conditional endpoint selection, a few services need to be defined:
 
 1. Metadata that can be added to an endpoint to turn on any conditional related logic. Endpoints include controllers, Minimal APIs, Razor Page, etc. If this metadata isn't added to an endpoint, no conditional checks are performed for it.
 
-    ```csharp
+    ```CSharp
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public sealed class ConditionalRouteAttribute : Attribute
     {
@@ -31,7 +31,7 @@ To enable conditional endpoint selection, a few services need to be defined:
 
 2. The API we want to implement to make a decision per request and endpoint selection:
 
-    ```csharp
+    ```CSharp
     public interface IConditionalEndpointSelector
     {
         ValueTask<bool> IsEnabledAsync(HttpContext context, Endpoint candidate);
@@ -40,7 +40,7 @@ To enable conditional endpoint selection, a few services need to be defined:
 
 3. A `MatcherPolicy` that is used to hook into routing and call the custom selector:
 
-    ```csharp
+    ```CSharp
     public static class ConditionalEndpointExtensions
     {
         /// <summary>
@@ -104,7 +104,7 @@ To enable conditional endpoint selection, a few services need to be defined:
 
 4. Implement a custom selector. As an example, this defines a check for the presence of a query parameter (`IgnoreLocal`) that turns off the local endpoint and uses the YARP endpoint instead.
 
-    ```csharp
+    ```CSharp
     public class QueryConditionalSelector : IConditionalEndpointSelector
     {
         public ValueTask<bool> IsEnabledAsync(HttpContext context, Endpoint candidate)

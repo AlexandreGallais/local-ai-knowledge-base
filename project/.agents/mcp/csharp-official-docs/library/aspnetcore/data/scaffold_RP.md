@@ -1,19 +1,19 @@
 ---
-title: "Scaffold a data model with dotnet scaffold in a Razor Pages project"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/data/scaffold_RP.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Scaffold a data model with dotnet scaffold in a Razor Pages project
+description: Scaffold a data model with dotnet scaffold in a Razor Pages project
+monikerRange: '>= aspnetcore-9.0'
+ms.date: 04/24/2025
+ms.topic: concept-article
+content_well_notification: AI-contribution
+ai-usage: ai-assisted
 ---
-
 # Scaffold a data model with dotnet scaffold in a Razor Pages project
 
-The CLI tool, dotnet scaffold creates data access UI for many .NET project types, such as API, Aspire, Blazor, MVC, and Razor Pages. `dotnet scaffold` can be run interactively or as a command line tool via passing parameter values.
+The CLI tool, [dotnet scaffold](https://www.nuget.org/packages/Microsoft.dotnet-scaffold) creates data access UI for many .NET project types, such as API, Aspire, Blazor, MVC, and Razor Pages. `dotnet scaffold` can be run interactively or as a command line tool via passing parameter values.
 
 ## Install and update the scaffolding tool
 
-Install the .NET SDK.
+Install the [.NET SDK](https://dotnet.microsoft.com/download).
 
 The following command installs the scaffolder globally:
 
@@ -21,9 +21,11 @@ The following command installs the scaffolder globally:
 dotnet tool install --global Microsoft.dotnet-scaffold
 ```
 
-See How to manage .NET tools for information on .NET tools and how to install them locally.
+See [How to manage .NET tools](/dotnet/core/tools/global-tools) for information on .NET tools and how to install them locally.
 
 To launch the interactive tool, run `dotnet scaffold`. The UI changes as more features are added. Currently, the interactive UI looks similar to the following image:
+
+![scaffold tool initial](~/data/scaffold_RP/images/scaffold1.png)
 
 To navigate the UI, use the:
 
@@ -33,7 +35,7 @@ To navigate the UI, use the:
 
 ## Create and scaffold a data model in a Razor Pages project
 
-If you have any problems with the following steps, see Tutorial: Create a Razor Pages web app with ASP.NET Core.
+If you have any problems with the following steps, see [Tutorial: Create a Razor Pages web app with ASP.NET Core](../tutorials/razor-pages/index.md?tabs=visual-studio-code).
 
 1. Run the following commands to create a Razor Pages project and navigate to the projects folder:
     ```dotnetcli
@@ -41,16 +43,7 @@ If you have any problems with the following steps, see Tutorial: Create a Razor 
     cd MyWebApp
     ```
 1. Add the `Contact` class to the `MyWebApp` project:
-```csharp
-namespace MyWebApp;
-public class Contact
-{
-    public int Id { get; set; }
-    public string? Firstname { get; set; }
-    public string? Lastname { get; set; }
-    public string? Email { get; set; }
-}
-```
+    :::code language="csharp" source="~/data/scaffold_RP/samples/MyWebApp/Contact.cs":::
 1. Run `dotnet scaffold` in the `MyWebApp` folder and select **Razor Pages**, then enter return.
 1. Navigate to **Razor Pages with Entity Framework (CRUD) (dotnet-scaffold-aspnet)**, then enter return.
 1. Enter return on the selected **MyWebApp (MyWebApp.csproj)**.
@@ -81,7 +74,7 @@ In  The preceding commands:
 
 * `dotnet tool uninstall --global dotnet-ef` uninstalls the `dotnet-ef` tool. Uninstalling ensures the latest tool is successfully installed. If `dotnet-ef` isn't installed, an error messages **A tool with the package Id 'dotnet-ef' could not be found.** You can ignore this message.
 * `dotnet tool install --global dotnet-ef` installs globally the `dotnet-ef` tool.
-* `dotnet ef migrations add initialMigration` adds the initial migration. For more information, see Part 2, add a model.
+* `dotnet ef migrations add initialMigration` adds the initial migration. For more information, see [Part 2, add a model](../tutorials/razor-pages/model.md?tabs=visual-studio-code).
 * `dotnet ef database update` applies the migrations to the database.
 
 Run the app:
@@ -95,7 +88,7 @@ Run the app:
 
 ## Related content
 
-* dotnet scaffold repo on GitHub
-* How to manage .NET tools
-* `Microsoft.dotnet-scaffold` NuGet package.
-* Scaffold a data model with dotnet scaffold in a Razor Pages project
+* [dotnet scaffold repo on GitHub](https://github.com/dotnet/Scaffolding)
+* [How to manage .NET tools](/dotnet/core/tools/global-tools)
+* [`Microsoft.dotnet-scaffold`](https://www.nuget.org/packages/Microsoft.dotnet-scaffold) NuGet package.
+* [Scaffold a data model with dotnet scaffold in a Razor Pages project](scaffold_RP.md)

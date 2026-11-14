@@ -1,42 +1,34 @@
----
-title: "Number class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/Number.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Number class (java.lang)
 
 ```java
 public abstract class Number implements java.io.Serializable
 ```
 
-The abstract class `Number` is the superclass of platform
+The abstract class {@code Number} is the superclass of platform
 classes representing numeric values that are convertible to the
-primitive types `byte`, `double`, `float`, `int`, `long`, and `short`.
+primitive types {@code byte}, {@code double}, {@code float}, {@code
+int}, {@code long}, and {@code short}.
 
 The specific semantics of the conversion from the numeric value of
-a particular `Number` implementation to a given primitive
-type is defined by the `Number` implementation in question.
+a particular {@code Number} implementation to a given primitive
+type is defined by the {@code Number} implementation in question.
 
 For platform classes, the conversion is often analogous to a
 narrowing primitive conversion or a widening primitive conversion
-as defined in *The Java Language Specification*
+as defined in <cite>The Java Language Specification</cite>
 for converting between primitive types.  Therefore, conversions may
 lose information about the overall magnitude of a numeric value, may
 lose precision, and may even return a result of a different sign
 than the input.
 
-See the documentation of a given `Number` implementation for
+See the documentation of a given {@code Number} implementation for
 conversion details.
 
-**JLS:** 5.1.2 Widening Primitive Conversion
-
-**JLS:** 5.1.3 Narrowing Primitive Conversion
-
-**Since:** 1.0
+@author      Lee Boynton
+@author      Arthur van Hoff
+@jls 5.1.2 Widening Primitive Conversion
+@jls 5.1.3 Narrowing Primitive Conversion
+@since   1.0
 
 ## Number.Number()
 
@@ -52,10 +44,10 @@ Constructor for subclasses to call.
 public abstract int intValue()
 ```
 
-Returns the value of the specified number as an `int`.
+Returns the value of the specified number as an {@code int}.
 
-**Returns:** the numeric value represented by this object after conversion
-         to type `int`.
+@return  the numeric value represented by this object after conversion
+         to type {@code int}.
 
 ## Number.longValue()
 
@@ -63,10 +55,10 @@ Returns the value of the specified number as an `int`.
 public abstract long longValue()
 ```
 
-Returns the value of the specified number as a `long`.
+Returns the value of the specified number as a {@code long}.
 
-**Returns:** the numeric value represented by this object after conversion
-         to type `long`.
+@return  the numeric value represented by this object after conversion
+         to type {@code long}.
 
 ## Number.floatValue()
 
@@ -74,10 +66,10 @@ Returns the value of the specified number as a `long`.
 public abstract float floatValue()
 ```
 
-Returns the value of the specified number as a `float`.
+Returns the value of the specified number as a {@code float}.
 
-**Returns:** the numeric value represented by this object after conversion
-         to type `float`.
+@return  the numeric value represented by this object after conversion
+         to type {@code float}.
 
 ## Number.doubleValue()
 
@@ -85,10 +77,10 @@ Returns the value of the specified number as a `float`.
 public abstract double doubleValue()
 ```
 
-Returns the value of the specified number as a `double`.
+Returns the value of the specified number as a {@code double}.
 
-**Returns:** the numeric value represented by this object after conversion
-         to type `double`.
+@return  the numeric value represented by this object after conversion
+         to type {@code double}.
 
 ## Number.byteValue()
 
@@ -96,15 +88,15 @@ Returns the value of the specified number as a `double`.
 public byte byteValue()
 ```
 
-Returns the value of the specified number as a `byte`.
+Returns the value of the specified number as a {@code byte}.
 
-**Implementation requirements:** The default implementation returns the result of `intValue` cast
-to a `byte`.
+@implSpec
+The default implementation returns the result of {@link #intValue} cast
+to a {@code byte}.
 
-**Returns:** the numeric value represented by this object after conversion
-         to type `byte`.
-
-**Since:** 1.1
+@return  the numeric value represented by this object after conversion
+         to type {@code byte}.
+@since   1.1
 
 ## Number.shortValue()
 
@@ -112,12 +104,12 @@ to a `byte`.
 public short shortValue()
 ```
 
-Returns the value of the specified number as a `short`.
+Returns the value of the specified number as a {@code short}.
 
-**Implementation requirements:** The default implementation returns the result of `intValue` cast
-to a `short`.
+@implSpec
+The default implementation returns the result of {@link #intValue} cast
+to a {@code short}.
 
-**Returns:** the numeric value represented by this object after conversion
-         to type `short`.
-
-**Since:** 1.1
+@return  the numeric value represented by this object after conversion
+         to type {@code short}.
+@since   1.1

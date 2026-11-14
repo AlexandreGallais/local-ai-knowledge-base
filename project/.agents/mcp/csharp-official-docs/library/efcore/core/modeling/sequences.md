@@ -1,15 +1,13 @@
 ---
-title: "Sequences - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/modeling/sequences.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Sequences - EF Core
+description: Configuring sequences in an Entity Framework Core model
+author: SamMonoRT
+ms.date: 12/18/2019
+uid: core/modeling/sequences
 ---
-
 # Sequences
 
-> **Note:**
+> [!NOTE]
 > Sequences are a feature typically supported only by relational databases. If you're using a non-relational database such as Azure Cosmos DB, check your database documentation on generating unique values.
 
 A sequence generates unique, sequential numeric values in the database. Sequences are not associated with a specific table, and multiple tables can be set up to draw values from the same sequence.
@@ -18,16 +16,7 @@ A sequence generates unique, sequential numeric values in the database. Sequence
 
 You can set up a sequence in the model, and then use it to generate values for properties:
 
-```csharp
-protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    modelBuilder.HasSequence<int>("OrderNumbers");
-
-    modelBuilder.Entity<Order>()
-        .Property(o => o.OrderNo)
-        .HasDefaultValueSql("NEXT VALUE FOR OrderNumbers");
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/Sequences/Sequence.cs?name=Sequence&highlight=3,7)]
 
 Note that the specific SQL used to generate a value from a sequence is database-specific; the above example works on SQL Server but will fail on other databases. Consult your specific database's documentation for more information.
 
@@ -35,11 +24,4 @@ Note that the specific SQL used to generate a value from a sequence is database-
 
 You can also configure additional aspects of the sequence, such as its schema, start value, increment, etc.:
 
-```csharp
-protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    modelBuilder.HasSequence<int>("OrderNumbers", schema: "shared")
-        .StartsAt(1000)
-        .IncrementsBy(5);
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/Sequences/SequenceConfiguration.cs?name=SequenceConfiguration&highlight=3-5)]

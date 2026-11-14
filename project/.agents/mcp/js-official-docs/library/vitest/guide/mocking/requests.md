@@ -1,25 +1,16 @@
----
-title: "Mocking Requests"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/mocking/requests.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # Mocking Requests
 
-Because Vitest runs in Node, mocking network requests is tricky; web APIs are not available, so we need something that will mimic network behavior for us. We recommend Mock Service Worker to accomplish this. It allows you to mock `http`, `WebSocket` and `GraphQL` network requests, and is framework agnostic.
+Because Vitest runs in Node, mocking network requests is tricky; web APIs are not available, so we need something that will mimic network behavior for us. We recommend [Mock Service Worker](https://mswjs.io/) to accomplish this. It allows you to mock `http`, `WebSocket` and `GraphQL` network requests, and is framework agnostic.
 
-Mock Service Worker (MSW) works by intercepting the requests your tests make, allowing you to use it without changing any of your application code. In-browser, this uses the Service Worker API. In Node.js, and for Vitest, it uses the `@mswjs/interceptors` library. To learn more about MSW, read their introduction
+Mock Service Worker (MSW) works by intercepting the requests your tests make, allowing you to use it without changing any of your application code. In-browser, this uses the [Service Worker API](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API). In Node.js, and for Vitest, it uses the [`@mswjs/interceptors`](https://github.com/mswjs/interceptors) library. To learn more about MSW, read their [introduction](https://mswjs.io/docs/)
 
 ## Configuration
 
-You can use it like below in your setup file
+You can use it like below in your [setup file](/config/setupfiles)
 
 ::: code-group
 
-```js
+```js [HTTP Setup]
 import { afterAll, afterEach, beforeAll } from 'vitest'
 import { setupServer } from 'msw/node'
 import { http, HttpResponse } from 'msw'
@@ -52,7 +43,7 @@ afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
 ```
 
-```js
+```js [GraphQL Setup]
 import { afterAll, afterEach, beforeAll } from 'vitest'
 import { setupServer } from 'msw/node'
 import { graphql, HttpResponse } from 'msw'
@@ -87,7 +78,7 @@ afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
 ```
 
-```js
+```js [WebSocket Setup]
 import { afterAll, afterEach, beforeAll } from 'vitest'
 import { setupServer } from 'msw/node'
 import { ws } from 'msw'
@@ -116,8 +107,10 @@ afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
 ```
 
+:::
+
 > Configuring the server with `onUnhandledRequest: 'error'` ensures that an error is thrown whenever there is a request that does not have a corresponding request handler.
 
 ## More
 
-There is much more to MSW. You can access cookies and query parameters, define mock error responses, and much more! To see all you can do with MSW, read their documentation.
+There is much more to MSW. You can access cookies and query parameters, define mock error responses, and much more! To see all you can do with MSW, read [their documentation](https://mswjs.io/docs).

@@ -1,12 +1,9 @@
 ---
 title: "Sample XML file: Books - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/sample-xml-file-books.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: This XML file—which is used in examples—has data about books.
+ms.date: 07/20/2015
+ms.assetid: b75ab1a2-fb76-4df9-bd01-c45ec22a29ef
 ---
-
 # Sample XML file: Books (LINQ to XML)
 
 The following XML file is used in various examples in the LINQ to XML documentation. The file contains information about books.
@@ -40,4 +37,4 @@ The following XML file is used in various examples in the LINQ to XML documentat
 
 ## See also
 
-- Sample XML Documents (LINQ to XML)
+- [Sample XML Documents (LINQ to XML)](sample-xml-file-typical-purchase-order.md)

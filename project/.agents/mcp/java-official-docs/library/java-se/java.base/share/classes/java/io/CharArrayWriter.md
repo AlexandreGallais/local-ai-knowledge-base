@@ -1,12 +1,3 @@
----
-title: "CharArrayWriter class (java.io)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/io/CharArrayWriter.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # CharArrayWriter class (java.io)
 
 ```java
@@ -16,12 +7,13 @@ public class CharArrayWriter extends Writer
 This class implements a character buffer that can be used as a Writer.
 The buffer automatically grows when data is written to the stream.  The data
 can be retrieved using toCharArray() and toString().
-
+<P>
 Note: Invoking close() on this class has no effect, and methods
 of this class can be called after the stream has closed
 without generating an IOException.
 
-**Since:** 1.1
+@author      Herb Jellinek
+@since       1.1
 
 ## CharArrayWriter.buf
 
@@ -55,13 +47,8 @@ public CharArrayWriter(int initialSize)
 
 Creates a new CharArrayWriter with the specified initial size.
 
-Parameters:
-
-- `initialSize`: an int specifying the initial buffer size.
-
-Throws:
-
-- `IllegalArgumentException`: if initialSize is negative
+@param  initialSize  an int specifying the initial buffer size.
+@throws IllegalArgumentException if initialSize is negative
 
 ## CharArrayWriter.write(int)
 
@@ -78,16 +65,14 @@ public void write(char[] c, int off, int len)
 ```
 
 Writes characters to the buffer.
+@param c the data to be written
+@param off       the start offset in the data
+@param len       the number of chars that are written
 
-Parameters:
-
-- `c`: the data to be written
-- `off`: the start offset in the data
-- `len`: the number of chars that are written
-
-Throws:
-
-- `IndexOutOfBoundsException`: If `off` is negative, or `len` is negative, or `off + len` is negative or greater than the length of the given array
+@throws  IndexOutOfBoundsException
+         If {@code off} is negative, or {@code len} is negative,
+         or {@code off + len} is negative or greater than the length
+         of the given array
 
 ## CharArrayWriter.write(String, int, int)
 
@@ -96,16 +81,14 @@ public void write(String str, int off, int len)
 ```
 
 Write a portion of a string to the buffer.
+@param  str  String to be written from
+@param  off  Offset from which to start reading characters
+@param  len  Number of characters to be written
 
-Parameters:
-
-- `str`: String to be written from
-- `off`: Offset from which to start reading characters
-- `len`: Number of characters to be written
-
-Throws:
-
-- `IndexOutOfBoundsException`: If `off` is negative, or `len` is negative, or `off + len` is negative or greater than the length of the given string
+@throws  IndexOutOfBoundsException
+         If {@code off} is negative, or {@code len} is negative,
+         or {@code off + len} is negative or greater than the length
+         of the given string
 
 ## CharArrayWriter.writeTo(Writer)
 
@@ -115,13 +98,8 @@ public void writeTo(Writer out) throws IOException
 
 Writes the contents of the buffer to another character stream.
 
-Parameters:
-
-- `out`: the output stream to write to
-
-Throws:
-
-- `IOException`: If an I/O error occurs.
+@param out       the output stream to write to
+@throws IOException If an I/O error occurs.
 
 ## CharArrayWriter.append(CharSequence)
 
@@ -131,23 +109,28 @@ public CharArrayWriter append(CharSequence csq)
 
 Appends the specified character sequence to this writer.
 
- An invocation of this method of the form `out.append(csq)`
-when `csq` is not `null`, behaves in exactly the same way
+<p> An invocation of this method of the form {@code out.append(csq)}
+when {@code csq} is not {@code null}, behaves in exactly the same way
 as the invocation
 
- Depending on the specification of `toString` for the
-character sequence `csq`, the entire sequence may not be
-appended. For instance, invoking the `toString` method of a
+{@snippet lang=java :
+    out.write(csq.toString())
+}
+
+<p> Depending on the specification of {@code toString} for the
+character sequence {@code csq}, the entire sequence may not be
+appended. For instance, invoking the {@code toString} method of a
 character buffer will return a subsequence whose content depends upon
 the buffer's position and limit.
 
-Parameters:
+@param  csq
+        The character sequence to append.  If {@code csq} is
+        {@code null}, then the four characters {@code "null"} are
+        appended to this writer.
 
-- `csq`: The character sequence to append. If `csq` is `null`, then the four characters `"null"` are appended to this writer.
+@return  This writer
 
-**Returns:** This writer
-
-**Since:** 1.5
+@since  1.5
 
 ## CharArrayWriter.append(CharSequence, int, int)
 
@@ -157,24 +140,36 @@ public CharArrayWriter append(CharSequence csq, int start, int end)
 
 Appends a subsequence of the specified character sequence to this writer.
 
- An invocation of this method of the form
-`out.append(csq, start, end)` when
-`csq` is not `null`, behaves in
+<p> An invocation of this method of the form
+{@code out.append(csq, start, end)} when
+{@code csq} is not {@code null}, behaves in
 exactly the same way as the invocation
 
-Parameters:
+{@snippet lang=java :
+    out.write(csq.subSequence(start, end).toString())
+}
 
-- `csq`: The character sequence from which a subsequence will be appended. If `csq` is `null`, then characters will be appended as if `csq` contained the four characters `"null"`.
-- `start`: The index of the first character in the subsequence
-- `end`: The index of the character following the last character in the subsequence
+@param  csq
+        The character sequence from which a subsequence will be
+        appended.  If {@code csq} is {@code null}, then characters
+        will be appended as if {@code csq} contained the four
+        characters {@code "null"}.
 
-**Returns:** This writer
+@param  start
+        The index of the first character in the subsequence
 
-**Since:** 1.5
+@param  end
+        The index of the character following the last character in the
+        subsequence
 
-Throws:
+@return  This writer
 
-- `IndexOutOfBoundsException`: If `start` or `end` are negative, `start` is greater than `end`, or `end` is greater than `csq.length()`
+@throws  IndexOutOfBoundsException
+         If {@code start} or {@code end} are negative, {@code start}
+         is greater than {@code end}, or {@code end} is greater than
+         {@code csq.length()}
+
+@since  1.5
 
 ## CharArrayWriter.append(char)
 
@@ -184,16 +179,19 @@ public CharArrayWriter append(char c)
 
 Appends the specified character to this writer.
 
- An invocation of this method of the form `out.append(c)`
+<p> An invocation of this method of the form {@code out.append(c)}
 behaves in exactly the same way as the invocation
 
-Parameters:
+{@snippet lang=java :
+    out.write(c)
+}
 
-- `c`: The 16-bit character to append
+@param  c
+        The 16-bit character to append
 
-**Returns:** This writer
+@return  This writer
 
-**Since:** 1.5
+@since 1.5
 
 ## CharArrayWriter.reset()
 
@@ -212,7 +210,7 @@ public char[] toCharArray()
 
 Returns a copy of the input data.
 
-**Returns:** an array of chars copied from the input data.
+@return an array of chars copied from the input data.
 
 ## CharArrayWriter.size()
 
@@ -222,7 +220,7 @@ public int size()
 
 Returns the current size of the buffer.
 
-**Returns:** an int representing the current size of the buffer.
+@return an int representing the current size of the buffer.
 
 ## CharArrayWriter.toString()
 
@@ -231,8 +229,7 @@ public String toString()
 ```
 
 Converts input data to a string.
-
-**Returns:** the string.
+@return the string.
 
 ## CharArrayWriter.flush()
 
@@ -242,7 +239,7 @@ public void flush()
 
 Flush the stream.
 
- The `flush` method of `CharArrayWriter` does nothing.
+<p> The {@code flush} method of {@code CharArrayWriter} does nothing.
 
 ## CharArrayWriter.close()
 

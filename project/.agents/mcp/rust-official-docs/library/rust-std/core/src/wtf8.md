@@ -1,22 +1,13 @@
----
-title: "core::wtf8"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/wtf8.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::wtf8
 
-Implementation of the WTF-8 encoding.
+Implementation of [the WTF-8 encoding](https://wtf-8.codeberg.page/).
 
 This library uses Rust’s type system to maintain
-well-formedness,
+[well-formedness](https://wtf-8.codeberg.page/#well-formed),
 like the `String` and `&str` types do for UTF-8.
 
-Since WTF-8 must not be used
-for interchange,
+Since [WTF-8 must not be used
+for interchange](https://wtf-8.codeberg.page/#intended-audience),
 this library deliberately does not provide access to the underlying bytes
 of WTF-8 strings,
 nor can it decode WTF-8 from arbitrary bytes.

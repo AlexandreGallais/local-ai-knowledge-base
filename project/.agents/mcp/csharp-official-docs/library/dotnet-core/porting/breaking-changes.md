@@ -1,12 +1,9 @@
 ---
-title: "Breaking changes can affect porting your app"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/breaking-changes.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Breaking changes can affect porting your app
+description: Breaking changes can occur when porting your code from .NET framework to .NET and between versions of .NET. This article describes categories of breaking changes, ways a change can affect compatibility and how to find breaking changes.
+author: StephenBonikowsky
+ms.date: 12/22/2022
 ---
-
 # Breaking changes might occur when porting code
 
 Changes that affect compatibility, otherwise known as breaking changes, sometimes occur between versions of .NET. Changes are impactful when porting from .NET Framework to .NET because of certain technologies not being available. Also, you might come across breaking changes simply because .NET is a cross-platform technology and .NET Framework isn't.
@@ -25,7 +22,7 @@ There are several types of changes that library authors can make that affect com
 - Internal implementation changes
 - Code changes
 
-For more information about what kind of changes are allowed or disallowed, see Change rules for compatibility.
+For more information about what kind of changes are allowed or disallowed, see [Change rules for compatibility](../compatibility/library-change-rules.md).
 
 ## Types of compatibility
 
@@ -40,8 +37,8 @@ There are six different ways a change can affect compatibility:
 - Backwards compatibility
 - Forward compatibility
 
-For more information, see How code changes can affect compatibility.
+For more information, see [How code changes can affect compatibility](../compatibility/categories.md).
 
 ## Find breaking changes
 
-Changes that affect compatibility are documented. Review these changes before you port your code from .NET Framework to .NET or upgrade it to a newer version of .NET. For a list of these breaking changes, see Breaking changes for migration from .NET Framework to .NET.
+Changes that affect compatibility are documented. Review these changes before you port your code from .NET Framework to .NET or upgrade it to a newer version of .NET. For a list of these breaking changes, see [Breaking changes for migration from .NET Framework to .NET](../compatibility/fx-core.md).

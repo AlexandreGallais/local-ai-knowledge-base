@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataImport::EnumMembersWithName Method"
 title: "IMetaDataImport::EnumMembersWithName Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-enummemberswithname-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.EnumMembersWithName"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::EnumMembersWithName"
+  - "EnumMembersWithName method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::EnumMembersWithName Method
 
 Enumerates MemberDef tokens representing members of the specified type with the specified name.
@@ -18,7 +25,7 @@ HRESULT EnumMembersWithName (
    [in, out] HCORENUM    *phEnum,
    [in]      mdTypeDef   cl,
    [in]      LPCWSTR     szName,
-   [out]     mdToken     <example-value>[],
+   [out]     mdToken     rMembers[],
    [in]      ULONG       cMax,
    [out]     ULONG       *pcTokens
 );
@@ -30,7 +37,7 @@ HRESULT EnumMembersWithName (
  [in, out] A pointer to the enumerator.
 
  `cl`
- [in] A TypeDef token <example-value> the type with members to enumerate.
+ [in] A TypeDef token representing the type with members to enumerate.
 
  `szName`
  [in] The member name that limits the scope of the enumerator.
@@ -46,7 +53,7 @@ HRESULT EnumMembersWithName (
 
 ## Remarks
 
- This method enumerates fields and methods, but not properties or events. Unlike IMetaDataImport::EnumMembers, `EnumMembersWithName` discards all field and member tokens that do not have the specified name.
+ This method enumerates fields and methods, but not properties or events. Unlike [IMetaDataImport::EnumMembers](imetadataimport-enummembers-method.md), `EnumMembersWithName` discards all field and member tokens that do not have the specified name.
 
 ## Return Value
 
@@ -57,7 +64,7 @@ HRESULT EnumMembersWithName (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -65,5 +72,5 @@ HRESULT EnumMembersWithName (
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

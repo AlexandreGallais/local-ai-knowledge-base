@@ -1,40 +1,36 @@
 ---
-title: "Open Web Interface for .NET (OWIN) with ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/owin.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Open Web Interface for .NET (OWIN) with ASP.NET Core
+description: Discover how ASP.NET Core supports the Open Web Interface for .NET (OWIN), which allows web apps to be decoupled from web servers.
+ms.date: 04/24/2025
 ---
-
 # Open Web Interface for .NET (OWIN) with ASP.NET Core
 
-By Steve Smith and Rick Anderson
+By [Steve Smith](https://ardalis.com/) and [Rick Anderson](https://twitter.com/RickAndMSFT)
 
 ASP.NET Core:
 
 * Supports the Open Web Interface for .NET (OWIN).
-* Has compatible replacements for the `Microsoft.Owin.*` (Katana) libraries.
+* Has compatible replacements for the `Microsoft.Owin.*` ([Katana](/aspnet/aspnet/overview/owin-and-katana/)) libraries.
 
 OWIN allows web apps to be decoupled from web servers. It defines a standard way for middleware to be used in a pipeline to handle requests and associated responses. ASP.NET Core applications and middleware can interoperate with OWIN-based applications, servers, and middleware.
 
 OWIN provides a decoupling layer that allows two frameworks with disparate object models to be used together. The `Microsoft.AspNetCore.Owin` package provides two adapter implementations:
 
-* ASP.NET Core to OWIN
+* ASP.NET Core to OWIN 
 * OWIN to ASP.NET Core
 
 This allows ASP.NET Core to be hosted on top of an OWIN compatible server/host or for other OWIN compatible components to be run on top of ASP.NET Core.
 
-> **Note:**
+> [!NOTE]
 > Using these adapters comes with a performance cost. Apps using only ASP.NET Core components shouldn't use the `Microsoft.AspNetCore.Owin` package or adapters.
 
-View or download sample code (how to download)
+[View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/fundamentals/owin/samples) ([how to download](index.md#how-to-download-a-sample))
 
 ## Running OWIN middleware in the ASP.NET Core pipeline
 
 ASP.NET Core's OWIN support is deployed as part of the `Microsoft.AspNetCore.Owin` package. You can import OWIN support into your project by installing this package.
 
-OWIN middleware conforms to the OWIN specification, which requires a `Func<IDictionary<string, object>, Task>` interface, and specific keys be set (such as `owin.ResponseBody`). The following simple OWIN middleware displays "Hello World":
+OWIN middleware conforms to the [OWIN specification](http://owin.org/spec/spec/owin-1.0.0.html), which requires a `Func<IDictionary<string, object>, Task>` interface, and specific keys be set (such as `owin.ResponseBody`). The following simple OWIN middleware displays "Hello World":
 
 ```csharp
 public Task OwinHello(IDictionary<string, object> environment)
@@ -69,10 +65,10 @@ public void Configure(IApplicationBuilder app)
 
 You can configure other actions to take place within the OWIN pipeline.
 
-> **Note:**
+> [!NOTE]
 > Response headers should only be modified prior to the first write to the response stream.
 
-> **Note:**
+> [!NOTE]
 > Multiple calls to `UseOwin` is discouraged for performance reasons. OWIN components will operate best if grouped together.
 
 ```csharp
@@ -102,18 +98,18 @@ You can construct an OWIN environment using the `HttpContext`.
 
 ## OWIN keys
 
-OWIN depends on an `IDictionary<string,object>` object to communicate information throughout an HTTP Request/Response exchange. ASP.NET Core implements the keys listed below. See the primary specification, extensions, and OWIN Key <example-value> and Common Keys.
+OWIN depends on an `IDictionary<string,object>` object to communicate information throughout an HTTP Request/Response exchange. ASP.NET Core implements the keys listed below. See the [primary specification, extensions](http://owin.org/#spec), and [OWIN Key Guidelines and Common Keys](http://owin.org/spec/spec/CommonKeys.html).
 
 ### Request data (OWIN v1.0.0)
 
 | Key               | Value (type) | Description |
 | ----------------- | ------------ | ----------- |
 | owin.RequestScheme | `String` |  |
-| owin.RequestMethod  | `String` | |
-| owin.RequestPathBase  | `String` | |
-| owin.RequestPath | `String` | |
-| owin.RequestQueryString  | `String` | |
-| owin.RequestProtocol  | `String` | |
+| owin.RequestMethod  | `String` | |    
+| owin.RequestPathBase  | `String` | |    
+| owin.RequestPath | `String` | |     
+| owin.RequestQueryString  | `String` | |    
+| owin.RequestProtocol  | `String` | |    
 | owin.RequestHeaders | `IDictionary<string,string[]>`  | |
 | owin.RequestBody | `Stream`  | |
 
@@ -137,32 +133,32 @@ OWIN depends on an `IDictionary<string,object>` object to communicate informatio
 | Key               | Value (type) | Description |
 | ----------------- | ------------ | ----------- |
 | owin.CallCancelled | `CancellationToken` |  |
-| owin.Version  | `String` | |
+| owin.Version  | `String` | |   
 
 ### Common keys
 
 | Key               | Value (type) | Description |
 | ----------------- | ------------ | ----------- |
 | ssl.ClientCertificate | `X509Certificate` |  |
-| ssl.LoadClientCertAsync  | `Func<Task>` | |
-| server.RemoteIpAddress  | `String` | |
-| server.RemotePort | `String` | |
-| server.LocalIpAddress  | `String` | |
-| server.LocalPort  | `String` | |
+| ssl.LoadClientCertAsync  | `Func<Task>` | |    
+| server.RemoteIpAddress  | `String` | |    
+| server.RemotePort | `String` | |     
+| server.LocalIpAddress  | `String` | |    
+| server.LocalPort  | `String` | |    
 | server.OnSendingHeaders  | `Action<Action<object>,object>` | |
 
 ### SendFiles v0.3.0
 
 | Key               | Value (type) | Description |
 | ----------------- | ------------ | ----------- |
-| sendfile.SendAsync | See delegate signature | Per Request |
+| sendfile.SendAsync | See [delegate signature](http://owin.org/spec/extensions/owin-SendFile-Extension-v0.3.0.htm) | Per Request |
 
 ### Opaque v0.3.0
 
 | Key               | Value (type) | Description |
 | ----------------- | ------------ | ----------- |
 | opaque.Version | `String` |  |
-| opaque.Upgrade | `OpaqueUpgrade` | See delegate signature |
+| opaque.Upgrade | `OpaqueUpgrade` | See [delegate signature](http://owin.org/spec/extensions/owin-SendFile-Extension-v0.3.0.htm) |
 | opaque.Stream | `Stream` |  |
 | opaque.CallCancelled | `CancellationToken` |  |
 
@@ -171,18 +167,18 @@ OWIN depends on an `IDictionary<string,object>` object to communicate informatio
 | Key               | Value (type) | Description |
 | ----------------- | ------------ | ----------- |
 | websocket.Version | `String` |  |
-| websocket.Accept | `WebSocketAccept` | See delegate signature |
+| websocket.Accept | `WebSocketAccept` | See [delegate signature](http://owin.org/spec/extensions/owin-SendFile-Extension-v0.3.0.htm) |
 | websocket.AcceptAlt |  | Non-spec |
-| websocket.SubProtocol | `String` | See RFC6455 Section 4.2.2 Step 5.5 |
-| websocket.SendAsync | `WebSocketSendAsync` | See delegate signature  |
-| websocket.ReceiveAsync | `WebSocketReceiveAsync` | See delegate signature  |
-| websocket.CloseAsync | `WebSocketCloseAsync` | See delegate signature  |
+| websocket.SubProtocol | `String` | See [RFC6455 Section 4.2.2](https://tools.ietf.org/html/rfc6455#section-4.2.2) Step 5.5 |
+| websocket.SendAsync | `WebSocketSendAsync` | See [delegate signature](http://owin.org/spec/extensions/owin-SendFile-Extension-v0.3.0.htm)  |
+| websocket.ReceiveAsync | `WebSocketReceiveAsync` | See [delegate signature](http://owin.org/spec/extensions/owin-SendFile-Extension-v0.3.0.htm)  |
+| websocket.CloseAsync | `WebSocketCloseAsync` | See [delegate signature](http://owin.org/spec/extensions/owin-SendFile-Extension-v0.3.0.htm)  |
 | websocket.CallCancelled | `CancellationToken` |  |
 | websocket.ClientCloseStatus | `int` | Optional |
 | websocket.ClientCloseDescription | `String` | Optional |
 
 ## Related content
 
-* See the source on GitHub for OWIN keys supported in the translation layer.
-* Middleware
-* Servers
+* See the [source on GitHub](https://github.com/aspnet/HttpAbstractions/blob/524a0227e5b7945b9520855d37881dabf7e5da32/src/Microsoft.AspNetCore.Owin/OwinFeatureCollection.cs) for OWIN keys supported in the translation layer.
+* [Middleware](middleware/index.md)
+* [Servers](servers/index.md)

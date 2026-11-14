@@ -40,7 +40,9 @@ interface BrickSettings {
 
 const settings = JSON.parse(readFileSync(join(import.meta.dirname, 'brick.json'), 'utf8')) as BrickSettings;
 const cache = new Map<string, IndexEntry[]>();
-const DOCUMENT = /^library\/[\w./-]+\.md$/;
+// A file of the documentation, in one of the formats the search reads.
+// Its path is the one of the source, spaces and backquotes included; inside() keeps it in the brick.
+const DOCUMENT = /^library\/[^#\\]+\.(?:md|mdx|markdown|rst|txt|adoc|tex|texi|ptx|xml|html?|json)(?:\.in)?$/;
 
 // The folder of this brick. BRICK_ROOT in the environment overrides it (tests).
 export function brickRoot(): string {

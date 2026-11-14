@@ -1,19 +1,20 @@
 ---
-title: "How to validate using XSD - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/validate-xsd.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to validate using XSD - LINQ to XML
+description: You can use extension methods from the System.Xml.Schema namespace to validate an XML tree against an XML Schema Definition Language (XSD) file.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to validate using XSD (LINQ to XML)
 
-The `System.Xml.Schema` namespace contains extension methods that make it easy to validate an XML tree against an XML Schema Definition Language (XSD) file. For more information, see the `System.Xml.Schema.Extensions.Validate*` method documentation.
+The <xref:System.Xml.Schema> namespace contains extension methods that make it easy to validate an XML tree against an XML Schema Definition Language (XSD) file. For more information, see the <xref:System.Xml.Schema.Extensions.Validate*> method documentation.
 
 ## Example: Validate XDocument objects against an XmlSchemaSet
 
-The following example creates an `System.Xml.Schema.XmlSchemaSet`, then validates two `System.Xml.Linq.XDocument` objects against the schema set. One of the documents is valid, the other isn't.
+The following example creates an <xref:System.Xml.Schema.XmlSchemaSet>, then validates two <xref:System.Xml.Linq.XDocument> objects against the schema set. One of the documents is valid, the other isn't.
 
 ```csharp
 string xsdMarkup =
@@ -127,7 +128,7 @@ doc2 did not validate
 
 ## Example: Validate an XML document from a file against a schema from a file
 
-The following example validates that the XML document from Sample XML file: Customers and orders is valid per the schema from Sample XSD file: Customers and orders. It then modifies the source XML document. It changes the `CustomerID` attribute on the first customer. After the change, orders will then refer to a customer that doesn't exist, so the XML document will no longer validate.
+The following example validates that the XML document from [Sample XML file: Customers and orders](sample-xml-file-customers-orders.md) is valid per the schema from [Sample XSD file: Customers and orders](sample-xsd-file-customers-orders.md). It then modifies the source XML document. It changes the `CustomerID` attribute on the first customer. After the change, orders will then refer to a customer that doesn't exist, so the XML document will no longer validate.
 
 ```csharp
 XmlSchemaSet schemas = new XmlSchemaSet();
@@ -191,11 +192,11 @@ Attempting to validate
 custOrdDoc validated
 
 Attempting to validate after modification
-The key <example-value> 'AAAAA' in Keyref fails to refer to some key.
+The key sequence 'AAAAA' in Keyref fails to refer to some key.
 custOrdDoc did not validate
 ```
 
 ## See also
 
-- `System.Xml.Schema.Extensions.Validate*`
-- XML trees
+- <xref:System.Xml.Schema.Extensions.Validate*?displayProperty=nameWithType>
+- [XML trees](functional-construction.md)

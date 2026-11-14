@@ -1,12 +1,9 @@
 ---
 title: "Sample XML file: Numerical data - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/sample-xml-file-numerical-data.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: This XML file—which is used in examples—has numerical data.
+ms.date: 07/20/2015
+ms.assetid: 365cae86-a166-46df-b56a-0209d9771c27
 ---
-
 # Sample XML file: Numerical data (LINQ to XML)
 
 The following XML file is used in various examples in the LINQ to XML documentation. This file contains numerical data for summing, averaging, and grouping.

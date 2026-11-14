@@ -1,13 +1,9 @@
 ---
-title: "dotnet-new-7-0-syntax"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/includes/dotnet-new-7-0-syntax.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+author: vshubina
+ms.author: vshubina
+ms.date: 03/30/2022
+ms.topic: include
 ---
-
-# dotnet-new-7-0-syntax
 
 Starting with the .NET 7 SDK, the `dotnet new` syntax has changed:
 
@@ -19,4 +15,4 @@ Other options that were available before are still available to use with their r
 Separate help for each subcommand is available via the `-h` or `--help` option: `dotnet new <subcommand> --help` lists all supported options for the subcommand.
 
 Additionally, tab completion is now available for `dotnet new`. It supports completion for installed template names and for the options a selected template provides.
-To activate tab completion for the .NET SDK, see Enable tab completion.
+To activate tab completion for the .NET SDK, see [Enable tab completion](../enable-tab-autocomplete.md).

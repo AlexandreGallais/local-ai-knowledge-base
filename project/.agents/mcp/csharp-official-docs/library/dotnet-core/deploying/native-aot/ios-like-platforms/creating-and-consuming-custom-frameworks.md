@@ -1,10 +1,9 @@
 ---
-title: "Create and consume custom frameworks for iOS-like platforms"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/deploying/native-aot/ios-like-platforms/creating-and-consuming-custom-frameworks.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Create and consume custom frameworks for iOS-like platforms
+description: How to create and consume custom frameworks with Native AOT for iOS-like platforms
+author: ivanpovazan
+ms.author: ivanpovazan
+ms.date: 11/21/2024
 ---
 
 # Create and consume custom frameworks for iOS-like platforms
@@ -12,7 +11,7 @@ license: "CC-BY-4.0"
 Starting from .NET 9, Native AOT supports publishing .NET class libraries that don't depend on iOS workloads for iOS-like platforms.
 This support enables you to create self-contained native libraries that can be consumed from iOS, Mac Catalyst, and tvOS applications.
 
-> **Important:**
+> [!IMPORTANT]
 > This approach does not come with the built-in Objective-C interoperability support and additional code adaptations might be required (such as marshalling reference type arguments) to achieve interoperability.
 
 ## Build shared libraries
@@ -57,10 +56,10 @@ This section describes steps to create a simple .NET Class Library project with 
 
 Successful completion of the previous step produces a pair of files: a shared library `MyNativeAOTLibrary.dylib` and its debug symbols `MyNativeAOTLibrary.dylib.dSYM`, which are located at: `MyNativeAOTLibrary/bin/Release/net9.0/<rid>/publish/`.
 
-> **Note:**
+> [!NOTE]
 > For creating universal frameworks, it is required to publish the class library for both `Arm64` and `x64` architectures for a given platform.
 > This means that you need to repeat step 5 with a different runtime identifier.
-> For example, you'd publish the class library with both `maccatalyst-arm64` and `maccatalyst-x64` runtime identifiers as a prerequisite for Packaging the shared library into a custom MacCatalyst universal framework.
+> For example, you'd publish the class library with both `maccatalyst-arm64` and `maccatalyst-x64` runtime identifiers as a prerequisite for [Packaging the shared library into a custom MacCatalyst universal framework](#package-the-shared-library-into-a-custom-maccatalyst-universal-framework).
 
 ## Create and consume a custom framework
 
@@ -68,7 +67,7 @@ Apple imposes a requirement that shared libraries (.dylibs) need to be packaged 
 
 This section describes all required steps to achieve this and a simple scenario of a iOS/MacCatalyst application consuming a shared NativeAOT library/framework.
 
-> **Note:**
+> [!NOTE]
 > The described steps are just for demonstration purposes. The actual requirements might differ depending on the exact use case.
 
 ### Package the shared library into custom iOS framework
@@ -107,7 +106,7 @@ This section describes all required steps to achieve this and a simple scenario 
     touch MyNativeAOTLibrary.framework/Info.plist
     ```
 
-    - Add the contents from the appendix into the created `Info.plist` file
+    - Add the contents from the [appendix](#appendix-infoplist-contents) into the created `Info.plist` file
 
 After the final step, the framework structure should look like this:
 
@@ -161,7 +160,7 @@ For this reason, you must publish native libraries targeting both of the followi
     touch MyNativeAOTLibrary.framework/Versions/A/Resources/Info.plist
     ```
 
-    - Add the contents from the appendix into the created `Info.plist` file
+    - Add the contents from the [appendix](#appendix-infoplist-contents) into the created `Info.plist` file
 
 After the final step, the framework structure should look like this:
 
@@ -187,7 +186,11 @@ MyNativeAOTLibrary.framework
     - In the dialog, choose **Add Other** -> **Add Files** and then browse to the location of `MyNativeAOTLibrary.framework` and select it
     - Once selected, set `Embed and Sign` option for `MyNativeAOTLibrary` framework
 
+    ![Xcode add framework reference](../../media/native-aot-ios-like-platforms/xcode-add-framework-reference.png)
+
 5. Add `MyNativeAOTLibrary.framework` location to the list of **Framework Search Paths** in the **Build Settings** tab
+
+    ![Xcode add framework search path](../../media/native-aot-ios-like-platforms/xcode-add-framework-search-path.png)
 
 6. Edit `main.m` by calling the exposed managed method `aotsample_add` and printing the result
 
@@ -203,12 +206,12 @@ MyNativeAOTLibrary.framework
 7. Select your physical iOS device and build/run the app
 8. Inspect the logs after the app has successfully launched. The app should print out: `2 + 5 = 7`
 
-> **Note:**
+> [!NOTE]
 > For MacCatalyst, use the same steps except for step 7, where the Run Destination needs to be set as: `Mac (Mac Catalyst)`.
 
 ## Build static libraries with NativeAOT for iOS-like platforms
 
-As described in building native libraries overview, it's better to build shared libraries over static ones due to several limitations.
+As described in [building native libraries overview](../libraries.md#building-native-libraries), it's better to build shared libraries over static ones due to several limitations.
 
 However, if desired, you can build a static library by following the steps for building a shared one and including an additional property in the project file:
 

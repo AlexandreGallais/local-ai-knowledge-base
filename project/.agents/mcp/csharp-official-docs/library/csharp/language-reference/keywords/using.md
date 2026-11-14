@@ -1,32 +1,21 @@
 ---
 title: "using keyword"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/keywords/using.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "using keyword - C# reference"
+ms.date: 01/22/2026
+f1_keywords:
+  - "using"
+helpviewer_keywords:
+  - "using keyword [C#]"
 ---
-
 # using (C# reference)
 
 The `using` keyword has two major uses:
 
-- The `using` statement defines a scope at the end of which an object is disposed:
-```csharp
-string filePath = "example.txt";
-string textToWrite = "Hello, this is a test message!";
+- The [`using` statement](../statements/using.md) defines a scope at the end of which an object is disposed:
+  :::code language="csharp" source="./snippets/UsingKeywordExample.cs" id="UsingStatement":::
+- The [`using` directive](using-directive.md) creates an alias for a namespace or imports types defined in other namespaces:
+  :::code language="csharp" source="./snippets/UsingKeywordExample.cs" id="UsingDirective":::
 
-// Use the using statement to ensure the StreamWriter is properly disposed of
-using (StreamWriter writer = new StreamWriter(filePath))
-{
-    writer.WriteLine(textToWrite);
-}
-```
-- The `using` directive creates an alias for a namespace or imports types defined in other namespaces:
-```csharp
-using System;
-using System.IO;
-```
 ## See also
 
-- C# keywords
+- [C# keywords](index.md)

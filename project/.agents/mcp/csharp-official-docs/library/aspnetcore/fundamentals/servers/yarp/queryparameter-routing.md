@@ -1,15 +1,15 @@
 ---
-title: "YARP Query Parameter Based Routing"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/queryparameter-routing.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: YARP Query Parameter Based Routing
+description: YARP Query Parameter Based Routing
+ms.date: 05/19/2026
+ms.topic: concept-article
+content_well_notification: AI-contribution
+ai-usage: ai-assisted
 ---
 
 # YARP Query Parameter Based Routing
 
-Proxy routes specified in config or via code must include at least a path or host to match against. In addition to these, a route can also specify one or more query parameters that must be present on the request.
+Proxy routes specified in [config](config-files.md) or via [code](config-providers.md) must include at least a path or host to match against. In addition to these, a route can also specify one or more query parameters that must be present on the request.
 
 ### Precedence
 
@@ -21,7 +21,7 @@ The default route match precedence order is
 1. headers
 1. query parameters
 
-That means a route which specifies methods and no query parameters will match before a route which specifies query parameters and no methods. This can be overridden by setting the `Order` property on a route (see example in config properties).
+That means a route which specifies methods and no query parameters will match before a route which specifies query parameters and no methods. This can be overridden by setting the `Order` property on a route (see example in [config properties](config-files.md#review-all-config-properties)).
 
 ## Configuration
 
@@ -245,7 +245,7 @@ var routes = new[]
 
 ## Contract
 
-RouteQueryParameter defines the code contract and is mapped from config.
+[RouteQueryParameter](xref:Yarp.ReverseProxy.Configuration.RouteQueryParameter) defines the code contract and is mapped from config.
 
 ### Name
 
@@ -257,7 +257,7 @@ A list of possible values to search for. The query parameter must match at least
 
 ### Mode
 
-QueryParameterMatchMode specifies how to match the values against the request query parameter. The default is `Exact`.
+[QueryParameterMatchMode](xref:Yarp.ReverseProxy.Configuration.QueryParameterMatchMode) specifies how to match the values against the request query parameter. The default is `Exact`.
 
 * Exact - Any of the query parameters with the given name must match in its entirety, subject to the value of `IsCaseSensitive`.
 * Prefix - Any of the query parameters with the given name must match by prefix, subject to the value of `IsCaseSensitive`.

@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugStackWalk::GetContext Method"
 title: "ICorDebugStackWalk::GetContext Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugstackwalk-getcontext-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugStackWalk.GetContext Method"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugStackWalk::GetContext"
+helpviewer_keywords:
+  - "GetContext method, ICorDebugStackWalk interface [.NET debugging]"
+  - "ICorDebugStackWalk::GetContext method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugStackWalk::GetContext Method
 
-Returns the context for the current frame in the ICorDebugStackWalk object.
+Returns the context for the current frame in the [ICorDebugStackWalk](icordebugstackwalk-interface.md) object.
 
 ## Syntax
 
@@ -45,13 +54,15 @@ This method returns the following specific HRESULTs as well as HRESULT errors th
 |HRESULT_FROM_WIN32(ERROR_INSUFFICIENT BUFFER)|The context buffer is too small.|
 |CORDBG_E_PAST_END_OF_STACK|The frame pointer is already at the end of the stack; therefore, no additional frames can be accessed.|
 
+## Exceptions
+
 ## Remarks
 
 Because unwinding restores only a subset of the registers, such as non-volatile registers, the context may not exactly match the register state at the time of the call.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

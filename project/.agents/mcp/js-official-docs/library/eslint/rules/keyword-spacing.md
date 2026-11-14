@@ -1,14 +1,7 @@
 ---
-title: "keyword-spacing"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/keyword-spacing.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: keyword-spacing
+rule_type: layout
 ---
-
-# keyword-spacing
-
 Keywords are syntax elements of JavaScript, such as `try` and `if`.
 These keywords have special meaning to the language and so often appear in a different color in code editors.
 As an important part of the language, style guides often refer to the spacing that should be used around keywords.
@@ -24,7 +17,7 @@ if (foo) {
 
 Of course, you could also have a style guide that disallows spaces around keywords.
 
-However, if you want to enforce the style of spacing between the `function` keyword and the following opening parenthesis, please refer to space-before-function-paren.
+However, if you want to enforce the style of spacing between the `function` keyword and the following opening parenthesis, please refer to [space-before-function-paren](space-before-function-paren).
 
 ## Rule Details
 
@@ -44,7 +37,7 @@ This rule has an object option:
 
 Examples of **incorrect** code for this rule with the default `{ "before": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint keyword-spacing: ["error", { "before": true }]*/
@@ -58,9 +51,11 @@ if (foo) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `{ "before": true }` option:
 
-**Correct:**
+::: correct { "parserOptions": { "ecmaFeatures": { "jsx": true } } }
 
 ```jsx
 /*eslint keyword-spacing: ["error", { "before": true }]*/
@@ -114,9 +109,11 @@ if (10+this.foo<= this.bar) {}
 let f = <A foo={this.foo} bar={function(){}} />
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `{ "before": false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint keyword-spacing: ["error", { "before": false }]*/
@@ -130,9 +127,11 @@ if (foo) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "before": false }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint keyword-spacing: ["error", { "before": false }]*/
@@ -146,11 +145,13 @@ if (foo) {
 }
 ```
 
+:::
+
 ### after
 
 Examples of **incorrect** code for this rule with the default `{ "after": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint keyword-spacing: ["error", { "after": true }]*/
@@ -164,9 +165,11 @@ if(foo) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `{ "after": true }` option:
 
-**Correct:**
+::: correct { "parserOptions": { "ecmaFeatures": { "jsx": true } } }
 
 ```jsx
 /*eslint keyword-spacing: ["error", { "after": true }]*/
@@ -233,9 +236,11 @@ function* qux(a) {
 let e = <A foo={this.foo} bar={function(){}} />
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `{ "after": false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint keyword-spacing: ["error", { "after": false }]*/
@@ -249,9 +254,11 @@ if (foo) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "after": false }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint keyword-spacing: ["error", { "after": false }]*/
@@ -265,11 +272,13 @@ if(foo) {
 }
 ```
 
+:::
+
 ### overrides
 
 Examples of **correct** code for this rule with the `{ "overrides": { "if": { "after": false }, "for": { "after": false }, "while": { "after": false }, "static": { "after": false }, "as": { "after": false } } }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint keyword-spacing: ["error", { "overrides": {
@@ -302,6 +311,8 @@ class C {
 
 export { C as"my class" };
 ```
+
+:::
 
 ## When Not To Use It
 

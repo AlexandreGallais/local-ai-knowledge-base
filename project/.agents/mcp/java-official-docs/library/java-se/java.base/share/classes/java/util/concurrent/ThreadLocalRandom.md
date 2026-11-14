@@ -1,47 +1,39 @@
----
-title: "ThreadLocalRandom class (java.util.concurrent)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/ThreadLocalRandom.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ThreadLocalRandom class (java.util.concurrent)
 
 ```java
 public final class ThreadLocalRandom extends Random
 ```
 
-A random number generator (with period 264) isolated
-to the current thread.  Like the global `java.util.Random`
-generator used by the `java.lang.Math` class,
-a `ThreadLocalRandom` is initialized
+A random number generator (with period 2<sup>64</sup>) isolated
+to the current thread.  Like the global {@link java.util.Random}
+generator used by the {@link java.lang.Math} class,
+a {@code ThreadLocalRandom} is initialized
 with an internally generated seed that may not otherwise be
-modified. When applicable, use of `ThreadLocalRandom` rather
-than shared `Random` objects in concurrent programs will
+modified. When applicable, use of {@code ThreadLocalRandom} rather
+than shared {@code Random} objects in concurrent programs will
 typically encounter much less overhead and contention.  Use of
-`ThreadLocalRandom` is particularly appropriate when multiple
-tasks (for example, each a `ForkJoinTask`) use random numbers
+{@code ThreadLocalRandom} is particularly appropriate when multiple
+tasks (for example, each a {@link ForkJoinTask}) use random numbers
 in parallel in thread pools.
 
-Usages of this class should typically be of the form:
-`ThreadLocalRandom.current().nextX(...)` (where
-`X` is `Int`, `Long`, etc).
+<p>Usages of this class should typically be of the form:
+{@code ThreadLocalRandom.current().nextX(...)} (where
+{@code X} is {@code Int}, {@code Long}, etc).
 When all usages are of this form, it is never possible to
-accidentally share a `ThreadLocalRandom` across multiple threads.
+accidentally share a {@code ThreadLocalRandom} across multiple threads.
 
-This class also provides additional commonly used bounded random
+<p>This class also provides additional commonly used bounded random
 generation methods.
 
-Instances of `ThreadLocalRandom` are not cryptographically
-secure.  Consider instead using `java.security.SecureRandom`
+<p>Instances of {@code ThreadLocalRandom} are not cryptographically
+secure.  Consider instead using {@link java.security.SecureRandom}
 in security-sensitive applications. Additionally,
 default-constructed instances do not use a cryptographically random
-seed unless the system property
-`java.util.secureRandomSeed` is set to `true`.
+seed unless the {@linkplain System#getProperty system property}
+{@code java.util.secureRandomSeed} is set to {@code true}.
 
-**Since:** 1.7
+@since 1.7
+@author Doug Lea
 
 ## ThreadLocalRandom.current()
 
@@ -49,11 +41,11 @@ seed unless the system property
 public static ThreadLocalRandom current()
 ```
 
-Returns the current thread's `ThreadLocalRandom` object.
+Returns the current thread's {@code ThreadLocalRandom} object.
 Methods of this object should be called only by the current thread,
 not by other threads.
 
-**Returns:** the current thread's `ThreadLocalRandom`
+@return the current thread's {@code ThreadLocalRandom}
 
 ## ThreadLocalRandom.setSeed(long)
 
@@ -61,12 +53,10 @@ not by other threads.
 public void setSeed(long seed)
 ```
 
-Throws `UnsupportedOperationException`.  Setting seeds in
+Throws {@code UnsupportedOperationException}.  Setting seeds in
 this generator is not supported.
 
-Throws:
-
-- `UnsupportedOperationException`: always
+@throws UnsupportedOperationException always
 
 ## ThreadLocalRandom.next(int)
 
@@ -78,11 +68,8 @@ Generates a pseudorandom number with the indicated number of
 low-order bits.  Because this class has no subclasses, this
 method cannot be invoked or overridden.
 
-Parameters:
-
-- `bits`: random bits
-
-**Returns:** the next pseudorandom value from this random number
+@param  bits random bits
+@return the next pseudorandom value from this random number
         generator's sequence
 
 ## ThreadLocalRandom.nextBoolean()
@@ -91,7 +78,7 @@ Parameters:
 public boolean nextBoolean()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
 ## ThreadLocalRandom.nextInt()
 
@@ -99,7 +86,7 @@ public boolean nextBoolean()
 public int nextInt()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
 ## ThreadLocalRandom.nextInt(int)
 
@@ -107,11 +94,8 @@ public int nextInt()
 public int nextInt(int bound)
 ```
 
-(inherited documentation)
-
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+{@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}
 
 ## ThreadLocalRandom.nextInt(int, int)
 
@@ -119,11 +103,8 @@ Throws:
 public int nextInt(int origin, int bound)
 ```
 
-(inherited documentation)
-
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+{@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}
 
 ## ThreadLocalRandom.nextLong()
 
@@ -131,7 +112,7 @@ Throws:
 public long nextLong()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
 ## ThreadLocalRandom.nextLong(long)
 
@@ -139,11 +120,8 @@ public long nextLong()
 public long nextLong(long bound)
 ```
 
-(inherited documentation)
-
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+{@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}
 
 ## ThreadLocalRandom.nextLong(long, long)
 
@@ -151,11 +129,8 @@ Throws:
 public long nextLong(long origin, long bound)
 ```
 
-(inherited documentation)
-
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+{@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}
 
 ## ThreadLocalRandom.nextFloat()
 
@@ -163,7 +138,7 @@ Throws:
 public float nextFloat()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
 ## ThreadLocalRandom.nextFloat(float)
 
@@ -171,15 +146,11 @@ public float nextFloat()
 public float nextFloat(float bound)
 ```
 
-(inherited documentation)
+{@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}
+@implNote {@inheritDoc}
 
-**Implementation note:** (inherited documentation)
-
-**Since:** 17
-
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+@since 17
 
 ## ThreadLocalRandom.nextFloat(float, float)
 
@@ -187,15 +158,11 @@ Throws:
 public float nextFloat(float origin, float bound)
 ```
 
-(inherited documentation)
+{@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}
+@implNote {@inheritDoc}
 
-**Implementation note:** (inherited documentation)
-
-**Since:** 17
-
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+@since 17
 
 ## ThreadLocalRandom.nextDouble()
 
@@ -203,7 +170,7 @@ Throws:
 public double nextDouble()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
 ## ThreadLocalRandom.nextDouble(double)
 
@@ -211,13 +178,9 @@ public double nextDouble()
 public double nextDouble(double bound)
 ```
 
-(inherited documentation)
-
-**Implementation note:** (inherited documentation)
-
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+{@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}
+@implNote {@inheritDoc}
 
 ## ThreadLocalRandom.nextDouble(double, double)
 
@@ -225,13 +188,9 @@ Throws:
 public double nextDouble(double origin, double bound)
 ```
 
-(inherited documentation)
-
-**Implementation note:** (inherited documentation)
-
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+{@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}
+@implNote {@inheritDoc}
 
 ## ThreadLocalRandom.ints(long)
 
@@ -239,13 +198,9 @@ Throws:
 public IntStream ints(long streamSize)
 ```
 
-(inherited documentation)
-
-**Since:** 1.8
-
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+{@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}
+@since 1.8
 
 ## ThreadLocalRandom.ints()
 
@@ -253,12 +208,10 @@ Throws:
 public IntStream ints()
 ```
 
-(inherited documentation)
-
-**Implementation note:** This method is implemented to be equivalent to
-          `ints(Long.MAX_VALUE)`.
-
-**Since:** 1.8
+{@inheritDoc}
+@implNote This method is implemented to be equivalent to
+          {@code ints(Long.MAX_VALUE)}.
+@since 1.8
 
 ## ThreadLocalRandom.ints(long, int, int)
 
@@ -266,13 +219,9 @@ public IntStream ints()
 public IntStream ints(long streamSize, int randomNumberOrigin, int randomNumberBound)
 ```
 
-(inherited documentation)
-
-**Since:** 1.8
-
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+{@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}
+@since 1.8
 
 ## ThreadLocalRandom.ints(int, int)
 
@@ -280,16 +229,11 @@ Throws:
 public IntStream ints(int randomNumberOrigin, int randomNumberBound)
 ```
 
-(inherited documentation)
-
-**Implementation note:** This method is implemented to be equivalent to
-          `ints(Long.MAX_VALUE, randomNumberOrigin, randomNumberBound)`.
-
-**Since:** 1.8
-
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+{@inheritDoc}
+@implNote This method is implemented to be equivalent to
+          {@code ints(Long.MAX_VALUE, randomNumberOrigin, randomNumberBound)}.
+@throws IllegalArgumentException {@inheritDoc}
+@since 1.8
 
 ## ThreadLocalRandom.longs(long)
 
@@ -297,13 +241,9 @@ Throws:
 public LongStream longs(long streamSize)
 ```
 
-(inherited documentation)
-
-**Since:** 1.8
-
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+{@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}
+@since 1.8
 
 ## ThreadLocalRandom.longs()
 
@@ -311,12 +251,10 @@ Throws:
 public LongStream longs()
 ```
 
-(inherited documentation)
-
-**Implementation note:** This method is implemented to be equivalent to
-          `longs(Long.MAX_VALUE)`.
-
-**Since:** 1.8
+{@inheritDoc}
+@implNote This method is implemented to be equivalent to
+          {@code longs(Long.MAX_VALUE)}.
+@since 1.8
 
 ## ThreadLocalRandom.longs(long, long, long)
 
@@ -324,13 +262,9 @@ public LongStream longs()
 public LongStream longs(long streamSize, long randomNumberOrigin, long randomNumberBound)
 ```
 
-(inherited documentation)
-
-**Since:** 1.8
-
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+{@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}
+@since 1.8
 
 ## ThreadLocalRandom.longs(long, long)
 
@@ -338,16 +272,11 @@ Throws:
 public LongStream longs(long randomNumberOrigin, long randomNumberBound)
 ```
 
-(inherited documentation)
-
-**Implementation note:** This method is implemented to be equivalent to
-          `longs(Long.MAX_VALUE, randomNumberOrigin, randomNumberBound)`.
-
-**Since:** 1.8
-
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+{@inheritDoc}
+@implNote This method is implemented to be equivalent to
+          {@code longs(Long.MAX_VALUE, randomNumberOrigin, randomNumberBound)}.
+@throws IllegalArgumentException {@inheritDoc}
+@since 1.8
 
 ## ThreadLocalRandom.doubles(long)
 
@@ -355,13 +284,9 @@ Throws:
 public DoubleStream doubles(long streamSize)
 ```
 
-(inherited documentation)
-
-**Since:** 1.8
-
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+{@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}
+@since 1.8
 
 ## ThreadLocalRandom.doubles()
 
@@ -369,12 +294,10 @@ Throws:
 public DoubleStream doubles()
 ```
 
-(inherited documentation)
-
-**Implementation note:** This method is implemented to be equivalent to
-          `doubles(Long.MAX_VALUE)`.
-
-**Since:** 1.8
+{@inheritDoc}
+@implNote This method is implemented to be equivalent to
+          {@code doubles(Long.MAX_VALUE)}.
+@since 1.8
 
 ## ThreadLocalRandom.doubles(long, double, double)
 
@@ -382,13 +305,9 @@ public DoubleStream doubles()
 public DoubleStream doubles(long streamSize, double randomNumberOrigin, double randomNumberBound)
 ```
 
-(inherited documentation)
-
-**Since:** 1.8
-
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+{@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}
+@since 1.8
 
 ## ThreadLocalRandom.doubles(double, double)
 
@@ -396,13 +315,8 @@ Throws:
 public DoubleStream doubles(double randomNumberOrigin, double randomNumberBound)
 ```
 
-(inherited documentation)
-
-**Implementation note:** This method is implemented to be equivalent to
-          `doubles(Long.MAX_VALUE, randomNumberOrigin, randomNumberBound)`.
-
-**Since:** 1.8
-
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+{@inheritDoc}
+@implNote This method is implemented to be equivalent to
+          {@code doubles(Long.MAX_VALUE, randomNumberOrigin, randomNumberBound)}.
+@throws IllegalArgumentException {@inheritDoc}
+@since 1.8

@@ -1,23 +1,14 @@
----
-title: "Testing services"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/testing/services.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Testing services
 
 Services typically contain your application's business logic that components rely on. Testing services verifies that the logic works correctly in isolation, independent of any component or template.
 
-This guide uses Vitest, which Angular CLI projects include by default. For more on testing setup, see the testing overview guide.
+This guide uses [Vitest](https://vitest.dev/), which Angular CLI projects include by default. For more on testing setup, see the [testing overview guide](guide/testing#set-up-for-testing).
 
 ## Testing a service
 
-Consider a `Calculator` service that performs basic <example-value>:
+Consider a `Calculator` service that performs basic arithmetic:
 
-```ts
+```ts { header: 'calculator.ts' }
 import {Service} from '@angular/core';
 
 @Service()
@@ -34,7 +25,7 @@ export class Calculator {
 
 To test this service, configure a `TestBed`, which is Angular's testing utility for creating an isolated testing environment for each test. It sets up dependency injection and lets you retrieve service instances — simulating how Angular wires things together in a real application.
 
-```ts
+```ts { header: 'calculator.spec.ts' }
 import {TestBed} from '@angular/core/testing';
 import {beforeEach, describe, expect, it} from 'vitest';
 import {Calculator} from './calculator';
@@ -66,7 +57,7 @@ Most services depend on other services to run properly. By default, `TestBed` pr
 
 Consider an `OrderTotal` service that relies on a `TaxCalculator` to compute the final price of an order:
 
-```ts
+```ts { header: 'tax-calculator.ts' }
 import {Service} from '@angular/core';
 
 @Service()
@@ -77,7 +68,7 @@ export class TaxCalculator {
 }
 ```
 
-```ts
+```ts { header: 'order-total.ts' }
 import {inject, Service} from '@angular/core';
 import {TaxCalculator} from './tax-calculator';
 
@@ -99,7 +90,7 @@ A stub is a way to replace a dependency or method with one that returns predicta
 
 To test `OrderTotal` without relying on the real `TaxCalculator`, you can provide a stub in the `TestBed` configuration.
 
-```ts
+```ts { header: 'order-total.spec.ts' }
 import {TestBed} from '@angular/core/testing';
 import {beforeEach, describe, expect, it, vi, type Mocked} from 'vitest';
 import {OrderTotal} from './order-total';
@@ -138,7 +129,7 @@ With this stub, whenever `OrderTotal` requests `TaxCalculator`, the `TestBed` kn
 
 A stub controls what a dependency returns, but sometimes you also need to verify that a service called its dependency with the correct arguments. This can be accomplished with spies, which track how a function is called. With Vitest, this functionality is built into `vi.fn()` and lets you assert on interactions between services.
 
-```ts
+```ts { header: 'order-total.spec.ts' }
 import {TestBed} from '@angular/core/testing';
 import {afterEach, beforeEach, describe, expect, it, vi, type Mocked} from 'vitest';
 import {OrderTotal} from './order-total';
@@ -182,4 +173,4 @@ The new test verifies that `OrderTotal` called `TaxCalculator.calculate` when co
 
 Many services use Angular's `HttpClient` to fetch data from a server. Angular provides dedicated testing utilities for `HttpClient` that let you control HTTP responses without making real network requests.
 
-For details on testing services that use `HttpClient`, see the HTTP testing guide.
+For details on testing services that use `HttpClient`, see the [HTTP testing guide](guide/http/testing).

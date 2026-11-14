@@ -1,30 +1,20 @@
----
-title: "ModuleOpenInfo interface (java.lang.classfile.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/attribute/ModuleOpenInfo.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ModuleOpenInfo interface (java.lang.classfile.attribute)
 
 ```java
 public sealed interface ModuleOpenInfo permits UnboundAttribute.UnboundModuleOpenInfo
 ```
 
-Models a single "opens" declaration in the `ModuleAttribute`.
+Models a single "opens" declaration in the {@link ModuleAttribute}.
 
-**API note:** Opening a package to another module allows that other module to gain
-the same full privilege access as members in this module.  See `MethodHandles.privateLookupIn` for more details.
+@apiNote
+Opening a package to another module allows that other module to gain
+the same full privilege access as members in this module.  See {@link
+MethodHandles#privateLookupIn} for more details.
 
-**See also:** ModuleAttribute#exports()
-
-**See also:** ModuleDescriptor.Opens
-
-**jvms:** 4.7.25 The `Module` Attribute
-
-**Since:** 24
+@see ModuleAttribute#exports()
+@see ModuleDescriptor.Opens
+@jvms 4.7.25 The {@code Module} Attribute
+@since 24
 
 ## ModuleOpenInfo.openedPackage()
 
@@ -32,7 +22,9 @@ the same full privilege access as members in this module.  See `MethodHandles.pr
 PackageEntry openedPackage()
 ```
 
-**See also:** ModuleDescriptor.Opens#source()
+{@return the package being opened}
+
+@see ModuleDescriptor.Opens#source()
 
 ## ModuleOpenInfo.opensFlagsMask()
 
@@ -40,11 +32,11 @@ PackageEntry openedPackage()
 int opensFlagsMask()
 ```
 
-It is in the range of unsigned short, `[0, 0xFFFF]`.
+{@return the flags associated with this open declaration, as a bit mask}
+It is in the range of unsigned short, {@code [0, 0xFFFF]}.
 
-**See also:** ModuleDescriptor.Opens#modifiers()
-
-**See also:** AccessFlag.Location#MODULE_OPENS
+@see ModuleDescriptor.Opens#modifiers()
+@see AccessFlag.Location#MODULE_OPENS
 
 ## ModuleOpenInfo.opensFlags()
 
@@ -52,13 +44,12 @@ It is in the range of unsigned short, `[0, 0xFFFF]`.
 default Set<AccessFlag> opensFlags()
 ```
 
-**See also:** ModuleDescriptor.Opens#accessFlags()
+{@return the flags associated with this open declaration, as a set of
+flag enums}
 
-**See also:** AccessFlag.Location#MODULE_OPENS
-
-Throws:
-
-- `IllegalArgumentException`: if the flags mask has any undefined bit set
+@throws IllegalArgumentException if the flags mask has any undefined bit set
+@see ModuleDescriptor.Opens#accessFlags()
+@see AccessFlag.Location#MODULE_OPENS
 
 ## ModuleOpenInfo.has(AccessFlag)
 
@@ -66,11 +57,10 @@ Throws:
 default boolean has(AccessFlag flag)
 ```
 
-Parameters:
+{@return whether the open declaration has the specified access flag set}
 
-- `flag`: the access flag
-
-**See also:** AccessFlag.Location#MODULE_OPENS
+@param flag the access flag
+@see AccessFlag.Location#MODULE_OPENS
 
 ## ModuleOpenInfo.opensTo()
 
@@ -78,9 +68,11 @@ Parameters:
 List<ModuleEntry> opensTo()
 ```
 
-**See also:** ModuleDescriptor.Opens#isQualified()
+{@return the modules to which this package is opened, or empty if this
+is an unqualified open}
 
-**See also:** ModuleDescriptor.Opens#targets()
+@see ModuleDescriptor.Opens#isQualified()
+@see ModuleDescriptor.Opens#targets()
 
 ## ModuleOpenInfo.of(PackageEntry, int, List<ModuleEntry>)
 
@@ -88,11 +80,12 @@ List<ModuleEntry> opensTo()
 static ModuleOpenInfo of(PackageEntry opens, int opensFlags, List<ModuleEntry> opensTo)
 ```
 
-Parameters:
+{@return a module open description}
 
-- `opens`: the package to open
-- `opensFlags`: the open flags
-- `opensTo`: the modules to which this package is opened, or empty if this is an unqualified open
+@param opens the package to open
+@param opensFlags the open flags
+@param opensTo the modules to which this package is opened, or empty if
+              this is an unqualified open
 
 ## ModuleOpenInfo.of(PackageEntry, Collection<AccessFlag>, List<ModuleEntry>)
 
@@ -100,15 +93,14 @@ Parameters:
 static ModuleOpenInfo of(PackageEntry opens, Collection<AccessFlag> opensFlags, List<ModuleEntry> opensTo)
 ```
 
-Parameters:
+{@return a module open description}
 
-- `opens`: the package to open
-- `opensFlags`: the open flags
-- `opensTo`: the modules to which this package is opened, or empty if this is an unqualified open
-
-Throws:
-
-- `IllegalArgumentException`: if any flag cannot be applied to the `AccessFlag.Location.MODULE_OPENS` location
+@param opens the package to open
+@param opensFlags the open flags
+@param opensTo the modules to which this package is opened, or empty if
+              this is an unqualified open
+@throws IllegalArgumentException if any flag cannot be applied to the
+        {@link AccessFlag.Location#MODULE_OPENS} location
 
 ## ModuleOpenInfo.of(PackageEntry, int, ModuleEntry...)
 
@@ -116,11 +108,12 @@ Throws:
 static ModuleOpenInfo of(PackageEntry opens, int opensFlags, ModuleEntry... opensTo)
 ```
 
-Parameters:
+{@return a module open description}
 
-- `opens`: the package to open
-- `opensFlags`: the open flags
-- `opensTo`: the modules to which this package is opened, or empty if this is an unqualified open
+@param opens the package to open
+@param opensFlags the open flags
+@param opensTo the modules to which this package is opened, or empty if
+              this is an unqualified open
 
 ## ModuleOpenInfo.of(PackageEntry, Collection<AccessFlag>, ModuleEntry...)
 
@@ -128,15 +121,14 @@ Parameters:
 static ModuleOpenInfo of(PackageEntry opens, Collection<AccessFlag> opensFlags, ModuleEntry... opensTo)
 ```
 
-Parameters:
+{@return a module open description}
 
-- `opens`: the package to open
-- `opensFlags`: the open flags
-- `opensTo`: the modules to which this package is opened, or empty if this is an unqualified open
-
-Throws:
-
-- `IllegalArgumentException`: if any flag cannot be applied to the `AccessFlag.Location.MODULE_OPENS` location
+@param opens the package to open
+@param opensFlags the open flags
+@param opensTo the modules to which this package is opened, or empty if
+              this is an unqualified open
+@throws IllegalArgumentException if any flag cannot be applied to the
+        {@link AccessFlag.Location#MODULE_OPENS} location
 
 ## ModuleOpenInfo.of(PackageDesc, int, List<ModuleDesc>)
 
@@ -144,11 +136,11 @@ Throws:
 static ModuleOpenInfo of(PackageDesc opens, int opensFlags, List<ModuleDesc> opensTo)
 ```
 
-Parameters:
-
-- `opens`: the package to open
-- `opensFlags`: the open flags
-- `opensTo`: the modules to which this package is opened, if it is a qualified open, or empty
+{@return a module open description}
+@param opens the package to open
+@param opensFlags the open flags
+@param opensTo the modules to which this package is opened, if it is a
+               qualified open, or empty
 
 ## ModuleOpenInfo.of(PackageDesc, Collection<AccessFlag>, List<ModuleDesc>)
 
@@ -156,15 +148,13 @@ Parameters:
 static ModuleOpenInfo of(PackageDesc opens, Collection<AccessFlag> opensFlags, List<ModuleDesc> opensTo)
 ```
 
-Parameters:
-
-- `opens`: the package to open
-- `opensFlags`: the open flags
-- `opensTo`: the modules to which this package is opened, if it is a qualified open, or empty
-
-Throws:
-
-- `IllegalArgumentException`: if any flag cannot be applied to the `AccessFlag.Location.MODULE_OPENS` location
+{@return a module open description}
+@param opens the package to open
+@param opensFlags the open flags
+@param opensTo the modules to which this package is opened, if it is a
+              qualified open, or empty
+@throws IllegalArgumentException if any flag cannot be applied to the
+        {@link AccessFlag.Location#MODULE_OPENS} location
 
 ## ModuleOpenInfo.of(PackageDesc, int, ModuleDesc...)
 
@@ -172,11 +162,11 @@ Throws:
 static ModuleOpenInfo of(PackageDesc opens, int opensFlags, ModuleDesc... opensTo)
 ```
 
-Parameters:
-
-- `opens`: the package to open
-- `opensFlags`: the open flags
-- `opensTo`: the packages to which this package is opened, or empty if this is an unqualified open
+{@return a module open description}
+@param opens the package to open
+@param opensFlags the open flags
+@param opensTo the packages to which this package is opened, or empty if
+              this is an unqualified open
 
 ## ModuleOpenInfo.of(PackageDesc, Collection<AccessFlag>, ModuleDesc...)
 
@@ -184,12 +174,10 @@ Parameters:
 static ModuleOpenInfo of(PackageDesc opens, Collection<AccessFlag> opensFlags, ModuleDesc... opensTo)
 ```
 
-Parameters:
-
-- `opens`: the package to open
-- `opensFlags`: the open flags
-- `opensTo`: the packages to which this package is opened, or empty if this is an unqualified open
-
-Throws:
-
-- `IllegalArgumentException`: if any flag cannot be applied to the `AccessFlag.Location.MODULE_OPENS` location
+{@return a module open description}
+@param opens the package to open
+@param opensFlags the open flags
+@param opensTo the packages to which this package is opened, or empty if
+              this is an unqualified open
+@throws IllegalArgumentException if any flag cannot be applied to the
+        {@link AccessFlag.Location#MODULE_OPENS} location

@@ -1,24 +1,22 @@
 ---
 title: "Creating Variant Generic Interfaces"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/programming-guide/concepts/covariance-contravariance/creating-variant-generic-interfaces.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to create variant generic interfaces with covariant or contravariant generic type parameters.
+ms.date: 07/20/2015
+ms.assetid: 30330ec4-9df2-4838-a535-6c406d0ed4df
 ---
 
 # Creating Variant Generic Interfaces (C#)
 
 You can declare generic type parameters in interfaces as covariant or contravariant. *Covariance* allows interface methods to have more derived return types than that defined by the generic type parameters. *Contravariance* allows interface methods to have argument types that are less derived than that specified by the generic parameters. A generic interface that has covariant or contravariant generic type parameters is called *variant*.
 
-> **Note:**
-> .NET Framework 4 introduced variance support for several existing generic interfaces. For the list of the variant interfaces in .NET, see Variance in Generic Interfaces (C#).
+> [!NOTE]
+> .NET Framework 4 introduced variance support for several existing generic interfaces. For the list of the variant interfaces in .NET, see [Variance in Generic Interfaces (C#)](./variance-in-generic-interfaces.md).
 
 ## Declaring Variant Generic Interfaces
 
 You can declare variant generic interfaces by using the `in` and `out` keywords for generic type parameters.
 
-> **Important:**
+> [!IMPORTANT]
 > `ref`, `in`, and `out` parameters in C# cannot be variant. Value types also do not support variance.
 
 You can declare a generic type parameter covariant by using the `out` keyword. The covariant type must satisfy the following conditions:
@@ -35,7 +33,7 @@ You can declare a generic type parameter covariant by using the `out` keyword. T
     }
     ```
 
-    There is one exception to this rule. If you have a contravariant generic delegate as a method parameter, you can use the type as a generic type parameter for the delegate. This is illustrated by the type `R` in the following example. For more information, see Variance in Delegates (C#) and Using Variance for Func and Action Generic Delegates (C#).
+    There is one exception to this rule. If you have a contravariant generic delegate as a method parameter, you can use the type as a generic type parameter for the delegate. This is illustrated by the type `R` in the following example. For more information, see [Variance in Delegates (C#)](./variance-in-delegates.md) and [Using Variance for Func and Action Generic Delegates (C#)](./using-variance-for-func-and-action-generic-delegates.md).
 
     ```csharp
     interface ICovariant<out R>
@@ -190,5 +188,5 @@ In this example, it is unspecified how the `pets.GetEnumerator` method chooses b
 
 ## See also
 
-- Variance in Generic Interfaces (C#)
-- Using Variance for Func and Action Generic Delegates (C#)
+- [Variance in Generic Interfaces (C#)](./variance-in-generic-interfaces.md)
+- [Using Variance for Func and Action Generic Delegates (C#)](./using-variance-for-func-and-action-generic-delegates.md)

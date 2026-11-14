@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: OpenID Connect `max_age` validates `auth_time`"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/11/openid-connect-max-age-validates-auth-time.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+ai-usage: ai-assisted
+description: "Learn about the breaking change in ASP.NET Core 11 where OpenID Connect validates the signed auth_time claim when an authorization request includes max_age."
+ms.date: 11/10/2026
 ---
-
 # OpenID Connect `max_age` validates `auth_time`
 
 To enforce the authentication freshness requested by an app, the ASP.NET Core OpenID Connect handler now validates the signed `auth_time` claim in ID tokens whenever the authorization request includes `max_age`. Providers that omit the claim or return an invalid authentication time now cause authentication to fail.
@@ -17,7 +14,7 @@ To enforce the authentication freshness requested by an app, the ASP.NET Core Op
 
 ## Previous behavior
 
-Previously, the OpenID Connect handler sent `max_age` to the identity provider but didn'<example-value>'s `auth_time` against that value. An app could accept authentication even if the provider omitted `auth_time` or reported an authentication time outside the requested limit.
+Previously, the OpenID Connect handler sent `max_age` to the identity provider but didn't validate the returned ID token's `auth_time` against that value. An app could accept authentication even if the provider omitted `auth_time` or reported an authentication time outside the requested limit.
 
 ## New behavior
 
@@ -25,10 +22,10 @@ Starting in ASP.NET Core 11, the handler validates `auth_time` after normal toke
 
 The effective value can come from any of the following sources:
 
-* `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions.MaxAge`
-* `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectChallengeProperties.MaxAge` for an individual challenge.
-* `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions.AdditionalAuthorizationParameters`
-* `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectEvents.OnRedirectToIdentityProvider`
+* <xref:Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions.MaxAge>
+* <xref:Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectChallengeProperties.MaxAge> for an individual challenge.
+* <xref:Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions.AdditionalAuthorizationParameters>
+* <xref:Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectEvents.OnRedirectToIdentityProvider>
 
 The signed ID token must contain `auth_time` as an integral, nonnegative OpenID Connect NumericDate: a JSON number that represents seconds since the Unix epoch and fits within the `DateTimeOffset` range. Authentication fails if the claim is missing, malformed, a string, fractional, negative, or outside that range.
 
@@ -45,13 +42,13 @@ For pushed authorization requests (PAR), set `max_age` in `OnRedirectToIdentityP
 
 ## Type of breaking change
 
-This change is a behavioral change. No API signatures change.
+This change is a [behavioral change](/dotnet/core/compatibility/categories#behavioral-change). No API signatures change.
 
 ## Reason for change
 
-To enforce the app's requested authentication freshness, the handler must validate the provider's signed assertion instead of only forwarding `max_age`. The OpenID Connect authentication request specification requires an `auth_time` claim when `max_age` is requested. For the implementation and background, see dotnet/aspnetcore#69321 and dotnet/aspnetcore#67462.
+To enforce the app's requested authentication freshness, the handler must validate the provider's signed assertion instead of only forwarding `max_age`. The [OpenID Connect authentication request specification](https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest) requires an `auth_time` claim when `max_age` is requested. For the implementation and background, see [dotnet/aspnetcore#69321](https://github.com/dotnet/aspnetcore/pull/69321) and [dotnet/aspnetcore#67462](https://github.com/dotnet/aspnetcore/issues/67462).
 
-This check trusts only the identity provider'<example-value>'t prove that a person performed a new physical authentication ceremony or protect against a compromised provider. It doesn'<example-value>'s local authentication cookie lifetime.
+This check trusts only the identity provider's signed assertion. It doesn't prove that a person performed a new physical authentication ceremony or protect against a compromised provider. It doesn't validate UserInfo claims, cover refresh-token redemption, or change the app's local authentication cookie lifetime.
 
 ## Recommended action
 
@@ -81,7 +78,7 @@ The switch defaults to `false`. To restore validation after the provider is fixe
 
 ## Affected APIs
 
-* `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions.MaxAge`
-* `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectChallengeProperties.MaxAge`
-* `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions.AdditionalAuthorizationParameters`
-* `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectEvents.OnRedirectToIdentityProvider`
+* <xref:Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions.MaxAge?displayProperty=fullName>
+* <xref:Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectChallengeProperties.MaxAge?displayProperty=fullName>
+* <xref:Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions.AdditionalAuthorizationParameters?displayProperty=fullName>
+* <xref:Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectEvents.OnRedirectToIdentityProvider?displayProperty=fullName>

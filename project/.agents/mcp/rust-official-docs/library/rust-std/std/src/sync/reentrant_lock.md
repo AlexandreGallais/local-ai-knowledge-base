@@ -1,12 +1,3 @@
----
-title: "std::sync::reentrant_lock"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sync/reentrant_lock.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::sync::reentrant_lock
 
 ## ReentrantLock::new
@@ -19,7 +10,7 @@ Creates a new re-entrant lock in an unlocked state ready for use.
 
 # Examples
 
-```rust
+```
 #![feature(reentrant_lock)]
 use std::sync::ReentrantLock;
 
@@ -36,7 +27,7 @@ Consumes this lock, returning the underlying data.
 
 # Examples
 
-```rust
+```
 #![feature(reentrant_lock)]
 
 use std::sync::ReentrantLock;
@@ -61,7 +52,7 @@ call succeeds without blocking.
 
 # Examples
 
-```rust
+```
 #![feature(reentrant_lock)]
 use std::cell::Cell;
 use std::sync::{Arc, ReentrantLock};
@@ -90,7 +81,7 @@ exist.
 
 # Examples
 
-```rust
+```
 #![feature(reentrant_lock)]
 use std::sync::ReentrantLock;
 

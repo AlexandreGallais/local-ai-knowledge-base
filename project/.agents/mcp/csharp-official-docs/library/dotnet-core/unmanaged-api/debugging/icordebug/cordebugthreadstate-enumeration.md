@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: CorDebugThreadState Enumeration"
 title: "CorDebugThreadState Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cordebugthreadstate-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "CorDebugThreadState"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "CorDebugThreadState"
+helpviewer_keywords:
+  - "CorDebugThreadState enumeration [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # CorDebugThreadState Enumeration
 
 Specifies the state of a thread for debugging.
@@ -29,13 +37,13 @@ typedef enum CorDebugThreadState {
 
 ## Remarks
 
- The debugger uses the `CorDebugThreadState` enumeration to control a thread's execution. The state of a thread can be set by using the ICorDebugThread::SetDebugState or ICorDebugController::SetAllThreadsDebugState method.
+ The debugger uses the `CorDebugThreadState` enumeration to control a thread's execution. The state of a thread can be set by using the [ICorDebugThread::SetDebugState](icordebugthread-setdebugstate-method.md) or [ICorDebugController::SetAllThreadsDebugState](icordebugcontroller-setallthreadsdebugstate-method.md) method.
 
- A callback provided to the hosting API enables message pumping, so an interrupted state is not needed.
+ A callback provided to the [hosting API](../../../../framework/unmanaged-api/hosting/index.md) enables message pumping, so an interrupted state is not needed.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

@@ -1,17 +1,15 @@
 ---
 title: "Breaking change: Empty strings in chained configuration override earlier providers"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/extensions/11/chained-configuration-empty-string.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where an empty string in a chained configuration overrides earlier providers."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # Empty strings in chained configuration override earlier providers
 
 Starting in .NET 11, a configuration added by using `AddConfiguration` treats an empty string as a present value. The empty string therefore overrides values from providers registered earlier in the outer configuration instead of allowing those earlier values to remain effective.
 
-This change continues the distinction between empty and `null` configuration values established in .NET 10 by Null values preserved in configuration. The handling of `null` by chained configuration is unchanged.
+This change continues the distinction between empty and `null` configuration values established in .NET 10 by [Null values preserved in configuration](../10.0/configuration-null-values-preserved.md). The handling of `null` by chained configuration is unchanged.
 
 ## Version introduced
 
@@ -50,7 +48,7 @@ Before .NET 11, the output was:
 Endpoint: 'https://example.com'
 ```
 
-When there was no earlier value, reading the key <example-value> `null`, and a section whose only value was the chained empty string was considered not to exist.
+When there was no earlier value, reading the key returned `null`, and a section whose only value was the chained empty string was considered not to exist.
 
 ## New behavior
 
@@ -66,11 +64,11 @@ A `null` value in the wrapped `IConfiguration` continues to be treated as absent
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-An empty string is a valid configuration value. Treating it as missing made chained configuration inconsistent with directly added configuration providers and prevented applications from intentionally clearing or disabling a setting by overriding it with an empty string. The new behavior preserves the configuration provider's distinction between an empty value and an absent value. For more information, see dotnet/runtime#131480.
+An empty string is a valid configuration value. Treating it as missing made chained configuration inconsistent with directly added configuration providers and prevented applications from intentionally clearing or disabling a setting by overriding it with an empty string. The new behavior preserves the configuration provider's distinction between an empty value and an absent value. For more information, see [dotnet/runtime#131480](https://github.com/dotnet/runtime/pull/131480).
 
 ## Recommended action
 
@@ -80,6 +78,6 @@ If your app relied on an empty string in a chained configuration allowing an ear
 
 ## Affected APIs
 
-- `Microsoft.Extensions.Configuration.ChainedConfigurationProvider.TryGet*`
-- `Microsoft.Extensions.Configuration.ChainedBuilderExtensions.AddConfiguration*`
-- `Microsoft.Extensions.Configuration.ChainedConfigurationSource.Build*`
+- <xref:Microsoft.Extensions.Configuration.ChainedConfigurationProvider.TryGet*?displayProperty=fullName>
+- <xref:Microsoft.Extensions.Configuration.ChainedBuilderExtensions.AddConfiguration*?displayProperty=fullName>
+- <xref:Microsoft.Extensions.Configuration.ChainedConfigurationSource.Build*?displayProperty=fullName>

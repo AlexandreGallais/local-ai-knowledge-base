@@ -1,14 +1,3 @@
----
-title: "ch18-01-what-is-oo"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch18-01-what-is-oo.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch18-01-what-is-oo
-
 ## Characteristics of Object-Oriented Languages
 
 There is no consensus in the programming community about what features a
@@ -55,14 +44,13 @@ demand whenever anyone needs it. In other words, `AveragedCollection` will
 cache the calculated average for us. Listing 18-1 has the definition of the
 `AveragedCollection` struct.
 
-**Listing 18-1: An `AveragedCollection` struct that maintains a list of integers and the average of the items in the collection** (src/lib.rs)
+<Listing number="18-1" file-name="src/lib.rs" caption="An `AveragedCollection` struct that maintains a list of integers and the average of the items in the collection">
 
-```rust
-pub struct AveragedCollection {
-    list: Vec<i32>,
-    average: f64,
-}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch18-oop/listing-18-01/src/lib.rs}}
 ```
+
+</Listing>
 
 The struct is marked `pub` so that other code can use it, but the fields within
 the struct remain private. This is important in this case because we want to
@@ -70,36 +58,13 @@ ensure that whenever a value is added or removed from the list, the average is
 also updated. We do this by implementing `add`, `remove`, and `average` methods
 on the struct, as shown in Listing 18-2.
 
-**Listing 18-2: Implementations of the public methods `add`, `remove`, and `average` on `AveragedCollection`** (src/lib.rs)
+<Listing number="18-2" file-name="src/lib.rs" caption="Implementations of the public methods `add`, `remove`, and `average` on `AveragedCollection`">
 
-```rust
-impl AveragedCollection {
-    pub fn add(&mut self, value: i32) {
-        self.list.push(value);
-        self.update_average();
-    }
-
-    pub fn remove(&mut self) -> Option<i32> {
-        let result = self.list.pop();
-        match result {
-            Some(value) => {
-                self.update_average();
-                Some(value)
-            }
-            None => None,
-        }
-    }
-
-    pub fn average(&self) -> f64 {
-        self.average
-    }
-
-    fn update_average(&mut self) {
-        let total: i32 = self.list.iter().sum();
-        self.average = total as f64 / self.list.len() as f64;
-    }
-}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch18-oop/listing-18-02/src/lib.rs:here}}
 ```
+
+</Listing>
 
 The public methods `add`, `remove`, and `average` are the only ways to access
 or modify data in an instance of `AveragedCollection`. When an item is added to

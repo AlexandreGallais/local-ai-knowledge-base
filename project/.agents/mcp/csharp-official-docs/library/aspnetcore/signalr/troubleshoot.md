@@ -1,12 +1,10 @@
 ---
-title: "ASP.NET Core SignalR connection troubleshooting"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/signalr/troubleshoot.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core SignalR connection troubleshooting
+ai-usage: ai-assisted
+description: ASP.NET Core SignalR connection troubleshooting.
+monikerRange: '>= aspnetcore-2.1'
+ms.date: 03/25/2026
 ---
-
 # Troubleshoot connection errors
 
 This section provides help with errors that can occur when trying to establish a connection to an ASP.NET Core SignalR hub.
@@ -64,11 +62,11 @@ Possible solution:
 
 Http status code 405 - Method Not Allowed
 
-* The app doesn't have CORS enabled
+* The app doesn't have [CORS](security.md#cross-origin-resource-sharing) enabled
 
 ### Response code 0
 
-Http status code 0 - Usually a CORS issue, no status code is given
+Http status code 0 - Usually a [CORS](security.md#cross-origin-resource-sharing) issue, no status code is given
 
 ```log
 Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at http://localhost:5000/default/negotiate?negotiateVersion=1. (Reason: CORS header 'Access-Control-Allow-Origin' missing).
@@ -98,8 +96,8 @@ This is often caused by having an access token that is over 4k.
 
 ### Transient network failures
 
-Transient network failures may close the SignalR connection. The server may interpret the closed connection as a graceful client disconnect. To get more info on why a client disconnected in those cases gather logs from the client and server.
+Transient network failures may close the SignalR connection. The server may interpret the closed connection as a graceful client disconnect. To get more info on why a client disconnected in those cases [gather logs from the client and server](diagnostics.md).
 
 ## Related content
 
-* SignalR Hub Protocol
+* [SignalR Hub Protocol](https://github.com/dotnet/aspnetcore/blob/main/src/SignalR/docs/specs/HubProtocol.md)

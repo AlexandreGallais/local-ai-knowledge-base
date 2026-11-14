@@ -1,10 +1,10 @@
 ---
-title: "Add Sort, Filter, Paging - ASP.NET MVC with EF Core (part 1 of 2)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/data/ef-mvc/sort-filter-page.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Add Sort, Filter, Paging - ASP.NET MVC with EF Core
+description: Add sorting, filtering, and paging functionality to the Students Index page, and create a page for simple grouping. This article is part of a tutorial series.
+ms.date: 04/20/2026
+ms.topic: tutorial
+
+# customer intent: As an ASP.NET developer, I want to add sorting, filtering, and paging functionality in ASP.NET MVC with EF Core, so I can customize my site pages and behavior.
 ---
 
 # Tutorial: Add sorting, filtering, and paging - ASP.NET MVC with EF Core
@@ -13,8 +13,11 @@ In the previous tutorial, you implemented a set of web pages for basic CRUD oper
 
 In this exercise, you add sorting, filtering, and paging functionality to the Students Index page. You also create a page that does simple grouping. The following illustration shows what the page looks like when you're done. The column headings are links the user can select to sort by that column. Selecting a column heading repeatedly causes the sort order to toggle between ascending and descending.
 
+:::image type="content" source="sort-filter-page/_static/paging.png" border="false" alt-text="Screenshot of the Students index page that includes sorting, filtering, and paging functionality.":::
+
 In this tutorial, you:
 
+> [!div class="checklist"]
 > * Add links to support column sorting
 > * Add a Search box to support searches
 > * Add paging to the Students Index
@@ -23,7 +26,7 @@ In this tutorial, you:
 
 ## Prerequisites
 
-* Complete the previous tutorial, Implement basic CRUD functionality - ASP.NET MVC with EF Core
+* Complete the previous tutorial, [Implement basic CRUD functionality - ASP.NET MVC with EF Core](crud.md)
 
 ## Add column sort links
 
@@ -33,31 +36,7 @@ To add sorting to the **Students Index** page, you change the `Index` method of 
 
 In the _StudentsController.cs_ file, replace the `Index` method with the following code:
 
-```csharp
-public async Task<IActionResult> Index(string sortOrder)
-{
-    ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-    ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
-    var students = from s in _context.Students
-                   select s;
-    switch (sortOrder)
-    {
-        case "name_desc":
-            students = students.OrderByDescending(s => s.LastName);
-            break;
-        case "Date":
-            students = students.OrderBy(s => s.EnrollmentDate);
-            break;
-        case "date_desc":
-            students = students.OrderByDescending(s => s.EnrollmentDate);
-            break;
-        default:
-            students = students.OrderBy(s => s.LastName);
-            break;
-    }
-    return View(await students.AsNoTracking().ToListAsync());
-}
-```
+[!code-csharp[](intro/samples/cu/Controllers/StudentsController.cs?name=snippet_SortOnly)]
 
 This code receives a `sortOrder` parameter from the query string in the URL. The query string value is provided by ASP.NET Core MVC as a parameter to the action method. The parameter is a string value: "Name" or "Date." The value is optionally followed by an underscore and the string "desc" to specify descending order. The default sort order is ascending.
 
@@ -65,31 +44,7 @@ The first time the **Index** page is requested, there's no query string. The stu
 
 The two `ViewData` elements (`NameSortParm` and `DateSortParm`) are used by the view to configure the column heading hyperlinks with the appropriate query string values.
 
-```csharp
-public async Task<IActionResult> Index(string sortOrder)
-{
-    ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-    ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
-    var students = from s in _context.Students
-                   select s;
-    switch (sortOrder)
-    {
-        case "name_desc":
-            students = students.OrderByDescending(s => s.LastName);
-            break;
-        case "Date":
-            students = students.OrderBy(s => s.EnrollmentDate);
-            break;
-        case "date_desc":
-            students = students.OrderByDescending(s => s.EnrollmentDate);
-            break;
-        default:
-            students = students.OrderBy(s => s.LastName);
-            break;
-    }
-    return View(await students.AsNoTracking().ToListAsync());
-}
-```
+[!code-csharp[](intro/samples/cu/Controllers/StudentsController.cs?name=snippet_SortOnly&highlight=3-4)]
 
 These code changes include ternary statements for the elements. The first statement specifies that if the `sortOrder` parameter is null or empty, the `NameSortParm` element is set to "name_desc." Otherwise, the element is set to an empty string. These two statements enable the view to set the column heading hyperlinks as follows:
 
@@ -102,65 +57,19 @@ These code changes include ternary statements for the elements. The first statem
 
 The method uses LINQ to Entities to specify the column to sort by. The code creates an `IQueryable` variable before the `switch` statement, modifies it in the `switch` statement, and calls the `ToListAsync` method after the `switch` statement. When you create and modify `IQueryable` variables, no query is sent to the database. The query isn't executed until you convert the `IQueryable` object into a collection by calling a method such as `ToListAsync`. Therefore, this code results in a single query that isn't executed until the `return View` statement.
 
-This code can get verbose when you work with a large number of columns. The last tutorial in this series, Learn about advanced scenarios > Use dynamic LINQ to simplify code, shows how to write code that lets you pass the name of the `OrderBy` column in a string variable.
+This code can get verbose when you work with a large number of columns. The last tutorial in this series, [Learn about advanced scenarios > Use dynamic LINQ to simplify code](advanced.md#dynamic-linq), shows how to write code that lets you pass the name of the `OrderBy` column in a string variable.
 
 ### Add column heading hyperlinks to the Student Index view
 
 Replace the code in the _Views/Students/Index.cshtml_ file with the following code that adds column heading hyperlinks. The changed lines are highlighted.
 
-```cshtml
-@model IEnumerable<ContosoUniversity.Models.Student>
-
-@{
-    ViewData["Title"] = "Index";
-}
-
-<h2>Index</h2>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-                <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.LastName)</a>
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstMidName)
-                </th>
-                <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.EnrollmentDate)</a>
-                </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstMidName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EnrollmentDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-```
+[!code-cshtml[](intro/samples/cu/Views/Students/Index2.cshtml?highlight=16,22)]
 
 This code uses the information in the `ViewData` properties to set up hyperlinks with the appropriate query string values.
 
 Run the app, select the **Students** tab, and select the **Last Name** and **Enrollment Date** column headings to verify sorting works.
+
+:::image type="content" source="sort-filter-page/_static/name-order.png" border="false" alt-text="Screenshot of the Students Index page showing the student last names sorted in ascending order.":::
 
 ## Add a Search box
 
@@ -170,38 +79,7 @@ To add filtering to the **Students Index** page, you add a text box and a **Subm
 
 In the _StudentsController.cs_ file, replace the `Index` method with the following code (the changes are highlighted).
 
-```csharp
-public async Task<IActionResult> Index(string sortOrder, string searchString)
-{
-    ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-    ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
-    ViewData["CurrentFilter"] = searchString;
-
-    var students = from s in _context.Students
-                   select s;
-    if (!String.IsNullOrEmpty(searchString))
-    {
-        students = students.Where(s => s.LastName.Contains(searchString)
-                               || s.FirstMidName.Contains(searchString));
-    }
-    switch (sortOrder)
-    {
-        case "name_desc":
-            students = students.OrderByDescending(s => s.LastName);
-            break;
-        case "Date":
-            students = students.OrderBy(s => s.EnrollmentDate);
-            break;
-        case "date_desc":
-            students = students.OrderByDescending(s => s.EnrollmentDate);
-            break;
-        default:
-            students = students.OrderBy(s => s.LastName);
-            break;
-    }
-    return View(await students.AsNoTracking().ToListAsync());
-}
-```
+[!code-csharp[](intro/samples/cu/Controllers/StudentsController.cs?name=snippet_SortFilter&highlight=1,5,9-13)]
 
 You added a `searchString` parameter to the `Index` method. The search string value is received from a text box that you add to the Index view. You also added a `where` clause to the `LINQ` statement that selects only students whose first name or last name match the search string. The statement that adds the `where` clause is executed only if there's a searchable value.
 
@@ -215,29 +93,15 @@ However, there's a performance penalty for this solution. The `ToUpper` code put
 
 ### Add a Search Box to the Student Index view
 
-In the _Views/Student/Index.cshtml_ file, add the highlighted code immediately before the opening table tag `` in order to create a caption, a text box, and a **Search** button.
+In the _Views/Student/Index.cshtml_ file, add the highlighted code immediately before the opening table tag `<table>` in order to create a caption, a text box, and a **Search** button.
 
-```cshtml
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+[!code-cshtml[](intro/samples/cu/Views/Students/Index3.cshtml?range=9-23&highlight=5-13)]
 
-<form asp-action="Index" method="get">
-    <div class="form-actions no-color">
-        <p>
-            <label>Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" /></label>
-            <input type="submit" value="Search" class="btn btn-default" /> |
-            <a asp-action="Index">Back to Full List</a>
-        </p>
-    </div>
-</form>
-
-<table class="table">
-```
-
-This code uses the `<form>` tag helper to add the search text box and button. By default, the `<form>` tag helper submits form data with a `POST`, which means the parameters are passed in the HTTP message body and not in the URL as query strings. When you specify HTTP `GET`, the form data is passed in the URL as query strings, which enables users to bookmark the URL. The W3C guidelines recommend using `GET` when the action doesn't result in an update.
+This code uses the `<form>` [tag helper](../../mvc/views/tag-helpers/intro.md) to add the search text box and button. By default, the `<form>` tag helper submits form data with a `POST`, which means the parameters are passed in the HTTP message body and not in the URL as query strings. When you specify HTTP `GET`, the form data is passed in the URL as query strings, which enables users to bookmark the URL. The W3C guidelines recommend using `GET` when the action doesn't result in an update.
 
 Run the app, select the **Students** tab, enter a search string, and select **Search** to verify filtering is working.
+
+:::image type="content" source="sort-filter-page/_static/filtering.png" border="false" alt-text="Screenshot of the Students Index page with filtering included.":::
 
 Notice that the URL contains the search string.
 
@@ -253,44 +117,136 @@ At this stage in your development, if you select a column heading sort link, you
 
 To add paging to the **Students Index** page, you create a `PaginatedList` class that uses `Skip` and `Take` statements to filter data on the server instead of always retrieving all table rows. Then you make more changes in the `Index` method and add paging buttons to the `Index` view. The following image shows the paging buttons.
 
+:::image type="content" source="sort-filter-page/_static/paging.png" border="false" alt-text="Screenshot of the Students index page with paging links.":::
+
 In the project folder, create the _PaginatedList.cs_ file. Replace the template code with the following code.
 
-```csharp
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-
-namespace ContosoUniversity
-{
-    public class PaginatedList<T> : List<T>
-    {
-        public int PageIndex { get; private set; }
-        public int TotalPages { get; private set; }
-
-        public PaginatedList(List<T> items, int count, int pageIndex, int pageSize)
-        {
-            PageIndex = pageIndex;
-            TotalPages = (int)Math.Ceiling(count / (double)pageSize);
-
-            this.AddRange(items);
-        }
-
-        public bool HasPreviousPage => PageIndex > 1;
-
-        public bool HasNextPage => PageIndex < TotalPages;
-
-        public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
-        {
-            var count = await source.CountAsync();
-            var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
-            return new PaginatedList<T>(items, count, pageIndex, pageSize);
-        }
-    }
-}
-```
+[!code-csharp[](intro/samples/cu/PaginatedList.cs)]
 
 The `CreateAsync` method in this code takes page size and page number and applies the appropriate `Skip` and `Take` statements to the `IQueryable` object. When the `ToListAsync` method is called on the `IQueryable` object, the method returns a `List` containing only the requested page. The `HasPreviousPage` and `HasNextPage` properties can be used to enable or disable **Previous** and **Next** paging buttons.
 
 A `CreateAsync` method is used instead of a constructor to create the `PaginatedList<T>` object because constructors can't run asynchronous code.
+
+## Add paging to the Index method
+
+In the _StudentsController.cs_ file, replace the `Index` method with the following code.
+
+[!code-csharp[](intro/samples/cu/Controllers/StudentsController.cs?name=snippet_SortFilterPage&highlight=1-5,7,11-18,45-46)]
+
+This code adds a page number parameter, a current sort order parameter, and a current filter parameter to the method signature.
+
+```csharp
+public async Task<IActionResult> Index(
+    string sortOrder,
+    string currentFilter,
+    string searchString,
+    int? pageNumber)
+```
+
+The first time the page displays, or a paging or sorting link isn't selected yet, all parameters are null. If a paging link is selected, the page variables contain the page number to display.
+
+The `ViewData` element named `CurrentSort` provides the view with the current sort order. This value must be included in the paging links so the sort order stays the same while paging.
+
+The `ViewData` element named `CurrentFilter` provides the view with the current filter string. This value must be included in the paging links to maintain the filter settings during paging. The value must be restored to the text box when the page displays.
+
+If the search string is changed during paging, the page must be reset to 1 because the new filter can result in different data to display. The search string is changed when a value is entered in the text box and the user selects **Submit**. In this scenario, the `searchString` parameter isn't null.
+
+```csharp
+if (searchString != null)
+{
+    pageNumber = 1;
+}
+else
+{
+    searchString = currentFilter;
+}
+```
+
+At the end of the `Index` method, the `PaginatedList.CreateAsync` method converts the student query to a single page of students in a collection type that supports paging. The single page of students is then passed to the view.
+
+```csharp
+return View(await PaginatedList<Student>.CreateAsync(students.AsNoTracking(), pageNumber ?? 1, pageSize));
+```
+
+The `PaginatedList.CreateAsync` method takes a page number. The two question marks `??` represent the null-coalescing operator. The null-coalescing operator defines a default value for a nullable type. The expression `(pageNumber ?? 1)` means return the value of `pageNumber` if it has a value, or return 1 if `pageNumber` is null.
+
+## Add paging links
+
+In the _Views/Students/Index.cshtml_ file, replace the existing code with the following code. The changes are highlighted.
+
+[!code-cshtml[](intro/samples/cu/Views/Students/Index.cshtml?highlight=1,27,30,33,61-79)]
+
+The `@model` statement at the top of the page specifies that the view now gets a `PaginatedList<T>` object instead of a `List<T>` object.
+
+The column header links use the query string to pass the current search string to the controller so the user can sort within filter results:
+
+```html
+<a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter ="@ViewData["CurrentFilter"]">Enrollment Date</a>
+```
+
+Tag helpers display the paging buttons:
+
+```html
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+   Previous
+</a>
+```
+
+Run the app and go to the **Students** page.
+
+:::image type="content" source="sort-filter-page/_static/paging.png" border="false" alt-text="Screenshot of the refreshed Students Index page with paging links.":::
+
+Select the paging links in different sort orders and make sure paging works. Enter a search string and try paging again to verify paging also works correctly with sorting and filtering.
+
+## Create an About page
+
+For the Contoso University website's **About** page, you display how many students are enrolled for each enrollment date. This functionality requires grouping and simple calculations on the groups. To support this behavior, you complete the following tasks:
+
+* Create a view model class for the data that you need to pass to the view.
+* Create the `About` method in the Home controller.
+* Create the About view.
+
+### Create the view model
+
+Create a *SchoolViewModels* folder in the *Models* folder.
+
+In the new folder, add an _EnrollmentDateGroup.cs_ class file and replace the template code with the following code:
+
+[!code-csharp[](intro/samples/cu/Models/SchoolViewModels/EnrollmentDateGroup.cs)]
+
+### Modify the Home Controller
+
+In the _HomeController.cs_ file, add the following `using` statements at the top of the file:
+
+[!code-csharp[](intro/samples/cu/Controllers/HomeController.cs?name=snippet_Usings1)]
+
+Add a class variable for the database context immediately after the opening curly brace `{` for the class, and get an instance of the context from ASP.NET Core DI:
+
+[!code-csharp[](intro/samples/cu/Controllers/HomeController.cs?name=snippet_AddContext&highlight=4,6,9)]
+
+Add an `About` method with the following code:
+
+[!code-csharp[](intro/samples/cu/Controllers/HomeController.cs?name=snippet_UseDbSet)]
+
+The `LINQ` statement groups the student entities by enrollment date. It calculates the number of entities in each group, and stores the results in a collection of `EnrollmentDateGroup` view model objects.
+
+### Create the About view
+
+Add a _Views/Home/About.cshtml_ file with the following code:
+
+[!code-cshtml[](intro/samples/cu/Views/Home/About.cshtml)]
+
+Run the app and go to the **About** page. The count of students for each enrollment date is displayed in a table.
+
+## Get the code
+
+[Download or view the completed application](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/data/ef-mvc/intro/samples/cu-final).
+
+## Next step
+
+> [!div class="nextstepaction"]
+> [Tutorial: Apply migrations (data model changes) to the Contoso University sample](migrations.md)

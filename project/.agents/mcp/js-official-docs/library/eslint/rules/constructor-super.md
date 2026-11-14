@@ -1,13 +1,8 @@
 ---
-title: "constructor-super"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/constructor-super.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: constructor-super
+rule_type: problem
+handled_by_typescript: true
 ---
-
-# constructor-super
 
 Constructors of derived classes must call `super()`.
 Constructors of non derived classes must not call `super()`.
@@ -31,7 +26,7 @@ class A {
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint constructor-super: "error"*/
@@ -52,9 +47,11 @@ class D extends null {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint constructor-super: "error"*/
@@ -69,6 +66,8 @@ class B extends C {
     }
 }
 ```
+
+:::
 
 ## Options
 

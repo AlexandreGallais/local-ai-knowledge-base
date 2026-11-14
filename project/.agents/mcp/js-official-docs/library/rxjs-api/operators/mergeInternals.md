@@ -1,0 +1,19 @@
+# src/internal/operators/mergeInternals
+
+## mergeInternals
+
+```ts
+export function mergeInternals<T, R>( source: Observable<T>, subscriber: Subscriber<R>, project: (value: T, index: number)
+```
+
+A process embodying the general "merge" strategy. This is used in
+`mergeMap` and `mergeScan` because the logic is otherwise nearly identical.
+@param source The original source observable
+@param subscriber The consumer subscriber
+@param project The projection function to get our inner sources
+@param concurrent The number of concurrent inner subscriptions
+@param onBeforeNext Additional logic to apply before nexting to our consumer
+@param expand If `true` this will perform an "expand" strategy, which differs only
+in that it recurses, and the inner subscription must be schedule-able.
+@param innerSubScheduler A scheduler to use to schedule inner subscriptions,
+this is to support the expand strategy, mostly, and should be deprecated

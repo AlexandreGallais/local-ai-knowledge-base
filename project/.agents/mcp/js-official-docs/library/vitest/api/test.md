@@ -1,10 +1,5 @@
 ---
-title: "Test (part 1 of 2)"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/api/test.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+outline: deep
 ---
 
 # Test
@@ -26,7 +21,7 @@ function test(
 
 `test` or `it` defines a set of related expectations. It receives the test name and a function that holds the expectations to test.
 
-Optionally, you can provide a timeout (in milliseconds) for specifying how long to wait before terminating, or a set of additional options. The default timeout is 5 seconds, and can be configured globally with `testTimeout`.
+Optionally, you can provide a timeout (in milliseconds) for specifying how long to wait before terminating, or a set of [additional options](#test-options). The default timeout is 5 seconds, and can be configured globally with [`testTimeout`](/config/testtimeout).
 
 ```ts
 import { expect, test } from 'vitest'
@@ -36,15 +31,17 @@ test('should work as expected', () => {
 })
 ```
 
-**Warning:**
+::: warning
 If the first argument is a function, its `name` property will be used as the name of the test. The function itself will not be called.
 
 If test body is not provided, the test is marked as `todo`.
+:::
 
 When a test function returns a promise, the runner will wait until it is resolved to collect async expectations. If the promise is rejected, the test will fail.
 
-**Tip:**
-In Jest, `TestFunction` can also be of type `(done: DoneCallback) => void`. If this form is used, the test will not be concluded until `done` is called. You can achieve the same using an `async` function, see the Migration guide Done Callback section.
+::: tip
+In Jest, `TestFunction` can also be of type `(done: DoneCallback) => void`. If this form is used, the test will not be concluded until `done` is called. You can achieve the same using an `async` function, see the [Migration guide Done Callback section](/guide/migration/jest#done-callback).
+:::
 
 ## Test Options
 
@@ -78,16 +75,16 @@ test('skipped concurrent test', { skip: true, concurrent: true }, () => {
 
 They both work in exactly the same way. To use either one is purely a stylistic choice.
 
-Options set to `undefined` are ignored. They don't override values from the chain, the parent suite, or tags.
+Options set to `undefined` are ignored. They don't override values from the chain, the parent suite, or [tags](/guide/test-tags).
 
 ### timeout
 
 - **Type:** `number`
-- **Default:** `5_000` (configured by `testTimeout`)
+- **Default:** `5_000` (configured by [`testTimeout`](/config/testtimeout))
 
 Test timeout in milliseconds.
 
-**Warning:**
+::: warning
 Note that if you are providing timeout as the last argument, you cannot use options anymore:
 
 ```ts
@@ -115,9 +112,11 @@ test('heavy test', { skip: true, timeout: 10_000 }, () => {
 })
 ```
 
+:::
+
 ### retry
 
-- **Default:** `0` (configured by `retry`)
+- **Default:** `0` (configured by [`retry`](/config/retry))
 - **Type:**
 
 ```ts
@@ -164,7 +163,7 @@ This can be useful for debugging flaky tests.
 - **Type:** `string[]`
 - **Default:** `[]`
 
-Custom user tags. If the tag is not specified in the configuration, the test will fail before it starts, unless `strictTags` is disabled manually.
+Custom user [tags](/guide/test-tags). If the tag is not specified in the [configuration](/config/tags), the test will fail before it starts, unless [`strictTags`](/config/stricttags) is disabled manually.
 
 ```ts
 import { it } from 'vitest'
@@ -178,9 +177,9 @@ it('user returns data from db', { tags: ['db', 'flaky'] }, () => {
 
 - **Type:** `TaskMeta`
 
-Attaches custom metadata available in reporters.
+Attaches custom [metadata](/api/advanced/metadata) available in reporters.
 
-**Warning:**
+::: warning
 Vitest merges top-level properties inherited from suites or tags. However, it does not perform a deep merge of nested objects.
 
 ```ts
@@ -211,16 +210,17 @@ describe(
 ```
 
 Prefer using non-nested meta, if possible.
+:::
 
 ### concurrent
 
 - **Type:** `boolean`
-- **Default:** `false` (configured by `sequence.concurrent`)
-- **Alias:** `test.concurrent`
+- **Default:** `false` (configured by [`sequence.concurrent`](/config/sequence#sequence-concurrent))
+- **Alias:** [`test.concurrent`](#test-concurrent)
 
 Whether this test run concurrently with other concurrent tests in the suite.
 
-Set `concurrent` to `false` to opt out of concurrency inherited from `describe.concurrent` or `sequence.concurrent`:
+Set `concurrent` to `false` to opt out of concurrency inherited from [`describe.concurrent`](/api/describe#describe-concurrent) or [`sequence.concurrent`](/config/sequence#sequence-concurrent):
 
 ```ts
 test('runs sequentially', { concurrent: false }, async () => {
@@ -232,7 +232,7 @@ test('runs sequentially', { concurrent: false }, async () => {
 
 - **Type:** `boolean`
 - **Default:** `false`
-- **Alias:** `test.skip`
+- **Alias:** [`test.skip`](#test-skip)
 
 Whether the test should be skipped.
 
@@ -240,7 +240,7 @@ Whether the test should be skipped.
 
 - **Type:** `boolean`
 - **Default:** `false`
-- **Alias:** `test.only`
+- **Alias:** [`test.only`](#test-only)
 
 Should this test be the only one running in a suite.
 
@@ -248,7 +248,7 @@ Should this test be the only one running in a suite.
 
 - **Type:** `boolean`
 - **Default:** `false`
-- **Alias:** `test.todo`
+- **Alias:** [`test.todo`](#test-todo)
 
 Whether the test should be skipped and marked as a todo.
 
@@ -256,7 +256,7 @@ Whether the test should be skipped and marked as a todo.
 
 - **Type:** `boolean`
 - **Default:** `false`
-- **Alias:** `test.fails`
+- **Alias:** [`test.fails`](#test-fails)
 
 Whether the test is expected to fail. If it does, the test will pass, otherwise it will fail.
 
@@ -264,7 +264,7 @@ Whether the test is expected to fail. If it does, the test will pass, otherwise 
 
 - **Alias:** `it.extend`
 
-Use `test.extend` to extend the test context with custom fixtures. This will return a new `test` and it's also extendable, so you can compose more fixtures or override existing ones by extending it as you need. See Extend Test Context for more information.
+Use `test.extend` to extend the test context with custom fixtures. This will return a new `test` and it's also extendable, so you can compose more fixtures or override existing ones by extending it as you need. See [Extend Test Context](/guide/test-context#extend-test-context) for more information.
 
 ```ts
 import { test as baseTest, expect } from 'vitest'
@@ -289,7 +289,7 @@ test('server uses correct port', ({ config, server }) => {
 
 ## test.override <Version>4.1.0</Version> {#test-override}
 
-Use `test.override` to override fixture values for all tests within the current suite and its nested suites. This must be called at the top level of a `describe` block. See Overriding Fixture Values for more information.
+Use `test.override` to override fixture values for all tests within the current suite and its nested suites. This must be called at the top level of a `describe` block. See [Overriding Fixture Values](/guide/test-context#overriding-fixture-values) for more information.
 
 ```ts
 import { test as baseTest, describe, expect } from 'vitest'
@@ -313,10 +313,11 @@ describe('use scoped values', () => {
 
 - **Alias:** `it.scoped`
 
-**DEPRECATED**
-`test.scoped` is deprecated in favor of `test.override` and will be removed in a future major version.
+::: danger DEPRECATED
+`test.scoped` is deprecated in favor of [`test.override`](#test-override) and will be removed in a future major version.
+:::
 
-Alias of `test.override`
+Alias of [`test.override`](#test-override)
 
 ## test.skip
 
@@ -333,7 +334,7 @@ test.skip('skipped test', () => {
 })
 ```
 
-You can also skip test by calling `skip` on its context dynamically:
+You can also skip test by calling `skip` on its [context](/guide/test-context) dynamically:
 
 ```ts
 import { assert, test } from 'vitest'
@@ -373,13 +374,13 @@ test.skipIf(isDev)('prod only test', () => {
 })
 ```
 
-Unlike `test.skip`, `test.skipIf` always sets the `skip` option: `true` if the condition is truthy, `false` otherwise. A falsy condition overrides `skip` inherited from tags, the same as `test(name, { skip: false })`.
+Unlike `test.skip`, `test.skipIf` always sets the [`skip`](#skip) option: `true` if the condition is truthy, `false` otherwise. A falsy condition overrides `skip` inherited from [tags](/guide/test-tags), the same as `test(name, { skip: false })`.
 
 ## test.runIf
 
 - **Alias:** `it.runIf`
 
-Opposite of test.skipIf. It always sets the `skip` option: `false` if the condition is truthy, `true` otherwise.
+Opposite of [test.skipIf](#test-skipif). It always sets the [`skip`](#skip) option: `false` if the condition is truthy, `true` otherwise.
 
 ```ts
 import { assert, test } from 'vitest'
@@ -414,8 +415,9 @@ In order to do that, run `vitest` with specific file containing the tests in que
 vitest interesting.test.ts
 ```
 
-**Warning:**
-Vitest detects when tests are running in CI and will throw an error if any test has `only` flag. You can configure this behaviour via `allowOnly` option.
+::: warning
+Vitest detects when tests are running in CI and will throw an error if any test has `only` flag. You can configure this behaviour via [`allowOnly`](/config/allowonly) option.
+:::
 
 ## test.concurrent
 
@@ -443,7 +445,7 @@ test.only.concurrent(/* ... */) // or test.concurrent.only(/* ... */)
 test.todo.concurrent(/* ... */) // or test.concurrent.todo(/* ... */)
 ```
 
-When running concurrent tests, Snapshots and Assertions must use `expect` from the local Test Context to ensure the right test is detected.
+When running concurrent tests, Snapshots and Assertions must use `expect` from the local [Test Context](/guide/test-context.md) to ensure the right test is detected.
 
 ```ts
 test.concurrent('test 1', async ({ expect }) => {
@@ -469,8 +471,9 @@ test.todo('unimplemented test', () => {
 })
 ```
 
-**Tip:**
+::: tip
 Vitest will automatically mark test as `todo` if test has no body.
+:::
 
 ## test.fails
 
@@ -487,3 +490,193 @@ test.fails('repro #1234', () => {
 ```
 
 This flag is useful to track difference in behaviour of your library over time. For example, you can define a failing test without fixing the issue yet due to time constraints. Tests marked with `fails` are tracked in the test summary since Vitest 4.1.
+
+## test.each
+
+- **Alias:** `it.each`
+
+::: tip
+While `test.each` is provided for Jest compatibility,
+Vitest also has [`test.for`](#test-for) with an additional feature to integrate [`TestContext`](/guide/test-context).
+:::
+
+Use `test.each` when you need to run the same test with different variables.
+You can inject parameters with [printf formatting](https://nodejs.org/api/util.html#util_util_format_format_args) in the test name in the order of the test function parameters.
+
+- `%s`: string
+- `%d`: number
+- `%i`: integer
+- `%f`: floating point value
+- `%j`: json
+- `%o`: object
+- `%#`: 0-based index of the test case
+- `%$`: 1-based index of the test case
+- `%%`: single percent sign ('%')
+
+```ts
+import { expect, test } from 'vitest'
+
+test.each([
+  [1, 1, 2],
+  [1, 2, 3],
+  [2, 1, 3],
+])('add(%i, %i) -> %i', (a, b, expected) => {
+  expect(a + b).toBe(expected)
+})
+
+// this will return
+// ✓ add(1, 1) -> 2
+// ✓ add(1, 2) -> 3
+// ✓ add(2, 1) -> 3
+```
+
+You can also access object properties and array elements with `$` prefix:
+
+```ts
+test.each([
+  { a: 1, b: 1, expected: 2 },
+  { a: 1, b: 2, expected: 3 },
+  { a: 2, b: 1, expected: 3 },
+])('add($a, $b) -> $expected', ({ a, b, expected }) => {
+  expect(a + b).toBe(expected)
+})
+
+// this will return
+// ✓ add(1, 1) -> 2
+// ✓ add(1, 2) -> 3
+// ✓ add(2, 1) -> 3
+
+test.each([
+  [1, 1, 2],
+  [1, 2, 3],
+  [2, 1, 3],
+])('add($0, $1) -> $2', (a, b, expected) => {
+  expect(a + b).toBe(expected)
+})
+
+// this will return
+// ✓ add(1, 1) -> 2
+// ✓ add(1, 2) -> 3
+// ✓ add(2, 1) -> 3
+```
+
+You can also access Object attributes with `.`, if you are using objects as arguments:
+
+```ts
+test.each`
+a               | b      | expected
+${{ val: 1 }}   | ${'b'} | ${'1b'}
+${{ val: 2 }}   | ${'b'} | ${'2b'}
+${{ val: 3 }}   | ${'b'} | ${'3b'}
+`('add($a.val, $b) -> $expected', ({ a, b, expected }) => {
+  expect(a.val + b).toBe(expected)
+})
+
+// this will return
+// ✓ add(1, b) -> 1b
+// ✓ add(2, b) -> 2b
+// ✓ add(3, b) -> 3b
+```
+
+- First row should be column names, separated by `|`;
+- One or more subsequent rows of data supplied as template literal expressions using `${value}` syntax.
+
+```ts
+import { expect, test } from 'vitest'
+
+test.each`
+  a               | b      | expected
+  ${1}            | ${1}   | ${2}
+  ${'a'}          | ${'b'} | ${'ab'}
+  ${[]}           | ${'b'} | ${'b'}
+  ${{}}           | ${'b'} | ${'[object Object]b'}
+  ${{ asd: 1 }}   | ${'b'} | ${'[object Object]b'}
+`('returns $expected when $a is added $b', ({ a, b, expected }) => {
+  expect(a + b).toBe(expected)
+})
+```
+
+::: tip
+Vitest formats interpolated title values with its display formatter. If the value is too truncated, you can increase [taskTitleValueFormatTruncate](/config/tasktitlevalueformattruncate) in your config file.
+:::
+
+## test.for
+
+- **Alias:** `it.for`
+
+Alternative to `test.each` to provide [`TestContext`](/guide/test-context).
+
+The difference from `test.each` lies in how arrays are provided in the arguments.
+Non-array arguments to `test.for` (including template string usage) work exactly the same as for `test.each`.
+
+```ts
+// `each` spreads arrays
+test.each([
+  [1, 1, 2],
+  [1, 2, 3],
+  [2, 1, 3],
+])('add(%i, %i) -> %i', (a, b, expected) => { // [!code --]
+  expect(a + b).toBe(expected)
+})
+
+// `for` doesn't spread arrays (notice the square brackets around the arguments)
+test.for([
+  [1, 1, 2],
+  [1, 2, 3],
+  [2, 1, 3],
+])('add(%i, %i) -> %i', ([a, b, expected]) => { // [!code ++]
+  expect(a + b).toBe(expected)
+})
+```
+
+The 2nd argument is [`TestContext`](/guide/test-context) and can be used for concurrent snapshots, for example:
+
+```ts
+test.concurrent.for([
+  [1, 1],
+  [1, 2],
+  [2, 1],
+])('add(%i, %i)', ([a, b], { expect }) => {
+  expect(a + b).toMatchSnapshot()
+})
+```
+
+## test.describe <Version>4.1.0</Version> {#test-describe}
+
+Scoped `describe`. See [describe](/api/describe) for more information.
+
+## test.suite <Version>4.1.0</Version> {#test-suite}
+
+Alias for `suite`. See [describe](/api/describe) for more information.
+
+## test.beforeEach
+
+Scoped `beforeEach` hook that inherits types from [`test.extend`](#test-extend). See [beforeEach](/api/hooks#beforeeach) for more information.
+
+## test.afterEach
+
+Scoped `afterEach` hook that inherits types from [`test.extend`](#test-extend). See [afterEach](/api/hooks#aftereach) for more information.
+
+## test.beforeAll
+
+Scoped `beforeAll` hook that inherits types from [`test.extend`](#test-extend). See [beforeAll](/api/hooks#beforeall) for more information.
+
+## test.afterAll
+
+Scoped `afterAll` hook that inherits types from [`test.extend`](#test-extend). See [afterAll](/api/hooks#afterall) for more information.
+
+## test.aroundEach <Version>4.1.0</Version> {#test-aroundeach}
+
+Scoped `aroundEach` hook that inherits types from [`test.extend`](#test-extend). See [aroundEach](/api/hooks#aroundeach) for more information.
+
+## test.aroundAll <Version>4.1.0</Version> {#test-aroundall}
+
+Scoped `aroundAll` hook that inherits types from [`test.extend`](#test-extend). See [aroundAll](/api/hooks#aroundall) for more information.
+
+## bench <Experimental /> {#bench}
+
+::: warning Updated in Vitest 5
+The benchmarking API has been rewritten. `bench` is no longer a top-level import from `vitest`, and the `bench.skip` / `bench.only` / `bench.todo` helpers have been removed. `bench` is now a [test-context fixture](/guide/test-context#bench) accessed from inside a `test()`.
+
+See the [Benchmarking guide](/guide/benchmarking) for the new API.
+:::

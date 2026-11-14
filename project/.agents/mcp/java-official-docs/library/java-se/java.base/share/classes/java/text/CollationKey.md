@@ -1,70 +1,81 @@
----
-title: "CollationKey class (java.text)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/text/CollationKey.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # CollationKey class (java.text)
 
 ```java
-public abstract class CollationKey <example-value> Comparable<CollationKey>
+public abstract class CollationKey implements Comparable<CollationKey>
 ```
 
-A `CollationKey` represents a `String` under the
-rules of a specific `Collator` object. Comparing two
-`CollationKey`s returns the relative order of the
-`String`s they represent. Using `CollationKey`s
-to compare `String`s is generally faster than using
-`Collator.compare`. Thus, when the `String`s
+A {@code CollationKey} represents a {@code String} under the
+rules of a specific {@code Collator} object. Comparing two
+{@code CollationKey}s returns the relative order of the
+{@code String}s they represent. Using {@code CollationKey}s
+to compare {@code String}s is generally faster than using
+{@code Collator.compare}. Thus, when the {@code String}s
 must be compared multiple times, for example when sorting a list
-of `String`s. It's more efficient to use `CollationKey`s.
+of {@code String}s. It's more efficient to use {@code CollationKey}s.
 
-You can not create `CollationKey`s directly. Rather,
-generate them by calling `Collator.getCollationKey`.
-You can only compare `CollationKey`s generated from
-the same `Collator` object.
+<p>
+You can not create {@code CollationKey}s directly. Rather,
+generate them by calling {@code Collator.getCollationKey}.
+You can only compare {@code CollationKey}s generated from
+the same {@code Collator} object.
 
-Generating a `CollationKey` for a `String`
-involves examining the entire `String`
+<p>
+Generating a {@code CollationKey} for a {@code String}
+involves examining the entire {@code String}
 and converting it to series of bits that can be compared bitwise. This
 allows fast comparisons once the keys are generated. The cost of generating
-keys is recouped in faster comparisons when `String`s need
+keys is recouped in faster comparisons when {@code String}s need
 to be compared many times. On the other hand, the result of a comparison
-is often determined by the first couple of characters of each `String`.
-`Collator.compare` examines only as many characters as it needs which
+is often determined by the first couple of characters of each {@code String}.
+{@code Collator.compare} examines only as many characters as it needs which
 allows it to be faster when doing single comparisons.
+<p>
+The following example shows how {@code CollationKey}s might be used
+to sort a list of {@code String}s.
+<blockquote>
+{@snippet lang=java :
+// Create an array of CollationKeys for the Strings to be sorted.
+Collator myCollator = Collator.getInstance();
+CollationKey[] keys = new CollationKey[3];
+keys[0] = myCollator.getCollationKey("Tom");
+keys[1] = myCollator.getCollationKey("Dick");
+keys[2] = myCollator.getCollationKey("Harry");
+sort(keys);
 
-The following example shows how `CollationKey`s might be used
-to sort a list of `String`s.
+//...
 
-**See also:** Collator
+// Inside body of sort routine, compare keys this way
+if (keys[i].compareTo(keys[j]) > 0)
+   // swap keys[i] and keys[j]
 
-**See also:** RuleBasedCollator
+//...
 
-**Since:** 1.1
+// Finally, when we've returned from sort.
+System.out.println(keys[0].getSourceString());
+System.out.println(keys[1].getSourceString());
+System.out.println(keys[2].getSourceString());
+}
+</blockquote>
+
+@see          Collator
+@see          RuleBasedCollator
+@author       Helena Shih
+@since 1.1
 
 ## CollationKey.compareTo(CollationKey)
 
 ```java
-public abstract int compareTo(CollationKey <example-value>)
+public abstract int compareTo(CollationKey target)
 ```
 
 Compare this CollationKey to the target CollationKey. The collation rules of the
-Collator object which created these keys are applied. **Note:**
+Collator object which created these keys are applied. <strong>Note:</strong>
 CollationKeys created by different Collators can not be compared.
-
-Parameters:
-
-- `target`: target CollationKey
-
-**Returns:** Returns an integer value. Value is less than zero if this is less
+@param target target CollationKey
+@return Returns an integer value. Value is less than zero if this is less
 than target, value is zero if this and target are equal and value is greater than
 zero if this is greater than target.
-
-**See also:** java.text.Collator#compare
+@see java.text.Collator#compare
 
 ## CollationKey.getSourceString()
 
@@ -74,7 +85,7 @@ public String getSourceString()
 
 Returns the String that this CollationKey represents.
 
-**Returns:** the source string of this CollationKey
+@return the source string of this CollationKey
 
 ## CollationKey.toByteArray()
 
@@ -87,7 +98,7 @@ could be legitimately compared, then one could compare the byte arrays
 for each of those keys to obtain the same result.  Byte arrays are
 organized most significant byte first.
 
-**Returns:** a byte array representation of the CollationKey
+@return a byte array representation of the CollationKey
 
 ## CollationKey.CollationKey(String)
 
@@ -97,12 +108,6 @@ protected CollationKey(String source)
 
 CollationKey constructor.
 
-Parameters:
-
-- `source`: the source string
-
-**Since:** 1.6
-
-Throws:
-
-- `NullPointerException`: if `source` is null
+@param source the source string
+@throws    NullPointerException if {@code source} is null
+@since 1.6

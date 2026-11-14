@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: ConfigurationBinder silently skips invalid array elements"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/extensions/8.0/configurationbinder-skips-failed-array-elements.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 8 where ConfigurationBinder silently skips array or list elements that fail type conversion instead of preserving null placeholders."
+ms.date: 03/11/2026
+ai-usage: ai-assisted
 ---
 
 # ConfigurationBinder silently skips invalid array elements
 
-Starting in .NET 8, `Microsoft.Extensions.Configuration.ConfigurationBinder` silently skips array and list elements whose values can't be converted to the target type. Previously, failed elements were preserved as `null` placeholders, and the resulting collection retained the same length as the number of elements in the configuration source.
+Starting in .NET 8, <xref:Microsoft.Extensions.Configuration.ConfigurationBinder> silently skips array and list elements whose values can't be converted to the target type. Previously, failed elements were preserved as `null` placeholders, and the resulting collection retained the same length as the number of elements in the configuration source.
 
 ## Version introduced
 
@@ -17,7 +15,7 @@ Starting in .NET 8, `Microsoft.Extensions.Configuration.ConfigurationBinder` sil
 
 ## Previous behavior
 
-Previously, when binding an array or list property via `Microsoft.Extensions.Configuration.ConfigurationBinder.Get``1(Microsoft.Extensions.Configuration.IConfiguration)` or `Microsoft.Extensions.Configuration.ConfigurationBinder.Bind(Microsoft.Extensions.Configuration.IConfiguration,System.Object)`, if an element's value couldn't be converted to the target type, that element was preserved as a `null` placeholder in the result. The collection length matched the number of elements in the configuration.
+Previously, when binding an array or list property via <xref:Microsoft.Extensions.Configuration.ConfigurationBinder.Get``1(Microsoft.Extensions.Configuration.IConfiguration)> or <xref:Microsoft.Extensions.Configuration.ConfigurationBinder.Bind(Microsoft.Extensions.Configuration.IConfiguration,System.Object)>, if an element's value couldn't be converted to the target type, that element was preserved as a `null` placeholder in the result. The collection length matched the number of elements in the configuration.
 
 ```csharp
 // Configuration source, for example, appsettings.json:
@@ -48,24 +46,24 @@ var settings = configuration.GetSection("Items").Get<MyItem[]>();
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-The internal implementation of `Microsoft.Extensions.Configuration.ConfigurationBinder` was refactored in .NET 8. Instead of pre-allocating the target array and binding elements in-place (which left `null` on conversion failure), the binder now collects only successfully bound elements into a temporary list before materializing the final array.
+The internal implementation of <xref:Microsoft.Extensions.Configuration.ConfigurationBinder> was refactored in .NET 8. Instead of pre-allocating the target array and binding elements in-place (which left `null` on conversion failure), the binder now collects only successfully bound elements into a temporary list before materializing the final array.
 
 The previous behavior was also problematic for value types such as `int[]`. For an invalid configuration value, the binder would store `0`, which was indistinguishable from a legitimate value of `0`. The new behavior avoids this ambiguity.
 
 ## Recommended action
 
-- **Enable `Microsoft.Extensions.Configuration.BinderOptions.ErrorOnUnknownConfiguration` during development** to surface invalid configuration values immediately rather than silently dropping elements:
+- **Enable <xref:Microsoft.Extensions.Configuration.BinderOptions.ErrorOnUnknownConfiguration> during development** to surface invalid configuration values immediately rather than silently dropping elements:
 
   ```csharp
   var settings = configuration.GetSection("Items").Get<MyItem[]>(options =>
       options.ErrorOnUnknownConfiguration = true);
   ```
 
-  Starting in .NET 8, this option also causes `Microsoft.Extensions.Configuration.ConfigurationBinder` to throw an `System.InvalidOperationException` when a value can't be converted to the target type. For more information, see ConfigurationBinder throws for mismatched value.
+  Starting in .NET 8, this option also causes <xref:Microsoft.Extensions.Configuration.ConfigurationBinder> to throw an <xref:System.InvalidOperationException> when a value can't be converted to the target type. For more information, see [ConfigurationBinder throws for mismatched value](configurationbinder-exceptions.md).
 
 - **Fix invalid configuration values.** Ensure all values in your configuration source match the expected types for the bound model.
 
@@ -75,7 +73,7 @@ The previous behavior was also problematic for value types such as `int[]`. For 
 
 ## Affected APIs
 
-- `Microsoft.Extensions.Configuration.ConfigurationBinder.Get``1(Microsoft.Extensions.Configuration.IConfiguration)`
-- `Microsoft.Extensions.Configuration.ConfigurationBinder.Get``1(Microsoft.Extensions.Configuration.IConfiguration,System.Action{Microsoft.Extensions.Configuration.BinderOptions})`
-- `Microsoft.Extensions.Configuration.ConfigurationBinder.Bind(Microsoft.Extensions.Configuration.IConfiguration,System.Object)`
-- `Microsoft.Extensions.Configuration.ConfigurationBinder.Bind(Microsoft.Extensions.Configuration.IConfiguration,System.Object,System.Action{Microsoft.Extensions.Configuration.BinderOptions})`
+- <xref:Microsoft.Extensions.Configuration.ConfigurationBinder.Get``1(Microsoft.Extensions.Configuration.IConfiguration)?displayProperty=fullName>
+- <xref:Microsoft.Extensions.Configuration.ConfigurationBinder.Get``1(Microsoft.Extensions.Configuration.IConfiguration,System.Action{Microsoft.Extensions.Configuration.BinderOptions})?displayProperty=fullName>
+- <xref:Microsoft.Extensions.Configuration.ConfigurationBinder.Bind(Microsoft.Extensions.Configuration.IConfiguration,System.Object)?displayProperty=fullName>
+- <xref:Microsoft.Extensions.Configuration.ConfigurationBinder.Bind(Microsoft.Extensions.Configuration.IConfiguration,System.Object,System.Action{Microsoft.Extensions.Configuration.BinderOptions})?displayProperty=fullName>

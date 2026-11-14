@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugThread::EnumerateChains Method"
 title: "ICorDebugThread::EnumerateChains Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugthread-enumeratechains-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugThread.EnumerateChains"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugThread::EnumerateChains"
+helpviewer_keywords:
+  - "EnumerateChains method [.NET debugging]"
+  - "ICorDebugThread::EnumerateChains method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugThread::EnumerateChains Method
 
 Gets an interface pointer to an ICorDebugChainEnum enumerator that contains all the stack chains in this ICorDebugThread object.
@@ -40,7 +49,7 @@ A debugger may want to rearrange the physical call stacks of all threads into lo
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

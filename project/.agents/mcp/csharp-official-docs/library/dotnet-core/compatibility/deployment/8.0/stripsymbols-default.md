@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: StripSymbols defaults to true"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/deployment/8.0/stripsymbols-default.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in deployment where the default value for 'StripSymbols' is now 'true' for 'PublishAOT'.
+ms.date: 05/02/2023
 ---
-
 # StripSymbols defaults to true
 
-When .NET 7 introduced Native AOT deployment, it also introduced the `StripSymbols` property that optionally allows debugging symbols to be stripped from the produced executable on Linux into a separate file. The default value of the property was `false`. In .NET 8, the default value has changed to `true`.
+When .NET 7 introduced [Native AOT deployment](../../../deploying/native-aot/index.md), it also introduced the `StripSymbols` property that optionally allows debugging symbols to be stripped from the produced executable on Linux into a separate file. The default value of the property was `false`. In .NET 8, the default value has changed to `true`.
 
 ## Previous behavior
 

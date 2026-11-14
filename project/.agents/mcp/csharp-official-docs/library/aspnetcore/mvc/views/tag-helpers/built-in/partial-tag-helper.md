@@ -1,148 +1,77 @@
 ---
-title: "Partial Tag Helper in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/mvc/views/tag-helpers/built-in/partial-tag-helper.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Partial Tag Helper in ASP.NET Core
+description: Discover the ASP.NET Core Partial Tag Helper and the role each of its attributes play in rendering a partial view.
+monikerRange: '>= aspnetcore-2.1'
+ms.date: 10/08/2026
 ---
-
 # Partial Tag Helper in ASP.NET Core
 
-By Scott Addie
+By [Scott Addie](https://github.com/scottaddie)
 
-For an overview of Tag Helpers, see Tag Helpers in ASP.NET Core.
+For an overview of Tag Helpers, see [Tag Helpers in ASP.NET Core](../intro.md).
 
-View or download sample code (how to download)
+[View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/mvc/views/tag-helpers/built-in/samples) ([how to download](../../../../fundamentals/index.md#how-to-download-a-sample))
 
 ## Overview
 
-The Partial Tag Helper is used for rendering a partial view in Razor Pages and MVC apps. Consider that it:
+The Partial Tag Helper is used for rendering a [partial view](../../partial.md) in Razor Pages and MVC apps. Consider that it:
 
 * Requires ASP.NET Core 2.1 or later.
-* Is an alternative to HTML Helper syntax.
+* Is an alternative to [HTML Helper syntax](../../partial.md#reference-a-partial-view).
 * Renders the partial view asynchronously.
 
 The HTML Helper options for rendering a partial view include:
 
-* `@await Html.PartialAsync`
-* `@await Html.RenderPartialAsync`
-* `@Html.Partial`
-* `@Html.RenderPartial`
+* [`@await Html.PartialAsync`](xref:Microsoft.AspNetCore.Mvc.Rendering.HtmlHelperPartialExtensions.PartialAsync*)
+* [`@await Html.RenderPartialAsync`](xref:Microsoft.AspNetCore.Mvc.Rendering.HtmlHelperPartialExtensions.RenderPartialAsync*)
+* [`@Html.Partial`](xref:Microsoft.AspNetCore.Mvc.Rendering.HtmlHelperPartialExtensions.Partial*)
+* [`@Html.RenderPartial`](xref:Microsoft.AspNetCore.Mvc.Rendering.HtmlHelperPartialExtensions.RenderPartial*)
 
 The *Product* model is used in samples throughout this document:
 
-```csharp
-namespace TagHelpersBuiltIn.Models
-{
-    public class Product
-    {
-        public int Number { get; set; }
-
-        public string Name { get; set; }
-
-        public string Description { get; set; }
-    }
-}
-```
+[!code-csharp[](samples/TagHelpersBuiltIn/Models/Product.cs)]
 
 An inventory of the Partial Tag Helper attributes follows.
 
 ## name
 
-The `name` attribute is required. It indicates the name or the path of the partial view to be rendered. When a partial view name is provided, the view discovery process is initiated. That process is bypassed when an explicit path is provided. For all acceptable `name` values, see Partial view discovery.
+The `name` attribute is required. It indicates the name or the path of the partial view to be rendered. When a partial view name is provided, the [view discovery](../../overview.md#view-discovery) process is initiated. That process is bypassed when an explicit path is provided. For all acceptable `name` values, see [Partial view discovery](../../partial.md#partial-view-discovery).
 
-The following markup uses an explicit path, indicating that `_ProductPartial.cshtml` is to be loaded from the *Shared* folder. Using the for attribute, a model is passed to the partial view for binding.
+The following markup uses an explicit path, indicating that `_ProductPartial.cshtml` is to be loaded from the *Shared* folder. Using the [for](#for) attribute, a model is passed to the partial view for binding.
 
-```cshtml
-<partial name="Shared/_ProductPartial.cshtml" for="Product">
-```
+[!code-cshtml[](samples/TagHelpersBuiltIn/Pages/Product.cshtml?name=snippet_Name)]
 
 ## for
 
-The `for` attribute assigns a `Microsoft.AspNetCore.Mvc.ViewFeatures.ModelExpression` to be evaluated against the current model. A `ModelExpression` infers the `@Model.` syntax. For example, `for="Product"` can be used instead of `for="@Model.Product"`. This default inference behavior is overridden by using the `@` symbol to define an inline expression.
+The `for` attribute assigns a <xref:Microsoft.AspNetCore.Mvc.ViewFeatures.ModelExpression> to be evaluated against the current model. A `ModelExpression` infers the `@Model.` syntax. For example, `for="Product"` can be used instead of `for="@Model.Product"`. This default inference behavior is overridden by using the `@` symbol to define an inline expression.
 
 The following markup loads `_ProductPartial.cshtml`:
 
-```cshtml
-<partial name="_ProductPartial" for="Product">
-```
+[!code-cshtml[](samples/TagHelpersBuiltIn/Pages/Product.cshtml?name=snippet_For)]
 
 The partial view is bound to the associated page model's `Product` property:
 
-```csharp
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using TagHelpersBuiltIn.Models;
-
-namespace TagHelpersBuiltIn.Pages
-{
-    public class ProductModel : PageModel
-    {
-        public Product Product { get; set; }
-
-        public void OnGet()
-        {
-            Product = new Product
-            {
-                Number = 1,
-                Name = "Test product",
-                Description = "This is a test product"
-            };
-        }
-    }
-}
-```
+[!code-csharp[](samples/TagHelpersBuiltIn/Pages/Product.cshtml.cs?highlight=8)]
 
 ## model
 
-The `model` attribute assigns a model instance to pass to the partial view. The `model` attribute can't be used with the for attribute.
+The `model` attribute assigns a model instance to pass to the partial view. The `model` attribute can't be used with the [for](#for) attribute.
 
 When neither `for` nor `model` is specified, the Partial Tag Helper falls back to passing the calling view's model (`ViewContext.ViewData.Model`) to the partial view.
 
 In the following markup, a new `Product` object is instantiated and passed to the `model` attribute for binding:
 
-```cshtml
-<partial name="_ProductPartial"
-         model='new Product { Number = 1, Name = "Test product", Description = "This is a test" }'>
-```
+[!code-cshtml[](samples/TagHelpersBuiltIn/Pages/Product.cshtml?name=snippet_Model)]
 
 ## view-data
 
-The `view-data` attribute assigns a `Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary` to pass to the partial view. The following markup makes the entire ViewData collection accessible to the partial view:
+The `view-data` attribute assigns a <xref:Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary> to pass to the partial view. The following markup makes the entire ViewData collection accessible to the partial view:
 
-```cshtml
-@{
-    ViewData["IsNumberReadOnly"] = true;
-}
-
-<partial name="_ProductViewDataPartial" for="Product" view-data="ViewData">
-```
+[!code-cshtml[](samples/TagHelpersBuiltIn/Pages/Product.cshtml?name=snippet_ViewData&highlight=5-)]
 
 In the preceding code, the `IsNumberReadOnly` key value is set to `true` and added to the ViewData collection. Consequently, `ViewData["IsNumberReadOnly"]` is made accessible within the following partial view:
 
-```cshtml
-@model TagHelpersBuiltIn.Models.Product
-
-<div class="form-group">
-    <label asp-for="Number"></label>
-    @if ((bool)ViewData["IsNumberReadOnly"])
-    {
-        <input asp-for="Number" type="number" class="form-control" readonly />
-    }
-    else
-    {
-        <input asp-for="Number" type="number" class="form-control" />
-    }
-</div>
-<div class="form-group">
-    <label asp-for="Name"></label>
-    <input asp-for="Name" type="text" class="form-control" />
-</div>
-<div class="form-group">
-    <label asp-for="Description"></label>
-    <textarea asp-for="Description" rows="4" cols="50" class="form-control"></textarea>
-</div>
-```
+[!code-cshtml[](samples/TagHelpersBuiltIn/Pages/Shared/_ProductViewDataPartial.cshtml?highlight=5)]
 
 In this example, the value of `ViewData["IsNumberReadOnly"]` determines whether the *Number* field is displayed as read only.
 
@@ -150,23 +79,13 @@ In this example, the value of `ViewData["IsNumberReadOnly"]` determines whether 
 
 Consider the following asynchronous HTML Helper example. A collection of products is iterated and displayed. Per the `PartialAsync` method's first parameter, the `_ProductPartial.cshtml` partial view is loaded. An instance of the `Product` model is passed to the partial view for binding.
 
-```cshtml
-@foreach (var product in Model.Products)
-{
-    @await Html.PartialAsync("_ProductPartial", product)
-}
-```
+[!code-cshtml[](samples/TagHelpersBuiltIn/Pages/Products.cshtml?name=snippet_HtmlHelper&highlight=3)]
 
 The following Partial Tag Helper achieves the same asynchronous rendering behavior as the `PartialAsync` HTML Helper. The `model` attribute is assigned a `Product` model instance for binding to the partial view.
 
-```cshtml
-@foreach (var product in Model.Products)
-{
-    <partial name="_ProductPartial" model="@product" />
-}
-```
+[!code-cshtml[](samples/TagHelpersBuiltIn/Pages/Products.cshtml?name=snippet_TagHelper&highlight=3)]
 
 ## Related content
 
-* Partial views in ASP.NET Core
-* Views in ASP.NET Core MVC
+* [Partial views in ASP.NET Core](../../partial.md)
+* [Views in ASP.NET Core MVC](../../overview.md#weakly-typed-data-viewdata-viewdata-attribute-and-viewbag)

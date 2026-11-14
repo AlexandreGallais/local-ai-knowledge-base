@@ -1,59 +1,57 @@
----
-title: "DateFormatSymbols class (java.text)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/text/DateFormatSymbols.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # DateFormatSymbols class (java.text)
 
 ```java
 public class DateFormatSymbols implements Serializable, Cloneable
 ```
 
-`DateFormatSymbols` is a public class for encapsulating
+{@code DateFormatSymbols} is a public class for encapsulating
 localizable date-time formatting data, such as the names of the
 months, the names of the days of the week, and the time zone data.
-`SimpleDateFormat` uses
-`DateFormatSymbols` to encapsulate this information.
+{@code SimpleDateFormat} uses
+{@code DateFormatSymbols} to encapsulate this information.
 
-Typically you shouldn't use `DateFormatSymbols` directly.
+<p>
+Typically you shouldn't use {@code DateFormatSymbols} directly.
 Rather, you are encouraged to create a date-time formatter with the
-`DateFormat` class's factory methods: `getTimeInstance`,
-`getDateInstance`, or `getDateTimeInstance`.
-These methods automatically create a `DateFormatSymbols` for
+{@code DateFormat} class's factory methods: {@code getTimeInstance},
+{@code getDateInstance}, or {@code getDateTimeInstance}.
+These methods automatically create a {@code DateFormatSymbols} for
 the formatter so that you don't have to. After the
 formatter is created, you may modify its format pattern using the
-`setPattern` method. For more information about
-creating formatters using `DateFormat`'s factory methods,
-see `DateFormat`.
+{@code setPattern} method. For more information about
+creating formatters using {@code DateFormat}'s factory methods,
+see {@link DateFormat}.
 
+<p>
 If you decide to create a date-time formatter with a specific
 format pattern for a specific locale, you can do so with:
+<blockquote>
+{@snippet lang=java :
+new SimpleDateFormat(aPattern, DateFormatSymbols.getInstance(aLocale));
+}
+</blockquote>
 
-If the locale contains "rg" (region override)
-Unicode extension,
+<p>If the locale contains "rg" (region override)
+<a href="../util/Locale.html#def_locale_extension">Unicode extension</a>,
 the symbols are overridden for the designated region.
 
-`DateFormatSymbols` objects are cloneable. When you obtain
-a `DateFormatSymbols` object, feel free to modify the
+<p>
+{@code DateFormatSymbols} objects are cloneable. When you obtain
+a {@code DateFormatSymbols} object, feel free to modify the
 date-time formatting data. For instance, you can replace the localized
 date-time format pattern characters with the ones that you feel easy
 to remember. Or you can change the representative cities
 to your favorite ones.
 
-New `DateFormatSymbols` subclasses may be added to support
-`SimpleDateFormat` for date-time formatting for additional locales.
+<p>
+New {@code DateFormatSymbols} subclasses may be added to support
+{@code SimpleDateFormat} for date-time formatting for additional locales.
 
-**See also:** DateFormat
-
-**See also:** SimpleDateFormat
-
-**See also:** java.util.SimpleTimeZone
-
-**Since:** 1.1
+@see          DateFormat
+@see          SimpleDateFormat
+@see          java.util.SimpleTimeZone
+@author       Chen-Lieh Huang
+@since 1.1
 
 ## DateFormatSymbols.DateFormatSymbols()
 
@@ -62,26 +60,22 @@ public DateFormatSymbols()
 ```
 
 Construct a DateFormatSymbols object by loading format data from
-resources for the default FORMAT
+resources for the default {@link java.util.Locale.Category#FORMAT FORMAT}
 locale. This constructor can only
 construct instances for the locales supported by the Java
 runtime environment, not for those supported by installed
-DateFormatSymbolsProvider
+{@link java.text.spi.DateFormatSymbolsProvider DateFormatSymbolsProvider}
 implementations. For full locale coverage, use the
-getInstance method.
-
-This is equivalent to calling
-DateFormatSymbols(Locale.getDefault(Locale.Category.FORMAT)).
-
-**See also:** #getInstance()
-
-**See also:** java.util.Locale#getDefault(java.util.Locale.Category)
-
-**See also:** java.util.Locale.Category#FORMAT
-
-Throws:
-
-- `java.util.MissingResourceException`: if the resources for the default locale cannot be found or cannot be loaded.
+{@link #getInstance(Locale) getInstance} method.
+<p>This is equivalent to calling
+{@link #DateFormatSymbols(Locale)
+    DateFormatSymbols(Locale.getDefault(Locale.Category.FORMAT))}.
+@see #getInstance()
+@see java.util.Locale#getDefault(java.util.Locale.Category)
+@see java.util.Locale.Category#FORMAT
+@throws     java.util.MissingResourceException
+            if the resources for the default locale cannot be
+            found or cannot be loaded.
 
 ## DateFormatSymbols.DateFormatSymbols(Locale)
 
@@ -93,19 +87,15 @@ Construct a DateFormatSymbols object by loading format data from
 resources for the given locale. This constructor can only
 construct instances for the locales supported by the Java
 runtime environment, not for those supported by installed
-DateFormatSymbolsProvider
+{@link java.text.spi.DateFormatSymbolsProvider DateFormatSymbolsProvider}
 implementations. For full locale coverage, use the
-getInstance method.
+{@link #getInstance(Locale) getInstance} method.
 
-Parameters:
-
-- `locale`: the desired locale
-
-**See also:** #getInstance(Locale)
-
-Throws:
-
-- `java.util.MissingResourceException`: if the resources for the specified locale cannot be found or cannot be loaded.
+@param locale the desired locale
+@see #getInstance(Locale)
+@throws     java.util.MissingResourceException
+            if the resources for the specified locale cannot be
+            found or cannot be loaded.
 
 ## DateFormatSymbols.getAvailableLocales()
 
@@ -114,19 +104,18 @@ public static Locale[] getAvailableLocales()
 ```
 
 Returns an array of all locales for which the
-`getInstance` methods of this class can return
+{@code getInstance} methods of this class can return
 localized instances.
 The returned array represents the union of locales supported by the
 Java runtime and by installed
-DateFormatSymbolsProvider
+{@link java.text.spi.DateFormatSymbolsProvider DateFormatSymbolsProvider}
 implementations. At a minimum, the returned array must contain a
-`Locale` instance equal to Locale.ROOT and
-a `Locale` instance equal to Locale.US.
+{@code Locale} instance equal to {@link Locale#ROOT Locale.ROOT} and
+a {@code Locale} instance equal to {@link Locale#US Locale.US}.
 
-**Returns:** An array of locales for which localized
-        `DateFormatSymbols` instances are available.
-
-**Since:** 1.6
+@return An array of locales for which localized
+        {@code DateFormatSymbols} instances are available.
+@since 1.6
 
 ## DateFormatSymbols.getInstance()
 
@@ -134,22 +123,18 @@ a `Locale` instance equal to Locale.US.
 public static final DateFormatSymbols getInstance()
 ```
 
-Gets the `DateFormatSymbols` instance for the default
-locale.  This method provides access to `DateFormatSymbols`
+Gets the {@code DateFormatSymbols} instance for the default
+locale.  This method provides access to {@code DateFormatSymbols}
 instances for locales supported by the Java runtime itself as well
 as for those supported by installed
-DateFormatSymbolsProvider
+{@link java.text.spi.DateFormatSymbolsProvider DateFormatSymbolsProvider}
 implementations.
-
-This is equivalent to calling getInstance(Locale.getDefault(Locale.Category.FORMAT)).
-
-**See also:** java.util.Locale#getDefault(java.util.Locale.Category)
-
-**See also:** java.util.Locale.Category#FORMAT
-
-**Returns:** a `DateFormatSymbols` instance.
-
-**Since:** 1.6
+<p>This is equivalent to calling {@link #getInstance(Locale)
+    getInstance(Locale.getDefault(Locale.Category.FORMAT))}.
+@see java.util.Locale#getDefault(java.util.Locale.Category)
+@see java.util.Locale.Category#FORMAT
+@return a {@code DateFormatSymbols} instance.
+@since 1.6
 
 ## DateFormatSymbols.getInstance(Locale)
 
@@ -157,24 +142,16 @@ This is equivalent to calling getInstance(Locale.getDefault(Locale.Category.FORM
 public static final DateFormatSymbols getInstance(Locale locale)
 ```
 
-Gets the `DateFormatSymbols` instance for the specified
-locale.  This method provides access to `DateFormatSymbols`
+Gets the {@code DateFormatSymbols} instance for the specified
+locale.  This method provides access to {@code DateFormatSymbols}
 instances for locales supported by the Java runtime itself as well
 as for those supported by installed
-DateFormatSymbolsProvider
+{@link java.text.spi.DateFormatSymbolsProvider DateFormatSymbolsProvider}
 implementations.
-
-Parameters:
-
-- `locale`: the given locale.
-
-**Returns:** a `DateFormatSymbols` instance.
-
-**Since:** 1.6
-
-Throws:
-
-- `NullPointerException`: if `locale` is null
+@param locale the given locale.
+@return a {@code DateFormatSymbols} instance.
+@throws    NullPointerException if {@code locale} is null
+@since 1.6
 
 ## DateFormatSymbols.getEras()
 
@@ -183,8 +160,7 @@ public String[] getEras()
 ```
 
 Gets era strings. For example: "AD" and "BC".
-
-**Returns:** the era strings.
+@return the era strings.
 
 ## DateFormatSymbols.setEras(String[])
 
@@ -193,10 +169,7 @@ public void setEras(String[] newEras)
 ```
 
 Sets era strings. For example: "AD" and "BC".
-
-Parameters:
-
-- `newEras`: the new era strings.
+@param newEras the new era strings.
 
 ## DateFormatSymbols.getMonths()
 
@@ -206,26 +179,28 @@ public String[] getMonths()
 
 Gets month strings. For example: "January", "February", etc.
 An array with either 12 or 13 elements will be returned depending
-on whether or not Calendar.UNDECIMBER
+on whether or not {@link java.util.Calendar#UNDECIMBER Calendar.UNDECIMBER}
 is supported. Use
-Calendar.JANUARY,
-Calendar.FEBRUARY,
+{@link java.util.Calendar#JANUARY Calendar.JANUARY},
+{@link java.util.Calendar#FEBRUARY Calendar.FEBRUARY},
 etc. to index the result array.
 
-If the language requires different forms for formatting and
+<p>If the language requires different forms for formatting and
 stand-alone usages, this method returns month names in the
 formatting form. For example, the preferred month name for
-January in the Czech language is *ledna* in the
-formatting form, while it is *leden* in the stand-alone
-form. This method returns `"ledna"` in this case. Refer
-to the
+January in the Czech language is <em>ledna</em> in the
+formatting form, while it is <em>leden</em> in the stand-alone
+form. This method returns {@code "ledna"} in this case. Refer
+to the <a href="http://unicode.org/reports/tr35/#Calendar_Elements">
 Calendar Elements in the Unicode Locale Data Markup Language
-(LDML) specification for more details.
+(LDML) specification</a> for more details.
 
-**Implementation requirements:** This method returns 13 elements since
-Calendar.UNDECIMBER is supported.
+@implSpec This method returns 13 elements since
+{@link java.util.Calendar#UNDECIMBER Calendar.UNDECIMBER} is supported.
+@return the month strings.
 
-**Returns:** the month strings.
+@spec https://www.unicode.org/reports/tr35
+     Unicode Locale Data Markup Language (LDML)
 
 ## DateFormatSymbols.setMonths(String[])
 
@@ -234,10 +209,9 @@ public void setMonths(String[] newMonths)
 ```
 
 Sets month strings. For example: "January", "February", etc.
-
-Parameters:
-
-- `newMonths`: the new month strings. The array should be indexed by Calendar.JANUARY, Calendar.FEBRUARY, etc.
+@param newMonths the new month strings. The array should
+be indexed by {@link java.util.Calendar#JANUARY Calendar.JANUARY},
+{@link java.util.Calendar#FEBRUARY Calendar.FEBRUARY}, etc.
 
 ## DateFormatSymbols.getShortMonths()
 
@@ -247,26 +221,28 @@ public String[] getShortMonths()
 
 Gets short month strings. For example: "Jan", "Feb", etc.
 An array with either 12 or 13 elements will be returned depending
-on whether or not Calendar.UNDECIMBER
+on whether or not {@link java.util.Calendar#UNDECIMBER Calendar.UNDECIMBER}
 is supported. Use
-Calendar.JANUARY,
-Calendar.FEBRUARY,
+{@link java.util.Calendar#JANUARY Calendar.JANUARY},
+{@link java.util.Calendar#FEBRUARY Calendar.FEBRUARY},
 etc. to index the result array.
 
-If the language requires different forms for formatting and
+<p>If the language requires different forms for formatting and
 stand-alone usages, this method returns short month names in
 the formatting form. For example, the preferred abbreviation
-for January in the Catalan language is *de gen.* in the
-formatting form, while it is *gen.* in the stand-alone
-form. This method returns `"de gen."` in this case. Refer
-to the
+for January in the Catalan language is <em>de gen.</em> in the
+formatting form, while it is <em>gen.</em> in the stand-alone
+form. This method returns {@code "de gen."} in this case. Refer
+to the <a href="http://unicode.org/reports/tr35/#Calendar_Elements">
 Calendar Elements in the Unicode Locale Data Markup Language
-(LDML) specification for more details.
+(LDML) specification</a> for more details.
 
-**Implementation requirements:** This method returns 13 elements since
-Calendar.UNDECIMBER is supported.
+@implSpec This method returns 13 elements since
+{@link java.util.Calendar#UNDECIMBER Calendar.UNDECIMBER} is supported.
+@return the short month strings.
 
-**Returns:** the short month strings.
+@spec https://www.unicode.org/reports/tr35
+     Unicode Locale Data Markup Language (LDML)
 
 ## DateFormatSymbols.setShortMonths(String[])
 
@@ -275,10 +251,9 @@ public void setShortMonths(String[] newShortMonths)
 ```
 
 Sets short month strings. For example: "Jan", "Feb", etc.
-
-Parameters:
-
-- `newShortMonths`: the new short month strings. The array should be indexed by Calendar.JANUARY, Calendar.FEBRUARY, etc.
+@param newShortMonths the new short month strings. The array should
+be indexed by {@link java.util.Calendar#JANUARY Calendar.JANUARY},
+{@link java.util.Calendar#FEBRUARY Calendar.FEBRUARY}, etc.
 
 ## DateFormatSymbols.getWeekdays()
 
@@ -287,10 +262,9 @@ public String[] getWeekdays()
 ```
 
 Gets weekday strings. For example: "Sunday", "Monday", etc.
-
-**Returns:** the weekday strings. Use
-Calendar.SUNDAY,
-Calendar.MONDAY, etc. to index
+@return the weekday strings. Use
+{@link java.util.Calendar#SUNDAY Calendar.SUNDAY},
+{@link java.util.Calendar#MONDAY Calendar.MONDAY}, etc. to index
 the result array.
 
 ## DateFormatSymbols.setWeekdays(String[])
@@ -300,10 +274,9 @@ public void setWeekdays(String[] newWeekdays)
 ```
 
 Sets weekday strings. For example: "Sunday", "Monday", etc.
-
-Parameters:
-
-- `newWeekdays`: the new weekday strings. The array should be indexed by Calendar.SUNDAY, Calendar.MONDAY, etc.
+@param newWeekdays the new weekday strings. The array should
+be indexed by {@link java.util.Calendar#SUNDAY Calendar.SUNDAY},
+{@link java.util.Calendar#MONDAY Calendar.MONDAY}, etc.
 
 ## DateFormatSymbols.getShortWeekdays()
 
@@ -312,10 +285,9 @@ public String[] getShortWeekdays()
 ```
 
 Gets short weekday strings. For example: "Sun", "Mon", etc.
-
-**Returns:** the short weekday strings. Use
-Calendar.SUNDAY,
-Calendar.MONDAY, etc. to index
+@return the short weekday strings. Use
+{@link java.util.Calendar#SUNDAY Calendar.SUNDAY},
+{@link java.util.Calendar#MONDAY Calendar.MONDAY}, etc. to index
 the result array.
 
 ## DateFormatSymbols.setShortWeekdays(String[])
@@ -325,10 +297,9 @@ public void setShortWeekdays(String[] newShortWeekdays)
 ```
 
 Sets short weekday strings. For example: "Sun", "Mon", etc.
-
-Parameters:
-
-- `newShortWeekdays`: the new short weekday strings. The array should be indexed by Calendar.SUNDAY, Calendar.MONDAY, etc.
+@param newShortWeekdays the new short weekday strings. The array should
+be indexed by {@link java.util.Calendar#SUNDAY Calendar.SUNDAY},
+{@link java.util.Calendar#MONDAY Calendar.MONDAY}, etc.
 
 ## DateFormatSymbols.getAmPmStrings()
 
@@ -337,8 +308,7 @@ public String[] getAmPmStrings()
 ```
 
 Gets ampm strings. For example: "AM" and "PM".
-
-**Returns:** the ampm strings.
+@return the ampm strings.
 
 ## DateFormatSymbols.setAmPmStrings(String[])
 
@@ -347,10 +317,7 @@ public void setAmPmStrings(String[] newAmpms)
 ```
 
 Sets ampm strings. For example: "AM" and "PM".
-
-Parameters:
-
-- `newAmpms`: the new ampm strings.
+@param newAmpms the new ampm strings.
 
 ## DateFormatSymbols.getZoneStrings()
 
@@ -359,46 +326,41 @@ public String[][] getZoneStrings()
 ```
 
 Gets time zone strings.  Use of this method is discouraged; use
-TimeZone.getDisplayName()
+{@link java.util.TimeZone#getDisplayName() TimeZone.getDisplayName()}
 instead.
-
+<p>
 The value returned is a
-two-dimensional array of strings of size *n* by *m*,
-where *m* is at least 5.  Each of the *n* rows is an
-entry containing the localized names for a single `TimeZone`.
-Each such row contains (with `i` ranging from
-0..*n*-1):
-
-- `zoneStringsi` - time zone ID
-
-- `zoneStringsi` - long name of zone in standard
-time
-
-- `zoneStringsi` - short name of zone in
-standard time
-
-- `zoneStringsi` - long name of zone in daylight
-saving time
-
-- `zoneStringsi` - short name of zone in daylight
-saving time
-
-The zone ID is *not* localized; it's one of the valid IDs of
-the TimeZone class that are not
-custom IDs.
+two-dimensional array of strings of size <em>n</em> by <em>m</em>,
+where <em>m</em> is at least 5.  Each of the <em>n</em> rows is an
+entry containing the localized names for a single {@code TimeZone}.
+Each such row contains (with {@code i} ranging from
+0..<em>n</em>-1):
+<ul>
+<li>{@code zoneStrings[i][0]} - time zone ID</li>
+<li>{@code zoneStrings[i][1]} - long name of zone in standard
+time</li>
+<li>{@code zoneStrings[i][2]} - short name of zone in
+standard time</li>
+<li>{@code zoneStrings[i][3]} - long name of zone in daylight
+saving time</li>
+<li>{@code zoneStrings[i][4]} - short name of zone in daylight
+saving time</li>
+</ul>
+The zone ID is <em>not</em> localized; it's one of the valid IDs of
+the {@link java.util.TimeZone TimeZone} class that are not
+<a href="../util/TimeZone.html#CustomID">custom IDs</a>.
 All other entries are localized names.  If a zone does not implement
 daylight saving time, the daylight saving time names should not be used.
-
-If setZoneStrings has been called
-on this `DateFormatSymbols` instance, then the strings
+<p>
+If {@link #setZoneStrings(String[][]) setZoneStrings} has been called
+on this {@code DateFormatSymbols} instance, then the strings
 provided by that call are returned. Otherwise, the returned array
 contains names provided by the Java runtime and by installed
-TimeZoneNameProvider
+{@link java.util.spi.TimeZoneNameProvider TimeZoneNameProvider}
 implementations.
 
-**Returns:** the time zone strings.
-
-**See also:** #setZoneStrings(String[][])
+@return the time zone strings.
+@see #setZoneStrings(String[][])
 
 ## DateFormatSymbols.setZoneStrings(String[][])
 
@@ -407,41 +369,32 @@ public void setZoneStrings(String[][] newZoneStrings)
 ```
 
 Sets time zone strings.  The argument must be a
-two-dimensional array of strings of size *n* by *m*,
-where *m* is at least 5.  Each of the *n* rows is an
-entry containing the localized names for a single `TimeZone`.
-Each such row contains (with `i` ranging from
-0..*n*-1):
-
-- `zoneStringsi` - time zone ID
-
-- `zoneStringsi` - long name of zone in standard
-time
-
-- `zoneStringsi` - short name of zone in
-standard time
-
-- `zoneStringsi` - long name of zone in daylight
-saving time
-
-- `zoneStringsi` - short name of zone in daylight
-saving time
-
-The zone ID is *not* localized; it's one of the valid IDs of
-the TimeZone class that are not
-custom IDs.
+two-dimensional array of strings of size <em>n</em> by <em>m</em>,
+where <em>m</em> is at least 5.  Each of the <em>n</em> rows is an
+entry containing the localized names for a single {@code TimeZone}.
+Each such row contains (with {@code i} ranging from
+0..<em>n</em>-1):
+<ul>
+<li>{@code zoneStrings[i][0]} - time zone ID</li>
+<li>{@code zoneStrings[i][1]} - long name of zone in standard
+time</li>
+<li>{@code zoneStrings[i][2]} - short name of zone in
+standard time</li>
+<li>{@code zoneStrings[i][3]} - long name of zone in daylight
+saving time</li>
+<li>{@code zoneStrings[i][4]} - short name of zone in daylight
+saving time</li>
+</ul>
+The zone ID is <em>not</em> localized; it's one of the valid IDs of
+the {@link java.util.TimeZone TimeZone} class that are not
+<a href="../util/TimeZone.html#CustomID">custom IDs</a>.
 All other entries are localized names.
 
-Parameters:
-
-- `newZoneStrings`: the new time zone strings.
-
-**See also:** #getZoneStrings()
-
-Throws:
-
-- `IllegalArgumentException`: if the length of any row in `newZoneStrings` is less than 5
-- `NullPointerException`: if `newZoneStrings` is null
+@param newZoneStrings the new time zone strings.
+@throws    IllegalArgumentException if the length of any row in
+   {@code newZoneStrings} is less than 5
+@throws    NullPointerException if {@code newZoneStrings} is null
+@see #getZoneStrings()
 
 ## DateFormatSymbols.getLocalPatternChars()
 
@@ -450,8 +403,7 @@ public String getLocalPatternChars()
 ```
 
 Gets localized date-time pattern characters. For example: 'u', 't', etc.
-
-**Returns:** the localized date-time pattern characters.
+@return the localized date-time pattern characters.
 
 ## DateFormatSymbols.setLocalPatternChars(String)
 
@@ -460,10 +412,8 @@ public void setLocalPatternChars(String newLocalPatternChars)
 ```
 
 Sets localized date-time pattern characters. For example: 'u', 't', etc.
-
-Parameters:
-
-- `newLocalPatternChars`: the new localized date-time pattern characters.
+@param newLocalPatternChars the new localized date-time
+pattern characters.
 
 ## DateFormatSymbols.clone()
 
@@ -479,10 +429,11 @@ Overrides Cloneable
 public int hashCode()
 ```
 
-**Implementation requirements:** Non-transient instance fields of this class are used to calculate
-a hash code value which adheres to the contract defined in `Objects.hashCode`.
+{@return the hash code for this {@code DateFormatSymbols}}
 
-**See also:** Object#hashCode()
+@implSpec Non-transient instance fields of this class are used to calculate
+a hash code value which adheres to the contract defined in {@link Objects#hashCode}.
+@see Object#hashCode()
 
 ## DateFormatSymbols.equals(Object)
 
@@ -490,19 +441,14 @@ a hash code value which adheres to the contract defined in `Objects.hashCode`.
 public boolean equals(Object obj)
 ```
 
-Compares the specified object with this `DateFormatSymbols` for equality.
-Returns true if the object is also a `DateFormatSymbols` and the two
-`DateFormatSymbols` objects represent the same date-time formatting data.
+Compares the specified object with this {@code DateFormatSymbols} for equality.
+Returns true if the object is also a {@code DateFormatSymbols} and the two
+{@code DateFormatSymbols} objects represent the same date-time formatting data.
 
-Parameters:
-
-- `obj`: object to be compared for equality
-
-**Implementation requirements:** This method performs an equality check with a notion of class
-identity based on `getClass()`, rather than `instanceof`.
+@implSpec This method performs an equality check with a notion of class
+identity based on {@code getClass()}, rather than {@code instanceof}.
 Therefore, in the equals methods in subclasses, no instance of this class
 should compare as equal to an instance of a subclass.
-
-**Returns:** `true` if the specified object is equal to this `DateFormatSymbols`
-
-**See also:** Object#equals(Object)
+@param  obj object to be compared for equality
+@return {@code true} if the specified object is equal to this {@code DateFormatSymbols}
+@see Object#equals(Object)

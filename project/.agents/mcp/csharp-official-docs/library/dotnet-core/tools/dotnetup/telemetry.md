@@ -1,16 +1,14 @@
 ---
-title: "dotnetup telemetry"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/telemetry.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnetup telemetry
+description: Learn what usage data dotnetup collects, how to opt out, and how to suppress the first-run notice.
+ms.topic: concept-article
+ms.date: 09/30/2026
+ai-usage: ai-generated
 ---
 
 # dotnetup telemetry
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](includes/public-preview.md)]
 
 `dotnetup` includes a telemetry feature that collects usage data and sends it
 to Microsoft when you run `dotnetup` commands. The usage data includes
@@ -23,7 +21,7 @@ Telemetry is on by default. To opt out, set the `DOTNET_CLI_TELEMETRY_OPTOUT`
 environment variable to `1` or `true`.
 
 This is the same variable that turns off telemetry for the .NET SDK and CLI.
-For more information, see .NET SDK and .NET CLI telemetry.
+For more information, see [.NET SDK and .NET CLI telemetry](../telemetry.md).
 
 ## First-run notice
 
@@ -41,7 +39,7 @@ environment variable to `1` or `true`.
 The telemetry feature doesn't collect personal data, such as usernames or
 email addresses. It doesn't scan your code, and it doesn't extract
 project-level data. `dotnetup` sends the data securely to Microsoft servers
-with Azure Monitor
+with [Azure Monitor](https://azure.microsoft.com/services/monitor/)
 technology.
 
 `dotnetup` collects the following data:
@@ -62,14 +60,14 @@ If `dotnetup` crashes, it collects the name of the exception and the stack
 trace of the `dotnetup` code. It doesn't include exception messages, because
 they can contain user input. This approach is the same as the approach that the
 .NET SDK uses. For more information, see
-Crash exception telemetry.
+[Crash exception telemetry](../telemetry.md#crash-exception-telemetry).
 
 ## CI and LLM agent detection
 
 `dotnetup` uses the same CI environment detection and LLM agent detection as
 the .NET SDK. For the list of environment variables that it checks, see
-Continuous integration detection
-and LLM detection.
+[Continuous integration detection](../telemetry.md#continuous-integration-detection)
+and [LLM detection](../telemetry.md#llm-detection).
 
 ## Related environment variables
 
@@ -84,12 +82,12 @@ and LLM detection.
 
 If you think that the telemetry collects sensitive data, or that Microsoft
 handles the data insecurely or inappropriately, file an issue in the
-dotnet/sdk repository.
+[dotnet/sdk repository](https://github.com/dotnet/sdk/issues).
 
 For more information, see the
-Microsoft Privacy Statement.
+[Microsoft Privacy Statement](https://www.microsoft.com/privacy/privacystatement).
 
 ## See also
 
-- .NET SDK and .NET CLI telemetry
-- dotnetup overview
+- [.NET SDK and .NET CLI telemetry](../telemetry.md)
+- [dotnetup overview](index.md)

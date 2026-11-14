@@ -1,36 +1,29 @@
----
-title: "Short class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/Short.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Short class (java.lang)
 
 ```java
 public final class Short extends Number implements Comparable<Short>, Constable
 ```
 
-The `Short` class is the wrapper class for values of the primitive
-type `short`. An object of type `Short` contains a
-single field whose type is `short`.
+The {@code Short} class is the {@linkplain
+java.lang##wrapperClass wrapper class} for values of the primitive
+type {@code short}. An object of type {@code Short} contains a
+single field whose type is {@code short}.
 
-In addition, this class provides several methods for converting
-a `short` to a `String` and a `String` to a
-`short`, as well as other constants and methods useful when
-dealing with a `short`.
+<p>In addition, this class provides several methods for converting
+a {@code short} to a {@code String} and a {@code String} to a
+{@code short}, as well as other constants and methods useful when
+dealing with a {@code short}.
 
-This is a value-based
+<p>This is a <a href="{@docRoot}/java.base/java/lang/doc-files/ValueBased.html">value-based</a>
 class; programmers should treat instances that are
-equal as interchangeable and should not
+{@linkplain #equals(Object) equal} as interchangeable and should not
 use instances for synchronization, or unpredictable behavior may
 occur. For example, in a future release, synchronization may fail.
 
-**See also:** java.lang.Number
-
-**Since:** 1.1
+@author  Nakul Saraiya
+@author  Joseph D. Darcy
+@see     java.lang.Number
+@since   1.1
 
 ## Short.MIN_VALUE
 
@@ -38,8 +31,8 @@ occur. For example, in a future release, synchronization may fail.
 public static final short MIN_VALUE
 ```
 
-A constant holding the minimum value a `short` can
-have, -215.
+A constant holding the minimum value a {@code short} can
+have, -2<sup>15</sup>.
 
 ## Short.MAX_VALUE
 
@@ -47,8 +40,8 @@ have, -215.
 public static final short MAX_VALUE
 ```
 
-A constant holding the maximum value a `short` can
-have, 215-1.
+A constant holding the maximum value a {@code short} can
+have, 2<sup>15</sup>-1.
 
 ## Short.TYPE
 
@@ -56,8 +49,8 @@ have, 215-1.
 public static final Class<Short> TYPE
 ```
 
-The `Class` instance representing the primitive type
-`short`.
+The {@code Class} instance representing the primitive type
+{@code short}.
 
 ## Short.toString(short)
 
@@ -65,16 +58,12 @@ The `Class` instance representing the primitive type
 public static String toString(short s)
 ```
 
-Returns a new `String` object representing the
-specified `short`. The radix is assumed to be 10.
+Returns a new {@code String} object representing the
+specified {@code short}. The radix is assumed to be 10.
 
-Parameters:
-
-- `s`: the `short` to be converted
-
-**Returns:** the string representation of the specified `short`
-
-**See also:** java.lang.Integer#toString(int)
+@param s the {@code short} to be converted
+@return the string representation of the specified {@code short}
+@see java.lang.Integer#toString(int)
 
 ## Short.parseShort(String, int)
 
@@ -82,44 +71,44 @@ Parameters:
 public static short parseShort(String s, int radix) throws NumberFormatException
 ```
 
-Parses the string argument as a signed `short` in the
+Parses the string argument as a signed {@code short} in the
 radix specified by the second argument. The characters in the
 string must all be digits, of the specified radix (as
-determined by whether int) returns a nonnegative value) except that the first
-character may be an ASCII minus sign `'-'`
-(`'\u005Cu002D'`) to indicate a negative value or an
-ASCII plus sign `'+'` (`'\u005Cu002B'`) to
-indicate a positive value.  The resulting `short` value
+determined by whether {@link java.lang.Character#digit(char,
+int)} returns a nonnegative value) except that the first
+character may be an ASCII minus sign {@code '-'}
+({@code '\u005Cu002D'}) to indicate a negative value or an
+ASCII plus sign {@code '+'} ({@code '\u005Cu002B'}) to
+indicate a positive value.  The resulting {@code short} value
 is returned.
 
-An exception of type `NumberFormatException` is
+<p>An exception of type {@code NumberFormatException} is
 thrown if any of the following situations occurs:
-
--  The first argument is `null` or is a string of
+<ul>
+<li> The first argument is {@code null} or is a string of
 length zero.
 
--  The radix is either smaller than `java.lang.Character.MIN_RADIX` or larger than `java.lang.Character.MAX_RADIX`.
+<li> The radix is either smaller than {@link
+java.lang.Character#MIN_RADIX} or larger than {@link
+java.lang.Character#MAX_RADIX}.
 
--  Any character of the string is not a digit of the
+<li> Any character of the string is not a digit of the
 specified radix, except that the first character may be a minus
-sign `'-'` (`'\u005Cu002D'`) or plus sign
-`'+'` (`'\u005Cu002B'`) provided that the
+sign {@code '-'} ({@code '\u005Cu002D'}) or plus sign
+{@code '+'} ({@code '\u005Cu002B'}) provided that the
 string is longer than length 1.
 
--  The value represented by the string is not a value of type
-`short`.
+<li> The value represented by the string is not a value of type
+{@code short}.
+</ul>
 
-Parameters:
-
-- `s`: the `String` containing the `short` representation to be parsed
-- `radix`: the radix to be used while parsing `s`
-
-**Returns:** the `short` represented by the string
+@param s         the {@code String} containing the
+                 {@code short} representation to be parsed
+@param radix     the radix to be used while parsing {@code s}
+@return          the {@code short} represented by the string
                  argument in the specified radix.
-
-Throws:
-
-- `NumberFormatException`: If the `String` does not contain a parsable `short`.
+@throws          NumberFormatException If the {@code String}
+                 does not contain a parsable {@code short}.
 
 ## Short.parseShort(String)
 
@@ -127,24 +116,22 @@ Throws:
 public static short parseShort(String s) throws NumberFormatException
 ```
 
-Parses the string argument as a signed decimal `short`. The characters in the string must all be decimal
+Parses the string argument as a signed decimal {@code
+short}. The characters in the string must all be decimal
 digits, except that the first character may be an ASCII minus
-sign `'-'` (`'\u005Cu002D'`) to indicate a
-negative value or an ASCII plus sign `'+'`
-(`'\u005Cu002B'`) to indicate a positive value.  The
-resulting `short` value is returned, exactly as if the
-argument and the radix 10 were given as arguments to the int) method.
+sign {@code '-'} ({@code '\u005Cu002D'}) to indicate a
+negative value or an ASCII plus sign {@code '+'}
+({@code '\u005Cu002B'}) to indicate a positive value.  The
+resulting {@code short} value is returned, exactly as if the
+argument and the radix 10 were given as arguments to the {@link
+#parseShort(java.lang.String, int)} method.
 
-Parameters:
-
-- `s`: a `String` containing the `short` representation to be parsed
-
-**Returns:** the `short` value represented by the
+@param s a {@code String} containing the {@code short}
+         representation to be parsed
+@return  the {@code short} value represented by the
          argument in decimal.
-
-Throws:
-
-- `NumberFormatException`: If the string does not contain a parsable `short`.
+@throws  NumberFormatException If the string does not
+         contain a parsable {@code short}.
 
 ## Short.valueOf(String, int)
 
@@ -152,31 +139,29 @@ Throws:
 public static Short valueOf(String s, int radix) throws NumberFormatException
 ```
 
-Returns a `Short` object holding the value
-extracted from the specified `String` when parsed
+Returns a {@code Short} object holding the value
+extracted from the specified {@code String} when parsed
 with the radix given by the second argument. The first argument
-is interpreted as representing a signed `short` in
+is interpreted as representing a signed {@code short} in
 the radix specified by the second argument, exactly as if the
-argument were given to the int) method. The result is a `Short` object that
-represents the `short` value specified by the string.
+argument were given to the {@link #parseShort(java.lang.String,
+int)} method. The result is a {@code Short} object that
+represents the {@code short} value specified by the string.
 
-In other words, this method returns a `Short` object
+<p>In other words, this method returns a {@code Short} object
 equal to the value of:
 
- `Short.valueOf(Short.parseShort(s, radix))`
+<blockquote>
+ {@code Short.valueOf(Short.parseShort(s, radix))}
+</blockquote>
 
-Parameters:
-
-- `s`: the string to be parsed
-- `radix`: the radix to be used in interpreting `s`
-
-**Returns:** a `Short` object holding the value
+@param s         the string to be parsed
+@param radix     the radix to be used in interpreting {@code s}
+@return          a {@code Short} object holding the value
                  represented by the string argument in the
                  specified radix.
-
-Throws:
-
-- `NumberFormatException`: If the `String` does not contain a parsable `short`.
+@throws          NumberFormatException If the {@code String} does
+                 not contain a parsable {@code short}.
 
 ## Short.valueOf(String)
 
@@ -184,29 +169,26 @@ Throws:
 public static Short valueOf(String s) throws NumberFormatException
 ```
 
-Returns a `Short` object holding the
-value given by the specified `String`. The argument
+Returns a {@code Short} object holding the
+value given by the specified {@code String}. The argument
 is interpreted as representing a signed decimal
-`short`, exactly as if the argument were given to
-the `parseShort(java.lang.String)` method. The result is
-a `Short` object that represents the
-`short` value specified by the string.
+{@code short}, exactly as if the argument were given to
+the {@link #parseShort(java.lang.String)} method. The result is
+a {@code Short} object that represents the
+{@code short} value specified by the string.
 
-In other words, this method returns a `Short` object
+<p>In other words, this method returns a {@code Short} object
 equal to the value of:
 
- `Short.valueOf(Short.parseShort(s))`
+<blockquote>
+ {@code Short.valueOf(Short.parseShort(s))}
+</blockquote>
 
-Parameters:
-
-- `s`: the string to be parsed
-
-**Returns:** a `Short` object holding the value
+@param s the string to be parsed
+@return  a {@code Short} object holding the value
          represented by the string argument
-
-Throws:
-
-- `NumberFormatException`: If the `String` does not contain a parsable `short`.
+@throws  NumberFormatException If the {@code String} does
+         not contain a parsable {@code short}.
 
 ## Short.describeConstable()
 
@@ -214,12 +196,11 @@ Throws:
 public Optional<DynamicConstantDesc<Short>> describeConstable()
 ```
 
-Returns an `Optional` containing the nominal descriptor for this
+Returns an {@link Optional} containing the nominal descriptor for this
 instance.
 
-**Returns:** an `Optional` describing the `Short` instance
-
-**Since:** 15
+@return an {@link Optional} describing the {@linkplain Short} instance
+@since 15
 
 ## Short.valueOf(short)
 
@@ -227,24 +208,20 @@ instance.
 public static Short valueOf(short s)
 ```
 
-Returns a `Short` instance representing the specified
-`short` value.
-If a new `Short` instance is not required, this method
+Returns a {@code Short} instance representing the specified
+{@code short} value.
+If a new {@code Short} instance is not required, this method
 should generally be used in preference to the constructor
-`Short(short)`, as this method is likely to yield
+{@link #Short(short)}, as this method is likely to yield
 significantly better space and time performance by caching
 frequently requested values.
 
 This method will always cache values in the range -128 to 127,
 inclusive, and may cache other values outside of this range.
 
-Parameters:
-
-- `s`: a short value.
-
-**Returns:** a `Short` instance representing `s`.
-
-**Since:** 1.5
+@param  s a short value.
+@return a {@code Short} instance representing {@code s}.
+@since  1.5
 
 ## Short.decode(String)
 
@@ -252,46 +229,46 @@ Parameters:
 public static Short decode(String nm) throws NumberFormatException
 ```
 
-Decodes a `String` into a `Short`.
+Decodes a {@code String} into a {@code Short}.
 Accepts decimal, hexadecimal, and octal numbers given by
 the following grammar:
 
-*DecodableString:*
-*Signopt DecimalNumeral*
-*Signopt* `0x` *HexDigits*
-*Signopt* `0X` *HexDigits*
-*Signopt* `#` *HexDigits*
-*Signopt* `0` *OctalDigits*
+<blockquote>
+<dl>
+<dt><i>DecodableString:</i>
+<dd><i>Sign<sub>opt</sub> DecimalNumeral</i>
+<dd><i>Sign<sub>opt</sub></i> {@code 0x} <i>HexDigits</i>
+<dd><i>Sign<sub>opt</sub></i> {@code 0X} <i>HexDigits</i>
+<dd><i>Sign<sub>opt</sub></i> {@code #} <i>HexDigits</i>
+<dd><i>Sign<sub>opt</sub></i> {@code 0} <i>OctalDigits</i>
 
-*Sign:*
-`-`
-`+`
+<dt><i>Sign:</i>
+<dd>{@code -}
+<dd>{@code +}
+</dl>
+</blockquote>
 
-*DecimalNumeral*, *HexDigits*, and *OctalDigits*
-are as defined in section  of
-*The Java Language Specification*,
+<i>DecimalNumeral</i>, <i>HexDigits</i>, and <i>OctalDigits</i>
+are as defined in section {@jls 3.10.1} of
+<cite>The Java Language Specification</cite>,
 except that underscores are not accepted between digits.
 
-The sequence of characters following an optional
-sign and/or radix specifier ("`0x`", "`0X`",
-"`#`", or leading zero) is parsed as by the `Short.parseShort` method with the indicated radix (10, 16, or
+<p>The sequence of characters following an optional
+sign and/or radix specifier ("{@code 0x}", "{@code 0X}",
+"{@code #}", or leading zero) is parsed as by the {@code
+Short.parseShort} method with the indicated radix (10, 16, or
 8).  This sequence of characters must represent a positive
-value or a `NumberFormatException` will be thrown.  The
-result is negated if first character of the specified `String` is the minus sign.  No whitespace characters are
-permitted in the `String`.
+value or a {@link NumberFormatException} will be thrown.  The
+result is negated if first character of the specified {@code
+String} is the minus sign.  No whitespace characters are
+permitted in the {@code String}.
 
-Parameters:
-
-- `nm`: the `String` to decode.
-
-**Returns:** a `Short` object holding the `short`
-           value represented by `nm`
-
-**See also:** java.lang.Short#parseShort(java.lang.String, int)
-
-Throws:
-
-- `NumberFormatException`: if the `String` does not contain a parsable `short`.
+@param     nm the {@code String} to decode.
+@return    a {@code Short} object holding the {@code short}
+           value represented by {@code nm}
+@throws    NumberFormatException  if the {@code String} does not
+           contain a parsable {@code short}.
+@see java.lang.Short#parseShort(java.lang.String, int)
 
 ## Short.Short(short)
 
@@ -299,15 +276,15 @@ Throws:
 public Short(short value)
 ```
 
-Constructs a newly allocated `Short` object that
-represents the specified `short` value.
+Constructs a newly allocated {@code Short} object that
+represents the specified {@code short} value.
 
-Parameters:
+@param value     the value to be represented by the
+                 {@code Short}.
 
-- `value`: the value to be represented by the `Short`.
-
-**Deprecated:** It is rarely appropriate to use this constructor. The static factory
-`valueOf(short)` is generally a better choice, as it is
+@deprecated
+It is rarely appropriate to use this constructor. The static factory
+{@link #valueOf(short)} is generally a better choice, as it is
 likely to yield significantly better space and time performance.
 
 ## Short.Short(String)
@@ -316,24 +293,22 @@ likely to yield significantly better space and time performance.
 public Short(String s) throws NumberFormatException
 ```
 
-Constructs a newly allocated `Short` object that
-represents the `short` value indicated by the
-`String` parameter. The string is converted to a
-`short` value in exactly the manner used by the
-`parseShort` method for radix 10.
+Constructs a newly allocated {@code Short} object that
+represents the {@code short} value indicated by the
+{@code String} parameter. The string is converted to a
+{@code short} value in exactly the manner used by the
+{@code parseShort} method for radix 10.
 
-Parameters:
+@param s the {@code String} to be converted to a
+         {@code Short}
+@throws  NumberFormatException If the {@code String}
+         does not contain a parsable {@code short}.
 
-- `s`: the `String` to be converted to a `Short`
-
-**Deprecated:** It is rarely appropriate to use this constructor.
-Use `parseShort(String)` to convert a string to a
-`short` primitive, or use `valueOf(String)`
-to convert a string to a `Short` object.
-
-Throws:
-
-- `NumberFormatException`: If the `String` does not contain a parsable `short`.
+@deprecated
+It is rarely appropriate to use this constructor.
+Use {@link #parseShort(String)} to convert a string to a
+{@code short} primitive, or use {@link #valueOf(String)}
+to convert a string to a {@code Short} object.
 
 ## Short.byteValue()
 
@@ -341,10 +316,9 @@ Throws:
 public byte byteValue()
 ```
 
-Returns the value of this `Short` as a `byte` after
+Returns the value of this {@code Short} as a {@code byte} after
 a narrowing primitive conversion.
-
-**JLS:** 5.1.3 Narrowing Primitive Conversion
+@jls 5.1.3 Narrowing Primitive Conversion
 
 ## Short.shortValue()
 
@@ -352,8 +326,8 @@ a narrowing primitive conversion.
 public short shortValue()
 ```
 
-Returns the value of this `Short` as a
-`short`.
+Returns the value of this {@code Short} as a
+{@code short}.
 
 ## Short.intValue()
 
@@ -361,10 +335,9 @@ Returns the value of this `Short` as a
 public int intValue()
 ```
 
-Returns the value of this `Short` as an `int` after
+Returns the value of this {@code Short} as an {@code int} after
 a widening primitive conversion.
-
-**JLS:** 5.1.2 Widening Primitive Conversion
+@jls 5.1.2 Widening Primitive Conversion
 
 ## Short.longValue()
 
@@ -372,10 +345,9 @@ a widening primitive conversion.
 public long longValue()
 ```
 
-Returns the value of this `Short` as a `long` after
+Returns the value of this {@code Short} as a {@code long} after
 a widening primitive conversion.
-
-**JLS:** 5.1.2 Widening Primitive Conversion
+@jls 5.1.2 Widening Primitive Conversion
 
 ## Short.floatValue()
 
@@ -383,10 +355,9 @@ a widening primitive conversion.
 public float floatValue()
 ```
 
-Returns the value of this `Short` as a `float`
+Returns the value of this {@code Short} as a {@code float}
 after a widening primitive conversion.
-
-**JLS:** 5.1.2 Widening Primitive Conversion
+@jls 5.1.2 Widening Primitive Conversion
 
 ## Short.doubleValue()
 
@@ -394,10 +365,9 @@ after a widening primitive conversion.
 public double doubleValue()
 ```
 
-Returns the value of this `Short` as a `double`
+Returns the value of this {@code Short} as a {@code double}
 after a widening primitive conversion.
-
-**JLS:** 5.1.2 Widening Primitive Conversion
+@jls 5.1.2 Widening Primitive Conversion
 
 ## Short.toString()
 
@@ -405,14 +375,14 @@ after a widening primitive conversion.
 public String toString()
 ```
 
-Returns a `String` object representing this
-`Short`'s value.  The value is converted to signed
+Returns a {@code String} object representing this
+{@code Short}'s value.  The value is converted to signed
 decimal representation and returned as a string, exactly as if
-the `short` value were given as an argument to the
-`java.lang.Short.toString(short)` method.
+the {@code short} value were given as an argument to the
+{@link java.lang.Short#toString(short)} method.
 
-**Returns:** a string representation of the value of this object in
-         base 10.
+@return  a string representation of the value of this object in
+         base&nbsp;10.
 
 ## Short.hashCode()
 
@@ -420,10 +390,10 @@ the `short` value were given as an argument to the
 public int hashCode()
 ```
 
-Returns a hash code for this `Short`; equal to the result
-of invoking `intValue()`.
+Returns a hash code for this {@code Short}; equal to the result
+of invoking {@code intValue()}.
 
-**Returns:** a hash code value for this `Short`
+@return a hash code value for this {@code Short}
 
 ## Short.hashCode(short)
 
@@ -431,16 +401,12 @@ of invoking `intValue()`.
 public static int hashCode(short value)
 ```
 
-Returns a hash code for a `short` value; compatible with
-`Short.hashCode()`.
+Returns a hash code for a {@code short} value; compatible with
+{@code Short.hashCode()}.
 
-Parameters:
-
-- `value`: the value to hash
-
-**Returns:** a hash code value for a `short` value.
-
-**Since:** 1.8
+@param value the value to hash
+@return a hash code value for a {@code short} value.
+@since 1.8
 
 ## Short.equals(Object)
 
@@ -449,16 +415,13 @@ public boolean equals(Object obj)
 ```
 
 Compares this object to the specified object.  The result is
-`true` if and only if the argument is not
-`null` and is a `Short` object that
-contains the same `short` value as this object.
+{@code true} if and only if the argument is not
+{@code null} and is a {@code Short} object that
+contains the same {@code short} value as this object.
 
-Parameters:
-
-- `obj`: the object to compare with
-
-**Returns:** `true` if the objects are the same;
-                 `false` otherwise.
+@param obj       the object to compare with
+@return          {@code true} if the objects are the same;
+                 {@code false} otherwise.
 
 ## Short.compareTo(Short)
 
@@ -466,21 +429,17 @@ Parameters:
 public int compareTo(Short anotherShort)
 ```
 
-Compares two `Short` objects numerically.
+Compares two {@code Short} objects numerically.
 
-Parameters:
-
-- `anotherShort`: the `Short` to be compared.
-
-**Returns:** the value `0` if this `Short` is
-         equal to the argument `Short`; a value less than
-         `0` if this `Short` is numerically less
-         than the argument `Short`; and a value greater than
-          `0` if this `Short` is numerically
-          greater than the argument `Short` (signed
+@param   anotherShort   the {@code Short} to be compared.
+@return  the value {@code 0} if this {@code Short} is
+         equal to the argument {@code Short}; a value less than
+         {@code 0} if this {@code Short} is numerically less
+         than the argument {@code Short}; and a value greater than
+          {@code 0} if this {@code Short} is numerically
+          greater than the argument {@code Short} (signed
           comparison).
-
-**Since:** 1.2
+@since   1.2
 
 ## Short.compare(short, short)
 
@@ -488,23 +447,18 @@ Parameters:
 public static int compare(short x, short y)
 ```
 
-Compares two `short` values numerically.
+Compares two {@code short} values numerically.
 The value returned is identical to what would be returned by:
-
-```java
+<pre>
    Short.valueOf(x).compareTo(Short.valueOf(y))
-```
+</pre>
 
-Parameters:
-
-- `x`: the first `short` to compare
-- `y`: the second `short` to compare
-
-**Returns:** the value `0` if `x == y`;
-        a value less than `0` if `x < y`; and
-        a value greater than `0` if `x > y`
-
-**Since:** 1.7
+@param  x the first {@code short} to compare
+@param  y the second {@code short} to compare
+@return the value {@code 0} if {@code x == y};
+        a value less than {@code 0} if {@code x < y}; and
+        a value greater than {@code 0} if {@code x > y}
+@since 1.7
 
 ## Short.compareUnsigned(short, short)
 
@@ -512,20 +466,16 @@ Parameters:
 public static int compareUnsigned(short x, short y)
 ```
 
-Compares two `short` values numerically treating the values
+Compares two {@code short} values numerically treating the values
 as unsigned.
 
-Parameters:
-
-- `x`: the first `short` to compare
-- `y`: the second `short` to compare
-
-**Returns:** the value `0` if `x == y`; a value less
-        than `0` if `x < y` as unsigned values; and
-        a value greater than `0` if `x > y` as
+@param  x the first {@code short} to compare
+@param  y the second {@code short} to compare
+@return the value {@code 0} if {@code x == y}; a value less
+        than {@code 0} if {@code x < y} as unsigned values; and
+        a value greater than {@code 0} if {@code x > y} as
         unsigned values
-
-**Since:** 9
+@since 9
 
 ## Short.SIZE
 
@@ -533,10 +483,9 @@ Parameters:
 public static final int SIZE
 ```
 
-The number of bits used to represent a `short` value in two's
+The number of bits used to represent a {@code short} value in two's
 complement binary form.
-
-**Since:** 1.5
+@since 1.5
 
 ## Short.BYTES
 
@@ -544,10 +493,10 @@ complement binary form.
 public static final int BYTES
 ```
 
-The number of bytes used to represent a `short` value in two's
+The number of bytes used to represent a {@code short} value in two's
 complement binary form.
 
-**Since:** 1.8
+@since 1.8
 
 ## Short.reverseBytes(short)
 
@@ -556,16 +505,12 @@ public static short reverseBytes(short i)
 ```
 
 Returns the value obtained by reversing the order of the bytes in the
-two's complement representation of the specified `short` value.
+two's complement representation of the specified {@code short} value.
 
-Parameters:
-
-- `i`: the value whose bytes are to be reversed
-
-**Returns:** the value obtained by reversing (or, equivalently, swapping)
-    the bytes in the specified `short` value.
-
-**Since:** 1.5
+@param i the value whose bytes are to be reversed
+@return the value obtained by reversing (or, equivalently, swapping)
+    the bytes in the specified {@code short} value.
+@since 1.5
 
 ## Short.toUnsignedInt(short)
 
@@ -573,23 +518,20 @@ Parameters:
 public static int toUnsignedInt(short x)
 ```
 
-Converts the argument to an `int` by an unsigned
-conversion.  In an unsigned conversion to an `int`, the
-high-order 16 bits of the `int` are zero and the
-low-order 16 bits are equal to the bits of the `short` argument.
+Converts the argument to an {@code int} by an unsigned
+conversion.  In an unsigned conversion to an {@code int}, the
+high-order 16 bits of the {@code int} are zero and the
+low-order 16 bits are equal to the bits of the {@code short} argument.
 
-Consequently, zero and positive `short` values are mapped
-to a numerically equal `int` value and negative `short` values are mapped to an `int` value equal to the
-input plus 216.
+Consequently, zero and positive {@code short} values are mapped
+to a numerically equal {@code int} value and negative {@code
+short} values are mapped to an {@code int} value equal to the
+input plus 2<sup>16</sup>.
 
-Parameters:
-
-- `x`: the value to convert to an unsigned `int`
-
-**Returns:** the argument converted to `int` by an unsigned
+@param  x the value to convert to an unsigned {@code int}
+@return the argument converted to {@code int} by an unsigned
         conversion
-
-**Since:** 1.8
+@since 1.8
 
 ## Short.toUnsignedLong(short)
 
@@ -597,20 +539,17 @@ Parameters:
 public static long toUnsignedLong(short x)
 ```
 
-Converts the argument to a `long` by an unsigned
-conversion.  In an unsigned conversion to a `long`, the
-high-order 48 bits of the `long` are zero and the
-low-order 16 bits are equal to the bits of the `short` argument.
+Converts the argument to a {@code long} by an unsigned
+conversion.  In an unsigned conversion to a {@code long}, the
+high-order 48 bits of the {@code long} are zero and the
+low-order 16 bits are equal to the bits of the {@code short} argument.
 
-Consequently, zero and positive `short` values are mapped
-to a numerically equal `long` value and negative `short` values are mapped to a `long` value equal to the
-input plus 216.
+Consequently, zero and positive {@code short} values are mapped
+to a numerically equal {@code long} value and negative {@code
+short} values are mapped to a {@code long} value equal to the
+input plus 2<sup>16</sup>.
 
-Parameters:
-
-- `x`: the value to convert to an unsigned `long`
-
-**Returns:** the argument converted to `long` by an unsigned
+@param  x the value to convert to an unsigned {@code long}
+@return the argument converted to {@code long} by an unsigned
         conversion
-
-**Since:** 1.8
+@since 1.8

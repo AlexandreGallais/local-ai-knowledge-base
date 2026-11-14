@@ -1,13 +1,12 @@
 ---
-title: "no-label-var"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-label-var.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-label-var
+rule_type: suggestion
+related_rules:
+- no-extra-label
+- no-labels
+- no-unused-labels
 ---
 
-# no-label-var
 
 ## Rule Details
 
@@ -15,7 +14,7 @@ This rule aims to create clearer code by disallowing the bad practice of creatin
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-label-var: "error"*/
@@ -29,9 +28,11 @@ x:
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-label-var: "error"*/
@@ -49,6 +50,8 @@ q:
   }
 }
 ```
+
+:::
 
 ## Options
 

@@ -1,10 +1,6 @@
 ---
+id: downloads
 title: "Downloads"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/downloads.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
 
 ## Introduction
@@ -40,7 +36,7 @@ Download download = page.waitForDownload(() -> {
 download.saveAs(Paths.get("/path/to/save/at/", download.suggestedFilename()));
 ```
 
-```python
+```python async
 # Start waiting for the download
 async with page.expect_download() as download_info:
     # Perform the action that initiates download
@@ -51,7 +47,7 @@ download = await download_info.value
 await download.save_as("/path/to/save/at/" + download.suggested_filename)
 ```
 
-```python
+```python sync
 # Start waiting for the download
 with page.expect_download() as download_info:
     # Perform the action that initiates download
@@ -84,13 +80,13 @@ page.on('download', download => download.path().then(console.log));
 page.onDownload(download -> System.out.println(download.path()));
 ```
 
-```python
+```python async
 async def handle_download(download):
     print(await download.path())
 page.on("download", handle_download)
 ```
 
-```python
+```python sync
 page.on("download", lambda download: print(download.path()))
 ```
 
@@ -101,5 +97,5 @@ page.Download += (sender, download) => Console.WriteLine(download.Url);
 Note that handling the event forks the control flow and makes the script harder to follow. Your scenario might end while you are downloading a file since your main control flow is not awaiting for this operation to resolve.
 
 :::note
-For uploading files, see the uploading files section.
+For uploading files, see the [uploading files](./input.md#upload-files) section.
 :::

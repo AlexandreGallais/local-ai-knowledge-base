@@ -1,17 +1,10 @@
----
-title: "Disallow applying operators after takeUntil (rxjs-x/no-unsafe-takeuntil)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/no-unsafe-takeuntil.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Disallow applying operators after `takeUntil` (`rxjs-x/no-unsafe-takeuntil`)
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, 🔒 `strict`.
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule effects failures whenever `takeUntil` is used in observable compositions that can leak subscriptions.
 
@@ -37,10 +30,14 @@ const combined = source
 
 ## Options
 
+<!-- begin auto-generated rule options list -->
+
 | Name    | Description                                                                 | Type     | Default                                                                                                                                                                                                                                                    |
 | :------ | :-------------------------------------------------------------------------- | :------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `alias` | An array of operator names that should be treated similarly to `takeUntil`. | String[] |                                                                                                                                                                                                                                                            |
 | `allow` | An array of operator names that are allowed to follow `takeUntil`.          | String[] | [`count`, `defaultIfEmpty`, `endWith`, `every`, `finalize`, `finally`, `isEmpty`, `last`, `max`, `min`, `publish`, `publishBehavior`, `publishLast`, `publishReplay`, `reduce`, `share`, `shareReplay`, `skipLast`, `takeLast`, `throwIfEmpty`, `toArray`] |
+
+<!-- end auto-generated rule options list -->
 
 This rule accepts a single option which is an object with `alias` and `allow` properties. The `alias` property is an array of names of operators that should be treated similarly to `takeUntil` and the `allow` property is an array of names of operators that are safe to use after `takeUntil`.
 
@@ -67,9 +64,9 @@ Type checked lint rules are more powerful than traditional lint rules, but also 
 
 ## Further reading
 
-- Avoiding takeUntil leaks
+- [Avoiding takeUntil leaks](https://ncjamieson.com/avoiding-takeuntil-leaks/)
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/no-unsafe-takeuntil.ts)
+- [Test source](/tests/rules/no-unsafe-takeuntil.test.ts)

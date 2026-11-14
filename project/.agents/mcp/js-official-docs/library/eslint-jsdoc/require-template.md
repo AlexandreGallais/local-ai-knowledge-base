@@ -1,13 +1,6 @@
----
-title: "require-template"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/require-template.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
-
-# `require-template`
+<a name="user-content-require-template"></a>
+<a name="require-template"></a>
+# <code>require-template</code>
 
 Checks to see that `@template` tags are present for any detected type
 parameters.
@@ -32,11 +25,15 @@ for us to firmly distinguish between `D` and `V` as type parameters or as some
 other identifiers, so we use an algorithm that assumes that any single capital
 letters are templates.
 
+<a name="user-content-require-template-options"></a>
+<a name="require-template-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `exemptedBy`
+<a name="user-content-require-template-options-exemptedby"></a>
+<a name="require-template-options-exemptedby"></a>
+### <code>exemptedBy</code>
 
 Array of tags (e.g., `['type']`) whose presence on the document
 block avoids the need for a `@template`. Defaults to an array with
@@ -44,7 +41,9 @@ block avoids the need for a `@template`. Defaults to an array with
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
 
-### `requireSeparateTemplates`
+<a name="user-content-require-template-options-requireseparatetemplates"></a>
+<a name="require-template-options-requireseparatetemplates"></a>
+### <code>requireSeparateTemplates</code>
 
 Requires that each template have its own separate line, i.e., preventing
 templates of this format:
@@ -57,6 +56,7 @@ templates of this format:
 
 Defaults to `false`.
 
+
 |||
 |---|---|
 |Context|everywhere|
@@ -65,6 +65,8 @@ Defaults to `false`.
 |Settings||
 |Options|`exemptedBy`, `requireSeparateTemplates`|
 
+<a name="user-content-require-template-failing-examples"></a>
+<a name="require-template-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -242,6 +244,10 @@ function foo<T>(bar: T, baz: number | boolean): T {
 // Message: Unexpected tag `@template`
 ````
 
+
+
+<a name="user-content-require-template-passing-examples"></a>
+<a name="require-template-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -446,3 +452,4 @@ export interface CodeGenerationResultData extends Omit<Map<string, any>, "get" |
  * @typedef {Omit<Map<string, EXPECTED_ANY>, "get" | "set" | "has" | "delete"> & CodeGenMapOverloads} CodeGenerationResultData
  */
 ````
+

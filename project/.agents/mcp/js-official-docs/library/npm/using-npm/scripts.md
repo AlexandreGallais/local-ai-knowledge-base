@@ -1,13 +1,8 @@
 ---
-title: "Scripts (part 1 of 2)"
-tool: "npm"
-version: "12.2"
-source: "https://github.com/npm/cli/blob/60e11343e61316d966c86805d803df5a0eb99230/docs/lib/content/using-npm/scripts.md"
-commit: "60e11343e61316d966c86805d803df5a0eb99230"
-license: "Artistic-2.0"
+title: Scripts
+section: 7
+description: How npm handles the "scripts" field
 ---
-
-# Scripts
 
 ### Description
 
@@ -44,7 +39,7 @@ These scripts happen in addition to the `pre<event>`, `post<event>`, and
 
 * `prepare`, `prepublish`, `prepublishOnly`, `prepack`, `postpack`, `dependencies`
 
-**prepare** (since `user@example.com`)
+**prepare** (since `npm@4.0.0`)
 * Runs BEFORE the package is packed, i.e.
 during `npm publish` and `npm pack`
 * Runs on local `npm install` without package arguments (runs with flags like `--production` or `--omit=dev`, but does not run when installing specific packages like `npm install express`)
@@ -80,9 +75,9 @@ See below for more info.
 
 **Deprecation Note: prepublish**
 
-Since `user@example.com`, the npm CLI has run the `prepublish` script for both `npm publish` and `npm install`, because it's a convenient way to prepare a package for use (some common use cases are described in the section below).
-It has also turned out to be, in practice, very confusing.
-As of `user@example.com`, a new event has been introduced, `prepare`, that preserves this existing behavior.
+Since `npm@1.1.71`, the npm CLI has run the `prepublish` script for both `npm publish` and `npm install`, because it's a convenient way to prepare a package for use (some common use cases are described in the section below).
+It has also turned out to be, in practice, [very confusing](https://github.com/npm/npm/issues/10074).
+As of `npm@4.0.0`, a new event has been introduced, `prepare`, that preserves this existing behavior.
 A _new_ event, `prepublishOnly` has been added as a transitional strategy to allow users to avoid the confusing behavior of existing npm versions and only run on `npm publish` (for instance, running the tests one last time to ensure they're in good shape).
 
 See <https://github.com/npm/npm/issues/10074> for a much lengthier justification, with further reading, for this change.
@@ -110,11 +105,11 @@ It is run AFTER the changes have been applied and the `package.json` and `packag
 
 ### Life Cycle Operation Order
 
-#### `npm cache add`
+#### [`npm cache add`](/commands/npm-cache)
 
 * `prepare`
 
-#### `npm ci`
+#### [`npm ci`](/commands/npm-ci)
 
 * `preinstall` (before dependencies are installed)
 * `install`
@@ -128,11 +123,11 @@ It is run AFTER the changes have been applied and the `package.json` and `packag
 
 Because `preinstall` runs before reify, scripts cannot rely on packages from `node_modules`. `npm ci` wipes `node_modules` before `preinstall` fires, so `require()` of a dependency will always fail. Use `install` or `postinstall` for setup that depends on installed packages.
 
-#### `npm diff`
+#### [`npm diff`](/commands/npm-diff)
 
 * `prepare`
 
-#### `npm install`
+#### [`npm install`](/commands/npm-install)
 
 These run on a bare `npm install` in a local project (no package arguments).
 
@@ -152,13 +147,13 @@ If there is a `binding.gyp` file in the root of your package and you haven't def
 
 These are run from the scripts of `<pkg-name>`
 
-#### `npm pack`
+#### [`npm pack`](/commands/npm-pack)
 
 * `prepack`
 * `prepare`
 * `postpack`
 
-#### `npm publish`
+#### [`npm publish`](/commands/npm-publish)
 
 * `prepublishOnly`
 * `prepack`
@@ -167,7 +162,7 @@ These are run from the scripts of `<pkg-name>`
 * `publish`
 * `postpublish`
 
-#### `npm rebuild`
+#### [`npm rebuild`](/commands/npm-rebuild)
 
 * `preinstall`
 * `install`
@@ -177,7 +172,7 @@ These are run from the scripts of `<pkg-name>`
 `prepare` is only run if the current directory is a symlink (e.g.
 with linked packages)
 
-#### `npm restart`
+#### [`npm restart`](/commands/npm-restart)
 
 If there is a `restart` script defined, these events are run; otherwise,
 `stop` and `start` are both run if present, including their `pre` and `post` iterations)
@@ -186,13 +181,13 @@ If there is a `restart` script defined, these events are run; otherwise,
 * `restart`
 * `postrestart`
 
-#### `npm run <user defined>`
+#### [`npm run <user defined>`](/commands/npm-run)
 
 * `pre<user-defined>`
 * `<user-defined>`
 * `post<user-defined>`
 
-#### `npm start`
+#### [`npm start`](/commands/npm-start)
 
 * `prestart`
 * `start`
@@ -201,28 +196,29 @@ If there is a `restart` script defined, these events are run; otherwise,
 If there is a `server.js` file in the root of your package, then npm will default the `start` command to `node server.js`.
 `prestart` and `poststart` will still run in this case.
 
-#### `npm stop`
+#### [`npm stop`](/commands/npm-stop)
 
 * `prestop`
 * `stop`
 * `poststop`
 
-#### `npm test`
+#### [`npm test`](/commands/npm-test)
 
 * `pretest`
 * `test`
 * `posttest`
 
-#### `npm version`
+#### [`npm version`](/commands/npm-version)
 
 * `preversion`
 * `version`
 * `postversion`
 
-#### A Note on a lack of `npm uninstall` scripts
+#### A Note on a lack of [`npm uninstall`](/commands/npm-uninstall) scripts
 
 While npm v6 had `uninstall` lifecycle scripts, npm v7 does not.
 Removal of a package can happen for a wide variety of reasons, and there's no clear way to currently give the script enough context to be useful.
+
 
 Reasons for a package removal include:
 
@@ -247,8 +243,8 @@ For npm v6 and earlier, scripts were generally run from the root of the package,
 If your package must support very old npm versions, you may wish to add a safeguard in your scripts (for example, by checking process.cwd()).
 
 For more details, see:
-- npm v7 release notes
-- Discussion about script working directory reliability in npm v6 and earlier
+- [npm v7 release notes](https://github.com/npm/cli/releases/tag/v7.0.0)
+- [Discussion about script working directory reliability in npm v6 and earlier](https://github.com/npm/npm/issues/12356)
 
 ### Environment
 
@@ -297,7 +293,7 @@ For example, if you had `{"name":"foo", "version":"1.2.5"}` in your package.json
 
 **Note:** In npm 7 and later, most package.json fields are no longer provided as environment variables. Scripts that need access to other package.json fields should read the package.json file directly. The `npm_package_json` environment variable provides the path to the file for this purpose.
 
-See `package.json` for more on package configs.
+See [`package.json`](/configuring-npm/package-json) for more on package configs.
 
 #### versioning variables
 
@@ -331,7 +327,7 @@ For example, if your package.json contains this:
 }
 ```
 
-then `scripts/build.js` will be called for the prepare stage of the lifecycle, and you can check the
+then `scripts/build.js` will be called for the prepare stage of the lifecycle, and you can check the 
 `npm_lifecycle_event` environment variable if your script needs to behave differently in different contexts.
 
 If you want to run build commands, you can do so.
@@ -350,9 +346,33 @@ This works just fine:
 ### Exiting
 
 Scripts are run by passing the line as a script argument to `/bin/sh` on POSIX systems or `cmd.exe` on Windows.
-You can control which shell is used by setting the `script-shell` configuration option.
+You can control which shell is used by setting the [`script-shell`](/using-npm/config#script-shell) configuration option.
 
 If the script exits with a code other than 0, then this will abort the process.
 
 Note that these script files don't have to be Node.js or even JavaScript programs.
 They just have to be some kind of executable file.
+
+### Best Practices
+
+* Don't exit with a non-zero error code unless you *really* mean it.
+  If the failure is minor or only will prevent some optional features, then it's better to just print a warning and exit successfully.
+* Try not to use scripts to do what npm can do for you.
+Read through [`package.json`](/configuring-npm/package-json) to see all the things that you can specify and enable by simply describing your package appropriately.
+In general, this will lead to a more robust and consistent state.
+* Inspect the env to determine where to put things.
+For instance, if the `NPM_CONFIG_BINROOT` environment variable is set to `/home/user/bin`, then don't try to install executables into `/usr/local/bin`.
+The user probably set it up that way for a reason.
+* Don't prefix your script commands with "sudo".  If root permissions are required for some reason, then it'll fail with that error, and the user will sudo the npm command in question.
+* Don't use `install`.
+Use a `.gyp` file for compilation, and `prepare` for anything else.
+You should almost never have to explicitly set a preinstall or install script.
+If you are doing this, please consider if there is another option.
+The only valid use of `install` or `preinstall` scripts is for compilation which must be done on the target architecture.
+
+### See Also
+
+* [npm run](/commands/npm-run)
+* [package.json](/configuring-npm/package-json)
+* [npm developers](/using-npm/developers)
+* [npm install](/commands/npm-install)

@@ -1,10 +1,11 @@
 ---
-title: "Publish .NET apps for macOS"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/deploying/macos.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Publish .NET apps for macOS
+description: Learn how to publish .NET applications for macOS, including signing, notarization, app entitlements, and universal binaries.
+author: agocke
+ms.author: angocke
+ms.date: 10/09/2026
+ms.topic: how-to
+ai-usage: ai-assisted
 ---
 
 # Publish .NET apps for macOS
@@ -21,11 +22,11 @@ Before you publish your .NET application for macOS, ensure you have the followin
 
 ## Produce your app using .NET SDK
 
-Use one of the methods described in the .NET application publishing overview to produce an application. You can create either a framework-dependent or self-contained application.
+Use one of the methods described in the [.NET application publishing overview](index.md) to produce an application. You can create either a framework-dependent or self-contained application.
 
 ## Sign and notarize your app
 
-Use Apple's developer documentation to sign and notarize the app native binaries. .NET creates a native *apphost* executable as the entry point for your app. This apphost must be signed and, if your app uses special capabilities, it must be assigned the appropriate **entitlements**.
+Use [Apple's developer documentation](https://developer.apple.com/documentation/security/notarizing_macos_software_before_distribution) to sign and notarize the app native binaries. .NET creates a native *apphost* executable as the entry point for your app. This apphost must be signed and, if your app uses special capabilities, it must be assigned the appropriate **entitlements**.
 
 ### Application identity
 
@@ -37,15 +38,15 @@ Software management solutions can use your apphost's signing identity to apply a
 
 Give the apphost a unique, stable code-signing identifier and sign releases with a Developer ID Application certificate from your Apple Developer team. Keep the identifier and team consistent across updates. Changing either can require users and administrators to renew approvals.
 
-For details, see Apple's guidance on metadata for standalone tools and signing individual executables.
+For details, see Apple's guidance on [metadata for standalone tools](https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html#//apple_ref/doc/uid/TP40005929-CH4-SW6) and [signing individual executables](https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html#//apple_ref/doc/uid/TP40005929-CH4-SW3).
 
 ### Entitlements for apps not published as Native AOT
 
-For apps not published as Native AOT, the `com.apple.security.cs.allow-jit` entitlement is required.
+For apps not published as [Native AOT](native-aot/index.md), the `com.apple.security.cs.allow-jit` entitlement is required.
 
 ### Entitlements for apps published as Native AOT
 
-For apps published as Native AOT, no entitlements are required.
+For apps published as [Native AOT](native-aot/index.md), no entitlements are required.
 
 ### Optional entitlements for debugging and diagnostics
 
@@ -54,7 +55,7 @@ The following entitlements enable additional debugging and diagnostic capabiliti
 - **`com.apple.security.get-task-allow`**: Needed for dump collection with `createdump` and `dotnet dump`.
 - **`com.apple.security.cs.debugger`**: Needed to attach a debugger to the process.
 
-> **Warning:**
+> [!WARNING]
 > Failing to sign and notarize your app might result in the application crashing while executing a restricted operation.
 
 ## Universal binaries
@@ -63,8 +64,8 @@ macOS supports *universal binaries*: a single Mach-O file that contains machine 
 
 .NET doesn't produce universal binaries directly. Instead, you publish your app once per architecture and merge the two native executables with the Apple `lipo` tool. Two .NET publishing modes produce a self-contained native executable that you can merge this way:
 
-- Single-file apps (`PublishSingleFile`)
-- Native AOT deployment (`PublishAot`)
+- [Single-file apps](single-file/overview.md) (`PublishSingleFile`)
+- [Native AOT deployment](native-aot/index.md) (`PublishAot`)
 
 ### Publish a single-file universal binary
 

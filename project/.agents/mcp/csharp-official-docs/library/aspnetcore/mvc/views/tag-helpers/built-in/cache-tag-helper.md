@@ -1,19 +1,15 @@
 ---
-title: "Cache Tag Helper in ASP.NET Core MVC"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/mvc/views/tag-helpers/built-in/cache-tag-helper.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Cache Tag Helper in ASP.NET Core MVC
+description: Learn how to use the Cache Tag Helper.
+ms.date: 09/22/2025
 ---
-
 # Cache Tag Helper in ASP.NET Core MVC
 
-By Peter Kellner
+By [Peter Kellner](https://peterkellner.net)
 
 The Cache Tag Helper provides the ability to improve the performance of your ASP.NET Core app by caching its content to the internal ASP.NET Core cache provider.
 
-For an overview of Tag Helpers, see Tag Helpers in ASP.NET Core.
+For an overview of Tag Helpers, see [Tag Helpers in ASP.NET Core](../intro.md).
 
 The following Razor markup caches the current date:
 
@@ -29,7 +25,7 @@ The first request to the page that contains the Tag Helper displays the current 
 
 | Attribute type | Example                      | Default |
 | -------------- | ---------------------------- | :-----: |
-| `TimeSpan`     | `@TimeSpan.FromSeconds(120)` | — |
+| `TimeSpan`     | `@TimeSpan.FromSeconds(120)` | &mdash; |
 
 `expires-after` sets the length of time from the first request time to cache the contents.
 
@@ -89,7 +85,7 @@ Example:
 </cache>
 ```
 
-Defaults to 30 seconds if `expires-after` and `expires-on` aren't defined.
+Defaults to 30 seconds if [`expires-after`](#expires-after) and [`expires-on`](#expires-on) aren't defined.
 
 ### `priority`
 
@@ -107,9 +103,9 @@ Example:
 </cache>
 ```
 
-The `priority` attribute doesn't guarantee a specific level of cache retention. `CacheItemPriority` is only a suggestion. Setting this attribute to `NeverRemove` doesn't guarantee that cached items are always retained. See the topics in the Related content section for more information.
+The `priority` attribute doesn't guarantee a specific level of cache retention. `CacheItemPriority` is only a suggestion. Setting this attribute to `NeverRemove` doesn't guarantee that cached items are always retained. See the topics in the [Related content](#related-content) section for more information.
 
-The Cache Tag Helper is dependent on the memory cache service. The Cache Tag Helper adds the service if it hasn't been added.
+The Cache Tag Helper is dependent on the [memory cache service](../../../../performance/caching/memory.md). The Cache Tag Helper adds the service if it hasn't been added.
 
 ### `vary-by`
 
@@ -119,7 +115,7 @@ The Cache Tag Helper is dependent on the memory cache service. The Cache Tag Hel
 
 `vary-by` allows for customization of what data is cached. When the object referenced by the attribute's string value changes, the content of the Cache Tag Helper is updated. Often, a string-concatenation of model values are assigned to this attribute. Effectively, this results in a scenario where an update to any of the concatenated values invalidates the cache.
 
-The following example assumes the controller method rendering the view sums the integer value of the two route parameters, `myParam1` and `myParam2`, and returns the sum as the single model property. When this sum changes, the content of the Cache Tag Helper is rendered and cached again.
+The following example assumes the controller method rendering the view sums the integer value of the two route parameters, `myParam1` and `myParam2`, and returns the sum as the single model property. When this sum changes, the content of the Cache Tag Helper is rendered and cached again.  
 
 Action:
 
@@ -157,14 +153,14 @@ The following example monitors the cookie associated with ASP.NET Core Identity.
     Current Time Inside Cache Tag Helper: @DateTime.Now
 </cache>
 ```
-
+    
 ### `vary-by-culture`
 
 | Attribute type | Examples        | Default |
 | -------------- | --------------- | :-----: |
 | Boolean        | `true`, `false` | `false` |
 
-`vary-by-culture` varys the cached result by request culture. Setting the attribute to `true` means the result is varied by `System.Globalization.CultureInfo.CurrentCulture` and `System.Globalization.CultureInfo.CurrentUICulture`.
+`vary-by-culture` varys the cached result by request culture. Setting the attribute to `true` means the result is varied by <xref:System.Globalization.CultureInfo.CurrentCulture?displayProperty=nameWithType> and <xref:System.Globalization.CultureInfo.CurrentUICulture?displayProperty=nameWithType>.
 
 Example:
 
@@ -196,7 +192,7 @@ The following example monitors the header value `User-Agent`. The example caches
 | -------------- | -------------------- |
 | String         | `Make`, `Make,Model` |
 
-`vary-by-query` accepts a comma-delimited list of `Microsoft.AspNetCore.Http.IQueryCollection.Keys` in a query string (`Microsoft.AspNetCore.Http.HttpRequest.Query`) that trigger a cache refresh when the value of any listed key changes.
+`vary-by-query` accepts a comma-delimited list of <xref:Microsoft.AspNetCore.Http.IQueryCollection.Keys> in a query string (<xref:Microsoft.AspNetCore.Http.HttpRequest.Query>) that trigger a cache refresh when the value of any listed key changes.
 
 The following example monitors the values of `Make` and `Model`. The example caches the content for every different `Make` and `Model` presented to the web server:
 
@@ -252,5 +248,5 @@ Using this attribute maintains the contents in cache through a sign-in and sign-
 
 ## Related content
 
-* Cache in-memory in ASP.NET Core
-* Introduction to Identity on ASP.NET Core
+* [Cache in-memory in ASP.NET Core](../../../../performance/caching/memory.md)
+* [Introduction to Identity on ASP.NET Core](../../../../security/authentication/identity.md)

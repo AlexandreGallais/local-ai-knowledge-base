@@ -1,12 +1,3 @@
----
-title: "alloc::io::buf_read"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/alloc/src/io/buf_read.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # alloc::io::buf_read
 
 ## trait BufRead
@@ -15,18 +6,18 @@ license: "MIT OR Apache-2.0"
 pub trait BufRead: Read
 ```
 
-A `BufRead` is a type of `Read`er which has an internal buffer, allowing it
+A `BufRead` is a type of [`Read`]er which has an internal buffer, allowing it
 to perform extra ways of reading.
 
 For example, reading line-by-line is inefficient without using a buffer, so
 if you want to read by line, you'll need `BufRead`, which includes a
-`read_line` method as well as a `lines` iterator.
+[`read_line`] method as well as a [`lines`] iterator.
 
 # Examples
 
 A locked standard input implements `BufRead`:
 
-```rust
+```no_run
 use std::io;
 use std::io::prelude::*;
 
@@ -34,15 +25,19 @@ let stdin = io::stdin();
 for line in stdin.lock().lines() {
     println!("{}", line?);
 }
+# std::io::Result::Ok(())
 ```
 
-If you have something that implements `Read`, you can use the `BufReader`
+If you have something that implements [`Read`], you can use the `BufReader`
 type to turn it into a `BufRead`.
 
-For example, `File` implements `Read`, but not `BufRead`.
+For example, `File` implements [`Read`], but not `BufRead`.
 `BufReader` to the rescue!
 
-```rust
+[`read_line`]: BufRead::read_line
+[`lines`]: BufRead::lines
+
+```no_run
 use std::io::{self, BufReader};
 use std::io::prelude::*;
 use std::fs::File;
@@ -66,22 +61,24 @@ fn main() -> io::Result<()> {
 fn fill_buf(&mut self) -> Result<&[u8]>
 ```
 
-Returns the contents of the internal buffer, filling it with more data, via `Read` methods, if empty.
+Returns the contents of the internal buffer, filling it with more data, via [`Read`] methods, if empty.
 
-This is a lower-level method and is meant to be used together with `consume`,
+This is a lower-level method and is meant to be used together with [`consume`],
 which can be used to mark bytes that should not be returned by subsequent calls to `read`.
+
+[`consume`]: BufRead::consume
 
 Returns an empty buffer when the stream has reached EOF.
 
 # Errors
 
-This function will return an I/O error if a `Read` method was called, but returned an error.
+This function will return an I/O error if a [`Read`] method was called, but returned an error.
 
 # Examples
 
 A locked standard input implements `BufRead`:
 
-```rust
+```no_run
 use std::io;
 use std::io::prelude::*;
 
@@ -96,6 +93,7 @@ println!("{buffer:?}");
 // mark the bytes we worked with as read
 let length = buffer.len();
 stdin.consume(length);
+# std::io::Result::Ok(())
 ```
 
 ## BufRead::consume
@@ -107,15 +105,17 @@ fn consume(&mut self, amount: usize)
 Marks the given `amount` of additional bytes from the internal buffer as having been read.
 Subsequent calls to `read` only return bytes that have not been marked as read.
 
-This is a lower-level method and is meant to be used together with `fill_buf`,
-which can be used to fill the internal buffer via `Read` methods.
+This is a lower-level method and is meant to be used together with [`fill_buf`],
+which can be used to fill the internal buffer via [`Read`] methods.
 
-It is a logic error if `amount` exceeds the number of unread bytes in the internal buffer, which is returned by `fill_buf`.
+It is a logic error if `amount` exceeds the number of unread bytes in the internal buffer, which is returned by [`fill_buf`].
 
 # Examples
 
-Since `consume()` is meant to be used with `fill_buf`,
+Since `consume()` is meant to be used with [`fill_buf`],
 that method's example includes an example of `consume()`.
+
+[`fill_buf`]: BufRead::fill_buf
 
 ## BufRead::read_until
 
@@ -137,19 +137,23 @@ or EOF.
 
 # Errors
 
-This function will ignore all instances of `ErrorKind::Interrupted` and
-will otherwise return any errors returned by `fill_buf`.
+This function will ignore all instances of [`ErrorKind::Interrupted`] and
+will otherwise return any errors returned by [`fill_buf`].
 
 If an I/O error is encountered then all bytes read so far will be
 present in `buf` and its length will have been adjusted appropriately.
 
+[`fill_buf`]: BufRead::fill_buf
+
 # Examples
 
-`std::io::Cursor``Cursor` is a type that implements `BufRead`. In
-this example, we use `Cursor` to read all the bytes in a byte slice
+[`std::io::Cursor`][`Cursor`] is a type that implements `BufRead`. In
+this example, we use [`Cursor`] to read all the bytes in a byte slice
 in hyphen delimited segments:
 
-```rust
+[`Cursor`]: crate::io::Cursor
+
+```
 use std::io::{self, BufRead};
 
 let mut cursor = io::Cursor::new(b"lorem-ipsum");
@@ -199,19 +203,23 @@ or EOF.
 
 # Errors
 
-This function will ignore all instances of `ErrorKind::Interrupted` and
-will otherwise return any errors returned by `fill_buf`.
+This function will ignore all instances of [`ErrorKind::Interrupted`] and
+will otherwise return any errors returned by [`fill_buf`].
 
 If an I/O error is encountered then all bytes read so far will be
 present in `buf` and its length will have been adjusted appropriately.
 
+[`fill_buf`]: BufRead::fill_buf
+
 # Examples
 
-`std::io::Cursor``Cursor` is a type that implements `BufRead`. In
-this example, we use `Cursor` to read some NUL-terminated information
+[`std::io::Cursor`][`Cursor`] is a type that implements `BufRead`. In
+this example, we use [`Cursor`] to read some NUL-terminated information
 about Ferris from a binary string, skipping the fun fact:
 
-```rust
+[`Cursor`]: crate::io::Cursor
+
+```
 use std::io::{self, BufRead};
 
 let mut cursor = io::Cursor::new(b"Ferris\0Likes long walks on the beach\0Crustacean\0!");
@@ -248,10 +256,10 @@ fn read_line(&mut self, buf: &mut String) -> Result<usize>
 ```
 
 Reads all bytes until a newline (the `0xA` byte) is reached, and append
-them to the provided `String` buffer.
+them to the provided [`String`] buffer.
 
 Previous content of the buffer will be preserved. To avoid appending to
-the buffer, you need to `clear` it first.
+the buffer, you need to [`clear`] it first.
 
 This function will read bytes from the underlying stream until the
 newline delimiter (the `0xA` byte) or EOF is found. Once found, all bytes
@@ -260,25 +268,33 @@ up to, and including, the delimiter (if found) will be appended to
 
 If successful, this function will return the total number of bytes read.
 
-If this function returns `Ok(0)`, the stream has reached EOF.
+If this function returns [`Ok(0)`], the stream has reached EOF.
 
 This function is blocking and should be used carefully: it is possible for
 an attacker to continuously send bytes without ever sending a newline
-or EOF. You can use `take` to limit the maximum number of bytes read.
+or EOF. You can use [`take`] to limit the maximum number of bytes read.
+
+[`Ok(0)`]: Ok
+[`clear`]: String::clear
+[`take`]: crate::io::Read::take
 
 # Errors
 
-This function has the same error semantics as `read_until` and will
+This function has the same error semantics as [`read_until`] and will
 also return an error if the read bytes are not valid UTF-8. If an I/O
 error is encountered then `buf` may contain some bytes already read in
 the event that all data read so far was valid UTF-8.
 
+[`read_until`]: BufRead::read_until
+
 # Examples
 
-`std::io::Cursor``Cursor` is a type that implements `BufRead`. In
-this example, we use `Cursor` to read all the lines in a byte slice:
+[`std::io::Cursor`][`Cursor`] is a type that implements `BufRead`. In
+this example, we use [`Cursor`] to read all the lines in a byte slice:
 
-```rust
+[`Cursor`]: crate::io::Cursor
+
+```
 use std::io::{self, BufRead};
 
 let mut cursor = io::Cursor::new(b"foo\nbar");
@@ -318,16 +334,21 @@ The iterator returned from this function will return instances of
 <code>[io::Result]<[Vec]\<u8>></code>. Each vector returned will *not* have
 the delimiter byte at the end.
 
-This function will yield errors whenever `read_until` would have
+This function will yield errors whenever [`read_until`] would have
 also yielded an error.
+
+[io::Result]: self::Result "io::Result"
+[`read_until`]: BufRead::read_until
 
 # Examples
 
-`std::io::Cursor``Cursor` is a type that implements `BufRead`. In
-this example, we use `Cursor` to iterate over all hyphen delimited
+[`std::io::Cursor`][`Cursor`] is a type that implements `BufRead`. In
+this example, we use [`Cursor`] to iterate over all hyphen delimited
 segments in a byte slice
 
-```rust
+[`Cursor`]: crate::io::Cursor
+
+```
 use std::io::{self, BufRead};
 
 let cursor = io::Cursor::new(b"lorem-ipsum-dolor");
@@ -351,13 +372,17 @@ The iterator returned from this function will yield instances of
 <code>[io::Result]<[String]></code>. Each string returned will *not* have a newline
 byte (the `0xA` byte) or `CRLF` (`0xD`, `0xA` bytes) at the end.
 
+[io::Result]: crate::io::Result "io::Result"
+
 # Examples
 
-`std::io::Cursor``Cursor` is a type that implements `BufRead`. In
-this example, we use `Cursor` to iterate over all the lines in a byte
+[`std::io::Cursor`][`Cursor`] is a type that implements `BufRead`. In
+this example, we use [`Cursor`] to iterate over all the lines in a byte
 slice.
 
-```rust
+[`Cursor`]: crate::io::Cursor
+
+```
 use std::io::{self, BufRead};
 
 let cursor = io::Cursor::new(b"lorem\nipsum\r\ndolor");
@@ -371,4 +396,4 @@ assert_eq!(lines_iter.next(), None);
 
 # Errors
 
-Each line of the iterator has the same error semantics as `BufRead::read_line`.
+Each line of the iterator has the same error semantics as [`BufRead::read_line`].

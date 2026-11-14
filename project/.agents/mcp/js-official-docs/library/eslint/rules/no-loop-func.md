@@ -1,13 +1,8 @@
 ---
-title: "no-loop-func"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-loop-func.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-loop-func
+rule_type: suggestion
 ---
 
-# no-loop-func
 
 Writing functions within loops tends to result in errors due to the way the function creates a closure around the loop. For example:
 
@@ -41,7 +36,7 @@ This rule disallows any function within a loop that contains unsafe references (
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-loop-func: "error"*/
@@ -95,9 +90,11 @@ for (var i = 0; i < 5; i++) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-loop-func: "error"*/
@@ -170,11 +167,13 @@ for (var i = 0; i < 5; i++) {
 }
 ```
 
+:::
+
 This rule additionally supports TypeScript type syntax.
 
 Examples of **correct** TypeScript code for this rule:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint no-loop-func: "error"*/
@@ -185,6 +184,8 @@ for (let i = 0; i < 10; i += 1) {
 	someArray = someArray.filter((item: MyType) => !!item);
 }
 ```
+
+:::
 
 ## Options
 

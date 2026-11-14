@@ -1,12 +1,3 @@
----
-title: "std::thread::local"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/thread/local.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::thread::local
 
 Thread local storage
@@ -20,27 +11,33 @@ pub struct LocalKey<T: 'static>
 A thread local storage (TLS) key which owns its contents.
 
 This key uses the fastest implementation available on the target platform.
-It is instantiated with the `thread_local!` macro and the
-primary method is the `with` method, though there are helpers to make
-working with `Cell` types easier.
+It is instantiated with the [`thread_local!`] macro and the
+primary method is the [`with`] method, though there are helpers to make
+working with [`Cell`] types easier.
 
-The `with` method yields a reference to the contained value which cannot
+The [`with`] method yields a reference to the contained value which cannot
 outlive the current thread or escape the given closure.
+
+[`thread_local!`]: crate::thread_local
 
 # Initialization and Destruction
 
 Initialization is dynamically performed on the first call to a setter (e.g.
-`with`) within a thread, and values that implement `Drop` get
+[`with`]) within a thread, and values that implement [`Drop`] get
 destructed when a thread exits. Some platform-specific caveats apply, which
 are explained below.
 Note that, should the destructor panic, the whole process will be [aborted].
 On platforms where initialization requires memory allocation, this is
-performed directly through `System`, allowing the [global allocator]
+performed directly through [`System`], allowing the [global allocator]
 to make use of thread local storage.
 
 A `LocalKey`'s initializer cannot recursively depend on itself. Using a
 `LocalKey` in this way may cause panics, aborts, or infinite recursion on
 the first call to `with`.
+
+[`System`]: crate::alloc::System
+[global allocator]: crate::alloc
+[aborted]: crate::process::abort
 
 # Single-thread Synchronization
 
@@ -49,13 +46,18 @@ obtain multiple references to the thread-local data in different places on
 the call stack. For this reason, only shared (`&T`) references may be obtained.
 
 To allow obtaining an exclusive mutable reference (`&mut T`), typically a
-`Cell` or `RefCell` is used (see the `std::cell` for more information
+[`Cell`] or [`RefCell`] is used (see the [`std::cell`] for more information
 on how exactly this works). To make this easier there are specialized
-implementations for `LocalKey<Cell<T>>` and `LocalKey<RefCell<T>>`.
+implementations for [`LocalKey<Cell<T>>`] and [`LocalKey<RefCell<T>>`].
+
+[`std::cell`]: `crate::cell`
+[`LocalKey<Cell<T>>`]: struct.LocalKey.html#impl-LocalKey<Cell<T>>
+[`LocalKey<RefCell<T>>`]: struct.LocalKey.html#impl-LocalKey<RefCell<T>>
+
 
 # Examples
 
-```rust
+```
 use std::cell::Cell;
 use std::thread;
 
@@ -107,20 +109,24 @@ example, there are a number of known caveats where destructors are not run:
    When dynamically unloading a Rust `cdylib`, pending TLS destructors may run
    during the unload or may be leaked.
 
+[converted into a fiber]: https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-convertthreadtofiber
+[loader lock]: https://docs.microsoft.com/en-us/windows/win32/dlls/dynamic-link-library-best-practices
+[`with`]: LocalKey::with
+
 ## macro thread_local!
 
 ```rust
 macro_rules! thread_local
 ```
 
-Declare a new thread local storage key of type `std::thread::LocalKey`.
+Declare a new thread local storage key of type [`std::thread::LocalKey`].
 
 # Syntax
 
 The macro wraps any number of static declarations and makes them thread local.
 Publicity and attributes for each static are allowed. Example:
 
-```rust
+```
 use std::cell::{Cell, RefCell};
 
 thread_local! {
@@ -134,17 +140,17 @@ BAR.with_borrow(|v| assert_eq!(v[1], 2.0));
 ```
 
 Note that only shared references (`&T`) to the inner data may be obtained, so a
-type such as `Cell` or `RefCell` is typically used to allow mutating access.
+type such as [`Cell`] or [`RefCell`] is typically used to allow mutating access.
 
 This macro supports a special `const {}` syntax that can be used
 when the initialization expression can be evaluated as a constant.
 This can enable a more efficient thread local implementation that
 can avoid lazy initialization. For types that do not
-need to be dropped, this can enable an
+[need to be dropped][crate::mem::needs_drop], this can enable an
 even more efficient implementation that does not need to
 track any additional state.
 
-```rust
+```
 use std::cell::RefCell;
 
 thread_local! {
@@ -154,8 +160,10 @@ thread_local! {
 FOO.with_borrow(|v| assert_eq!(v.len(), 0));
 ```
 
-See [`LocalKey` documentation]`std::thread::LocalKey` for more
+See [`LocalKey` documentation][`std::thread::LocalKey`] for more
 information.
+
+[`std::thread::LocalKey`]: crate::thread::LocalKey
 
 ## struct AccessError
 
@@ -163,7 +171,7 @@ information.
 pub struct AccessError
 ```
 
-An error returned by `LocalKey::try_with`.
+An error returned by [`LocalKey::try_with`](struct.LocalKey.html#method.try_with).
 
 ## LocalKey::with
 
@@ -178,13 +186,13 @@ this key yet.
 
 # Panics
 
-This function will `panic!()` if the key <example-value> has its
+This function will `panic!()` if the key currently has its
 destructor running, and it **may** panic if the destructor has
 previously been run for this thread.
 
 # Examples
 
-```rust
+```
 thread_local! {
     pub static STATIC: String = String::from("I am");
 }
@@ -205,7 +213,7 @@ Acquires a reference to the value in this TLS key.
 
 This will lazily initialize the value if this thread has not referenced
 this key yet. If the key has been destroyed (which may happen if this is called
-in a destructor), this function may return an `AccessError`.
+in a destructor), this function may return an [`AccessError`].
 
 # Panics
 
@@ -214,7 +222,7 @@ key's initializer panics.
 
 # Examples
 
-```rust
+```
 thread_local! {
     pub static STATIC: String = String::from("I am");
 }
@@ -239,12 +247,12 @@ given value if it wasn't initialized yet.
 
 # Panics
 
-Panics if the key <example-value> has its destructor running,
+Panics if the key currently has its destructor running,
 and it **may** panic if the destructor has previously been run for this thread.
 
 # Examples
 
-```rust
+```
 use std::cell::Cell;
 
 thread_local! {
@@ -271,12 +279,12 @@ this key yet.
 
 # Panics
 
-Panics if the key <example-value> has its destructor running,
+Panics if the key currently has its destructor running,
 and it **may** panic if the destructor has previously been run for this thread.
 
 # Examples
 
-```rust
+```
 use std::cell::Cell;
 
 thread_local! {
@@ -299,12 +307,12 @@ this key yet.
 
 # Panics
 
-Panics if the key <example-value> has its destructor running,
+Panics if the key currently has its destructor running,
 and it **may** panic if the destructor has previously been run for this thread.
 
 # Examples
 
-```rust
+```
 use std::cell::Cell;
 
 thread_local! {
@@ -328,12 +336,12 @@ this key yet.
 
 # Panics
 
-Panics if the key <example-value> has its destructor running,
+Panics if the key currently has its destructor running,
 and it **may** panic if the destructor has previously been run for this thread.
 
 # Examples
 
-```rust
+```
 use std::cell::Cell;
 
 thread_local! {
@@ -357,12 +365,12 @@ this key yet.
 
 # Panics
 
-Panics if the key <example-value> has its destructor running,
+Panics if the key currently has its destructor running,
 and it **may** panic if the destructor has previously been run for this thread.
 
 # Examples
 
-```rust
+```
 use std::cell::Cell;
 
 thread_local! {
@@ -388,12 +396,12 @@ this key yet.
 
 Panics if the value is currently mutably borrowed.
 
-Panics if the key <example-value> has its destructor running,
+Panics if the key currently has its destructor running,
 and it **may** panic if the destructor has previously been run for this thread.
 
 # Examples
 
-```rust
+```
 use std::cell::RefCell;
 
 thread_local! {
@@ -418,12 +426,12 @@ this key yet.
 
 Panics if the value is currently borrowed.
 
-Panics if the key <example-value> has its destructor running,
+Panics if the key currently has its destructor running,
 and it **may** panic if the destructor has previously been run for this thread.
 
 # Examples
 
-```rust
+```
 use std::cell::RefCell;
 
 thread_local! {
@@ -451,12 +459,12 @@ given value if it wasn't initialized yet.
 
 Panics if the value is currently borrowed.
 
-Panics if the key <example-value> has its destructor running,
+Panics if the key currently has its destructor running,
 and it **may** panic if the destructor has previously been run for this thread.
 
 # Examples
 
-```rust
+```
 use std::cell::RefCell;
 
 thread_local! {
@@ -485,12 +493,12 @@ this key yet.
 
 Panics if the value is currently borrowed.
 
-Panics if the key <example-value> has its destructor running,
+Panics if the key currently has its destructor running,
 and it **may** panic if the destructor has previously been run for this thread.
 
 # Examples
 
-```rust
+```
 use std::cell::RefCell;
 
 thread_local! {
@@ -518,12 +526,12 @@ Replaces the contained value, returning the old value.
 
 Panics if the value is currently borrowed.
 
-Panics if the key <example-value> has its destructor running,
+Panics if the key currently has its destructor running,
 and it **may** panic if the destructor has previously been run for this thread.
 
 # Examples
 
-```rust
+```
 use std::cell::RefCell;
 
 thread_local! {

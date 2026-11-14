@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugProcess5::EnumerateGCReferences Method"
 title: "ICorDebugProcess5::EnumerateGCReferences Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess5-enumerategcreferences-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugProcess5.EnumerateGCReferences"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugProcess5::EnumerateGCReferences"
+helpviewer_keywords:
+  - "EnumerateGCReferences method, ICorDebugProcess5 interface [.NET debugging]"
+  - "ICorDebugProcess5::EnumerateGCReferences method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugProcess5::EnumerateGCReferences Method
 
 Gets an enumerator for all objects that are to be garbage-collected in a process.
@@ -26,7 +35,7 @@ HRESULT EnumerateGCReferences(
  [in] A Boolean value that indicates whether weak references are also to be enumerated. If `enumerateWeakReferences` is `true`, the `ppEnum` enumerator includes both strong references and weak references. If `enumerateWeakReferences` is `false`, the enumerator includes only strong references.
 
  `ppEnum`
- [out] A pointer to the address of an ICorDebugGCReferenceEnum that is an enumerator for the objects to be garbage-collected.
+ [out] A pointer to the address of an [ICorDebugGCReferenceEnum](icordebuggcreferenceenum-interface.md) that is an enumerator for the objects to be garbage-collected.
 
 ## Remarks
 
@@ -34,7 +43,7 @@ This method provides a way to determine the full rooting chain for any managed o
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -44,4 +53,4 @@ This method provides a way to determine the full rooting chain for any managed o
 
 ## See also
 
-- ICorDebugProcess5 Interface
+- [ICorDebugProcess5 Interface](icordebugprocess5-interface.md)

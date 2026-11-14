@@ -1,15 +1,13 @@
 ---
-title: "Work with the .NET Compiler Platform SDK semantic model"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/roslyn-sdk/work-with-semantics.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Work with the .NET Compiler Platform SDK semantic model
+description: This overview provides an understanding of the type you use to understand and manipulate the semantic model of your code.
+ms.date: 10/15/2017
+ms.custom: mvc
 ---
 
 # Work with semantics
 
-Syntax trees represent the lexical and syntactic structure of source code. Although this information alone is enough to describe all the declarations and logic in the source, it is not enough information to identify what is being referenced. A name
+[Syntax trees](work-with-syntax.md) represent the lexical and syntactic structure of source code. Although this information alone is enough to describe all the declarations and logic in the source, it is not enough information to identify what is being referenced. A name
 may represent:
 
 - a type
@@ -27,7 +25,7 @@ In addition to a syntactic model of the source code, a semantic model encapsulat
 
 ## Compilation
 
-A compilation is a representation of everything needed to compile a C# or Visual Basic <example-value>, which includes all the assembly references, compiler options, and source files.
+A compilation is a representation of everything needed to compile a C# or Visual Basic program, which includes all the assembly references, compiler options, and source files.
 
 Because all this information is in one place, the elements contained in the source code can be described in more detail. The compilation represents each declared type, member, or variable as a symbol. The compilation contains a variety of methods that help you find and relate the symbols that have either been declared in the source code or imported as metadata from an assembly.
 
@@ -37,14 +35,14 @@ Similar to syntax trees, compilations are immutable. After you create a compilat
 
 A symbol represents a distinct element declared by the source code or imported from an assembly as metadata. Every namespace, type, method, property, field, event, parameter, or local variable is represented by a symbol.
 
-A variety of methods and properties on the `Microsoft.CodeAnalysis.Compilation` type help you find symbols. For example, you can find a symbol for a declared type by its common metadata name. You can also access the entire symbol table as a tree of symbols rooted by the global namespace.
+A variety of methods and properties on the <xref:Microsoft.CodeAnalysis.Compilation> type help you find symbols. For example, you can find a symbol for a declared type by its common metadata name. You can also access the entire symbol table as a tree of symbols rooted by the global namespace.
 
-Symbols also contain additional information that the compiler determines from the source or metadata, such as other referenced symbols. Each kind of symbol is represented by a separate interface derived from `Microsoft.CodeAnalysis.ISymbol`, each with its own methods and properties detailing the information the compiler has gathered. Many of these properties directly reference other symbols. For example, the `Microsoft.CodeAnalysis.IMethodSymbol.ReturnType` property
+Symbols also contain additional information that the compiler determines from the source or metadata, such as other referenced symbols. Each kind of symbol is represented by a separate interface derived from <xref:Microsoft.CodeAnalysis.ISymbol>, each with its own methods and properties detailing the information the compiler has gathered. Many of these properties directly reference other symbols. For example, the <xref:Microsoft.CodeAnalysis.IMethodSymbol.ReturnType?displayProperty=nameWithType> property
 tells you the actual type symbol that the method returns.
 
-Symbols present a common representation of namespaces, types, and members, between source code and metadata. For example, a method that was declared in source code and a method that was imported from metadata are both represented by an `Microsoft.CodeAnalysis.IMethodSymbol` with the same properties.
+Symbols present a common representation of namespaces, types, and members, between source code and metadata. For example, a method that was declared in source code and a method that was imported from metadata are both represented by an <xref:Microsoft.CodeAnalysis.IMethodSymbol> with the same properties.
 
-Symbols are similar in concept to the CLR type system as represented by the `System.Reflection` API, yet they are richer in that they model more than just types. Namespaces, local variables, and labels are all symbols. In addition, symbols are a representation of language concepts, not CLR concepts. There is a lot of overlap, but there are many meaningful distinctions as well. For instance, an iterator method in C# or Visual Basic is a single symbol. However, when the iterator method is translated to CLR metadata, it is a type and multiple methods.
+Symbols are similar in concept to the CLR type system as represented by the <xref:System.Reflection> API, yet they are richer in that they model more than just types. Namespaces, local variables, and labels are all symbols. In addition, symbols are a representation of language concepts, not CLR concepts. There is a lot of overlap, but there are many meaningful distinctions as well. For instance, an iterator method in C# or Visual Basic is a single symbol. However, when the iterator method is translated to CLR metadata, it is a type and multiple methods.
 
 ## Semantic model
 

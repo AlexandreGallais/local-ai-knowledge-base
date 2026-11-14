@@ -1,42 +1,33 @@
 ---
 title: "Main() and command-line arguments"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/fundamentals/program-structure/main-command-line.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about Main() and command-line arguments. The 'Main' method is the entry point of an executable program.
+ms.date: 03/16/2026
+ai-usage: ai-assisted
+#customer intent: As a C# developer, I want to understand the Main() method and command-line arguments so that I can define and control the entry point of my application.
 ---
-
 # Main() and command-line arguments
 
-> **Tip:**
-> **New to developing software?** Start with the Get started tutorials first. Those tutorials use top-level statements, which is simpler for new apps.
+> [!TIP]
+> **New to developing software?** Start with the [Get started](../../tour-of-csharp/tutorials/index.md) tutorials first. Those tutorials use [top-level statements](top-level-statements.md), which is simpler for new apps.
 >
 > **Working with an existing codebase?** Many existing applications use an explicit `Main` method. This article explains how it works and how to use it effectively.
 
 When you start a C# application, the runtime calls the `Main` method. The `Main` method is the entry point of a C# application.
 
-A C# program can have only one entry point. If you have more than one class with a `Main` method, you must use the **StartupObject** compiler option when you compile your program to specify which `Main` method serves as the entry point. For more information, see **StartupObject** (C# Compiler Options). The following example displays the number of command-line arguments as its first action:
+A C# program can have only one entry point. If you have more than one class with a `Main` method, you must use the **StartupObject** compiler option when you compile your program to specify which `Main` method serves as the entry point. For more information, see [**StartupObject** (C# Compiler Options)](../../language-reference/compiler-options/advanced.md#startupobject). The following example displays the number of command-line arguments as its first action:
 
-```csharp
-﻿class TestClass
-{
-    static void Main(string[] args)
-    {
-        Console.WriteLine(args.Length);
-    }
-}
-```
+:::code language="csharp" source="snippets/main-command-line/TestClass.cs":::
+
 ## Overview
 
 The `Main` method is the entry point of an executable program. When your program starts, the runtime calls `Main` before any other code runs. When `Main` returns, the program ends. You declare `Main` with these rules:
 
 - You must declare `Main` inside a class or struct. The enclosing `class` can be `static`.
-- `Main` must be `static`.
-- `Main` can have any access modifier.
+- `Main` must be [`static`](../../language-reference/keywords/static.md).
+- `Main` can have any [access modifier](../../programming-guide/classes-and-structs/access-modifiers.md).
 - `Main` can return `void`, `int`, `Task`, or `Task<int>`.
-- If and only if `Main` returns a `Task` or `Task<int>`, the declaration of `Main` can include the `async` modifier. This rule specifically excludes an `async void Main` method.
-- You can declare the `Main` method with or without a `string[]` parameter that contains command-line arguments. When you use Visual Studio to create Windows applications, you can add the parameter manually or else use the `System.Environment.GetCommandLineArgs` method to obtain the command-line arguments. Parameters are zero-indexed command-line arguments. Unlike C and C++, the name of the program isn't treated as the first command-line argument in the `args` array, but it's the first element of the `System.Environment.GetCommandLineArgs` method.
+- If and only if `Main` returns a `Task` or `Task<int>`, the declaration of `Main` can include the [`async`](../../language-reference/keywords/async.md) modifier. This rule specifically excludes an `async void Main` method.
+- You can declare the `Main` method with or without a `string[]` parameter that contains command-line arguments. When you use Visual Studio to create Windows applications, you can add the parameter manually or else use the <xref:System.Environment.GetCommandLineArgs> method to obtain the command-line arguments. Parameters are zero-indexed command-line arguments. Unlike C and C++, the name of the program isn't treated as the first command-line argument in the `args` array, but it's the first element of the <xref:System.Environment.GetCommandLineArgs> method.
 
 The following list shows permutations of `Main` declarations:
 
@@ -74,54 +65,34 @@ When you return `int` or `Task<int>`, your program can send status information t
 
 The following example returns an exit code:
 
-```csharp
-class MainReturnValTest
-{
-    static int Main()
-    {
-        //...
-        return 0;
-    }
-}
-```
+:::code language="csharp" source="snippets/main-command-line/MainReturnValTest.cs":::
+
 After running the program, you can check the exit code. In PowerShell, use `$LastExitCode`. In a batch file or shell script, use `%ERRORLEVEL%`.
 
 If your `Main` method uses `await`, declare it as `async` with a `Task` or `Task<int>` return type. The runtime calls `Main` and waits for the returned `Task` to complete before the process exits. The return type can't be `void` or `int` because the `async` modifier requires a return type that the runtime can await—`void` and `int` don't represent ongoing work, so the process could exit before asynchronous operations finish. Use `Task` when you don't need an exit code, or `Task<int>` when you do:
 
-```csharp
-class Program
-{
-    static async Task<int> Main(string[] args)
-    {
-        return await AsyncConsoleWork();
-    }
+:::code language="csharp" source="snippets/main-arguments/Program.cs" id="AsyncMain":::
 
-    private static async Task<int> AsyncConsoleWork()
-    {
-        return 0;
-    }
-}
-```
 ## Command-line arguments
 
-Include a `string[] args` parameter in your `Main` declaration to accept command-line arguments. If you don't need them, omit the parameter. The `args` parameter is a `System.String` array that's never null—if no arguments are provided, its `Length` is zero.
+Include a `string[] args` parameter in your `Main` declaration to accept command-line arguments. If you don't need them, omit the parameter. The `args` parameter is a <xref:System.String> array that's never null—if no arguments are provided, its `Length` is zero.
 
-You can convert string arguments to other types by using `Parse` or `System.Convert`:
+You can convert string arguments to other types by using `Parse` or <xref:System.Convert>:
 
 ```csharp
 long num = long.Parse(args[0]);
 ```
 
-> **Tip:**
-> Parsing command-line arguments can be complex. Consider using the System.CommandLine library to simplify the process.
+> [!TIP]
+> Parsing command-line arguments can be complex. Consider using the [System.CommandLine](../../../standard/commandline/index.md) library to simplify the process.
 
-For a working example, see How to display command-line arguments.
+For a working example, see [How to display command-line arguments](../tutorials/how-to-display-command-line-arguments.md).
 
 ## C# language specification
 
-For more information, see the C# Language Specification. The language specification is the definitive source for C# syntax and usage.
+[!INCLUDE[CSharplangspec](~/includes/csharplangspec-md.md)]
 
 ## Related content
 
-- `System.Environment`
-- How to display command line arguments
+- <xref:System.Environment?displayProperty=nameWithType>
+- [How to display command line arguments](../tutorials/how-to-display-command-line-arguments.md)

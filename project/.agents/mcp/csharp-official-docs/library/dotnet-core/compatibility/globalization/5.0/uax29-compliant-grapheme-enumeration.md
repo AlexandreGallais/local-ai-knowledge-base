@@ -1,33 +1,29 @@
 ---
 title: "Breaking change: StringInfo and TextElementEnumerator are now UAX29-compliant"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/globalization/5.0/uax29-compliant-grapheme-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the globalization breaking change in .NET 5 where StringInfo and TextElementEnumerator process grapheme clusters according to the latest version of the Unicode Standard.
+ms.date: 04/07/2020
 ---
-
 # StringInfo and TextElementEnumerator are now UAX29-compliant
 
-Prior to this change, `System.Globalization.StringInfo` and `System.Globalization.TextElementEnumerator` didn't properly handle all grapheme clusters. Some graphemes were split into their constituent components instead of being kept together. Now, `System.Globalization.StringInfo` and `System.Globalization.TextElementEnumerator` process grapheme clusters according to the latest version of the Unicode Standard.
+Prior to this change, <xref:System.Globalization.StringInfo?displayProperty=fullName> and <xref:System.Globalization.TextElementEnumerator?displayProperty=fullName> didn't properly handle all grapheme clusters. Some graphemes were split into their constituent components instead of being kept together. Now, <xref:System.Globalization.StringInfo> and <xref:System.Globalization.TextElementEnumerator> process grapheme clusters according to the latest version of the Unicode Standard.
 
-In addition, the `Microsoft.VisualBasic.Strings.StrReverse*` method, which reverses the characters in a string in Visual Basic, now also follows the Unicode standard for grapheme clusters.
+In addition, the <xref:Microsoft.VisualBasic.Strings.StrReverse*?displayProperty=fullName> method, which reverses the characters in a string in Visual Basic, now also follows the Unicode standard for grapheme clusters.
 
 ## Change description
 
-A grapheme or extended grapheme cluster is a single user-perceived character that may be made up of multiple Unicode code points. For example, the string containing the Thai character "kam" (:::no-loc text="กำ":::) consists of the following two characters:
+A [grapheme](https://www.unicode.org/glossary/#grapheme) or [extended grapheme cluster](https://www.unicode.org/glossary/#extended_grapheme_cluster) is a single user-perceived character that may be made up of multiple Unicode code points. For example, the string containing the Thai character "kam" (:::no-loc text="กำ":::) consists of the following two characters:
 
 - :::no-loc text="ก"::: (= '\u0e01') THAI CHARACTER KO KAI
 - :::no-loc text=" ำ"::: (= '\u0e33') THAI CHARACTER SARA AM
 
 When displayed to the user, the operating system combines the two characters to form the single display character (or grapheme) "kam" or :::no-loc text="กำ":::. Emoji can also consist of multiple characters that are combined for display in a similar way.
 
-> **Tip:**
+> [!TIP]
 > The .NET documentation sometimes uses the term "text element" when referring to a grapheme.
 
-The `System.Globalization.StringInfo` and `System.Globalization.TextElementEnumerator` classes inspect strings and return information about the graphemes they contain. In .NET Framework (all versions) and .NET Core 3.x and earlier, these two classes use custom logic that handles some combining classes but doesn't fully comply with the Unicode Standard. For example, the `System.Globalization.StringInfo` and `System.Globalization.TextElementEnumerator` classes incorrectly split the single Thai character "kam" back into its constituent components instead of keeping them together. These classes also incorrectly split the emoji character "🤷🏽‍♀️" into four clusters (person shrugging, skin tone modifier, gender modifier, and an invisible combiner) instead of keeping them together as a single grapheme cluster.
+The <xref:System.Globalization.StringInfo> and <xref:System.Globalization.TextElementEnumerator> classes inspect strings and return information about the graphemes they contain. In .NET Framework (all versions) and .NET Core 3.x and earlier, these two classes use custom logic that handles some combining classes but doesn't fully comply with the [Unicode Standard](https://www.unicode.org/reports/tr29/tr29-35.html#Grapheme_Cluster_Boundaries). For example, the <xref:System.Globalization.StringInfo> and <xref:System.Globalization.TextElementEnumerator> classes incorrectly split the single Thai character "kam" back into its constituent components instead of keeping them together. These classes also incorrectly split the emoji character "🤷🏽‍♀️" into four clusters (person shrugging, skin tone modifier, gender modifier, and an invisible combiner) instead of keeping them together as a single grapheme cluster.
 
-Starting with .NET 5, the `System.Globalization.StringInfo` and `System.Globalization.TextElementEnumerator` classes implement the Unicode standard as defined by Unicode Standard Annex \#29, rev. 35, sec. 3. In particular, they now return extended grapheme clusters for all combining classes.
+Starting with .NET 5, the <xref:System.Globalization.StringInfo> and <xref:System.Globalization.TextElementEnumerator> classes implement the Unicode standard as defined by [Unicode Standard Annex \#29, rev. 35, sec. 3](https://www.unicode.org/reports/tr29/tr29-35.html). In particular, they now return [extended grapheme clusters](https://www.unicode.org/glossary/#extended_grapheme_cluster) for all combining classes.
 
 Consider the following C# code:
 
@@ -84,9 +80,9 @@ Grapheme 1: "🤷🏽‍♀️"
 (1 grapheme(s) total.)
 ```
 
-In addition, starting in .NET 5, the `Microsoft.VisualBasic.Strings.StrReverse*` method, which reverses the characters in a string in Visual Basic, now also follows the Unicode standard for grapheme clusters.
+In addition, starting in .NET 5, the <xref:Microsoft.VisualBasic.Strings.StrReverse*?displayProperty=fullName> method, which reverses the characters in a string in Visual Basic, now also follows the Unicode standard for grapheme clusters.
 
-These changes are part of a wider set of Unicode and UTF-8 improvements in .NET, including an extended grapheme cluster enumeration API to complement the Unicode scalar-value enumeration APIs that were introduced with the `System.Text.Rune` type in .NET Core 3.0.
+These changes are part of a wider set of Unicode and UTF-8 improvements in .NET, including an extended grapheme cluster enumeration API to complement the Unicode scalar-value enumeration APIs that were introduced with the <xref:System.Text.Rune?displayProperty=fullName> type in .NET Core 3.0.
 
 ## Version introduced
 
@@ -98,6 +94,20 @@ You don't need to take any action. Your apps will automatically behave in a more
 
 ## Affected APIs
 
-- `System.Globalization.StringInfo`
-- `System.Globalization.TextElementEnumerator`
-- `Microsoft.VisualBasic.Strings.StrReverse*`
+- <xref:System.Globalization.StringInfo?displayProperty=fullName>
+- <xref:System.Globalization.TextElementEnumerator?displayProperty=fullName>
+- <xref:Microsoft.VisualBasic.Strings.StrReverse*?displayProperty=fullName>
+
+<!--
+
+### Affected APIs
+
+- `T:System.Globalization.StringInfo`
+- `T:System.Globalization.TextElementEnumerator`
+- `Overload:Microsoft.VisualBasic.Strings.StrReverse`
+
+### Category
+
+Globalization
+
+-->

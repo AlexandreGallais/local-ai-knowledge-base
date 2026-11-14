@@ -1,12 +1,11 @@
 ---
 title: "NETSDK1137: Don't use the Microsoft.NET.Sdk.WindowsDesktop SDK"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/sdk-errors/netsdk1137.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: How to resolve the `Don't use the Microsoft.NET.Sdk.WindowsDesktop SDK' error message.
+ms.topic: error-reference
+ms.date: 07/08/2022
+f1_keywords:
+- NETSDK1137
 ---
-
 # NETSDK1137: Don't use the Microsoft.NET.Sdk.WindowsDesktop SDK
 
 NETSDK1137 indicates that your project specifies an outdated project SDK. The full error message is similar to the following example:

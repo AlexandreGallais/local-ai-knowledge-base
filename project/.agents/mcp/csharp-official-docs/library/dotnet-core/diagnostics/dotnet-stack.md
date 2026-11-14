@@ -1,12 +1,8 @@
 ---
-title: "dotnet-stack diagnostic tool - .NET CLI"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/dotnet-stack.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet-stack diagnostic tool - .NET CLI
+description: Learn how to install and use the dotnet-stack CLI tool which captures and prints the managed stacks for all threads in the target .NET process.
+ms.date: 04/21/2021
 ---
-
 # Inspect managed stack traces (dotnet-stack)
 
 **This article applies to:** ✔️ `dotnet-stack` version 5.0.221401 and later versions
@@ -17,7 +13,7 @@ There are two ways to download and install `dotnet-stack`:
 
 - **dotnet global tool:**
 
-  To install the latest release version of the `dotnet-stack` NuGet package, use the dotnet tool install command:
+  To install the latest release version of the `dotnet-stack` [NuGet package](https://www.nuget.org/packages/dotnet-stack), use the [dotnet tool install](../tools/dotnet-tool-install.md) command:
 
   ```dotnetcli
   dotnet tool install --global dotnet-stack
@@ -29,8 +25,8 @@ There are two ways to download and install `dotnet-stack`:
 
   | OS  | Platform |
   | --- | -------- |
-  | Windows | x86 \| x64 \| Arm \| Arm-x64 |
-  | Linux   | x64 \| Arm \| Arm64 \| musl-x64 \| musl-Arm64 |
+  | Windows | [x86](https://aka.ms/dotnet-stack/win-x86) \| [x64](https://aka.ms/dotnet-stack/win-x64) \| [Arm](https://aka.ms/dotnet-stack/win-arm) \| [Arm-x64](https://aka.ms/dotnet-stack/win-arm64) |
+  | Linux   | [x64](https://aka.ms/dotnet-stack/linux-x64) \| [Arm](https://aka.ms/dotnet-stack/linux-arm) \| [Arm64](https://aka.ms/dotnet-stack/linux-arm64) \| [musl-x64](https://aka.ms/dotnet-stack/linux-musl-x64) \| [musl-Arm64](https://aka.ms/dotnet-stack/linux-musl-arm64) |
 
 ## Synopsis
 
@@ -44,7 +40,7 @@ The `dotnet-stack` tool:
 
 * Is a cross-platform .NET Core tool.
 * Captures and prints the managed stacks for all threads in the target .NET process.
-* Utilizes `EventPipe` tracing provided by the .NET Core runtime.
+* Utilizes [`EventPipe`](./eventpipe.md) tracing provided by the .NET Core runtime.
 
 ## Options
 
@@ -60,9 +56,9 @@ The `dotnet-stack` tool:
 
 | Command                                               | Description                                                             |
 |-------------------------------------------------------|-------------------------------------------------------------------------|
-| dotnet-stack report           | Prints the stack trace for each thread in the target process.           |
-| dotnet-stack ps                   | Lists the dotnet processes that stack traces can be collected from.     |
-| dotnet-stack symbolicate | Get the line number from the Method Token and IL Offset in a stacktrace.|
+| [dotnet-stack report](#dotnet-stack-report)           | Prints the stack trace for each thread in the target process.           |
+| [dotnet-stack ps](#dotnet-stack-ps)                   | Lists the dotnet processes that stack traces can be collected from.     |
+| [dotnet-stack symbolicate](#dotnet-stack-symbolicate) | Get the line number from the Method Token and IL Offset in a stacktrace.|
 
 ## dotnet-stack report
 
@@ -138,9 +134,9 @@ dotnet-stack symbolicate <input-path> [-d|--search-dir] [-o|--output] [-c|--stdo
 > cat stack.trace
 
 Unhandled exception. System.NullReferenceException: Object reference not set to an instance of an object.
-   at DotnetStackSymbolicate.App.MethodA() in DotnetStackSymbolicate.dll:token <example-value>
-   at DotnetStackSymbolicate.App..ctor() in DotnetStackSymbolicate.dll:token <example-value>
-   at DotnetStackSymbolicate.Program.OnCreate() in DotnetStackSymbolicate.Tizen.dll:token <example-value>
+   at DotnetStackSymbolicate.App.MethodA() in DotnetStackSymbolicate.dll:token 0x6000002+0x6
+   at DotnetStackSymbolicate.App..ctor() in DotnetStackSymbolicate.dll:token 0x6000003+0x51
+   at DotnetStackSymbolicate.Program.OnCreate() in DotnetStackSymbolicate.Tizen.dll:token 0x6000001+0x8
 onSigabrt called
 >
 > dotnet-stack symbolicate stack.trace --stdout
@@ -162,7 +158,7 @@ To report managed stacks using `dotnet-stack`:
 
   - On Windows, you can use Task Manager or the `tasklist` command, for example.
   - On Linux, for example, the `ps` command.
-  - dotnet-stack ps
+  - [dotnet-stack ps](#dotnet-stack-ps)
 
 - Run the following command:
 
@@ -200,11 +196,11 @@ To report managed stacks using `dotnet-stack`:
     Module!Method
     Module!Method
   ```
-
-> **Note:**
+  
+> [!NOTE]
 > Stopping the process can take a long time (up to several minutes) for very large applications. The runtime needs to send over the type and method information for all managed code that was captured to resolve function names.
-
+  
 ## Next steps
-
-- Use dotnet-trace to collect CPU samples of a .NET application
-- Use dotnet-dump to collect a dump of a .NET application
+  
+- [Use dotnet-trace to collect CPU samples of a .NET application](dotnet-trace.md)
+- [Use dotnet-dump to collect a dump of a .NET application](dotnet-dump.md)

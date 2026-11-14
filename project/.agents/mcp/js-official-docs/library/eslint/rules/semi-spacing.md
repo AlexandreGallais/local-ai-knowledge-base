@@ -1,14 +1,13 @@
 ---
-title: "semi-spacing"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/semi-spacing.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: semi-spacing
+rule_type: layout
+related_rules:
+- semi
+- no-extra-semi
+- comma-spacing
+- block-spacing
+- space-in-parens
 ---
-
-# semi-spacing
-
 JavaScript allows you to place unnecessary spaces before or after a semicolon.
 
 Disallowing or enforcing space around a semicolon can improve the readability of your program.
@@ -50,7 +49,7 @@ This is the default option. It enforces spacing after semicolons and disallows s
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint semi-spacing: "error"*/
@@ -63,9 +62,11 @@ for (i = 0 ; i < 10 ; i++) {}
 for (i = 0;i < 10;i++) {}
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint semi-spacing: "error"*/
@@ -80,13 +81,15 @@ if (true) {;}
 ;foo();
 ```
 
+:::
+
 ### `{"before": true, "after": false}`
 
 This option enforces spacing before semicolons and disallows spacing after semicolons.
 
 Examples of **incorrect** code for this rule with the `{"before": true, "after": false}` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint semi-spacing: ["error", { "before": true, "after": false }]*/
@@ -99,9 +102,11 @@ for (i = 0;i < 10;i++) {}
 for (i = 0; i < 10; i++) {}
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{"before": true, "after": false}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint semi-spacing: ["error", { "before": true, "after": false }]*/
@@ -112,6 +117,8 @@ throw new Error("error") ;
 while (a) {break ;}
 for (i = 0 ;i < 10 ;i++) {}
 ```
+
+:::
 
 ## When Not To Use It
 

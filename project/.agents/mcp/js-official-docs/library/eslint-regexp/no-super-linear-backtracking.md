@@ -1,17 +1,17 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/no-super-linear-backtracking"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/no-super-linear-backtracking.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "disallow exponential and polynomial backtracking"
+since: "v0.13.0"
 ---
-
 # regexp/no-super-linear-backtracking
 
 💼 This rule is enabled in the following configs: 🟢 `flat/recommended`, 🔵 `recommended`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 > disallow exponential and polynomial backtracking
 
@@ -19,7 +19,7 @@ license: "MIT"
 
 This rule reports cases of exponential and polynomial backtracking.
 
-These types of backtracking almost always cause an exponential or polynomial worst-case runtime. This super-linear worst-case runtime can be exploited by attackers in what is called Regular expression Denial of Service - ReDoS.
+These types of backtracking almost always cause an exponential or polynomial worst-case runtime. This super-linear worst-case runtime can be exploited by attackers in what is called [Regular expression Denial of Service - ReDoS][1].
 
 <eslint-code-block fix>
 
@@ -83,8 +83,11 @@ These options control whether ambiguity that might cause super-linear backtracki
 
 ## :books: Further reading
 
-- Regular expression Denial of Service - ReDoS
+- [Regular expression Denial of Service - ReDoS][1]
 - [scslre]
+
+[1]: https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS
+[scslre]: https://github.com/RunDevelopment/scslre
 
 ## :rocket: Version
 
@@ -92,5 +95,5 @@ This rule was introduced in eslint-plugin-regexp v0.13.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/no-super-linear-backtracking.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/no-super-linear-backtracking.ts)

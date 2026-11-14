@@ -1,12 +1,3 @@
----
-title: "CRL class (java.security.cert)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/cert/CRL.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # CRL class (java.security.cert)
 
 ```java
@@ -17,15 +8,17 @@ This class is an abstraction of certificate revocation lists (CRLs) that
 have different formats but important common uses. For example, all CRLs
 share the functionality of listing revoked certificates, and can be queried
 on whether they list a given certificate.
-
+<p>
 Specialized CRL types can be defined by subclassing off of this abstract
 class.
 
-**See also:** X509CRL
+@author Hemma Prafullchandra
 
-**See also:** CertificateFactory
 
-**Since:** 1.2
+@see X509CRL
+@see CertificateFactory
+
+@since 1.2
 
 ## CRL.CRL(String)
 
@@ -35,9 +28,13 @@ protected CRL(String type)
 
 Creates a CRL of the specified type.
 
-Parameters:
+@param type the standard name of the CRL type.
+See the <a href=
+"{@docRoot}/../specs/security/standard-names.html">
+Java Security Standard Algorithm Names</a> document
+for information about standard CRL types.
 
-- `type`: the standard name of the CRL type. See the  Java Security Standard Algorithm Names document for information about standard CRL types.
+@spec security/standard-names.html Java Security Standard Algorithm Names
 
 ## CRL.getType()
 
@@ -47,7 +44,7 @@ public final String getType()
 
 Returns the type of this CRL.
 
-**Returns:** the type of this CRL.
+@return the type of this CRL.
 
 ## CRL.toString()
 
@@ -57,7 +54,7 @@ public abstract String toString()
 
 Returns a string representation of this CRL.
 
-**Returns:** a string representation of this CRL.
+@return a string representation of this CRL.
 
 ## CRL.isRevoked(Certificate)
 
@@ -67,9 +64,6 @@ public abstract boolean isRevoked(Certificate cert)
 
 Checks whether the given certificate is on this CRL.
 
-Parameters:
-
-- `cert`: the certificate to check for.
-
-**Returns:** true if the given certificate is on this CRL,
+@param cert the certificate to check for.
+@return true if the given certificate is on this CRL,
 false otherwise.

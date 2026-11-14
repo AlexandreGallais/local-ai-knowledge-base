@@ -1,21 +1,21 @@
 ---
-title: "Prevent Cross-Site Scripting (XSS) in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/cross-site-scripting.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
+title: Prevent Cross-Site Scripting (XSS) in ASP.NET Core
+description: Learn about Cross-Site Scripting (XSS) and techniques for addressing this vulnerability in an ASP.NET Core app.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 05/13/2026
+ai-usage: ai-assisted
 
+# customer intent: As an ASP.NET Core developer, I want to prevent Cross-Site Scripting in my ASP.NET Core app, so I can protect my apps against this vulnerability.
+---
 # Prevent Cross-Site Scripting (XSS) in ASP.NET Core
 
-By Rick Anderson
+By [Rick Anderson](https://twitter.com/RickAndMSFT)
 
 Cross-Site Scripting (XSS) is a security vulnerability that enables a cyberattacker to place client side scripts (usually JavaScript) into web pages. When other users load affected pages, the cyberattacker's scripts run. The cyberattacker can then steal cookies and session tokens, change the contents of the web page through DOM manipulation, or redirect the browser to another page. XSS vulnerabilities generally occur when an application takes user input and outputs it to a page without validating, encoding, or escaping it.
 
 This article applies primarily to ASP.NET Core MVC with views, Razor Pages, and other apps that return HTML that can be vulnerable to XSS. Web APIs that return data in the form of HTML, XML, or JSON can trigger XSS attacks in their client apps if they don't properly sanitize user input. This behavior depends on how much trust the client app places in the API. If an API accepts user-generated content and returns it in an HTML response, the data is open to attack. A cyberattacker can inject malicious scripts into the content that executes when the response is rendered in the user's browser.
 
-To prevent XSS attacks, web APIs should implement input validation and output encoding. Input validation ensures that user input meets expected criteria and doesn't include malicious code. Output encoding ensures that any data returned by the API is properly sanitized so it can't be executed as code by the user's browser. For more information, see GitHub dotnet/aspnetcore.docs issue #28789.
+To prevent XSS attacks, web APIs should implement input validation and output encoding. Input validation ensures that user input meets expected criteria and doesn't include malicious code. Output encoding ensures that any data returned by the API is properly sanitized so it can't be executed as code by the user's browser. For more information, see [GitHub dotnet/aspnetcore.docs issue #28789](https://github.com/dotnet/AspNetCore.Docs/issues/28789).
 
 ## Protect your application against XSS
 
@@ -29,7 +29,7 @@ To avoid introducing XSS into the application, developers should implement the f
 
 - Before you put untrusted data into an HTML element, ensure the data is HTML encoded.
 
-   HTML encoding takes characters such as the left angle bracket or _less than_ (`<`) and changes them into a safe form like (`<`).
+   HTML encoding takes characters such as the left angle bracket or _less than_ (`<`) and changes them into a safe form like (`&lt;`).
 
 - Before you put untrusted data into an HTML attribute, ensure the data is HTML-attribute encoded.
 
@@ -43,7 +43,7 @@ To avoid introducing XSS into the application, developers should implement the f
 
 ## Explore HTML encoding with Razor
 
-The Razor engine used in MVC automatically encodes all output sourced from variables, unless you work to prevent this behavior. It uses HTML attribute encoding rules whenever you use the at symbol `@` directive. Because HTML attribute encoding is a superset of HTML encoding, you don't have to consider whether to use HTML encoding or HTML-attribute encoding. You must ensure that you only use the at symbol `@` in an HTML context, and not when attempting to insert untrusted input directly into JavaScript. Razor Tag Helpers also encode input you use in tag parameters.
+The Razor engine used in MVC automatically encodes all output sourced from variables, unless you work to prevent this behavior. It uses HTML attribute encoding rules whenever you use the at symbol `@` directive. Because HTML attribute encoding is a superset of HTML encoding, you don't have to consider whether to use HTML encoding or HTML-attribute encoding. You must ensure that you only use the at symbol `@` in an HTML context, and not when attempting to insert untrusted input directly into JavaScript. [Razor Tag Helpers](../mvc/views/tag-helpers/intro.md) also encode input you use in tag parameters.
 
 Consider the following Razor view:
 
@@ -61,7 +61,7 @@ This view outputs the contents of the `untrustedInput` variable. The variable in
 &lt;&quot;123&quot;&gt;
 ```
 
-> **Warning:**
+> [!WARNING]
 > ASP.NET Core MVC provides an `HtmlString` class that isn't automatically encoded upon output. This class should never be used in combination with untrusted input because it exposes an XSS vulnerability.
 
 ## Explore JavaScript encoding with Razor
@@ -156,7 +156,7 @@ The preceding code generates the following output:
 <script>alert(1)</script>
 ```
 
-> **Warning:**
+> [!WARNING]
 > Don't concatenate untrusted input in JavaScript to create DOM elements or use `document.write()` on dynamically generated content.
 >
 > Instead, use one of the following approaches to prevent code from being exposed to DOM-based XSS:
@@ -170,7 +170,7 @@ The preceding code generates the following output:
 
 You can use HTML, JavaScript, and URL encoders in your code in two ways:
 
-* Inject them via dependency injection.
+* Inject them via [dependency injection](../fundamentals/dependency-injection.md).
 * Use the default encoders contained in the `System.Text.Encodings.Web` namespace.
 
 When you use the default encoders, any customizations applied to character ranges (so they're treated as safe) don't take effect. The default encoders use the safest encoding rules possible.
@@ -208,14 +208,16 @@ var encodedValue = _urlEncoder.Encode(example);
 
 After encoding, the `encodedValue` variable contains the string `%22Quoted%20Value%20with%20spaces%20and%20%26%22`. Spaces, quotes, punctuation, and other unsafe characters are percent encoded to their hexadecimal value. For example, a space character is converted to `%20`.
 
-> **Warning:**
-> Don't use untrusted input as part of a URL path. Always pass <example-value> input as a query string value.
+> [!WARNING]
+> Don't use untrusted input as part of a URL path. Always pass untrusted input as a query string value.
 
 ## Customize the encoders
 
 By default, encoders use a safe list limited to the Basic Latin Unicode range. All characters outside of the indicated range are encoded as their character code equivalents. This behavior also affects rendering by Razor Tag Helpers and HTML Helpers because they use the encoders to output your strings.
 
 The purpose for this behavior is to protect against unknown or future browser bugs. Previous browser bugs tripped up parsing based on the processing of non-English characters. If your web site makes heavy use of non-Latin characters, such as Chinese, Cyrillic, or others, this behavior is probably not suited for your configuration.
+
+:::moniker range=">= aspnetcore-6.0"
 
 You can customize the encoder safe lists to include Unicode ranges appropriate to the app during startup. Make the customizations in the _Program.cs_ file.
 
@@ -239,15 +241,43 @@ builder.Services.AddSingleton<HtmlEncoder>(
                                                UnicodeRanges.CjkUnifiedIdeographs }));
 ```
 
-This example widens the safe list to include the Unicode Range CJK Unified Ideographs. The following output shows the rendered view for the wider range of safe characters:
+:::moniker-end
+
+:::moniker range="< aspnetcore-6.0"
+
+You can customize the encoder safe lists to include Unicode ranges appropriate to your application during startup, in `ConfigureServices()`.
+
+For example, using the default configuration you might use a Razor HtmlHelper like so;
+
+```html
+<p>This link text is in Chinese: @Html.ActionLink("汉语/漢語", "Index")</p>
+```
+
+When you view the source of the web page you'll see it has been rendered as follows, with the Chinese text encoded;
+
+```html
+<p>This link text is in Chinese: <a href="/">&#x6C49;&#x8BED;/&#x6F22;&#x8A9E;</a></p>
+```
+
+To widen the characters treated as safe by the encoder you would insert the following line into the `ConfigureServices()` method in `startup.cs`;
+
+```csharp
+services.AddSingleton<HtmlEncoder>(
+     HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.BasicLatin,
+                                               UnicodeRanges.CjkUnifiedIdeographs }));
+```
+
+:::moniker-end
+
+This example widens the safe list to include the Unicode Range [CJK Unified Ideographs](https://wikipedia.org/wiki/CJK_Unified_Ideographs). The following output shows the rendered view for the wider range of safe characters:
 
 ```html
 <p>This link text is in Chinese: <a href="/">汉语/漢語</a></p>
 ```
 
-Safe list ranges are specified as Unicode code charts, not languages. The Unicode standard has a list of code charts you can use to find the chart that contains your characters. Each encoder (HTML, JavaScript, URL) must be configured separately.
+Safe list ranges are specified as Unicode code charts, not languages. The [Unicode standard](https://unicode.org/) has a list of [code charts](https://www.unicode.org/charts/index.html) you can use to find the chart that contains your characters. Each encoder (HTML, JavaScript, URL) must be configured separately.
 
-> **Note:**
+> [!NOTE]
 > Customization of the safe list only affects encoders sourced via dependency injection.
 > If you directly access an encoder via `System.Text.Encodings.Web.*Encoder.Default`, only the default safe list is used, Basic Latin.
 
@@ -267,6 +297,6 @@ Never rely on validation alone. Always encode untrusted input before output, no 
 
 ## Related content
 
-- Dependency injection in ASP.NET Core
-- Unicode 17.0 Character Code Charts
-- Razor Tag Helpers
+- [Dependency injection in ASP.NET Core](../fundamentals/dependency-injection.md)
+- [Unicode 17.0 Character Code Charts](https://www.unicode.org/charts/index.html)
+- [Razor Tag Helpers](../mvc/views/tag-helpers/intro.md)

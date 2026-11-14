@@ -1,22 +1,13 @@
----
-title: "Referencing component children with queries (part 1 of 2)"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/components/queries.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Referencing component children with queries
 
-TIP: This guide assumes you've already read the Essentials Guide. Read that first if you're new to Angular.
+TIP: This guide assumes you've already read the [Essentials Guide](essentials). Read that first if you're new to Angular.
 
 A component can define **queries** that find child elements and read values from their injectors.
 
 Developers most commonly use queries to retrieve references to child components, directives, DOM elements, and more.
 
 All query functions return signals that reflect the most up-to-date results. You can read the
-result by calling the signal function, including in reactive contexts like `computed` and `effect`.
+result by calling the signal function, including in [reactive contexts](guide/signals#reactive-contexts) like `computed` and `effect`.
 
 There are two categories of query: **view queries** and **content queries.**
 
@@ -24,7 +15,7 @@ There are two categories of query: **view queries** and **content queries.**
 
 View queries retrieve results from the elements in the component's _view_ — the elements defined in the component's own template. You can query for a single result with the `viewChild` function.
 
-```angular-ts
+```angular-ts {highlight: [14, 15]}
 @Component({
   selector: 'custom-card-header',
   /*...*/
@@ -49,7 +40,7 @@ If the query does not find a result, its value is `undefined`. This may occur if
 
 You can also query for multiple results with the `viewChildren` function.
 
-```angular-ts
+```angular-ts {highlight: [17]}
 @Component({
   selector: 'custom-card-action',
   /*...*/
@@ -79,7 +70,7 @@ export class CustomCard {
 
 Content queries retrieve results from the elements in the component's _content_— the elements nested inside the component in the template where it's used. You can query for a single result with the `contentChild` function.
 
-```angular-ts
+```angular-ts {highlight: [14, 15]}
 @Component({
   selector: 'custom-toggle',
   /*...*/
@@ -111,11 +102,11 @@ export class UserProfile {}
 
 If the query does not find a result, its value is `undefined`. This may occur if the target element is absent or hidden by `@if`. Angular keeps the result of `contentChild` up to date as your application state changes.
 
-By default, `contentChild` queries traverse into descendants, while `contentChildren` queries find only _direct_ children. See Content descendants.
+By default, `contentChild` queries traverse into descendants, while `contentChildren` queries find only _direct_ children. See [Content descendants](#content-descendants).
 
 You can also query for multiple results with the `contentChildren` function.
 
-```angular-ts
+```angular-ts {highlight: [14, 15]}
 @Component({
   selector: 'custom-menu-item',
   /*...*/
@@ -172,7 +163,7 @@ This first parameter for each query decorator is its **locator**.
 Most of the time, you want to use a component or directive as your locator.
 
 You can alternatively specify a string locator corresponding to
-a template reference variable.
+a [template reference variable](guide/templates/variables#template-reference-variables).
 
 ```angular-ts
 @Component({
@@ -193,12 +184,12 @@ Angular does not support CSS selectors as query locators.
 
 ### Queries and the injector tree
 
-TIP: See Dependency Injection for background on providers and Angular's injection tree.
+TIP: See [Dependency Injection](guide/di) for background on providers and Angular's injection tree.
 
 For more advanced cases, you can use any `ProviderToken` as a locator. This lets you locate elements based on component and directive providers.
 
 ```angular-ts
-const SUB_ITEM = new InjectionToken<string>('<example-value>');
+const SUB_ITEM = new InjectionToken<string>('sub-item');
 
 @Component({
   /*...*/
@@ -263,7 +254,7 @@ third-party component provides.
 By default, `contentChildren` queries find only _direct_ children of the component and do not traverse into descendants.
 `contentChild` queries do traverse into descendants by default.
 
-```angular-ts
+```angular-ts {highlight: [13, 14, 15, 16, 17]}
 @Component({
   selector: 'custom-expando',
   /*...*/
@@ -301,7 +292,7 @@ You can alternatively declare queries by adding the corresponding decorator to a
 
 You can query for a single result with the `@ViewChild` decorator.
 
-```angular-ts
+```angular-ts {highlight: [14, 16, 17, 18]}
 @Component({
   selector: 'custom-card-header',
   /*...*/
@@ -327,11 +318,11 @@ In this example, the `CustomCard` component queries for a child `CustomCardHeade
 
 Angular keeps the result of `@ViewChild` up to date as your application state changes.
 
-**View query results become available in the `ngAfterViewInit` lifecycle method**. Before this point, the value is `undefined`. See the Lifecycle section for details on the component lifecycle.
+**View query results become available in the `ngAfterViewInit` lifecycle method**. Before this point, the value is `undefined`. See the [Lifecycle](guide/components/lifecycle) section for details on the component lifecycle.
 
 You can also query for multiple results with the `@ViewChildren` decorator.
 
-```angular-ts
+```angular-ts {highlight: [17, 19, 20, 21, 22, 23]}
 @Component({
   selector: 'custom-card-action',
   /*...*/
@@ -364,7 +355,7 @@ export class CustomCard implements AfterViewInit {
 
 You can query for a single result with the `@ContentChild` decorator.
 
-```angular-ts
+```angular-ts {highlight: [14, 16, 17, 18]}
 @Component({
   selector: 'custom-toggle',
   /*...*/
@@ -400,11 +391,11 @@ In this example, the `CustomExpando` component queries for a child `CustomToggle
 
 Angular keeps the result of `@ContentChild` up to date as your application state changes.
 
-**Content query results become available in the `ngAfterContentInit` lifecycle method**. Before this point, the value is `undefined`. See the Lifecycle section for details on the component lifecycle.
+**Content query results become available in the `ngAfterContentInit` lifecycle method**. Before this point, the value is `undefined`. See the [Lifecycle](guide/components/lifecycle) section for details on the component lifecycle.
 
 You can also query for multiple results with the `@ContentChildren` decorator.
 
-```angular-ts
+```angular-ts {highlight: [14, 16, 17, 18, 19, 20]}
 @Component({
   selector: 'custom-menu-item',
   /*...*/
@@ -476,3 +467,13 @@ The `static` option is not available for `@ViewChildren` and `@ContentChildren` 
 `QueryList` offers a number of convenience APIs for working with results in an array-like manner, such as `map`, `reduce`, and `forEach`. You can get an array of the current results by calling `toArray`.
 
 You can subscribe to the `changes` property to do something any time the results change.
+
+## Common query pitfalls
+
+When using queries, common pitfalls can make your code harder to understand and maintain.
+
+Always maintain a single source of truth for state shared between multiple components. This avoids scenarios where repeated state in different components becomes out of sync.
+
+Avoid directly writing state to child components. This pattern can lead to brittle code that is hard to understand and is prone to [ExpressionChangedAfterItHasBeenChecked](errors/NG0100) errors.
+
+Never directly write state to parent or ancestor components. This pattern can lead to brittle code that is hard to understand and is prone to [ExpressionChangedAfterItHasBeenChecked](errors/NG0100) errors.

@@ -1,15 +1,15 @@
 ---
-title: "What's new in the SDK and tooling for .NET 10 (part 1 of 2)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/whats-new/dotnet-10/sdk.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: What's new in the SDK and tooling for .NET 10
+description: Learn about the new .NET SDK features introduced in .NET 10.
+titleSuffix: ""
+ms.date: 11/07/2025
+ai-usage: ai-assisted
+ms.update-cycle: 3650-days
 ---
 
 # What's new in the SDK and tooling for .NET 10
 
-This article describes new features and enhancements in the .NET SDK for .NET 10. You can download .NET 10 here.
+This article describes new features and enhancements in the .NET SDK for .NET 10. You can [download .NET 10 here](https://get.dot.net/10).
 
 ## .NET tools enhancements
 
@@ -33,7 +33,7 @@ You can now use the `dotnet tool exec` command to execute a .NET tool without in
 
 ```bash
 dotnet tool exec --source ./artifacts/package/ dotnetsay  "Hello, World!"
-Tool package user@example.com will be downloaded from source <source>.
+Tool package dotnetsay@1.0.0 will be downloaded from source <source>.
 Proceed? [y/n] (y): y
   _   _          _   _                __        __                 _       _   _
  | | | |   ___  | | | |   ___         \ \      / /   ___    _ __  | |   __| | | |
@@ -43,7 +43,7 @@ Proceed? [y/n] (y): y
                                 |/
 ```
 
-This downloads and runs the specified tool package in one command. By default, users are prompted to confirm the download if the tool doesn't already exist locally. The latest version of the chosen tool package is used unless an explicit version is specified (for example, `user@example.com`).
+This downloads and runs the specified tool package in one command. By default, users are prompted to confirm the download if the tool doesn't already exist locally. The latest version of the chosen tool package is used unless an explicit version is specified (for example, `dotnetsay@0.1.0`).
 
 One-shot tool execution works seamlessly with local tool manifests. If you run a tool from a location containing a `.config/dotnet-tools.json` nearby, the version of the tool in that configuration will be used instead of the latest version available.
 
@@ -57,11 +57,11 @@ dnx dotnetsay "Hello, World!"
 
 The actual implementation of the `dnx` command is in the `dotnet` CLI itself, allowing its behavior to evolve over time.
 
-For more information about managing .NET tools, see Manage .NET tools.
+For more information about managing .NET tools, see [Manage .NET tools](../../tools/global-tools.md).
 
 ### Use the `any` RuntimeIdentifier with platform-specific .NET tools
 
-The platform-specific .NET tools feature is great for making sure tools are optimized for specific platforms that you target ahead-of-time. However, there are times where you won't know all of the platforms that you'd like to target, or sometimes .NET itself will learn how to support a new platform, and you'd like your tool to be runnable there too.
+The [platform-specific .NET tools](#platform-specific-net-tools) feature is great for making sure tools are optimized for specific platforms that you target ahead-of-time. However, there are times where you won't know all of the platforms that you'd like to target, or sometimes .NET itself will learn how to support a new platform, and you'd like your tool to be runnable there too.
 
 To make your tool work this way, add the `any` runtime identifier to your project file:
 
@@ -162,7 +162,7 @@ There are also small technical limitations to be aware of when using .NET Tasks 
 
 ## File-based apps enhancements
 
-.NET 10 brings significant updates to the file-based apps experience, including publish support and native AOT capabilities. For an introduction to file-based apps, see File-based apps and Building and running C# programs.
+.NET 10 brings significant updates to the file-based apps experience, including publish support and native AOT capabilities. For an introduction to file-based apps, see [File-based apps](../../../csharp/tour-of-csharp/overview.md#file-based-apps) and [Building and running C# programs](../../../csharp/fundamentals/program-structure/index.md#building-and-running-c-programs).
 
 ### Enhanced file-based apps with publish support and native AOT
 
@@ -217,16 +217,16 @@ hello
 
 These enhancements make file-based apps more powerful while maintaining their simplicity for quick scripting and prototyping scenarios.
 
-For more information about native AOT, see .NET native AOT.
+For more information about native AOT, see [.NET native AOT](../../deploying/native-aot/index.md).
 
 ## Pruning of framework-provided package references
 
-Starting in .NET 10, the NuGet Audit feature can prune framework-provided package references that aren't used by the project.
+Starting in .NET 10, the [NuGet Audit](/nuget/concepts/auditing-packages) feature can [prune framework-provided package references](/nuget/consume-packages/package-references-in-project-files#prunepackagereference) that aren't used by the project.
 This feature is enabled by default for all frameworks of a project that targets >= .NET 10.0 in the latest SDK.
 This change helps reduce the number of packages that are restored and analyzed during the build process, which can lead to faster build times and reduced disk space usage. It also can lead to a reduction in false positives from NuGet Audit and other dependency-scanning mechanisms.
 
 When this feature is enabled, you might see a reduction in the contents of your applications' generated *.deps.json* files. Any package references supplied by the .NET runtime are automatically removed from the generated dependency file.
-When a direct package reference is within the pruning range, `PrivateAssets="all"` and `IncludeAssets="none"` are applied.
+When a direct package reference is within the pruning range, [`PrivateAssets="all"` and `IncludeAssets="none"` are applied](/nuget/consume-packages/package-references-in-project-files#how-prunepackagereference-works).
 
 While this feature is enabled by default for the listed TFMs, you can disable it by setting the `RestoreEnablePackagePruning` property to `false` in your project file or *Directory.Build.props* file.
 
@@ -236,15 +236,45 @@ Starting in .NET 10, the `dotnet` CLI tool includes new aliases for common comma
 
 | New noun-first form                                                 | Alias for                 |
 |---------------------------------------------------------------------|---------------------------|
-| `dotnet package add`           | `dotnet add package`      |
-| `dotnet package list`         | `dotnet list package`     |
-| `dotnet package remove`     | `dotnet remove package`   |
-| `dotnet reference add`       | `dotnet add reference`    |
-| `dotnet reference list`     | `dotnet list reference`   |
-| `dotnet reference remove` | `dotnet remove reference` |
+| [`dotnet package add`](../../tools/dotnet-package-add.md)           | `dotnet add package`      |
+| [`dotnet package list`](../../tools/dotnet-package-list.md)         | `dotnet list package`     |
+| [`dotnet package remove`](../../tools/dotnet-package-remove.md)     | `dotnet remove package`   |
+| [`dotnet reference add`](../../tools/dotnet-reference-add.md)       | `dotnet add reference`    |
+| [`dotnet reference list`](../../tools/dotnet-reference-list.md)     | `dotnet list reference`   |
+| [`dotnet reference remove`](../../tools/dotnet-reference-remove.md) | `dotnet remove reference` |
 
 The new noun-first forms align with general CLI standards, making the `dotnet` CLI more consistent with other tools. While the verb-first forms continue to work, it's better to use the noun-first forms for improved readability and consistency in scripts and documentation.
 
 ## CLI commands default to interactive mode in interactive terminals
 
 The `--interactive` flag is now enabled by default for CLI commands in interactive terminals. This change allows commands to dynamically retrieve credentials or perform other interactive behaviors without requiring the flag to be explicitly set. For noninteractive scenarios, you can disable interactivity by specifying `--interactive false`.
+
+## Native shell tab-completion scripts
+
+The `dotnet` CLI now supports generating native tab-completion scripts for popular shells using the `dotnet completions script [SHELL]` command. Supported shells include `bash`, `fish`, `nushell`, `powershell`, and `zsh`. These scripts improve usability by providing faster and more integrated tab-completion features. For example, in PowerShell, you can enable completions by adding the following to your `$PROFILE`:
+
+```powershell
+dotnet completions script pwsh | Out-String | Invoke-Expression
+```
+
+## Console apps can natively create container images
+
+Console apps can now create container images via `dotnet publish /t:PublishContainer` without requiring the `<EnableSdkContainerSupport>` property in the project file. This aligns console apps with the behavior of ASP.NET Core and Worker SDK apps.
+
+## Explicitly control the image format of containers
+
+A new `<ContainerImageFormat>` property allows you to explicitly set the format of container images to either `Docker` or `OCI`. This property overrides the default behavior, which depends on the base image format and whether the container is multi-architecture.
+
+## Support for Microsoft.Testing.Platform (MTP) in `dotnet test`
+
+Starting in .NET 10, `dotnet test` natively supports [MTP](../../testing/microsoft-testing-platform-intro.md). To enable this feature, add the following configuration to your *global.json* file:
+
+```json
+{
+    "test": {
+        "runner": "Microsoft.Testing.Platform"
+    }
+}
+```
+
+For more details, see [Testing with `dotnet test`](../../testing/unit-testing-with-dotnet-test.md).

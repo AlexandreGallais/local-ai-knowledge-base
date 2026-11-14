@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugValue2::GetExactType Method"
 title: "ICorDebugValue2::GetExactType Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugvalue2-getexacttype-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugValue2.GetExactType"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugValue2::GetExactType"
+helpviewer_keywords:
+  - "ICorDebugValue2::GetExactType method [.NET debugging]"
+  - "GetExactType method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugValue2::GetExactType Method
 
-Gets an interface pointer to an "ICorDebugType" object that represents the `System.Type` of this value.
+Gets an interface pointer to an "ICorDebugType" object that represents the <xref:System.Type> of this value.
 
 ## Syntax
 
@@ -22,18 +31,20 @@ HRESULT GetExactType (
 ## Parameters
 
  `ppType`
- [out] A pointer to the address of an `ICorDebugType` object that represents the `System.Type` of the value represented by this "ICorDebugValue2" object.
+ [out] A pointer to the address of an `ICorDebugType` object that represents the <xref:System.Type> of the value represented by this "ICorDebugValue2" object.
 
 ## Remarks
 
-The generics-aware `GetExactType` method supersedes both the ICorDebugObjectValue::GetClass and the ICorDebugValue::GetType methods, each of which return information about the type of a value.
+The generics-aware `GetExactType` method supersedes both the [ICorDebugObjectValue::GetClass](icordebugobjectvalue-getclass-method.md) and the [ICorDebugValue::GetType](icordebugvalue-gettype-method.md) methods, each of which return information about the type of a value.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
  **Library:** CorGuids.lib
 
  **.NET versions:** Available since .NET Framework 2.0
+
+## See also

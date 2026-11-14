@@ -1,25 +1,22 @@
 ---
-title: "Disabled runtime marshalling - .NET"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/native-interop/disabled-marshalling.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Disabled runtime marshalling - .NET
+description: Learn how .NET marshals your types to a native representation when runtime marshalling is disabled.
+ms.date: 04/08/2024
 ---
 
 # Disabled runtime marshalling
 
-When the `System.Runtime.CompilerServices.DisableRuntimeMarshallingAttribute` attribute is applied to an assembly, the runtime disables most built-in support for data marshalling between managed and native representations. This article describes the features that are disabled and how .NET types map to native types when marshalling is disabled.
+When the [`System.Runtime.CompilerServices.DisableRuntimeMarshallingAttribute`](xref:System.Runtime.CompilerServices.DisableRuntimeMarshallingAttribute) attribute is applied to an assembly, the runtime disables most built-in support for data marshalling between managed and native representations. This article describes the features that are disabled and how .NET types map to native types when marshalling is disabled.
 
 ## Scenarios where marshalling is disabled
 
-When the `DisableRuntimeMarshallingAttribute` is applied to an assembly, it affects P/Invokes and Delegate types in the assembly, as well as any calls to unmanaged function pointers in the assembly. It does not affect any P/Invoke or interop delegate types defined in other assemblies. It also does not disable marshalling for the runtime's built-in COM interop support. The built-in COM interop support can be enabled or disabled through a feature switch.
+When the `DisableRuntimeMarshallingAttribute` is applied to an assembly, it affects P/Invokes and Delegate types in the assembly, as well as any calls to unmanaged function pointers in the assembly. It does not affect any P/Invoke or interop delegate types defined in other assemblies. It also does not disable marshalling for the runtime's built-in COM interop support. The built-in COM interop support can be enabled or disabled through a [feature switch](https://github.com/dotnet/runtime/blob/main/docs/workflow/trimming/feature-switches.md).
 
 ### Disabled features
 
 When the `DisableRuntimeMarshallingAttribute` is applied to an assembly, the following attributes will have no effect or throw an exception:
 
-- `System.Runtime.InteropServices.LCIDConversionAttribute` on a P/Invoke or a delegate
+- <xref:System.Runtime.InteropServices.LCIDConversionAttribute> on a P/Invoke or a delegate
 - `SetLastError=true` on a P/Invoke
 - `ThrowOnUnmappableChar=true` on a P/Invoke
 - `BestFitMapping=true` on a P/Invoke
@@ -28,7 +25,7 @@ When the `DisableRuntimeMarshallingAttribute` is applied to an assembly, the fol
 
 ## Default rules for marshalling common types
 
-When marshalling is disabled, the rules for default marshalling change to much simpler rules. These rules are described below. As mentioned in the interop best practices documentation, blittable types are types with the same layout in managed and native code and as such do not require any marshalling. Additionally, these rules cannot be customized with the tools mentioned in the documentation on customizing parameter marshalling.
+When marshalling is disabled, the rules for default marshalling change to much simpler rules. These rules are described below. As mentioned in the [interop best practices documentation](best-practices.md#blittable-types), blittable types are types with the same layout in managed and native code and as such do not require any marshalling. Additionally, these rules cannot be customized with the tools mentioned in [the documentation on customizing parameter marshalling](customize-parameter-marshalling.md).
 
 | C# keyword | .NET Type        | Native Type        |
 |------------|------------------|--------------------|
@@ -44,12 +41,12 @@ When marshalling is disabled, the rules for default marshalling change to much s
 | `nint`     | `System.IntPtr`  | `intptr_t`         |
 | `nuint`    | `System.UIntPtr` | `uintptr_t`        |
 | `bool`     | `System.Boolean` | `bool`             |
-|            | User-defined C# `unmanaged` type with no fields with `LayoutKind.Auto` | Treated as a blittable type. All customized struct marshalling is ignored. |
+|            | User-defined [C# `unmanaged`](../../csharp/language-reference/builtin-types/unmanaged-types.md) type with no fields with `LayoutKind.Auto` | Treated as a blittable type. All [customized struct marshalling](customize-struct-marshalling.md) is ignored. |
 |            | All other types  | unsupported        |
 
 ## Examples
 
-The following example shows some features that are enabled or disabled when runtime marshalling is disabled. To demonstrate the manual application of this guidance, these examples use `[DllImport]` as opposed to the recommended `[LibraryImport]` attribute. The analyzer with ID SYSLIB1054 provides additional guidance when you use `[LibraryImport]`.
+The following example shows some features that are enabled or disabled when runtime marshalling is disabled. To demonstrate the manual application of this guidance, these examples use `[DllImport]` as opposed to the recommended `[LibraryImport]` attribute. The analyzer with ID [SYSLIB1054](../../fundamentals/syslib-diagnostics/syslib1050-1069.md) provides additional guidance when you use `[LibraryImport]`.
 
 ```csharp
 using System.Runtime.InteropServices;

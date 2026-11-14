@@ -1,19 +1,15 @@
 ---
-title: "dotnet-dsrouter - .NET"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/dotnet-dsrouter.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet-dsrouter - .NET
+description: An introduction to dotnet-dsrouter in .NET.
+ms.date: 11/26/2021
 ---
-
 # dotnet-dsrouter
 
 **This article applies to:** ✔️ .NET 6.0 SDK and later versions
 
 ## Install
 
-To install the latest release version of the `dotnet-dsrouter` NuGet package, use the dotnet tool install command:
+To install the latest release version of the `dotnet-dsrouter` [NuGet package](https://www.nuget.org/packages/dotnet-dsrouter), use the [dotnet tool install](../tools/dotnet-tool-install.md) command:
 
 ```dotnetcli
 dotnet tool install --global dotnet-dsrouter
@@ -31,13 +27,13 @@ The `dotnet-dsrouter` connects diagnostic tooling like `dotnet-trace` and `dotne
 
 The communication between diagnostic tooling and `dotnet-dsrouter` uses the same IPC (Named Pipe, Unix Domain Socket) as used when connecting to a local .NET runtime. `dotnet-dsrouter` uses TCP/IP in its communication with remote .NET runtime and support several different connectivity scenarios to handle different needs and requirements used by different platforms. `dotnet-dsrouter` also implements additional support to simplify connectivity configuration when running in emulator, simulator, and on physical device attached over USB.
 
-> **Note:**
+> [!NOTE]
 > `dotnet-dsrouter` is intended for development and testing and it's highly recommended to run `dotnet-dsrouter` over loopback interface (for example, `127.0.0.1`, `[::1]`). The connectivity features and port forwarding capabilities of `dotnet-dsrouter` handles all scenarios using local emulator, simulator or physical device connected over USB.
 
-> **Warning:**
+> [!WARNING]
 > Binding TCP server endpoint to anything except loopback interface (`localhost`, `127.0.0.1` or `[::1]`) is _not_ recommended. Any connections towards TCP server endpoint will be unauthenticated and unencrypted. `dotnet-dsrouter` is intended for development use and should only be run in development and testing environments.
 
-Detailed usage of `dotnet-dsrouter` together with mobile applications is outline by respective .NET SDKs. This document will only include a couple of examples on how to run diagnostic tools against .NET application running on Android. For in-depth details on configuration and scenarios, see Diagnostics Tracing.
+Detailed usage of `dotnet-dsrouter` together with mobile applications is outline by respective .NET SDKs. This document will only include a couple of examples on how to run diagnostic tools against .NET application running on Android. For in-depth details on configuration and scenarios, see [Diagnostics Tracing](https://github.com/dotnet/runtime/blob/main/docs/design/mono/diagnostics-tracing.md).
 
 ## Options
 
@@ -53,10 +49,10 @@ Detailed usage of `dotnet-dsrouter` together with mobile applications is outline
 
 | Command                                                         |
 |-----------------------------------------------------------------|
-| dotnet-dsrouter client-server |
-| dotnet-dsrouter server-server |
-| dotnet-dsrouter server-client |
-| dotnet-dsrouter client-client |
+| [dotnet-dsrouter client-server](#dotnet-dsrouter-client-server) |
+| [dotnet-dsrouter server-server](#dotnet-dsrouter-server-server) |
+| [dotnet-dsrouter server-client](#dotnet-dsrouter-server-client) |
+| [dotnet-dsrouter client-client](#dotnet-dsrouter-client-client) |
 
 ## dotnet-dsrouter client-server
 
@@ -240,7 +236,7 @@ Sometimes it may be useful to collect a trace of an application from its startup
     dotnet-trace collect --diagnostic-port ~/mylocalport,connect
   ```
 
-`dotnet-trace` will start a trace session and resume application that will now continue to execute. A stream of events will start to flow from the mobile application, through `dotnet-dsrouter` into `dotnet-trace` nettrace file. When done tracing, press `Enter` to make sure trace session is properly closed making sure nettrace file includes all needed data before application gets closed.
+`dotnet-trace` will start a trace session and resume application that will now continue to execute. A stream of events will start to flow from the mobile application, through `dotnet-dsrouter` into `dotnet-trace` nettrace file. When done tracing, press <kbd>Enter</kbd> to make sure trace session is properly closed making sure nettrace file includes all needed data before application gets closed.
 
 It's possible to run several trace sessions against the same running application over time, leave `dotnet-dsrouter` running and rerun `dotnet-trace` when a new trace session is needed.
 
@@ -250,15 +246,15 @@ It's possible to run several trace sessions against the same running application
 
 If `dotnet-dsrouter` is run with `--forward-port` targeting Android and `adb` server, emulator or device gets restarted, all `dotnet-dsrouter` instances need to be restarted as well to restore port forwarding rules.
 
-When done using `dotnet-dsrouter`, press `Q` or `Ctrl` + `C` to quit application.
+When done using `dotnet-dsrouter`, press <kbd>Q</kbd> or <kbd>Ctrl</kbd> + <kbd>C</kbd> to quit application.
 
-> **Note:**
+> [!NOTE]
 > When running `dotnet-dsrouter` on Windows it will use Named Pipes for its IPC channel. Replace ~/mylocalport with mylocalport in above examples when running on Windows.
 
-> **Note:**
+> [!NOTE]
 > TCP/IP port 9000 is just an example. Any free TCP/IP port can be used.
 
-> **Note:**
+> [!NOTE]
 > Unix Domain Socket ~/mylocalport is just an example. Any free Unix Domain Socket file path can be used.
 
 ## Collect a trace using dotnet-trace from a .NET application running on Android
@@ -267,5 +263,5 @@ If there's no need to collect a trace during application startup, it's possible 
 
 ## See also
 
-- .NET MAUI Tracing
-- .NET Diagnostics Tracing on mobile
+- [.NET MAUI Tracing](https://github.com/dotnet/maui/wiki/Profiling-.NET-MAUI-Apps)
+- [.NET Diagnostics Tracing on mobile](https://github.com/dotnet/runtime/blob/main/docs/design/mono/diagnostics-tracing.md)

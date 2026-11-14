@@ -1,0 +1,174 @@
+<Type Name="HybridCacheEntryOptions" FullName="Microsoft.Extensions.Caching.Hybrid.HybridCacheEntryOptions">
+  <TypeSignature Language="C#" Value="public sealed class HybridCacheEntryOptions" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit HybridCacheEntryOptions extends System.Object" />
+  <TypeSignature Language="DocId" Value="T:Microsoft.Extensions.Caching.Hybrid.HybridCacheEntryOptions" />
+  <TypeSignature Language="VB.NET" Value="Public NotInheritable Class HybridCacheEntryOptions" />
+  <TypeSignature Language="F#" Value="type HybridCacheEntryOptions = class" />
+  <TypeSignature Language="C++ CLI" Value="public ref class HybridCacheEntryOptions sealed" />
+  <AssemblyInfo>
+    <AssemblyName>Microsoft.Extensions.Caching.Hybrid</AssemblyName>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>Microsoft.Extensions.Caching.Abstractions</AssemblyName>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.1</AssemblyVersion>
+    <AssemblyVersion>10.0.0.2</AssemblyVersion>
+    <AssemblyVersion>11.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>
+            Specifies additional options (for example, expiration) that apply to a <see cref="T:Microsoft.Extensions.Caching.Hybrid.HybridCache" /> operation. When options
+            can be specified at multiple levels (for example, globally and per-call), the values are composed; the
+            most granular non-null value is used, with null values being inherited. If no value is specified at
+            any level, the implementation can choose a reasonable default.
+            </summary>
+    <remarks>
+            This type is immutable. To adjust cache entry options based on the result of a data fetch, use one of the
+            <see cref="M:Microsoft.Extensions.Caching.Hybrid.HybridCache.GetOrCreateAsync``2(System.String,``0,System.Func{``0,Microsoft.Extensions.Caching.Hybrid.HybridCacheEntryContext,System.Threading.CancellationToken,System.Threading.Tasks.ValueTask{``1}},Microsoft.Extensions.Caching.Hybrid.HybridCacheEntryOptions,System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)" />
+            overloads, whose factory callback receives a mutable <see cref="T:Microsoft.Extensions.Caching.Hybrid.HybridCacheEntryContext" />.
+            </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public HybridCacheEntryOptions ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:Microsoft.Extensions.Caching.Hybrid.HybridCacheEntryOptions.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; HybridCacheEntryOptions();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.Caching.Hybrid</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.Caching.Abstractions</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Expiration">
+      <MemberSignature Language="C#" Value="public TimeSpan? Expiration { get; init; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Nullable`1&lt;valuetype System.TimeSpan&gt; Expiration" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.Caching.Hybrid.HybridCacheEntryOptions.Expiration" />
+      <MemberSignature Language="VB.NET" Value="Public Property Expiration As Nullable(Of TimeSpan)" />
+      <MemberSignature Language="F#" Value="member this.Expiration : Nullable&lt;TimeSpan&gt; with get, set" Usage="Microsoft.Extensions.Caching.Hybrid.HybridCacheEntryOptions.Expiration" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Nullable&lt;TimeSpan&gt; Expiration { Nullable&lt;TimeSpan&gt; get(); void set(Nullable&lt;TimeSpan&gt; value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.Caching.Hybrid</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.Caching.Abstractions</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Nullable&lt;System.TimeSpan&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gets or sets the overall cache duration of this entry, passed to the backend distributed cache.
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Flags">
+      <MemberSignature Language="C#" Value="public Microsoft.Extensions.Caching.Hybrid.HybridCacheEntryFlags? Flags { get; init; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Nullable`1&lt;valuetype Microsoft.Extensions.Caching.Hybrid.HybridCacheEntryFlags&gt; Flags" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.Caching.Hybrid.HybridCacheEntryOptions.Flags" />
+      <MemberSignature Language="VB.NET" Value="Public Property Flags As Nullable(Of HybridCacheEntryFlags)" />
+      <MemberSignature Language="F#" Value="member this.Flags : Nullable&lt;Microsoft.Extensions.Caching.Hybrid.HybridCacheEntryFlags&gt; with get, set" Usage="Microsoft.Extensions.Caching.Hybrid.HybridCacheEntryOptions.Flags" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Nullable&lt;Microsoft::Extensions::Caching::Hybrid::HybridCacheEntryFlags&gt; Flags { Nullable&lt;Microsoft::Extensions::Caching::Hybrid::HybridCacheEntryFlags&gt; get(); void set(Nullable&lt;Microsoft::Extensions::Caching::Hybrid::HybridCacheEntryFlags&gt; value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.Caching.Hybrid</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.Caching.Abstractions</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Nullable&lt;Microsoft.Extensions.Caching.Hybrid.HybridCacheEntryFlags&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gets or sets additional flags that apply to the requested operation.
+            </summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LocalCacheExpiration">
+      <MemberSignature Language="C#" Value="public TimeSpan? LocalCacheExpiration { get; init; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Nullable`1&lt;valuetype System.TimeSpan&gt; LocalCacheExpiration" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.Caching.Hybrid.HybridCacheEntryOptions.LocalCacheExpiration" />
+      <MemberSignature Language="VB.NET" Value="Public Property LocalCacheExpiration As Nullable(Of TimeSpan)" />
+      <MemberSignature Language="F#" Value="member this.LocalCacheExpiration : Nullable&lt;TimeSpan&gt; with get, set" Usage="Microsoft.Extensions.Caching.Hybrid.HybridCacheEntryOptions.LocalCacheExpiration" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Nullable&lt;TimeSpan&gt; LocalCacheExpiration { Nullable&lt;TimeSpan&gt; get(); void set(Nullable&lt;TimeSpan&gt; value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.Caching.Hybrid</AssemblyName>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.Caching.Abstractions</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Nullable&lt;System.TimeSpan&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gets or sets the expiration for the local (in-process) cache entry.
+            </summary>
+        <value>To be added.</value>
+        <remarks>
+            When retrieving a cached value from an external cache store, this value will be used to calculate the local
+            cache expiration, not exceeding the remaining overall cache lifetime.
+            </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LocalSize">
+      <MemberSignature Language="C#" Value="public long? LocalSize { get; init; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Nullable`1&lt;int64&gt; LocalSize" />
+      <MemberSignature Language="DocId" Value="P:Microsoft.Extensions.Caching.Hybrid.HybridCacheEntryOptions.LocalSize" />
+      <MemberSignature Language="VB.NET" Value="Public Property LocalSize As Nullable(Of Long)" />
+      <MemberSignature Language="F#" Value="member this.LocalSize : Nullable&lt;int64&gt; with get, set" Usage="Microsoft.Extensions.Caching.Hybrid.HybridCacheEntryOptions.LocalSize" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Nullable&lt;long&gt; LocalSize { Nullable&lt;long&gt; get(); void set(Nullable&lt;long&gt; value); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>Microsoft.Extensions.Caching.Abstractions</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Nullable&lt;System.Int64&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gets or sets the size to assign to entries in the local (in-process) cache.
+            </summary>
+        <value>To be added.</value>
+        <remarks>
+            The units are determined by the underlying local cache implementation. When the local cache
+            is an <see cref="T:Microsoft.Extensions.Caching.Memory.IMemoryCache" /> configured with a size limit, this value corresponds to
+            <see cref="P:Microsoft.Extensions.Caching.Memory.ICacheEntry.Size" />.
+            <para>
+            When <see langword="null" />, the implementation may compute a default size (for example, from
+            the serialized payload length).
+            </para></remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

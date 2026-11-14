@@ -1,12 +1,11 @@
 ---
-title: "dotnet-scaffold telemetry"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-scaffold-telemetry.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet-scaffold telemetry
+description: Learn about the telemetry collected by the dotnet-scaffold CLI tool.
+author: tdykstra
+ms.author: tdykstra
+ms.date: 08/03/2026
+ai-usage: ai-assisted
 ---
-
 # dotnet-scaffold telemetry
 
 The `dotnet-scaffold` tool includes a telemetry feature that collects usage data. This feature helps the `dotnet-scaffold` team understand how the tool is used so they can improve it.
@@ -17,7 +16,7 @@ The `dotnet-scaffold` tool includes a telemetry feature that collects usage data
 dotnet tool install --global Microsoft.dotnet-scaffold
 ```
 
-For more information about the tool, see the dotnet/Scaffolding repository and the Getting Started guide.
+For more information about the tool, see the [dotnet/Scaffolding repository](https://github.com/dotnet/Scaffolding) and the [Getting Started guide](https://github.com/dotnet/Scaffolding/blob/main/docs/Getting-Started.md).
 
 ## How to opt out
 
@@ -67,13 +66,13 @@ The data is sent securely to Microsoft servers and held under restricted access.
 
 Protecting your privacy is important to us. If you suspect the telemetry feature is collecting sensitive data or the data is being insecurely or inappropriately handled, take one of the following actions:
 
-* File an issue in the dotnet/scaffolding repository.
-* Send an email to user@example.com for investigation.
+* File an issue in the [dotnet/scaffolding](https://github.com/dotnet/scaffolding/issues) repository.
+* Send an email to [dotnet@microsoft.com](mailto:dotnet@microsoft.com) for investigation.
 
 ## Additional resources
 
-* .NET SDK telemetry
-* .NET CLI telemetry data
-* dotnet/Scaffolding repository
-* Get started with dotnet-scaffold
-* Microsoft.dotnet-scaffold NuGet package
+* [.NET SDK telemetry](telemetry.md)
+* [.NET CLI telemetry data](https://dotnet.microsoft.com/platform/telemetry)
+* [dotnet/Scaffolding repository](https://github.com/dotnet/Scaffolding)
+* [Get started with dotnet-scaffold](https://github.com/dotnet/Scaffolding/blob/main/docs/Getting-Started.md)
+* [Microsoft.dotnet-scaffold NuGet package](https://www.nuget.org/packages/Microsoft.dotnet-scaffold/)

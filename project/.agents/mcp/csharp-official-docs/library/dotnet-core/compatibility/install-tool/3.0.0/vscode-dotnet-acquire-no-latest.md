@@ -1,10 +1,9 @@
 ---
 title: "Breaking change: dotnet.acquire API for VS Code no longer always downloads latest"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/install-tool/3.0.0/vscode-dotnet-acquire-no-latest.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change where the dotnet.acquire VS Code API no longer always checks for the latest runtime version before returning a path."
+ms.date: 11/04/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/49127
 ---
 
 # dotnet.acquire API for VS Code no longer always downloads latest
@@ -19,7 +18,7 @@ The .NET Install Tool Extension for VS Code provides the `dotnet.acquire` comman
 
 Up until version 3.0.0 of the .NET Install Tool, or prerelease version 2.4.1, calling `dotnet.acquire` always triggered a check to see what the latest runtime version was, given the VS Code client was online and didn't specify an existing path to `dotnet`. If that latest runtime wasn't available on the machine, it was installed, and the path to it was returned.
 
-This runtime is used by C# Dev Kit, C#, and other VS Code extensions, both first and third party, to run internal .NET code and processes, such as the language server host. This runtime is generally not used to run user projects, and is a private, user-folder copy on disk. It can be the runtime or aspnetcore runtime.
+This runtime is used by [C# Dev Kit](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit), C#, and other VS Code extensions, both first and third party, to run internal .NET code and processes, such as the language server host. This runtime is generally not used to run user projects, and is a private, user-folder copy on disk. It can be the runtime or aspnetcore runtime.
 
 A similar command, `dotnet.uninstall` exists. Previously, that command uninstalled any .NET runtime or SDK that an extension had requested, if no other extensions depended upon that installation, and decremented the reference count. An extension depended on the installation if the extension had requested that version of .NET in the past. A reference count-based mechanism allowed uninstallation when no further dependent extensions of an install remained.
 
@@ -36,7 +35,7 @@ In addition, `dotnet.uninstall` doesn't uninstall if the install is considered t
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -67,5 +66,5 @@ None.
 
 ## See also
 
-- .NET Install Tool for VS Code
-- .NET Install Tool commands documentation
+- [.NET Install Tool for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.vscode-dotnet-runtime)
+- [.NET Install Tool commands documentation](https://github.com/dotnet/vscode-dotnet-runtime/blob/main/Documentation/commands.md)

@@ -1,12 +1,12 @@
 ---
 title: "NETSDK1242: Building projects with the Mono runtime is not supported in .NET 11.0 and later"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/sdk-errors/netsdk1242.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to resolve build error NETSDK1242, which reports that the Mono runtime is not supported for the target mobile platform in .NET 11.0 and later.
+ms.topic: error-reference
+ms.date: 06/16/2026
+ai-usage: ai-assisted
+f1_keywords:
+- NETSDK1242
 ---
-
 # NETSDK1242: Building projects with the Mono runtime is not supported in .NET 11.0 and later
 
 This error indicates that the project selects the Mono runtime (the `UseMonoRuntime` property is set to `true`) for a mobile target platform while targeting .NET 11.0 or later, where the Mono runtime is no longer supported for that platform. The full error message is similar to the following example:
@@ -24,4 +24,4 @@ Choose one of the following options:
 
 ## See also
 
-- .NET SDK error and warning reference
+- [.NET SDK error and warning reference](index.md)

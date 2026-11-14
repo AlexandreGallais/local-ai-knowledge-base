@@ -1,23 +1,25 @@
 ---
 title: "Passing Structures"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/native-interop/passing-structures.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Understand how to pass structures and classes to unmanaged functions. Learn about the StructLayoutAttribute attribute, which you use to define formatted types.
+ms.date: 07/08/2026
+ai-usage: ai-assisted
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "platform invoke, calling unmanaged functions"
 ---
-
 # Passing Structures
 
-Many unmanaged functions expect you to pass, as a parameter to the function, members of structures (user-defined types in Visual Basic) or members of classes that are defined in managed code. When passing structures or classes to unmanaged code using platform invoke, you must provide additional information to preserve the original layout and alignment. This topic introduces the `System.Runtime.InteropServices.StructLayoutAttribute` attribute, which you use to define formatted types. For managed structures and classes, you can select from several predictable layout behaviors supplied by the `LayoutKind` enumeration.
+Many unmanaged functions expect you to pass, as a parameter to the function, members of structures (user-defined types in Visual Basic) or members of classes that are defined in managed code. When passing structures or classes to unmanaged code using platform invoke, you must provide additional information to preserve the original layout and alignment. This topic introduces the <xref:System.Runtime.InteropServices.StructLayoutAttribute> attribute, which you use to define formatted types. For managed structures and classes, you can select from several predictable layout behaviors supplied by the `LayoutKind` enumeration.
 
  Central to the concepts presented in this topic is an important difference between structure and class types. Structures are value types and classes are reference types — classes always provide at least one level of memory indirection (a pointer to a value). This difference is important because unmanaged functions often demand indirection, as shown by the signatures in the first column of the following table. The managed structure and class declarations in the remaining columns show the degree to which you can adjust the level of indirection in your declaration. Declarations are provided for both Visual Basic and Visual C#.
 
-|Unmanaged signature|Managed declaration: no indirection`Structure MyType``struct MyType;`|Managed declaration: one level of indirection`Class MyType``class MyType;`|
+|Unmanaged signature|Managed declaration: <br />no indirection<br />`Structure MyType`<br />`struct MyType;`|Managed declaration: <br />one level of indirection<br />`Class MyType`<br />`class MyType;`|
 |-------------------------|---------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
-|`DoWork(MyType x);` Demands zero levels of indirection.|`DoWork(ByVal x As MyType)`  `DoWork(MyType x)` Adds zero levels of indirection.|Not possible because there is already one level of indirection.|
-|`DoWork(MyType* x);` Demands one level of indirection.|`DoWork(ByRef x As MyType)`  `DoWork(ref MyType x)` Adds one level of indirection.|`DoWork(ByVal x As MyType)`  `DoWork(MyType x)` Adds zero levels of indirection.|
-|`DoWork(MyType** x);` Demands two levels of indirection.|Not possible because `ByRef ByRef` or `ref ref` cannot be used.|`DoWork(ByRef x As MyType)`  `DoWork(ref MyType x)` Adds one level of indirection.|
+|`DoWork(MyType x);`<br /><br /> Demands zero levels of indirection.|`DoWork(ByVal x As MyType)` <br /> `DoWork(MyType x)`<br /><br /> Adds zero levels of indirection.|Not possible because there is already one level of indirection.|
+|`DoWork(MyType* x);`<br /><br /> Demands one level of indirection.|`DoWork(ByRef x As MyType)` <br /> `DoWork(ref MyType x)`<br /><br /> Adds one level of indirection.|`DoWork(ByVal x As MyType)` <br /> `DoWork(MyType x)`<br /><br /> Adds zero levels of indirection.|
+|`DoWork(MyType** x);`<br /><br /> Demands two levels of indirection.|Not possible because `ByRef ByRef` or `ref ref` cannot be used.|`DoWork(ByRef x As MyType)` <br /> `DoWork(ref MyType x)`<br /><br /> Adds one level of indirection.|
 
  The table describes the following guidelines for platform invoke declarations:
 
@@ -84,7 +86,7 @@ internal static class NativeMethods
 
 ## Declaring and Passing Classes
 
- You can pass <example-value> of a class to an unmanaged DLL function, as long as the class has a fixed member layout. The following example demonstrates how to pass <example-value> of the `MySystemTime` class, which are defined in sequential order, to the `GetSystemTime` in the User32.dll file. `GetSystemTime` has the following unmanaged signature:
+ You can pass members of a class to an unmanaged DLL function, as long as the class has a fixed member layout. The following example demonstrates how to pass members of the `MySystemTime` class, which are defined in sequential order, to the `GetSystemTime` in the User32.dll file. `GetSystemTime` has the following unmanaged signature:
 
 ```cpp
 void GetSystemTime(SYSTEMTIME* SystemTime);
@@ -171,6 +173,6 @@ public class TestPlatformInvoke
 
 ## See also
 
-- Calling a DLL Function
-- `System.Runtime.InteropServices.StructLayoutAttribute`
-- `System.Runtime.InteropServices.FieldOffsetAttribute`
+- [Calling a DLL Function](calling-a-dll-function.md)
+- <xref:System.Runtime.InteropServices.StructLayoutAttribute>
+- <xref:System.Runtime.InteropServices.FieldOffsetAttribute>

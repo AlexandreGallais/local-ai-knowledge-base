@@ -1,57 +1,21 @@
 ---
 title: "Automatically Implemented Properties"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/programming-guide/classes-and-structs/auto-implemented-properties.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: For an automatically implemented property in C#, the compiler creates a private, anonymous backing field accessed only through get and set accessors of the property.
+ms.date: 11/18/2025
+f1_keywords:
+  - "propertyInitializer_CSharpKeyword"
+helpviewer_keywords:
+  - "auto-implemented properties [C#]"
+  - "properties [C#], auto-implemented"
 ---
-
 # Automatically implemented properties
 
 Automatically implemented properties make property-declaration more concise when no other logic is required in the property accessors. They also enable client code to create objects. When you declare a property as shown in the following example, the compiler creates a private, anonymous backing field that can only be accessed through the property's `get` and `set` accessors. `init` accessors can also be declared as automatically implemented properties.
 
 The following example shows a simple class that has some automatically implemented properties:
 
-```csharp
-﻿    namespace AutoImplemented;
-    
-    // This class is mutable. Its data can be modified from
-    // outside the class.
-    public class Customer
-    {
-        // Auto-implemented properties for trivial get and set
-        public double TotalPurchases { get; set; }
-        public string Name { get; set; }
-        public int CustomerId { get; set; }
+:::code language="csharp" source="./snippets/properties/AutoImplemented.cs" id="Snippet28":::
 
-        // Constructor
-        public Customer(double purchases, string name, int id)
-        {
-            TotalPurchases = purchases;
-            Name = name;
-            CustomerId = id;
-        }
-
-        // Methods
-        public string GetContactInfo() { return "ContactInfo"; }
-        public string GetTransactionHistory() { return "History"; }
-
-        // .. Additional methods, events, etc.
-    }
-
-    class Program
-    {
-        static void Main()
-        {
-            // Initialize a new object.
-            Customer cust1 = new Customer(4987.63, "Northwind", 90108);
-
-            // Modify a property.
-            cust1.TotalPurchases += 499.99;
-        }
-    }
-```
 You can't declare automatically implemented properties in interfaces. Automatically implemented and field backed properties declare a private instance backing field, and interfaces can't declare instance fields. Declaring a property in an interface without defining a body declares a property with accessors. Each type that implements that interface must implement that property.
 
 You can initialize automatically implemented properties similarly to fields:
@@ -64,11 +28,11 @@ The class that is shown in the previous example is mutable. Client code can chan
 
 * Declare only a `get` accessor (immutable everywhere except the constructor).
 * Declare a `get` accessor and an `init` accessor (immutable everywhere except during object construction).
-* Declare the `set` accessor as private (immutable to consumers).
+* Declare the `set` accessor as [private](../../language-reference/keywords/private.md) (immutable to consumers).
 
-For more information, see How to implement a lightweight class with automatically implemented properties.
+For more information, see [How to implement a lightweight class with automatically implemented properties](./how-to-implement-a-lightweight-class-with-auto-implemented-properties.md).
 
-You might need to add validation to an automatically implemented property. C# 14 adds field backed properties. You use the `field` keyword to access the compiler synthesized backing field of an automatically implemented property. For example, you could ensure that the `FirstName` property in the preceding example can't be set to `null` or the empty string:
+You might need to add validation to an automatically implemented property. C# 14 adds [field backed properties](../../language-reference/keywords/field.md). You use the `field` keyword to access the compiler synthesized backing field of an automatically implemented property. For example, you could ensure that the `FirstName` property in the preceding example can't be set to `null` or the empty string:
 
 ```csharp
 public string FirstName 
@@ -87,6 +51,6 @@ This feature enables you to add logic to accessors without requiring you to expl
 
 ## See also
 
-- Use auto-implemented properties (style rule IDE0032)
-- Properties
-- Modifiers
+- [Use auto-implemented properties (style rule IDE0032)](../../../fundamentals/code-analysis/style-rules/ide0032.md)
+- [Properties](./properties.md)
+- [Modifiers](../../language-reference/keywords/index.md)

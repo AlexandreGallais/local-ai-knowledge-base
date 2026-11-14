@@ -1,12 +1,11 @@
 ---
-title: "Native code interop with Native AOT"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/deploying/native-aot/interop.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Native code interop with Native AOT
+description: Learn about native code interop with Native AOT.
+author: MichalStrehovsky
+ms.author: michals
+ms.date: 05/17/2023
+ai-usage: ai-assisted
 ---
-
 # Native code interop with Native AOT
 
 Native code interop is a technology that allows you to access unmanaged libraries from managed code, or expose managed libraries to unmanaged code (the opposite direction).
@@ -44,8 +43,8 @@ Examples:
 
 On Windows, Native AOT uses a prepopulated list of direct P/Invoke methods that are available on all supported versions of Windows.
 
-> **Warning:**
-> Because direct P/Invoke methods are resolved by the operating system dynamic loader and not by the Native AOT runtime library, direct P/Invoke methods will not respect the `System.Runtime.InteropServices.DefaultDllImportSearchPathsAttribute`. The library search order will follow the dynamic loader rules as defined by the operating system. Some operating systems and loaders offer ways to control dynamic loading through linker flags (such as `/DEPENDENTLOADFLAG` on Windows or `-rpath` on Linux). For more information on how to specify linker flags, see the Linking section.
+> [!WARNING]
+> Because direct P/Invoke methods are resolved by the operating system dynamic loader and not by the Native AOT runtime library, direct P/Invoke methods will not respect the <xref:System.Runtime.InteropServices.DefaultDllImportSearchPathsAttribute>. The library search order will follow the dynamic loader rules as defined by the operating system. Some operating systems and loaders offer ways to control dynamic loading through linker flags (such as `/DEPENDENTLOADFLAG` on Windows or `-rpath` on Linux). For more information on how to specify linker flags, see the [Linking](#linking) section.
 
 ### Linking
 
@@ -83,9 +82,9 @@ Examples:
 
 ## Native exports
 
-The Native AOT compiler exports methods annotated with `System.Runtime.InteropServices.UnmanagedCallersOnlyAttribute` with a nonempty `EntryPoint` property as
+The Native AOT compiler exports methods annotated with <xref:System.Runtime.InteropServices.UnmanagedCallersOnlyAttribute> with a nonempty `EntryPoint` property as
 public C entry points. This makes it possible to either dynamically or statically link the AOT compiled modules into external
 programs. Only methods marked `UnmanagedCallersOnly` in the published assembly are considered. Methods in project references or NuGet packages won't be exported.
-For more information, see NativeLibrary sample.
+For more information, see [NativeLibrary sample](https://github.com/dotnet/samples/tree/main/core/nativeaot/NativeLibrary/README.md).
 
-Methods annotated with `UnmanagedCallersOnly` don't perform marshalling and require blittable parameter and return types. Starting in .NET 11, when runtime marshalling is enabled, Native AOT throws `System.InvalidProgramException` if an unmanaged caller invokes such a method with a non-blittable signature, such as a `bool` return type or a `char` parameter. The exception causes the process to terminate (fail fast) and can't be caught to recover from the invalid signature. Use blittable equivalents or, for supported unmanaged types, disable runtime marshalling in the assembly that declares the method. For details, see Native AOT rejects non-blittable UnmanagedCallersOnly signatures.
+Methods annotated with `UnmanagedCallersOnly` don't perform marshalling and require blittable parameter and return types. Starting in .NET 11, when runtime marshalling is enabled, Native AOT throws <xref:System.InvalidProgramException> if an unmanaged caller invokes such a method with a non-blittable signature, such as a `bool` return type or a `char` parameter. The exception causes the process to terminate (fail fast) and can't be caught to recover from the invalid signature. Use blittable equivalents or, for supported unmanaged types, [disable runtime marshalling](../../../standard/native-interop/disabled-marshalling.md) in the assembly that declares the method. For details, see [Native AOT rejects non-blittable UnmanagedCallersOnly signatures](../../compatibility/interop/11/unmanagedcallersonly-non-blittable.md).

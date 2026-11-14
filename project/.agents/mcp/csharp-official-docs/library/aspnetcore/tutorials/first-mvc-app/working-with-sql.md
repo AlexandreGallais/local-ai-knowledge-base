@@ -1,13 +1,17 @@
 ---
-title: "Part 5, work with a database in an ASP.NET Core MVC app"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/tutorials/first-mvc-app/working-with-sql.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Part 5, work with a database in an ASP.NET Core MVC app
+ai-usage: ai-assisted
+description: Part 5 of tutorial series on ASP.NET Core MVC.
+monikerRange: '>= aspnetcore-3.1'
+ms.custom: sfi-ropc-nochange
+ms.date: 10/22/2026
 ---
 
 # Part 5, work with a database in an ASP.NET Core MVC app
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+:::moniker range=">= aspnetcore-10.0"
 
 ## Introduction
 
@@ -22,50 +26,33 @@ You'll learn how to:
 
 ## Prerequisite
 
-This tutorial uses a database you set up in the previous step: Part 4, add a model to an ASP.NET Core MVC app.
+This tutorial uses a database you set up in the previous step: [Part 4, add a model to an ASP.NET Core MVC app](adding-model.md).
 
 ## Working with the database context
 
-The `MvcMovieContext` object handles the task of connecting to the database and mapping `Movie` objects to database records. The database context is registered with the Dependency Injection container in the `Program.cs` file:
+The `MvcMovieContext` object handles the task of connecting to the database and mapping `Movie` objects to database records. The database context is registered with the [Dependency Injection](../../fundamentals/dependency-injection.md) container in the `Program.cs` file:
 
-# Visual Studio
+# [Visual Studio](#tab/visual-studio)
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<MvcMovieContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MvcMovieContext") ?? throw new InvalidOperationException("Connection string 'MvcMovieContext' not found.")));
-```
+[!code-csharp[](~/tutorials/first-mvc-app/start-mvc/samples/MvcMovie10/Program.cs?name=snippet_FirstSQLServer&highlight=2-3)]
 
-The ASP.NET Core Configuration system reads the `ConnectionString` key. For local development, it gets the connection string from the `appsettings.json` file:
+The ASP.NET Core [Configuration](../../fundamentals/configuration/index.md) system reads the `ConnectionString` key. For local development, it gets the connection string from the `appsettings.json` file:
 
-```json
-"ConnectionStrings": {
-  "MvcMovieContext": "Server=(localdb)\\mssqllocaldb;Database=MvcMovieContext-4ebefa10-de29-4dea-b2ad-8a8dc6bcf374;Trusted_Connection=True;MultipleActiveResultSets=true"
-}
-```
+[!code-json[](~/tutorials/first-mvc-app/start-mvc/samples/MvcMovie10/appsettings.json?highlight=2&range=9-11)]
 
-# Visual Studio Code
+# [Visual Studio Code](#tab/visual-studio-code)
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<MvcMovieContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("MvcMovieContext")));
-```
+[!code-csharp[](~/tutorials/first-mvc-app/start-mvc/samples/MvcMovie10/Program.cs?name=snippet_FirstSQLite&highlight=3-4)]
 
-The ASP.NET Core Configuration system reads the `ConnectionString`. For local development, it gets the connection string from the `appsettings.json` file:
+The ASP.NET Core [Configuration](../../fundamentals/configuration/index.md) system reads the `ConnectionString`. For local development, it gets the connection string from the `appsettings.json` file:
 
-```json
-"ConnectionStrings": {
-  "MvcMovieContext": "Data Source=MvcMovie.db"
-}
-```
+[!code-json[](~/tutorials/first-mvc-app/start-mvc/samples/MvcMovie10/appsettings_SQLite.json?highlight=2&range=9-11)]
 
 ---
 
-> **Warning:**
-> This article uses a local database that doesn't require the user to be authenticated. Production apps should use the most secure authentication flow available. For more information on authentication for deployed test and production apps, see Secure authentication flows.
+[!INCLUDE [managed-identities](~/includes/managed-identities-test-non-production.md)]
 
-# Visual Studio
+# [Visual Studio](#tab/visual-studio)
 
 ## SQL Server Express LocalDB
 
@@ -82,102 +69,32 @@ From the **View** menu, open **SQL Server Object Explorer** (SSOX).
 
 Right-click on the `Movie` table (`dbo.Movie`) **> View Designer**
 
+:::image type="content" source="~/tutorials/first-mvc-app/working-with-sql/media/view-designer.png" alt-text="Right-click on the Movie table > View Designer.":::
+
+:::image type="content" source="~/tutorials/first-mvc-app/working-with-sql/media/designer-view.png" alt-text="Movie table open in Designer.":::
+
 Note the key icon next to `ID`. By default, EF makes a property named `ID` the primary key.
 
 Right-click on the `Movie` table **> View Data**
 
+:::image type="content" source="~/tutorials/first-mvc-app/working-with-sql/media/view-data.png" alt-text="Right-click on the Movie table > View Data.":::
+
+:::image type="content" source="~/tutorials/first-mvc-app/working-with-sql/media/empty-movie-data.png" alt-text="Movie table open showing no data.":::
 -->
 
-# Visual Studio Code
+# [Visual Studio Code](#tab/visual-studio-code)
 
-## SQLite
-
-The SQLite website states:
-
-> SQLite is a self-contained, high-reliability, embedded, full-featured, public-domain, SQL database engine. SQLite is the most used database engine in the world.
-
-There are many third party tools you can download to manage and view a SQLite database. The image below is from DB Browser for SQLite. If you have a favorite SQLite tool, leave a comment on what you like about it.
-
-> **Note:**
-> For this tutorial you use the Entity Framework Core *migrations* feature where possible. Migrations updates the database schema to match changes in the data model. However, migrations can only do the kinds of changes that the EF Core provider supports, and the SQLite provider's capabilities are limited. For example, adding a column is supported, but removing or changing a column is not supported. If a migration is created to remove or change a column, the `ef migrations add` command succeeds but the `ef database update` command fails. Due to these limitations, this tutorial doesn't use migrations for SQLite schema changes. Instead, when the schema changes, you drop and re-create the database.
->
->The workaround for the SQLite limitations is to manually write migrations code to perform a table rebuild when something in the table changes. A table rebuild involves:
->
->* Creating a new table.
->* Copying data from the old table to the new table.
->* Dropping the old table.
->* Renaming the new table.
->
->For more information, see the following resources:
->
-> * SQLite EF Core Database Provider Limitations
-> * Customize migration code
-> * Data seeding
-> * SQLite ALTER TABLE statement
+[!INCLUDE[](~/includes/RP/sqlite.md)]
+[!INCLUDE[](~/includes/RP-mvc-shared/sqlite-warn.md)]
 
 ---
+<!-- End of VS tabs -->
 
 ## Seed the database
 
 Create a new class named `SeedData` in the *Models* folder. Replace the generated code with the following:
 
-```csharp
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using MvcMovie.Data;
-using System;
-using System.Linq;
-
-namespace MvcMovie.Models;
-
-public static class SeedData
-{
-    public static void Initialize(IServiceProvider serviceProvider)
-    {
-        using (var context = new MvcMovieContext(
-            serviceProvider.GetRequiredService<
-                DbContextOptions<MvcMovieContext>>()))
-        {
-            // Look for any movies.
-            if (context.Movie.Any())
-            {
-                return;   // DB has been seeded
-            }
-            context.Movie.AddRange(
-                new Movie
-                {
-                    Title = "When Harry Met Sally",
-                    ReleaseDate = DateTime.Parse("1989-2-12"),
-                    Genre = "Romantic Comedy",
-                    Price = 7.99M
-                },
-                new Movie
-                {
-                    Title = "Ghostbusters ",
-                    ReleaseDate = DateTime.Parse("1984-3-13"),
-                    Genre = "Comedy",
-                    Price = 8.99M
-                },
-                new Movie
-                {
-                    Title = "Ghostbusters 2",
-                    ReleaseDate = DateTime.Parse("1986-2-23"),
-                    Genre = "Comedy",
-                    Price = 9.99M
-                },
-                new Movie
-                {
-                    Title = "Rio Bravo",
-                    ReleaseDate = DateTime.Parse("1959-4-15"),
-                    Genre = "Western",
-                    Price = 3.99M
-                }
-            );
-            context.SaveChanges();
-        }
-    }
-}
-```
+[!code-csharp[](~/tutorials/first-mvc-app/start-mvc/samples/MvcMovie10/Models/SeedData.cs?name=snippet_FirstVersion)]
 
 If there are any movies in the database, the seed initializer returns and no movies are added.
 
@@ -188,106 +105,23 @@ if (context.Movie.Any())
 }
 ```
 
-# Visual Studio
+<a name="si"></a>
+
+### Add the seed initializer
+
+# [Visual Studio](#tab/visual-studio)
 
 Replace the contents of `Program.cs` with the following code. The new code is highlighted.
 
-```csharp
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using MvcMovie.Data;
-using MvcMovie.Models;
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<MvcMovieContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MvcMovieContext") ?? throw new InvalidOperationException("Connection string 'MvcMovieContext' not found.")));
-
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
-var app = builder.Build();
-
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-
-    SeedData.Initialize(services);
-}
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
-
-app.UseHttpsRedirection();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapStaticAssets();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
-
-app.Run();
-```
+[!code-csharp[](~/tutorials/first-mvc-app/start-mvc/samples/MvcMovie10/Program.cs?name=snippet_SQLServerSeedData&highlight=4,14-20)]
 
 Test the app. Force the app to initialize, calling the code in the `Program.cs` file, so the seed method runs. To force initialization, close the command prompt window that Visual Studio opened, and restart by pressing Ctrl+F5.
 
-# Visual Studio Code
+# [Visual Studio Code](#tab/visual-studio-code)
 
 Update `Program.cs` with the following highlighted code:
 
-```csharp
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using MvcMovie.Data;
-using MvcMovie.Models;
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddDbContext<MvcMovieContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("MvcMovieContext")));
-
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
-var app = builder.Build();
-
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-
-    SeedData.Initialize(services);
-}
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
-
-app.UseHttpsRedirection();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapStaticAssets();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
-
-app.Run();
-```
+[!code-csharp[](~/tutorials/first-mvc-app/start-mvc/samples/MvcMovie10/Program.cs?name=snippet_SQLiteSeedData&highlight=4,15-20)]
 
 Test the app. Stop it and restart it so the `SeedData.Initialize` method runs and seeds the database.
 
@@ -295,10 +129,26 @@ Test the app. Stop it and restart it so the `SeedData.Initialize` method runs an
 
 The app shows the seeded data.
 
+:::image type="content" source="~/tutorials/first-mvc-app/working-with-sql/media/seeded-movies.png" alt-text="MVC Movie app open in Microsoft Edge showing movie data.":::
+
 And a refresh of the `Movie` table shows the same data.
 
-> **Note:**
-> You may not be able to enter decimal commas in decimal fields. To support jQuery validation for non-English locales that use a comma (",") for a decimal point, and non US-English date formats, you must take steps to globalize your app. See this GitHub comment 4076 for instructions on adding decimal comma.
+:::image type="content" source="~/tutorials/first-mvc-app/working-with-sql/media/seeded-movie-data.png" alt-text="Movie table has seeded data.":::
 
-> Previous: Adding a model
-> Next: Adding controller methods and views
+[!INCLUDE[](~/includes/localization/currency.md)]
+
+> [!div class="step-by-step"]
+> [Previous: Adding a model](~/tutorials/first-mvc-app/adding-model.md)
+> [Next: Adding controller methods and views](~/tutorials/first-mvc-app/controller-methods-views.md)
+
+:::moniker-end
+
+[!INCLUDE[](~/tutorials/first-mvc-app/working-with-sql/includes/working-with-sql9.md)]
+
+[!INCLUDE[](~/tutorials/first-mvc-app/working-with-sql/includes/working-with-sql8.md)]
+
+[!INCLUDE[](~/tutorials/first-mvc-app/working-with-sql/includes/working-with-sql7.md)]
+
+[!INCLUDE[](~/tutorials/first-mvc-app/working-with-sql/includes/working-with-sql6.md)]
+
+[!INCLUDE[](~/tutorials/first-mvc-app/working-with-sql/includes/working-with-sql3-5.md)]

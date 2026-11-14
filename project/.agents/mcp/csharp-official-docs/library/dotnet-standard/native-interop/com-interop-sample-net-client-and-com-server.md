@@ -1,17 +1,23 @@
 ---
 title: "COM interop sample: .NET client and COM server"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/native-interop/com-interop-sample-net-client-and-com-server.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Read a code sample that shows how a .NET client accesses a COM server to create a COM coclass instance and call class members to perform mortgage calculations.
+ms.date: 07/08/2026
+ai-usage: ai-assisted
+dev_langs:
+  - "csharp"
+  - "vb"
+  - "cpp"
+helpviewer_keywords:
+  - "interoperation with unmanaged code, samples"
+  - "COM interop, samples"
 ---
-
 # COM interop sample: .NET client and COM server
 
-This sample demonstrates how a .NET client, built to access a COM server, creates an instance of a COM coclass and calls class members to perform mortgage calculations.
+This sample demonstrates how a [.NET client](#cpconcominteropsamplenetclientcomserveranchor1), built to access a [COM server](#cpconcominteropsamplenetclientcomserveranchor2), creates an instance of a COM coclass and calls class members to perform mortgage calculations.
 
  In this example, the client creates and calls an instance of the `Loan` coclass, passes four arguments (one of those four being equal to zero) to the instance, and displays the computations. Code fragments from this sample appear throughout this section.
+
+<a name="cpconcominteropsamplenetclientcomserveranchor1"></a>
 
 ## .NET client
 
@@ -141,6 +147,8 @@ public class LoanApp {
     }
 }
 ```
+
+<a name="cpconcominteropsamplenetclientcomserveranchor2"></a>
 
 ## COM Server
 
@@ -289,4 +297,4 @@ static double Round(double value, short digits)
 
 ## See also
 
-- Expose COM components to .NET
+- [Expose COM components to .NET](exposing-com-components.md)

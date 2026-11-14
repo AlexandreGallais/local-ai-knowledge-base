@@ -1,35 +1,34 @@
----
-title: "MethodHandleEntry interface (java.lang.classfile.constantpool)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/constantpool/MethodHandleEntry.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # MethodHandleEntry interface (java.lang.classfile.constantpool)
 
 ```java
 public sealed interface MethodHandleEntry extends LoadableConstantEntry permits AbstractPoolEntry.MethodHandleEntryImpl
 ```
 
-Models a `CONSTANT_MethodHandle_info` structure, or a symbolic
-reference to a method handle, in the constant pool
-of a `class` file.  The method handle directly accesses an accessible
+Models a {@code CONSTANT_MethodHandle_info} structure, or a symbolic
+reference to a {@linkplain MethodHandle method handle}, in the constant pool
+of a {@code class} file.  The method handle directly accesses an accessible
 method, field, or constructor.
-
-The use of a `MethodHandleEntry` is modeled by a `DirectMethodHandleDesc`.  Conversions are through `ConstantPoolBuilder.methodHandleEntry(DirectMethodHandleDesc)` and `asSymbol()`.
-
+<p>
+The use of a {@code MethodHandleEntry} is modeled by a {@link
+DirectMethodHandleDesc}.  Conversions are through {@link
+ConstantPoolBuilder#methodHandleEntry(DirectMethodHandleDesc)} and {@link
+#asSymbol()}.
+<p>
 A method handle entry is composite:
+{@snippet lang=text :
+// @link substring="MethodHandleEntry" target="ConstantPoolBuilder#methodHandleEntry(int, MemberRefEntry)" :
+MethodHandleEntry(
+    int refKind, // @link substring="refKind" target="#kind()"
+    MemberRefEntry reference // @link substring="reference" target="#reference()"
+)
+}
+where {@code refKind} is in the range {@code [1, 9]}.
 
-where `refKind` is in the range `[1, 9]`.
-
-**See also:** ConstantPoolBuilder#methodHandleEntry
+@see ConstantPoolBuilder#methodHandleEntry
      ConstantPoolBuilder::methodHandleEntry
+@jvms 4.4.8 The {@code CONSTANT_MethodHandle_info} Structure
 
-**jvms:** 4.4.8 The `CONSTANT_MethodHandle_info` Structure
-
-**Since:** 24
+@since 24
 
 ## MethodHandleEntry.constantValue()
 
@@ -37,9 +36,9 @@ where `refKind` is in the range `[1, 9]`.
 default ConstantDesc constantValue()
 ```
 
-(inherited documentation)
-
-This is equivalent to asSymbol().
+{@inheritDoc}
+<p>
+This is equivalent to {@link #asSymbol() asSymbol()}.
 
 ## MethodHandleEntry.kind()
 
@@ -47,7 +46,9 @@ This is equivalent to asSymbol().
 int kind()
 ```
 
-**See also:** MethodHandleInfo##refkinds Reference kinds
+{@return the reference kind of this method handle (JVMS {@jvms 4.4.8})}
+
+@see MethodHandleInfo##refkinds Reference kinds
 
 ## MethodHandleEntry.reference()
 
@@ -55,11 +56,16 @@ int kind()
 MemberRefEntry reference()
 ```
 
+{@return the constant pool entry describing the field or method,
+according to the {@linkplain #kind() reference kind}}
+
 ## MethodHandleEntry.asSymbol()
 
 ```java
 DirectMethodHandleDesc asSymbol()
 ```
 
-**See also:** ConstantPoolBuilder#methodHandleEntry(DirectMethodHandleDesc)
+{@return a symbolic descriptor for this method handle}
+
+@see ConstantPoolBuilder#methodHandleEntry(DirectMethodHandleDesc)
      ConstantPoolBuilder::methodHandleEntry(DirectMethodHandleDesc)

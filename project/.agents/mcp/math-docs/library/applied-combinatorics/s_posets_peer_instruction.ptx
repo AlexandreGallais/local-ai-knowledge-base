@@ -1,0 +1,581 @@
+<exercises xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="s_posets_PI" component="runestone-PI">
+  <title>Peer Instruction Questions</title>
+  <exercise label="posets_PI_movie-poset">
+    <statement correct="yes">
+      <p>I understood how Bob constructed his picture in the class preparation assignment.
+      </p>
+      <image width="65%" source="movies">
+        <description>A poset ranking seven movies</description>
+      </image>
+    </statement>
+  </exercise>
+  <exercise label="posets_PI_antichains">
+    <statement>
+      <p>Which of the following sets are antichains?
+      </p>
+      <image width="50%">
+        <description>
+          <p>
+            The order diagram of a poset with 34 points. The points are labeled from 1 to 34.
+          </p>
+        </description>
+        <prefigure xmlns="https://prefigure.org" label="big-poset-PI1">
+          <xi:include href="prefig/big-poset.xml"/>
+        </prefigure>
+      </image>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="yes">
+        <statement>
+          <p><m>\{20,7,32,15\}</m></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>\{9,7,32,6\}</m></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>\{19,27,6,35\}</m></p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p><m>\{9,25,26,7,12\}</m></p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>  
+  <exercise label="posets_PI_chains">
+    <statement>
+      <p>Which of the following sets are chains?
+      </p>
+      <image width="50%">
+        <description>
+          <p>
+            The order diagram of a poset with 34 points. The points are labeled from 1 to 34.
+          </p>
+        </description>
+        <prefigure xmlns="https://prefigure.org" label="big-poset-PI2">
+          <xi:include href="prefig/big-poset.xml"/>
+        </prefigure>
+      </image>
+    </statement>
+    <choices multiple-correct="yes">
+      <choice correct="yes">
+        <statement>
+          <p><m>\{8,4,35\}</m></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>\{8,4,31,2,22\}</m></p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p><m>\{19,27,6,35\}</m></p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p><m>\{29,24,26,4,31,6,35\}</m></p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>  
+  <exercise label="posets_PI_antichain-type">
+    <statement>
+      <p>The set <m>\{12,13,30,16\}</m> is
+      </p>
+      <image width="50%">
+        <description>
+          <p>
+            The order diagram of a poset with 34 points. The points are labeled from 1 to 34.
+          </p>
+        </description>
+        <prefigure xmlns="https://prefigure.org" label="big-poset-PI3">
+          <xi:include href="prefig/big-poset.xml"/>
+        </prefigure>
+      </image>
+    </statement>
+    <choices>
+      <choice>
+        <statement>
+          <p>a maximal antichain (not maximum).</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>a maximum antichain.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>an antichain, but neither maximal nor maximum.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>not an antichain.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>  
+  <exercise label="posets_PI_chain-type1">
+    <statement>
+      <p>The set <m>\{3,25,10\}</m> is
+      </p>
+      <image width="50%">
+        <description>
+          <p>
+            The order diagram of a poset with 34 points. The points are labeled from 1 to 34.
+          </p>
+        </description>
+        <prefigure xmlns="https://prefigure.org" label="big-poset-PI4">
+          <xi:include href="prefig/big-poset.xml"/>
+        </prefigure>
+      </image>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p>a maximal chain (not maximum).</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>a maximum chain.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>a chain, but neither maximal nor maximum.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>not a chain.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>  
+  <exercise label="posets_PI_chain-type2">
+    <statement>
+      <p>The set <m>\{8,7,13,4,31,6,35\}</m> is
+      </p>
+      <image width="50%">
+        <description>
+          <p>
+            The order diagram of a poset with 34 points. The points are labeled from 1 to 34.
+          </p>
+        </description>
+        <prefigure xmlns="https://prefigure.org" label="big-poset-PI5">
+          <xi:include href="prefig/big-poset.xml"/>
+        </prefigure>
+      </image>
+    </statement>
+    <choices>
+      <choice>
+        <statement>
+          <p>a maximal chain (not maximum).</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>a maximum chain.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>a chain, but neither maximal nor maximum.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>not a chain.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>  
+
+
+  <exercise label="posets_PI_17-pt-chain">
+    <statement>
+      <p>If we find a chain <m>C</m> with 17 points in a poset <m>\bfP</m>, then we know
+      </p>
+    </statement>
+    <choices>
+      <choice>
+        <statement>
+          <p><m>\height(\bfP) = 17</m>.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>\height(\bfP) \leq 17</m>.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p><m>\height(\bfP) \geq 17</m>.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>Absolutely nothing about <m>\height(\bfP)</m></p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>    
+  <exercise label="posets_PI_points-subset-lattice">
+    <statement>
+      <p>How many points are there in <m>\mathbf{2}^n</m>?</p>
+    </statement>
+    <choices>
+      <choice>
+        <statement>
+          <p><m>n</m></p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p><m>2^n</m></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>n!</m></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>None of the above</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="posets_PI_subset-lattice-minimal">
+    <statement>
+      <p>How many minimal elements does <m>\mathbf{2}^n</m> have?</p>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p><m>1</m></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>n/2</m></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>n</m></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>2^n</m></p>
+        </statement>
+      </choice>
+
+    </choices>
+  </exercise>
+  <exercise label="posets_PI_subset-lattice-height">
+    <statement>
+      <p>What is the height of <m>\mathbf{2}^n</m>?</p>
+    </statement>
+    <choices>
+      <choice>
+        <statement>
+          <p><m>1</m></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>n</m></p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p><m>n+1</m></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>\displaystyle\binom{n}{n/2}</m></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>Cannot be expressed as a function of <m>n</m></p>
+        </statement>
+      </choice>
+
+    </choices>
+  </exercise>
+  <exercise label="posets_PI_intord-less">
+    <statement>
+      <p>Consider the intervals below as an interval order. Which intervals are less than <m>k</m> in the interal order?</p>
+      <image source="intervals" width="80%">
+        <description>A collection of intervals</description>
+      </image>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p><m>c</m></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>g</m></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>d</m></p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p><m>i</m></p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="posets_PI_intord-incomp">
+    <statement>
+      <p>Consider the intervals below as an interval order. Which intervals are incomparable to <m>d</m> in the interal order?</p>
+      <image source="intervals" width="80%">
+        <description>A collection of intervals</description>
+      </image>
+    </statement>
+    <choices>
+      <choice>
+        <statement>
+          <p><m>e</m></p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p><m>j</m></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>g</m></p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p><m>f</m></p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p><m>i</m></p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>  
+  <exercise label="posets_PI_find-two-plus-two">
+    <statement>
+      <p>Which set forms a <m>\mathbf{2}+\mathbf{2}</m> in the poset below?</p>
+      <image source="find_2plus2" width="30%">
+        <description>A poset</description>
+      </image>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p><m>\{k,j,e,c\}</m></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>\{j,l,e,c\}</m></p>
+        </statement>
+      </choice>      
+      <choice>
+        <statement>
+          <p><m>\{e,c,f,i\}</m></p>
+        </statement>
+      </choice>        
+      <choice>
+        <statement>
+          <p>None of the above</p>
+        </statement>
+      </choice>  
+    </choices>
+  </exercise>
+  <exercise label="posets_PI_find-intrep-interval">
+    <statement>
+      <p>  You've run the first four steps of the algorithm for an interval
+        representation and have down-sets
+        <md>\{\}\subsetneq
+        \{e\}\subsetneq\{a,e\}\subsetneq\{a,b,e\}\subsetneq \{a,b,e,f\}</md>
+        and up-sets
+        <md>\{b,c,d,f\}\supsetneq \{b,c,d\}\supsetneq \{c,d\}\supsetneq
+        \{d\}\supsetneq \{\}</md>. You know that <m>D(f) = \{e\}</m> and <m>U(f) =
+        \{d\}</m>. Then <m>I(f)=</m></p>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p><m>[2,4]</m></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>[1,3]</m></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>[4,2]</m></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>[3,1]</m></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>[2,2]</m></p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="posets_PI_intord-findrep-nocontain">
+    <statement>
+      <p>  You're trying to find an interval representation for a poset and
+        determine <m>D(x)\not\subseteq D(z)</m> and <m>D(z)\not\subseteq D(x)</m>. You</p>
+    </statement>
+    <choices>
+      <choice>
+        <statement>
+          <p>start over since that's impossible.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>find a <m>\mathbf{2}+\mathbf{2}</m>.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>keep going since it will fix itself.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>are still uncertain what <m>D(x)</m> means.</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="posets_PI_intord-findrep-small-downset">
+    <statement>
+      <p>  Suppose that you're finding an interval representation for an
+        interval order <m>\mathbf{P}</m> and determine that <m>D(x) = D_1</m>, the smallest
+        downset. Then you know</p>
+    </statement>
+    <choices>
+      <choice>
+        <statement>
+          <p><m>x</m> is maximal in <m>\mathbf{P}</m>.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>I(x)</m> has the smallest right end point.</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p><m>x</m> is minimal in <m>\mathbf{P}</m>.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>I(x)</m> has the largest left end point.</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>
+            none of the above.
+          </p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="posets_PI_intord-firstfit-chains">
+    <statement>
+      <p>Consider the intervals in the order <m>h,e,a,b,d,j,i,c,f,g</m>. How many chains does First Fit use?</p>
+      <image source="intord_for_firstfit" width="75%">
+        <description>An interval representation</description>
+      </image>
+    </statement>
+    <choices>
+      <choice>
+        <statement>
+          <p>4</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>5</p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p>6</p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>7</p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  <exercise label="posets_PI_intord-firstfit-already-assigned">
+    <statement>
+      <p>  You're chain partitioning this interval order using First Fit, ordering them by
+        left endpoint with ties broken by smallest label. When you encounter <m>h</m>, which points have you already
+        assigned to chains?</p>
+      <image source="intord_for_firstfit" width="75%">
+        <description>An interval representation</description>
+      </image>
+    </statement>
+    <choices>
+      <choice correct="yes">
+        <statement>
+          <p><m>g</m></p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p><m>j</m></p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p><m>a</m></p>
+        </statement>
+      </choice>
+      <choice correct="yes">
+        <statement>
+          <p><m>d</m></p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+  
+</exercises>

@@ -1,20 +1,11 @@
----
-title: "alloc::slice"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/alloc/src/slice.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # alloc::slice
 
 Utilities for the slice primitive type.
 
-*See also the slice primitive type.*
+*[See also the slice primitive type](slice).*
 
 Most of the structs in this module are iterator types which can only be created
-using a certain function. For example, `slice.iter()` yields an `Iter`.
+using a certain function. For example, `slice.iter()` yields an [`Iter`].
 
 A few functions are provided to create a slice from a value reference
 or from a raw pointer.
@@ -30,21 +21,21 @@ Sorts the slice in ascending order, preserving initial order of equal elements.
 This sort is stable (i.e., does not reorder equal elements) and *O*(*n* \* log(*n*))
 worst-case.
 
-If the implementation of `Ord` for `T` does not implement a [total order], the function
+If the implementation of [`Ord`] for `T` does not implement a [total order], the function
 may panic; even if the function exits normally, the resulting order of elements in the slice
 is unspecified. See also the note on panicking below.
 
 When applicable, unstable sorting is preferred because it is generally faster than stable
 sorting and it doesn't allocate auxiliary memory. See
-`sort_unstable`. The exception are partially sorted slices, which
+[`sort_unstable`](slice::sort_unstable). The exception are partially sorted slices, which
 may be better served with `slice::sort`.
 
-Sorting types that only implement `PartialOrd` such as `f32` and `f64` require
+Sorting types that only implement [`PartialOrd`] such as [`f32`] and [`f64`] require
 additional precautions. For example, `f32::NAN != f32::NAN`, which doesn't fulfill the
-reflexivity requirement of `Ord`. By using an alternative comparison function with
-`slice::sort_by` such as `f32::total_cmp` or `f64::total_cmp` that defines a [total
+reflexivity requirement of [`Ord`]. By using an alternative comparison function with
+`slice::sort_by` such as [`f32::total_cmp`] or [`f64::total_cmp`] that defines a [total
 order] users can sort slices containing floating-point values. Alternatively, if all values
-in the slice are guaranteed to be in a subset for which `PartialOrd::partial_cmp` forms a
+in the slice are guaranteed to be in a subset for which [`PartialOrd::partial_cmp`] forms a
 [total order], it's possible to sort the slice with `sort_by(|a, b|
 a.partial_cmp(b).unwrap())`.
 
@@ -61,8 +52,8 @@ clamps at `self.len() / 2`.
 
 # Panics
 
-May panic if the implementation of `Ord` for `T` does not implement a [total order], or if
-the `Ord` implementation itself panics.
+May panic if the implementation of [`Ord`] for `T` does not implement a [total order], or if
+the [`Ord`] implementation itself panics.
 
 All safe functions on slices preserve the invariant that even if the function panics, all
 original elements will remain in the slice and any possible modifications via interior
@@ -73,12 +64,15 @@ to dispose of all contained elements.
 
 # Examples
 
-```rust
+```
 let mut v = [4, -5, 1, -3, 2];
 
 v.sort();
 assert_eq!(v, [-5, -3, 1, 2, 4]);
 ```
+
+[driftsort]: https://github.com/Voultapher/driftsort
+[total order]: https://en.wikipedia.org/wiki/Total_order
 
 ## T::sort_by
 
@@ -98,7 +92,7 @@ unspecified. See also the note on panicking below.
 
 For example `|a, b| (a - b).cmp(a)` is a comparison function that is neither transitive nor
 reflexive nor total, `a < b < c < a` with `a = 1, b = 2, c = 3`. For more information and
-examples see the `Ord` documentation.
+examples see the [`Ord`] documentation.
 
 # Current implementation
 
@@ -124,7 +118,7 @@ to dispose of all contained elements.
 
 # Examples
 
-```rust
+```
 let mut v = [4, -5, 1, -3, 2];
 v.sort_by(|a, b| a.cmp(b));
 assert_eq!(v, [-5, -3, 1, 2, 4]);
@@ -134,19 +128,22 @@ v.sort_by(|a, b| b.cmp(a));
 assert_eq!(v, [4, 2, 1, -3, -5]);
 ```
 
+[driftsort]: https://github.com/Voultapher/driftsort
+[total order]: https://en.wikipedia.org/wiki/Total_order
+
 ## T::sort_by_key
 
 ```rust
 pub fn sort_by_key<K, F>(&mut self, mut f: F) where F: FnMut(&T) -> K, K: Ord,
 ```
 
-Sorts the slice in ascending order with a key <example-value> function, preserving initial order
+Sorts the slice in ascending order with a key extraction function, preserving initial order
 of equal elements.
 
 This sort is stable (i.e., does not reorder equal elements) and *O*(*m* \* *n* \* log(*n*))
-worst-case, where the key <example-value> is *O*(*m*).
+worst-case, where the key function is *O*(*m*).
 
-If the implementation of `Ord` for `K` does not implement a [total order], the function
+If the implementation of [`Ord`] for `K` does not implement a [total order], the function
 may panic; even if the function exits normally, the resulting order of elements in the slice
 is unspecified. See also the note on panicking below.
 
@@ -163,8 +160,8 @@ clamps at `self.len() / 2`.
 
 # Panics
 
-May panic if the implementation of `Ord` for `K` does not implement a [total order], or if
-the `Ord` implementation or the key-function `f` panics.
+May panic if the implementation of [`Ord`] for `K` does not implement a [total order], or if
+the [`Ord`] implementation or the key-function `f` panics.
 
 All safe functions on slices preserve the invariant that even if the function panics, all
 original elements will remain in the slice and any possible modifications via interior
@@ -175,12 +172,15 @@ to dispose of all contained elements.
 
 # Examples
 
-```rust
+```
 let mut v = [4i32, -5, 1, -3, 2];
 
 v.sort_by_key(|k| k.abs());
 assert_eq!(v, [1, 2, -3, 4, -5]);
 ```
+
+[driftsort]: https://github.com/Voultapher/driftsort
+[total order]: https://en.wikipedia.org/wiki/Total_order
 
 ## T::sort_by_cached_key
 
@@ -188,26 +188,26 @@ assert_eq!(v, [1, 2, -3, 4, -5]);
 pub fn sort_by_cached_key<K, F>(&mut self, f: F) where F: FnMut(&T) -> K, K: Ord,
 ```
 
-Sorts the slice in ascending order with a key <example-value> function, preserving initial order
+Sorts the slice in ascending order with a key extraction function, preserving initial order
 of equal elements.
 
 This sort is stable (i.e., does not reorder equal elements) and *O*(*m* \* *n* + *n* \*
-log(*n*)) worst-case, where the key <example-value> is *O*(*m*).
+log(*n*)) worst-case, where the key function is *O*(*m*).
 
-During sorting, the key <example-value> is called at most once per element, by using temporary
-storage to remember the results of key evaluation. The order of calls to the key <example-value> is
+During sorting, the key function is called at most once per element, by using temporary
+storage to remember the results of key evaluation. The order of calls to the key function is
 unspecified and may change in future versions of the standard library.
 
-If the implementation of `Ord` for `K` does not implement a [total order], the function
+If the implementation of [`Ord`] for `K` does not implement a [total order], the function
 may panic; even if the function exits normally, the resulting order of elements in the slice
 is unspecified. See also the note on panicking below.
 
-For simple key <example-value> (e.g., functions that are property accesses or basic <example-value>),
-`sort_by_key` is likely to be faster.
+For simple key functions (e.g., functions that are property accesses or basic operations),
+[`sort_by_key`](slice::sort_by_key) is likely to be faster.
 
 # Current implementation
 
-The current implementation is based on instruction-parallel-network sort by Lukas
+The current implementation is based on [instruction-parallel-network sort][ipnsort] by Lukas
 Bergdoll, which combines the fast average case of randomized quicksort with the fast worst
 case of heapsort, while achieving linear time on fully sorted and reversed inputs. And
 *O*(*k* \* log(*n*)) where *k* is the number of distinct elements in the input. It leverages
@@ -219,8 +219,8 @@ length of the slice.
 
 # Panics
 
-May panic if the implementation of `Ord` for `K` does not implement a [total order], or if
-the `Ord` implementation panics.
+May panic if the implementation of [`Ord`] for `K` does not implement a [total order], or if
+the [`Ord`] implementation panics.
 
 All safe functions on slices preserve the invariant that even if the function panics, all
 original elements will remain in the slice and any possible modifications via interior
@@ -231,13 +231,16 @@ to dispose of all contained elements.
 
 # Examples
 
-```rust
+```
 let mut v = [4i32, -5, 1, -3, 2, 10];
 
 // Strings are sorted by lexicographical order.
 v.sort_by_cached_key(|k| k.to_string());
 assert_eq!(v, [-3, -5, 1, 10, 2, 4]);
 ```
+
+[ipnsort]: https://github.com/Voultapher/sort-research-rs/tree/main/ipnsort
+[total order]: https://en.wikipedia.org/wiki/Total_order
 
 ## T::to_vec
 
@@ -249,7 +252,7 @@ Copies `self` into a new `Vec`.
 
 # Examples
 
-```rust
+```
 let s = [10, 40, 30];
 let x = s.to_vec();
 // Here, `s` and `x` can be modified independently.
@@ -268,7 +271,7 @@ The resulting vector can be converted back into a box via
 
 # Examples
 
-```rust
+```
 let s: Box<[i32]> = Box::new([10, 40, 30]);
 let x = s.into_vec();
 // `s` cannot be used anymore because it has been converted into `x`.
@@ -290,13 +293,13 @@ This function will panic if the capacity would overflow.
 
 # Examples
 
-```rust
+```
 assert_eq!([1, 2].repeat(3), vec![1, 2, 1, 2, 1, 2]);
 ```
 
 A panic upon overflow:
 
-```rust
+```should_panic
 // this will panic at runtime
 b"0123456789abcdef".repeat(usize::MAX);
 ```
@@ -311,7 +314,7 @@ Flattens a slice of `T` into a single value `Self::Output`.
 
 # Examples
 
-```rust
+```
 assert_eq!(["hello", "world"].concat(), "helloworld");
 assert_eq!([[1, 2], [3, 4]].concat(), [1, 2, 3, 4]);
 ```
@@ -327,7 +330,7 @@ given separator between each.
 
 # Examples
 
-```rust
+```
 assert_eq!(["hello", "world"].join(" "), "hello world");
 assert_eq!([[1, 2], [3, 4]].join(&0), [1, 2, 0, 3, 4]);
 assert_eq!([[1, 2], [3, 4]].join(&[0, 0][..]), [1, 2, 0, 0, 3, 4]);
@@ -344,7 +347,8 @@ given separator between each.
 
 # Examples
 
-```rust
+```
+# #![allow(deprecated)]
 assert_eq!(["hello", "world"].connect(" "), "hello world");
 assert_eq!([[1, 2], [3, 4]].connect(&0), [1, 2, 0, 3, 4]);
 ```
@@ -361,7 +365,9 @@ is mapped to its ASCII upper case equivalent.
 ASCII letters 'a' to 'z' are mapped to 'A' to 'Z',
 but non-ASCII letters are unchanged.
 
-To uppercase the value in-place, use `make_ascii_uppercase`.
+To uppercase the value in-place, use [`make_ascii_uppercase`].
+
+[`make_ascii_uppercase`]: slice::make_ascii_uppercase
 
 ## u8::to_ascii_lowercase
 
@@ -375,7 +381,9 @@ is mapped to its ASCII lower case equivalent.
 ASCII letters 'A' to 'Z' are mapped to 'a' to 'z',
 but non-ASCII letters are unchanged.
 
-To lowercase the value in-place, use `make_ascii_lowercase`.
+To lowercase the value in-place, use [`make_ascii_lowercase`].
+
+[`make_ascii_lowercase`]: slice::make_ascii_lowercase
 
 ## Concat::Output
 

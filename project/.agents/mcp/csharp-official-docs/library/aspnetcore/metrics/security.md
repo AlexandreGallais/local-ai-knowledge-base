@@ -1,23 +1,22 @@
 ---
-title: "ASP.NET Core built-in authentication and authorization metrics"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/metrics/security.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core built-in authentication and authorization metrics
+ai-usage: ai-assisted
+description: Learn about built-in authentication and authorization metrics for ASP.NET Core apps.
+monikerRange: '>= aspnetcore-10.0'
+ms.date: 08/05/2026
+ms.topic: reference
 ---
-
 # ASP.NET Core built-in authentication and authorization metrics
 
-This article describes the built-in authentication and authorization metrics for ASP.NET Core produced using the `System.Diagnostics.Metrics` API. These metrics cover authorization attempts and authentication operations. They're available in ASP.NET Core 10.0 or later.
+This article describes the built-in authentication and authorization metrics for ASP.NET Core produced using the <xref:System.Diagnostics.Metrics?displayProperty=nameWithType> API. These metrics cover authorization attempts and authentication operations. They're available in ASP.NET Core 10.0 or later.
 
-For an overview of all built-in metrics reference pages and how to read this reference, see ASP.NET Core built-in metrics. For information on how to collect, report, enrich, and test with ASP.NET Core metrics, see ASP.NET Core metrics.
+For an overview of all built-in metrics reference pages and how to read this reference, see [ASP.NET Core built-in metrics](built-in.md). For information on how to collect, report, enrich, and test with ASP.NET Core metrics, see [ASP.NET Core metrics](overview.md).
 
 ## `Microsoft.AspNetCore.Authorization`
 
-The `Microsoft.AspNetCore.Authorization` metrics report information about authorization attempts in ASP.NET Core apps:
+The `Microsoft.AspNetCore.Authorization` metrics report information about [authorization attempts](../security/authorization/introduction.md) in ASP.NET Core apps:
 
-* `aspnetcore.authorization.attempts`
+* [`aspnetcore.authorization.attempts`](#metric-aspnetcoreauthorizationattempts)
 
 ### Metric: `aspnetcore.authorization.attempts`
 
@@ -34,13 +33,13 @@ Attribute | Type | Description | Examples | Presence
 
 ## `Microsoft.AspNetCore.Authentication`
 
-The `Microsoft.AspNetCore.Authentication` metrics report information about Authentication in ASP.NET Core apps:
+The `Microsoft.AspNetCore.Authentication` metrics report information about [Authentication](../security/authentication/index.md) in ASP.NET Core apps:
 
-* `aspnetcore.authentication.authenticate.duration`
-* `aspnetcore.authentication.challenges`
-* `aspnetcore.authentication.forbids`
-* `aspnetcore.authentication.sign_ins`
-* `aspnetcore.authentication.sign_outs`
+* [`aspnetcore.authentication.authenticate.duration`](#metric-aspnetcoreauthenticationauthenticateduration)
+* [`aspnetcore.authentication.challenges`](#metric-aspnetcoreauthenticationchallenges)
+* [`aspnetcore.authentication.forbids`](#metric-aspnetcoreauthenticationforbids)
+* [`aspnetcore.authentication.sign_ins`](#metric-aspnetcoreauthenticationsign_ins)
+* [`aspnetcore.authentication.sign_outs`](#metric-aspnetcoreauthenticationsign_outs)
 
 ### Metric: `aspnetcore.authentication.authenticate.duration`
 
@@ -100,8 +99,8 @@ Attribute | Type | Description | Examples | Presence
 
 ## Related content
 
-* ASP.NET Core built-in metrics
-* ASP.NET Core built-in HTTP metrics
-* ASP.NET Core built-in diagnostics metrics
-* ASP.NET Core built-in Blazor (Razor components) metrics
-* ASP.NET Core metrics
+* [ASP.NET Core built-in metrics](built-in.md)
+* [ASP.NET Core built-in HTTP metrics](http.md)
+* [ASP.NET Core built-in diagnostics metrics](diagnostics.md)
+* [ASP.NET Core built-in Blazor (Razor components) metrics](blazor.md)
+* [ASP.NET Core metrics](overview.md)

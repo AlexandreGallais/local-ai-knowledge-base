@@ -1,15 +1,15 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/sort-alternatives"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/sort-alternatives.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "sort alternatives if order doesn't matter"
+since: "v0.12.0"
 ---
-
 # regexp/sort-alternatives
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 > sort alternatives if order doesn't matter
 
@@ -51,5 +51,5 @@ This rule was introduced in eslint-plugin-regexp v0.12.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/sort-alternatives.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/sort-alternatives.ts)

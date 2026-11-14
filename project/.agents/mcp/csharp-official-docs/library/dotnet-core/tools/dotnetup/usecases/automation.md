@@ -1,16 +1,14 @@
 ---
-title: "Use dotnetup in automation"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/usecases/automation.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Use dotnetup in automation
+description: Use deterministic dotnetup commands and machine-readable output in scripts and CI.
+ms.topic: how-to
+ms.date: 09/30/2026
+ai-usage: ai-assisted
 ---
 
 # Use dotnetup in automation
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 `dotnetup` disables first-use onboarding when it detects CI or redirected
 output. Use explicit commands and options so scripts do not depend on terminal
@@ -77,7 +75,7 @@ directory to `GITHUB_PATH` so that later steps can run `dotnetup`.
 When you omit the channel, `dotnetup sdk install` uses the nearest
 `global.json` file. If it can't find a requirement, it installs `latest`. For
 more information, see
-Manage repository SDK requirements.
+[Manage repository SDK requirements](install-with-global-json.md).
 
 `dotnetup dotnet` sets `PATH` and `DOTNET_ROOT` for the command that it starts.
 Other steps that run `dotnet` directly don't use the dotnetup-managed
@@ -107,6 +105,6 @@ manifest. Use an isolated `--manifest-path` for independent jobs.
 
 ## See also
 
-- dotnetup list
-- Manage custom installation roots
-- Update tracked installations
+- [dotnetup list](../reference/dotnetup-list.md)
+- [Manage custom installation roots](manage-custom-installation-roots.md)
+- [Update tracked installations](update-installations.md)

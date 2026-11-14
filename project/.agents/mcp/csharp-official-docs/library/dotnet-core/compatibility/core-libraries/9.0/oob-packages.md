@@ -1,10 +1,9 @@
 ---
 title: "New version of some OOB packages"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/9.0/oob-packages.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in core .NET libraries where updates were made to TFMs and package versions for several OOB packages.
+ms.date: 12/4/2024
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/43564
 ---
 
 # New version of some OOB packages
@@ -19,18 +18,18 @@ Additionally, the source code of these packages was migrated from their old loca
 
 | Package                                 | Old source code location                                        | New package version |
 |-----------------------------------------|-----------------------------------------------------------------|---------------------|
-| Microsoft.Bcl.HashCode                  | dotnet/corefx, 3.1 branch   | 6.0.0               |
-| Microsoft.IO.Redist                     | dotnet/runtime, 6.0 branch | 6.1.0               |
-| System.Buffers                          | dotnet/corefx, 2.1 branch   | 4.6.0               |
-| System.Data.SqlClient                   | dotnet/corefx, 3.1 branch   | 4.9.0               |
-| System.Json                             | dotnet/corefx, 3.1 branch   | 4.8.0               |
-| System.Memory                           | dotnet/corefx, 2.1 branch   | 4.6.0               |
-| System.Net.WebSockets.WebSocketProtocol | dotnet/runtime, 5.0 branch | 5.1.0               |
-| System.Numerics.Vectors                 | dotnet/corefx, 2.1 branch   | 4.6.0               |
-| System.Reflection.DispatchProxy         | dotnet/corefx, 3.1 branch   | 4.8.0               |
-| System.Runtime.CompilerServices.Unsafe  | dotnet/runtime, 6.0 branch | 6.1.0               |
-| System.Threading.Tasks.Extensions       | dotnet/corefx, 2.1 branch   | 4.6.0               |
-| System.Xml.XPath.XmlDocument            | dotnet/corefx, 1.1 branch   | 4.7.0               |
+| Microsoft.Bcl.HashCode                  | [dotnet/corefx](https://github.com/dotnet/corefx), 3.1 branch   | 6.0.0               |
+| Microsoft.IO.Redist                     | [dotnet/runtime](https://github.com/dotnet/runtime), 6.0 branch | 6.1.0               |
+| System.Buffers                          | [dotnet/corefx](https://github.com/dotnet/corefx), 2.1 branch   | 4.6.0               |
+| System.Data.SqlClient                   | [dotnet/corefx](https://github.com/dotnet/corefx), 3.1 branch   | 4.9.0               |
+| System.Json                             | [dotnet/corefx](https://github.com/dotnet/corefx), 3.1 branch   | 4.8.0               |
+| System.Memory                           | [dotnet/corefx](https://github.com/dotnet/corefx), 2.1 branch   | 4.6.0               |
+| System.Net.WebSockets.WebSocketProtocol | [dotnet/runtime](https://github.com/dotnet/runtime), 5.0 branch | 5.1.0               |
+| System.Numerics.Vectors                 | [dotnet/corefx](https://github.com/dotnet/corefx), 2.1 branch   | 4.6.0               |
+| System.Reflection.DispatchProxy         | [dotnet/corefx](https://github.com/dotnet/corefx), 3.1 branch   | 4.8.0               |
+| System.Runtime.CompilerServices.Unsafe  | [dotnet/runtime](https://github.com/dotnet/runtime), 6.0 branch | 6.1.0               |
+| System.Threading.Tasks.Extensions       | [dotnet/corefx](https://github.com/dotnet/corefx), 2.1 branch   | 4.6.0               |
+| System.Xml.XPath.XmlDocument            | [dotnet/corefx](https://github.com/dotnet/corefx), 1.1 branch   | 4.7.0               |
 
 ## Version introduced
 
@@ -46,7 +45,7 @@ Some TFMs that were previously supported are no longer supported. However, there
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
@@ -54,7 +53,7 @@ The source code of these packages was moved from their old branch, which was alr
 
 ## Recommended action
 
-Depending on the package, different recommended actions are provided. For more information, see the package support policy.
+Depending on the package, different recommended actions are provided. For more information, see the [package support policy](https://github.com/dotnet/maintenance-packages/tree/main/package-support-policy.md).
 
 ## Affected APIs
 

@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: CorDebugSetContextFlag Enumeration"
 title: "CorDebugSetContextFlag Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cordebugsetcontextflag-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "CorDebugSetContextFlag"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "CorDebugSetContextFlag"
+helpviewer_keywords:
+  - "CorDebugSetContextFlag enumeration [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # CorDebugSetContextFlag Enumeration
 
 Indicates whether the context is from the active (or leaf) frame on the stack or has been computed by unwinding from another frame.
@@ -30,11 +38,11 @@ typedef enum CorDebugSetContextFlag
 
 ## Remarks
 
- `CorDebugSetContextFlag` provides values that are used by the ICorDebugStackWalk::SetContext method.
+ `CorDebugSetContextFlag` provides values that are used by the [ICorDebugStackWalk::SetContext](icordebugstackwalk-setcontext-method.md) method.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

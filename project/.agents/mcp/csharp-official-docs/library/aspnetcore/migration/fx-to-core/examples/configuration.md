@@ -1,37 +1,27 @@
 ---
-title: "Migrate configuration to ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/migration/fx-to-core/examples/configuration.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Migrate configuration to ASP.NET Core
+description: Learn how to migrate configuration from an ASP.NET MVC project to an ASP.NET Core MVC project.
+ms.date: 12/30/2025
+ms.sfi.ropc: t
 ---
 
 # Migrate configuration to ASP.NET Core
 
-In the previous article, we began to migrate an ASP.NET MVC project to ASP.NET Core MVC. In this article, we migrate configuration.
+In the previous article, we began to [migrate an ASP.NET MVC project to ASP.NET Core MVC](overview.md). In this article, we migrate configuration.
 
-View or download sample code (how to download)
+[View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/migration/fx-to-core/examples/samples/configuration) ([how to download](../../../fundamentals/index.md#how-to-download-a-sample))
 
 ## Setup configuration
 
 ASP.NET Core no longer uses the *Global.asax* and *web.config* files that previous versions of ASP.NET utilized. In the earlier versions of ASP.NET, application startup logic was placed in an `Application_StartUp` method within *Global.asax*. Later, in ASP.NET MVC, a `Startup.cs` file was included in the root of the project; and, it was called when the application started. ASP.NET Core has adopted this approach completely by placing all startup logic in the `Startup.cs` file.
 
-The *web.config* file has also been replaced in ASP.NET Core. Configuration itself can now be configured, as part of the application startup procedure described in `Startup.cs`. Configuration can still utilize XML files, but typically ASP.NET Core projects will place configuration values in a JSON-formatted file, such as `appsettings.json`. ASP.NET Core'<example-value>'t be checked into source control. See Configuration to learn more about configuration in ASP.NET Core.
+The *web.config* file has also been replaced in ASP.NET Core. Configuration itself can now be configured, as part of the application startup procedure described in `Startup.cs`. Configuration can still utilize XML files, but typically ASP.NET Core projects will place configuration values in a JSON-formatted file, such as `appsettings.json`. ASP.NET Core's configuration system can also easily access environment variables, which can provide a [more secure and robust location](../../../security/app-secrets.md) for environment-specific values. This is especially true for secrets like connection strings and API keys that shouldn't be checked into source control. See [Configuration](../../../fundamentals/configuration/index.md) to learn more about configuration in ASP.NET Core.
 
-> **Warning:**
-> This article uses a local database that doesn't require the user to be authenticated. Production apps should use the most secure authentication flow available. For more information on authentication for deployed test and production apps, see Secure authentication flows.
+[!INCLUDE [managed-identities](~/includes/managed-identities-test-non-production.md)]
 
 To setup configuration, add the following constructor and property to the `Startup.cs` file located in the root of the project:
 
-```csharp
-public Startup(IConfiguration configuration)
-{
-    Configuration = configuration;
-}
-
-public IConfiguration Configuration { get; }
-```
+[!code-csharp[](samples/configuration/WebApp1/src/WebApp1/Startup.cs?range=11-16)]
 
 Note that at this point, the `Startup.cs` file won't compile, as we still need to add the following `using` statement:
 
@@ -41,19 +31,13 @@ using Microsoft.Extensions.Configuration;
 
 Add an `appsettings.json` file to the root of the project using the appropriate item template:
 
+![Add AppSettings JSON](_static/configuration/add-appsettings-json.png)
+
 ## Migrate configuration settings from web.config
 
 Our ASP.NET MVC project included the required database connection string in *web.config*, in the `<connectionStrings>` element. In our ASP.NET Core project, we are going to store this information in the `appsettings.json` file. Open `appsettings.json`, and note that it already includes the following:
 
-```json
-﻿{
-	"Data": {
-		"DefaultConnection": {
-			"ConnectionString": "Server=(localdb)\\MSSQLLocalDB;Database=_CHANGE_ME;Trusted_Connection=True;"
-		}
-	}
-}
-```
+[!code-json[](samples/configuration/WebApp1/src/WebApp1/appsettings.json?highlight=4)]
 
 In the highlighted line depicted above, change the name of the database from **_CHANGE_ME** to the name of your database.
 

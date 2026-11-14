@@ -1,12 +1,3 @@
----
-title: "ToIntBiFunction interface (java.util.function)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/function/ToIntBiFunction.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ToIntBiFunction interface (java.util.function)
 
 ```java
@@ -14,20 +5,17 @@ public interface ToIntBiFunction<T, U>
 ```
 
 Represents a function that accepts two arguments and produces an int-valued
-result.  This is the `int`-producing primitive specialization for
-`BiFunction`.
+result.  This is the {@code int}-producing primitive specialization for
+{@link BiFunction}.
 
-This is a functional interface
-whose functional method is Object).
+<p>This is a <a href="package-summary.html">functional interface</a>
+whose functional method is {@link #applyAsInt(Object, Object)}.
 
-Parameters:
+@param <T> the type of the first argument to the function
+@param <U> the type of the second argument to the function
 
-- `<T>`: the type of the first argument to the function
-- ``: the type of the second argument to the function
-
-**See also:** BiFunction
-
-**Since:** 1.8
+@see BiFunction
+@since 1.8
 
 ## ToIntBiFunction.applyAsInt(T, U)
 
@@ -37,9 +25,6 @@ int applyAsInt(T t, U u)
 
 Applies this function to the given arguments.
 
-Parameters:
-
-- `t`: the first function argument
-- `u`: the second function argument
-
-**Returns:** the function result
+@param t the first function argument
+@param u the second function argument
+@return the function result

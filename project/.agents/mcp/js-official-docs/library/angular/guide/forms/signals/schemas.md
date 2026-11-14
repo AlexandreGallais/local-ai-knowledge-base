@@ -1,12 +1,3 @@
----
-title: "Schemas and schema composability"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/forms/signals/schemas.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Schemas and schema composability
 
 Signal Forms uses a two-layer architecture to separate _how your form is structured_ from _how it behaves at runtime_.
@@ -77,7 +68,7 @@ registrationForm = form(this.registrationModel, (schemaPath) => {
 
 ## Conditional schemas with `applyWhen()`
 
-NOTE: The Adding form logic guide introduced `applyWhen()` for conditional rules with inline logic. This section covers how to compose `applyWhen()` with reusable schemas.
+NOTE: The [Adding form logic guide](guide/forms/signals/form-logic) introduced `applyWhen()` for conditional rules with inline logic. This section covers how to compose `applyWhen()` with reusable schemas.
 
 Some rules should only apply under certain conditions. For example, a zip code field might require validation only when the selected country is the United States.
 
@@ -145,11 +136,11 @@ This pattern keeps validation logic modular — each country's address rules liv
 
 The `applyWhenValue()` function simplifies conditions that only need to check the field's value. Instead of receiving a `FieldContext`, the condition function receives the field's raw value directly.
 
-```ts
+```ts {header: "applyWhen — logic function receives FieldContext"}
 applyWhen(schemaPath.payment, ({value}) => value().type === 'credit-card', creditCardSchema);
 ```
 
-```ts
+```ts {header: "applyWhenValue — condition receives the value directly"}
 applyWhenValue(schemaPath.payment, (payment) => payment.type === 'credit-card', creditCardSchema);
 ```
 
@@ -241,12 +232,12 @@ invoiceForm = form(this.invoiceModel, (schemaPath) => {
 });
 ```
 
-TIP: For more on validating array items, including custom error messages per field, see the Validation guide.
+TIP: For more on validating array items, including custom error messages per field, see the [Validation guide](guide/forms/signals/validation).
 
 ## Next steps
 
 To learn more about Signal Forms, check out these related guides:
 
-- Adding form logic - Learn how to add conditional logic, dynamic behavior, and metadata to your forms
-- Validation - Learn about validation rules and error handling
-- Async operations - Learn how to handle form submission and async validation
+- [Adding form logic](guide/forms/signals/form-logic) - Learn how to add conditional logic, dynamic behavior, and metadata to your forms
+- [Validation](guide/forms/signals/validation) - Learn about validation rules and error handling
+- [Async operations](guide/forms/signals/async-operations) - Learn how to handle form submission and async validation

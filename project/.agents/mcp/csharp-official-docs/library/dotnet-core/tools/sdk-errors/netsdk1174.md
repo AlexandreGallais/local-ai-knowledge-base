@@ -1,12 +1,11 @@
 ---
 title: "NETSDK1174: -p abbreviation for --project in dotnet run is deprecated"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/sdk-errors/netsdk1174.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: -p abbreviation for --project in dotnet run is deprecated.
+ms.topic: error-reference
+ms.date: 07/14/2021
+f1_keywords:
+- NETSDK1174
 ---
-
 # NETSDK1174: -p abbreviation for --project in dotnet run is deprecated
 
 The full error message is similar to the following example:
@@ -15,4 +14,4 @@ The full error message is similar to the following example:
 
 The use of `-p` in `dotnet run` is deprecated because of the close relationship `dotnet run` has with `dotnet build` and `dotnet publish`. In `dotnet build` and `dotnet publish`, `p` is used to set MSBuild properties. This deprecation is the first step in aligning abbreviations for these three commands.
 
-For more information, see `-p` option for `dotnet run` is deprecated.
+For more information, see [`-p` option for `dotnet run` is deprecated](../../compatibility/sdk/6.0/deprecate-p-option-dotnet-run.md).

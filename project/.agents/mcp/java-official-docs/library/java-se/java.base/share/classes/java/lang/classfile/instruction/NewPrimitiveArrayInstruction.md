@@ -1,33 +1,24 @@
----
-title: "NewPrimitiveArrayInstruction interface (java.lang.classfile.instruction)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/instruction/NewPrimitiveArrayInstruction.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # NewPrimitiveArrayInstruction interface (java.lang.classfile.instruction)
 
 ```java
 public sealed interface NewPrimitiveArrayInstruction extends Instruction permits AbstractInstruction.BoundNewPrimitiveArrayInstruction, AbstractInstruction.UnboundNewPrimitiveArrayInstruction
 ```
 
-Models a newarray instruction in the `code`
-array of a `Code` attribute.  Delivered as a `CodeElement`
-when traversing the elements of a `CodeModel`.
-
+Models a {@link Opcode#NEWARRAY newarray} instruction in the {@code code}
+array of a {@code Code} attribute.  Delivered as a {@link CodeElement}
+when traversing the elements of a {@link CodeModel}.
+<p>
 A new primitive array instruction is composite:
+{@snippet lang=text :
+// @link substring="NewPrimitiveArrayInstruction" target="#of" :
+NewPrimitiveArrayInstruction(TypeKind typeKind) // @link substring="typeKind" target="#typeKind"
+}
+where {@code typeKind} is primitive and not {@code void}.
 
-where `typeKind` is primitive and not `void`.
-
-**See also:** Opcode.Kind#NEW_PRIMITIVE_ARRAY
-
-**See also:** CodeBuilder#newarray CodeBuilder::newarray
-
-**jvms:** 6.5.newarray *newarray*
-
-**Since:** 24
+@see Opcode.Kind#NEW_PRIMITIVE_ARRAY
+@see CodeBuilder#newarray CodeBuilder::newarray
+@jvms 6.5.newarray <em>newarray</em>
+@since 24
 
 ## NewPrimitiveArrayInstruction.typeKind()
 
@@ -35,8 +26,11 @@ where `typeKind` is primitive and not `void`.
 TypeKind typeKind()
 ```
 
-**API note:** The backing array code for this instruction is available through
-typeKind().newarrayCode().
+{@return the component type of the array}
+
+@apiNote
+The backing array code for this instruction is available through
+{@link TypeKind#newarrayCode() typeKind().newarrayCode()}.
 
 ## NewPrimitiveArrayInstruction.of(TypeKind)
 
@@ -44,12 +38,9 @@ typeKind().newarrayCode().
 static NewPrimitiveArrayInstruction of(TypeKind typeKind)
 ```
 
-Parameters:
+{@return a new primitive array instruction}
 
-- `typeKind`: the component type of the array
-
-**See also:** TypeKind#fromNewarrayCode(int) TypeKind::fromNewarrayCode
-
-Throws:
-
-- `IllegalArgumentException`: when `typeKind` is not primitive or is `void`
+@param typeKind the component type of the array
+@throws IllegalArgumentException when {@code typeKind} is not primitive
+        or is {@code void}
+@see TypeKind#fromNewarrayCode(int) TypeKind::fromNewarrayCode

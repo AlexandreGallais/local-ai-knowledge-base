@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: Time zone overview"
 title: "Time zone overview"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/datetime/time-zone-overview.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "04/10/2017"
+helpviewer_keywords:
+  - "time zones [.NET], about time zones"
+  - "transition time [.NET]"
+  - "TimeZoneInfo class, about TimeZoneInfo class"
+  - "time zones [.NET], creating"
+  - "invalid time [.NET]"
+  - "fixed rule [.NET]"
+  - "ambiguous time [.NET]"
+  - "floating rule [.NET]"
+  - "daylight saving time [.NET]"
+  - "adjustment rule [.NET]"
+  - "time zones [.NET], terminology"
+ms.assetid: c4b7ed01-5e38-4959-a3b6-ef9765d6ccf1
 ---
-
 # Time zone overview
 
-The `System.TimeZoneInfo` class simplifies the creation of time zone-aware applications. The `System.TimeZone` class supports working with the local time zone and Coordinated Universal Time (UTC). The `System.TimeZoneInfo` class supports both of these zones as well as any time zone about which information is predefined in the registry. You can also use `System.TimeZoneInfo` to define custom time zones that the system has no information about.
+The <xref:System.TimeZoneInfo> class simplifies the creation of time zone-aware applications. The <xref:System.TimeZone> class supports working with the local time zone and Coordinated Universal Time (UTC). The <xref:System.TimeZoneInfo> class supports both of these zones as well as any time zone about which information is predefined in the registry. You can also use <xref:System.TimeZoneInfo> to define custom time zones that the system has no information about.
 
 ## Time zone essentials
 
@@ -36,26 +45,26 @@ The following table defines terms commonly used when working with time zones and
 
 ## Time zones and the TimeZoneInfo class
 
-In .NET, a `System.TimeZoneInfo` object represents a time zone. The `System.TimeZoneInfo` class includes a `System.TimeZoneInfo.GetAdjustmentRules*` method that returns an array of `System.TimeZoneInfo.AdjustmentRule` objects. Each element of this array provides information about the transition to and from daylight saving time for a particular time period. (For time zones that do not support daylight saving time, the method returns an empty array.) Each `System.TimeZoneInfo.AdjustmentRule` object has a `System.TimeZoneInfo.AdjustmentRule.DaylightTransitionStart*` and a `System.TimeZoneInfo.AdjustmentRule.DaylightTransitionEnd` property that defines the particular date and time of the transition to and from daylight saving time. The `System.TimeZoneInfo.TransitionTime.IsFixedDateRule` property indicates whether that transition is fixed or floating.
+In .NET, a <xref:System.TimeZoneInfo> object represents a time zone. The <xref:System.TimeZoneInfo> class includes a <xref:System.TimeZoneInfo.GetAdjustmentRules*> method that returns an array of <xref:System.TimeZoneInfo.AdjustmentRule> objects. Each element of this array provides information about the transition to and from daylight saving time for a particular time period. (For time zones that do not support daylight saving time, the method returns an empty array.) Each <xref:System.TimeZoneInfo.AdjustmentRule> object has a <xref:System.TimeZoneInfo.AdjustmentRule.DaylightTransitionStart*> and a <xref:System.TimeZoneInfo.AdjustmentRule.DaylightTransitionEnd> property that defines the particular date and time of the transition to and from daylight saving time. The <xref:System.TimeZoneInfo.TransitionTime.IsFixedDateRule> property indicates whether that transition is fixed or floating.
 
 .NET relies on time zone information provided by the Windows operating system and stored in the registry. Due to the number of the earth's time zones, not all existing time zones are represented in the registry. In addition, because the registry is a dynamic structure, predefined time zones can be added to or removed from it. Finally, the registry does not necessarily contain historic time zone data. For example, in Windows XP the registry contains data about only a single set of time zone adjustments. Windows Vista supports dynamic time zone data, which means that a single time zone can have multiple adjustment rules that apply to specific intervals of years. However, most time zones that are defined in the Windows Vista registry and support daylight saving time have only one or two predefined adjustment rules.
 
-The dependence of the `System.TimeZoneInfo` class on the registry means that a time zone-aware application cannot be certain that a particular time zone is defined in the registry. As a result, the attempt to instantiate a specific time zone (other than the local time zone or the time zone that represents UTC) should use exception handling. It should also provide some method of letting the application to continue if a required `System.TimeZoneInfo` object cannot be instantiated from the registry.
+The dependence of the <xref:System.TimeZoneInfo> class on the registry means that a time zone-aware application cannot be certain that a particular time zone is defined in the registry. As a result, the attempt to instantiate a specific time zone (other than the local time zone or the time zone that represents UTC) should use exception handling. It should also provide some method of letting the application to continue if a required <xref:System.TimeZoneInfo> object cannot be instantiated from the registry.
 
-To handle the absence of a required time zone, the `System.TimeZoneInfo` class includes a `System.TimeZoneInfo.CreateCustomTimeZone*` method, which you can use to create custom time zones that are not found in the registry. For details on creating a custom time zone, see How to: Create time zones without adjustment rules and How to: Create time zones with adjustment rules. In addition, you can use the `System.TimeZoneInfo.ToSerializedString*` method to convert a newly created time zone to a string and save it in a data store (such as a database, a text file, the registry, or an application resource). You can then use the `System.TimeZoneInfo.FromSerializedString*` method to convert this string back to a `System.TimeZoneInfo` object. For details, see How to: Save time zones to an embedded resource and How to: Restore time zones from an embedded resource.
+To handle the absence of a required time zone, the <xref:System.TimeZoneInfo> class includes a <xref:System.TimeZoneInfo.CreateCustomTimeZone*> method, which you can use to create custom time zones that are not found in the registry. For details on creating a custom time zone, see [How to: Create time zones without adjustment rules](create-time-zones-without-adjustment-rules.md) and [How to: Create time zones with adjustment rules](create-time-zones-with-adjustment-rules.md). In addition, you can use the <xref:System.TimeZoneInfo.ToSerializedString*> method to convert a newly created time zone to a string and save it in a data store (such as a database, a text file, the registry, or an application resource). You can then use the <xref:System.TimeZoneInfo.FromSerializedString*> method to convert this string back to a <xref:System.TimeZoneInfo> object. For details, see [How to: Save time zones to an embedded resource](save-time-zones-to-an-embedded-resource.md) and [How to: Restore time zones from an embedded resource](restore-time-zones-from-an-embedded-resource.md).
 
-Because each time zone is characterized by a base offset from UTC, as well as by an offset from UTC that reflects any existing adjustment rules, a time in one time zone can be easily converted to the time in another time zone. For this purpose, the `System.TimeZoneInfo` object includes several conversion methods, including:
+Because each time zone is characterized by a base offset from UTC, as well as by an offset from UTC that reflects any existing adjustment rules, a time in one time zone can be easily converted to the time in another time zone. For this purpose, the <xref:System.TimeZoneInfo> object includes several conversion methods, including:
 
-- `System.TimeZoneInfo.ConvertTimeFromUtc*`, which converts UTC to the time in a designated time zone.
+- <xref:System.TimeZoneInfo.ConvertTimeFromUtc*>, which converts UTC to the time in a designated time zone.
 
-- `System.TimeZoneInfo.ConvertTimeToUtc*`, which converts the time in a designated time zone to UTC.
+- <xref:System.TimeZoneInfo.ConvertTimeToUtc*>, which converts the time in a designated time zone to UTC.
 
-- `System.TimeZoneInfo.ConvertTime*`, which converts the time in one designated time zone to the time in another designated time zone.
+- <xref:System.TimeZoneInfo.ConvertTime*>, which converts the time in one designated time zone to the time in another designated time zone.
 
-- `System.TimeZoneInfo.ConvertTimeBySystemTimeZoneId*`, which uses time zone identifiers (instead of `System.TimeZoneInfo` objects) as parameters to convert the time in one designated time zone to the time in another designated time zone.
+- <xref:System.TimeZoneInfo.ConvertTimeBySystemTimeZoneId*>, which uses time zone identifiers (instead of <xref:System.TimeZoneInfo> objects) as parameters to convert the time in one designated time zone to the time in another designated time zone.
 
-For details on converting times between time zones, see Converting times between time zones.
+For details on converting times between time zones, see [Converting times between time zones](converting-between-time-zones.md).
 
 ## See also
 
-- Dates, times, and time zones
+- [Dates, times, and time zones](index.md)

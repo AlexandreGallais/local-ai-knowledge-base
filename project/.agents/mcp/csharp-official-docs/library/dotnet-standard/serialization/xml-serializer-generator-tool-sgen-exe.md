@@ -1,18 +1,14 @@
 ---
 title: "XML Serializer Generator tool (Sgen.exe)"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/serialization/xml-serializer-generator-tool-sgen-exe.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: The XML Serializer Generator creates an XML serialization assembly for types in an assembly, which improves the startup performance of XmlSerializer.
+ms.date: 04/23/2024
 ---
-
 # XML Serializer Generator tool (Sgen.exe)
 
-The XML Serializer Generator creates an XML serialization assembly for types in a specified assembly. The serialization assembly improves the startup performance of a `System.Xml.Serialization.XmlSerializer` when it serializes or deserializes objects of the specified types.
+The XML Serializer Generator creates an XML serialization assembly for types in a specified assembly. The serialization assembly improves the startup performance of a <xref:System.Xml.Serialization.XmlSerializer> when it serializes or deserializes objects of the specified types.
 
-> **Note:**
-> This tool is specific to .NET Framework assemblies. To generate XML serializers for .NET (Core) assemblies, see Use Microsoft XML Serializer Generator on .NET Core.
+> [!NOTE]
+> This tool is specific to .NET Framework assemblies. To generate XML serializers for .NET (Core) assemblies, see [Use Microsoft XML Serializer Generator on .NET Core](../../core/additional-tools/xml-serializer-generator.md).
 
 ## Syntax
 
@@ -22,8 +18,8 @@ Run the tool from the command line.
 sgen [options]
 ```
 
-> **Tip:**
-> For .NET Framework tools to function properly, you must either use Visual Studio Developer Command Prompt or Visual Studio Developer PowerShell or set the `Path`, `Include`, and `Lib` environment variables correctly. To set these environment variables, run *SDKVars.bat*, which is located in the *\<SDK>\\\<version>\Bin* directory.
+> [!TIP]
+> For .NET Framework tools to function properly, you must either use [Visual Studio Developer Command Prompt or Visual Studio Developer PowerShell](/visualstudio/ide/reference/command-prompt-powershell) or set the `Path`, `Include`, and `Lib` environment variables correctly. To set these environment variables, run *SDKVars.bat*, which is located in the *\<SDK>\\\<version>\Bin* directory.
 
 ## Parameters
 
@@ -41,19 +37,19 @@ sgen [options]
 |**/r\[eference\]:**_assemblyfiles_|Specifies the assemblies that are referenced by the types requiring XML serialization. Accepts multiple assembly files separated by commas.|
 |**/s\[ilent\]**|Suppresses the display of success messages.|
 |**/t\[ype\]:**_type_|Generates serialization code only for the specified type.|
-|**/v\[erbose\]**|Displays verbose output for debugging. Lists types from the target assembly that cannot be serialized with the `System.Xml.Serialization.XmlSerializer`.|
+|**/v\[erbose\]**|Displays verbose output for debugging. Lists types from the target assembly that cannot be serialized with the <xref:System.Xml.Serialization.XmlSerializer>.|
 |**/?**|Displays command syntax and options for the tool.|
 
 ## Remarks
 
-When the XML Serializer Generator is not used, `System.Xml.Serialization.XmlSerializer` generates serialization code and a serialization assembly for each type every time an application is run. To improve the performance of XML serialization startup, use the Sgen.exe tool to generate those assemblies in advance. These assemblies can then be deployed with the application.
+When the XML Serializer Generator is not used, <xref:System.Xml.Serialization.XmlSerializer> generates serialization code and a serialization assembly for each type every time an application is run. To improve the performance of XML serialization startup, use the Sgen.exe tool to generate those assemblies in advance. These assemblies can then be deployed with the application.
 
 The XML Serializer Generator can also improve the performance of clients that use XML web service proxies to communicate with servers, because the serialization process won't incur a performance hit when the type is loaded the first time.
 
 The generated assemblies can't be used on the server side of a web service. This tool is only for web service clients and manual serialization scenarios.
 
-> **Note:**
-> The `sgen` tool is not compatible with init-only setters. The tool will fail if the target assembly contains any public properties that use this feature.
+> [!NOTE]
+> The `sgen` tool is not compatible with [init-only](../../csharp/language-reference/keywords/init.md) setters. The tool will fail if the target assembly contains any public properties that use this feature.
 
 ### Naming
 
@@ -71,6 +67,6 @@ The *Data.XmlSerializers.dll* assembly can be referenced from code that needs to
 
 ## See also
 
-- Use Microsoft XML Serializer Generator on .NET Core
-- Tools
-- Developer command-line shells
+- [Use Microsoft XML Serializer Generator on .NET Core](../../core/additional-tools/xml-serializer-generator.md)
+- [Tools](../../framework/tools/index.md)
+- [Developer command-line shells](/visualstudio/ide/reference/command-prompt-powershell)

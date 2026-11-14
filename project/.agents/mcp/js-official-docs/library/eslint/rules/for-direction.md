@@ -1,13 +1,7 @@
 ---
-title: "for-direction"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/for-direction.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: for-direction
+rule_type: problem
 ---
-
-# for-direction
 
 A `for` loop with a stop condition that can never be reached, such as one with a counter that moves in the wrong direction, will run infinitely. While there are occasions when an infinite loop is intended, the convention is to construct such loops as `while` loops. More typically, an infinite `for` loop is a bug.
 
@@ -19,7 +13,7 @@ This rule forbids `for` loops where the counter variable changes in such a way t
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint for-direction: "error"*/
@@ -49,9 +43,11 @@ for (let i = 0; i < 10; i += n) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint for-direction: "error"*/
@@ -77,6 +73,8 @@ for (let i = 0; 0 > i; i++) {
     // (loop never executes, but direction is consistent)
 }
 ```
+
+:::
 
 ## Options
 

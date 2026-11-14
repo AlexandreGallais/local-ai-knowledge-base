@@ -1,19 +1,13 @@
----
-title: "prefer-combined-guards"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-combined-guards.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-combined-guards
 
 📝 Prefer combining consecutive guards with identical exit statements.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Consecutive guard clauses with identical exits can be combined using `||`, removing duplication while preserving condition evaluation order. By default, only simple conditions and `||` chains of simple conditions are checked.
 
@@ -21,7 +15,7 @@ This rule checks adjacent `if` statements without `else`. By default, each body,
 
 Exit values, labels, and calls are compared by source text, ignoring surrounding parentheses where applicable. The rule does not normalize internal formatting or infer semantic equivalence. Braces, surrounding whitespace, and optional trailing semicolons may differ.
 
-When using the TypeScript parser, type information is optional but enables combining exits containing references, including in JavaScript with JSDoc types. Every reference must have the same type in both bodies to preserve control-flow narrowing. Enable typed linting with `parserOptions.projectService: true`.
+When using the TypeScript parser, [type information](https://typescript-eslint.io/getting-started/typed-linting) is optional but enables combining exits containing references, including in JavaScript with JSDoc types. Every reference must have the same type in both bodies to preserve control-flow narrowing. Enable typed linting with [`parserOptions.projectService: true`](https://typescript-eslint.io/packages/parser/#projectservice).
 
 Without type information, the TypeScript parser requires exit expressions to contain no variable references, `this`, `super`, or JSX references. Arrays, objects with constant values, and constant untagged templates are allowed, including type assertions such as `[] as const`. Exits containing tagged templates are always ignored because each source location has its own cached template object.
 
@@ -114,7 +108,7 @@ function check(value: number, finished: boolean, cancelled: boolean) {
 }
 ```
 
-Bodies with additional statements or nested control flow are ignored by default (see `checkMultiStatementBodies`). Arbitrary identical bodies cannot generally be combined: both original bodies could execute when both conditions are true.
+Bodies with additional statements or nested control flow are ignored by default (see [`checkMultiStatementBodies`](#checkmultistatementbodies)). Arbitrary identical bodies cannot generally be combined: both original bodies could execute when both conditions are true.
 
 ```js
 // ✅
@@ -198,7 +192,7 @@ for (const item of items) {
 
 ## Related rules
 
-- `no-duplicate-if-branches` checks duplicate bodies within `if`/`else if`/`else` chains.
-- `no-lonely-if` combines nested conditions using `&&`.
-- `no-useless-else` removes `else` after exiting branches, which can expose consecutive guards.
-- `prefer-boolean-return` can further simplify a combined boolean guard followed by the opposite boolean return.
+- [`no-duplicate-if-branches`](./no-duplicate-if-branches.md) checks duplicate bodies within `if`/`else if`/`else` chains.
+- [`no-lonely-if`](./no-lonely-if.md) combines nested conditions using `&&`.
+- [`no-useless-else`](./no-useless-else.md) removes `else` after exiting branches, which can expose consecutive guards.
+- [`prefer-boolean-return`](./prefer-boolean-return.md) can further simplify a combined boolean guard followed by the opposite boolean return.

@@ -1,278 +1,173 @@
 ---
-title: "Tuple types (part 1 of 15)"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/builtin-types/value-tuples.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: "Tuple types"
+description: "C# tuples: lightweight data structures that you can use to group loosely related data elements. Tuples introduce a type that contains multiple public members."
+ms.date: 01/14/2026
+helpviewer_keywords:
+  - "value tuples [C#]"
 ---
-
 # Tuple types (C# reference)
 
 The *tuples* feature provides a concise syntax to group multiple data elements in a lightweight data structure.
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
-
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
-
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
 The following example shows how you can declare a tuple variable, initialize it, and access its data members:
 
-```csharp
-global using BandPass = (int Min, int Max);
+:::code language="csharp" source="snippets/shared/ValueTuples.cs" id="Introduction":::
 
-using Range = (int Minimum, int Maximum);
+As the preceding example shows, to define a tuple type, you specify the types of all its data members and, optionally, the [field names](#tuple-field-names). You can't define methods in a tuple type, but you can use the methods provided by .NET, as the following example shows:
 
-namespace builtin_types;
+:::code language="csharp" source="snippets/shared/ValueTuples.cs" id="MethodOnTuples":::
 
-public static class ValueTuples
-{
-    public static void Examples()
-    {
-        Intro();
-        MethodsOnTuples();
-        LargeTuple();
-        MultipleReturns();
-        ExplicitFieldNames();
-        InferFieldNames();
-        DefaultFieldNames();
-        TupleAssignment();
-        DeconstructExplicit();
-        DeconstructVar();
-        DeconstructExisting();
-        TupleEquality();
-        TupleEvaluationForEquality();
-        TupleAsOutParameter();
-        DeconstructToPattern();
+Tuple types support [equality operators](../operators/equality-operators.md) `==` and `!=`. For more information, see the [Tuple equality](#tuple-equality) section.
 
-        BandPass <example-value> = (40, 100);
-        Console.WriteLine($"The bandpass <example-value> is {bracket.Min} to {bracket.Max}");
+Tuple types are [value types](value-types.md); tuple elements are public fields. That design makes tuples *mutable* value types.
 
-        (int a , int b) = bracket;
-        Console.WriteLine($"The bracket is {a} to {b}");
+You can define tuples with an arbitrarily large number of elements:
 
-        Range r = bracket;
-        Console.WriteLine($"The range is {r.Minimum} to {r.Maximum}");
-    }
+:::code language="csharp" source="snippets/shared/ValueTuples.cs" id="LargeTuple":::
 
-    private static void DeconstructToPattern()
-    {
-        for (int i = 4; i < 20;  i++)
-        {
-            if (Math.DivRem(i, 3) is ( Quotient: var q, Remainder: 0 ))
-            {
-                Console.WriteLine($"{i} is divisible by 3, with quotient {q}");
-            }
-        }
-    }
+## Use cases for tuples
 
-    private static void Intro()
-    {
-        (double, int) t1 = (4.5, 3);
-        Console.WriteLine($"Tuple with elements {t1.Item1} and {t1.Item2}.");
-        // Output:
-        // Tuple with elements 4.5 and 3.
+One of the most common use cases for tuples is as a method return type. Instead of defining [`out` method parameters](../keywords/method-parameters.md#out-parameter-modifier), group method results in a tuple return type, as the following example shows:
 
-        (double Sum, int Count) t2 = (4.5, 3);
-        Console.WriteLine($"Sum of {t2.Count} elements is {t2.Sum}.");
-        // Output:
-        // Sum of 3 elements is 4.5.
-    }
+:::code language="csharp" source="snippets/shared/ValueTuples.cs" id="MultipleReturns":::
 
-    private static void MethodsOnTuples()
-    {
-        (double, int) t = (4.5, 3);
-        Console.WriteLine(t.ToString());
-        Console.WriteLine($"Hash code of {t} is {t.GetHashCode()}.");
-        // Output:
-        // (4.5, 3)
-        // Hash code of (4.5, 3) is 718460086.
-    }
+As the preceding example shows, you can work with the returned tuple instance directly or [deconstruct](#tuple-assignment-and-deconstruction) it in separate variables.
 
-    private static void LargeTuple()
-    {
-        var t =
-        (1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-        11, 12, 13, 14, 15, 16, 17, 18,
-        19, 20, 21, 22, 23, 24, 25, 26);
-        Console.WriteLine(t.Item26);  // output: 26
-    }
+You can also use tuple types instead of anonymous types; for example, in LINQ queries. For more information, see [Choosing between anonymous and tuple types](../../../standard/base-types/choosing-between-anonymous-and-tuple.md).
 
-    private static void MultipleReturns()
-    {
-        int[] xs = new int[] { 4, 7, 9 };
-        var limits = FindMinMax(xs);
-        Console.WriteLine($"Limits of [{string.Join(" ", xs)}] are {limits.min} and {limits.max}");
-        // Output:
-        // Limits of [4 7 9] are 4 and 9
+Typically, use tuples to group loosely related data elements. In public APIs, consider defining a [class](../keywords/class.md) or a [structure](struct.md) type.
 
-        int[] ys = new int[] { -9, 0, 67, 100 };
-        var (minimum, maximum) = FindMinMax(ys);
-        Console.WriteLine($"Limits of [{string.Join(" ", ys)}] are {minimum} and {maximum}");
-        // Output:
-        // Limits of [-9 0 67 100] are -9 and 100
+## Tuple field names
 
-        (int min, int max) FindMinMax(int[] input)
-        {
-            if (input is null || input.Length == 0)
-            {
-                throw new ArgumentException("Cannot find minimum and maximum of a null or empty array.");
-            }
+You explicitly specify tuple field names in a tuple initialization expression or in the definition of a tuple type, as the following example shows:
 
-            // Initialize min to MaxValue so every value in the input
-            // is less than this initial value.
-            var min = int.MaxValue;
-            // Initialize max to MinValue so every value in the input
-            // is greater than this initial value.
-            var max = int.MinValue;
-            foreach (var i in input)
-            {
-                if (i < min)
-                {
-                    min = i;
-                }
-                if (i > max)
-                {
-                    max = i;
-                }
-            }
-            return (min, max);
-        }
-    }
+[!code-csharp[explicit field names](snippets/shared/ValueTuples.cs#ExplicitFieldNames)]
 
-    private static void ExplicitFieldNames()
-    {
-        var t = (Sum: 4.5, Count: 3);
-        Console.WriteLine($"Sum of {t.Count} elements is {t.Sum}.");
+If you don't specify a field name, the compiler might infer it from the name of the corresponding variable in a tuple initialization expression, as the following example shows:
 
-        (double Sum, int Count) d = (4.5, 3);
-        Console.WriteLine($"Sum of {d.Count} elements is {d.Sum}.");
-    }
+:::code language="csharp" source="snippets/shared/ValueTuples.cs" id="InferFieldNames":::
 
-    private static void InferFieldNames()
-    {
-        var sum = 4.5;
-        var count = 3;
-        var t = (sum, count);
-        Console.WriteLine($"Sum of {t.count} elements is {t.sum}.");
-    }
+This feature is called tuple projection initializers. The name of a variable isn't projected onto a tuple field name in the following cases:
 
-    private static void DefaultFieldNames()
-    {
-        var a = 1;
-        var t = (a, b: 2, 3);
-        Console.WriteLine($"The 1st element is {t.Item1} (same as {t.a}).");
-        Console.WriteLine($"The 2nd element is {t.Item2} (same as {t.b}).");
-        Console.WriteLine($"The 3rd element is {t.Item3}.");
-        // Output:
-        // The 1st element is 1 (same as 1).
-        // The 2nd element is 2 (same as 2).
-        // The 3rd element is 3.
-    }
+- The candidate name is a member name of a tuple type, for example, `Item3`, `ToString`, or `Rest`.
+- The candidate name is a duplicate of another tuple field name, either explicit or implicit.
 
-    private static void TupleAssignment()
-    {
-        (int, double) t1 = (17, 3.14);
-        (double First, double Second) t2 = (0.0, 1.0);
-        t2 = t1;
-        Console.WriteLine($"{nameof(t2)}: {t2.First} and {t2.Second}");
-        // Output:
-        // t2: 17 and 3.14
+In the preceding cases, you either explicitly specify the name of a field or access a field by its default name.
 
-        (double A, double B) t3 = (2.0, 3.0);
-        t3 = t2;
-        Console.WriteLine($"{nameof(t3)}: {t3.A} and {t3.B}");
-        // Output:
-        // t3: 17 and 3.14
-    }
+The default names of tuple fields are `Item1`, `Item2`, `Item3`, and so on. You can always use the default name of a field, even when a field name is specified explicitly or inferred, as the following example shows:
 
-    private static void DeconstructExplicit()
-    {
-        var t = ("post office", 3.6);
-        (string destination, double distance) = t;
-        Console.WriteLine($"Distance to {destination} is {distance} kilometers.");
-        // Output:
-        // Distance to post office is 3.6 kilometers.
-    }
+:::code language="csharp" source="snippets/shared/ValueTuples.cs" id="DefaultFieldNames":::
 
-    private static void DeconstructVar()
-    {
-        var t = ("post office", 3.6);
-        var (destination, distance) = t;
-        Console.WriteLine($"Distance to {destination} is {distance} kilometers.");
-        // Output:
-        // Distance to post office is 3.6 kilometers.
-    }
+[Tuple assignment](#tuple-assignment-and-deconstruction) and [tuple equality comparisons](#tuple-equality) don't take field names into account.
 
-    private static void DeconstructMixed()
-    {
-        var t = ("post office", 3.6);
-        (var destination, double distance) = t;
-        Console.WriteLine($"Distance to {destination} is {distance} kilometers.");
-        // Output:
-        // Distance to post office is 3.6 kilometers.
-    }
+At compile time, the compiler replaces non-default field names with the corresponding default names. As a result, explicitly specified or inferred field names aren't available at run time.
 
-    private static void DeconstructExisting()
-    {
-        var destination = string.Empty;
-        var distance = 0.0;
+> [!TIP]
+> Enable .NET code style rule [IDE0037](../../../fundamentals/code-analysis/style-rules/ide0037.md) to set a preference on inferred or explicit tuple field names.
 
-        var t = ("post office", 3.6);
-        (destination, distance) = t;
-        Console.WriteLine($"Distance to {destination} is {distance} kilometers.");
-        // Output:
-        // Distance to post office is 3.6 kilometers.
-    }
+You can specify an alias for a tuple type with a [`using` directive](../keywords/using-directive.md#the-using-alias). The following example adds a `global using` alias for a tuple type with two integer values for an allowed `Min` and `Max` value:
 
-    private static void TupleEquality()
-    {
-        (int a, byte b) left = (5, 10);
-        (long a, int b) right = (5, 10);
-        Console.WriteLine(left == right);  // output: True
-        Console.WriteLine(left != right);  // output: False
+:::code language="csharp" source="snippets/shared/ValueTuples.cs" id="AliasTupleType":::
 
-        var t1 = (A: 5, B: 10);
-        var t2 = (B: 5, A: 10);
-        Console.WriteLine(t1 == t2);  // output: True
-        Console.WriteLine(t1 != t2);  // output: False
-    }
+After declaring the alias, you can use the `BandPass` name as an alias for that tuple type:
 
-    private static void TupleEvaluationForEquality()
-    {
-        Console.WriteLine((Display(1), Display(2)) == (Display(3), Display(4)));
+:::code language="csharp" source="snippets/shared/ValueTuples.cs" id="UseAliasType":::
 
-        int Display(int s)
-        {
-            Console.WriteLine(s);
-            return s;
-        }
-        // Output:
-        // 1
-        // 2
-        // 3
-        // 4
-        // False
-    }
+An alias doesn't introduce a new *type*, but only creates a synonym for an existing type. You can deconstruct a tuple declared with the `BandPass` alias the same as you can with its underlying tuple type:
 
-    private static void TupleAsOutParameter()
-    {
-        var limitsLookup = new Dictionary<int, (int Min, int Max)>()
-        {
-            [2] = (4, 10),
-            [4] = (10, 20),
-            [6] = (0, 23)
-        };
+:::code language="csharp" source="snippets/shared/ValueTuples.cs" id="DeconstructAlias":::
 
-        if (limitsLookup.TryGetValue(4, out (int Min, int Max) limits))
-        {
-            Console.WriteLine($"Found limits: min is {limits.Min}, max is {limits.Max}");
-        }
-        // Output:
-        // Found limits: min is 10, max is 20
-    }
-}
-```
-As the preceding example shows, to define a tuple type, you specify the types of all its data members and, optionally, the field names. You can't define methods in a tuple type, but you can use the methods provided by .NET, as the following example shows:
+As with tuple assignment or deconstruction, the tuple member names don't need to match; the types do.
+
+Similarly, a second alias with the same arity and member types can be used interchangeably with the original alias. You could declare a second alias:
+
+:::code language="csharp" source="snippets/shared/ValueTuples.cs" id="AliasSynonym":::
+
+You can assign a `Range` tuple to a `BandPass` tuple. As with all tuple assignment, the field names need not match, only the types and the arity.
+
+:::code language="csharp" source="snippets/shared/ValueTuples.cs" id="AliasSynonymUses":::
+
+An alias for a tuple type provides more semantic information when you use tuples. It doesn't introduce a new type. To provide type safety, you should declare a positional [`record`](record.md) instead.
+
+## Tuple assignment and deconstruction
+
+C# supports assignment between tuple types that satisfy both of the following conditions:
+
+- Both tuple types have the same number of elements.
+- For each tuple position, the type of the right-hand tuple element is the same as or implicitly convertible to the type of the corresponding left-hand tuple element.
+
+Assign tuple element values by following the order of tuple elements. The assignment process ignores the names of tuple fields, as the following example shows:
+
+:::code language="csharp" source="snippets/shared/ValueTuples.cs" id="Assignment":::
+
+Use the assignment operator `=` to *deconstruct* a tuple instance into separate variables. You can do that in many ways:
+
+- Use the `var` keyword outside the parentheses to declare implicitly typed variables and let the compiler infer their types:
+
+  :::code language="csharp" source="snippets/shared/ValueTuples.cs" id="DeconstructVar":::
+
+- Explicitly declare the type of each variable inside parentheses:
+
+  :::code language="csharp" source="snippets/shared/ValueTuples.cs" id="DeconstructExplicit":::
+
+- Declare some types explicitly and other types implicitly (with `var`) inside the parentheses:
+
+  :::code language="csharp" source="snippets/shared/ValueTuples.cs" id="DeconstructMixed":::
+
+- Use existing variables:
+
+  :::code language="csharp" source="snippets/shared/ValueTuples.cs" id="DeconstructExisting":::
+
+The destination of a deconstruct expression can include both existing variables and variables declared in the deconstruction declaration.
+
+You can also combine deconstruction with [pattern matching](../../fundamentals/patterns/pattern-matching.md) to inspect the characteristics of fields in a tuple. The following example loops through several integers and prints those that are divisible by 3. It deconstructs the tuple result of <xref:System.Int32.DivRem*?displayProperty=nameWithType> and matches against a `Remainder` of 0:
+
+:::code language="csharp" source="snippets/shared/ValueTuples.cs" id="DeconstructToPattern":::
+
+For more information about deconstruction of tuples and other types, see [Deconstructing tuples and other types](../../fundamentals/patterns/deconstruct.md).
+
+## Tuple equality
+
+Tuple types support the `==` and `!=` operators. These operators compare members of the left-hand operand with the corresponding members of the right-hand operand following the order of tuple elements.
+
+:::code language="csharp" source="snippets/shared/ValueTuples.cs" id="TupleEquality":::
+
+As the preceding example shows, the `==` and `!=` operations don't take tuple field names into account.
+
+Two tuples are comparable when both of the following conditions are satisfied:
+
+- Both tuples have the same number of elements. For example, `t1 != t2` doesn't compile if `t1` and `t2` have different numbers of elements.
+- For each tuple position, the corresponding elements from the left-hand and right-hand tuple operands are comparable by using the `==` and `!=` operators. For example, `(1, (2, 3)) == ((1, 2), 3)` doesn't compile because `1` isn't comparable with `(1, 2)`.
+
+The `==` and `!=` operators compare tuples in a short-circuiting way. That is, an operation stops as soon as it meets a pair of non equal elements or reaches the ends of tuples. However, before any comparison, *all* tuple elements are evaluated, as the following example shows:
+
+:::code language="csharp" source="snippets/shared/ValueTuples.cs" id="TupleEvaluationForEquality":::
+
+## Tuples as out parameters
+
+Typically, you refactor a method that has [`out` parameters](../keywords/method-parameters.md#out-parameter-modifier) into a method that returns a tuple. However, some cases exist where an `out` parameter can be a tuple type. The following example shows how to work with tuples as `out` parameters:
+
+:::code language="csharp" source="snippets/shared/ValueTuples.cs" id="TupleAsOutParameter":::
+
+## Tuples vs `System.Tuple`
+
+C# tuples use <xref:System.ValueTuple?displayProperty=nameWithType> types and differ from tuples that use <xref:System.Tuple?displayProperty=nameWithType> types. The main differences are:
+
+- `System.ValueTuple` types are [value types](value-types.md). `System.Tuple` types are [reference types](../keywords/reference-types.md).
+- `System.ValueTuple` types are mutable. `System.Tuple` types are immutable.
+- Data members of `System.ValueTuple` types are fields. Data members of `System.Tuple` types are properties.
+
+## C# language specification
+
+For more information, see:
+
+- [Tuple types](/dotnet/csharp/language-reference/language-specification/types#8311-tuple-types)
+- [Tuple equality operators](/dotnet/csharp/language-reference/language-specification/expressions#121211-tuple-equality-operators)
+
+## See also
+
+- [Value types](value-types.md)
+- [Choosing between anonymous and tuple types](../../../standard/base-types/choosing-between-anonymous-and-tuple.md)
+- <xref:System.ValueTuple?displayProperty=nameWithType>

@@ -1,24 +1,23 @@
 ---
 title: "Cookie login redirects are disabled for known API endpoints"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/10/cookie-authentication-api-endpoints.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+ai-usage: ai-assisted
+description: "Learn about the breaking change in ASP.NET Core 10 where cookie authentication no longer redirects to login or access denied URIs for known API endpoints."
+ms.custom: https://github.com/aspnet/Announcements/issues/525
+ms.date: 09/16/2026
 ---
 
 # Cookie login redirects are disabled for known API endpoints
 
 By default, unauthenticated and unauthorized requests made to known API endpoints protected by cookie authentication now result in 401 and 403 responses rather than redirecting to a login or access-denied URI.
 
-Known API endpoints are identified using the new `Microsoft.AspNetCore.Http.Metadata.IDisableCookieRedirectMetadata` interface, and metadata implementing the new interface has been added automatically to the following:
+Known API [endpoints](../../fundamentals/routing.md) are identified using the new <xref:Microsoft.AspNetCore.Http.Metadata.IDisableCookieRedirectMetadata> interface, and metadata implementing the new interface has been added automatically to the following:
 
-* `[ApiController]` endpoints.
+* [`[ApiController]`](xref:Microsoft.AspNetCore.Mvc.ApiControllerAttribute) endpoints.
 * Minimal API endpoints that read JSON request bodies or write JSON responses.
-* Endpoints using `Microsoft.AspNetCore.Http.TypedResults` return types.
+* Endpoints using <xref:Microsoft.AspNetCore.Http.TypedResults> return types.
 * SignalR endpoints.
 
-The companion `Microsoft.AspNetCore.Http.Metadata.IAllowCookieRedirectMetadata` interface opts an endpoint back in to redirects. It overrides `IDisableCookieRedirectMetadata` no matter the order in which the metadata is added.
+The companion <xref:Microsoft.AspNetCore.Http.Metadata.IAllowCookieRedirectMetadata> interface opts an endpoint back in to redirects. It overrides `IDisableCookieRedirectMetadata` no matter the order in which the metadata is added.
 
 The 401 and 403 responses still include a `Location` header holding the login or access-denied URI. Only the status code changes.
 
@@ -30,7 +29,7 @@ Only the challenge (401) and forbid (403) paths consider endpoint metadata. Sign
 
 ## Previous behavior
 
-Previously, the cookie authentication handler redirected unauthenticated and unauthorized requests to a login or access-denied URI by default for all requests other than XMLHttpRequests (XHRs).
+Previously, the cookie authentication handler redirected unauthenticated and unauthorized requests to a login or access-denied URI by default for all requests other than [XMLHttpRequests (XHRs)](https://developer.mozilla.org/docs/Web/API/XMLHttpRequest).
 
 ## New behavior
 
@@ -38,7 +37,7 @@ Starting in .NET 10, unauthenticated and unauthorized requests made to known API
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](/dotnet/core/compatibility/categories#behavioral-change).
 
 ## Reason for change
 
@@ -56,7 +55,7 @@ To restore the previous behavior for the whole app, enable the `Microsoft.AspNet
 </ItemGroup>
 ```
 
-The switch is read once, the first time cookie authentication is used, so if you set it in code instead, call `System.AppContext.SetSwitch*` before the host is built:
+The switch is read once, the first time cookie authentication is used, so if you set it in code instead, call <xref:System.AppContext.SetSwitch*> before the host is built:
 
 ```csharp
 AppContext.SetSwitch(
@@ -65,7 +64,7 @@ AppContext.SetSwitch(
 var builder = WebApplication.CreateBuilder(args);
 ```
 
-To restore redirects for individual endpoints instead, call `Microsoft.AspNetCore.Builder.CookieRedirectEndpointConventionBuilderExtensions.AllowCookieRedirect*` or apply the `Microsoft.AspNetCore.Http.AllowCookieRedirectAttribute` to an action method or controller class:
+To restore redirects for individual endpoints instead, call <xref:Microsoft.AspNetCore.Builder.CookieRedirectEndpointConventionBuilderExtensions.AllowCookieRedirect*> or apply the <xref:Microsoft.AspNetCore.Http.AllowCookieRedirectAttribute> to an action method or controller class:
 
 ```csharp
 app.MapGet("/reports/summary", () => new { Total = 1000 })
@@ -73,9 +72,9 @@ app.MapGet("/reports/summary", () => new { Total = 1000 })
    .AllowCookieRedirect();
 ```
 
-Conversely, call `Microsoft.AspNetCore.Builder.CookieRedirectEndpointConventionBuilderExtensions.DisableCookieRedirect*` to return 401 and 403 status codes for endpoints that aren't detected as API endpoints automatically.
+Conversely, call <xref:Microsoft.AspNetCore.Builder.CookieRedirectEndpointConventionBuilderExtensions.DisableCookieRedirect*> to return 401 and 403 status codes for endpoints that aren't detected as API endpoints automatically.
 
-If you want to always redirect to the login and access-denied URIs for unauthenticated or unauthorized requests regardless of the target endpoint or whether the source of the request is an XHR, you can override `Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents.RedirectToLogin*` and `Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents.RedirectToAccessDenied*` as follows:
+If you want to always redirect to the login and access-denied URIs for unauthenticated or unauthorized requests regardless of the target endpoint or whether the source of the request is an XHR, you can override <xref:Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents.RedirectToLogin*> and <xref:Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents.RedirectToAccessDenied*> as follows:
 
 ```csharp
 builder.Services.AddAuthentication()
@@ -141,14 +140,14 @@ builder.Services.AddAuthentication()
 
 ## Affected APIs
 
-* `Microsoft.AspNetCore.Http.Metadata.IDisableCookieRedirectMetadata`
-* `Microsoft.AspNetCore.Http.Metadata.IAllowCookieRedirectMetadata`
-* `Microsoft.AspNetCore.Http.AllowCookieRedirectAttribute`
-* `Microsoft.AspNetCore.Builder.CookieRedirectEndpointConventionBuilderExtensions.DisableCookieRedirect*`
-* `Microsoft.AspNetCore.Builder.CookieRedirectEndpointConventionBuilderExtensions.AllowCookieRedirect*`
-* `Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents.RedirectToLogin*`
-* `Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents.RedirectToAccessDenied*`
+* <xref:Microsoft.AspNetCore.Http.Metadata.IDisableCookieRedirectMetadata?displayProperty=fullName>
+* <xref:Microsoft.AspNetCore.Http.Metadata.IAllowCookieRedirectMetadata?displayProperty=fullName>
+* <xref:Microsoft.AspNetCore.Http.AllowCookieRedirectAttribute?displayProperty=fullName>
+* <xref:Microsoft.AspNetCore.Builder.CookieRedirectEndpointConventionBuilderExtensions.DisableCookieRedirect*?displayProperty=fullName>
+* <xref:Microsoft.AspNetCore.Builder.CookieRedirectEndpointConventionBuilderExtensions.AllowCookieRedirect*?displayProperty=fullName>
+* <xref:Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents.RedirectToLogin*?displayProperty=fullName>
+* <xref:Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents.RedirectToAccessDenied*?displayProperty=fullName>
 
 ## See also
 
-* API endpoint authentication behavior in ASP.NET Core
+* [API endpoint authentication behavior in ASP.NET Core](/aspnet/core/security/authentication/api-endpoint-auth?view=aspnetcore-10.0&preserve-view=true)

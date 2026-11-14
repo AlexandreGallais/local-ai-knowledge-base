@@ -1,15 +1,18 @@
 ---
 title: "Memory-Mapped Files"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/io/memory-mapped-files.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Explore memory-mapped files in .NET, which contain file contents in virtual memory, and allow applications to modify the file by writing directly to the memory.
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "memory-mapped files"
+  - "inter-process communication"
+ms.assetid: a483d1b5-64aa-45b6-86ef-11b859f7f02e
 ---
-
 # Memory-mapped files
 
-A memory-mapped file contains the contents of a file in virtual memory. This mapping between a file and memory space enables an application, including multiple processes, to modify the file by reading and writing directly to the memory. You can use managed code to access memory-mapped files in the same way that native Windows functions access memory-mapped files, as described in Managing Memory-Mapped Files.
+A memory-mapped file contains the contents of a file in virtual memory. This mapping between a file and memory space enables an application, including multiple processes, to modify the file by reading and writing directly to the memory. You can use managed code to access memory-mapped files in the same way that native Windows functions access memory-mapped files, as described in [Managing Memory-Mapped Files](/previous-versions/ms810613(v=msdn.10)).
 
 There are two types of memory-mapped files:
 
@@ -37,149 +40,57 @@ There are two types of memory-mapped files:
 
  The following image shows multiple and overlapped views to a memory-mapped file:
 
+ ![Screenshot that shows views to a memory&#45;mapped file.](./media/memory-mapped-files/memory-map-persist-file.png)
+
 ## Programming with Memory-Mapped Files
 
  The following table provides a guide for using memory-mapped file objects and their members.
 
 |Task|Methods or properties to use|
 |----------|----------------------------------|
-|To obtain a `System.IO.MemoryMappedFiles.MemoryMappedFile` object that represents a persisted memory-mapped file from a file on disk.|`System.IO.MemoryMappedFiles.MemoryMappedFile.CreateFromFile*` method.|
-|To obtain a `System.IO.MemoryMappedFiles.MemoryMappedFile` object that represents a non-persisted memory-mapped file (not associated with a file on disk).|`System.IO.MemoryMappedFiles.MemoryMappedFile.CreateNew*` method. - or - `System.IO.MemoryMappedFiles.MemoryMappedFile.CreateOrOpen*` method.|
-|To obtain a `System.IO.MemoryMappedFiles.MemoryMappedFile` object of an existing memory-mapped file (either persisted or non-persisted).|`System.IO.MemoryMappedFiles.MemoryMappedFile.OpenExisting*` method.|
-|To obtain a `System.IO.UnmanagedMemoryStream` object for a sequentially accessed view to the memory-mapped file.|`System.IO.MemoryMappedFiles.MemoryMappedFile.CreateViewStream*` method.|
-|To obtain a `System.IO.UnmanagedMemoryAccessor` object for a random access view to a memory-mapped file.|`System.IO.MemoryMappedFiles.MemoryMappedFile.CreateViewAccessor*` method.|
-|To obtain a `Microsoft.Win32.SafeHandles.SafeMemoryMappedViewHandle` object to use with unmanaged code.|`System.IO.MemoryMappedFiles.MemoryMappedFile.SafeMemoryMappedFileHandle` property. - or - `System.IO.MemoryMappedFiles.MemoryMappedViewAccessor.SafeMemoryMappedViewHandle` property. - or - `System.IO.MemoryMappedFiles.MemoryMappedViewStream.SafeMemoryMappedViewHandle` property.|
-|To delay allocating memory until a view is created (non-persisted files only). (To determine the current system page size, use the `System.Environment.SystemPageSize` property.)|`System.IO.MemoryMappedFiles.MemoryMappedFile.CreateNew*` method with the `System.IO.MemoryMappedFiles.MemoryMappedFileOptions.DelayAllocatePages` value. - or - `System.IO.MemoryMappedFiles.MemoryMappedFile.CreateOrOpen*` methods that have a `System.IO.MemoryMappedFiles.MemoryMappedFileOptions` enumeration as a parameter.|
+|To obtain a <xref:System.IO.MemoryMappedFiles.MemoryMappedFile> object that represents a persisted memory-mapped file from a file on disk.|<xref:System.IO.MemoryMappedFiles.MemoryMappedFile.CreateFromFile*?displayProperty=nameWithType> method.|
+|To obtain a <xref:System.IO.MemoryMappedFiles.MemoryMappedFile> object that represents a non-persisted memory-mapped file (not associated with a file on disk).|<xref:System.IO.MemoryMappedFiles.MemoryMappedFile.CreateNew*?displayProperty=nameWithType> method.<br /><br /> - or -<br /><br /> <xref:System.IO.MemoryMappedFiles.MemoryMappedFile.CreateOrOpen*?displayProperty=nameWithType> method.|
+|To obtain a <xref:System.IO.MemoryMappedFiles.MemoryMappedFile> object of an existing memory-mapped file (either persisted or non-persisted).|<xref:System.IO.MemoryMappedFiles.MemoryMappedFile.OpenExisting*?displayProperty=nameWithType> method.|
+|To obtain a <xref:System.IO.UnmanagedMemoryStream> object for a sequentially accessed view to the memory-mapped file.|<xref:System.IO.MemoryMappedFiles.MemoryMappedFile.CreateViewStream*?displayProperty=nameWithType> method.|
+|To obtain a <xref:System.IO.UnmanagedMemoryAccessor> object for a random access view to a memory-mapped file.|<xref:System.IO.MemoryMappedFiles.MemoryMappedFile.CreateViewAccessor*?displayProperty=nameWithType> method.|
+|To obtain a <xref:Microsoft.Win32.SafeHandles.SafeMemoryMappedViewHandle> object to use with unmanaged code.|<xref:System.IO.MemoryMappedFiles.MemoryMappedFile.SafeMemoryMappedFileHandle?displayProperty=nameWithType> property.<br /><br /> - or -<br /><br /> <xref:System.IO.MemoryMappedFiles.MemoryMappedViewAccessor.SafeMemoryMappedViewHandle?displayProperty=nameWithType> property.<br /><br /> - or -<br /><br /> <xref:System.IO.MemoryMappedFiles.MemoryMappedViewStream.SafeMemoryMappedViewHandle?displayProperty=nameWithType> property.|
+|To delay allocating memory until a view is created (non-persisted files only).<br /><br /> (To determine the current system page size, use the <xref:System.Environment.SystemPageSize?displayProperty=nameWithType> property.)|<xref:System.IO.MemoryMappedFiles.MemoryMappedFile.CreateNew*> method with the <xref:System.IO.MemoryMappedFiles.MemoryMappedFileOptions.DelayAllocatePages?displayProperty=nameWithType> value.<br /><br /> - or -<br /><br /> <xref:System.IO.MemoryMappedFiles.MemoryMappedFile.CreateOrOpen*> methods that have a <xref:System.IO.MemoryMappedFiles.MemoryMappedFileOptions> enumeration as a parameter.|
 
 ### Security
 
- You can apply access rights when you create a memory-mapped file, by using the following methods that take a `System.IO.MemoryMappedFiles.MemoryMappedFileAccess` enumeration as a parameter:
+ You can apply access rights when you create a memory-mapped file, by using the following methods that take a <xref:System.IO.MemoryMappedFiles.MemoryMappedFileAccess> enumeration as a parameter:
 
-- `System.IO.MemoryMappedFiles.MemoryMappedFile.CreateFromFile*`
+- <xref:System.IO.MemoryMappedFiles.MemoryMappedFile.CreateFromFile*?displayProperty=nameWithType>
 
-- `System.IO.MemoryMappedFiles.MemoryMappedFile.CreateNew*`
+- <xref:System.IO.MemoryMappedFiles.MemoryMappedFile.CreateNew*?displayProperty=nameWithType>
 
-- `System.IO.MemoryMappedFiles.MemoryMappedFile.CreateOrOpen*`
+- <xref:System.IO.MemoryMappedFiles.MemoryMappedFile.CreateOrOpen*?displayProperty=nameWithType>
 
- You can specify access rights for opening an existing memory-mapped file by using the `System.IO.MemoryMappedFiles.MemoryMappedFile.OpenExisting*` methods that take an `System.IO.MemoryMappedFiles.MemoryMappedFileRights` as a parameter.
+ You can specify access rights for opening an existing memory-mapped file by using the <xref:System.IO.MemoryMappedFiles.MemoryMappedFile.OpenExisting*> methods that take an <xref:System.IO.MemoryMappedFiles.MemoryMappedFileRights> as a parameter.
 
- In addition, you can include a `System.IO.MemoryMappedFiles.MemoryMappedFileSecurity` object that contains predefined access rules.
+ In addition, you can include a <xref:System.IO.MemoryMappedFiles.MemoryMappedFileSecurity> object that contains predefined access rules.
 
- To apply new or changed access rules to a memory-mapped file, use the `System.IO.MemoryMappedFiles.MemoryMappedFile.SetAccessControl*` method. To retrieve access or audit rules from an existing file, use the `System.IO.MemoryMappedFiles.MemoryMappedFile.GetAccessControl*` method.
+ To apply new or changed access rules to a memory-mapped file, use the <xref:System.IO.MemoryMappedFiles.MemoryMappedFile.SetAccessControl*> method. To retrieve access or audit rules from an existing file, use the <xref:System.IO.MemoryMappedFiles.MemoryMappedFile.GetAccessControl*> method.
 
 ## Examples
 
 ### Persisted Memory-Mapped Files
 
- The `System.IO.MemoryMappedFiles.MemoryMappedFile.CreateFromFile*` methods create a memory-mapped file from an existing file on disk.
+ The <xref:System.IO.MemoryMappedFiles.MemoryMappedFile.CreateFromFile*> methods create a memory-mapped file from an existing file on disk.
 
  The following example creates a memory-mapped view of a part of an extremely large file and manipulates a portion of it.
 
- ```csharp
-using System;
-using System.IO;
-using System.IO.MemoryMappedFiles;
-using System.Runtime.InteropServices;
-
-class Program
-{
-    static void Main(string[] args)
-    {
-        long offset = 0x10000000; // 256 megabytes
-        long length = 0x20000000; // 512 megabytes
-
-        // Create the memory-mapped file.
-        using (var mmf = MemoryMappedFile.CreateFromFile(@"c:\ExtremelyLargeImage.data", FileMode.Open,"ImgA"))
-        {
-            // Create a random access view, from the 256th megabyte (the offset)
-            // to the 768th megabyte (the offset plus length).
-            using (var accessor = mmf.CreateViewAccessor(offset, length))
-            {
-                int colorSize = Marshal.SizeOf(typeof(MyColor));
-                MyColor color;
-
-                // Make changes to the view.
-                for (long i = 0; i < length; i += colorSize)
-                {
-                    accessor.Read(i, out color);
-                    color.Brighten(10);
-                    accessor.Write(i, ref color);
-                }
-            }
-        }
-    }
-}
-
-public struct MyColor
-{
-    public short Red;
-    public short Green;
-    public short Blue;
-    public short Alpha;
-
-    // Make the view brighter.
-    public void Brighten(short value)
-    {
-        Red = (short)Math.Min(short.MaxValue, (int)Red + value);
-        Green = (short)Math.Min(short.MaxValue, (int)Green + value);
-        Blue = (short)Math.Min(short.MaxValue, (int)Blue + value);
-        Alpha = (short)Math.Min(short.MaxValue, (int)Alpha + value);
-    }
-}
-```
+ [!code-csharp[MemoryMappedFiles.MemoryMappedFile.CreateFromFile#1](../../../samples/snippets/csharp/VS_Snippets_CLR/memorymappedfiles.memorymappedfile.createfromfile/cs/program.cs#1)]
+ [!code-vb[MemoryMappedFiles.MemoryMappedFile.CreateFromFile#1](../../../samples/snippets/visualbasic/VS_Snippets_CLR/memorymappedfiles.memorymappedfile.createfromfile/vb/program.vb#1)]
 
  The following example opens the same memory-mapped file for another process.
 
- ```csharp
-using System;
-using System.IO.MemoryMappedFiles;
-using System.Runtime.InteropServices;
-
-class Program
-{
-    static void Main(string[] args)
-    {
-        // Assumes another process has created the memory-mapped file.
-        using (var mmf = MemoryMappedFile.OpenExisting("ImgA"))
-        {
-            using (var accessor = mmf.CreateViewAccessor(4000000, 2000000))
-            {
-                int colorSize = Marshal.SizeOf(typeof(MyColor));
-                MyColor color;
-
-                // Make changes to the view.
-                for (long i = 0; i < 1500000; i += colorSize)
-                {
-                    accessor.Read(i, out color);
-                    color.Brighten(20);
-                    accessor.Write(i, ref color);
-                }
-            }
-        }
-    }
-}
-
-public struct MyColor
-{
-    public short Red;
-    public short Green;
-    public short Blue;
-    public short Alpha;
-
-    // Make the view brigher.
-    public void Brighten(short value)
-    {
-        Red = (short)Math.Min(short.MaxValue, (int)Red + value);
-        Green = (short)Math.Min(short.MaxValue, (int)Green + value);
-        Blue = (short)Math.Min(short.MaxValue, (int)Blue + value);
-        Alpha = (short)Math.Min(short.MaxValue, (int)Alpha + value);
-    }
-}
-```
+ [!code-csharp[MemoryMappedFiles.MemoryMappedFile.OpenExisting#1](../../../samples/snippets/csharp/VS_Snippets_CLR/memorymappedfiles.memorymappedfile.openexisting/cs/program.cs#1)]
+ [!code-vb[MemoryMappedFiles.MemoryMappedFile.OpenExisting#1](../../../samples/snippets/visualbasic/VS_Snippets_CLR/memorymappedfiles.memorymappedfile.openexisting/vb/program.vb#1)]
 
 ### Non-Persisted Memory-Mapped Files
 
- The `System.IO.MemoryMappedFiles.MemoryMappedFile.CreateNew*` and `System.IO.MemoryMappedFiles.MemoryMappedFile.CreateOrOpen*` methods create a memory-mapped file that is not mapped to an existing file on disk.
+ The <xref:System.IO.MemoryMappedFiles.MemoryMappedFile.CreateNew*> and <xref:System.IO.MemoryMappedFiles.MemoryMappedFile.CreateOrOpen*> methods create a memory-mapped file that is not mapped to an existing file on disk.
 
  The following example consists of three separate processes (console applications) that write Boolean values to a memory-mapped file. The following sequence of actions occur:
 
@@ -219,122 +130,19 @@ Process C says: True
 
  **Process A**
 
- ```csharp
-using System;
-using System.IO;
-using System.IO.MemoryMappedFiles;
-using System.Threading;
-
-class Program
-{
-    // Process A:
-    static void Main(string[] args)
-    {
-        using (MemoryMappedFile mmf = MemoryMappedFile.CreateNew("testmap", 10000))
-        {
-            bool mutexCreated;
-            Mutex mutex = new Mutex(true, "testmapmutex", out mutexCreated);
-            using (MemoryMappedViewStream stream = mmf.CreateViewStream())
-            {
-                BinaryWriter writer = new BinaryWriter(stream);
-                writer.Write(1);
-            }
-            mutex.ReleaseMutex();
-
-            Console.WriteLine("Start Process B and press ENTER to continue.");
-            Console.ReadLine();
-
-            Console.WriteLine("Start Process C and press ENTER to continue.");
-            Console.ReadLine();
-
-            mutex.WaitOne();
-            using (MemoryMappedViewStream stream = mmf.CreateViewStream())
-            {
-                BinaryReader reader = new BinaryReader(stream);
-                Console.WriteLine($"Process A says: {reader.ReadBoolean()}");
-                Console.WriteLine($"Process B says: {reader.ReadBoolean()}");
-                Console.WriteLine($"Process C says: {reader.ReadBoolean()}");
-            }
-            mutex.ReleaseMutex();
-        }
-    }
-}
-```
+ [!code-csharp[System.IO.MemoryMappedFiles_IPC_X#1](../../../samples/snippets/csharp/VS_Snippets_CLR_System/system.io.memorymappedfiles_ipc_x/cs/program.cs#1)]
+ [!code-vb[System.IO.MemoryMappedFiles_IPC_X#1](../../../samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.memorymappedfiles_ipc_x/vb/program.vb#1)]
 
  **Process B**
 
- ```csharp
-using System;
-using System.IO;
-using System.IO.MemoryMappedFiles;
-using System.Threading;
-
-class Program
-{
-    // Process B:
-    static void Main(string[] args)
-    {
-        try
-        {
-            using (MemoryMappedFile mmf = MemoryMappedFile.OpenExisting("testmap"))
-            {
-
-                Mutex mutex = Mutex.OpenExisting("testmapmutex");
-                mutex.WaitOne();
-
-                using (MemoryMappedViewStream stream = mmf.CreateViewStream(1, 0))
-                {
-                    BinaryWriter writer = new BinaryWriter(stream);
-                    writer.Write(0);
-                }
-                mutex.ReleaseMutex();
-            }
-        }
-        catch (FileNotFoundException)
-        {
-            Console.WriteLine("Memory-mapped file does not exist. Run Process A first.");
-        }
-    }
-}
-```
+ [!code-csharp[System.IO.MemoryMappedFiles_IPC_A#1](../../../samples/snippets/csharp/VS_Snippets_CLR_System/system.io.memorymappedfiles_ipc_a/cs/program.cs#1)]
+ [!code-vb[System.IO.MemoryMappedFiles_IPC_A#1](../../../samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.memorymappedfiles_ipc_a/vb/program.vb#1)]
 
  **Process C**
 
- ```csharp
-using System;
-using System.IO;
-using System.IO.MemoryMappedFiles;
-using System.Threading;
-
-class Program
-{
-    // Process C:
-    static void Main(string[] args)
-    {
-        try
-        {
-            using (MemoryMappedFile mmf = MemoryMappedFile.OpenExisting("testmap"))
-            {
-
-                Mutex mutex = Mutex.OpenExisting("testmapmutex");
-                mutex.WaitOne();
-
-                using (MemoryMappedViewStream stream = mmf.CreateViewStream(2, 0))
-                {
-                    BinaryWriter writer = new BinaryWriter(stream);
-                    writer.Write(1);
-                }
-                mutex.ReleaseMutex();
-            }
-        }
-        catch (FileNotFoundException)
-        {
-            Console.WriteLine("Memory-mapped file does not exist. Run Process A first, then B.");
-        }
-    }
-}
-```
+ [!code-csharp[System.IO.MemoryMappedFiles_IPC_B#1](../../../samples/snippets/csharp/VS_Snippets_CLR_System/system.io.memorymappedfiles_ipc_b/cs/program.cs#1)]
+ [!code-vb[System.IO.MemoryMappedFiles_IPC_B#1](../../../samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.memorymappedfiles_ipc_b/vb/program.vb#1)]
 
 ## See also
 
-- File and Stream I/O
+- [File and Stream I/O](index.md)

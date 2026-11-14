@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: AddProvider validates provider isn't null"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/extensions/6.0/addprovider-null-check.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 6 breaking change in .NET extensions where AddProvider now validates that the provider argument is not null.
+ms.date: 11/05/2021
 ---
-
 # AddProvider checks for non-null provider
 
-`Microsoft.Extensions.Logging.LoggerFactory` implements `Microsoft.Extensions.Logging.ILoggerFactory` with an `AddProvider(ILoggerProvider)` method. `null` providers aren't accepted and will cause an `System.ArgumentNullException` to be thrown.
+<xref:Microsoft.Extensions.Logging.LoggerFactory?displayProperty=fullName> implements <xref:Microsoft.Extensions.Logging.ILoggerFactory> with an `AddProvider(ILoggerProvider)` method. `null` providers aren't accepted and will cause an <xref:System.ArgumentNullException> to be thrown.
 
 ## Version introduced
 
@@ -17,11 +13,11 @@ license: "CC-BY-4.0"
 
 ## Previous behavior
 
-Previously, `Microsoft.Extensions.Logging.LoggerFactory.AddProvider(Microsoft.Extensions.Logging.ILoggerProvider)` did not perform any validation of the `provider` argument. As such, the method considered `null` to be a "valid" provider and added it to the collection of providers.
+Previously, <xref:Microsoft.Extensions.Logging.LoggerFactory.AddProvider(Microsoft.Extensions.Logging.ILoggerProvider)> did not perform any validation of the `provider` argument. As such, the method considered `null` to be a "valid" provider and added it to the collection of providers.
 
 ## New behavior
 
-Starting in .NET 6, `null` providers aren't accepted, and `Microsoft.Extensions.Logging.LoggerFactory.AddProvider(Microsoft.Extensions.Logging.ILoggerProvider)` throws an `System.ArgumentNullException` if the logging provider argument is `null`. For example, the following code throws an `System.ArgumentNullException`:
+Starting in .NET 6, `null` providers aren't accepted, and <xref:Microsoft.Extensions.Logging.LoggerFactory.AddProvider(Microsoft.Extensions.Logging.ILoggerProvider)> throws an <xref:System.ArgumentNullException> if the logging provider argument is `null`. For example, the following code throws an <xref:System.ArgumentNullException>:
 
 ```csharp
 var factory = new LoggerFactory();
@@ -30,16 +26,16 @@ var factory = new LoggerFactory();
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
-The previous behavior caused some operations inside the class to unnecessarily throw `System.NullReferenceException` exceptions. For example, the `Microsoft.Extensions.Logging.LoggerFactory.Dispose` method will capture the exception and do nothing.
+The previous behavior caused some operations inside the class to unnecessarily throw <xref:System.NullReferenceException> exceptions. For example, the <xref:Microsoft.Extensions.Logging.LoggerFactory.Dispose?displayProperty=nameWithType> method will capture the exception and do nothing.
 
 ## Recommended action
 
-Ensure you're not passing a `null` provider to `Microsoft.Extensions.Logging.LoggerFactory.AddProvider(Microsoft.Extensions.Logging.ILoggerProvider)`.
+Ensure you're not passing a `null` provider to <xref:Microsoft.Extensions.Logging.LoggerFactory.AddProvider(Microsoft.Extensions.Logging.ILoggerProvider)>.
 
 ## Affected APIs
 
-- `Microsoft.Extensions.Logging.LoggerFactory.AddProvider(Microsoft.Extensions.Logging.ILoggerProvider)`
+- <xref:Microsoft.Extensions.Logging.LoggerFactory.AddProvider(Microsoft.Extensions.Logging.ILoggerProvider)?displayProperty=fullName>

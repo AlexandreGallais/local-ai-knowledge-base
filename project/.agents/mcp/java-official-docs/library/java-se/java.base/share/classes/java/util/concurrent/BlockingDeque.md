@@ -1,146 +1,163 @@
----
-title: "BlockingDeque interface (java.util.concurrent) (part 1 of 2)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/BlockingDeque.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # BlockingDeque interface (java.util.concurrent)
 
 ```java
 public interface BlockingDeque<E> extends BlockingQueue<E>, Deque<E>
 ```
 
-A `Deque` that additionally supports blocking operations that wait
+A {@link Deque} that additionally supports blocking operations that wait
 for the deque to become non-empty when retrieving an element, and wait for
 space to become available in the deque when storing an element.
 
-`BlockingDeque` methods come in four forms, with different ways
+<p>{@code BlockingDeque} methods come in four forms, with different ways
 of handling operations that cannot be satisfied immediately, but may be
 satisfied at some point in the future:
 one throws an exception, the second returns a special value (either
-`null` or `false`, depending on the operation), the third
+{@code null} or {@code false}, depending on the operation), the third
 blocks the current thread indefinitely until the operation can succeed,
 and the fourth blocks for only a given maximum time limit before giving
 up.  These methods are summarized in the following table:
 
-Summary of BlockingDeque methods
+<table class="plain">
+<caption>Summary of BlockingDeque methods</caption>
+ <tr>
+   <th id="First" colspan="5"> First Element (Head)</th>
+ </tr>
+ <tr>
+   <td></td>
+   <th id="FThrow" style="font-weight:normal; font-style: italic">Throws exception</th>
+   <th id="FValue" style="font-weight:normal; font-style: italic">Special value</th>
+   <th id="FBlock" style="font-weight:normal; font-style: italic">Blocks</th>
+   <th id="FTimes" style="font-weight:normal; font-style: italic">Times out</th>
+ </tr>
+ <tr>
+   <th id="FInsert" style="text-align:left">Insert</th>
+   <td headers="First FInsert FThrow">{@link #addFirst(Object) addFirst(e)}</td>
+   <td headers="First FInsert FValue">{@link #offerFirst(Object) offerFirst(e)}</td>
+   <td headers="First FInsert FBlock">{@link #putFirst(Object) putFirst(e)}</td>
+   <td headers="First FInsert FTimes">{@link #offerFirst(Object, long, TimeUnit) offerFirst(e, time, unit)}</td>
+ </tr>
+ <tr>
+   <th id="FRemove" style="text-align:left">Remove</th>
+   <td headers="First FRemove FThrow">{@link #removeFirst() removeFirst()}</td>
+   <td headers="First FRemove FValue">{@link #pollFirst() pollFirst()}</td>
+   <td headers="First FRemove FBlock">{@link #takeFirst() takeFirst()}</td>
+   <td headers="First FRemove FTimes">{@link #pollFirst(long, TimeUnit) pollFirst(time, unit)}</td>
+ </tr>
+ <tr>
+   <th id="FExamine" style="text-align:left">Examine</th>
+   <td headers="First FExamine FThrow">{@link #getFirst() getFirst()}</td>
+   <td headers="First FExamine FValue">{@link #peekFirst() peekFirst()}</td>
+   <td headers="First FExamine FBlock" style="font-style:italic">not applicable</td>
+   <td headers="First FExamine FTimes" style="font-style:italic">not applicable</td>
+ </tr>
+ <tr>
+   <th id="Last" colspan="5"> Last Element (Tail)</th>
+ </tr>
+ <tr>
+   <td></td>
+   <th id="LThrow" style="font-weight:normal; font-style: italic">Throws exception</th>
+   <th id="LValue" style="font-weight:normal; font-style: italic">Special value</th>
+   <th id="LBlock" style="font-weight:normal; font-style: italic">Blocks</th>
+   <th id="LTimes" style="font-weight:normal; font-style: italic">Times out</th>
+ </tr>
+ <tr>
+   <th id="LInsert" style="text-align:left">Insert</th>
+   <td headers="Last LInsert LThrow">{@link #addLast(Object) addLast(e)}</td>
+   <td headers="Last LInsert LValue">{@link #offerLast(Object) offerLast(e)}</td>
+   <td headers="Last LInsert LBlock">{@link #putLast(Object) putLast(e)}</td>
+   <td headers="Last LInsert LTimes">{@link #offerLast(Object, long, TimeUnit) offerLast(e, time, unit)}</td>
+ </tr>
+ <tr>
+   <th id="LRemove" style="text-align:left">Remove</th>
+   <td headers="Last LRemove LThrow">{@link #removeLast() removeLast()}</td>
+   <td headers="Last LRemove LValue">{@link #pollLast() pollLast()}</td>
+   <td headers="Last LRemove LBlock">{@link #takeLast() takeLast()}</td>
+   <td headers="Last LRemove LTimes">{@link #pollLast(long, TimeUnit) pollLast(time, unit)}</td>
+ </tr>
+ <tr>
+   <th id="LExamine" style="text-align:left">Examine</th>
+   <td headers="Last LExamine LThrow">{@link #getLast() getLast()}</td>
+   <td headers="Last LExamine LValue">{@link #peekLast() peekLast()}</td>
+   <td headers="Last LExamine LBlock" style="font-style:italic">not applicable</td>
+   <td headers="Last LExamine LTimes" style="font-style:italic">not applicable</td>
+ </tr>
+</table>
 
-    First Element (Head)
-
-   Throws exception
-   Special value
-   Blocks
-   Times out
-
-   Insert
-   addFirst(e)
-   offerFirst(e)
-   putFirst(e)
-   long, TimeUnit) offerFirst(e, time, unit)
-
-   Remove
-   removeFirst()
-   pollFirst()
-   takeFirst()
-   TimeUnit) pollFirst(time, unit)
-
-   Examine
-   getFirst()
-   peekFirst()
-   not applicable
-   not applicable
-
-    Last Element (Tail)
-
-   Throws exception
-   Special value
-   Blocks
-   Times out
-
-   Insert
-   addLast(e)
-   offerLast(e)
-   putLast(e)
-   long, TimeUnit) offerLast(e, time, unit)
-
-   Remove
-   removeLast()
-   pollLast()
-   takeLast()
-   TimeUnit) pollLast(time, unit)
-
-   Examine
-   getLast()
-   peekLast()
-   not applicable
-   not applicable
-
-Like any `BlockingQueue`, a `BlockingDeque` is thread safe,
+<p>Like any {@link BlockingQueue}, a {@code BlockingDeque} is thread safe,
 does not permit null elements, and may (or may not) be
 capacity-constrained.
 
-A `BlockingDeque` implementation may be used directly as a FIFO
-`BlockingQueue`. The methods inherited from the
-`BlockingQueue` interface are precisely equivalent to
-`BlockingDeque` methods as indicated in the following table:
+<p>A {@code BlockingDeque} implementation may be used directly as a FIFO
+{@code BlockingQueue}. The methods inherited from the
+{@code BlockingQueue} interface are precisely equivalent to
+{@code BlockingDeque} methods as indicated in the following table:
 
-Comparison of BlockingQueue and BlockingDeque methods
+<table class="plain">
+<caption>Comparison of BlockingQueue and BlockingDeque methods</caption>
+ <tr>
+   <td></td>
+   <th id="BQueue"> {@code BlockingQueue} Method</th>
+   <th id="BDeque"> Equivalent {@code BlockingDeque} Method</th>
+ </tr>
+ <tr>
+   <th id="Insert" rowspan="4" style="text-align:left; vertical-align:top">Insert</th>
+   <th id="add" style="font-weight:normal; text-align:left">{@link #add(Object) add(e)}</th>
+   <td headers="Insert BDeque add">{@link #addLast(Object) addLast(e)}</td>
+ </tr>
+ <tr>
+   <th id="offer1" style="font-weight:normal; text-align:left">{@link #offer(Object) offer(e)}</th>
+   <td headers="Insert BDeque offer1">{@link #offerLast(Object) offerLast(e)}</td>
+ </tr>
+ <tr>
+   <th id="put" style="font-weight:normal; text-align:left">{@link #put(Object) put(e)}</th>
+   <td headers="Insert BDeque put">{@link #putLast(Object) putLast(e)}</td>
+ </tr>
+ <tr>
+   <th id="offer2" style="font-weight:normal; text-align:left">{@link #offer(Object, long, TimeUnit) offer(e, time, unit)}</th>
+   <td headers="Insert BDeque offer2">{@link #offerLast(Object, long, TimeUnit) offerLast(e, time, unit)}</td>
+ </tr>
+ <tr>
+   <th id="Remove" rowspan="4" style="text-align:left; vertical-align:top">Remove</th>
+   <th id="remove" style="font-weight:normal; text-align:left">{@link #remove() remove()}</th>
+   <td headers="Remove BDeque remove">{@link #removeFirst() removeFirst()}</td>
+ </tr>
+ <tr>
+   <th id="poll1" style="font-weight:normal; text-align:left">{@link #poll() poll()}</th>
+   <td headers="Remove BDeque poll1">{@link #pollFirst() pollFirst()}</td>
+ </tr>
+ <tr>
+   <th id="take" style="font-weight:normal; text-align:left">{@link #take() take()}</th>
+   <td headers="Remove BDeque take">{@link #takeFirst() takeFirst()}</td>
+ </tr>
+ <tr>
+   <th id="poll2" style="font-weight:normal; text-align:left">{@link #poll(long, TimeUnit) poll(time, unit)}</th>
+   <td headers="Remove BDeque poll2">{@link #pollFirst(long, TimeUnit) pollFirst(time, unit)}</td>
+ </tr>
+ <tr>
+   <th id="Examine" rowspan="2" style="text-align:left; vertical-align:top">Examine</th>
+   <th id="element" style="font-weight:normal; text-align:left">{@link #element() element()}</th>
+   <td headers="Examine BDeque element">{@link #getFirst() getFirst()}</td>
+ </tr>
+ <tr>
+   <th id="peek" style="font-weight:normal; text-align:left">{@link #peek() peek()}</th>
+   <td headers="Examine BDeque peek">{@link #peekFirst() peekFirst()}</td>
+ </tr>
+</table>
 
-    `BlockingQueue` Method
-    Equivalent `BlockingDeque` Method
-
-   Insert
-   add(e)
-   addLast(e)
-
-   offer(e)
-   offerLast(e)
-
-   put(e)
-   putLast(e)
-
-   long, TimeUnit) offer(e, time, unit)
-   long, TimeUnit) offerLast(e, time, unit)
-
-   Remove
-   remove()
-   removeFirst()
-
-   poll()
-   pollFirst()
-
-   take()
-   takeFirst()
-
-   TimeUnit) poll(time, unit)
-   TimeUnit) pollFirst(time, unit)
-
-   Examine
-   element()
-   getFirst()
-
-   peek()
-   peekFirst()
-
-Memory consistency effects: As with other concurrent
+<p>Memory consistency effects: As with other concurrent
 collections, actions in a thread prior to placing an object into a
-`BlockingDeque`
-*happen-before*
+{@code BlockingDeque}
+<a href="package-summary.html#MemoryVisibility"><i>happen-before</i></a>
 actions subsequent to the access or removal of that element from
-the `BlockingDeque` in another thread.
+the {@code BlockingDeque} in another thread.
 
-This interface is a member of the
+<p>This interface is a member of the
+<a href="{@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+Java Collections Framework</a>.
 
-Java Collections Framework.
-
-Parameters:
-
-- `<E>`: the type of elements held in this deque
-
-**Since:** 1.6
+@since 1.6
+@author Doug Lea
+@param <E> the type of elements held in this deque
 
 ## BlockingDeque.addFirst(E)
 
@@ -150,20 +167,15 @@ void addFirst(E e)
 
 Inserts the specified element at the front of this deque if it is
 possible to do so immediately without violating capacity restrictions,
-throwing an `IllegalStateException` if no space is currently
+throwing an {@code IllegalStateException} if no space is currently
 available.  When using a capacity-restricted deque, it is generally
-preferable to use offerFirst.
+preferable to use {@link #offerFirst(Object) offerFirst}.
 
-Parameters:
-
-- `e`: the element to add
-
-Throws:
-
-- `IllegalStateException`: (inherited documentation)
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: if the specified element is null
-- `IllegalArgumentException`: (inherited documentation)
+@param e the element to add
+@throws IllegalStateException {@inheritDoc}
+@throws ClassCastException {@inheritDoc}
+@throws NullPointerException if the specified element is null
+@throws IllegalArgumentException {@inheritDoc}
 
 ## BlockingDeque.addLast(E)
 
@@ -173,20 +185,15 @@ void addLast(E e)
 
 Inserts the specified element at the end of this deque if it is
 possible to do so immediately without violating capacity restrictions,
-throwing an `IllegalStateException` if no space is currently
+throwing an {@code IllegalStateException} if no space is currently
 available.  When using a capacity-restricted deque, it is generally
-preferable to use offerLast.
+preferable to use {@link #offerLast(Object) offerLast}.
 
-Parameters:
-
-- `e`: the element to add
-
-Throws:
-
-- `IllegalStateException`: (inherited documentation)
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: if the specified element is null
-- `IllegalArgumentException`: (inherited documentation)
+@param e the element to add
+@throws IllegalStateException {@inheritDoc}
+@throws ClassCastException {@inheritDoc}
+@throws NullPointerException if the specified element is null
+@throws IllegalArgumentException {@inheritDoc}
 
 ## BlockingDeque.offerFirst(E)
 
@@ -196,21 +203,16 @@ boolean offerFirst(E e)
 
 Inserts the specified element at the front of this deque if it is
 possible to do so immediately without violating capacity restrictions,
-returning `true` upon success and `false` if no space is
+returning {@code true} upon success and {@code false} if no space is
 currently available.
 When using a capacity-restricted deque, this method is generally
-preferable to the addFirst method, which can
+preferable to the {@link #addFirst(Object) addFirst} method, which can
 fail to insert an element only by throwing an exception.
 
-Parameters:
-
-- `e`: the element to add
-
-Throws:
-
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: if the specified element is null
-- `IllegalArgumentException`: (inherited documentation)
+@param e the element to add
+@throws ClassCastException {@inheritDoc}
+@throws NullPointerException if the specified element is null
+@throws IllegalArgumentException {@inheritDoc}
 
 ## BlockingDeque.offerLast(E)
 
@@ -220,21 +222,16 @@ boolean offerLast(E e)
 
 Inserts the specified element at the end of this deque if it is
 possible to do so immediately without violating capacity restrictions,
-returning `true` upon success and `false` if no space is
+returning {@code true} upon success and {@code false} if no space is
 currently available.
 When using a capacity-restricted deque, this method is generally
-preferable to the addLast method, which can
+preferable to the {@link #addLast(Object) addLast} method, which can
 fail to insert an element only by throwing an exception.
 
-Parameters:
-
-- `e`: the element to add
-
-Throws:
-
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: if the specified element is null
-- `IllegalArgumentException`: (inherited documentation)
+@param e the element to add
+@throws ClassCastException {@inheritDoc}
+@throws NullPointerException if the specified element is null
+@throws IllegalArgumentException {@inheritDoc}
 
 ## BlockingDeque.putFirst(E)
 
@@ -245,16 +242,13 @@ void putFirst(E e) throws InterruptedException
 Inserts the specified element at the front of this deque,
 waiting if necessary for space to become available.
 
-Parameters:
-
-- `e`: the element to add
-
-Throws:
-
-- `InterruptedException`: if interrupted while waiting
-- `ClassCastException`: if the class of the specified element prevents it from being added to this deque
-- `NullPointerException`: if the specified element is null
-- `IllegalArgumentException`: if some property of the specified element prevents it from being added to this deque
+@param e the element to add
+@throws InterruptedException if interrupted while waiting
+@throws ClassCastException if the class of the specified element
+        prevents it from being added to this deque
+@throws NullPointerException if the specified element is null
+@throws IllegalArgumentException if some property of the specified
+        element prevents it from being added to this deque
 
 ## BlockingDeque.putLast(E)
 
@@ -265,16 +259,13 @@ void putLast(E e) throws InterruptedException
 Inserts the specified element at the end of this deque,
 waiting if necessary for space to become available.
 
-Parameters:
-
-- `e`: the element to add
-
-Throws:
-
-- `InterruptedException`: if interrupted while waiting
-- `ClassCastException`: if the class of the specified element prevents it from being added to this deque
-- `NullPointerException`: if the specified element is null
-- `IllegalArgumentException`: if some property of the specified element prevents it from being added to this deque
+@param e the element to add
+@throws InterruptedException if interrupted while waiting
+@throws ClassCastException if the class of the specified element
+        prevents it from being added to this deque
+@throws NullPointerException if the specified element is null
+@throws IllegalArgumentException if some property of the specified
+        element prevents it from being added to this deque
 
 ## BlockingDeque.offerFirst(E, long, TimeUnit)
 
@@ -286,21 +277,19 @@ Inserts the specified element at the front of this deque,
 waiting up to the specified wait time if necessary for space to
 become available.
 
-Parameters:
-
-- `e`: the element to add
-- `timeout`: how long to wait before giving up, in units of `unit`
-- `unit`: a `TimeUnit` determining how to interpret the `timeout` parameter
-
-**Returns:** `true` if successful, or `false` if
+@param e the element to add
+@param timeout how long to wait before giving up, in units of
+       {@code unit}
+@param unit a {@code TimeUnit} determining how to interpret the
+       {@code timeout} parameter
+@return {@code true} if successful, or {@code false} if
         the specified waiting time elapses before space is available
-
-Throws:
-
-- `InterruptedException`: if interrupted while waiting
-- `ClassCastException`: if the class of the specified element prevents it from being added to this deque
-- `NullPointerException`: if the specified element is null
-- `IllegalArgumentException`: if some property of the specified element prevents it from being added to this deque
+@throws InterruptedException if interrupted while waiting
+@throws ClassCastException if the class of the specified element
+        prevents it from being added to this deque
+@throws NullPointerException if the specified element is null
+@throws IllegalArgumentException if some property of the specified
+        element prevents it from being added to this deque
 
 ## BlockingDeque.offerLast(E, long, TimeUnit)
 
@@ -312,21 +301,19 @@ Inserts the specified element at the end of this deque,
 waiting up to the specified wait time if necessary for space to
 become available.
 
-Parameters:
-
-- `e`: the element to add
-- `timeout`: how long to wait before giving up, in units of `unit`
-- `unit`: a `TimeUnit` determining how to interpret the `timeout` parameter
-
-**Returns:** `true` if successful, or `false` if
+@param e the element to add
+@param timeout how long to wait before giving up, in units of
+       {@code unit}
+@param unit a {@code TimeUnit} determining how to interpret the
+       {@code timeout} parameter
+@return {@code true} if successful, or {@code false} if
         the specified waiting time elapses before space is available
-
-Throws:
-
-- `InterruptedException`: if interrupted while waiting
-- `ClassCastException`: if the class of the specified element prevents it from being added to this deque
-- `NullPointerException`: if the specified element is null
-- `IllegalArgumentException`: if some property of the specified element prevents it from being added to this deque
+@throws InterruptedException if interrupted while waiting
+@throws ClassCastException if the class of the specified element
+        prevents it from being added to this deque
+@throws NullPointerException if the specified element is null
+@throws IllegalArgumentException if some property of the specified
+        element prevents it from being added to this deque
 
 ## BlockingDeque.takeFirst()
 
@@ -337,11 +324,8 @@ E takeFirst() throws InterruptedException
 Retrieves and removes the first element of this deque, waiting
 if necessary until an element becomes available.
 
-**Returns:** the head of this deque
-
-Throws:
-
-- `InterruptedException`: if interrupted while waiting
+@return the head of this deque
+@throws InterruptedException if interrupted while waiting
 
 ## BlockingDeque.takeLast()
 
@@ -352,11 +336,8 @@ E takeLast() throws InterruptedException
 Retrieves and removes the last element of this deque, waiting
 if necessary until an element becomes available.
 
-**Returns:** the tail of this deque
-
-Throws:
-
-- `InterruptedException`: if interrupted while waiting
+@return the tail of this deque
+@throws InterruptedException if interrupted while waiting
 
 ## BlockingDeque.pollFirst(long, TimeUnit)
 
@@ -368,17 +349,13 @@ Retrieves and removes the first element of this deque, waiting
 up to the specified wait time if necessary for an element to
 become available.
 
-Parameters:
-
-- `timeout`: how long to wait before giving up, in units of `unit`
-- `unit`: a `TimeUnit` determining how to interpret the `timeout` parameter
-
-**Returns:** the head of this deque, or `null` if the specified
+@param timeout how long to wait before giving up, in units of
+       {@code unit}
+@param unit a {@code TimeUnit} determining how to interpret the
+       {@code timeout} parameter
+@return the head of this deque, or {@code null} if the specified
         waiting time elapses before an element is available
-
-Throws:
-
-- `InterruptedException`: if interrupted while waiting
+@throws InterruptedException if interrupted while waiting
 
 ## BlockingDeque.pollLast(long, TimeUnit)
 
@@ -390,17 +367,13 @@ Retrieves and removes the last element of this deque, waiting
 up to the specified wait time if necessary for an element to
 become available.
 
-Parameters:
-
-- `timeout`: how long to wait before giving up, in units of `unit`
-- `unit`: a `TimeUnit` determining how to interpret the `timeout` parameter
-
-**Returns:** the tail of this deque, or `null` if the specified
+@param timeout how long to wait before giving up, in units of
+       {@code unit}
+@param unit a {@code TimeUnit} determining how to interpret the
+       {@code timeout} parameter
+@return the tail of this deque, or {@code null} if the specified
         waiting time elapses before an element is available
-
-Throws:
-
-- `InterruptedException`: if interrupted while waiting
+@throws InterruptedException if interrupted while waiting
 
 ## BlockingDeque.removeFirstOccurrence(Object)
 
@@ -410,21 +383,18 @@ boolean removeFirstOccurrence(Object o)
 
 Removes the first occurrence of the specified element from this deque.
 If the deque does not contain the element, it is unchanged.
-More formally, removes the first element `e` such that
-`o.equals(e)` (if such an element exists).
-Returns `true` if this deque contained the specified element
+More formally, removes the first element {@code e} such that
+{@code o.equals(e)} (if such an element exists).
+Returns {@code true} if this deque contained the specified element
 (or equivalently, if this deque changed as a result of the call).
 
-Parameters:
-
-- `o`: element to be removed from this deque, if present
-
-**Returns:** `true` if an element was removed as a result of this call
-
-Throws:
-
-- `ClassCastException`: if the class of the specified element is incompatible with this deque (optional)
-- `NullPointerException`: if the specified element is null (optional)
+@param o element to be removed from this deque, if present
+@return {@code true} if an element was removed as a result of this call
+@throws ClassCastException if the class of the specified element
+        is incompatible with this deque
+(<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
+@throws NullPointerException if the specified element is null
+(<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
 
 ## BlockingDeque.removeLastOccurrence(Object)
 
@@ -434,21 +404,18 @@ boolean removeLastOccurrence(Object o)
 
 Removes the last occurrence of the specified element from this deque.
 If the deque does not contain the element, it is unchanged.
-More formally, removes the last element `e` such that
-`o.equals(e)` (if such an element exists).
-Returns `true` if this deque contained the specified element
+More formally, removes the last element {@code e} such that
+{@code o.equals(e)} (if such an element exists).
+Returns {@code true} if this deque contained the specified element
 (or equivalently, if this deque changed as a result of the call).
 
-Parameters:
-
-- `o`: element to be removed from this deque, if present
-
-**Returns:** `true` if an element was removed as a result of this call
-
-Throws:
-
-- `ClassCastException`: if the class of the specified element is incompatible with this deque (optional)
-- `NullPointerException`: if the specified element is null (optional)
+@param o element to be removed from this deque, if present
+@return {@code true} if an element was removed as a result of this call
+@throws ClassCastException if the class of the specified element
+        is incompatible with this deque
+(<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
+@throws NullPointerException if the specified element is null
+(<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
 
 ## BlockingDeque.add(E)
 
@@ -459,23 +426,20 @@ boolean add(E e)
 Inserts the specified element into the queue represented by this deque
 (in other words, at the tail of this deque) if it is possible to do so
 immediately without violating capacity restrictions, returning
-`true` upon success and throwing an
-`IllegalStateException` if no space is currently available.
+{@code true} upon success and throwing an
+{@code IllegalStateException} if no space is currently available.
 When using a capacity-restricted deque, it is generally preferable to
-use offer.
+use {@link #offer(Object) offer}.
 
-This method is equivalent to addLast.
+<p>This method is equivalent to {@link #addLast(Object) addLast}.
 
-Parameters:
-
-- `e`: the element to add
-
-Throws:
-
-- `IllegalStateException`: (inherited documentation)
-- `ClassCastException`: if the class of the specified element prevents it from being added to this deque
-- `NullPointerException`: if the specified element is null
-- `IllegalArgumentException`: if some property of the specified element prevents it from being added to this deque
+@param e the element to add
+@throws IllegalStateException {@inheritDoc}
+@throws ClassCastException if the class of the specified element
+        prevents it from being added to this deque
+@throws NullPointerException if the specified element is null
+@throws IllegalArgumentException if some property of the specified
+        element prevents it from being added to this deque
 
 ## BlockingDeque.offer(E)
 
@@ -486,22 +450,19 @@ boolean offer(E e)
 Inserts the specified element into the queue represented by this deque
 (in other words, at the tail of this deque) if it is possible to do so
 immediately without violating capacity restrictions, returning
-`true` upon success and `false` if no space is currently
+{@code true} upon success and {@code false} if no space is currently
 available.  When using a capacity-restricted deque, this method is
-generally preferable to the `add` method, which can fail to
+generally preferable to the {@link #add} method, which can fail to
 insert an element only by throwing an exception.
 
-This method is equivalent to offerLast.
+<p>This method is equivalent to {@link #offerLast(Object) offerLast}.
 
-Parameters:
-
-- `e`: the element to add
-
-Throws:
-
-- `ClassCastException`: if the class of the specified element prevents it from being added to this deque
-- `NullPointerException`: if the specified element is null
-- `IllegalArgumentException`: if some property of the specified element prevents it from being added to this deque
+@param e the element to add
+@throws ClassCastException if the class of the specified element
+        prevents it from being added to this deque
+@throws NullPointerException if the specified element is null
+@throws IllegalArgumentException if some property of the specified
+        element prevents it from being added to this deque
 
 ## BlockingDeque.put(E)
 
@@ -513,15 +474,208 @@ Inserts the specified element into the queue represented by this deque
 (in other words, at the tail of this deque), waiting if necessary for
 space to become available.
 
-This method is equivalent to putLast.
+<p>This method is equivalent to {@link #putLast(Object) putLast}.
 
-Parameters:
+@param e the element to add
+@throws InterruptedException {@inheritDoc}
+@throws ClassCastException if the class of the specified element
+        prevents it from being added to this deque
+@throws NullPointerException if the specified element is null
+@throws IllegalArgumentException if some property of the specified
+        element prevents it from being added to this deque
 
-- `e`: the element to add
+## BlockingDeque.offer(E, long, TimeUnit)
 
-Throws:
+```java
+boolean offer(E e, long timeout, TimeUnit unit) throws InterruptedException
+```
 
-- `InterruptedException`: (inherited documentation)
-- `ClassCastException`: if the class of the specified element prevents it from being added to this deque
-- `NullPointerException`: if the specified element is null
-- `IllegalArgumentException`: if some property of the specified element prevents it from being added to this deque
+Inserts the specified element into the queue represented by this deque
+(in other words, at the tail of this deque), waiting up to the
+specified wait time if necessary for space to become available.
+
+<p>This method is equivalent to
+{@link #offerLast(Object,long,TimeUnit) offerLast}.
+
+@param e the element to add
+@return {@code true} if the element was added to this deque, else
+        {@code false}
+@throws InterruptedException {@inheritDoc}
+@throws ClassCastException if the class of the specified element
+        prevents it from being added to this deque
+@throws NullPointerException if the specified element is null
+@throws IllegalArgumentException if some property of the specified
+        element prevents it from being added to this deque
+
+## BlockingDeque.remove()
+
+```java
+E remove()
+```
+
+Retrieves and removes the head of the queue represented by this deque
+(in other words, the first element of this deque).
+This method differs from {@link #poll() poll()} only in that it
+throws an exception if this deque is empty.
+
+<p>This method is equivalent to {@link #removeFirst() removeFirst}.
+
+@return the head of the queue represented by this deque
+@throws NoSuchElementException if this deque is empty
+
+## BlockingDeque.poll()
+
+```java
+E poll()
+```
+
+Retrieves and removes the head of the queue represented by this deque
+(in other words, the first element of this deque), or returns
+{@code null} if this deque is empty.
+
+<p>This method is equivalent to {@link #pollFirst()}.
+
+@return the head of this deque, or {@code null} if this deque is empty
+
+## BlockingDeque.take()
+
+```java
+E take() throws InterruptedException
+```
+
+Retrieves and removes the head of the queue represented by this deque
+(in other words, the first element of this deque), waiting if
+necessary until an element becomes available.
+
+<p>This method is equivalent to {@link #takeFirst() takeFirst}.
+
+@return the head of this deque
+@throws InterruptedException if interrupted while waiting
+
+## BlockingDeque.poll(long, TimeUnit)
+
+```java
+E poll(long timeout, TimeUnit unit) throws InterruptedException
+```
+
+Retrieves and removes the head of the queue represented by this deque
+(in other words, the first element of this deque), waiting up to the
+specified wait time if necessary for an element to become available.
+
+<p>This method is equivalent to
+{@link #pollFirst(long,TimeUnit) pollFirst}.
+
+@return the head of this deque, or {@code null} if the
+        specified waiting time elapses before an element is available
+@throws InterruptedException if interrupted while waiting
+
+## BlockingDeque.element()
+
+```java
+E element()
+```
+
+Retrieves, but does not remove, the head of the queue represented by
+this deque (in other words, the first element of this deque).
+This method differs from {@link #peek() peek} only in that it throws an
+exception if this deque is empty.
+
+<p>This method is equivalent to {@link #getFirst() getFirst}.
+
+@return the head of this deque
+@throws NoSuchElementException if this deque is empty
+
+## BlockingDeque.peek()
+
+```java
+E peek()
+```
+
+Retrieves, but does not remove, the head of the queue represented by
+this deque (in other words, the first element of this deque), or
+returns {@code null} if this deque is empty.
+
+<p>This method is equivalent to {@link #peekFirst() peekFirst}.
+
+@return the head of this deque, or {@code null} if this deque is empty
+
+## BlockingDeque.remove(Object)
+
+```java
+boolean remove(Object o)
+```
+
+Removes the first occurrence of the specified element from this deque.
+If the deque does not contain the element, it is unchanged.
+More formally, removes the first element {@code e} such that
+{@code o.equals(e)} (if such an element exists).
+Returns {@code true} if this deque contained the specified element
+(or equivalently, if this deque changed as a result of the call).
+
+<p>This method is equivalent to
+{@link #removeFirstOccurrence(Object) removeFirstOccurrence}.
+
+@param o element to be removed from this deque, if present
+@return {@code true} if this deque changed as a result of the call
+@throws ClassCastException if the class of the specified element
+        is incompatible with this deque
+(<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
+@throws NullPointerException if the specified element is null
+(<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
+
+## BlockingDeque.contains(Object)
+
+```java
+boolean contains(Object o)
+```
+
+Returns {@code true} if this deque contains the specified element.
+More formally, returns {@code true} if and only if this deque contains
+at least one element {@code e} such that {@code o.equals(e)}.
+
+@param o object to be checked for containment in this deque
+@return {@code true} if this deque contains the specified element
+@throws ClassCastException if the class of the specified element
+        is incompatible with this deque
+(<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
+@throws NullPointerException if the specified element is null
+(<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
+
+## BlockingDeque.size()
+
+```java
+int size()
+```
+
+Returns the number of elements in this deque.
+
+@return the number of elements in this deque
+
+## BlockingDeque.iterator()
+
+```java
+Iterator<E> iterator()
+```
+
+Returns an iterator over the elements in this deque in proper sequence.
+The elements will be returned in order from first (head) to last (tail).
+
+@return an iterator over the elements in this deque in proper sequence
+
+## BlockingDeque.push(E)
+
+```java
+void push(E e)
+```
+
+Pushes an element onto the stack represented by this deque (in other
+words, at the head of this deque) if it is possible to do so
+immediately without violating capacity restrictions, throwing an
+{@code IllegalStateException} if no space is currently available.
+
+<p>This method is equivalent to {@link #addFirst(Object) addFirst}.
+
+@throws IllegalStateException {@inheritDoc}
+@throws ClassCastException {@inheritDoc}
+@throws NullPointerException if the specified element is null
+@throws IllegalArgumentException {@inheritDoc}

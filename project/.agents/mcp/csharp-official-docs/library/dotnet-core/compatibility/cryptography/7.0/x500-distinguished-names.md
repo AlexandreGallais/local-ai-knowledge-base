@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: X500DistinguishedName parsing of friendly names"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/cryptography/7.0/x500-distinguished-names.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 7 breaking change in cryptography where X500DistinguishedName parsing doesn't permit friendly names where OIDs are expected on MacOS and Linux.
+ms.date: 05/19/2022
+ms.custom: linux-related-content
 ---
-
 # X500DistinguishedName parsing of friendly names
 
 On Linux and macOS, a distinguished name with a relative distinguished name component that is prefixed with "OID." followed by a friendly name will no longer parse. For example, `OID.STREET=MainStreet` no longer parses.
@@ -17,7 +14,7 @@ On Linux and macOS only, a distinguished name would successfully parse even if t
 
 ## New behavior
 
-Attempting to parse a distinguished name with a component prefixed with "OID." but not followed by a well-formed, dotted-decimal OID throws a `System.Security.Cryptography.CryptographicException`.
+Attempting to parse a distinguished name with a component prefixed with "OID." but not followed by a well-formed, dotted-decimal OID throws a <xref:System.Security.Cryptography.CryptographicException>.
 
 ## Version introduced
 
@@ -25,7 +22,7 @@ Attempting to parse a distinguished name with a component prefixed with "OID." b
 
 ## Type of breaking change
 
-This change can affect binary compatibility.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 
@@ -37,5 +34,5 @@ Change "OID."-prefixed relative distinguished name components to use an OID, suc
 
 ## Affected APIs
 
-- `System.Security.Cryptography.X509Certificates.X500DistinguishedName.#ctor(System.String)`
-- `System.Security.Cryptography.X509Certificates.X500DistinguishedName.#ctor(System.String,System.Security.Cryptography.X509Certificates.X500DistinguishedNameFlags)`
+- <xref:System.Security.Cryptography.X509Certificates.X500DistinguishedName.%23ctor(System.String)>
+- <xref:System.Security.Cryptography.X509Certificates.X500DistinguishedName.%23ctor(System.String,System.Security.Cryptography.X509Certificates.X500DistinguishedNameFlags)>

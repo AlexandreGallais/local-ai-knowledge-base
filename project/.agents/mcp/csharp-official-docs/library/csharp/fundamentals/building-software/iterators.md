@@ -1,58 +1,26 @@
 ---
 title: "Iterators"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/fundamentals/building-software/iterators.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how C# iterator methods produce IEnumerable sequences with yield return and yield break for use with foreach.
+ms.date: 10/15/2026
+ms.topic: concept-article
+ai-usage: ai-generated
 ---
 
 # Iterators
 
 Choose an iterator when you want to return a sequence whose elements callers can consume one at a time, without first building the complete result in a collection. This approach fits generated values, filters with custom control flow, and sequences that callers might stop reading early. Compared with a completed collection, an iterator changes when the work happens, not just how you write it.
 
-> **Tip:**
-> This article teaches synchronous iterators for developers who know methods, loops, and collections. For complete `yield` syntax and restrictions, see the `yield` statement reference.
+> [!TIP]
+> This article teaches synchronous iterators for developers who know methods, loops, and collections. For complete `yield` syntax and restrictions, see the [`yield` statement reference](../../language-reference/statements/yield.md).
 
-An *iterator method* produces a sequence of values one at a time. This article focuses on iterator methods that return `System.Collections.Generic.IEnumerable`1`, whose values callers usually consume with a `foreach` statement.
+An *iterator method* produces a sequence of values one at a time. This article focuses on iterator methods that return <xref:System.Collections.Generic.IEnumerable`1>, whose values callers usually consume with a `foreach` statement.
 
 ## Produce elements with `yield return`
 
 Use `yield return` to provide the next element in the sequence. The following iterator selects acceptable temperature readings from a sensor. In this scenario, `-1` marks the end of the sensor data.
 
-```csharp
-int[] readings = [21, 27, 24, -1, 19];
+:::code language="csharp" source="snippets/iterators/Program.cs" id="IteratorMethod":::
 
-IEnumerable<int> acceptedReadings =
-    SelectTemperatures(readings, maximum: 25);
-
-Console.WriteLine("Sequence created.");
-
-foreach (int temperature in acceptedReadings)
-{
-    Console.WriteLine($"Accepted: {temperature}°C");
-}
-
-static IEnumerable<int> SelectTemperatures(
-    IEnumerable<int> readings,
-    int maximum)
-{
-    foreach (int reading in readings)
-    {
-        Console.WriteLine($"Checking {reading}°C");
-
-        if (reading == -1)
-        {
-            yield break;
-        }
-
-        if (reading <= maximum)
-        {
-            yield return reading;
-        }
-    }
-}
-```
 `SelectTemperatures` returns `IEnumerable<int>`, which represents a sequence of `int` values. Each `yield return reading` provides one value to the `foreach` loop. After the caller handles that value, the iterator continues with the next input.
 
 Use the generic `IEnumerable<T>` form for most modern C# code. The type argument, such as `int`, tells callers which element type the sequence contains.
@@ -115,13 +83,13 @@ var comfortableReadings = SelectTemperatures(readings, 25)
 
 The iterator and LINQ operation remain deferred until code enumerates `comfortableReadings`.
 
-For asynchronous sequences, see Generate and consume asynchronous streams. For custom enumeration patterns and all `yield` restrictions, use the language reference.
+For asynchronous sequences, see [Generate and consume asynchronous streams](../../asynchronous-programming/generate-consume-asynchronous-stream.md). For custom enumeration patterns and all `yield` restrictions, use the [language reference](../../language-reference/statements/yield.md).
 
 ## See also
 
-- Building software
-- Lambda expressions
-- Local functions
-- `foreach` statement
-- `yield` statement
-- LINQ
+- [Building software](index.md)
+- [Lambda expressions](lambdas.md)
+- [Local functions](local-functions.md)
+- [`foreach` statement](../../language-reference/statements/iteration-statements.md#the-foreach-statement)
+- [`yield` statement](../../language-reference/statements/yield.md)
+- [LINQ](../statements/linq.md)

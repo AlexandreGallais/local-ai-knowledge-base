@@ -1,14 +1,7 @@
 ---
-title: "no-whitespace-before-property"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-whitespace-before-property.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-whitespace-before-property
+rule_type: layout
 ---
-
-# no-whitespace-before-property
-
 JavaScript allows whitespace between objects and their properties. However, inconsistent spacing can make code harder to read and can lead to errors.
 
 ```js
@@ -28,7 +21,7 @@ foo
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-whitespace-before-property: "error"*/
@@ -48,9 +41,11 @@ foo
   .bar(). baz()
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-whitespace-before-property: "error"*/
@@ -74,6 +69,8 @@ foo.
   bar().
   baz()
 ```
+
+:::
 
 ## When Not To Use It
 

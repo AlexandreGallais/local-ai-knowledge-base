@@ -1,12 +1,3 @@
----
-title: "alloc::borrow"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/alloc/src/borrow.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # alloc::borrow
 
 A module for working with borrowed data.
@@ -44,7 +35,7 @@ Creates owned data from borrowed data, usually by cloning.
 
 Basic usage:
 
-```rust
+```
 let s: &str = "a";
 let ss: String = s.to_owned();
 
@@ -60,13 +51,13 @@ fn clone_into(&self, target: &mut Self::Owned)
 
 Uses borrowed data to replace owned data, usually by cloning.
 
-This is borrow-generalized version of `Clone::clone_from`.
+This is borrow-generalized version of [`Clone::clone_from`].
 
 # Examples
 
 Basic usage:
 
-```rust
+```
 let mut s: String = String::new();
 "hello".clone_into(&mut s);
 
@@ -93,13 +84,13 @@ is desired, `to_mut` will obtain a mutable reference to an owned
 value, cloning if necessary.
 
 If you need reference-counting pointers, note that
-`Rc::make_mut`[crate::rc::Rc::make_mut] and
-`Arc::make_mut`[crate::sync::Arc::make_mut] can provide clone-on-write
+[`Rc::make_mut`][crate::rc::Rc::make_mut] and
+[`Arc::make_mut`][crate::sync::Arc::make_mut] can provide clone-on-write
 functionality as well.
 
 # Examples
 
-```rust
+```
 use std::borrow::Cow;
 
 fn abs_all(input: &mut Cow<'_, [i32]>) {
@@ -129,7 +120,7 @@ abs_all(&mut input);
 
 Another example showing how to keep `Cow` in a struct:
 
-```rust
+```
 use std::borrow::Cow;
 
 struct Items<'a, X> where [X]: ToOwned<Owned = Vec<X>> {
@@ -174,7 +165,7 @@ Clones the data if it is not already owned.
 
 # Examples
 
-```rust
+```
 use std::borrow::Cow;
 
 let mut cow = Cow::Borrowed("foo");
@@ -200,7 +191,7 @@ Clones the data if it is not already owned.
 
 Calling `into_owned` on a `Cow::Borrowed` returns a clone of the borrowed data:
 
-```rust
+```
 use std::borrow::Cow;
 
 let s = "Hello world!";
@@ -215,7 +206,7 @@ assert_eq!(
 Calling `into_owned` on a `Cow::Owned` returns the owned data. The data is moved out of the
 `Cow` without being cloned.
 
-```rust
+```
 use std::borrow::Cow;
 
 let s = "Hello world!";

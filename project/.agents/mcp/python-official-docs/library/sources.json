@@ -8,8 +8,6 @@
       "version": "3.15",
       "license": "PSF-2.0 AND 0BSD",
       "attribution": "Python Software Foundation",
-      "flavor": "markdown",
-      "core": false,
       "paths": [
         "Doc/library/",
         "Doc/reference/",
@@ -25,8 +23,7 @@
         "Doc/howto",
         "Doc/faq",
         "Doc/whatsnew"
-      ],
-      "converter": "rst"
+      ]
     },
     {
       "tool": "inkex",
@@ -36,12 +33,16 @@
       "version": "1.4.1",
       "license": "GPL-2.0-or-later",
       "attribution": "The Inkscape extension developers",
-      "flavor": "markdown",
-      "core": false,
-      "paths": ["inkex/"],
-      "docs": ["inkex"],
-      "exclude": ["inkex/deprecated-simple"],
-      "converter": "python-docstrings"
+      "paths": [
+        "inkex/"
+      ],
+      "docs": [
+        "inkex"
+      ],
+      "exclude": [
+        "inkex/deprecated-simple"
+      ],
+      "extract": "python-docstrings"
     },
     {
       "tool": "inkscape-extensions-guide",
@@ -51,15 +52,14 @@
       "version": "1.4.1",
       "license": "GPL-2.0-or-later",
       "attribution": "The Inkscape extension developers",
-      "flavor": "markdown",
-      "core": false,
-      "paths": ["docs/"],
+      "paths": [
+        "docs/"
+      ],
       "docs": [
         "docs/authors",
         "docs/tutorial",
         "docs/dev"
-      ],
-      "converter": "rst"
+      ]
     }
   ]
 }

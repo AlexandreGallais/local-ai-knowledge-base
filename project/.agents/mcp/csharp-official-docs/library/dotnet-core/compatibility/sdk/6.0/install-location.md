@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: .NET can't be installed to custom location"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/6.0/install-location.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 6 where .NET can no longer be installed to a custom location using the MSI installer on Windows.
+ms.date: 08/02/2023
 ---
-
 # .NET can't be installed to custom location
 
-You can no longer change the installation path of .NET with the Windows Installer package. To install .NET to a different path, use the dotnet-install scripts.
+You can no longer change the installation path of .NET with the Windows Installer package. To install .NET to a different path, use the [dotnet-install scripts](../../../tools/dotnet-install-script.md).
 
 ## Version introduced
 
@@ -29,7 +25,7 @@ To support SxS architecture installs on ARM64, the x64 version of dotnet must be
 
 ## Recommended action
 
-To install to a custom location, use install scripts instead.
+To install to a custom location, use [install scripts](/powershell/module/powershellget/install-script) instead.
 
 ## Affected APIs
 

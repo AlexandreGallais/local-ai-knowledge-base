@@ -1,10 +1,6 @@
 ---
-title: "tags | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/tags.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: tags | Config
+outline: deep
 ---
 
 # tags <Version>4.1.0</Version> {#tags}
@@ -12,11 +8,11 @@ license: "MIT"
 - **Type:** `TestTagDefinition[]`
 - **Default:** `[]`
 
-Defines all available tags in your test project. By default, if test defines a name not listed here, Vitest will throw an error, but this can be configured via a `strictTags` option.
+Defines all [available tags](/guide/test-tags) in your test project. By default, if test defines a name not listed here, Vitest will throw an error, but this can be configured via a [`strictTags`](/config/stricttags) option.
 
-If you are using `projects`, they will inherit all global tags definitions automatically.
+If you are using [`projects`](/config/projects), they will inherit all global tags definitions automatically.
 
-Use `--tags-filter` to filter tests by their tags. Use `--list-tags` to print every tag in your Vitest workspace.
+Use [`--tags-filter`](/guide/test-tags#syntax) to filter tests by their tags. Use [`--list-tags`](/guide/cli#listtags) to print every tag in your Vitest workspace.
 
 ## name
 
@@ -36,10 +32,10 @@ export default defineConfig({
 })
 ```
 
-**Tip:**
+::: tip
 If you are using TypeScript, you can enforce what tags are available by augmenting the `TestTags` type with a property that contains a union of strings (make sure this file is included by your `tsconfig`):
 
-```ts
+```ts [vitest.shims.ts]
 import 'vitest'
 
 declare module 'vitest' {
@@ -52,6 +48,8 @@ declare module 'vitest' {
   }
 }
 ```
+
+:::
 
 ## description
 
@@ -102,12 +100,13 @@ When a test has both tags, the `timeout` will be `30_000` because `flaky` has a 
 
 ## Test Options
 
-Tags can define test options that will be applied to every test marked with the tag. These options are merged with the test's own options, with the test's options taking precedence.
+Tags can define [test options](/api/test#test-options) that will be applied to every test marked with the tag. These options are merged with the test's own options, with the test's options taking precedence.
 
-**Warning:**
-The `retry.condition` can only be a regexp because the config values need to be serialised.
+::: warning
+The [`retry.condition`](/api/test#retry) can only be a regexp because the config values need to be serialised.
 
-Tags also cannot apply other tags via these options.
+Tags also cannot apply other [tags](/api/test#tags) via these options.
+:::
 
 ## Example
 

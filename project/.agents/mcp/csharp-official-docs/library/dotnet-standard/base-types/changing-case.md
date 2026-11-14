@@ -1,10 +1,18 @@
 ---
 title: "Changing case in .NET"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/base-types/changing-case.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to change in the case of strings in .NET.
+ms.date: 08/11/2021
+dev_langs:
+    - "csharp"
+    - "vb"
+helpviewer_keywords:
+    - "strings [.NET], case"
+    - "case sensitivity"
+    - "ToUpper method"
+    - "ToLower method"
+    - "uppercase"
+    - "lowercase"
+ms.assetid: 6805f81b-e9ad-4387-9f4c-b9bdb21b87c0
 ---
 
 # Change case in .NET
@@ -13,131 +21,52 @@ If you write an application that accepts input from a user, you can never be sur
 
 | Method name | Use |
 |--|--|
-| `System.String.ToUpper*` | Converts all characters in a string to uppercase. |
-| `System.String.ToLower*` | Converts all characters in a string to lowercase. |
-| `System.Globalization.TextInfo.ToTitleCase*` | Converts a string to title case. |
+| <xref:System.String.ToUpper*?displayProperty=nameWithType> | Converts all characters in a string to uppercase. |
+| <xref:System.String.ToLower*?displayProperty=nameWithType> | Converts all characters in a string to lowercase. |
+| <xref:System.Globalization.TextInfo.ToTitleCase*?displayProperty=nameWithType> | Converts a string to title case. |
 
-> **Warning:**
-> The `System.String.ToUpper*` and `System.String.ToLower*` methods should not be used to convert strings in order to compare them or test them for equality. For more information, see the Compare strings of mixed case section.
+> [!WARNING]
+> The <xref:System.String.ToUpper*?displayProperty=nameWithType> and <xref:System.String.ToLower*?displayProperty=nameWithType> methods should not be used to convert strings in order to compare them or test them for equality. For more information, see the [Compare strings of mixed case](#compare-strings-of-mixed-case) section.
 
 ## Compare strings of mixed case
 
-To compare strings of mixed case to determine their ordering, call one of the overloads of the `System.String.CompareTo*` method with a `comparisonType` parameter, and provide a value of either `System.StringComparison.CurrentCultureIgnoreCase`, `System.StringComparison.InvariantCultureIgnoreCase`, or `System.StringComparison.OrdinalIgnoreCase` for the `comparisonType` argument. For a comparison using a specific culture other than the current culture, call an overload of the `System.String.CompareTo*` method with both a `culture` and `options` parameter, and provide a value of `System.Globalization.CompareOptions.IgnoreCase` as the `options` argument.
+To compare strings of mixed case to determine their ordering, call one of the overloads of the <xref:System.String.CompareTo*?displayProperty=nameWithType> method with a `comparisonType` parameter, and provide a value of either <xref:System.StringComparison.CurrentCultureIgnoreCase?displayProperty=nameWithType>, <xref:System.StringComparison.InvariantCultureIgnoreCase?displayProperty=nameWithType>, or <xref:System.StringComparison.OrdinalIgnoreCase?displayProperty=nameWithType> for the `comparisonType` argument. For a comparison using a specific culture other than the current culture, call an overload of the <xref:System.String.CompareTo*?displayProperty=nameWithType> method with both a `culture` and `options` parameter, and provide a value of <xref:System.Globalization.CompareOptions.IgnoreCase?displayProperty=nameWithType> as the `options` argument.
 
-To compare strings of mixed case to determine whether they're equal, call one of the overloads of the `System.String.Equals*` method with a `comparisonType` parameter, and provide a value of either `System.StringComparison.CurrentCultureIgnoreCase`, `System.StringComparison.InvariantCultureIgnoreCase`, or `System.StringComparison.OrdinalIgnoreCase` for the `comparisonType` argument.
+To compare strings of mixed case to determine whether they're equal, call one of the overloads of the <xref:System.String.Equals*?displayProperty=nameWithType> method with a `comparisonType` parameter, and provide a value of either <xref:System.StringComparison.CurrentCultureIgnoreCase?displayProperty=nameWithType>, <xref:System.StringComparison.InvariantCultureIgnoreCase?displayProperty=nameWithType>, or <xref:System.StringComparison.OrdinalIgnoreCase?displayProperty=nameWithType> for the `comparisonType` argument.
 
-For more information, see Best practices for using strings.
+For more information, see [Best practices for using strings](best-practices-strings.md).
 
 ## `ToUpper` method
 
-The `System.String.ToUpper*` method changes all characters in a string to uppercase. The following example converts the string "Hello World!" from mixed case to uppercase.
+The <xref:System.String.ToUpper*?displayProperty=nameWithType> method changes all characters in a string to uppercase. The following example converts the string "Hello World!" from mixed case to uppercase.
 
-```csharp
-﻿using System;
+[!code-csharp[Strings.ChangingCase#1](../../../samples/snippets/csharp/VS_Snippets_CLR/Strings.ChangingCase/cs/Example.cs#1)]
+[!code-vb[Strings.ChangingCase#1](../../../samples/snippets/visualbasic/VS_Snippets_CLR/Strings.ChangingCase/vb/Example.vb#1)]
 
-[assembly: CLSCompliant(true)]
-public class Example
-{
-   public static void Main()
-   {
-      ConvertToUpperCase();
-      Console.WriteLine();
-      ConvertToLowerCase();
-   }
-
-   private static void ConvertToUpperCase()
-   {
-      string properString = "Hello World!";
-      Console.WriteLine(properString.ToUpper());
-      // This example displays the following output:
-      //       HELLO WORLD!
-   }
-
-   private static void ConvertToLowerCase()
-   {
-      string properString = "Hello World!";
-      Console.WriteLine(properString.ToLower());
-      // This example displays the following output:
-      //       hello world!
-   }
-}
-```
-
-The preceding example is culture-sensitive by default; it applies the casing conventions of the current culture. To perform a culture-insensitive case change or to apply the casing conventions of a particular culture, use the `System.String.ToUpper(System.Globalization.CultureInfo)` method overload and supply a value of `System.Globalization.CultureInfo.InvariantCulture*` or a `System.Globalization.CultureInfo` object that represents the specified culture to the `culture` parameter. For an example that demonstrates how to use the `System.String.ToUpper*` method to perform a culture-insensitive case change, see Perform culture-insensitive case changes.
+The preceding example is culture-sensitive by default; it applies the casing conventions of the current culture. To perform a culture-insensitive case change or to apply the casing conventions of a particular culture, use the <xref:System.String.ToUpper%28System.Globalization.CultureInfo%29?displayProperty=nameWithType> method overload and supply a value of <xref:System.Globalization.CultureInfo.InvariantCulture*?displayProperty=nameWithType> or a <xref:System.Globalization.CultureInfo?displayProperty=nameWithType> object that represents the specified culture to the `culture` parameter. For an example that demonstrates how to use the <xref:System.String.ToUpper*> method to perform a culture-insensitive case change, see [Perform culture-insensitive case changes](../../core/extensions/performing-culture-insensitive-case-changes.md).
 
 ## `ToLower` method
 
-The `System.String.ToLower*` method is similar to the previous method, but instead converts all the characters in a string to lowercase. The following example converts the string "Hello World!" to lowercase.
+The <xref:System.String.ToLower*?displayProperty=nameWithType> method is similar to the previous method, but instead converts all the characters in a string to lowercase. The following example converts the string "Hello World!" to lowercase.
 
-```csharp
-﻿using System;
+[!code-csharp[Strings.ChangingCase#2](../../../samples/snippets/csharp/VS_Snippets_CLR/Strings.ChangingCase/cs/Example.cs#2)]
+[!code-vb[Strings.ChangingCase#2](../../../samples/snippets/visualbasic/VS_Snippets_CLR/Strings.ChangingCase/vb/Example.vb#2)]
 
-[assembly: CLSCompliant(true)]
-public class Example
-{
-   public static void Main()
-   {
-      ConvertToUpperCase();
-      Console.WriteLine();
-      ConvertToLowerCase();
-   }
-
-   private static void ConvertToUpperCase()
-   {
-      string properString = "Hello World!";
-      Console.WriteLine(properString.ToUpper());
-      // This example displays the following output:
-      //       HELLO WORLD!
-   }
-
-   private static void ConvertToLowerCase()
-   {
-      string properString = "Hello World!";
-      Console.WriteLine(properString.ToLower());
-      // This example displays the following output:
-      //       hello world!
-   }
-}
-```
-
-The preceding example is culture-sensitive by default; it applies the casing conventions of the current culture. To perform a culture-insensitive case change or to apply the casing conventions of a particular culture, use the `System.String.ToLower(System.Globalization.CultureInfo)` method overload and supply a value of `System.Globalization.CultureInfo.InvariantCulture*` or a `System.Globalization.CultureInfo` object that represents the specified culture to the `culture` parameter. For an example that demonstrates how to use the `System.String.ToLower(System.Globalization.CultureInfo)` method to perform a culture-insensitive case change, see Perform culture-insensitive case changes.
+The preceding example is culture-sensitive by default; it applies the casing conventions of the current culture. To perform a culture-insensitive case change or to apply the casing conventions of a particular culture, use the <xref:System.String.ToLower%28System.Globalization.CultureInfo%29?displayProperty=nameWithType> method overload and supply a value of <xref:System.Globalization.CultureInfo.InvariantCulture*?displayProperty=nameWithType> or a <xref:System.Globalization.CultureInfo?displayProperty=nameWithType> object that represents the specified culture to the `culture` parameter. For an example that demonstrates how to use the <xref:System.String.ToLower%28System.Globalization.CultureInfo%29> method to perform a culture-insensitive case change, see [Perform culture-insensitive case changes](../../core/extensions/performing-culture-insensitive-case-changes.md).
 
 ## `ToTitleCase` method
 
-The `System.Globalization.TextInfo.ToTitleCase*` converts the first character of each word to uppercase and the remaining characters to lowercase. However, words that are entirely uppercase are assumed to be acronyms and are not converted.
+The <xref:System.Globalization.TextInfo.ToTitleCase*?displayProperty=nameWithType> converts the first character of each word to uppercase and the remaining characters to lowercase. However, words that are entirely uppercase are assumed to be acronyms and are not converted.
 
-The `System.Globalization.TextInfo.ToTitleCase*` method is culture-sensitive; that is, it uses the casing conventions of a particular culture. In order to call the method, you first retrieve the `System.Globalization.TextInfo` object that represents the casing conventions of the particular culture from the `System.Globalization.CultureInfo.TextInfo` property of a particular culture.
+The <xref:System.Globalization.TextInfo.ToTitleCase*?displayProperty=nameWithType> method is culture-sensitive; that is, it uses the casing conventions of a particular culture. In order to call the method, you first retrieve the <xref:System.Globalization.TextInfo> object that represents the casing conventions of the particular culture from the <xref:System.Globalization.CultureInfo.TextInfo?displayProperty=nameWithType> property of a particular culture.
 
-The following example passes each string in an array to the `System.Globalization.TextInfo.ToTitleCase*` method. The strings include proper title strings as well as acronyms. The strings are converted to title case by using the casing conventions of the English (United States) culture.
+The following example passes each string in an array to the <xref:System.Globalization.TextInfo.ToTitleCase*?displayProperty=nameWithType> method. The strings include proper title strings as well as acronyms. The strings are converted to title case by using the casing conventions of the English (United States) culture.
 
-```csharp
-using System;
-using System.Globalization;
+[!code-csharp[System.Globalization.TextInfo.ToTitleCase#1](../../../samples/snippets/csharp/VS_Snippets_CLR_System/system.globalization.textinfo.totitlecase/cs/totitlecase2.cs#1)]
+[!code-vb[System.Globalization.TextInfo.ToTitleCase#1](../../../samples/snippets/visualbasic/VS_Snippets_CLR_System/system.globalization.textinfo.totitlecase/vb/totitlecase2.vb#1)]
 
-public class Example
-{
-   public static void Main()
-   {
-      string[] values = { "a tale of two cities", "gROWL to the rescue",
-                          "inside the US government", "sports and MLB baseball",
-                          "The Return of Sherlock Holmes", "UNICEF and children"};
-
-      TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
-      foreach (var value in values)
-         Console.WriteLine($"{value} --> {ti.ToTitleCase(value)}");
-   }
-}
-// The example displays the following output:
-//    a tale of two cities --> A Tale Of Two Cities
-//    gROWL to the rescue --> Growl To The Rescue
-//    inside the US government --> Inside The US Government
-//    sports and MLB baseball --> Sports And MLB Baseball
-//    The Return of Sherlock Holmes --> The Return Of Sherlock Holmes
-//    UNICEF and children --> UNICEF And Children
-```
-
-Note that although it is culture-sensitive, the `System.Globalization.TextInfo.ToTitleCase*` method does not provide linguistically correct casing rules. For instance, in the previous example, the method converts "a tale of two cities" to "A Tale Of Two Cities". However, the linguistically correct title casing for the en-US culture is "A Tale of Two Cities."
+Note that although it is culture-sensitive, the <xref:System.Globalization.TextInfo.ToTitleCase*?displayProperty=nameWithType> method does not provide linguistically correct casing rules. For instance, in the previous example, the method converts "a tale of two cities" to "A Tale Of Two Cities". However, the linguistically correct title casing for the en-US culture is "A Tale of Two Cities."
 
 ## See also
 
-- Perform culture-insensitive string operations
+- [Perform culture-insensitive string operations](../../core/extensions/performing-culture-insensitive-string-operations.md)

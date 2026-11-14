@@ -1,12 +1,18 @@
 ---
+description: "Learn more about: CorPinvokeMap Enumeration"
 title: "CorPinvokeMap Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/enumerations/corpinvokemap-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "CorPinvokeMap"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "CorPinvokeMap"
+topic_type:
+  - "apiref"
 ---
-
 # CorPinvokeMap Enumeration
 
 Specifies options for a PInvoke call.
@@ -77,6 +83,6 @@ typedef enum  CorPinvokeMap {
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorHdr.h

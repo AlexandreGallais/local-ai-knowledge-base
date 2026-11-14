@@ -1,27 +1,30 @@
 ---
-title: "Install GitHub Copilot upgrade"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/github-copilot-upgrade/install.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Install GitHub Copilot upgrade
+description: "Learn how to install and set up GitHub Copilot upgrade across Visual Studio, Visual Studio Code, GitHub Copilot CLI, GitHub Copilot app, and GitHub.com."
+ms.topic: install-set-up-deploy
+ms.date: 09/21/2026
+ai-usage: ai-assisted
+zone_pivot_groups: copilot-upgrade-install
+
+#customer intent: As a developer, I want to install GitHub Copilot upgrade so that I can upgrade supported projects in my preferred development environment.
+
 ---
 
 # Install GitHub Copilot upgrade
 
 GitHub Copilot upgrade works across multiple development environments. Choose your preferred environment to install and set up the agent. Technology support and prerequisites can vary by environment.
 
-**visualstudio:**
+::: zone pivot="visualstudio"
 
 ## Prerequisites
 
 Before you install, make sure you have:
 
 - Windows operating system.
-- Visual Studio 2026 (or Visual Studio 2022 version 17.14.17+).
-- .NET desktop development workload with these optional components enabled: **GitHub Copilot**, **GitHub Copilot app modernization**.
+- [Visual Studio 2026](https://visualstudio.microsoft.com/downloads/) (or Visual Studio 2022 version 17.14.17+).
+- [.NET desktop development workload](/visualstudio/install/modify-visual-studio?view=visualstudio&preserve-view=true#change-workloads-or-individual-components) with these optional components enabled: **GitHub Copilot**, **GitHub Copilot app modernization**.
 - GitHub Copilot subscription (paid or free).
-- Sign in to Visual Studio with a GitHub account that has Copilot access.
+- [Sign in to Visual Studio with a GitHub account](/visualstudio/ide/work-with-github-accounts) that has [Copilot access](https://docs.github.com/copilot/get-started/plans#ready-to-choose-a-plan).
 - Code written in C# or Visual Basic.
 
 ## Install
@@ -33,7 +36,9 @@ Visual Studio includes GitHub Copilot upgrade through the **GitHub Copilot app m
 1. Open a solution in Visual Studio.
 1. Right-click a project in **Solution Explorer** and select **Modernize**, or open **GitHub Copilot Chat** and type `@Modernize`.
 
-**vscode:**
+::: zone-end
+
+::: zone pivot="vscode"
 
 ## Prerequisites
 
@@ -47,7 +52,7 @@ Before you install, make sure you have:
 
 Install as a Visual Studio Code extension:
 
-1. In Visual Studio Code, open the **Extensions** view (`Ctrl+Shift+X`).
+1. In Visual Studio Code, open the **Extensions** view (<kbd>Ctrl+Shift+X</kbd>).
 1. Search for **GitHub Copilot upgrade**.
 1. Select **Install**.
 
@@ -63,13 +68,15 @@ The extension registers the available upgrade tools and adds the agent to Copilo
 
    Select the **Agent** picker and find the `Upgrade` entry.
 
-**copilot-cli:**
+::: zone-end
+
+::: zone pivot="copilot-cli"
 
 ## Prerequisites
 
 Before you install, make sure you have:
 
-- GitHub Copilot CLI installed.
+- [GitHub Copilot CLI](https://gh.io/cli) installed.
 - GitHub Copilot subscription (paid or free).
 
 ## Install
@@ -94,24 +101,26 @@ Install through the GitHub Copilot CLI:
 
 Run `/agent` to confirm that `upgrade-agent` appears in the agent list.
 
-**github-copilot-app:**
+::: zone-end
+
+::: zone pivot="github-copilot-app"
 
 ## Prerequisites
 
 Before you install, make sure you have:
 
-- GitHub Copilot app installed.
+- [GitHub Copilot app](https://gh.io/app) installed.
 - GitHub Copilot subscription (paid or free).
 
 ## Install
 
 Install the `microsoft/upgrade-agent-plugins` marketplace through the GitHub Copilot app:
 
-1. Click this link to automatically open the **Settings** > **Plugins** window in the GitHub Copilot app.
+1. Click [this link](https://github.com/copilot/app/launch?entry_point=upgrade_agent_docs&open=ghapp%3A%2F%2Fplugins%2Fmarketplace%2Fadd%3Fsource%3Dmicrosoft%2Fupgrade-agent-plugins) to automatically open the **Settings** > **Plugins** window in the GitHub Copilot app.
 1. In the **Add plugin marketplace** dialog, select **Allow**.
 1. Go to the **Customize** view and search for `upgrade-agent`. Under the **All marketplaces** dropdown, select the `upgrade-agent-plugins`, and select **Install** on the `upgrade-agent` plugin.
 
-> **Important:**
+> [!IMPORTANT]
 > If the plugin's button displays **Install** again after you select it, the installation failed. Close all instances of Visual Studio, Visual Studio Code, and Copilot CLI, and then try again.
 
 ## Verify the installation
@@ -122,7 +131,9 @@ Run `/agent` to confirm that `upgrade-agent:upgrade` appears in the agent list.
 
 Select the **Default agent** picker and find the **Upgrade** entry.
 
-**github-com:**
+::: zone-end
+
+::: zone pivot="github-com"
 
 ## Prerequisites
 
@@ -135,13 +146,15 @@ Before you install, make sure you have:
 
 Add the custom coding agent to your repository:
 
-1. Review adding custom coding agents to your repository.
-1. Add the `upgrade` agent. See the coding agent README for details.
+1. Review [adding custom coding agents to your repository](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents).
+1. Add the `upgrade` agent. See the [coding agent README](https://github.com/microsoft/upgrade-agent-plugins/blob/main/cloud-agent/README.md) for details.
+
+::: zone-end
 
 ## Related content
 
-- What is GitHub Copilot upgrade?
-- Upgrade .NET projects
-- Upgrade JavaScript and TypeScript projects
-- Core concepts
-- GitHub Copilot upgrade FAQ
+- [What is GitHub Copilot upgrade?](overview.md)
+- [Upgrade .NET projects](dotnet-overview.md)
+- [Upgrade JavaScript and TypeScript projects](javascript-typescript-overview.md)
+- [Core concepts](concepts.md)
+- [GitHub Copilot upgrade FAQ](faq.yml)

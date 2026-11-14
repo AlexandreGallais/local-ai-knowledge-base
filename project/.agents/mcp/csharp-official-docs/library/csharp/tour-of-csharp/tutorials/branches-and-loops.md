@@ -1,21 +1,18 @@
 ---
-title: "Branches and loops - Introductory tutorial"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/tour-of-csharp/tutorials/branches-and-loops.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Branches and loops - Introductory tutorial
+description: In this tutorial about branches and loops, you write C# code to explore the language syntax that supports conditional branches and loops to execute statements repeatedly. You write C# code and see the results of compiling and running your code directly in the browser.
+ms.date: 02/09/2026
 ---
-
 # Tutorial: C# `if` statements and loops - conditional logic
 
 This tutorial teaches you how to write C# code that examines variables and changes the execution path based on those variables. You write C# code and see the results of compiling and running it. The tutorial contains a series of lessons that explore branching and looping constructs in C#. These lessons teach you the fundamentals of the C# language.
 
-> **Tip:**
-> **New to programming?** Work through every section in order. **Coming from another language?** The `if`/`else` and loop syntax looks familiar - focus on the nested loops and the challenge to practice C#-specific patterns.
+> [!TIP]
+> **New to programming?** Work through every section in order. **Coming from another language?** The `if`/`else` and loop syntax looks familiar - focus on the [nested loops](#created-nested-loops) and the [challenge](#combine-branches-and-loops) to practice C#-specific patterns.
 
 In this tutorial, you:
 
+> [!div class="checklist"]
 >
 > * Launch a GitHub Codespace with a C# development environment.
 > * Explore `if` and `else` statements.
@@ -27,26 +24,22 @@ In this tutorial, you:
 
 You must have one of the following options:
 
-- A GitHub account to use GitHub Codespaces. If you don't already have one, create a free account at GitHub.com.
+- A GitHub account to use [GitHub Codespaces](https://github.com/codespaces). If you don't already have one, create a free account at [GitHub.com](https://github.com).
 - A computer with the following tools installed:
-  - The .NET 10 SDK.
-  - Visual Studio Code.
-  - The C# DevKit.
+  - The [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0).
+  - [Visual Studio Code](https://code.visualstudio.com/download).
+  - The [C# DevKit](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit).
 
 ## Use if statements
 
-To start a GitHub Codespace with the tutorial environment, open a browser window to the tutorial codespace repository. Select the green *Code* button, and the *Codespaces* tab. Then select the `+` sign to create a new Codespace using this environment. If you completed other tutorials in this series, you can open that codespace instead of creating a new one.
+To start a GitHub Codespace with the tutorial environment, open a browser window to the [tutorial codespace](https://github.com/dotnet/tutorial-codespace) repository. Select the green *Code* button, and the *Codespaces* tab. Then select the `+` sign to create a new Codespace using this environment. If you completed other tutorials in this series, you can open that codespace instead of creating a new one.
 
 1. When your codespace loads, create a new file in the *tutorials* folder named *branches-loops.cs*.
 1. Open your new file.
 1. Type or copy the following code into *branches-loops.cs*:
 
-```csharp
-int a = 5;
-int b = 6;
-if (a + b > 10)
-    Console.WriteLine("The answer is greater than 10.");
-```
+   :::code language="csharp" source="./snippets/BranchesAndLoops/branches-loops.cs" id="FirstIf":::
+
 1. Try this code by typing the following command in the integrated terminal:
 
    ```dotnetcli
@@ -66,7 +59,7 @@ if (a + b > 10)
 
    Because the answer is less than 10, nothing is printed. The **condition** you're testing is false. You don't have any code to execute because you only wrote one of the possible branches for an `if` statement: the true branch.
 
-> **Tip:**
+> [!TIP]
 > As you explore C# (or any programming language), you might make mistakes when you write code. The compiler finds and reports the errors. Look closely at the error output and the code that generated the error. You can also ask Copilot to find differences or spot any mistakes. The compiler error can usually help you find the problem.
 
 This first sample shows the power of `if` and Boolean types. A *Boolean* is a variable that can have one of two values: `true` or `false`. C# defines a special type, `bool` for Boolean variables. The `if` statement checks the value of a `bool`. When the value is `true`, the statement following the `if` executes. Otherwise, it's skipped. This process of checking conditions and executing statements based on those conditions is powerful. Let's explore more.
@@ -77,108 +70,40 @@ To execute different code in both the true and false branches, create an `else` 
 
 1. Add the last two lines in the following code snippet (you should already have the first four):
 
-```csharp
-int a = 5;
-int b = 3;
-if (a + b > 10)
-    Console.WriteLine("The answer is greater than 10");
-else
-    Console.WriteLine("The answer is not greater than 10");
-```
+   :::code language="csharp" source="./snippets/BranchesAndLoops/branches-loops.cs" id="IfAndElse":::
+
    The statement following the `else` keyword executes only when the condition being tested is `false`. Combining `if` and `else` with boolean conditions provides all the power you need to handle both a `true` and a `false` condition.
 
-   > **Important:**
+   > [!IMPORTANT]
    > The indentation under the `if` and `else` statements is for human readers. The C# language doesn't treat indentation or white space as significant. The statement following the `if` or `else` keyword executes based on the condition. All the samples in this tutorial follow a common practice to indent lines based on the control flow of statements.
 
    Because indentation isn't significant, you need to use `{` and `}` to indicate when you want more than one statement to be part of the block that executes conditionally. C# programmers typically use those braces on all `if` and `else` clauses.
 
 1. The following example is the same as what you created in the previous example, with the addition of `{` and `}`. Modify your code to match the following code:
 
-```csharp
-int a = 5;
-int b = 3;
-if (a + b > 10)
-{
-    Console.WriteLine("The answer is greater than 10");
-}
-else
-{
-    Console.WriteLine("The answer is not greater than 10");
-}
-```
-   > **Tip:**
+   :::code language="csharp" source="./snippets/BranchesAndLoops/branches-loops.cs" id="IncludeBraces":::
+
+   > [!TIP]
    > Through the rest of this tutorial, the code samples all include the braces, following accepted practices.
 
 1. You can test more complicated conditions. Add the following code after the code you wrote so far:
 
-```csharp
-int a = 5;
-int b = 3;
-int c = 4;
-if ((a + b + c > 10) && (a == b))
-{
-    Console.WriteLine("The answer is greater than 10");
-    Console.WriteLine("And the first number is equal to the second");
-}
-else
-{
-    Console.WriteLine("The answer is not greater than 10");
-    Console.WriteLine("Or the first number is not equal to the second");
-}
-```
+   :::code language="csharp" source="./snippets/BranchesAndLoops/branches-loops.cs" id="ComplexConditions":::
+
    The `==` symbol tests for *equality*. Using `==` distinguishes the test for equality from assignment, which you saw in `a = 5`.
 
    The `&&` represents "and". It means both conditions must be true to execute the statement in the true branch. These examples also show that you can have multiple statements in each conditional branch, provided you enclose them in `{` and `}`.
 
 1. You can also use  `||` to represent "or". Add the following code after what you wrote so far:
 
-```csharp
-if ((a + b + c > 10) || (a == b))
-```
+   :::code language="csharp" source="./snippets/BranchesAndLoops/branches-loops.cs" id="UseOr":::
+
 1. Modify the values of `a`, `b`, and `c` and switch between `&&` and `||` to explore. You gain more understanding of how the `&&` and `||` operators work.
 
 1. You finished the first step. Before you start the next section, move the current code into a separate method. That change makes it easier to start working with a new example. Put the existing code in a method called `ExploreIf()`. Call it from the top of your program. When you finish those changes, your code should look like the following code:
 
-```csharp
-ExploreIf();
+   :::code language="csharp" source="./snippets/BranchesAndLoops/branches-loops.cs" id="Refactor":::
 
-void ExploreIf()
-{
-    int a = 5;
-    int b = 3;
-    if (a + b > 10)
-    {
-        Console.WriteLine("The answer is greater than 10");
-    }
-    else
-    {
-        Console.WriteLine("The answer is not greater than 10");
-    }
-
-    int c = 4;
-    if ((a + b + c > 10) && (a > b))
-    {
-        Console.WriteLine("The answer is greater than 10");
-        Console.WriteLine("And the first number is greater than the second");
-    }
-    else
-    {
-        Console.WriteLine("The answer is not greater than 10");
-        Console.WriteLine("Or the first number is not greater than the second");
-    }
-
-    if ((a + b + c > 10) || (a > b))
-    {
-        Console.WriteLine("The answer is greater than 10");
-        Console.WriteLine("Or the first number is greater than the second");
-    }
-    else
-    {
-        Console.WriteLine("The answer is not greater than 10");
-        Console.WriteLine("And the first number is not greater than the second");
-    }
-}
-```
 1. Comment out the call to `ExploreIf()`. It makes the output less cluttered as you work in this section:
 
    ```csharp
@@ -191,38 +116,26 @@ The `//` starts a **comment** in C#. Comments are any text you want to keep in y
 
 Another important concept for creating larger programs is **loops**. Use loops to repeat statements that you want to execute more than once.
 
-> **Tip:**
-> **Learn more:** Read about iteration statements and selection statements in the C# language reference.
+> [!TIP]
+> **Learn more:** Read about [iteration statements](../../language-reference/statements/iteration-statements.md) and [selection statements](../../language-reference/statements/selection-statements.md) in the C# language reference.
 
 1. Add this code after the call to `ExploreIf`:
 
-```csharp
-int counter = 0;
-while (counter < 10)
-{
-    Console.WriteLine($"Hello World! The counter is {counter}");
-    counter++;
-}
-```
+   :::code language="csharp" source="./snippets/BranchesAndLoops/branches-loops.cs" id="WhileLoop":::
+
    The `while` statement checks a condition and executes the statement following the `while`. It repeats checking the condition and executing those statements until the condition is false.
 
    There's one other new operator in this example. The `++` after the `counter` variable is the **increment** operator. It adds 1 to the value of `counter` and stores that value in the `counter` variable.
 
-   > **Important:**
+   > [!IMPORTANT]
    > Make sure that the `while` loop condition changes to false as you execute the code. Otherwise, you create an **infinite loop** where your program never ends. This sample doesn't demonstrate that behavior, because you have to force your program to quit by using **CTRL-C** or other means.
 
    The `while` loop tests the condition before executing the code following the `while`.
 
 1. The `do` ... `while` loop executes the code first, and then checks the condition. The *do while* loop is shown in the following code:
 
-```csharp
-int counter = 0;
-do
-{
-    Console.WriteLine($"Hello World! The counter is {counter}");
-    counter++;
-} while (counter < 10);
-```
+   :::code language="csharp" source="./snippets/BranchesAndLoops/branches-loops.cs" id="DoLoop":::
+
    This `do` loop and the earlier `while` loop produce the same output.
 
 Let's move on to one last loop statement.
@@ -233,12 +146,8 @@ Another common loop statement that you see in C# code is the `for` loop.
 
 1. Try this code:
 
-```csharp
-for (int counter = 0; counter < 10; counter++)
-{
-    Console.WriteLine($"Hello World! The counter is {counter}");
-}
-```
+   :::code language="csharp" source="./snippets/BranchesAndLoops/branches-loops.cs" id="ForLoop":::
+
    The preceding `for` loop does the same work as the `while` loop and the `do` loop you already used. The `for` statement has three parts that control how it works:
 
    - The first part is the **for initializer**: `int counter = 0;` declares that `counter` is the loop variable, and sets its initial value to `0`.
@@ -260,31 +169,16 @@ You can nest a `while`, `do`, or `for` loop inside another loop. By combining ea
 
 1. Add the following `for` loop that generates the rows:
 
-```csharp
-for (int row = 1; row < 11; row++)
-{
-    Console.WriteLine($"The row is {row}");
-}
-```
+   :::code language="csharp" source="./snippets/BranchesAndLoops/branches-loops.cs" id="Rows":::
+
 1. Add another loop to generate the columns:
 
-```csharp
-for (char column = 'a'; column < 'k'; column++)
-{
-    Console.WriteLine($"The column is {column}");
-}
-```
+   :::code language="csharp" source="./snippets/BranchesAndLoops/branches-loops.cs" id="Columns":::
+
 1. Finally, nest the columns loop inside the rows to form pairs:
 
-```csharp
-for (int row = 1; row < 11; row++)
-{
-    for (char column = 'a'; column < 'k'; column++)
-    {
-        Console.WriteLine($"The cell is ({row}, {column})");
-    }
-}
-```
+   :::code language="csharp" source="./snippets/BranchesAndLoops/branches-loops.cs" id="Nested":::
+
    The outer loop increments once for each full run of the inner loop. Reverse the row and column nesting, and see the changes for yourself. When you're done, place the code from this section in a method called `ExploreLoops()`.
 
 ## Combine branches and loops
@@ -299,34 +193,30 @@ Try it yourself. Then check how you did. As a hint, you should get 63 for an ans
 
 Did you come up with something like this?
 
-```csharp
-int sum = 0;
-for (int number = 1; number < 21; number++)
-{
-    if (number % 3 == 0)
-    {
-        sum = sum + number;
-    }
-}
-Console.WriteLine($"The sum is {sum}");
-```
+<!-- markdownlint-disable MD033 -->
+<details>
+
+:::code language="csharp" source="./snippets/BranchesAndLoops/branches-loops.cs" id="Challenge":::
+</details>
+<!-- markdownlint-enable MD033 -->
 
 You completed the "branches and loops" tutorial.
 
 ## Cleanup resources
 
-GitHub automatically deletes your Codespace after 30 days of inactivity. If you plan to explore more tutorials in this series, you can leave your Codespace provisioned. If you're ready to visit the .NET site to download the .NET SDK, you can delete your Codespace. To delete your Codespace, open a browser window and navigate to your Codespaces. You should see a list of your codespaces in the window. Select the three dots (`...`) in the entry for the learn tutorial codespace and select **delete**.
+GitHub automatically deletes your Codespace after 30 days of inactivity. If you plan to explore more tutorials in this series, you can leave your Codespace provisioned. If you're ready to visit the [.NET site](https://dotnet.microsoft.com/download/dotnet) to download the .NET SDK, you can delete your Codespace. To delete your Codespace, open a browser window and navigate to [your Codespaces](https://github.com/codespaces). You should see a list of your codespaces in the window. Select the three dots (`...`) in the entry for the learn tutorial codespace and select **delete**.
 
 ## Next steps
 
 Continue to the next tutorial in this series:
 
-> Learn about collections
+> [!div class="nextstepaction"]
+> [Learn about collections](list-collection.md)
 
 Or explore related topics in C# Fundamentals:
 
-- Pattern matching — A powerful alternative to complex `if`/`else` chains.
-- Methods and program structure — Learn how to organize the methods you created in this tutorial.
-- What you can build with C# — See the kinds of apps you can create with what you're learning.
-- Selection statements
-- Iteration statements
+- [Pattern matching](../../fundamentals/patterns/pattern-matching.md) — A powerful alternative to complex `if`/`else` chains.
+- [Methods and program structure](../../fundamentals/program-structure/index.md) — Learn how to organize the methods you created in this tutorial.
+- [What you can build with C#](../what-you-can-build.md) — See the kinds of apps you can create with what you're learning.
+- [Selection statements](../../language-reference/statements/selection-statements.md)
+- [Iteration statements](../../language-reference/statements/iteration-statements.md)

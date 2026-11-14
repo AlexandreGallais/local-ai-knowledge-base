@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugHeapValue3::GetMonitorEventWaitList Method"
 title: "ICorDebugHeapValue3::GetMonitorEventWaitList Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugheapvalue3-getmonitoreventwaitlist-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugHeapValue3.GetMonitorEventWaitList"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugHeapValue3::GetMonitorEventWaitList"
+helpviewer_keywords:
+  - "ICorDebugHeapValue3::GetMonitorEventWaitList method [.NET debugging]"
+  - "GetMonitorEventWaitList method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugHeapValue3::GetMonitorEventWaitList Method
 
 Provides an ordered list of threads that are queued on the event that is associated with a monitor lock.
@@ -33,9 +42,11 @@ This method returns the following specific HRESULTs as well as HRESULT errors th
 |S_OK|The list is not empty.|
 |S_FALSE|The list is empty.|
 
+## Exceptions
+
 ## Remarks
 
-The first thread in the list is the first thread that is released by the next call to `System.Threading.Monitor.Pulse(System.Object)`. The next thread in the list is released on the following call, and so on.
+The first thread in the list is the first thread that is released by the next call to <xref:System.Threading.Monitor.Pulse%28System.Object%29?displayProperty=nameWithType>. The next thread in the list is released on the following call, and so on.
 
 If the list is not empty, this method returns S_OK. If the list is empty, the method returns S_FALSE; in this case, the enumeration is still valid, although it is empty.
 
@@ -47,7 +58,7 @@ If an error occurs such that it cannot be determined which, if any, threads are 
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

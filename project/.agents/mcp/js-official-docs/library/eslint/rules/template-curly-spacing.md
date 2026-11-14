@@ -1,14 +1,7 @@
 ---
-title: "template-curly-spacing"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/template-curly-spacing.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: template-curly-spacing
+rule_type: layout
 ---
-
-# template-curly-spacing
-
 We can embed expressions in template strings with using a pair of `${` and `}`.
 
 This rule can force usage of spacing _within_ the curly brace pair according to style guides.
@@ -38,7 +31,7 @@ This rule has one option which has either `"never"` or `"always"` as value.
 
 Examples of **incorrect** code for this rule with the default `"never"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint template-curly-spacing: "error"*/
@@ -49,9 +42,11 @@ Examples of **incorrect** code for this rule with the default `"never"` option:
 `hello, ${ people.name }!`;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"never"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint template-curly-spacing: "error"*/
@@ -62,12 +57,14 @@ Examples of **correct** code for this rule with the default `"never"` option:
     people.name
 }!`;
 ```
+
+:::
 
 ### always
 
 Examples of **incorrect** code for this rule with the `"always"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint template-curly-spacing: ["error", "always"]*/
@@ -78,9 +75,11 @@ Examples of **incorrect** code for this rule with the `"always"` option:
 `hello, ${people.name}!`;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"always"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint template-curly-spacing: ["error", "always"]*/
@@ -91,6 +90,8 @@ Examples of **correct** code for this rule with the `"always"` option:
     people.name
 }!`;
 ```
+
+:::
 
 ## When Not To Use It
 

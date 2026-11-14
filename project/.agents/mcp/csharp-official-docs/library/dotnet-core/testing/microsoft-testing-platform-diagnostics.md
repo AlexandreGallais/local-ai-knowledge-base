@@ -1,26 +1,26 @@
 ---
-title: "Microsoft.Testing.Platform (MTP) diagnostics"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/microsoft-testing-platform-diagnostics.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Microsoft.Testing.Platform (MTP) diagnostics
+description: Learn about the MTP extensions that capture evidence, such as screen recordings, to help you diagnose a test run.
+author: evangelink
+ms.author: amauryleve
+ms.date: 07/09/2026
+ai-usage: ai-assisted
 ---
 
 # Diagnostics
 
 These extensions capture evidence during a test run so you can diagnose failures after the fact. Each extension requires an additional NuGet package, as described in each section.
 
-> **Tip:**
-> When using Microsoft.Testing.Platform.MSBuild (included transitively by MSTest, NUnit, and xUnit runners), these extensions are auto-registered when you install their NuGet packages — no code changes needed. The manual registration specified in this article is only required if you disabled the auto-generated entry point by setting `<GenerateTestingPlatformEntryPoint>false</GenerateTestingPlatformEntryPoint>`.
+> [!TIP]
+> When using [Microsoft.Testing.Platform.MSBuild](https://www.nuget.org/packages/Microsoft.Testing.Platform.MSBuild) (included transitively by MSTest, NUnit, and xUnit runners), these extensions are auto-registered when you install their NuGet packages — no code changes needed. The manual registration specified in this article is only required if you disabled the auto-generated entry point by setting `<GenerateTestingPlatformEntryPoint>false</GenerateTestingPlatformEntryPoint>`.
 
-For process-level diagnostics, see the related Crash and hang dumps extensions, which collect process dump files when the test host crashes or hangs.
+For process-level diagnostics, see the related [Crash and hang dumps](microsoft-testing-platform-crash-hang-dumps.md) extensions, which collect process dump files when the test host crashes or hangs.
 
 ## Video recorder
 
-The video recorder records the screen while your tests run and attaches the captured videos to the test session as artifacts. Recording is opt-in per run and driven by an external `ffmpeg` process, which must be available on the `PATH` or set through an explicit path. This extension requires the Microsoft.Testing.Extensions.VideoRecorder NuGet package.
+The video recorder records the screen while your tests run and attaches the captured videos to the test session as artifacts. Recording is opt-in per run and driven by an external `ffmpeg` process, which must be available on the `PATH` or set through an explicit path. This extension requires the [Microsoft.Testing.Extensions.VideoRecorder](https://nuget.org/packages/Microsoft.Testing.Extensions.VideoRecorder) NuGet package.
 
-> **Note:**
+> [!NOTE]
 > Available in MTP starting with version 2.3.0. This extension is experimental, and its options and output format might change in a future version.
 
 ### Manual registration

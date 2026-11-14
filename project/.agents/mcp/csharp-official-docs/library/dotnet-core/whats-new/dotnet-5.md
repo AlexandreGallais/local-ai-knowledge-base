@@ -1,10 +1,8 @@
 ---
-title: "What's new in .NET 5"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/whats-new/dotnet-5.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: What's new in .NET 5
+description: Learn about .NET 5, a cross-platform and open-source development platform that is the next evolution of .NET Core.
+ms.date: 07/26/2022
+ms.update-cycle: 3650-days
 ---
 
 # What's new in .NET 5
@@ -18,22 +16,22 @@ ASP.NET Core 5.0 is based on .NET 5 but retains the name "Core" to avoid confusi
 
 .NET 5 includes the following improvements and new features compared to .NET Core 3.1:
 
-- C# updates
-- F# updates
-- Visual Basic <example-value>
-- System.Text.Json new features
-- Single file apps
-- App trimming
+- [C# updates](#c-updates)
+- [F# updates](#f-updates)
+- [Visual Basic updates](#visual-basic-updates)
+- [System.Text.Json new features](#systemtextjson-new-features)
+- [Single file apps](../deploying/single-file/overview.md)
+- [App trimming](https://devblogs.microsoft.com/dotnet/app-trimming-in-net-5)
 - Windows Arm64 and Arm64 intrinsics
 - Tooling support for dump debugging
-- The runtime libraries are 80% annotated for nullable reference types
+- The runtime libraries are 80% annotated for [nullable reference types](../../csharp/fundamentals/null-safety/nullable-reference-types.md)
 - Performance improvements:
-  - Garbage Collection (GC)
-  - System.Text.Json
-  - System.Text.RegularExpressions
-  - Async ValueTask pooling
-  - Container size optimizations
-  - Many more areas
+  - [Garbage Collection (GC)](https://devblogs.microsoft.com/dotnet/performance-improvements-in-net-5/#gc)
+  - [System.Text.Json](https://devblogs.microsoft.com/dotnet/performance-improvements-in-net-5/#json)
+  - [System.Text.RegularExpressions](https://devblogs.microsoft.com/dotnet/regex-performance-improvements-in-net-5)
+  - [Async ValueTask pooling](https://devblogs.microsoft.com/dotnet/async-valuetask-pooling-in-net-5)
+  - [Container size optimizations](https://github.com/dotnet/dotnet-docker/issues/1814#issuecomment-625294750)
+  - [Many more areas](https://devblogs.microsoft.com/dotnet/performance-improvements-in-net-5)
 
 ## .NET 5 doesn't replace .NET Framework
 
@@ -41,27 +39,27 @@ ASP.NET Core 5.0 is based on .NET 5 but retains the name "Core" to avoid confusi
 
 | Technology            | Recommended alternative                                                                         |
 |-----------------------|-------------------------------------------------------------------------------------------------|
-| Web Forms             | ASP.NET Core Blazor or Razor Pages |
-| Windows Workflow (WF) | Elsa-Workflows                                   |
+| Web Forms             | ASP.NET Core [Blazor](/aspnet/core/blazor) or [Razor Pages](/aspnet/core/tutorials/razor-pages) |
+| Windows Workflow (WF) | [Elsa-Workflows](https://github.com/elsa-workflows/elsa-core)                                   |
 
 ### Windows Communication Foundation
 
-The original implementation of Windows Communication Foundation (WCF) was only supported on Windows. However, there's a client port available from the .NET Foundation. It's entirely open source, cross platform, and supported by Microsoft. The core NuGet packages are listed below:
+The original implementation of [Windows Communication Foundation (WCF)](../../framework/wcf/index.md) was only supported on Windows. However, there's a client port available from the .NET Foundation. It's entirely [open source](https://github.com/dotnet/wcf), cross platform, and supported by Microsoft. The core NuGet packages are listed below:
 
-- System.ServiceModel.Duplex
-- System.ServiceModel.Federation
-- System.ServiceModel.Http
-- System.ServiceModel.NetTcp
-- System.ServiceModel.Primitives
-- System.ServiceModel.Security
+- [System.ServiceModel.Duplex](https://www.nuget.org/packages/System.ServiceModel.Duplex)
+- [System.ServiceModel.Federation](https://www.nuget.org/packages/System.ServiceModel.Federation)
+- [System.ServiceModel.Http](https://www.nuget.org/packages/System.ServiceModel.Http)
+- [System.ServiceModel.NetTcp](https://www.nuget.org/packages/System.ServiceModel.NetTcp)
+- [System.ServiceModel.Primitives](https://www.nuget.org/packages/System.ServiceModel.Primitives)
+- [System.ServiceModel.Security](https://www.nuget.org/packages/System.ServiceModel.Security)
 
-The server components that complement the aforementioned client libraries are available through CoreWCF. As of April 2022, CoreWCF is officially supported by Microsoft. However, for an alternative to WCF, consider gRPC.
+The server components that complement the aforementioned client libraries are available through [CoreWCF](https://www.nuget.org/profiles/corewcf). As of April 2022, CoreWCF is officially supported by Microsoft. However, for an alternative to WCF, consider [gRPC](/aspnet/core/grpc).
 
 ## .NET 5 doesn't replace .NET Standard
 
 New application development can specify the `net5.0` Target Framework Moniker (TFM) for all project types, including class libraries. Sharing code between .NET 5 workloads is simplified: all you need is the `net5.0` TFM.
 
-For .NET 5 apps and libraries, the `net5.0` TFM combines and replaces the `netcoreapp` and `netstandard` TFMs. However, if you plan to share code between .NET Framework, .NET Core, and .NET 5 workloads, you can do so by specifying `netstandard2.0` as your TFM. For more information, see .NET Standard.
+For .NET 5 apps and libraries, the `net5.0` TFM combines and replaces the `netcoreapp` and `netstandard` TFMs. However, if you plan to share code between .NET Framework, .NET Core, and .NET 5 workloads, you can do so by specifying `netstandard2.0` as your TFM. For more information, see [.NET Standard](../../standard/net-standard.md).
 
 ## C# updates
 
@@ -77,13 +75,13 @@ Developers writing .NET 5 apps will have access to the latest C# version and fea
 
 - **Function pointers**: Language constructs that expose the following intermediate language (IL) opcodes: `ldftn` and `calli`.
 
-For more information on the available C# 9 features, see What's new in C# 9.
+For more information on the available C# 9 features, see [What's new in C# 9](../../csharp/whats-new/csharp-version-history.md#c-version-9).
 
 ### Source generators
 
 In addition to some of the highlighted new C# features, source generators are making their way into developer projects. Source generators allow code that runs during compilation to inspect your program and produce additional files that are compiled together with the rest of your code.
 
-For more information on source generators, see Introducing C# source generators and C# source generator samples.
+For more information on source generators, see [Introducing C# source generators](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators) and [C# source generator samples](https://devblogs.microsoft.com/dotnet/new-c-source-generator-samples).
 
 ## F# updates
 
@@ -95,7 +93,7 @@ let age = 36
 let message = $"{name} is {age} years old."
 ```
 
-In addition to basic <example-value> interpolation, there's typed interpolation. With typed interpolation, a given type must match the format specifier.
+In addition to basic string interpolation, there's typed interpolation. With typed interpolation, a given type must match the format specifier.
 
 ```fsharp
 let name = "David"
@@ -103,13 +101,13 @@ let age = 36
 let message = $"%s{name} is %d{age} years old."
 ```
 
-This format is similar to the `sprintf` function that formats a string based on type-safe inputs.
+This format is similar to the [`sprintf`](https://fsharp.github.io/fsharp-core-docs/reference/fsharp-core-printfmodule.html#sprintf) function that formats a string based on type-safe inputs.
 
-For more information, see What's new in F# 5.
+For more information, see [What's new in F# 5](../../fsharp/whats-new/fsharp-50.md).
 
-## Visual Basic <example-value>
+## Visual Basic updates
 
-There are no new language features for Visual Basic in .NET 5. However, with .NET 5, Visual Basic <example-value> is extended to:
+There are no new language features for Visual Basic in .NET 5. However, with .NET 5, Visual Basic support is extended to:
 
 | Description                            | `dotnet new` parameter |
 |----------------------------------------|------------------------|
@@ -126,26 +124,26 @@ There are no new language features for Visual Basic in .NET 5. However, with .NE
 | NUnit 3 Test Item                      | `nunit-test`           |
 | xUnit Test Project                     | `xunit`                |
 
-For more information on project templates from the .NET CLI, see `dotnet new`.
+For more information on project templates from the .NET CLI, see [`dotnet new`](../tools/dotnet-new.md).
 
 ## System.Text.Json new features
 
-There are new features in and for System.Text.Json:
+There are new features in and for [System.Text.Json](../../standard/serialization/system-text-json/overview.md):
 
-- Preserve references and handle circular references
-- Serialization extension methods on HttpClient
-- Allow or write numbers in quotes
-- Support immutable types and C# 9 Records
-- Support non-public property accessors
-- Support fields
-- Conditionally ignore properties
-- Support non-string-key <example-value>
-- Allow custom converters to handle null
-- Copy JsonSerializerOptions
-- Create JsonSerializerOptions with web defaults
+- [Preserve references and handle circular references](../../standard/serialization/system-text-json/preserve-references.md)
+- [Serialization extension methods on HttpClient](../../standard/serialization/system-text-json/httpclient-extensions.md)
+- [Allow or write numbers in quotes](../../standard/serialization/system-text-json/invalid-json.md#allow-or-write-numbers-in-quotes)
+- [Support immutable types and C# 9 Records](../../standard/serialization/system-text-json/immutability.md)
+- [Support non-public property accessors](../../standard/serialization/system-text-json/immutability.md)
+- [Support fields](../../standard/serialization/system-text-json/fields.md)
+- [Conditionally ignore properties](../../standard/serialization/system-text-json/ignore-properties.md)
+- [Support non-string-key dictionaries](../../standard/serialization/system-text-json/migrate-from-newtonsoft.md#dictionary-with-non-string-key)
+- [Allow custom converters to handle null](../../standard/serialization/system-text-json/converters-how-to.md#handle-null-values)
+- [Copy JsonSerializerOptions](../../standard/serialization/system-text-json/configure-options.md#copy-jsonserializeroptions)
+- [Create JsonSerializerOptions with web defaults](../../standard/serialization/system-text-json/configure-options.md#web-defaults-for-jsonserializeroptions)
 
 ## See also
 
-- The Journey to one .NET
-- Performance improvements in .NET 5
-- Download the .NET SDK
+- [The Journey to one .NET](/Events/Build/2020/BOD106)
+- [Performance improvements in .NET 5](https://devblogs.microsoft.com/dotnet/performance-improvements-in-net-5)
+- [Download the .NET SDK](https://dotnet.microsoft.com/download)

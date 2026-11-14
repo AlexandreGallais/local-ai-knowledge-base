@@ -1,19 +1,10 @@
----
-title: "Navigate to routes"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/routing/navigate-to-routes.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Navigate to routes
 
-The RouterLink directive is Angular's declarative approach to navigation. It allows you to use standard anchor elements (``) that seamlessly integrate with Angular's routing system.
+The RouterLink directive is Angular's declarative approach to navigation. It allows you to use standard anchor elements (`<a>`) that seamlessly integrate with Angular's routing system.
 
 ## How to use RouterLink
 
-Instead of using regular anchor elements `` with an `href` attribute, you add a RouterLink directive with the appropriate path in order to leverage Angular routing.
+Instead of using regular anchor elements `<a>` with an `href` attribute, you add a RouterLink directive with the appropriate path in order to leverage Angular routing.
 
 ```angular-ts
 import {RouterLink} from '@angular/router';
@@ -82,7 +73,7 @@ For example, if the user is on `example.com/settings`, here is how different rel
 
 ## Programmatic navigation to routes
 
-While `RouterLink` handles declarative navigation in templates, Angular provides programmatic navigation for scenarios where you need to navigate based on logic, user actions, or application state. By injecting `Router`, you can dynamically navigate to routes, pass <example-value>, and control navigation behavior in your TypeScript code.
+While `RouterLink` handles declarative navigation in templates, Angular provides programmatic navigation for scenarios where you need to navigate based on logic, user actions, or application state. By injecting `Router`, you can dynamically navigate to routes, pass parameters, and control navigation behavior in your TypeScript code.
 
 ### `router.navigate()`
 
@@ -117,7 +108,7 @@ export class AppDashboard {
 }
 ```
 
-`router.navigate()` supports both simple and complex routing scenarios, allowing you to pass route parameters, query parameters, and control navigation behavior.
+`router.navigate()` supports both simple and complex routing scenarios, allowing you to pass route parameters, [query parameters](/guide/routing/read-route-state#query-parameters), and control navigation behavior.
 
 You can also build dynamic navigation paths relative to your component’s location in the routing tree using the `relativeTo` option.
 
@@ -161,7 +152,7 @@ export class UserDetail {
 
 When navigating multiple levels up, all `..` segments must be in the **first element** of the commands array. The router only parses `..` from the first command string — subsequent array elements are treated as literal path segments.
 
-```angular-ts
+```angular-ts {prefer}
 // From: /team/123/users/456
 // Result: /team/123/settings
 this.router.navigate(['../../settings'], {relativeTo: this.route});
@@ -169,13 +160,13 @@ this.router.navigate(['../../settings'], {relativeTo: this.route});
 
 When using `relativeTo`, never prefix the first command with `/`. A leading `/` makes the navigation absolute and ignores `relativeTo` entirely.
 
-```angular-ts
+```angular-ts {prefer}
 // From: /team/123/users/456
 // Result: /team/123/users/456/edit
 this.router.navigate(['edit'], {relativeTo: this.route});
 ```
 
-```angular-ts
+```angular-ts {avoid}
 // From: /team/123/users/456
 // Leading '/' causes absolute navigation — relativeTo is ignored
 // Result: /edit
@@ -261,4 +252,4 @@ export class ProductList {
 
 ## Next steps
 
-Learn how to read route state to create responsive and context-aware components.
+Learn how to [read route state](/guide/routing/read-route-state) to create responsive and context-aware components.

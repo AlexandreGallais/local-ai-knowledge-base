@@ -1,151 +1,197 @@
----
-title: "ChoiceFormat class (java.text)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/text/ChoiceFormat.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ChoiceFormat class (java.text)
 
 ```java
 public class ChoiceFormat extends NumberFormat
 ```
 
-`ChoiceFormat` is a concrete subclass of `NumberFormat` that
+{@code ChoiceFormat} is a concrete subclass of {@code NumberFormat} that
 allows you to attach a format to a range of numbers.
-It is generally used in a `MessageFormat` for handling plurals.
+It is generally used in a {@link MessageFormat} for handling plurals.
 The choice is specified with an ascending list of doubles, where each item
 specifies a half-open interval up to the next item:
-
-```java
-X matches j if and only if limit[j] &le; X < limit[j+1]
-```
-
+<blockquote>
+<pre>
+X matches j if and only if limit[j] &le; X &lt; limit[j+1]
+</pre>
+</blockquote>
 If there is no match, then either the first or last index is used, depending
 on whether the number (X) is too low or too high.  If the limit array is not
 in ascending order, the results of formatting will be incorrect.  ChoiceFormat
-also accepts `\u221E` as equivalent to infinity(INF).
+also accepts <code>&#92;u221E</code> as equivalent to infinity(INF).
 
-**Note:**
-`ChoiceFormat` differs from the other `Format`
-classes in that you create a `ChoiceFormat` object with a
-constructor (not with a `getInstance` style factory
-method). The factory methods aren't necessary because `ChoiceFormat`
+<p>
+<strong>Note:</strong>
+{@code ChoiceFormat} differs from the other {@code Format}
+classes in that you create a {@code ChoiceFormat} object with a
+constructor (not with a {@code getInstance} style factory
+method). The factory methods aren't necessary because {@code ChoiceFormat}
 doesn't require any complex setup for a given locale. In fact,
-`ChoiceFormat` doesn't implement any locale specific behavior.
+{@code ChoiceFormat} doesn't implement any locale specific behavior.
 
-#### Patterns
+<h2><a id="patterns">Patterns</a></h2>
+A {@code ChoiceFormat} pattern has the following syntax:
+<blockquote>
+<dl>
+<dt><i>Pattern:</i>
+<dd>SubPattern *("|" SubPattern)
+</dl>
 
-A `ChoiceFormat` pattern has the following syntax:
+<dl>
+<dt><i>SubPattern:</i>
+<dd>Limit Relation Format
+<dd><sub>Note: Each additional SubPattern must have an ascending Limit-Relation interval</sub></dd>
+</dl>
 
-*Pattern:*
-SubPattern *("|" SubPattern)
+<dl>
+<dt><i>Limit:</i>
+<dd>Number / "&infin;" / "-&infin;"
+</dl>
 
-*SubPattern:*
-Limit Relation Format
-Note: Each additional SubPattern must have an ascending Limit-Relation interval
+<dl>
+<dt><i>Number:</i>
+<dd>["-"] *(Digit) 1*(Decimal / Digit) *(Digit) [Exponent]
+</dl>
 
-*Limit:*
-Number / "&infin;" / "-&infin;"
+<dl>
+<dt><i>Decimal:</i>
+<dd>1*(Digit ".") / 1*("." Digit)
+</dl>
 
-*Number:*
-["-"] *(Digit) 1*(Decimal / Digit) *(Digit) [Exponent]
+<dl>
+<dt><i>Digit:</i>
+<dd>0 - 9
+</dl>
 
-*Decimal:*
-1*(Digit ".") / 1*("." Digit)
+<dl>
+<dt><i>Exponent:</i>
+<dd>*(Digit) Digit ExponentSymbol Digit *(Digit)
+</dl>
 
-*Digit:*
-0 - 9
+<dl>
+<dt><i>ExponentSymbol:</i>
+<dd>"e" / "E"
+</dl>
 
-*Exponent:*
-*(Digit) Digit ExponentSymbol Digit *(Digit)
+<dl>
+<dt><i>Relation:</i>
+<dd>"#" / "&lt;" / "&le;"
+</dl>
 
-*ExponentSymbol:*
-"e" / "E"
+<dl>
+<dt><i>Format:</i>
+<dd>Any characters except the special pattern character '|'
+</dl>
 
-*Relation:*
-"#" / "<" / "&le;"
+</blockquote>
 
-*Format:*
-Any characters except the special pattern character '|'
+<i>Note:The relation &le; is not equivalent to &lt;&equals;</i>
 
-*Note:The relation &le; is not equivalent to <&equals;*
-
- To use a reserved special pattern character within a *Format* pattern,
-it must be single quoted. For example, `new ChoiceFormat("1#'|'foo'|'").format(1)`
-returns `"|foo|"`.
+<p> To use a reserved special pattern character within a <i>Format</i> pattern,
+it must be single quoted. For example, {@code new ChoiceFormat("1#'|'foo'|'").format(1)}
+returns {@code "|foo|"}.
 Use two single quotes in a row to produce a literal single quote. For example,
-`new ChoiceFormat("1# ''one'' ").format(1)` returns `" 'one' "`.
+{@code new ChoiceFormat("1# ''one'' ").format(1)} returns {@code " 'one' "}.
 
-#### Usage Information
+<h2>Usage Information</h2>
 
-A `ChoiceFormat` can be constructed using either an array of formats
+<p>
+A {@code ChoiceFormat} can be constructed using either an array of formats
 and an array of limits or a string pattern. When constructing with
 format and limit arrays, the length of these arrays must be the same.
 
 For example,
-
--
-    *limits* = {1,2,3,4,5,6,7}
-
-    *formats* = {"Sun","Mon","Tue","Wed","Thur","Fri","Sat"}
-
--
-    *limits* = {0, 1, ChoiceFormat.nextDouble(1)}
-
-    *formats* = {"no files", "one file", "many files"}
-
-    (`nextDouble` can be used to get the next higher double, to
+<ul>
+<li>
+    <em>limits</em> = {1,2,3,4,5,6,7}<br>
+    <em>formats</em> = {"Sun","Mon","Tue","Wed","Thur","Fri","Sat"}
+<li>
+    <em>limits</em> = {0, 1, ChoiceFormat.nextDouble(1)}<br>
+    <em>formats</em> = {"no files", "one file", "many files"}<br>
+    ({@code nextDouble} can be used to get the next higher double, to
     make the half-open interval.)
+</ul>
 
+<p>
 Below is an example of constructing a ChoiceFormat with arrays to format
 and parse values:
+{@snippet lang=java :
+double[] limits = {1,2,3,4,5,6,7};
+String[] dayOfWeekNames = {"Sun","Mon","Tue","Wed","Thur","Fri","Sat"};
+ChoiceFormat form = new ChoiceFormat(limits, dayOfWeekNames);
+ParsePosition status = new ParsePosition(0);
+for (double i = 0.0; i <= 8.0; ++i) {
+    status.setIndex(0);
+    System.out.println(i + " -> " + form.format(i) + " -> "
+                             + form.parse(form.format(i),status));
+}
+}
 
-Below is an example of constructing a ChoiceFormat with a String pattern:
+<p>Below is an example of constructing a ChoiceFormat with a String pattern:
+{@snippet lang=java :
+ChoiceFormat fmt = new ChoiceFormat(
+     "-1#is negative| 0#is zero or fraction | 1#is one |1.0<is 1+ |2#is two |2<is more than 2.");
 
-For more sophisticated patterns, `ChoiceFormat` can be used with
-`MessageFormat` to produce accurate forms for singular and plural:
+System.out.println(fmt.format(Double.NEGATIVE_INFINITY)); // outputs "is negative"
+System.out.println(fmt.format(-1.0)); // outputs "is negative"
+System.out.println(fmt.format(0)); // outputs "is zero or fraction"
+System.out.println(fmt.format(0.9)); // outputs "is zero or fraction"
+System.out.println(fmt.format(1)); // outputs "is one"
+System.out.println(fmt.format(1.5)); // outputs "is 1+"
+System.out.println(fmt.format(2)); // outputs "is two"
+System.out.println(fmt.format(2.1)); // outputs "is more than 2."
+System.out.println(fmt.format(Double.NaN)); // outputs "is negative"
+System.out.println(fmt.format(Double.POSITIVE_INFINITY)); // outputs "is more than 2."
+}
 
-The output with different values for `fileCount`:
-
-```java
+<p>
+For more sophisticated patterns, {@code ChoiceFormat} can be used with
+{@link MessageFormat} to produce accurate forms for singular and plural:
+{@snippet lang=java :
+MessageFormat msgFmt = new MessageFormat("The disk \"{0}\" contains {1}.");
+double[] fileLimits = {0,1,2};
+String[] filePart = {"no files","one file","{1,number} files"};
+ChoiceFormat fileChoices = new ChoiceFormat(fileLimits, filePart);
+msgFmt.setFormatByArgumentIndex(1, fileChoices);
+Object[] args = {"MyDisk", 1273};
+System.out.println(msgFmt.format(args));
+}
+The output with different values for {@code fileCount}:
+<blockquote><pre>
 The disk "MyDisk" contains no files.
 The disk "MyDisk" contains one file.
 The disk "MyDisk" contains 1,273 files.
-```
+</pre></blockquote>
+See {@link MessageFormat##pattern_caveats MessageFormat} for caveats regarding
+{@code MessageFormat} patterns within a {@code ChoiceFormat} pattern.
 
-See MessageFormat for caveats regarding
-`MessageFormat` patterns within a `ChoiceFormat` pattern.
+<h2><a id="synchronization">Synchronization</a></h2>
 
-#### Synchronization
-
+<p>
 Choice formats are not synchronized.
 It is recommended to create separate format instances for each thread.
 If multiple threads access a format concurrently, it must be synchronized
 externally.
 
-**API note:** A subclass could perform more consistent pattern validation by
-throwing an `IllegalArgumentException` for all incorrect cases.
-See the `Implementation Note` for this implementation's behavior regarding
+@apiNote A subclass could perform more consistent pattern validation by
+throwing an {@code IllegalArgumentException} for all incorrect cases.
+See the {@code Implementation Note} for this implementation's behavior regarding
 incorrect patterns.
-
-This class inherits instance methods from `NumberFormat` it does
-not utilize; a subclass could override and throw `UnsupportedOperationException` for such methods.
-
-**Implementation note:** Given an incorrect pattern, this implementation may either
-throw an exception or succeed and discard the incorrect portion. A `NumberFormatException` is thrown if a `limit` can not be
-parsed as a numeric value and an `IllegalArgumentException` is thrown
-if a `SubPattern` is missing, or the intervals are not ascending.
+<p>This class inherits instance methods from {@code NumberFormat} it does
+not utilize; a subclass could override and throw {@code
+UnsupportedOperationException} for such methods.
+@implNote Given an incorrect pattern, this implementation may either
+throw an exception or succeed and discard the incorrect portion. A {@code
+NumberFormatException} is thrown if a {@code limit} can not be
+parsed as a numeric value and an {@code IllegalArgumentException} is thrown
+if a {@code SubPattern} is missing, or the intervals are not ascending.
 Discarding the incorrect portion may result in a ChoiceFormat with
-empty `limits` and `formats`.
+empty {@code limits} and {@code formats}.
 
-**See also:** DecimalFormat
 
-**See also:** MessageFormat
-
-**Since:** 1.1
+@see          DecimalFormat
+@see          MessageFormat
+@author       Mark Davis
+@since 1.1
 
 ## ChoiceFormat.applyPattern(String)
 
@@ -155,19 +201,16 @@ public void applyPattern(String newPattern)
 
 Apply the given pattern to this ChoiceFormat object. The syntax and error
 related caveats for the ChoiceFormat pattern can be found in the
-Patterns section. Unlike String[]), this method will throw an `IllegalArgumentException` if
-the `limits` are not in ascending order.
+{@linkplain ##patterns Patterns} section. Unlike {@link #setChoices(double[],
+String[])}, this method will throw an {@code IllegalArgumentException} if
+the {@code limits} are not in ascending order.
 
-Parameters:
-
-- `newPattern`: a pattern string
-
-**See also:** #ChoiceFormat(String)
-
-Throws:
-
-- `NullPointerException`: if `newPattern` is `null`
-- `IllegalArgumentException`: if `newPattern` violates the pattern syntax
+@param newPattern a pattern string
+@throws    NullPointerException if {@code newPattern}
+           is {@code null}
+@throws    IllegalArgumentException if {@code newPattern}
+           violates the pattern syntax
+@see #ChoiceFormat(String)
 
 ## ChoiceFormat.toPattern()
 
@@ -175,11 +218,14 @@ Throws:
 public String toPattern()
 ```
 
-The `string` returned is not guaranteed to be the same input
-`string` passed to either `applyPattern(String)` or
-`ChoiceFormat(String)`.
+{@return a pattern {@code string} that represents the {@code limits} and
+{@code formats} of this ChoiceFormat object}
 
-**See also:** #applyPattern(String)
+The {@code string} returned is not guaranteed to be the same input
+{@code string} passed to either {@link #applyPattern(String)} or
+{@link #ChoiceFormat(String)}.
+
+@see #applyPattern(String)
 
 ## ChoiceFormat.ChoiceFormat(String)
 
@@ -189,21 +235,17 @@ public ChoiceFormat(String newPattern)
 
 Constructs a ChoiceFormat with limits and corresponding formats
 based on the pattern. The syntax and error related caveats for the
-ChoiceFormat pattern can be found in the Patterns
-section. Unlike String[]), this constructor will
-throw an `IllegalArgumentException` if the `limits` are not
+ChoiceFormat pattern can be found in the {@linkplain ##patterns Patterns}
+section. Unlike {@link #ChoiceFormat(double[], String[])}, this constructor will
+throw an {@code IllegalArgumentException} if the {@code limits} are not
 in ascending order.
 
-Parameters:
-
-- `newPattern`: the new pattern string
-
-**See also:** #applyPattern
-
-Throws:
-
-- `NullPointerException`: if `newPattern` is `null`
-- `IllegalArgumentException`: if `newPattern` violates the pattern syntax
+@param newPattern the new pattern string
+@throws    NullPointerException if {@code newPattern} is
+           {@code null}
+@throws    IllegalArgumentException if {@code newPattern}
+           violates the pattern syntax
+@see #applyPattern
 
 ## ChoiceFormat.ChoiceFormat(double[], String[])
 
@@ -213,17 +255,13 @@ public ChoiceFormat(double[] limits, String[] formats)
 
 Constructs with the limits and the corresponding formats.
 
-Parameters:
-
-- `limits`: limits in ascending order
-- `formats`: corresponding format strings
-
-**See also:** #setChoices
-
-Throws:
-
-- `NullPointerException`: if `limits` or `formats` is `null`
-- `IllegalArgumentException`: if the length of `limits` and `formats` are not equal
+@param limits limits in ascending order
+@param formats corresponding format strings
+@throws    NullPointerException if {@code limits} or {@code formats}
+           is {@code null}
+@throws    IllegalArgumentException if the length of {@code limits}
+           and {@code formats} are not equal
+@see #setChoices
 
 ## ChoiceFormat.setChoices(double[], String[])
 
@@ -233,15 +271,17 @@ public void setChoices(double[] limits, String[] formats)
 
 Set the choices to be used in formatting.
 
-Parameters:
-
-- `limits`: contains the top value that you want parsed with that format, and should be in ascending sorted order. When formatting X, the choice will be the i, where limit[i] &le; X < limit[i+1]. If the limit array is not in ascending order, the results of formatting will be incorrect.
-- `formats`: are the formats you want to use for each limit.
-
-Throws:
-
-- `NullPointerException`: if `limits` or `formats` is `null`
-- `IllegalArgumentException`: if the length of `limits` and `formats` are not equal
+@param limits contains the top value that you want
+parsed with that format, and should be in ascending sorted order. When
+formatting X, the choice will be the i, where
+limit[i] &le; X {@literal <} limit[i+1].
+If the limit array is not in ascending order, the results of formatting
+will be incorrect.
+@param formats are the formats you want to use for each limit.
+@throws    NullPointerException if {@code limits} or
+           {@code formats} is {@code null}
+@throws    IllegalArgumentException if the length of {@code limits}
+           and {@code formats} are not equal
 
 ## ChoiceFormat.getLimits()
 
@@ -249,11 +289,15 @@ Throws:
 public double[] getLimits()
 ```
 
+{@return the limits of this ChoiceFormat}
+
 ## ChoiceFormat.getFormats()
 
 ```java
 public Object[] getFormats()
 ```
+
+{@return the formats of this ChoiceFormat}
 
 ## ChoiceFormat.format(long, StringBuffer, FieldPosition)
 
@@ -262,21 +306,18 @@ public StringBuffer format(long number, StringBuffer toAppendTo, FieldPosition s
 ```
 
 Specialization of format. This method really calls
-StringBuffer, FieldPosition).
+{@link #format(double, StringBuffer, FieldPosition)}.
 Thus, the range of longs that are supported is only equal to
 the range that can be stored by double. This will never be
 a practical limitation.
 
-Parameters:
-
-- `number`: number to be formatted and substituted.
-- `toAppendTo`: where text is appended.
-- `status`: ignore no useful status is returned.
-
-Throws:
-
-- `ArrayIndexOutOfBoundsException`: if either the `limits` or `formats` of this ChoiceFormat are empty
-- `NullPointerException`: if `toAppendTo` is `null`
+@param number number to be formatted and substituted.
+@param toAppendTo where text is appended.
+@param status ignore no useful status is returned.
+@throws    ArrayIndexOutOfBoundsException if either the {@code limits}
+           or {@code formats} of this ChoiceFormat are empty
+@throws    NullPointerException if {@code toAppendTo}
+           is {@code null}
 
 ## ChoiceFormat.format(double, StringBuffer, FieldPosition)
 
@@ -286,16 +327,13 @@ public StringBuffer format(double number, StringBuffer toAppendTo, FieldPosition
 
 Returns pattern with formatted double.
 
-Parameters:
-
-- `number`: number to be formatted and substituted.
-- `toAppendTo`: where text is appended.
-- `status`: ignore no useful status is returned.
-
-Throws:
-
-- `ArrayIndexOutOfBoundsException`: if either the `limits` or `formats` of this ChoiceFormat are empty
-- `NullPointerException`: if `toAppendTo` is `null`
+@param number number to be formatted and substituted.
+@param toAppendTo where text is appended.
+@param status ignore no useful status is returned.
+@throws    ArrayIndexOutOfBoundsException if either the {@code limits}
+           or {@code formats} of this ChoiceFormat are empty
+@throws    NullPointerException if {@code toAppendTo}
+           is {@code null}
 
 ## ChoiceFormat.parse(String, ParsePosition)
 
@@ -303,26 +341,33 @@ Throws:
 public Number parse(String text, ParsePosition status)
 ```
 
-Parses the input text starting at the index given by the `ParsePosition`
-as a `Double`. The value returned is the `limit` corresponding
-to the `format` that is the longest substring of the input text.
-Matching is done in ascending order, when multiple `format`s match
-the text equivalently in strength, the first matching `limit` is
-returned. If there is no match, `Double.NaN` is returned.
-
+Parses the input text starting at the index given by the {@code ParsePosition}
+as a {@code Double}. The value returned is the {@code limit} corresponding
+to the {@code format} that is the longest substring of the input text.
+Matching is done in ascending order, when multiple {@code format}s match
+the text equivalently in strength, the first matching {@code limit} is
+returned. If there is no match, {@code Double.NaN} is returned.
+<p>
 For example,
+{@snippet lang=java :
+var fmt = new ChoiceFormat("0#foo|1#bar|2#baz");
+fmt.parse("baz", new ParsePosition(0)); // returns 2.0
+fmt.parse("quux", new ParsePosition(0)); // returns NaN
+}
 
-Parameters:
-
-- `text`: the source text.
-- `status`: an input-output parameter. On input, the status.index field indicates the first character of the source text that should be parsed. On exit, if no error occurred, status.index is set to the first unparsed character in the source text. On exit, if an error did occur, status.index is unchanged and status.errorIndex is set to the first index of the character that caused the parse to fail.
-
-**Returns:** A Number which represents the `limit` corresponding to the
-`format` parsed, or `Double.NaN` if the parse fails.
-
-Throws:
-
-- `NullPointerException`: if `status` is `null` or if `text` is `null` and the list of choice strings is not empty.
+@param text the source text.
+@param status an input-output parameter.  On input, the
+status.index field indicates the first character of the
+source text that should be parsed.  On exit, if no error
+occurred, status.index is set to the first unparsed character
+in the source text.  On exit, if an error did occur,
+status.index is unchanged and status.errorIndex is set to the
+first index of the character that caused the parse to fail.
+@return A Number which represents the {@code limit} corresponding to the
+{@code format} parsed, or {@code Double.NaN} if the parse fails.
+@throws    NullPointerException if {@code status} is {@code null}
+           or if {@code text} is {@code null} and the list of
+           choice strings is not empty.
 
 ## ChoiceFormat.isStrict()
 
@@ -330,7 +375,7 @@ Throws:
 public boolean isStrict()
 ```
 
-**Since:** 23
+@since 23
 
 ## ChoiceFormat.setStrict(boolean)
 
@@ -338,7 +383,7 @@ public boolean isStrict()
 public void setStrict(boolean strict)
 ```
 
-**Since:** 23
+@since 23
 
 ## ChoiceFormat.nextDouble(double)
 
@@ -346,21 +391,16 @@ public void setStrict(boolean strict)
 public static final double nextDouble (double d)
 ```
 
-Finds the least double greater than `d`.
-If `NaN`, returns same value.
+Finds the least double greater than {@code d}.
+If {@code NaN}, returns same value.
+<p>Used to make half-open intervals.
 
-Used to make half-open intervals.
+@implNote This is equivalent to calling
+{@link Math#nextUp(double) Math.nextUp(d)}
 
-Parameters:
-
-- `d`: the reference value
-
-**Implementation note:** This is equivalent to calling
-Math.nextUp(d)
-
-**Returns:** the least double value greater than `d`
-
-**See also:** #previousDouble
+@param d the reference value
+@return the least double value greater than {@code d}
+@see #previousDouble
 
 ## ChoiceFormat.nextDouble(double, boolean)
 
@@ -368,20 +408,18 @@ Math.nextUp(d)
 public static double nextDouble (double d, boolean positive)
 ```
 
-Finds the least double greater than `d` (if `positive` is
-`true`), or the greatest double less than `d` (if
-`positive` is `false`).
-If `NaN`, returns same value.
+Finds the least double greater than {@code d} (if {@code positive} is
+{@code true}), or the greatest double less than {@code d} (if
+{@code positive} is {@code false}).
+If {@code NaN}, returns same value.
 
-Parameters:
+@implNote This is equivalent to calling
+{@code positive ? Math.nextUp(d) : Math.nextDown(d)}
 
-- `d`: the reference value
-- `positive`: `true` if the least double is desired; `false` otherwise
-
-**Implementation note:** This is equivalent to calling
-`positive ? Math.nextUp(d) : Math.nextDown(d)`
-
-**Returns:** the least or greater double value
+@param d        the reference value
+@param positive {@code true} if the least double is desired;
+                {@code false} otherwise
+@return the least or greater double value
 
 ## ChoiceFormat.previousDouble(double)
 
@@ -389,19 +427,15 @@ Parameters:
 public static final double previousDouble (double d)
 ```
 
-Finds the greatest double less than `d`.
-If `NaN`, returns same value.
+Finds the greatest double less than {@code d}.
+If {@code NaN}, returns same value.
 
-Parameters:
+@implNote This is equivalent to calling
+{@link Math#nextDown(double) Math.nextDown(d)}
 
-- `d`: the reference value
-
-**Implementation note:** This is equivalent to calling
-Math.nextDown(d)
-
-**Returns:** the greatest double value less than `d`
-
-**See also:** #nextDouble
+@param d the reference value
+@return the greatest double value less than {@code d}
+@see #nextDouble
 
 ## ChoiceFormat.clone()
 
@@ -417,10 +451,11 @@ Overrides Cloneable
 public int hashCode()
 ```
 
-**Implementation requirements:** This method calculates the hash code value using the values returned by
-`getFormats()` and `getLimits()`.
+{@return the hash code for this {@code ChoiceFormat}}
 
-**See also:** Object#hashCode()
+@implSpec This method calculates the hash code value using the values returned by
+{@link #getFormats()} and {@link #getLimits()}.
+@see Object#hashCode()
 
 ## ChoiceFormat.toString()
 
@@ -428,25 +463,22 @@ public int hashCode()
 public String toString()
 ```
 
+{@return a string identifying this {@code ChoiceFormat}, for debugging}
+
 ## ChoiceFormat.equals(Object)
 
 ```java
 public boolean equals(Object obj)
 ```
 
-Compares the specified object with this `ChoiceFormat` for equality.
-Returns true if the object is also a `ChoiceFormat` and the
+Compares the specified object with this {@code ChoiceFormat} for equality.
+Returns true if the object is also a {@code ChoiceFormat} and the
 two formats would format any value the same.
 
-Parameters:
-
-- `obj`: object to be compared for equality
-
-**Implementation requirements:** This method performs an equality check with a notion of class
-identity based on `getClass()`, rather than `instanceof`.
+@implSpec This method performs an equality check with a notion of class
+identity based on {@code getClass()}, rather than {@code instanceof}.
 Therefore, in the equals methods in subclasses, no instance of this class
 should compare as equal to an instance of a subclass.
-
-**Returns:** `true` if the specified object is equal to this `ChoiceFormat`
-
-**See also:** Object#equals(Object)
+@param  obj object to be compared for equality
+@return {@code true} if the specified object is equal to this {@code ChoiceFormat}
+@see Object#equals(Object)

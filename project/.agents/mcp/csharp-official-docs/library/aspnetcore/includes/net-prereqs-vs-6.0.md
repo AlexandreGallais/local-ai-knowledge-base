@@ -1,13 +1,2 @@
----
-title: "net-prereqs-vs-6.0"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/net-prereqs-vs-6.0.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# net-prereqs-vs-6.0
-
-* Visual Studio 2022 with the **ASP.NET and web development** workload.
-* .NET 6 SDK
+* [Visual Studio 2022](https://visualstudio.microsoft.com/vs/#download) with the **ASP.NET and web development** workload.
+* [!INCLUDE [.NET 6 SDK](~/includes/6.0-SDK.md)]

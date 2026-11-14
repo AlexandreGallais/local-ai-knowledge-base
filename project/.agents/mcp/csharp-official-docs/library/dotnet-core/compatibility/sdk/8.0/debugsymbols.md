@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: Setting DebugSymbols to false disables PDB generation"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/8.0/debugsymbols.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in the .NET SDK where setting DebugSymbols to false disables PDB generation.
+no-loc: [DebugSymbols]
+ms.date: 07/30/2024
 ---
-
 # Setting DebugSymbols to false disables PDB generation
 
-The existing MSBuild documentation says that specifying `DebugSymbols=false` on the command line means that program database (*.pdb*) files aren't generated. However, that wasn't true before .NET 8. The behavior has been updated such that setting `DebugSymbols` to `false` now suppresses PDB generation by changing `DebugType` to `None`.
+The existing [MSBuild documentation](/visualstudio/msbuild/common-msbuild-project-properties) says that specifying `DebugSymbols=false` on the command line means that program database (*.pdb*) files aren't generated. However, that wasn't true before .NET 8. The behavior has been updated such that setting `DebugSymbols` to `false` now suppresses PDB generation by changing `DebugType` to `None`.
 
 If you currently have a script where you expect PDBs to be created, and the behavior changes when you upgrade to .NET 8 or a later version, check if the script includes `-p:DebugSymbols=false`.
 
@@ -27,7 +24,7 @@ If you currently have a script where you expect PDBs to be created, and the beha
 
 ## Type of change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

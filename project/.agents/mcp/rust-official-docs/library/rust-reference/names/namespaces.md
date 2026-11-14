@@ -1,12 +1,3 @@
----
-title: "Namespaces"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/names/namespaces.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[names.namespaces]
 # Namespaces
 
@@ -110,7 +101,8 @@ The macro namespace is split into two sub-namespaces: one for [bang-style macros
 
 For example, the [`cfg` attribute] and the [`cfg` macro] are two different entities with the same name in the macro namespace, but they can still be used in their respective context.
 
-> **Note:**
+<!-- ignore: requires external crates -->
+> [!NOTE]
 > `use` imports still cannot create duplicate bindings of the same name in a module or block, regardless of sub-namespace.
 >
 > ```rust,ignore
@@ -121,3 +113,57 @@ For example, the [`cfg` attribute] and the [`cfg` macro] are two different entit
 >
 > use myattr::mymac; // error[E0252]: the name `mymac` is defined multiple times.
 > ```
+
+[`cfg` attribute]: ../conditional-compilation.md#the-cfg-attribute
+[`cfg` macro]: ../conditional-compilation.md#the-cfg-macro
+[`char`]: ../types/char.md
+[`for`]: ../expressions/loop-expr.md#iterator-loops
+[`if let`]: ../expressions/if-expr.md#if-let-patterns
+[`let`]: ../statements.md#let-statements
+[`macro_rules` declarations]: ../macros-by-example.md
+[`match`]: ../expressions/match-expr.md
+[`Self` constructors]: ../paths.md#self-1
+[`Self` type]: ../paths.md#self-1
+[`str`]: ../types/str.md
+[`use` import]: ../items/use-declarations.md
+[`while let`]: ../expressions/loop-expr.md#while-let-patterns
+[Associated const declarations]: ../items/associated-items.md#associated-constants
+[Associated function declarations]: ../items/associated-items.md#associated-functions-and-methods
+[Associated type declarations]: ../items/associated-items.md#associated-types
+[Attribute macros]: ../procedural-macros.md#the-proc_macro_attribute-attribute
+[attributes]: ../attributes.md
+[bang-style macros]: ../macros.md
+[Block labels]: expr.loop.block-labels
+[boolean]: ../types/boolean.md
+[Built-in attributes]: ../attributes.md#built-in-attributes-index
+[closure parameters]: ../expressions/closure-expr.md
+[closure]: ../expressions/closure-expr.md
+[Constant item declarations]: ../items/constant-items.md
+[Derive macro helpers]: ../procedural-macros.md#derive-macro-helper-attributes
+[Derive macros]: macro.proc.derive
+[entity]: ../glossary.md#entity
+[Enum variant constructors]: ../items/enumerations.md
+[enum]: ../items/enumerations.md
+[External crate declarations]: ../items/extern-crates.md
+[External crate prelude]: preludes.md#extern-prelude
+[field expression]: ../expressions/field-expr.md
+[Function declarations]: ../items/functions.md
+[function parameters]: ../items/functions.md#function-parameters
+[Function-like procedural macros]: ../procedural-macros.md#the-proc_macro-attribute
+[Generic const parameters]: ../items/generics.md#const-generics
+[Generic lifetime parameters]: ../items/generics.md
+[Generic type parameters]: ../items/generics.md
+[Loop labels]: ../expressions/loop-expr.md#loop-labels
+[Module declarations]: ../items/modules.md
+[name resolution]: name-resolution.md
+[names]: ../names.md
+[numeric]: ../types/numeric.md
+[Static item declarations]: ../items/static-items.md
+[Struct constructors]: ../items/structs.md
+[Struct]: ../items/structs.md
+[Tool attribute modules]: ../attributes.md#tool-attributes
+[Tool attributes]: ../attributes.md#tool-attributes
+[Trait item declarations]: ../items/traits.md
+[Type aliases]: ../items/type-aliases.md
+[union]: ../items/unions.md
+[use declaration]: ../items/use-declarations.md

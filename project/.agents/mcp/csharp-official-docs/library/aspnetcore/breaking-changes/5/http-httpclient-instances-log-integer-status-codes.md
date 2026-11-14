@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: HTTP: HttpClient instances created by IHttpClientFactory log integer status codes"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/5/http-httpclient-instances-log-integer-status-codes.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 5.0 titled HTTP: HttpClient instances created by IHttpClientFactory log integer status codes"
+ms.date: 10/01/2020
+ms.custom: https://github.com/aspnet/Announcements/issues/396
 ---
-
 # HTTP: HttpClient instances created by IHttpClientFactory log integer status codes
 
-`System.Net.Http.HttpClient` instances created by `System.Net.Http.IHttpClientFactory` log HTTP status codes as integers instead of with status code names.
+<xref:System.Net.Http.HttpClient> instances created by <xref:System.Net.Http.IHttpClientFactory> log HTTP status codes as integers instead of with status code names.
 
 ## Version introduced
 
@@ -35,7 +32,7 @@ End processing HTTP request after 70.0862ms - 200
 
 ## Reason for change
 
-The original behavior of this logging is inconsistent with other parts of ASP.NET Core that have always used integer values. The inconsistency makes logs difficult to query via structured logging systems such as Elasticsearch. For more context, see dotnet/extensions#1549.
+The original behavior of this logging is inconsistent with other parts of ASP.NET Core that have always used integer values. The inconsistency makes logs difficult to query via structured logging systems such as [Elasticsearch](https://www.elastic.co/elasticsearch/). For more context, see [dotnet/extensions#1549](https://github.com/dotnet/extensions/issues/1549).
 
 Using integer values is more flexible than text because it allows queries on ranges of values.
 
@@ -49,12 +46,12 @@ If you need to force compatibility with the old behavior and use textual status 
 
 1. Copy the .NET Core 3.1 versions of the following classes into your project:
 
-    * LoggingHttpMessageHandlerBuilderFilter
-    * LoggingHttpMessageHandler
-    * LoggingScopeHttpMessageHandler
-    * HttpHeadersLogValue
+    * [LoggingHttpMessageHandlerBuilderFilter](https://github.com/dotnet/extensions/blob/release/3.1/src/HttpClientFactory/Http/src/Logging/LoggingHttpMessageHandlerBuilderFilter.cs)
+    * [LoggingHttpMessageHandler](https://github.com/dotnet/extensions/blob/release/3.1/src/HttpClientFactory/Http/src/Logging/LoggingHttpMessageHandler.cs)
+    * [LoggingScopeHttpMessageHandler](https://github.com/dotnet/extensions/blob/release/3.1/src/HttpClientFactory/Http/src/Logging/LoggingScopeHttpMessageHandler.cs)
+    * [HttpHeadersLogValue](https://github.com/dotnet/extensions/blob/release/3.1/src/HttpClientFactory/Http/src/Logging/HttpHeadersLogValue.cs)
 
-1. Rename the classes to avoid conflicts with public types in the Microsoft.Extensions.Http NuGet package.
+1. Rename the classes to avoid conflicts with public types in the [Microsoft.Extensions.Http](https://www.nuget.org/packages/Microsoft.Extensions.Http) NuGet package.
 
 1. Replace the built-in implementation of `LoggingHttpMessageHandlerBuilderFilter` with your own in the project's `Startup.ConfigureServices` method. For example:
 
@@ -73,4 +70,16 @@ If you need to force compatibility with the old behavior and use textual status 
 
 ## Affected APIs
 
-`System.Net.Http.HttpClient`
+<xref:System.Net.Http.HttpClient?displayProperty=nameWithType>
+
+<!--
+
+### Category
+
+ASP.NET Core
+
+### Affected APIs
+
+`T:System.Net.Http.HttpClient`
+
+-->

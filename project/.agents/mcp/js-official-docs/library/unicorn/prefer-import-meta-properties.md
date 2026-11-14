@@ -1,21 +1,15 @@
----
-title: "prefer-import-meta-properties"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-import-meta-properties.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-import-meta-properties
 
 📝 Prefer `import.meta.{dirname,filename}` over legacy techniques for getting file paths.
 
 🚫 Disabled by default.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
-Starting with Node.js 20.11, `import.meta.dirname` and `import.meta.filename` have been introduced in ES modules.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+Starting with Node.js 20.11, [`import.meta.dirname`](https://nodejs.org/api/esm.html#importmetadirname) and [`import.meta.filename`](https://nodejs.org/api/esm.html#importmetafilename) have been introduced in ES modules.
 
 These built-in properties avoid converting `import.meta.url` and calling path helpers, so file-path code is shorter and clearer.
 

@@ -1,12 +1,16 @@
 ---
+description: "Learn more about: ICorDebugProcess11 Interface"
 title: "ICorDebugProcess11 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess11-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "06/06/2022"
+api_name:
+  - "ICorDebugProcess11"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugProcess11 Interface
 
 [Supported in .NET 8 through .NET 10.]
@@ -17,11 +21,13 @@ Deprecated. Provides a method that enumerates ranges of native memory that are u
 
 |Method|Description|
 |------------|-----------------|
-|EnumerateLoaderHeapMemoryRegions Method|Deprecated. Enumerates ranges of native memory that are used by the .NET runtime to store internal data structures that describe .NET types and methods. The information returned is the same information that would be shown by using the SOS `eeheap -loader` command. |
+|[EnumerateLoaderHeapMemoryRegions Method](icordebugprocess11-enumerateloaderheapmemoryregions-method.md)|Deprecated. Enumerates ranges of native memory that are used by the .NET runtime to store internal data structures that describe .NET types and methods. The information returned is the same information that would be shown by using the SOS `eeheap -loader` command. |
+
+## Remarks
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

@@ -1,19 +1,17 @@
 ---
-title: "Combine Configs"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/use/configure/combine-configs.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: Combine Configs
+eleventyNavigation:
+    key: combine configs
+    parent: configure
+    title: Combine Configs
+    order: 6
 ---
-
-# Combine Configs
 
 In many cases, you won't write an ESLint config file from scratch, but rather, you'll use a combination of predefined and shareable configs along with your own overrides to create the config for your project. This page explains some of the patterns you can use to combine configs in your configuration file.
 
 ## Apply a Config Object
 
-If you are importing a config object from another module, you can apply it to just a subset of files by creating a new object with a `files` key and using the `extends` key to merge in the rest of the properties from the imported object. For example:
+If you are importing a [config object](../core-concepts/glossary#config-object) from another module, you can apply it to just a subset of files by creating a new object with a `files` key and using the `extends` key to merge in the rest of the properties from the imported object. For example:
 
 ```js
 // eslint.config.js
@@ -38,7 +36,7 @@ Here, the `"js/recommended"` predefined configuration is applied to files that m
 
 ## Apply a Config Array
 
-If you are importing a config array from another module, you can apply a config array (an array of configuration objects) to just a subset of files by using the `extends` key. For example:
+If you are importing a [config array](../core-concepts/glossary#config-array) from another module, you can apply a config array (an array of configuration objects) to just a subset of files by using the `extends` key. For example:
 
 ```js
 // eslint.config.js

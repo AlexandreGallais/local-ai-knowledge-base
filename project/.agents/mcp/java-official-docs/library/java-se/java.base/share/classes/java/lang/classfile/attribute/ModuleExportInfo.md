@@ -1,27 +1,15 @@
----
-title: "ModuleExportInfo interface (java.lang.classfile.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/attribute/ModuleExportInfo.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ModuleExportInfo interface (java.lang.classfile.attribute)
 
 ```java
 public sealed interface ModuleExportInfo permits UnboundAttribute.UnboundModuleExportInfo
 ```
 
-Models a single "exports" declaration in the `ModuleAttribute`.
+Models a single "exports" declaration in the {@link ModuleAttribute}.
 
-**See also:** ModuleAttribute#exports()
-
-**See also:** ModuleDescriptor.Exports
-
-**jvms:** 4.7.25 The `Module` Attribute
-
-**Since:** 24
+@see ModuleAttribute#exports()
+@see ModuleDescriptor.Exports
+@jvms 4.7.25 The {@code Module} Attribute
+@since 24
 
 ## ModuleExportInfo.exportedPackage()
 
@@ -29,7 +17,9 @@ Models a single "exports" declaration in the `ModuleAttribute`.
 PackageEntry exportedPackage()
 ```
 
-**See also:** ModuleDescriptor.Exports#source()
+{@return the exported package}
+
+@see ModuleDescriptor.Exports#source()
 
 ## ModuleExportInfo.exportsFlagsMask()
 
@@ -37,11 +27,11 @@ PackageEntry exportedPackage()
 int exportsFlagsMask()
 ```
 
-It is in the range of unsigned short, `[0, 0xFFFF]`.
+{@return the flags associated with this export declaration, as a bit mask}
+It is in the range of unsigned short, {@code [0, 0xFFFF]}.
 
-**See also:** ModuleDescriptor.Exports#modifiers()
-
-**See also:** AccessFlag.Location#MODULE_EXPORTS
+@see ModuleDescriptor.Exports#modifiers()
+@see AccessFlag.Location#MODULE_EXPORTS
 
 ## ModuleExportInfo.exportsFlags()
 
@@ -49,13 +39,12 @@ It is in the range of unsigned short, `[0, 0xFFFF]`.
 default Set<AccessFlag> exportsFlags()
 ```
 
-**See also:** ModuleDescriptor.Exports#accessFlags()
+{@return the flags associated with this export declaration, as a set of
+flag enums}
 
-**See also:** AccessFlag.Location#MODULE_EXPORTS
-
-Throws:
-
-- `IllegalArgumentException`: if the flags mask has any undefined bit set
+@throws IllegalArgumentException if the flags mask has any undefined bit set
+@see ModuleDescriptor.Exports#accessFlags()
+@see AccessFlag.Location#MODULE_EXPORTS
 
 ## ModuleExportInfo.has(AccessFlag)
 
@@ -63,11 +52,10 @@ Throws:
 default boolean has(AccessFlag flag)
 ```
 
-Parameters:
+{@return whether the export declaration has the specified access flag set}
 
-- `flag`: the access flag
-
-**See also:** AccessFlag.Location#MODULE_EXPORTS
+@param flag the access flag
+@see AccessFlag.Location#MODULE_EXPORTS
 
 ## ModuleExportInfo.exportsTo()
 
@@ -75,9 +63,11 @@ Parameters:
 List<ModuleEntry> exportsTo()
 ```
 
-**See also:** ModuleDescriptor.Exports#isQualified()
+{@return the list of modules to which this package is exported, or empty
+if this is an unqualified export}
 
-**See also:** ModuleDescriptor.Exports#targets()
+@see ModuleDescriptor.Exports#isQualified()
+@see ModuleDescriptor.Exports#targets()
 
 ## ModuleExportInfo.of(PackageEntry, int, List<ModuleEntry>)
 
@@ -85,11 +75,12 @@ List<ModuleEntry> exportsTo()
 static ModuleExportInfo of(PackageEntry exports, int exportFlags, List<ModuleEntry> exportsTo)
 ```
 
-Parameters:
+{@return a module export description}
 
-- `exports`: the exported package
-- `exportFlags`: the export flags, as a bitmask
-- `exportsTo`: the modules to which this package is exported, or empty if this is an unqualified export
+@param exports the exported package
+@param exportFlags the export flags, as a bitmask
+@param exportsTo the modules to which this package is exported, or empty
+       if this is an unqualified export
 
 ## ModuleExportInfo.of(PackageEntry, Collection<AccessFlag>, List<ModuleEntry>)
 
@@ -97,15 +88,14 @@ Parameters:
 static ModuleExportInfo of(PackageEntry exports, Collection<AccessFlag> exportFlags, List<ModuleEntry> exportsTo)
 ```
 
-Parameters:
+{@return a module export description}
 
-- `exports`: the exported package
-- `exportFlags`: the export flags
-- `exportsTo`: the modules to which this package is exported, or empty if this is an unqualified export
-
-Throws:
-
-- `IllegalArgumentException`: if any flag cannot be applied to the `AccessFlag.Location.MODULE_EXPORTS` location
+@param exports the exported package
+@param exportFlags the export flags
+@param exportsTo the modules to which this package is exported, or empty
+       if this is an unqualified export
+@throws IllegalArgumentException if any flag cannot be applied to the
+        {@link AccessFlag.Location#MODULE_EXPORTS} location
 
 ## ModuleExportInfo.of(PackageEntry, int, ModuleEntry...)
 
@@ -113,11 +103,12 @@ Throws:
 static ModuleExportInfo of(PackageEntry exports, int exportFlags, ModuleEntry... exportsTo)
 ```
 
-Parameters:
+{@return a module export description}
 
-- `exports`: the exported package
-- `exportFlags`: the export flags, as a bitmask
-- `exportsTo`: the modules to which this package is exported, or empty if this is an unqualified export
+@param exports the exported package
+@param exportFlags the export flags, as a bitmask
+@param exportsTo the modules to which this package is exported, or empty
+       if this is an unqualified export
 
 ## ModuleExportInfo.of(PackageEntry, Collection<AccessFlag>, ModuleEntry...)
 
@@ -125,15 +116,14 @@ Parameters:
 static ModuleExportInfo of(PackageEntry exports, Collection<AccessFlag> exportFlags, ModuleEntry... exportsTo)
 ```
 
-Parameters:
+{@return a module export description}
 
-- `exports`: the exported package
-- `exportFlags`: the export flags
-- `exportsTo`: the modules to which this package is exported, or empty if this is an unqualified export
-
-Throws:
-
-- `IllegalArgumentException`: if any flag cannot be applied to the `AccessFlag.Location.MODULE_EXPORTS` location
+@param exports the exported package
+@param exportFlags the export flags
+@param exportsTo the modules to which this package is exported, or empty
+       if this is an unqualified export
+@throws IllegalArgumentException if any flag cannot be applied to the
+        {@link AccessFlag.Location#MODULE_EXPORTS} location
 
 ## ModuleExportInfo.of(PackageDesc, int, List<ModuleDesc>)
 
@@ -141,11 +131,12 @@ Throws:
 static ModuleExportInfo of(PackageDesc exports, int exportFlags, List<ModuleDesc> exportsTo)
 ```
 
-Parameters:
+{@return a module export description}
 
-- `exports`: the exported package
-- `exportFlags`: the export flags, as a bitmask
-- `exportsTo`: the modules to which this package is exported, or empty if this is an unqualified export
+@param exports the exported package
+@param exportFlags the export flags, as a bitmask
+@param exportsTo the modules to which this package is exported, or empty
+       if this is an unqualified export
 
 ## ModuleExportInfo.of(PackageDesc, Collection<AccessFlag>, List<ModuleDesc>)
 
@@ -153,15 +144,14 @@ Parameters:
 static ModuleExportInfo of(PackageDesc exports, Collection<AccessFlag> exportFlags, List<ModuleDesc> exportsTo)
 ```
 
-Parameters:
+{@return a module export description}
 
-- `exports`: the exported package
-- `exportFlags`: the export flags
-- `exportsTo`: the modules to which this package is exported, or empty if this is an unqualified export
-
-Throws:
-
-- `IllegalArgumentException`: if any flag cannot be applied to the `AccessFlag.Location.MODULE_EXPORTS` location
+@param exports the exported package
+@param exportFlags the export flags
+@param exportsTo the modules to which this package is exported, or empty
+       if this is an unqualified export
+@throws IllegalArgumentException if any flag cannot be applied to the
+        {@link AccessFlag.Location#MODULE_EXPORTS} location
 
 ## ModuleExportInfo.of(PackageDesc, int, ModuleDesc...)
 
@@ -169,11 +159,12 @@ Throws:
 static ModuleExportInfo of(PackageDesc exports, int exportFlags, ModuleDesc... exportsTo)
 ```
 
-Parameters:
+{@return a module export description}
 
-- `exports`: the exported package
-- `exportFlags`: the export flags, as a bitmask
-- `exportsTo`: the modules to which this package is exported, or empty if this is an unqualified export
+@param exports the exported package
+@param exportFlags the export flags, as a bitmask
+@param exportsTo the modules to which this package is exported, or empty
+       if this is an unqualified export
 
 ## ModuleExportInfo.of(PackageDesc, Collection<AccessFlag>, ModuleDesc...)
 
@@ -181,12 +172,11 @@ Parameters:
 static ModuleExportInfo of(PackageDesc exports, Collection<AccessFlag> exportFlags, ModuleDesc... exportsTo)
 ```
 
-Parameters:
+{@return a module export description}
 
-- `exports`: the exported package
-- `exportFlags`: the export flags
-- `exportsTo`: the modules to which this package is exported, or empty if this is an unqualified export
-
-Throws:
-
-- `IllegalArgumentException`: if any flag cannot be applied to the `AccessFlag.Location.MODULE_EXPORTS` location
+@param exports the exported package
+@param exportFlags the export flags
+@param exportsTo the modules to which this package is exported, or empty
+       if this is an unqualified export
+@throws IllegalArgumentException if any flag cannot be applied to the
+        {@link AccessFlag.Location#MODULE_EXPORTS} location

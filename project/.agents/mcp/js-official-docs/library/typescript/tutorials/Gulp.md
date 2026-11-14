@@ -1,18 +1,15 @@
 ---
-title: "Gulp"
-tool: "typescript"
-version: "6.0"
-source: "https://github.com/microsoft/TypeScript-Website/blob/4ec663ac4412c3a7086401bd5a8811565589b11d/packages/documentation/copy/en/tutorials/Gulp.md"
-commit: "4ec663ac4412c3a7086401bd5a8811565589b11d"
-license: "CC-BY-4.0"
+title: Gulp
+layout: docs
+permalink: /docs/handbook/gulp.html
+oneline: Using TypeScript with Gulp
+deprecated: true
 ---
 
-# Gulp
+This quick start guide will teach you how to build TypeScript with [gulp](https://gulpjs.com) and then add [Browserify](https://browserify.org), [terser](https://terser.org), or [Watchify](https://github.com/substack/watchify) to the gulp pipeline.
+This guide also shows how to add [Babel](https://babeljs.io/) functionality using [Babelify](https://github.com/babel/babelify).
 
-This quick start guide will teach you how to build TypeScript with gulp and then add Browserify, terser, or Watchify to the gulp pipeline.
-This guide also shows how to add Babel functionality using Babelify.
-
-We assume that you're already using Node.js with npm.
+We assume that you're already using [Node.js](https://nodejs.org/) with [npm](https://www.npmjs.com/).
 
 ## Minimal project
 
@@ -64,10 +61,10 @@ npm install -g gulp-cli
 ```
 
 Then install `typescript`, `gulp` and `gulp-typescript` in your project's dev dependencies.
-Gulp-typescript is a gulp plugin for TypeScript.
+[Gulp-typescript](https://www.npmjs.com/package/gulp-typescript) is a gulp plugin for TypeScript.
 
 ```shell
-npm install --save-dev typescript user@example.com gulp-typescript
+npm install --save-dev typescript gulp@4.0.0 gulp-typescript
 ```
 
 ### Write a simple example
@@ -84,7 +81,7 @@ hello("TypeScript");
 
 In the project root, `proj`, create the file `tsconfig.json`:
 
-```json
+```json tsconfig
 {
   "files": ["src/main.ts"],
   "compilerOptions": {
@@ -140,7 +137,7 @@ console.log(sayHello("TypeScript"));
 
 Finally, add `src/greet.ts` to `tsconfig.json`:
 
-```json
+```json tsconfig
 {
   "files": ["src/main.ts", "src/greet.ts"],
   "compilerOptions": {
@@ -168,9 +165,9 @@ Fortunately, that's exactly what Browserify does.
 Even better, it lets us use the CommonJS module system used by Node, which is the default TypeScript emit.
 That means our TypeScript and Node setup will transfer to the browser basically unchanged.
 
-First, install browserify, tsify, and vinyl-source-stream.
+First, install browserify, [tsify](https://www.npmjs.com/package/tsify), and vinyl-source-stream.
 tsify is a Browserify plugin that, like gulp-typescript, gives access to the TypeScript compiler.
-vinyl-source-stream lets us adapt the file output of Browserify back into a format that gulp understands called vinyl.
+vinyl-source-stream lets us adapt the file output of Browserify back into a format that gulp understands called [vinyl](https://github.com/gulpjs/vinyl).
 
 ```shell
 npm install --save-dev browserify tsify vinyl-source-stream
@@ -392,7 +389,7 @@ gulp.task(
 );
 ```
 
-Notice that `terser` itself has just one call — the calls to `buffer` and `sourcemaps` exist to make sure sourcemaps keep working.
+Notice that `terser` itself has just one call &mdash; the calls to `buffer` and `sourcemaps` exist to make sure sourcemaps keep working.
 These calls give us a separate sourcemap file instead of using inline sourcemaps like before.
 Now you can run Gulp and check that `bundle.js` does get minified into an unreadable mess:
 
@@ -457,7 +454,7 @@ We also need to have TypeScript target ES2015.
 Babel will then produce ES5 from the ES2015 code that TypeScript emits.
 Let's modify `tsconfig.json`:
 
-```json
+```json tsconfig
 {
   "files": ["src/main.ts"],
   "compilerOptions": {

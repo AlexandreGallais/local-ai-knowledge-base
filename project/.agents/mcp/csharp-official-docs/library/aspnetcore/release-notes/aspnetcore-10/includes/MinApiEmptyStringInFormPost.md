@@ -1,14 +1,3 @@
----
-title: "MinApiEmptyStringInFormPost"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-10/includes/MinApiEmptyStringInFormPost.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# MinApiEmptyStringInFormPost
-
 ### Treating empty string in form post as null for nullable value types
 
 When using the `[FromForm]` attribute with a complex object in Minimal APIs, empty string values in a form post are now converted to `null` rather than causing a parse failure. This behavior matches the processing logic for form posts not associated with complex objects in Minimal APIs.
@@ -33,4 +22,4 @@ public class Todo
 }
 ```
 
-Thanks to @nvmkpk for contributing this change!
+Thanks to [@nvmkpk](https://github.com/nvmkpk) for contributing this change!

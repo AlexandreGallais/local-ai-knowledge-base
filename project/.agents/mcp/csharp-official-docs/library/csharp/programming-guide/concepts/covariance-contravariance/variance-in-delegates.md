@@ -1,12 +1,9 @@
 ---
 title: "Variance in Delegates"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/programming-guide/concepts/covariance-contravariance/variance-in-delegates.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how the variance support in .NET allows you to match method signatures with delegate types in all delegates.
+ms.date: 07/20/2015
+ms.assetid: 19de89d2-8224-4406-8964-2965b732b890
 ---
-
 # Variance in Delegates (C#)
 
 .NET Framework 3.5 introduced variance support for matching method signatures with delegate types in all delegates in C#. This means that you can assign to delegates not only methods that have matching signatures, but also methods that return more derived types (covariance) or that accept parameters that have less derived types (contravariance) than that specified by the delegate type. This includes both generic and non-generic delegates.
@@ -20,7 +17,7 @@ public delegate First SampleDelegate(Second a);
 public delegate R SampleGenericDelegate<A, R>(A a);
 ```
 
- When you create delegates of the `SampleDelegate` or `SampleGenericDelegate` types, you can assign any one of the following methods to those delegates.
+ When you create delegates of the `SampleDelegate` or `SampleGenericDelegate<A, R>` types, you can assign any one of the following methods to those delegates.
 
 ```csharp
 // Matching signature.
@@ -61,7 +58,7 @@ SampleGenericDelegate<Second, First> dGeneric = ASecondRFirst;
 SampleGenericDelegate<Second, First> dGenericConversion = AFirstRSecond;
 ```
 
- For more examples, see Using Variance in Delegates (C#) and Using Variance for Func and Action Generic Delegates (C#).
+ For more examples, see [Using Variance in Delegates (C#)](./using-variance-in-delegates.md) and [Using Variance for Func and Action Generic Delegates (C#)](./using-variance-for-func-and-action-generic-delegates.md).
 
 ## Variance in Generic Type Parameters
 
@@ -113,17 +110,17 @@ public static void Test()
 
 .NET Framework 4 introduced variance support for generic type parameters in several existing generic delegates:
 
-- `Action` delegates from the `System` namespace, for example, `System.Action`1` and `System.Action`2`
+- `Action` delegates from the <xref:System> namespace, for example, <xref:System.Action`1> and <xref:System.Action`2>
 
-- `Func` delegates from the `System` namespace, for example, `System.Func`1` and `System.Func`2`
+- `Func` delegates from the <xref:System> namespace, for example, <xref:System.Func`1> and <xref:System.Func`2>
 
-- The `System.Predicate`1` delegate
+- The <xref:System.Predicate`1> delegate
 
-- The `System.Comparison`1` delegate
+- The <xref:System.Comparison`1> delegate
 
-- The `System.Converter`2` delegate
+- The <xref:System.Converter`2> delegate
 
- For more information and examples, see Using Variance for Func and Action Generic Delegates (C#).
+ For more information and examples, see [Using Variance for Func and Action Generic Delegates (C#)](./using-variance-for-func-and-action-generic-delegates.md).
 
 ### Declaring Variant Type Parameters in Generic Delegates
 
@@ -141,7 +138,7 @@ public delegate R DCovariant<out R>();
 public delegate void DContravariant<in A>(A a);
 ```
 
-> **Important:**
+> [!IMPORTANT]
 > `ref`, `in`, and `out` parameters in C# can't be marked as variant.
 
  It is also possible to support both variance and covariance in the same delegate, but for different type parameters. This is shown in the following example.
@@ -161,7 +158,7 @@ dvariant("test");
 
 ### Combining Variant Generic Delegates
 
-Don't combine variant delegates. The `System.Delegate.Combine*` method does not support variant delegate conversion and expects delegates to be of exactly the same type. This can lead to a run-time exception when you combine delegates either by using the `System.Delegate.Combine*` method or by using the `+` operator, as shown in the following code example.
+Don't combine variant delegates. The <xref:System.Delegate.Combine*> method does not support variant delegate conversion and expects delegates to be of exactly the same type. This can lead to a run-time exception when you combine delegates either by using the <xref:System.Delegate.Combine*> method or by using the `+` operator, as shown in the following code example.
 
 ```csharp
 Action<object> actObj = x => Console.WriteLine("object: {0}", x);
@@ -203,6 +200,6 @@ public static void Test()
 
 ## See also
 
-- Generics
-- Using Variance for Func and Action Generic Delegates (C#)
-- How to combine delegates (Multicast Delegates)
+- [Generics](../../../../standard/generics/index.md)
+- [Using Variance for Func and Action Generic Delegates (C#)](./using-variance-for-func-and-action-generic-delegates.md)
+- [How to combine delegates (Multicast Delegates)](../../delegates/how-to-combine-delegates-multicast-delegates.md)

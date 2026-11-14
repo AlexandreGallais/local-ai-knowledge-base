@@ -1,12 +1,3 @@
----
-title: "PipedWriter class (java.io)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/io/PipedWriter.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # PipedWriter class (java.io)
 
 ```java
@@ -15,7 +6,8 @@ public class PipedWriter extends Writer
 
 Piped character-output streams.
 
-**Since:** 1.1
+@author      Mark Reinhold
+@since       1.1
 
 ## PipedWriter.PipedWriter(PipedReader)
 
@@ -25,15 +17,10 @@ public PipedWriter(PipedReader snk) throws IOException
 
 Creates a piped writer connected to the specified piped
 reader. Data characters written to this stream will then be
-available as input from `snk`.
+available as input from {@code snk}.
 
-Parameters:
-
-- `snk`: The piped reader to connect to.
-
-Throws:
-
-- `IOException`: if an I/O error occurs.
+@param      snk   The piped reader to connect to.
+@throws     IOException  if an I/O error occurs.
 
 ## PipedWriter.PipedWriter()
 
@@ -45,9 +32,8 @@ Creates a piped writer that is not yet connected to a
 piped reader. It must be connected to a piped reader,
 either by the receiver or the sender, before being used.
 
-**See also:** java.io.PipedReader#connect(java.io.PipedWriter)
-
-**See also:** java.io.PipedWriter#connect(java.io.PipedReader)
+@see     java.io.PipedReader#connect(java.io.PipedWriter)
+@see     java.io.PipedWriter#connect(java.io.PipedReader)
 
 ## PipedWriter.connect(PipedReader)
 
@@ -57,23 +43,22 @@ public synchronized void connect(PipedReader snk) throws IOException
 
 Connects this piped writer to a receiver. If this object
 is already connected to some other piped reader, an
-`IOException` is thrown.
-
-If `snk` is an unconnected piped reader and
-`src` is an unconnected piped writer, they may
+{@code IOException} is thrown.
+<p>
+If {@code snk} is an unconnected piped reader and
+{@code src} is an unconnected piped writer, they may
 be connected by either the call:
-
+{@snippet lang=java :
+    src.connect(snk)
+}
 or the call:
-
+{@snippet lang=java :
+    snk.connect(src)
+}
 The two calls have the same effect.
 
-Parameters:
-
-- `snk`: the piped reader to connect to.
-
-Throws:
-
-- `IOException`: if an I/O error occurs.
+@param      snk   the piped reader to connect to.
+@throws     IOException  if an I/O error occurs.
 
 ## PipedWriter.write(int)
 
@@ -81,20 +66,18 @@ Throws:
 public void write(int c) throws IOException
 ```
 
-Writes the specified `char` to the piped output stream.
+Writes the specified {@code char} to the piped output stream.
 If a thread was reading data characters from the connected piped input
 stream, but the thread is no longer alive, then an
-`IOException` is thrown.
+{@code IOException} is thrown.
+<p>
+Implements the {@code write} method of {@code Writer}.
 
-Implements the `write` method of `Writer`.
-
-Parameters:
-
-- `c`: the `char` to be written.
-
-Throws:
-
-- `IOException`: if the pipe is  `broken`, unconnected, closed or an I/O error occurs.
+@param   c   the {@code char} to be written.
+@throws  IOException  if the pipe is
+         <a href=PipedOutputStream.html#BROKEN> {@code broken}</a>,
+         {@link #connect(java.io.PipedReader) unconnected}, closed
+         or an I/O error occurs.
 
 ## PipedWriter.write(char[], int, int)
 
@@ -102,24 +85,27 @@ Throws:
 public void write(char[] cbuf, int off, int len) throws IOException
 ```
 
-Writes `len` characters from the specified character array
-starting at offset `off` to this piped output stream.
+Writes {@code len} characters from the specified character array
+starting at offset {@code off} to this piped output stream.
 This method blocks until all the characters are written to the output
 stream.
 If a thread was reading data characters from the connected piped input
 stream, but the thread is no longer alive, then an
-`IOException` is thrown.
+{@code IOException} is thrown.
 
-Parameters:
+@param   cbuf  the data.
+@param   off   the start offset in the data.
+@param   len   the number of characters to write.
 
-- `cbuf`: the data.
-- `off`: the start offset in the data.
-- `len`: the number of characters to write.
+@throws  IndexOutOfBoundsException
+         If {@code off} is negative, or {@code len} is negative,
+         or {@code off + len} is negative or greater than the length
+         of the given array
 
-Throws:
-
-- `IndexOutOfBoundsException`: If `off` is negative, or `len` is negative, or `off + len` is negative or greater than the length of the given array
-- `IOException`: if the pipe is `broken`, unconnected, closed or an I/O error occurs.
+@throws  IOException  if the pipe is
+         <a href=PipedOutputStream.html#BROKEN>{@code broken}</a>,
+         {@link #connect(java.io.PipedReader) unconnected}, closed
+         or an I/O error occurs.
 
 ## PipedWriter.flush()
 
@@ -131,9 +117,7 @@ Flushes this output stream and forces any buffered output characters
 to be written out.
 This will notify any readers that characters are waiting in the pipe.
 
-Throws:
-
-- `IOException`: if the pipe is closed, or an I/O error occurs.
+@throws     IOException  if the pipe is closed, or an I/O error occurs.
 
 ## PipedWriter.close()
 
@@ -145,6 +129,4 @@ Closes this piped output stream and releases any system resources
 associated with this stream. This stream may no longer be used for
 writing characters.
 
-Throws:
-
-- `IOException`: if an I/O error occurs.
+@throws     IOException  if an I/O error occurs.

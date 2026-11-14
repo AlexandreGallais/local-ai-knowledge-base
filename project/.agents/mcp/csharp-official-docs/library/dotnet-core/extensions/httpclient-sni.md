@@ -1,10 +1,9 @@
 ---
-title: "Customize SNI in HTTP requests"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/httpclient-sni.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Customize SNI in HTTP requests
+description: Learn How to control Server Name Indication TLS extension in HTTP requests.
+author: rzikm
+ms.author: radekzikmund
+ms.date: 9/5/2023
 ---
 
 # Customize SNI in HTTP requests
@@ -27,10 +26,10 @@ using var response = await client.GetAsync("https://127.0.0.1:5001/");
 System.Console.WriteLine(response);
 ```
 
-> **Note:**
+> [!NOTE]
 > This method doesn't allow you to avoid sending SNI altogether when connecting to a URL with a hostname. If the header is set to empty string, `HttpClient` uses the hostname from the URL instead.
 
-> **Note:**
+> [!NOTE]
 > Customizing the Host header affects server certificate validation. By default, client will expect the server certificate to match the hostname in the Host header.
 
 ## Manual SslStream authentication via ConnectCallback

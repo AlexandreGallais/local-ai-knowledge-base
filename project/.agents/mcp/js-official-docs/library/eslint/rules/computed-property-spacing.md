@@ -1,14 +1,11 @@
 ---
-title: "computed-property-spacing"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/computed-property-spacing.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: computed-property-spacing
+rule_type: layout
+related_rules:
+- array-bracket-spacing
+- comma-spacing
+- space-in-parens
 ---
-
-# computed-property-spacing
-
 While formatting preferences are very personal, a number of style guides require
 or disallow spaces between computed properties in the following situations:
 
@@ -51,7 +48,7 @@ Object option:
 
 Examples of **incorrect** code for this rule with the default `"never"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint computed-property-spacing: ["error", "never"]*/
@@ -65,9 +62,11 @@ const { [ a ]: someProp } = obj;
 ({ [ b ]: anotherProp } = anotherObj);
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"never"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint computed-property-spacing: ["error", "never"]*/
@@ -81,11 +80,13 @@ const { [a]: someProp } = obj;
 ({ [b]: anotherProp } = anotherObj);
 ```
 
+:::
+
 ### always
 
 Examples of **incorrect** code for this rule with the `"always"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint computed-property-spacing: ["error", "always"]*/
@@ -100,9 +101,11 @@ const { [a]: someProp } = obj;
 ({ [b ]: anotherProp } = anotherObj);
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"always"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint computed-property-spacing: ["error", "always"]*/
@@ -115,13 +118,15 @@ const { [ a ]: someProp } = obj;
 ({ [ b ]: anotherProp } = anotherObj);
 ```
 
+:::
+
 #### enforceForClassMembers
 
 With `enforceForClassMembers` set to `true` (default), the rule also disallows/enforces spaces inside of computed keys of class methods, getters and setters.
 
 Examples of **incorrect** code for this rule with `"never"` and `{ "enforceForClassMembers": true }` (default):
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint computed-property-spacing: ["error", "never", { "enforceForClassMembers": true }]*/
@@ -140,9 +145,11 @@ const Bar = class {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with `"never"` and `{ "enforceForClassMembers": true }` (default):
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint computed-property-spacing: ["error", "never", { "enforceForClassMembers": true }]*/
@@ -161,9 +168,11 @@ const Bar = class {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with `"never"` and `{ "enforceForClassMembers": false }`:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint computed-property-spacing: ["error", "never", { "enforceForClassMembers": false }]*/
@@ -181,6 +190,8 @@ const Bar = class {
   static set [ c ](value) {}
 }
 ```
+
+:::
 
 ## When Not To Use It
 

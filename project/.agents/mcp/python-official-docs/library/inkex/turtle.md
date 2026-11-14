@@ -1,12 +1,3 @@
----
-title: "inkex.turtle"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/turtle.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.turtle
 
 A Python path turtle for Inkscape extensions
@@ -19,8 +10,8 @@ class PathTurtle
 
 A Python path turtle
 
-> *Changed in version 1.2.*
-> pTurtle has been renamed to PathTurtle.
+.. versionchanged:: 1.2
+    pTurtle has been renamed to PathTurtle.
 
 ## PathTurtle.forward
 
@@ -47,7 +38,7 @@ def right(self, deg)
 Rotate turtle right by deg degrees.
 
 Changed in inkex 1.2: The turtle now rotates right (previously left) when
-calling this method.
+    calling this method.
 
 ## PathTurtle.left
 
@@ -58,7 +49,7 @@ def left(self, deg)
 Rotate turtle left by deg degrees.
 
 Changed in inkex 1.2: The turtle now rotates left (previously right) when
-calling this method.
+    calling this method.
 
 ## PathTurtle.penup
 
@@ -173,7 +164,7 @@ class PathBuilder
 This helper class can be used to construct a path and insert it into a
 document.
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## PathBuilder.__init__
 
@@ -184,7 +175,7 @@ def __init__(self, style: Style)
 Initializes a PathDrawHelper object
 
 Args:
-style (Style): Style of the path.
+    style (Style): Style of the path.
 
 ## PathBuilder.add
 
@@ -195,8 +186,8 @@ def add(self, command: Union[PathCommand, List[PathCommand]])
 Add a Path command to the Helper
 
 Args:
-command (Union[PathCommand, List[PathCommand]]): A (list of) PathCommand(s)
-to be appended.
+    command (Union[PathCommand, List[PathCommand]]): A (list of) PathCommand(s)
+        to be appended.
 
 ## PathBuilder.terminate
 
@@ -213,12 +204,12 @@ supposed to be overridden in subclasses.
 def append_next(self, sibling_before: BaseElement)
 ```
 
-Insert the resulting Path as `inkex.elements._polygons.PathElement`
+Insert the resulting Path as :class:`inkex.elements._polygons.PathElement`
 into the document tree.
 
 Args:
-sibling_before (BaseElement): The element the resulting path will be
-appended after.
+    sibling_before (BaseElement): The element the resulting path will be
+        appended after.
 
 ## class PathGroupBuilder
 
@@ -229,7 +220,7 @@ class PathGroupBuilder(PathBuilder)
 This helper class can be used to construct a group of paths that all have the
 same style.
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## PathGroupBuilder.terminate
 
@@ -246,9 +237,9 @@ empty.
 def append_next(self, sibling_before: BaseElement)
 ```
 
-Insert the resulting Path as `inkex.elements._groups.Group` into the
-document tree.
+Insert the resulting Path as :class:`inkex.elements._groups.Group` into the
+    document tree.
 
 Args:
-sibling_before (BaseElement): The element the resulting group will be
-appended after.
+    sibling_before (BaseElement): The element the resulting group will be
+        appended after.

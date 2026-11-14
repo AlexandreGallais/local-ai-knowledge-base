@@ -1,17 +1,8 @@
----
-title: "Never type"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/types/never.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[type.never]
 # Never type
 
 r[type.never.intro]
-The never type `!` is a type with no values, representing computations that never complete, also known as diverging computations.
+The never type `!` is a type with no values, representing computations that never complete, also known as [diverging][divergence] computations.
 
 > [!EXAMPLE]
 > ```rust
@@ -54,7 +45,7 @@ The never type `!` is a type with no values, representing computations that neve
 > ```
 
 r[type.never.syntax]
-```grammar
+```grammar,types
 NeverType -> `!`
 ```
 
@@ -64,5 +55,7 @@ Expressions of type `!` can be coerced into any type.
 r[type.never.layout]
 The `!` type has a size of 0 and an alignment of 1.
 
-> **Note:**
+> [!NOTE]
 > The standard library type [`Infallible`] is a type alias for `!`.
+
+[`Infallible`]: core::convert::Infallible

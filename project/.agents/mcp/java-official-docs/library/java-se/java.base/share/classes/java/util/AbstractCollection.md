@@ -1,51 +1,41 @@
----
-title: "AbstractCollection class (java.util)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/AbstractCollection.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AbstractCollection class (java.util)
 
 ```java
 public abstract class AbstractCollection<E> implements Collection<E>
 ```
 
-This class provides a skeletal implementation of the `Collection`
-interface, to minimize the effort required to implement this interface.
+This class provides a skeletal implementation of the {@code Collection}
+interface, to minimize the effort required to implement this interface. <p>
 
 To implement an unmodifiable collection, the programmer needs only to
-extend this class and provide implementations for the `iterator` and
-`size` methods.  (The iterator returned by the `iterator`
-method must implement `hasNext` and `next`.)
+extend this class and provide implementations for the {@code iterator} and
+{@code size} methods.  (The iterator returned by the {@code iterator}
+method must implement {@code hasNext} and {@code next}.)<p>
 
 To implement a modifiable collection, the programmer must additionally
-override this class's `add` method (which otherwise throws an
-`UnsupportedOperationException`), and the iterator returned by the
-`iterator` method must additionally implement its `remove`
-method.
+override this class's {@code add} method (which otherwise throws an
+{@code UnsupportedOperationException}), and the iterator returned by the
+{@code iterator} method must additionally implement its {@code remove}
+method.<p>
 
 The programmer should generally provide a void (no argument) and
-`Collection` constructor, as per the recommendation in the
-`Collection` interface specification.
+{@code Collection} constructor, as per the recommendation in the
+{@code Collection} interface specification.<p>
 
 The documentation for each non-abstract method in this class describes its
 implementation in detail.  Each of these methods may be overridden if
-the collection being implemented admits a more efficient implementation.
+the collection being implemented admits a more efficient implementation.<p>
 
 This class is a member of the
+<a href="{@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+Java Collections Framework</a>.
 
-Java Collections Framework.
+@param <E> the type of elements in this collection
 
-Parameters:
-
-- `<E>`: the type of elements in this collection
-
-**See also:** Collection
-
-**Since:** 1.2
+@author  Josh Bloch
+@author  Neal Gafter
+@see Collection
+@since 1.2
 
 ## AbstractCollection.AbstractCollection()
 
@@ -64,7 +54,7 @@ public abstract Iterator<E> iterator()
 
 Returns an iterator over the elements contained in this collection.
 
-**Returns:** an iterator over the elements contained in this collection
+@return an iterator over the elements contained in this collection
 
 ## AbstractCollection.isEmpty()
 
@@ -72,9 +62,10 @@ Returns an iterator over the elements contained in this collection.
 public boolean isEmpty()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Implementation requirements:** This implementation returns `size() == 0`.
+@implSpec
+This implementation returns {@code size() == 0}.
 
 ## AbstractCollection.contains(Object)
 
@@ -82,15 +73,14 @@ public boolean isEmpty()
 public boolean contains(Object o)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Implementation requirements:** This implementation iterates over the elements in the collection,
+@implSpec
+This implementation iterates over the elements in the collection,
 checking each element in turn for equality with the specified element.
 
-Throws:
-
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
+@throws ClassCastException   {@inheritDoc}
+@throws NullPointerException {@inheritDoc}
 
 ## AbstractCollection.toArray()
 
@@ -98,26 +88,27 @@ Throws:
 public Object[] toArray()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Implementation requirements:** This implementation returns an array containing all the elements
+@implSpec
+This implementation returns an array containing all the elements
 returned by this collection's iterator, in the same order, stored in
-consecutive elements of the array, starting with index `0`.
+consecutive elements of the array, starting with index {@code 0}.
 The length of the returned array is equal to the number of elements
 returned by the iterator, even if the size of this collection changes
 during iteration, as might happen if the collection permits
-concurrent modification during iteration.  The `size` method is
+concurrent modification during iteration.  The {@code size} method is
 called only as an optimization hint; the correct result is returned
 even if the iterator returns a different number of elements.
 
-This method is equivalent to:
+<p>This method is equivalent to:
 
-```java
+ <pre> {@code
 List<E> list = new ArrayList<E>(size());
 for (E e : this)
     list.add(e);
 return list.toArray();
-```
+}</pre>
 
 ## AbstractCollection.toArray(T[])
 
@@ -125,33 +116,32 @@ return list.toArray();
 public <T> T[] toArray(T[] a)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Implementation requirements:** This implementation returns an array containing all the elements
+@implSpec
+This implementation returns an array containing all the elements
 returned by this collection's iterator in the same order, stored in
-consecutive elements of the array, starting with index `0`.
+consecutive elements of the array, starting with index {@code 0}.
 If the number of elements returned by the iterator is too large to
 fit into the specified array, then the elements are returned in a
 newly allocated array with length equal to the number of elements
 returned by the iterator, even if the size of this collection
 changes during iteration, as might happen if the collection permits
-concurrent modification during iteration.  The `size` method is
+concurrent modification during iteration.  The {@code size} method is
 called only as an optimization hint; the correct result is returned
 even if the iterator returns a different number of elements.
 
-This method is equivalent to:
+<p>This method is equivalent to:
 
-```java
+ <pre> {@code
 List<E> list = new ArrayList<E>(size());
 for (E e : this)
     list.add(e);
 return list.toArray(a);
-```
+}</pre>
 
-Throws:
-
-- `ArrayStoreException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
+@throws ArrayStoreException  {@inheritDoc}
+@throws NullPointerException {@inheritDoc}
 
 ## AbstractCollection.add(E)
 
@@ -159,18 +149,17 @@ Throws:
 public boolean add(E e)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Implementation requirements:** This implementation always throws an
-`UnsupportedOperationException`.
+@implSpec
+This implementation always throws an
+{@code UnsupportedOperationException}.
 
-Throws:
-
-- `UnsupportedOperationException`: (inherited documentation)
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
-- `IllegalArgumentException`: (inherited documentation)
-- `IllegalStateException`: (inherited documentation)
+@throws UnsupportedOperationException {@inheritDoc}
+@throws ClassCastException            {@inheritDoc}
+@throws NullPointerException          {@inheritDoc}
+@throws IllegalArgumentException      {@inheritDoc}
+@throws IllegalStateException         {@inheritDoc}
 
 ## AbstractCollection.remove(Object)
 
@@ -178,22 +167,21 @@ Throws:
 public boolean remove(Object o)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Implementation requirements:** This implementation iterates over the collection looking for the
+@implSpec
+This implementation iterates over the collection looking for the
 specified element.  If it finds the element, it removes the element
 from the collection using the iterator's remove method.
 
-Note that this implementation throws an
-`UnsupportedOperationException` if the iterator returned by this
-collection's iterator method does not implement the `remove`
+<p>Note that this implementation throws an
+{@code UnsupportedOperationException} if the iterator returned by this
+collection's iterator method does not implement the {@code remove}
 method and this collection contains the specified object.
 
-Throws:
-
-- `UnsupportedOperationException`: (inherited documentation)
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
+@throws UnsupportedOperationException {@inheritDoc}
+@throws ClassCastException            {@inheritDoc}
+@throws NullPointerException          {@inheritDoc}
 
 ## AbstractCollection.containsAll(Collection<?>)
 
@@ -201,19 +189,17 @@ Throws:
 public boolean containsAll(Collection<?> c)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Implementation requirements:** This implementation iterates over the specified collection,
+@implSpec
+This implementation iterates over the specified collection,
 checking each element returned by the iterator in turn to see
 if it's contained in this collection.  If all elements are so
-contained `true` is returned, otherwise `false`.
+contained {@code true} is returned, otherwise {@code false}.
 
-**See also:** #contains(Object)
-
-Throws:
-
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
+@throws ClassCastException            {@inheritDoc}
+@throws NullPointerException          {@inheritDoc}
+@see #contains(Object)
 
 ## AbstractCollection.addAll(Collection<? extends E>)
 
@@ -221,24 +207,23 @@ Throws:
 public boolean addAll(Collection<? extends E> c)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Implementation requirements:** This implementation iterates over the specified collection, and adds
+@implSpec
+This implementation iterates over the specified collection, and adds
 each object returned by the iterator to this collection, in turn.
 
-Note that this implementation will throw an
-`UnsupportedOperationException` unless `add` is
+<p>Note that this implementation will throw an
+{@code UnsupportedOperationException} unless {@code add} is
 overridden (assuming the specified collection is non-empty).
 
-**See also:** #add(Object)
+@throws UnsupportedOperationException {@inheritDoc}
+@throws ClassCastException            {@inheritDoc}
+@throws NullPointerException          {@inheritDoc}
+@throws IllegalArgumentException      {@inheritDoc}
+@throws IllegalStateException         {@inheritDoc}
 
-Throws:
-
-- `UnsupportedOperationException`: (inherited documentation)
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
-- `IllegalArgumentException`: (inherited documentation)
-- `IllegalStateException`: (inherited documentation)
+@see #add(Object)
 
 ## AbstractCollection.removeAll(Collection<?>)
 
@@ -246,28 +231,26 @@ Throws:
 public boolean removeAll(Collection<?> c)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Implementation requirements:** This implementation iterates over this collection, checking each
+@implSpec
+This implementation iterates over this collection, checking each
 element returned by the iterator in turn to see if it's contained
 in the specified collection.  If it's so contained, it's removed from
-this collection with the iterator's `remove` method.
+this collection with the iterator's {@code remove} method.
 
-Note that this implementation will throw an
-`UnsupportedOperationException` if the iterator returned by the
-`iterator` method does not implement the `remove` method
+<p>Note that this implementation will throw an
+{@code UnsupportedOperationException} if the iterator returned by the
+{@code iterator} method does not implement the {@code remove} method
 and this collection contains one or more elements in common with the
 specified collection.
 
-**See also:** #remove(Object)
+@throws UnsupportedOperationException {@inheritDoc}
+@throws ClassCastException            {@inheritDoc}
+@throws NullPointerException          {@inheritDoc}
 
-**See also:** #contains(Object)
-
-Throws:
-
-- `UnsupportedOperationException`: (inherited documentation)
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
+@see #remove(Object)
+@see #contains(Object)
 
 ## AbstractCollection.retainAll(Collection<?>)
 
@@ -275,28 +258,26 @@ Throws:
 public boolean retainAll(Collection<?> c)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Implementation requirements:** This implementation iterates over this collection, checking each
+@implSpec
+This implementation iterates over this collection, checking each
 element returned by the iterator in turn to see if it's contained
 in the specified collection.  If it's not so contained, it's removed
-from this collection with the iterator's `remove` method.
+from this collection with the iterator's {@code remove} method.
 
-Note that this implementation will throw an
-`UnsupportedOperationException` if the iterator returned by the
-`iterator` method does not implement the `remove` method
+<p>Note that this implementation will throw an
+{@code UnsupportedOperationException} if the iterator returned by the
+{@code iterator} method does not implement the {@code remove} method
 and this collection contains one or more elements not present in the
 specified collection.
 
-**See also:** #remove(Object)
+@throws UnsupportedOperationException {@inheritDoc}
+@throws ClassCastException            {@inheritDoc}
+@throws NullPointerException          {@inheritDoc}
 
-**See also:** #contains(Object)
-
-Throws:
-
-- `UnsupportedOperationException`: (inherited documentation)
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
+@see #remove(Object)
+@see #contains(Object)
 
 ## AbstractCollection.clear()
 
@@ -304,21 +285,20 @@ Throws:
 public void clear()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Implementation requirements:** This implementation iterates over this collection, removing each
-element using the `Iterator.remove` operation.  Most
+@implSpec
+This implementation iterates over this collection, removing each
+element using the {@code Iterator.remove} operation.  Most
 implementations will probably choose to override this method for
 efficiency.
 
-Note that this implementation will throw an
-`UnsupportedOperationException` if the iterator returned by this
-collection's `iterator` method does not implement the
-`remove` method and this collection is non-empty.
+<p>Note that this implementation will throw an
+{@code UnsupportedOperationException} if the iterator returned by this
+collection's {@code iterator} method does not implement the
+{@code remove} method and this collection is non-empty.
 
-Throws:
-
-- `UnsupportedOperationException`: (inherited documentation)
+@throws UnsupportedOperationException {@inheritDoc}
 
 ## AbstractCollection.toString()
 
@@ -329,8 +309,8 @@ public String toString()
 Returns a string representation of this collection.  The string
 representation consists of a list of the collection's elements in the
 order they are returned by its iterator, enclosed in square brackets
-(`"[]"`).  Adjacent elements are separated by the characters
-`", "` (comma and space).  Elements are converted to strings as
-by `String.valueOf(Object)`.
+({@code "[]"}).  Adjacent elements are separated by the characters
+{@code ", "} (comma and space).  Elements are converted to strings as
+by {@link String#valueOf(Object)}.
 
-**Returns:** a string representation of this collection
+@return a string representation of this collection

@@ -1,21 +1,21 @@
 ---
 title: "How to: Control Serialization of Derived Classes"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/serialization/how-to-control-serialization-of-derived-classes.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: You can customize an XML stream by deriving a class from an existing class and instructing the XmlSerializer instance how to serialize the new class.
+ms.date: "03/30/2017"
+dev_langs: 
+  - "csharp"
+  - "vb"
+ms.assetid: caa92596-9e15-4d91-acbe-56911ef47a84
 ---
-
 # How to: Control Serialization of Derived Classes
 
-Using the **XmlElementAttribute** attribute to change the name of an XML element is not the only way to customize object serialization. You can also customize the XML stream by deriving from an existing class and instructing the `System.Xml.Serialization.XmlSerializer` instance how to serialize the new class.
-
- For example, given a `Book` class, you can derive from it and create an `ExpandedBook` class that has a few more properties. However, you must instruct the **XmlSerializer** to accept the derived type when serializing or deserializing. This can be done by creating a `System.Xml.Serialization.XmlElementAttribute` instance and setting its **Type** property to the derived class type. Add the **XmlElementAttribute** to a `System.Xml.Serialization.XmlAttributes` instance. Then add the **XmlAttributes** to a `System.Xml.Serialization.XmlAttributeOverrides` instance, specifying the type being overridden and the name of the member that accepts the derived class. This is shown in the following example.
-
-## Example
-
-```vb
+Using the **XmlElementAttribute** attribute to change the name of an XML element is not the only way to customize object serialization. You can also customize the XML stream by deriving from an existing class and instructing the <xref:System.Xml.Serialization.XmlSerializer> instance how to serialize the new class.  
+  
+ For example, given a `Book` class, you can derive from it and create an `ExpandedBook` class that has a few more properties. However, you must instruct the **XmlSerializer** to accept the derived type when serializing or deserializing. This can be done by creating a <xref:System.Xml.Serialization.XmlElementAttribute> instance and setting its **Type** property to the derived class type. Add the **XmlElementAttribute** to a <xref:System.Xml.Serialization.XmlAttributes> instance. Then add the **XmlAttributes** to a <xref:System.Xml.Serialization.XmlAttributeOverrides> instance, specifying the type being overridden and the name of the member that accepts the derived class. This is shown in the following example.  
+  
+## Example  
+  
+```vb  
 Public Class Orders  
     public Books() As Book  
 End Class
@@ -122,8 +122,8 @@ Public Class Run
     End Sub  
 End Class  
 ```  
-
-```csharp
+  
+```csharp  
 public class Orders  
 {  
     public Book[] Books;  
@@ -227,13 +227,13 @@ public class Run
     }  
 }  
 ```  
-
+  
 ## See also
 
-- `System.Xml.Serialization.XmlSerializer`
-- `System.Xml.Serialization.XmlElementAttribute`
-- `System.Xml.Serialization.XmlAttributes`
-- `System.Xml.Serialization.XmlAttributeOverrides`
-- XML and SOAP Serialization
-- How to: Serialize an Object
-- How to: Specify an Alternate Element Name for an XML Stream
+- <xref:System.Xml.Serialization.XmlSerializer>
+- <xref:System.Xml.Serialization.XmlElementAttribute>
+- <xref:System.Xml.Serialization.XmlAttributes>
+- <xref:System.Xml.Serialization.XmlAttributeOverrides>
+- [XML and SOAP Serialization](xml-and-soap-serialization.md)
+- [How to: Serialize an Object](how-to-serialize-an-object.md)
+- [How to: Specify an Alternate Element Name for an XML Stream](how-to-specify-an-alternate-element-name-for-an-xml-stream.md)

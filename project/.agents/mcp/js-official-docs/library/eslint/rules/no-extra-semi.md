@@ -1,14 +1,10 @@
 ---
-title: "no-extra-semi"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-extra-semi.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-extra-semi
+rule_type: suggestion
+related_rules:
+- semi
+- semi-spacing
 ---
-
-# no-extra-semi
-
 Typing mistakes and misunderstandings about where semicolons are required can lead to semicolons that are unnecessary. While not technically an error, extra semicolons can cause confusion when reading code.
 
 ## Rule Details
@@ -19,7 +15,7 @@ Problems reported by this rule can be fixed automatically, except when removing 
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-extra-semi: "error"*/
@@ -43,9 +39,11 @@ class C {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-extra-semi: "error"*/
@@ -72,6 +70,8 @@ class C {
     }
 }
 ```
+
+:::
 
 ## When Not To Use It
 

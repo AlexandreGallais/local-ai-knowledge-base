@@ -1,104 +1,45 @@
 ---
-title: "Use web API conventions"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/web-api/advanced/conventions.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Use web API conventions
+ai-usage: ai-assisted
+description: Learn about web API conventions in ASP.NET Core.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 07/06/2026
 ---
-
 # Use web API conventions
 
-> **Warning:**
-> The web API analyzers used with these conventions are deprecated as of .NET 10 and will be removed in a future release. Setting `IncludeOpenAPIAnalyzers` to `true` emits warning `ASPDEPR007`. For more information, see IncludeOpenAPIAnalyzers property and MVC API analyzers are deprecated.
+:::moniker range=">= aspnetcore-10.0"
 
-Common API documentation can be extracted and applied to multiple actions, controllers, or all controllers within an assembly. Web API conventions are a substitute for decorating individual actions with `[ProducesResponseType]`.
+> [!WARNING]
+> The web API analyzers used with these conventions are deprecated as of .NET 10 and will be removed in a future release. Setting `IncludeOpenAPIAnalyzers` to `true` emits warning `ASPDEPR007`. For more information, see [IncludeOpenAPIAnalyzers property and MVC API analyzers are deprecated](/aspnet/core/breaking-changes/10/openapi-analyzers-deprecated?view=aspnetcore-10.0&preserve-view=true).
+
+:::moniker-end
+
+Common [API documentation](../../tutorials/web-api-help-pages-using-swagger.md) can be extracted and applied to multiple actions, controllers, or all controllers within an assembly. Web API conventions are a substitute for decorating individual actions with [`[ProducesResponseType]`](xref:Microsoft.AspNetCore.Mvc.ProducesResponseTypeAttribute).
 
 A convention allows you to:
 
 * Define the most common return types and status codes returned from a specific type of action.
 * Identify actions that deviate from the defined standard.
 
-Default conventions are available from `Microsoft.AspNetCore.Mvc.DefaultApiConventions`. The conventions are demonstrated with the `ValuesController.cs` added to an **API** project template:
+Default conventions are available from <xref:Microsoft.AspNetCore.Mvc.DefaultApiConventions?displayProperty=fullName>. The conventions are demonstrated with the `ValuesController.cs` added to an **API** project template:
 
-```csharp
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+[!code-csharp[](conventions/ValuesController.cs)]
 
-namespace WebApp1.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ValuesController : ControllerBase
-    {
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+Actions that follow the patterns in the `ValuesController.cs` work with the default conventions. If the default conventions don't meet your needs, see [Create web API conventions](#create-web-api-conventions).
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
+At runtime, <xref:Microsoft.AspNetCore.Mvc.ApiExplorer> understands conventions. `ApiExplorer` is MVC's abstraction to communicate with [OpenAPI](https://www.openapis.org/) (also known as Swagger) document generators. Attributes from the applied convention are associated with an action and are included in the action's OpenAPI documentation. [API analyzers](analyzers.md) also understand conventions. If your action is unconventional (for example, it returns a status code that isn't documented by the applied convention), a warning encourages you to document the status code.
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
-    }
-}
-```
-
-Actions that follow the patterns in the `ValuesController.cs` work with the default conventions. If the default conventions don't meet your needs, see Create web API conventions.
-
-At runtime, `Microsoft.AspNetCore.Mvc.ApiExplorer` understands conventions. `ApiExplorer` is MVC's abstraction to communicate with OpenAPI (also known as Swagger) document generators. Attributes from the applied convention are associated with an action and are included in the action's OpenAPI documentation. API analyzers also understand conventions. If your action is unconventional (for example, it returns a status code that isn't documented by the applied convention), a warning encourages you to document the status code.
-
-View or download sample code (how to download)
+[View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/web-api/advanced/conventions/samples) ([how to download](../../fundamentals/index.md#how-to-download-a-sample))
 
 ## Apply web API conventions
 
 Conventions don't compose; each action may be associated with exactly one convention. More specific conventions take precedence over less specific conventions. The selection is non-deterministic when two or more conventions of the same priority apply to an action. The following options exist to apply a convention to an action, from the most specific to the least specific:
 
-1. `Microsoft.AspNetCore.Mvc.ApiConventionMethodAttribute` — Applies to individual actions and specifies the convention type and the convention method that applies.
+1. `Microsoft.AspNetCore.Mvc.ApiConventionMethodAttribute` &mdash; Applies to individual actions and specifies the convention type and the convention method that applies.
 
     In the following example, the default convention type's `Microsoft.AspNetCore.Mvc.DefaultApiConventions.Put` convention method is applied to the `Update` action:
 
-    ```csharp
-// PUT api/contactsconvention/{guid}
-[HttpPut("{id}")]
-[ApiConventionMethod(typeof(DefaultApiConventions), 
-                     nameof(DefaultApiConventions.Put))]
-public IActionResult Update(string id, Contact contact)
-{
-    var contactToUpdate = _contacts.Get(id);
-
-    if (contactToUpdate == null)
-    {
-        return NotFound();
-    }
-
-    _contacts.Update(contact);
-
-    return NoContent();
-}
-```
+    [!code-csharp[](conventions/samples/Controllers/ContactsConventionController.cs?name=snippet_ApiConventionMethod&highlight=3)]
 
     The `Microsoft.AspNetCore.Mvc.DefaultApiConventions.Put` convention method applies the following attributes to the action:
 
@@ -109,38 +50,26 @@ public IActionResult Update(string id, Contact contact)
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     ```
 
-    For more information on `[ProducesDefaultResponseType]`, see Default Response.
+    For more information on `[ProducesDefaultResponseType]`, see [Default Response](https://swagger.io/docs/specification/describing-responses/#default-response).
 
-1. `Microsoft.AspNetCore.Mvc.ApiConventionTypeAttribute` applied to a controller — Applies the specified convention type to all actions on the controller. A convention method is marked with hints that determine the actions to which the convention method applies. For more information on hints, see Create web API conventions).
+1. `Microsoft.AspNetCore.Mvc.ApiConventionTypeAttribute` applied to a controller &mdash; Applies the specified convention type to all actions on the controller. A convention method is marked with hints that determine the actions to which the convention method applies. For more information on hints, see [Create web API conventions](#create-web-api-conventions)).
 
     In the following example, the default set of conventions is applied to all actions in *ContactsConventionController*:
 
-    ```csharp
-[ApiController]
-[ApiConventionType(typeof(DefaultApiConventions))]
-[Route("api/[controller]")]
-public class ContactsConventionController : ControllerBase
-{
-```
+    [!code-csharp[](conventions/samples/Controllers/ContactsConventionController.cs?name=snippet_ApiConventionTypeAttribute&highlight=2)]
 
-1. `Microsoft.AspNetCore.Mvc.ApiConventionTypeAttribute` applied to an assembly — Applies the specified convention type to all controllers in the current assembly. As a recommendation, apply assembly-level attributes in the `Startup.cs` file.
+1. `Microsoft.AspNetCore.Mvc.ApiConventionTypeAttribute` applied to an assembly &mdash; Applies the specified convention type to all controllers in the current assembly. As a recommendation, apply assembly-level attributes in the `Startup.cs` file.
 
     In the following example, the default set of conventions is applied to all controllers in the assembly:
 
-    ```csharp
-[assembly: ApiConventionType(typeof(DefaultApiConventions))]
-namespace ApiConventions
-{
-    public class Startup
-    {
-```
+    [!code-csharp[](conventions/samples/Startup.cs?name=snippet_ApiConventionTypeAttribute&highlight=1)]
 
 ## Create web API conventions
 
 If the default API conventions don't meet your needs, create your own conventions. A convention is:
 
 * A static type with methods.
-* Capable of defining response types and naming requirements on actions.
+* Capable of defining [response types](#response-types) and [naming requirements](#naming-requirements) on actions.
 
 ### Response types
 
@@ -183,7 +112,7 @@ In the preceding example:
 
 ## Related content
 
-* Video: Create metadata for NSwagClient
-* Video: Beginner's Series to: Web APIs
-* Use web API analyzers
-* ASP.NET Core web API documentation with Swagger / OpenAPI
+* [Video: Create metadata for NSwagClient](/shows/beginners-series-to-web-apis/generating-api-clients-17-of-18--beginners-series-to-web-apis)
+* [Video: Beginner's Series to: Web APIs](/shows/beginners-series-to-web-apis/)
+* [Use web API analyzers](analyzers.md)
+* [ASP.NET Core web API documentation with Swagger / OpenAPI](../../tutorials/web-api-help-pages-using-swagger.md)

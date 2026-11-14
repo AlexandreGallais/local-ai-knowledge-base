@@ -1,15 +1,23 @@
 ---
+description: "Learn more about: COR_ACTIVE_FUNCTION Structure"
 title: "COR_ACTIVE_FUNCTION Structure"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cor-active-function-structure.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "COR_ACTIVE_FUNCTION"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "COR_ACTIVE_FUNCTION"
+helpviewer_keywords:
+  - "COR_ACTIVE_FUNCTION structure [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # COR_ACTIVE_FUNCTION Structure
 
-Contains information about the functions that are currently active in a thread's frames. This structure is used by the ICorDebugThread2::GetActiveFunctions method.
+Contains information about the functions that are currently active in a thread's frames. This structure is used by the [ICorDebugThread2::GetActiveFunctions](icordebugthread2-getactivefunctions-method.md) method.
 
 ## Syntax
 
@@ -35,7 +43,7 @@ typedef struct  _COR_ACTIVE_FUNCTION {
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl
 

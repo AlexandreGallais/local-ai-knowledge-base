@@ -1,12 +1,12 @@
 ---
 title: "NETSDK1145: Targeting or apphost pack missing"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/sdk-errors/netsdk1145.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: How to resolve the issue of targeting pack missing while NuGet package restore is not supported
+author: wli3
+ms.topic: error-reference
+ms.date: 09/14/2020
+f1_keywords:
+- NETSDK1145
 ---
-
 # NETSDK1145: Targeting or apphost pack missing
 
 **This article applies to:** ✔️ .NET 5.0.100 SDK and later versions

@@ -1,539 +1,91 @@
 ---
-title: "How to: Decrypt XML Elements with Asymmetric Keys (part 1 of 2)"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/security/how-to-decrypt-xml-elements-with-asymmetric-keys.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn more about: How to: Decrypt XML Elements with Asymmetric Keys"
+title: "How to: Decrypt XML Elements with Asymmetric Keys"
+ms.date: 07/14/2020
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "System.Security.Cryptography.RSA class"
+  - "asymmetric keys"
+  - "System.Security.Cryptography.EncryptedXml class"
+  - "XML encryption"
+  - "decryption"
+ms.assetid: dd5de491-dafe-4b94-966d-99714b2e754a
 ---
-
 # How to: Decrypt XML Elements with Asymmetric Keys
 
-You can use the classes in the `System.Security.Cryptography.Xml` namespace to encrypt and decrypt an element within an XML document.  XML Encryption is a standard way to exchange or store encrypted XML data, without worrying about the data being easily read.  For more information about the XML Encryption standard, see the World Wide Web Consortium (W3C) recommendation XML Signature Syntax and Processing.
+You can use the classes in the <xref:System.Security.Cryptography.Xml> namespace to encrypt and decrypt an element within an XML document.  XML Encryption is a standard way to exchange or store encrypted XML data, without worrying about the data being easily read.  For more information about the XML Encryption standard, see the World Wide Web Consortium (W3C) recommendation [XML Signature Syntax and Processing](https://www.w3.org/TR/xmldsig-core/).
 
-> **Note:**
+> [!NOTE]
 > The code in this article applies to Windows.
 
-The example in this procedure decrypts an XML element that was encrypted using the methods described in How to: Encrypt XML Elements with Asymmetric Keys.  It finds an <`EncryptedData`> element, decrypts the element, and then replaces the element with the original plaintext XML element.
+The example in this procedure decrypts an XML element that was encrypted using the methods described in [How to: Encrypt XML Elements with Asymmetric Keys](how-to-encrypt-xml-elements-with-asymmetric-keys.md).  It finds an <`EncryptedData`> element, decrypts the element, and then replaces the element with the original plaintext XML element.
 
-This example decrypts an XML element using two keys.  It retrieves a previously generated RSA private key from a key <example-value>, and then uses the RSA key to decrypt a session key <example-value> in the <`EncryptedKey`> element of the <`EncryptedData`> element.  The example then uses the session key to decrypt the XML element.
+This example decrypts an XML element using two keys.  It retrieves a previously generated RSA private key from a key container, and then uses the RSA key to decrypt a session key stored in the <`EncryptedKey`> element of the <`EncryptedData`> element.  The example then uses the session key to decrypt the XML element.
 
 This example is appropriate for situations where multiple applications have to share encrypted data or where an application has to save encrypted data between the times that it runs.
 
 ### To decrypt an XML element with an asymmetric key
 
-1. Create a `System.Security.Cryptography.CspParameters` object and specify the name of the key container.
+1. Create a <xref:System.Security.Cryptography.CspParameters> object and specify the name of the key container.
 
-     ```csharp
+     [!code-csharp[HowToDecryptXMLElementAsymmetric#2](../../../samples/snippets/csharp/VS_Snippets_CLR/HowToDecryptXMLElementAsymmetric/cs/sample.cs#2)]
+     [!code-vb[HowToDecryptXMLElementAsymmetric#2](../../../samples/snippets/visualbasic/VS_Snippets_CLR/HowToDecryptXMLElementAsymmetric/vb/sample.vb#2)]
 
-using System;
-using System.Xml;
-using System.Security.Cryptography;
-using System.Security.Cryptography.Xml;
-using System.Runtime.Versioning;
+2. Retrieve a previously generated asymmetric key from the container using the <xref:System.Security.Cryptography.RSACryptoServiceProvider> object.  The key is automatically retrieved from the key container when you pass the <xref:System.Security.Cryptography.CspParameters> object to the <xref:System.Security.Cryptography.RSACryptoServiceProvider> constructor.
 
-[SupportedOSPlatform("windows")]
-class Program
-{
-	static void Main(string[] args)
-	{
-		// Create an XmlDocument object.
-		XmlDocument xmlDoc = new XmlDocument();
+     [!code-csharp[HowToDecryptXMLElementAsymmetric#3](../../../samples/snippets/csharp/VS_Snippets_CLR/HowToDecryptXMLElementAsymmetric/cs/sample.cs#3)]
+     [!code-vb[HowToDecryptXMLElementAsymmetric#3](../../../samples/snippets/visualbasic/VS_Snippets_CLR/HowToDecryptXMLElementAsymmetric/vb/sample.vb#3)]
 
-		// Load an XML file into the XmlDocument object.
-		try
-		{
-			xmlDoc.PreserveWhitespace = true;
-			xmlDoc.Load("test.xml");
-		}
-		catch (Exception e)
-		{
-			Console.WriteLine(e.Message);
-		}
-		CspParameters cspParams = new CspParameters();
-		cspParams.KeyContainerName = "XML_ENC_RSA_KEY";
+3. Create a new <xref:System.Security.Cryptography.Xml.EncryptedXml> object to decrypt the document.
 
-		// Get the RSA key from the key container.  This key will decrypt
-		// a symmetric key that was imbedded in the XML document.
-		RSACryptoServiceProvider rsaKey = new RSACryptoServiceProvider(cspParams);
+     [!code-csharp[HowToDecryptXMLElementAsymmetric#5](../../../samples/snippets/csharp/VS_Snippets_CLR/HowToDecryptXMLElementAsymmetric/cs/sample.cs#5)]
+     [!code-vb[HowToDecryptXMLElementAsymmetric#5](../../../samples/snippets/visualbasic/VS_Snippets_CLR/HowToDecryptXMLElementAsymmetric/vb/sample.vb#5)]
 
-		try
-		{
+4. Add a key/name mapping to associate the RSA key with the element within the document that should be decrypted.  You must use the same name for the key that you used when you encrypted the document.  Note that this name is separate from the name used to identify the key in the key container specified in step 1.
 
-			// Decrypt the elements.
-			Decrypt(xmlDoc, rsaKey, "rsaKey");
+     [!code-csharp[HowToDecryptXMLElementAsymmetric#6](../../../samples/snippets/csharp/VS_Snippets_CLR/HowToDecryptXMLElementAsymmetric/cs/sample.cs#6)]
+     [!code-vb[HowToDecryptXMLElementAsymmetric#6](../../../samples/snippets/visualbasic/VS_Snippets_CLR/HowToDecryptXMLElementAsymmetric/vb/sample.vb#6)]
 
-			// Save the XML document.
-			xmlDoc.Save("test.xml");
+5. Call the <xref:System.Security.Cryptography.Xml.EncryptedXml.DecryptDocument*> method to decrypt the <`EncryptedData`> element.  This method uses the RSA key to decrypt the session key and automatically uses the session key to decrypt the XML element.  It also automatically replaces the <`EncryptedData`> element with the original plaintext.
 
-			// Display the encrypted XML to the console.
-			Console.WriteLine();
-			Console.WriteLine("Decrypted XML:");
-			Console.WriteLine();
-			Console.WriteLine(xmlDoc.OuterXml);
-		}
-		catch (Exception e)
-		{
-			Console.WriteLine(e.Message);
-		}
-		finally
-		{
-			// Clear the RSA key.
-			rsaKey.Clear();
-		}
-
-		Console.ReadLine();
-	}
-
-	public static void Decrypt(XmlDocument Doc, RSA Alg, string KeyName)
-	{
-		// Check the arguments.
-		if (Doc == null)
-			throw new ArgumentNullException("Doc");
-		if (Alg == null)
-			throw new ArgumentNullException("Alg");
-		if (KeyName == null)
-			throw new ArgumentNullException("KeyName");
-		// Create a new EncryptedXml object.
-		EncryptedXml exml = new EncryptedXml(Doc);
-
-		// Add a key-name mapping.
-		// This method can only decrypt documents
-		// that present the specified key name.
-		exml.AddKeyNameMapping(KeyName, Alg);
-
-		// Decrypt the element.
-		exml.DecryptDocument();
-	}
-}
-```
-
-2. Retrieve a previously generated asymmetric key from the container using the `System.Security.Cryptography.RSACryptoServiceProvider` object.  The key is automatically retrieved from the key <example-value> when you pass the `System.Security.Cryptography.CspParameters` object to the `System.Security.Cryptography.RSACryptoServiceProvider` constructor.
-
-     ```csharp
-
-using System;
-using System.Xml;
-using System.Security.Cryptography;
-using System.Security.Cryptography.Xml;
-using System.Runtime.Versioning;
-
-[SupportedOSPlatform("windows")]
-class Program
-{
-	static void Main(string[] args)
-	{
-		// Create an XmlDocument object.
-		XmlDocument xmlDoc = new XmlDocument();
-
-		// Load an XML file into the XmlDocument object.
-		try
-		{
-			xmlDoc.PreserveWhitespace = true;
-			xmlDoc.Load("test.xml");
-		}
-		catch (Exception e)
-		{
-			Console.WriteLine(e.Message);
-		}
-		CspParameters cspParams = new CspParameters();
-		cspParams.KeyContainerName = "XML_ENC_RSA_KEY";
-
-		// Get the RSA key from the key container.  This key will decrypt
-		// a symmetric key that was imbedded in the XML document.
-		RSACryptoServiceProvider rsaKey = new RSACryptoServiceProvider(cspParams);
-
-		try
-		{
-
-			// Decrypt the elements.
-			Decrypt(xmlDoc, rsaKey, "rsaKey");
-
-			// Save the XML document.
-			xmlDoc.Save("test.xml");
-
-			// Display the encrypted XML to the console.
-			Console.WriteLine();
-			Console.WriteLine("Decrypted XML:");
-			Console.WriteLine();
-			Console.WriteLine(xmlDoc.OuterXml);
-		}
-		catch (Exception e)
-		{
-			Console.WriteLine(e.Message);
-		}
-		finally
-		{
-			// Clear the RSA key.
-			rsaKey.Clear();
-		}
-
-		Console.ReadLine();
-	}
-
-	public static void Decrypt(XmlDocument Doc, RSA Alg, string KeyName)
-	{
-		// Check the arguments.
-		if (Doc == null)
-			throw new ArgumentNullException("Doc");
-		if (Alg == null)
-			throw new ArgumentNullException("Alg");
-		if (KeyName == null)
-			throw new ArgumentNullException("KeyName");
-		// Create a new EncryptedXml object.
-		EncryptedXml exml = new EncryptedXml(Doc);
-
-		// Add a key-name mapping.
-		// This method can only decrypt documents
-		// that present the specified key name.
-		exml.AddKeyNameMapping(KeyName, Alg);
-
-		// Decrypt the element.
-		exml.DecryptDocument();
-	}
-}
-```
-
-3. Create a new `System.Security.Cryptography.Xml.EncryptedXml` object to decrypt the document.
-
-     ```csharp
-
-using System;
-using System.Xml;
-using System.Security.Cryptography;
-using System.Security.Cryptography.Xml;
-using System.Runtime.Versioning;
-
-[SupportedOSPlatform("windows")]
-class Program
-{
-	static void Main(string[] args)
-	{
-		// Create an XmlDocument object.
-		XmlDocument xmlDoc = new XmlDocument();
-
-		// Load an XML file into the XmlDocument object.
-		try
-		{
-			xmlDoc.PreserveWhitespace = true;
-			xmlDoc.Load("test.xml");
-		}
-		catch (Exception e)
-		{
-			Console.WriteLine(e.Message);
-		}
-		CspParameters cspParams = new CspParameters();
-		cspParams.KeyContainerName = "XML_ENC_RSA_KEY";
-
-		// Get the RSA key from the key container.  This key will decrypt
-		// a symmetric key that was imbedded in the XML document.
-		RSACryptoServiceProvider rsaKey = new RSACryptoServiceProvider(cspParams);
-
-		try
-		{
-
-			// Decrypt the elements.
-			Decrypt(xmlDoc, rsaKey, "rsaKey");
-
-			// Save the XML document.
-			xmlDoc.Save("test.xml");
-
-			// Display the encrypted XML to the console.
-			Console.WriteLine();
-			Console.WriteLine("Decrypted XML:");
-			Console.WriteLine();
-			Console.WriteLine(xmlDoc.OuterXml);
-		}
-		catch (Exception e)
-		{
-			Console.WriteLine(e.Message);
-		}
-		finally
-		{
-			// Clear the RSA key.
-			rsaKey.Clear();
-		}
-
-		Console.ReadLine();
-	}
-
-	public static void Decrypt(XmlDocument Doc, RSA Alg, string KeyName)
-	{
-		// Check the arguments.
-		if (Doc == null)
-			throw new ArgumentNullException("Doc");
-		if (Alg == null)
-			throw new ArgumentNullException("Alg");
-		if (KeyName == null)
-			throw new ArgumentNullException("KeyName");
-		// Create a new EncryptedXml object.
-		EncryptedXml exml = new EncryptedXml(Doc);
-
-		// Add a key-name mapping.
-		// This method can only decrypt documents
-		// that present the specified key name.
-		exml.AddKeyNameMapping(KeyName, Alg);
-
-		// Decrypt the element.
-		exml.DecryptDocument();
-	}
-}
-```
-
-4. Add a key/name mapping to associate the RSA key with the element within the document that should be decrypted.  You must use the same name for the key that you used when you encrypted the document.  Note that this name is separate from the name used to identify the key in the key <example-value> specified in step 1.
-
-     ```csharp
-
-using System;
-using System.Xml;
-using System.Security.Cryptography;
-using System.Security.Cryptography.Xml;
-using System.Runtime.Versioning;
-
-[SupportedOSPlatform("windows")]
-class Program
-{
-	static void Main(string[] args)
-	{
-		// Create an XmlDocument object.
-		XmlDocument xmlDoc = new XmlDocument();
-
-		// Load an XML file into the XmlDocument object.
-		try
-		{
-			xmlDoc.PreserveWhitespace = true;
-			xmlDoc.Load("test.xml");
-		}
-		catch (Exception e)
-		{
-			Console.WriteLine(e.Message);
-		}
-		CspParameters cspParams = new CspParameters();
-		cspParams.KeyContainerName = "XML_ENC_RSA_KEY";
-
-		// Get the RSA key from the key container.  This key will decrypt
-		// a symmetric key that was imbedded in the XML document.
-		RSACryptoServiceProvider rsaKey = new RSACryptoServiceProvider(cspParams);
-
-		try
-		{
-
-			// Decrypt the elements.
-			Decrypt(xmlDoc, rsaKey, "rsaKey");
-
-			// Save the XML document.
-			xmlDoc.Save("test.xml");
-
-			// Display the encrypted XML to the console.
-			Console.WriteLine();
-			Console.WriteLine("Decrypted XML:");
-			Console.WriteLine();
-			Console.WriteLine(xmlDoc.OuterXml);
-		}
-		catch (Exception e)
-		{
-			Console.WriteLine(e.Message);
-		}
-		finally
-		{
-			// Clear the RSA key.
-			rsaKey.Clear();
-		}
-
-		Console.ReadLine();
-	}
-
-	public static void Decrypt(XmlDocument Doc, RSA Alg, string KeyName)
-	{
-		// Check the arguments.
-		if (Doc == null)
-			throw new ArgumentNullException("Doc");
-		if (Alg == null)
-			throw new ArgumentNullException("Alg");
-		if (KeyName == null)
-			throw new ArgumentNullException("KeyName");
-		// Create a new EncryptedXml object.
-		EncryptedXml exml = new EncryptedXml(Doc);
-
-		// Add a key-name mapping.
-		// This method can only decrypt documents
-		// that present the specified key name.
-		exml.AddKeyNameMapping(KeyName, Alg);
-
-		// Decrypt the element.
-		exml.DecryptDocument();
-	}
-}
-```
-
-5. Call the `System.Security.Cryptography.Xml.EncryptedXml.DecryptDocument*` method to decrypt the <`EncryptedData`> element.  This method uses the RSA key to decrypt the session key and automatically uses the session key to decrypt the XML element.  It also automatically replaces the <`EncryptedData`> element with the original plaintext.
-
-     ```csharp
-
-using System;
-using System.Xml;
-using System.Security.Cryptography;
-using System.Security.Cryptography.Xml;
-using System.Runtime.Versioning;
-
-[SupportedOSPlatform("windows")]
-class Program
-{
-	static void Main(string[] args)
-	{
-		// Create an XmlDocument object.
-		XmlDocument xmlDoc = new XmlDocument();
-
-		// Load an XML file into the XmlDocument object.
-		try
-		{
-			xmlDoc.PreserveWhitespace = true;
-			xmlDoc.Load("test.xml");
-		}
-		catch (Exception e)
-		{
-			Console.WriteLine(e.Message);
-		}
-		CspParameters cspParams = new CspParameters();
-		cspParams.KeyContainerName = "XML_ENC_RSA_KEY";
-
-		// Get the RSA key from the key container.  This key will decrypt
-		// a symmetric key that was imbedded in the XML document.
-		RSACryptoServiceProvider rsaKey = new RSACryptoServiceProvider(cspParams);
-
-		try
-		{
-
-			// Decrypt the elements.
-			Decrypt(xmlDoc, rsaKey, "rsaKey");
-
-			// Save the XML document.
-			xmlDoc.Save("test.xml");
-
-			// Display the encrypted XML to the console.
-			Console.WriteLine();
-			Console.WriteLine("Decrypted XML:");
-			Console.WriteLine();
-			Console.WriteLine(xmlDoc.OuterXml);
-		}
-		catch (Exception e)
-		{
-			Console.WriteLine(e.Message);
-		}
-		finally
-		{
-			// Clear the RSA key.
-			rsaKey.Clear();
-		}
-
-		Console.ReadLine();
-	}
-
-	public static void Decrypt(XmlDocument Doc, RSA Alg, string KeyName)
-	{
-		// Check the arguments.
-		if (Doc == null)
-			throw new ArgumentNullException("Doc");
-		if (Alg == null)
-			throw new ArgumentNullException("Alg");
-		if (KeyName == null)
-			throw new ArgumentNullException("KeyName");
-		// Create a new EncryptedXml object.
-		EncryptedXml exml = new EncryptedXml(Doc);
-
-		// Add a key-name mapping.
-		// This method can only decrypt documents
-		// that present the specified key name.
-		exml.AddKeyNameMapping(KeyName, Alg);
-
-		// Decrypt the element.
-		exml.DecryptDocument();
-	}
-}
-```
+     [!code-csharp[HowToDecryptXMLElementAsymmetric#7](../../../samples/snippets/csharp/VS_Snippets_CLR/HowToDecryptXMLElementAsymmetric/cs/sample.cs#7)]
+     [!code-vb[HowToDecryptXMLElementAsymmetric#7](../../../samples/snippets/visualbasic/VS_Snippets_CLR/HowToDecryptXMLElementAsymmetric/vb/sample.vb#7)]
 
 6. Save the XML document.
 
-     ```csharp
+     [!code-csharp[HowToDecryptXMLElementAsymmetric#8](../../../samples/snippets/csharp/VS_Snippets_CLR/HowToDecryptXMLElementAsymmetric/cs/sample.cs#8)]
+     [!code-vb[HowToDecryptXMLElementAsymmetric#8](../../../samples/snippets/visualbasic/VS_Snippets_CLR/HowToDecryptXMLElementAsymmetric/vb/sample.vb#8)]
 
-using System;
-using System.Xml;
-using System.Security.Cryptography;
-using System.Security.Cryptography.Xml;
-using System.Runtime.Versioning;
+## Example
 
-[SupportedOSPlatform("windows")]
-class Program
-{
-	static void Main(string[] args)
-	{
-		// Create an XmlDocument object.
-		XmlDocument xmlDoc = new XmlDocument();
+This example assumes that a file named `test.xml` exists in the same directory as the compiled program.  It also assumes that `test.xml` contains an XML element that was encrypted using the techniques described in [How to: Encrypt XML Elements with Asymmetric Keys](how-to-encrypt-xml-elements-with-asymmetric-keys.md).
 
-		// Load an XML file into the XmlDocument object.
-		try
-		{
-			xmlDoc.PreserveWhitespace = true;
-			xmlDoc.Load("test.xml");
-		}
-		catch (Exception e)
-		{
-			Console.WriteLine(e.Message);
-		}
-		CspParameters cspParams = new CspParameters();
-		cspParams.KeyContainerName = "XML_ENC_RSA_KEY";
+[!code-csharp[HowToDecryptXMLElementAsymmetric#1](../../../samples/snippets/csharp/VS_Snippets_CLR/HowToDecryptXMLElementAsymmetric/cs/sample.cs#1)]
+[!code-vb[HowToDecryptXMLElementAsymmetric#1](../../../samples/snippets/visualbasic/VS_Snippets_CLR/HowToDecryptXMLElementAsymmetric/vb/sample.vb#1)]
 
-		// Get the RSA key from the key container.  This key will decrypt
-		// a symmetric key that was imbedded in the XML document.
-		RSACryptoServiceProvider rsaKey = new RSACryptoServiceProvider(cspParams);
+## Compiling the Code
 
-		try
-		{
+- In a project that targets .NET Framework, include a reference to `System.Security.dll`.
 
-			// Decrypt the elements.
-			Decrypt(xmlDoc, rsaKey, "rsaKey");
+- In a project that targets .NET Core or .NET 5, install NuGet package [System.Security.Cryptography.Xml](https://www.nuget.org/packages/System.Security.Cryptography.Xml).
 
-			// Save the XML document.
-			xmlDoc.Save("test.xml");
+- Include the following namespaces: <xref:System.Xml>, <xref:System.Security.Cryptography>, and <xref:System.Security.Cryptography.Xml>.
 
-			// Display the encrypted XML to the console.
-			Console.WriteLine();
-			Console.WriteLine("Decrypted XML:");
-			Console.WriteLine();
-			Console.WriteLine(xmlDoc.OuterXml);
-		}
-		catch (Exception e)
-		{
-			Console.WriteLine(e.Message);
-		}
-		finally
-		{
-			// Clear the RSA key.
-			rsaKey.Clear();
-		}
+## .NET Security
 
-		Console.ReadLine();
-	}
+Never store a symmetric cryptographic key in plaintext or transfer a symmetric key between machines in plaintext.  Additionally, never store or transfer the private key of an asymmetric key pair in plaintext.  For more information about symmetric and asymmetric cryptographic keys, see [Generating Keys for Encryption and Decryption](generating-keys-for-encryption-and-decryption.md).
 
-	public static void Decrypt(XmlDocument Doc, RSA Alg, string KeyName)
-	{
-		// Check the arguments.
-		if (Doc == null)
-			throw new ArgumentNullException("Doc");
-		if (Alg == null)
-			throw new ArgumentNullException("Alg");
-		if (KeyName == null)
-			throw new ArgumentNullException("KeyName");
-		// Create a new EncryptedXml object.
-		EncryptedXml exml = new EncryptedXml(Doc);
+ Never embed a key directly into your source code.  Embedded keys can be easily read from an assembly by using [Ildasm.exe (IL Disassembler)](../../framework/tools/ildasm-exe-il-disassembler.md) or by opening the assembly in a text editor such as Notepad.
 
-		// Add a key-name mapping.
-		// This method can only decrypt documents
-		// that present the specified key name.
-		exml.AddKeyNameMapping(KeyName, Alg);
+ When you are done using a cryptographic key, clear it from memory by setting each byte to zero or by calling the <xref:System.Security.Cryptography.SymmetricAlgorithm.Clear*> method of the managed cryptography class.  Cryptographic keys can sometimes be read from memory by a debugger or read from a hard drive if the memory location is paged to disk.
 
-		// Decrypt the element.
-		exml.DecryptDocument();
-	}
-}
-```
+## See also
+
+- [Cryptography Model](cryptography-model.md)
+- [Cryptographic Services](cryptographic-services.md)
+- [Cross-Platform Cryptography](cross-platform-cryptography.md)
+- <xref:System.Security.Cryptography.Xml>
+- [How to: Encrypt XML Elements with Asymmetric Keys](how-to-encrypt-xml-elements-with-asymmetric-keys.md)
+- [ASP.NET Core Data Protection](/aspnet/core/security/data-protection/introduction)

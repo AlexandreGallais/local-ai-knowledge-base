@@ -1,17 +1,17 @@
 ---
-title: "Test UWP and WinUI 3 apps with MSTest and Microsoft.Testing.Platform"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/unit-testing-mstest-winui.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Test UWP and WinUI 3 apps with MSTest and Microsoft.Testing.Platform
+description: Learn how to test classic and modern UWP apps, packaged and unpackaged WinUI 3 apps, and AppContainer hosts with MSTest and Microsoft.Testing.Platform.
+author: Evangelink
+ms.author: amauryleve
+ms.date: 09/30/2026
+ai-usage: ai-assisted
 ---
 
 # Test UWP and WinUI 3 apps with MSTest and Microsoft.Testing.Platform
 
 Use Microsoft.Testing.Platform (MTP) to run MSTest tests inside UWP and WinUI 3 applications. The application acts as the test host and owns its UI thread and process lifetime.
 
-> **Important:**
+> [!IMPORTANT]
 > The complete Windows application support matrix described in this article is available with MSTest 4.5 and MTP 2.5. Until the stable versions are released, use matching 4.5 and 2.5 preview packages. If you manage MTP packages directly, keep the platform and extension package versions aligned.
 
 ## Choose an application model
@@ -65,13 +65,13 @@ Visual Studio normally enables `UseUwpTools` during the build. MSTest.Sdk select
 
 If you only need UWP references in a non-UWP MTP test application, set `UseUwpTools` to `false`. The SDK then uses the direct MTP runner unless another packaged application model requires the sidecar.
 
-For a complete project, see the modern UWP MTP sample.
+For a complete project, see the [modern UWP MTP sample](https://github.com/microsoft/testfx/tree/main/samples/public/UwpMtpApp).
 
 ### Configure a classic UWP project
 
 Keep the existing `uap10.0` project shape, desktop MSBuild toolchain, and UWP extension SDK. Import MSTest.Sdk 4.5 or later, and enable the MSTest runner and MTP. MSTest.Sdk supplies the UAP-compatible bootstrap, adapter, and runtime assets.
 
-For a complete project, see the classic UWP MTP sample.
+For a complete project, see the [classic UWP MTP sample](https://github.com/microsoft/testfx/tree/main/samples/public/ClassicUwpMtpApp).
 
 ### Run UWP tests
 
@@ -107,7 +107,7 @@ Environment.ExitCode = await MicrosoftTestingPlatformApplication.RunAsync(
 
 Use `UITestMethod` for tests that create or access WinUI objects. Use `TestMethod` for tests that don't require the UI thread.
 
-> **Warning:**
+> [!WARNING]
 > Don't add `[assembly: WinUITestTarget(...)]` to a self-hosted WinUI test app. That attribute starts a WinUI application for a separate test host, but the self-hosted app has already called `Application.Start`.
 
 ### Configure an unpackaged app
@@ -124,7 +124,7 @@ If a host that isn't a Windows App SDK app loads your test library, set `Windows
 
 VSTest doesn't support unpackaged WinUI 3 test apps because its WinUI provider requires an AppX manifest.
 
-For a complete project, see the unpackaged WinUI MTP sample.
+For a complete project, see the [unpackaged WinUI MTP sample](https://github.com/microsoft/testfx/tree/main/samples/public/WinUIMtpUnpackagedApp).
 
 ### Configure a packaged full-trust app
 
@@ -132,7 +132,7 @@ Keep the default packaged WinUI configuration and its `Package.appxmanifest`. MS
 
 Don't also call `AddPackagedAppDeployment`. An MTP run can register only one test host launcher. Set `EnableMicrosoftTestingExtensionsPackagedApp` to `false` only when a custom launcher owns packaged activation.
 
-For a complete project, see the packaged WinUI MTP sample.
+For a complete project, see the [packaged WinUI MTP sample](https://github.com/microsoft/testfx/tree/main/samples/public/WinUIMtpPackagedApp).
 
 ### Configure an AppContainer app
 
@@ -140,7 +140,7 @@ In the WinUI package manifest, configure the application as `packagedClassicApp`
 
 Run the sidecar non-elevated. Use the `InvokeTestingPlatform` target so the sidecar can copy results and diagnostics from package `LocalState` to the requested results directory.
 
-For a complete project, see the AppContainer WinUI MTP sample.
+For a complete project, see the [AppContainer WinUI MTP sample](https://github.com/microsoft/testfx/tree/main/samples/public/WinUIMtpAppContainerApp).
 
 ## Run WinUI 3 tests
 
@@ -175,8 +175,8 @@ Don't use `dotnet exec` for a WinUI app. WinUI resolves PRI resources relative t
 
 ## See also
 
-- MSTest overview
-- MSTest SDK configuration
-- Run tests with MSTest
-- MTP test host deployment
-- Windows app testing guidance in the MSTest repository
+- [MSTest overview](unit-testing-mstest-intro.md)
+- [MSTest SDK configuration](unit-testing-mstest-sdk.md)
+- [Run tests with MSTest](unit-testing-mstest-running-tests.md)
+- [MTP test host deployment](microsoft-testing-platform-test-host-deployment.md)
+- [Windows app testing guidance in the MSTest repository](https://github.com/microsoft/testfx/blob/main/docs/winui-testing.md)

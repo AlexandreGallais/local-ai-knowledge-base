@@ -1,23 +1,14 @@
----
-title: "Gatherers class (java.util.stream)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/stream/Gatherers.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Gatherers class (java.util.stream)
 
 ```java
 public final class Gatherers
 ```
 
-Implementations of `Gatherer` that provide useful intermediate
+Implementations of {@link Gatherer} that provide useful intermediate
 operations, such as windowing functions, folding functions,
 transforming elements concurrently, etc.
 
-**Since:** 24
+@since 24
 
 ## Gatherers.windowFixed(int)
 
@@ -30,28 +21,28 @@ Returns a Gatherer that gathers elements into windows
 If the stream is empty then no window will be produced.
 The last window may contain fewer elements than the supplied window size.
 
-Example:
+<p>Example:
+{@snippet lang = java:
+// will contain: [[1, 2, 3], [4, 5, 6], [7, 8]]
+List<List<Integer>> windows =
+    Stream.of(1,2,3,4,5,6,7,8).gather(Gatherers.windowFixed(3)).toList();
+}
 
-Parameters:
-
-- `windowSize`: the size of the windows
-- ``: the type of elements the returned gatherer consumes and the contents of the windows it produces
-
-**Implementation requirements:** Each window produced is an unmodifiable List; calls to any
-mutator method will always cause `UnsupportedOperationException`
+@implSpec Each window produced is an unmodifiable List; calls to any
+mutator method will always cause {@code UnsupportedOperationException}
 to be thrown. There are no guarantees on the implementation type or
 serializability of the produced Lists.
 
-**API note:** For efficiency reasons, windows may be allocated contiguously
+@apiNote For efficiency reasons, windows may be allocated contiguously
          and eagerly. This means that choosing large window sizes for
          small streams may use excessive memory for the duration of
          evaluation of this operation.
 
-**Returns:** a new gatherer which groups elements into fixed-size windows
-
-Throws:
-
-- `IllegalArgumentException`: when `windowSize` is less than 1
+@param windowSize the size of the windows
+@param <TR> the type of elements the returned gatherer consumes
+            and the contents of the windows it produces
+@return a new gatherer which groups elements into fixed-size windows
+@throws IllegalArgumentException when {@code windowSize} is less than 1
 
 ## Gatherers.windowSliding(int)
 
@@ -67,28 +58,32 @@ If the stream is empty then no window will be produced. If the size of
 the stream is smaller than the window size then only one window will
 be produced, containing all elements in the stream.
 
-Example:
+<p>Example:
+{@snippet lang = java:
+// will contain: [[1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 8]]
+List<List<Integer>> windows2 =
+    Stream.of(1,2,3,4,5,6,7,8).gather(Gatherers.windowSliding(2)).toList();
 
-Parameters:
+// will contain: [[1, 2, 3, 4, 5, 6], [2, 3, 4, 5, 6, 7], [3, 4, 5, 6, 7, 8]]
+List<List<Integer>> windows6 =
+    Stream.of(1,2,3,4,5,6,7,8).gather(Gatherers.windowSliding(6)).toList();
+}
 
-- `windowSize`: the size of the windows
-- ``: the type of elements the returned gatherer consumes and the contents of the windows it produces
-
-**Implementation requirements:** Each window produced is an unmodifiable List; calls to any
-mutator method will always cause `UnsupportedOperationException`
+@implSpec Each window produced is an unmodifiable List; calls to any
+mutator method will always cause {@code UnsupportedOperationException}
 to be thrown. There are no guarantees on the implementation type or
 serializability of the produced Lists.
 
-**API note:** For efficiency reasons, windows may be allocated contiguously
+@apiNote For efficiency reasons, windows may be allocated contiguously
          and eagerly. This means that choosing large window sizes for
          small streams may use excessive memory for the duration of
          evaluation of this operation.
 
-**Returns:** a new gatherer which groups elements into sliding windows
-
-Throws:
-
-- `IllegalArgumentException`: when windowSize is less than 1
+@param windowSize the size of the windows
+@param <TR> the type of elements the returned gatherer consumes
+            and the contents of the windows it produces
+@return a new gatherer which groups elements into sliding windows
+@throws IllegalArgumentException when windowSize is less than 1
 
 ## Gatherers.fold(Supplier<R>, BiFunction<? super R, ? super T, ? extends R>)
 
@@ -96,30 +91,33 @@ Throws:
 public static <T, R> Gatherer<T, ?, R> fold( Supplier<R> initial, BiFunction<? super R, ? super T, ? extends R> folder)
 ```
 
-Returns a Gatherer that performs an ordered, *reduction-like*,
+Returns a Gatherer that performs an ordered, <i>reduction-like</i>,
 transformation for scenarios where no combiner-function can be
 implemented, or for reductions which are intrinsically
 order-dependent.
 
-Parameters:
-
-- `initial`: the identity value for the fold operation
-- `folder`: the folding function
-- `<T>`: the type of elements the returned gatherer consumes
-- `<R>`: the type of elements the returned gatherer produces
-
-**Implementation requirements:** If no exceptions are thrown during processing, then this
+@implSpec If no exceptions are thrown during processing, then this
 operation only ever produces a single element.
 
-Example:
+<p>Example:
+{@snippet lang = java:
+// will contain: Optional["123456789"]
+Optional<String> numberString =
+    Stream.of(1,2,3,4,5,6,7,8,9)
+          .gather(
+              Gatherers.fold(() -> "", (string, number) -> string + number)
+           )
+          .findFirst();
+}
 
-**See also:** java.util.stream.Stream#reduce(Object, BinaryOperator)
+@see java.util.stream.Stream#reduce(Object, BinaryOperator)
 
-**Returns:** a new Gatherer
-
-Throws:
-
-- `NullPointerException`: if any of the parameters are `null`
+@param initial the identity value for the fold operation
+@param folder the folding function
+@param <T> the type of elements the returned gatherer consumes
+@param <R> the type of elements the returned gatherer produces
+@return a new Gatherer
+@throws NullPointerException if any of the parameters are {@code null}
 
 ## Gatherers.scan(Supplier<R>, BiFunction<? super R, ? super T, ? extends R>)
 
@@ -129,25 +127,28 @@ public static <T, R> Gatherer<T, ?, R> scan( Supplier<R> initial, BiFunction<? s
 
 Returns a Gatherer that performs a Prefix Scan -- an incremental
 accumulation -- using the provided functions.  Starting with an
-initial value obtained from the `Supplier`, each subsequent
-value is obtained by applying the `BiFunction` to the current
+initial value obtained from the {@code Supplier}, each subsequent
+value is obtained by applying the {@code BiFunction} to the current
 value and the next input element, after which the resulting value is
 produced downstream.
 
-Example:
+<p>Example:
+{@snippet lang = java:
+// will contain: ["1", "12", "123", "1234", "12345", "123456", "1234567", "12345678", "123456789"]
+List<String> numberStrings =
+    Stream.of(1,2,3,4,5,6,7,8,9)
+          .gather(
+              Gatherers.scan(() -> "", (string, number) -> string + number)
+           )
+          .toList();
+}
 
-Parameters:
-
-- `initial`: the supplier of the initial value for the scanner
-- `scanner`: the function to apply for each element
-- `<T>`: the type of element which this gatherer consumes
-- `<R>`: the type of element which this gatherer produces
-
-**Returns:** a new Gatherer which performs a prefix scan
-
-Throws:
-
-- `NullPointerException`: if any of the parameters are `null`
+@param initial the supplier of the initial value for the scanner
+@param scanner the function to apply for each element
+@param <T> the type of element which this gatherer consumes
+@param <R> the type of element which this gatherer produces
+@return a new Gatherer which performs a prefix scan
+@throws NullPointerException if any of the parameters are {@code null}
 
 ## Gatherers.mapConcurrent(int, Function<? super T, ? extends R>)
 
@@ -157,28 +158,22 @@ public static <T, R> Gatherer<T,?,R> mapConcurrent( final int maxConcurrency, fi
 
 An operation which executes a function concurrently
 with a configured level of max concurrency, using
-virtual threads.
+<a href="{@docRoot}/java.base/java/lang/Thread.html#virtual-threads">virtual threads</a>.
 This operation preserves the ordering of the stream.
 
-Parameters:
-
-- `maxConcurrency`: the maximum concurrency desired
-- `mapper`: a function to be executed concurrently
-- `<T>`: the type of input
-- `<R>`: the type of output
-
-**API note:** In progress tasks will be attempted to be cancelled,
+@apiNote In progress tasks will be attempted to be cancelled,
 on a best-effort basis, in situations where the downstream no longer
 wants to receive any more elements.
 
-**Implementation requirements:** If a result of the function is to be pushed downstream but
+@implSpec If a result of the function is to be pushed downstream but
 instead the function completed exceptionally then the corresponding
 exception will instead be rethrown by this method as an instance of
-`RuntimeException`, after which any remaining tasks are canceled.
+{@link RuntimeException}, after which any remaining tasks are canceled.
 
-**Returns:** a new Gatherer
-
-Throws:
-
-- `IllegalArgumentException`: if `maxConcurrency` is less than 1
-- `NullPointerException`: if `mapper` is `null`
+@param maxConcurrency the maximum concurrency desired
+@param mapper a function to be executed concurrently
+@param <T> the type of input
+@param <R> the type of output
+@return a new Gatherer
+@throws IllegalArgumentException if {@code maxConcurrency} is less than 1
+@throws NullPointerException if {@code mapper} is {@code null}

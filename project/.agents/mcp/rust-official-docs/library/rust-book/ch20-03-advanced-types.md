@@ -1,14 +1,3 @@
----
-title: "ch20-03-advanced-types"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch20-03-advanced-types.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch20-03-advanced-types
-
 ## Advanced Types
 
 The Rust type system has some features that we’ve so far mentioned but haven’t
@@ -17,10 +6,14 @@ they are useful as types. Then, we’ll move on to type aliases, a feature
 similar to newtypes but with slightly different semantics. We’ll also discuss
 the `!` type and dynamically sized types.
 
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="using-the-newtype-pattern-for-type-safety-and-abstraction"></a>
+
 ### Type Safety and Abstraction with the Newtype Pattern
 
-This section assumes you’ve read the earlier section “Implementing External
-Traits with the Newtype Pattern”. The newtype pattern
+This section assumes you’ve read the earlier section [“Implementing External
+Traits with the Newtype Pattern”][newtype]<!-- ignore -->. The newtype pattern
 is also useful for tasks beyond those we’ve discussed so far, including
 statically enforcing that values are never confused and indicating the units of
 a value. You saw an example of using newtypes to indicate units in Listing
@@ -39,10 +32,14 @@ associated with their name. Code using `People` would only interact with the
 public API we provide, such as a method to add a name string to the `People`
 collection; that code wouldn’t need to know that we assign an `i32` ID to names
 internally. The newtype pattern is a lightweight way to achieve encapsulation
-to hide implementation details, which we discussed in the “Encapsulation that
+to hide implementation details, which we discussed in the [“Encapsulation that
 Hides Implementation
-Details”
+Details”][encapsulation-that-hides-implementation-details]<!-- ignore -->
 section in Chapter 18.
+
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="creating-type-synonyms-with-type-aliases"></a>
 
 ### Type Synonyms and Type Aliases
 
@@ -51,7 +48,7 @@ another name. For this we use the `type` keyword. For example, we can create
 the alias `Kilometers` to `i32` like so:
 
 ```rust
-type Kilometers = i32;
+{{#rustdoc_include ../listings/ch20-advanced-features/no-listing-04-kilometers-alias/src/main.rs:here}}
 ```
 
 Now the alias `Kilometers` is a _synonym_ for `i32`; unlike the `Millimeters`
@@ -60,12 +57,7 @@ new type. Values that have the type `Kilometers` will be treated the same as
 values of type `i32`:
 
 ```rust
-type Kilometers = i32;
-
-let x: i32 = 5;
-let y: Kilometers = 5;
-
-println!("x + y = {}", x + y);
+{{#rustdoc_include ../listings/ch20-advanced-features/no-listing-04-kilometers-alias/src/main.rs:there}}
 ```
 
 Because `Kilometers` and `i32` are the same type, we can add values of both
@@ -78,7 +70,7 @@ an error.
 The main use case for type synonyms is to reduce repetition. For example, we
 might have a lengthy type like this:
 
-```rust
+```rust,ignore
 Box<dyn Fn() + Send + 'static>
 ```
 
@@ -86,37 +78,25 @@ Writing this lengthy type in function signatures and as type annotations all
 over the code can be tiresome and error-prone. Imagine having a project full of
 code like that in Listing 20-25.
 
-**Listing 20-25: Using a long type in many places**
+<Listing number="20-25" caption="Using a long type in many places">
 
 ```rust
-let f: Box<dyn Fn() + Send + 'static> = Box::new(|| println!("hi"));
-
-fn takes_long_type(f: Box<dyn Fn() + Send + 'static>) {
-    // --snip--
-}
-
-fn returns_long_type() -> Box<dyn Fn() + Send + 'static> {
-    // --snip--
+{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-25/src/main.rs:here}}
 ```
+
+</Listing>
 
 A type alias makes this code more manageable by reducing the repetition. In
 Listing 20-26, we’ve introduced an alias named `Thunk` for the verbose type and
 can replace all uses of the type with the shorter alias `Thunk`.
 
-**Listing 20-26: Introducing a type alias, `Thunk`, to reduce repetition**
+<Listing number="20-26" caption="Introducing a type alias, `Thunk`, to reduce repetition">
 
 ```rust
-type Thunk = Box<dyn Fn() + Send + 'static>;
-
-let f: Thunk = Box::new(|| println!("hi"));
-
-fn takes_long_type(f: Thunk) {
-    // --snip--
-}
-
-fn returns_long_type() -> Thunk {
-    // --snip--
+{{#rustdoc_include ../listings/ch20-advanced-features/listing-20-26/src/main.rs:here}}
 ```
+
+</Listing>
 
 This code is much easier to read and write! Choosing a meaningful name for a
 type alias can help communicate your intent as well (_thunk_ is a word for code
@@ -131,24 +111,15 @@ possible I/O errors. Many of the functions in `std::io` will be returning
 `Result<T, E>` where the `E` is `std::io::Error`, such as these functions in
 the `Write` trait:
 
-```rust
-use std::fmt;
-use std::io::Error;
-
-pub trait Write {
-    fn write(&mut self, buf: &[u8]) -> Result<usize, Error>;
-    fn flush(&mut self) -> Result<(), Error>;
-
-    fn write_all(&mut self, buf: &[u8]) -> Result<(), Error>;
-    fn write_fmt(&mut self, fmt: fmt::Arguments) -> Result<(), Error>;
-}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch20-advanced-features/no-listing-05-write-trait/src/lib.rs}}
 ```
 
 The `Result<..., Error>` is repeated a lot. As such, `std::io` has this type
 alias declaration:
 
-```rust
-type Result<T> = std::result::Result<T, std::io::Error>;
+```rust,noplayground
+{{#rustdoc_include ../listings/ch20-advanced-features/no-listing-06-result-alias/src/lib.rs:here}}
 ```
 
 Because this declaration is in the `std::io` module, we can use the fully
@@ -156,14 +127,8 @@ qualified alias `std::io::Result<T>`; that is, a `Result<T, E>` with the `E`
 filled in as `std::io::Error`. The `Write` trait function signatures end up
 looking like this:
 
-```rust
-pub trait Write {
-    fn write(&mut self, buf: &[u8]) -> Result<usize>;
-    fn flush(&mut self) -> Result<()>;
-
-    fn write_all(&mut self, buf: &[u8]) -> Result<()>;
-    fn write_fmt(&mut self, fmt: fmt::Arguments) -> Result<()>;
-}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch20-advanced-features/no-listing-06-result-alias/src/lib.rs:there}}
 ```
 
 The type alias helps in two ways: It makes code easier to write _and_ it gives
@@ -178,9 +143,8 @@ _empty type_ because it has no values. We prefer to call it the _never type_
 because it stands in the place of the return type when a function will never
 return. Here is an example:
 
-```rust
-fn bar() -> ! {
-    // --snip--
+```rust,noplayground
+{{#rustdoc_include ../listings/ch20-advanced-features/no-listing-07-never-type/src/lib.rs:here}}
 ```
 
 This code is read as “the function `bar` returns never.” Functions that return
@@ -191,25 +155,21 @@ But what use is a type you can never create values for? Recall the code from
 Listing 2-5, part of the number-guessing game; we’ve reproduced a bit of it
 here in Listing 20-27.
 
-**Listing 20-27: A `match` with an arm that ends in `continue`**
+<Listing number="20-27" caption="A `match` with an arm that ends in `continue`">
 
-```rust
-let guess: u32 = match guess.trim().parse() {
-    Ok(num) => num,
-    Err(_) => continue,
-};
+```rust,ignore
+{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-05/src/main.rs:ch19}}
 ```
 
-At the time, we skipped over some details in this code. In “The `match`
-Control Flow Construct”
+</Listing>
+
+At the time, we skipped over some details in this code. In [“The `match`
+Control Flow Construct”][the-match-control-flow-construct]<!-- ignore -->
 section in Chapter 6, we discussed that `match` arms must all return the same
 type. So, for example, the following code doesn’t work:
 
-```rust
-let guess = match guess.trim().parse() {
-    Ok(_) => 5,
-    Err(_) => "hello",
-};
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch20-advanced-features/no-listing-08-match-arms-different-types/src/main.rs:here}}
 ```
 
 The type of `guess` in this code would have to be an integer _and_ a string,
@@ -232,15 +192,8 @@ The never type is useful with the `panic!` macro as well. Recall the `unwrap`
 function that we call on `Option<T>` values to produce a value or panic with
 this definition:
 
-```rust
-impl<T> Option<T> {
-    pub fn unwrap(self) -> T {
-        match self {
-            Some(val) => val,
-            None => panic!("called `Option::unwrap()` on a `None` value"),
-        }
-    }
-}
+```rust,ignore
+{{#rustdoc_include ../listings/ch20-advanced-features/no-listing-09-unwrap-definition/src/lib.rs:here}}
 ```
 
 In this code, the same thing happens as in the `match` in Listing 20-27: Rust
@@ -251,12 +204,8 @@ returning a value from `unwrap`, so this code is valid.
 
 One final expression that has the type `!` is a loop:
 
-```rust
-print!("forever ");
-
-loop {
-    print!("and ever ");
-}
+```rust,ignore
+{{#rustdoc_include ../listings/ch20-advanced-features/no-listing-10-loop-returns-never/src/main.rs:here}}
 ```
 
 Here, the loop never ends, so `!` is the value of the expression. However, this
@@ -278,9 +227,8 @@ we can’t know how long the string is until runtime. That means we can’t crea
 a variable of type `str`, nor can we take an argument of type `str`. Consider
 the following code, which does not work:
 
-```rust
-let s1: str = "Hello there!";
-let s2: str = "How's it going?";
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch20-advanced-features/no-listing-11-cant-create-str/src/main.rs:here}}
 ```
 
 Rust needs to know how much memory to allocate for any value of a particular
@@ -292,7 +240,7 @@ holding a dynamically sized type.
 
 So, what do we do? In this case, you already know the answer: We make the type
 of `s1` and `s2` string slice (`&str`) rather than `str`. Recall from the
-“String Slices” section in Chapter 4 that the
+[“String Slices”][string-slices]<!-- ignore --> section in Chapter 4 that the
 slice data structure only stores the starting position and the length of the
 slice. So, although `&T` is a single value that stores the memory address of
 where the `T` is located, a string slice is _two_ values: the address of the
@@ -307,8 +255,9 @@ put values of dynamically sized types behind a pointer of some kind.
 We can combine `str` with all kinds of pointers: for example, `Box<str>` or
 `Rc<str>`. In fact, you’ve seen this before but with a different dynamically
 sized type: traits. Every trait is a dynamically sized type we can refer to by
-using the name of the trait. In the “Using Trait Objects to Abstract over
-Shared Behavior” section in Chapter 18, we mentioned that to use traits as trait
+using the name of the trait. In the [“Using Trait Objects to Abstract over
+Shared Behavior”][using-trait-objects-to-abstract-over-shared-behavior]<!--
+ignore --> section in Chapter 18, we mentioned that to use traits as trait
 objects, we must put them behind a pointer, such as `&dyn Trait` or `Box<dyn
 Trait>` (`Rc<dyn Trait>` would work too).
 
@@ -318,28 +267,22 @@ for everything whose size is known at compile time. In addition, Rust
 implicitly adds a bound on `Sized` to every generic function. That is, a
 generic function definition like this:
 
-```rust
-fn generic<T>(t: T) {
-    // --snip--
-}
+```rust,ignore
+{{#rustdoc_include ../listings/ch20-advanced-features/no-listing-12-generic-fn-definition/src/lib.rs}}
 ```
 
 is actually treated as though we had written this:
 
-```rust
-fn generic<T: Sized>(t: T) {
-    // --snip--
-}
+```rust,ignore
+{{#rustdoc_include ../listings/ch20-advanced-features/no-listing-13-generic-implicit-sized-bound/src/lib.rs}}
 ```
 
 By default, generic functions will work only on types that have a known size at
 compile time. However, you can use the following special syntax to relax this
 restriction:
 
-```rust
-fn generic<T: ?Sized>(t: &T) {
-    // --snip--
-}
+```rust,ignore
+{{#rustdoc_include ../listings/ch20-advanced-features/no-listing-14-generic-maybe-sized/src/lib.rs}}
 ```
 
 A trait bound on `?Sized` means “`T` may or may not be `Sized`,” and this
@@ -352,3 +295,9 @@ Because the type might not be `Sized`, we need to use it behind some kind of
 pointer. In this case, we’ve chosen a reference.
 
 Next, we’ll talk about functions and closures!
+
+[encapsulation-that-hides-implementation-details]: ch18-01-what-is-oo.html#encapsulation-that-hides-implementation-details
+[string-slices]: ch04-03-slices.html#string-slices
+[the-match-control-flow-construct]: ch06-02-match.html#the-match-control-flow-construct
+[using-trait-objects-to-abstract-over-shared-behavior]: ch18-02-trait-objects.html#using-trait-objects-to-abstract-over-shared-behavior
+[newtype]: ch20-02-advanced-traits.html#implementing-external-traits-with-the-newtype-pattern

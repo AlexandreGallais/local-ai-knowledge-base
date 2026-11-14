@@ -1,23 +1,19 @@
 ---
 title: ".NET 8 breaking change: Complex.ToString format changed to `<a; b>`"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/8.0/complex-format.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 8 breaking change in core .NET libraries where the Complex.ToString() format changed from `(a, b)` to `<a; b>`.
+ms.date: 08/06/2024
 ---
+# Complex.ToString format changed to `<a; b>`
 
-# Complex.ToString format changed to ``
-
-To better support formatting values with culture-specific information, the default string representation of complex numbers was changed to avoid using characters that can be used in formatted numeric values. This change affects `System.Numerics.Complex.ToString*`, where the value is now formatted as `` instead of `(a, b)`. Both *a* and *b* are formatted using the general format specifier ("G") and the conventions of the culture defined by provider—this hasn't changed.
+To better support formatting values with culture-specific information, the default string representation of complex numbers was changed to avoid using characters that can be used in formatted numeric values. This change affects <xref:System.Numerics.Complex.ToString*?displayProperty=nameWithType>, where the value is now formatted as `<a; b>` instead of `(a, b)`. Both *a* and *b* are formatted using the general format specifier ("G") and the conventions of the culture defined by provider&mdash;this hasn't changed.
 
 ## Previous behavior
 
-Previously, the string representation of the complex number returned by `System.Numerics.Complex.ToString*` displayed the number using its Cartesian coordinates in the form `(a, b)`, where *a* was the real part of the complex number, and *b* was its imaginary part.
+Previously, the string representation of the complex number returned by <xref:System.Numerics.Complex.ToString*?displayProperty=nameWithType> displayed the number using its Cartesian coordinates in the form `(a, b)`, where *a* was the real part of the complex number, and *b* was its imaginary part.
 
 ## New behavior
 
-Starting in .NET 8, the string representation of the complex number returned by `System.Numerics.Complex.ToString*` displays the number using its Cartesian coordinates in the form ``, where *a* is the real part of the complex number, and *b* is its imaginary part.
+Starting in .NET 8, the string representation of the complex number returned by <xref:System.Numerics.Complex.ToString*?displayProperty=nameWithType> displays the number using its Cartesian coordinates in the form `<a; b>`, where *a* is the real part of the complex number, and *b* is its imaginary part.
 
 ## Version introduced
 
@@ -25,11 +21,11 @@ Starting in .NET 8, the string representation of the complex number returned by 
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-The change to use a semicolon enables support of formatting with culture-specific information. It also enables the corresponding need to be able to parse results back out given that it implements `System.Numerics.INumberBase`1`.
+The change to use a semicolon enables support of formatting with culture-specific information. It also enables the corresponding need to be able to parse results back out given that it implements <xref:System.Numerics.INumberBase`1>.
 
 The change from parentheses (`( )`) to angle brackets avoids potential collision with numeric formats where negative numbers are formatted as `(x)`. The new behavior is also consistent with the behavior of the `Vector*` types.
 
@@ -39,8 +35,8 @@ If you need the previous format, you can use a custom string formatting mechanis
 
 ## Affected APIs
 
-- `System.Numerics.Complex.ToString*`
+- <xref:System.Numerics.Complex.ToString*?displayProperty=fullName>
 
 ## See also
 
-- Format a complex number
+- [Format a complex number](xref:System.Numerics.Complex#format-a-complex-number)

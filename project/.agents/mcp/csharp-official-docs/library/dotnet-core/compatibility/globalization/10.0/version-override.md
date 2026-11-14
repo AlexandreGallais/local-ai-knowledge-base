@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: Environment variable renamed to DOTNET_ICU_VERSION_OVERRIDE"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/globalization/10.0/version-override.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 10 breaking change in globalization where the environment variable CLR_ICU_VERSION_OVERRIDE was renamed to DOTNET_ICU_VERSION_OVERRIDE.
+ms.date: 01/30/2025
+ai-usage: ai-assisted
 ---
 
 # Environment variable renamed to DOTNET_ICU_VERSION_OVERRIDE
@@ -25,11 +23,11 @@ Starting in .NET 10, the `DOTNET_ICU_VERSION_OVERRIDE` environment variable is u
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-This change ensures the environment variable is consistent with the naming convention used for all .NET environment variables.
+This change ensures the environment variable is consistent with the naming convention used for all [.NET environment variables](../../../tools/dotnet-environment-variables.md).
 
 ## Recommended action
 

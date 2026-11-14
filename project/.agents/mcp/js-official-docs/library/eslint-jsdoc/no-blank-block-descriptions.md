@@ -1,15 +1,8 @@
----
-title: "no-blank-block-descriptions"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/no-blank-block-descriptions.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-no-blank-block-descriptions"></a>
+<a name="no-blank-block-descriptions"></a>
+### <code>no-blank-block-descriptions</code>
 
-# no-blank-block-descriptions
 
-### `no-blank-block-descriptions`
 
 If tags are present, this rule will prevent empty lines in the
 block description.
@@ -17,10 +10,14 @@ block description.
 If no tags are present, this rule will prevent extra empty lines
 in the block description.
 
+<a name="user-content-fixer"></a>
+<a name="fixer"></a>
 ## Fixer
 
 Strips empty lines in block descriptions.
 
+<a name="user-content-context-and-settings"></a>
+<a name="context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -31,6 +28,8 @@ Strips empty lines in block descriptions.
 |Settings||
 |Options||
 
+<a name="user-content-failing-examples"></a>
+<a name="failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -68,6 +67,10 @@ const SENIORITY_ORDER = ['senior', 'middle', 'specialist'];
 // Message: There should be no extra blank lines in block descriptions not followed by tags.
 ````
 
+
+
+<a name="user-content-passing-examples"></a>
+<a name="passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -102,3 +105,4 @@ function functionWithClearName() {}
 /** @someTag */
 function functionWithClearName() {}
 ````
+

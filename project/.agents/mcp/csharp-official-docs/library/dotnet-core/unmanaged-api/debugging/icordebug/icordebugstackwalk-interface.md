@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugStackWalk Interface"
 title: "ICorDebugStackWalk Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugstackwalk-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugStackWalk"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugStackWalk"
+helpviewer_keywords:
+  - "ICorDebugStackWalk interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugStackWalk Interface
 
 Provides methods for getting the managed methods, or frames, on a thread’s stack.
@@ -15,19 +23,19 @@ Provides methods for getting the managed methods, or frames, on a thread’s sta
 
 |Method|Description|
 |------------|-----------------|
-|GetContext Method|Returns the context for the current frame in the `ICorDebugStackWalk` object.|
-|SetContext Method|Sets the `ICorDebugStackWalk` object’s current context to a valid context for the thread.|
-|Next Method|Moves the `ICorDebugStackWalk` object to the next frame.|
-|GetFrame Method|Gets the current frame in the `ICorDebugStackWalk` object.|
+|[GetContext Method](icordebugstackwalk-getcontext-method.md)|Returns the context for the current frame in the `ICorDebugStackWalk` object.|
+|[SetContext Method](icordebugstackwalk-setcontext-method.md)|Sets the `ICorDebugStackWalk` object’s current context to a valid context for the thread.|
+|[Next Method](icordebugstackwalk-next-method.md)|Moves the `ICorDebugStackWalk` object to the next frame.|
+|[GetFrame Method](icordebugstackwalk-getframe-method.md)|Gets the current frame in the `ICorDebugStackWalk` object.|
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

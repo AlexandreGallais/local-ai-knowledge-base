@@ -1,12 +1,3 @@
----
-title: "RxJS Operators"
-tool: "rxjs"
-version: "7.8"
-source: "https://github.com/ReactiveX/rxjs/blob/e5351d02e225e275ac0e497c7b66eaa5f0c88791/docs_app/content/guide/operators.md"
-commit: "e5351d02e225e275ac0e497c7b66eaa5f0c88791"
-license: "Apache-2.0"
----
-
 # RxJS Operators
 
 RxJS is mostly useful for its _operators_, even though the Observable is the foundation. Operators are the essential pieces that allow complex asynchronous code to be easily composed in a declarative manner.
@@ -15,19 +6,19 @@ RxJS is mostly useful for its _operators_, even though the Observable is the fou
 
 Operators are **functions**. There are two kinds of operators:
 
-**Pipeable Operators** are the kind that can be piped to Observables using the syntax `observableInstance.pipe(operator)` or, more commonly, `observableInstance.pipe(operatorFactory())`. Operator factory functions include, `filter(...)`, and `mergeMap(...)`.
+**Pipeable Operators** are the kind that can be piped to Observables using the syntax `observableInstance.pipe(operator)` or, more commonly, `observableInstance.pipe(operatorFactory())`. Operator factory functions include, [`filter(...)`](/api/operators/filter), and [`mergeMap(...)`](/api/operators/mergeMap).
 
 When Pipeable Operators are called, they do not _change_ the existing Observable instance. Instead, they return a _new_ Observable, whose subscription logic is based on the first Observable.
 
-A Pipeable Operator is a function that takes an Observable as its input and returns another Observable. It is a pure operation: the previous Observable stays unmodified.
+<span class="informal">A Pipeable Operator is a function that takes an Observable as its input and returns another Observable. It is a pure operation: the previous Observable stays unmodified.</span>
 
-A Pipeable Operator Factory is a function that can take parameters to set the context and return a Pipeable Operator. The factory’s arguments belong to the operator’s lexical scope.
+<span class="informal">A Pipeable Operator Factory is a function that can take parameters to set the context and return a Pipeable Operator. The factory’s arguments belong to the operator’s lexical scope.</span>
 
 A Pipeable Operator is essentially a pure function which takes one Observable as input and generates another Observable as output. Subscribing to the output Observable will also subscribe to the input Observable.
 
 **Creation Operators** are the other kind of operator, which can be called as standalone functions to create a new Observable. For example: `of(1, 2, 3)` creates an observable that will emit 1, 2, and 3, one right after another. Creation operators will be discussed in more detail in a later section.
 
-For example, the operator called `map` is analogous to the Array method of the same name. Just as `[1, 2, 3].map(x => x * x)` will yield `[1, 4, 9]`, the Observable created like this:
+For example, the operator called [`map`](/api/operators/map) is analogous to the Array method of the same name. Just as `[1, 2, 3].map(x => x * x)` will yield `[1, 4, 9]`, the Observable created like this:
 
 ```ts
 import { of, map } from 'rxjs';
@@ -42,7 +33,7 @@ of(1, 2, 3)
 // value: 9
 ```
 
-will emit `1`, `4`, `9`. Another useful operator is `first`:
+will emit `1`, `4`, `9`. Another useful operator is [`first`](/api/operators/first):
 
 ```ts
 import { of, first } from 'rxjs';
@@ -79,7 +70,7 @@ import { interval } from 'rxjs';
 const observable = interval(1000 /* number of milliseconds */);
 ```
 
-See the list of all static creation operators here.
+See the list of all static creation operators [here](#creation-operators-list).
 
 ## Higher-order Observables
 
@@ -100,21 +91,23 @@ const fileObservable = urlObservable.pipe(
 );
 ```
 
-The `concatAll()` operator subscribes to each "inner" Observable that comes out of the "outer" Observable, and copies all the emitted values until that Observable completes, and goes on to the next one. All of the values are in that way concatenated. Other useful flattening operators (called _join operators_) are
+The [`concatAll()`](/api/operators/concatAll) operator subscribes to each "inner" Observable that comes out of the "outer" Observable, and copies all the emitted values until that Observable completes, and goes on to the next one. All of the values are in that way concatenated. Other useful flattening operators (called [_join operators_](#join-operators)) are
 
-- `mergeAll()` — subscribes to each inner Observable as it arrives, then emits each value as it arrives
-- `switchAll()` — subscribes to the first inner Observable when it arrives, and emits each value as it arrives, but when the next inner Observable arrives, unsubscribes to the previous one, and subscribes to the new one.
-- `exhaustAll()` — subscribes to the first inner Observable when it arrives, and emits each value as it arrives, discarding all newly arriving inner Observables until that first one completes, then waits for the next inner Observable.
+- [`mergeAll()`](/api/operators/mergeAll) — subscribes to each inner Observable as it arrives, then emits each value as it arrives
+- [`switchAll()`](/api/operators/switchAll) — subscribes to the first inner Observable when it arrives, and emits each value as it arrives, but when the next inner Observable arrives, unsubscribes to the previous one, and subscribes to the new one.
+- [`exhaustAll()`](/api/operators/exhaustAll) — subscribes to the first inner Observable when it arrives, and emits each value as it arrives, discarding all newly arriving inner Observables until that first one completes, then waits for the next inner Observable.
 
-Just as many array libraries combine `map()` and `flat()` (or `flatten()`) into a single `flatMap()`, there are mapping equivalents of all the RxJS flattening operators `concatMap()`, `mergeMap()`, `switchMap()`, and `exhaustMap()`.
+Just as many array libraries combine [`map()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) and [`flat()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat) (or `flatten()`) into a single [`flatMap()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap), there are mapping equivalents of all the RxJS flattening operators [`concatMap()`](/api/operators/concatMap), [`mergeMap()`](/api/operators/mergeMap), [`switchMap()`](/api/operators/switchMap), and [`exhaustMap()`](/api/operators/exhaustMap).
 
 ## Marble diagrams
 
 To explain how operators work, textual descriptions are often not enough. Many operators are related to time, they may for instance delay, sample, throttle, or debounce value emissions in different ways. Diagrams are often a better tool for that. _Marble Diagrams_ are visual representations of how operators work, and include the input Observable(s), the operator and its parameters, and the output Observable.
 
-In a marble diagram, time flows to the right, and the diagram describes how values ("marbles") are emitted on the Observable execution.
+<span class="informal">In a marble diagram, time flows to the right, and the diagram describes how values ("marbles") are emitted on the Observable execution.</span>
 
 Below you can see the anatomy of a marble diagram.
+
+<img src="assets/images/guide/marble-diagram-anatomy.svg">
 
 Throughout this documentation site, we extensively use marble diagrams to explain how operators work. They may be really useful in other contexts too, like on a whiteboard or even in our unit tests (as ASCII diagrams).
 
@@ -122,153 +115,153 @@ Throughout this documentation site, we extensively use marble diagrams to explai
 
 There are operators for different purposes, and they may be categorized as: creation, transformation, filtering, joining, multicasting, error handling, utility, etc. In the following list you will find all the operators organized in categories.
 
-For a complete overview, see the references page.
+For a complete overview, see the [references page](/api).
 
-### Creation Operators
+### <a id="creation-operators-list"></a>Creation Operators
 
-- `ajax`
-- `bindCallback`
-- `bindNodeCallback`
-- `defer`
-- `empty`
-- `from`
-- `fromEvent`
-- `fromEventPattern`
-- `generate`
-- `interval`
-- `of`
-- `range`
-- `throwError`
-- `timer`
-- `iif`
+- [`ajax`](/api/ajax/ajax)
+- [`bindCallback`](/api/index/function/bindCallback)
+- [`bindNodeCallback`](/api/index/function/bindNodeCallback)
+- [`defer`](/api/index/function/defer)
+- [`empty`](/api/index/function/empty)
+- [`from`](/api/index/function/from)
+- [`fromEvent`](/api/index/function/fromEvent)
+- [`fromEventPattern`](/api/index/function/fromEventPattern)
+- [`generate`](/api/index/function/generate)
+- [`interval`](/api/index/function/interval)
+- [`of`](/api/index/function/of)
+- [`range`](/api/index/function/range)
+- [`throwError`](/api/index/function/throwError)
+- [`timer`](/api/index/function/timer)
+- [`iif`](/api/index/function/iif)
 
-### Join Creation Operators
+### <a id="join-creation-operators"></a>Join Creation Operators
 
 These are Observable creation operators that also have join functionality -- emitting values of multiple source Observables.
 
-- `combineLatest`
-- `concat`
-- `forkJoin`
-- `merge`
-- `partition`
-- `race`
-- `zip`
+- [`combineLatest`](/api/index/function/combineLatest)
+- [`concat`](/api/index/function/concat)
+- [`forkJoin`](/api/index/function/forkJoin)
+- [`merge`](/api/index/function/merge)
+- [`partition`](/api/index/function/partition)
+- [`race`](/api/index/function/race)
+- [`zip`](/api/index/function/zip)
 
 ### Transformation Operators
 
-- `buffer`
-- `bufferCount`
-- `bufferTime`
-- `bufferToggle`
-- `bufferWhen`
-- `concatMap`
-- `concatMapTo`
-- `exhaust`
-- `exhaustMap`
-- `expand`
-- `groupBy`
-- `map`
-- `mapTo`
-- `mergeMap`
-- `mergeMapTo`
-- `mergeScan`
-- `pairwise`
-- `partition`
-- `pluck`
-- `scan`
-- `switchScan`
-- `switchMap`
-- `switchMapTo`
-- `window`
-- `windowCount`
-- `windowTime`
-- `windowToggle`
-- `windowWhen`
+- [`buffer`](/api/operators/buffer)
+- [`bufferCount`](/api/operators/bufferCount)
+- [`bufferTime`](/api/operators/bufferTime)
+- [`bufferToggle`](/api/operators/bufferToggle)
+- [`bufferWhen`](/api/operators/bufferWhen)
+- [`concatMap`](/api/operators/concatMap)
+- [`concatMapTo`](/api/operators/concatMapTo)
+- [`exhaust`](/api/operators/exhaust)
+- [`exhaustMap`](/api/operators/exhaustMap)
+- [`expand`](/api/operators/expand)
+- [`groupBy`](/api/operators/groupBy)
+- [`map`](/api/operators/map)
+- [`mapTo`](/api/operators/mapTo)
+- [`mergeMap`](/api/operators/mergeMap)
+- [`mergeMapTo`](/api/operators/mergeMapTo)
+- [`mergeScan`](/api/operators/mergeScan)
+- [`pairwise`](/api/operators/pairwise)
+- [`partition`](/api/operators/partition)
+- [`pluck`](/api/operators/pluck)
+- [`scan`](/api/operators/scan)
+- [`switchScan`](/api/operators/switchScan)
+- [`switchMap`](/api/operators/switchMap)
+- [`switchMapTo`](/api/operators/switchMapTo)
+- [`window`](/api/operators/window)
+- [`windowCount`](/api/operators/windowCount)
+- [`windowTime`](/api/operators/windowTime)
+- [`windowToggle`](/api/operators/windowToggle)
+- [`windowWhen`](/api/operators/windowWhen)
 
 ### Filtering Operators
 
-- `audit`
-- `auditTime`
-- `debounce`
-- `debounceTime`
-- `distinct`
-- `distinctUntilChanged`
-- `distinctUntilKeyChanged`
-- `elementAt`
-- `filter`
-- `first`
-- `ignoreElements`
-- `last`
-- `sample`
-- `sampleTime`
-- `single`
-- `skip`
-- `skipLast`
-- `skipUntil`
-- `skipWhile`
-- `take`
-- `takeLast`
-- `takeUntil`
-- `takeWhile`
-- `throttle`
-- `throttleTime`
+- [`audit`](/api/operators/audit)
+- [`auditTime`](/api/operators/auditTime)
+- [`debounce`](/api/operators/debounce)
+- [`debounceTime`](/api/operators/debounceTime)
+- [`distinct`](/api/operators/distinct)
+- [`distinctUntilChanged`](/api/operators/distinctUntilChanged)
+- [`distinctUntilKeyChanged`](/api/operators/distinctUntilKeyChanged)
+- [`elementAt`](/api/operators/elementAt)
+- [`filter`](/api/operators/filter)
+- [`first`](/api/operators/first)
+- [`ignoreElements`](/api/operators/ignoreElements)
+- [`last`](/api/operators/last)
+- [`sample`](/api/operators/sample)
+- [`sampleTime`](/api/operators/sampleTime)
+- [`single`](/api/operators/single)
+- [`skip`](/api/operators/skip)
+- [`skipLast`](/api/operators/skipLast)
+- [`skipUntil`](/api/operators/skipUntil)
+- [`skipWhile`](/api/operators/skipWhile)
+- [`take`](/api/operators/take)
+- [`takeLast`](/api/operators/takeLast)
+- [`takeUntil`](/api/operators/takeUntil)
+- [`takeWhile`](/api/operators/takeWhile)
+- [`throttle`](/api/operators/throttle)
+- [`throttleTime`](/api/operators/throttleTime)
 
-### Join Operators
+### <a id="join-operators"></a>Join Operators
 
-Also see the Join Creation Operators section above.
+Also see the [Join Creation Operators](#join-creation-operators) section above.
 
-- `combineLatestAll`
-- `concatAll`
-- `exhaustAll`
-- `mergeAll`
-- `switchAll`
-- `startWith`
-- `withLatestFrom`
+- [`combineLatestAll`](/api/operators/combineLatestAll)
+- [`concatAll`](/api/operators/concatAll)
+- [`exhaustAll`](/api/operators/exhaustAll)
+- [`mergeAll`](/api/operators/mergeAll)
+- [`switchAll`](/api/operators/switchAll)
+- [`startWith`](/api/operators/startWith)
+- [`withLatestFrom`](/api/operators/withLatestFrom)
 
 ### Multicasting Operators
 
-- `multicast`
-- `publish`
-- `publishBehavior`
-- `publishLast`
-- `publishReplay`
-- `share`
+- [`multicast`](/api/operators/multicast)
+- [`publish`](/api/operators/publish)
+- [`publishBehavior`](/api/operators/publishBehavior)
+- [`publishLast`](/api/operators/publishLast)
+- [`publishReplay`](/api/operators/publishReplay)
+- [`share`](/api/operators/share)
 
 ### Error Handling Operators
 
-- `catchError`
-- `retry`
-- `retryWhen`
+- [`catchError`](/api/operators/catchError)
+- [`retry`](/api/operators/retry)
+- [`retryWhen`](/api/operators/retryWhen)
 
 ### Utility Operators
 
-- `tap`
-- `delay`
-- `delayWhen`
-- `dematerialize`
-- `materialize`
-- `observeOn`
-- `subscribeOn`
-- `timeInterval`
-- `timestamp`
-- `timeout`
-- `timeoutWith`
-- `toArray`
+- [`tap`](/api/operators/tap)
+- [`delay`](/api/operators/delay)
+- [`delayWhen`](/api/operators/delayWhen)
+- [`dematerialize`](/api/operators/dematerialize)
+- [`materialize`](/api/operators/materialize)
+- [`observeOn`](/api/operators/observeOn)
+- [`subscribeOn`](/api/operators/subscribeOn)
+- [`timeInterval`](/api/operators/timeInterval)
+- [`timestamp`](/api/operators/timestamp)
+- [`timeout`](/api/operators/timeout)
+- [`timeoutWith`](/api/operators/timeoutWith)
+- [`toArray`](/api/operators/toArray)
 
 ### Conditional and Boolean Operators
 
-- `defaultIfEmpty`
-- `every`
-- `find`
-- `findIndex`
-- `isEmpty`
+- [`defaultIfEmpty`](/api/operators/defaultIfEmpty)
+- [`every`](/api/operators/every)
+- [`find`](/api/operators/find)
+- [`findIndex`](/api/operators/findIndex)
+- [`isEmpty`](/api/operators/isEmpty)
 
 ### Mathematical and Aggregate Operators
 
-- `count`
-- `max`
-- `min`
-- `reduce`
+- [`count`](/api/operators/count)
+- [`max`](/api/operators/max)
+- [`min`](/api/operators/min)
+- [`reduce`](/api/operators/reduce)
 
 ## Creating custom operators
 
@@ -357,4 +350,4 @@ Note that you must
 2. implement a "finalization" function that cleans up when the Observable completes (in this case by unsubscribing and clearing any pending timeouts).
 3. return that finalization function from the function passed to the Observable constructor.
 
-Of course, this is only an example; the `delay()` operator already exists.
+Of course, this is only an example; the [`delay()`](/api/operators/delay) operator already exists.

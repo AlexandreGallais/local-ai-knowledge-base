@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugEditAndContinueErrorInfo::GetToken Method"
 title: "ICorDebugEditAndContinueErrorInfo::GetToken Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugeditandcontinueerrorinfo-gettoken-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugEditAndContinueErrorInfo.GetToken"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugEditAndContinueErrorInfo::GetToken"
+helpviewer_keywords:
+  - "GetToken method, ICorDebugEditAndContinueErrorInfo interface [.NET debugging]"
+  - "ICorDebugEditAndContinueErrorInfo::GetToken method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
-# ICorDebugEditAndContinueErrorInfo::GetToken <example-value>
+# ICorDebugEditAndContinueErrorInfo::GetToken Method
 
 `GetToken` is obsolete. Do not call this method.

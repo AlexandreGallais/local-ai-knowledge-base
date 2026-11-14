@@ -1,18 +1,18 @@
 ---
-title: "Microsoft.Testing.Platform (MTP) telemetry"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/microsoft-testing-platform-telemetry.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Microsoft.Testing.Platform (MTP) telemetry
+description: Learn about the telemetry data collected by MTP and how to disable it.
+author: nohwnd
+ms.author: jajares
+ms.date: 08/26/2026
+ai-usage: ai-assisted
 ---
 
 # Telemetry
 
-This feature requires the Microsoft.Testing.Extensions.Telemetry NuGet package.
+This feature requires the [Microsoft.Testing.Extensions.Telemetry](https://nuget.org/packages/Microsoft.Testing.Extensions.Telemetry) NuGet package.
 
-> **Tip:**
-> When using Microsoft.Testing.Platform.MSBuild (included transitively by MSTest, NUnit, and xUnit runners), this extension is auto-registered when you install its NuGet package — no code changes needed. The manual registration in the following section is only required if you disabled the auto-generated entry point by setting `<GenerateTestingPlatformEntryPoint>false</GenerateTestingPlatformEntryPoint>`.
+> [!TIP]
+> When using [Microsoft.Testing.Platform.MSBuild](https://www.nuget.org/packages/Microsoft.Testing.Platform.MSBuild) (included transitively by MSTest, NUnit, and xUnit runners), this extension is auto-registered when you install its NuGet package — no code changes needed. The manual registration in the following section is only required if you disabled the auto-generated entry point by setting `<GenerateTestingPlatformEntryPoint>false</GenerateTestingPlatformEntryPoint>`.
 
 ### Manual registration
 
@@ -21,7 +21,7 @@ var builder = await TestApplication.CreateBuilderAsync(args);
 builder.AddAppInsightsTelemetryProvider();
 ```
 
-Microsoft.Testing.Platform (MTP) collects telemetry data, which is used to help understand how to improve the product. For example, this usage data helps to debug issues, such as slow start-up times, and to prioritize new features. While these insights are appreciated, you're free to disable telemetry. For more information on telemetry, see privacy statement.
+Microsoft.Testing.Platform (MTP) collects telemetry data, which is used to help understand how to improve the product. For example, this usage data helps to debug issues, such as slow start-up times, and to prioritize new features. While these insights are appreciated, you're free to [disable telemetry](#disable-telemetry-reporting). For more information on telemetry, see [privacy statement](https://go.microsoft.com/fwlink/?LinkID=528096&clcid=0x409).
 
 ## Types of telemetry data
 
@@ -54,7 +54,7 @@ It doesn't extract the contents of any data files accessed or created by your ap
 
 The data is sent securely to Microsoft servers using Azure Monitor technology, held under restricted access, and published under strict security controls from secure Azure Storage systems.
 
-Protecting your privacy is important to Microsoft! If you suspect the telemetry is collecting sensitive data or the data is being insecurely or inappropriately handled, file an issue in the microsoft/testfx GitHub repository or send an email to user@example.com for investigation.
+Protecting your privacy is important to Microsoft! If you suspect the telemetry is collecting sensitive data or the data is being insecurely or inappropriately handled, file an issue in the [microsoft/testfx](https://github.com/microsoft/testfx) GitHub repository or send an email to [dotnet@microsoft.com](mailto:dotnet@microsoft.com) for investigation.
 
 The telemetry feature collects the following data points:
 
@@ -79,7 +79,7 @@ The telemetry feature collects the following data points:
 | All | Name of your executable (which is usually the same as the name of the project), as a hashed value. |
 | All | Operating system, version and architecture. |
 | All | Process architecture. |
-| All | Runtime ID (RID). For more information, see .NET RID Catalog. |
+| All | Runtime ID (RID). For more information, see [.NET RID Catalog](../rid-catalog.md). |
 | All | The exit code of the application. |
 | All | Three octet IP address used to determine the geographical location. |
 | All | Timestamp of invocation, timestamp of start and end of various steps in the execution. |

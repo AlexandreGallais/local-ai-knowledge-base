@@ -1,18 +1,13 @@
 ---
-title: "space-after-function-name"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/space-after-function-name.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
----
+title: space-after-function-name
 
-# space-after-function-name
+---
 
 Enforces consistent spacing after name in function definitions.
 
-**Important:**
-This rule was removed in ESLint v1.0.0 and replaced by the space-before-function-paren rule.
+::: important
+This rule was removed in ESLint v1.0.0 and replaced by the [space-before-function-paren](space-before-function-paren) rule.
+:::
 
 Whitespace between a function name and its parameter list is optional.
 
@@ -34,7 +29,7 @@ This rule aims to enforce a consistent spacing after function names. It takes on
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 function foo (x) {
@@ -49,9 +44,11 @@ function bar(x) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 function foo(x) {
@@ -65,3 +62,5 @@ function bar (x) {
     // ...
 }
 ```
+
+:::

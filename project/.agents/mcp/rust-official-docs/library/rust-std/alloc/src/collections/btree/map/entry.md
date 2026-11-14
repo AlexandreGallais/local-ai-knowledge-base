@@ -1,12 +1,3 @@
----
-title: "alloc::collections::btree::map::entry"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/alloc/src/collections/btree/map/entry.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # alloc::collections::btree::map::entry
 
 ## enum Entry
@@ -17,7 +8,9 @@ pub enum Entry< 'a, K: 'a, V: 'a, #[unstable(feature = "allocator_ext", issue = 
 
 A view into a single entry in a map, which may either be vacant or occupied.
 
-This `enum` is constructed from the `entry` method on `BTreeMap`.
+This `enum` is constructed from the [`entry`] method on [`BTreeMap`].
+
+[`entry`]: BTreeMap::entry
 
 ## struct VacantEntry
 
@@ -26,7 +19,7 @@ pub struct VacantEntry< 'a, K, V, #[unstable(feature = "allocator_ext", issue = 
 ```
 
 A view into a vacant entry in a `BTreeMap`.
-It is part of the `Entry` enum.
+It is part of the [`Entry`] enum.
 
 ## struct OccupiedEntry
 
@@ -35,7 +28,7 @@ pub struct OccupiedEntry< 'a, K, V, #[unstable(feature = "allocator_ext", issue 
 ```
 
 A view into an occupied entry in a `BTreeMap`.
-It is part of the `Entry` enum.
+It is part of the [`Entry`] enum.
 
 ## Entry::or_insert
 
@@ -48,7 +41,7 @@ a mutable reference to the value in the entry.
 
 # Examples
 
-```rust
+```
 use std::collections::BTreeMap;
 
 let mut map: BTreeMap<&str, usize> = BTreeMap::new();
@@ -68,7 +61,7 @@ and returns a mutable reference to the value in the entry.
 
 # Examples
 
-```rust
+```
 use std::collections::BTreeMap;
 
 let mut map: BTreeMap<&str, String> = BTreeMap::new();
@@ -95,7 +88,7 @@ unnecessary, unlike with `.or_insert_with(|| ... )`.
 
 # Examples
 
-```rust
+```
 use std::collections::BTreeMap;
 
 let mut map: BTreeMap<&str, usize> = BTreeMap::new();
@@ -115,7 +108,7 @@ Returns a reference to this entry's key.
 
 # Examples
 
-```rust
+```
 use std::collections::BTreeMap;
 
 let mut map: BTreeMap<&str, usize> = BTreeMap::new();
@@ -133,7 +126,7 @@ potential inserts into the map.
 
 # Examples
 
-```rust
+```
 use std::collections::BTreeMap;
 
 let mut map: BTreeMap<&str, usize> = BTreeMap::new();
@@ -159,7 +152,7 @@ Sets the value of the entry, and returns an `OccupiedEntry`.
 
 # Examples
 
-```rust
+```
 use std::collections::BTreeMap;
 
 let mut map: BTreeMap<&str, String> = BTreeMap::new();
@@ -179,7 +172,7 @@ and returns a mutable reference to the value in the entry.
 
 # Examples
 
-```rust
+```
 use std::collections::BTreeMap;
 
 let mut map: BTreeMap<&str, Option<usize>> = BTreeMap::new();
@@ -199,7 +192,7 @@ through the VacantEntry.
 
 # Examples
 
-```rust
+```
 use std::collections::BTreeMap;
 
 let mut map: BTreeMap<&str, usize> = BTreeMap::new();
@@ -216,7 +209,7 @@ Take ownership of the key.
 
 # Examples
 
-```rust
+```
 use std::collections::BTreeMap;
 use std::collections::btree_map::Entry;
 
@@ -238,7 +231,7 @@ and returns a mutable reference to it.
 
 # Examples
 
-```rust
+```
 use std::collections::BTreeMap;
 use std::collections::btree_map::Entry;
 
@@ -261,7 +254,7 @@ and returns an `OccupiedEntry`.
 
 # Examples
 
-```rust
+```
 use std::collections::BTreeMap;
 use std::collections::btree_map::Entry;
 
@@ -284,7 +277,7 @@ Gets a reference to the key in the entry.
 
 # Examples
 
-```rust
+```
 use std::collections::BTreeMap;
 
 let mut map: BTreeMap<&str, usize> = BTreeMap::new();
@@ -302,7 +295,7 @@ Take ownership of the key and value from the map.
 
 # Examples
 
-```rust
+```
 use std::collections::BTreeMap;
 use std::collections::btree_map::Entry;
 
@@ -328,7 +321,7 @@ Gets a reference to the value in the entry.
 
 # Examples
 
-```rust
+```
 use std::collections::BTreeMap;
 use std::collections::btree_map::Entry;
 
@@ -349,11 +342,13 @@ pub fn get_mut(&mut self) -> &mut V
 Gets a mutable reference to the value in the entry.
 
 If you need a reference to the `OccupiedEntry` that may outlive the
-destruction of the `Entry` value, see `into_mut`.
+destruction of the `Entry` value, see [`into_mut`].
+
+[`into_mut`]: OccupiedEntry::into_mut
 
 # Examples
 
-```rust
+```
 use std::collections::BTreeMap;
 use std::collections::btree_map::Entry;
 
@@ -379,11 +374,13 @@ pub fn into_mut(self) -> &'a mut V
 
 Converts the entry into a mutable reference to its value.
 
-If you need multiple references to the `OccupiedEntry`, see `get_mut`.
+If you need multiple references to the `OccupiedEntry`, see [`get_mut`].
+
+[`get_mut`]: OccupiedEntry::get_mut
 
 # Examples
 
-```rust
+```
 use std::collections::BTreeMap;
 use std::collections::btree_map::Entry;
 
@@ -408,7 +405,7 @@ and returns the entry's old value.
 
 # Examples
 
-```rust
+```
 use std::collections::BTreeMap;
 use std::collections::btree_map::Entry;
 
@@ -431,7 +428,7 @@ Takes the value of the entry out of the map, and returns it.
 
 # Examples
 
-```rust
+```
 use std::collections::BTreeMap;
 use std::collections::btree_map::Entry;
 

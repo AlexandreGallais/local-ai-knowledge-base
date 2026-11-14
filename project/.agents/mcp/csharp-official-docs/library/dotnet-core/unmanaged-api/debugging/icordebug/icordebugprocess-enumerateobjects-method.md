@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugProcess::EnumerateObjects Method"
 title: "ICorDebugProcess::EnumerateObjects Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess-enumerateobjects-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugProcess.EnumerateObjects"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugProcess::EnumerateObjects"
+helpviewer_keywords:
+  - "EnumerateObjects method [.NET debugging]"
+  - "ICorDebugProcess::EnumerateObjects method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugProcess::EnumerateObjects Method
 
 This method has not been implemented.

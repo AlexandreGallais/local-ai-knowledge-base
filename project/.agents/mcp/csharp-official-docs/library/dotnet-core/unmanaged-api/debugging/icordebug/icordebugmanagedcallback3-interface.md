@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugManagedCallback3 Interface"
 title: "ICorDebugManagedCallback3 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmanagedcallback3-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugManagedCallback3"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugManagedCallback3"
+helpviewer_keywords:
+  - "ICorDebugManagedCallback3 interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugManagedCallback3 Interface
 
 Provides a callback method that indicates that an enabled custom debugger notification has been raised.
@@ -15,18 +23,18 @@ Provides a callback method that indicates that an enabled custom debugger notifi
 
 |Method|Description|
 |------------|-----------------|
-|CustomNotification Method|Indicates that an enabled custom debugger notification has been raised.|
+|[CustomNotification Method](icordebugmanagedcallback3-customnotification-method.md)|Indicates that an enabled custom debugger notification has been raised.|
 
 ## Remarks
 
-This interface is a logical extension of the ICorDebugManagedCallback and ICorDebugManagedCallback2 interfaces.
+This interface is a logical extension of the [ICorDebugManagedCallback](icordebugmanagedcallback-interface.md) and [ICorDebugManagedCallback2](icordebugmanagedcallback2-interface.md) interfaces.
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -36,5 +44,5 @@ This interface is a logical extension of the ICorDebugManagedCallback and ICorDe
 
 ## See also
 
-- ICorDebugManagedCallback Interface
-- ICorDebugManagedCallback2 Interface
+- [ICorDebugManagedCallback Interface](icordebugmanagedcallback-interface.md)
+- [ICorDebugManagedCallback2 Interface](icordebugmanagedcallback2-interface.md)

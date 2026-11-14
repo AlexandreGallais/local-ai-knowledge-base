@@ -1,10 +1,11 @@
 ---
-title: "JavaScript and TypeScript upgrade capabilities"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/github-copilot-upgrade/javascript-typescript-capabilities.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: JavaScript and TypeScript upgrade capabilities
+description: Review the JavaScript and TypeScript workflows and focused capabilities available in GitHub Copilot upgrade.
+ms.topic: reference
+ms.date: 09/21/2026
+ai-usage: ai-generated
+
+#customer intent: As a JavaScript or TypeScript developer, I want to compare the available GitHub Copilot upgrade capabilities so that I can choose the right workflow.
 ---
 
 # JavaScript and TypeScript upgrade capabilities
@@ -28,10 +29,10 @@ The available guidance evolves independently from the top-level workflow. Ask th
 
 ## Validation behavior
 
-Dependency and compiler upgrades include pre-upgrade and post-upgrade validation. Depending on the project, the agent can use compilation, bundler builds, tests, command-line execution, server startup, endpoint probes, and browser flows. For more information, see Validate a JavaScript or TypeScript application.
+Dependency and compiler upgrades include pre-upgrade and post-upgrade validation. Depending on the project, the agent can use compilation, bundler builds, tests, command-line execution, server startup, endpoint probes, and browser flows. For more information, see [Validate a JavaScript or TypeScript application](javascript-typescript-validate-application.md).
 
 ## Related content
 
-- Upgrade JavaScript and TypeScript projects
-- Upgrade JavaScript and TypeScript dependencies
-- Upgrade the TypeScript compiler
+- [Upgrade JavaScript and TypeScript projects](javascript-typescript-overview.md)
+- [Upgrade JavaScript and TypeScript dependencies](javascript-typescript-upgrade-dependencies.md)
+- [Upgrade the TypeScript compiler](javascript-typescript-upgrade-typescript.md)

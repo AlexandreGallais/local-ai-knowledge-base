@@ -1,10 +1,9 @@
 ---
 title: "IncludeOpenAPIAnalyzers property and MVC API analyzers are deprecated"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/10/openapi-analyzers-deprecated.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 10 where the IncludeOpenAPIAnalyzers property and its associated MVC API analyzers are deprecated."
+ms.date: 08/07/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/aspnet/Announcements/issues/521
 ---
 
 # IncludeOpenAPIAnalyzers property and MVC API analyzers are deprecated
@@ -40,13 +39,13 @@ The analyzers continue to function, but developers receive this deprecation warn
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](/dotnet/core/compatibility/categories#source-compatibility).
 
 ## Reason for change
 
 The MVC API analyzers were originally introduced to help keep return types and attributes in sync for API controllers, ensuring consistency between method signatures and their corresponding OpenAPI documentation. These analyzers provided compile-time validation to catch mismatches between declared return types and the actual types returned by controller actions.
 
-However, with the introduction of Minimal APIs and the `Microsoft.AspNetCore.Http.TypedResults` pattern, the .NET ecosystem has evolved toward a more type-safe approach for API development. `TypedResults` provides compile-time guarantees about response types without requiring additional analyzers, making the MVC API analyzers redundant for modern .NET applications. In .NET 10, `TypedResults` are supported in controller-based APIs.
+However, with the introduction of Minimal APIs and the <xref:Microsoft.AspNetCore.Http.TypedResults> pattern, the .NET ecosystem has evolved toward a more type-safe approach for API development. `TypedResults` provides compile-time guarantees about response types without requiring additional analyzers, making the MVC API analyzers redundant for modern .NET applications. In .NET 10, `TypedResults` are supported in controller-based APIs.
 
 Previous approach with MVC API analyzers:
 

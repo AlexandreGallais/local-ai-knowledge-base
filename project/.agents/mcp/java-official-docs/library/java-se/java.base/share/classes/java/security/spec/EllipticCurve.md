@@ -1,12 +1,3 @@
----
-title: "EllipticCurve class (java.security.spec)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/spec/EllipticCurve.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # EllipticCurve class (java.security.spec)
 
 ```java
@@ -16,13 +7,13 @@ public class EllipticCurve
 This immutable class holds the necessary values needed to represent
 an elliptic curve.
 
-**See also:** ECField
+@see ECField
+@see ECFieldFp
+@see ECFieldF2m
 
-**See also:** ECFieldFp
+@author Valerie Peng
 
-**See also:** ECFieldF2m
-
-**Since:** 1.5
+@since 1.5
 
 ## EllipticCurve.EllipticCurve(ECField, BigInteger, BigInteger)
 
@@ -31,19 +22,15 @@ public EllipticCurve(ECField field, BigInteger a, BigInteger b)
 ```
 
 Creates an elliptic curve with the specified elliptic field
-`field` and the coefficients `a` and
-`b`.
-
-Parameters:
-
-- `field`: the finite field that this elliptic curve is over.
-- `a`: the first coefficient of this elliptic curve.
-- `b`: the second coefficient of this elliptic curve.
-
-Throws:
-
-- `NullPointerException`: if `field`, `a`, or `b` is null.
-- `IllegalArgumentException`: if `a` or `b` is not null and not in `field`.
+{@code field} and the coefficients {@code a} and
+{@code b}.
+@param field the finite field that this elliptic curve is over.
+@param a the first coefficient of this elliptic curve.
+@param b the second coefficient of this elliptic curve.
+@throws    NullPointerException if {@code field},
+{@code a}, or {@code b} is null.
+@throws    IllegalArgumentException if {@code a}
+or {@code b} is not null and not in {@code field}.
 
 ## EllipticCurve.EllipticCurve(ECField, BigInteger, BigInteger, byte[])
 
@@ -52,20 +39,18 @@ public EllipticCurve(ECField field, BigInteger a, BigInteger b, byte[] seed)
 ```
 
 Creates an elliptic curve with the specified elliptic field
-`field`, the coefficients `a` and
-`b`, and the `seed` used for curve generation.
-
-Parameters:
-
-- `field`: the finite field that this elliptic curve is over.
-- `a`: the first coefficient of this elliptic curve.
-- `b`: the second coefficient of this elliptic curve.
-- `seed`: the bytes used during curve generation for later validation. Contents of this array are copied to protect against subsequent modification.
-
-Throws:
-
-- `NullPointerException`: if `field`, `a`, or `b` is null.
-- `IllegalArgumentException`: if `a` or `b` is not null and not in `field`.
+{@code field}, the coefficients {@code a} and
+{@code b}, and the {@code seed} used for curve generation.
+@param field the finite field that this elliptic curve is over.
+@param a the first coefficient of this elliptic curve.
+@param b the second coefficient of this elliptic curve.
+@param seed the bytes used during curve generation for later
+validation. Contents of this array are copied to protect against
+subsequent modification.
+@throws    NullPointerException if {@code field},
+{@code a}, or {@code b} is null.
+@throws    IllegalArgumentException if {@code a}
+or {@code b} is not null and not in {@code field}.
 
 ## EllipticCurve.getField()
 
@@ -73,10 +58,9 @@ Throws:
 public ECField getField()
 ```
 
-Returns the finite field `field` that this
+Returns the finite field {@code field} that this
 elliptic curve is over.
-
-**Returns:** the field `field` that this curve
+@return the field {@code field} that this curve
 is over.
 
 ## EllipticCurve.getA()
@@ -85,10 +69,9 @@ is over.
 public BigInteger getA()
 ```
 
-Returns the first coefficient `a` of the
+Returns the first coefficient {@code a} of the
 elliptic curve.
-
-**Returns:** the first coefficient `a`.
+@return the first coefficient {@code a}.
 
 ## EllipticCurve.getB()
 
@@ -96,10 +79,9 @@ elliptic curve.
 public BigInteger getB()
 ```
 
-Returns the second coefficient `b` of the
+Returns the second coefficient {@code b} of the
 elliptic curve.
-
-**Returns:** the second coefficient `b`.
+@return the second coefficient {@code b}.
 
 ## EllipticCurve.getSeed()
 
@@ -107,10 +89,9 @@ elliptic curve.
 public byte[] getSeed()
 ```
 
-Returns the seeding bytes `seed` used
+Returns the seeding bytes {@code seed} used
 during curve generation. May be null if not specified.
-
-**Returns:** the seeding bytes `seed`. A new
+@return the seeding bytes {@code seed}. A new
 array is returned each time this method is called.
 
 ## EllipticCurve.equals(Object)
@@ -121,12 +102,8 @@ public boolean equals(Object obj)
 
 Compares this elliptic curve for equality with the
 specified object.
-
-Parameters:
-
-- `obj`: the object to be compared.
-
-**Returns:** true if `obj` is an instance of
+@param obj the object to be compared.
+@return true if {@code obj} is an instance of
 EllipticCurve and the field, A, and B match, false otherwise.
 
 ## EllipticCurve.hashCode()
@@ -136,10 +113,8 @@ public int hashCode()
 ```
 
 Returns a hash code value for this elliptic curve.
-
-**Returns:** a hash code value computed from the hash codes of the field, A,
+@return a hash code value computed from the hash codes of the field, A,
 and B, as follows:
-
-```java
+<pre>{@code
     (field.hashCode() << 6) + (a.hashCode() << 4) + (b.hashCode() << 2)
-```
+}</pre>

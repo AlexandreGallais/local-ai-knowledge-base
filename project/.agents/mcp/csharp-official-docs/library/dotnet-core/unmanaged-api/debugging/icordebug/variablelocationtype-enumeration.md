@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: VariableLocationType Enumeration"
 title: "VariableLocationType Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/variablelocationtype-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "VariableLocationType"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "VariableLocationType"
+helpviewer_keywords:
+  - "VariableLocationType enumeration [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # VariableLocationType Enumeration
 
 Indicates the native location type of a variable.
@@ -32,11 +40,11 @@ typedef enum VariableLocationType
 
 ## Remarks
 
- A member of the `VariableLocationType` enumeration is returned by the ICorDebugVariableHome::GetLocationType method.
+ A member of the `VariableLocationType` enumeration is returned by the [ICorDebugVariableHome::GetLocationType](icordebugvariablehome-getlocationtype-method.md) method.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

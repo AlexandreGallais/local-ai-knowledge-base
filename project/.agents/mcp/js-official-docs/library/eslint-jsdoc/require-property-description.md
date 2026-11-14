@@ -1,20 +1,16 @@
----
-title: "require-property-description"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/require-property-description.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-require-property-description"></a>
+<a name="require-property-description"></a>
+# <code>require-property-description</code>
 
-# `require-property-description`
+* [Context and settings](#user-content-require-property-description-context-and-settings)
+* [Failing examples](#user-content-require-property-description-failing-examples)
+* [Passing examples](#user-content-require-property-description-passing-examples)
 
-* Context and settings
-* Failing examples
-* Passing examples
 
 Requires that each `@property` tag has a `description` value.
 
+<a name="user-content-require-property-description-context-and-settings"></a>
+<a name="require-property-description-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -24,6 +20,8 @@ Requires that each `@property` tag has a `description` value.
 |Aliases|`prop`|
 |Recommended|true|
 
+<a name="user-content-require-property-description-failing-examples"></a>
+<a name="require-property-description-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -50,6 +48,10 @@ The following patterns are considered problems:
 // Message: Unexpected tag `@property`
 ````
 
+
+
+<a name="user-content-require-property-description-passing-examples"></a>
+<a name="require-property-description-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -83,3 +85,4 @@ The following patterns are not considered problems:
  * )} numberEater Method which takes a number.
  */
 ````
+

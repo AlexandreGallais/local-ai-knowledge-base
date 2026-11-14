@@ -1,24 +1,127 @@
 ---
 title: "Sorry, we don't have specifics on this error"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/misc/sorry-we-don-t-have-specifics-on-this-csharp-error.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "List of possible resources for compiler errors and warnings that haven't been documented yet."
+ms.date: 09/11/2026
+ai-usage: ai-assisted
+f1_keywords:
+  - "CS0190"
+  - "CS0595"
+  - "CS0847"
+  - "CS1066"
+  - "CS1072"
+  - "CS1073"
+  - "CS1636"
+  - "CS1669"
+  - "CS1734"
+  - "CS1735"
+  - "CS1745"
+  - "CS1747"
+  - "CS1748"
+  - "CS1752"
+  - "CS1754"
+  - "CS1756"
+  - "CS1757"
+  - "CS1758"
+  - "CS1759"
+  - "CS1761"
+  - "CS1766"
+  - "CS1767"
+  - "CS1768"
+  - "CS1769"
+  - "CS1770"
+  - "CS1774"
+  - "CS1997"
+  - "CS3028"
+  # C# 5 diagnostics
+  - "CS4017"
+  - "CS4018"
+  - "CS4019"
+  - "CS4020"
+  - "CS4021"
+  - "CS4022"
+  - "CS4023"
+  - "CS4024"
+  - "CS4025"
+  - "CS4026"
+  - "CS4036"
+  # C# 6 diagnostics
+  - "CS7006"
+  - "CS7012"
+  - "CS7013"
+  - "CS7017"
+  - "CS7018"
+  - "CS7019"
+  - "CS7020"
+  - "CS7024"
+  - "CS7025"
+  - "CS7026"
+  - "CS7041"
+  - "CS7043"
+  - "CS7048"
+  - "CS7049"
+  - "CS7050"
+  - "CS7051"
+  - "CS7052"
+  - "CS7056"
+  - "CS7057"
+  - "CS7058"
+  - "CS7059"
+  - "CS7061"
+  - "CS7064"
+  - "CS7065"
+  - "CS7070"
+  - "CS7086"
+  - "CS7087"
+  - "CS7094"
+  - "CS7095"
+  - "CS7096"
+  - "CS7098"
+  - "CS7099"
+  - "CS7100"
+  - "CS7101" # build only diagnostic
+  - "CS7103"
+  - "CS8004" # build only diagnostic
+  - "CS8005" # build only diagnostic
+  - "CS8006" # build only diagnostic
+  - "CS8007" # build only diagnostic
+  - "CS8008" # build only diagnostic
+  - "CS8009"
+  - "CS8010" # build only diagnostic
+  - "CS8011" # build only diagnostic
+  - "CS8012"
+  - "CS8013" # build only diagnostic
+  - "CS8014" # build only diagnostic
+  - "CS8015"
+  - "CS8016"
+  - "CS8017"
+  - "CS8018"
+  - "CS8027"
+  - "CS8029"
+  - "CS8036"
+  - "CS8055"
+  - "CS8057"
+  - "CS8078" # build only diagnostic
+  - "CS8079"
+  - "CS8095"
+  - "CS8096"
+  - "CS8099"
+  - "CS8103"
+  - "CS8104"
+helpviewer_keywords:
+  - "errors [C#], additional information"
 ---
-
 # Sorry, we don't have specifics on this C# error
 
 We're sorry, but we don't have any specific information about this error. You can search for the error number and message text to find information on the web. Or you can ask other developers using one of these:
+  
+ [Msdn forums - Visual C#](https://social.msdn.microsoft.com/Forums/vstudio/home?forum=csharpgeneral)  
+ Provides a forum for questions about and issues with Visual C# that are not discussed in other forums.  
 
- Msdn forums - Visual C#
- Provides a forum for questions about and issues with Visual C# that are not discussed in other forums.
-
- Stack Overflow
-Provides a QA website for questions about and issues with Visual C#.
+ [Stack Overflow](https://stackoverflow.com/questions/tagged/c%23)  
+Provides a QA website for questions about and issues with Visual C#.  
 
 ## See also
 
-- C# Reference
-- Visual Studio feedback options
-- Additional Resources for Visual C# Programmers
+- [C# Reference](../language-reference/index.yml)
+- [Visual Studio feedback options](/visualstudio/ide/feedback-options)
+- [Additional Resources for Visual C# Programmers](../tour-of-csharp/overview.md)

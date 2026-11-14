@@ -1,20 +1,12 @@
----
-title: "Configuring Preview"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/browser/preview.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # Configuring Preview
 
-**Warning:**
-The `preview` provider's main functionality is to show tests in a real browser environment. However, it does not support advanced browser automation features like multiple browser instances or headless mode. For more complex scenarios, consider using Playwright or WebdriverIO.
+::: warning
+The `preview` provider's main functionality is to show tests in a real browser environment. However, it does not support advanced browser automation features like multiple browser instances or headless mode. For more complex scenarios, consider using [Playwright](/config/browser/playwright) or [WebdriverIO](/config/browser/webdriverio).
+:::
 
-To see your tests running in a real browser, you need to install the `@vitest/browser-preview` npm package and specify its `preview` export in the `test.browser.provider` property of your config:
+To see your tests running in a real browser, you need to install the [`@vitest/browser-preview`](https://npmx.dev/package/@vitest/browser-preview) npm package and specify its `preview` export in the `test.browser.provider` property of your config:
 
-```ts
+```ts [vitest.config.js]
 import { preview } from '@vitest/browser-preview'
 import { defineConfig } from 'vitest/config'
 
@@ -32,9 +24,9 @@ This will open a new browser window using your default browser to run the tests.
 
 ## Differences with Other Providers
 
-The preview provider has some limitations compared to other providers like Playwright or WebdriverIO:
+The preview provider has some limitations compared to other providers like [Playwright](/config/browser/playwright) or [WebdriverIO](/config/browser/webdriverio):
 
 - It does not support headless mode; the browser window will always be visible.
 - It does not support multiple instances of the same browser; each instance must use a different browser.
 - It does not support advanced browser capabilities or options; you can only specify the browser name.
-- It does not support CDP (Chrome DevTools Protocol) commands or other low-level browser interactions. Unlike Playwright or WebdriverIO, the `userEvent` API is just re-exported from `@testing-library/user-event` and does not have any special integration with the browser.
+- It does not support CDP (Chrome DevTools Protocol) commands or other low-level browser interactions. Unlike Playwright or WebdriverIO, the [`userEvent`](/api/browser/interactivity) API is just re-exported from [`@testing-library/user-event`](https://npmx.dev/package/@testing-library/user-event) and does not have any special integration with the browser.

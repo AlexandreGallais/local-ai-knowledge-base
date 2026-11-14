@@ -1,19 +1,17 @@
 ---
 title: "Breaking change: Renamed parameter in HtmlElement.InsertAdjacentElement"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/windows-forms/10.0/insertadjacentelement-orientation.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in Windows Forms where the parameter `orient` was renamed to `orientation`.
+ms.date: 01/30/2025
+ai-usage: ai-assisted
 ---
 
 # Renamed parameter in HtmlElement.InsertAdjacentElement
 
-`System.Windows.Forms.HtmlElement.InsertAdjacentElement(System.Windows.Forms.HtmlElementInsertionOrientation,System.Windows.Forms.HtmlElement)` parameter `orient` was renamed to `orientation`.
+<xref:System.Windows.Forms.HtmlElement.InsertAdjacentElement(System.Windows.Forms.HtmlElementInsertionOrientation,System.Windows.Forms.HtmlElement)?displayProperty=nameWithType> parameter `orient` was renamed to `orientation`.
 
 ## Previous behavior
 
-Previously, calls to `System.Windows.Forms.HtmlElement.InsertAdjacentElement(System.Windows.Forms.HtmlElementInsertionOrientation,System.Windows.Forms.HtmlElement)` included the `orient` parameter:
+Previously, calls to <xref:System.Windows.Forms.HtmlElement.InsertAdjacentElement(System.Windows.Forms.HtmlElementInsertionOrientation,System.Windows.Forms.HtmlElement)?displayProperty=nameWithType> included the `orient` parameter:
 
 ```csharp
 element.InsertAdjacentElement(orient: HtmlElementInsertionOrientation.AfterEnd, newElement);
@@ -33,7 +31,7 @@ element.InsertAdjacentElement(orientation: HtmlElementInsertionOrientation.After
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
@@ -53,4 +51,4 @@ element.InsertAdjacentElement(HtmlElementInsertionOrientation.AfterEnd, newEleme
 
 ## Affected APIs
 
-- `System.Windows.Forms.HtmlElement.InsertAdjacentElement(System.Windows.Forms.HtmlElementInsertionOrientation,System.Windows.Forms.HtmlElement)`
+- <xref:System.Windows.Forms.HtmlElement.InsertAdjacentElement(System.Windows.Forms.HtmlElementInsertionOrientation,System.Windows.Forms.HtmlElement)?displayProperty=fullName>

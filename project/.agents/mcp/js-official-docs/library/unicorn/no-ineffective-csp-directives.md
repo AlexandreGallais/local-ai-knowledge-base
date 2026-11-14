@@ -1,21 +1,15 @@
----
-title: "no-ineffective-csp-directives"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-ineffective-csp-directives.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-ineffective-csp-directives
 
 📝 Disallow ineffective CSP directives in `<meta>` elements.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, 🌐 `recommended-html`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, 🌐 `recommended-html`, ☑️ `unopinionated`.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Browsers ignore the `frame-ancestors`, `sandbox`, and `report-uri` Content Security Policy (CSP) directives when the policy is delivered through a `<meta>` element. The markup can give the impression that framing restrictions, sandbox restrictions, or violation reporting are active when they are not.
 
-This rule reports those three directives in static CSP `<meta>` elements in HTML and JSX. It follows the HTML processing algorithm and CSP specification.
+This rule reports those three directives in static CSP `<meta>` elements in HTML and JSX. It follows the [HTML processing algorithm](https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-http-equiv-content-security-policy) and [CSP specification](https://www.w3.org/TR/CSP3/#delivery-html-meta-element).
 
 ## Examples
 
@@ -61,4 +55,4 @@ Other directives, report-only policies, policy syntax or strength, `<head>` plac
 
 Skips HTML tags with configured templates. In JSX, skips spreads, duplicate relevant attributes, custom components, and unresolved or mutable values.
 
-`<meta>`-like text inside raw-text containers such as `` may be reported.
+`<meta>`-like text inside raw-text containers such as `<iframe>` may be reported.

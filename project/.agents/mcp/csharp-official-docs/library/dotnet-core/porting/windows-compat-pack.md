@@ -1,21 +1,19 @@
 ---
-title: "Use the Windows Compatibility Pack to port code"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/windows-compat-pack.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Use the Windows Compatibility Pack to port code
+description: Learn about the Windows Compatibility Pack and how can you use it to port existing .NET Framework code to .NET.
+author: terrajobst
+ms.date: 05/25/2023
 ---
 
 # Use the Windows Compatibility Pack to port code to .NET
 
 Some of the most common issues found when porting existing code from .NET Framework to .NET are dependencies on APIs and technologies that are only found in .NET Framework. The *Windows Compatibility Pack* provides many of these technologies, so it's much easier to build .NET applications and .NET Standard libraries.
 
-The compatibility pack is a logical extension of .NET Standard 2.0 that significantly increases the API set. Existing code compiles with almost no modifications. To keep its promise of "the set of APIs that all .NET implementations provide", .NET Standard doesn't include technologies that can't work across all platforms, such as registry, Windows Management Instrumentation (WMI), or reflection emit APIs. The Windows Compatibility Pack sits on top of .NET Standard and provides access to these Windows-only technologies. It's especially useful for customers that want to move to .NET but plan to stay on Windows, at least as a first step. In that scenario, you can use Windows-only technologies removes the migration hurdle.
+The compatibility pack is a logical [extension of .NET Standard 2.0](../whats-new/dotnet-core-2-0.md#api-changes-and-library-support) that significantly increases the API set. Existing code compiles with almost no modifications. To keep its promise of "the set of APIs that all .NET implementations provide", .NET Standard doesn't include technologies that can't work across all platforms, such as registry, Windows Management Instrumentation (WMI), or reflection emit APIs. The Windows Compatibility Pack sits on top of .NET Standard and provides access to these Windows-only technologies. It's especially useful for customers that want to move to .NET but plan to stay on Windows, at least as a first step. In that scenario, you can use Windows-only technologies removes the migration hurdle.
 
 ## Package contents
 
-The Windows Compatibility Pack is provided via the Microsoft.Windows.Compatibility NuGet package and can be referenced from projects that target .NET or .NET Standard.
+The Windows Compatibility Pack is provided via the [Microsoft.Windows.Compatibility NuGet package](https://www.nuget.org/packages/Microsoft.Windows.Compatibility) and can be referenced from projects that target .NET or .NET Standard.
 
 It provides about 20,000 APIs, including Windows-only and cross-platform APIs from the following technology areas:
 
@@ -37,17 +35,17 @@ It provides about 20,000 APIs, including Windows-only and cross-platform APIs fr
 - Windows Runtime Caching
 - Windows Services
 
-For more information, see the specification of the compatibility pack.
+For more information, see the [specification of the compatibility pack](https://github.com/dotnet/designs/blob/main/accepted/2018/compat-pack/compat-pack.md).
 
 ## Get started
 
-1. Before porting, make sure to take a look at the Porting process.
+1. Before porting, make sure to take a look at the [Porting process](index.md).
 
-2. When porting existing code to .NET or .NET Standard, install the Microsoft.Windows.Compatibility NuGet package.
+2. When porting existing code to .NET or .NET Standard, install the [Microsoft.Windows.Compatibility NuGet package](https://www.nuget.org/packages/Microsoft.Windows.Compatibility).
 
    If you want to stay on Windows, you're all set.
 
-3. If you want to run the .NET application or .NET Standard library on Linux or macOS, use the Platform compatibility analyzer to find usage of APIs that won't work cross-platform.
+3. If you want to run the .NET application or .NET Standard library on Linux or macOS, use the [Platform compatibility analyzer](../../standard/analyzers/platform-compat-analyzer.md) to find usage of APIs that won't work cross-platform.
 
 4. Either remove the usages of those APIs, replace them with cross-platform alternatives, or guard them using a platform check, like:
 
@@ -71,4 +69,4 @@ For more information, see the specification of the compatibility pack.
     }
     ```
 
-For a demo, check out the Channel 9 video of the Windows Compatibility Pack.
+For a demo, check out the [Channel 9 video of the Windows Compatibility Pack](/Events/Connect/2017/T123).

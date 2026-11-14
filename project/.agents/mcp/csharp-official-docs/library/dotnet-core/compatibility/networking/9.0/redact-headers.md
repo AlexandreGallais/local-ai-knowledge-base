@@ -1,19 +1,15 @@
 ---
 title: "HttpClientFactory logging redacts header values by default"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/networking/9.0/redact-headers.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 9 breaking change in networking where HttpClientFactory logging redacts all header values by default.
+ms.date: 09/05/2024
 ---
-
 # HttpClientFactory logging redacts header values by default
 
-`HttpClientFactory`'s default logging includes `Trace`-level logs that output all the request and response headers. The `Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.RedactLoggedHeaders*` method lets you specify which of these headers are sensitive. The values of those headers aren't logged (the header names remain, but the values are substituted with `*`). Previously, if none of the headers were specified as sensitive with `RedactLoggedHeaders`, all headers were considered non-sensitive and were logged with all their values as-is. Starting in .NET 9, unless specified, all headers are instead considered sensitive and all the values are redacted by default.
+`HttpClientFactory`'s default logging includes `Trace`-level logs that output all the request and response headers. The <xref:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.RedactLoggedHeaders*> method lets you specify which of these headers are sensitive. The values of those headers aren't logged (the header names remain, but the values are substituted with `*`). Previously, if none of the headers were specified as sensitive with `RedactLoggedHeaders`, all headers were considered non-sensitive and were logged with all their values as-is. Starting in .NET 9, unless specified, all headers are instead considered sensitive and all the values are redacted by default.
 
 ## Previous behavior
 
-Previously, if `Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.RedactLoggedHeaders*` wasn't called, all the headers were logged as-is. If `RedactLoggedHeaders` was called, the specified headers were redacted, and other headers were logged as-is.
+Previously, if <xref:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.RedactLoggedHeaders*> wasn't called, all the headers were logged as-is. If `RedactLoggedHeaders` was called, the specified headers were redacted, and other headers were logged as-is.
 
 ```csharp
 services.AddHttpClient("default", ...); // 1
@@ -25,7 +21,7 @@ services.AddHttpClient("redacted-collection", ...) // 3
     .RedactLoggedHeaders(new[] { "Authorization", "X-Sensitive", });
 ```
 
-**(1) Default—not redacted**
+**(1) Default&mdash;not redacted**
 
 ```txt
 trce: System.Net.Http.HttpClient.default.ClientHandler[102]
@@ -60,7 +56,7 @@ trce: System.Net.Http.HttpClient.redacted-collection.ClientHandler[102]
 
 ## New behavior
 
-Starting in .NET 9, if `Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.RedactLoggedHeaders*` isn't called, all the headers are redacted. If `RedactLoggedHeaders` is called, the specified headers are redacted.
+Starting in .NET 9, if <xref:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.RedactLoggedHeaders*> isn't called, all the headers are redacted. If `RedactLoggedHeaders` is called, the specified headers are redacted.
 
 ```csharp
 services.AddHttpClient("default", ...); // 1 <--- CHANGED
@@ -72,7 +68,7 @@ services.AddHttpClient("redacted-collection", ...) // 3 <--- remains the same
     .RedactLoggedHeaders(new[] { "Authorization", "X-Sensitive", });
 ```
 
-**(1) Default—all are redacted**
+**(1) Default&mdash;all are redacted**
 
 ```txt
 trce: System.Net.Http.HttpClient.default.ClientHandler[102]
@@ -89,7 +85,7 @@ trce: System.Net.Http.HttpClient.default.ClientHandler[102]
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -97,7 +93,7 @@ If headers aren't specified as sensitive, sensitive information can be exposed i
 
 ## Recommended action
 
-If you want to log the headers, assess which headers might contain sensitive information and explicitly specify them using the `RedactLoggedHeaders` API. You can redact headers per client, or globally for all clients by using the `Microsoft.Extensions.DependencyInjection.HttpClientFactoryServiceCollectionExtensions.ConfigureHttpClientDefaults(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Microsoft.Extensions.DependencyInjection.IHttpClientBuilder})`.
+If you want to log the headers, assess which headers might contain sensitive information and explicitly specify them using the `RedactLoggedHeaders` API. You can redact headers per client, or globally for all clients by using the <xref:Microsoft.Extensions.DependencyInjection.HttpClientFactoryServiceCollectionExtensions.ConfigureHttpClientDefaults(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Microsoft.Extensions.DependencyInjection.IHttpClientBuilder})>.
 
 Consider using an "allow-list" approach rather than a "block-list" approach.
 
@@ -125,4 +121,4 @@ services.ConfigureHttpClientDefaults(b => b.RedactLoggedHeaders(_ => false));
 
 ## Affected APIs
 
-- `Microsoft.Extensions.DependencyInjection.HttpClientFactoryServiceCollectionExtensions.AddHttpClient*`
+- <xref:Microsoft.Extensions.DependencyInjection.HttpClientFactoryServiceCollectionExtensions.AddHttpClient*>

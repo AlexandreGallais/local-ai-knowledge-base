@@ -1,22 +1,18 @@
 ---
-title: "virtual keyword (part 1 of 6)"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/keywords/virtual.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "virtual - C# Reference"
+title: "virtual keyword"
+ms.date: 01/22/2026
+f1_keywords: 
+  - "virtual_CSharpKeyword"
+  - "virtual"
+helpviewer_keywords: 
+  - "virtual keyword [C#]"
 ---
-
 # virtual (C# Reference)
 
 Use the `virtual` keyword to modify a method, property, indexer, or event declaration and allow a derived class to override it.
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
-
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
-
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
 For example, any class that inherits this method can override it:
 
@@ -27,10 +23,41 @@ public virtual double Area()
 }
 ```
 
-An overriding member in a derived class can change the implementation of a virtual member. For more information about how to use the `virtual` keyword, see Versioning with the Override and New Keywords and Knowing When to Use Override and New Keywords.
+An [overriding member](override.md) in a derived class can change the implementation of a virtual member. For more information about how to use the `virtual` keyword, see [Versioning with the Override and New Keywords](../../programming-guide/classes-and-structs/versioning-with-the-override-and-new-keywords.md) and [Knowing When to Use Override and New Keywords](../../programming-guide/classes-and-structs/knowing-when-to-use-override-and-new-keywords.md).
 
 When you invoke a virtual method, the runtime checks the type of the object for an overriding member. It calls the overriding member in the most derived class. If no derived class overrides the member, the original member is called.
 
 By default, methods are non-virtual. You can't override a non-virtual method.
 
 The following example shows a virtual property:
+
+:::code language="csharp" source="./snippets/csrefKeywordsModifiers.cs" id="26":::
+
+Virtual properties behave like virtual methods, except for the differences in declaration and invocation syntax.
+
+- A virtual inherited property can be overridden in a derived class by including a property declaration that uses the `override` modifier.
+
+## Example
+
+In this example, the `Shape` class contains the two coordinates `x` and `y`, and the `Area()` virtual method. Different shape classes such as `Circle`, `Cylinder`, and `Sphere` inherit the `Shape` class, and the surface area is calculated for each figure. Each derived class has its own override implementation of `Area()`.
+
+The inherited classes `Circle`, `Cylinder`, and `Sphere` all use constructors that initialize the base class, as shown in the following declaration.
+
+```csharp
+public Cylinder(double r, double h): base(r, h) {}
+```
+
+The following program calculates and displays the appropriate area for each figure by invoking the appropriate implementation of the `Area()` method, according to the object that is associated with the method.
+
+:::code language="csharp" source="./snippets/csrefKeywordsModifiers.cs" id="23":::
+
+## C# language specification
+
+[!INCLUDE[CSharplangspec](~/includes/csharplangspec-md.md)]
+
+## See also
+
+- [Polymorphism](../../fundamentals/object-oriented/polymorphism.md)
+- [abstract](abstract.md)
+- [override](override.md)
+- [new (modifier)](new-modifier.md)

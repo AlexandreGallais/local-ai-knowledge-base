@@ -1,15 +1,14 @@
 ---
 title: "Breaking change - `dotnet new sln` defaults to SLNX file format"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/dotnet-new-sln-slnx-default.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where `dotnet new sln` creates SLNX-format solution files instead of SLN-format files."
+ms.date: 08/30/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/48192
 ---
 
 # `dotnet new sln` defaults to SLNX file format
 
-In .NET 10, `dotnet new sln` generates an SLNX-format solution file instead of an SLN-formatted solution file.
+In .NET 10, `dotnet new sln` generates an [SLNX-format](https://devblogs.microsoft.com/visualstudio/new-simpler-solution-file-format/) solution file instead of an SLN-formatted solution file.
 
 ## Version introduced
 
@@ -45,11 +44,11 @@ Starting in .NET 10, `dotnet new sln` creates a SLNX-format solution file simila
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-The .NET SDK added support for SLNX files in version 9.0.200, and it's proven to be a stable, understandable format for developers. It's well-supported by all major .NET tooling and is much easier for developers to maintain. This breaking change aims to encourage the use of the SLNX format.
+The .NET SDK [added support for SLNX files](https://devblogs.microsoft.com/dotnet/introducing-slnx-support-dotnet-cli/) in version 9.0.200, and it's proven to be a stable, understandable format for developers. It's well-supported by all major .NET tooling and is much easier for developers to maintain. This breaking change aims to encourage the use of the SLNX format.
 
 ## Recommended action
 
@@ -63,4 +62,4 @@ None.
 
 ## See also
 
-- .NET default templates for dotnet new
+- [.NET default templates for dotnet new](../../../tools/dotnet-new-sdk-templates.md)

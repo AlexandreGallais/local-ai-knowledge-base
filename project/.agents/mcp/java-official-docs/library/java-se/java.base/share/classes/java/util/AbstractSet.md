@@ -1,48 +1,36 @@
----
-title: "AbstractSet class (java.util)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/AbstractSet.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AbstractSet class (java.util)
 
 ```java
 public abstract class AbstractSet<E> extends AbstractCollection<E> implements Set<E>
 ```
 
-This class provides a skeletal implementation of the `Set`
+This class provides a skeletal implementation of the {@code Set}
 interface to minimize the effort required to implement this
-interface.
+interface. <p>
 
 The process of implementing a set by extending this class is identical
 to that of implementing a Collection by extending AbstractCollection,
 except that all of the methods and constructors in subclasses of this
-class must obey the additional constraints imposed by the `Set`
+class must obey the additional constraints imposed by the {@code Set}
 interface (for instance, the add method must not permit addition of
-multiple instances of an object to a set).
+multiple instances of an object to a set).<p>
 
 Note that this class does not override any of the implementations from
-the `AbstractCollection` class.  It merely adds implementations
-for `equals` and `hashCode`.
+the {@code AbstractCollection} class.  It merely adds implementations
+for {@code equals} and {@code hashCode}.<p>
 
 This class is a member of the
+<a href="{@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+Java Collections Framework</a>.
 
-Java Collections Framework.
+@param <E> the type of elements maintained by this set
 
-Parameters:
-
-- `<E>`: the type of elements maintained by this set
-
-**See also:** Collection
-
-**See also:** AbstractCollection
-
-**See also:** Set
-
-**Since:** 1.2
+@author  Josh Bloch
+@author  Neal Gafter
+@see Collection
+@see AbstractCollection
+@see Set
+@since 1.2
 
 ## AbstractSet.AbstractSet()
 
@@ -60,23 +48,20 @@ public boolean equals(Object o)
 ```
 
 Compares the specified object with this set for equality.  Returns
-`true` if the given object is also a set, the two sets have
+{@code true} if the given object is also a set, the two sets have
 the same size, and every member of the given set is contained in
-this set.  This ensures that the `equals` method works
-properly across different implementations of the `Set`
-interface.
+this set.  This ensures that the {@code equals} method works
+properly across different implementations of the {@code Set}
+interface.<p>
 
 This implementation first checks if the specified object is this
-set; if so it returns `true`.  Then, it checks if the
+set; if so it returns {@code true}.  Then, it checks if the
 specified object is a set whose size is identical to the size of
 this set; if not, it returns false.  If so, it returns
-`containsAll((Collection) o)`.
+{@code containsAll((Collection) o)}.
 
-Parameters:
-
-- `o`: object to be compared for equality with this set
-
-**Returns:** `true` if the specified object is equal to this set
+@param o object to be compared for equality with this set
+@return {@code true} if the specified object is equal to this set
 
 ## AbstractSet.hashCode()
 
@@ -86,21 +71,19 @@ public int hashCode()
 
 Returns the hash code value for this set.  The hash code of a set is
 defined to be the sum of the hash codes of the elements in the set,
-where the hash code of a `null` element is defined to be zero.
-This ensures that `s1.equals(s2)` implies that
-`s1.hashCode()==s2.hashCode()` for any two sets `s1`
-and `s2`, as required by the general contract of
-`Object.hashCode`.
+where the hash code of a {@code null} element is defined to be zero.
+This ensures that {@code s1.equals(s2)} implies that
+{@code s1.hashCode()==s2.hashCode()} for any two sets {@code s1}
+and {@code s2}, as required by the general contract of
+{@link Object#hashCode}.
 
-This implementation iterates over the set, calling the
-`hashCode` method on each element in the set, and adding up
+<p>This implementation iterates over the set, calling the
+{@code hashCode} method on each element in the set, and adding up
 the results.
 
-**Returns:** the hash code value for this set
-
-**See also:** Object#equals(Object)
-
-**See also:** Set#equals(Object)
+@return the hash code value for this set
+@see Object#equals(Object)
+@see Set#equals(Object)
 
 ## AbstractSet.removeAll(Collection<?>)
 
@@ -111,37 +94,35 @@ public boolean removeAll(Collection<?> c)
 Removes from this set all of its elements that are contained in the
 specified collection (optional operation).  If the specified
 collection is also a set, this operation effectively modifies this
-set so that its value is the *asymmetric set difference* of
+set so that its value is the <i>asymmetric set difference</i> of
 the two sets.
 
-This implementation determines which is the smaller of this set
-and the specified collection, by invoking the `size`
+<p>This implementation determines which is the smaller of this set
+and the specified collection, by invoking the {@code size}
 method on each.  If this set has fewer elements, then the
 implementation iterates over this set, checking each element
 returned by the iterator in turn to see if it is contained in
 the specified collection.  If it is so contained, it is removed
-from this set with the iterator's `remove` method.  If
+from this set with the iterator's {@code remove} method.  If
 the specified collection has fewer elements, then the
 implementation iterates over the specified collection, removing
 from this set each element returned by the iterator, using this
-set's `remove` method.
+set's {@code remove} method.
 
-Note that this implementation will throw an
-`UnsupportedOperationException` if the iterator returned by the
-`iterator` method does not implement the `remove` method.
+<p>Note that this implementation will throw an
+{@code UnsupportedOperationException} if the iterator returned by the
+{@code iterator} method does not implement the {@code remove} method.
 
-Parameters:
-
-- `c`: collection containing elements to be removed from this set
-
-**Returns:** `true` if this set changed as a result of the call
-
-**See also:** #remove(Object)
-
-**See also:** #contains(Object)
-
-Throws:
-
-- `UnsupportedOperationException`: if the `removeAll` operation is not supported by this set
-- `ClassCastException`: if the class of an element of this set is incompatible with the specified collection (optional)
-- `NullPointerException`: if this set contains a null element and the specified collection does not permit null elements (optional), or if the specified collection is null
+@param  c collection containing elements to be removed from this set
+@return {@code true} if this set changed as a result of the call
+@throws UnsupportedOperationException if the {@code removeAll} operation
+        is not supported by this set
+@throws ClassCastException if the class of an element of this set
+        is incompatible with the specified collection
+(<a href="Collection.html#optional-restrictions">optional</a>)
+@throws NullPointerException if this set contains a null element and the
+        specified collection does not permit null elements
+(<a href="Collection.html#optional-restrictions">optional</a>),
+        or if the specified collection is null
+@see #remove(Object)
+@see #contains(Object)

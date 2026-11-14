@@ -1,16 +1,18 @@
 ---
+description: "Learn more about: Exceptions and Performance"
 title: "Exceptions and Performance"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/exceptions-and-performance.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "tester-doer pattern"
+  - "TryParse pattern"
+  - "exceptions, throwing"
+  - "exceptions, performance"
+  - "throwing exceptions, performance"
+ms.assetid: 3ad6aad9-08e6-4232-b336-0e301f2493e6
 ---
-
 # Exceptions and Performance
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
 One common concern related to exceptions is that if exceptions are used for code that routinely fails, the performance of the implementation will be unacceptable. This is a valid concern. When a member throws an exception, its performance can be orders of magnitude slower. However, it is possible to achieve good performance while strictly adhering to the exception guidelines that disallow using error codes. Two patterns described in this section suggest ways to do this.
 
@@ -20,7 +22,7 @@ One common concern related to exceptions is that if exceptions are used for code
 
 ## Tester-Doer Pattern
 
- Sometimes performance of an exception-throwing member can be improved by breaking the member into two. Let’s look at the `System.Collections.Generic.ICollection`1.Add*` method of the `System.Collections.Generic.ICollection`1` interface.
+ Sometimes performance of an exception-throwing member can be improved by breaking the member into two. Let’s look at the <xref:System.Collections.Generic.ICollection`1.Add*> method of the <xref:System.Collections.Generic.ICollection`1> interface.
 
 ```csharp
 ICollection<int> numbers = ...
@@ -44,7 +46,7 @@ if (!numbers.IsReadOnly)
 
 ## Try-Parse Pattern
 
- For extremely performance-sensitive APIs, an even faster pattern than the Tester-Doer Pattern described in the previous section should be used. The pattern calls for adjusting the member name to make a well-defined test case a part of the member semantics. For example, `System.DateTime` defines a `System.DateTime.Parse*` method that throws an exception if parsing of a string fails. It also defines a corresponding `System.DateTime.TryParse*` method that attempts to parse, but returns false if parsing is unsuccessful and returns the result of a successful parsing using an `out` parameter.
+ For extremely performance-sensitive APIs, an even faster pattern than the Tester-Doer Pattern described in the previous section should be used. The pattern calls for adjusting the member name to make a well-defined test case a part of the member semantics. For example, <xref:System.DateTime> defines a <xref:System.DateTime.Parse*> method that throws an exception if parsing of a string fails. It also defines a corresponding <xref:System.DateTime.TryParse*> method that attempts to parse, but returns false if parsing is unsuccessful and returns the result of a successful parsing using an `out` parameter.
 
 ```csharp
 public struct DateTime
@@ -70,9 +72,9 @@ public struct DateTime
 
  *Portions © 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Framework Design Guidelines
-- Design Guidelines for Exceptions
+- [Framework Design Guidelines](index.md)
+- [Design Guidelines for Exceptions](exceptions.md)

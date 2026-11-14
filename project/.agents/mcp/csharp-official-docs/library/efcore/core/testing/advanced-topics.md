@@ -1,12 +1,10 @@
 ---
-title: "Advanced testing topics - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/testing/advanced-topics.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Advanced testing topics - EF Core
+description: Advanced Entity Framework Core testing topics
+author: AndriySvyryd
+ms.date: 11/21/2025
+uid: core/testing/advanced-topics
 ---
-
 # Advanced testing topics
 
 This page described some less common topics related to testing EF Core applications.
@@ -15,7 +13,7 @@ This page described some less common topics related to testing EF Core applicati
 
 EF Core uses an internal service provider to manage services required for database operations, including query compilation, model building, and other core functionality. By default, EF Core caches these internal service providers to improve performance when multiple `DbContext` instances share the same configuration.
 
-The `Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableServiceProviderCaching*` method controls whether EF Core caches the internal service provider:
+The <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableServiceProviderCaching*> method controls whether EF Core caches the internal service provider:
 
 ```csharp
 public class ApplicationDbContext : DbContext

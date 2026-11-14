@@ -1,14 +1,3 @@
----
-title: "vscode-trust-authors-add-assets"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/vscode-trust-authors-add-assets.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# vscode-trust-authors-add-assets
-
 Visual Studio Code might display a dialog box that asks: **Do you trust the authors of the files in this folder?**
 
 * If you trust all files in the parent folder, select **Trust the authors of all files in the parent folder**.

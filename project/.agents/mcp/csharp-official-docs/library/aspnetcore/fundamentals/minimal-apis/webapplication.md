@@ -1,10 +1,16 @@
 ---
-title: "WebApplication and WebApplicationBuilder in ASP.NET Core apps (part 1 of 4)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/minimal-apis/webapplication.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: WebApplication and WebApplicationBuilder in ASP.NET Core apps
+ai-usage: ai-assisted
+description: Learn how to use WebApplication and WebApplicationBuilder in ASP.NET Core apps.
+monikerRange: '>= aspnetcore-7.0'
+ms.date: 08/18/2026
 ---
 
 # WebApplication and WebApplicationBuilder in ASP.NET Core apps
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+[!INCLUDE [WebApplication and WebApplicationBuilder](~/fundamentals/minimal-apis/includes/webapplication7.md)]
+[!INCLUDE [WebApplication and WebApplicationBuilder](~/fundamentals/minimal-apis/includes/webapplication8.md)]
+[!INCLUDE [WebApplication and WebApplicationBuilder](~/fundamentals/minimal-apis/includes/webapplication9.md)]
+[!INCLUDE [WebApplication and WebApplicationBuilder](~/fundamentals/minimal-apis/includes/webapplication10.md)]

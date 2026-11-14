@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: ICorDebugExceptionDebugEvent::GetNativeIP Method"
 title: "ICorDebugExceptionDebugEvent::GetNativeIP Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugexceptiondebugevent-getnativeip-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugExceptionDebugEvent::GetNativeIP Method
 
 Gets the native instruction pointer for this exception debug event.
@@ -30,19 +26,19 @@ The meaning of this instruction pointer depends on the event type, as shown in t
 
 |Event type|Meaning of `pStackPointer` value|
 |----------------|--------------------------------------|
-|MANAGED_EXCEPTION_FIRST_CHANCE|The address of the faulting instruction.|
-|MANAGED_EXCEPTION_USER_FIRST_CHANCE|The code address in the frame indicated by the GetStackPointer method where execution would resume if no exception had been raised. The exception may or may not cause different code, such as the catch block of a `try/catch/finally` clause, to be executed in this frame.|
-|MANAGED_EXCEPTION_CATCH_HANDLER_FOUND|The code address where `catch` handler execution will start in the frame indicated by the GetStackPointer method.|
-|MANAGED_EXCEPTION_UNHANDLED|`pIP` is 0.|
+|[MANAGED_EXCEPTION_FIRST_CHANCE](cordebugrecordformat-enumeration.md)|The address of the faulting instruction.|
+|[MANAGED_EXCEPTION_USER_FIRST_CHANCE](cordebugrecordformat-enumeration.md)|The code address in the frame indicated by the [GetStackPointer](icordebugexceptiondebugevent-getstackpointer-method.md) method where execution would resume if no exception had been raised. The exception may or may not cause different code, such as the catch block of a `try/catch/finally` clause, to be executed in this frame.|
+|[MANAGED_EXCEPTION_CATCH_HANDLER_FOUND](cordebugrecordformat-enumeration.md)|The code address where `catch` handler execution will start in the frame indicated by the [GetStackPointer](icordebugexceptiondebugevent-getstackpointer-method.md) method.|
+|[MANAGED_EXCEPTION_UNHANDLED](cordebugrecordformat-enumeration.md)|`pIP` is 0.|
 
-The event type is available from the ICorDebugDebugEvent::GetEventKind method.
+The event type is available from the [ICorDebugDebugEvent::GetEventKind](icordebugdebugevent-geteventkind-method.md) method.
 
-> **Note:**
+> [!NOTE]
 > This method is available with .NET Native only.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -52,4 +48,4 @@ The event type is available from the ICorDebugDebugEvent::GetEventKind method.
 
 ## See also
 
-- ICorDebugExceptionDebugEvent Interface
+- [ICorDebugExceptionDebugEvent Interface](icordebugexceptiondebugevent-interface.md)

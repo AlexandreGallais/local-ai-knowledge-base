@@ -1,33 +1,26 @@
 ---
+id: writing-tests
 title: "Writing tests"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/writing-tests-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# Writing tests
-
 ## Introduction
 
 Playwright tests are simple: they **perform actions** and **assert the state** against expectations.
 
-Playwright automatically waits for actionability checks to pass <example-value> performing each action. You don't need to add manual waits or deal with race conditions. Playwright assertions are designed to describe expectations that will eventually be met, eliminating flaky timeouts and racy checks.
+Playwright automatically waits for [actionability](./actionability.md) checks to pass before performing each action. You don't need to add manual waits or deal with race conditions. Playwright assertions are designed to describe expectations that will eventually be met, eliminating flaky timeouts and racy checks.
 
 **You will learn**
 
-- How to write the first test
-- How to perform actions
-- How to use assertions
-- How tests run in isolation
-- How to use test hooks
+- [How to write the first test](/writing-tests.md#first-test)
+- [How to perform actions](/writing-tests.md#actions)
+- [How to use assertions](/writing-tests.md#assertions)
+- [How tests run in isolation](/writing-tests.md#test-isolation)
+- [How to use test hooks](/writing-tests.md#using-test-hooks)
 
 ## First test
 
 Take a look at the following example to see how to write a test.
 
-```js
+```js title="tests/example.spec.ts"
 import { test, expect } from '@playwright/test';
 
 test('has title', async ({ page }) => {
@@ -52,6 +45,7 @@ test('get started link', async ({ page }) => {
 Add `// @ts-check` at the start of each test file when using JavaScript in VS Code to get automatic type checking.
 :::
 
+
 ## Actions
 
 ### Navigation
@@ -70,9 +64,10 @@ Playwright waits for the page to reach the load state before continuing. Learn m
 
 ### Interactions
 
-Performing actions starts with locating elements. Playwright uses Locators API for that. Locators represent a way to find element(s) on the page at any moment. Learn more about the different types of locators available.
+Performing actions starts with locating elements. Playwright uses [Locators API](./locators.md) for that. Locators represent a way to find element(s) on the page at any moment. Learn more about the [different types](./locators.md) of locators available.
 
-Playwright waits for the element to be actionable before performing the action, so you don't need to wait for it to become available.
+Playwright waits for the element to be [actionable](./actionability.md) before performing the action, so you don't need to wait for it to become available.
+
 
 ```js
 // Create a locator.
@@ -88,9 +83,9 @@ In most cases, it'll be written in one line:
 await page.getByRole('link', { name: 'Get started' }).click();
 ```
 
-### Basic <example-value>
+### Basic actions
 
-Here are the most popular Playwright actions. For the complete list, check the Locator API section.
+Here are the most popular Playwright actions. For the complete list, check the [Locator API](./api/class-locator.md) section.
 
 | Action | Description |
 | :- | :- |
@@ -106,7 +101,7 @@ Here are the most popular Playwright actions. For the complete list, check the L
 
 ## Assertions
 
-Playwright includes test assertions in the form of `expect` function. To make an assertion, call `expect(value)` and choose a matcher that reflects the expectation.
+Playwright includes [test assertions](./test-assertions.md) in the form of `expect` function. To make an assertion, call `expect(value)` and choose a matcher that reflects the expectation.
 
 Playwright includes async matchers that wait until the expected condition is met. Using these matchers makes tests non-flaky and resilient. For example, this code waits until the page gets the title containing "Playwright":
 
@@ -114,7 +109,7 @@ Playwright includes async matchers that wait until the expected condition is met
 await expect(page).toHaveTitle(/Playwright/);
 ```
 
-Here are the most popular async assertions. For the complete list, see assertions guide:
+Here are the most popular async assertions. For the complete list, see [assertions guide](./test-assertions.md):
 
 | Assertion | Description |
 | :- | :- |
@@ -135,11 +130,12 @@ Playwright also includes generic matchers like `toEqual`, `toContain`, `toBeTrut
 expect(success).toBeTruthy();
 ```
 
+
 ### Test Isolation
 
-Playwright Test is based on the concept of test fixtures such as the built in page fixture, which is passed into your test. Pages are isolated between tests due to the Browser Context, which is equivalent to a brand new browser profile. Every test gets a fresh environment, even when multiple tests run in a single browser.
+Playwright Test is based on the concept of [test fixtures](./test-fixtures.md) such as the [built in page fixture](./test-fixtures#built-in-fixtures), which is passed into your test. Pages are [isolated between tests due to the Browser Context](./browser-contexts), which is equivalent to a brand new browser profile. Every test gets a fresh environment, even when multiple tests run in a single browser.
 
-```js
+```js title="tests/example.spec.ts"
 import { test } from '@playwright/test';
 
 test('example test', async ({ page }) => {
@@ -153,9 +149,9 @@ test('another test', async ({ page }) => {
 
 ### Using Test Hooks
 
-You can use various test hooks such as `test.describe` to declare a group of tests and `test.beforeEach` and `test.afterEach` which are executed before/after each test. Other hooks include the `test.beforeAll` and `test.afterAll` which are executed once per worker before/after all tests.
+You can use various [test hooks](./api/class-test.md) such as `test.describe` to declare a group of tests and `test.beforeEach` and `test.afterEach` which are executed before/after each test. Other hooks include the `test.beforeAll` and `test.afterAll` which are executed once per worker before/after all tests.
 
-```js
+```js title="tests/example.spec.ts"
 import { test, expect } from '@playwright/test';
 
 test.describe('navigation', () => {
@@ -173,8 +169,9 @@ test.describe('navigation', () => {
 
 ## What's Next
 
-- Run single test, multiple tests, headed mode
-- Generate tests with Codegen
-- See a trace of your tests
-- Explore UI Mode
-- Run tests on CI with GitHub Actions
+- [Run single test, multiple tests, headed mode](./running-tests.md)
+- [Generate tests with Codegen](./codegen-intro.md)
+- [See a trace of your tests](./trace-viewer-intro.md)
+- [Explore UI Mode](./test-ui-mode.md)
+- [Run tests on CI with GitHub Actions](./ci-intro.md)
+

@@ -1,12 +1,3 @@
----
-title: "PhantomReference class (java.lang.ref)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/ref/PhantomReference.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # PhantomReference class (java.lang.ref)
 
 ```java
@@ -17,25 +8,23 @@ Phantom reference objects, which are enqueued after the collector
 determines that their referents may otherwise be reclaimed.  Phantom
 references are most often used to schedule post-mortem cleanup actions.
 
- Suppose the garbage collector determines at a certain point in time
-that an object is
-phantom reachable.  At that time it will atomically clear
+<p> Suppose the garbage collector determines at a certain point in time
+that an object is <a href="package-summary.html#reachability">
+phantom reachable</a>.  At that time it will atomically clear
 all phantom references to that object and all phantom references to
 any other phantom-reachable objects from which that object is reachable.
 At the same time or at some later time it will enqueue those newly-cleared
 phantom references that are registered with reference queues.
 
- In order to ensure that a reclaimable object remains so, the referent of
-a phantom reference may not be retrieved: The `get` method of a
-phantom reference always returns `null`.
-The refersTo method can be used to test
+<p> In order to ensure that a reclaimable object remains so, the referent of
+a phantom reference may not be retrieved: The {@code get} method of a
+phantom reference always returns {@code null}.
+The {@link #refersTo(Object) refersTo} method can be used to test
 whether some object is the referent of a phantom reference.
+@param <T> the type of the referent
 
-Parameters:
-
-- `<T>`: the type of the referent
-
-**Since:** 1.2
+@author   Mark Reinhold
+@since    1.2
 
 ## PhantomReference.get()
 
@@ -45,9 +34,9 @@ public T get()
 
 Returns this reference object's referent.  Because the referent of a
 phantom reference is always inaccessible, this method always returns
-`null`.
+{@code null}.
 
-**Returns:** `null`
+@return {@code null}
 
 ## PhantomReference.PhantomReference(T, ReferenceQueue<? super T>)
 
@@ -58,10 +47,9 @@ public PhantomReference( T referent, ReferenceQueue<? super T> q)
 Creates a new phantom reference that refers to the given object and
 is registered with the given queue.
 
- It is possible to create a phantom reference with a `null`
+<p> It is possible to create a phantom reference with a {@code null}
 queue.  Such a reference will never be enqueued.
 
-Parameters:
-
-- `referent`: the object the new phantom reference will refer to
-- `q`: the queue with which the reference is to be registered, or `null` if registration is not required
+@param referent the object the new phantom reference will refer to
+@param q the queue with which the reference is to be registered,
+         or {@code null} if registration is not required

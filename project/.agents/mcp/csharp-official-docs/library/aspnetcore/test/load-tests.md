@@ -1,12 +1,8 @@
 ---
-title: "ASP.NET Core load/stress testing"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/test/load-tests.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core load/stress testing
+description: Learn about several tools and approaches for load testing and stress testing ASP.NET Core apps.
+ms.date: 4/05/2019
 ---
-
 # ASP.NET Core load/stress testing
 
 Load testing and stress testing are important to ensure a web app is performant and scalable. Load and stress testing have different goals even though they often share similar tests.
@@ -17,25 +13,25 @@ Load testing and stress testing are important to ensure a web app is performant 
 
 Stress tests determine if an app under stress can recover from failure and gracefully return to expected behavior. Under stress, the app is run at abnormally high stress.
 
-Azure Load Testing is a fully managed load-testing service that enables you to generate high-scale load. The service simulates traffic for apps, regardless of where they're hosted. Azure Load Testing Preview enables you to use existing Apache JMeter scripts to generate high-scale load.
+[Azure Load Testing](/azure/load-testing/overview-what-is-azure-load-testing) is a fully managed load-testing service that enables you to generate high-scale load. The service simulates traffic for apps, regardless of where they're hosted. Azure Load Testing Preview enables you to use existing Apache JMeter scripts to generate high-scale load.
 
-Visual Studio 2019 load testing has been deprecated. The corresponding Azure DevOps cloud-based load testing service has been closed.
+[Visual Studio 2019 load testing](https://devblogs.microsoft.com/devops/cloud-based-load-testing-service-eol/) has been deprecated. The corresponding Azure DevOps cloud-based load testing service has been closed.
 
 ## Third-party tools
 
 The following list contains third-party web performance tools with various feature sets:
 
-* Apache JMeter
-* ApacheBench (ab)
-* Gatling
-* jmeter-dotnet-dsl
-* k6
-* Locust
-* West Wind WebSurge
-* Netling
-* Vegeta
-* NBomber C#/F#
+* [Apache JMeter](https://jmeter.apache.org/)
+* [ApacheBench (ab)](https://httpd.apache.org/docs/2.4/programs/ab.html)
+* [Gatling](https://gatling.io/)
+* [jmeter-dotnet-dsl](https://abstracta.github.io/jmeter-dotnet-dsl/)
+* [k6](https://k6.io)
+* [Locust](https://locust.io/)
+* [West Wind WebSurge](https://websurge.west-wind.com/)
+* [Netling](https://github.com/hallatore/Netling)
+* [Vegeta](https://github.com/tsenart/vegeta)
+* [NBomber C#/F#](https://nbomber.com/)
 
 ## Load and stress test with release builds
 
-Load and stress tests should be done in release and production mode and not in debug and development mode. Release configurations are fully optimized with minimal logging. Debug configuration is not optimized. Development mode enables more information logging that can impact performance.
+Load and stress tests should be done in release and [production](../fundamentals/environments.md) mode and not in debug and development mode. [Release configurations](/visualstudio/debugger/how-to-set-debug-and-release-configurations) are fully optimized with minimal logging. Debug configuration is not optimized. [Development](../fundamentals/environments.md) mode enables more information logging that can impact performance.

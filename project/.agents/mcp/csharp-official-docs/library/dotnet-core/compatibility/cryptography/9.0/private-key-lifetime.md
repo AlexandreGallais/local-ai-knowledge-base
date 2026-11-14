@@ -1,23 +1,19 @@
 ---
 title: "Breaking change: Windows private key lifetime simplified"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/cryptography/9.0/private-key-lifetime.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 9 breaking change in cryptography where the lifetime of a Windows private key has been simplified.
+ms.date: 10/04/2024
 ---
+# Windows private key lifetime simplified
 
-# Windows private key <example-value> simplified
-
-When a workload loads a PKCS#12/PFX on Windows without setting either the `System.Security.Cryptography.X509Certificates.X509KeyStorageFlags.PersistKeySet` or `System.Security.Cryptography.X509Certificates.X509KeyStorageFlags.EphemeralKeySet` storage options, .NET determines when the private key is no longer needed and should be erased. In previous versions of .NET (and in .NET Framework), two different sets of logic were used. In .NET 9, there's a single set of logic.
+When a workload loads a PKCS#12/PFX on Windows without setting either the <xref:System.Security.Cryptography.X509Certificates.X509KeyStorageFlags.PersistKeySet> or <xref:System.Security.Cryptography.X509Certificates.X509KeyStorageFlags.EphemeralKeySet> storage options, .NET determines when the private key is no longer needed and should be erased. In previous versions of .NET (and in .NET Framework), two different sets of logic were used. In .NET 9, there's a single set of logic.
 
 ## Previous behavior
 
 Previously, when loading a certificate (and its private key) from a PKCS#12/PFX with `new X509Certificate2(pfx, password, flags)`, the loaded certificate represented the lifetime of the private key. When this certificate object was disposed (or finalized if it was garbage-collected without being disposed), the associated private key was deleted. No shared ownership or transfer of ownership occurred.
 
-When loading a certificate (and its private key) from a PKCS#12/PFX with `X509Certificate2Collection.Import(pfx, password, flags)`, each loaded certificate that had a private key <example-value> the lifetime, as with the single certificate load. But, in addition, a marker was placed on the native copy of the certificate to indicate that any copies should also track the private key lifetime. If a second `System.Security.Cryptography.X509Certificates.X509Certificate2` object was created in terms of the same underlying `PCERT_CONTEXT` value, then whichever copy was disposed (or finalized) first erased the private key out from under the other copy.
+When loading a certificate (and its private key) from a PKCS#12/PFX with `X509Certificate2Collection.Import(pfx, password, flags)`, each loaded certificate that had a private key tracked the lifetime, as with the single certificate load. But, in addition, a marker was placed on the native copy of the certificate to indicate that any copies should also track the private key lifetime. If a second <xref:System.Security.Cryptography.X509Certificates.X509Certificate2> object was created in terms of the same underlying `PCERT_CONTEXT` value, then whichever copy was disposed (or finalized) first erased the private key out from under the other copy.
 
-The following code failed (either with a `System.Security.Cryptography.CryptographicException` or a `System.NullReferenceException`) because the private key was deleted:
+The following code failed (either with a <xref:System.Security.Cryptography.CryptographicException> or a <xref:System.NullReferenceException>) because the private key was deleted:
 
 ```csharp
 X509Certificate2Collection coll = new X509Certificate2Collection(pfx, password, X509KeyStorageFlags.DefaultKeySet);
@@ -35,9 +31,9 @@ using (RSA key = coll[0].GetRSAPrivateKey())
 
 ## New behavior
 
-Starting in .NET 9, the lifetime is always associated with the `System.Security.Cryptography.X509Certificates.X509Certificate2` instance that was directly produced from the PKCS#12/PFX load.
+Starting in .NET 9, the lifetime is always associated with the <xref:System.Security.Cryptography.X509Certificates.X509Certificate2> instance that was directly produced from the PKCS#12/PFX load.
 
-The same code snippet in the Previous behavior section now succeeds.
+The same code snippet in the [Previous behavior](#previous-behavior) section now succeeds.
 
 ## Version introduced
 
@@ -45,7 +41,7 @@ The same code snippet in the Previous behavior section now succeeds.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -53,8 +49,8 @@ Most workloads that load a PKCS#12/PFX use the single certificate load and under
 
 ## Recommended action
 
-If you understood the collection-load lifetime management and depended on calling `Dispose` on a clone to cause key <example-value>, ensure that you're also (or instead) calling `Dispose` on the original loaded object.
+If you understood the collection-load lifetime management and depended on calling `Dispose` on a clone to cause key erasure, ensure that you're also (or instead) calling `Dispose` on the original loaded object.
 
 ## Affected APIs
 
-- `System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import*`
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import*?displayProperty=fullName>

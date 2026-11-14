@@ -1,12 +1,3 @@
----
-title: "std::sync::poison::condvar"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sync/poison/condvar.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::sync::poison::condvar
 
 ## struct Condvar
@@ -29,7 +20,7 @@ variable may result in a runtime panic.
 
 # Examples
 
-```rust
+```
 use std::sync::{Arc, Mutex, Condvar};
 use std::thread;
 
@@ -64,7 +55,7 @@ notified.
 
 # Examples
 
-```rust
+```
 use std::sync::Condvar;
 
 let condvar = Condvar::new();
@@ -81,7 +72,7 @@ notification.
 
 This function will atomically unlock the mutex specified (represented by
 `guard`) and block the current thread. This means that any calls
-to `notify_one` or `notify_all` which happen logically after the
+to [`notify_one`] or [`notify_all`] which happen logically after the
 mutex is unlocked are candidates to wake this thread up. When this
 function call returns, the lock specified will have been re-acquired.
 
@@ -94,16 +85,21 @@ protect against spurious wakeups.
 
 This function will return an error if the mutex being waited on is
 poisoned when this thread re-acquires the lock. For more information,
-see information about [poisoning] on the `Mutex` type.
+see information about [poisoning] on the [`Mutex`] type.
 
 # Panics
 
-This function may `panic!` if it is used with more than one mutex
+This function may [`panic!`] if it is used with more than one mutex
 over time.
+
+[`notify_one`]: Self::notify_one
+[`notify_all`]: Self::notify_all
+[poisoning]: super::Mutex#poisoning
+[`Mutex`]: super::Mutex
 
 # Examples
 
-```rust
+```
 use std::sync::{Arc, Mutex, Condvar};
 use std::thread;
 
@@ -136,12 +132,12 @@ pub fn wait_while<'a, T, F>( &self, mut guard: MutexGuard<'a, T>, mut condition:
 Blocks the current thread until the provided condition becomes false.
 
 `condition` is checked immediately; if not met (returns `true`), this
-will `wait` for the next notification then check again. This repeats
+will [`wait`] for the next notification then check again. This repeats
 until `condition` returns `false`, in which case this function returns.
 
 This function will atomically unlock the mutex specified (represented by
 `guard`) and block the current thread. This means that any calls
-to `notify_one` or `notify_all` which happen logically after the
+to [`notify_one`] or [`notify_all`] which happen logically after the
 mutex is unlocked are candidates to wake this thread up. When this
 function call returns, the lock specified will have been re-acquired.
 
@@ -149,11 +145,17 @@ function call returns, the lock specified will have been re-acquired.
 
 This function will return an error if the mutex being waited on is
 poisoned when this thread re-acquires the lock. For more information,
-see information about [poisoning] on the `Mutex` type.
+see information about [poisoning] on the [`Mutex`] type.
+
+[`wait`]: Self::wait
+[`notify_one`]: Self::notify_one
+[`notify_all`]: Self::notify_all
+[poisoning]: super::Mutex#poisoning
+[`Mutex`]: super::Mutex
 
 # Examples
 
-```rust
+```
 use std::sync::{Arc, Mutex, Condvar};
 use std::thread;
 
@@ -183,7 +185,7 @@ pub fn wait_timeout_ms<'a, T>( &self, guard: MutexGuard<'a, T>, ms: u32, ) -> Lo
 Waits on this condition variable for a notification, timing out after a
 specified duration.
 
-The semantics of this function are equivalent to `wait`
+The semantics of this function are equivalent to [`wait`]
 except that the thread will be blocked for roughly no longer
 than `ms` milliseconds. This method should not be used for
 precise timing due to anomalies such as preemption or platform
@@ -197,12 +199,14 @@ the system time.
 The returned boolean is `false` only if the timeout is known
 to have elapsed.
 
-Like `wait`, the lock specified will be re-acquired when this function
+Like [`wait`], the lock specified will be re-acquired when this function
 returns, regardless of whether the timeout elapsed or not.
+
+[`wait`]: Self::wait
 
 # Examples
 
-```rust
+```
 use std::sync::{Arc, Mutex, Condvar};
 use std::thread;
 
@@ -241,7 +245,7 @@ pub fn wait_timeout<'a, T>( &self, guard: MutexGuard<'a, T>, dur: Duration, ) ->
 Waits on this condition variable for a notification, timing out after a
 specified duration.
 
-The semantics of this function are equivalent to `wait` except that
+The semantics of this function are equivalent to [`wait`] except that
 the thread will be blocked for roughly no longer than `dur`. This
 method should not be used for precise timing due to anomalies such as
 preemption or platform differences that might not cause the maximum
@@ -254,18 +258,21 @@ Condition variables normally have a boolean predicate associated with
 them, and the predicate must always be checked each time this function
 returns to protect against spurious wakeups. Furthermore, since the timeout
 is given relative to the moment this function is called, it needs to be adjusted
-when this function is called in a loop. The `wait_timeout_while` method
+when this function is called in a loop. The [`wait_timeout_while`] method
 lets you wait with a timeout while a predicate is true, taking care of all these concerns.
 
-The returned `WaitTimeoutResult` value indicates if the timeout is
+The returned [`WaitTimeoutResult`] value indicates if the timeout is
 known to have elapsed.
 
-Like `wait`, the lock specified will be re-acquired when this function
+Like [`wait`], the lock specified will be re-acquired when this function
 returns, regardless of whether the timeout elapsed or not.
+
+[`wait`]: Self::wait
+[`wait_timeout_while`]: Self::wait_timeout_while
 
 # Examples
 
-```rust
+```
 use std::sync::{Arc, Mutex, Condvar};
 use std::thread;
 use std::time::Duration;
@@ -305,7 +312,7 @@ pub fn wait_timeout_while<'a, T, F>( &self, mut guard: MutexGuard<'a, T>, dur: D
 Waits on this condition variable for a notification, timing out after a
 specified duration.
 
-The semantics of this function are equivalent to `wait_while` except
+The semantics of this function are equivalent to [`wait_while`] except
 that the thread will be blocked for roughly no longer than `dur`. This
 method should not be used for precise timing due to anomalies such as
 preemption or platform differences that might not cause the maximum
@@ -315,15 +322,18 @@ Note that the best effort is made to ensure that the time waited is
 measured with a monotonic clock, and not affected by the changes made to
 the system time.
 
-The returned `WaitTimeoutResult` value indicates if the timeout is
+The returned [`WaitTimeoutResult`] value indicates if the timeout is
 known to have elapsed without the condition being met.
 
-Like `wait_while`, the lock specified will be re-acquired when this
+Like [`wait_while`], the lock specified will be re-acquired when this
 function returns, regardless of whether the timeout elapsed or not.
+
+[`wait_while`]: Self::wait_while
+[`wait_timeout`]: Self::wait_timeout
 
 # Examples
 
-```rust
+```
 use std::sync::{Arc, Mutex, Condvar};
 use std::thread;
 use std::time::Duration;
@@ -361,14 +371,18 @@ pub fn notify_one(&self)
 Wakes up one blocked thread on this condvar.
 
 If there is a blocked thread on this condition variable, then it will
-be woken up from its call to `wait` or `wait_timeout`. Calls to
+be woken up from its call to [`wait`] or [`wait_timeout`]. Calls to
 `notify_one` are not buffered in any way.
 
-To wake up all threads, see `notify_all`.
+To wake up all threads, see [`notify_all`].
+
+[`wait`]: Self::wait
+[`wait_timeout`]: Self::wait_timeout
+[`notify_all`]: Self::notify_all
 
 # Examples
 
-```rust
+```
 use std::sync::{Arc, Mutex, Condvar};
 use std::thread;
 
@@ -404,11 +418,13 @@ This method will ensure that any current waiters on the condition
 variable are awoken. Calls to `notify_all()` are not buffered in any
 way.
 
-To wake up only one thread, see `notify_one`.
+To wake up only one thread, see [`notify_one`].
+
+[`notify_one`]: Self::notify_one
 
 # Examples
 
-```rust
+```
 use std::sync::{Arc, Mutex, Condvar};
 use std::thread;
 

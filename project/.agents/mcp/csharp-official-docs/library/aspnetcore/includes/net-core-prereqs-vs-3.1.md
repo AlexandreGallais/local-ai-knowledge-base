@@ -1,13 +1,2 @@
----
-title: "net-core-prereqs-vs-3.1"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/net-core-prereqs-vs-3.1.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# net-core-prereqs-vs-3.1
-
-* Visual Studio 2019 16.4 or later with the **ASP.NET and web development** workload
-* .NET Core 3.1 SDK
+* [Visual Studio 2019 16.4 or later](https://visualstudio.microsoft.com/downloads/?utm_medium=microsoft&utm_source=learn.microsoft.com&utm_campaign=inline+link&utm_content=download+vs2019) with the **ASP.NET and web development** workload
+* [!INCLUDE [.NET Core 3.1 SDK](~/includes/3.1-SDK.md)]

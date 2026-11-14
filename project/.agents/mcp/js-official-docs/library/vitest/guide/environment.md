@@ -1,32 +1,29 @@
 ---
-title: "Test Environment | Guide"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/environment.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Test Environment | Guide
 ---
 
 # Test Environment
 
-Vitest provides `environment` option to run code inside a specific environment. You can modify how environment behaves with `environmentOptions` option.
+Vitest provides [`environment`](/config/environment) option to run code inside a specific environment. You can modify how environment behaves with [`environmentOptions`](/config/environmentoptions) option.
 
 By default, you can use these environments:
 
 - `node` is default environment
-- `jsdom` emulates browser environment by providing Browser API, uses `jsdom` package
-- `happy-dom` emulates browser environment by providing Browser API, and considered to be faster than jsdom, but lacks some API, uses `happy-dom` package
-- `edge-runtime` emulates Vercel's edge-runtime, uses `@edge-runtime/vm` package
+- `jsdom` emulates browser environment by providing Browser API, uses [`jsdom`](https://github.com/jsdom/jsdom) package
+- `happy-dom` emulates browser environment by providing Browser API, and considered to be faster than jsdom, but lacks some API, uses [`happy-dom`](https://github.com/capricorn86/happy-dom) package
+- `edge-runtime` emulates Vercel's [edge-runtime](https://edge-runtime.vercel.app/), uses [`@edge-runtime/vm`](https://npmx.dev/package/@edge-runtime/vm) package
 
-**Info:**
-When using `jsdom` or `happy-dom` environments, Vitest follows the same rules that Vite does when importing CSS and assets. If importing external dependency fails with `unknown extension .css` error, you need to inline the whole import chain manually by adding all packages to `server.deps.inline`. For example, if the error happens in `package-3` in this import chain: `source code -> package-1 -> package-2 -> package-3`, you need to add all three packages to `server.deps.inline`.
+::: info
+When using `jsdom` or `happy-dom` environments, Vitest follows the same rules that Vite does when importing [CSS](https://vitejs.dev/guide/features.html#css) and [assets](https://vitejs.dev/guide/features.html#static-assets). If importing external dependency fails with `unknown extension .css` error, you need to inline the whole import chain manually by adding all packages to [`server.deps.inline`](/config/server#inline). For example, if the error happens in `package-3` in this import chain: `source code -> package-1 -> package-2 -> package-3`, you need to add all three packages to `server.deps.inline`.
 
 The `require` of CSS and assets inside the external dependencies are resolved automatically.
+:::
 
-**Warning:**
+::: warning
 "Environments" exist only when running tests in Node.js.
 
-`browser` is not considered an environment in Vitest. If you wish to run part of your tests using Browser Mode, you can create a test project.
+`browser` is not considered an environment in Vitest. If you wish to run part of your tests using [Browser Mode](/guide/browser/), you can create a [test project](/guide/browser/#projects-config).
+:::
 
 ## Environments for Specific Files
 
@@ -79,8 +76,9 @@ export default <Environment>{
 }
 ```
 
-**Warning:**
-Vitest requires `viteEnvironment` option on environment object (fallbacks to the Vitest environment name by default). It should be equal to `ssr`, `client` or any custom Vite environment name. This value determines which environment is used to process file.
+::: warning
+Vitest requires `viteEnvironment` option on environment object (fallbacks to the Vitest environment name by default). It should be equal to `ssr`, `client` or any custom [Vite environment](https://vite.dev/guide/api-environment) name. This value determines which environment is used to process file.
+:::
 
 You also have access to default Vitest environments through `vitest/runtime` entry:
 

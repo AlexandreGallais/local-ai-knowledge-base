@@ -1,10 +1,8 @@
 ---
-title: "Tutorial: Learn about advanced scenarios - ASP.NET MVC with EF Core (part 1 of 2)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/data/ef-mvc/advanced.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: "Tutorial: Learn about advanced scenarios - ASP.NET MVC with EF Core"
+description: "This tutorial introduces useful topics for going beyond the basics of developing ASP.NET Core web apps that use Entity Framework Core."
+ms.date: 03/27/2019
+ms.topic: tutorial
 ---
 
 # Tutorial: Learn about advanced scenarios - ASP.NET MVC with EF Core
@@ -13,6 +11,7 @@ In the previous tutorial, you implemented table-per-hierarchy inheritance. This 
 
 In this tutorial, you:
 
+> [!div class="checklist"]
 > * Perform raw SQL queries
 > * Call a query to return entities
 > * Call a query to return other types
@@ -25,13 +24,13 @@ In this tutorial, you:
 
 ## Prerequisites
 
-* Implement Inheritance
+* [Implement Inheritance](inheritance.md)
 
 ## Perform raw SQL queries
 
 One of the advantages of using the Entity Framework is that it avoids tying your code too closely to a particular method of storing data. It does this by generating SQL queries and commands for you, which also frees you from having to write them yourself. But there are exceptional scenarios when you need to run specific SQL queries that you have manually created. For these scenarios, the Entity Framework Code First API includes methods that enable you to pass SQL commands directly to the database. You have the following options in EF Core 1.0:
 
-* Use the `DbSet.FromSql` method for queries that return entity types. The returned objects must be of the type expected by the `DbSet` object, and they're automatically tracked by the database context unless you turn tracking off.
+* Use the `DbSet.FromSql` method for queries that return entity types. The returned objects must be of the type expected by the `DbSet` object, and they're automatically tracked by the database context unless you [turn tracking off](crud.md#disable-tracking-of-entity-objects-no-tracking-queries).
 
 * Use the `Database.ExecuteSqlCommand` for non-query commands.
 
@@ -45,31 +44,11 @@ The `DbSet<TEntity>` class provides a method that you can use to execute a query
 
 In `DepartmentsController.cs`, in the `Details` method, replace the code that retrieves a department with a `FromSql` method call, as shown in the following highlighted code:
 
-```csharp
-public async Task<IActionResult> Details(int? id)
-{
-    if (id == null)
-    {
-        return NotFound();
-    }
-
-    string query = "SELECT * FROM Department WHERE DepartmentID = {0}";
-    var department = await _context.Departments
-        .FromSql(query, id)
-        .Include(d => d.Administrator)
-        .AsNoTracking()
-        .FirstOrDefaultAsync();
-
-    if (department == null)
-    {
-        return NotFound();
-    }
-
-    return View(department);
-}
-```
+[!code-csharp[](intro/samples/cu/Controllers/DepartmentsController.cs?name=snippet_RawSQL&highlight=8,9,10)]
 
 To verify that the new code works correctly, select the **Departments** tab and then **Details** for one of the departments.
+
+![Department Details](advanced/_static/department-details.png)
 
 ## Call a query to return other types
 
@@ -77,77 +56,27 @@ Earlier you created a student statistics grid for the About page that showed the
 
 In `HomeController.cs`, replace the `About` method with the following code:
 
-```csharp
-public async Task<ActionResult> About()
-{
-    List<EnrollmentDateGroup> groups = new List<EnrollmentDateGroup>();
-    var conn = _context.Database.GetDbConnection();
-    try
-    {
-        await conn.OpenAsync();
-        using (var command = conn.CreateCommand())
-        {
-            string query = "SELECT EnrollmentDate, COUNT(*) AS StudentCount "
-                + "FROM Person "
-                + "WHERE Discriminator = 'Student' "
-                + "GROUP BY EnrollmentDate";
-            command.CommandText = query;
-            DbDataReader reader = await command.ExecuteReaderAsync();
-
-            if (reader.HasRows)
-            {
-                while (await reader.ReadAsync())
-                {
-                    var row = new EnrollmentDateGroup { EnrollmentDate = reader.GetDateTime(0), StudentCount = reader.GetInt32(1) };
-                    groups.Add(row);
-                }
-            }
-            reader.Dispose();
-        }
-    }
-    finally
-    {
-        conn.Close();
-    }
-    return View(groups);
-}
-```
+[!code-csharp[](intro/samples/cu/Controllers/HomeController.cs?name=snippet_UseRawSQL&highlight=3-32)]
 
 Add a using statement:
 
-```csharp
-using System.Data.Common;
-```
+[!code-csharp[](intro/samples/cu/Controllers/HomeController.cs?name=snippet_Usings2)]
 
 Run the app and go to the About page. It displays the same data it did before.
+
+![About page](advanced/_static/about.png)
 
 ## Call an update query
 
 Suppose Contoso University administrators want to perform global changes in the database, such as changing the number of credits for every course. If the university has a large number of courses, it would be inefficient to retrieve them all as entities and change them individually. In this section you'll implement a web page that enables the user to specify a factor by which to change the number of credits for all courses, and you'll make the change by executing a SQL UPDATE statement. The web page will look like the following illustration:
 
+![Update Course Credits page](advanced/_static/update-credits.png)
+
 In `CoursesController.cs`, add UpdateCourseCredits methods for HttpGet and HttpPost:
 
-```csharp
-public IActionResult UpdateCourseCredits()
-{
-    return View();
-}
-```
+[!code-csharp[](intro/samples/cu/Controllers/CoursesController.cs?name=snippet_UpdateGet)]
 
-```csharp
-[HttpPost]
-public async Task<IActionResult> UpdateCourseCredits(int? multiplier)
-{
-    if (multiplier != null)
-    {
-        ViewData["RowsAffected"] = 
-            await _context.Database.ExecuteSqlCommandAsync(
-                "UPDATE Course SET Credits = Credits * {0}",
-                parameters: multiplier);
-    }
-    return View();
-}
-```
+[!code-csharp[](intro/samples/cu/Controllers/CoursesController.cs?name=snippet_UpdatePost)]
 
 When the controller processes an HttpGet request, nothing is returned in `ViewData["RowsAffected"]`, and the view displays an empty text box and a submit button, as shown in the preceding illustration.
 
@@ -159,46 +88,21 @@ In the **Add New Item** dialog, click **ASP.NET Core** under **Installed** in th
 
 In `Views/Courses/UpdateCourseCredits.cshtml`, replace the template code with the following code:
 
-```cshtml
-﻿@{
-    ViewBag.Title = "UpdateCourseCredits";
-}
-
-<h2>Update Course Credits</h2>
-
-@if (ViewData["RowsAffected"] == null)
-{
-    <form asp-action="UpdateCourseCredits">
-        <div class="form-actions no-color">
-            <p>
-                Enter a number to multiply every course's credits by: @Html.TextBox("multiplier")
-            </p>
-            <p>
-                <input type="submit" value="Update" class="btn btn-default" />
-            </p>
-        </div>
-    </form>
-}
-@if (ViewData["RowsAffected"] != null)
-{
-    <p>
-        Number of rows updated: @ViewData["RowsAffected"]
-    </p>
-}
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-```
+[!code-cshtml[](intro/samples/cu/Views/Courses/UpdateCourseCredits.cshtml)]
 
 Run the `UpdateCourseCredits` method by selecting the **Courses** tab, then adding "/UpdateCourseCredits" to the end of the URL in the browser's address bar (for example: `http://localhost:5813/Courses/UpdateCourseCredits`). Enter a number in the text box:
 
+![Update Course Credits page](advanced/_static/update-credits.png)
+
 Click **Update**. You see the number of rows affected:
+
+![Update Course Credits page rows affected](advanced/_static/update-credits-rows-affected.png)
 
 Click **Back to List** to see the list of courses with the revised number of credits.
 
 Note that production code would ensure that updates always result in valid data. The simplified code shown here could multiply the number of credits enough to result in numbers greater than 5. (The `Credits` property has a `[Range(0, 5)]` attribute.) The update query would work but the invalid data could cause unexpected results in other parts of the system that assume the number of credits is 5 or less.
 
-For more information about raw SQL queries, see Raw SQL Queries.
+For more information about raw SQL queries, see [Raw SQL Queries](/ef/core/querying/raw-sql).
 
 ## Examine SQL queries
 
@@ -246,9 +150,9 @@ Many developers write code to implement the repository and unit of work patterns
 
 * EF includes features for implementing TDD without writing repository code.
 
-For information about how to implement the repository and unit of work patterns, see the Entity Framework 5 version of this tutorial series.
+For information about how to implement the repository and unit of work patterns, see [the Entity Framework 5 version of this tutorial series](/aspnet/mvc/overview/older-versions/getting-started-with-ef-5-using-mvc-4/implementing-the-repository-and-unit-of-work-patterns-in-an-asp-net-mvc-application).
 
-Entity Framework Core implements an in-memory database provider that can be used for testing. For more information, see Test with InMemory.
+Entity Framework Core implements an in-memory database provider that can be used for testing. For more information, see [Test with InMemory](/ef/core/miscellaneous/testing/in-memory).
 
 ## Automatic change detection
 
@@ -268,10 +172,104 @@ _context.ChangeTracker.AutoDetectChangesEnabled = false;
 
 ## EF Core source code and development plans
 
-The Entity Framework Core source is at https://github.com/dotnet/efcore. The EF Core repository contains nightly builds, issue tracking, feature specs, design meeting notes, and the roadmap for future development. You can file or find bugs, and contribute.
+The Entity Framework Core source is at [https://github.com/dotnet/efcore](https://github.com/dotnet/efcore). The EF Core repository contains nightly builds, issue tracking, feature specs, design meeting notes, and [the roadmap for future development](https://github.com/dotnet/efcore/wiki/Roadmap). You can file or find bugs, and contribute.
 
 Although the source code is open, Entity Framework Core is fully supported as a Microsoft product. The Microsoft Entity Framework team keeps control over which contributions are accepted and tests all code changes to ensure the quality of each release.
 
 ## Reverse engineer from existing database
 
-To reverse engineer a data model including entity classes from an existing database, use the scaffold-dbcontext command. See the getting-started tutorial.
+To reverse engineer a data model including entity classes from an existing database, use the [scaffold-dbcontext](/ef/core/miscellaneous/cli/powershell#scaffold-dbcontext) command. See the [getting-started tutorial](/ef/core/get-started/aspnetcore/existing-db).
+
+<a id="dynamic-linq"></a>
+
+## Use dynamic LINQ to simplify code
+
+The [third tutorial in this series](sort-filter-page.md) shows how to write LINQ code by hard-coding column names in a `switch` statement. With two columns to choose from, this works fine, but if you have many columns the code could get verbose. To solve that problem, you can use the `EF.Property` method to specify the name of the property as a string. To try out this approach, replace the `Index` method in the `StudentsController` with the following code.
+
+[!code-csharp[](intro/samples/cu/Controllers/StudentsController.cs?name=snippet_DynamicLinq)]
+
+## Acknowledgments
+
+Tom Dykstra and Rick Anderson (twitter @RickAndMSFT) wrote this tutorial. Rowan Miller, Diego Vega, and other members of the Entity Framework team assisted with code reviews and helped debug issues that arose while we were writing code for the tutorials. John Parente and Paul Goldman worked on updating the tutorial for ASP.NET Core 2.2.
+
+<a id="common-errors"></a>
+
+## Troubleshoot common errors
+
+### ContosoUniversity.dll used by another process
+
+Error message:
+
+> Cannot open '...bin\Debug\netcoreapp1.0\ContosoUniversity.dll' for writing -- 'The process cannot access the file '...\bin\Debug\netcoreapp1.0\ContosoUniversity.dll' because it is being used by another process.
+
+Solution:
+
+Stop the site in IIS Express. Go to the Windows System Tray, find IIS Express and right-click its icon, select the Contoso University site, and then click **Stop Site**.
+
+### Migration scaffolded with no code in Up and Down methods
+
+Possible cause:
+
+The EF CLI commands don't automatically close and save code files. If you have unsaved changes when you run the `migrations add` command, EF won't find your changes.
+
+Solution:
+
+Run the `migrations remove` command, save your code changes and rerun the `migrations add` command.
+
+### Errors while running database update
+
+It's possible to get other errors when making schema changes in a database that has existing data. If you get migration errors you can't resolve, you can either change the database name in the connection string or delete the database. With a new database, there's no data to migrate, and the update-database command is much more likely to complete without errors.
+
+The simplest approach is to rename the database in `appsettings.json`. The next time you run `database update`, a new database will be created.
+
+To delete a database in SSOX, right-click the database, click **Delete**, and then in the **Delete Database** dialog box select **Close existing connections** and click **OK**.
+
+To delete a database by using the CLI, run the `database drop` CLI command:
+
+```dotnetcli
+dotnet ef database drop
+```
+
+### Error locating SQL Server instance
+
+Error Message:
+
+> A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SQL Network Interfaces, error: 26 - Error Locating Server/Instance Specified)
+
+Solution:
+
+Check the connection string. If you have manually deleted the database file, change the name of the database in the construction string to start over with a new database.
+
+## Get the code
+
+[Download or view the completed application.](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/data/ef-mvc/intro/samples/cu-final)
+
+## Related content
+
+For more information about EF Core, see the [Entity Framework Core documentation](/ef/core). A book is also available: [Entity Framework Core in Action](https://www.manning.com/books/entity-framework-core-in-action).
+
+For information on how to deploy a web app, see [Host and deploy ASP.NET Core](../../host-and-deploy/index.md).
+
+For information about other topics related to ASP.NET Core MVC, such as authentication and authorization, see [Overview of ASP.NET Core](../../overview.md).
+
+[!INCLUDE[](~/includes/reliableWAP.md)]
+
+## Next steps
+
+In this tutorial, you:
+
+> [!div class="checklist"]
+> * Performed raw SQL queries
+> * Called a query to return entities
+> * Called a query to return other types
+> * Called an update query
+> * Examined SQL queries
+> * Created an abstraction layer
+> * Learned about Automatic change detection
+> * Learned about EF Core source code and development plans
+> * Learned how to use dynamic LINQ to simplify code
+
+This completes this series of tutorials on using the Entity Framework Core in an ASP.NET Core MVC application. This series worked with a new database; an alternative is to  [reverse engineer a model from an existing database](/ef/core/managing-schemas/scaffolding).
+
+> [!div class="nextstepaction"]
+> [Tutorial: EF Core with MVC, existing database](/ef/core/get-started/aspnetcore/existing-db?toc=/aspnet/core/toc.json&bc=/aspnet/core/breadcrumb/toc.json)

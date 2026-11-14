@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: TryParse and BindAsync methods are validated"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/6/tryparse-bindasync-validation.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 6.0 where `TryParse` and `BindAsync` methods on parameter types for `Map*` methods are validated at startup."
+ms.date: 09/22/2021
+ms.custom: https://github.com/aspnet/Announcements/issues/472
 ---
-
 # TryParse and BindAsync methods are validated
 
 ASP.NET Core now validates `TryParse` and `BindAsync` methods on parameter types for `Map*` methods. If no valid method is found, ASP.NET Core looks for invalid methods and throws an exception at startup if one is found. The exception helps to avoid unexpected behavior by alerting you that your method signature may be incorrect.
@@ -45,7 +42,7 @@ Boolean TryParse(System.String)
 
 ## Type of breaking change
 
-This change can affect binary compatibility and source compatibility.
+This change can affect [binary compatibility](/dotnet/core/compatibility/categories#binary-compatibility) and [source compatibility](/dotnet/core/compatibility/categories#source-compatibility).
 
 ## Reason for change
 
@@ -56,7 +53,7 @@ This change was made so that developers are made aware of `BindAsync` and `TryPa
 If your type has a `BindAsync` or `TryParse` method with different syntax for a reason other than parameter binding, you'll now encounter an exception at startup. To avoid this behavior, there are multiple strategies available:
 
 - Change your `BindAsync` or `TryParse` method to be `internal` or `private`.
-- Add a new `BindAsync` or `TryParse` method that has the syntax the framework looks for—invalid methods are ignored if a valid one is found.
+- Add a new `BindAsync` or `TryParse` method that has the syntax the framework looks for&mdash;invalid methods are ignored if a valid one is found.
 - Mark your parameter as `[FromBody]`.
 
 ## Affected APIs

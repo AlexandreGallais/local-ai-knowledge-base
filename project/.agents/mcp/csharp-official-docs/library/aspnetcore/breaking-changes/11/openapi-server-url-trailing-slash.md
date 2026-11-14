@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: OpenAPI server URL no longer has a trailing slash when PathBase is empty"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/11/openapi-server-url-trailing-slash.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+ai-usage: ai-assisted
+description: "Learn about the breaking change in ASP.NET Core 11 where the generated OpenAPI document's servers[0].url no longer ends with a trailing slash when the request PathBase is empty."
+ms.date: 06/04/2026
 ---
-
 # OpenAPI server URL no longer has a trailing slash when PathBase is empty
 
-The server URL that ASP.NET Core writes into the generated OpenAPI document no longer ends with a trailing slash when the request `Microsoft.AspNetCore.Http.HttpRequest.PathBase` is empty. Tooling or contract tests that string-compare `servers[0].url` need to be updated.
+The server URL that ASP.NET Core writes into the generated OpenAPI document no longer ends with a trailing slash when the request <xref:Microsoft.AspNetCore.Http.HttpRequest.PathBase> is empty. Tooling or contract tests that string-compare `servers[0].url` need to be updated.
 
 ## Version introduced
 
@@ -43,11 +40,11 @@ If `PathBase` has an explicit value (for example, `/api`), the URL is unchanged 
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](/dotnet/core/compatibility/categories#behavioral-change).
 
 ## Reason for change
 
-The previous behavior didn't match the OpenAPI 3.1.0 specification examples, which use server URLs without a trailing slash. The change aligns the generated document with the spec and avoids surprises in downstream tooling that's sensitive to the difference. For more information, see dotnet/aspnetcore#64716.
+The previous behavior didn't match the OpenAPI 3.1.0 specification examples, which use server URLs without a trailing slash. The change aligns the generated document with the spec and avoids surprises in downstream tooling that's sensitive to the difference. For more information, see [dotnet/aspnetcore#64716](https://github.com/dotnet/aspnetcore/pull/64716).
 
 ## Recommended action
 
@@ -75,4 +72,4 @@ builder.Services.AddOpenApi(options =>
 ## Affected APIs
 
 - `Microsoft.AspNetCore.OpenApi.OpenApiRouteHandlerBuilderExtensions`
-- Generated `servers[0].url` in the OpenAPI document produced by `AddOpenApi`.
+- Generated `servers[0].url` in the OpenAPI document produced by [`AddOpenApi`](../../fundamentals/openapi/aspnetcore-openapi.md).

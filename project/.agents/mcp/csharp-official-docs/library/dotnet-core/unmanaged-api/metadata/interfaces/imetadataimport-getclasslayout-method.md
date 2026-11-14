@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataImport::GetClassLayout Method"
 title: "IMetaDataImport::GetClassLayout Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-getclasslayout-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.GetClassLayout"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::GetClassLayout"
+  - "GetClassLayout method, IMetaDataImport interface [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::GetClassLayout Method
 
 Gets layout information for the class referenced by the specified TypeDef token.
@@ -33,7 +40,7 @@ HRESULT GetClassLayout  (
  [out] One of the values 1, 2, 4, 8, or 16, representing the pack size of the class.
 
  `rFieldOffset`
- [out] An array of COR_FIELD_OFFSET values.
+ [out] An array of [COR_FIELD_OFFSET](../structures/cor-field-offset-structure.md) values.
 
  `cMax`
  [in] The maximum size of the `rFieldOffset` array.
@@ -46,7 +53,7 @@ HRESULT GetClassLayout  (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -54,5 +61,5 @@ HRESULT GetClassLayout  (
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

@@ -1,12 +1,3 @@
----
-title: "core::mem::drop_guard"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/mem/drop_guard.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::mem::drop_guard
 
 ## struct DropGuard
@@ -22,6 +13,7 @@ This is useful for quickly creating destructors inline.
 # Examples
 
 ```rust
+# #![allow(unused)]
 
 use std::mem::DropGuard;
 
@@ -50,6 +42,7 @@ Create a new instance of `DropGuard`.
 # Example
 
 ```rust
+# #![allow(unused)]
 
 use std::mem::DropGuard;
 
@@ -73,6 +66,7 @@ owned resources.
 # Example
 
 ```rust
+# #![allow(unused)]
 
 use std::mem::DropGuard;
 

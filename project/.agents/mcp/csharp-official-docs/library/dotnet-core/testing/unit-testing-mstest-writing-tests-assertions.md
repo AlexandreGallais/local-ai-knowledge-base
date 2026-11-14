@@ -1,15 +1,15 @@
 ---
-title: "MSTest assertions (part 1 of 2)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/unit-testing-mstest-writing-tests-assertions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: MSTest assertions
+description: Learn about MSTest assertions including Assert, StringAssert, and CollectionAssert classes for validating test results.
+author: Evangelink
+ms.author: amauryleve
+ms.date: 10/01/2026
+ai-usage: ai-assisted
 ---
 
 # MSTest assertions
 
-Use the `Assert` classes of the `Microsoft.VisualStudio.TestTools.UnitTesting` namespace to verify specific functionality. A test method exercises the code in your application but reports correctness only when you include `Assert` statements.
+Use the `Assert` classes of the <xref:Microsoft.VisualStudio.TestTools.UnitTesting> namespace to verify specific functionality. A test method exercises the code in your application but reports correctness only when you include `Assert` statements.
 
 ## Overview
 
@@ -21,7 +21,7 @@ MSTest provides three assertion classes:
 | `StringAssert` | String-specific assertions for patterns, substrings, and comparisons. |
 | `CollectionAssert` | Collection assertions for comparing and validating collections. |
 
-> **Important:**
+> [!IMPORTANT]
 > For new code, always use the `Assert` class. The `StringAssert` and `CollectionAssert` classes are likely to be deprecated in a future release. They're maintained primarily for backward compatibility, but they're not recommended because splitting assertions across three types hurts discoverability.
 
 All assertion methods accept an optional message parameter that displays when the assertion fails, helping you identify the cause:
@@ -32,9 +32,9 @@ Assert.AreEqual(expected, actual, "Values should match after processing");
 
 ## The `Assert` class
 
-Use the `Microsoft.VisualStudio.TestTools.UnitTesting.Assert` class to verify that the code under test behaves as expected.
+Use the <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert> class to verify that the code under test behaves as expected.
 
-> **Note:**
+> [!NOTE]
 > Starting with MSTest 4.0, all `Assert` APIs capture the argument expression and include it in failure messages. This support provides richer diagnostics without a manual `message` parameter.
 
 ### Common assertion methods
@@ -80,46 +80,46 @@ Assert.That(order.Total > 0);
 
 ### Available APIs
 
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreNotEqual*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreNotSame*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreSame*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Contains*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ContainsSingle*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.DoesNotContain*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.DoesNotEndWith*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.DoesNotMatchRegex*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.DoesNotStartWith*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.EndsWith*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Fail*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.HasCount*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Inconclusive*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsEmpty*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsExactInstanceOfType*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsFalse*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsGreaterThan*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsGreaterThanOrEqualTo*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsInRange*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsInstanceOfType*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsLessThan*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsLessThanOrEqualTo*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNegative*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNotEmpty*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNotExactInstanceOfType*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNotInstanceOfType*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNotNull*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNull*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsPositive*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsTrue*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.MatchesRegex*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.StartsWith*`
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreNotEqual*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreNotSame*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreSame*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Contains*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ContainsSingle*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.DoesNotContain*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.DoesNotEndWith*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.DoesNotMatchRegex*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.DoesNotStartWith*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.EndsWith*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Fail*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.HasCount*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Inconclusive*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsEmpty*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsExactInstanceOfType*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsFalse*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsGreaterThan*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsGreaterThanOrEqualTo*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsInRange*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsInstanceOfType*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsLessThan*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsLessThanOrEqualTo*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNegative*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNotEmpty*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNotExactInstanceOfType*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNotInstanceOfType*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNotNull*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNull*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsPositive*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsTrue*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.MatchesRegex*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.StartsWith*?displayProperty=nameWithType>
 - `Assert.That`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Throws*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ThrowsAsync*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ThrowsExactly*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ThrowsExactlyAsync*`
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Throws*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ThrowsAsync*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ThrowsExactly*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ThrowsExactlyAsync*?displayProperty=nameWithType>
 
-> **Note:**
+> [!NOTE]
 > Starting with MSTest 3.8, collection assertions include `Assert.Contains`, `Assert.DoesNotContain`, `Assert.HasCount`, `Assert.IsEmpty`, `Assert.IsNotEmpty`, and `Assert.ContainsSingle`.
 >
 > Starting with MSTest 3.10, comparison assertions include `Assert.IsInRange`, `Assert.IsGreaterThan`, `Assert.IsGreaterThanOrEqualTo`, `Assert.IsLessThan`, `Assert.IsLessThanOrEqualTo`, `Assert.IsPositive`, and `Assert.IsNegative`.
@@ -130,7 +130,7 @@ Assert.That(order.Total > 0);
 
 ### New collection and equivalence assertions in MSTest 4.3
 
-> **Note:**
+> [!NOTE]
 > The following assertion methods were introduced in MSTest 4.3.0.
 
 - `Assert.AreSequenceEqual` / `Assert.AreNotSequenceEqual` — element-wise sequence comparison. Pass `SequenceOrder.InAnyOrder` to ignore element order.
@@ -145,13 +145,13 @@ When comparing collections, prefer these methods over `Assert.AreEqual`, which c
 MSTest 4.3 also adds:
 
 - The experimental `Assert.AddValueFormatter` API to customize how values are rendered in assertion failure messages.
-- `System.Span`1` and `System.Memory`1` overloads for `Assert.HasCount`.
+- <xref:System.Span`1> and <xref:System.Memory`1> overloads for `Assert.HasCount`.
 - Structured assertion failure messages for `Assert.IsTrue`, `Assert.IsFalse`, `Assert.IsNull`, and `Assert.IsNotNull` that include the evaluated expression.
 - Interpolated-string message overloads for the async `Assert.ThrowsAsync`/`Assert.ThrowsExactlyAsync` methods, and rejection of `ValueTask<TResult>`-returning delegates that would otherwise not be awaited.
 - Complete exception details, including stack traces and inner exceptions, in `Assert.Throws*` failure messages.
 - Assertion failure stacks that hide MSTest implementation frames and render built-in numeric values at full precision.
 
-MSTest 4.4 adds span and memory overloads to `Assert.IsEmpty`, `Assert.IsNotEmpty`, and the remaining collection APIs. The overloads accept `System.Span`1`, `System.ReadOnlySpan`1`, `System.Memory`1`, and `System.ReadOnlyMemory`1`:
+MSTest 4.4 adds span and memory overloads to `Assert.IsEmpty`, `Assert.IsNotEmpty`, and the remaining collection APIs. The overloads accept <xref:System.Span`1>, <xref:System.ReadOnlySpan`1>, <xref:System.Memory`1>, and <xref:System.ReadOnlyMemory`1>:
 
 - All-item checks: `AreAllDistinct`, `AreAllNotNull`, and `AreAllOfType`.
 - Comparisons: `AreEquivalent`, `AreNotEquivalent`, `AreSequenceEqual`, and `AreNotSequenceEqual`.
@@ -159,14 +159,14 @@ MSTest 4.4 adds span and memory overloads to `Assert.IsEmpty`, `Assert.IsNotEmpt
 
 With MSTest 4.4 and MTP 2.4, capable IDEs and reporters receive assertion expected and actual values as separate structured properties. Consumers don't need to parse these values from the failure message.
 
-`Assert.AddValueFormatter` returns an `System.IDisposable` registration. Dispose the registration to remove the formatter. The formatter applies only to the current asynchronous context, so parallel tests can use different formatters without changing each other's output. Because the API is experimental in MSTest 4.3, acknowledge or suppress the `MSTESTEXP` diagnostic before you use it.
+`Assert.AddValueFormatter` returns an <xref:System.IDisposable> registration. Dispose the registration to remove the formatter. The formatter applies only to the current asynchronous context, so parallel tests can use different formatters without changing each other's output. Because the API is experimental in MSTest 4.3, acknowledge or suppress the `MSTESTEXP` diagnostic before you use it.
 
 ### Soft assertions with `Assert.Scope()`
 
-> **Important:**
+> [!IMPORTANT]
 > `Assert.Scope()` is an experimental API. Using it produces the `MSTESTEXP` diagnostic, which you suppress (for example, with `#pragma warning disable MSTESTEXP` or in your project's `.editorconfig` file) to acknowledge that the shape and behavior of the API can change in future releases.
 
-By default, every assertion throws an `Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException` as soon as it fails, which ends the test immediately. `Assert.Scope()` introduces *soft assertions*: while a scope is active, assertion failures are collected instead of thrown, so execution continues and you can see every failure in the scope at once. When the scope is disposed, the collected failures are reported together:
+By default, every assertion throws an <xref:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException> as soon as it fails, which ends the test immediately. `Assert.Scope()` introduces *soft assertions*: while a scope is active, assertion failures are collected instead of thrown, so execution continues and you can see every failure in the scope at once. When the scope is disposed, the collected failures are reported together:
 
 ```csharp
 [TestMethod]
@@ -205,7 +205,7 @@ If a failed assertion would lead to a `NullReferenceException` (or any other exc
 
 #### Value-returning assertions return `null`/`default` on failure inside a scope
 
-Some assertions return a value on success—for example, `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Throws*` and `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ThrowsExactly*` return the caught exception, and `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ContainsSingle*` returns the matched element. When one of these assertions *fails* inside a scope, the failure is collected and the method returns `null`/`default` instead of throwing:
+Some assertions return a value on success—for example, <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Throws*> and <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ThrowsExactly*> return the caught exception, and <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.ContainsSingle*> returns the matched element. When one of these assertions *fails* inside a scope, the failure is collected and the method returns `null`/`default` instead of throwing:
 
 ```csharp
 using (Assert.Scope())
@@ -221,7 +221,7 @@ Don't rely on the value returned by a soft assertion inside a scope. If you need
 
 #### `Assert.Fail` and `Assert.Inconclusive` always throw
 
-`Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Fail*` and `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Inconclusive*` are never soft. They always throw immediately, even inside a scope, because they express an unconditional test outcome. Use one of them when a condition is critical and the rest of the test can't meaningfully continue without it.
+<xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Fail*> and <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Inconclusive*> are never soft. They always throw immediately, even inside a scope, because they express an unconditional test outcome. Use one of them when a condition is critical and the rest of the test can't meaningfully continue without it.
 
 #### Nested scopes aren't supported
 
@@ -229,15 +229,125 @@ You can't nest `Assert.Scope()` calls. Only one assertion scope can be active at
 
 ## The `StringAssert` class
 
-Use the `Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert` class to compare and examine strings.
+Use the <xref:Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert> class to compare and examine strings.
 
-> **Warning:**
-> The `StringAssert` class is likely to be deprecated in a future release. It's maintained for backward compatibility only and isn't recommended for new code. All `StringAssert` methods have equivalents on the `Assert` class, which offers better discoverability. To migrate existing usages, see analyzer MSTEST0046.
+> [!WARNING]
+> The `StringAssert` class is likely to be deprecated in a future release. It's maintained for backward compatibility only and isn't recommended for new code. All `StringAssert` methods have equivalents on the `Assert` class, which offers better discoverability. To migrate existing usages, see analyzer [MSTEST0046](mstest-analyzers/mstest0046.md).
 
 Available APIs are:
 
-- `Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert.Contains*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert.DoesNotMatch*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert.EndsWith*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert.Matches*`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert.StartsWith*`
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert.Contains*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert.DoesNotMatch*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert.EndsWith*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert.Matches*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert.StartsWith*?displayProperty=nameWithType>
+
+## The `CollectionAssert` class
+
+Use the <xref:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert> class to compare collections of objects, or to verify the state of a collection.
+
+> [!WARNING]
+> The `CollectionAssert` class is likely to be deprecated in a future release. It's maintained primarily for backward compatibility and isn't recommended for new code. When an equivalent method exists on `Assert` (such as `Assert.Contains`, `Assert.DoesNotContain`, or `Assert.HasCount`), use `Assert` for better discoverability.
+
+Available APIs are:
+
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert.AllItemsAreInstancesOfType*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert.AllItemsAreNotNull*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert.AllItemsAreUnique*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert.AreEqual*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert.AreEquivalent*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert.AreNotEqual*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert.AreNotEquivalent*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert.Contains*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert.DoesNotContain*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert.IsNotSubsetOf*?displayProperty=nameWithType>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert.IsSubsetOf*?displayProperty=nameWithType>
+
+## Create custom assertions with `Assert.That`
+
+The built-in assertion methods don't cover every scenario. To extend the assertion infrastructure with your own checks, MSTest exposes the <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.That?displayProperty=nameWithType> singleton property as an extensibility hook. You add custom assertions as C# extension methods on the `Assert` instance type, and callers invoke them with the familiar `Assert.That.MyAssertion(...)` syntax.
+
+For better discoverability, organize project-wide assertions in a dedicated static class. Custom assertions reached through `Assert.That` show up alongside the built-in methods in IntelliSense, so consumers don't have to remember a separate helper type.
+
+### Author a custom assertion
+
+Add an extension method that targets the `Assert` type and throws <xref:Microsoft.VisualStudio.TestTools.UnitTesting.AssertFailedException> when the condition fails:
+
+```csharp
+using System;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+public static class CustomAssertExtensions
+{
+    public static void IsPrime(this Assert assert, int value)
+    {
+        if (value < 2 || Enumerable.Range(2, (int)Math.Sqrt(value) - 1).Any(i => value % i == 0))
+        {
+            throw new AssertFailedException($"Assert.That.IsPrime failed. Value <{value}> is not a prime number.");
+        }
+    }
+}
+```
+
+### Use a custom assertion
+
+After you import the namespace that contains your extension methods, call your custom assertion through `Assert.That`:
+
+```csharp
+[TestMethod]
+public void Compute_ReturnsPrime()
+{
+    int result = _calculator.NextPrime(10);
+    Assert.That.IsPrime(result);
+}
+```
+
+### Extension hooks on `StringAssert` and `CollectionAssert`
+
+The <xref:Microsoft.VisualStudio.TestTools.UnitTesting.StringAssert.That?displayProperty=nameWithType> and <xref:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert.That?displayProperty=nameWithType> properties expose the same singleton pattern for backward compatibility. For new custom assertions, always target `Assert.That`. Otherwise, your helpers inherit the same discoverability problems as the legacy classes, and they'll need migration if `StringAssert` and `CollectionAssert` are deprecated.
+
+### `Assert.That` property versus `Assert.That(...)` method
+
+> [!NOTE]
+> Don't confuse the `Assert.That` singleton *property*—used as an extensibility hook—with the `Assert.That(() => condition)` *method* added in MSTest 3.8. The latter accepts a Boolean expression and produces detailed failure messages by analyzing the expression tree (for example, `Assert.That(() => order.Total > 0)`). The two APIs share a name but serve different purposes.
+
+## Best practices
+
+- **Use specific assertions**: Prefer `AreEqual` over `IsTrue(a == b)` for better failure messages.
+
+- **Include descriptive messages**: Help identify failures quickly with clear assertion messages.
+
+- **Test one thing at a time**: Each test method should verify a single behavior.
+
+- **Use `Throws`/`ThrowsExactly` for exceptions**: In MSTest v3.8+, prefer `Assert.Throws`, `Assert.ThrowsExactly`, and their async counterparts (`ThrowsAsync`, `ThrowsExactlyAsync`) over the `ExpectedException` attribute.
+
+- **Prefer `Assert` over `StringAssert`/`CollectionAssert`**: For better discoverability and consistency, use the `Assert` class. The `StringAssert` and `CollectionAssert` classes are likely to be deprecated in a future release.
+
+- **Extend `Assert.That` for custom assertions**: For consistent discoverability, add custom assertions as extension methods on `Assert` and invoke them through `Assert.That`. Don't target `StringAssert.That` or `CollectionAssert.That` in new code.
+
+## Related analyzers
+
+The following analyzers help ensure proper usage of assertions:
+
+- [MSTEST0006](mstest-analyzers/mstest0006.md) - Avoid `ExpectedException` attribute, use `Assert.Throws` methods instead.
+- [MSTEST0017](mstest-analyzers/mstest0017.md) - Assertion arguments should be passed in the correct order.
+- [MSTEST0023](mstest-analyzers/mstest0023.md) - Do not negate boolean assertions.
+- [MSTEST0025](mstest-analyzers/mstest0025.md) - Prefer `Assert.Fail` over always-false conditions.
+- [MSTEST0026](mstest-analyzers/mstest0026.md) - Assertion arguments should avoid conditional access.
+- [MSTEST0032](mstest-analyzers/mstest0032.md) - Review always-true assert conditions.
+- [MSTEST0037](mstest-analyzers/mstest0037.md) - Use proper assert methods.
+- [MSTEST0038](mstest-analyzers/mstest0038.md) - Avoid `Assert.AreSame` with value types.
+- [MSTEST0039](mstest-analyzers/mstest0039.md) - Use newer `Assert.Throws` methods.
+- [MSTEST0040](mstest-analyzers/mstest0040.md) - Avoid using asserts in async void context.
+- [MSTEST0046](mstest-analyzers/mstest0046.md) - Use `Assert` instead of `StringAssert`.
+- [MSTEST0051](mstest-analyzers/mstest0051.md) - `Assert.Throws` should contain a single statement.
+- [MSTEST0053](mstest-analyzers/mstest0053.md) - Avoid `Assert` format parameters.
+- [MSTEST0058](mstest-analyzers/mstest0058.md) - Avoid asserts in catch blocks.
+
+## See also
+
+- [Write tests in MSTest](unit-testing-mstest-writing-tests.md)
+- [Data-driven testing](unit-testing-mstest-writing-tests-data-driven.md)
+- [TestContext class](unit-testing-mstest-writing-tests-testcontext.md)
+- [MSTest analyzers](mstest-analyzers/overview.md)

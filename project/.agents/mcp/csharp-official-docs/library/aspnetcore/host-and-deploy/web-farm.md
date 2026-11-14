@@ -1,39 +1,38 @@
 ---
-title: "Host ASP.NET Core in a web farm"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/host-and-deploy/web-farm.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Host ASP.NET Core in a web farm
+description: Learn how to host multiple instances of an ASP.NET Core app with shared resources in a web farm environment.
+monikerRange: '>= aspnetcore-2.1'
+ms.date: 01/13/2020
 ---
-
 # Host ASP.NET Core in a web farm
 
-By Chris Ross
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+By [Chris Ross](https://github.com/Tratcher)
 
 A *web farm* is a group of two or more web servers (or *nodes*) that host multiple instances of an app. When requests from users arrive to a web farm, a *load balancer* distributes the requests to the web farm's nodes. Web farms improve:
 
 * **Reliability/availability**: When one or more nodes fail, the load balancer can route requests to other functioning nodes to continue processing requests.
 * **Capacity/performance**: Multiple nodes can process more requests than a single server. The load balancer balances the workload by distributing requests to the nodes.
-* **Scalability**: When more or less capacity is required, the number of active nodes can be increased or decreased to match the workload. Web farm platform technologies, such as Azure App Service, can automatically add or remove nodes at the request of the system administrator or automatically without human intervention.
+* **Scalability**: When more or less capacity is required, the number of active nodes can be increased or decreased to match the workload. Web farm platform technologies, such as [Azure App Service](https://azure.microsoft.com/services/app-service/), can automatically add or remove nodes at the request of the system administrator or automatically without human intervention.
 * **Maintainability**: Nodes of a web farm can rely on a set of shared services, which results in easier system management. For example, the nodes of a web farm can rely upon a single database server and a common network location for static resources, such as images and downloadable files.
 
 This topic describes configuration and dependencies for ASP.NET core apps hosted in a web farm that rely upon shared resources.
 
 ## General configuration
 
-Host and deploy ASP.NET Core
-Learn how to set up hosting environments and deploy ASP.NET Core apps. Configure a process manager on each node of the web farm to automate app starts and restarts. Each node requires the ASP.NET Core runtime. For more information, see the topics in the Host and deploy area of the documentation.
+[Host and deploy ASP.NET Core](index.md)  
+Learn how to set up hosting environments and deploy ASP.NET Core apps. Configure a process manager on each node of the web farm to automate app starts and restarts. Each node requires the ASP.NET Core runtime. For more information, see the topics in the [Host and deploy](index.md) area of the documentation.
 
-Configure ASP.NET Core to work with proxy servers and load balancers
+[Configure ASP.NET Core to work with proxy servers and load balancers](proxy-load-balancer.md)  
 Learn about configuration for apps hosted behind proxy servers and load balancers, which often obscure important request information.
 
-Deploy ASP.NET Core apps to Azure App Service
-Azure App Service is a Microsoft cloud computing platform service for hosting web apps, including ASP.NET Core. App Service is a fully managed platform that provides automatic scaling, load balancing, patching, and continuous deployment.
+[Deploy ASP.NET Core apps to Azure App Service](azure-apps/index.md)  
+[Azure App Service](https://azure.microsoft.com/services/app-service/) is a [Microsoft cloud computing platform service](https://azure.microsoft.com/) for hosting web apps, including ASP.NET Core. App Service is a fully managed platform that provides automatic scaling, load balancing, patching, and continuous deployment.
 
 ## App data
 
-When an app is scaled to multiple instances, there might be app state that requires sharing across nodes. If the state is transient, consider sharing an `Microsoft.Extensions.Caching.Distributed.IDistributedCache`. If the shared state requires persistence, consider storing the shared state in a database.
+When an app is scaled to multiple instances, there might be app state that requires sharing across nodes. If the state is transient, consider sharing an <xref:Microsoft.Extensions.Caching.Distributed.IDistributedCache>. If the shared state requires persistence, consider storing the shared state in a database.
 
 ## Required configuration
 
@@ -41,23 +40,23 @@ Data Protection and Caching require configuration for apps deployed to a web far
 
 ### Data Protection
 
-The ASP.NET Core Data Protection system is used by apps to protect data. Data Protection relies upon a set of cryptographic keys stored in a *key ring*. When the Data Protection system is initialized, it applies default settings that store the key ring locally. Under the default configuration, a unique key ring is stored on each node of the web farm. Consequently, each web farm node can't decrypt data that's encrypted by an app on any other node. The default configuration isn't generally appropriate for hosting apps in a web farm. An alternative to implementing a shared key ring is to always route user requests to the same node. For more information on Data Protection system configuration for web farm deployments, see Configure ASP.NET Core Data Protection.
+The [ASP.NET Core Data Protection system](../security/data-protection/introduction.md) is used by apps to protect data. Data Protection relies upon a set of cryptographic keys stored in a *key ring*. When the Data Protection system is initialized, it applies [default settings](../security/data-protection/configuration/default-settings.md) that store the key ring locally. Under the default configuration, a unique key ring is stored on each node of the web farm. Consequently, each web farm node can't decrypt data that's encrypted by an app on any other node. The default configuration isn't generally appropriate for hosting apps in a web farm. An alternative to implementing a shared key ring is to always route user requests to the same node. For more information on Data Protection system configuration for web farm deployments, see [Configure ASP.NET Core Data Protection](../security/data-protection/configuration/overview.md).
 
 ### Caching
 
-In a web farm environment, the caching mechanism must share cached items across the web farm's nodes. Caching must either rely upon a common Redis cache, a shared SQL Server database, or a custom caching implementation that shares cached items across the web farm. For more information, see Distributed caching in ASP.NET Core.
+In a web farm environment, the caching mechanism must share cached items across the web farm's nodes. Caching must either rely upon a common Redis cache, a shared SQL Server database, or a custom caching implementation that shares cached items across the web farm. For more information, see [Distributed caching in ASP.NET Core](../performance/caching/distributed.md).
 
 ## Dependent components
 
 The following scenarios don't require additional configuration, but they depend on technologies that require configuration for web farms.
 
-| Scenario | Depends on … |
+| Scenario | Depends on &hellip; |
 | -------- | ------------------- |
-| Authentication | Data Protection (see Configure ASP.NET Core Data Protection).For more information, see Use cookie authentication without ASP.NET Core Identity and Share authentication cookies among ASP.NET apps. |
-| Identity | Authentication and database configuration.For more information, see Introduction to Identity on ASP.NET Core. |
-| Session | Data Protection (encrypted cookies) (see Configure ASP.NET Core Data Protection) and Caching (see Distributed caching in ASP.NET Core).For more information, see Session and state management: Session state. |
-| TempData | Data Protection (encrypted cookies) (see Configure ASP.NET Core Data Protection) or Session (see Session and state management: Session state).For more information, see Session and state management: TempData. |
-| Antiforgery | Data Protection (see Configure ASP.NET Core Data Protection).For more information, see Prevent Cross-Site Request Forgery (XSRF/CSRF) attacks in ASP.NET Core. |
+| Authentication | Data Protection (see [Configure ASP.NET Core Data Protection](../security/data-protection/configuration/overview.md)).<br><br>For more information, see [Use cookie authentication without ASP.NET Core Identity](../security/authentication/cookie.md) and [Share authentication cookies among ASP.NET apps](../security/cookie-sharing.md). |
+| Identity | Authentication and database configuration.<br><br>For more information, see [Introduction to Identity on ASP.NET Core](../security/authentication/identity.md). |
+| Session | Data Protection (encrypted cookies) (see [Configure ASP.NET Core Data Protection](../security/data-protection/configuration/overview.md)) and Caching (see [Distributed caching in ASP.NET Core](../performance/caching/distributed.md)).<br><br>For more information, see [Session and state management: Session state](../fundamentals/app-state.md#session-state). |
+| TempData | Data Protection (encrypted cookies) (see [Configure ASP.NET Core Data Protection](../security/data-protection/configuration/overview.md)) or Session (see [Session and state management: Session state](../fundamentals/app-state.md#session-state)).<br><br>For more information, see [Session and state management: TempData](../fundamentals/app-state.md#tempdata). |
+| Antiforgery | Data Protection (see [Configure ASP.NET Core Data Protection](../security/data-protection/configuration/overview.md)).<br><br>For more information, see [Prevent Cross-Site Request Forgery (XSRF/CSRF) attacks in ASP.NET Core](../security/anti-request-forgery.md). |
 
 ## Troubleshoot
 
@@ -76,13 +75,14 @@ When any of the following symptoms occur **intermittently**, the problem is usua
 * TempData fails.
 * POSTs fail: The antiforgery check fails.
 
-For more information on Data Protection configuration for web farm deployments, see Configure ASP.NET Core Data Protection. For more information on caching configuration for web farm deployments, see Distributed caching in ASP.NET Core.
+For more information on Data Protection configuration for web farm deployments, see [Configure ASP.NET Core Data Protection](../security/data-protection/configuration/overview.md). For more information on caching configuration for web farm deployments, see [Distributed caching in ASP.NET Core](../performance/caching/distributed.md).
 
 ## Obtain data from apps
 
-If the web farm apps are capable of responding to requests, obtain request, connection, and additional data from the apps using terminal inline middleware. For more information and sample code, see Troubleshoot and debug ASP.NET Core projects.
+If the web farm apps are capable of responding to requests, obtain request, connection, and additional data from the apps using terminal inline middleware. For more information and sample code, see [Troubleshoot and debug ASP.NET Core projects](../test/troubleshoot.md#obtain-data-from-an-app).
 
 ## Related content
 
-* Custom Script Extension for Windows: Downloads and executes scripts on Azure virtual machines, which is useful for post-deployment configuration and software installation.
-* Configure ASP.NET Core to work with proxy servers and load balancers
+* [Custom Script Extension for Windows](/azure/virtual-machines/extensions/custom-script-windows): Downloads and executes scripts on Azure virtual machines, which is useful for post-deployment configuration and software installation.
+* [Configure ASP.NET Core to work with proxy servers and load balancers](proxy-load-balancer.md)
+ 

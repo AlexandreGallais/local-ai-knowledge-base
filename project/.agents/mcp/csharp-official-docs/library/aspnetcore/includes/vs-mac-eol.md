@@ -1,19 +1,12 @@
 ---
-title: "vs-mac-eol"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/vs-mac-eol.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+ms.date: 09/15/2023
+ms.topic: include
 ---
-
-# vs-mac-eol
-
-> **Important:**
+> [!IMPORTANT]
 > Microsoft has announced the retirement of Visual Studio for Mac. Visual Studio for Mac will no longer be supported starting August 31, 2024. Alternatives include:
 >
-> * Visual Studio Code with the C# Dev Kit and related extensions, such as .NET MAUI and Unity.
+> * Visual Studio Code with the [C# Dev Kit](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit) and related extensions, such as [.NET MAUI](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.dotnet-maui) and [Unity](https://marketplace.visualstudio.com/items?itemName=visualstudiotoolsforunity.vstuc).
 > * Visual Studio IDE running on Windows in a VM on Mac.
-> * Visual Studio IDE running on Windows in a VM in the Cloud.
+> * Visual Studio IDE running on Windows in a [VM in the Cloud](https://aka.ms/devbox).
 >
-> For more information, see Visual Studio for Mac retirement announcement.
+> For more information, see [Visual Studio for Mac retirement announcement](https://devblogs.microsoft.com/visualstudio/visual-studio-for-mac-retirement-announcement).

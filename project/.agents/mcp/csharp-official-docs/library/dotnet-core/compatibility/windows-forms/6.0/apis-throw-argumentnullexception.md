@@ -1,29 +1,25 @@
 ---
 title: "Breaking change: Some APIs throw ArgumentNullException"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/windows-forms/6.0/apis-throw-argumentnullexception.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 6 where some APIs validate arguments and now throw an ArgumentNullException.
+ms.date: 11/04/2021
 ---
-
 # Some APIs throw ArgumentNullException
 
-Some APIs now validate input parameters and throw an `System.ArgumentNullException` where previously they threw a `System.NullReferenceException`, if invoked with `null` input arguments.
+Some APIs now validate input parameters and throw an <xref:System.ArgumentNullException> where previously they threw a <xref:System.NullReferenceException>, if invoked with `null` input arguments.
 
 ## Change description
 
-In previous .NET versions, the affected APIs throw a `System.NullReferenceException` if invoked with an argument that's `null`.
+In previous .NET versions, the affected APIs throw a <xref:System.NullReferenceException> if invoked with an argument that's `null`.
 
-Starting in .NET 6, the affected APIs throw an `System.ArgumentNullException` if invoked with an argument that's `null`.
+Starting in .NET 6, the affected APIs throw an <xref:System.ArgumentNullException> if invoked with an argument that's `null`.
 
 ## Change category
 
-This change affects binary compatibility.
+This change affects [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 
-Throwing `System.ArgumentNullException` conforms to .NET Runtime behavior. It provides a better debug experience by clearly communicating which argument caused the exception.
+Throwing <xref:System.ArgumentNullException> conforms to .NET Runtime behavior. It provides a better debug experience by clearly communicating which argument caused the exception.
 
 ## Version introduced
 
@@ -32,7 +28,7 @@ Throwing `System.ArgumentNullException` conforms to .NET Runtime behavior. It pr
 ## Recommended action
 
 - Review and, if necessary, update your code to prevent passing `null` input arguments to the affected APIs.
-- If your code handles `System.NullReferenceException`, replace or add an additional handler for `System.ArgumentNullException`.
+- If your code handles <xref:System.NullReferenceException>, replace or add an additional handler for <xref:System.ArgumentNullException>.
 
 ## Affected APIs
 
@@ -40,11 +36,11 @@ The following table lists the affected APIs and specific parameters:
 
 | Method/property | Parameter name |
 |-|-|
-| `System.Windows.Forms.TreeNodeCollection.Item(System.Int32)` | `index` |
-| `System.Windows.Forms.DrawTreeNodeEventArgs.#ctor(System.Drawing.Graphics,System.Windows.Forms.TreeNode,System.Drawing.Rectangle,System.Windows.Forms.TreeNodeStates)` | `graphics` |
-| `System.Windows.Forms.DataGridViewRowStateChangedEventArgs.#ctor(System.Windows.Forms.DataGridViewRow,System.Windows.Forms.DataGridViewElementStates)` | `dataGridViewRow` |
-| `System.Windows.Forms.DataGridViewColumnStateChangedEventArgs.#ctor(System.Windows.Forms.DataGridViewColumn,System.Windows.Forms.DataGridViewElementStates)` | `dataGridViewColumn` |
+| <xref:System.Windows.Forms.TreeNodeCollection.Item(System.Int32)?displayProperty=fullName> | `index` |
+| <xref:System.Windows.Forms.DrawTreeNodeEventArgs.%23ctor(System.Drawing.Graphics,System.Windows.Forms.TreeNode,System.Drawing.Rectangle,System.Windows.Forms.TreeNodeStates)> | `graphics` |
+| <xref:System.Windows.Forms.DataGridViewRowStateChangedEventArgs.%23ctor(System.Windows.Forms.DataGridViewRow,System.Windows.Forms.DataGridViewElementStates)> | `dataGridViewRow` |
+| <xref:System.Windows.Forms.DataGridViewColumnStateChangedEventArgs.%23ctor(System.Windows.Forms.DataGridViewColumn,System.Windows.Forms.DataGridViewElementStates)> | `dataGridViewColumn` |
 
 ## See also
 
-- TreeNodeCollection.Item throws exception if node is assigned elsewhere
+- [TreeNodeCollection.Item throws exception if node is assigned elsewhere](treenodecollection-item-throws-argumentexception.md)

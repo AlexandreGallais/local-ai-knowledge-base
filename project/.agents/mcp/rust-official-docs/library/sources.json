@@ -8,13 +8,13 @@
       "version": "2026-11",
       "license": "MIT OR Apache-2.0",
       "attribution": "Steve Klabnik, Carol Nichols, Chris Krycho and the Rust community",
-      "flavor": "mdbook",
-      "core": false,
       "paths": [
         "src/",
         "listings/"
       ],
-      "docs": ["src"]
+      "docs": [
+        "src"
+      ]
     },
     {
       "tool": "rust-reference",
@@ -24,10 +24,12 @@
       "version": "2026-11",
       "license": "MIT OR Apache-2.0",
       "attribution": "The Rust Project Developers",
-      "flavor": "mdbook",
-      "core": false,
-      "paths": ["src/"],
-      "docs": ["src"]
+      "paths": [
+        "src/"
+      ],
+      "docs": [
+        "src"
+      ]
     },
     {
       "tool": "rust-std",
@@ -37,8 +39,6 @@
       "version": "1.100",
       "license": "MIT OR Apache-2.0",
       "attribution": "The Rust Project Developers",
-      "flavor": "markdown",
-      "core": false,
       "paths": [
         "library/core/src/",
         "library/alloc/src/",
@@ -49,7 +49,37 @@
         "library/alloc/src",
         "library/std/src"
       ],
-      "converter": "rustdoc"
+      "extract": "rustdoc"
+    },
+    {
+      "tool": "cargo",
+      "title": "The Cargo Book: manifests, workspaces, features, profiles, commands",
+      "repository": "https://github.com/rust-lang/cargo.git",
+      "ref": "0.101.0",
+      "version": "1.100",
+      "license": "MIT OR Apache-2.0",
+      "attribution": "The Rust Project Developers",
+      "paths": [
+        "doc/book/src/"
+      ],
+      "docs": [
+        "doc/book/src"
+      ]
+    },
+    {
+      "tool": "rust-by-example",
+      "title": "Rust by Example",
+      "repository": "https://github.com/rust-lang/rust-by-example.git",
+      "ref": "master",
+      "version": "2026-11",
+      "license": "MIT OR Apache-2.0",
+      "attribution": "The Rust Project Developers",
+      "paths": [
+        "src/"
+      ],
+      "docs": [
+        "src"
+      ]
     }
   ]
 }

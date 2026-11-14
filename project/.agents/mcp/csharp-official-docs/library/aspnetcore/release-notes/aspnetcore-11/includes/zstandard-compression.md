@@ -1,17 +1,6 @@
----
-title: "zstandard-compression"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-11/includes/zstandard-compression.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# zstandard-compression
-
 ### Zstandard response compression and request decompression
 
-ASP.NET Core now supports Zstandard (zstd) for both response compression and request decompression. This adds zstd support to the existing response-compression and request-decompression middleware and enables zstd by default.
+ASP.NET Core now supports [Zstandard (zstd)](https://facebook.github.io/zstd/) for both response compression and request decompression. This adds zstd support to the existing response-compression and request-decompression middleware and enables zstd by default.
 
 ```csharp
 var builder = WebApplication.CreateBuilder(args);
@@ -27,4 +16,4 @@ builder.Services.Configure<ZstandardCompressionProviderOptions>(options =>
 });
 ```
 
-Thank you @manandre for this contribution!
+Thank you [@manandre](https://github.com/manandre) for this contribution!

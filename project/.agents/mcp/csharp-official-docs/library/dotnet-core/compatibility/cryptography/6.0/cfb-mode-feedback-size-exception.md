@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: CreateEncryptor methods throw exception for incorrect feedback size"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/cryptography/6.0/cfb-mode-feedback-size-exception.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 6 where the `CreateEncryptor` and `CreateDecryptor` methods for `AesCng` and `TripleDESCng` throw an exception for an incorrect feedback size when used with a persisted key for CFB mode.
+ms.date: 10/01/2021
 ---
-
 # CreateEncryptor methods throw exception for incorrect feedback size
 
-The `CreateEncryptor` and `CreateDecryptor` methods for `System.Security.Cryptography.AesCng` and `System.Security.Cryptography.TripleDESCng` now throw a `System.Security.Cryptography.CryptographicException` when the object instance is being used with a CNG persisted (or named) key for Cipher Feedback (CFB) mode, with a feedback size other than eight (CFB8).
+The `CreateEncryptor` and `CreateDecryptor` methods for <xref:System.Security.Cryptography.AesCng> and <xref:System.Security.Cryptography.TripleDESCng> now throw a <xref:System.Security.Cryptography.CryptographicException> when the object instance is being used with a CNG persisted (or named) key for Cipher Feedback (CFB) mode, with a feedback size other than eight (CFB8).
 
 ## Previous behavior
 
@@ -17,9 +13,9 @@ Previously, these classes allowed CFB128 (`AesCng`) or CFB64 (`TripleDESCng`) to
 
 ## New behavior
 
-The `CreateEncryptor` and `CreateDecryptor` methods throw a `System.Security.Cryptography.CryptographicException` when both of the following conditions are met:
+The `CreateEncryptor` and `CreateDecryptor` methods throw a <xref:System.Security.Cryptography.CryptographicException> when both of the following conditions are met:
 
-- CFB128 or CFB64 mode is selected (that is, `System.Security.Cryptography.SymmetricAlgorithm.FeedbackSize` is set to 128 or 64).
+- CFB128 or CFB64 mode is selected (that is, <xref:System.Security.Cryptography.SymmetricAlgorithm.FeedbackSize?displayProperty=nameWithType> is set to 128 or 64).
 - The instance is backed by a persisted key.
 
 ## Version introduced
@@ -28,7 +24,7 @@ The `CreateEncryptor` and `CreateDecryptor` methods throw a `System.Security.Cry
 
 ## Type of breaking change
 
-This change can affect binary compatibility.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 
@@ -40,7 +36,7 @@ If you encounter this exception, consider switching from CFB128 or CFB64 to CFB8
 
 ## Affected APIs
 
-- `System.Security.Cryptography.AesCng.CreateEncryptor`
-- `System.Security.Cryptography.AesCng.CreateDecryptor`
-- `System.Security.Cryptography.TripleDESCng.CreateEncryptor`
-- `System.Security.Cryptography.TripleDESCng.CreateDecryptor`
+- <xref:System.Security.Cryptography.AesCng.CreateEncryptor?displayProperty=fullName>
+- <xref:System.Security.Cryptography.AesCng.CreateDecryptor?displayProperty=fullName>
+- <xref:System.Security.Cryptography.TripleDESCng.CreateEncryptor?displayProperty=fullName>
+- <xref:System.Security.Cryptography.TripleDESCng.CreateDecryptor?displayProperty=fullName>

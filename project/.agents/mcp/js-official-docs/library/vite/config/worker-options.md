@@ -1,12 +1,3 @@
----
-title: "Worker Options"
-tool: "vite"
-version: "8.3"
-source: "https://github.com/vitejs/vite/blob/b39e6e63dcbfc3cf4be871acf3554efbd6d0e268/docs/config/worker-options.md"
-commit: "b39e6e63dcbfc3cf4be871acf3554efbd6d0e268"
-license: "MIT"
----
-
 # Worker Options
 
 Unless noted, the options in this section are applied to all dev, build, and preview.
@@ -20,14 +11,14 @@ Output format for worker bundle.
 
 ## worker.plugins
 
-- **Type:** `() => (Plugin | Plugin[])[]`
+- **Type:** [`() => (Plugin | Plugin[])[]`](./shared-options#plugins)
 
-Vite plugins that apply to the worker bundles. Note that config.plugins only applies to workers in dev, it should be configured here instead for build.
+Vite plugins that apply to the worker bundles. Note that [config.plugins](./shared-options#plugins) only applies to workers in dev, it should be configured here instead for build.
 The function should return new plugin instances as they are used in parallel rolldown worker builds. As such, modifying `config.worker` options in the `config` hook will be ignored.
 
 ## worker.rolldownOptions
 
-- **Type:** `RolldownOptions`
+- **Type:** [`RolldownOptions`](https://rolldown.rs/reference/)
 
 Rolldown options to build worker bundle.
 

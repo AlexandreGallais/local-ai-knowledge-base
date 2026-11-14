@@ -1,15 +1,13 @@
 ---
-title: "Connection strings"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/sqlite/connection-strings.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Connection strings
+ms.date: 06/06/2023
+no-loc: Command Timeout,Default Timeout,Data Source,Recursive Triggers,Pooling
+description: The supported keywords and values of connection strings.
+ms.custom: sfi-ropc-nochange
 ---
-
 # Connection strings
 
-A connection string is used to specify how to connect to the database. Connection strings in Microsoft.Data.Sqlite follow the standard ADO.NET syntax as a semicolon-separated list of keywords and values.
+A connection string is used to specify how to connect to the database. Connection strings in Microsoft.Data.Sqlite follow the standard [ADO.NET syntax](../../../framework/data/adonet/connection-strings.md) as a semicolon-separated list of keywords and values.
 
 ## Keywords
 
@@ -23,11 +21,11 @@ SQLite treats paths relative to the current working directory. Absolute paths ca
 
 If **empty**, SQLite creates a temporary on-disk database that's deleted when the connection is closed.
 
-If `:memory:`, an in-memory database is used. For more information, see In-Memory databases.
+If `:memory:`, an in-memory database is used. For more information, see [In-Memory databases](in-memory-databases.md).
 
 Paths that start with the `|DataDirectory|` substitution string are treated the same as relative paths. If set, paths are made relative to the DataDirectory application domain property value.
 
-This keyword also supports URI Filenames.
+This keyword also supports [URI Filenames](https://www.sqlite.org/uri.html).
 
 ### Mode
 
@@ -54,17 +52,17 @@ The caching mode used by the connection.
 
 The encryption key. When specified, `PRAGMA key` is sent immediately after opening the connection.
 
-> **Warning:**
+> [!WARNING]
 > Password has no effect when encryption isn't supported by the native SQLite library.
 
-> **Note:**
-> The Password <example-value> was added in version 3.0.
+> [!NOTE]
+> The Password keyword was added in version 3.0.
 
 ### Foreign Keys
 
 A value indicating whether to enable foreign key constraints.
 
-> **Note:**
+> [!NOTE]
 > The Foreign Keys keyword was added in version 3.0.
 
 | Value   | Description                                                               |
@@ -80,7 +78,7 @@ SQLite library.
 
 A value that indicates whether to enable recursive triggers.
 
-> **Note:**
+> [!NOTE]
 > The Recursive Triggers keyword was added in version 3.0.
 
 | Value | Description                                                                 |
@@ -92,16 +90,16 @@ A value that indicates whether to enable recursive triggers.
 
 The default timeout (in seconds) for executing commands. The default value is 30. *Command Timeout* is an alias of this keyword.
 
-This value can be overridden using `Microsoft.Data.Sqlite.SqliteConnection.DefaultTimeout` which in turn can be overridden using `Microsoft.Data.Sqlite.SqliteCommand.CommandTimeout`.
+This value can be overridden using <xref:Microsoft.Data.Sqlite.SqliteConnection.DefaultTimeout> which in turn can be overridden using <xref:Microsoft.Data.Sqlite.SqliteCommand.CommandTimeout>.
 
-> **Note:**
+> [!NOTE]
 > The Default Timeout keyword was added in version 6.0.
 
 ### Pooling
 
 A value indicating whether the connection will be pooled.
 
-> **Note:**
+> [!NOTE]
 > The Pooling keyword was added in version 6.0.
 
 | Value | Description                                         |
@@ -111,27 +109,27 @@ A value indicating whether the connection will be pooled.
 
 ### Vfs
 
-A value indicating which virtual file system (VFS) implementation to use. When empty or not specified, the default VFS for the platform is used.
+A value indicating which [virtual file system (VFS)](https://www.sqlite.org/vfs.html) implementation to use. When empty or not specified, the default VFS for the platform is used.
 
-> **Note:**
+> [!NOTE]
 > The Vfs keyword was added in version 10.0.
 
 ## Connection string builder
 
-You can use `Microsoft.Data.Sqlite.SqliteConnectionStringBuilder` as a strongly typed way of creating connection strings. It can also be used to prevent connection string injection attacks.
+You can use <xref:Microsoft.Data.Sqlite.SqliteConnectionStringBuilder> as a strongly typed way of creating connection strings. It can also be used to prevent connection string injection attacks.
 
-> **Note:**
+> [!NOTE]
 > In the following example, `baseConnectionString` is an existing connection string, such as `Data Source=EncryptionSample.db`.
 
-_Code sample not included: ../../../../samples/snippets/standard/data/sqlite/EncryptionSample/Program.cs._
+[!code-csharp[](../../../../samples/snippets/standard/data/sqlite/EncryptionSample/Program.cs?name=snippet_ConnectionStringBuilder)]
 
 ## Examples
 
 ### Basic
 
-A basic <example-value> string with a shared cache for improved concurrency.
+A basic connection string with a shared cache for improved concurrency.
 
-> **Caution:**
+> [!CAUTION]
 > Mixing shared-cache mode and write-ahead logging is discouraged. For optimal performance, remove `Cache=Shared` when the database is configured to use write-ahead logging.
 
 ```connectionstring
@@ -143,7 +141,7 @@ Data Source=Application.db;Cache=Shared
 An encrypted database.
 
 ```connectionstring
-Data Source=Encrypted.db;Password=<example-value>
+Data Source=Encrypted.db;Password=MyEncryptionKey
 ```
 
 ### Read-only
@@ -172,6 +170,6 @@ Data Source=Sharable;Mode=Memory;Cache=Shared
 
 ## See also
 
-* Connection Strings in ADO.NET
-* In-Memory databases
-* Transactions
+* [Connection Strings in ADO.NET](../../../framework/data/adonet/connection-strings.md)
+* [In-Memory databases](in-memory-databases.md)
+* [Transactions](transactions.md)

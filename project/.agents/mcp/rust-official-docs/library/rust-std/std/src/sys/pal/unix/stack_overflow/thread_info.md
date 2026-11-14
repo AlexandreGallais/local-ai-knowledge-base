@@ -1,12 +1,3 @@
----
-title: "std::sys::pal::unix::stack_overflow::thread_info"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sys/pal/unix/stack_overflow/thread_info.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::sys::pal::unix::stack_overflow::thread_info
 
 TLS, but async-signal-safe.
@@ -23,13 +14,13 @@ lifetime of a thread, we can use `&errno` as a key for a `BTreeMap`
 that stores thread-specific data.
 
 Concurrent access to this map is synchronized by two locks – an outer
-`Mutex` and an inner spin lock that also remembers the identity of
+[`Mutex`] and an inner spin lock that also remembers the identity of
 the lock owner:
 * The spin lock is the primary means of synchronization: since it only
   uses native atomics, it can be soundly used inside the signal handle
-  as opposed to `Mutex`, which might not be async-signal-safe.
-* The `Mutex` prevents busy-waiting in the setup logic, as all accesses
-  there are performed with the `Mutex` held, which makes the spin-lock
+  as opposed to [`Mutex`], which might not be async-signal-safe.
+* The [`Mutex`] prevents busy-waiting in the setup logic, as all accesses
+  there are performed with the [`Mutex`] held, which makes the spin-lock
   redundant in the common case.
 * Finally, by using the `errno` address as the locked value of the spin
   lock, we can detect cases where a SIGSEGV occurred while the thread

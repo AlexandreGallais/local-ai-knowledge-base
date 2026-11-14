@@ -1,10 +1,11 @@
 ---
-title: "Example that outputs Office Open XML document parts - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/example-outputs-office-open-xml-document-parts.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Example that outputs Office Open XML document parts - LINQ to XML
+description: Learn how to open an Office Open XML document and access its parts.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: 6cd37055-89b4-42e8-bf27-5a29717e35f3
 ---
 
 # Example that outputs Office Open XML document parts (LINQ to XML)
@@ -15,7 +16,7 @@ This article shows how to open an Office Open XML document and access its parts.
 
 The following example opens an Office Open XML document and prints the document and styles parts.
 
-This example uses classes from the WindowsBase assembly, and types from the `System.IO.Packaging` namespace.
+This example uses classes from the WindowsBase assembly, and types from the <xref:System.IO.Packaging?displayProperty=nameWithType> namespace.
 
 ```csharp
 const string fileName = "SampleDoc.docx";

@@ -1,21 +1,18 @@
 ---
 title: "Breaking change: Azure: Microsoft-prefixed Azure integration packages removed"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/5/azure-integration-packages-removed.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 5.0 titled Azure: Microsoft-prefixed Azure integration packages removed"
+ms.date: 10/01/2020
+ms.custom: https://github.com/aspnet/Announcements/issues/408
 ---
-
 # Azure: Microsoft-prefixed Azure integration packages removed
 
 The following `Microsoft.*` packages that provide integration between ASP.NET Core and Azure SDKs aren't included in ASP.NET Core 5.0:
 
-* Microsoft.Extensions.Configuration.AzureKeyVault, which integrates Azure Key Vault into the Configuration system.
-* Microsoft.AspNetCore.DataProtection.AzureKeyVault, which integrates Azure Key Vault into the ASP.NET Core Data Protection system.
-* Microsoft.AspNetCore.DataProtection.AzureStorage, which integrates Azure Blob Storage into the ASP.NET Core Data Protection system.
+* [Microsoft.Extensions.Configuration.AzureKeyVault](https://www.nuget.org/packages/Microsoft.Extensions.Configuration.AzureKeyVault/), which integrates [Azure Key Vault](/azure/key-vault/) into the [Configuration system](../../fundamentals/configuration/index.md).
+* [Microsoft.AspNetCore.DataProtection.AzureKeyVault](https://www.nuget.org/packages/Microsoft.AspNetCore.DataProtection.AzureKeyVault/), which integrates Azure Key Vault into the [ASP.NET Core Data Protection system](../../security/data-protection/introduction.md).
+* [Microsoft.AspNetCore.DataProtection.AzureStorage](https://www.nuget.org/packages/Microsoft.AspNetCore.DataProtection.AzureStorage/), which integrates [Azure Blob Storage](/azure/storage/blobs/) into the ASP.NET Core Data Protection system.
 
-For discussion on this issue, see dotnet/aspnetcore#19570.
+For discussion on this issue, see [dotnet/aspnetcore#19570](https://github.com/dotnet/aspnetcore/issues/19570).
 
 ## Version introduced
 
@@ -42,9 +39,9 @@ In ASP.NET Core 2.1 or later projects, replace the old `Microsoft.*` with the ne
 
 | Old | New |
 |--|--|
-| `Microsoft.AspNetCore.DataProtection.AzureKeyVault` | Azure.Extensions.AspNetCore.DataProtection.Keys |
-| `Microsoft.AspNetCore.DataProtection.AzureStorage` | Azure.Extensions.AspNetCore.DataProtection.Blobs |
-| `Microsoft.Extensions.Configuration.AzureKeyVault` | Azure.Extensions.AspNetCore.Configuration.Secrets |
+| `Microsoft.AspNetCore.DataProtection.AzureKeyVault` | [Azure.Extensions.AspNetCore.DataProtection.Keys](https://www.nuget.org/packages/Azure.Extensions.AspNetCore.DataProtection.Keys) |
+| `Microsoft.AspNetCore.DataProtection.AzureStorage` | [Azure.Extensions.AspNetCore.DataProtection.Blobs](https://www.nuget.org/packages/Azure.Extensions.AspNetCore.DataProtection.Blobs) |
+| `Microsoft.Extensions.Configuration.AzureKeyVault` | [Azure.Extensions.AspNetCore.Configuration.Secrets](https://www.nuget.org/packages/Azure.Extensions.AspNetCore.Configuration.Secrets) |
 
 The new packages use a new version of the Azure SDK that includes breaking changes. The general usage patterns are unchanged. Some overloads and options may differ to adapt to changes in the underlying Azure SDK APIs.
 
@@ -57,6 +54,20 @@ When upgrading your project to .NET 5, transition to the `Azure.*` packages to m
 
 ## Affected APIs
 
-- `Microsoft.Extensions.Configuration.AzureKeyVaultConfigurationExtensions.AddAzureKeyVault*`
-- `Microsoft.AspNetCore.DataProtection.AzureDataProtectionBuilderExtensions.ProtectKeysWithAzureKeyVault*`
-- `Microsoft.AspNetCore.DataProtection.AzureDataProtectionBuilderExtensions.PersistKeysToAzureBlobStorage*`
+- <xref:Microsoft.Extensions.Configuration.AzureKeyVaultConfigurationExtensions.AddAzureKeyVault*?displayProperty=nameWithType>
+- <xref:Microsoft.AspNetCore.DataProtection.AzureDataProtectionBuilderExtensions.ProtectKeysWithAzureKeyVault*?displayProperty=nameWithType>
+- <xref:Microsoft.AspNetCore.DataProtection.AzureDataProtectionBuilderExtensions.PersistKeysToAzureBlobStorage*?displayProperty=nameWithType>
+
+<!--
+
+### Category
+
+ASP.NET Core
+
+### Affected APIs
+
+- `Overload:Microsoft.Extensions.Configuration.AzureKeyVaultConfigurationExtensions.AddAzureKeyVault`
+- `Overload:Microsoft.AspNetCore.DataProtection.AzureDataProtectionBuilderExtensions.ProtectKeysWithAzureKeyVault`
+- `Overload:Microsoft.AspNetCore.DataProtection.AzureDataProtectionBuilderExtensions.PersistKeysToAzureBlobStorage`
+
+-->

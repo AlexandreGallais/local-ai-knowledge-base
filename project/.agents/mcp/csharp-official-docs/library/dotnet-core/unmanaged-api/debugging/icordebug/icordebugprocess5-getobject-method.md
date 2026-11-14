@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugProcess5::GetObject Method"
 title: "ICorDebugProcess5::GetObject Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess5-getobject-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugProcess5.GetObject"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugProcess5::GetObject"
+helpviewer_keywords:
+  - "GetObject method, ICorDebugProcess5 interface [.NET debugging]"
+  - "ICorDebugProcess5::GetObject method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugProcess5::GetObject Method
 
 Converts an object address to an "ICorDebugObjectValue" object.
@@ -34,7 +43,7 @@ If `addr` does not point to a valid managed object, the `GetObject` method retur
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -44,4 +53,4 @@ If `addr` does not point to a valid managed object, the `GetObject` method retur
 
 ## See also
 
-- ICorDebugProcess5 Interface
+- [ICorDebugProcess5 Interface](icordebugprocess5-interface.md)

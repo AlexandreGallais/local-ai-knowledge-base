@@ -1,12 +1,3 @@
----
-title: "alloc::io::copy"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/alloc/src/io/copy.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # alloc::io::copy
 
 ## fn copy
@@ -15,15 +6,21 @@ license: "MIT OR Apache-2.0"
 pub fn copy<R: ?Sized, W: ?Sized>(reader: &mut R, writer: &mut W) -> Result<u64> where R: Read, W: Write,
 ```
 
+[`fs::copy`]: ../../std/fs/fn.copy.html
+
 # Errors
 
-This function will return an error immediately if any call to `read` or
-`write` returns an error. All instances of `ErrorKind::Interrupted` are
+This function will return an error immediately if any call to [`read`] or
+[`write`] returns an error. All instances of [`ErrorKind::Interrupted`] are
 handled by this function and the underlying operation is retried.
+
+[`read`]: Read::read
+[`write`]: Write::write
+[`ErrorKind::Interrupted`]: crate::io::ErrorKind::Interrupted
 
 # Examples
 
-```rust
+```
 use std::io;
 
 fn main() -> io::Result<()> {

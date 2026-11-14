@@ -1,12 +1,3 @@
----
-title: "std::panic"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/panic.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::panic
 
 Panic support in the standard library.
@@ -19,8 +10,8 @@ pub type PanicInfo<'a> = PanicHookInfo<'a>
 
 A struct providing information about a panic.
 
-`PanicInfo` has been renamed to `PanicHookInfo` to avoid confusion with
-`core::panic::PanicInfo`.
+`PanicInfo` has been renamed to [`PanicHookInfo`] to avoid confusion with
+[`core::panic::PanicInfo`].
 
 ## struct PanicHookInfo
 
@@ -30,11 +21,11 @@ pub struct PanicHookInfo<'a>
 
 A struct providing information about a panic.
 
-`PanicHookInfo` structure is passed to a panic hook set by the `set_hook` function.
+`PanicHookInfo` structure is passed to a panic hook set by the [`set_hook`] function.
 
 # Examples
 
-```rust
+```should_panic
 use std::panic;
 
 panic::set_hook(Box::new(|panic_info| {
@@ -44,6 +35,8 @@ panic::set_hook(Box::new(|panic_info| {
 panic!("critical system failure");
 ```
 
+[`set_hook`]: ../../std/panic/fn.set_hook.html
+
 ## PanicHookInfo::payload
 
 ```rust
@@ -52,19 +45,22 @@ pub fn payload(&self) -> &(dyn Any + Send)
 
 Returns the payload associated with the panic.
 
-This will commonly, but not always, be a `&'static str` or `String`.
-If you only care about such payloads, use `payload_as_str` instead.
+This will commonly, but not always, be a `&'static str` or [`String`].
+If you only care about such payloads, use [`payload_as_str`] instead.
 
 A invocation of the `panic!()` macro in Rust 2021 or later will always result in a
 panic payload of type `&'static str` or `String`.
 
-Only an invocation of `panic_any`
+Only an invocation of [`panic_any`]
 (or, in Rust 2018 and earlier, `panic!(x)` where `x` is something other than a string)
 can result in a panic payload other than a `&'static str` or `String`.
 
+[`String`]: ../../std/string/struct.String.html
+[`payload_as_str`]: PanicHookInfo::payload_as_str
+
 # Examples
 
-```rust
+```should_panic
 use std::panic;
 
 panic::set_hook(Box::new(|panic_info| {
@@ -93,13 +89,13 @@ This returns the payload if it is of type `&'static str` or `String`.
 A invocation of the `panic!()` macro in Rust 2021 or later will always result in a
 panic payload where `payload_as_str` returns `Some`.
 
-Only an invocation of `panic_any`
+Only an invocation of [`panic_any`]
 (or, in Rust 2018 and earlier, `panic!(x)` where `x` is something other than a string)
 can result in a panic payload where `payload_as_str` returns `None`.
 
 # Example
 
-```rust
+```should_panic
 std::panic::set_hook(Box::new(|panic_info| {
     if let Some(s) = panic_info.payload_as_str() {
         println!("panic occurred: {s:?}");
@@ -120,12 +116,12 @@ pub fn location(&self) -> Option<&'static Location<'static>>
 Returns information about the location from which the panic originated,
 if available.
 
-This method will currently always return `Some`, but this may change
+This method will currently always return [`Some`], but this may change
 in future versions.
 
 # Examples
 
-```rust
+```should_panic
 use std::panic;
 
 panic::set_hook(Box::new(|panic_info| {
@@ -153,9 +149,9 @@ Panics the current thread with the given message as the panic payload.
 The message can be of any (`Any + Send`) type, not just strings.
 
 The message is wrapped in a `Box<'static + Any + Send>`, which can be
-accessed later using `PanicHookInfo::payload`.
+accessed later using [`PanicHookInfo::payload`].
 
-See the `panic!` macro for more information about panicking.
+See the [`panic!`] macro for more information about panicking.
 
 ## fn catch_unwind
 
@@ -177,17 +173,19 @@ behavior, it is not necessary to use `catch_unwind` explicitly. This
 function should instead be used when more graceful error-handling is needed.
 
 It is **not** recommended to use this function for a general try/catch
-mechanism. The `Result` type is more appropriate to use for functions that
+mechanism. The [`Result`] type is more appropriate to use for functions that
 can fail on a regular basis. Additionally, this function is not guaranteed
 to catch all panics, see the "Notes" section below.
 
-The closure provided is required to adhere to the `UnwindSafe` trait to
+The closure provided is required to adhere to the [`UnwindSafe`] trait to
 ensure that all captured variables are safe to cross this boundary. The
-purpose of this bound is to encode the concept of exception safety in
+purpose of this bound is to encode the concept of [exception safety][rfc] in
 the type system. Most usage of this function should not need to worry about
 this bound as programs are naturally unwind safe without `unsafe` code. If
-it becomes a problem the `AssertUnwindSafe` wrapper struct can be used to
+it becomes a problem the [`AssertUnwindSafe`] wrapper struct can be used to
 quickly assert that the usage here is indeed unwind safe.
+
+[rfc]: https://rust-lang.github.io/rfcs/1236-stabilize-catch-panic.html
 
 # Notes
 
@@ -215,7 +213,7 @@ panic!
 
 # Examples
 
-```rust
+```
 use std::panic;
 
 let result = panic::catch_unwind(|| {
@@ -237,7 +235,7 @@ pub fn resume_unwind(payload: Box<dyn Any + Send>) -> !
 
 Triggers a panic without invoking the panic hook.
 
-This is designed to be used in conjunction with `catch_unwind` to, for
+This is designed to be used in conjunction with [`catch_unwind`] to, for
 example, carry a panic across a layer of C code.
 
 # Notes
@@ -249,7 +247,7 @@ not trigger an unwind.
 
 # Examples
 
-```rust
+```should_panic
 use std::panic;
 
 let result = panic::catch_unwind(|| {

@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: Full build skipped for Native AOT publish"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/11/aot-publish-skips-full-build.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where the .NET SDK only compiles intermediate assemblies for Native AOT publish and skips the full Build target."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # Full build skipped for Native AOT publish
@@ -27,7 +25,7 @@ Consequently, build extensibility points that aren't part of compilation don't r
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

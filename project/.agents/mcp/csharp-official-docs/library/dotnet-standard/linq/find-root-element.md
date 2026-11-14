@@ -1,10 +1,11 @@
 ---
-title: "How to find the root element - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/find-root-element.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to find the root element - LINQ to XML
+description: Learn how to use XPath and LINQ to XML, in C# and Visual Basic, to find the root element of an XML document.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to find the root element (LINQ to XML)
@@ -13,7 +14,7 @@ This article provides an example that shows how to use XPath and LINQ to XML, in
 
 ## Example: Find the root element
 
-This example uses LINQ to XML query and XPath to find the root element in XML document Sample XML file: Multiple purchase orders. The XPath expression is `/PurchaseOrders`.
+This example uses LINQ to XML query and XPath to find the root element in XML document [Sample XML file: Multiple purchase orders](sample-xml-file-multiple-purchase-orders.md). The XPath expression is `/PurchaseOrders`.
 
 ```csharp
 XDocument po = XDocument.Load("PurchaseOrders.xml");
@@ -57,4 +58,4 @@ PurchaseOrders
 
 ## See also
 
-- Comparison of XPath and LINQ to XML
+- [Comparison of XPath and LINQ to XML](comparison-xpath-linq-xml.md)

@@ -1,52 +1,48 @@
 ---
-title: "Install .NET SDK on Linux with Snap"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/install/linux-snap-sdk.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Install .NET SDK on Linux with Snap
+description: Learn about how to install the .NET SDK snap package. Canonical maintains and supports .NET-related snap packages.
+author: adegeo
+ms.author: adegeo
+ms.date: 07/15/2026
+ms.topic: install-set-up-deploy
+ms.custom: linux-related-content, updateeachrelease
+ai-usage: ai-assisted
+#customer intent: As a Linux user, I want to install .NET SDK through Snap.
 ---
 
 # Install .NET SDK with Snap
 
 This article describes how to install the .NET SDK snap package. .NET SDK snap packages are provided by and maintained by Canonical. Snaps are a great alternative to the package manager built into your Linux distribution.
 
-A snap is a bundle of an app and its dependencies that works across many different Linux distributions. Snaps are discoverable and installable from the Snap Store. For more information about Snap, see Get started.
+A snap is a bundle of an app and its dependencies that works across many different Linux distributions. Snaps are discoverable and installable from the Snap Store. For more information about Snap, see [Get started](https://snapcraft.io/docs/tutorials/get-started/#tutorials-get-started).
 
-> **Important:**
+> [!IMPORTANT]
 > If you install .NET with Snap, use Snap to manage all your .NET installations. Avoid mixing Snap with other installation methods, such as a package manager or the scripted install, because mixing methods can cause conflicts.
 
-> **Caution:**
-> Snap installations of .NET may have problems running .NET tools. If you wish to use .NET tools, we recommend that you install .NET using the `dotnet-install` script or the package manager for the particular Linux distribution.
+> [!CAUTION]
+> Snap installations of .NET may have problems running [.NET tools](../tools/global-tools.md). If you wish to use .NET tools, we recommend that you install .NET using the [`dotnet-install` script](linux-scripted-manual.md#scripted-install) or the package manager for the particular Linux distribution.
 >
 > It's a known issue that the `dotnet watch` command doesn't work when .NET is installed via Snap.
 >
-> If you're going to use .NET tools or the `dotnet watch` command, we recommend that you install .NET using the `dotnet-install` script.
+> If you're going to use .NET tools or the `dotnet watch` command, we recommend that you install .NET using the [`dotnet-install` script](linux-scripted-manual.md#scripted-install).
 
 ## Prerequisites
 
 - Linux distribution that supports snap.
 - `snapd` the snap daemon.
 
-Your Linux distribution might already include snap. Try running `snap` from a terminal to see if the command works. For a list of supported Linux distributions, and instructions on how to install snap, see Installing `snapd`.
+Your Linux distribution might already include snap. Try running `snap` from a terminal to see if the command works. For a list of supported Linux distributions, and instructions on how to install snap, see [Installing `snapd`](https://snapcraft.io/docs/installing-snapd).
 
 ## .NET releases
 
-Microsoft publishes .NET under two different support policies, Long Term Support (LTS) and Standard Term Support (STS). The quality of all releases is the same. The only difference is the length of support. LTS releases get free support and patches for three years. STS releases get free support and patches for two years. For more information, see .NET Support Policy.
-
-The versions of .NET that are currently supported by Microsoft are:
-
-- 11.0 (STS)—Support ends **November 14, 2028**.
-- 10.0 (LTS)—Support ends **November 14, 2028**.
-
-Other entities that build and release .NET might introduce different support policies. Be sure to check with them to understand how .NET is supported.
+[!INCLUDE [supported-versions](includes/supported-versions.md)]
 
 ## 1. Install the SDK
 
 To install the .NET SDK, use version-specific snap package identifiers because this approach lets you install and manage multiple SDK versions side by side. For example, use `dotnet-sdk-80` for .NET 8 and `dotnet-sdk-100` for .NET 10. The SDK includes both the ASP.NET Core and .NET runtime, versioned to the SDK. This article uses the .NET 10 SDK snap package; if you're using a different package, substitute it.
 
-> **Tip:**
-> The Snapcraft .NET SDK package page (.NET 8, .NET 9, .NET 10) includes distribution-specific instructions on how to install Snapcraft and .NET.
+> [!TIP]
+> The Snapcraft .NET SDK package page ([.NET 8](https://snapcraft.io/dotnet-sdk-80), [.NET 9](https://snapcraft.io/dotnet-sdk-90), [.NET 10](https://snapcraft.io/dotnet-sdk-100)) includes distribution-specific instructions on how to install Snapcraft and .NET.
 
 01. Open a terminal.
 01. Use `snap install` to install the .NET SDK snap package.
@@ -123,13 +119,13 @@ path-to-application:
   The path to an application .dll file to execute.
 ```
 
-To learn how to use the .NET CLI, see .NET CLI overview.
+To learn how to use the .NET CLI, see [.NET CLI overview](../tools/index.md).
 
 ## Troubleshooting
 
-- Can't install Snap on WSL2
-- Can't resolve the dotnet command or SDK
-- TLS/SSL Certificate errors
+- [Can't install Snap on WSL2](#cant-install-snap-on-wsl2)
+- [Can't resolve the dotnet command or SDK](#cant-resolve-the-dotnet-command-or-sdk)
+- [TLS/SSL Certificate errors](#tlsssl-certificate-errors)
 
 ### Can't install Snap on WSL2
 
@@ -155,8 +151,8 @@ It's common for other apps, such as a code IDE or an extension in Visual Studio 
 
 Try the following steps to fix the issue:
 
-01. Complete 2. Map the dotnet command.
-01. Set the `DOTNET_ROOT` environment variable permanently by following Export the environment variable permanently.
+01. Complete [2. Map the dotnet command](#2-map-the-dotnet-command).
+01. Set the `DOTNET_ROOT` environment variable permanently by following [Export the environment variable permanently](#export-the-environment-variable-permanently).
 
 ### TLS/SSL Certificate errors
 
@@ -188,6 +184,6 @@ The certificate location varies by distribution. Here are the locations for the 
 
 ## Related content
 
-- .NET CLI overview
-- How to enable TAB completion for the .NET CLI.
-- Tutorial: Create a console application with .NET
+- [.NET CLI overview](../tools/index.md)
+- [How to enable TAB completion for the .NET CLI.](../tools/enable-tab-autocomplete.md)
+- [Tutorial: Create a console application with .NET](../tutorials/create-console-app.md)

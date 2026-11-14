@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugObjectValue::IsValueClass Method"
 title: "ICorDebugObjectValue::IsValueClass Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugobjectvalue-isvalueclass-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugObjectValue.IsValueClass"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugObjectValue::IsValueClass"
+helpviewer_keywords:
+  - "ICorDebugObjectValue::IsValueClass method [.NET debugging]"
+  - "IsValueClass method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugObjectValue::IsValueClass Method
 
 Gets a value that indicates whether this object value is a value type.
@@ -26,10 +35,12 @@ HRESULT IsValueClass (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
  **Library:** CorGuids.lib
 
  **.NET versions:** Available since .NET Framework 1.0
+
+## See also

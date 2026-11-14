@@ -1,19 +1,18 @@
 ---
-title: "Self-Tracking Entities Walkthrough - EF6 (part 1 of 2)"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/fundamentals/disconnected-entities/self-tracking-entities/walkthrough.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Self-Tracking Entities Walkthrough - EF6
+description: Self-tracking entities walkthrough for Entity Framework 6
+author: SamMonoRT
+ms.date: 10/23/2016
+uid: ef6/fundamentals/disconnected-entities/self-tracking-entities/walkthrough
+ms.custom: sfi-ropc-nochange
 ---
-
 # Self-Tracking Entities Walkthrough
-> **Important:**
-> We no longer recommend using the self-tracking-entities template. It will only continue to be available to support existing applications. If your application requires working with disconnected graphs of entities, consider other alternatives such as Trackable Entities, which is a technology similar to Self-Tracking-Entities that is more actively developed by the community, or writing custom code using the low-level change tracking APIs.
+> [!IMPORTANT]
+> We no longer recommend using the self-tracking-entities template. It will only continue to be available to support existing applications. If your application requires working with disconnected graphs of entities, consider other alternatives such as [Trackable Entities](https://trackableentities.github.io/), which is a technology similar to Self-Tracking-Entities that is more actively developed by the community, or writing custom code using the low-level change tracking APIs.
 
 This walkthrough demonstrates the scenario in which a Windows Communication Foundation (WCF) service exposes an operation that returns an entity graph. Next, a client application manipulates that graph and submits the modifications to a service operation that validates and saves the updates to a database using Entity Framework.
 
-Before completing this walkthrough make sure you read the Self-Tracking Entities page.
+Before completing this walkthrough make sure you read the [Self-Tracking Entities](xref:ef6/fundamentals/disconnected-entities/self-tracking-entities/index) page.
 
 This walkthrough completes the following actions:
 
@@ -40,8 +39,8 @@ The database server that is installed with Visual Studio is different depending 
 Let's go ahead and generate the database.
 
 -   Open Visual Studio
--   **View -> Server Explorer**
--   Right click on **Data Connections -> Add Connection…**
+-   **View -&gt; Server Explorer**
+-   Right click on **Data Connections -&gt; Add Connection…**
 -   If you haven’t connected to a database from Server Explorer before you’ll need to select **Microsoft SQL Server** as the data source
 -   Connect to either LocalDB or SQL Express, depending on which one you have installed
 -   Enter **STESample** as the database name
@@ -51,17 +50,17 @@ Let's go ahead and generate the database.
     -   Right-click on the database in Server Explorer and select **New Query**
     -   Copy the following SQL into the new query, then right-click on the query and select **Execute**
 -   If you are using Visual Studio 2010
-    -   Select **Data -> Transact SQL Editor -> New Query Connection...**
+    -   Select **Data -&gt; Transact SQL Editor -&gt; New Query Connection...**
     -   Enter **.\\SQLEXPRESS** as the server name and click **OK**
     -   Select the **STESample** database from the drop down at the top of the query editor
     -   Copy the following SQL into the new query, then right-click on the query and select **Execute SQL**
 
-```sql
+``` SQL
     CREATE TABLE [dbo].[Blogs] (
         [BlogId] INT IDENTITY (1, 1) NOT NULL,
         [Name] NVARCHAR (200) NULL,
         [Url]  NVARCHAR (200) NULL,
-        CONSTRAINT [PK_dbo.Blogs] PRIMARY KEY <example-value> ([BlogId] ASC)
+        CONSTRAINT [PK_dbo.Blogs] PRIMARY KEY CLUSTERED ([BlogId] ASC)
     );
 
     CREATE TABLE [dbo].[Posts] (
@@ -69,7 +68,7 @@ Let's go ahead and generate the database.
         [Title] NVARCHAR (200) NULL,
         [Content] NTEXT NULL,
         [BlogId] INT NOT NULL,
-        CONSTRAINT [PK_dbo.Posts] PRIMARY KEY <example-value> ([PostId] ASC),
+        CONSTRAINT [PK_dbo.Posts] PRIMARY KEY CLUSTERED ([PostId] ASC),
         CONSTRAINT [FK_dbo.Posts_dbo.Blogs_BlogId] FOREIGN KEY ([BlogId]) REFERENCES [dbo].[Blogs] ([BlogId]) ON DELETE CASCADE
     );
 
@@ -84,13 +83,13 @@ Let's go ahead and generate the database.
 
 First up, we need a project to put the model in.
 
--   **File -> New -> Project...**
+-   **File -&gt; New -&gt; Project...**
 -   Select **Visual C\#** from the left pane and then **Class Library**
 -   Enter **STESample** as the name and click **OK**
 
 Now we'll create a simple model in the EF Designer to access our database:
 
--   **Project -> Add New Item...**
+-   **Project -&gt; Add New Item...**
 -   Select **Data** from the left pane and then **ADO.NET Entity Data Model**
 -   Enter **BloggingModel** as the name and click **OK**
 -   Select **Generate from database** and click **Next**
@@ -130,14 +129,16 @@ The first step is to stop generating entity classes in the existing project:
 
 Next, we are going to add a new project and generate the entity classes in it
 
--   **File -> Add -> Project...**
+-   **File -&gt; Add -&gt; Project...**
 -   Select **Visual C\#** from the left pane and then **Class Library**
 -   Enter **STESample.Entities** as the name and click **OK**
--   **Project -> Add Existing Item...**
+-   **Project -&gt; Add Existing Item...**
 -   Navigate to the **STESample** project folder
 -   Select to view **All Files (\*.\*)**
 -   Select the **STETemplate.tt** file
 -   Click on the drop down arrow next to the **Add** button and select **Add As Link**
+
+    ![Add Linked Template](~/ef6/media/addlinkedtemplate.png)
 
 We're also going to make sure the entity classes get generated in the same namespace as the context. This just reduces the number of using statements we need to add throughout our application.
 
@@ -156,14 +157,14 @@ Finally, the project with our context in it will need a reference to the entity 
     -   In Visual Studio 2012 - select **Solution** from the left pane, check the box next to **STESample.Entities** and click **OK**
     -   In Visual Studio 2010 - select the **Projects** tab, select **STESample.Entities** and click **OK**
 
->**Note:**
+>[!NOTE]
 > Another option for moving the entity types to a separate project is to move the template file, rather than linking it from its default location. If you do this, you will need to update the **inputFile** variable in the template to provide the relative path to the edmx file (in this example that would be **..\\BloggingModel.edmx**).
 
 ## Create a WCF Service
 
 Now it's time to add a WCF Service to expose our data, we'll start by creating the project.
 
--   **File -> Add -> Project...**
+-   **File -&gt; Add -&gt; Project...**
 -   Select **Visual C\#** from the left pane and then **WCF Service Application**
 -   Enter **STESample.Service** as the name and click **OK**
 -   Add a reference to the **System.Data.Entity** assembly
@@ -178,7 +179,7 @@ Now it's time to implement the actual service.
 
 -   Open **IService1.cs** and replace the contents with the following code
 
-```csharp
+``` csharp
     using System.Collections.Generic;
     using System.ServiceModel;
 
@@ -198,7 +199,7 @@ Now it's time to implement the actual service.
 
 -   Open **Service1.svc** and replace the contents with the following code
 
-```csharp
+``` csharp
     using System;
     using System.Collections.Generic;
     using System.Data;
@@ -248,3 +249,303 @@ Now it's time to implement the actual service.
         }
     }
 ```
+
+## Consume the Service from a Console Application
+
+Let's create a console application that uses our service.
+
+-   **File -&gt; New -&gt; Project...**
+-   Select **Visual C\#** from the left pane and then **Console Application**
+-   Enter **STESample.ConsoleTest** as the name and click **OK**
+-   Add a reference to the **STESample.Entities** project
+
+We need a service reference to our WCF service
+
+-   Right-click the **STESample.ConsoleTest** project in **Solution Explorer** and select **Add Service Reference...**
+-   Click **Discover**
+-   Enter **BloggingService** as the namespace and click **OK**
+
+Now we can write some code to consume the service.
+
+-   Open **Program.cs** and replace the contents with the following code.
+
+``` csharp
+    using STESample.ConsoleTest.BloggingService;
+    using System;
+    using System.Linq;
+
+    namespace STESample.ConsoleTest
+    {
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                // Print out the data before we change anything
+                Console.WriteLine("Initial Data:");
+                DisplayBlogsAndPosts();
+
+                // Add a new Blog and some Posts
+                AddBlogAndPost();
+                Console.WriteLine("After Adding:");
+                DisplayBlogsAndPosts();
+
+                // Modify the Blog and one of its Posts
+                UpdateBlogAndPost();
+                Console.WriteLine("After Update:");
+                DisplayBlogsAndPosts();
+
+                // Delete the Blog and its Posts
+                DeleteBlogAndPost();
+                Console.WriteLine("After Delete:");
+                DisplayBlogsAndPosts();
+
+                Console.WriteLine("Press any key to exit...");
+                Console.ReadKey();
+            }
+
+            static void DisplayBlogsAndPosts()
+            {
+                using (var service = new Service1Client())
+                {
+                    // Get all Blogs (and Posts) from the service
+                    // and print them to the console
+                    var blogs = service.GetBlogs();
+                    foreach (var blog in blogs)
+                    {
+                        Console.WriteLine(blog.Name);
+                        foreach (var post in blog.Posts)
+                        {
+                            Console.WriteLine(" - {0}", post.Title);
+                        }
+                    }
+                }
+
+                Console.WriteLine();
+                Console.WriteLine();
+            }
+
+            static void AddBlogAndPost()
+            {
+                using (var service = new Service1Client())
+                {
+                    // Create a new Blog with a couple of Posts
+                    var newBlog = new Blog
+                    {
+                        Name = "The New Blog",
+                        Posts =
+                        {
+                            new Post { Title = "Welcome to the new blog"},
+                            new Post { Title = "What's new on the new blog"}
+                        }
+                    };
+
+                    // Save the changes using the service
+                    service.UpdateBlog(newBlog);
+                }
+            }
+
+            static void UpdateBlogAndPost()
+            {
+                using (var service = new Service1Client())
+                {
+                    // Get all the Blogs
+                    var blogs = service.GetBlogs();
+
+                    // Use LINQ to Objects to find The New Blog
+                    var blog = blogs.First(b => b.Name == "The New Blog");
+
+                    // Update the Blogs name
+                    blog.Name = "The Not-So-New Blog";
+
+                    // Update one of the related posts
+                    blog.Posts.First().Content = "Some interesting content...";
+
+                    // Save the changes using the service
+                    service.UpdateBlog(blog);
+                }
+            }
+
+            static void DeleteBlogAndPost()
+            {
+                using (var service = new Service1Client())
+                {
+                    // Get all the Blogs
+                    var blogs = service.GetBlogs();
+
+                    // Use LINQ to Objects to find The Not-So-New Blog
+                    var blog = blogs.First(b => b.Name == "The Not-So-New Blog");
+
+                    // Mark all related Posts for deletion
+                    // We need to call ToList because each Post will be removed from the
+                    // Posts collection when we call MarkAsDeleted
+                    foreach (var post in blog.Posts.ToList())
+                    {
+                        post.MarkAsDeleted();
+                    }
+
+                    // Mark the Blog for deletion
+                    blog.MarkAsDeleted();
+
+                    // Save the changes using the service
+                    service.UpdateBlog(blog);
+                }
+            }
+        }
+    }
+```
+
+You can now run the application to see it in action.
+
+-   Right-click the **STESample.ConsoleTest** project in **Solution Explorer** and select **Debug -&gt; Start new instance**
+
+You'll see the following output when the application executes.
+
+```console
+Initial Data:
+ADO.NET Blog
+- Intro to EF
+- What is New
+
+After Adding:
+ADO.NET Blog
+- Intro to EF
+- What is New
+The New Blog
+- Welcome to the new blog
+- What's new on the new blog
+
+After Update:
+ADO.NET Blog
+- Intro to EF
+- What is New
+The Not-So-New Blog
+- Welcome to the new blog
+- What's new on the new blog
+
+After Delete:
+ADO.NET Blog
+- Intro to EF
+- What is New
+
+Press any key to exit...
+```
+
+## Consume the Service from a WPF Application
+
+Let's create a WPF application that uses our service.
+
+-   **File -&gt; New -&gt; Project...**
+-   Select **Visual C\#** from the left pane and then **WPF Application**
+-   Enter **STESample.WPFTest** as the name and click **OK**
+-   Add a reference to the **STESample.Entities** project
+
+We need a service reference to our WCF service
+
+-   Right-click the **STESample.WPFTest** project in **Solution Explorer** and select **Add Service Reference...**
+-   Click **Discover**
+-   Enter **BloggingService** as the namespace and click **OK**
+
+Now we can write some code to consume the service.
+
+-   Open **MainWindow.xaml** and replace the contents with the following code.
+
+``` xaml
+    <Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:STESample="clr-namespace:STESample;assembly=STESample.Entities"
+        mc:Ignorable="d" x:Class="STESample.WPFTest.MainWindow"
+        Title="MainWindow" Height="350" Width="525" Loaded="Window_Loaded">
+
+        <Window.Resources>
+            <CollectionViewSource
+                x:Key="blogViewSource"
+                d:DesignSource="{d:DesignInstance {x:Type STESample:Blog}, CreateList=True}"/>
+            <CollectionViewSource
+                x:Key="blogPostsViewSource"
+                Source="{Binding Posts, Source={StaticResource blogViewSource}}"/>
+        </Window.Resources>
+
+        <Grid DataContext="{StaticResource blogViewSource}">
+            <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True"
+                      ItemsSource="{Binding}" Margin="10,10,10,179">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding BlogId}" Header="Id" Width="Auto" IsReadOnly="True" />
+                    <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="Auto"/>
+                    <DataGridTextColumn Binding="{Binding Url}" Header="Url" Width="Auto"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid AutoGenerateColumns="False" EnableRowVirtualization="True"
+                      ItemsSource="{Binding Source={StaticResource blogPostsViewSource}}" Margin="10,145,10,38">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding PostId}" Header="Id" Width="Auto"  IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="Auto"/>
+                    <DataGridTextColumn Binding="{Binding Content}" Header="Content" Width="Auto"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Width="68" Height="23" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                    Margin="0,0,10,10" Click="buttonSave_Click">Save</Button>
+        </Grid>
+    </Window>
+```
+
+-   Open the code behind for MainWindow (**MainWindow.xaml.cs**) and replace the contents with the following code
+
+``` csharp
+    using STESample.WPFTest.BloggingService;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Data;
+
+    namespace STESample.WPFTest
+    {
+        public partial class MainWindow : Window
+        {
+            public MainWindow()
+            {
+                InitializeComponent();
+            }
+
+            private void Window_Loaded(object sender, RoutedEventArgs e)
+            {
+                using (var service = new Service1Client())
+                {
+                    // Find the view source for Blogs and populate it with all Blogs (and related Posts)
+                    // from the Service. The default editing functionality of WPF will allow the objects
+                    // to be manipulated on the screen.
+                    var blogsViewSource = (CollectionViewSource)this.FindResource("blogViewSource");
+                    blogsViewSource.Source = service.GetBlogs().ToList();
+                }
+            }
+
+            private void buttonSave_Click(object sender, RoutedEventArgs e)
+            {
+                using (var service = new Service1Client())
+                {
+                    // Get the blogs that are bound to the screen
+                    var blogsViewSource = (CollectionViewSource)this.FindResource("blogViewSource");
+                    var blogs = (List<Blog>)blogsViewSource.Source;
+
+                    // Save all Blogs and related Posts
+                    foreach (var blog in blogs)
+                    {
+                        service.UpdateBlog(blog);
+                    }
+
+                    // Re-query for data to get database-generated keys etc.
+                    blogsViewSource.Source = service.GetBlogs().ToList();
+                }
+            }
+        }
+    }
+```
+
+You can now run the application to see it in action.
+
+-   Right-click the **STESample.WPFTest** project in **Solution Explorer** and select **Debug -&gt; Start new instance**
+-   You can manipulate the data using the screen and save it via the service using the **Save** button
+
+![WPF Main window](~/ef6/media/wpf.png)

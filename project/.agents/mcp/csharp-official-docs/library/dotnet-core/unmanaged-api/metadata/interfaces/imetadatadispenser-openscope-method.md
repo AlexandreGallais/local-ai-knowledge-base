@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataDispenser::OpenScope Method"
 title: "IMetaDataDispenser::OpenScope Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadatadispenser-openscope-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataDispenser.OpenScope"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataDispenser::OpenScope"
+  - "OpenScope method, IMetaDataDispenser interface [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataDispenser::OpenScope Method
 
 Opens an existing, on-disk file and maps its metadata into memory.
@@ -28,7 +35,7 @@ HRESULT OpenScope (
  [in] The name of the file to be opened. The file must contain common language runtime (CLR) metadata.
 
  `dwOpenFlags`
- [in] A value of the CorOpenFlags enumeration to specify the mode (read, write, and so on) for opening.
+ [in] A value of the [CorOpenFlags](../enumerations/coropenflags-enumeration.md) enumeration to specify the mode (read, write, and so on) for opening.
 
  `riid`
  [in] The IID of the desired metadata interface to be returned; the caller will use the interface to import (read) or emit (write) metadata.
@@ -48,7 +55,7 @@ Scopes opened with `dwOpenFlags` set to `ofRead` aren't shared. Use the `ofReadO
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -56,11 +63,11 @@ Scopes opened with `dwOpenFlags` set to `ofRead` aren't shared. Use the `ofReadO
 
 ## See also
 
-- IMetaDataDispenser Interface
-- IMetaDataDispenserEx Interface
-- IMetaDataAssemblyEmit Interface
-- IMetaDataAssemblyImport Interface
-- IMetaDataEmit Interface
-- IMetaDataEmit2 Interface
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataDispenser Interface](imetadatadispenser-interface.md)
+- [IMetaDataDispenserEx Interface](imetadatadispenserex-interface.md)
+- [IMetaDataAssemblyEmit Interface](imetadataassemblyemit-interface.md)
+- [IMetaDataAssemblyImport Interface](imetadataassemblyimport-interface.md)
+- [IMetaDataEmit Interface](imetadataemit-interface.md)
+- [IMetaDataEmit2 Interface](imetadataemit2-interface.md)
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

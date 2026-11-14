@@ -1,13 +1,9 @@
 ---
-title: "no-useless-computed-key"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-useless-computed-key.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-useless-computed-key
+rule_type: suggestion
 ---
 
-# no-useless-computed-key
+
 
 It's unnecessary to use computed properties with literals such as:
 
@@ -27,7 +23,7 @@ This rule disallows unnecessary usage of computed property keys.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-useless-computed-key: "error"*/
@@ -55,9 +51,11 @@ class Foo {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-useless-computed-key: "error"*/
@@ -85,9 +83,11 @@ class Foo {
 }
 ```
 
+:::
+
 Examples of additional **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-useless-computed-key: "error"*/
@@ -111,6 +111,8 @@ class Foo {
 }
 ```
 
+:::
+
 ## Options
 
 This rule has an object option:
@@ -126,7 +128,7 @@ When `enforceForClassMembers` is set to `false`, the rule will allow unnecessary
 
 Examples of **incorrect** code for this rule with the `{ "enforceForClassMembers": false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-useless-computed-key: ["error", { "enforceForClassMembers": false }]*/
@@ -141,9 +143,11 @@ const obj = {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "enforceForClassMembers": false }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-useless-computed-key: ["error", { "enforceForClassMembers": false }]*/
@@ -160,6 +164,8 @@ class SomeClass {
     static ['baz']() {}
 }
 ```
+
+:::
 
 ## When Not To Use It
 

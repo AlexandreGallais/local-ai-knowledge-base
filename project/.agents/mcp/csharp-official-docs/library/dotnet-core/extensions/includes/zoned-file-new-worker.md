@@ -1,23 +1,18 @@
 ---
-title: "zoned-file-new-worker"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/includes/zoned-file-new-worker.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 06/02/2021
+ms.topic: include
 ---
-
-# zoned-file-new-worker
 
 ## Create a new project
 
-**docs:**
+:::zone target="docs" pivot="visualstudio"
 
 To create a new Worker Service project with Visual Studio, select **File** > **New** > **Project...**. From the **Create a new project** dialog search for "Worker Service", and select Worker Service template. Enter the desired project name, select an appropriate location, and select **Next**. On the **Additional information** page, for the **Target Framework** select `.NET 5.0`, and check the **Enable Docker** option to enable docker support. Select the desired **Docker OS**.
 
-**docs:**
+:::zone-end
+:::zone target="docs" pivot="vscode"
 
-To create a new Worker Service project with Visual Studio Code, you can run .NET CLI commands from the integrated terminal. For more information, see Visual Studio Code: Integrated Terminal.
+To create a new Worker Service project with Visual Studio Code, you can run .NET CLI commands from the integrated terminal. For more information, see [Visual Studio Code: Integrated Terminal](https://code.visualstudio.com/docs/editor/integrated-terminal).
 
 Open the integrated terminal, and run the `dotnet new` command, and replace the `<Project.Name>` with your desired project name.
 
@@ -25,9 +20,10 @@ Open the integrated terminal, and run the `dotnet new` command, and replace the 
 dotnet new worker --name <Project.Name>
 ```
 
-For more information on the .NET CLI new worker service project command, see dotnet new worker.
+For more information on the .NET CLI new worker service project command, see [dotnet new worker](../../tools/dotnet-new-sdk-templates.md#web-others).
 
-**docs:**
+:::zone-end
+:::zone target="docs" pivot="cli"
 
 To create a new Worker Service project with the .NET CLI, open your favorite terminal in a working directory. Run the `dotnet new` command, and replace the `<Project.Name>` with your desired project name.
 
@@ -35,4 +31,6 @@ To create a new Worker Service project with the .NET CLI, open your favorite ter
 dotnet new worker --name <Project.Name>
 ```
 
-For more information on the .NET CLI new worker service project command, see dotnet new worker.
+For more information on the .NET CLI new worker service project command, see [dotnet new worker](../../tools/dotnet-new-sdk-templates.md#web-others).
+
+:::zone-end

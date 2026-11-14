@@ -1,31 +1,30 @@
 ---
-title: "Hosting ASP.NET Core image in container using docker compose with HTTPS"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/docker-compose-https.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Hosting ASP.NET Core image in container using docker compose with HTTPS
+description: Learn how to host ASP.NET Core Images with Docker Compose over HTTPS
+ms.custom: sfi-ropc-nochange
+ms.date: 09/07/2024
 ---
-
 # Hosting ASP.NET Core images with Docker Compose over HTTPS
 
-ASP.NET Core uses HTTPS by default. HTTPS relies on certificates for trust, identity, and encryption.
+:::moniker range=">= aspnetcore-8.0"
+
+ASP.NET Core uses [HTTPS by default](~/security/enforcing-ssl.md). [HTTPS](https://en.wikipedia.org/wiki/HTTPS) relies on [certificates](https://en.wikipedia.org/wiki/Public_key_certificate) for trust, identity, and encryption.
 
 This document explains how to run pre-built container images with HTTPS.
 
-See Developing ASP.NET Core Applications with Docker over HTTPS for development scenarios.
+See [Developing ASP.NET Core Applications with Docker over HTTPS](https://github.com/dotnet/dotnet-docker/blob/main/samples/run-aspnetcore-https-development.md) for development scenarios.
 
-This sample requires Docker 17.06 or later of the Docker client.
+This sample requires [Docker 17.06](https://docs.docker.com/release-notes/docker-ce) or later of the [Docker client](https://www.docker.com/products/docker).
 
 ## Prerequisites
 
-The .NET Core 2.2 SDK or later is required for some of the instructions in this document.
+The [.NET Core 2.2 SDK](https://dotnet.microsoft.com/download) or later is required for some of the instructions in this document.
 
 ## Certificates
 
-A certificate from a certificate authority is required for production hosting for a domain. :::no-loc text="Let's Encrypt"::: is a certificate authority that offers free certificates.
+A certificate from a [certificate authority](https://wikipedia.org/wiki/Certificate_authority) is required for [production hosting](https://blogs.msdn.microsoft.com/webdev/2017/11/29/configuring-https-in-asp-net-core-across-different-platforms/) for a domain. [:::no-loc text="Let's Encrypt":::](https://letsencrypt.org/) is a certificate authority that offers free certificates.
 
-This document uses self-signed development certificates for hosting pre-built images over `localhost`. The instructions are similar to using production certificates.
+This document uses [self-signed development certificates](https://wikipedia.org/wiki/Self-signed_certificate) for hosting pre-built images over `localhost`. The instructions are similar to using production certificates.
 
 For production certificates:
 
@@ -74,12 +73,12 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=<example-value>
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=-\0pw-
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
     volumes:
       - ~/.aspnet/https:/https:ro
 ```
-The password <example-value> in the docker compose file must match the password used for the certificate.
+The password specified in the docker compose file must match the password used for the certificate.
 
 Start the container with ASP.NET Core configured for HTTPS:
 
@@ -114,12 +113,12 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=<example-value>
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=-\0pw-
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
     volumes:
       - ~/.aspnet/https:/https:ro
 ```
-The password <example-value> in the docker compose file must match the password used for the certificate.
+The password specified in the docker compose file must match the password used for the certificate.
 
 Start the container with ASP.NET Core configured for HTTPS:
 
@@ -152,12 +151,12 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=<example-value>
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=-\0pw-
       - ASPNETCORE_Kestrel__Certificates__Default__Path=C:\https\aspnetapp.pfx
     volumes:
       - ${USERPROFILE}\.aspnet\https:C:\https:ro
 ```
-The password <example-value> in the docker compose file must match the password used for the certificate.
+The password specified in the docker compose file must match the password used for the certificate.
 
 Start the container with ASP.NET Core configured for HTTPS:
 
@@ -167,4 +166,8 @@ docker-compose -f "docker-compose.debug.yml" up -d
 
 ## See also
 
-* `dotnet dev-certs`
+* [`dotnet dev-certs`](/dotnet/core/tools/dotnet-dev-certs)
+
+:::moniker-end
+
+[!INCLUDE[](~/security/includes/docker-compose-https7.md)]

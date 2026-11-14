@@ -1,39 +1,38 @@
 ---
-title: "Generate Self-Signed Certificates Overview"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/additional-tools/self-signed-certificates-guide.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Generate Self-Signed Certificates Overview
+description: An overview of the dotnet dev-certs tool that adds functionality for .NET and ASP.NET Core projects, and other options for using self-signed certificates.
+author: angee
+ms.date: 09/23/2026
+ms.custom: sfi-ropc-nochange
 ---
 
 # Generate self-signed certificates with the .NET CLI
 
 There are different ways to create and use self-signed certificates for development and testing scenarios. This article covers using self-signed certificates with `dotnet dev-certs`, and other options like `PowerShell` and `OpenSSL`.
 
-You can then validate that the certificate loads using an example such as an ASP.NET Core app hosted in a container.
+You can then validate that the certificate loads using an example such as an [ASP.NET Core app](https://github.com/dotnet/dotnet-docker/blob/main/samples/run-aspnetcore-https-development.md) hosted in a container.
 
 ## Prerequisites
 
 For `dotnet dev-certs`, be sure to have the appropriate version of .NET installed:
 
-* Install .NET on Windows
-* Install .NET on Linux
-* Install .NET on macOS
+* [Install .NET on Windows](../install/windows.md)
+* [Install .NET on Linux](../install/linux.md)
+* [Install .NET on macOS](../install/macos.md)
 
-This sample requires the Docker client.
+This sample requires the [Docker client](https://www.docker.com/products/docker).
 
 ## Prepare sample app
 
-For this guide, you'll use a sample app and make changes where appropriate.
+For this guide, you'll use a [sample app](https://hub.docker.com/r/microsoft/dotnet-samples) and make changes where appropriate.
 
-Check that the sample app Dockerfile is using .NET 11.
+Check that the sample app [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/7a1cdd5dd426ae782d7304ab8af476855790186a/samples/AspNetCoreRazorApp/Dockerfile) is using .NET 11.
 
 Depending on the host OS, you might need to update the ASP.NET runtime. For Windows containers, use the Windows Server Core variant of the sample.
 
 For example, this will help with testing the certificates on Windows:
 
-```dockerfile
+```Dockerfile
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
 FROM mcr.microsoft.com/dotnet/sdk:11.0-windowsservercore-ltsc2025 AS build
 WORKDIR /source
@@ -72,8 +71,8 @@ Make sure the `AspNetCoreRazorApp.csproj` includes the appropriate target framew
 </Project>
 ```
 
-> **Note:**
-> If you want to use `dotnet publish` parameters to *trim* the deployment, make sure that the appropriate dependencies are included for supporting SSL certificates. Update the project file to ensure that the appropriate assemblies are included in the container. For reference, check how to update the .csproj file to support SSL certificates when using trimming for self-contained deployments.
+> [!NOTE]
+> If you want to use `dotnet publish` parameters to *trim* the deployment, make sure that the appropriate dependencies are included for supporting SSL certificates. Update the [project file](https://github.com/dotnet/dotnet-docker/blob/7a1cdd5dd426ae782d7304ab8af476855790186a/samples/AspNetCoreRazorApp/AspNetCoreRazorApp/AspNetCoreRazorApp.csproj) to ensure that the appropriate assemblies are included in the container. For reference, check how to update the .csproj file to [support SSL certificates](../deploying/trimming/trim-self-contained.md) when using trimming for self-contained deployments.
 
 Make sure you're pointing to the sample app.
 
@@ -97,9 +96,9 @@ docker build -t aspnetapp:my-sample -f Dockerfile.windowsservercore .
 
 You can create a self-signed certificate:
 
-- With dotnet dev-certs
-- With PowerShell
-- With OpenSSL
+- [With dotnet dev-certs](#with-dotnet-dev-certs)
+- [With PowerShell](#with-powershell)
+- [With OpenSSL](#with-openssl)
 
 ### With dotnet dev-certs
 
@@ -110,8 +109,8 @@ dotnet dev-certs https -ep $env:USERPROFILE\.aspnet\https\AspNetCoreRazorApp.pfx
 dotnet dev-certs https --trust
 ```
 
-> **Note:**
-> The certificate name, in this case *AspNetCoreRazorApp*.pfx, must match the project assembly name. `$CREDENTIAL_PLACEHOLDER$` represents a password of your own choosing. If the console returns "<example-value>", a trusted certificate already exists in your store. You can export it using the MMC Console.
+> [!NOTE]
+> The certificate name, in this case *AspNetCoreRazorApp*.pfx, must match the project assembly name. `$CREDENTIAL_PLACEHOLDER$` represents a password of your own choosing. If the console returns "A valid HTTPS certificate is already present.", a trusted certificate already exists in your store. You can export it using the MMC Console.
 >
 > In .NET 10 and later, if you run `dotnet dev-certs https --trust` inside a Windows Subsystem for Linux (WSL) instance, the command also trusts the certificate on the Windows host.
 >
@@ -123,16 +122,16 @@ Configure application secrets, for the certificate:
 
 ```console
 dotnet user-secrets -p AspNetCoreRazorApp\AspNetCoreRazorApp.csproj init
-dotnet user-secrets -p AspNetCoreRazorApp\AspNetCoreRazorApp.csproj set "<example-value>" "<example-value>"
+dotnet user-secrets -p AspNetCoreRazorApp\AspNetCoreRazorApp.csproj set "Kestrel:Certificates:Development:Password" "$CREDENTIAL_PLACEHOLDER$"
 ```
 
-> **Note:**
+> [!NOTE]
 > The password must match the password used for the certificate.
 
 Run the container image with ASP.NET Core configured for HTTPS:
 
 ```powershell
-docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="<example-value>" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -v $env:APPDATA\microsoft\UserSecrets\:C:\Users\ContainerUser\AppData\Roaming\microsoft\UserSecrets -v $env:USERPROFILE\.aspnet\https:C:\Users\ContainerUser\AppData\Roaming\ASP.NET\Https mcr.microsoft.com/dotnet/samples:aspnetapp
+docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -v $env:APPDATA\microsoft\UserSecrets\:C:\Users\ContainerUser\AppData\Roaming\microsoft\UserSecrets -v $env:USERPROFILE\.aspnet\https:C:\Users\ContainerUser\AppData\Roaming\ASP.NET\Https mcr.microsoft.com/dotnet/samples:aspnetapp
 ```
 
 Once the application starts, navigate to `https://localhost:8001` in your web browser.
@@ -142,13 +141,13 @@ Once the application starts, navigate to `https://localhost:8001` in your web br
 If the secrets and certificates aren't in use, be sure to clean them up.
 
 ```console
-dotnet user-secrets remove "<example-value>" -p AspNetCoreRazorApp\AspNetCoreRazorApp.csproj
+dotnet user-secrets remove "Kestrel:Certificates:Development:Password" -p AspNetCoreRazorApp\AspNetCoreRazorApp.csproj
 dotnet dev-certs https --clean
 ```
 
 ### With PowerShell
 
-You can use PowerShell to generate self-signed certificates. The PKI Client can be used to generate a self-signed certificate.
+You can use PowerShell to generate self-signed certificates. The [PKI Client](/powershell/module/pki/new-selfsignedcertificate) can be used to generate a self-signed certificate.
 
 ```powershell
 $cert = New-SelfSignedCertificate -DnsName @("contoso.com", "www.contoso.com") -CertStoreLocation "cert:\LocalMachine\My"
@@ -158,26 +157,26 @@ The certificate will be generated, but for the purposes of testing, should be pl
 
 ```powershell
 $certKeyPath = "c:\certs\contoso.com.pfx"
-$password = <example-value> '<example-value>' -AsPlainText -Force
-$cert | Export-PfxCertificate -FilePath $certKeyPath -Password <example-value>
-$rootCert = $(Import-PfxCertificate -FilePath $certKeyPath -CertStoreLocation '<example-value>' -Password <example-value>)
+$password = ConvertTo-SecureString '$CREDENTIAL_PLACEHOLDER$' -AsPlainText -Force
+$cert | Export-PfxCertificate -FilePath $certKeyPath -Password $password
+$rootCert = $(Import-PfxCertificate -FilePath $certKeyPath -CertStoreLocation 'Cert:\LocalMachine\Root' -Password $password)
 ```
 
-At this point, the certificates should be viewable from an MMC snap-in.
+At this point, the certificates should be viewable from an [MMC snap-in](../../framework/wcf/feature-details/how-to-view-certificates-with-the-mmc-snap-in.md).
 
 You can run the sample container in Windows Subsystem for Linux (WSL):
 
 ```console
-docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="<example-value>" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -e ASPNETCORE_Kestrel__Certificates__Default__Password="<example-value>" -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/contoso.com.pfx -v /c/certs:/https/ mcr.microsoft.com/dotnet/samples:aspnetapp
+docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -e ASPNETCORE_Kestrel__Certificates__Default__Password="$CREDENTIAL_PLACEHOLDER$" -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/contoso.com.pfx -v /c/certs:/https/ mcr.microsoft.com/dotnet/samples:aspnetapp
 ```
 
-> **Note:**
+> [!NOTE]
 > With the volume mount, the file path could be handled differently based on host. For example, in WSL you might replace */c/certs* with */mnt/c/certs*.
 
 If you're using the container built earlier for Windows, the run command would look like the following:
 
 ```console
-docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="<example-value>" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -e ASPNETCORE_Kestrel__Certificates__Default__Password="<example-value>" -e ASPNETCORE_Kestrel__Certificates__Default__Path=c:\https\contoso.com.pfx -v c:\certs:C:\https aspnetapp:my-sample
+docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -e ASPNETCORE_Kestrel__Certificates__Default__Password="$CREDENTIAL_PLACEHOLDER$" -e ASPNETCORE_Kestrel__Certificates__Default__Path=c:\https\contoso.com.pfx -v c:\certs:C:\https aspnetapp:my-sample
 ```
 
 Once the application is up, navigate to contoso.com:8001 in a browser.
@@ -194,7 +193,7 @@ $rootCert | Remove-item
 
 ### With OpenSSL
 
-You can use OpenSSL to create self-signed certificates. This example uses WSL / Ubuntu and a bash shell with `OpenSSL`.
+You can use [OpenSSL](https://www.openssl.org/) to create self-signed certificates. This example uses WSL / Ubuntu and a bash shell with `OpenSSL`.
 
 This command generates a .crt and a .key.
 
@@ -240,7 +239,7 @@ To get a .pfx, use the following command:
 openssl pkcs12 -export -out $PARENT.pfx -inkey $PARENT.key -in $PARENT.crt
 ```
 
-> **Note:**
+> [!NOTE]
 > Starting in .NET 5, Kestrel can take *.crt* and PEM-encoded *.key* files in addition to *.pfx* files with a password.
 
 Depending on the host OS, the certificate needs to be trusted. On a Linux host, 'trusting' the certificate is different and distro dependent.
@@ -257,7 +256,7 @@ Run the sample using the following command in WSL:
 docker run --rm -it -p 8000:80 -p 8001:443 -e ASPNETCORE_URLS="https://+;http://+" -e ASPNETCORE_HTTPS_PORT=8001 -e ASPNETCORE_ENVIRONMENT=Development -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/contoso.com.crt -e ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/https/contoso.com.key -v /c/path/to/certs:/https/ mcr.microsoft.com/dotnet/samples:aspnetapp
 ```
 
-> **Note:**
+> [!NOTE]
 > In WSL, the volume mount path might change depending on the configuration.
 
 Run the following command in PowerShell:
@@ -280,4 +279,4 @@ Get-ChildItem $certKeyPath | Remove-Item
 
 ## See also
 
-* dotnet dev-certs
+* [dotnet dev-certs](../tools/dotnet-dev-certs.md)

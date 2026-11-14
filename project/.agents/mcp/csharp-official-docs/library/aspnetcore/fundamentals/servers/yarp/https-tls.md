@@ -1,10 +1,10 @@
 ---
-title: "YARP HTTPS & TLS"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/https-tls.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: YARP HTTPS & TLS
+description: YARP HTTPS & TLS
+ms.date: 02/14/2025
+ms.topic: concept-article
+content_well_notification: AI-contribution
+ai-usage: ai-assisted
 ---
 
 # YARP HTTPS & TLS
@@ -21,18 +21,18 @@ TLS tunneling using the CONNECT method is a feature used to proxy requests witho
 
 ## Configuring incoming connections
 
-YARP can run on top of all ASP.NET Core servers and configuring HTTPS/TLS for incoming connections is server specific. For configuration details, see Kestrel, IIS, and Http.Sys - Configure Windows Server.
+YARP can run on top of all ASP.NET Core servers and configuring HTTPS/TLS for incoming connections is server specific. For configuration details, see [Kestrel](../kestrel/endpoints.md#listenoptionsusehttps), [IIS](/iis/manage/configuring-security/how-to-set-up-ssl-on-iis), and [Http.Sys - Configure Windows Server](../httpsys.md#configure-windows-server).
 
 ### Advanced TLS filters with Kestrel
 
-Kestrel supports intercepting incoming connections before the TLS handshake. YARP includes a TlsFrameHelper API that can parse the raw TLS handshake and enable you to gather custom telemetry or eagerly reject connections. These APIs cannot modify the TLS handshake or decrypt the data stream. See this example.
+Kestrel supports intercepting incoming connections before the TLS handshake. YARP includes a [TlsFrameHelper](xref:Yarp.ReverseProxy.Utilities.Tls.TlsFrameHelper) API that can parse the raw TLS handshake and enable you to gather custom telemetry or eagerly reject connections. These APIs cannot modify the TLS handshake or decrypt the data stream. See this [example](https://github.com/microsoft/reverse-proxy/blob/v1.0.0-rc.1/testassets/ReverseProxy.Direct/TlsFilter.cs).
 
 ## Configuring outgoing connections
 
-To enable TLS encryption when communicating with a destination specify the destination address as `https` like `"https://destinationHost"`. See the configuration docs for examples.
+To enable TLS encryption when communicating with a destination specify the destination address as `https` like `"https://destinationHost"`. See the [configuration docs](config-files.md#examine-the-configuration-structure) for examples.
 
-The host name specified in the destination address will be used for the TLS handshake by default, including SNI and server certificate validation. If proxying the original host header is enabled, that value will be used for the TLS handshake instead. If a custom host value needs to be used then use the RequestHeader transform to set the host header.
+The host name specified in the destination address will be used for the TLS handshake by default, including SNI and server certificate validation. If proxying the [original host header](transforms-request.md#requestheaderoriginalhost) is enabled, that value will be used for the TLS handshake instead. If a custom host value needs to be used then use the [RequestHeader](transforms-request.md#requestheader) transform to set the host header.
 
-Outbound connections to the destinations are handled by HttpClient/SocketsHttpHandler. A different instance and settings can be configured per cluster. Some settings are available in the configuration model, while others can only be configured in code. See the HttpClient docs for details.
+Outbound connections to the destinations are handled by HttpClient/SocketsHttpHandler. A different instance and settings can be configured per cluster. Some settings are available in the configuration model, while others can only be configured in code. See the [HttpClient](http-client-config.md) docs for details.
 
-Destination server certificates need to be trusted by the proxy or custom validation needs to be applied via the HttpClient configuration.
+Destination server certificates need to be trusted by the proxy or custom validation needs to be applied via the [HttpClient](http-client-config.md) configuration.

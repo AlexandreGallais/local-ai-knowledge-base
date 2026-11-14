@@ -1,19 +1,10 @@
----
-title: "Interceptors"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/http/interceptors.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Interceptors
 
 `HttpClient` supports a form of middleware known as _interceptors_.
 
 TLDR: Interceptors are middleware that allows common patterns around retrying, caching, logging, and authentication to be abstracted away from individual requests.
 
-`HttpClient` supports two kinds of interceptors: functional and DI-based. Our recommendation is to use functional interceptors because they have more predictable behavior, especially in complex setups. Our examples in this guide use functional interceptors, and we cover DI-based interceptors in their own section at the end.
+`HttpClient` supports two kinds of interceptors: functional and DI-based. Our recommendation is to use functional interceptors because they have more predictable behavior, especially in complex setups. Our examples in this guide use functional interceptors, and we cover [DI-based interceptors](#di-based-interceptors) in their own section at the end.
 
 ## Interceptors
 
@@ -100,7 +91,7 @@ CRITICAL: The body of a request or response is **not** protected from deep mutat
 
 ## Dependency injection in interceptors
 
-Interceptors are run in the _injection context_ of the injector which registered them, and can use Angular's `inject` API to retrieve dependencies.
+Interceptors are run in the _injection context_ of the injector which registered them, and can use Angular's [`inject`](/api/core/inject) API to retrieve dependencies.
 
 For example, suppose an application has a service called `AuthService`, which creates authentication tokens for outgoing requests. An interceptor can inject and use this service:
 
@@ -111,7 +102,7 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) 
 
   // Clone the request to add the authentication header.
   const newReq = req.clone({
-    headers: req.headers.append('<example-value>', authToken),
+    headers: req.headers.append('X-Authentication-Token', authToken),
   });
   return next(newReq);
 }
@@ -119,7 +110,7 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) 
 
 ## Request and response metadata
 
-Often it'<example-value>'s not sent to the backend, but is specifically meant for interceptors. `HttpRequest`s have a `.context` object which stores this kind of metadata as an instance of `HttpContext`. This object functions as a typed map, with keys of type `HttpContextToken`.
+Often it's useful to include information in a request that's not sent to the backend, but is specifically meant for interceptors. `HttpRequest`s have a `.context` object which stores this kind of metadata as an instance of `HttpContext`. This object functions as a typed map, with keys of type `HttpContextToken`.
 
 To illustrate how this system works, let's use metadata to control whether a caching interceptor is enabled for a given request.
 
@@ -131,7 +122,7 @@ To store whether the caching interceptor should cache a particular request in th
 export const CACHING_ENABLED = new HttpContextToken<boolean>(() => true);
 ```
 
-The provided function creates the default value for the token for requests that haven'<example-value>'s value is an object or array, each request gets its own instance.
+The provided function creates the default value for the token for requests that haven't explicitly set a value for it. Using a function ensures that if the token's value is an object or array, each request gets its own instance.
 
 ### Reading the token in an interceptor
 

@@ -1,21 +1,14 @@
----
-title: "prefer-single-array-predicate"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-single-array-predicate.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-single-array-predicate
 
 📝 Prefer a single `Array#some()` or `Array#every()` with a combined predicate.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-Combining multiple predicates into a single `Array#some()` or `Array#every()` call is more efficient and readable. Calling the same method multiple times iterates the array multiple times unnecessarily.
+<!-- end auto-generated rule header -->
+
+Combining multiple predicates into a single [`Array#some()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some) or [`Array#every()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every) call is more efficient and readable. Calling the same method multiple times iterates the array multiple times unnecessarily.
 
 This rule only provides suggestions (not autofix) because combining calls can change evaluation order when receivers or predicates have side effects.
 

@@ -1,15 +1,8 @@
----
-title: "Disallow using ReplaySubject, publishReplay or shareReplay without specifying the buffer size (rxjs-x/no-ignored-replay-buffer)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/no-ignored-replay-buffer.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Disallow using `ReplaySubject`, `publishReplay` or `shareReplay` without specifying the buffer size (`rxjs-x/no-ignored-replay-buffer`)
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, 🔒 `strict`.
+
+<!-- end auto-generated rule header -->
 
 This rule effects failures if the buffer size of a replay buffer is not explicitly specified.
 
@@ -50,5 +43,5 @@ If you don't care about implicitly defaulting to `Infinity` in your replay buffe
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/no-ignored-replay-buffer.ts)
+- [Test source](/tests/rules/no-ignored-replay-buffer.test.ts)

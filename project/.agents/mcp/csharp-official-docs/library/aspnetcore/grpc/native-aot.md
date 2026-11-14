@@ -1,22 +1,23 @@
 ---
-title: "gRPC and Native AOT"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/grpc/native-aot.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: gRPC and Native AOT
+description: Learn about support for gRPC with .NET native ahead-of-time (AOT).
+monikerRange: '>= aspnetcore-8.0'
+ms.date: 04/06/2023
 ---
-
 # gRPC and Native AOT
+
+<!-- UPDATE 9.0 Activate after release and INCLUDE is updated
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
 -->
 
-By James Newton-King
+By [James Newton-King](https://twitter.com/jamesnk)
 
-gRPC supports .NET native ahead-of-time (AOT) in .NET 8. Native AOT enables publishing gRPC client and server apps as small, fast native executables.
+gRPC supports [.NET native ahead-of-time (AOT)](/dotnet/core/deploying/native-aot/) in .NET 8. Native AOT enables publishing gRPC client and server apps as small, fast native executables.
 
-> **Warning:**
-> In .NET 8, not all ASP.NET Core features are compatible with Native AOT. For more information, see ASP.NET Core and Native AOT compatibility.
+> [!WARNING]
+> In .NET 8, not all ASP.NET Core features are compatible with Native AOT. For more information, see [ASP.NET Core and Native AOT compatibility](../fundamentals/native-aot.md#aspnet-core-and-native-aot-compatibility).
 
 ## Get started
 
@@ -24,21 +25,7 @@ AOT compilation happens when the app is published. Native AOT is enabled with th
 
 1. Add `<PublishAot>true</PublishAot>` to the gRPC client or server app's project file. This will enable Native AOT compilation during publish and enable dynamic code usage analysis during build and editing.
 
-    ```xml
-<Project Sdk="Microsoft.NET.Sdk.Web">
-
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <PublishAot>true</PublishAot>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Grpc.AspNetCore" Version="2.51.0" />
-    <PackageReference Include="Google.Protobuf" Version="3.22.0" />
-  </ItemGroup>
-
-</Project>
-```
+    [!code-xml[](~/grpc/native-aot/Server.csproj?highlight=5)]
 
     Native AOT can also be enabled by specifying the `--aot` option with the ASP.NET Core gRPC template:
 
@@ -46,7 +33,7 @@ AOT compilation happens when the app is published. Native AOT is enabled with th
     dotnet new grpc --aot
     ```
 
-2. Publish the app for a specific runtime identifier (RID) using `dotnet publish -r <RID>`.
+2. Publish the app for a specific [runtime identifier (RID)](/dotnet/core/rid-catalog) using `dotnet publish -r <RID>`.
 
 The app is available in the publish directory and contains all the code needed to run in it.
 
@@ -58,14 +45,7 @@ A Native AOT executable contains just the code from external dependencies requir
 
 The publish size of an ASP.NET Core gRPC service can be optimized by creating the host builder with `WebApplication.CreateSlimBuilder()`. This builder provides a minimal list of features required to run an ASP.NET Core app.
 
-```csharp
-var builder = WebApplication.CreateSlimBuilder(args);
-builder.Services.AddGrpc();
-
-var app = builder.Build();
-app.MapGrpcService<GreeterService>();
-app.Run();
-```
+[!code-csharp[](~/grpc/native-aot/Program.cs?highlight=1)]
 
 ## Benefits of using Native AOT
 
@@ -75,9 +55,9 @@ Apps published with Native AOT have:
 * Reduced startup time
 * Reduce memory demand
 
-For more information and examples of the benefits that Native AOT provides, see Benefits of using Native AOT with ASP.NET Core.
+For more information and examples of the benefits that Native AOT provides, see [Benefits of using Native AOT with ASP.NET Core](../fundamentals/native-aot.md).
 
 ## Related content
 
-* ASP.NET Core support for Native AOT
-* Native AOT deployment
+* [ASP.NET Core support for Native AOT](../fundamentals/native-aot.md)
+* [Native AOT deployment](/dotnet/core/deploying/native-aot/)

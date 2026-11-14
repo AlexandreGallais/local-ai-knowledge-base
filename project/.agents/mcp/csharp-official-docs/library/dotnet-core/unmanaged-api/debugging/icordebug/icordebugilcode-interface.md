@@ -1,12 +1,16 @@
 ---
+description: "Learn more about: ICorDebugILCode Interface"
 title: "ICorDebugILCode Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugilcode-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugILCode"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugILCode Interface
 
 Represents a segment of intermediate language (IL) code.
@@ -15,11 +19,11 @@ Represents a segment of intermediate language (IL) code.
 
 |Method|Description|
 |------------|-----------------|
-|GetEHClauses Method|Returns a pointer to a list of exception handling (EH) clauses that are defined for this IL.|
+|[GetEHClauses Method](icordebugilcode-getehclauses-method.md)|Returns a pointer to a list of exception handling (EH) clauses that are defined for this IL.|
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

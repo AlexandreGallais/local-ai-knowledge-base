@@ -1,13 +1,8 @@
 ---
-title: "no-negated-condition"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-negated-condition.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-negated-condition
+rule_type: suggestion
 ---
 
-# no-negated-condition
 
 Negated conditions are more difficult to understand. Code can be made more readable by inverting the condition instead.
 
@@ -20,7 +15,7 @@ This rule disallows negated conditions in either of the following:
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-negated-condition: "error"*/
@@ -46,9 +41,11 @@ if (a !== b) {
 !a ? c : b
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-negated-condition: "error"*/
@@ -69,6 +66,8 @@ if (a != b) {
 
 a ? b : c
 ```
+
+:::
 
 ## Options
 

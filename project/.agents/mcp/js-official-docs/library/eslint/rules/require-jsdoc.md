@@ -1,18 +1,15 @@
 ---
-title: "require-jsdoc"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/require-jsdoc.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: require-jsdoc
+rule_type: suggestion
+related_rules:
+- valid-jsdoc
 ---
 
-# require-jsdoc
+:::important
+This rule was removed in ESLint v9.0.0 and replaced by the [`eslint-plugin-jsdoc`](https://github.com/gajus/eslint-plugin-jsdoc) equivalent.
+:::
 
-**Important:**
-This rule was removed in ESLint v9.0.0 and replaced by the `eslint-plugin-jsdoc` equivalent.
-
-JSDoc is a JavaScript API documentation generator. It uses specially-formatted comments inside of code to generate API documentation automatically. For example, this is what a JSDoc comment looks like for a function:
+[JSDoc](https://jsdoc.app/) is a JavaScript API documentation generator. It uses specially-formatted comments inside of code to generate API documentation automatically. For example, this is what a JSDoc comment looks like for a function:
 
 ```js
 /**
@@ -64,7 +61,7 @@ Default option settings are:
 
 Examples of **incorrect** code for this rule with the `{ "require": { "FunctionDeclaration": true, "MethodDefinition": true, "ClassDeclaration": true, "ArrowFunctionExpression": true, "FunctionExpression": true } }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint "require-jsdoc": ["error", {
@@ -106,9 +103,11 @@ var bar = {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "require": { "FunctionDeclaration": true, "MethodDefinition": true, "ClassDeclaration": true, "ArrowFunctionExpression": true, "FunctionExpression": true } }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint "require-jsdoc": ["error", {
@@ -193,6 +192,8 @@ var bar = {
 
 setTimeout(() => {}, 10); // since it's an anonymous arrow function
 ```
+
+:::
 
 ## When Not To Use It
 

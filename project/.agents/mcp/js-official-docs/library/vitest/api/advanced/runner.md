@@ -1,16 +1,8 @@
----
-title: "Runner API <Badge type=\"danger\">advanced</Badge>"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/api/advanced/runner.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # Runner API <Badge type="danger">advanced</Badge>
 
-**Warning:**
-This is advanced API. If you just want to run tests, you probably don't need this. It is primarily used by library authors.
+::: warning
+This is advanced API. If you just want to [run tests](/guide/), you probably don't need this. It is primarily used by library authors.
+:::
 
 You can specify a path to your test runner with the `runner` option in your configuration file. This file should have a default export with a class constructor implementing these methods:
 
@@ -99,7 +91,7 @@ export interface VitestRunner {
   /**
    * Function that is called when the runner attempts to get the value when `test.extend` is used with `{ injected: true }`
    */
-  injectValue?: (key: <example-value>) => unknown
+  injectValue?: (key: string) => unknown
   /**
    * Publicly available configuration.
    */
@@ -113,7 +105,7 @@ export interface VitestRunner {
 
 When initiating this class, Vitest passes down Vitest config, - you should expose it as a `config` property:
 
-```ts
+```ts [runner.ts]
 import type { RunnerTestFile, SerializedConfig, TestRunner, VitestTestRunner } from 'vitest'
 
 class CustomRunner extends TestRunner implements VitestTestRunner {
@@ -131,7 +123,7 @@ class CustomRunner extends TestRunner implements VitestTestRunner {
 export default CustomRunner
 ```
 
-**Warning:**
+::: warning
 Vitest also injects an instance of `ModuleRunner` from `vite/module-runner` as `moduleRunner` property. You can use it to process files in `importFile` method (this is default behavior of `TestRunner` and `BenchmarkRunner`).
 
 `ModuleRunner` exposes `import` method, which is used to import test files in a Vite-friendly environment. Meaning, it will resolve imports and transform file content at runtime so that Node can understand it:
@@ -144,18 +136,23 @@ export default class Runner {
 }
 ```
 
-**Warning:**
-If you don't have a custom runner or didn't define `runTest` method, Vitest will try to retrieve a task automatically. If you didn't add a function with `setFn`, it will fail.
+:::
 
-**Tip:**
+::: warning
+If you don't have a custom runner or didn't define `runTest` method, Vitest will try to retrieve a task automatically. If you didn't add a function with `setFn`, it will fail.
+:::
+
+::: tip
 Snapshot support and some other features depend on the runner. If you don't want to lose it, you can extend your runner from `TestRunner` imported from `vitest`. It also exposes `NodeBenchmarkRunner`, if you want to extend benchmark functionality.
+:::
 
 ## Tasks
 
-**Warning:**
-The "Runner Tasks API" is experimental and should primarily be used only in the test runtime. Vitest also exposes the "Reported Tasks API", which should be preferred when working in the main thread (inside the reporter, for example).
+::: warning
+The "Runner Tasks API" is experimental and should primarily be used only in the test runtime. Vitest also exposes the ["Reported Tasks API"](/api/advanced/test-module), which should be preferred when working in the main thread (inside the reporter, for example).
 
 The team is currently discussing if "Runner Tasks" should be replaced by "Reported Tasks" in the future.
+:::
 
 Suites and tests are called `tasks` internally. Vitest runner initiates a `File` task before collecting any tests - this is a superset of `Suite` with a few additional properties. It is available on every task (including `File`) as a `file` property.
 
@@ -311,7 +308,7 @@ Vitest exposes `createTaskCollector` utility to create your own `test` method. I
 
 A task is an object that is part of a suite. It is automatically added to the current suite with a `suite.task` method:
 
-```js
+```js [custom.js]
 export { afterAll, beforeAll, describe, TestRunner } from 'vitest'
 
 // this function will be called during collection phase:
@@ -332,7 +329,7 @@ export const myCustomTask = TestRunner.createTaskCollector(
 )
 ```
 
-```js
+```js [tasks.test.js]
 import {
   afterAll,
   beforeAll,

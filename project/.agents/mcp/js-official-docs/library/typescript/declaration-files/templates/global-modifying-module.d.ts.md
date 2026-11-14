@@ -1,13 +1,8 @@
 ---
 title: "Global: Modifying Module"
-tool: "typescript"
-version: "6.0"
-source: "https://github.com/microsoft/TypeScript-Website/blob/4ec663ac4412c3a7086401bd5a8811565589b11d/packages/documentation/copy/en/declaration-files/templates/global-modifying-module.d.ts.md"
-commit: "4ec663ac4412c3a7086401bd5a8811565589b11d"
-license: "CC-BY-4.0"
+layout: docs
+permalink: /docs/handbook/declaration-files/templates/global-modifying-module-d-ts.html
 ---
-
-# Global: Modifying Module
 
 ## _Global-modifying Modules_
 

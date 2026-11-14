@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: Changed MessagePack library in signalr-protocol-msgpack package"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/6/messagepack-library-change.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 6.0 where the MessagePack library was changed and two options were removed in the @microsoft/signalr-protocol-msgpack package."
+ms.date: 04/07/2021
+ms.custom: https://github.com/aspnet/Announcements/issues/454
 ---
-
 # Changed MessagePack library in @microsoft/signalr-protocol-msgpack
 
-The @microsoft/signalr-protocol-msgpack npm package now references `@msgpack/msgpack` instead of `msgpack5`. Additionally, the available options that can optionally be passed into the `MessagePackHubProtocol` have changed. The `MessagePackOptions.disableTimestampEncoding` and `MessagePackOptions.forceFloat64` properties were removed, and some new options were added.
+The [@microsoft/signalr-protocol-msgpack](https://www.npmjs.com/package/@microsoft/signalr-protocol-msgpack) npm package now references `@msgpack/msgpack` instead of `msgpack5`. Additionally, the available options that can optionally be passed into the `MessagePackHubProtocol` have changed. The `MessagePackOptions.disableTimestampEncoding` and `MessagePackOptions.forceFloat64` properties were removed, and some new options were added.
 
 For discussion, see <https://github.com/dotnet/aspnetcore/issues/30471>.
 
@@ -19,7 +16,7 @@ ASP.NET Core 6.0
 
 ## Old behavior
 
-In previous versions, you must include three script references to use the MessagePack Hub Protocol in the browser:
+In previous versions, you must include three script references to use the [MessagePack Hub Protocol](../../signalr/messagepackhubprotocol.md) in the browser:
 
 ```html
 <script src="~/lib/signalr/signalr.js"></script>
@@ -29,7 +26,7 @@ In previous versions, you must include three script references to use the Messag
 
 ## New behavior
 
-Starting in ASP.NET Core 6, you only need two script references to use the MessagePack Hub Protocol in the browser:
+Starting in ASP.NET Core 6, you only need two script references to use the [MessagePack Hub Protocol](../../signalr/messagepackhubprotocol.md) in the browser:
 
 ```html
 <script src="~/lib/signalr/signalr.js"></script>
@@ -54,3 +51,15 @@ The following APIs were removed:
 
 - `MessagePackOptions.disableTimestampEncoding`
 - `MessagePackOptions.forceFloat64`
+
+<!--
+
+## Category
+
+ASP.NET Core
+
+## Affected APIs
+
+Not detectable via API analysis.
+
+-->

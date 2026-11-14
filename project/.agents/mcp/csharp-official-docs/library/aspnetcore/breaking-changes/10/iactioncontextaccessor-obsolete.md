@@ -1,15 +1,14 @@
 ---
 title: "IActionContextAccessor and ActionContextAccessor are obsolete"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/10/iactioncontextaccessor-obsolete.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 10 where IActionContextAccessor and ActionContextAccessor are marked as obsolete."
+ms.date: 08/07/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/aspnet/Announcements/issues/520
 ---
 
 # IActionContextAccessor and ActionContextAccessor are obsolete
 
-`Microsoft.AspNetCore.Mvc.Infrastructure.IActionContextAccessor` and `Microsoft.AspNetCore.Mvc.Infrastructure.ActionContextAccessor` have been marked as obsolete with diagnostic ID `ASPDEPR006`. With the introduction of endpoint routing, `IActionContextAccessor` is no longer necessary as developers can access action descriptor and metadata information directly through `HttpContext.GetEndpoint()`.
+<xref:Microsoft.AspNetCore.Mvc.Infrastructure.IActionContextAccessor> and <xref:Microsoft.AspNetCore.Mvc.Infrastructure.ActionContextAccessor> have been marked as obsolete with diagnostic ID `ASPDEPR006`. With the introduction of endpoint routing, `IActionContextAccessor` is no longer necessary as developers can access action descriptor and metadata information directly through `HttpContext.GetEndpoint()`.
 
 ## Version introduced
 
@@ -17,7 +16,7 @@ license: "CC-BY-4.0"
 
 ## Previous behavior
 
-Previously, you could use `IActionContextAccessor` to access the current `Microsoft.AspNetCore.Mvc.ActionContext`:
+Previously, you could use `IActionContextAccessor` to access the current <xref:Microsoft.AspNetCore.Mvc.ActionContext>:
 
 ```csharp
 public class MyService
@@ -46,7 +45,7 @@ Starting in .NET 10, using `IActionContextAccessor` and `ActionContextAccessor` 
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](/dotnet/core/compatibility/categories#source-compatibility).
 
 ## Reason for change
 
@@ -54,7 +53,7 @@ With the introduction of endpoint routing in ASP.NET Core, `IActionContextAccess
 
 ## Recommended action
 
-Migrate from `IActionContextAccessor` to `Microsoft.AspNetCore.Http.IHttpContextAccessor` and use `HttpContext.GetEndpoint()`:
+Migrate from `IActionContextAccessor` to <xref:Microsoft.AspNetCore.Http.IHttpContextAccessor> and use `HttpContext.GetEndpoint()`:
 
 Before:
 
@@ -101,5 +100,5 @@ public class MyService
 
 ## Affected APIs
 
-- `Microsoft.AspNetCore.Mvc.Infrastructure.IActionContextAccessor`
-- `Microsoft.AspNetCore.Mvc.Infrastructure.ActionContextAccessor`
+- <xref:Microsoft.AspNetCore.Mvc.Infrastructure.IActionContextAccessor?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Mvc.Infrastructure.ActionContextAccessor?displayProperty=fullName>

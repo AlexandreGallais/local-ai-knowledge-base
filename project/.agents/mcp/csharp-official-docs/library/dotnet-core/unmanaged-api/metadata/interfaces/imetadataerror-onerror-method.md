@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataError::OnError Method"
 title: "IMetaDataError::OnError Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataerror-onerror-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataError.OnError"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataError::OnError"
+  - "OnError method, IMetaDataError interface [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataError::OnError Method
 
 Provides notification of errors that occur during the metadata merge.
@@ -30,7 +37,7 @@ HRESULT OnError (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -38,4 +45,4 @@ HRESULT OnError (
 
 ## See also
 
-- IMetaDataError Interface
+- [IMetaDataError Interface](imetadataerror-interface.md)

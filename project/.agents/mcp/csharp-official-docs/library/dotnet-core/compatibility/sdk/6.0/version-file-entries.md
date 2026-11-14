@@ -1,19 +1,15 @@
 ---
 title: "Breaking change: .version file includes build version"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/6.0/version-file-entries.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in the .NET SDK where the .version file now includes the specific build version.
+ms.date: 09/16/2022
 ---
-
 # .version file includes build version
 
 The .NET SDK installation folder (under *dotnet/sdk/\<version>*) contains a *.version* file. This file includes the following data:
 
 - The hash for the commit for that version of the .NET SDK.
 - The stable version.
-- The runtime identifier (RID) of the .NET SDK.
+- The [runtime identifier (RID)](../../../rid-catalog.md) of the .NET SDK.
 
 This change adds the specific build number from the product's build system.
 

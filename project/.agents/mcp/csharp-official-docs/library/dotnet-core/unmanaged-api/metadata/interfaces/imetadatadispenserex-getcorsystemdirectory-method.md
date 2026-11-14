@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataDispenserEx::GetCORSystemDirectory Method"
 title: "IMetaDataDispenserEx::GetCORSystemDirectory Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadatadispenserex-getcorsystemdirectory-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataDispenserEx.GetCORSystemDirectory"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataDispenserEx::GetCORSystemDirectory"
+  - "GetCORSystemDirectory method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataDispenserEx::GetCORSystemDirectory Method
 
 Gets the directory that holds the current common language runtime (CLR). This method is supported only for use by .NET Framework out-of-process debuggers. If called from another component, it will return `E_NOTIMPL`.
@@ -34,7 +41,7 @@ HRESULT GetCORSystemDirectory (
 
 ## Requirements
 
- **Platform:** See .NET supported operating systems.
+ **Platform:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -42,5 +49,5 @@ HRESULT GetCORSystemDirectory (
 
 ## See also
 
-- IMetaDataDispenserEx Interface
-- IMetaDataDispenser Interface
+- [IMetaDataDispenserEx Interface](imetadatadispenserex-interface.md)
+- [IMetaDataDispenser Interface](imetadatadispenser-interface.md)

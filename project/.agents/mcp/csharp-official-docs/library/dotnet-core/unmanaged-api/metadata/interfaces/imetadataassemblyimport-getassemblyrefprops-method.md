@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataAssemblyImport::GetAssemblyRefProps Method"
 title: "IMetaDataAssemblyImport::GetAssemblyRefProps Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataassemblyimport-getassemblyrefprops-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataAssemblyImport.GetAssemblyRefProps"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataAssemblyImport::GetAssemblyRefProps"
+  - "GetAssemblyRefProps method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataAssemblyImport::GetAssemblyRefProps Method
 
 Gets the set of properties for the assembly reference with the specified metadata signature.
@@ -58,7 +65,7 @@ HRESULT GetAssemblyRefProps (
  [out] The number of wide chars in the returned hash value.
 
  `pdwAssemblyRefFlags`\
- [out] A pointer to flags that describe the metadata applied to an assembly. The flags value is a combination of one or more CorAssemblyFlags values.
+ [out] A pointer to flags that describe the metadata applied to an assembly. The flags value is a combination of one or more [CorAssemblyFlags](../enumerations/corassemblyflags-enumeration.md) values.
 
 ## Return Value
 
@@ -66,7 +73,7 @@ HRESULT GetAssemblyRefProps (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -74,4 +81,4 @@ HRESULT GetAssemblyRefProps (
 
 ## See also
 
-- IMetaDataAssemblyImport Interface
+- [IMetaDataAssemblyImport Interface](imetadataassemblyimport-interface.md)

@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: Middleware no longer defers to endpoint with null request delegate"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/7/middleware-null-requestdelegate.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in ASP.NET Core 7.0 where the file-serving middleware no longer no-op when the active endpoint has a null request delegate.
+ms.date: 07/18/2022
+ms.custom: https://github.com/aspnet/Announcements/issues/488
 ---
-
 # Middleware no longer defers to endpoint with null request delegate
 
 As detailed in <https://github.com/dotnet/aspnetcore/issues/42413>, the file-serving middleware (`DefaultFilesMiddleware`, `DirectoryBrowserMiddleware`, and `StaticFileMiddleware`) have been updated to no longer no-op (that is, defer to the next middleware in the pipeline) when there's an active endpoint with a `null` request delegate.
@@ -25,7 +22,7 @@ The file-serving middleware will now only perform no action if there's an active
 
 ## Type of breaking change
 
-This change affects binary compatibility.
+This change affects [binary compatibility](/dotnet/core/compatibility/categories#binary-compatibility).
 
 ## Reason for change
 

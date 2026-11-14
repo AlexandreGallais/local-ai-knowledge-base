@@ -1,14 +1,3 @@
----
-title: "ch19-01-all-the-places-for-patterns"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch19-01-all-the-places-for-patterns.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch19-01-all-the-places-for-patterns
-
 ## All the Places Patterns Can Be Used
 
 Patterns pop up in a number of places in Rust, and you’ve been using them a lot
@@ -22,16 +11,21 @@ Formally, `match` expressions are defined as the keyword `match`, a value to
 match on, and one or more match arms that consist of a pattern and an
 expression to run if the value matches that arm’s pattern, like this:
 
-<pre><code>match VALUE {
-    PATTERN => EXPRESSION,
-    PATTERN => EXPRESSION,
-    PATTERN => EXPRESSION,
+<!--
+  Manually formatted rather than using Markdown intentionally: Markdown does not
+  support italicizing code in the body of a block like this!
+-->
+
+<pre><code>match <em>VALUE</em> {
+    <em>PATTERN</em> => <em>EXPRESSION</em>,
+    <em>PATTERN</em> => <em>EXPRESSION</em>,
+    <em>PATTERN</em> => <em>EXPRESSION</em>,
 }</code></pre>
 
 For example, here’s the `match` expression from Listing 6-5 that matches on an
 `Option<i32>` value in the variable `x`:
 
-```rust
+```rust,ignore
 match x {
     None => None,
     Some(i) => Some(i + 1),
@@ -50,8 +44,8 @@ matching any value can never fail and thus covers every remaining case.
 The particular pattern `_` will match anything, but it never binds to a
 variable, so it’s often used in the last match arm. The `_` pattern can be
 useful when you want to ignore any value not specified, for example. We’ll
-cover the `_` pattern in more detail in “Ignoring Values in a
-Pattern” later in this chapter.
+cover the `_` pattern in more detail in [“Ignoring Values in a
+Pattern”][ignoring-values-in-a-pattern]<!-- ignore --> later in this chapter.
 
 ### `let` Statements
 
@@ -68,8 +62,13 @@ Every time you’ve used a `let` statement like this you’ve been using pattern
 although you might not have realized it! More formally, a `let` statement looks
 like this:
 
+<!--
+  Manually formatted rather than using Markdown intentionally: Markdown does not
+  support italicizing code in the body of a block like this!
+-->
+
 <pre>
-<code>let PATTERN = EXPRESSION;</code>
+<code>let <em>PATTERN</em> = <em>EXPRESSION</em>;</code>
 </pre>
 
 In statements like `let x = 5;` with a variable name in the PATTERN slot, the
@@ -82,11 +81,14 @@ effectively means “bind everything to the variable `x`, whatever the value is.
 To see the pattern-matching aspect of `let` more clearly, consider Listing
 19-1, which uses a pattern with `let` to destructure a tuple.
 
-**Listing 19-1: Using a pattern to destructure a tuple and create three variables at once**
+
+<Listing number="19-1" caption="Using a pattern to destructure a tuple and create three variables at once">
 
 ```rust
-let (x, y, z) = (1, 2, 3);
+{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-01/src/main.rs:here}}
 ```
+
+</Listing>
 
 Here, we match a tuple against a pattern. Rust compares the value `(1, 2, 3)`
 to the pattern `(x, y, z)` and sees that the value matches the pattern—that is,
@@ -99,35 +101,23 @@ in the tuple, the overall type won’t match and we’ll get a compiler error. F
 example, Listing 19-2 shows an attempt to destructure a tuple with three
 elements into two variables, which won’t work.
 
-**Listing 19-2: Incorrectly constructing a pattern whose variables don’t match the number of elements in the tuple**
+<Listing number="19-2" caption="Incorrectly constructing a pattern whose variables don’t match the number of elements in the tuple">
 
-```rust
-let (x, y) = (1, 2, 3);
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-02/src/main.rs:here}}
 ```
+
+</Listing>
 
 Attempting to compile this code results in this type error:
 
 ```console
-$ cargo run
-   Compiling patterns v0.1.0 (file:///projects/patterns)
-error[E0308]: mismatched types
- --> src/main.rs:2:9
-  |
-2 |     let (x, y) = (1, 2, 3);
-  |         ^^^^^^   --------- this expression has type `({integer}, {integer}, {integer})`
-  |         |
-  |         expected a tuple with 3 elements, found one with 2 elements
-  |
-  = note: expected tuple `({integer}, {integer}, {integer})`
-             found tuple `(_, _)`
-
-For more information about this error, try `rustc --explain E0308`.
-error: could not compile `patterns` (bin "patterns") due to 1 previous error
+{{#include ../listings/ch19-patterns-and-matching/listing-19-02/output.txt}}
 ```
 
 To fix the error, we could ignore one or more of the values in the tuple using
-`_` or `..`, as you’ll see in the “Ignoring Values in a
-Pattern” section. If the problem
+`_` or `..`, as you’ll see in the [“Ignoring Values in a
+Pattern”][ignoring-values-in-a-pattern]<!-- ignore --> section. If the problem
 is that we have too many variables in the pattern, the solution is to make the
 types match by removing variables so that the number of variables equals the
 number of elements in the tuple.
@@ -150,29 +140,13 @@ a series of checks for several conditions. For this example, we’ve created
 variables with hardcoded values that a real program might receive from user
 input.
 
-**Listing 19-3: Mixing `if let`, `else if`, `else if let`, and `else`** (src/main.rs)
+<Listing number="19-3" file-name="src/main.rs" caption="Mixing `if let`, `else if`, `else if let`, and `else`">
 
 ```rust
-fn main() {
-    let favorite_color: Option<&str> = None;
-    let is_tuesday = false;
-    let age: Result<u8, _> = "34".parse();
-
-    if let Some(color) = favorite_color {
-        println!("Using your favorite color, {color}, as the background");
-    } else if is_tuesday {
-        println!("Tuesday is green day!");
-    } else if let Ok(age) = age {
-        if age > 30 {
-            println!("Using purple as the background color");
-        } else {
-            println!("Using orange as the background color");
-        }
-    } else {
-        println!("Using blue as the background color");
-    }
-}
+{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-03/src/main.rs}}
 ```
+
+</Listing>
 
 If the user specifies a favorite color, that color is used as the background.
 If no favorite color is specified and today is Tuesday, the background color is
@@ -205,20 +179,13 @@ Similar in construction to `if let`, the `while let` conditional loop allows a
 19-4, we show a `while let` loop that waits on messages sent between threads,
 but in this case checking a `Result` instead of an `Option`.
 
-**Listing 19-4: Using a `while let` loop to print values for as long as `rx.recv()` returns `Ok`**
+<Listing number="19-4" caption="Using a `while let` loop to print values for as long as `rx.recv()` returns `Ok`">
 
 ```rust
-let (tx, rx) = std::sync::mpsc::channel();
-std::thread::spawn(move || {
-    for val in [1, 2, 3] {
-        tx.send(val).unwrap();
-    }
-});
-
-while let Ok(value) = rx.recv() {
-    println!("{value}");
-}
+{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-04/src/main.rs:here}}
 ```
+
+</Listing>
 
 This example prints `1`, `2`, and then `3`. The `recv` method takes the first
 message out of the receiver side of the channel and returns an `Ok(value)`. When
@@ -235,26 +202,20 @@ pattern. For example, in `for x in y`, the `x` is the pattern. Listing 19-5
 demonstrates how to use a pattern in a `for` loop to destructure, or break
 apart, a tuple as part of the `for` loop.
 
-**Listing 19-5: Using a pattern in a `for` loop to destructure a tuple**
+
+<Listing number="19-5" caption="Using a pattern in a `for` loop to destructure a tuple">
 
 ```rust
-let v = vec!['a', 'b', 'c'];
-
-for (index, value) in v.iter().enumerate() {
-    println!("{value} is at index {index}");
-}
+{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-05/src/main.rs:here}}
 ```
+
+</Listing>
 
 The code in Listing 19-5 will print the following:
 
+
 ```console
-$ cargo run
-   Compiling patterns v0.1.0 (file:///projects/patterns)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.52s
-     Running `target/debug/patterns`
-a is at index 0
-b is at index 1
-c is at index 2
+{{#include ../listings/ch19-patterns-and-matching/listing-19-05/output.txt}}
 ```
 
 We adapt an iterator using the `enumerate` method so that it produces a value
@@ -263,36 +224,32 @@ the tuple `(0, 'a')`. When this value is matched to the pattern `(index,
 value)`, index will be `0` and value will be `'a'`, printing the first line of
 the output.
 
+
 ### Function Parameters
 
 Function parameters can also be patterns. The code in Listing 19-6, which
 declares a function named `foo` that takes one parameter named `x` of type
 `i32`, should by now look familiar.
 
-**Listing 19-6: A function signature using patterns in the parameters**
+<Listing number="19-6" caption="A function signature using patterns in the parameters">
 
 ```rust
-fn foo(x: i32) {
-    // code goes here
-}
+{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-06/src/main.rs:here}}
 ```
+
+</Listing>
 
 The `x` part is a pattern! As we did with `let`, we could match a tuple in a
 function’s arguments to the pattern. Listing 19-7 splits the values in a tuple
 as we pass it to a function.
 
-**Listing 19-7: A function with parameters that destructure a tuple** (src/main.rs)
+<Listing number="19-7" file-name="src/main.rs" caption="A function with parameters that destructure a tuple">
 
 ```rust
-fn print_coordinates(&(x, y): &(i32, i32)) {
-    println!("Current location: ({x}, {y})");
-}
-
-fn main() {
-    let point = (3, 5);
-    print_coordinates(&point);
-}
+{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-07/src/main.rs}}
 ```
+
+</Listing>
 
 This code prints `Current location: (3, 5)`. The values `&(3, 5)` match the
 pattern `&(x, y)`, so `x` is the value `3` and `y` is the value `5`.
@@ -305,3 +262,5 @@ At this point, you’ve seen several ways to use patterns, but patterns don’t
 work the same in every place we can use them. In some places, the patterns must
 be irrefutable; in other circumstances, they can be refutable. We’ll discuss
 these two concepts next.
+
+[ignoring-values-in-a-pattern]: ch19-03-pattern-syntax.html#ignoring-values-in-a-pattern

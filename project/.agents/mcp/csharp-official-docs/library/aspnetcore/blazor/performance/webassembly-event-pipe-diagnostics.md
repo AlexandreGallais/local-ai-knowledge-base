@@ -1,13 +1,14 @@
 ---
-title: "ASP.NET Core Blazor WebAssembly Event Pipe diagnostics"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/performance/webassembly-event-pipe-diagnostics.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core Blazor WebAssembly Event Pipe diagnostics
+description: Learn about Event Pipe diagnostics and how to get a Garbage Collector heap dump in ASP.NET Core Blazor WebAssembly apps.
+monikerRange: '>= aspnetcore-10.0'
+ms.date: 11/11/2025
 ---
-
 # ASP.NET Core Blazor WebAssembly Event Pipe diagnostics
+
+<!-- UPDATE 11.0 - Activate ...
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
 -->
 
@@ -15,7 +16,7 @@ This article describes diagnostic tools and how to use them in Blazor WebAssembl
 
 ## Prerequisite for all scenarios
 
-Install the .NET WebAssembly build tools:
+Install the [.NET WebAssembly build tools](../webassembly-build-tools-and-aot.md#net-webassembly-build-tools):
 
 ```dotnetcli
 dotnet workload install wasm-tools
@@ -31,7 +32,7 @@ In the app's project file (`.csproj`), add following properties for the duration
 </PropertyGroup>
 ```
 
-> **Warning:**
+> [!WARNING]
 > Don't enable diagnostics in production because it has a negative performance impact.
 
 Build your app with the `wasm-tools` workload.
@@ -50,7 +51,7 @@ A `.nettrace` file is downloaded from the browser into a local folder, usually t
 
 Convert the dump to `.gcdump` format using the `dotnet-gcdump` tool. To view the converted `.gcdump` file, use Visual Studio or PrefView.
 
-For more information, see View the GC dump captured from dotnet-gcdump.
+For more information, see [View the GC dump captured from dotnet-gcdump](/dotnet/core/diagnostics/dotnet-gcdump#view-the-gc-dump-captured-from-dotnet-gcdump).
 
 ## How a WebAssembly app uses CPU and how to find slow or hot methods
 
@@ -66,7 +67,7 @@ In the app's project file (`.csproj`), add following properties for the duration
 </PropertyGroup>
 ```
 
-> **Warning:**
+> [!WARNING]
 > Don't enable diagnostics in production because it has a negative performance impact.
 
 Build the app with the `wasm-tools` workload.
@@ -85,9 +86,9 @@ Start using the app to run problematic code.
 
 After the predefined period, the browser downloads a `.nettrace` file into a local folder, usually the `Downloads` folder on Windows. To view the `.nettrace` file, use Visual Studio or PrefView.
 
-For more information, see Use EventPipe to trace your .NET application.
+For more information, see [Use EventPipe to trace your .NET application](/dotnet/core/diagnostics/eventpipe#use-eventpipe-to-trace-your-net-application).
 
-The `Timing-Allow-Origin` HTTP header allows for more precise time measurements.
+The [`Timing-Allow-Origin` HTTP header](https://developer.mozilla.org/docs/Web/HTTP/Reference/Headers/Timing-Allow-Origin) allows for more precise time measurements.
 
 ## How to observe metrics emitted by a WebAssembly app
 
@@ -101,7 +102,7 @@ In the app's project file (`.csproj`), add following properties for the duration
 </PropertyGroup>
 ```
 
-> **Warning:**
+> [!WARNING]
 > Don't enable diagnostics in production because it has a negative performance impact.
 
 Build the app with the `wasm-tools` workload.
@@ -118,16 +119,16 @@ Call the preceding API from either a browser developer tools console or JavaScri
 
 After the predefined period, the browser downloads a `.nettrace` file into a local folder, usually the `Downloads` folder on Windows. To view the `.nettrace` file, use Visual Studio or PrefView.
 
-For more information, see Use EventPipe to trace your .NET application.
+For more information, see [Use EventPipe to trace your .NET application](/dotnet/core/diagnostics/eventpipe#use-eventpipe-to-trace-your-net-application).
 
 ## MSBuild properties that enable diagnostic integration
 
-Property | Default | Set value to… | Description
+Property | Default | Set value to&hellip; | Description
 --- | :---: | :---: | ---
 `<EnableDiagnostics>` | `false` | `true` | Enables support for WebAssembly performance tracing.
 `<WasmPerformanceInstrumentation>` | No value | See table&dagger; | Enables instrumentation necessary for the sampling profiler. The property follows the :::no-loc text="callspec"::: syntax. &dagger;For permissible values, see the following table.
-`<MetricsSupport>` | `false` | `true` | Enables `System.Diagnostics.Metrics` support. For more information, see the `System.Diagnostics.Metrics` namespace.
-`<EventSourceSupport>` | `false`| `true` | Enables `EventPipe` support. For more information, see Diagnostics and instrumentation: Observability and telemetry.
+`<MetricsSupport>` | `false` | `true` | Enables `System.Diagnostics.Metrics` support. For more information, see the [`System.Diagnostics.Metrics` namespace](/dotnet/api/system.diagnostics.metrics).
+`<EventSourceSupport>` | `false`| `true` | Enables `EventPipe` support. For more information, see [Diagnostics and instrumentation: Observability and telemetry](/dotnet/core/deploying/native-aot/diagnostics#observability-and-telemetry).
 
 The following table describes permissable `<WasmPerformanceInstrumentation>` values.
 
@@ -144,13 +145,13 @@ The following table describes permissable `<WasmPerformanceInstrumentation>` val
 
 Your code should yield to main browser loop often to allow the trace to be collected. When executing long running loops, the internal diagnostic buffers could overflow.
 
-> **Caution:**
+> [!CAUTION]
 > Enabling profilers and diagnostic tools has negative size and performance impacts, so don't publish an app for production with profilers enabled.
 
 ## Related content
 
-* EventPipe is a runtime component used to collect tracing data, similar to ETW and perf_events.
-* What diagnostic tools are available in .NET Core?
-* .NET diagnostic tools
-* `dotnet/diagnostics` GitHub repository
-* `Microsoft.Diagnostics.NETCore.Client` NuGet package
+* [EventPipe](/dotnet/core/diagnostics/eventpipe) is a runtime component used to collect tracing data, similar to [ETW](/windows/win32/etw/event-tracing-portal) and [perf_events](https://wikipedia.org/wiki/Perf_%28Linux%29).
+* [What diagnostic tools are available in .NET Core?](/dotnet/core/diagnostics/)
+* [.NET diagnostic tools](/dotnet/core/diagnostics/tools-overview)
+* [`dotnet/diagnostics` GitHub repository](https://github.com/dotnet/diagnostics)
+* [`Microsoft.Diagnostics.NETCore.Client` NuGet package](https://www.nuget.org/packages/Microsoft.Diagnostics.NETCore.Client)

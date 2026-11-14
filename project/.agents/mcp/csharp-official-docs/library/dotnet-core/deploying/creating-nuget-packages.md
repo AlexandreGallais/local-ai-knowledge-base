@@ -1,15 +1,11 @@
 ---
-title: "Create a NuGet package with the .NET CLI"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/deploying/creating-nuget-packages.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Create a NuGet package with the .NET CLI
+description: Learn how to create a NuGet package with the 'dotnet pack' command.
+ms.date: 06/20/2016
 ---
-
 # How to create a NuGet package with the .NET CLI
 
-> **Note:**
+> [!NOTE]
 > The following shows command-line samples using Unix. The `dotnet pack` command as shown here works the same way on Windows.
 
 .NET Standard and .NET Core libraries are expected to be distributed as NuGet packages. This is in fact how all of the .NET Standard libraries are distributed and consumed. This is most easily done with the `dotnet pack` command.
@@ -18,11 +14,7 @@ Imagine that you just wrote an awesome new library that you would like to distri
 
 If you have transitive dependencies, that is, a project that depends on another package, make sure to restore packages for the entire solution with the `dotnet restore` command before you create a NuGet package. Failing to do so will result in the `dotnet pack` command not working properly.
 
-You don't have to run `dotnet restore` because it's run implicitly by all commands that require a restore to occur, such as `dotnet new`, `dotnet build`, `dotnet run`, `dotnet test`, `dotnet publish`, and `dotnet pack`. To disable implicit restore, use the `--no-restore` option.
-
-The `dotnet restore` command is still useful in certain scenarios where explicitly restoring makes sense, such as continuous integration builds in Azure DevOps Services or in build systems that need to explicitly control when the restore occurs.
-
-For information about how to manage NuGet feeds, see the `dotnet restore` documentation.
+[!INCLUDE[DotNet Restore Note](~/includes/dotnet-restore-note.md)]
 
 After ensuring packages are restored, you can navigate to the directory where a library lives:
 
@@ -68,4 +60,4 @@ It is important to note that at no point is the `dotnet publish` command involve
 
 ## See also
 
-- Quickstart: Create and publish a package
+- [Quickstart: Create and publish a package](/nuget/quickstart/create-and-publish-a-package-using-the-dotnet-cli)

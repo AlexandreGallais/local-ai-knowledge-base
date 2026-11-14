@@ -1,28 +1,18 @@
----
-title: "DoubleUnaryOperator interface (java.util.function)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/function/DoubleUnaryOperator.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # DoubleUnaryOperator interface (java.util.function)
 
 ```java
 public interface DoubleUnaryOperator
 ```
 
-Represents an operation on a single `double`-valued operand that produces
-a `double`-valued result.  This is the primitive type specialization of
-`UnaryOperator` for `double`.
+Represents an operation on a single {@code double}-valued operand that produces
+a {@code double}-valued result.  This is the primitive type specialization of
+{@link UnaryOperator} for {@code double}.
 
-This is a functional interface
-whose functional method is `applyAsDouble(double)`.
+<p>This is a <a href="package-summary.html">functional interface</a>
+whose functional method is {@link #applyAsDouble(double)}.
 
-**See also:** UnaryOperator
-
-**Since:** 1.8
+@see UnaryOperator
+@since 1.8
 
 ## DoubleUnaryOperator.applyAsDouble(double)
 
@@ -32,11 +22,8 @@ double applyAsDouble(double operand)
 
 Applies this operator to the given operand.
 
-Parameters:
-
-- `operand`: the operand
-
-**Returns:** the operator result
+@param operand the operand
+@return the operator result
 
 ## DoubleUnaryOperator.compose(DoubleUnaryOperator)
 
@@ -44,23 +31,17 @@ Parameters:
 default DoubleUnaryOperator compose(DoubleUnaryOperator before)
 ```
 
-Returns a composed operator that first applies the `before`
+Returns a composed operator that first applies the {@code before}
 operator to its input, and then applies this operator to the result.
 If evaluation of either operator throws an exception, it is relayed to
 the caller of the composed operator.
 
-Parameters:
-
-- `before`: the operator to apply before this operator is applied
-
-**Returns:** a composed operator that first applies the `before`
+@param before the operator to apply before this operator is applied
+@return a composed operator that first applies the {@code before}
 operator and then applies this operator
+@throws NullPointerException if before is null
 
-**See also:** #andThen(DoubleUnaryOperator)
-
-Throws:
-
-- `NullPointerException`: if before is null
+@see #andThen(DoubleUnaryOperator)
 
 ## DoubleUnaryOperator.andThen(DoubleUnaryOperator)
 
@@ -69,22 +50,16 @@ default DoubleUnaryOperator andThen(DoubleUnaryOperator after)
 ```
 
 Returns a composed operator that first applies this operator to
-its input, and then applies the `after` operator to the result.
+its input, and then applies the {@code after} operator to the result.
 If evaluation of either operator throws an exception, it is relayed to
 the caller of the composed operator.
 
-Parameters:
+@param after the operator to apply after this operator is applied
+@return a composed operator that first applies this operator and then
+applies the {@code after} operator
+@throws NullPointerException if after is null
 
-- `after`: the operator to apply after this operator is applied
-
-**Returns:** a composed operator that first applies this operator and then
-applies the `after` operator
-
-**See also:** #compose(DoubleUnaryOperator)
-
-Throws:
-
-- `NullPointerException`: if after is null
+@see #compose(DoubleUnaryOperator)
 
 ## DoubleUnaryOperator.identity()
 
@@ -94,4 +69,4 @@ static DoubleUnaryOperator identity()
 
 Returns a unary operator that always returns its input argument.
 
-**Returns:** a unary operator that always returns its input argument
+@return a unary operator that always returns its input argument

@@ -1,12 +1,3 @@
----
-title: "CacheRequest class (java.net)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/net/CacheRequest.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # CacheRequest class (java.net)
 
 ```java
@@ -22,7 +13,8 @@ abandoned. If an IOException is encountered while reading the
 response or writing to the cache, the current cache store operation
 will be aborted.
 
-**Since:** 1.5
+@author Yingxian Wang
+@since 1.5
 
 ## CacheRequest.CacheRequest()
 
@@ -41,12 +33,10 @@ public abstract OutputStream getBody() throws IOException
 Returns an OutputStream to which the response body can be
 written.
 
-**Returns:** an OutputStream to which the response body can
+@return an OutputStream to which the response body can
         be written
-
-Throws:
-
-- `IOException`: if an I/O error occurs while writing the response body
+@throws IOException if an I/O error occurs while
+        writing the response body
 
 ## CacheRequest.abort()
 

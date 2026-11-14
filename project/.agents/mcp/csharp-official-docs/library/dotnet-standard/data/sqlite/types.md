@@ -1,12 +1,9 @@
 ---
-title: "Data types"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/sqlite/types.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Data types
+ms.date: 12/13/2019
+description: Describes the supported data types and some of the limitations around them.
+no-loc: ["INTEGER", "BLOB", "TEXT", "REAL"]
 ---
-
 # Data types
 
 SQLite only has four primitive data types: INTEGER, REAL, TEXT, and BLOB. APIs that return database values as an `object` will only ever return one of these four types. Additional .NET types are supported by Microsoft.Data.Sqlite, but values are ultimately coerced between these types and one of the four primitive types.
@@ -37,7 +34,7 @@ SQLite only has four primitive data types: INTEGER, REAL, TEXT, and BLOB. APIs t
 
 ## Alternative types
 
-Some .NET types can be read from alternative SQLite types. Parameters can also be configured to use these alternative types. For more information, see Parameters.
+Some .NET types can be read from alternative SQLite types. Parameters can also be configured to use these alternative types. For more information, see [Parameters](parameters.md#alternative-types).
 
 | .NET           | SQLite  | Remarks                              |
 | -------------- | ------- | ------------------------------------ |
@@ -51,16 +48,16 @@ Some .NET types can be read from alternative SQLite types. Parameters can also b
 
 For example, the following query reads a TimeSpan value from a REAL column in the result set.
 
-_Code sample not included: ../../../../samples/snippets/standard/data/sqlite/DateAndTimeSample/Program.cs._
+[!code-csharp[](../../../../samples/snippets/standard/data/sqlite/DateAndTimeSample/Program.cs?name=snippet_AlternativeType)]
 
 ## Column types
 
 SQLite uses a dynamic type system where the type of a value is associated with the value itself and not the column where it's stored. You're free to use whatever column type name you want. Microsoft.Data.Sqlite won't apply any additional semantics to these names.
 
-The column type name does have an impact on the type affinity. One common gotcha is that using a column type of STRING will try to convert values to INTEGER or REAL, which can lead to unexpected results. We recommend only using the four primitive SQLite type names: INTEGER, REAL, TEXT, and BLOB.
+The column type name does have an impact on the [type affinity](https://www.sqlite.org/datatype3.html#type_affinity). One common gotcha is that using a column type of STRING will try to convert values to INTEGER or REAL, which can lead to unexpected results. We recommend only using the four primitive SQLite type names: INTEGER, REAL, TEXT, and BLOB.
 
 SQLite allows you to specify type facets like length, precision, and scale, but they are not enforced by the database engine. Your app is responsible for enforcing these.
 
 ## See also
 
-- Datatypes In SQLite
+- [Datatypes In SQLite](https://www.sqlite.org/datatype3.html)

@@ -1,17 +1,8 @@
----
-title: "inkex.extensions"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/extensions.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.extensions
 
 A helper module for creating Inkscape effect extensions
 
-This provides the basic <example-value> types of extensions which most writers should
+This provides the basic generic types of extensions which most writers should
 use in their code. See below for the different types.
 
 ## class EffectExtension
@@ -59,13 +50,13 @@ Preprocess the SVG into an export-friendly document by converting
 certain objects to path beforehand.
 
 Args:
-types_to_path (List[str], optional): List of element types to convert to
-path. Defaults to all text elements and all non-path shape elements.
-unlink_clones (bool, optional): If clones should be unlinked. Defaults to
-True.
+    types_to_path (List[str], optional): List of element types to convert to
+        path. Defaults to all text elements and all non-path shape elements.
+    unlink_clones (bool, optional): If clones should be unlinked. Defaults to
+        True.
 
 Returns:
-_type_: _description_
+    _type_: _description_
 
 ## class RasterOutputExtension
 
@@ -75,7 +66,7 @@ class RasterOutputExtension(InkscapeExtension)
 
 Takes a PNG from Inkscape and outputs it to another raster format.
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## RasterOutputExtension.effect
 
@@ -171,10 +162,10 @@ def create_container(self)
 
 Return the container the generated elements will go into.
 
-Default is a new layer or current layer depending on the `container_layer`
+Default is a new layer or current layer depending on the :attr:`container_layer`
 flag.
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## class TemplateExtension
 

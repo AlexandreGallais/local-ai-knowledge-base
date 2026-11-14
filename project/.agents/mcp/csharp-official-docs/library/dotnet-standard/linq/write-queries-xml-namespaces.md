@@ -1,17 +1,18 @@
 ---
-title: "How to write queries on XML in namespaces - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/write-queries-xml-namespaces.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to write queries on XML in namespaces - LINQ to XML
+description: To write a query on XML that's in a namespace, you use XName objects that have the correct namespace. Learn how to do this in C# and Visual Basic, and how to create queries.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to write queries on XML in namespaces (LINQ to XML)
 
-To write a query on XML that's in a namespace, you must use `System.Xml.Linq.XName` objects that have the correct namespace.
+To write a query on XML that's in a namespace, you must use <xref:System.Xml.Linq.XName> objects that have the correct namespace.
 
-For C#, the most common approach is to initialize an `System.Xml.Linq.XNamespace` using a string that contains the URI, then use the addition operator overload to combine the namespace with the local name.
+For C#, the most common approach is to initialize an <xref:System.Xml.Linq.XNamespace> using a string that contains the URI, then use the addition operator overload to combine the namespace with the local name.
 
 For Visual Basic, the most common approach is to define a global namespace, and then use XML literals and XML properties that use the global namespace. You can define a global default namespace, in which case elements in the XML literals will be in the namespace by default. Alternatively, you can define a global namespace with a prefix, and then use the prefix as required in the XML literals and in XML properties. As with other forms of XML, attributes are always in no namespace by default.
 
@@ -129,4 +130,4 @@ This example produces the following output:
 
 ## See also
 
-- Namespaces overview
+- [Namespaces overview](namespaces-overview.md)

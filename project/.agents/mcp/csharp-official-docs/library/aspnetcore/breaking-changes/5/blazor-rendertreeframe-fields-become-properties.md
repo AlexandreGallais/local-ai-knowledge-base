@@ -1,23 +1,20 @@
 ---
 title: "Breaking change: Blazor: RenderTreeFrame readonly public fields have become properties"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/5/blazor-rendertreeframe-fields-become-properties.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 5.0 titled Blazor: RenderTreeFrame readonly public fields have become properties"
+ms.date: 10/01/2020
+ms.custom: https://github.com/aspnet/Announcements/issues/438
 ---
-
 # Blazor: RenderTreeFrame readonly public fields have become properties
 
-In ASP.NET Core 3.0 and 3.1, the `Microsoft.AspNetCore.Components.RenderTree.RenderTreeFrame` struct exposed various `readonly public` fields, including `Microsoft.AspNetCore.Components.RenderTree.RenderTreeFrame.FrameType`, `Microsoft.AspNetCore.Components.RenderTree.RenderTreeFrame.Sequence`, and others. In ASP.NET Core 5.0 RC1 and later versions, all the `readonly public` fields changed to `readonly public` properties.
+In ASP.NET Core 3.0 and 3.1, the <xref:Microsoft.AspNetCore.Components.RenderTree.RenderTreeFrame> struct exposed various `readonly public` fields, including <xref:Microsoft.AspNetCore.Components.RenderTree.RenderTreeFrame.FrameType>, <xref:Microsoft.AspNetCore.Components.RenderTree.RenderTreeFrame.Sequence>, and others. In ASP.NET Core 5.0 RC1 and later versions, all the `readonly public` fields changed to `readonly public` properties.
 
 This change won't affect many developers because:
 
-* Any app or library that simply uses `.razor` files (or even manual `Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder` calls) to define its components wouldn't be referencing this type directly.
+* Any app or library that simply uses `.razor` files (or even manual <xref:Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder> calls) to define its components wouldn't be referencing this type directly.
 * The `RenderTreeFrame` type itself is regarded as an implementation detail, not intended for use outside of the framework. ASP.NET Core 3.0 and later includes an analyzer that issues compiler warnings if the type is being used directly.
 * Even if you reference `RenderTreeFrame` directly, this change is binary-breaking but not source-breaking. That is, your existing source code will compile and behave properly. You'll only encounter an issue if compiling against a .NET Core 3.x framework and then running those binaries against the .NET 5 or a later framework.
 
-For discussion, see GitHub issue dotnet/aspnetcore#25727.
+For discussion, see GitHub issue [dotnet/aspnetcore#25727](https://github.com/dotnet/aspnetcore/issues/25727).
 
 ## Version introduced
 
@@ -54,8 +51,20 @@ Most Blazor developers are unaffected by this change. The change is more likely 
         <PackageReference Include="Microsoft.AspNetCore.Components" Version="5.0.0-rc.1.*" Condition="'$(TargetFramework)' != 'netstandard2.0'" />
         ```
 
-For further clarification, see this diff showing how @jsakamoto already upgraded the `Toolbelt.Blazor.HeadElement` library.
+For further clarification, see this [diff showing how @jsakamoto already upgraded the `Toolbelt.Blazor.HeadElement` library](https://github.com/jsakamoto/Toolbelt.Blazor.HeadElement/commit/090df430ba725f9420d412753db8104e8c32bf51).
 
 ## Affected APIs
 
-`Microsoft.AspNetCore.Components.RenderTree.RenderTreeFrame`
+<xref:Microsoft.AspNetCore.Components.RenderTree.RenderTreeFrame?displayProperty=nameWithType>
+
+<!--
+
+### Category
+
+ASP.NET Core
+
+### Affected APIs
+
+`T:Microsoft.AspNetCore.Components.RenderTree.RenderTreeFrame`
+
+-->

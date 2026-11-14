@@ -1,200 +1,52 @@
 ---
-title: "Dependency injection into views in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/mvc/views/dependency-injection.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Dependency injection into views in ASP.NET Core
+ai-usage: ai-assisted
+description: Learn how ASP.NET Core supports dependency injection into MVC views.
+ms.date: 10/14/2016
 ---
-
 # Dependency injection into views in ASP.NET Core
 
-ASP.NET Core supports dependency injection into views. This can be useful for view-specific services, such as localization or data required only for populating view elements. Most of the data views display should be passed in from the controller.
+:::moniker range=">= aspnetcore-6.0"
 
-View or download sample code (how to download)
+ASP.NET Core supports [dependency injection](../../fundamentals/dependency-injection.md) into views. This can be useful for view-specific services, such as localization or data required only for populating view elements. Most of the data views display should be passed in from the controller.
+
+[View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/mvc/views/dependency-injection/samples/6.0) ([how to download](../../fundamentals/index.md#how-to-download-a-sample))
 
 ## Configuration injection
 
-The values in settings files, such as `appsettings.json` and `appsettings.Development.json`, can be injected into a view. Consider the `appsettings.Development.json` from the sample code:
+The values in settings files, such as `appsettings.json` and `appsettings.Development.json`, can be injected into a view. Consider the `appsettings.Development.json` from the [sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/mvc/views/dependency-injection/samples/6.0):
 
-```json
-{
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft.AspNetCore": "Warning"
-    }
-  },
-  "MyRoot": {
-    "MyParent": {
-      "MyChildName": "Joe"
-    }
-  }
-}
-```
+[!code-json[](~/mvc/views/dependency-injection/samples/6.0/WebViewInject/appsettings.Development.json?highlight=8-11)]
 
 The following markup displays the configuration value in a Razor Pages view:
 
-```cshtml
-@page
-@model PrivacyModel
-@using Microsoft.Extensions.Configuration
-@inject IConfiguration Configuration
-@{
-    ViewData["Title"] = "Privacy RP";
-}
-<h1>@ViewData["Title"]</h1>
-
-<p>PR Privacy</p>
-
-<h2>
-   MyRoot:MyParent:MyChildName: @Configuration["MyRoot:MyParent:MyChildName"]
-</h2>
-```
+[!code-cshtml[](~/mvc/views/dependency-injection/samples/6.0/WebViewInject/Pages/Privacy.cshtml?highlight=3,4,13)]
 
 The following markup displays the configuration value in a MVC view:
 
-```cshtml
-@using Microsoft.Extensions.Configuration
-@inject IConfiguration Configuration
-@{
-    ViewData["Title"] = "Privacy MVC";
-}
-<h1>@ViewData["Title"]</h1>
+[!code-cshtml[](~/mvc/views/dependency-injection/samples/6.0/WebViewInject/Views/Home/Privacy.cshtml?highlight=1-2,11)]
 
-<p>MVC Use this page to detail your site's privacy policy.</p>
-
-<h2>
-   MyRoot:MyParent:MyChildName: @Configuration["MyRoot:MyParent:MyChildName"]
-</h2>
-```
-
-For more information, see Configuration in ASP.NET Core
+For more information, see [Configuration in ASP.NET Core](../../fundamentals/configuration/index.md)
 
 ## Service injection
 
 A service can be injected into a view using the `@inject` directive.
 
-```cshtml
-﻿@using System.Threading.Tasks
-@using ViewInjectSample.Model
-@using ViewInjectSample.Model.Services
-@model IEnumerable<ToDoItem>
-@inject StatisticsService StatsService
-<!DOCTYPE html>
-<html>
-<head>
-    <title>To Do Items</title>
-</head>
-<body>
-    <div>
-        <h1>To Do Items</h1>
-        <ul>
-            <li>Total Items: @StatsService.GetCount()</li>
-            <li>Completed: @StatsService.GetCompletedCount()</li>
-            <li>Avg. Priority: @StatsService.GetAveragePriority()</li>
-        </ul>
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Priority</th>
-                <th>Is Done?</th>
-            </tr>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.Name</td>
-                    <td>@item.Priority</td>
-                    <td>@item.IsDone</td>
-                </tr>
-            }
-        </table>
-    </div>
-</body>
-</html>
-```
+[!code-cshtml[](~/mvc/views/dependency-injection/samples/6.0/WebViewInject/Views/ToDo/Index.cshtml?highlight=4,5,15,16,17)]
 
 This view displays a list of `ToDoItem` instances, along with a summary showing overall statistics. The summary is populated from the injected `StatisticsService`. This service is registered for dependency injection in `ConfigureServices` in `Program.cs`:
 
-```csharp
-using ViewInjectSample.Helpers;
-using ViewInjectSample.Infrastructure;
-using ViewInjectSample.Interfaces;
-using ViewInjectSample.Model.Services;
-
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
-
-builder.Services.AddTransient<IToDoItemRepository, ToDoItemRepository>();
-builder.Services.AddTransient<StatisticsService>();
-builder.Services.AddTransient<ProfileOptionsService>();
-builder.Services.AddTransient<MyHtmlHelper>();
-
-var app = builder.Build();
-
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
-}
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.MapRazorPages();
-
-app.MapDefaultControllerRoute();
-
-app.Run();
-```
+[!code-csharp[](~/mvc/views/dependency-injection/samples/6.0/WebViewInject/Program.cs?highlight=11,12)]
 
 The `StatisticsService` performs some calculations on the set of `ToDoItem` instances, which it accesses via a repository:
 
-```csharp
-﻿using System.Linq;
-using ViewInjectSample.Interfaces;
-
-namespace ViewInjectSample.Model.Services
-{
-    public class StatisticsService
-    {
-        private readonly IToDoItemRepository _toDoItemRepository;
-
-        public StatisticsService(IToDoItemRepository toDoItemRepository)
-        {
-            _toDoItemRepository = toDoItemRepository;
-        }
-
-        public int GetCount()
-        {
-            return _toDoItemRepository.List().Count();
-        }
-
-        public int GetCompletedCount()
-        {
-            return _toDoItemRepository.List().Count(x => x.IsDone);
-        }
-
-        public double GetAveragePriority()
-        {
-            if (_toDoItemRepository.List().Count() == 0)
-            {
-                return 0.0;
-            }
-
-            return _toDoItemRepository.List().Average(x => x.Priority);
-        }
-    }
-}
-```
+[!code-csharp[](~/mvc/views/dependency-injection/samples/6.0/WebViewInject/Models/Services/StatisticsService.cs?highlight=15,20,25)]
 
 The sample repository uses an in-memory collection. An in-memory implementation shouldn't be used for large, remotely accessed data sets.
 
 The sample displays data from the model bound to the view and the service injected into the view:
+
+![To Do view listing total items, completed items, average priority, and a list of tasks with their priority levels and boolean values indicating completion.](dependency-injection/_static/screenshot.png)
 
 ## Populating Lookup Data
 
@@ -205,122 +57,131 @@ View injection can be useful to populate options in UI elements, such as dropdow
 
 An alternative approach injects services directly into the view to obtain the options. This minimizes the amount of code required by the controller or razor Page, moving this view element construction logic into the view itself. The controller action or Razor Page to display a profile editing form only needs to pass the form the profile instance:
 
-```csharp
-using Microsoft.AspNetCore.Mvc;
-using ViewInjectSample.Model;
-
-namespace ViewInjectSample.Controllers;
-
-public class ProfileController : Controller
-{
-    public IActionResult Index()
-    {
-        // A real app would up profile based on the user.
-        var profile = new Profile()
-        {
-            Name = "Rick",
-            FavColor = "Blue",
-            Gender = "Male",
-            State = new State("Ohio","OH")
-        };
-        return View(profile);
-    }
-}
-```
+[!code-csharp[](~/mvc/views/dependency-injection/samples/6.0/WebViewInject/Controllers/ProfileController.cs)]
 
 The HTML form used to update the preferences includes dropdown lists for three of the properties:
 
+![Update Profile view with a form allowing the entry of name, gender, state, and favorite Color.](dependency-injection/_static/updateprofile.png)
+
 These lists are populated by a service that has been injected into the view:
 
-```cshtml
-@using System.Threading.Tasks
-@using ViewInjectSample.Model.Services
-@model ViewInjectSample.Model.Profile
-@inject ProfileOptionsService Options
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Update Profile</title>
-</head>
-<body>
-<div>
-    <h1>Update Profile</h1>
-    Name: @Html.TextBoxFor(m => m.Name)
-    <br/>
-    Gender: @Html.DropDownList("Gender",
-           Options.ListGenders().Select(g => 
-                new SelectListItem() { Text = g, Value = g }))
-    <br/>
-
-    State: @Html.DropDownListFor(m => m.State!.Code,
-           Options.ListStates().Select(s => 
-                new SelectListItem() { Text = s.Name, Value = s.Code}))
-    <br />
-
-    Fav. Color: @Html.DropDownList("FavColor",
-           Options.ListColors().Select(c => 
-                new SelectListItem() { Text = c, Value = c }))
-    </div>
-</body>
-</html>
-```
+[!code-cshtml[](~/mvc/views/dependency-injection/samples/6.0/WebViewInject/Views/Profile/Index.cshtml?highlight=4,16,17,21,22,26,27)]
 
 The `ProfileOptionsService` is a UI-level service designed to provide just the data needed for this form:
 
-```csharp
-namespace ViewInjectSample.Model.Services;
+[!code-csharp[](~/mvc/views/dependency-injection/samples/6.0/WebViewInject/Models/Services/ProfileOptionsService.cs)]
 
-public class ProfileOptionsService
-{
-    public List<string> ListGenders()
-    {
-        // Basic <example-value>
-        return new List<string>() {"Female", "Male"};
-    }
-
-    public List<State> ListStates()
-    {
-        // Add a few states
-        return new List<State>()
-        {
-            new State("Alabama", "AL"),
-            new State("Alaska", "AK"),
-            new State("Ohio", "OH")
-        };
-    }
-
-    public List<string> ListColors()
-    {
-        return new List<string>() { "Blue","Green","Red","Yellow" };
-    }
-}
-```
-
-Note an unregistered type throws an exception at runtime because the service provider is internally queried via `Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService*`.
+Note an unregistered type throws an exception at runtime because the service provider is internally queried via <xref:Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService*>.
 
 ## Overriding Services
 
 In addition to injecting new services, this technique can be used to override previously injected services on a page. The figure below shows all of the fields available on the page used in the first example:
 
+![Intellisense contextual menu on a typed @ symbol listing Html, Component, StatsService, and Url fields](dependency-injection/_static/razor-fields.png)
+
 The default fields include `Html`, `Component`, and `Url`. To replace the default HTML Helpers with a custom version, use `@inject`:
 
-```cshtml
-﻿@using System.Threading.Tasks
-@using ViewInjectSample.Helpers
-@inject MyHtmlHelper Html
-<!DOCTYPE html>
-<html>
-<head>
-    <title>My Helper</title>
-</head>
-<body>
-    <div>
-        Test: @Html.Value
-    </div>
-</body>
-</html>
-```
+[!code-cshtml[](~/mvc/views/dependency-injection/samples/6.0/WebViewInject/Views/Helper/Index.cshtml?highlight=3,11)]
 
 ## See Also
 
-* Simon Timms Blog: Getting Lookup Data Into Your View
+* Simon Timms Blog: [Getting Lookup Data Into Your View](https://blog.simontimms.com/2015/06/09/getting-lookup-data-into-you-view/)
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-6.0"
+
+ASP.NET Core supports [dependency injection](../../fundamentals/dependency-injection.md) into views. This can be useful for view-specific services, such as localization or data required only for populating view elements. You should try to maintain [separation of concerns](/dotnet/standard/modern-web-apps-azure-architecture/architectural-principles#separation-of-concerns) between your controllers and views. Most of the data your views display should be passed in from the controller.
+
+[View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/mvc/views/dependency-injection/samples) ([how to download](../../fundamentals/index.md#how-to-download-a-sample))
+
+## Configuration injection
+
+`appsettings.json` values can be injected directly into a view.
+
+Example of an `appsettings.json` file:
+
+```json
+{
+   "root": {
+      "parent": {
+         "child": "myvalue"
+      }
+   }
+}
+```
+
+The syntax for `@inject`:
+   `@inject <type> <name>`
+
+An example using `@inject`:
+
+```csharp
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+   string myValue = Configuration["root:parent:child"];
+   ...
+}
+```
+
+## Service injection
+
+A service can be injected into a view using the `@inject` directive. You can think of `@inject` as adding a property to the view, and populating the property using DI.
+
+[!code-cshtml[](../../mvc/views/dependency-injection/samples/src/ViewInjectSample/Views/ToDo/Index.cshtml?highlight=4,5,15,16,17)]
+
+This view displays a list of `ToDoItem` instances, along with a summary showing overall statistics. The summary is populated from the injected `StatisticsService`. This service is registered for dependency injection in `ConfigureServices` in `Startup.cs`:
+
+[!code-csharp[](../../mvc/views/dependency-injection/samples/src/ViewInjectSample/Startup.cs?highlight=6,7&range=15-22)]
+
+The `StatisticsService` performs some calculations on the set of `ToDoItem` instances, which it accesses via a repository:
+
+[!code-csharp[](../../mvc/views/dependency-injection/samples/src/ViewInjectSample/Model/Services/StatisticsService.cs?highlight=15,20,25)]
+
+The sample repository uses an in-memory collection. The implementation shown above (which operates on all of the data in memory) isn't recommended for large, remotely accessed data sets.
+
+The sample displays data from the model bound to the view and the service injected into the view:
+
+![To Do view listing total items, completed items, average priority, and a list of tasks with their priority levels and boolean values indicating completion.](dependency-injection/_static/screenshot.png)
+
+## Populating Lookup Data
+
+View injection can be useful to populate options in UI elements, such as dropdown lists. Consider a user profile form that includes options for specifying gender, state, and other preferences. Rendering such a form using a standard MVC approach would require the controller to request data access services for each of these sets of options, and then populate a model or `ViewBag` with each set of options to be bound.
+
+An alternative approach injects services directly into the view to obtain the options. This minimizes the amount of code required by the controller, moving this view element construction logic into the view itself. The controller action to display a profile editing form only needs to pass the form the profile instance:
+
+[!code-csharp[](../../mvc/views/dependency-injection/samples/src/ViewInjectSample/Controllers/ProfileController.cs?highlight=9,19)]
+
+The HTML form used to update these preferences includes dropdown lists for three of the properties:
+
+![Update Profile view with a form allowing the entry of name, gender, state, and favorite Color.](dependency-injection/_static/updateprofile.png)
+
+These lists are populated by a service that has been injected into the view:
+
+[!code-cshtml[](../../mvc/views/dependency-injection/samples/src/ViewInjectSample/Views/Profile/Index.cshtml?highlight=4,16,17,21,22,26,27)]
+
+The `ProfileOptionsService` is a UI-level service designed to provide just the data needed for this form:
+
+[!code-csharp[](../../mvc/views/dependency-injection/samples/src/ViewInjectSample/Model/Services/ProfileOptionsService.cs?highlight=7,13,24)]
+
+> [!IMPORTANT]
+> Don't forget to register types you request through dependency injection in `Startup.ConfigureServices`. An unregistered type throws an exception at runtime because the service provider is internally queried via <xref:Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetRequiredService*>.
+
+## Overriding Services
+
+In addition to injecting new services, this technique can also be used to override previously injected services on a page. The figure below shows all of the fields available on the page used in the first example:
+
+![Intellisense contextual menu on a typed @ symbol listing Html, Component, StatsService, and Url fields](dependency-injection/_static/razor-fields.png)
+
+As you can see, the default fields include `Html`, `Component`, and `Url` (as well as the `StatsService` that we injected). If for instance you wanted to replace the default HTML Helpers with your own, you could easily do so using `@inject`:
+
+[!code-cshtml[](../../mvc/views/dependency-injection/samples/src/ViewInjectSample/Views/Helper/Index.cshtml?highlight=3,11)]
+
+If you want to extend existing services, you can simply use this technique while inheriting from or wrapping the existing implementation with your own.
+
+## See Also
+
+* Simon Timms Blog: [Getting Lookup Data Into Your View](https://blog.simontimms.com/2015/06/09/getting-lookup-data-into-you-view/)
+
+:::moniker-end

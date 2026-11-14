@@ -1,17 +1,16 @@
 ---
 title: "Breaking change - Tensor operations reject unsupported storage layouts"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/11/tensor-storage-layout-validation.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 11 where multidimensional Tensor APIs reject unsupported overlap and incompatible array storage.
+ms.date: 09/30/2026
+ai-usage: ai-generated
+ms.custom: https://github.com/dotnet/docs/issues/56290
 ---
 
 # Tensor operations reject unsupported storage layouts
 
-Starting in .NET 11, multidimensional Tensor copying and destination-taking operations reject unsupported overlapping storage layouts with `System.ArgumentException` before they write output. Tensor-span constructors also validate the element type of `System.Array` storage.
+Starting in .NET 11, multidimensional Tensor copying and destination-taking operations reject unsupported overlapping storage layouts with <xref:System.ArgumentException> before they write output. Tensor-span constructors also validate the element type of `System.Array` storage.
 
-The change is delivered in the System.Numerics.Tensors package, including its supported target frameworks. Updating the package can affect apps that target earlier .NET versions. The separate `TensorPrimitives` APIs retain their existing overlap contract.
+The change is delivered in the [System.Numerics.Tensors](https://www.nuget.org/packages/System.Numerics.Tensors) package, including its supported target frameworks. Updating the package can affect apps that target earlier .NET versions. The separate `TensorPrimitives` APIs retain their existing overlap contract.
 
 ## Version introduced
 
@@ -52,11 +51,11 @@ The `Try` copying methods still return `false`, without copying, when the destin
 
 `Tensor.ResizeTo` and concatenation into an existing destination reject a zero-stride dimension that contains more than one logical element. Empty destinations and zero strides in singleton dimensions remain permitted.
 
-`TensorSpan<T>` and `ReadOnlyTensorSpan<T>` constructors that take `System.Array` throw `System.ArrayTypeMismatchException` for incompatible array element types. Writable tensor spans also reject covariant arrays; read-only tensor spans permit compatible reference-type covariance.
+`TensorSpan<T>` and `ReadOnlyTensorSpan<T>` constructors that take `System.Array` throw <xref:System.ArrayTypeMismatchException> for incompatible array element types. Writable tensor spans also reject covariant arrays; read-only tensor spans permit compatible reference-type covariance.
 
 ## Type of breaking change
 
-This is a behavioral change.
+This is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -83,17 +82,17 @@ Don't assume that a `Try` copying method can't throw. A `false` result handles i
 
 ## Affected APIs
 
-- `System.Numerics.Tensors.IReadOnlyTensor`2.CopyTo*`.
-- `System.Numerics.Tensors.IReadOnlyTensor`2.FlattenTo*`.
-- `System.Numerics.Tensors.IReadOnlyTensor`2.TryCopyTo*`.
-- `System.Numerics.Tensors.IReadOnlyTensor`2.TryFlattenTo*`.
-- The corresponding copy and flatten methods on `System.Numerics.Tensors.Tensor`1`, `System.Numerics.Tensors.TensorSpan`1`, and `System.Numerics.Tensors.ReadOnlyTensorSpan`1`.
-- Destination-taking elementwise methods on `System.Numerics.Tensors.Tensor`, including unary, binary, and tensor/scalar operations.
-- `System.Numerics.Tensors.Tensor.ResizeTo*` (all overloads).
-- `System.Numerics.Tensors.Tensor.Reverse*` and `System.Numerics.Tensors.Tensor.ReverseDimension*` (overloads that take a destination).
-- `System.Numerics.Tensors.Tensor.Concatenate*` (overload that takes a destination).
-- `System.Numerics.Tensors.TensorSpan`1.#ctor*` and `System.Numerics.Tensors.ReadOnlyTensorSpan`1.#ctor*` (the two overloads on each type that take `System.Array`).
+- <xref:System.Numerics.Tensors.IReadOnlyTensor`2.CopyTo*?displayProperty=fullName>.
+- <xref:System.Numerics.Tensors.IReadOnlyTensor`2.FlattenTo*?displayProperty=fullName>.
+- <xref:System.Numerics.Tensors.IReadOnlyTensor`2.TryCopyTo*?displayProperty=fullName>.
+- <xref:System.Numerics.Tensors.IReadOnlyTensor`2.TryFlattenTo*?displayProperty=fullName>.
+- The corresponding copy and flatten methods on <xref:System.Numerics.Tensors.Tensor`1>, <xref:System.Numerics.Tensors.TensorSpan`1>, and <xref:System.Numerics.Tensors.ReadOnlyTensorSpan`1>.
+- Destination-taking elementwise methods on <xref:System.Numerics.Tensors.Tensor>, including unary, binary, and tensor/scalar operations.
+- <xref:System.Numerics.Tensors.Tensor.ResizeTo*?displayProperty=fullName> (all overloads).
+- <xref:System.Numerics.Tensors.Tensor.Reverse*?displayProperty=fullName> and <xref:System.Numerics.Tensors.Tensor.ReverseDimension*?displayProperty=fullName> (overloads that take a destination).
+- <xref:System.Numerics.Tensors.Tensor.Concatenate*?displayProperty=fullName> (overload that takes a destination).
+- <xref:System.Numerics.Tensors.TensorSpan`1.%23ctor*> and <xref:System.Numerics.Tensors.ReadOnlyTensorSpan`1.%23ctor*> (the two overloads on each type that take `System.Array`).
 
 ## See also
 
-- Tensor shapes, storage, and NumPy differences
+- [Tensor shapes, storage, and NumPy differences](../../../../standard/tensor-shapes-and-storage.md)

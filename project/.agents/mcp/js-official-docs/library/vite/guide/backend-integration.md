@@ -1,22 +1,14 @@
----
-title: "Backend Integration"
-tool: "vite"
-version: "8.3"
-source: "https://github.com/vitejs/vite/blob/b39e6e63dcbfc3cf4be871acf3554efbd6d0e268/docs/guide/backend-integration.md"
-commit: "b39e6e63dcbfc3cf4be871acf3554efbd6d0e268"
-license: "MIT"
----
-
 # Backend Integration
 
-**Note**
-If you want to serve the HTML using a traditional backend (e.g. Rails, Laravel) but use Vite for serving assets, check for existing integrations listed in Awesome Vite.
+:::tip Note
+If you want to serve the HTML using a traditional backend (e.g. Rails, Laravel) but use Vite for serving assets, check for existing integrations listed in [Awesome Vite](https://github.com/vitejs/awesome-vite#integrations-with-backends).
 
 If you need a custom integration, you can follow the steps in this guide to configure it manually.
+:::
 
 1. In your Vite config, configure the entry and enable build manifest:
 
-   ```js
+   ```js twoslash [vite.config.js]
    import { defineConfig } from 'vite'
    // ---cut---
    export default defineConfig({
@@ -35,7 +27,7 @@ If you need a custom integration, you can follow the steps in this guide to conf
    })
    ```
 
-   If you haven't disabled the module preload polyfill, you also need to import the polyfill in your entry
+   If you haven't disabled the [module preload polyfill](/config/build-options.md#build-polyfillmodulepreload), you also need to import the polyfill in your entry
 
    ```js
    // add the beginning of your app entry
@@ -52,7 +44,7 @@ If you need a custom integration, you can follow the steps in this guide to conf
 
    In order to properly serve assets, you have two options:
    - Make sure the server is configured to proxy static assets requests to the Vite server
-   - Set `server.origin` so that generated asset URLs will be resolved using the back-end server URL instead of a relative path
+   - Set [`server.origin`](/config/server-options.md#server-origin) so that generated asset URLs will be resolved using the back-end server URL instead of a relative path
 
    This is needed for assets such as images to load properly.
 
@@ -70,7 +62,7 @@ If you need a custom integration, you can follow the steps in this guide to conf
 
 3. For production, after running `vite build`, a `.vite/manifest.json` file will be generated alongside other asset files. An example manifest file looks like this:
 
-   ```json
+   ```json [.vite/manifest.json] style:max-height:400px
    {
      "_shared-B7PI925R.js": {
        "file": "assets/shared-B7PI925R.js",
@@ -137,7 +129,7 @@ If you need a custom integration, you can follow the steps in this guide to conf
 
    The manifest has a `Record<name, chunk>` structure where each chunk follows the `ManifestChunk` interface:
 
-   ```ts
+   ```ts style:max-height:400px
    interface ManifestChunk {
      /**
       * The input file name of this chunk / asset if known
@@ -185,11 +177,11 @@ If you need a custom integration, you can follow the steps in this guide to conf
    ```
 
    Each entry in the manifest represents one of the following:
-   - **Entry chunks**: Generated from files specified in `build.rolldownOptions.input`. These chunks have `isEntry: true` and their key is the relative src path from project root.
+   - **Entry chunks**: Generated from files specified in [`build.rolldownOptions.input`](https://rolldown.rs/reference/InputOptions.input#input). These chunks have `isEntry: true` and their key is the relative src path from project root.
    - **Dynamic entry chunks**: Generated from dynamic imports. These chunks have `isDynamicEntry: true` and their key is the relative src path from project root.
    - **Non-entry chunks**: Their key is the base name of the generated file prefixed with `_`.
    - **Asset chunks**: Generated from imported assets like images, fonts. Their key is the relative src path from project root.
-   - **CSS files**: When `build.cssCodeSplit` is `false`, a single CSS file is generated with the key `style.css`. When `build.cssCodeSplit` is not `false`, the key is generated similar to JS chunks (i.e. entry chunks will not have `_` prefix and non-entry chunks will have `_` prefix).
+   - **CSS files**: When [`build.cssCodeSplit`](/config/build-options.md#build-csscodesplit) is `false`, a single CSS file is generated with the key `style.css`. When `build.cssCodeSplit` is not `false`, the key is generated similar to JS chunks (i.e. entry chunks will not have `_` prefix and non-entry chunks will have `_` prefix).
 
    JS chunks (chunks other than assets or CSS) will contain information on their static and dynamic imports (both are keys that map to the corresponding chunk in the manifest). Chunks also list their corresponding CSS and asset files if they have any.
 
@@ -276,8 +268,11 @@ If you need a custom integration, you can follow the steps in this guide to conf
    }
    ```
 
-**Chunk Import Maps Support (Experimental)**
+   :::
 
-   If you are using the experimental `build.chunkImportMap` option, you also need to inject the import map into the HTML.
+   :::info Chunk Import Maps Support (Experimental)
+
+   If you are using the experimental [`build.chunkImportMap`](/config/build-options#build-chunkimportmap) option, you also need to inject the import map into the HTML.
 
    The import map is output to `importmap.json` in the output directory. Make sure to inject the `<script type="importmap">` tag before any `<script type="module">` tags or `<link rel="modulepreload">` tags.
+   :::

@@ -1,19 +1,18 @@
 ---
-title: "YARP Direct Forwarding"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/direct-forwarding.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: YARP Direct Forwarding
+ai-usage: ai-assisted
+content_well_notification: AI-contribution
+description: Learn how to use YARP Direct Forwarding to take a specific request and forward it to a specific destination.
+ms.date: 10/07/2026
+ms.topic: concept-article
 ---
-
 # YARP Direct Forwarding
 
 Some applications only need the ability to take a specific request and forward it to a specific destination. These applications do not need, or have addressed in other ways, the other features of the proxy like configuration discovery, routing, load balancing, etc..
 
 ## IHttpForwarder
 
-IHttpForwarder serves as the core proxy adapter between incoming AspNetCore and outgoing System.Net.Http requests. It handles the mechanics of creating a HttpRequestMessage from a HttpContext, sending it, and relaying the response.
+[IHttpForwarder](xref:Yarp.ReverseProxy.Forwarder.IHttpForwarder) serves as the core proxy adapter between incoming AspNetCore and outgoing System.Net.Http requests. It handles the mechanics of creating a HttpRequestMessage from a HttpContext, sending it, and relaying the response.
 
 IHttpForwarder supports:
 
@@ -32,11 +31,11 @@ It does not include:
 
 ## Example
 
-See ReverseProxy.Direct.Sample as a pre-built sample, or use the steps below.
+See [ReverseProxy.Direct.Sample](https://github.com/microsoft/reverse-proxy/tree/release/latest/samples/ReverseProxy.Direct.Sample) as a pre-built sample, or use the steps below.
 
 ### Add the YARP Reverse Proxy NuGet package
 
-Add the `Yarp.ReverseProxy` NuGet package to the project.
+Add the [`Yarp.ReverseProxy` NuGet package](https://www.nuget.org/packages/Yarp.ReverseProxy) to the project.
 
 ### Update `Program.cs`
 
@@ -114,7 +113,7 @@ internal class CustomTransformer : HttpTransformer
     /// <param name="proxyRequest">The outgoing proxy request.</param>
     /// <param name="destinationPrefix">The uri prefix for the selected destination server which can be used to create
     /// the RequestUri.</param>
-    public override async ValueTask TransformRequestAsync(HttpContext httpContext, HttpRequestMessage proxyRequest, string destinationPrefix, CancellationToken <example-value>)
+    public override async ValueTask TransformRequestAsync(HttpContext httpContext, HttpRequestMessage proxyRequest, string destinationPrefix, CancellationToken cancellationToken)
     {
         // Copy all request headers
         await base.TransformRequestAsync(httpContext, proxyRequest, destinationPrefix, cancellationToken);
@@ -133,7 +132,7 @@ internal class CustomTransformer : HttpTransformer
 }
 ```
 
-There are also extension methods available that simplify the mapping of IHttpForwarder to endpoints.
+There are also [extension methods](xref:Microsoft.AspNetCore.Builder.DirectForwardingIEndpointRouteBuilderExtensions) available that simplify the mapping of IHttpForwarder to endpoints.
 
 ```csharp
 app.MapForwarder("/{**catch-all}", "https://localhost:10000/", requestConfig, transformer, httpClient);
@@ -149,30 +148,22 @@ Re-using a client for requests to the same destination is recommended for perfor
 
 ### Transforms
 
-The request and response can be modified by providing a derived `Yarp.ReverseProxy.Forwarder.HttpTransformer` as a parameter to the `Yarp.ReverseProxy.Forwarder.IHttpForwarderExtensions.SendAsync*` method, as shown in the Update `Program.cs` section's example.
+The request and response can be modified by providing a derived <xref:Yarp.ReverseProxy.Forwarder.HttpTransformer> as a parameter to the <xref:Yarp.ReverseProxy.Forwarder.IHttpForwarderExtensions.SendAsync*> method, as shown in the [Update `Program.cs`](#update-programcs) section's example.
 
-To use the built-in transforms with direct forwarding, resolve `ITransformBuilder` from dependency injection and call its `Create` method. `AddHttpForwarder` registers `ITransformBuilder`, so `AddReverseProxy` isn't required.
+To use the [built-in transforms](transforms.md) with direct forwarding, resolve `ITransformBuilder` from dependency injection and call its `Create` method. `AddHttpForwarder` registers `ITransformBuilder`, so `AddReverseProxy` isn't required.
 
 Ensure that the `Program` file imports the following namespaces:
 
-```csharp
-using Yarp.ReverseProxy.Transforms;
-using Yarp.ReverseProxy.Transforms.Builder;
-```
+:::code language="csharp" source="direct-forwarding/snippets/10.0/Program.cs" id="snippet_imports":::
+
 Replace the `transformer` initialization in the preceding example with the following code:
 
-```csharp
-var transformBuilder = app.Services.GetRequiredService<ITransformBuilder>();
-var transformer = transformBuilder.Create(context =>
-{
-    context.AddQueryRemoveKey("param1");
-    context.AddQueryValue("area", "xx2", append: false);
-});
-```
+:::code language="csharp" source="direct-forwarding/snippets/10.0/Program.cs" id="snippet_create_transformer":::
+
 The callback configures a `TransformBuilderContext` using the same extension methods available to `AddTransforms`. The transforms remove the `param1` query parameter and set `area` to `xx2`. A request for `/test/orders?param1=value&area=old&sort=name` is forwarded as `/test/orders?area=xx2&sort=name`.
 
-Pass the resulting `HttpTransformer` to `SendAsync` or `MapForwarder`, as shown earlier. Create the transformer once and reuse it across requests. By default, the created transformer also suppresses the incoming `Host` header and adds the `X-Forwarded` headers described in YARP Request and Response Transforms.
+Pass the resulting `HttpTransformer` to `SendAsync` or `MapForwarder`, as shown earlier. Create the transformer once and reuse it across requests. By default, the created transformer also suppresses the incoming `Host` header and adds the `X-Forwarded` headers described in [YARP Request and Response Transforms](transforms.md#defaults).
 
 ### Error handling
 
-IHttpForwarder catches exceptions and timeouts from the HTTP client, logs them, and converts them to 5xx status codes or aborts the response. An error code is returned from `SendAsync`, and the error details can be accessed from the IForwarderErrorFeature as shown above.
+IHttpForwarder catches exceptions and timeouts from the HTTP client, logs them, and converts them to 5xx status codes or aborts the response. An error code is returned from `SendAsync`, and the error details can be accessed from the [IForwarderErrorFeature](xref:Yarp.ReverseProxy.Forwarder.IForwarderErrorFeature) as shown above.

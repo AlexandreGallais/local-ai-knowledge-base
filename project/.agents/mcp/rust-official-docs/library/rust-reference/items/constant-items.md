@@ -1,17 +1,8 @@
----
-title: "Constant items"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/items/constant-items.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[items.const]
 # Constant items
 
 r[items.const.syntax]
-```grammar
+```grammar,items
 ConstantItem ->
     `const` ( IDENTIFIER | `_` ) `:` Type ( `=` Expression )? `;`
 ```
@@ -105,9 +96,9 @@ m!(const _: () = (););
 r[items.const.eval]
 ## Evaluation
 
-Free constants are always evaluated at compile-time to surface panics. This happens even within an unused function:
+[Free][free] constants are always [evaluated][const_eval] at compile-time to surface panics. This happens even within an unused function:
 
-```rust
+```rust,compile_fail
 // Compile-time panic
 const PANIC: () = std::unimplemented!();
 
@@ -116,3 +107,14 @@ fn unused_generic_function<T>() {
     const _: () = assert!(usize::BITS == 0);
 }
 ```
+
+[const_eval]: ../const_eval.md
+[associated constant]: ../items/associated-items.md#associated-constants
+[constant value]: ../const_eval.md#constant-expressions
+[free]: ../glossary.md#free-item
+[static lifetime elision]: ../lifetime-elision.md#const-and-static-elision
+[trait definition]: traits.md
+[underscore imports]: use-declarations.md#underscore-imports
+[`Copy`]: ../special-types-and-traits.md#copy
+[value namespace]: ../names/namespaces.md
+[promotion]: destructors.scope.const-promotion

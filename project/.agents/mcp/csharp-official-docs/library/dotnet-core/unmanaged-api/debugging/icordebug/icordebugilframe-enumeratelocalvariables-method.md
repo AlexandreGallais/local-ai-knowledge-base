@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugILFrame::EnumerateLocalVariables Method"
 title: "ICorDebugILFrame::EnumerateLocalVariables Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugilframe-enumeratelocalvariables-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugILFrame.EnumerateLocalVariables"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugILFrame::EnumerateLocalVariables"
+helpviewer_keywords:
+  - "EnumerateLocalVariables method [.NET debugging]"
+  - "ICorDebugILFrame::EnumerateLocalVariables method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugILFrame::EnumerateLocalVariables Method
 
 Gets an enumerator for the local variables in this frame.
@@ -30,7 +39,7 @@ HRESULT EnumerateLocalVariables(
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

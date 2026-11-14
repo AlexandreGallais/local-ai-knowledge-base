@@ -1,12 +1,3 @@
----
-title: "Numeric types"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/types/numeric.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[type.numeric]
 # Numeric types
 
@@ -18,22 +9,22 @@ The unsigned integer types consist of:
 
 Type   | Minimum | Maximum
 -------|---------|-------------------
-`u8`   | 0       | 28-1
-`u16`  | 0       | 216-1
-`u32`  | 0       | 232-1
-`u64`  | 0       | 264-1
-`u128` | 0       | 2128-1
+`u8`   | 0       | 2<sup>8</sup>-1
+`u16`  | 0       | 2<sup>16</sup>-1
+`u32`  | 0       | 2<sup>32</sup>-1
+`u64`  | 0       | 2<sup>64</sup>-1
+`u128` | 0       | 2<sup>128</sup>-1
 
 r[type.numeric.int.signed]
 The signed two's complement integer types consist of:
 
 Type   | Minimum            | Maximum
 -------|--------------------|-------------------
-`i8`   | -(27)   | 27-1
-`i16`  | -(215)  | 215-1
-`i32`  | -(231)  | 231-1
-`i64`  | -(263)  | 263-1
-`i128` | -(2127) | 2127-1
+`i8`   | -(2<sup>7</sup>)   | 2<sup>7</sup>-1
+`i16`  | -(2<sup>15</sup>)  | 2<sup>15</sup>-1
+`i32`  | -(2<sup>31</sup>)  | 2<sup>31</sup>-1
+`i64`  | -(2<sup>63</sup>)  | 2<sup>63</sup>-1
+`i128` | -(2<sup>127</sup>) | 2<sup>127</sup>-1
 
 r[type.numeric.float]
 ## Floating-point types
@@ -46,8 +37,8 @@ r[type.numeric.int.size]
 r[type.numeric.int.size.usize]
 The `usize` type is an unsigned integer type with the same number of bits as the platform's pointer type. It can represent every memory address in the process.
 
-> **Note:**
-> While a `usize` can represent every *address*, converting a *pointer* to a `usize` is not necessarily a reversible operation. For more information, see the documentation for [type cast expressions], [`std::ptr`], and provenance in particular.
+> [!NOTE]
+> While a `usize` can represent every *address*, converting a *pointer* to a `usize` is not necessarily a reversible operation. For more information, see the documentation for [type cast expressions], [`std::ptr`], and [provenance][std::ptr#provenance] in particular.
 
 r[type.numeric.int.size.isize]
 The `isize` type is a signed two's complement integer type with the same number of bits as the platform's pointer type. The theoretical upper bound on object and array size is the maximum `isize` value. This ensures that `isize` can be used to calculate differences between pointers into an object or array and can address every byte within an object along with one byte past the end.
@@ -55,10 +46,12 @@ The `isize` type is a signed two's complement integer type with the same number 
 r[type.numeric.int.size.minimum]
 `usize` and `isize` are at least 16-bits wide.
 
-> **Note:**
+> [!NOTE]
 > Many pieces of Rust code may assume that pointers, `usize`, and `isize` are either 32-bit or 64-bit. As a consequence, 16-bit pointer support is limited and may require explicit care and acknowledgment from a library to support.
 
 r[type.numeric.validity]
 ## Bit validity
 
 For every numeric type, `T`, the bit validity of `T` is equivalent to the bit validity of `[u8; size_of::<T>()]`. An uninitialized byte is not a valid `u8`.
+
+[type cast expressions]: ../expressions/operator-expr.md#type-cast-expressions

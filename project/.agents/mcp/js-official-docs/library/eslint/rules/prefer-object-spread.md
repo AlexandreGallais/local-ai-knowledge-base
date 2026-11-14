@@ -1,13 +1,9 @@
 ---
-title: "prefer-object-spread"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/prefer-object-spread.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: prefer-object-spread
+rule_type: suggestion
 ---
 
-# prefer-object-spread
+
 
 When `Object.assign` is called using an object literal as the first argument, this rule requires using the object spread syntax instead. This rule also warns on cases where an `Object.assign` call is made using a single argument that is an object literal, in this case, the `Object.assign` call is not needed.
 
@@ -17,7 +13,7 @@ Introduced in ES2018, object spread is a declarative alternative which may perfo
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint prefer-object-spread: "error"*/
@@ -38,9 +34,11 @@ Object.assign({});
 Object.assign({ foo: bar });
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint prefer-object-spread: "error"*/
@@ -58,6 +56,8 @@ Object.assign(foo, { bar, baz });
 
 Object.assign(foo, { ...baz });
 ```
+
+:::
 
 ## Options
 

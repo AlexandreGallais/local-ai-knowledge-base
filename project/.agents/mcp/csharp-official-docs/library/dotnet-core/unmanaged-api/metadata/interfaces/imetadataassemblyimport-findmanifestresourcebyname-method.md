@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataAssemblyImport::FindManifestResourceByName Method"
 title: "IMetaDataAssemblyImport::FindManifestResourceByName Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataassemblyimport-findmanifestresourcebyname-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataAssemblyImport.FindManifestResourceByName"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataAssemblyImport::FindManifestResourceByName"
+  - "IMetaDataAssemblyImport::FindManifestResourceByName method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataAssemblyImport::FindManifestResourceByName Method
 
 Gets a pointer to the manifest resource with the specified name.
@@ -34,7 +41,7 @@ HRESULT FindManifestResourceByName (
 
 ## Requirements
 
- **Platform:** See .NET supported operating systems.
+ **Platform:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -42,5 +49,5 @@ HRESULT FindManifestResourceByName (
 
 ## See also
 
-- IMetaDataAssemblyImport Interface
-- How the Runtime Locates Assemblies
+- [IMetaDataAssemblyImport Interface](imetadataassemblyimport-interface.md)
+- [How the Runtime Locates Assemblies](../../../../framework/deployment/how-the-runtime-locates-assemblies.md)

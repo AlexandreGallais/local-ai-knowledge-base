@@ -1,15 +1,4 @@
----
-title: "dotnet-tool-install-arch-options"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/dotnet-tool-install-arch-options.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# dotnet-tool-install-arch-options
-
-> **Note:**
+> [!NOTE]
 > By default, the architecture of the .NET binaries to install represents the currently running operating system architecture.
-> To specify a different architecture, review how to use the `dotnet tool install` command with the '--arch' option.
-> For more information, see GitHub dotnet/aspnetcore.docs issue #29262 - _Add '-a arm64' on Apple Silicon_.
+> To specify a different architecture, review how to use the `dotnet tool install` command with the ['--arch' option](/dotnet/core/tools/dotnet-tool-install#options).
+> For more information, see [GitHub dotnet/aspnetcore.docs issue #29262](https://github.com/dotnet/AspNetCore.Docs/issues/29262) - _Add '-a arm64' on Apple Silicon_.

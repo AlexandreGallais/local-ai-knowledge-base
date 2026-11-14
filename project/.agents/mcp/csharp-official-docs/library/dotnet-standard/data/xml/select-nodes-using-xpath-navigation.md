@@ -1,21 +1,21 @@
 ---
 title: "Select Nodes Using XPath Navigation"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/select-nodes-using-xpath-navigation.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn to select XML nodes in .NET. Use Document Object Model (DOM) methods allowing you to use XML Path Language (XPath) navigation to query DOM information.
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
-
 # Select Nodes Using XPath Navigation
 
 The XML Document Object Model (DOM) contains methods that allow you to use XML Path Language (XPath) navigation to query information in the DOM. You can use XPath to find a single, specific node or to find all nodes that match some criteria.
 
 ## XPath Select Methods
 
- The DOM classes provide two methods for XPath selection: the `System.Xml.XmlNode.SelectSingleNode*` method and the `System.Xml.XmlNode.SelectNodes*` method. The `System.Xml.XmlNode.SelectSingleNode*` method returns the first node that matches the selection criteria. The `System.Xml.XmlNode.SelectNodes*` method returns an `System.Xml.XmlNodeList` that contains the matching nodes.
+ The DOM classes provide two methods for XPath selection: the <xref:System.Xml.XmlNode.SelectSingleNode*> method and the <xref:System.Xml.XmlNode.SelectNodes*> method. The <xref:System.Xml.XmlNode.SelectSingleNode*> method returns the first node that matches the selection criteria. The <xref:System.Xml.XmlNode.SelectNodes*> method returns an <xref:System.Xml.XmlNodeList> that contains the matching nodes.
 
- The following example uses the `System.Xml.XmlNode.SelectSingleNode*` method to select the first `book` node in which the author's last name meets the specified criteria. The bookstore.xml file (which is provided at the end of this topic) is used as the input file.
+ The following example uses the <xref:System.Xml.XmlNode.SelectSingleNode*> method to select the first `book` node in which the author's last name meets the specified criteria. The bookstore.xml file (which is provided at the end of this topic) is used as the input file.
 
 ```vb
 Dim doc As New XmlDocument()
@@ -50,7 +50,7 @@ XmlNode node = root.SelectSingleNode(
 Console.WriteLine(node.InnerXml);
 ```
 
- The next example uses the `System.Xml.XmlNode.SelectNodes*` method to select all the book nodes in which the price is greater than a specified amount. The price for each book in the selected list is then programmatically reduced by ten percent. Finally, the updated file is written to the console. The bookstore.xml file (which is provided at the end of this topic) is used as the input file.
+ The next example uses the <xref:System.Xml.XmlNode.SelectNodes*> method to select all the book nodes in which the price is greater than a specified amount. The price for each book in the selected list is then programmatically reduced by ten percent. Finally, the updated file is written to the console. The bookstore.xml file (which is provided at the end of this topic) is used as the input file.
 
 ```vb
 ' Load the document and set the root element.
@@ -112,17 +112,17 @@ doc.DocumentElement.FirstChild.SelectNodes(. . . )
 this doc.DocumentElement.FirstChild.SelectNodes(. . .);
 ```
 
- All `System.Xml.XmlNodeList` objects are synchronized with the underlying document. Therefore, if you iterate through the node list and modify the value of a node, that node is also updated in the document it came from. Notice in the previous example that when a node is modified in the selected `System.Xml.XmlNodeList` the underlying document is also modified.
+ All <xref:System.Xml.XmlNodeList> objects are synchronized with the underlying document. Therefore, if you iterate through the node list and modify the value of a node, that node is also updated in the document it came from. Notice in the previous example that when a node is modified in the selected <xref:System.Xml.XmlNodeList> the underlying document is also modified.
 
-> **Note:**
+> [!NOTE]
 > When the underlying document is modified, it is advisable to rerun the select. If the node modified is one that could cause the node to be added to the node list when it was not previously, or would now cause it to be removed from the node list, there is no guarantee that the node list is now accurate.
 
 ## Namespaces in XPath Expressions
 
- XPath expressions can include namespaces. Namespace resolution is supported using the `System.Xml.XmlNamespaceManager`. If the XPath expression includes a prefix, the prefix and namespace URI pair must be added to the `System.Xml.XmlNamespaceManager`, and the `System.Xml.XmlNamespaceManager` is passed to the `System.Xml.XmlNode.SelectNodes(System.String,System.Xml.XmlNamespaceManager)` or `System.Xml.XmlNode.SelectSingleNode(System.String,System.Xml.XmlNamespaceManager)` method. Notice that the code examples above use the `System.Xml.XmlNamespaceManager` to resolve the namespace of the bookstore.xml document.
+ XPath expressions can include namespaces. Namespace resolution is supported using the <xref:System.Xml.XmlNamespaceManager>. If the XPath expression includes a prefix, the prefix and namespace URI pair must be added to the <xref:System.Xml.XmlNamespaceManager>, and the <xref:System.Xml.XmlNamespaceManager> is passed to the <xref:System.Xml.XmlNode.SelectNodes%28System.String%2CSystem.Xml.XmlNamespaceManager%29> or <xref:System.Xml.XmlNode.SelectSingleNode%28System.String%2CSystem.Xml.XmlNamespaceManager%29> method. Notice that the code examples above use the <xref:System.Xml.XmlNamespaceManager> to resolve the namespace of the bookstore.xml document.
 
-> **Note:**
-> If the XPath expression does not include a prefix, it is assumed that the namespace Uniform Resource Identifier (URI) is the empty namespace. If your XML includes a default namespace, you must still add a prefix and namespace URI to the `System.Xml.XmlNamespaceManager`; otherwise, no nodes will be selected.
+> [!NOTE]
+> If the XPath expression does not include a prefix, it is assumed that the namespace Uniform Resource Identifier (URI) is the empty namespace. If your XML includes a default namespace, you must still add a prefix and namespace URI to the <xref:System.Xml.XmlNamespaceManager>; otherwise, no nodes will be selected.
 
 #### Input File
 
@@ -160,4 +160,4 @@ this doc.DocumentElement.FirstChild.SelectNodes(. . .);
 
 ## See also
 
-- XML Document Object Model (DOM)
+- [XML Document Object Model (DOM)](xml-document-object-model-dom.md)

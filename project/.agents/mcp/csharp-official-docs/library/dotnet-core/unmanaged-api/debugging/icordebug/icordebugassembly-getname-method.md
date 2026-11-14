@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugAssembly::GetName Method"
 title: "ICorDebugAssembly::GetName Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugassembly-getname-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugAssembly.GetName"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugAssembly::GetName"
+helpviewer_keywords:
+  - "ICorDebugAssembly::GetName method [.NET debugging]"
+  - "GetName method, ICorDebugAssembly interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugAssembly::GetName Method
 
 Gets the name of the assembly that this `ICorDebugAssembly` instance represents.
@@ -38,7 +47,7 @@ The `GetName` method returns the full path and file name of the assembly.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

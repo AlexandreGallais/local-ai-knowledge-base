@@ -1,10 +1,8 @@
 ---
-title: "FIPS compliance - .NET Core"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/security/fips-compliance.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: FIPS compliance - .NET Core
+description: Explains .NET Core Federal Information Processing Standard (FIPS) compliance.
+ms.date: 11/20/2019
+author: Rick-Anderson
 ---
 
 # .NET Core Federal Information Processing Standard (FIPS) compliance
@@ -22,6 +20,6 @@ If code is written for a FIPS-compliant environment, the developer is responsibl
 
 For more information on FIPS compliance, see the following articles:
 
-* Windows FIPS Compliance
-* Configuring Windows for FIPS Compliance
-* Chapter 8. Federal Standards and Regulations Red Hat Enterprise Linux 7
+* [Windows FIPS Compliance](/windows/security/threat-protection/fips-140-validation)
+* [Configuring Windows for FIPS Compliance](/windows/security/threat-protection/security-policy-settings/system-cryptography-use-fips-compliant-algorithms-for-encryption-hashing-and-signing)
+* [Chapter 8. Federal Standards and Regulations Red Hat Enterprise Linux 7](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/chap-federal_standards_and_regulations)

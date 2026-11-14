@@ -1,18 +1,16 @@
 ---
-title: "Organizing and testing projects with the .NET CLI"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tutorials/testing-with-cli.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Organizing and testing projects with the .NET CLI
+description: This tutorial explains how to organize and test .NET projects from the command line.
+ms.date: 10/23/2025
+ai-usage: ai-assisted
 ---
 
 # Organizing and testing projects with the .NET CLI
 
-This tutorial follows Tutorial: Create a .NET console application, taking you beyond the creation of a simple console app to develop advanced and well-organized applications. After showing you how to use folders to organize your code, the tutorial shows you how to extend a console application with the xUnit testing framework.
+This tutorial follows [Tutorial: Create a .NET console application](create-console-app.md), taking you beyond the creation of a simple console app to develop advanced and well-organized applications. After showing you how to use folders to organize your code, the tutorial shows you how to extend a console application with the [xUnit](https://xunit.net/) testing framework.
 
-> **Note:**
-> This tutorial recommends that you place the application project and test project in separate folders. Some developers prefer to keep these projects in the same folder. For more information, see GitHub issue dotnet/docs #26395.
+> [!NOTE]
+> This tutorial recommends that you place the application project and test project in separate folders. Some developers prefer to keep these projects in the same folder. For more information, see GitHub issue [dotnet/docs #26395](https://github.com/dotnet/docs/issues/26395).
 
 ## Using folders to organize code
 
@@ -45,11 +43,11 @@ Projects that logically group files into folders are easy to navigate and mainta
 
 ### Prerequisites
 
-* .NET 5.0 SDK or a later version.
+* [.NET 5.0 SDK](https://dotnet.microsoft.com/download) or a later version.
 
 ### Building the sample
 
-For the following steps, you can either follow along using the NewTypes Pets Sample or create your own files and folders. The types are logically organized into a folder structure that permits the addition of more types later, and tests are also logically placed in folders permitting the addition of more tests later.
+For the following steps, you can either follow along using the [NewTypes Pets Sample](https://github.com/dotnet/samples/tree/main/core/console-apps/NewTypesMsBuild) or create your own files and folders. The types are logically organized into a folder structure that permits the addition of more types later, and tests are also logically placed in folders permitting the addition of more tests later.
 
 The sample contains two types, `Dog` and `Cat`, and has them implement a common interface, `IPet`. For the `NewTypes` project, your goal is to organize the pet-related types into a *Pets* folder. If another set of types is added later, *WildAnimals* for example, they're placed in the *NewTypes* folder alongside the *Pets* folder. The *WildAnimals* folder may contain types for animals that aren't pets, such as `Squirrel` and `Rabbit` types. In this way as types are added, the project remains well organized.
 
@@ -69,23 +67,23 @@ Create the following folder structure with file content indicated:
 
 *IPet.cs*:
 
-_Code sample not included: ../../../samples/snippets/core/tutorials/testing-with-cli/csharp/src/NewTypes/Pets/IPet.cs._
+[!code-csharp[IPet interface](../../../samples/snippets/core/tutorials/testing-with-cli/csharp/src/NewTypes/Pets/IPet.cs)]
 
 *Dog.cs*:
 
-_Code sample not included: ../../../samples/snippets/core/tutorials/testing-with-cli/csharp/src/NewTypes/Pets/Dog.cs._
+[!code-csharp[Dog class](../../../samples/snippets/core/tutorials/testing-with-cli/csharp/src/NewTypes/Pets/Dog.cs)]
 
 *Cat.cs*:
 
-_Code sample not included: ../../../samples/snippets/core/tutorials/testing-with-cli/csharp/src/NewTypes/Pets/Cat.cs._
+[!code-csharp[Cat class](../../../samples/snippets/core/tutorials/testing-with-cli/csharp/src/NewTypes/Pets/Cat.cs)]
 
 *Program.cs*:
 
-_Code sample not included: ../../../samples/snippets/core/tutorials/testing-with-cli/csharp/src/NewTypes/Program.cs._
+[!code-csharp[Main](../../../samples/snippets/core/tutorials/testing-with-cli/csharp/src/NewTypes/Program.cs)]
 
 *NewTypes.csproj*:
 
-_Code sample not included: ../../../samples/snippets/core/tutorials/testing-with-cli/csharp/src/NewTypes/NewTypes.csproj._
+[!code-xml[NewTypes csproj](../../../samples/snippets/core/tutorials/testing-with-cli/csharp/src/NewTypes/NewTypes.csproj)]
 
 Execute the following command:
 
@@ -104,11 +102,11 @@ Optional exercise: You can add a new pet type, such as a `Bird`, by extending th
 
 ### Testing the sample
 
-The `NewTypes` project is in place, and you've organized it by keeping the pets-related types in a folder. Next, create your test project and start writing tests with the xUnit test framework. Unit testing allows you to automatically check the behavior of your pet types to confirm that they're operating properly.
+The `NewTypes` project is in place, and you've organized it by keeping the pets-related types in a folder. Next, create your test project and start writing tests with the [xUnit](https://xunit.net/) test framework. Unit testing allows you to automatically check the behavior of your pet types to confirm that they're operating properly.
 
 Navigate back to the *src* folder and create a *test* folder with a *NewTypesTests* folder within it. At a command prompt from the *NewTypesTests* folder, execute `dotnet new xunit`. This command produces two files: *NewTypesTests.csproj* and *UnitTest1.cs*.
 
-The test project can't currently test the types in `NewTypes` and requires a project reference to the `NewTypes` project. To add a project reference, use the `dotnet reference add` command:
+The test project can't currently test the types in `NewTypes` and requires a project reference to the `NewTypes` project. To add a project reference, use the [`dotnet reference add`](../tools/dotnet-reference-add.md) command:
 
 ```dotnetcli
 dotnet reference add ../../src/NewTypes/NewTypes.csproj
@@ -124,7 +122,7 @@ Or, you also have the option of manually adding the project reference by adding 
 
 *NewTypesTests.csproj*:
 
-_Code sample not included: ../../../samples/snippets/core/tutorials/testing-with-cli/csharp/test/NewTypesTests/NewTypesTests.csproj._
+[!code-xml[NewTypesTests csproj](../../../samples/snippets/core/tutorials/testing-with-cli/csharp/test/NewTypesTests/NewTypesTests.csproj)]
 
 The *NewTypesTests.csproj* file contains the following package references:
 
@@ -164,7 +162,7 @@ public class PetTests
 
 Optional exercise: If you added a `Bird` type earlier that yields a `Tweet!` to the owner, add a test method to the *PetTests.cs* file, `BirdTalkToOwnerReturnsTweet`, to check that the `TalkToOwner` method works correctly for the `Bird` type.
 
-> **Note:**
+> [!NOTE]
 > Although you expect that the `expected` and `actual` values are equal, an initial assertion with the `Assert.NotEqual` check specifies that these values are *not equal*. Always initially create a test to fail in order to check the logic of the test. After you confirm that the test fails, adjust the assertion to allow the test to pass.
 
 The following shows the complete project structure:
@@ -185,7 +183,7 @@ The following shows the complete project structure:
       |__NewTypesTests.csproj
 ```
 
-Start in the *test/NewTypesTests* directory. Run the tests with the `dotnet test` command. This command starts the test runner specified in the project file.
+Start in the *test/NewTypesTests* directory. Run the tests with the [`dotnet test`](../tools/dotnet-test.md) command. This command starts the test runner specified in the project file.
 
 As expected, testing fails, and the console displays the following output:
 
@@ -210,7 +208,7 @@ Failed!  - Failed:     1, Passed:     1, Skipped:     0, Total:     2, Duration:
 
 Change the assertions of your tests from `Assert.NotEqual` to `Assert.Equal`:
 
-_Code sample not included: ../../../samples/snippets/core/tutorials/testing-with-cli/csharp/test/NewTypesTests/PetTests.cs._
+[!code-csharp[PetTests class](../../../samples/snippets/core/tutorials/testing-with-cli/csharp/test/NewTypesTests/PetTests.cs)]
 
 Rerun the tests with the `dotnet test` command and obtain the following output:
 

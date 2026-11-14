@@ -1,10 +1,9 @@
 ---
 title: "Breaking change: Message no longer duplicated in Console log output"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/extensions/10.0/console-json-logging-duplicate-messages.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where `Message` is no longer duplicated in Console log output using the JSON formatter."
+ms.date: 08/07/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/47006
 ---
 
 # Message no longer duplicated in Console log output
@@ -52,7 +51,7 @@ Starting in .NET 10, `Message` appears only at the top level and not inside the 
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -68,13 +67,13 @@ Overall, this results in cleaner, more efficient, and easier-to-read logs.
 
 If you previously parsed the logging output to extract the `Message` from within the `State` object, it's safe to use the top-level `Message` instead, now that duplication has been removed.
 
-> **Note:**
+> [!NOTE]
 > In some cases, a `Message` might still appear within the `State` object. This typically happens when its content differs from the top-level `Message`.
 
 ## Affected APIs
 
-- `Microsoft.Extensions.Logging.ConsoleLoggerExtensions.AddConsole*`
-- `Microsoft.Extensions.Logging.ConsoleLoggerExtensions.AddConsoleFormatter*`
-- `Microsoft.Extensions.Logging.ConsoleLoggerExtensions.AddJsonConsole*`
-- `Microsoft.Extensions.Logging.ConsoleLoggerExtensions.AddSimpleConsole*`
-- `Microsoft.Extensions.Logging.ConsoleLoggerExtensions.AddSystemdConsole*`
+- <xref:Microsoft.Extensions.Logging.ConsoleLoggerExtensions.AddConsole*?displayProperty=fullName>
+- <xref:Microsoft.Extensions.Logging.ConsoleLoggerExtensions.AddConsoleFormatter*?displayProperty=fullName>
+- <xref:Microsoft.Extensions.Logging.ConsoleLoggerExtensions.AddJsonConsole*?displayProperty=fullName>
+- <xref:Microsoft.Extensions.Logging.ConsoleLoggerExtensions.AddSimpleConsole*?displayProperty=fullName>
+- <xref:Microsoft.Extensions.Logging.ConsoleLoggerExtensions.AddSystemdConsole*?displayProperty=fullName>

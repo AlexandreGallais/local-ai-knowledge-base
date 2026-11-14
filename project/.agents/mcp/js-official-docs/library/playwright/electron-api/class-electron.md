@@ -1,12 +1,3 @@
----
-title: "class: Electron"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/electron-api/class-electron.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: Electron
 * since: v1.9
 * langs: js
@@ -56,11 +47,11 @@ const { _electron: electron } = require('playwright');
 
 If you are not able to launch Electron and it will end up in timeouts during launch, try the following:
 
-* Ensure that `nodeCliInspect` (FuseV1Options.EnableNodeCliInspectArguments) fuse is **not** set to `false`.
+* Ensure that `nodeCliInspect` ([FuseV1Options.EnableNodeCliInspectArguments](https://www.electronjs.org/docs/latest/tutorial/fuses#nodecliinspect)) fuse is **not** set to `false`.
 
 **Mocking native dialogs:**
 
-Playwright does not intercept the native Electron dialog API
+Playwright does not intercept the native Electron [dialog](https://www.electronjs.org/docs/latest/api/dialog) API
 (`dialog.showOpenDialog`, `dialog.showSaveDialog`, `dialog.showMessageBox`, etc.) because those calls happen in the
 Electron main process and go straight to OS APIs. Use [`method: ElectronApplication.evaluate`] to replace the
 relevant methods in the main process so tests run deterministically without any OS-level UI:

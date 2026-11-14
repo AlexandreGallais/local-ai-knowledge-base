@@ -1,34 +1,24 @@
----
-title: "AbstractExecutorService class (java.util.concurrent)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/AbstractExecutorService.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AbstractExecutorService class (java.util.concurrent)
 
 ```java
 public abstract class AbstractExecutorService implements ExecutorService
 ```
 
-Provides default implementations of `ExecutorService`
-execution methods. This class implements the `submit`,
-`invokeAny` and `invokeAll` methods using a
-`RunnableFuture` returned by `newTaskFor`, which defaults
-to the `FutureTask` class provided in this package.  For example,
-the implementation of `submit(Runnable)` creates an
-associated `RunnableFuture` that is executed and
-returned. Subclasses may override the `newTaskFor` methods
-to return `RunnableFuture` implementations other than
-`FutureTask`.
+Provides default implementations of {@link ExecutorService}
+execution methods. This class implements the {@code submit},
+{@code invokeAny} and {@code invokeAll} methods using a
+{@link RunnableFuture} returned by {@code newTaskFor}, which defaults
+to the {@link FutureTask} class provided in this package.  For example,
+the implementation of {@code submit(Runnable)} creates an
+associated {@code RunnableFuture} that is executed and
+returned. Subclasses may override the {@code newTaskFor} methods
+to return {@code RunnableFuture} implementations other than
+{@code FutureTask}.
 
-**Extension example.** Here is a sketch of a class
-that customizes `ThreadPoolExecutor` to use
-a `CustomTask` class instead of the default `FutureTask`:
-
-```java
+<p><b>Extension example.</b> Here is a sketch of a class
+that customizes {@link ThreadPoolExecutor} to use
+a {@code CustomTask} class instead of the default {@code FutureTask}:
+<pre> {@code
 public class CustomThreadPoolExecutor extends ThreadPoolExecutor {
 
   static class CustomTask<V> implements RunnableFuture<V> { ... }
@@ -40,10 +30,10 @@ public class CustomThreadPoolExecutor extends ThreadPoolExecutor {
       return new CustomTask<V>(r, v);
   }
   // ... add constructors, etc.
-}
-```
+}}</pre>
 
-**Since:** 1.5
+@since 1.5
+@author Doug Lea
 
 ## AbstractExecutorService.AbstractExecutorService()
 
@@ -59,21 +49,17 @@ Constructor for subclasses to call.
 protected <T> RunnableFuture<T> newTaskFor(Runnable runnable, T value)
 ```
 
-Returns a `RunnableFuture` for the given runnable and default
+Returns a {@code RunnableFuture} for the given runnable and default
 value.
 
-Parameters:
-
-- `runnable`: the runnable task being wrapped
-- `value`: the default value for the returned future
-- `<T>`: the type of the given value
-
-**Returns:** a `RunnableFuture` which, when run, will run the
-underlying runnable and which, as a `Future`, will yield
+@param runnable the runnable task being wrapped
+@param value the default value for the returned future
+@param <T> the type of the given value
+@return a {@code RunnableFuture} which, when run, will run the
+underlying runnable and which, as a {@code Future}, will yield
 the given value as its result and provide for cancellation of
 the underlying task
-
-**Since:** 1.6
+@since 1.6
 
 ## AbstractExecutorService.newTaskFor(Callable<T>)
 
@@ -81,19 +67,15 @@ the underlying task
 protected <T> RunnableFuture<T> newTaskFor(Callable<T> callable)
 ```
 
-Returns a `RunnableFuture` for the given callable task.
+Returns a {@code RunnableFuture} for the given callable task.
 
-Parameters:
-
-- `callable`: the callable task being wrapped
-- `<T>`: the type of the callable's result
-
-**Returns:** a `RunnableFuture` which, when run, will call the
-underlying callable and which, as a `Future`, will yield
+@param callable the callable task being wrapped
+@param <T> the type of the callable's result
+@return a {@code RunnableFuture} which, when run, will call the
+underlying callable and which, as a {@code Future}, will yield
 the callable's result as its result and provide for
 cancellation of the underlying task
-
-**Since:** 1.6
+@since 1.6
 
 ## AbstractExecutorService.submit(Runnable)
 
@@ -101,10 +83,8 @@ cancellation of the underlying task
 public Future<?> submit(Runnable task)
 ```
 
-Throws:
-
-- `RejectedExecutionException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
+@throws RejectedExecutionException {@inheritDoc}
+@throws NullPointerException       {@inheritDoc}
 
 ## AbstractExecutorService.submit(Runnable, T)
 
@@ -112,10 +92,8 @@ Throws:
 public <T> Future<T> submit(Runnable task, T result)
 ```
 
-Throws:
-
-- `RejectedExecutionException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
+@throws RejectedExecutionException {@inheritDoc}
+@throws NullPointerException       {@inheritDoc}
 
 ## AbstractExecutorService.submit(Callable<T>)
 
@@ -123,10 +101,8 @@ Throws:
 public <T> Future<T> submit(Callable<T> task)
 ```
 
-Throws:
-
-- `RejectedExecutionException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
+@throws RejectedExecutionException {@inheritDoc}
+@throws NullPointerException       {@inheritDoc}
 
 ## AbstractExecutorService.invokeAny(Collection<? extends Callable<T>>)
 
@@ -134,13 +110,11 @@ Throws:
 public <T> T invokeAny(Collection<? extends Callable<T>> tasks) throws InterruptedException, ExecutionException
 ```
 
-Throws:
-
-- `InterruptedException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
-- `IllegalArgumentException`: (inherited documentation)
-- `ExecutionException`: (inherited documentation)
-- `RejectedExecutionException`: (inherited documentation)
+@throws InterruptedException       {@inheritDoc}
+@throws NullPointerException       {@inheritDoc}
+@throws IllegalArgumentException   {@inheritDoc}
+@throws ExecutionException         {@inheritDoc}
+@throws RejectedExecutionException {@inheritDoc}
 
 ## AbstractExecutorService.invokeAny(Collection<? extends Callable<T>>, long, TimeUnit)
 
@@ -148,13 +122,11 @@ Throws:
 public <T> T invokeAny(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException
 ```
 
-Throws:
-
-- `InterruptedException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
-- `TimeoutException`: (inherited documentation)
-- `ExecutionException`: (inherited documentation)
-- `RejectedExecutionException`: (inherited documentation)
+@throws InterruptedException       {@inheritDoc}
+@throws NullPointerException       {@inheritDoc}
+@throws TimeoutException           {@inheritDoc}
+@throws ExecutionException         {@inheritDoc}
+@throws RejectedExecutionException {@inheritDoc}
 
 ## AbstractExecutorService.invokeAll(Collection<? extends Callable<T>>)
 
@@ -162,11 +134,9 @@ Throws:
 public <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks) throws InterruptedException
 ```
 
-Throws:
-
-- `InterruptedException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
-- `RejectedExecutionException`: (inherited documentation)
+@throws InterruptedException       {@inheritDoc}
+@throws NullPointerException       {@inheritDoc}
+@throws RejectedExecutionException {@inheritDoc}
 
 ## AbstractExecutorService.invokeAll(Collection<? extends Callable<T>>, long, TimeUnit)
 
@@ -174,8 +144,6 @@ Throws:
 public <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit) throws InterruptedException
 ```
 
-Throws:
-
-- `InterruptedException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
-- `RejectedExecutionException`: (inherited documentation)
+@throws InterruptedException       {@inheritDoc}
+@throws NullPointerException       {@inheritDoc}
+@throws RejectedExecutionException {@inheritDoc}

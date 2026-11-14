@@ -1,15 +1,16 @@
 ---
-title: "How to retrieve a collection of attributes - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/retrieve-collection-attributes.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to retrieve a collection of attributes - LINQ to XML
+description: Learn how to use the XElement.Attributes method to retrieve the attributes of an element.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to retrieve a collection of attributes (LINQ to XML)
 
-This article shows the use of the `System.Xml.Linq.XElement.Attributes*` method to retrieve the attributes of an element.
+This article shows the use of the <xref:System.Xml.Linq.XElement.Attributes*> method to retrieve the attributes of an element.
 
 ## Example: Iterate through the attributes of an element
 
@@ -49,4 +50,4 @@ ConvertableTo="double"
 
 ## See also
 
-- LINQ to XML axes overview
+- [LINQ to XML axes overview](linq-xml-axes-overview.md)

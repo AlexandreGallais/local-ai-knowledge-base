@@ -1,19 +1,13 @@
----
-title: "no-invalid-temporal-arithmetic"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-invalid-temporal-arithmetic.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-invalid-temporal-arithmetic
 
 📝 Disallow statically known invalid Temporal arithmetic.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Reports statically known Temporal arithmetic failures: unsupported duration units, missing `relativeTo`, and invalid units, rounding settings, or `overflow` options.
 
@@ -72,9 +66,9 @@ PlainDateTime and ZonedDateTime day rounding requires increment `1`. Duration da
 
 ## Suggestions
 
-Suggestions can correct `unit`/`smallestUnit` mixups in `total()`/`round()`, or convert an Instant's single-property `{days: amount}` to hours when both amounts are safe integers. Unit-key <example-value> require no other known contract error.
+Suggestions can correct `unit`/`smallestUnit` mixups in `total()`/`round()`, or convert an Instant's single-property `{days: amount}` to hours when both amounts are safe integers. Unit-key corrections require no other known contract error.
 
-> **Important:**
+> [!IMPORTANT]
 > A calendar day can differ from 24 elapsed hours across daylight-saving transitions. Use `Temporal.ZonedDateTime` arithmetic to preserve the local time on the next calendar day.
 
 These changes can alter intent, so no automatic fixes are provided.
@@ -87,12 +81,12 @@ Recognizes `Temporal` constructors and factories, constant aliases, and TypeScri
 
 ## Related rules
 
-`prefer-temporal` encourages adoption; `prefer-temporal-conversion` simplifies conversions.
+[`prefer-temporal`](./prefer-temporal.md) encourages adoption; [`prefer-temporal-conversion`](./prefer-temporal-conversion.md) simplifies conversions.
 
 ## References
 
-- Temporal specification
-- PlainYearMonth arithmetic
-- Instant arithmetic
-- Duration totals
-- Rounding increments for Instant
+- [Temporal specification](https://tc39.es/proposal-temporal/)
+- [PlainYearMonth arithmetic](https://tc39.es/proposal-temporal/#sec-temporal-adddurationtoyearmonth)
+- [Instant arithmetic](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Temporal/Instant/add)
+- [Duration totals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Temporal/Duration/total)
+- [Rounding increments for Instant](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Temporal/Instant/round)

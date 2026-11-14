@@ -1,32 +1,25 @@
----
-title: "ReturnInstruction interface (java.lang.classfile.instruction)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/instruction/ReturnInstruction.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ReturnInstruction interface (java.lang.classfile.instruction)
 
 ```java
 public sealed interface ReturnInstruction extends Instruction permits AbstractInstruction.UnboundReturnInstruction
 ```
 
-Models a return-from-method instruction in the `code` array of a
-`Code` attribute.  Corresponding opcodes have a kind of
-`Opcode.Kind.RETURN`.  Delivered as a `CodeElement` when
-traversing the elements of a `CodeModel`.
-
+Models a return-from-method instruction in the {@code code} array of a
+{@code Code} attribute.  Corresponding opcodes have a {@linkplain Opcode#kind() kind} of
+{@link Opcode.Kind#RETURN}.  Delivered as a {@link CodeElement} when
+traversing the elements of a {@link CodeModel}.
+<p>
 A return-from-method instruction is composite:
+{@snippet lang=text :
+// @link substring="ReturnInstruction" target="#of(TypeKind)" :
+ReturnInstruction(TypeKind typeKind) // @link substring="typeKind" target="#typeKind()"
+}
+where {@code typeKind} is {@linkplain TypeKind##computational-type
+computational} or {@link TypeKind#VOID void}.
 
-where `typeKind` is computational or void.
-
-**See also:** Opcode.Kind#RETURN
-
-**See also:** CodeBuilder#return_(TypeKind) CodeBuilder::return_
-
-**Since:** 24
+@see Opcode.Kind#RETURN
+@see CodeBuilder#return_(TypeKind) CodeBuilder::return_
+@since 24
 
 ## ReturnInstruction.typeKind()
 
@@ -34,18 +27,20 @@ where `typeKind` is computational or void.
 TypeKind typeKind()
 ```
 
+{@return the {@linkplain TypeKind##computational-type computational type}, including
+{@link TypeKind#VOID void}, of the return instruction}
+
 ## ReturnInstruction.of(TypeKind)
 
 ```java
 static ReturnInstruction of(TypeKind typeKind)
 ```
 
-`typeKind` is converted to its
+{@return a return instruction}
+{@code typeKind} is {@linkplain TypeKind#asLoadable() converted} to its
 computational type.
 
-Parameters:
-
-- `typeKind`: the type of the return instruction
+@param typeKind the type of the return instruction
 
 ## ReturnInstruction.of(Opcode)
 
@@ -53,10 +48,9 @@ Parameters:
 static ReturnInstruction of(Opcode op)
 ```
 
-Parameters:
+{@return a return instruction}
 
-- `op`: the opcode for the specific type of return instruction, which must be of kind `Opcode.Kind.RETURN`
-
-Throws:
-
-- `IllegalArgumentException`: if the opcode kind is not `Opcode.Kind.RETURN`.
+@param op the opcode for the specific type of return instruction,
+          which must be of kind {@link Opcode.Kind#RETURN}
+@throws IllegalArgumentException if the opcode kind is not
+        {@link Opcode.Kind#RETURN}.

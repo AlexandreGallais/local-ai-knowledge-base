@@ -1,32 +1,42 @@
 ---
 title: "Built-in reference types"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/builtin-types/reference-types.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about reference types that have C# keywords you can use to declare them."
+ms.date: 01/14/2026
+f1_keywords:
+  - "object_CSharpKeyword"
+  - "object"
+  - "delegate_CSharpKeyword"
+  - "delegate"
+  - "dynamic_CSharpKeyword"
+  - "string"
+  - "string_CSharpKeyword"
+  - "Utf8StringLiteral_CSharpKeyword"
+helpviewer_keywords:
+  - "object keyword [C#]"
+  - "delegate keyword [C#]"
+  - "function pointers [C#]"
+  - "dynamic [C#]"
+  - "dynamic keyword [C#]"
+  - "strings [C#], reference"
+  - "@ string literal"
+  - "string literals [C#]"
+  - "string keyword [C#]"
 ---
-
 # Built-in reference types (C# reference)
 
 C# has many built-in reference types. These types include keywords or operators that are synonyms for a type in the .NET library.
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
-
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
-
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
 ## The object type
 
-The `object` type is an alias for `System.Object` in .NET. In the unified type system of C#, all types, predefined and user-defined, reference types and value types, inherit directly or indirectly from `System.Object`. Assign values of any type (except `ref struct`, see ref struct) to variables of type `object`. You can assign the literal `null` to any `object` variable as its default value. When you convert a value type variable to `object`, the value is *boxed*. When you convert a variable of type `object` to a value type, the value is *unboxed*. For more information, see Boxing and Unboxing.
+The `object` type is an alias for <xref:System.Object?displayProperty=nameWithType> in .NET. In the unified type system of C#, all types, predefined and user-defined, reference types and value types, inherit directly or indirectly from <xref:System.Object?displayProperty=nameWithType>. Assign values of any type (except `ref struct`, see [ref struct](ref-struct.md)) to variables of type `object`. You can assign the literal `null` to any `object` variable as its default value. When you convert a value type variable to `object`, the value is *boxed*. When you convert a variable of type `object` to a value type, the value is *unboxed*. For more information, see [Boxing and Unboxing](../../programming-guide/types/boxing-and-unboxing.md).
 
 ## The string type
 
-The `string` type represents a sequence of zero or more Unicode characters. In .NET, `string` is an alias for `System.String`.
+The `string` type represents a sequence of zero or more Unicode characters. In .NET, `string` is an alias for <xref:System.String?displayProperty=nameWithType>.
 
-Although `string` is a reference type, the equality operators `==` and `!=` compare the values of `string` objects, not references. Value-based equality makes testing for string equality more intuitive. For example:
+Although `string` is a reference type, the [equality operators `==` and `!=`](../operators/equality-operators.md#string-equality) compare the values of `string` objects, not references. Value-based equality makes testing for string equality more intuitive. For example:
 
 ```csharp
 string a = "hello";
@@ -39,7 +49,7 @@ Console.WriteLine(object.ReferenceEquals(a, b));
 
 The preceding example displays "True" and then "False" because the content of the strings is equivalent, but `a` and `b` don't refer to the same string instance.
 
-The + operator concatenates strings:
+The [+ operator](../operators/addition-operator.md#string-concatenation) concatenates strings:
 
 ```csharp
 string a = "good " + "morning";
@@ -54,7 +64,7 @@ string b = "h";
 b += "ello";
 ```
 
-You can use the `[]` operator for readonly access to individual characters of a string. Valid index values start at `0` and must be less than the length of the string:
+You can use the `[]` [operator](../operators/member-access-operators.md#indexer-operator-) for readonly access to individual characters of a string. Valid index values start at `0` and must be less than the length of the string:
 
 ```csharp
 string str = "test";
@@ -129,19 +139,7 @@ var json= """
     """;
 ```
 
-> **Tip:**
-> Visual Studio and the C# Dev Kit provide some validation and syntax highlighting when raw string literals contain JSON data or regular expressions.
->
-> The tools parse the text. If the tools have confidence that the text represents JSON or a regular expression, the editor provides syntax coloring.
->
-> You can improve that experience by adding a comment above the declaration indicating the format:
->
-> - `// lang=json` indicates the raw string literal represents JSON data.
-> - `// lang=regex` indicates the raw string literal represents a regular expression.
->
-> When a raw string literal is used as an argument where the parameter uses the `System.Diagnostics.CodeAnalysis.StringSyntaxAttribute` to indicate a format, these tools validate the raw string literal for some of the format types. Both JSON and regex are supported.
->
-> For some formats, the comment or the attribute enables code suggestions offer fixes for string literals based on the format.
+[!INCLUDE[raw-string-tip](../../includes/raw-string-parsing.md)]
 
 The compiler returns an error if any of the text lines extend to the left of the closing quote sequence. The opening and closing quote sequences can be on the same line, providing the string literal neither starts nor ends with a quote character:
 
@@ -149,7 +147,7 @@ The compiler returns an error if any of the text lines extend to the left of the
 var shortText = """He said "hello!" this morning.""";
 ```
 
-You can combine raw string literals with string interpolation to include quote characters and braces in the output string.
+You can combine raw string literals with [string interpolation](../tokens/interpolated.md) to include quote characters and braces in the output string.
 
 Quoted string literals are enclosed in double quotation marks ("):
 
@@ -167,10 +165,10 @@ Console.WriteLine(a);
 //  F
 ```
 
-> **Note:**
+> [!NOTE]
 > The escape code `\udddd` (where `dddd` is a four-digit number) represents the Unicode character U+`dddd`. Eight-digit Unicode escape codes are also recognized: `\Udddddddd`.
 
-Verbatim string literals start with `@` and are also enclosed in double quotation marks. For example:
+[Verbatim string literals](../tokens/verbatim.md) start with `@` and are also enclosed in double quotation marks. For example:
 
 ```csharp
 @"good morning"  // a string literal
@@ -190,20 +188,20 @@ To include a double quotation mark in an @-quoted string, double it:
 
 ### UTF-8 string literals
 
-.NET stores strings using UTF-16 encoding. UTF-8 is the standard for Web protocols and other important libraries. You can add the `u8` suffix to a string literal to specify UTF-8 encoding. The compiler stores UTF-8 literals as `ReadOnlySpan<byte>` objects. Using a UTF-8 string literal creates a more clear declaration than declaring the equivalent `System.ReadOnlySpan`1`, as shown in the following code:
+.NET stores strings using UTF-16 encoding. UTF-8 is the standard for Web protocols and other important libraries. You can add the `u8` suffix to a string literal to specify UTF-8 encoding. The compiler stores UTF-8 literals as `ReadOnlySpan<byte>` objects. Using a UTF-8 string literal creates a more clear declaration than declaring the equivalent <xref:System.ReadOnlySpan`1?displayProperty=nameWithType>, as shown in the following code:
 
 ```csharp
 ReadOnlySpan<byte> AuthWithTrailingSpace = new byte[] { 0x41, 0x55, 0x54, 0x48, 0x20 };
 ReadOnlySpan<byte> AuthStringLiteral = "AUTH "u8;
 ```
 
-To store a UTF-8 string literal as an array, use `System.ReadOnlySpan`1.ToArray` to copy the bytes containing the literal to the mutable array:
+To store a UTF-8 string literal as an array, use <xref:System.ReadOnlySpan`1.ToArray?displayProperty=nameWithType> to copy the bytes containing the literal to the mutable array:
 
 ```csharp
 byte[] AuthStringLiteral = "AUTH "u8.ToArray();
 ```
 
-UTF-8 string literals aren'<example-value>'re runtime constants. Therefore, they can'<example-value>'t combine UTF-8 string literals with string interpolation. You can't use the `$` token and the `u8` suffix on the same string expression.
+UTF-8 string literals aren't compile-time constants; they're runtime constants. Therefore, they can't be used as the default value for an optional parameter. You can't combine UTF-8 string literals with string interpolation. You can't use the `$` token and the `u8` suffix on the same string expression.
 
 ## The delegate type
 
@@ -216,9 +214,9 @@ public delegate int AnotherDelegate(MyType m, long num);
 
 In .NET, `System.Action` and `System.Func` types provide generic definitions for many common delegates. You likely don't need to define new custom delegate types. Instead, you can create instantiations of the provided generic types.
 
-A `delegate` is a built-in reference type that you can use to encapsulate a named or an anonymous method. Delegates are similar to function pointers in C++; however, delegates are type-safe and secure. For applications of delegates, see Delegates and Generic Delegates. Delegates are the basis for Events. You instantiate a delegate by associating it with either a named or anonymous method.
+A `delegate` is a built-in reference type that you can use to encapsulate a named or an anonymous method. Delegates are similar to function pointers in C++; however, delegates are type-safe and secure. For applications of delegates, see [Delegates](../../programming-guide/delegates/index.md) and [Generic Delegates](../../programming-guide/generics/generic-delegates.md). Delegates are the basis for [Events](../../programming-guide/events/index.md). You instantiate a delegate by associating it with either a named or anonymous method.
 
-You must instantiate the delegate with a method or lambda expression that has a compatible return type and input parameters. For more information on the degree of variance that is allowed in the method signature, see Variance in Delegates. For use with anonymous methods, declare the delegate and the code to be associated with it together.
+You must instantiate the delegate with a method or lambda expression that has a compatible return type and input parameters. For more information on the degree of variance that is allowed in the method signature, see [Variance in Delegates](../../programming-guide/concepts/covariance-contravariance/using-variance-in-delegates.md). For use with anonymous methods, declare the delegate and the code to be associated with it together.
 
 Delegate combination or removal fails with a runtime exception when the delegate types involved at run time are different due to variant conversion. The following example demonstrates a situation that fails:
 
@@ -245,19 +243,19 @@ Action<string> wrappedObjectAction = new Action<string>(objectAction);
 Action<string> combination = stringAction + wrappedObjectAction;
 ```
 
-You can declare *function pointers*, which use similar syntax. A function pointer uses the `calli` instruction instead of instantiating a delegate type and calling the virtual `Invoke` method.
+You can declare [*function pointers*](../unsafe-code.md#function-pointers), which use similar syntax. A function pointer uses the `calli` instruction instead of instantiating a delegate type and calling the virtual `Invoke` method.
 
 ## The dynamic type
 
-The `dynamic` type indicates that the variable and references to its members bypass <example-value> type checking. Instead, these operations are resolved at run time. The `dynamic` type simplifies access to COM APIs such as the Office Automation APIs, to dynamic APIs such as IronPython libraries, and to the HTML Document Object Model (DOM).
+The `dynamic` type indicates that the variable and references to its members bypass compile-time type checking. Instead, these operations are resolved at run time. The `dynamic` type simplifies access to COM APIs such as the Office Automation APIs, to dynamic APIs such as IronPython libraries, and to the HTML Document Object Model (DOM).
 
 Type `dynamic` behaves like type `object` in most circumstances. In particular, any non-null expression can be converted to the `dynamic` type. The `dynamic` type differs from `object` in that the compiler doesn't resolve or type check operations that contain expressions of type `dynamic`. The compiler packages together information about the operation, and that information is later used to evaluate the operation at run time. As part of the process, variables of type `dynamic` are compiled into variables of type `object`. Therefore, type `dynamic` exists only at compile time, not at run time.
 
 The following example contrasts a variable of type `dynamic` with a variable of type `object`. To verify the type of each variable at compile time, place the mouse pointer over `dyn` or `obj` in the `WriteLine` statements. Copy the following code into an editor where IntelliSense is available. IntelliSense shows **dynamic** for `dyn` and **object** for `obj`.
 
-_Code sample not included: ~/samples/snippets/csharp/VS_Snippets_VBCSharp/csrefKeywordsTypes/CS/dynamic1.cs._
+[!code-csharp[csrefKeywordsTypes#21](~/samples/snippets/csharp/VS_Snippets_VBCSharp/csrefKeywordsTypes/CS/dynamic1.cs#21)]
 
-The `System.Console.WriteLine*` statements display the run-time types of `dyn` and `obj`. At that point, both have the same type, integer. The following output is produced:
+The <xref:System.Console.WriteLine*> statements display the run-time types of `dyn` and `obj`. At that point, both have the same type, integer. The following output is produced:
 
 ```console
 System.Int32
@@ -275,28 +273,28 @@ obj = obj + 3;
 
 The following example uses `dynamic` in several declarations. The `Main` method also contrasts compile-time type checking with run-time type checking.
 
-_Code sample not included: ~/samples/snippets/csharp/VS_Snippets_VBCSharp/csrefKeywordsTypes/CS/dynamic2.cs._
+[!code-csharp[csrefKeywordsTypes#25](~/samples/snippets/csharp/VS_Snippets_VBCSharp/csrefKeywordsTypes/CS/dynamic2.cs#25)]
 
 ### C# language specification
 
-For more information, see the following sections of the C# language specification:
+For more information, see the following sections of the [C# language specification](~/_csharpstandard/standard/README.md):
 
-- §8.2.3 The object type
-- §8.2.4 The dynamic type
-- §8.2.5 The string type
-- §8.2.8 Delegate types
-- §6.4.5.6 String literals
+- [§8.2.3 The object type](~/_csharpstandard/standard/types.md#823-the-object-type)
+- [§8.2.4 The dynamic type](~/_csharpstandard/standard/types.md#824-the-dynamic-type)
+- [§8.2.5 The string type](~/_csharpstandard/standard/types.md#825-the-string-type)
+- [§8.2.8 Delegate types](~/_csharpstandard/standard/types.md#828-delegate-types)
+- [§6.4.5.6 String literals](~/_csharpstandard/standard/lexical-structure.md#6456-string-literals)
 
 ### See also
 
-- C# Keywords
-- Events
-- Using Type dynamic
-- Best Practices for Using Strings
-- Creating New Strings
-- Type-testing and cast operators
-- How to safely cast using pattern matching and the as and is operators
-- Walkthrough: creating and using dynamic objects
-- `System.Object`
-- `System.String`
-- `System.Dynamic.DynamicObject`
+- [C# Keywords](../keywords/index.md)
+- [Events](../../programming-guide/events/index.md)
+- [Using Type dynamic](../../advanced-topics/interop/using-type-dynamic.md)
+- [Best Practices for Using Strings](../../../standard/base-types/best-practices-strings.md)
+- [Creating New Strings](../../../standard/base-types/creating-new.md)
+- [Type-testing and cast operators](../operators/type-testing-and-cast.md)
+- [How to safely cast using pattern matching and the as and is operators](../../fundamentals/tutorials/safely-cast-using-pattern-matching-is-and-as-operators.md)
+- [Walkthrough: creating and using dynamic objects](../../advanced-topics/interop/walkthrough-creating-and-using-dynamic-objects.md)
+- <xref:System.Object?displayProperty=nameWithType>
+- <xref:System.String?displayProperty=nameWithType>
+- <xref:System.Dynamic.DynamicObject?displayProperty=nameWithType>

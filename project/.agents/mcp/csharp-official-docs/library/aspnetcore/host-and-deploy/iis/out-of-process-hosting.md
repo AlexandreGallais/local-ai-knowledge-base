@@ -1,35 +1,37 @@
 ---
-title: "Out-of-process hosting with IIS and ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/host-and-deploy/iis/out-of-process-hosting.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Out-of-process hosting with IIS and ASP.NET Core
+description: Learn about out-of-process Hosting with IIS and the ASP.NET Core Module.
+monikerRange: '>= aspnetcore-5.0'
+ms.date: 02/07/2020
 ---
+# Out-of-process hosting with IIS and ASP.NET Core 
 
-# Out-of-process hosting with IIS and ASP.NET Core
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
-Because ASP.NET Core apps run in a process separate from the IIS worker process, the ASP.NET Core Module handles process management. The module starts the process for the ASP.NET Core app when the first request arrives and restarts the app if it shuts down or crashes. This is essentially the same behavior as seen with apps that run in-process that are managed by the Windows Process Activation Service (WAS).
+Because ASP.NET Core apps run in a process separate from the IIS worker process, the ASP.NET Core Module handles process management. The module starts the process for the ASP.NET Core app when the first request arrives and restarts the app if it shuts down or crashes. This is essentially the same behavior as seen with apps that run in-process that are managed by the [Windows Process Activation Service (WAS)](/iis/manage/provisioning-and-managing-iis/features-of-the-windows-process-activation-service-was).
 
 The following diagram illustrates the relationship between IIS, the ASP.NET Core Module, and an app hosted out-of-process:
+
+![ASP.NET Core Module in the out-of-process hosting scenario](index/_static/ancm-outofprocess.png)
 
 1. Requests arrive from the web to the kernel-mode HTTP.sys driver.
 1. The driver routes the requests to IIS on the website's configured port. The configured port is usually 80 (HTTP) or 443 (HTTPS).
 1. The module forwards the requests to Kestrel on a random port for the app. The random port isn't 80 or 443.
 
-The ASP.NET Core Module specifies the port via an environment variable at startup. The `Microsoft.AspNetCore.Hosting.WebHostBuilderIISExtensions.UseIISIntegration*` extension configures the server to listen on `http://localhost:{PORT}`. Additional checks are performed, and requests that don't originate from the module are rejected. The module doesn't support HTTPS forwarding. Requests are forwarded over HTTP even if received by IIS over HTTPS.
+<!-- make this a bullet list -->
+The ASP.NET Core Module specifies the port via an environment variable at startup. The <xref:Microsoft.AspNetCore.Hosting.WebHostBuilderIISExtensions.UseIISIntegration*> extension configures the server to listen on `http://localhost:{PORT}`. Additional checks are performed, and requests that don't originate from the module are rejected. The module doesn't support HTTPS forwarding. Requests are forwarded over HTTP even if received by IIS over HTTPS.
 
 After Kestrel picks up the request from the module, the request is forwarded into the ASP.NET Core middleware pipeline. The middleware pipeline handles the request and passes it on as an `HttpContext` instance to the app's logic. Middleware added by IIS Integration updates the scheme, remote IP, and pathbase to account for forwarding the request to Kestrel. The app's response is passed back to IIS, which forwards it back to the HTTP client that initiated the request.
 
-For ASP.NET Core Module configuration guidance, see ASP.NET Core Module (ANCM) for IIS.
+For ASP.NET Core Module configuration guidance, see [ASP.NET Core Module (ANCM) for IIS](../aspnet-core-module.md).
 
-For more information on hosting, see Host in ASP.NET Core.
+For more information on hosting, see [Host in ASP.NET Core](../../fundamentals/index.md#host).
 
 ## Application configuration
 
 ### Enable the IISIntegration components
 
-When building a host in `CreateHostBuilder` (`Program.cs`), call `Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder*` to enable IIS integration:
+When building a host in `CreateHostBuilder` (`Program.cs`), call <xref:Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder*> to enable IIS integration:
 
 ```csharp
 public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -37,11 +39,12 @@ public static IHostBuilder CreateHostBuilder(string[] args) =>
         ...
 ```
 
-For more information on `CreateDefaultBuilder`, see .NET Generic Host in ASP.NET Core.
+For more information on `CreateDefaultBuilder`, see [.NET Generic Host in ASP.NET Core](../../fundamentals/host/generic-host.md#configure-default-builder-settings).
+
 
 **Out-of-process hosting model**
 
-To configure IIS options, include a service configuration for `Microsoft.AspNetCore.Builder.IISOptions` in `Microsoft.AspNetCore.Hosting.IStartup.ConfigureServices*`. The following example prevents the app from populating `HttpContext.Connection.ClientCertificate`:
+To configure IIS options, include a service configuration for <xref:Microsoft.AspNetCore.Builder.IISOptions> in <xref:Microsoft.AspNetCore.Hosting.IStartup.ConfigureServices*>. The following example prevents the app from populating `HttpContext.Connection.ClientCertificate`:
 
 ```csharp
 services.Configure<IISOptions>(options => 
@@ -52,20 +55,22 @@ services.Configure<IISOptions>(options =>
 
 | Option                         | Default | Setting |
 | ------------------------------ | :-----: | ------- |
-| `AutomaticAuthentication`      | `true`  | If `true`, IIS integration middleware sets the `HttpContext.User` authenticated by Windows Authentication. If `false`, the middleware only provides an identity for `HttpContext.User` and responds to challenges when explicitly requested by the `AuthenticationScheme`. Windows Authentication must be enabled in IIS for `AutomaticAuthentication` to function. For more information, see the Windows Authentication topic. |
+| `AutomaticAuthentication`      | `true`  | If `true`, [IIS integration middleware](#enable-the-iisintegration-components) sets the `HttpContext.User` authenticated by [Windows Authentication](../../security/authentication/windowsauth.md). If `false`, the middleware only provides an identity for `HttpContext.User` and responds to challenges when explicitly requested by the `AuthenticationScheme`. Windows Authentication must be enabled in IIS for `AutomaticAuthentication` to function. For more information, see the [Windows Authentication](../../security/authentication/windowsauth.md) topic. |
 | `AuthenticationDisplayName`    | `null`  | Sets the display name shown to users on login pages. |
 | `ForwardClientCertificate`     | `true`  | If `true` and the `MS-ASPNETCORE-CLIENTCERT` request header is present, the `HttpContext.Connection.ClientCertificate` is populated. |
 
+
 ### Proxy server and load balancer scenarios
 
-The IIS integration middleware and the ASP.NET Core Module are configured to forward the:
+The [IIS integration middleware](#enable-the-iisintegration-components) and the ASP.NET Core Module are configured to forward the:
 
 * Scheme (HTTP/HTTPS).
 * Remote IP address where the request originated.
 
-The IIS integration middleware configures forwarded headers middleware.
+The [IIS integration middleware](#enable-the-iisintegration-components) configures forwarded headers middleware.
 
-Additional configuration might be required for apps hosted behind additional proxy servers and load balancers. For more information, see Configure ASP.NET Core to work with proxy servers and load balancers.
+Additional configuration might be required for apps hosted behind additional proxy servers and load balancers. For more information, see [Configure ASP.NET Core to work with proxy servers and load balancers](../proxy-load-balancer.md).
+
 
 ### Out-of-process hosting model
 
@@ -81,9 +86,9 @@ In-process hosting is set with `InProcess`, which is the default value.
 
 The value of `<AspNetCoreHostingModel>` is case insensitive, so `inprocess` and `outofprocess` are valid values.
 
-Kestrel server is used instead of IIS HTTP Server (`IISHttpServer`).
+[Kestrel](../../fundamentals/servers/kestrel.md) server is used instead of IIS HTTP Server (`IISHttpServer`).
 
-For out-of-process, `CreateDefaultBuilder` calls `Microsoft.AspNetCore.Hosting.WebHostBuilderIISExtensions.UseIISIntegration*` to:
+For out-of-process, [`CreateDefaultBuilder`](../../fundamentals/host/generic-host.md#configure-default-builder-settings) calls <xref:Microsoft.AspNetCore.Hosting.WebHostBuilderIISExtensions.UseIISIntegration*> to:
 
 * Configure the port and base path the server should listen on when running behind the ASP.NET Core Module.
 * Configure the host to capture startup errors.
@@ -92,7 +97,7 @@ For out-of-process, `CreateDefaultBuilder` calls `Microsoft.AspNetCore.Hosting.W
 
 `Process.GetCurrentProcess().ProcessName` reports `w3wp`/`iisexpress` (in-process) or `dotnet` (out-of-process).
 
-Many native modules, such as Windows Authentication, remain active. To learn more about IIS modules active with the ASP.NET Core Module, see IIS modules with ASP.NET Core.
+Many native modules, such as Windows Authentication, remain active. To learn more about IIS modules active with the ASP.NET Core Module, see [IIS modules with ASP.NET Core](modules.md).
 
 The ASP.NET Core Module can also:
 

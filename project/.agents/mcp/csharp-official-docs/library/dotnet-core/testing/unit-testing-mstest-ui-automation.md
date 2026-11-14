@@ -1,19 +1,22 @@
 ---
-title: "Test Windows desktop apps with MSTest UI Automation"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/unit-testing-mstest-ui-automation.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Test Windows desktop apps with MSTest UI Automation
+description: Learn how to launch and test unpackaged Win32, Windows Forms, and WPF applications with MSTest.Windows.UIAutomation.
+author: Evangelink
+ms.author: amauryleve
+ms.date: 10/01/2026
+dev_langs:
+  - "csharp"
+  - "vb"
+ai-usage: ai-generated
 ---
 
 # Test Windows desktop apps with MSTest UI Automation
 
-The preview `MSTest.Windows.UIAutomation` package integrates MSTest lifecycle management with the built-in Windows UI Automation API. Use it to launch an unpackaged full-trust desktop application, find one of its windows as an `System.Windows.Automation.AutomationElement`, and stop the application after each test.
+The preview [`MSTest.Windows.UIAutomation`](https://github.com/microsoft/testfx/tree/main/src/TestFramework/TestFramework.Windows.UIAutomation) package integrates MSTest lifecycle management with the built-in Windows UI Automation API. Use it to launch an unpackaged full-trust desktop application, find one of its windows as an <xref:System.Windows.Automation.AutomationElement>, and stop the application after each test.
 
 The package supports Win32, Windows Forms, and WPF applications in an interactive Windows session. It doesn't provide MSIX, UWP, or WinUI activation, elevated-process automation, a headless desktop, locators, automatic waits, screenshots, or a multi-window object model.
 
-> **Important:**
+> [!IMPORTANT]
 > This feature requires MSTest 4.5 preview packages and a Windows-specific target framework.
 
 ## Enable Windows UI Automation
@@ -42,32 +45,10 @@ Derive from one of these classes:
 
 Declare `STATestClass` directly on every concrete test class because MSTest test-class attributes aren't inherited:
 
-```csharp
-using System.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.VisualStudio.TestTools.UnitTesting.Windows.UIAutomation;
+:::code language="csharp" source="./snippets/unit-testing-mstest-ui-automation/csharp/UIAutomationExample/MyAppTests.cs" id="WindowTestClass":::
 
-[STATestClass]
-public sealed class MyAppTests : WindowTest
-{
-    protected override ProcessStartInfo CreateProcessStartInfo()
-        => new(@"C:\MyApp\MyApp.exe");
-}
-```
-```vb
-Imports System.Diagnostics
-Imports Microsoft.VisualStudio.TestTools.UnitTesting
-Imports Microsoft.VisualStudio.TestTools.UnitTesting.Windows.UIAutomation
+:::code language="vb" source="./snippets/unit-testing-mstest-ui-automation/vb/UIAutomationExample/MyAppTests.vb" id="WindowTestClass":::
 
-<STATestClass>
-Public NotInheritable Class MyAppTests
-    Inherits WindowTest
-
-    Protected Overrides Function CreateProcessStartInfo() As ProcessStartInfo
-        Return New ProcessStartInfo("C:\MyApp\MyApp.exe")
-    End Function
-End Class
-```
 Use `MainWindow` in your test methods to query or invoke Windows UI Automation patterns. The package uses the UIA2 `System.Windows.Automation` API. You can layer another library, such as FlaUI, over the exposed `AutomationElement` when you need richer element interaction.
 
 ## Customize startup and window discovery
@@ -89,7 +70,7 @@ For parameterized tests and retries, each invocation receives its own applicatio
 
 ## See also
 
-- MSTest overview
-- Test execution and control
-- Test UWP and WinUI 3 apps with MSTest and MTP
-- Windows UI Automation overview
+- [MSTest overview](unit-testing-mstest-intro.md)
+- [Test execution and control](unit-testing-mstest-writing-tests-controlling-execution.md)
+- [Test UWP and WinUI 3 apps with MSTest and MTP](unit-testing-mstest-winui.md)
+- [Windows UI Automation overview](/dotnet/framework/ui-automation/ui-automation-overview)

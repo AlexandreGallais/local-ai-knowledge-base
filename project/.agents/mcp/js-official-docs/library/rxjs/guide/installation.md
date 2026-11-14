@@ -1,12 +1,3 @@
----
-title: "Installation Instructions"
-tool: "rxjs"
-version: "7.8"
-source: "https://github.com/ReactiveX/rxjs/blob/e5351d02e225e275ac0e497c7b66eaa5f0c88791/docs_app/content/guide/installation.md"
-commit: "e5351d02e225e275ac0e497c7b66eaa5f0c88791"
-license: "Apache-2.0"
----
-
 # Installation Instructions
 
 Here are different ways you can install RxJS:
@@ -59,13 +50,13 @@ npm install @reactivex/rxjs
 If you are using npm version 2, you need to specify the library version explicitly:
 
 ```shell
-npm install @reactivex/user@example.com
+npm install @reactivex/rxjs@7.3.0
 ```
 
 ## CDN
 
-For CDN, you can use unpkg:
+For CDN, you can use [unpkg](https://unpkg.com/):
 
-https://unpkg.com/rxjs@^7/dist/bundles/rxjs.umd.min.js
+[https://unpkg.com/rxjs@^7/dist/bundles/rxjs.umd.min.js](https://unpkg.com/rxjs@%5E7/dist/bundles/rxjs.umd.min.js)
 
 To import what you need, please {@link guide/importing#cdn check out this} guide.

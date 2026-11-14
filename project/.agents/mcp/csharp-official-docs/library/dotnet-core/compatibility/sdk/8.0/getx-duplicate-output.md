@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Duplicate output for -getItem, -getProperty, and -getTargetResult"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/8.0/getx-duplicate-output.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in the .NET 8 SDK where using property, item, and result-returning MSBuild flags in combination with a framework-specific build causes duplicate output of the requested properties, items, and results.
+ms.date: 12/05/2023
 ---
-
 # Duplicate output for -getItem, -getProperty, and -getTargetResult
 
 .NET SDK 8.0.200 introduced a regression in the new `-getItem`, `-getProperty`, and `-getTargetResult` MSBuild CLI options. When the SDK is used to perform an MSBuild operation for a specific TargetFramework, the output is duplicated, like so:
@@ -17,7 +13,7 @@ bin\Debug/net8.0-android/android-arm64/
 bin\Debug/net8.0-android/android-arm64/
 ```
 
-> **Note:**
+> [!NOTE]
 > We intend to fix this behavior in an upcoming release of the .NET 8.0.200 SDK.
 
 ## Version introduced
@@ -41,7 +37,7 @@ This is a behavioral change that can impact user scripts, especially in CI/CD sc
 
 ## Reason for change
 
-These options are intended to return values computed from a single user-requested build. However, SDK-initiated MSBuild operations like `build` and `publish` can sometimes trigger a second call to MSBuild—particularly when the `-f` option is used to specify that a build should occur for a specific TargetFramework. In that scenario, `-getItem`, `-getProperty`, and `-getTargetResult` options were passed to both MSBuild invocations, instead of only the one that a user expected to be triggered.
+These options are intended to return values computed from a single user-requested build. However, SDK-initiated MSBuild operations like `build` and `publish` can sometimes trigger a second call to MSBuild&mdash;particularly when the `-f` option is used to specify that a build should occur for a specific TargetFramework. In that scenario, `-getItem`, `-getProperty`, and `-getTargetResult` options were passed to both MSBuild invocations, instead of only the one that a user expected to be triggered.
 
 ## Recommended action
 

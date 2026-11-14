@@ -1,12 +1,3 @@
----
-title: "PosixFilePermissions class (java.nio.file.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/file/attribute/PosixFilePermissions.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # PosixFilePermissions class (java.nio.file.attribute)
 
 ```java
@@ -14,9 +5,9 @@ public final class PosixFilePermissions
 ```
 
 This class consists exclusively of static methods that operate on sets of
-`PosixFilePermission` objects.
+{@link PosixFilePermission} objects.
 
-**Since:** 1.7
+@since 1.7
 
 ## PosixFilePermissions.toString(Set<PosixFilePermission>)
 
@@ -24,18 +15,17 @@ This class consists exclusively of static methods that operate on sets of
 public static String toString(Set<PosixFilePermission> perms)
 ```
 
-Returns the `String` representation of a set of permissions. It
-is guaranteed that the returned `String` can be parsed by the
-`fromString` method.
+Returns the {@code String} representation of a set of permissions. It
+is guaranteed that the returned {@code String} can be parsed by the
+{@link #fromString} method.
 
- If the set contains `null` or elements that are not of type
-`PosixFilePermission` then these elements are ignored.
+<p> If the set contains {@code null} or elements that are not of type
+{@code PosixFilePermission} then these elements are ignored.
 
-Parameters:
+@param   perms
+         the set of permissions
 
-- `perms`: the set of permissions
-
-**Returns:** the string representation of the permission set
+@return  the string representation of the permission set
 
 ## PosixFilePermissions.fromString(String)
 
@@ -43,34 +33,35 @@ Parameters:
 public static Set<PosixFilePermission> fromString(String perms)
 ```
 
-Returns the set of permissions corresponding to a given `String`
+Returns the set of permissions corresponding to a given {@code String}
 representation.
 
- The `perms` parameter is a `String` representing the
+<p> The {@code perms} parameter is a {@code String} representing the
 permissions. It has 9 characters that are interpreted as three sets of
 three. The first set refers to the owner's permissions; the next to the
 group permissions and the last to others. Within each set, the first
-character is `'r'` to indicate permission to read, the second
-character is `'w'` to indicate permission to write, and the third
-character is `'x'` for execute permission. Where a permission is
-not set then the corresponding character is set to `'-'`.
+character is {@code 'r'} to indicate permission to read, the second
+character is {@code 'w'} to indicate permission to write, and the third
+character is {@code 'x'} for execute permission. Where a permission is
+not set then the corresponding character is set to {@code '-'}.
 
- **Usage Example:**
+<p> <b>Usage Example:</b>
 Suppose we require the set of permissions that indicate the owner has read,
 write, and execute permissions, the group has read and execute permissions
 and others have none.
+{@snippet lang=java :
+    Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rwxr-x---");
+}
 
-Parameters:
+@param   perms
+         string representing a set of permissions
 
-- `perms`: string representing a set of permissions
+@return  the resulting set of permissions
 
-**Returns:** the resulting set of permissions
+@throws  IllegalArgumentException
+         if the string cannot be converted to a set of permissions
 
-**See also:** #toString(Set)
-
-Throws:
-
-- `IllegalArgumentException`: if the string cannot be converted to a set of permissions
+@see #toString(Set)
 
 ## PosixFilePermissions.asFileAttribute(Set<PosixFilePermission>)
 
@@ -78,17 +69,17 @@ Throws:
 public static FileAttribute<Set<PosixFilePermission>> asFileAttribute(Set<PosixFilePermission> perms)
 ```
 
-Creates a `FileAttribute`, encapsulating a copy of the given file
-permissions, suitable for passing to the createFile or createDirectory
+Creates a {@link FileAttribute}, encapsulating a copy of the given file
+permissions, suitable for passing to the {@link java.nio.file.Files#createFile
+createFile} or {@link java.nio.file.Files#createDirectory createDirectory}
 methods.
 
-Parameters:
+@param   perms
+         the set of permissions
 
-- `perms`: the set of permissions
+@return  an attribute encapsulating the given file permissions with
+         {@link FileAttribute#name name} {@code "posix:permissions"}
 
-**Returns:** an attribute encapsulating the given file permissions with
-         name `"posix:permissions"`
-
-Throws:
-
-- `ClassCastException`: if the set contains elements that are not of type `PosixFilePermission`
+@throws  ClassCastException
+         if the set contains elements that are not of type {@code
+         PosixFilePermission}

@@ -1,14 +1,3 @@
----
-title: "ch06-03-if-let"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch06-03-if-let.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch06-03-if-let
-
 ## Concise Control Flow with `if let` and `let...else`
 
 The `if let` syntax lets you combine `if` and `let` into a less verbose way to
@@ -17,15 +6,13 @@ program in Listing 6-6 that matches on an `Option<u8>` value in the
 `config_max` variable but only wants to execute code if the value is the `Some`
 variant.
 
-**Listing 6-6: A `match` that only cares about executing code when the value is `Some`**
+<Listing number="6-6" caption="A `match` that only cares about executing code when the value is `Some`">
 
 ```rust
-let config_max = Some(3u8);
-match config_max {
-    Some(max) => println!("The maximum is configured to be {max}"),
-    _ => (),
-}
+{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-06/src/main.rs:here}}
 ```
+
+</Listing>
 
 If the value is `Some`, we print out the value in the `Some` variant by binding
 the value to the variable `max` in the pattern. We don’t want to do anything
@@ -37,10 +24,7 @@ Instead, we could write this in a shorter way using `if let`. The following
 code behaves the same as the `match` in Listing 6-6:
 
 ```rust
-let config_max = Some(3u8);
-if let Some(max) = config_max {
-    println!("The maximum is configured to be {max}");
-}
+{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-12-if-let/src/main.rs:here}}
 ```
 
 The syntax `if let` takes a pattern and an expression separated by an equal
@@ -69,22 +53,13 @@ announcing the state of the quarters, we could do that with a `match`
 expression, like this:
 
 ```rust
-let mut count = 0;
-match coin {
-    Coin::Quarter(state) => println!("State quarter from {state:?}!"),
-    _ => count += 1,
-}
+{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-13-count-and-announce-match/src/main.rs:here}}
 ```
 
 Or we could use an `if let` and `else` expression, like this:
 
 ```rust
-let mut count = 0;
-if let Coin::Quarter(state) = coin {
-    println!("State quarter from {state:?}!");
-} else {
-    count += 1;
-}
+{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/no-listing-14-count-and-announce-if-let-else/src/main.rs:here}}
 ```
 
 ## Staying on the “Happy Path” with `let...else`
@@ -96,35 +71,19 @@ state on the quarter was, we might introduce a method on `UsState` to check the
 age of a state, like so:
 
 ```rust
-impl UsState {
-    fn existed_in(&self, year: u16) -> bool {
-        match self {
-            UsState::Alabama => year >= 1819,
-            UsState::Alaska => year >= 1959,
-            // -- snip --
-        }
-    }
-}
+{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-07/src/main.rs:state}}
 ```
 
 Then, we might use `if let` to match on the type of coin, introducing a `state`
 variable within the body of the condition, as in Listing 6-7.
 
-**Listing 6-7: Checking whether a state existed in 1900 by using conditionals nested inside an `if let`**
+<Listing number="6-7" caption="Checking whether a state existed in 1900 by using conditionals nested inside an `if let`">
 
 ```rust
-fn describe_state_quarter(coin: Coin) -> Option<String> {
-    if let Coin::Quarter(state) = coin {
-        if state.existed_in(1900) {
-            Some(format!("{state:?} is pretty old, for America!"))
-        } else {
-            Some(format!("{state:?} is relatively new."))
-        }
-    } else {
-        None
-    }
-}
+{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-07/src/main.rs:describe}}
 ```
+
+</Listing>
 
 That gets the job done, but it has pushed the work into the body of the `if
 let` statement, and if the work to be done is more complicated, it might be
@@ -133,23 +92,13 @@ advantage of the fact that expressions produce a value either to produce the
 `state` from the `if let` or to return early, as in Listing 6-8. (You could do
 something similar with a `match`, too.)
 
-**Listing 6-8: Using `if let` to produce a value or return early**
+<Listing number="6-8" caption="Using `if let` to produce a value or return early">
 
 ```rust
-fn describe_state_quarter(coin: Coin) -> Option<String> {
-    let state = if let Coin::Quarter(state) = coin {
-        state
-    } else {
-        return None;
-    };
-
-    if state.existed_in(1900) {
-        Some(format!("{state:?} is pretty old, for America!"))
-    } else {
-        Some(format!("{state:?} is relatively new."))
-    }
-}
+{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-08/src/main.rs:describe}}
 ```
+
+</Listing>
 
 This is a bit annoying to follow in its own way, though! One branch of the `if
 let` produces a value, and the other one returns from the function entirely.
@@ -164,21 +113,13 @@ the `else` arm, which must return from the function.
 In Listing 6-9, you can see how Listing 6-8 looks when using `let...else` in
 place of `if let`.
 
-**Listing 6-9: Using `let...else` to clarify the flow through the function**
+<Listing number="6-9" caption="Using `let...else` to clarify the flow through the function">
 
 ```rust
-fn describe_state_quarter(coin: Coin) -> Option<String> {
-    let Coin::Quarter(state) = coin else {
-        return None;
-    };
-
-    if state.existed_in(1900) {
-        Some(format!("{state:?} is pretty old, for America!"))
-    } else {
-        Some(format!("{state:?} is relatively new."))
-    }
-}
+{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-09/src/main.rs:describe}}
 ```
+
+</Listing>
 
 Notice that it stays on the “happy path” in the main body of the function this
 way, without having significantly different control flow for two branches the

@@ -1,14 +1,7 @@
 ---
-title: "no-floating-decimal"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-floating-decimal.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-floating-decimal
+rule_type: suggestion
 ---
-
-# no-floating-decimal
-
 Float values in JavaScript contain a decimal point, and there is no requirement that the decimal point be preceded or followed by a number. For example, the following are all valid JavaScript numbers:
 
 ```js
@@ -25,7 +18,7 @@ This rule is aimed at eliminating floating decimal points and will warn whenever
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-floating-decimal: "error"*/
@@ -35,9 +28,11 @@ var num = 2.;
 var num = -.7;
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-floating-decimal: "error"*/
@@ -46,6 +41,8 @@ var num = 0.5;
 var num = 2.0;
 var num = -0.7;
 ```
+
+:::
 
 ## When Not To Use It
 

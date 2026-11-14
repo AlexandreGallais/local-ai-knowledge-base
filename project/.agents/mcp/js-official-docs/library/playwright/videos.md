@@ -1,10 +1,6 @@
 ---
+id: videos
 title: "Videos"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/videos.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
 
 ## Introduction
@@ -23,9 +19,9 @@ Playwright Test can record videos for your tests, controlled by the `video` opti
 
 Video files will appear in the test output directory, typically `test-results`. See [`property: TestOptions.video`] for advanced video configuration.
 
-Videos are saved upon browser context closure at the end of a test. If you create a browser context manually, make sure to await [`method: BrowserContext.close`].
+Videos are saved upon [browser context](./browser-contexts.md) closure at the end of a test. If you create a browser context manually, make sure to await [`method: BrowserContext.close`].
 
-```js
+```js tab=js-test title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 export default defineConfig({
   use: {
@@ -34,7 +30,7 @@ export default defineConfig({
 });
 ```
 
-```js
+```js tab=js-library
 const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
 // Make sure to await close, so that videos are saved.
 await context.close();
@@ -46,7 +42,7 @@ When `show: { actions }` is specified, each action will be visually highlighted 
 
 When `show: { test }` is specified, video will be annotated with the current test information with configurable `level`.
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 export default defineConfig({
   use: {
@@ -73,6 +69,7 @@ export default defineConfig({
 For multi-page scenarios, you can access the video file associated with the page via the
 [`method: Page.video`].
 
+
 ```js
 const path = await page.video().path();
 ```
@@ -84,7 +81,7 @@ Note that the video is only available after the page or browser context is close
 ## Record video
 * langs: python, java, csharp
 
-Videos are saved upon browser context closure at the end of a test. If you create a browser context manually, make sure to await [`method: BrowserContext.close`].
+Videos are saved upon [browser context](./browser-contexts.md) closure at the end of a test. If you create a browser context manually, make sure to await [`method: BrowserContext.close`].
 
 ```js
 const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
@@ -98,13 +95,13 @@ context = browser.newContext(new Browser.NewContextOptions().setRecordVideoDir(P
 context.close();
 ```
 
-```python
+```python async
 context = await browser.new_context(record_video_dir="videos/")
 # Make sure to await close, so that videos are saved.
 await context.close()
 ```
 
-```python
+```python sync
 context = browser.new_context(record_video_dir="videos/")
 # Make sure to close, so that videos are saved.
 context.close()
@@ -136,14 +133,14 @@ BrowserContext context = browser.newContext(new Browser.NewContextOptions()
   .setRecordVideoSize(640, 480));
 ```
 
-```python
+```python async
 context = await browser.new_context(
     record_video_dir="videos/",
     record_video_size={"width": 640, "height": 480}
 )
 ```
 
-```python
+```python sync
 context = browser.new_context(
     record_video_dir="videos/",
     record_video_size={"width": 640, "height": 480}
@@ -164,6 +161,7 @@ Saved video files will appear in the specified folder. They all have generated u
 For the multi-page scenarios, you can access the video file associated with the page via the
 [`method: Page.video`].
 
+
 ```js
 const path = await page.video().path();
 ```
@@ -172,11 +170,11 @@ const path = await page.video().path();
 path = page.video().path();
 ```
 
-```python
+```python async
 path = await page.video.path()
 ```
 
-```python
+```python sync
 path = page.video.path()
 ```
 

@@ -1,15 +1,12 @@
----
-title: "require-template-description"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/require-template-description.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-require-template-description"></a>
+<a name="require-template-description"></a>
+# <code>require-template-description</code>
 
-# `require-template-description`
-
+<a name="user-content-require-template-description-options"></a>
+<a name="require-template-description-options"></a>
 ## Options
+
+
 
 |||
 |---|---|
@@ -19,6 +16,8 @@ license: "BSD-3-Clause"
 |Settings||
 |Options||
 
+<a name="user-content-require-template-description-failing-examples"></a>
+<a name="require-template-description-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -30,6 +29,10 @@ The following patterns are considered problems:
 // Message: @template should have a description
 ````
 
+
+
+<a name="user-content-require-template-description-passing-examples"></a>
+<a name="require-template-description-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -43,3 +46,4 @@ The following patterns are not considered problems:
  * @template Has a description
  */
 ````
+

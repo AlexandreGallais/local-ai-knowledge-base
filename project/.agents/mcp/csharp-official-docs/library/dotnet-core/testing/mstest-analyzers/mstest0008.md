@@ -1,12 +1,17 @@
 ---
 title: "MSTEST0008: TestInitialize method should have valid layout"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0008.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0008: TestInitialize method should have valid layout"
+ms.date: 11/05/2026
+ai-usage: ai-assisted
+f1_keywords:
+- MSTEST0008
+- TestInitializeShouldBeValidAnalyzer
+helpviewer_keywords:
+- TestInitializeShouldBeValidAnalyzer
+- MSTEST0008
+author: engyebrahim
+ms.author: enjieid
 ---
-
 # MSTEST0008: TestInitialize method should have valid layout
 
 | Property                            | Value                                          |
@@ -38,12 +43,7 @@ MSTest calls `[TestInitialize]` on the test-class instance before it invokes the
 | The return type is `void`, `Task`, or `ValueTask`. | An awaitable return value lets MSTest complete asynchronous setup before the test starts. |
 | The method isn't `async void`. | Without an awaitable result, setup could continue after the test starts, and later exceptions couldn't be reliably recorded as initialization failures. |
 
-The declaring type supplies the test fixture that owns these callbacks:
-
-- Use a `class` so MSTest can associate the callbacks with a test-class hierarchy.
-- Use a `public` class, or an `internal` class with `[assembly: DiscoverInternals]`, to meet MSTest's type-discovery contract.
-- Use a non-static class for these fixtures. Test methods need a test-class instance, even when a class-level lifecycle callback is static.
-- Mark a sealed class with `[TestClass]` or a derived attribute. A sealed class can't supply inherited callbacks to another test class, so it must identify itself as the test container.
+[!INCLUDE [test-class-rules](includes/test-class-rules.md)]
 
 ## How to fix violations
 
@@ -63,11 +63,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0008
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0008.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

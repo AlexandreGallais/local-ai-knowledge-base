@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: EditorConfig files implicitly included"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/6.0/editorconfig-additional-files.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 6 where .editorconfig files can no longer be AdditionalFiles items.
+ms.date: 11/17/2021
 ---
-
 # EditorConfig files implicitly included
 
 Roslyn analyzers added support for parsing and respecting *.editorconfig* file options before the compiler added support for these files. To work around this limitation, *.editorconfig* files had to be included as `AdditionalFiles` project items. Now that the compiler implicitly includes *.editorconfig* files in a project, you'll get an error if you include them as *AdditionalFiles* project items.
@@ -25,12 +21,12 @@ Starting with the .NET 6 SDK, you'll get the following error at compile time if 
 
 **error AD0001: Analyzer [...] threw an exception of type 'System.InvalidOperationException' with message 'Passing '.editorconfig' files as additional files is no longer needed. It will be implicitly discovered (if the file is in the project's directory or any ancestor directory), or it should be converted into a 'globalconfig'.**
 
-> **Note:**
+> [!NOTE]
 > This warning only appears in .NET 6. It was removed in .NET 7.
 
 ## Change category
 
-This change might affect source compatibility.
+This change might affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
@@ -39,7 +35,7 @@ The compiler now supports *.editorconfig* files, and they're implicitly included
 ## Recommended action
 
 - If the *.editorconfig* file is in the project directory or an ancestor directory, remove the `<AdditionalFiles>` item for the *.editorconfig* file from your project file.
-- Otherwise, convert the *.editorconfig* file to a Global AnalyzerConfig file, and change the `AdditionalFiles` item to a `GlobalAnalyzerConfigFiles` item in your project file.
+- Otherwise, convert the *.editorconfig* file to a [Global AnalyzerConfig](../../../../fundamentals/code-analysis/configuration-files.md#global-analyzerconfig) file, and change the `AdditionalFiles` item to a `GlobalAnalyzerConfigFiles` item in your project file.
 
 ## Affected APIs
 

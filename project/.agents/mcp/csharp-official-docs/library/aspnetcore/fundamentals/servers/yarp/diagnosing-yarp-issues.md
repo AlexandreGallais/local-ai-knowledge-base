@@ -1,19 +1,18 @@
 ---
-title: "YARP Diagnosing YARP-based proxies"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/diagnosing-yarp-issues.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: YARP Diagnosing YARP-based proxies
+description: YARP Diagnosing YARP-based proxies
+ms.date: 2/6/2025
+ms.topic: concept-article
+content_well_notification: AI-contribution
+ai-usage: ai-assisted
 ---
-
 # YARP Diagnosing YARP-based proxies
 
 When using a reverse proxy, there is an additional hop from the client to the proxy, and then from the proxy to destination for things to go wrong. This topic should provide some hints and tips for how to debug and diagnose issues when they occur. It assumes that the proxy is already running, and so does not include problems at startup such as configuration errors.
 
 ## Logging
 
-The first step to being able to tell what is going on with YARP is to turn on logging. This is a configuration flag so can be changed on the fly. YARP is implemented as a middleware component for ASP.NET Core, so you need to enable logging for both YARP and ASP.NET to get the complete picture of what is going on.
+The first step to being able to tell what is going on with YARP is to turn on [logging](../../logging/index.md). This is a configuration flag so can be changed on the fly. YARP is implemented as a middleware component for ASP.NET Core, so you need to enable logging for both YARP and ASP.NET to get the complete picture of what is going on.
 
 By default ASP.NET will log to the console, and the configuration file can be used to control the level of logging.
 
@@ -32,7 +31,7 @@ By default ASP.NET will log to the console, and the configuration file can be us
 
 You want logging information from the `Microsoft.AspNetCore.\*` and `Yarp.ReverseProxy.\*` providers. The preceding example emits `Information`-level events from both providers to the console. Changing the level to `Debug` shows additional entries. ASP.NET implements change detection for configuration files, so you can edit the `appsettings.json` file (or `appsettings.development.json` for the `Development` environment) while the project is running and observe changes to the log output.
 
-> **Note:**
+> [!NOTE]
 > Settings in the `appsettings.development.json` file override settings in `appsettings.json` when running in the `Development` environment, so make sure that if you are editing `appsettings.json` that the values aren't overridden.
 
 ### Understanding log entries
@@ -41,22 +40,22 @@ The logging output is directly tied to the way that ASP.NET Core processes reque
 
 | Level | Log Message | Description |
 | --- | --- | --- |
-| dbug | Microsoft.AspNetCore.Server.Kestrel.Connections[39]Connection id "0HMCD0JK7K51U" accepted.| Connections are independent of requests, so this is a new connection |
-| dbug | Microsoft.AspNetCore.Server.Kestrel.Connections[1]Connection id "0HMCD0JK7K51U" started. | |
-| info | Microsoft.AspNetCore.Hosting.Diagnostics[1]Request starting HTTP/1.1 GET http://localhost:5000/ - - | This is the incoming request to ASP.NET |
-| dbug | Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware[0]Wildcard detected, all requests with hosts will be allowed. | My configuration does not tie endpoints to specific hostnames |
-| dbug | Microsoft.AspNetCore.Routing.Matching.DfaMatcher[1001]1 candidate(s) found for the request path '/' | This shows what possible matches there are for the route |
-| dbug | Microsoft.AspNetCore.Routing.Matching.DfaMatcher[1005]Endpoint 'minimumroute' with route pattern '{\*\*catch-all}' is valid for the request path '/' | The minimum route from YARPs configuration has matched|
-| dbug | Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware[1]Request matched endpoint 'minimumroute' | |
-| info | Microsoft.AspNetCore.Routing.EndpointMiddleware[0]Executing endpoint 'minimumroute' | |
-| info | Yarp.ReverseProxy.Forwarder.HttpForwarder[9]Proxying to http://www.example.com/ | YARP is proxying the request to example.com |
-| info | Microsoft.AspNetCore.Routing.EndpointMiddleware[1]Executed endpoint 'minimumroute' | |
-| dbug | Microsoft.AspNetCore.Server.Kestrel.Connections[9]Connection id "0HMCD0JK7K51U" completed keep alive response. | The response has finished, but connection can be kept alive. |
-| info | Microsoft.AspNetCore.Hosting.Diagnostics[2]Request finished HTTP/1.1 GET http://localhost:5000/ - - - 200 1256 text/html;+charset=utf-8 12.7797ms| The response completed with status code 200, responding with 1256 bytes as text/html in ~13ms. |
-| dbug | Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets[6]Connection id "0HMCD0JK7K51U" received FIN. | Diagnostic information about the connection to determine who closed it and how cleanly |
-| dbug | Microsoft.AspNetCore.Server.Kestrel.Connections[10]Connection id "0HMCD0JK7K51U" disconnecting. | |
-| dbug | Microsoft.AspNetCore.Server.Kestrel.Connections[2]Connection id "0HMCD0JK7K51U" stopped. | |
-| dbug | Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets[7]Connection id "0HMCD0JK7K51U" sending FIN because: "The Socket transport's send loop completed gracefully." | |
+| dbug | Microsoft.AspNetCore.Server.Kestrel.Connections[39]<br>Connection id "0HMCD0JK7K51U" accepted.| Connections are independent of requests, so this is a new connection |
+| dbug | Microsoft.AspNetCore.Server.Kestrel.Connections[1]<br>Connection id "0HMCD0JK7K51U" started. | |
+| info | Microsoft.AspNetCore.Hosting.Diagnostics[1]<br>Request starting HTTP/1.1 GET http://localhost:5000/ - - | This is the incoming request to ASP.NET |
+| dbug | Microsoft.AspNetCore.HostFiltering.HostFilteringMiddleware[0]<br>Wildcard detected, all requests with hosts will be allowed. | My configuration does not tie endpoints to specific hostnames |
+| dbug | Microsoft.AspNetCore.Routing.Matching.DfaMatcher[1001]<br>1 candidate(s) found for the request path '/' | This shows what possible matches there are for the route |
+| dbug | Microsoft.AspNetCore.Routing.Matching.DfaMatcher[1005]<br>Endpoint 'minimumroute' with route pattern '{\*\*catch-all}' is valid for the request path '/' | The minimum route from YARPs configuration has matched|
+| dbug | Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware[1]<br>Request matched endpoint 'minimumroute' | |
+| info | Microsoft.AspNetCore.Routing.EndpointMiddleware[0]<br>Executing endpoint 'minimumroute' | |
+| info | Yarp.ReverseProxy.Forwarder.HttpForwarder[9]<br>Proxying to http://www.example.com/ | YARP is proxying the request to example.com |
+| info | Microsoft.AspNetCore.Routing.EndpointMiddleware[1]<br>Executed endpoint 'minimumroute' | |
+| dbug | Microsoft.AspNetCore.Server.Kestrel.Connections[9]<br>Connection id "0HMCD0JK7K51U" completed keep alive response. | The response has finished, but connection can be kept alive. |
+| info | Microsoft.AspNetCore.Hosting.Diagnostics[2]<br>Request finished HTTP/1.1 GET http://localhost:5000/ - - - 200 1256 text/html;+charset=utf-8 12.7797ms| The response completed with status code 200, responding with 1256 bytes as text/html in ~13ms. |
+| dbug | Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets[6]<br>Connection id "0HMCD0JK7K51U" received FIN. | Diagnostic information about the connection to determine who closed it and how cleanly |
+| dbug | Microsoft.AspNetCore.Server.Kestrel.Connections[10]<br>Connection id "0HMCD0JK7K51U" disconnecting. | |
+| dbug | Microsoft.AspNetCore.Server.Kestrel.Connections[2]<br>Connection id "0HMCD0JK7K51U" stopped. | |
+| dbug | Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets[7]<br>Connection id "0HMCD0JK7K51U" sending FIN because: "The Socket transport's send loop completed gracefully." | |
 
 The above gives general information about the request and how it was processed.
 
@@ -103,14 +102,14 @@ info: Microsoft.AspNetCore.HttpLogging.HttpLoggingMiddleware[2]
 
 ## Using telemetry events
 
-We recommend reading Networking telemetry in .NET as a primer on how to consume networking telemetry in .NET.
+We recommend reading [Networking telemetry in .NET](/dotnet/fundamentals/networking/telemetry/overview) as a primer on how to consume networking telemetry in .NET.
 
-The Metrics sample shows how to listen to events from the different providers that collect telemetry as part of YARP. The most important from a diagnostics perspective are:
+The [Metrics sample](https://github.com/microsoft/reverse-proxy/tree/main/samples/ReverseProxy.Metrics.Sample) shows how to listen to events from the different providers that collect telemetry as part of YARP. The most important from a diagnostics perspective are:
 
 * `ForwarderTelemetryConsumer`
 * `HttpClientTelemetryConsumer`
 
-To use either of these, create a class implementing a `Yarp.Telemetry.Consumption` interface, such as `Yarp.Telemetry.Consumption.IForwarderTelemetryConsumer`:
+To use either of these, create a class implementing a [`Yarp.Telemetry.Consumption` interface](xref:Yarp.Telemetry.Consumption#interfaces), such as <xref:Yarp.Telemetry.Consumption.IForwarderTelemetryConsumer>:
 
 ```csharp
 public class ForwarderTelemetry : IForwarderTelemetryConsumer
@@ -196,7 +195,7 @@ Forwarder Telemetry [06:41:00.530] => OnForwarderStage :: Stage:
 Forwarder Telemetry [06:41:03.655] => OnForwarderStop :: Status: 200
 ```
 
-The events for telemetry are fired as they occur, so you can obtain the `HttpContext` and the YARP feature from it:
+The events for telemetry are fired as they occur, so you can [obtain the `HttpContext`](../../http-context.md) and the YARP feature from it:
 
 ```csharp
 services.AddTelemetryConsumer<ForwarderTelemetry>();
@@ -247,9 +246,9 @@ public Task MyCustomProxyStep(HttpContext context, Func<Task> next)
 }
 ```
 
-You can also use ASP.NET middleware within Configure that will enable you to inspect the request before the proxy pipeline.
+You can also use [ASP.NET middleware](../../middleware/write.md) within Configure that will enable you to inspect the request before the proxy pipeline.
 
-> **Note:**
+> [!NOTE]
 > The proxy streams the response from the destination server back to the client, so the response headers and body aren't readily accessible via middleware.
 
 ## Using the debugger
@@ -258,7 +257,7 @@ A debugger, such as Visual Studio, can be attached to the proxy process. However
 
 ## Network tracing
 
-It can be attractive to use network tracing tools like Fiddler or Wireshark to try to monitor what's happening either side of the proxy. However, be cautious using both tools:
+It can be attractive to use network tracing tools like [Fiddler](https://www.telerik.com/fiddler) or [Wireshark](https://www.wireshark.org/) to try to monitor what's happening either side of the proxy. However, be cautious using both tools:
 
 * Fiddler registers itself as a proxy and relies on apps using the default proxy to be able to monitor traffic. This works for inbound traffic from a browser to YARP but won't capture the outbound requests, as YARP is configured to not use the proxy settings for outbound traffic.
 * On Windows, Wireshark uses Npcap to capture packet data for network traffic, so it captures both inbound and outbound traffic and can be used to monitor HTTP traffic.

@@ -1,17 +1,8 @@
----
-title: "Function pointer types"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/types/function-pointer.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[type.fn-pointer]
 # Function pointer types
 
 r[type.fn-pointer.syntax]
-```grammar
+```grammar,types
 BareFunctionType ->
     ForLifetimes? FunctionTypeQualifiers `fn`
        `(` FunctionParametersMaybeNamedVariadic? `)` BareFunctionReturnType?
@@ -66,3 +57,10 @@ r[type.fn-pointer.attributes]
 ## Attributes on function pointer parameters
 
 Attributes on function pointer parameters follow the same rules and restrictions as [regular function parameters].
+
+[`extern`]: ../items/external-blocks.md
+[closures]: closure.md
+[extern function]: ../items/functions.md#extern-function-qualifier
+[function items]: function-item.md
+[unsafe function]: ../unsafe-keyword.md
+[regular function parameters]: ../items/functions.md#attributes-on-function-parameters

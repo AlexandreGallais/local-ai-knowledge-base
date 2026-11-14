@@ -1,22 +1,15 @@
----
-title: "Enforce passing only Error values to throwError or Subject.error (rxjs-x/throw-error)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/throw-error.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Enforce passing only `Error` values to `throwError` or `Subject.error` (`rxjs-x/throw-error`)
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, 🔒 `strict`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule forbids passing values that are not `Error` objects to `throwError` or `Subject.error`.
-It's similar to the typescript-eslint `only-throw-error` rule,
+It's similar to the typescript-eslint [`only-throw-error`](https://typescript-eslint.io/rules/only-throw-error/) rule,
 but is for the `throwError` Observable creation function or the `Subject.error` method - not `throw` statements.
 
 ## Rule details
@@ -45,10 +38,14 @@ subject.error(new Error("Kaboom!"));
 
 ## Options
 
+<!-- begin auto-generated rule options list -->
+
 | Name                   | Description                                                 | Type    | Default |
 | :--------------------- | :---------------------------------------------------------- | :------ | :------ |
 | `allowThrowingAny`     | Whether to always allow throwing values typed as `any`.     | Boolean | `true`  |
 | `allowThrowingUnknown` | Whether to always allow throwing values typed as `unknown`. | Boolean | `true`  |
+
+<!-- end auto-generated rule options list -->
 
 ## When Not To Use It
 
@@ -60,5 +57,5 @@ Type checked lint rules are more powerful than traditional lint rules, but also 
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/throw-error.ts)
+- [Test source](/tests/rules/throw-error.test.ts)

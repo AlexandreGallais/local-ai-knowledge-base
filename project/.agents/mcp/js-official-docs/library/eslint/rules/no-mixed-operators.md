@@ -1,14 +1,9 @@
 ---
-title: "no-mixed-operators"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-mixed-operators.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-mixed-operators
+rule_type: suggestion
+related_rules:
+- no-extra-parens
 ---
-
-# no-mixed-operators
-
 Enclosing complex expressions by parentheses clarifies the developer's intention, which makes the code more readable.
 This rule warns when different operators are used consecutively without parentheses in an expression.
 
@@ -36,12 +31,12 @@ will generate
 
 This rule checks `BinaryExpression`, `LogicalExpression` and `ConditionalExpression`.
 
-This rule may conflict with no-extra-parens rule.
-If you use both this and no-extra-parens rule together, you need to use the `nestedBinaryExpressions` option of no-extra-parens rule.
+This rule may conflict with [no-extra-parens](no-extra-parens) rule.
+If you use both this and [no-extra-parens](no-extra-parens) rule together, you need to use the `nestedBinaryExpressions` option of [no-extra-parens](no-extra-parens) rule.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-mixed-operators: "error"*/
@@ -50,9 +45,11 @@ var foo = a && b < 0 || c > 0 || d + 1 === 0;
 var foo = a + b * c;
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-mixed-operators: "error"*/
@@ -64,6 +61,8 @@ var foo = a && (b < 0 || c > 0 || d + 1 === 0);
 var foo = a + (b * c);
 var foo = (a + b) * c;
 ```
+
+:::
 
 ## Options
 
@@ -110,7 +109,7 @@ In this case, this rule checks if bitwise operators and logical operators are mi
 
 Examples of **incorrect** code for this rule with `{"groups": [["&", "|", "^", "~", "<<", ">>", ">>>"], ["&&", "||"]]}` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-mixed-operators: ["error", {"groups": [["&", "|", "^", "~", "<<", ">>", ">>>"], ["&&", "||"]]}]*/
@@ -119,7 +118,9 @@ var foo = a && b < 0 || c > 0 || d + 1 === 0;
 var foo = a & b | c;
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint no-mixed-operators: ["error", {"groups": [["&&", "||", "?:"]]}]*/
@@ -131,9 +132,11 @@ var bar = a ? b || c : d;
 var baz = a ? b : c || d;
 ```
 
+:::
+
 Examples of **correct** code for this rule with `{"groups": [["&", "|", "^", "~", "<<", ">>", ">>>"], ["&&", "||"]]}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-mixed-operators: ["error", {"groups": [["&", "|", "^", "~", "<<", ">>", ">>>"], ["&&", "||"]]}]*/
@@ -149,7 +152,9 @@ var foo = a + (b * c);
 var foo = (a + b) * c;
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint no-mixed-operators: ["error", {"groups": [["&&", "||", "?:"]]}]*/
@@ -163,11 +168,13 @@ var baz = a ? b : (c || d);
 var baz = (a ? b : c) || d;
 ```
 
+:::
+
 ### allowSamePrecedence
 
 Examples of **correct** code for this rule with `{"allowSamePrecedence": true}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-mixed-operators: ["error", {"allowSamePrecedence": true}]*/
@@ -176,9 +183,11 @@ Examples of **correct** code for this rule with `{"allowSamePrecedence": true}` 
 var foo = a + b - c;
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with `{"allowSamePrecedence": false}` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-mixed-operators: ["error", {"allowSamePrecedence": false}]*/
@@ -187,9 +196,11 @@ Examples of **incorrect** code for this rule with `{"allowSamePrecedence": false
 var foo = a + b - c;
 ```
 
+:::
+
 Examples of **correct** code for this rule with `{"allowSamePrecedence": false}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-mixed-operators: ["error", {"allowSamePrecedence": false}]*/
@@ -197,6 +208,8 @@ Examples of **correct** code for this rule with `{"allowSamePrecedence": false}`
 // + and - have the same precedence.
 var foo = (a + b) - c;
 ```
+
+:::
 
 ## When Not To Use It
 

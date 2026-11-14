@@ -1,15 +1,13 @@
 ---
-title: "Support for the .localhost top-level domain"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/test/localhost-tld.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn how using localhost as top-level domain can make testing easier in some scenarios.
+monikerRange: '>= aspnetcore-10.0'
+ms.date: 11/19/2025
+title: Support for the .localhost top-level domain
 ---
 
 # Support for the .localhost top-level domain
 
-The `.localhost` top-level domain (TLD) is defined in RFC2606 and RFC6761 as being reserved for testing purposes and available for users to use locally as they would any other domain name. This means using a name like `myapp.localhost` locally that resolves to the IP loopback address is allowed and expected according to these RFCs.
+The `.localhost` top-level domain (TLD) is defined in [RFC2606](https://www.rfc-editor.org/rfc/rfc2606) and [RFC6761](https://www.rfc-editor.org/rfc/rfc6761) as being reserved for testing purposes and available for users to use locally as they would any other domain name. This means using a name like `myapp.localhost` locally that resolves to the IP loopback address is allowed and expected according to these RFCs.
 
 Modern evergreen browsers already automatically resolve any `*.localhost` name to the IP loopback address (`127.0.0.1`/`::1`), effectively making them an alias for any service already being hosted at `localhost` on the local machine. Any service responding to `http://localhost:6789` will also respond to `http://anything-here.localhost:6789`, assuming no further specific hostname verification or enforcement is being performed by the service.
 
@@ -17,7 +15,7 @@ Having different apps running locally be resolvable via different names allows f
 
 ## Kestrel support for .localhost
 
-ASP.NET Core's built-in HTTP server, Kestrel, correctly treats any `*.localhost` name set via supported endpoint configuration mechanisms as the local loopback address and binds to it rather than all external addresses (that is, bind to `127.0.0.1`/`::1` rather than `0.0.0.0`/`::`). This includes the `"applicationUrl"` property in launch profiles configured in a *launchSettings.json* file, and the `ASPNETCORE_URLS` environment variable. When configured to listen on a `.localhost` address, Kestrel logs an information message for both the `.localhost` **and** `localhost` addresses, to make it clear that both names can be used.
+ASP.NET Core's built-in HTTP server, Kestrel, correctly treats any `*.localhost` name set via [supported endpoint configuration mechanisms](../fundamentals/servers/kestrel/endpoints.md#configure-endpoints) as the local loopback address and binds to it rather than all external addresses (that is, bind to `127.0.0.1`/`::1` rather than `0.0.0.0`/`::`). This includes the `"applicationUrl"` property in [launch profiles configured in a *launchSettings.json* file](../fundamentals/environments.md#set-the-environment-with-the-launch-settings-file-launchsettingsjson), and the `ASPNETCORE_URLS` environment variable. When configured to listen on a `.localhost` address, Kestrel logs an information message for both the `.localhost` **and** `localhost` addresses, to make it clear that both names can be used.
 
 ## Browser compatibility
 
@@ -27,7 +25,7 @@ Some client apps other than Safari and evergreen web browsers treat `*.localhost
 
 ## HTTPS development certificate
 
-The ASP.NET Core HTTPS development certificate (including the `dotnet dev-certs https` command) is valid for use with the `*.dev.localhost` domain name.
+The [ASP.NET Core HTTPS development certificate](../security/enforcing-ssl.md#trust-the-aspnet-core-https-development-certificate) (including the `dotnet dev-certs https` command) is valid for use with the `*.dev.localhost` domain name.
 
 The certificate lists the `*.dev.localhost` name as a Subject Alternative Name (SAN) rather than `*.localhost` because using a wildcard certificate for a top-level domain name is invalid.
 

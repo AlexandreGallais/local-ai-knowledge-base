@@ -1,15 +1,6 @@
----
-title: "Testing Pipes"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/testing/pipes.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Testing Pipes
 
-You can test pipes without the Angular testing utilities.
+You can test [pipes](guide/templates/pipes) without the Angular testing utilities.
 
 ## Testing the `TitleCasePipe`
 

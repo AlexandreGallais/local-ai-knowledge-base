@@ -1,10 +1,9 @@
 ---
-title: "MSTest migration to v3"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/unit-testing-mstest-migration-from-v1-to-v3.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: MSTest migration to v3
+description: Learn about migrating from legacy MSTest (MSTest v1) to latest MSTest (MSTest v3).
+author: engyebrahim
+ms.author: enjieid
+ms.date: 11/28/2025
 ---
 
 # MSTest v3 migration guide
@@ -39,8 +38,8 @@ Even if you're satisfied with your current MSTest setup, upgrading to MSTest v3 
 
 By upgrading, you're setting up your tests to be faster, more reliable, and adaptable to future .NET developments, positioning your project for long-term success and easier maintenance.
 
-> **Tip:**
-> After migrating to MSTest v3, consider taking a further step and migrate to MSTest v4. For more information, see Migrate from MSTest v3 to v4.
+> [!TIP]
+> After migrating to MSTest v3, consider taking a further step and migrate to MSTest v4. For more information, see [Migrate from MSTest v3 to v4](./unit-testing-mstest-migration-v3-v4.md).
 
 ## Migration steps
 
@@ -58,20 +57,22 @@ In non-SDK style projects, these references are often added through Visual Studi
 4. Inside the **References** folder, **find and select** the MSTest DLL references, `Microsoft.VisualStudio.QualityTools.UnitTestFramework`
 5. **Right-click** the selected reference(s) and choose **Remove** from the context menu.
 
+    ![Context menu of the assembly reference](https://github.com/user-attachments/assets/7aff1afb-e26b-4450-bc2e-903a577e3df2)
+
 6. **Save the project** to apply changes.
 
 ### 2. Update your project
 
 You can update your project to MSTest v3 in one of two ways:
 
-- **Update Packages**: If you have NuGet package references to the MSTest.TestFramework and the MSTest.TestAdapter, update them using the NuGet Package Manager in Visual Studio or by running the following command in the NuGet Package Manager Console:
+- **Update Packages**: If you have NuGet package references to the [MSTest.TestFramework](https://www.nuget.org/packages/MSTest.TestFramework) and the [MSTest.TestAdapter](https://www.nuget.org/packages/MSTest.TestAdapter/), update them using the NuGet Package Manager in Visual Studio or by running the following command in the NuGet Package Manager Console:
 
     ```shell
     Update-Package MSTest.TestFramework -Version 3.11.1
     Update-Package MSTest.TestAdapter -Version 3.11.1
     ```
 
-- **Or Install MSTest Package**: Install the latest MSTest package using the NuGet Package Manager in Visual Studio or by running the following command in the NuGet Package Manager Console:
+- **Or Install MSTest Package**: Install the latest [MSTest](https://www.nuget.org/packages/MSTest) package using the NuGet Package Manager in Visual Studio or by running the following command in the NuGet Package Manager Console:
 
     ```shell
     Install-Package MSTest -Version 3.11.1
@@ -103,7 +104,7 @@ Choose the option that best suits your project setup. Both methods ensure your p
 
 - **Test Initialization**: Use `TestInitialize` methods for async initialization.
 - **Cleanup**: Use `TestCleanup` methods or the `Dispose` pattern for cleanup.
-- **RunSettings**: The `.testsettings` file is no longer supported, meaning `<LegacySettings>` is also no longer available. Use .runsettings for test configuration.
+- **RunSettings**: The `.testsettings` file is no longer supported, meaning `<LegacySettings>` is also no longer available. Use [.runsettings](/visualstudio/test/configure-unit-tests-by-using-a-dot-runsettings-file) for test configuration.
 
 ## New Features in MSTest v3
 
@@ -203,4 +204,4 @@ MSTest v3 includes built-in code analyzers for best practices, avoiding configur
 
 ## Additional resources
 
-- MTP overview
+- [MTP overview](microsoft-testing-platform-intro.md)

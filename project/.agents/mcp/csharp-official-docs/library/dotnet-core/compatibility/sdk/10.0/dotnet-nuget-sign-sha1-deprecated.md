@@ -1,15 +1,14 @@
 ---
 title: "Breaking change - SHA-1 fingerprint support deprecated in dotnet nuget sign"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/dotnet-nuget-sign-sha1-deprecated.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where SHA-1 fingerprint support is deprecated in dotnet nuget sign command, promoting NU3043 warning to error."
+ms.date: 08/11/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/47449
 ---
 
 # SHA-1 fingerprint support deprecated in `dotnet nuget sign`
 
-Starting in .NET 10, the NU3043 warning is promoted to an error when using SHA-1 fingerprints with the `dotnet nuget sign` command. This change enforces the use of only strong, approved hash algorithms (SHA-2 family) for signing operations.
+Starting in .NET 10, the [NU3043](/nuget/reference/errors-and-warnings/nu3043) warning is promoted to an error when using SHA-1 fingerprints with the [`dotnet nuget sign` command](../../../tools/dotnet-nuget-sign.md). This change enforces the use of only strong, approved hash algorithms (SHA-2 family) for signing operations.
 
 ## Version introduced
 
@@ -25,7 +24,7 @@ Starting in .NET 10, the NU3043 warning is elevated to an error. This change blo
 
 ## Type of breaking change
 
-This is a behavioral change.
+This is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -45,5 +44,5 @@ None.
 
 ## See also
 
-- dotnet nuget sign
-- NuGet warning NU3043
+- [dotnet nuget sign](../../../tools/dotnet-nuget-sign.md)
+- [NuGet warning NU3043](/nuget/reference/errors-and-warnings/nu3043)

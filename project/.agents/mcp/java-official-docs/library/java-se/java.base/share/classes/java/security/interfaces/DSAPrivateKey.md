@@ -1,30 +1,19 @@
----
-title: "DSAPrivateKey <example-value> (java.security.interfaces)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/interfaces/DSAPrivateKey.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
-# DSAPrivateKey <example-value> (java.security.interfaces)
+# DSAPrivateKey interface (java.security.interfaces)
 
 ```java
-public interface DSAPrivateKey <example-value> DSAKey, java.security.PrivateKey
+public interface DSAPrivateKey extends DSAKey, java.security.PrivateKey
 ```
 
 The standard interface to a DSA private key. DSA (Digital Signature
 Algorithm) is defined in NIST's FIPS-186.
 
-**See also:** java.security.Key
+@see java.security.Key
+@see java.security.Signature
+@see DSAKey
+@see DSAPublicKey
 
-**See also:** java.security.Signature
-
-**See also:** DSAKey
-
-**See also:** DSAPublicKey
-
-**Since:** 1.1
+@author Benjamin Renaud
+@since 1.1
 
 ## DSAPrivateKey.serialVersionUID
 
@@ -36,7 +25,7 @@ The class fingerprint that is set to indicate
 serialization compatibility with a previous
 version of the class.
 
-**Deprecated:** A `serialVersionUID` field in an interface is
+@deprecated A {@code serialVersionUID} field in an interface is
 ineffectual. Do not use; no replacement.
 
 ## DSAPrivateKey.getX()
@@ -45,9 +34,9 @@ ineffectual. Do not use; no replacement.
 BigInteger getX()
 ```
 
-Returns the value of the private key, `x`.
+Returns the value of the private key, {@code x}.
 
-**Returns:** the value of the private key, `x`.
+@return the value of the private key, {@code x}.
 
 ## DSAPrivateKey.getParams()
 
@@ -55,8 +44,9 @@ Returns the value of the private key, `x`.
 default DSAParams getParams()
 ```
 
-(inherited documentation)
+{@inheritDoc java.security.AsymmetricKey}
 
-**Implementation requirements:** The default implementation returns `null`.
+@implSpec
+The default implementation returns {@code null}.
 
-**Returns:** (inherited documentation)
+@return {@inheritDoc java.security.AsymmetricKey}

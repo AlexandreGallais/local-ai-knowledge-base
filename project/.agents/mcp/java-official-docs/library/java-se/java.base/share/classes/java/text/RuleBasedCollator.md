@@ -1,133 +1,119 @@
----
-title: "RuleBasedCollator class (java.text)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/text/RuleBasedCollator.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # RuleBasedCollator class (java.text)
 
 ```java
 public class RuleBasedCollator extends Collator
 ```
 
-The `RuleBasedCollator` class is a concrete subclass of
-`Collator` that provides a simple, data-driven, table
+The {@code RuleBasedCollator} class is a concrete subclass of
+{@code Collator} that provides a simple, data-driven, table
 collator.  With this class you can create a customized table-based
-`Collator`.  `RuleBasedCollator` maps
+{@code Collator}.  {@code RuleBasedCollator} maps
 characters to sort keys.
 
-`RuleBasedCollator` has the following restrictions
+<p>
+{@code RuleBasedCollator} has the following restrictions
 for efficiency (other subclasses may be used for more complex languages) :
-
-- If a special collation rule controlled by a <modifier> is
+<ol>
+<li>If a special collation rule controlled by a &lt;modifier&gt; is
     specified it applies to the whole collator object.
-
-- All non-mentioned characters are at the end of the
+<li>All non-mentioned characters are at the end of the
     collation order.
+</ol>
 
+<p>
 The collation table is composed of a list of collation rules, where each
 rule is of one of three forms:
-
-```java
-   <modifier>
-   <relation> <text-argument>
-   <reset> <text-argument>
-```
-
+<pre>
+   &lt;modifier&gt;
+   &lt;relation&gt; &lt;text-argument&gt;
+   &lt;reset&gt; &lt;text-argument&gt;
+</pre>
 The definitions of the rule elements is as follows:
-
-- **Text-Argument**: A text-argument is any sequence of
+<UL>
+   <LI><strong>Text-Argument</strong>: A text-argument is any sequence of
        characters, excluding special characters (that is, common
        whitespace characters [0009-000D, 0020] and rule syntax characters
        [0021-002F, 003A-0040, 005B-0060, 007B-007E]). If those
        characters are desired, you can put them in single quotes
-       (e.g. ampersand => '&'). Note that unquoted white space characters
-       are ignored; e.g. `b c` is treated as `bc`.
-
-- **Modifier**: There are currently two modifiers that
+       (e.g. ampersand =&gt; '&amp;'). Note that unquoted white space characters
+       are ignored; e.g. {@code b c} is treated as {@code bc}.
+   <LI><strong>Modifier</strong>: There are currently two modifiers that
        turn on special collation rules.
-
-- '@' : Turns on backwards sorting of accents (secondary
+       <UL>
+           <LI>'@' : Turns on backwards sorting of accents (secondary
                      differences), as in French.
-
-- '!' : Turns on Thai/Lao vowel-consonant swapping.  If this
+           <LI>'!' : Turns on Thai/Lao vowel-consonant swapping.  If this
                      rule is in force when a Thai vowel of the range
-                     \U0E40-\U0E44 precedes a Thai consonant of the range
-                     \U0E01-\U0E2E OR a Lao vowel of the range \U0EC0-\U0EC4
-                     precedes a Lao consonant of the range \U0E81-\U0EAE then
+                     &#92;U0E40-&#92;U0E44 precedes a Thai consonant of the range
+                     &#92;U0E01-&#92;U0E2E OR a Lao vowel of the range &#92;U0EC0-&#92;U0EC4
+                     precedes a Lao consonant of the range &#92;U0E81-&#92;U0EAE then
                      the vowel is placed after the consonant for collation
                      purposes.
-
-'@' : Indicates that accents are sorted backwards, as in French.
-
-- **Relation**: The relations are the following:
-
-- '<' : Greater, as a letter difference (primary)
-
-- ';' : Greater, as an accent difference (secondary)
-
-- ',' : Greater, as a case difference (tertiary)
-
-- '=' : Equal
-
-- **Reset**: There is a single reset
+       </UL>
+       <p>'@' : Indicates that accents are sorted backwards, as in French.
+   <LI><strong>Relation</strong>: The relations are the following:
+       <UL>
+           <LI>'&lt;' : Greater, as a letter difference (primary)
+           <LI>';' : Greater, as an accent difference (secondary)
+           <LI>',' : Greater, as a case difference (tertiary)
+           <LI>'=' : Equal
+       </UL>
+   <LI><strong>Reset</strong>: There is a single reset
        which is used primarily for contractions and expansions, but which
        can also be used to add a modification at the end of a set of rules.
-
-'&' : Indicates that the next rule follows the position to where
+       <p>'&amp;' : Indicates that the next rule follows the position to where
            the reset text-argument would be sorted.
+</UL>
 
+<p>
 This sounds more complicated than it is in practice. For example, the
 following are equivalent ways of expressing the same thing:
-
-```java
-a < b < c
-a < b & b < c
-a < c & a < b
-```
-
+<blockquote>
+<pre>
+a &lt; b &lt; c
+a &lt; b &amp; b &lt; c
+a &lt; c &amp; a &lt; b
+</pre>
+</blockquote>
 Notice that the order is important, as the subsequent item goes immediately
 after the text-argument. The following are not equivalent:
-
-```java
-a < b & a < c
-a < c & a < b
-```
-
+<blockquote>
+<pre>
+a &lt; b &amp; a &lt; c
+a &lt; c &amp; a &lt; b
+</pre>
+</blockquote>
 Either the text-argument must already be present in the sequence, or some
-initial substring of the text-argument must be present. (e.g. "a < b & ae <
+initial substring of the text-argument must be present. (e.g. "a &lt; b &amp; ae &lt;
 e" is valid since "a" is present in the sequence before "ae" is reset). In
 this latter case, "ae" is not entered and treated as a single character;
 instead, "e" is sorted as if it were expanded to two characters: "a"
 followed by an "e". This difference appears in natural languages: in
 traditional Spanish "ch" is treated as though it contracts to a single
-character (expressed as "c < ch < d"), while in traditional German
+character (expressed as "c &lt; ch &lt; d"), while in traditional German
 a-umlaut is treated as though it expanded to two characters
-(expressed as "a,A < b,B ... &ae;\u00e3&AE;\u00c3").
-[\u00e3 and \u00c3 are, of course, the escape sequences for a-umlaut.]
-
-**Ignorable Characters**
-
+(expressed as "a,A &lt; b,B ... &amp;ae;&#92;u00e3&amp;AE;&#92;u00c3").
+[&#92;u00e3 and &#92;u00c3 are, of course, the escape sequences for a-umlaut.]
+<p>
+<strong>Ignorable Characters</strong>
+<p>
 For ignorable characters, the first rule must start with a relation (the
-examples we have used above are really fragments; "a < b" really should be
-"< a < b"). If, however, the first relation is not "<", then all the all
-text-arguments up to the first "<" are ignorable. For example, ", - < a < b"
+examples we have used above are really fragments; "a &lt; b" really should be
+"&lt; a &lt; b"). If, however, the first relation is not "&lt;", then all the all
+text-arguments up to the first "&lt;" are ignorable. For example, ", - &lt; a &lt; b"
 makes "-" an ignorable character, as we saw earlier in the word
 "black-birds". In the samples for different languages, you see that most
 accents are ignorable.
 
-**Normalization and Accents**
-
-`RuleBasedCollator` automatically processes its rule table to
+<p><strong>Normalization and Accents</strong>
+<p>
+{@code RuleBasedCollator} automatically processes its rule table to
 include both pre-composed and combining-character versions of
 accented characters.  Even if the provided rule string contains only
 base characters and separate combining accent characters, the pre-composed
 accented characters matching all canonical combinations of characters from
 the rule string will be entered in the table.
-
+<p>
 This allows you to use a RuleBasedCollator to compare accented strings
 even when the collator is set to NO_DECOMPOSITION.  There are two caveats,
 however.  First, if the strings to be collated contain combining
@@ -138,86 +124,86 @@ compatibility decompositions (such as full-width and half-width forms),
 you must use FULL_DECOMPOSITION, since the rule tables only include
 canonical mappings.
 
-**Errors**
-
+<p><strong>Errors</strong>
+<p>
 The following are errors:
-
-- A text-argument contains unquoted punctuation symbols
-       (e.g. "a < b-c < d").
-
-- A relation or reset character not followed by a text-argument
-       (e.g. "a < ,b").
-
-- A reset where the text-argument (or an initial substring of the
+<UL>
+    <LI>A text-argument contains unquoted punctuation symbols
+       (e.g. "a &lt; b-c &lt; d").
+    <LI>A relation or reset character not followed by a text-argument
+       (e.g. "a &lt; ,b").
+    <LI>A reset where the text-argument (or an initial substring of the
         text-argument) is not already in the sequence.
-        (e.g. "a < b & e < f")
+        (e.g. "a &lt; b &amp; e &lt; f")
+</UL>
+If you produce one of these errors, a {@code RuleBasedCollator} throws
+a {@code ParseException}.
 
-If you produce one of these errors, a `RuleBasedCollator` throws
-a `ParseException`.
-
-**Examples**
-
-Simple:     "< a < b < c < d"
-
-Norwegian:  "< a, A < b, B < c, C < d, D < e, E < f, F
-                < g, G < h, H < i, I < j, J < k, K < l, L
-                < m, M < n, N < o, O < p, P < q, Q < r, R
-                < s, S < t, T < u, U < v, V < w, W < x, X
-                < y, Y < z, Z
-                < \u00E6, \u00C6
-                < \u00F8, \u00D8
-                < \u00E5 = a\u030A, \u00C5 = A\u030A;
+<p><strong>Examples</strong>
+<p>Simple:     "&lt; a &lt; b &lt; c &lt; d"
+<p>Norwegian:  "&lt; a, A &lt; b, B &lt; c, C &lt; d, D &lt; e, E &lt; f, F
+                &lt; g, G &lt; h, H &lt; i, I &lt; j, J &lt; k, K &lt; l, L
+                &lt; m, M &lt; n, N &lt; o, O &lt; p, P &lt; q, Q &lt; r, R
+                &lt; s, S &lt; t, T &lt; u, U &lt; v, V &lt; w, W &lt; x, X
+                &lt; y, Y &lt; z, Z
+                &lt; &#92;u00E6, &#92;u00C6
+                &lt; &#92;u00F8, &#92;u00D8
+                &lt; &#92;u00E5 = a&#92;u030A, &#92;u00C5 = A&#92;u030A;
                      aa, AA"
 
-To create a `RuleBasedCollator` object with specialized
-rules tailored to your needs, you construct the `RuleBasedCollator`
-with the rules contained in a `String` object. For example:
-
-```java
-String simple = "< a< b< c< d";
+<p>
+To create a {@code RuleBasedCollator} object with specialized
+rules tailored to your needs, you construct the {@code RuleBasedCollator}
+with the rules contained in a {@code String} object. For example:
+<blockquote>
+<pre>
+String simple = "&lt; a&lt; b&lt; c&lt; d";
 RuleBasedCollator mySimple = new RuleBasedCollator(simple);
-```
-
+</pre>
+</blockquote>
 Or:
-
-```java
-String Norwegian = "< a, A < b, B < c, C < d, D < e, E < f, F < g, G < h, H < i, I" +
-                   "< j, J < k, K < l, L < m, M < n, N < o, O < p, P < q, Q < r, R" +
-                   "< s, S < t, T < u, U < v, V < w, W < x, X < y, Y < z, Z" +
-                   "< \u00E6, \u00C6" +     // Latin letter ae & AE
-                   "< \u00F8, \u00D8" +     // Latin letter o & O with stroke
-                   "< \u00E5 = a\u030A," +  // Latin letter a with ring above
-                   "  \u00C5 = A\u030A;" +  // Latin letter A with ring above
+<blockquote>
+<pre>
+String Norwegian = "&lt; a, A &lt; b, B &lt; c, C &lt; d, D &lt; e, E &lt; f, F &lt; g, G &lt; h, H &lt; i, I" +
+                   "&lt; j, J &lt; k, K &lt; l, L &lt; m, M &lt; n, N &lt; o, O &lt; p, P &lt; q, Q &lt; r, R" +
+                   "&lt; s, S &lt; t, T &lt; u, U &lt; v, V &lt; w, W &lt; x, X &lt; y, Y &lt; z, Z" +
+                   "&lt; &#92;u00E6, &#92;u00C6" +     // Latin letter ae &amp; AE
+                   "&lt; &#92;u00F8, &#92;u00D8" +     // Latin letter o &amp; O with stroke
+                   "&lt; &#92;u00E5 = a&#92;u030A," +  // Latin letter a with ring above
+                   "  &#92;u00C5 = A&#92;u030A;" +  // Latin letter A with ring above
                    "  aa, AA";
 RuleBasedCollator myNorwegian = new RuleBasedCollator(Norwegian);
-```
+</pre>
+</blockquote>
 
+<p>
 A new collation rules string can be created by concatenating rules
-strings. For example, the rules returned by `getRules()` could
-be concatenated to combine multiple `RuleBasedCollator`s.
+strings. For example, the rules returned by {@link #getRules()} could
+be concatenated to combine multiple {@code RuleBasedCollator}s.
 
+<p>
 The following example demonstrates how to change the order of
 non-spacing accents,
-
-```java
+<blockquote>
+<pre>
 // old rule
-String oldRules = "=\u0301;\u0300;\u0302;\u0308"    // main accents
-                + ";\u0327;\u0303;\u0304;\u0305"    // main accents
-                + ";\u0306;\u0307;\u0309;\u030A"    // main accents
-                + ";\u030B;\u030C;\u030D;\u030E"    // main accents
-                + ";\u030F;\u0310;\u0311;\u0312"    // main accents
-                + "< a , A ; ae, AE ; \u00e6 , \u00c6"
-                + "< b , B < c, C < e, E & C < d, D";
+String oldRules = "=&#92;u0301;&#92;u0300;&#92;u0302;&#92;u0308"    // main accents
+                + ";&#92;u0327;&#92;u0303;&#92;u0304;&#92;u0305"    // main accents
+                + ";&#92;u0306;&#92;u0307;&#92;u0309;&#92;u030A"    // main accents
+                + ";&#92;u030B;&#92;u030C;&#92;u030D;&#92;u030E"    // main accents
+                + ";&#92;u030F;&#92;u0310;&#92;u0311;&#92;u0312"    // main accents
+                + "&lt; a , A ; ae, AE ; &#92;u00e6 , &#92;u00c6"
+                + "&lt; b , B &lt; c, C &lt; e, E &amp; C &lt; d, D";
 // change the order of accent characters
-String addOn = "& \u0300 ; \u0308 ; \u0302";
+String addOn = "&amp; &#92;u0300 ; &#92;u0308 ; &#92;u0302";
 RuleBasedCollator myCollator = new RuleBasedCollator(oldRules + addOn);
-```
+</pre>
+</blockquote>
 
-**See also:** Collator
-
-**See also:** CollationElementIterator
-
-**Since:** 1.1
+@see        Collator
+@see        CollationElementIterator
+@author     Helena Shih, Laura Werner, Richard Gillam
+@since 1.1
 
 ## RuleBasedCollator.RuleBasedCollator(String)
 
@@ -228,16 +214,12 @@ public RuleBasedCollator(String rules) throws ParseException
 RuleBasedCollator constructor.  This takes the table rules and builds
 a collation table out of them.  Please see RuleBasedCollator class
 description for more details on the collation rule syntax.
-
-Parameters:
-
-- `rules`: the collation rules to build the collation table from.
-
-**See also:** java.util.Locale
-
-Throws:
-
-- `ParseException`: A format exception will be thrown if the build process of the rules fails. For example, build rule "a < ? < d" will cause the constructor to throw the ParseException because the '?' is not quoted.
+@see java.util.Locale
+@param rules the collation rules to build the collation table from.
+@throws    ParseException A format exception
+will be thrown if the build process of the rules fails. For
+example, build rule "a &lt; ? &lt; d" will cause the constructor to
+throw the ParseException because the '?' is not quoted.
 
 ## RuleBasedCollator.getRules()
 
@@ -246,8 +228,7 @@ public String getRules()
 ```
 
 Gets the table-based rules for the collation object.
-
-**Returns:** returns the collation rules that the table collation object
+@return returns the collation rules that the table collation object
 was created from.
 
 ## RuleBasedCollator.getCollationElementIterator(String)
@@ -258,13 +239,9 @@ public CollationElementIterator getCollationElementIterator(String source)
 
 Returns a CollationElementIterator for the given String.
 
-Parameters:
-
-- `source`: the string to be collated
-
-**Returns:** a `CollationElementIterator` object
-
-**See also:** java.text.CollationElementIterator
+@param source the string to be collated
+@return a {@code CollationElementIterator} object
+@see java.text.CollationElementIterator
 
 ## RuleBasedCollator.getCollationElementIterator(CharacterIterator)
 
@@ -274,15 +251,10 @@ public CollationElementIterator getCollationElementIterator( CharacterIterator s
 
 Returns a CollationElementIterator for the given CharacterIterator.
 
-Parameters:
-
-- `source`: the character iterator to be collated
-
-**Returns:** a `CollationElementIterator` object
-
-**See also:** java.text.CollationElementIterator
-
-**Since:** 1.2
+@param source the character iterator to be collated
+@return a {@code CollationElementIterator} object
+@see java.text.CollationElementIterator
+@since 1.2
 
 ## RuleBasedCollator.compare(String, String)
 
@@ -295,9 +267,7 @@ collation rules.  Returns information about whether a string is less
 than, greater than or equal to another string in a language.
 This can be overridden in a subclass.
 
-Throws:
-
-- `NullPointerException`: if `source` or `target` is null.
+@throws    NullPointerException if {@code source} or {@code target} is null.
 
 ## RuleBasedCollator.getCollationKey(String)
 
@@ -324,12 +294,8 @@ public boolean equals(Object obj)
 ```
 
 Compares the equality of two collation objects.
-
-Parameters:
-
-- `obj`: the table-based collation object to be compared with this.
-
-**Returns:** true if the current table-based collation object is the same
+@param obj the table-based collation object to be compared with this.
+@return true if the current table-based collation object is the same
 as the table-based collation object obj; false otherwise.
 
 ## RuleBasedCollator.hashCode()

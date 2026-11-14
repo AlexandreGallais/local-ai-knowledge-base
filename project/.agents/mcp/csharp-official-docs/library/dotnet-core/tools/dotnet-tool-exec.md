@@ -1,12 +1,9 @@
 ---
-title: "dotnet tool exec command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-tool-exec.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet tool exec command
+description: The dotnet tool exec command downloads and invokes a .NET tool in one step without permanent installation.
+ms.date: 09/15/2026
+ai-usage: ai-assisted
 ---
-
 # dotnet tool exec
 
 **This article applies to:** ✔️ .NET 10.0.100 SDK and later versions
@@ -51,7 +48,7 @@ This command also exists in two other forms for easier use
 
 - **`PACKAGE_NAME`**
 
-  The NuGet package ID of the .NET tool to execute. You can optionally specify a version using the `@` syntax, for example `user@example.com`.
+  The NuGet package ID of the .NET tool to execute. You can optionally specify a version using the `@` syntax, for example `dotnetsay@2.1.0`.
 
 - **`tool-arguments`**
 
@@ -63,25 +60,19 @@ This command also exists in two other forms for easier use
 
   Allow the tool to use a newer version of the .NET runtime if the runtime it targets isn't installed.
 
-- **`--add-source `**
+- **`--add-source <SOURCE>`**
 
-  Adds an additional NuGet package source to use during installation. Feeds are accessed in parallel, not in a fallback cascade sequence. If the same package and version is available in multiple feeds, the fastest feed wins. For more information, see What happens when a NuGet package is installed. You can control this through the use of NuGet package source mapping. For more information, see Package Source Mapping.
+  Adds an additional NuGet package source to use during installation. Feeds are accessed in parallel, not in a fallback cascade sequence. If the same package and version is available in multiple feeds, the fastest feed wins. For more information, see [What happens when a NuGet package is installed](/nuget/concepts/package-installation-process#what-happens-when-a-nuget-package-is-installed). You can control this through the use of NuGet package source mapping. For more information, see [Package Source Mapping](/nuget/consume-packages/package-source-mapping).
 
-- **`--configfile <FILE>`**
+- [!INCLUDE [configfile](includes/cli-configfile.md)]
 
-The NuGet configuration file (*nuget.config*) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see Common NuGet Configurations.
-
-- **`--disable-parallel`**
-
-Prevents restoring multiple projects in parallel.
+- [!INCLUDE [disable-parallel](includes/cli-disable-parallel.md)]
 
 - **`--ignore-failed-sources`**
 
   Treats package source failures as warnings.
 
-- **`--interactive`**
-
-Allows the command to stop and wait for user input or action. For example, to complete authentication.
+- [!INCLUDE [interactive](includes/cli-interactive.md)]
 
 - **`--no-http-cache`**
 
@@ -95,20 +86,11 @@ Allows the command to stop and wait for user input or action. For example, to co
 
   Accepts all confirmation prompts, including the prompt to download and run the tool package. Use this option only with packages and package sources that you trust. Available starting with .NET 11.
 
-- **`--source `**
+- [!INCLUDE [source](includes/cli-tool-source.md)]
 
-Specifies the source for NuGet packages.
+- [!INCLUDE [verbosity](includes/cli-verbosity-normal.md)]
 
-> **Caution:**
-> This option completely replaces existing NuGet configuration, including Package Source Mapping.
-
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. The default is `normal`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
-
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Examples
 
@@ -116,7 +98,7 @@ Prints out a description of how to use the command.
 
   Downloads (if necessary) and runs the latest version of the `dotnetsay` tool.
 
-- **`dotnet tool exec user@example.com`**
+- **`dotnet tool exec dotnetsay@2.1.0`**
 
   Downloads (if necessary) and runs version 2.1.0 of the `dotnetsay` tool.
 
@@ -147,8 +129,8 @@ The `dotnet tool install -g` command does still serve an important purpose for u
 
 ## See also
 
-- .NET tools
-- dotnet tool install
-- dotnet tool run
-- Tutorial: Install and use a .NET global tool using the .NET CLI
-- Tutorial: Install and use a .NET local tool using the .NET CLI
+- [.NET tools](global-tools.md)
+- [dotnet tool install](dotnet-tool-install.md)
+- [dotnet tool run](dotnet-tool-run.md)
+- [Tutorial: Install and use a .NET global tool using the .NET CLI](global-tools-how-to-use.md)
+- [Tutorial: Install and use a .NET local tool using the .NET CLI](local-tools-how-to-use.md)

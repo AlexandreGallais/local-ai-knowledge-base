@@ -1,15 +1,8 @@
----
-title: "std::os::windows::fs"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/os/windows/fs.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::os::windows::fs
 
-Windows-specific extensions to primitives in the `std::fs` module.
+Windows-specific extensions to primitives in the [`std::fs`] module.
+
+[`std::fs`]: crate::fs
 
 ## trait FileExt
 
@@ -17,7 +10,7 @@ Windows-specific extensions to primitives in the `std::fs` module.
 pub trait FileExt
 ```
 
-Windows-specific extensions to `fs::File`.
+Windows-specific extensions to [`fs::File`].
 
 ## FileExt::seek_read
 
@@ -38,7 +31,7 @@ fn main() -> io::Result<()> {
     file.seek_read(&mut buffer[..], 72)?;
     Ok(())
 }
-```rust
+```
 
 ## FileExt::seek_write
 
@@ -57,7 +50,7 @@ fn main() -> std::io::Result<()> {
     buffer.seek_write(b"some bytes", 72)?;
     Ok(())
 }
-```rust
+```
 
 ## OpenOptionsExt::access_mode
 
@@ -71,9 +64,9 @@ use std::os::windows::prelude::*;
 // Open without read and write permission, for example if you only need
 // to call `stat` on the file
 let file = OpenOptions::new().access_mode(0).open("foo.txt");
-```rust
+```
 
-`CreateFile`: https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea
+[`CreateFile`]: https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea
 
 ## OpenOptionsExt::share_mode
 
@@ -90,9 +83,9 @@ let file = OpenOptions::new()
     .write(true)
     .share_mode(0)
     .open("foo.txt");
-```rust
+```
 
-`CreateFile`: https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea
+[`CreateFile`]: https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea
 
 ## OpenOptionsExt::custom_flags
 
@@ -113,10 +106,10 @@ let file = OpenOptions::new()
     .write(true)
     .custom_flags(winapi::FILE_FLAG_DELETE_ON_CLOSE)
     .open("foo.txt");
-```rust
+```
 
-`CreateFile`: https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea
-`CreateFile2`: https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfile2
+[`CreateFile`]: https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea
+[`CreateFile2`]: https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfile2
 
 ## OpenOptionsExt::attributes
 
@@ -137,10 +130,10 @@ let file = OpenOptions::new()
     .create(true)
     .attributes(winapi::FILE_ATTRIBUTE_HIDDEN)
     .open("foo.txt");
-```rust
+```
 
-`CreateFile`: https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea
-`CreateFile2`: https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfile2
+[`CreateFile`]: https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea
+[`CreateFile2`]: https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfile2
 
 ## OpenOptionsExt::security_qos_flags
 
@@ -163,10 +156,10 @@ let file = OpenOptions::new()
     .security_qos_flags(winapi::SECURITY_IDENTIFICATION)
 
     .open(r"\\.\pipe\MyPipe");
-```rust
+```
 
-`CreateFile`: https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea
-`CreateFile2`: https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfile2
+[`CreateFile`]: https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea
+[`CreateFile2`]: https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfile2
 [Impersonation Levels]:
     https://docs.microsoft.com/en-us/windows/win32/api/winnt/ne-winnt-security_impersonation_level
 
@@ -176,12 +169,12 @@ let file = OpenOptions::new()
 pub trait MetadataExt
 ```
 
-Windows-specific extensions to `fs::Metadata`.
+Windows-specific extensions to [`fs::Metadata`].
 
 The data members that this trait exposes correspond to the members
-of the `BY_HANDLE_FILE_INFORMATION` structure.
+of the [`BY_HANDLE_FILE_INFORMATION`] structure.
 
-`BY_HANDLE_FILE_INFORMATION`:
+[`BY_HANDLE_FILE_INFORMATION`]:
     https://docs.microsoft.com/windows/win32/api/fileapi/ns-fileapi-by_handle_file_information
 
 ## MetadataExt::file_attributes
@@ -199,7 +192,7 @@ fn main() -> io::Result<()> {
     let attributes = metadata.file_attributes();
     Ok(())
 }
-```rust
+```
 
 [File Attribute Constants]:
     https://docs.microsoft.com/windows/win32/fileio/file-attribute-constants
@@ -219,9 +212,9 @@ fn main() -> io::Result<()> {
     let creation_time = metadata.creation_time();
     Ok(())
 }
-```rust
+```
 
-`FILETIME`: https://docs.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-filetime
+[`FILETIME`]: https://docs.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-filetime
 
 ## MetadataExt::last_access_time
 
@@ -238,9 +231,9 @@ fn main() -> io::Result<()> {
     let last_access_time = metadata.last_access_time();
     Ok(())
 }
-```rust
+```
 
-`FILETIME`: https://docs.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-filetime
+[`FILETIME`]: https://docs.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-filetime
 
 ## MetadataExt::last_write_time
 
@@ -257,9 +250,9 @@ fn main() -> io::Result<()> {
     let last_write_time = metadata.last_write_time();
     Ok(())
 }
-```rust
+```
 
-`FILETIME`: https://docs.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-filetime
+[`FILETIME`]: https://docs.microsoft.com/windows/win32/api/minwinbase/ns-minwinbase-filetime
 
 ## MetadataExt::file_size
 
@@ -276,7 +269,7 @@ fn main() -> io::Result<()> {
     let file_size = metadata.file_size();
     Ok(())
 }
-```rust
+```
 
 ## fn symlink_file
 
@@ -290,7 +283,9 @@ fn main() -> std::io::Result<()> {
     fs::symlink_file("a.txt", "b.txt")?;
     Ok(())
 }
-```rust
+```
+
+# Limitations
 
 Windows treats symlink creation as a [privileged action][symlink-security],
 therefore this function is likely to fail unless the user makes changes to
@@ -312,7 +307,9 @@ fn main() -> std::io::Result<()> {
     fs::symlink_dir("a", "b")?;
     Ok(())
 }
-```rust
+```
+
+# Limitations
 
 Windows treats symlink creation as a [privileged action][symlink-security],
 therefore this function is likely to fail unless the user makes changes to

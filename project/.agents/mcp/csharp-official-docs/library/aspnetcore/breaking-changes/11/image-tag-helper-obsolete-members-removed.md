@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: Obsolete ImageTagHelper members removed"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/11/image-tag-helper-obsolete-members-removed.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 11 where obsolete ImageTagHelper members have been removed."
+ms.date: 08/05/2026
+ai-usage: ai-assisted
 ---
-
 # Obsolete ImageTagHelper members removed
 
 A constructor overload and two properties of `ImageTagHelper` that were marked obsolete since ASP.NET Core 3.0 Preview 4 have been removed in ASP.NET Core 11.
@@ -29,11 +26,11 @@ Starting in .NET 11, the following `ImageTagHelper` members no longer exist:
 
 ## Type of breaking change
 
-This change can affect source compatibility and/or binary compatibility.
+This change can affect [source compatibility](/dotnet/core/compatibility/categories#source-compatibility) and/or [binary compatibility](/dotnet/core/compatibility/categories#source-compatibility).
 
 ## Reason for change
 
-These APIs were marked obsolete since ASP.NET Core 3.0. For more information, see dotnet/aspnetcore#67077.
+These APIs were marked obsolete since ASP.NET Core 3.0. For more information, see [dotnet/aspnetcore#67077](https://github.com/dotnet/aspnetcore/pull/67077).
 
 ## Recommended action
 

@@ -1,12 +1,3 @@
----
-title: "core::panic::location"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/panic/location.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::panic::location
 
 ## struct Location
@@ -17,11 +8,14 @@ pub struct Location<'a>
 
 A struct containing information about the location of a panic.
 
-This structure is created by `PanicHookInfo::location()` and `PanicInfo::location()`.
+This structure is created by [`PanicHookInfo::location()`] and [`PanicInfo::location()`].
+
+[`PanicInfo::location()`]: crate::panic::PanicInfo::location
+[`PanicHookInfo::location()`]: ../../std/panic/struct.PanicHookInfo.html#method.location
 
 # Examples
 
-```rust
+```should_panic
 use std::panic;
 
 panic::set_hook(Box::new(|panic_info| {
@@ -39,7 +33,7 @@ panic!("Normal panic");
 
 Comparisons for equality and ordering are made in file, line, then column priority.
 Files are compared as strings, not `Path`, which could be unexpected.
-See `Location::file`'s documentation for more discussion.
+See [`Location::file`]'s documentation for more discussion.
 
 ## Location::caller
 
@@ -53,7 +47,7 @@ within a non-tracked function body.
 
 # Examples
 
-```
+```standalone_crate
 use std::panic::Location;
 
 /// ```
@@ -122,7 +116,7 @@ fn main() {
         (yet_another_location.line(), yet_another_location.column())
     );
 }
-```rust
+```
 
 ## Location::file
 
@@ -150,7 +144,7 @@ platform and target platform differ.
 
 # Examples
 
-```rust
+```should_panic
 use std::panic;
 
 panic::set_hook(Box::new(|panic_info| {
@@ -185,7 +179,7 @@ Returns the line number from which the panic originated.
 
 # Examples
 
-```rust
+```should_panic
 use std::panic;
 
 panic::set_hook(Box::new(|panic_info| {
@@ -209,7 +203,7 @@ Returns the column from which the panic originated.
 
 # Examples
 
-```rust
+```should_panic
 use std::panic;
 
 panic::set_hook(Box::new(|panic_info| {

@@ -1,19 +1,12 @@
----
-title: "vitest/require-mock-type-parameters"
-tool: "eslint-vitest"
-version: "1.6"
-source: "https://github.com/vitest-dev/eslint-plugin-vitest/blob/c5df1054a25044a7ca5baf07461b7aee1f15f5f2/docs/rules/require-mock-type-parameters.md"
-commit: "c5df1054a25044a7ca5baf07461b7aee1f15f5f2"
-license: "MIT"
----
-
 # vitest/require-mock-type-parameters
 
 📝 Enforce using type parameters with vitest mock functions.
 
 ⚠️ This rule _warns_ in the 🌐 `all` config.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 When using `vi.fn()` to mock functions, by default, the mocked function has the type of `(...args: any[]) => any`. To add more specific types to the mocked function, a type parameter needs to be added to the call, e.g. `vi.fn<(arg1: string, arg2: boolean) => number>()`.
 
@@ -43,9 +36,13 @@ test('foo', () => {
 
 ## Options
 
+<!-- begin auto-generated rule options list -->
+
 | Name                   | Description                                                       | Type    | Default |
 | :--------------------- | :---------------------------------------------------------------- | :------ | :------ |
 | `checkImportFunctions` | Also require type parameters for `importActual` and `importMock`. | Boolean | `false` |
+
+<!-- end auto-generated rule options list -->
 
 ```json
 {

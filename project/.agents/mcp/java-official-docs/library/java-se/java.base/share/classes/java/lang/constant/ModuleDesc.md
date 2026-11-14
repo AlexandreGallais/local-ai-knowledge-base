@@ -1,26 +1,17 @@
----
-title: "ModuleDesc interface (java.lang.constant)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/constant/ModuleDesc.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ModuleDesc interface (java.lang.constant)
 
 ```java
 public sealed interface ModuleDesc permits ModuleDescImpl
 ```
 
-A nominal descriptor for a `Module` constant.
+A nominal descriptor for a {@code Module} constant.
 
-To create a `ModuleDesc` for a module, use the `of(String)`
+<p>
+To create a {@link ModuleDesc} for a module, use the {@link #of(String)}
 method.
 
-**jvms:** 4.4.11 The CONSTANT_Module_info Structure
-
-**Since:** 21
+@jvms 4.4.11 The CONSTANT_Module_info Structure
+@since 21
 
 ## ModuleDesc.of(String)
 
@@ -28,21 +19,15 @@ method.
 static ModuleDesc of(String name)
 ```
 
-Returns a `ModuleDesc` for a module,
+Returns a {@link ModuleDesc} for a module,
 given the name of the module.
 
-Parameters:
-
-- `name`: the module name
-
-**Returns:** a `ModuleDesc` describing the desired module
-
-**jvms:** 4.2.3 Module and Package Names
-
-Throws:
-
-- `NullPointerException`: if the argument is `null`
-- `IllegalArgumentException`: if the name string is not in the correct format
+@param name the module name
+@return a {@link ModuleDesc} describing the desired module
+@throws NullPointerException if the argument is {@code null}
+@throws IllegalArgumentException if the name string is not in the
+correct format
+@jvms 4.2.3 Module and Package Names
 
 ## ModuleDesc.name()
 
@@ -50,9 +35,9 @@ Throws:
 String name()
 ```
 
-Returns the module name of this `ModuleDesc`.
+Returns the module name of this {@link ModuleDesc}.
 
-**Returns:** the module name
+@return the module name
 
 ## ModuleDesc.equals(Object)
 
@@ -61,11 +46,8 @@ boolean equals(Object o)
 ```
 
 Compare the specified object with this descriptor for equality.
-Returns `true` if and only if the specified object is
-also a `ModuleDesc` and both describe the same module.
+Returns {@code true} if and only if the specified object is
+also a {@link ModuleDesc} and both describe the same module.
 
-Parameters:
-
-- `o`: the other object
-
-**Returns:** whether this descriptor is equal to the other object
+@param o the other object
+@return whether this descriptor is equal to the other object

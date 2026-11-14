@@ -1,10 +1,11 @@
 ---
-title: "How to debug empty query results sets - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/debug-empty-query-results-sets.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to debug empty query results sets - LINQ to XML
+description: When you query an XML tree in a default namespace, avoid the common error of querying as though the XML were not in a namespace.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to debug empty query results sets (LINQ to XML)
@@ -15,7 +16,7 @@ The first set of examples in this article shows a typical way that XML in a defa
 
 The second set of examples show the necessary corrections so that you can query XML in a namespace.
 
-For more information, see Namespaces overview.
+For more information, see [Namespaces overview](namespaces-overview.md).
 
 ## Example: An improper query on XML in a namespace
 
@@ -71,7 +72,7 @@ End of result set
 
 This example shows creation of XML in a namespace, and a query that's  coded properly.
 
-The solution is to declare and initialize an `System.Xml.Linq.XNamespace` object, and to use it when specifying `System.Xml.Linq.XName` objects. In this case, the argument to the `System.Xml.Linq.XContainer.Elements*` method is an `System.Xml.Linq.XName` object.
+The solution is to declare and initialize an <xref:System.Xml.Linq.XNamespace> object, and to use it when specifying <xref:System.Xml.Linq.XName> objects. In this case, the argument to the <xref:System.Xml.Linq.XContainer.Elements*> method is an <xref:System.Xml.Linq.XName> object.
 
 ```csharp
 XElement root = XElement.Parse(
@@ -131,4 +132,4 @@ End of result set
 
 ## See also
 
-- Basic <example-value> (LINQ to XML) (Visual Basic)
+- [Basic Queries (LINQ to XML) (Visual Basic)](./find-element-specific-attribute.md)

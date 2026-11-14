@@ -1,15 +1,15 @@
 ---
-title: ".NET SDK workload sets"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-workload-sets.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
----
+title: .NET SDK workload sets
+description: "Learn how to use workload sets to control which versions of workloads get installed, updated, or restored."
+ms.service: dotnet
+ms.topic: how-to
+ms.date: 08/02/2024
 
+#customer intent: As a developer using optional workloads, I want to keep my workload versions in sync so that I can avoid conflicts between versions. I also want to avoid unexpected workload updates, so that I can avoid disruptions in development.
+---
 # .NET SDK workload sets
 
-The *workload sets* feature provides a version number that represents a group of .NET SDK workloads. The install, update, and restore commands use this number in *workload-set update mode* to provide the following benefits:
+The *workload sets* feature provides a version number that represents a group of .NET SDK workloads. The [install](dotnet-workload-install.md), [update](dotnet-workload-update.md), and [restore](dotnet-workload-restore.md) commands use this number in *workload-set update mode* to provide the following benefits:
 
 * You control the cadence of change for installed workload versions. The alternative mode of operation without using workload sets is called *loose manifests update mode*. In this mode, workloads are updated automatically as new versions of individual workloads are released onto any configured NuGet feeds. In `workload-set` update mode, workloads stay at a specific workload-set version until you explicitly change that version.
 * You can install and update a combination of workload versions that ship at the same time and are known to work together.
@@ -28,9 +28,9 @@ And you can still choose to install, update, or restore to the latest version of
 
 ## Prerequisites
 
-* .NET 8.0.400 SDK or later.
+* [.NET 8.0.400 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) or later.
 
-  In 8.0.400 SDK, the `dotnet workload` commands are in workload-set update mode only when it's explicitly selected.
+  In 8.0.400 SDK, the `dotnet workload` commands are in workload-set update mode only when it's explicitly selected. <!--Starting in [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0), `dotnet workload` commands are in workload-set update mode by default.-->
 
 ## "Pin" the install command
 
@@ -39,9 +39,9 @@ The command no longer automatically installs the newest workload based on loose 
 
 To "pin" the `install` command:
 
-1. Choose a workload-set version. For example, `9.0.100-preview.7.24414.1`.
+1. [Choose a workload-set version](#choose-a-workload-set-version). For example, `9.0.100-preview.7.24414.1`.
 
-1. Choose a workload. For example, `aspire`.
+1. [Choose a workload](dotnet-workload-search.md). For example, `aspire`.
 
 1. ```dotnetcli
    dotnet workload install aspire --version 9.0.100-preview.7.24414.1
@@ -89,7 +89,7 @@ To update installed workloads to the latest workload-set version available on th
 
 To specify a workload-set version to update to when you're not specifying it in global.json, use the `--version` option of the `update` command:
 
-1. Choose a workload-set version. For example, `8.0.400`.
+1. [Choose a workload-set version](#choose-a-workload-set-version). For example, `8.0.400`.
 
 1. ```dotnetcli
    dotnet workload update --version 8.0.400
@@ -114,6 +114,7 @@ To use a `global.json` file to specify the workload-set version for a repository
    ```
 
 With the current directory in the same repository and the CLI in `workload-set` update mode, the `install`, `update`, and `restore` commands install workloads for the specified workload-set version. If you don't have a global.json file and you're in `workload-set` update mode, the `restore` command installs the workload-set version that was established when you switched from manifests update mode to `workload-set` update mode.
+<!--If you're using SDK 9, you defaulted to `workload-set` update mode, and you might not have established a workload-set version. In that case, `restore` installs the latest workload set available on the configured feeds.-->
 
 If you have a workload-set version in the global.json file, the workload commands are in `workload-set` mode even if you haven't run the `config` command or used `--version`. The global.json file overrides those.
 To use the `--version` option in that case, run the command outside of the path containing the global.json file.
@@ -158,7 +159,7 @@ dotnet workload --version
 
 Workload sets are published to nuget.org with each release of the .NET SDK, under the package ID `Microsoft.NET.Workloads.<feature band>`. For a stable version of the SDK, there is always a matching workload-set version. So 8.0.400 SDK can install an 8.0.400 workload set, and 401 can install a 401 set. In general, we recommend that you install the matching workload set for a stable SDK.
 
-For preview releases, find the corresponding workload-set version in the package's README tab. For example, see the README tab for the .NET 9 Preview 7 package.
+For preview releases, find the corresponding workload-set version in the package's README tab. For example, see [the README tab for the .NET 9 Preview 7 package](https://www.nuget.org/packages/Microsoft.NET.Workloads.9.0.100-preview.7/9.100.0-preview.7.24414.1#readme-body-tab).
 
 In the future, you'll be able to see a list of workload-set versions and what they contain.
 
@@ -174,6 +175,6 @@ In .NET 8.0.4xx SDK, manifests mode is the default. In this version, you need to
 
 ## Related content
 
-* dotnet workload command
-* dotnet workload install
-* dotnet workload update
+* [dotnet workload command](dotnet-workload.md)
+* [dotnet workload install](dotnet-workload-install.md)
+* [dotnet workload update](dotnet-workload-update.md)

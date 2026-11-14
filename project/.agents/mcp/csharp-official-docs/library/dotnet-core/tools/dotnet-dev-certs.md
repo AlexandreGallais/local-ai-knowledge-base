@@ -1,12 +1,9 @@
 ---
-title: "dotnet dev-certs command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-dev-certs.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet dev-certs command
+description: The dotnet dev-certs command generates a self-signed certificate to enable HTTPS use in development.
+ms.date: 03/29/2026
+ai-usage: ai-assisted
 ---
-
 # dotnet dev-certs
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -100,7 +97,9 @@ The `dotnet dev-certs` command manages a self-signed certificate to enable HTTPS
   successfully removed from the machine.
   ```
 
-- **`-ep|--export-path `**
+  <a name="exportpath"></a>
+
+- **`-ep|--export-path <PATH>`**
 
   Exports the certificate to a file so that it can be used by other tools. Specify the full path to the exported certificate file, including the file name. The containing directories must already exist and access to them should be restricted. The type of certificate files that are created depends on which options are used with `--export-path`:
 
@@ -109,8 +108,8 @@ The `dotnet dev-certs` command manages a self-signed certificate to enable HTTPS
   |`--export-path`| The public part of the certificate as a PFX file.|
   |`--export-path --format PEM` | The public part of the certificate in PEM format. No separate *.key* file is created.|
   |`--export-path --password` | The public and private parts of the certificate as a PFX file. |
-  |`--export-path --password <example-value> PEM` | The public and private parts of the certificate as a pair of files in PEM format. The key file has the *.key* extension and is protected by the given password. |
-  |`--export-path --no-password <example-value> PEM` | The public and private parts of the certificate as a pair of files in PEM format. The key file has the *.key* extension and is exported in plain text. The `--no-password` option is intended for internal testing use only.|
+  |`--export-path --password --format PEM` | The public and private parts of the certificate as a pair of files in PEM format. The key file has the *.key* extension and is protected by the given password. |
+  |`--export-path --no-password --format PEM` | The public and private parts of the certificate as a pair of files in PEM format. The key file has the *.key* extension and is exported in plain text. The `--no-password` option is intended for internal testing use only.|
 
   - **`--format`**
 
@@ -118,9 +117,9 @@ The `dotnet dev-certs` command manages a self-signed certificate to enable HTTPS
 
   The file format is independent of the file name extension. For example, if you specify `--format pfx` and `--export-path ./cert.pem`, you'll get a file named *cert.pem* in `PFX` format.
 
-  For information about the effect of this option when used with `--password`, `--no-password`, or without either of those options, see --export-path earlier in this article.
+  For information about the effect of this option when used with `--password`, `--no-password`, or without either of those options, see [--export-path](#exportpath) earlier in this article.
 
-- **`-i|--import `**
+- **`-i|--import <PATH>`**
 
   Imports the provided HTTPS development certificate into the local machine. Requires that you also specify the `--clean` option, which clears out any existing HTTPS developer certificates.
 
@@ -144,7 +143,7 @@ The `dotnet dev-certs` command manages a self-signed certificate to enable HTTPS
   ```
 
   In the example, `$CREDENTIAL_PLACEHOLDER$` represents a password.
-
+  
 - **`-q|--quiet`**
 
   Display warnings and errors only.
@@ -211,8 +210,8 @@ The `dotnet dev-certs` command manages a self-signed certificate to enable HTTPS
 
 ## See also
 
-- Generate self-signed certificates with the .NET CLI
-- Enforce HTTPS in ASP.NET Core
-- Troubleshoot certificate problems such as certificate not trusted
-- Hosting ASP.NET Core images with Docker over HTTPS
-- Hosting ASP.NET Core images with Docker Compose over HTTPS
+- [Generate self-signed certificates with the .NET CLI](../additional-tools/self-signed-certificates-guide.md)
+- [Enforce HTTPS in ASP.NET Core](/aspnet/core/security/enforcing-ssl)
+- [Troubleshoot certificate problems such as certificate not trusted](/aspnet/core/security/enforcing-ssl#troubleshoot-certificate-problems-such-as-certificate-not-trusted)
+- [Hosting ASP.NET Core images with Docker over HTTPS](/aspnet/core/security/docker-https)
+- [Hosting ASP.NET Core images with Docker Compose over HTTPS](/aspnet/core/security/docker-compose-https)

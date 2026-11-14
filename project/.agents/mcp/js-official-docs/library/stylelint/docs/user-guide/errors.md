@@ -1,19 +1,10 @@
----
-title: "Errors & warnings"
-tool: "stylelint"
-version: "18.0"
-source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/docs/user-guide/errors.md"
-commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
-license: "MIT"
----
-
 # Errors & warnings
 
 In addition to rule problems, Stylelint surfaces the following errors and warnings:
 
 ## CSS syntax error
 
-The CSS parser built into Stylelint, or the chosen custom syntax, could not parse your code.
+The CSS parser built into Stylelint, or the chosen [custom syntax](options.md#customsyntax), could not parse your code.
 
 ### Unclosed block
 
@@ -70,7 +61,7 @@ For example:
 
 ## Parse error
 
-The CSS parser built into Stylelint (or the chosen custom syntax) successfully parsed your code, but one of the construct-specific parsers failed to parse either a media query, selector or value within that source.
+The CSS parser built into Stylelint (or the chosen [custom syntax](options.md#customsyntax)) successfully parsed your code, but one of the construct-specific parsers failed to parse either a media query, selector or value within that source.
 
 The construct-specific parsers are:
 
@@ -82,28 +73,28 @@ You should check that your constructs are wellformed, e.g. parentheses are balan
 
 ## Unknown rule error
 
-There is an unknown rule in the configuration object.
+There is an unknown rule in the [configuration object](configure.md).
 
 You should:
 
 - install the latest version of Stylelint (`npm i --save-dev stylelint`), as we may have recently added the rule
-- check that the rule exists and is correctly named by searching the list of rules
+- check that the rule exists and is correctly named by searching the [list of rules](rules.md)
 
 ## Deprecation warning
 
-There is a deprecated rule in the configuration object.
+There is a deprecated rule in the [configuration object](configure.md).
 
 You should:
 
-- identify in the CHANGELOG which release deprecated the rule
+- identify in the [CHANGELOG](../../CHANGELOG.md) which release deprecated the rule
 - take the action suggested there
 
 ## Invalid option warning
 
-There is a misconfigured rule in the configuration object.
+There is a misconfigured rule in the [configuration object](configure.md).
 
 You should:
 
 - install the latest version of Stylelint (`npm i --save-dev stylelint`), as we may have recently added the option
 - check that the option exists and is correctly named by reading the rule's README
-- correctly configure the `rules` property in the configuration object
+- correctly configure the [`rules`](configure.md#rules) property in the configuration object

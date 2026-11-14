@@ -1,12 +1,9 @@
 ---
 title: ".NET Monitor only includes distroless images"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/deployment/8.0/monitor-image.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in deployment in .NET 8 where the .NET Monitor 8 image offering only includes distroless images.
+ms.date: 12/07/2023
+ms.custom: linux-related-content
 ---
-
 # .NET Monitor only includes distroless images
 
 The .NET Monitor 8 image offering has been simplified to focus on a better security posture and smaller image as compared to the .NET Monitor 7 image offering. As part of this change, the Alpine-based images for .NET Monitor have been superseded by the Ubuntu Chiseled-based images.
@@ -39,7 +36,7 @@ The `latest` floating tag has automatically updated from the Alpine-based images
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -57,7 +54,7 @@ Update your tag usage to indicate which image from the .NET Monitor 8 image offe
 
 The notable changes when migrating from a full distro image to a distroless image are the use of a non-root user, the lack of a package manager, and the lack of a shell.
 
-If you were using full distro images (for example, Alpine), you might need to adjust the running user of the .NET Monitor image in your deployments when migrating to .NET Monitor 8. You can find guidance for changing the running user in the .NET Monitor 8.0 compatibility documentation.
+If you were using full distro images (for example, Alpine), you might need to adjust the running user of the .NET Monitor image in your deployments when migrating to .NET Monitor 8. You can find guidance for changing the running user in the .NET Monitor 8.0 [compatibility documentation](https://github.com/dotnet/dotnet-monitor/blob/main/documentation/compatibility/8.0/README.md).
 
 ## Affected APIs
 

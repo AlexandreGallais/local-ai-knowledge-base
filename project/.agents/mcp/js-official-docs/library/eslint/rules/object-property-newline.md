@@ -1,14 +1,12 @@
 ---
-title: "object-property-newline"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/object-property-newline.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: object-property-newline
+rule_type: layout
+related_rules:
+- brace-style
+- comma-dangle
+- key-spacing
+- object-curly-spacing
 ---
-
-# object-property-newline
-
 This rule permits you to restrict the locations of property specifications in object literals. You may prohibit any part of any property specification from appearing on the same line as any part of any other property specification. You may make this prohibition absolute, or, by invoking an object option, you may allow an exception, permitting an object literal to have all parts of all of its property specifications on a single line.
 
 ## Rule Details
@@ -181,7 +179,7 @@ As illustrated above, the `--fix` option, applied to this rule, does not comply 
 
 Examples of **incorrect** code for this rule, with no object option or with `allowAllPropertiesOnSameLine` set to `false`:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint object-property-newline: "error"*/
@@ -217,9 +215,11 @@ const obj5 = {
 ]: true};
 ```
 
+:::
+
 Examples of **correct** code for this rule, with no object option or with `allowAllPropertiesOnSameLine` set to `false`:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint object-property-newline: "error"*/
@@ -249,9 +249,11 @@ const obj3 = {
 };
 ```
 
+:::
+
 Examples of additional **correct** code for this rule with the `{ "allowAllPropertiesOnSameLine": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint object-property-newline: ["error", { "allowAllPropertiesOnSameLine": true }]*/
@@ -267,10 +269,12 @@ const obj3 = {
 };
 ```
 
+:::
+
 ## When Not To Use It
 
 You can turn this rule off if you want to decide, case-by-case, whether to place property specifications on separate lines.
 
 ## Compatibility
 
-* **JSCS**: This rule provides partial compatibility with requireObjectKeysOnNewLine.
+* **JSCS**: This rule provides partial compatibility with [requireObjectKeysOnNewLine](https://jscs-dev.github.io/rule/requireObjectKeysOnNewLine).

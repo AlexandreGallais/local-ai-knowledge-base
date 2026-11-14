@@ -1,14 +1,12 @@
 ---
-title: "Multiple Diagrams per Model - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/modeling/designer/multiple-diagrams.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Multiple Diagrams per Model - EF6
+description: Multiple Diagrams per Model in Entity Framework 6
+author: SamMonoRT
+ms.date: 10/23/2016
+uid: ef6/modeling/designer/multiple-diagrams
 ---
-
 # Multiple Diagrams per Model
-> **Note:**
+> [!NOTE]
 > **EF5 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 5. If you are using an earlier version, some or all of the information does not apply.
 
 This video and page shows how to split a model into multiple diagrams using the Entity Framework Designer (EF Designer). You might want to use this feature when your model becomes too large to view or edit.
@@ -20,7 +18,7 @@ This video shows how to split a model into multiple diagrams using the Entity Fr
 
 **Presented By**: Julia Kornich
 
-**Video**: WMV | MP4 | WMV (ZIP)
+**Video**: [WMV](https://download.microsoft.com/download/5/C/2/5C2B52AB-5532-426F-B078-1E253341B5FA/HDI-ITPro-MSDN-winvideo-multiplediagrams.wmv) | [MP4](https://download.microsoft.com/download/5/C/2/5C2B52AB-5532-426F-B078-1E253341B5FA/HDI-ITPro-MSDN-mp4video-multiplediagrams.m4v) | [WMV (ZIP)](https://download.microsoft.com/download/5/C/2/5C2B52AB-5532-426F-B078-1E253341B5FA/HDI-ITPro-MSDN-winvideo-multiplediagrams.zip)
 
 ## EF Designer Overview
 
@@ -36,6 +34,8 @@ The visual design surface window is automatically opened when the Entity Data Mo
 
 The following screenshot shows an .edmx file opened in the EF Designer. The screenshot shows the visual design surface (to the left) and the **Model Browser** window (to the right).
 
+![EF Designer 2](~/ef6/media/efdesigner2.png)
+
 To undo an operation done in the EF Designer, click Ctrl-Z.
 
 ## Working with Diagrams
@@ -46,7 +46,11 @@ As you add new diagrams, they appear under the Diagrams folder in the Model Brow
 
 The diagram name is displayed next to the .edmx file name, in the Visual Studio editor. For example Model1.edmx\[Diagram1\].
 
+![Diagram Name](~/ef6/media/diagramname.png)
+
 The diagrams content (shape and color of entities and associations) is stored in the .edmx.diagram file. To view this file, select Solution Explorer and unfold the .edmx file. 
+
+![Diagram Files](~/ef6/media/diagramfiles.png)
 
 You should not edit the .edmx.diagram file manually, the content of this file maybe overwritten by the EF Designer.
  
@@ -66,6 +70,8 @@ In addition to splitting a model into multiple diagrams, you can also change col
 
 To change the color, select an entity (or multiple entities) on the design surface. Then, click the right mouse button and select **Properties**. In the Properties window, select the **Fill Color** property. Specify the color using either a valid color name (for example, Red) or a valid RGB (for example, 255, 128, 128). 
 
+![Change Color](~/ef6/media/color.png)
+
 ## Summary
 
-In this topic we looked at how to split a model into multiple diagrams and also how to specify a different color for an entity using the Entity Framework Designer.
+In this topic we looked at how to split a model into multiple diagrams and also how to specify a different color for an entity using the Entity Framework Designer. 

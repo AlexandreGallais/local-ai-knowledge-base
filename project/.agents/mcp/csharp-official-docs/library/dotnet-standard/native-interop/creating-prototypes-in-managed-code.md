@@ -1,24 +1,37 @@
 ---
 title: "Creating Prototypes in Managed Code"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/native-interop/creating-prototypes-in-managed-code.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Create prototypes in .NET managed code, so you can access unmanaged functions and use attribute fields that annotate method definition in managed code.
+ms.date: 07/08/2026
+ai-usage: ai-assisted
+dev_langs:
+  - "csharp"
+  - "vb"
+  - "cpp"
+helpviewer_keywords:
+  - "prototypes in managed code"
+  - "COM interop, DLL functions"
+  - "unmanaged functions"
+  - "platform invoke, creating prototypes"
+  - "COM interop, platform invoke"
+  - "interoperation with unmanaged code, DLL functions"
+  - "interoperation with unmanaged code, platform invoke"
+  - "platform invoke, object fields"
+  - "DLL functions"
+  - "object fields in platform invoke"
 ---
 
 # Creating Prototypes in Managed Code
 
-This topic describes how to access unmanaged functions and introduces several attribute fields that annotate method definition in managed code. For examples that demonstrate how to construct .NET-based declarations to be used with platform invoke, see Marshalling Data with Platform Invoke.
+This topic describes how to access unmanaged functions and introduces several attribute fields that annotate method definition in managed code. For examples that demonstrate how to construct .NET-based declarations to be used with platform invoke, see [Marshalling Data with Platform Invoke](marshalling-data-with-platform-invoke.md).
 
  Before you can access an unmanaged DLL function from managed code, you need to know the name of the function and the name of the DLL that exports it. With this information, you can begin to write the managed definition for an unmanaged function that is implemented in a DLL. Furthermore, you can adjust the way that platform invoke creates the function and marshals data to and from the function.
 
-> **Note:**
-> Windows API functions that allocate a string enable you to free the string by using a method such as `LocalFree`. Platform invoke handles such parameters differently. For platform invoke calls, make the parameter an `IntPtr` type instead of a `String` type. Use methods that are provided by the `System.Runtime.InteropServices.Marshal` class to convert the type to a string manually and free it manually.
+> [!NOTE]
+> Windows API functions that allocate a string enable you to free the string by using a method such as `LocalFree`. Platform invoke handles such parameters differently. For platform invoke calls, make the parameter an `IntPtr` type instead of a `String` type. Use methods that are provided by the <xref:System.Runtime.InteropServices.Marshal?displayProperty=nameWithType> class to convert the type to a string manually and free it manually.
 
 ## Declaration Basics
 
- Managed definitions to unmanaged functions are language-dependent, as you can see in the following examples. For more complete code examples, see Platform Invoke Examples.
+ Managed definitions to unmanaged functions are language-dependent, as you can see in the following examples. For more complete code examples, see [Platform Invoke Examples](platform-invoke-examples.md).
 
 ```vb
 Friend Class NativeMethods
@@ -30,7 +43,7 @@ Friend Class NativeMethods
 End Class
 ```
 
- To apply the `System.Runtime.InteropServices.DllImportAttribute.BestFitMapping`, `System.Runtime.InteropServices.DllImportAttribute.CallingConvention`, `System.Runtime.InteropServices.DllImportAttribute.ExactSpelling`, `System.Runtime.InteropServices.DllImportAttribute.PreserveSig`, `System.Runtime.InteropServices.DllImportAttribute.SetLastError`, or `System.Runtime.InteropServices.DllImportAttribute.ThrowOnUnmappableChar` fields to a Visual Basic <example-value>, you must use the `System.Runtime.InteropServices.DllImportAttribute` attribute instead of the `Declare` statement.
+ To apply the <xref:System.Runtime.InteropServices.DllImportAttribute.BestFitMapping?displayProperty=nameWithType>, <xref:System.Runtime.InteropServices.DllImportAttribute.CallingConvention?displayProperty=nameWithType>, <xref:System.Runtime.InteropServices.DllImportAttribute.ExactSpelling?displayProperty=nameWithType>, <xref:System.Runtime.InteropServices.DllImportAttribute.PreserveSig?displayProperty=nameWithType>, <xref:System.Runtime.InteropServices.DllImportAttribute.SetLastError?displayProperty=nameWithType>, or <xref:System.Runtime.InteropServices.DllImportAttribute.ThrowOnUnmappableChar?displayProperty=nameWithType> fields to a Visual Basic declaration, you must use the <xref:System.Runtime.InteropServices.DllImportAttribute> attribute instead of the `Declare` statement.
 
 ```vb
 Imports System.Runtime.InteropServices
@@ -69,32 +82,32 @@ extern "C" int MessageBox(
 
 ## Adjusting the Definition
 
- Whether you set them explicitly or not, attribute fields are at work defining the behavior of managed code. Platform invoke operates according to the default values set on various fields that exist as metadata in an assembly. You can alter this default behavior by adjusting the values of one or more fields. In many cases, you use the `System.Runtime.InteropServices.DllImportAttribute` to set a value.
+ Whether you set them explicitly or not, attribute fields are at work defining the behavior of managed code. Platform invoke operates according to the default values set on various fields that exist as metadata in an assembly. You can alter this default behavior by adjusting the values of one or more fields. In many cases, you use the <xref:System.Runtime.InteropServices.DllImportAttribute> to set a value.
 
  The following table lists the complete set of attribute fields that pertain to platform invoke. For each field, the table includes the default value and a link to information on how to use these fields to define unmanaged DLL functions.
 
 |Field|Description|
 |-----------|-----------------|
-|`System.Runtime.InteropServices.DllImportAttribute.BestFitMapping`|Enables or disables best-fit mapping.|
-|`System.Runtime.InteropServices.DllImportAttribute.CallingConvention`|Specifies the calling convention to use in passing method arguments. The default is `WinAPI`, which corresponds to `__stdcall` for the 32-bit Intel-based platforms.|
-|`System.Runtime.InteropServices.DllImportAttribute.CharSet`|Controls name mangling and the way that string arguments should be marshalled to the function. The default is `CharSet.Ansi`.|
-|`System.Runtime.InteropServices.DllImportAttribute.EntryPoint`|Specifies the DLL entry point to be called.|
-|`System.Runtime.InteropServices.DllImportAttribute.ExactSpelling`|Controls whether an entry point should be modified to correspond to the character set. The default value varies by programming language.|
-|`System.Runtime.InteropServices.DllImportAttribute.PreserveSig`|Controls whether the managed method signature should be transformed into an unmanaged signature that returns an HRESULT and has an additional [out, retval] argument for the return value. The default is `true` (the signature should not be transformed).|
-|`System.Runtime.InteropServices.DllImportAttribute.SetLastError`|Enables the caller to use the `Marshal.GetLastWin32Error` API function to determine whether an error occurred while executing the method. In Visual Basic, the default is `true`; in C# and C++, the default is `false`.|
-|`System.Runtime.InteropServices.DllImportAttribute.ThrowOnUnmappableChar`|Controls throwing of an exception on an unmappable Unicode character that is converted to an ANSI "?" character.|
+|<xref:System.Runtime.InteropServices.DllImportAttribute.BestFitMapping>|Enables or disables best-fit mapping.|
+|<xref:System.Runtime.InteropServices.DllImportAttribute.CallingConvention>|Specifies the calling convention to use in passing method arguments. The default is `WinAPI`, which corresponds to `__stdcall` for the 32-bit Intel-based platforms.|
+|<xref:System.Runtime.InteropServices.DllImportAttribute.CharSet>|Controls name mangling and the way that string arguments should be marshalled to the function. The default is `CharSet.Ansi`.|
+|<xref:System.Runtime.InteropServices.DllImportAttribute.EntryPoint>|Specifies the DLL entry point to be called.|
+|<xref:System.Runtime.InteropServices.DllImportAttribute.ExactSpelling>|Controls whether an entry point should be modified to correspond to the character set. The default value varies by programming language.|
+|<xref:System.Runtime.InteropServices.DllImportAttribute.PreserveSig>|Controls whether the managed method signature should be transformed into an unmanaged signature that returns an HRESULT and has an additional [out, retval] argument for the return value.<br /><br /> The default is `true` (the signature should not be transformed).|
+|<xref:System.Runtime.InteropServices.DllImportAttribute.SetLastError>|Enables the caller to use the `Marshal.GetLastWin32Error` API function to determine whether an error occurred while executing the method. In Visual Basic, the default is `true`; in C# and C++, the default is `false`.|
+|<xref:System.Runtime.InteropServices.DllImportAttribute.ThrowOnUnmappableChar>|Controls throwing of an exception on an unmappable Unicode character that is converted to an ANSI "?" character.|
 
- For detailed reference information, see `System.Runtime.InteropServices.DllImportAttribute`.
+ For detailed reference information, see <xref:System.Runtime.InteropServices.DllImportAttribute>.
 
 ## Platform invoke security considerations
 
- The `Assert`, `Deny`, and `PermitOnly` members of the `System.Security.Permissions.SecurityAction` enumeration are referred to as *stack walk modifiers*. These members are ignored if they are used as declarative attributes on platform invoke declarations and COM Interface Definition Language (IDL) statements.
+ The `Assert`, `Deny`, and `PermitOnly` members of the <xref:System.Security.Permissions.SecurityAction> enumeration are referred to as *stack walk modifiers*. These members are ignored if they are used as declarative attributes on platform invoke declarations and COM Interface Definition Language (IDL) statements.
 
 ### Platform Invoke Examples
 
  The platform invoke samples in this section illustrate the use of the `RegistryPermission` attribute with the stack walk modifiers.
 
- In the following example, the `System.Security.Permissions.SecurityAction``Assert`, `Deny`, and `PermitOnly` modifiers are ignored.
+ In the following example, the <xref:System.Security.Permissions.SecurityAction>`Assert`, `Deny`, and `PermitOnly` modifiers are ignored.
 
 ```csharp
 [DllImport("MyClass.dll", EntryPoint = "CallRegistryPermission")]
@@ -118,7 +131,7 @@ extern "C" int MessageBox(
     private static extern bool CallRegistryPermissionDeny();
 ```
 
- `System.Security.Permissions.SecurityAction` modifiers do work correctly if they are placed on a class that contains (wraps) the platform invoke call.
+ <xref:System.Security.Permissions.SecurityAction> modifiers do work correctly if they are placed on a class that contains (wraps) the platform invoke call.
 
 ```cpp
       [RegistryPermission(SecurityAction.Demand, Unrestricted = true)]
@@ -139,7 +152,7 @@ class PInvokeWrapper
 }
 ```
 
- `System.Security.Permissions.SecurityAction` modifiers also work correctly in a nested scenario where they are placed on the caller of the platform invoke call:
+ <xref:System.Security.Permissions.SecurityAction> modifiers also work correctly in a nested scenario where they are placed on the caller of the platform invoke call:
 
 ```cpp
       {
@@ -220,11 +233,11 @@ interface IDemandStubsItf
 
 ## See also
 
-- Consuming Unmanaged DLL Functions
-- Specifying an Entry Point
-- Specifying a Character Set
-- Platform Invoke Examples
-- Platform Invoke Security Considerations
-- Identifying Functions in DLLs
-- Creating a Class to Hold DLL Functions
-- Calling a DLL Function
+- [Consuming Unmanaged DLL Functions](consuming-unmanaged-dll-functions.md)
+- [Specifying an Entry Point](specifying-an-entry-point.md)
+- [Specifying a Character Set](specifying-a-character-set.md)
+- [Platform Invoke Examples](platform-invoke-examples.md)
+- [Platform Invoke Security Considerations](/previous-versions/dotnet/netframework-4.0/bb397754(v=vs.100))
+- [Identifying Functions in DLLs](identifying-functions-in-dlls.md)
+- [Creating a Class to Hold DLL Functions](creating-a-class-to-hold-dll-functions.md)
+- [Calling a DLL Function](calling-a-dll-function.md)

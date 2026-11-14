@@ -1,24 +1,23 @@
 ---
-title: "Unit testing C# with TUnit and .NET"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/unit-testing-csharp-with-tunit.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Unit testing C# with TUnit and .NET
+description: Learn unit test concepts in C# and .NET through an interactive experience building a sample solution step-by-step using dotnet test and TUnit.
+author: thomhurst
+ms.author: wiwagn
+ms.date: 11/03/2026
+ai-usage: ai-assisted
 ---
-
 # Unit testing C# with TUnit and .NET
 
 This tutorial takes you through an interactive experience building a sample solution step-by-step to learn unit testing concepts.
 
-This article is about testing a .NET Core project. If you're testing an ASP.NET Core project, see Integration tests in ASP.NET Core.
+[!INCLUDE [testing an ASP.NET Core project from .NET Core](../../../includes/core-testing-note-aspnet.md)]
 
 ## Prerequisites
 
-- .NET 10 SDK or later versions.
+- [.NET 10 SDK](https://dotnet.microsoft.com/download) or later versions.
 - A text editor or code editor of your choice.
 
-TUnit is built entirely on Microsoft.Testing.Platform (MTP) and doesn't support VSTest. This tutorial uses the MTP mode of `dotnet test`, which requires the .NET 10 SDK.
+TUnit is built entirely on [Microsoft.Testing.Platform (MTP)](microsoft-testing-platform-intro.md) and doesn't support VSTest. This tutorial uses the MTP mode of `dotnet test`, which requires the .NET 10 SDK.
 
 ## Creating the source project
 
@@ -90,10 +89,10 @@ Change the directory to the *PrimeService.Tests* directory and create a new proj
 dotnet new TUnit
 ```
 
-> **Note:**
+> [!NOTE]
 > Template short names are case-sensitive. Use `TUnit`, not `tunit`.
 
-The dotnet new command creates a test project that uses TUnit as the test library. The generated *PrimeService.Tests.csproj* file is an executable project that references the `TUnit` package (the version number might differ):
+The [dotnet new](../tools/dotnet-new.md) command creates a test project that uses TUnit as the test library. The generated *PrimeService.Tests.csproj* file is an executable project that references the `TUnit` package (the version number might differ):
 
 ```xml
 <PropertyGroup>
@@ -110,7 +109,7 @@ The dotnet new command creates a test project that uses TUnit as the test librar
 
 The `TUnit` package includes the test framework, the assertion library, and the MTP test runner, so the project doesn't need any other test packages. The template also adds sample tests. Delete all the *.cs* files and the *Data* directory from the *PrimeService.Tests* directory, because this tutorial replaces them with its own tests.
 
-Now, add the `PrimeService` class library as another dependency to the project. Use the `dotnet reference add` command:
+Now, add the `PrimeService` class library as another dependency to the project. Use the [`dotnet reference add`](../tools/dotnet-reference-add.md) command:
 
 ```dotnetcli
 dotnet reference add ../PrimeService/PrimeService.csproj
@@ -147,7 +146,7 @@ Because TUnit doesn't support VSTest, `dotnet test` must run in its MTP mode. In
 }
 ```
 
-For more information, see MTP mode of dotnet test.
+For more information, see [MTP mode of dotnet test](unit-testing-with-dotnet-test.md#mtp-mode-of-dotnet-test).
 
 ## Creating the first test
 
@@ -175,10 +174,10 @@ namespace Prime.UnitTests.Services
 
 The `[Test]` attribute indicates a method is a test method. TUnit doesn't need an attribute on the class. TUnit assertions are asynchronous, so the test method returns a `Task` and awaits `Assert.That`. The `TUnit` package adds global `using` directives for its namespaces, so the file doesn't need them.
 
-> **Note:**
+> [!NOTE]
 > The `using Prime.Services;` directive is inside the namespace on purpose. MTP generates the test application's entry point in the project's root namespace, `PrimeService.Tests`. That namespace hides the `PrimeService` class from a `using` directive at the top of the file, but not from one inside the namespace.
 
-Save this file and execute the `dotnet test` command to build the tests and the class library and run the tests. The TUnit test project contains the program entry point to run your tests. `dotnet test` starts the test application using the unit test project you created.
+Save this file and execute the [`dotnet test`](../tools/dotnet-test.md) command to build the tests and the class library and run the tests. The TUnit test project contains the program entry point to run your tests. `dotnet test` starts the test application using the unit test project you created.
 
 Your test fails. You didn't create the implementation yet. Make the test pass by writing the simplest code in the `PrimeService` class that works:
 
@@ -226,8 +225,8 @@ You built a small library and a set of unit tests for that library. You've also 
 
 ## See also
 
-- TUnit documentation
-- Run selected unit tests
-- Order unit tests
-- dotnet reference add
-- dotnet test
+- [TUnit documentation](https://tunit.dev/)
+- [Run selected unit tests](selective-unit-tests.md?pivots=tunit)
+- [Order unit tests](order-unit-tests.md?pivots=tunit)
+- [dotnet reference add](../tools/dotnet-reference-add.md)
+- [dotnet test](../tools/dotnet-test.md)

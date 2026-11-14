@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: HostApplicationBuilderSettings.Args respected by HostApplicationBuilder ctor"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/extensions/8.0/hostapplicationbuilder-ctor.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 8 breaking change in .NET extensions where the HostApplicationBuilder constructor respects the HostApplicationBuilderSettings.Args value even if DisableDefaults is true.
+ms.date: 03/13/2023
 ---
-
 # HostApplicationBuilderSettings.Args respected by HostApplicationBuilder ctor
 
-The `Microsoft.Extensions.Hosting.HostApplicationBuilder` constructor that accepts a `Microsoft.Extensions.Hosting.HostApplicationBuilderSettings` object now applies the `Microsoft.Extensions.Hosting.HostApplicationBuilderSettings.Args` property, regardless of whether `Microsoft.Extensions.Hosting.HostApplicationBuilderSettings.DisableDefaults` is set to `true` or `false`.
+The <xref:Microsoft.Extensions.Hosting.HostApplicationBuilder> constructor that accepts a <xref:Microsoft.Extensions.Hosting.HostApplicationBuilderSettings> object now applies the <xref:Microsoft.Extensions.Hosting.HostApplicationBuilderSettings.Args?displayProperty=nameWithType> property, regardless of whether <xref:Microsoft.Extensions.Hosting.HostApplicationBuilderSettings.DisableDefaults> is set to `true` or `false`.
 
 ## Version introduced
 
@@ -17,24 +13,24 @@ The `Microsoft.Extensions.Hosting.HostApplicationBuilder` constructor that accep
 
 ## Previous behavior
 
-Previously, the `Microsoft.Extensions.Hosting.HostApplicationBuilderSettings.Args` property was ignored when `Microsoft.Extensions.Hosting.HostApplicationBuilderSettings.DisableDefaults` was set to `true`.
+Previously, the <xref:Microsoft.Extensions.Hosting.HostApplicationBuilderSettings.Args?displayProperty=nameWithType> property was ignored when <xref:Microsoft.Extensions.Hosting.HostApplicationBuilderSettings.DisableDefaults?displayProperty=nameWithType> was set to `true`.
 
 ## New behavior
 
-Starting in .NET 8, the `Microsoft.Extensions.Hosting.HostApplicationBuilderSettings.Args` value is added to `Microsoft.Extensions.Hosting.HostApplicationBuilder.Configuration` regardless of whether `Microsoft.Extensions.Hosting.HostApplicationBuilderSettings.DisableDefaults` is set to `true` or `false`.
+Starting in .NET 8, the <xref:Microsoft.Extensions.Hosting.HostApplicationBuilderSettings.Args?displayProperty=nameWithType> value is added to <xref:Microsoft.Extensions.Hosting.HostApplicationBuilder.Configuration?displayProperty=nameWithType> regardless of whether <xref:Microsoft.Extensions.Hosting.HostApplicationBuilderSettings.DisableDefaults> is set to `true` or `false`.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-The behavior of ignoring `Microsoft.Extensions.Hosting.HostApplicationBuilderSettings.Args` was unexpected, even when `Microsoft.Extensions.Hosting.HostApplicationBuilderSettings.DisableDefaults` was set to `true`. That's because if the caller didn't want the command-line arguments applied to the `Microsoft.Extensions.Hosting.HostApplicationBuilder`, they wouldn't have set them on the `Microsoft.Extensions.Hosting.HostApplicationBuilderSettings` object. Since the caller *did* pass the command-line arguments on the settings, those arguments should be respected.
+The behavior of ignoring <xref:Microsoft.Extensions.Hosting.HostApplicationBuilderSettings.Args?displayProperty=nameWithType> was unexpected, even when <xref:Microsoft.Extensions.Hosting.HostApplicationBuilderSettings.DisableDefaults?displayProperty=nameWithType> was set to `true`. That's because if the caller didn't want the command-line arguments applied to the <xref:Microsoft.Extensions.Hosting.HostApplicationBuilder>, they wouldn't have set them on the <xref:Microsoft.Extensions.Hosting.HostApplicationBuilderSettings> object. Since the caller *did* pass the command-line arguments on the settings, those arguments should be respected.
 
 ## Recommended action
 
-If you don't want the command-line arguments to be added to the `Microsoft.Extensions.Hosting.HostApplicationBuilder` configuration, leave the `Microsoft.Extensions.Hosting.HostApplicationBuilderSettings.Args` property set to `null`.
+If you don't want the command-line arguments to be added to the <xref:Microsoft.Extensions.Hosting.HostApplicationBuilder> configuration, leave the <xref:Microsoft.Extensions.Hosting.HostApplicationBuilderSettings.Args?displayProperty=nameWithType> property set to `null`.
 
 ## Affected APIs
 
-- `Microsoft.Extensions.Hosting.HostApplicationBuilder.#ctor(Microsoft.Extensions.Hosting.HostApplicationBuilderSettings)`
+- <xref:Microsoft.Extensions.Hosting.HostApplicationBuilder.%23ctor(Microsoft.Extensions.Hosting.HostApplicationBuilderSettings)>

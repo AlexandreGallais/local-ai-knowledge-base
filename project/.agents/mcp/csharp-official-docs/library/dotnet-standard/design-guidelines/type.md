@@ -1,12 +1,14 @@
 ---
-title: "Class design guidelines for .NET"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/type.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn more about designing types and classes in .NET.
+title: Class design guidelines for .NET
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "type design guidelines"
+  - "type design guidelines, about type design guidelines"
+  - "class library design guidelines [.NET Framework], type design guidelines"
+  - "types [.NET Framework], design guidelines"
+ms.assetid: 6b49314e-8bba-43ea-97ca-4e0255812f95
 ---
-
 # Type design guidelines
 
 From the CLR perspective, there are only two categories of types—reference types and value types—but for the purpose of a discussion about framework design, we divide types into more logical groups, each with its own specific design rules.
@@ -27,17 +29,17 @@ From the CLR perspective, there are only two categories of types—reference typ
 
 ## In this section
 
- Choosing Between Class and Struct\
- Abstract Class Design\
- Static Class Design\
- Interface Design\
- Struct Design\
- Enum Design\
- Nested Types\
+ [Choosing Between Class and Struct](choosing-between-class-and-struct.md)\
+ [Abstract Class Design](abstract-class.md)\
+ [Static Class Design](static-class.md)\
+ [Interface Design](interface.md)\
+ [Struct Design](struct.md)\
+ [Enum Design](enum.md)\
+ [Nested Types](nested-types.md)\
  *Portions © 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Framework Design Guidelines
+- [Framework Design Guidelines](index.md)

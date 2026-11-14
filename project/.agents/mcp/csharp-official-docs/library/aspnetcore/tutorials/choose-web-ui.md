@@ -1,13 +1,12 @@
 ---
-title: "Choose an ASP.NET Core UI"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/tutorials/choose-web-ui.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Choose an ASP.NET Core UI
+description: Learn when to use which ASP.NET Core web UI technologies. Understand the server, client and hybrid options.
+ms.date: 10/26/2025
 ---
 
 # Choose an ASP.NET Core web UI
+
+:::moniker range=">= aspnetcore-8.0"
 
 ASP.NET Core is a complete UI framework. Choose which functionalities to combine that fit the app's web UI needs.
 
@@ -29,7 +28,7 @@ Benefits of using Blazor:
 * Interop with JavaScript.
 * Integrate components with existing MVC, Razor Pages, or JavaScript based apps.
 
-For a complete overview of Blazor, its architecture and benefits, see ASP.NET Core Blazor and ASP.NET Core Blazor hosting models. To get started with your first Blazor app, see Build your first Blazor app.
+For a complete overview of Blazor, its architecture and benefits, see [ASP.NET Core Blazor](../blazor/index.md) and [ASP.NET Core Blazor hosting models](../blazor/hosting-models.md). To get started with your first Blazor app, see [Build your first Blazor app](https://dotnet.microsoft.com/learn/aspnet/blazor-tutorial/intro).
 
 ## ASP.NET Core Razor Pages
 
@@ -43,7 +42,7 @@ Razor Pages benefits:
   * View specific logic and view models can be kept together in their own namespace and directory.
   * Groups of related pages can be kept in their own namespace and directory.
 
-To get started with your first ASP.NET Core Razor Pages app, see Tutorial: Get started with Razor Pages in ASP.NET Core. For a complete overview of ASP.NET Core Razor Pages, its architecture and benefits, see: Razor Pages architecture and concepts in ASP.NET Core.
+To get started with your first ASP.NET Core Razor Pages app, see [Tutorial: Get started with Razor Pages in ASP.NET Core](razor-pages/razor-pages-start.md). For a complete overview of ASP.NET Core Razor Pages, its architecture and benefits, see: [Razor Pages architecture and concepts in ASP.NET Core](../razor-pages/index.md).
 
 ## ASP.NET Core MVC
 
@@ -52,14 +51,14 @@ ASP.NET Core MVC renders UI on the server and uses a Model-View-Controller (MVC)
 ASP.NET Core MVC benefits:
 
 * Based on a scalable and mature model for building large web apps.
-* Clear separation of concerns for maximum flexibility.
+* Clear [separation of concerns](/dotnet/standard/modern-web-apps-azure-architecture/architectural-principles#separation-of-concerns) for maximum flexibility.
 * The Model-View-Controller separation of responsibilities ensures that the business model can evolve without being tightly coupled to low-level implementation details.
 
-To get started with  ASP.NET Core MVC, see Get started with ASP.NET Core MVC. For an overview of ASP.NET Core MVC's architecture and benefits, see Overview of ASP.NET Core MVC.
+To get started with  ASP.NET Core MVC, see [Get started with ASP.NET Core MVC](first-mvc-app/start-mvc.md). For an overview of ASP.NET Core MVC's architecture and benefits, see [Overview of ASP.NET Core MVC](../mvc/overview.md).
 
 ## ASP.NET Core Single Page Applications (SPA) with frontend JavaScript technologies
 
-Build client-side logic for ASP.NET Core apps using popular JavaScript technologies, such as Angular, React, and Vue. ASP.NET Core provides project templates for Angular, React, and Vue, and it can be used with other JavaScript frameworks as well.
+Build client-side logic for ASP.NET Core apps using popular JavaScript technologies, such as [Angular](https://angular.dev/), [React](https://react.dev/), and [Vue](https://vuejs.org/). ASP.NET Core provides project templates for Angular, React, and Vue, and it can be used with other JavaScript frameworks as well.
 
 Benefits of ASP.NET Core SPA with JavaScript technologies, in addition to the client rendering benefits previously listed:
 
@@ -74,10 +73,10 @@ Downsides:
 
 To get started, see:
 
-* Create an ASP.NET Core app with Angular
-* Create an ASP.NET Core app with React
-* Create an ASP.NET Core app with Vue
-* JavaScript and TypeScript in Visual Studio
+* [Create an ASP.NET Core app with Angular](/visualstudio/javascript/tutorial-asp-net-core-with-angular)
+* [Create an ASP.NET Core app with React](/visualstudio/javascript/tutorial-asp-net-core-with-react)
+* [Create an ASP.NET Core app with Vue](/visualstudio/javascript/tutorial-asp-net-core-with-vue)
+* [JavaScript and TypeScript in Visual Studio](/visualstudio/javascript/javascript-in-visual-studio)
 
 ## Combine multiple web UI solutions: ASP.NET Core MVC or Razor Pages plus Blazor
 
@@ -86,15 +85,19 @@ MVC, Razor Pages, and Blazor are part of the ASP.NET Core framework and are desi
 Benefits for MVC or Razor Pages plus Blazor, in addition to MVC or Razor Pages benefits:
 
 * Prerendering executes Razor components on the server and renders them into a view or page, which improves the perceived load time of the app.
-* Add interactivity to existing views or pages with the Component Tag Helper.
+* Add interactivity to existing views or pages with the [Component Tag Helper](../mvc/views/tag-helpers/built-in/component-tag-helper.md).
 
-To get started with ASP.NET Core MVC or Razor Pages plus Blazor, see Integrate ASP.NET Core Razor components with MVC or Razor Pages.
+To get started with ASP.NET Core MVC or Razor Pages plus Blazor, see [Integrate ASP.NET Core Razor components with MVC or Razor Pages](../blazor/components/integration.md).
 
 ## Next steps
 
 For more information, see:
 
-* ASP.NET Core Blazor
-* ASP.NET Core Blazor hosting models
-* Integrate ASP.NET Core Razor components with MVC or Razor Pages
-* Compare gRPC services with HTTP APIs
+* [ASP.NET Core Blazor](../blazor/index.md)
+* [ASP.NET Core Blazor hosting models](../blazor/hosting-models.md)
+* [Integrate ASP.NET Core Razor components with MVC or Razor Pages](../blazor/components/integration.md)
+* [Compare gRPC services with HTTP APIs](../grpc/comparison.md)
+
+:::moniker-end
+
+[!INCLUDE[](~/tutorials/choose-web-ui/includes/choose-web-ui3-7.md)]

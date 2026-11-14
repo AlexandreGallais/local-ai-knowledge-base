@@ -1,14 +1,3 @@
----
-title: "appendix-07-nightly-rust"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/appendix-07-nightly-rust.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# appendix-07-nightly-rust
-
 ## Appendix G - How Rust is Made and “Nightly Rust”
 
 This appendix is about how Rust is made and how that affects you as a Rust
@@ -197,7 +186,7 @@ you can write up a proposal, called an RFC.
 
 Anyone can write RFCs to improve Rust, and the proposals are reviewed and
 discussed by the Rust team, which is comprised of many topic subteams. There’s
-a full list of the teams on Rust’s website, which includes teams for
+a full list of the teams [on Rust’s website](https://www.rust-lang.org/governance), which includes teams for
 each area of the project: language design, compiler implementation,
 infrastructure, documentation, and more. The appropriate team reads the
 proposal and the comments, writes some comments of their own, and eventually,
@@ -207,7 +196,7 @@ If the feature is accepted, an issue is opened on the Rust repository, and
 someone can implement it. The person who implements it very well may not be the
 person who proposed the feature in the first place! When the implementation is
 ready, it lands on the main branch behind a feature gate, as we discussed in
-the “Unstable Features” section.
+the [“Unstable Features”](#unstable-features)<!-- ignore --> section.
 
 After some time, once Rust developers who use nightly releases have been able
 to try out the new feature, team members will discuss the feature, how it’s

@@ -1,12 +1,8 @@
 ---
 title: ".NET 6 breaking change: Default console logger formatting in container images"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/containers/6.0/console-formatter-default.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 6 breaking change in .NET containers where the default formatting for the console logger in aspnet container images is no longer JSON.
+ms.date: 05/02/2022
 ---
-
 # Default console logger formatting in container images
 
 The default console formatter that's configured in `aspnet` containers has changed.
@@ -51,11 +47,11 @@ info: Microsoft.Hosting.Lifetime[0]
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
-When the change to use JSON formatting was introduced in the .NET 6 GA release, it broke many scenarios that relied on the original, simple formatting as described in dotnet/dotnet-docker#2725.
+When the change to use JSON formatting was introduced in the .NET 6 GA release, it broke many scenarios that relied on the original, simple formatting as described in [dotnet/dotnet-docker#2725](https://github.com/dotnet/dotnet-docker#2725).
 
 ## Recommended action
 
@@ -67,4 +63,4 @@ None.
 
 ## See also
 
-- dotnet/dotnet-docker#3706
+- [dotnet/dotnet-docker#3706](https://github.com/dotnet/dotnet-docker#3706)

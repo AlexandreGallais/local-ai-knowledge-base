@@ -1,69 +1,58 @@
----
-title: "EnumSet class (java.util)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/EnumSet.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # EnumSet class (java.util)
 
 ```java
 public abstract sealed class EnumSet<E extends Enum<E>> extends AbstractSet<E> implements Cloneable, java.io.Serializable permits JumboEnumSet, RegularEnumSet
 ```
 
-A specialized `Set` implementation for use with enum types.  All of
+A specialized {@link Set} implementation for use with enum types.  All of
 the elements in an enum set must come from a single enum type that is
 specified, explicitly or implicitly, when the set is created.  Enum sets
 are represented internally as bit vectors.  This representation is
 extremely compact and efficient. The space and time performance of this
 class should be good enough to allow its use as a high-quality, typesafe
-alternative to traditional `int`-based "bit flags."  Even bulk
-operations (such as `containsAll` and `retainAll`) should
+alternative to traditional {@code int}-based "bit flags."  Even bulk
+operations (such as {@code containsAll} and {@code retainAll}) should
 run very quickly if their argument is also an enum set.
 
-The iterator returned by the `iterator` method traverses the
-elements in their *natural order* (the order in which the enum
-constants are declared).  The returned iterator is *weakly
-consistent*: it will never throw `ConcurrentModificationException`
+<p>The iterator returned by the {@code iterator} method traverses the
+elements in their <i>natural order</i> (the order in which the enum
+constants are declared).  The returned iterator is <i>weakly
+consistent</i>: it will never throw {@link ConcurrentModificationException}
 and it may or may not show the effects of any modifications to the set that
 occur while the iteration is in progress.
 
-Null elements are not permitted.  Attempts to insert a null element
-will throw `NullPointerException`.  Attempts to test for the
+<p>Null elements are not permitted.  Attempts to insert a null element
+will throw {@link NullPointerException}.  Attempts to test for the
 presence of a null element or to remove one will, however, function
 properly.
 
-Like most collection implementations, `EnumSet` is not
+<P>Like most collection implementations, {@code EnumSet} is not
 synchronized.  If multiple threads access an enum set concurrently, and at
 least one of the threads modifies the set, it should be synchronized
 externally.  This is typically accomplished by synchronizing on some
 object that naturally encapsulates the enum set.  If no such object exists,
-the set should be "wrapped" using the `Collections.synchronizedSet`
+the set should be "wrapped" using the {@link Collections#synchronizedSet}
 method.  This is best done at creation time, to prevent accidental
 unsynchronized access:
 
-```java
-Set<MyEnum> s = Collections.synchronizedSet(EnumSet.noneOf(MyEnum.class));
-```
+<pre>
+Set&lt;MyEnum&gt; s = Collections.synchronizedSet(EnumSet.noneOf(MyEnum.class));
+</pre>
 
-Implementation note: All basic <example-value> execute in constant time.
+<p>Implementation note: All basic operations execute in constant time.
 They are likely (though not guaranteed) to be much faster than their
-`HashSet` counterparts.  Even bulk operations execute in
+{@link HashSet} counterparts.  Even bulk operations execute in
 constant time if their argument is also an enum set.
 
-This class is a member of the
+<p>This class is a member of the
+<a href="{@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+Java Collections Framework</a>.
 
-Java Collections Framework.
+@param <E> the enum type of elements maintained by this set
 
-Parameters:
-
-- `<E>`: the enum type of elements maintained by this set
-
-**Since:** 1.5
-
-**See also:** EnumMap
+@author Josh Bloch
+@since 1.5
+@see EnumMap
 
 ## EnumSet.noneOf(Class<E>)
 
@@ -73,16 +62,11 @@ public static <E extends Enum<E>> EnumSet<E> noneOf(Class<E> elementType)
 
 Creates an empty enum set with the specified element type.
 
-Parameters:
-
-- `<E>`: The class of the elements in the set
-- `elementType`: the class object of the element type for this enum set
-
-**Returns:** An empty enum set of the specified type.
-
-Throws:
-
-- `NullPointerException`: if `elementType` is null
+@param <E> The class of the elements in the set
+@param elementType the class object of the element type for this enum
+    set
+@return An empty enum set of the specified type.
+@throws NullPointerException if {@code elementType} is null
 
 ## EnumSet.allOf(Class<E>)
 
@@ -93,16 +77,11 @@ public static <E extends Enum<E>> EnumSet<E> allOf(Class<E> elementType)
 Creates an enum set containing all of the elements in the specified
 element type.
 
-Parameters:
-
-- `<E>`: The class of the elements in the set
-- `elementType`: the class object of the element type for this enum set
-
-**Returns:** An enum set containing all the elements in the specified type.
-
-Throws:
-
-- `NullPointerException`: if `elementType` is null
+@param <E> The class of the elements in the set
+@param elementType the class object of the element type for this enum
+    set
+@return An enum set containing all the elements in the specified type.
+@throws NullPointerException if {@code elementType} is null
 
 ## EnumSet.copyOf(EnumSet<E>)
 
@@ -113,16 +92,10 @@ public static <E extends Enum<E>> EnumSet<E> copyOf(EnumSet<E> s)
 Creates an enum set with the same element type as the specified enum
 set, initially containing the same elements (if any).
 
-Parameters:
-
-- `<E>`: The class of the elements in the set
-- `s`: the enum set from which to initialize this enum set
-
-**Returns:** A copy of the specified enum set.
-
-Throws:
-
-- `NullPointerException`: if `s` is null
+@param <E> The class of the elements in the set
+@param s the enum set from which to initialize this enum set
+@return A copy of the specified enum set.
+@throws NullPointerException if {@code s} is null
 
 ## EnumSet.copyOf(Collection<E>)
 
@@ -131,22 +104,17 @@ public static <E extends Enum<E>> EnumSet<E> copyOf(Collection<E> c)
 ```
 
 Creates an enum set initialized from the specified collection.  If
-the specified collection is an `EnumSet` instance, this static
-factory method behaves identically to `copyOf(EnumSet)`.
+the specified collection is an {@code EnumSet} instance, this static
+factory method behaves identically to {@link #copyOf(EnumSet)}.
 Otherwise, the specified collection must contain at least one element
 (in order to determine the new enum set's element type).
 
-Parameters:
-
-- `<E>`: The class of the elements in the collection
-- `c`: the collection from which to initialize this enum set
-
-**Returns:** An enum set initialized from the given collection.
-
-Throws:
-
-- `IllegalArgumentException`: if `c` is not an `EnumSet` instance and contains no elements
-- `NullPointerException`: if `c` is null
+@param <E> The class of the elements in the collection
+@param c the collection from which to initialize this enum set
+@return An enum set initialized from the given collection.
+@throws IllegalArgumentException if {@code c} is not an
+    {@code EnumSet} instance and contains no elements
+@throws NullPointerException if {@code c} is null
 
 ## EnumSet.complementOf(EnumSet<E>)
 
@@ -156,18 +124,12 @@ public static <E extends Enum<E>> EnumSet<E> complementOf(EnumSet<E> s)
 
 Creates an enum set with the same element type as the specified enum
 set, initially containing all the elements of this type that are
-*not* contained in the specified set.
+<i>not</i> contained in the specified set.
 
-Parameters:
-
-- `<E>`: The class of the elements in the enum set
-- `s`: the enum set from whose complement to initialize this enum set
-
-**Returns:** The complement of the specified set in this set
-
-Throws:
-
-- `NullPointerException`: if `s` is null
+@param <E> The class of the elements in the enum set
+@param s the enum set from whose complement to initialize this enum set
+@return The complement of the specified set in this set
+@throws NullPointerException if {@code s} is null
 
 ## EnumSet.of(E)
 
@@ -183,16 +145,10 @@ uses the varargs feature.  This overloading may be used to create
 an enum set initially containing an arbitrary number of elements, but
 is likely to run slower than the overloadings that do not use varargs.
 
-Parameters:
-
-- `<E>`: The class of the specified element and of the set
-- `e`: the element that this set is to contain initially
-
-**Returns:** an enum set initially containing the specified element
-
-Throws:
-
-- `NullPointerException`: if `e` is null
+@param <E> The class of the specified element and of the set
+@param e the element that this set is to contain initially
+@throws NullPointerException if {@code e} is null
+@return an enum set initially containing the specified element
 
 ## EnumSet.of(E, E)
 
@@ -208,17 +164,11 @@ uses the varargs feature.  This overloading may be used to create
 an enum set initially containing an arbitrary number of elements, but
 is likely to run slower than the overloadings that do not use varargs.
 
-Parameters:
-
-- `<E>`: The class of the parameter elements and of the set
-- `e1`: an element that this set is to contain initially
-- `e2`: another element that this set is to contain initially
-
-**Returns:** an enum set initially containing the specified elements
-
-Throws:
-
-- `NullPointerException`: if any parameters are null
+@param <E> The class of the parameter elements and of the set
+@param e1 an element that this set is to contain initially
+@param e2 another element that this set is to contain initially
+@throws NullPointerException if any parameters are null
+@return an enum set initially containing the specified elements
 
 ## EnumSet.of(E, E, E)
 
@@ -234,18 +184,12 @@ uses the varargs feature.  This overloading may be used to create
 an enum set initially containing an arbitrary number of elements, but
 is likely to run slower than the overloadings that do not use varargs.
 
-Parameters:
-
-- `<E>`: The class of the parameter elements and of the set
-- `e1`: an element that this set is to contain initially
-- `e2`: another element that this set is to contain initially
-- `e3`: another element that this set is to contain initially
-
-**Returns:** an enum set initially containing the specified elements
-
-Throws:
-
-- `NullPointerException`: if any parameters are null
+@param <E> The class of the parameter elements and of the set
+@param e1 an element that this set is to contain initially
+@param e2 another element that this set is to contain initially
+@param e3 another element that this set is to contain initially
+@throws NullPointerException if any parameters are null
+@return an enum set initially containing the specified elements
 
 ## EnumSet.of(E, E, E, E)
 
@@ -261,19 +205,13 @@ uses the varargs feature.  This overloading may be used to create
 an enum set initially containing an arbitrary number of elements, but
 is likely to run slower than the overloadings that do not use varargs.
 
-Parameters:
-
-- `<E>`: The class of the parameter elements and of the set
-- `e1`: an element that this set is to contain initially
-- `e2`: another element that this set is to contain initially
-- `e3`: another element that this set is to contain initially
-- `e4`: another element that this set is to contain initially
-
-**Returns:** an enum set initially containing the specified elements
-
-Throws:
-
-- `NullPointerException`: if any parameters are null
+@param <E> The class of the parameter elements and of the set
+@param e1 an element that this set is to contain initially
+@param e2 another element that this set is to contain initially
+@param e3 another element that this set is to contain initially
+@param e4 another element that this set is to contain initially
+@throws NullPointerException if any parameters are null
+@return an enum set initially containing the specified elements
 
 ## EnumSet.of(E, E, E, E, E)
 
@@ -289,20 +227,14 @@ uses the varargs feature.  This overloading may be used to create
 an enum set initially containing an arbitrary number of elements, but
 is likely to run slower than the overloadings that do not use varargs.
 
-Parameters:
-
-- `<E>`: The class of the parameter elements and of the set
-- `e1`: an element that this set is to contain initially
-- `e2`: another element that this set is to contain initially
-- `e3`: another element that this set is to contain initially
-- `e4`: another element that this set is to contain initially
-- `e5`: another element that this set is to contain initially
-
-**Returns:** an enum set initially containing the specified elements
-
-Throws:
-
-- `NullPointerException`: if any parameters are null
+@param <E> The class of the parameter elements and of the set
+@param e1 an element that this set is to contain initially
+@param e2 another element that this set is to contain initially
+@param e3 another element that this set is to contain initially
+@param e4 another element that this set is to contain initially
+@param e5 another element that this set is to contain initially
+@throws NullPointerException if any parameters are null
+@return an enum set initially containing the specified elements
 
 ## EnumSet.of(E, E...)
 
@@ -316,17 +248,12 @@ be used to create an enum set initially containing an arbitrary
 number of elements, but it is likely to run slower than the overloadings
 that do not use varargs.
 
-Parameters:
-
-- `<E>`: The class of the parameter elements and of the set
-- `first`: an element that the set is to contain initially
-- `rest`: the remaining elements the set is to contain initially
-
-**Returns:** an enum set initially containing the specified elements
-
-Throws:
-
-- `NullPointerException`: if any of the specified elements are null, or if `rest` is null
+@param <E> The class of the parameter elements and of the set
+@param first an element that the set is to contain initially
+@param rest the remaining elements the set is to contain initially
+@throws NullPointerException if any of the specified elements are null,
+    or if {@code rest} is null
+@return an enum set initially containing the specified elements
 
 ## EnumSet.range(E, E)
 
@@ -339,19 +266,13 @@ range defined by the two specified endpoints.  The returned set will
 contain the endpoints themselves, which may be identical but must not
 be out of order.
 
-Parameters:
-
-- `<E>`: The class of the parameter elements and of the set
-- `from`: the first element in the range
-- `to`: the last element in the range
-
-**Returns:** an enum set initially containing all of the elements in the
+@param <E> The class of the parameter elements and of the set
+@param from the first element in the range
+@param to the last element in the range
+@throws NullPointerException if {@code from} or {@code to} are null
+@throws IllegalArgumentException if {@code from.compareTo(to) > 0}
+@return an enum set initially containing all of the elements in the
         range defined by the two specified endpoints
-
-Throws:
-
-- `NullPointerException`: if `from` or `to` are null
-- `IllegalArgumentException`: if `from.compareTo(to) > 0`
 
 ## EnumSet.clone()
 
@@ -361,4 +282,4 @@ public EnumSet<E> clone()
 
 Returns a copy of this set.
 
-**Returns:** a copy of this set
+@return a copy of this set

@@ -1,12 +1,9 @@
 ---
-title: "dotnet format command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-format.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet format command
+description: The dotnet format command formats code to match EditorConfig settings for the current directory.
+ms.date: 09/15/2026
+ai-usage: ai-assisted
 ---
-
 # dotnet format
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -30,7 +27,7 @@ dotnet format -h|--help
 
 ## Description
 
-`dotnet format` is a code formatter that applies style preferences and static analysis recommendations to a project or solution. Preferences will be read from an *.editorconfig* file, if present, otherwise a default set of preferences will be used. For more information, see the EditorConfig documentation.
+`dotnet format` is a code formatter that applies style preferences and static analysis recommendations to a project or solution. Preferences will be read from an *.editorconfig* file, if present, otherwise a default set of preferences will be used. For more information, see the [EditorConfig documentation](../../fundamentals/code-analysis/configuration-files.md#editorconfig).
 
 ## Arguments
 
@@ -38,7 +35,7 @@ dotnet format -h|--help
 
 The MSBuild project or solution to run code formatting on. If a project or solution file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in *proj* or *sln*, and uses that file.
 
-> **Caution:**
+> [!CAUTION]
 > dotnet format may restore, compile, and run analyzers from the specified project or solution. Only invoke the tool against trusted code.
 
 ## Options
@@ -51,7 +48,7 @@ None of the options below are required for the `dotnet format` command to succee
 
 - **`--diagnostics <DIAGNOSTICS>`**
 
-  A space-separated list of diagnostic IDs to use as a filter when fixing code style or third-party issues. Default value is whichever IDs are listed in the *.editorconfig* file. For a list of built-in analyzer rule IDs that you can specify, see the list of IDs for code-analysis style rules.
+  A space-separated list of diagnostic IDs to use as a filter when fixing code style or third-party issues. Default value is whichever IDs are listed in the *.editorconfig* file. For a list of built-in analyzer rule IDs that you can specify, see the [list of IDs for code-analysis style rules](../../fundamentals/code-analysis/style-rules/index.md).
 
 - **`--exclude <EXCLUDE>`**
 
@@ -59,7 +56,7 @@ None of the options below are required for the `dotnet format` command to succee
 
 - **`--exclude-diagnostics <EXCLUDE-DIAGNOSTICS>`**
 
-  A space-separated list of diagnostic IDs to exclude when fixing code style or third-party issues. Default value is none. For a list of built-in analyzer rule IDs that you can specify, see the list of IDs for code-analysis style rules.
+  A space-separated list of diagnostic IDs to exclude when fixing code style or third-party issues. Default value is none. For a list of built-in analyzer rule IDs that you can specify, see the [list of IDs for code-analysis style rules](../../fundamentals/code-analysis/style-rules/index.md).
 
 - **`--framework <FRAMEWORK>`**
 
@@ -93,13 +90,9 @@ None of the options below are required for the `dotnet format` command to succee
 
   Displays version information.
 
-- **`-v|--verbosity <LEVEL>`**
+- [!INCLUDE [verbosity](includes/cli-verbosity.md)]
 
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
-
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Subcommands
 
@@ -109,7 +102,7 @@ Prints out a description of how to use the command.
 
 #### Description
 
-The `dotnet format whitespace` subcommand only runs formatting rules associated with whitespace formatting. For a complete list of possible formatting options that you can specify in your *.editorconfig* file, see the C# formatting options.
+The `dotnet format whitespace` subcommand only runs formatting rules associated with whitespace formatting. For a complete list of possible formatting options that you can specify in your *.editorconfig* file, see the [C# formatting options](../../fundamentals/code-analysis/style-rules/csharp-formatting-options.md).
 
 #### Options
 
@@ -123,13 +116,13 @@ The `dotnet format whitespace` subcommand only runs formatting rules associated 
 
 #### Description
 
-The `dotnet format style` subcommand only runs formatting rules associated with code style formatting. For a complete list of formatting options that you can specify in your `editorconfig` file, see Code style rules.
+The `dotnet format style` subcommand only runs formatting rules associated with code style formatting. For a complete list of formatting options that you can specify in your `editorconfig` file, see [Code style rules](../../fundamentals/code-analysis/style-rules/index.md).
 
 #### Options
 
 - **`--diagnostics <DIAGNOSTICS>`**
 
-  A space-separated list of diagnostic IDs to use as a filter when fixing code style issues. Default value is whichever IDs are listed in the *.editorconfig* file. For a list of built-in code style analyzer rule IDs that you can specify, see the list of IDs for code-analysis style rules.
+  A space-separated list of diagnostic IDs to use as a filter when fixing code style issues. Default value is whichever IDs are listed in the *.editorconfig* file. For a list of built-in code style analyzer rule IDs that you can specify, see the [list of IDs for code-analysis style rules](../../fundamentals/code-analysis/style-rules/index.md).
 
 - **`--severity <LEVEL>`**
 
@@ -141,13 +134,13 @@ The `dotnet format style` subcommand only runs formatting rules associated with 
 
 #### Description
 
-The `dotnet format analyzers` subcommand only runs formatting rules associated with analyzers. For a list of analyzer rules that you can specify in your `editorconfig` file, see Quality rules.
+The `dotnet format analyzers` subcommand only runs formatting rules associated with analyzers. For a list of analyzer rules that you can specify in your `editorconfig` file, see [Quality rules](../../fundamentals/code-analysis/quality-rules/index.md).
 
 ##### Options
 
 - **`--diagnostics <DIAGNOSTICS>`**
 
-  A space-separated list of diagnostic IDs to use as a filter when fixing non code style issues. Default value is whichever IDs are listed in the *.editorconfig* file. For a list of built-in analyzer rule IDs that you can specify, see the list of IDs for quality rules. For third-party analyzers refer to their documentation.
+  A space-separated list of diagnostic IDs to use as a filter when fixing non code style issues. Default value is whichever IDs are listed in the *.editorconfig* file. For a list of built-in analyzer rule IDs that you can specify, see the [list of IDs for quality rules](../../fundamentals/code-analysis/quality-rules/index.md). For third-party analyzers refer to their documentation.
 
 - **`--severity <LEVEL>`**
 
@@ -179,7 +172,7 @@ The `dotnet format analyzers` subcommand only runs formatting rules associated w
   dotnet format --include ./src/ ./tests/ --exclude ./src/submodule-a/
   ```
 
-- Fix a specific **code style** issue:
+- Fix a specific **code style** issue:  
 
   ```dotnetcli
   dotnet format style --diagnostics IDE0005 --severity info
@@ -193,12 +186,12 @@ The `dotnet format analyzers` subcommand only runs formatting rules associated w
 
 - Fix a specific (non code style) analyzer issue:
 
-  ```dotnetcli
+  ```dotnetcli  
   dotnet format analyzers --diagnostics CA1831 --severity warn
   ```
 
-- Fix all non code style issues that have severity `info`, `warning` or `error`:
+- Fix all non code style issues that have severity `info`, `warning` or `error`:  
 
-  ```dotnetcli
+  ```dotnetcli  
   dotnet format analyzers --severity info
-  ```
+  ```  

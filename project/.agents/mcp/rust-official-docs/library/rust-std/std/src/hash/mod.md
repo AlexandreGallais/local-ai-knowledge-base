@@ -1,22 +1,17 @@
----
-title: "std::hash"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/hash/mod.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::hash
 
 Generic hashing support.
 
 This module provides a generic way to compute the [hash] of a value.
-Hashes are most commonly used with `HashMap` and `HashSet`.
+Hashes are most commonly used with [`HashMap`] and [`HashSet`].
+
+[hash]: https://en.wikipedia.org/wiki/Hash_function
+[`HashMap`]: ../../std/collections/struct.HashMap.html
+[`HashSet`]: ../../std/collections/struct.HashSet.html
 
 The simplest way to make a type hashable is to use `#[derive(Hash)]`:
 
-#### Examples
+# Examples
 
 ```rust
 use std::hash::{DefaultHasher, Hash, Hasher};
@@ -49,13 +44,14 @@ fn calculate_hash<T: Hash>(t: &T) -> u64 {
 ```
 
 If you need more control over how a value is hashed, you need to implement
-the `Hash` trait:
+the [`Hash`] trait:
 
 ```rust
 use std::hash::{DefaultHasher, Hash, Hasher};
 
 struct Person {
     id: u32,
+    # #[allow(dead_code)]
     name: String,
     phone: u64,
 }

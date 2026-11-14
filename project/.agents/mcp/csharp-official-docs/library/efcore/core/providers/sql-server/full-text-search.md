@@ -1,28 +1,26 @@
 ---
-title: "Microsoft SQL Server Database Provider - Full-Text Search - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/providers/sql-server/full-text-search.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Microsoft SQL Server Database Provider - Full-Text Search - EF Core
+description: Using full-text search with the Entity Framework Core Microsoft SQL Server database provider
+author: SamMonoRT
+ms.date: 02/05/2026
+uid: core/providers/sql-server/full-text-search
 ---
-
 # Full-Text Search in the SQL Server EF Core Provider
 
-SQL Server provides full-text search capabilities that enable sophisticated text search beyond simple `LIKE` patterns. Full-text search supports linguistic matching, inflectional forms, proximity search, and weighted ranking.
+SQL Server provides [full-text search](/sql/relational-databases/search/full-text-search) capabilities that enable sophisticated text search beyond simple `LIKE` patterns. Full-text search supports linguistic matching, inflectional forms, proximity search, and weighted ranking.
 
 EF Core's SQL Server provider supports both full-text search *predicates* (for filtering) and *table-valued functions* (for filtering with ranking).
 
 ## Setting up full-text search
 
-Before using full-text search, you must create a full-text catalog on your database, and a full-text index on the columns you want to search.
+Before using full-text search, you must create a [full-text catalog](/sql/t-sql/statements/create-fulltext-catalog-transact-sql) on your database, and a [full-text index](/sql/t-sql/statements/create-fulltext-index-transact-sql) on the columns you want to search.
 
-### EF Core 11+
+### [EF Core 11+](#tab/ef-core-11)
 
-> **Note:**
+> [!NOTE]
 > Full-text catalog and index management in migrations was introduced in EF Core 11.
 
-You can configure full-text catalogs and indexes directly in your EF model. When you add a migration, EF will generate the appropriate SQL to create (or alter) the catalog and index for you.
+You can configure full-text catalogs and indexes directly in your EF model. When you add a [migration](xref:core/managing-schemas/migrations/index), EF will generate the appropriate SQL to create (or alter) the catalog and index for you.
 
 First, define a full-text catalog on the model, then configure a full-text index on your entity type:
 
@@ -60,7 +58,7 @@ modelBuilder.HasFullTextCatalog("ftCatalog")
     .IsAccentSensitive(false);
 ```
 
-### Older versions
+### [Older versions](#tab/older-versions)
 
 On older versions of EF Core, you can set up full-text search by adding raw SQL to a migration. Add an empty migration and then edit it to include the full-text catalog and index creation SQL:
 
@@ -90,7 +88,7 @@ protected override void Down(MigrationBuilder migrationBuilder)
 
 ---
 
-For more information, see the SQL Server full-text search documentation.
+For more information, see the [SQL Server full-text search documentation](/sql/relational-databases/search/get-started-with-full-text-search).
 
 ## Full-text predicates
 
@@ -151,14 +149,14 @@ FROM [Articles] AS [a]
 WHERE CONTAINS([a].[Contents], N'veggies')
 ```
 
-For more information on `CONTAINS()` query syntax, see the SQL Server CONTAINS documentation.
+For more information on `CONTAINS()` query syntax, see the [SQL Server CONTAINS documentation](/sql/t-sql/queries/contains-transact-sql).
 
 ## Full-text table-valued functions
 
-> **Note:**
+> [!NOTE]
 > Full-text table-valued functions are being introduced in EF Core 11.
 
-While the predicates above are useful for filtering, they don't provide ranking information. SQL Server's table-valued functions `FREETEXTTABLE()` and `CONTAINSTABLE()` return both matching rows and a ranking score that indicates how well each row matches the search query.
+While the predicates above are useful for filtering, they don't provide ranking information. SQL Server's table-valued functions [`FREETEXTTABLE()`](/sql/relational-databases/system-functions/freetexttable-transact-sql) and [`CONTAINSTABLE()`](/sql/relational-databases/system-functions/containstable-transact-sql) return both matching rows and a ranking score that indicates how well each row matches the search query.
 
 ### FreeTextTable()
 
@@ -180,7 +178,7 @@ foreach (var result in results)
 }
 ```
 
-Note that you must provide the generic type parameters; `Article` corresponds to the entity type being searched, where `int` is the full-text search key <example-value> when creating the index, and which is returned by `FREETEXTTABLE()`.
+Note that you must provide the generic type parameters; `Article` corresponds to the entity type being searched, where `int` is the full-text search key specified when creating the index, and which is returned by `FREETEXTTABLE()`.
 
 The above automatically searches across all columns registered for full-text searching and returns the top 10 matches. You can also provide a specific column to search:
 

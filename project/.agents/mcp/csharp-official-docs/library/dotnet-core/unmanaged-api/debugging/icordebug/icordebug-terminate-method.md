@@ -1,18 +1,27 @@
 ---
+description: "Learn more about: ICorDebug::Terminate Method"
 title: "ICorDebug::Terminate Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebug-terminate-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebug.Terminate"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebug::Terminate"
+helpviewer_keywords:
+  - "Terminate method, ICorDebug interface [.NET debugging]"
+  - "ICorDebug::Terminate method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebug::Terminate Method
 
 Terminates the `ICorDebug` object.
 
-> **Note:**
-> `Terminate` should not be called until an ICorDebugManagedCallback::ExitProcess callback has been received for all processes being debugged.
+> [!NOTE]
+> `Terminate` should not be called until an [ICorDebugManagedCallback::ExitProcess](icordebugmanagedcallback-exitprocess-method.md) callback has been received for all processes being debugged.
 
 ## Syntax
 
@@ -26,7 +35,7 @@ HRESULT Terminate ();
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -36,4 +45,4 @@ HRESULT Terminate ();
 
 ## See also
 
-- ICorDebug Interface
+- [ICorDebug Interface](icordebug-interface.md)

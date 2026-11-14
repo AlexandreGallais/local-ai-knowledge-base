@@ -1,16 +1,17 @@
 ---
 title: "Names of Assemblies and DLLs"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/names-of-assemblies-and-dlls.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn guidelines for naming assemblies and dynamic-link libraries (DLLs). An assembly can span one or more files, but it usually maps one-to-one with a DLL.
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "names [.NET Framework], DLLs"
+  - "names [.NET Framework], assemblies"
+  - "assemblies [.NET Framework], names"
+  - "DLLs, names"
+ms.assetid: e800b610-31b4-4949-9c14-cb60e9f254be
 ---
-
 # Names of Assemblies and DLLs
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
 An assembly is the unit of deployment and identity for managed code programs. Although assemblies can span one or more files, typically an assembly maps one-to-one with a DLL. Therefore, this section describes only DLL naming conventions, which then can be mapped to assembly naming conventions.
 
@@ -28,9 +29,9 @@ An assembly is the unit of deployment and identity for managed code programs. Al
 
  *Portions © 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Framework Design Guidelines
-- Naming Guidelines
+- [Framework Design Guidelines](index.md)
+- [Naming Guidelines](naming-guidelines.md)

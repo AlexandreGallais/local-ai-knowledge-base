@@ -1,27 +1,21 @@
----
-title: "default-export-style"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/default-export-style.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # default-export-style
 
 📝 Enforce consistent default export declarations.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Enforce whether default-exported functions and classes are declared inline with `export default` or separately. For functions, separate means a `const` arrow function exported by identifier. For classes, separate means a class declaration exported by identifier.
 
 A consistent declaration style makes default exports easier to scan and avoids mixing multiple declaration forms across a codebase.
 
-This rule controls whether local default exports are written inline or separately. Named exports are intentionally ignored. Use `consistent-function-style` for function syntax, including direct default-exported functions through its `defaultExport` option.
+This rule controls whether local default exports are written inline or separately. Named exports are intentionally ignored. Use [`consistent-function-style`](./consistent-function-style.md) for function syntax, including direct default-exported functions through its `defaultExport` option.
 
-Use `no-anonymous-default-export` to require names for anonymous default exports.
+Use [`no-anonymous-default-export`](./no-anonymous-default-export.md) to require names for anonymous default exports.
 
 ## Examples
 
@@ -123,7 +117,7 @@ export default foo;
 
 `'ignore'` disables checks for functions.
 
-> **Note:**
+> [!NOTE]
 > When both rules are enabled, configure compatible styles. For example, `functions: 'inline'` pairs with `defaultExport: 'declaration'`, while `functions: 'separate'` pairs with `defaultExport: 'ignore'` when `namedFunctions` permits the separate `const` arrow function. The `defaultExport` option does not inspect `export default identifier`.
 
 ### `classes`

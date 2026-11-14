@@ -1,37 +1,28 @@
----
-title: "Visual Studio"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/vs-vsc-vsmac-help.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# Visual Studio
+# [Visual Studio](#tab/visual-studio)
 
 ## Visual Studio help
 
-* Learn to debug C# code using Visual Studio
-* Introduction to the Visual Studio IDE
+* [Learn to debug C# code using Visual Studio](/visualstudio/debugger/getting-started-with-the-debugger)
+* [Introduction to the Visual Studio IDE](/visualstudio/ide/visual-studio-ide)
 
-# Visual Studio Code
+# [Visual Studio Code](#tab/visual-studio-code)
 
 ## Visual Studio Code help
 
-* Getting started
-* Debugging
-* Integrated terminal
-* Keyboard shortcuts
+* [Getting started](https://code.visualstudio.com/docs)
+* [Debugging](https://code.visualstudio.com/docs/editor/debugging)
+* [Integrated terminal](https://code.visualstudio.com/docs/editor/integrated-terminal)
+* [Keyboard shortcuts](https://code.visualstudio.com/docs/getstarted/keybindings#_keyboard-shortcuts-reference)
 
-  * macOS keyboard shortcuts
-  * Linux keyboard shortcuts
-  * Windows keyboard shortcuts
+  * [macOS keyboard shortcuts](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-macos.pdf)
+  * [Linux keyboard shortcuts](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-linux.pdf)
+  * [Windows keyboard shortcuts](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf)
 
-# Visual Studio for Mac
+# [Visual Studio for Mac](#tab/visual-studio-mac)
 
 ## Visual Studio for Mac help
 
-* Visual Studio for Mac Tour
-* Introducing Visual Studio for Mac
+* [Visual Studio for Mac Tour](/visualstudio/mac/ide-tour)
+* [Introducing Visual Studio for Mac](/visualstudio/mac/)
 
 ---

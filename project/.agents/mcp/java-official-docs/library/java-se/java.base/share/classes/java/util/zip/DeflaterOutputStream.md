@@ -1,12 +1,3 @@
----
-title: "DeflaterOutputStream class (java.util.zip)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/zip/DeflaterOutputStream.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # DeflaterOutputStream class (java.util.zip)
 
 ```java
@@ -16,28 +7,27 @@ public class DeflaterOutputStream extends FilterOutputStream
 This class implements an output stream filter for compressing data in
 the "deflate" compression format. It is also used as the basis for other
 types of compression filters, such as GZIPOutputStream.
-
- Unless otherwise noted, passing a `null` argument to a constructor
-or method in this class will cause a `NullPointerException` to be
+<p> Unless otherwise noted, passing a {@code null} argument to a constructor
+or method in this class will cause a {@link NullPointerException} to be
 thrown.
 
-#### Compressor Usage
-
-A `DeflaterOutputStream` created without
-specifying a compressor will create a compressor
+<h2 id="compressor-usage">Compressor Usage</h2>
+A {@code DeflaterOutputStream} created without
+specifying a {@linkplain Deflater compressor} will create a compressor
 at construction time, and close the compressor when the output stream
-is closed.
-
-If a compressor is specified when creating a `DeflaterOutputStream`, it is the
-responsibility of the caller to close the
+is {@linkplain #close closed}.
+<p>
+If a compressor is specified when creating a {@code DeflaterOutputStream}, it is the
+responsibility of the caller to {@linkplain Deflater#close close} the
 compressor after closing the output stream.
 
-**API note:** The `close` method should be called to release resources used by this
-stream, either directly, or with the `try`-with-resources statement.
+@apiNote
+The {@link #close} method should be called to release resources used by this
+stream, either directly, or with the {@code try}-with-resources statement.
 
-**See also:** Deflater
-
-**Since:** 1.1
+@see         Deflater
+@author      David Connelly
+@since 1.1
 
 ## DeflaterOutputStream.def
 
@@ -63,23 +53,23 @@ public DeflaterOutputStream(OutputStream out, Deflater def, int size, boolean sy
 
 Creates a new output stream with the specified compressor,
 buffer size and flush mode.
+<p>
+{@linkplain #close() Closing} this output stream
+{@linkplain ##compressor-usage will not close} the given
+{@linkplain Deflater compressor}.
 
-Closing this output stream
-will not close the given
-compressor.
+@param out the output stream
+@param def the compressor ("deflater")
+@param size the output buffer size
+@param syncFlush
+       if {@code true} the {@link #flush()} method of this
+       instance flushes the compressor with flush mode
+       {@link Deflater#SYNC_FLUSH} before flushing the output
+       stream, otherwise only flushes the output stream
 
-Parameters:
+@throws IllegalArgumentException if {@code size <= 0}
 
-- `out`: the output stream
-- `def`: the compressor ("deflater")
-- `size`: the output buffer size
-- `syncFlush`: if `true` the `flush()` method of this instance flushes the compressor with flush mode `Deflater.SYNC_FLUSH` before flushing the output stream, otherwise only flushes the output stream
-
-**Since:** 1.7
-
-Throws:
-
-- `IllegalArgumentException`: if `size <= 0`
+@since 1.7
 
 ## DeflaterOutputStream.DeflaterOutputStream(OutputStream, Deflater, int)
 
@@ -90,22 +80,17 @@ public DeflaterOutputStream(OutputStream out, Deflater def, int size)
 Creates a new output stream with the specified compressor and
 buffer size.
 
-The new output stream instance is created as if by invoking
-the 4-argument constructor `DeflaterOutputStream(out, def, size, false)`.
+<p>The new output stream instance is created as if by invoking
+the 4-argument constructor {@code DeflaterOutputStream(out, def, size, false)}.
+<p>
+{@linkplain #close() Closing} this output stream
+{@linkplain ##compressor-usage will not close} the given
+{@linkplain Deflater compressor}.
 
-Closing this output stream
-will not close the given
-compressor.
-
-Parameters:
-
-- `out`: the output stream
-- `def`: the compressor ("deflater")
-- `size`: the output buffer size
-
-Throws:
-
-- `IllegalArgumentException`: if `size <= 0`
+@param out the output stream
+@param def the compressor ("deflater")
+@param size the output buffer size
+@throws    IllegalArgumentException if {@code size <= 0}
 
 ## DeflaterOutputStream.DeflaterOutputStream(OutputStream, Deflater, boolean)
 
@@ -115,18 +100,20 @@ public DeflaterOutputStream(OutputStream out, Deflater def, boolean syncFlush)
 
 Creates a new output stream with the specified compressor, flush
 mode and a default buffer size.
+<p>
+{@linkplain #close() Closing} this output stream
+{@linkplain ##compressor-usage will not close} the given
+{@linkplain Deflater compressor}.
 
-Closing this output stream
-will not close the given
-compressor.
+@param out the output stream
+@param def the compressor ("deflater")
+@param syncFlush
+       if {@code true} the {@link #flush()} method of this
+       instance flushes the compressor with flush mode
+       {@link Deflater#SYNC_FLUSH} before flushing the output
+       stream, otherwise only flushes the output stream
 
-Parameters:
-
-- `out`: the output stream
-- `def`: the compressor ("deflater")
-- `syncFlush`: if `true` the `flush()` method of this instance flushes the compressor with flush mode `Deflater.SYNC_FLUSH` before flushing the output stream, otherwise only flushes the output stream
-
-**Since:** 1.7
+@since 1.7
 
 ## DeflaterOutputStream.DeflaterOutputStream(OutputStream, Deflater)
 
@@ -137,17 +124,15 @@ public DeflaterOutputStream(OutputStream out, Deflater def)
 Creates a new output stream with the specified compressor and
 a default buffer size.
 
-The new output stream instance is created as if by invoking
-the 3-argument constructor `DeflaterOutputStream(out, def, false)`.
+<p>The new output stream instance is created as if by invoking
+the 3-argument constructor {@code DeflaterOutputStream(out, def, false)}.
+<p>
+{@linkplain #close() Closing} this output stream
+{@linkplain ##compressor-usage will not close} the given
+{@linkplain Deflater compressor}.
 
-Closing this output stream
-will not close the given
-compressor.
-
-Parameters:
-
-- `out`: the output stream
-- `def`: the compressor ("deflater")
+@param out the output stream
+@param def the compressor ("deflater")
 
 ## DeflaterOutputStream.DeflaterOutputStream(OutputStream, boolean)
 
@@ -158,16 +143,18 @@ public DeflaterOutputStream(OutputStream out, boolean syncFlush)
 Creates a new output stream and compressor with the
 default compression level, a default buffer size and
 the specified flush mode.
-
+<p>
 The compressor will be closed when this output stream
-is closed.
+is {@linkplain #close() closed}.
 
-Parameters:
+@param out the output stream
+@param syncFlush
+       if {@code true} the {@link #flush()} method of this
+       instance flushes the compressor with flush mode
+       {@link Deflater#SYNC_FLUSH} before flushing the output
+       stream, otherwise only flushes the output stream
 
-- `out`: the output stream
-- `syncFlush`: if `true` the `flush()` method of this instance flushes the compressor with flush mode `Deflater.SYNC_FLUSH` before flushing the output stream, otherwise only flushes the output stream
-
-**Since:** 1.7
+@since 1.7
 
 ## DeflaterOutputStream.DeflaterOutputStream(OutputStream)
 
@@ -178,15 +165,13 @@ public DeflaterOutputStream(OutputStream out)
 Creates a new output stream and compressor with the
 default compression level and a default buffer size.
 
-The new output stream instance is created as if by invoking
-the 2-argument constructor `DeflaterOutputStream(out, false)`.
-
+<p>The new output stream instance is created as if by invoking
+the 2-argument constructor {@code DeflaterOutputStream(out, false)}.
+<p>
 The compressor will be closed when this output stream
-is closed.
+is {@linkplain #close() closed}.
 
-Parameters:
-
-- `out`: the output stream
+@param out the output stream
 
 ## DeflaterOutputStream.write(int)
 
@@ -196,14 +181,8 @@ public void write(int b) throws IOException
 
 Writes a byte to the compressed output stream. This method will
 block until the byte can be written.
-
-Parameters:
-
-- `b`: the byte to be written
-
-Throws:
-
-- `IOException`: if an I/O error has occurred
+@param b the byte to be written
+@throws    IOException if an I/O error has occurred
 
 ## DeflaterOutputStream.write(byte[], int, int)
 
@@ -213,16 +192,10 @@ public void write(byte[] b, int off, int len) throws IOException
 
 Writes an array of bytes to the compressed output stream. This
 method will block until all the bytes are written.
-
-Parameters:
-
-- `b`: the data to be written
-- `off`: the start offset of the data
-- `len`: the length of the data
-
-Throws:
-
-- `IOException`: if an I/O error has occurred
+@param b the data to be written
+@param off the start offset of the data
+@param len the length of the data
+@throws    IOException if an I/O error has occurred
 
 ## DeflaterOutputStream.finish()
 
@@ -233,10 +206,7 @@ public void finish() throws IOException
 Finishes writing compressed data to the output stream without closing
 the underlying stream. Use this method when applying multiple filters
 in succession to the same output stream.
-
-Throws:
-
-- `IOException`: if an I/O error has occurred
+@throws    IOException if an I/O error has occurred
 
 ## DeflaterOutputStream.close()
 
@@ -247,9 +217,7 @@ public void close() throws IOException
 Writes remaining compressed data to the output stream and closes the
 underlying stream.
 
-Throws:
-
-- `IOException`: if an I/O error has occurred
+@throws    IOException if an I/O error has occurred
 
 ## DeflaterOutputStream.deflate()
 
@@ -258,10 +226,7 @@ protected void deflate() throws IOException
 ```
 
 Writes next block of compressed data to the output stream.
-
-Throws:
-
-- `IOException`: if an I/O error has occurred
+@throws IOException if an I/O error has occurred
 
 ## DeflaterOutputStream.flush()
 
@@ -271,15 +236,14 @@ public void flush() throws IOException
 
 Flushes the compressed output stream.
 
-If Deflater, int, boolean) syncFlush is `true` when this compressed output stream is
-constructed, this method first flushes the underlying `compressor`
-with the flush mode `Deflater.SYNC_FLUSH` to force
+If {@link #DeflaterOutputStream(OutputStream, Deflater, int, boolean)
+syncFlush} is {@code true} when this compressed output stream is
+constructed, this method first flushes the underlying {@code compressor}
+with the flush mode {@link Deflater#SYNC_FLUSH} to force
 all pending data to be flushed out to the output stream and then
 flushes the output stream. Otherwise this method only flushes the
-output stream without flushing the `compressor`.
+output stream without flushing the {@code compressor}.
 
-**Since:** 1.7
+@throws IOException if an I/O error has occurred
 
-Throws:
-
-- `IOException`: if an I/O error has occurred
+@since 1.7

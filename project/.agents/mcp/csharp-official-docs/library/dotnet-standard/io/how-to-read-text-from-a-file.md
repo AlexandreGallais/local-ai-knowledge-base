@@ -1,18 +1,26 @@
 ---
 title: "Read text from a file"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/io/how-to-read-text-from-a-file.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: In this article, see examples of how to read text synchronously or asynchronously from a text file, using the StreamReader class in .NET for desktop apps.
+ms.date: 05/09/2024
+ms.custom: devdivchpfy22
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "streams, reading text from files"
+  - "reading text files"
+  - "reading data, text files"
+  - "data streams, reading text from files"
+  - "I/O [.NET], reading text from files"
+ms.assetid: ed180baa-dfc6-4c69-a725-46e87edafb27
+#customer intent: As a developer I want to read text from a file
 ---
-
 # Read text from a file
 
-The following examples show how to read text synchronously and asynchronously from a text file using .NET for desktop apps. In both examples, when you create the instance of the `System.IO.StreamReader` class, you provide the relative or absolute path to the file.
+The following examples show how to read text synchronously and asynchronously from a text file using .NET for desktop apps. In both examples, when you create the instance of the <xref:System.IO.StreamReader> class, you provide the relative or absolute path to the file.
 
-> **Note:**
-> These code examples don't apply to Universal Windows (UWP) apps because the Windows runtime provides different stream types for reading and writing to files. For more information, see UWP work with files. For examples that show how to convert between .NET Framework streams and Windows Runtime streams, see How to: Convert between .NET Framework streams and Windows Runtime streams.
+> [!NOTE]
+> These code examples don't apply to Universal Windows (UWP) apps because the Windows runtime provides different stream types for reading and writing to files. For more information, see [UWP work with files](/windows/uwp/get-started/fileio-learning-track). For examples that show how to convert between .NET Framework streams and Windows Runtime streams, see [How to: Convert between .NET Framework streams and Windows Runtime streams](how-to-convert-between-dotnet-streams-and-winrt-streams.md).
 
 ## Prerequisites
 
@@ -24,93 +32,29 @@ The following examples show how to read text synchronously and asynchronously fr
 
 The following example shows a synchronous read operation within a console app. The file contents are read and stored in a string variable, which is then written to the console.
 
-1. Create a `System.IO.StreamReader` instance.
-1. Call the `System.IO.StreamReader.ReadToEnd` method and assign the result to a string.
+1. Create a <xref:System.IO.StreamReader> instance.
+1. Call the <xref:System.IO.StreamReader.ReadToEnd?displayProperty=nameWithType> method and assign the result to a string.
 1. Write the output to the console.
 
-```csharp
-try
-{
-    // Open the text file using a stream reader.
-    using StreamReader reader = new("TestFile.txt");
+:::code language="csharp" source="snippets/how-to-read-text-from-a-file/csharp/Program.cs" id="sync":::
+:::code language="vb" source="snippets/how-to-read-text-from-a-file/vb/Program.vb" id="sync":::
 
-    // Read the stream as a string.
-    string text = reader.ReadToEnd();
-
-    // Write the text to the console.
-    Console.WriteLine(text);
-}
-catch (IOException e)
-{
-    Console.WriteLine("The file could not be read:");
-    Console.WriteLine(e.Message);
-}
-```
-```vb
-Try
-    ' Open the text file using a stream reader.
-    Using reader As New StreamReader("TestFile.txt")
-
-        ' Read the stream as a string.
-        Dim text As String = reader.ReadToEnd()
-
-        ' Write the text to the console.
-        Console.WriteLine(text)
-
-    End Using
-Catch ex As IOException
-    Console.WriteLine("The file could not be read:")
-    Console.WriteLine(ex.Message)
-End Try
-```
 ## Read a file asynchronously
 
 The following example shows an asynchronous read operation within a console app. The file contents are read and stored in a string variable, which is then written to the console.
 
-1. Create a `System.IO.StreamReader` instance.
-1. Await the `System.IO.StreamReader.ReadToEndAsync` method and assign the result to a string.
+1. Create a <xref:System.IO.StreamReader> instance.
+1. Await the <xref:System.IO.StreamReader.ReadToEndAsync?displayProperty=nameWithType> method and assign the result to a string.
 1. Write the output to the console.
 
-```csharp
-try
-{
-    // Open the text file using a stream reader.
-    using StreamReader reader = new("TestFile.txt");
+:::code language="csharp" source="snippets/how-to-read-text-from-a-file/csharp/Program.cs" id="async":::
+:::code language="vb" source="snippets/how-to-read-text-from-a-file/vb/Program.vb" id="async":::
 
-    // Read the stream as a string.
-    string text = await reader.ReadToEndAsync();
-
-    // Write the text to the console.
-    Console.WriteLine(text);
-}
-catch (IOException e)
-{
-    Console.WriteLine("The file could not be read:");
-    Console.WriteLine(e.Message);
-}
-```
-```vb
-Try
-    ' Open the text file using a stream reader.
-    Using reader As New StreamReader("TestFile.txt")
-
-        ' Read the stream as a string.
-        Dim text As String = Await reader.ReadToEndAsync()
-
-        ' Write the text to the console.
-        Console.WriteLine(text)
-
-    End Using
-Catch ex As IOException
-    Console.WriteLine("The file could not be read:")
-    Console.WriteLine(ex.Message)
-End Try
-```
 ## Related content
 
-- Common I/O Tasks.
-- Asynchronous file I/O.
-- How to: Write text to a file.
-- `System.IO.StreamReader`
-- `System.IO.File.OpenText*`
-- `System.IO.StreamReader.ReadLine*`
+- [Common I/O Tasks](common-i-o-tasks.md).
+- [Asynchronous file I/O](asynchronous-file-i-o.md).
+- [How to: Write text to a file](how-to-write-text-to-a-file.md).
+- <xref:System.IO.StreamReader>
+- <xref:System.IO.File.OpenText*?displayProperty=nameWithType>
+- <xref:System.IO.StreamReader.ReadLine*?displayProperty=nameWithType>

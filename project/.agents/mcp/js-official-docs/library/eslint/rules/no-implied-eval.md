@@ -1,13 +1,10 @@
 ---
-title: "no-implied-eval"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-implied-eval.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-implied-eval
+rule_type: suggestion
+related_rules:
+- no-eval
 ---
 
-# no-implied-eval
 
 It's considered a good practice to avoid using `eval()` in JavaScript. There are security and performance implications involved with doing so, which is why many linters (including ESLint) recommend disallowing `eval()`. However, there are some other ways to pass a string and have it interpreted as JavaScript code that have similar concerns.
 
@@ -34,7 +31,7 @@ This rule aims to eliminate implied `eval()` through the use of `setTimeout()`, 
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-implied-eval: "error"*/
@@ -51,9 +48,11 @@ window.setTimeout("count = 5", 10);
 window.setInterval("foo = bar", 10);
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-implied-eval: "error"*/
@@ -67,6 +66,8 @@ setInterval(function() {
     alert("Hi!");
 }, 100);
 ```
+
+:::
 
 ## Options
 

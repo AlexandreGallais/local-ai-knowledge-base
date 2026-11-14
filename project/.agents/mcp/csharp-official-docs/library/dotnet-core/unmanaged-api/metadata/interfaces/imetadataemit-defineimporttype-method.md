@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataEmit::DefineImportType Method"
 title: "IMetaDataEmit::DefineImportType Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataemit-defineimporttype-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataEmit.DefineImportType"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataEmit::DefineImportType"
+  - "IMetaDataEmit::DefineImportType method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataEmit::DefineImportType Method
 
 Creates a reference to the specified type that is defined outside the current scope, and defines a token for that reference.
@@ -28,7 +35,7 @@ HRESULT DefineImportType (
 ## Parameters
 
  `pAssemImport`
- [in] An IMetaDataAssemblyImport interface that represents the assembly from which the target type is imported.
+ [in] An [IMetaDataAssemblyImport](imetadataassemblyimport-interface.md) interface that represents the assembly from which the target type is imported.
 
  `pbHashValue`
  [in] An array that contains the hash for the assembly specified by `pAssemImport`.
@@ -37,24 +44,24 @@ HRESULT DefineImportType (
  [in] The number of bytes in the `pbHashValue` array.
 
  `pImport`
- [in] An IMetaDataImport interface that represents the metadata scope from which the target type is imported.
+ [in] An [IMetaDataImport](imetadataimport-interface.md) interface that represents the metadata scope from which the target type is imported.
 
  `tdImport`
  [in] An `mdTypeDef` token that specifies the target type.
 
  `pAssemEmit`
- [in] An IMetaDataAssemblyEmit interface that represents the assembly into which the target type is imported.
+ [in] An [IMetaDataAssemblyEmit](imetadataassemblyemit-interface.md) interface that represents the assembly into which the target type is imported.
 
  `ptr`
  [out] The `mdTypeRef` token that is defined in the current scope for the type reference.
 
 ## Remarks
 
- Prior to calling the IMetaDataEmit::DefineImportMember method, you can use the `DefineImportType` method to create a type reference, in the current scope, for the member's parent class or parent interface.
+ Prior to calling the [IMetaDataEmit::DefineImportMember](imetadataemit-defineimportmember-method.md) method, you can use the `DefineImportType` method to create a type reference, in the current scope, for the member's parent class or parent interface.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -62,5 +69,5 @@ HRESULT DefineImportType (
 
 ## See also
 
-- IMetaDataEmit Interface
-- IMetaDataEmit2 Interface
+- [IMetaDataEmit Interface](imetadataemit-interface.md)
+- [IMetaDataEmit2 Interface](imetadataemit2-interface.md)

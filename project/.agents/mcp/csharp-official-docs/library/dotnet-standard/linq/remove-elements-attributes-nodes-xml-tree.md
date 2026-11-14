@@ -1,38 +1,39 @@
 ---
-title: "Remove elements, attributes, and nodes from an XML tree - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/remove-elements-attributes-nodes-xml-tree.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Remove elements, attributes, and nodes from an XML tree - LINQ to XML
+description: Learn how to remove elements, attributes, and other types of nodes from an XML tree.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # Remove elements, attributes, and nodes from an XML tree (LINQ to XML)
 
 You can modify an XML tree, removing elements, attributes, and other types of nodes.
 
-Removing a single element or a single attribute from an XML document is straightforward. However, when removing collections of elements or attributes, you should first materialize a collection into a list, and then delete the elements or attributes from the list. The best approach is to use the `System.Xml.Linq.Extensions.Remove*` extension method to do this.
+Removing a single element or a single attribute from an XML document is straightforward. However, when removing collections of elements or attributes, you should first materialize a collection into a list, and then delete the elements or attributes from the list. The best approach is to use the <xref:System.Xml.Linq.Extensions.Remove*> extension method to do this.
 
-The main reason to use this approach is that most of the collections you retrieve from an XML tree are yielded using deferred execution. If you don't first materialize them into a list, or if you don't use the extension methods, you may encounter a certain class of bugs. For more information, see Mixed declarative/imperative code bugs.
+The main reason to use this approach is that most of the collections you retrieve from an XML tree are yielded using deferred execution. If you don't first materialize them into a list, or if you don't use the extension methods, you may encounter a certain class of bugs. For more information, see [Mixed declarative/imperative code bugs](mixed-declarative-imperative-code-bugs.md).
 
 The following methods remove nodes and attributes from an XML tree.
 
 |Method|Description|
 |------------|-----------------|
-|`System.Xml.Linq.XAttribute.Remove*`|Remove an `System.Xml.Linq.XAttribute` from its parent.|
-|`System.Xml.Linq.XContainer.RemoveNodes*`|Remove the child nodes from an `System.Xml.Linq.XContainer`.|
-|`System.Xml.Linq.XElement.RemoveAll*`|Remove content and attributes from an `System.Xml.Linq.XElement`.|
-|`System.Xml.Linq.XElement.RemoveAttributes*`|Remove the attributes of an `System.Xml.Linq.XElement`.|
-|`System.Xml.Linq.XElement.SetAttributeValue*`|Remove the attribute if you pass the value `null`.|
-|`System.Xml.Linq.XElement.SetElementValue*`|Remove the child element if you pass the value `null`.|
-|`System.Xml.Linq.XNode.Remove*`|Remove an `System.Xml.Linq.XNode` from its parent.|
-|`System.Xml.Linq.Extensions.Remove*`|Remove every attribute or element in the source collection from its parent element.|
+|<xref:System.Xml.Linq.XAttribute.Remove*?displayProperty=nameWithType>|Remove an <xref:System.Xml.Linq.XAttribute> from its parent.|
+|<xref:System.Xml.Linq.XContainer.RemoveNodes*?displayProperty=nameWithType>|Remove the child nodes from an <xref:System.Xml.Linq.XContainer>.|
+|<xref:System.Xml.Linq.XElement.RemoveAll*?displayProperty=nameWithType>|Remove content and attributes from an <xref:System.Xml.Linq.XElement>.|
+|<xref:System.Xml.Linq.XElement.RemoveAttributes*?displayProperty=nameWithType>|Remove the attributes of an <xref:System.Xml.Linq.XElement>.|
+|<xref:System.Xml.Linq.XElement.SetAttributeValue*?displayProperty=nameWithType>|Remove the attribute if you pass the value `null`.|
+|<xref:System.Xml.Linq.XElement.SetElementValue*?displayProperty=nameWithType>|Remove the child element if you pass the value `null`.|
+|<xref:System.Xml.Linq.XNode.Remove*?displayProperty=nameWithType>|Remove an <xref:System.Xml.Linq.XNode> from its parent.|
+|<xref:System.Xml.Linq.Extensions.Remove*?displayProperty=nameWithType>|Remove every attribute or element in the source collection from its parent element.|
 
 ## Example: Remove a single element, and remove a collection of elements in two ways
 
-This example demonstrates three approaches to removing elements. First, it removes a single element. Second, it retrieves a collection of elements, materializes them using the `System.Linq.Enumerable.ToList*` operator, and then removes the collection. Finally, it retrieves a collection of elements and removes them using the `System.Xml.Linq.Extensions.Remove*` extension method.
+This example demonstrates three approaches to removing elements. First, it removes a single element. Second, it retrieves a collection of elements, materializes them using the <xref:System.Linq.Enumerable.ToList*?displayProperty=nameWithType> operator, and then removes the collection. Finally, it retrieves a collection of elements and removes them using the <xref:System.Xml.Linq.Extensions.Remove*> extension method.
 
-For more information on the `System.Linq.Enumerable.ToList*` operator, see Converting Data Types (C#) and Converting Data Types (Visual Basic).
+For more information on the <xref:System.Linq.Enumerable.ToList*> operator, see [Converting Data Types (C#)](../../csharp/linq/standard-query-operators/converting-data-types.md) and [Converting Data Types (Visual Basic)](../../visual-basic/programming-guide/concepts/linq/converting-data-types.md).
 
 ```csharp
 XElement root = XElement.Parse(@"<Root>

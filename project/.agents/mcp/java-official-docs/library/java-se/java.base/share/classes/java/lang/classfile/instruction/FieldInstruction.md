@@ -1,30 +1,26 @@
----
-title: "FieldInstruction interface (java.lang.classfile.instruction)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/instruction/FieldInstruction.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # FieldInstruction interface (java.lang.classfile.instruction)
 
 ```java
 public sealed interface FieldInstruction extends Instruction permits AbstractInstruction.BoundFieldInstruction, AbstractInstruction.UnboundFieldInstruction
 ```
 
-Models a field access instruction in the `code` array of a `Code`
-attribute.  Corresponding opcodes have a kind
-of `Opcode.Kind.FIELD_ACCESS`.  Delivered as a `CodeElement` when
-traversing the elements of a `CodeModel`.
-
+Models a field access instruction in the {@code code} array of a {@code Code}
+attribute.  Corresponding opcodes have a {@linkplain Opcode#kind() kind}
+of {@link Opcode.Kind#FIELD_ACCESS}.  Delivered as a {@link CodeElement} when
+traversing the elements of a {@link CodeModel}.
+<p>
 A field access instruction is composite:
+{@snippet lang=text :
+// @link substring="FieldInstruction" target="#of(Opcode, FieldRefEntry)" :
+FieldInstruction(
+    Opcode opcode, // @link substring="opcode" target="#opcode()"
+    FieldRefEntry field, // @link substring="field" target="#field()"
+)
+}
 
-**See also:** Opcode.Kind#FIELD_ACCESS
-
-**See also:** CodeBuilder#fieldAccess CodeBuilder::fieldAccess
-
-**Since:** 24
+@see Opcode.Kind#FIELD_ACCESS
+@see CodeBuilder#fieldAccess CodeBuilder::fieldAccess
+@since 24
 
 ## FieldInstruction.field()
 
@@ -32,11 +28,15 @@ A field access instruction is composite:
 FieldRefEntry field()
 ```
 
+{@return the {@link FieldRefEntry} constant described by this instruction}
+
 ## FieldInstruction.owner()
 
 ```java
 default ClassEntry owner()
 ```
+
+{@return the class holding the field}
 
 ## FieldInstruction.name()
 
@@ -44,14 +44,19 @@ default ClassEntry owner()
 default Utf8Entry name()
 ```
 
+{@return the name of the field}
+
 ## FieldInstruction.type()
 
 ```java
 default Utf8Entry type()
 ```
 
-**API note:** A symbolic descriptor for the type of the field is available through
-typeSymbol().
+{@return the field descriptor string of the field}
+
+@apiNote
+A symbolic descriptor for the type of the field is available through
+{@link #typeSymbol() typeSymbol()}.
 
 ## FieldInstruction.typeSymbol()
 
@@ -59,20 +64,21 @@ typeSymbol().
 default ClassDesc typeSymbol()
 ```
 
+{@return a symbolic descriptor for the type of the field}
+
 ## FieldInstruction.of(Opcode, FieldRefEntry)
 
 ```java
 static FieldInstruction of(Opcode op, FieldRefEntry field)
 ```
 
-Parameters:
+{@return a field access instruction}
 
-- `op`: the opcode for the specific type of field access instruction, which must be of kind `Opcode.Kind.FIELD_ACCESS`
-- `field`: a constant pool entry describing the field
-
-Throws:
-
-- `IllegalArgumentException`: if the opcode kind is not `Opcode.Kind.FIELD_ACCESS`.
+@param op the opcode for the specific type of field access instruction,
+          which must be of kind {@link Opcode.Kind#FIELD_ACCESS}
+@param field a constant pool entry describing the field
+@throws IllegalArgumentException if the opcode kind is not
+        {@link Opcode.Kind#FIELD_ACCESS}.
 
 ## FieldInstruction.of(Opcode, ClassEntry, Utf8Entry, Utf8Entry)
 
@@ -80,16 +86,15 @@ Throws:
 static FieldInstruction of(Opcode op, ClassEntry owner, Utf8Entry name, Utf8Entry type)
 ```
 
-Parameters:
+{@return a field access instruction}
 
-- `op`: the opcode for the specific type of field access instruction, which must be of kind `Opcode.Kind.FIELD_ACCESS`
-- `owner`: the class holding the field
-- `name`: the name of the field
-- `type`: the field descriptor
-
-Throws:
-
-- `IllegalArgumentException`: if the opcode kind is not `Opcode.Kind.FIELD_ACCESS`.
+@param op the opcode for the specific type of field access instruction,
+          which must be of kind {@link Opcode.Kind#FIELD_ACCESS}
+@param owner the class holding the field
+@param name the name of the field
+@param type the field descriptor
+@throws IllegalArgumentException if the opcode kind is not
+        {@link Opcode.Kind#FIELD_ACCESS}.
 
 ## FieldInstruction.of(Opcode, ClassEntry, NameAndTypeEntry)
 
@@ -97,12 +102,11 @@ Throws:
 static FieldInstruction of(Opcode op, ClassEntry owner, NameAndTypeEntry nameAndType)
 ```
 
-Parameters:
+{@return a field access instruction}
 
-- `op`: the opcode for the specific type of field access instruction, which must be of kind `Opcode.Kind.FIELD_ACCESS`
-- `owner`: the class holding the field
-- `nameAndType`: the name and field descriptor of the field
-
-Throws:
-
-- `IllegalArgumentException`: if the opcode kind is not `Opcode.Kind.FIELD_ACCESS`.
+@param op the opcode for the specific type of field access instruction,
+          which must be of kind {@link Opcode.Kind#FIELD_ACCESS}
+@param owner the class holding the field
+@param nameAndType the name and field descriptor of the field
+@throws IllegalArgumentException if the opcode kind is not
+        {@link Opcode.Kind#FIELD_ACCESS}.

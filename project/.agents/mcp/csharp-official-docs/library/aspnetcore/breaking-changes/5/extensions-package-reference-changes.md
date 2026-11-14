@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: Extensions: Package reference changes affecting some NuGet packages"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/5/extensions-package-reference-changes.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 5.0 titled Extensions: Package reference changes affecting some NuGet packages"
+ms.date: 10/01/2020
+ms.custom: https://github.com/aspnet/Announcements/issues/411
 ---
-
 # Extensions: Package reference changes affecting some NuGet packages
 
-With the migration of some `Microsoft.Extensions.*` NuGet packages from the dotnet/extensions repository to dotnet/runtime, as described in aspnet/Announcements#411, packaging changes are being applied to some of the migrated packages. For discussion on this issue, see dotnet/aspnetcore#21033.
+With the migration of some `Microsoft.Extensions.*` NuGet packages from the [dotnet/extensions](https://github.com/dotnet/extensions) repository to [dotnet/runtime](https://github.com/dotnet/runtime), as described in [aspnet/Announcements#411](https://github.com/aspnet/Announcements/issues/411), packaging changes are being applied to some of the migrated packages. For discussion on this issue, see [dotnet/aspnetcore#21033](https://github.com/dotnet/aspnetcore/issues/21033).
 
 ## Version introduced
 
@@ -33,17 +30,29 @@ Consumers of the affected packages should add a direct dependency on the removed
 
 |Package name|Change description|
 |------------|------------------|
-|Microsoft.Extensions.Configuration.Binder|Removed reference to `Microsoft.Extensions.Configuration`|
-|Microsoft.Extensions.Configuration.Json    |Removed reference to `System.Threading.Tasks.Extensions`|
-|Microsoft.Extensions.Hosting.Abstractions|Removed reference to `Microsoft.Extensions.Logging.Abstractions`|
-|Microsoft.Extensions.Logging                          |Removed reference to `Microsoft.Extensions.Configuration.Binder`|
-|Microsoft.Extensions.Logging.Console          |Removed reference to `Microsoft.Extensions.Configuration.Abstractions`|
-|Microsoft.Extensions.Logging.EventLog        |Removed reference to `System.Diagnostics.EventLog` for the .NET Framework 4.6.1 target framework moniker|
-|Microsoft.Extensions.Logging.EventSource  |Removed reference to `System.Threading.Tasks.Extensions`|
-|Microsoft.Extensions.Options                          |Removed reference to `System.ComponentModel.Annotations`|
+|[Microsoft.Extensions.Configuration.Binder](https://nuget.org/packages/Microsoft.Extensions.Configuration.Binder)|Removed reference to `Microsoft.Extensions.Configuration`|
+|[Microsoft.Extensions.Configuration.Json](https://nuget.org/packages/Microsoft.Extensions.Configuration.Json)    |Removed reference to `System.Threading.Tasks.Extensions`|
+|[Microsoft.Extensions.Hosting.Abstractions](https://nuget.org/packages/Microsoft.Extensions.Hosting.Abstractions)|Removed reference to `Microsoft.Extensions.Logging.Abstractions`|
+|[Microsoft.Extensions.Logging](https://nuget.org/packages/Microsoft.Extensions.Logging)                          |Removed reference to `Microsoft.Extensions.Configuration.Binder`|
+|[Microsoft.Extensions.Logging.Console](https://nuget.org/packages/Microsoft.Extensions.Logging.Console)          |Removed reference to `Microsoft.Extensions.Configuration.Abstractions`|
+|[Microsoft.Extensions.Logging.EventLog](https://nuget.org/packages/Microsoft.Extensions.Logging.EventLog)        |Removed reference to `System.Diagnostics.EventLog` for the .NET Framework 4.6.1 target framework moniker|
+|[Microsoft.Extensions.Logging.EventSource](https://nuget.org/packages/Microsoft.Extensions.Logging.EventSource)  |Removed reference to `System.Threading.Tasks.Extensions`|
+|[Microsoft.Extensions.Options](https://nuget.org/packages/Microsoft.Extensions.Options)                          |Removed reference to `System.ComponentModel.Annotations`|
 
 For example, the package reference to `Microsoft.Extensions.Configuration` was removed from `Microsoft.Extensions.Configuration.Binder`. No API from the dependency was used in the package. Users of `Microsoft.Extensions.Configuration.Binder` who depend on APIs from `Microsoft.Extensions.Configuration` should add a direct reference to it in their project.
 
 ## Affected APIs
 
 None
+
+<!--
+
+### Category
+
+ASP.NET Core
+
+### Affected APIs
+
+Not detectable via API analysis
+
+-->

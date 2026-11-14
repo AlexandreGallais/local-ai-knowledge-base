@@ -1,12 +1,3 @@
----
-title: "Directive composition API"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/directives/directive-composition-api.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Directive composition API
 
 Angular directives offer a great way to encapsulate reusable behaviors. Directives can apply attributes, CSS classes, and event listeners to an element.
@@ -28,7 +19,7 @@ In this example, the `MenuBehavior` directive is applied to the host element of 
 export class AdminMenu {}
 ```
 
-When the framework renders a component, Angular also creates an instance of each host directive. The directives' host bindings apply to the component's host element. By default, host directive inputs and outputs are not exposed as part of the component's public API. See Including inputs and outputs below for more information.
+When the framework renders a component, Angular also creates an instance of each host directive. The directives' host bindings apply to the component's host element. By default, host directive inputs and outputs are not exposed as part of the component's public API. See [Including inputs and outputs](#including-inputs-and-outputs) below for more information.
 
 Host directives come with the following constraints:
 
@@ -207,7 +198,7 @@ export class Button {}
 
 If the same directive appears **more than once as a host directive**, for example, when two directives both declare a common dependency in their `hostDirectives`, Angular merges all instances into a single directive instance. The input and output mappings from all instances are combined.
 
-This resolves the classic diamond problem in host directive composition:
+This resolves the classic [diamond problem](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem) in host directive composition:
 
 ```ts
 // A shared behavior that both triggers need
@@ -249,7 +240,7 @@ HELPFUL: Because Angular produces only one instance of the shared directive, bot
 
 When Angular merges duplicate host directive matches it also merges their input and output mappings.
 
-If two instances of the same host directive expose the **same input or output under different aliases**, Angular throws an error at compile time (NG8024).
+If two instances of the same host directive expose the **same input or output under different aliases**, Angular throws an error at compile time ([NG8024](errors/NG8024)).
 
 ```ts
 @Directive({
@@ -276,5 +267,7 @@ To resolve this, ensure that both paths expose the shared input or output under 
 
 ## What's next
 
-  - Structural directives
-  - Component host elements
+<docs-pill-row>
+  <docs-pill href="guide/directives/structural-directives" title="Structural directives"/>
+  <docs-pill href="guide/components/host-elements" title="Component host elements"/>
+</docs-pill-row>

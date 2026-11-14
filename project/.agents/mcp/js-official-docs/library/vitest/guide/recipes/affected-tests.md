@@ -1,18 +1,13 @@
 ---
-title: "Running Only Affected Tests | Recipes"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/recipes/affected-tests.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Running Only Affected Tests | Recipes
 ---
 
 # Running Only Affected Tests
 
 A full run of a large suite is the right check before a merge, but it is slow feedback for a small change. If you edited one module, only the tests that load that module can change their result. Vitest has two flags that select those tests. They differ in one question: changed compared to what?
 
-- `--changed` compares the working tree with a Git reference.
-- `--since-last-run` compares every file a test loaded with the time of the test's last run.
+- [`--changed`](/config/changed) compares the working tree with a Git reference.
+- [`--since-last-run`](/guide/cli#since-last-run) compares every file a test loaded with the time of the test's last run.
 
 ## `--changed`: what differs from a Git reference
 
@@ -36,7 +31,7 @@ The first run with `--since-last-run` runs every test and records the files each
 
 Each run updates the records of the tests it ran, so the baseline moves with you: after a run, only the next edit selects tests again. Git is not involved, so the flag works in a fresh container, in a worktree with an unrelated history, or in a directory that is not a repository. A new test file, or one that was never recorded, always runs.
 
-The records live in the cache. `vitest run --clearCache` deletes them, and the next `--since-last-run` run is a full run again.
+The records live in the [cache](/config/cache). `vitest run --clearCache` deletes them, and the next `--since-last-run` run is a full run again.
 
 ## Which one to pick
 
@@ -56,7 +51,7 @@ AI coding agents run tests after almost every edit. They often work in a contain
 
 Tell the agent about it in the instructions file of your project:
 
-```md
+```md [AGENTS.md]
 - After a change, run `vitest run --since-last-run` to test only what the change affects.
 - Before you finish, run `vitest run` once for the whole suite.
 ```
@@ -65,7 +60,7 @@ Two things the records cannot see: a file that no test loaded during the last ru
 
 ## See also
 
-- `changed`
-- `--since-last-run`
-- `experimental.recordDependencies`
-- Test Filtering
+- [`changed`](/config/changed)
+- [`--since-last-run`](/guide/cli#since-last-run)
+- [`experimental.recordDependencies`](/config/experimental#experimental-recorddependencies)
+- [Test Filtering](/guide/filtering)

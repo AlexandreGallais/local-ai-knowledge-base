@@ -1,61 +1,57 @@
 ---
+description: "Learn more about: Metadata interfaces (.NET)"
 title: "Metadata interfaces (.NET)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/metadata-interfaces.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 07/22/2025
 ---
-
 # Metadata interfaces (.NET)
 
-These articles describe the unmanaged metadata interfaces that provide access to the metadata exposed by .NET types, methods, fields, and other APIs. For unmanaged API metadata interfaces that are specific to .NET Framework, see Metadata interfaces.
+These articles describe the unmanaged metadata interfaces that provide access to the metadata exposed by .NET types, methods, fields, and other APIs. For unmanaged API metadata interfaces that are specific to .NET Framework, see [Metadata interfaces](../../../../framework/unmanaged-api/metadata/metadata-interfaces.md).
 
-IMapToken <example-value>
+[IMapToken interface](imaptoken-interface.md)\
 Provides mapping capabilities between imported and emitted metadata signatures.
 
-IMetaDataAssemblyEmit interface\
+[IMetaDataAssemblyEmit interface](imetadataassemblyemit-interface.md)\
 Provides methods that support the self-description model used by the common language runtime (CLR) to resolve and consume resources.
 
-IMetaDataAssemblyImport interface\
+[IMetaDataAssemblyImport interface](imetadataassemblyimport-interface.md)\
 Provides methods to access and examine the contents of an assembly manifest.
 
-IMetaDataDispenser interface\
+[IMetaDataDispenser interface](imetadatadispenser-interface.md)\
 `IMetaDataDispenser` is obsolete. Use `IMetaDataDispenserEx` instead.
 
-IMetaDataDispenserEx interface\
+[IMetaDataDispenserEx interface](imetadatadispenserex-interface.md)\
 Provides methods that map areas of memory for creating or modifying metadata.
 
-IMetaDataEmit interface\
+[IMetaDataEmit interface](imetadataemit-interface.md)\
 Provides methods to create, modify and store metadata about the assembly in the currently defined scope.
 
-IMetaDataEmit2 interface\
-Provides methods for defining and modifying the metadata signatures of methods and constructors with parameters of type `System.Type`.
+[IMetaDataEmit2 interface](imetadataemit2-interface.md)\
+Provides methods for defining and modifying the metadata signatures of methods and constructors with parameters of type <xref:System.Type?displayProperty=nameWithType>.
 
-IMetaDataError interface\
+[IMetaDataError interface](imetadataerror-interface.md)\
 Provides a callback mechanism for reporting errors during the resolution of the metadata signature for an assembly.
 
-IMetaDataFilter interface\
+[IMetaDataFilter interface](imetadatafilter-interface.md)\
 Provides methods for marking and filtering metadata tokens to avoid repeating actions that have already been taken.
 
-IMetaDataImport interface\
+[IMetaDataImport interface](imetadataimport-interface.md)\
 Provides methods for importing and manipulating types from other assemblies.
 
-IMetaDataImport2 interface\
+[IMetaDataImport2 interface](imetadataimport2-interface.md)\
 Extends `IMetaDataImport` to provide the capability of working with generic types.
 
-IMetaDataInfo interface\
+[IMetaDataInfo interface](imetadatainfo-interface.md)\
 Provides a method that gets information about the mapping of metadata from an on-disk file into memory.
 
-IMetaDataTables interface\
+[IMetaDataTables interface](imetadatatables-interface.md)\
 Provides methods for the storage and retrieval of metadata information in tables.
 
-IMetaDataTables2 interface\
+[IMetaDataTables2 interface](imetadatatables2-interface.md)\
 Extends `IMetaDataTables` to include methods for working with metadata streams.
 
-IMetaDataValidate interface\
+[IMetaDataValidate interface](imetadatavalidate-interface.md)\
 Provides methods to use for validation of metadata signatures.
 
 ## See also
 
-- Metadata interfaces (.NET Framework)
+- [Metadata interfaces (.NET Framework)](../../../../framework/unmanaged-api/metadata/metadata-interfaces.md)

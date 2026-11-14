@@ -1,12 +1,3 @@
----
-title: "signal-store-feature-should-use-generic-type"
-tool: "ngrx-signals"
-version: "22.0"
-source: "https://github.com/ngrx/platform/blob/a4995391ef631f1bd60d539f436a1aa5c23c4fe5/projects/www/src/app/pages/guide/eslint-plugin/rules/signal-store-feature-should-use-generic-type.md"
-commit: "a4995391ef631f1bd60d539f436a1aa5c23c4fe5"
-license: "MIT"
----
-
 # signal-store-feature-should-use-generic-type
 
 A custom Signal Store feature that accepts an input should define a generic type.
@@ -16,6 +7,9 @@ A custom Signal Store feature that accepts an input should define a generic type
 - **Suggestion**: No
 - **Requires type checking**: No
 - **Configurable**: No
+
+<!-- Everything above this generated, do not edit -->
+<!-- MANUAL-DOC:START -->
 
 ## Rule Details
 
@@ -81,4 +75,4 @@ function withY<_>() {
 
 ## Further reading
 
-- Known TypeScript Issues with Custom Store Features
+- [Known TypeScript Issues with Custom Store Features](guide/signals/signal-store/custom-store-features#known-typescript-issues)

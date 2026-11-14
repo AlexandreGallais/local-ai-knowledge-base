@@ -1,12 +1,3 @@
----
-title: "class: TestInfo (part 1 of 2)"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/test-api/class-testinfo.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: TestInfo
 * since: v1.10
 * langs: js
@@ -22,6 +13,7 @@ test('basic test', async ({ page }, testInfo) => {
 });
 ```
 
+
 ## property: TestInfo.annotations
 * since: v1.10
 - type: <[Array]<[Object]>>
@@ -31,7 +23,7 @@ test('basic test', async ({ page }, testInfo) => {
 
 The list of annotations applicable to the current test. Includes annotations from the test, annotations from all [`method: Test.describe`] groups the test belongs to and file-level annotations for the test file.
 
-Learn more about test annotations.
+Learn more about [test annotations](../test-annotations.md).
 
 ## property: TestInfo.attachments
 * since: v1.10
@@ -105,23 +97,27 @@ Content type of this attachment to properly present in the report, for example `
 
 Path on the filesystem to the attached file. Mutually exclusive with [`option: body`].
 
+
 ## property: TestInfo.column
 * since: v1.10
 - type: <[int]>
 
 Column number where the currently running test is declared.
 
+
 ## property: TestInfo.config
 * since: v1.10
 - type: <[FullConfig]>
 
-Processed configuration from the configuration file.
+Processed configuration from the [configuration file](../test-configuration.md).
+
 
 ## property: TestInfo.duration
 * since: v1.10
 - type: <[int]>
 
 The number of milliseconds the test took to finish. Always zero before the test finishes, either successfully or not. Can be used in [`method: Test.afterEach`] hook.
+
 
 ## property: TestInfo.error
 * since: v1.10
@@ -135,6 +131,7 @@ element in [`property: TestInfo.errors`].
 - type: <[Array]<[TestInfoError]>>
 
 Errors thrown during test execution, if any.
+
 
 ## property: TestInfo.expectedStatus
 * since: v1.10
@@ -177,11 +174,13 @@ Test is marked as "should fail" when the condition is `true`.
 
 Optional description that will be reflected in a test report.
 
+
 ## property: TestInfo.file
 * since: v1.10
 - type: <[string]>
 
 Absolute path to a file where the currently running test is declared.
+
 
 ## method: TestInfo.fixme#1
 * since: v1.10
@@ -205,6 +204,7 @@ Test is marked as "fixme" when the condition is `true`.
 
 Optional description that will be reflected in a test report.
 
+
 ## property: TestInfo.fn
 * since: v1.10
 - type: <[function]>
@@ -215,7 +215,7 @@ Test function as passed to `test(title, testFunction)`.
 * since: v1.43
 - type: <[Array]<[string]>>
 
-Tags that apply to the test. Learn more about tags.
+Tags that apply to the test. Learn more about [tags](../test-annotations.md#tag-tests).
 
 :::note
 Any changes made to this list while the test is running will not be visible to test reporters.
@@ -278,25 +278,26 @@ Path segments to append at the end of the resulting path.
 
 The index of the worker between `0` and `workers - 1`. It is guaranteed that workers running at the same time have a different `parallelIndex`. When a worker is restarted, for example after a failure, the new worker process has the same `parallelIndex`.
 
-Also available as `process.env.TEST_PARALLEL_INDEX`. Learn more about parallelism and sharding with Playwright Test.
+Also available as `process.env.TEST_PARALLEL_INDEX`. Learn more about [parallelism and sharding](../test-parallel.md) with Playwright Test.
 
 ## property: TestInfo.project
 * since: v1.10
 - type: <[FullProject]>
 
-Processed project configuration from the configuration file.
+Processed project configuration from the [configuration file](../test-configuration.md).
+
 
 ## property: TestInfo.repeatEachIndex
 * since: v1.10
 - type: <[int]>
 
-Specifies a unique repeat index when running in "repeat each" mode. This mode is enabled by passing `--repeat-each` to the command line.
+Specifies a unique repeat index when running in "repeat each" mode. This mode is enabled by passing `--repeat-each` to the [command line](../test-cli.md).
 
 ## property: TestInfo.retry
 * since: v1.10
 - type: <[int]>
 
-Specifies the retry number when the test is retried after a failure. The first test run has [`property: TestInfo.retry`] equal to zero, the first retry has it equal to one, and so on. Learn more about retries.
+Specifies the retry number when the test is retried after a failure. The first test run has [`property: TestInfo.retry`] equal to zero, the first retry has it equal to one, and so on. Learn more about [retries](../test-retries.md#retries).
 
 ```js
 import { test, expect } from '@playwright/test';
@@ -318,9 +319,9 @@ test('my test', async ({ page }, testInfo) => {
 ## method: TestInfo.setTimeout
 * since: v1.10
 
-Changes the timeout for the currently running test. Zero means no timeout. Learn more about various timeouts.
+Changes the timeout for the currently running test. Zero means no timeout. Learn more about [various timeouts](../test-timeouts.md).
 
-Timeout is usually specified in the configuration file, but it could be useful to change the timeout in certain scenarios:
+Timeout is usually specified in the [configuration file](../test-configuration.md), but it could be useful to change the timeout in certain scenarios:
 
 ```js
 import { test, expect } from '@playwright/test';
@@ -359,6 +360,7 @@ A skip condition. Test is skipped when the condition is `true`.
 
 Optional description that will be reflected in a test report.
 
+
 ## method: TestInfo.slow#1
 * since: v1.10
 
@@ -380,6 +382,7 @@ Test is marked as "slow" when the condition is `true`.
 - `description` ?<[string]>
 
 Optional description that will be reflected in a test report.
+
 
 ## method: TestInfo.snapshotPath
 * since: v1.10
@@ -433,4 +436,58 @@ Use of [`property: TestInfo.snapshotSuffix`] is discouraged. Please use [`proper
 snapshot paths.
 :::
 
-Suffix used to differentiate snapshots between multiple test configurations. For example, if snapshots depend on the platform, you can set `testInfo.snapshotSuffix` equal to `process.platform`. In this case `expect(value).toMatchSnapshot(snapshotName)` will use different snapshots depending on the platform. Learn more about snapshots.
+Suffix used to differentiate snapshots between multiple test configurations. For example, if snapshots depend on the platform, you can set `testInfo.snapshotSuffix` equal to `process.platform`. In this case `expect(value).toMatchSnapshot(snapshotName)` will use different snapshots depending on the platform. Learn more about [snapshots](../test-snapshots.md).
+
+## property: TestInfo.status
+* since: v1.10
+- type: "TestStatus" ?<"passed"|"failed"|"timedOut"|"skipped"|"interrupted">
+
+Actual status for the currently running test. Available after the test has finished in [`method: Test.afterEach`] hook and fixtures.
+
+Status is usually compared with the [`property: TestInfo.expectedStatus`]:
+
+```js
+import { test, expect } from '@playwright/test';
+
+test.afterEach(async ({}, testInfo) => {
+  if (testInfo.status !== testInfo.expectedStatus)
+    console.log(`${testInfo.title} did not run as expected!`);
+});
+```
+
+## property: TestInfo.timeout
+* since: v1.10
+- type: <[int]>
+
+Timeout in milliseconds for the currently running test. Zero means no timeout. Learn more about [various timeouts](../test-timeouts.md).
+
+Timeout is usually specified in the [configuration file](../test-configuration.md)
+
+```js
+import { test, expect } from '@playwright/test';
+
+test.beforeEach(async ({ page }, testInfo) => {
+  // Extend timeout for all tests running this hook by 30 seconds.
+  testInfo.setTimeout(testInfo.timeout + 30000);
+});
+```
+
+## property: TestInfo.title
+* since: v1.10
+- type: <[string]>
+
+The title of the currently running test as passed to `test(title, testFunction)`.
+
+## property: TestInfo.titlePath
+* since: v1.10
+- type: <[Array]<[string]>>
+
+The full title path starting with the test file name.
+
+## property: TestInfo.workerIndex
+* since: v1.10
+- type: <[int]>
+
+The unique index of the worker process that is running the test. When a worker is restarted, for example after a failure, the new worker process gets a new unique `workerIndex`.
+
+Also available as `process.env.TEST_WORKER_INDEX`. Learn more about [parallelism and sharding](../test-parallel.md) with Playwright Test.

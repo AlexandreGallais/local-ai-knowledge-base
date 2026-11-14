@@ -1,19 +1,13 @@
----
-title: "no-double-comparison"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-double-comparison.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-double-comparison
 
 📝 Disallow two comparisons of the same operands that can be combined into one.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 When a `||` or `&&` joins two comparisons of the same pair of operands, the pair often says the same thing as a single comparison. `x === y || x < y` is exactly `x <= y`. Combining them removes noise and avoids evaluating the operands twice.
 
@@ -74,7 +68,7 @@ x >= y;
 
 ## Caveats
 
-The replacements are offered as suggestions, not autofixes, because some reductions can change runtime behavior for valid JavaScript values. For example, `undefined === undefined || undefined < undefined` is `true`, but `undefined <= undefined` is `false`.
+The replacements are offered as [suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions), not autofixes, because some reductions can change runtime behavior for valid JavaScript values. For example, `undefined === undefined || undefined < undefined` is `true`, but `undefined <= undefined` is `false`.
 
 The reductions assume the operands are the same primitive type, which is the common case. They are not exact for mixed types or objects with a custom `valueOf`, because the relational operators (`<`, `<=`, `>`, `>=`) coerce their operands while `===` and `!==` do not. For example, with `x = '5'`, `x === 5 || x < 5` is `false` but `x <= 5` is `true`. Such comparisons are unusual and typically a mistake, so the rule still reports them, but only as suggestions. Only strict equality (`===`/`!==`) is recognized; loose equality (`==`/`!=`) is left alone.
 

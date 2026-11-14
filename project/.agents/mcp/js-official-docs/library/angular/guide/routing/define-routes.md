@@ -1,12 +1,3 @@
----
-title: "Define routes"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/routing/define-routes.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Define routes
 
 Routes serve as the fundamental building blocks for navigation within an Angular app.
@@ -15,7 +6,7 @@ Routes serve as the fundamental building blocks for navigation within an Angular
 
 In Angular, a **route** is an object that defines which component should render for a specific URL path or pattern, as well as additional configuration options about what happens when a user navigates to that URL.
 
-Here is a basic <example-value> of a route:
+Here is a basic example of a route:
 
 ```ts
 import {AdminPage} from './app-admin';
@@ -91,8 +82,8 @@ Parameterized URLs allow you to define dynamic paths that allow multiple URLs to
 
 You can define this type of pattern by adding parameters to your route’s `path` string and prefixing each parameter with the colon (`:`) character.
 
-IMPORTANT: Parameters are distinct from information in the URL's query string.
-Learn more about query parameters in Angular in this guide.
+IMPORTANT: Parameters are distinct from information in the URL's [query string](https://en.wikipedia.org/wiki/Query_string).
+Learn more about [query parameters in Angular in this guide](/guide/routing/read-route-state#query-parameters).
 
 The following example displays a user profile component based on the user id passed in through the URL.
 
@@ -103,7 +94,7 @@ import {UserProfile} from './user-profile/user-profile';
 const routes: Routes = [{path: 'user/:id', component: UserProfile}];
 ```
 
-In this example, URLs such as `/user/leeroy` and `/user/jenkins` render the `UserProfile` component. This component can then read the `id` parameter and use it to perform additional work, such as fetching data. See reading route state guide for details on reading route parameters.
+In this example, URLs such as `/user/leeroy` and `/user/jenkins` render the `UserProfile` component. This component can then read the `id` parameter and use it to perform additional work, such as fetching data. See [reading route state guide](/guide/routing/read-route-state) for details on reading route parameters.
 
 Valid route parameter names must start with a letter (a-z, A-Z) and can only contain:
 
@@ -127,7 +118,7 @@ const routes: Routes = [
 
 With this new path, users can visit `/user/leeroy/youtube` and `/user/leeroy/bluesky` and see respective social media feeds based on the parameter for the user leeroy.
 
-See Reading route state for details on reading route parameters.
+See [Reading route state](/guide/routing/read-route-state) for details on reading route parameters.
 
 ### Wildcards
 
@@ -200,7 +191,7 @@ If you modify or remove a route, some users may still click on out-of-date links
 
 ## Page titles
 
-You can associate a **title** with each route. Angular automatically updates the page title when a route activates. Always define appropriate page titles for your application, as these titles are necessary to create an accessible experience.
+You can associate a **title** with each route. Angular automatically updates the [page title](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title) when a route activates. Always define appropriate page titles for your application, as these titles are necessary to create an accessible experience.
 
 ```ts
 import {Routes} from '@angular/router';
@@ -222,7 +213,7 @@ const routes: Routes = [
 ];
 ```
 
-The page `title` property can be set dynamically to a resolver function using `ResolveFn`.
+The page `title` property can be set dynamically to a resolver function using [`ResolveFn`](/api/router/ResolveFn).
 
 ```ts
 const titleResolver: ResolveFn<string> = (route) => route.queryParams['id'];
@@ -236,7 +227,7 @@ const routes: Routes = [
 ];
 ```
 
-Route titles can also be set via a service extending the `TitleStrategy` abstract class. By default, Angular uses the `DefaultTitleStrategy`.
+Route titles can also be set via a service extending the [`TitleStrategy`](/api/router/TitleStrategy) abstract class. By default, Angular uses the [`DefaultTitleStrategy`](/api/router/DefaultTitleStrategy).
 
 ### Using TitleStrategy for page titles
 
@@ -277,7 +268,7 @@ export const appConfig = {
 
 ## Route-level providers for dependency injection
 
-Each route has a `providers` property that lets you provide dependencies to that route's content via dependency injection.
+Each route has a `providers` property that lets you provide dependencies to that route's content via [dependency injection](/guide/di).
 
 Common scenarios where this can be helpful include applications that have different services based on whether the user is an admin or not.
 
@@ -298,7 +289,7 @@ export const ROUTES: Route[] = [
 
 In this code sample, the `admin` path contains a protected data property of `ADMIN_API_KEY` that is only available to children within its section. As a result, no other paths will be able to access the data provided via `ADMIN_API_KEY`.
 
-See the Dependency injection guide for more information about providers and injection in Angular.
+See the [Dependency injection guide](/guide/di) for more information about providers and injection in Angular.
 
 ## Associating data with routes
 
@@ -332,18 +323,20 @@ const routes: Routes = [
 
 In this code sample, the home and about page are configured with specific `analyticsId` which would then be used in their respective components for page tracking analytics.
 
-You can read this static data by injecting the `ActivatedRoute`. See Reading route state for details.
+You can read this static data by injecting the `ActivatedRoute`. See [Reading route state](/guide/routing/read-route-state) for details.
 
 ### Dynamic data with resources and resolvers
 
 When you need to fetch data for a route, Angular Router supports reactive route resources as well as data resolvers:
 
-- Data fetching with resources: Fetch data reactively using Angular Signals `Resource` APIs.
-- Route data resolvers: Fetch data before route activation using resolver functions.
+- [Data fetching with resources](/guide/routing/data-fetching-with-resources): Fetch data reactively using Angular Signals `Resource` APIs.
+- [Route data resolvers](/guide/routing/data-resolvers): Fetch data before route activation using resolver functions.
 
 ## Nested Routes
 
 Nested routes, also known as child routes, are a common technique for managing more complex navigation routes where a component has a sub-view that changes based on the URL.
+
+<img alt="Diagram to illustrate nested routes" src="assets/images/guide/router/nested-routing-diagram.svg">
 
 You can add child routes to any route definition with the `children` property:
 
@@ -384,5 +377,7 @@ After adding child routes to the configuration and adding a `<router-outlet>` to
 
 ## Next steps
 
-  - Route Loading Strategies
-  - Display the contents of your routes with Outlets
+<docs-pill-row>
+  <docs-pill href="/guide/routing/loading-strategies" title="Route Loading Strategies"/>
+  <docs-pill href="/guide/routing/show-routes-with-outlets" title="Display the contents of your routes with Outlets"/>
+</docs-pill-row>

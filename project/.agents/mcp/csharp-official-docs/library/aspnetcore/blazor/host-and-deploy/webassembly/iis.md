@@ -1,17 +1,17 @@
 ---
-title: "Host and deploy ASP.NET Core Blazor WebAssembly with IIS"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/host-and-deploy/webassembly/iis.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Host and deploy ASP.NET Core Blazor WebAssembly with IIS
+ai-usage: ai-assisted
+description: Learn how to host and deploy Blazor WebAssembly using Internet Information Services (IIS).
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 11/11/2025
 ---
-
 # Host and deploy ASP.NET Core Blazor WebAssembly with IIS
 
-This article explains how to host and deploy Blazor WebAssembly using Internet Information Services (IIS).
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
-IIS is a capable static file server for Blazor apps. To configure IIS to host Blazor, see Build a Static Website on IIS.
+This article explains how to host and deploy Blazor WebAssembly using [Internet Information Services (IIS)](https://www.iis.net/).
+
+IIS is a capable static file server for Blazor apps. To configure IIS to host Blazor, see [Build a Static Website on IIS](/iis/manage/creating-websites/scenario-build-a-static-website-on-iis).
 
 Published assets are created in the `/bin/Release/{TARGET FRAMEWORK}/publish` or `bin/Release/{TARGET FRAMEWORK}/browser-wasm/publish` folder, where the `{TARGET FRAMEWORK}` placeholder is the target framework. Host the contents of the `publish` folder on the web server or hosting service.
 
@@ -26,13 +26,24 @@ When a Blazor project is published, a `web.config` file is created with the foll
 * URL Rewrite Module rules are established:
   * Serve the sub-directory where the app's static assets reside (`wwwroot/{PATH REQUESTED}`).
   * Create SPA fallback routing so that requests for non-file assets are redirected to the app's default document in its static assets folder (`wwwroot/index.html`).
-
+  
 ## Use of a custom `web.config`
 
 To use a custom `web.config` file:
 
+:::moniker range=">= aspnetcore-8.0"
+
 1. Place the custom `web.config` file in the project's root folder.
-1. Publish the project. For more information, see Host and deploy ASP.NET Core Blazor.
+1. Publish the project. For more information, see [Host and deploy ASP.NET Core Blazor](../index.md).
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-8.0"
+
+1. Place the custom `web.config` file in the project's root folder. For a hosted Blazor WebAssembly [solution](../../tooling.md#visual-studio-solution-file-sln), place the file in the **:::no-loc text="Server":::** project's folder.
+1. Publish the project. For a hosted Blazor WebAssembly solution, publish the solution from the **:::no-loc text="Server":::** project. For more information, see [Host and deploy ASP.NET Core Blazor](../index.md).
+
+:::moniker-end
 
 If the SDK's `web.config` generation or transformation during publish either doesn't move the file to published assets in the `publish` folder or modifies the custom configuration in your custom `web.config` file, use any of the following approaches as needed to take full control of the process:
 
@@ -62,9 +73,9 @@ If the SDK's `web.config` generation or transformation during publish either doe
 
 ## Install the URL Rewrite Module
 
-The URL Rewrite Module is required to rewrite URLs. The module isn't installed by default, and it isn't available for install as a Web Server (IIS) role service feature. The module must be downloaded from the IIS website. Use the Web Platform Installer to install the module:
+The [URL Rewrite Module](https://www.iis.net/downloads/microsoft/url-rewrite) is required to rewrite URLs. The module isn't installed by default, and it isn't available for install as a Web Server (IIS) role service feature. The module must be downloaded from the IIS website. Use the Web Platform Installer to install the module:
 
-1. Locally, navigate to the URL Rewrite Module downloads page. For the English version, select **WebPI** to download the WebPI installer. For other languages, select the appropriate architecture for the server (x86/x64) to download the installer.
+1. Locally, navigate to the [URL Rewrite Module downloads page](https://www.iis.net/downloads/microsoft/url-rewrite#additionalDownloads). For the English version, select **WebPI** to download the WebPI installer. For other languages, select the appropriate architecture for the server (x86/x64) to download the installer.
 1. Copy the installer to the server. Run the installer. Select the **Install** button and accept the license terms. A server restart isn't required after the install completes.
 
 ## Configure the website
@@ -103,19 +114,29 @@ If a standalone app is hosted as an IIS sub-app, perform either of the following
     </location>
   </configuration>
   ```
-
-  > **Note:**
+  
+  > [!NOTE]
   > Disabling inheritance of the root (parent) app's `<system.webServer>` section is the default configuration for published apps using the .NET SDK.
 
-Removing the handler or disabling inheritance is performed in addition to configuring the app's base path. Set the app base path in the app's `index.html` file to the IIS alias used when configuring the sub-app in IIS.
+Removing the handler or disabling inheritance is performed in addition to [configuring the app's base path](../app-base-path.md). Set the app base path in the app's `index.html` file to the IIS alias used when configuring the sub-app in IIS.
 
-Configure the app's base path by following the guidance in ASP.NET Core Blazor app base path.
+Configure the app's base path by following the guidance in [ASP.NET Core Blazor app base path](../app-base-path.md).
 
 ## Brotli and Gzip compression
 
+:::moniker range=">= aspnetcore-8.0"
+
 *This section only applies to standalone Blazor WebAssembly apps.*
 
-IIS can be configured via `web.config` to serve Brotli or Gzip compressed Blazor assets for standalone Blazor WebAssembly apps. For an example configuration file, see `web.config`.
+:::moniker-end
+
+:::moniker range="< aspnetcore-8.0"
+
+*This section only applies to standalone Blazor WebAssembly apps. Hosted Blazor apps use a default ASP.NET Core app `web.config` file, not the file linked in this section.*
+
+:::moniker-end
+
+IIS can be configured via `web.config` to serve Brotli or Gzip compressed Blazor assets for standalone Blazor WebAssembly apps. For an example configuration file, see [`web.config`](https://github.com/dotnet/AspNetCore.Docs/blob/main/aspnetcore/blazor/host-and-deploy/webassembly/samples/web.config?raw=true).
 
 Additional configuration of the example `web.config` file might be required in the following scenarios:
 
@@ -124,10 +145,10 @@ Additional configuration of the example `web.config` file might be required in t
   * Serving compressed files configured by the example `web.config` file in an uncompressed format.
 * The server's IIS configuration (for example, `applicationHost.config`) provides server-level IIS defaults. Depending on the server-level configuration, the app might require a different IIS configuration than what the example `web.config` file contains.
 
-For more information on custom `web.config` files, see the Use of a custom `web.config` section.
+For more information on custom `web.config` files, see the [Use of a custom `web.config`](#use-of-a-custom-webconfig) section.
 
 ## Troubleshooting
 
 If a *500 - Internal Server Error* is received and IIS Manager throws errors when attempting to access the website's configuration, confirm that the URL Rewrite Module is installed. When the module isn't installed, the `web.config` file can't be parsed by IIS. This prevents the IIS Manager from loading the website's configuration and the website from serving Blazor's static files.
 
-For more information on troubleshooting deployments to IIS, see Troubleshoot ASP.NET Core on Azure App Service and IIS.
+For more information on troubleshooting deployments to IIS, see [Troubleshoot ASP.NET Core on Azure App Service and IIS](../../../test/troubleshoot-azure-iis.md).

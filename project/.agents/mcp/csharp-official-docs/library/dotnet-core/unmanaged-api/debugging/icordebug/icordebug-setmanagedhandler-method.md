@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebug::SetManagedHandler Method"
 title: "ICorDebug::SetManagedHandler Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebug-setmanagedhandler-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebug.SetManagedHandler"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebug::SetManagedHandler"
+helpviewer_keywords:
+  - "ICorDebug::SetManagedHandler method [.NET debugging]"
+  - "SetManagedHandler method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebug::SetManagedHandler Method
 
 Specifies the event handler object for managed events.
@@ -22,7 +31,7 @@ HRESULT SetManagedHandler (
 ## Parameters
 
  `pCallback`
- [in] A pointer to an ICorDebugManagedCallback object, which is the event handler object.
+ [in] A pointer to an [ICorDebugManagedCallback](icordebugmanagedcallback-interface.md) object, which is the event handler object.
 
 ## Remarks
 
@@ -32,7 +41,7 @@ If the `ICorDebugManagedCallback` implementation does not contain sufficient int
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -42,4 +51,4 @@ If the `ICorDebugManagedCallback` implementation does not contain sufficient int
 
 ## See also
 
-- ICorDebug Interface
+- [ICorDebug Interface](icordebug-interface.md)

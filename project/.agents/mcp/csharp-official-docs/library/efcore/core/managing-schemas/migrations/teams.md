@@ -1,12 +1,10 @@
 ---
-title: "Migrations in Team Environments - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/managing-schemas/migrations/teams.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Migrations in Team Environments - EF Core
+description: Best practices for managing migrations and resolving conflicts in team environments with Entity Framework Core
+author: SamMonoRT
+ms.date: 08/05/2026
+uid: core/managing-schemas/migrations/teams
 ---
-
 # Migrations in Team Environments
 
 When working with Migrations in team environments, various problems can arise when migrations are added by multiple developers around the same time; note that migrations aren't simply SQL scripts but also include a snapshot of the model at the time of that migration.
@@ -19,12 +17,12 @@ Migrations form an ordered sequence. Each migration's designer metadata represen
 
 ## Detecting diverged migration trees
 
-> **Note:**
+> [!NOTE]
 > This feature is being introduced in EF Core 11 from preview-3 onwards.
 
 Starting with EF 11, the model snapshot records the ID of the latest migration. This means that if two developers each create a migration on separate branches, merging those branches will produce a source control conflict in the model snapshot file — since both branches modify the latest migration ID. This conflict is an important signal: it tells you that the migration trees have diverged, and one of them must be discarded before proceeding.
 
-To resolve this, follow the steps in Resolving diverged migration trees below: abort the merge, remove your migration (keeping your model changes), merge your teammate's changes, and then re-add your migration.
+To resolve this, follow the steps in [Resolving diverged migration trees](#resolving-diverged-migration-trees) below: abort the merge, remove your migration (keeping your model changes), merge your teammate's changes, and then re-add your migration.
 
 EF Core 10 and earlier don't record the latest migration ID in the model snapshot, so a source control system may merge the snapshot without reporting this conflict. The migration trees are still diverged and must be resolved using the same workflow.
 
@@ -62,7 +60,7 @@ dotnet ef migrations script --idempotent -o artifacts/migrate.sql
 
 Note that idempotent scripts depend on provider support. For example, SQLite doesn't currently support generating them; in that case generate a versioned script pair instead.
 
-Use Azure DevOps approvals and gates (or the equivalent in your CI system) to hold the deployment until a reviewer signs off on the exact SQL:
+Use Azure DevOps [approvals and gates](/azure/devops/pipelines/process/approvals) (or the equivalent in your CI system) to hold the deployment until a reviewer signs off on the exact SQL:
 
 ```yaml
 stages:
@@ -109,5 +107,5 @@ Deploy the reviewed script itself rather than regenerating SQL at deploy time, s
 
 In `dotnet ef migrations script`, `from` describes the initial database state and `to` the target state; a `from` newer than `to` emits the migrations' `Down` operations instead. Generate a rollback script from the current (newer) migration state back to an earlier target and store it next to the forward script.
 
-> **Warning:**
+> [!WARNING]
 > A rollback script runs the migrations' `Down` operations, but it can't generally reconstruct data that the forward migration dropped or transformed. Test the rollback against a copy of the production schema and review the data impact before relying on it.

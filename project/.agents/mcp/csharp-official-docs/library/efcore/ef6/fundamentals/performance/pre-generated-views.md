@@ -1,23 +1,25 @@
 ---
-title: "Pre-generated mapping views - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/fundamentals/performance/pre-generated-views.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Pre-generated mapping views - EF6
+description: Pre-generated mapping views in Entity Framework 6
+author: SamMonoRT
+ms.date: 10/23/2016
+uid: ef6/fundamentals/performance/pre-generated-views
 ---
-
 # Pre-generated mapping views
-Before the Entity Framework can execute a query or save changes to the data source, it must generate a set of mapping views to access the database. These mapping views are a set of Entity SQL statement that represent the database in an abstract way, and are part of the metadata which is cached per application domain. If you create multiple instances of the same context in the same application domain, they will reuse mapping views from the cached metadata rather than regenerating them. Because mapping view generation is a significant part of the overall cost of executing the first query, the Entity Framework enables you to pre-generate mapping views and include them in the compiled project. For more information, see  Performance Considerations (Entity Framework).
+Before the Entity Framework can execute a query or save changes to the data source, it must generate a set of mapping views to access the database. These mapping views are a set of Entity SQL statement that represent the database in an abstract way, and are part of the metadata which is cached per application domain. If you create multiple instances of the same context in the same application domain, they will reuse mapping views from the cached metadata rather than regenerating them. Because mapping view generation is a significant part of the overall cost of executing the first query, the Entity Framework enables you to pre-generate mapping views and include them in the compiled project. For more information, see  [Performance Considerations (Entity Framework)](xref:ef6/fundamentals/performance/perf-whitepaper).
 
 ## Generating Mapping Views with the EF Power Tools Community Edition
 
-The easiest way to pre-generate views is to use the EF Power Tools Community Edition. Once you have the Power Tools installed you will have a menu option to Generate Views, as below.
+The easiest way to pre-generate views is to use the [EF Power Tools Community Edition](https://marketplace.visualstudio.com/items?itemName=ErikEJ.EntityFramework6PowerToolsCommunityEdition). Once you have the Power Tools installed you will have a menu option to Generate Views, as below.
 
 -   For **Code First** models right-click on the code file that contains your DbContext class.
 -   For **EF Designer** models right-click on your EDMX file.
 
+![generate Views](~/ef6/media/generateviews.png)
+
 Once the process is finished you will have a class similar to the following generated
+
+![generated Views](~/ef6/media/generatedviews.png)
 
 Now when you run your application EF will use this class to load views as required. If your model changes and you do not re-generate this class then EF will throw an exception.
 
@@ -25,14 +27,14 @@ Now when you run your application EF will use this class to load views as requir
 
 The other way to generate views is to use the APIs that EF provides. When using this method you have the freedom to serialize the views however you like, but you also need to load the views yourself.
 
-> **Note:**
+> [!NOTE]
 > **EF6 Onwards Only** - The APIs shown in this section were introduced in Entity Framework 6. If you are using an earlier version this information does not apply.
 
 ### Generating Views
 
 The APIs to generate views are on the System.Data.Entity.Core.Mapping.StorageMappingItemCollection class. You can retrieve a StorageMappingCollection for a Context by using the MetadataWorkspace of an ObjectContext. If you are using the newer DbContext API then you can access this by using the IObjectContextAdapter like below, in this code we have an instance of your derived DbContext called dbContext:
 
-```csharp
+``` csharp
     var objectContext = ((IObjectContextAdapter) dbContext).ObjectContext;
     var  mappingCollection = (StorageMappingItemCollection)objectContext.MetadataWorkspace
                                                                         .GetItemCollection(DataSpace.CSSpace);
@@ -40,7 +42,7 @@ The APIs to generate views are on the System.Data.Entity.Core.Mapping.StorageMap
 
 Once you have the StorageMappingItemCollection then you can get access to the GenerateViews and ComputeMappingHashValue methods.
 
-```csharp
+``` csharp
     public Dictionary<EntitySetBase, DbMappingView> GenerateViews(IList<EdmSchemaError> errors)
     public string ComputeMappingHashValue()
 ```
@@ -53,7 +55,7 @@ When generating views you will call the GenerateViews method and then write out 
 
 In order to load the views generated by the GenerateViews method, you can provide EF with a class that inherits from the DbMappingViewCache abstract class. DbMappingViewCache specifies two methods that you must implement:
 
-```csharp
+``` csharp
     public abstract string MappingHashValue { get; }
     public abstract DbMappingView GetView(EntitySetBase extent);
 ```
@@ -64,7 +66,7 @@ The GetView method will accept an EntitySetBase and you need to return a DbMappi
 
 The following is an extract from the DbMappingViewCache that is generated with the Power Tools as described above, in it we see one way to store and retrieve the EntitySql required.
 
-```csharp
+``` csharp
     public override string MappingHashValue
     {
         get { return "a0b843f03dd29abee99789e190a6fb70ce8e93dc97945d437d9a58fb8e2afd2e"; }
@@ -112,7 +114,7 @@ The following is an extract from the DbMappingViewCache that is generated with t
 
 To have EF use your DbMappingViewCache you add use the DbMappingViewCacheTypeAttribute, specifying the context that it was created for. In the code below we associate the BlogContext with the MyMappingViewCache class.
 
-```csharp
+``` csharp
     [assembly: DbMappingViewCacheType(typeof(BlogContext), typeof(MyMappingViewCache))]
 ```
 

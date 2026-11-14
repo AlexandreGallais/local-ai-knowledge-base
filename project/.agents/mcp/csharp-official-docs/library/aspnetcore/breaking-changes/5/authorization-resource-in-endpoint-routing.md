@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: Authorization: Resource in endpoint routing is HttpContext"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/5/authorization-resource-in-endpoint-routing.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 5.0 titled Authorization: Resource in endpoint routing is HttpContext"
+ms.date: 10/01/2020
+ms.custom: https://github.com/aspnet/Announcements/issues/423
 ---
-
 # Authorization: Resource in endpoint routing is HttpContext
 
-When using endpoint routing in ASP.NET Core 3.1, the resource used for authorization is the endpoint. This approach was insufficient for gaining access to the route data (`Microsoft.AspNetCore.Routing.RouteData`). Previously in MVC, an `Microsoft.AspNetCore.Http.HttpContext` resource was passed in, which allows access to both the endpoint (`Microsoft.AspNetCore.Http.Endpoint`) and the route data. This change ensures that the resource passed to authorization is always the `HttpContext`.
+When using endpoint routing in ASP.NET Core 3.1, the resource used for authorization is the endpoint. This approach was insufficient for gaining access to the route data (<xref:Microsoft.AspNetCore.Routing.RouteData>). Previously in MVC, an <xref:Microsoft.AspNetCore.Http.HttpContext> resource was passed in, which allows access to both the endpoint (<xref:Microsoft.AspNetCore.Http.Endpoint>) and the route data. This change ensures that the resource passed to authorization is always the `HttpContext`.
 
 ## Version introduced
 
@@ -17,7 +14,7 @@ ASP.NET Core 5.0
 
 ## Old behavior
 
-When using endpoint routing and the authorization middleware (`Microsoft.AspNetCore.Authorization.AuthorizationMiddleware`) or [Authorize] attributes, the resource passed to authorization is the matching endpoint.
+When using endpoint routing and the authorization middleware (<xref:Microsoft.AspNetCore.Authorization.AuthorizationMiddleware>) or [[Authorize]](xref:Microsoft.AspNetCore.Authorization.AuthorizeAttribute) attributes, the resource passed to authorization is the matching endpoint.
 
 ## New behavior
 
@@ -29,9 +26,9 @@ You can get to the endpoint from the `HttpContext`. However, there was no way to
 
 ## Recommended action
 
-If your app uses the endpoint resource, call `Microsoft.AspNetCore.Http.EndpointHttpContextExtensions.GetEndpoint*` on the `HttpContext` to continue accessing the endpoint.
+If your app uses the endpoint resource, call <xref:Microsoft.AspNetCore.Http.EndpointHttpContextExtensions.GetEndpoint*> on the `HttpContext` to continue accessing the endpoint.
 
-You can revert to the old behavior with `System.AppContext.SetSwitch*`. For example:
+You can revert to the old behavior with <xref:System.AppContext.SetSwitch*>. For example:
 
 ```csharp
 AppContext.SetSwitch(
@@ -42,3 +39,15 @@ AppContext.SetSwitch(
 ## Affected APIs
 
 None
+
+<!--
+
+### Category
+
+ASP.NET Core
+
+### Affected APIs
+
+Not detectable via API analysis
+
+-->

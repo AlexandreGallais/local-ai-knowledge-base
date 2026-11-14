@@ -1,12 +1,3 @@
----
-title: "class: RequestOptions"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-requestoptions.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: RequestOptions
 * since: v1.18
 * langs: java
@@ -33,7 +24,7 @@ context.request().post("https://example.com/signup", RequestOptions.create().set
     .set("lastName", "Doe")));
 ```
 
-You can also send files as fields of an html form. The data will be encoded using `multipart/form-data`:
+You can also send files as fields of an html form. The data will be encoded using [`multipart/form-data`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST):
 
 ```java
 Path path = Paths.get("members.csv");
@@ -149,14 +140,14 @@ Maximum number of times network errors should be retried. Currently only `ECONNR
 * since: v1.18
 - returns: <[RequestOptions]>
 
-Changes the request method (e.g. PUT or
-POST).
+Changes the request method (e.g. [PUT](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT) or
+[POST](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST)).
 
 ### param: RequestOptions.setMethod.method
 * since: v1.18
 - `method` <[string]>
 
-Request method, e.g. POST.
+Request method, e.g. [POST](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST).
 
 ## method: RequestOptions.setMultipart
 * since: v1.18

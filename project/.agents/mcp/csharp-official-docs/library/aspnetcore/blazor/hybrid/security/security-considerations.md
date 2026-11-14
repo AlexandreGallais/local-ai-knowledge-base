@@ -1,17 +1,21 @@
 ---
-title: "ASP.NET Core Blazor Hybrid security considerations"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/hybrid/security/security-considerations.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core Blazor Hybrid security considerations
+ai-usage: ai-assisted
+description: Learn about security considerations when developing apps in Blazor Hybrid.
+monikerRange: '>= aspnetcore-6.0'
+ms.date: 11/11/2025
 ---
-
 # ASP.NET Core Blazor Hybrid security considerations
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+<!-- This topic drops loc for "Mac Catalyst" -->
 
 This article describes security considerations for Blazor Hybrid apps.
 
 Blazor Hybrid apps that render web content execute .NET code inside a platform Web View. The .NET code interacts with the web content via an interop channel between the .NET code and the Web View.
+
+![The WebView and .NET code interoperate within the app to render web content.](~/blazor/hybrid/security/index/_static/figure01.png)
 
 The web content rendered into the Web View can come from assets provided by the app from either of the following locations:
 
@@ -29,14 +33,14 @@ If possible, avoid loading content from a third-party origin. To mitigate risk, 
 If your app must reference content from an external origin, we recommend that you use common web security approaches to provide the app with an opportunity to block the content from loading if the content is compromised:
 
 * Serve content securely with TLS/HTTPS.
-* Institute a Content Security Policy (CSP). For more information, see Enforce a Content Security Policy for ASP.NET Core Blazor.
-* Perform Subresource Integrity (SRI) checks.
+* Institute a [Content Security Policy (CSP)](https://developer.mozilla.org/docs/Web/HTTP/Guides/CSP). For more information, see [Enforce a Content Security Policy for ASP.NET Core Blazor](../../security/content-security-policy.md).
+* Perform [Subresource Integrity (SRI)](https://developer.mozilla.org/docs/Web/Security/Subresource_Integrity) checks.
 
-Even if all of the resources are packed into the app and don't load from any external origin, remain cautious about problems in the resources' code that run inside the Web View, as the resources might have vulnerabilities that could allow cross-site scripting (XSS) attacks.
+Even if all of the resources are packed into the app and don't load from any external origin, remain cautious about problems in the resources' code that run inside the Web View, as the resources might have vulnerabilities that could allow [cross-site scripting (XSS)](../../security/interactive-server-side-rendering.md#cross-site-scripting-xss) attacks.
 
 In general, the Blazor framework protects against XSS by dealing with HTML in safe ways. However, some programming patterns allow Razor components to inject raw HTML into rendered output, such as rendering content from an untrusted source. For example, rendering HTML content directly from a database should be avoided. Additionally, JavaScript libraries used by the app might manipulate HTML in unsafe ways to inadvertently or deliberately render unsafe output.
 
-For these reasons, it's best to apply the same protections against XSS that are normally applied to web apps. Prevent loading scripts from unknown sources and don't implement potentially unsafe JavaScript features, such as `eval` and other unsafe JavaScript primitives. Establishing a CSP is recommended to reduce these security risks.
+For these reasons, it's best to apply the same protections against XSS that are normally applied to web apps. Prevent loading scripts from unknown sources and don't implement potentially unsafe JavaScript features, such as [`eval`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/eval) and other unsafe JavaScript primitives. Establishing a CSP is recommended to reduce these security risks.
 
 If the code inside the Web View is compromised, the code gains access to all of the content inside the Web View and might interact with the host via the interop channel. For that reason, any content coming from the Web View (events, JS interop) must be treated as **untrusted** and validated in the same way as for other sensitive contexts, such as in a compromised Blazor Server app that can lead to malicious attacks on the host system.
 
@@ -44,14 +48,14 @@ Don't store sensitive information, such as credentials, security tokens, or sens
 
 ## External content rendered in an `iframe`
 
-When using an `iframe` to display external content within a Blazor Hybrid page, we recommend that users leverage sandboxing features to ensure that the content is isolated from the parent page containing the app. In the following Razor component example, the `sandbox` attribute is present for the `` tag to apply sandboxing features to the `admin.html` page:
+When using an [`iframe`](https://developer.mozilla.org/docs/Web/HTML/Element/iframe) to display external content within a Blazor Hybrid page, we recommend that users leverage [sandboxing features](https://developer.mozilla.org/docs/Web/HTML/Element/iframe) to ensure that the content is isolated from the parent page containing the app. In the following Razor component example, the [`sandbox` attribute](https://developer.mozilla.org/docs/Web/HTML/Element/iframe) is present for the `<iframe>` tag to apply sandboxing features to the `admin.html` page:
 
 ```razor
 <iframe sandbox src="https://contoso.com/admin.html" />
 ```
 
-> **Warning:**
-> The `sandbox` attribute isn't supported in early browser versions. For more information, see Can I use: `sandbox`.
+> [!WARNING]
+> The [`sandbox` attribute](https://developer.mozilla.org/docs/Web/HTML/Element/iframe) isn't supported in early browser versions. For more information, see [Can I use: `sandbox`](https://caniuse.com/?search=sandbox).
 
 ## Links to external URLs
 
@@ -59,43 +63,43 @@ Links to URLs outside of the app are opened in an appropriate external app, not 
 
 ## Keep the Web View current in deployed apps
 
-The `Microsoft.AspNetCore.Components.WebView.Maui.BlazorWebView` control uses the currently-installed, platform-specific native Web View. Since the native Web View is periodically updated with support for new APIs and fixes for security issues, it may be necessary to ensure that an app is using a Web View version that meets the app's requirements.
+The <xref:Microsoft.AspNetCore.Components.WebView.Maui.BlazorWebView> control uses the currently-installed, platform-specific native Web View. Since the native Web View is periodically updated with support for new APIs and fixes for security issues, it may be necessary to ensure that an app is using a Web View version that meets the app's requirements.
 
 Use one of the following approaches to keep the Web View current in deployed apps:
 
 * **On all platforms**: Check the Web View version and prompt the user to take any necessary steps to update it.
-* **Only on Windows**: Package a fixed-version Web View within the app, using it in place of the system's shared Web View. For more information, see the Use and distribute a fixed version of the Windows `WebView2` Runtime section.
+* **Only on Windows**: Package a fixed-version Web View within the app, using it in place of the system's shared Web View. For more information, see the [Use and distribute a fixed version of the Windows `WebView2` Runtime](#use-and-distribute-a-fixed-version-of-the-windows-webview2-runtime) section.
 
 ### Android
 
-The Android Web View is distributed and updated via the Google Play Store. Check the Web View version by reading the `User-Agent` string. Read the Web View's `navigator.userAgent` property using JavaScript interop and optionally cache the value using a singleton service if the user agent string is required outside of a Razor component context.
+The Android Web View is distributed and updated via the [Google Play Store](https://play.google.com/store/apps/details?id=com.google.android.webview). Check the Web View version by reading the [`User-Agent`](https://developer.mozilla.org/docs/Web/HTTP/Headers/User-Agent) string. Read the Web View's [`navigator.userAgent`](https://developer.mozilla.org/docs/Web/API/Navigator/userAgent) property using [JavaScript interop](../../javascript-interoperability/index.md) and optionally cache the value using a singleton service if the user agent string is required outside of a Razor component context.
 
 When using the Android Emulator:
 
 * Use an emulated device with **Google Play Services** preinstalled. Emulated devices without Google Play Services preinstalled aren't supported.
-* Install Google Chrome from the Google Play Store. If Google Chrome is already installed, update Chrome from the Google Play Store. If an emulated device doesn't have the latest version of Chrome installed, it might not have the latest version of the Android Web View installed.
+* Install Google Chrome from the Google Play Store. If Google Chrome is already installed, [update Chrome from the Google Play Store](https://support.google.com/chrome/answer/95414?hl=en&co=GENIE.Platform%3DAndroid). If an emulated device doesn't have the latest version of Chrome installed, it might not have the latest version of the Android Web View installed.
 
 ### iOS/:::no-loc text="Mac Catalyst":::
 
-iOS and :::no-loc text="Mac Catalyst"::: both use `WKWebView`, a Safari-based control, which is updated by the operating system. Similar to the Android case, determine the Web View version by reading the Web View's `User-Agent` string.
+iOS and :::no-loc text="Mac Catalyst"::: both use [`WKWebView`](https://developer.apple.com/documentation/webkit/wkwebview), a Safari-based control, which is updated by the operating system. Similar to the [Android](#android) case, determine the Web View version by reading the Web View's [`User-Agent`](https://developer.mozilla.org/docs/Web/HTTP/Headers/User-Agent) string.
 
 ### Windows (.NET MAUI, WPF, Windows Forms)
 
-On Windows, the Chromium-based Microsoft Edge `WebView2` is required for Blazor Hybrid/`BlazorWebView` apps.
+On Windows, the Chromium-based [Microsoft Edge `WebView2`](/microsoft-edge/webview2/) is required for Blazor Hybrid/`BlazorWebView` apps.
 
-The newest installed version of `WebView2`, known as the *:::no-loc text="Evergreen distribution":::*, is used. If you wish to ship a specific version of `WebView2` with the app, use the *:::no-loc text="Fixed Version distribution":::* (see the Use and distribute a fixed version of the Windows `WebView2` Runtime section).
+The newest installed version of `WebView2`, known as the *:::no-loc text="Evergreen distribution":::*, is used. If you wish to ship a specific version of `WebView2` with the app, use the *:::no-loc text="Fixed Version distribution":::* (see the [Use and distribute a fixed version of the Windows `WebView2` Runtime](#use-and-distribute-a-fixed-version-of-the-windows-webview2-runtime) section).
 
-For more information on checking the currently-installed `WebView2` version and the distribution modes, see the `WebView2` distribution documentation.
+For more information on checking the currently-installed `WebView2` version and the distribution modes, see the [`WebView2` distribution documentation](/microsoft-edge/webview2/concepts/distribution).
 
 ## Use and distribute a fixed version of the Windows `WebView2` Runtime
 
-Follow the guidance in this section to use and distribute a fixed version of the Chromium-based Microsoft Edge `WebView2` Runtime for Blazor Hybrid/`BlazorWebView` apps.
+Follow the guidance in this section to use and distribute a fixed version of the Chromium-based [Microsoft Edge `WebView2`](/microsoft-edge/webview2/) Runtime for Blazor Hybrid/`BlazorWebView` apps.
 
-Download the **Fixed Version** installer packages from Microsoft Edge WebView2: Download the WebView2 Runtime.
+Download the **Fixed Version** installer packages from [Microsoft Edge WebView2: Download the WebView2 Runtime](https://developer.microsoft.com/microsoft-edge/webview2).
 
 The following steps place the packages into `Runtimex86`, `Runtimex64`, and `RuntimeARM64` folders in the parent folder of the app's solution folder, maintaining the files outside of the project to keep the **Solution Explorer** view of the project focused on the app's developer assets.
 
-After downloading a runtime, use the `expand` command in a command shell to expand the `.cab` file from the system's `C:\Users\{USER}\Downloads` folder into the solution's root folder:
+After downloading a runtime, use the [`expand` command](/windows-server/administration/windows-commands/expand) in a command shell to expand the `.cab` file from the system's `C:\Users\{USER}\Downloads` folder into the solution's root folder:
 
 ```cli
 expand {PATH TO THE PACKAGE} -F:* {PATH TO THE DESTINATION FOLDER}
@@ -116,7 +120,7 @@ The following example uses:
 expand "C:\Users\{USER}\Downloads\Microsoft.WebView2.FixedVersionRuntime.114.0.1823.79.x86.cab" -F:* C:\src\MySolution\
 ```
 
-Rename the folder to `Runtimex86` with the `Rename-Item` PowerShell cmdlet:
+Rename the folder to `Runtimex86` with the [`Rename-Item` PowerShell cmdlet](/powershell/module/microsoft.powershell.management/rename-item):
 
 ```powershell
 rename-item "C:\src\MySolution\Microsoft.WebView2.FixedVersionRuntime.114.0.1823.79.x86" "C:\src\MySolution\Runtimex86"
@@ -151,5 +155,5 @@ In the app's project file (`.csproj`), add the following after the existing `<Ma
 
 ## Related content
 
-* ASP.NET Core Blazor Hybrid authentication and authorization
-* ASP.NET Core Blazor authentication and authorization
+* [ASP.NET Core Blazor Hybrid authentication and authorization](index.md)
+* [ASP.NET Core Blazor authentication and authorization](../../security/index.md)

@@ -1,17 +1,18 @@
 ---
-title: "Generate tokens with dotnet user-jwts"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/authentication/jwt-authn.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Generate tokens with dotnet user-jwts
+ai-usage: ai-assisted
+description: Learn how to generate and manage JSON Web Tokens in development with the dotnet user-jwts command.
+monikerRange: '>= aspnetcore-7.0'
+ms.date: 10/13/2026
+
+# customer intent: As an ASP.NET developer, I want to use the dotnet user-jwts command, so I can generate and manage JSON Web Tokens in development.
 ---
 
 # Manage JSON Web Tokens in development with dotnet user-jwts
 
-By Rick Anderson
+By [Rick Anderson](https://twitter.com/RickAndMSFT)
 
-The `dotnet user-jwts` command line tool can create and manage app specific local JSON Web Tokens (JWTs).
+The `dotnet user-jwts` command line tool can create and manage app specific local [JSON Web Tokens](https://www.jwt.io/introduction#what-is-json-web-token) (JWTs).
 
 This article provides syntax details for the command and examples.
 
@@ -82,6 +83,8 @@ Usage: `dotnet user-jwts create [options]`
 | `-o \| --output`  | The format to use for displaying output from the command: `default`, `token`, or `json`. |
 | `-h \| --help`    | Show help information for the command. |
 
+:::moniker range=">= aspnetcore-11.0"
+
 ## Use with file-based apps
 
 `dotnet user-jwts` works with file-based apps through the `--file` option. Point `--file` at the app's C# file (`.cs`).
@@ -99,9 +102,11 @@ Rules:
 * The path passed to `--file` must be a C# file with the `.cs` file extension.
 * The `--file` and `--project` options can't be used together.
 
+:::moniker-end
+
 ## Examples
 
-Run the following commands to create an empty web project and add the Microsoft.AspNetCore.Authentication.JwtBearer NuGet package:
+Run the following commands to create an empty web project and add the [Microsoft.AspNetCore.Authentication.JwtBearer](https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.JwtBearer) NuGet package:
 
 ```dotnetcli
 dotnet new web -o MyJWT
@@ -111,31 +116,15 @@ dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
 
 Replace the contents of the _Program.cs_ file with the following code:
 
-```csharp
-using System.Security.Claims;
+:::code language="csharp" source="~/security/authentication/jwt-authn/samples/MyJWT/Program.cs" id="snippet_1":::
 
-var builder = WebApplication.CreateBuilder(args);
+In the preceding code, a GET request to the `/secret` endpoint returns a `401 Unauthorized` error. A production app might get the JWT from a [Security token service](/entra/identity-platform/security-tokens), perhaps in response to signing in with credentials. When you use the API during local development, the `dotnet user-jwts` command line tool can be used to create and manage app-specific local JWTs.
 
-builder.Services.AddAuthorization();
-builder.Services.AddAuthentication("Bearer").AddJwtBearer();
-
-var app = builder.Build();
-
-app.UseAuthorization();
-
-app.MapGet("/", () => "Hello, World!");
-app.MapGet("<example-value>", (ClaimsPrincipal user) => $"<example-value>")
-    .RequireAuthorization();
-
-app.Run();
-```
-In the preceding code, a GET request to the `/secret` endpoint returns a `401 Unauthorized` error. A production app might get the JWT from a Security token <example-value>, perhaps in response to signing in with credentials. When you use the API during local development, the `dotnet user-jwts` command line tool can be used to create and manage app-specific local JWTs.
-
-The `user-jwts` tool is similar in concept to the user-secrets tool. It can be used to manage values for the app that are valid only for the developer on the local machine. In fact, the `user-jwts` tool utilizes the `user-secrets` infrastructure to store the symmetric signing secret (there's no public key) under `Authentication:Schemes:Bearer:<example-value>`. In the Development environment, the default host configuration makes user secrets available to `AddJwtBearer()` for signature validation. This approach ensures the key is stored safely in the user profile.
+The `user-jwts` tool is similar in concept to the [user-secrets](../app-secrets.md) tool. It can be used to manage values for the app that are valid only for the developer on the local machine. In fact, the `user-jwts` tool utilizes the `user-secrets` infrastructure to store the symmetric signing secret (there's no public key) under `Authentication:Schemes:Bearer:SigningKeys`. In the Development environment, the default host configuration makes user secrets available to `AddJwtBearer()` for signature validation. This approach ensures the key is stored safely in the user profile.
 
 The `user-jwts` tool hides implementation details, such as where and how the values are stored. The tool can be used without knowing the implementation details.
 
-The issued-token <example-value> (not the signing key) are stored in a JSON file in the local machine's user profile folder:
+The issued-token records (not the signing key) are stored in a JSON file in the local machine's user profile folder:
 
 - **Windows**: _%APPDATA%\Microsoft\UserSecrets\<secrets_GUID>\user-jwts.json_
 
@@ -151,38 +140,17 @@ dotnet user-jwts create
 
 The preceding command creates a JWT and updates the project `appsettings.Development.json` file with JSON similar to the following example:
 
-```csharp
-{
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft.AspNetCore": "Warning"
-    }
-  },
-  "Authentication": {
-    "Schemes": {
-      "Bearer": {
-        "ValidAudiences": [
-          "http://localhost:8401",
-          "https://localhost:44308",
-          "http://localhost:5182",
-          "https://localhost:7076"
-        ],
-        "ValidIssuer": "dotnet-user-jwts"
-      }
-    }
-  }
-}
-```
+:::code language="csharp" source="~/security/authentication/jwt-authn/samples/MyJWT/appsettings.Development.json" highlight="7-19":::
+
 Copy the JWT and the `ID` created in the preceding command. Use a tool like Curl to test the `/secret` endpoint, where `{token}` is the previously generated JWT:
 
 ```dotnetcli
-curl -i -H "<example-value>" https://localhost:{port}/secret
+curl -i -H "Authorization: Bearer {token}" https://localhost:{port}/secret
 ```
 
 ### Display JWT security information
 
-The following command displays the JWT security information, including expiration, scopes, roles, token <example-value> and payload, and the compact token:
+The following command displays the JWT security information, including expiration, scopes, roles, token header and payload, and the compact token:
 
 ```dotnetcli
 dotnet user-jwts print {ID} --show-all
@@ -190,10 +158,10 @@ dotnet user-jwts print {ID} --show-all
 
 ### Create a token for a specific user and scope
 
-The following command creates a JWT for a user named `MyTestUser`. For the supported `create` options, see the Options for the create command section.
+The following command creates a JWT for a user named `MyTestUser`. For the supported `create` options, see the [Options for the create command](#options-for-the-create-command) section.
 
 ```dotnetcli
-dotnet user-jwts create --name MyTestUser --scope "<example-value>"
+dotnet user-jwts create --name MyTestUser --scope "myapi:secrets"
 ```
 
 The preceding command has output similar to the following example:
@@ -203,30 +171,14 @@ New JWT saved with ID '43e0b748'.
 Name: MyTestUser
 Scopes: myapi:secrets
 
-Token: <example-jwt>{Remaining token <example-value>}
+Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.{Remaining token deleted}
 ```
 
 The preceding token can be used to test the `/secret2` endpoint in the following code:
 
-```csharp
-using System.Security.Claims;
+:::code language="csharp" source="~/security/authentication/jwt-authn/samples/MyJWT/Program.cs" id="snippet_2" highlight="11-12":::
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddAuthorization();
-builder.Services.AddAuthentication("Bearer").AddJwtBearer();
-
-var app = builder.Build();
-
-app.MapGet("/", () => "Hello, World!");
-app.MapGet("<example-value>", (ClaimsPrincipal user) => $"<example-value>")
-    .RequireAuthorization();
-app.MapGet("<example-value>", () => "<example-value>")
-    .RequireAuthorization(p => p.RequireClaim("<example-value>", "<example-value>"));
-
-app.Run();
-```
 ## Related content
 
-- Microsoft.AspNetCore.Authentication.JwtBearer
-- JSON Web Tokens
+- [Microsoft.AspNetCore.Authentication.JwtBearer](https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.JwtBearer)
+- [JSON Web Tokens](https://www.jwt.io/introduction#what-is-json-web-token)

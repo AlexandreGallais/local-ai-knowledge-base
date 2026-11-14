@@ -1,18 +1,17 @@
 ---
-title: "no-empty-label"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-empty-label.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
----
+title: no-empty-label
 
-# no-empty-label
+related_rules:
+- no-labels
+- no-label-var
+- no-unused-labels
+---
 
 Disallows labels for anything other than loops and switches.
 
-**Important:**
-This rule was removed in ESLint v2.0.0 and replaced by the no-labels rule.
+::: important
+This rule was removed in ESLint v2.0.0 and replaced by the [no-labels](no-labels) rule.
+:::
 
 Labeled statements are only used in conjunction with labeled break and continue statements. ECMAScript has no goto statement.
 
@@ -22,7 +21,7 @@ This error occurs when a label is used to mark a statement that is not an iterat
 
 Example of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-empty-label: "error"*/
@@ -31,9 +30,11 @@ labeled:
 var x = 10;
 ```
 
+:::
+
 Example of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-empty-label: "error"*/
@@ -43,6 +44,8 @@ for (var i=10; i; i--) {
     // ...
 }
 ```
+
+:::
 
 ## When Not To Use It
 

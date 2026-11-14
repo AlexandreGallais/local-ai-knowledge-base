@@ -1,12 +1,3 @@
----
-title: "Redirecting Routes"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/routing/redirecting-routes.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Redirecting Routes
 
 Route redirects allow you to automatically navigate users from one route to another. Think of it like mail forwarding, where mail intended for one address is sent to a different address. This is useful for handling legacy URLs, implementing default routes, or managing access control.
@@ -99,9 +90,9 @@ This means that:
 
 The `redirectTo` property can also accept a function in order to add logic to how users are redirected.
 
-The function only has access part of the `ActivatedRouteSnapshot` data since some data is not accurately known at the route matching phase. Examples include: resolved titles, lazy loaded components, etc.
+The [function](api/router/RedirectFunction) only has access part of the [`ActivatedRouteSnapshot`](api/router/ActivatedRouteSnapshot) data since some data is not accurately known at the route matching phase. Examples include: resolved titles, lazy loaded components, etc.
 
-It typically returns a string or `URLTree`, but it can also return an observable or promise.
+It typically returns a string or [`URLTree`](api/router/UrlTree), but it can also return an observable or promise.
 
 Here is an example where the user is redirected to different menu based on the time of the day:
 
@@ -143,8 +134,8 @@ export const routes: Routes = [
 ];
 ```
 
-To learn more, check out the API docs for the RedirectFunction.
+To learn more, check out [the API docs for the RedirectFunction](api/router/RedirectFunction).
 
 ## Next steps
 
-For more information about the `redirectTo` property, check out the API docs.
+For more information about the `redirectTo` property, check out the [API docs](api/router/Route#redirectTo).

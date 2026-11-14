@@ -1,30 +1,27 @@
 ---
-title: "Compilation config settings"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/runtime-config/compilation.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Compilation config settings
+description: Learn about runtime settings that configure how the JIT compiler works for .NET apps.
+ms.date: 09/25/2026
+ai-usage: ai-assisted
 ---
-
 # Runtime configuration options for compilation
 
 This article details the settings you can use to configure .NET compilation.
 
 ## Tiered compilation
 
-- Configures whether the just-in-time (JIT) compiler uses tiered compilation. Tiered compilation transitions methods through two tiers:
-  - The first tier generates code more quickly (quick JIT) or loads pre-compiled code (ReadyToRun).
+- Configures whether the just-in-time (JIT) compiler uses [tiered compilation](../whats-new/dotnet-core-3-0.md#tiered-compilation). Tiered compilation transitions methods through two tiers:
+  - The first tier generates code more quickly ([quick JIT](#quick-jit)) or loads pre-compiled code ([ReadyToRun](#readytorun)).
   - The second tier generates optimized code in the background ("optimizing JIT").
 - In .NET Core 3.0 and later, tiered compilation is enabled by default.
 - In .NET Core 2.1 and 2.2, tiered compilation is disabled by default.
-- For more information, see the Tiered compilation guide.
+- For more information, see the [Tiered compilation guide](https://github.com/dotnet/runtime/blob/main/docs/design/features/tiered-compilation.md).
 
 | | Setting name | Values |
 | - | - | - |
-| **runtimeconfig.json** | `System.Runtime.TieredCompilation` | `true` - enabled`false` - disabled |
-| **MSBuild property** | `TieredCompilation` | `true` - enabled`false` - disabled |
-| **Environment variable** | `DOTNET_TieredCompilation` | `1` - enabled`0` - disabled |
+| **runtimeconfig.json** | `System.Runtime.TieredCompilation` | `true` - enabled<br/>`false` - disabled |
+| **MSBuild property** | `TieredCompilation` | `true` - enabled<br/>`false` - disabled |
+| **Environment variable** | `DOTNET_TieredCompilation` | `1` - enabled<br/>`0` - disabled |
 
 ### Examples
 
@@ -66,15 +63,15 @@ Project file:
 
 - Configures whether the JIT compiler uses *quick JIT*. For methods that don't contain loops and for which pre-compiled code is not available, quick JIT compiles them more quickly but without optimizations.
 - Enabling quick JIT decreases startup time but can produce code with degraded performance characteristics. For example, the code may use more stack space, allocate more memory, and run slower.
-- If quick JIT is disabled but tiered compilation is enabled, only pre-compiled code participates in tiered compilation. If a method is not pre-compiled with ReadyToRun, the JIT behavior is the same as if tiered compilation were disabled.
+- If quick JIT is disabled but [tiered compilation](#tiered-compilation) is enabled, only pre-compiled code participates in tiered compilation. If a method is not pre-compiled with [ReadyToRun](#readytorun), the JIT behavior is the same as if [tiered compilation](#tiered-compilation) were disabled.
 - In .NET Core 3.0 and later, quick JIT is enabled by default.
 - In .NET Core 2.1 and 2.2, quick JIT is disabled by default.
 
 | | Setting name | Values |
 | - | - | - |
-| **runtimeconfig.json** | `System.Runtime.TieredCompilation.QuickJit` | `true` - enabled`false` - disabled |
-| **MSBuild property** | `TieredCompilationQuickJit` | `true` - enabled`false` - disabled |
-| **Environment variable** | `DOTNET_TC_QuickJit` | `1` - enabled`0` - disabled |
+| **runtimeconfig.json** | `System.Runtime.TieredCompilation.QuickJit` | `true` - enabled<br/>`false` - disabled |
+| **MSBuild property** | `TieredCompilationQuickJit` | `true` - enabled<br/>`false` - disabled |
+| **Environment variable** | `DOTNET_TC_QuickJit` | `1` - enabled<br/>`0` - disabled |
 
 ### Examples
 
@@ -116,14 +113,14 @@ Project file:
 
 - Configures whether the JIT compiler uses quick JIT on methods that contain loops.
 - Enabling quick JIT for loops may improve startup performance. However, long-running loops can get stuck in less-optimized code for long periods.
-- If quick JIT is disabled, this setting has no effect.
+- If [quick JIT](#quick-jit) is disabled, this setting has no effect.
 - If you omit this setting, quick JIT is not used for methods that contain loops. This is equivalent to setting the value to `false`.
 
 | | Setting name | Values |
 | - | - | - |
-| **runtimeconfig.json** | `System.Runtime.TieredCompilation.QuickJitForLoops` | `false` - disabled`true` - enabled |
-| **MSBuild property** | `TieredCompilationQuickJitForLoops` | `false` - disabled`true` - enabled |
-| **Environment variable** | `DOTNET_TC_QuickJitForLoops` | `0` - disabled`1` - enabled |
+| **runtimeconfig.json** | `System.Runtime.TieredCompilation.QuickJitForLoops` | `false` - disabled<br/>`true` - enabled |
+| **MSBuild property** | `TieredCompilationQuickJitForLoops` | `false` - disabled<br/>`true` - enabled |
+| **Environment variable** | `DOTNET_TC_QuickJitForLoops` | `0` - disabled<br/>`1` - enabled |
 
 ### Examples
 
@@ -164,21 +161,21 @@ Project file:
 ## ReadyToRun
 
 - Configures whether the .NET runtime uses pre-compiled code for images with available ReadyToRun data. Disabling this option forces the runtime to JIT-compile framework code.
-- For more information, see Ready to Run.
+- For more information, see [Ready to Run](../deploying/ready-to-run.md).
 - If you omit this setting, .NET uses ReadyToRun data when it's available. This is equivalent to setting the value to `1`.
 
 |                          | Setting name        | Values                           |
 |--------------------------|---------------------|----------------------------------|
-| **Environment variable** | `DOTNET_ReadyToRun` | `1` - enabled`0` - disabled |
+| **Environment variable** | `DOTNET_ReadyToRun` | `1` - enabled<br/>`0` - disabled |
 
 ## Dynamic code
 
-Set this option to `false` to test fallback code that you need when dynamic code isn't supported, such as in Native AOT apps, without publishing with Native AOT. The option causes `System.Runtime.CompilerServices.RuntimeFeature.IsDynamicCodeSupported` to return `false`.
+Set this option to `false` to test fallback code that you need when dynamic code isn't supported, such as in Native AOT apps, without publishing with Native AOT. The option causes <xref:System.Runtime.CompilerServices.RuntimeFeature.IsDynamicCodeSupported?displayProperty=nameWithType> to return `false`.
 
 | | Setting name | Values |
 | - | - | - |
-| **runtimeconfig.json** | `System.Runtime.CompilerServices.RuntimeFeature.IsDynamicCodeSupported` | `true` - supported`false` - not supported |
-| **MSBuild property** | `DynamicCodeSupport` | `true` - supported`false` - not supported |
+| **runtimeconfig.json** | `System.Runtime.CompilerServices.RuntimeFeature.IsDynamicCodeSupported` | `true` - supported<br/>`false` - not supported |
+| **MSBuild property** | `DynamicCodeSupport` | `true` - supported<br/>`false` - not supported |
 
 ### Example
 
@@ -200,8 +197,8 @@ This setting enables dynamic (tiered) profile-guided optimization (PGO) in .NET 
 
 |                          | Setting name       | Values                                  |
 |--------------------------|--------------------|-----------------------------------------|
-| **Environment variable** | `DOTNET_TieredPGO` | `1` - enabled`0` - disabled        |
-| **MSBuild property**     | `TieredPGO`        | `true` - enabled`false` - disabled |
+| **Environment variable** | `DOTNET_TieredPGO` | `1` - enabled<br/>`0` - disabled        |
+| **MSBuild property**     | `TieredPGO`        | `true` - enabled<br/>`false` - disabled |
 
 Profile-guided optimization (PGO) is where the JIT compiler generates optimized code in terms of the types and code paths that are most frequently used. *Dynamic* PGO works hand-in-hand with tiered compilation to further optimize code based on additional instrumentation that's put in place during tier 0.
 

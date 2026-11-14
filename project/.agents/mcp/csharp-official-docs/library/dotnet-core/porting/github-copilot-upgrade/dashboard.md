@@ -1,10 +1,12 @@
 ---
-title: "Monitor upgrades with the Upgrade Dashboard"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/github-copilot-upgrade/dashboard.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Monitor upgrades with the Upgrade Dashboard
+description: "Learn how to use the Upgrade Dashboard to monitor progress, review assessment results, inspect dependencies, and check upgrade settings."
+ms.topic: concept-article
+ms.date: 09/21/2026
+ai-usage: ai-assisted
+
+#customer intent: As a developer using GitHub Copilot upgrade, I want to understand the Upgrade Dashboard so that I can monitor my upgrade progress and review assessment results visually.
+
 ---
 
 # Monitor upgrades with the Upgrade Dashboard
@@ -17,7 +19,7 @@ The Upgrade Dashboard provides a visual view of a GitHub Copilot upgrade session
 - Check the upgrade strategy and settings.
 - Publish the assessment as a private GitHub gist for team review.
 
-> **Note:**
+> [!NOTE]
 > Dashboard fields depend on the active scenario and technology pack. The project, target framework, NuGet package, and compatibility views in this article describe a .NET version upgrade.
 
 In the GitHub Copilot app for desktop, the dashboard opens as a side panel. In other environments, such as the GitHub Copilot CLI or an IDE, it opens in your browser.
@@ -39,14 +41,14 @@ Use the eight tabs in the top navigation bar to inspect different parts of the u
 
 | Tab | Purpose |
 | --- | --- |
-| **Overview** | Summarizes the upgrade session. |
-| **Scenario** | Shows the active scenario and its phases. |
-| **Tasks** | Tracks the upgrade plan and individual tasks. |
-| **Projects** | Lists projects, target frameworks, and assessment incidents. |
-| **Dependencies** | Reports package and reference compatibility. |
-| **Assessment** | Presents codebase assessment results. |
-| **Options** | Shows the current upgrade strategy and settings. |
-| **Activity** | Records file changes, commits, and build events. |
+| [**Overview**](#overview-tab) | Summarizes the upgrade session. |
+| [**Scenario**](#scenario-tab) | Shows the active scenario and its phases. |
+| [**Tasks**](#tasks-tab) | Tracks the upgrade plan and individual tasks. |
+| [**Projects**](#projects-tab) | Lists projects, target frameworks, and assessment incidents. |
+| [**Dependencies**](#dependencies-tab) | Reports package and reference compatibility. |
+| [**Assessment**](#assessment-tab) | Presents codebase assessment results. |
+| [**Options**](#options-tab) | Shows the current upgrade strategy and settings. |
+| [**Activity**](#activity-tab) | Records file changes, commits, and build events. |
 
 ## Overview tab
 
@@ -66,6 +68,8 @@ The **At a glance** section displays these statistics:
 - **NuGet packages**: Distinct packages in the solution that the agent analyzes against the target framework.
 - **Incompatible packages**: Packages that don't support the target framework.
 
+:::image type="content" source="media/dashboard/overview.png" alt-text="Screenshot of the Upgrade Dashboard Overview tab." lightbox="media/dashboard/overview.png":::
+
 ## Scenario tab
 
 The **Scenario** tab lists the active scenario and all scenarios available for the repository. Use the **Active** and **All scenarios** subtabs to switch between these views.
@@ -73,6 +77,8 @@ The **Scenario** tab lists the active scenario and all scenarios available for t
 The **Active** subtab shows the scenario ID, such as `DOTNET-VERSION-UPGRADE`, and the TFM transition, such as `net472` to `net10.0`. It also describes the scenario's purpose and approach.
 
 The phase pipeline shows the status of each upgrade phase. A check mark identifies a completed phase, and a dot identifies the current phase.
+
+:::image type="content" source="media/dashboard/scenario.png" alt-text="Screenshot of the Upgrade Dashboard Scenario tab." lightbox="media/dashboard/scenario.png":::
 
 ## Tasks tab
 
@@ -83,6 +89,8 @@ The **Overview** section explains the upgrade strategy, including project order 
 - **Check mark**: Complete. The dashboard crosses out the task label.
 - **Spinner**: In progress. The dashboard displays the task label in bold.
 - **Square**: Pending.
+
+:::image type="content" source="media/dashboard/tasks.png" alt-text="Screenshot of the Upgrade Dashboard Tasks tab." lightbox="media/dashboard/tasks.png":::
 
 ## Projects tab
 
@@ -98,6 +106,8 @@ Use **Table** or **Graph** to change the view. The table includes these columns:
 - **Incidents**: The incident count.
 
 The graph displays projects as nodes and project references as connections.
+
+:::image type="content" source="media/dashboard/projects.png" alt-text="Screenshot of the Upgrade Dashboard Projects tab." lightbox="media/dashboard/projects.png":::
 
 ## Dependencies tab
 
@@ -115,6 +125,8 @@ A compatibility bar groups packages as **Valid**, **Partial**, **Incompatible**,
 
 The package table lists package names, projects, installed versions, recommended versions, and compatibility. For an incompatible package, select **Explain** to ask the agent for details in the chat.
 
+:::image type="content" source="media/dashboard/dependencies.png" alt-text="Screenshot of the Upgrade Dashboard Dependencies tab." lightbox="media/dashboard/dependencies.png":::
+
 ## Assessment tab
 
 The **Assessment** tab reports codebase compatibility with the target framework. Summary tiles show project, issue, incident, mandatory issue, and effort totals. Category tiles identify the three largest incident groups.
@@ -127,6 +139,8 @@ Two bar charts group incidents:
 Use the **Summary**, **Issues**, and **Features** subtabs to change the level of detail. **Summary** provides a narrative report about project, package, and API compatibility. **Issues** and **Features** provide individual breakdowns.
 
 To view the assessment date and version, select the **Info** icon. To publish the assessment as a private GitHub gist, select the **Share** icon.
+
+:::image type="content" source="media/dashboard/assessment.png" alt-text="Screenshot of the Upgrade Dashboard Assessment tab." lightbox="media/dashboard/assessment.png":::
 
 ## Options tab
 
@@ -142,6 +156,8 @@ For **Flow mode**, select **Switch to Guided** or **Switch to Automatic**. The d
 
 The target framework might include a platform suffix. For example, a WPF application might target `net10.0-windows` instead of `net10.0`.
 
+:::image type="content" source="media/dashboard/options.png" alt-text="Screenshot of the Upgrade Dashboard Options tab." lightbox="media/dashboard/options.png":::
+
 ## Activity tab
 
 The **Activity** tab provides a timestamped log of agent actions. During an active session, the log updates in real time and places new events at the top. The panel also displays the source `activity.jsonl` path.
@@ -153,6 +169,8 @@ Use the **Log**, **Commits**, and **By file** subtabs to review activity. Each l
 - **Details**: The associated file path or commit message.
 - **Line diff**: The number of lines added or removed in a file event.
 
+:::image type="content" source="media/dashboard/activity.png" alt-text="Screenshot of the Upgrade Dashboard Activity tab." lightbox="media/dashboard/activity.png":::
+
 ## Limitations
 
 - Access the dashboard only through the GitHub Copilot app for desktop or the GitHub Copilot CLI.
@@ -162,7 +180,7 @@ Use the **Log**, **Commits**, and **By file** subtabs to review activity. Each l
 
 ## Related content
 
-- What is GitHub Copilot upgrade?
-- Upgrade .NET projects
-- Upgrade JavaScript and TypeScript projects
-- .NET scenarios and skills
+- [What is GitHub Copilot upgrade?](overview.md)
+- [Upgrade .NET projects](dotnet-overview.md)
+- [Upgrade JavaScript and TypeScript projects](javascript-typescript-overview.md)
+- [.NET scenarios and skills](dotnet-scenarios-and-skills.md)

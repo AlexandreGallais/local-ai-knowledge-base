@@ -1,12 +1,3 @@
----
-title: "IntSummaryStatistics class (java.util)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/IntSummaryStatistics.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # IntSummaryStatistics class (java.util)
 
 ```java
@@ -16,37 +7,36 @@ public class IntSummaryStatistics implements IntConsumer
 A state object for collecting statistics such as count, min, max, sum, and
 average.
 
-This class is designed to work with (though does not require)
-streams. For example, you can compute
+<p>This class is designed to work with (though does not require)
+{@linkplain java.util.stream streams}. For example, you can compute
 summary statistics on a stream of ints with:
-
-```java
+<pre> {@code
 IntSummaryStatistics stats = intStream.collect(IntSummaryStatistics::new,
                                                IntSummaryStatistics::accept,
                                                IntSummaryStatistics::combine);
-```
+}</pre>
 
-`IntSummaryStatistics` can be used as a
-reduction
-target for a stream. For example:
+<p>{@code IntSummaryStatistics} can be used as a
+{@linkplain java.util.stream.Stream#collect(Collector) reduction}
+target for a {@linkplain java.util.stream.Stream stream}. For example:
 
-```java
+<pre> {@code
 IntSummaryStatistics stats = people.stream()
                                    .collect(Collectors.summarizingInt(Person::getDependents));
-```
+}</pre>
 
 This computes, in a single pass, the count of people, as well as the minimum,
 maximum, sum, and average of their number of dependents.
 
-**Implementation note:** This implementation is not thread safe. However, it is safe to use
-Collectors.summarizingInt() on a parallel stream, because the parallel
-implementation of Stream.collect()
+@implNote This implementation is not thread safe. However, it is safe to use
+{@link java.util.stream.Collectors#summarizingInt(java.util.function.ToIntFunction)
+Collectors.summarizingInt()} on a parallel stream, because the parallel
+implementation of {@link java.util.stream.Stream#collect Stream.collect()}
 provides the necessary partitioning, isolation, and merging of results for
 safe and efficient parallel execution.
 
-This implementation does not check for overflow of the count or the sum.
-
-**Since:** 1.8
+<p>This implementation does not check for overflow of the count or the sum.
+@since 1.8
 
 ## IntSummaryStatistics.IntSummaryStatistics()
 
@@ -55,7 +45,7 @@ public IntSummaryStatistics()
 ```
 
 Constructs an empty instance with zero count, zero sum,
-`Integer.MAX_VALUE` min, `Integer.MIN_VALUE` max and zero
+{@code Integer.MAX_VALUE} min, {@code Integer.MIN_VALUE} max and zero
 average.
 
 ## IntSummaryStatistics.IntSummaryStatistics(long, int, int, long)
@@ -64,40 +54,34 @@ average.
 public IntSummaryStatistics(long count, int min, int max, long sum) throws IllegalArgumentException
 ```
 
-Constructs a non-empty instance with the specified `count`,
-`min`, `max`, and `sum`.
+Constructs a non-empty instance with the specified {@code count},
+{@code min}, {@code max}, and {@code sum}.
 
-If `count` is zero then the remaining arguments are ignored and
+<p>If {@code count} is zero then the remaining arguments are ignored and
 an empty instance is constructed.
 
-If the arguments are inconsistent then an `IllegalArgumentException`
+<p>If the arguments are inconsistent then an {@code IllegalArgumentException}
 is thrown.  The necessary consistent argument conditions are:
-
-- `count >= 0`
-
-- `min <= max`
-
-Parameters:
-
-- `count`: the count of values
-- `min`: the minimum value
-- `max`: the maximum value
-- `sum`: the sum of all values
-
-**API note:** The enforcement of argument correctness means that the retrieved set of
-recorded values obtained from a `IntSummaryStatistics` source
+<ul>
+  <li>{@code count >= 0}</li>
+  <li>{@code min <= max}</li>
+</ul>
+@apiNote
+The enforcement of argument correctness means that the retrieved set of
+recorded values obtained from a {@code IntSummaryStatistics} source
 instance may not be a legal set of arguments for this constructor due to
 arithmetic overflow of the source's recorded count of values.
 The consistent argument conditions are not sufficient to prevent the
 creation of an internally inconsistent instance.  An example of such a
-state would be an instance with: `count` = 2, `min` = 1,
-`max` = 2, and `sum` = 0.
+state would be an instance with: {@code count} = 2, {@code min} = 1,
+{@code max} = 2, and {@code sum} = 0.
 
-**Since:** 10
-
-Throws:
-
-- `IllegalArgumentException`: if the arguments are inconsistent
+@param count the count of values
+@param min the minimum value
+@param max the maximum value
+@param sum the sum of all values
+@throws IllegalArgumentException if the arguments are inconsistent
+@since 10
 
 ## IntSummaryStatistics.accept(int)
 
@@ -107,9 +91,7 @@ public void accept(int value)
 
 Records a new value into the summary information
 
-Parameters:
-
-- `value`: the input value
+@param value the input value
 
 ## IntSummaryStatistics.combine(IntSummaryStatistics)
 
@@ -117,15 +99,10 @@ Parameters:
 public void combine(IntSummaryStatistics other)
 ```
 
-Combines the state of another `IntSummaryStatistics` into this one.
+Combines the state of another {@code IntSummaryStatistics} into this one.
 
-Parameters:
-
-- `other`: another `IntSummaryStatistics`
-
-Throws:
-
-- `NullPointerException`: if `other` is null
+@param other another {@code IntSummaryStatistics}
+@throws NullPointerException if {@code other} is null
 
 ## IntSummaryStatistics.getCount()
 
@@ -135,7 +112,7 @@ public final long getCount()
 
 Returns the count of values recorded.
 
-**Returns:** the count of values
+@return the count of values
 
 ## IntSummaryStatistics.getSum()
 
@@ -146,7 +123,7 @@ public final long getSum()
 Returns the sum of values recorded, or zero if no values have been
 recorded.
 
-**Returns:** the sum of values, or zero if none
+@return the sum of values, or zero if none
 
 ## IntSummaryStatistics.getMin()
 
@@ -154,10 +131,10 @@ recorded.
 public final int getMin()
 ```
 
-Returns the minimum value recorded, or `Integer.MAX_VALUE` if no
+Returns the minimum value recorded, or {@code Integer.MAX_VALUE} if no
 values have been recorded.
 
-**Returns:** the minimum value, or `Integer.MAX_VALUE` if none
+@return the minimum value, or {@code Integer.MAX_VALUE} if none
 
 ## IntSummaryStatistics.getMax()
 
@@ -165,10 +142,10 @@ values have been recorded.
 public final int getMax()
 ```
 
-Returns the maximum value recorded, or `Integer.MIN_VALUE` if no
+Returns the maximum value recorded, or {@code Integer.MIN_VALUE} if no
 values have been recorded.
 
-**Returns:** the maximum value, or `Integer.MIN_VALUE` if none
+@return the maximum value, or {@code Integer.MIN_VALUE} if none
 
 ## IntSummaryStatistics.getAverage()
 
@@ -179,7 +156,7 @@ public final double getAverage()
 Returns the arithmetic mean of values recorded, or zero if no values have been
 recorded.
 
-**Returns:** the arithmetic mean of values, or zero if none
+@return the arithmetic mean of values, or zero if none
 
 ## IntSummaryStatistics.toString()
 

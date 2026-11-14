@@ -1,30 +1,28 @@
 ---
-title: "Replace the ASP.NET machineKey in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/data-protection/compatibility/replacing-machinekey.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Replace the ASP.NET machineKey in ASP.NET Core
+description: Discover how to replace machineKey in ASP.NET to allow the use of a new and more secure data protection system.
+ms.date: 04/06/2019
 ---
-
 # Replace the ASP.NET machineKey in ASP.NET Core
 
-The implementation of the `<machineKey>` element in ASP.NET is replaceable. This allows most calls to ASP.NET cryptographic routines to be routed through a replacement data protection mechanism, including the new data protection system.
+<a name="compatibility-replacing-machinekey"></a>
+
+The implementation of the `<machineKey>` element in ASP.NET [is replaceable](https://blogs.msdn.microsoft.com/webdev/2012/10/23/cryptographic-improvements-in-asp-net-4-5-pt-2/). This allows most calls to ASP.NET cryptographic routines to be routed through a replacement data protection mechanism, including the new data protection system.
 
 ## Package installation
 
-> **Note:**
+> [!NOTE]
 > The new data protection system can only be installed into an existing ASP.NET application targeting .NET Framework 4.5.1 or later. Installation will fail if the application targets .NET Framework 4.5 or lower.
 
-To install the new data protection system into an existing .NET Framework 4.5.1+ project, install the package Microsoft.AspNetCore.DataProtection.SystemWeb. This will instantiate the data protection system using the default configuration settings.
+To install the new data protection system into an existing .NET Framework 4.5.1+ project, install the package Microsoft.AspNetCore.DataProtection.SystemWeb. This will instantiate the data protection system using the [default configuration](../configuration/default-settings.md) settings.
 
-When you install the package, it inserts a line into *Web.config* that tells ASP.NET to use it for most cryptographic operations, including forms authentication, view state, and calls to MachineKey.Protect. It does not use the data protection API. The line that's inserted reads as follows.
+When you install the package, it inserts a line into *Web.config* that tells ASP.NET to use it for [most cryptographic operations](https://blogs.msdn.microsoft.com/webdev/2012/10/23/cryptographic-improvements-in-asp-net-4-5-pt-2/), including forms authentication, view state, and calls to MachineKey.Protect. It does not use the [data protection API](../using-data-protection.md). The line that's inserted reads as follows.
 
 ```xml
-<machineKey <example-value>"Framework45" dataProtectorType="..." />
+<machineKey compatibilityMode="Framework45" dataProtectorType="..." />
 ```
 
->**Tip:**
+>[!TIP]
 > You can tell if the new data protection system is active by inspecting fields like `__VIEWSTATE`, which should begin with "CfDJ8" as in the example below. "CfDJ8" is the base64 representation of the magic "09 F0 C9 F0" header that identifies a payload protected by the data protection system.
 
 ```html
@@ -59,8 +57,8 @@ namespace DataProtectionDemo
 }
 ```
 
->**Tip:**
-> You can also use `<machineKey <example-value>"my-app" ... />` in place of an explicit call to SetApplicationName. This is a convenience mechanism to avoid forcing the developer to create a DataProtectionStartup-derived type if all they wanted to configure was setting the application name.
+>[!TIP]
+> You can also use `<machineKey applicationName="my-app" ... />` in place of an explicit call to SetApplicationName. This is a convenience mechanism to avoid forcing the developer to create a DataProtectionStartup-derived type if all they wanted to configure was setting the application name.
 
 To enable this custom configuration, go back to Web.config and look for the `<appSettings>` element that the package install added to the config file. It will look like the following markup:
 

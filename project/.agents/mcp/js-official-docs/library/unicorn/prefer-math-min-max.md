@@ -1,19 +1,13 @@
----
-title: "prefer-math-min-max"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-math-min-max.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-math-min-max
 
 📝 Prefer `Math.min()` and `Math.max()` over ternaries for simple comparisons.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 This rule enforces the use of `Math.min()` and `Math.max()` functions instead of ternary expressions when performing simple comparisons, such as selecting the minimum or maximum value between two or more options.
 
@@ -55,5 +49,5 @@ height <= 50 ? 50 : height;
 Math.max(height, 50);
 ```
 
-> **Note:**
+> [!NOTE]
 > This rule offers suggestions instead of autofixes because comparisons and `Math.min()`/`Math.max()` handle `NaN`, signed zero, and non-number values differently. For example, `a > b ? a : b` returns `b` when `a` is `NaN`, while `Math.max(a, b)` returns `NaN`. Check these behaviors before applying a suggestion.

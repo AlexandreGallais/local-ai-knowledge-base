@@ -1,12 +1,3 @@
----
-title: "InvokeDynamicInstruction interface (java.lang.classfile.instruction)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/instruction/InvokeDynamicInstruction.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # InvokeDynamicInstruction interface (java.lang.classfile.instruction)
 
 ```java
@@ -14,18 +5,20 @@ public sealed interface InvokeDynamicInstruction extends Instruction permits Abs
 ```
 
 Models a dynamically-computed call site invocation instruction in the
-`code` array of a `Code` attribute.  The corresponding opcode is
-invokedynamic.  Delivered as a `CodeElement` when traversing the elements of a `CodeModel`.
-
+{@code code} array of a {@code Code} attribute.  The corresponding opcode is
+{@link Opcode#INVOKEDYNAMIC invokedynamic}.  Delivered as a {@link
+CodeElement} when traversing the elements of a {@link CodeModel}.
+<p>
 A dynamically-computed call site invocation instruction is composite:
+{@snippet lang=text :
+// @link substring="InvokeDynamicInstruction" target="#of" :
+InvokeDynamicInstruction(InvokeDynamicEntry invokedynamic) // @link substring="invokedynamic" target="#invokedynamic()"
+}
 
-**See also:** Opcode.Kind#INVOKE_DYNAMIC
-
-**See also:** CodeBuilder#invokedynamic CodeBuilder::invokedynamic
-
-**jvms:** 6.5.invokedynamic *invokedynamic*
-
-**Since:** 24
+@see Opcode.Kind#INVOKE_DYNAMIC
+@see CodeBuilder#invokedynamic CodeBuilder::invokedynamic
+@jvms 6.5.invokedynamic <em>invokedynamic</em>
+@since 24
 
 ## InvokeDynamicInstruction.invokedynamic()
 
@@ -33,11 +26,15 @@ A dynamically-computed call site invocation instruction is composite:
 InvokeDynamicEntry invokedynamic()
 ```
 
+{@return an {@link InvokeDynamicEntry} describing the call site}
+
 ## InvokeDynamicInstruction.name()
 
 ```java
 default Utf8Entry name()
 ```
+
+{@return the invocation name of the call site}
 
 ## InvokeDynamicInstruction.type()
 
@@ -45,7 +42,11 @@ default Utf8Entry name()
 default Utf8Entry type()
 ```
 
-**API note:** A symbolic descriptor for the invocation typeis available through typeSymbol().
+{@return the invocation type of the call site}
+
+@apiNote
+A symbolic descriptor for the invocation typeis available through {@link
+#typeSymbol() typeSymbol()}.
 
 ## InvokeDynamicInstruction.typeSymbol()
 
@@ -53,11 +54,15 @@ default Utf8Entry type()
 default MethodTypeDesc typeSymbol()
 ```
 
+{@return the invocation type of the call site, as a symbolic descriptor}
+
 ## InvokeDynamicInstruction.bootstrapMethod()
 
 ```java
 default DirectMethodHandleDesc bootstrapMethod()
 ```
+
+{@return the bootstrap method of the call site}
 
 ## InvokeDynamicInstruction.bootstrapArgs()
 
@@ -65,12 +70,14 @@ default DirectMethodHandleDesc bootstrapMethod()
 default List<ConstantDesc> bootstrapArgs()
 ```
 
+{@return the bootstrap arguments of the call site}
+
 ## InvokeDynamicInstruction.of(InvokeDynamicEntry)
 
 ```java
 static InvokeDynamicInstruction of(InvokeDynamicEntry invokedynamic)
 ```
 
-Parameters:
+{@return an invokedynamic instruction}
 
-- `invokedynamic`: the constant pool entry describing the call site
+@param invokedynamic the constant pool entry describing the call site

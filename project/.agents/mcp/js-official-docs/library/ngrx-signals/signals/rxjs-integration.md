@@ -1,12 +1,3 @@
----
-title: "RxJS Integration"
-tool: "ngrx-signals"
-version: "22.0"
-source: "https://github.com/ngrx/platform/blob/a4995391ef631f1bd60d539f436a1aa5c23c4fe5/projects/www/src/app/pages/guide/signals/rxjs-integration.md"
-commit: "a4995391ef631f1bd60d539f436a1aa5c23c4fe5"
-license: "MIT"
----
-
 # RxJS Integration
 
 RxJS is still a major part of NgRx and the Angular ecosystem, and the `@ngrx/signals` package provides **opt-in** integration with RxJS APIs through the `rxjs-interop` plugin.
@@ -218,12 +209,12 @@ export class BookList {
 <ngrx-docs-alert type="inform">
 
 For safe handling of API responses, it is recommended to use the `tapResponse` operator from the `@ngrx/operators` package.
-Learn more about it in the tapResponse guide.
+Learn more about it in the [tapResponse](guide/operators/operators#tapresponse) guide.
 
 </ngrx-docs-alert>
 
 The `rxMethod` function can also be utilized to define reactive methods for SignalStore.
-Further details can be found in the Reactive Store Methods guide.
+Further details can be found in the [Reactive Store Methods](guide/signals/signal-store#reactive-store-methods) guide.
 
 ### Reactive Methods without Arguments
 

@@ -1,16 +1,8 @@
----
-title: "Angular Signals"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/signals/overview.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
-# Angular Signals
+<docs-decorative-header title="Angular Signals" imgSrc="adev/src/assets/images/signals.svg"> <!-- markdownlint-disable-line -->
 Angular Signals is a system that granularly tracks how and where your state is used throughout an application, allowing the framework to optimize rendering updates.
+</docs-decorative-header>
 
-TIP: Check out Angular's Essentials before diving into this comprehensive guide.
+TIP: Check out Angular's [Essentials](essentials/signals) before diving into this comprehensive guide.
 
 ## What are signals?
 
@@ -140,7 +132,7 @@ Angular automatically enters a reactive context when:
 - Evaluating a `computed` signal.
 - Evaluating a `linkedSignal`.
 - Evaluating a `resource`'s params function.
-- Rendering a component template (including bindings in the host property).
+- Rendering a component template (including bindings in the [host property](guide/components/host-elements#binding-to-the-host-element)).
 
 During these operations, Angular creates a _live_ connection. If a tracked signal changes, Angular will _eventually_ re-run the consumer.
 
@@ -196,7 +188,7 @@ effect(() => {
 
 The reactive context is only active for synchronous code. Any signal reads that occur after an asynchronous boundary will not be tracked as dependencies.
 
-```ts
+```ts {avoid}
 effect(async () => {
   const data = await fetchUserData();
   // Reactive context is lost here - theme() won't be tracked
@@ -206,7 +198,7 @@ effect(async () => {
 
 To ensure all signal reads are tracked, read signals before the `await`. This includes passing them as arguments to the awaited function, since arguments are evaluated synchronously:
 
-```ts
+```ts {prefer}
 effect(async () => {
   const currentTheme = theme(); // Read before await
   const data = await fetchUserData();
@@ -214,7 +206,7 @@ effect(async () => {
 });
 ```
 
-```ts
+```ts {prefer}
 effect(async () => {
   // Also works: signal is read before await (as function argument)
   await renderContent(docContent());
@@ -224,17 +216,17 @@ effect(async () => {
 ## Advanced derivations
 
 While `computed` handles simple readonly derivations, you might find yourself needing a writable state that is dependent on other signals.
-For more information see the Dependent state with linkedSignal guide.
+For more information see the [Dependent state with linkedSignal](/guide/signals/linked-signal) guide.
 
-All signal APIs are synchronous— `signal`, `computed`, `input`, etc. However, applications often need to deal with data that is available asynchronously. A `Resource` gives you a way to incorporate async data into your application's signal-based code and still allow you to access its data synchronously. For more information see the Async reactivity with resources guide.
+All signal APIs are synchronous— `signal`, `computed`, `input`, etc. However, applications often need to deal with data that is available asynchronously. A `Resource` gives you a way to incorporate async data into your application's signal-based code and still allow you to access its data synchronously. For more information see the [Async reactivity with resources](/guide/signals/resource) guide.
 
 ## Executing side effects on non-reactive APIs
 
-Synchronous or asynchronous derivations are recommended when we want to react to state changes. However, this doesn't cover all the possible use cases, and you'll sometimes find yourself in a situation where you need to react to signal changes on non-reactive APIs. Use `effect` or `afterRenderEffect` for those specific use cases. For more information see Side effects for non-reactive APIs guide.
+Synchronous or asynchronous derivations are recommended when we want to react to state changes. However, this doesn't cover all the possible use cases, and you'll sometimes find yourself in a situation where you need to react to signal changes on non-reactive APIs. Use `effect` or `afterRenderEffect` for those specific use cases. For more information see [Side effects for non-reactive APIs](/guide/signals/effect) guide.
 
 ## Reading signals in `OnPush` components
 
-When you read a signal within an `OnPush` component's template, Angular tracks the signal as a dependency of that component. When the value of that signal changes, Angular automatically marks the component to ensure it gets updated the next time change detection runs. Refer to the Skipping component subtrees guide for more information about `OnPush` components.
+When you read a signal within an `OnPush` component's template, Angular tracks the signal as a dependency of that component. When the value of that signal changes, Angular automatically [marks](api/core/ChangeDetectorRef#markForCheck) the component to ensure it gets updated the next time change detection runs. Refer to the [Skipping component subtrees](best-practices/skipping-subtrees) guide for more information about `OnPush` components.
 
 ## Advanced topics
 
@@ -256,7 +248,7 @@ data.set(['test']);
 
 Equality functions can be provided to both writable and computed signals.
 
-HELPFUL: By default, signals use referential equality (`Object.is()` comparison).
+HELPFUL: By default, signals use referential equality ([`Object.is()`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/is) comparison).
 
 ### Type checking signals
 
@@ -283,9 +275,9 @@ isWritableSignal(doubled); // false
 
 ## Using signals with RxJS
 
-See RxJS interop with Angular signals for details on interoperability between signals and RxJS.
+See [RxJS interop with Angular signals](ecosystem/rxjs-interop) for details on interoperability between signals and RxJS.
 
 ## Debugging signals
 
 Angular DevTools can visualize the signal graph of a component or directive, showing how its signals, computeds, effects, and other reactive nodes depend on each other.
-See Debug the signal graph to learn how to open, read, and inspect the graph.
+See [Debug the signal graph](tools/devtools/signals) to learn how to open, read, and inspect the graph.

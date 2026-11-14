@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: Razor runtime compilation is obsolete"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/10/razor-runtime-compilation-obsolete.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in ASP.NET Core 10.0 where Razor runtime compilation APIs have been marked obsolete.
+ms.date: 08/08/2025
+ms.custom: https://github.com/aspnet/Announcements/issues/522
 ---
 
 # Razor runtime compilation is obsolete
 
-Razor runtime compilation is obsolete and is not recommended for production scenarios. For production scenarios, use the default build-time compilation. For development scenarios, use Hot Reload instead.
+Razor runtime compilation is obsolete and is not recommended for production scenarios. For production scenarios, use the default build-time compilation. For development scenarios, use [Hot Reload](../../test/hot-reload.md) instead.
 
 ## Version introduced
 
@@ -17,34 +15,34 @@ Razor runtime compilation is obsolete and is not recommended for production scen
 
 ## Previous behavior
 
-Previously, you could use Razor runtime compilation to recompile `.cshtml` files while the application was running. This meant you didn't need to restart the application for changes to take effect.
+Previously, you could use [Razor runtime compilation](../../mvc/views/view-compilation.md) to recompile `.cshtml` files while the application was running. This meant you didn't need to restart the application for changes to take effect.
 
 ## New behavior
 
-Starting in .NET 10, use of the affected APIs produces a compiler warning with diagnostic ID `ASPDEPR003`:
+Starting in .NET 10, use of the [affected APIs](#affected-apis) produces a compiler warning with diagnostic ID `ASPDEPR003`:
 
 > warning ASPDEPR003: Razor runtime compilation is obsolete and is not recommended for production scenarios. For production scenarios, use the default build time compilation. For development scenarios, use Hot Reload instead. For more information, visit <https://aka.ms/aspnet/deprecate/003>.
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](/dotnet/core/compatibility/categories#source-compatibility).
 
 ## Reason for change
 
-Razor runtime compilation has been replaced by Hot Reload, which has been the recommended approach for a few years now. This change makes it clearer that Razor runtime compilation doesn't get support for new features and should no longer be used.
+Razor runtime compilation has been replaced by [Hot Reload](../../test/hot-reload.md), which has been the recommended approach for a few years now. This change makes it clearer that Razor runtime compilation doesn't get support for new features and should no longer be used.
 
 ## Recommended action
 
-Remove calls to `Microsoft.Extensions.DependencyInjection.RazorRuntimeCompilationMvcBuilderExtensions.AddRazorRuntimeCompilation*` and use Hot Reload instead.
+Remove calls to <xref:Microsoft.Extensions.DependencyInjection.RazorRuntimeCompilationMvcBuilderExtensions.AddRazorRuntimeCompilation*> and use [Hot Reload](../../test/hot-reload.md) instead.
 
 ## Affected APIs
 
-- `Microsoft.AspNetCore.Mvc.ApplicationParts.AssemblyPartExtensions`
-- `Microsoft.Extensions.DependencyInjection.RazorRuntimeCompilationMvcBuilderExtensions.AddRazorRuntimeCompilation*`
-- `Microsoft.Extensions.DependencyInjection.RazorRuntimeCompilationMvcCoreBuilderExtensions.AddRazorRuntimeCompilation*`
-- `Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.FileProviderRazorProjectItem`
-- `Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.MvcRazorRuntimeCompilationOptions`
+- <xref:Microsoft.AspNetCore.Mvc.ApplicationParts.AssemblyPartExtensions?displayProperty=fullName>
+- <xref:Microsoft.Extensions.DependencyInjection.RazorRuntimeCompilationMvcBuilderExtensions.AddRazorRuntimeCompilation*?displayProperty=fullName>
+- <xref:Microsoft.Extensions.DependencyInjection.RazorRuntimeCompilationMvcCoreBuilderExtensions.AddRazorRuntimeCompilation*?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.FileProviderRazorProjectItem?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.MvcRazorRuntimeCompilationOptions?displayProperty=fullName>
 
 ## See also
 
-- .NET Hot Reload support for ASP.NET Core
+- [.NET Hot Reload support for ASP.NET Core](../../test/hot-reload.md)

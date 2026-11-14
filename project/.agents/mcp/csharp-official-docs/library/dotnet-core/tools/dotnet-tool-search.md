@@ -1,19 +1,15 @@
 ---
-title: "dotnet tool search command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-tool-search.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet tool search command
+description: The dotnet tool search command searches the .NET tools that are published to NuGet.org.
+ms.date: 10/28/2025
 ---
-
 # dotnet tool search
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
 
 ## Name
 
-`dotnet tool search` - Searches all .NET tools that are published to NuGet.
+`dotnet tool search` - Searches all [.NET tools](global-tools.md) that are published to NuGet.
 
 ## Synopsis
 
@@ -28,7 +24,7 @@ dotnet tool search -h|--help
 
 The `dotnet tool search` command provides a way for you to search NuGet for tools that can be used as .NET global, tool-path, or local tools. The command searches the tool names and metadata such as titles, descriptions, and tags.
 
-The command uses the NuGet Search API. It filters on `packageType=dotnettool` to select only .NET tool packages.
+The command uses the [NuGet Search API](/nuget/api/search-query-service-resource#search-for-packages). It filters on `packageType=dotnettool` to select only .NET tool packages.
 
 ## Options
 
@@ -48,9 +44,7 @@ The command uses the NuGet Search API. It filters on `packageType=dotnettool` to
 
   Specifies the number of query results to show. Used for pagination.
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Examples
 
@@ -98,6 +92,6 @@ Prints out a description of how to use the command.
 
 ## See also
 
-- .NET tools
-- Tutorial: Install and use a .NET global tool using the .NET CLI
-- Tutorial: Install and use a .NET local tool using the .NET CLI
+- [.NET tools](global-tools.md)
+- [Tutorial: Install and use a .NET global tool using the .NET CLI](global-tools-how-to-use.md)
+- [Tutorial: Install and use a .NET local tool using the .NET CLI](local-tools-how-to-use.md)

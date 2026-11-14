@@ -1,12 +1,18 @@
 ---
+description: "Learn more about: CorDebugEHClause Structure"
 title: "CorDebugEHClause Structure"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cordebugehclause-structure.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "cpp"
+api_name:
+  - "CorDebugEHClause"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+topic_type:
+  - "apiref"
 ---
-
 # CorDebugEHClause Structure
 
 Represents an exception handling (EH) clause for a given piece of intermediate language (IL) code.
@@ -39,9 +45,9 @@ typedef struct _CorDebugEHClause {
 
 ## Remarks
 
- An array of `CoreDebugEHClause` values is returned by the GetEHClauses method.
+ An array of `CoreDebugEHClause` values is returned by the [GetEHClauses](icordebugilcode-getehclauses-method.md) method.
 
- The EH clause information is defined by the CLI specification. For more information, see Standard ECMA-355: Common Language Infrastructure (CLI), 6th Edition.
+ The EH clause information is defined by the CLI specification. For more information, see [Standard ECMA-355: Common Language Infrastructure (CLI), 6th Edition](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/).
 
  The `flags` field can contain the following flags. Note that they are not defined in CorDebug.idl or CorDebug.h.
 
@@ -54,7 +60,7 @@ typedef struct _CorDebugEHClause {
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -64,4 +70,4 @@ typedef struct _CorDebugEHClause {
 
 ## See also
 
-- GetEHClauses Method
+- [GetEHClauses Method](icordebugilcode-getehclauses-method.md)

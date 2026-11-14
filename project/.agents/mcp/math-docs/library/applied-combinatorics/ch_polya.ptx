@@ -1,0 +1,33 @@
+<chapter xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="ch_polya">
+    <title>Pólya's Enumeration Theorem</title>
+
+
+    <introduction>
+        <p>In this chapter, we introduce a powerful enumeration technique generally referred to as Pólya's enumeration theorem.<fn>Like so many results of mathematics, the crux of the result was originally discovered by someone other than the mathematician whose name is associated with it. J.H. Redfield published this result in 1927, 10 years prior to Pólya's work. It would take until 1960 for Redfield's work to be discovered, by which time Pólya's name was firmly attached to the technique.</fn> Pólya's approach to counting allows us to use symmetries (such as those of geometric objects like polygons) to form generating functions. These generating functions can then be used to answer combinatorial questions such as
+                  <ol>
+            <li>
+                <p>How many different necklaces of six beads can be formed using red, blue and green beads? What about <m>500</m>-bead necklaces?</p>
+            </li>
+            <li>
+                <p>How many musical scales consisting of <m>6</m> notes are there?</p>
+            </li>
+            <li>
+                <p>How many isomers of the compound xylenol, <m>\text{C} _6\text{H} _3(\text{CH} _3)_2(\text{OH} )</m>, are there? What about <m>\text{C} _n \text{H} _{2n+2}</m>? (In chemistry, <term>isomers</term> are chemical compounds with the same number of molecules of each element but with different arrangements of those molecules.)</p>
+            </li>
+            <li>
+                <p>How many nonisomorphic graphs are there on four vertices? How many of them have three edges? What about on <m>1000</m> vertices with <m>257,000</m> edges? How many <m>r</m>-regular graphs are there on <m>40</m> vertices? (A graph is <term><m>r</m>-regular</term><idx><h>graph</h><h>regular</h></idx> if every vertex has degree <m>r</m>.)</p>
+            </li>
+        
+                  </ol>
+                </p>
+
+        <p>To use Pólya's techniques, we will require the idea of a permutation group. However, our treatment will be self-contained and driven by examples. We begin with a simplified version of the first question above.
+        </p>
+    </introduction>
+    <xi:include href="s_polya_square.ptx"/>
+    <xi:include href="s_polya_perm-groups.ptx"/>
+    <xi:include href="s_polya_burnside.ptx"/>
+    <xi:include href="s_polya_polya.ptx"/>
+    <xi:include href="s_polya_apps.ptx"/>
+    <xi:include href="s_polya_exercises.ptx"/>
+</chapter>

@@ -1,17 +1,11 @@
----
-title: "no-conflicting-constraints"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-conflicting-constraints.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-conflicting-constraints
 
 📝 Disallow conflicting CSS query and HTML form constraints.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `recommended-css`, 🌐 `recommended-html`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, 🎨 `recommended-css`, 🌐 `recommended-html`, ☑️ `unopinionated`.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Report conflicting explicit bounds in CSS queries and HTML form controls, including JSX/TSX. No fixes or suggestions are provided because the intended bounds cannot be inferred.
 
@@ -98,4 +92,4 @@ Custom components, spreads, dynamic bounds/types, mutable bindings, and forward 
 
 ## Related rules
 
-`cssicorn/no-invalid-media-features` and HTML ESLint's `no-invalid-attr-value` validate individual values. `cssicorn/prefer-media-feature-range-syntax` checks notation; HTML ESLint's `no-ineffective-attrs` checks applicability. None checks relationships between bounds.
+[`cssicorn/no-invalid-media-features`](https://github.com/sindresorhus/eslint-cssicorn/blob/main/docs/rules/no-invalid-media-features.md) and HTML ESLint's [`no-invalid-attr-value`](https://html-eslint.org/docs/rules/no-invalid-attr-value) validate individual values. [`cssicorn/prefer-media-feature-range-syntax`](https://github.com/sindresorhus/eslint-cssicorn/blob/main/docs/rules/prefer-media-feature-range-syntax.md) checks notation; HTML ESLint's `no-ineffective-attrs` checks applicability. None checks relationships between bounds.

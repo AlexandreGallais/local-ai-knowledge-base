@@ -1,10 +1,8 @@
 ---
-title: "Functional programming vs. imperative programming - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/functional-vs-imperative-programming.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Functional programming vs. imperative programming - LINQ to XML
+description: Learn about functional programming and how it differs from traditional imperative (procedural) programming.
+ms.date: 07/20/2015
+ms.assetid: 5e35c5a0-c949-422a-873b-fca6b2254f57
 ---
 
 # Functional programming vs. imperative programming (LINQ to XML)
@@ -25,11 +23,11 @@ With an imperative approach, a developer writes code that specifies the steps th
 |Primary flow control|Loops, conditionals, and function (method) calls.|Function calls, including recursion.|
 |Primary manipulation unit|Instances of structures or classes.|Functions as first-class objects and data collections.|
 
-Although most languages were designed to support a specific programming paradigm, many general languages are flexible enough to support multiple paradigms. For example, most languages that contain function pointers can be used to credibly support functional programming. Furthermore, C# and Visual Basic <example-value> explicit language extensions to support functional programming, including lambda expressions and type inference. LINQ technology is a form of declarative, functional programming.
+Although most languages were designed to support a specific programming paradigm, many general languages are flexible enough to support multiple paradigms. For example, most languages that contain function pointers can be used to credibly support functional programming. Furthermore, C# and Visual Basic include explicit language extensions to support functional programming, including lambda expressions and type inference. LINQ technology is a form of declarative, functional programming.
 
 ## Functional programming using XSLT
 
-Many XSLT developers are familiar with the pure functional approach. The most effective way to develop an XSLT style sheet is to treat each template as an isolated, composable transformation. The order of execution is completely de-emphasized. XSLT doesn't allow side effects (with the exception that escaping mechanisms for executing procedural code can introduce side effects that result in functional impurity). However, although XSLT is an effective tool, some of its characteristics aren't optimal. For example, expressing programming constructs in XML makes code relatively verbose, and therefore difficult to maintain. Also, the heavy reliance on recursion for flow control can result in code that's hard to read. For more information about XSLT, see XSLT Transformations.
+Many XSLT developers are familiar with the pure functional approach. The most effective way to develop an XSLT style sheet is to treat each template as an isolated, composable transformation. The order of execution is completely de-emphasized. XSLT doesn't allow side effects (with the exception that escaping mechanisms for executing procedural code can introduce side effects that result in functional impurity). However, although XSLT is an effective tool, some of its characteristics aren't optimal. For example, expressing programming constructs in XML makes code relatively verbose, and therefore difficult to maintain. Also, the heavy reliance on recursion for flow control can result in code that's hard to read. For more information about XSLT, see [XSLT Transformations](../data/xml/xslt-transformations.md).
 
 However, XSLT has proved the value of using a pure functional approach for transforming XML from one shape to another. Pure functional programming with LINQ to XML is similar in many ways to XSLT. However, the programming constructs introduced by LINQ to XML, C#, and Visual Basic allow you to write pure functional transformations that are more readable and maintainable than XSLT.
 
@@ -55,6 +53,6 @@ Fortunately, C# and Visual Basic don't require the full leap to functional progr
 
 ## See also
 
-- Introduction to pure functional transformations
-- XSLT Transformations
-- Refactor into pure functions
+- [Introduction to pure functional transformations](introduction-pure-functional-transformations.md)
+- [XSLT Transformations](../data/xml/xslt-transformations.md)
+- [Refactor into pure functions](refactor-pure-functions.md)

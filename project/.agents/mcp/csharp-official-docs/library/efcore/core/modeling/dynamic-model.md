@@ -1,29 +1,15 @@
 ---
-title: "Alternating between multiple models with the same DbContext type - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/modeling/dynamic-model.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Alternating between multiple models with the same DbContext type - EF Core
+description: Alternating between multiple models with the same DbContext type using Entity Framework Core
+author: AndriySvyryd
+ms.date: 01/03/2020
+uid: core/modeling/dynamic-model
 ---
-
 # Alternating between multiple models with the same DbContext type
 
 The model built in `OnModelCreating` can use a property on the context to change how the model is built. For example, suppose you wanted to configure an entity differently based on some property:
 
-```csharp
-protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    if (UseIntProperty)
-    {
-        modelBuilder.Entity<ConfigurableEntity>().Ignore(e => e.StringProperty);
-    }
-    else
-    {
-        modelBuilder.Entity<ConfigurableEntity>().Ignore(e => e.IntProperty);
-    }
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/DynamicModel/DynamicContext.cs?name=OnModelCreating)]
 
 Unfortunately, this code wouldn't work as-is, since EF builds the model and runs `OnModelCreating` only once, caching the result for performance reasons. However, you can hook into the model caching mechanism to make EF aware of the property producing different models.
 
@@ -33,38 +19,14 @@ EF uses the `IModelCacheKeyFactory` to generate cache keys for models; by defaul
 
 The following implementation takes the `UseIntProperty` into account when producing a model cache key:
 
-```csharp
-public class DynamicModelCacheKeyFactory : IModelCacheKeyFactory
-{
-    public object Create(DbContext context, bool designTime)
-        => context is DynamicContext dynamicContext
-            ? (context.GetType(), dynamicContext.UseIntProperty, designTime)
-            : (object)context.GetType();
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/DynamicModel/DynamicModelCacheKeyFactory.cs?name=DynamicModel)]
 
 You also have to implement the overload of the Create method that also handles design-time model caching. As in the following example:
 
-```csharp
-public class DynamicModelCacheKeyFactoryDesignTimeSupport : IModelCacheKeyFactory
-{
-    public object Create(DbContext context, bool designTime)
-        => context is DynamicContext dynamicContext
-            ? (context.GetType(), dynamicContext.UseIntProperty, designTime)
-            : (object)context.GetType();
-
-    public object Create(DbContext context)
-        => Create(context, false);
-}
-```
+[!code-csharp[Main](../../../samples/core/Modeling/DynamicModel/DynamicModelCacheKeyFactoryDesignTimeSupport.cs?name=DynamicModelDesignTimeSupport)]
 
 Finally, register your new `IModelCacheKeyFactory` in your context's `OnConfiguring`:
 
-```csharp
-protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    => optionsBuilder
-        .UseInMemoryDatabase($"DynamicContext-{UseIntProperty}")
-        .ReplaceService<IModelCacheKeyFactory, DynamicModelCacheKeyFactory>();
-```
+[!code-csharp[Main](../../../samples/core/Modeling/DynamicModel/DynamicContext.cs?name=OnConfiguring)]
 
-See the full sample project for more context.
+See the [full sample project](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/DynamicModel) for more context.

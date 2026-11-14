@@ -1,21 +1,15 @@
----
-title: "no-unreadable-iife"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-unreadable-iife.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-unreadable-iife
 
 📝 Disallow unreadable IIFEs.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-IIFE with parenthesized arrow function body is considered unreadable.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+[IIFE](https://en.wikipedia.org/wiki/Immediately_invoked_function_expression) with parenthesized arrow function body is considered unreadable.
 
 Parenthesized arrow bodies make an IIFE look like a grouped expression and obscure where the function body begins.
 

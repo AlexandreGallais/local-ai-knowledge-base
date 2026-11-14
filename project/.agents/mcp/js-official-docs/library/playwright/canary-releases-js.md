@@ -1,13 +1,7 @@
 ---
+id: canary-releases
 title: "Canary releases"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/canary-releases-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# Canary releases
 
 ## Introduction
 
@@ -29,7 +23,7 @@ A canary release passes all automated tests and is used to test e.g. the HTML re
 
 For any code-related commit on `main`, the continuous integration will publish a daily canary release under the `@next` npm dist tag.
 
-You can see on npm the current dist tags:
+You can see on [npm](https://www.npmjs.com/package/@playwright/test?activeTab=versions) the current dist tags:
 
 - `latest`: stable releases
 - `next`: next releases, published daily
@@ -43,4 +37,4 @@ npm install -D @playwright/test@next
 
 ## Documentation
 
-The stable and the `next` documentation is published on playwright.dev. To see the `next` documentation, press `Shift` on the keyboard `5` times.
+The stable and the `next` documentation is published on [playwright.dev](https://playwright.dev). To see the `next` documentation, press <kbd>Shift</kbd> on the keyboard `5` times.

@@ -1,15 +1,11 @@
 ---
 title: ".NET 8 breaking change: Boolean-backed enum type support removed"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/8.0/bool-backed-enum.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 8 breaking change in core .NET libraries where support for parsing, formatting, and conversions of Boolean-backed enumeration types has been removed.
+ms.date: 08/02/2023
 ---
-
 # Boolean-backed enum type support removed
 
-Support for formatting, parsing, and conversions of Boolean-backed enumeration types has been removed.
+Support for formatting, parsing, and conversions of Boolean-backed [enumeration types](../../../../csharp/language-reference/builtin-types/enum.md) has been removed.
 
 ## Previous behavior
 
@@ -17,7 +13,7 @@ Previously, formatting, parsing, or converting a Boolean-backed enumeration type
 
 ## New behavior
 
-Starting in .NET 8, an `System.InvalidOperationException` is thrown if you try to format, parse, or convert a Boolean-backed enumeration type.
+Starting in .NET 8, an <xref:System.InvalidOperationException> is thrown if you try to format, parse, or convert a Boolean-backed enumeration type.
 
 ## Version introduced
 
@@ -25,7 +21,7 @@ Starting in .NET 8, an `System.InvalidOperationException` is thrown if you try t
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -37,10 +33,10 @@ If you're using a Boolean-backed enumeration type, use a regular Boolean type or
 
 ## Affected APIs
 
-- `System.Enum.Parse*`
-- `System.Enum.TryParse*`
-- `System.Enum.Format(System.Type,System.Object,System.String)`
-- `System.Enum.GetName*`
-- `System.Enum.GetNames*`
-- `System.Enum.GetValues*`
-- `System.Enum.ToObject*`
+- <xref:System.Enum.Parse*?displayProperty=fullName>
+- <xref:System.Enum.TryParse*?displayProperty=fullName>
+- <xref:System.Enum.Format(System.Type,System.Object,System.String)?displayProperty=fullName>
+- <xref:System.Enum.GetName*?displayProperty=fullName>
+- <xref:System.Enum.GetNames*?displayProperty=fullName>
+- <xref:System.Enum.GetValues*?displayProperty=fullName>
+- <xref:System.Enum.ToObject*?displayProperty=fullName>

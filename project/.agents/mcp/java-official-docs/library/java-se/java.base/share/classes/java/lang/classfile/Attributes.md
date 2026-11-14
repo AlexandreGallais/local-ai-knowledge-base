@@ -1,34 +1,24 @@
----
-title: "Attributes class (java.lang.classfile)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/Attributes.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Attributes class (java.lang.classfile)
 
 ```java
 public final class Attributes
 ```
 
-Attribute mappers for predefined (JVMS ) and JDK-specific
+Attribute mappers for predefined (JVMS {@jvms 4.7}) and JDK-specific
 nonstandard attributes.
-
+<p>
 Unless otherwise specified, each mapper returned by methods in this class:
+<ul>
+<li>is predefined in the JVMS instead of JDK-specific;
+<li>does not permit {@linkplain AttributeMapper#allowMultiple() multiple
+attribute instances} in the same structure;
+<li>the attribute has a {@linkplain AttributeMapper#stability() data
+dependency} on the {@linkplain AttributeStability#CP_REFS constant pool}.
+</ul>
 
-- is predefined in the JVMS instead of JDK-specific;
-
-- does not permit multiple attribute instances in the same structure;
-
-- the attribute has a data dependency on the constant pool.
-
-**See also:** AttributeMapper
-
-**See also:** java.lang.classfile.attribute
-
-**Since:** 24
+@see AttributeMapper
+@see java.lang.classfile.attribute
+@since 24
 
 ## Attributes.NAME_ANNOTATION_DEFAULT
 
@@ -324,11 +314,15 @@ Synthetic
 public static AttributeMapper<AnnotationDefaultAttribute> annotationDefault()
 ```
 
+{@return the mapper for the {@code AnnotationDefault} attribute}
+
 ## Attributes.bootstrapMethods()
 
 ```java
 public static AttributeMapper<BootstrapMethodsAttribute> bootstrapMethods()
 ```
+
+{@return the mapper for the {@code BootstrapMethods} attribute}
 
 ## Attributes.characterRangeTable()
 
@@ -336,10 +330,11 @@ public static AttributeMapper<BootstrapMethodsAttribute> bootstrapMethods()
 public static AttributeMapper<CharacterRangeTableAttribute> characterRangeTable()
 ```
 
+{@return the mapper for the {@code CharacterRangeTable} attribute}
 This is a JDK-specific attribute.
-The mapper permits multiple instances in a `Code` attribute, but this
+The mapper permits multiple instances in a {@code Code} attribute, but this
 attribute should be only emitted once.
-This has a data dependency on labels.
+This has a data dependency on {@linkplain AttributeStability#LABELS labels}.
 
 ## Attributes.code()
 
@@ -347,12 +342,15 @@ This has a data dependency on labels.
 public static AttributeMapper<CodeAttribute> code()
 ```
 
+{@return the mapper for the {@code Code} attribute}
+
 ## Attributes.compilationId()
 
 ```java
 public static AttributeMapper<CompilationIDAttribute> compilationId()
 ```
 
+{@return the mapper for the {@code CompilationID} attribute}
 This is a JDK-specific attribute.
 
 ## Attributes.constantValue()
@@ -361,14 +359,17 @@ This is a JDK-specific attribute.
 public static AttributeMapper<ConstantValueAttribute> constantValue()
 ```
 
+{@return the mapper for the {@code ConstantValue} attribute}
+
 ## Attributes.deprecated()
 
 ```java
 public static AttributeMapper<DeprecatedAttribute> deprecated()
 ```
 
+{@return the mapper for the {@code Deprecated} attribute}
 The mapper permits multiple instances in a given location.
-This has no data dependency.
+This has {@linkplain AttributeStability#STATELESS no data dependency}.
 
 ## Attributes.enclosingMethod()
 
@@ -376,11 +377,15 @@ This has no data dependency.
 public static AttributeMapper<EnclosingMethodAttribute> enclosingMethod()
 ```
 
+{@return the mapper for the {@code EnclosingMethod} attribute}
+
 ## Attributes.exceptions()
 
 ```java
 public static AttributeMapper<ExceptionsAttribute> exceptions()
 ```
+
+{@return the mapper for the {@code Exceptions} attribute}
 
 ## Attributes.innerClasses()
 
@@ -388,14 +393,17 @@ public static AttributeMapper<ExceptionsAttribute> exceptions()
 public static AttributeMapper<InnerClassesAttribute> innerClasses()
 ```
 
+{@return the mapper for the {@code InnerClasses} attribute}
+
 ## Attributes.lineNumberTable()
 
 ```java
 public static AttributeMapper<LineNumberTableAttribute> lineNumberTable()
 ```
 
-The mapper permits multiple instances in a `Code` attribute.
-This has a data dependency on labels.
+{@return the mapper for the {@code LineNumberTable} attribute}
+The mapper permits multiple instances in a {@code Code} attribute.
+This has a data dependency on {@linkplain AttributeStability#LABELS labels}.
 
 ## Attributes.localVariableTable()
 
@@ -403,8 +411,9 @@ This has a data dependency on labels.
 public static AttributeMapper<LocalVariableTableAttribute> localVariableTable()
 ```
 
-The mapper permits multiple instances in a `Code` attribute.
-This has a data dependency on labels.
+{@return the mapper for the {@code LocalVariableTable} attribute}
+The mapper permits multiple instances in a {@code Code} attribute.
+This has a data dependency on {@linkplain AttributeStability#LABELS labels}.
 
 ## Attributes.localVariableTypeTable()
 
@@ -412,8 +421,9 @@ This has a data dependency on labels.
 public static AttributeMapper<LocalVariableTypeTableAttribute> localVariableTypeTable()
 ```
 
+{@return the mapper for the {@code LocalVariableTypeTable} attribute}
 The mapper permits multiple instances in a given location.
-This has a data dependency on labels.
+This has a data dependency on {@linkplain AttributeStability#LABELS labels}.
 
 ## Attributes.methodParameters()
 
@@ -421,11 +431,15 @@ This has a data dependency on labels.
 public static AttributeMapper<MethodParametersAttribute> methodParameters()
 ```
 
+{@return the mapper for the {@code MethodParameters} attribute}
+
 ## Attributes.module()
 
 ```java
 public static AttributeMapper<ModuleAttribute> module()
 ```
+
+{@return the mapper for the {@code Module} attribute}
 
 ## Attributes.moduleHashes()
 
@@ -433,6 +447,7 @@ public static AttributeMapper<ModuleAttribute> module()
 public static AttributeMapper<ModuleHashesAttribute> moduleHashes()
 ```
 
+{@return the mapper for the {@code ModuleHashes} attribute}
 This is a JDK-specific attribute.
 
 ## Attributes.moduleMainClass()
@@ -441,11 +456,15 @@ This is a JDK-specific attribute.
 public static AttributeMapper<ModuleMainClassAttribute> moduleMainClass()
 ```
 
+{@return the mapper for the {@code ModuleMainClass} attribute}
+
 ## Attributes.modulePackages()
 
 ```java
 public static AttributeMapper<ModulePackagesAttribute> modulePackages()
 ```
+
+{@return the mapper for the {@code ModulePackages} attribute}
 
 ## Attributes.moduleResolution()
 
@@ -453,8 +472,9 @@ public static AttributeMapper<ModulePackagesAttribute> modulePackages()
 public static AttributeMapper<ModuleResolutionAttribute> moduleResolution()
 ```
 
+{@return the mapper for the {@code ModuleResolution} attribute}
 This is a JDK-specific attribute.
-This has no data dependency.
+This has {@linkplain AttributeStability#STATELESS no data dependency}.
 
 ## Attributes.moduleTarget()
 
@@ -462,6 +482,7 @@ This has no data dependency.
 public static AttributeMapper<ModuleTargetAttribute> moduleTarget()
 ```
 
+{@return the mapper for the {@code ModuleTarget} attribute}
 This is a JDK-specific attribute.
 
 ## Attributes.nestHost()
@@ -470,11 +491,15 @@ This is a JDK-specific attribute.
 public static AttributeMapper<NestHostAttribute> nestHost()
 ```
 
+{@return the mapper for the {@code NestHost} attribute}
+
 ## Attributes.nestMembers()
 
 ```java
 public static AttributeMapper<NestMembersAttribute> nestMembers()
 ```
+
+{@return the mapper for the {@code NestMembers} attribute}
 
 ## Attributes.permittedSubclasses()
 
@@ -482,11 +507,15 @@ public static AttributeMapper<NestMembersAttribute> nestMembers()
 public static AttributeMapper<PermittedSubclassesAttribute> permittedSubclasses()
 ```
 
+{@return the mapper for the {@code PermittedSubclasses} attribute}
+
 ## Attributes.record()
 
 ```java
 public static AttributeMapper<RecordAttribute> record()
 ```
+
+{@return the mapper for the {@code Record} attribute}
 
 ## Attributes.runtimeInvisibleAnnotations()
 
@@ -494,11 +523,15 @@ public static AttributeMapper<RecordAttribute> record()
 public static AttributeMapper<RuntimeInvisibleAnnotationsAttribute> runtimeInvisibleAnnotations()
 ```
 
+{@return the mapper for the {@code RuntimeInvisibleAnnotations} attribute}
+
 ## Attributes.runtimeInvisibleParameterAnnotations()
 
 ```java
 public static AttributeMapper<RuntimeInvisibleParameterAnnotationsAttribute> runtimeInvisibleParameterAnnotations()
 ```
+
+{@return the mapper for the {@code RuntimeInvisibleParameterAnnotations} attribute}
 
 ## Attributes.runtimeInvisibleTypeAnnotations()
 
@@ -506,7 +539,9 @@ public static AttributeMapper<RuntimeInvisibleParameterAnnotationsAttribute> run
 public static AttributeMapper<RuntimeInvisibleTypeAnnotationsAttribute> runtimeInvisibleTypeAnnotations()
 ```
 
-This has a data dependency on arbitrary indices in the `class` file format.
+{@return the mapper for the {@code RuntimeInvisibleTypeAnnotations} attribute}
+This has a data dependency on {@linkplain AttributeStability#UNSTABLE
+arbitrary indices} in the {@code class} file format.
 
 ## Attributes.runtimeVisibleAnnotations()
 
@@ -514,11 +549,15 @@ This has a data dependency on arbitrary indices in the `class` file format.
 public static AttributeMapper<RuntimeVisibleAnnotationsAttribute> runtimeVisibleAnnotations()
 ```
 
+{@return the mapper for the {@code RuntimeVisibleAnnotations} attribute}
+
 ## Attributes.runtimeVisibleParameterAnnotations()
 
 ```java
 public static AttributeMapper<RuntimeVisibleParameterAnnotationsAttribute> runtimeVisibleParameterAnnotations()
 ```
+
+{@return the mapper for the {@code RuntimeVisibleParameterAnnotations} attribute}
 
 ## Attributes.runtimeVisibleTypeAnnotations()
 
@@ -526,7 +565,9 @@ public static AttributeMapper<RuntimeVisibleParameterAnnotationsAttribute> runti
 public static AttributeMapper<RuntimeVisibleTypeAnnotationsAttribute> runtimeVisibleTypeAnnotations()
 ```
 
-This has a data dependency on arbitrary indices in the `class` file format.
+{@return the mapper for the {@code RuntimeVisibleTypeAnnotations} attribute}
+This has a data dependency on {@linkplain AttributeStability#UNSTABLE
+arbitrary indices} in the {@code class} file format.
 
 ## Attributes.signature()
 
@@ -534,13 +575,16 @@ This has a data dependency on arbitrary indices in the `class` file format.
 public static AttributeMapper<SignatureAttribute> signature()
 ```
 
+{@return the mapper for the {@code Signature} attribute}
+
 ## Attributes.sourceDebugExtension()
 
 ```java
 public static AttributeMapper<SourceDebugExtensionAttribute> sourceDebugExtension()
 ```
 
-This has no data dependency.
+{@return the mapper for the {@code SourceDebugExtension} attribute}
+This has {@linkplain AttributeStability#STATELESS no data dependency}.
 
 ## Attributes.sourceFile()
 
@@ -548,12 +592,15 @@ This has no data dependency.
 public static AttributeMapper<SourceFileAttribute> sourceFile()
 ```
 
+{@return the mapper for the {@code SourceFile} attribute}
+
 ## Attributes.sourceId()
 
 ```java
 public static AttributeMapper<SourceIDAttribute> sourceId()
 ```
 
+{@return the mapper for the {@code SourceID} attribute}
 This is a JDK-specific attribute.
 
 ## Attributes.stackMapTable()
@@ -562,7 +609,8 @@ This is a JDK-specific attribute.
 public static AttributeMapper<StackMapTableAttribute> stackMapTable()
 ```
 
-This has a data dependency on labels.
+{@return the mapper for the {@code StackMapTable} attribute}
+This has a data dependency on {@linkplain AttributeStability#LABELS labels}.
 
 ## Attributes.synthetic()
 
@@ -570,5 +618,6 @@ This has a data dependency on labels.
 public static AttributeMapper<SyntheticAttribute> synthetic()
 ```
 
+{@return the mapper for the {@code Synthetic} attribute}
 The mapper permits multiple instances in a given location.
-This has no data dependency.
+This has {@linkplain AttributeStability#STATELESS no data dependency}.

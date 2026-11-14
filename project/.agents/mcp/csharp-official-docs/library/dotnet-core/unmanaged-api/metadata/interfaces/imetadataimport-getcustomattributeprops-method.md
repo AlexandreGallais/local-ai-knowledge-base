@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataImport::GetCustomAttributeProps Method"
 title: "IMetaDataImport::GetCustomAttributeProps Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-getcustomattributeprops-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.GetCustomAttributeProps"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::GetCustomAttributeProps"
+  - "IMetaDataImport::GetCustomAttributeProps method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::GetCustomAttributeProps Method
 
 Gets the value of the custom attribute, given its metadata token.
@@ -29,10 +36,10 @@ HRESULT GetCustomAttributeProps (
  [in] A metadata token that represents the custom attribute to be retrieved.
 
  `ptkObj`
- [out, optional] A metadata token <example-value> the object that the custom attribute modifies. This value can be any type of metadata token <example-value> `mdCustomAttribute`.
+ [out, optional] A metadata token representing the object that the custom attribute modifies. This value can be any type of metadata token except `mdCustomAttribute`.
 
  `ptkType`
- [out, optional] An `mdMethodDef` or `mdMemberRef` metadata token <example-value> the `System.Type` of the returned custom attribute.
+ [out, optional] An `mdMethodDef` or `mdMemberRef` metadata token representing the <xref:System.Type> of the returned custom attribute.
 
  `ppBlob`
  [out, optional] A pointer to an array of data that is the value of the custom attribute.
@@ -46,7 +53,7 @@ HRESULT GetCustomAttributeProps (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -54,5 +61,5 @@ HRESULT GetCustomAttributeProps (
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

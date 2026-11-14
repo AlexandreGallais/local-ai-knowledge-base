@@ -1,12 +1,3 @@
----
-title: "Route Loading Strategies"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/routing/loading-strategies.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Route Loading Strategies
 
 Understanding how and when routes and components load in Angular routing is crucial for building responsive web applications. Angular offers two primary strategies to control loading behavior:
@@ -18,7 +9,7 @@ Each approach offers distinct advantages for different scenarios.
 
 ## Eagerly loaded components
 
-When you define a route with the `component` property, the referenced component is eagerly loaded as part of the same JavaScript bundle as the route configuration.
+When you define a route with the [`component`](api/router/Route#component) property, the referenced component is eagerly loaded as part of the same JavaScript bundle as the route configuration.
 
 ```ts
 import {Routes} from '@angular/router';
@@ -45,7 +36,7 @@ While including more JavaScript in your initial page load leads to slower initia
 
 ## Lazily loaded components and routes
 
-You can use the `loadComponent` property to lazily load the JavaScript for a component at the point at which that route would become active. The `loadChildren` property lazily loads child routes during route matching.
+You can use the [`loadComponent`](api/router/Route#loadComponent) property to lazily load the JavaScript for a component at the point at which that route would become active. The [`loadChildren`](api/router/Route#loadChildren) property lazily loads child routes during route matching.
 
 ```ts
 import {Routes} from '@angular/router';
@@ -63,7 +54,7 @@ export const routes: Routes = [
 ];
 ```
 
-The `loadComponent` and `loadChildren` properties accept a loader function that returns a Promise that resolves to an Angular component or a set of routes respectively. In most cases, this function uses the standard JavaScript dynamic import API. You can, however, use any arbitrary async loader function.
+The [`loadComponent`](/api/router/Route#loadComponent) and [`loadChildren`](/api/router/Route#loadChildren) properties accept a loader function that returns a Promise that resolves to an Angular component or a set of routes respectively. In most cases, this function uses the standard [JavaScript dynamic import API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import). You can, however, use any arbitrary async loader function.
 
 If the lazily loaded file uses a `default` export, you can return the `import()` promise directly without an additional `.then` call to select the exported class.
 
@@ -71,7 +62,7 @@ Lazily loading routes can significantly improve the load speed of your Angular a
 
 ## Injection context lazy loading
 
-The Router executes `loadComponent` and `loadChildren` within the **injection context of the current route**, allowing you to call `inject`inside these loader functions to access providers declared on that route, inherited from parent routes through hierarchical dependency injection, or available globally. This enables context-aware lazy loading.
+The Router executes [`loadComponent`](/api/router/Route#loadComponent) and [`loadChildren`](/api/router/Route#loadChildren) within the **injection context of the current route**, allowing you to call [`inject`](/api/core/inject)inside these loader functions to access providers declared on that route, inherited from parent routes through hierarchical dependency injection, or available globally. This enables context-aware lazy loading.
 
 ```ts
 import {Routes} from '@angular/router';
@@ -102,4 +93,4 @@ NOTE: While lazy routes have the upfront performance benefit of reducing the amo
 
 ## Next steps
 
-Learn how to display the contents of your routes with Outlets.
+Learn how to [display the contents of your routes with Outlets](/guide/routing/show-routes-with-outlets).

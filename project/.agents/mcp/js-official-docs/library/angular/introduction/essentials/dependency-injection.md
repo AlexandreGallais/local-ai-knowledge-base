@@ -1,16 +1,8 @@
----
-title: "Dependency Injection"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/introduction/essentials/dependency-injection.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
-# Dependency Injection
+<docs-decorative-header title="Dependency Injection" imgSrc="adev/src/assets/images/dependency_injection.svg"> <!-- markdownlint-disable-line -->
 Reuse code and control behaviors across your application and tests.
+</docs-decorative-header>
 
-When you need to share logic between components, Angular leverages the design pattern of dependency injection that allows you to create a “service” which allows you to inject code into components while managing it from a single source of truth.
+When you need to share logic between components, Angular leverages the design pattern of [dependency injection](guide/di) that allows you to create a “service” which allows you to inject code into components while managing it from a single source of truth.
 
 ## What are services?
 
@@ -39,7 +31,7 @@ export class Calculator {
 When you want to use a service in a component, you need to:
 
 1. Import the service
-2. Declare a class field where the service is injected. Assign the class field to the result of the call of the built-in function `inject` which creates the service
+2. Declare a class field where the service is injected. Assign the class field to the result of the call of the built-in function [`inject`](/api/core/inject) which creates the service
 
 Here’s what it might look like in the `Receipt` component:
 
@@ -57,9 +49,11 @@ export class Receipt {
 }
 ```
 
-In this example, the `Calculator` is being used by calling the Angular function `inject` and passing in the service to it.
+In this example, the `Calculator` is being used by calling the Angular function [`inject`](/api/core/inject) and passing in the service to it.
 
 ## Next Step
 
-  - Next Steps After Essentials
-  - In-depth dependency injection guide
+<docs-pill-row>
+  <docs-pill title="Next Steps After Essentials" href="essentials/next-steps" />
+  <docs-pill title="In-depth dependency injection guide" href="guide/di" />
+</docs-pill-row>

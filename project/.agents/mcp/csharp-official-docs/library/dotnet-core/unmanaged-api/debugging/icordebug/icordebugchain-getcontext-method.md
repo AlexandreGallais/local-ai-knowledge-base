@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugChain::GetContext Method"
 title: "ICorDebugChain::GetContext Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugchain-getcontext-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugChain.GetContext"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugChain::GetContext"
+helpviewer_keywords:
+  - "ICorDebugChain::GetContext method [.NET debugging]"
+  - "GetContext method, ICorDebugChain interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugChain::GetContext Method
 
 This method is not implemented.

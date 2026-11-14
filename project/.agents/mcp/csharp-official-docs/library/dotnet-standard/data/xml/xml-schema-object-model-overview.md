@@ -1,12 +1,9 @@
 ---
+description: "Learn more about: XML Schema Object Model Overview"
 title: "XML Schema Object Model Overview"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/xml-schema-object-model-overview.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+ms.assetid: 896a1e12-5655-42c6-8cdd-89c12862b34b
 ---
-
 # XML Schema Object Model Overview
 
 The Schema Object Model (SOM) in the Microsoft .NET Framework is a rich API that allows you to create, edit, and validate schemas programmatically. The SOM operates on XML schema documents similarly to the way the Document Object Model (DOM) operates on XML documents. XML schema documents are valid XML files that, once loaded into the SOM, convey meaning about the structure and validity of other XML documents which conform to the schema.
@@ -19,9 +16,9 @@ The Schema Object Model (SOM) in the Microsoft .NET Framework is a rich API that
 
 - Create in-memory schemas using strongly typed classes.
 
-- Interact with the `System.Xml.Schema.XmlSchemaSet` class to cache, compile, and retrieve schemas.
+- Interact with the <xref:System.Xml.Schema.XmlSchemaSet> class to cache, compile, and retrieve schemas.
 
-- Interact with the `System.Xml.XmlReader.Create*` method of the `System.Xml.XmlReader` class to validate XML instance documents against schemas.
+- Interact with the <xref:System.Xml.XmlReader.Create*> method of the <xref:System.Xml.XmlReader> class to validate XML instance documents against schemas.
 
 - Build editors for creating and maintaining schemas.
 
@@ -29,16 +26,18 @@ The Schema Object Model (SOM) in the Microsoft .NET Framework is a rich API that
 
 ## The Schema Object Model
 
- The SOM consists of an extensive set of classes in the `System.Xml.Schema` namespace corresponding to the elements in an XML schema. For example, the `<xsd:schema>...</xsd:schema>` element maps to the `System.Xml.Schema.XmlSchema` class, and all the information that can be contained within an `<xsd:schema/>` element can be represented using the `System.Xml.Schema.XmlSchema` class. Similarly, the `<xsd:element>...</xsd:element>` and `<xsd:attribute>...</xsd:attribute>` elements map to the `System.Xml.Schema.XmlSchemaElement` and `System.Xml.Schema.XmlSchemaAttribute` classes respectively. This mapping continues for all the elements of an XML schema creating an XML schema object model in the `System.Xml.Schema` namespace illustrated in the diagram that follows.
+ The SOM consists of an extensive set of classes in the <xref:System.Xml.Schema?displayProperty=nameWithType> namespace corresponding to the elements in an XML schema. For example, the `<xsd:schema>...</xsd:schema>` element maps to the <xref:System.Xml.Schema.XmlSchema?displayProperty=nameWithType> class, and all the information that can be contained within an `<xsd:schema/>` element can be represented using the <xref:System.Xml.Schema.XmlSchema> class. Similarly, the `<xsd:element>...</xsd:element>` and `<xsd:attribute>...</xsd:attribute>` elements map to the <xref:System.Xml.Schema.XmlSchemaElement?displayProperty=nameWithType> and <xref:System.Xml.Schema.XmlSchemaAttribute?displayProperty=nameWithType> classes respectively. This mapping continues for all the elements of an XML schema creating an XML schema object model in the <xref:System.Xml.Schema> namespace illustrated in the diagram that follows.
 
- For more information about each class in the `System.Xml.Schema` namespace, see the `System.Xml.Schema` namespace reference documentation in the .NET Framework class library.
+ ![System.Xml.Schema Object Model](./media/xml-schema-object-model-overview/xml-schema-object-model.gif)
+
+ For more information about each class in the <xref:System.Xml.Schema> namespace, see the <xref:System.Xml.Schema> namespace reference documentation in the .NET Framework class library.
 
 ## See also
 
-- Reading and Writing XML Schemas
-- Building XML Schemas
-- Traversing XML Schemas
-- Editing XML Schemas
-- Including or Importing XML Schemas
-- XmlSchemaSet for Schema Compilation
-- Post-Schema Compilation Infoset
+- [Reading and Writing XML Schemas](reading-and-writing-xml-schemas.md)
+- [Building XML Schemas](building-xml-schemas.md)
+- [Traversing XML Schemas](traversing-xml-schemas.md)
+- [Editing XML Schemas](editing-xml-schemas.md)
+- [Including or Importing XML Schemas](including-or-importing-xml-schemas.md)
+- [XmlSchemaSet for Schema Compilation](xmlschemaset-for-schema-compilation.md)
+- [Post-Schema Compilation Infoset](post-schema-compilation-infoset.md)

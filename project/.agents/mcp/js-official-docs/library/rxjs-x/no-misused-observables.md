@@ -1,28 +1,21 @@
----
-title: "Disallow Observables in places not designed to handle them (rxjs-x/no-misused-observables)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/no-misused-observables.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Disallow Observables in places not designed to handle them (`rxjs-x/no-misused-observables`)
 
 💼 This rule is enabled in the 🔒 `strict` config.
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule forbids providing observables to logical locations where the TypeScript compiler allows them but they are not handled properly.
 These situations can often arise due to a misunderstanding of the way observables are handled.
 
-> **Tip:**
+> [!TIP]
 > `no-misused-observables` only detects code that provides observables to incorrect _logical_ locations.
-> See `no-floating-observables` for detecting unhandled observable _statements_.
+> See [`no-floating-observables`](./no-floating-observables.md) for detecting unhandled observable _statements_.
 
-This rule is like no-misused-promises but for Observables.
+This rule is like [no-misused-promises](https://typescript-eslint.io/rules/no-misused-promises) but for Observables.
 
-> **Note:**
+> [!NOTE]
 > Unlike `@typescript-eslint/no-misused-promises`, this rule does not check conditionals like `if` statements.
 > Use `@typescript-eslint/no-unnecessary-condition` for linting those situations.
 
@@ -67,6 +60,8 @@ class MyRxClass implements MyRxInterface {
 
 ## Options
 
+<!-- WARNING: not auto-generated! -->
+
 | Name               | Description                                                                 | Type    | Default |
 | :----------------- | :-------------------------------------------------------------------------- | :------ | :------ |
 | `checksSpreads`    | Disallow `...` spreading an Observable.                                     | Boolean | `true`  |
@@ -94,13 +89,13 @@ Type checked lint rules are more powerful than traditional lint rules, but also 
 
 ## Further reading
 
-- TypeScript void function assignability
+- [TypeScript void function assignability](https://github.com/Microsoft/TypeScript/wiki/FAQ#why-are-functions-returning-non-void-assignable-to-function-returning-void)
 
 ## Related To
 
-- `no-floating-observables`
+- [`no-floating-observables`](./no-floating-observables.md)
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/no-misused-observables.ts)
+- [Test source](/tests/rules/no-misused-observables.test.ts)

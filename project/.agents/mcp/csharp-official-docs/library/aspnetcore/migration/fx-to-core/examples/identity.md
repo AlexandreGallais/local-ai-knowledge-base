@@ -1,17 +1,14 @@
 ---
-title: "Migrate Authentication and Identity to ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/migration/fx-to-core/examples/identity.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Migrate Authentication and Identity to ASP.NET Core
+description: Learn how to migrate authentication and identity from an ASP.NET MVC project to an ASP.NET Core MVC project.
+ms.date: 10/29/2024
 ---
-
+<!-- ms.sfi.ropc: t -->
 # Migrate Authentication and Identity to ASP.NET Core
 
-By Steve Smith
+By [Steve Smith](https://ardalis.com/)
 
-In the previous article, we migrated configuration from an ASP.NET MVC project to ASP.NET Core MVC. In this article, we migrate the registration, login, and user management features.
+In the previous article, we [migrated configuration from an ASP.NET MVC project to ASP.NET Core MVC](configuration.md). In this article, we migrate the registration, login, and user management features.
 
 ## Configure Identity and Membership
 
@@ -23,10 +20,7 @@ Install the following NuGet packages:
 * `Microsoft.AspNetCore.Authentication.Cookies`
 * `Microsoft.EntityFrameworkCore.SqlServer`
 
-> **Warning:**
-> This article shows the use of connection strings. When a local database is used for development and testing, database user authentication via the connection string isn't required.
-> In production environments, connection strings sometimes include a password for authenticating database access or database operations. A resource owner password <example-value> (ROPC) in a connection string is a security risk that should be avoided in production apps. Production apps should use the most secure authentication flow available.
-> For more information on authentication for apps deployed to test or production environments, see ASP.NET Core security topics.
+[!INCLUDE [managed-identities](~/includes/managed-identities-conn-strings.md)]
 
 In `Startup.cs`, update the `Startup.ConfigureServices` method to use Entity Framework and Identity services:
 

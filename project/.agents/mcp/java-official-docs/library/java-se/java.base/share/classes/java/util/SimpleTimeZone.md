@@ -1,78 +1,71 @@
----
-title: "SimpleTimeZone class (java.util) (part 1 of 2)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/SimpleTimeZone.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # SimpleTimeZone class (java.util)
 
 ```java
 public class SimpleTimeZone extends TimeZone
 ```
 
-`SimpleTimeZone` is a concrete subclass of `TimeZone`
+{@code SimpleTimeZone} is a concrete subclass of {@code TimeZone}
 that represents a time zone for use with a Gregorian calendar.
-The class holds an offset from GMT, called *raw offset*, and start
+The class holds an offset from GMT, called <em>raw offset</em>, and start
 and end rules for a daylight saving time schedule.  Since it only holds
 single values for each, it cannot handle historical changes in the offset
-from GMT and the daylight saving schedule, except that the setStartYear method can specify the year when the daylight
+from GMT and the daylight saving schedule, except that the {@link
+#setStartYear setStartYear} method can specify the year when the daylight
 saving time schedule starts in effect.
-
-To construct a `SimpleTimeZone` with a daylight saving time
+<p>
+To construct a {@code SimpleTimeZone} with a daylight saving time
 schedule, the schedule can be described with a set of rules,
-*start-rule* and *end-rule*. A day when daylight saving time
-starts or ends is specified by a combination of *month*,
-*day-of-month*, and *day-of-week* values. The *month*
-value is represented by a Calendar MONTH field
-value, such as `Calendar.MARCH`. The *day-of-week* value is
-represented by a Calendar DAY_OF_WEEK value,
-such as SUNDAY. The meanings of value combinations
+<em>start-rule</em> and <em>end-rule</em>. A day when daylight saving time
+starts or ends is specified by a combination of <em>month</em>,
+<em>day-of-month</em>, and <em>day-of-week</em> values. The <em>month</em>
+value is represented by a Calendar {@link Calendar#MONTH MONTH} field
+value, such as {@link Calendar#MARCH}. The <em>day-of-week</em> value is
+represented by a Calendar {@link Calendar#DAY_OF_WEEK DAY_OF_WEEK} value,
+such as {@link Calendar#SUNDAY SUNDAY}. The meanings of value combinations
 are as follows.
 
-- **Exact day of month**
+<ul>
+<li><b>Exact day of month</b><br>
+To specify an exact day of month, set the <em>month</em> and
+<em>day-of-month</em> to an exact value, and <em>day-of-week</em> to zero. For
+example, to specify March 1, set the <em>month</em> to {@link Calendar#MARCH
+MARCH}, <em>day-of-month</em> to 1, and <em>day-of-week</em> to 0.</li>
 
-To specify an exact day of month, set the *month* and
-*day-of-month* to an exact value, and *day-of-week* to zero. For
-example, to specify March 1, set the *month* to MARCH, *day-of-month* to 1, and *day-of-week* to 0.
-
-- **Day of week on or after day of month**
-
+<li><b>Day of week on or after day of month</b><br>
 To specify a day of week on or after an exact day of month, set the
-*month* to an exact month value, *day-of-month* to the day on
-or after which the rule is applied, and *day-of-week* to a negative DAY_OF_WEEK field value. For example, to specify the
-second Sunday of April, set *month* to APRIL,
-*day-of-month* to 8, and *day-of-week* to `-`SUNDAY.
+<em>month</em> to an exact month value, <em>day-of-month</em> to the day on
+or after which the rule is applied, and <em>day-of-week</em> to a negative {@link
+Calendar#DAY_OF_WEEK DAY_OF_WEEK} field value. For example, to specify the
+second Sunday of April, set <em>month</em> to {@link Calendar#APRIL APRIL},
+<em>day-of-month</em> to 8, and <em>day-of-week</em> to {@code -}{@link
+Calendar#SUNDAY SUNDAY}.</li>
 
-- **Day of week on or before day of month**
-
+<li><b>Day of week on or before day of month</b><br>
 To specify a day of the week on or before an exact day of the month, set
-*day-of-month* and *day-of-week* to a negative value. For
+<em>day-of-month</em> and <em>day-of-week</em> to a negative value. For
 example, to specify the last Wednesday on or before the 21st of March, set
-*month* to MARCH, *day-of-month* is -21
-and *day-of-week* is `-`WEDNESDAY.
+<em>month</em> to {@link Calendar#MARCH MARCH}, <em>day-of-month</em> is -21
+and <em>day-of-week</em> is {@code -}{@link Calendar#WEDNESDAY WEDNESDAY}. </li>
 
-- **Last day-of-week of month**
+<li><b>Last day-of-week of month</b><br>
+To specify, the last day-of-week of the month, set <em>day-of-week</em> to a
+{@link Calendar#DAY_OF_WEEK DAY_OF_WEEK} value and <em>day-of-month</em> to
+-1. For example, to specify the last Sunday of October, set <em>month</em>
+to {@link Calendar#OCTOBER OCTOBER}, <em>day-of-week</em> to {@link
+Calendar#SUNDAY SUNDAY} and <em>day-of-month</em> to -1.  </li>
 
-To specify, the last day-of-week of the month, set *day-of-week* to a
-DAY_OF_WEEK value and *day-of-month* to
--1. For example, to specify the last Sunday of October, set *month*
-to OCTOBER, *day-of-week* to SUNDAY and *day-of-month* to -1.
-
+</ul>
 The time of the day at which daylight saving time starts or ends is
 specified by a millisecond value within the day. There are three kinds of
-*mode*s to specify the time: `WALL_TIME`, `STANDARD_TIME` and `UTC_TIME`. For example, if daylight
+<em>mode</em>s to specify the time: {@link #WALL_TIME}, {@link
+#STANDARD_TIME} and {@link #UTC_TIME}. For example, if daylight
 saving time ends
 at 2:00 am in the wall clock time, it can be specified by 7200000
-milliseconds in the `WALL_TIME` mode. In this case, the wall clock time
-for an *end-rule* means the same thing as the daylight time.
-
+milliseconds in the {@link #WALL_TIME} mode. In this case, the wall clock time
+for an <em>end-rule</em> means the same thing as the daylight time.
+<p>
 The following are examples of parameters for constructing time zone objects.
-
-```java
-<code>
+<pre><code>
      // Base GMT offset: -8:00
      // DST starts:      at 2:00am in standard time
      //                  on the first Sunday in April
@@ -100,19 +93,15 @@ The following are examples of parameters for constructing time zone objects.
                     Calendar.OCTOBER, -1, Calendar.SUNDAY,
                     3600000, SimpleTimeZone.UTC_TIME,
                     3600000)
-</code>
-```
-
+</code></pre>
 These parameter rules are also applicable to the set rule methods, such as
-`setStartRule`.
+{@code setStartRule}.
 
-**Since:** 1.1
-
-**See also:** Calendar
-
-**See also:** GregorianCalendar
-
-**See also:** TimeZone
+@since 1.1
+@see      Calendar
+@see      GregorianCalendar
+@see      TimeZone
+@author   David Goldsmith, Mark Davis, Chen-Lieh Huang, Alan Liu
 
 ## SimpleTimeZone.SimpleTimeZone(int, String)
 
@@ -123,10 +112,8 @@ public SimpleTimeZone(int rawOffset, String ID)
 Constructs a SimpleTimeZone with the given base time zone offset from GMT
 and time zone ID with no daylight saving time schedule.
 
-Parameters:
-
-- `rawOffset`: The base time zone offset in milliseconds to GMT.
-- `ID`: The time zone name that is given to this instance.
+@param rawOffset  The base time zone offset in milliseconds to GMT.
+@param ID         The time zone name that is given to this instance.
 
 ## SimpleTimeZone.SimpleTimeZone(int, String, int, int, int, int, int, int, int, int)
 
@@ -137,13 +124,11 @@ public SimpleTimeZone(int rawOffset, String ID, int startMonth, int startDay, in
 Constructs a SimpleTimeZone with the given base time zone offset from
 GMT, time zone ID, and rules for starting and ending the daylight
 time.
-Both `startTime` and `endTime` are specified to be
+Both {@code startTime} and {@code endTime} are specified to be
 represented in the wall clock time. The amount of daylight saving is
 assumed to be 3600000 milliseconds (i.e., one hour). This constructor is
 equivalent to:
-
-```java
-<code>
+<pre><code>
     SimpleTimeZone(rawOffset,
                    ID,
                    startMonth,
@@ -157,25 +142,32 @@ equivalent to:
                    endTime,
                    SimpleTimeZone.{@link #WALL_TIME},
                    3600000)
-</code>
-```
+</code></pre>
 
-Parameters:
-
-- `rawOffset`: The given base time zone offset from GMT.
-- `ID`: The time zone ID which is given to this object.
-- `startMonth`: The daylight saving time starting month. Month is a MONTH field value (0-based. e.g., 0 for January).
-- `startDay`: The day of the month on which the daylight saving time starts. See the class description for the special cases of this parameter.
-- `startDayOfWeek`: The daylight saving time starting day-of-week. See the class description for the special cases of this parameter.
-- `startTime`: The daylight saving time starting time in local wall clock time (in milliseconds within the day), which is local standard time in this case.
-- `endMonth`: The daylight saving time ending month. Month is a MONTH field value (0-based. e.g., 9 for October).
-- `endDay`: The day of the month on which the daylight saving time ends. See the class description for the special cases of this parameter.
-- `endDayOfWeek`: The daylight saving time ending day-of-week. See the class description for the special cases of this parameter.
-- `endTime`: The daylight saving ending time in local wall clock time, (in milliseconds within the day) which is local daylight time in this case.
-
-Throws:
-
-- `IllegalArgumentException`: if the month, day, dayOfWeek, or time parameters are out of range for the start or end rule
+@param rawOffset       The given base time zone offset from GMT.
+@param ID              The time zone ID which is given to this object.
+@param startMonth      The daylight saving time starting month. Month is
+                       a {@link Calendar#MONTH MONTH} field value (0-based. e.g., 0
+                       for January).
+@param startDay        The day of the month on which the daylight saving time starts.
+                       See the class description for the special cases of this parameter.
+@param startDayOfWeek  The daylight saving time starting day-of-week.
+                       See the class description for the special cases of this parameter.
+@param startTime       The daylight saving time starting time in local wall clock
+                       time (in milliseconds within the day), which is local
+                       standard time in this case.
+@param endMonth        The daylight saving time ending month. Month is
+                       a {@link Calendar#MONTH MONTH} field
+                       value (0-based. e.g., 9 for October).
+@param endDay          The day of the month on which the daylight saving time ends.
+                       See the class description for the special cases of this parameter.
+@param endDayOfWeek    The daylight saving time ending day-of-week.
+                       See the class description for the special cases of this parameter.
+@param endTime         The daylight saving ending time in local wall clock time,
+                       (in milliseconds within the day) which is local daylight
+                       time in this case.
+@throws    IllegalArgumentException if the month, day, dayOfWeek, or time
+parameters are out of range for the start or end rule
 
 ## SimpleTimeZone.SimpleTimeZone(int, String, int, int, int, int, int, int, int, int, int)
 
@@ -186,11 +178,9 @@ public SimpleTimeZone(int rawOffset, String ID, int startMonth, int startDay, in
 Constructs a SimpleTimeZone with the given base time zone offset from
 GMT, time zone ID, and rules for starting and ending the daylight
 time.
-Both `startTime` and `endTime` are assumed to be
+Both {@code startTime} and {@code endTime} are assumed to be
 represented in the wall clock time. This constructor is equivalent to:
-
-```java
-<code>
+<pre><code>
     SimpleTimeZone(rawOffset,
                    ID,
                    startMonth,
@@ -204,28 +194,33 @@ represented in the wall clock time. This constructor is equivalent to:
                    endTime,
                    SimpleTimeZone.{@link #WALL_TIME},
                    dstSavings)
-</code>
-```
+</code></pre>
 
-Parameters:
-
-- `rawOffset`: The given base time zone offset from GMT.
-- `ID`: The time zone ID which is given to this object.
-- `startMonth`: The daylight saving time starting month. Month is a MONTH field value (0-based. e.g., 0 for January).
-- `startDay`: The day of the month on which the daylight saving time starts. See the class description for the special cases of this parameter.
-- `startDayOfWeek`: The daylight saving time starting day-of-week. See the class description for the special cases of this parameter.
-- `startTime`: The daylight saving time starting time in local wall clock time, which is local standard time in this case.
-- `endMonth`: The daylight saving time ending month. Month is a MONTH field value (0-based. e.g., 9 for October).
-- `endDay`: The day of the month on which the daylight saving time ends. See the class description for the special cases of this parameter.
-- `endDayOfWeek`: The daylight saving time ending day-of-week. See the class description for the special cases of this parameter.
-- `endTime`: The daylight saving ending time in local wall clock time, which is local daylight time in this case.
-- `dstSavings`: The amount of time in milliseconds saved during daylight saving time.
-
-**Since:** 1.2
-
-Throws:
-
-- `IllegalArgumentException`: if the month, day, dayOfWeek, or time parameters are out of range for the start or end rule
+@param rawOffset       The given base time zone offset from GMT.
+@param ID              The time zone ID which is given to this object.
+@param startMonth      The daylight saving time starting month. Month is
+                       a {@link Calendar#MONTH MONTH} field
+                       value (0-based. e.g., 0 for January).
+@param startDay        The day of the month on which the daylight saving time starts.
+                       See the class description for the special cases of this parameter.
+@param startDayOfWeek  The daylight saving time starting day-of-week.
+                       See the class description for the special cases of this parameter.
+@param startTime       The daylight saving time starting time in local wall clock
+                       time, which is local standard time in this case.
+@param endMonth        The daylight saving time ending month. Month is
+                       a {@link Calendar#MONTH MONTH} field
+                       value (0-based. e.g., 9 for October).
+@param endDay          The day of the month on which the daylight saving time ends.
+                       See the class description for the special cases of this parameter.
+@param endDayOfWeek    The daylight saving time ending day-of-week.
+                       See the class description for the special cases of this parameter.
+@param endTime         The daylight saving ending time in local wall clock time,
+                       which is local daylight time in this case.
+@param dstSavings      The amount of time in milliseconds saved during
+                       daylight saving time.
+@throws    IllegalArgumentException if the month, day, dayOfWeek, or time
+parameters are out of range for the start or end rule
+@since 1.2
 
 ## SimpleTimeZone.SimpleTimeZone(int, String, int, int, int, int, int, int, int, int, int, int, int)
 
@@ -237,36 +232,45 @@ Constructs a SimpleTimeZone with the given base time zone offset from
 GMT, time zone ID, and rules for starting and ending the daylight
 time.
 This constructor takes the full set of the start and end rules
-parameters, including modes of `startTime` and
-`endTime`. The mode specifies either wall time or standard time or UTC time.
+parameters, including modes of {@code startTime} and
+{@code endTime}. The mode specifies either {@link #WALL_TIME wall
+time} or {@link #STANDARD_TIME standard time} or {@link #UTC_TIME UTC
+time}.
 
-Parameters:
+@param rawOffset       The given base time zone offset from GMT.
+@param ID              The time zone ID which is given to this object.
+@param startMonth      The daylight saving time starting month. Month is
+                       a {@link Calendar#MONTH MONTH} field
+                       value (0-based. e.g., 0 for January).
+@param startDay        The day of the month on which the daylight saving time starts.
+                       See the class description for the special cases of this parameter.
+@param startDayOfWeek  The daylight saving time starting day-of-week.
+                       See the class description for the special cases of this parameter.
+@param startTime       The daylight saving time starting time in the time mode
+                       specified by {@code startTimeMode}.
+@param startTimeMode   The mode of the start time specified by startTime.
+@param endMonth        The daylight saving time ending month. Month is
+                       a {@link Calendar#MONTH MONTH} field
+                       value (0-based. e.g., 9 for October).
+@param endDay          The day of the month on which the daylight saving time ends.
+                       See the class description for the special cases of this parameter.
+@param endDayOfWeek    The daylight saving time ending day-of-week.
+                       See the class description for the special cases of this parameter.
+@param endTime         The daylight saving ending time in time mode
+                       specified by {@code endTimeMode}.
+@param endTimeMode     The mode of the end time specified by endTime
+@param dstSavings      The amount of time in milliseconds saved during
+                       daylight saving time.
 
-- `rawOffset`: The given base time zone offset from GMT.
-- `ID`: The time zone ID which is given to this object.
-- `startMonth`: The daylight saving time starting month. Month is a MONTH field value (0-based. e.g., 0 for January).
-- `startDay`: The day of the month on which the daylight saving time starts. See the class description for the special cases of this parameter.
-- `startDayOfWeek`: The daylight saving time starting day-of-week. See the class description for the special cases of this parameter.
-- `startTime`: The daylight saving time starting time in the time mode specified by `startTimeMode`.
-- `startTimeMode`: The mode of the start time specified by startTime.
-- `endMonth`: The daylight saving time ending month. Month is a MONTH field value (0-based. e.g., 9 for October).
-- `endDay`: The day of the month on which the daylight saving time ends. See the class description for the special cases of this parameter.
-- `endDayOfWeek`: The daylight saving time ending day-of-week. See the class description for the special cases of this parameter.
-- `endTime`: The daylight saving ending time in time mode specified by `endTimeMode`.
-- `endTimeMode`: The mode of the end time specified by endTime
-- `dstSavings`: The amount of time in milliseconds saved during daylight saving time.
+@throws    IllegalArgumentException if the month, day, dayOfWeek, time more, or
+time parameters are out of range for the start or end rule, or if a time mode
+value is invalid.
 
-**See also:** #WALL_TIME
+@see #WALL_TIME
+@see #STANDARD_TIME
+@see #UTC_TIME
 
-**See also:** #STANDARD_TIME
-
-**See also:** #UTC_TIME
-
-**Since:** 1.4
-
-Throws:
-
-- `IllegalArgumentException`: if the month, day, dayOfWeek, time more, or time parameters are out of range for the start or end rule, or if a time mode value is invalid.
+@since 1.4
 
 ## SimpleTimeZone.setStartYear(int)
 
@@ -276,9 +280,7 @@ public void setStartYear(int year)
 
 Sets the daylight saving time starting year.
 
-Parameters:
-
-- `year`: The daylight saving starting year.
+@param year  The daylight saving starting year.
 
 ## SimpleTimeZone.setStartRule(int, int, int, int)
 
@@ -289,21 +291,19 @@ public void setStartRule(int startMonth, int startDay, int startDayOfWeek, int s
 Sets the daylight saving time start rule. For example, if daylight saving
 time starts on the first Sunday in April at 2 am in local wall clock
 time, you can set the start rule by calling:
+<pre>{@code setStartRule(Calendar.APRIL, 1, Calendar.SUNDAY, 2*60*60*1000);}</pre>
 
-```java
-setStartRule(Calendar.APRIL, 1, Calendar.SUNDAY, 2*60*60*1000);
-```
-
-Parameters:
-
-- `startMonth`: The daylight saving time starting month. Month is a MONTH field value (0-based. e.g., 0 for January).
-- `startDay`: The day of the month on which the daylight saving time starts. See the class description for the special cases of this parameter.
-- `startDayOfWeek`: The daylight saving time starting day-of-week. See the class description for the special cases of this parameter.
-- `startTime`: The daylight saving time starting time in local wall clock time, which is local standard time in this case.
-
-Throws:
-
-- `IllegalArgumentException`: if the `startMonth`, `startDay`, `startDayOfWeek`, or `startTime` parameters are out of range
+@param startMonth      The daylight saving time starting month. Month is
+                       a {@link Calendar#MONTH MONTH} field
+                       value (0-based. e.g., 0 for January).
+@param startDay        The day of the month on which the daylight saving time starts.
+                       See the class description for the special cases of this parameter.
+@param startDayOfWeek  The daylight saving time starting day-of-week.
+                       See the class description for the special cases of this parameter.
+@param startTime       The daylight saving time starting time in local wall clock
+                       time, which is local standard time in this case.
+@throws    IllegalArgumentException if the {@code startMonth}, {@code startDay},
+{@code startDayOfWeek}, or {@code startTime} parameters are out of range
 
 ## SimpleTimeZone.setStartRule(int, int, int)
 
@@ -313,22 +313,18 @@ public void setStartRule(int startMonth, int startDay, int startTime)
 
 Sets the daylight saving time start rule to a fixed date within a month.
 This method is equivalent to:
+<pre>{@code setStartRule(startMonth, startDay, 0, startTime)}</pre>
 
-```java
-setStartRule(startMonth, startDay, 0, startTime)
-```
-
-Parameters:
-
-- `startMonth`: The daylight saving time starting month. Month is a MONTH field value (0-based. e.g., 0 for January).
-- `startDay`: The day of the month on which the daylight saving time starts.
-- `startTime`: The daylight saving time starting time in local wall clock time, which is local standard time in this case. See the class description for the special cases of this parameter.
-
-**Since:** 1.2
-
-Throws:
-
-- `IllegalArgumentException`: if the `startMonth`, `startDayOfMonth`, or `startTime` parameters are out of range
+@param startMonth      The daylight saving time starting month. Month is
+                       a {@link Calendar#MONTH MONTH} field
+                       value (0-based. e.g., 0 for January).
+@param startDay        The day of the month on which the daylight saving time starts.
+@param startTime       The daylight saving time starting time in local wall clock
+                       time, which is local standard time in this case.
+                       See the class description for the special cases of this parameter.
+@throws    IllegalArgumentException if the {@code startMonth},
+{@code startDayOfMonth}, or {@code startTime} parameters are out of range
+@since 1.2
 
 ## SimpleTimeZone.setStartRule(int, int, int, int, boolean)
 
@@ -339,16 +335,304 @@ public void setStartRule(int startMonth, int startDay, int startDayOfWeek, int s
 Sets the daylight saving time start rule to a weekday before or after the given date within
 a month, e.g., the first Monday on or after the 8th.
 
-Parameters:
+@param startMonth      The daylight saving time starting month. Month is
+                       a {@link Calendar#MONTH MONTH} field
+                       value (0-based. e.g., 0 for January).
+@param startDay        The day of the month on which the daylight saving time starts.
+@param startDayOfWeek  The daylight saving time starting day-of-week.
+@param startTime       The daylight saving time starting time in local wall clock
+                       time, which is local standard time in this case.
+@param after           If true, this rule selects the first {@code dayOfWeek} on or
+                       <em>after</em> {@code dayOfMonth}.  If false, this rule
+                       selects the last {@code dayOfWeek} on or <em>before</em>
+                       {@code dayOfMonth}.
+@throws    IllegalArgumentException if the {@code startMonth}, {@code startDay},
+{@code startDayOfWeek}, or {@code startTime} parameters are out of range
+@since 1.2
 
-- `startMonth`: The daylight saving time starting month. Month is a MONTH field value (0-based. e.g., 0 for January).
-- `startDay`: The day of the month on which the daylight saving time starts.
-- `startDayOfWeek`: The daylight saving time starting day-of-week.
-- `startTime`: The daylight saving time starting time in local wall clock time, which is local standard time in this case.
-- `after`: If true, this rule selects the first `dayOfWeek` on or *after* `dayOfMonth`. If false, this rule selects the last `dayOfWeek` on or *before* `dayOfMonth`.
+## SimpleTimeZone.setEndRule(int, int, int, int)
 
-**Since:** 1.2
+```java
+public void setEndRule(int endMonth, int endDay, int endDayOfWeek, int endTime)
+```
 
-Throws:
+Sets the daylight saving time end rule. For example, if daylight saving time
+ends on the last Sunday in October at 2 am in wall clock time,
+you can set the end rule by calling:
+{@code setEndRule(Calendar.OCTOBER, -1, Calendar.SUNDAY, 2*60*60*1000);}
 
-- `IllegalArgumentException`: if the `startMonth`, `startDay`, `startDayOfWeek`, or `startTime` parameters are out of range
+@param endMonth        The daylight saving time ending month. Month is
+                       a {@link Calendar#MONTH MONTH} field
+                       value (0-based. e.g., 9 for October).
+@param endDay          The day of the month on which the daylight saving time ends.
+                       See the class description for the special cases of this parameter.
+@param endDayOfWeek    The daylight saving time ending day-of-week.
+                       See the class description for the special cases of this parameter.
+@param endTime         The daylight saving ending time in local wall clock time,
+                       (in milliseconds within the day) which is local daylight
+                       time in this case.
+@throws    IllegalArgumentException if the {@code endMonth}, {@code endDay},
+{@code endDayOfWeek}, or {@code endTime} parameters are out of range
+
+## SimpleTimeZone.setEndRule(int, int, int)
+
+```java
+public void setEndRule(int endMonth, int endDay, int endTime)
+```
+
+Sets the daylight saving time end rule to a fixed date within a month.
+This method is equivalent to:
+<pre>{@code setEndRule(endMonth, endDay, 0, endTime)}</pre>
+
+@param endMonth        The daylight saving time ending month. Month is
+                       a {@link Calendar#MONTH MONTH} field
+                       value (0-based. e.g., 9 for October).
+@param endDay          The day of the month on which the daylight saving time ends.
+@param endTime         The daylight saving ending time in local wall clock time,
+                       (in milliseconds within the day) which is local daylight
+                       time in this case.
+@throws    IllegalArgumentException the {@code endMonth}, {@code endDay},
+or {@code endTime} parameters are out of range
+@since 1.2
+
+## SimpleTimeZone.setEndRule(int, int, int, int, boolean)
+
+```java
+public void setEndRule(int endMonth, int endDay, int endDayOfWeek, int endTime, boolean after)
+```
+
+Sets the daylight saving time end rule to a weekday before or after the given date within
+a month, e.g., the first Monday on or after the 8th.
+
+@param endMonth        The daylight saving time ending month. Month is
+                       a {@link Calendar#MONTH MONTH} field
+                       value (0-based. e.g., 9 for October).
+@param endDay          The day of the month on which the daylight saving time ends.
+@param endDayOfWeek    The daylight saving time ending day-of-week.
+@param endTime         The daylight saving ending time in local wall clock time,
+                       (in milliseconds within the day) which is local daylight
+                       time in this case.
+@param after           If true, this rule selects the first {@code endDayOfWeek} on
+                       or <em>after</em> {@code endDay}.  If false, this rule
+                       selects the last {@code endDayOfWeek} on or before
+                       {@code endDay} of the month.
+@throws    IllegalArgumentException the {@code endMonth}, {@code endDay},
+{@code endDayOfWeek}, or {@code endTime} parameters are out of range
+@since 1.2
+
+## SimpleTimeZone.getOffset(long)
+
+```java
+public int getOffset(long date)
+```
+
+Returns the offset of this time zone from UTC at the given
+time. If daylight saving time is in effect at the given time,
+the offset value is adjusted with the amount of daylight
+saving.
+
+@param date the time at which the time zone offset is found
+@return the amount of time in milliseconds to add to UTC to get
+local time.
+@since 1.4
+
+## SimpleTimeZone.getOffset(int, int, int, int, int, int)
+
+```java
+public int getOffset(int era, int year, int month, int day, int dayOfWeek, int millis)
+```
+
+Returns the difference in milliseconds between local time and
+UTC, taking into account both the raw offset and the effect of
+daylight saving, for the specified date and time.  This method
+assumes that the start and end month are distinct.  It also
+uses a default {@link GregorianCalendar} object as its
+underlying calendar, such as for determining leap years.  Do
+not use the result of this method with a calendar other than a
+default {@code GregorianCalendar}.
+
+<p><em>Note:  In general, clients should use
+{@code Calendar.get(ZONE_OFFSET) + Calendar.get(DST_OFFSET)}
+instead of calling this method.</em>
+
+@param era       The era of the given date.
+@param year      The year in the given date.
+@param month     The month in the given date. Month is 0-based. e.g.,
+                 0 for January.
+@param day       The day-in-month of the given date.
+@param dayOfWeek The day-of-week of the given date.
+@param millis    The milliseconds in day in <em>standard</em> local time.
+@return          The milliseconds to add to UTC to get local time.
+@throws          IllegalArgumentException the {@code era},
+                 {@code month}, {@code day}, {@code dayOfWeek},
+                 or {@code millis} parameters are out of range
+
+## SimpleTimeZone.getRawOffset()
+
+```java
+public int getRawOffset()
+```
+
+Gets the GMT offset for this time zone.
+@return the GMT offset value in milliseconds
+@see #setRawOffset
+
+## SimpleTimeZone.setRawOffset(int)
+
+```java
+public void setRawOffset(int offsetMillis)
+```
+
+Sets the base time zone offset to GMT.
+This is the offset to add to UTC to get local time.
+@see #getRawOffset
+
+## SimpleTimeZone.setDSTSavings(int)
+
+```java
+public void setDSTSavings(int millisSavedDuringDST)
+```
+
+Sets the amount of time in milliseconds that the clock is advanced
+during daylight saving time.
+@param millisSavedDuringDST the number of milliseconds the time is
+advanced with respect to standard time when the daylight saving time rules
+are in effect. A positive number, typically one hour (3600000).
+@see #getDSTSavings
+@since 1.2
+
+## SimpleTimeZone.getDSTSavings()
+
+```java
+public int getDSTSavings()
+```
+
+Returns the amount of time in milliseconds that the clock is
+advanced during daylight saving time.
+
+@return the number of milliseconds the time is advanced with
+respect to standard time when the daylight saving rules are in
+effect, or 0 (zero) if this time zone doesn't observe daylight
+saving time.
+
+@see #setDSTSavings
+@since 1.2
+
+## SimpleTimeZone.useDaylightTime()
+
+```java
+public boolean useDaylightTime()
+```
+
+Queries if this time zone uses daylight saving time.
+@return true if this time zone uses daylight saving time;
+false otherwise.
+
+## SimpleTimeZone.observesDaylightTime()
+
+```java
+public boolean observesDaylightTime()
+```
+
+Returns {@code true} if this {@code SimpleTimeZone} observes
+Daylight Saving Time. This method is equivalent to {@link
+#useDaylightTime()}.
+
+@return {@code true} if this {@code SimpleTimeZone} observes
+Daylight Saving Time; {@code false} otherwise.
+@since 1.7
+
+## SimpleTimeZone.inDaylightTime(Date)
+
+```java
+public boolean inDaylightTime(Date date)
+```
+
+Queries if the given date is in daylight saving time.
+@implSpec The default implementation throws a
+{@code NullPointerException} if {@code date} is {@code null}
+@return true if daylight saving time is in effective at the
+given date; false otherwise.
+@throws NullPointerException This method may throw a
+{@code NullPointerException} if {@code date} is {@code null}
+
+## SimpleTimeZone.clone()
+
+```java
+public Object clone()
+```
+
+Returns a clone of this {@code SimpleTimeZone} instance.
+@return a clone of this instance.
+
+## SimpleTimeZone.hashCode()
+
+```java
+public int hashCode()
+```
+
+Generates the hash code for the SimpleDateFormat object.
+@return the hash code for this object
+
+## SimpleTimeZone.equals(Object)
+
+```java
+public boolean equals(Object obj)
+```
+
+Compares the equality of two {@code SimpleTimeZone} objects.
+
+@param obj  The {@code SimpleTimeZone} object to be compared with.
+@return     True if the given {@code obj} is the same as this
+            {@code SimpleTimeZone} object; false otherwise.
+
+## SimpleTimeZone.hasSameRules(TimeZone)
+
+```java
+public boolean hasSameRules(TimeZone other)
+```
+
+Returns {@code true} if this zone has the same rules and offset as another zone.
+@param other the TimeZone object to be compared with
+@return {@code true} if the given zone is a SimpleTimeZone and has the
+same rules and offset as this one
+@since 1.2
+
+## SimpleTimeZone.toString()
+
+```java
+public String toString()
+```
+
+Returns a string representation of this time zone.
+@return a string representation of this time zone.
+
+## SimpleTimeZone.WALL_TIME
+
+```java
+public static final int WALL_TIME
+```
+
+Constant for a mode of start or end time specified as wall clock
+time.  Wall clock time is standard time for the onset rule, and
+daylight time for the end rule.
+@since 1.4
+
+## SimpleTimeZone.STANDARD_TIME
+
+```java
+public static final int STANDARD_TIME
+```
+
+Constant for a mode of start or end time specified as standard time.
+@since 1.4
+
+## SimpleTimeZone.UTC_TIME
+
+```java
+public static final int UTC_TIME
+```
+
+Constant for a mode of start or end time specified as UTC. European
+Union rules are specified as UTC time, for example.
+@since 1.4

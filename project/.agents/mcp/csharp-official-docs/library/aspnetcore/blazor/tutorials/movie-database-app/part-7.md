@@ -1,13 +1,13 @@
 ---
-title: "Build a Blazor movie database app (Part 7 - Add a new field) (part 1 of 2)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/tutorials/movie-database-app/part-7.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Build a Blazor movie database app (Part 7 - Add a new field)
+description: This part of the Blazor movie database app tutorial explains how to add a new field to the movie class, CRUD pages, and database.
+monikerRange: '>= aspnetcore-8.0'
+ms.date: 11/11/2025
+zone_pivot_groups: tooling
 ---
-
 # Build a Blazor movie database app (Part 7 - Add a new field)
+
+[!INCLUDE[](~/includes/not-latest-version-without-not-supported-content.md)]
 
 This article is the seventh part of the Blazor movie database app tutorial that teaches you the basics of building an ASP.NET Core Blazor Web App with features to manage a movie database.
 
@@ -15,12 +15,12 @@ This part of the tutorial series covers adding a new field to the movie class, C
 
 The database update is handled by EF Core migrations. EF Core transparently tracks changes to the database in a migration history table and automatically throws an exception if the app's model classes aren't synchronized with the database's tables and columns. EF Core migrations make it possible to quickly troubleshoot database consistency problems.
 
-> **Important:**
+> [!IMPORTANT]
 > Confirm that the app isn't running for the next steps.
 
 ## Add a movie rating to the app's model
 
-Open the `Models/Movie.cs` file and add a `Rating` property with a regular expression that limits the value of `Rating` to the exact Motion Picture Association film rating designations:
+Open the `Models/Movie.cs` file and add a `Rating` property with a regular expression that limits the value of `Rating` to the exact [Motion Picture Association](https://www.motionpictures.org/) film rating designations:
 
 ```csharp
 [Required]
@@ -32,7 +32,7 @@ public string? Rating { get; set; }
 
 Open the `Create` component definition file (`Components/Pages/MoviePages/Create.razor`).
 
-Add the following `` block between the `` block for `Price` and the create button (``):
+Add the following `<div>` block between the `<div>` block for `Price` and the create button (`<button>`):
 
 ```razor
 <div class="mb-3">
@@ -44,7 +44,7 @@ Add the following `` block between the `` block for `Price` and the create butto
 
 Open the `Delete` component definition file (`Components/Pages/MoviePages/Delete.razor`).
 
-Add the following description list (``) block between the description list block for `Price` and the `EditForm` component:
+Add the following description list (`<dl>`) block between the description list block for `Price` and the `EditForm` component:
 
 ```razor
 <dl class="row">
@@ -55,7 +55,7 @@ Add the following description list (``) block between the description list block
 
 Open the `Details` component definition file (`Components/Pages/MoviePages/Details.razor`).
 
-Add the following description list term (``) and description list element (``) after the term and element for `Price` just inside the closing `` tag:
+Add the following description list term (`<dt>`) and description list element (`<dl>`) after the term and element for `Price` just inside the closing `</dl>` tag:
 
 ```razor
 <dt class="col-sm-2">Rating</dt>
@@ -64,7 +64,7 @@ Add the following description list term (``) and description list element (``) a
 
 Open the `Edit` component definition file (`Components/Pages/MoviePages/Edit.razor`).
 
-Add the following `` block between the `` block for `Price` and the save button (``):
+Add the following `<div>` block between the `<div>` block for `Price` and the save button (`<button>`):
 
 ```razor
 <div class="mb-3">
@@ -76,7 +76,7 @@ Add the following `` block between the `` block for `Price` and the save button 
 
 Open the `Index` component definition file (`Components/Pages/MoviePages/Index.razor`).
 
-Update the `QuickGrid` component to include the movie rating. Add the following `Microsoft.AspNetCore.Components.QuickGrid.PropertyColumn`2` immediately after the column for `Price`:
+Update the `QuickGrid` component to include the movie rating. Add the following <xref:Microsoft.AspNetCore.Components.QuickGrid.PropertyColumn`2> immediately after the column for `Price`:
 
 ```razor
 <PropertyColumn Property="movie => movie.Rating" />
@@ -108,21 +108,27 @@ Add the `Rating` property to each of the other `new Movie` blocks in the same fa
 
 Don't run the app yet. Build the app to confirm that there are no errors.
 
-**vs:**
+:::zone pivot="vs"
 
-Select **Build** > **Rebuild Solution** from the menu bar.
+Select **Build** > **Rebuild Solution** from the menu bar. 
 
-**vsc:**
+:::zone-end
+
+:::zone pivot="vsc"
 
 In the **Command Palette**, use the `.NET: Build` command.
 
-**cli:**
+:::zone-end
+
+:::zone pivot="cli"
 
 In a command shell opened to the project's root folder, execute the following command:
 
 ```dotnetcli
 dotnet build
 ```
+
+:::zone-end
 
 Fix any errors in the app that were introduced by pasting the preceding markup and code before proceeding to the next step.
 
@@ -136,7 +142,7 @@ If you were to try and run the app at this point, the app would fail with a SQL 
 
 Create a migration to update the database's schema. The movie rating, as a `Rating` column, is added to the database's `Movie` table.
 
-**vs:**
+:::zone pivot="vs"
 
 In Visual Studio **Solution Explorer**, double-click **Connected Services**. In the **SQL Server Express LocalDB** area of **Service Dependencies**, select the ellipsis (`...`) followed by **Add migration**.
 
@@ -175,10 +181,12 @@ Modify the one movie that isn't rated *R*:
 1. Edit the *Mad Max: Beyond Thunderdome* movie.
 1. Update the movie rating from `R` to `PG-13`. Save the change.
 
-> **Note:**
-> An alternative to modifying the migration file is to delete the records in the database and rerun the app to reseed the database. The seeding code was modified earlier to supply default values. This approach is useful in cases where the assignment of default values to fields is better controlled or faster for you to implement with C# code during seeding. For more information see the Delete all database records and reseed the database section at the end of this article.
+> [!NOTE]
+> An alternative to modifying the migration file is to delete the records in the database and rerun the app to reseed the database. The seeding code was modified earlier to supply default values. This approach is useful in cases where the assignment of default values to fields is better controlled or faster for you to implement with C# code during seeding. For more information see the [Delete all database records and reseed the database](#delete-all-database-records-and-reseed-the-database) section at the end of this article.
 
-**vsc:**
+:::zone-end
+
+:::zone pivot="vsc"
 
 In the **Terminal** (**Terminal** menu > **New Terminal**), execute the following command to add a migration. The migration name (`AddRatingField`) is an arbitrary description for the migration:
 
@@ -221,10 +229,12 @@ Modify the one movie that isn't rated *R*:
 1. Edit the *Mad Max: Beyond Thunderdome* movie.
 1. Update the movie rating from `R` to `PG-13`. Save the change.
 
-> **Note:**
-> An alternative to modifying the migration file is to delete the records in the database and rerun the app to reseed the database. The seeding code was modified earlier to supply default values. This approach is useful in cases where the assignment of default values to fields is better controlled or faster with C# code during seeding. For more information see the Delete all database records and reseed the database section at the end of this article.
+> [!NOTE]
+> An alternative to modifying the migration file is to delete the records in the database and rerun the app to reseed the database. The seeding code was modified earlier to supply default values. This approach is useful in cases where the assignment of default values to fields is better controlled or faster with C# code during seeding. For more information see the [Delete all database records and reseed the database](#delete-all-database-records-and-reseed-the-database) section at the end of this article.
 
-**cli:**
+:::zone-end
+
+:::zone pivot="cli"
 
 In a command shell opened to the project's root folder, execute the following command to add a migration. The migration name (`AddRatingField`) is an arbitrary description for the migration:
 
@@ -267,7 +277,103 @@ Modify the one movie that isn't rated *R*:
 1. Edit the *Mad Max: Beyond Thunderdome* movie.
 1. Update the movie rating from `R` to `PG-13`. Save the change.
 
-> **Note:**
-> An alternative to modifying the migration file is to delete the records in the database and rerun the app to reseed the database. The seeding code was modified earlier to supply default values. This approach is useful in cases where the assignment of default values to fields is better controlled or faster with C# code during seeding. For more information see the Delete all database records and reseed the database section at the end of this article.
+> [!NOTE]
+> An alternative to modifying the migration file is to delete the records in the database and rerun the app to reseed the database. The seeding code was modified earlier to supply default values. This approach is useful in cases where the assignment of default values to fields is better controlled or faster with C# code during seeding. For more information see the [Delete all database records and reseed the database](#delete-all-database-records-and-reseed-the-database) section at the end of this article.
+
+:::zone-end
 
 Run the app and verify you can create, edit, and display movies with the new movie rating field.
+
+## Troubleshoot
+
+In the event that the database becomes corrupted, delete the database and use migrations to recreate the database:
+
+:::zone pivot="vs"
+
+1. Select the database in **SQL Server Object Explorer** (SSOX).
+1. Right-click on the database, and select **Delete**. *Make sure that you select the correct database in the list.*
+1. Check **Close existing connections**.
+1. Select **OK**.
+1. In **Solution Explorer**, double-click **Connected Services**. In the **Service Dependencies** area, select the ellipsis (`...`) followed by **Update database** in the **SQL Server Express LocalDB** area. Updating the database executes the existing migrations that recreate the database.
+
+:::zone-end
+
+:::zone pivot="vsc"
+
+1. Delete the database. If your database tooling has a connection to the database, close the tooling first or use the tool's features to close the database connection and delete the database. Consult your tool's documentation for guidance. *Make sure that you select the correct database in the list.*
+1. In the **Terminal** (**Terminal** menu > **New Terminal**), execute the following command to run the existing migrations that recreate the database:
+
+   ```dotnetcli
+   dotnet ef database update
+   ```
+
+:::zone-end
+
+:::zone pivot="cli"
+
+1. Delete the database. If your database tooling has a connection to the database, close the tooling first or use the tool's features to close the database connection and delete the database. Consult your tool's documentation for guidance. *Make sure that you select the correct database in the list.*
+1. In a command shell opened to the project's root folder, execute the following command to run the existing migrations that recreate the database:
+
+   ```dotnetcli
+   dotnet ef database update
+   ```
+
+:::zone-end
+
+## Delete all database records and reseed the database
+
+*This section describes an alternative process for updating the database with a default value for a new model property without modifying the migration file. Following the guidance in this section isn't necessary if you followed all of the steps in the [Update the database](#update-the-database) section earlier in this article.*
+
+To delete all of the records in the database, use one of the following approaches:
+
+:::zone pivot="vs"
+
+* Run the app and use the delete links in the browser. This approach is reasonably fast when there are only a few records to delete.
+* In Visual Studio from **SQL Server Object Explorer** (SSOX), delete the database records. With the database table visible, right-click the table and select **View Data**. When the table opens to show the movie records, select the first record. Hold the <kbd>Shift</kbd> key and select the last record to select all of the records in the table. With all of the records selected, press the <kbd>Delete</kbd> key to delete the records. This approach is reasonably fast when there are many records to delete.
+* In Visual Studio from SSOX, right-click the database and select **New Query**. A blank SQL file (`.sql`) opens. Paste the following command into the file: `DELETE FROM dbo.Movie;`. Select the green **Execute** triangle to execute the query or press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd> on the keyboard. In the **Message** tab, SSOX reports the number of rows affected, deleted in this case, by the query. You can save the query for later use if you wish. Otherwise, close the file without saving it. This approach is especially useful when the table is large and contains hundreds to thousands of records.
+
+:::zone-end
+
+:::zone pivot="vsc"
+
+* Run the app and use the delete links in the browser. This approach is reasonably fast when there are only a few records to delete.
+* Using database tooling&dagger;, delete the database records. In most database tools that permit direct manipulation of data, open the database table's data view in the tooling. When the table opens to show the movie records, select the first record. Hold the <kbd>Shift</kbd> key and select the last record to select all of the records in the database. With all of the records selected, press the <kbd>Delete</kbd> key to delete the records. You may need to adjust these instructions depending on the database tooling in use. Consult the tool's documentation for more information. This approach is reasonably fast when there are many records to delete.
+* Using database tooling&dagger;, execute a SQL query against the movie table to delete the table's records. The SQL command is `DELETE FROM dbo.Movie;`. You can save the query for later use if you wish. Otherwise, close the file without saving it. Consult the tool's documentation for the exact steps. This approach is especially useful when the table is large and contains hundreds to thousands of records.
+
+&dagger;*database tooling*: There are many free and retail database tools available on the open market that can work with SQL databases. Consult Internet resources to find one suitable for your database and platform.
+
+:::zone-end
+
+:::zone pivot="cli"
+
+* Run the app and use the delete links in the browser. This approach is reasonably fast when there are only a few records to delete.
+* Using database tooling&dagger;, delete the database records. In most database tools that permit direct manipulation of data, open the database table's data view in the tooling. When the table opens to show the movie records, select the first record. Hold the <kbd>Shift</kbd> key and select the last record to select all of the records in the database. With all of the records selected, press the <kbd>Delete</kbd> key to delete the records. You may need to adjust these instructions depending on the database tooling in use. Consult the tool's documentation for more information. This approach is reasonably fast when there are many records to delete.
+* Using database tooling&dagger;, execute a SQL query against the movie table to delete the table's records. The SQL command is `DELETE FROM dbo.Movie;`. You can save the query for later use if you wish. Otherwise, close the file without saving it. Consult the tool's documentation for the exact steps. This approach is especially useful when the table is large and contains hundreds to thousands of records.
+
+&dagger;*database tooling*: There are many free and retail database tools available on the open market that can work with SQL databases. Consult Internet resources to find one suitable for your database and platform.
+
+:::zone-end
+
+> [!WARNING]
+> Use extreme caution when deleting records from a database. Deleting records is permanent without taking additional data loss mitigation steps. Production databases often provision automatic backup copies of data, either instantaneously as the database is modified or periodically, including with off-site copies and permanent physical storage of data.
+
+After deleting all of the records, run the app. The initializer reseeds the database and includes the correct movie ratings for the `Rating` field based on the seeding code.
+
+## Troubleshoot with the completed sample
+
+[!INCLUDE[](~/blazor/tutorials/movie-database-app/includes/troubleshoot.md)]
+
+## Related content
+
+* [Migrations (EF Core documentation)](/ef/core/managing-schemas/migrations/)
+* [Customize migration code](/ef/core/managing-schemas/migrations/#customize-migration-code)
+
+## Legal
+
+[*Mad Max*, *The Road Warrior*, *Mad Max: Beyond Thunderdome*, *Mad Max: Fury Road*, and *Furiosa: A Mad Max Saga*](https://warnerbros.fandom.com/wiki/Mad_Max_(franchise)) are trademarks and copyrights of [Warner Bros. Entertainment](https://www.warnerbros.com/).
+
+## Next steps
+
+> [!div class="step-by-step"]
+> [Previous: Add Search](part-6.md)
+> [Next: Add interactivity](part-8.md)

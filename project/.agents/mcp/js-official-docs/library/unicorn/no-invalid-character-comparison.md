@@ -1,17 +1,11 @@
----
-title: "no-invalid-character-comparison"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-invalid-character-comparison.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-invalid-character-comparison
 
 📝 Disallow comparing a single character from a string to a multi-character string.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Indexing a string returns a single character (or an empty string / `undefined` when out of bounds). Comparing such a result to a string literal longer than one character can therefore never be equal, so the comparison is always `false` (or always `true` for `!=`/`!==`).
 

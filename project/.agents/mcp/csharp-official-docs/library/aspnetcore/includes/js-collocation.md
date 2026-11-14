@@ -1,14 +1,3 @@
----
-title: "js-collocation"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/js-collocation.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# js-collocation
-
 Collocation of JavaScript (JS) files for pages and views is a convenient way to organize scripts in an app.
 
 Collocate JS files using the following filename extension conventions:
@@ -22,7 +11,7 @@ Collocated JS files are publicly addressable using the ***path to the file in th
 * Pages and views from a collocated scripts file in the app:
 
   `{PATH}/{PAGE, VIEW, OR COMPONENT}.{EXTENSION}.js`
-
+  
   * The `{PATH}` placeholder is the path to the page, view, or component.
   * The `{PAGE, VIEW, OR COMPONENT}` placeholder is the page, view, or component.
   * The `{EXTENSION}` placeholder matches the extension of the page, view, or component, either `razor` or `cshtml`.
@@ -39,14 +28,13 @@ Collocated JS files are publicly addressable using the ***path to the file in th
 
 The default layout `Pages/Shared/_Layout.cshtml` can be configured to include collocated JS files, eliminating the need to configure each page individually:
 
-```razor
-<script asp-src-include="@(ViewContext.View.Path).js"></script>
-```
-The sample download uses the preceding code snippet to include collocated JS files in the default layout.
+:::code language="razor" source="~/mvc/views/tag-helpers/built-in/samples/ScriptTagHelper/Pages/Shared/_Layout.cshtml"  range="54-54":::
 
-  When the app is published, the framework automatically moves the script to the web root. In the preceding example, the script is moved to `bin\Release\{TARGET FRAMEWORK MONIKER}\publish\wwwroot\Pages\Index.cshtml.js`, where the `{TARGET FRAMEWORK MONIKER}` placeholder is the Target Framework Moniker (TFM). No change is required to the script's relative URL in the `Index` page.
+The [sample download](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/mvc/views/tag-helpers/built-in/samples/ScriptTagHelper) uses the preceding code snippet to include collocated JS files in the default layout.
+  
+  When the app is published, the framework automatically moves the script to the web root. In the preceding example, the script is moved to `bin\Release\{TARGET FRAMEWORK MONIKER}\publish\wwwroot\Pages\Index.cshtml.js`, where the `{TARGET FRAMEWORK MONIKER}` placeholder is the [Target Framework Moniker (TFM)](/dotnet/standard/frameworks). No change is required to the script's relative URL in the `Index` page.
 
-  When the app is published, the framework automatically moves the script to the web root. In the preceding example, the script is moved to `bin\Release\{TARGET FRAMEWORK MONIKER}\publish\wwwroot\Components\Pages\Index.razor.js`, where the `{TARGET FRAMEWORK MONIKER}` placeholder is the Target Framework Moniker (TFM). No change is required to the script's relative URL in the `Index` component.
+  When the app is published, the framework automatically moves the script to the web root. In the preceding example, the script is moved to `bin\Release\{TARGET FRAMEWORK MONIKER}\publish\wwwroot\Components\Pages\Index.razor.js`, where the `{TARGET FRAMEWORK MONIKER}` placeholder is the [Target Framework Moniker (TFM)](/dotnet/standard/frameworks). No change is required to the script's relative URL in the `Index` component.
 
 * For scripts provided by a Razor class library (RCL):
 

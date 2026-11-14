@@ -1,12 +1,9 @@
 ---
-title: "Networking config settings (part 1 of 2)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/runtime-config/networking.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Networking config settings
+description: Learn about runtime settings that configure networking for .NET apps.
+ms.date: 10/20/2026
+ai-usage: ai-assisted
 ---
-
 # Runtime configuration options for networking
 
 ## HTTP/2 protocol
@@ -16,10 +13,10 @@ license: "CC-BY-4.0"
 
 | | Setting name | Values |
 | - | - | - |
-| **runtimeconfig.json** | `System.Net.Http.SocketsHttpHandler.Http2Support` | `false` - disabled`true` - enabled |
-| **Environment variable** | `DOTNET_SYSTEM_NET_HTTP_SOCKETSHTTPHANDLER_HTTP2SUPPORT` | `0` - disabled`1` - enabled |
+| **runtimeconfig.json** | `System.Net.Http.SocketsHttpHandler.Http2Support` | `false` - disabled<br/>`true` - enabled |
+| **Environment variable** | `DOTNET_SYSTEM_NET_HTTP_SOCKETSHTTPHANDLER_HTTP2SUPPORT` | `0` - disabled<br/>`1` - enabled |
 
-This configuration setting doesn't have a specific MSBuild property. However, you can add a `RuntimeHostConfigurationOption` MSBuild item instead. Use the *runtimeconfig.json* setting name as the value of the `Include` attribute. For an example, see MSBuild properties.
+[!INCLUDE [runtimehostconfigurationoption](includes/runtimehostconfigurationoption.md)]
 
 ## HTTP/3 protocol
 
@@ -27,35 +24,35 @@ This configuration setting doesn't have a specific MSBuild property. However, yo
 
 | | Setting name | Values |
 | - | - | - |
-| **runtimeconfig.json** | `System.Net.SocketsHttpHandler.Http3Support` | `false` - disabled `true` - enabled |
-| **Environment variable** | `DOTNET_SYSTEM_NET_HTTP_SOCKETSHTTPHANDLER_HTTP3SUPPORT` | `0` - disabled`1` - enabled |
+| **runtimeconfig.json** | `System.Net.SocketsHttpHandler.Http3Support` | `false` - disabled <br/>`true` - enabled |
+| **Environment variable** | `DOTNET_SYSTEM_NET_HTTP_SOCKETSHTTPHANDLER_HTTP3SUPPORT` | `0` - disabled<br/>`1` - enabled |
 
-This configuration setting doesn't have a specific MSBuild property. However, you can add a `RuntimeHostConfigurationOption` MSBuild item instead. Use the *runtimeconfig.json* setting name as the value of the `Include` attribute. For an example, see MSBuild properties.
+[!INCLUDE [runtimehostconfigurationoption](includes/runtimehostconfigurationoption.md)]
 
 ## SPN creation in HttpClient (.NET 6 and later)
 
-- Impacts generation of service principal names (SPN) for Kerberos and NTLM authentication when `Host` header is missing and the target isn't running on the default port.
+- Impacts generation of [service principal names](/windows/win32/ad/service-principal-names) (SPN) for Kerberos and NTLM authentication when `Host` header is missing and the target isn't running on the default port.
 - .NET 6 and later versions don't include the port in the SPN by default. However, the behavior is configurable.
 
 | | Setting name | Values |
 | - | - | - |
-| **runtimeconfig.json** | `System.Net.Http.UsePortInSpn` | `true` - include port number in SPN, for example, `HTTP/host:port``false` - don't include port in SPN, for example, `HTTP/host` |
-| **Environment variable** | `DOTNET_SYSTEM_NET_HTTP_USEPORTINSPN` | `1` - include port number in SPN, for example, `HTTP/host:port``0` - don't include port in SPN, for example, `HTTP/host` |
+| **runtimeconfig.json** | `System.Net.Http.UsePortInSpn` | `true` - include port number in SPN, for example, `HTTP/host:port`<br/>`false` - don't include port in SPN, for example, `HTTP/host` |
+| **Environment variable** | `DOTNET_SYSTEM_NET_HTTP_USEPORTINSPN` | `1` - include port number in SPN, for example, `HTTP/host:port`<br/>`0` - don't include port in SPN, for example, `HTTP/host` |
 
-This configuration setting doesn't have a specific MSBuild property. However, you can add a `RuntimeHostConfigurationOption` MSBuild item instead. Use the *runtimeconfig.json* setting name as the value of the `Include` attribute. For an example, see MSBuild properties.
+[!INCLUDE [runtimehostconfigurationoption](includes/runtimehostconfigurationoption.md)]
 
 ## Managed NTLM authentication
 
-On non-Windows platforms, the system GSSAPI implementation might not provide NTLM, might require an additional native NTLM provider, or might have compatibility issues. Set this option to `true` when an application must authenticate to an existing NTLM service and the system provider can't complete the authentication. .NET then uses its built-in managed implementation of NTLM and SPNEGO for HTTP and SMTP authentication and `System.Net.Security.NegotiateAuthentication`.
+On non-Windows platforms, the system GSSAPI implementation might not provide NTLM, might require an additional native NTLM provider, or might have compatibility issues. Set this option to `true` when an application must authenticate to an existing NTLM service and the system provider can't complete the authentication. .NET then uses its built-in managed implementation of NTLM and SPNEGO for HTTP and SMTP authentication and <xref:System.Net.Security.NegotiateAuthentication>.
 
-> **Important:**
+> [!IMPORTANT]
 > NTLM is a legacy authentication protocol and uses cryptographic algorithms that don't meet current recommendations. Enable managed NTLM only when required for compatibility with existing systems. Negotiate prefers Kerberos when available but can fall back to NTLM. To prevent NTLM, request Kerberos explicitly when supported or use a modern authentication protocol.
 
 | | Setting name | Values |
 | - | - | - |
-| **runtimeconfig.json** | `System.Net.Security.UseManagedNtlm` | `false` - use the system GSSAPI implementation`true` - use the built-in managed NTLM and SPNEGO implementation |
+| **runtimeconfig.json** | `System.Net.Security.UseManagedNtlm` | `false` - use the system GSSAPI implementation<br/>`true` - use the built-in managed NTLM and SPNEGO implementation |
 
-This configuration setting doesn't have a specific MSBuild property. However, you can add a `RuntimeHostConfigurationOption` MSBuild item instead. Use the *runtimeconfig.json* setting name as the value of the `Include` attribute. For an example, see MSBuild properties.
+[!INCLUDE [runtimehostconfigurationoption](includes/runtimehostconfigurationoption.md)]
 
 ## HTTP/2 dynamic window scaling
 
@@ -64,10 +61,10 @@ This configuration setting doesn't have a specific MSBuild property. However, yo
 
 | | Setting name | Values |
 | - | - | - |
-| **runtimeconfig.json** | `System.Net.SocketsHttpHandler.Http2FlowControl.DisableDynamicWindowSizing` | `false` - enabled (default)`true` - disabled |
-| **Environment variable** | `DOTNET_SYSTEM_NET_HTTP_SOCKETSHTTPHANDLER_HTTP2FLOWCONTROL_DISABLEDYNAMICWINDOWSIZING` | `0` - enabled (default)`1` - disabled |
+| **runtimeconfig.json** | `System.Net.SocketsHttpHandler.Http2FlowControl.DisableDynamicWindowSizing` | `false` - enabled (default)<br/>`true` - disabled |
+| **Environment variable** | `DOTNET_SYSTEM_NET_HTTP_SOCKETSHTTPHANDLER_HTTP2FLOWCONTROL_DISABLEDYNAMICWINDOWSIZING` | `0` - enabled (default)<br/>`1` - disabled |
 
-This configuration setting doesn't have a specific MSBuild property. However, you can add a `RuntimeHostConfigurationOption` MSBuild item instead. Use the *runtimeconfig.json* setting name as the value of the `Include` attribute. For an example, see MSBuild properties.
+[!INCLUDE [runtimehostconfigurationoption](includes/runtimehostconfigurationoption.md)]
 
 ## HTTP/2 stream receive window size
 
@@ -83,7 +80,7 @@ This configuration setting doesn't have a specific MSBuild property. However, yo
 - Configures the multiplier that controls how aggressively the HTTP/2 stream-receive window grows. Higher values result in a more conservative window growth, which reduces peak throughput.
 - Defaults to 1.0. Values below 0 are reset to the default. There's no hard upper limit, but values much above the default progressively limit per-request throughput.
 
-> **Note:**
+> [!NOTE]
 > This setting is intended for advanced diagnostics and internal tuning. Most developers don't need to change it.
 
 | | Setting name | Values |
@@ -92,14 +89,14 @@ This configuration setting doesn't have a specific MSBuild property. However, yo
 
 ## HTTP activity propagation
 
-Configures whether distributed tracing activity propagation is enabled for `System.Net.Http.HttpClient`. When enabled, outgoing HTTP requests propagate trace context headers (such as `traceparent`) for distributed tracing tools like OpenTelemetry.
+Configures whether distributed tracing activity propagation is enabled for <xref:System.Net.Http.HttpClient>. When enabled, outgoing HTTP requests propagate trace context headers (such as `traceparent`) for distributed tracing tools like OpenTelemetry.
 
 | | Setting name | Values |
 | - | - | - |
-| **runtimeconfig.json** | `System.Net.Http.EnableActivityPropagation` | `true` - enabled (default)`false` - disabled |
-| **Environment variable** | `DOTNET_SYSTEM_NET_HTTP_ENABLEACTIVITYPROPAGATION` | `1` - enabled (default)`0` - disabled |
+| **runtimeconfig.json** | `System.Net.Http.EnableActivityPropagation` | `true` - enabled (default)<br/>`false` - disabled |
+| **Environment variable** | `DOTNET_SYSTEM_NET_HTTP_ENABLEACTIVITYPROPAGATION` | `1` - enabled (default)<br/>`0` - disabled |
 
-This configuration setting doesn't have a specific MSBuild property. However, you can add a `RuntimeHostConfigurationOption` MSBuild item instead. Use the *runtimeconfig.json* setting name as the value of the `Include` attribute. For an example, see MSBuild properties.
+[!INCLUDE [runtimehostconfigurationoption](includes/runtimehostconfigurationoption.md)]
 
 ## Pending connection timeout on request completion
 
@@ -115,22 +112,22 @@ Configures the timeout (in milliseconds) for completing a pending connection att
 | **runtimeconfig.json** | `System.Net.SocketsHttpHandler.PendingConnectionTimeoutOnRequestCompletion` | Integer (default: `5000`) |
 | **Environment variable** | `DOTNET_SYSTEM_NET_HTTP_SOCKETSHTTPHANDLER_PENDINGCONNECTIONTIMEOUTONREQUESTCOMPLETION` | Integer (default: `5000`) |
 
-This configuration setting doesn't have a specific MSBuild property. However, you can add a `RuntimeHostConfigurationOption` MSBuild item instead. Use the *runtimeconfig.json* setting name as the value of the `Include` attribute. For an example, see MSBuild properties.
+[!INCLUDE [runtimehostconfigurationoption](includes/runtimehostconfigurationoption.md)]
 
 ## Proxy pre-authentication
 
-When enabled, `System.Net.Http.SocketsHttpHandler` proactively sends `Basic` proxy authentication credentials on the first request instead of waiting for a `407` challenge response from the proxy. This is useful for proxies that don't send `407` challenge responses.
+When enabled, <xref:System.Net.Http.SocketsHttpHandler> proactively sends `Basic` proxy authentication credentials on the first request instead of waiting for a `407` challenge response from the proxy. This is useful for proxies that don't send `407` challenge responses.
 
 | | Setting name | Values |
 | - | - | - |
-| **runtimeconfig.json** | `System.Net.Http.SocketsHttpHandler.ProxyPreAuthenticate` | `false` - disabled (default)`true` - enabled |
-| **Environment variable** | `DOTNET_SYSTEM_NET_HTTP_SOCKETSHTTPHANDLER_PROXYPREAUTHENTICATE` | `0` - disabled (default)`1` - enabled |
+| **runtimeconfig.json** | `System.Net.Http.SocketsHttpHandler.ProxyPreAuthenticate` | `false` - disabled (default)<br>`true` - enabled |
+| **Environment variable** | `DOTNET_SYSTEM_NET_HTTP_SOCKETSHTTPHANDLER_PROXYPREAUTHENTICATE` | `0` - disabled (default)<br>`1` - enabled |
 
-This configuration setting doesn't have a specific MSBuild property. However, you can add a `RuntimeHostConfigurationOption` MSBuild item instead. Use the *runtimeconfig.json* setting name as the value of the `Include` attribute. For an example, see MSBuild properties.
+[!INCLUDE [runtimehostconfigurationoption](includes/runtimehostconfigurationoption.md)]
 
 ## Maximum connections per server
 
-Configures the maximum number of simultaneous TCP connections that `System.Net.Http.SocketsHttpHandler` opens to a single server. The handler ignores values less than `1` and uses the default.
+Configures the maximum number of simultaneous TCP connections that <xref:System.Net.Http.SocketsHttpHandler> opens to a single server. The handler ignores values less than `1` and uses the default.
 
 - Defaults to unlimited (`int.MaxValue`).
 
@@ -139,24 +136,24 @@ Configures the maximum number of simultaneous TCP connections that `System.Net.H
 | **runtimeconfig.json** | `System.Net.SocketsHttpHandler.MaxConnectionsPerServer` | Integer (default: unlimited) |
 | **Environment variable** | `DOTNET_SYSTEM_NET_HTTP_SOCKETSHTTPHANDLER_MAXCONNECTIONSPERSERVER` | Integer (default: unlimited) |
 
-This configuration setting doesn't have a specific MSBuild property. However, you can add a `RuntimeHostConfigurationOption` MSBuild item instead. Use the *runtimeconfig.json* setting name as the value of the `Include` attribute. For an example, see MSBuild properties.
+[!INCLUDE [runtimehostconfigurationoption](includes/runtimehostconfigurationoption.md)]
 
 ## Socket inline completions
 
-Configures whether socket continuations are allowed to run on the event thread instead of being dispatched to the `System.Threading.ThreadPool`. Enabling this setting can improve performance in some scenarios. However, it might degrade performance if expensive work holds the I/O thread for longer than needed.
+Configures whether socket continuations are allowed to run on the event thread instead of being dispatched to the <xref:System.Threading.ThreadPool?displayProperty=nameWithType>. Enabling this setting can improve performance in some scenarios. However, it might degrade performance if expensive work holds the I/O thread for longer than needed.
 
-> **Note:**
+> [!NOTE]
 > Test to make sure enabling this setting helps performance in your specific scenario.
 
 | | Setting name | Values |
 | - | - | - |
-| **Environment variable** | `DOTNET_SYSTEM_NET_SOCKETS_INLINE_COMPLETIONS` | `0` - disabled (default)`1` - enabled |
+| **Environment variable** | `DOTNET_SYSTEM_NET_SOCKETS_INLINE_COMPLETIONS` | `0` - disabled (default)<br/>`1` - enabled |
 
 ## Socket thread count
 
 Configures the number of threads used for socket I/O. When not overridden, the value is calculated based on processor count and architecture. Practical values are in the range `[1, ProcessorCount]`. Values outside this range aren't rejected but are unlikely to improve performance.
 
-> **Note:**
+> [!NOTE]
 > This setting is intended for extreme load scenarios. Most developers don't need to change it.
 
 | | Setting name | Values |
@@ -169,21 +166,21 @@ Configures whether Internet Protocol version 6 (IPv6) is disabled.
 
 | | Setting name | Values |
 | - | - | - |
-| **runtimeconfig.json** | `System.Net.DisableIPv6` | `false` - enabled (default)`true` - disabled |
-| **Environment variable** | `DOTNET_SYSTEM_NET_DISABLEIPV6` | `0` - enabled (default)`1` - disabled |
+| **runtimeconfig.json** | `System.Net.DisableIPv6` | `false` - enabled (default)<br/>`true` - disabled |
+| **Environment variable** | `DOTNET_SYSTEM_NET_DISABLEIPV6` | `0` - enabled (default)<br/>`1` - disabled |
 
-This configuration setting doesn't have a specific MSBuild property. However, you can add a `RuntimeHostConfigurationOption` MSBuild item instead. Use the *runtimeconfig.json* setting name as the value of the `Include` attribute. For an example, see MSBuild properties.
+[!INCLUDE [runtimehostconfigurationoption](includes/runtimehostconfigurationoption.md)]
 
 ## TLS session resumption
 
-Control whether TLS session resumption disables TLS session resumption for `System.Net.Security.SslStream`. Session resumption allows TLS reconnections to skip a full handshake by reusing previously negotiated session parameters, which reduces latency.
+Control whether TLS session resumption disables TLS session resumption for <xref:System.Net.Security.SslStream>. Session resumption allows TLS reconnections to skip a full handshake by reusing previously negotiated session parameters, which reduces latency.
 
 | | Setting name | Values |
 | - | - | - |
-| **runtimeconfig.json** | `System.Net.Security.DisableTlsResume` | `false` - enabled (default)`true` - disabled |
-| **Environment variable** | `DOTNET_SYSTEM_NET_SECURITY_DISABLETLSRESUME` | `0` - enabled (default)`1` - disabled |
+| **runtimeconfig.json** | `System.Net.Security.DisableTlsResume` | `false` - enabled (default)<br>`true` - disabled |
+| **Environment variable** | `DOTNET_SYSTEM_NET_SECURITY_DISABLETLSRESUME` | `0` - enabled (default)<br>`1` - disabled |
 
-This configuration setting doesn't have a specific MSBuild property. However, you can add a `RuntimeHostConfigurationOption` MSBuild item instead. Use the *runtimeconfig.json* setting name as the value of the `Include` attribute. For an example, see MSBuild properties.
+[!INCLUDE [runtimehostconfigurationoption](includes/runtimehostconfigurationoption.md)]
 
 ## Server AIA downloads
 
@@ -191,10 +188,10 @@ When enabled, the TLS client automatically downloads intermediate certificates f
 
 | | Setting name | Values |
 | - | - | - |
-| **runtimeconfig.json** | `System.Net.Security.EnableServerAiaDownloads` | `false` - disabled (default)`true` - enabled |
-| **Environment variable** | `DOTNET_SYSTEM_NET_SECURITY_ENABLESERVERAIADOWNLOADS` | `0` - disabled (default)`1` - enabled |
+| **runtimeconfig.json** | `System.Net.Security.EnableServerAiaDownloads` | `false` - disabled (default)<br>`true` - enabled |
+| **Environment variable** | `DOTNET_SYSTEM_NET_SECURITY_ENABLESERVERAIADOWNLOADS` | `0` - disabled (default)<br>`1` - enabled |
 
-This configuration setting doesn't have a specific MSBuild property. However, you can add a `RuntimeHostConfigurationOption` MSBuild item instead. Use the *runtimeconfig.json* setting name as the value of the `Include` attribute. For an example, see MSBuild properties.
+[!INCLUDE [runtimehostconfigurationoption](includes/runtimehostconfigurationoption.md)]
 
 ## QUIC configuration caching
 
@@ -202,10 +199,10 @@ Disables caching of MsQuic configuration objects. When enabled (default), the sy
 
 | | Setting name | Values |
 | - | - | - |
-| **runtimeconfig.json** | `System.Net.Quic.DisableConfigurationCache` | `false` - caching enabled (default)`true` - caching disabled |
-| **Environment variable** | `DOTNET_SYSTEM_NET_QUIC_DISABLE_CONFIGURATION_CACHE` | `0` - caching enabled (default)`1` - caching disabled |
+| **runtimeconfig.json** | `System.Net.Quic.DisableConfigurationCache` | `false` - caching enabled (default)<br>`true` - caching disabled |
+| **Environment variable** | `DOTNET_SYSTEM_NET_QUIC_DISABLE_CONFIGURATION_CACHE` | `0` - caching enabled (default)<br>`1` - caching disabled |
 
-This configuration setting doesn't have a specific MSBuild property. However, you can add a `RuntimeHostConfigurationOption` MSBuild item instead. Use the *runtimeconfig.json* setting name as the value of the `Include` attribute. For an example, see MSBuild properties.
+[!INCLUDE [runtimehostconfigurationoption](includes/runtimehostconfigurationoption.md)]
 
 ## App-local MsQuic (Windows)
 
@@ -213,6 +210,19 @@ When enabled, the QUIC implementation uses the MsQuic library from the applicati
 
 | | Setting name | Values |
 | - | - | - |
-| **runtimeconfig.json** | `System.Net.Quic.AppLocalMsQuic` | `false` - use system MsQuic (default)`true` - use app-local MsQuic |
+| **runtimeconfig.json** | `System.Net.Quic.AppLocalMsQuic` | `false` - use system MsQuic (default)<br>`true` - use app-local MsQuic |
 
-This configuration setting doesn't have a specific MSBuild property. However, you can add a `RuntimeHostConfigurationOption` MSBuild item instead. Use the *runtimeconfig.json* setting name as the value of the `Include` attribute. For an example, see MSBuild properties.
+[!INCLUDE [runtimehostconfigurationoption](includes/runtimehostconfigurationoption.md)]
+
+## HttpListener kernel response buffering (Windows)
+
+When enabled, <xref:System.Net.HttpListener> buffers response data in the kernel via HTTP.sys. Kernel buffering can significantly improve throughput over high-latency connections for applications that use synchronous I/O or asynchronous I/O with at most one outstanding write at a time. Don't enable this setting for applications with multiple concurrent outstanding writes.
+
+> [!NOTE]
+> Enabling kernel response buffering can result in higher CPU and memory usage by HTTP.sys.
+
+| | Setting name | Values |
+| - | - | - |
+| **runtimeconfig.json** | `System.Net.HttpListener.EnableKernelResponseBuffering` | `false` - disabled (default)<br>`true` - enabled |
+
+[!INCLUDE [runtimehostconfigurationoption](includes/runtimehostconfigurationoption.md)]

@@ -1,19 +1,18 @@
 ---
 title: "NETSDK1206: Found version-specific or distribution-specific runtime identifier(s)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/sdk-errors/netsdk1206.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about .NET SDK error NETSDK1206, which occurs when a project has dependencies with version-specific or distribution-specific runtime identifiers.
+ms.topic: error-reference
+ms.date: 08/24/2023
+f1_keywords:
+- NETSDK1206
 ---
-
 # NETSDK1206: Found version-specific or distribution-specific runtime identifier(s)
 
-NETSDK1206 indicates your project has assets for version-specific or distribution-specific runtime identifiers. In .NET 8 and higher, the runtime no longer considers version-specific or distro-specific RIDs by default and will find RID-specific assets using a known set of portable RIDs. The warning will list the RIDs and packages affected.
+NETSDK1206 indicates your project has assets for version-specific or distribution-specific [runtime identifiers](../../rid-catalog.md). In .NET 8 and higher, the runtime no longer considers version-specific or distro-specific RIDs by default and will find [RID-specific assets using a known set of portable RIDs](../../compatibility/deployment/8.0/rid-asset-list.md). The warning will list the RIDs and packages affected.
 
 First, check for a newer version of any affected packages to see if they have moved to portable RIDs. Many packages have already moved to portable RIDs in their latest versions. If no such version exists, we recommend contacting the package authors to request switching the package to use only portable RIDs.
 
-If you know your application does not actually need the specified RID—for example, it is not intended to run on the platform specified by the RID—you can switch to using a more general RID. For example, change `<RuntimeIdentifier>win10-x64</RuntimeIdentifier>` to `<RuntimeIdentifier>win-x64</RuntimeIdentifier>` in your project file:
+If you know your application does not actually need the specified RID&mdash;for example, it is not intended to run on the platform specified by the RID&mdash;you can switch to using a more general RID. For example, change `<RuntimeIdentifier>win10-x64</RuntimeIdentifier>` to `<RuntimeIdentifier>win-x64</RuntimeIdentifier>` in your project file:
 
 ```xml
 <PropertyGroup>

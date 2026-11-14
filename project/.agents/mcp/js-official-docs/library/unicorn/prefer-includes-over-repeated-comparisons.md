@@ -1,17 +1,11 @@
----
-title: "prefer-includes-over-repeated-comparisons"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-includes-over-repeated-comparisons.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-includes-over-repeated-comparisons
 
 📝 Prefer `.includes()` over repeated equality comparisons.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Comparing the same expression against multiple values is easier to scan as a membership check.
 
@@ -19,7 +13,7 @@ This rule reports strict equality comparisons joined by `||` and strict inequali
 
 This rule does not autofix because the best rewrite depends on context. Plain member expressions are still reported, so consider accessors and proxies before rewriting.
 
-With type information, the rule skips union-typed subjects, including generic types with union constraints, to preserve narrowing. Other narrowing-dependent comparisons may require disabling the rule locally.
+With [type information](https://typescript-eslint.io/getting-started/typed-linting/), the rule skips union-typed subjects, including generic types with union constraints, to preserve narrowing. Other narrowing-dependent comparisons may require disabling the rule locally.
 
 With type information, it also reports loose comparisons (`==` joined by `||` or `!=` joined by `&&`), including chains mixed with their strict counterparts, when the subject and every compared value are all primitive strings or all primitive numbers. This includes enum members and generic types constrained to `string` or `number`. Without type information, loose comparisons are ignored.
 

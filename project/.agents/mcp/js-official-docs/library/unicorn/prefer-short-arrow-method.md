@@ -1,19 +1,13 @@
----
-title: "prefer-short-arrow-method"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-short-arrow-method.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-short-arrow-method
 
 📝 Prefer arrow function properties over methods with a single return.
 
 🚫 Disabled by default.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 For object literal methods that simply return a value with no other logic, arrow function syntax is more concise. This rule applies only to object literals, not classes, since class methods have different prototype and binding behavior.
 

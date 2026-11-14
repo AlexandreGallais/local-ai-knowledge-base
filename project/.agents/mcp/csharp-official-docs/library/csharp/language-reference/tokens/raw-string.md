@@ -1,35 +1,21 @@
 ---
-title: "Raw string literals - \\\"\\\"\\\""
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/tokens/raw-string.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Raw string literals can contain any arbitrary text without the need for special escape sequences. You begin and end a raw string literal with a minimum of three double-quote characters."
+title: "Raw string literals - \"\"\""
+f1_keywords:
+  - "RawStringLiteral_CSharpKeyword"
+ms.date: 01/30/2026
 ---
-
 # Raw string literal text - `"""` in string literals
 
 A raw string literal starts and ends with a minimum of three double quote (`"`) characters:
 
-```csharp
-var singleLine = """This is a "raw string literal". It can contain characters like \, ' and ".""";
-```
+:::code language="csharp" source="./snippets/raw-string-literal.cs" id="SingleLine":::
+
 Raw string literals can span multiple lines:
 
-```csharp
-var xml = """
-        <element attr="content">
-            <body>
-            </body>
-        </element>
-        """;
-```
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
+:::code language="csharp" source="./snippets/raw-string-literal.cs" id="MultiLine":::
 
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
-
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
 The following rules govern the interpretation of a multiline raw string literal:
 
@@ -72,39 +58,23 @@ var xml = """
 \b\b\b\b""";
 ```
 
-> **Tip:**
-> Visual Studio and the C# Dev Kit provide some validation and syntax highlighting when raw string literals contain JSON data or regular expressions.
->
-> The tools parse the text. If the tools have confidence that the text represents JSON or a regular expression, the editor provides syntax coloring.
->
-> You can improve that experience by adding a comment above the declaration indicating the format:
->
-> - `// lang=json` indicates the raw string literal represents JSON data.
-> - `// lang=regex` indicates the raw string literal represents a regular expression.
->
-> When a raw string literal is used as an argument where the parameter uses the `System.Diagnostics.CodeAnalysis.StringSyntaxAttribute` to indicate a format, these tools validate the raw string literal for some of the format types. Both JSON and regex are supported.
->
-> For some formats, the comment or the attribute enables code suggestions offer fixes for string literals based on the format.
+[!INCLUDE[raw-string-tip](../../includes/raw-string-parsing.md)]
 
 You might need to create a raw string literal that has three or more consecutive double-quote characters. Raw string literals can start and end with a sequence of at least three double-quote characters. When your string literal contains three consecutive double-quotes, you start and end the raw string literal with four double quote characters:
 
-```csharp
-var moreQuotes = """" As you can see,"""Raw string literals""" can start and end with more than three double-quotes when needed."""";
-```
+:::code language="csharp" source="./snippets/raw-string-literal.cs" id="MoarQuotes":::
+
 If you need to start or end a raw string literal with quote characters, use the multiline format:
 
-```csharp
-var MultiLineQuotes = """"
-               """Raw string literals""" can start and end with more than three double-quotes when needed.
-               """";
-```
-Raw string literals can also be combined with interpolated strings to embed the `{` and `}` characters in the output string. You use multiple `$` characters in an interpolated raw string literal to embed `{` and `}` characters in the output string without escaping them.
+:::code language="csharp" source="./snippets/raw-string-literal.cs" id="InitialQuotes":::
+
+Raw string literals can also be combined with [interpolated strings](./interpolated.md#interpolated-raw-string-literals) to embed the `{` and `}` characters in the output string. You use multiple `$` characters in an interpolated raw string literal to embed `{` and `}` characters in the output string without escaping them.
 
 The raw string literal's content must not contain a set of contiguous `"` characters whose length is equal to or greater than the raw string literal delimiter length. For example, the strings `"""" """ """"` and `""""""" """""" """"" """" """ """""""` are well-formed. However, the strings `""" """ """` and `""" """" """` aren't well-formed.
 
 ## See also
 
-- C# special characters
-- C# string interpolation
-- String literals (C# language specification)
-- Raw String literals (C# fundamentals)
+- [C# special characters](./index.md)
+- [C# string interpolation](./interpolated.md)
+- [String literals (C# language specification)](~/_csharpstandard/standard/lexical-structure.md#6456-string-literals)
+- [Raw String literals (C# fundamentals)](../../fundamentals/strings/raw-string-literals.md)

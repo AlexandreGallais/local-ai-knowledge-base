@@ -1,12 +1,22 @@
 ---
+description: "Learn more about: ICorDebugVariableHome Interface"
 title: "ICorDebugVariableHome Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugvariablehome-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "cpp"
+api_name:
+  - "ICorDebugVariableHome"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugVariableHome"
+helpviewer_keywords:
+  - "ICorDebugVariableHome interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugVariableHome Interface
 
 Represents a local variable or argument of a function.
@@ -15,17 +25,17 @@ Represents a local variable or argument of a function.
 
 |Method|Description|
 |------------|-----------------|
-|GetArgumentIndex Method|Gets the index of a function argument.|
-|GetCode Method|Gets the "ICorDebugCode" instance that contains this `ICorDebugVariableHome` object.|
-|GetLiveRange Method|Gets the native range over which this variable is live.|
-|GetLocationType Method|Gets the type of the variable's native location.|
-|GetOffset Method|Gets the offset from the base register for a variable.|
-|GetRegister Method|Gets the register that contains a variable with a location type of `VLT_REGISTER`, and the base register for a variable with a location type of `VLT_REGISTER_RELATIVE`.|
-|GetSlotIndex Method|Gets the managed slot-index of a local variable.|
+|[GetArgumentIndex Method](icordebugvariablehome-getargumentindex-method.md)|Gets the index of a function argument.|
+|[GetCode Method](icordebugvariablehome-getcode-method.md)|Gets the "ICorDebugCode" instance that contains this `ICorDebugVariableHome` object.|
+|[GetLiveRange Method](icordebugvariablehome-getliverange-method.md)|Gets the native range over which this variable is live.|
+|[GetLocationType Method](icordebugvariablehome-getlocationtype-method.md)|Gets the type of the variable's native location.|
+|[GetOffset Method](icordebugvariablehome-getoffset-method.md)|Gets the offset from the base register for a variable.|
+|[GetRegister Method](icordebugvariablehome-getregister-method.md)|Gets the register that contains a variable with a location type of `VLT_REGISTER`, and the base register for a variable with a location type of `VLT_REGISTER_RELATIVE`.|
+|[GetSlotIndex Method](icordebugvariablehome-getslotindex-method.md)|Gets the managed slot-index of a local variable.|
 
 ## Example
 
-The following code fragment uses the ICorDebugCode4 object named `pCode4`.
+The following code fragment uses the [ICorDebugCode4](icordebugcode4-interface.md) object named `pCode4`.
 
 ```cpp
 ICorDebugCode4 *pCode4 = NULL;
@@ -68,7 +78,7 @@ for (int i = 0; i < celtFetched; i++)
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -78,4 +88,4 @@ for (int i = 0; i < celtFetched; i++)
 
 ## See also
 
-- ICorDebugVariableHomeEnum Interface
+- [ICorDebugVariableHomeEnum Interface](icordebugvariablehomeenum-interface.md)

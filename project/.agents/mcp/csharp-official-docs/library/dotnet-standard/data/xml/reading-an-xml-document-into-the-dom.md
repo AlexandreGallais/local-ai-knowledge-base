@@ -1,27 +1,27 @@
 ---
+description: "Learn more about: Reading an XML Document into the DOM"
 title: "Reading an XML Document into the DOM"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/reading-an-xml-document-into-the-dom.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: a4fb291f-5630-49ba-a49a-5b66c3b71e49
 ---
-
 # Reading an XML Document into the DOM
 
-XML information is read into memory from different formats. It can be read from a string, stream, URL, text reader, or a class derived from the `System.Xml.XmlReader`.
+XML information is read into memory from different formats. It can be read from a string, stream, URL, text reader, or a class derived from the <xref:System.Xml.XmlReader>.
 
- The `System.Xml.XmlDocument.Load*` method brings the document into memory and has overloaded methods available to take data from each of the different formats. There is also a `System.Xml.XmlDocument.LoadXml*` method that reads XML from a string.
+ The <xref:System.Xml.XmlDocument.Load*> method brings the document into memory and has overloaded methods available to take data from each of the different formats. There is also a <xref:System.Xml.XmlDocument.LoadXml*> method that reads XML from a string.
 
- Different `System.Xml.XmlDocument.Load*` methods affect which nodes are created when the XML Document Object Model (DOM) is loaded. The following table lists the differences between some of the `System.Xml.XmlDocument.Load*` methods and topics that address them.
+ Different <xref:System.Xml.XmlDocument.Load*> methods affect which nodes are created when the XML Document Object Model (DOM) is loaded. The following table lists the differences between some of the <xref:System.Xml.XmlDocument.Load*> methods and topics that address them.
 
 |Subject|Topic|
 |-------------|-----------|
-|Creation of white space nodes|The object used to load the DOM has an affect on the white space and significant white space nodes generated in the DOM. For more information, see White Space and Significant White Space Handling when Loading the DOM.|
-|Loading XML starting from a specific node or loading the entire XML document|Using the `System.Xml.XmlDocument.Load*` method data can be loaded from a specific node into the DOM. For more information, see Load Data from a Reader.|
-|Validating the XML as it is loaded|The XML data loaded into the DOM can be validated as it is loaded. This is accomplished using a validating `System.Xml.XmlReader`. For more information about validating XML as it is loaded, see Validating an XML Document in the DOM.|
+|Creation of white space nodes|The object used to load the DOM has an affect on the white space and significant white space nodes generated in the DOM. For more information, see [White Space and Significant White Space Handling when Loading the DOM](white-space-and-significant-white-space-handling-when-loading-the-dom.md).|
+|Loading XML starting from a specific node or loading the entire XML document|Using the <xref:System.Xml.XmlDocument.Load*?displayProperty=nameWithType> method data can be loaded from a specific node into the DOM. For more information, see [Load Data from a Reader](load-data-from-a-reader.md).|
+|Validating the XML as it is loaded|The XML data loaded into the DOM can be validated as it is loaded. This is accomplished using a validating <xref:System.Xml.XmlReader>. For more information about validating XML as it is loaded, see [Validating an XML Document in the DOM](validating-an-xml-document-in-the-dom.md).|
 
- The following example shows XML being loaded with the `System.Xml.XmlDocument.LoadXml*` method and the data subsequently saved to a text file called `data.xml`.
+ The following example shows XML being loaded with the <xref:System.Xml.XmlDocument.LoadXml*> method and the data subsequently saved to a text file called `data.xml`.
 
 ```vb
 Imports System
@@ -65,4 +65,4 @@ public class Sample
 
 ## See also
 
-- XML Document Object Model (DOM)
+- [XML Document Object Model (DOM)](xml-document-object-model-dom.md)

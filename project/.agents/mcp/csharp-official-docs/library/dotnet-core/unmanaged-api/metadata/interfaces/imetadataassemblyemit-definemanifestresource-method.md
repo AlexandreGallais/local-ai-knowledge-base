@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataAssemblyEmit::DefineManifestResource Method"
 title: "IMetaDataAssemblyEmit::DefineManifestResource Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataassemblyemit-definemanifestresource-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataAssemblyEmit.DefineManifestResource"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataAssemblyEmit::DefineManifestResource"
+  - "IMetaDataAssemblyEmit::DefineManifestResource method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataAssemblyEmit::DefineManifestResource Method
 
 Creates a `ManifestResource` structure containing metadata for the specified manifest resource, and returns the associated metadata token.
@@ -16,7 +23,7 @@ Creates a `ManifestResource` structure containing metadata for the specified man
 ```cpp
 HRESULT DefineManifestResource (
     [in] LPCWSTR                szName,
-    [in] mdToken                <example-value>,
+    [in] mdToken                tkImplementation,
     [in] DWORD                  dwOffset,
     [in] DWORD                  dwResourceFlags,
     [out] mdManifestResource    *pmdmr
@@ -46,7 +53,7 @@ HRESULT DefineManifestResource (
 
 ## Requirements
 
- **Platform:** See .NET supported operating systems.
+ **Platform:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -54,4 +61,4 @@ HRESULT DefineManifestResource (
 
 ## See also
 
-- IMetaDataAssemblyEmit Interface
+- [IMetaDataAssemblyEmit Interface](imetadataassemblyemit-interface.md)

@@ -1,12 +1,18 @@
 ---
+description: "Learn more about: CorAssemblyFlags Enumeration"
 title: "CorAssemblyFlags Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/enumerations/corassemblyflags-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "CorAssemblyFlags"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "CorAssemblyFlags"
+topic_type:
+  - "apiref"
 ---
-
 # CorAssemblyFlags Enumeration
 
 Contains values that describe the metadata applied to an assembly compilation.
@@ -16,7 +22,7 @@ Contains values that describe the metadata applied to an assembly compilation.
 ```cpp
 typedef enum CorAssemblyFlags {
 
-    afPublicKey             =   <example-value>,
+    afPublicKey             =   0x0001,
     afPA_None               =   0x0000,
     afPA_MSIL               =   0x0010,
     afPA_x86                =   0x0020,
@@ -58,8 +64,8 @@ typedef enum CorAssemblyFlags {
 | `afPA_Mask` | A mask that describes the processor architecture. |
 | `afPA_FullMask` | Specifies that the processor architecture description is included. |
 | `afPA_Shift` | Indicates a shift count in the processor architecture flags to and from the index. |
-| `afEnableJITcompileTracking` |Indicates the corresponding value from the `System.Diagnostics.DebuggableAttribute.DebuggingModes` of the `System.Diagnostics.DebuggableAttribute`.|
-| `afDisableJITcompileOptimizer` |Indicates the corresponding value from the `System.Diagnostics.DebuggableAttribute.DebuggingModes` of the `System.Diagnostics.DebuggableAttribute`.|
+| `afEnableJITcompileTracking` |Indicates the corresponding value from the <xref:System.Diagnostics.DebuggableAttribute.DebuggingModes> of the <xref:System.Diagnostics.DebuggableAttribute>.|
+| `afDisableJITcompileOptimizer` |Indicates the corresponding value from the <xref:System.Diagnostics.DebuggableAttribute.DebuggingModes> of the <xref:System.Diagnostics.DebuggableAttribute>.|
 | `afRetargetable` | Indicates that the assembly can be retargeted at runtime to an assembly from a different publisher. |
 | `afContentType_Mask` | A mask that describes the content type. |
 | `afContentType_Default` | Indicates the default content type. |
@@ -67,6 +73,6 @@ typedef enum CorAssemblyFlags {
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorHdr.h

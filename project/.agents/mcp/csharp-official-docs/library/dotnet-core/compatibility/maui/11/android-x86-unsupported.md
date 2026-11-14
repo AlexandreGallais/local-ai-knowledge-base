@@ -1,10 +1,9 @@
 ---
 title: "Breaking change - Android x86 is not supported"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/maui/11/android-x86-unsupported.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where Android x86 is not supported."
+ms.date: 10/21/2026
+ai-usage: ai-generated
+ms.custom: https://github.com/dotnet/docs/issues/56480
 ---
 
 # Android x86 is not supported
@@ -25,7 +24,7 @@ CoreCLR doesn't have an `android-x86` runtime identifier. `android-x64` remains 
 
 ## Type of breaking change
 
-This change affects binary compatibility and is a behavioral change.
+This change affects [binary compatibility](../../categories.md#binary-compatibility) and is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

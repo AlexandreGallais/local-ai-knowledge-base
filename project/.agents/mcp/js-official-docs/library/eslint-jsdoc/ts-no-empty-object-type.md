@@ -1,18 +1,15 @@
----
-title: "ts-no-empty-object-type"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/ts-no-empty-object-type.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
-
-# `ts-no-empty-object-type`
+<a name="user-content-ts-no-empty-object-type"></a>
+<a name="ts-no-empty-object-type"></a>
+# <code>ts-no-empty-object-type</code>
 
 Warns against use of the empty object type which, in TypeScript,
 means "any value that is defined".
 
+<a name="user-content-ts-no-empty-object-type-options"></a>
+<a name="ts-no-empty-object-type-options"></a>
 ## Options
+
+
 
 |||
 |---|---|
@@ -22,6 +19,8 @@ means "any value that is defined".
 |Settings||
 |Options||
 
+<a name="user-content-ts-no-empty-object-type-failing-examples"></a>
+<a name="ts-no-empty-object-type-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -38,6 +37,10 @@ The following patterns are considered problems:
 // Message: No empty object type.
 ````
 
+
+
+<a name="user-content-ts-no-empty-object-type-passing-examples"></a>
+<a name="ts-no-empty-object-type-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -60,3 +63,4 @@ The following patterns are not considered problems:
  */
 // Settings: {"jsdoc":{"mode":"jsdoc"}}
 ````
+

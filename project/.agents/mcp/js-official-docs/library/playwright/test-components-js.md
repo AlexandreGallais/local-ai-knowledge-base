@@ -1,13 +1,7 @@
 ---
-title: "Component testing (part 1 of 2)"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/test-components-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
+id: test-components
+title: "Component testing"
 ---
-
-# Component testing
 
 ## Introduction
 
@@ -26,12 +20,12 @@ test('click should expand', async ({ mount }) => {
 Tests run in Node.js while components run in a real browser: real clicks are triggered, real layout is executed, visual regression is possible. At the same time, tests get everything Playwright Test offers: parallelism, parametrization, retries and post-mortem tracing.
 
 :::note
-The experimental `@playwright/experimental-ct-react`, `-ct-react17` and `-ct-vue` packages have been removed and are no longer published. If you are still on them, stay on Playwright 1.62 until you have followed the migration guide below.
+The experimental `@playwright/experimental-ct-react`, `-ct-react17` and `-ct-vue` packages have been removed and are no longer published. If you are still on them, stay on Playwright 1.62 until you have followed the [migration guide](#migration-from-the-experimental-packages) below.
 :::
 
 ## Why a framework-agnostic approach
 
-The `@playwright/experimental-ct-*` packages let tests write JSX inline — `mount()`. To make that possible, Playwright had to control the entire pipeline: scan the tests for components, compile a bundle with its own copy of Vite and its own config, serve it from its own server, and marshal props and callbacks across the Node.js/browser boundary.
+The `@playwright/experimental-ct-*` packages let tests write JSX inline — `mount(<Button onClick={spy} />)`. To make that possible, Playwright had to control the entire pipeline: scan the tests for components, compile a bundle with its own copy of Vite and its own config, serve it from its own server, and marshal props and callbacks across the Node.js/browser boundary.
 
 That design kept the packages experimental forever:
 
@@ -83,7 +77,7 @@ If you prefer to write the gallery by hand, the installed skill contains the ful
 
 Add a project to your `playwright.config.ts` and point `baseURL` at the gallery:
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
@@ -113,7 +107,7 @@ export default defineConfig({
 
 Stories live next to the component they exercise. Each named export is one scenario:
 
-```js
+```js title="src/components/Button.story.tsx"
 import { Button } from './Button';
 
 export const Primary = () => <Button title='Submit' />;
@@ -123,7 +117,7 @@ export const Disabled = () => <Button title='Submit' disabled />;
 
 ### Step 4: Write a test
 
-```js
+```js title="tests/components/button.spec.ts"
 import { test, expect } from '@playwright/test';
 
 test('renders primary button', async ({ mount }) => {
@@ -170,7 +164,7 @@ Components take callbacks; tests want to assert they fired. Instead of marshalli
 }>
 <TabItem value="react">
 
-```js
+```js title="src/components/Expandable.story.tsx"
 import { useState } from 'react';
 import { Expandable } from './Expandable';
 
@@ -186,7 +180,7 @@ export const Stateful = () => {
 </TabItem>
 <TabItem value="vue">
 
-```js
+```js title="src/components/Expandable.story.ts"
 import { defineComponent, h, ref } from 'vue';
 import Expandable from './Expandable.vue';
 
@@ -208,7 +202,7 @@ export const Stateful = defineComponent(() => {
 </TabItem>
 </Tabs>
 
-```js
+```js title="tests/components/expandable.spec.ts"
 test('click should expand', async ({ mount }) => {
   const component = await mount('components/Expandable/Stateful');
   await component.getByRole('button').click();
@@ -227,14 +221,14 @@ This pattern is the heart of the methodology:
 
 When a scenario benefits from parameterizing, pass plain serializable props as the second argument to `mount`. The gallery hands them to the story as its props:
 
-```js
+```js title="src/components/Button.story.tsx"
 import { Button } from './Button';
 
 export const WithTitle = ({ title = 'Default' }: { title?: string }) =>
   <Button title={title} />;
 ```
 
-```js
+```js title="tests/components/button.spec.ts"
 import type { WithTitle } from '../../src/components/Button.story';
 
 const component = await mount<typeof WithTitle>('Button/WithTitle', { title: 'Hello' });
@@ -276,8 +270,84 @@ test('renders the error state', async ({ page, mount }) => {
 });
 ```
 
-The `serviceWorkers: 'block'` option from the config keeps the app's own service worker from serving cached responses that would shadow the routes. Teams with MSW handler libraries can start the worker inside a story or decorator instead.
+The `serviceWorkers: 'block'` option from the config keeps the app's own service worker from serving cached responses that would shadow the routes. Teams with [MSW](https://mswjs.io/) handler libraries can start the worker inside a story or decorator instead.
 
 ### Debugging stories
 
 Open the gallery URL in a browser and call `await window.mount({ story: 'components/Button/Primary' })` from the DevTools console — that is exactly what the `mount` fixture does. An unknown story or a render error rejects `window.mount`, which surfaces as the test's `mount()` throwing with a real stack. To browse without the console, give your gallery an optional index page listing all discovered stories.
+
+## Migration from the experimental packages
+
+The experimental packages compiled JSX in the test file and marshalled it into the browser. The gallery pattern moves the scenario into a story export that runs natively in the browser. Here is how the concepts map:
+
+| `@playwright/experimental-ct-*` | Story gallery |
+|---|---|
+| `mount(<Button onClick={spy} />)` | Stateful story: the story provides `onClick` and records the effect into a hidden input; the test asserts with `toHaveValue()` |
+| Plain data props from the test | Unchanged in spirit: `mount(id, props)` |
+| JSX children / slots from the test | One story export per composition (Vue: a `.story.vue` file for slot-heavy scenarios) |
+| `component.update(<Button count={2} />)` | `component.update({ count: 2 })` |
+| `component.unmount()` | `component.unmount()` |
+| `beforeMount` / `afterMount` hooks | The body of the gallery's `window.mount` (global), or story decorators (per-story) |
+| `hooksConfig` per-test variation | Props: `mount('App/Routing', { route: '/dashboard' })`, interpreted by the story |
+| `router` fixture / MSW handlers in Node.js | [`method: Page.route`] in the test, or MSW `setupWorker` inside a story |
+| `playwright/index.html` (styles, theme) | The gallery's `index.html` and entry module imports |
+| `ctViteConfig`, `ctPort`, `ctTemplateDir` | Gone — the gallery runs through your own dev server; the port lives in `webServer` and `baseURL` |
+| `defineConfig` from the ct package | Plain `defineConfig` from `@playwright/test` |
+
+A typical spec migrates like this:
+
+```js title="Before: button.spec.tsx"
+import { test, expect } from '@playwright/experimental-ct-react';
+import Button from '../src/components/Button';
+
+test('counts clicks', async ({ mount }) => {
+  let clicks = 0;
+  const component = await mount(<Button title='Submit' onClick={() => ++clicks} />);
+  await component.getByRole('button').click();
+  expect(clicks).toBe(1);
+});
+```
+
+```js title="After: src/components/Button.story.tsx"
+import { useState } from 'react';
+import { Button } from './Button';
+
+export const CountsClicks = () => {
+  const [clicks, setClicks] = useState(0);
+  return <>
+    <Button title='Submit' onClick={() => setClicks(count => count + 1)} />
+    <form hidden><input data-testid='click-count' readOnly value={String(clicks)} /></form>
+  </>;
+};
+```
+
+```js title="After: tests/components/button.spec.ts"
+import { test, expect } from '@playwright/test';
+
+test('counts clicks', async ({ mount }) => {
+  const component = await mount('components/Button/CountsClicks');
+  await component.getByRole('button').click();
+  await expect(component.getByTestId('click-count')).toHaveValue('1');
+});
+```
+
+Migrate incrementally: while pinned to Playwright 1.62, set up the gallery and the `components` project alongside the old CT project, port spec by spec, then drop the `@playwright/experimental-ct-*` dependency along with `playwright/index.html`, `playwright/index.ts` and `playwright/.cache` and upgrade.
+
+Things to watch for:
+
+- **Story ids are strings.** Renaming or moving a story breaks specs at runtime, not compile time. Using `mount<typeof Story>` at least ties the props to the story at compile time.
+- **Per-test JSX is gone.** A test that built a different JSX tree per test becomes one story export per composition — which is the point: every composition worth testing is worth naming and reviewing.
+
+## Frequently asked questions
+
+### How do I access the component's methods or its instance?
+
+Accessing a component's internal methods or its instance within test code is neither recommended nor supported. Instead, focus on observing and interacting with the component from a user's perspective — click it, look at the page, and record internal effects into the DOM through the story. Tests become less fragile and more valuable when they avoid implementation details. If a test fails when run from a user's perspective, it likely means the automated test has uncovered a genuine bug.
+
+### Can I keep using my bundler plugins, aliases and CSS setup?
+
+Yes — that is the core of the design. The gallery is served by your own dev server, so whatever your app can render, your stories can render. There is no second bundler config to keep in sync.
+
+### What about frameworks other than React and Vue?
+
+Ask your coding agent to implement the gallery contract for your framework: resolve a story id to a component, render it into `#root`, reuse the root across calls so `update()` preserves state. The `mount` fixture does not know or care which framework is on the other side.

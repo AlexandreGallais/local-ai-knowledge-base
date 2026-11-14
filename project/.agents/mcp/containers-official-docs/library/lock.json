@@ -1,0 +1,56 @@
+{
+  "dockerfile": {
+    "commit": "f55949dea4f03bb9d85b73e9afc9a609291289db",
+    "files": 25,
+    "bytes": 157764,
+    "built": "2026-11-14"
+  },
+  "docker-manuals": {
+    "commit": "553482ce632f00c6e7faabab863422b4916e7c18",
+    "files": 298,
+    "bytes": 2923459,
+    "built": "2026-11-14"
+  },
+  "docker-cli": {
+    "commit": "5457199aa57c45e990c59c89cab5f02b817238d7",
+    "files": 185,
+    "bytes": 1094308,
+    "built": "2026-11-14"
+  },
+  "podman": {
+    "commit": "055de046937d29450f310fce0fe3071485d8bed9",
+    "files": 506,
+    "bytes": 1180136,
+    "built": "2026-11-14"
+  },
+  "compose-spec": {
+    "commit": "3a4a6995e4a971f6173dff9130cb3e38e6738651",
+    "files": 28,
+    "bytes": 319507,
+    "built": "2026-11-14"
+  },
+  "devcontainers-spec": {
+    "commit": "c95ffeed1d059abfe9ffbe79762dc2fa4e7c2421",
+    "files": 18,
+    "bytes": 177224,
+    "built": "2026-11-14"
+  },
+  "oci-image-spec": {
+    "commit": "147f9c13cedb47a0c4d9a11a222961073d585877",
+    "files": 14,
+    "bytes": 115727,
+    "built": "2026-11-14"
+  },
+  "oci-runtime-spec": {
+    "commit": "92249139eea7161e13745abd4cb6d0ea02a3227a",
+    "files": 19,
+    "bytes": 199846,
+    "built": "2026-11-14"
+  },
+  "oci-distribution-spec": {
+    "commit": "a139cc423184af6078077b9b7ee336eddbd03f8f",
+    "files": 7,
+    "bytes": 77305,
+    "built": "2026-11-14"
+  }
+}

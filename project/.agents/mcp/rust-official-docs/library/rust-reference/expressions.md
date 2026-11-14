@@ -1,17 +1,8 @@
----
-title: "Expressions"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/expressions.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[expr]
 # Expressions
 
 r[expr.syntax]
-```grammar
+```grammar,expressions
 Expression ->
       ExpressionWithoutBlock
     | ExpressionWithBlock
@@ -73,7 +64,7 @@ The meaning of each kind of expression dictates several things:
 r[expr.structure]
 In this way, the structure of expressions dictates the structure of execution. Blocks are just another kind of expression, so blocks, statements, expressions, and blocks again can recursively nest inside each other to an arbitrary depth.
 
-> **Note:**
+> [!NOTE]
 > We give names to the operands of expressions so that we may discuss them, but these names are not stable and may be changed.
 
 r[expr.precedence]
@@ -83,25 +74,25 @@ The precedence of Rust operators and expressions is ordered as follows, going fr
 
 | Operator/Expression         | Associativity       |
 |-----------------------------|---------------------|
-| Paths          |                     |
-| Method calls |                     |
-| Field expressions | left to right   |
-| Function calls, array indexing | |
-| `?`             |                     |
-| Unary `-` `!` `*` borrow | |
-| `as`             | left to right       |
-| `*` `/` `%` | left to right       |
-| `+` `-` | left to right       |
-| `<<` `>>` | left to right     |
-| `&`     | left to right       |
-| `^`     | left to right       |
-| `&#124;` | left to right       |
-| `==` `!=` `<` `>` `<=` `>=` | Require parentheses |
-| `&&`     | left to right       |
-| `&#124;&#124;` | left to right       |
-| `..` `..=` | Require parentheses |
-| `=` `+=` `-=` `*=` `/=` `%=`  `&=` `&#124;=` `^=` `<<=` `>>=` | right to left |
-| `return` `break` closures  | |
+| [Paths][expr.path]          |                     |
+| [Method calls][expr.method] |                     |
+| [Field expressions][expr.field] | left to right   |
+| [Function calls][expr.call], [array indexing][expr.array.index] | |
+| [`?`][expr.try]             |                     |
+| Unary [`-`][expr.negate] [`!`][expr.negate] [`*`][expr.deref] [borrow][expr.operator.borrow] | |
+| [`as`][expr.as]             | left to right       |
+| [`*`][expr.arith-logic] [`/`][expr.arith-logic] [`%`][expr.arith-logic] | left to right       |
+| [`+`][expr.arith-logic] [`-`][expr.arith-logic] | left to right       |
+| [`<<`][expr.arith-logic] [`>>`][expr.arith-logic] | left to right     |
+| [`&`][expr.arith-logic]     | left to right       |
+| [`^`][expr.arith-logic]     | left to right       |
+| [<code>&#124;</code>][expr.arith-logic] | left to right       |
+| [`==`][expr.cmp] [`!=`][expr.cmp] [`<`][expr.cmp] [`>`][expr.cmp] [`<=`][expr.cmp] [`>=`][expr.cmp] | Require parentheses |
+| [`&&`][expr.bool-logic]     | left to right       |
+| [<code>&#124;&#124;</code>][expr.bool-logic] | left to right       |
+| [`..`][expr.range] [`..=`][expr.range] | Require parentheses |
+| [`=`][expr.assign] [`+=`][expr.compound-assign] [`-=`][expr.compound-assign] [`*=`][expr.compound-assign] [`/=`][expr.compound-assign] [`%=`][expr.compound-assign] <br> [`&=`][expr.compound-assign] [<code>&#124;=</code>][expr.compound-assign] [`^=`][expr.compound-assign] [`<<=`][expr.compound-assign] [`>>=`][expr.compound-assign] | right to left |
+| [`return`][expr.return] [`break`][expr.loop.break] [closures][expr.closure]  | |
 
 r[expr.operand-order]
 ## Evaluation order of operands
@@ -132,7 +123,7 @@ The following list of expressions all evaluate their operands the same way, as d
 r[expr.operand-order.operands-before-primary]
 The operands of these expressions are evaluated prior to applying the effects of the expression. Expressions taking multiple operands are evaluated left to right as written in the source code.
 
-> **Note:**
+> [!NOTE]
 > Which subexpressions are the operands of an expression is determined by expression precedence as per the previous section.
 
 For example, the two `next` method calls will always be called in the same order:
@@ -148,7 +139,7 @@ assert_eq!(
 );
 ```
 
-> **Note:**
+> [!NOTE]
 > Since this is applied recursively, these expressions are also evaluated from innermost to outermost, ignoring siblings until there are no inner subexpressions.
 
 r[expr.place-value]
@@ -161,7 +152,7 @@ r[expr.place-value.place-memory-location]
 A *place expression* is an expression that represents a memory location.
 
 r[expr.place-value.place-expr-kinds]
-These expressions are [paths] which refer to local variables, [static variables], dereferences (`*expr`), [array indexing] expressions (`expr[expr]`), [field] references (`expr.f`) and parenthesized place expressions.
+These expressions are [paths] which refer to local variables, [static variables], [dereferences][deref] (`*expr`), [array indexing] expressions (`expr[expr]`), [field] references (`expr.f`) and parenthesized place expressions.
 
 r[expr.place-value.value-expr-kinds]
 All other expressions are value expressions.
@@ -173,25 +164,25 @@ r[expr.place-value.place-context]
 The following contexts are *place expression* contexts:
 
 * The left operand of a [compound assignment] expression.
-* The operand of a unary [borrow], [raw borrow] or dereference operator.
+* The operand of a unary [borrow], [raw borrow] or [dereference][deref] operator.
 * The operand of a [field expression].
 * The indexed operand of an [array indexing expression].
 * The tuple operand of a [tuple indexing expression].
 * The operand of any [implicit borrow].
 * The initializer of a [let statement].
-* The [scrutinee] of an [`if let`], `match`, or [`while let`] expression.
+* The [scrutinee] of an [`if let`], [`match`][match], or [`while let`] expression.
 * The base of a [functional update] struct expression.
 
-> **Note:**
+> [!NOTE]
 > Historically, place expressions were called *lvalues* and value expressions were called *rvalues*.
 
 r[expr.place-value.assignee]
-An *assignee expression* is an expression that appears in the left operand of an assignment expression. Explicitly, the assignee expressions are:
+An *assignee expression* is an expression that appears in the left operand of an [assignment][assign] expression. Explicitly, the assignee expressions are:
 
 - Place expressions.
 - [Underscores].
 - [Tuples] of assignee expressions.
-- Slices of assignee expressions.
+- [Slices][expr.array.index] of assignee expressions.
 - [Tuple structs] of assignee expressions.
 - [Structs] of assignee expressions (with optionally named fields).
 - [Unit structs]
@@ -215,9 +206,9 @@ r[expr.move.movable-place]
 Only the following place expressions may be moved out of:
 
 * [Variables] which are not currently borrowed.
-* Temporary values.
-* Fields of a place expression which can be moved out of and don't implement [`Drop`].
-* The result of dereferencing an expression with type [`Box<T>`] and that can also be moved out of.
+* [Temporary values](#temporaries).
+* [Fields][field] of a place expression which can be moved out of and don't implement [`Drop`].
+* The result of [dereferencing][deref] an expression with type [`Box<T>`] and that can also be moved out of.
 
 r[expr.move.deinitialization]
 After moving out of a place expression that evaluates to a local variable, the location is deinitialized and cannot be read from again until it is reinitialized.
@@ -229,7 +220,7 @@ r[expr.mut]
 ### Mutability
 
 r[expr.mut.intro]
-For a place expression to be assigned to, mutably borrowed, [implicitly mutably borrowed], or bound to a pattern containing `ref mut`, it must be _mutable_. We call these *mutable place expressions*. In contrast, other place expressions are called *immutable place expressions*.
+For a place expression to be [assigned][assign] to, mutably [borrowed][borrow], [implicitly mutably borrowed], or bound to a pattern containing `ref mut`, it must be _mutable_. We call these *mutable place expressions*. In contrast, other place expressions are called *immutable place expressions*.
 
 r[expr.mut.valid-places]
 The following expressions can be mutable place expression contexts:
@@ -237,8 +228,8 @@ The following expressions can be mutable place expression contexts:
 * Mutable [variables] which are not currently borrowed.
 * [Mutable `static` items].
 * [Temporary values].
-* Fields: this evaluates the subexpression in a mutable place expression context.
-* Dereferences of a `*mut T` pointer.
+* [Fields][field]: this evaluates the subexpression in a mutable place expression context.
+* [Dereferences][deref] of a `*mut T` pointer.
 * Dereference of a variable, or field of a variable, with type `&mut T`. Note: This is an exception to the requirement of the next rule.
 * Dereferences of a type that implements `DerefMut`: this then requires that the value being dereferenced is evaluated in a mutable place expression context.
 * [Array indexing] of a type that implements `IndexMut`: this then evaluates the value being indexed, but not the index, in mutable place expression context.
@@ -252,10 +243,10 @@ r[expr.super-macros]
 ### Super macros
 
 r[expr.super-macros.intro]
-Certain built-in macros may create [temporaries] whose scopes may be [extended]. These temporaries are *super temporaries* and these macros are *super macros*. Invocations of these macros are *super macro call expressions*. Arguments to these macros may be *super operands*.
+Certain built-in macros may create [temporaries] whose [scopes][temporary scopes] may be [extended]. These temporaries are *super temporaries* and these macros are *super macros*. [Invocations][macro invocations] of these macros are *super macro call expressions*. Arguments to these macros may be *super operands*.
 
-> **Note:**
-> When a super macro call expression is an [extending expression], its super operands are [extending expressions] and the scopes of the super temporaries are [extended]. See [destructors.scope.lifetime-extension.exprs].
+> [!NOTE]
+> When a super macro call expression is an [extending expression], its super operands are [extending expressions] and the [scopes][temporary scopes] of the super temporaries are [extended]. See [destructors.scope.lifetime-extension.exprs].
 
 r[expr.super-macros.format_args]
 #### `format_args!`
@@ -263,7 +254,7 @@ r[expr.super-macros.format_args]
 r[expr.super-macros.format_args.super-operands]
 Except for the format string argument, all arguments passed to [`format_args!`] are *super operands*.
 
-```rust
+```rust,edition2024
 # fn temp() -> String { String::from("") }
 // Due to the call being an extending expression and the argument
 // being a super operand, the inner block is an extending expression,
@@ -283,7 +274,7 @@ x; // <-- The temporary is extended, allowing use here.
 
 The expansion of a call to [`format_args!`] sometimes creates other internal *super temporaries*.
 
-```rust
+```rust,compile_fail,E0716
 let x = {
     // This call creates an internal temporary.
     let x = format_args!("{:?}", 0);
@@ -298,7 +289,7 @@ let x = { let x = format_args!("{}", 0); x };
 x; // OK
 ```
 
-> **Note:**
+> [!NOTE]
 > The details of when [`format_args!`] does or does not create internal temporaries are currently unspecified.
 
 r[expr.super-macros.pin]
@@ -307,7 +298,7 @@ r[expr.super-macros.pin]
 r[expr.super-macros.pin.super-operands]
 The argument to [`pin!`] is a *super operand*.
 
-```rust
+```rust,edition2024
 # use core::pin::pin;
 # fn temp() {}
 // As above for `format_args!`.
@@ -330,7 +321,7 @@ r[expr.implicit-borrow]
 ### Implicit borrows
 
 r[expr.implicit-borrow-intro]
-Certain expressions will treat an expression as a place expression by implicitly borrowing it. For example, it is possible to compare two unsized slices for equality directly, because the `==` operator implicitly borrows its operands:
+Certain expressions will treat an expression as a place expression by implicitly borrowing it. For example, it is possible to compare two unsized [slices][slice] for equality directly, because the `==` operator implicitly borrows its operands:
 
 ```rust
 # let c = [1, 2, 3];
@@ -352,7 +343,7 @@ Implicit borrows may be taken in the following expressions:
 * Left operand in [field] expressions.
 * Left operand in [call expressions].
 * Left operand in [array indexing] expressions.
-* Operand of the dereference operator (`*`).
+* Operand of the [dereference operator][deref] (`*`).
 * Operands of [comparison].
 * Left operands of the [compound assignment].
 * Arguments to [`format_args!`] except the format string.
@@ -371,8 +362,69 @@ r[expr.attr.restriction]
 * Before an expression used as a [statement].
 * Elements of [array expressions], [tuple expressions], [call expressions], and tuple-style [struct] expressions.
 * The tail expression of [block expressions].
+<!-- Keep list in sync with block-expr.md -->
 
 r[expr.attr.never-before]
 They are never allowed before:
 * [Range] expressions.
 * Binary operator expressions ([ArithmeticOrLogicalExpression], [ComparisonExpression], [LazyBooleanExpression], [TypeCastExpression], [AssignmentExpression], [CompoundAssignmentExpression]).
+
+[`Box<T>`]:             special-types-and-traits.md#boxt
+[`Copy`]:               special-types-and-traits.md#copy
+[`Drop`]:               special-types-and-traits.md#drop
+[`if let`]:             expressions/if-expr.md#if-let-patterns
+[`format_args!`]:       core::format_args
+[`pin!`]:               core::pin::pin
+[`Sized`]:              special-types-and-traits.md#sized
+[`while let`]:          expressions/loop-expr.md#while-let-patterns
+[array expressions]:    expressions/array-expr.md
+[array indexing]:       expressions/array-expr.md#array-and-slice-indexing-expressions
+[array indexing expression]: expr.array.index
+[assign]:               expressions/operator-expr.md#assignment-expressions
+[block expressions]:    expressions/block-expr.md
+[borrow]:               expressions/operator-expr.md#borrow-operators
+[call expressions]:     expressions/call-expr.md
+[comparison]:           expressions/operator-expr.md#comparison-operators
+[compound assignment]:  expressions/operator-expr.md#compound-assignment-expressions
+[deref]:                expressions/operator-expr.md#the-dereference-operator
+[destructors]:          destructors.md
+[drop scope]:           destructors.md#drop-scopes
+[extended]:             destructors.scope.lifetime-extension
+[extending expression]: destructors.scope.lifetime-extension.exprs
+[extending expressions]: destructors.scope.lifetime-extension.exprs
+[field]:                expressions/field-expr.md
+[field expression]:     expr.field
+[functional update]:    expressions/struct-expr.md#functional-update-syntax
+[implicit borrow]:      #implicit-borrows
+[implicitly borrowed]:  expr.implicit-borrow
+[implicitly mutably borrowed]: #implicit-borrows
+[interior mutability]:  interior-mutability.md
+[let statement]:        statements.md#let-statements
+[macro invocations]:    macro.invocation
+[match]:                expressions/match-expr.md
+[method-call]:          expressions/method-call-expr.md
+[Mutable `static` items]: items/static-items.md#mutable-statics
+[Outer attributes]:     attributes.md
+[paths]:                expressions/path-expr.md
+[place expression contexts]: expr.place-value
+[promoted]:             destructors.md#constant-promotion
+[Range]:                expressions/range-expr.md
+[raw borrow]:           expressions/operator-expr.md#raw-borrow-operators
+[scrutinee]:            glossary.md#scrutinee
+[slice]:                types/slice.md
+[statement]:            statements.md
+[static variables]:     items/static-items.md
+[struct]:               expressions/struct-expr.md
+[Structs]:              expr.struct
+[temporaries]:          expr.temporary
+[temporary scopes]:     destructors.scope.temporary
+[Temporary values]:     #temporaries
+[tuple expressions]:    expressions/tuple-expr.md
+[tuple indexing expression]: expr.tuple-index
+[Tuple structs]:        items.struct.tuple
+[Tuples]:               expressions/tuple-expr.md
+[Underscores]:          expressions/underscore-expr.md
+[Unit structs]:         items.struct.unit
+[value expression context]: expr.place-value
+[value expression]:     expr.place-value
+[Variables]:            variables.md

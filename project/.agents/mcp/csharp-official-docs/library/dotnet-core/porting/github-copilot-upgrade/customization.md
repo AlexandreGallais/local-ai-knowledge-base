@@ -1,10 +1,12 @@
 ---
-title: "Customize GitHub Copilot upgrade"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/github-copilot-upgrade/customization.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Customize GitHub Copilot upgrade
+description: "Learn how to customize GitHub Copilot upgrade with custom skills, custom scenarios, scenario artifact edits, and chat instructions to encode your team's upgrade patterns."
+ms.topic: concept-article
+ms.date: 09/21/2026
+ai-usage: ai-assisted
+
+#customer intent: As a developer, I want to customize GitHub Copilot upgrade so that I can encode my team's upgrade patterns, enforce coding standards during upgrades, and define custom upgrade workflows.
+
 ---
 
 # Customize GitHub Copilot upgrade
@@ -20,7 +22,7 @@ GitHub Copilot upgrade is extensible. The agent provides multiple customization 
 | **Custom skills** | Team or personal | Permanent (checked into repo or user profile) | Medium |
 | **Custom scenarios** | Team or personal | Permanent | High |
 
-> **Tip:**
+> [!TIP]
 > Start with chat instructions and scenario artifact edits. Move to custom skills when you find yourself repeating the same instructions across upgrades.
 
 ## Customize through chat
@@ -36,7 +38,7 @@ Customize the agent's behavior in real time through natural conversation. The ag
 | _"Always use file-scoped namespaces"_ | Saved as a coding standard preference |
 | _"Pause after each task for my review"_ | Saved as an execution style preference |
 
-> **Tip:**
+> [!TIP]
 > To make an instruction persist across the entire upgrade, phrase it as a permanent preference: _"From now on, always..."_ or _"For all tasks in this upgrade..."_. The agent writes the instruction to `scenario-instructions.md`.
 
 ## Edit scenario artifacts
@@ -72,7 +74,7 @@ Add sections like these to guide the agent:
 - Keep existing repository interfaces during migration
 - Preserve all Entity Framework conventions
 
-## Key <example-value> Log
+## Key Decisions Log
 - 2025-01-15: Keep Newtonsoft.Json in SharedLib — third-party SDK requires it
 - 2025-01-16: Skip database project — DBA team will handle separately
 ```
@@ -94,7 +96,7 @@ Each task in `tasks/{taskId}/task.md` contains the task specification and workin
 - Add domain-specific context the agent missed.
 - Provide code examples for the desired outcome.
 
-> **Important:**
+> [!IMPORTANT]
 > The agent's tools manage `tasks.md` as a read-only dashboard. Don't edit `tasks.md` directly. The agent overwrites any manual changes. Edit `scenario-instructions.md` or individual `task.md` files instead.
 
 ## Create custom skills
@@ -109,7 +111,7 @@ Skills are the primary extension point for the agent. A skill is a Markdown file
 | `.github/upgrades/skills/my-skill.md` | Repository (upgrade-specific) | Skills specific to upgrade scenarios |
 | `%UserProfile%/.copilot/skills/my-skill.md` | User profile (personal, all repos) | Personal preferences and patterns |
 
-> **Tip:**
+> [!TIP]
 > Repository-level skills (`.github/skills/`) are the most common choice. They travel with the code, and the entire team can use them.
 
 ### Skill file structure
@@ -255,7 +257,7 @@ For each service contract:
 
 Place scenario files in `.github/skills/` or `.github/upgrades/skills/` for the agent to discover them.
 
-> **Tip:**
+> [!TIP]
 > The `scenarioTraitsSet` field defines traits that the agent uses to match your scenario against the solution's characteristics. These traits help the agent suggest your scenario when appropriate.
 
 ## Source control and branching
@@ -274,7 +276,7 @@ Example chat instructions:
 - _"Don't commit until I explicitly ask you to"_
 - _"Commit after every task with a descriptive message"_
 
-> **Tip:**
+> [!TIP]
 > For large multi-project upgrades, per-task branches give you flexibility to review and merge each change independently, or roll back a single task without affecting the rest.
 
 ## Skill loading priority
@@ -291,12 +293,12 @@ When the agent discovers multiple skills, it resolves them using a priority syst
 
 The agent collects skills from all sources. When skills have overlapping scope, higher-priority sources take precedence. The `discovery` field controls when the skill loads. `lazy` means on demand when relevant, and `preload` means always available.
 
-> **Tip:**
+> [!TIP]
 > You don't need to replace a built-in skill to change behavior. A higher-priority repository skill supplements the built-in skill, adding your team's specific conventions on top of the baseline behavior.
 
 ## Related content
 
-- Core concepts
-- .NET scenarios and skills
-- Apply custom .NET upgrade instructions
-- Best practices
+- [Core concepts](concepts.md)
+- [.NET scenarios and skills](dotnet-scenarios-and-skills.md)
+- [Apply custom .NET upgrade instructions](dotnet-how-to-custom-upgrade-instructions.md)
+- [Best practices](best-practices.md)

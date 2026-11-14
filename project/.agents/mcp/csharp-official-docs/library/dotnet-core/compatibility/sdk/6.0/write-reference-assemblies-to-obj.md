@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: Write reference assemblies to IntermediateOutputPath"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/6.0/write-reference-assemblies-to-obj.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 6 where reference assemblies are written to the IntermediateOutputPath by default.
+ms.date: 07/13/2021
 ---
-
 # Write reference assemblies to intermediate output
 
-The .NET SDK now writes reference assemblies to the `IntermediateOutputPath` instead of the `OutDir` by default. This change removes these build-time-only artifacts from outputs that you require at runtime.
+The .NET SDK now writes [reference assemblies](../../../../standard/assembly/reference-assemblies.md) to the `IntermediateOutputPath` instead of the `OutDir` by default. This change removes these build-time-only artifacts from outputs that you require at runtime.
 
 ## Version **introduced**
 
@@ -17,7 +13,7 @@ The .NET SDK now writes reference assemblies to the `IntermediateOutputPath` ins
 
 ## Old behavior
 
-Since reference assemblies were added, the .NET SDK has written reference assemblies to the *ref* directory in the `OutDir` directory of the compilation. In .NET 5, the ProduceReferenceAssembly property was introduced and defaulted to `true` for `net5.0` and later applications. With this change, many applications began implicitly generating reference assemblies in the `OutDir` directory.
+Since reference assemblies were added, the .NET SDK has written reference assemblies to the *ref* directory in the `OutDir` directory of the compilation. In .NET 5, the [ProduceReferenceAssembly](../../../../csharp/language-reference/compiler-options/output.md#producereferenceassembly) property was introduced and defaulted to `true` for `net5.0` and later applications. With this change, many applications began implicitly generating reference assemblies in the `OutDir` directory.
 
 ## New behavior
 
@@ -31,4 +27,4 @@ Reference assemblies are generally not runtime assets, and so don't belong in th
 
 If you have custom build logic and you need to manipulate the reference assemblies, use the `TargetRefPath` property to get the correct path.
 
-If an external system requires the reference assembly in `OutDir`, set the MSBuild property ProduceReferenceAssemblyInOutDir to `true` in your project file.
+If an external system requires the reference assembly in `OutDir`, set the MSBuild property [ProduceReferenceAssemblyInOutDir](../../../project-sdk/msbuild-props.md#producereferenceassemblyinoutdir) to `true` in your project file.

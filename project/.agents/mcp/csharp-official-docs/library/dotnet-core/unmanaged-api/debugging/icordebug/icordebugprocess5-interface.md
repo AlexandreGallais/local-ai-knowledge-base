@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugProcess5 Interface"
 title: "ICorDebugProcess5 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess5-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugProcess5"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugProcess5"
+helpviewer_keywords:
+  - "ICorDebugProcess5 interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugProcess5 Interface
 
 Extends the ICorDebugProcess interface to support access to the managed heap, to provide information about garbage collection of managed objects, and to determine whether a debugger loads images from the application local native image cache.
@@ -15,29 +23,29 @@ Extends the ICorDebugProcess interface to support access to the managed heap, to
 
 |Method|Description|
 |------------|-----------------|
-|EnableNGenPolicy Method|Sets a value that determines how an application loads native images while running under a managed debugger.|
-|EnumerateGCReferences Method|Gets an enumerator for all objects that are to be garbage-collected in a process.|
-|EnumerateHandles Method|Gets an enumerator for object handles in a process.|
-|EnumerateHeap Method|Gets an enumerator for objects on the managed heap.|
-|EnumerateHeapRegions Method|Gets an enumerator for regions of the managed heap.|
-|GetArrayLayout Method|Gets information about the layout of an array in memory.|
-|GetGCHeapInformation Method|Gets a pointer to a COR_HEAPINFO structure that contains information about objects that are to be garbage-collected on the managed heap.|
-|GetObject Method|Gets a pointer to an object on the managed heap.|
-|GetTypeFields Method|Gets a pointer to an array that contains field information for a type based on its type identifier.|
-|GetTypeForTypeID Method|Gets a type object that provides information about an object based on its type identifiers.|
-|GetTypeID Method|Gets the type identifier for the object at a specified address.|
-|GetTypeLayout Method|Gets information about the layout of an object in memory based on its type identifier.|
+|[EnableNGenPolicy Method](icordebugprocess5-enablengenpolicy-method.md)|Sets a value that determines how an application loads native images while running under a managed debugger.|
+|[EnumerateGCReferences Method](icordebugprocess5-enumerategcreferences-method.md)|Gets an enumerator for all objects that are to be garbage-collected in a process.|
+|[EnumerateHandles Method](icordebugprocess5-enumeratehandles-method.md)|Gets an enumerator for object handles in a process.|
+|[EnumerateHeap Method](icordebugprocess5-enumerateheap-method.md)|Gets an enumerator for objects on the managed heap.|
+|[EnumerateHeapRegions Method](icordebugprocess5-enumerateheapregions-method.md)|Gets an enumerator for regions of the managed heap.|
+|[GetArrayLayout Method](icordebugprocess5-getarraylayout-method.md)|Gets information about the layout of an array in memory.|
+|[GetGCHeapInformation Method](icordebugprocess5-getgcheapinformation-method.md)|Gets a pointer to a [COR_HEAPINFO](cor-heapinfo-structure.md) structure that contains information about objects that are to be garbage-collected on the managed heap.|
+|[GetObject Method](icordebugprocess5-getobject-method.md)|Gets a pointer to an object on the managed heap.|
+|[GetTypeFields Method](icordebugprocess5-gettypefields-method.md)|Gets a pointer to an array that contains field information for a type based on its type identifier.|
+|[GetTypeForTypeID Method](icordebugprocess5-gettypefortypeid-method.md)|Gets a type object that provides information about an object based on its type identifiers.|
+|[GetTypeID Method](icordebugprocess5-gettypeid-method.md)|Gets the type identifier for the object at a specified address.|
+|[GetTypeLayout Method](icordebugprocess5-gettypelayout-method.md)|Gets information about the layout of an object in memory based on its type identifier.|
 
 ## Remarks
 
-This interface logically extends the ICorDebugProcess, ICorDebugProcess2, and ICorDebugProcess3 interfaces.
+This interface logically extends the ICorDebugProcess, ICorDebugProcess2, and [ICorDebugProcess3](icordebugprocess3-interface.md) interfaces.
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either from another machine or from another process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

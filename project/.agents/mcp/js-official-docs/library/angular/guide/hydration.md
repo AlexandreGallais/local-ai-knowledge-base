@@ -1,12 +1,3 @@
----
-title: "Hydration (part 1 of 2)"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/hydration.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Hydration
 
 ## What is hydration
@@ -15,13 +6,13 @@ Hydration is the process that restores the server-side rendered application on t
 
 ## Why is hydration important?
 
-Hydration improves application performance by avoiding extra work to re-create DOM nodes. Instead, Angular tries to match existing DOM elements to the application's structure at runtime and reuses DOM nodes when possible. This results in a performance improvement that can be measured using Core Web Vitals (CWV) statistics, such as reducing the First Input Delay (FID) and Largest Contentful Paint (LCP), as well as Cumulative Layout Shift (CLS). Improving these numbers also affects things like SEO performance.
+Hydration improves application performance by avoiding extra work to re-create DOM nodes. Instead, Angular tries to match existing DOM elements to the application's structure at runtime and reuses DOM nodes when possible. This results in a performance improvement that can be measured using [Core Web Vitals (CWV)](https://web.dev/learn-core-web-vitals/) statistics, such as reducing the First Input Delay ([FID](https://web.dev/fid/)) and Largest Contentful Paint ([LCP](https://web.dev/lcp/)), as well as Cumulative Layout Shift ([CLS](https://web.dev/cls/)). Improving these numbers also affects things like SEO performance.
 
-Without hydration enabled, server-side rendered Angular applications will destroy and re-render the application's DOM, which may result in a visible UI flicker. This re-rendering can negatively impact Core Web Vitals like LCP and cause a layout shift. Enabling hydration allows the existing DOM to be re-used and prevents a flicker.
+Without hydration enabled, server-side rendered Angular applications will destroy and re-render the application's DOM, which may result in a visible UI flicker. This re-rendering can negatively impact [Core Web Vitals](https://web.dev/learn-core-web-vitals/) like [LCP](https://web.dev/lcp/) and cause a layout shift. Enabling hydration allows the existing DOM to be re-used and prevents a flicker.
 
 ## How do you enable hydration in Angular
 
-Hydration can be enabled for server-side rendered (SSR) applications only. Follow the Angular SSR Guide to enable server-side rendering first.
+Hydration can be enabled for server-side rendered (SSR) applications only. Follow the [Angular SSR Guide](guide/ssr) to enable server-side rendering first.
 
 ### Using Angular CLI
 
@@ -64,17 +55,17 @@ IMPORTANT: Make sure that the `provideClientHydration()` call is also included i
 
 After you've configured hydration and have started up your server, load your application in the browser.
 
-HELPFUL: You will likely need to fix instances of Direct DOM Manipulation before hydration will fully work either by switching to Angular constructs or by using `ngSkipHydration`. See Constraints, Direct DOM Manipulation, and How to skip hydration for particular components for more details.
+HELPFUL: You will likely need to fix instances of Direct DOM Manipulation before hydration will fully work either by switching to Angular constructs or by using `ngSkipHydration`. See [Constraints](#constraints), [Direct DOM Manipulation](#direct-dom-manipulation), and [How to skip hydration for particular components](#how-to-skip-hydration-for-particular-components) for more details.
 
 While running an application in dev mode, you can confirm hydration is enabled by opening the Developer Tools in your browser and viewing the console. You should see a message that includes hydration-related stats, such as the number of components and nodes hydrated. Angular calculates the stats based on all components rendered on a page, including those that come from third-party libraries.
 
-You can also use Angular DevTools browser extension to see hydration status of components on a page. Angular DevTools also allows to enable an overlay to indicate which parts of the page were hydrated. If there is a hydration mismatch error - DevTools would also highlight a component that caused the error.
+You can also use [Angular DevTools browser extension](tools/devtools) to see hydration status of components on a page. Angular DevTools also allows to enable an overlay to indicate which parts of the page were hydrated. If there is a hydration mismatch error - DevTools would also highlight a component that caused the error.
 
 ## Capturing and replaying events
 
 When an application is rendered on the server, it is visible in a browser as soon as produced HTML loads. Users may assume that they can interact with the page, but event listeners are not attached until hydration completes. The Event Replay feature captures all events that happen before hydration and replays those events once hydration has completed.
 
-Event replay is enabled alongside incremental hydration. If you opt out of incremental hydration with `withNoIncrementalHydration()`, you can still enable event replay using the `withEventReplay()` function:
+Event replay is enabled alongside [incremental hydration](guide/incremental-hydration). If you opt out of incremental hydration with `withNoIncrementalHydration()`, you can still enable event replay using the `withEventReplay()` function:
 
 ```typescript
 import {
@@ -95,16 +86,16 @@ Event Replay is a feature that improves user experience by capturing user events
 
 The Event Replay is divided into three main phases:
 
-- **Capturing user interactions**
+- **Capturing user interactions**<br>
   Prior to **Hydration**, Event Replay captures and stores all interactions that the user may perform, such as clicks and other browser native events.
 
-- **Storing events**
+- **Storing events**<br>
   The **Event Contract** keeps in memory all the interactions recorded in the previous step, ensuring that they are not lost for later replay.
 
-- **Relaunch of events**
+- **Relaunch of events**<br>
   Once **Hydration** is complete, Angular re-invokes the captured events.
 
-Event replay supports _native browser events_, for example `click`, `mouseover`, and `focusin`. If you'd like to learn more about JSAction, the library that powers event replay, you can read more on the readme.
+Event replay supports _native browser events_, for example `click`, `mouseover`, and `focusin`. If you'd like to learn more about JSAction, the library that powers event replay, you can read more [on the readme](https://github.com/angular/angular/tree/main/packages/core/primitives/event-dispatch#readme).
 
 This feature ensures a consistent user experience, preventing user actions performed before hydration from being ignored.
 
@@ -120,9 +111,9 @@ If there is a mismatch between server and client DOM tree structures, the hydrat
 
 If you have components that manipulate the DOM using native DOM APIs or use `innerHTML` or `outerHTML`, the hydration process will encounter errors. Specific cases where DOM manipulation is a problem are situations like accessing the `document`, querying for specific elements, and injecting additional nodes using `appendChild`. Detaching DOM nodes and moving them to other locations will also result in errors.
 
-This is because Angular is unaware of these DOM changes and cannot resolve them during the hydration process. Angular will expect a certain structure, but it will encounter a different structure when attempting to hydrate. This mismatch will result in hydration failure and throw a DOM mismatch error (see below).
+This is because Angular is unaware of these DOM changes and cannot resolve them during the hydration process. Angular will expect a certain structure, but it will encounter a different structure when attempting to hydrate. This mismatch will result in hydration failure and throw a DOM mismatch error ([see below](#errors)).
 
-It is best to refactor your component to avoid this sort of DOM manipulation. Try to use Angular APIs to do this work, if you can. If you cannot refactor this behavior, use the `ngSkipHydration` attribute (described below) until you can refactor into a hydration friendly solution.
+It is best to refactor your component to avoid this sort of DOM manipulation. Try to use Angular APIs to do this work, if you can. If you cannot refactor this behavior, use the `ngSkipHydration` attribute ([described below](#how-to-skip-hydration-for-particular-components)) until you can refactor into a hydration friendly solution.
 
 ### Valid HTML structure
 
@@ -130,13 +121,13 @@ There are a few cases where if you have a component template that does not have 
 
 As an example, here are some of the most common cases of this issue.
 
-- `` without a ``
-- `` inside a ``
-- `` inside another ``
+- `<table>` without a `<tbody>`
+- `<div>` inside a `<p>`
+- `<a>` inside another `<a>`
 
-If you are uncertain about whether your HTML is valid, you can use a syntax validator to check it.
+If you are uncertain about whether your HTML is valid, you can use a [syntax validator](https://validator.w3.org/) to check it.
 
-NOTE: While the HTML standard does not require the `` element inside tables, modern browsers automatically create a `` element in tables that do not declare one. Because of this inconsistency, always explicitly declare a `` element in tables to avoid hydration errors.
+NOTE: While the HTML standard does not require the `<tbody>` element inside tables, modern browsers automatically create a `<tbody>` element in tables that do not declare one. Because of this inconsistency, always explicitly declare a `<tbody>` element in tables to avoid hydration errors.
 
 ### Preserve Whitespaces Configuration
 
@@ -154,13 +145,13 @@ Providing a custom or a "noop" Zone.js implementation may lead to a different ti
 
 ## Errors
 
-There are several hydration related errors you may encounter ranging from node mismatches to cases when the `ngSkipHydration` was used on an invalid host node. The most common error case that may occur is due to direct DOM manipulation using native APIs that results in hydration being unable to find or match the expected DOM tree structure on the client that was rendered by the server. The other case where you may encounter this type of error was mentioned in the Valid HTML structure section earlier. So, make sure the HTML in your templates is using valid structure, and you'll avoid that error case.
+There are several hydration related errors you may encounter ranging from node mismatches to cases when the `ngSkipHydration` was used on an invalid host node. The most common error case that may occur is due to direct DOM manipulation using native APIs that results in hydration being unable to find or match the expected DOM tree structure on the client that was rendered by the server. The other case where you may encounter this type of error was mentioned in the [Valid HTML structure](#valid-html-structure) section earlier. So, make sure the HTML in your templates is using valid structure, and you'll avoid that error case.
 
-For a full reference on hydration related errors, visit the Errors Reference Guide.
+For a full reference on hydration related errors, visit the [Errors Reference Guide](/errors).
 
 ## How to skip hydration for particular components
 
-Some components may not work properly with hydration enabled due to some of the aforementioned issues, like Direct DOM Manipulation. As a workaround, you can add the `ngSkipHydration` attribute to a component's tag in order to skip hydrating the entire component.
+Some components may not work properly with hydration enabled due to some of the aforementioned issues, like [Direct DOM Manipulation](#direct-dom-manipulation). As a workaround, you can add the `ngSkipHydration` attribute to a component's tag in order to skip hydrating the entire component.
 
 ```angular-html
 <app-example ngSkipHydration />
@@ -186,7 +177,7 @@ Keep in mind that adding the `ngSkipHydration` attribute to your root applicatio
 
 ## Hydration Timing and Application Stability
 
-Application stability is an important part of the hydration process. Hydration and any post-hydration processes only occur once the application has reported stability. There are a number of ways that stability can be delayed. Examples include setting timeouts and intervals, unresolved promises, and pending microtasks. In those cases, you may encounter the Application remains unstable error, which indicates that your app has not yet reached the stable state after 10 seconds. If you're finding that your application is not hydrating right away, take a look at what is impacting application stability and refactor to avoid causing these delays.
+Application stability is an important part of the hydration process. Hydration and any post-hydration processes only occur once the application has reported stability. There are a number of ways that stability can be delayed. Examples include setting timeouts and intervals, unresolved promises, and pending microtasks. In those cases, you may encounter the [Application remains unstable](errors/NG0506) error, which indicates that your app has not yet reached the stable state after 10 seconds. If you're finding that your application is not hydrating right away, take a look at what is impacting application stability and refactor to avoid causing these delays.
 
 ### Debugging Application Stability
 
@@ -205,3 +196,53 @@ bootstrapApplication(App, {
 When enabled, the utility logs pending tasks (`PendingTasks`) to the console. If your application uses Zone.js, you can also import `zone.js/plugins/task-tracking` to see which macrotasks are keeping the Angular Zone from stabilizing. This plugin provides the stack trace of the macrotask creation, effectively helping you identify the source of the delay.
 
 IMPORTANT: Angular does not remove the zone.js task tracking plugin or this utility from production bundles. Use them only for temporary debugging of stability issues during development, including for optimized production builds.
+
+## I18N
+
+HELPFUL: By default, Angular will skip hydration for components that use i18n blocks, effectively re-rendering those components from scratch.
+
+To enable hydration for i18n blocks, you can add [`withI18nSupport`](/api/platform-browser/withI18nSupport) to your `provideClientHydration` call.
+
+```typescript
+import {
+  bootstrapApplication,
+  provideClientHydration,
+  withI18nSupport,
+} from '@angular/platform-browser';
+...
+
+bootstrapApplication(App, {
+  providers: [provideClientHydration(withI18nSupport())]
+});
+```
+
+## Consistent rendering across server-side and client-side
+
+Avoid introducing `@if` blocks and other conditionals that display different content when server-side rendering than client-side rendering, such as using an `@if` block with Angular's `isPlatformBrowser` function. These rendering differences cause layout shifts, negatively impacting end-user experience and core web vitals.
+
+## Third Party Libraries with DOM Manipulation
+
+There are a number of third party libraries that depend on DOM manipulation to be able to render. D3 charts is a prime example. These libraries worked without hydration, but they may cause DOM mismatch errors when hydration is enabled. For now, if you encounter DOM mismatch errors using one of these libraries, you can add the `ngSkipHydration` attribute to the component that renders using that library.
+
+## Third Party Scripts with DOM Manipulation
+
+Many third party scripts, such as ad trackers and analytics, modify the DOM before hydration can occur. These scripts may cause hydration errors because the page no longer matches the structure expected by Angular. Prefer deferring this type of script until after hydration whenever possible. Consider using [`AfterNextRender`](api/core/afterNextRender) to delay the script until post-hydration processes have occurred.
+
+### CDNs and browser extensions
+
+Code outside your application can change the HTML from the server before hydration starts. You often can't see these errors on your computer, because they don't happen on your local server.
+
+**CDNs that change HTML.** Some CDN features change HTML on its way to the browser. For example, some features remove comment nodes and whitespace, but hydration needs them. Another example is Email Address Obfuscation from Cloudflare, which is on by default. This feature changes email addresses to elements like `<span class="__cf_email__" data-cfemail="...">`. It also changes `mailto:` links and adds a script that changes the content back. If this script doesn't run before hydration starts, Angular finds an element where it expects text. Your local server doesn't use the CDN, so your application works on your computer and fails only in production.
+
+**Browser extensions.** Some browser extensions change the page before hydration starts. Examples are click-to-call tools, translators, and password managers. You can't control these extensions. Only users who install them have the problem, so you may see errors from only some users.
+
+To fix these errors:
+
+- Add `ngSkipHydration` to the component host around the changed content. Add it in the template where you write that content, like this: `<app-contact ngSkipHydration><a href="tel:...">...</a></app-contact>`. Angular then renders this content again in the browser, and this removes the changes. You can use this attribute only on component host elements, so you can't add it to the `<a>` element. Read more in [how to skip hydration](#how-to-skip-hydration-for-particular-components).
+- Turn off the CDN feature for your application. In Cloudflare, turn off [Email Address Obfuscation](https://developers.cloudflare.com/waf/tools/scrape-shield/email-address-obfuscation/) in the security settings, or use a [Configuration Rule](https://developers.cloudflare.com/rules/configuration-rules/settings/) to turn it off for the hostnames of your application.
+
+NOTE: The `<!--email_off-->` comments from Cloudflare don't help in Angular templates, because the compiler removes comments from templates.
+
+## Incremental Hydration
+
+Incremental hydration is an advanced form of hydration that allows for more granular control over when hydration happens. See the [incremental hydration guide](guide/incremental-hydration) for more information.

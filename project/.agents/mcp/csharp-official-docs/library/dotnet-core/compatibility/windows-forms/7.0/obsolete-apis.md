@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: .NET 7 obsoletions and warnings in Windows Forms"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/windows-forms/7.0/obsolete-apis.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+titleSuffix: ""
+description: Learn about the .NET 7 breaking change where some Windows Forms APIs have been marked as obsolete or otherwise produce a warning.
+ms.date: 09/09/2022
 ---
-
 # Windows Forms obsoletions and warnings (.NET 7)
 
 Some Windows Forms APIs have been marked as obsolete, starting in .NET 7. Other APIs aren't obsolete but will cause a compile-time warning if you reference them.
@@ -23,9 +20,9 @@ The following table lists the custom diagnostic IDs and their corresponding warn
 
 | Diagnostic ID | Description | Severity | Version introduced |
 | - | - |
-| WFDEV001 | Casting to/from `System.IntPtr` is unsafe. Use `WParamInternal`, `LParamInternal`, or `ResultInternal` instead. | Warning | Preview 1 |
-| WFDEV002 | `System.Windows.Forms.DomainUpDown.DomainUpDownAccessibleObject` is no longer used to provide accessible support for `System.Windows.Forms.DomainUpDown` controls. Use `System.Windows.Forms.AccessibleObject` instead. | Warning | RC 1 |
-| WFDEV003 | `System.Windows.Forms.DomainUpDown.DomainItemAccessibleObject` is no longer used to provide accessible support for `System.Windows.Forms.DomainUpDown` items. Use `System.Windows.Forms.AccessibleObject` instead. | Warning | RC 1 |
+| [WFDEV001](/dotnet/desktop/winforms/wfdev-diagnostics/wfdev001) | Casting to/from <xref:System.IntPtr> is unsafe. Use `WParamInternal`, `LParamInternal`, or `ResultInternal` instead. | Warning | Preview 1 |
+| [WFDEV002](/dotnet/desktop/winforms/wfdev-diagnostics/wfdev002) | <xref:System.Windows.Forms.DomainUpDown.DomainUpDownAccessibleObject?displayProperty=nameWithType> is no longer used to provide accessible support for <xref:System.Windows.Forms.DomainUpDown> controls. Use <xref:System.Windows.Forms.AccessibleObject> instead. | Warning | RC 1 |
+| [WFDEV003](/dotnet/desktop/winforms/wfdev-diagnostics/wfdev003) | <xref:System.Windows.Forms.DomainUpDown.DomainItemAccessibleObject?displayProperty=nameWithType> is no longer used to provide accessible support for <xref:System.Windows.Forms.DomainUpDown> items. Use <xref:System.Windows.Forms.AccessibleObject> instead. | Warning | RC 1 |
 
 ## Version introduced
 
@@ -33,7 +30,7 @@ The following table lists the custom diagnostic IDs and their corresponding warn
 
 ## Type of breaking change
 
-These obsoletions and warnings can affect source compatibility.
+These obsoletions and warnings can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Recommended action
 
@@ -44,18 +41,18 @@ These obsoletions and warnings can affect source compatibility.
 
 ### WFDEV001
 
-- `System.Windows.Forms.Message.WParam`
-- `System.Windows.Forms.Message.LParam`
-- `System.Windows.Forms.Message.Result`
+- <xref:System.Windows.Forms.Message.WParam?displayProperty=fullName>
+- <xref:System.Windows.Forms.Message.LParam?displayProperty=fullName>
+- <xref:System.Windows.Forms.Message.Result?displayProperty=fullName>
 
 ### WFDEV002
 
-- `System.Windows.Forms.DomainUpDown.DomainUpDownAccessibleObject`
+- <xref:System.Windows.Forms.DomainUpDown.DomainUpDownAccessibleObject?displayProperty=fullName>
 
 ### WFDEV003
 
-- `System.Windows.Forms.DomainUpDown.DomainItemAccessibleObject`
+- <xref:System.Windows.Forms.DomainUpDown.DomainItemAccessibleObject?displayProperty=fullName>
 
 ## See also
 
-- Obsolete Windows Forms features in .NET 7+
+- [Obsolete Windows Forms features in .NET 7+](/dotnet/desktop/winforms/wfdev-diagnostics/obsoletions-overview)

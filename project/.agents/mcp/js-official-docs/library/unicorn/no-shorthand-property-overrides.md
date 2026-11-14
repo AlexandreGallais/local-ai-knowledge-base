@@ -1,23 +1,17 @@
----
-title: "no-shorthand-property-overrides"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-shorthand-property-overrides.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-shorthand-property-overrides
 
 📝 Disallow shorthand properties that override related longhand properties.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `recommended-css`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, 🎨 `recommended-css`, ☑️ `unopinionated`.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 CSS shorthands reset every related longhand that they omit. Placing a shorthand after a longhand in the same declaration block is therefore usually an accidental reset.
 
 This rule checks declarations only within the same block. It supports matching vendor-prefixed properties and intentionally ignores CSS-escaped property names.
 
-For JavaScript and TypeScript, it checks direct object literals in the `style` prop of intrinsic JSX elements, such as ``. It supports camelCase and quoted CSS property names, matching vendor prefixes, and TypeScript assertions or `satisfies`. Values must be literal strings or numbers; signed numbers and template strings without interpolation are also supported.
+For JavaScript and TypeScript, it checks direct object literals in the `style` prop of intrinsic JSX elements, such as `<div>`. It supports camelCase and quoted CSS property names, matching vendor prefixes, and TypeScript assertions or `satisfies`. Values must be literal strings or numbers; signed numbers and template strings without interpolation are also supported.
 
 Objects with spreads, computed keys, methods, or accessors are ignored. Dynamic, empty, nullish, boolean, and `!important` values are ignored. Style variables, custom component props, and CSS library APIs are not checked.
 
@@ -29,7 +23,7 @@ The rule includes properties reset indirectly by a shorthand, such as `border-im
 
 This rule does not provide an autofix or editor suggestion because the intended styling is ambiguous. Move the shorthand before the longhand if the longhand should win, include the intended value in the shorthand where possible, or remove the earlier declaration if the override is intentional.
 
-Related rules check different patterns: `cssicorn/no-duplicate-properties` checks repeated property names, `cssicorn/no-redundant-longhand-properties` combines longhands into shorthands, and `cssicorn/no-redundant-shorthand-values` removes repeated shorthand values.
+Related rules check different patterns: [`cssicorn/no-duplicate-properties`](https://github.com/sindresorhus/eslint-cssicorn/blob/main/docs/rules/no-duplicate-properties.md) checks repeated property names, [`cssicorn/no-redundant-longhand-properties`](https://github.com/sindresorhus/eslint-cssicorn/blob/main/docs/rules/no-redundant-longhand-properties.md) combines longhands into shorthands, and [`cssicorn/no-redundant-shorthand-values`](https://github.com/sindresorhus/eslint-cssicorn/blob/main/docs/rules/no-redundant-shorthand-values.md) removes repeated shorthand values.
 
 ## Examples
 
@@ -105,7 +99,7 @@ The effective `padding-left` in this example remains `1px`, because the first sh
 
 ## CSS files
 
-Enable it for CSS files with `@eslint/css`:
+Enable it for CSS files with [`@eslint/css`](https://github.com/eslint/css):
 
 ```js
 import css from '@eslint/css';

@@ -1,12 +1,3 @@
----
-title: "ZipEntry class (java.util.zip)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/zip/ZipEntry.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ZipEntry class (java.util.zip)
 
 ```java
@@ -15,7 +6,8 @@ public class ZipEntry implements ZipConstants, Cloneable
 
 This class is used to represent a ZIP file entry.
 
-**Since:** 1.1
+@author      David Connelly
+@since 1.1
 
 ## ZipEntry.STORED
 
@@ -41,14 +33,12 @@ public ZipEntry(String name)
 
 Creates a new ZIP entry with the specified name.
 
-Parameters:
+@param  name
+        The entry name
 
-- `name`: The entry name
-
-Throws:
-
-- `NullPointerException`: if the entry name is null
-- `IllegalArgumentException`: if the combined length of the entry name and the CEN Header size exceeds 65,535 bytes.
+@throws NullPointerException if the entry name is null
+@throws IllegalArgumentException if the combined length of the entry name
+and the {@linkplain #CENHDR CEN Header size} exceeds 65,535 bytes.
 
 ## ZipEntry.ZipEntry(ZipEntry)
 
@@ -59,19 +49,18 @@ public ZipEntry(ZipEntry e)
 Creates a new ZIP entry with fields taken from the specified
 ZIP entry.
 
-Parameters:
+@param  e
+        A ZIP Entry object
 
-- `e`: A ZIP Entry object
-
-Throws:
-
-- `NullPointerException`: if the entry object is null
+@throws NullPointerException if the entry object is null
 
 ## ZipEntry.getName()
 
 ```java
 public String getName()
 ```
+
+{@return the name of the entry}
 
 ## ZipEntry.setTime(long)
 
@@ -81,20 +70,19 @@ public void setTime(long time)
 
 Sets the last modification time of the entry.
 
- If the entry is output to a ZIP file or ZIP file formatted
+<p> If the entry is output to a ZIP file or ZIP file formatted
 output stream the last modification time set by this method will
-be stored into the `date and time fields` of the ZIP file
-entry and encoded in standard `MS-DOS date and time format`.
-The default TimeZone is
+be stored into the {@code date and time fields} of the ZIP file
+entry and encoded in standard {@code MS-DOS date and time format}.
+The {@link java.util.TimeZone#getDefault() default TimeZone} is
 used to convert the epoch time to the MS-DOS date and time.
 
-Parameters:
+@param  time
+        The last modification time of the entry in milliseconds
+        since the epoch
 
-- `time`: The last modification time of the entry in milliseconds since the epoch
-
-**See also:** #getTime()
-
-**See also:** #getLastModifiedTime()
+@see #getTime()
+@see #getLastModifiedTime()
 
 ## ZipEntry.getTime()
 
@@ -104,18 +92,18 @@ public long getTime()
 
 Returns the last modification time of the entry.
 
- If the entry is read from a ZIP file or ZIP file formatted
-input stream, this is the last modification time from the `date and time fields` of the ZIP file entry. The
-default TimeZone is used
+<p> If the entry is read from a ZIP file or ZIP file formatted
+input stream, this is the last modification time from the {@code
+date and time fields} of the ZIP file entry. The
+{@link java.util.TimeZone#getDefault() default TimeZone} is used
 to convert the standard MS-DOS formatted date and time to the
 epoch time.
 
-**Returns:** The last modification time of the entry in milliseconds
+@return  The last modification time of the entry in milliseconds
          since the epoch, or -1 if not specified
 
-**See also:** #setTime(long)
-
-**See also:** #setLastModifiedTime(FileTime)
+@see #setTime(long)
+@see #setLastModifiedTime(FileTime)
 
 ## ZipEntry.setTimeLocal(LocalDateTime)
 
@@ -125,30 +113,27 @@ public void setTimeLocal(LocalDateTime time)
 
 Sets the last modification time of the entry in local date-time.
 
- If the entry is output to a ZIP file or ZIP file formatted
+<p> If the entry is output to a ZIP file or ZIP file formatted
 output stream the last modification time set by this method will
-be stored into the `date and time fields` of the ZIP file
-entry and encoded in standard `MS-DOS date and time format`.
-If the date-time set is out of the range of the standard `MS-DOS date and time format`, the time will also be stored into
-ZIP file entry's extended timestamp fields in `optional extra data` in UTC time. The system default TimeZone is used to convert the local date-time
+be stored into the {@code date and time fields} of the ZIP file
+entry and encoded in standard {@code MS-DOS date and time format}.
+If the date-time set is out of the range of the standard {@code
+MS-DOS date and time format}, the time will also be stored into
+ZIP file entry's extended timestamp fields in {@code optional
+extra data} in UTC time. The {@link java.time.ZoneId#systemDefault()
+system default TimeZone} is used to convert the local date-time
 to UTC time.
 
- `LocalDateTime` uses a precision of nanoseconds, whereas
+<p> {@code LocalDateTime} uses a precision of nanoseconds, whereas
 this class uses a precision of milliseconds. The conversion will
 truncate any excess precision information as though the amount in
 nanoseconds was subject to integer division by one million.
 
-Parameters:
-
-- `time`: The last modification time of the entry in local date-time
-
-**See also:** #getTimeLocal()
-
-**Since:** 9
-
-Throws:
-
-- `NullPointerException`: if `time` is null
+@param  time
+        The last modification time of the entry in local date-time
+@throws NullPointerException if {@code time} is null
+@see #getTimeLocal()
+@since 9
 
 ## ZipEntry.getTimeLocal()
 
@@ -158,20 +143,19 @@ public LocalDateTime getTimeLocal()
 
 Returns the last modification time of the entry in local date-time.
 
- If the entry is read from a ZIP file or ZIP file formatted
+<p> If the entry is read from a ZIP file or ZIP file formatted
 input stream, this is the last modification time from the zip
-file entry's `optional extra data` if the extended timestamp
+file entry's {@code optional extra data} if the extended timestamp
 fields are present. Otherwise, the last modification time is read
-from entry's standard MS-DOS formatted `date and time fields`.
+from entry's standard MS-DOS formatted {@code date and time fields}.
 
- The system default TimeZone
+<p> The {@link java.time.ZoneId#systemDefault() system default TimeZone}
 is used to convert the UTC time to local date-time.
 
-**Returns:** The last modification time of the entry in local date-time
+@return  The last modification time of the entry in local date-time
 
-**See also:** #setTimeLocal(LocalDateTime)
-
-**Since:** 9
+@see #setTimeLocal(LocalDateTime)
+@since 9
 
 ## ZipEntry.setLastModifiedTime(FileTime)
 
@@ -181,24 +165,20 @@ public ZipEntry setLastModifiedTime(FileTime time)
 
 Sets the last modification time of the entry.
 
- When output to a ZIP file or ZIP file formatted output stream
+<p> When output to a ZIP file or ZIP file formatted output stream
 the last modification time set by this method will be stored into
-ZIP file entry's `date and time fields` in `standard MS-DOS date and time format`), and the extended timestamp fields
-in `optional extra data` in UTC time.
+ZIP file entry's {@code date and time fields} in {@code standard
+MS-DOS date and time format}), and the extended timestamp fields
+in {@code optional extra data} in UTC time.
 
-Parameters:
+@param  time
+        The last modification time of the entry
+@return This ZIP entry
 
-- `time`: The last modification time of the entry
+@throws NullPointerException if the {@code time} is null
 
-**Returns:** This ZIP entry
-
-**See also:** #getLastModifiedTime()
-
-**Since:** 1.8
-
-Throws:
-
-- `NullPointerException`: if the `time` is null
+@see #getLastModifiedTime()
+@since 1.8
 
 ## ZipEntry.getLastModifiedTime()
 
@@ -208,18 +188,18 @@ public FileTime getLastModifiedTime()
 
 Returns the last modification time of the entry.
 
- If the entry is read from a ZIP file or ZIP file formatted
+<p> If the entry is read from a ZIP file or ZIP file formatted
 input stream, this is the last modification time from the zip
-file entry's `optional extra data` if the extended timestamp
+file entry's {@code optional extra data} if the extended timestamp
 fields are present. Otherwise the last modification time is read
-from the entry's `date and time fields`, the default TimeZone is used to convert
+from the entry's {@code date and time fields}, the {@link
+java.util.TimeZone#getDefault() default TimeZone} is used to convert
 the standard MS-DOS formatted date and time to the epoch time.
 
-**Returns:** The last modification time of the entry, null if not specified
+@return The last modification time of the entry, null if not specified
 
-**See also:** #setLastModifiedTime(FileTime)
-
-**Since:** 1.8
+@see #setLastModifiedTime(FileTime)
+@since 1.8
 
 ## ZipEntry.setLastAccessTime(FileTime)
 
@@ -229,23 +209,18 @@ public ZipEntry setLastAccessTime(FileTime time)
 
 Sets the last access time of the entry.
 
- If set, the last access time will be stored into the extended
-timestamp fields of entry's `optional extra data`, when output
+<p> If set, the last access time will be stored into the extended
+timestamp fields of entry's {@code optional extra data}, when output
 to a ZIP file or ZIP file formatted stream.
 
-Parameters:
+@param  time
+        The last access time of the entry
+@return This ZIP entry
 
-- `time`: The last access time of the entry
+@throws NullPointerException if the {@code time} is null
 
-**Returns:** This ZIP entry
-
-**See also:** #getLastAccessTime()
-
-**Since:** 1.8
-
-Throws:
-
-- `NullPointerException`: if the `time` is null
+@see #getLastAccessTime()
+@since 1.8
 
 ## ZipEntry.getLastAccessTime()
 
@@ -255,15 +230,13 @@ public FileTime getLastAccessTime()
 
 Returns the last access time of the entry.
 
- The last access time is from the extended timestamp fields
-of entry's `optional extra data` when read from a ZIP file
+<p> The last access time is from the extended timestamp fields
+of entry's {@code optional extra data} when read from a ZIP file
 or ZIP file formatted stream.
 
-**Returns:** The last access time of the entry, null if not specified
-
-**See also:** #setLastAccessTime(FileTime)
-
-**Since:** 1.8
+@return The last access time of the entry, null if not specified
+@see #setLastAccessTime(FileTime)
+@since 1.8
 
 ## ZipEntry.setCreationTime(FileTime)
 
@@ -273,23 +246,18 @@ public ZipEntry setCreationTime(FileTime time)
 
 Sets the creation time of the entry.
 
- If set, the creation time will be stored into the extended
-timestamp fields of entry's `optional extra data`, when
+<p> If set, the creation time will be stored into the extended
+timestamp fields of entry's {@code optional extra data}, when
 output to a ZIP file or ZIP file formatted stream.
 
-Parameters:
+@param  time
+        The creation time of the entry
+@return This ZIP entry
 
-- `time`: The creation time of the entry
+@throws NullPointerException if the {@code time} is null
 
-**Returns:** This ZIP entry
-
-**See also:** #getCreationTime()
-
-**Since:** 1.8
-
-Throws:
-
-- `NullPointerException`: if the `time` is null
+@see #getCreationTime()
+@since 1.8
 
 ## ZipEntry.getCreationTime()
 
@@ -299,15 +267,13 @@ public FileTime getCreationTime()
 
 Returns the creation time of the entry.
 
- The creation time is from the extended timestamp fields of
-entry's `optional extra data` when read from a ZIP file
+<p> The creation time is from the extended timestamp fields of
+entry's {@code optional extra data} when read from a ZIP file
 or ZIP file formatted stream.
 
-**Returns:** the creation time of the entry, null if not specified
-
-**See also:** #setCreationTime(FileTime)
-
-**Since:** 1.8
+@return the creation time of the entry, null if not specified
+@see #setCreationTime(FileTime)
+@since 1.8
 
 ## ZipEntry.setSize(long)
 
@@ -317,15 +283,13 @@ public void setSize(long size)
 
 Sets the uncompressed size of the entry data.
 
-Parameters:
+@param size the uncompressed size in bytes
 
-- `size`: the uncompressed size in bytes
-
-**See also:** #getSize()
-
-Throws:
-
-- `IllegalArgumentException`: if the specified size is less than 0, is greater than 0xFFFFFFFF when ZIP64 format is not supported, or is less than 0 when ZIP64 is supported
+@throws IllegalArgumentException if the specified size is less
+        than 0, is greater than 0xFFFFFFFF when
+        <a href="package-summary.html#zip64">ZIP64 format</a> is not supported,
+        or is less than 0 when ZIP64 is supported
+@see #getSize()
 
 ## ZipEntry.getSize()
 
@@ -335,9 +299,8 @@ public long getSize()
 
 Returns the uncompressed size of the entry data.
 
-**Returns:** the uncompressed size of the entry data, or -1 if not known
-
-**See also:** #setSize(long)
+@return the uncompressed size of the entry data, or -1 if not known
+@see #setSize(long)
 
 ## ZipEntry.getCompressedSize()
 
@@ -347,12 +310,11 @@ public long getCompressedSize()
 
 Returns the size of the compressed entry data.
 
- In the case of a stored entry, the compressed size will be the same
+<p> In the case of a stored entry, the compressed size will be the same
 as the uncompressed size of the entry.
 
-**Returns:** the size of the compressed entry data, or -1 if not known
-
-**See also:** #setCompressedSize(long)
+@return the size of the compressed entry data, or -1 if not known
+@see #setCompressedSize(long)
 
 ## ZipEntry.setCompressedSize(long)
 
@@ -362,11 +324,9 @@ public void setCompressedSize(long csize)
 
 Sets the size of the compressed entry data.
 
-Parameters:
+@param csize the compressed size to set
 
-- `csize`: the compressed size to set
-
-**See also:** #getCompressedSize()
+@see #getCompressedSize()
 
 ## ZipEntry.setCrc(long)
 
@@ -376,15 +336,11 @@ public void setCrc(long crc)
 
 Sets the CRC-32 checksum of the uncompressed entry data.
 
-Parameters:
+@param crc the CRC-32 value
 
-- `crc`: the CRC-32 value
-
-**See also:** #getCrc()
-
-Throws:
-
-- `IllegalArgumentException`: if the specified CRC-32 value is less than 0 or greater than 0xFFFFFFFF
+@throws IllegalArgumentException if the specified CRC-32 value is
+        less than 0 or greater than 0xFFFFFFFF
+@see #getCrc()
 
 ## ZipEntry.getCrc()
 
@@ -394,10 +350,10 @@ public long getCrc()
 
 Returns the CRC-32 checksum of the uncompressed entry data.
 
-**Returns:** the CRC-32 checksum of the uncompressed entry data, or -1 if
+@return the CRC-32 checksum of the uncompressed entry data, or -1 if
 not known
 
-**See also:** #setCrc(long)
+@see #setCrc(long)
 
 ## ZipEntry.setMethod(int)
 
@@ -407,15 +363,11 @@ public void setMethod(int method)
 
 Sets the compression method for the entry.
 
-Parameters:
+@param method the compression method, either STORED or DEFLATED
 
-- `method`: the compression method, either STORED or DEFLATED
-
-**See also:** #getMethod()
-
-Throws:
-
-- `IllegalArgumentException`: if the specified compression method is invalid
+@throws  IllegalArgumentException if the specified compression
+         method is invalid
+@see #getMethod()
 
 ## ZipEntry.getMethod()
 
@@ -425,9 +377,8 @@ public int getMethod()
 
 Returns the compression method of the entry.
 
-**Returns:** the compression method of the entry, or -1 if not specified
-
-**See also:** #setMethod(int)
+@return the compression method of the entry, or -1 if not specified
+@see #setMethod(int)
 
 ## ZipEntry.setExtra(byte[])
 
@@ -437,21 +388,22 @@ public void setExtra(byte[] extra)
 
 Sets the optional extra field data for the entry.
 
- Invoking this method may change this entry's last modification
-time, last access time and creation time, if the `extra` field
-data includes the extensible timestamp fields, such as `NTFS tag 0x0001` or `Info-ZIP Extended Timestamp`, as specified in
-Info-ZIP
-Application Note 970311.
+<p> Invoking this method may change this entry's last modification
+time, last access time and creation time, if the {@code extra} field
+data includes the extensible timestamp fields, such as {@code NTFS tag
+0x0001} or {@code Info-ZIP Extended Timestamp}, as specified in
+<a href="http://www.info-zip.org/doc/appnote-19970311-iz.zip">Info-ZIP
+Application Note 970311</a>.
 
-Parameters:
+@param  extra
+        The extra field data bytes
 
-- `extra`: The extra field data bytes
+@throws IllegalArgumentException if the combined length of the specified
+extra field data, the {@linkplain #getName() entry name},
+the {@linkplain #getComment() entry comment}, and the
+{@linkplain #CENHDR CEN Header size} exceeds 65,535 bytes.
 
-**See also:** #getExtra()
-
-Throws:
-
-- `IllegalArgumentException`: if the combined length of the specified extra field data, the entry name, the entry comment, and the CEN Header size exceeds 65,535 bytes.
+@see #getExtra()
 
 ## ZipEntry.getExtra()
 
@@ -461,9 +413,9 @@ public byte[] getExtra()
 
 Returns the extra field data for the entry.
 
-**Returns:** the extra field data for the entry, or null if none
+@return the extra field data for the entry, or null if none
 
-**See also:** #setExtra(byte[])
+@see #setExtra(byte[])
 
 ## ZipEntry.setComment(String)
 
@@ -472,16 +424,12 @@ public void setComment(String comment)
 ```
 
 Sets the optional comment string for the entry.
-
-Parameters:
-
-- `comment`: the comment string
-
-**See also:** #getComment()
-
-Throws:
-
-- `IllegalArgumentException`: if the combined length of the specified entry comment, the entry name, the extra field data, and the CEN Header size exceeds 65,535 bytes.
+@param comment the comment string
+@throws IllegalArgumentException if the combined length
+of the specified entry comment, the {@linkplain #getName() entry name},
+the {@linkplain #getExtra() extra field data}, and the
+{@linkplain #CENHDR CEN Header size} exceeds 65,535 bytes.
+@see #getComment()
 
 ## ZipEntry.getComment()
 
@@ -491,9 +439,9 @@ public String getComment()
 
 Returns the comment string for the entry.
 
-**Returns:** the comment string for the entry, or null if none
+@return the comment string for the entry, or null if none
 
-**See also:** #setComment(String)
+@see #setComment(String)
 
 ## ZipEntry.isDirectory()
 
@@ -503,8 +451,7 @@ public boolean isDirectory()
 
 Returns true if this is a directory entry. A directory entry is
 defined to be one whose name ends with a '/'.
-
-**Returns:** true if this is a directory entry
+@return true if this is a directory entry
 
 ## ZipEntry.toString()
 

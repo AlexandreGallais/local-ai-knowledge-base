@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: PackagePart.GetStream() returns a non-seekable stream for compressed parts in ReadWrite packages"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/11/packagepart-getstream-non-seekable.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where PackagePart.GetStream() returns a forward-only stream instead of a seekable MemoryStream for compressed parts of a ReadWrite package."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
-
 # PackagePart.GetStream() returns a non-seekable stream for compressed parts in ReadWrite packages
 
-When you open a `System.IO.Packaging.Package` with <System.IO.FileAccess.ReadWrite?displayProperty=nameWithType> and then open a compressed part for reading that hasn't been modified in the current session, `System.IO.Packaging.PackagePart.GetStream*` now returns a forward-only stream instead of a seekable `System.IO.MemoryStream`.
+When you open a <xref:System.IO.Packaging.Package> with <System.IO.FileAccess.ReadWrite?displayProperty=nameWithType> and then open a compressed part for reading that hasn't been modified in the current session, <xref:System.IO.Packaging.PackagePart.GetStream*?displayProperty=nameWithType> now returns a forward-only stream instead of a seekable <xref:System.IO.MemoryStream>.
 
 ## Version introduced
 
@@ -65,13 +62,13 @@ The following scenarios aren't affected:
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
 Previously, opening a compressed part for reading from a `ReadWrite` package always decompressed the entire entry into a `MemoryStream` before it returned the stream. This approach produced a seekable stream, but it imposed unnecessary memory allocations and CPU overhead for the common case where callers only read the stream sequentially (for example, `XmlReader` or the Open XML SDK). The new behavior streams directly from the underlying ZIP archive entry for forward-only reads, which avoids the up-front decompression.
 
-For more information, see dotnet/runtime#129698.
+For more information, see [dotnet/runtime#129698](https://github.com/dotnet/runtime/pull/129698).
 
 ## Recommended action
 
@@ -89,6 +86,6 @@ Alternatively, if your use case doesn't require `ReadWrite` access to the packag
 
 ## Affected APIs
 
-- `System.IO.Packaging.PackagePart.GetStream`
-- `System.IO.Packaging.PackagePart.GetStream(System.IO.FileMode)`
-- `System.IO.Packaging.PackagePart.GetStream(System.IO.FileMode,System.IO.FileAccess)`
+- <xref:System.IO.Packaging.PackagePart.GetStream?displayProperty=fullName>
+- <xref:System.IO.Packaging.PackagePart.GetStream(System.IO.FileMode)?displayProperty=fullName>
+- <xref:System.IO.Packaging.PackagePart.GetStream(System.IO.FileMode,System.IO.FileAccess)?displayProperty=fullName>

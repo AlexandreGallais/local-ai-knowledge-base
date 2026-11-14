@@ -1,13 +1,8 @@
 ---
-title: "no-unused-private-class-members"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-unused-private-class-members.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-unused-private-class-members
+rule_type: problem
 ---
 
-# no-unused-private-class-members
 
 Private class members that are declared and not used anywhere in the code are most likely an error due to incomplete refactoring. Such class members take up space in the code and can lead to confusion by readers.
 
@@ -20,7 +15,7 @@ This rule reports unused private class members.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-unused-private-class-members: "error"*/
@@ -53,9 +48,11 @@ class E {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-unused-private-class-members: "error"*/
@@ -85,6 +82,8 @@ class C {
     }
 }
 ```
+
+:::
 
 ## Options
 

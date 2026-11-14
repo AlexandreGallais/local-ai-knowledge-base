@@ -1,13 +1,9 @@
 ---
-title: "no-implicit-coercion"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-implicit-coercion.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-implicit-coercion
+rule_type: suggestion
 ---
 
-# no-implicit-coercion
+
 
 In JavaScript, there are a lot of different ways to convert value types.
 Some of them might be hard to read and understand.
@@ -58,7 +54,7 @@ Note that operator `+` in `allow` list would allow `+foo` (number coercion) as w
 
 Examples of **incorrect** code for the default `{ "boolean": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-implicit-coercion: "error"*/
@@ -68,9 +64,11 @@ const b1 = ~foo.indexOf(".");
 // bitwise not is incorrect only with `indexOf`/`lastIndexOf` method calling.
 ```
 
+:::
+
 Examples of **correct** code for the default `{ "boolean": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-implicit-coercion: "error"*/
@@ -81,11 +79,13 @@ const b1 = foo.indexOf(".") !== -1;
 const n = ~foo; // This is a just bitwise not.
 ```
 
+:::
+
 ### number
 
 Examples of **incorrect** code for the default `{ "number": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-implicit-coercion: "error"*/
@@ -96,9 +96,11 @@ const n2 = foo - 0;
 const n3 = 1 * foo;
 ```
 
+:::
+
 Examples of **correct** code for the default `{ "number": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-implicit-coercion: "error"*/
@@ -110,11 +112,13 @@ const n2 = parseInt(foo, 10);
 const n3 = foo * 1/4; // `* 1` is allowed when followed by the `/` operator
 ```
 
+:::
+
 ### string
 
 Examples of **incorrect** code for the default `{ "string": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-implicit-coercion: "error"*/
@@ -125,9 +129,11 @@ foo += "";
 foo += ``;
 ```
 
+:::
+
 Examples of **correct** code for the default `{ "string": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-implicit-coercion: "error"*/
@@ -136,13 +142,15 @@ const s = String(foo);
 foo = String(foo);
 ```
 
+:::
+
 ### disallowTemplateShorthand
 
 This option is **not** affected by the `string` option.
 
 Examples of **incorrect** code for the `{ "disallowTemplateShorthand": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-implicit-coercion: ["error", { "disallowTemplateShorthand": true }]*/
@@ -150,9 +158,11 @@ Examples of **incorrect** code for the `{ "disallowTemplateShorthand": true }` o
 const s = `${foo}`;
 ```
 
+:::
+
 Examples of **correct** code for the `{ "disallowTemplateShorthand": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-implicit-coercion: ["error", { "disallowTemplateShorthand": true }]*/
@@ -168,9 +178,11 @@ const s3 = `${foo}${bar}`;
 const s4 = tag`${foo}`;
 ```
 
+:::
+
 Examples of **correct** code for the default `{ "disallowTemplateShorthand": false }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-implicit-coercion: ["error", { "disallowTemplateShorthand": false }]*/
@@ -178,13 +190,15 @@ Examples of **correct** code for the default `{ "disallowTemplateShorthand": fal
 const s = `${foo}`;
 ```
 
+:::
+
 ### allow
 
 Using `allow` list, we can override and allow specific operators.
 
 Examples of **correct** code for the sample `{ "allow": ["!!", "~"] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-implicit-coercion: [2, { "allow": ["!!", "~"] } ]*/
@@ -192,6 +206,8 @@ Examples of **correct** code for the sample `{ "allow": ["!!", "~"] }` option:
 const b = !!foo;
 const b1 = ~foo.indexOf(".");
 ```
+
+:::
 
 ## When Not To Use It
 

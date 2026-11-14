@@ -1,30 +1,19 @@
----
-title: "DynamicConstantDesc class (java.lang.constant)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/constant/DynamicConstantDesc.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # DynamicConstantDesc class (java.lang.constant)
 
 ```java
 public abstract non-sealed class DynamicConstantDesc<T> implements ConstantDesc
 ```
 
-A nominal descriptor for a
+A <a href="package-summary.html#nominal">nominal descriptor</a> for a
 dynamic constant (one described in the constant pool with
-`Constant_Dynamic_info`.)
+{@code Constant_Dynamic_info}.)
 
-Concrete subtypes of `DynamicConstantDesc` should be immutable
+<p>Concrete subtypes of {@linkplain DynamicConstantDesc} should be immutable
 and their behavior should not rely on object identity.
 
-Parameters:
+@param <T> the type of the dynamic constant
 
-- `<T>`: the type of the dynamic constant
-
-**Since:** 12
+@since 12
 
 ## DynamicConstantDesc.DynamicConstantDesc(DirectMethodHandleDesc, String, ClassDesc, ConstantDesc...)
 
@@ -34,19 +23,20 @@ protected DynamicConstantDesc(DirectMethodHandleDesc bootstrapMethod, String con
 
 Creates a nominal descriptor for a dynamic constant.
 
-Parameters:
-
-- `bootstrapMethod`: a `DirectMethodHandleDesc` describing the bootstrap method for the constant
-- `constantName`: The unqualified name that would appear in the `NameAndType` operand of the `LDC` for this constant
-- `constantType`: a `ClassDesc` describing the type that would appear in the `NameAndType` operand of the `LDC` for this constant
-- `bootstrapArgs`: `ConstantDesc`s describing the static arguments to the bootstrap, that would appear in the `BootstrapMethods` attribute
-
-**jvms:** 4.2.2 Unqualified Names
-
-Throws:
-
-- `NullPointerException`: if any argument is null
-- `IllegalArgumentException`: if the `name` has the incorrect format
+@param bootstrapMethod a {@link DirectMethodHandleDesc} describing the
+                       bootstrap method for the constant
+@param constantName The unqualified name that would appear in the {@code NameAndType}
+                    operand of the {@code LDC} for this constant
+@param constantType a {@link ClassDesc} describing the type
+                    that would appear in the {@code NameAndType} operand
+                    of the {@code LDC} for this constant
+@param bootstrapArgs {@link ConstantDesc}s describing the static arguments
+                     to the bootstrap, that would appear in the
+                     {@code BootstrapMethods} attribute
+@throws NullPointerException if any argument is null
+@throws IllegalArgumentException if the {@code name} has the incorrect
+format
+@jvms 4.2.2 Unqualified Names
 
 ## DynamicConstantDesc.ofCanonical(DirectMethodHandleDesc, String, ClassDesc, ConstantDesc[])
 
@@ -58,33 +48,33 @@ Returns a nominal descriptor for a dynamic constant, transforming it into
 a more specific type if the constant bootstrap is a well-known one and a
 more specific nominal descriptor type (e.g., ClassDesc) is available.
 
-Classes whose `Constable.describeConstable()` method produce
-a `DynamicConstantDesc` with a well-known bootstrap including
-`Class` (for instances describing primitive types), `Enum`,
-and `VarHandle`.
+<p>Classes whose {@link Constable#describeConstable()} method produce
+a {@linkplain DynamicConstantDesc} with a well-known bootstrap including
+{@link Class} (for instances describing primitive types), {@link Enum},
+and {@link VarHandle}.
 
-Bytecode-reading APIs that process the constant pool and wish to expose
-entries as `ConstantDesc` to their callers should generally use this
-method in preference to String, ClassDesc, ConstantDesc...)
+<p>Bytecode-reading APIs that process the constant pool and wish to expose
+entries as {@link ConstantDesc} to their callers should generally use this
+method in preference to {@link #ofNamed(DirectMethodHandleDesc, String, ClassDesc, ConstantDesc...)}
 because this may result in a more specific type that can be provided to
 callers.
 
-Parameters:
-
-- `<T>`: the type of the dynamic constant
-- `bootstrapMethod`: a `DirectMethodHandleDesc` describing the bootstrap method for the constant
-- `constantName`: The unqualified name that would appear in the `NameAndType` operand of the `LDC` for this constant
-- `constantType`: a `ClassDesc` describing the type that would appear in the `NameAndType` operand of the `LDC` for this constant
-- `bootstrapArgs`: `ConstantDesc`s describing the static arguments to the bootstrap, that would appear in the `BootstrapMethods` attribute
-
-**Returns:** the nominal descriptor
-
-**jvms:** 4.2.2 Unqualified Names
-
-Throws:
-
-- `NullPointerException`: if any argument is null
-- `IllegalArgumentException`: if the `name` has the incorrect format
+@param <T> the type of the dynamic constant
+@param bootstrapMethod a {@link DirectMethodHandleDesc} describing the
+                       bootstrap method for the constant
+@param constantName The unqualified name that would appear in the {@code NameAndType}
+                    operand of the {@code LDC} for this constant
+@param constantType a {@link ClassDesc} describing the type
+                    that would appear in the {@code NameAndType} operand
+                    of the {@code LDC} for this constant
+@param bootstrapArgs {@link ConstantDesc}s describing the static arguments
+                     to the bootstrap, that would appear in the
+                     {@code BootstrapMethods} attribute
+@return the nominal descriptor
+@throws NullPointerException if any argument is null
+@throws IllegalArgumentException if the {@code name} has the incorrect
+format
+@jvms 4.2.2 Unqualified Names
 
 ## DynamicConstantDesc.ofNamed(DirectMethodHandleDesc, String, ClassDesc, ConstantDesc...)
 
@@ -94,22 +84,22 @@ public static<T> DynamicConstantDesc<T> ofNamed(DirectMethodHandleDesc bootstrap
 
 Returns a nominal descriptor for a dynamic constant.
 
-Parameters:
-
-- `<T>`: the type of the dynamic constant
-- `bootstrapMethod`: a `DirectMethodHandleDesc` describing the bootstrap method for the constant
-- `constantName`: The unqualified name that would appear in the `NameAndType` operand of the `LDC` for this constant
-- `constantType`: a `ClassDesc` describing the type that would appear in the `NameAndType` operand of the `LDC` for this constant
-- `bootstrapArgs`: `ConstantDesc`s describing the static arguments to the bootstrap, that would appear in the `BootstrapMethods` attribute
-
-**Returns:** the nominal descriptor
-
-**jvms:** 4.2.2 Unqualified Names
-
-Throws:
-
-- `NullPointerException`: if any argument is null
-- `IllegalArgumentException`: if the `name` has the incorrect format
+@param <T> the type of the dynamic constant
+@param bootstrapMethod a {@link DirectMethodHandleDesc} describing the
+                       bootstrap method for the constant
+@param constantName The unqualified name that would appear in the {@code NameAndType}
+                    operand of the {@code LDC} for this constant
+@param constantType a {@link ClassDesc} describing the type
+                    that would appear in the {@code NameAndType} operand
+                    of the {@code LDC} for this constant
+@param bootstrapArgs {@link ConstantDesc}s describing the static arguments
+                     to the bootstrap, that would appear in the
+                     {@code BootstrapMethods} attribute
+@return the nominal descriptor
+@throws NullPointerException if any argument is null
+@throws IllegalArgumentException if the {@code name} has the incorrect
+format
+@jvms 4.2.2 Unqualified Names
 
 ## DynamicConstantDesc.of(DirectMethodHandleDesc, ConstantDesc...)
 
@@ -118,22 +108,18 @@ public static<T> DynamicConstantDesc<T> of(DirectMethodHandleDesc bootstrapMetho
 ```
 
 Returns a nominal descriptor for a dynamic constant whose name parameter
-is `ConstantDescs.DEFAULT_NAME`, and whose type parameter is always
+is {@link ConstantDescs#DEFAULT_NAME}, and whose type parameter is always
 the same as the bootstrap method return type.
 
-Parameters:
-
-- `<T>`: the type of the dynamic constant
-- `bootstrapMethod`: a `DirectMethodHandleDesc` describing the bootstrap method for the constant
-- `bootstrapArgs`: `ConstantDesc`s describing the static arguments to the bootstrap, that would appear in the `BootstrapMethods` attribute
-
-**Returns:** the nominal descriptor
-
-**jvms:** 4.2.2 Unqualified Names
-
-Throws:
-
-- `NullPointerException`: if any argument is null
+@param <T> the type of the dynamic constant
+@param bootstrapMethod a {@link DirectMethodHandleDesc} describing the
+                       bootstrap method for the constant
+@param bootstrapArgs {@link ConstantDesc}s describing the static arguments
+                     to the bootstrap, that would appear in the
+                     {@code BootstrapMethods} attribute
+@return the nominal descriptor
+@throws NullPointerException if any argument is null
+@jvms 4.2.2 Unqualified Names
 
 ## DynamicConstantDesc.of(DirectMethodHandleDesc)
 
@@ -142,19 +128,14 @@ public static<T> DynamicConstantDesc<T> of(DirectMethodHandleDesc bootstrapMetho
 ```
 
 Returns a nominal descriptor for a dynamic constant whose bootstrap has
-no static arguments, whose name parameter is `ConstantDescs.DEFAULT_NAME`,
+no static arguments, whose name parameter is {@link ConstantDescs#DEFAULT_NAME},
 and whose type parameter is always the same as the bootstrap method return type.
 
-Parameters:
-
-- `<T>`: the type of the dynamic constant
-- `bootstrapMethod`: a `DirectMethodHandleDesc` describing the bootstrap method for the constant
-
-**Returns:** the nominal descriptor
-
-Throws:
-
-- `NullPointerException`: if any argument is null
+@param <T> the type of the dynamic constant
+@param bootstrapMethod a {@link DirectMethodHandleDesc} describing the
+                       bootstrap method for the constant
+@return the nominal descriptor
+@throws NullPointerException if any argument is null
 
 ## DynamicConstantDesc.constantName()
 
@@ -162,10 +143,10 @@ Throws:
 public String constantName()
 ```
 
-Returns the name that would appear in the `NameAndType` operand
-of the `LDC` for this constant.
+Returns the name that would appear in the {@code NameAndType} operand
+of the {@code LDC} for this constant.
 
-**Returns:** the constant name
+@return the constant name
 
 ## DynamicConstantDesc.constantType()
 
@@ -173,10 +154,10 @@ of the `LDC` for this constant.
 public ClassDesc constantType()
 ```
 
-Returns a `ClassDesc` describing the type that would appear in the
-`NameAndType` operand of the `LDC` for this constant.
+Returns a {@link ClassDesc} describing the type that would appear in the
+{@code NameAndType} operand of the {@code LDC} for this constant.
 
-**Returns:** the constant type
+@return the constant type
 
 ## DynamicConstantDesc.bootstrapMethod()
 
@@ -184,10 +165,10 @@ Returns a `ClassDesc` describing the type that would appear in the
 public DirectMethodHandleDesc bootstrapMethod()
 ```
 
-Returns a `MethodHandleDesc` describing the bootstrap method for
+Returns a {@link MethodHandleDesc} describing the bootstrap method for
 this constant.
 
-**Returns:** the bootstrap method
+@return the bootstrap method
 
 ## DynamicConstantDesc.bootstrapArgs()
 
@@ -197,7 +178,7 @@ public ConstantDesc[] bootstrapArgs()
 
 Returns the bootstrap arguments for this constant.
 
-**Returns:** the bootstrap arguments
+@return the bootstrap arguments
 
 ## DynamicConstantDesc.bootstrapArgsList()
 
@@ -205,9 +186,9 @@ Returns the bootstrap arguments for this constant.
 public List<ConstantDesc> bootstrapArgsList()
 ```
 
-Returns the bootstrap arguments for this constant as an immutable `List`.
+Returns the bootstrap arguments for this constant as an immutable {@link List}.
 
-**Returns:** a `List` of the bootstrap arguments
+@return a {@link List} of the bootstrap arguments
 
 ## DynamicConstantDesc.equals(Object)
 
@@ -216,17 +197,15 @@ public final boolean equals(Object o)
 ```
 
 Compares the specified object with this descriptor for equality.  Returns
-`true` if and only if the specified object is also a
-`DynamicConstantDesc`, and both descriptors have equal
+{@code true} if and only if the specified object is also a
+{@linkplain DynamicConstantDesc}, and both descriptors have equal
 bootstrap methods, bootstrap argument lists, constant name, and
 constant type.
 
-Parameters:
-
-- `o`: the `DynamicConstantDesc` to compare to this `DynamicConstantDesc`
-
-**Returns:** `true` if the specified `DynamicConstantDesc`
-     is equal to this `DynamicConstantDesc`.
+@param o the {@code DynamicConstantDesc} to compare to this
+      {@code DynamicConstantDesc}
+@return {@code true} if the specified {@code DynamicConstantDesc}
+     is equal to this {@code DynamicConstantDesc}.
 
 ## DynamicConstantDesc.toString()
 
@@ -238,4 +217,4 @@ Returns a compact textual description of this constant description,
 including the bootstrap method, the constant name and type, and
 the static bootstrap arguments.
 
-**Returns:** A compact textual description of this call site descriptor
+@return A compact textual description of this call site descriptor

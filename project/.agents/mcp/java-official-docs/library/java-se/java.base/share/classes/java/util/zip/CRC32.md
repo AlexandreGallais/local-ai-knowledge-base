@@ -1,12 +1,3 @@
----
-title: "CRC32 class (java.util.zip)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/zip/CRC32.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # CRC32 class (java.util.zip)
 
 ```java
@@ -15,10 +6,11 @@ public class CRC32 implements Checksum
 
 A class that can be used to compute the CRC-32 of a data stream.
 
- Passing a `null` argument to a method in this class will cause
-a `NullPointerException` to be thrown.
+<p> Passing a {@code null} argument to a method in this class will cause
+a {@link NullPointerException} to be thrown.</p>
 
-**Since:** 1.1
+@author      David Connelly
+@since 1.1
 
 ## CRC32.CRC32()
 
@@ -45,9 +37,10 @@ public void update(byte[] b, int off, int len)
 
 Updates the CRC-32 checksum with the specified array of bytes.
 
-Throws:
-
-- `ArrayIndexOutOfBoundsException`: if `off` is negative, or `len` is negative, or `off+len` is negative or greater than the length of the array `b`.
+@throws ArrayIndexOutOfBoundsException
+        if {@code off} is negative, or {@code len} is negative, or
+        {@code off+len} is negative or greater than the length of
+        the array {@code b}.
 
 ## CRC32.update(ByteBuffer)
 
@@ -61,7 +54,7 @@ The checksum is updated with the remaining bytes in the buffer, starting
 at the buffer's position. Upon return, the buffer's position will be
 updated to its limit; its limit will not have been changed.
 
-**Since:** 1.8
+@since 1.8
 
 ## CRC32.reset()
 

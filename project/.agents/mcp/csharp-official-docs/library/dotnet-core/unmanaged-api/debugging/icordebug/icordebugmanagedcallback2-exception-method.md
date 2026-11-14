@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugManagedCallback2::Exception Method"
 title: "ICorDebugManagedCallback2::Exception Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmanagedcallback2-exception-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugManagedCallback2.Exception"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugManagedCallback2::Exception"
+helpviewer_keywords:
+  - "ICorDebugManagedCallback2::Exception method [.NET debugging]"
+  - "Exception method, ICorDebugManagedCallback2 interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugManagedCallback2::Exception Method
 
 Notifies the debugger that a search for an exception handler has started.
@@ -42,7 +51,7 @@ HRESULT Exception (
  [in] A value of the CorDebugExceptionCallbackType enumeration that specifies the type of this exception callback.
 
  `dwFlags`
- [in] A value of the CorDebugExceptionFlags enumeration that specifies additional information about the exception
+ [in] A value of the [CorDebugExceptionFlags](cordebugexceptionflags-enumeration.md) enumeration that specifies additional information about the exception
 
 ## Remarks
 
@@ -61,7 +70,7 @@ The particular frame and offset are determined by the `dwEventType` parameter as
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -71,5 +80,5 @@ The particular frame and offset are determined by the `dwEventType` parameter as
 
 ## See also
 
-- ICorDebugManagedCallback2 Interface
-- ICorDebugManagedCallback Interface
+- [ICorDebugManagedCallback2 Interface](icordebugmanagedcallback2-interface.md)
+- [ICorDebugManagedCallback Interface](icordebugmanagedcallback-interface.md)

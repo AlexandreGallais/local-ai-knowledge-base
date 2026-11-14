@@ -1,19 +1,12 @@
----
-title: "Disallow operators that return connectable observables (rxjs-x/no-connectable)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/no-connectable.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Disallow operators that return connectable observables (`rxjs-x/no-connectable`)
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule prevents the use of operators that return connectable observables.
 
-> **Note:**
+> [!NOTE]
 > All operators banned by this rule are also deprecated by RxJS,
 > so this rule may be removed in a future major version.
 
@@ -36,5 +29,5 @@ Type checked lint rules are more powerful than traditional lint rules, but also 
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/no-connectable.ts)
+- [Test source](/tests/rules/no-connectable.test.ts)

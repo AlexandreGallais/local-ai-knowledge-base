@@ -1,12 +1,10 @@
 ---
-title: "Introduction to relationships - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/modeling/relationships.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Introduction to relationships - EF Core
+description: How to configure relationships between entity types when using Entity Framework Core
+author: SamMonoRT
+ms.date: 03/30/2023
+uid: core/modeling/relationships
 ---
-
 # Introduction to relationships
 
 This document provides a simple introduction to the representation of relationships in object models and relational databases, including how EF Core maps between the two.
@@ -63,10 +61,10 @@ public class Blog
 
 This connection from `Blog` to `Post` and, inversely, from `Post` back to `Blog` is known as a "relationship" in EF Core.
 
-> **Important:**
+> [!IMPORTANT]
 > A **single** relationship can typically be traversed in either direction. In this example, that is from `Blog` to `Post` via the `Blog.Posts` property, and from `Post` back to `Blog` via the `Post.Blog` property. This is **one** relationship, not two.
 
-> **Tip:**
+> [!TIP]
 > In EF Core, the `Blog.Posts` and `Post.Blog` properties are called "navigations".
 
 ## Relationships in relational databases
@@ -91,24 +89,24 @@ CREATE TABLE [Blogs] (
     CONSTRAINT [PK_Blogs] PRIMARY KEY ([Id]));
 ```
 
-In this relational model, the `Posts` and `Blogs` tables are each given a "primary key" column. The value of the primary key <example-value> identifies each post or blog. In addition, the `Posts` table is given a "foreign key" column. The `Blogs` primary key <example-value> `Id` is referenced by the `BlogId` foreign key <example-value> of the `Posts` table. This column is "constrained" such that any value in the `BlogId` column of `Posts` **must** match a value in the `Id` column of `Blogs`. This match determines which blog every post is related to. For example, if the `BlogId` value in one row of the `Posts` table is 7, then the post represented by that row is published in the blog with the primary key 7.
+In this relational model, the `Posts` and `Blogs` tables are each given a "primary key" column. The value of the primary key uniquely identifies each post or blog. In addition, the `Posts` table is given a "foreign key" column. The `Blogs` primary key column `Id` is referenced by the `BlogId` foreign key column of the `Posts` table. This column is "constrained" such that any value in the `BlogId` column of `Posts` **must** match a value in the `Id` column of `Blogs`. This match determines which blog every post is related to. For example, if the `BlogId` value in one row of the `Posts` table is 7, then the post represented by that row is published in the blog with the primary key 7.
 
 ## Mapping relationships in EF Core
 
-EF Core relationship mapping is all about mapping the primary key/foreign key <example-value> used in a relational database to the references between objects used in an object model.
+EF Core relationship mapping is all about mapping the primary key/foreign key representation used in a relational database to the references between objects used in an object model.
 
 In the most basic sense, this involves:
 
-- Adding a primary key <example-value> to each entity type.
-- Adding a foreign key <example-value> to one entity type.
+- Adding a primary key property to each entity type.
+- Adding a foreign key property to one entity type.
 - Associating the references between entity types with the primary and foreign keys to form a single relationship configuration.
 
-Once this mapping is made, EF changes the foreign key <example-value> as needed when the references between objects change, and changes the references between objects as needed when the foreign key <example-value> change.
+Once this mapping is made, EF changes the foreign key values as needed when the references between objects change, and changes the references between objects as needed when the foreign key values change.
 
-> **Note:**
-> Primary keys are used for more than mapping relationships. See _Keys_ for more information.
+> [!NOTE]
+> Primary keys are used for more than mapping relationships. See [_Keys_](xref:core/modeling/keys) for more information.
 
-For example, the entity types shown above can be updated with primary and foreign key <example-value>:
+For example, the entity types shown above can be updated with primary and foreign key properties:
 
 ```csharp
 public class Blog
@@ -135,10 +133,10 @@ public class Post
 }
 ```
 
-> **Tip:**
-> Primary and foreign key <example-value> don't need to be publicly visible properties of the entity type. However, even when the properties are hidden, it is important to recognize that they still exist in the EF model.
+> [!TIP]
+> Primary and foreign key properties don't need to be publicly visible properties of the entity type. However, even when the properties are hidden, it is important to recognize that they still exist in the EF model.
 
-The primary key <example-value> of `Blog`, `Blog.Id`, and the foreign key <example-value> of `Post`, `Post.BlogId`, can then be associated with the references ("navigations") between the entity types (`Blog.Posts` and `Post.Blog`). This is done automatically by EF when building a simple relationship like this, but can also be specified explicitly when overriding the `OnModelCreating` method of your `DbContext`. For example:
+The primary key property of `Blog`, `Blog.Id`, and the foreign key property of `Post`, `Post.BlogId`, can then be associated with the references ("navigations") between the entity types (`Blog.Posts` and `Post.Blog`). This is done automatically by EF when building a simple relationship like this, but can also be specified explicitly when overriding the `OnModelCreating` method of your `DbContext`. For example:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -157,42 +155,42 @@ Now all these properties will behave coherently together as a representation of 
 
 EF supports many different types of relationships, with many different ways these relationships can be represented and configured. To jump into examples for different kinds of relationships, see:
 
-- _One-to-many relationships_, in which a single entity is associated with any number of other entities.
-- _One-to-one relationships_, in which a single entity is associated with another single entity.
-- _Many-to-many relationships_, in which any number of entities are associated with any number of other entities.
+- [_One-to-many relationships_](xref:core/modeling/relationships/one-to-many), in which a single entity is associated with any number of other entities.
+- [_One-to-one relationships_](xref:core/modeling/relationships/one-to-one), in which a single entity is associated with another single entity.
+- [_Many-to-many relationships_](xref:core/modeling/relationships/many-to-many), in which any number of entities are associated with any number of other entities.
 
 If you are new to EF, then trying the examples linked in the bullet points above is a good way to get a feel for how relationships work.
 
 To dig deeper into the properties of entity types involved in relationship mapping, see:
 
-- _Foreign and principal keys in relationships_, which covers how foreign keys map to the database.
-- _Relationship navigations_, which describes how navigations are layered over a foreign key to provide an object-oriented view of the relationship.
+- [_Foreign and principal keys in relationships_](xref:core/modeling/relationships/foreign-and-principal-keys), which covers how foreign keys map to the database.
+- [_Relationship navigations_](xref:core/modeling/relationships/navigations), which describes how navigations are layered over a foreign key to provide an object-oriented view of the relationship.
 
 EF models are built using a combination of three mechanisms: conventions, mapping attributes, and the model builder API. Most of the examples show the model building API. To find out more about other options, see:
 
-- _Relationship conventions_, which discover entity types, their properties, and the relationships between the types.
-- _Relationship mapping attributes_, which can be used an alternative to the model building API for some aspects of relationship configuration.
+- [_Relationship conventions_](xref:core/modeling/relationships/conventions), which discover entity types, their properties, and the relationships between the types.
+- [_Relationship mapping attributes_](xref:core/modeling/relationships/mapping-attributes), which can be used an alternative to the model building API for some aspects of relationship configuration.
 
-> **Important:**
+> [!IMPORTANT]
 > The model-building API is the final source of truth for the EF model--it always takes precedence over configuration discovered by convention or specified by mapping attributes. It is also the only mechanism with full fidelity to configure every aspect of the EF model.
 
 Other topics related to relationships include:
 
-- _Cascade deletes_, which describe how related entities can be automatically deleted when `SaveChanges` or `SaveChangesAsync` is called.
-- _Owned entity types_ use a special type of "owning" relationship that implies a stronger connection between the two types than the "normal" relationships discussed here. Many of the concepts described here for normal relationships are carried over to owned relationships. However, owned relationships also have their own special behaviors.
+- [_Cascade deletes_](xref:core/saving/cascade-delete), which describe how related entities can be automatically deleted when `SaveChanges` or `SaveChangesAsync` is called.
+- [_Owned entity types_](xref:core/modeling/owned-entities) use a special type of "owning" relationship that implies a stronger connection between the two types than the "normal" relationships discussed here. Many of the concepts described here for normal relationships are carried over to owned relationships. However, owned relationships also have their own special behaviors.
 
-> **Tip:**
-> Refer to the glossary of relationship terms as needed when reading the documentation to help understand the terminology used.
+> [!TIP]
+> Refer to the [glossary of relationship terms](xref:core/modeling/relationships/glossary) as needed when reading the documentation to help understand the terminology used.
 
 ## Using relationships
 
 Relationships defined in the model can be used in various ways. For example:
 
-- Relationships can be used to query related data in any of three ways:
-  - Eagerly as part of a LINQ query, using `Include`.
-  - Lazily using lazy-loading proxies, or lazy-loading without proxies.
-  - Explicitly using the `Load` or `LoadAsync` methods.
-- Relationships can be used in data seeding through matching of PK values to FK values.
-- Relationships can be used to track graphs of entities. Relationships are then used by the change tracker to:
-  - Detect changes in relationships and perform fixup
-  - Send foreign key <example-value> to the database with `SaveChanges` or `SaveChangesAsync`
+- Relationships can be used to [query related data](xref:core/querying/related-data) in any of three ways:
+  - [Eagerly](xref:core/querying/related-data/eager) as part of a LINQ query, using `Include`.
+  - [Lazily](xref:core/querying/related-data/lazy) using lazy-loading proxies, or lazy-loading without proxies.
+  - [Explicitly](xref:core/querying/related-data/explicit) using the `Load` or `LoadAsync` methods.
+- Relationships can be used in [data seeding](xref:core/modeling/data-seeding) through matching of PK values to FK values.
+- Relationships can be used to [track graphs of entities](xref:core/change-tracking/index). Relationships are then used by the change tracker to:
+  - [Detect changes in relationships and perform fixup](xref:core/change-tracking/relationship-changes)
+  - [Send foreign key updates to the database](xref:core/saving/related-data) with `SaveChanges` or `SaveChangesAsync`

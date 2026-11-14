@@ -1,13 +1,11 @@
 ---
-title: "require-yield"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/require-yield.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: require-yield
+rule_type: suggestion
+related_rules:
+- require-await
 ---
 
-# require-yield
+
 
 ## Rule Details
 
@@ -15,7 +13,7 @@ This rule generates warnings for generator functions that do not have the `yield
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint require-yield: "error"*/
@@ -25,9 +23,11 @@ function* foo() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint require-yield: "error"*/
@@ -44,6 +44,8 @@ function bar() {
 // This rule does not warn on empty generator functions.
 function* baz() { }
 ```
+
+:::
 
 ## Options
 

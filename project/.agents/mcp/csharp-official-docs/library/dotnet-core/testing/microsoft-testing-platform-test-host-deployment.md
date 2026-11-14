@@ -1,22 +1,22 @@
 ---
-title: "Microsoft.Testing.Platform (MTP) test host deployment"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/microsoft-testing-platform-test-host-deployment.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Microsoft.Testing.Platform (MTP) test host deployment
+description: Learn how MTP extensions control test host deployment and startup.
+author: evangelink
+ms.author: amauryleve
+ms.date: 10/01/2026
+ai-usage: ai-assisted
 ---
 
 # Test host deployment
 
 These extensions control how and where MTP deploys and starts the test host. They use the experimental `ITestHostLauncher` extension point to control test host deployment and startup.
 
-> **Tip:**
-> When you use Microsoft.Testing.Platform.MSBuild, install an extension's NuGet package to register the extension automatically. MSTest, NUnit, and xUnit runners include `Microsoft.Testing.Platform.MSBuild` transitively. If you disable the generated entry point, call `AddSelfRegisteredExtensions` to register the packages that MSBuild contributes.
+> [!TIP]
+> When you use [Microsoft.Testing.Platform.MSBuild](https://www.nuget.org/packages/Microsoft.Testing.Platform.MSBuild), install an extension's NuGet package to register the extension automatically. MSTest, NUnit, and xUnit runners include `Microsoft.Testing.Platform.MSBuild` transitively. If you disable the generated entry point, call `AddSelfRegisteredExtensions` to register the packages that MSBuild contributes.
 
 ## Packaged app deployment
 
-The Microsoft.Testing.Extensions.PackagedApp extension registers a packaged Windows test host from its build-output layout and activates it by Application User Model ID (AUMID).
+The [Microsoft.Testing.Extensions.PackagedApp](https://www.nuget.org/packages/Microsoft.Testing.Extensions.PackagedApp) extension registers a packaged Windows test host from its build-output layout and activates it by Application User Model ID (AUMID).
 
 The package was introduced in MTP 2.3. Starting with MTP 2.5, it supports packaged full-trust and AppContainer hosts end to end, including:
 
@@ -25,9 +25,9 @@ The package was introduced in MTP 2.3. Starting with MTP 2.5, it supports packag
 - Classic UWP apps that target `uap10.0`.
 - WinUI 3 `packagedClassicApp` hosts that set `TrustLevel="appContainer"`.
 
-MSTest.Sdk 4.5 or later configures this extension and the required full-trust app-model sidecar automatically. For application setup and run commands, see Test UWP and WinUI 3 apps with MSTest and MTP.
+MSTest.Sdk 4.5 or later configures this extension and the required full-trust app-model sidecar automatically. For application setup and run commands, see [Test UWP and WinUI 3 apps with MSTest and MTP](unit-testing-mstest-winui.md).
 
-> **Caution:**
+> [!CAUTION]
 > Starting with MTP 2.4, `Microsoft.Testing.Extensions.PackagedApp` follows the MTP release version, and its public registration API is no longer experimental. The generic `ITestHostLauncher` extension point remains experimental and might change in a future release.
 
 ### Meet the requirements
@@ -54,7 +54,7 @@ For a UWP `windowsApp`, Windows supplies one opaque activation string through `L
 
 ### Connect an AppContainer host
 
-An AppContainer token <example-value> a restricted package SID. A named pipe that authorizes only the current user rejects the AppContainer process even when it belongs to the same signed-in user.
+An AppContainer token includes a restricted package SID. A named pipe that authorizes only the current user rejects the AppContainer process even when it belongs to the same signed-in user.
 
 In MTP 2.5 or later, the packaged-app launcher derives the selected application's exact package SID and asks MTP to grant that SID the minimum client rights on the controller and extension pipes. The extension doesn't grant `ALL APPLICATION PACKAGES`, lower the pipe's integrity level, or require a network loopback exemption.
 

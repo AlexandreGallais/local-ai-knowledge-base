@@ -1,12 +1,19 @@
 ---
 title: "MSTEST0067: Avoid synchronously blocking calls in test code"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0067.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0067: Avoid synchronously blocking calls in test code"
+ms.date: 06/04/2026
+f1_keywords:
+- MSTEST0067
+- AvoidThreadSleepAndTaskWaitInTestsAnalyzer
+helpviewer_keywords:
+- AvoidThreadSleepAndTaskWaitInTestsAnalyzer
+- MSTEST0067
+author: Evangelink
+ms.author: amauryleve
+ai-usage: ai-assisted
+dev_langs:
+- CSharp
 ---
-
 # MSTEST0067: Avoid synchronously blocking calls in test code
 
 | Property                            | Value                                           |
@@ -20,14 +27,14 @@ license: "CC-BY-4.0"
 | **Introduced in version**           | 4.3.0                                           |
 | **Is there a code fix**             | No                                              |
 
-> **Note:**
+> [!NOTE]
 > This rule is available starting with MSTest 4.3. It's disabled by default. It's enabled as a warning when `<MSTestAnalysisMode>All</MSTestAnalysisMode>` is set.
 
 ## Cause
 
-Test code uses a synchronously blocking call such as `System.Threading.Thread.Sleep*`, `System.Threading.Tasks.Task.Wait*`, `System.Threading.Tasks.Task.WaitAll*`, `System.Threading.Tasks.Task.WaitAny*`, or `System.Threading.Tasks.Task`1.Result`.
+Test code uses a synchronously blocking call such as <xref:System.Threading.Thread.Sleep*?displayProperty=nameWithType>, <xref:System.Threading.Tasks.Task.Wait*?displayProperty=nameWithType>, <xref:System.Threading.Tasks.Task.WaitAll*?displayProperty=nameWithType>, <xref:System.Threading.Tasks.Task.WaitAny*?displayProperty=nameWithType>, or <xref:System.Threading.Tasks.Task`1.Result?displayProperty=nameWithType>.
 
-The rule fires on methods marked with `Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute` (including custom attributes that inherit from it) and on fixture methods marked with `Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute`, `Microsoft.VisualStudio.TestTools.UnitTesting.TestCleanupAttribute`, `Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute`, `Microsoft.VisualStudio.TestTools.UnitTesting.ClassCleanupAttribute`, `Microsoft.VisualStudio.TestTools.UnitTesting.AssemblyInitializeAttribute`, `Microsoft.VisualStudio.TestTools.UnitTesting.AssemblyCleanupAttribute`, `GlobalTestInitializeAttribute`, and `GlobalTestCleanupAttribute`.
+The rule fires on methods marked with <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute> (including custom attributes that inherit from it) and on fixture methods marked with <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute>, <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TestCleanupAttribute>, <xref:Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute>, <xref:Microsoft.VisualStudio.TestTools.UnitTesting.ClassCleanupAttribute>, <xref:Microsoft.VisualStudio.TestTools.UnitTesting.AssemblyInitializeAttribute>, <xref:Microsoft.VisualStudio.TestTools.UnitTesting.AssemblyCleanupAttribute>, `GlobalTestInitializeAttribute`, and `GlobalTestCleanupAttribute`.
 
 ## Rule description
 
@@ -82,11 +89,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0067
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0067.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

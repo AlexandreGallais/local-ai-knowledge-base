@@ -1,0 +1,152 @@
+---
+title: "HTMLInputElement: reportValidity() method"
+short-title: reportValidity()
+slug: Web/API/HTMLInputElement/reportValidity
+page-type: web-api-instance-method
+browser-compat: api.HTMLInputElement.reportValidity
+---
+
+{{APIRef("HTML DOM")}}
+
+The **`reportValidity()`** method of the {{domxref("HTMLInputElement")}} interface performs the same validity checking steps as the {{domxref("HTMLInputElement.checkValidity", "checkValidity()")}} method. In addition, if the {{domxref("HTMLElement/invalid_event", "invalid")}} event is not canceled, the browser displays the problem to the user.
+
+## Syntax
+
+```js-nolint
+reportValidity()
+```
+
+### Parameters
+
+None.
+
+### Return value
+
+Returns `true` if the element's value has no validity problems; otherwise, returns `false`.
+
+## Examples
+
+### Basic usage
+
+#### HTML
+
+We include a required number field and a button to report its validity.
+
+```html
+<p>
+  <label for="age">Your (21 to 65) </label>
+  <input type="number" name="age" required id="age" min="21" max="65" />
+</p>
+<p>
+  <button type="button" id="report">reportValidity()</button>
+</p>
+<pre id="log"></pre>
+```
+
+#### JavaScript
+
+When the "reportValidity()" button is activated, we use the `reportValidity()` method to check if the input's value meets its constraints. We log the return value. If `false`, we also display the validation message and capture the `invalid` event.
+
+```js
+const output = document.querySelector("#log");
+const reportButton = document.querySelector("#report");
+const ageInput = document.querySelector("#age");
+
+ageInput.addEventListener("invalid", () => {
+  output.textContent += "Invalid event fired.\n";
+});
+
+reportButton.addEventListener("click", () => {
+  output.textContent = "";
+  const reportVal = ageInput.reportValidity();
+  output.textContent += `"reportValidity()" returned: ${reportVal}`;
+  if (!reportVal) {
+    output.textContent += `\nValidation message: "${ageInput.validationMessage}"`;
+  }
+});
+```
+
+#### Results
+
+{{EmbedLiveSample("Basic usage", "100%", 120)}}
+
+When `false`, if the value is missing, is below 21, is above 65, or is otherwise invalid, an error message appears, an invalid event is fired, and we log that invalid event in the output.
+
+### Custom error message
+
+This example demonstrates how a custom error message can cause a `false` return value when the value is otherwise valid.
+
+#### HTML
+
+We add an "Allow resetting" checkbox to the HTML from the previous example.
+
+```html hidden
+<p>
+  <label for="age">Your (21 to 65) </label>
+  <input type="number" name="age" required id="age" min="21" max="65" />
+</p>
+<p>
+  <button type="button" id="report">reportValidity()</button>
+  <input type="checkbox" id="allow-resetting" />
+  <label for="allow-resetting">Allow resetting</label>
+</p>
+<pre id="log"></pre>
+```
+
+#### JavaScript
+
+We expand on the JavaScript from the basic example above, adding a function that uses the {{domxref("HTMLInputElement.setCustomValidity()")}} method to provide custom error messages. The `validateAge()` function only sets the error message to an empty string if the age meets the checked constraints and the "Allow resetting" checkbox is checked.
+
+```js
+const output = document.querySelector("#log");
+const reportButton = document.querySelector("#report");
+const ageInput = document.querySelector("#age");
+const allowResetting = document.querySelector("#allow-resetting");
+
+reportButton.addEventListener("click", () => {
+  validateAge();
+  output.textContent = "";
+  const reportVal = ageInput.reportValidity();
+  output.textContent += `"reportValidity()" returned: ${reportVal}`;
+  if (!reportVal) {
+    output.textContent += `\nValidation message: "${ageInput.validationMessage}"`;
+  }
+});
+
+function validateAge() {
+  const validityState = ageInput.validity;
+  if (validityState.valueMissing) {
+    ageInput.setCustomValidity("Please set an age (required)");
+  } else if (validityState.rangeUnderflow) {
+    ageInput.setCustomValidity("Your value is too low");
+  } else if (validityState.rangeOverflow) {
+    ageInput.setCustomValidity("Your value is too high");
+  } else if (allowResetting.checked) {
+    // Clear the custom error only when resetting is allowed.
+    ageInput.setCustomValidity("");
+  }
+}
+```
+
+#### Results
+
+{{EmbedLiveSample("Custom error message", "100%", 120)}}
+
+If you activate the "reportValidity()" button before entering an age, the `reportValidity()` method returns `false` because it does not meet `required` constraint validation. This method fires an `invalid` event on the input and reports the problem to the user, displaying the custom error message "Please set an age (required)". As long as a custom error message is set, activating the "reportValidity()" button will continue to display an error even if you select a valid age. Select "Allow resetting", then activate "reportValidity()" again with a valid age to clear the custom error message. Clearing the checkbox prevents subsequent checks from clearing a custom error message.
+
+## Specifications
+
+{{Specifications}}
+
+## Browser compatibility
+
+{{Compat}}
+
+## See also
+
+- {{domxref("HTMLInputElement.checkValidity()")}}
+- {{HTMLElement("input")}}
+- {{HTMLElement("form")}}
+- [Learn: Client-side form validation](/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation)
+- [Guide: Constraint validation](/en-US/docs/Web/HTML/Guides/Constraint_validation)
+- CSS {{cssxref(":valid")}} and {{cssxref(":invalid")}} pseudo-classes

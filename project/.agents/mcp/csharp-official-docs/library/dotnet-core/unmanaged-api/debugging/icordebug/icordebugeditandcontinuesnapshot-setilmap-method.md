@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugEditAndContinueSnapshot::SetILMap Method"
 title: "ICorDebugEditAndContinueSnapshot::SetILMap Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugeditandcontinuesnapshot-setilmap-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugEditAndContinueSnapshot.SetILMap"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugEditAndContinueSnapshot::SetILMap"
+helpviewer_keywords:
+  - "SetILMap method [.NET debugging]"
+  - "ICorDebugEditAndContinueSnapshot::SetILMap method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugEditAndContinueSnapshot::SetILMap Method
 
 `SetILMap` is obsolete. Do not call this method.

@@ -1,12 +1,12 @@
 ---
+description: "Learn more about: Unordered Node Retrieval by Name or Index"
 title: "Unordered Node Retrieval by Name or Index"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/unordered-node-retrieval-by-name-or-index.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: 2038a90b-92af-4a0a-baaa-08e688d95194
 ---
-
 # Unordered Node Retrieval by Name or Index
 
 The **XmlNamedNodeMap** is described in the World Wide Web Consortium (W3C) specification as the NamedNodeMap and is required to handle an unordered set of nodes with the ability to reference nodes by their name or index. The only way you have access to an **XmlNamedNodeMap** is when an **XmlNamedNodeMap** is returned through a method or property. There are three methods or properties that return an **XmlNamedNodeMap**:
@@ -17,7 +17,7 @@ The **XmlNamedNodeMap** is described in the World Wide Web Consortium (W3C) spec
 
 - XmlDocumentType.Notations
 
- For example, the **XmlDocumentType.Entities** property gets the collection of **XmlEntity** nodes declared in the document type declaration. This collection is returned as an **XmlNamedNodeMap**, and you can iterate through the collection with the use of the **Count** property and display entity information. For an example of iterating through an **XmlNamedNodeMap**, see `System.Xml.XmlDocumentType.Entities*`.
+ For example, the **XmlDocumentType.Entities** property gets the collection of **XmlEntity** nodes declared in the document type declaration. This collection is returned as an **XmlNamedNodeMap**, and you can iterate through the collection with the use of the **Count** property and display entity information. For an example of iterating through an **XmlNamedNodeMap**, see <xref:System.Xml.XmlDocumentType.Entities*>.
 
  The **XmlAttributeCollection** is derived from **XmlNamedNodeMap** and only attributes are modifiable, while notations and entities are read-only. Using the **XmlNamedNodeMap** for the attributes, you can get nodes for those attributes based on their XML names. This provides an easy method for manipulating the collection of attributes on an element node. This can be contrasted directly with **XmlNodeList**, which also implements the **IEnumerable** interface, but with an index accessor rather than a string. The **RemoveNamedItem** and **SetNamedItem** methods are only used against an **XmlAttributeCollection**. Adding or removing from an attribute collection, whether using the **AttributeCollection** or the **XmlNamedNodeMap** implementation, modifies the attribute collection on the element. The following code example shows how to move an attribute and create a new attribute.
 
@@ -110,8 +110,8 @@ class test {
 }
 ```
 
- To see an additional code example which shows an attribute being removed from an **AttributeCollection**, see XmlNamedNodeMap.RemoveNamedItem Method. For more information on the methods and properties, see XmlNamedNodeMap Members.
+ To see an additional code example which shows an attribute being removed from an **AttributeCollection**, see [XmlNamedNodeMap.RemoveNamedItem Method](xref:System.Xml.XmlNamedNodeMap.RemoveNamedItem%2A). For more information on the methods and properties, see [XmlNamedNodeMap Members](xref:System.Xml.XmlNamedNodeMap).
 
 ## See also
 
-- XML Document Object Model (DOM)
+- [XML Document Object Model (DOM)](xml-document-object-model-dom.md)

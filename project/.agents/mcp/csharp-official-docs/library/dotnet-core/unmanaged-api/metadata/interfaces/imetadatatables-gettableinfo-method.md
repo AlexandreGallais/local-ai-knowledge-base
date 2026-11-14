@@ -1,15 +1,22 @@
 ---
+description: "Learn more about: IMetaDataTables::GetTableInfo Method"
 title: "IMetaDataTables::GetTableInfo Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadatatables-gettableinfo-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataTables.GetTableInfo"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataTables::GetTableInfo"
+  - "GetTableInfo method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataTables::GetTableInfo Method
 
-Gets the name, row size, number of rows, number of columns, and key <example-value> index of the specified table.
+Gets the name, row size, number of rows, number of columns, and key column index of the specified table.
 
 ## Syntax
 
@@ -39,14 +46,14 @@ HRESULT GetTableInfo (
  [out] A pointer to the number of columns in the table.
 
  `piKey`
- [out] A pointer to the index of the key <example-value>, or -1 if the table has no key column.
+ [out] A pointer to the index of the key column, or -1 if the table has no key column.
 
  `ppName`
  [out] A pointer to a pointer to the table name.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -54,5 +61,5 @@ HRESULT GetTableInfo (
 
 ## See also
 
-- IMetaDataTables Interface
-- IMetaDataTables2 Interface
+- [IMetaDataTables Interface](imetadatatables-interface.md)
+- [IMetaDataTables2 Interface](imetadatatables2-interface.md)

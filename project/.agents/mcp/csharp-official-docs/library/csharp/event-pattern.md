@@ -1,15 +1,12 @@
 ---
-title: "Standard .NET event patterns"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/event-pattern.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Standard .NET event patterns
+description: Learn about .NET event patterns and how to create standard event sources and subscribe and process standard events in your code.
+ms.date: 03/13/2025
+ms.subservice: fundamentals
 ---
-
 # Standard .NET event patterns
 
-Previous
+[Previous](events-overview.md)
 
 .NET events generally follow a few known patterns. Standardizing on these patterns means that developers can apply knowledge of those standard patterns, which can be applied to any .NET event program.
 
@@ -27,7 +24,7 @@ This standard signature provides insight into when events are used:
 
 - ***The return type is void***. Events can have zero to many listeners. Raising an event notifies all listeners. In general, listeners don't provide values in response to events.
 - ***Events indicate the sender***: The event signature includes the object that raised the event. That provides any listener with a mechanism to communicate with the sender. The compile-time type of `sender` is `System.Object`, even though you likely know a more derived type that would always be correct. By convention, use `object`.
-- ***Events package more information in a single structure***: The `args` parameter is a type derived from `System.EventArgs` that includes any more necessary information. (You'll see in the next section that this convention is no longer enforced.) If your event type doesn't need any more arguments, you still must provide both arguments. There's a special value, `System.EventArgs.Empty` that you should use to denote that your event doesn't contain any additional information.
+- ***Events package more information in a single structure***: The `args` parameter is a type derived from <xref:System.EventArgs?displayProperty=nameWithType> that includes any more necessary information. (You'll see in the [next section](modern-events.md) that this convention is no longer enforced.) If your event type doesn't need any more arguments, you still must provide both arguments. There's a special value, <xref:System.EventArgs.Empty?displayProperty=nameWithType> that you should use to denote that your event doesn't contain any additional information.
 
 Let's build a class that lists files in a directory, or any of its subdirectories that follow a pattern. This component raises an event for each file found that matches the pattern.
 
@@ -35,63 +32,33 @@ Using an event model provides some design advantages. You can create multiple ev
 
 Here's the initial event argument declaration for finding a sought file:
 
-```csharp
-public class FileFoundArgs : EventArgs
-{
-    public string FoundFile { get; }
+:::code language="csharp" source="./snippets/events/VersionOne.cs" id="EventArgsV1":::
 
-    public FileFoundArgs(string fileName) => FoundFile = fileName;
-}
-```
 Even though this type looks like a small, data-only type, you should follow the convention and make it a reference (`class`) type. That means the argument object is passed by reference, and any updates to the data are viewed by all subscribers. The first version is an immutable object. You should prefer to make the properties in your event argument type immutable. That way, one subscriber can't change the values before another subscriber sees them. (There are exceptions to this practice, as you see later.)
 
-Next, we need to create the event declaration in the FileSearcher class. Using the `System.EventHandler`1` type means that you don't need to create yet another type definition. You just use a generic specialization.
+Next, we need to create the event declaration in the FileSearcher class. Using the <xref:System.EventHandler`1?displayProperty=nameWithType> type means that you don't need to create yet another type definition. You just use a generic specialization.
 
 Let's fill out the FileSearcher class to search for files that match a pattern, and raise the correct event when a match is discovered.
 
-```csharp
-public class FileSearcher
-{
-    public event EventHandler<FileFoundArgs>? FileFound;
+:::code language="csharp" source="./snippets/events/VersionOne.cs" id="FileSearcherV1":::
 
-    public void Search(string directory, string searchPattern)
-    {
-        foreach (var file in Directory.EnumerateFiles(directory, searchPattern))
-        {
-            FileFound?.Invoke(this, new FileFoundArgs(file));
-        }
-    }
-}
-```
 ## Define and raise field-like events
 
 The simplest way to add an event to your class is to declare that event as a public field, as in the preceding example:
 
-```csharp
-public event EventHandler<FileFoundArgs>? FileFound;
-```
+:::code language="csharp" source="./snippets/events/Program.cs" id="DeclareEvent":::
+
 This looks like it's declaring a public field, which would appear to be a bad object-oriented practice. You want to protect data access through properties, or methods. While this code might look like a bad practice, the code generated by the compiler does create wrappers so that the event objects can only be accessed in safe ways. The only operations available on a field-like event are *add* and *remove* handler:
 
-```csharp
-var fileLister = new FileSearcher();
-int filesFound = 0;
+:::code language="csharp" source="./snippets/events/Program.cs" id="AttachEventHandler":::
 
-EventHandler<FileFoundArgs> onFileFound = (sender, eventArgs) =>
-{
-    Console.WriteLine(eventArgs.FoundFile);
-    filesFound++;
-};
+:::code language="csharp" source="./snippets/events/Program.cs" id="DetachHandler":::
 
-fileLister.FileFound += onFileFound;
-```
-```csharp
-fileLister.FileFound -= onFileFound;
-```
 There's a local variable for the handler. If you used the body of the lambda, the `remove` handler wouldn't work correctly. It would be a different instance of the delegate, and silently do nothing.
 
 Code outside the class can't raise the event, nor can it perform any other operations.
 
-Beginning with C# 14, events can be declared as partial members. A partial event declaration must include a *defining declaration* and an *implementing declaration*. The defining declaration must use the field-like event syntax. The implementing declaration must declare the `add` and `remove` handlers.
+Beginning with C# 14, events can be declared as [partial members](./language-reference/keywords/partial-member.md). A partial event declaration must include a *defining declaration* and an *implementing declaration*. The defining declaration must use the field-like event syntax. The implementing declaration must declare the `add` and `remove` handlers.
 
 ## Return values from event subscribers
 
@@ -109,40 +76,18 @@ The second pattern would only cancel the operation if all subscribers wanted the
 
 Let's implement the first version for this sample. You need to add a boolean field named `CancelRequested` to the `FileFoundArgs` type:
 
-```csharp
-public class FileFoundArgs : EventArgs
-{
-    public string FoundFile { get; }
-    public bool CancelRequested { get; set; }
+:::code language="csharp" source="./snippets/events/Program.cs" id="EventArgs":::
 
-    public FileFoundArgs(string fileName) => FoundFile = fileName;
-}
-```
 This new field is automatically initialized to `false` so you don't cancel accidentally. The only other change to the component is to check the flag after raising the event to see if any of the subscribers requested a cancellation:
 
-```csharp
-private void SearchDirectory(string directory, string searchPattern)
-{
-    foreach (var file in Directory.EnumerateFiles(directory, searchPattern))
-    {
-        var args = new FileFoundArgs(file);
-        FileFound?.Invoke(this, args);
-        if (args.CancelRequested)
-            break;
-    }
-}
-```
+:::code language="csharp" source="./snippets/events/Program.cs" id="SearchWithCancel":::
+
 One advantage of this pattern is that it isn't a breaking change. None of the subscribers requested cancellation before, and they still aren't. None of the subscriber code requires updates unless they want to support the new cancel protocol.
 
 Let's update the subscriber so that it requests a cancellation once it finds the first executable:
 
-```csharp
-EventHandler<FileFoundArgs> onFileFound = (sender, eventArgs) =>
-{
-    Console.WriteLine(eventArgs.FoundFile);
-    eventArgs.CancelRequested = true;
-};
-```
+:::code language="csharp" source="./snippets/events/Program.cs" id="CancelSearch":::
+
 ## Adding another event declaration
 
 Let's add one more feature, and demonstrate other language idioms for events. Let's add an overload of the `Search` method that traverses all subdirectories in search of files.
@@ -151,91 +96,35 @@ This method could get to be a lengthy operation in a directory with many subdire
 
 You start by creating the new EventArgs derived class for reporting the new directory and progress.
 
-```csharp
-internal class SearchDirectoryArgs : EventArgs
-{
-    internal string CurrentSearchDirectory { get; }
-    internal int TotalDirs { get; }
-    internal int CompletedDirs { get; }
+:::code language="csharp" source="./snippets/events/Program.cs" id="SearchDirEventArgs":::
 
-    internal SearchDirectoryArgs(string dir, int totalDirs, int completedDirs)
-    {
-        CurrentSearchDirectory = dir;
-        TotalDirs = totalDirs;
-        CompletedDirs = completedDirs;
-    }
-}
-```
 Again, you can follow the recommendations to make an immutable reference type for the event arguments.
 
 Next, define the event. This time, you use a different syntax. In addition to using the field syntax, you can explicitly create the event property with add and remove handlers. In this sample, you don't need extra code in those handlers, but this shows how you would create them.
 
-```csharp
-internal event EventHandler<SearchDirectoryArgs> DirectoryChanged
-{
-    add { _directoryChanged += value; }
-    remove { _directoryChanged -= value; }
-}
-private EventHandler<SearchDirectoryArgs>? _directoryChanged;
-```
-In many ways, the code you write here mirrors the code the compiler generates for the field event definitions you saw earlier. You create the event using syntax similar to  properties. Notice that the handlers have different names: `add` and `remove`. These accessors are called to subscribe to the event, or unsubscribe from the event. Notice that you also must declare a private backing field to store the event variable. This variable is initialized to null.
+:::code language="csharp" source="./snippets/events/Program.cs" id="DeclareSearchEvent":::
+
+In many ways, the code you write here mirrors the code the compiler generates for the field event definitions you saw earlier. You create the event using syntax similar to  [properties](programming-guide/classes-and-structs/properties.md). Notice that the handlers have different names: `add` and `remove`. These accessors are called to subscribe to the event, or unsubscribe from the event. Notice that you also must declare a private backing field to store the event variable. This variable is initialized to null.
 
 Next, let's add the overload of the `Search` method that traverses subdirectories and raises both events. The easiest way is to use a default argument to specify that you want to search all directories:
 
-```csharp
-public void Search(string directory, string searchPattern, bool searchSubDirs = false)
-{
-    if (searchSubDirs)
-    {
-        var allDirectories = Directory.GetDirectories(directory, "*.*", SearchOption.AllDirectories);
-        var completedDirs = 0;
-        var totalDirs = allDirectories.Length + 1;
-        foreach (var dir in allDirectories)
-        {
-            _directoryChanged?.Invoke(this, new (dir, totalDirs, completedDirs++));
-            // Search 'dir' and its subdirectories for files that match the search pattern:
-            SearchDirectory(dir, searchPattern);
-        }
-        // Include the Current Directory:
-        _directoryChanged?.Invoke(this, new (directory, totalDirs, completedDirs++));
-        SearchDirectory(directory, searchPattern);
-    }
-    else
-    {
-        SearchDirectory(directory, searchPattern);
-    }
-}
+:::code language="csharp" source="./snippets/events/Program.cs" id="FinalImplementation":::
 
-private void SearchDirectory(string directory, string searchPattern)
-{
-    foreach (var file in Directory.EnumerateFiles(directory, searchPattern))
-    {
-        var args = new FileFoundArgs(file);
-        FileFound?.Invoke(this, args);
-        if (args.CancelRequested)
-            break;
-    }
-}
-```
 At this point, you can run the application calling the overload for searching all subdirectories. There are no subscribers on the new `DirectoryChanged` event, but using the `?.Invoke()` idiom ensures it works correctly.
 
 Let's add a handler to write a line that shows the progress in the console window.
 
-```csharp
-fileLister.DirectoryChanged += (sender, eventArgs) =>
-{
-    Console.Write($"Entering '{eventArgs.CurrentSearchDirectory}'.");
-    Console.WriteLine($" {eventArgs.CompletedDirs} of {eventArgs.TotalDirs} completed...");
-};
-```
+:::code language="csharp" source="./snippets/events/Program.cs" id="Search":::
+
 You saw patterns that are followed throughout the .NET ecosystem. By learning these patterns and conventions, you're writing idiomatic C# and .NET quickly.
 
 ## See also
 
-- Introduction to events
-- Event design
-- Handle and raise events
+- [Introduction to events](events-overview.md)
+- [Event design](../standard/design-guidelines/event.md)
+- [Handle and raise events](../standard/events/index.md)
 
 Next, you see some changes in these patterns in the most recent release of .NET.
 
-> Next
+> [!div class="step-by-step"]
+> [Next](modern-events.md)

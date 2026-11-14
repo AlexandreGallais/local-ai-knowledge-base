@@ -1,10 +1,10 @@
 ---
-title: "ASP.NET to ASP.NET Core session state migration"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/migration/fx-to-core/areas/session.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET to ASP.NET Core session state migration
+description: ASP.NET to ASP.NET Core session state migration
+monikerRange: '>= aspnetcore-6.0'
+ms.date: 07/17/2025
+ms.topic: concept-article
+zone_pivot_groups: migration-remote-app-setup
 ---
 
 # Migrate ASP.NET Framework Session to ASP.NET Core
@@ -28,7 +28,7 @@ You have three main approaches for handling session state during migration:
 2. **Incremental with separate sessions** - Migrate components piece by piece, with each app maintaining its own session state
 3. **Incremental with shared sessions** - Migrate components while sharing session data between Framework and Core applications
 
-For most applications, migrating to ASP.NET Core session provides the best performance and maintainability. However, larger applications or those with complex session requirements may benefit from an incremental approach using the System.Web adapters.
+For most applications, migrating to [ASP.NET Core session](../../../fundamentals/app-state.md) provides the best performance and maintainability. However, larger applications or those with complex session requirements may benefit from an incremental approach using the System.Web adapters.
 
 ## Choose your migration approach
 
@@ -39,12 +39,12 @@ You have three main options for migrating session state from ASP.NET Framework t
 **Answer these questions to choose your approach:**
 
 1. **Are you doing a complete rewrite or incremental migration?**
-   * Complete rewrite → Built-in ASP.NET Core session
+   * Complete rewrite → [Built-in ASP.NET Core session](#built-in-aspnet-core-session-state)
    * Incremental migration → Continue to question 2
 
 2. **Do both your ASP.NET Framework and ASP.NET Core apps need to access the same session data?**
-   * Yes, shared session needed → Remote app session
-   * No, separate sessions are fine → Wrapped ASP.NET Core session
+   * Yes, shared session needed → [Remote app session](#remote-app-session-state)
+   * No, separate sessions are fine → [Wrapped ASP.NET Core session](#wrapped-aspnet-core-session-state)
 
 ### Understanding the differences
 
@@ -61,14 +61,14 @@ Before diving into implementation details, it's important to understand how ASP.
 
 | Approach | Code Changes | Performance | Session Sharing | When to Use |
 |----------|-------------|-------------|-----------------|-------------|
-| **Built-in ASP.NET Core** | High - Rewrite all session code | Best | None | Complete rewrites, performance-critical apps |
-| **Wrapped ASP.NET Core** | Low - Keep existing session patterns | Good | None | Incremental migrations, no shared state needed |
-| **Remote app** | Low - Keep existing session patterns | Fair | Full | Running both apps simultaneously |
+| **[Built-in ASP.NET Core](#built-in-aspnet-core-session-state)** | High - Rewrite all session code | Best | None | Complete rewrites, performance-critical apps |
+| **[Wrapped ASP.NET Core](#wrapped-aspnet-core-session-state)** | Low - Keep existing session patterns | Good | None | Incremental migrations, no shared state needed |
+| **[Remote app](#remote-app-session-state)** | Low - Keep existing session patterns | Fair | Full | Running both apps simultaneously |
 
-The System.Web adapters enable the "Wrapped" and "Remote app" approaches by bridging the differences between ASP.NET Framework and Core session implementations through two key <example-value>:
+The [System.Web adapters](~/migration/fx-to-core/inc/systemweb-adapters.md) enable the "Wrapped" and "Remote app" approaches by bridging the differences between ASP.NET Framework and Core session implementations through two key interfaces:
 
-* `Microsoft.AspNetCore.SystemWebAdapters.ISessionManager`: Accepts an `Microsoft.AspNetCore.Http.HttpContext` and session metadata, returns an `ISessionState` object
-* `Microsoft.AspNetCore.SystemWebAdapters.ISessionState`: Describes session object state and backs the `System.Web.SessionState.HttpSessionState` type
+* `Microsoft.AspNetCore.SystemWebAdapters.ISessionManager`: Accepts an <xref:Microsoft.AspNetCore.Http.HttpContext> and session metadata, returns an `ISessionState` object
+* `Microsoft.AspNetCore.SystemWebAdapters.ISessionState`: Describes session object state and backs the <xref:System.Web.SessionState.HttpSessionState> type
 
 ## Built-in ASP.NET Core session state
 
@@ -116,50 +116,26 @@ When migrating to built-in ASP.NET Core session:
 
 ## System.Web Adapter Session
 
-> **Note:**
-> This makes use of the System.Web Adapters to simplify migration.
+[!INCLUDE[](~/migration/fx-to-core/includes/uses-systemweb-adapters.md)]
 
 ### Serialization configuration
 
-The `System.Web.SessionState.HttpSessionState` object requires serialization for remote app session state.
+The <xref:System.Web.SessionState.HttpSessionState> object requires serialization for remote app session state.
 
-In ASP.NET Framework, BinaryFormatter was used to automatically serialize session value contents. In order to serialize these with for use with the System.Web adapters, the serialization must be explicitly configured using `ISessionKeySerializer` implementations.
+In ASP.NET Framework, [BinaryFormatter](/dotnet/api/system.runtime.serialization.formatters.binary.binaryformatter) was used to automatically serialize session value contents. In order to serialize these with for use with the System.Web adapters, the serialization must be explicitly configured using `ISessionKeySerializer` implementations.
 
 Out of the box, there is a simple JSON serializer that allows each session key to be registered to a known type using `JsonSessionSerializerOptions`:
 
 * `RegisterKey<T>(string)` - Registers a session key to a known type. This registration is required for correct serialization/deserialization. Missing registrations cause errors and prevent session access.
 
-```csharp
-builder.Services.AddSystemWebAdapters()
-    .AddJsonSessionSerializer(options =>
-    {
-        // Serialization/deserialization requires each session key to be registered to a type
-        options.RegisterKey<int>("test-value");
-    });
-```
+:::code language="csharp" source="~/migration/fx-to-core/areas/session/samples/serialization/Program.cs" id="snippet_Serialization" :::
+
 If more customization is needed, then `ISessionKeySerializer` can be implemented:
 
-```csharp
-builder.Services.AddSystemWebAdapters()
-    .AddSessionSerializer();
+:::code language="csharp" source="~/migration/fx-to-core/areas/session/samples/serialization/Program_Custom.cs" id="snippet_Serialization" :::
+:::code language="csharp" source="~/migration/fx-to-core/areas/session/samples/serialization/Program_Custom.cs" id="snippet_CustomSerializer" :::
 
-builder.Services.AddSingleton<ISessionKeySerializer, CustomSessionKeySerializer>();
-```
-```csharp
-sealed class CustomSessionKeySerializer : ISessionKeySerializer
-{
-    public bool TryDeserialize(string key, byte[] bytes, out object? obj)
-    {
-        // Custom deserialization logic
-    }
-
-    public bool TrySerialize(string key, object? value, out byte[] bytes)
-    {
-        // Custom serialization logic
-    }
-}
-```
-> **Note:**
+> [!NOTE]
 > When using the `AddJsonSessionSerializer` registration pattern, there is no need to call `AddSessionSerializer` as it will automatically be added. If you only want to use a customimplementation, then you must manually add it.
 
 ### Enable session
@@ -168,44 +144,29 @@ Session support requires explicit activation. Configure it per-route or globally
 
 * Annotate controllers
 
-```csharp
-[Session]
-public class SomeController : Controller
-{
-}
-```
+:::code language="csharp" source="~/migration/fx-to-core/areas/session/samples/remote/SomeController.cs" id="snippet_Controller" :::
+
 * Enable globally for all endpoints
 
-```csharp
-app.MapDefaultControllerRoute()
-    .RequireSystemWebAdapterSession();
-```
+:::code language="csharp" source="~/migration/fx-to-core/areas/session/samples/remote/Program.cs" id="snippet_RequireSystemWebAdapterSession" :::
+
 ## Wrapped ASP.NET Core session state
 
 Choose this approach when your migrated components don't need to share session data with your legacy application.
 
-The `Microsoft.Extensions.DependencyInjection.WrappedSessionExtensions.AddWrappedAspNetCoreSession` extension method adds a wrapped ASP.NET Core session to work with the adapters. It uses the same backing store as `Microsoft.AspNetCore.Http.ISession` while providing strongly-typed access.
+The `Microsoft.Extensions.DependencyInjection.WrappedSessionExtensions.AddWrappedAspNetCoreSession` extension method adds a wrapped ASP.NET Core session to work with the adapters. It uses the same backing store as <xref:Microsoft.AspNetCore.Http.ISession> while providing strongly-typed access.
 
 **Configuration for ASP.NET Core:**
 
-```csharp
-builder.Services.AddSystemWebAdapters()
-    .AddJsonSessionSerializer(options =>
-    {
-        // Serialization/deserialization requires each session key to be registered to a type
-        options.RegisterKey<int>("test-value");
-        options.RegisterKey<SessionDemoModel>("SampleSessionItem");
-    })
-    .AddWrappedAspNetCoreSession();
-```
+:::code language="csharp" source="~/migration/fx-to-core/areas/session/samples/wrapped/Program.cs" id="snippet_WrapAspNetCoreSession" :::
+
 Your Framework application requires no changes.
 
-For more information, see the wrapped session state sample app
+For more information, see the [wrapped session state sample app](https://github.com/dotnet/systemweb-adapters/blob/main/samples/SessionLocal/SessionLocalCore/Program.cs)
 
 ## Remote app session state
 
-> **Note:**
-> This makes use of the System.Web Adapters to simplify migration.
+[!INCLUDE[](~/migration/fx-to-core/includes/uses-systemweb-adapters.md)]
 
 Choose this approach when you need to share session state between your ASP.NET Framework and ASP.NET Core applications during incremental migration.
 
@@ -213,61 +174,26 @@ Remote app session enables communication between applications to retrieve and se
 
 ### Prerequisites
 
-Complete the remote app setup instructions to connect your ASP.NET Core and ASP.NET Framework applications.
+Complete the [remote app setup](../inc/remote-app-setup.md) instructions to connect your ASP.NET Core and ASP.NET Framework applications.
 
 ### Application configuration
 
-**manual:**
+:::zone pivot="manual"
 **ASP.NET Core configuration:**
 
 Call `AddRemoteAppSession` and `AddJsonSessionSerializer` to register known session item types:
 
-```csharp
-builder.Services.AddSystemWebAdapters()
-    .AddJsonSessionSerializer(options =>
-    {
-        // Serialization/deserialization requires each session key to be registered to a type
-        options.RegisterKey<int>("test-value");
-        options.RegisterKey<SessionDemoModel>("SampleSessionItem");
-    })
-    .AddRemoteAppClient(options =>
-    {
-        // Provide the URL for the remote app that has enabled session querying
-        options.RemoteAppUrl = new(builder.Configuration["ReverseProxy:Clusters:fallbackCluster:Destinations:fallbackApp:Address"]);
+:::code language="csharp" source="~/migration/fx-to-core/areas/session/samples/remote/Program.cs" id="snippet_RemoteConfiguration" :::
 
-        // Provide a strong API key that will be used to authenticate the request on the remote app for querying the session
-        options.ApiKey = builder.Configuration["<example-value>"];
-    })
-    .AddSessionClient();
-```
 **ASP.NET Framework configuration:**
 
 Add this change to `Global.asax.cs`:
 
-```csharp
-public class Global : HttpApplication
-{
-        protected void Application_Start()
-        {
-            HttpApplicationHost.RegisterHost(builder =>
-            {
-                builder.AddSystemWebAdapters()
-                    .AddJsonSessionSerializer(options =>
-                    {
-                        // Serialization/deserialization requires each session key to be registered to a type
-                        options.RegisterKey<int>("test-value");
-                        options.RegisterKey<SessionDemoModel>("SampleSessionItem");
-                    })
-                    // Provide a strong API key that will be used to authenticate the request on the remote app for querying the session
-                    // ApiKey is a string representing a GUID
-                    .AddRemoteAppServer(options => options.ApiKey = ConfigurationManager.AppSettings["<example-value>"])
-                    .AddSessionServer();
-            });
-        }
-}
-```
+:::code language="csharp" source="~/migration/fx-to-core/areas/session/samples/remote/Global.asax.cs":::
 
-**aspire:**
+:::zone-end
+
+:::zone pivot="aspire"
 When using Aspire, the configuration will be done via environment variables and are set by the AppHost. To enable remote session, the option must be enabled:
 
 ```csharp
@@ -281,11 +207,15 @@ var coreApp = builder.AddProject<Projects.CoreApplication>("core")
 ...
 ```
 
+:::zone-end
+
 ### Communication protocol
 
 #### Readonly sessions
 
 Readonly sessions retrieve session state without locking. The process uses a single `GET` request that returns session state and closes immediately.
+
+![Readonly session will retrieve the session state from the framework app](~/migration/fx-to-core/areas/session/_static/readonly_session.png)
 
 #### Writeable sessions
 
@@ -295,3 +225,5 @@ Writeable sessions require additional steps:
 * Keep the initial `GET` request open until the session completes
 * Use an additional `PUT` request to update state
 * Close the initial request only after updating is complete
+
+![Writeable session state protocol starts with the same as the readonly](~/migration/fx-to-core/areas/session/_static/writesession.png)

@@ -1,12 +1,3 @@
----
-title: "std::thread::join_handle"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/thread/join_handle.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::thread::join_handle
 
 ## struct JoinHandle
@@ -21,17 +12,17 @@ A `JoinHandle` *detaches* the associated thread when it is dropped, which
 means that there is no longer any handle to the thread and no way to `join`
 on it.
 
-Due to platform restrictions, it is not possible to `Clone` this
+Due to platform restrictions, it is not possible to [`Clone`] this
 handle: the ability to join a thread is a uniquely-owned permission.
 
-This `struct` is created by the `thread::spawn` function and the
-`thread::Builder::spawn` method.
+This `struct` is created by the [`thread::spawn`] function and the
+[`thread::Builder::spawn`] method.
 
 # Examples
 
-Creation from `thread::spawn`:
+Creation from [`thread::spawn`]:
 
-```rust
+```
 use std::thread;
 
 let join_handle: thread::JoinHandle<_> = thread::spawn(|| {
@@ -39,9 +30,9 @@ let join_handle: thread::JoinHandle<_> = thread::spawn(|| {
 });
 ```
 
-Creation from `thread::Builder::spawn`:
+Creation from [`thread::Builder::spawn`]:
 
-```rust
+```
 use std::thread;
 
 let builder = thread::Builder::new();
@@ -53,7 +44,7 @@ let join_handle: thread::JoinHandle<_> = builder.spawn(|| {
 
 A thread being detached and outliving the thread that spawned it:
 
-```rust
+```no_run
 use std::thread;
 use std::time::Duration;
 
@@ -75,6 +66,9 @@ println!("Original thread is joined.");
 thread::sleep(Duration::from_millis(1000));
 ```
 
+[`thread::Builder::spawn`]: super::Builder::spawn
+[`thread::spawn`]: super::spawn
+
 ## JoinHandle::thread
 
 ```rust
@@ -85,7 +79,7 @@ Extracts a handle to the underlying thread.
 
 # Examples
 
-```rust
+```
 use std::thread;
 
 let builder = thread::Builder::new();
@@ -112,12 +106,15 @@ for thread-local variables that might be running after the main function of the 
 
 In terms of [atomic memory orderings], the completion of the associated
 thread synchronizes with this function returning. In other words, all
-operations performed by that thread happen
-before all
+operations performed by that thread [happen
+before](https://doc.rust-lang.org/nomicon/atomics.html#data-accesses) all
 operations that happen after `join` returns.
 
-If the associated thread panics, `Err` is returned with the parameter given
-to `panic!` (though see the Notes below).
+If the associated thread panics, [`Err`] is returned with the parameter given
+to [`panic!`] (though see the Notes below).
+
+[`Err`]: crate::result::Result::Err
+[atomic memory orderings]: crate::sync::atomic
 
 # Panics
 
@@ -126,7 +123,7 @@ itself or otherwise may create a deadlock with joining threads.
 
 # Examples
 
-```rust
+```
 use std::thread;
 
 let builder = thread::Builder::new();
@@ -142,9 +139,12 @@ join_handle.join().expect("Couldn't join on the associated thread");
 If a "foreign" unwinding operation (e.g. an exception thrown from C++
 code, or a `panic!` in Rust code compiled or linked with a different
 runtime) unwinds all the way to the thread root, the process may be
-aborted; see the Notes on `thread::spawn`. If the process is not
+aborted; see the Notes on [`thread::spawn`]. If the process is not
 aborted, this function will return a `Result::Err` containing an opaque
 type.
+
+[`catch_unwind`]: ../../std/panic/fn.catch_unwind.html
+[`thread::spawn`]: super::spawn
 
 ## JoinHandle::is_finished
 
@@ -156,9 +156,9 @@ Checks if the associated thread has finished running its main function.
 
 `is_finished` supports implementing a non-blocking join operation, by checking
 `is_finished`, and calling `join` if it returns `true`. This function does not block. To
-block while waiting on the thread to finish, use `join`[Self::join].
+block while waiting on the thread to finish, use [`join`][Self::join].
 
 This might return `true` for a brief moment after the thread's main
 function has returned, but before the thread itself has stopped running.
-However, once this returns `true`, `join`[Self::join] can be expected
+However, once this returns `true`, [`join`][Self::join] can be expected
 to return quickly, without blocking for any significant amount of time.

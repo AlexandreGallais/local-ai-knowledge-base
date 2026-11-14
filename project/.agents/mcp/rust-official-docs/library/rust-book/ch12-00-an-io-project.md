@@ -1,12 +1,3 @@
----
-title: "An I/O Project: Building a Command Line Program"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch12-00-an-io-project.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
 # An I/O Project: Building a Command Line Program
 
 This chapter is a recap of the many skills you’ve learned so far and an
@@ -38,12 +29,20 @@ background knowledge you need to understand a real-world project such as
 
 Our `grep` project will combine a number of concepts you’ve learned so far:
 
-- Organizing code (Chapter 7)
-- Using vectors and strings (Chapter 8)
-- Handling errors (Chapter 9)
-- Using traits and lifetimes where appropriate (Chapter 10)
-- Writing tests (Chapter 11)
+- Organizing code ([Chapter 7][ch7]<!-- ignore -->)
+- Using vectors and strings ([Chapter 8][ch8]<!-- ignore -->)
+- Handling errors ([Chapter 9][ch9]<!-- ignore -->)
+- Using traits and lifetimes where appropriate ([Chapter 10][ch10]<!-- ignore -->)
+- Writing tests ([Chapter 11][ch11]<!-- ignore -->)
 
 We’ll also briefly introduce closures, iterators, and trait objects, which
-Chapter 13 and Chapter 18 will
+[Chapter 13][ch13]<!-- ignore --> and [Chapter 18][ch18]<!-- ignore --> will
 cover in detail.
+
+[ch7]: ch07-00-managing-growing-projects-with-packages-crates-and-modules.html
+[ch8]: ch08-00-common-collections.html
+[ch9]: ch09-00-error-handling.html
+[ch10]: ch10-00-generics.html
+[ch11]: ch11-00-testing.html
+[ch13]: ch13-00-functional-features.html
+[ch18]: ch18-00-oop.html

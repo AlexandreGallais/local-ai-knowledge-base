@@ -1,12 +1,11 @@
 ---
-title: "Write a custom .NET runtime host"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tutorials/netcore-hosting.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Write a custom .NET runtime host
+description: Learn to host the .NET runtime from native code to support advanced scenarios that require controlling how the .NET runtime works.
+author: mjrousos
+ms.topic: how-to
+ms.date: 10/23/2025
+ai-usage: ai-assisted
 ---
-
 # Write a custom .NET host to control the .NET runtime from your native code
 
 Like all managed code, .NET applications are executed by a host. The host is responsible for starting the runtime (including components like the JIT and garbage collector) and invoking managed entry points.
@@ -17,34 +16,36 @@ This article gives an overview of the steps necessary to start the .NET runtime 
 
 ## Prerequisites
 
-Because hosts are native applications, this tutorial covers constructing a C++ application to host .NET. You need a C++ development environment (such as that provided by Visual Studio).
+Because hosts are native applications, this tutorial covers constructing a C++ application to host .NET. You need a C++ development environment (such as that provided by [Visual Studio](https://aka.ms/vsdownload?utm_medium=microsoft&utm_source=learn.microsoft.com&utm_campaign=inline+link)).
 
-You also need to build a .NET component to test the host with, so you should install the latest .NET SDK. It includes the necessary headers and libraries to link with.
+You also need to build a .NET component to test the host with, so you should install the [latest .NET SDK](https://dotnet.microsoft.com/download). It includes the necessary headers and libraries to link with.
 
 ## Hosting APIs
 
 Hosting the .NET runtime is done with the `nethost` and `hostfxr` libraries' APIs. These entry points handle the complexity of finding and setting up the runtime for initialization and allow both launching a managed application and calling into a static managed method.
 
-> **Important:**
+> [!IMPORTANT]
 > The `nethost` and `hostfxr` hosting APIs only support framework-dependent deployments. Self-contained deployments should be treated as stand-alone executables. If you're evaluating deployment models for your application, use a framework-dependent deployment to ensure compatibility with these native hosting APIs.
 
 ## Create a host using `nethost.h` and `hostfxr.h`
 
-A sample host demonstrating the steps outlined in the tutorial below is available in the dotnet/samples GitHub repository. Comments in the sample clearly associate the numbered steps from this tutorial with where they're performed in the sample. For download instructions, see Samples and Tutorials.
+A [sample host](https://github.com/dotnet/samples/tree/main/core/hosting) demonstrating the steps outlined in the tutorial below is available in the dotnet/samples GitHub repository. Comments in the sample clearly associate the numbered steps from this tutorial with where they're performed in the sample. For download instructions, see [Samples and Tutorials](../../samples-and-tutorials/index.md#view-and-download-samples).
 
 Keep in mind that the sample host is meant to be used for learning purposes, so it is light on error checking and designed to emphasize readability over efficiency.
 
-The following steps detail how to use the `nethost` and `hostfxr` libraries to start the .NET runtime in a native application and call into a managed static method. The sample uses the `nethost` headers and library and the `coreclr_delegates.h` and `hostfxr.h` headers installed with the .NET SDK.
+The following steps detail how to use the `nethost` and `hostfxr` libraries to start the .NET runtime in a native application and call into a managed static method. The [sample](https://github.com/dotnet/samples/tree/main/core/hosting/src) uses the `nethost` headers and library and the `coreclr_delegates.h` and `hostfxr.h` headers installed with the .NET SDK.
 
 ### Step 1 - Load `hostfxr` and get exported hosting functions
 
-The `nethost` library provides the `get_hostfxr_path` function for locating the `hostfxr` library. The `hostfxr` library exposes functions for hosting the .NET runtime. The full list of functions can be found in `hostfxr.h` and the native hosting design document. The sample and this tutorial use the following:
+The `nethost` library provides the `get_hostfxr_path` function for locating the `hostfxr` library. The `hostfxr` library exposes functions for hosting the .NET runtime. The full list of functions can be found in [`hostfxr.h`](https://github.com/dotnet/runtime/blob/main/src/native/corehost/hostfxr.h) and the [native hosting design document](https://github.com/dotnet/runtime/blob/main/docs/design/features/native-hosting.md). The sample and this tutorial use the following:
 
 * `hostfxr_initialize_for_runtime_config`: Initializes a host context and prepares for initialization of the .NET runtime using the specified runtime configuration.
 * `hostfxr_get_runtime_delegate`: Gets a delegate for runtime functionality.
 * `hostfxr_close`: Closes a host context.
 
 The `hostfxr` library is found using `get_hostfxr_path` API from `nethost` library. It is then loaded and its exports are retrieved.
+
+[!code-cpp[HostFxrHost#LoadHostFxr](~/samples/snippets/core/tutorials/netcore-hosting/csharp/HostWithHostFxr/src/NativeHost/nativehost.cpp#LoadHostFxr)]
 
 The sample uses the following includes:
 
@@ -64,9 +65,13 @@ These files can be found at the following locations:
 
 The `hostfxr_initialize_for_runtime_config` and `hostfxr_get_runtime_delegate` functions initialize and start the .NET runtime using the runtime configuration for the managed component that will be loaded. The `hostfxr_get_runtime_delegate` function is used to get a runtime delegate that allows loading a managed assembly and getting a function pointer to a static method in that assembly.
 
+[!code-cpp[HostFxrHost#Initialize](~/samples/snippets/core/tutorials/netcore-hosting/csharp/HostWithHostFxr/src/NativeHost/nativehost.cpp#Initialize)]
+
 ### Step 3 - Load managed assembly and get function pointer to a managed method
 
 The runtime delegate is called to load the managed assembly and get a function pointer to a managed method. The delegate requires the assembly path, assembly-qualified type name, and method name as inputs and returns a function pointer that can be used to invoke the managed method.
+
+[!code-cpp[HostFxrHost#LoadAndGet](~/samples/snippets/core/tutorials/netcore-hosting/csharp/HostWithHostFxr/src/NativeHost/nativehost.cpp#LoadAndGet)]
 
 By passing `nullptr` as the delegate type name when calling the runtime delegate, the sample uses a default signature for the managed method:
 
@@ -79,6 +84,8 @@ A different signature can be used by specifying an assembly-qualified delegate t
 ### Step 4 - Run managed code!
 
 The native host can now call the managed method and pass it the desired parameters.
+
+[!code-cpp[HostFxrHost#CallManaged](~/samples/snippets/core/tutorials/netcore-hosting/csharp/HostWithHostFxr/src/NativeHost/nativehost.cpp#CallManaged)]
 
 ## Limitations
 

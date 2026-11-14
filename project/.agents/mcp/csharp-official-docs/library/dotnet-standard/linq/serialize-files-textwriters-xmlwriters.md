@@ -1,28 +1,26 @@
 ---
-title: "Serialize to files, TextWriters, and XmlWriters - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/serialize-files-textwriters-xmlwriters.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Serialize to files, TextWriters, and XmlWriters - LINQ to XML
+description: You can serialize XML trees to a File, a TextWriter, or an XmlWriter, and you can serialize any XML component, including XDocument and XElement, to a string by using the ToString method.
+ms.date: 07/20/2015
+ms.topic: how-to
 ---
 
 # Serialize to files, TextWriters, and XmlWriters (LINQ to XML)
 
-You can serialize XML trees to a `System.IO.File`, a `System.IO.TextWriter`, or an `System.Xml.XmlWriter`.
+You can serialize XML trees to a <xref:System.IO.File>, a <xref:System.IO.TextWriter>, or an <xref:System.Xml.XmlWriter>.
 
-You can serialize any XML component, including `System.Xml.Linq.XDocument` and `System.Xml.Linq.XElement`, to a string by using the `ToString` method.
+You can serialize any XML component, including <xref:System.Xml.Linq.XDocument> and <xref:System.Xml.Linq.XElement>, to a string by using the `ToString` method.
 
-If you want to suppress formatting when serializing to a string, you can use the `System.Xml.Linq.XNode.ToString*` method.
+If you want to suppress formatting when serializing to a string, you can use the <xref:System.Xml.Linq.XNode.ToString*?displayProperty=nameWithType> method.
 
-The default behavior when serializing to a file is to format (indent) the resulting XML document. When you indent, the insignificant white space in the XML tree isn't preserved. To serialize with formatting, use one of the overloads of the following methods that don't take `System.Xml.Linq.SaveOptions` as an argument:
+The default behavior when serializing to a file is to format (indent) the resulting XML document. When you indent, the insignificant white space in the XML tree isn't preserved. To serialize with formatting, use one of the overloads of the following methods that don't take <xref:System.Xml.Linq.SaveOptions> as an argument:
 
-- `System.Xml.Linq.XDocument.Save*`
-- `System.Xml.Linq.XElement.Save*`
+- <xref:System.Xml.Linq.XDocument.Save*?displayProperty=nameWithType>
+- <xref:System.Xml.Linq.XElement.Save*?displayProperty=nameWithType>
 
-If you want the option not to indent and to preserve the insignificant white space in the XML tree, use one of the overloads of the following methods that takes `System.Xml.Linq.SaveOptions` as an argument:
+If you want the option not to indent and to preserve the insignificant white space in the XML tree, use one of the overloads of the following methods that takes <xref:System.Xml.Linq.SaveOptions> as an argument:
 
-- `System.Xml.Linq.XDocument.Save*`
-- `System.Xml.Linq.XElement.Save*`
+- <xref:System.Xml.Linq.XDocument.Save*?displayProperty=nameWithType>
+- <xref:System.Xml.Linq.XElement.Save*?displayProperty=nameWithType>
 
 For examples, see the appropriate reference article.

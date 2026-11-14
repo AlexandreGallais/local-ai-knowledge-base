@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugFrame::GetStackRange Method"
 title: "ICorDebugFrame::GetStackRange Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugframe-getstackrange-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugFrame.GetStackRange"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugFrame::GetStackRange"
+helpviewer_keywords:
+  - "GetStackRange method, ICorDebugFrame interface [.NET debugging]"
+  - "ICorDebugFrame::GetStackRange method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugFrame::GetStackRange Method
 
 Gets the absolute address range of this stack frame.
@@ -34,7 +43,7 @@ The address range of the stack is useful for piecing together interleaved stack 
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugFrame::GetChain Method"
 title: "ICorDebugFrame::GetChain Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugframe-getchain-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugFrame.GetChain"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugFrame::GetChain"
+helpviewer_keywords:
+  - "ICorDebugFrame::GetChain method [.NET debugging]"
+  - "GetChain method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugFrame::GetChain Method
 
 Gets a pointer to the chain this frame is a part of.
@@ -26,7 +35,7 @@ HRESULT GetChain (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

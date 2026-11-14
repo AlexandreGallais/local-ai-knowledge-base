@@ -1,21 +1,17 @@
 ---
 title: "Breaking change: 'dotnet pack' uses Release configuration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/8.0/dotnet-pack-config.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in the .NET 8 SDK where 'dotnet pack' uses the 'Release' configuration by default.
+ms.date: 02/02/2023
 ---
-
 # 'dotnet pack' uses Release configuration
 
-The `dotnet pack` command, which packs code into a NuGet package, now uses the `Release` configuration instead of the `Debug` configuration by default.
+The [`dotnet pack` command](../../../tools/dotnet-pack.md), which packs code into a NuGet package, now uses the `Release` configuration instead of the `Debug` configuration by default.
 
 ## Previous behavior
 
 Previously, `dotnet pack` used the `Debug` configuration unless the configuration was specified explicitly or `PackRelease` was set to `true`.
 
-The `PackRelease` property was added in .NET 7 as a path forward to this breaking change. Previously, you could set the `DOTNET_CLI_ENABLE_PACK_RELEASE_FOR_SOLUTIONS` environment variable to use `PackRelease` in a project that was part of a Visual Studio solution.
+The [`PackRelease` property](../../../project-sdk/msbuild-props.md#packrelease) was added in .NET 7 as a path forward to this breaking change. Previously, you could set the `DOTNET_CLI_ENABLE_PACK_RELEASE_FOR_SOLUTIONS` environment variable to use `PackRelease` in a project that was part of a Visual Studio solution.
 
 ## New behavior
 
@@ -37,7 +33,7 @@ For projects in a solution:
 
 ## Type of breaking change
 
-This change can affect source compatibility and is also a behavioral change.
+This change can affect [source compatibility](../../categories.md#source-compatibility) and is also a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -65,4 +61,4 @@ The `DOTNET_CLI_ENABLE_PACK_RELEASE_FOR_SOLUTIONS` environment variable was remo
 
 ## See also
 
-- 'dotnet publish' uses Release configuration
+- ['dotnet publish' uses Release configuration](dotnet-publish-config.md)

@@ -1,12 +1,3 @@
----
-title: "core::num::wrapping"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/num/wrapping.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::num::wrapping
 
 Definitions of `Wrapping<T>`.
@@ -35,7 +26,7 @@ The underlying value can be retrieved through the `.0` index of the
 
 # Examples
 
-```rust
+```
 use std::num::Wrapping;
 
 let zero = Wrapping(0u32);
@@ -63,7 +54,7 @@ is used.
 
 Basic usage:
 
-```rust
+```
 use std::num::Wrapping;
 
 let n = Wrapping(0b0000000_01010101i16);

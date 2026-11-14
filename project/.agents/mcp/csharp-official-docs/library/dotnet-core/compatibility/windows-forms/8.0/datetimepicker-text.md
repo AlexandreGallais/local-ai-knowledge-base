@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: DateTimePicker.Text is empty string"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/windows-forms/8.0/datetimepicker-text.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 8 for Windows Forms where the DateTimePicker.Text property is the empty string until a handle to the control is created.
+ms.date: 06/06/2024
 ---
-
 # DateTimePicker.Text is empty string
 
-The `System.Windows.Forms.DateTimePicker.Text` property of the `System.Windows.Forms.DateTimePicker` control is now set to the empty string until a handle to the control is created.
+The <xref:System.Windows.Forms.DateTimePicker.Text> property of the <xref:System.Windows.Forms.DateTimePicker> control is now set to the empty string until a handle to the control is created.
 
 ## Version introduced
 
@@ -17,15 +13,15 @@ The `System.Windows.Forms.DateTimePicker.Text` property of the `System.Windows.F
 
 ## Previous behavior
 
-Previously, the `System.Windows.Forms.DateTimePicker.Text` property was available as soon as the `System.Windows.Forms.DateTimePicker` was constructed.
+Previously, the <xref:System.Windows.Forms.DateTimePicker.Text?displayProperty=nameWithType> property was available as soon as the <xref:System.Windows.Forms.DateTimePicker> was constructed.
 
 ## New behavior
 
-Starting in .NET 8, the `System.Windows.Forms.DateTimePicker.Text` property is the empty string until a handle is created. Once the handle is created, `System.Windows.Forms.DateTimePicker.Text` is set to the date that's currently displayed in the control.
+Starting in .NET 8, the <xref:System.Windows.Forms.DateTimePicker.Text?displayProperty=nameWithType> property is the empty string until a handle is created. Once the handle is created, <xref:System.Windows.Forms.DateTimePicker.Text> is set to the date that's currently displayed in the control.
 
 ## Change category
 
-This change is a *behavioral change*.
+This change is a [*behavioral change*](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -53,4 +49,4 @@ public partial class Form1 : Form
 
 ## Affected APIs
 
-- `System.Windows.Forms.DateTimePicker.Text`
+- <xref:System.Windows.Forms.DateTimePicker.Text?displayProperty=fullName>

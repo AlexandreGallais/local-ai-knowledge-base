@@ -1,16 +1,12 @@
 ---
+description: "Learn more about: Dependency Properties"
 title: "Dependency Properties"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/dependency-properties.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "10/22/2008"
+ms.assetid: 212cfb1e-cec4-4047-94a6-47209b387f6f
 ---
-
 # Dependency Properties
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
 A dependency property (DP) is a regular property that stores its value in a property store instead of storing it in a type variable (field), for example.
 
@@ -20,11 +16,11 @@ A dependency property (DP) is a regular property that stores its value in a prop
 
 ## Dependency Property Design
 
- ✔️ DO inherit from `System.Windows.DependencyObject`, or one of its subtypes, when implementing dependency properties. The type provides a very efficient implementation of a property store and automatically supports WPF data binding.
+ ✔️ DO inherit from <xref:System.Windows.DependencyObject>, or one of its subtypes, when implementing dependency properties. The type provides a very efficient implementation of a property store and automatically supports WPF data binding.
 
- ✔️ DO provide a regular CLR property and public static read-only field storing an instance of `System.Windows.DependencyProperty` for each dependency property.
+ ✔️ DO provide a regular CLR property and public static read-only field storing an instance of <xref:System.Windows.DependencyProperty?displayProperty=nameWithType> for each dependency property.
 
- ✔️ DO implement dependency properties by calling instance methods `System.Windows.DependencyObject.GetValue*` and `System.Windows.DependencyObject.SetValue*`.
+ ✔️ DO implement dependency properties by calling instance methods <xref:System.Windows.DependencyObject.GetValue*?displayProperty=nameWithType> and <xref:System.Windows.DependencyObject.SetValue*?displayProperty=nameWithType>.
 
  ✔️ DO name the dependency property static field by suffixing the name of the property with "Property."
 
@@ -42,7 +38,7 @@ A dependency property (DP) is a regular property that stores its value in a prop
 
  Dependency properties described in the preceding section represent intrinsic properties of the declaring type; for example, the `Text` property is a property of `TextButton`, which declares it. A special kind of dependency property is the attached dependency property.
 
- A classic example of an attached property is the `System.Windows.Controls.Grid.Column` property. The property represents Button’s (not Grid’s) column position, but it is only relevant if the Button is contained in a Grid, and so it's "attached" to Buttons by Grids.
+ A classic example of an attached property is the <xref:System.Windows.Controls.Grid.Column?displayProperty=nameWithType> property. The property represents Button’s (not Grid’s) column position, but it is only relevant if the Button is contained in a Grid, and so it's "attached" to Buttons by Grids.
 
 ```xaml
 <Grid>
@@ -88,7 +84,7 @@ public class Grid {
 
 ## Dependency Property Change Notifications
 
- ❌ DO NOT implement change notification logic in dependency property accessors. Dependency properties have a built-in change notifications feature that must be used by supplying a change notification callback to the `System.Windows.PropertyMetadata`.
+ ❌ DO NOT implement change notification logic in dependency property accessors. Dependency properties have a built-in change notifications feature that must be used by supplying a change notification callback to the <xref:System.Windows.PropertyMetadata>.
 
 ## Dependency Property Value Coercion
 
@@ -100,9 +96,9 @@ public class Grid {
 
  *Portions © 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Framework Design Guidelines
-- Common Design Patterns
+- [Framework Design Guidelines](index.md)
+- [Common Design Patterns](common-design-patterns.md)

@@ -1,10 +1,5 @@
 ---
-title: "environment | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/environment.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: environment | Config
 ---
 
 # environment
@@ -15,14 +10,15 @@ license: "MIT"
 
 The environment that will be used for testing. The default environment in Vitest
 is a Node.js environment. If you are building a web application, you can use
-browser-like environment through either `jsdom`
-or `happy-dom` instead.
-If you are building edge functions, you can use `edge-runtime` environment
+browser-like environment through either [`jsdom`](https://github.com/jsdom/jsdom)
+or [`happy-dom`](https://github.com/capricorn86/happy-dom) instead.
+If you are building edge functions, you can use [`edge-runtime`](https://edge-runtime.vercel.app/packages/vm) environment
 
-**Tip:**
-You can also use Browser Mode to run integration or unit tests in the browser without mocking the environment.
+::: tip
+You can also use [Browser Mode](/guide/browser/) to run integration or unit tests in the browser without mocking the environment.
+:::
 
-To define custom options for your environment, use `environmentOptions`.
+To define custom options for your environment, use [`environmentOptions`](/config/environmentoptions).
 
 By adding a `@vitest-environment` docblock or comment at the top of the file,
 you can specify another environment to be used for all tests in that file:
@@ -68,7 +64,7 @@ You can also define a custom environment. When non-builtin environment is used, 
 
 The custom environment file should export an object with the shape of `Environment`:
 
-```ts
+```ts [environment.js]
 import type { Environment } from 'vitest'
 
 export default <Environment>{
@@ -85,18 +81,21 @@ export default <Environment>{
 }
 ```
 
-**Tip:**
-The `viteEnvironment` field corresponds to the environment defined by the Vite Environment API. By default, Vite exposes `client` (for the browser) and `ssr` (for the server) environments.
+::: tip
+The `viteEnvironment` field corresponds to the environment defined by the [Vite Environment API](https://vite.dev/guide/api-environment#environment-api). By default, Vite exposes `client` (for the browser) and `ssr` (for the server) environments.
+:::
 
-Vitest also exposes `builtinEnvironments` through `vitest/environments` entry, in case you just want to extend it. You can read more about extending environments in our guide.
+Vitest also exposes `builtinEnvironments` through `vitest/environments` entry, in case you just want to extend it. You can read more about extending environments in [our guide](/guide/environment).
 
-**Tip:**
-jsdom environment exposes `jsdom` global variable equal to the current JSDOM instance. If you want TypeScript to recognize it, you can add `vitest/jsdom` to your `tsconfig.json` when you use this environment:
+::: tip
+jsdom environment exposes `jsdom` global variable equal to the current [JSDOM](https://github.com/jsdom/jsdom) instance. If you want TypeScript to recognize it, you can add `vitest/jsdom` to your `tsconfig.json` when you use this environment:
 
-```json
+```json [tsconfig.json]
 {
   "compilerOptions": {
     "types": ["vitest/jsdom"]
   }
 }
 ```
+
+:::

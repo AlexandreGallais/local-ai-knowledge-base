@@ -1,19 +1,10 @@
----
-title: "Array and array index expressions"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/expressions/array-expr.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[expr.array]
 # Array and array index expressions
 
 ## Array expressions
 
 r[expr.array.syntax]
-```grammar
+```grammar,expressions
 ArrayExpression -> `[` ArrayElements? `]`
 
 ArrayElements ->
@@ -22,7 +13,7 @@ ArrayElements ->
 ```
 
 r[expr.array.constructor]
-*Array expressions* construct arrays. Array expressions come in two forms.
+*Array expressions* construct [arrays][array]. Array expressions come in two forms.
 
 r[expr.array.array]
 The first form lists out every value in the array.
@@ -53,8 +44,8 @@ let _: [u8; C] = [0; _]; // Inferred const.
 let _: [u8; C] = [0; (((_)))]; // Inferred const.
 ```
 
-> **Note:**
-> In an array expression, an [inferred const] is parsed as an expression but then semantically treated as a separate kind of [const generic argument].
+> [!NOTE]
+> In an array expression, an [inferred const] is parsed as an [expression][Expression] but then semantically treated as a separate kind of [const generic argument].
 
 r[expr.array.repeat-behavior]
 An array expression of this form creates an array with the length of the value of the length operand with each element being a copy of the repeat operand. That is, `[a; b]` creates an array containing `b` copies of the value of `a`.
@@ -85,7 +76,7 @@ r[expr.array.index]
 ## Array and slice indexing expressions
 
 r[expr.array.index.syntax]
-```grammar
+```grammar,expressions
 IndexExpression -> Expression `[` Expression `]`
 ```
 
@@ -103,7 +94,7 @@ let x = &vec![()][0];
 # x;
 ```
 
-```rust
+```rust,compile_fail,E0716
 // The temporary holding the result of `vec![()]` is dropped at the
 // end of the statement, so it's an error to use `y` after.
 let y = &*std::ops::Index::index(&vec![()], 0); // ERROR
@@ -114,9 +105,9 @@ r[expr.array.index.zero-index]
 Indices are zero-based for arrays and slices.
 
 r[expr.array.index.const]
-Array access is a [constant expression], so bounds can be checked at compile-time with a constant index value. Otherwise a check will be performed at run-time that will put the thread in a _panicked state_ if it fails.
+Array access is a [constant expression], so bounds can be checked at compile-time with a constant index value. Otherwise a check will be performed at run-time that will put the thread in a [_panicked state_][panic] if it fails.
 
-```rust
+```rust,should_panic
 // lint is deny by default.
 #![warn(unconditional_panic)]
 
@@ -136,3 +127,20 @@ arr[10];                  // warning: index out of bounds
 
 r[expr.array.index.trait-impl]
 The array index expression can be implemented for types other than arrays and slices by implementing the [Index] and [IndexMut] traits.
+
+[`Copy`]: ../special-types-and-traits.md#copy
+[IndexMut]: std::ops::IndexMut
+[Index]: std::ops::Index
+[array]: ../types/array.md
+[const generic argument]: items.generics.const.argument
+[const block expression]: expr.block.const
+[constant expression]: ../const_eval.md#constant-expressions
+[constant item]: ../items/constant-items.md
+[inferred const]: items.generics.const.inferred
+[literal]: ../tokens.md#literals
+[memory location]: ../expressions.md#place-expressions-and-value-expressions
+[panic]: ../panic.md
+[path]: path-expr.md
+[slice]: ../types/slice.md
+[temporary lifetime extension]: destructors.scope.lifetime-extension
+[temporary scope]: destructors.scope.temporary

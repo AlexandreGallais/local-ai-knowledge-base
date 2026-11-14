@@ -1,12 +1,11 @@
 ---
-title: "YARP Kubernetes Ingress Controller"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/kubernetes-ingress.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: YARP Kubernetes Ingress Controller
+description: YARP Kubernetes Ingress Controller
+ms.date: 04/03/2025
+ms.topic: concept-article
+content_well_notification: AI-contribution
+ai-usage: ai-assisted
 ---
-
 # YARP Kubernetes Ingress Controller
 
 Introduced: Future Preview
@@ -17,24 +16,24 @@ YARP can be integrated with Kubernetes as a reverse proxy managing HTTP/HTTPS tr
 
 Before we continue with this tutorial, make sure you have the following ready...
 
-1. Installing Docker based on your operating system.
+1. Installing [Docker](https://docs.docker.com/install/) based on your operating system.
 
-1. A container registry. Docker by default will create a container registry on DockerHub. You could also use Azure Container Registry or another container registry of your choice, like a local registry for testing.
+1. A container registry. Docker by default will create a container registry on [DockerHub](https://hub.docker.com/). You could also use [Azure Container Registry](/en-us/azure/aks/tutorial-kubernetes-prepare-acr) or another container registry of your choice, like a [local registry](https://docs.docker.com/registry/deploying/#run-a-local-registry) for testing.
 
 1. A Kubernetes Cluster. There are many different options here, including:
 
-   * Azure Kubernetes Service
-   * Kubernetes in Docker Desktop, however it does take up quite a bit of memory on your machine, so use with caution.
-   * Minikube
-   * K3s, a lightweight single-binary certified Kubernetes distribution from Rancher.
+   * [Azure Kubernetes Service](/en-us/azure/aks/tutorial-kubernetes-deploy-cluster)
+   * [Kubernetes in Docker Desktop](https://www.docker.com/blog/docker-windows-desktop-now-kubernetes/), however it does take up quite a bit of memory on your machine, so use with caution.
+   * [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
+   * [K3s](https://k3s.io), a lightweight single-binary certified Kubernetes distribution from Rancher.
    * Another Kubernetes provider of your choice.
 
-> **Note:**
+> [!NOTE]
 > If you choose a container registry provided by a cloud provider other than Dockerhub, you probably must take steps to configure your Kubernetes cluster to allow access. Follow the instructions provided by your cloud provider.
 
 ## Get started
 
-> **Note:**
+> [!NOTE]
 > For now, there is no official Docker image for the YARP ingress controller.
 
 In the meantime, the YARP ingress controller must be built locally and deploy it. In the root of the repository, run:
@@ -46,7 +45,7 @@ docker push {REGISTRY_NAME}/yarp-controller:{TAG}
 
 In the preceding commands, the `{REGISTRY_NAME}` placeholder is the name of the Docker registry, and the `{TAG}` placeholder is a tag for the image (for example, `1.0.0`).
 
-The first step is to deploy the YARP ingress controller to the Kubernetes cluster. This can be done by navigating to Kubernetes Ingress sample `\samples\KubernetesIngress.Sample\Ingress`
+The first step is to deploy the YARP ingress controller to the Kubernetes cluster. This can be done by navigating to [Kubernetes Ingress sample](https://github.com/dotnet/yarp/tree/release/latest/samples/KubernetesIngress.Sample) `\samples\KubernetesIngress.Sample\Ingress`
 and running (after modifying `ingress-controller.yaml` with the same `REGISTRY_NAME` and `TAG`):
 
 ```bash

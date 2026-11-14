@@ -1,0 +1,118 @@
+<Type Name="ProcessExitStatus" FullName="System.Diagnostics.ProcessExitStatus">
+  <TypeSignature Language="C#" Value="public sealed class ProcessExitStatus" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit ProcessExitStatus extends System.Object" />
+  <TypeSignature Language="DocId" Value="T:System.Diagnostics.ProcessExitStatus" />
+  <TypeSignature Language="VB.NET" Value="Public NotInheritable Class ProcessExitStatus" />
+  <TypeSignature Language="F#" Value="type ProcessExitStatus = class" />
+  <TypeSignature Language="C++ CLI" Value="public ref class ProcessExitStatus sealed" />
+  <AssemblyInfo>
+    <AssemblyName>System.Diagnostics.Process</AssemblyName>
+    <AssemblyVersion>11.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>Represents the exit status of a process.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ProcessExitStatus (int exitCode, bool canceled, System.Runtime.InteropServices.PosixSignal? signal = default);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(int32 exitCode, bool canceled, valuetype System.Nullable`1&lt;valuetype System.Runtime.InteropServices.PosixSignal&gt; signal) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Diagnostics.ProcessExitStatus.#ctor(System.Int32,System.Boolean,System.Nullable{System.Runtime.InteropServices.PosixSignal})" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New (exitCode As Integer, canceled As Boolean, Optional signal As Nullable(Of PosixSignal) = Nothing)" />
+      <MemberSignature Language="F#" Value="new System.Diagnostics.ProcessExitStatus : int * bool * Nullable&lt;System.Runtime.InteropServices.PosixSignal&gt; -&gt; System.Diagnostics.ProcessExitStatus" Usage="new System.Diagnostics.ProcessExitStatus (exitCode, canceled, signal)" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Diagnostics.Process</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="exitCode" Type="System.Int32" />
+        <Parameter Name="canceled" Type="System.Boolean" />
+        <Parameter Name="signal" Type="System.Nullable&lt;System.Runtime.InteropServices.PosixSignal&gt;" />
+      </Parameters>
+      <Docs>
+        <param name="exitCode">The exit code of the process.</param>
+        <param name="canceled">A value indicating whether the process has been terminated due to timeout or cancellation.</param>
+        <param name="signal">On Unix, the POSIX signal that terminated the process, or <see langword="null" /> if the process exited normally.</param>
+        <summary>Initializes a new instance of the <see cref="T:System.Diagnostics.ProcessExitStatus" /> class.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Canceled">
+      <MemberSignature Language="C#" Value="public bool Canceled { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool Canceled" />
+      <MemberSignature Language="DocId" Value="P:System.Diagnostics.ProcessExitStatus.Canceled" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Canceled As Boolean" />
+      <MemberSignature Language="F#" Value="member this.Canceled : bool" Usage="System.Diagnostics.ProcessExitStatus.Canceled" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool Canceled { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Diagnostics.Process</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a value indicating whether the process has been terminated due to timeout or cancellation.</summary>
+        <value>
+          <see langword="true" /> if the process was terminated due to timeout or cancellation; otherwise, <see langword="false" />.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ExitCode">
+      <MemberSignature Language="C#" Value="public int ExitCode { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 ExitCode" />
+      <MemberSignature Language="DocId" Value="P:System.Diagnostics.ProcessExitStatus.ExitCode" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property ExitCode As Integer" />
+      <MemberSignature Language="F#" Value="member this.ExitCode : int" Usage="System.Diagnostics.ProcessExitStatus.ExitCode" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property int ExitCode { int get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Diagnostics.Process</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the exit code of the process.</summary>
+        <value>The exit code of the process.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+If the process was terminated by a signal on Unix, the exit code is 128 + the signal number. Use <xref:System.Diagnostics.ProcessExitStatus.Signal> to get the actual signal.
+          ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Signal">
+      <MemberSignature Language="C#" Value="public System.Runtime.InteropServices.PosixSignal? Signal { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Nullable`1&lt;valuetype System.Runtime.InteropServices.PosixSignal&gt; Signal" />
+      <MemberSignature Language="DocId" Value="P:System.Diagnostics.ProcessExitStatus.Signal" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property Signal As Nullable(Of PosixSignal)" />
+      <MemberSignature Language="F#" Value="member this.Signal : Nullable&lt;System.Runtime.InteropServices.PosixSignal&gt;" Usage="System.Diagnostics.ProcessExitStatus.Signal" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property Nullable&lt;System::Runtime::InteropServices::PosixSignal&gt; Signal { Nullable&lt;System::Runtime::InteropServices::PosixSignal&gt; get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Diagnostics.Process</AssemblyName>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Nullable&lt;System.Runtime.InteropServices.PosixSignal&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the POSIX signal that terminated the process on Unix, or <see langword="null" /> if the process was not terminated by a signal.</summary>
+        <value>The POSIX signal that terminated the process, or <see langword="null" /> if the process was not terminated by a signal.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+On Unix, a process can be terminated by a signal (for example, SIGKILL or SIGTERM). When a signal terminates the process, the kernel reports "terminated by signal X" rather than an exit code. The <xref:System.Diagnostics.ProcessExitStatus.Signal> property captures that signal. When the process exits normally on Unix, or on Windows where POSIX signals don't apply, the property is `null`.
+          ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

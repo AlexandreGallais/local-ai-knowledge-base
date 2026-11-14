@@ -1,10 +1,12 @@
 ---
-title: "Command-line design guidance for System.CommandLine"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/commandline/design-guidance.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Command-line design guidance for System.CommandLine
+description: "Provides guidance for designing a command-line interface."
+ms.date: 06/19/2025
+no-loc: [System.CommandLine]
+helpviewer_keywords:
+  - "command line"
+  - "System.CommandLine"
+ms.topic: best-practice
 ---
 
 # Design guidance
@@ -45,17 +47,17 @@ In particular, avoid using any of the following aliases differently than their c
 
 * `-v` for `--verbosity`.
 
-  Commands often provide output to the user on the console; this option is used to specify the amount of output the user requests. For more information, see The `--verbosity` option later in this article.
+  Commands often provide output to the user on the console; this option is used to specify the amount of output the user requests. For more information, see [The `--verbosity` option](#the---verbosity-option) later in this article.
 
 There are also some aliases with common usage limited to the .NET CLI. You can use these aliases for other options in your apps, but be aware of the possibility of confusion.
 
 * `-c` for `--configuration`
 
-  This option often refers to a named Build Configuration, like `Debug` or `Release`. You can use any name you want for a configuration, but most tools are expecting one of those. This setting is often used to configure other properties in a way that makes sense for that configuration—for example, doing less code optimization when building the `Debug` configuration. Consider this option if your command has different modes of operation.
+  This option often refers to a named Build Configuration, like `Debug` or `Release`. You can use any name you want for a configuration, but most tools are expecting one of those. This setting is often used to configure other properties in a way that makes sense for that configuration&mdash;for example, doing less code optimization when building the `Debug` configuration. Consider this option if your command has different modes of operation.
 
 * `-f` for `--framework`
 
-  This option is used to select a single Target Framework Moniker (TFM) to execute for, so if your CLI application has differing behavior based on which TFM is chosen, you should support this flag.
+  This option is used to select a single [Target Framework Moniker (TFM)](../frameworks.md) to execute for, so if your CLI application has differing behavior based on which TFM is chosen, you should support this flag.
 
 * `-p` for `--property`
 
@@ -63,7 +65,7 @@ There are also some aliases with common usage limited to the .NET CLI. You can u
 
 * `-r` for `--runtime`
 
-  If your application can run on different runtimes, or has runtime-specific logic, consider supporting this option as a way of specifying a Runtime Identifier. If your app supports `--runtime`, consider supporting `--os` and `--arch` also. These options let you specify just the OS or the architecture parts of the RID, leaving the part not specified to be determined from the current platform. For more information, see dotnet publish.
+  If your application can run on different runtimes, or has runtime-specific logic, consider supporting this option as a way of specifying a [Runtime Identifier](../../core/rid-catalog.md). If your app supports `--runtime`, consider supporting `--os` and `--arch` also. These options let you specify just the OS or the architecture parts of the RID, leaving the part not specified to be determined from the current platform. For more information, see [dotnet publish](../../core/tools/dotnet-publish.md).
 
 ### Short names
 
@@ -75,7 +77,7 @@ Define names in lowercase only, except you can make uppercase aliases to make co
 
 ### Kebab case names
 
-Use kebab case to distinguish words. For example, `--additional-probing-path`.
+Use [kebab case](https://en.wikipedia.org/wiki/Letter_case#Kebab_case) to distinguish words. For example, `--additional-probing-path`.
 
 ### Pluralization
 
@@ -136,7 +138,7 @@ dotnet run --project ./myapp.csproj -- --message "Hello world!"
 
 In this example, the `--project` option is passed to the `dotnet run` command, and the `--message` option with its argument is passed as a command-line option to *myapp* when it runs.
 
-The `--` token is not always required for passing options to an app that you run by using `dotnet run`. Without the double-dash, the `dotnet run` command automatically passes on to the app being run any options that aren'<example-value>'t recognize the arguments and options:
+The `--` token is not always required for passing options to an app that you run by using `dotnet run`. Without the double-dash, the `dotnet run` command automatically passes on to the app being run any options that aren't recognized as applying to `dotnet run` itself or to MSBuild. So the following command lines are equivalent because `dotnet run` doesn't recognize the arguments and options:
 
 ```dotnetcli
 dotnet run -- quotes read --delay 0 --fg-color red
@@ -157,9 +159,9 @@ In the .NET CLI, some Boolean options result in the same behavior when you pass 
 
 ### Kebab case
 
-In some cases, the .NET CLI doesn't use kebab case for command, option, or argument names. For example, there is a .NET CLI option that is named `--additionalprobingpath` instead of `--additional-probing-path`.
+In some cases, the .NET CLI doesn't use kebab case for command, option, or argument names. For example, there is a .NET CLI option that is named [`--additionalprobingpath`](../../core/tools/dotnet.md#additionalprobingpath) instead of `--additional-probing-path`.
 
 ## See also
 
-* Open-source CLI design guidance
-* GNU standards
+* [Open-source CLI design guidance](https://clig.dev/)
+* [GNU standards](https://www.gnu.org/software/libc/manual/html_node/Argument-Syntax.html)

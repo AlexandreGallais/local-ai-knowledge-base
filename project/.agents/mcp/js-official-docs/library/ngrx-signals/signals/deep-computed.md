@@ -1,12 +1,3 @@
----
-title: "DeepComputed"
-tool: "ngrx-signals"
-version: "22.0"
-source: "https://github.com/ngrx/platform/blob/a4995391ef631f1bd60d539f436a1aa5c23c4fe5/projects/www/src/app/pages/guide/signals/deep-computed.md"
-commit: "a4995391ef631f1bd60d539f436a1aa5c23c4fe5"
-license: "MIT"
----
-
 # DeepComputed
 
 The `deepComputed` function creates a `DeepSignal` when a computation result is an object literal.

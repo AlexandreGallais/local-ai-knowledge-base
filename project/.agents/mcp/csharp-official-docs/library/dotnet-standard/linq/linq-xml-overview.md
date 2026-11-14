@@ -1,10 +1,12 @@
 ---
-title: "Overview - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/linq-xml-overview.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Overview - LINQ to XML
+description: LINQ to XML provides an in-memory XML programming interface that's based on .NET capabilities and is comparable to an updated DOM API.
+ms.date: 03/23/2026
+ai-usage: ai-assisted
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: 716b94d3-0091-4de1-8e05-41bc069fa9dd
 ---
 
 # LINQ to XML overview
@@ -30,14 +32,14 @@ LINQ to XML is like the Document Object Model (DOM) in that it brings the XML do
 - It provides a new object model that's lighter weight and easier to work with.
 - It takes advantage of language features in C# and Visual Basic.
 
-The most important advantage of LINQ to XML is its integration with Language-Integrated Query (LINQ). This integration enables you to write queries on the in-memory XML document to retrieve collections of elements and attributes. The query capability of LINQ to XML is comparable in functionality (although not in syntax) to XPath and XQuery. The integration of LINQ in C# and Visual Basic <example-value> stronger typing, compile-time checking, and improved debugger support.
+The most important advantage of LINQ to XML is its integration with Language-Integrated Query (LINQ). This integration enables you to write queries on the in-memory XML document to retrieve collections of elements and attributes. The query capability of LINQ to XML is comparable in functionality (although not in syntax) to XPath and XQuery. The integration of LINQ in C# and Visual Basic provides stronger typing, compile-time checking, and improved debugger support.
 
-Another advantage of LINQ to XML is the ability to use query results as parameters to `System.Xml.Linq.XElement` and `System.Xml.Linq.XAttribute` object constructors enables a powerful approach to creating XML trees. This approach, called *functional construction*, enables developers to easily transform XML trees from one shape to another.
+Another advantage of LINQ to XML is the ability to use query results as parameters to <xref:System.Xml.Linq.XElement> and <xref:System.Xml.Linq.XAttribute> object constructors enables a powerful approach to creating XML trees. This approach, called *functional construction*, enables developers to easily transform XML trees from one shape to another.
 
 For example, suppose you have a typical XML purchase order that you want to query with LINQ to XML. The following query gets the part number attribute value for every item element in the purchase order.
 
-> **Tip:**
-> The examples in this section use Sample XML file: Typical purchase order. Save the file as `PurchaseOrder.xml` in the directory where you run the app (usually the output folder, such as `bin/Debug/...`) before you run the queries.
+> [!TIP]
+> The examples in this section use [Sample XML file: Typical purchase order](sample-xml-file-typical-purchase-order.md). Save the file as `PurchaseOrder.xml` in the directory where you run the app (usually the output folder, such as `bin/Debug/...`) before you run the queries.
 
 ```csharp
 // Load the XML file from our project directory containing the purchase orders
@@ -112,11 +114,11 @@ IEnumerable<XElement> pricesByPartNos = purchaseOrder.Descendants("Item")
 
 In addition to these LINQ capabilities, LINQ to XML provides an improved XML programming interface. Using LINQ to XML, you can:
 
-- Load XML from files or streams.
+- Load XML from [files](load-xml-file.md) or [streams](stream-xml-fragments-xmlreader.md).
 - Serialize XML to files or streams.
 - Create XML from scratch by using functional construction.
 - Query XML using XPath-like axes.
-- Manipulate the in-memory XML tree by using methods such as `System.Xml.Linq.XContainer.Add*`, `System.Xml.Linq.XNode.Remove*`, `System.Xml.Linq.XNode.ReplaceWith*`, and `System.Xml.Linq.XElement.SetValue*`.
+- Manipulate the in-memory XML tree by using methods such as <xref:System.Xml.Linq.XContainer.Add*>, <xref:System.Xml.Linq.XNode.Remove*>, <xref:System.Xml.Linq.XNode.ReplaceWith*>, and <xref:System.Xml.Linq.XElement.SetValue*>.
 - Validate XML trees using XSD.
 - Use a combination of these features to transform XML trees from one shape into another.
 
@@ -159,14 +161,14 @@ Dim contacts As XElement = _
     </Contacts>
 ```
 
-> **Note:**
-> The Visual Basic <example-value> of the example uses XML literals. You can also use `System.Xml.Linq.XElement` in Visual Basic, as in the C# version.
+> [!NOTE]
+> The Visual Basic version of the example uses XML literals. You can also use <xref:System.Xml.Linq.XElement> in Visual Basic, as in the C# version.
 
-For more information, see XML trees.
+For more information, see [XML trees](functional-construction.md).
 
 ## See also
 
-- Reference
-- LINQ to XML vs. DOM
-- LINQ to XML vs. other XML technologies
-- `System.Xml.Linq`
+- [Reference](reference.md)
+- [LINQ to XML vs. DOM](linq-xml-vs-dom.md)
+- [LINQ to XML vs. other XML technologies](linq-xml-vs-xml-technologies.md)
+- <xref:System.Xml.Linq>

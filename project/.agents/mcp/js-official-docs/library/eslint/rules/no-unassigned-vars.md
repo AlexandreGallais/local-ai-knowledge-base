@@ -1,13 +1,12 @@
 ---
-title: "no-unassigned-vars"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-unassigned-vars.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-unassigned-vars
+rule_type: problem
+related_rules:
+- init-declarations
+- no-unused-vars
+- prefer-const
 ---
 
-# no-unassigned-vars
 
 This rule flags `let` or `var` declarations that are never assigned a value but are still read or used in the code. Since these variables will always be `undefined`, their usage is likely a programming mistake.
 
@@ -27,7 +26,7 @@ if (status === 'ready') {
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-unassigned-vars: "error"*/
@@ -59,9 +58,11 @@ function init() {
 }
 ```
 
+:::
+
 In TypeScript:
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /*eslint no-unassigned-vars: "error"*/
@@ -70,9 +71,11 @@ let value: number | undefined;
 console.log(value);
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-unassigned-vars: "error"*/
@@ -115,9 +118,11 @@ if (one === two) {
 }
 ```
 
+:::
+
 In TypeScript:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint no-unassigned-vars: "error"*/
@@ -130,6 +135,8 @@ declare module "my-module" {
   export = value;
 }
 ```
+
+:::
 
 ## Options
 

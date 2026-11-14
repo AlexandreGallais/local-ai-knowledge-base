@@ -1,10 +1,11 @@
 ---
-title: "How to filter on an attribute - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/filter-attribute.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to filter on an attribute - LINQ to XML
+description: This article shows how to use LINQ to XML query and XPath, in C# and Visual Basic, to find descendant elements that have a specified name and attribute value.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to filter on an attribute (LINQ to XML)
@@ -13,7 +14,7 @@ This article shows how to use LINQ to XML query and XPath, in C# and Visual Basi
 
 ## Example: Find all descendant elements that have a specified name and attribute value
 
-This example uses LINQ to XML query and XPath to find, in XML document Sample XML file: Multiple purchase orders, all descendant elements that have the name `Address`, and a `Type` attribute whose value is "Shipping". The XPath expression is `.//Address[@Type='Shipping']`
+This example uses LINQ to XML query and XPath to find, in XML document [Sample XML file: Multiple purchase orders](sample-xml-file-multiple-purchase-orders.md), all descendant elements that have the name `Address`, and a `Type` attribute whose value is "Shipping". The XPath expression is `.//Address[@Type='Shipping']`
 
 ```csharp
 XDocument po = XDocument.Load("PurchaseOrders.xml");
@@ -92,4 +93,4 @@ Results are identical
 
 ## See also
 
-- Comparison of XPath and LINQ to XML
+- [Comparison of XPath and LINQ to XML](comparison-xpath-linq-xml.md)

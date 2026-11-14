@@ -1,21 +1,17 @@
 ---
 title: ".NET 7 breaking change: Compiling C++/CLI projects in Visual Studio"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/7.0/cpluspluscli-compiler-version.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in core .NET libraries where Visual Studio version 17.2 is required to compile .NET 7 C++/CLI projects.
+ms.date: 03/21/2022
 ---
-
 # C++/CLI projects in Visual Studio
 
-.NET 7 includes *generic math* APIs that use `static abstract` interface members on primitive types, such as `System.Int32`. Earlier versions of the C++/CLI compiler were incompatible with such members. Because those members are used on many primitive types, compilation errors will occur when targeting `net7.0`, even if you don't use the generic math features directly.
+.NET 7 includes *generic math* APIs that use `static abstract` interface members on primitive types, such as <xref:System.Int32>. Earlier versions of the C++/CLI compiler were incompatible with such members. Because those members are used on many primitive types, compilation errors will occur when targeting `net7.0`, even if you don't use the generic math features directly.
 
-Beyond C++/CLI, it's also possible that the introduction of `static abstract` interface members on primitive `System` types will surface issues in other tools that aren't forward-compatible with the usage of this new language construct. If you're a tool author, you'll need to update any tools impacted by this change to accommodate the usage of `static abstract` interface members. If you need help, file an issue in the dotnet/runtime repo to request guidance.
+Beyond C++/CLI, it's also possible that the introduction of `static abstract` interface members on primitive <xref:System> types will surface issues in other tools that aren't forward-compatible with the usage of this new language construct. If you're a tool author, you'll need to update any tools impacted by this change to accommodate the usage of `static abstract` interface members. If you need help, [file an issue in the dotnet/runtime repo](https://github.com/dotnet/runtime/issues/new) to request guidance.
 
 ## Previous behavior
 
-Previously, compiling .NET projects using C++/CLI did not result in errors related to members on primitive `System` types.
+Previously, compiling .NET projects using C++/CLI did not result in errors related to members on primitive <xref:System> types.
 
 ## New behavior
 
@@ -25,7 +21,7 @@ Compiling a `net7.0` project using C++/CLI in a release of Visual Studio prior t
 error C2253: 'System.Int32.Parse': pure specifier or abstract override specifier only allowed on virtual function
 ```
 
-Other than upgrading, there's no way to work around this compiler error. It's generated because of `static abstract` interface members on primitive `System` types. When you upgrade to Visual Studio 2022 version 17.2, the compilation errors will no longer occur.
+Other than upgrading, there's no way to work around this compiler error. It's generated because of `static abstract` interface members on primitive <xref:System> types. When you upgrade to Visual Studio 2022 version 17.2, the compilation errors will no longer occur.
 
 Implicitly implemented `static abstract` interface members can be invoked, but even with Visual Studio 2022 version 17.2, C++/CLI doesn't support invoking explicitly implemented `static abstract` interface members.
 
@@ -35,7 +31,7 @@ Implicitly implemented `static abstract` interface members can be invoked, but e
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
@@ -43,9 +39,9 @@ This change can affect source compatibility.
 
 ## Recommended action
 
-To continue using C++/CLI with .NET 7, upgrade to Visual Studio 2022 version 17.2 or a later version. You might also need to set the platform toolset to v143.
+To continue using C++/CLI with .NET 7, upgrade to Visual Studio 2022 version 17.2 or a later version. You might also need to set the [platform toolset](/cpp/build/how-to-modify-the-target-framework-and-platform-toolset#platform-toolset) to v143.
 
-If you skipped .NET 7 when you upgraded to .NET 8, upgrade to Visual Studio 2022 version 17.8 or later and platform toolset v143 or later.
+If you skipped .NET 7 when you upgraded to .NET 8, upgrade to Visual Studio 2022 version 17.8 or later and [platform toolset](/cpp/build/how-to-modify-the-target-framework-and-platform-toolset#platform-toolset) v143 or later.
 
 ## Affected APIs
 
@@ -53,4 +49,4 @@ N/A
 
 ## See also
 
-- Visual Studio 2022 version 17.2 - release notes
+- [Visual Studio 2022 version 17.2 - release notes](/visualstudio/releases/2022/release-notes-v17.2)

@@ -1,19 +1,15 @@
 ---
 title: "Breaking change: LastIndexOf has improved handling of empty search strings"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/5.0/lastindexof-improved-handling-of-empty-values.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 5 breaking change in core .NET libraries where LastIndexOf and related APIs now return correct values when searching for a zero-length substring.
+ms.date: 11/01/2020
 ---
-
 # LastIndexOf has improved handling of empty search strings
 
-`System.String.LastIndexOf*` and related APIs now return correct values when searching for a zero-length (or zero-length equivalent) substring within a larger string.
+<xref:System.String.LastIndexOf*?displayProperty=nameWithType> and related APIs now return correct values when searching for a zero-length (or zero-length equivalent) substring within a larger string.
 
 ## Change description
 
-In .NET Framework and .NET Core 1.0 - 3.1, `System.String.LastIndexOf*` and related APIs might return an incorrect value when the caller searches for a zero-length substring.
+In .NET Framework and .NET Core 1.0 - 3.1, <xref:System.String.LastIndexOf*?displayProperty=nameWithType> and related APIs might return an incorrect value when the caller searches for a zero-length substring.
 
 ```csharp
 Console.WriteLine("Hello".LastIndexOf("")); // prints '4' (incorrect)
@@ -35,7 +31,7 @@ In these examples, `5` is the correct answer because `"Hello".Substring(5)` and 
 
 ## Reason for change
 
-This change was part of an overall bug fixing effort around string handling for .NET 5. It also helps unify our behavior between Windows and non-Windows platforms. For more information, see dotnet/runtime#13383 and dotnet/runtime##13382.
+This change was part of an overall bug fixing effort around string handling for .NET 5. It also helps unify our behavior between Windows and non-Windows platforms. For more information, see [dotnet/runtime#13383](https://github.com/dotnet/runtime/issues/13383) and [dotnet/runtime##13382](https://github.com/dotnet/runtime/issues/13382).
 
 ## Version introduced
 
@@ -49,6 +45,20 @@ There is no compatibility switch to restore the old behavior.
 
 ## Affected APIs
 
-- `System.String.LastIndexOf*`
-- `System.Globalization.CompareInfo.LastIndexOf*`
-- `System.MemoryExtensions.LastIndexOf*`
+- <xref:System.String.LastIndexOf*?displayProperty=fullName>
+- <xref:System.Globalization.CompareInfo.LastIndexOf*?displayProperty=fullName>
+- <xref:System.MemoryExtensions.LastIndexOf*?displayProperty=fullName>
+
+<!--
+
+### Category
+
+Core .NET libraries
+
+### Affected APIs
+
+- `Overload:System.String.LastIndexOf`
+- `Overload:System.Globalization.CompareInfo.LastIndexOf`
+- `Overload:System.MemoryExtensions.LastIndexOf`
+
+-->

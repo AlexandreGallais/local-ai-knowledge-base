@@ -1,21 +1,12 @@
----
-title: "Conversion to Promises"
-tool: "rxjs"
-version: "7.8"
-source: "https://github.com/ReactiveX/rxjs/blob/e5351d02e225e275ac0e497c7b66eaa5f0c88791/docs_app/content/deprecations/to-promise.md"
-commit: "e5351d02e225e275ac0e497c7b66eaa5f0c88791"
-license: "Apache-2.0"
----
-
 # Conversion to Promises
 
-The similarity between Observables and Promises is that both collections may produce values over
+The similarity between Observables and Promises is that both [collections](/guide/observable) may produce values over
 time, but the difference is that Observables may produce none or more than one value, while Promises produce only one
 value when resolved successfully.
 
 ## Issues
 
-For this reason, in RxJS 7, the return type of the Observable's `toPromise()`
+For this reason, in RxJS 7, the return type of the Observable's [`toPromise()`](/api/index/class/Observable#toPromise)
 method has been fixed to better reflect the fact that Observables can yield zero values. This may be a **breaking
 change** to some projects as the return type was changed from `Promise<T>` to `Promise<T | undefined>`.
 
@@ -78,8 +69,8 @@ execute();
 // "The first number is 0"
 ```
 
-Both functions will return a Promise that rejects if the source Observable errors. The Promise
-will reject with the same error that the Observable has errored with.
+<span class="informal">Both functions will return a Promise that rejects if the source Observable errors. The Promise
+will reject with the same error that the Observable has errored with.</span>
 
 ## Use default value
 

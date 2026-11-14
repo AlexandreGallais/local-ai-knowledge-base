@@ -1,14 +1,3 @@
----
-title: "ch19-02-refutability"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch19-02-refutability.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch19-02-refutability
-
 ## Refutability: Whether a Pattern Might Fail to Match
 
 Patterns come in two forms: refutable and irrefutable. Patterns that will match
@@ -38,11 +27,13 @@ where Rust requires an irrefutable pattern and vice versa. Listing 19-8 shows a
 `let` statement, but for the pattern, we’ve specified `Some(x)`, a refutable
 pattern. As you might expect, this code will not compile.
 
-**Listing 19-8: Attempting to use a refutable pattern with `let`**
+<Listing number="19-8" caption="Attempting to use a refutable pattern with `let`">
 
-```rust
-let Some(x) = some_option_value;
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-08/src/main.rs:here}}
 ```
+
+</Listing>
 
 If `some_option_value` were a `None` value, it would fail to match the pattern
 `Some(x)`, meaning the pattern is refutable. However, the `let` statement can
@@ -51,24 +42,7 @@ do with a `None` value. At compile time, Rust will complain that we’ve tried t
 use a refutable pattern where an irrefutable pattern is required:
 
 ```console
-$ cargo run
-   Compiling patterns v0.1.0 (file:///projects/patterns)
-error[E0005]: refutable pattern in local binding
- --> src/main.rs:3:9
-  |
-3 |     let Some(x) = some_option_value;
-  |         ^^^^^^^ pattern `None` not covered
-  |
-  = note: `let` bindings require an "irrefutable pattern", like a `struct` or an `enum` with only one variant
-  = note: for more information, visit https://doc.rust-lang.org/book/ch19-02-refutability.html
-  = note: the matched value is of type `Option<i32>`
-help: you might want to use `let...else` to handle the variant that isn't matched
-  |
-3 |     let Some(x) = some_option_value else { todo!() };
-  |                                     ++++++++++++++++
-
-For more information about this error, try `rustc --explain E0005`.
-error: could not compile `patterns` (bin "patterns") due to 1 previous error
+{{#include ../listings/ch19-patterns-and-matching/listing-19-08/output.txt}}
 ```
 
 Because we didn’t cover (and couldn’t cover!) every valid value with the
@@ -80,47 +54,32 @@ can use `let...else`. Then, if the pattern doesn’t match, the code in the curl
 brackets will handle the value. Listing 19-9 shows how to fix the code in
 Listing 19-8.
 
-**Listing 19-9: Using `let...else` and a block with refutable patterns instead of `let`**
+<Listing number="19-9" caption="Using `let...else` and a block with refutable patterns instead of `let`">
 
 ```rust
-let Some(x) = some_option_value else {
-    return;
-};
+{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-09/src/main.rs:here}}
 ```
+
+</Listing>
 
 We’ve given the code an out! This code is perfectly valid, although it means we
 cannot use an irrefutable pattern without receiving a warning. If we give
 `let...else` a pattern that will always match, such as `x`, as shown in Listing
 19-10, the compiler will give a warning.
 
-**Listing 19-10: Attempting to use an irrefutable pattern with `let...else`**
+<Listing number="19-10" caption="Attempting to use an irrefutable pattern with `let...else`">
 
 ```rust
-let x = 5 else {
-    return;
-};
+{{#rustdoc_include ../listings/ch19-patterns-and-matching/listing-19-10/src/main.rs:here}}
 ```
+
+</Listing>
 
 Rust complains that it doesn’t make sense to use `let...else` with an
 irrefutable pattern because the `else` will never be reached:
 
 ```console
-$ cargo run
-   Compiling patterns v0.1.0 (file:///projects/patterns)
-warning: unreachable `else` clause
- --> src/main.rs:2:15
-  |
-2 |     let x = 5 else {
-  |     --------- ^^^^
-  |     |
-  |     assigning to binding pattern will always succeed
-  |
-  = note: this pattern always matches, so the else clause is unreachable
-  = note: `#[warn(irrefutable_let_patterns)]` on by default
-
-warning: `patterns` (bin "patterns") generated 1 warning
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.39s
-     Running `target/debug/patterns`
+{{#include ../listings/ch19-patterns-and-matching/listing-19-10/output.txt}}
 ```
 
 For this reason, match arms must use refutable patterns, except for the last

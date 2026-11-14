@@ -1,12 +1,3 @@
----
-title: "XECPublicKeySpec class (java.security.spec)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/spec/XECPublicKeySpec.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # XECPublicKeySpec class (java.security.spec)
 
 ```java
@@ -21,7 +12,7 @@ some value that is determined by the algorithm parameters. This field
 element is represented by a BigInteger which may hold any value. That is,
 the BigInteger is not restricted to the range of canonical field elements.
 
-**Since:** 11
+@since 11
 
 ## XECPublicKeySpec.XECPublicKeySpec(AlgorithmParameterSpec, BigInteger)
 
@@ -32,14 +23,12 @@ public XECPublicKeySpec(AlgorithmParameterSpec params, BigInteger u)
 Construct a public key spec using the supplied parameters and
 u coordinate.
 
-Parameters:
+@param params the algorithm parameters
+@param u the u-coordinate of the point, represented using a BigInteger
+         which may hold any value
 
-- `params`: the algorithm parameters
-- `u`: the u-coordinate of the point, represented using a BigInteger which may hold any value
-
-Throws:
-
-- `NullPointerException`: if `params` or `u` is null.
+@throws NullPointerException if {@code params} or {@code u}
+                             is null.
 
 ## XECPublicKeySpec.getParams()
 
@@ -49,7 +38,7 @@ public AlgorithmParameterSpec getParams()
 
 Get the algorithm parameters that define the curve and other settings.
 
-**Returns:** the parameters
+@return the parameters
 
 ## XECPublicKeySpec.getU()
 
@@ -59,5 +48,5 @@ public BigInteger getU()
 
 Get the u coordinate of the point.
 
-**Returns:** the u-coordinate, represented using a BigInteger which may hold
+@return the u-coordinate, represented using a BigInteger which may hold
          any value

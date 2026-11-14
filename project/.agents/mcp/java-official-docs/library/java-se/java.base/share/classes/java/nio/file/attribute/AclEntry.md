@@ -1,12 +1,3 @@
----
-title: "AclEntry class (java.nio.file.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/file/attribute/AclEntry.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AclEntry class (java.nio.file.attribute)
 
 ```java
@@ -15,38 +6,37 @@ public final class AclEntry
 
 An entry in an access control list (ACL).
 
- The ACL entry represented by this class is based on the ACL model
-specified in *RFC 3530:
-Network File System (NFS) version 4 Protocol*. Each entry has four
+<p> The ACL entry represented by this class is based on the ACL model
+specified in <a href="http://www.ietf.org/rfc/rfc3530.txt"><i>RFC&nbsp;3530:
+Network File System (NFS) version 4 Protocol</i></a>. Each entry has four
 components as follows:
 
--
+<ol>
+   <li><p> The {@link #type() type} component determines if the entry
+   grants or denies access. </p></li>
 
- The type component determines if the entry
-   grants or denies access.
-
--
-
- The principal component, sometimes called the
-   "who" component, is a `UserPrincipal` corresponding to the identity
+   <li><p> The {@link #principal() principal} component, sometimes called the
+   "who" component, is a {@link UserPrincipal} corresponding to the identity
    that the entry grants or denies access
+   </p></li>
 
--
+   <li><p> The {@link #permissions permissions} component is a set of
+   {@link AclEntryPermission permissions}
+   </p></li>
 
- The permissions component is a set of
-   permissions
+   <li><p> The {@link #flags() flags} component is a set of {@link AclEntryFlag
+   flags} to indicate how entries are inherited and propagated </p></li>
+</ol>
 
--
+<p> ACL entries are created using an associated {@link Builder} object by
+invoking its {@link Builder#build build} method.
 
- The flags component is a set of flags to indicate how entries are inherited and propagated
-
- ACL entries are created using an associated `Builder` object by
-invoking its build method.
-
- ACL entries are immutable and are safe for use by multiple concurrent
+<p> ACL entries are immutable and are safe for use by multiple concurrent
 threads.
 
-**Since:** 1.7
+@spec https://www.rfc-editor.org/info/rfc3530
+     RFC 3530: Network File System (NFS) version 4 Protocol
+@since 1.7
 
 ## AclEntry.build()
 
@@ -54,15 +44,14 @@ threads.
 public AclEntry build()
 ```
 
-Constructs an `AclEntry` from the components of this builder.
+Constructs an {@link AclEntry} from the components of this builder.
 The type and who components are required to have been set in order
-to construct an `AclEntry`.
+to construct an {@code AclEntry}.
 
-**Returns:** a new ACL entry
+@return  a new ACL entry
 
-Throws:
-
-- `IllegalStateException`: if the type or who component have not been set
+@throws  IllegalStateException
+         if the type or who component have not been set
 
 ## AclEntry.setType(AclEntryType)
 
@@ -72,11 +61,8 @@ public Builder setType(AclEntryType type)
 
 Sets the type component of this builder.
 
-Parameters:
-
-- `type`: the component type
-
-**Returns:** this builder
+@param   type  the component type
+@return  this builder
 
 ## AclEntry.setPrincipal(UserPrincipal)
 
@@ -86,11 +72,8 @@ public Builder setPrincipal(UserPrincipal who)
 
 Sets the principal component of this builder.
 
-Parameters:
-
-- `who`: the principal component
-
-**Returns:** this builder
+@param   who  the principal component
+@return  this builder
 
 ## AclEntry.setPermissions(Set<AclEntryPermission>)
 
@@ -101,15 +84,12 @@ public Builder setPermissions(Set<AclEntryPermission> perms)
 Sets the permissions component of this builder. On return, the
 permissions component of this builder is a copy of the given set.
 
-Parameters:
+@param   perms  the permissions component
+@return  this builder
 
-- `perms`: the permissions component
-
-**Returns:** this builder
-
-Throws:
-
-- `ClassCastException`: if the set contains elements that are not of type `AclEntryPermission`
+@throws  ClassCastException
+         if the set contains elements that are not of type {@code
+         AclEntryPermission}
 
 ## AclEntry.setPermissions(AclEntryPermission...)
 
@@ -121,11 +101,8 @@ Sets the permissions component of this builder. On return, the
 permissions component of this builder is a copy of the permissions in
 the given array.
 
-Parameters:
-
-- `perms`: the permissions component
-
-**Returns:** this builder
+@param   perms  the permissions component
+@return  this builder
 
 ## AclEntry.setFlags(Set<AclEntryFlag>)
 
@@ -136,15 +113,12 @@ public Builder setFlags(Set<AclEntryFlag> flags)
 Sets the flags component of this builder. On return, the flags
 component of this builder is a copy of the given set.
 
-Parameters:
+@param   flags  the flags component
+@return  this builder
 
-- `flags`: the flags component
-
-**Returns:** this builder
-
-Throws:
-
-- `ClassCastException`: if the set contains elements that are not of type `AclEntryFlag`
+@throws  ClassCastException
+         if the set contains elements that are not of type {@code
+         AclEntryFlag}
 
 ## AclEntry.setFlags(AclEntryFlag...)
 
@@ -156,11 +130,8 @@ Sets the flags component of this builder. On return, the flags
 component of this builder is a copy of the flags in the given
 array.
 
-Parameters:
-
-- `flags`: the flags component
-
-**Returns:** this builder
+@param   flags  the flags component
+@return  this builder
 
 ## AclEntry.newBuilder()
 
@@ -169,10 +140,10 @@ public static Builder newBuilder()
 ```
 
 Constructs a new builder. The initial value of the type and who
-components is `null`. The initial value of the permissions and
+components is {@code null}. The initial value of the permissions and
 flags components is the empty set.
 
-**Returns:** a new builder
+@return  a new builder
 
 ## AclEntry.newBuilder(AclEntry)
 
@@ -182,11 +153,8 @@ public static Builder newBuilder(AclEntry entry)
 
 Constructs a new builder with the components of an existing ACL entry.
 
-Parameters:
-
-- `entry`: an ACL entry
-
-**Returns:** a new builder
+@param   entry  an ACL entry
+@return  a new builder
 
 ## AclEntry.type()
 
@@ -196,7 +164,7 @@ public AclEntryType type()
 
 Returns the ACL entry type.
 
-**Returns:** the ACL entry type
+@return the ACL entry type
 
 ## AclEntry.principal()
 
@@ -206,7 +174,7 @@ public UserPrincipal principal()
 
 Returns the principal component.
 
-**Returns:** the principal component
+@return the principal component
 
 ## AclEntry.permissions()
 
@@ -216,9 +184,9 @@ public Set<AclEntryPermission> permissions()
 
 Returns a copy of the permissions component.
 
- The returned set is a modifiable copy of the permissions.
+<p> The returned set is a modifiable copy of the permissions.
 
-**Returns:** the permissions component
+@return the permissions component
 
 ## AclEntry.flags()
 
@@ -228,9 +196,9 @@ public Set<AclEntryFlag> flags()
 
 Returns a copy of the flags component.
 
- The returned set is a modifiable copy of the flags.
+<p> The returned set is a modifiable copy of the flags.
 
-**Returns:** the flags component
+@return the flags component
 
 ## AclEntry.equals(Object)
 
@@ -240,20 +208,19 @@ public boolean equals(Object ob)
 
 Compares the specified object with this ACL entry for equality.
 
- If the given object is not an `AclEntry` then this method
-immediately returns `false`.
+<p> If the given object is not an {@code AclEntry} then this method
+immediately returns {@code false}.
 
- For two ACL entries to be considered equals requires that they are
+<p> For two ACL entries to be considered equals requires that they are
 both the same type, their who components are equal, their permissions
 components are equal, and their flags components are equal.
 
- This method satisfies the general contract of the Object.equals method.
+<p> This method satisfies the general contract of the {@link
+java.lang.Object#equals(Object) Object.equals} method. </p>
 
-Parameters:
+@param   ob   the object to which this object is to be compared
 
-- `ob`: the object to which this object is to be compared
-
-**Returns:** `true` if, and only if, the given object is an AclEntry that
+@return  {@code true} if, and only if, the given object is an AclEntry that
          is identical to this AclEntry
 
 ## AclEntry.hashCode()
@@ -264,7 +231,8 @@ public int hashCode()
 
 Returns the hash-code value for this ACL entry.
 
- This method satisfies the general contract of the `Object.hashCode` method.
+<p> This method satisfies the general contract of the {@link
+Object#hashCode} method.
 
 ## AclEntry.toString()
 
@@ -274,4 +242,4 @@ public String toString()
 
 Returns the string representation of this ACL entry.
 
-**Returns:** the string representation of this entry
+@return  the string representation of this entry

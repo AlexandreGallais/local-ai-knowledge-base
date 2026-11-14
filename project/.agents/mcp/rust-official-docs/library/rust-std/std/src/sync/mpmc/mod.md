@@ -1,12 +1,3 @@
----
-title: "std::sync::mpmc"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sync/mpmc/mod.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::sync::mpmc
 
 Multi-producer, multi-consumer FIFO queue communication primitives.
@@ -14,46 +5,51 @@ Multi-producer, multi-consumer FIFO queue communication primitives.
 This module provides message-based communication over channels, concretely
 defined by two types:
 
-* `Sender`
-* `Receiver`
+* [`Sender`]
+* [`Receiver`]
 
-`Sender`s are used to send data to a set of `Receiver`s where each item
+[`Sender`]s are used to send data to a set of [`Receiver`]s where each item
 sent is delivered to (at most) one receiver. Both sender and receiver are
 cloneable (multi-producer) such that many threads can send simultaneously
 to receivers (multi-consumer).
 
 These channels come in two flavors:
 
-1. An asynchronous, infinitely buffered channel. The `channel` function
+1. An asynchronous, infinitely buffered channel. The [`channel`] function
    will return a `(Sender, Receiver)` tuple where all sends will be
    **asynchronous** (they never block for space to become available; see
-   `std::sync` for precise guarantees on blocking.) The channel
+   [`std::sync`] for precise guarantees on blocking.) The channel
    conceptually has an infinite buffer.
 
-2. A synchronous, bounded channel. The `sync_channel` function will
+2. A synchronous, bounded channel. The [`sync_channel`] function will
    return a `(Sender, Receiver)` tuple where the storage for pending
    messages is a pre-allocated buffer of a fixed size. All sends will be
    **synchronous** by blocking until there is buffer space available. Note
    that a bound of 0 is allowed, causing the channel to become a "rendezvous"
    channel where each sender atomically hands off a message to a receiver.
 
-#### Disconnection
+[`send`]: Sender::send
+[`std::sync`]: ../index.html#blocking-guarantees
 
-The send and receive operations on channels will all return a `Result`
+## Disconnection
+
+The send and receive operations on channels will all return a [`Result`]
 indicating whether the operation succeeded or not. An unsuccessful operation
 is normally indicative of the other half of a channel having "hung up" by
 being dropped in its corresponding thread.
 
 Once half of a channel has been deallocated, most operations can no longer
-continue to make progress, so `Err` will be returned. Many applications
-will continue to `unwrap` the results returned from this module,
+continue to make progress, so [`Err`] will be returned. Many applications
+will continue to [`unwrap`] the results returned from this module,
 instigating a propagation of failure among threads if one unexpectedly dies.
 
-#### Examples
+[`unwrap`]: Result::unwrap
+
+# Examples
 
 Simple usage:
 
-```rust
+```
 #![feature(mpmc_channel)]
 
 use std::thread;
@@ -69,7 +65,7 @@ assert_eq!(rx.recv().unwrap(), 10);
 
 Shared usage:
 
-```rust
+```
 #![feature(mpmc_channel)]
 
 use std::thread;
@@ -104,7 +100,7 @@ thread::scope(|s| {
 
 Propagating panics:
 
-```rust
+```
 #![feature(mpmc_channel)]
 
 use std::sync::mpmc::channel;

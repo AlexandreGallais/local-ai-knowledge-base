@@ -1,12 +1,3 @@
----
-title: "core::marker::variance"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/marker/variance.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::marker::variance
 
 ## name::new
@@ -33,8 +24,10 @@ pub struct PhantomCovariantLifetime<'a>(PhantomCovariant<&'a ()>)
 
 Zero-sized type used to mark a lifetime as covariant.
 
-Covariant lifetimes must live at least as long as declared. See the reference for more
+Covariant lifetimes must live at least as long as declared. See [the reference][1] for more
 information.
+
+[1]: https://doc.rust-lang.org/stable/reference/subtyping.html#variance
 
 Note: If `'a` is otherwise contravariant or invariant, the resulting type is invariant.
 
@@ -52,8 +45,10 @@ pub struct PhantomContravariantLifetime<'a>(PhantomContravariant<&'a ()>)
 
 Zero-sized type used to mark a lifetime as contravariant.
 
-Contravariant lifetimes must live at most as long as declared. See the reference for
+Contravariant lifetimes must live at most as long as declared. See [the reference][1] for
 more information.
+
+[1]: https://doc.rust-lang.org/stable/reference/subtyping.html#variance
 
 Note: If `'a` is otherwise covariant or invariant, the resulting type is invariant.
 
@@ -72,7 +67,9 @@ pub struct PhantomInvariantLifetime<'a>(PhantomInvariant<&'a ()>)
 Zero-sized type used to mark a lifetime as invariant.
 
 Invariant lifetimes must be live for the exact length declared, neither shorter nor longer.
-See the reference for more information.
+See [the reference][1] for more information.
+
+[1]: https://doc.rust-lang.org/stable/reference/subtyping.html#variance
 
 ## Layout
 
@@ -89,8 +86,10 @@ pub struct PhantomCovariant<T>(PhantomData<fn() -> T>)
 Zero-sized type used to mark a type parameter as covariant.
 
 Types used as part of the return value from a function are covariant. If the type is _also_
-passed as a parameter then it is invariant. See the reference for
+passed as a parameter then it is [invariant][PhantomInvariant]. See [the reference][1] for
 more information.
+
+[1]: https://doc.rust-lang.org/stable/reference/subtyping.html#variance
 
 Note: If `T` is otherwise contravariant or invariant, the resulting type is invariant.
 
@@ -109,8 +108,10 @@ pub struct PhantomContravariant<T>(PhantomData<fn(T)>)
 Zero-sized type used to mark a type parameter as contravariant.
 
 Types passed as arguments to a function are contravariant. If the type is _also_ part of the
-return value from a function then it is invariant. See the
-reference for more information.
+return value from a function then it is [invariant][PhantomInvariant]. See [the
+reference][1] for more information.
+
+[1]: https://doc.rust-lang.org/stable/reference/subtyping.html#variance
 
 Note: If `T` is otherwise covariant or invariant, the resulting type is invariant.
 
@@ -129,7 +130,9 @@ pub struct PhantomInvariant<T>(PhantomData<fn(T) -> T>)
 Zero-sized type used to mark a type parameter as invariant.
 
 Types that are both passed as an argument _and_ used as part of the return value from a
-function are invariant. See the reference for more information.
+function are invariant. See [the reference][1] for more information.
+
+[1]: https://doc.rust-lang.org/stable/reference/subtyping.html#variance
 
 ## Layout
 
@@ -151,17 +154,17 @@ A marker trait for phantom variance types.
 pub const fn variance<T>() -> T where T: Variance,
 ```
 
-Construct a variance marker; equivalent to `Default::default`.
+Construct a variance marker; equivalent to [`Default::default`].
 
 This type can be any of the following. You generally should not need to explicitly name the
 type, however.
 
-- `PhantomCovariant`
-- `PhantomContravariant`
-- `PhantomInvariant`
-- `PhantomCovariantLifetime`
-- `PhantomContravariantLifetime`
-- `PhantomInvariantLifetime`
+- [`PhantomCovariant`]
+- [`PhantomContravariant`]
+- [`PhantomInvariant`]
+- [`PhantomCovariantLifetime`]
+- [`PhantomContravariantLifetime`]
+- [`PhantomInvariantLifetime`]
 
 # Example
 

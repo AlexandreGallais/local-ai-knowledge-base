@@ -1,19 +1,10 @@
----
-title: "Mocking Modules"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/mocking/modules.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # Mocking Modules
 
 ## Defining a Module
 
-Before mocking a "module", we should define what it is. In Vitest context, the "module" is a file that exports something. Using plugins, any file can be turned into a JavaScript module. The "module object" is a namespace object that holds dynamic references to exported identifiers. Simply put, it's an object with exported methods and properties. In this example, `example.js` is a module that exports `answer` and `variable`:
+Before mocking a "module", we should define what it is. In Vitest context, the "module" is a file that exports something. Using [plugins](https://vite.dev/guide/api-plugin.html), any file can be turned into a JavaScript module. The "module object" is a namespace object that holds dynamic references to exported identifiers. Simply put, it's an object with exported methods and properties. In this example, `example.js` is a module that exports `answer` and `variable`:
 
-```js
+```js [example.js]
 export function answer() {
   // ...
   return 42
@@ -24,13 +15,13 @@ export const variable = 'example'
 
 The `exampleObject` here is a module object:
 
-```js
+```js [example.test.js]
 import * as exampleObject from './example.js'
 ```
 
 The `exampleObject` will always exist even if you imported the example using named imports:
 
-```js
+```js [example.test.js]
 import { answer, variable } from './example.js'
 ```
 
@@ -45,7 +36,7 @@ For the purpose of this guide, let's introduce some definitions.
 - **Mocked export** is a module export, which invocations can be tracked.
 - **Spied export** is a mocked export.
 
-To mock a module completely, you can use the `vi.mock` API. You can define a new module dynamically by providing a factory that returns a new module as a second argument:
+To mock a module completely, you can use the [`vi.mock` API](/api/vi#vi-mock). You can define a new module dynamically by providing a factory that returns a new module as a second argument:
 
 ```ts
 import { vi } from 'vitest'
@@ -64,11 +55,13 @@ vi.mock(import('./example.js'), () => {
 })
 ```
 
-**Tip:**
-Remember that you can call `vi.mock` in a setup file to apply the module mock in every test file automatically.
+::: tip
+Remember that you can call `vi.mock` in a [setup file](/config/setupfiles) to apply the module mock in every test file automatically.
+:::
 
-**Tip:**
+::: tip
 Note the usage of dynamic import: `import('./example.ts')`. Vitest will strip it before the code is executed, but it allows TypeScript to properly validate the string and type the `importOriginal` method in your IDE or CLI.
+:::
 
 If your code is trying to access a method that was not returned from this factory, Vitest will throw an error with a helpful message. Note that `answer` is not mocked, i.e. it cannot be tracked. To make it trackable, use `vi.fn()` instead:
 
@@ -103,8 +96,9 @@ expect(answer).toHaveBeenCalled()
 expect(answer).toHaveReturned(42)
 ```
 
-**Warning:**
+::: warning
 Note that `importOriginal` is asynchronous and needs to be awaited.
+:::
 
 In the above example, we provided the original `answer` to the `vi.fn()` call so it can keep calling it while being tracked at the same time.
 
@@ -120,8 +114,8 @@ expect(exampleObject.answer()).toBe(0)
 expect(exampleObject.answer).toHaveBeenCalled()
 ```
 
-**Browser Mode Support**
-This will not work in the Browser Mode because it uses the browser's native ESM support to serve modules. The module namespace object is sealed and can't be reconfigured. To bypass this limitation, Vitest supports `{ spy: true }` option in `vi.mock('./example.js')`. This will automatically spy on every export in the module without replacing them with fake ones.
+::: danger Browser Mode Support
+This will not work in the [Browser Mode](/guide/browser/) because it uses the browser's native ESM support to serve modules. The module namespace object is sealed and can't be reconfigured. To bypass this limitation, Vitest supports `{ spy: true }` option in `vi.mock('./example.js')`. This will automatically spy on every export in the module without replacing them with fake ones.
 
 ```ts
 import { vi } from 'vitest'
@@ -132,10 +126,12 @@ vi.mock('./example.js', { spy: true })
 vi.mocked(exampleObject.answer).mockReturnValue(0)
 ```
 
-**Warning:**
+:::
+
+::: warning
 You only need to import the module as a namespace object in the file where you are using the `vi.spyOn` utility. If the `answer` is called in another file and is imported there as a named export, Vitest will be able to properly track it as long as the function that called it is called after `vi.spyOn`:
 
-```ts
+```ts [source.js]
 import { answer } from './example.js'
 
 export function question() {
@@ -146,6 +142,8 @@ export function question() {
   return 'Unknown Question'
 }
 ```
+
+:::
 
 Note that `vi.spyOn` will only spy on calls that were done after it spied on the method. So, if the function is executed at the top level during an import or it was called before the spying, `vi.spyOn` will not be able to report on it.
 
@@ -190,12 +188,13 @@ expect(answer()).toBe(42)
 expect(answer).toHaveBeenCalled()
 ```
 
-**Warning:**
-With `spy: true`, Vitest doesn't copy exported objects and class prototypes. Instead, it replaces their methods with spies in place. Node.js built-ins and externalized dependencies are evaluated only once, so other code, `vi.importActual` and `require` see these spies too. For example, `vi.mock(import('node:events'), { spy: true })` turns `EventEmitter.prototype.emit` into a spy for every event emitter in the worker.
+::: warning
+With `spy: true`, Vitest doesn't copy exported objects and class prototypes. Instead, it replaces their methods with spies in place. Node.js built-ins and [externalized](/config/server#server-deps-external) dependencies are evaluated only once, so other code, `vi.importActual` and `require` see these spies too. For example, `vi.mock(import('node:events'), { spy: true })` turns `EventEmitter.prototype.emit` into a spy for every event emitter in the worker.
+:::
 
 One nice thing that mocked modules support is sharing the state between the instance and its prototype. Consider this module:
 
-```ts
+```ts [answer.js]
 export class Answer {
   constructor(value) {
     this._value = value
@@ -209,7 +208,7 @@ export class Answer {
 
 By mocking it, we can keep track of every invocation of `.value()` even without having access to the instance itself:
 
-```ts
+```ts [answer.test.js]
 import { expect, test, vi } from 'vitest'
 import { Answer } from './answer.js'
 
@@ -243,9 +242,9 @@ Vitest supports mocking virtual modules. These modules don't exist on the file s
 
 By default, Vitest will fail transforming files if it cannot find the source of the import. To bypass this, you need to specify it in your config. You can either always redirect the import to a file, or just signal Vite to ignore it and use the `vi.mock` factory to define its exports.
 
-To redirect the import, use `test.alias` config option:
+To redirect the import, use [`test.alias`](/config/alias) config option:
 
-```ts
+```ts [vitest.config.ts]
 import { defineConfig } from 'vitest/config'
 import { resolve } from 'node:path'
 
@@ -260,7 +259,7 @@ export default defineConfig({
 
 To mark the module as always resolved, return the same string from `resolveId` hook of a plugin:
 
-```ts
+```ts [vitest.config.ts]
 import { defineConfig } from 'vitest/config'
 import { resolve } from 'node:path'
 
@@ -298,7 +297,7 @@ Vitest implements different module mocking mechanisms depending on the environme
 
 ::: code-group
 
-```ts
+```ts [example.js]
 import { answer } from './answer.js'
 
 vi.mock(import('./answer.js'))
@@ -306,7 +305,7 @@ vi.mock(import('./answer.js'))
 console.log(answer)
 ```
 
-```ts
+```ts [example.transformed.js]
 vi.mock('./answer.js')
 
 const __vitest_module_0__ = await __handle_mock__(
@@ -317,31 +316,33 @@ const __vitest_module_0__ = await __handle_mock__(
 console.log(__vitest_module_0__.answer())
 ```
 
+:::
+
 The `__handle_mock__` wrapper just makes sure the mock is resolved before the import is initiated, it doesn't modify the module in any way.
 
-The module mocking plugins are available in the `@vitest/mocker` package.
+The module mocking plugins are available in the [`@vitest/mocker` package](https://github.com/vitest-dev/vitest/tree/main/packages/mocker).
 
 ### JSDOM, happy-dom, Node
 
-When you run your tests in an emulated environment, Vitest creates a module runner that can consume Vite code. The module runner is designed in such a way that Vitest can hook into the module evaluation and replace it with the mock, if it was registered. This means that Vitest runs your code in an ESM-like environment, but it doesn't use native ESM mechanism directly. This allows the test runner to bend the rules around ES Modules immutability, allowing users to call `vi.spyOn` on a seemingly ES Module.
+When you run your tests in an emulated environment, Vitest creates a [module runner](https://vite.dev/guide/api-environment-runtimes.html#modulerunner) that can consume Vite code. The module runner is designed in such a way that Vitest can hook into the module evaluation and replace it with the mock, if it was registered. This means that Vitest runs your code in an ESM-like environment, but it doesn't use native ESM mechanism directly. This allows the test runner to bend the rules around ES Modules immutability, allowing users to call `vi.spyOn` on a seemingly ES Module.
 
-If module runner is disabled and node loader is not explicitly disabled, Vitest will register a loader hook that transforms original modules into mocked ones. In this mode users cannot call `vi.spyOn` on an ES Module because Vitest uses a native loader mechanism with all its guard rails. In addition to that, Vitest also has to inject a `mock` query into every mocked module which is visible in the stack trace.
+If module runner is [disabled](/config/experimental#experimental-vitemodulerunner) and [node loader](/config/experimental#experimental-nodeloader) is not explicitly disabled, Vitest will [register a loader hook](https://nodejs.org/api/module.html#customization-hooks) that transforms original modules into mocked ones. In this mode users cannot call `vi.spyOn` on an ES Module because Vitest uses a native loader mechanism with all its guard rails. In addition to that, Vitest also has to inject a `mock` query into every mocked module which is visible in the stack trace.
 
 ### Browser Mode
 
-Vitest uses native ESM in the Browser Mode. This means that we cannot replace the module so easily. Instead, Vitest intercepts the fetch request (via playwright's `page.route` or a Vite plugin API if using `preview` or `webdriverio`) and serves transformed code, if the module was mocked. With the experimental `browser.importMapMocks` option, mocked modules are served through an import map in the tester document instead, so no request is intercepted.
+Vitest uses native ESM in the Browser Mode. This means that we cannot replace the module so easily. Instead, Vitest intercepts the fetch request (via playwright's `page.route` or a Vite plugin API if using `preview` or `webdriverio`) and serves transformed code, if the module was mocked. With the experimental [`browser.importMapMocks`](/config/browser/importmapmocks) option, mocked modules are served through an import map in the tester document instead, so no request is intercepted.
 
 For example, if the module is automocked, Vitest can parse static exports and create a placeholder module:
 
 ::: code-group
 
-```ts
+```ts [answer.js]
 export function answer() {
   return 42
 }
 ```
 
-```ts
+```ts [answer.transformed.js]
 function answer() {
   return 42
 }
@@ -353,6 +354,8 @@ const __private_module__ = {
 
 export const answer = __private_module__.answer
 ```
+
+:::
 
 The example is simplified for brevity, but the concept is unchanged. We can inject a `__private_module__` variable into the module to hold the mocked values. If the user called `vi.mock` with `spy: true`, we pass down the original value; otherwise, we create a simple `vi.fn()` mock.
 
@@ -372,7 +375,7 @@ This module can now be served back to the browser. You can inspect the code in t
 
 Beware that it is not possible to mock calls to methods that are called inside other methods of the same file. For example, in this code:
 
-```ts
+```ts [foobar.js]
 export function foo() {
   return 'foo'
 }
@@ -384,7 +387,7 @@ export function foobar() {
 
 It is not possible to mock the `foo` method from the outside because it is referenced directly. So this code will have no effect on the `foo` call inside `foobar` (but it will affect the `foo` call in other modules):
 
-```ts
+```ts [foobar.test.ts]
 import { vi } from 'vitest'
 import * as mod from './foobar.js'
 
@@ -401,7 +404,7 @@ vi.mock(import('./foobar.js'), async (importOriginal) => {
 
 You can confirm this behavior by providing the implementation to the `foobar` method directly:
 
-```ts
+```ts [foobar.test.js]
 import * as mod from './foobar.js'
 
 vi.spyOn(mod, 'foo')
@@ -410,7 +413,7 @@ vi.spyOn(mod, 'foo')
 mod.foobar(mod.foo)
 ```
 
-```ts
+```ts [foobar.js]
 export function foo() {
   return 'foo'
 }
@@ -420,4 +423,4 @@ export function foobar(injectedFoo) {
 }
 ```
 
-This is the intended behavior, and we do not plan to implement a workaround. Consider refactoring your code into multiple files or use techniques such as dependency injection. We believe that making the application testable is not the responsibility of the test runner, but of the application architecture.
+This is the intended behavior, and we do not plan to implement a workaround. Consider refactoring your code into multiple files or use techniques such as [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection). We believe that making the application testable is not the responsibility of the test runner, but of the application architecture.

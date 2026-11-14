@@ -1,17 +1,6 @@
----
-title: "signalr"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-9/includes/signalr.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# signalr
-
 ### Polymorphic type support in SignalR Hubs
 
-Hub methods can now accept a base class instead of the derived class to enable polymorphic scenarios. The base type needs to be annotated to allow polymorphism.
+Hub methods can now accept a base class instead of the derived class to enable polymorphic scenarios. The base type needs to be [annotated to allow polymorphism](/dotnet/standard/serialization/system-text-json/polymorphism).
 
 ```csharp
 public class MyHub : Hub

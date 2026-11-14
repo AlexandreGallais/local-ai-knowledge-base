@@ -1,15 +1,14 @@
 ---
 title: "Breaking change - HTTP/3 support in System.Net.Http disabled by default with PublishTrimmed"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/networking/10.0/http3-disabled-with-publishtrimmed.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where HTTP/3 support is disabled by default when PublishTrimmed or PublishAot is set to true."
+ms.date: 07/22/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/47443
 ---
 
 # HTTP/3 support in System.Net.Http disabled by default with PublishTrimmed
 
-Setting `PublishTrimmed` or `PublishAot` to `true` in the project disables HTTP/3 support in `System.Net.Http` by default.
+Setting `PublishTrimmed` or `PublishAot` to `true` in the project disables HTTP/3 support in <xref:System.Net.Http> by default.
 
 ## Version introduced
 
@@ -25,7 +24,7 @@ Starting in .NET 10, HTTP/3 is disabled and the code for it isn't included when 
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
@@ -49,4 +48,4 @@ None.
 
 ## See also
 
-- Trimming options
+- [Trimming options](../../../deploying/trimming/trimming-options.md)

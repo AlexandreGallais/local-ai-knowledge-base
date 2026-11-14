@@ -1,12 +1,18 @@
 ---
+description: "Learn more about: IMetaDataDispenser Interface"
 title: "IMetaDataDispenser Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadatadispenser-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataDispenser"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataDispenser"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataDispenser Interface
 
 Provides methods to create a new metadata scope, or open an existing one.
@@ -15,13 +21,13 @@ Provides methods to create a new metadata scope, or open an existing one.
 
 | Method | Description |
 |------------|-----------------|
-|DefineScope Method| Creates a new area in memory where you can create new metadata. |
-|OpenScope Method|Opens an existing, on-disk file and maps its metadata into memory.|
-|OpenScopeOnMemory Method| Opens an area of memory that contains existing metadata. That is, this method opens a specified area of memory in which the existing data is treated as metadata. |
+|[DefineScope Method](imetadatadispenser-definescope-method.md)| Creates a new area in memory where you can create new metadata. |
+|[OpenScope Method](imetadatadispenser-openscope-method.md)|Opens an existing, on-disk file and maps its metadata into memory.|
+|[OpenScopeOnMemory Method](imetadatadispenser-openscopeonmemory-method.md)| Opens an area of memory that contains existing metadata. That is, this method opens a specified area of memory in which the existing data is treated as metadata. |
 
 ## Requirements
 
- **Platform:** See .NET supported operating systems.
+ **Platform:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -29,5 +35,5 @@ Provides methods to create a new metadata scope, or open an existing one.
 
 ## See also
 
-- IMetaDataDispenserEx Interface
-- Metadata Interfaces
+- [IMetaDataDispenserEx Interface](imetadatadispenserex-interface.md)
+- [Metadata Interfaces](metadata-interfaces.md)

@@ -1,12 +1,3 @@
----
-title: "Command Line Interface (CLI)"
-tool: "stylelint"
-version: "18.0"
-source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/docs/user-guide/cli.md"
-commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
-license: "MIT"
----
-
 # Command Line Interface (CLI)
 
 You can use Stylelint on the command line. For example:
@@ -17,7 +8,7 @@ stylelint "**/*.css"
 
 _You should include quotation marks around file globs._
 
-If you are using npm scripts, you'll need to escape the quotes:
+If you are using [npm scripts](https://docs.npmjs.com/cli/v8/using-npm/scripts), you'll need to escape the quotes:
 
 ```json
 {
@@ -35,63 +26,63 @@ The CLI accepts:
 
 ### `--allow-empty-input`
 
-The process exits without throwing an error when glob pattern matches no files. More info.
+The process exits without throwing an error when glob pattern matches no files. [More info](options.md#allowemptyinput).
 
 ### `--cache-location`
 
-Path to a file or directory for the cache location. More info.
+Path to a file or directory for the cache location. [More info](options.md#cachelocation).
 
 ### `--cache-strategy`
 
-Strategy for the cache to use for detecting changed files. Can be either "metadata" or "content". More info.
+Strategy for the cache to use for detecting changed files. Can be either "metadata" or "content". [More info](options.md#cachestrategy).
 
 ### `--cache`
 
-Store the results of processed files so that Stylelint only operates on the changed ones. By default, the cache is stored in `./.stylelintcache` in `process.cwd()`. More info.
+Store the results of processed files so that Stylelint only operates on the changed ones. By default, the cache is stored in `./.stylelintcache` in `process.cwd()`. [More info](options.md#cache).
 
 ### `--color, --no-color`
 
-Force enabling/disabling of color. More info.
+Force enabling/disabling of color. [More info](options.md#color).
 
 ### `--config-basedir`
 
-Absolute path to the directory that relative paths defining `extends`, `plugins`, and `customSyntax` are _relative to_. More info.
+Absolute path to the directory that relative paths defining `extends`, `plugins`, and `customSyntax` are _relative to_. [More info](options.md#configbasedir).
 
 ### `--config`
 
-Path to a JSON, YAML, or JS file that contains your configuration object. More info.
+Path to a JSON, YAML, or JS file that contains your [configuration object](./configure.md). [More info](options.md#configfile).
 
 ### `--custom-syntax`
 
-Specify a custom syntax to use on your code. More info.
+Specify a custom syntax to use on your code. [More info](options.md#customsyntax).
 
 ### `--disable-default-ignores`
 
-Disable the default ignores. Stylelint will not automatically ignore the contents of `node_modules`. More info.
+Disable the default ignores. Stylelint will not automatically ignore the contents of `node_modules`. [More info](options.md#disabledefaultignores).
 
 ### `--fix`
 
-Automatically fix, where possible, problems reported by rules. More info.
+Automatically fix, where possible, problems reported by rules. [More info](options.md#fix).
 
 ### `--compute-edit-info`
 
-Compute edit information for fixable problems. More info.
+Compute edit information for fixable problems. [More info](options.md#computeeditinfo).
 
 ### `--formatter` | `--custom-formatter`
 
-Specify the formatter to format your results. More info.
+Specify the formatter to format your results. [More info](options.md#formatter).
 
 ### `--globby-options`
 
-Options in JSON format for matching the input globs, e.g. `'{"dot":true}'`. More info.
+Options in JSON format for matching the input globs, e.g. `'{"dot":true}'`. [More info](options.md#globbyoptions).
 
 ### `--ignore-disables`
 
-Ignore `stylelint-disable` (e.g. `/* stylelint-disable block-no-empty */`) comments. More info.
+Ignore `stylelint-disable` (e.g. `/* stylelint-disable block-no-empty */`) comments. [More info](options.md#ignoredisables).
 
 ### `--ignore-path`
 
-Path to a file containing patterns that describe files to ignore. The path can be absolute or relative to `process.cwd()`. You can repeat the option to provide multiple paths. By default, Stylelint looks for `.stylelintignore` in `process.cwd()`. More info.
+Path to a file containing patterns that describe files to ignore. The path can be absolute or relative to `process.cwd()`. You can repeat the option to provide multiple paths. By default, Stylelint looks for `.stylelintignore` in `process.cwd()`. [More info](options.md#ignorepath).
 
 ### `--ignore-pattern`
 
@@ -99,7 +90,7 @@ Pattern of files to ignore (in addition to those in `.stylelintignore`).
 
 ### `--max-warnings`
 
-Set a limit to the number of warnings accepted. More info.
+Set a limit to the number of warnings accepted. [More info](options.md#maxwarnings).
 
 ### `--output-file`
 
@@ -111,31 +102,31 @@ Print the configuration for the given input path. Globs are unsupported.
 
 ### `--quiet`
 
-Only register problems for rules with an "error"-level severity (ignore "warning"-level). More info.
+Only register problems for rules with an "error"-level severity (ignore "warning"-level). [More info](options.md#quiet).
 
 ### `--quiet-deprecation-warnings`
 
-Ignore deprecation warnings. More info.
+Ignore deprecation warnings. [More info](options.md#quietdeprecationwarnings).
 
 ### `--report-descriptionless-disables`
 
-Produce a report of the `stylelint-disable` comments without a description. More info.
+Produce a report of the `stylelint-disable` comments without a description. [More info](options.md#reportdescriptionlessdisables).
 
 ### `--report-invalid-scope-disables`
 
-Produce a report of the `stylelint-disable` comments that used for rules that don't exist within the configuration object. More info.
+Produce a report of the `stylelint-disable` comments that used for rules that don't exist within the configuration object. [More info](options.md#reportinvalidscopedisables).
 
 ### `--report-needless-disables`
 
-Produce a report to clean up your codebase, keeping only the `stylelint-disable` comments that serve a purpose. More info.
+Produce a report to clean up your codebase, keeping only the `stylelint-disable` comments that serve a purpose. [More info](options.md#reportneedlessdisables).
 
 ### `--report-unscoped-disables`
 
-Produce a report of the configuration comments that are not scoped to one or more rules. More info.
+Produce a report of the configuration comments that are not scoped to one or more rules. [More info](options.md#reportunscopeddisables).
 
 ### `--stdin-filename`
 
-A filename to assign the input. More info.
+A filename to assign the input. [More info](options.md#codefilename).
 
 ### `--stdin`
 
@@ -143,15 +134,15 @@ Accept stdin input even if it is empty.
 
 ### `--suppress`
 
-Suppress problems that have the severity of `error` and record them in a file. More info.
+Suppress problems that have the severity of `error` and record them in a file. [More info](suppressions.md#--suppressrule).
 
 ### `--suppress-location`
 
-Path to a file or directory for the suppressions location. More info.
+Path to a file or directory for the suppressions location. [More info](suppressions.md#--suppress-location-path).
 
 ### `--validate, --no-validate`
 
-Force enable/disable the validation of the rules' options. More info.
+Force enable/disable the validation of the rules' options. [More info](options.md#validate).
 
 ### `--version`
 
@@ -188,7 +179,7 @@ For example:
 
 ## Usage examples
 
-The CLI expects input as either a file glob or `process.stdin`. It outputs formatted results into `process.stderr`.
+The CLI expects input as either a [file glob](https://github.com/SuperchupuDev/tinyglobby) or `process.stdin`. It outputs formatted results into `process.stderr`.
 
 _You should include quotation marks around file globs._
 

@@ -1,12 +1,10 @@
 ---
-title: "Designer Table Splitting - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/modeling/designer/table-splitting.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Designer Table Splitting - EF6
+description: Designer Table Splitting in Entity Framework 6
+author: SamMonoRT
+ms.date: 10/23/2016
+uid: ef6/modeling/designer/table-splitting
 ---
-
 # Designer Table Splitting
 This walkthrough shows how to map multiple entity types to a single table by modifying a model with the Entity Framework Designer (EF Designer).
 
@@ -14,12 +12,14 @@ One reason you may want to use table splitting is delaying the loading of some p
 
 The following image shows the main windows that are used when working with the EF Designer.
 
+![EF Designer](~/ef6/media/efdesigner.png)
+
 ## Prerequisites
 
 To complete this walkthrough, you will need:
 
 - A recent version of Visual Studio.
-- The School sample database.
+- The [School sample database](xref:ef6/resources/school-database).
 
 ## Set up the Project
 
@@ -47,12 +47,12 @@ The Entity Designer, which provides a design surface for editing your model, is 
 
 In this section you will split the **Person** entity into two entities and then map them to a single table.
 
-> **Note:**
+> [!NOTE]
 > The **Person** entity does not contain any properties that may contain large amount of data; it is just used as an example.
 
 -   Right-click an empty area of the design surface, point to **Add New**, and click **Entity**.
     The **New Entity** dialog box appears.
--   Type **HireInfo** for the **Entity name** and **PersonID** for the **Key <example-value>** name.
+-   Type **HireInfo** for the **Entity name** and **PersonID** for the **Key Property** name.
 -   Click **OK**.
 -   A new entity type is created and displayed on the design surface.
 -   Select the **HireDate** property of the **Person** entity type and press **Ctrl+X** keys.
@@ -64,9 +64,11 @@ In this section you will split the **Person** entity into two entities and then 
 
 The next step requires the **Mapping Details** window. If you cannot see this window, right-click the design surface and select **Mapping Details**.
 
--   Select the **HireInfo** entity type and click **<Add a Table or View>** in the **Mapping Details** window.
--   Select **Person** from the **<Add a Table or View>** field drop-down list. The list contains tables or views to which the selected entity can be mapped.
+-   Select the **HireInfo** entity type and click **&lt;Add a Table or View&gt;** in the **Mapping Details** window.
+-   Select **Person** from the **&lt;Add a Table or View&gt;** field drop-down list. The list contains tables or views to which the selected entity can be mapped.
     The appropriate properties should be mapped by default.
+
+    ![Mapping Properties](~/ef6/media/mapping.png)
 
 -   Select the **PersonHireInfo** association on the design surface.
 -   Right-click the association on the design surface and select **Properties**.
@@ -80,7 +82,7 @@ The next step requires the **Mapping Details** window. If you cannot see this 
 
 -   Paste the following code in the Main method.
 
-```csharp
+``` csharp
     using (var context = new SchoolEntities())
     {
         Person person = new Person()
@@ -119,6 +121,12 @@ The following T-SQL statements were executed against the **School** database as 
 
 -   The following **INSERT** was executed as a result of executing context.SaveChanges() and combines data from the **Person** and **HireInfo** entities
 
+    ![Insert Combining Person and HireInfo Data](~/ef6/media/insert.png)
+
 -   The following **SELECT** was executed as a result of executing context.People.FirstOrDefault() and selects just the columns mapped to **Person**
 
+    ![Select 1](~/ef6/media/select1.png)
+
 -   The following **SELECT** was executed as a result of accessing the navigation property existingPerson.Instructor and selects just the columns mapped to **HireInfo**
+
+    ![Select 2](~/ef6/media/select2.png)

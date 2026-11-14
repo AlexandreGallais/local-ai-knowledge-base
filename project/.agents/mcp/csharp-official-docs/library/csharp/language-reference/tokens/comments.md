@@ -1,48 +1,24 @@
 ---
 title: "// and /* */ - comments"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/tokens/comments.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: You use \"//\" for single-line comments. You use \"/*\" to start multi-line comments that end with \"*/\". You add comments to explain your code.
+ms.date: 01/14/2026
 ---
-
 # Code comments - `//` and `/*` - `*/`
 
 C# supports two different forms of comments. Single line comments start with `//` and end at the end of that line of code. Multiline comments start with `/*` and end with `*/`.
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
-
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
-
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
 The following code shows an example of each form:
 
-```csharp
-// This is a single line comment.
+:::code language="csharp" source="./snippets/comments.cs" id="ExampleComments":::
 
-/* This could be a summary of all the
-   code that's in this class.
-   You might add multiple paragraphs, or links to pages
-   like https://learn.microsoft.com/dotnet/csharp.
-   
-   You could even include emojis. This example is 🔥
-   Then, when you're done, close with
-   */
-```
 You can use a multiline comment to insert text in a line of code. Because these comments have an explicit closing character, you can include more executable code after the comment:
 
-```csharp
-public static int Add(int left, int right)
-{
-    return left /* first operand */ + right /* second operand */;
-}
-```
+:::code language="csharp" source="./snippets/comments.cs" id="InlineComment":::
+
 A single line comment can appear after executable code on the same line. The comment ends at the end of the text line:
 
-```csharp
-return source++; // increment the source.
-```
-Some comments start with three slashes: `///`. *Triple-slash comments* are *XML documentation comments*. The compiler reads these comments to produce human documentation. You can read more about XML doc comments in the section on triple-slash comments.
+:::code language="csharp" source="./snippets/comments.cs" id="LineEndingComment":::
+
+Some comments start with three slashes: `///`. *Triple-slash comments* are *XML documentation comments*. The compiler reads these comments to produce human documentation. You can read more about [XML doc comments](../xmldoc/index.md) in the section on triple-slash comments.

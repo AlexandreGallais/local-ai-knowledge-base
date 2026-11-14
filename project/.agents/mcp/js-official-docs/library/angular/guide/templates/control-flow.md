@@ -1,12 +1,3 @@
----
-title: "Control flow"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/templates/control-flow.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Control flow
 
 Angular templates support control flow blocks that let you conditionally show, hide, and repeat elements.
@@ -47,7 +38,7 @@ This can be useful for referencing longer expressions that would be easier to re
 
 ## Repeat content with the `@for` block
 
-The `@for` block loops through a collection and repeatedly renders the content of a block. The collection can be any JavaScript iterable, but Angular has additional performance optimizations for `Array` values.
+The `@for` block loops through a collection and repeatedly renders the content of a block. The collection can be any JavaScript [iterable](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Iteration_protocols), but Angular has additional performance optimizations for `Array` values.
 
 A typical `@for` loop looks like:
 
@@ -175,6 +166,7 @@ export class AppComponent {
 
 When the switched expression is nested within a union, you must explicitly specify the expression to check for exhaustiveness.
 
+<!-- prettier-ignore -->
 ```angular-ts
 @Component({
   template: `

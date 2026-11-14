@@ -1,17 +1,14 @@
 ---
 title: "Breaking change: IIS: UrlRewrite middleware query strings are preserved"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/5/iis-urlrewrite-middleware-query-strings-are-preserved.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 5.0 titled IIS: UrlRewrite middleware query strings are preserved"
+ms.date: 10/01/2020
+ms.custom: https://github.com/aspnet/Announcements/issues/420
 ---
-
 # IIS: UrlRewrite middleware query strings are preserved
 
 An IIS UrlRewrite middleware defect prevented the query string from being preserved in rewrite rules. That defect has been fixed to maintain consistency with the IIS UrlRewrite Module's behavior.
 
-For discussion, see issue dotnet/aspnetcore#22972.
+For discussion, see issue [dotnet/aspnetcore#22972](https://github.com/dotnet/aspnetcore/issues/22972).
 
 ## Version introduced
 
@@ -32,7 +29,7 @@ The preceding rule doesn't append the query string. A URI like `/about?id=1` red
 
 ## New behavior
 
-The query string is preserved. The URI from the example in Old behavior would be `/contact?id=1`.
+The query string is preserved. The URI from the example in [Old behavior](#old-behavior) would be `/contact?id=1`.
 
 ## Reason for change
 
@@ -44,4 +41,16 @@ If the behavior of removing the query string is preferred, set the `action` elem
 
 ## Affected APIs
 
-`Microsoft.AspNetCore.Rewrite.IISUrlRewriteOptionsExtensions.AddIISUrlRewrite*`
+<xref:Microsoft.AspNetCore.Rewrite.IISUrlRewriteOptionsExtensions.AddIISUrlRewrite*?displayProperty=nameWithType>
+
+<!--
+
+### Category
+
+ASP.NET Core
+
+### Affected APIs
+
+`Overload:Microsoft.AspNetCore.Rewrite.IISUrlRewriteOptionsExtensions.AddIISUrlRewrite`
+
+-->

@@ -1,22 +1,18 @@
 ---
-title: "Prerequisites to port from .NET Framework"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/premigration-needed-changes.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Prerequisites to port from .NET Framework
+description: Before porting your code from .NET Framework to .NET, you must use the correct developer environment and update your project files as required.
+author: StephenBonikowsky
+ms.date: 06/10/2021
 ---
-
 # Prerequisites to porting code
 
 Make the needed changes to build and run a .NET application before beginning the work to port your code. These changes can be done while still building and running a .NET Framework application.
 
-> **Important:**
-> .NET Upgrade Assistant is officially deprecated. Use the GitHub Copilot modernization chat agent instead, which is included with Visual Studio 2026 and Visual Studio 2022 17.14.16 or later. This agent analyzes your projects and dependencies, produces a step-by-step migration plan with targeted recommendations and automated code fixes, and commits each change so you can validate or roll back. It automates common porting tasks—updating project files, replacing deprecated APIs, and resolving build issues—so you can modernize faster with less manual effort.
+[!INCLUDE [github-copilot-suggestion](includes/github-copilot-suggestion.md)]
 
 ## Upgrade to required tooling
 
-Upgrade to a version of MSBuild/Visual Studio that supports the version of .NET you want to target. For more information, see Versioning relationship between the .NET SDK, MSBuild and VS.
+Upgrade to a version of MSBuild/Visual Studio that supports the version of .NET you want to target. For more information, see [Versioning relationship between the .NET SDK, MSBuild and VS](versioning-sdk-msbuild-vs.md).
 
 ## Update .NET Framework target version
 
@@ -32,11 +28,11 @@ Because your projects now target .NET Framework 4.7.2, use that version of the .
 
 ## Change to PackageReference format
 
-Convert all references to the PackageReference format.
+Convert all references to the [PackageReference](/nuget/consume-packages/package-references-in-project-files) format.
 
 ## Convert to SDK style project format
 
-Convert your projects to the SDK-style format.
+Convert your projects to the [SDK-style format](../project-sdk/overview.md).
 
 ## Update dependencies
 
@@ -44,4 +40,4 @@ Update dependencies to their latest version available, and to .NET Standard vers
 
 ## Next steps
 
-- Create a porting plan
+- [Create a porting plan](porting-approaches.md)

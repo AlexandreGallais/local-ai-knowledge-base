@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: All assemblies trimmed by default"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/deployment/7.0/trim-all-assemblies.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 7 breaking change in deployment where all assemblies in a console app are trimmed by default.
+ms.date: 07/28/2022
 ---
-
 # All assemblies trimmed by default
 
 Trimming now trims all assemblies in console apps, by default. This change only affects apps that are published with `PublishTrimmed=true`, and it only breaks apps that had existing trim warnings. It also only affects plain .NET apps that don't use the Windows Desktop, Android, iOS, WASM, or ASP.NET SDK.
@@ -27,7 +23,7 @@ If your app did have trim warnings, you may see changes in behavior or exception
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
@@ -35,7 +31,7 @@ This change helps to decrease app size without users having to explicitly opt in
 
 ## Recommended action
 
-The best resolution is to resolve all the trim warnings in your application. For information about resolving the warnings in your own libraries, see Introduction to trim warnings. For other libraries, contact the author to request that they resolve the warnings, or choose a different library that already supports trimming. For example, you can switch to `System.Text.Json` with source generation, which supports trimming, instead of `Newtonsoft.Json`.
+The best resolution is to resolve all the trim warnings in your application. For information about resolving the warnings in your own libraries, see [Introduction to trim warnings](../../../deploying/trimming/fixing-warnings.md). For other libraries, contact the author to request that they resolve the warnings, or choose a different library that already supports trimming. For example, you can switch to <xref:System.Text.Json?displayProperty=fullName> with [source generation](../../../../standard/serialization/system-text-json/source-generation.md), which supports trimming, instead of `Newtonsoft.Json`.
 
 To revert to the previous behavior, set the `TrimMode` property to `partial`, which is the pre-.NET 7 behavior.
 
@@ -55,4 +51,4 @@ None.
 
 ## See also
 
-- Trimming options
+- [Trimming options](../../../deploying/trimming/trimming-options.md)

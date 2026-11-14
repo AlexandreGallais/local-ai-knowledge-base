@@ -1,23 +1,18 @@
 ---
-title: "Extending Browser Locators | Recipes"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/recipes/browser-locators.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Extending Browser Locators | Recipes
 ---
 
 # Domain Locators
 
-Built-in locators like `getByRole` and `getByText` cover queries that map onto accessibility attributes. They run out when an app has shapes that don't fit ARIA, like a "comment with N replies" or a row in a custom table component.
+Built-in [locators](/api/browser/locators) like `getByRole` and `getByText` cover queries that map onto accessibility attributes. They run out when an app has shapes that don't fit ARIA, like a "comment with N replies" or a row in a custom table component.
 
 The fallback is to use `querySelector`. That works, but the result is a plain query rather than a locator, so you lose auto-retry and strict-mode protection.
 
-`locators.extend` <Version>3.2.0</Version> adds a domain-specific locator without giving up the locator API. The value the method returns is still a locator, so auto-retry, strict-mode protection, and chaining all carry through to your custom methods. The names you give those methods become part of the team's test vocabulary: `page.getByCard({ id: 'product-1' })` reads like the product instead of the DOM, and the same name shows up consistently across the suite.
+[`locators.extend`](/api/browser/locators#custom-locators) <Version>3.2.0</Version> adds a domain-specific locator without giving up the locator API. The value the method returns is still a locator, so auto-retry, strict-mode protection, and chaining all carry through to your custom methods. The names you give those methods become part of the team's test vocabulary: `page.getByCard({ id: 'product-1' })` reads like the product instead of the DOM, and the same name shows up consistently across the suite.
 
 ## Returning a Playwright string
 
-The simplest form returns a Playwright locator string. Vitest treats the returned string as a child query of whatever locator the method was called on: when called on `page`, the string runs against the entire page; when called on a parent locator, it runs scoped to that parent's subtree.
+The simplest form returns a [Playwright locator string](https://playwright.dev/docs/other-locators). Vitest treats the returned string as a child query of whatever locator the method was called on: when called on `page`, the string runs against the entire page; when called on a parent locator, it runs scoped to that parent's subtree.
 
 Reach for this form when the new query has no good expression in built-in locators, like a CSS-with-text selector for a widget that doesn't map onto a built-in role, or an XPath for a legacy component you don't control.
 
@@ -98,7 +93,7 @@ Interaction methods don't compose into selectors. `page.getByRole('textbox').cli
 
 ## Augmenting locator types
 
-`locators.extend` is a runtime registration. TypeScript doesn't know about the new methods until you augment the `LocatorSelectors` interface, usually in a shared `.d.ts` file:
+`locators.extend` is a runtime registration. TypeScript doesn't know about the new methods until you augment the [`LocatorSelectors`](/api/browser/locators) interface, usually in a shared `.d.ts` file:
 
 ```ts
 import 'vitest/browser'
@@ -116,6 +111,6 @@ declare module 'vitest/browser' {
 
 ## See also
 
-- Custom Locators API
-- Built-in Locators
-- Playwright "other locators"
+- [Custom Locators API](/api/browser/locators#custom-locators)
+- [Built-in Locators](/api/browser/locators)
+- [Playwright "other locators"](https://playwright.dev/docs/other-locators)

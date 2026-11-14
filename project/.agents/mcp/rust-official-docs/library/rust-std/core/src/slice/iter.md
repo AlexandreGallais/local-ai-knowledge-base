@@ -1,12 +1,3 @@
----
-title: "core::slice::iter (part 1 of 2)"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/slice/iter.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::slice::iter
 
 Definitions of a bunch of iterators for `[T]`.
@@ -19,13 +10,13 @@ pub struct Iter<'a, T: 'a>
 
 Immutable slice iterator
 
-This struct is created by the `iter` method on [slices].
+This struct is created by the [`iter`] method on [slices].
 
 # Examples
 
 Basic usage:
 
-```rust
+```
 // First, we need a slice to call the `iter` method on:
 let slice = &[1, 2, 3];
 
@@ -41,6 +32,9 @@ for element in slice {
 }
 ```
 
+[`iter`]: slice::iter
+[slices]: slice
+
 ## Iter::as_slice
 
 ```rust
@@ -53,7 +47,7 @@ Views the underlying data as a subslice of the original data.
 
 Basic usage:
 
-```rust
+```
 // First, we need a slice to call the `iter` method on:
 let slice = &[1, 2, 3];
 
@@ -82,13 +76,13 @@ pub struct IterMut<'a, T: 'a>
 
 Mutable slice iterator.
 
-This struct is created by the `iter_mut` method on [slices].
+This struct is created by the [`iter_mut`] method on [slices].
 
 # Examples
 
 Basic usage:
 
-```rust
+```
 // First, we need a slice to call the `iter_mut` method on:
 let slice = &mut [1, 2, 3];
 
@@ -101,6 +95,9 @@ for element in slice.iter_mut() {
 // We now have "[2, 3, 4]":
 println!("{slice:?}");
 ```
+
+[`iter_mut`]: slice::iter_mut
+[slices]: slice
 
 ## IterMut::into_slice
 
@@ -117,7 +114,7 @@ to consume the iterator.
 
 Basic usage:
 
-```rust
+```
 // First, we need a slice to call the `iter_mut` method on:
 let mut slice = &mut [1, 2, 3];
 
@@ -147,7 +144,7 @@ Views the underlying data as a subslice of the original data.
 
 Basic usage:
 
-```rust
+```
 // First, we need a slice to call the `iter_mut` method on:
 let slice = &mut [1, 2, 3];
 
@@ -178,17 +175,20 @@ pub struct Split<'a, T: 'a, P> where P: FnMut(&T) -> bool,
 An iterator over subslices separated by elements that match a predicate
 function.
 
-This struct is created by the `split` method on [slices].
+This struct is created by the [`split`] method on [slices].
 
 # Example
 
-```rust
+```
 let slice = [10, 40, 33, 20];
 let mut iter = slice.split(|num| num % 3 == 0);
 assert_eq!(iter.next(), Some(&[10, 40][..]));
 assert_eq!(iter.next(), Some(&[20][..]));
 assert_eq!(iter.next(), None);
 ```
+
+[`split`]: slice::split
+[slices]: slice
 
 ## ::SplitInclusive
 
@@ -200,17 +200,20 @@ An iterator over subslices separated by elements that match a predicate
 function. Unlike `Split`, it contains the matched part as a terminator
 of the subslice.
 
-This struct is created by the `split_inclusive` method on [slices].
+This struct is created by the [`split_inclusive`] method on [slices].
 
 # Example
 
-```rust
+```
 let slice = [10, 40, 33, 20];
 let mut iter = slice.split_inclusive(|num| num % 3 == 0);
 assert_eq!(iter.next(), Some(&[10, 40, 33][..]));
 assert_eq!(iter.next(), Some(&[20][..]));
 assert_eq!(iter.next(), None);
 ```
+
+[`split_inclusive`]: slice::split_inclusive
+[slices]: slice
 
 ## ::SplitMut
 
@@ -221,14 +224,17 @@ pub struct SplitMut<'a, T: 'a, P> where P: FnMut(&T) -> bool,
 An iterator over the mutable subslices of the vector which are separated
 by elements that match `pred`.
 
-This struct is created by the `split_mut` method on [slices].
+This struct is created by the [`split_mut`] method on [slices].
 
 # Example
 
-```rust
+```
 let mut v = [10, 40, 30, 20, 60, 50];
 let iter = v.split_mut(|num| *num % 3 == 0);
 ```
+
+[`split_mut`]: slice::split_mut
+[slices]: slice
 
 ## ::SplitInclusiveMut
 
@@ -240,14 +246,17 @@ An iterator over the mutable subslices of the vector which are separated
 by elements that match `pred`. Unlike `SplitMut`, it contains the matched
 parts in the ends of the subslices.
 
-This struct is created by the `split_inclusive_mut` method on [slices].
+This struct is created by the [`split_inclusive_mut`] method on [slices].
 
 # Example
 
-```rust
+```
 let mut v = [10, 40, 30, 20, 60, 50];
 let iter = v.split_inclusive_mut(|num| *num % 3 == 0);
 ```
+
+[`split_inclusive_mut`]: slice::split_inclusive_mut
+[slices]: slice
 
 ## ::RSplit
 
@@ -258,17 +267,20 @@ pub struct RSplit<'a, T: 'a, P> where P: FnMut(&T) -> bool,
 An iterator over subslices separated by elements that match a predicate
 function, starting from the end of the slice.
 
-This struct is created by the `rsplit` method on [slices].
+This struct is created by the [`rsplit`] method on [slices].
 
 # Example
 
-```rust
+```
 let slice = [11, 22, 33, 0, 44, 55];
 let mut iter = slice.rsplit(|num| *num == 0);
 assert_eq!(iter.next(), Some(&[44, 55][..]));
 assert_eq!(iter.next(), Some(&[11, 22, 33][..]));
 assert_eq!(iter.next(), None);
 ```
+
+[`rsplit`]: slice::rsplit
+[slices]: slice
 
 ## ::RSplitMut
 
@@ -279,14 +291,17 @@ pub struct RSplitMut<'a, T: 'a, P> where P: FnMut(&T) -> bool,
 An iterator over the subslices of the vector which are separated
 by elements that match `pred`, starting from the end of the slice.
 
-This struct is created by the `rsplit_mut` method on [slices].
+This struct is created by the [`rsplit_mut`] method on [slices].
 
 # Example
 
-```rust
+```
 let mut slice = [11, 22, 33, 0, 44, 55];
 let iter = slice.rsplit_mut(|num| *num == 0);
 ```
+
+[`rsplit_mut`]: slice::rsplit_mut
+[slices]: slice
 
 ## struct SplitN
 
@@ -297,17 +312,20 @@ pub struct SplitN<'a, T: 'a, P> where P: FnMut(&T) -> bool,
 An iterator over subslices separated by elements that match a predicate
 function, limited to a given number of splits.
 
-This struct is created by the `splitn` method on [slices].
+This struct is created by the [`splitn`] method on [slices].
 
 # Example
 
-```rust
+```
 let slice = [10, 40, 30, 20, 60, 50];
 let mut iter = slice.splitn(2, |num| *num % 3 == 0);
 assert_eq!(iter.next(), Some(&[10, 40][..]));
 assert_eq!(iter.next(), Some(&[20, 60, 50][..]));
 assert_eq!(iter.next(), None);
 ```
+
+[`splitn`]: slice::splitn
+[slices]: slice
 
 ## struct RSplitN
 
@@ -319,17 +337,20 @@ An iterator over subslices separated by elements that match a
 predicate function, limited to a given number of splits, starting
 from the end of the slice.
 
-This struct is created by the `rsplitn` method on [slices].
+This struct is created by the [`rsplitn`] method on [slices].
 
 # Example
 
-```rust
+```
 let slice = [10, 40, 30, 20, 60, 50];
 let mut iter = slice.rsplitn(2, |num| *num % 3 == 0);
 assert_eq!(iter.next(), Some(&[50][..]));
 assert_eq!(iter.next(), Some(&[10, 40, 30, 20][..]));
 assert_eq!(iter.next(), None);
 ```
+
+[`rsplitn`]: slice::rsplitn
+[slices]: slice
 
 ## struct SplitNMut
 
@@ -340,14 +361,17 @@ pub struct SplitNMut<'a, T: 'a, P> where P: FnMut(&T) -> bool,
 An iterator over subslices separated by elements that match a predicate
 function, limited to a given number of splits.
 
-This struct is created by the `splitn_mut` method on [slices].
+This struct is created by the [`splitn_mut`] method on [slices].
 
 # Example
 
-```rust
+```
 let mut slice = [10, 40, 30, 20, 60, 50];
 let iter = slice.splitn_mut(2, |num| *num % 3 == 0);
 ```
+
+[`splitn_mut`]: slice::splitn_mut
+[slices]: slice
 
 ## struct RSplitNMut
 
@@ -359,14 +383,17 @@ An iterator over subslices separated by elements that match a
 predicate function, limited to a given number of splits, starting
 from the end of the slice.
 
-This struct is created by the `rsplitn_mut` method on [slices].
+This struct is created by the [`rsplitn_mut`] method on [slices].
 
 # Example
 
-```rust
+```
 let mut slice = [10, 40, 30, 20, 60, 50];
 let iter = slice.rsplitn_mut(2, |num| *num % 3 == 0);
 ```
+
+[`rsplitn_mut`]: slice::rsplitn_mut
+[slices]: slice
 
 ## struct Windows
 
@@ -376,11 +403,11 @@ pub struct Windows<'a, T: 'a>
 
 An iterator over overlapping subslices of length `size`.
 
-This struct is created by the `windows` method on [slices].
+This struct is created by the [`windows`] method on [slices].
 
 # Example
 
-```rust
+```
 let slice = ['r', 'u', 's', 't'];
 let mut iter = slice.windows(2);
 assert_eq!(iter.next(), Some(&['r', 'u'][..]));
@@ -388,6 +415,9 @@ assert_eq!(iter.next(), Some(&['u', 's'][..]));
 assert_eq!(iter.next(), Some(&['s', 't'][..]));
 assert_eq!(iter.next(), None);
 ```
+
+[`windows`]: slice::windows
+[slices]: slice
 
 ## struct Chunks
 
@@ -401,11 +431,11 @@ time), starting at the beginning of the slice.
 When the slice len is not evenly divided by the chunk size, the last slice
 of the iteration will be the remainder.
 
-This struct is created by the `chunks` method on [slices].
+This struct is created by the [`chunks`] method on [slices].
 
 # Example
 
-```rust
+```
 let slice = ['l', 'o', 'r', 'e', 'm'];
 let mut iter = slice.chunks(2);
 assert_eq!(iter.next(), Some(&['l', 'o'][..]));
@@ -413,6 +443,9 @@ assert_eq!(iter.next(), Some(&['r', 'e'][..]));
 assert_eq!(iter.next(), Some(&['m'][..]));
 assert_eq!(iter.next(), None);
 ```
+
+[`chunks`]: slice::chunks
+[slices]: slice
 
 ## struct ChunksMut
 
@@ -426,14 +459,17 @@ elements at a time), starting at the beginning of the slice.
 When the slice len is not evenly divided by the chunk size, the last slice
 of the iteration will be the remainder.
 
-This struct is created by the `chunks_mut` method on [slices].
+This struct is created by the [`chunks_mut`] method on [slices].
 
 # Example
 
-```rust
+```
 let mut slice = ['l', 'o', 'r', 'e', 'm'];
 let iter = slice.chunks_mut(2);
 ```
+
+[`chunks_mut`]: slice::chunks_mut
+[slices]: slice
 
 ## ::ChunksExact
 
@@ -446,19 +482,23 @@ time), starting at the beginning of the slice.
 
 When the slice len is not evenly divided by the chunk size, the last
 up to `chunk_size-1` elements will be omitted but can be retrieved from
-the `remainder` function from the iterator.
+the [`remainder`] function from the iterator.
 
-This struct is created by the `chunks_exact` method on [slices].
+This struct is created by the [`chunks_exact`] method on [slices].
 
 # Example
 
-```rust
+```
 let slice = ['l', 'o', 'r', 'e', 'm'];
 let mut iter = slice.chunks_exact(2);
 assert_eq!(iter.next(), Some(&['l', 'o'][..]));
 assert_eq!(iter.next(), Some(&['r', 'e'][..]));
 assert_eq!(iter.next(), None);
 ```
+
+[`chunks_exact`]: slice::chunks_exact
+[`remainder`]: ChunksExact::remainder
+[slices]: slice
 
 ## ChunksExact::remainder
 
@@ -472,7 +512,7 @@ elements.
 
 # Example
 
-```rust
+```
 let slice = ['l', 'o', 'r', 'e', 'm'];
 let mut iter = slice.chunks_exact(2);
 assert_eq!(iter.remainder(), &['m'][..]);
@@ -495,16 +535,20 @@ elements at a time), starting at the beginning of the slice.
 
 When the slice len is not evenly divided by the chunk size, the last up to
 `chunk_size-1` elements will be omitted but can be retrieved from the
-`into_remainder` function from the iterator.
+[`into_remainder`] function from the iterator.
 
-This struct is created by the `chunks_exact_mut` method on [slices].
+This struct is created by the [`chunks_exact_mut`] method on [slices].
 
 # Example
 
-```rust
+```
 let mut slice = ['l', 'o', 'r', 'e', 'm'];
 let iter = slice.chunks_exact_mut(2);
 ```
+
+[`chunks_exact_mut`]: slice::chunks_exact_mut
+[`into_remainder`]: ChunksExactMut::into_remainder
+[slices]: slice
 
 ## ChunksExactMut::into_remainder
 
@@ -525,11 +569,11 @@ pub struct ArrayWindows<'a, T: 'a, const N: usize>
 A windowed iterator over a slice in overlapping chunks (`N` elements at a
 time), starting at the beginning of the slice
 
-This struct is created by the `array_windows` method on [slices].
+This struct is created by the [`array_windows`] method on [slices].
 
 # Example
 
-```rust
+```
 let slice = [0, 1, 2, 3];
 let mut iter = slice.array_windows::<2>();
 assert_eq!(iter.next(), Some(&[0, 1]));
@@ -537,6 +581,9 @@ assert_eq!(iter.next(), Some(&[1, 2]));
 assert_eq!(iter.next(), Some(&[2, 3]));
 assert_eq!(iter.next(), None);
 ```
+
+[`array_windows`]: slice::array_windows
+[slices]: slice
 
 ## struct RChunks
 
@@ -550,11 +597,11 @@ time), starting at the end of the slice.
 When the slice len is not evenly divided by the chunk size, the last slice
 of the iteration will be the remainder.
 
-This struct is created by the `rchunks` method on [slices].
+This struct is created by the [`rchunks`] method on [slices].
 
 # Example
 
-```rust
+```
 let slice = ['l', 'o', 'r', 'e', 'm'];
 let mut iter = slice.rchunks(2);
 assert_eq!(iter.next(), Some(&['e', 'm'][..]));
@@ -562,6 +609,9 @@ assert_eq!(iter.next(), Some(&['o', 'r'][..]));
 assert_eq!(iter.next(), Some(&['l'][..]));
 assert_eq!(iter.next(), None);
 ```
+
+[`rchunks`]: slice::rchunks
+[slices]: slice
 
 ## struct RChunksMut
 
@@ -575,14 +625,17 @@ elements at a time), starting at the end of the slice.
 When the slice len is not evenly divided by the chunk size, the last slice
 of the iteration will be the remainder.
 
-This struct is created by the `rchunks_mut` method on [slices].
+This struct is created by the [`rchunks_mut`] method on [slices].
 
 # Example
 
-```rust
+```
 let mut slice = ['l', 'o', 'r', 'e', 'm'];
 let iter = slice.rchunks_mut(2);
 ```
+
+[`rchunks_mut`]: slice::rchunks_mut
+[slices]: slice
 
 ## ::RChunksExact
 
@@ -595,16 +648,107 @@ time), starting at the end of the slice.
 
 When the slice len is not evenly divided by the chunk size, the last
 up to `chunk_size-1` elements will be omitted but can be retrieved from
-the `remainder` function from the iterator.
+the [`remainder`] function from the iterator.
 
-This struct is created by the `rchunks_exact` method on [slices].
+This struct is created by the [`rchunks_exact`] method on [slices].
 
 # Example
 
-```rust
+```
 let slice = ['l', 'o', 'r', 'e', 'm'];
 let mut iter = slice.rchunks_exact(2);
 assert_eq!(iter.next(), Some(&['e', 'm'][..]));
 assert_eq!(iter.next(), Some(&['o', 'r'][..]));
 assert_eq!(iter.next(), None);
 ```
+
+[`rchunks_exact`]: slice::rchunks_exact
+[`remainder`]: RChunksExact::remainder
+[slices]: slice
+
+## RChunksExact::remainder
+
+```rust
+pub const fn remainder(&self) -> &'a [T]
+```
+
+Returns the remainder of the original slice that is not going to be
+returned by the iterator. The returned slice has at most `chunk_size-1`
+elements.
+
+# Example
+
+```
+let slice = ['l', 'o', 'r', 'e', 'm'];
+let mut iter = slice.rchunks_exact(2);
+assert_eq!(iter.remainder(), &['l'][..]);
+assert_eq!(iter.next(), Some(&['e', 'm'][..]));
+assert_eq!(iter.remainder(), &['l'][..]);
+assert_eq!(iter.next(), Some(&['o', 'r'][..]));
+assert_eq!(iter.remainder(), &['l'][..]);
+assert_eq!(iter.next(), None);
+assert_eq!(iter.remainder(), &['l'][..]);
+```
+
+## struct RChunksExactMut
+
+```rust
+pub struct RChunksExactMut<'a, T: 'a>
+```
+
+An iterator over a slice in (non-overlapping) mutable chunks (`chunk_size`
+elements at a time), starting at the end of the slice.
+
+When the slice len is not evenly divided by the chunk size, the last up to
+`chunk_size-1` elements will be omitted but can be retrieved from the
+[`into_remainder`] function from the iterator.
+
+This struct is created by the [`rchunks_exact_mut`] method on [slices].
+
+# Example
+
+```
+let mut slice = ['l', 'o', 'r', 'e', 'm'];
+let iter = slice.rchunks_exact_mut(2);
+```
+
+[`rchunks_exact_mut`]: slice::rchunks_exact_mut
+[`into_remainder`]: RChunksExactMut::into_remainder
+[slices]: slice
+
+## RChunksExactMut::into_remainder
+
+```rust
+pub const fn into_remainder(self) -> &'a mut [T]
+```
+
+Returns the remainder of the original slice that is not going to be
+returned by the iterator. The returned slice has at most `chunk_size-1`
+elements.
+
+## struct ChunkBy
+
+```rust
+pub struct ChunkBy<'a, T: 'a, P>
+```
+
+An iterator over slice in (non-overlapping) chunks separated by a predicate.
+
+This struct is created by the [`chunk_by`] method on [slices].
+
+[`chunk_by`]: slice::chunk_by
+[slices]: slice
+
+## struct ChunkByMut
+
+```rust
+pub struct ChunkByMut<'a, T: 'a, P>
+```
+
+An iterator over slice in (non-overlapping) mutable chunks separated
+by a predicate.
+
+This struct is created by the [`chunk_by_mut`] method on [slices].
+
+[`chunk_by_mut`]: slice::chunk_by_mut
+[slices]: slice

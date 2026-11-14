@@ -1,15 +1,14 @@
 ---
 title: "Breaking change: System.Text.Json metadata reader now unescapes metadata property names"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/serialization/9.0/json-metadata-reader.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: System.Text.Json now unescapes metadata property names, affecting reference preservation and metadata property validation.
+ms.date: 2/13/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/44748
 ---
 
 # System.Text.Json metadata reader now unescapes metadata property names
 
-The `System.Text.Json` library has been updated to unescape metadata property names. This change affects how JSON documents are interpreted in the context of reference preservation, polymorphism, and metadata property validation.
+The <xref:System.Text.Json?displayProperty=fullName> library has been updated to unescape metadata property names. This change affects how JSON documents are interpreted in the context of reference preservation, polymorphism, and metadata property validation.
 
 ## Version introduced
 
@@ -17,7 +16,7 @@ The `System.Text.Json` library has been updated to unescape metadata property na
 
 ## Previous behavior
 
-Previously, `System.Text.Json` didn't unescape metadata property names. This would lead to invalid property names being accepted, which could bypass <example-value> property validation.
+Previously, <xref:System.Text.Json?displayProperty=fullName> didn't unescape metadata property names. This would lead to invalid property names being accepted, which could bypass metadata property validation.
 
 For example, the following code would succeed in the first call but throw an exception in the second call:
 
@@ -44,7 +43,7 @@ public record Derived : Base;
 
 ## New behavior
 
-`System.Text.Json` now unescapes metadata property names. This new behavior means that the line `Console.WriteLine(JsonSerializer.Deserialize<Base>(json) is Derived);` from the polymorphic deserialization example now returns `true`, and that invalid property names correctly fail to deserialize with the following exception:
+<xref:System.Text.Json?displayProperty=fullName> now unescapes metadata property names. This new behavior means that the line `Console.WriteLine(JsonSerializer.Deserialize<Base>(json) is Derived);` from the polymorphic deserialization example now returns `true`, and that invalid property names correctly fail to deserialize with the following exception:
 
 ```output
 Unhandled exception. System.Text.Json.JsonException: Properties that start with '$' are not allowed in types that support metadata.
@@ -52,17 +51,17 @@ Unhandled exception. System.Text.Json.JsonException: Properties that start with 
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-The change improves correctness and reliability by ensuring that metadata property names are properly unescaped, preventing the bypass of metadata property validation. For more details, see the reported issue.
+The change improves correctness and reliability by ensuring that metadata property names are properly unescaped, preventing the bypass of metadata property validation. For more details, see the [reported issue](https://github.com/dotnet/runtime/issues/112288).
 
 ## Recommended action
 
-Avoid using escaping to bypass <example-value> property validation. Instead, pick property names that don't conflict with metadata properties.
+Avoid using escaping to bypass metadata property validation. Instead, pick property names that don't conflict with metadata properties.
 
 ## Affected APIs
 
-* `System.Text.Json`
-* `System.Text.Json.JsonSerializer.Deserialize*`
+* <xref:System.Text.Json?displayProperty=fullName>
+* <xref:System.Text.Json.JsonSerializer.Deserialize*?displayProperty=fullName>

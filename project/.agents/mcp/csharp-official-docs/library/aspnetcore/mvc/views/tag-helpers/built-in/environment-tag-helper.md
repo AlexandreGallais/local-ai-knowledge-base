@@ -1,19 +1,15 @@
 ---
-title: "Environment Tag Helper in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/mvc/views/tag-helpers/built-in/environment-tag-helper.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Environment Tag Helper in ASP.NET Core
+description: ASP.NET Core Environment Tag Helper defined including all properties
+ms.date: 10/10/2018
 ---
-
 # Environment Tag Helper in ASP.NET Core
 
-By Peter Kellner and Hisham Bin Ateya
+By [Peter Kellner](https://peterkellner.net) and [Hisham Bin Ateya](https://twitter.com/hishambinateya)
 
-The Environment Tag Helper conditionally renders its enclosed content based on the current hosting environment. The Environment Tag Helper's single attribute, `names`, is a comma-separated list of environment names. If any of the provided environment names match the current environment, the enclosed content is rendered.
+The Environment Tag Helper conditionally renders its enclosed content based on the current [hosting environment](../../../../fundamentals/environments.md). The Environment Tag Helper's single attribute, `names`, is a comma-separated list of environment names. If any of the provided environment names match the current environment, the enclosed content is rendered.
 
-For an overview of Tag Helpers, see Tag Helpers in ASP.NET Core.
+For an overview of Tag Helpers, see [Tag Helpers in ASP.NET Core](../intro.md).
 
 ## Environment Tag Helper Attributes
 
@@ -21,7 +17,7 @@ For an overview of Tag Helpers, see Tag Helpers in ASP.NET Core.
 
 `names` accepts a single hosting environment name or a comma-separated list of hosting environment names that trigger the rendering of the enclosed content.
 
-Environment values are compared to the current value returned by IWebHostEnvironment.EnvironmentName. The comparison ignores case.
+Environment values are compared to the current value returned by [IWebHostEnvironment.EnvironmentName](xref:Microsoft.AspNetCore.Hosting.IHostingEnvironment.EnvironmentName). The comparison ignores case.
 
 The following example uses an Environment Tag Helper. The content is rendered if the hosting environment is Staging or Production:
 
@@ -31,13 +27,15 @@ The following example uses an Environment Tag Helper. The content is rendered if
 </environment>
 ```
 
+:::moniker range=">= aspnetcore-2.0"
+
 ## include and exclude attributes
 
 `include` & `exclude` attributes control rendering the enclosed content based on the included or excluded hosting environment names.
 
 ### include
 
-The `include` property exhibits similar behavior to the `names` attribute. An environment listed in the `include` attribute value must match the app's hosting environment (IWebHostEnvironment.EnvironmentName) to render the content of the `<environment>` tag.
+The `include` property exhibits similar behavior to the `names` attribute. An environment listed in the `include` attribute value must match the app's hosting environment ([IWebHostEnvironment.EnvironmentName](xref:Microsoft.AspNetCore.Hosting.IHostingEnvironment.EnvironmentName)) to render the content of the `<environment>` tag.
 
 ```cshtml
 <environment include="Staging,Production">
@@ -55,6 +53,8 @@ In contrast to the `include` attribute, the content of the `<environment>` tag i
 </environment>
 ```
 
+:::moniker-end
+
 ## Related content
 
-* ASP.NET Core runtime environments
+* [ASP.NET Core runtime environments](../../../../fundamentals/environments.md)

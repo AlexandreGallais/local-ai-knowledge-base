@@ -1,12 +1,10 @@
 ---
-title: "SQLite Database Provider - Limitations - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/providers/sqlite/limitations.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: SQLite Database Provider - Limitations - EF Core
+description: Limitations of the Entity Framework Core SQLite database provider as compared to other providers
+author: SamMonoRT
+ms.date: 10/22/2026
+uid: core/providers/sqlite/limitations
 ---
-
 # SQLite EF Core Database Provider Limitations
 
 The SQLite provider has a number of migrations limitations. Most of these limitations are a result of limitations in the underlying SQLite database engine and are not specific to EF.
@@ -17,7 +15,7 @@ The common relational library (shared by EF Core relational database providers) 
 
 * Schemas
 * Sequences
-* Database-generated concurrency tokens (see documentation)
+* Database-generated concurrency tokens ([see documentation](xref:core/saving/concurrency#native-database-generated-concurrency-tokens))
 
 ## Query limitations
 
@@ -29,9 +27,9 @@ SQLite doesn't natively support the following data types. EF Core can read and w
 
 Instead of `DateTimeOffset`, we recommend using `DateTime` values. When handling multiple time zones, we recommend converting the values to UTC before saving and then converting back to the appropriate time zone.
 
-SQLite doesn't natively support `decimal` either, but EF Core translates comparison, ordering, arithmetic and aggregate operations on `decimal` values to functions and a collation that it registers on the connection, such as `ef_compare` and `EF_DECIMAL`. See Function Mappings for the translations.
+SQLite doesn't natively support `decimal` either, but EF Core translates comparison, ordering, arithmetic and aggregate operations on `decimal` values to functions and a collation that it registers on the connection, such as `ef_compare` and `EF_DECIMAL`. See [Function Mappings](xref:core/providers/sqlite/functions) for the translations.
 
-If you don't need the precision of `decimal`, you can use `double` instead. You can use a value converter to continue using `decimal` in your classes.
+If you don't need the precision of `decimal`, you can use `double` instead. You can use a [value converter](xref:core/modeling/value-conversions) to continue using `decimal` in your classes.
 
 ```csharp
 modelBuilder.Entity<MyEntity>()
@@ -73,9 +71,9 @@ Delete               | ✔
 
 ### Migrations limitations workaround
 
-You can workaround some of these limitations by manually writing code in your migrations to perform a rebuild. Table rebuilds involve creating a new table, copying data to the new table, dropping the old table, renaming the new table. You will need to use the `Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder.Sql*` method to perform some of these steps.
+You can workaround some of these limitations by manually writing code in your migrations to perform a rebuild. Table rebuilds involve creating a new table, copying data to the new table, dropping the old table, renaming the new table. You will need to use the <xref:Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder.Sql%2A> method to perform some of these steps.
 
-See Making Other Kinds Of Table Schema Changes in the SQLite documentation for more details.
+See [Making Other Kinds Of Table Schema Changes](https://sqlite.org/lang_altertable.html#otheralter) in the SQLite documentation for more details.
 
 ### Idempotent script limitations
 
@@ -95,7 +93,7 @@ dotnet ef database update --connection "Data Source=My.db"
 
 ## Concurrent migrations protection
 
-EF9 introduced a migration locking mechanism to protect against concurrent migration executions. Unlike SQL Server, which uses a session-level application lock (`sp_getapplock`) that is automatically released when the connection closes, SQLite doesn't have built-in application locks. EF Core instead creates a `__EFMigrationsLock` table and inserts a row to acquire the lock.
+EF9 introduced a [migration locking mechanism](xref:core/managing-schemas/migrations/applying#migration-locking) to protect against concurrent migration executions. Unlike SQL Server, which uses a session-level application lock (`sp_getapplock`) that is automatically released when the connection closes, SQLite doesn't have built-in application locks. EF Core instead creates a `__EFMigrationsLock` table and inserts a row to acquire the lock.
 
 ### Handling abandoned locks
 
@@ -117,5 +115,5 @@ After clearing the lock, subsequent migration operations proceed normally. The t
 
 ## See also
 
-* Microsoft.Data.Sqlite Async Limitations
-* Microsoft.Data.Sqlite ADO.NET Limitations
+* [Microsoft.Data.Sqlite Async Limitations](/dotnet/standard/data/sqlite/async)
+* [Microsoft.Data.Sqlite ADO.NET Limitations](/dotnet/standard/data/sqlite/adonet-limitations)

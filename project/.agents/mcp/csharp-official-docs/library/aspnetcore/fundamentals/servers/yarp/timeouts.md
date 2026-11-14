@@ -1,20 +1,20 @@
 ---
-title: "YARP Request Timeouts"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/timeouts.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: YARP Request Timeouts
+description: YARP Request Timeouts
+ms.date: 11/01/2025
+ms.topic: concept-article
+content_well_notification: AI-contribution
+ai-usage: ai-assisted
 ---
 
 # YARP Request Timeouts
 
 ## Introduction
 
-.NET 8 introduced the request timeouts middleware to enable configuring request timeouts globally as well as per endpoint. This functionality is also available in YARP 2.1 when running on .NET 8 or newer.
+.NET 8 introduced the [request timeouts middleware](../../../performance/timeouts.md) to enable configuring request timeouts globally as well as per endpoint. This functionality is also available in YARP 2.1 when running on .NET 8 or newer.
 
 ## Defaults
-Requests do not have any timeouts by default, other than the ActivityTimeout used to clean up idle requests. A default policy specified in RequestTimeoutOptions will apply to proxied requests as well.
+Requests do not have any timeouts by default, other than the [ActivityTimeout](http-client-config.md#httprequest) used to clean up idle requests. A default policy specified in [RequestTimeoutOptions](/dotnet/api/microsoft.aspnetcore.http.timeouts.requesttimeoutoptions) will apply to proxied requests as well.
 
 ## Interaction with ActivityTimeout
 
@@ -58,7 +58,7 @@ To avoid `ActivityTimeout` interfering with debugging or legitimate long-running
 ```
 
 ## Configuration
-Timeouts and Timeout Policies can be specified per route via RouteConfig and can be bound from the `Routes` sections of the config file. As with other route properties, this can be modified and reloaded without restarting the proxy. Policy names are case insensitive.
+Timeouts and Timeout Policies can be specified per route via [RouteConfig](xref:Yarp.ReverseProxy.Configuration.RouteConfig) and can be bound from the `Routes` sections of the config file. As with other route properties, this can be modified and reloaded without restarting the proxy. Policy names are case insensitive.
 
 Timeouts are specified in a TimeSpan format (HH:MM:SS). Specifying both a Timeout and a TimeoutPolicy on the same route is invalid and will cause the configuration to be rejected.
 

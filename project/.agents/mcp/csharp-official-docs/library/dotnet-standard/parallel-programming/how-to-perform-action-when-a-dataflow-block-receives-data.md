@@ -1,157 +1,44 @@
 ---
-title: "How to: Perform Action When a Dataflow Block Receives Data (part 1 of 2)"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/parallel-programming/how-to-perform-action-when-a-dataflow-block-receives-data.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn more about: How to: Perform Action When a Dataflow Block Receives Data"
+title: "How to: Perform Action When a Dataflow Block Receives Data"
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "Task Parallel Library, dataflows"
+  - "TPL dataflow library, receiving data"
+ms.assetid: fc2585dc-965e-4632-ace7-73dd02684ed3
 ---
-
 # How to: Perform Action When a Dataflow Block Receives Data
 
-*Execution dataflow block* types call a user-provided delegate when they receive data. The `System.Threading.Tasks.Dataflow.ActionBlock`1`, `System.Threading.Tasks.Dataflow.TransformBlock`2`, and `System.Threading.Tasks.Dataflow.TransformManyBlock`2` classes are execution dataflow block types. You can use the `delegate` keyword (`Sub` in Visual Basic), `System.Action`1`, `System.Func`2`, or a lambda expression when you provide a work function to an execution dataflow block. This document describes how to use `System.Func`2` and lambda expressions to perform action in execution blocks.
+*Execution dataflow block* types call a user-provided delegate when they receive data. The <xref:System.Threading.Tasks.Dataflow.ActionBlock`1?displayProperty=nameWithType>, <xref:System.Threading.Tasks.Dataflow.TransformBlock`2?displayProperty=nameWithType>, and <xref:System.Threading.Tasks.Dataflow.TransformManyBlock`2?displayProperty=nameWithType> classes are execution dataflow block types. You can use the `delegate` keyword (`Sub` in Visual Basic), <xref:System.Action`1>, <xref:System.Func`2>, or a lambda expression when you provide a work function to an execution dataflow block. This document describes how to use <xref:System.Func`2> and lambda expressions to perform action in execution blocks.
 
-> **Note:**
-> The TPL dataflow library (the `System.Threading.Tasks.Dataflow` namespace) is included in .NET 6 and later versions. For .NET Framework and .NET Standard projects, you need to install the 📦 System.Threading.Tasks.Dataflow NuGet package.
+[!INCLUDE [tpl-install-instructions](../../../includes/tpl-install-instructions.md)]
 
 ## Example
 
- The following example uses dataflow to read a file from disk and computes the number of bytes in that file that are equal to zero. It uses `System.Threading.Tasks.Dataflow.TransformBlock`2` to read the file and compute the number of zero bytes, and `System.Threading.Tasks.Dataflow.ActionBlock`1` to print the number of zero bytes to the console. The `System.Threading.Tasks.Dataflow.TransformBlock`2` object specifies a `System.Func`2` object to perform work when the blocks receive data. The `System.Threading.Tasks.Dataflow.ActionBlock`1` object uses a lambda expression to print to the console the number of zero bytes that are read.
+ The following example uses dataflow to read a file from disk and computes the number of bytes in that file that are equal to zero. It uses <xref:System.Threading.Tasks.Dataflow.TransformBlock`2> to read the file and compute the number of zero bytes, and <xref:System.Threading.Tasks.Dataflow.ActionBlock`1> to print the number of zero bytes to the console. The <xref:System.Threading.Tasks.Dataflow.TransformBlock`2> object specifies a <xref:System.Func`2> object to perform work when the blocks receive data. The <xref:System.Threading.Tasks.Dataflow.ActionBlock`1> object uses a lambda expression to print to the console the number of zero bytes that are read.
 
- ```csharp
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
+ [!code-csharp[TPLDataflow_ExecutionBlocks#1](../../../samples/snippets/csharp/VS_Snippets_Misc/tpldataflow_executionblocks/cs/dataflowexecutionblocks.cs#1)]
+ [!code-vb[TPLDataflow_ExecutionBlocks#1](../../../samples/snippets/visualbasic/VS_Snippets_Misc/tpldataflow_executionblocks/vb/dataflowexecutionblocks.vb#1)]
 
-// Demonstrates how to provide delegates to exectution dataflow blocks.
-class DataflowExecutionBlocks
-{
-   // Computes the number of zero bytes that the provided file
-   // contains.
-   static int CountBytes(string path)
-   {
-      byte[] buffer = new byte[1024];
-      int totalZeroBytesRead = 0;
-      using (var fileStream = File.OpenRead(path))
-      {
-         int bytesRead = 0;
-         do
-         {
-            bytesRead = fileStream.Read(buffer, 0, buffer.Length);
-            totalZeroBytesRead += buffer.Count(b => b == 0);
-         } while (bytesRead > 0);
-      }
+ Although you can provide a lambda expression to a <xref:System.Threading.Tasks.Dataflow.TransformBlock`2> object, this example uses <xref:System.Func`2> to enable other code to use the `CountBytes` method. The <xref:System.Threading.Tasks.Dataflow.ActionBlock`1> object uses a lambda expression because the work to be performed is specific to this task and is not likely to be useful from other code. For more information about how lambda expressions work in the Task Parallel Library, see [Lambda Expressions in PLINQ and TPL](lambda-expressions-in-plinq-and-tpl.md).
 
-      return totalZeroBytesRead;
-   }
+ The section Summary of Delegate Types in the [Dataflow](dataflow-task-parallel-library.md) document summarizes the delegate types that you can provide to <xref:System.Threading.Tasks.Dataflow.ActionBlock`1>, <xref:System.Threading.Tasks.Dataflow.TransformBlock`2>, and <xref:System.Threading.Tasks.Dataflow.TransformManyBlock`2> objects. The table also specifies whether the delegate type operates synchronously or asynchronously.
 
-   static void Main(string[] args)
-   {
-      // Create a temporary file on disk.
-      string tempFile = Path.GetTempFileName();
+## Robust Programming
 
-      // Write random data to the temporary file.
-      using (var fileStream = File.OpenWrite(tempFile))
-      {
-         Random rand = new Random();
-         byte[] buffer = new byte[1024];
-         for (int i = 0; i < 512; i++)
-         {
-            rand.NextBytes(buffer);
-            fileStream.Write(buffer, 0, buffer.Length);
-         }
-      }
+ This example provides a delegate of type <xref:System.Func`2> to the <xref:System.Threading.Tasks.Dataflow.TransformBlock`2> object to perform the task of the dataflow block synchronously. To enable the dataflow block to behave asynchronously, provide a delegate of type `Func<T, Task<TResult>>` to the dataflow block. When a dataflow block behaves asynchronously, the task of the dataflow block is complete only when the returned <xref:System.Threading.Tasks.Task`1> object finishes. The following example modifies the `CountBytes` method and uses the [async](../../csharp/language-reference/keywords/async.md) and [await](../../csharp/language-reference/operators/await.md) operators ([Async](../../visual-basic/language-reference/modifiers/async.md) and [Await](../../visual-basic/language-reference/operators/await-operator.md) in Visual Basic) to asynchronously compute the total number of bytes that are zero in the provided file. The <xref:System.IO.FileStream.ReadAsync*> method performs file read operations asynchronously.
 
-      // Create an ActionBlock<int> object that prints to the console
-      // the number of bytes read.
-      var printResult = new ActionBlock<int>(zeroBytesRead =>
-      {
-         Console.WriteLine($"{Path.GetFileName(tempFile)} contains {zeroBytesRead} zero bytes.");
-      });
+ [!code-csharp[TPLDataflow_ExecutionBlocks#2](../../../samples/snippets/csharp/VS_Snippets_Misc/tpldataflow_executionblocks/cs/dataflowexecutionblocks.cs#2)]
+ [!code-vb[TPLDataflow_ExecutionBlocks#2](../../../samples/snippets/visualbasic/VS_Snippets_Misc/tpldataflow_executionblocks/vb/dataflowexecutionblocks.vb#2)]
 
-      // Create a TransformBlock<string, int> object that calls the
-      // CountBytes function and returns its result.
-      var countBytes = new TransformBlock<string, int>(
-         new Func<string, int>(CountBytes));
+ You can also use asynchronous lambda expressions to perform action in an execution dataflow block. The following example modifies the <xref:System.Threading.Tasks.Dataflow.TransformBlock`2> object that is used in the previous example so that it uses a lambda expression to perform the work asynchronously.
 
-      // Link the TransformBlock<string, int> object to the
-      // ActionBlock<int> object.
-      countBytes.LinkTo(printResult);
+ [!code-csharp[TPLDataflow_ExecutionBlocks#3](../../../samples/snippets/csharp/VS_Snippets_Misc/tpldataflow_executionblocks/cs/dataflowexecutionblocks.cs#3)]
+ [!code-vb[TPLDataflow_ExecutionBlocks#3](../../../samples/snippets/visualbasic/VS_Snippets_Misc/tpldataflow_executionblocks/vb/dataflowexecutionblocks.vb#3)]
 
-      // Create a continuation task that completes the ActionBlock<int>
-      // object when the TransformBlock<string, int> finishes.
-      countBytes.Completion.ContinueWith(delegate { printResult.Complete(); });
+## See also
 
-      // Post the path to the temporary file to the
-      // TransformBlock<string, int> object.
-      countBytes.Post(tempFile);
-
-      // Requests completion of the TransformBlock<string, int> object.
-      countBytes.Complete();
-
-      // Wait for the ActionBlock<int> object to print the message.
-      printResult.Completion.Wait();
-
-      // Delete the temporary file.
-      File.Delete(tempFile);
-   }
-}
-
-/* Sample output:
-tmp4FBE.tmp contains 2081 zero bytes.
-*/
-
-class Program2
-{
-   // Asynchronously computes the number of zero bytes that the provided file
-   // contains.
-   static async Task<int> CountBytesAsync(string path)
-   {
-      byte[] buffer = new byte[1024];
-      int totalZeroBytesRead = 0;
-      using (var fileStream = new FileStream(
-         path, FileMode.Open, FileAccess.Read, FileShare.Read, 0x1000, true))
-      {
-         int bytesRead = 0;
-         do
-         {
-            // Asynchronously read from the file stream.
-            bytesRead = await fileStream.ReadAsync(buffer, 0, buffer.Length);
-            totalZeroBytesRead += buffer.Count(b => b == 0);
-         } while (bytesRead > 0);
-      }
-
-      return totalZeroBytesRead;
-   }
-
-   static void Foo()
-   {
-      // Create a TransformBlock<string, int> object that calls the
-      // CountBytes function and returns its result.
-      var countBytesAsync = new TransformBlock<string, int>(async path =>
-      {
-         byte[] buffer = new byte[1024];
-         int totalZeroBytesRead = 0;
-         using (var fileStream = new FileStream(
-            path, FileMode.Open, FileAccess.Read, FileShare.Read, 0x1000, true))
-         {
-            int bytesRead = 0;
-            do
-            {
-               // Asynchronously read from the file stream.
-               bytesRead = await fileStream.ReadAsync(buffer, 0, buffer.Length);
-               totalZeroBytesRead += buffer.Count(b => b == 0);
-            } while (bytesRead > 0);
-         }
-
-         return totalZeroBytesRead;
-      });
-   }
-}
-```
-
- Although you can provide a lambda expression to a `System.Threading.Tasks.Dataflow.TransformBlock`2` object, this example uses `System.Func`2` to enable other code to use the `CountBytes` method. The `System.Threading.Tasks.Dataflow.ActionBlock`1` object uses a lambda expression because the work to be performed is specific to this task and is not likely to be useful from other code. For more information about how lambda expressions work in the Task Parallel Library, see Lambda Expressions in PLINQ and TPL.
-
- The section Summary of Delegate Types in the Dataflow document summarizes the delegate types that you can provide to `System.Threading.Tasks.Dataflow.ActionBlock`1`, `System.Threading.Tasks.Dataflow.TransformBlock`2`, and `System.Threading.Tasks.Dataflow.TransformManyBlock`2` objects. The table also specifies whether the delegate type operates synchronously or asynchronously.
+- [Dataflow](dataflow-task-parallel-library.md)

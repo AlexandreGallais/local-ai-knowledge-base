@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Publish ReadyToRun with --no-restore requires changes"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/6.0/publish-readytorun-requires-restore-change.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 6 where publishing a project with ReadyToRun requires changes to the way the project is restored.
+ms.date: 02/01/2022
 ---
-
 # Publishing a ReadyToRun project with --no-restore requires changes to the restore
 
 If you publish a project with `-p:PublishReadyToRun=true` in addition to `--no-restore`, the project will only build with packages that were restored in a prior `dotnet restore` operation. In .NET 5, this process worked and resulted in a crossgen'd binary. In .NET 6, this same process will fail with the NETSDK1094 error.

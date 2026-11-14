@@ -1,12 +1,3 @@
----
-title: "Form models"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/forms/signals/models.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Form models
 
 Form models are the foundation of Signal Forms, serving as the single source of truth for your form data. This guide explores how to create form models, update them, and design them for maintainability.
@@ -32,7 +23,7 @@ import {form, FormField} from '@angular/forms/signals';
   imports: [FormField],
   template: `
     <input type="email" [formField]="loginForm.email" />
-    <input type="<example-value>" [formField]="<example-value>" />
+    <input type="password" [formField]="loginForm.password" />
   `,
 })
 export class LoginComponent {
@@ -45,7 +36,7 @@ export class LoginComponent {
 }
 ```
 
-The `form()` function accepts the model signal and creates a **field tree** - a special object structure that mirrors your model's shape. The field tree is both navigable (access child fields with dot notation like `loginForm.email`) and callable (call a field as a function to access its state).
+The [`form()`](api/forms/signals/form) function accepts the model signal and creates a **field tree** - a special object structure that mirrors your model's shape. The field tree is both navigable (access child fields with dot notation like `loginForm.email`) and callable (call a field as a function to access its state).
 
 The `[formField]` directive binds each input element to its corresponding field in the field tree, enabling automatic two-way synchronization between the UI and model.
 
@@ -53,7 +44,7 @@ The `[formField]` directive binds each input element to its corresponding field 
 
 Signal Forms builds the field tree by walking your model. The objects and arrays it walks through (the **structural layer**) must be plain JavaScript objects and arrays. The values at the **leaves** (positions with no nested fields) are usually primitives (strings, numbers, booleans) or `null`. Native `date`, `month`, `time`, and `week` inputs also accept `Date`, and custom controls can accept any value type they understand.
 
-```ts
+```ts {prefer, header: 'Plain structure'}
 interface UserFormModel {
   name: string;
   birthday: Date | null;
@@ -81,7 +72,7 @@ IMPORTANT: Class instances, `Map`, and `Set` are **not supported in the structur
 - **Non-extensible or frozen objects inside arrays** throw when Signal Forms assigns a tracking symbol to preserve item identity across reorders.
 - **`Map` and `Set`** produce empty field trees, because Signal Forms enumerates children with `Object.keys`.
 
-If your application uses classes for domain modeling, translate to plain objects at the form boundary. See Translating between form model and domain model.
+If your application uses classes for domain modeling, translate to plain objects at the form boundary. See [Translating between form model and domain model](guide/forms/signals/model-design#translating-between-form-model-and-domain-model).
 
 ### Using TypeScript types
 
@@ -90,7 +81,7 @@ While TypeScript infers types from object literals, defining explicit types impr
 ```ts
 interface LoginData {
   email: string;
-  password: <example-value>;
+  password: string;
 }
 
 export class LoginComponent {
@@ -117,7 +108,7 @@ const usernameField = loginForm.username;
 
 Form models should provide initial values for all fields you want to include in the field tree.
 
-```ts
+```ts {prefer}
 // Good: All fields initialized
 const userModel = signal({
   name: '',
@@ -126,7 +117,7 @@ const userModel = signal({
 });
 ```
 
-```ts
+```ts {avoid}
 // Avoid: Missing initial value
 const userModel = signal({
   name: '',
@@ -151,7 +142,7 @@ const userModel = signal<UserData>({
 });
 ```
 
-HELPFUL: Native text controls like `` and `<textarea>` don't support `null`, use `''` to represent an empty value.
+HELPFUL: Native text controls like `<input type=text>` and `<textarea>` don't support `null`, use `''` to represent an empty value.
 
 Fields set to `undefined` are excluded from the field tree. A model with `{value: undefined}` behaves identically to `{}` - accessing the field returns `undefined` rather than a `FieldTree`.
 
@@ -185,7 +176,7 @@ Access field state when working with individual fields in templates or reactive 
 @Component({
   template: `
     <p>Current email: {{ loginForm.email().value() }}</p>
-    <p>Password <example-value>: {{ passwordLength() }}</p>
+    <p>Password length: {{ passwordLength() }}</p>
   `,
 })
 export class LoginComponent {
@@ -202,7 +193,7 @@ Field state provides reactive signals for each field's value, making it suitable
 
 TIP: Field state includes many more signals beyond `value()`, such as validation state (e.g., valid, invalid, errors), interaction tracking (e.g., touched, dirty), and visibility (e.g., hidden, disabled).
 
-See the Field State Management guide for complete coverage.
+See the [Field State Management guide](guide/forms/signals/field-state-management) for complete coverage.
 
 ## Updating form models programmatically
 
@@ -214,7 +205,7 @@ Use `set()` on the form model to replace the entire value:
 loadUserData() {
   this.userModel.set({
     name: 'Alice',
-    email: 'user@example.com',
+    email: 'alice@example.com',
     age: 30,
   });
 }
@@ -461,10 +452,15 @@ orderForm.items[0].quantity; // FieldTree<number>
 
 Array items containing objects automatically receive tracking identities, which helps maintain field state even when items change position in the array. This ensures validation state and user interactions persist correctly when arrays are reordered.
 
+<!-- TBD: For dynamic arrays and complex array operations, see the [Working with arrays guide](guide/forms/signals/arrays). -->
+
 ## Next steps
 
 This guide covered creating models and updating values. Related guides explore other aspects of Signal Forms:
 
-  - Field state management
-  - Validation
-  - Custom controls
+<docs-pill-row>
+  <docs-pill href="guide/forms/signals/field-state-management" title="Field state management" />
+  <docs-pill href="guide/forms/signals/validation" title="Validation" />
+  <docs-pill href="guide/forms/signals/custom-controls" title="Custom controls" />
+  <!-- <docs-pill href="guide/forms/signals/arrays" title="Working with Arrays" /> -->
+</docs-pill-row>

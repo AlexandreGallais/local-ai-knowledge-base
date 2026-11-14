@@ -1,14 +1,7 @@
 ---
-title: "newline-per-chained-call"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/newline-per-chained-call.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: newline-per-chained-call
+rule_type: layout
 ---
-
-# newline-per-chained-call
-
 Chained method calls on a single line without line breaks are harder to read, so some developers place a newline character after each method call in the chain to make it more readable and easy to maintain.
 
 Let's look at the following perfectly valid (but single line) code.
@@ -71,7 +64,7 @@ This rule has an object option:
 
 Examples of **incorrect** code for this rule with the default `{ "ignoreChainWithDepth": 2 }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint newline-per-chained-call: ["error", { "ignoreChainWithDepth": 2 }]*/
@@ -90,9 +83,11 @@ _
 obj.method().method2().method3();
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `{ "ignoreChainWithDepth": 2 }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint newline-per-chained-call: ["error", { "ignoreChainWithDepth": 2 }]*/
@@ -125,6 +120,8 @@ obj
   .method2()
   .method3().prop;
 ```
+
+:::
 
 ## When Not To Use It
 

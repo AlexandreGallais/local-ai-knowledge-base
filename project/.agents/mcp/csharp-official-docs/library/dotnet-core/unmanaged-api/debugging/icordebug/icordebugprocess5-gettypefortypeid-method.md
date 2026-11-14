@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugProcess5::GetTypeForTypeID Method"
 title: "ICorDebugProcess5::GetTypeForTypeID Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess5-gettypefortypeid-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugProcess5.GetTypeForTypeID"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugProcess5::GetTypeForTypeID"
+helpviewer_keywords:
+  - "GetTypeForTypeID method, ICorDebugProcess5 interface [.NET debugging]"
+  - "ICorDebugProcess5::GetTypeForTypeID method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugProcess5::GetTypeForTypeID Method
 
 Converts a type identifier to an ICorDebugType value.
@@ -34,7 +43,7 @@ In some cases, methods that return a type identifier may return a null `COR_TYPE
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -44,4 +53,4 @@ In some cases, methods that return a type identifier may return a null `COR_TYPE
 
 ## See also
 
-- ICorDebugProcess5 Interface
+- [ICorDebugProcess5 Interface](icordebugprocess5-interface.md)

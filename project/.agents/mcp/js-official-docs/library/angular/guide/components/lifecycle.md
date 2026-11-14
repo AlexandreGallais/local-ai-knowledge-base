@@ -1,15 +1,6 @@
----
-title: "Component Lifecycle"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/components/lifecycle.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Component Lifecycle
 
-TIP: This guide assumes you've already read the Essentials Guide. Read that first if you're new to Angular.
+TIP: This guide assumes you've already read the [Essentials Guide](essentials). Read that first if you're new to Angular.
 
 A component's **lifecycle** is the sequence of steps that happen between the component's creation
 and its destruction. Each step represents a different part of Angular's process for rendering
@@ -29,50 +20,68 @@ process.
 
 ## Summary
 
-       | Phase
-       | Method
-       | Summary
-
-       | Creation
-       | `constructor`
-       |
-
+<div class="docs-table docs-scroll-track-transparent">
+  <table>
+    <tr>
+      <td><strong>Phase</strong></td>
+      <td><strong>Method</strong></td>
+      <td><strong>Summary</strong></td>
+    </tr>
+    <tr>
+      <td>Creation</td>
+      <td><code>constructor</code></td>
+      <td>
+        <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Classes/constructor" target="_blank">
           Standard JavaScript class constructor
-        . Runs when Angular instantiates the component.
-
-       | ChangeDetection
-       | `ngOnInit`
-
-       | Runs once after Angular has initialized all the component's inputs.
-
-       | `ngOnChanges`
-       | Runs every time the component's inputs have changed.
-
-       | `ngDoCheck`
-       | Runs every time this component is checked for changes.
-
-       | `ngAfterContentInit`
-       | Runs once after the component's content has been initialized.
-
-       | `ngAfterContentChecked`
-       | Runs every time this component content has been checked for changes.
-
-       | `ngAfterViewInit`
-       | Runs once after the component's view has been initialized.
-
-       | `ngAfterViewChecked`
-       | Runs every time the component's view has been checked for changes.
-
-       | Rendering
-       | `afterNextRender`
-       | Runs once the next time that all components have been rendered to the DOM.
-
-       | `afterEveryRender`
-       | Runs every time all components have been rendered to the DOM.
-
-       | Destruction
-       | `ngOnDestroy`
-       | Runs once before the component is destroyed.
+        </a>. Runs when Angular instantiates the component.
+      </td>
+    </tr>
+    <tr>
+      <td rowspan="7">Change<br>Detection</td>
+      <td><code>ngOnInit</code>
+      </td>
+      <td>Runs once after Angular has initialized all the component's inputs.</td>
+    </tr>
+    <tr>
+      <td><code>ngOnChanges</code></td>
+      <td>Runs every time the component's inputs have changed.</td>
+    </tr>
+    <tr>
+      <td><code>ngDoCheck</code></td>
+      <td>Runs every time this component is checked for changes.</td>
+    </tr>
+    <tr>
+      <td><code>ngAfterContentInit</code></td>
+      <td>Runs once after the component's <em>content</em> has been initialized.</td>
+    </tr>
+    <tr>
+      <td><code>ngAfterContentChecked</code></td>
+      <td>Runs every time this component content has been checked for changes.</td>
+    </tr>
+    <tr>
+      <td><code>ngAfterViewInit</code></td>
+      <td>Runs once after the component's <em>view</em> has been initialized.</td>
+    </tr>
+    <tr>
+      <td><code>ngAfterViewChecked</code></td>
+      <td>Runs every time the component's view has been checked for changes.</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Rendering</td>
+      <td><code>afterNextRender</code></td>
+      <td>Runs once the next time that <strong>all</strong> components have been rendered to the DOM.</td>
+    </tr>
+    <tr>
+      <td><code>afterEveryRender</code></td>
+      <td>Runs every time <strong>all</strong> components have been rendered to the DOM.</td>
+    </tr>
+    <tr>
+      <td>Destruction</td>
+      <td><code>ngOnDestroy</code></td>
+      <td>Runs once before the component is destroyed.</td>
+    </tr>
+  </table>
+</div>
 
 ### ngOnInit
 
@@ -94,7 +103,7 @@ During initialization, the first `ngOnChanges` runs before `ngOnInit`.
 #### Inspecting changes
 
 The `ngOnChanges` method accepts one `SimpleChanges` argument. This object is
-a `Record`
+a [`Record`](https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type)
 mapping each component input name to a `SimpleChange` object. Each `SimpleChange` contains the
 input's previous value, its current value, and a flag for whether this is the first time the input
 has changed.
@@ -173,10 +182,10 @@ The `ngAfterContentInit` method runs once after all the children nested inside t
 _content_) have been initialized.
 
 You can use this lifecycle hook to read the results of
-content queries. While you can access the initialized
+[content queries](guide/components/queries#content-queries). While you can access the initialized
 state of these queries, avoid changing non-signal state that an ancestor's template has already
 rendered. Doing so can result in an
-ExpressionChangedAfterItHasBeenCheckedError.
+[ExpressionChangedAfterItHasBeenCheckedError](errors/NG0100).
 
 ### ngAfterContentChecked
 
@@ -187,9 +196,9 @@ This method runs very frequently and can significantly impact your page's perfor
 defining this hook whenever possible, only using it when you have no alternative.
 
 While you can access the updated state
-of content queries here, avoid changing non-signal
+of [content queries](guide/components/queries#content-queries) here, avoid changing non-signal
 state that an ancestor's template has already rendered. Doing so can result in
-an ExpressionChangedAfterItHasBeenCheckedError.
+an [ExpressionChangedAfterItHasBeenCheckedError](errors/NG0100).
 
 ### ngAfterViewInit
 
@@ -197,9 +206,9 @@ The `ngAfterViewInit` method runs once after all the children in the component's
 _view_) have been initialized.
 
 You can use this lifecycle hook to read the results of
-view queries. While you can access the initialized state of
+[view queries](guide/components/queries#view-queries). While you can access the initialized state of
 these queries, avoid changing non-signal state that a template has already rendered. Doing so can
-result in an ExpressionChangedAfterItHasBeenCheckedError.
+result in an [ExpressionChangedAfterItHasBeenCheckedError](errors/NG0100).
 
 ### ngAfterViewChecked
 
@@ -209,9 +218,9 @@ _view_) have been checked for changes.
 This method runs very frequently and can significantly impact your page's performance. Avoid
 defining this hook whenever possible, only using it when you have no alternative.
 
-While you can access the updated state of view queries
+While you can access the updated state of [view queries](guide/components/queries#view-queries)
 here, avoid changing non-signal state that a template has already rendered. Doing so can result
-in an ExpressionChangedAfterItHasBeenCheckedError.
+in an [ExpressionChangedAfterItHasBeenCheckedError](errors/NG0100).
 
 ### afterEveryRender and afterNextRender
 
@@ -223,11 +232,11 @@ class method, they are standalone functions that accept a callback. The executio
 callbacks are not tied to any specific component instance, but instead an application-wide hook.
 
 `afterEveryRender` and `afterNextRender` must be called in
-an injection context, typically a
+an [injection context](guide/di/dependency-injection-context), typically a
 component's constructor.
 
 You can use render callbacks to perform manual DOM operations.
-See Using DOM APIs for guidance on working with the DOM in Angular.
+See [Using DOM APIs](guide/components/dom-apis) for guidance on working with the DOM in Angular.
 
 Render callbacks do not run during server-side rendering or during build-time pre-rendering.
 
@@ -236,7 +245,7 @@ Render callbacks do not run during server-side rendering or during build-time pr
 When using `afterEveryRender` or `afterNextRender`, you can optionally split the work into phases. The
 phase gives you control over the sequencing of DOM operations, letting you sequence _write_
 operations before _read_ operations in order to minimize
-layout thrashing. In order to
+[layout thrashing](https://web.dev/avoid-large-complex-layouts-and-layout-thrashing). In order to
 communicate across phases, a phase function may return a result value that can be accessed in the
 next phase.
 

@@ -1,17 +1,13 @@
 ---
-title: "Image Tag Helper in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/mvc/views/tag-helpers/built-in/image-tag-helper.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Image Tag Helper in ASP.NET Core
+description: Shows how to work with Image Tag Helper.
+ms.date: 04/06/2019
 ---
-
 # Image Tag Helper in ASP.NET Core
 
-By Peter Kellner
+By [Peter Kellner](https://peterkellner.net)
 
-The Image Tag Helper enhances the `` tag to provide cache-busting behavior for static image files.
+The Image Tag Helper enhances the `<img>` tag to provide cache-busting behavior for static image files.
 
 A cache-busting string is a unique value representing the hash of the static image file appended to the asset's URL. The unique string prompts clients (and some proxies) to reload the image from the host web server and not from the client's cache.
 
@@ -20,13 +16,13 @@ If the image source (`src`) is a static file on the host web server:
 * A unique cache-busting string is appended as a query parameter to the image source.
 * If the file on the host web server changes, a unique request URL is generated that includes the updated request parameter.
 
-For an overview of Tag Helpers, see Tag Helpers in ASP.NET Core.
+For an overview of Tag Helpers, see [Tag Helpers in ASP.NET Core](../intro.md).
 
 ## Image Tag Helper Attributes
 
 ### src
 
-To activate the Image Tag Helper, the `src` attribute is required on the `` element.
+To activate the Image Tag Helper, the `src` attribute is required on the `<img>` element.
 
 The image source (`src`) must point to a physical static file on the server. If the `src` is a remote URI, the cache-busting query string parameter isn't generated.
 
@@ -48,7 +44,7 @@ If the static file exists in the directory */wwwroot/images/*, the generated HTM
 
 The value assigned to the parameter `v` is the hash value of the `asplogo.png` file on disk. If the web server is unable to obtain read access to the static file, no `v` parameter is added to the `src` attribute in the rendered markup.
 
-For a Tag Helper to generate a version for a static file outside `wwwroot`, see Serve files from multiple locations
+[!INCLUDE[](~/includes/th_version.md)]
 
 ## Hash caching behavior
 
@@ -56,4 +52,4 @@ The Image Tag Helper uses the cache provider on the local web server to store th
 
 ## Related content
 
-* Cache in-memory in ASP.NET Core
+* [Cache in-memory in ASP.NET Core](../../../../performance/caching/memory.md)

@@ -1,12 +1,3 @@
----
-title: "class: Video"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-video.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: Video
 * since: v1.8
 
@@ -20,11 +11,11 @@ console.log(await page.video().path());
 System.out.println(page.video().path());
 ```
 
-```python
+```python async
 print(await page.video.path())
 ```
 
-```python
+```python sync
 print(page.video.path())
 ```
 

@@ -1,20 +1,18 @@
 ---
-title: "Well-known EventCounters in .NET"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/available-counters.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Well-known EventCounters in .NET
+description: Review EventCounters published by the .NET runtime and libraries.
+ms.topic: reference
+ms.date: 12/17/2020
 ---
 
 # Well-known EventCounters in .NET
 
-The .NET runtime and libraries implement and publish several EventCounters that can be used to identify and diagnose various performance issues. This article is a reference on the providers that can be used to monitor these counters and their descriptions.
-See the well-known metrics reference instead if you are working with .NET's newer System.Diagnostics.Metrics API.
+The .NET runtime and libraries implement and publish several [EventCounters](./event-counters.md) that can be used to identify and diagnose various performance issues. This article is a reference on the providers that can be used to monitor these counters and their descriptions.
+See the [well-known metrics reference](built-in-metrics.md) instead if you are working with .NET's newer [System.Diagnostics.Metrics API](metrics.md).
 
 ## System.Runtime counters
 
-The following counters are published as part of .NET runtime (CoreCLR) and are maintained in the _RuntimeEventSource.cs_.
+The following counters are published as part of .NET runtime (CoreCLR) and are maintained in the [_RuntimeEventSource.cs_](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Diagnostics/Tracing/RuntimeEventSource.cs).
 
 | Counter | Description | First available in |
 |--|--|--|
@@ -22,7 +20,7 @@ The following counters are published as part of .NET runtime (CoreCLR) and are m
 | :::no-loc text="Allocation Rate"::: (`alloc-rate`) | The number of bytes allocated per update interval | .NET Core 3.1 |
 | :::no-loc text="CPU Usage"::: (`cpu-usage`) | The percent of the process's CPU usage relative to all of the system CPU resources | .NET Core 3.1 |
 | :::no-loc text="Exception Count"::: (`exception-count`) | The number of exceptions that have occurred | .NET Core 3.1 |
-| :::no-loc text="GC Heap Size"::: (`gc-heap-size`) | The number of megabytes thought to be allocated based on `System.GC.GetTotalMemory(System.Boolean)` | .NET Core 3.1 |
+| :::no-loc text="GC Heap Size"::: (`gc-heap-size`) | The number of megabytes thought to be allocated based on <xref:System.GC.GetTotalMemory(System.Boolean)?displayProperty=nameWithType> | .NET Core 3.1 |
 | :::no-loc text="Gen 0 GC Count"::: (`gen-0-gc-count`) | The number of times GC has occurred for Gen 0 per update interval | .NET Core 3.1 |
 | :::no-loc text="Gen 0 Size"::: (`gen-0-size`) | The number of bytes for Gen 0 GC | .NET Core 3.1 |
 | :::no-loc text="Gen 1 GC Count"::: (`gen-1-gc-count`) | The number of times GC has occurred for Gen 1 per update interval | .NET Core 3.1 |
@@ -32,13 +30,13 @@ The following counters are published as part of .NET runtime (CoreCLR) and are m
 | :::no-loc text="LOH Size"::: (`loh-size`) | The number of bytes for the large object heap | .NET Core 3.1 |
 | :::no-loc text="POH Size"::: (`poh-size`) | The number of bytes for the pinned object heap (available on .NET 5 and later versions) | .NET Core 3.1 |
 | :::no-loc text="GC Fragmentation"::: (`gc-fragmentation`) | The GC Heap Fragmentation (available on .NET 5 and later versions) | .NET Core 3.1 |
-| :::no-loc text="Monitor Lock Contention Count"::: (`monitor-lock-contention-count`) | The number of times there was contention when trying to take the monitor's lock, based on `System.Threading.Monitor.LockContentionCount` | .NET Core 3.1 |
-| :::no-loc text="Number of Active Timers"::: (`active-timer-count`) | The number of `System.Threading.Timer` instances that are currently active, based on `System.Threading.Timer.ActiveCount` | .NET Core 3.1 |
-| :::no-loc text="Number of Assemblies Loaded"::: (`assembly-count`) | The number of `System.Reflection.Assembly` instances loaded into a process at a point in time | .NET Core 3.1 |
-| :::no-loc text="ThreadPool Completed Work Item Count"::: (`threadpool-completed-items-count`) | The number of work items that have been processed so far in the `System.Threading.ThreadPool` | .NET Core 3.1 |
-| :::no-loc text="ThreadPool Queue Length"::: (`threadpool-queue-length`) | The number of work items that are currently queued to be processed in the `System.Threading.ThreadPool` | .NET Core 3.1 |
-| :::no-loc text="ThreadPool Thread Count"::: (`threadpool-thread-count`) | The number of thread pool threads that currently exist in the `System.Threading.ThreadPool`, based on `System.Threading.ThreadPool.ThreadCount` | .NET Core 3.1 |
-| :::no-loc text="Working Set"::: (`working-set`) | The number of megabytes of physical memory mapped to the process context at a point in time based on `System.Environment.WorkingSet` | .NET Core 3.1 |
+| :::no-loc text="Monitor Lock Contention Count"::: (`monitor-lock-contention-count`) | The number of times there was contention when trying to take the monitor's lock, based on <xref:System.Threading.Monitor.LockContentionCount?displayProperty=nameWithType> | .NET Core 3.1 |
+| :::no-loc text="Number of Active Timers"::: (`active-timer-count`) | The number of <xref:System.Threading.Timer> instances that are currently active, based on <xref:System.Threading.Timer.ActiveCount?displayProperty=nameWithType> | .NET Core 3.1 |
+| :::no-loc text="Number of Assemblies Loaded"::: (`assembly-count`) | The number of <xref:System.Reflection.Assembly> instances loaded into a process at a point in time | .NET Core 3.1 |
+| :::no-loc text="ThreadPool Completed Work Item Count"::: (`threadpool-completed-items-count`) | The number of work items that have been processed so far in the <xref:System.Threading.ThreadPool> | .NET Core 3.1 |
+| :::no-loc text="ThreadPool Queue Length"::: (`threadpool-queue-length`) | The number of work items that are currently queued to be processed in the <xref:System.Threading.ThreadPool> | .NET Core 3.1 |
+| :::no-loc text="ThreadPool Thread Count"::: (`threadpool-thread-count`) | The number of thread pool threads that currently exist in the <xref:System.Threading.ThreadPool>, based on <xref:System.Threading.ThreadPool.ThreadCount?displayProperty=nameWithType> | .NET Core 3.1 |
+| :::no-loc text="Working Set"::: (`working-set`) | The number of megabytes of physical memory mapped to the process context at a point in time based on <xref:System.Environment.WorkingSet?displayProperty=nameWithType> | .NET Core 3.1 |
 | :::no-loc text="IL Bytes Jitted"::: (`il-bytes-jitted`) | The total size of ILs that are JIT-compiled, in bytes | .NET 5 |
 | :::no-loc text="Methods Jitted Count"::: (`methods-jitted-count`) | The number of methods that are JIT-compiled | .NET 5 |
 | :::no-loc text="GC Committed Bytes"::: (`gc-committed`) | The number of bytes committed by the GC | .NET 6 |
@@ -47,7 +45,7 @@ The following counters are published as part of .NET runtime (CoreCLR) and are m
 
 ## Microsoft.AspNetCore.Hosting counters
 
-The following counters are published as part of ASP.NET Core and are maintained in _HostingEventSource.cs_.
+The following counters are published as part of [ASP.NET Core](/aspnet/core) and are maintained in [_HostingEventSource.cs_](https://github.com/dotnet/aspnetcore/blob/main/src/Hosting/Hosting/src/Internal/HostingEventSource.cs).
 
 | Counter | Description | First available in |
 |--|--|--|
@@ -58,7 +56,7 @@ The following counters are published as part of ASP.NET Core and are maintained 
 
 ## Microsoft.AspNetCore.Http.Connections counters
 
-The following counters are published as part of ASP.NET Core SignalR and are maintained in _HttpConnectionsEventSource.cs_.
+The following counters are published as part of [ASP.NET Core SignalR](/aspnet/core/signalr/introduction) and are maintained in [_HttpConnectionsEventSource.cs_](https://github.com/dotnet/aspnetcore/blob/main/src/SignalR/common/Http.Connections/src/Internal/HttpConnectionsEventSource.cs).
 
 | Counter | Description | First available in |
 |--|--|--|
@@ -70,7 +68,7 @@ The following counters are published as part of ASP.NET Core SignalR and are mai
 
 ## Microsoft-AspNetCore-Server-Kestrel counters
 
-The following counters are published as part of the ASP.NET Core Kestrel web server and are maintained in _KestrelEventSource.cs_.
+The following counters are published as part of the [ASP.NET Core Kestrel web server](/aspnet/core/fundamentals/servers/kestrel) and are maintained in [_KestrelEventSource.cs_](https://github.com/dotnet/aspnetcore/blob/main/src/Servers/Kestrel/Core/src/Internal/Infrastructure/KestrelEventSource.cs).
 
 | Counter | Description | First available in |
 |--|--|--|
@@ -87,7 +85,7 @@ The following counters are published as part of the ASP.NET Core Kestrel web ser
 
 ## System.Net.Http counters
 
-The following counters are published by the HTTP stack and are maintained in _HttpTelemetry.AnyOS.cs_.
+The following counters are published by the HTTP stack and are maintained in [_HttpTelemetry.AnyOS.cs_](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Net.Http/src/System/Net/Http/HttpTelemetry.AnyOS.cs).
 
 | Counter | Description | First available in |
 |--|--|--|
@@ -105,7 +103,7 @@ The following counters are published by the HTTP stack and are maintained in _Ht
 
 ## System.Net.NameResolution counters
 
-The following counters track metrics related to DNS lookups and are maintained in _NameResolutionTelemetry.cs_.
+The following counters track metrics related to DNS lookups and are maintained in [_NameResolutionTelemetry.cs_](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Net.NameResolution/src/System/Net/NameResolutionTelemetry.cs).
 
 | Counter | Description | First available in |
 |--|--|--|
@@ -115,7 +113,7 @@ The following counters track metrics related to DNS lookups and are maintained i
 
 ## System.Net.Security counters
 
-The following counters track metrics related to the Transport Layer Security protocol and are maintained in _NetSecurityTelemetry.cs_.
+The following counters track metrics related to the Transport Layer Security protocol and are maintained in [_NetSecurityTelemetry.cs_](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Net.Security/src/System/Net/Security/NetSecurityTelemetry.cs).
 
 | Counter | Description | First available in |
 |--|--|--|
@@ -136,7 +134,7 @@ The following counters track metrics related to the Transport Layer Security pro
 
 ## System.Net.Sockets counters
 
-The following counters track metrics related to `System.Net.Sockets.Socket` and are maintained in _SocketsTelemetry_.
+The following counters track metrics related to <xref:System.Net.Sockets.Socket> and are maintained in [_SocketsTelemetry_](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Net.Sockets/src/System/Net/Sockets/SocketsTelemetry.cs).
 
 | Counter | Description | First available in |
 |--|--|--|

@@ -1,0 +1,8 @@
+{
+  "name": "containers-official-docs",
+  "instructions": "The official documentation of containers, kept locally: Docker (the Dockerfile reference, the manuals of Docker Engine, Build and Compose, the reference of every docker command), Podman (every podman command, Containerfile, pods, Quadlet), the Compose Specification, the Development Containers specification and the OCI specifications (image, runtime, distribution). Search with search_docs, then read one section with read_doc. Look it up rather than guess it.",
+  "search": "Search the official documentation of containers: Docker (the Dockerfile reference, the manuals of Docker Engine, Build and Compose, the reference of every docker command), Podman (every podman command, Containerfile, pods, Quadlet), the Compose Specification, the Development Containers specification and the OCI specifications (image, runtime, distribution). Returns 10 section ids at most.",
+  "queryExample": "\"HEALTHCHECK\" or \"podman run publish port\"",
+  "toolExample": "\"dockerfile\", \"podman\" or \"devcontainers-spec\"",
+  "idExample": "library/dockerfile/reference.md#healthcheck"
+}

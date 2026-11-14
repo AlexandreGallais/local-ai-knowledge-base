@@ -1,12 +1,17 @@
 ---
 title: "MSTEST0015: Test method should not be ignored"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0015.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0015: Test method should not be ignored"
+ms.date: 11/05/2026
+ai-usage: ai-assisted
+f1_keywords:
+- MSTEST0015
+- TestMethodShouldNotBeIgnored
+helpviewer_keywords:
+- TestMethodShouldNotBeIgnored
+- MSTEST0015
+author: engyebrahim
+ms.author: enjieid
 ---
-
 # MSTEST0015: Test method should not be ignored
 
 | Property                            | Value                                        |
@@ -36,10 +41,9 @@ Ensure that the test method isn't ignored.
 
 ## When to suppress warnings
 
-Suppress a diagnostic only if the exclusion is intentional and your project permits it. Record the reason in the `[Ignore]` attribute; MSTEST0066 can enforce that justification. Don't suppress an unintended exclusion, because the test still won't run.
+Suppress a diagnostic only if the exclusion is intentional and your project permits it. Record the reason in the `[Ignore]` attribute; [MSTEST0066](mstest0066.md) can enforce that justification. Don't suppress an unintended exclusion, because the test still won't run.
 
-> **Note:**
-> This rule is opt-in. It's not enabled even when using `<MSTestAnalysisMode>All</MSTestAnalysisMode>`. For more information about `MSTestAnalysisMode`, see MSTest code analysis.
+[!INCLUDE [disabled-in-all](includes/disabled-in-all.md)]
 
 ## Suppress a warning
 
@@ -51,11 +55,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0015
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0015.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

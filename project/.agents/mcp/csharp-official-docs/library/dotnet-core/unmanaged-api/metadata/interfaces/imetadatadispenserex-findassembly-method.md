@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataDispenserEx::FindAssembly Method"
 title: "IMetaDataDispenserEx::FindAssembly Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadatadispenserex-findassembly-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataDispenserEx.FindAssembly"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataDispenserEx::FindAssembly"
+  - "IMetaDataDispenserEx::FindAssembly method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataDispenserEx::FindAssembly Method
 
 This method is not implemented. If called, it returns E_NOTIMPL.
@@ -50,7 +57,7 @@ HRESULT FindAssembly(
 
 ## Requirements
 
- **Platform:** See .NET supported operating systems.
+ **Platform:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -58,5 +65,5 @@ HRESULT FindAssembly(
 
 ## See also
 
-- IMetaDataDispenserEx Interface
-- IMetaDataDispenser Interface
+- [IMetaDataDispenserEx Interface](imetadatadispenserex-interface.md)
+- [IMetaDataDispenser Interface](imetadatadispenser-interface.md)

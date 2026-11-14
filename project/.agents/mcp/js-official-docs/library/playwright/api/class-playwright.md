@@ -1,12 +1,3 @@
----
-title: "class: Playwright"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-playwright.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: Playwright
 * since: v1.8
 
@@ -42,7 +33,7 @@ public class Example {
 }
 ```
 
-```python
+```python async
 import asyncio
 from playwright.async_api import async_playwright, Playwright
 
@@ -60,7 +51,7 @@ async def main():
 asyncio.run(main())
 ```
 
-```python
+```python sync
 from playwright.sync_api import sync_playwright, Playwright
 
 def run(playwright: Playwright):
@@ -122,7 +113,7 @@ const iPhone = devices['iPhone 6'];
 })();
 ```
 
-```python
+```python async
 import asyncio
 from playwright.async_api import async_playwright, Playwright
 
@@ -142,7 +133,7 @@ async def main():
 asyncio.run(main())
 ```
 
-```python
+```python sync
 from playwright.sync_api import sync_playwright, Playwright
 
 def run(playwright: Playwright):
@@ -195,7 +186,7 @@ Playwright methods might throw errors if they are unable to fulfill a request. F
 [`method: Locator.waitFor`] might fail if the selector doesn't match any nodes during the given timeframe.
 
 For certain types of errors Playwright uses specific error classes. These classes are available via
-`playwright.errors`.
+[`playwright.errors`](#playwright-errors).
 
 An example of handling a timeout error:
 
@@ -209,7 +200,7 @@ try {
 }
 ```
 
-```python
+```python async
 try:
   await page.wait_for_selector(".foo")
 except TimeoutError as e:
@@ -217,7 +208,7 @@ except TimeoutError as e:
   # do something if this is a timeout.
 ```
 
-```python
+```python sync
 try:
   page.wait_for_selector(".foo")
 except TimeoutError as e:
@@ -244,7 +235,7 @@ Exposes API that can be used for the Web API testing.
 - type: <[Selectors]>
 
 Selectors can be used to install custom selector engines. See
-extensibility for more information.
+[extensibility](../extensibility.md) for more information.
 
 ## property: Playwright.webkit
 * since: v1.8

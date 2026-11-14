@@ -1,25 +1,17 @@
----
-title: "Environment API for Plugins"
-tool: "vite"
-version: "8.3"
-source: "https://github.com/vitejs/vite/blob/b39e6e63dcbfc3cf4be871acf3554efbd6d0e268/docs/guide/api-environment-plugins.md"
-commit: "b39e6e63dcbfc3cf4be871acf3554efbd6d0e268"
-license: "MIT"
----
-
 # Environment API for Plugins
 
-**Release Candidate**
-The Environment API is generally in the release candidate phase. We'll maintain stability in the APIs between major releases to allow the ecosystem to experiment and build upon them. However, note that some specific APIs are still considered experimental.
+:::info Release Candidate
+The Environment API is generally in the release candidate phase. We'll maintain stability in the APIs between major releases to allow the ecosystem to experiment and build upon them. However, note that [some specific APIs](/changes/#considering) are still considered experimental.
 
 We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment with the new features and validate them.
 
 Resources:
 
-- Feedback discussion where we are gathering feedback about the new APIs.
-- Environment API PR where the new APIs were implemented and reviewed.
+- [Feedback discussion](https://github.com/vitejs/vite/discussions/16358) where we are gathering feedback about the new APIs.
+- [Environment API PR](https://github.com/vitejs/vite/pull/16471) where the new APIs were implemented and reviewed.
 
 Please share your feedback with us.
+:::
 
 ## Per-environment Hooks and Global Hooks
 
@@ -27,7 +19,7 @@ Plugins run on a shared pipeline, but their hooks fall into two categories depen
 
 Global hooks are called a single time, independent of the configured environments. They handle app-wide concerns such as resolving the config or setting up the dev and preview servers, so `this.environment` is not relevant to them. Config resolution related hooks and server related hooks are global hooks.
 
-Per-environment hooks are called once for each environment, and expose the current environment through `this.environment` in their context. All Rolldown hooks are per-environment, as are other Vite-specific hooks that handle modules. However, note that `buildStart` and `buildEnd` are only called for the client environment without the `perEnvironmentStartEndDuringDev: true` flag.
+Per-environment hooks are called once for each environment, and expose the current environment through `this.environment` in their context. All [Rolldown hooks](/guide/api-plugin#rolldown-hooks) are per-environment, as are other Vite-specific hooks that handle modules. However, note that `buildStart` and `buildEnd` are only called for the client environment without [the `perEnvironmentStartEndDuringDev: true` flag](#per-environment-state-in-plugins).
 
 ## Accessing the Current Environment in Hooks
 
@@ -47,7 +39,7 @@ A plugin could use the `environment` instance to change how a module is processe
 
 ## Registering New Environments Using Hooks
 
-Plugins can add new environments in the `config` hook. For example, RSC support uses an additional environment to have a separate module graph with the `react-server` condition:
+Plugins can add new environments in the `config` hook. For example, [RSC support](/plugins/#vitejs-plugin-rsc) uses an additional environment to have a separate module graph with the `react-server` condition:
 
 ```ts
   config(config: UserConfig) {
@@ -69,7 +61,7 @@ An empty object is enough to register the environment, using default values from
 
 - **Type:** `(name: string, config: EnvironmentOptions, env: { mode: string, command: 'build' | 'serve', isSsrBuild?: boolean, isPreview?: boolean, isSsrTargetWebworker?: boolean }) => EnvironmentOptions | null | void`
 - **Kind:** `async`, `sequential`
-- **Scope:** Per-environment
+- **Scope:** [Per-environment](#per-environment-hooks-and-global-hooks)
 
 While the `config` hook is running, the complete list of environments isn't yet known and the environments can be affected by both the default values from the root level environment config or explicitly through the `config.environments` record.
 Plugins should set default values using the `config` hook. To configure each environment, they can use the new `configEnvironment` hook. This hook is called for each environment with its partially resolved config including resolution of final defaults.
@@ -91,8 +83,8 @@ Plugins should set default values using the `config` hook. To configure each env
 
 - **Type:** `(this: { environment: DevEnvironment }, options: HotUpdateOptions) => Array<EnvironmentModuleNode> | void | Promise<Array<EnvironmentModuleNode> | void>`
 - **Kind:** `async`, `sequential`
-- **Scope:** Per-environment
-- **See also:** HMR API
+- **Scope:** [Per-environment](#per-environment-hooks-and-global-hooks)
+- **See also:** [HMR API](./api-hmr)
 
 The `hotUpdate` hook allows plugins to perform custom HMR update handling for a given environment. When a file changes, the HMR algorithm is run for each environment in series according to the order in `server.environments`, so the `hotUpdate` hook will be called multiple times. The hook receives a context object with the following signature:
 
@@ -155,7 +147,7 @@ The hook can choose to:
   }
   ```
 
-  Client code should register the corresponding handler using the HMR API (this could be injected by the same plugin's `transform` hook):
+  Client code should register the corresponding handler using the [HMR API](./api-hmr) (this could be injected by the same plugin's `transform` hook):
 
   ```js
   if (import.meta.hot) {
@@ -192,7 +184,7 @@ function PerEnvironmentCountTransformedModulesPlugin() {
 
 - **Type:** `(environment: PartialEnvironment) => boolean | PluginOption | Promise<boolean>`
 - **Kind:** `async`, `sequential`
-- **Scope:** Per-environment
+- **Scope:** [Per-environment](#per-environment-hooks-and-global-hooks)
 
 A plugin can define what are the environments it should apply to with the `applyToEnvironment` function.
 
@@ -256,11 +248,13 @@ The `applyToEnvironment` hook is called at config time, currently after `configR
 
 ## Application-Plugin Communication
 
-`environment.hot` allows plugins to communicate with the code on the application side for a given environment. This is the equivalent of the Client-server Communication feature, but supports environments other than the client environment.
+`environment.hot` allows plugins to communicate with the code on the application side for a given environment. This is the equivalent of [the Client-server Communication feature](/guide/api-plugin#client-server-communication), but supports environments other than the client environment.
 
-**Note**
+:::warning Note
 
 Note that this feature is only available for environments that support HMR.
+
+:::
 
 ### Managing the Application Instances
 
@@ -305,7 +299,7 @@ This forced frameworks to share state between the `client` build and the `ssr` b
 
 In a future major, we could have complete alignment:
 
-- **During both dev and build:** plugins are shared, with per-environment filtering
+- **During both dev and build:** plugins are shared, with [per-environment filtering](#per-environment-plugins-using-the-applytoenvironment-hook)
 
 There will also be a single `ResolvedConfig` instance shared during build, allowing for caching at entire app build process level in the same way as we have been doing with `WeakMap<ResolvedConfig, CachedData>` during dev.
 

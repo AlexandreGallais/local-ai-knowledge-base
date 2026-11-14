@@ -1,12 +1,3 @@
----
-title: "DosFileAttributes interface (java.nio.file.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/file/attribute/DosFileAttributes.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # DosFileAttributes interface (java.nio.file.attribute)
 
 ```java
@@ -16,9 +7,13 @@ public interface DosFileAttributes extends BasicFileAttributes
 File attributes associated with a file in a file system that supports
 legacy "DOS" attributes.
 
- **Usage Example:**
+<p> <b>Usage Example:</b>
+{@snippet lang=java :
+    Path file = ...
+    DosFileAttributes attrs = Files.readAttributes(file, DosFileAttributes.class);
+}
 
-**Since:** 1.7
+@since 1.7
 
 ## DosFileAttributes.isReadOnly()
 
@@ -28,12 +23,12 @@ boolean isReadOnly()
 
 Returns the value of the read-only attribute.
 
- This attribute is often used as a simple access control mechanism
+<p> This attribute is often used as a simple access control mechanism
 to prevent files from being deleted or updated. Whether the file system
-or platform does any enforcement to prevent *read-only* files
+or platform does any enforcement to prevent <em>read-only</em> files
 from being updated is implementation specific.
 
-**Returns:** the value of the read-only attribute
+@return  the value of the read-only attribute
 
 ## DosFileAttributes.isHidden()
 
@@ -43,10 +38,10 @@ boolean isHidden()
 
 Returns the value of the hidden attribute.
 
- This attribute is often used to indicate if the file is visible to
+<p> This attribute is often used to indicate if the file is visible to
 users.
 
-**Returns:** the value of the hidden attribute
+@return  the value of the hidden attribute
 
 ## DosFileAttributes.isArchive()
 
@@ -56,9 +51,9 @@ boolean isArchive()
 
 Returns the value of the archive attribute.
 
- This attribute is typically used by backup programs.
+<p> This attribute is typically used by backup programs.
 
-**Returns:** the value of the archive attribute
+@return  the value of the archive attribute
 
 ## DosFileAttributes.isSystem()
 
@@ -68,7 +63,7 @@ boolean isSystem()
 
 Returns the value of the system attribute.
 
- This attribute is often used to indicate that the file is a component
+<p> This attribute is often used to indicate that the file is a component
 of the operating system.
 
-**Returns:** the value of the system attribute
+@return  the value of the system attribute

@@ -1,10 +1,11 @@
 ---
-title: "How to find descendant elements - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/find-descendant-elements.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to find descendant elements - LINQ to XML
+description: This article shows how to use XPath and LINQ to XML query, in C# and Visual Basic, to find all descendant elements that have a specified name.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to find descendant elements (LINQ to XML)
@@ -13,7 +14,7 @@ This article shows how to use XPath and LINQ to XML query, in C# and Visual Basi
 
 ## Example Find descendant elements that have a specified name
 
- This example shows how to use LINQ to XML query and XPath to find all descendant elements named `Name` in XML document Sample XML file: Multiple purchase orders. The XPath expression is `//Name`.
+ This example shows how to use LINQ to XML query and XPath to find all descendant elements named `Name` in XML document [Sample XML file: Multiple purchase orders](sample-xml-file-multiple-purchase-orders.md). The XPath expression is `//Name`.
 
 ```csharp
 XDocument po = XDocument.Load("PurchaseOrders.xml");
@@ -67,4 +68,4 @@ Results are identical
 
 ## See also
 
-- LINQ to XML for XPath Users (Visual Basic)
+- [LINQ to XML for XPath Users (Visual Basic)](./comparison-xpath-linq-xml.md)

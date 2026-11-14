@@ -1,12 +1,3 @@
----
-title: "class: Request"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-request.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: Request
 * since: v1.8
 
@@ -213,12 +204,12 @@ Response response = page.navigate("http://example.com");
 System.out.println(response.request().redirectedFrom().url()); // "http://example.com"
 ```
 
-```python
+```python async
 response = await page.goto("http://example.com")
 print(response.request.redirected_from.url) # "http://example.com"
 ```
 
-```python
+```python sync
 response = page.goto("http://example.com")
 print(response.request.redirected_from.url) # "http://example.com"
 ```
@@ -240,12 +231,12 @@ Response response = page.navigate("https://google.com");
 System.out.println(response.request().redirectedFrom()); // null
 ```
 
-```python
+```python async
 response = await page.goto("https://google.com")
 print(response.request.redirected_from) # None
 ```
 
-```python
+```python sync
 response = page.goto("https://google.com")
 print(response.request.redirected_from) # None
 ```
@@ -335,7 +326,7 @@ Returns resource size information for given request.
 
 Returns resource timing information for given request. Most of the timing values become available upon the response,
 `responseEnd` becomes available when request finishes. Find more information at
-Resource Timing API.
+[Resource Timing API](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceResourceTiming).
 
 **Usage**
 
@@ -354,14 +345,14 @@ page.onRequestFinished(request -> {
 page.navigate("http://example.com");
 ```
 
-```python
+```python async
 async with page.expect_event("requestfinished") as request_info:
     await page.goto("http://example.com")
 request = await request_info.value
 print(request.timing)
 ```
 
-```python
+```python sync
 with page.expect_event("requestfinished") as request_info:
     page.goto("http://example.com")
 request = request_info.value

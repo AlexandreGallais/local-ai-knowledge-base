@@ -1,12 +1,3 @@
----
-title: "std::sync::poison::mutex"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sync/poison/mutex.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::sync::poison::mutex
 
 ## struct Mutex
@@ -18,9 +9,9 @@ pub struct Mutex<T: ?Sized>
 A mutual exclusion primitive useful for protecting shared data
 
 This mutex will block threads waiting for the lock to become available. The
-mutex can be created via a `new` constructor. Each mutex has a type parameter
+mutex can be created via a [`new`] constructor. Each mutex has a type parameter
 which represents the data that it is protecting. The data can only be accessed
-through the RAII guards returned from `lock` and `try_lock`, which
+through the RAII guards returned from [`lock`] and [`try_lock`], which
 guarantees that the data is only ever accessed when the mutex is locked.
 
 # Poisoning
@@ -31,12 +22,12 @@ panicked.
 
 Once a mutex is poisoned, all other threads are unable to access the data by
 default as it is likely tainted (some invariant is not being upheld). For a
-mutex, this means that the `lock` and `try_lock` methods return a
-`Result` which indicates whether a mutex has been poisoned or not. Most
-usage of a mutex will simply `unwrap()` these results, propagating panics
+mutex, this means that the [`lock`] and [`try_lock`] methods return a
+[`Result`] which indicates whether a mutex has been poisoned or not. Most
+usage of a mutex will simply [`unwrap()`] these results, propagating panics
 among threads to ensure that a possibly invalid invariant is not witnessed.
 
-Poisoning is only advisory: the `PoisonError` type has an `into_inner`
+Poisoning is only advisory: the [`PoisonError`] type has an [`into_inner`]
 method which will return the guard that would have otherwise been returned
 on a successful lock. This allows access to the data, despite the lock being
 poisoned.
@@ -45,13 +36,13 @@ In addition, the panic detection is not ideal, so even unpoisoned mutexes
 need to be handled with care, since certain panics may have been skipped.
 Here is a non-exhaustive list of situations where this might occur:
 
-- If a mutex is locked while a panic is underway, e.g. within a `Drop`
+- If a mutex is locked while a panic is underway, e.g. within a [`Drop`]
   implementation or a [panic hook], panicking for the second time while the
   lock is held will leave the mutex unpoisoned. Note that while double panic
-  usually aborts the program, `catch_unwind` can prevent this.
+  usually aborts the program, [`catch_unwind`] can prevent this.
 
 - Locking and unlocking the mutex across different panic contexts, e.g. by
-  storing the guard to a `Cell` within `Drop::drop` and accessing it
+  storing the guard to a [`Cell`] within [`Drop::drop`] and accessing it
   outside, or vice versa, can affect poisoning status in an unexpected way.
 
 - Foreign exceptions do not currently trigger poisoning even in absence of
@@ -90,9 +81,19 @@ impl<T> MutexBox<T> {
 }
 ```
 
+[`new`]: Self::new
+[`lock`]: Self::lock
+[`try_lock`]: Self::try_lock
+[`unwrap()`]: Result::unwrap
+[`PoisonError`]: super::PoisonError
+[`into_inner`]: super::PoisonError::into_inner
+[panic hook]: crate::panic::set_hook
+[`catch_unwind`]: crate::panic::catch_unwind
+[`Cell`]: crate::cell::Cell
+
 # Examples
 
-```rust
+```
 use std::sync::{Arc, Mutex};
 use std::thread;
 use std::sync::mpsc::channel;
@@ -130,7 +131,7 @@ rx.recv().unwrap();
 
 To recover from a poisoned mutex:
 
-```rust
+```
 use std::sync::{Arc, Mutex};
 use std::thread;
 
@@ -160,7 +161,7 @@ let mut guard = match lock.lock() {
 To unlock a mutex guard sooner than the end of the enclosing scope,
 either create an inner scope or drop the guard manually.
 
-```rust
+```
 use std::sync::{Arc, Mutex};
 use std::thread;
 
@@ -230,10 +231,13 @@ An RAII implementation of a "scoped lock" of a mutex. When this structure is
 dropped (falls out of scope), the lock will be unlocked.
 
 The data protected by the mutex can be accessed through this guard via its
-`Deref` and `DerefMut` implementations.
+[`Deref`] and [`DerefMut`] implementations.
 
-This structure is created by the `lock` and `try_lock` methods on
-`Mutex`.
+This structure is created by the [`lock`] and [`try_lock`] methods on
+[`Mutex`].
+
+[`lock`]: Mutex::lock
+[`try_lock`]: Mutex::try_lock
 
 ## Mutex::new
 
@@ -245,7 +249,7 @@ Creates a new mutex in an unlocked state ready for use.
 
 # Examples
 
-```rust
+```
 use std::sync::Mutex;
 
 let mutex = Mutex::new(0);
@@ -281,7 +285,7 @@ the current thread.
 
 # Examples
 
-```rust
+```
 use std::sync::{Arc, Mutex};
 use std::thread;
 
@@ -302,7 +306,7 @@ pub fn try_lock(&self) -> TryLockResult<MutexGuard<'_, T>>
 
 Attempts to acquire this lock.
 
-If the lock could not be acquired at this time, then `Err` is returned.
+If the lock could not be acquired at this time, then [`Err`] is returned.
 Otherwise, an RAII guard is returned. The lock will be unlocked when the
 guard is dropped.
 
@@ -311,16 +315,19 @@ This function does not block.
 # Errors
 
 If another user of this mutex panicked while holding the mutex, then
-this call will return the `Poisoned` error if the mutex would
+this call will return the [`Poisoned`] error if the mutex would
 otherwise be acquired. An acquired lock guard will be contained
 in the returned error.
 
 If the mutex could not be acquired because it is already locked, then
-this call will return the `WouldBlock` error.
+this call will return the [`WouldBlock`] error.
+
+[`Poisoned`]: TryLockError::Poisoned
+[`WouldBlock`]: TryLockError::WouldBlock
 
 # Examples
 
-```rust
+```
 use std::sync::{Arc, Mutex};
 use std::thread;
 
@@ -352,7 +359,7 @@ without additional synchronization.
 
 # Examples
 
-```rust
+```
 use std::sync::{Arc, Mutex};
 use std::thread;
 
@@ -382,7 +389,7 @@ consistent state, and if so the poison is removed.
 
 # Examples
 
-```rust
+```
 use std::sync::{Arc, Mutex};
 use std::thread;
 
@@ -420,7 +427,7 @@ instead.
 
 # Examples
 
-```rust
+```
 use std::sync::Mutex;
 
 let mutex = Mutex::new(0);
@@ -438,7 +445,7 @@ Returns a mutable reference to the underlying data.
 Since this call borrows the `Mutex` mutably, no actual locking needs to
 take place -- the mutable borrow statically guarantees no new locks can be acquired
 while this reference exists. Note that this method does not clear any previous abandoned locks
-(e.g., via `forget()` on a `MutexGuard`).
+(e.g., via [`forget()`] on a [`MutexGuard`]).
 
 # Errors
 
@@ -448,10 +455,12 @@ underlying data instead.
 
 # Examples
 
-```rust
+```
 use std::sync::Mutex;
 
 let mut mutex = Mutex::new(0);
 *mutex.get_mut().unwrap() = 10;
 assert_eq!(*mutex.lock().unwrap(), 10);
 ```
+
+[`forget()`]: mem::forget

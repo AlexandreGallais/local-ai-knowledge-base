@@ -1,21 +1,11 @@
----
-title: "ch07-01-packages-and-crates"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch07-01-packages-and-crates.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch07-01-packages-and-crates
-
 ## Packages and Crates
 
 The first parts of the module system we’ll cover are packages and crates.
 
 A _crate_ is the smallest amount of code that the Rust compiler considers at a
 time. Even if you run `rustc` rather than `cargo` and pass a single source code
-file (as we did all the way back in “Rust Program Basics” in Chapter 1), the compiler considers that file to be a crate. Crates can
+file (as we did all the way back in [“Rust Program Basics”][basics]<!-- ignore
+--> in Chapter 1), the compiler considers that file to be a crate. Crates can
 contain modules, and the modules may be defined in other files that get
 compiled with the crate, as we’ll see in the coming sections.
 
@@ -27,14 +17,14 @@ created so far have been binary crates.
 
 _Library crates_ don’t have a `main` function, and they don’t compile to an
 executable. Instead, they define functionality intended to be shared with
-multiple projects. For example, the `rand` crate we used in Chapter
-2 provides functionality that generates random numbers.
+multiple projects. For example, the `rand` crate we used in [Chapter
+2][rand]<!-- ignore --> provides functionality that generates random numbers.
 Most of the time when Rustaceans say “crate,” they mean library crate, and they
 use “crate” interchangeably with the general programming concept of a “library.”
 
 The _crate root_ is a source file that the Rust compiler starts from and makes
-up the root module of your crate (we’ll explain modules in depth in “Control
-Scope and Privacy with Modules”).
+up the root module of your crate (we’ll explain modules in depth in [“Control
+Scope and Privacy with Modules”][modules]<!-- ignore -->).
 
 A _package_ is a bundle of one or more crates that provides a set of
 functionality. A package contains a _Cargo.toml_ file that describes how to
@@ -76,3 +66,7 @@ contains a binary crate named `my-project`. If a package contains _src/main.rs_
 and _src/lib.rs_, it has two crates: a binary and a library, both with the same
 name as the package. A package can have multiple binary crates by placing files
 in the _src/bin_ directory: Each file will be a separate binary crate.
+
+[basics]: ch01-02-hello-world.html#rust-program-basics
+[modules]: ch07-02-defining-modules-to-control-scope-and-privacy.html
+[rand]: ch02-00-guessing-game-tutorial.html#generating-a-random-number

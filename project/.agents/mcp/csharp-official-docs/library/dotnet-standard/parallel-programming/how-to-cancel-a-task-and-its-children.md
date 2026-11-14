@@ -1,12 +1,14 @@
 ---
 title: "How to: Cancel a Task and Its Children"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/parallel-programming/how-to-cancel-a-task-and-its-children.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: See examples of how to cancel a task and its children in .NET. The examples cover steps from cancelable task creation, to the notice that the task was canceled.
+ms.date: 04/09/2024
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "tasks, how to cancel"
+ms.assetid: 08574301-8331-4719-ad50-9cf7f6ff3048
 ---
-
 # How to: Cancel a Task and Its Children
 
 This example shows how to perform the following tasks:
@@ -20,177 +22,19 @@ The calling thread does not forcibly end the task; it only signals that cancella
 
 ## Example
 
-This example shows how to terminate a `System.Threading.Tasks.Task` and its children in response to a cancellation request. It also shows that when a user delegate terminates by throwing a `System.Threading.Tasks.TaskCanceledException`, the calling thread can optionally use the `System.Threading.Tasks.Task.Wait*` method or `System.Threading.Tasks.Task.WaitAll*` method to wait for the tasks to finish. In this case, you must use a `try/catch` block to handle the exceptions on the calling thread.
+This example shows how to terminate a <xref:System.Threading.Tasks.Task> and its children in response to a cancellation request. It also shows that when a user delegate terminates by throwing a <xref:System.Threading.Tasks.TaskCanceledException>, the calling thread can optionally use the <xref:System.Threading.Tasks.Task.Wait*> method or <xref:System.Threading.Tasks.Task.WaitAll*> method to wait for the tasks to finish. In this case, you must use a `try/catch` block to handle the exceptions on the calling thread.
 
-```csharp
-using System;
-using System.Collections.Concurrent;
-using System.Threading;
-using System.Threading.Tasks;
+[!code-csharp[TPL_Cancellation#04](../../../samples/snippets/csharp/VS_Snippets_Misc/tpl_cancellation/cs/cancel1.cs#04)]
+[!code-vb[TPL_Cancellation#04](../../../samples/snippets/visualbasic/VS_Snippets_Misc/tpl_cancellation/vb/cancel1.vb#04)]
 
-public class Example
-{
-    public static async Task Main()
-    {
-        // Cancellation token <example-value> for cancellation. Make sure to dispose after use (which is done here through the using expression).
-        using var tokenSource = new CancellationTokenSource();
-
-        // The cancellation token will be used to communicate cancellation to tasks
-        var token = tokenSource.Token;
-
-        Console.WriteLine("Main: Press any key to begin tasks...");
-        Console.ReadKey(true);
-        Console.WriteLine("Main: To terminate the example, press 'c' to cancel and exit...");
-        Console.WriteLine();
-
-        // Store references to the tasks so that we can wait on them and
-        // observe their status after cancellation.
-        var tasks = new ConcurrentBag<Task>();
-
-        // Pass the token to the user delegate so it can cancel during execution,
-        // and also to the task so it can cancel before execution starts.
-        var cancellableTask = Task.Run(() => {
-            DoSomeWork(token);
-            Console.WriteLine($"Cancellable: Task {Task.CurrentId} ran to completion");
-        }, token);
-        Console.WriteLine($"Main: Cancellable Task {cancellableTask.Id} created");
-        tasks.Add(cancellableTask);
-
-        var parentTask = Task.Run(() =>
-        {
-            for (int i = 0; i <= 7; i++)
-            {
-                // If cancellation was requested we don't need to start any more
-                // child tasks (that would immediately cancel) => break out of loop
-                if (token.IsCancellationRequested) break;
-
-                // For each child task, pass the same token
-                // to each user delegate and to Task.Run.
-                var childTask = Task.Run(() => {
-                    DoSomeWork(token);
-                    Console.WriteLine($"Child: Task {Task.CurrentId} ran to completion");
-                }, token);
-                Console.WriteLine($"Parent: Task {childTask.Id} created");
-                tasks.Add(childTask);
-
-                DoSomeWork(token, maxIterations: 1);
-            }
-
-            Console.WriteLine($"Parent: Task {Task.CurrentId} ran to completion");
-        }, token);
-        Console.WriteLine($"Main: Parent Task {parentTask.Id} created");
-        tasks.Add(parentTask);
-
-        // Request cancellation from the UI thread.
-        char ch = Console.ReadKey().KeyChar;
-        if (ch == 'c' || ch == 'C')
-        {
-            tokenSource.Cancel();
-            Console.WriteLine("\nMain: Task cancellation requested.");
-
-            // Optional: Observe the change in the Status property on the task.
-            // It is not necessary to wait on tasks that have canceled. However,
-            // if you do wait, you must enclose the call in a try-catch block to
-            // catch the OperationCanceledExceptions that are thrown. If you do
-            // not wait, no exception is thrown if the token that was passed to the
-            // Task.Run method is the same token that requested the cancellation.
-        }
-
-        try
-        {
-            // Wait for all tasks before disposing the cancellation token <example-value>
-            await Task.WhenAll(tasks);
-        }
-        catch (OperationCanceledException)
-        {
-            Console.WriteLine($"\nMain: {nameof(OperationCanceledException)} thrown\n");
-        }
-
-        // Display status of all tasks.
-        foreach (var task in tasks)
-        {
-            Console.WriteLine($"Main: Task {task.Id} status is now {task.Status}");
-        }
-    }
-
-    static void DoSomeWork(CancellationToken ct, int maxIterations = 10)
-    {
-        // Was cancellation already requested?
-        if (ct.IsCancellationRequested)
-        {
-            Console.WriteLine($"Task {Task.CurrentId} was cancelled before it got started.");
-            ct.ThrowIfCancellationRequested();
-        }
-
-        // NOTE!!! A "TaskCanceledException was unhandled
-        // by user code" error will be raised here if "Just My Code"
-        // is enabled on your computer. On Express editions JMC is
-        // enabled and cannot be disabled. The exception is benign.
-        // Just press F5 to continue executing your code.
-        for (int i = 0; i <= maxIterations; i++)
-        {
-            // Do a bit of work. Not too much.
-            var sw = new SpinWait();
-            for (int j = 0; j <= 100; j++)
-                sw.SpinOnce();
-
-            if (ct.IsCancellationRequested)
-            {
-                Console.WriteLine($"Task {Task.CurrentId} work cancelled");
-                ct.ThrowIfCancellationRequested();
-            }
-        }
-    }
-}
-// The example displays output like the following:
-//    Main: Press any key to begin tasks...
-//    Main: To terminate the example, press 'c' to cancel and exit...
-//
-//    Main: Cancellable Task 13 created
-//    Main: Parent Task 14 created
-//    Parent: Task 15 created
-//    Parent: Task 16 created
-//    Parent: Task 17 created
-//    Parent: Task 18 created
-//    Parent: Task 19 created
-//    Parent: Task 20 created
-//    Cancellable: Task 13 ran to completion
-//    Child: Task 15 ran to completion
-//    Parent: Task 21 created
-//    Child: Task 16 ran to completion
-//    Parent: Task 22 created
-//    Child: Task 17 ran to completion
-//    c
-//    Main: Task cancellation requested.
-//    Task 20 work cancelled
-//    Task 21 work cancelled
-//    Task 22 work cancelled
-//    Task 18 work cancelled
-//    Task 14 work cancelled
-//    Task 19 work cancelled
-//
-//    Main: OperationCanceledException thrown
-//
-//    Main: Task 22 status is now Canceled
-//    Main: Task 21 status is now Canceled
-//    Main: Task 20 status is now Canceled
-//    Main: Task 19 status is now Canceled
-//    Main: Task 18 status is now Canceled
-//    Main: Task 17 status is now RanToCompletion
-//    Main: Task 16 status is now RanToCompletion
-//    Main: Task 15 status is now RanToCompletion
-//    Main: Task 14 status is now Canceled
-//    Main: Task 13 status is now RanToCompletion
-```
-
-The `System.Threading.Tasks.Task` class is fully integrated with the cancellation model that is based on the `System.Threading.CancellationTokenSource` and `System.Threading.CancellationToken` types. For more information, see Cancellation in Managed Threads and Task Cancellation.
+The <xref:System.Threading.Tasks.Task?displayProperty=nameWithType> class is fully integrated with the cancellation model that is based on the <xref:System.Threading.CancellationTokenSource?displayProperty=nameWithType> and <xref:System.Threading.CancellationToken?displayProperty=nameWithType> types. For more information, see [Cancellation in Managed Threads](../threading/cancellation-in-managed-threads.md) and [Task Cancellation](task-cancellation.md).
 
 ## See also
 
-- `System.Threading.CancellationTokenSource`
-- `System.Threading.CancellationToken`
-- `System.Threading.Tasks.Task`
-- `System.Threading.Tasks.Task`1`
-- Task-based Asynchronous Programming
-- Attached and Detached Child Tasks
-- Lambda Expressions in PLINQ and TPL
+- <xref:System.Threading.CancellationTokenSource?displayProperty=nameWithType>
+- <xref:System.Threading.CancellationToken?displayProperty=nameWithType>
+- <xref:System.Threading.Tasks.Task?displayProperty=nameWithType>
+- <xref:System.Threading.Tasks.Task`1?displayProperty=nameWithType>
+- [Task-based Asynchronous Programming](task-based-asynchronous-programming.md)
+- [Attached and Detached Child Tasks](attached-and-detached-child-tasks.md)
+- [Lambda Expressions in PLINQ and TPL](lambda-expressions-in-plinq-and-tpl.md)

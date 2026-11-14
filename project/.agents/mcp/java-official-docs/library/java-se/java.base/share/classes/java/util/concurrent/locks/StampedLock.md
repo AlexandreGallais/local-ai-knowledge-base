@@ -1,12 +1,3 @@
----
-title: "StampedLock class (java.util.concurrent.locks) (part 1 of 2)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/locks/StampedLock.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # StampedLock class (java.util.concurrent.locks)
 
 ```java
@@ -22,24 +13,26 @@ represent failure to acquire access. Lock release and conversion
 methods require stamps as arguments, and fail if they do not match
 the state of the lock. The three modes are:
 
-- **Writing.** Method `writeLock` possibly blocks
+<ul>
+
+ <li><b>Writing.</b> Method {@link #writeLock} possibly blocks
   waiting for exclusive access, returning a stamp that can be used
-  in method `unlockWrite` to release the lock. Untimed and
-  timed versions of `tryWriteLock` are also provided. When
+  in method {@link #unlockWrite} to release the lock. Untimed and
+  timed versions of {@code tryWriteLock} are also provided. When
   the lock is held in write mode, no read locks may be obtained,
   and all optimistic read validations will fail.
 
-- **Reading.** Method `readLock` possibly blocks
+ <li><b>Reading.</b> Method {@link #readLock} possibly blocks
   waiting for non-exclusive access, returning a stamp that can be
-  used in method `unlockRead` to release the lock. Untimed
-  and timed versions of `tryReadLock` are also provided.
+  used in method {@link #unlockRead} to release the lock. Untimed
+  and timed versions of {@code tryReadLock} are also provided.
 
-- **Optimistic Reading.** Method `tryOptimisticRead`
+ <li><b>Optimistic Reading.</b> Method {@link #tryOptimisticRead}
   returns a non-zero stamp only if the lock is not currently held in
-  write mode.  Method `validate` returns true if the lock has not
+  write mode.  Method {@link #validate} returns true if the lock has not
   been acquired in write mode since obtaining a given stamp, in which
   case all actions prior to the most recent write lock release
-  happen-before actions following the call to `tryOptimisticRead`.
+  happen-before actions following the call to {@code tryOptimisticRead}.
   This mode can be thought of as an extremely weak version of a
   read-lock, that can be broken by a writer at any time.  The use of
   optimistic read mode for short read-only code segments often reduces
@@ -48,20 +41,23 @@ the state of the lock. The three modes are:
   them in local variables for later use after validation. Fields read
   while in optimistic read mode may be wildly inconsistent, so usage
   applies only when you are familiar enough with data representations to
-  check consistency and/or repeatedly invoke method `validate()`.
+  check consistency and/or repeatedly invoke method {@code validate()}.
   For example, such steps are typically required when first reading an
   object or array reference, and then accessing one of its fields,
   elements or methods.
 
-This class also supports methods that conditionally provide
-conversions across the three modes. For example, method `tryConvertToWriteLock` attempts to "upgrade" a mode, returning
+</ul>
+
+<p>This class also supports methods that conditionally provide
+conversions across the three modes. For example, method {@link
+#tryConvertToWriteLock} attempts to "upgrade" a mode, returning
 a valid write stamp if (1) already in writing mode (2) in reading
 mode and there are no other readers or (3) in optimistic read mode
 and the lock is available. The forms of these methods are designed to
 help reduce some of the code bloat that otherwise occurs in
 retry-based designs.
 
-StampedLocks are designed for use as internal utilities in the
+<p>StampedLocks are designed for use as internal utilities in the
 development of thread-safe components. Their use relies on
 knowledge of the internal properties of the data, objects, and
 methods they are protecting.  They are not reentrant, so locked
@@ -79,42 +75,43 @@ correctly.  StampedLocks are serializable, but always deserialize
 into initial unlocked state, so they are not useful for remote
 locking.
 
-Like Semaphore, but unlike most
-`Lock` implementations, StampedLocks have no notion of ownership.
+<p>Like {@link java.util.concurrent.Semaphore Semaphore}, but unlike most
+{@link Lock} implementations, StampedLocks have no notion of ownership.
 Locks acquired in one thread can be released or converted in another.
 
-The scheduling policy of StampedLock does not consistently
+<p>The scheduling policy of StampedLock does not consistently
 prefer readers over writers or vice versa.  All "try" methods are
 best-effort and do not necessarily conform to any scheduling or
 fairness policy. A zero return from any "try" method for acquiring
 or converting locks does not carry any information about the state
 of the lock; a subsequent invocation may succeed.
 
-Because it supports coordinated usage across multiple lock
-modes, this class does not directly implement the `Lock` or
-`ReadWriteLock` interfaces. However, a StampedLock may be
-viewed `asReadLock()`, `asWriteLock()`, or `asReadWriteLock()` in applications requiring only the associated
+<p>Because it supports coordinated usage across multiple lock
+modes, this class does not directly implement the {@link Lock} or
+{@link ReadWriteLock} interfaces. However, a StampedLock may be
+viewed {@link #asReadLock()}, {@link #asWriteLock()}, or {@link
+#asReadWriteLock()} in applications requiring only the associated
 set of functionality.
 
-**Memory Synchronization.** Methods with the effect of
+<p><b>Memory Synchronization.</b> Methods with the effect of
 successfully locking in any mode have the same memory
-synchronization effects as a *Lock* action, as described in
-Chapter 17 of *The Java Language Specification*.
+synchronization effects as a <em>Lock</em> action, as described in
+Chapter 17 of <cite>The Java Language Specification</cite>.
 Methods successfully unlocking in write mode have the same memory
-synchronization effects as an *Unlock* action.  In optimistic
+synchronization effects as an <em>Unlock</em> action.  In optimistic
 read usages, actions prior to the most recent write mode unlock action
 are guaranteed to happen-before those following a tryOptimisticRead
 only if a later validate returns true; otherwise there is no guarantee
 that the reads between tryOptimisticRead and validate obtain a
 consistent snapshot.
 
-**Sample Usage.** The following illustrates some usage idioms
+<p><b>Sample Usage.</b> The following illustrates some usage idioms
 in a class that maintains simple two-dimensional points. The sample
 code illustrates some try/catch conventions even though they are
 not strictly needed here because no exceptions can occur in their
 bodies.
 
-```java
+<pre> {@code
 class Point {
   private double x, y;
   private final StampedLock sl = new StampedLock();
@@ -200,12 +197,11 @@ class Point {
       sl.unlock(stamp);
     }
   }
-}
-```
+}}</pre>
 
-**JLS:** 17.4 Memory Model
-
-**Since:** 1.8
+@jls 17.4 Memory Model
+@since 1.8
+@author Doug Lea
 
 ## StampedLock.StampedLock()
 
@@ -224,7 +220,7 @@ public long writeLock()
 Exclusively acquires the lock, blocking if necessary
 until available.
 
-**Returns:** a write stamp that can be used to unlock or convert mode
+@return a write stamp that can be used to unlock or convert mode
 
 ## StampedLock.tryWriteLock()
 
@@ -234,7 +230,7 @@ public long tryWriteLock()
 
 Exclusively acquires the lock if it is immediately available.
 
-**Returns:** a write stamp that can be used to unlock or convert mode,
+@return a write stamp that can be used to unlock or convert mode,
 or zero if the lock is not available
 
 ## StampedLock.tryWriteLock(long, TimeUnit)
@@ -246,19 +242,14 @@ public long tryWriteLock(long time, TimeUnit unit) throws InterruptedException
 Exclusively acquires the lock if it is available within the
 given time and the current thread has not been interrupted.
 Behavior under timeout and interruption matches that specified
-for method `Lock.tryLock(long,TimeUnit)`.
+for method {@link Lock#tryLock(long,TimeUnit)}.
 
-Parameters:
-
-- `time`: the maximum time to wait for the lock
-- `unit`: the time unit of the `time` argument
-
-**Returns:** a write stamp that can be used to unlock or convert mode,
+@param time the maximum time to wait for the lock
+@param unit the time unit of the {@code time} argument
+@return a write stamp that can be used to unlock or convert mode,
 or zero if the lock is not available
-
-Throws:
-
-- `InterruptedException`: if the current thread is interrupted before acquiring the lock
+@throws InterruptedException if the current thread is interrupted
+before acquiring the lock
 
 ## StampedLock.writeLockInterruptibly()
 
@@ -269,13 +260,11 @@ public long writeLockInterruptibly() throws InterruptedException
 Exclusively acquires the lock, blocking if necessary
 until available or the current thread is interrupted.
 Behavior under interruption matches that specified
-for method `Lock.lockInterruptibly()`.
+for method {@link Lock#lockInterruptibly()}.
 
-**Returns:** a write stamp that can be used to unlock or convert mode
-
-Throws:
-
-- `InterruptedException`: if the current thread is interrupted before acquiring the lock
+@return a write stamp that can be used to unlock or convert mode
+@throws InterruptedException if the current thread is interrupted
+before acquiring the lock
 
 ## StampedLock.readLock()
 
@@ -286,7 +275,7 @@ public long readLock()
 Non-exclusively acquires the lock, blocking if necessary
 until available.
 
-**Returns:** a read stamp that can be used to unlock or convert mode
+@return a read stamp that can be used to unlock or convert mode
 
 ## StampedLock.tryReadLock()
 
@@ -296,7 +285,7 @@ public long tryReadLock()
 
 Non-exclusively acquires the lock if it is immediately available.
 
-**Returns:** a read stamp that can be used to unlock or convert mode,
+@return a read stamp that can be used to unlock or convert mode,
 or zero if the lock is not available
 
 ## StampedLock.tryReadLock(long, TimeUnit)
@@ -308,19 +297,14 @@ public long tryReadLock(long time, TimeUnit unit) throws InterruptedException
 Non-exclusively acquires the lock if it is available within the
 given time and the current thread has not been interrupted.
 Behavior under timeout and interruption matches that specified
-for method `Lock.tryLock(long,TimeUnit)`.
+for method {@link Lock#tryLock(long,TimeUnit)}.
 
-Parameters:
-
-- `time`: the maximum time to wait for the lock
-- `unit`: the time unit of the `time` argument
-
-**Returns:** a read stamp that can be used to unlock or convert mode,
+@param time the maximum time to wait for the lock
+@param unit the time unit of the {@code time} argument
+@return a read stamp that can be used to unlock or convert mode,
 or zero if the lock is not available
-
-Throws:
-
-- `InterruptedException`: if the current thread is interrupted before acquiring the lock
+@throws InterruptedException if the current thread is interrupted
+before acquiring the lock
 
 ## StampedLock.readLockInterruptibly()
 
@@ -331,13 +315,11 @@ public long readLockInterruptibly() throws InterruptedException
 Non-exclusively acquires the lock, blocking if necessary
 until available or the current thread is interrupted.
 Behavior under interruption matches that specified
-for method `Lock.lockInterruptibly()`.
+for method {@link Lock#lockInterruptibly()}.
 
-**Returns:** a read stamp that can be used to unlock or convert mode
-
-Throws:
-
-- `InterruptedException`: if the current thread is interrupted before acquiring the lock
+@return a read stamp that can be used to unlock or convert mode
+@throws InterruptedException if the current thread is interrupted
+before acquiring the lock
 
 ## StampedLock.tryOptimisticRead()
 
@@ -348,7 +330,7 @@ public long tryOptimisticRead()
 Returns a stamp that can later be validated, or zero
 if exclusively locked.
 
-**Returns:** a valid optimistic read stamp, or zero if exclusively locked
+@return a valid optimistic read stamp, or zero if exclusively locked
 
 ## StampedLock.validate(long)
 
@@ -360,14 +342,11 @@ Returns true if the lock has not been exclusively acquired
 since issuance of the given stamp. Always returns false if the
 stamp is zero. Always returns true if the stamp represents a
 currently held lock. Invoking this method with a value not
-obtained from `tryOptimisticRead` or a locking method
+obtained from {@link #tryOptimisticRead} or a locking method
 for this lock has no defined effect or result.
 
-Parameters:
-
-- `stamp`: a stamp
-
-**Returns:** `true` if the lock has not been exclusively acquired
+@param stamp a stamp
+@return {@code true} if the lock has not been exclusively acquired
 since issuance of the given stamp; else false
 
 ## StampedLock.unlockWrite(long)
@@ -379,13 +358,9 @@ public void unlockWrite(long stamp)
 If the lock state matches the given stamp, releases the
 exclusive lock.
 
-Parameters:
-
-- `stamp`: a stamp returned by a write-lock operation
-
-Throws:
-
-- `IllegalMonitorStateException`: if the stamp does not match the current state of this lock
+@param stamp a stamp returned by a write-lock operation
+@throws IllegalMonitorStateException if the stamp does
+not match the current state of this lock
 
 ## StampedLock.unlockRead(long)
 
@@ -396,13 +371,9 @@ public void unlockRead(long stamp)
 If the lock state matches the given stamp, releases the
 non-exclusive lock.
 
-Parameters:
-
-- `stamp`: a stamp returned by a read-lock operation
-
-Throws:
-
-- `IllegalMonitorStateException`: if the stamp does not match the current state of this lock
+@param stamp a stamp returned by a read-lock operation
+@throws IllegalMonitorStateException if the stamp does
+not match the current state of this lock
 
 ## StampedLock.unlock(long)
 
@@ -413,13 +384,9 @@ public void unlock(long stamp)
 If the lock state matches the given stamp, releases the
 corresponding mode of the lock.
 
-Parameters:
-
-- `stamp`: a stamp returned by a lock operation
-
-Throws:
-
-- `IllegalMonitorStateException`: if the stamp does not match the current state of this lock
+@param stamp a stamp returned by a lock operation
+@throws IllegalMonitorStateException if the stamp does
+not match the current state of this lock
 
 ## StampedLock.tryConvertToWriteLock(long)
 
@@ -435,11 +402,8 @@ Or, if an optimistic read, returns a write stamp only if
 immediately available. This method returns zero in all other
 cases.
 
-Parameters:
-
-- `stamp`: a stamp
-
-**Returns:** a valid write stamp, or zero on failure
+@param stamp a stamp
+@return a valid write stamp, or zero on failure
 
 ## StampedLock.tryConvertToReadLock(long)
 
@@ -454,11 +418,8 @@ returns it. Or, if an optimistic read, acquires a read lock and
 returns a read stamp only if immediately available. This method
 returns zero in all other cases.
 
-Parameters:
-
-- `stamp`: a stamp
-
-**Returns:** a valid read stamp, or zero on failure
+@param stamp a stamp
+@return a valid read stamp, or zero on failure
 
 ## StampedLock.tryConvertToOptimisticRead(long)
 
@@ -472,11 +433,8 @@ observation stamp.  Or, if an optimistic read, returns it if
 validated. This method returns zero in all other cases, and so
 may be useful as a form of "tryUnlock".
 
-Parameters:
-
-- `stamp`: a stamp
-
-**Returns:** a valid optimistic read stamp, or zero on failure
+@param stamp a stamp
+@return a valid optimistic read stamp, or zero on failure
 
 ## StampedLock.tryUnlockWrite()
 
@@ -488,4 +446,192 @@ Releases the write lock if it is held, without requiring a
 stamp value. This method may be useful for recovery after
 errors.
 
-**Returns:** `true` if the lock was held, else false
+@return {@code true} if the lock was held, else false
+
+## StampedLock.tryUnlockRead()
+
+```java
+public boolean tryUnlockRead()
+```
+
+Releases one hold of the read lock if it is held, without
+requiring a stamp value. This method may be useful for recovery
+after errors.
+
+@return {@code true} if the read lock was held, else false
+
+## StampedLock.isWriteLocked()
+
+```java
+public boolean isWriteLocked()
+```
+
+Returns {@code true} if the lock is currently held exclusively.
+
+@return {@code true} if the lock is currently held exclusively
+
+## StampedLock.isReadLocked()
+
+```java
+public boolean isReadLocked()
+```
+
+Returns {@code true} if the lock is currently held non-exclusively.
+
+@return {@code true} if the lock is currently held non-exclusively
+
+## StampedLock.isWriteLockStamp(long)
+
+```java
+public static boolean isWriteLockStamp(long stamp)
+```
+
+Tells whether a stamp represents holding a lock exclusively.
+This method may be useful in conjunction with
+{@link #tryConvertToWriteLock}, for example: <pre> {@code
+long stamp = sl.tryOptimisticRead();
+try {
+  ...
+  stamp = sl.tryConvertToWriteLock(stamp);
+  ...
+} finally {
+  if (StampedLock.isWriteLockStamp(stamp))
+    sl.unlockWrite(stamp);
+}}</pre>
+
+@param stamp a stamp returned by a previous StampedLock operation
+@return {@code true} if the stamp was returned by a successful
+  write-lock operation
+@since 10
+
+## StampedLock.isReadLockStamp(long)
+
+```java
+public static boolean isReadLockStamp(long stamp)
+```
+
+Tells whether a stamp represents holding a lock non-exclusively.
+This method may be useful in conjunction with
+{@link #tryConvertToReadLock}, for example: <pre> {@code
+long stamp = sl.tryOptimisticRead();
+try {
+  ...
+  stamp = sl.tryConvertToReadLock(stamp);
+  ...
+} finally {
+  if (StampedLock.isReadLockStamp(stamp))
+    sl.unlockRead(stamp);
+}}</pre>
+
+@param stamp a stamp returned by a previous StampedLock operation
+@return {@code true} if the stamp was returned by a successful
+  read-lock operation
+@since 10
+
+## StampedLock.isLockStamp(long)
+
+```java
+public static boolean isLockStamp(long stamp)
+```
+
+Tells whether a stamp represents holding a lock.
+This method may be useful in conjunction with
+{@link #tryConvertToReadLock} and {@link #tryConvertToWriteLock},
+for example: <pre> {@code
+long stamp = sl.tryOptimisticRead();
+try {
+  ...
+  stamp = sl.tryConvertToReadLock(stamp);
+  ...
+  stamp = sl.tryConvertToWriteLock(stamp);
+  ...
+} finally {
+  if (StampedLock.isLockStamp(stamp))
+    sl.unlock(stamp);
+}}</pre>
+
+@param stamp a stamp returned by a previous StampedLock operation
+@return {@code true} if the stamp was returned by a successful
+  read-lock or write-lock operation
+@since 10
+
+## StampedLock.isOptimisticReadStamp(long)
+
+```java
+public static boolean isOptimisticReadStamp(long stamp)
+```
+
+Tells whether a stamp represents a successful optimistic read.
+
+@param stamp a stamp returned by a previous StampedLock operation
+@return {@code true} if the stamp was returned by a successful
+  optimistic read operation, that is, a non-zero return from
+  {@link #tryOptimisticRead()} or
+  {@link #tryConvertToOptimisticRead(long)}
+@since 10
+
+## StampedLock.getReadLockCount()
+
+```java
+public int getReadLockCount()
+```
+
+Queries the number of read locks held for this lock. This
+method is designed for use in monitoring system state, not for
+synchronization control.
+@return the number of read locks held
+
+## StampedLock.toString()
+
+```java
+public String toString()
+```
+
+Returns a string identifying this lock, as well as its lock
+state.  The state, in brackets, includes the String {@code
+"Unlocked"} or the String {@code "Write-locked"} or the String
+{@code "Read-locks:"} followed by the current number of
+read-locks held.
+
+@return a string identifying this lock, as well as its lock state
+
+## StampedLock.asReadLock()
+
+```java
+public Lock asReadLock()
+```
+
+Returns a plain {@link Lock} view of this StampedLock in which
+the {@link Lock#lock} method is mapped to {@link #readLock},
+and similarly for other methods. The returned Lock does not
+support a {@link Condition}; method {@link Lock#newCondition()}
+throws {@code UnsupportedOperationException}.
+
+@return the lock
+
+## StampedLock.asWriteLock()
+
+```java
+public Lock asWriteLock()
+```
+
+Returns a plain {@link Lock} view of this StampedLock in which
+the {@link Lock#lock} method is mapped to {@link #writeLock},
+and similarly for other methods. The returned Lock does not
+support a {@link Condition}; method {@link Lock#newCondition()}
+throws {@code UnsupportedOperationException}.
+
+@return the lock
+
+## StampedLock.asReadWriteLock()
+
+```java
+public ReadWriteLock asReadWriteLock()
+```
+
+Returns a {@link ReadWriteLock} view of this StampedLock in
+which the {@link ReadWriteLock#readLock()} method is mapped to
+{@link #asReadLock()}, and {@link ReadWriteLock#writeLock()} to
+{@link #asWriteLock()}.
+
+@return the lock

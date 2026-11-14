@@ -1,19 +1,13 @@
----
-title: "consistent-destructuring"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/consistent-destructuring.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # consistent-destructuring
 
 📝 Use destructured variables over properties.
 
 🚫 Disabled by default.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Enforces the use of already destructured variables over accessing the same direct, non-computed identifier property again. Previous destructurings are easily missed which leads to an inconsistent code style.
 

@@ -1,24 +1,21 @@
 ---
 title: "Breaking change: MVC: ObjectModelValidator calls a new overload of ValidationVisitor.Validate"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/5/mvc-objectmodelvalidator-calls-new-overload.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 5.0 titled MVC: ObjectModelValidator calls a new overload of ValidationVisitor.Validate"
+ms.date: 10/01/2020
+ms.custom: https://github.com/aspnet/Announcements/issues/440
 ---
-
 # MVC: ObjectModelValidator calls a new overload of ValidationVisitor.Validate
 
-In ASP.NET Core 5.0, an overload of the `Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ValidationVisitor.Validate*` was added. The new overload accepts the top-level model instance that contains properties:
+In ASP.NET Core 5.0, an overload of the <xref:Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ValidationVisitor.Validate*?displayProperty=nameWithType> was added. The new overload accepts the top-level model instance that contains properties:
 
 ```diff
   bool Validate(ModelMetadata metadata, string key, object model, bool alwaysValidateAtTopLevel);
 + bool Validate(ModelMetadata metadata, string key, object model, bool alwaysValidateAtTopLevel, object container);
 ```
 
-`Microsoft.AspNetCore.Mvc.ModelBinding.ObjectModelValidator` invokes this new overload of `ValidationVisitor` to perform validation. This new overload is pertinent if your validation library integrates with ASP.NET Core MVC's model validation system.
+<xref:Microsoft.AspNetCore.Mvc.ModelBinding.ObjectModelValidator> invokes this new overload of `ValidationVisitor` to perform validation. This new overload is pertinent if your validation library integrates with ASP.NET Core MVC's model validation system.
 
-For discussion, see GitHub issue dotnet/aspnetcore#26020.
+For discussion, see GitHub issue [dotnet/aspnetcore#26020](https://github.com/dotnet/aspnetcore/issues/26020).
 
 ## Version introduced
 
@@ -42,7 +39,7 @@ ValidationVisitor.Validate(ModelMetadata metadata, string key, object model, boo
 
 ## Reason for change
 
-This change was introduced to support validators, such as `System.ComponentModel.DataAnnotations.CompareAttribute`, that rely on inspection of other properties.
+This change was introduced to support validators, such as <xref:System.ComponentModel.DataAnnotations.CompareAttribute>, that rely on inspection of other properties.
 
 ## Recommended action
 
@@ -59,4 +56,16 @@ public class MyCustomValidationVisitor : ValidationVisitor
 
 ## Affected APIs
 
-`Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ValidationVisitor.Validate*`
+<xref:Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ValidationVisitor.Validate*?displayProperty=nameWithType>
+
+<!--
+
+### Category
+
+ASP.NET Core
+
+### Affected APIs
+
+`Overload:Microsoft.AspNetCore.Mvc.ModelBinding.Validation.ValidationVisitor.Validate`
+
+-->

@@ -1,28 +1,25 @@
 ---
-title: "Tag Helper Components in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/mvc/views/tag-helpers/th-components.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Tag Helper Components in ASP.NET Core
+description: Learn what Tag Helper Components are and how to use them in ASP.NET Core.
+monikerRange: '>= aspnetcore-2.0'
+ms.date: 06/12/2019
 ---
-
 # Tag Helper Components in ASP.NET Core
 
-By Scott Addie and Fiyaz Bin Hasan
+By [Scott Addie](https://twitter.com/Scott_Addie) and [Fiyaz Bin Hasan](https://github.com/fiyazbinhasan)
 
 A Tag Helper Component is a Tag Helper that allows you to conditionally modify or add HTML elements from server-side code. This feature is available in ASP.NET Core 2.0 or later.
 
-ASP.NET Core includes two built-in Tag Helper Components: `head` and `body`. They're located in the `Microsoft.AspNetCore.Mvc.Razor.TagHelpers` namespace and can be used in both MVC and Razor Pages. Tag Helper Components don't require registration with the app in `_ViewImports.cshtml`.
+ASP.NET Core includes two built-in Tag Helper Components: `head` and `body`. They're located in the <xref:Microsoft.AspNetCore.Mvc.Razor.TagHelpers> namespace and can be used in both MVC and Razor Pages. Tag Helper Components don't require registration with the app in `_ViewImports.cshtml`.
 
-View or download sample code (how to download)
+[View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/mvc/views/tag-helpers/th-components/samples) ([how to download](../../../fundamentals/index.md#how-to-download-a-sample))
 
 ## Use cases
 
 Two common use cases of Tag Helper Components include:
 
-1. Injecting a `<link>` into the `<head>`.
-1. Injecting a `<script>` into the `<body>`.
+1. [Injecting a `<link>` into the `<head>`.](#inject-into-html-head-element)
+1. [Injecting a `<script>` into the `<body>`.](#inject-into-html-body-element)
 
 The following sections describe these use cases.
 
@@ -30,120 +27,41 @@ The following sections describe these use cases.
 
 Inside the HTML `<head>` element, CSS files are commonly imported with the HTML `<link>` element. The following code injects a `<link>` element into the `<head>` element using the `head` Tag Helper Component:
 
-```csharp
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Razor.TagHelpers;
-
-namespace RazorPagesSample.TagHelpers
-{
-    public class AddressStyleTagHelperComponent : TagHelperComponent
-    {
-        private readonly string _style = 
-            @"<link rel=""stylesheet"" href=""/css/address.css"" />";
-
-        public override int Order => 1;
-
-        public override Task ProcessAsync(TagHelperContext context,
-                                          TagHelperOutput output)
-        {
-            if (string.Equals(context.TagName, "head", 
-                              StringComparison.OrdinalIgnoreCase))
-            {
-                output.PostContent.AppendHtml(_style);
-            }
-
-            return Task.CompletedTask;
-        }
-    }
-}
-```
+[!code-csharp[](th-components/samples/RazorPagesSample/TagHelpers/AddressStyleTagHelperComponent.cs)]
 
 In the preceding code:
 
-* `AddressStyleTagHelperComponent` implements `Microsoft.AspNetCore.Razor.TagHelpers.TagHelperComponent`. The abstraction:
-  * Allows initialization of the class with a `Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext`.
+* `AddressStyleTagHelperComponent` implements <xref:Microsoft.AspNetCore.Razor.TagHelpers.TagHelperComponent>. The abstraction:
+  * Allows initialization of the class with a <xref:Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext>.
   * Enables the use of Tag Helper Components to add or modify HTML elements.
-* The `Microsoft.AspNetCore.Razor.TagHelpers.TagHelperComponent.Order` property defines the order in which the Components are rendered. `Order` is necessary when there are multiple usages of Tag Helper Components in an app.
-* `Microsoft.AspNetCore.Razor.TagHelpers.TagHelperComponent.ProcessAsync*` compares the execution context's `Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext.TagName` property value to `head`. If the comparison evaluates to true, the content of the `_style` field is injected into the HTML `<head>` element.
+* The <xref:Microsoft.AspNetCore.Razor.TagHelpers.TagHelperComponent.Order> property defines the order in which the Components are rendered. `Order` is necessary when there are multiple usages of Tag Helper Components in an app.
+* <xref:Microsoft.AspNetCore.Razor.TagHelpers.TagHelperComponent.ProcessAsync*> compares the execution context's <xref:Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext.TagName> property value to `head`. If the comparison evaluates to true, the content of the `_style` field is injected into the HTML `<head>` element.
 
 ### Inject into HTML body element
 
 The `body` Tag Helper Component can inject a `<script>` element into the `<body>` element. The following code demonstrates this technique:
 
-```csharp
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Razor.TagHelpers;
-
-namespace RazorPagesSample.TagHelpers
-{
-    public class AddressScriptTagHelperComponent : TagHelperComponent
-    {
-        public override int Order => 2;
-        
-        public override async Task ProcessAsync(TagHelperContext context,
-                                                TagHelperOutput output)
-        {
-            if (string.Equals(context.TagName, "body",
-                              StringComparison.OrdinalIgnoreCase))
-            {
-                var script = await File.ReadAllTextAsync(
-                    "TagHelpers/Templates/AddressToolTipScript.html");
-                output.PostContent.AppendHtml(script);
-            }
-        }
-    }
-}
-```
+[!code-csharp[](th-components/samples/RazorPagesSample/TagHelpers/AddressScriptTagHelperComponent.cs)]
 
 A separate HTML file is used to store the `<script>` element. The HTML file makes the code cleaner and more maintainable. The preceding code reads the contents of `TagHelpers/Templates/AddressToolTipScript.html` and appends it with the Tag Helper output. The `AddressToolTipScript.html` file includes the following markup:
 
-```html
-﻿<script>
-$("address[printable]").hover(function() {
-    $(this).attr({
-        "data-toggle": "tooltip",
-        "data-placement": "right",
-        "title": "Home of Microsoft!"
-    });
-});
-</script>
-```
+[!code-html[](th-components/samples/RazorPagesSample/TagHelpers/Templates/AddressToolTipScript.html)]
 
-The preceding code binds a Bootstrap tooltip widget to any `<address>` element that includes a `printable` attribute. The effect is visible when a mouse pointer hovers over the element.
+The preceding code binds a [Bootstrap tooltip widget](https://getbootstrap.com/docs/3.3/javascript/#tooltips) to any `<address>` element that includes a `printable` attribute. The effect is visible when a mouse pointer hovers over the element.
 
 ## Register a Component
 
 A Tag Helper Component must be added to the app's Tag Helper Components collection. There are three ways to add to the collection:
 
-* Registration via services container
-* Registration via Razor file
-* Registration via Page Model or controller
+* [Registration via services container](#registration-via-services-container)
+* [Registration via Razor file](#registration-via-razor-file)
+* [Registration via Page Model or controller](#registration-via-page-model-or-controller)
 
 ### Registration via services container
 
-If the Tag Helper Component class isn't managed with `Microsoft.AspNetCore.Mvc.Razor.TagHelpers.ITagHelperComponentManager`, it must be registered with the dependency injection (DI) system. The following `Startup.ConfigureServices` code registers the `AddressStyleTagHelperComponent` and `AddressScriptTagHelperComponent` classes with a transient lifetime:
+If the Tag Helper Component class isn't managed with <xref:Microsoft.AspNetCore.Mvc.Razor.TagHelpers.ITagHelperComponentManager>, it must be registered with the [dependency injection (DI)](../../../fundamentals/dependency-injection.md) system. The following `Startup.ConfigureServices` code registers the `AddressStyleTagHelperComponent` and `AddressScriptTagHelperComponent` classes with a [transient lifetime](../../../fundamentals/dependency-injection.md#lifetime-and-registration-options):
 
-```csharp
-public void ConfigureServices(IServiceCollection services)
-{
-    services.Configure<CookiePolicyOptions>(options =>
-    {
-        options.CheckConsentNeeded = context => true;
-        options.MinimumSameSitePolicy = SameSiteMode.None;
-    });
-
-    services.AddMvc()
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-    services.AddTransient<ITagHelperComponent, 
-        AddressScriptTagHelperComponent>();
-    services.AddTransient<ITagHelperComponent, 
-        AddressStyleTagHelperComponent>();
-}
-```
+[!code-csharp[](th-components/samples/RazorPagesSample/Startup.cs?name=snippet_ConfigureServices&highlight=12-15)]
 
 ### Registration via Razor file
 
@@ -151,26 +69,7 @@ If the Tag Helper Component isn't registered with DI, it can be registered from 
 
 `ITagHelperComponentManager` is used to add Tag Helper Components or remove them from the app. The following code demonstrates this technique with `AddressTagHelperComponent`:
 
-```cshtml
-@using RazorPagesSample.TagHelpers;
-@using Microsoft.AspNetCore.Mvc.Razor.TagHelpers;
-@inject ITagHelperComponentManager manager;
-
-@{
-    string markup;
-
-    if (Model.IsWeekend)
-    {
-        markup = "<em class='text-warning'>Office closed today!</em>";
-    }
-    else
-    {
-        markup = "<em class='text-info'>Office open today!</em>";
-    }
-
-    manager.Components.Add(new AddressTagHelperComponent(markup, 1));
-}
-```
+[!code-cshtml[](th-components/samples/RazorPagesSample/Pages/Contact.cshtml?name=snippet_ITagHelperComponentManager)]
 
 In the preceding code:
 
@@ -179,35 +78,11 @@ In the preceding code:
 
 `AddressTagHelperComponent` is modified to accommodate a constructor that accepts the `markup` and `order` parameters:
 
-```csharp
-private readonly string _markup;
-
-public override int Order { get; }
-
-public AddressTagHelperComponent(string markup = "", int order = 1)
-{
-    _markup = markup;
-    Order = order;
-}
-```
+[!code-csharp[](th-components/samples/RazorPagesSample/TagHelpers/AddressTagHelperComponent.cs?name=snippet_Constructor)]
 
 The provided `markup` parameter is used in `ProcessAsync` as follows:
 
-```csharp
-public override async Task ProcessAsync(TagHelperContext context,
-                                        TagHelperOutput output)
-{
-    if (string.Equals(context.TagName, "address",
-            StringComparison.OrdinalIgnoreCase) &&
-        output.Attributes.ContainsName("printable"))
-    {
-        TagHelperContent childContent = await output.GetChildContentAsync();
-        string content = childContent.GetContent();
-        output.Content.SetHtmlContent(
-            $"<div>{content}<br>{_markup}</div>{_printableButton}");
-    }
-}
-```
+[!code-csharp[](th-components/samples/RazorPagesSample/TagHelpers/AddressTagHelperComponent.cs?name=snippet_ProcessAsync&highlight=10-11)]
 
 ### Registration via Page Model or controller
 
@@ -215,50 +90,7 @@ If the Tag Helper Component isn't registered with DI, it can be registered from 
 
 Constructor injection is used to access an instance of `ITagHelperComponentManager`. The Tag Helper Component is added to the instance's Tag Helper Components collection. The following Razor Pages page model demonstrates this technique with `AddressTagHelperComponent`:
 
-```csharp
-using System;
-using Microsoft.AspNetCore.Mvc.Razor.TagHelpers;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using RazorPagesSample.TagHelpers;
-
-public class IndexModel : PageModel
-{
-    private readonly ITagHelperComponentManager _tagHelperComponentManager;
-
-    public bool IsWeekend
-    {
-        get
-        {
-            var dayOfWeek = DateTime.Now.DayOfWeek;
-
-            return dayOfWeek == DayOfWeek.Saturday ||
-                   dayOfWeek == DayOfWeek.Sunday;
-        }
-    }
-
-    public IndexModel(ITagHelperComponentManager tagHelperComponentManager)
-    {
-        _tagHelperComponentManager = tagHelperComponentManager;
-    }
-
-    public void OnGet()
-    {
-        string markup;
-
-        if (IsWeekend)
-        {
-            markup = "<em class='text-warning'>Office closed today!</em>";
-        }
-        else
-        {
-            markup = "<em class='text-info'>Office open today!</em>";
-        }
-
-        _tagHelperComponentManager.Components.Add(
-            new AddressTagHelperComponent(markup, 1));
-    }
-}
-```
+[!code-csharp[](th-components/samples/RazorPagesSample/Pages/Index.cshtml.cs?name=snippet_IndexModelClass)]
 
 In the preceding code:
 
@@ -269,32 +101,13 @@ In the preceding code:
 
 To create a custom Tag Helper Component:
 
-* Create a public class deriving from `Microsoft.AspNetCore.Mvc.Razor.TagHelpers.TagHelperComponentTagHelper`.
-* Apply an `[HtmlTargetElement]` attribute to the class. Specify the name of the target HTML element.
-* *Optional*: Apply an `[EditorBrowsable(EditorBrowsableState.Never)]` attribute to the class to suppress the type's display in IntelliSense.
+* Create a public class deriving from <xref:Microsoft.AspNetCore.Mvc.Razor.TagHelpers.TagHelperComponentTagHelper>.
+* Apply an [`[HtmlTargetElement]`](xref:Microsoft.AspNetCore.Razor.TagHelpers.HtmlTargetElementAttribute) attribute to the class. Specify the name of the target HTML element.
+* *Optional*: Apply an [`[EditorBrowsable(EditorBrowsableState.Never)]`](xref:System.ComponentModel.EditorBrowsableAttribute) attribute to the class to suppress the type's display in IntelliSense.
 
 The following code creates a custom Tag Helper Component that targets the `<address>` HTML element:
 
-```csharp
-﻿using System.ComponentModel;
-using Microsoft.AspNetCore.Mvc.Razor.TagHelpers;
-using Microsoft.AspNetCore.Razor.TagHelpers;
-using Microsoft.Extensions.Logging;
-
-namespace RazorPagesSample.TagHelpers
-{
-    [HtmlTargetElement("address")]
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public class AddressTagHelperComponentTagHelper : TagHelperComponentTagHelper
-    {
-        public AddressTagHelperComponentTagHelper(
-            ITagHelperComponentManager componentManager, 
-            ILoggerFactory loggerFactory) : base(componentManager, loggerFactory)
-        {
-        }
-    }
-}
-```
+[!code-csharp[](th-components/samples/RazorPagesSample/TagHelpers/AddressTagHelperComponentTagHelper.cs)]
 
 Use the custom `address` Tag Helper Component to inject HTML markup as follows:
 
@@ -324,24 +137,17 @@ public class AddressTagHelperComponent : TagHelperComponent
 }
 ```
 
-The preceding `ProcessAsync` method injects the HTML provided to `Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContent.SetHtmlContent*` into the matching `<address>` element. The injection occurs when:
+The preceding `ProcessAsync` method injects the HTML provided to <xref:Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContent.SetHtmlContent*> into the matching `<address>` element. The injection occurs when:
 
 * The execution context's `TagName` property value equals `address`.
 * The corresponding `<address>` element has a `printable` attribute.
 
 For example, the `if` statement evaluates to true when processing the following `<address>` element:
 
-```cshtml
-<address printable>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
-```
+[!code-cshtml[](th-components/samples/RazorPagesSample/Pages/Contact.cshtml?name=snippet_AddressPrintable)]
 
 ## Related content
 
-* Dependency injection in ASP.NET Core
-* Dependency injection into views in ASP.NET Core
-* ASP.NET Core built-in Tag Helpers
+* [Dependency injection in ASP.NET Core](../../../fundamentals/dependency-injection.md)
+* [Dependency injection into views in ASP.NET Core](../dependency-injection.md)
+* [ASP.NET Core built-in Tag Helpers](built-in/index.md)

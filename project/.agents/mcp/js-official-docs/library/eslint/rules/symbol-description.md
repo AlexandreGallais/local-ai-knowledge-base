@@ -1,13 +1,10 @@
 ---
-title: "symbol-description"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/symbol-description.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: symbol-description
+rule_type: suggestion
+further_reading:
+- https://www.ecma-international.org/ecma-262/6.0/#sec-symbol-description
 ---
 
-# symbol-description
 
 The `Symbol` function may have an optional description:
 
@@ -35,7 +32,7 @@ This rules requires a description when creating symbols.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint symbol-description: "error"*/
@@ -43,9 +40,11 @@ Examples of **incorrect** code for this rule:
 const foo = Symbol();
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint symbol-description: "error"*/
@@ -55,6 +54,8 @@ const foo = Symbol("some description");
 const someString = "some description";
 const bar = Symbol(someString);
 ```
+
+:::
 
 ## Options
 

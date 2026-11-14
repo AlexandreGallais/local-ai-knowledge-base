@@ -1,15 +1,11 @@
 ---
-title: "Bundle and minify static assets in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/client-side/bundling-and-minification.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Bundle and minify static assets in ASP.NET Core
+description: Learn how to optimize static resources in an ASP.NET Core web application by applying bundling and minification techniques.
+ms.date: 05/09/2025
 ---
-
 # Bundle and minify static assets in ASP.NET Core
 
-By Scott Addie and David Pine
+By [Scott Addie](https://twitter.com/Scott_Addie) and [David Pine](https://twitter.com/davidpine7)
 
 This article explains the benefits of applying bundling and minification, including how these features can be used with ASP.NET Core web apps.
 
@@ -72,15 +68,17 @@ The test app used to generate the figures in the preceding table demonstrates ty
 
 ## Choose a bundling and minification strategy
 
-ASP.NET Core doesn't provide a native bundling and minification solution. Third-party tools, such as Gulp and Webpack, provide workflow automation for bundling and minification, as well as linting and image optimization. Bundling and minifying before deployment provides the advantage of reduced server load. However, bundling and minification increase build complexity and only work with static files.
+ASP.NET Core doesn't provide a native bundling and minification solution. Third-party tools, such as [Gulp](https://gulpjs.com) and [Webpack](https://webpack.js.org), provide workflow automation for bundling and minification, as well as linting and image optimization. Bundling and minifying before deployment provides the advantage of reduced server load. However, bundling and minification increase build complexity and only work with static files.
 
 ## Environment-based bundling and minification
 
 As a best practice, the bundled and minified files of your app should be used in a production environment. During development, the original files make for easier debugging of the app.
 
-Specify which files to include in your pages by using the Environment Tag Helper in your views. The Environment Tag Helper only renders its contents when running in specific environments.
+Specify which files to include in your pages by using the [Environment Tag Helper](../mvc/views/tag-helpers/built-in/environment-tag-helper.md) in your views. The Environment Tag Helper only renders its contents when running in specific [environments](../fundamentals/environments.md).
 
 The following `environment` tag renders the unprocessed CSS files when running in the `Development` environment:
+
+:::moniker range=">= aspnetcore-2.0"
 
 ```cshtml
 <environment include="Development">
@@ -89,7 +87,24 @@ The following `environment` tag renders the unprocessed CSS files when running i
 </environment>
 ```
 
+:::moniker-end
+
+:::moniker range="<= aspnetcore-1.1"
+
+```cshtml
+<environment names="Staging,Production">
+    <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+          asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+          asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+</environment>
+```
+
+:::moniker-end
+
 The following `environment` tag renders the bundled and minified CSS files when running in an environment other than `Development`. For example, running in `Production` or `Staging` triggers the rendering of these stylesheets:
+
+:::moniker range=">= aspnetcore-2.0"
 
 ```cshtml
 <environment exclude="Development">
@@ -100,7 +115,22 @@ The following `environment` tag renders the bundled and minified CSS files when 
 </environment>
 ```
 
+:::moniker-end
+
+:::moniker range="<= aspnetcore-1.1"
+
+```cshtml
+<environment names="Staging,Production">
+    <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+          asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+          asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+</environment>
+```
+
+:::moniker-end
+
 ## Related content
 
-* Use multiple environments
-* Tag Helpers
+* [Use multiple environments](../fundamentals/environments.md)
+* [Tag Helpers](../mvc/views/tag-helpers/intro.md)

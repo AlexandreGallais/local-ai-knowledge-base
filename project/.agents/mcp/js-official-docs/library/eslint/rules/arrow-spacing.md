@@ -1,14 +1,7 @@
 ---
-title: "arrow-spacing"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/arrow-spacing.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: arrow-spacing
+rule_type: layout
 ---
-
-# arrow-spacing
-
 This rule normalize style of spacing before/after an arrow function's arrow(`=>`).
 
 ```js
@@ -29,7 +22,7 @@ The default configuration is `{ "before": true, "after": true }`.
 
 Examples of **incorrect** code for this rule with the default `{ "before": true, "after": true }` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint arrow-spacing: "error"*/
@@ -44,9 +37,11 @@ a=> a;
 () =>{'\n'};
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `{ "before": true, "after": true }` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint arrow-spacing: "error"*/
@@ -57,9 +52,11 @@ a => a;
 () => {'\n'};
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `{ "before": false, "after": false }` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint arrow-spacing: ["error", { "before": false, "after": false }]*/
@@ -69,9 +66,11 @@ Examples of **incorrect** code for this rule with the `{ "before": false, "after
 ()=> {'\n'};
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "before": false, "after": false }` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint arrow-spacing: ["error", { "before": false, "after": false }]*/
@@ -81,9 +80,11 @@ Examples of **correct** code for this rule with the `{ "before": false, "after":
 ()=>{'\n'};
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `{ "before": false, "after": true }` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint arrow-spacing: ["error", { "before": false, "after": true }]*/
@@ -93,9 +94,11 @@ Examples of **incorrect** code for this rule with the `{ "before": false, "after
 ()=>{'\n'};
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "before": false, "after": true }` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint arrow-spacing: ["error", { "before": false, "after": true }]*/
@@ -104,3 +107,5 @@ Examples of **correct** code for this rule with the `{ "before": false, "after":
 (a)=> {};
 ()=> {'\n'};
 ```
+
+:::

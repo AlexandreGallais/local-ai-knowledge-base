@@ -1,18 +1,15 @@
 ---
-title: "no-reserved-keys"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-reserved-keys.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
----
+title: no-reserved-keys
 
-# no-reserved-keys
+further_reading:
+- https://compat-table.github.io/compat-table/es5/#test-Object/array_literal_extensions_Reserved_words_as_property_names
+---
 
 Disallows unquoted reserved words as property names in object literals.
 
-**Important:**
-This rule was removed in ESLint v1.0.0 and replaced by the quote-props rule.
+::: important
+This rule was removed in ESLint v1.0.0 and replaced by the [quote-props](quote-props) rule.
+:::
 
 ECMAScript 3 described as series of keywords and reserved words, such as `if` and `public`, that are used or intended to be used for a core language feature. The specification also indicated that these keywords and reserved words could not be used as object property names without being enclosed in strings. An error occurs in an ECMAScript 3 environment when you use a keyword or reserved word in an object literal. For example:
 
@@ -32,7 +29,7 @@ This rule is aimed at eliminating the use of ECMAScript 3 keywords and reserved 
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 var superman = {
@@ -45,9 +42,11 @@ var values = {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 var superman = {
@@ -59,6 +58,8 @@ var values = {
     "enum": ["red", "blue", "green"]
 };
 ```
+
+:::
 
 ## When Not To Use It
 

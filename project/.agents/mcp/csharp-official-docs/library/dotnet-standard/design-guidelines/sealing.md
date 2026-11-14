@@ -1,16 +1,17 @@
 ---
+description: "Learn more about: Sealing"
 title: "Sealing"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/sealing.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "limiting extensibility"
+  - "classes [.NET Framework], sealing"
+  - "preventing customization"
+  - "sealed classes"
+ms.assetid: cc42267f-bb7a-427a-845e-df97408528d4
 ---
-
 # Sealing
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
 One of the features of object-oriented frameworks is that developers can extend and customize them in ways unanticipated by the framework designers. This is both the power and danger of extensible design. When you design your framework, it is, therefore, very important to carefully design for extensibility when it is desired, and to limit extensibility when it is dangerous.
 
@@ -18,17 +19,17 @@ One of the features of object-oriented frameworks is that developers can extend 
 
  ❌ DO NOT seal classes without having a good reason to do so.
 
- Sealing a class because you cannot think of an extensibility scenario is not a good reason. Framework users like to inherit from classes for various non-obvious reasons, like adding convenience members. See Unsealed Classes for examples of non-obvious reasons users want to inherit from a type.
+ Sealing a class because you cannot think of an extensibility scenario is not a good reason. Framework users like to inherit from classes for various non-obvious reasons, like adding convenience members. See [Unsealed Classes](unsealed-classes.md) for examples of non-obvious reasons users want to inherit from a type.
 
  Good reasons for sealing a class include the following:
 
-- The class is a static class. See Static Class Design.
+- The class is a static class. See [Static Class Design](static-class.md).
 
 - The class stores security-sensitive secrets in inherited protected members.
 
 - The class inherits many virtual members and the cost of sealing them individually would outweigh the benefits of leaving the class unsealed.
 
-- The class is an attribute that requires very fast runtime look-up. Sealed attributes have slightly higher performance levels than unsealed ones. See Attributes.
+- The class is an attribute that requires very fast runtime look-up. Sealed attributes have slightly higher performance levels than unsealed ones. See [Attributes](attributes.md).
 
  ❌ DO NOT declare protected or virtual members on sealed types.
 
@@ -36,14 +37,14 @@ One of the features of object-oriented frameworks is that developers can extend 
 
  ✔️ CONSIDER sealing members that you override.
 
- Problems that can result from introducing virtual members (discussed in Virtual Members) apply to overrides as well, although to a slightly lesser degree. Sealing an override shields you from these problems starting from that point in the inheritance hierarchy.
+ Problems that can result from introducing virtual members (discussed in [Virtual Members](virtual-members.md)) apply to overrides as well, although to a slightly lesser degree. Sealing an override shields you from these problems starting from that point in the inheritance hierarchy.
 
  *Portions © 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Framework Design Guidelines
-- Designing for Extensibility
-- Unsealed Classes
+- [Framework Design Guidelines](index.md)
+- [Designing for Extensibility](designing-for-extensibility.md)
+- [Unsealed Classes](unsealed-classes.md)

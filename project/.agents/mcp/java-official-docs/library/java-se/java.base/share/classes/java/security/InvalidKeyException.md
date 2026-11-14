@@ -1,12 +1,3 @@
----
-title: "InvalidKeyException class (java.security)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/InvalidKeyException.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # InvalidKeyException class (java.security)
 
 ```java
@@ -16,7 +7,8 @@ public class InvalidKeyException extends KeyException
 This is the exception for invalid Keys (invalid encoding, wrong
 length, uninitialized, etc.).
 
-**Since:** 1.1
+@author Benjamin Renaud
+@since 1.1
 
 ## InvalidKeyException.InvalidKeyException()
 
@@ -24,8 +16,8 @@ length, uninitialized, etc.).
 public InvalidKeyException()
 ```
 
-Constructs an `InvalidKeyException` with no detail message. A
-detail message is a `String` that describes this particular
+Constructs an {@code InvalidKeyException} with no detail message. A
+detail message is a {@code String} that describes this particular
 exception.
 
 ## InvalidKeyException.InvalidKeyException(String)
@@ -34,13 +26,11 @@ exception.
 public InvalidKeyException(String msg)
 ```
 
-Constructs an `InvalidKeyException` with the specified detail
-message. A detail message is a `String` that describes this
+Constructs an {@code InvalidKeyException} with the specified detail
+message. A detail message is a {@code String} that describes this
 particular exception.
 
-Parameters:
-
-- `msg`: the detail message.
+@param msg the detail message.
 
 ## InvalidKeyException.InvalidKeyException(String, Throwable)
 
@@ -48,15 +38,15 @@ Parameters:
 public InvalidKeyException(String message, Throwable cause)
 ```
 
-Creates an `InvalidKeyException` with the specified
+Creates an {@code InvalidKeyException} with the specified
 detail message and cause.
 
-Parameters:
-
-- `message`: the detail message (which is saved for later retrieval by the `getMessage()` method).
-- `cause`: the cause (which is saved for later retrieval by the `getCause()` method). (A `null` value is permitted, and indicates that the cause is nonexistent or unknown.)
-
-**Since:** 1.5
+@param message the detail message (which is saved for later retrieval
+       by the {@link #getMessage()} method).
+@param cause the cause (which is saved for later retrieval by the
+       {@link #getCause()} method).  (A {@code null} value is permitted,
+       and indicates that the cause is nonexistent or unknown.)
+@since 1.5
 
 ## InvalidKeyException.InvalidKeyException(Throwable)
 
@@ -64,13 +54,12 @@ Parameters:
 public InvalidKeyException(Throwable cause)
 ```
 
-Creates an `InvalidKeyException` with the specified cause
-and a detail message of `(cause==null ? null : cause.toString())`
+Creates an {@code InvalidKeyException} with the specified cause
+and a detail message of {@code (cause==null ? null : cause.toString())}
 (which typically contains the class and detail message of
-`cause`).
+{@code cause}).
 
-Parameters:
-
-- `cause`: the cause (which is saved for later retrieval by the `getCause()` method). (A `null` value is permitted, and indicates that the cause is nonexistent or unknown.)
-
-**Since:** 1.5
+@param cause the cause (which is saved for later retrieval by the
+       {@link #getCause()} method).  (A {@code null} value is permitted,
+       and indicates that the cause is nonexistent or unknown.)
+@since 1.5

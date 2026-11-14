@@ -1,20 +1,14 @@
 ---
+id: test-timeouts
 title: "Timeouts"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/test-timeouts-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# Timeouts
 
 Playwright Test has multiple configurable timeouts for various tasks.
 
 |Timeout    |Default             |Description                      |
 |:----------|:----------------|:--------------------------------|
-|Test timeout|30_000 ms|Timeout for each testSet in config`{`{ timeout: 60_000 }`}`Override in test`test.setTimeout(120_000)` |
-|Expect timeout|5_000 ms|Timeout for each assertionSet in config`{`{ expect: { timeout: 10_000 } }`}`Override in test`expect(locator).toBeVisible({ timeout: 10_000 })` |
+|Test timeout|30_000 ms|Timeout for each test<br/><span style={{textTransform:'uppercase',fontSize:'smaller',fontWeight:'bold',opacity:'0.7'}}>Set in config</span><br/><code>{`{ timeout: 60_000 }`}</code><br/><span style={{textTransform: 'uppercase',fontSize: 'smaller', fontWeight: 'bold', opacity: '0.7'}}>Override in test</span><br/>`test.setTimeout(120_000)` |
+|Expect timeout|5_000 ms|Timeout for each assertion<br/><span style={{textTransform:'uppercase',fontSize:'smaller',fontWeight:'bold',opacity:'0.7'}}>Set in config</span><br/><code>{`{ expect: { timeout: 10_000 } }`}</code><br/><span style={{textTransform: 'uppercase',fontSize: 'smaller', fontWeight: 'bold', opacity: '0.7'}}>Override in test</span><br/>`expect(locator).toBeVisible({ timeout: 10_000 })` |
 
 ## Test timeout
 
@@ -34,7 +28,7 @@ The same timeout value also applies to `beforeAll` and `afterAll` hooks, but the
 
 ### Set test timeout in the config
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -46,7 +40,7 @@ API reference: [`property: TestConfig.timeout`].
 
 ### Set timeout for a single test
 
-```js
+```js title="example.spec.ts"
 import { test, expect } from '@playwright/test';
 
 test('slow test', async ({ page }) => {
@@ -64,7 +58,7 @@ API reference: [`method: Test.setTimeout`] and [`method: Test.slow`].
 
 ### Change timeout from a `beforeEach` hook
 
-```js
+```js title="example.spec.ts"
 import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }, testInfo) => {
@@ -79,7 +73,7 @@ API reference: [`method: TestInfo.setTimeout`].
 
 `beforeAll` and `afterAll` hooks have a separate timeout, by default equal to test timeout. You can change it separately for each hook by calling [`method: TestInfo.setTimeout`] inside the hook.
 
-```js
+```js title="example.spec.ts"
 import { test, expect } from '@playwright/test';
 
 test.beforeAll(async () => {
@@ -108,7 +102,7 @@ Call log:
 
 ### Set expect timeout in the config
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -122,7 +116,7 @@ API reference: [`property: TestConfig.expect`].
 
 ### Specify expect timeout for a single assertion
 
-```js
+```js title="example.spec.ts"
 import { test, expect } from '@playwright/test';
 
 test('example', async ({ page }) => {
@@ -144,7 +138,7 @@ Running 1000 tests using 10 workers
 
 You can set global timeout in the config.
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -161,15 +155,16 @@ If you happen to be in this section because your test are flaky, it is very like
 
 |Timeout    |Default             |Description                      |
 |:----------|:----------------|:--------------------------------|
-|Action timeout| no timeout |Timeout for each actionSet in config`{`{ use: { actionTimeout: 10_000 } }`}`Override in test`locator.click({ timeout: 10_000 })` |
-|Navigation timeout| no timeout |Timeout for each navigation actionSet in config`{`{ use: { navigationTimeout: 30_000 } }`}`Override in test`page.goto('/', { timeout: 30_000 })` |
-|Global timeout|no timeout |Global timeout for the whole test runSet in config`{ globalTimeout: 3_600_000 }` |
-|`beforeAll`/`afterAll` timeout|30_000 ms|Timeout for the hookSet in hook`test.setTimeout(60_000)` |
-|Fixture timeout|no timeout |Timeout for an individual fixtureSet in fixture`{ scope: 'test', timeout: 30_000 }` |
+|Action timeout| no timeout |Timeout for each action<br/><span style={{textTransform:'uppercase',fontSize:'smaller',fontWeight:'bold',opacity:'0.7'}}>Set in config</span><br/><code>{`{ use: { actionTimeout: 10_000 } }`}</code><br/><span style={{textTransform: 'uppercase',fontSize: 'smaller', fontWeight: 'bold', opacity: '0.7'}}>Override in test</span><br/>`locator.click({ timeout: 10_000 })` |
+|Navigation timeout| no timeout |Timeout for each navigation action<br/><span style={{textTransform:'uppercase',fontSize:'smaller',fontWeight:'bold',opacity:'0.7'}}>Set in config</span><br/><code>{`{ use: { navigationTimeout: 30_000 } }`}</code><br/><span style={{textTransform: 'uppercase',fontSize: 'smaller', fontWeight: 'bold', opacity: '0.7'}}>Override in test</span><br/>`page.goto('/', { timeout: 30_000 })` |
+|Global timeout|no timeout |Global timeout for the whole test run<br/><span style={{textTransform:'uppercase',fontSize:'smaller',fontWeight:'bold',opacity:'0.7'}}>Set in config</span><br/>`{ globalTimeout: 3_600_000 }`<br/> |
+|`beforeAll`/`afterAll` timeout|30_000 ms|Timeout for the hook<br/><span style={{textTransform:'uppercase',fontSize:'smaller',fontWeight:'bold',opacity:'0.7'}}>Set in hook</span><br/>`test.setTimeout(60_000)`<br/> |
+|Fixture timeout|no timeout |Timeout for an individual fixture<br/><span style={{textTransform:'uppercase',fontSize:'smaller',fontWeight:'bold',opacity:'0.7'}}>Set in fixture</span><br/>`{ scope: 'test', timeout: 30_000 }`<br/> |
+
 
 ### Set action and navigation timeouts in the config
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -184,7 +179,7 @@ API reference: [`property: TestOptions.actionTimeout`] and [`property: TestOptio
 
 ### Set timeout for a single action
 
-```js
+```js title="example.spec.ts"
 import { test, expect } from '@playwright/test';
 
 test('basic test', async ({ page }) => {
@@ -195,9 +190,9 @@ test('basic test', async ({ page }) => {
 
 ## Fixture timeout
 
-By default, fixture shares timeout with the test. However, for slow fixtures, especially worker-scoped ones, it is convenient to have a separate timeout. This way you can keep the overall test timeout small, and give the slow fixture more time.
+By default, [fixture](./test-fixtures) shares timeout with the test. However, for slow fixtures, especially [worker-scoped](./test-fixtures#worker-scoped-fixtures) ones, it is convenient to have a separate timeout. This way you can keep the overall test timeout small, and give the slow fixture more time.
 
-```js
+```js title="example.spec.ts"
 import { test as base, expect } from '@playwright/test';
 
 const test = base.extend<{ slowFixture: string }>({

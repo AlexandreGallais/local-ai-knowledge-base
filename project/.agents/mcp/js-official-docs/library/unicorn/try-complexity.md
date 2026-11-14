@@ -1,19 +1,13 @@
----
-title: "try-complexity"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/try-complexity.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # try-complexity
 
 📝 Limit the complexity of `try` blocks.
 
 🚫 Disabled by default.
 
-Large `try` blocks can make it unclear which operation is expected to throw. This rule uses the same cyclomatic complexity signals as ESLint's `complexity` rule, but only for the `try` block itself.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+Large `try` blocks can make it unclear which operation is expected to throw. This rule uses the same cyclomatic complexity signals as ESLint's [`complexity`](https://eslint.org/docs/latest/rules/complexity) rule, but only for the `try` block itself.
 
 This rule counts decision points, not lines or statements. A `try` block with multiple straight-line statements has a complexity of `1`.
 

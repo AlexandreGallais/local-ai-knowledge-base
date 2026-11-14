@@ -1,13 +1,12 @@
 ---
-title: "ASP.NET Core Blazor WebAssembly state management"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/state-management/webassembly.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core Blazor WebAssembly state management
+description: Learn how to persist user data (state) in Blazor WebAssembly apps.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 11/11/2025
 ---
-
 # ASP.NET Core Blazor WebAssembly state management
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
 This article describes common approaches for maintaining a user's data (state) in Blazor WebAssembly apps.
 
@@ -19,13 +18,13 @@ Examples of user state held in browser memory include:
 
 * The hierarchy of component instances and their most recent render output in the rendered UI.
 * The values of fields and properties in component instances.
-* Data held in dependency injection (DI) service instances.
-* Values set through JavaScript interop calls.
+* Data held in [dependency injection (DI)](../../fundamentals/dependency-injection.md) service instances.
+* Values set through [JavaScript interop](../javascript-interoperability/call-javascript-from-dotnet.md) calls.
 
 When a user closes and reopens their browser or reloads the page, user state held in the browser's memory is lost.
 
-> **Note:**
-> Protected Browser Storage (`Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage` namespace) relies on ASP.NET Core Data Protection and is only supported for server-side Blazor apps.
+> [!NOTE]
+> [Protected Browser Storage](protected-browser-storage.md#aspnet-core-protected-browser-storage) (<xref:Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage?displayProperty=fullName> namespace) relies on ASP.NET Core Data Protection and is only supported for server-side Blazor apps.
 
 ## Persist state across browser sessions
 
@@ -51,25 +50,25 @@ For permanent data persistence that spans multiple users and devices, the app ca
 
 After data is saved, the user's state is retained and available in any new browser session.
 
-Because Blazor WebAssembly apps run entirely in the user's browser, they require additional measures to access secure external systems, such as storage services and databases. Blazor WebAssembly apps are secured in the same manner as single-page applications (SPAs). Typically, an app authenticates a user via OAuth/OpenID Connect (OIDC) and then interacts with storage services and databases through web API calls to a server-side app. The server-side app mediates the transfer of data between the Blazor WebAssembly app and the storage service or database. The Blazor WebAssembly app maintains an ephemeral connection to the server-side app, while the server-side app has a persistent connection to storage.
+Because Blazor WebAssembly apps run entirely in the user's browser, they require additional measures to access secure external systems, such as storage services and databases. Blazor WebAssembly apps are secured in the same manner as single-page applications (SPAs). Typically, an app authenticates a user via [OAuth](https://oauth.net)/[OpenID Connect (OIDC)](https://openid.net/developers/how-connect-works/) and then interacts with storage services and databases through web API calls to a server-side app. The server-side app mediates the transfer of data between the Blazor WebAssembly app and the storage service or database. The Blazor WebAssembly app maintains an ephemeral connection to the server-side app, while the server-side app has a persistent connection to storage.
 
 For more information, see the following resources:
 
-* Call a web API from an ASP.NET Core Blazor app
-* Secure ASP.NET Core Blazor WebAssembly
+* [Call a web API from an ASP.NET Core Blazor app](../call-web-api.md)
+* [Secure ASP.NET Core Blazor WebAssembly](../security/webassembly/index.md)
 * Blazor *Security and Identity* articles
 
 For more information on Azure data storage options, see the following:
 
-* Azure Databases
-* Azure Storage Documentation
+* [Azure Databases](https://azure.microsoft.com/product-categories/databases/)
+* [Azure Storage Documentation](/azure/storage/)
 
 ## Related content
 
-* State management using the URL
-* In-memory state container service
-* Cascading values and parameters
-* Save app state before an authentication operation with session storage (Blazor WebAssembly)
+* [State management using the URL](index.md#state-management-using-the-url)
+* [In-memory state container service](index.md#in-memory-state-container-service)
+* [Cascading values and parameters](index.md#cascading-values-and-parameters)
+* [Save app state before an authentication operation with session storage (Blazor WebAssembly)](../security/webassembly/additional-scenarios.md#save-app-state-before-an-authentication-operation-with-session-storage)
 * Managing state via an external server API
-  * Call a web API from an ASP.NET Core Blazor app
-  * Secure ASP.NET Core Blazor WebAssembly
+  * [Call a web API from an ASP.NET Core Blazor app](../call-web-api.md)
+  * [Secure ASP.NET Core Blazor WebAssembly](../security/webassembly/index.md)

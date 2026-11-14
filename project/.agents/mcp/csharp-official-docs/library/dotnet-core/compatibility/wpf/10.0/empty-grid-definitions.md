@@ -1,10 +1,9 @@
 ---
 title: "Breaking change - Empty ColumnDefinitions and RowDefinitions are disallowed"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/wpf/10.0/empty-grid-definitions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in WPF in .NET 10 where empty Grid.ColumnDefinitions or Grid.RowDefinitions declarations now cause MC3063 compilation errors."
+ms.date: 08/11/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/47743
 ---
 
 # Empty ColumnDefinitions and RowDefinitions are disallowed
@@ -40,7 +39,7 @@ This occurs when `<Grid.ColumnDefinitions>` or `<Grid.RowDefinitions>` elements 
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 

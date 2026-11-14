@@ -1,12 +1,14 @@
 ---
-title: "The using directive: Import types from a namespace (part 1 of 2)"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/keywords/using-directive.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "The `using` directive imports types from a namespace, or creates an alias for a given type. Using directives enable you to use simple names for types instead of the fully qualified type name."
+title: "The using directive: Import types from a namespace"
+ms.date: 01/22/2026
+f1_keywords:
+  - "using_CSharpKeyword"
+  - "using-static_CSharpKeyword"
+helpviewer_keywords:
+  - "using directive [C#]"
+  - "using static directive [C#]"
 ---
-
 # The `using` directive
 
 The `using` directive enables you to use types defined in a namespace without specifying the fully qualified namespace of that type. In its basic form, the `using` directive imports all the types from a single namespace, as shown in the following example:
@@ -30,15 +32,10 @@ using Project = PC.MyCompany.Project;
 
 You can use the `global` modifier on a *using alias directive*.
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
-
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
-
-> **Note:**
-> The `using` keyword is also used to create *`using` statements*, which help ensure that `System.IDisposable` objects such as files and fonts are handled correctly. For more information about the *`using` statement*, see `using` statement.
+> [!NOTE]
+> The `using` keyword is also used to create *`using` statements*, which help ensure that <xref:System.IDisposable> objects such as files and fonts are handled correctly. For more information about the *`using` statement*, see [`using` statement](../statements/using.md).
 
 The scope of a `using` directive without the `global` modifier is the file in which it appears.
 
@@ -51,7 +48,7 @@ Other `using` directives can appear:
 
 Otherwise, a compiler error is generated.
 
-Create a `using` directive to use the types in a namespace without having to specify the namespace. A `using` directive doesn't give you access to any namespaces that are nested in the namespace you specify. Namespaces come in two categories: user-defined and system-defined. User-defined namespaces are namespaces defined in your code. For a list of the system-defined namespaces, see .NET API Browser.
+Create a `using` directive to use the types in a namespace without having to specify the namespace. A `using` directive doesn't give you access to any namespaces that are nested in the namespace you specify. Namespaces come in two categories: user-defined and system-defined. User-defined namespaces are namespaces defined in your code. For a list of the system-defined namespaces, see [.NET API Browser](../../../../api/index.md).
 
 ## The `global` modifier
 
@@ -70,28 +67,17 @@ A *global using* directive can appear at the beginning of any source code file. 
 
 You can add `global using` directives to any source file. Typically, you keep them in a single location. The order of `global using` directives doesn't matter, either in a single file or between files.
 
-You can combine the `global` modifier with the `static` modifier. You can apply the `global` modifier to a *using alias directive*. In both cases, the directive's scope is all files in the current compilation. The following example enables using all the methods declared in the `System.Math` in all files in your project:
+You can combine the `global` modifier with the `static` modifier. You can apply the `global` modifier to a *using alias directive*. In both cases, the directive's scope is all files in the current compilation. The following example enables using all the methods declared in the <xref:System.Math?displayProperty=fullName> in all files in your project:
 
 ```csharp
 global using static System.Math;
 ```
 
-You can also globally include a namespace by adding a `<Using>` item to your project file, for example, `<Using Include="My.Awesome.Namespace" />`. For more information, see `<Using>` item.
+You can also globally include a namespace by adding a `<Using>` item to your project file, for example, `<Using Include="My.Awesome.Namespace" />`. For more information, see [`<Using>` item](../../../core/project-sdk/msbuild-props.md#using).
 
 Analyzers issue diagnostics if you duplicate `global` using directives in different locations. These same analyzers also inform you if you add a `using` directive for a namespace or type that a `global` using directive already references. You might find it easier to manage your `global` usings by keeping them together in one file in the project.
 
-> **Important:**
-> The C# templates for .NET 6 use *top level statements*. Your application may not match the code in this article, if you've already upgraded to the .NET 6. For more information see the article on New C# templates generate top level statements
->
-> The .NET 6 SDK also adds a set of *implicit* `global using` directives for projects that use the following SDKs:
->
-> - Microsoft.NET.Sdk
-> - Microsoft.NET.Sdk.Web
-> - Microsoft.NET.Sdk.Worker
->
-> These implicit `global using` directives include the most common namespaces for the project type.
->
-> For more information, see the article on Implicit using directives
+[!INCLUDE [csharp10-templates](../../../../includes/csharp10-templates.md)]
 
 ## The `static` modifier
 
@@ -102,7 +88,7 @@ The `using static` directive names a type whose static members and nested types 
 using static <fully-qualified-type-name>;
 ```
 
-The `<fully-qualified-type-name>` is the name of the type whose static members and nested types you can reference without specifying a type name. If you don't provide a fully qualified type name (the full namespace name along with the type name), C# generates compiler error CS0246: "The type or namespace name 'type/namespace' couldn't be found (are you missing a using directive or an assembly reference?)".
+The `<fully-qualified-type-name>` is the name of the type whose static members and nested types you can reference without specifying a type name. If you don't provide a fully qualified type name (the full namespace name along with the type name), C# generates compiler error [CS0246](../compiler-messages/assembly-references.md): "The type or namespace name 'type/namespace' couldn't be found (are you missing a using directive or an assembly reference?)".
 
 If you apply the `using static` directive within the context of a namespace (either file-scoped or nested in a `namespace` block), you don't need to fully qualify the type.
 
@@ -122,137 +108,25 @@ class Program
 }
 ```
 
-Ordinarily, when you call a static member, you provide the type name along with the member name. Repeatedly entering the same type name to invoke members of the type can result in verbose, obscure code. For example, the following definition of a `Circle` class references many members of the `System.Math` class.
+Ordinarily, when you call a static member, you provide the type name along with the member name. Repeatedly entering the same type name to invoke members of the type can result in verbose, obscure code. For example, the following definition of a `Circle` class references many members of the <xref:System.Math> class.
 
-```csharp
-using System;
+:::code language="csharp" source="./snippets/using-static1.cs" id="Snippet1":::
 
-public class Circle
-{
-   public Circle(double radius)
-   {
-      Radius = radius;
-   }
+By eliminating the need to explicitly reference the <xref:System.Math> class each time a member is referenced, the `using static` directive produces cleaner code:
 
-   public double Radius { get; set; }
+:::code language="csharp" source="./snippets/using-static2.cs":::
 
-   public double Diameter
-   {
-      get { return 2 * Radius; }
-   }
-
-   public double Circumference
-   {
-      get { return 2 * Radius * Math.PI; }
-   }
-
-   public double Area
-   {
-      get { return Math.PI * Math.Pow(Radius, 2); }
-   }
-}
-```
-By eliminating the need to explicitly reference the `System.Math` class each time a member is referenced, the `using static` directive produces cleaner code:
-
-```csharp
-﻿using System;
-using static System.Math;
-
-public class Circle
-{
-   public Circle(double radius)
-   {
-      Radius = radius;
-   }
-
-   public double Radius { get; set; }
-
-   public double Diameter
-   {
-      get { return 2 * Radius; }
-   }
-
-   public double Circumference
-   {
-      get { return 2 * Radius * PI; }
-   }
-
-   public double Area
-   {
-      get { return PI * Pow(Radius, 2); }
-   }
-}
-```
 `using static` imports only accessible static members and nested types declared in the specified type. Inherited members aren't imported. You can import from any named type with a `using static` directive, including Visual Basic modules. If F# top-level functions appear in metadata as static members of a named type whose name is a valid C# identifier, the F# functions can be imported.
 
 `using static` makes extension members declared in the specified type available for extension member lookup. However, the names of the extension members aren't imported into scope for unqualified reference in code.
 
 Methods with the same name imported from different types by different `using static` directives in the same compilation unit or namespace form a method group. Overload resolution within these method groups follows normal C# rules.
 
-The following example uses the `using static` directive to make the static members of the `System.Console`, `System.Math`, and `System.String` classes available without having to specify their type name.
+The following example uses the `using static` directive to make the static members of the <xref:System.Console>, <xref:System.Math>, and <xref:System.String> classes available without having to specify their type name.
 
-```csharp
-using System;
-using static System.Console;
-using static System.Math;
-using static System.String;
+:::code language="csharp" source="./snippets/using-static3.cs" id="Snippet1":::
 
-class Program
-{
-   static void Main()
-   {
-      Write("Enter a circle's radius: ");
-      var input = ReadLine();
-      if (!IsNullOrEmpty(input) && double.TryParse(input, out var radius)) {
-         var c = new Circle(radius);
-
-         string s = "\nInformation about the circle:\n";
-         s = s + Format("   Radius: {0:N2}\n", c.Radius);
-         s = s + Format("   Diameter: {0:N2}\n", c.Diameter);
-         s = s + Format("   Circumference: {0:N2}\n", c.Circumference);
-         s = s + Format("   Area: {0:N2}\n", c.Area);
-         WriteLine(s);
-      }
-      else {
-         WriteLine("Invalid input...");
-      }
-   }
-}
-
-public class Circle
-{
-   public Circle(double radius)
-   {
-      Radius = radius;
-   }
-
-   public double Radius { get; set; }
-
-   public double Diameter
-   {
-      get { return 2 * Radius; }
-   }
-
-   public double Circumference
-   {
-      get { return 2 * Radius * PI; }
-   }
-
-   public double Area
-   {
-      get { return PI * Pow(Radius, 2); }
-   }
-}
-// The example displays the following output:
-//       Enter a circle's radius: 12.45
-//
-//       Information about the circle:
-//          Radius: 12.45
-//          Diameter: 24.90
-//          Circumference: 78.23
-//          Area: 486.95
-```
-In the example, you could also apply the `using static` directive to the `System.Double` type. Adding that directive would make it possible to call the `System.Double.TryParse(System.String,System.Double@)` method without specifying a type name. However, using `TryParse` without a type name creates less readable code, since it becomes necessary to check the `using static` directives to determine which numeric type's `TryParse` method is called.
+In the example, you could also apply the `using static` directive to the <xref:System.Double> type. Adding that directive would make it possible to call the <xref:System.Double.TryParse(System.String,System.Double@)> method without specifying a type name. However, using `TryParse` without a type name creates less readable code, since it becomes necessary to check the `using static` directives to determine which numeric type's `TryParse` method is called.
 
 `using static` also applies to `enum` types. By adding `using static` with the enum, you no longer need to use the enum type to access its members.
 
@@ -286,152 +160,34 @@ using s.RegularExpressions; // Generates a compiler error.
 
 The following example shows how to define and use a `using` alias for a namespace:
 
-```csharp
-﻿// 9 comes before 8 because "using System;" is part of snippet and must come first in file.
+:::code language="csharp" source="./snippets/csrefKeywordsNamespace2.cs" id="Snippet8":::
 
-using System;
-
-// Using alias directive for a class.
-using AliasToMyClass = NameSpace1.MyClass;
-
-// Using alias directive for a generic class.
-using UsingAlias = NameSpace2.MyClass<int>;
-
-namespace NameSpace1
-{
-    public class MyClass
-    {
-        public override string ToString()
-        {
-            return "You are in NameSpace1.MyClass.";
-        }
-    }
-}
-
-namespace NameSpace2
-{
-    class MyClass<T>
-    {
-        public override string ToString()
-        {
-            return "You are in NameSpace2.MyClass.";
-        }
-    }
-}
-
-namespace NameSpace3
-{
-    class MainClass
-    {
-        static void Main()
-        {
-            var instance1 = new AliasToMyClass();
-            Console.WriteLine(instance1);
-
-            var instance2 = new UsingAlias();
-            Console.WriteLine(instance2);
-        }
-    }
-}
-// Output:
-//    You are in NameSpace1.MyClass.
-//    You are in NameSpace2.MyClass.
-
-namespace PC
-{
-    // Define an alias for the nested namespace.
-    using Project = PC.MyCompany.Project;
-    class A
-    {
-        void M()
-        {
-            // Use the alias
-            var mc = new Project.MyClass();
-        }
-    }
-    namespace MyCompany
-    {
-        namespace Project
-        {
-            public class MyClass { }
-        }
-    }
-}
-```
 A using alias directive can't have an open generic type on the right-hand side. For example, you can't create a using alias for a `List<T>`, but you can create one for a `List<int>`.
 
 The following example shows how to define a `using` directive and a `using` alias for a class:
 
-```csharp
-﻿// 9 comes before 8 because "using System;" is part of snippet and must come first in file.
+:::code language="csharp" source="./snippets/csrefKeywordsNamespace2.cs" id="Snippet9":::
 
-using System;
+You can create aliases for [tuple types](../builtin-types/value-tuples.md#tuple-field-names), pointer types, and other unsafe types. For more information on the rules, see [§14.6.2 Using alias directives](~/_csharpstandard/standard/namespaces.md#1462-using-alias-directives) in the C# standard.
 
-// Using alias directive for a class.
-using AliasToMyClass = NameSpace1.MyClass;
+## Qualified alias member
 
-// Using alias directive for a generic class.
-using UsingAlias = NameSpace2.MyClass<int>;
+The namespace alias qualifier, `::` provides explicit access to the global namespace or other using aliases that other entities might hide.
 
-namespace NameSpace1
-{
-    public class MyClass
-    {
-        public override string ToString()
-        {
-            return "You are in NameSpace1.MyClass.";
-        }
-    }
-}
+The `global::` ensures that the namespace lookup for the namespace following the `::` token is relative to the global namespace. Otherwise, the token must resolve to a using alias, and the token following the `::` must resolve to a type in that aliased namespace. The following example shows both forms:
 
-namespace NameSpace2
-{
-    class MyClass<T>
-    {
-        public override string ToString()
-        {
-            return "You are in NameSpace2.MyClass.";
-        }
-    }
-}
+:::code language="csharp" source="./snippets/UsingAliasQualifier.cs" id="UsingAliasQualifier":::
 
-namespace NameSpace3
-{
-    class MainClass
-    {
-        static void Main()
-        {
-            var instance1 = new AliasToMyClass();
-            Console.WriteLine(instance1);
+## C# language specification
 
-            var instance2 = new UsingAlias();
-            Console.WriteLine(instance2);
-        }
-    }
-}
-// Output:
-//    You are in NameSpace1.MyClass.
-//    You are in NameSpace2.MyClass.
+For more information, see [Using directives](~/_csharpstandard/standard/namespaces.md#146-using-directives) in the [C# Language Specification](~/_csharpstandard/standard/README.md). The language specification is the definitive source for C# syntax and usage.
 
-namespace PC
-{
-    // Define an alias for the nested namespace.
-    using Project = PC.MyCompany.Project;
-    class A
-    {
-        void M()
-        {
-            // Use the alias
-            var mc = new Project.MyClass();
-        }
-    }
-    namespace MyCompany
-    {
-        namespace Project
-        {
-            public class MyClass { }
-        }
-    }
-}
-```
-You can create aliases for tuple types, pointer types, and other unsafe types. For more information on the rules, see §14.6.2 Using alias directives in the C# standard.
+For more information on the *global using* modifier, see [Global using directives](~/_csharpstandard/standard/namespaces.md#1452-global-using-alias-directives).
+
+## See also
+
+- [C# keywords](index.md)
+- [Organize types with namespaces](../../fundamentals/namespaces/overview.md)
+- [Style rule IDE0005 - Remove unnecessary 'using' directives](../../../fundamentals/code-analysis/style-rules/ide0005.md)
+- [Style rule IDE0065 - 'using' directive placement](../../../fundamentals/code-analysis/style-rules/ide0065.md)
+- [`using` statement](../statements/using.md)

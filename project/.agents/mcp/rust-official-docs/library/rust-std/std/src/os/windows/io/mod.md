@@ -1,12 +1,3 @@
----
-title: "std::os::windows::io"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/os/windows/io/mod.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::os::windows::io
 
 Windows-specific extensions to general I/O primitives.
@@ -17,19 +8,19 @@ or be forged if they're created from invalid values.
 
 This module provides three types for representing raw handles and sockets
 with different ownership properties: raw, borrowed, and owned, which are
-analogous to types used for representing pointers. These types reflect concepts of I/O
-safety on Windows.
+analogous to types used for representing pointers. These types reflect concepts of [I/O
+safety][io-safety] on Windows.
 
 | Type                   | Analogous to |
 | ---------------------- | ------------ |
-| `RawHandle`          | `*const _`   |
-| `RawSocket`          | `*const _`   |
+| [`RawHandle`]          | `*const _`   |
+| [`RawSocket`]          | `*const _`   |
 |                        |              |
-| `BorrowedHandle<'a>` | `&'a _`      |
-| `BorrowedSocket<'a>` | `&'a _`      |
+| [`BorrowedHandle<'a>`] | `&'a _`      |
+| [`BorrowedSocket<'a>`] | `&'a _`      |
 |                        |              |
-| `OwnedHandle`        | `Box<_>`     |
-| `OwnedSocket`        | `Box<_>`     |
+| [`OwnedHandle`]        | `Box<_>`     |
+| [`OwnedSocket`]        | `Box<_>`     |
 
 Like raw pointers, `RawHandle` and `RawSocket` values are primitive values.
 And in new code, they should be considered unsafe to do I/O on (analogous
@@ -57,4 +48,8 @@ have exclusive access to the underlying object.
 Like boxes, `OwnedHandle` and `OwnedSocket` values conceptually own the
 resource they point to, and free (close) it when they are dropped.
 
-See the `io` module docs for a general explanation of I/O safety.
+See the [`io` module docs][io-safety] for a general explanation of I/O safety.
+
+[`BorrowedHandle<'a>`]: crate::os::windows::io::BorrowedHandle
+[`BorrowedSocket<'a>`]: crate::os::windows::io::BorrowedSocket
+[io-safety]: crate::io#io-safety

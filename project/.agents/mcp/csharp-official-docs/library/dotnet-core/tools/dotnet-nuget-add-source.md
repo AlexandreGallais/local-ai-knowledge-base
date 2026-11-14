@@ -1,12 +1,9 @@
 ---
-title: "dotnet nuget add source command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-nuget-add-source.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet nuget add source command
+description: The dotnet nuget add source command adds a new package source to your NuGet configuration files. 
+ms.date: 11/03/2026
+ai-usage: ai-assisted
 ---
-
 # dotnet nuget add source
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -15,7 +12,7 @@ license: "CC-BY-4.0"
 
 `dotnet nuget add source` - Add a NuGet source.
 
-> **Note:**
+> [!NOTE]
 > Use package sources that you trust.
 
 ## Synopsis
@@ -33,8 +30,8 @@ dotnet nuget add source -h|--help
 
 The `dotnet nuget add source` command adds a new package source to your NuGet configuration files.
 
-> **Warning:**
-> When adding multiple package sources, be careful not to introduce a dependency confusion vulnerability.
+> [!WARNING]
+> When adding multiple package sources, be careful not to introduce a [dependency confusion vulnerability](/nuget/concepts/security-best-practices#nuget-feeds).
 
 ## Arguments
 
@@ -44,14 +41,12 @@ The `dotnet nuget add source` command adds a new package source to your NuGet co
 
 ## Options
 
-- **`--configfile <FILE>`**
-
-The NuGet configuration file (*nuget.config*) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see Common NuGet Configurations.
+- [!INCLUDE [configfile](includes/cli-configfile.md)]
 
 - **`--allow-insecure-connections`**
-
+  
   Allows HTTP connections for adding or updating packages. This method is not secure. Available since .NET 9 SDK.
-
+  
 - **`-n|--name <SOURCE_NAME>`**
 
   Name of the source.
@@ -60,13 +55,13 @@ The NuGet configuration file (*nuget.config*) to use. If specified, only the set
 
   Sets the minimum package publish age for this source in nonnegative whole hours. When `dotnet package add` or `dotnet package update` automatically selects a version, it excludes versions from this source that haven't reached the minimum age, unless the package matches a configured exception. Sets the `minPublishAgeHours` attribute in *nuget.config*. Omit the option or set it to `0` to add a source with no minimum age. Available starting with .NET SDK 11.0.100.
 
-  For package-selection behavior, exceptions, and restore limitations, see Minimum package publish age.
+  For package-selection behavior, exceptions, and restore limitations, see [Minimum package publish age](/nuget/consume-packages/minimum-package-publish-age).
 
 - **`-p|--password <PASSWORD>`**
 
   Password to be used when connecting to an authenticated source.
 
-> **Note:**
+> [!NOTE]
 > Be aware that encrypted passwords are only supported on Windows.
 > Moreover, they can only be decrypted on the same machine and by the same user who originally encrypted them.
 
@@ -74,9 +69,9 @@ The NuGet configuration file (*nuget.config*) to use. If specified, only the set
 
   Enables storing portable package source credentials by disabling password encryption.
 
-> **Warning:**
+> [!WARNING]
 > Storing passwords in clear text is strongly discouraged.
-> For more information on managing credentials <example-value>, refer to the security best practices for consuming packages from private feeds.
+> For more information on managing credentials securely, refer to the [security best practices for consuming packages from private feeds](/nuget/consume-packages/consuming-packages-authenticated-feeds#security-best-practices-for-managing-credentials).
 
 - **`-u|--username <USER>`**
 
@@ -84,7 +79,7 @@ The NuGet configuration file (*nuget.config*) to use. If specified, only the set
 
 - **`--valid-authentication-types <TYPES>`**
 
-  Comma-separated list of valid authentication types for this source. Set this to `basic` if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic <example-value>, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include `negotiate`, `kerberos`, `ntlm`, and `digest`, but these values are unlikely to be useful.
+  Comma-separated list of valid authentication types for this source. Set this to `basic` if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include `negotiate`, `kerberos`, `ntlm`, and `digest`, but these values are unlikely to be useful.
 
 ## Examples
 
@@ -112,7 +107,7 @@ The NuGet configuration file (*nuget.config*) to use. If specified, only the set
   dotnet nuget add source https://someServer/myTeam -n myTeam -u myUsername -p myPassword
   ```
 
-- Add a source that needs authentication (then go install credential <example-value>):
+- Add a source that needs authentication (then go install credential provider):
 
   ```dotnetcli
   dotnet nuget add source https://azureartifacts.microsoft.com/myTeam -n myTeam
@@ -120,10 +115,10 @@ The NuGet configuration file (*nuget.config*) to use. If specified, only the set
 
 ## See also
 
-- Configure an HTTPS client certificate for a package source
+- [Configure an HTTPS client certificate for a package source](dotnet-nuget-add-client-cert.md)
 
-- Security best practices for managing package source credentials
+- [Security best practices for managing package source credentials](/nuget/consume-packages/consuming-packages-authenticated-feeds#security-best-practices-for-managing-credentials)
 
-- Package source sections in NuGet.config files
+- [Package source sections in NuGet.config files](/nuget/reference/nuget-config-file#package-source-sections)
 
-- sources command (nuget.exe)
+- [sources command (nuget.exe)](/nuget/reference/cli-reference/cli-ref-sources)

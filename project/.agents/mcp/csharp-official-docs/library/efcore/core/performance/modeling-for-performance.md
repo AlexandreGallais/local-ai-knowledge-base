@@ -1,12 +1,10 @@
 ---
-title: "Modeling for Performance - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/performance/modeling-for-performance.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Modeling for Performance - EF Core
+description: Modeling efficiently when using Entity Framework Core
+author: SamMonoRT
+ms.date: 10/10/2022
+uid: core/performance/modeling-for-performance
 ---
-
 # Modeling for Performance
 
 In many cases, the way you model can have a profound impact on the performance of your application; while a properly normalized and "correct" model is usually a good starting point, in real-world applications some pragmatic compromises can go a long way for achieving good performance. Since it's quite difficult to change your model once an application is running in production, it's worth keeping performance in mind when creating the initial model.
@@ -21,27 +19,27 @@ The following details some techniques for denormalization and caching in EF Core
 
 ### Stored computed columns
 
-If the data to be cached is a product of other columns in the same table, then a stored computed column can be a perfect solution. For example, a `Customer` may have `FirstName` and `LastName` columns, but we may need to search by the customer's *full name*. A stored computed column is automatically maintained by the database - which recalculates it whenever the row is changed - and you can even define an index over it to speed up queries.
+If the data to be cached is a product of other columns in the same table, then a [stored computed column](xref:core/modeling/generated-properties#computed-columns) can be a perfect solution. For example, a `Customer` may have `FirstName` and `LastName` columns, but we may need to search by the customer's *full name*. A stored computed column is automatically maintained by the database - which recalculates it whenever the row is changed - and you can even define an index over it to speed up queries.
 
 ### Update cache columns when inputs change
 
 If your cached column needs to reference inputs from outside the table's row, you cannot use computed columns. However, it is still possible to recalculate the column whenever its input changes; for example, you could recalculate the average Blog's rating every time a Post is changed, added or removed. Be sure to identify the exact conditions when recalculation is needed, otherwise your cached value will go out of sync.
 
-One way to do this, is to perform the update yourself, via the regular EF Core API. `SaveChanges` Events or interceptors can be used to automatically check if any Posts are being updated, and to perform the recalculation that way. Note that this typically entails additional database roundtrips, as additional commands must be sent.
+One way to do this, is to perform the update yourself, via the regular EF Core API. `SaveChanges` [Events](xref:core/logging-events-diagnostics/events) or [interceptors](xref:core/logging-events-diagnostics/interceptors#savechanges-interception) can be used to automatically check if any Posts are being updated, and to perform the recalculation that way. Note that this typically entails additional database roundtrips, as additional commands must be sent.
 
-For more perf-sensitive applications, database triggers can be defined to automatically perform the recalculation in the database. This saves the extra database roundtrips, automatically occurs within the same transaction as the main update, and can be simpler to set up. EF doesn't provide any specific API for creating or maintaining triggers, but it's perfectly fine to create an empty migration and add the trigger definition via raw SQL.
+For more perf-sensitive applications, database triggers can be defined to automatically perform the recalculation in the database. This saves the extra database roundtrips, automatically occurs within the same transaction as the main update, and can be simpler to set up. EF doesn't provide any specific API for creating or maintaining triggers, but it's perfectly fine to [create an empty migration and add the trigger definition via raw SQL](xref:core/managing-schemas/migrations/managing#arbitrary-changes-via-raw-sql).
 
 ### Materialized/indexed views
 
 Materialized (or indexed) views are similar to regular views, except that their data is stored on disk ("materialized"), rather than calculated every time the view is queried. Such views are conceptually similar to stored computed columns, as they cache the results of potentially expensive calculations; however, they cache an entire query's resultset instead of a single column. Materialized views can be queried just like any regular table, and since they are cached on disk, such queries execute very quickly and cheaply without having to constantly perform the expensive calculations of the query which defines the view.
 
-Specific support for materialized views varies across databases. In some databases (e.g. PostgreSQL), materialized views must be manually refreshed in order for their values to be synchronized with their underlying tables. This is typically done via a timer - in cases where some data lag is acceptable - or via a trigger or stored procedure call in specific conditions. SQL Server Indexed Views, on the other hand, are automatically updated as their underlying tables are modified; this ensures that the view always shows the latest data, at the cost of slower updates. In addition, SQL Server Index Views have various restrictions on what they support; consult the documentation for more information.
+Specific support for materialized views varies across databases. In some databases (e.g. [PostgreSQL](https://www.postgresql.org/docs/current/rules-materializedviews.html)), materialized views must be manually refreshed in order for their values to be synchronized with their underlying tables. This is typically done via a timer - in cases where some data lag is acceptable - or via a trigger or stored procedure call in specific conditions. [SQL Server Indexed Views](/sql/relational-databases/views/create-indexed-views), on the other hand, are automatically updated as their underlying tables are modified; this ensures that the view always shows the latest data, at the cost of slower updates. In addition, SQL Server Index Views have various restrictions on what they support; consult the [documentation](/sql/relational-databases/views/create-indexed-views) for more information.
 
-EF doesn't currently provide any specific API for creating or maintaining views, materialized/indexed or otherwise; but it's perfectly fine to create an empty migration and add the view definition via raw SQL.
+EF doesn't currently provide any specific API for creating or maintaining views, materialized/indexed or otherwise; but it's perfectly fine to [create an empty migration and add the view definition via raw SQL](xref:core/managing-schemas/migrations/managing#arbitrary-changes-via-raw-sql).
 
 ## Inheritance mapping
 
-It's recommended to read the dedicated page on inheritance before continuing with this section.
+It's recommended to read [the dedicated page on inheritance](xref:core/modeling/inheritance) before continuing with this section.
 
 EF Core currently supports three techniques for mapping an inheritance model to a relational database:
 
@@ -53,14 +51,14 @@ The choice of inheritance mapping technique can have a considerable impact on ap
 
 Intuitively, TPT might seem like the "cleaner" technique; a separate table for each .NET type makes the database schema look similar to the .NET type hierarchy. In addition, since TPH must represent the entire hierarchy in a single table, rows have *all* columns regardless of the type actually being held in the row, and unrelated columns are always empty and unused. Aside from seeming to be an "unclean" mapping technique, many believe that these empty columns take up considerable space in the database and may hurt performance as well.
 
-> **Tip:**
+> [!TIP]
 > If your database system supports it (e.g. SQL Server), then consider using "sparse columns" for TPH columns that will be rarely populated.
 
-However, measuring shows that TPT is in most cases the inferior mapping technique from a performance standpoint; where all data in TPH comes from a single table, TPT queries must join together multiple tables, and joins are one of the primary sources of performance issues in relational databases. Databases also generally tend to deal well with empty columns, and features such as SQL Server sparse columns can reduce this overhead even further.
+However, measuring shows that TPT is in most cases the inferior mapping technique from a performance standpoint; where all data in TPH comes from a single table, TPT queries must join together multiple tables, and joins are one of the primary sources of performance issues in relational databases. Databases also generally tend to deal well with empty columns, and features such as [SQL Server sparse columns](/sql/relational-databases/tables/use-sparse-columns) can reduce this overhead even further.
 
 TPC has similar performance characteristics to TPH, but is slightly slower when selecting entities of all types as this involves several tables. However, TPC really excels when querying for entities of a single leaf type - the query only uses a single table and needs no filtering.
 
-For a concrete example, see this benchmark which sets up a simple model with a 7-type hierarchy; 5000 rows are seeded for each type - totalling 35000 rows - and the benchmark simply loads all rows from the database:
+For a concrete example, [see this benchmark](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Benchmarks/Inheritance.cs) which sets up a simple model with a 7-type hierarchy; 5000 rows are seeded for each type - totalling 35000 rows - and the benchmark simply loads all rows from the database:
 
 | Method |     Mean |   Error |   StdDev |     Gen 0 |     Gen 1 | Allocated |
 |------- |---------:|--------:|---------:|----------:|----------:|----------:|

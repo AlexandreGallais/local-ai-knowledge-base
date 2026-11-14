@@ -1,15 +1,8 @@
----
-title: "Disallow cyclic actions in effects and epics (rxjs-x/no-cyclic-action)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/no-cyclic-action.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Disallow cyclic actions in effects and epics (`rxjs-x/no-cyclic-action`)
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule effects failures for effects and epics that emit actions that would pass their `ofType` filter. Such actions are cyclic and, upon emission, immediately re-trigger the effect or epic.
 
@@ -45,7 +38,7 @@ someEffect = createEffect(() =>
 );
 ```
 
-Instead, you can use the the RxJS `ignoreElements` operator:
+Instead, you can use the the RxJS [`ignoreElements`](https://rxjs.dev/api/operators/ignoreElements) operator:
 
 ```ts
 someEffect = createEffect(() =>
@@ -57,13 +50,17 @@ someEffect = createEffect(() =>
 );
 ```
 
-Or you can use an ESLint inline comment to disable the rule for a specific effect.
+Or you can use an ESLint [inline comment](https://eslint.org/docs/user-guide/configuring#disabling-rules-with-inline-comments) to disable the rule for a specific effect.
 
 ## Options
+
+<!-- begin auto-generated rule options list -->
 
 | Name         | Description                                                   | Type   | Default                  |
 | :----------- | :------------------------------------------------------------ | :----- | :----------------------- |
 | `observable` | A RegExp that matches an effect or epic's actions observable. | String | `[Aa]ction(s\|s\$\|\$)$` |
+
+<!-- end auto-generated rule options list -->
 
 This rule accepts a single option which is an object with an `observable` property that is a regular expression used to match an effect or epic's actions observable. The default `observable` regular expression should match most effect and epic action sources.
 
@@ -80,12 +77,12 @@ This rule accepts a single option which is an object with an `observable` proper
 
 If you don't use a library with effects and epics (e.g. NgRx or redux-observable),
 then you don't need this rule.
-Alternatively, if you use NgRx's own `avoid-cyclic-effects` rule,
+Alternatively, if you use NgRx's own [`avoid-cyclic-effects`](https://ngrx.io/guide/eslint-plugin/rules/avoid-cyclic-effects) rule,
 then you don't need this rule.
 
 Type checked lint rules are more powerful than traditional lint rules, but also require configuring type checked linting.
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/no-cyclic-action.ts)
+- [Test source](/tests/rules/no-cyclic-action.test.ts)

@@ -1,17 +1,8 @@
----
-title: "Identifiers"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/identifiers.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[ident]
 # Identifiers
 
 r[ident.syntax]
-```grammar
+```grammar,lexer
 IDENTIFIER_OR_KEYWORD -> ( XID_Start | `_` ) XID_Continue*
 
 XID_Start -> <`XID_Start` defined by Unicode>
@@ -28,8 +19,9 @@ RESERVED_RAW_IDENTIFIER ->
     `r#` (`_` | `crate` | `self` | `Self` | `super`) !XID_Continue
 ```
 
+<!-- When updating the version, update the UAX links, too. -->
 r[ident.unicode]
-Identifiers follow the specification in Unicode Standard Annex #31 for Unicode version 17.0, with the additions described below. Some examples of identifiers:
+Identifiers follow the specification in [Unicode Standard Annex #31][UAX31] for Unicode version 17.0, with the additions described below. Some examples of identifiers:
 
 * `foo`
 * `_identifier`
@@ -44,11 +36,11 @@ The profile used from UAX #31 is:
 * Continue := [`XID_Continue`]
 * Medial := empty
 
-> **Note:**
+> [!NOTE]
 > Identifiers starting with an underscore are typically used to indicate an identifier that is intentionally unused, and will silence the unused warning in `rustc`.
 
 r[ident.keyword]
-Identifiers may not be a [strict] or [reserved] keyword without the `r#` prefix described below in raw identifiers.
+Identifiers may not be a [strict] or [reserved] keyword without the `r#` prefix described below in [raw identifiers](#raw-identifiers).
 
 r[ident.zero-width-chars]
 Zero width non-joiner (ZWNJ U+200C) and zero width joiner (ZWJ U+200D) characters are not allowed in identifiers.
@@ -65,9 +57,9 @@ Identifiers are restricted to the ASCII subset of [`XID_Start`] and [`XID_Contin
 r[ident.normalization]
 ## Normalization
 
-Identifiers are normalized using Normalization Form C (NFC) as defined in Unicode Standard Annex #15. Two identifiers are equal if their NFC forms are equal.
+Identifiers are normalized using Normalization Form C (NFC) as defined in [Unicode Standard Annex #15][UAX15]. Two identifiers are equal if their NFC forms are equal.
 
-Procedural and declarative macros receive normalized identifiers in their input.
+[Procedural][proc-macro] and [declarative][mbe] macros receive normalized identifiers in their input.
 
 r[ident.raw]
 ## Raw identifiers
@@ -80,3 +72,18 @@ Unlike a normal identifier, a raw identifier may be any strict or reserved keywo
 
 r[ident.raw.reserved]
 It is an error to use the [RESERVED_RAW_IDENTIFIER] token.
+
+[`extern crate`]: items/extern-crates.md
+[`no_mangle`]: abi.md#the-no_mangle-attribute
+[`path` attribute]: items/modules.md#the-path-attribute
+[`XID_Continue`]: http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Continue%3A%5D&abb=on&g=&i=
+[`XID_Start`]:  http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5B%3AXID_Start%3A%5D&abb=on&g=&i=
+[external blocks]: items/external-blocks.md
+[mbe]: macros-by-example.md
+[module]: items/modules.md
+[path]: paths.md
+[proc-macro]: procedural-macros.md
+[reserved]: keywords.md#reserved-keywords
+[strict]: keywords.md#strict-keywords
+[UAX15]: https://www.unicode.org/reports/tr15/tr15-57.html
+[UAX31]: https://www.unicode.org/reports/tr31/tr31-43.html

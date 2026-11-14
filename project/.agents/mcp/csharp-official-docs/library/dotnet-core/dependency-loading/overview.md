@@ -1,12 +1,10 @@
 ---
-title: "Dependency loading - .NET"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/dependency-loading/overview.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Dependency loading - .NET
+description: Overview of managed and unmanaged dependency loading in .NET 5+ and .NET Core
+ms.date: 08/18/2022
+author: sdmaclea
+ms.topic: overview
 ---
-
 # Dependency loading in .NET
 
 Every .NET application has dependencies. Even the simple `hello world` app has dependencies on portions of the .NET class libraries.
@@ -17,25 +15,25 @@ In some applications, dependencies are dynamically determined at runtime. In the
 
 ## AssemblyLoadContext
 
-The `System.Runtime.Loader.AssemblyLoadContext` API is central to the .NET loading design. The Understanding AssemblyLoadContext article provides a conceptual overview of the design.
+The <xref:System.Runtime.Loader.AssemblyLoadContext> API is central to the .NET loading design. The [Understanding AssemblyLoadContext](understanding-assemblyloadcontext.md) article provides a conceptual overview of the design.
 
 ## Loading details
 
 The loading algorithm details are covered briefly in several articles:
 
-- Managed assembly loading algorithm
-- Satellite assembly loading algorithm
-- Unmanaged (native) library loading algorithm
-- Default probing
+- [Managed assembly loading algorithm](loading-managed.md)
+- [Satellite assembly loading algorithm](loading-resources.md)
+- [Unmanaged (native) library loading algorithm](loading-unmanaged.md)
+- [Default probing](default-probing.md)
 
 ## Create an app with plugins
 
-The tutorial Create a .NET application with plugins describes how to create a custom AssemblyLoadContext. It uses an `System.Runtime.Loader.AssemblyDependencyResolver` to resolve the dependencies of the plugin. The tutorial correctly isolates the plugin's dependencies from the hosting application.
+The tutorial [Create a .NET application with plugins](../tutorials/creating-app-with-plugin-support.md) describes how to create a custom AssemblyLoadContext. It uses an <xref:System.Runtime.Loader.AssemblyDependencyResolver> to resolve the dependencies of the plugin. The tutorial correctly isolates the plugin's dependencies from the hosting application.
 
 ## Assembly unloadability
 
-The How to use and debug assembly unloadability in .NET article is a step-by-step tutorial. It shows how to load a .NET application, execute it, and then unload it. The article also provides debugging tips.
+The [How to use and debug assembly unloadability in .NET](../../standard/assembly/unloadability.md) article is a step-by-step tutorial. It shows how to load a .NET application, execute it, and then unload it. The article also provides debugging tips.
 
 ## Collect detailed assembly loading information
 
-The Collect detailed assembly loading information article describes how to collect detailed information about managed assembly loading in the runtime. It uses the dotnet-trace tool to capture assembly loader events in a trace of a running process.
+The [Collect detailed assembly loading information](collect-details.md) article describes how to collect detailed information about managed assembly loading in the runtime. It uses the [dotnet-trace](../diagnostics/dotnet-trace.md) tool to capture assembly loader events in a trace of a running process.

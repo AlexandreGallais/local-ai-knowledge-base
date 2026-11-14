@@ -1,10 +1,9 @@
 ---
 title: "Breaking change - Mono project properties no longer configure mobile apps"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/maui/11/mono-project-properties.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where Mono project properties no longer configure mobile apps."
+ms.date: 10/21/2026
+ai-usage: ai-generated
+ms.custom: https://github.com/dotnet/docs/issues/56477
 ---
 
 # Mono project properties no longer configure mobile apps
@@ -59,7 +58,7 @@ combination causes build error `XA1049`.
 
 ## Type of breaking change
 
-This change can affect source compatibility and behavior.
+This change can affect [source compatibility](../../categories.md#source-compatibility) and [behavior](../../categories.md#behavioral-change).
 
 ## Reason for change
 

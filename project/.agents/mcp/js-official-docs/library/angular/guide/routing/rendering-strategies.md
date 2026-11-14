@@ -1,12 +1,3 @@
----
-title: "Rendering strategies in Angular"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/routing/rendering-strategies.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Rendering strategies in Angular
 
 This guide helps you choose the right rendering strategy for different parts of your Angular application.
@@ -79,13 +70,13 @@ Angular supports three primary rendering strategies:
 | **Build time**      | Longer - generates all pages upfront        |
 | **Content updates** | Requires rebuild and redeploy               |
 
-📖 **Implementation:** See Customizing build-time prerendering in the SSR guide.
+📖 **Implementation:** See [Customizing build-time prerendering](guide/ssr#customizing-build-time-prerendering-ssg) in the SSR guide.
 
 ## Server-Side Rendering (SSR)
 
 **SSR generates HTML on the server for the initial request for a route**, providing dynamic content with good SEO. The server renders HTML and sends it to the client.
 
-Once the client renders the page, Angular hydrates the app and it then runs entirely in the browser like a traditional SPA - subsequent navigation, route changes, and API calls all happen client-side without additional server rendering.
+Once the client renders the page, Angular [hydrates](/guide/hydration#what-is-hydration) the app and it then runs entirely in the browser like a traditional SPA - subsequent navigation, route changes, and API calls all happen client-side without additional server rendering.
 
 ### When to use SSR
 
@@ -111,7 +102,7 @@ Once the client renders the page, Angular hydrates the app and it then runs enti
 | **Personalization** | Full access to user context                         |
 | **Server costs**    | Higher - renders on the initial request for a route |
 
-📖 **Implementation:** See Server routing and Authoring server-compatible components in the SSR guide.
+📖 **Implementation:** See [Server routing](guide/ssr#server-routing) and [Authoring server-compatible components](guide/ssr#authoring-server-compatible-components) in the SSR guide.
 
 ## Choosing the Right Strategy
 
@@ -136,11 +127,13 @@ When using SSR or SSG, Angular "hydrates" the server-rendered HTML to make it in
 
 📖 **Learn more:**
 
-- Hydration guide - Complete hydration setup
-- Incremental hydration - Advanced hydration with `@defer` blocks
+- [Hydration guide](guide/hydration) - Complete hydration setup
+- [Incremental hydration](guide/incremental-hydration) - Advanced hydration with `@defer` blocks
 
 ## Next steps
 
-  - Server-Side Rendering
-  - Hydration
-  - Incremental Hydration
+<docs-pill-row>
+  <docs-pill href="/guide/ssr" title="Server-Side Rendering"/>
+  <docs-pill href="/guide/hydration" title="Hydration"/>
+  <docs-pill href="/guide/incremental-hydration" title="Incremental Hydration"/>
+</docs-pill-row>

@@ -1,17 +1,8 @@
----
-title: "Visibility and privacy"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/visibility-and-privacy.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[vis]
 # Visibility and privacy
 
 r[vis.syntax]
-```grammar
+```grammar,items
 Visibility ->
       `pub`
     | `pub` `(` `crate` `)`
@@ -146,7 +137,7 @@ r[vis.scoped.edition2018]
 
 Here's an example:
 
-```rust
+```rust,edition2015
 pub mod outer_mod {
     pub mod inner_mod {
         // This function is visible within `outer_mod`
@@ -196,7 +187,7 @@ fn bar() {
 fn main() { bar() }
 ```
 
-> **Note:**
+> [!NOTE]
 > This syntax only adds another restriction to the visibility of an item. It does not guarantee that the item is visible within all parts of the specified scope. To access an item, all of its parent items up to the current scope must still be visible as well.
 
 r[vis.reexports]

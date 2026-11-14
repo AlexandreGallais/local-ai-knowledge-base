@@ -1,19 +1,15 @@
 ---
 title: "Breaking change: 'dotnet restore' audits transitive packages"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/nugetaudit-transitive-packages.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in the .NET 10 SDK where 'dotnet restore' also produces security vulnerability warnings for transitive packages by default.
+ms.date: 03/28/2025
 ---
-
 # 'dotnet restore' audits transitive packages
 
-The `dotnet restore` command, which restores the dependencies of a project, now produces security vulnerability warnings for transitive packages by default when the project targets .NET 10 or a later version.
+The [`dotnet restore` command](../../../tools/dotnet-restore.md), which restores the dependencies of a project, now produces security vulnerability warnings for transitive packages by default when the project targets .NET 10 or a later version.
 
 ## Previous behavior
 
-NuGetAudit was introduced in .NET 8 to emit warnings for packages with known security vulnerabilities.
+[NuGetAudit](../8.0/dotnet-restore-audit.md) was introduced in .NET 8 to emit warnings for packages with known security vulnerabilities.
 By default, only direct package references were audited, however, it was possible to change the `NuGetAuditMode` property to include all packages.
 
 In a .NET 9 preview version, NuGetAuditMode's default was changed to `all` for all projects, and this change was reverted back to `direct` in the .NET 9.0.101 SDK.
@@ -32,7 +28,7 @@ If your project targets .NET 9 or lower, the default for `NuGetAuditMode` remain
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -62,6 +58,6 @@ Packages with known vulnerabilities might cause your app to be exploitable, even
 
 ## See also
 
-- Audit for security vulnerabilities (`dotnet restore`)
-- Auditing package dependencies for security vulnerabilities
-- NuGetAudit 2.0: Elevating Security and Trust in Package Management
+- [Audit for security vulnerabilities (`dotnet restore`)](../../../tools/dotnet-restore.md#audit-for-security-vulnerabilities)
+- [Auditing package dependencies for security vulnerabilities](/nuget/concepts/auditing-packages)
+- [NuGetAudit 2.0: Elevating Security and Trust in Package Management](https://devblogs.microsoft.com/nuget/nugetaudit-2-0-elevating-security-and-trust-in-package-management/)

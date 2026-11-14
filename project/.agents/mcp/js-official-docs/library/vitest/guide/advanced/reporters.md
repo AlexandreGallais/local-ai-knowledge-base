@@ -1,16 +1,8 @@
----
-title: "Extending Reporters <Badge type=\"danger\">advanced</Badge> {#extending-reporters}"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/advanced/reporters.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # Extending Reporters <Badge type="danger">advanced</Badge> {#extending-reporters}
 
-**Warning:**
-This is an advanced API. If you just want to configure built-in reporters, read the "Reporters" guide.
+::: warning
+This is an advanced API. If you just want to configure built-in reporters, read the ["Reporters"](/guide/reporters) guide.
+:::
 
 You can import reporters from `vitest/node` and extend them to create your custom reporters.
 
@@ -26,14 +18,15 @@ export default class MyDefaultReporter extends DefaultReporter {
 }
 ```
 
-**Warning:**
+::: warning
 However, note that exposed reports are not considered stable and can change the shape of their API within a minor version.
+:::
 
-Of course, you can create your reporter from scratch. Just implement the `Reporter` interface:
+Of course, you can create your reporter from scratch. Just implement the [`Reporter`](/api/advanced/reporters) interface:
 
 And here is an example of a custom reporter:
 
-```ts
+```ts [custom-reporter.js]
 import type { Reporter } from 'vitest/node'
 
 export default class CustomReporter implements Reporter {
@@ -49,7 +42,7 @@ export default class CustomReporter implements Reporter {
 
 Then you can use your custom reporter in the `vitest.config.ts` file:
 
-```ts
+```ts [vitest.config.ts]
 import { defineConfig } from 'vitest/config'
 import CustomReporter from './custom-reporter.js'
 
@@ -62,9 +55,9 @@ export default defineConfig({
 
 ## Reported Tasks
 
-Reported events receive tasks for tests, suites and modules:
+Reported [events](/api/advanced/reporters) receive tasks for [tests](/api/advanced/test-case), [suites](/api/advanced/test-suite) and [modules](/api/advanced/test-module):
 
-```ts
+```ts twoslash
 import type { Reporter, TestModule } from 'vitest/node'
 
 class MyReporter implements Reporter {
@@ -81,14 +74,15 @@ class MyReporter implements Reporter {
 
 ## Storing artifacts on file system
 
-**Tip:**
-Vitest provides `vitest.createReport` that exposes collection of utilities for writing artifacts on file system conveniently.
+::: tip
+Vitest provides [`vitest.createReport`](/api/advanced/vitest#createreport) that exposes collection of utilities for writing artifacts on file system conveniently.
+:::
 
 If your custom reporter needs to store any artifacts on file system it should place them inside `.vitest` directory. This directory is a convention that Vitest reporters and third party integrations can use to co-locate their results in a single directory. This way users of your custom reporter do not need to add multiple exclusion in their `.gitignore`. Only the `.vitest` is needed.
 
 Reporters and other integrations should respect following rules around `.vitest` directory:
 
-- `.vitest` directory is placed in the `root` of the project
+- `.vitest` directory is placed in [the `root` of the project](/config/root)
 - Reporter can create `.vitest` directory if it does not already exist
 - Reporter should never remove `.vitest` directory
 - Reporter should create their own directory inside `.vitest`, for example `.vitest/yaml-reporter/`
@@ -107,7 +101,7 @@ Reporters and other integrations should respect following rules around `.vitest`
 
 ## Exported Reporters
 
-`vitest` comes with a few built-in reporters that you can use out of the box.
+`vitest` comes with a few [built-in reporters](/guide/reporters) that you can use out of the box.
 
 ### Built-in reporters:
 

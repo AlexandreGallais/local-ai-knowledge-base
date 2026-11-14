@@ -1,21 +1,15 @@
----
-title: "no-empty-file"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-empty-file.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-empty-file
 
 📝 Disallow empty files.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `recommended-css`, 🌐 `recommended-html`, 🧩 `recommended-json`, 📚 `recommended-markdown`, 🛠️ `recommended-toml`, 📋 `recommended-yaml`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, 🎨 `recommended-css`, 🌐 `recommended-html`, 🧩 `recommended-json`, 📚 `recommended-markdown`, 🛠️ `recommended-toml`, 📋 `recommended-yaml`, ☑️ `unopinionated`.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Meaningless files clutter a codebase.
 
-This applies to files of any extension. It is tested with JavaScript, TypeScript, Vue (`vue-eslint-parser`), HTML (`@html-eslint/parser`), CSS (`@eslint/css`), Markdown (`@eslint/markdown`), TOML (`eslint-plugin-toml`), and YAML (`eslint-plugin-yml`). JSON, JSONC, and JSON5 files parsed by `@eslint/json` require a value, so empty or comment-only files produce a syntax error before this rule runs.
+This applies to files of any extension. It is tested with JavaScript, TypeScript, Vue ([`vue-eslint-parser`](https://github.com/vuejs/vue-eslint-parser)), HTML ([`@html-eslint/parser`](https://github.com/yeonjuan/html-eslint)), CSS ([`@eslint/css`](https://github.com/eslint/css)), Markdown ([`@eslint/markdown`](https://github.com/eslint/markdown)), TOML ([`eslint-plugin-toml`](https://github.com/ota-meshi/eslint-plugin-toml)), and YAML ([`eslint-plugin-yml`](https://ota-meshi.github.io/eslint-plugin-yml/)). JSON, JSONC, and JSON5 files parsed by [`@eslint/json`](https://github.com/eslint/json) require a value, so empty or comment-only files produce a syntax error before this rule runs.
 
 Code extracted by a processor (for example, fenced code blocks in Markdown) is not treated as a file, so an empty extracted block is not reported.
 

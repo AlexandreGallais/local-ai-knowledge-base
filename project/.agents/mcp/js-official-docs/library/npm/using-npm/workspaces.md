@@ -1,13 +1,8 @@
 ---
-title: "Workspaces"
-tool: "npm"
-version: "12.2"
-source: "https://github.com/npm/cli/blob/60e11343e61316d966c86805d803df5a0eb99230/docs/lib/content/using-npm/workspaces.md"
-commit: "60e11343e61316d966c86805d803df5a0eb99230"
-license: "Artistic-2.0"
+title: Workspaces
+section: 7
+description: Working with workspaces
 ---
-
-# Workspaces
 
 ### Description
 
@@ -16,12 +11,12 @@ license: "Artistic-2.0"
 This set of features makes up for a much more streamlined workflow handling linked packages from the local file system.
 It automates the linking process as part of `npm install` and removes the need to manually use `npm link` in order to add references to packages that should be symlinked into the current `node_modules` folder.
 
-We also refer to these packages being auto-symlinked during `npm install` as a single **workspace**, meaning it's a nested package within the current local file system that is explicitly defined in the `package.json`
+We also refer to these packages being auto-symlinked during `npm install` as a single **workspace**, meaning it's a nested package within the current local file system that is explicitly defined in the [`package.json`](/configuring-npm/package-json#workspaces)
 `workspaces` configuration.
 
 ### Defining workspaces
 
-Workspaces are usually defined via the `workspaces` property of the `package.json` file, e.g:
+Workspaces are usually defined via the `workspaces` property of the [`package.json`](/configuring-npm/package-json#workspaces) file, e.g:
 
 ```json
 {
@@ -59,7 +54,7 @@ Below is a post `npm install` example, given that same previous example structur
 
 ### Getting started with workspaces
 
-You may automate the required steps to define a new workspace using npm init.
+You may automate the required steps to define a new workspace using [npm init](/commands/npm-init).
 For example in a project that already has a `package.json` defined you can run:
 
 ```
@@ -71,7 +66,7 @@ This command will create the missing folders and a new `package.json` file (if n
 
 ### Adding dependencies to a workspace
 
-It's possible to directly add/remove/update dependencies of your workspaces using the `workspace` config.
+It's possible to directly add/remove/update dependencies of your workspaces using the [`workspace` config](/using-npm/config#workspace).
 
 For example, assuming the following structure:
 
@@ -116,7 +111,7 @@ Note: other installing commands such as `uninstall`, `ci`, etc will also respect
 
 ### Using workspaces
 
-Given the specifics of how Node.js handles module resolution it's possible to consume any defined workspace by its declared `package.json` `name`.
+Given the [specifics of how Node.js handles module resolution](https://nodejs.org/dist/latest-v14.x/docs/api/modules.html#modules_all_together) it's possible to consume any defined workspace by its declared `package.json` `name`.
 Continuing from the example defined above, let's also create a Node.js script that will require the workspace `a` example module, e.g:
 
 ```
@@ -133,7 +128,7 @@ When running it with:
 `node lib/index.js`
 
 This demonstrates how the nature of `node_modules` resolution allows for
-**workspaces** to enable a portable workflow for requiring each **workspace** in such a way that is also easy to publish these nested workspaces to be consumed elsewhere.
+**workspaces** to enable a portable workflow for requiring each **workspace** in such a way that is also easy to [publish](/commands/npm-publish) these nested workspaces to be consumed elsewhere.
 
 ### Running commands in the context of workspaces
 
@@ -217,7 +212,8 @@ npm run test --workspaces --if-present
 
 ### See also
 
-* npm install
-* npm publish
-* npm run
-* config
+* [npm install](/commands/npm-install)
+* [npm publish](/commands/npm-publish)
+* [npm run](/commands/npm-run)
+* [config](/using-npm/config)
+

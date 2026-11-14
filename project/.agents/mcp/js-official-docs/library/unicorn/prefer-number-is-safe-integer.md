@@ -1,21 +1,15 @@
----
-title: "prefer-number-is-safe-integer"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-number-is-safe-integer.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-number-is-safe-integer
 
 📝 Prefer `Number.isSafeInteger()` over integer checks.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-`Number.isSafeInteger()` checks that a value is an integer _and_ that it can be exactly represented, that is, it is within the safe integer range `[-(2 ** 53 - 1), 2 ** 53 - 1]`. `Number.isInteger()` returns `true` for larger integers that can no longer be represented precisely, which is rarely what you want.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+[`Number.isSafeInteger()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isSafeInteger) checks that a value is an integer _and_ that it can be exactly represented, that is, it is within the safe integer range `[-(2 ** 53 - 1), 2 ** 53 - 1]`. [`Number.isInteger()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger) returns `true` for larger integers that can no longer be represented precisely, which is rarely what you want.
 
 This rule also reports common integer checks like `value % 1 === 0`, `Math.trunc(value) === value`, `Math.floor(value) === value`, and Lodash/Underscore `isInteger()`/`isSafeInteger()` calls.
 

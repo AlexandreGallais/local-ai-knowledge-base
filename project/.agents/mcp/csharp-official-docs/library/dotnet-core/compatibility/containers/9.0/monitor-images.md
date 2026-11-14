@@ -1,10 +1,9 @@
 ---
 title: ".NET Monitor images simplified to version-only tags"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/containers/9.0/monitor-images.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in containers where the .NET Monitor 9 image offering has been simplified to only provide Azure Linux distroless images.
+ms.date: 12/4/2024
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/43379
 ---
 
 # .NET Monitor images simplified to version-only tags
@@ -45,7 +44,7 @@ The `latest` tag has been updated from the Ubuntu Chiseled images to Azure Linux
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -69,7 +68,7 @@ The following table shows the recommended .NET Monitor 9 tags.
 | `9`   | To stay on the latest .NET Monitor 9 *release and servicing* update |
 | `9.0` | To stay on the latest .NET Monitor 9.0 *servicing* update           |
 
-A full list of all supported tags can be found on .NET Monitor's README in the `dotnet/dotnet-docker` GitHub repository.
+A full list of all supported tags can be found on .NET Monitor's [README](https://github.com/dotnet/dotnet-docker/blob/main/README.monitor.md#full-tag-listing) in the `dotnet/dotnet-docker` GitHub repository.
 
 Starting in .NET Monitor 8, the image offering was changed from using full distro images to using distroless images. If you're migrating from .NET Monitor 7 or earlier, the notable changes when migrating from a full distro image to a distroless image are:
 
@@ -77,9 +76,9 @@ Starting in .NET Monitor 8, the image offering was changed from using full distr
 - The lack of a package manager
 - The lack of a shell
 
-If you were using full distro images (for example, Alpine), you might need to adjust the running user of the .NET Monitor image in your deployments when migrating to .NET Monitor 8 or later. You can find guidance for changing the running user in the .NET Monitor 8.0 compatibility documentation.
+If you were using full distro images (for example, Alpine), you might need to adjust the running user of the .NET Monitor image in your deployments when migrating to .NET Monitor 8 or later. You can find guidance for changing the running user in the .NET Monitor 8.0 [compatibility documentation](https://github.com/dotnet/dotnet-monitor/blob/main/documentation/compatibility/8.0/README.md).
 
-For changes from .NET Monitor 8 to .NET Monitor 9, see the .NET Monitor 9.0 compatibility documentation.
+For changes from .NET Monitor 8 to .NET Monitor 9, see the .NET Monitor 9.0 [compatibility documentation](https://github.com/dotnet/dotnet-monitor/blob/main/documentation/compatibility/9.0/README.md).
 
 ## Affected APIs
 

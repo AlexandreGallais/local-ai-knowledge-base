@@ -1,12 +1,12 @@
 ---
 title: "NETSDK1144: Optimizing assemblies for size failed"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/sdk-errors/netsdk1144.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: How to resolve the 'optimizing for size failed' message.
+ms.topic: error-reference
+ms.date: 01/14/2025
+ai-usage: ai-assisted
+f1_keywords:
+- NETSDK1144
 ---
-
 # NETSDK1144: Optimizing assemblies for size failed
 
 ## Error Message

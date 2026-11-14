@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: ISystemClock is obsolete"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/8/isystemclock-obsolete.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in ASP.NET Core 8.0 where ISystemClock and constructors that use it have been marked obsolete.
+ms.date: 05/30/2023
+ms.custom: https://github.com/aspnet/Announcements/issues/505
 ---
-
 # ISystemClock is obsolete
 
-`Microsoft.AspNetCore.Authentication.ISystemClock` has been used by ASP.NET Core's authentication and identity components since version 1.0 to enable unit testing of time-related functionality, like expiration checking. .NET 8 includes a suitable abstraction, `System.TimeProvider`, that provides the same functionality and much more. We're taking this opportunity to obsolete `Microsoft.AspNetCore.Authentication.ISystemClock` and replace it with `System.TimeProvider` throughout the ASP.NET Core libraries.
+<xref:Microsoft.AspNetCore.Authentication.ISystemClock?displayProperty=fullName> has been used by ASP.NET Core's authentication and identity components since version 1.0 to enable unit testing of time-related functionality, like expiration checking. .NET 8 includes a suitable abstraction, <xref:System.TimeProvider?displayProperty=fullName>, that provides the same functionality and much more. We're taking this opportunity to obsolete <xref:Microsoft.AspNetCore.Authentication.ISystemClock> and replace it with <xref:System.TimeProvider> throughout the ASP.NET Core libraries.
 
 ## Version introduced
 
@@ -17,23 +14,23 @@ ASP.NET Core 8.0 Preview 5
 
 ## Previous behavior
 
-`Microsoft.AspNetCore.Authentication.ISystemClock` was injected into the constructors of the authentication and identity components by dependency injection (DI) and could be overridden for testing.
+<xref:Microsoft.AspNetCore.Authentication.ISystemClock> was injected into the constructors of the authentication and identity components by dependency injection (DI) and could be overridden for testing.
 
-The default `Microsoft.AspNetCore.Authentication.SystemClock` implementation truncated to the nearest second for easier formatting.
+The default <xref:Microsoft.AspNetCore.Authentication.SystemClock> implementation truncated to the nearest second for easier formatting.
 
 ## New behavior
 
-`Microsoft.AspNetCore.Authentication.ISystemClock`, `Microsoft.AspNetCore.Authentication.SystemClock`, and the authentication handler constructors that have an `Microsoft.AspNetCore.Authentication.ISystemClock` parameter have been marked obsolete. Using these APIs in code will generate a warning at compile time.
+<xref:Microsoft.AspNetCore.Authentication.ISystemClock>, <xref:Microsoft.AspNetCore.Authentication.SystemClock>, and the authentication handler constructors that have an <xref:Microsoft.AspNetCore.Authentication.ISystemClock> parameter have been marked obsolete. Using these APIs in code will generate a warning at compile time.
 
-`Microsoft.AspNetCore.Authentication.ISystemClock` remains in the dependency injection container but is no longer used. It may be removed from the container in a future version.
+<xref:Microsoft.AspNetCore.Authentication.ISystemClock> remains in the dependency injection container but is no longer used. It may be removed from the container in a future version.
 
-`System.TimeProvider` is now a settable property on the `Options` classes for the authentication and identity components. It can be set directly or by registering a provider in the dependency injection container.
+<xref:System.TimeProvider> is now a settable property on the `Options` classes for the authentication and identity components. It can be set directly or by registering a provider in the dependency injection container.
 
-`System.TimeProvider` does not truncate to the nearest second. Consumers are expected to correctly format the time as needed.
+<xref:System.TimeProvider> does not truncate to the nearest second. Consumers are expected to correctly format the time as needed.
 
 ## Type of breaking change
 
-This change affects source compatibility.
+This change affects [source compatibility](/dotnet/core/compatibility/categories#source-compatibility).
 
 ## Reason for change
 
@@ -41,7 +38,7 @@ This change was made to unify time abstraction across the stack for easier testi
 
 ## Recommended action
 
-If you have components that derive from `Microsoft.AspNetCore.Authentication.AuthenticationHandler`1` or `Microsoft.AspNetCore.Identity.SecurityStampValidator`1`, remove the `Microsoft.AspNetCore.Authentication.ISystemClock` constructor parameter and call the new base constructor accordingly.
+If you have components that derive from <xref:Microsoft.AspNetCore.Authentication.AuthenticationHandler`1?displayProperty=fullName> or <xref:Microsoft.AspNetCore.Identity.SecurityStampValidator`1?displayProperty=fullName>, remove the <xref:Microsoft.AspNetCore.Authentication.ISystemClock> constructor parameter and call the new base constructor accordingly.
 
 ```diff
 - public BasicAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock)
@@ -61,24 +58,24 @@ You can set `TimeProvider` for testing on the options or via DI.
 
 ## Affected APIs
 
-- `Microsoft.AspNetCore.Authentication.ISystemClock`
-- `Microsoft.AspNetCore.Authentication.SystemClock`
-- `Microsoft.AspNetCore.Authentication.AuthenticationHandler`1`
-- `Microsoft.AspNetCore.Authentication.AuthenticationHandler`1.Clock`
-- `Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)`
-- `Microsoft.AspNetCore.Authentication.Facebook.FacebookHandler.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.Facebook.FacebookOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)`
-- `Microsoft.AspNetCore.Authentication.Google.GoogleHandler.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.Google.GoogleOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)`
-- `Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)`
-- `Microsoft.AspNetCore.Authentication.MicrosoftAccount.MicrosoftAccountHandler.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.MicrosoftAccount.MicrosoftAccountOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)`
-- `Microsoft.AspNetCore.Authentication.Negotiate.NegotiateHandler.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.Negotiate.NegotiateOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)`
-- `Microsoft.AspNetCore.Authentication.OAuth.OAuthHandler`1.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{`0},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)`
-- `Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectHandler.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.HtmlEncoder,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)`
-- `Microsoft.AspNetCore.Authentication.PolicySchemeHandler.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.PolicySchemeOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)`
-- `Microsoft.AspNetCore.Authentication.RemoteAuthenticationHandler`1`
-- `Microsoft.AspNetCore.Authentication.SignInAuthenticationHandler`1.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{`0},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)`
-- `Microsoft.AspNetCore.Authentication.SignOutAuthenticationHandler`1.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{`0},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)`
-- `Microsoft.AspNetCore.Authentication.Twitter.TwitterHandler.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.Twitter.TwitterOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)`
-- `Microsoft.AspNetCore.Authentication.WsFederation.WsFederationHandler.#ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.WsFederation.WsFederationOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)`
-- `Microsoft.AspNetCore.Identity.SecurityStampValidator`1.#ctor(Microsoft.Extensions.Options.IOptions{Microsoft.AspNetCore.Identity.SecurityStampValidatorOptions},Microsoft.AspNetCore.Identity.SignInManager{`0},Microsoft.AspNetCore.Authentication.ISystemClock,Microsoft.Extensions.Logging.ILoggerFactory)`
-- `Microsoft.AspNetCore.Identity.SecurityStampValidator`1.Clock`
-- `Microsoft.AspNetCore.Identity.TwoFactorSecurityStampValidator`1.#ctor(Microsoft.Extensions.Options.IOptions{Microsoft.AspNetCore.Identity.SecurityStampValidatorOptions},Microsoft.AspNetCore.Identity.SignInManager{`0},Microsoft.AspNetCore.Authentication.ISystemClock,Microsoft.Extensions.Logging.ILoggerFactory)`
+- <xref:Microsoft.AspNetCore.Authentication.ISystemClock?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Authentication.SystemClock?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Authentication.AuthenticationHandler`1?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Authentication.AuthenticationHandler`1.Clock?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationHandler.%23ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)>
+- <xref:Microsoft.AspNetCore.Authentication.Facebook.FacebookHandler.%23ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.Facebook.FacebookOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)>
+- <xref:Microsoft.AspNetCore.Authentication.Google.GoogleHandler.%23ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.Google.GoogleOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)>
+- <xref:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.%23ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)>
+- <xref:Microsoft.AspNetCore.Authentication.MicrosoftAccount.MicrosoftAccountHandler.%23ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.MicrosoftAccount.MicrosoftAccountOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)>
+- <xref:Microsoft.AspNetCore.Authentication.Negotiate.NegotiateHandler.%23ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.Negotiate.NegotiateOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)>
+- <xref:Microsoft.AspNetCore.Authentication.OAuth.OAuthHandler`1.%23ctor(Microsoft.Extensions.Options.IOptionsMonitor{`0},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)>
+- <xref:Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectHandler.%23ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.OpenIdConnect.OpenIdConnectOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.HtmlEncoder,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)>
+- <xref:Microsoft.AspNetCore.Authentication.PolicySchemeHandler.%23ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.PolicySchemeOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Authentication.RemoteAuthenticationHandler`1?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Authentication.SignInAuthenticationHandler`1.%23ctor(Microsoft.Extensions.Options.IOptionsMonitor{`0},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)>
+- <xref:Microsoft.AspNetCore.Authentication.SignOutAuthenticationHandler`1.%23ctor(Microsoft.Extensions.Options.IOptionsMonitor{`0},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)>
+- <xref:Microsoft.AspNetCore.Authentication.Twitter.TwitterHandler.%23ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.Twitter.TwitterOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)>
+- <xref:Microsoft.AspNetCore.Authentication.WsFederation.WsFederationHandler.%23ctor(Microsoft.Extensions.Options.IOptionsMonitor{Microsoft.AspNetCore.Authentication.WsFederation.WsFederationOptions},Microsoft.Extensions.Logging.ILoggerFactory,System.Text.Encodings.Web.UrlEncoder,Microsoft.AspNetCore.Authentication.ISystemClock)>
+- <xref:Microsoft.AspNetCore.Identity.SecurityStampValidator`1.%23ctor(Microsoft.Extensions.Options.IOptions{Microsoft.AspNetCore.Identity.SecurityStampValidatorOptions},Microsoft.AspNetCore.Identity.SignInManager{`0},Microsoft.AspNetCore.Authentication.ISystemClock,Microsoft.Extensions.Logging.ILoggerFactory)>
+- <xref:Microsoft.AspNetCore.Identity.SecurityStampValidator`1.Clock?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Identity.TwoFactorSecurityStampValidator`1.%23ctor(Microsoft.Extensions.Options.IOptions{Microsoft.AspNetCore.Identity.SecurityStampValidatorOptions},Microsoft.AspNetCore.Identity.SignInManager{`0},Microsoft.AspNetCore.Authentication.ISystemClock,Microsoft.Extensions.Logging.ILoggerFactory)>

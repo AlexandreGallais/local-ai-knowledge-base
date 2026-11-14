@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: AllowRenegotiation default is false"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/networking/7.0/allowrenegotiation-default.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 7 breaking change in networking where the default value of SslServerAuthenticationOptions.AllowRenegotiation has been changed to false.
+ms.date: 03/16/2022
 ---
-
 # AllowRenegotiation default is false
 
-The default value of `System.Net.Security.SslServerAuthenticationOptions.AllowRenegotiation` has been changed to `false`.
+The default value of <xref:System.Net.Security.SslServerAuthenticationOptions.AllowRenegotiation?displayProperty=nameWithType> has been changed to `false`.
 
 ## Previous behavior
 
@@ -25,7 +21,7 @@ Starting in .NET 7, client-side renegotiation must be explicitly enabled on the 
 
 ## Type of breaking change
 
-This change can affect binary compatibility and source compatibility.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility) and [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
@@ -33,11 +29,11 @@ Client-side renegotiation is viewed as insecure by the industry. For example, it
 
 ## Recommended action
 
-If client-side renegotiation is required, set `System.Net.Security.SslServerAuthenticationOptions.AllowRenegotiation` to `true` when initializing the server side of the `System.Net.Security.SslStream`.
+If client-side renegotiation is required, set <xref:System.Net.Security.SslServerAuthenticationOptions.AllowRenegotiation?displayProperty=nameWithType> to `true` when initializing the server side of the <xref:System.Net.Security.SslStream>.
 
 ## Affected APIs
 
-- `System.Net.Security.SslServerAuthenticationOptions`
-- `System.Net.Security.SslStream.AuthenticateAsServer(System.Security.Cryptography.X509Certificates.X509Certificate,System.Boolean,System.Boolean)`
-- `System.Net.Security.SslStream.AuthenticateAsServer(System.Security.Cryptography.X509Certificates.X509Certificate,System.Boolean,System.Security.Authentication.SslProtocols,System.Boolean)`
-- `System.Net.Security.SslStream.AuthenticateAsServer(System.Security.Cryptography.X509Certificates.X509Certificate)`
+- <xref:System.Net.Security.SslServerAuthenticationOptions?displayProperty=fullName>
+- <xref:System.Net.Security.SslStream.AuthenticateAsServer(System.Security.Cryptography.X509Certificates.X509Certificate,System.Boolean,System.Boolean)?displayProperty=fullName>
+- <xref:System.Net.Security.SslStream.AuthenticateAsServer(System.Security.Cryptography.X509Certificates.X509Certificate,System.Boolean,System.Security.Authentication.SslProtocols,System.Boolean)?displayProperty=fullName>
+- <xref:System.Net.Security.SslStream.AuthenticateAsServer(System.Security.Cryptography.X509Certificates.X509Certificate)?displayProperty=fullName>

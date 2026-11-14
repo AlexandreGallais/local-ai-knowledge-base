@@ -1,15 +1,6 @@
----
-title: "inkex.tester"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/tester/__init__.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.tester
 
-Testing module. See unittests for details.
+Testing module. See :ref:`unittests` for details.
 
 ## class NoExtension
 
@@ -84,8 +75,8 @@ def data_file(cls, filename, *parts, check_exists=True)
 
 Provide a data file from a filename, can accept directories as arguments.
 
-> *Changed in version 1.2.*
-> `check_exists` parameter added
+.. versionchanged:: 1.2
+    ``check_exists`` parameter added
 
 ## TestCase.empty_svg
 
@@ -112,7 +103,7 @@ def assertTransformEqual(self, lhs, rhs, places=7)
 Assert that two transform expressions evaluate to the same
 transformation matrix.
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## TestCase.effect
 
@@ -163,7 +154,9 @@ class ComparisonMeta(type)
 ```
 
 Metaclass for ComparisonMixin which creates parametrized tests that can be run
-independently. See `ComparisonMixin` for details.
+independently. See :class:`~inkex.tester.ComparisonMixin` for details.
+
+..versionadded :: 1.4
 
 ## class ComparisonMixin
 
@@ -172,28 +165,28 @@ class ComparisonMixin(metaclass=ComparisonMeta)
 ```
 
 This mixin allows to easily specify a set of run-through unit tests for an
-extension, which is specified in `inkex.tester.TestCase.effect_class`.
+extension, which is specified in :attr:`inkex.tester.TestCase.effect_class`.
 
-The commandline parameters are passed in `comparisons`, the input file
-in `compare_file` (either a list of files, or a single file).
+The commandline parameters are passed in :attr:`comparisons`, the input file
+in :attr:`compare_file` (either a list of files, or a single file).
 
-The `ComparisonMeta` metaclass creates a set of independent unit tests
+The :class:`ComparisonMeta` metaclass creates a set of independent unit tests
 out of this data. Behavior notest:
 
-- The unit tests created are the cross product of `comparisons` and
-`compare_file`. If `compare_file` is a list, the comparison file name
-is suffixed with the current `compare_file` name.
-- Optionally, `comparisons_cmpfile_dict` may be specified as
-`Dict[Tuple[str], str]` where the keys are sets of command line parameters and
-the values are the filenames of the output file. This takes precedence over
-`comparisons`.
+- The unit tests created are the cross product of :attr:`comparisons` and
+  :attr:`compare_file`. If :attr:`compare_file` is a list, the comparison file name
+  is suffixed with the current ``compare_file`` name.
+- Optionally, :attr:`comparisons_cmpfile_dict` may be specified as
+  ``Dict[Tuple[str], str]`` where the keys are sets of command line parameters and
+  the values are the filenames of the output file. This takes precedence over
+  :attr:`comparisons`.
 - If any of those values are properties, their values cannot be accessed at test
-collection time and there will only be a single test, `test_all_comparisons`
-with otherwise identical behavior.
-- If the class overrides `test_all_comparisons`, no additional tests are
-generated to allow for custom comparison logic.
+  collection time and there will only be a single test, ``test_all_comparisons``
+  with otherwise identical behavior.
+- If the class overrides ``test_all_comparisons``, no additional tests are
+  generated to allow for custom comparison logic.
 
-To create the comparison files for the unit tests, use the `EXPORT_COMPARE`
+To create the comparison files for the unit tests, use the ``EXPORT_COMPARE``
 environment variable.
 
 ## ComparisonMixin.write_compare_data

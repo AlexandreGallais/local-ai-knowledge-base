@@ -1,17 +1,16 @@
 ---
-title: "dotnet-dump diagnostic tool - .NET CLI (part 1 of 2)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/dotnet-dump.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet-dump diagnostic tool - .NET CLI
+description: Learn how to install and use the dotnet-dump CLI tool to collect and analyze Windows and Linux dumps without any native debugger.
+ms.date: 03/04/2026
+ms.topic: reference
+ms.custom: linux-related-content
+ai-usage: ai-assisted
 ---
-
 # Dump collection and analysis utility (dotnet-dump)
 
 **This article applies to:** ✔️ `dotnet-dump` version 3.0.47001 and later versions
 
-> **Note:**
+> [!NOTE]
 > `dotnet-dump` for macOS is only supported with .NET 5 and later versions.
 
 ## Install
@@ -20,7 +19,7 @@ There are two ways to download and install `dotnet-dump`:
 
 - **dotnet global tool:**
 
-  To install the latest release version of the `dotnet-dump` NuGet package, use the dotnet tool install command:
+  To install the latest release version of the `dotnet-dump` [NuGet package](https://www.nuget.org/packages/dotnet-dump), use the [dotnet tool install](../tools/dotnet-tool-install.md) command:
 
   ```dotnetcli
   dotnet tool install --global dotnet-dump
@@ -32,10 +31,10 @@ There are two ways to download and install `dotnet-dump`:
 
   | OS  | Platform |
   | --- | -------- |
-  | Windows | x86 \| x64 \| Arm \| Arm-x64 |
-  | Linux   | x64 \| Arm \| Arm64 \| musl-x64 \| musl-Arm64 |
+  | Windows | [x86](https://aka.ms/dotnet-dump/win-x86) \| [x64](https://aka.ms/dotnet-dump/win-x64) \| [Arm](https://aka.ms/dotnet-dump/win-arm) \| [Arm-x64](https://aka.ms/dotnet-dump/win-arm64) |
+  | Linux   | [x64](https://aka.ms/dotnet-dump/linux-x64) \| [Arm](https://aka.ms/dotnet-dump/linux-arm) \| [Arm64](https://aka.ms/dotnet-dump/linux-arm64) \| [musl-x64](https://aka.ms/dotnet-dump/linux-musl-x64) \| [musl-Arm64](https://aka.ms/dotnet-dump/linux-musl-arm64) |
 
-> **Note:**
+> [!NOTE]
 > To use `dotnet-dump` on an x86 app, you need a corresponding x86 version of the tool.
 
 ## Synopsis
@@ -62,9 +61,9 @@ The `dotnet-dump` global tool is a way to collect and analyze dumps on Windows, 
 
 | Command                                     |
 | ------------------------------------------- |
-| dotnet-dump collect |
-| dotnet-dump analyze |
-| dotnet-dump ps           |
+| [dotnet-dump collect](#dotnet-dump-collect) |
+| [dotnet-dump analyze](#dotnet-dump-analyze) |
+| [dotnet-dump ps](#dotnet-dump-ps)           |
 
 ## dotnet-dump collect
 
@@ -120,20 +119,20 @@ dotnet-dump collect [-h|--help] [-p|--process-id] [-n|--name] [--type] [-o|--out
 
   Enables crash report generation.
 
-> **Note:**
+> [!NOTE]
 > On Linux and macOS, this command expects the target application and `dotnet-dump` to share the same `TMPDIR` environment variable. Otherwise, the command will time out.
 
-> **Note:**
+> [!NOTE]
 > To collect a dump using `dotnet-dump`, it needs to be run as the same user as the user running target process or as root. Otherwise, the tool will fail to establish a connection with the target process.
 
-> **Note:**
+> [!NOTE]
 > Collecting a full or heap dump may cause the OS to page in substantial virtual memory for the target process. If the target process is running in a container with an enforced memory limit, the increased memory usage
 > may cause the OS to terminate the container if the limit was exceeded. We recommend testing to ensure the memory limit is set high enough. Another option is to temporarily change or remove the limit
 > prior to dump collection if your environment supports doing so.
 
 ## dotnet-dump analyze
 
-Starts an interactive shell to explore a dump. The shell accepts various SOS commands.
+Starts an interactive shell to explore a dump. The shell accepts various [SOS commands](#analyze-sos-commands).
 
 ### Synopsis
 
@@ -151,7 +150,7 @@ dotnet-dump analyze <dump_path> [-h|--help] [-c|--command]
 
 - **`-c|--command <debug_command>`**
 
-  Runs the command on start. Multiple instances of this parameter can be used in an invocation to chain commands. Commands will get run in the order that they are provided on the command line. If you want dotnet dump to exit after the commands, your last command should be 'exit'.
+  Runs the [command](#analyze-sos-commands) on start. Multiple instances of this parameter can be used in an invocation to chain commands. Commands will get run in the order that they are provided on the command line. If you want dotnet dump to exit after the commands, your last command should be 'exit'.
 
 ### Analyze SOS commands
 
@@ -216,10 +215,10 @@ dotnet-dump analyze <dump_path> [-h|--help] [-c|--command]
 | `objsize`                                           | Displays the size of the specified object. |
 | `parallelstacks`                                    | Displays the merged threads stack similarly to the Visual Studio 'Parallel Stacks' panel. |
 | `pathto`                                            | Displays the GC path from `<root>` to `<target>`. |
-| `pe` or `printexception`                            | Displays and formats fields of any object derived from the `System.Exception` class at the specified address. |
+| `pe` or `printexception`                            | Displays and formats fields of any object derived from the <xref:System.Exception> class at the specified address. |
 | `r` or `registers`                                  | Displays the thread's registers. |
 | `runtimes`                                          | Lists the runtimes in the target or changes the default runtime. |
-| `setclrpath`                                        | Sets the path to load coreclr dac/dbi files using `setclrpath `. |
+| `setclrpath`                                        | Sets the path to load coreclr dac/dbi files using `setclrpath <path>`. |
 | `setsymbolserver`                                   | Enables the symbol server support. |
 | `sos`                                               | Executes various coreclr debugging commands. Use the syntax `sos <command-name> <args>`. For more information, see 'soshelp'. |
 | `soshelp` or `help`                                 | Displays all available commands. |
@@ -236,5 +235,285 @@ dotnet-dump analyze <dump_path> [-h|--help] [-c|--command]
 | `verifyheap`                                        | Checks the GC heap for signs of corruption. |
 | `verifyobj`                                         | Checks the object that is passed as an argument for signs of corruption. |
 
-> **Note:**
-> Additional details can be found in SOS Debugging Extension for .NET.
+> [!NOTE]
+> Additional details can be found in [SOS Debugging Extension for .NET](sos-debugging-extension.md).
+
+## dotnet-dump ps
+
+ Lists the dotnet processes that dumps can be collected from.
+ `dotnet-dump` version 6.0.320703 and later versions also display the command-line arguments that each process was started with, if available.
+
+### Synopsis
+
+```console
+dotnet-dump ps [-h|--help]
+```
+
+### Example
+
+Suppose you start a long-running app using the command ```dotnet run --configuration Release```. In another window, you run the ```dotnet-dump ps``` command. The output you'll see is as follows. The command-line arguments, if any, are shown in `dotnet-dump` version 6.0.320703 and later.
+
+```console
+> dotnet-dump ps
+
+  21932 dotnet     C:\Program Files\dotnet\dotnet.exe   run --configuration Release
+  36656 dotnet     C:\Program Files\dotnet\dotnet.exe
+```
+
+## Using `dotnet-dump`
+
+The first step is to collect a dump. This step can be skipped if a core dump has already been generated. The operating system or the .NET Core runtime's built-in [dump generation feature](https://github.com/dotnet/runtime/blob/main/docs/design/coreclr/botr/xplat-minidump-generation.md) can each create core dumps.
+
+```console
+$ dotnet-dump collect --process-id 1902
+Writing minidump to file ./core_20190226_135837
+Written 98983936 bytes (24166 pages) to core file
+Complete
+```
+
+Now analyze the core dump with the `analyze` command:
+
+```console
+$ dotnet-dump analyze ./core_20190226_135850
+Loading core dump: ./core_20190226_135850
+Ready to process analysis commands. Type 'help' to list available commands or 'help [command]' to get detailed help on a command.
+Type 'quit' or 'exit' to exit the session.
+>
+```
+
+This action brings up an interactive session that accepts commands like:
+
+```console
+> clrstack
+OS Thread Id: 0x573d (0)
+    Child SP               IP Call Site
+00007FFD28B42C58 00007fb22c1a8ed9 [HelperMethodFrame_PROTECTOBJ: 00007ffd28b42c58] System.RuntimeMethodHandle.InvokeMethod(System.Object, System.Object[], System.Signature, Boolean, Boolean)
+00007FFD28B42DD0 00007FB1B1334F67 System.Reflection.RuntimeMethodInfo.Invoke(System.Object, System.Reflection.BindingFlags, System.Reflection.Binder, System.Object[], System.Globalization.CultureInfo) [/root/coreclr/src/mscorlib/src/System/Reflection/RuntimeMethodInfo.cs @ 472]
+00007FFD28B42E20 00007FB1B18D33ED SymbolTestApp.Program.Foo4(System.String) [/home/mikem/builds/SymbolTestApp/SymbolTestApp/SymbolTestApp.cs @ 54]
+00007FFD28B42ED0 00007FB1B18D2FC4 SymbolTestApp.Program.Foo2(Int32, System.String) [/home/mikem/builds/SymbolTestApp/SymbolTestApp/SymbolTestApp.cs @ 29]
+00007FFD28B42F00 00007FB1B18D2F5A SymbolTestApp.Program.Foo1(Int32, System.String) [/home/mikem/builds/SymbolTestApp/SymbolTestApp/SymbolTestApp.cs @ 24]
+00007FFD28B42F30 00007FB1B18D168E SymbolTestApp.Program.Main(System.String[]) [/home/mikem/builds/SymbolTestApp/SymbolTestApp/SymbolTestApp.cs @ 19]
+00007FFD28B43210 00007fb22aa9cedf [GCFrame: 00007ffd28b43210]
+00007FFD28B43610 00007fb22aa9cedf [GCFrame: 00007ffd28b43610]
+```
+
+To see an unhandled exception that killed your app:
+
+```console
+> pe -lines
+Exception object: 00007fb18c038590
+Exception type:   System.Reflection.TargetInvocationException
+Message:          Exception has been thrown by the target of an invocation.
+InnerException:   System.Exception, Use !PrintException 00007FB18C038368 to see more.
+StackTrace (generated):
+SP               IP               Function
+00007FFD28B42DD0 0000000000000000 System.Private.CoreLib.dll!System.RuntimeMethodHandle.InvokeMethod(System.Object, System.Object[], System.Signature, Boolean, Boolean)
+00007FFD28B42DD0 00007FB1B1334F67 System.Private.CoreLib.dll!System.Reflection.RuntimeMethodInfo.Invoke(System.Object, System.Reflection.BindingFlags, System.Reflection.Binder, System.Object[], System.Globalization.CultureInfo)+0xa7 [/root/coreclr/src/mscorlib/src/System/Reflection/RuntimeMethodInfo.cs @ 472]
+00007FFD28B42E20 00007FB1B18D33ED SymbolTestApp.dll!SymbolTestApp.Program.Foo4(System.String)+0x15d [/home/mikem/builds/SymbolTestApp/SymbolTestApp/SymbolTestApp.cs @ 54]
+00007FFD28B42ED0 00007FB1B18D2FC4 SymbolTestApp.dll!SymbolTestApp.Program.Foo2(Int32, System.String)+0x34 [/home/mikem/builds/SymbolTestApp/SymbolTestApp/SymbolTestApp.cs @ 29]
+00007FFD28B42F00 00007FB1B18D2F5A SymbolTestApp.dll!SymbolTestApp.Program.Foo1(Int32, System.String)+0x3a [/home/mikem/builds/SymbolTestApp/SymbolTestApp/SymbolTestApp.cs @ 24]
+00007FFD28B42F30 00007FB1B18D168E SymbolTestApp.dll!SymbolTestApp.Program.Main(System.String[])+0x6e [/home/mikem/builds/SymbolTestApp/SymbolTestApp/SymbolTestApp.cs @ 19]
+
+StackTraceString: <none>
+HResult: 80131604
+```
+
+## Analyze memory leaks and allocations
+
+Memory leaks occur when your app holds references to objects that are no longer needed, preventing the garbage collector from reclaiming memory. Use `dotnet-dump` to identify memory leaks, find the largest objects, and understand where memory is being consumed.
+
+For a complete walkthrough of debugging a memory leak, see [Debug a memory leak in .NET](debug-memory-leak.md).
+
+### Identify the largest objects
+
+Use the `dumpheap` command with the `-stat` option to see a summary of objects on the heap, sorted by total size:
+
+```console
+> dumpheap -stat
+
+Statistics:
+              MT    Count    TotalSize Class Name
+00007f6c1eeefba8      576        59904 System.Reflection.RuntimeMethodInfo
+00007f6c1dc021c8     1749        95696 System.SByte[]
+00000000008c9db0     3847       116080      Free
+00007f6c1e784a18      175       128640 System.Char[]
+00007f6c1dbf5510      217       133504 System.Object[]
+00007f6c1dc014c0      467       416464 System.Byte[]
+00007f6c21625038        6      4063376 testwebapi.Controllers.Customer[]
+00007f6c20a67498   200000      4800000 testwebapi.Controllers.Customer
+00007f6c1dc00f90   206770     19494060 System.String
+Total 428516 objects
+```
+
+This output shows you which types consume the most memory. In this example, `System.String` objects consume about 19 MB, and `Customer` objects consume about 4.8 MB.
+
+### Identify objects by namespace or assembly
+
+To find which modules or namespaces are consuming memory, use the `-type` option with a partial type name to filter results:
+
+```console
+> dumpheap -type MyCompany.Data -stat
+
+Statistics:
+              MT    Count    TotalSize Class Name
+00007f6c21625038    15000      3600000 MyCompany.Data.CustomerRecord
+00007f6c21625040     8000      2560000 MyCompany.Data.OrderHistory
+00007f6c21625048     2000       960000 MyCompany.Data.ProductCache
+Total 25000 objects, 7120000 bytes
+```
+
+This approach helps you identify which parts of your codebase are responsible for memory consumption.
+
+### Find the highest number of instantiations
+
+To see which types have the most instances, regardless of total size, look at the **Count** column in the `dumpheap -stat` output. Objects with high instance counts might indicate inefficient object creation or caching issues:
+
+```console
+> dumpheap -stat
+
+Statistics:
+              MT    Count    TotalSize Class Name
+00007f6c1dc00f90   206770     19494060 System.String
+00007f6c20a67498   200000      4800000 testwebapi.Controllers.Customer
+00007f6c1dc021c8     1749        95696 System.SByte[]
+```
+
+This example shows 206,770 `String` instances and 200,000 `Customer` instances.
+
+### Analyze object references with gcroot
+
+After identifying large or numerous objects, use `gcroot` to find out why an object isn't being garbage collected. The `gcroot` command shows the reference chain from GC roots to a specific object:
+
+```console
+> dumpheap -mt 00007f6c20a67498
+         Address               MT     Size
+00007f6ad09421f8 00007f6c20a67498       24
+...
+
+> gcroot 00007f6ad09421f8
+
+Thread 3f68:
+    00007F6795BB58A0 00007F6C1D7D0745 testwebapi.Controllers.CustomerCache.GetAll()
+        rbx:  (interior)
+            ->  00007F6BDFFFF038 System.Object[]
+            ->  00007F69D0033570 testwebapi.Controllers.Processor
+            ->  00007F69D0033588 testwebapi.Controllers.CustomerCache
+            ->  00007F69D00335A0 System.Collections.Generic.List`1[[testwebapi.Controllers.Customer]]
+            ->  00007F6C000148A0 testwebapi.Controllers.Customer[]
+            ->  00007F6AD0942258 testwebapi.Controllers.Customer
+
+Found 1 root.
+```
+
+This output shows that the `Customer` object is held by a `CustomerCache` object, which helps you identify the source of the leak in your code.
+
+### Analyze memory by object size
+
+Use the `-min` and `-max` options to filter objects by size:
+
+```console
+> dumpheap -min 100000 -stat
+
+Statistics:
+              MT    Count    TotalSize Class Name
+00007f6c21625038        6      4063376 testwebapi.Controllers.Customer[]
+00007f6c1dc014c0       12       416464 System.Byte[]
+Total 18 objects
+```
+
+This command shows only objects larger than 100,000 bytes, helping you focus on the biggest memory consumers.
+
+## Find deadlocks
+
+Use `dotnet-dump` to diagnose deadlock situations where threads are blocked waiting for resources. For a complete deadlock debugging walkthrough, see [Debug a deadlock in .NET](debug-deadlock.md).
+
+### List all threads
+
+Use the `threads` command to see all managed threads:
+
+```console
+> threads
+*0 0x1DBFF (121855)
+ 1 0x1DC01 (121857)
+ 2 0x1DC02 (121858)
+ ...
+```
+
+### Examine thread stacks
+
+Use `clrstack -all` to see the call stacks of all threads:
+
+```console
+> clrstack -all
+```
+
+Look for patterns where multiple threads are blocked on `Monitor.Enter` or similar synchronization primitives.
+
+### Find lock owners
+
+Use the `syncblk` command to see which threads hold locks and which threads are waiting:
+
+```console
+> syncblk
+Index         SyncBlock MonitorHeld Recursion Owning Thread Info          SyncBlock Owner
+   43 00000246E51268B8          603         1 0000024B713F4E30 5634  28   00000249654b14c0 System.Object
+   44 00000246E5126908            3         1 0000024B713F47E0 51d4  29   00000249654b14d8 System.Object
+```
+
+The **MonitorHeld** column shows the number of threads waiting for the lock. The **Owning Thread Info** column shows which thread owns the lock.
+
+## Advanced memory analysis scenarios
+
+### Compare multiple dumps
+
+To understand memory growth over time, collect multiple dumps and compare them:
+
+1. Collect a baseline dump: `dotnet-dump collect -p <pid> -o baseline.dmp`
+1. Let your app run and consume more memory.
+1. Collect a second dump: `dotnet-dump collect -p <pid> -o after.dmp`
+1. Analyze both dumps and compare the `dumpheap -stat` results.
+
+Look for types that have significantly more instances or larger total sizes in the second dump.
+
+### Analyze memory for specific object types
+
+To dump all instances of a specific type:
+
+```console
+> dumpheap -type Customer
+         Address               MT     Size
+00007f6ad09421f8 00007f6c20a67498       24
+00007f6ad0942210 00007f6c20a67498       24
+...
+```
+
+Then use `dumpobj` to examine individual objects:
+
+```console
+> dumpobj 00007f6ad09421f8
+Name:        testwebapi.Controllers.Customer
+MethodTable: 00007f6c20a67498
+EEClass:     00007f6c21625000
+Size:        24(0x18) bytes
+File:        /app/testwebapi.dll
+Fields:
+              MT    Field   Offset                 Type VT     Attr            Value Name
+00007f6c1dc00f90  4000001        8        System.String  0 instance 00007f6ad09421f0 Name
+00007f6c1dbf4c18  4000002       10         System.Int32  1 instance               42 Id
+```
+
+## Collect a dump in a Docker container
+
+`dotnet-dump` requires `ptrace` capabilities in the container. A common way to grant them is to start the container with `--cap-add=SYS_PTRACE`. Depending on your environment, you might also need to adjust the container's seccomp profile. See the [Dumps: FAQ](faq-dumps.yml) for help diagnosing container security configuration issues.
+
+To install `dotnet-dump` in a production image without the .NET SDK, use the [direct download links](#install) from the Install section, or use a [multi-stage Docker build](https://docs.docker.com/develop/develop-images/multistage-build/) to copy the tool binaries from an SDK image. For complete container diagnostics guidance, see [Collect diagnostics in Linux containers](diagnostics-in-containers.md).
+
+## Troubleshooting dump collection issues
+
+Dump collection requires the process to be able to call `ptrace`. If you are facing issues collecting dumps, the environment you are running on may be configured to restrict such calls. See our [Dumps: FAQ](faq-dumps.yml) for troubleshooting tips and potential solutions to common issues.
+
+## See also
+
+- [Collect diagnostics in Linux containers](diagnostics-in-containers.md)
+- [Collecting and analyzing memory dumps blog](https://devblogs.microsoft.com/dotnet/collecting-and-analyzing-memory-dumps/)
+- [Heap analysis tool (dotnet-gcdump)](dotnet-gcdump.md)

@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataAssemblyImport::FindAssembliesByName Method"
 title: "IMetaDataAssemblyImport::FindAssembliesByName Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataassemblyimport-findassembliesbyname-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataAssemblyImport.FindAssembliesByName"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataAssemblyImport::FindAssembliesByName"
+  - "IMetaDataAssemblyImport::FindAssembliesByName method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataAssemblyImport::FindAssembliesByName Method
 
 Gets an array of assemblies with the specified `szAssemblyName` parameter, using the standard rules employed by the common language runtime (CLR) for resolving references.
@@ -33,7 +40,7 @@ HRESULT FindAssembliesByName (
  [in] A list of semicolon-delimited subdirectories (for example, "bin;bin2"), under the root directory, in which to search for the assembly. These directories are probed in addition to those specified in the default probing rules.
 
  `szAssemblyName`
- [in] The name of the assembly to find. The format of this string is defined in the class reference page for `System.Reflection.AssemblyName`.
+ [in] The name of the assembly to find. The format of this string is defined in the class reference page for <xref:System.Reflection.AssemblyName>.
 
  `ppIUnk`
  [out] An array that holds the `IMetadataAssemblyImport` interface pointers.
@@ -42,7 +49,7 @@ HRESULT FindAssembliesByName (
  [in] The maximum number of interface pointers to place in `ppIUnk`.
 
  `pcAssemblies`
- [out] The number of interface pointers returned—that is, the number of interface pointers actually placed in `ppIUnk`.
+ [out] The number of interface pointers returned&mdash;that is, the number of interface pointers actually placed in `ppIUnk`.
 
 ## Return Value
 
@@ -53,17 +60,17 @@ HRESULT FindAssembliesByName (
 
 ## Remarks
 
- Given an assembly name, the `FindAssembliesByName` method finds the assembly by following the standard rules for resolving assembly references. (For more information, see How the Runtime Locates Assemblies.) `FindAssembliesByName` allows the caller to configure various aspects of the assembly resolver context, such as application base and private search path.
+ Given an assembly name, the `FindAssembliesByName` method finds the assembly by following the standard rules for resolving assembly references. (For more information, see [How the Runtime Locates Assemblies](../../../../framework/deployment/how-the-runtime-locates-assemblies.md).) `FindAssembliesByName` allows the caller to configure various aspects of the assembly resolver context, such as application base and private search path.
 
- The `FindAssembliesByName` method requires the CLR to be initialized in the process in order to invoke the assembly resolution logic. Therefore, you must call CoInitializeEE (passing COINITEE_DEFAULT) before calling `FindAssembliesByName`, and then follow with a call to CoUninitializeCor.
+ The `FindAssembliesByName` method requires the CLR to be initialized in the process in order to invoke the assembly resolution logic. Therefore, you must call [CoInitializeEE](../../../../framework/unmanaged-api/hosting/coinitializeee-function.md) (passing COINITEE_DEFAULT) before calling `FindAssembliesByName`, and then follow with a call to [CoUninitializeCor](../../../../framework/unmanaged-api/hosting/couninitializecor-function.md).
 
- `FindAssembliesByName` returns an IMetaDataImport pointer to the file containing the assembly manifest for the assembly name that is passed in. If the given assembly name is not fully specified (for example, if it does not include a version), multiple assemblies might be returned.
+ `FindAssembliesByName` returns an [IMetaDataImport](imetadataimport-interface.md) pointer to the file containing the assembly manifest for the assembly name that is passed in. If the given assembly name is not fully specified (for example, if it does not include a version), multiple assemblies might be returned.
 
  `FindAssembliesByName` is commonly used by a compiler that attempts to find a referenced assembly at compile time.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -71,5 +78,5 @@ HRESULT FindAssembliesByName (
 
 ## See also
 
-- How the Runtime Locates Assemblies
-- IMetaDataAssemblyImport Interface
+- [How the Runtime Locates Assemblies](../../../../framework/deployment/how-the-runtime-locates-assemblies.md)
+- [IMetaDataAssemblyImport Interface](imetadataassemblyimport-interface.md)

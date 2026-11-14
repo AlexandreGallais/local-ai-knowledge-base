@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: CorDebugUnmappedStop Enumeration"
 title: "CorDebugUnmappedStop Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cordebugunmappedstop-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "CorDebugUnmappedStop"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "CorDebugUnmappedStop"
+helpviewer_keywords:
+  - "CorDebugUnmappedStop enumeration [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # CorDebugUnmappedStop Enumeration
 
 Specifies the type of unmapped code that can trigger a halt in code execution by the stepper.
@@ -39,11 +47,11 @@ typedef enum CorDebugUnmappedStop {
 
 ## Remarks
 
- Use the ICorDebugStepper::SetUnmappedStopMask method to set the flags that specify the unmapped code in which the stepper will stop.
+ Use the [ICorDebugStepper::SetUnmappedStopMask](icordebugstepper-setunmappedstopmask-method.md) method to set the flags that specify the unmapped code in which the stepper will stop.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

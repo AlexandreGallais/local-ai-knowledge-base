@@ -1,88 +1,42 @@
 ---
 title: "How to: Open and append to a log file"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/io/how-to-open-and-append-to-a-log-file.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Open and append to a log file using the StreamWriter and StreamReader classes in .NET, which write characters to and read characters from streams.
+ms.date: "01/21/2019"
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "log files, opening"
+  - "streams, opening and appending to log file"
+  - "log files, appending to"
+  - "I/O [.NET], log files"
+ms.assetid: 74423362-1721-49cb-aa0a-e04005f72a06
 ---
-
 # How to: Open and append to a log file
 
-`System.IO.StreamWriter` and `System.IO.StreamReader` write characters to and read characters from streams. The following code example opens the *log.txt* file for input, or creates it if it doesn't exist, and appends log information to the end of the file. The example then writes the contents of the file to standard output for display.
+<xref:System.IO.StreamWriter> and <xref:System.IO.StreamReader> write characters to and read characters from streams. The following code example opens the *log.txt* file for input, or creates it if it doesn't exist, and appends log information to the end of the file. The example then writes the contents of the file to standard output for display.
 
-As an alternative to this example, you could store the information as a single string or string array, and use the `System.IO.File.WriteAllText*` or `System.IO.File.WriteAllLines*` method to achieve the same functionality.
+As an alternative to this example, you could store the information as a single string or string array, and use the <xref:System.IO.File.WriteAllText*?displayProperty=nameWithType> or <xref:System.IO.File.WriteAllLines*?displayProperty=nameWithType> method to achieve the same functionality.
 
-> **Note:**
-> Visual Basic users may choose to use the methods and properties provided by the `Microsoft.VisualBasic.Logging.Log` class or `Microsoft.VisualBasic.FileIO.FileSystem` class for creating or writing to log files.
+> [!NOTE]
+> Visual Basic users may choose to use the methods and properties provided by the <xref:Microsoft.VisualBasic.Logging.Log> class or <xref:Microsoft.VisualBasic.FileIO.FileSystem> class for creating or writing to log files.
 
 ## Example
 
- ```csharp
-using System;
-using System.IO;
-
-class DirAppend
-{
-    public static void Main()
-    {
-        using (StreamWriter w = File.AppendText("log.txt"))
-        {
-            Log("Test1", w);
-            Log("Test2", w);
-        }
-
-        using (StreamReader r = File.OpenText("log.txt"))
-        {
-            DumpLog(r);
-        }
-    }
-
-    public static void Log(string logMessage, TextWriter w)
-    {
-        w.Write("\r\nLog Entry : ");
-        w.WriteLine($"{DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}");
-        w.WriteLine("  :");
-        w.WriteLine($"  :{logMessage}");
-        w.WriteLine ("-------------------------------");
-    }
-
-    public static void DumpLog(StreamReader r)
-    {
-        string line;
-        while ((line = r.ReadLine()) != null)
-        {
-            Console.WriteLine(line);
-        }
-    }
-}
-// The example creates a file named "log.txt" and writes the following lines to it,
-// or appends them to the existing "log.txt" file:
-
-// Log Entry : <current long time string> <current long date string>
-//  :
-//  :Test1
-// -------------------------------
-
-// Log Entry : <current long time string> <current long date string>
-//  :
-//  :Test2
-// -------------------------------
-
-// It then writes the contents of "log.txt" to the console.
-```
+ [!code-csharp[Conceptual.BasicIO.TextFiles#2](../../../samples/snippets/csharp/VS_Snippets_CLR/conceptual.basicio.textfiles/cs/source2.cs#2)]
+ [!code-vb[Conceptual.BasicIO.TextFiles#2](../../../samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.basicio.textfiles/vb/source2.vb#2)]
 
 ## See also
 
-- `System.IO.StreamWriter`
-- `System.IO.StreamReader`
-- `System.IO.File.AppendText*`
-- `System.IO.File.OpenText*`
-- `System.IO.StreamReader.ReadLine*`
-- How to: Enumerate directories and files
-- How to: Read and write to a newly created data file
-- How to: Read text from a file
-- How to: Write text to a file
-- How to: Read characters from a string
-- How to: Write characters to a string
-- File and stream I/O
+- <xref:System.IO.StreamWriter>
+- <xref:System.IO.StreamReader>
+- <xref:System.IO.File.AppendText*?displayProperty=nameWithType>
+- <xref:System.IO.File.OpenText*?displayProperty=nameWithType>
+- <xref:System.IO.StreamReader.ReadLine*?displayProperty=nameWithType>
+- [How to: Enumerate directories and files](how-to-enumerate-directories-and-files.md)
+- [How to: Read and write to a newly created data file](how-to-read-and-write-to-a-newly-created-data-file.md)
+- [How to: Read text from a file](how-to-read-text-from-a-file.md)
+- [How to: Write text to a file](how-to-write-text-to-a-file.md)
+- [How to: Read characters from a string](how-to-read-characters-from-a-string.md)
+- [How to: Write characters to a string](how-to-write-characters-to-a-string.md)
+- [File and stream I/O](index.md)

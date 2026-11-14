@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugType::GetType Method"
 title: "ICorDebugType::GetType Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugtype-gettype-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugType.GetType"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugType::GetType"
+helpviewer_keywords:
+  - "ICorDebugType::GetType method [.NET debugging]"
+  - "GetType method, ICorDebugType interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugType::GetType Method
 
-Gets a CorElementType value that describes the native type of the common language runtime (CLR) `System.Type` represented by this ICorDebugType.
+Gets a CorElementType value that describes the native type of the common language runtime (CLR) <xref:System.Type> represented by this ICorDebugType.
 
 ## Syntax
 
@@ -22,15 +31,15 @@ HRESULT GetType (
 ## Parameters
 
  `ty`
- [out] A pointer to a value of the `CorElementType` enumeration that indicates the CLR `System.Type` that this `ICorDebugType` represents.
+ [out] A pointer to a value of the `CorElementType` enumeration that indicates the CLR <xref:System.Type> that this `ICorDebugType` represents.
 
 ## Remarks
 
-If the value of `ty` is either ELEMENT_TYPE_CLASS or ELEMENT_TYPE_VALUETYPE, the ICorDebugType::GetClass method may be called to get the uninstantiated type for a generic type; otherwise, do not call `ICorDebugType::GetClass`.
+If the value of `ty` is either ELEMENT_TYPE_CLASS or ELEMENT_TYPE_VALUETYPE, the [ICorDebugType::GetClass](icordebugtype-getclass-method.md) method may be called to get the uninstantiated type for a generic type; otherwise, do not call `ICorDebugType::GetClass`.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

@@ -1,12 +1,3 @@
----
-title: "core::cell::lazy"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/cell/lazy.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::cell::lazy
 
 ## struct LazyCell
@@ -17,22 +8,29 @@ pub struct LazyCell<T, F = fn() -> T>
 
 A value which is initialized on the first access.
 
-For a thread-safe version of this struct, see `std::sync::LazyLock`.
+For a thread-safe version of this struct, see [`std::sync::LazyLock`].
+
+[`std::sync::LazyLock`]: ../../std/sync/struct.LazyLock.html
 
 # Poisoning
 
-If the initialization closure passed to `LazyCell::new` panics, the cell will be poisoned.
+If the initialization closure passed to [`LazyCell::new`] panics, the cell will be poisoned.
 Once the cell is poisoned, any threads that attempt to access this cell (via a dereference
-or via an explicit call to `force()`) will panic.
+or via an explicit call to [`force()`]) will panic.
 
-This concept is similar to that of poisoning in the `std::sync::poison` module. A key
+This concept is similar to that of poisoning in the [`std::sync::poison`] module. A key
 difference, however, is that poisoning in `LazyCell` is _unrecoverable_. All future accesses of
-the cell from other threads will panic, whereas a type in `std::sync::poison` like
-`std::sync::poison::Mutex` allows recovery via `PoisonError::into_inner()`.
+the cell from other threads will panic, whereas a type in [`std::sync::poison`] like
+[`std::sync::poison::Mutex`] allows recovery via [`PoisonError::into_inner()`].
+
+[`force()`]: LazyCell::force
+[`std::sync::poison`]: ../../std/sync/poison/index.html
+[`std::sync::poison::Mutex`]: ../../std/sync/poison/struct.Mutex.html
+[`PoisonError::into_inner()`]: ../../std/sync/poison/struct.PoisonError.html#method.into_inner
 
 # Examples
 
-```rust
+```
 use std::cell::LazyCell;
 
 let lazy: LazyCell<i32> = LazyCell::new(|| {
@@ -60,7 +58,7 @@ Creates a new lazy value with the given initializing function.
 
 # Examples
 
-```rust
+```
 use std::cell::LazyCell;
 
 let hello = "Hello, World!".to_string();
@@ -83,13 +81,16 @@ This is equivalent to the `Deref` impl, but is explicit.
 
 # Panics
 
-If the initialization closure panics (the one that is passed to the `new()` method), the
+If the initialization closure panics (the one that is passed to the [`new()`] method), the
 panic is propagated to the caller, and the cell becomes poisoned. This will cause all future
-accesses of the cell (via `force()` or a dereference) to panic.
+accesses of the cell (via [`force()`] or a dereference) to panic.
+
+[`new()`]: LazyCell::new
+[`force()`]: LazyCell::force
 
 # Examples
 
-```rust
+```
 use std::cell::LazyCell;
 
 let lazy = LazyCell::new(|| 92);
@@ -109,13 +110,16 @@ the result.
 
 # Panics
 
-If the initialization closure panics (the one that is passed to the `new()` method), the
+If the initialization closure panics (the one that is passed to the [`new()`] method), the
 panic is propagated to the caller, and the cell becomes poisoned. This will cause all future
-accesses of the cell (via `force()` or a dereference) to panic.
+accesses of the cell (via [`force()`] or a dereference) to panic.
+
+[`new()`]: LazyCell::new
+[`force()`]: LazyCell::force
 
 # Examples
 
-```rust
+```
 use std::cell::LazyCell;
 
 let mut lazy = LazyCell::new(|| 92);
@@ -137,7 +141,7 @@ poisoned), returns `None`.
 
 # Examples
 
-```rust
+```
 use std::cell::LazyCell;
 
 let mut lazy = LazyCell::new(|| 92);
@@ -159,7 +163,7 @@ returns `None`.
 
 # Examples
 
-```rust
+```
 use std::cell::LazyCell;
 
 let lazy = LazyCell::new(|| 92);

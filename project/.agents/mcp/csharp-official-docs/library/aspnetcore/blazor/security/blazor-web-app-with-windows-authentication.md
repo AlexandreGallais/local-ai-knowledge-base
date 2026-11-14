@@ -1,47 +1,49 @@
 ---
-title: "Secure an ASP.NET Core Blazor Web App with Windows Authentication"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/security/blazor-web-app-with-windows-authentication.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Secure an ASP.NET Core Blazor Web App with Windows Authentication
+ai-usage: ai-assisted
+description: Learn how to secure a Blazor Web App with Windows Authentication.
+monikerRange: '>= aspnetcore-9.0'
+ms.date: 09/18/2026
 ---
-
 # Secure an ASP.NET Core Blazor Web App with Windows Authentication
+
+<!-- UPDATE 11.0 - Activate ...
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
 -->
 
-This article describes how to secure a Blazor Web App with Windows Authentication using a sample app. For more information, see Configure Windows Authentication in ASP.NET Core.
+This article describes how to secure a Blazor Web App with [Windows Authentication](/windows-server/security/windows-authentication/windows-authentication-overview) using a sample app. For more information, see [Configure Windows Authentication in ASP.NET Core](../../security/authentication/windowsauth.md).
 
 The app specification for the Blazor Web App:
 
-* Adopts the Interactive Server render mode with global interactivity.
-* Establishes an authorization policy for a Windows security identifier to access a secure page.
+* Adopts the [Interactive Server render mode with global interactivity](../components/render-modes.md).
+* Establishes an [authorization policy](../../security/authorization/policies.md) for a [Windows security identifier](/windows-server/identity/ad-ds/manage/understand-security-identifiers) to access a secure page.
 
 ## Sample app
 
 Access the sample through the latest version folder in the Blazor samples repository with the following link. The sample is in the `BlazorWebAppWinAuthServer` folder for .NET 9 or later.
 
-View or download sample code (how to download)
+[View or download sample code](https://github.com/dotnet/blazor-samples) ([how to download](../fundamentals/index.md#sample-apps))
 
 ## Configuration
 
 The sample app doesn't require configuration to run locally.
 
-When deployed to a host, such as IIS, the app must adopt impersonation to run under the user's account. For more information, see Configure Windows Authentication in ASP.NET Core.
+When deployed to a host, such as IIS, the app must adopt impersonation to run under the user's account. For more information, see [Configure Windows Authentication in ASP.NET Core](../../security/authentication/windowsauth.md#impersonation).
 
 ## Sample app code
 
 Inspect the `Program` file in the sample app for the following API calls.
 
-`Microsoft.Extensions.DependencyInjection.AuthenticationServiceCollectionExtensions.AddAuthentication*` is called using the `Microsoft.AspNetCore.Authentication.Negotiate.NegotiateDefaults.AuthenticationScheme*` authentication scheme. `Microsoft.Extensions.DependencyInjection.NegotiateExtensions.AddNegotiate*` configures the `Microsoft.AspNetCore.Authentication.AuthenticationBuilder` to use Negotiate (also known as Windows, Kerberos, or NTLM) authentication, and the authentication handler supports Kerberos on Windows and Linux servers:
+<xref:Microsoft.Extensions.DependencyInjection.AuthenticationServiceCollectionExtensions.AddAuthentication*> is called using the <xref:Microsoft.AspNetCore.Authentication.Negotiate.NegotiateDefaults.AuthenticationScheme*?displayProperty=nameWithType> authentication scheme. <xref:Microsoft.Extensions.DependencyInjection.NegotiateExtensions.AddNegotiate*> configures the <xref:Microsoft.AspNetCore.Authentication.AuthenticationBuilder> to use Negotiate (also known as Windows, Kerberos, or NTLM) authentication, and the authentication handler supports Kerberos on Windows and Linux servers:
 
 ```csharp
 builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
     .AddNegotiate();
 ```
 
-`Microsoft.Extensions.DependencyInjection.PolicyServiceCollectionExtensions.AddAuthorization*` adds authorization policy services. The following code assigns the `Microsoft.AspNetCore.Authorization.AuthorizationOptions.DefaultPolicy`, which requires an authenticated user, to the `Microsoft.AspNetCore.Authorization.AuthorizationOptions.FallbackPolicy`. This configuration requires authentication when no policy is produced from authorization metadata:
+<xref:Microsoft.Extensions.DependencyInjection.PolicyServiceCollectionExtensions.AddAuthorization*> adds authorization policy services. The following code assigns the <xref:Microsoft.AspNetCore.Authorization.AuthorizationOptions.DefaultPolicy?displayProperty=nameWithType>, which requires an authenticated user, to the <xref:Microsoft.AspNetCore.Authorization.AuthorizationOptions.FallbackPolicy?displayProperty=nameWithType>. This configuration requires authentication when no policy is produced from authorization metadata:
 
 ```csharp
 builder.Services.AddAuthorization(options =>
@@ -50,15 +52,15 @@ builder.Services.AddAuthorization(options =>
 });
 ```
 
-For complete policy selection rules, see Policy-based authorization in ASP.NET Core.
+For complete policy selection rules, see [Policy-based authorization in ASP.NET Core](../../security/authorization/policies.md#default-and-fallback-policies).
 
-`Microsoft.Extensions.DependencyInjection.CascadingAuthenticationStateServiceCollectionExtensions.AddCascadingAuthenticationState*` adds cascading authentication state to the service collection. This is equivalent to placing a `CascadingAuthenticationState` component at the root of the app's component hierarchy:
+<xref:Microsoft.Extensions.DependencyInjection.CascadingAuthenticationStateServiceCollectionExtensions.AddCascadingAuthenticationState*> adds cascading authentication state to the service collection. This is equivalent to placing a `CascadingAuthenticationState` component at the root of the app's component hierarchy:
 
 ```csharp
 builder.Services.AddCascadingAuthenticationState();
 ```
 
-An authorization policy is added for a Windows security identifier (SID). The `S-1-5-113` well-known SID in the following example indicates that the user is a local account, which restricts network sign-in to local accounts instead of "administrator" or equivalent accounts:
+An [authorization policy](../../security/authorization/policies.md) is added for a [Windows security identifier (SID)](/windows-server/identity/ad-ds/manage/understand-security-identifiers). The `S-1-5-113` well-known SID in the following example indicates that the user is a local account, which restricts network sign-in to local accounts instead of "administrator" or equivalent accounts:
 
 ```csharp
 builder.Services.AddAuthorizationBuilder()
@@ -177,5 +179,5 @@ else
 
 ## Related content
 
-* Configure Windows Authentication in ASP.NET Core
-* Security identifiers (Windows Server documentation)
+* [Configure Windows Authentication in ASP.NET Core](../../security/authentication/windowsauth.md)
+* [Security identifiers (Windows Server documentation)](/windows-server/identity/ad-ds/manage/understand-security-identifiers)

@@ -1,14 +1,3 @@
----
-title: "ch11-03-test-organization"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch11-03-test-organization.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch11-03-test-organization
-
 ## Test Organization
 
 As mentioned at the start of the chapter, testing is a complex discipline, and
@@ -46,23 +35,10 @@ that they shouldn’t be included in the compiled result.
 Recall that when we generated the new `adder` project in the first section of
 this chapter, Cargo generated this code for us:
 
-Filename: src/lib.rs
+<span class="filename">Filename: src/lib.rs</span>
 
-```rust
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-01/src/lib.rs}}
 ```
 
 On the automatically generated `tests` module, the attribute `cfg` stands for
@@ -73,6 +49,10 @@ given a certain configuration option. In this case, the configuration option is
 with `cargo test`. This includes any helper functions that might be within this
 module, in addition to the functions annotated with `#[test]`.
 
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="testing-private-functions"></a>
+
 #### Private Function Tests
 
 There’s debate within the testing community about whether or not private
@@ -81,32 +61,17 @@ impossible to test private functions. Regardless of which testing ideology you
 adhere to, Rust’s privacy rules do allow you to test private functions.
 Consider the code in Listing 11-12 with the private function `internal_adder`.
 
-**Listing 11-12: Testing a private function** (src/lib.rs)
+<Listing number="11-12" file-name="src/lib.rs" caption="Testing a private function">
 
-```rust
-pub fn add_two(a: u64) -> u64 {
-    internal_adder(a, 2)
-}
-
-fn internal_adder(left: u64, right: u64) -> u64 {
-    left + right
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn internal() {
-        let result = internal_adder(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-12/src/lib.rs}}
 ```
+
+</Listing>
 
 Note that the `internal_adder` function is not marked as `pub`. Tests are just
 Rust code, and the `tests` module is just another module. As we discussed in
-“Paths for Referring to an Item in the Module Tree”,
+[“Paths for Referring to an Item in the Module Tree”][paths]<!-- ignore -->,
 items in child modules can use the items in their ancestor modules. In this
 test, we bring all of the items belonging to the `tests` module’s parent into
 scope with `use super::*`, and then the test can call `internal_adder`. If you
@@ -146,17 +111,13 @@ adder
 
 Enter the code in Listing 11-13 into the _tests/integration_test.rs_ file.
 
-**Listing 11-13: An integration test of a function in the `adder` crate** (tests/integration_test.rs)
+<Listing number="11-13" file-name="tests/integration_test.rs" caption="An integration test of a function in the `adder` crate">
 
-```rust
-use adder::add_two;
-
-#[test]
-fn it_adds_two() {
-    let result = add_two(2);
-    assert_eq!(result, 4);
-}
+```rust,ignore
+{{#rustdoc_include ../listings/ch11-writing-automated-tests/listing-11-13/tests/integration_test.rs}}
 ```
+
+</Listing>
 
 Each file in the _tests_ directory is a separate crate, so we need to bring our
 library into each test crate’s scope. For that reason, we add `use
@@ -167,28 +128,7 @@ We don’t need to annotate any code in _tests/integration_test.rs_ with
 in this directory only when we run `cargo test`. Run `cargo test` now:
 
 ```console
-$ cargo test
-   Compiling adder v0.1.0 (file:///projects/adder)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.31s
-     Running unittests src/lib.rs (target/debug/deps/adder-1082c4b063a8fbe6)
-
-running 1 test
-test tests::internal ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-     Running tests/integration_test.rs (target/debug/deps/integration_test-1082c4b063a8fbe6)
-
-running 1 test
-test it_adds_two ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-   Doc-tests adder
-
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+{{#include ../listings/ch11-writing-automated-tests/listing-11-13/output.txt}}
 ```
 
 The three sections of output include the unit tests, the integration test, and
@@ -215,15 +155,7 @@ particular integration test file, use the `--test` argument of `cargo test`
 followed by the name of the file:
 
 ```console
-$ cargo test --test integration_test
-   Compiling adder v0.1.0 (file:///projects/adder)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.64s
-     Running tests/integration_test.rs (target/debug/deps/integration_test-82e7799c1bc62298)
-
-running 1 test
-test it_adds_two ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+{{#include ../listings/ch11-writing-automated-tests/output-only-05-single-integration/output.txt}}
 ```
 
 This command runs only the tests in the _tests/integration_test.rs_ file.
@@ -241,18 +173,16 @@ regarding how to separate code into modules and files.
 
 The different behavior of _tests_ directory files is most noticeable when you
 have a set of helper functions to use in multiple integration test files, and
-you try to follow the steps in the “Separating Modules into Different
-Files” section of Chapter 7 to
+you try to follow the steps in the [“Separating Modules into Different
+Files”][separating-modules-into-files]<!-- ignore --> section of Chapter 7 to
 extract them into a common module. For example, if we create _tests/common.rs_
 and place a function named `setup` in it, we can add some code to `setup` that
 we want to call from multiple test functions in multiple test files:
 
-Filename: tests/common.rs
+<span class="filename">Filename: tests/common.rs</span>
 
-```rust
-pub fn setup() {
-    // setup code specific to your library's tests would go here
-}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-12-shared-test-code-problem/tests/common.rs}}
 ```
 
 When we run the tests again, we’ll see a new section in the test output for the
@@ -260,34 +190,7 @@ _common.rs_ file, even though this file doesn’t contain any test functions nor
 did we call the `setup` function from anywhere:
 
 ```console
-$ cargo test
-   Compiling adder v0.1.0 (file:///projects/adder)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.89s
-     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
-
-running 1 test
-test tests::internal ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-     Running tests/common.rs (target/debug/deps/common-92948b65e88960b4)
-
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-     Running tests/integration_test.rs (target/debug/deps/integration_test-92948b65e88960b4)
-
-running 1 test
-test it_adds_two ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-   Doc-tests adder
-
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+{{#include ../listings/ch11-writing-automated-tests/no-listing-12-shared-test-code-problem/output.txt}}
 ```
 
 Having `common` appear in the test results with `running 0 tests` displayed for
@@ -308,7 +211,7 @@ project directory now looks like this:
 ```
 
 This is the older naming convention that Rust also understands that we mentioned
-in “Alternate File Paths” in Chapter 7. Naming the
+in [“Alternate File Paths”][alt-paths]<!-- ignore --> in Chapter 7. Naming the
 file this way tells Rust not to treat the `common` module as an integration test
 file. When we move the `setup` function code into _tests/common/mod.rs_ and
 delete the _tests/common.rs_ file, the section in the test output will no longer
@@ -319,20 +222,10 @@ After we’ve created _tests/common/mod.rs_, we can use it from any of the
 integration test files as a module. Here’s an example of calling the `setup`
 function from the `it_adds_two` test in _tests/integration_test.rs_:
 
-Filename: tests/integration_test.rs
+<span class="filename">Filename: tests/integration_test.rs</span>
 
-```rust
-use adder::add_two;
-
-mod common;
-
-#[test]
-fn it_adds_two() {
-    common::setup();
-
-    let result = add_two(2);
-    assert_eq!(result, 4);
-}
+```rust,ignore
+{{#rustdoc_include ../listings/ch11-writing-automated-tests/no-listing-13-fix-shared-test-code-problem/tests/integration_test.rs}}
 ```
 
 Note that the `mod common;` declaration is the same as the module declaration
@@ -367,3 +260,7 @@ reduce logic bugs having to do with how your code is expected to behave.
 
 Let’s combine the knowledge you learned in this chapter and in previous
 chapters to work on a project!
+
+[paths]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
+[separating-modules-into-files]: ch07-05-separating-modules-into-different-files.html
+[alt-paths]: ch07-05-separating-modules-into-different-files.html#alternate-file-paths

@@ -1,12 +1,3 @@
----
-title: "ECFieldF2m class (java.security.spec)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/spec/ECFieldF2m.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ECFieldF2m class (java.security.spec)
 
 ```java
@@ -16,9 +7,11 @@ public class ECFieldF2m implements ECField
 This immutable class defines an elliptic curve (EC)
 characteristic 2 finite field.
 
-**See also:** ECField
+@see ECField
 
-**Since:** 1.5
+@author Valerie Peng
+
+@since 1.5
 
 ## ECFieldF2m.ECFieldF2m(int)
 
@@ -27,15 +20,10 @@ public ECFieldF2m(int m)
 ```
 
 Creates an elliptic curve characteristic 2 finite
-field which has 2^`m` elements with normal basis.
-
-Parameters:
-
-- `m`: with 2^`m` being the number of elements.
-
-Throws:
-
-- `IllegalArgumentException`: if `m` is not positive.
+field which has 2^{@code m} elements with normal basis.
+@param m with 2^{@code m} being the number of elements.
+@throws    IllegalArgumentException if {@code m}
+is not positive.
 
 ## ECFieldF2m.ECFieldF2m(int, BigInteger)
 
@@ -44,29 +32,25 @@ public ECFieldF2m(int m, BigInteger rp)
 ```
 
 Creates an elliptic curve characteristic 2 finite
-field which has 2^`m` elements with
+field which has 2^{@code m} elements with
 polynomial basis.
 The reduction polynomial for this field is based
-on `rp` whose i-th bit corresponds to
-the i-th coefficient of the reduction polynomial.
-
+on {@code rp} whose i-th bit corresponds to
+the i-th coefficient of the reduction polynomial.<p>
 Note: A valid reduction polynomial is either a
-trinomial (X^`m` + X^`k` + 1
-with `m` > `k` >= 1) or a
-pentanomial (X^`m` + X^`k3`
-+ X^`k2` + X^`k1` + 1 with
-`m` > `k3` > `k2`
-> `k1` >= 1).
-
-Parameters:
-
-- `m`: with 2^`m` being the number of elements.
-- `rp`: the BigInteger whose i-th bit corresponds to the i-th coefficient of the reduction polynomial.
-
-Throws:
-
-- `NullPointerException`: if `rp` is null.
-- `IllegalArgumentException`: if `m` is not positive, or `rp` does not represent a valid reduction polynomial.
+trinomial (X^{@code m} + X^{@code k} + 1
+with {@code m} &gt; {@code k} &gt;= 1) or a
+pentanomial (X^{@code m} + X^{@code k3}
++ X^{@code k2} + X^{@code k1} + 1 with
+{@code m} &gt; {@code k3} &gt; {@code k2}
+&gt; {@code k1} &gt;= 1).
+@param m with 2^{@code m} being the number of elements.
+@param rp the BigInteger whose i-th bit corresponds to
+the i-th coefficient of the reduction polynomial.
+@throws    NullPointerException if {@code rp} is null.
+@throws    IllegalArgumentException if {@code m}
+is not positive, or {@code rp} does not represent
+a valid reduction polynomial.
 
 ## ECFieldF2m.ECFieldF2m(int, int[])
 
@@ -75,29 +59,29 @@ public ECFieldF2m(int m, int[] ks)
 ```
 
 Creates an elliptic curve characteristic 2 finite
-field which has 2^`m` elements with
+field which has 2^{@code m} elements with
 polynomial basis. The reduction polynomial for this
-field is based on `ks` whose content
+field is based on {@code ks} whose content
 contains the order of the middle term(s) of the
 reduction polynomial.
 Note: A valid reduction polynomial is either a
-trinomial (X^`m` + X^`k` + 1
-with `m` > `k` >= 1) or a
-pentanomial (X^`m` + X^`k3`
-+ X^`k2` + X^`k1` + 1 with
-`m` > `k3` > `k2`
-> `k1` >= 1), so `ks` should
+trinomial (X^{@code m} + X^{@code k} + 1
+with {@code m} &gt; {@code k} &gt;= 1) or a
+pentanomial (X^{@code m} + X^{@code k3}
++ X^{@code k2} + X^{@code k1} + 1 with
+{@code m} &gt; {@code k3} &gt; {@code k2}
+&gt; {@code k1} &gt;= 1), so {@code ks} should
 have length 1 or 3.
-
-Parameters:
-
-- `m`: with 2^`m` being the number of elements.
-- `ks`: the order of the middle term(s) of the reduction polynomial. Contents of this array are copied to protect against subsequent modification.
-
-Throws:
-
-- `NullPointerException`: if `ks` is null.
-- `IllegalArgumentException`: if`m` is not positive, or the length of `ks` is neither 1 nor 3, or values in `ks` are not between `m`-1 and 1 (inclusive) and in descending order.
+@param m with 2^{@code m} being the number of elements.
+@param ks the order of the middle term(s) of the
+reduction polynomial. Contents of this array are copied
+to protect against subsequent modification.
+@throws    NullPointerException if {@code ks} is null.
+@throws    IllegalArgumentException if{@code m}
+is not positive, or the length of {@code ks}
+is neither 1 nor 3, or values in {@code ks}
+are not between {@code m}-1 and 1 (inclusive)
+and in descending order.
 
 ## ECFieldF2m.getFieldSize()
 
@@ -105,10 +89,9 @@ Throws:
 public int getFieldSize()
 ```
 
-Returns the field size in bits which is `m`
+Returns the field size in bits which is {@code m}
 for this characteristic 2 finite field.
-
-**Returns:** the field size in bits.
+@return the field size in bits.
 
 ## ECFieldF2m.getM()
 
@@ -116,10 +99,9 @@ for this characteristic 2 finite field.
 public int getM()
 ```
 
-Returns the value `m` of this characteristic
+Returns the value {@code m} of this characteristic
 2 finite field.
-
-**Returns:** `m` with 2^`m` being the
+@return {@code m} with 2^{@code m} being the
 number of elements.
 
 ## ECFieldF2m.getReductionPolynomial()
@@ -131,8 +113,7 @@ public BigInteger getReductionPolynomial()
 Returns a BigInteger whose i-th bit corresponds to the
 i-th coefficient of the reduction polynomial for polynomial
 basis or null for normal basis.
-
-**Returns:** a BigInteger whose i-th bit corresponds to the
+@return a BigInteger whose i-th bit corresponds to the
 i-th coefficient of the reduction polynomial for polynomial
 basis or null for normal basis.
 
@@ -145,8 +126,7 @@ public int[] getMidTermsOfReductionPolynomial()
 Returns an integer array which contains the order of the
 middle term(s) of the reduction polynomial for polynomial
 basis or null for normal basis.
-
-**Returns:** an integer array which contains the order of the
+@return an integer array which contains the order of the
 middle term(s) of the reduction polynomial for polynomial
 basis or null for normal basis. A new array is returned
 each time this method is called.
@@ -159,13 +139,9 @@ public boolean equals(Object obj)
 
 Compares this finite field for equality with the
 specified object.
-
-Parameters:
-
-- `obj`: the object to be compared.
-
-**Returns:** true if `obj` is an instance
-of ECFieldF2m and both `m` and the reduction
+@param obj the object to be compared.
+@return true if {@code obj} is an instance
+of ECFieldF2m and both {@code m} and the reduction
 polynomial match, false otherwise.
 
 ## ECFieldF2m.hashCode()
@@ -173,3 +149,5 @@ polynomial match, false otherwise.
 ```java
 public int hashCode()
 ```
+
+{@return the hash code value for this characteristic 2 finite field}

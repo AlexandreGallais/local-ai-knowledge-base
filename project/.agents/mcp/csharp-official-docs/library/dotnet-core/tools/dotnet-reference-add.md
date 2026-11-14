@@ -1,12 +1,9 @@
 ---
-title: "dotnet reference add command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-reference-add.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet reference add command
+description: The dotnet reference add command provides a convenient option to add project-to-project references.
+ms.date: 09/15/2026
+ai-usage: ai-assisted
 ---
-
 # dotnet reference add
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -15,8 +12,8 @@ license: "CC-BY-4.0"
 
 `dotnet reference add` - Adds project-to-project (P2P) references.
 
-> **Note:**
-> If you're using .NET 9 SDK or earlier, use the "verb first" form (`dotnet add reference`) instead. The "noun first" form was introduced in .NET 10. For more information, see More consistent command order.
+> [!NOTE]
+> If you're using .NET 9 SDK or earlier, use the "verb first" form (`dotnet add reference`) instead. The "noun first" form was introduced in .NET 10. For more information, see [More consistent command order](../whats-new/dotnet-10/sdk.md#more-consistent-command-order).
 
 ## Synopsis
 
@@ -60,7 +57,7 @@ There's no CLI command to add a reference to an assembly that isn't in a project
 
 - **`PROJECT_REFERENCES`**
 
-  Project-to-project (P2P) references to add. Specify one or more projects. Glob patterns are supported on Unix/Linux-based systems.
+  Project-to-project (P2P) references to add. Specify one or more projects. [Glob patterns](https://en.wikipedia.org/wiki/Glob_(programming)) are supported on Unix/Linux-based systems.
 
 ## Options
 
@@ -70,15 +67,11 @@ There's no CLI command to add a reference to an assembly that isn't in a project
 
 - **`-f|--framework <FRAMEWORK>`**
 
-  Adds project references only when targeting a specific framework using the TFM format.
+  Adds project references only when targeting a specific [framework](../../standard/frameworks.md) using the TFM format.
 
-- **`-?|-h|--help`**
+- [!INCLUDE [help](includes/cli-help.md)]
 
-Prints out a description of how to use the command.
-
-- **`--interactive`**
-
-Allows the command to stop and wait for user input or action. For example, to complete authentication.
+- [!INCLUDE [interactive](includes/cli-interactive.md)]
 
 ## Examples
 

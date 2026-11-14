@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: SignalR Hub methods try to resolve parameters from DI"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/7/signalr-hub-method-parameters-di.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in ASP.NET Core 7.0 where SignalR Hub methods try to resolve parameters from DI.
+ms.date: 03/03/2022
+ms.custom: https://github.com/aspnet/Announcements/issues/479
 ---
 
 # SignalR Hub methods try to resolve parameters from DI
@@ -31,7 +29,7 @@ class MyHub : Hub
 
 ## New behavior
 
-Types in DI are checked at app startup using `Microsoft.Extensions.DependencyInjection.IServiceProviderIsService` to determine if an argument in a Hub method comes from DI or from the client.
+Types in DI are checked at app startup using <xref:Microsoft.Extensions.DependencyInjection.IServiceProviderIsService> to determine if an argument in a Hub method comes from DI or from the client.
 
 In the following example, which assumes you're using the default DI container, `SomeCustomType` comes from the DI container instead of from the client. If the client tries to send `SomeCustomType`, it gets an error:
 
@@ -47,7 +45,7 @@ class MyHub : Hub
 
 ## Type of breaking change
 
-This change affects source compatibility.
+This change affects [source compatibility](/dotnet/core/compatibility/categories#source-compatibility).
 
 ## Reason for change
 
@@ -66,7 +64,7 @@ Services.AddSignalR(options =>
 });
 ```
 
-If you're broken by the change, but you want to use the feature without breaking clients, you can disable the feature as shown above and use an attribute that implements `Microsoft.AspNetCore.Http.Metadata.IFromServiceMetadata` on *new* arguments/Hub methods:
+If you're broken by the change, but you want to use the feature without breaking clients, you can disable the feature as shown above and use an attribute that implements <xref:Microsoft.AspNetCore.Http.Metadata.IFromServiceMetadata> on *new* arguments/Hub methods:
 
 ```csharp
 Services.AddScoped<SomeCustomType>();

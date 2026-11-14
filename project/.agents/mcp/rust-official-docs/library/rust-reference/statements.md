@@ -1,17 +1,8 @@
----
-title: "Statements"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/statements.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[statement]
 # Statements
 
 r[statement.syntax]
-```grammar
+```grammar,statements
 Statement ->
       `;`
     | Item
@@ -24,12 +15,12 @@ r[statement.intro]
 A *statement* is a component of a [block], which is in turn a component of an outer [expression] or [function].
 
 r[statement.kind]
-Rust has two kinds of statement: declaration statements and expression statements.
+Rust has two kinds of statement: [declaration statements](#declaration-statements) and [expression statements](#expression-statements).
 
 r[statement.decl]
 ## Declaration statements
 
-A *declaration statement* is one that introduces one or more *names* into the enclosing statement block. The declared names may denote new variables or new items.
+A *declaration statement* is one that introduces one or more *names* into the enclosing statement block. The declared names may denote new variables or new [items][item].
 
 The two kinds of declaration statements are item declarations and `let` statements.
 
@@ -37,7 +28,7 @@ r[statement.item]
 ### Item declarations
 
 r[statement.item.intro]
-An *item declaration statement* has a syntactic form identical to an item declaration within a [module].
+An *item declaration statement* has a syntactic form identical to an [item declaration][item] within a [module].
 
 r[statement.item.scope]
 Declaring an item within a statement block restricts its [scope] to the block containing the statement. The item is not given a [canonical path] nor are any sub-items it may declare.
@@ -62,7 +53,7 @@ r[statement.let]
 ### `let` statements
 
 r[statement.let.syntax]
-```grammar
+```grammar,statements
 LetStatement ->
     OuterAttribute* `let` PatternNoTopAlt ( `:` Type )?
     (
@@ -102,7 +93,7 @@ r[statement.expr]
 ## Expression statements
 
 r[statement.expr.syntax]
-```grammar
+```grammar,statements
 ExpressionStatement ->
       ExpressionWithoutBlock `;`
     | ExpressionWithBlock `;`?
@@ -112,7 +103,7 @@ r[statement.expr.intro]
 An *expression statement* is one that evaluates an [expression] and ignores its result. As a rule, an expression statement's purpose is to trigger the effects of evaluating its expression.
 
 r[statement.expr.restriction-semicolon]
-An expression that consists of only a block expression or control flow expression, if used in a context where a statement is permitted, can omit the trailing semicolon. This can cause an ambiguity between it being parsed as a standalone statement and as a part of another expression; in this case, it is parsed as a statement.
+An expression that consists of only a [block expression][block] or control flow expression, if used in a context where a statement is permitted, can omit the trailing semicolon. This can cause an ambiguity between it being parsed as a standalone statement and as a part of another expression; in this case, it is parsed as a statement.
 
 r[statement.expr.constraint-block]
 The type of [ExpressionWithBlock] expressions when used as statements must be the unit type.
@@ -149,3 +140,18 @@ r[statement.attribute]
 ## Attributes on statements
 
 Statements accept [outer attributes]. The attributes that have meaning on a statement are [`cfg`], and [the lint check attributes].
+
+[block]: expressions/block-expr.md
+[expression]: expressions.md
+[function]: items/functions.md
+[item]: items.md
+[module]: items/modules.md
+[never type]: types/never.md
+[canonical path]: paths.md#canonical-paths
+[implementations]: items/implementations.md
+[variables]: variables.md
+[outer attributes]: attributes.md
+[`cfg`]: conditional-compilation.md
+[the lint check attributes]: attributes/diagnostics.md#lint-check-attributes
+[pattern]: patterns.md
+[scope]: names/scopes.md

@@ -1,15 +1,11 @@
 ---
 title: "Solution-level `--output` option no longer valid for build-related commands"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/7.0/solution-level-output-no-longer-valid.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in the .NET 7.0.200 SDK where using the `--output` option is no longer valid when using a solution file
+ms.date: 02/15/2023
 ---
-
 # Solution-level `--output` option no longer valid for build-related commands
 
-In the 7.0.200 SDK, there was a change to no longer accept the `--output`/`-o` option when using a solution file with the following commands:
+In the 7.0.200 SDK, there was [a change](https://github.com/dotnet/sdk/pull/29065) to no longer accept the `--output`/`-o` option when using a solution file with the following commands:
 
 * `build`
 * `clean`
@@ -69,7 +65,7 @@ If multiple apps depend on different versions of a file, then even if the build 
 
 ## Other examples
 
-For more examples of how this underlying error presents in practice, see the discussion on dotnet/sdk#15607.
+For more examples of how this underlying error presents in practice, see the discussion on [dotnet/sdk#15607](https://github.com/dotnet/sdk/issues/15607).
 
 ## Recommended action
 

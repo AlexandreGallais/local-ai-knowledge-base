@@ -1,18 +1,22 @@
 ---
 title: "Managed Threading Best Practices"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/threading/managed-threading-best-practices.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn managed threading best practices in .NET. Work with difficult situations such as coordinating many threads or handling blocking threads.
+ms.date: 03/13/2026
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "threading [.NET], design guidelines"
+  - "threading [.NET], best practices"
+  - "managed threading"
+ms.assetid: e51988e7-7f4b-4646-a06d-1416cee8d557
 ---
-
 # Managed threading best practices
 
 Multithreading requires careful programming. For most tasks, you can reduce complexity by queuing requests for execution by thread pool threads. This topic addresses more difficult situations, such as coordinating the work of multiple threads, or handling threads that block.
 
-> **Note:**
-> The Task Parallel Library and PLINQ provide APIs that reduce some of the complexity and risks of multi-threaded programming. For more information, see Parallel Programming in .NET.
+> [!NOTE]
+> The Task Parallel Library and PLINQ provide APIs that reduce some of the complexity and risks of multi-threaded programming. For more information, see [Parallel Programming in .NET](../parallel-programming/index.md).
 
 ## Deadlocks and race conditions
 
@@ -22,7 +26,7 @@ Multithreading requires careful programming. For most tasks, you can reduce comp
 
  A deadlock occurs when each of two threads tries to lock a resource the other has already locked. Neither thread can make any further progress.
 
- Many methods of the managed threading classes provide time-outs to help you detect deadlocks. For example, the following code attempts to acquire a lock on an object named `lockObject`. If the lock is not obtained in 300 milliseconds, `System.Threading.Monitor.TryEnter*` returns `false`.
+ Many methods of the managed threading classes provide time-outs to help you detect deadlocks. For example, the following code attempts to acquire a lock on an object named `lockObject`. If the lock is not obtained in 300 milliseconds, <xref:System.Threading.Monitor.TryEnter*?displayProperty=nameWithType> returns `false`.
 
 ```vb
 If Monitor.TryEnter(lockObject, 300) Then
@@ -58,7 +62,7 @@ else {
 
  In a multithreaded application, a thread that has loaded and incremented the value might be preempted by another thread which performs all three steps; when the first thread resumes execution and stores its value, it overwrites `objCt` without taking into account the fact that the value has changed in the interim.
 
- This particular race condition is easily avoided by using methods of the `System.Threading.Interlocked` class, such as `System.Threading.Interlocked.Increment*`. To read about other techniques for synchronizing data among multiple threads, see Synchronizing Data for Multithreading.
+ This particular race condition is easily avoided by using methods of the <xref:System.Threading.Interlocked> class, such as <xref:System.Threading.Interlocked.Increment*?displayProperty=nameWithType>. To read about other techniques for synchronizing data among multiple threads, see [Synchronizing Data for Multithreading](synchronizing-data-for-multithreading.md).
 
  Race conditions can also occur when you synchronize the activities of multiple threads. Whenever you write a line of code, you must consider what might happen if a thread were preempted before executing the line (or before any of the individual machine instructions that make up the line), and another thread overtook it.
 
@@ -72,31 +76,31 @@ else {
 
 ## Number of processors
 
-Whether there are multiple processors or only one processor available on a system can influence multithreaded architecture. For more information, see Number of Processors.
+Whether there are multiple processors or only one processor available on a system can influence multithreaded architecture. For more information, see [Number of Processors](/previous-versions/dotnet/netframework-1.1/1c9txz50(v=vs.71)#number-of-processors).
 
-Use the `System.Environment.ProcessorCount` property to determine the number of processors available at runtime.
+Use the <xref:System.Environment.ProcessorCount?displayProperty=nameWithType> property to determine the number of processors available at runtime.
 
 ## General recommendations
 
 Consider the following guidelines when using multiple threads:
 
-- Don't use `System.Threading.Thread.Abort*` to terminate other threads. Calling `Abort` on another thread is akin to throwing an exception on that thread, without knowing what point that thread has reached in its processing. In .NET 5 and later versions, `System.Threading.Thread.Abort*` is obsolete and throws a `System.PlatformNotSupportedException`. Instead, use cooperative cancellation via `System.Threading.CancellationToken`. For more information, see SYSLIB0006: Thread.Abort is not supported.
+- Don't use <xref:System.Threading.Thread.Abort*?displayProperty=nameWithType> to terminate other threads. Calling `Abort` on another thread is akin to throwing an exception on that thread, without knowing what point that thread has reached in its processing. In .NET 5 and later versions, <xref:System.Threading.Thread.Abort*?displayProperty=nameWithType> is obsolete and throws a <xref:System.PlatformNotSupportedException>. Instead, use cooperative cancellation via <xref:System.Threading.CancellationToken>. For more information, see [SYSLIB0006: Thread.Abort is not supported](../../fundamentals/syslib-diagnostics/syslib0006.md).
 
-- Don't use `System.Threading.Thread.Suspend*` and `System.Threading.Thread.Resume*` to synchronize the activities of multiple threads. Do use `System.Threading.Mutex`, `System.Threading.ManualResetEvent`, `System.Threading.AutoResetEvent`, and `System.Threading.Monitor`.
+- Don't use <xref:System.Threading.Thread.Suspend*?displayProperty=nameWithType> and <xref:System.Threading.Thread.Resume*?displayProperty=nameWithType> to synchronize the activities of multiple threads. Do use <xref:System.Threading.Mutex>, <xref:System.Threading.ManualResetEvent>, <xref:System.Threading.AutoResetEvent>, and <xref:System.Threading.Monitor>.
 
-- Don't control the execution of worker threads from your main program (using events, for example). Instead, design your program so that worker threads are responsible for waiting until work is available, executing it, and notifying other parts of your program when finished. If your worker threads do not block, consider using thread pool threads. `System.Threading.Monitor.PulseAll*` is useful in situations where worker threads block.
+- Don't control the execution of worker threads from your main program (using events, for example). Instead, design your program so that worker threads are responsible for waiting until work is available, executing it, and notifying other parts of your program when finished. If your worker threads do not block, consider using thread pool threads. <xref:System.Threading.Monitor.PulseAll*?displayProperty=nameWithType> is useful in situations where worker threads block.
 
-- Don't use types as lock objects. That is, avoid code such as `lock(typeof(X))` in C# or `SyncLock(GetType(X))` in Visual Basic, or the use of `System.Threading.Monitor.Enter*` with `System.Type` objects. For a given type, there is only one instance of `System.Type` per application domain. If the type you take a lock on is public, code other than your own can take locks on it, leading to deadlocks. For additional issues, see Reliability Best Practices.
+- Don't use types as lock objects. That is, avoid code such as `lock(typeof(X))` in C# or `SyncLock(GetType(X))` in Visual Basic, or the use of <xref:System.Threading.Monitor.Enter*?displayProperty=nameWithType> with <xref:System.Type> objects. For a given type, there is only one instance of <xref:System.Type?displayProperty=nameWithType> per application domain. If the type you take a lock on is public, code other than your own can take locks on it, leading to deadlocks. For additional issues, see [Reliability Best Practices](../../framework/performance/reliability-best-practices.md).
 
 - Use caution when locking on instances, for example `lock(this)` in C# or `SyncLock(Me)` in Visual Basic. If other code in your application, external to the type, takes a lock on the object, deadlocks could occur.
 
-- In .NET 9 and C# 13 or later, use a dedicated `System.Threading.Lock` instance as your lock object with the C# lock statement. In Visual Basic, continue to use a dedicated private reference type instance with `SyncLock`.
+- In .NET 9 and C# 13 or later, use a dedicated <xref:System.Threading.Lock?displayProperty=nameWithType> instance as your lock object with the C# [lock statement](../../csharp/language-reference/statements/lock.md). In Visual Basic, continue to use a dedicated private reference type instance with `SyncLock`.
 
-- Do ensure that a thread that has entered a monitor always leaves that monitor, even if an exception occurs while the thread is in the monitor. The C# lock statement and the Visual Basic <example-value> statement provide this behavior automatically, employing a **finally** block to ensure that `System.Threading.Monitor.Exit*` is called. If you cannot ensure that **Exit** will be called, consider changing your design to use **Mutex**. A mutex is automatically released when the thread that currently owns it terminates.
+- Do ensure that a thread that has entered a monitor always leaves that monitor, even if an exception occurs while the thread is in the monitor. The C# [lock](../../csharp/language-reference/statements/lock.md) statement and the Visual Basic [SyncLock](../../visual-basic/language-reference/statements/synclock-statement.md) statement provide this behavior automatically, employing a **finally** block to ensure that <xref:System.Threading.Monitor.Exit*?displayProperty=nameWithType> is called. If you cannot ensure that **Exit** will be called, consider changing your design to use **Mutex**. A mutex is automatically released when the thread that currently owns it terminates.
 
 - Do use multiple threads for tasks that require different resources, and avoid assigning multiple threads to a single resource. For example, any task involving I/O benefits from having its own thread, because that thread will block during I/O operations and thus allow other threads to execute. User input is another resource that benefits from a dedicated thread. On a single-processor computer, a task that involves intensive computation coexists with user input and with tasks that involve I/O, but multiple computation-intensive tasks contend with each other.
 
-- Consider using methods of the `System.Threading.Interlocked` class for simple state changes, instead of using the `lock` statement (`SyncLock` in Visual Basic). The `lock` statement is a good general-purpose tool, but the `System.Threading.Interlocked` class provides better performance for updates that must be atomic. Internally, it executes a single lock prefix if there is no contention. In code reviews, watch for code like that shown in the following examples. In the first example, a state variable is incremented:
+- Consider using methods of the <xref:System.Threading.Interlocked> class for simple state changes, instead of using the `lock` statement (`SyncLock` in Visual Basic). The `lock` statement is a good general-purpose tool, but the <xref:System.Threading.Interlocked> class provides better performance for updates that must be atomic. Internally, it executes a single lock prefix if there is no contention. In code reviews, watch for code like that shown in the following examples. In the first example, a state variable is incremented:
 
     ```vb
     SyncLock lockObject
@@ -111,7 +115,7 @@ Consider the following guidelines when using multiple threads:
     }
     ```
 
-     You can improve performance by using the `System.Threading.Interlocked.Increment*` method instead of the `lock` statement, as follows:
+     You can improve performance by using the <xref:System.Threading.Interlocked.Increment*> method instead of the `lock` statement, as follows:
 
     ```vb
     System.Threading.Interlocked.Increment(myField)
@@ -121,8 +125,8 @@ Consider the following guidelines when using multiple threads:
     System.Threading.Interlocked.Increment(myField);
     ```
 
-    > **Note:**
-    > Use the `System.Threading.Interlocked.Add*` method for atomic increments larger than 1.
+    > [!NOTE]
+    > Use the <xref:System.Threading.Interlocked.Add*> method for atomic increments larger than 1.
 
      In the second example, a reference type variable is updated only if it is a null reference (`Nothing` in Visual Basic).
 
@@ -146,7 +150,7 @@ Consider the following guidelines when using multiple threads:
     }
     ```
 
-     Performance can be improved by using the `System.Threading.Interlocked.CompareExchange*` method instead, as follows:
+     Performance can be improved by using the <xref:System.Threading.Interlocked.CompareExchange*> method instead, as follows:
 
     ```vb
     System.Threading.Interlocked.CompareExchange(x, y, Nothing)
@@ -156,8 +160,8 @@ Consider the following guidelines when using multiple threads:
     System.Threading.Interlocked.CompareExchange(ref x, y, null);
     ```
 
-    > **Note:**
-    > The `System.Threading.Interlocked.CompareExchange``1(``0@,``0,``0)` method overload provides a type-safe alternative for reference types.
+    > [!NOTE]
+    > The <xref:System.Threading.Interlocked.CompareExchange``1%28``0%40%2C``0%2C``0%29> method overload provides a type-safe alternative for reference types.
 
 ## Recommendations for class libraries
 
@@ -173,5 +177,5 @@ Consider the following guidelines when designing class libraries for multithread
 
 ## See also
 
-- Threading
-- Threads and Threading
+- [Threading](managed-threading-basics.md)
+- [Threads and Threading](threads-and-threading.md)

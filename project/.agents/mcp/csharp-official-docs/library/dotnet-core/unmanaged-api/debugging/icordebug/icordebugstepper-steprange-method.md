@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugStepper::StepRange Method"
 title: "ICorDebugStepper::StepRange Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugstepper-steprange-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugStepper.StepRange"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugStepper::StepRange"
+helpviewer_keywords:
+  - "StepRange method [.NET debugging]"
+  - "ICorDebugStepper::StepRange method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugStepper::StepRange Method
 
 Causes this ICorDebugStepper to single-step through its containing thread, and to return when it reaches code beyond the last of the specified ranges.
@@ -34,15 +43,15 @@ HRESULT StepRange (
 
 ## Remarks
 
-The `StepRange` method works like the ICorDebugStepper::Step method, except that it does not complete until code outside the given range is reached.
+The `StepRange` method works like the [ICorDebugStepper::Step](icordebugstepper-step-method.md) method, except that it does not complete until code outside the given range is reached.
 
 This can be more efficient than stepping one instruction at a time. Ranges are specified as a list of offset pairs from the start of the stepper's frame.
 
-Ranges are relative to the common intermediate language (CIL) code of a method. Call ICorDebugStepper::SetRangeIL with `false` to make the ranges relative to the native code of a method.
+Ranges are relative to the common intermediate language (CIL) code of a method. Call [ICorDebugStepper::SetRangeIL](icordebugstepper-setrangeil-method.md) with `false` to make the ranges relative to the native code of a method.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

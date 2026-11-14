@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugEval2::CallParameterizedFunction Method"
 title: "ICorDebugEval2::CallParameterizedFunction Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugeval2-callparameterizedfunction-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugEval2.CallParameterizedFunction"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugEval2::CallParameterizedFunction"
+helpviewer_keywords:
+  - "ICorDebugEval2::CallParameterizedFunction method [.NET debugging]"
+  - "CallParameterizedFunction method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugEval2::CallParameterizedFunction Method
 
-Sets up a call to the specified ICorDebugFunction, which can be nested inside a class whose constructor takes `System.Type` parameters, or can itself take `System.Type` parameters.
+Sets up a call to the specified ICorDebugFunction, which can be nested inside a class whose constructor takes <xref:System.Type> parameters, or can itself take <xref:System.Type> parameters.
 
 ## Syntax
 
@@ -42,7 +51,7 @@ HRESULT CallParameterizedFunction (
 
 ## Remarks
 
- `CallParameterizedFunction` is like ICorDebugEval::CallFunction except that the function may be inside a class with type parameters, may itself take type parameters, or both. The type arguments should be given first for the class, and then for the function.
+ `CallParameterizedFunction` is like [ICorDebugEval::CallFunction](icordebugeval-callfunction-method.md) except that the function may be inside a class with type parameters, may itself take type parameters, or both. The type arguments should be given first for the class, and then for the function.
 
 If the function is in a different application domain, a transition will occur. However, all type and value arguments must be in the target application domain.
 
@@ -50,7 +59,7 @@ Function evaluation can be performed only in limited scenarios. If `CallParamete
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

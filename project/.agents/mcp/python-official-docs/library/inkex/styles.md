@@ -1,12 +1,3 @@
----
-title: "inkex.styles"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/styles.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.styles
 
 Functions for handling styles and embedded css
@@ -43,9 +34,13 @@ class Style(NotifyOrderedDict)
 
 A list of style directives
 
-> *Changed in version 1.2.*
-> The Style API now allows for access to parsed / processed styles via the
-> `call()` method.
+.. versionchanged:: 1.2
+    The Style API now allows for access to parsed / processed styles via the
+    :func:`call` method.
+
+.. automethod:: __call__
+.. automethod:: __getitem__
+.. automethod:: __setitem__
 
 ## Style.parse_str
 
@@ -71,7 +66,7 @@ def copy(self)
 
 Create a copy of the style.
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## Style.update
 
@@ -79,7 +74,7 @@ Create a copy of the style.
 def update(self, other)
 ```
 
-Update, while respecting `!important` declarations, and simplifying
+Update, while respecting ``!important`` declarations, and simplifying
 shorthands
 
 ## Style.add_inherited
@@ -91,14 +86,14 @@ def add_inherited(self, parent)
 Creates a new Style containing all parent styles with importance "!important"
 and current styles with importance "!important"
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 Args:
-parent: the parent style that will be merged into this one (will not be
-altered)
+    parent: the parent style that will be merged into this one (will not be
+        altered)
 
 Returns:
-Style: the merged Style object
+    Style: the merged Style object
 
 ## Style.get_store
 
@@ -106,17 +101,17 @@ Style: the merged Style object
 def get_store(self, key)
 ```
 
-Gets the `BaseStyleValue` of this key, since the
-other interfaces - `__getitem__() and call__()` - return the
+Gets the :class:`~inkex.properties.BaseStyleValue` of this key, since the
+other interfaces - :func:`__getitem__` and :func:`__call__` - return the
 original and parsed value, respectively.
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 Args:
-key (str): the attribute name
+    key (str): the attribute name
 
 Returns:
-BaseStyleValue: the BaseStyleValue struct of this attribute
+    BaseStyleValue: the BaseStyleValue struct of this attribute
 
 ## Style.items
 
@@ -126,7 +121,7 @@ def items(self)
 
 The styles's items as string
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## Style.get_importance
 
@@ -134,9 +129,9 @@ The styles's items as string
 def get_importance(self, key, default=False)
 ```
 
-Returns whether the declaration with `key` is marked as `!important`
+Returns whether the declaration with ``key`` is marked as ``!important``
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## Style.set_importance
 
@@ -144,9 +139,9 @@ Returns whether the declaration with `key` is marked as `!important`
 def set_importance(self, key, importance)
 ```
 
-Sets the `!important` state of a declaration with key `key`
+Sets the ``!important`` state of a declaration with key ``key``
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## Style.get_color
 
@@ -185,14 +180,14 @@ style using the respective specificity of the style
 
 see https://www.w3.org/TR/CSS22/cascade.html#cascading-order
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 Args:
-element (BaseElement): the element that the cascaded style will be
-computed for
+    element (BaseElement): the element that the cascaded style will be
+        computed for
 
 Returns:
-Style: the cascaded style
+    Style: the cascaded style
 
 ## Style.specified_style
 
@@ -203,14 +198,14 @@ def specified_style(cls, element)
 Returns the specified style of an element, i.e. the cascaded style +
 inheritance, see https://www.w3.org/TR/CSS22/cascade.html#specified-value
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 Args:
-element (BaseElement): the element that the specified style will be computed
-for
+    element (BaseElement): the element that the specified style will be computed
+        for
 
 Returns:
-Style: the specified style
+    Style: the specified style
 
 ## class StyleSheets
 
@@ -240,7 +235,7 @@ def lookup_specificity(self, element)
 
 Find all styles for this element and return the specificity of the match.
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## class StyleSheet
 
@@ -285,11 +280,11 @@ Lookup the element_id against all the styles in this sheet
 and return the specificity of the match
 
 Args:
-element: the element of the element that styles are being queried for
+    element: the element of the element that styles are being queried for
 
 Yields:
-Tuple[ConditionalStyle, Tuple[int, int, int]]: all matched styles and the
-specificity of the match
+    Tuple[ConditionalStyle, Tuple[int, int, int]]: all matched styles and the
+    specificity of the match
 
 ## class ConditionalStyle
 
@@ -309,7 +304,7 @@ def matches(self, element: etree.Element)
 
 Checks if an individual element matches this selector.
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## ConditionalStyle.all_matches
 
@@ -319,7 +314,7 @@ def all_matches(self, document: etree.Element)
 
 Get all matches of this selector in document as iterator.
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## ConditionalStyle.get_specificities
 
@@ -329,4 +324,4 @@ def get_specificities(self, element: Optional[BaseElement] = None)
 
 Gets an iterator of the specificity of all rules in this ConditionalStyle
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2

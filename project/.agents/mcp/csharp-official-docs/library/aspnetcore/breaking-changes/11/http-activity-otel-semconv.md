@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: ASP.NET Core hosting emits OpenTelemetry HTTP semantic-convention tags by default"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/11/http-activity-otel-semconv.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+ai-usage: ai-assisted
+description: "Learn about the breaking change in ASP.NET Core 11 where the HTTP server Activity emits OpenTelemetry HTTP semantic-convention tags by default, the http.route tag uses literal default values for conventional routes, and Activity.StatusDescription is no longer set on exceptions."
+ms.date: 06/04/2026
 ---
-
 # ASP.NET Core hosting emits OpenTelemetry HTTP semantic-convention tags by default
 
-The HTTP server `System.Diagnostics.Activity` created by `Microsoft.AspNetCore.Hosting` now emits the OpenTelemetry HTTP server-span semantic-convention tags by default, and its `http.route` tag uses the resolved values of conventional-route default parameters. `System.Diagnostics.Activity.StatusDescription` is no longer set when an unhandled exception occurs. Together, these changes bring the built-in `Microsoft.AspNetCore.Hosting` activity into line with the metadata produced by `OpenTelemetry.Instrumentation.AspNetCore`.
+The HTTP server <xref:System.Diagnostics.Activity> created by `Microsoft.AspNetCore.Hosting` now emits the OpenTelemetry HTTP server-span semantic-convention tags by default, and its `http.route` tag uses the resolved values of conventional-route default parameters. <xref:System.Diagnostics.Activity.StatusDescription> is no longer set when an unhandled exception occurs. Together, these changes bring the built-in `Microsoft.AspNetCore.Hosting` activity into line with the metadata produced by `OpenTelemetry.Instrumentation.AspNetCore`.
 
 ## Version introduced
 
@@ -27,20 +24,20 @@ Previously:
 
 Starting in ASP.NET Core 11:
 
-- `Microsoft.AspNetCore.Hosting.SuppressActivityOpenTelemetryData` defaults to `false`. The framework's HTTP server `Activity` now carries the OpenTelemetry HTTP server-span tags out of the box. The added tags include `http.request.method`, `http.response.status_code`, `http.route`, `network.protocol.version`, `url.path`, `url.scheme`, `server.address`, `server.port`, and `user_agent.original`. See the OpenTelemetry HTTP server span spec for the full set of attributes.
+- `Microsoft.AspNetCore.Hosting.SuppressActivityOpenTelemetryData` defaults to `false`. The framework's HTTP server `Activity` now carries the OpenTelemetry HTTP [server-span](https://opentelemetry.io/docs/specs/semconv/http/http-spans/#http-server-span) tags out of the box. The added tags include `http.request.method`, `http.response.status_code`, `http.route`, `network.protocol.version`, `url.path`, `url.scheme`, `server.address`, `server.port`, and `user_agent.original`. See the [OpenTelemetry HTTP server span spec](https://opentelemetry.io/docs/specs/semconv/http/http-spans/#http-server-span) for the full set of attributes.
 - The HTTP request duration metric (`http.server.request.duration`) carries an additional `error.type` dimension for `5xx` responses.
 - For conventional routes, the `http.route` tag has the `{controller}`, `{action}`, `{area}`, and `{page}` parameters replaced by their resolved values. For example, a request to `Store/Checkout` matched by the conventional route `{controller=Home}/{action=Index}/{id?}` now reports `http.route = "Store/Checkout/{id?}"` instead of `"{controller=Home}/{action=Index}/{id?}"`.
 - When an unhandled exception escapes the request pipeline, the framework sets `Activity.Status` to `Error` but does *not* set `Activity.StatusDescription`. The exception is still recorded as an `Activity` event with the standard `exception.type`, `exception.message`, and `exception.stacktrace` tags, and the exception type is reflected in the `error.type` metric dimension.
 
 ## Type of breaking change
 
-This is a behavioral change.
+This is a [behavioral change](/dotnet/core/compatibility/categories#behavioral-change).
 
 ## Reason for change
 
 Aligning the built-in hosting activity with the OpenTelemetry HTTP server-span specification lets apps observe their HTTP behavior without taking an extra dependency on `OpenTelemetry.Instrumentation.AspNetCore`. Using resolved route values in `http.route` matches the OpenTelemetry guidance for that tag and produces more useful aggregations in dashboards. Not setting `Activity.StatusDescription` on exceptions aligns with `OpenTelemetry.Instrumentation.AspNetCore` (which already left it unset) and avoids putting potentially sensitive exception messages in places that aren't designed to receive them.
 
-For more information, see dotnet/aspnetcore#64851, dotnet/aspnetcore#64854, and dotnet/aspnetcore#65825.
+For more information, see [dotnet/aspnetcore#64851](https://github.com/dotnet/aspnetcore/pull/64851), [dotnet/aspnetcore#64854](https://github.com/dotnet/aspnetcore/pull/64854), and [dotnet/aspnetcore#65825](https://github.com/dotnet/aspnetcore/pull/65825).
 
 ## Recommended action
 
@@ -62,5 +59,5 @@ The switch only controls the OpenTelemetry tags. The `http.route` value-substitu
 ## Affected APIs
 
 - `Microsoft.AspNetCore.Hosting.HostingHostBuilderExtensions`
-- `System.Diagnostics.Activity.StatusDescription`
-- The OpenTelemetry HTTP server span semantic conventions.
+- <xref:System.Diagnostics.Activity.StatusDescription?displayProperty=fullName>
+- The OpenTelemetry [HTTP server span semantic conventions](https://opentelemetry.io/docs/specs/semconv/http/http-spans/#http-server-span).

@@ -1,19 +1,13 @@
----
-title: "prefer-minimal-ternary"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-minimal-ternary.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-minimal-ternary
 
 📝 Prefer moving ternaries into the minimal varying part of an expression.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 This rule reports ternaries where both branches share the same outer shape and only one subexpression varies. Moving the ternary into the varying part avoids duplicating the rest and makes the real difference easier to see.
 
@@ -45,7 +39,7 @@ const foo = test ? a + 1 : b + 1;
 const foo = (test ? a : b) + 1;
 ```
 
-Member access with a varying static property name or receiver is opt-in through `checkComputedMemberAccess` or `checkVaryingBase`. Dynamic computed keys are reported by default:
+Member access with a varying static property name or receiver is opt-in through [`checkComputedMemberAccess`](#checkcomputedmemberaccess) or [`checkVaryingBase`](#checkvaryingbase). Dynamic computed keys are reported by default:
 
 ```js
 // ❌
@@ -83,7 +77,7 @@ Matching ignores comments and whitespace between tokens, including in TypeScript
 
 Comments, unsafe evaluation reordering, Vue directive attributes, and statement bodies inside Vue interpolations prevent autofixes.
 
-With type information, the rule ignores ternaries whose minimization could change narrowing, overload resolution, generic inference, or correlated types, as well as shared-callee calls and constructors with rest parameters. These conservative checks can also skip safe transformations. They are best-effort; review type-sensitive fixes.
+With [type information](https://typescript-eslint.io/getting-started/typed-linting/), the rule ignores ternaries whose minimization could change narrowing, overload resolution, generic inference, or correlated types, as well as shared-callee calls and constructors with rest parameters. These conservative checks can also skip safe transformations. They are best-effort; review type-sensitive fixes.
 
 Without type information, TypeScript objects with shared non-literal values, even safe identifiers, receive suggestions instead of autofixes. Suggestions are subject to runtime and comment safeguards; review them for lost narrowing.
 
@@ -96,7 +90,7 @@ These transformations are intentionally excluded:
 - **Conditional spreads** (`test ? [1, 2] : [1]`): added spread syntax often hurts readability, including for multiple varying JSX attributes.
 - **Object key swaps** (`test ? {a: 1} : {b: 1}`): computed keys obscure the object shapes.
 - **String/template splitting** (`test ? 'cat' : 'car'`): shared text is not necessarily a meaningful unit.
-- **`if`/`else` conversion**: belongs to `prefer-ternary`, which shares this rule's expression matching and fixes directly to the minimal form when safe.
+- **`if`/`else` conversion**: belongs to [`prefer-ternary`](./prefer-ternary.md), which shares this rule's expression matching and fixes directly to the minimal form when safe.
 - **TypeScript wrappers** (`test ? a! : b!`): factoring out `as`, `!`, or `satisfies` needs separate type-checking analysis.
 
 ## Options

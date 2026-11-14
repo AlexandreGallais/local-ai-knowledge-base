@@ -1,13 +1,7 @@
 ---
-title: "no-restricted-modules"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-restricted-modules.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-restricted-modules
+rule_type: suggestion
 ---
-
-# no-restricted-modules
 
 A module in Node.js is a simple or complex functionality organized in a JavaScript file which can be reused throughout the Node.js
 application. The keyword `require` is used in Node.js/CommonJS to import modules into an application. This way you can have dynamic loading where the loaded module name isn't predefined /static, or where you conditionally load a module only if it's "truly required".
@@ -76,7 +70,7 @@ To restrict the use of all Node.js core modules (via <https://github.com/nodejs/
 
 Examples of **incorrect** code for this rule  with sample `"fs", "cluster", "lodash"` restricted modules:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-restricted-modules: ["error", "fs", "cluster"]*/
@@ -85,7 +79,9 @@ const fs = require('fs');
 const cluster = require('cluster');
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint no-restricted-modules: ["error", {"paths": ["cluster"] }]*/
@@ -93,7 +89,9 @@ const cluster = require('cluster');
 const cluster = require('cluster');
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint no-restricted-modules: ["error", { "patterns": ["lodash/*"] }]*/
@@ -101,9 +99,11 @@ const cluster = require('cluster');
 const pick = require('lodash/pick');
 ```
 
+:::
+
 Examples of **correct** code for this rule with sample `"fs", "cluster", "lodash"` restricted modules:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-restricted-modules: ["error", "fs", "cluster"]*/
@@ -111,7 +111,9 @@ Examples of **correct** code for this rule with sample `"fs", "cluster", "lodash
 const crypto = require('crypto');
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint no-restricted-modules: ["error", {
@@ -122,3 +124,5 @@ const crypto = require('crypto');
 const crypto = require('crypto');
 const pick = require('lodash/pick');
 ```
+
+:::

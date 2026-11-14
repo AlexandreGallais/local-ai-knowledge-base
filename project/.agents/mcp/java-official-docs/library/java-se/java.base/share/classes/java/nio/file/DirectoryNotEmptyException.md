@@ -1,12 +1,3 @@
----
-title: "DirectoryNotEmptyException class (java.nio.file)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/file/DirectoryNotEmptyException.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # DirectoryNotEmptyException class (java.nio.file)
 
 ```java
@@ -16,7 +7,7 @@ public class DirectoryNotEmptyException extends FileSystemException
 Checked exception thrown when a file system operation fails because a
 directory is not empty.
 
-**Since:** 1.7
+@since 1.7
 
 ## DirectoryNotEmptyException.DirectoryNotEmptyException(String)
 
@@ -26,6 +17,5 @@ public DirectoryNotEmptyException(String dir)
 
 Constructs an instance of this class.
 
-Parameters:
-
-- `dir`: a string identifying the directory or `null` if not known
+@param   dir
+         a string identifying the directory or {@code null} if not known

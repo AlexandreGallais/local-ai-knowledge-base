@@ -1,51 +1,40 @@
----
-title: "IdentityScope class (java.security)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/IdentityScope.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # IdentityScope class (java.security)
 
 ```java
 public abstract class IdentityScope extends Identity
 ```
 
-This class represents a scope for identities. It is an Identity
+<p>This class represents a scope for identities. It is an Identity
 itself, and therefore has a name and can have a scope. It can also
 optionally have a public key and associated certificates.
 
-An `IdentityScope` can contain `Identity` objects of all
-kinds, including signers. All types of `Identity` objects can be
+<p>An {@code IdentityScope} can contain {@code Identity} objects of all
+kinds, including signers. All types of {@code Identity} objects can be
 retrieved, added, and removed using the same methods. Note that it is
 possible, and in fact expected, that different types of identity scopes will
 apply different policies for their various operations on the
 various types of Identities.
 
-There is a one-to-one mapping between keys and identities, and
+<p>There is a one-to-one mapping between keys and identities, and
 there can only be one copy of one key per scope. For example, suppose
-**Acme Software, Inc** is a software publisher known to a user.
+<b>Acme Software, Inc</b> is a software publisher known to a user.
 Suppose it is an Identity, that is, it has a public key, and a set of
 associated certificates. It is named in the scope using the name
 "Acme Software". No other named Identity in the scope has the same
 public  key. Of course, none has the same name as well.
 
-**See also:** Identity
+@see Identity
+@see Signer
+@see Principal
+@see Key
 
-**See also:** Signer
+@author Benjamin Renaud
+@since 1.1
 
-**See also:** Principal
-
-**See also:** Key
-
-**Since:** 1.1
-
-**Deprecated:** This class is deprecated and subject to removal in a future
+@deprecated This class is deprecated and subject to removal in a future
     version of Java SE. It has been replaced by
-    `java.security.KeyStore`, the `java.security.cert` package,
-    and `java.security.Principal`.
+    {@code java.security.KeyStore}, the {@code java.security.cert} package,
+    and {@code java.security.Principal}.
 
 ## IdentityScope.IdentityScope()
 
@@ -64,9 +53,7 @@ public IdentityScope(String name)
 
 Constructs a new identity scope with the specified name.
 
-Parameters:
-
-- `name`: the scope name.
+@param name the scope name.
 
 ## IdentityScope.IdentityScope(String, IdentityScope)
 
@@ -76,14 +63,11 @@ public IdentityScope(String name, IdentityScope scope) throws KeyManagementExcep
 
 Constructs a new identity scope with the specified name and scope.
 
-Parameters:
+@param name the scope name.
+@param scope the scope for the new identity scope.
 
-- `name`: the scope name.
-- `scope`: the scope for the new identity scope.
-
-Throws:
-
-- `KeyManagementException`: if there is already an `Identity` with the same name in the scope.
+@throws    KeyManagementException if there is already an {@code Identity}
+with the same name in the scope.
 
 ## IdentityScope.getSystemScope()
 
@@ -93,10 +77,10 @@ public static IdentityScope getSystemScope()
 
 Returns the system's identity scope.
 
-**Returns:** the system's identity scope, or `null` if none has been
+@return the system's identity scope, or {@code null} if none has been
         set.
 
-**See also:** #setSystemScope
+@see #setSystemScope
 
 ## IdentityScope.setSystemScope(IdentityScope)
 
@@ -106,11 +90,9 @@ protected static void setSystemScope(IdentityScope scope)
 
 Sets the system's identity scope.
 
-Parameters:
+@param scope the scope to set.
 
-- `scope`: the scope to set.
-
-**See also:** #getSystemScope
+@see #getSystemScope
 
 ## IdentityScope.size()
 
@@ -120,7 +102,7 @@ public abstract int size()
 
 Returns the number of identities within this identity scope.
 
-**Returns:** the number of identities within this identity scope.
+@return the number of identities within this identity scope.
 
 ## IdentityScope.getIdentity(String)
 
@@ -128,15 +110,13 @@ Returns the number of identities within this identity scope.
 public abstract Identity getIdentity(String name)
 ```
 
-Returns the `Identity` in this scope with the specified
+Returns the {@code Identity} in this scope with the specified
 name (if any).
 
-Parameters:
+@param name the name of the {@code Identity} to be retrieved.
 
-- `name`: the name of the `Identity` to be retrieved.
-
-**Returns:** the `Identity` named `name`, or `null`
-if there are no identities named `name` in this scope.
+@return the {@code Identity} named {@code name}, or {@code null}
+if there are no identities named {@code name} in this scope.
 
 ## IdentityScope.getIdentity(Principal)
 
@@ -144,16 +124,15 @@ if there are no identities named `name` in this scope.
 public Identity getIdentity(Principal principal)
 ```
 
-Retrieves the `Identity` whose name is the same as that of the
-specified principal. (Note: `Identity` implements
-`Principal`.)
+Retrieves the {@code Identity} whose name is the same as that of the
+specified principal. (Note: {@code Identity} implements
+{@code Principal}.)
 
-Parameters:
+@param principal the principal corresponding to the {@code Identity}
+to be retrieved.
 
-- `principal`: the principal corresponding to the `Identity` to be retrieved.
-
-**Returns:** the `Identity` whose name is the same as that of the
-principal, or `null` if there are no identities of the same name
+@return the {@code Identity} whose name is the same as that of the
+principal, or {@code null} if there are no identities of the same name
 in this scope.
 
 ## IdentityScope.getIdentity(PublicKey)
@@ -162,13 +141,11 @@ in this scope.
 public abstract Identity getIdentity(PublicKey key)
 ```
 
-Retrieves the `identity` with the specified public key.
+Retrieves the {@code identity} with the specified public key.
 
-Parameters:
+@param key the public key for the identity to be returned.
 
-- `key`: the public key for the identity to be returned.
-
-**Returns:** the identity with the given key, or `null` if there are
+@return the identity with the given key, or {@code null} if there are
 no identities in this scope with that key.
 
 ## IdentityScope.addIdentity(Identity)
@@ -177,15 +154,14 @@ no identities in this scope with that key.
 public abstract void addIdentity(Identity identity) throws KeyManagementException
 ```
 
-Adds an `Identity` to this identity scope.
+Adds an {@code Identity} to this identity scope.
 
-Parameters:
+@param identity the {@code Identity} to be added.
 
-- `identity`: the `Identity` to be added.
-
-Throws:
-
-- `KeyManagementException`: if the identity is not valid, a name conflict occurs, another identity has the same public key as the identity being added, or another exception occurs.
+@throws    KeyManagementException if the identity is not
+valid, a name conflict occurs, another identity has the same
+public key as the identity being added, or another exception
+occurs.
 
 ## IdentityScope.removeIdentity(Identity)
 
@@ -193,15 +169,12 @@ Throws:
 public abstract void removeIdentity(Identity identity) throws KeyManagementException
 ```
 
-Removes an `Identity` from this identity scope.
+Removes an {@code Identity} from this identity scope.
 
-Parameters:
+@param identity the {@code Identity} to be removed.
 
-- `identity`: the `Identity` to be removed.
-
-Throws:
-
-- `KeyManagementException`: if the identity is missing, or another exception occurs.
+@throws    KeyManagementException if the identity is missing,
+or another exception occurs.
 
 ## IdentityScope.identities()
 
@@ -211,7 +184,7 @@ public abstract Enumeration<Identity> identities()
 
 Returns an enumeration of all identities in this identity scope.
 
-**Returns:** an enumeration of all identities in this identity scope.
+@return an enumeration of all identities in this identity scope.
 
 ## IdentityScope.toString()
 
@@ -223,4 +196,4 @@ Returns a string representation of this identity scope, including
 its name, its scope name, and the number of identities in this
 identity scope.
 
-**Returns:** a string representation of this identity scope.
+@return a string representation of this identity scope.

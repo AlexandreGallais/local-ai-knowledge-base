@@ -4,5 +4,5 @@
   "search": "Search the Java API documentation of OpenJDK: the java.base module (java.lang, java.util, java.io, java.nio, java.time, java.math, java.net, java.text, java.security) and java.net.http. Returns 10 section ids at most.",
   "queryExample": "\"HashMap put\" or \"CompletableFuture thenApply\"",
   "toolExample": "\"java-se\" (the only tool)",
-  "idExample": "library/java-se/java.base/share/classes/java/util/HashMap.md#hashmapputk-v"
+  "idExample": "library/java-se/java.base/share/classes/java/util/HashMap.md#hashmaphashmap"
 }

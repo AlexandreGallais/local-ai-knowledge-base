@@ -1,24 +1,17 @@
----
-title: "Angular CLI MCP Server"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/ai/mcp-server-setup.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Angular CLI MCP Server
 
 The Angular CLI includes a Model Context Protocol (MCP) server that enables AI assistants (like Cursor, Antigravity, JetBrains AI, etc.) to interact directly with the Angular CLI. It provides tools for code generation, workspace analysis, and running builds/tests.
 
-**Integration with Angular AI Agent Skills**
-  If your host environment supports custom Agent Skills (such as Antigravity), you can combine the Angular CLI MCP server with the official Angular AI Skills. While the skills provide the agent with deep instruction-level guidance and coding standards, the MCP server provides the action tools (like compiling, running tests, and analyzing workspaces) to execute those guidelines, resulting in a complete and powerful development agent.
+<docs-callout title="Integration with Angular AI Agent Skills">
+  If your host environment supports custom Agent Skills (such as Antigravity), you can combine the Angular CLI MCP server with the official [Angular AI Skills](https://angular.dev/ai/agent-skills). While the skills provide the agent with deep instruction-level guidance and coding standards, the MCP server provides the action tools (like compiling, running tests, and analyzing workspaces) to execute those guidelines, resulting in a complete and powerful development agent.
+</docs-callout>
 
 ## Get Started
 
 To use the MCP server, you configure your host environment (IDE or CLI) to run `npx @angular/cli mcp`.
 
-  **Antigravity IDE**
+<docs-tab-group>
+  <docs-tab label="Antigravity IDE">
     Create a file named `.antigravity/mcp.json` in your project's root:
 
     ```json
@@ -32,7 +25,9 @@ To use the MCP server, you configure your host environment (IDE or CLI) to run `
     }
     ```
 
-  **Cursor**
+  </docs-tab>
+
+  <docs-tab label="Cursor">
     Create `.cursor/mcp.json` in the project root (or globally at `~/.cursor/mcp.json`):
 
     ```json
@@ -46,7 +41,9 @@ To use the MCP server, you configure your host environment (IDE or CLI) to run `
     }
     ```
 
-  **VS Code**
+  </docs-tab>
+
+  <docs-tab label="VS Code">
     Create `.vscode/mcp.json`:
 
     ```json
@@ -59,6 +56,9 @@ To use the MCP server, you configure your host environment (IDE or CLI) to run `
       }
     }
     ```
+
+  </docs-tab>
+</docs-tab-group>
 
 ## Available Tools (Default)
 
@@ -113,7 +113,7 @@ The AI agent guides the developer through Angular concepts in an interactive san
 
 ## Command Options
 
-You can pass <example-value> to the MCP server in the `args` array of your configuration:
+You can pass arguments to the MCP server in the `args` array of your configuration:
 
 - `--read-only`: Only registers tools that do not modify the project.
 - `--local-only`: Only registers tools that do not require an internet connection.

@@ -1,14 +1,3 @@
----
-title: "ch07-05-separating-modules-into-different-files"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch07-05-separating-modules-into-different-files.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch07-05-separating-modules-into-different-files
-
 ## Separating Modules into Different Files
 
 So far, all the examples in this chapter defined multiple modules in one file.
@@ -27,37 +16,33 @@ the `mod front_of_house;` declaration, so that _src/lib.rs_ contains the code
 shown in Listing 7-21. Note that this won’t compile until we create the
 _src/front_of_house.rs_ file in Listing 7-22.
 
-**Listing 7-21: Declaring the `front_of_house` module whose body will be in *src/front_of_house.rs*** (src/lib.rs)
+<Listing number="7-21" file-name="src/lib.rs" caption="Declaring the `front_of_house` module whose body will be in *src/front_of_house.rs*">
 
-```rust
-mod front_of_house;
-
-pub use crate::front_of_house::hosting;
-
-pub fn eat_at_restaurant() {
-    hosting::add_to_waitlist();
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/lib.rs}}
 ```
+
+</Listing>
 
 Next, place the code that was in the curly brackets into a new file named
 _src/front_of_house.rs_, as shown in Listing 7-22. The compiler knows to look
 in this file because it came across the module declaration in the crate root
 with the name `front_of_house`.
 
-**Listing 7-22: Definitions inside the `front_of_house` module in *src/front_of_house.rs*** (src/front_of_house.rs)
+<Listing number="7-22" file-name="src/front_of_house.rs" caption="Definitions inside the `front_of_house` module in *src/front_of_house.rs*">
 
-```rust
-pub mod hosting {
-    pub fn add_to_waitlist() {}
-}
+```rust,ignore
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-21-and-22/src/front_of_house.rs}}
 ```
+
+</Listing>
 
 Note that you only need to load a file using a `mod` declaration _once_ in your
 module tree. Once the compiler knows the file is part of the project (and knows
 where in the module tree the code resides because of where you’ve put the `mod`
 statement), other files in your project should refer to the loaded file’s code
-using a path to where it was declared, as covered in the “Paths for Referring
-to an Item in the Module Tree” section. In other words,
+using a path to where it was declared, as covered in the [“Paths for Referring
+to an Item in the Module Tree”][paths]<!-- ignore --> section. In other words,
 `mod` is _not_ an “include” operation that you may have seen in other
 programming languages.
 
@@ -69,20 +54,24 @@ named for its ancestors in the module tree, in this case _src/front_of_house_.
 To start moving `hosting`, we change _src/front_of_house.rs_ to contain only
 the declaration of the `hosting` module:
 
-**Listing** (src/front_of_house.rs)
+<Listing file-name="src/front_of_house.rs">
 
-```rust
-pub mod hosting;
+```rust,ignore
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house.rs}}
 ```
+
+</Listing>
 
 Then, we create a _src/front_of_house_ directory and a _hosting.rs_ file to
 contain the definitions made in the `hosting` module:
 
-**Listing** (src/front_of_house/hosting.rs)
+<Listing file-name="src/front_of_house/hosting.rs">
 
-```rust
-pub fn add_to_waitlist() {}
+```rust,ignore
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-02-extracting-hosting/src/front_of_house/hosting.rs}}
 ```
+
+</Listing>
 
 If we instead put _hosting.rs_ in the _src_ directory, the compiler would
 expect the _hosting.rs_ code to be in a `hosting` module declared in the crate
@@ -136,3 +125,5 @@ you can make definitions public by adding the `pub` keyword.
 
 In the next chapter, we’ll look at some collection data structures in the
 standard library that you can use in your neatly organized code.
+
+[paths]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html

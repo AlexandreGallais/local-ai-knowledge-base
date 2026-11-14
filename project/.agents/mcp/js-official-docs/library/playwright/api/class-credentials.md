@@ -1,12 +1,3 @@
----
-title: "class: Credentials (part 1 of 2)"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-credentials.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: Credentials
 * since: v1.61
 
@@ -16,13 +7,13 @@ ceremonies in the page, without a real authenticator or hardware security key.
 
 There are three common ways to use it:
 
-- **Seed a known credential.** The passkey <example-value> exists — for example, your backend provisioned
+- **Seed a known credential.** The passkey already exists — for example, your backend provisioned
   it for a test user. Import it with [`method: Credentials.create`] so the app under test can sign
   in right away. See the first example below.
 - **Capture a credential, then reuse it.** Let the app register a passkey once in a setup test,
   read it back with [`method: Credentials.get`], and seed it into later tests. See the second example below.
 - **Save credentials in the storage state, restore later.** Let the app register a passkey in a
-  setup test and save it as part of the storage state by setting [`option: BrowserContext.storageState.credentials`]. See authentication guide for examples.
+  setup test and save it as part of the storage state by setting [`option: BrowserContext.storageState.credentials`]. See [authentication guide](../auth.md) for examples.
 
 **Usage: seed a known credential**
 
@@ -33,8 +24,8 @@ const context = await browser.newContext();
 await context.credentials.create('example.com', {
   id: knownCredentialId, // base64url
   userHandle: knownUserHandle, // base64url
-  privateKey: <example-value>, // base64url PKCS#8 (DER)
-  publicKey: <example-value>, // base64url SPKI (DER)
+  privateKey: knownPrivateKey, // base64url PKCS#8 (DER)
+  publicKey: knownPublicKey, // base64url SPKI (DER)
 });
 await context.credentials.install();
 
@@ -59,7 +50,7 @@ page.navigate("https://example.com/login");
 // The page's navigator.credentials.get() is answered with the seeded passkey.
 ```
 
-```python
+```python async
 context = await browser.new_context()
 
 # A passkey your backend already provisioned for a test user.
@@ -67,8 +58,8 @@ await context.credentials.create(
     "example.com",
     id=known_credential_id,  # base64url
     user_handle=known_user_handle,  # base64url
-    private_key=<example-value>,  # base64url PKCS#8 (DER)
-    public_key=<example-value>,  # base64url SPKI (DER)
+    private_key=known_private_key,  # base64url PKCS#8 (DER)
+    public_key=known_public_key,  # base64url SPKI (DER)
 )
 await context.credentials.install()
 
@@ -77,7 +68,7 @@ await page.goto("https://example.com/login")
 # The page's navigator.credentials.get() is answered with the seeded passkey.
 ```
 
-```python
+```python sync
 context = browser.new_context()
 
 # A passkey your backend already provisioned for a test user.
@@ -85,8 +76,8 @@ context.credentials.create(
     "example.com",
     id=known_credential_id,  # base64url
     user_handle=known_user_handle,  # base64url
-    private_key=<example-value>,  # base64url PKCS#8 (DER)
-    public_key=<example-value>,  # base64url SPKI (DER)
+    private_key=known_private_key,  # base64url PKCS#8 (DER)
+    public_key=known_public_key,  # base64url SPKI (DER)
 )
 context.credentials.install()
 
@@ -103,8 +94,8 @@ await context.Credentials.CreateAsync("example.com", new()
 {
     Id = knownCredentialId, // base64url
     UserHandle = knownUserHandle, // base64url
-    PrivateKey = <example-value>, // base64url PKCS#8 (DER)
-    PublicKey = <example-value>, // base64url SPKI (DER)
+    PrivateKey = knownPrivateKey, // base64url PKCS#8 (DER)
+    PublicKey = knownPublicKey, // base64url SPKI (DER)
 });
 await context.Credentials.InstallAsync();
 
@@ -139,12 +130,12 @@ page.navigate("https://example.com/register");
 page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Create a passkey")).click();
 
 // Read back the passkey the page registered — it includes the private key.
-VirtualCredential <example-value> = context.credentials().get(
+VirtualCredential credential = context.credentials().get(
     new Credentials.GetOptions().setRpId("example.com")).get(0);
 Files.writeString(Paths.get("playwright/.auth/passkey.json"), new Gson().toJson(credential));
 ```
 
-```python
+```python async
 # setup test: let the app register a passkey, then save it.
 context = await browser.new_context()
 await context.credentials.install()
@@ -159,7 +150,7 @@ with open("playwright/.auth/passkey.json", "w") as f:
     json.dump(credential, f)
 ```
 
-```python
+```python sync
 # setup test: let the app register a passkey, then save it.
 context = browser.new_context()
 context.credentials.install()
@@ -202,7 +193,7 @@ await page.goto('https://example.com/login');
 
 ```java
 // later test: seed the captured passkey so the app starts already enrolled.
-VirtualCredential <example-value> = new Gson().fromJson(
+VirtualCredential credential = new Gson().fromJson(
     Files.readString(Paths.get("playwright/.auth/passkey.json")), VirtualCredential.class);
 BrowserContext context = browser.newContext();
 context.credentials().create(credential.rpId, new Credentials.CreateOptions()
@@ -218,7 +209,7 @@ page.navigate("https://example.com/login");
 // navigator.credentials.get() resolves the captured passkey — already signed in.
 ```
 
-```python
+```python async
 # later test: seed the captured passkey so the app starts already enrolled.
 with open("playwright/.auth/passkey.json") as f:
     credential = json.load(f)
@@ -227,8 +218,8 @@ await context.credentials.create(
     credential["rpId"],
     id=credential["id"],
     user_handle=credential["userHandle"],
-    private_key=<example-value>["privateKey"],
-    public_key=<example-value>["publicKey"],
+    private_key=credential["privateKey"],
+    public_key=credential["publicKey"],
     sign_count=credential["signCount"],
 )
 await context.credentials.install()
@@ -238,7 +229,7 @@ await page.goto("https://example.com/login")
 # navigator.credentials.get() resolves the captured passkey — already signed in.
 ```
 
-```python
+```python sync
 # later test: seed the captured passkey so the app starts already enrolled.
 with open("playwright/.auth/passkey.json") as f:
     credential = json.load(f)
@@ -247,8 +238,8 @@ context.credentials.create(
     credential["rpId"],
     id=credential["id"],
     user_handle=credential["userHandle"],
-    private_key=<example-value>["privateKey"],
-    public_key=<example-value>["publicKey"],
+    private_key=credential["privateKey"],
+    public_key=credential["publicKey"],
     sign_count=credential["signCount"],
 )
 context.credentials.install()
@@ -280,7 +271,7 @@ await page.GotoAsync("https://example.com/login");
 
 **Usage: save credentials in the storage state, restore later**
 
-See authentication guide for examples of using saving and restoring the storage state.
+See [authentication guide](../auth.md) for examples of using saving and restoring the storage state.
 
 **Defaults**
 
@@ -291,7 +282,7 @@ See authentication guide for examples of using saving and restoring the storage 
   usernameless passkey flows resolve them.
 - Fresh keys are ECDSA P-256 (COSE algorithm `-7`). An omitted `id` or `userHandle` is
   filled with 16 random bytes.
-- The signature counter of a fresh credential <example-value> at `0` and is incremented by one on every
+- The signature counter of a fresh credential starts at `0` and is incremented by one on every
   successful `navigator.credentials.get()` assertion. Pass [`option: Credentials.create.signCount`] to seed a different value.
 
 ## async method: Credentials.install
@@ -362,13 +353,13 @@ Base64url-encoded SPKI (DER) public key. Auto-generated if omitted.
 * since: v1.64
 - `signCount` <[int]>
 
-Initial value of the signature counter. The counter is incremented by one on
+Initial value of the [signature counter](https://www.w3.org/TR/webauthn-2/#signature-counter). The counter is incremented by one on
 every successful `navigator.credentials.get()` assertion, so the first assertion reports `signCount + 1`. Defaults to `0`.
 
 ## async method: Credentials.delete
 * since: v1.61
 
-Removes a credential from the authenticator by its id. Works for any credential <example-value> held —
+Removes a credential from the authenticator by its id. Works for any credential currently held —
 both those seeded with [`method: Credentials.create`] and those the page registered itself by
 calling `navigator.credentials.create()`.
 
@@ -377,3 +368,32 @@ calling `navigator.credentials.create()`.
 - `id` <[string]>
 
 Base64url-encoded credential id.
+
+## async method: Credentials.get
+* since: v1.61
+- returns: "VirtualCredential" <[Array]<[Object]>>
+  - `id` <[string]>
+  - `rpId` <[string]>
+  - `userHandle` <[string]>
+  - `privateKey` <[string]>
+  - `publicKey` <[string]>
+  - `signCount` <[int]>
+
+Returns every credential currently held by the authenticator, optionally filtered by [`option: Credentials.get.rpId`] or
+[`option: Credentials.get.id`]. This includes both credentials seeded with [`method: Credentials.create`] and credentials
+the page registered itself by calling `navigator.credentials.create()`.
+
+Each returned credential includes its private and public keys and the current signature counter, so a passkey the app just
+registered can be saved and re-seeded into a later test with [`method: Credentials.create`] — see the second example in the class overview.
+
+### option: Credentials.get.rpId
+* since: v1.61
+- `rpId` <[string]>
+
+Only return credentials for this relying party id.
+
+### option: Credentials.get.id
+* since: v1.61
+- `id` <[string]>
+
+Only return the credential with this base64url-encoded id.

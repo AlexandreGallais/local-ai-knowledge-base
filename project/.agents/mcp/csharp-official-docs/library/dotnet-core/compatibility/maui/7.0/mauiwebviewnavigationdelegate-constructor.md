@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Constructors accept base interface instead of concrete type"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/maui/7.0/mauiwebviewnavigationdelegate-constructor.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 7 breaking change in .NET MAUI where the `MauiWebChromeClient` and `MauiWebViewNavigationDelegate` constructors accept the base interface instead of a specific concrete type.
+ms.date: 11/14/2022
 ---
-
 # Constructors accept base interface instead of concrete type
 
 The constructors of the following types now accept the base interface (`IWebViewHandler`) instead of a specific, concrete type that implements the interface (`WebViewHandler`):
@@ -28,7 +24,7 @@ The constructors of `MauiWebChromeClient` and `MauiWebViewNavigationDelegate` no
 
 ## Type of breaking change
 
-This change can affect binary compatibility.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 

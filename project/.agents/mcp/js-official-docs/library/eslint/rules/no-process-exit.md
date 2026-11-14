@@ -1,13 +1,7 @@
 ---
-title: "no-process-exit"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-process-exit.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-process-exit
+rule_type: suggestion
 ---
-
-# no-process-exit
 
 The `process.exit()` method in Node.js is used to immediately stop the Node.js process and exit. This is a dangerous operation because it can occur in any method at any point in time, potentially stopping a Node.js application completely when an error occurs. For example:
 
@@ -28,7 +22,7 @@ if (somethingBadHappened) {
 
 By throwing an error in this way, other parts of the application have an opportunity to handle the error rather than stopping the application altogether. If the error bubbles all the way up to the process without being handled, then the process will exit and a non-zero exit code will returned, so the end result is the same.
 
-If you are using `process.exit()` only for specifying the exit code, you can set `process.exitCode` (introduced in Node.js 0.11.8) instead.
+If you are using `process.exit()` only for specifying the exit code, you can set [`process.exitCode`](https://nodejs.org/api/process.html#process_process_exitcode) (introduced in Node.js 0.11.8) instead.
 
 ## Rule Details
 
@@ -36,7 +30,7 @@ This rule aims to prevent the use of `process.exit()` in Node.js JavaScript. As 
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-process-exit: "error"*/
@@ -45,9 +39,11 @@ process.exit(1);
 process.exit(0);
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-process-exit: "error"*/
@@ -55,6 +51,8 @@ Examples of **correct** code for this rule:
 Process.exit();
 var exit = process.exit;
 ```
+
+:::
 
 ## When Not To Use It
 

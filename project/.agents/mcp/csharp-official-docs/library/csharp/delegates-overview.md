@@ -1,10 +1,8 @@
 ---
-title: "Introduction to delegates and events"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/delegates-overview.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Introduction to delegates and events
+description: The first in a series of articles about C# delegates and events. This article introduces basic concepts and discusses language design goals for delegates.
+ms.date: 03/24/2022
+ms.subservice: fundamentals
 ---
 
 # Introduction to delegates and events in C\#
@@ -28,7 +26,7 @@ and type safety around the concept.
 As you'll see later in this series, the C# code you write for algorithms
 like this is type safe. The compiler ensures that the types match for arguments and return types.
 
-Function pointers support similar scenarios, where you need more control over the calling convention. The code associated with a delegate is invoked using a virtual method added to a delegate type. Using function pointers, you can specify different conventions.
+[Function pointers](language-reference/unsafe-code.md#function-pointers) support similar scenarios, where you need more control over the calling convention. The code associated with a delegate is invoked using a virtual method added to a delegate type. Using function pointers, you can specify different conventions.
 
 ## Language Design Goals for Delegates
 
@@ -43,7 +41,7 @@ problems.
 Second, the team wanted to support both single and multicast method
 calls. (Multicast delegates are delegates that chain together multiple method calls.
 You'll see examples
-later in this series.)
+[later in this series](delegate-class.md).)
 
 The team wanted delegates to support the same type safety that developers
 expect from all C# constructs.
@@ -71,4 +69,4 @@ You'll learn about:
 
 Let's get started.
 
-Next
+[Next](delegate-class.md)

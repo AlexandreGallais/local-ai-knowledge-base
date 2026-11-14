@@ -1,24 +1,17 @@
----
-title: "AccessController class (java.security)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/AccessController.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AccessController class (java.security)
 
 ```java
 public final class AccessController
 ```
 
-`AccessController` was used with the Security Manager for access
+{@code AccessController} was used with the Security Manager for access
 control operations and decisions. This feature no longer exists.
 
-**Since:** 1.2
-
-**Deprecated:** This class was only useful in conjunction with the Security Manager, which is no longer supported.
+@author Li Gong
+@author Roland Schemers
+@since 1.2
+@deprecated This class was only useful in conjunction with {@linkplain
+      SecurityManager the Security Manager}, which is no longer supported.
       There is no replacement for the Security Manager or this class.
 
 ## AccessController.doPrivileged(PrivilegedAction<T>)
@@ -29,32 +22,28 @@ public static <T> T doPrivileged(PrivilegedAction<T> action)
 
 Performs the specified action.
 
- If the action's `run` method throws an (unchecked)
+<p> If the action's {@code run} method throws an (unchecked)
 exception, it will propagate through this method.
 
-Parameters:
+@param <T> the type of the value returned by the PrivilegedAction's
+                 {@code run} method
 
-- `<T>`: the type of the value returned by the PrivilegedAction's `run` method
-- `action`: the action to be performed
+@param action the action to be performed
 
-**Returns:** the value returned by the action's `run` method
+@return the value returned by the action's {@code run} method
 
-**See also:** #doPrivileged(PrivilegedAction,AccessControlContext)
+@throws    NullPointerException if the action is {@code null}
 
-**See also:** #doPrivileged(PrivilegedExceptionAction)
-
-**API note:** This method originally performed the specified
-    `PrivilegedAction` with privileges enabled. Running the action
+@see #doPrivileged(PrivilegedAction,AccessControlContext)
+@see #doPrivileged(PrivilegedExceptionAction)
+@apiNote This method originally performed the specified
+    {@code PrivilegedAction} with privileges enabled. Running the action
     with privileges enabled was only useful in conjunction with
-    the Security Manager, which is no
+    {@linkplain SecurityManager the Security Manager}, which is no
     longer supported. This method has been changed to run the action as
     is, and has equivalent behavior as if there were no Security Manager
     enabled. There is no replacement for the Security Manager or this
     method.
-
-Throws:
-
-- `NullPointerException`: if the action is `null`
 
 ## AccessController.doPrivilegedWithCombiner(PrivilegedAction<T>)
 
@@ -64,31 +53,29 @@ public static <T> T doPrivilegedWithCombiner(PrivilegedAction<T> action)
 
 Performs the specified action.
 
- If the action's `run` method throws an (unchecked)
+<p> If the action's {@code run} method throws an (unchecked)
 exception, it will propagate through this method.
 
-Parameters:
+@param <T> the type of the value returned by the PrivilegedAction's
+                 {@code run} method
 
-- `<T>`: the type of the value returned by the PrivilegedAction's `run` method
-- `action`: the action to be performed
+@param action the action to be performed
 
-**Returns:** the value returned by the action's `run` method
+@return the value returned by the action's {@code run} method
 
-**API note:** This method originally performed the specified
-    `PrivilegedAction` with privileges enabled and with the current
+@throws    NullPointerException if the action is {@code null}
+
+@apiNote This method originally performed the specified
+    {@code PrivilegedAction} with privileges enabled and with the current
     access control context's domain combiner preserved. Running the
     action with privileges enabled was only useful in conjunction with
-    the Security Manager, which is no
+    {@linkplain SecurityManager the Security Manager}, which is no
     longer supported. This method has been changed to run the action as
     is, and has equivalent behavior as if there were no Security Manager
     enabled. There is no replacement for the Security Manager or this
     method.
 
-**Since:** 1.6
-
-Throws:
-
-- `NullPointerException`: if the action is `null`
+@since 1.6
 
 ## AccessController.doPrivileged(PrivilegedAction<T>, AccessControlContext)
 
@@ -97,31 +84,28 @@ public static <T> T doPrivileged(PrivilegedAction<T> action, AccessControlContex
 ```
 
 Performs the specified action.
-
-If the action's `run` method throws an (unchecked) exception,
+<p>
+If the action's {@code run} method throws an (unchecked) exception,
 it will propagate through this method.
 
-Parameters:
+@param <T> the type of the value returned by the PrivilegedAction's
+                 {@code run} method
+@param action the action to be performed.
+@param context ignored
 
-- `<T>`: the type of the value returned by the PrivilegedAction's `run` method
-- `action`: the action to be performed.
-- `context`: ignored
+@return the value returned by the action's {@code run} method
 
-**Returns:** the value returned by the action's `run` method
+@throws    NullPointerException if the action is {@code null}
 
-**API note:** This method originally performed the specified
-    `PrivilegedAction` with privileges enabled and restricted
-    by the specified `AccessControlContext`. Running the
+@apiNote This method originally performed the specified
+    {@code PrivilegedAction} with privileges enabled and restricted
+    by the specified {@code AccessControlContext}. Running the
     action with privileges enabled was only useful in conjunction with
-    the Security Manager, which is no
+    {@linkplain SecurityManager the Security Manager}, which is no
     longer supported. This method has been changed to run the action as
     is, and has equivalent behavior as if there were no Security Manager
     enabled. There is no replacement for the Security Manager or this
     method.
-
-Throws:
-
-- `NullPointerException`: if the action is `null`
 
 ## AccessController.doPrivileged(PrivilegedAction<T>, AccessControlContext, Permission...)
 
@@ -131,34 +115,32 @@ public static <T> T doPrivileged(PrivilegedAction<T> action, AccessControlContex
 
 Performs the specified action.
 
-If the action's `run` method throws an (unchecked) exception,
+<p>
+If the action's {@code run} method throws an (unchecked) exception,
 it will propagate through this method.
 
-Parameters:
+@param <T> the type of the value returned by the PrivilegedAction's
+                 {@code run} method
+@param action the action to be performed
+@param context ignored
+@param perms ignored
 
-- `<T>`: the type of the value returned by the PrivilegedAction's `run` method
-- `action`: the action to be performed
-- `context`: ignored
-- `perms`: ignored
+@return the value returned by the action's {@code run} method
 
-**Returns:** the value returned by the action's `run` method
+@throws NullPointerException if action is {@code null}
 
-**API note:** This method originally performed the specified
-    `PrivilegedAction` with privileges enabled and restricted
-    by the specified `AccessControlContext` and with a privilege
-    scope limited by the specified `Permission` arguments. Running
+@apiNote This method originally performed the specified
+    {@code PrivilegedAction} with privileges enabled and restricted
+    by the specified {@code AccessControlContext} and with a privilege
+    scope limited by the specified {@code Permission} arguments. Running
     the action with privileges enabled was only useful in conjunction with
-    the Security Manager, which is no
+    {@linkplain SecurityManager the Security Manager}, which is no
     longer supported. This method has been changed to run the action as
     is, and has equivalent behavior as if there were no Security Manager
     enabled. There is no replacement for the Security Manager or this
     method.
 
-**Since:** 1.8
-
-Throws:
-
-- `NullPointerException`: if action is `null`
+@since 1.8
 
 ## AccessController.doPrivilegedWithCombiner(PrivilegedAction<T>, AccessControlContext, Permission...)
 
@@ -168,36 +150,34 @@ public static <T> T doPrivilegedWithCombiner(PrivilegedAction<T> action, AccessC
 
 Performs the specified action.
 
-If the action's `run` method throws an (unchecked) exception,
+<p>
+If the action's {@code run} method throws an (unchecked) exception,
 it will propagate through this method.
 
-Parameters:
+@param <T> the type of the value returned by the PrivilegedAction's
+                 {@code run} method
+@param action the action to be performed
+@param context ignored
+@param perms ignored
 
-- `<T>`: the type of the value returned by the PrivilegedAction's `run` method
-- `action`: the action to be performed
-- `context`: ignored
-- `perms`: ignored
+@return the value returned by the action's {@code run} method
 
-**Returns:** the value returned by the action's `run` method
+@throws NullPointerException if action is {@code null}
 
-**API note:** This method originally performed the specified
-    `PrivilegedAction` with privileges enabled and restricted
-    by the specified `AccessControlContext` and with a privilege
-    scope limited by the specified `Permission` arguments. This
+@apiNote This method originally performed the specified
+    {@code PrivilegedAction} with privileges enabled and restricted
+    by the specified {@code AccessControlContext} and with a privilege
+    scope limited by the specified {@code Permission} arguments. This
     method also originally preserved the current access control context's
     domain combiner while the action was performed. Running the action
     with privileges enabled was only useful in conjunction with
-    the Security Manager, which is no
+    {@linkplain SecurityManager the Security Manager}, which is no
     longer supported. This method has been changed to run the action as
     is, and has equivalent behavior as if there were no Security Manager
     enabled. There is no replacement for the Security Manager or this
     method.
 
-**Since:** 1.8
-
-Throws:
-
-- `NullPointerException`: if action is `null`
+@since 1.8
 
 ## AccessController.doPrivileged(PrivilegedExceptionAction<T>)
 
@@ -207,29 +187,28 @@ public static <T> T doPrivileged(PrivilegedExceptionAction<T> action) throws Pri
 
 Performs the specified action.
 
- If the action's `run` method throws an *unchecked*
+<p> If the action's {@code run} method throws an <i>unchecked</i>
 exception, it will propagate through this method.
 
-Parameters:
+@param <T> the type of the value returned by the
+                 PrivilegedExceptionAction's {@code run} method
 
-- `<T>`: the type of the value returned by the PrivilegedExceptionAction's `run` method
-- `action`: the action to be performed
+@param action the action to be performed
 
-**Returns:** the value returned by the action's `run` method
+@return the value returned by the action's {@code run} method
 
-**API note:** This method originally performed the specified
-    `PrivilegedExceptionAction` with privileges enabled. Running
+@throws    PrivilegedActionException if the specified action's
+        {@code run} method threw a <i>checked</i> exception
+@throws    NullPointerException if the action is {@code null}
+
+@apiNote This method originally performed the specified
+    {@code PrivilegedExceptionAction} with privileges enabled. Running
     the action with privileges enabled was only useful in conjunction with
-    the Security Manager, which is no
+    {@linkplain SecurityManager the Security Manager}, which is no
     longer supported. This method has been changed to run the action as
     is, and has equivalent behavior as if there were no Security Manager
     enabled. There is no replacement for the Security Manager or this
     method.
-
-Throws:
-
-- `PrivilegedActionException`: if the specified action's `run` method threw a *checked* exception
-- `NullPointerException`: if the action is `null`
 
 ## AccessController.doPrivilegedWithCombiner(PrivilegedExceptionAction<T>)
 
@@ -239,32 +218,31 @@ public static <T> T doPrivilegedWithCombiner(PrivilegedExceptionAction<T> action
 
 Performs the specified action.
 
- If the action's `run` method throws an *unchecked*
+<p> If the action's {@code run} method throws an <i>unchecked</i>
 exception, it will propagate through this method.
 
-Parameters:
+@param <T> the type of the value returned by the
+                 PrivilegedExceptionAction's {@code run} method
 
-- `<T>`: the type of the value returned by the PrivilegedExceptionAction's `run` method
-- `action`: the action to be performed
+@param action the action to be performed
 
-**Returns:** the value returned by the action's `run` method
+@return the value returned by the action's {@code run} method
 
-**API note:** This method originally performed the specified
-    `PrivilegedExceptionAction` with privileges enabled and with
+@throws    PrivilegedActionException if the specified action's
+        {@code run} method threw a <i>checked</i> exception
+@throws    NullPointerException if the action is {@code null}
+
+@apiNote This method originally performed the specified
+    {@code PrivilegedExceptionAction} with privileges enabled and with
     the current access control context's domain combiner preserved.
     Running the action with privileges enabled was only useful in
-    conjunction with the Security Manager,
+    conjunction with {@linkplain SecurityManager the Security Manager},
     which is no longer supported. This method has been changed to run
     the action as is, and has equivalent behavior as if there were no
     Security Manager enabled. There is no replacement for the Security
     Manager or this method.
 
-**Since:** 1.6
-
-Throws:
-
-- `PrivilegedActionException`: if the specified action's `run` method threw a *checked* exception
-- `NullPointerException`: if the action is `null`
+@since 1.6
 
 ## AccessController.doPrivileged(PrivilegedExceptionAction<T>, AccessControlContext)
 
@@ -273,36 +251,32 @@ public static <T> T doPrivileged(PrivilegedExceptionAction<T> action, AccessCont
 ```
 
 Performs the specified action.
-
-If the action's `run` method throws an *unchecked*
+<p>
+If the action's {@code run} method throws an <i>unchecked</i>
 exception, it will propagate through this method.
 
-Parameters:
+@param <T> the type of the value returned by the
+                 PrivilegedExceptionAction's {@code run} method
+@param action the action to be performed
+@param context ignored
 
-- `<T>`: the type of the value returned by the PrivilegedExceptionAction's `run` method
-- `action`: the action to be performed
-- `context`: ignored
+@return the value returned by the action's {@code run} method
 
-**Returns:** the value returned by the action's `run` method
+@throws    PrivilegedActionException if the specified action's
+        {@code run} method threw a <i>checked</i> exception
+@throws    NullPointerException if the action is {@code null}
 
-**See also:** #doPrivileged(PrivilegedAction)
-
-**See also:** #doPrivileged(PrivilegedAction,AccessControlContext)
-
-**API note:** This method originally performed the specified
-    `PrivilegedExceptionAction` with privileges enabled and
-    restricted by the specified `AccessControlContext`. Running the
+@see #doPrivileged(PrivilegedAction)
+@see #doPrivileged(PrivilegedAction,AccessControlContext)
+@apiNote This method originally performed the specified
+    {@code PrivilegedExceptionAction} with privileges enabled and
+    restricted by the specified {@code AccessControlContext}. Running the
     action with privileges enabled was only useful in conjunction with
-    the Security Manager, which is no
+    {@linkplain SecurityManager the Security Manager}, which is no
     longer supported. This method has been changed to run the action as
     is, and has equivalent behavior as if there were no Security Manager
     enabled. There is no replacement for the Security Manager or this
     method.
-
-Throws:
-
-- `PrivilegedActionException`: if the specified action's `run` method threw a *checked* exception
-- `NullPointerException`: if the action is `null`
 
 ## AccessController.doPrivileged(PrivilegedExceptionAction<T>, AccessControlContext, Permission...)
 
@@ -312,35 +286,34 @@ public static <T> T doPrivileged(PrivilegedExceptionAction<T> action, AccessCont
 
 Performs the specified action.
 
-If the action's `run` method throws an (unchecked) exception,
+<p>
+If the action's {@code run} method throws an (unchecked) exception,
 it will propagate through this method.
 
-Parameters:
+@param <T> the type of the value returned by the
+                 PrivilegedExceptionAction's {@code run} method
+@param action the action to be performed
+@param context ignored
+@param perms ignored
 
-- `<T>`: the type of the value returned by the PrivilegedExceptionAction's `run` method
-- `action`: the action to be performed
-- `context`: ignored
-- `perms`: ignored
+@return the value returned by the action's {@code run} method
 
-**Returns:** the value returned by the action's `run` method
+@throws PrivilegedActionException if the specified action's
+        {@code run} method threw a <i>checked</i> exception
+@throws NullPointerException if action is {@code null}
 
-**API note:** This method originally performed the specified
-    `PrivilegedExceptionAction` with privileges enabled and
-    restricted by the specified `AccessControlContext` and with a
-    privilege scope limited by the specified `Permission`
+@apiNote This method originally performed the specified
+    {@code PrivilegedExceptionAction} with privileges enabled and
+    restricted by the specified {@code AccessControlContext} and with a
+    privilege scope limited by the specified {@code Permission}
     arguments. Running the action with privileges enabled was only useful
-    in conjunction with the Security Manager,
+    in conjunction with {@linkplain SecurityManager the Security Manager},
     which is no longer supported. This method has been changed to run
     the action as is, and has equivalent behavior as if there were no
     Security Manager enabled. There is no replacement for the Security
     Manager or this method.
 
-**Since:** 1.8
-
-Throws:
-
-- `PrivilegedActionException`: if the specified action's `run` method threw a *checked* exception
-- `NullPointerException`: if action is `null`
+@since 1.8
 
 ## AccessController.doPrivilegedWithCombiner(PrivilegedExceptionAction<T>, AccessControlContext, Permission...)
 
@@ -350,37 +323,36 @@ public static <T> T doPrivilegedWithCombiner(PrivilegedExceptionAction<T> action
 
 Performs the specified action.
 
-If the action's `run` method throws an (unchecked) exception,
+<p>
+If the action's {@code run} method throws an (unchecked) exception,
 it will propagate through this method.
 
-Parameters:
+@param <T> the type of the value returned by the
+                 PrivilegedExceptionAction's {@code run} method
+@param action the action to be performed
+@param context ignored
+@param perms ignored
 
-- `<T>`: the type of the value returned by the PrivilegedExceptionAction's `run` method
-- `action`: the action to be performed
-- `context`: ignored
-- `perms`: ignored
+@return the value returned by the action's {@code run} method
 
-**Returns:** the value returned by the action's `run` method
+@throws PrivilegedActionException if the specified action's
+        {@code run} method threw a <i>checked</i> exception
+@throws NullPointerException if action is {@code null}
 
-**API note:** This method originally performed the specified
-    `PrivilegedExceptionAction` with privileges enabled and
-    restricted by the specified `AccessControlContext` and with a
-    privilege scope limited by the specified `Permission`
+@apiNote This method originally performed the specified
+    {@code PrivilegedExceptionAction} with privileges enabled and
+    restricted by the specified {@code AccessControlContext} and with a
+    privilege scope limited by the specified {@code Permission}
     arguments. This method also preserved the current access control
     context's domain combiner while the action was performed. Running
     the action with privileges enabled was only useful in conjunction
-    with the Security Manager, which is no
+    with {@linkplain SecurityManager the Security Manager}, which is no
     longer supported. This method has been changed to run the action as
     is, and has equivalent behavior as if there were no Security Manager
     enabled. There is no replacement for the Security Manager or this
     method.
 
-**Since:** 1.8
-
-Throws:
-
-- `PrivilegedActionException`: if the specified action's `run` method threw a *checked* exception
-- `NullPointerException`: if action is `null`
+@since 1.8
 
 ## AccessController.getContext()
 
@@ -388,21 +360,20 @@ Throws:
 public static AccessControlContext getContext()
 ```
 
-Returns an `AccessControlContext` where the `checkPermission`
-method always throws an `AccessControlException` and the
-`getDomainCombiner` method always returns `null`.
+Returns an {@code AccessControlContext} where the {@code checkPermission}
+method always throws an {@code AccessControlException} and the
+{@code getDomainCombiner} method always returns {@code null}.
 
-**Returns:** an `AccessControlContext` as specified above
+@return an {@code AccessControlContext} as specified above
 
-**See also:** AccessControlContext
-
-**API note:** This method originally returned a snapshot of the current
+@see AccessControlContext
+@apiNote This method originally returned a snapshot of the current
       calling context, which included the current thread's access
       control context and any limited privilege scope. This method has
       been changed to always return an innocuous
-      `AccessControlContext` that fails all permission checks.
+      {@code AccessControlContext} that fails all permission checks.
       This method was only useful in conjunction with
-      the Security Manager, which is no
+      {@linkplain SecurityManager the Security Manager}, which is no
       longer supported. There is no replacement for the Security Manager
       or this method.
 
@@ -412,21 +383,16 @@ method always throws an `AccessControlException` and the
 public static void checkPermission(Permission perm) throws AccessControlException
 ```
 
-Throws `AccessControlException`.
+Throws {@code AccessControlException}.
 
-Parameters:
+@param perm ignored
+@throws    AccessControlException always
 
-- `perm`: ignored
-
-**API note:** This method originally determined whether the access request
+@apiNote This method originally determined whether the access request
       indicated by the specified permission should be allowed or denied,
-      based on the current `AccessControlContext` and security
+      based on the current {@code AccessControlContext} and security
       policy. This method has been changed to always throw
-      `AccessControlException`. This method was only useful in
-      conjunction with the Security Manager,
+      {@code AccessControlException}. This method was only useful in
+      conjunction with {@linkplain SecurityManager the Security Manager},
       which is no longer supported. There is no replacement for the
       Security Manager or this method.
-
-Throws:
-
-- `AccessControlException`: always

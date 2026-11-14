@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugVariableHomeEnum::Next Method"
 title: "ICorDebugVariableHomeEnum::Next Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugvariablehomeenum-next-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugVariableHomeEnum.Next"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugVariableHomeEnum::Next"
+helpviewer_keywords:
+  - "ICorDebugVariableHomeEnum::Next method [.NET debugging]"
+  - "Next method, ICorDebugVariableHomeEnum interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugVariableHomeEnum::Next Method
 
-Gets the specified number of ICorDebugVariableHome instances that contain information about the local variables and arguments in a function.
+Gets the specified number of [ICorDebugVariableHome](icordebugvariablehome-interface.md) instances that contain information about the local variables and arguments in a function.
 
 ## Syntax
 
@@ -27,7 +36,7 @@ HRESULT Next(
  [in] The number of objects to be retrieved.
 
  `homes`
-An array of pointers, each of which points to a ICorDebugVariableHome object that provides information about  a local variable or argument of a function.
+An array of pointers, each of which points to a [ICorDebugVariableHome](icordebugvariablehome-interface.md) object that provides information about  a local variable or argument of a function.
 
  `pceltFetched`
  [out] The number of instances actually returned in objects.
@@ -43,11 +52,11 @@ The method returns the following values.
 
 ## Remarks
 
-The ICorDebugVariableHomeEnum::Next method retrieves a maximum of  `celt` objects starting at the current position of the enumerator. When the method returns, `pceltFetched` contains the actual number of objects retrieved.
+The [ICorDebugVariableHomeEnum::Next](icordebugvariablehomeenum-next-method.md) method retrieves a maximum of  `celt` objects starting at the current position of the enumerator. When the method returns, `pceltFetched` contains the actual number of objects retrieved.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -57,5 +66,5 @@ The ICorDebugVariableHomeEnum::Next method retrieves a maximum of  `celt` object
 
 ## See also
 
-- ICorDebugVariableHomeEnum Interface
-- ICorDebugVariableHome Interface
+- [ICorDebugVariableHomeEnum Interface](icordebugvariablehomeenum-interface.md)
+- [ICorDebugVariableHome Interface](icordebugvariablehome-interface.md)

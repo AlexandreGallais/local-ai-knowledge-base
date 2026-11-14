@@ -1,15 +1,11 @@
 ---
-title: "browser.locators | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/browser/locators.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: browser.locators | Config
+outline: deep
 ---
 
 # browser.locators
 
-Options for built-in browser locators.
+Options for built-in [browser locators](/api/browser/locators).
 
 ## browser.locators.testIdAttribute
 
@@ -23,7 +19,7 @@ Attribute used to find elements with `getByTestId` locator.
 - **Type:** `boolean`
 - **Default:** `true`
 
-When set to `true`, locators match text exactly by default, requiring a full, case-sensitive match. Individual locator calls can override this default via their own `exact` option.
+When set to `true`, [locators](/api/browser/locators) match text exactly by default, requiring a full, case-sensitive match. Individual locator calls can override this default via their own `exact` option.
 
 ```ts
 // With exact: true (default), this only matches the string "Hello, World" exactly.
@@ -39,8 +35,8 @@ await locator.click()
 
 Controls what Vitest prints when a locator cannot find an element. Vitest prints information for the DOM subtree where the locator search ran, or `document.body` for page-level locators.
 
-- `'html'` prints that DOM subtree as HTML using `utils.prettyDOM`.
-- `'aria'` prints that DOM subtree as an ARIA snapshot, which focuses on accessible roles, names, and state.
+- `'html'` prints that DOM subtree as HTML using [`utils.prettyDOM`](/api/browser/context#prettydom).
+- `'aria'` prints that DOM subtree as an [ARIA snapshot](/guide/browser/aria-snapshots), which focuses on accessible roles, names, and state.
 - `'all'` prints the ARIA snapshot first, followed by the HTML output.
 
 ```ts

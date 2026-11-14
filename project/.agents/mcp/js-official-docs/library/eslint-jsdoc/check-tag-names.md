@@ -1,28 +1,22 @@
----
-title: "check-tag-names (part 1 of 3)"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/check-tag-names.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-check-tag-names"></a>
+<a name="check-tag-names"></a>
+# <code>check-tag-names</code>
 
-# `check-tag-names`
+* [Fixer](#user-content-check-tag-names-fixer)
+* [Options](#user-content-check-tag-names-options)
+    * [`definedTags`](#user-content-check-tag-names-options-definedtags)
+    * [`enableFixer`](#user-content-check-tag-names-options-enablefixer)
+    * [`inlineTags`](#user-content-check-tag-names-options-inlinetags)
+    * [`jsxTags`](#user-content-check-tag-names-options-jsxtags)
+    * [`typed`](#user-content-check-tag-names-options-typed)
+* [Context and settings](#user-content-check-tag-names-context-and-settings)
+* [Failing examples](#user-content-check-tag-names-failing-examples)
+* [Passing examples](#user-content-check-tag-names-passing-examples)
 
-* Fixer
-* Options
-    * `definedTags`
-    * `enableFixer`
-    * `inlineTags`
-    * `jsxTags`
-    * `typed`
-* Context and settings
-* Failing examples
-* Passing examples
 
 Reports invalid block tag names.
 
-Valid JSDoc 3 Block Tags are:
+Valid [JSDoc 3 Block Tags](https://jsdoc.app/#block-tags) are:
 
 ```
 abstract
@@ -95,7 +89,7 @@ version
 yields
 ```
 
-`modifies` is also supported (see source)
+`modifies` is also supported (see [source](https://github.com/jsdoc/jsdoc/blob/master/packages/jsdoc/lib/jsdoc/tag/dictionary/definitions.js#L594))
 but is undocumented.
 
 The following synonyms are also recognized if you set them in
@@ -142,7 +136,7 @@ Likewise are the tag keys of `settings.jsdoc.structuredTags` automatically
 considered as valid (as their defining an expected structure for tags implies
 the tags may be used).
 
-For TypeScript
+For [TypeScript](https://www.typescriptlang.org/docs/handbook/type-checking-javascript-files.html#supported-jsdoc)
 (or Closure), when `settings.jsdoc.mode` is set to `typescript` or `closure`,
 one may also use the following:
 
@@ -150,7 +144,7 @@ one may also use the following:
 template
 ```
 
-And for Closure,
+And for [Closure](https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler),
 when `settings.jsdoc.mode` is set to `closure`, one may use the following (in
 addition to the JSDoc and TypeScript tags–though replacing `returns` with
 `return`):
@@ -177,7 +171,7 @@ suppress
 unrestricted
 ```
 
-...and these undocumented tags which are only in source:
+...and these undocumented tags which are only in [source](https://github.com/google/closure-compiler/blob/master/src/com/google/javascript/jscomp/parsing/Annotation.java):
 
 ```
 closurePrimitive
@@ -229,9 +223,11 @@ include
 includeCode
 ```
 
+<a name="user-content-check-tag-names-fixer"></a>
+<a name="check-tag-names-fixer"></a>
 ## Fixer
 
-Auto-removes types that are redundant with the `typed` option.
+Auto-removes types that are redundant with the [`typed` option](#user-content-typed).
 
 For `@property` and `@prop` tags flagged by that option, the fixer can instead
 move each description onto the matching property. This happens when every
@@ -244,11 +240,15 @@ block is removed if nothing remains. If a name does not match, the tag has no
 description, or the attached value is not a recognized object, the fixer
 removes the tag name and leaves the remaining text in the parent comment.
 
+<a name="user-content-check-tag-names-options"></a>
+<a name="check-tag-names-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `definedTags`
+<a name="user-content-check-tag-names-options-definedtags"></a>
+<a name="check-tag-names-options-definedtags"></a>
+### <code>definedTags</code>
 
 Use an array of `definedTags` strings to configure additional, allowed tags.
 The format is as follows:
@@ -259,17 +259,23 @@ The format is as follows:
 }
 ```
 
-### `enableFixer`
+<a name="user-content-check-tag-names-options-enablefixer"></a>
+<a name="check-tag-names-options-enablefixer"></a>
+### <code>enableFixer</code>
 
-Set to `false` to disable auto-removal of types that are redundant with the `typed` option.
+Set to `false` to disable auto-removal of types that are redundant with the [`typed` option](#user-content-typed).
 
-### `inlineTags`
+<a name="user-content-check-tag-names-options-inlinetags"></a>
+<a name="check-tag-names-options-inlinetags"></a>
+### <code>inlineTags</code>
 
 List of tags to allow inline.
 
 Defaults to array of `'link', 'linkcode', 'linkplain', 'tutorial', 'inheritDoc', 'label', 'include', and 'includeCode'`
 
-### `jsxTags`
+<a name="user-content-check-tag-names-options-jsxtags"></a>
+<a name="check-tag-names-options-jsxtags"></a>
+### <code>jsxTags</code>
 
 If this is set to `true`, all of the following tags used to control JSX output are allowed:
 
@@ -280,9 +286,11 @@ jsxImportSource
 jsxRuntime
 ```
 
-For more information, see the babel documentation.
+For more information, see the [babel documentation](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx).
 
-### `typed`
+<a name="user-content-check-tag-names-options-typed"></a>
+<a name="check-tag-names-options-typed"></a>
+### <code>typed</code>
 
 If this is set to `true`, additionally checks for tag names that are redundant when using a type checker such as TypeScript.
 
@@ -344,6 +352,9 @@ static
 this
 ```
 
+
+<a name="user-content-check-tag-names-context-and-settings"></a>
+<a name="check-tag-names-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -353,3 +364,1062 @@ this
 |Recommended|true|
 |Options|`definedTags`, `enableFixer`, `inlineTags`, `jsxTags`, `typed`|
 |Settings|`tagNamePreference`, `mode`|
+
+<a name="user-content-check-tag-names-failing-examples"></a>
+<a name="check-tag-names-failing-examples"></a>
+## Failing examples
+
+The following patterns are considered problems:
+
+````ts
+/** @type {string} */let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@type' is redundant when using a type system.
+
+/** @type {string} */let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"enableFixer":false,"typed":true}]
+// Message: '@type' is redundant when using a type system.
+
+/** @type {string} */ let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@type' is redundant when using a type system.
+
+/** @type {string} */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@type' is redundant when using a type system.
+
+/** @type {string} */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@type' is redundant when using a type system.
+
+/** @type {string} - extra info */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@type' is redundant when using a type system.
+
+/**
+ * Existing comment.
+ *  @type {string}
+ */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@type' is redundant when using a type system.
+
+/** @abstract */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@abstract' is redundant outside of ambient (`declare`/`.d.ts`) contexts when using a type system.
+
+/** @abstract */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"enableFixer":false,"typed":true}]
+// Message: '@abstract' is redundant outside of ambient (`declare`/`.d.ts`) contexts when using a type system.
+
+const a = {
+  /** @abstract */
+  b: true,
+};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@abstract' is redundant outside of ambient (`declare`/`.d.ts`) contexts when using a type system.
+
+/** @template */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@template' without a name is redundant when using a type system.
+
+/**
+ * Prior description.
+ *
+ * @template
+ */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@template' without a name is redundant when using a type system.
+
+/** @typoo {string} */
+let a;
+// Message: Invalid JSDoc tag name "typoo".
+
+/** @typoo {string} */
+let a;
+// Settings: {"jsdoc":{"structuredTags":{"parameter":{"name":"namepath-referencing","required":["type","name"],"type":true}}}}
+// Message: Invalid JSDoc tag name "typoo".
+
+/**
+ * @Param
+ */
+function quux () {
+
+}
+// Message: Invalid JSDoc tag name "Param".
+
+/**
+ * @foo
+ */
+function quux () {
+
+}
+// Message: Invalid JSDoc tag name "foo".
+
+/**
+ * @arg foo
+ */
+function quux (foo) {
+
+}
+// Message: Invalid JSDoc tag (preference). Replace "arg" JSDoc tag with "param".
+
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
+// Message: Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "arg".
+
+/**
+ * @constructor foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"tag constructor":"cons"}}}
+// Message: Invalid JSDoc tag (preference). Replace "constructor" JSDoc tag with "cons".
+
+/**
+ * @arg foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"arg":"somethingDifferent"}}}
+// Message: Invalid JSDoc tag (preference). Replace "arg" JSDoc tag with "somethingDifferent".
+
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":"parameter"}}}
+// Message: Invalid JSDoc tag (preference). Replace "param" JSDoc tag with "parameter".
+
+/**
+ * @bar foo
+ */
+function quux (foo) {
+
+}
+// Message: Invalid JSDoc tag name "bar".
+
+/**
+ * @baz @bar foo
+ */
+function quux (foo) {
+
+}
+// "jsdoc/check-tag-names": ["error"|"warn", {"definedTags":["bar"]}]
+// Message: Invalid JSDoc tag name "baz".
+
+/**
+ * @bar
+ * @baz
+ */
+function quux (foo) {
+
+}
+// "jsdoc/check-tag-names": ["error"|"warn", {"definedTags":["bar"]}]
+// Message: Invalid JSDoc tag name "baz".
+
+/**
+ * @todo
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"todo":false}}}
+// Message: Blacklisted tag found (`@todo`)
+
+/**
+ * @todo
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"todo":{"message":"Please resolve to-dos or add to the tracker"}}}}
+// Message: Please resolve to-dos or add to the tracker
+
+/**
+ * @todo
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"todo":{"message":"Please use x-todo instead of todo","replacement":"x-todo"}}}}
+// Message: Please use x-todo instead of todo
+
+/**
+ * @todo
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"todo":55}}}
+// Message: Invalid `settings.jsdoc.tagNamePreference`. Values must be falsy, a string, or an object.
+
+/**
+ * @property {object} a
+ * @prop {boolean} b
+ */
+function quux () {
+
+}
+// Message: Invalid JSDoc tag (preference). Replace "prop" JSDoc tag with "property".
+
+/**
+ * @abc foo
+ * @abcd bar
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"abc":"abcd"}}}
+// "jsdoc/check-tag-names": ["error"|"warn", {"definedTags":["abcd"]}]
+// Message: Invalid JSDoc tag (preference). Replace "abc" JSDoc tag with "abcd".
+
+/**
+ * @abc
+ * @abcd
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"abc":"abcd"}}}
+// Message: Invalid JSDoc tag (preference). Replace "abc" JSDoc tag with "abcd".
+
+/**
+ * @returns
+ */
+function quux (foo) {}
+// Settings: {"jsdoc":{"mode":"closure"}}
+// Message: Invalid JSDoc tag (preference). Replace "returns" JSDoc tag with "return".
+
+/** 
+ * @modifies
+ * @abstract
+ * @access
+ * @alias
+ * @async
+ * @augments
+ * @author
+ * @borrows
+ * @callback
+ * @class
+ * @classdesc
+ * @constant
+ * @constructs
+ * @copyright
+ * @default
+ * @deprecated
+ * @description
+ * @enum
+ * @event
+ * @example
+ * @exports
+ * @external
+ * @file
+ * @fires
+ * @function
+ * @generator
+ * @global
+ * @hideconstructor
+ * @ignore
+ * @implements
+ * @inheritdoc
+ * @inheritDoc
+ * @inner
+ * @instance
+ * @interface
+ * @kind
+ * @lends
+ * @license
+ * @listens
+ * @member
+ * @memberof
+ * @memberof!
+ * @mixes
+ * @mixin
+ * @module
+ * @name
+ * @namespace
+ * @override
+ * @package
+ * @param
+ * @private
+ * @property
+ * @protected
+ * @public
+ * @readonly
+ * @requires
+ * @returns
+ * @see
+ * @since
+ * @static
+ * @summary
+ * @this
+ * @throws
+ * @todo
+ * @tutorial
+ * @type
+ * @typedef
+ * @variation
+ * @version
+ * @yields
+ */
+function quux (foo) {}
+// Settings: {"jsdoc":{"mode":"badMode"}}
+// Message: Unrecognized value `badMode` for `settings.jsdoc.mode`.
+
+/** 
+ * @modifies
+ * @abstract
+ * @access
+ * @alias
+ * @async
+ * @augments
+ * @author
+ * @borrows
+ * @callback
+ * @class
+ * @classdesc
+ * @constant
+ * @constructs
+ * @copyright
+ * @default
+ * @deprecated
+ * @description
+ * @enum
+ * @event
+ * @example
+ * @exports
+ * @external
+ * @file
+ * @fires
+ * @function
+ * @generator
+ * @global
+ * @hideconstructor
+ * @ignore
+ * @implements
+ * @inheritdoc
+ * @inheritDoc
+ * @inner
+ * @instance
+ * @interface
+ * @kind
+ * @lends
+ * @license
+ * @listens
+ * @member
+ * @memberof
+ * @memberof!
+ * @mixes
+ * @mixin
+ * @module
+ * @name
+ * @namespace
+ * @override
+ * @package
+ * @param
+ * @private
+ * @property
+ * @protected
+ * @public
+ * @readonly
+ * @requires
+ * @returns
+ * @see
+ * @since
+ * @static
+ * @summary
+ * @this
+ * @throws
+ * @todo
+ * @tutorial
+ * @type
+ * @typedef
+ * @variation
+ * @version
+ * @yields
+ * @alpha
+ * @beta
+ * @decorator
+ * @eventProperty
+ * @experimental
+ * @packageDocumentation
+ * @privateRemarks
+ * @remarks
+ * @sealed
+ * @category
+ * @categoryDescription
+ * @disableGroups
+ * @document
+ * @expand
+ * @expandType
+ * @group
+ * @groupDescription
+ * @hidden
+ * @hideCategories
+ * @hideGroups
+ * @inline
+ * @inlineType
+ * @mergeModuleWith
+ * @preventExpand
+ * @preventInline
+ * @primaryExport
+ * @showCategories
+ * @showGroups
+ * @sortStrategy
+ * @useDeclaredType
+ * @import
+ * @internal
+ * @jsx
+ * @overload
+ * @satisfies
+ * @template
+ */
+function quux (foo) {}
+// Settings: {"jsdoc":{"mode":"jsdoc"}}
+// Message: Invalid JSDoc tag name "alpha".
+
+/** 
+ * @externs
+ */
+function quux (foo) {}
+// Message: Invalid JSDoc tag name "externs".
+
+/** @jsxFrag Fragment */
+/** @jsxImportSource preact */
+/** @jsxRuntime automatic */
+// Message: Invalid JSDoc tag name "jsxFrag".
+
+/**
+ * @constructor
+ */
+function Test() {
+  this.works = false;
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"returns":"return"}}}
+// Message: Invalid JSDoc tag (preference). Replace "constructor" JSDoc tag with "class".
+
+/** @typedef {Object} MyObject
+ * @property {string} id - my id
+ */
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@typedef' is redundant when using a type system.
+
+/**
+ * @property {string} id - my id
+ */
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/** @typedef {Object} MyObject */
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@typedef' is redundant when using a type system.
+
+/** @typedef {Object} MyObject
+ */
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@typedef' is redundant when using a type system.
+
+/**
+ * @todo
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"todo":{"message":"Please don't use todo"}}}}
+// Message: Please don't use todo
+
+/**
+ * An {@inline sth} tag in the description and {@another} with a {@link}.
+ * @param {SomeType} name And an {@inlineTag} inside a tag description.
+ * @param {AnotherType} anotherName And yet {@another}
+ */
+// Message: Invalid JSDoc inline tag name "inline"
+
+export class Foo {
+  /**
+   * Internal.
+   * @private
+   */
+  private bar = 1;
+}
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@private' is redundant when using a type system.
+
+/**
+ * @prop BASIC - icon, title, message, expandedMessage, up to two buttons.
+ * @prop IMAGE - icon, title, message, expandedMessage, image, up to two buttons.
+ */
+declare const TemplateType: {
+    BASIC: 'basic',
+    IMAGE: 'image',
+}
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: Invalid JSDoc tag (preference). Replace "prop" JSDoc tag with "property".
+
+/**
+ * @prop BASIC - icon, title, message, expandedMessage, up to two buttons.
+ * @prop MISSING - not a property of this object.
+ */
+declare const TemplateType: {
+    BASIC: 'basic',
+    IMAGE: 'image',
+}
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: Invalid JSDoc tag (preference). Replace "prop" JSDoc tag with "property".
+
+/**
+ * Kinds of template.
+ * @property BASIC - icon, title
+ *   and up to two buttons.
+ * @property IMAGE - image
+ */
+export const TemplateType = {
+    1: 'one',
+    'IMAGE': 'image',
+    [extra]: true,
+    ...rest,
+    BASIC: 'basic',
+};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/**
+ * @property BASIC - icon, title, message, expandedMessage, up to two buttons.
+ * @property IMAGE - icon, title, message, expandedMessage, image, up to two buttons.
+ */
+const TemplateType = {
+    /** Already documented. */
+    BASIC: 'basic',
+    IMAGE: 'image',
+};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/**
+ * @property a - desc
+ */
+const [a] = [];
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/**
+ * @property - orphan
+ */
+export {};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/**
+ * @property BASIC - one
+ * @property BASIC - two
+ */
+const obj = {
+    BASIC: 1,
+};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/** @property BASIC */
+const obj = {
+    BASIC: 1,
+};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/** @property BASIC */const obj = {BASIC: 1};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/** @property BASIC - icon
+ * @param foo
+ */
+const obj = {
+    BASIC: 1,
+};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/**
+ * @param foo
+ * @property BASIC - icon */
+const obj = {
+    BASIC: 1,
+};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/**\r
+ * Kinds.\r
+ * @property BASIC - icon\r
+ *\r
+ * more\r
+ */\r
+const obj = {\r
+    BASIC: 1,\r
+};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+
+/**
+ * @property
+ */
+const obj = {
+    BASIC: 1,
+};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+// Message: '@property' is redundant when using a type system.
+````
+
+
+
+<a name="user-content-check-tag-names-passing-examples"></a>
+<a name="check-tag-names-passing-examples"></a>
+## Passing examples
+
+The following patterns are not considered problems:
+
+````ts
+/** @default 0 */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/** @default 0 */
+declare let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/** @abstract */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/** @abstract */
+declare let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/** @abstract */
+{ declare let a; }
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+function test() {
+  /** @abstract */
+  declare let a;
+}
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/** @template name */
+let a;
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/** @param param - takes information */
+function takesOne(param) {}
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/**
+ * @param foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @memberof! foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @arg foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":"arg"}}}
+
+/**
+ * @parameter foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"structuredTags":{"parameter":{"name":"namepath-referencing","required":["type","name"],"type":true}}}}
+
+/**
+ * @bar foo
+ */
+function quux (foo) {
+
+}
+// "jsdoc/check-tag-names": ["error"|"warn", {"definedTags":["bar"]}]
+
+/**
+ * @baz @bar foo
+ */
+function quux (foo) {
+
+}
+// "jsdoc/check-tag-names": ["error"|"warn", {"definedTags":["baz","bar"]}]
+
+/**
+ * @baz @bar foo
+ */
+function quux (foo) {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"param":"baz","returns":{"message":"Prefer `bar`","replacement":"bar"},"todo":false}}}
+
+/**
+ * @returns
+ */
+function quux (foo) {}
+
+/**
+ * @return
+ */
+function quux (foo) {}
+// Settings: {"jsdoc":{"mode":"closure"}}
+
+/** 
+ * @modifies
+ * @abstract
+ * @access
+ * @alias
+ * @async
+ * @augments
+ * @author
+ * @borrows
+ * @callback
+ * @class
+ * @classdesc
+ * @constant
+ * @constructs
+ * @copyright
+ * @default
+ * @deprecated
+ * @description
+ * @enum
+ * @event
+ * @example
+ * @exports
+ * @external
+ * @file
+ * @fires
+ * @function
+ * @generator
+ * @global
+ * @hideconstructor
+ * @ignore
+ * @implements
+ * @inheritdoc
+ * @inheritDoc
+ * @inner
+ * @instance
+ * @interface
+ * @kind
+ * @lends
+ * @license
+ * @listens
+ * @member
+ * @memberof
+ * @memberof!
+ * @mixes
+ * @mixin
+ * @module
+ * @name
+ * @namespace
+ * @override
+ * @package
+ * @param
+ * @private
+ * @property
+ * @protected
+ * @public
+ * @readonly
+ * @requires
+ * @returns
+ * @see
+ * @since
+ * @static
+ * @summary
+ * @this
+ * @throws
+ * @todo
+ * @tutorial
+ * @type
+ * @typedef
+ * @variation
+ * @version
+ * @yields
+ */
+function quux (foo) {}
+
+/** 
+ * @modifies
+ * @abstract
+ * @access
+ * @alias
+ * @async
+ * @augments
+ * @author
+ * @borrows
+ * @callback
+ * @class
+ * @classdesc
+ * @constant
+ * @constructs
+ * @copyright
+ * @default
+ * @deprecated
+ * @description
+ * @enum
+ * @event
+ * @example
+ * @exports
+ * @external
+ * @file
+ * @fires
+ * @function
+ * @generator
+ * @global
+ * @hideconstructor
+ * @ignore
+ * @implements
+ * @inheritdoc
+ * @inheritDoc
+ * @inner
+ * @instance
+ * @interface
+ * @kind
+ * @lends
+ * @license
+ * @listens
+ * @member
+ * @memberof
+ * @memberof!
+ * @mixes
+ * @mixin
+ * @module
+ * @name
+ * @namespace
+ * @override
+ * @package
+ * @param
+ * @private
+ * @property
+ * @protected
+ * @public
+ * @readonly
+ * @requires
+ * @returns
+ * @see
+ * @since
+ * @static
+ * @summary
+ * @this
+ * @throws
+ * @todo
+ * @tutorial
+ * @type
+ * @typedef
+ * @variation
+ * @version
+ * @yields
+ * @alpha
+ * @beta
+ * @decorator
+ * @eventProperty
+ * @experimental
+ * @packageDocumentation
+ * @privateRemarks
+ * @remarks
+ * @sealed
+ * @category
+ * @categoryDescription
+ * @disableGroups
+ * @document
+ * @expand
+ * @expandType
+ * @group
+ * @groupDescription
+ * @hidden
+ * @hideCategories
+ * @hideGroups
+ * @inline
+ * @inlineType
+ * @mergeModuleWith
+ * @preventExpand
+ * @preventInline
+ * @primaryExport
+ * @showCategories
+ * @showGroups
+ * @sortStrategy
+ * @useDeclaredType
+ * @import
+ * @internal
+ * @jsx
+ * @overload
+ * @satisfies
+ * @template
+ */
+function quux (foo) {}
+// Settings: {"jsdoc":{"mode":"typescript"}}
+
+/** 
+ * @externs
+ */
+function quux (foo) {}
+// Settings: {"jsdoc":{"mode":"closure"}}
+
+/**
+ *
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @todo
+ */
+function quux () {
+
+}
+
+/**
+ * @extends Foo
+ */
+function quux () {
+
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"augments":{"message":"@extends is to be used over @augments.","replacement":"extends"}}}}
+
+/**
+ * (Set tag name preference to itself to get aliases to
+ *   work along with main tag name.)
+ * @augments Bar
+ * @extends Foo
+ */
+function quux () {
+}
+// Settings: {"jsdoc":{"tagNamePreference":{"extends":"extends"}}}
+
+/**
+ * Registers the `target` class as a transient dependency; each time the dependency is resolved a new instance will be created.
+ *
+ * @param target - The class / constructor function to register as transient.
+ *
+ * @example ```ts
+@transient()
+class Foo { }
+```
+ * @param Time for a new tag
+ */
+export function transient<T>(target?: T): T {
+  // ...
+}
+
+/** @jsx h */
+/** @jsxFrag Fragment */
+/** @jsxImportSource preact */
+/** @jsxRuntime automatic */
+// "jsdoc/check-tag-names": ["error"|"warn", {"jsxTags":true}]
+
+/**
+ * @internal
+ */
+// Settings: {"jsdoc":{"mode":"typescript"}}
+
+interface WebTwain {
+  /**
+   * Converts the images specified by the indices to base64 synchronously.
+   * @function WebTwain#ConvertToBase64
+   * @returns {Base64Result}
+
+  ConvertToBase64(): Base64Result;
+  */
+
+  /**
+   * Converts the images specified by the indices to base64 asynchronously.
+   * @function WebTwain#ConvertToBase64
+   * @returns {boolean}
+   */
+  ConvertToBase64(): boolean;
+}
+
+/**
+ * @overload
+ * @satisfies
+ */
+// Settings: {"jsdoc":{"mode":"typescript"}}
+
+/**
+ * @module
+ * A comment related to the module
+ */
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/**
+ * An {@inline sth} tag in the description and {@another} with a {@link}.
+ * @param {SomeType} name And an {@inlineTag} inside a tag description.
+ * @param {AnotherType} anotherName And yet {@another}
+ */
+// "jsdoc/check-tag-names": ["error"|"warn", {"inlineTags":["inline","another","inlineTag","link"]}]
+
+/**
+ * @typeParam T
+ */
+// Settings: {"jsdoc":{"tagNamePreference":{"template":"typeParam"}}}
+
+/**
+ * @ember/debug etc. etc.
+ */
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/** @public */
+export const docs = {};
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/**
+ * Creates a router.
+ *
+ * @public
+ */
+export function createRouter () {}
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+export interface Options {
+  /**
+   * @private
+   */
+  name: string;
+}
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/** @protected */
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+
+/**
+ * @prop BASIC - kept because `prop` is explicitly allowed.
+ */
+const TemplateType = {
+    BASIC: 'basic',
+};
+// Settings: {"jsdoc":{"tagNamePreference":{"prop":"prop"}}}
+// "jsdoc/check-tag-names": ["error"|"warn", {"typed":true}]
+````
+

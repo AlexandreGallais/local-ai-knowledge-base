@@ -1,21 +1,21 @@
 ---
-title: "Chain standard query operators together (C#) - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/chain-standard-query-operators-together.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Chain standard query operators together (C#) - LINQ to XML
+description: Learn how to chain query operators together.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+ms.topic: how-to
 ---
 
 # Chain standard query operators together (C#) (LINQ to XML)
 
-The standard query operators can be chained together. For example, you can interject the `System.Linq.Enumerable.Where*` operator (invoked by the `where` clause), and it operates in a lazy fashion; that is, no intermediate results are materialized by it.
+The standard query operators can be chained together. For example, you can interject the <xref:System.Linq.Enumerable.Where*?displayProperty=nameWithType> operator (invoked by the `where` clause), and it operates in a lazy fashion; that is, no intermediate results are materialized by it.
 
 ## Example: Interject a where clause
 
-In this example, the `System.Linq.Enumerable.Where*` method is called before calling `ConvertCollectionToUpperCase`. The `System.Linq.Enumerable.Where*` method operates in almost exactly the same way as the lazy methods used in previous examples in this tutorial, `ConvertCollectionToUpperCase` and `AppendString`.
+In this example, the <xref:System.Linq.Enumerable.Where*> method is called before calling `ConvertCollectionToUpperCase`. The <xref:System.Linq.Enumerable.Where*> method operates in almost exactly the same way as the lazy methods used in previous examples in this tutorial, `ConvertCollectionToUpperCase` and `AppendString`.
 
-One difference is that in this case, the `System.Linq.Enumerable.Where*` method iterates through its source collection, determines that the first item doesn't pass the predicate, and then gets the next item, which does pass. It then yields the second item.
+One difference is that in this case, the <xref:System.Linq.Enumerable.Where*> method iterates through its source collection, determines that the first item doesn't pass the predicate, and then gets the next item, which does pass. It then yields the second item.
 
 However, the basic idea is the same: intermediate collections aren't materialized unless they have to be.
 
@@ -84,4 +84,4 @@ AppendString: source >GHI<
 Main: str >GHI!!!<
 ```
 
-This is the final article in the Tutorial: Chaining Queries Together (C#) tutorial.
+This is the final article in the [Tutorial: Chaining Queries Together (C#)](chain-queries-example.md) tutorial.

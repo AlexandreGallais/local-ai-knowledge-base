@@ -1,0 +1,1756 @@
+<Type Name="ParameterInfo" FullName="System.Reflection.ParameterInfo">
+  <TypeSignature Language="C#" Value="public class ParameterInfo : System.Reflection.ICustomAttributeProvider, System.Runtime.Serialization.IObjectReference" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit ParameterInfo extends System.Object implements class System.Reflection.ICustomAttributeProvider, class System.Runtime.Serialization.IObjectReference" />
+  <TypeSignature Language="DocId" Value="T:System.Reflection.ParameterInfo" />
+  <TypeSignature Language="VB.NET" Value="Public Class ParameterInfo&#xA;Implements ICustomAttributeProvider, IObjectReference" />
+  <TypeSignature Language="F#" Value="type ParameterInfo = class&#xA;    interface ICustomAttributeProvider&#xA;    interface IObjectReference" />
+  <TypeSignature Language="C++ CLI" Value="public ref class ParameterInfo : System::Reflection::ICustomAttributeProvider, System::Runtime::Serialization::IObjectReference" />
+  <AssemblyInfo>
+    <AssemblyName>System.Reflection</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <AssemblyVersion>4.0.10.0</AssemblyVersion>
+    <AssemblyVersion>4.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>mscorlib</AssemblyName>
+    <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.5.0</AssemblyVersion>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>netstandard</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>System.Runtime</AssemblyName>
+    <AssemblyVersion>4.2.0.0</AssemblyVersion>
+    <AssemblyVersion>4.2.1.0</AssemblyVersion>
+    <AssemblyVersion>4.2.2.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+    <AssemblyVersion>11.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
+    <TypeForwarding From="System.Reflection" FromVersion="10.0.0.0" To="System.Runtime" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
+    <TypeForwarding From="System.Reflection" FromVersion="11.0.0.0" To="System.Runtime" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="System.Reflection" FromVersion="8.0.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+    <TypeForwarding From="System.Reflection" FromVersion="9.0.0.0" To="System.Runtime" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+  </TypeForwardingChain>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface FrameworkAlternate="net-9.0">
+      <InterfaceName>System.Reflection.ICustomAttributeProvider</InterfaceName>
+    </Interface>
+    <Interface FrameworkAlternate="net-9.0">
+      <InterfaceName>System.Runtime.Serialization.IObjectReference</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Attributes>
+    <Attribute>
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>Discovers the attributes of a parameter and provides access to parameter metadata.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Use an instance of `ParameterInfo` to obtain information about the parameter's data type, default value, and so on.
+
+ <xref:System.Reflection.MethodBase.GetParameters*> returns an array of `ParameterInfo` objects representing the parameters of a method, in order.
+
+
+
+## Examples
+ This example shows how to use various reflection classes to analyze the metadata contained in an assembly.
+
+ :::code language="csharp" source="~/snippets/csharp/System.Reflection/Assembly/GetReferencedAssemblies/Reflection.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Reflection/Assembly/GetReferencedAssemblies/Reflection.vb" id="Snippet1":::
+
+ ]]></format>
+    </remarks>
+    <threadsafe>This type is thread safe.</threadsafe>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected ParameterInfo ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Reflection.ParameterInfo.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Protected Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="protected:&#xA; ParameterInfo();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>Initializes a new instance of the <see langword="ParameterInfo" /> class.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Attributes">
+      <MemberSignature Language="C#" Value="public virtual System.Reflection.ParameterAttributes Attributes { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype System.Reflection.ParameterAttributes Attributes" />
+      <MemberSignature Language="DocId" Value="P:System.Reflection.ParameterInfo.Attributes" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property Attributes As ParameterAttributes" />
+      <MemberSignature Language="F#" Value="member this.Attributes : System.Reflection.ParameterAttributes" Usage="System.Reflection.ParameterInfo.Attributes" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Reflection::ParameterAttributes Attributes { System::Reflection::ParameterAttributes get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Reflection.ParameterAttributes</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the attributes for this parameter.</summary>
+        <value>A <see langword="ParameterAttributes" /> object representing the attributes for this parameter.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method utilizes the <xref:System.Reflection.ParameterInfo.AttrsImpl> method.
+
+To get the <xref:System.Reflection.ParameterInfo> array, first get the method or the constructor and then call <xref:System.Reflection.MethodBase.GetParameters*?displayProperty=nameWithType>.
+
+## Examples
+
+The following example defines a method with three parameters. It uses the <xref:System.Reflection.ParameterInfo.Attributes> property to get the attributes of each parameter and display them in the console.
+
+:::code language="csharp" source="~/snippets/csharp/System.Reflection/ParameterInfo/Attributes/parameterinfo_attributes1.cs" id="Snippet1":::
+:::code language="vb" source="~/snippets/visualbasic/System.Reflection/ParameterInfo/Attributes/parameterinfo_attributes1.vb" id="Snippet1":::
+
+ ]]></format>
+        </remarks>
+        <altmember cref="T:System.Reflection.ParameterAttributes" />
+      </Docs>
+    </Member>
+    <Member MemberName="AttrsImpl">
+      <MemberSignature Language="C#" Value="protected System.Reflection.ParameterAttributes AttrsImpl;" />
+      <MemberSignature Language="ILAsm" Value=".field family valuetype System.Reflection.ParameterAttributes AttrsImpl" />
+      <MemberSignature Language="DocId" Value="F:System.Reflection.ParameterInfo.AttrsImpl" />
+      <MemberSignature Language="VB.NET" Value="Protected AttrsImpl As ParameterAttributes " />
+      <MemberSignature Language="F#" Value="val mutable AttrsImpl : System.Reflection.ParameterAttributes" Usage="System.Reflection.ParameterInfo.AttrsImpl" />
+      <MemberSignature Language="C++ CLI" Value="protected: System::Reflection::ParameterAttributes AttrsImpl;" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Reflection.ParameterAttributes</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The attributes of the parameter.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This field is intended only for users who are deriving classes from `ParameterInfo`.
+
+ Typical access to parameter attributes is through <xref:System.Reflection.ParameterInfo.Attributes*>.
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ClassImpl">
+      <MemberSignature Language="C#" Value="protected Type? ClassImpl;" />
+      <MemberSignature Language="ILAsm" Value=".field family class System.Type ClassImpl" />
+      <MemberSignature Language="DocId" Value="F:System.Reflection.ParameterInfo.ClassImpl" />
+      <MemberSignature Language="VB.NET" Value="Protected ClassImpl As Type " />
+      <MemberSignature Language="F#" Value="val mutable ClassImpl : Type" Usage="System.Reflection.ParameterInfo.ClassImpl" />
+      <MemberSignature Language="C++ CLI" Value="protected: Type ^ ClassImpl;" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Type</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The <see langword="Type" /> of the parameter.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This field is intended only for users who are deriving classes from `ParameterInfo`.
+
+ Typical access to parameter types is through <xref:System.Reflection.ParameterInfo.ParameterType*>.
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CustomAttributes">
+      <MemberSignature Language="C#" Value="public virtual System.Collections.Generic.IEnumerable&lt;System.Reflection.CustomAttributeData&gt; CustomAttributes { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Collections.Generic.IEnumerable`1&lt;class System.Reflection.CustomAttributeData&gt; CustomAttributes" />
+      <MemberSignature Language="DocId" Value="P:System.Reflection.ParameterInfo.CustomAttributes" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property CustomAttributes As IEnumerable(Of CustomAttributeData)" />
+      <MemberSignature Language="F#" Value="member this.CustomAttributes : seq&lt;System.Reflection.CustomAttributeData&gt;" Usage="System.Reflection.ParameterInfo.CustomAttributes" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Collections::Generic::IEnumerable&lt;System::Reflection::CustomAttributeData ^&gt; ^ CustomAttributes { System::Collections::Generic::IEnumerable&lt;System::Reflection::CustomAttributeData ^&gt; ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.IEnumerable&lt;System.Reflection.CustomAttributeData&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a collection that contains this parameter's custom attributes.</summary>
+        <value>A collection that contains this parameter's custom attributes.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DefaultValue">
+      <MemberSignature Language="C#" Value="public virtual object? DefaultValue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance object DefaultValue" />
+      <MemberSignature Language="DocId" Value="P:System.Reflection.ParameterInfo.DefaultValue" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property DefaultValue As Object" />
+      <MemberSignature Language="F#" Value="member this.DefaultValue : obj" Usage="System.Reflection.ParameterInfo.DefaultValue" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Object ^ DefaultValue { System::Object ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a value indicating the default value if the parameter has a default value.</summary>
+        <value>The default value of the parameter, or <see cref="F:System.DBNull.Value" /> if the parameter has no default value.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This property is used only in the execution context. In the reflection-only context, use the <xref:System.Reflection.ParameterInfo.RawDefaultValue> property instead.
+
+ The default value is used when an actual value is not specified in the method call. A parameter can have a default value that is `null`. This is distinct from the case where a default value is not defined.
+
+ This method utilizes the <xref:System.Reflection.ParameterInfo.DefaultValueImpl> method.
+
+ To get the <xref:System.Reflection.ParameterInfo> array, first get the method or the constructor and then call <xref:System.Reflection.MethodBase.GetParameters*?displayProperty=nameWithType>.
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DefaultValueImpl">
+      <MemberSignature Language="C#" Value="protected object? DefaultValueImpl;" />
+      <MemberSignature Language="ILAsm" Value=".field family object DefaultValueImpl" />
+      <MemberSignature Language="DocId" Value="F:System.Reflection.ParameterInfo.DefaultValueImpl" />
+      <MemberSignature Language="VB.NET" Value="Protected DefaultValueImpl As Object " />
+      <MemberSignature Language="F#" Value="val mutable DefaultValueImpl : obj" Usage="System.Reflection.ParameterInfo.DefaultValueImpl" />
+      <MemberSignature Language="C++ CLI" Value="protected: System::Object ^ DefaultValueImpl;" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The default value of the parameter.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This field is intended only for users who are deriving classes from `ParameterInfo`.
+
+ Typical access to the default value of the parameter is through <xref:System.Reflection.ParameterInfo.DefaultValue*>.
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="GetCustomAttributes">
+      <Docs>
+        <summary>Gets the custom attributes applied to this parameter.</summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="GetCustomAttributes">
+      <MemberSignature Language="C#" Value="public virtual object[] GetCustomAttributes (bool inherit);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance object[] GetCustomAttributes(bool inherit) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Reflection.ParameterInfo.GetCustomAttributes(System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetCustomAttributes (inherit As Boolean) As Object()" />
+      <MemberSignature Language="F#" Value="abstract member GetCustomAttributes : bool -&gt; obj[]&#xA;override this.GetCustomAttributes : bool -&gt; obj[]" Usage="parameterInfo.GetCustomAttributes inherit" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual cli::array &lt;System::Object ^&gt; ^ GetCustomAttributes(bool inherit);" />
+      <MemberType>Method</MemberType>
+      <Implements>
+        <InterfaceMember>M:System.Reflection.ICustomAttributeProvider.GetCustomAttributes(System.Boolean)</InterfaceMember>
+      </Implements>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object[]</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="inherit" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="inherit">This argument is ignored for objects of this type.</param>
+        <summary>Gets all the custom attributes defined on this parameter.</summary>
+        <returns>An array that contains all the custom attributes applied to this parameter.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method ignores the `inherit` parameter. To search the inheritance chain for attributes on parameters, use the appropriate overloads of the <xref:System.Attribute.GetCustomAttributes*?displayProperty=nameWithType> method.
+
+
+
+## Examples
+ The following example shows how custom attributes that have been applied to the parameters of methods can be retrieved at run time. The example defines a custom attribute named `MyAttribute` that can be applied to parameters. The example then defines a class named `MyClass` with a method named `MyMethod`, and applies `MyAttribute` to a parameter of the method.
+
+ When the example is run, it uses the <xref:System.Reflection.ParameterInfo.GetCustomAttributes(System.Boolean)> method to retrieve the custom attributes that have been applied to all parameters of all methods in `MyClass`, and displays them at the console.
+
+ :::code language="csharp" source="~/snippets/csharp/System.Reflection/ParameterInfo/GetCustomAttributes/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Reflection/ParameterInfo/GetCustomAttributes/source.vb" id="Snippet1":::
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.TypeLoadException">A custom attribute type could not be loaded.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="GetCustomAttributes">
+      <MemberSignature Language="C#" Value="public virtual object[] GetCustomAttributes (Type attributeType, bool inherit);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance object[] GetCustomAttributes(class System.Type attributeType, bool inherit) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Reflection.ParameterInfo.GetCustomAttributes(System.Type,System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetCustomAttributes (attributeType As Type, inherit As Boolean) As Object()" />
+      <MemberSignature Language="F#" Value="abstract member GetCustomAttributes : Type * bool -&gt; obj[]&#xA;override this.GetCustomAttributes : Type * bool -&gt; obj[]" Usage="parameterInfo.GetCustomAttributes (attributeType, inherit)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual cli::array &lt;System::Object ^&gt; ^ GetCustomAttributes(Type ^ attributeType, bool inherit);" />
+      <MemberType>Method</MemberType>
+      <Implements>
+        <InterfaceMember>M:System.Reflection.ICustomAttributeProvider.GetCustomAttributes(System.Type,System.Boolean)</InterfaceMember>
+      </Implements>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Object[]</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="attributeType" Type="System.Type" />
+        <Parameter Name="inherit" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="attributeType">The custom attributes identified by type.</param>
+        <param name="inherit">This argument is ignored for objects of this type.</param>
+        <summary>Gets the custom attributes of the specified type or its derived types that are applied to this parameter.</summary>
+        <returns>An array that contains the custom attributes of the specified type or its derived types.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method ignores the `inherit` parameter. To search the inheritance chain for attributes on parameters, use the appropriate overloads of the <xref:System.Attribute.GetCustomAttributes*?displayProperty=nameWithType> method.
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentException">The type must be a type provided by the underlying runtime system.</exception>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="attributeType" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.TypeLoadException">A custom attribute type could not be loaded.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="GetCustomAttributesData">
+      <MemberSignature Language="C#" Value="public virtual System.Collections.Generic.IList&lt;System.Reflection.CustomAttributeData&gt; GetCustomAttributesData ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Collections.Generic.IList`1&lt;class System.Reflection.CustomAttributeData&gt; GetCustomAttributesData() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Reflection.ParameterInfo.GetCustomAttributesData" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetCustomAttributesData () As IList(Of CustomAttributeData)" />
+      <MemberSignature Language="F#" Value="abstract member GetCustomAttributesData : unit -&gt; System.Collections.Generic.IList&lt;System.Reflection.CustomAttributeData&gt;&#xA;override this.GetCustomAttributesData : unit -&gt; System.Collections.Generic.IList&lt;System.Reflection.CustomAttributeData&gt;" Usage="parameterInfo.GetCustomAttributesData " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Collections::Generic::IList&lt;System::Reflection::CustomAttributeData ^&gt; ^ GetCustomAttributesData();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.IList&lt;System.Reflection.CustomAttributeData&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Returns a list of <see cref="T:System.Reflection.CustomAttributeData" /> objects for the current parameter, which can be used in the reflection-only context.</summary>
+        <returns>A generic list of <see cref="T:System.Reflection.CustomAttributeData" /> objects representing data about the attributes that have been applied to the current parameter.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Use this method to examine the custom attributes of code in the reflection-only context, in cases where the custom attributes themselves are defined in code that is loaded into the reflection-only context. Methods such as <xref:System.Attribute.GetCustomAttributes*?displayProperty=nameWithType> and <xref:System.Reflection.ParameterInfo.GetCustomAttributes*?displayProperty=nameWithType> cannot be used in such cases, because they create instances of the attributes. Code in the reflection-only context cannot be executed. For more information and example code, see the <xref:System.Reflection.CustomAttributeData> class.
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetModifiedParameterType">
+      <MemberSignature Language="C#" Value="public virtual Type GetModifiedParameterType ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Type GetModifiedParameterType() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Reflection.ParameterInfo.GetModifiedParameterType" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetModifiedParameterType () As Type" />
+      <MemberSignature Language="F#" Value="abstract member GetModifiedParameterType : unit -&gt; Type&#xA;override this.GetModifiedParameterType : unit -&gt; Type" Usage="parameterInfo.GetModifiedParameterType " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual Type ^ GetModifiedParameterType();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Type</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Gets the modified type of this parameter object.</summary>
+        <returns>A modified type.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ A modified type supports <xref:System.Type.GetOptionalCustomModifiers*>, <xref:System.Type.GetRequiredCustomModifiers*>, and <xref:System.Type.GetFunctionPointerCallingConventions*>, which are used to obtain custom modifiers from a function pointer.
+
+ To obtain the normal, unmodified type from a modified type, use <xref:System.Type.UnderlyingSystemType*>.
+
+ This method is provided for designers of managed compilers. For more information on custom modifiers, see classes in the <xref:System.Runtime.CompilerServices> namespace. Also see the metadata specification in Partition II of the [Common Language Infrastructure (CLI) documentation](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/).
+
+ ]]></format>
+        </remarks>
+        <altmember cref="M:System.Reflection.ParameterInfo.GetOptionalCustomModifiers" />
+        <altmember cref="M:System.Reflection.ParameterInfo.GetRequiredCustomModifiers" />
+        <altmember cref="M:System.Reflection.FieldInfo.GetModifiedFieldType" />
+        <altmember cref="M:System.Reflection.PropertyInfo.GetModifiedPropertyType" />
+      </Docs>
+    </Member>
+    <Member MemberName="GetOptionalCustomModifiers">
+      <MemberSignature Language="C#" Value="public virtual Type[] GetOptionalCustomModifiers ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Type[] GetOptionalCustomModifiers() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Reflection.ParameterInfo.GetOptionalCustomModifiers" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetOptionalCustomModifiers () As Type()" />
+      <MemberSignature Language="F#" Value="abstract member GetOptionalCustomModifiers : unit -&gt; Type[]&#xA;override this.GetOptionalCustomModifiers : unit -&gt; Type[]" Usage="parameterInfo.GetOptionalCustomModifiers " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual cli::array &lt;Type ^&gt; ^ GetOptionalCustomModifiers();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Type[]</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Gets the optional custom modifiers of the parameter.</summary>
+        <returns>An array of <see cref="T:System.Type" /> objects that identify the optional custom modifiers of the current parameter, such as <see cref="T:System.Runtime.CompilerServices.IsConst" /> or <see cref="T:System.Runtime.CompilerServices.IsImplicitlyDereferenced" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Reflection.ParameterInfo.GetOptionalCustomModifiers*> and <xref:System.Reflection.ParameterInfo.GetRequiredCustomModifiers*> methods are provided for designers of managed compilers. For more information on custom modifiers, see <xref:System.Runtime.CompilerServices.IsBoxed> and related classes in the <xref:System.Runtime.CompilerServices> namespace, and the metadata specification in the ECMA Partition II documentation. For more information, see [ECMA 335 Common Language Infrastructure (CLI)](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/).
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetRealObject">
+      <MemberSignature Language="C#" Value="public object GetRealObject (System.Runtime.Serialization.StreamingContext context);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance object GetRealObject(valuetype System.Runtime.Serialization.StreamingContext context) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Reflection.ParameterInfo.GetRealObject(System.Runtime.Serialization.StreamingContext)" />
+      <MemberSignature Language="VB.NET" Value="Public Function GetRealObject (context As StreamingContext) As Object" />
+      <MemberSignature Language="F#" Value="abstract member GetRealObject : System.Runtime.Serialization.StreamingContext -&gt; obj&#xA;override this.GetRealObject : System.Runtime.Serialization.StreamingContext -&gt; obj" Usage="parameterInfo.GetRealObject context" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::Object ^ GetRealObject(System::Runtime::Serialization::StreamingContext context);" />
+      <MemberType>Method</MemberType>
+      <Implements>
+        <InterfaceMember>M:System.Runtime.Serialization.IObjectReference.GetRealObject(System.Runtime.Serialization.StreamingContext)</InterfaceMember>
+      </Implements>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)&gt;]</AttributeName>
+        </Attribute>
+        <Attribute>
+          <AttributeName Language="C#">[System.Obsolete("This API supports obsolete formatter-based serialization. It should not be called or extended by application code.", DiagnosticId="SYSLIB0051", UrlFormat="https://aka.ms/dotnet-warnings/{0}")]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Obsolete("This API supports obsolete formatter-based serialization. It should not be called or extended by application code.", DiagnosticId="SYSLIB0051", UrlFormat="https://aka.ms/dotnet-warnings/{0}")&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="context" Type="System.Runtime.Serialization.StreamingContext" />
+      </Parameters>
+      <Docs>
+        <param name="context">The serialized stream from which the current object is deserialized.</param>
+        <summary>Returns the real object that should be deserialized instead of the object that the serialized stream specifies.</summary>
+        <returns>The actual object that is put into the graph.</returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.Runtime.Serialization.SerializationException">The parameter's position in the parameter list of its associated member is not valid for that member's type.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="GetRequiredCustomModifiers">
+      <MemberSignature Language="C#" Value="public virtual Type[] GetRequiredCustomModifiers ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance class System.Type[] GetRequiredCustomModifiers() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Reflection.ParameterInfo.GetRequiredCustomModifiers" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function GetRequiredCustomModifiers () As Type()" />
+      <MemberSignature Language="F#" Value="abstract member GetRequiredCustomModifiers : unit -&gt; Type[]&#xA;override this.GetRequiredCustomModifiers : unit -&gt; Type[]" Usage="parameterInfo.GetRequiredCustomModifiers " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual cli::array &lt;Type ^&gt; ^ GetRequiredCustomModifiers();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Type[]</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Gets the required custom modifiers of the parameter.</summary>
+        <returns>An array of <see cref="T:System.Type" /> objects that identify the required custom modifiers of the current parameter, such as <see cref="T:System.Runtime.CompilerServices.IsConst" /> or <see cref="T:System.Runtime.CompilerServices.IsImplicitlyDereferenced" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ The <xref:System.Reflection.ParameterInfo.GetOptionalCustomModifiers*> and <xref:System.Reflection.ParameterInfo.GetRequiredCustomModifiers*> methods are provided for designers of managed compilers. For more information on custom modifiers, see <xref:System.Runtime.CompilerServices.IsBoxed> and related classes in the <xref:System.Runtime.CompilerServices> namespace, and the metadata specification in Partition II of [ECMA 335 Common Language Infrastructure (CLI)](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/).
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="HasDefaultValue">
+      <MemberSignature Language="C#" Value="public virtual bool HasDefaultValue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool HasDefaultValue" />
+      <MemberSignature Language="DocId" Value="P:System.Reflection.ParameterInfo.HasDefaultValue" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property HasDefaultValue As Boolean" />
+      <MemberSignature Language="F#" Value="member this.HasDefaultValue : bool" Usage="System.Reflection.ParameterInfo.HasDefaultValue" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property bool HasDefaultValue { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a value that indicates whether this parameter has a default value.</summary>
+        <value>
+          <see langword="true" /> if this parameter has a default value; otherwise, <see langword="false" />.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsDefined">
+      <MemberSignature Language="C#" Value="public virtual bool IsDefined (Type attributeType, bool inherit);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance bool IsDefined(class System.Type attributeType, bool inherit) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Reflection.ParameterInfo.IsDefined(System.Type,System.Boolean)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function IsDefined (attributeType As Type, inherit As Boolean) As Boolean" />
+      <MemberSignature Language="F#" Value="abstract member IsDefined : Type * bool -&gt; bool&#xA;override this.IsDefined : Type * bool -&gt; bool" Usage="parameterInfo.IsDefined (attributeType, inherit)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual bool IsDefined(Type ^ attributeType, bool inherit);" />
+      <MemberType>Method</MemberType>
+      <Implements>
+        <InterfaceMember>M:System.Reflection.ICustomAttributeProvider.IsDefined(System.Type,System.Boolean)</InterfaceMember>
+      </Implements>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="attributeType" Type="System.Type" />
+        <Parameter Name="inherit" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="attributeType">The <see langword="Type" /> object to search for.</param>
+        <param name="inherit">This argument is ignored for objects of this type.</param>
+        <summary>Determines whether the custom attribute of the specified type or its derived types is applied to this parameter.</summary>
+        <returns>
+          <see langword="true" /> if one or more instances of <paramref name="attributeType" /> or its derived types are applied to this parameter; otherwise, <see langword="false" />.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method ignores the `inherit` parameter. To search the inheritance chain for attributes on parameters, use the appropriate overloads of the <xref:System.Attribute.IsDefined*?displayProperty=nameWithType> method.
+
+
+
+## Examples
+ The following example defines two custom attributes, `MyAttribute` and `MyDerivedAttribute`. `MyDerivedAttribute` is derived from `MyAttribute`. The example then applies these attributes to the parameters of a method of an example class.
+
+ When the example is run, it uses the <xref:System.Reflection.ParameterInfo.IsDefined*> method to test all parameters of all methods in the example class. It then displays the parameters that have `MyAttribute` or `MyDerivedAttribute`.
+
+ :::code language="csharp" source="~/snippets/csharp/System.Reflection/ParameterInfo/IsDefined/parameterinfo_getcustomattribute_isdefined.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Reflection/ParameterInfo/IsDefined/parameterinfo_getcustomattribute_isdefined.vb" id="Snippet1":::
+
+ ]]></format>
+        </remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="attributeType" /> is <see langword="null" />.</exception>
+        <exception cref="T:System.ArgumentException">
+          <paramref name="attributeType" /> is not a <see cref="T:System.Type" /> object supplied by the common language runtime.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="IsIn">
+      <MemberSignature Language="C#" Value="public bool IsIn { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsIn" />
+      <MemberSignature Language="DocId" Value="P:System.Reflection.ParameterInfo.IsIn" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsIn As Boolean" />
+      <MemberSignature Language="F#" Value="member this.IsIn : bool" Usage="System.Reflection.ParameterInfo.IsIn" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsIn { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a value indicating whether this is an input parameter.</summary>
+        <value>
+          <see langword="true" /> if the parameter is an input parameter; otherwise, <see langword="false" />.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method depends on an optional metadata flag. This flag can be inserted by compilers, but the compilers are not obligated to do so.
+
+ This method utilizes the `In` flag of the `ParameterAttributes` enumerator.
+
+ To get the <xref:System.Reflection.ParameterInfo> array, first get the method or the constructor and then call <xref:System.Reflection.MethodBase.GetParameters*?displayProperty=nameWithType>.
+
+
+
+## Examples
+ The following example shows how to test method parameters for the <xref:System.Reflection.ParameterAttributes.In?displayProperty=nameWithType>, <xref:System.Reflection.ParameterAttributes.Out?displayProperty=nameWithType>, and <xref:System.Reflection.ParameterAttributes.Optional?displayProperty=nameWithType> attributes.
+
+ The example contains a `DefineMethod` method that does the following:
+
+- Creates a dynamic assembly containing a `MyType` type.
+
+- Adds a `MyMethod` method to `MyType`. `MyMethod` has three parameters. The first parameter is defined with <xref:System.Reflection.ParameterAttributes.In?displayProperty=nameWithType>, the second with <xref:System.Reflection.ParameterAttributes.Out?displayProperty=nameWithType>, and the third with <xref:System.Reflection.ParameterAttributes.Optional?displayProperty=nameWithType>.
+
+- Calls <xref:System.Reflection.Emit.TypeBuilder.CreateType*?displayProperty=nameWithType> to complete the type.
+
+ After executing `DefineMethod`, the example searches the assemblies that are currently loaded until it finds the dynamic assembly. It loads `MyType` from the assembly, gets a <xref:System.Reflection.MethodInfo> object for the `MyMethod` method, and examines the parameters. The example uses the <xref:System.Reflection.ParameterInfo.IsIn*>, <xref:System.Reflection.ParameterInfo.IsOut*>, and <xref:System.Reflection.ParameterInfo.IsOptional*> properties to display information about the parameters.
+
+ :::code language="csharp" source="~/snippets/csharp/System.Reflection/ParameterInfo/IsIn/parameterinfo_isin_isout_isoptional.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Reflection/ParameterInfo/IsIn/parameterinfo_isin_isout_isoptional.vb" id="Snippet1":::
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsLcid">
+      <MemberSignature Language="C#" Value="public bool IsLcid { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsLcid" />
+      <MemberSignature Language="DocId" Value="P:System.Reflection.ParameterInfo.IsLcid" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsLcid As Boolean" />
+      <MemberSignature Language="F#" Value="member this.IsLcid : bool" Usage="System.Reflection.ParameterInfo.IsLcid" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsLcid { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a value indicating whether this parameter is a locale identifier (lcid).</summary>
+        <value>
+          <see langword="true" /> if the parameter is a locale identifier; otherwise, <see langword="false" />.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method depends on an optional metadata flag. This flag can be inserted by compilers, but the compilers are not obligated to do so.
+
+ This method utilizes the `Lcid` flag of the `ParameterAttributes` enumerator.
+
+ To get the <xref:System.Reflection.ParameterInfo> array, first get the method or the constructor and then call <xref:System.Reflection.MethodBase.GetParameters*?displayProperty=nameWithType>.
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsOptional">
+      <MemberSignature Language="C#" Value="public bool IsOptional { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsOptional" />
+      <MemberSignature Language="DocId" Value="P:System.Reflection.ParameterInfo.IsOptional" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsOptional As Boolean" />
+      <MemberSignature Language="F#" Value="member this.IsOptional : bool" Usage="System.Reflection.ParameterInfo.IsOptional" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsOptional { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a value indicating whether this parameter is optional.</summary>
+        <value>
+          <see langword="true" /> if the parameter is optional; otherwise, <see langword="false" />.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method depends on an optional metadata flag. This flag can be inserted by compilers, but the compilers are not obligated to do so.
+
+ This method utilizes the `Optional` flag of the `ParameterAttributes` enumerator.
+
+ To get the <xref:System.Reflection.ParameterInfo> array, first get the method and then call <xref:System.Reflection.MethodBase.GetParameters*?displayProperty=nameWithType>.
+
+
+
+## Examples
+ The following example shows how to test method parameters for the <xref:System.Reflection.ParameterAttributes.In?displayProperty=nameWithType>, <xref:System.Reflection.ParameterAttributes.Out?displayProperty=nameWithType>, and <xref:System.Reflection.ParameterAttributes.Optional?displayProperty=nameWithType> attributes.
+
+ The example contains a `DefineMethod` method that does the following:
+
+- Creates a dynamic assembly containing a `MyType` type.
+
+- Adds a `MyMethod` method to `MyType`. `MyMethod` has three parameters. The first parameter is defined with <xref:System.Reflection.ParameterAttributes.In?displayProperty=nameWithType>, the second with <xref:System.Reflection.ParameterAttributes.Out?displayProperty=nameWithType>, and the third with <xref:System.Reflection.ParameterAttributes.Optional?displayProperty=nameWithType>.
+
+- Calls <xref:System.Reflection.Emit.TypeBuilder.CreateType*?displayProperty=nameWithType> to complete the type.
+
+ After executing `DefineMethod`, the example searches the assemblies that are currently loaded until it finds the dynamic assembly. It loads `MyType` from the assembly, gets a <xref:System.Reflection.MethodInfo> object for the `MyMethod` method, and examines the parameters. The example uses the <xref:System.Reflection.ParameterInfo.IsIn*>, <xref:System.Reflection.ParameterInfo.IsOut*>, and <xref:System.Reflection.ParameterInfo.IsOptional*> properties to display information about the parameters.
+
+ :::code language="csharp" source="~/snippets/csharp/System.Reflection/ParameterInfo/IsIn/parameterinfo_isin_isout_isoptional.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Reflection/ParameterInfo/IsIn/parameterinfo_isin_isout_isoptional.vb" id="Snippet1":::
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsOut">
+      <MemberSignature Language="C#" Value="public bool IsOut { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsOut" />
+      <MemberSignature Language="DocId" Value="P:System.Reflection.ParameterInfo.IsOut" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsOut As Boolean" />
+      <MemberSignature Language="F#" Value="member this.IsOut : bool" Usage="System.Reflection.ParameterInfo.IsOut" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsOut { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a value indicating whether this is an output parameter.</summary>
+        <value>
+          <see langword="true" /> if the parameter is an output parameter; otherwise, <see langword="false" />.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method depends on an optional metadata flag. This flag can be inserted by compilers, but the compilers are not obligated to do so.
+
+ This method utilizes the `Out` flag of the `ParameterAttributes` enumerator.
+
+ To get the <xref:System.Reflection.ParameterInfo> array, first get the method or the constructor and then call <xref:System.Reflection.MethodBase.GetParameters*?displayProperty=nameWithType>.
+
+
+
+## Examples
+ The following example shows how to test method parameters for the <xref:System.Reflection.ParameterAttributes.In?displayProperty=nameWithType>, <xref:System.Reflection.ParameterAttributes.Out?displayProperty=nameWithType>, and <xref:System.Reflection.ParameterAttributes.Optional?displayProperty=nameWithType> attributes.
+
+ The example contains a `DefineMethod` method that does the following:
+
+- Creates a dynamic assembly containing a `MyType` type.
+
+- Adds a `MyMethod` method to `MyType`. `MyMethod` has three parameters. The first parameter is defined with <xref:System.Reflection.ParameterAttributes.In?displayProperty=nameWithType>, the second with <xref:System.Reflection.ParameterAttributes.Out?displayProperty=nameWithType>, and the third with <xref:System.Reflection.ParameterAttributes.Optional?displayProperty=nameWithType>.
+
+- Calls <xref:System.Reflection.Emit.TypeBuilder.CreateType*?displayProperty=nameWithType> to complete the type.
+
+ After executing `DefineMethod`, the example searches the assemblies that are currently loaded until it finds the dynamic assembly. It loads `MyType` from the assembly, gets a <xref:System.Reflection.MethodInfo> object for the `MyMethod` method, and examines the parameters. The example uses the <xref:System.Reflection.ParameterInfo.IsIn*>, <xref:System.Reflection.ParameterInfo.IsOut*>, and <xref:System.Reflection.ParameterInfo.IsOptional*> properties to display information about the parameters.
+
+ :::code language="csharp" source="~/snippets/csharp/System.Reflection/ParameterInfo/IsOut/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Reflection/ParameterInfo/IsOut/source.vb" id="Snippet1":::
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsRetval">
+      <MemberSignature Language="C#" Value="public bool IsRetval { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance bool IsRetval" />
+      <MemberSignature Language="DocId" Value="P:System.Reflection.ParameterInfo.IsRetval" />
+      <MemberSignature Language="VB.NET" Value="Public ReadOnly Property IsRetval As Boolean" />
+      <MemberSignature Language="F#" Value="member this.IsRetval : bool" Usage="System.Reflection.ParameterInfo.IsRetval" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; property bool IsRetval { bool get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a value indicating whether this is a <see langword="Retval" /> parameter.</summary>
+        <value>
+          <see langword="true" /> if the parameter is a <see langword="Retval" />; otherwise, <see langword="false" />.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method depends on an optional metadata flag. This flag can be inserted by compilers, but the compilers are not obligated to do so.
+
+ This method utilizes the `Retval` flag of the `ParameterAttributes` enumerator.
+
+ To get the <xref:System.Reflection.ParameterInfo> array, first get the method or the constructor and then call <xref:System.Reflection.MethodBase.GetParameters*?displayProperty=nameWithType>.
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Member">
+      <MemberSignature Language="C#" Value="public virtual System.Reflection.MemberInfo Member { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Reflection.MemberInfo Member" />
+      <MemberSignature Language="DocId" Value="P:System.Reflection.ParameterInfo.Member" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property Member As MemberInfo" />
+      <MemberSignature Language="F#" Value="member this.Member : System.Reflection.MemberInfo" Usage="System.Reflection.ParameterInfo.Member" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Reflection::MemberInfo ^ Member { System::Reflection::MemberInfo ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Reflection.MemberInfo</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a value indicating the member in which the parameter is implemented.</summary>
+        <value>The member which implanted the parameter represented by this <see cref="T:System.Reflection.ParameterInfo" />.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MemberImpl">
+      <MemberSignature Language="C#" Value="protected System.Reflection.MemberInfo MemberImpl;" />
+      <MemberSignature Language="ILAsm" Value=".field family class System.Reflection.MemberInfo MemberImpl" />
+      <MemberSignature Language="DocId" Value="F:System.Reflection.ParameterInfo.MemberImpl" />
+      <MemberSignature Language="VB.NET" Value="Protected MemberImpl As MemberInfo " />
+      <MemberSignature Language="F#" Value="val mutable MemberImpl : System.Reflection.MemberInfo" Usage="System.Reflection.ParameterInfo.MemberImpl" />
+      <MemberSignature Language="C++ CLI" Value="protected: System::Reflection::MemberInfo ^ MemberImpl;" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Reflection.MemberInfo</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The member in which the field is implemented.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This field is intended only for users who are deriving classes from `ParameterInfo`.
+
+ Typical access to the parameter name is through the <xref:System.Reflection.ParameterInfo.Member*>.
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MetadataToken">
+      <MemberSignature Language="C#" Value="public virtual int MetadataToken { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 MetadataToken" />
+      <MemberSignature Language="DocId" Value="P:System.Reflection.ParameterInfo.MetadataToken" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property MetadataToken As Integer" />
+      <MemberSignature Language="F#" Value="member this.MetadataToken : int" Usage="System.Reflection.ParameterInfo.MetadataToken" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property int MetadataToken { int get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a value that identifies this parameter in metadata.</summary>
+        <value>A value which, in combination with the module, uniquely identifies this parameter in metadata.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ To get the module, use the <xref:System.Reflection.MemberInfo.Module> property of the member that defines this parameter.
+
+ The tokens obtained using this property can be passed to the unmanaged Reflection API.
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Name">
+      <MemberSignature Language="C#" Value="public virtual string? Name { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Name" />
+      <MemberSignature Language="DocId" Value="P:System.Reflection.ParameterInfo.Name" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property Name As String" />
+      <MemberSignature Language="F#" Value="member this.Name : string" Usage="System.Reflection.ParameterInfo.Name" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::String ^ Name { System::String ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the name of the parameter.</summary>
+        <value>The simple name of this parameter.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This property utilizes the protected <xref:System.Reflection.ParameterInfo.NameImpl> field, and depends on an optional metadata flag that might not be available in all compilers.
+
+ To get the <xref:System.Reflection.ParameterInfo> array, first get the method or the constructor and then call the <xref:System.Reflection.MethodBase.GetParameters*?displayProperty=nameWithType> method.
+
+> [!WARNING]
+>  If this <xref:System.Reflection.ParameterInfo> represents a return value (that is, if it was obtained by using the <xref:System.Reflection.MethodInfo.ReturnParameter?displayProperty=nameWithType> property), this property will be `null`.
+
+
+
+## Examples
+ The following example shows how to get <xref:System.Reflection.ParameterInfo> objects for the parameters of a method, and then use the <xref:System.Reflection.ParameterInfo.Name> property to obtain the parameter names.
+
+ :::code language="csharp" source="~/snippets/csharp/System.Reflection/ParameterInfo/Name/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Reflection/ParameterInfo/Name/source.vb" id="Snippet1":::
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="NameImpl">
+      <MemberSignature Language="C#" Value="protected string? NameImpl;" />
+      <MemberSignature Language="ILAsm" Value=".field family string NameImpl" />
+      <MemberSignature Language="DocId" Value="F:System.Reflection.ParameterInfo.NameImpl" />
+      <MemberSignature Language="VB.NET" Value="Protected NameImpl As String " />
+      <MemberSignature Language="F#" Value="val mutable NameImpl : string" Usage="System.Reflection.ParameterInfo.NameImpl" />
+      <MemberSignature Language="C++ CLI" Value="protected: System::String ^ NameImpl;" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The name of the parameter.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This field is intended only for users who are deriving classes from `ParameterInfo`.
+
+ Typical access to the parameter name is through the <xref:System.Reflection.ParameterInfo.Name*>.
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ParameterType">
+      <MemberSignature Language="C#" Value="public virtual Type ParameterType { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Type ParameterType" />
+      <MemberSignature Language="DocId" Value="P:System.Reflection.ParameterInfo.ParameterType" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property ParameterType As Type" />
+      <MemberSignature Language="F#" Value="member this.ParameterType : Type" Usage="System.Reflection.ParameterInfo.ParameterType" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property Type ^ ParameterType { Type ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Type</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the <see langword="Type" /> of this parameter.</summary>
+        <value>The <see langword="Type" /> object that represents the <see langword="Type" /> of this parameter.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This method depends on an optional metadata and might not be available in all compilers.
+
+ To get the <xref:System.Reflection.ParameterInfo> array, first get the method or the constructor and then call <xref:System.Reflection.MethodBase.GetParameters*?displayProperty=nameWithType>.
+
+
+
+## Examples
+ The following example shows how to get <xref:System.Reflection.ParameterInfo> objects for the parameters of a method, and then use the <xref:System.Reflection.ParameterInfo.ParameterType> property to display the type of each parameter.
+
+ :::code language="csharp" source="~/snippets/csharp/System.Reflection/ParameterInfo/ParameterType/source.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Reflection/ParameterInfo/ParameterType/source.vb" id="Snippet1":::
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Position">
+      <MemberSignature Language="C#" Value="public virtual int Position { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 Position" />
+      <MemberSignature Language="DocId" Value="P:System.Reflection.ParameterInfo.Position" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property Position As Integer" />
+      <MemberSignature Language="F#" Value="member this.Position : int" Usage="System.Reflection.ParameterInfo.Position" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property int Position { int get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+        <AssemblyVersion>4.0.10.0</AssemblyVersion>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the zero-based position of the parameter in the formal parameter list.</summary>
+        <value>An integer representing the position this parameter occupies in the parameter list.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Only parameters in the method signature (that is, in the formal parameter list) are considered when calculating the position. For instance methods, the hidden parameter that represents `this` (`Me` in Visual Basic) is not counted.
+
+ This method utilizes the <xref:System.Reflection.ParameterInfo.PositionImpl> method.
+
+ To get the <xref:System.Reflection.ParameterInfo> array, first get the method or the constructor and then call <xref:System.Reflection.MethodBase.GetParameters*?displayProperty=nameWithType>.
+
+ ]]></format>
+        </remarks>
+        <altmember cref="P:System.Reflection.ParameterInfo.Name" />
+      </Docs>
+    </Member>
+    <Member MemberName="PositionImpl">
+      <MemberSignature Language="C#" Value="protected int PositionImpl;" />
+      <MemberSignature Language="ILAsm" Value=".field family int32 PositionImpl" />
+      <MemberSignature Language="DocId" Value="F:System.Reflection.ParameterInfo.PositionImpl" />
+      <MemberSignature Language="VB.NET" Value="Protected PositionImpl As Integer " />
+      <MemberSignature Language="F#" Value="val mutable PositionImpl : int" Usage="System.Reflection.ParameterInfo.PositionImpl" />
+      <MemberSignature Language="C++ CLI" Value="protected: int PositionImpl;" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The zero-based position of the parameter in the parameter list.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This field is intended only for users who are deriving classes from `ParameterInfo`.
+
+ Typical access to the name of the parameter is through <xref:System.Reflection.ParameterInfo.Position*>.
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RawDefaultValue">
+      <MemberSignature Language="C#" Value="public virtual object? RawDefaultValue { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance object RawDefaultValue" />
+      <MemberSignature Language="DocId" Value="P:System.Reflection.ParameterInfo.RawDefaultValue" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property RawDefaultValue As Object" />
+      <MemberSignature Language="F#" Value="member this.RawDefaultValue : obj" Usage="System.Reflection.ParameterInfo.RawDefaultValue" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Object ^ RawDefaultValue { System::Object ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+        <AssemblyVersion>4.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Attributes>
+        <Attribute>
+          <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+          <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+        </Attribute>
+      </Attributes>
+      <ReturnValue>
+        <ReturnType>System.Object</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets a value indicating the default value if the parameter has a default value.</summary>
+        <value>The default value of the parameter, or <see cref="F:System.DBNull.Value" /> if the parameter has no default value.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+ This property can be used in both the execution context and the reflection-only context.
+
+ The default value is used when an actual value is not specified in the method call. A parameter can have a default value that is `null`. This is distinct from the case where a default value is not defined.
+
+ To get the <xref:System.Reflection.ParameterInfo> array, first get the method or the constructor and then call the <xref:System.Reflection.MethodBase.GetParameters*?displayProperty=nameWithType> method.
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="System.Reflection.ICustomAttributeProvider.GetCustomAttributes">
+      <Docs>
+        <summary>Returns an array of custom attributes defined on this member, or an empty array if there are no custom attributes.</summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="ToString">
+      <MemberSignature Language="C#" Value="public override string ToString ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance string ToString() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Reflection.ParameterInfo.ToString" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function ToString () As String" />
+      <MemberSignature Language="F#" Value="override this.ToString : unit -&gt; string" Usage="parameterInfo.ToString " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::String ^ ToString();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Reflection</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Gets the parameter type and name represented as a string.</summary>
+        <returns>A string containing the type and the name of the parameter.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

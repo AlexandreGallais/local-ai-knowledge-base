@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugCode2::GetCodeChunks Method"
 title: "ICorDebugCode2::GetCodeChunks Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugcode2-getcodechunks-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugCode2.GetCodeChunks"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugCode2::GetCodeChunks"
+helpviewer_keywords:
+  - "GetCodeChunks method [.NET debugging]"
+  - "ICorDebugCode2::GetCodeChunks method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugCode2::GetCodeChunks Method
 
 Gets the chunks of code that this code object is composed of.
@@ -35,11 +44,11 @@ HRESULT GetCodeChunks (
 
 ## Remarks
 
-The code chunks will never overlap, and they will follow the order in which they would have been concatenated by ICorDebugCode::GetCode. A common intermediate language (CIL) code object comprises a single code chunk.
+The code chunks will never overlap, and they will follow the order in which they would have been concatenated by [ICorDebugCode::GetCode](icordebugcode-getcode-method.md). A common intermediate language (CIL) code object comprises a single code chunk.
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** CorDebug.idl, CorDebug.h
 

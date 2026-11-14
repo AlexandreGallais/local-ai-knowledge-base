@@ -1,12 +1,3 @@
----
-title: "ChronoZonedDateTime interface (java.time.chrono) (part 1 of 2)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/time/chrono/ChronoZonedDateTime.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ChronoZonedDateTime interface (java.time.chrono)
 
 ```java
@@ -15,35 +6,32 @@ public interface ChronoZonedDateTime<D extends ChronoLocalDate> extends Temporal
 
 A date-time with a time-zone in an arbitrary chronology,
 intended for advanced globalization use cases.
-
-**Most applications should declare method signatures, fields and variables
-as `ZonedDateTime`, not this interface.**
-
-A `ChronoZonedDateTime` is the abstract representation of an offset date-time
-where the `Chronology chronology`, or calendar system, is pluggable.
-The date-time is defined in terms of fields expressed by `TemporalField`,
-where most common implementations are defined in `ChronoField`.
+<p>
+<b>Most applications should declare method signatures, fields and variables
+as {@link ZonedDateTime}, not this interface.</b>
+<p>
+A {@code ChronoZonedDateTime} is the abstract representation of an offset date-time
+where the {@code Chronology chronology}, or calendar system, is pluggable.
+The date-time is defined in terms of fields expressed by {@link TemporalField},
+where most common implementations are defined in {@link ChronoField}.
 The chronology defines how the calendar system operates and the meaning of
 the standard fields.
 
-#### When to use this interface
-
-The design of the API encourages the use of `ZonedDateTime` rather than this
+<h2>When to use this interface</h2>
+The design of the API encourages the use of {@code ZonedDateTime} rather than this
 interface, even in the case where the application needs to deal with multiple
-calendar systems. The rationale for this is explored in detail in `ChronoLocalDate`.
-
-Ensure that the discussion in `ChronoLocalDate` has been read and understood
+calendar systems. The rationale for this is explored in detail in {@link ChronoLocalDate}.
+<p>
+Ensure that the discussion in {@code ChronoLocalDate} has been read and understood
 before using this interface.
 
-Parameters:
-
-- `<D>`: the concrete type for the date of this date-time
-
-**Implementation requirements:** This interface must be implemented with care to ensure other classes operate correctly.
+@implSpec
+This interface must be implemented with care to ensure other classes operate correctly.
 All implementations that can be instantiated must be final, immutable and thread-safe.
 Subclasses should be Serializable wherever possible.
 
-**Since:** 1.8
+@param <D> the concrete type for the date of this date-time
+@since 1.8
 
 ## ChronoZonedDateTime.timeLineOrder()
 
@@ -51,22 +39,19 @@ Subclasses should be Serializable wherever possible.
 static Comparator<ChronoZonedDateTime<?>> timeLineOrder()
 ```
 
-Gets a comparator that compares `ChronoZonedDateTime` in
+Gets a comparator that compares {@code ChronoZonedDateTime} in
 time-line order ignoring the chronology.
-
-This comparator differs from the comparison in `compareTo` in that it
+<p>
+This comparator differs from the comparison in {@link #compareTo} in that it
 only compares the underlying instant and not the chronology.
 This allows dates in different calendar systems to be compared based
 on the position of the date-time on the instant time-line.
 The underlying comparison is equivalent to comparing the epoch-second and nano-of-second.
 
-**Returns:** a comparator that compares in time-line order ignoring the chronology
-
-**See also:** #isAfter
-
-**See also:** #isBefore
-
-**See also:** #isEqual
+@return a comparator that compares in time-line order ignoring the chronology
+@see #isAfter
+@see #isBefore
+@see #isEqual
 
 ## ChronoZonedDateTime.from(TemporalAccessor)
 
@@ -74,32 +59,25 @@ The underlying comparison is equivalent to comparing the epoch-second and nano-o
 static ChronoZonedDateTime<?> from(TemporalAccessor temporal)
 ```
 
-Obtains an instance of `ChronoZonedDateTime` from a temporal object.
-
+Obtains an instance of {@code ChronoZonedDateTime} from a temporal object.
+<p>
 This creates a zoned date-time based on the specified temporal.
-A `TemporalAccessor` represents an arbitrary set of date and time information,
-which this factory converts to an instance of `ChronoZonedDateTime`.
-
+A {@code TemporalAccessor} represents an arbitrary set of date and time information,
+which this factory converts to an instance of {@code ChronoZonedDateTime}.
+<p>
 The conversion extracts and combines the chronology, date, time and zone
 from the temporal object. The behavior is equivalent to using
-`Chronology.zonedDateTime(TemporalAccessor)` with the extracted chronology.
+{@link Chronology#zonedDateTime(TemporalAccessor)} with the extracted chronology.
 Implementations are permitted to perform optimizations such as accessing
 those fields that are equivalent to the relevant objects.
+<p>
+This method matches the signature of the functional interface {@link TemporalQuery}
+allowing it to be used as a query via method reference, {@code ChronoZonedDateTime::from}.
 
-This method matches the signature of the functional interface `TemporalQuery`
-allowing it to be used as a query via method reference, `ChronoZonedDateTime::from`.
-
-Parameters:
-
-- `temporal`: the temporal object to convert, not null
-
-**Returns:** the date-time, not null
-
-**See also:** Chronology#zonedDateTime(TemporalAccessor)
-
-Throws:
-
-- `DateTimeException`: if unable to convert to a `ChronoZonedDateTime`
+@param temporal  the temporal object to convert, not null
+@return the date-time, not null
+@throws DateTimeException if unable to convert to a {@code ChronoZonedDateTime}
+@see Chronology#zonedDateTime(TemporalAccessor)
 
 ## ChronoZonedDateTime.toLocalDate()
 
@@ -108,11 +86,11 @@ default D toLocalDate()
 ```
 
 Gets the local date part of this date-time.
-
+<p>
 This returns a local date with the same year, month and day
 as this date-time.
 
-**Returns:** the date part of this date-time, not null
+@return the date part of this date-time, not null
 
 ## ChronoZonedDateTime.toLocalTime()
 
@@ -121,11 +99,11 @@ default LocalTime toLocalTime()
 ```
 
 Gets the local time part of this date-time.
-
+<p>
 This returns a local time with the same hour, minute, second and
 nanosecond as this date-time.
 
-**Returns:** the time part of this date-time, not null
+@return the time part of this date-time, not null
 
 ## ChronoZonedDateTime.toLocalDateTime()
 
@@ -134,11 +112,11 @@ ChronoLocalDateTime<D> toLocalDateTime()
 ```
 
 Gets the local date-time part of this date-time.
-
+<p>
 This returns a local date with the same year, month and day
 as this date-time.
 
-**Returns:** the local date-time part of this date-time, not null
+@return the local date-time part of this date-time, not null
 
 ## ChronoZonedDateTime.getChronology()
 
@@ -147,11 +125,11 @@ default Chronology getChronology()
 ```
 
 Gets the chronology of this date-time.
+<p>
+The {@code Chronology} represents the calendar system in use.
+The era and other fields in {@link ChronoField} are defined by the chronology.
 
-The `Chronology` represents the calendar system in use.
-The era and other fields in `ChronoField` are defined by the chronology.
-
-**Returns:** the chronology, not null
+@return the chronology, not null
 
 ## ChronoZonedDateTime.getOffset()
 
@@ -160,10 +138,10 @@ ZoneOffset getOffset()
 ```
 
 Gets the zone offset, such as '+01:00'.
-
+<p>
 This is the offset of the local date-time from UTC/Greenwich.
 
-**Returns:** the zone offset, not null
+@return the zone offset, not null
 
 ## ChronoZonedDateTime.getZone()
 
@@ -172,10 +150,10 @@ ZoneId getZone()
 ```
 
 Gets the zone ID, such as 'Europe/Paris'.
-
+<p>
 This returns the stored time-zone id used to determine the time-zone rules.
 
-**Returns:** the zone ID, not null
+@return the zone ID, not null
 
 ## ChronoZonedDateTime.withEarlierOffsetAtOverlap()
 
@@ -185,23 +163,20 @@ ChronoZonedDateTime<D> withEarlierOffsetAtOverlap()
 
 Returns a copy of this date-time changing the zone offset to the
 earlier of the two valid offsets at a local time-line overlap.
-
+<p>
 This method only has any effect when the local time-line overlaps, such as
 at an autumn daylight savings cutover. In this scenario, there are two
 valid offsets for the local date-time. Calling this method will return
 a zoned date-time with the earlier of the two selected.
-
-If this method is called when it is not an overlap, `this`
+<p>
+If this method is called when it is not an overlap, {@code this}
 is returned.
-
+<p>
 This instance is immutable and unaffected by this method call.
 
-**Returns:** a `ChronoZonedDateTime` based on this date-time with the earlier offset, not null
-
-Throws:
-
-- `DateTimeException`: if no rules can be found for the zone
-- `DateTimeException`: if no rules are valid for this date-time
+@return a {@code ChronoZonedDateTime} based on this date-time with the earlier offset, not null
+@throws DateTimeException if no rules can be found for the zone
+@throws DateTimeException if no rules are valid for this date-time
 
 ## ChronoZonedDateTime.withLaterOffsetAtOverlap()
 
@@ -211,23 +186,20 @@ ChronoZonedDateTime<D> withLaterOffsetAtOverlap()
 
 Returns a copy of this date-time changing the zone offset to the
 later of the two valid offsets at a local time-line overlap.
-
+<p>
 This method only has any effect when the local time-line overlaps, such as
 at an autumn daylight savings cutover. In this scenario, there are two
 valid offsets for the local date-time. Calling this method will return
 a zoned date-time with the later of the two selected.
-
-If this method is called when it is not an overlap, `this`
+<p>
+If this method is called when it is not an overlap, {@code this}
 is returned.
-
+<p>
 This instance is immutable and unaffected by this method call.
 
-**Returns:** a `ChronoZonedDateTime` based on this date-time with the later offset, not null
-
-Throws:
-
-- `DateTimeException`: if no rules can be found for the zone
-- `DateTimeException`: if no rules are valid for this date-time
+@return a {@code ChronoZonedDateTime} based on this date-time with the later offset, not null
+@throws DateTimeException if no rules can be found for the zone
+@throws DateTimeException if no rules are valid for this date-time
 
 ## ChronoZonedDateTime.withZoneSameLocal(ZoneId)
 
@@ -237,20 +209,17 @@ ChronoZonedDateTime<D> withZoneSameLocal(ZoneId zone)
 
 Returns a copy of this date-time with a different time-zone,
 retaining the local date-time if possible.
-
+<p>
 This method changes the time-zone and retains the local date-time.
 The local date-time is only changed if it is invalid for the new zone.
-
+<p>
 To change the zone and adjust the local date-time,
-use `withZoneSameInstant(ZoneId)`.
-
+use {@link #withZoneSameInstant(ZoneId)}.
+<p>
 This instance is immutable and unaffected by this method call.
 
-Parameters:
-
-- `zone`: the time-zone to change to, not null
-
-**Returns:** a `ChronoZonedDateTime` based on this date-time with the requested zone, not null
+@param zone  the time-zone to change to, not null
+@return a {@code ChronoZonedDateTime} based on this date-time with the requested zone, not null
 
 ## ChronoZonedDateTime.withZoneSameInstant(ZoneId)
 
@@ -260,25 +229,19 @@ ChronoZonedDateTime<D> withZoneSameInstant(ZoneId zone)
 
 Returns a copy of this date-time with a different time-zone,
 retaining the instant.
-
+<p>
 This method changes the time-zone and retains the instant.
 This normally results in a change to the local date-time.
-
+<p>
 This method is based on retaining the same instant, thus gaps and overlaps
 in the local time-line have no effect on the result.
-
+<p>
 To change the offset while keeping the local time,
-use `withZoneSameLocal(ZoneId)`.
+use {@link #withZoneSameLocal(ZoneId)}.
 
-Parameters:
-
-- `zone`: the time-zone to change to, not null
-
-**Returns:** a `ChronoZonedDateTime` based on this date-time with the requested zone, not null
-
-Throws:
-
-- `DateTimeException`: if the result exceeds the supported date range
+@param zone  the time-zone to change to, not null
+@return a {@code ChronoZonedDateTime} based on this date-time with the requested zone, not null
+@throws DateTimeException if the result exceeds the supported date range
 
 ## ChronoZonedDateTime.isSupported(TemporalField)
 
@@ -287,25 +250,22 @@ boolean isSupported(TemporalField field)
 ```
 
 Checks if the specified field is supported.
-
+<p>
 This checks if the specified field can be queried on this date-time.
-If false, then calling the range,
-get and long)
+If false, then calling the {@link #range(TemporalField) range},
+{@link #get(TemporalField) get} and {@link #with(TemporalField, long)}
 methods will throw an exception.
-
+<p>
 The set of supported fields is defined by the chronology and normally includes
-all `ChronoField` fields.
-
-If the field is not a `ChronoField`, then the result of this method
-is obtained by invoking `TemporalField.isSupportedBy(TemporalAccessor)`
-passing `this` as the argument.
+all {@code ChronoField} fields.
+<p>
+If the field is not a {@code ChronoField}, then the result of this method
+is obtained by invoking {@code TemporalField.isSupportedBy(TemporalAccessor)}
+passing {@code this} as the argument.
 Whether the field is supported is determined by the field.
 
-Parameters:
-
-- `field`: the field to check, null returns false
-
-**Returns:** true if the field can be queried, false if not
+@param field  the field to check, null returns false
+@return true if the field can be queried, false if not
 
 ## ChronoZonedDateTime.isSupported(TemporalUnit)
 
@@ -314,24 +274,21 @@ default boolean isSupported(TemporalUnit unit)
 ```
 
 Checks if the specified unit is supported.
-
+<p>
 This checks if the specified unit can be added to or subtracted from this date-time.
-If false, then calling the TemporalUnit) and
-TemporalUnit) minus methods will throw an exception.
-
+If false, then calling the {@link #plus(long, TemporalUnit)} and
+{@link #minus(long, TemporalUnit) minus} methods will throw an exception.
+<p>
 The set of supported units is defined by the chronology and normally includes
-all `ChronoUnit` units except `FOREVER`.
-
-If the unit is not a `ChronoUnit`, then the result of this method
-is obtained by invoking `TemporalUnit.isSupportedBy(Temporal)`
-passing `this` as the argument.
+all {@code ChronoUnit} units except {@code FOREVER}.
+<p>
+If the unit is not a {@code ChronoUnit}, then the result of this method
+is obtained by invoking {@code TemporalUnit.isSupportedBy(Temporal)}
+passing {@code this} as the argument.
 Whether the unit is supported is determined by the unit.
 
-Parameters:
-
-- `unit`: the unit to check, null returns false
-
-**Returns:** true if the unit can be added/subtracted, false if not
+@param unit  the unit to check, null returns false
+@return true if the unit can be added/subtracted, false if not
 
 ## ChronoZonedDateTime.with(TemporalAdjuster)
 
@@ -339,12 +296,9 @@ Parameters:
 default ChronoZonedDateTime<D> with(TemporalAdjuster adjuster)
 ```
 
-(inherited documentation)
-
-Throws:
-
-- `DateTimeException`: (inherited documentation)
-- `ArithmeticException`: (inherited documentation)
+{@inheritDoc}
+@throws DateTimeException {@inheritDoc}
+@throws ArithmeticException {@inheritDoc}
 
 ## ChronoZonedDateTime.with(TemporalField, long)
 
@@ -352,12 +306,9 @@ Throws:
 ChronoZonedDateTime<D> with(TemporalField field, long newValue)
 ```
 
-(inherited documentation)
-
-Throws:
-
-- `DateTimeException`: (inherited documentation)
-- `ArithmeticException`: (inherited documentation)
+{@inheritDoc}
+@throws DateTimeException {@inheritDoc}
+@throws ArithmeticException {@inheritDoc}
 
 ## ChronoZonedDateTime.plus(TemporalAmount)
 
@@ -365,12 +316,9 @@ Throws:
 default ChronoZonedDateTime<D> plus(TemporalAmount amount)
 ```
 
-(inherited documentation)
-
-Throws:
-
-- `DateTimeException`: (inherited documentation)
-- `ArithmeticException`: (inherited documentation)
+{@inheritDoc}
+@throws DateTimeException {@inheritDoc}
+@throws ArithmeticException {@inheritDoc}
 
 ## ChronoZonedDateTime.plus(long, TemporalUnit)
 
@@ -378,12 +326,9 @@ Throws:
 ChronoZonedDateTime<D> plus(long amountToAdd, TemporalUnit unit)
 ```
 
-(inherited documentation)
-
-Throws:
-
-- `DateTimeException`: (inherited documentation)
-- `ArithmeticException`: (inherited documentation)
+{@inheritDoc}
+@throws DateTimeException {@inheritDoc}
+@throws ArithmeticException {@inheritDoc}
 
 ## ChronoZonedDateTime.minus(TemporalAmount)
 
@@ -391,12 +336,9 @@ Throws:
 default ChronoZonedDateTime<D> minus(TemporalAmount amount)
 ```
 
-(inherited documentation)
-
-Throws:
-
-- `DateTimeException`: (inherited documentation)
-- `ArithmeticException`: (inherited documentation)
+{@inheritDoc}
+@throws DateTimeException {@inheritDoc}
+@throws ArithmeticException {@inheritDoc}
 
 ## ChronoZonedDateTime.minus(long, TemporalUnit)
 
@@ -404,12 +346,9 @@ Throws:
 default ChronoZonedDateTime<D> minus(long amountToSubtract, TemporalUnit unit)
 ```
 
-(inherited documentation)
-
-Throws:
-
-- `DateTimeException`: (inherited documentation)
-- `ArithmeticException`: (inherited documentation)
+{@inheritDoc}
+@throws DateTimeException {@inheritDoc}
+@throws ArithmeticException {@inheritDoc}
 
 ## ChronoZonedDateTime.query(TemporalQuery<R>)
 
@@ -418,27 +357,21 @@ default <R> R query(TemporalQuery<R> query)
 ```
 
 Queries this date-time using the specified query.
-
+<p>
 This queries this date-time using the specified query strategy object.
-The `TemporalQuery` object defines the logic to be used to
+The {@code TemporalQuery} object defines the logic to be used to
 obtain the result. Read the documentation of the query to understand
 what the result of this method will be.
-
+<p>
 The result of this method is obtained by invoking the
-`TemporalQuery.queryFrom(TemporalAccessor)` method on the
-specified query passing `this` as the argument.
+{@link TemporalQuery#queryFrom(TemporalAccessor)} method on the
+specified query passing {@code this} as the argument.
 
-Parameters:
-
-- `<R>`: the type of the result
-- `query`: the query to invoke, not null
-
-**Returns:** the query result, null may be returned (defined by the query)
-
-Throws:
-
-- `DateTimeException`: if unable to query (defined by the query)
-- `ArithmeticException`: if numeric overflow occurs (defined by the query)
+@param <R> the type of the result
+@param query  the query to invoke, not null
+@return the query result, null may be returned (defined by the query)
+@throws DateTimeException if unable to query (defined by the query)
+@throws ArithmeticException if numeric overflow occurs (defined by the query)
 
 ## ChronoZonedDateTime.format(DateTimeFormatter)
 
@@ -447,24 +380,17 @@ default String format(DateTimeFormatter formatter)
 ```
 
 Formats this date-time using the specified formatter.
-
+<p>
 This date-time will be passed to the formatter to produce a string.
-
+<p>
 The default implementation must behave as follows:
-
-```java
+<pre>
  return formatter.format(this);
-```
+</pre>
 
-Parameters:
-
-- `formatter`: the formatter to use, not null
-
-**Returns:** the formatted date-time string, not null
-
-Throws:
-
-- `DateTimeException`: if an error occurs during printing
+@param formatter  the formatter to use, not null
+@return the formatted date-time string, not null
+@throws DateTimeException if an error occurs during printing
 
 ## ChronoZonedDateTime.toInstant()
 
@@ -472,14 +398,14 @@ Throws:
 default Instant toInstant()
 ```
 
-Converts this date-time to an `Instant`.
-
-This returns an `Instant` representing the same point on the
+Converts this date-time to an {@code Instant}.
+<p>
+This returns an {@code Instant} representing the same point on the
 time-line as this date-time. The calculation combines the
-local date-time and
-offset.
+{@linkplain #toLocalDateTime() local date-time} and
+{@linkplain #getOffset() offset}.
 
-**Returns:** an `Instant` representing the same instant, not null
+@return an {@code Instant} representing the same instant, not null
 
 ## ChronoZonedDateTime.toEpochSecond()
 
@@ -489,13 +415,13 @@ default long toEpochSecond()
 
 Converts this date-time to the number of seconds from the epoch
 of 1970-01-01T00:00:00Z.
-
-This uses the local date-time and
-offset to calculate the epoch-second value,
+<p>
+This uses the {@linkplain #toLocalDateTime() local date-time} and
+{@linkplain #getOffset() offset} to calculate the epoch-second value,
 which is the number of elapsed seconds from 1970-01-01T00:00:00Z.
 Instants on the time-line after the epoch are positive, earlier are negative.
 
-**Returns:** the number of seconds from the epoch of 1970-01-01T00:00:00Z
+@return the number of seconds from the epoch of 1970-01-01T00:00:00Z
 
 ## ChronoZonedDateTime.compareTo(ChronoZonedDateTime<?>)
 
@@ -504,24 +430,110 @@ default int compareTo(ChronoZonedDateTime<?> other)
 ```
 
 Compares this date-time to another date-time, including the chronology.
-
+<p>
 The comparison is based first on the instant, then on the local date-time,
 then on the zone ID, then on the chronology.
-It is "consistent with equals", as defined by `Comparable`.
-
+It is "consistent with equals", as defined by {@link Comparable}.
+<p>
 If all the date-time objects being compared are in the same chronology, then the
 additional chronology stage is not required.
-
+<p>
 This default implementation performs the comparison defined above.
 
-Parameters:
-
-- `other`: the other date-time to compare to, not null
-
-**Returns:** the comparator value, that is the comparison of this with the `other` values for the instant,
+@param other  the other date-time to compare to, not null
+@return the comparator value, that is the comparison of this with the {@code other} values for the instant,
          the local date-time, the zone ID, and the chronology, in order, returning the first non-zero result,
          and otherwise returning zero
+@see #isBefore
+@see #isAfter
 
-**See also:** #isBefore
+## ChronoZonedDateTime.isBefore(ChronoZonedDateTime<?>)
 
-**See also:** #isAfter
+```java
+default boolean isBefore(ChronoZonedDateTime<?> other)
+```
+
+Checks if the instant of this date-time is before that of the specified date-time.
+<p>
+This method differs from the comparison in {@link #compareTo} in that it
+only compares the instant of the date-time. This is equivalent to using
+{@code dateTime1.toInstant().isBefore(dateTime2.toInstant());}.
+<p>
+This default implementation performs the comparison based on the epoch-second
+and nano-of-second.
+
+@param other  the other date-time to compare to, not null
+@return true if this point is before the specified date-time
+
+## ChronoZonedDateTime.isAfter(ChronoZonedDateTime<?>)
+
+```java
+default boolean isAfter(ChronoZonedDateTime<?> other)
+```
+
+Checks if the instant of this date-time is after that of the specified date-time.
+<p>
+This method differs from the comparison in {@link #compareTo} in that it
+only compares the instant of the date-time. This is equivalent to using
+{@code dateTime1.toInstant().isAfter(dateTime2.toInstant());}.
+<p>
+This default implementation performs the comparison based on the epoch-second
+and nano-of-second.
+
+@param other  the other date-time to compare to, not null
+@return true if this is after the specified date-time
+
+## ChronoZonedDateTime.isEqual(ChronoZonedDateTime<?>)
+
+```java
+default boolean isEqual(ChronoZonedDateTime<?> other)
+```
+
+Checks if the instant of this date-time is equal to that of the specified date-time.
+<p>
+This method differs from the comparison in {@link #compareTo} and {@link #equals}
+in that it only compares the instant of the date-time. This is equivalent to using
+{@code dateTime1.toInstant().equals(dateTime2.toInstant());}.
+<p>
+This default implementation performs the comparison based on the epoch-second
+and nano-of-second.
+
+@param other  the other date-time to compare to, not null
+@return true if the instant equals the instant of the specified date-time
+
+## ChronoZonedDateTime.equals(Object)
+
+```java
+boolean equals(Object obj)
+```
+
+Checks if this date-time is equal to another date-time.
+<p>
+The comparison is based on the offset date-time and the zone.
+To compare for the same instant on the time-line, use {@link #compareTo}.
+Only objects of type {@code ChronoZonedDateTime} are compared, other types return false.
+
+@param obj  the object to check, null returns false
+@return true if this is equal to the other date-time
+
+## ChronoZonedDateTime.hashCode()
+
+```java
+int hashCode()
+```
+
+A hash code for this date-time.
+
+@return a suitable hash code
+
+## ChronoZonedDateTime.toString()
+
+```java
+String toString()
+```
+
+Outputs this date-time as a {@code String}.
+<p>
+The output will include the full zoned date-time.
+
+@return a string representation of this date-time, not null

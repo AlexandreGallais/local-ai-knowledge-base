@@ -1,23 +1,17 @@
----
-title: "prefer-reflect-apply"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-reflect-apply.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-reflect-apply
 
 📝 Prefer `Reflect.apply()` over `Function#apply()`.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
-`Reflect.apply()` is arguably less verbose and easier to understand. In addition, when you accept arbitrary methods, it's not safe to assume `.apply()` exists or is not overridden.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
-If you prefer `.apply()` calls to be converted to spread syntax when it preserves the `this` value, enable ESLint's built-in `prefer-spread` rule.
+[`Reflect.apply()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect/apply) is arguably less verbose and easier to understand. In addition, when you accept arbitrary methods, it's not safe to assume `.apply()` exists or is not overridden.
+
+If you prefer `.apply()` calls to be converted to spread syntax when it preserves the `this` value, enable ESLint's built-in [`prefer-spread`](https://eslint.org/docs/latest/rules/prefer-spread) rule.
 
 Computed method keys are only checked when they are string literals or template literals without substitutions, so their evaluation is safe to remove.
 

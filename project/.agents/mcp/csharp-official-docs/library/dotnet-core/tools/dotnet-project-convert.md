@@ -1,12 +1,9 @@
 ---
-title: "dotnet project convert command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-project-convert.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet project convert command
+description: The 'dotnet project convert' command converts a file-based program to a project-based program.
+ms.date: 10/25/2025
+ai-usage: ai-assisted
 ---
-
 # dotnet project convert
 
 **This article applies to:** ✔️ .NET 10 SDK and later versions
@@ -59,17 +56,13 @@ The command performs the following operations:
 
   Forces conversion even if there are malformed directives. By default, the command fails if it encounters directives that cannot be properly parsed or converted.
 
-- **`--interactive`**
-
-Allows the command to stop and wait for user input or action. For example, to complete authentication.
+- [!INCLUDE [interactive](includes/cli-interactive.md)]
 
 - **`-o|--output <OUTPUT_DIRECTORY>`**
 
   Specifies the output directory for the converted project. If not specified, a directory is created with the same name as the input file (without extension) in the current directory.
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Examples
 
@@ -139,7 +132,7 @@ Prints out a description of how to use the command.
 
 ## See also
 
-- dotnet build
-- dotnet run
-- dotnet publish
-- Tutorial: Build file-based C# programs
+- [dotnet build](dotnet-build.md)
+- [dotnet run](dotnet-run.md)
+- [dotnet publish](dotnet-publish.md)
+- [Tutorial: Build file-based C# programs](../../csharp/fundamentals/tutorials/file-based-programs.md)

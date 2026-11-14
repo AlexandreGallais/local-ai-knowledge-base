@@ -1,13 +1,9 @@
 ---
-title: "no-unsafe-optional-chaining"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-unsafe-optional-chaining.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-unsafe-optional-chaining
+rule_type: problem
 ---
 
-# no-unsafe-optional-chaining
+
 
 The optional chaining (`?.`) expression can short-circuit with a return value of `undefined`. Therefore, treating an evaluated optional chaining expression as a function, object, number, etc., can cause TypeError or unexpected results. For example:
 
@@ -36,7 +32,7 @@ This rule aims to detect some cases where the use of optional chaining doesn't p
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint no-unsafe-optional-chaining: "error"*/
@@ -94,9 +90,11 @@ async function foo () {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-unsafe-optional-chaining: "error"*/
@@ -133,6 +131,8 @@ async function foo () {
 }
 ```
 
+:::
+
 ## Options
 
 This rule has an object option:
@@ -149,7 +149,7 @@ With this option set to `true` the rule is enforced for:
 
 Examples of additional **incorrect** code for this rule with the `{ "disallowArithmeticOperators": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-unsafe-optional-chaining: ["error", { "disallowArithmeticOperators": true }]*/
@@ -177,3 +177,5 @@ async function foo () {
   baz += await obj?.foo;
 }
 ```
+
+:::

@@ -1,12 +1,3 @@
----
-title: "CertPathBuilder class (java.security.cert)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/cert/CertPathBuilder.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # CertPathBuilder class (java.security.cert)
 
 ```java
@@ -14,60 +5,65 @@ public class CertPathBuilder
 ```
 
 A class for building certification paths (also known as certificate chains).
-
+<p>
 This class uses a provider-based architecture.
-To create a `CertPathBuilder`, call
-one of the static `getInstance` methods, passing in the
-algorithm name of the `CertPathBuilder` desired and optionally
+To create a {@code CertPathBuilder}, call
+one of the static {@code getInstance} methods, passing in the
+algorithm name of the {@code CertPathBuilder} desired and optionally
 the name of the provider desired.
 
-Once a `CertPathBuilder` object has been created, certification
-paths can be constructed by calling the build method and
+<p>Once a {@code CertPathBuilder} object has been created, certification
+paths can be constructed by calling the {@link #build build} method and
 passing it an algorithm-specific set of parameters. If successful, the
-result (including the `CertPath` that was built) is returned
-in an object that implements the `CertPathBuilderResult`
+result (including the {@code CertPath} that was built) is returned
+in an object that implements the {@code CertPathBuilderResult}
 interface.
 
-The `getRevocationChecker` method allows an application to specify
+<p>The {@link #getRevocationChecker} method allows an application to specify
 additional algorithm-specific parameters and options used by the
-`CertPathBuilder` when checking the revocation status of certificates.
+{@code CertPathBuilder} when checking the revocation status of certificates.
 Here is an example demonstrating how it is used with the PKIX algorithm:
 
-```java
+<pre>
 CertPathBuilder cpb = CertPathBuilder.getInstance("PKIX");
 PKIXRevocationChecker rc = (PKIXRevocationChecker)cpb.getRevocationChecker();
 rc.setOptions(EnumSet.of(Option.PREFER_CRLS));
 params.addCertPathChecker(rc);
 CertPathBuilderResult cpbr = cpb.build(params);
-```
+</pre>
 
-Every implementation of the Java platform is required to support the
-following standard `CertPathBuilder` algorithm:
-
-- `PKIX`
-
-This algorithm is described in the
-CertPathBuilder section of the
+<p>Every implementation of the Java platform is required to support the
+following standard {@code CertPathBuilder} algorithm:
+<ul>
+<li>{@code PKIX}</li>
+</ul>
+This algorithm is described in the <a href=
+"{@docRoot}/../specs/security/standard-names.html#certpathbuilder-algorithms">
+CertPathBuilder section</a> of the
 Java Security Standard Algorithm Names Specification.
 Consult the release documentation for your implementation to see if any
 other algorithms are supported.
 
-**Concurrent Access**
-
+<p>
+<b>Concurrent Access</b>
+<p>
 The static methods of this class are guaranteed to be thread-safe.
 Multiple threads may concurrently invoke the static methods defined in
 this class with no ill effects.
-
+<p>
 However, this is not true for the non-static methods defined by this class.
 Unless otherwise documented by a specific provider, threads that need to
-access a single `CertPathBuilder` instance concurrently should
+access a single {@code CertPathBuilder} instance concurrently should
 synchronize amongst themselves and provide the necessary locking. Multiple
-threads each manipulating a different `CertPathBuilder` instance
+threads each manipulating a different {@code CertPathBuilder} instance
 need not synchronize.
 
-**See also:** CertPath
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@see CertPath
 
-**Since:** 1.4
+@since       1.4
+@author      Sean Mullan
+@author      Yassir Elley
 
 ## CertPathBuilder.CertPathBuilder(CertPathBuilderSpi, Provider, String)
 
@@ -75,14 +71,12 @@ need not synchronize.
 protected CertPathBuilder(CertPathBuilderSpi builderSpi, Provider provider, String algorithm)
 ```
 
-Creates a `CertPathBuilder` object of the given algorithm,
+Creates a {@code CertPathBuilder} object of the given algorithm,
 and encapsulates the given provider implementation (SPI object) in it.
 
-Parameters:
-
-- `builderSpi`: the provider implementation
-- `provider`: the provider
-- `algorithm`: the algorithm name
+@param builderSpi the provider implementation
+@param provider the provider
+@param algorithm the algorithm name
 
 ## CertPathBuilder.getInstance(String)
 
@@ -90,38 +84,43 @@ Parameters:
 public static CertPathBuilder getInstance(String algorithm) throws NoSuchAlgorithmException
 ```
 
-Returns a `CertPathBuilder` object that implements the
+Returns a {@code CertPathBuilder} object that implements the
 specified algorithm.
 
- This method traverses the list of registered security Providers,
+<p> This method traverses the list of registered security Providers,
 starting with the most preferred Provider.
 A new CertPathBuilder object encapsulating the
 CertPathBuilderSpi implementation from the first
 Provider that supports the specified algorithm is returned.
 
- Note that the list of registered providers may be retrieved via
-the Security.getProviders() method.
+<p> Note that the list of registered providers may be retrieved via
+the {@link Security#getProviders() Security.getProviders()} method.
 
-Parameters:
-
-- `algorithm`: the name of the requested `CertPathBuilder` algorithm. See the CertPathBuilder section in the  Java Security Standard Algorithm Names Specification for information about standard algorithm names.
-
-**Implementation note:** The JDK Reference Implementation additionally uses the
-`jdk.security.provider.preferred`
-Security property to determine
+@implNote
+The JDK Reference Implementation additionally uses the
+{@code jdk.security.provider.preferred}
+{@link Security#getProperty(String) Security} property to determine
 the preferred provider order for the specified algorithm. This
 may be different from the order of providers returned by
-Security.getProviders().
+{@link Security#getProviders() Security.getProviders()}.
 
-**Returns:** a `CertPathBuilder` object that implements the
+@param algorithm the name of the requested {@code CertPathBuilder}
+ algorithm.  See the CertPathBuilder section in the <a href=
+ "{@docRoot}/../specs/security/standard-names.html#certpathbuilder-algorithms">
+Java Security Standard Algorithm Names Specification</a>
+for information about standard algorithm names.
+
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@return a {@code CertPathBuilder} object that implements the
         specified algorithm
 
-**See also:** java.security.Provider
+@throws NoSuchAlgorithmException if no {@code Provider} supports a
+        {@code CertPathBuilderSpi} implementation for the
+        specified algorithm
 
-Throws:
+@throws NullPointerException if {@code algorithm} is {@code null}
 
-- `NoSuchAlgorithmException`: if no `Provider` supports a `CertPathBuilderSpi` implementation for the specified algorithm
-- `NullPointerException`: if `algorithm` is `null`
+@see java.security.Provider
 
 ## CertPathBuilder.getInstance(String, String)
 
@@ -129,33 +128,42 @@ Throws:
 public static CertPathBuilder getInstance(String algorithm, String provider) throws NoSuchAlgorithmException, NoSuchProviderException
 ```
 
-Returns a `CertPathBuilder` object that implements the
+Returns a {@code CertPathBuilder} object that implements the
 specified algorithm.
 
- A new CertPathBuilder object encapsulating the
+<p> A new CertPathBuilder object encapsulating the
 CertPathBuilderSpi implementation from the specified provider
 is returned.  The specified provider must be registered
 in the security provider list.
 
- Note that the list of registered providers may be retrieved via
-the Security.getProviders() method.
+<p> Note that the list of registered providers may be retrieved via
+the {@link Security#getProviders() Security.getProviders()} method.
 
-Parameters:
+@param algorithm the name of the requested {@code CertPathBuilder}
+ algorithm.  See the CertPathBuilder section in the <a href=
+ "{@docRoot}/../specs/security/standard-names.html#certpathbuilder-algorithms">
+Java Security Standard Algorithm Names Specification</a>
+for information about standard algorithm names.
 
-- `algorithm`: the name of the requested `CertPathBuilder` algorithm. See the CertPathBuilder section in the  Java Security Standard Algorithm Names Specification for information about standard algorithm names.
-- `provider`: the name of the provider.
+@param provider the name of the provider.
 
-**Returns:** a `CertPathBuilder` object that implements the
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@return a {@code CertPathBuilder} object that implements the
         specified algorithm
 
-**See also:** java.security.Provider
+@throws IllegalArgumentException if the {@code provider} is
+        {@code null} or empty
 
-Throws:
+@throws NoSuchAlgorithmException if a {@code CertPathBuilderSpi}
+        implementation for the specified algorithm is not
+        available from the specified provider
 
-- `IllegalArgumentException`: if the `provider` is `null` or empty
-- `NoSuchAlgorithmException`: if a `CertPathBuilderSpi` implementation for the specified algorithm is not available from the specified provider
-- `NoSuchProviderException`: if the specified provider is not registered in the security provider list
-- `NullPointerException`: if `algorithm` is `null`
+@throws NoSuchProviderException if the specified provider is not
+        registered in the security provider list
+
+@throws NullPointerException if {@code algorithm} is {@code null}
+
+@see java.security.Provider
 
 ## CertPathBuilder.getInstance(String, Provider)
 
@@ -163,29 +171,36 @@ Throws:
 public static CertPathBuilder getInstance(String algorithm, Provider provider) throws NoSuchAlgorithmException
 ```
 
-Returns a `CertPathBuilder` object that implements the
+Returns a {@code CertPathBuilder} object that implements the
 specified algorithm.
 
- A new CertPathBuilder object encapsulating the
+<p> A new CertPathBuilder object encapsulating the
 CertPathBuilderSpi implementation from the specified Provider
 object is returned.  Note that the specified Provider object
 does not have to be registered in the provider list.
 
-Parameters:
+@param algorithm the name of the requested {@code CertPathBuilder}
+ algorithm.  See the CertPathBuilder section in the <a href=
+ "{@docRoot}/../specs/security/standard-names.html#certpathbuilder-algorithms">
+Java Security Standard Algorithm Names Specification</a>
+for information about standard algorithm names.
 
-- `algorithm`: the name of the requested `CertPathBuilder` algorithm. See the CertPathBuilder section in the  Java Security Standard Algorithm Names Specification for information about standard algorithm names.
-- `provider`: the provider.
+@param provider the provider.
 
-**Returns:** a `CertPathBuilder` object that implements the
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@return a {@code CertPathBuilder} object that implements the
         specified algorithm
 
-**See also:** java.security.Provider
+@throws IllegalArgumentException if the {@code provider} is
+        {@code null}
 
-Throws:
+@throws NoSuchAlgorithmException if a {@code CertPathBuilderSpi}
+        implementation for the specified algorithm is not available
+        from the specified {@code Provider} object
 
-- `IllegalArgumentException`: if the `provider` is `null`
-- `NoSuchAlgorithmException`: if a `CertPathBuilderSpi` implementation for the specified algorithm is not available from the specified `Provider` object
-- `NullPointerException`: if `algorithm` is `null`
+@throws NullPointerException if {@code algorithm} is {@code null}
+
+@see java.security.Provider
 
 ## CertPathBuilder.getProvider()
 
@@ -193,9 +208,9 @@ Throws:
 public final Provider getProvider()
 ```
 
-Returns the provider of this `CertPathBuilder`.
+Returns the provider of this {@code CertPathBuilder}.
 
-**Returns:** the provider of this `CertPathBuilder`
+@return the provider of this {@code CertPathBuilder}
 
 ## CertPathBuilder.getAlgorithm()
 
@@ -203,9 +218,9 @@ Returns the provider of this `CertPathBuilder`.
 public final String getAlgorithm()
 ```
 
-Returns the name of the algorithm of this `CertPathBuilder`.
+Returns the name of the algorithm of this {@code CertPathBuilder}.
 
-**Returns:** the name of the algorithm of this `CertPathBuilder`
+@return the name of the algorithm of this {@code CertPathBuilder}
 
 ## CertPathBuilder.build(CertPathParameters)
 
@@ -216,16 +231,12 @@ public final CertPathBuilderResult build(CertPathParameters params) throws CertP
 Attempts to build a certification path using the specified algorithm
 parameter set.
 
-Parameters:
-
-- `params`: the algorithm parameters
-
-**Returns:** the result of the build algorithm
-
-Throws:
-
-- `CertPathBuilderException`: if the builder is unable to construct a certification path that satisfies the specified parameters
-- `InvalidAlgorithmParameterException`: if the specified parameters are inappropriate for this `CertPathBuilder`
+@param params the algorithm parameters
+@return the result of the build algorithm
+@throws CertPathBuilderException if the builder is unable to construct
+ a certification path that satisfies the specified parameters
+@throws InvalidAlgorithmParameterException if the specified parameters
+are inappropriate for this {@code CertPathBuilder}
 
 ## CertPathBuilder.getDefaultType()
 
@@ -233,24 +244,23 @@ Throws:
 public static final String getDefaultType()
 ```
 
-Returns the default `CertPathBuilder` type as specified by
-the `certpathbuilder.type` security property, or the string
- if no such property exists.
+Returns the default {@code CertPathBuilder} type as specified by
+the {@code certpathbuilder.type} security property, or the string
+{@literal "PKIX"} if no such property exists.
 
-The default `CertPathBuilder` type can be used by
+<p>The default {@code CertPathBuilder} type can be used by
 applications that do not want to use a hard-coded type when calling one
-of the `getInstance` methods, and want to provide a default
+of the {@code getInstance} methods, and want to provide a default
 type in case a user does not specify its own.
 
-The default `CertPathBuilder` type can be changed by
-setting the value of the `certpathbuilder.type` security property
+<p>The default {@code CertPathBuilder} type can be changed by
+setting the value of the {@code certpathbuilder.type} security property
 to the desired type.
 
-**See also:** java.security.Security security properties
-
-**Returns:** the default `CertPathBuilder` type as specified
-by the `certpathbuilder.type` security property, or the string
- if no such property exists.
+@see java.security.Security security properties
+@return the default {@code CertPathBuilder} type as specified
+by the {@code certpathbuilder.type} security property, or the string
+{@literal "PKIX"} if no such property exists.
 
 ## CertPathBuilder.getRevocationChecker()
 
@@ -258,20 +268,17 @@ by the `certpathbuilder.type` security property, or the string
 public final CertPathChecker getRevocationChecker()
 ```
 
-Returns a `CertPathChecker` that the encapsulated
-`CertPathBuilderSpi` implementation uses to check the revocation
+Returns a {@code CertPathChecker} that the encapsulated
+{@code CertPathBuilderSpi} implementation uses to check the revocation
 status of certificates. A PKIX implementation returns objects of
-type `PKIXRevocationChecker`. Each invocation of this method
-returns a new instance of `CertPathChecker`.
+type {@code PKIXRevocationChecker}. Each invocation of this method
+returns a new instance of {@code CertPathChecker}.
 
-The primary purpose of this method is to allow callers to specify
+<p>The primary purpose of this method is to allow callers to specify
 additional input parameters and options specific to revocation checking.
 See the class description for an example.
 
-**Returns:** a `CertPathChecker`
-
-**Since:** 1.8
-
-Throws:
-
-- `UnsupportedOperationException`: if the service provider does not support this method
+@return a {@code CertPathChecker}
+@throws UnsupportedOperationException if the service provider does not
+        support this method
+@since 1.8

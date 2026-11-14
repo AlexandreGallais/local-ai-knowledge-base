@@ -1,19 +1,18 @@
 ---
-title: "Display images and documents in ASP.NET Core Blazor"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/images-and-documents.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Display images and documents in ASP.NET Core Blazor
+description: Learn how to display images and documents in ASP.NET Core Blazor apps.
+monikerRange: '>= aspnetcore-6.0'
+ms.date: 11/11/2025
 ---
-
 # Display images and documents in ASP.NET Core Blazor
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
 This article describes approaches for displaying images and documents in Blazor apps.
 
-The examples in this article are available for inspection and use in the Blazor sample apps:
+The examples in this article are available for inspection and use in the [Blazor sample apps](fundamentals/index.md#sample-apps):
 
-`dotnet/blazor-samples` GitHub repository: Navigate to the app named `BlazorSample_BlazorWebApp` (8.0 or later), `BlazorSample_Server` (7.0 or earlier), or `BlazorSample_WebAssembly`.
+[`dotnet/blazor-samples` GitHub repository](https://github.com/dotnet/blazor-samples): Navigate to the app named `BlazorSample_BlazorWebApp` (8.0 or later), `BlazorSample_Server` (7.0 or earlier), or `BlazorSample_WebAssembly`.
 
 ## Dynamically set an image source
 
@@ -29,7 +28,30 @@ In the following `ShowImage1` component:
 
 `ShowImage1.razor`:
 
-_Code sample not included: ~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/ShowImage1.razor._
+:::moniker range=">= aspnetcore-9.0"
+
+:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/ShowImage1.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
+
+:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/ShowImage1.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
+
+:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/images/ShowImage1.razor":::
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-7.0"
+
+:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Pages/images/ShowImage1.razor":::
+
+:::moniker-end
+
 The preceding example uses a C# field to hold the image's source data, but you can also use a C# property to hold the data.
 
 Avoid using a loop variable directly in a lambda expression, such as `i` in the preceding `for` loop example. Otherwise, the same variable is used by all lambda expressions, which results in use of the same value in all lambdas. Capture the variable's value in a local variable. In the preceding example:
@@ -37,7 +59,7 @@ Avoid using a loop variable directly in a lambda expression, such as `i` in the 
 * The loop variable `i` is assigned to `imageId`.
 * `imageId` is used in the lambda expression.
 
-Alternatively, use a `foreach` loop with `System.Linq.Enumerable.Range*`, which doesn't suffer from the preceding problem:
+Alternatively, use a `foreach` loop with <xref:System.Linq.Enumerable.Range*?displayProperty=nameWithType>, which doesn't suffer from the preceding problem:
 
 ```razor
 @foreach (var imageId in Enumerable.Range(1, 3))
@@ -48,24 +70,24 @@ Alternatively, use a `foreach` loop with `System.Linq.Enumerable.Range*`, which 
 }
 ```
 
-For more information on lambda expressions with event handling, see ASP.NET Core Blazor event handling.
+For more information on lambda expressions with event handling, see [ASP.NET Core Blazor event handling](components/event-handling.md#lambda-expressions).
 
 ## Stream image or document data
 
 An image or other document type, such as a PDF, can be directly transmitted to the client using Blazor's streaming interop features instead of hosting the file at a public URL.
 
-The example in this section streams source data using JavaScript (JS) interop. The following `setSource` JS function:
+The example in this section streams source data using [JavaScript (JS) interop](javascript-interoperability/index.md). The following `setSource` JS function:
 
-* Can be used to stream content for the following elements: `<body>`, ``, ``, ``, `<link>`, `<object>`, `<script>`, `<style>`, and `<track>`.
+* Can be used to stream content for the following elements: `<body>`, `<embed>`, `<iframe>`, `<img>`, `<link>`, `<object>`, `<script>`, `<style>`, and `<track>`.
 * Accepts an element `id` to display the file's contents, a data stream for the document, the content type, and a title for the display element.
 
 The function:
 
-* Reads the provided stream into an `ArrayBuffer`.
-* Creates a `Blob` to wrap the `ArrayBuffer`, setting the blob's content type.
+* Reads the provided stream into an [`ArrayBuffer`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer).
+* Creates a [`Blob`](https://developer.mozilla.org/docs/Web/API/Blob) to wrap the `ArrayBuffer`, setting the blob's content type.
 * Creates an object URL to serve as the address for the document to be shown.
 * Set's the element's title (`title`) from the `title` parameter and sets the element's source (`src`) from the created object URL.
-* To prevent memory leaks, the function calls `revokeObjectURL` to dispose of the object URL after the element loads the resource (`load` event).
+* To prevent memory leaks, the function calls [`revokeObjectURL`](https://developer.mozilla.org/docs/Web/API/URL/revokeObjectURL) to dispose of the object URL after the element loads the resource ([`load` event](https://developer.mozilla.org/docs/Web/API/HTMLElement/load_event)).
 
 ```html
 <script>
@@ -87,42 +109,88 @@ The function:
 </script>
 ```
 
-> **Note:**
-> For general guidance on JS location and our recommendations for production apps, see JavaScript location in ASP.NET Core Blazor apps.
+> [!NOTE]
+> For general guidance on JS location and our recommendations for production apps, see [JavaScript location in ASP.NET Core Blazor apps](javascript-interoperability/location-of-javascript.md).
 
 The following `ShowImage2` component:
 
-* Injects services for an `System.Net.Http.HttpClient` and `Microsoft.JSInterop.IJSRuntime`.
-* Includes an `` tag to display an image.
-* Has a `GetImageStreamAsync` C# method to retrieve a `System.IO.Stream` for an image. A production app may dynamically generate an image based on the specific user or retrieve an image from storage. The following example retrieves the .NET avatar for the `dotnet` GitHub repository.
+* Injects services for an <xref:System.Net.Http.HttpClient?displayProperty=fullName> and <xref:Microsoft.JSInterop.IJSRuntime?displayProperty=fullName>.
+* Includes an `<img>` tag to display an image.
+* Has a `GetImageStreamAsync` C# method to retrieve a <xref:System.IO.Stream> for an image. A production app may dynamically generate an image based on the specific user or retrieve an image from storage. The following example retrieves the .NET avatar for the `dotnet` GitHub repository.
 * Has a `SetImageAsync` method that's triggered on the button's selection by the user. `SetImageAsync` performs the following steps:
-  * Retrieves the `System.IO.Stream` from `GetImageStreamAsync`.
-  * Wraps the `System.IO.Stream` in a `Microsoft.JSInterop.DotNetStreamReference`, which allows streaming the image data to the client.
+  * Retrieves the <xref:System.IO.Stream> from `GetImageStreamAsync`.
+  * Wraps the <xref:System.IO.Stream> in a <xref:Microsoft.JSInterop.DotNetStreamReference>, which allows streaming the image data to the client.
   * Invokes the `setSource` JavaScript function, which accepts the data on the client.
 
-> **Note:**
-> Server-side apps use a dedicated `System.Net.Http.HttpClient` service to make requests, so no action is required by the developer of a server-side Blazor app to register an `System.Net.Http.HttpClient` service. Client-side apps have a default `System.Net.Http.HttpClient` service registration when the app is created from a Blazor project template. If an `System.Net.Http.HttpClient` service registration isn't present in the `Program` file of a client-side app, provide one by adding `builder.Services.AddHttpClient();`. For more information, see HTTP requests with IHttpClientFactory - ASP.NET Core.
+> [!NOTE]
+> Server-side apps use a dedicated <xref:System.Net.Http.HttpClient> service to make requests, so no action is required by the developer of a server-side Blazor app to register an <xref:System.Net.Http.HttpClient> service. Client-side apps have a default <xref:System.Net.Http.HttpClient> service registration when the app is created from a Blazor project template. If an <xref:System.Net.Http.HttpClient> service registration isn't present in the `Program` file of a client-side app, provide one by adding `builder.Services.AddHttpClient();`. For more information, see [HTTP requests with IHttpClientFactory - ASP.NET Core](../fundamentals/http-requests.md).
 
 `ShowImage2.razor`:
 
-_Code sample not included: ~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/ShowImage2.razor._
-The following `ShowFile` component loads either a text file (`files/quote.txt`) or a PDF file (`files/quote.pdf`) into an `` element.
+:::moniker range=">= aspnetcore-9.0"
 
-> **Warning:**
-> Use of the `` element in the following example is safe and doesn't require sandboxing because content is loaded from the app, which is a trusted source.
+:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/ShowImage2.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
+
+:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/ShowImage2.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
+
+:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/images/ShowImage2.razor":::
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-7.0"
+
+:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Pages/images/ShowImage2.razor":::
+
+:::moniker-end
+
+The following `ShowFile` component loads either a text file (`files/quote.txt`) or a PDF file (`files/quote.pdf`) into an [`<iframe>` element](https://developer.mozilla.org/docs/Web/HTML/Element/iframe).
+
+> [!WARNING]
+> Use of the `<iframe>` element in the following example is safe and doesn't require [sandboxing](https://developer.mozilla.org/docs/Web/HTML/Element/iframe#sandbox) because content is loaded from the app, which is a trusted source.
 >
-> When loading content from an untrusted source or user input, an improperly implemented `` element risks creating security vulnerabilities.
+> When loading content from an untrusted source or user input, an improperly implemented `<iframe>` element risks creating security vulnerabilities.
 
 `ShowFile.razor`:
 
-_Code sample not included: ~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/ShowFile.razor._
-In the preceding example, the `using` statement for the `response` variable doesn't dispose of the `System.Net.Http.HttpResponseMessage` instance until the scope of `ShowFileAsync` ends. The open stream is maintained long enough to transfer the file data to the `setSource` function via JavaScript interop. For general guidance on the importance of disposing of `System.Net.Http.HttpResponseMessage` instances, see Call a web API from an ASP.NET Core Blazor app.
+:::moniker range=">= aspnetcore-9.0"
+
+:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/ShowFile.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
+
+:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/ShowFile.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
+
+:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/images/ShowFile.razor":::
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-7.0"
+
+:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Pages/images/ShowFile.razor":::
+
+:::moniker-end
+
+In the preceding example, the `using` statement for the `response` variable doesn't dispose of the <xref:System.Net.Http.HttpResponseMessage> instance until the scope of `ShowFileAsync` ends. The open stream is maintained long enough to transfer the file data to the `setSource` function via JavaScript interop. For general guidance on the importance of disposing of <xref:System.Net.Http.HttpResponseMessage> instances, see [Call a web API from an ASP.NET Core Blazor app](call-web-api.md#disposal-of-httprequestmessage-httpresponsemessage-and-httpclient).
 
 ## Related content
 
-* ASP.NET Core Blazor file uploads
-* File uploads: Upload image preview
-* ASP.NET Core Blazor file downloads
-* Call .NET methods from JavaScript functions in ASP.NET Core Blazor
-* Call JavaScript functions from .NET methods in ASP.NET Core Blazor
-* Blazor samples GitHub repository (`dotnet/blazor-samples`) (how to download)
+* [ASP.NET Core Blazor file uploads](file-uploads.md)
+* [File uploads: Upload image preview](file-uploads.md#upload-image-preview)
+* [ASP.NET Core Blazor file downloads](file-downloads.md)
+* [Call .NET methods from JavaScript functions in ASP.NET Core Blazor](javascript-interoperability/call-dotnet-from-javascript.md#stream-from-javascript-to-net)
+* [Call JavaScript functions from .NET methods in ASP.NET Core Blazor](javascript-interoperability/call-javascript-from-dotnet.md#stream-from-net-to-javascript)
+* [Blazor samples GitHub repository (`dotnet/blazor-samples`)](https://github.com/dotnet/blazor-samples) ([how to download](fundamentals/index.md#sample-apps))

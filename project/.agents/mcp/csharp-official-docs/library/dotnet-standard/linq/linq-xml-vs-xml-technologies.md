@@ -1,25 +1,23 @@
 ---
-title: "LINQ to XML vs. other XML technologies"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/linq-xml-vs-xml-technologies.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: LINQ to XML vs. other XML technologies
+description: Learn how LINQ to XML compares to XSLT, MSXML, and XmlLite, to make better technology choices.
+ms.date: 07/20/2015
+ms.assetid: 01b8e746-12d3-471d-b811-7539e4547784
 ---
 
 # LINQ to XML vs. other XML technologies
 
-This article compares LINQ to XML to the following XML technologies: `System.Xml.XmlReader`, XSLT, MSXML, and XmlLite. This information can help you decide which technologies to use.
+This article compares LINQ to XML to the following XML technologies: <xref:System.Xml.XmlReader>, XSLT, MSXML, and XmlLite. This information can help you decide which technologies to use.
 
-For a comparison of LINQ to XML to the Document Object Model (DOM), see LINQ to XML vs. DOM.
+For a comparison of LINQ to XML to the Document Object Model (DOM), see [LINQ to XML vs. DOM](linq-xml-vs-dom.md).
 
 ## LINQ to XML vs. XmlReader
 
-`System.Xml.XmlReader` is a fast, forward-only, non-caching parser.
+<xref:System.Xml.XmlReader> is a fast, forward-only, non-caching parser.
 
-LINQ to XML is implemented on top of `System.Xml.XmlReader`, and they're tightly integrated. However, you can also use `System.Xml.XmlReader` directly.
+LINQ to XML is implemented on top of <xref:System.Xml.XmlReader>, and they're tightly integrated. However, you can also use <xref:System.Xml.XmlReader> directly.
 
-For example, suppose you're building a Web service that will parse hundreds of XML documents per second, and the documents have the same structure, meaning that you only have to write one implementation of the code to parse the XML. In this case, you'd probably want to use `System.Xml.XmlReader` directly.
+For example, suppose you're building a Web service that will parse hundreds of XML documents per second, and the documents have the same structure, meaning that you only have to write one implementation of the code to parse the XML. In this case, you'd probably want to use <xref:System.Xml.XmlReader> directly.
 
 In contrast, if you're building a system that parses many smaller XML documents, and each one is different, you'd want to take advantage of the productivity improvements that LINQ to XML provides.
 
@@ -29,9 +27,9 @@ Both LINQ to XML and XSLT provide extensive XML document transformation capabili
 
 XSLT can be a productive system that yields high-performance applications. For example, some large Web companies use XSLT as a way to generate HTML from XML that has been pulled from different kinds of data stores. The managed XSLT engine compiles XSLT to common language runtime (CLR) code, and performs even better in some scenarios than the native XSLT engine.
 
-However, XSLT doesn't take advantage of the C# and Visual Basic <example-value> that many developers have. It requires developers to write code in a different and complex programming language. Using two non-integrated development systems such as C# (or Visual Basic) and XSLT results in software systems that are more difficult to develop and maintain.
+However, XSLT doesn't take advantage of the C# and Visual Basic knowledge that many developers have. It requires developers to write code in a different and complex programming language. Using two non-integrated development systems such as C# (or Visual Basic) and XSLT results in software systems that are more difficult to develop and maintain.
 
-After you've become proficient in using LINQ to XML query expressions, LINQ to XML transformations are a powerful technology that's easy to use. Basically, you form your XML document by using functional construction, pulling in data from various sources, constructing `System.Xml.Linq.XElement` objects dynamically, and assembling the whole into a new XML tree. The transformation can generate a completely new document. Constructing transformations in LINQ to XML is relatively easy and intuitive, and the resulting code is readable. This reduces development and maintenance costs.
+After you've become proficient in using LINQ to XML query expressions, LINQ to XML transformations are a powerful technology that's easy to use. Basically, you form your XML document by using functional construction, pulling in data from various sources, constructing <xref:System.Xml.Linq.XElement> objects dynamically, and assembling the whole into a new XML tree. The transformation can generate a completely new document. Constructing transformations in LINQ to XML is relatively easy and intuitive, and the resulting code is readable. This reduces development and maintenance costs.
 
 LINQ to XML isn't intended to replace XSLT. XSLT is still the tool of choice for complicated and document-centric XML transformations, especially if the structure of the document isn't well defined.
 
@@ -57,4 +55,4 @@ XmlLite isn't integrated with Language-Integrated Query (LINQ). It doesn't yield
 
 ## See also
 
-- LINQ to XML overview
+- [LINQ to XML overview](linq-xml-overview.md)

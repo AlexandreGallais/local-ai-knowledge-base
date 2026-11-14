@@ -1,13 +1,11 @@
 ---
-title: "Debug Your Configuration"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/use/configure/debug.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: Debug Your Configuration
+eleventyNavigation:
+    key: debug config
+    parent: configure
+    title: Debug Your Configuration
+    order: 8
 ---
-
-# Debug Your Configuration
 
 {%- from 'components/npx_tabs.macro.html' import npx_tabs %}
 
@@ -17,7 +15,7 @@ ESLint creates a configuration for each file that is linted based on your config
 
 **Use When:** You aren't sure if the correct configuration file is being read. This may happen if you have multiple configuration files in the same project.
 
-**What To Do:** Run ESLint with the `--debug` command line flag and pass the file to check, like this:
+**What To Do:** Run ESLint with the [`--debug`](../command-line-interface#--debug) command line flag and pass the file to check, like this:
 
 {{ npx_tabs({
     package: "eslint",
@@ -37,7 +35,7 @@ eslint:eslint Config file URL is file:///C:/Users/nzakas/projects/eslint/eslint/
 
 **Use When:** You aren't sure why linting isn't producing the expected results, either because it seems like your rule configuration isn't being honored or the wrong language options are being used.
 
-**What To Do:** Run ESLint with the `--print-config` command line flag and pass the file to check, like this:
+**What To Do:** Run ESLint with the [`--print-config`](../command-line-interface#--print-config) command line flag and pass the file to check, like this:
 
 {{ npx_tabs({
     package: "eslint",
@@ -63,20 +61,23 @@ This outputs a JSON representation of the file's calculated config, such as:
 }
 ```
 
-**Tip:**
+::: tip
 You won't see any entries for `files`, `ignores`, or `name`, because those are only used in calculating the final configuration and so do not appear in the result. You will see any default configuration applied by ESLint itself.
+:::
 
 ## Use the Config Inspector
 
 **Use When:** You aren't sure if certain configuration objects in your configuration file match a given filename.
 
-**What To Do:** Run ESLint with the `--inspect-config` command line flag and pass the file to check, like this:
+**What To Do:** Run ESLint with the [`--inspect-config`](../command-line-interface#--inspect-config) command line flag and pass the file to check, like this:
 
 {{ npx_tabs({
     package: "eslint",
     args: ["--inspect-config"]
 }) }}
 
-This initiates the config inspector by installing and starting `@eslint/config-inspector`. You can then type in the filename in question to see which configuration objects will apply.
+This initiates the config inspector by installing and starting [`@eslint/config-inspector`](https://github.com/eslint/config-inspector). You can then type in the filename in question to see which configuration objects will apply.
+
+![Config inspector screenshot showing which config objects match index.js](../../assets/images/configure/config-inspector.png)
 
 The config inspector also shows you when rules are deprecated, how many available rules you're using, and more.

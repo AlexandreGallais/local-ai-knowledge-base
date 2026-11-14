@@ -1,12 +1,3 @@
----
-title: "EncodedKeySpec class (java.security.spec)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/spec/EncodedKeySpec.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # EncodedKeySpec class (java.security.spec)
 
 ```java
@@ -15,17 +6,16 @@ public abstract class EncodedKeySpec implements KeySpec
 
 This class represents a public or private key in encoded format.
 
-**See also:** java.security.Key
+@author Jan Luehe
 
-**See also:** java.security.KeyFactory
 
-**See also:** KeySpec
+@see java.security.Key
+@see java.security.KeyFactory
+@see KeySpec
+@see X509EncodedKeySpec
+@see PKCS8EncodedKeySpec
 
-**See also:** X509EncodedKeySpec
-
-**See also:** PKCS8EncodedKeySpec
-
-**Since:** 1.2
+@since 1.2
 
 ## EncodedKeySpec.EncodedKeySpec(byte[])
 
@@ -33,15 +23,12 @@ This class represents a public or private key in encoded format.
 public EncodedKeySpec(byte[] encodedKey)
 ```
 
-Creates a new `EncodedKeySpec` with the given encoded key.
+Creates a new {@code EncodedKeySpec} with the given encoded key.
 
-Parameters:
-
-- `encodedKey`: the encoded key. The contents of the array are copied to protect against subsequent modification.
-
-Throws:
-
-- `NullPointerException`: if `encodedKey` is null.
+@param encodedKey the encoded key. The contents of the
+array are copied to protect against subsequent modification.
+@throws NullPointerException if {@code encodedKey}
+is null.
 
 ## EncodedKeySpec.EncodedKeySpec(byte[], String)
 
@@ -49,22 +36,25 @@ Throws:
 protected EncodedKeySpec(byte[] encodedKey, String algorithm)
 ```
 
-Creates a new `EncodedKeySpec` with the given encoded key.
+Creates a new {@code EncodedKeySpec} with the given encoded key.
 This constructor is useful when subsequent callers of the
-`EncodedKeySpec` object might not know the algorithm
+{@code EncodedKeySpec} object might not know the algorithm
 of the key.
 
-Parameters:
-
-- `encodedKey`: the encoded key. The contents of the array are copied to protect against subsequent modification.
-- `algorithm`: the algorithm name of the encoded key. See the AsymmetricKey <example-value> section in the  Java Security Standard Algorithm Names Specification for information about standard asymmetric key <example-value> names.
-
-**Since:** 9
-
-Throws:
-
-- `NullPointerException`: if `encodedKey` or `algorithm` is null.
-- `IllegalArgumentException`: if `algorithm` is the empty string `""`
+@param encodedKey the encoded key. The contents of the
+array are copied to protect against subsequent modification.
+@param algorithm the algorithm name of the encoded key.
+See the AsymmetricKey Algorithms section in the
+<a href="{@docRoot}/../specs/security/standard-names.html#asymmetrickey-algorithms">
+Java Security Standard Algorithm Names Specification</a>
+for information about standard asymmetric key algorithm names.
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@throws NullPointerException if {@code encodedKey}
+or {@code algorithm} is null.
+@throws IllegalArgumentException if {@code algorithm} is
+the empty string {@code ""}
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@since 9
 
 ## EncodedKeySpec.getAlgorithm()
 
@@ -74,9 +64,8 @@ public String getAlgorithm()
 
 Returns the name of the algorithm of the encoded key.
 
-**Returns:** the name of the algorithm, or null if not specified
-
-**Since:** 9
+@return the name of the algorithm, or null if not specified
+@since 9
 
 ## EncodedKeySpec.getEncoded()
 
@@ -86,7 +75,7 @@ public byte[] getEncoded()
 
 Returns the encoded key.
 
-**Returns:** the encoded key. Returns a new array each time
+@return the encoded key. Returns a new array each time
 this method is called.
 
 ## EncodedKeySpec.getFormat()
@@ -98,13 +87,13 @@ public abstract String getFormat()
 Returns the name of the encoding format associated with this
 key specification.
 
-If the opaque representation of a key
-(see Key) can be transformed
-(see KeyFactory)
-into this key <example-value> (or a subclass of it),
-`getFormat` called
-on the opaque key <example-value> the same value as the
-`getFormat` method
+<p>If the opaque representation of a key
+(see {@link java.security.Key Key}) can be transformed
+(see {@link java.security.KeyFactory KeyFactory})
+into this key specification (or a subclass of it),
+{@code getFormat} called
+on the opaque key returns the same value as the
+{@code getFormat} method
 of this key specification.
 
-**Returns:** a string representation of the encoding format.
+@return a string representation of the encoding format.

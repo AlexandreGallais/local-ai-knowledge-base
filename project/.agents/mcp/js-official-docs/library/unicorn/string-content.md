@@ -1,19 +1,13 @@
----
-title: "string-content"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/string-content.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # string-content
 
 📝 Enforce better string content.
 
 🚫 Disabled by default.
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Enforce certain things about the contents of strings. For example, you can enforce using `’` instead of `'` to avoid escaping. Or you could block some words. The possibilities are endless.
 
@@ -31,7 +25,7 @@ A property access or call on one of these tags is ignored too, like ``styled.div
 
 In template literals, patterns match the raw text, and a match that overlaps an escape sequence, such as `\n`, is ignored.
 
-**This rule has no effect by default. You need to set `patterns` to check string content.**
+**This rule has no effect by default. You need to set [`patterns`](#patterns) to check string content.**
 
 SOML string values, including literal and block strings, are supported; keys are left unchanged. Replacements use escaped strings. Fixes and suggestions are omitted when a replacement contains a carriage return or lone surrogate, which SOML cannot represent.
 
@@ -49,9 +43,9 @@ const foo = 'Someone’s coming!';
 
 ## TOML
 
-This rule also supports string values in TOML files when linting with `eslint-plugin-toml`. Patterns match decoded content in basic, literal, and multiline strings. Keys and comments are not checked.
+This rule also supports string values in TOML files when linting with [`eslint-plugin-toml`](https://github.com/ota-meshi/eslint-plugin-toml). Patterns match decoded content in basic, literal, and multiline strings. Keys and comments are not checked.
 
-Fixes and suggestions write double-quoted basic <example-value> with TOML-compatible escaping, including when the original is a literal or multiline string. Replacements containing unpaired Unicode surrogates are reported without a fix or suggestion because TOML cannot represent them.
+Fixes and suggestions write double-quoted basic strings with TOML-compatible escaping, including when the original is a literal or multiline string. Replacements containing unpaired Unicode surrogates are reported without a fix or suggestion because TOML cannot represent them.
 
 ```js
 'unicorn/string-content': ['error', {patterns: {unicorn: '🦄'}}]
@@ -139,7 +133,7 @@ For example, if you want to enforce `...` → `…`:
 Type: `string[]`
 Default: `[]`
 
-Only check string nodes matching one of these ESLint selectors. When empty, all supported string nodes are checked.
+Only check string nodes matching one of these [ESLint selectors](https://eslint.org/docs/latest/extend/selectors). When empty, all supported string nodes are checked.
 
 The selector must match the string node itself: `Literal` for JavaScript string literals, `TemplateElement` for template literal content, `TOMLValue[kind="string"]` for TOML string values, `YAMLScalar` for YAML scalars, `String` for JSON, SOML, or CSS strings, or `Url` for CSS URLs.
 

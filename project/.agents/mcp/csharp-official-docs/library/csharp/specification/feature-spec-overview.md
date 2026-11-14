@@ -1,15 +1,11 @@
 ---
 title: "Feature specifications"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/specification/feature-spec-overview.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Understand the relationships among the ECMA C# standard and the feature specifications for newer language features implemented in roslyn."
+ms.date: 04/08/2026
 ---
-
 # Feature specifications
 
-Because the C# standard specification fell behind the latest C# implementation, this section contains the Microsoft specifications for those newer features that aren't yet incorporated into the standard. You can read these specifications to get information on newer features.
+Because the [C# standard specification](overview.md) fell behind the latest C# implementation, this section contains the Microsoft specifications for those newer features that aren't yet incorporated into the standard. You can read these specifications to get information on newer features.
 
 The feature specifications began as proposals for the design. They include proposed changes to the standard. The C# language design team and compiler team produce these feature specifications. The purpose of the proposals is to guide the design and implementation of the feature. They might include proposed features that aren't yet implemented. The actual implementation might have modified behavior. The language design meeting (LDM) notes capture those changes. The LDM notes are the minutes of the language design meetings. In most cases, the pertinent LDM notes are linked from the feature specifications.
 
@@ -17,4 +13,4 @@ As the committee works on newer versions, the standard replaces the feature spec
 
 ## See also
 
-- C# standard specification
+- [C# standard specification](overview.md)

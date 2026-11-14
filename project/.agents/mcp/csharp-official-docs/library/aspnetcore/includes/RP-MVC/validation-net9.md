@@ -1,13 +1,4 @@
----
-title: "validation-net9"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/RP-MVC/validation-net9.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# validation-net9
+<!-- USED in RP and MVC tutorial for .NET 9 -->
 
 ## Add validation rules to the movie model
 
@@ -15,41 +6,7 @@ The DataAnnotations namespace provides a set of built-in validation attributes t
 
 Update the `Movie` class to take advantage of the built-in validation attributes `Required`, `StringLength`, `RegularExpression`, `Range` and the `DataType` formatting attribute.
 
-```csharp
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace MvcMovie.Models;
-
-public class Movie
-{
-    public int Id { get; set; }
-
-    [StringLength(60, MinimumLength = 3)]
-    [Required]
-    public string? Title { get; set; }
-
-    [Display(Name = "Release Date")]
-    [DataType(DataType.Date)]
-    public DateTime ReleaseDate { get; set; }
-
-    [Range(1, 100)]
-    [DataType(DataType.Currency)]
-    [Column(TypeName = "decimal(18, 2)")]
-    public decimal Price { get; set; }    
-
-    [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$")]
-    [Required]
-    [StringLength(30)]
-    public string? Genre { get; set; }
-
-    [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
-    [StringLength(5)]
-    [Required]
-    public string? Rating { get; set; }
-}
-```
+[!code-csharp[](~/tutorials/first-mvc-app/start-mvc/samples/MvcMovie90/Models/Movie.cs?name=snippet_Final&highlight=11-12,19-20,24-26,29-31)]
 
 The validation attributes specify behavior that you want to enforce on the model properties they're applied to:
 

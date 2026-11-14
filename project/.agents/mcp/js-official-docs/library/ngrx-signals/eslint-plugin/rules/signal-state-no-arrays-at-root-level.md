@@ -1,12 +1,3 @@
----
-title: "signal-state-no-arrays-at-root-level"
-tool: "ngrx-signals"
-version: "22.0"
-source: "https://github.com/ngrx/platform/blob/a4995391ef631f1bd60d539f436a1aa5c23c4fe5/projects/www/src/app/pages/guide/eslint-plugin/rules/signal-state-no-arrays-at-root-level.md"
-commit: "a4995391ef631f1bd60d539f436a1aa5c23c4fe5"
-license: "MIT"
----
-
 # signal-state-no-arrays-at-root-level
 
 signalState should accept a record or dictionary as an input argument.
@@ -16,6 +7,9 @@ signalState should accept a record or dictionary as an input argument.
 - **Suggestion**: No
 - **Requires type checking**: Yes
 - **Configurable**: No
+
+<!-- Everything above this generated, do not edit -->
+<!-- MANUAL-DOC:START -->
 
 ## Rule Details
 

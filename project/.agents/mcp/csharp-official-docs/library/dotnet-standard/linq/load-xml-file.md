@@ -1,21 +1,22 @@
 ---
-title: "How to load XML from a file - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/load-xml-file.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to load XML from a file - LINQ to XML
+description: You can use the XElement.Load method in C# and Visual Basic to load an XML document from a file.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to load XML from a file (LINQ to XML)
 
-This article shows how to load XML from a file in C# and Visual Basic using the `System.Xml.Linq.XElement.Load*` method.
+This article shows how to load XML from a file in C# and Visual Basic using the <xref:System.Xml.Linq.XElement.Load*?displayProperty=nameWithType> method.
 
 ## Example: Load XML document from a file
 
-The following example shows how to load an XML document from a file by providing `System.Xml.Linq.XElement.Load*` with the URI that references the file. The example loads books.xml and outputs the XML tree to the console.
+The following example shows how to load an XML document from a file by providing <xref:System.Xml.Linq.XElement.Load*?displayProperty=nameWithType> with the URI that references the file. The example loads books.xml and outputs the XML tree to the console.
 
-The contents of books.xml are shown in Sample XML file: Books.
+The contents of books.xml are shown in [Sample XML file: Books](sample-xml-file-books.md).
 
 ```csharp
 XElement booksFromFile = XElement.Load(@"books.xml");

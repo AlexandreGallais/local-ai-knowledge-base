@@ -1,20 +1,18 @@
 ---
-title: "Owned Entity Types - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/modeling/owned-entities.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Owned Entity Types - EF Core
+description: How to configure owned entity types or aggregates when using Entity Framework Core
+author: AndriySvyryd
+ms.date: 11/06/2019
+uid: core/modeling/owned-entities
 ---
-
 # Owned Entity Types
 
 EF Core allows you to model entity types that can only ever appear on navigation properties of other entity types. These are called _owned entity types_. The entity containing an owned entity type is its _owner_.
 
-Owned entities are essentially a part of the owner and cannot exist without it, they are conceptually similar to aggregates. This means that the owned entity is by definition on the dependent side of the relationship with the owner.
+Owned entities are essentially a part of the owner and cannot exist without it, they are conceptually similar to [aggregates](https://martinfowler.com/bliki/DDD_Aggregate.html). This means that the owned entity is by definition on the dependent side of the relationship with the owner.
 
-> **Tip:**
-> If you are modeling a value object - an object without its own identity, such as an `Address` or `Coordinate` - consider using a complex type instead of an owned entity type. Unlike owned types, complex types have value semantics and no hidden key, which avoids a number of pitfalls; see Complex types vs. owned entity types for a comparison.
+> [!TIP]
+> If you are modeling a [value object](https://martinfowler.com/bliki/ValueObject.html) - an object without its own identity, such as an `Address` or `Coordinate` - consider using a [complex type](xref:core/modeling/complex-types) instead of an owned entity type. Unlike owned types, complex types have value semantics and no hidden key, which avoids a number of pitfalls; see [Complex types vs. owned entity types](xref:core/modeling/complex-types#complex-types-vs-owned-entity-types) for a comparison.
 
 ## Configuring types as owned
 
@@ -24,47 +22,32 @@ In this example, `StreetAddress` is a type with no identity property. It is used
 
 We can use the `OwnedAttribute` to treat it as an owned entity when referenced from another entity type:
 
-```csharp
-[Owned]
-public class StreetAddress
-{
-    public string Street { get; set; }
-    public string City { get; set; }
-}
-```
+[!code-csharp[StreetAddress](../../../samples/core/Modeling/OwnedEntities/StreetAddress.cs?name=StreetAddress)]
 
-```csharp
-public class Order
-{
-    public int Id { get; set; }
-    public StreetAddress ShippingAddress { get; set; }
-}
-```
+[!code-csharp[Order](../../../samples/core/Modeling/OwnedEntities/Order.cs?name=Order)]
 
 It is also possible to use the `OwnsOne` method in `OnModelCreating` to specify that the `ShippingAddress` property is an Owned Entity of the `Order` entity type and to configure additional facets if needed.
 
-```csharp
-modelBuilder.Entity<Order>().OwnsOne(p => p.ShippingAddress);
-```
+[!code-csharp[OwnsOne](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsOne)]
 
 If the `ShippingAddress` property is private in the `Order` type, you can use the string version of the `OwnsOne` method:
 
-```csharp
-modelBuilder.Entity<Order>().OwnsOne(typeof(StreetAddress), "ShippingAddress");
-```
+[!code-csharp[OwnsOneString](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsOneString)]
 
 The model above is mapped to the following database schema:
 
-See the full sample project for more context.
+![Screenshot of the database model for entity containing owned reference](_static/owned-entities-ownsone.png)
 
-> **Tip:**
-> The owned entity type can be marked as required, see Required one-to-one dependents for more information.
+See the [full sample project](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/OwnedEntities) for more context.
+
+> [!TIP]
+> The owned entity type can be marked as required, see [Required one-to-one dependents](xref:core/modeling/relationships/navigations#required-navigations) for more information.
 
 ## Implicit keys
 
-Owned types configured with `OwnsOne` or discovered through a reference navigation always have a one-to-one relationship with the owner, therefore they don't need their own key <example-value> as the foreign key <example-value> are unique. In the previous example, the `StreetAddress` type does not need to define a key property.
+Owned types configured with `OwnsOne` or discovered through a reference navigation always have a one-to-one relationship with the owner, therefore they don't need their own key values as the foreign key values are unique. In the previous example, the `StreetAddress` type does not need to define a key property.
 
-In order to understand how EF Core tracks these objects, it is useful to know that a primary key is created as a shadow property for the owned type. The value of the key of an instance of the owned type will be the same as the value of the key of the owner instance.
+In order to understand how EF Core tracks these objects, it is useful to know that a primary key is created as a [shadow property](xref:core/modeling/shadow-properties) for the owned type. The value of the key of an instance of the owned type will be the same as the value of the key of the owner instance.
 
 ## Collections of owned types
 
@@ -79,50 +62,30 @@ The two most straightforward solutions to this are:
 
 In this example we'll use the `Distributor` class.
 
-```csharp
-public class Distributor
-{
-    public int Id { get; set; }
-    public ICollection<StreetAddress> ShippingCenters { get; set; }
-}
-```
+[!code-csharp[Distributor](../../../samples/core/Modeling/OwnedEntities/Distributor.cs?name=Distributor)]
 
 By default the primary key used for the owned type referenced through the `ShippingCenters` navigation property will be `("DistributorId", "Id")` where `"DistributorId"` is the FK and `"Id"` is a unique `int` value.
 
 To configure a different primary key call `HasKey`.
 
-```csharp
-modelBuilder.Entity<Distributor>().OwnsMany(
-    p => p.ShippingCenters, a =>
-    {
-        a.WithOwner().HasForeignKey("OwnerId");
-        a.Property<int>("Id");
-        a.HasKey("Id");
-    });
-```
+[!code-csharp[OwnsMany](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsMany)]
 
 The model above is mapped to the following database schema:
 
+![Screenshot of the database model for entity containing owned collection](_static/owned-entities-ownsmany.png)
+
 ## Mapping owned types with table splitting
 
-When using relational databases, by default reference owned types are mapped to the same table as the owner. This requires splitting the table in two: some columns will be used to store the data of the owner, and some columns will be used to store data of the owned entity. This is a common feature known as table splitting.
+When using relational databases, by default reference owned types are mapped to the same table as the owner. This requires splitting the table in two: some columns will be used to store the data of the owner, and some columns will be used to store data of the owned entity. This is a common feature known as [table splitting](xref:core/modeling/table-splitting).
 
 By default, EF Core will name the database columns for the properties of the owned entity type following the pattern _Navigation_OwnedEntityProperty_. Therefore the `StreetAddress` properties will appear in the 'Orders' table with the names 'ShippingAddress_Street' and 'ShippingAddress_City'.
 
 You can use the `HasColumnName` method to rename those columns.
 
-```csharp
-modelBuilder.Entity<Order>().OwnsOne(
-    o => o.ShippingAddress,
-    sa =>
-    {
-        sa.Property(p => p.Street).HasColumnName("ShipsToStreet");
-        sa.Property(p => p.City).HasColumnName("ShipsToCity");
-    });
-```
+[!code-csharp[ColumnNames](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=ColumnNames)]
 
-> **Note:**
-> Most of the normal entity type configuration methods like Ignore can be called in the same way.
+> [!NOTE]
+> Most of the normal entity type configuration methods like [Ignore](/dotnet/api/microsoft.entityframeworkcore.metadata.builders.ownednavigationbuilder.ignore) can be called in the same way.
 
 ## Sharing the same .NET type among multiple owned types
 
@@ -132,14 +95,7 @@ In those cases, the property pointing from the owner to the owned entity becomes
 
 For example, in the following class `ShippingAddress` and `BillingAddress` are both of the same .NET type, `StreetAddress`.
 
-```csharp
-public class OrderDetails
-{
-    public DetailedOrder Order { get; set; }
-    public StreetAddress BillingAddress { get; set; }
-    public StreetAddress ShippingAddress { get; set; }
-}
-```
+[!code-csharp[OrderDetails](../../../samples/core/Modeling/OwnedEntities/OrderDetails.cs?name=OrderDetails)]
 
 In order to understand how EF Core will distinguish tracked instances of these objects, it may be useful to think that the defining navigation has become part of the key of the instance alongside the value of the key of the owner and the .NET type of the owned type.
 
@@ -147,66 +103,37 @@ In order to understand how EF Core will distinguish tracked instances of these o
 
 In this example `OrderDetails` owns `BillingAddress` and `ShippingAddress`, which are both `StreetAddress` types. Then `OrderDetails` is owned by the `DetailedOrder` type.
 
-```csharp
-public class DetailedOrder
-{
-    public int Id { get; set; }
-    public OrderDetails OrderDetails { get; set; }
-    public OrderStatus Status { get; set; }
-}
-```
+[!code-csharp[DetailedOrder](../../../samples/core/Modeling/OwnedEntities/DetailedOrder.cs?name=DetailedOrder)]
 
-```csharp
-public enum OrderStatus
-{
-    Pending,
-    Shipped
-}
-```
+[!code-csharp[OrderStatus](../../../samples/core/Modeling/OwnedEntities/OrderStatus.cs?name=OrderStatus)]
 
 Each navigation to an owned type defines a separate entity type with completely independent configuration.
 
 In addition to nested owned types, an owned type can reference a regular entity which can be either the owner or a different entity as long as the owned entity is on the dependent side. This capability sets owned entity types apart from complex types in EF6.
 
-```csharp
-public class OrderDetails
-{
-    public DetailedOrder Order { get; set; }
-    public StreetAddress BillingAddress { get; set; }
-    public StreetAddress ShippingAddress { get; set; }
-}
-```
+[!code-csharp[OrderDetails](../../../samples/core/Modeling/OwnedEntities/OrderDetails.cs?name=OrderDetails)]
 
 ## Configuring owned types
 
 It is possible to chain the `OwnsOne` method in a fluent call to configure this model:
 
-```csharp
-modelBuilder.Entity<DetailedOrder>().OwnsOne(
-    p => p.OrderDetails, od =>
-    {
-        od.WithOwner(d => d.Order);
-        od.Navigation(d => d.Order).UsePropertyAccessMode(PropertyAccessMode.Property);
-        od.OwnsOne(c => c.BillingAddress);
-        od.OwnsOne(c => c.ShippingAddress);
-    });
-```
+[!code-csharp[OwnsOneNested](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsOneNested)]
 
 Notice the `WithOwner` call used to define the navigation property pointing back at the owner. To define a navigation to the owner entity type that's not part of the ownership relationship `WithOwner()` should be called without any arguments.
 
 It is also possible to achieve this result using `OwnedAttribute` on both `OrderDetails` and `StreetAddress`.
 
-In addition, notice the `Navigation` call. Navigation properties to owned types can be further configured as for non-owned navigation properties.
+In addition, notice the `Navigation` call. Navigation properties to owned types can be further configured [as for non-owned navigation properties](xref:core/modeling/relationships/navigations#required-navigations).
 
 The model above is mapped to the following database schema:
+
+![Screenshot of the database model for entity containing nested owned references](_static/owned-entities-nested.png)
 
 ## Storing owned types in separate tables
 
 Also unlike EF6 complex types, owned types can be stored in a separate table from the owner. In order to override the convention that maps an owned type to the same table as the owner, you can simply call `ToTable` and provide a different table name. The following example will map `OrderDetails` and its two addresses to a separate table from `DetailedOrder`:
 
-```csharp
-modelBuilder.Entity<DetailedOrder>().OwnsOne(p => p.OrderDetails, od => { od.ToTable("OrderDetails"); });
-```
+[!code-csharp[OwnsOneTable](../../../samples/core/Modeling/OwnedEntities/OwnedEntityContext.cs?name=OwnsOneTable)]
 
 It is also possible to use the `TableAttribute` to accomplish this, but note that this would fail if there are multiple navigations to the owned type since in that case multiple entity types would be mapped to the same table.
 
@@ -214,10 +141,7 @@ It is also possible to use the `TableAttribute` to accomplish this, but note tha
 
 When querying the owner the owned types will be included by default. It is not necessary to use the `Include` method, even if the owned types are stored in a separate table. Based on the model described before, the following query will get `Order`, `OrderDetails` and the two owned `StreetAddresses` from the database:
 
-```csharp
-var order = await context.DetailedOrders.FirstAsync(o => o.Status == OrderStatus.Pending);
-Console.WriteLine($"First pending order will ship to: {order.OrderDetails.ShippingAddress.City}");
-```
+[!code-csharp[DetailedOrderQuery](../../../samples/core/Modeling/OwnedEntities/Program.cs?name=DetailedOrderQuery)]
 
 ## Limitations
 

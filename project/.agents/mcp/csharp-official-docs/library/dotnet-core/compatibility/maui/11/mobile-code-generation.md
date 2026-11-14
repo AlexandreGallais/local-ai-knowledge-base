@@ -1,10 +1,9 @@
 ---
 title: "Breaking change - Code generation on mobile changes from Mono to CoreCLR"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/maui/11/mobile-code-generation.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where code generation on mobile changes from Mono to CoreCLR."
+ms.date: 10/21/2026
+ai-usage: ai-generated
+ms.custom: https://github.com/dotnet/docs/issues/56478
 ---
 
 # Code generation on mobile changes from Mono to CoreCLR
@@ -45,13 +44,13 @@ Apple Release builds precompile the entire app with R2R and can use the
 interpreter at run time for dynamic behavior. Debug builds use less R2R, so most
 of the app runs with the interpreter.
 
-NativeAOT
+[NativeAOT](/dotnet/maui/deployment/nativeaot?view=net-maui-11.0)
 is another code generation option on mobile platforms. It is different from
 both Mono AOT and CoreCLR R2R. Android NativeAOT is experimental in .NET 11.
 
 ## Type of breaking change
 
-This change can affect source compatibility and behavior.
+This change can affect [source compatibility](../../categories.md#source-compatibility) and [behavior](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -65,7 +64,7 @@ control CoreCLR R2R.
 - Use `MauiEnableFullReadyToRun` only after you measure the app.
 - Measure startup time, speed, memory use, and app size.
 - If you are considering NativeAOT, review the
-  .NET MAUI Native AOT deployment guidance
+  [.NET MAUI Native AOT deployment guidance](/dotnet/maui/deployment/nativeaot?view=net-maui-11.0)
   because it is a separate deployment model with different restrictions.
   Treat Android NativeAOT as experimental in .NET 11.
 
@@ -89,4 +88,4 @@ These settings configure Mono AOT compilation, LLVM, interpreter selection,
 AOT inputs, or generated marshal methods. They don't configure the CoreCLR
 ReadyToRun pipeline. For the detailed migration and build-diagnostic behavior,
 see
-Mono project properties no longer configure mobile apps.
+[Mono project properties no longer configure mobile apps](https://github.com/dotnet/docs/issues/56477).

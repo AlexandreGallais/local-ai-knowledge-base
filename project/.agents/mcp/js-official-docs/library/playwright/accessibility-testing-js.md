@@ -1,13 +1,7 @@
 ---
+id: accessibility-testing
 title: "Accessibility testing"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/accessibility-testing-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# Accessibility testing
 
 ## Introduction
 
@@ -18,18 +12,18 @@ A few examples of problems this can catch include:
 - UI controls and form elements without labels that a screen reader could identify
 - Interactive elements with duplicate IDs which can confuse assistive technologies
 
-The following examples rely on the `@axe-core/playwright` package which adds support for running the axe accessibility testing engine as part of your Playwright tests.
+The following examples rely on the [`@axe-core/playwright`](https://npmjs.org/@axe-core/playwright) package which adds support for running the [axe accessibility testing engine](https://www.deque.com/axe/) as part of your Playwright tests.
 
 :::note[Disclaimer]
 Automated accessibility tests can detect some common accessibility problems such as missing or invalid properties. But many accessibility problems can only be discovered through manual testing. We recommend using a combination of automated testing, manual accessibility assessments, and inclusive user testing.
 
-For manual assessments, we recommend Accessibility Insights for Web, a free and open source dev tool that walks you through assessing a website for WCAG 2.1 AA coverage.
+For manual assessments, we recommend [Accessibility Insights for Web](https://accessibilityinsights.io/docs/web/overview/?referrer=playwright-accessibility-testing-js), a free and open source dev tool that walks you through assessing a website for [WCAG 2.1 AA](https://www.w3.org/WAI/WCAG21/quickref/?currentsidebar=%23col_customize&levels=aaa) coverage.
 :::
 ## Example accessibility tests
 
 Accessibility tests work just like any other Playwright test. You can either create separate test cases for them, or integrate accessibility scans and assertions into your existing test cases.
 
-The following examples demonstrate a few basic <example-value> testing scenarios.
+The following examples demonstrate a few basic accessibility testing scenarios.
 
 ### Scanning an entire page
 
@@ -38,9 +32,9 @@ This example demonstrates how to test an entire page for automatically detectabl
 1. Uses normal Playwright Test syntax to define a test case
 1. Uses normal Playwright syntax to navigate to the page under test
 1. Awaits `AxeBuilder.analyze()` to run the accessibility scan against the page
-1. Uses normal Playwright Test assertions to verify that there are no violations in the returned scan results
+1. Uses normal Playwright Test [assertions](./test-assertions) to verify that there are no violations in the returned scan results
 
-```js
+```js tab=js-ts
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright'; // 1
 
@@ -55,7 +49,7 @@ test.describe('homepage', () => { // 2
 });
 ```
 
-```js
+```js tab=js-js
 const { test, expect } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default; // 1
 
@@ -74,9 +68,9 @@ test.describe('homepage', () => { // 2
 
 `@axe-core/playwright` supports many configuration options for axe. You can specify these options by using a Builder pattern with the `AxeBuilder` class.
 
-For example, you can use `AxeBuilder.include()` to constrain an accessibility scan to only run against one specific part of a page.
+For example, you can use [`AxeBuilder.include()`](https://github.com/dequelabs/axe-core-npm/blob/develop/packages/playwright/README.md#axebuilderincludeselector-string--string) to constrain an accessibility scan to only run against one specific part of a page.
 
-`AxeBuilder.analyze()` will scan the page *in its current state* when you call it. To scan parts of a page that are revealed based on UI interactions, use Locators to interact with the page before invoking `analyze()`:
+`AxeBuilder.analyze()` will scan the page *in its current state* when you call it. To scan parts of a page that are revealed based on UI interactions, use [Locators](./locators.md) to interact with the page before invoking `analyze()`:
 
 ```js
 test('navigation menu should not have automatically detectable accessibility violations', async ({
@@ -101,9 +95,9 @@ test('navigation menu should not have automatically detectable accessibility vio
 
 ### Scanning for WCAG violations
 
-By default, axe checks against a wide variety of accessibility rules. Some of these rules correspond to specific success criteria from the Web Content Accessibility Guidelines (WCAG), and others are "best practice" rules that are not specifically required by any WCAG criterion.
+By default, axe checks against a wide variety of accessibility rules. Some of these rules correspond to specific success criteria from the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/TR/WCAG21/), and others are "best practice" rules that are not specifically required by any WCAG criterion.
 
-You can constrain an accessibility scan to only run those rules which are "tagged" as corresponding to specific WCAG success criteria by using `AxeBuilder.withTags()`. For example, Accessibility Insights for Web's Automated Checks only include axe rules that test for violations of WCAG A and AA success criteria; to match that behavior, you would use the tags `wcag2a`, `wcag2aa`, `wcag21a`, and `wcag21aa`.
+You can constrain an accessibility scan to only run those rules which are "tagged" as corresponding to specific WCAG success criteria by using [`AxeBuilder.withTags()`](https://github.com/dequelabs/axe-core-npm/blob/develop/packages/playwright/README.md#axebuilderwithtagstags-stringarray). For example, [Accessibility Insights for Web's Automated Checks](https://accessibilityinsights.io/docs/web/getstarted/fastpass/?referrer=playwright-accessibility-testing-js) only include axe rules that test for violations of WCAG A and AA success criteria; to match that behavior, you would use the tags `wcag2a`, `wcag2aa`, `wcag21a`, and `wcag21aa`.
 
 Note that automated testing cannot detect all types of WCAG violations.
 
@@ -119,7 +113,7 @@ test('should not have any automatically detectable WCAG A or AA violations', asy
 });
 ```
 
-You can find a complete listing of the rule tags axe-core supports in the "Axe-core Tags" section of the axe API documentation.
+You can find a complete listing of the rule tags axe-core supports in [the "Axe-core Tags" section of the axe API documentation](https://www.deque.com/axe/core-documentation/api-documentation/#axecore-tags).
 
 ## Handling known issues
 
@@ -127,7 +121,7 @@ A common question when adding accessibility tests to an application is "how do I
 
 ### Excluding individual elements from a scan
 
-If your application contains a few specific elements with known issues, you can use `AxeBuilder.exclude()` to exclude them from being scanned until you're able to fix the issues.
+If your application contains a few specific elements with known issues, you can use [`AxeBuilder.exclude()`](https://github.com/dequelabs/axe-core-npm/blob/develop/packages/playwright/README.md#axebuilderexcludeselector-string--string) to exclude them from being scanned until you're able to fix the issues.
 
 This is usually the simplest option, but it has some important downsides:
 * `exclude()` will exclude the specified elements *and all of their descendants*. Avoid using it with components that contain many children.
@@ -149,13 +143,13 @@ test('should not have any accessibility violations outside of elements with know
 });
 ```
 
-If the element in question is used repeatedly in many pages, consider using a test fixture to reuse the same `AxeBuilder` configuration across multiple tests.
+If the element in question is used repeatedly in many pages, consider [using a test fixture](#using-a-test-fixture-for-common-axe-configuration) to reuse the same `AxeBuilder` configuration across multiple tests.
 
 ### Disabling individual scan rules
 
-If your application contains many different preexisting violations of a specific rule, you can use `AxeBuilder.disableRules()` to temporarily disable individual rules until you're able to fix the issues.
+If your application contains many different preexisting violations of a specific rule, you can use [`AxeBuilder.disableRules()`](https://github.com/dequelabs/axe-core-npm/blob/develop/packages/playwright/README.md#axebuilderdisablerulesrules-stringarray) to temporarily disable individual rules until you're able to fix the issues.
 
-You can find the rule IDs to pass to `disableRules()` in the `id` property of the violations you want to suppress. A complete list of axe's rules can be found in `axe-core`'s documentation.
+You can find the rule IDs to pass to `disableRules()` in the `id` property of the violations you want to suppress. A [complete list of axe's rules](https://github.com/dequelabs/axe-core/blob/master/doc/rule-descriptions.md) can be found in `axe-core`'s documentation.
 
 ```js
 test('should not have any accessibility violations outside of rules with known issues', async ({
@@ -173,7 +167,7 @@ test('should not have any accessibility violations outside of rules with known i
 
 ### Using snapshots to allow specific known issues
 
-If you would like to allow for a more granular set of known issues, you can use Snapshots to verify that a set of preexisting violations has not changed. This approach avoids the downsides of using `AxeBuilder.exclude()` at the cost of slightly more complexity and fragility.
+If you would like to allow for a more granular set of known issues, you can use [Snapshots](./test-snapshots.md) to verify that a set of preexisting violations has not changed. This approach avoids the downsides of using `AxeBuilder.exclude()` at the cost of slightly more complexity and fragility.
 
 Do not use a snapshot of the entire `accessibilityScanResults.violations` array. It contains implementation details of the elements in question, such as a snippet of their rendered HTML; if you include these in your snapshots, it will make your tests prone to breaking every time one of the components in question changes for an unrelated reason:
 
@@ -205,7 +199,7 @@ function violationFingerprints(accessibilityScanResults) {
 
 Most accessibility tests are primarily concerned with the `violations` property of the axe scan results. However, the scan results contain more than just `violations`. For example, the results also contain information about rules which passed and about elements which axe found to have inconclusive results for some rules. This information can be useful for debugging tests that aren't detecting all the violations you expect them to.
 
-To include *all* of the scan results as part of your test results for debugging purposes, you can add the scan results as a test attachment with `testInfo.attach()`. Reporters can then embed or link the full results as part of your test output.
+To include *all* of the scan results as part of your test results for debugging purposes, you can add the scan results as a test attachment with [`testInfo.attach()`](./api/class-testinfo#test-info-attach). [Reporters](./test-reporters) can then embed or link the full results as part of your test output.
 
 The following example demonstrates attaching scan results to a test:
 
@@ -226,7 +220,7 @@ test('example with attachment', async ({ page }, testInfo) => {
 
 ## Using a test fixture for common axe configuration
 
-Test fixtures are a good way to share common `AxeBuilder` configuration across many tests. Some scenarios where this might be useful include:
+[Test fixtures](./test-fixtures) are a good way to share common `AxeBuilder` configuration across many tests. Some scenarios where this might be useful include:
 * Using a common set of rules among all of your tests
 * Suppressing a known violation in a common element which appears in many different pages
 * Attaching standalone accessibility reports consistently for many scans
@@ -237,7 +231,7 @@ The following example demonstrates creating and using a test fixture that covers
 
 This example fixture creates an `AxeBuilder` object which is pre-configured with shared `withTags()` and `exclude()` configuration.
 
-```js
+```js tab=js-ts title="axe-test.ts"
 import { test as base } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
@@ -261,7 +255,7 @@ export const test = base.extend<AxeFixture>({
 export { expect } from '@playwright/test';
 ```
 
-```js
+```js tab=js-js title="axe-test.js"
 const base = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
 

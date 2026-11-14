@@ -1,0 +1,8 @@
+{
+  "name": "cpp-official-docs",
+  "instructions": "The official documentation of C and C++, kept locally: cppreference.com (the C and C++ languages and standard libraries), CMake, Clang, the GNU Make manual and the GCC manual. Search with search_docs, then read one section with read_doc. Look it up rather than guess it.",
+  "search": "Search the official documentation of C and C++: cppreference.com (the C and C++ languages and standard libraries), CMake, Clang, the GNU Make manual and the GCC manual. Returns 10 section ids at most.",
+  "queryExample": "\"std::unique_ptr\" or \"add_executable\"",
+  "toolExample": "\"cppreference\", \"cmake\" or \"gcc\"",
+  "idExample": "library/cppreference/cpp/memory/unique_ptr.html#member-functions"
+}

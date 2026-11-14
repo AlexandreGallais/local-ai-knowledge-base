@@ -1,38 +1,30 @@
----
-title: "IO class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/IO.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # IO class (java.lang)
 
 ```java
 public final class IO
 ```
 
-A collection of static methods that provide convenient access to `System.in`
-and `System.out` for line-oriented input and output.
-
-The `readln()` and `readln(String)` methods decode bytes read from
-`System.in` into characters. The charset used for decoding is specified by the
-stdin.encoding property. If this property is not present,
+A collection of static methods that provide convenient access to {@link System#in}
+and {@link System#out} for line-oriented input and output.
+<p>
+The {@link #readln()} and {@link #readln(String)} methods decode bytes read from
+{@code System.in} into characters. The charset used for decoding is specified by the
+{@link System##stdin.encoding stdin.encoding} property. If this property is not present,
 or if the charset it names cannot be loaded, then UTF-8 is used instead. Decoding
 always replaces malformed and unmappable byte sequences with the charset's default
 replacement string.
-
-Charset decoding is set up upon the first call to one of the `readln` methods.
+<p>
+Charset decoding is set up upon the first call to one of the {@code readln} methods.
 Decoding may buffer additional bytes beyond those that have been decoded to characters
-returned to the application. After the first call to one of the `readln` methods,
-any subsequent use of `System.in` results in unspecified behavior.
+returned to the application. After the first call to one of the {@code readln} methods,
+any subsequent use of {@code System.in} results in unspecified behavior.
 
-**API note:** The expected use case is that certain applications will use only the `readln`
+@apiNote
+The expected use case is that certain applications will use only the {@code readln}
 methods to read from the standard input, and they will not mix these calls with
-other techniques for reading from `System.in`.
+other techniques for reading from {@code System.in}.
 
-**Since:** 25
+@since 25
 
 ## IO.println(Object)
 
@@ -43,12 +35,10 @@ public static void println(Object obj)
 Writes a string representation of the specified object and then writes
 a line separator to the standard output.
 
- The effect is as if println(obj)
-had been called on `System.out`.
+<p> The effect is as if {@link java.io.PrintStream#println(Object) println(obj)}
+had been called on {@code System.out}.
 
-Parameters:
-
-- `obj`: the object to print, may be `null`
+@param obj the object to print, may be {@code null}
 
 ## IO.println()
 
@@ -58,8 +48,8 @@ public static void println()
 
 Writes a line separator to the standard output.
 
- The effect is as if println()
-had been called on `System.out`.
+<p> The effect is as if {@link java.io.PrintStream#println() println()}
+had been called on {@code System.out}.
 
 ## IO.print(Object)
 
@@ -70,12 +60,10 @@ public static void print(Object obj)
 Writes a string representation of the specified object to the
 standard output.
 
- The effect is as if print(obj)
-had been called on `System.out`.
+<p> The effect is as if {@link java.io.PrintStream#print(Object) print(obj)}
+had been called on {@code System.out}.
 
-Parameters:
-
-- `obj`: the object to print, may be `null`
+@param obj the object to print, may be {@code null}
 
 ## IO.readln()
 
@@ -84,21 +72,19 @@ public static String readln()
 ```
 
 Reads a single line of text from the standard input.
-
+<p>
 One line is read from the decoded input as if by
-BufferedReader.readLine()
+{@link java.io.BufferedReader#readLine() BufferedReader.readLine()}
 and then the result is returned.
-
+<p>
 If necessary, this method first sets up charset decoding, as described in
 above in the class specification.
 
-**Returns:** a string containing the line read from the standard input, not
-including any line separator characters. Returns `null` if an
+@return a string containing the line read from the standard input, not
+including any line separator characters. Returns {@code null} if an
 end of stream has been reached without having read any characters.
 
-Throws:
-
-- `IOError`: if an I/O error occurs
+@throws IOError if an I/O error occurs
 
 ## IO.readln(String)
 
@@ -107,21 +93,17 @@ public static String readln(String prompt)
 ```
 
 Writes a prompt and then reads a line of input.
-
-Writes a prompt as if by calling print, and then reads a single
-line of text as if by calling readln.
-
+<p>
+Writes a prompt as if by calling {@link #print print}, and then reads a single
+line of text as if by calling {@link #readln() readln}.
+<p>
 If necessary, this method first sets up charset decoding, as described in
 above in the class specification.
 
-Parameters:
+@param prompt the prompt string, may be {@code null}
 
-- `prompt`: the prompt string, may be `null`
-
-**Returns:** a string containing the line read from the standard input, not
-including any line separator characters. Returns `null` if an
+@return a string containing the line read from the standard input, not
+including any line separator characters. Returns {@code null} if an
 end of stream has been reached without having read any characters.
 
-Throws:
-
-- `IOError`: if an I/O error occurs
+@throws IOError if an I/O error occurs

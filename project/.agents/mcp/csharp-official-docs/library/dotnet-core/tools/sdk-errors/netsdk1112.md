@@ -1,12 +1,11 @@
 ---
 title: "NETSDK1112: The runtime pack was not downloaded"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/sdk-errors/netsdk1112.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: How to resolve the `runtime pack was not downloaded' error message.
+ms.topic: error-reference
+ms.date: 07/08/2022
+f1_keywords:
+- NETSDK1112
 ---
-
 # NETSDK1112: The runtime pack was not downloaded
 
 A runtime pack that your project requires was not downloaded. The full error message is similar to the following example:

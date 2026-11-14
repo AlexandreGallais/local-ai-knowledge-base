@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugController::EnumerateThreads Method"
 title: "ICorDebugController::EnumerateThreads Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugcontroller-enumeratethreads-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugController.EnumerateThreads"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugController::EnumerateThreads"
+helpviewer_keywords:
+  - "ICorDebugController::EnumerateThreads method [.NET debugging]"
+  - "EnumerateThreads method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugController::EnumerateThreads Method
 
 Gets an enumerator for the active managed threads in the process.
@@ -26,14 +35,16 @@ HRESULT EnumerateThreads (
 
 ## Remarks
 
-A thread is considered active after the ICorDebugManagedCallback::CreateThread callback has been dispatched and before the ICorDebugManagedCallback::ExitThread callback has been dispatched. A managed thread may not necessarily have any managed frames on its stack. Threads can be enumerated even before the ICorDebugManagedCallback::CreateProcess callback. The enumeration will naturally be empty.
+A thread is considered active after the [ICorDebugManagedCallback::CreateThread](icordebugmanagedcallback-createthread-method.md) callback has been dispatched and before the [ICorDebugManagedCallback::ExitThread](icordebugmanagedcallback-exitthread-method.md) callback has been dispatched. A managed thread may not necessarily have any managed frames on its stack. Threads can be enumerated even before the [ICorDebugManagedCallback::CreateProcess](icordebugmanagedcallback-createprocess-method.md) callback. The enumeration will naturally be empty.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
  **Library:** CorGuids.lib
 
  **.NET versions:** Available since .NET Framework 1.0
+
+## See also

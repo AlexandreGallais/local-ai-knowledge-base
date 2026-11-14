@@ -1,41 +1,39 @@
 ---
-title: "Use LibMan with ASP.NET Core in Visual Studio"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/client-side/libman/libman-vs.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Use LibMan with ASP.NET Core in Visual Studio
+description: Learn how to use LibMan in an ASP.NET Core project with Visual Studio.
+ms.date: 12/03/2025
 ---
-
 # Use LibMan with ASP.NET Core in Visual Studio
 
-By Scott Addie
+By [Scott Addie](https://twitter.com/Scott_Addie)
 
-Visual Studio has built-in support for LibMan in ASP.NET Core projects, including:
+Visual Studio has built-in support for [LibMan](index.md) in ASP.NET Core projects, including:
 
 * Support for configuring and running LibMan restore operations on build.
 * Menu items for triggering LibMan restore and clean operations.
 * Search dialog for finding libraries and adding the files to a project.
-* Editing support for `libman.json`—the LibMan manifest file.
+* Editing support for `libman.json`&mdash;the LibMan manifest file.
 
-View or download sample code (how to download)
+[View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/client-side/libman/samples/) [(how to download)](../../fundamentals/index.md#how-to-download-a-sample)
 
 ## Prerequisites
 
-* Visual Studio 2019 with the **ASP.NET and web development** workload
+* [Visual Studio 2019](https://visualstudio.microsoft.com/downloads/?utm_medium=microsoft&utm_source=learn.microsoft.com&utm_campaign=inline+link&utm_content=download+vs2019) with the **ASP.NET and web development** workload
 
 ## Add library files
 
 Library files can be added to an ASP.NET Core project in two different ways:
 
-1. Use the Add Client-Side Library dialog
-1. Manually configure LibMan manifest file entries
+1. [Use the Add Client-Side Library dialog](#use-the-add-client-side-library-dialog)
+1. [Manually configure LibMan manifest file entries](#manually-configure-libman-manifest-file-entries)
 
 ### Use the Add Client-Side Library dialog
 
 Follow these steps to install a client-side library:
 
 * In **Solution Explorer**, right-click the project folder in which the files should be added. Choose **Add** > **Client-Side Library**. The **Add Client-Side Library** dialog appears:
+
+  ![Add Client-Side Library dialog](_static/add-library-dialog.png)
 
 * Select the library provider from the **Provider** drop down. CDNJS is the default provider.
 * Type the library name to fetch in the **Library** text box. IntelliSense provides a list of libraries beginning with the provided text.
@@ -53,7 +51,7 @@ Follow these steps to install a client-side library:
   * If launched from a project folder, the corresponding folder name is used.
 
   The folder suggestion is suffixed with the library name. The following table illustrates folder suggestions when installing jQuery in a Razor Pages project.
-
+  
   |Launch location                           |Suggested folder      |
   |------------------------------------------|----------------------|
   |project root (if *wwwroot* exists)        |*wwwroot/lib/jquery/* |
@@ -66,7 +64,7 @@ Follow these steps to install a client-side library:
   ```console
   Restore operation started...
   Restoring libraries for project LibManSample
-  Restoring library user@example.com... (LibManSample)
+  Restoring library jquery@3.3.1... (LibManSample)
   wwwroot/lib/jquery/jquery.min.js written to destination (LibManSample)
   wwwroot/lib/jquery/jquery.js written to destination (LibManSample)
   wwwroot/lib/jquery/jquery.min.map written to destination (LibManSample)
@@ -86,37 +84,16 @@ To open `libman.json` for editing, the following options exist:
 
 **&#8224;** If the `libman.json` file doesn't already exist in the project root, it will be created with the default item template content.
 
-Visual Studio offers rich JSON editing support such as colorization, formatting, IntelliSense, and schema validation. The LibMan manifest's JSON schema is found at https://json.schemastore.org/libman.
+Visual Studio offers rich JSON editing support such as colorization, formatting, IntelliSense, and schema validation. The LibMan manifest's JSON schema is found at [https://json.schemastore.org/libman](https://json.schemastore.org/libman).
 
 With the following manifest file, LibMan retrieves files per the configuration defined in the `libraries` property. An explanation of the object literals defined within `libraries` follows:
 
-* A subset of jQuery version 3.3.1 is retrieved from the CDNJS provider. The subset is defined in the `files` property—`jquery.min.js`, `jquery.js`, and *jquery.min.map*. The files are placed in the project's *wwwroot/lib/jquery* folder.
-* The entirety of Bootstrap version 4.1.3 is retrieved and placed in a *wwwroot/lib/bootstrap* folder. The object literal's `provider` property overrides the `defaultProvider` property value. LibMan retrieves the Bootstrap files from the unpkg provider.
+* A subset of [jQuery](https://jquery.com/) version 3.3.1 is retrieved from the CDNJS provider. The subset is defined in the `files` property&mdash;`jquery.min.js`, `jquery.js`, and *jquery.min.map*. The files are placed in the project's *wwwroot/lib/jquery* folder.
+* The entirety of [Bootstrap](https://getbootstrap.com/) version 4.1.3 is retrieved and placed in a *wwwroot/lib/bootstrap* folder. The object literal's `provider` property overrides the `defaultProvider` property value. LibMan retrieves the Bootstrap files from the unpkg provider.
 
-```json
-{
-  "version": "1.0",
-  "defaultProvider": "cdnjs",
-  "libraries": [
-    {
-      "library": "user@example.com",
-      "files": [
-        "jquery.min.js",
-        "jquery.js",
-        "jquery.min.map"
-      ],
-      "destination": "wwwroot/lib/jquery/"
-    },
-    {
-      "provider": "unpkg",
-      "library": "user@example.com",
-      "destination": "wwwroot/lib/bootstrap/"
-    }
-  ]
-}
-```
+[!code-json[](samples/LibManSample/libman.json)]
 
-> **Note:**
+> [!NOTE]
 > LibMan only supports one version of each library from each provider. The `libman.json` file fails schema validation if it contains two libraries with the same library name for a given provider.
 
 ## Restore library files
@@ -125,8 +102,8 @@ To restore library files from within Visual Studio, there must be a valid `libma
 
 Library files can be restored in an ASP.NET Core project in two ways:
 
-1. Restore files during build
-1. Restore files manually
+1. [Restore files during build](#restore-files-during-build)
+1. [Restore files manually](#restore-files-manually)
 
 ### Restore files during build
 
@@ -135,11 +112,9 @@ LibMan can restore the defined library files as part of the build process. By de
 To enable and test the restore-on-build behavior:
 
 * Right-click `libman.json` in **Solution Explorer** and select **Enable Restore Client-Side Libraries on Build** from the context menu.
-* Click the **Yes** button when prompted to install a NuGet package. The Microsoft.Web.LibraryManager.Build NuGet package is added to the project:
+* Click the **Yes** button when prompted to install a NuGet package. The [Microsoft.Web.LibraryManager.Build](https://www.nuget.org/packages/Microsoft.Web.LibraryManager.Build/) NuGet package is added to the project:
 
-  ```xml
-<PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="3.0.71" />
-```
+  [!code-xml[](samples/LibManSample/LibManSample.csproj?name=snippet_RestoreOnBuildPackage)]
 
 * Build the project to confirm LibMan file restoration occurs. The `Microsoft.Web.LibraryManager.Build` package injects an MSBuild target that runs LibMan during the project's build operation.
 * Review the **Build** feed of the **Output** window for a LibMan activity log:
@@ -148,8 +123,8 @@ To enable and test the restore-on-build behavior:
   1>------ Build started: Project: LibManSample, Configuration: Debug Any CPU ------
   1>
   1>Restore operation started...
-  1>Restoring library user@example.com...
-  1>Restoring library user@example.com...
+  1>Restoring library jquery@3.3.1...
+  1>Restoring library bootstrap@4.1.3...
   1>
   1>2 libraries restored in 10.66 seconds
   1>LibManSample -> C:\LibManSample\bin\Debug\netcoreapp2.1\LibManSample.dll
@@ -158,7 +133,7 @@ To enable and test the restore-on-build behavior:
 
 When the restore-on-build behavior is enabled, the `libman.json` context menu displays a **Disable Restore Client-Side Libraries on Build** option. Selecting this option removes the `Microsoft.Web.LibraryManager.Build` package reference from the project file. Consequently, the client-side libraries are no longer restored on each build.
 
-Regardless of the restore-on-build setting, you can manually restore at any time from the `libman.json` context menu. For more information, see Restore files manually.
+Regardless of the restore-on-build setting, you can manually restore at any time from the `libman.json` context menu. For more information, see [Restore files manually](#restore-files-manually).
 
 ### Restore files manually
 
@@ -179,7 +154,7 @@ While the restore operation is running:
   ```console
   Restore operation started...
   Restoring libraries for project LibManSample
-  Restoring library user@example.com... (LibManSample)
+  Restoring library jquery@3.3.1... (LibManSample)
   wwwroot/lib/jquery/jquery.min.js written to destination (LibManSample)
   wwwroot/lib/jquery/jquery.js written to destination (LibManSample)
   wwwroot/lib/jquery/jquery.min.map written to destination (LibManSample)
@@ -207,7 +182,7 @@ Clean libraries operation completed
 2 libraries were successfully deleted in 1.91 secs
 ```
 
-The clean operation only deletes files from the project. Library files stay in the cache for faster retrieval on future restore operations. To manage library files stored in the local machine's cache, use the LibMan CLI.
+The clean operation only deletes files from the project. Library files stay in the cache for faster retrieval on future restore operations. To manage library files stored in the local machine's cache, use the [LibMan CLI](libman-cli.md).
 
 ## Uninstall library files
 
@@ -217,7 +192,9 @@ To uninstall library files:
 * Position the caret inside the corresponding `libraries` object literal.
 * Click the light bulb icon that appears in the left margin, and select **Uninstall \<library_name>@\<library_version>**:
 
-Alternatively, you can manually edit and save the LibMan manifest (`libman.json`). The restore operation runs when the file is saved. Library files that are no longer defined in `libman.json` are removed from the project.
+  ![Uninstall library context menu option](_static/uninstall-menu-option.png)
+
+Alternatively, you can manually edit and save the LibMan manifest (`libman.json`). The [restore operation](#restore-library-files) runs when the file is saved. Library files that are no longer defined in `libman.json` are removed from the project.
 
 ## Update library version
 
@@ -232,14 +209,16 @@ LibMan checks for a library version newer than the version installed. The follow
 * A **No updates found** message is displayed if the latest version is already installed.
 * The latest stable version is displayed if not already installed.
 
+  ![Check for updates context menu option](_static/update-menu-option.png)
+
 * If a pre-release newer than the installed version is available, the pre-release is displayed.
 
-To downgrade to an older library version, manually edit the `libman.json` file. When the file is saved, the LibMan restore operation:
+To downgrade to an older library version, manually edit the `libman.json` file. When the file is saved, the LibMan [restore operation](#restore-library-files):
 
 * Removes redundant files from the previous version.
 * Adds new and updated files from the new version.
 
 ## Related content
 
-* Use the LibMan CLI with ASP.NET Core
-* LibMan GitHub repository
+* [Use the LibMan CLI with ASP.NET Core](libman-cli.md)
+* [LibMan GitHub repository](https://github.com/aspnet/LibraryManager)

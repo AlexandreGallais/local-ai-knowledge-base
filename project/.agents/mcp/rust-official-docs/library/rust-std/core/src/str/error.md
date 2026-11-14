@@ -1,12 +1,3 @@
----
-title: "core::str::error"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/str/error.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::str::error
 
 Defines utf8 error type.
@@ -17,18 +8,21 @@ Defines utf8 error type.
 pub struct Utf8Error
 ```
 
-Errors which can occur when attempting to interpret a sequence of `u8`
+Errors which can occur when attempting to interpret a sequence of [`u8`]
 as a string.
 
-As such, the `from_utf8` family of functions and methods for both `String`s
-and `&str`s make use of this error, for example.
+As such, the `from_utf8` family of functions and methods for both [`String`]s
+and [`&str`]s make use of this error, for example.
+
+[`String`]: ../../std/string/struct.String.html#method.from_utf8
+[`&str`]: super::from_utf8
 
 # Examples
 
 This error type’s methods can be used to create functionality
 similar to `String::from_utf8_lossy` without allocating heap memory:
 
-```rust
+```
 fn from_utf8_lossy<F>(mut input: &[u8], mut push: F) where F: FnMut(&str) {
     loop {
         match std::str::from_utf8(input) {
@@ -70,7 +64,7 @@ would return `Ok(_)`.
 
 Basic usage:
 
-```rust
+```
 use std::str;
 
 // some invalid bytes, in a vector
@@ -100,8 +94,10 @@ Provides more information about the failure:
   The length provided is that of the invalid byte sequence
   that starts at the index given by `valid_up_to()`.
   Decoding should resume after that sequence
-  (after inserting a `U+FFFD REPLACEMENT CHARACTER`[U+FFFD]) in case of
+  (after inserting a [`U+FFFD REPLACEMENT CHARACTER`][U+FFFD]) in case of
   lossy decoding.
+
+[U+FFFD]: ../../std/char/constant.REPLACEMENT_CHARACTER.html
 
 ## ::ParseBoolError
 
@@ -109,4 +105,6 @@ Provides more information about the failure:
 pub struct ParseBoolError
 ```
 
-An error returned when parsing a `bool` using `from_str` fails
+An error returned when parsing a `bool` using [`from_str`] fails
+
+[`from_str`]: super::FromStr::from_str

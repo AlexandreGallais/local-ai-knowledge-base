@@ -1,0 +1,253 @@
+<Type Name="CodePagesEncodingProvider" FullName="System.Text.CodePagesEncodingProvider">
+  <TypeSignature Language="C#" Value="public sealed class CodePagesEncodingProvider : System.Text.EncodingProvider" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit CodePagesEncodingProvider extends System.Text.EncodingProvider" />
+  <TypeSignature Language="DocId" Value="T:System.Text.CodePagesEncodingProvider" />
+  <TypeSignature Language="VB.NET" Value="Public NotInheritable Class CodePagesEncodingProvider&#xA;Inherits EncodingProvider" />
+  <TypeSignature Language="F#" Value="type CodePagesEncodingProvider = class&#xA;    inherit EncodingProvider" />
+  <TypeSignature Language="C++ CLI" Value="public ref class CodePagesEncodingProvider sealed : System::Text::EncodingProvider" />
+  <AssemblyInfo>
+    <AssemblyName>System.Text.Encoding.CodePages</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <AssemblyVersion>4.0.1.0</AssemblyVersion>
+    <AssemblyVersion>4.0.2.0</AssemblyVersion>
+    <AssemblyVersion>4.1.1.0</AssemblyVersion>
+    <AssemblyVersion>4.1.2.0</AssemblyVersion>
+    <AssemblyVersion>4.1.3.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.1</AssemblyVersion>
+    <AssemblyVersion>10.0.0.2</AssemblyVersion>
+    <AssemblyVersion>11.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Text.EncodingProvider</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Attributes>
+    <Attribute FrameworkAlternate="net-10.0;net-10.0-pp;net-11.0;net-11.0-pp;net-8.0;net-9.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>Provides access to an encoding provider for code pages that otherwise are available only in .NET Framework.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+Modern .NET supports only the following encodings:
+
+- ASCII (code page 20127), which is returned by the <xref:System.Text.Encoding.ASCII?displayProperty=nameWithType> property.
+- ISO-8859-1 (code page 28591).
+- UTF-7 (code page 65000), which is returned by the <xref:System.Text.Encoding.UTF7?displayProperty=nameWithType> property.
+- UTF-8 (code page 65001), which is returned by the <xref:System.Text.Encoding.UTF8?displayProperty=nameWithType> property.
+- UTF-16 and UTF-16LE (code page 1200), which is returned by the <xref:System.Text.Encoding.Unicode?displayProperty=nameWithType> property.
+- UTF-16BE (code page 1201), which is instantiated by calling the <xref:System.Text.UnicodeEncoding.%23ctor(System.Boolean,System.Boolean,System.Boolean)?displayProperty=nameWithType> or <xref:System.Text.UnicodeEncoding.%23ctor(System.Boolean,System.Boolean)?displayProperty=nameWithType> constructor with a `bigEndian` value of `true`.
+- UTF-32 and UTF-32LE (code page 12000), which is returned by the <xref:System.Text.Encoding.UTF32?displayProperty=nameWithType> property.
+- UTF-32BE (code page 12001), which is instantiated by calling an <xref:System.Text.UTF32Encoding> constructor that has a `bigEndian` parameter and providing a value of `true` in the method call.
+
+Other than code page 20127, code-page encodings are not supported. The <xref:System.Text.CodePagesEncodingProvider> class extends <xref:System.Text.EncodingProvider> to make these code pages available. To use these additional code pages, follow these steps:
+
+1. Retrieve a <xref:System.Text.CodePagesEncodingProvider> object from the static <xref:System.Text.CodePagesEncodingProvider.Instance?displayProperty=nameWithType> property.
+1. Pass the <xref:System.Text.CodePagesEncodingProvider> object to the <xref:System.Text.Encoding.RegisterProvider*?displayProperty=nameWithType> method.
+
+After an <xref:System.Text.EncodingProvider> object is registered, the encodings that it supports are available by calling the overloads of <xref:System.Text.Encoding.GetEncoding*?displayProperty=nameWithType>; you should not call the <xref:System.Text.EncodingProvider.GetEncoding*?displayProperty=nameWithType> overloads.
+
+### Impact on default encoding behavior
+
+Registering <xref:System.Text.CodePagesEncodingProvider> also affects the behavior of <xref:System.Text.Encoding.GetEncoding(System.Int32)> when called with a `codepage` argument of `0`:
+
+- On Windows, `GetEncoding(0)` returns the encoding that matches the system's active code page.
+- On non-Windows platforms, `GetEncoding(0)` returns UTF-8, maintaining cross-platform consistency.
+
+When no encoding provider is registered, `GetEncoding(0)` returns UTF-8 on all platforms.
+
+ ]]></format>
+    </remarks>
+  </Docs>
+  <Members>
+    <MemberGroup MemberName="GetEncoding">
+      <Docs>
+        <summary>Returns the encoding associated with the specified code page identifier or name.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+.NET supports only the following encodings by default:
+
+- ASCII (code page 20127), which is returned by the <xref:System.Text.Encoding.ASCII?displayProperty=nameWithType> property.
+- ISO-8859-1 (code page 28591).
+- UTF-7 (code page 65000), which is returned by the <xref:System.Text.Encoding.UTF7?displayProperty=nameWithType> property.
+- UTF-8 (code page 65001), which is returned by the <xref:System.Text.Encoding.UTF8?displayProperty=nameWithType> property.
+- UTF-16 and UTF-16LE (code page 1200), which is returned by the <xref:System.Text.Encoding.Unicode?displayProperty=nameWithType> property.
+- UTF-16BE (code page 1201), which is instantiated by calling the <xref:System.Text.UnicodeEncoding.%23ctor*?displayProperty=nameWithType> or <xref:System.Text.UnicodeEncoding.%23ctor*?displayProperty=nameWithType> constructor with a `bigEndian` value of `true`.
+- UTF-32 and UTF-32LE (code page 12000), which is returned by the <xref:System.Text.Encoding.UTF32?displayProperty=nameWithType> property.
+- UTF-32BE (code page 12001), which is instantiated by calling an <xref:System.Text.UTF32Encoding> constructor that has a `bigEndian` parameter and providing a value of `true` in the method call.
+
+To retrieve an encoding that is present in .NET Framework but not in .NET, you do the following:
+
+1. Get the <xref:System.Text.EncodingProvider> object from the static <xref:System.Text.CodePagesEncodingProvider.Instance?displayProperty=nameWithType> property.
+1. Pass the <xref:System.Text.EncodingProvider> object to the <xref:System.Text.Encoding.RegisterProvider*?displayProperty=nameWithType> method to make the encodings supplied by the <xref:System.Text.EncodingProvider> object available to the common language runtime.
+1. Call an <xref:System.Text.Encoding.GetEncoding*?displayProperty=nameWithType> overload to retrieve the encoding. The <xref:System.Text.Encoding.GetEncoding*?displayProperty=nameWithType> method will call the corresponding <xref:System.Text.EncodingProvider.GetEncoding*?displayProperty=nameWithType> method to determine whether it can supply the requested encoding.
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="GetEncoding">
+      <MemberSignature Language="C#" Value="public override System.Text.Encoding? GetEncoding (int codepage);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Text.Encoding GetEncoding(int32 codepage) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Text.CodePagesEncodingProvider.GetEncoding(System.Int32)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function GetEncoding (codepage As Integer) As Encoding" />
+      <MemberSignature Language="F#" Value="override this.GetEncoding : int -&gt; System.Text.Encoding" Usage="codePagesEncodingProvider.GetEncoding codepage" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Text::Encoding ^ GetEncoding(int codepage);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Text.Encoding.CodePages</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Text.Encoding</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="codepage" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="codepage">The code page identifier of the preferred encoding that the encoding provider might support.</param>
+        <summary>Returns the encoding associated with the specified code page identifier.</summary>
+        <returns>The encoding associated with the specified code page identifier, or <see langword="null" /> if the provider does not support the requested codepage encoding.</returns>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+This method provides access to code page encodings that are available in .NET Framework but not natively supported in modern .NET.
+
+When `codepage` is `0`, this method has special behavior that affects the default encoding returned by <xref:System.Text.Encoding.GetEncoding(System.Int32)>:
+
+- **On Windows**: Returns the encoding that matches the system's active code page.
+- **On non-Windows platforms**: Returns `null`, allowing <xref:System.Text.Encoding.GetEncoding(System.Int32)> to fall back to its default UTF-8 behavior.
+
+For all other supported code page identifiers, this method returns the corresponding encoding if it's available from the code pages encoding provider, or `null` if the code page is not supported.
+
+          ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetEncoding">
+      <MemberSignature Language="C#" Value="public override System.Text.Encoding? GetEncoding (string name);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Text.Encoding GetEncoding(string name) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Text.CodePagesEncodingProvider.GetEncoding(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function GetEncoding (name As String) As Encoding" />
+      <MemberSignature Language="F#" Value="override this.GetEncoding : string -&gt; System.Text.Encoding" Usage="codePagesEncodingProvider.GetEncoding name" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Text::Encoding ^ GetEncoding(System::String ^ name);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Text.Encoding.CodePages</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Text.Encoding</ReturnType>
+        <Attributes>
+          <Attribute FrameworkAlternate="net-10.0">
+            <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(2)]</AttributeName>
+            <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(2)&gt;]</AttributeName>
+          </Attribute>
+        </Attributes>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="name" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="name">The code page name of the preferred encoding that the encoding provider might support.</param>
+        <summary>Returns the encoding associated with the specified code page name.</summary>
+        <returns>The encoding associated with the specified code page, or <see langword="null" /> if the provider does not support the requested encoding.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetEncodings">
+      <MemberSignature Language="C#" Value="public override System.Collections.Generic.IEnumerable&lt;System.Text.EncodingInfo&gt; GetEncodings ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig virtual instance class System.Collections.Generic.IEnumerable`1&lt;class System.Text.EncodingInfo&gt; GetEncodings() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Text.CodePagesEncodingProvider.GetEncodings" />
+      <MemberSignature Language="VB.NET" Value="Public Overrides Function GetEncodings () As IEnumerable(Of EncodingInfo)" />
+      <MemberSignature Language="F#" Value="override this.GetEncodings : unit -&gt; seq&lt;System.Text.EncodingInfo&gt;" Usage="codePagesEncodingProvider.GetEncodings " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; override System::Collections::Generic::IEnumerable&lt;System::Text::EncodingInfo ^&gt; ^ GetEncodings();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Text.Encoding.CodePages</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.IEnumerable&lt;System.Text.EncodingInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Returns an array that contains all the encodings that are supported by the <see cref="T:System.Text.CodePagesEncodingProvider" />.</summary>
+        <returns>An array that contains all the supported encodings.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Instance">
+      <MemberSignature Language="C#" Value="public static System.Text.EncodingProvider Instance { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property class System.Text.EncodingProvider Instance" />
+      <MemberSignature Language="DocId" Value="P:System.Text.CodePagesEncodingProvider.Instance" />
+      <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property Instance As EncodingProvider" />
+      <MemberSignature Language="F#" Value="static member Instance : System.Text.EncodingProvider" Usage="System.Text.CodePagesEncodingProvider.Instance" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Text::EncodingProvider ^ Instance { System::Text::EncodingProvider ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Text.Encoding.CodePages</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Text.EncodingProvider</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets an encoding provider for code pages supported in .NET Framework but not in modern .NET.</summary>
+        <value>An encoding provider that allows access to encodings not supported on the current .NET Framework platform.</value>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+.NET supports only the following encodings by default:
+
+- ASCII (code page 20127), which is returned by the <xref:System.Text.Encoding.ASCII?displayProperty=nameWithType> property.
+- ISO-8859-1 (code page 28591).
+- UTF-7 (code page 65000), which is returned by the <xref:System.Text.Encoding.UTF7?displayProperty=nameWithType> property.
+- UTF-8 (code page 65001), which is returned by the <xref:System.Text.Encoding.UTF8?displayProperty=nameWithType> property.
+- UTF-16 and UTF-16LE (code page 1200), which is returned by the <xref:System.Text.Encoding.Unicode?displayProperty=nameWithType> property.
+- UTF-16BE (code page 1201), which is instantiated by calling the <xref:System.Text.UnicodeEncoding.%23ctor*?displayProperty=nameWithType> or <xref:System.Text.UnicodeEncoding.%23ctor*?displayProperty=nameWithType> constructor with a `bigEndian` value of `true`.
+- UTF-32 and UTF-32LE (code page 12000), which is returned by the <xref:System.Text.Encoding.UTF32?displayProperty=nameWithType> property.
+- UTF-32BE (code page 12001), which is instantiated by calling an <xref:System.Text.UTF32Encoding> constructor that has a `bigEndian` parameter and providing a value of `true` in the method call.
+
+To retrieve an encoding that is present in .NET Framework but not in modern .NET, you do the following:
+
+1. Get the <xref:System.Text.EncodingProvider> object from the static <xref:System.Text.CodePagesEncodingProvider.Instance?displayProperty=nameWithType> property.
+1. Pass the <xref:System.Text.EncodingProvider> object to the <xref:System.Text.Encoding.RegisterProvider*?displayProperty=nameWithType> method to make the encodings supplied by the <xref:System.Text.EncodingProvider> object available to the common language runtime.
+1. Call an <xref:System.Text.Encoding.GetEncoding*?displayProperty=nameWithType> overload to retrieve the encoding. The <xref:System.Text.Encoding.GetEncoding*?displayProperty=nameWithType> method will call the corresponding <xref:System.Text.EncodingProvider.GetEncoding*?displayProperty=nameWithType> method to determine whether it can supply the requested encoding.
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

@@ -1,12 +1,8 @@
 ---
-title: "dotnet tool run command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-tool-run.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet tool run command
+description: The dotnet tool run command invokes a local tool.
+ms.date: 10/28/2025
 ---
-
 # dotnet tool run
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -25,7 +21,7 @@ dotnet tool run -h|--help
 
 ## Description
 
-The `dotnet tool run` command searches tool manifest files that are in scope for the current directory. When it finds a reference to the specified tool, it runs the tool. For more information, see Invoke a local tool.
+The `dotnet tool run` command searches tool manifest files that are in scope for the current directory. When it finds a reference to the specified tool, it runs the tool. For more information, see [Invoke a local tool](global-tools.md#invoke-a-local-tool).
 
 ## Arguments
 
@@ -39,9 +35,7 @@ The `dotnet tool run` command searches tool manifest files that are in scope for
 
   Available starting with .NET 9.0 SDK. Allow tool to use a newer version of the .NET runtime if the runtime it targets isn't installed.
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Example
 
@@ -55,5 +49,5 @@ Prints out a description of how to use the command.
 
 ## See also
 
-- .NET tools
-- Tutorial: Install and use a .NET local tool using the .NET CLI
+- [.NET tools](global-tools.md)
+- [Tutorial: Install and use a .NET local tool using the .NET CLI](local-tools-how-to-use.md)

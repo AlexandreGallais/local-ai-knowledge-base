@@ -1,12 +1,3 @@
----
-title: "core::iter::adapters"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/iter/adapters/mod.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::iter::adapters
 
 ## SourceIter::Source
@@ -48,3 +39,5 @@ access. In particular an adapter may have consumed more elements than strictly n
 The overall goal of these requirements is to let the consumer of a pipeline use
 * whatever remains in the source after iteration has stopped
 * the memory that has become unused by advancing a consuming iterator
+
+[`next()`]: Iterator::next()

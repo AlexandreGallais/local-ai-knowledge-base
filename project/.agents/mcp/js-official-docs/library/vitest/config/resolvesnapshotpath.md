@@ -1,10 +1,6 @@
 ---
-title: "resolveSnapshotPath | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/resolvesnapshotpath.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: resolveSnapshotPath | Config
+outline: deep
 ---
 
 # resolveSnapshotPath <CRoot />
@@ -24,7 +20,7 @@ export default defineConfig({
 })
 ```
 
-You can also use the `context` parameter to access the project's serialized config. This is useful when you have multiple projects and want to store snapshots in different locations based on the project name:
+You can also use the `context` parameter to access the project's serialized config. This is useful when you have multiple [projects](/guide/projects) and want to store snapshots in different locations based on the project name:
 
 ```ts
 import { basename, dirname, join } from 'node:path'

@@ -20,8 +20,8 @@ description: Use when the user asks for tests, when a test fails, or after you c
 2. Find the runner: the `test` target of
    `angular.json` (`@angular/build:unit-test`, Vitest) or `vitest` in `package.json`.
 3. Read one existing test next to the code; copy its style and helpers.
-4. Angular: read `docs/angular-testing/index.md`, then the document you need. A store:
-   `docs/ngrx-signals/testing-stores.md`. A component: `docs/components/testing-a11y.md`.
+4. Angular: search the testing guide of Angular with `js-official-docs` (`TestBed`, `whenStable`).
+   A store: search `unprotected` and the testing page of NgRx Signals. A component: its ARIA pattern.
 5. List the cases: the normal case, each limit, each error the request names.
 6. Write the tests next to the code: `<name>.spec.ts`.
 7. Run them with the test command of the project (`ng test --watch=false`, or `vitest run <file>`).
@@ -49,8 +49,8 @@ Command: ng test --watch=false. Exit 0, 16 tests passed.
 - `ng test` without `--watch=false` never ends.
 - `fakeAsync` and `detectChanges()` from memory: Angular 22 tests run without zone; use
   `await fixture.whenStable()`.
-- A geometry (`getBBox`, `getScreenCTM`) in jsdom is always 0: read
-  `docs/angular-testing/svg-class-tests.md`.
+- A geometry (`getBBox`, `getScreenCTM`) in jsdom is always 0: test it in the browser mode of
+  Vitest, or with Playwright (search `browser mode` with `js-official-docs`).
 
 ## Final check
 

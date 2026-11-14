@@ -1,10 +1,6 @@
 ---
-title: "chaiConfig | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/chaiconfig.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: chaiConfig | Config
+outline: deep
 ---
 
 # chaiConfig
@@ -12,7 +8,7 @@ license: "MIT"
 - **Type:** `{ includeStack?, showDiff?, truncateThreshold? }`
 - **Default:** `{ includeStack: false, showDiff: true, truncateThreshold: 40 }`
 
-Equivalent to Chai config.
+Equivalent to [Chai config](https://github.com/chaijs/chai/blob/4.x.x/lib/chai/config.js).
 
 ## chaiConfig.includeStack
 

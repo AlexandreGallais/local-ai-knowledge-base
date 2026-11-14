@@ -1,12 +1,3 @@
----
-title: "inkex.gui.app"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/gui/app.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.gui.app
 
 Gtk Application base classes, providing a way to load a GtkBuilder
@@ -23,10 +14,10 @@ This wraps gtk builder and allows for some extra functionality with
 windows, especially the management of gtk main loops.
 
 Args:
-start_loop (bool, optional): If set to true will start a new gtk main loop.
-Defaults to False.
-start_gui (bool, optional): Used as local propertes if unset and passed to
-primary window when loaded. Defaults to True.
+    start_loop (bool, optional): If set to true will start a new gtk main loop.
+        Defaults to False.
+    start_gui (bool, optional): Used as local propertes if unset and passed to
+            primary window when loaded. Defaults to True.
 
 ## GtkApp.prefix
 

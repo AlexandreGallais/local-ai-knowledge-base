@@ -1,17 +1,11 @@
----
-title: "Introduction"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch00-00-introduction.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
 # Introduction
 
-> Note: This edition of the book is the same as The Rust Programming
-> Language available in print and ebook format from No Starch
-> Press.
+> Note: This edition of the book is the same as [The Rust Programming
+> Language][nsprust] available in print and ebook format from [No Starch
+> Press][nsp].
+
+[nsprust]: https://nostarch.com/rust-programming-language-3rd-edition
+[nsp]: https://nostarch.com/
 
 Welcome to _The Rust Programming Language_, an introductory book about Rust.
 The Rust programming language helps you write faster, more reliable software.
@@ -178,6 +172,8 @@ There is no wrong way to read this book: If you want to skip ahead, go for it!
 You might have to jump back to earlier chapters if you experience any
 confusion. But do whatever works for you.
 
+<span id="ferris"></span>
+
 An important part of the process of learning Rust is learning how to read the
 error messages the compiler displays: These will guide you toward working code.
 As such, we’ll provide many examples that don’t compile along with the error
@@ -190,9 +186,9 @@ meant to work:
 
 | Ferris                                                                                                           | Meaning                                          |
 | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-|             | This code does not compile!                      |
-|                    | This code panics!                                |
-|  | This code does not produce the desired behavior. |
+| <img src="img/ferris/does_not_compile.svg" class="ferris-explain" alt="Ferris with a question mark"/>            | This code does not compile!                      |
+| <img src="img/ferris/panics.svg" class="ferris-explain" alt="Ferris throwing up their hands"/>                   | This code panics!                                |
+| <img src="img/ferris/not_desired_behavior.svg" class="ferris-explain" alt="Ferris with one claw up, shrugging"/> | This code does not produce the desired behavior. |
 
 In most situations, we’ll lead you to the correct version of any code that
 doesn’t compile.
@@ -200,4 +196,6 @@ doesn’t compile.
 ## Source Code
 
 The source files from which this book is generated can be found on
-GitHub.
+[GitHub][book].
+
+[book]: https://github.com/rust-lang/book/tree/main/src

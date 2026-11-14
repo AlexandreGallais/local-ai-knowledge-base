@@ -1,18 +1,9 @@
----
-title: "Configuring application environments"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/tools/cli/environments.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Configuring application environments
 
 You can define different named build configurations for your project, such as `development` and `staging`, with different defaults.
 
 Each named configuration can have defaults for any of the options that apply to the various builder targets, such as `build`, `serve`, and `test`.
-The Angular CLI `build`, `serve`, and `test` commands can then replace files with appropriate versions for your intended target environment.
+The [Angular CLI](tools/cli) `build`, `serve`, and `test` commands can then replace files with appropriate versions for your intended target environment.
 
 ## Angular CLI configurations
 
@@ -66,7 +57,7 @@ ng build --configuration debug,production,customer-facing
 `@angular/build:application` supports file replacements, an option for substituting source files before executing a build.
 Using this in combination with `--configuration` provides a mechanism for configuring environment-specific data in your application.
 
-Start by generating environments to create the `src/environments/` directory and configure the project to use file replacements.
+Start by [generating environments](cli/generate/environments) to create the `src/environments/` directory and configure the project to use file replacements.
 
 ```shell
 

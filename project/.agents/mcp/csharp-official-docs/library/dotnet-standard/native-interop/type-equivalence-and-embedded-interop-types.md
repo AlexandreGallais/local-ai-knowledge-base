@@ -1,19 +1,21 @@
 ---
 title: "Type equivalence and embedded interop types"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/native-interop/type-equivalence-and-embedded-interop-types.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Understand type equivalence between .NET types and members with a managed assembly, and COM types that are embedded into that assembly.
+ms.date: 07/08/2026
+ai-usage: ai-assisted
+helpviewer_keywords:
+  - "type equivalence"
+  - "embedded interop types"
+  - "primary interop assemblies,not necessary in CLR version 4"
+  - "NoPIA"
 ---
-
 # Type equivalence and embedded interop types
 
-In .NET, the common language runtime supports embedding type information for COM types directly into managed assemblies, instead of requiring the managed assemblies to obtain type information for COM types from interop assemblies. Because the embedded type information includes only the types and members that are actually used by a managed assembly, two managed assemblies might have very different views of the same COM type. Each managed assembly has a different `System.Type` object to represent its view of the COM type. The common language runtime supports type equivalence between these different views for interfaces, structures, enumerations, and delegates.
+In .NET, the common language runtime supports embedding type information for COM types directly into managed assemblies, instead of requiring the managed assemblies to obtain type information for COM types from interop assemblies. Because the embedded type information includes only the types and members that are actually used by a managed assembly, two managed assemblies might have very different views of the same COM type. Each managed assembly has a different <xref:System.Type> object to represent its view of the COM type. The common language runtime supports type equivalence between these different views for interfaces, structures, enumerations, and delegates.
 
 Type equivalence means that a COM object that is passed from one managed assembly to another can be cast to the appropriate managed type in the receiving assembly.
 
-> **Note:**
+> [!NOTE]
 > Type equivalence and embedded interop types simplify the deployment of applications and add-ins that use COM components, because it is not necessary to deploy interop assemblies with the applications. Developers of shared COM components still have to create primary interop assemblies (PIAs) if they want their components to be used by earlier versions of the .NET Framework.
 
 ## Type equivalence
@@ -24,28 +26,28 @@ Type equivalence means that a COM object that is passed from one managed assembl
 
 - The types have the same identity, as described in the next section.
 
-- Both types are eligible for type equivalence, as described in the Marking COM types for type equivalence section.
+- Both types are eligible for type equivalence, as described in the [Marking COM types for type equivalence](#marking-com-types-for-type-equivalence) section.
 
 ### Type identity
 
-Two types are determined to have the same identity when their scopes and identities match, in other words, if they each have the `System.Runtime.InteropServices.TypeIdentifierAttribute` attribute, and the two attributes have matching `System.Runtime.InteropServices.TypeIdentifierAttribute.Scope*` and `System.Runtime.InteropServices.TypeIdentifierAttribute.Identifier` properties. The comparison for `System.Runtime.InteropServices.TypeIdentifierAttribute.Scope*` is case-insensitive.
+Two types are determined to have the same identity when their scopes and identities match, in other words, if they each have the <xref:System.Runtime.InteropServices.TypeIdentifierAttribute> attribute, and the two attributes have matching <xref:System.Runtime.InteropServices.TypeIdentifierAttribute.Scope*> and <xref:System.Runtime.InteropServices.TypeIdentifierAttribute.Identifier> properties. The comparison for <xref:System.Runtime.InteropServices.TypeIdentifierAttribute.Scope*> is case-insensitive.
 
-If a type does not have the `System.Runtime.InteropServices.TypeIdentifierAttribute` attribute, or if it has a `System.Runtime.InteropServices.TypeIdentifierAttribute` attribute that does not specify scope and identifier, the type can still be considered for equivalence as follows:
+If a type does not have the <xref:System.Runtime.InteropServices.TypeIdentifierAttribute> attribute, or if it has a <xref:System.Runtime.InteropServices.TypeIdentifierAttribute> attribute that does not specify scope and identifier, the type can still be considered for equivalence as follows:
 
-- For interfaces, the value of the `System.Runtime.InteropServices.GuidAttribute` is used instead of the `System.Runtime.InteropServices.TypeIdentifierAttribute.Scope` property, and the `System.Type.FullName` property (that is, the type name, including the namespace) is used instead of the `System.Runtime.InteropServices.TypeIdentifierAttribute.Identifier` property.
+- For interfaces, the value of the <xref:System.Runtime.InteropServices.GuidAttribute> is used instead of the <xref:System.Runtime.InteropServices.TypeIdentifierAttribute.Scope?displayProperty=nameWithType> property, and the <xref:System.Type.FullName?displayProperty=nameWithType> property (that is, the type name, including the namespace) is used instead of the <xref:System.Runtime.InteropServices.TypeIdentifierAttribute.Identifier?displayProperty=nameWithType> property.
 
-- For structures, enumerations, and delegates, the `System.Runtime.InteropServices.GuidAttribute` of the containing assembly is used instead of the `System.Runtime.InteropServices.TypeIdentifierAttribute.Scope` property, and the `System.Type.FullName` property is used instead of the `System.Runtime.InteropServices.TypeIdentifierAttribute.Identifier` property.
+- For structures, enumerations, and delegates, the <xref:System.Runtime.InteropServices.GuidAttribute> of the containing assembly is used instead of the <xref:System.Runtime.InteropServices.TypeIdentifierAttribute.Scope> property, and the <xref:System.Type.FullName?displayProperty=nameWithType> property is used instead of the <xref:System.Runtime.InteropServices.TypeIdentifierAttribute.Identifier> property.
 
 ### Marking COM types for type equivalence
 
  You can mark a type as eligible for type equivalence in two ways:
 
-- Apply the `System.Runtime.InteropServices.TypeIdentifierAttribute` attribute to the type.
+- Apply the <xref:System.Runtime.InteropServices.TypeIdentifierAttribute> attribute to the type.
 
-- Make the type a COM import type. An interface is a COM import type if it has the `System.Runtime.InteropServices.ComImportAttribute` attribute. An interface, structure, enumeration, or delegate is a COM import type if the assembly in which it is defined has the `System.Runtime.InteropServices.ImportedFromTypeLibAttribute` attribute.
+- Make the type a COM import type. An interface is a COM import type if it has the <xref:System.Runtime.InteropServices.ComImportAttribute> attribute. An interface, structure, enumeration, or delegate is a COM import type if the assembly in which it is defined has the <xref:System.Runtime.InteropServices.ImportedFromTypeLibAttribute> attribute.
 
 ## See also
 
-- `System.Type.IsEquivalentTo*`
-- Using COM Types in Managed Code
-- Importing a Type Library as an Assembly
+- <xref:System.Type.IsEquivalentTo*>
+- [Using COM Types in Managed Code](/previous-versions/dotnet/netframework-4.0/3y76b69k(v=vs.100))
+- [Importing a Type Library as an Assembly](importing-a-type-library-as-an-assembly.md)

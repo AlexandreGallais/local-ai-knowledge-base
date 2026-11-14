@@ -1,16 +1,14 @@
 ---
-title: "dotnetup dotnet command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/reference/dotnetup-dotnet.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnetup dotnet command
+description: Command reference for running the dotnetup-managed dotnet command.
+ms.topic: reference
+ms.date: 08/07/2026
+ai-usage: ai-assisted
 ---
 
 # dotnetup dotnet command
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 ## Name
 
@@ -43,7 +41,7 @@ such as Visual Studio Code.
 
 Use Terminal Mode and launch the IDE from that terminal. On Windows, use
 Everywhere Mode to configure all applications. For more information, see
-dotnetup environment configuration.
+[dotnetup environment configuration](../concepts/environment.md).
 
 ## Arguments
 

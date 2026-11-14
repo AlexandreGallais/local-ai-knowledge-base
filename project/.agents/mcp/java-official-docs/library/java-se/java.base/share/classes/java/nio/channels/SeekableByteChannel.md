@@ -1,38 +1,28 @@
----
-title: "SeekableByteChannel interface (java.nio.channels)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/channels/SeekableByteChannel.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # SeekableByteChannel interface (java.nio.channels)
 
 ```java
 public interface SeekableByteChannel extends ByteChannel
 ```
 
-A byte channel that maintains a current *position* and allows the
+A byte channel that maintains a current <i>position</i> and allows the
 position to be changed.
 
- A seekable byte channel is connected to an entity, typically a file,
+<p> A seekable byte channel is connected to an entity, typically a file,
 that contains a variable-length sequence of bytes that can be read and
-written. The current position can be *queried* and
-*modified*. The channel also provides access to
-the current *size* of the entity to which the channel is connected. The
+written. The current position can be {@link #position() <i>queried</i>} and
+{@link #position(long) <i>modified</i>}. The channel also provides access to
+the current <i>size</i> of the entity to which the channel is connected. The
 size increases when bytes are written beyond its current size; the size
-decreases when it is *truncated*.
+decreases when it is {@link #truncate <i>truncated</i>}.
 
- The position and truncate methods
+<p> The {@link #position(long) position} and {@link #truncate truncate} methods
 which do not otherwise have a value to return are specified to return the
 channel upon which they are invoked. This allows method invocations to be
 chained. Implementations of this interface should specialize the return type
 so that method invocations on the implementation class can be chained.
 
-**Since:** 1.7
-
-**See also:** java.nio.file.Files#newByteChannel
+@since 1.7
+@see java.nio.file.Files#newByteChannel
 
 ## SeekableByteChannel.read(ByteBuffer)
 
@@ -42,16 +32,15 @@ int read(ByteBuffer dst) throws IOException
 
 Reads a sequence of bytes from this channel into the given buffer.
 
- Bytes are read starting at this channel's current position, and
+<p> Bytes are read starting at this channel's current position, and
 then the position is updated with the number of bytes actually read.
-Otherwise this method behaves exactly as specified in the `ReadableByteChannel` interface.
+Otherwise this method behaves exactly as specified in the {@link
+ReadableByteChannel} interface.
 
-Throws:
-
-- `ClosedChannelException`: (inherited documentation)
-- `AsynchronousCloseException`: (inherited documentation)
-- `ClosedByInterruptException`: (inherited documentation)
-- `NonReadableChannelException`: (inherited documentation)
+@throws  ClosedChannelException      {@inheritDoc}
+@throws  AsynchronousCloseException  {@inheritDoc}
+@throws  ClosedByInterruptException  {@inheritDoc}
+@throws  NonReadableChannelException {@inheritDoc}
 
 ## SeekableByteChannel.write(ByteBuffer)
 
@@ -61,21 +50,19 @@ int write(ByteBuffer src) throws IOException
 
 Writes a sequence of bytes to this channel from the given buffer.
 
- Bytes are written starting at this channel's current position, unless
+<p> Bytes are written starting at this channel's current position, unless
 the channel is connected to an entity such as a file that is opened with
-the APPEND option, in
+the {@link java.nio.file.StandardOpenOption#APPEND APPEND} option, in
 which case the position is first advanced to the end. The entity to which
 the channel is connected is grown, if necessary, to accommodate the
 written bytes, and then the position is updated with the number of bytes
 actually written. Otherwise this method behaves exactly as specified by
-the `WritableByteChannel` interface.
+the {@link WritableByteChannel} interface.
 
-Throws:
-
-- `ClosedChannelException`: (inherited documentation)
-- `AsynchronousCloseException`: (inherited documentation)
-- `ClosedByInterruptException`: (inherited documentation)
-- `NonWritableChannelException`: (inherited documentation)
+@throws  ClosedChannelException      {@inheritDoc}
+@throws  AsynchronousCloseException  {@inheritDoc}
+@throws  ClosedByInterruptException  {@inheritDoc}
+@throws  NonWritableChannelException {@inheritDoc}
 
 ## SeekableByteChannel.position()
 
@@ -85,14 +72,14 @@ long position() throws IOException
 
 Returns this channel's position.
 
-**Returns:** This channel's position,
+@return  This channel's position,
          a non-negative integer counting the number of bytes
          from the beginning of the entity to the current position
 
-Throws:
-
-- `ClosedChannelException`: If this channel is closed
-- `IOException`: If some other I/O error occurs
+@throws  ClosedChannelException
+         If this channel is closed
+@throws  IOException
+         If some other I/O error occurs
 
 ## SeekableByteChannel.position(long)
 
@@ -102,7 +89,7 @@ SeekableByteChannel position(long newPosition) throws IOException
 
 Sets this channel's position.
 
- Setting the position to a value that is greater than the current size
+<p> Setting the position to a value that is greater than the current size
 is legal but does not change the size of the entity.  A later attempt to
 read bytes at such a position will immediately return an end-of-file
 indication.  A later attempt to write bytes at such a position will cause
@@ -110,21 +97,23 @@ the entity to grow to accommodate the new bytes; the values of any bytes
 between the previous end-of-file and the newly-written bytes are
 unspecified.
 
- Setting the channel's position is not recommended when connected to
-an entity, typically a file, that is opened with the APPEND option. When opened for
+<p> Setting the channel's position is not recommended when connected to
+an entity, typically a file, that is opened with the {@link
+java.nio.file.StandardOpenOption#APPEND APPEND} option. When opened for
 append, the position is first advanced to the end before writing.
 
-Parameters:
+@param  newPosition
+        The new position, a non-negative integer counting
+        the number of bytes from the beginning of the entity
 
-- `newPosition`: The new position, a non-negative integer counting the number of bytes from the beginning of the entity
+@return  This channel
 
-**Returns:** This channel
-
-Throws:
-
-- `ClosedChannelException`: If this channel is closed
-- `IllegalArgumentException`: If the new position is negative
-- `IOException`: If some other I/O error occurs
+@throws  ClosedChannelException
+         If this channel is closed
+@throws  IllegalArgumentException
+         If the new position is negative
+@throws  IOException
+         If some other I/O error occurs
 
 ## SeekableByteChannel.size()
 
@@ -134,12 +123,12 @@ long size() throws IOException
 
 Returns the current size of entity to which this channel is connected.
 
-**Returns:** The current size, measured in bytes
+@return  The current size, measured in bytes
 
-Throws:
-
-- `ClosedChannelException`: If this channel is closed
-- `IOException`: If some other I/O error occurs
+@throws  ClosedChannelException
+         If this channel is closed
+@throws  IOException
+         If some other I/O error occurs
 
 ## SeekableByteChannel.truncate(long)
 
@@ -150,24 +139,26 @@ SeekableByteChannel truncate(long size) throws IOException
 Truncates the entity, to which this channel is connected, to the given
 size.
 
- If the given size is less than the current size then the entity is
+<p> If the given size is less than the current size then the entity is
 truncated, discarding any bytes beyond the new end. If the given size is
 greater than or equal to the current size then the entity is not modified.
 In either case, if the current position is greater than the given size
 then it is set to that size.
 
- An implementation of this interface may prohibit truncation when
-connected to an entity, typically a file, opened with the APPEND option.
+<p> An implementation of this interface may prohibit truncation when
+connected to an entity, typically a file, opened with the {@link
+java.nio.file.StandardOpenOption#APPEND APPEND} option.
 
-Parameters:
+@param  size
+        The new size, a non-negative byte count
 
-- `size`: The new size, a non-negative byte count
+@return  This channel
 
-**Returns:** This channel
-
-Throws:
-
-- `NonWritableChannelException`: If this channel was not opened for writing
-- `ClosedChannelException`: If this channel is closed
-- `IllegalArgumentException`: If the new size is negative
-- `IOException`: If some other I/O error occurs
+@throws  NonWritableChannelException
+         If this channel was not opened for writing
+@throws  ClosedChannelException
+         If this channel is closed
+@throws  IllegalArgumentException
+         If the new size is negative
+@throws  IOException
+         If some other I/O error occurs

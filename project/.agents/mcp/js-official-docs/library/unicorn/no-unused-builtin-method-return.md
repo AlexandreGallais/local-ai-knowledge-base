@@ -1,17 +1,10 @@
----
-title: "no-unused-builtin-method-return"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-unused-builtin-method-return.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-unused-builtin-method-return
 
 📝 Disallow ignoring the return value of selected built-in methods.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
+
+<!-- end auto-generated rule header -->
 
 Ignoring the result of array methods like `.map()`, Set operations like `.union()`, or Temporal updates like `.add()` is usually a bug or dead code.
 
@@ -122,4 +115,4 @@ Bindings annotated with a nullable union, along with optional parameters, are le
 
 The rule checks directly discarded calls, including optional calls, `await`, TypeScript assertion wrappers, every element but the last of a comma expression, and `for` initializers and updates. It intentionally does not inspect comparison expressions (including Yoda comparisons), logical expressions, or conditional expressions for discarded results.
 
-`no-unused-iterator-helper` handles discarded lazy iterator helpers, which require different behavior because `void` does not consume the iterator or run its callback. This rule skips iterator helper calls recognized by that rule.
+[`no-unused-iterator-helper`](./no-unused-iterator-helper.md) handles discarded lazy iterator helpers, which require different behavior because `void` does not consume the iterator or run its callback. This rule skips iterator helper calls recognized by that rule.

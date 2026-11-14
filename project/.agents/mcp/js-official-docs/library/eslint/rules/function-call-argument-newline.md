@@ -1,14 +1,12 @@
 ---
-title: "function-call-argument-newline"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/function-call-argument-newline.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: function-call-argument-newline
+rule_type: layout
+related_rules:
+- function-paren-newline
+- func-call-spacing
+- object-property-newline
+- array-element-newline
 ---
-
-# function-call-argument-newline
-
 A number of style guides require or disallow line breaks between arguments of a function call.
 
 ## Rule Details
@@ -27,7 +25,7 @@ This rule has a string option:
 
 Examples of **incorrect** code for this rule with the default `"always"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint function-call-argument-newline: ["error", "always"]*/
@@ -44,9 +42,11 @@ baz("one", "two", (x) => {
 });
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"always"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint function-call-argument-newline: ["error", "always"]*/
@@ -81,11 +81,13 @@ baz(
 );
 ```
 
+:::
+
 ### never
 
 Examples of **incorrect** code for this rule with the `"never"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint function-call-argument-newline: ["error", "never"]*/
@@ -111,9 +113,11 @@ baz(
 );
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"never"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint function-call-argument-newline: ["error", "never"]*/
@@ -136,11 +140,13 @@ baz("one", "two", (x) => {
 });
 ```
 
+:::
+
 ### consistent
 
 Examples of **incorrect** code for this rule with the `"consistent"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint function-call-argument-newline: ["error", "consistent"]*/
@@ -160,9 +166,11 @@ baz("one", "two",
 );
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"consistent"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint function-call-argument-newline: ["error", "consistent"]*/
@@ -207,6 +215,8 @@ baz(
     }
 );
 ```
+
+:::
 
 ## When Not To Use It
 

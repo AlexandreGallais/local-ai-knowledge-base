@@ -1,24 +1,44 @@
 ---
 title: "Resolve errors from invalid expression contexts"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/compiler-messages/expression-form-restrictions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "This article helps you diagnose and correct C# compiler errors and warnings from expressions that appear in contexts where they are not permitted"
+f1_keywords:
+  - "CS0175"
+  - "CS0186"
+  - "CS1547"
+  - "CS8115"
+  - "CS8185"
+  - "CS8209"
+  - "CS8310"
+  - "CS8312"
+helpviewer_keywords:
+  - "CS0175"
+  - "CS0186"
+  - "CS1547"
+  - "CS8115"
+  - "CS8185"
+  - "CS8209"
+  - "CS8310"
+  - "CS8312"
+ms.date: 08/20/2026
+ai-usage: ai-assisted
 ---
 
 # Resolve errors from invalid expression contexts
 
 This article covers the following compiler errors and warnings:
 
-- **CS0175**: *Use of keyword 'base' is not valid in this context*
-- **CS0186**: *Use of null is not valid in this context*
-- **CS1547**: *Keyword 'void' cannot be used in this context*
-- **CS8115**: *A throw expression is not allowed in this context.*
-- **CS8185**: *A declaration is not allowed in this context.*
-- **CS8209**: *A value of type 'void' may not be assigned.*
-- **CS8310**: *Operator 'operator' cannot be applied to operand 'operand'*
-- **CS8312**: *Use of default literal is not valid in this context*
+<!-- The text in this list generates issues for Acrolinx, because it doesn't use contractions.
+That's by design. The text closely matches the text of the compiler error or warning for SEO purposes.
+ -->
+
+- [**CS0175**](#invalid-expression-contexts): *Use of keyword 'base' is not valid in this context*
+- [**CS0186**](#invalid-expression-contexts): *Use of null is not valid in this context*
+- [**CS1547**](#invalid-expression-contexts): *Keyword 'void' cannot be used in this context*
+- [**CS8115**](#invalid-expression-contexts): *A throw expression is not allowed in this context.*
+- [**CS8185**](#invalid-expression-contexts): *A declaration is not allowed in this context.*
+- [**CS8209**](#invalid-expression-contexts): *A value of type 'void' may not be assigned.*
+- [**CS8310**](#invalid-expression-contexts): *Operator 'operator' cannot be applied to operand 'operand'*
+- [**CS8312**](#invalid-expression-contexts): *Use of default literal is not valid in this context*
 
 ## Invalid expression contexts
 

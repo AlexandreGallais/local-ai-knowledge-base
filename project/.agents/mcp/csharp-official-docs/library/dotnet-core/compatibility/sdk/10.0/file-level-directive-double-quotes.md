@@ -1,10 +1,9 @@
 ---
 title: "Breaking change - Double quotes in file-level directives are disallowed"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/file-level-directive-double-quotes.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where double quotes in file-level directives are disallowed."
+ms.date: 11/04/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/48916
 ---
 
 # Double quotes in file-level directives are disallowed
@@ -17,7 +16,7 @@ Usage of double quotes `"` inside `#:` file-level directives is now a build-time
 
 ## Previous behavior
 
-In .NET 10 RC2 and older .NET 10 previews, quotes in directives weren't blocked but they didn't work as expected. They were only escaped as any other special character and passed to MSBuild. For example, `#:property Prop="my test"` resulted in `<Prop>"my test"</Prop>`.
+In .NET 10 RC2 and older .NET 10 previews, quotes in directives weren't blocked but they didn't work as expected. They were only escaped as any other special character and passed to MSBuild. For example, `#:property Prop="my test"` resulted in `<Prop>&quot;my test&quot;</Prop>`.
 
 ## New behavior
 
@@ -27,7 +26,7 @@ An error is reported if a double quote `"` is encountered in any file-level dire
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 

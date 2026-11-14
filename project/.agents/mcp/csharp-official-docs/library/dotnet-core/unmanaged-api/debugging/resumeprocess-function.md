@@ -1,15 +1,26 @@
 ---
+description: "Learn more about: ResumeProcess Function"
 title: "ResumeProcess Function"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/resumeprocess-function.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/21/2022"
+api_name:
+  - "ResumeProcess"
+api_location:
+  - "dbgshim.dll"
+  - "libdbgshim.so"
+  - "libdbgshim.dylib"
+f1_keywords:
+  - "ResumeProcess"
+helpviewer_keywords:
+  - "debugging API [.NET Core]"
+  - ".NET Core, debugging"
+  - "ResumeProcess function"
+ms.assetid: 5e3c3958-80bb-43b1-a96b-dd3e6dbd9cd7
+topic_type:
+  - "apiref"
 ---
-
 # ResumeProcess function
 
-Resumes the process using the resume handle returned by the CreateProcessForLaunch function.
+Resumes the process using the resume handle returned by the [CreateProcessForLaunch function](createprocessforlaunch-function.md).
 
 ## Syntax
 
@@ -22,7 +33,7 @@ HRESULT ResumeProcess (
 ## Parameters
 
  `hResumeHandle`\
- [in] The resume handle returned by CreateProcessForLaunch function.
+ [in] The resume handle returned by [CreateProcessForLaunch function](createprocessforlaunch-function.md).
 
 ## Return value
 
@@ -34,7 +45,7 @@ HRESULT ResumeProcess (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** dbgshim.h
 

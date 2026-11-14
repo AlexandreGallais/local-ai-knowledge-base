@@ -1,12 +1,3 @@
----
-title: "RSAPrivateKeySpec class (java.security.spec)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/spec/RSAPrivateKeySpec.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # RSAPrivateKeySpec class (java.security.spec)
 
 ```java
@@ -15,19 +6,16 @@ public class RSAPrivateKeySpec implements KeySpec
 
 This class specifies an RSA private key.
 
-**Since:** 1.2
+@author Jan Luehe
+@since 1.2
 
-**See also:** java.security.Key
 
-**See also:** java.security.KeyFactory
-
-**See also:** KeySpec
-
-**See also:** PKCS8EncodedKeySpec
-
-**See also:** RSAPublicKeySpec
-
-**See also:** RSAPrivateCrtKeySpec
+@see java.security.Key
+@see java.security.KeyFactory
+@see KeySpec
+@see PKCS8EncodedKeySpec
+@see RSAPublicKeySpec
+@see RSAPrivateCrtKeySpec
 
 ## RSAPrivateKeySpec.RSAPrivateKeySpec(BigInteger, BigInteger)
 
@@ -37,10 +25,8 @@ public RSAPrivateKeySpec(BigInteger modulus, BigInteger privateExponent)
 
 Creates a new RSAPrivateKeySpec.
 
-Parameters:
-
-- `modulus`: the modulus
-- `privateExponent`: the private exponent
+@param modulus the modulus
+@param privateExponent the private exponent
 
 ## RSAPrivateKeySpec.RSAPrivateKeySpec(BigInteger, BigInteger, AlgorithmParameterSpec)
 
@@ -50,13 +36,10 @@ public RSAPrivateKeySpec(BigInteger modulus, BigInteger privateExponent, Algorit
 
 Creates a new RSAPrivateKeySpec with additional key parameters.
 
-Parameters:
-
-- `modulus`: the modulus
-- `privateExponent`: the private exponent
-- `params`: the parameters associated with this key, may be null
-
-**Since:** 11
+@param modulus the modulus
+@param privateExponent the private exponent
+@param params the parameters associated with this key, may be null
+@since 11
 
 ## RSAPrivateKeySpec.getModulus()
 
@@ -66,7 +49,7 @@ public BigInteger getModulus()
 
 Returns the modulus.
 
-**Returns:** the modulus
+@return the modulus
 
 ## RSAPrivateKeySpec.getPrivateExponent()
 
@@ -76,7 +59,7 @@ public BigInteger getPrivateExponent()
 
 Returns the private exponent.
 
-**Returns:** the private exponent
+@return the private exponent
 
 ## RSAPrivateKeySpec.getParams()
 
@@ -87,6 +70,5 @@ public AlgorithmParameterSpec getParams()
 Returns the parameters associated with this key, may be null if not
 present.
 
-**Returns:** the parameters associated with this key
-
-**Since:** 11
+@return the parameters associated with this key
+@since 11

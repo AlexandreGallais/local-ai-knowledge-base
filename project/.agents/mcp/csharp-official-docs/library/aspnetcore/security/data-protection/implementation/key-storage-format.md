@@ -1,15 +1,13 @@
 ---
-title: "Key storage format in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/data-protection/implementation/key-storage-format.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Key storage format in ASP.NET Core
+description: Learn implementation details of the ASP.NET Core Data Protection key storage format.
+ms.date: 04/08/2020
 ---
+# Key storage format in ASP.NET Core
 
-# Key <example-value> format in ASP.NET Core
+<a name="data-protection-implementation-key-storage-format"></a>
 
-Objects are stored at rest in XML representation. The default directory for key <example-value> is:
+Objects are stored at rest in XML representation. The default directory for key storage is:
 
 * Windows: *%LOCALAPPDATA%\ASP.NET\DataProtection-Keys\*
 * macOS / Linux: *$HOME/.aspnet/DataProtection-Keys*
@@ -28,7 +26,7 @@ Keys exist as top-level objects in the key repository. By convention keys have t
     <descriptor>
       <encryption algorithm="AES_256_CBC" />
       <validation algorithm="HMACSHA256" />
-      <enc:encryptedSecret <example-value>"<example-value>" xmlns:enc="<example-value>">
+      <enc:encryptedSecret decryptorType="{decryptorType}" xmlns:enc="...">
         <encryptedKey>
           <!-- This key is encrypted with Windows DPAPI. -->
           <value>AQAAANCM...8/zeP8lcwAg==</value>
@@ -59,7 +57,7 @@ The particular format of the \<descriptor> element depends on the authenticated 
 
 ## The \<encryptedSecret> element
 
-An **<encryptedSecret>** element which contains the encrypted form of the secret key <example-value> may be present if encryption of secrets at rest is enabled. The attribute `decryptorType` is the assembly-qualified name of a type which implements `Microsoft.AspNetCore.DataProtection.XmlEncryption.IXmlDecryptor`. This type is responsible for reading the inner **<encryptedKey>** element and decrypting it to recover the original plaintext.
+An **&lt;encryptedSecret&gt;** element which contains the encrypted form of the secret key material may be present if [encryption of secrets at rest is enabled](key-encryption-at-rest.md). The attribute `decryptorType` is the assembly-qualified name of a type which implements <xref:Microsoft.AspNetCore.DataProtection.XmlEncryption.IXmlDecryptor>. This type is responsible for reading the inner **&lt;encryptedKey&gt;** element and decrypting it to recover the original plaintext.
 
 As with `<descriptor>`, the particular format of the `<encryptedSecret>` element depends on the at-rest encryption mechanism in use. In the above example, the master key is encrypted using Windows DPAPI per the comment.
 

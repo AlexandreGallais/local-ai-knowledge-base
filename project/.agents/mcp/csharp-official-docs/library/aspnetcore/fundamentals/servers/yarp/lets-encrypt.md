@@ -1,20 +1,20 @@
 ---
-title: "YARP Lets Encrypt"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/lets-encrypt.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: YARP Lets Encrypt
+description: YARP Lets Encrypt
+monikerRange: '<= aspnetcore-7.0'
+ms.date: 06/14/2025
+ms.topic: concept-article
+content_well_notification: AI-contribution
+ai-usage: ai-assisted
 ---
-
 # YARP Lets Encrypt
 
-> **Note:**
-> The `LettuceEncrypt` NuGet package described in this article is archived and no longer supported, so the package isn't recommended for use.
+> [!NOTE]
+> The [`LettuceEncrypt` NuGet package](https://github.com/natemcmaster/LettuceEncrypt) described in this article is archived and no longer supported, so the package isn't recommended for use.
 
 ## Introduction
 
-YARP can support the certificate authority Lets Encrypt by using the API of another ASP.NET Core project, `LettuceEncrypt`. It allows you to set up TLS between the client and YARP with minimal configuration.
+YARP can support the certificate authority [Lets Encrypt](https://letsencrypt.org/) by using the API of another ASP.NET Core project, [`LettuceEncrypt`](https://github.com/natemcmaster/LettuceEncrypt). It allows you to set up TLS between the client and YARP with minimal configuration.
 
 ## Requirements
 
@@ -50,7 +50,7 @@ There are required options for `LettuceEncrypt` that should be set. See the exam
     "DomainNames": [ "example.com" ],
 
     // You must specify an email address to register with the certificate authority
-    "EmailAddress": "user@example.com"
+    "EmailAddress": "it-admin@example.com"
   }
 }
 ```
@@ -61,7 +61,7 @@ There are required options for `LettuceEncrypt` that should be set. See the exam
 services.AddLettuceEncrypt();
 ```
 
-For more options (for example, saving certificates) see the examples in the `LettuceEncrypt` project README.
+For more options (for example, saving certificates) see the examples in the [`LettuceEncrypt` project README](https://github.com/natemcmaster/LettuceEncrypt).
 
 ## Kestrel Endpoints
 

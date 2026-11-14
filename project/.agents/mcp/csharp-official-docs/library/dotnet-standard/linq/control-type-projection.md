@@ -1,19 +1,19 @@
 ---
-title: "How to control the type of a projection - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/control-type-projection.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to control the type of a projection - LINQ to XML
+description: You can control the type of collection that your query returns; it need not be an IEnumerable of XElements.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
-
 # How to control the type of a projection (LINQ to XML)
 
-*Projection* is the process of filtering a set of data, changing its shape and perhaps its type. Most query expressions do projections. Most of the query expressions in this section evaluate to `System.Collections.Generic.IEnumerable`1` of `System.Xml.Linq.XElement`, but you can create collections of other types. This article shows how to do this.
+*Projection* is the process of filtering a set of data, changing its shape and perhaps its type. Most query expressions do projections. Most of the query expressions in this section evaluate to <xref:System.Collections.Generic.IEnumerable`1> of <xref:System.Xml.Linq.XElement>, but you can create collections of other types. This article shows how to do this.
 
 ## Example: Define a new type and create a query that creates an IEnumerable of that type
 
-The following example defines a new type, `Customer`, and the query expression instantiates new `Customer` objects in the `Select` clause. This causes the type of the query expression to be `System.Collections.Generic.IEnumerable`1` of `Customer`. The example uses XML document Sample XML file: Customers and orders.
+The following example defines a new type, `Customer`, and the query expression instantiates new `Customer` objects in the `Select` clause. This causes the type of the query expression to be <xref:System.Collections.Generic.IEnumerable`1> of `Customer`. The example uses XML document [Sample XML file: Customers and orders](sample-xml-file-customers-orders.md).
 
 ```csharp
 public class Customer
@@ -55,6 +55,7 @@ class Program
         foreach (Customer cust in custList)
             Console.WriteLine(cust);
     }
+
 
 }
 ```
@@ -130,5 +131,5 @@ LETSS:Let's Stop N Shop:Jaime Yorres
 
 ## See also
 
-- `System.Linq.Enumerable.Select*`
-- Projections and Transformations (LINQ to XML) (Visual Basic)
+- <xref:System.Linq.Enumerable.Select*>
+- [Projections and Transformations (LINQ to XML) (Visual Basic)](./work-dictionaries-linq-xml.md)

@@ -1,13 +1,11 @@
 ---
-title: "no-with"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-with.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-with
+rule_type: suggestion
+further_reading:
+- https://web.archive.org/web/20200717110117/https://yuiblog.com/blog/2006/04/11/with-statement-considered-harmful/
 ---
 
-# no-with
+
 
 The `with` statement is potentially problematic because it adds members of an object to the current scope, making it impossible to tell what a variable inside the block actually refers to.
 
@@ -19,7 +17,7 @@ If ESLint parses code in strict mode, the parser (instead of this rule) reports 
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint no-with: "error"*/
@@ -29,15 +27,19 @@ with (point) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct { "sourceType": "script" }
 
 ```js
 /*eslint no-with: "error"*/
 
 const r = ({x, y}) => Math.sqrt(x * x + y * y);
 ```
+
+:::
 
 ## Options
 

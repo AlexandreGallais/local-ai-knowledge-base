@@ -1,137 +1,43 @@
 ---
-title: "General Data Protection Regulation (GDPR) support in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/gdpr.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: General Data Protection Regulation (GDPR) support in ASP.NET Core
+ai-usage: ai-assisted
+description: Learn how to access the GDPR extension points in an ASP.NET Core web app.
+ms.date: 07/11/2019
 ---
-
 # EU General Data Protection Regulation (GDPR) support in ASP.NET Core
 
-By Rick Anderson
+By [Rick Anderson](https://twitter.com/RickAndMSFT)
 
-ASP.NET Core provides APIs and templates to help meet some of the EU General Data Protection Regulation (GDPR) requirements:
+ASP.NET Core provides APIs and templates to help meet some of the [EU General Data Protection Regulation (GDPR)](https://ec.europa.eu/info/law/law-topic/data-protection/reform/what-does-general-data-protection-regulation-gdpr-govern_en) requirements:
+
+:::moniker range=">= aspnetcore-7.0"
 
 * The project templates include extension points and stubbed markup that you can replace with your privacy and cookie use policy.
 * The `Pages/Privacy.cshtml` page or `Views/Home/Privacy.cshtml` view provides a page to detail your site's privacy policy.
 
-For GDPR guidance that applies to Blazor apps, see EU General Data Protection Regulation (GDPR) support in ASP.NET Core Blazor.
+For GDPR guidance that applies to Blazor apps, see [EU General Data Protection Regulation (GDPR) support in ASP.NET Core Blazor](../blazor/security/gdpr.md).
 
 To enable the default cookie consent feature like that found in the ASP.NET Core 2.2 templates in a current ASP.NET Core template generated app, add the following highlighted code to `Program.cs`:
 
-  ```csharp
-var builder = WebApplication.CreateBuilder(args);
+  [!code-csharp[Main](~/security/gdpr/samples/RP6.0/WebGDPR/Program.cs?name=snippet_1&highlight=4-11,23)]
 
-builder.Services.AddRazorPages();
-builder.Services.Configure<CookiePolicyOptions>(options =>
-{
-    // This lambda determines whether user consent for non-essential 
-    // cookies is needed for a given request.
-    options.CheckConsentNeeded = context => true;
-
-    options.MinimumSameSitePolicy = SameSiteMode.None;
-});
-
-var app = builder.Build();
-
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-    app.UseHsts();
-}
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseCookiePolicy();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapRazorPages();
-
-app.Run();
-```
-
-In the preceding code, `Microsoft.AspNetCore.Builder.CookiePolicyOptions` and `Microsoft.AspNetCore.Builder.CookiePolicyAppBuilderExtensions.UseCookiePolicy*` are used.
+In the preceding code, <xref:Microsoft.AspNetCore.Builder.CookiePolicyOptions> and <xref:Microsoft.AspNetCore.Builder.CookiePolicyAppBuilderExtensions.UseCookiePolicy*> are used.
 
 * Add the cookie consent partial to the `_Layout.cshtml` file:
 
-  ```cshtml
-            @*Previous markup removed for brevity*@
-    </header>
-    <div class="container">
-        <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - WebGDPR - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
-</html>
-```
+  [!code-cshtml[Main](~/security/gdpr/samples/RP6.0/WebGDPR/Pages/Shared/_Layout.cshtml?name=snippet&highlight=4)]
 
 * Add the `_CookieConsentPartial.cshtml` file to the project:
 
-  ```cshtml
-﻿@using Microsoft.AspNetCore.Http.Features
+  [!code-cshtml[Main](~/security/gdpr/samples/RP6.0/WebGDPR/Pages/Shared/_CookieConsentPartial.cshtml)]
 
-@{
-    var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
-    var showBanner = !consentFeature?.CanTrack ?? false;
-    var cookieString = consentFeature?.CreateConsentCookie();
-}
-
-@if (showBanner)
-{
-    <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
-        Use this space to summarize your privacy and cookie use policy. <a asp-page="/Privacy">Learn More</a>.
-        <button type="button" class="accept-policy close" data-bs-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
-            <span aria-hidden="true">Accept</span>
-        </button>
-    </div>
-    <script>
-        (function () {
-            var button = document.querySelector("#cookieConsent button[data-cookie-string]");
-            button.addEventListener("click", function (event) {
-                document.cookie = button.dataset.cookieString;
-            }, false);
-        })();
-    </script>
-}
-```
-
-* Select the ASP.NET Core 2.2 version of this article to read about the cookie consent feature.
+* Select the ASP.NET Core [2.2 version](gdpr.md?view=aspnetcore-2.2&preserve-view=true) of this article to read about the cookie consent feature.
 
 ## Customize the cookie consent value
 
-Specify the value used to track if the user consented to the cookie use policy using the `CookiePolicyOptions.ConsentCookieValue` property:
+Specify the value used to track if the user consented to the cookie use policy using the [`CookiePolicyOptions.ConsentCookieValue`](/dotnet/api/microsoft.aspnetcore.builder.cookiepolicyoptions.consentcookievalue) property:
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddRazorPages();
-builder.Services.Configure<CookiePolicyOptions>(options =>
-{
-    options.CheckConsentNeeded = context => true;
-    options.MinimumSameSitePolicy = SameSiteMode.None;
-    options.ConsentCookieValue = "true";
-});
-
-var app = builder.Build();
-```
+[!code-csharp[Main](~/security/gdpr/samples/RP6.0/WebGDPR/Program.cs?name=snippet_2&highlight=8)]
 
 ## Encryption at rest
 
@@ -144,18 +50,24 @@ Some databases and storage mechanisms allow for encryption at rest. Encryption a
 
 For example:
 
-* Microsoft SQL and Azure SQL provide Transparent Data Encryption (TDE).
-* SQL Azure encrypts the database by default
-* Azure Blobs, Files, Table, and Queue Storage are encrypted by default.
+* Microsoft SQL and Azure SQL provide [Transparent Data Encryption](/sql/relational-databases/security/encryption/transparent-data-encryption) (TDE).
+* [SQL Azure encrypts the database by default](https://azure.microsoft.com/updates/newly-created-azure-sql-databases-encrypted-by-default/)
+* [Azure Blobs, Files, Table, and Queue Storage are encrypted by default](https://azure.microsoft.com/blog/announcing-default-encryption-for-azure-blobs-files-table-and-queue-storage/).
 
 For databases that don't provide built-in encryption at rest, you may be able to use disk encryption to provide the same protection. For example:
 
-* BitLocker for Windows Server
+* [BitLocker for Windows Server](/windows/security/information-protection/bitlocker/bitlocker-how-to-deploy-on-windows-server)
 * Linux:
-  * eCryptfs
-  * EncFS.
+  * [eCryptfs](https://launchpad.net/ecryptfs)
+  * [EncFS](https://github.com/vgough/encfs).
 
 ## Related content
 
-* Microsoft Trust Center: Safeguard individual privacy with cloud services from Microsoft: GDPR
-* European Commission: Data protection explained
+* [Microsoft Trust Center: Safeguard individual privacy with cloud services from Microsoft: GDPR](https://www.microsoft.com/trust-center/privacy/gdpr-overview)
+* [European Commission: Data protection explained](https://ec.europa.eu/info/law/law-topic/data-protection/reform/what-does-general-data-protection-regulation-gdpr-govern_en)
+
+:::moniker-end
+
+[!INCLUDE[](~//security/gdpr/includes/gdpr2.md)]
+[!INCLUDE[](~//security/gdpr/includes/gdpr35.md)]
+[!INCLUDE[](~//security/gdpr/includes/gdpr6.md)]

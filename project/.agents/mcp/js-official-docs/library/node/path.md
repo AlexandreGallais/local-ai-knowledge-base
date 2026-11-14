@@ -1,15 +1,10 @@
----
-title: "Path"
-tool: "node"
-version: "26.13"
-source: "https://github.com/nodejs/node/blob/e9c277643b0249c50f6e6de5413be8a88ea11b6a/doc/api/path.md"
-commit: "e9c277643b0249c50f6e6de5413be8a88ea11b6a"
-license: "MIT"
----
-
 # Path
 
+<!--introduced_in=v0.10.0-->
+
 > Stability: 2 - Stable
+
+<!-- source_link=lib/path.js -->
 
 The `node:path` module provides utilities for working with file and directory
 paths. It can be accessed using:
@@ -46,7 +41,7 @@ path.basename('C:\\temp\\myfile.html');
 ```
 
 To achieve consistent results when working with Windows file paths on any
-operating system, use `path.win32`:
+operating system, use [`path.win32`][]:
 
 On POSIX and Windows:
 
@@ -56,7 +51,7 @@ path.win32.basename('C:\\temp\\myfile.html');
 ```
 
 To achieve consistent results when working with POSIX file paths on any
-operating system, use `path.posix`:
+operating system, use [`path.posix`][]:
 
 On POSIX and Windows:
 
@@ -69,16 +64,24 @@ On Windows Node.js follows the concept of per-drive working directory.
 This behavior can be observed when using a drive path without a backslash. For
 example, `path.resolve('C:\\')` can potentially return a different result than
 `path.resolve('C:')`. For more information, see
-this MSDN page.
+[this MSDN page][MSDN-Rel-Path].
 
 ## `path.basename(path[, suffix])`
+
+<!-- YAML
+added: v0.1.25
+changes:
+  - version: v6.0.0
+    pr-url: https://github.com/nodejs/node/pull/5348
+    description: Passing a non-string as the `path` argument will throw now.
+-->
 
 * `path` {string}
 * `suffix` {string} An optional suffix to remove
 * Returns: {string}
 
 The `path.basename()` method returns the last portion of a `path`, similar to
-the Unix `basename` command. Trailing directory separators are
+the Unix `basename` command. Trailing [directory separators][`path.sep`] are
 ignored.
 
 ```js
@@ -102,10 +105,14 @@ path.win32.basename('C:\\foo.HTML', '.html');
 // Returns: 'foo.HTML'
 ```
 
-A `TypeError` is thrown if `path` is not a string or if `suffix` is given
+A [`TypeError`][] is thrown if `path` is not a string or if `suffix` is given
 and is not a string.
 
 ## `path.delimiter`
+
+<!-- YAML
+added: v0.9.3
+-->
 
 * Type: {string}
 
@@ -136,21 +143,37 @@ process.env.PATH.split(path.delimiter);
 
 ## `path.dirname(path)`
 
+<!-- YAML
+added: v0.1.16
+changes:
+  - version: v6.0.0
+    pr-url: https://github.com/nodejs/node/pull/5348
+    description: Passing a non-string as the `path` argument will throw now.
+-->
+
 * `path` {string}
 * Returns: {string}
 
 The `path.dirname()` method returns the directory name of a `path`, similar to
 the Unix `dirname` command. Trailing directory separators are ignored, see
-`path.sep`.
+[`path.sep`][].
 
 ```js
 path.dirname('/foo/bar/baz/asdf/quux');
 // Returns: '/foo/bar/baz/asdf'
 ```
 
-A `TypeError` is thrown if `path` is not a string.
+A [`TypeError`][] is thrown if `path` is not a string.
 
 ## `path.extname(path)`
+
+<!-- YAML
+added: v0.1.25
+changes:
+  - version: v6.0.0
+    pr-url: https://github.com/nodejs/node/pull/5348
+    description: Passing a non-string as the `path` argument will throw now.
+-->
 
 * `path` {string}
 * Returns: {string}
@@ -181,9 +204,17 @@ path.extname('.index.md');
 // Returns: '.md'
 ```
 
-A `TypeError` is thrown if `path` is not a string.
+A [`TypeError`][] is thrown if `path` is not a string.
 
 ## `path.format(pathObject)`
+
+<!-- YAML
+added: v0.11.15
+changes:
+  - version: v19.0.0
+    pr-url: https://github.com/nodejs/node/pull/44349
+    description: The dot will be added if it is not specified in `ext`.
+-->
 
 * `pathObject` {Object} Any JavaScript object having the following properties:
   * `dir` {string}
@@ -194,7 +225,7 @@ A `TypeError` is thrown if `path` is not a string.
 * Returns: {string}
 
 The `path.format()` method returns a path string from an object. This is the
-opposite of `path.parse()`.
+opposite of [`path.parse()`][].
 
 When providing properties to the `pathObject` remember that there are
 combinations where one property has priority over another:
@@ -254,6 +285,18 @@ path.format({
 
 ## `path.matchesGlob(path, pattern)`
 
+<!-- YAML
+added:
+  - v22.5.0
+  - v20.17.0
+changes:
+  - version:
+    - v24.8.0
+    - v22.20.0
+    pr-url: https://github.com/nodejs/node/pull/59572
+    description: Marking the API stable.
+-->
+
 * `path` {string} The path to glob-match against.
 * `pattern` {string} The glob to check the path against.
 * Returns: {boolean} Whether or not the `path` matched the `pattern`.
@@ -267,9 +310,13 @@ path.matchesGlob('/foo/bar', '/foo/*'); // true
 path.matchesGlob('/foo/bar*', 'foo/bird'); // false
 ```
 
-A `TypeError` is thrown if `path` or `pattern` are not strings.
+A [`TypeError`][] is thrown if `path` or `pattern` are not strings.
 
 ## `path.isAbsolute(path)`
+
+<!-- YAML
+added: v0.11.2
+-->
 
 * `path` {string}
 * Returns: {boolean}
@@ -301,9 +348,13 @@ path.isAbsolute('bar/baz');     // false
 path.isAbsolute('.');           // false
 ```
 
-A `TypeError` is thrown if `path` is not a string.
+A [`TypeError`][] is thrown if `path` is not a string.
 
 ## `path.join([...paths])`
+
+<!-- YAML
+added: v0.1.16
+-->
 
 * `...paths` {string} A sequence of path segments
 * Returns: {string}
@@ -323,9 +374,13 @@ path.join('foo', {}, 'bar');
 // Throws 'TypeError: Path must be a string. Received {}'
 ```
 
-A `TypeError` is thrown if any of the path segments is not a string.
+A [`TypeError`][] is thrown if any of the path segments is not a string.
 
 ## `path.normalize(path)`
+
+<!-- YAML
+added: v0.1.23
+-->
 
 * `path` {string}
 * Returns: {string}
@@ -371,16 +426,20 @@ path.win32.normalize('C:////temp\\\\/\\/\\/foo/bar');
 // Returns: 'C:\\temp\\foo\\bar'
 ```
 
-A `TypeError` is thrown if `path` is not a string.
+A [`TypeError`][] is thrown if `path` is not a string.
 
 ## `path.parse(path)`
+
+<!-- YAML
+added: v0.11.15
+-->
 
 * `path` {string}
 * Returns: {Object}
 
 The `path.parse()` method returns an object whose properties represent
 significant elements of the `path`. Trailing directory separators are ignored,
-see `path.sep`.
+see [`path.sep`][].
 
 The returned object will have the following properties:
 
@@ -434,9 +493,17 @@ path.parse('C:\\path\\dir\\file.txt');
 (All spaces in the "" line should be ignored. They are purely for formatting.)
 ```
 
-A `TypeError` is thrown if `path` is not a string.
+A [`TypeError`][] is thrown if `path` is not a string.
 
 ## `path.posix`
+
+<!-- YAML
+added: v0.11.15
+changes:
+  - version: v15.3.0
+    pr-url: https://github.com/nodejs/node/pull/34962
+    description: Exposed as `require('path/posix')`.
+-->
 
 * Type: {Object}
 
@@ -446,6 +513,15 @@ of the `path` methods.
 The API is accessible via `require('node:path').posix` or `require('node:path/posix')`.
 
 ## `path.relative(from, to)`
+
+<!-- YAML
+added: v0.5.0
+changes:
+  - version: v6.8.0
+    pr-url: https://github.com/nodejs/node/pull/8523
+    description: On Windows, the leading slashes for UNC paths are now included
+                 in the return value.
+-->
 
 * `from` {string}
 * `to` {string}
@@ -472,9 +548,13 @@ path.relative('C:\\orandea\\test\\aaa', 'C:\\orandea\\impl\\bbb');
 // Returns: '..\\..\\impl\\bbb'
 ```
 
-A `TypeError` is thrown if either `from` or `to` is not a string.
+A [`TypeError`][] is thrown if either `from` or `to` is not a string.
 
 ## `path.resolve([...paths])`
+
+<!-- YAML
+added: v0.3.4
+-->
 
 * `...paths` {string} A sequence of paths or path segments
 * Returns: {string}
@@ -511,9 +591,13 @@ path.resolve('wwwroot', 'static_files/png/', '../gif/image.gif');
 // this returns '/home/myself/node/wwwroot/static_files/gif/image.gif'
 ```
 
-A `TypeError` is thrown if any of the arguments is not a string.
+A [`TypeError`][] is thrown if any of the arguments is not a string.
 
 ## `path.sep`
+
+<!-- YAML
+added: v0.7.9
+-->
 
 * Type: {string}
 
@@ -542,10 +626,14 @@ slashes (`\`).
 
 ## `path.toNamespacedPath(path)`
 
+<!-- YAML
+added: v9.0.0
+-->
+
 * `path` {string}
 * Returns: {string}
 
-On Windows systems only, returns an equivalent namespace-prefixed path for
+On Windows systems only, returns an equivalent [namespace-prefixed path][] for
 the given `path`. If `path` is not a string, `path` will be returned without
 modifications.
 
@@ -554,9 +642,25 @@ method is non-operational and always returns `path` without modifications.
 
 ## `path.win32`
 
+<!-- YAML
+added: v0.11.15
+changes:
+  - version: v15.3.0
+    pr-url: https://github.com/nodejs/node/pull/34962
+    description: Exposed as `require('path/win32')`.
+-->
+
 * Type: {Object}
 
 The `path.win32` property provides access to Windows-specific implementations
 of the `path` methods.
 
 The API is accessible via `require('node:path').win32` or `require('node:path/win32')`.
+
+[MSDN-Rel-Path]: https://docs.microsoft.com/en-us/windows/desktop/FileIO/naming-a-file#fully-qualified-vs-relative-paths
+[`TypeError`]: errors.md#class-typeerror
+[`path.parse()`]: #pathparsepath
+[`path.posix`]: #pathposix
+[`path.sep`]: #pathsep
+[`path.win32`]: #pathwin32
+[namespace-prefixed path]: https://docs.microsoft.com/en-us/windows/desktop/FileIO/naming-a-file#namespaces

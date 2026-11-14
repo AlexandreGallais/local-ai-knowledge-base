@@ -1,13 +1,15 @@
 ---
-title: "no-nonoctal-decimal-escape"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-nonoctal-decimal-escape.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-nonoctal-decimal-escape
+rule_type: suggestion
+related_rules:
+- no-octal-escape
+further_reading:
+- https://tc39.es/ecma262/#prod-annexB-NonOctalDecimalEscapeSequence
 ---
 
-# no-nonoctal-decimal-escape
+
+
+
 
 Although not being specified in the language until ECMAScript 2021, `\8` and `\9` escape sequences in string literals were allowed in most JavaScript engines, and treated as "useless" escapes:
 
@@ -16,7 +18,7 @@ Although not being specified in the language until ECMAScript 2021, `\8` and `\9
 "\9" === "9"; // true
 ```
 
-Since ECMAScript 2021, these escape sequences are specified as non-octal decimal escape sequences, retaining the same behavior.
+Since ECMAScript 2021, these escape sequences are specified as [non-octal decimal escape sequences](https://tc39.es/ecma262/#prod-annexB-NonOctalDecimalEscapeSequence), retaining the same behavior.
 
 Nevertheless, the ECMAScript specification treats `\8` and `\9` in string literals as a legacy feature. This syntax is optional if the ECMAScript host is not a web browser. Browsers still have to support it, but only in non-strict mode.
 
@@ -28,7 +30,7 @@ This rule disallows `\8` and `\9` escape sequences in string literals.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint no-nonoctal-decimal-escape: "error"*/
@@ -46,9 +48,11 @@ const baz = "Don't use \8 and \9 escapes.";
 const quux = "\0\8";
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct { "sourceType": "script" }
 
 ```js
 /*eslint no-nonoctal-decimal-escape: "error"*/
@@ -65,6 +69,8 @@ const baz = "Don't use \\8 and \\9 escapes.";
 
 const quux = "\0\u0038";
 ```
+
+:::
 
 ## Options
 

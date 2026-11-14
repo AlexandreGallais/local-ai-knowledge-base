@@ -1,21 +1,15 @@
----
-title: "no-unnecessary-array-flat-map"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-unnecessary-array-flat-map.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-unnecessary-array-flat-map
 
 📝 Disallow unnecessary use of `Array#flatMap()`.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-`Array#flatMap()` is useful when one input item can become multiple output items. When a callback only returns `[item]` or `condition ? [item] : []`, `.map()`, `.filter()`, or `.filter().map()` is clearer.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+[`Array#flatMap()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap) is useful when one input item can become multiple output items. When a callback only returns `[item]` or `condition ? [item] : []`, `.map()`, `.filter()`, or `.filter().map()` is clearer.
 
 Method replacements only check simple arrow callbacks.
 
@@ -87,4 +81,4 @@ array.flatMap(() => condition ? value : []);
 
 ## Related rules
 
-- unicorn/prefer-array-flat-map
+- [unicorn/prefer-array-flat-map](./prefer-array-flat-map.md)

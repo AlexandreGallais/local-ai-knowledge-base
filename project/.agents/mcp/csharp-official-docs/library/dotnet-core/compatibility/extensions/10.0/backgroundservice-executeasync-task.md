@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: BackgroundService runs all of ExecuteAsync as a Task"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/extensions/10.0/backgroundservice-executeasync-task.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where BackgroundService now runs the entirety of ExecuteAsync on a background thread instead of running the synchronous portion on the main thread."
+ms.date: 10/13/2025
+ai-usage: ai-assisted
 ---
 
 # BackgroundService runs all of ExecuteAsync as a Task
 
-`Microsoft.Extensions.Hosting.BackgroundService` now runs the entirety of `Microsoft.Extensions.Hosting.BackgroundService.ExecuteAsync*` on a background thread. Previously, the synchronous portion of `ExecuteAsync` (before the first `await`) ran on the main thread during service startup, blocking other services from starting. Only code after the first `await` ran on a background thread.
+<xref:Microsoft.Extensions.Hosting.BackgroundService> now runs the entirety of <xref:Microsoft.Extensions.Hosting.BackgroundService.ExecuteAsync*> on a background thread. Previously, the synchronous portion of `ExecuteAsync` (before the first `await`) ran on the main thread during service startup, blocking other services from starting. Only code after the first `await` ran on a background thread.
 
 ## Version introduced
 
@@ -25,7 +23,7 @@ Starting in .NET 10, all of `ExecuteAsync` runs on a background thread, and no p
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -37,9 +35,9 @@ If you require any part of your `BackgroundService.ExecuteAsync` to run earlier 
 
 - Place the code that needs to run synchronously in the constructor, and it executes as part of the service construction.
 - Override `StartAsync` and do some work before calling `base.StartAsync`. `StartAsync` retains the behavior that its synchronous portion runs synchronously during startup and blocks other services from starting.
-- If you want to run code at a more specific time during service startup, implement `Microsoft.Extensions.Hosting.IHostedLifecycleService` on your `BackgroundService`.
-- Forgo `BackgroundService` entirely and implement your own `Microsoft.Extensions.Hosting.IHostedService`.
+- If you want to run code at a more specific time during service startup, implement <xref:Microsoft.Extensions.Hosting.IHostedLifecycleService?displayProperty=fullName> on your `BackgroundService`.
+- Forgo `BackgroundService` entirely and implement your own <xref:Microsoft.Extensions.Hosting.IHostedService?displayProperty=fullName>.
 
 ## Affected APIs
 
-- `Microsoft.Extensions.Hosting.BackgroundService.ExecuteAsync*`
+- <xref:Microsoft.Extensions.Hosting.BackgroundService.ExecuteAsync*?displayProperty=fullName>

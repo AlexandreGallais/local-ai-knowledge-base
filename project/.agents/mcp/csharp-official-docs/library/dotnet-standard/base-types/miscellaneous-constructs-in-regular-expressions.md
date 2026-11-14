@@ -1,12 +1,17 @@
 ---
+description: "Learn more about: Miscellaneous Constructs in Regular Expressions"
 title: "Miscellaneous Constructs in Regular Expressions"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/base-types/miscellaneous-constructs-in-regular-expressions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+ms.topic: reference
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "constructs, miscellaneous"
+  - ".NET regular expressions, miscellaneous constructs"
+  - "regular expressions, miscellaneous constructs"
+ms.assetid: 7d10d11f-680f-4721-b047-fb136316b4cd
 ---
-
 # Miscellaneous Constructs in Regular Expressions
 
 Regular expressions in .NET include three miscellaneous language constructs. One lets you enable or disable particular matching options in the middle of a regular expression pattern. The remaining two let you include comments in a regular expression.
@@ -17,7 +22,7 @@ Regular expressions in .NET include three miscellaneous language constructs. One
 
 `(?imnsx-imnsx)`
 
- You list the options you want to enable after the question mark, and the options you want to disable after the minus sign. The following table describes each option. For more information about each option, see Regular Expression Options.
+ You list the options you want to enable after the question mark, and the options you want to disable after the minus sign. The following table describes each option. For more information about each option, see [Regular Expression Options](regular-expression-options.md).
 
 |Option|Description|
 |------------|-----------------|
@@ -29,55 +34,13 @@ Regular expressions in .NET include three miscellaneous language constructs. One
 
  Any change in regular expression options defined by the `(?imnsx-imnsx)` construct remains in effect until the end of the enclosing group.
 
-> **Note:**
-> The `(?imnsx-imnsx:`*subexpression*`)` grouping construct provides identical functionality for a subexpression. For more information, see Grouping Constructs.
+> [!NOTE]
+> The `(?imnsx-imnsx:`*subexpression*`)` grouping construct provides identical functionality for a subexpression. For more information, see [Grouping Constructs](grouping-constructs-in-regular-expressions.md).
 
  The following example uses the `i`, `n`, and `x` options to enable case insensitivity and explicit captures, and to ignore white space in the regular expression pattern in the middle of a regular expression.
 
- ```csharp
-using System;
-using System.Text.RegularExpressions;
-
-public class Example
-{
-   public static void Main()
-   {
-      string pattern;
-      string input = "double dare double Double a Drooling dog The Dreaded Deep";
-
-      pattern = @"\b(D\w+)\s(d\w+)\b";
-      // Match pattern using default options.
-      foreach (Match match in Regex.Matches(input, pattern))
-      {
-         Console.WriteLine(match.Value);
-         if (match.Groups.Count > 1)
-            for (int ctr = 1; ctr < match.Groups.Count; ctr++)
-               Console.WriteLine($"   Group {ctr}: {match.Groups[ctr].Value}");
-      }
-      Console.WriteLine();
-
-      // Change regular expression pattern to include options.
-      pattern = @"\b(D\w+)(?ixn) \s (d\w+) \b";
-      // Match new pattern with options.
-      foreach (Match match in Regex.Matches(input, pattern))
-      {
-         Console.WriteLine(match.Value);
-         if (match.Groups.Count > 1)
-            for (int ctr = 1; ctr < match.Groups.Count; ctr++)
-               Console.WriteLine($"   Group {ctr}: '{match.Groups[ctr].Value}'");
-      }
-   }
-}
-// The example displays the following output:
-//       Drooling dog
-//          Group 1: Drooling
-//          Group 2: dog
-//
-//       Drooling dog
-//          Group 1: 'Drooling'
-//       Dreaded Deep
-//          Group 1: 'Dreaded'
-```
+ [!code-csharp[RegularExpressions.Language.Miscellaneous#1](../../../samples/snippets/csharp/VS_Snippets_CLR/regularexpressions.language.miscellaneous/cs/miscellaneous1.cs#1)]
+ [!code-vb[RegularExpressions.Language.Miscellaneous#1](../../../samples/snippets/visualbasic/VS_Snippets_CLR/regularexpressions.language.miscellaneous/vb/miscellaneous1.vb#1)]
 
  The example defines two regular expressions. The first, `\b(D\w+)\s(d\w+)\b`, matches two consecutive words that begin with an uppercase "D" and a lowercase "d". The second regular expression, `\b(D\w+)(?ixn) \s (d\w+) \b`, uses inline options to modify this pattern, as described in the following table. A comparison of the results confirms the effect of the `(?ixn)` construct.
 
@@ -92,7 +55,7 @@ public class Example
 
 ## Inline Comment
 
- The `(?#` *comment*`)` construct lets you include an inline comment in a regular expression. The regular expression engine does not use any part of the comment in pattern matching, although the comment is included in the string that is returned by the `System.Text.RegularExpressions.Regex.ToString*` method. The comment ends at the first closing parenthesis.
+ The `(?#` *comment*`)` construct lets you include an inline comment in a regular expression. The regular expression engine does not use any part of the comment in pattern matching, although the comment is included in the string that is returned by the <xref:System.Text.RegularExpressions.Regex.ToString*?displayProperty=nameWithType> method. The comment ends at the first closing parenthesis.
 
  The following example repeats the first regular expression pattern from the example in the previous section. It adds two inline comments to the regular expression to indicate whether the comparison is case-sensitive. The regular expression pattern, `\b((?# case-sensitive comparison)D\w+)\s(?ixn)((?#case-insensitive comparison)d\w+)\b`, is defined as follows.
 
@@ -107,43 +70,12 @@ public class Example
 |`(d\w+)`|Match an uppercase or lowercase "d" followed by one or more word characters. This is the second capture group.|
 |`\b`|Match a word boundary.|
 
- ```csharp
-using System;
-using System.Text.RegularExpressions;
-
-public class Example
-{
-   public static void Main()
-   {
-      string pattern = @"\b((?# case-sensitive comparison)D\w+)\s(?ixn)((?#case-insensitive comparison)d\w+)\b";
-      Regex rgx = new Regex(pattern);
-      string input = "double dare double Double a Drooling dog The Dreaded Deep";
-
-      Console.WriteLine("Pattern: " + pattern.ToString());
-      // Match pattern using default options.
-      foreach (Match match in rgx.Matches(input))
-      {
-         Console.WriteLine(match.Value);
-         if (match.Groups.Count > 1)
-         {
-            for (int ctr = 1; ctr <match.Groups.Count; ctr++)
-               Console.WriteLine($"   Group {ctr}: {match.Groups[ctr].Value}");
-         }
-      }
-   }
-}
-// The example displays the following output:
-//    Pattern: \b((?# case-sensitive comparison)D\w+)\s(?ixn)((?#case-insensitive comp
-//    arison)d\w+)\b
-//    Drooling dog
-//       Group 1: Drooling
-//    Dreaded Deep
-//       Group 1: Dreaded
-```
+ [!code-csharp[RegularExpressions.Language.Miscellaneous#2](../../../samples/snippets/csharp/VS_Snippets_CLR/regularexpressions.language.miscellaneous/cs/miscellaneous2.cs#2)]
+ [!code-vb[RegularExpressions.Language.Miscellaneous#2](../../../samples/snippets/visualbasic/VS_Snippets_CLR/regularexpressions.language.miscellaneous/vb/miscellaneous2.vb#2)]
 
 ## End-of-Line Comment
 
- A number sign (`#`) marks an x-mode comment, which starts at the unescaped # character at the end of the regular expression pattern and continues until the end of the line. To use this construct, you must either enable the `x` option (through inline options) or supply the `System.Text.RegularExpressions.RegexOptions.IgnorePatternWhitespace` value to the `option` parameter when instantiating the `System.Text.RegularExpressions.Regex` object or calling a static `System.Text.RegularExpressions.Regex` method.
+ A number sign (`#`) marks an x-mode comment, which starts at the unescaped # character at the end of the regular expression pattern and continues until the end of the line. To use this construct, you must either enable the `x` option (through inline options) or supply the <xref:System.Text.RegularExpressions.RegexOptions.IgnorePatternWhitespace?displayProperty=nameWithType> value to the `option` parameter when instantiating the <xref:System.Text.RegularExpressions.Regex> object or calling a static <xref:System.Text.RegularExpressions.Regex> method.
 
  The following example illustrates the end-of-line comment construct. It determines whether a string is a composite format string that includes at least one format item. The following table describes the constructs in the regular expression pattern:
 
@@ -159,30 +91,11 @@ public class Example
 | `(?x)`      | Enable the ignore pattern white-space option so that the end-of-line comment will be recognized. |
 | `# Looks for a composite format item.` | An end-of-line comment. |
 
- ```csharp
-using System;
-using System.Text.RegularExpressions;
+ [!code-csharp[RegularExpressions.Language.Miscellaneous#3](../../../samples/snippets/csharp/VS_Snippets_CLR/regularexpressions.language.miscellaneous/cs/miscellaneous3.cs#3)]
+ [!code-vb[RegularExpressions.Language.Miscellaneous#3](../../../samples/snippets/visualbasic/VS_Snippets_CLR/regularexpressions.language.miscellaneous/vb/miscellaneous3.vb#3)]
 
-public class Example
-{
-   public static void Main()
-   {
-      string pattern = @"\{\d+(,-*\d+)*(\:\w{1,4}?)*\}(?x) # Looks for a composite format item.";
-      string input = "{0,-3:F}";
-      Console.WriteLine($"'{input}':");
-      if (Regex.IsMatch(input, pattern))
-         Console.WriteLine("   contains a composite format item.");
-      else
-         Console.WriteLine("   does not contain a composite format item.");
-   }
-}
-// The example displays the following output:
-//       '{0,-3:F}':
-//          contains a composite format item.
-```
-
- Note that, instead of providing the `(?x)` construct in the regular expression, the comment could also have been recognized by calling the `System.Text.RegularExpressions.Regex.IsMatch(System.String,System.String,System.Text.RegularExpressions.RegexOptions)` method and passing it the `System.Text.RegularExpressions.RegexOptions.IgnorePatternWhitespace` enumeration value.
+ Note that, instead of providing the `(?x)` construct in the regular expression, the comment could also have been recognized by calling the <xref:System.Text.RegularExpressions.Regex.IsMatch%28System.String%2CSystem.String%2CSystem.Text.RegularExpressions.RegexOptions%29?displayProperty=nameWithType> method and passing it the <xref:System.Text.RegularExpressions.RegexOptions.IgnorePatternWhitespace?displayProperty=nameWithType> enumeration value.
 
 ## See also
 
-- Regular Expression Language - Quick Reference
+- [Regular Expression Language - Quick Reference](regular-expression-language-quick-reference.md)

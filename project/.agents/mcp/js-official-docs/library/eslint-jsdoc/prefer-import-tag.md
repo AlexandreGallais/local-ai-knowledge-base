@@ -1,36 +1,40 @@
----
-title: "prefer-import-tag"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/prefer-import-tag.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
-
-# `prefer-import-tag`
+<a name="user-content-prefer-import-tag"></a>
+<a name="prefer-import-tag"></a>
+# <code>prefer-import-tag</code>
 
 Prefer `@import` tags to inline `import()` statements.
 
+<a name="user-content-prefer-import-tag-fixer"></a>
+<a name="prefer-import-tag-fixer"></a>
 ## Fixer
 
 Creates `@import` tags if an already existing matching `@typedef` or
 `@import` is not found.
 
+<a name="user-content-prefer-import-tag-options"></a>
+<a name="prefer-import-tag-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `enableFixer`
+<a name="user-content-prefer-import-tag-options-enablefixer"></a>
+<a name="prefer-import-tag-options-enablefixer"></a>
+### <code>enableFixer</code>
 
 Whether or not to enable the fixer to add `@import` tags.
 
-### `exemptTypedefs`
+<a name="user-content-prefer-import-tag-options-exempttypedefs"></a>
+<a name="prefer-import-tag-options-exempttypedefs"></a>
+### <code>exemptTypedefs</code>
 
 Whether to allow `import()` statements within `@typedef`
 
-### `outputType`
+<a name="user-content-prefer-import-tag-options-outputtype"></a>
+<a name="prefer-import-tag-options-outputtype"></a>
+### <code>outputType</code>
 
 What kind of `@import` to generate when no matching `@typedef` or `@import` is found
+
 
 |||
 |---|---|
@@ -42,6 +46,8 @@ What kind of `@import` to generate when no matching `@typedef` or `@import` is f
 |Settings|`mode`|
 |Options|`enableFixer`, `exemptTypedefs`, `outputType`|
 
+<a name="user-content-prefer-import-tag-failing-examples"></a>
+<a name="prefer-import-tag-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -379,6 +385,10 @@ let x;
 // Message: Inline `import()` found; prefer `@import`
 ````
 
+
+
+<a name="user-content-prefer-import-tag-passing-examples"></a>
+<a name="prefer-import-tag-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -409,3 +419,4 @@ The following patterns are not considered problems:
  * @type {Rule['Node'}
  */
 ````
+

@@ -1,21 +1,22 @@
 ---
-title: "Functional construction - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/functional-construction.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Functional construction - LINQ to XML
+description: LINQ to XML provides functional construction, which enables you to create an XML tree in a single statement.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # Functional construction (LINQ to XML)
 
 LINQ to XML provides a powerful way to create XML elements called *functional construction*. Functional construction enables you to create an XML tree in a single statement.
 
-Several key <example-value> of the LINQ to XML programming interface are used in functional construction:
+Several key features of the LINQ to XML programming interface are used in functional construction:
 
-- The `System.Xml.Linq.XElement` constructor takes various types of arguments for content. For example, you can pass <example-value> `System.Xml.Linq.XElement` object, which becomes a child element. You can pass an `System.Xml.Linq.XAttribute` object, which becomes an attribute of the element. Or you can pass any other type of object, which is converted to a string and becomes the text content of the element.
-- The `System.Xml.Linq.XElement` constructor takes a `params` array of type `System.Object`, so that you can pass any number of objects to the constructor. This enables you to create an element that has complex content.
-- If an object implements `System.Collections.Generic.IEnumerable`1`, the collection in the object is enumerated, and all items in the collection are added. If the collection contains `System.Xml.Linq.XElement` or `System.Xml.Linq.XAttribute` objects, each item in the collection is added separately. This is important because it lets you pass the results of a LINQ query to the constructor.
+- The <xref:System.Xml.Linq.XElement> constructor takes various types of arguments for content. For example, you can pass another <xref:System.Xml.Linq.XElement> object, which becomes a child element. You can pass an <xref:System.Xml.Linq.XAttribute> object, which becomes an attribute of the element. Or you can pass any other type of object, which is converted to a string and becomes the text content of the element.
+- The <xref:System.Xml.Linq.XElement> constructor takes a `params` array of type <xref:System.Object>, so that you can pass any number of objects to the constructor. This enables you to create an element that has complex content.
+- If an object implements <xref:System.Collections.Generic.IEnumerable`1>, the collection in the object is enumerated, and all items in the collection are added. If the collection contains <xref:System.Xml.Linq.XElement> or <xref:System.Xml.Linq.XAttribute> objects, each item in the collection is added separately. This is important because it lets you pass the results of a LINQ query to the constructor.
 
 ## Example: Create an XML tree
 
@@ -95,5 +96,5 @@ This example produces the following output:
 
 ## See also
 
-- Create XML Trees in C#
-- XML literals in Visual Basic
+- [Create XML Trees in C#](create-xml-trees.md)
+- [XML literals in Visual Basic](xml-literals.md)

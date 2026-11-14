@@ -40,16 +40,22 @@ removes the server, its documentation and its rules, without breaking the other 
 | Brick | What the AI gets |
 | --- | --- |
 | `parse` | The outline, then one part, then the images of a heavy file: XD, Word, Excel, PowerPoint, PDF, SVG. |
-| `js-official-docs` | The official documentation of the JavaScript and TypeScript tools: MDN, Angular, TypeScript, RxJS, NgRx Signals, Node.js, npm, Vite, Vitest, Playwright, ESLint, Stylelint. |
-| `csharp-official-docs` | C# and .NET: the language, .NET guides, ASP.NET Core, EF Core and the API reference. |
+| `js-official-docs` | The JavaScript and TypeScript tools: MDN (JavaScript, HTML, CSS, Web APIs, SVG, HTTP, accessibility), the ARIA Authoring Practices Guide, Angular (guides, API reference, CLI), TypeScript (handbook, tsconfig options), RxJS and NgRx Signals (guides, API reference), Node.js, npm, Vite, Vitest, Playwright, Storybook, Sass, Prettier, EditorConfig, ESLint, Stylelint and their plugins. |
+| `csharp-official-docs` | C# and .NET: the language, the guides and fundamentals, the architecture guides, ASP.NET Core, EF Core, .NET Aspire, and the API reference of the base class library, ASP.NET Core and EF Core. |
 | `python-official-docs` | Python: language reference, standard library, tutorial, how-to guides, what is new; the `inkex` API of the Inkscape extensions and their guides. |
-| `rust-official-docs` | Rust: the book, the reference and the standard library (`core`, `alloc`, `std`). |
-| `java-official-docs` | Java: the Java SE API of `java.base` and `java.net.http`, from OpenJDK 25. |
+| `rust-official-docs` | Rust: the book, the reference, Rust by Example, the Cargo book and the standard library (`core`, `alloc`, `std`). |
+| `java-official-docs` | Java: the Java SE API of `java.base` and `java.net.http` (OpenJDK 25, LTS), Gradle and Maven. |
+| `containers-official-docs` | Containers: the Dockerfile reference, the Docker manuals and CLI, Podman, the Compose Specification, the Dev Containers specification, the OCI specifications. |
+| `git-official-docs` | Git: the manual page of every command. |
+| `cpp-official-docs` | C and C++: cppreference.com, CMake, Clang, the GNU Make and GCC manuals. |
+| `math-docs` | Mathematics: free textbooks of linear algebra, discrete mathematics and combinatorics, in LaTeX and PreTeXt. |
 
 Each documentation brick searches its own documentation only, then gives one section at a time. Only
-the official documentation is there, each source under its own license, noted in the
-`THIRD_PARTY_NOTICES.md` of its brick; the `README.md` of a brick lists its sources, their versions,
-and what was set aside and why.
+the official documentation is there, each file as its authors wrote it, in its own format (Markdown,
+reStructuredText, AsciiDoc, LaTeX, Texinfo, PreTeXt, XML, HTML); an API reference that lives in the
+comments of the code is taken from those comments. Each source keeps its own license, noted in the
+`THIRD_PARTY_NOTICES.md` of its brick; `library/README.md` lists the sources, their versions and
+sizes, and the `README.md` of the brick what was set aside and why.
 
 [`project/.agents/README.md`](project/.agents/README.md) explains each part, and the `README.md` of each
 brick says what it holds and how to remove it.
@@ -118,7 +124,9 @@ repository. The workstation never does it: it receives the new export.
    `node scripts/check-library.ts project/.agents/mcp/python-official-docs`.
 3. When a lint plugin follows the major version of the tool (angular-eslint follows Angular), update
    its version in `project/package.json`.
-4. Run the tests, `node scripts/check-base.ts` and `node scripts/export.ts`, write the change in
+4. After a change of the search or of the server of the documentation bricks, made in
+   `js-official-docs`, copy it to the others: `node scripts/sync-docs-bricks.ts`.
+5. Run the tests, `node scripts/check-base.ts` and `node scripts/export.ts`, write the change in
    `CHANGELOG.md`, and deliver the new export.
 
 ## Layout

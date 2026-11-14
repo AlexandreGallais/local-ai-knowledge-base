@@ -1,20 +1,19 @@
 ---
-title: "Error handling with gRPC on .NET"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/grpc/error-handling.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Error handling with gRPC on .NET
+description: Learn how to do error handling with gRPC on .NET.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 01/09/2024
 ---
-
 # Error handling with gRPC
 
-By James Newton-King
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+By [James Newton-King](https://twitter.com/jamesnk)
 
 This article discusses error handling and gRPC:
 
 * Built-in error handling capabilities using gRPC status codes and error messages.
-* Sending complex, structured error information using rich error handling.
+* Sending complex, structured error information using [rich error handling](#rich-error-handling).
 
 ## Built-in error handling
 
@@ -25,11 +24,11 @@ gRPC calls communicate success or failure with a status code. When a gRPC call c
 
 The types commonly used with error handling are:
 
-* `StatusCode`: An enumeration of gRPC status codes. `OK` signals success; other values are failure.
+* `StatusCode`: An enumeration of [gRPC status codes](https://grpc.github.io/grpc/core/md_doc_statuscodes.html). `OK` signals success; other values are failure.
 * `Status`: A `struct` that combines a `StatusCode` and an optional string error message. The error message provides further details about what happened.
 * `RpcException`: An exception type that has `Status` value. This exception is thrown in gRPC server methods and caught by gRPC clients.
 
-Built-in error handling only supports a status code and string description. To send complex error information from the server to the client, use rich error handling.
+Built-in error handling only supports a status code and string description. To send complex error information from the server to the client, [use rich error handling](#rich-error-handling).
 
 ## Throw server errors
 
@@ -80,7 +79,7 @@ public class GreeterService : GreeterBase
 
 Thrown exception types that aren't `RpcException` also cause the call to fail, but with an `UNKNOWN` status code and a generic message `Exception was thrown by handler`.
 
-`Exception was thrown by handler` is sent to the client rather than the exception message to prevent exposing potentially sensitive information. To see a more descriptive error message in a development environment, configure `EnableDetailedErrors`.
+`Exception was thrown by handler` is sent to the client rather than the exception message to prevent exposing potentially sensitive information. To see a more descriptive error message in a development environment, configure [`EnableDetailedErrors`](configuration.md#configure-services-options).
 
 ## Handle client errors
 
@@ -113,25 +112,25 @@ Errors are represented by `RpcException` with an error status code and optional 
 
 * The call failed on the server and the server sent an error status code. For example, the gRPC client started a call that was missing required data from the request message and the server returns an `INVALID_ARGUMENT` status code.
 * An error occurred inside the client when making the gRPC call. For example, a client makes a gRPC call, can't connect to the server, and throws an error with a status of `UNAVAILABLE`.
-* The `System.Threading.CancellationToken` passed to the gRPC call is canceled. The gRPC call is stopped and the client throws an error with a status of `CANCELLED`.
+* The <xref:System.Threading.CancellationToken> passed to the gRPC call is canceled. The gRPC call is stopped and the client throws an error with a status of `CANCELLED`.
 * A gRPC call exceeds its configured deadline. The gRPC call is stopped and the client throws an error with a status of `DEADLINE_EXCEEDED`.
 
 ## Rich error handling
 
-Rich error handling allows complex, structured information to be sent with error messages. For example, validation of incoming message fields that returns a list of invalid field names and descriptions. The `google.rpc.Status` error model is often used to send complex error information between gRPC apps.
+Rich error handling allows complex, structured information to be sent with error messages. For example, validation of incoming message fields that returns a list of invalid field names and descriptions. The [`google.rpc.Status` error model](https://cloud.google.com/apis/design/errors#error_model) is often used to send complex error information between gRPC apps.
 
-gRPC on .NET supports a rich error model using the `Grpc.StatusProto` package. This package has methods for creating rich error models on the server and reading them by a client. The rich error model builds on top of gRPC's built-in handling capabilities and they can be used side-by-side.
+gRPC on .NET supports a rich error model using the [`Grpc.StatusProto`](https://www.nuget.org/packages/Grpc.StatusProto/) package. This package has methods for creating rich error models on the server and reading them by a client. The rich error model builds on top of gRPC's built-in handling capabilities and they can be used side-by-side.
 
-> **Important:**
+> [!IMPORTANT]
 > Errors are included in headers, and total headers in responses are often limited to 8 KB (8,192 bytes). Ensure that the headers containing errors do not exceed 8 KB.
 
 ### Creating rich errors on the server
 
 Rich errors are created from `Google.Rpc.Status`. This type is ***different*** from `Grpc.Core.Status`.
 
-`Google.Rpc.Status` has status, message, and details fields. The most important field is details, which is a repeating field of `Any` values. Details are where complex payloads are added.
+`Google.Rpc.Status` has status, message, and details fields. The most important field is details, which is a repeating field of [`Any`](protobuf.md#any) values. Details are where complex payloads are added.
 
-Although any message type can be used as a payload, it's recommended to use one of the standard error payloads:
+Although any message type can be used as a payload, it's recommended to use one of the [standard error payloads](https://cloud.google.com/apis/design/errors#error_model):
 
 * `BadRequest`
 * `PreconditionFailure`
@@ -139,7 +138,7 @@ Although any message type can be used as a payload, it's recommended to use one 
 * `ResourceInfo`
 * `QuotaFailure`
 
-`Grpc.StatusProto` includes the `ToRpcException` a helper method to convert `Google.Rpc.Status` to an error. Throw the error from the gRPC server method:
+[`Grpc.StatusProto`](https://www.nuget.org/packages/Grpc.StatusProto/) includes the `ToRpcException` a helper method to convert `Google.Rpc.Status` to an error. Throw the error from the gRPC server method:
 
 ```cs
 public class GreeterService : Greeter.GreeterBase
@@ -211,6 +210,6 @@ The preceding code:
 
 ## Related content
 
-* Create gRPC services and methods
-* Call gRPC services with the .NET client
-* gRPC status codes
+* [Create gRPC services and methods](services.md)
+* [Call gRPC services with the .NET client](client.md)
+* [gRPC status codes](https://grpc.github.io/grpc/core/md_doc_statuscodes.html)

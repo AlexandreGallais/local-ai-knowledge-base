@@ -1,20 +1,19 @@
 ---
-title: "Bulk Suppressions"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/use/suppressions.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: Bulk Suppressions
+eleventyNavigation:
+    key: suppressions
+    parent: use eslint
+    title: Bulk Suppressions
+    order: 8
 ---
-
-# Bulk Suppressions
 
 Enabling a new lint rule as `"error"` can be challenging when the codebase has many violations and the rule isn't auto-fixable. Unless the rule is enabled during the early stages of the project, it becomes harder and harder to enable it as the codebase grows. Existing violations must be resolved before enabling the rule, but while doing that other violations may occur.
 
 To address this, ESLint provides a way to suppress existing violations for one or more rules. While the rule will be enforced for new code, the existing violations will not be reported. This way, you can address the existing violations at your own pace.
 
-**Important:**
+::: important
 Only rules configured as `"error"` are suppressed. If a rule is enabled as `"warn"`, ESLint will not suppress the violations.
+:::
 
 After you enable a rule as `"error"` in your configuration file, you can suppress all the existing violations at once by using the `--suppress-all` flag. It is recommended to execute the command with the `--fix` flag so that you don't suppress violations that can be auto-fixed.
 
@@ -55,7 +54,7 @@ You can address any of the reported violations by making the necessary changes t
 There are suppressions left that do not occur anymore. Consider re-running the command with `--prune-suppressions`.
 ```
 
-To remove the suppressions that are no longer needed, you can use the `--prune-suppressions` flag.
+To remove the suppressions that are no longer needed, you can use the [`--prune-suppressions`](./command-line-interface#--prune-suppressions) flag.
 
 ```bash
 eslint --prune-suppressions
@@ -67,11 +66,11 @@ To ignore unused suppressions when calculating the exit code and not report an e
 eslint --pass-on-unpruned-suppressions
 ```
 
-For more information on the available CLI options, refer to Command Line Interface.
+For more information on the available CLI options, refer to [Command Line Interface](./command-line-interface).
 
 ## Usage with the Node.js API
 
-Suppressions can also be applied when using ESLint programmatically through the Node.js API. To enable suppressions, set the `applySuppressions` option to `true` in the `ESLint` constructor:
+Suppressions can also be applied when using ESLint programmatically through the [Node.js API](../integrate/nodejs-api). To enable suppressions, set the `applySuppressions` option to `true` in the `ESLint` constructor:
 
 ```js
 const eslint = new ESLint({

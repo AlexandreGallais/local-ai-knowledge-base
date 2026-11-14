@@ -1,23 +1,17 @@
----
-title: "no-useless-boolean-cast"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-useless-boolean-cast.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-useless-boolean-cast
 
 📝 Disallow unnecessary `Boolean()` casts in array predicate callbacks.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Array predicate methods already treat callback return values as truthy or falsy, so wrapping the returned expression in `Boolean()` is unnecessary.
 
-`Boolean()` around an optional chain is kept, since it normalizes a possibly-`undefined` value to a real boolean. When type information is available, the cast is also kept whenever the argument's type includes `undefined` or `null`, even without optional-chaining syntax.
+`Boolean()` around an optional chain is kept, since it normalizes a possibly-`undefined` value to a real boolean. When [type information](https://typescript-eslint.io/getting-started/typed-linting/) is available, the cast is also kept whenever the argument's type includes `undefined` or `null`, even without optional-chaining syntax.
 
 ## Examples
 

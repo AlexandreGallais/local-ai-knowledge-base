@@ -1,10 +1,11 @@
 ---
+description: "Learn more about: Accessing Attributes in the DOM"
 title: "Accessing Attributes in the DOM"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/accessing-attributes-in-the-dom.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: ce2df341-a1a4-4e97-8e1b-cd45b8e3e71e
 ---
 
 # Accessing Attributes in the DOM
@@ -184,7 +185,7 @@ public class Sample
 
 ## Retrieving an Individual Attribute Node
 
-To retrieve a single attribute node from an element, the `System.Xml.XmlElement.GetAttributeNode*` method is used. It returns an object of type **XmlAttribute**. Once you have an **XmlAttribute**, all the methods and properties available in the `System.Xml.XmlAttribute` class are available on that object, such as finding the **OwnerElement**.
+To retrieve a single attribute node from an element, the <xref:System.Xml.XmlElement.GetAttributeNode*?displayProperty=nameWithType> method is used. It returns an object of type **XmlAttribute**. Once you have an **XmlAttribute**, all the methods and properties available in the <xref:System.Xml.XmlAttribute?displayProperty=nameWithType> class are available on that object, such as finding the **OwnerElement**.
 
 ```vb
 Imports System.IO
@@ -254,4 +255,4 @@ XmlAttribute attr = doc.DocumentElement.Attributes[0];
 
 ## See also
 
-- XML Document Object Model (DOM)
+- [XML Document Object Model (DOM)](xml-document-object-model-dom.md)

@@ -1,12 +1,12 @@
 ---
 title: "XPath Queries and Namespaces"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/xpath-queries-and-namespaces.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about XPath queries & namespaces. XPath queries know of namespaces in an XML document & can use namespace prefixes to qualify element & attribute names.
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: ef6402be-2f8e-4be2-8d3e-a80891cdef8b
 ---
-
 # XPath Queries and Namespaces
 
 XPath queries are aware of namespaces in an XML document and can use namespace prefixes to qualify element and attribute names. Qualifying element and attribute names with a namespace prefix limits the nodes returned by an XPath query to only those nodes that belong to a specific namespace.
@@ -15,21 +15,21 @@ XPath queries are aware of namespaces in an XML document and can use namespace p
 
 ## The XmlNamespaceManager
 
- To use namespaces in an XPath query, an object derived from the `System.Xml.IXmlNamespaceResolver` interface like the `System.Xml.XmlNamespaceManager` class is constructed with the namespace URI and prefix to include in the XPath query.
+ To use namespaces in an XPath query, an object derived from the <xref:System.Xml.IXmlNamespaceResolver> interface like the <xref:System.Xml.XmlNamespaceManager> class is constructed with the namespace URI and prefix to include in the XPath query.
 
- The `System.Xml.XmlNamespaceManager` object may be used in the query in each of the following ways.
+ The <xref:System.Xml.XmlNamespaceManager> object may be used in the query in each of the following ways.
 
-- The `System.Xml.XmlNamespaceManager` object is associated with an existing `System.Xml.XPath.XPathExpression` object by using the `System.Xml.XPath.XPathExpression.SetContext*` method of the `System.Xml.XPath.XPathExpression` object. You may also compile a new `System.Xml.XPath.XPathExpression` object using the static `System.Xml.XPath.XPathExpression.Compile*` method which takes a string representing the XPath expression and an `System.Xml.XmlNamespaceManager` object as parameters and returns a new `System.Xml.XPath.XPathExpression` object.
+- The <xref:System.Xml.XmlNamespaceManager> object is associated with an existing <xref:System.Xml.XPath.XPathExpression> object by using the <xref:System.Xml.XPath.XPathExpression.SetContext*> method of the <xref:System.Xml.XPath.XPathExpression> object. You may also compile a new <xref:System.Xml.XPath.XPathExpression> object using the static <xref:System.Xml.XPath.XPathExpression.Compile*> method which takes a string representing the XPath expression and an <xref:System.Xml.XmlNamespaceManager> object as parameters and returns a new <xref:System.Xml.XPath.XPathExpression> object.
 
-- The `System.Xml.XmlNamespaceManager` object itself is passed as a parameter to an accepting `System.Xml.XPath.XPathNavigator` class method along with a string representing the XPath expression.
+- The <xref:System.Xml.XmlNamespaceManager> object itself is passed as a parameter to an accepting <xref:System.Xml.XPath.XPathNavigator> class method along with a string representing the XPath expression.
 
- The following are the methods of the `System.Xml.XPath.XPathNavigator` class that accept an object derived from the `System.Xml.IXmlNamespaceResolver` interface as a parameter.
+ The following are the methods of the <xref:System.Xml.XPath.XPathNavigator> class that accept an object derived from the <xref:System.Xml.IXmlNamespaceResolver> interface as a parameter.
 
-- `System.Xml.XPath.XPathNavigator.Evaluate*`
+- <xref:System.Xml.XPath.XPathNavigator.Evaluate*>
 
-- `System.Xml.XPath.XPathNavigator.Select*`
+- <xref:System.Xml.XPath.XPathNavigator.Select*>
 
-- `System.Xml.XPath.XPathNavigator.SelectSingleNode*`
+- <xref:System.Xml.XPath.XPathNavigator.SelectSingleNode*>
 
 ### The Default Namespace
 
@@ -75,12 +75,12 @@ XPathNodeIterator nodes = navigator.Select(query);
 
 ## See also
 
-- `System.Xml.XmlDocument`
-- `System.Xml.XPath.XPathDocument`
-- `System.Xml.XPath.XPathNavigator`
-- Process XML Data Using the XPath Data Model
-- Select XML Data Using XPathNavigator
-- Evaluate XPath Expressions using XPathNavigator
-- Matching Nodes using XPathNavigator
-- Node Types Recognized with XPath Queries
-- Compiled XPath Expressions
+- <xref:System.Xml.XmlDocument>
+- <xref:System.Xml.XPath.XPathDocument>
+- <xref:System.Xml.XPath.XPathNavigator>
+- [Process XML Data Using the XPath Data Model](process-xml-data-using-the-xpath-data-model.md)
+- [Select XML Data Using XPathNavigator](select-xml-data-using-xpathnavigator.md)
+- [Evaluate XPath Expressions using XPathNavigator](evaluate-xpath-expressions-using-xpathnavigator.md)
+- [Matching Nodes using XPathNavigator](matching-nodes-using-xpathnavigator.md)
+- [Node Types Recognized with XPath Queries](node-types-recognized-with-xpath-queries.md)
+- [Compiled XPath Expressions](compiled-xpath-expressions.md)

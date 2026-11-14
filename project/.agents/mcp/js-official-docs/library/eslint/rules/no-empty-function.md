@@ -1,13 +1,10 @@
 ---
-title: "no-empty-function"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-empty-function.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-empty-function
+rule_type: suggestion
+related_rules:
+- no-empty
 ---
 
-# no-empty-function
 
 Empty functions can reduce readability because readers need to guess whether it's intentional or not.
 So writing a clear comment for empty functions is a good practice.
@@ -33,7 +30,7 @@ A function will not be considered a problem if it contains a comment.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-empty-function: "error"*/
@@ -83,9 +80,11 @@ class A {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-empty-function: "error"*/
@@ -175,6 +174,8 @@ class A {
 }
 ```
 
+:::
+
 ## Options
 
 This rule has an option to allow specific kinds of functions to be empty.
@@ -199,7 +200,7 @@ This rule has an option to allow specific kinds of functions to be empty.
 
 Examples of **correct** code for the `{ "allow": ["functions"] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-empty-function: ["error", { "allow": ["functions"] }]*/
@@ -213,11 +214,13 @@ const obj = {
 };
 ```
 
+:::
+
 ### allow: arrowFunctions
 
 Examples of **correct** code for the `{ "allow": ["arrowFunctions"] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-empty-function: ["error", { "allow": ["arrowFunctions"] }]*/
@@ -225,11 +228,13 @@ Examples of **correct** code for the `{ "allow": ["arrowFunctions"] }` option:
 const foo = () => {};
 ```
 
+:::
+
 ### allow: generatorFunctions
 
 Examples of **correct** code for the `{ "allow": ["generatorFunctions"] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-empty-function: ["error", { "allow": ["generatorFunctions"] }]*/
@@ -243,11 +248,13 @@ const obj = {
 };
 ```
 
+:::
+
 ### allow: methods
 
 Examples of **correct** code for the `{ "allow": ["methods"] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-empty-function: ["error", { "allow": ["methods"] }]*/
@@ -262,11 +269,13 @@ class A {
 }
 ```
 
+:::
+
 ### allow: generatorMethods
 
 Examples of **correct** code for the `{ "allow": ["generatorMethods"] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-empty-function: ["error", { "allow": ["generatorMethods"] }]*/
@@ -281,11 +290,13 @@ class A {
 }
 ```
 
+:::
+
 ### allow: getters
 
 Examples of **correct** code for the `{ "allow": ["getters"] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-empty-function: ["error", { "allow": ["getters"] }]*/
@@ -300,11 +311,13 @@ class A {
 }
 ```
 
+:::
+
 ### allow: setters
 
 Examples of **correct** code for the `{ "allow": ["setters"] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-empty-function: ["error", { "allow": ["setters"] }]*/
@@ -319,11 +332,13 @@ class A {
 }
 ```
 
+:::
+
 ### allow: constructors
 
 Examples of **correct** code for the `{ "allow": ["constructors"] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-empty-function: ["error", { "allow": ["constructors"] }]*/
@@ -333,11 +348,13 @@ class A {
 }
 ```
 
+:::
+
 ### allow: asyncFunctions
 
 Examples of **correct** code for the `{ "allow": ["asyncFunctions"] }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-empty-function: ["error", { "allow": ["asyncFunctions"] }]*/
@@ -345,11 +362,13 @@ Examples of **correct** code for the `{ "allow": ["asyncFunctions"] }` options:
 async function a(){}
 ```
 
+:::
+
 ### allow: asyncMethods
 
 Examples of **correct** code for the `{ "allow": ["asyncMethods"] }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-empty-function: ["error", { "allow": ["asyncMethods"] }]*/
@@ -364,11 +383,13 @@ class A {
 }
 ```
 
+:::
+
 ### allow: privateConstructors
 
 Examples of **correct** TypeScript code for the `{ "allow": ["privateConstructors"] }` option:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint no-empty-function: ["error", { "allow": ["privateConstructors"] }]*/
@@ -378,11 +399,13 @@ class A {
 }
 ```
 
+:::
+
 ### allow: protectedConstructors
 
 Examples of **correct** TypeScript code for the `{ "allow": ["protectedConstructors"] }` option:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint no-empty-function: ["error", { "allow": ["protectedConstructors"] }]*/
@@ -392,11 +415,13 @@ class A {
 }
 ```
 
+:::
+
 ### allow: decoratedFunctions
 
 Examples of **correct** TypeScript code for the `{ "allow": ["decoratedFunctions"] }` option:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint no-empty-function: ["error", { "allow": ["decoratedFunctions"] }]*/
@@ -407,11 +432,13 @@ class A {
 }
 ```
 
+:::
+
 ### allow: overrideMethods
 
 Examples of **correct** TypeScript code for the `{ "allow": ["overrideMethods"] }` option:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint no-empty-function: ["error", { "allow": ["overrideMethods"] }]*/
@@ -424,6 +451,8 @@ class Derived extends Base {
     override method() {}
 }
 ```
+
+:::
 
 ## When Not To Use It
 

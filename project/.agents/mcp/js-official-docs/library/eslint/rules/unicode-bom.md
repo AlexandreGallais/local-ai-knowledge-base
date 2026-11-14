@@ -1,13 +1,9 @@
 ---
-title: "unicode-bom"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/unicode-bom.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: unicode-bom
+rule_type: layout
 ---
 
-# unicode-bom
+
 
 The Unicode Byte Order Mark (BOM) is used to specify whether code units are big
 endian or little endian. That is, whether the most significant or least
@@ -32,7 +28,7 @@ This rule has a string option:
 
 Example of **correct** code for this rule with the `"always"` option:
 
-**Correct:**
+::: correct
 
 ```js
 ﻿// U+FEFF at the beginning
@@ -42,21 +38,25 @@ Example of **correct** code for this rule with the `"always"` option:
 let abc;
 ```
 
+:::
+
 Example of **incorrect** code for this rule with the `"always"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint unicode-bom: ["error", "always"]*/
 
 let abc;
 ```
+
+:::
 
 ### never
 
 Example of **correct** code for this rule with the default `"never"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint unicode-bom: ["error", "never"]*/
@@ -64,9 +64,11 @@ Example of **correct** code for this rule with the default `"never"` option:
 let abc;
 ```
 
+:::
+
 Example of **incorrect** code for this rule with the `"never"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 ﻿// U+FEFF at the beginning
@@ -75,6 +77,8 @@ Example of **incorrect** code for this rule with the `"never"` option:
 
 let abc;
 ```
+
+:::
 
 ## When Not To Use It
 

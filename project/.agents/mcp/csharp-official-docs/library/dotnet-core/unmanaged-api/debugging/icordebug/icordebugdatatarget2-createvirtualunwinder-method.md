@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: ICorDebugDataTarget2::CreateVirtualUnwinder Method"
 title: "ICorDebugDataTarget2::CreateVirtualUnwinder Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugdatatarget2-createvirtualunwinder-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugDataTarget2::CreateVirtualUnwinder Method
 
 Creates a new stack unwinder that starts unwinding from an initial context (which isn't necessarily the leaf of a thread).
@@ -42,16 +38,16 @@ ppUnwinder
 
 ## Return Value
 
- `S_OK` if successful. Any other `HRESULT` indicates failure. Any failing `HRESULT` received by mscordbi is considered fatal and causes ICorDebug methods to return `CORDBG_E_DATA_TARGET_ERROR`.
+ `S_OK` if successful. Any other `HRESULT` indicates failure. Any failing `HRESULT` received by mscordbi is considered fatal and causes [ICorDebug](icordebug-interface.md) methods to return `CORDBG_E_DATA_TARGET_ERROR`.
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This method is available with .NET Native only.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -61,4 +57,4 @@ ppUnwinder
 
 ## See also
 
-- ICorDebugDataTarget2 Interface
+- [ICorDebugDataTarget2 Interface](icordebugdatatarget2-interface.md)

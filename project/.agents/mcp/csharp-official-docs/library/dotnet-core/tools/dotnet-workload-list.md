@@ -1,12 +1,8 @@
 ---
-title: "dotnet workload list command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-workload-list.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet workload list command
+description: The 'dotnet workload list' command lists installed workloads.
+ms.date: 08/31/2021
 ---
-
 # dotnet workload list
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -27,17 +23,13 @@ dotnet workload list [-?|-h|--help]
 
 The `dotnet workload list` command lists all installed workloads.
 
-For more information about the `dotnet workload` commands, see the dotnet workload install command.
+For more information about the `dotnet workload` commands, see the [dotnet workload install](dotnet-workload-install.md#description) command.
 
 ## Options
 
-- **`-?|-h|--help`**
+- [!INCLUDE [help](includes/cli-help.md)]
 
-Prints out a description of how to use the command.
-
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. The default is `minimal`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+- [!INCLUDE [verbosity](includes/cli-verbosity-minimal.md)]
 
 ## Examples
 

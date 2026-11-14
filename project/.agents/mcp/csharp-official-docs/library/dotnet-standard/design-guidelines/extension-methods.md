@@ -1,16 +1,12 @@
 ---
+description: "Learn more about: Extension Methods"
 title: "Extension Methods"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/extension-methods.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "10/22/2008"
+ms.assetid: 5de945cb-88f4-49d7-b0e6-f098300cf357
 ---
-
 # Extension Methods
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
 Extension methods are a language feature that allows static methods to be called using instance method call syntax. These methods must take at least one parameter, which represents the instance the method is to operate on.
 
@@ -22,11 +18,11 @@ Extension methods are a language feature that allows static methods to be called
 
  ✔️ CONSIDER using extension methods in any of the following scenarios:
 
-- To provide helper functionality relevant to every implementation of an interface, if said functionality can be written in terms of the core interface. This is because concrete implementations cannot otherwise be assigned to interfaces. For example, the `LINQ to Objects` operators are implemented as extension methods for all `System.Collections.Generic.IEnumerable`1` types. Thus, any `IEnumerable<>` implementation is automatically LINQ-enabled.
+- To provide helper functionality relevant to every implementation of an interface, if said functionality can be written in terms of the core interface. This is because concrete implementations cannot otherwise be assigned to interfaces. For example, the `LINQ to Objects` operators are implemented as extension methods for all <xref:System.Collections.Generic.IEnumerable`1> types. Thus, any `IEnumerable<>` implementation is automatically LINQ-enabled.
 
-- When an instance method would introduce a dependency on some type, but such a dependency would break dependency management rules. For example, a dependency from `System.String` to `System.Uri` is probably not desirable, and so `String.ToUri()` instance method returning `System.Uri` would be the wrong design from a dependency management perspective. A static extension method `Uri.ToUri(this string str)` returning `System.Uri` would be a much better design.
+- When an instance method would introduce a dependency on some type, but such a dependency would break dependency management rules. For example, a dependency from <xref:System.String> to <xref:System.Uri?displayProperty=nameWithType> is probably not desirable, and so `String.ToUri()` instance method returning `System.Uri` would be the wrong design from a dependency management perspective. A static extension method `Uri.ToUri(this string str)` returning `System.Uri` would be a much better design.
 
- ❌ AVOID defining extension methods on `System.Object`.
+ ❌ AVOID defining extension methods on <xref:System.Object?displayProperty=nameWithType>.
 
  VB users will not be able to call such methods on object references using the extension method syntax. VB does not support calling such methods because, in VB, declaring a reference as Object forces all method invocations on it to be late bound (actual member called is determined at run time), while bindings to extension methods are determined at compile-time (early bound).
 
@@ -44,9 +40,9 @@ Extension methods are a language feature that allows static methods to be called
 
  *Portions &copy; 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Member Design Guidelines
-- Framework Design Guidelines
+- [Member Design Guidelines](member.md)
+- [Framework Design Guidelines](index.md)

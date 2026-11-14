@@ -8,14 +8,16 @@
       "version": "15",
       "license": "CC-BY-4.0",
       "attribution": "Microsoft and the .NET docs contributors",
-      "flavor": "docfx",
-      "core": false,
       "paths": [
         "docs/csharp/",
         "includes/"
       ],
-      "docs": ["docs/csharp"],
-      "exclude": ["docs/csharp/**/snippets"]
+      "docs": [
+        "docs/csharp"
+      ],
+      "exclude": [
+        "docs/csharp/**/snippets"
+      ]
     },
     {
       "tool": "dotnet-core",
@@ -25,14 +27,16 @@
       "version": "11",
       "license": "CC-BY-4.0",
       "attribution": "Microsoft and the .NET docs contributors",
-      "flavor": "docfx",
-      "core": false,
       "paths": [
         "docs/core/",
         "includes/"
       ],
-      "docs": ["docs/core"],
-      "exclude": ["docs/core/**/snippets"]
+      "docs": [
+        "docs/core"
+      ],
+      "exclude": [
+        "docs/core/**/snippets"
+      ]
     },
     {
       "tool": "dotnet-standard",
@@ -42,15 +46,17 @@
       "version": "11",
       "license": "CC-BY-4.0",
       "attribution": "Microsoft and the .NET docs contributors",
-      "flavor": "docfx",
-      "core": false,
       "paths": [
         "docs/standard/",
         "samples/snippets/csharp/",
         "includes/"
       ],
-      "docs": ["docs/standard"],
-      "exclude": ["docs/standard/**/snippets"]
+      "docs": [
+        "docs/standard"
+      ],
+      "exclude": [
+        "docs/standard/**/snippets"
+      ]
     },
     {
       "tool": "aspnetcore",
@@ -60,10 +66,12 @@
       "version": "11",
       "license": "CC-BY-4.0",
       "attribution": "Microsoft and the ASP.NET Core docs contributors",
-      "flavor": "docfx",
-      "core": false,
-      "paths": ["aspnetcore/"],
-      "docs": ["aspnetcore"],
+      "paths": [
+        "aspnetcore/"
+      ],
+      "docs": [
+        "aspnetcore"
+      ],
       "exclude": [
         "aspnetcore/**/samples",
         "aspnetcore/**/samples_snapshot",
@@ -79,13 +87,13 @@
       "version": "11",
       "license": "CC-BY-4.0",
       "attribution": "Microsoft and the Entity Framework docs contributors",
-      "flavor": "docfx",
-      "core": false,
       "paths": [
         "entity-framework/",
         "samples/"
       ],
-      "docs": ["entity-framework"]
+      "docs": [
+        "entity-framework"
+      ]
     },
     {
       "tool": "dotnet-api",
@@ -95,8 +103,6 @@
       "version": "11",
       "license": "CC-BY-4.0",
       "attribution": "Microsoft and the .NET API docs contributors",
-      "flavor": "docfx",
-      "core": false,
       "paths": [
         "xml/System/",
         "xml/System.Buffers/",
@@ -275,8 +281,122 @@
         "xml/ns-Microsoft.Extensions.ServiceDiscovery.xml",
         "xml/ns-Microsoft.Extensions.Time.Testing.xml"
       ],
-      "docs": ["xml"],
-      "converter": "dotnet-xml"
+      "docs": [
+        "xml"
+      ]
+    },
+    {
+      "tool": "dotnet-fundamentals",
+      "title": ".NET fundamentals: dependency injection, configuration, logging, code analysis rules CA and IDE",
+      "repository": "https://github.com/dotnet/docs.git",
+      "ref": "main",
+      "version": "11",
+      "license": "CC-BY-4.0",
+      "attribution": "Microsoft and the .NET documentation contributors",
+      "paths": [
+        "docs/fundamentals/"
+      ],
+      "docs": [
+        "docs/fundamentals"
+      ],
+      "exclude": [
+        "docs/fundamentals/**/snippets",
+        "docs/fundamentals/**/media"
+      ]
+    },
+    {
+      "tool": "dotnet-architecture",
+      "title": ".NET architecture guides: microservices, containers, cloud-native, modern web applications",
+      "repository": "https://github.com/dotnet/docs.git",
+      "ref": "main",
+      "version": "11",
+      "license": "CC-BY-4.0",
+      "attribution": "Microsoft and the .NET documentation contributors",
+      "paths": [
+        "docs/architecture/"
+      ],
+      "docs": [
+        "docs/architecture"
+      ],
+      "exclude": [
+        "docs/architecture/**/media"
+      ]
+    },
+    {
+      "tool": "aspire",
+      "title": ".NET Aspire: app host, integrations, deployment, observability",
+      "repository": "https://github.com/dotnet/docs-aspire.git",
+      "ref": "main",
+      "version": "13",
+      "license": "MIT",
+      "attribution": "Microsoft and the .NET Aspire documentation contributors",
+      "paths": [
+        "docs/"
+      ],
+      "docs": [
+        "docs"
+      ],
+      "exclude": [
+        "docs/**/snippets",
+        "docs/**/media"
+      ]
+    },
+    {
+      "tool": "aspnetcore-api",
+      "title": "ASP.NET Core API reference: the XML documentation of the shared framework Microsoft.AspNetCore.App",
+      "repository": "https://www.nuget.org/packages/Microsoft.AspNetCore.App.Ref/11.0.0",
+      "archive": "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.ref/11.0.0/microsoft.aspnetcore.app.ref.11.0.0.nupkg",
+      "ref": "11.0.0",
+      "version": "11.0",
+      "license": "MIT",
+      "attribution": ".NET Foundation and Contributors",
+      "paths": [
+        "ref/net11.0/"
+      ],
+      "docs": [
+        "ref/net11.0"
+      ],
+      "licenseTexts": {
+        "LICENSE.txt": "https://raw.githubusercontent.com/dotnet/aspnetcore/main/LICENSE.txt"
+      }
+    },
+    {
+      "tool": "efcore-api",
+      "title": "Entity Framework Core API reference: the XML documentation of Microsoft.EntityFrameworkCore",
+      "repository": "https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/11.0.0",
+      "archive": "https://api.nuget.org/v3-flatcontainer/microsoft.entityframeworkcore/11.0.0/microsoft.entityframeworkcore.11.0.0.nupkg",
+      "ref": "11.0.0",
+      "version": "11.0",
+      "license": "MIT",
+      "attribution": ".NET Foundation and Contributors",
+      "paths": [
+        "lib/net11.0/"
+      ],
+      "docs": [
+        "lib/net11.0"
+      ],
+      "licenseTexts": {
+        "LICENSE.txt": "https://raw.githubusercontent.com/dotnet/efcore/main/LICENSE.txt"
+      }
+    },
+    {
+      "tool": "efcore-relational-api",
+      "title": "Entity Framework Core relational API reference: the XML documentation of Microsoft.EntityFrameworkCore.Relational",
+      "repository": "https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Relational/11.0.0",
+      "archive": "https://api.nuget.org/v3-flatcontainer/microsoft.entityframeworkcore.relational/11.0.0/microsoft.entityframeworkcore.relational.11.0.0.nupkg",
+      "ref": "11.0.0",
+      "version": "11.0",
+      "license": "MIT",
+      "attribution": ".NET Foundation and Contributors",
+      "paths": [
+        "lib/net11.0/"
+      ],
+      "docs": [
+        "lib/net11.0"
+      ],
+      "licenseTexts": {
+        "LICENSE.txt": "https://raw.githubusercontent.com/dotnet/efcore/main/LICENSE.txt"
+      }
     }
   ]
 }

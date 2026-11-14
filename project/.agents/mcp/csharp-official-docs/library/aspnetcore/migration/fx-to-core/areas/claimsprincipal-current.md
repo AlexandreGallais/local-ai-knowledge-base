@@ -1,12 +1,8 @@
 ---
-title: "Migrate from static ClaimsPrincipal access"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/migration/fx-to-core/areas/claimsprincipal-current.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Migrate from static ClaimsPrincipal access
+description: Learn how to migrate away from static ClaimsPrincipal access to retrieve the current authenticated user's identity and claims in ASP.NET Core.
+ms.date: 07/17/2025
 ---
-
 # Migrate from static ClaimsPrincipal access
 
 The current ClaimsPrincipal is a fundamental component of authenticated web applications, providing access to the current user's identity and claims. When migrating from ASP.NET Framework to ASP.NET Core, accessing this presents unique challenges because the two frameworks have different approaches to user context management.
@@ -15,10 +11,10 @@ The current ClaimsPrincipal is a fundamental component of authenticated web appl
 
 ASP.NET Framework and ASP.NET Core take fundamentally different approaches to how the current user is accessed:
 
-* **ASP.NET Framework** uses static properties like `System.Security.Claims.ClaimsPrincipal.Current` and `System.Threading.Thread.CurrentPrincipal` with automatic context management. These properties are interchangeable and both provide access to the current user's identity.
-* **ASP.NET Core** stores the current user in `Microsoft.AspNetCore.Http.HttpContext.User` and avoids static state.
+* **ASP.NET Framework** uses static properties like <xref:System.Security.Claims.ClaimsPrincipal.Current?displayProperty=nameWithType> and <xref:System.Threading.Thread.CurrentPrincipal?displayProperty=nameWithType> with automatic context management. These properties are interchangeable and both provide access to the current user's identity.
+* **ASP.NET Core** stores the current user in <xref:Microsoft.AspNetCore.Http.HttpContext.User?displayProperty=nameWithType> and avoids static state.
 
-These differences mean you can't simply continue using static principal properties (`System.Security.Claims.ClaimsPrincipal.Current` or `System.Threading.Thread.CurrentPrincipal`) in ASP.NET Core without changes. By default, the static properties aren't set, and code depending on them needs to be updated to get the current authenticated user's identity through different means.
+These differences mean you can't simply continue using static principal properties (<xref:System.Security.Claims.ClaimsPrincipal.Current?displayProperty=nameWithType> or <xref:System.Threading.Thread.CurrentPrincipal?displayProperty=nameWithType>) in ASP.NET Core without changes. By default, the static properties aren't set, and code depending on them needs to be updated to get the current authenticated user's identity through different means.
 
 ## Migration strategies overview
 
@@ -38,25 +34,25 @@ You have two main options for migrating static principal access from ASP.NET Fra
 **Answer these questions to choose your approach:**
 
 1. **Are you doing a complete rewrite or incremental migration?**
-   * Complete rewrite → Complete rewrite to ASP.NET Core patterns
+   * Complete rewrite → [Complete rewrite to ASP.NET Core patterns](#complete-rewrite-to-aspnet-core-patterns)
    * Incremental migration → Continue to question 2
 
-2. **Do you have extensive static principal usage (`System.Security.Claims.ClaimsPrincipal.Current` or `System.Threading.Thread.CurrentPrincipal`) across shared libraries?**
-   * Yes, lots of shared code → System.Web adapters
-   * No, isolated static principal usage → Complete rewrite to ASP.NET Core patterns
+2. **Do you have extensive static principal usage (<xref:System.Security.Claims.ClaimsPrincipal.Current?displayProperty=nameWithType> or <xref:System.Threading.Thread.CurrentPrincipal?displayProperty=nameWithType>) across shared libraries?**
+   * Yes, lots of shared code → [System.Web adapters](#systemweb-adapters)
+   * No, isolated static principal usage → [Complete rewrite to ASP.NET Core patterns](#complete-rewrite-to-aspnet-core-patterns)
 
 ### Migration approaches comparison
 
 | Approach | Code Changes | Performance | Shared Libraries | When to Use |
 |----------|-------------|-------------|------------------|-------------|
-| **Complete rewrite** | High - Rewrite all static principal access | Best | Requires updates | Complete rewrites, performance-critical apps |
-| **System.Web adapters** | Low - Keep existing patterns | Good | Works with existing code | Incremental migrations, extensive static access |
+| **[Complete rewrite](#complete-rewrite-to-aspnet-core-patterns)** | High - Rewrite all static principal access | Best | Requires updates | Complete rewrites, performance-critical apps |
+| **[System.Web adapters](#systemweb-adapters)** | Low - Keep existing patterns | Good | Works with existing code | Incremental migrations, extensive static access |
 
 ## Complete rewrite to ASP.NET Core patterns
 
 Choose this approach when you're performing a complete migration or want the best performance and maintainability.
 
-ASP.NET Core provides several options for retrieving the current authenticated user's `System.Security.Claims.ClaimsPrincipal` without relying on static properties. This approach requires rewriting static principal access code but offers the most benefits in the long term.
+ASP.NET Core provides several options for retrieving the current authenticated user's <xref:System.Security.Claims.ClaimsPrincipal> without relying on static properties. This approach requires rewriting static principal access code but offers the most benefits in the long term.
 
 ### Complete rewrite pros and cons
 
@@ -70,12 +66,12 @@ ASP.NET Core provides several options for retrieving the current authenticated u
 
 ### ASP.NET Core ClaimsPrincipal access patterns
 
-There are several options for retrieving the current authenticated user's `System.Security.Claims.ClaimsPrincipal` in ASP.NET Core in place of `System.Security.Claims.ClaimsPrincipal.Current`:
+There are several options for retrieving the current authenticated user's <xref:System.Security.Claims.ClaimsPrincipal> in ASP.NET Core in place of <xref:System.Security.Claims.ClaimsPrincipal.Current?displayProperty=nameWithType>:
 
-* **`Microsoft.AspNetCore.Mvc.ControllerBase.User`**
-* **`Microsoft.AspNetCore.Http.HttpContext.User`**
-* **Passed in from caller**. Libraries without access to the current `Microsoft.AspNetCore.Http.HttpContext` are often called from controllers or middleware components and can have the current user's identity passed as an argument.
-* **`Microsoft.AspNetCore.Http.IHttpContextAccessor`**. The project being migrated to ASP.NET Core may be too large to easily pass the current user's identity to all necessary locations. In such cases, `Microsoft.AspNetCore.Http.IHttpContextAccessor` can be used as a workaround. This is not ideal as it uses a static accessor behind the scenes. Prefer a more direct option if possible.
+* **<xref:Microsoft.AspNetCore.Mvc.ControllerBase.User?displayProperty=nameWithType>**
+* **<xref:Microsoft.AspNetCore.Http.HttpContext.User?displayProperty=nameWithType>**
+* **Passed in from caller**. Libraries without access to the current <xref:Microsoft.AspNetCore.Http.HttpContext> are often called from controllers or middleware components and can have the current user's identity passed as an argument.
+* **<xref:Microsoft.AspNetCore.Http.IHttpContextAccessor>**. The project being migrated to ASP.NET Core may be too large to easily pass the current user's identity to all necessary locations. In such cases, <xref:Microsoft.AspNetCore.Http.IHttpContextAccessor> can be used as a workaround. This is not ideal as it uses a static accessor behind the scenes. Prefer a more direct option if possible.
 
 ### Code examples
 
@@ -94,7 +90,7 @@ public class UserService
 }
 ```
 
-**ASP.NET Core (after) - Pass <example-value> as parameter:**
+**ASP.NET Core (after) - Pass ClaimsPrincipal as parameter:**
 ```csharp
 public class UserService
 {
@@ -150,12 +146,11 @@ public class UserService
 
 ## System.Web adapters
 
-> **Note:**
-> This makes use of the System.Web Adapters to simplify migration.
+[!INCLUDE[](~/migration/fx-to-core/includes/uses-systemweb-adapters.md)]
 
 Choose this approach when you need to maintain existing static principal usage patterns during incremental migration, or when you have extensive shared libraries that would be difficult to update.
 
-The System.Web adapters can enable both `System.Security.Claims.ClaimsPrincipal.Current` and `System.Threading.Thread.CurrentPrincipal` support in ASP.NET Core, allowing you to keep existing code patterns while migrating incrementally. Both properties work interchangeably once adapters are configured.
+The System.Web adapters can enable both <xref:System.Security.Claims.ClaimsPrincipal.Current?displayProperty=nameWithType> and <xref:System.Threading.Thread.CurrentPrincipal?displayProperty=nameWithType> support in ASP.NET Core, allowing you to keep existing code patterns while migrating incrementally. Both properties work interchangeably once adapters are configured.
 
 ### System.Web adapters pros and cons
 
@@ -169,7 +164,7 @@ The System.Web adapters can enable both `System.Security.Claims.ClaimsPrincipal.
 
 ### Setting up static principal support
 
-To enable static principal support (`System.Security.Claims.ClaimsPrincipal.Current` and `System.Threading.Thread.CurrentPrincipal`) with System.Web adapters, endpoints must be annotated with the `SetThreadCurrentPrincipalAttribute` metadata:
+To enable static principal support (<xref:System.Security.Claims.ClaimsPrincipal.Current?displayProperty=nameWithType> and <xref:System.Threading.Thread.CurrentPrincipal?displayProperty=nameWithType>) with System.Web adapters, endpoints must be annotated with the `SetThreadCurrentPrincipalAttribute` metadata:
 
 ```csharp
 // Add to controller or action

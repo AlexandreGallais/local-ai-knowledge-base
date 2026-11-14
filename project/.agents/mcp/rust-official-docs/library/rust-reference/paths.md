@@ -1,12 +1,3 @@
----
-title: "Paths"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/paths.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[paths]
 # Paths
 
@@ -15,7 +6,8 @@ A *path* is a sequence of one or more path segments separated by `::` tokens. Pa
 
 Two examples of simple paths consisting of only identifier segments:
 
-```rust
+<!-- ignore: syntax fragment -->
+```rust,ignore
 x;
 x::y::z;
 ```
@@ -26,7 +18,7 @@ r[paths.simple]
 ### Simple paths
 
 r[paths.simple.syntax]
-```grammar
+```grammar,paths
 SimplePath ->
     `::`? SimplePathSegment (`::` SimplePathSegment)*
 
@@ -35,7 +27,7 @@ SimplePathSegment ->
 ```
 
 r[paths.simple.intro]
-Simple paths are used in [visibility] markers, [attributes], macros, and [`use`] items. For example:
+Simple paths are used in [visibility] markers, [attributes], [macros][mbe], and [`use`] items. For example:
 
 ```rust
 use std::io::{self, Write};
@@ -49,7 +41,7 @@ r[paths.expr]
 ### Paths in expressions
 
 r[paths.expr.syntax]
-```grammar
+```grammar,paths
 PathInExpression ->
     `::`? PathExprSegment (`::` PathExprSegment)*
 
@@ -89,7 +81,7 @@ r[paths.expr.intro]
 Paths in expressions allow for paths with generic arguments to be specified. They are used in various places in [expressions] and [patterns].
 
 r[paths.expr.turbofish]
-The `::` token is required before the opening `<` for generic arguments to avoid ambiguity with the less-than operator. This is colloquially known as "<example-value>" syntax.
+The `::` token is required before the opening `<` for generic arguments to avoid ambiguity with the less-than operator. This is colloquially known as "turbofish" syntax.
 
 ```rust
 (0..10).collect::<Vec<_>>();
@@ -116,14 +108,14 @@ let _ = f::<C>(); // Single segment path.
 let _ = f::<{ m::C }>(); // Multi-segment path must be braced.
 ```
 
-```rust
+```rust,compile_fail
 fn f<const N: usize>() -> [u8; N] { [0; _] }
 let _: [_; 1] = f::<{ _ }>();
 //                    ^ ERROR `_` not allowed here
 ```
 
-> **Note:**
-> In a generic argument list, an [inferred const] is parsed as an inferred type but then semantically treated as a separate kind of [const generic argument].
+> [!NOTE]
+> In a generic argument list, an [inferred const] is parsed as an [inferred type][InferredType] but then semantically treated as a separate kind of [const generic argument].
 
 r[paths.expr.impl-trait-params]
 The synthetic type parameters corresponding to `impl Trait` types are implicit, and these cannot be explicitly specified.
@@ -132,7 +124,7 @@ r[paths.qualified]
 ## Qualified paths
 
 r[paths.qualified.syntax]
-```grammar
+```grammar,paths
 QualifiedPathInExpression -> QualifiedPathType (`::` PathExprSegment)+
 
 QualifiedPathType -> `<` Type (`as` TypePath)? `>`
@@ -141,7 +133,7 @@ QualifiedPathInType -> QualifiedPathType (`::` TypePathSegment)+
 ```
 
 r[paths.qualified.intro]
-Fully qualified paths allow for disambiguating the path for [trait implementations] and for specifying canonical paths. When used in a type specification, it supports using the type syntax specified below.
+Fully qualified paths allow for disambiguating the path for [trait implementations] and for specifying [canonical paths](#canonical-paths). When used in a type specification, it supports using the type syntax specified below.
 
 ```rust
 struct S;
@@ -165,7 +157,7 @@ r[paths.type]
 ### Paths in types
 
 r[paths.type.syntax]
-```grammar
+```grammar,paths
 TypePath -> `::`? TypePathSegment (`::` TypePathSegment)*
 
 TypePathSegment -> PathIdentSegment (`::`? GenericArgs)?
@@ -199,7 +191,7 @@ r[paths.qualifiers]
 r[paths.qualifiers.intro]
 Paths can be denoted with various leading qualifiers to change the meaning of how it is resolved.
 
-> **Note:**
+> [!NOTE]
 > [`use` declarations] have additional behaviors and restrictions for `self`, `super`, `crate`, and `$crate`.
 
 r[paths.qualifiers.global-root]
@@ -223,7 +215,7 @@ pub fn foo() {
 }
 ```
 
-```rust
+```rust,edition2015
 // 2015 Edition
 mod a {
     pub fn foo() {}
@@ -260,13 +252,13 @@ fn f<T: m::Tr::self>() {} // OK: Traits can be parents of `self`.
 # fn main() { let _: Ty = m::E::V1; }
 ```
 
-```rust
+```rust,compile_fail,E0223
 struct S;
 type Ty = S::self; // ERROR: Structs cannot be parents of `self`.
 # fn main() {}
 ```
 
-> **Note:**
+> [!NOTE]
 > See [items.use.self] for additional rules about `self` in `use` declarations.
 
 r[paths.qualifiers.self-pat]
@@ -447,10 +439,10 @@ r[paths.canonical.module-prefix]
 The path prefix for modules is the canonical path to that module.
 
 r[paths.canonical.bare-impl-prefix]
-For bare implementations, it is the canonical path of the item being implemented surrounded by angle (`<>`) brackets.
+For bare implementations, it is the canonical path of the item being implemented surrounded by <span class="parenthetical">angle (`<>`)</span> brackets.
 
 r[paths.canonical.trait-impl-prefix]
-For [trait implementations], it is the canonical path of the item being implemented followed by `as` followed by the canonical path to the trait all surrounded in angle (`<>`) brackets.
+For [trait implementations], it is the canonical path of the item being implemented followed by `as` followed by the canonical path to the trait all surrounded in <span class="parenthetical">angle (`<>`)</span> brackets.
 
 r[paths.canonical.local-canonical-path]
 The canonical path is only meaningful within a given crate. There is no global namespace across crates; an item's canonical path merely identifies it within the crate.
@@ -498,3 +490,32 @@ mod without { // crate::without
 
 # fn main() {}
 ```
+
+[`$crate`]: macro.decl.hygiene.crate
+[implementations]: items/implementations.md
+[items]: items.md
+[literal]: expressions/literal-expr.md
+[use declarations]: items/use-declarations.md
+[`Self` scope]: names/scopes.md#self-scope
+[`use`]: items/use-declarations.md
+[attributes]: attributes.md
+[const generic argument]: items.generics.const.argument
+[enumeration]: items/enumerations.md
+[expressions]: expressions.md
+[extern prelude]: names/preludes.md#extern-prelude
+[implementation]: items/implementations.md
+[inferred const]: items.generics.const.inferred
+[macro transcribers]: macros-by-example.md
+[macros]: macros.md
+[mbe]: macros-by-example.md
+[module]: items/modules.md
+[patterns]: patterns.md
+[struct]: items/structs.md
+[trait implementations]: items/implementations.md#trait-implementations
+[trait]: items/traits.md
+[traits]: items/traits.md
+[types]: types.md
+[union]: items/unions.md
+[`use` declarations]: items/use-declarations.md
+[value namespace]: names/namespaces.md
+[visibility]: visibility-and-privacy.md

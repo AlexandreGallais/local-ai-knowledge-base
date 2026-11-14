@@ -1,12 +1,3 @@
----
-title: "std::thread::scoped"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/thread/scoped.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::thread::scoped
 
 ## struct Scope
@@ -17,7 +8,7 @@ pub struct Scope<'scope, 'env: 'scope>
 
 A scope to spawn scoped threads in.
 
-See `scope` for details.
+See [`scope`] for details.
 
 ## struct ScopedJoinHandle
 
@@ -27,7 +18,7 @@ pub struct ScopedJoinHandle<'scope, T>(JoinInner<'scope, T>)
 
 An owned permission to join on a scoped thread (block on its termination).
 
-See `Scope::spawn` for details.
+See [`Scope::spawn`] for details.
 
 ## fn scope
 
@@ -37,8 +28,8 @@ pub fn scope<'env, F, T>(f: F) -> T where F: for<'scope> FnOnce(&'scope Scope<'s
 
 Creates a scope for spawning scoped threads.
 
-The function passed to `scope` will be provided a `Scope` object,
-through which scoped threads can be [spawned]`Scope::spawn`.
+The function passed to `scope` will be provided a [`Scope`] object,
+through which scoped threads can be [spawned][`Scope::spawn`].
 
 Unlike non-scoped threads, scoped threads can borrow non-`'static` data,
 as the scope guarantees all threads will be joined at the end of the scope.
@@ -54,11 +45,11 @@ be running.
 If any of the automatically joined threads panicked, this function will panic.
 
 If you want to handle panics from spawned threads,
-`join`[ScopedJoinHandle::join] them before the end of the scope.
+[`join`][ScopedJoinHandle::join] them before the end of the scope.
 
 # Example
 
-```rust
+```
 use std::thread;
 
 let mut a = vec![1, 2, 3];
@@ -108,27 +99,29 @@ The `'env: 'scope` bound is part of the definition of the `Scope` type.
 pub fn spawn<F, T>(&'scope self, f: F) -> ScopedJoinHandle<'scope, T> where F: FnOnce() -> T + Send + 'scope, T: Send + 'scope,
 ```
 
-Spawns a new thread within a scope, returning a `ScopedJoinHandle` for it.
+Spawns a new thread within a scope, returning a [`ScopedJoinHandle`] for it.
 
 Unlike non-scoped threads, threads spawned with this function may
-borrow non-`'static` data from outside the scope. See `scope` for
+borrow non-`'static` data from outside the scope. See [`scope`] for
 details.
 
-The join handle provides a `join` method that can be used to join the spawned
-thread. If the spawned thread panics, `join` will return an `Err` containing
+The join handle provides a [`join`] method that can be used to join the spawned
+thread. If the spawned thread panics, [`join`] will return an [`Err`] containing
 the panic payload.
 
 If the join handle is dropped, the spawned thread will be implicitly joined at the
-end of the scope. In that case, if the spawned thread panics, `scope` will
+end of the scope. In that case, if the spawned thread panics, [`scope`] will
 panic after all threads are joined.
 
-This function creates a thread with the default parameters of `Builder`.
-To specify the new thread's stack size or the name, use `Builder::spawn_scoped`.
+This function creates a thread with the default parameters of [`Builder`].
+To specify the new thread's stack size or the name, use [`Builder::spawn_scoped`].
 
 # Panics
 
-Panics if the OS fails to create a thread; use `Builder::spawn_scoped`
+Panics if the OS fails to create a thread; use [`Builder::spawn_scoped`]
 to recover from such errors.
+
+[`join`]: ScopedJoinHandle::join
 
 ## Builder::spawn_scoped
 
@@ -138,7 +131,7 @@ pub fn spawn_scoped<'scope, 'env, F, T>( self, scope: &'scope Scope<'scope, 'env
 
 Spawns a new scoped thread using the settings set through this `Builder`.
 
-Unlike `Scope::spawn`, this method yields an `io::Result` to
+Unlike [`Scope::spawn`], this method yields an [`io::Result`] to
 capture any failure to create the thread at the OS level.
 
 # Panics
@@ -147,7 +140,7 @@ Panics if a thread name was set and it contained null bytes.
 
 # Example
 
-```rust
+```
 use std::thread;
 
 let mut a = vec![1, 2, 3];
@@ -191,7 +184,7 @@ Extracts a handle to the underlying thread.
 
 # Examples
 
-```rust
+```
 use std::thread;
 
 thread::scope(|s| {
@@ -217,14 +210,16 @@ for thread-local variables that might be running after the main function of the 
 In terms of [atomic memory orderings], the completion of the associated
 thread synchronizes with this function returning.
 In other words, all operations performed by that thread
-happen before
+[happen before](https://doc.rust-lang.org/nomicon/atomics.html#data-accesses)
 all operations that happen after `join` returns.
 
-If the associated thread panics, `Err` is returned with the panic payload.
+If the associated thread panics, [`Err`] is returned with the panic payload.
+
+[atomic memory orderings]: crate::sync::atomic
 
 # Examples
 
-```rust
+```
 use std::thread;
 
 thread::scope(|s| {
@@ -245,9 +240,9 @@ Checks if the associated thread has finished running its main function.
 
 `is_finished` supports implementing a non-blocking join operation, by checking
 `is_finished`, and calling `join` if it returns `true`. This function does not block. To
-block while waiting on the thread to finish, use `join`[Self::join].
+block while waiting on the thread to finish, use [`join`][Self::join].
 
 This might return `true` for a brief moment after the thread's main
 function has returned, but before the thread itself has stopped running.
-However, once this returns `true`, `join`[Self::join] can be expected
+However, once this returns `true`, [`join`][Self::join] can be expected
 to return quickly, without blocking for any significant amount of time.

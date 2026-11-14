@@ -1,19 +1,15 @@
 ---
-title: "dotnet watch command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-watch.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet watch command
+description: The dotnet watch command is a file watcher that runs a dotnet command when changes in source code are detected.
+ms.date: 09/29/2025
 ---
-
 # dotnet watch
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
 
 ## Name
 
-`dotnet watch` - Restarts or hot reloads the specified application, or runs a specified dotnet command, when changes in source code are detected.
+`dotnet watch` - Restarts or [hot reloads](#hot-reload) the specified application, or runs a specified dotnet command, when changes in source code are detected.
 
 ## Synopsis
 
@@ -30,13 +26,13 @@ dotnet watch -?|-h|--help
 
 ## Description
 
-The `dotnet watch` command is a file watcher. When it detects a change, it runs the `dotnet run` command or a specified `dotnet` command. If it runs `dotnet run`, and the change is supported for hot reload, it hot reloads the specified application. If the change isn't supported, it restarts the application. This process enables fast iterative development from the command line.
+The `dotnet watch` command is a file watcher. When it detects a change, it runs the `dotnet run` command or a specified `dotnet` command. If it runs `dotnet run`, and the change is supported for [hot reload](#hot-reload), it hot reloads the specified application. If the change isn't supported, it restarts the application. This process enables fast iterative development from the command line.
 
 While running `dotnet watch`, you can force the app to rebuild and restart by pressing Ctrl+R in the command shell. This feature is available only while the app is running. For example, if you run `dotnet watch` on a console app that ends before you press Ctrl+R, pressing Ctrl+R has no effect. However, in that case `dotnet watch` is still watching files and will restart the app if a file is updated.
 
 ### Response compression
 
-If `dotnet watch` runs for an app that uses response compression, the tool can't inject the browser refresh script. The  .NET 7 and later version of the tool displays a warning message like the following:
+If `dotnet watch` runs for an app that uses [response compression](/aspnet/core/performance/response-compression), the tool can't inject the browser refresh script. The  .NET 7 and later version of the tool displays a warning message like the following:
 
 > warn: Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserRefreshMiddleware[4]
 >
@@ -63,41 +59,33 @@ As an alternative to disabling response compression, manually add the browser re
 
 - **`<forwarded arguments>`**
 
-  Arguments provided after a double dash (` -- `) are passed to the child `dotnet` process. If you're running `dotnet watch run`, these arguments are options for dotnet run. If you're running `dotnet watch test`, these arguments are options for dotnet test.
+  Arguments provided after a double dash (` -- `) are passed to the child `dotnet` process. If you're running `dotnet watch run`, these arguments are options for [dotnet run](dotnet-run.md). If you're running `dotnet watch test`, these arguments are options for [dotnet test](dotnet-test.md).
 
 ## Options
 
-- **`--artifacts-path <ARTIFACTS_DIR>`**
+- [!INCLUDE [artifacts-path](includes/cli-artifacts-path.md)]
 
-All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see Artifacts Output Layout. This option and the value provided must be explicitly cascaded in any `dotnet` command that depends on the output of another `dotnet` command, for example, when using `dotnet build --no-restore` and `dotnet publish --no-build`. Available since .NET 8 SDK.
-
-- **`--disable-build-servers`**
-
-Forces the command to ignore any persistent build servers. This option provides a consistent way to disable all use of build caching, which forces a build from scratch. A build that doesn't rely on caches is useful when the caches might be corrupted or incorrect for some reason. Available since .NET 7 SDK.
+- [!INCLUDE [disable-build-servers](includes/cli-disable-build-servers.md)]
 
 - **`--list`**
 
   Lists all discovered files without starting the watcher.
 
-- **`--no-self-contained`**
-
-Publish your application as a framework-dependent application. A compatible .NET runtime must be installed on the target machine to run your application.
+- [!INCLUDE [no-self-contained](includes/cli-no-self-contained.md)]
 
 - **`--no-hot-reload`**
 
-  Suppress hot reload for supported apps.
+  Suppress [hot reload](#hot-reload) for [supported apps](/visualstudio/debugger/hot-reload#supported-net-app-frameworks-and-scenarios).
 
 - **`--non-interactive`**
 
-  Runs `dotnet watch` in non-interactive mode. Use this option to prevent console input from being requested. When hot reload is enabled and a rude edit is detected, dotnet watch restarts the app. Available since .NET 7 SDK.
+  Runs `dotnet watch` in non-interactive mode. Use this option to prevent console input from being requested. When hot reload is enabled and a [rude edit](#rude-edits) is detected, dotnet watch restarts the app. Available since .NET 7 SDK.
 
-- **`--project `**
+- **`--project <PATH>`**
 
   Specifies the path of the project file to run (folder only or including the project file name). If not specified, it defaults to the current directory.
 
-- **`--sc|--self-contained`**
-
-Publish the .NET runtime with your application so the runtime doesn't need to be installed on the target machine.
+- [!INCLUDE [self-contained](includes/cli-self-contained.md)]
 
 - **`-q|--quiet`**
 
@@ -113,11 +101,9 @@ Publish the .NET runtime with your application so the runtime doesn't need to be
 
 - **`--`**
 
-  The double-dash option ('--') can be used to delimit `dotnet watch` options from arguments that will be passed to the child process. Its use is optional. When the double-dash option isn't used, `dotnet watch` considers the first unrecognized argument to be the beginning of arguments that it should pass into the child `dotnet` process.
+  The [double-dash option ('--')](../../standard/commandline/syntax.md#the----token) can be used to delimit `dotnet watch` options from arguments that will be passed to the child process. Its use is optional. When the double-dash option isn't used, `dotnet watch` considers the first unrecognized argument to be the beginning of arguments that it should pass into the child `dotnet` process.
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Environment variables
 
@@ -129,7 +115,7 @@ Prints out a description of how to use the command.
 
 - **`DOTNET_USE_POLLING_FILE_WATCHER`**
 
-  When set to `1` or `true`, `dotnet watch` uses a polling file watcher instead of `System.IO.FileSystemWatcher`. Polling is required for some file systems, such as network shares, Docker mounted volumes, and other virtual file systems. The `Microsoft.Extensions.FileProviders.PhysicalFileProvider` class uses `DOTNET_USE_POLLING_FILE_WATCHER` to determine whether the `Microsoft.Extensions.FileProviders.PhysicalFileProvider.Watch*` method will rely on the `Microsoft.Extensions.FileProviders.Physical.PollingFileChangeToken`.
+  When set to `1` or `true`, `dotnet watch` uses a polling file watcher instead of <xref:System.IO.FileSystemWatcher?displayProperty=nameWithType>. Polling is required for some file systems, such as network shares, Docker mounted volumes, and other virtual file systems. The <xref:Microsoft.Extensions.FileProviders.PhysicalFileProvider> class uses `DOTNET_USE_POLLING_FILE_WATCHER` to determine whether the <xref:Microsoft.Extensions.FileProviders.PhysicalFileProvider.Watch*?displayProperty=nameWithType> method will rely on the <xref:Microsoft.Extensions.FileProviders.Physical.PollingFileChangeToken>.
 
 - **`DOTNET_WATCH`**
 
@@ -244,7 +230,7 @@ Exclude multiple patterns by separating them with semicolons:
 
 The `DefaultItemExcludes` property affects all default item types, like `Compile` and `EmbeddedResource`. The `Watch="false"` attribute provides finer control over specific files or project references.
 
-For more information, see the DefaultItemExcludes reference.
+For more information, see the [DefaultItemExcludes reference](../project-sdk/msbuild-props.md#defaultitemexcludes).
 
 ## Advanced configuration
 
@@ -260,7 +246,7 @@ For more information, see the DefaultItemExcludes reference.
 
 Starting in .NET 6 SDK, `dotnet watch` includes support for *hot reload*. Hot reload is a feature that lets you apply changes to a running app without having to rebuild and restart it. The changes may be to code files or static assets, such as stylesheet files and JavaScript files. This feature streamlines the local development experience, as it gives immediate feedback when you modify your app.
 
-For information about app types and .NET versions that support hot reload, see Supported .NET app frameworks and scenarios.
+For information about app types and .NET versions that support hot reload, see [Supported .NET app frameworks and scenarios](/visualstudio/debugger/hot-reload#supported-net-app-frameworks-and-scenarios).
 
 ### Rude edits
 
@@ -276,11 +262,11 @@ dotnet watch ⌚ Unable to apply hot reload because of a rude edit.
 * **Always**: Restarts the app and doesn't prompt anymore for rude edits.
 * **Never**: Leaves the app running without the changes applied and doesn't prompt anymore for rude edits.
 
-For information about what kinds of changes are considered rude edits, see Edit code and continue debugging and Unsupported changes to code.
+For information about what kinds of changes are considered rude edits, see [Edit code and continue debugging](/visualstudio/debugger/edit-and-continue) and [Unsupported changes to code](/visualstudio/debugger/supported-code-changes-csharp#unsupported-changes-to-code).
 
 To disable hot reload when you run `dotnet watch`, use the `--no-hot-reload` option, as shown in the following example:
 
-```net
+```.NET CLI
 dotnet watch --no-hot-reload
 ```
 
@@ -324,9 +310,9 @@ dotnet watch --no-hot-reload
 
 ## See also
 
-* Tutorial: Develop ASP.NET Core apps using a file watcher
-* Hot reload in Visual Studio
-* Hot reload supported apps
-* Hot reload supported code changes
-* Hot reload test execution
-* Hot reload support for ASP.NET Core
+* [Tutorial: Develop ASP.NET Core apps using a file watcher](/aspnet/core/tutorials/dotnet-watch)
+* [Hot reload in Visual Studio](/visualstudio/debugger/hot-reload)
+* [Hot reload supported apps](/visualstudio/debugger/hot-reload#supported-net-app-frameworks-and-scenarios)
+* [Hot reload supported code changes](/visualstudio/debugger/supported-code-changes-csharp)
+* [Hot reload test execution](/visualstudio/test/test-execution-with-hot-reload)
+* [Hot reload support for ASP.NET Core](/aspnet/core/test/hot-reload)

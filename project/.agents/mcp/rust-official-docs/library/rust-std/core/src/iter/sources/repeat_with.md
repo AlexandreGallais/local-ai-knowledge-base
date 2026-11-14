@@ -1,12 +1,3 @@
----
-title: "core::iter::sources::repeat_with"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/iter/sources/repeat_with.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::iter::sources::repeat_with
 
 ## fn repeat_with
@@ -21,21 +12,23 @@ applying the provided closure, the repeater, `F: FnMut() -> A`.
 The `repeat_with()` function calls the repeater over and over again.
 
 Infinite iterators like `repeat_with()` are often used with adapters like
-`Iterator::take()`, in order to make them finite.
+[`Iterator::take()`], in order to make them finite.
 
-If the element type of the iterator you need implements `Clone`, and
+If the element type of the iterator you need implements [`Clone`], and
 it is OK to keep the source element in memory, you should instead use
-the `repeat()` function.
+the [`repeat()`] function.
 
-An iterator produced by `repeat_with()` is not a `DoubleEndedIterator`.
-If you need `repeat_with()` to return a `DoubleEndedIterator`,
+An iterator produced by `repeat_with()` is not a [`DoubleEndedIterator`].
+If you need `repeat_with()` to return a [`DoubleEndedIterator`],
 please open a GitHub issue explaining your use case.
+
+[`repeat()`]: crate::iter::repeat
 
 # Examples
 
 Basic usage:
 
-```rust
+```
 use std::iter;
 
 // let's assume we have some value of a type that is not `Clone`
@@ -81,5 +74,5 @@ pub struct RepeatWith<F>
 An iterator that repeats elements of type `A` endlessly by
 applying the provided closure `F: FnMut() -> A`.
 
-This `struct` is created by the `repeat_with()` function.
+This `struct` is created by the [`repeat_with()`] function.
 See its documentation for more.

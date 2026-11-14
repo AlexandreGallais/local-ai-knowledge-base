@@ -1,13 +1,9 @@
 ---
-title: "use-isnan"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/use-isnan.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: use-isnan
+rule_type: problem
 ---
 
-# use-isnan
+
 
 In JavaScript, `NaN` is a special value of the `Number` type. It's used to represent any of the "not-a-number" values represented by the double-precision 64-bit format as specified by the IEEE Standard for Binary Floating-Point Arithmetic.
 
@@ -24,7 +20,7 @@ This rule disallows comparisons to `NaN`.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint use-isnan: "error"*/
@@ -46,9 +42,11 @@ if (foo != Number.NaN) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint use-isnan: "error"*/
@@ -61,6 +59,8 @@ if (!isNaN(foo)) {
     // ...
 }
 ```
+
+:::
 
 ## Options
 
@@ -76,7 +76,7 @@ Therefore, it can never match `case NaN`. Also, `switch(NaN)` can never match a 
 
 Examples of **incorrect** code for this rule with `"enforceForSwitchCase"` option set to `true` (default):
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint use-isnan: ["error", {"enforceForSwitchCase": true}]*/
@@ -122,9 +122,11 @@ switch (Number.NaN) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with `"enforceForSwitchCase"` option set to `true` (default):
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint use-isnan: ["error", {"enforceForSwitchCase": true}]*/
@@ -147,9 +149,11 @@ if (Number.isNaN(a)) {
 } // ...
 ```
 
+:::
+
 Examples of **correct** code for this rule with `"enforceForSwitchCase"` option set to `false`:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint use-isnan: ["error", {"enforceForSwitchCase": false}]*/
@@ -195,12 +199,14 @@ switch (Number.NaN) {
 }
 ```
 
+:::
+
 ### enforceForIndexOf
 
 The following methods internally use the `===` comparison to match the given value with an array element:
 
-* `Array.prototype.indexOf`
-* `Array.prototype.lastIndexOf`
+* [`Array.prototype.indexOf`](https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.indexof)
+* [`Array.prototype.lastIndexOf`](https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.lastindexof)
 
 Therefore, for any array `foo`, `foo.indexOf(NaN)` and `foo.lastIndexOf(NaN)` will always return `-1`.
 
@@ -208,7 +214,7 @@ Set `"enforceForIndexOf"` to `true` if you want this rule to report `indexOf(NaN
 
 Examples of **incorrect** code for this rule with `"enforceForIndexOf"` option set to `true`:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint use-isnan: ["error", {"enforceForIndexOf": true}]*/
@@ -226,9 +232,11 @@ const firstIndexFromSecondElement = myArray.indexOf(NaN, 1);
 const lastIndexFromSecondElement = myArray.lastIndexOf(NaN, 1);
 ```
 
+:::
+
 Examples of **correct** code for this rule with `"enforceForIndexOf"` option set to `true`:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint use-isnan: ["error", {"enforceForIndexOf": true}]*/
@@ -272,6 +280,8 @@ const firstIndex1 = myArray.findIndex(Number.isNaN);
 // ES2016
 const hasNaN3 = myArray.includes(NaN);
 ```
+
+:::
 
 #### Known Limitations
 

@@ -1,13 +1,10 @@
 ---
-title: "no-object-constructor"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-object-constructor.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-object-constructor
+rule_type: suggestion
+related_rules:
+- no-array-constructor
+- no-new-wrappers
 ---
-
-# no-object-constructor
 
 Use of the `Object` constructor to construct a new empty object is generally discouraged in favor of object literal notation because of conciseness and because the `Object` global may be redefined.
 The exception is when the `Object` constructor is used to intentionally wrap a specified value which is passed as an argument.
@@ -18,7 +15,7 @@ This rule disallows calling the `Object` constructor without an argument.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint no-object-constructor: "error"*/
@@ -28,9 +25,11 @@ Object();
 new Object();
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint no-object-constructor: "error"*/
@@ -43,6 +42,8 @@ const isObject = value => value === Object(value);
 
 const createObject = Object => new Object();
 ```
+
+:::
 
 ## Options
 

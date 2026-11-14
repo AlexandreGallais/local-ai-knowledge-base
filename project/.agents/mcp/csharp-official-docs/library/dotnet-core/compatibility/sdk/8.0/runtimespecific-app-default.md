@@ -1,24 +1,20 @@
 ---
 title: "Breaking change: Runtime-specific apps no longer self-contained"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/8.0/runtimespecific-app-default.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in the .NET 8 SDK where apps that specify a runtime identifier are no longer self-contained by default.
+ms.date: 06/05/2023
 ---
-
 # Runtime-specific apps no longer self-contained
 
-Runtime-specific apps, or .NET apps with a `RuntimeIdentifier`, are no longer self-contained by default. Instead, they are framework-dependent by default.
+Runtime-specific apps, or .NET apps with a `RuntimeIdentifier`, are no longer [self-contained](../../../deploying/index.md#publish-as-self-contained) by default. Instead, they are [framework-dependent](../../../deploying/index.md#publish-as-framework-dependent) by default.
 
 This is a breaking change in the following situations:
 
 - If you deployed, distributed, or published your app and didn't explicitly add the `SelfContained` property, but also didn't require that the .NET runtime be installed on the machine for it to work. In this case, you may have relied on the previous behavior to produce a self-contained app by default.
-- If you rely on the IL Link tool. In this case, take the steps described under Recommended action to use IL Link again.
+- If you rely on the IL Link tool. In this case, take the steps described under [Recommended action](#recommended-action) to use IL Link again.
 
 ## Previous behavior
 
-Previously, if a runtime identifier (RID) was specified (via RuntimeIdentifier), the app was published as self-contained, even if `SelfContained` wasn't explicitly specified.
+Previously, if a runtime identifier (RID) was specified (via [RuntimeIdentifier](../../../project-sdk/msbuild-props.md#runtimeidentifier)), the app was published as self-contained, even if `SelfContained` wasn't explicitly specified.
 
 In addition:
 
@@ -36,7 +32,7 @@ In addition:
 - The `PublishTrimmed` property also now implies `SelfContained` during `dotnet publish`.
 - The `PublishReadyToRun` property no longer implies `SelfContained` if the project targets .NET 8 or later.
 
-> **Note:**
+> [!NOTE]
 > If you publish using `msbuild /t:Publish` and you want your app to be self-contained, you must explicitly specify `SelfContained`, even if your project has one of the listed publish properties.
 
 ## Version introduced
@@ -45,7 +41,7 @@ In addition:
 
 ## Type of breaking change
 
-This change can affect source compatibility and binary compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility) and [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 
@@ -66,7 +62,7 @@ Now that customers have had time to add `SelfContained` explicitly, it's okay to
 
   **For projects with TargetFrameworks >= 8.0, RuntimeIdentifier no longer automatically gives a SelfContained app. To continue creating a .NET framework independent app after upgrading to 8.0, consider setting SelfContained explicitly.**
 
-  Follow the guidance of the warning and declare your app as self-contained. You can do that either in the project file or as a command-line argument, for example, `dotnet publish --self-contained`.
+  Follow the guidance of the warning and declare your app as self-contained. You can do that either in the [project file](#set-project-file-property) or as a command-line argument, for example, `dotnet publish --self-contained`.
 
 - If you're using .NET 8 and want to keep the previous behavior, set `SelfContained` to `true` in the same way as previously described.
 
@@ -85,4 +81,4 @@ Now that customers have had time to add `SelfContained` explicitly, it's okay to
 
 ## See also
 
-- .NET application publishing overview
+- [.NET application publishing overview](../../../deploying/index.md)

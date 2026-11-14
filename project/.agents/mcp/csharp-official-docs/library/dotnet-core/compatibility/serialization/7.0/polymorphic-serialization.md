@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: Polymorphic serialization for object types"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/serialization/7.0/polymorphic-serialization.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 7 breaking change in serialization where System.Text.Json no longer hardcodes polymorphism for root-level object types.
+ms.date: 09/12/2022
 ---
-
 # Polymorphic serialization for object types
 
-Using default configuration, `System.Text.Json` serializes values of type `object` using polymorphism. This behavior becomes less consistent if you register a custom converter for `object`. `System.Text.Json` has historically hardcoded polymorphism for root-level object values but not for nested object values. Starting with .NET 7, this behavior has changed so that custom converters never use polymorphism.
+Using default configuration, <xref:System.Text.Json?displayProperty=fullName> serializes values of type `object` [using polymorphism](../../../../standard/serialization/system-text-json/polymorphism.md). This behavior becomes less consistent if you register a custom converter for `object`. `System.Text.Json` has historically hardcoded polymorphism for root-level object values but not for nested object values. Starting with .NET 7, this behavior has changed so that custom converters never use polymorphism.
 
 ## Previous behavior
 
@@ -42,7 +38,7 @@ JsonSerializer.Serialize<object[]>(new object[] { 0 }, options);
 
 ## New behavior
 
-Starting in .NET 7, using the custom object converter defined in the Previous behavior section, the following code serializes as 42. That's because the serializer will always consult the custom converter and not use polymorphism.
+Starting in .NET 7, using the custom object converter defined in the [Previous behavior](#previous-behavior) section, the following code serializes as 42. That's because the serializer will always consult the custom converter and not use polymorphism.
 
 ```csharp
 var options = new JsonSerializerOptions { Converters = { new CustomObjectConverter() } };
@@ -55,7 +51,7 @@ JsonSerializer.Serialize<object>(0, options);
 
 ## Type of breaking change
 
-This change can affect binary compatibility.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 
@@ -72,7 +68,7 @@ JsonSerializer.Serialize(0, inputType: typeof(int), options); // Serializes as 0
 
 ## Affected APIs
 
-- `System.Text.Json.JsonSerializer.Serialize``1(``0,System.Text.Json.JsonSerializerOptions)`
-- `System.Text.Json.JsonSerializer.Serialize``1(System.IO.Stream,``0,System.Text.Json.JsonSerializerOptions)`
-- `System.Text.Json.JsonSerializer.Serialize``1(System.Text.Json.Utf8JsonWriter,``0,System.Text.Json.JsonSerializerOptions)`
-- `System.Text.Json.JsonSerializer.SerializeAsync``1(System.IO.Stream,``0,System.Text.Json.JsonSerializerOptions,System.Threading.CancellationToken)`
+- <xref:System.Text.Json.JsonSerializer.Serialize``1(``0,System.Text.Json.JsonSerializerOptions)?displayProperty=fullName>
+- <xref:System.Text.Json.JsonSerializer.Serialize``1(System.IO.Stream,``0,System.Text.Json.JsonSerializerOptions)?displayProperty=fullName>
+- <xref:System.Text.Json.JsonSerializer.Serialize``1(System.Text.Json.Utf8JsonWriter,``0,System.Text.Json.JsonSerializerOptions)?displayProperty=fullName>
+- <xref:System.Text.Json.JsonSerializer.SerializeAsync``1(System.IO.Stream,``0,System.Text.Json.JsonSerializerOptions,System.Threading.CancellationToken)?displayProperty=fullName>

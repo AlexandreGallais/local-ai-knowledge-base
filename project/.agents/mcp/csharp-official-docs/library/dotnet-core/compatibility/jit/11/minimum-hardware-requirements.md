@@ -1,10 +1,9 @@
 ---
 title: "Breaking change: Minimum hardware requirements updated"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/jit/11/minimum-hardware-requirements.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where x86/x64 minimum hardware requirements and x86/x64 and Arm64 ReadyToRun targets have been updated."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/48045
 ---
 
 # Minimum hardware requirements updated
@@ -43,7 +42,7 @@ The `ReadyToRun` target has been updated to `x86-64-v3` for Windows and Linux, w
 
 ## Previous behavior
 
-By default, .NET successfully launched and ran on older hardware. Individual applications might have opted-in to higher baselines or explicitly used hardware intrinsics that raised the baseline for their scenario.
+By default, .NET successfully launched and ran on older hardware. Individual applications might have opted-in to higher baselines or explicitly used [hardware intrinsics](xref:System.Runtime.Intrinsics) that raised the baseline for their scenario.
 
 ## New behavior
 
@@ -51,11 +50,11 @@ Starting with .NET 11, .NET fails to run on x86/x64 hardware that doesn't suppor
 
 > The current CPU is missing one or more of the baseline instruction sets.
 
-For `ReadyToRun`-capable assemblies, there might be additional startup overhead on some supported hardware that doesn't meet the expected support for a typical device.
+For [`ReadyToRun`](../../../deploying/ready-to-run.md)-capable assemblies, there might be additional startup overhead on some supported hardware that doesn't meet the expected support for a typical device.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -75,5 +74,5 @@ This change affects all of .NET.
 
 ## See also
 
-- Hardware intrinsics
-- ReadyToRun deployment
+- [Hardware intrinsics](xref:System.Runtime.Intrinsics)
+- [ReadyToRun deployment](../../../deploying/ready-to-run.md)

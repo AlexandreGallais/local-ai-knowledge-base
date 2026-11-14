@@ -1,12 +1,3 @@
----
-title: "core::ops::deref"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/ops/deref.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::ops::deref
 
 ## trait Deref
@@ -20,22 +11,22 @@ Used for immutable dereferencing operations, like `*v`.
 In addition to being used for explicit dereferencing operations with the
 (unary) `*` operator in immutable contexts, `Deref` is also used implicitly
 by the compiler in many circumstances. This mechanism is called
-"`Deref` coercion". In mutable contexts, `DerefMut` is used and
+["`Deref` coercion"][coercion]. In mutable contexts, [`DerefMut`] is used and
 mutable deref coercion similarly occurs.
 
 **Warning:** Deref coercion is a powerful language feature which has
 far-reaching implications for every type that implements `Deref`. The
 compiler will silently insert calls to `Deref::deref`. For this reason, one
 should be careful about implementing `Deref` and only do so when deref
-coercion is desirable. See below for advice on when this is
+coercion is desirable. See [below][implementing] for advice on when this is
 typically desirable or undesirable.
 
 Types that implement `Deref` or `DerefMut` are often called "smart
 pointers" and the mechanism of deref coercion has been specifically designed
 to facilitate the pointer-like behavior that name suggests. Often, the
 purpose of a "smart pointer" type is to change the ownership semantics
-of a contained value (for example, `Rc`[rc] or `Cow`[cow]) or the
-storage semantics of a contained value (for example, `Box`[box]).
+of a contained value (for example, [`Rc`][rc] or [`Cow`][cow]) or the
+storage semantics of a contained value (for example, [`Box`][box]).
 
 # Deref coercion
 
@@ -47,8 +38,8 @@ If `T` implements `Deref<Target = U>`, and `v` is a value of type `T`, then:
 * `T` implicitly implements all the methods of the type `U` which take the
   `&self` receiver.
 
-For more details, visit the chapter in *The Rust Programming Language*
-as well as the reference sections on the dereference operator,
+For more details, visit [the chapter in *The Rust Programming Language*][book]
+as well as the reference sections on [the dereference operator][ref-deref-op],
 [method resolution], and [type coercions].
 
 # When to implement `Deref` or `DerefMut`
@@ -72,19 +63,19 @@ Note that there's a large difference between implementing deref traits
 generically over many target types, and doing so only for specific target
 types.
 
-Generic implementations, such as for `Box<T>`[box] (which is generic over
+Generic implementations, such as for [`Box<T>`][box] (which is generic over
 every type and dereferences to `T`) should be careful to provide few or no
 methods, since the target type is unknown and therefore every method could
 collide with one on the target type, causing confusion for users.
 `impl<T> Box<T>` has no methods (though several associated functions),
 partly for this reason.
 
-Specific implementations, such as for `String`[string] (whose `Deref`
+Specific implementations, such as for [`String`][string] (whose `Deref`
 implementation has `Target = str`) can have many methods, since avoiding
 collision is much easier. `String` and `str` both have many methods, and
 `String` additionally behaves as if it has every method of `str` because of
 deref coercion. The implementing type may also be generic while the
-implementation is still specific in this sense; for example, `Vec<T>`[vec]
+implementation is still specific in this sense; for example, [`Vec<T>`][vec]
 dereferences to `[T]`, so methods of `T` are not applicable.
 
 Consider also that deref coercion means that deref traits are a much larger
@@ -92,7 +83,7 @@ part of a type's public API than any other trait as it is implicitly called
 by the compiler. Therefore, it is advisable to consider whether this is
 something you are comfortable supporting as a public API.
 
-The `AsRef` and `Borrow`[core::borrow::Borrow] traits have very similar
+The [`AsRef`] and [`Borrow`][core::borrow::Borrow] traits have very similar
 signatures to `Deref`. It may be desirable to implement either or both of
 these, whether in addition to or rather than deref traits. See their
 documentation for details.
@@ -110,12 +101,24 @@ However, infallibility is not enforced and therefore not guaranteed.
 As such, `unsafe` code should not rely on infallibility in general for
 soundness.
 
+[book]: ../../book/ch15-02-deref.html
+[coercion]: #deref-coercion
+[implementing]: #when-to-implement-deref-or-derefmut
+[ref-deref-op]: ../../reference/expressions/operator-expr.html#the-dereference-operator
+[method resolution]: ../../reference/expressions/method-call-expr.html
+[type coercions]: ../../reference/type-coercions.html
+[box]: ../../alloc/boxed/struct.Box.html
+[string]: ../../alloc/string/struct.String.html
+[vec]: ../../alloc/vec/struct.Vec.html
+[rc]: ../../alloc/rc/struct.Rc.html
+[cow]: ../../alloc/borrow/enum.Cow.html
+
 # Examples
 
 A struct with a single field which is accessible by dereferencing the
 struct.
 
-```rust
+```
 use std::ops::Deref;
 
 struct DerefExample<T> {
@@ -145,21 +148,21 @@ Used for mutable dereferencing operations, like in `*v = 1;`.
 In addition to being used for explicit dereferencing operations with the
 (unary) `*` operator in mutable contexts, `DerefMut` is also used implicitly
 by the compiler in many circumstances. This mechanism is called
-"mutable deref coercion". In immutable contexts, `Deref` is used.
+["mutable deref coercion"][coercion]. In immutable contexts, [`Deref`] is used.
 
 **Warning:** Deref coercion is a powerful language feature which has
 far-reaching implications for every type that implements `DerefMut`. The
 compiler will silently insert calls to `DerefMut::deref_mut`. For this
 reason, one should be careful about implementing `DerefMut` and only do so
-when mutable deref coercion is desirable. See the `Deref` docs
+when mutable deref coercion is desirable. See [the `Deref` docs][implementing]
 for advice on when this is typically desirable or undesirable.
 
 Types that implement `DerefMut` or `Deref` are often called "smart
 pointers" and the mechanism of deref coercion has been specifically designed
 to facilitate the pointer-like behavior that name suggests. Often, the
 purpose of a "smart pointer" type is to change the ownership semantics
-of a contained value (for example, `Rc`[rc] or `Cow`[cow]) or the
-storage semantics of a contained value (for example, `Box`[box]).
+of a contained value (for example, [`Rc`][rc] or [`Cow`][cow]) or the
+storage semantics of a contained value (for example, [`Box`][box]).
 
 # Mutable deref coercion
 
@@ -171,8 +174,8 @@ then:
 * Values of type `&mut T` are coerced to values of type `&mut U`
 * `T` implicitly implements all the (mutable) methods of the type `U`.
 
-For more details, visit the chapter in *The Rust Programming Language*
-as well as the reference sections on the dereference operator,
+For more details, visit [the chapter in *The Rust Programming Language*][book]
+as well as the reference sections on [the dereference operator][ref-deref-op],
 [method resolution] and [type coercions].
 
 # Fallibility
@@ -188,12 +191,23 @@ However, infallibility is not enforced and therefore not guaranteed.
 As such, `unsafe` code should not rely on infallibility in general for
 soundness.
 
+[book]: ../../book/ch15-02-deref.html
+[coercion]: #mutable-deref-coercion
+[implementing]: Deref#when-to-implement-deref-or-derefmut
+[ref-deref-op]: ../../reference/expressions/operator-expr.html#the-dereference-operator
+[method resolution]: ../../reference/expressions/method-call-expr.html
+[type coercions]: ../../reference/type-coercions.html
+[box]: ../../alloc/boxed/struct.Box.html
+[string]: ../../alloc/string/struct.String.html
+[rc]: ../../alloc/rc/struct.Rc.html
+[cow]: ../../alloc/borrow/enum.Cow.html
+
 # Examples
 
 A struct with a single field which is modifiable by dereferencing the
 struct.
 
-```rust
+```
 use std::ops::{Deref, DerefMut};
 
 struct DerefMutExample<T> {

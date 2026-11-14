@@ -1,12 +1,3 @@
----
-title: "ReflectiveOperationException class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/ReflectiveOperationException.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ReflectiveOperationException class (java.lang)
 
 ```java
@@ -16,9 +7,8 @@ public class ReflectiveOperationException extends Exception
 Common superclass of exceptions thrown by reflective operations in
 core reflection.
 
-**See also:** LinkageError
-
-**Since:** 1.7
+@see LinkageError
+@since 1.7
 
 ## ReflectiveOperationException.ReflectiveOperationException()
 
@@ -26,9 +16,9 @@ core reflection.
 public ReflectiveOperationException()
 ```
 
-Constructs a new exception with `null` as its detail
+Constructs a new exception with {@code null} as its detail
 message.  The cause is not initialized, and may subsequently be
-initialized by a call to `initCause`.
+initialized by a call to {@link #initCause}.
 
 ## ReflectiveOperationException.ReflectiveOperationException(String)
 
@@ -38,11 +28,10 @@ public ReflectiveOperationException(String message)
 
 Constructs a new exception with the specified detail message.
 The cause is not initialized, and may subsequently be
-initialized by a call to `initCause`.
+initialized by a call to {@link #initCause}.
 
-Parameters:
-
-- `message`: the detail message. The detail message is saved for later retrieval by the `getMessage()` method.
+@param   message   the detail message. The detail message is saved for
+         later retrieval by the {@link #getMessage()} method.
 
 ## ReflectiveOperationException.ReflectiveOperationException(String, Throwable)
 
@@ -53,14 +42,16 @@ public ReflectiveOperationException(String message, Throwable cause)
 Constructs a new exception with the specified detail message
 and cause.
 
-Note that the detail message associated with
-`cause` is *not* automatically incorporated in
+<p>Note that the detail message associated with
+{@code cause} is <em>not</em> automatically incorporated in
 this exception's detail message.
 
-Parameters:
-
-- `message`: the detail message (which is saved for later retrieval by the `getMessage()` method).
-- `cause`: the cause (which is saved for later retrieval by the `getCause()` method). (A `null` value is permitted, and indicates that the cause is nonexistent or unknown.)
+@param  message the detail message (which is saved for later retrieval
+        by the {@link #getMessage()} method).
+@param  cause the cause (which is saved for later retrieval by the
+        {@link #getCause()} method).  (A {@code null} value is
+        permitted, and indicates that the cause is nonexistent or
+        unknown.)
 
 ## ReflectiveOperationException.ReflectiveOperationException(Throwable)
 
@@ -69,9 +60,10 @@ public ReflectiveOperationException(Throwable cause)
 ```
 
 Constructs a new exception with the specified cause and a detail
-message of `(cause==null ? null : cause.toString())` (which
-typically contains the class and detail message of `cause`).
+message of {@code (cause==null ? null : cause.toString())} (which
+typically contains the class and detail message of {@code cause}).
 
-Parameters:
-
-- `cause`: the cause (which is saved for later retrieval by the `getCause()` method). (A `null` value is permitted, and indicates that the cause is nonexistent or unknown.)
+@param  cause the cause (which is saved for later retrieval by the
+        {@link #getCause()} method).  (A {@code null} value is
+        permitted, and indicates that the cause is nonexistent or
+        unknown.)

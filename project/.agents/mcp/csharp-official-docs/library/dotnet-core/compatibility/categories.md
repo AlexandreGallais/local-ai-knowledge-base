@@ -1,22 +1,19 @@
 ---
-title: "Compatibility"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/categories.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Compatibility
+description: Learn about the ways in which code changes can affect compatibility in .NET.
+ms.date: 06/10/2019
+ms.topic: concept-article
 ---
-
 # How code changes can affect compatibility
 
 *Compatibility* refers to the ability to compile or execute code on a version of a .NET implementation other than the one with which the code was originally developed. A particular change can affect compatibility in six different ways:
 
-- Behavioral change
-- Binary compatibility
-- Source compatibility
-- Design-time compatibility
-- Backwards compatibility
-- Forward compatibility (not a goal of .NET Core)
+- [Behavioral change](#behavioral-change)
+- [Binary compatibility](#binary-compatibility)
+- [Source compatibility](#source-compatibility)
+- [Design-time compatibility](#design-time-compatibility)
+- [Backwards compatibility](#backwards-compatibility)
+- [Forward compatibility](#forward-compatibility) (not a goal of .NET Core)
 
 ## Behavioral change
 

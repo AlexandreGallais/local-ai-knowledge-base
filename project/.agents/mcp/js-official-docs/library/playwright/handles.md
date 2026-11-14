@@ -1,10 +1,6 @@
 ---
+id: handles
 title: "Handles"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/handles.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
 
 ## Introduction
@@ -20,7 +16,7 @@ Since any DOM element in the page is also a JavaScript object, any [ElementHandl
 a [JSHandle] as well.
 
 Handles are used to perform operations on those actual objects in the page. You can evaluate
-on a handle, get handle properties, pass <example-value> as an evaluation parameter, serialize page
+on a handle, get handle properties, pass handle as an evaluation parameter, serialize page
 object into JSON etc. See the [JSHandle] class API for these and methods.
 
 ### API reference
@@ -39,12 +35,12 @@ JSHandle jsHandle = page.evaluateHandle("window");
 //  Use jsHandle for evaluations.
 ```
 
-```python
+```python async
 js_handle = await page.evaluate_handle('window')
 #  Use jsHandle for evaluations.
 ```
 
-```python
+```python sync
 js_handle = page.evaluate_handle('window')
 #  Use jsHandle for evaluations.
 ```
@@ -91,7 +87,7 @@ String classNames = elementHandle.getAttribute("class");
 assertTrue(classNames.contains("highlighted"));
 ```
 
-```python
+```python async
 # Get the element handle
 element_handle = await page.wait_for_selector('#box')
 
@@ -104,7 +100,7 @@ class_names = await element_handle.get_attribute('class')
 assert 'highlighted' in class_names
 ```
 
-```python
+```python sync
 # Get the element handle
 element_handle = page.wait_for_selector('#box')
 
@@ -177,7 +173,7 @@ page.evaluate("arg => arg.myArray.push(arg.newElement)", arg);
 myArrayHandle.dispose();
 ```
 
-```python
+```python async
 # Create new array in page.
 my_array_handle = await page.evaluate_handle("""() => {
   window.myArray = [1];
@@ -197,7 +193,7 @@ await page.evaluate("(arg) => arg.myArray.push(arg.newElement)", {
 await my_array_handle.dispose()
 ```
 
-```python
+```python sync
 # Create new array in page.
 my_array_handle = page.evaluate_handle("""() => {
   window.myArray = [1];
@@ -235,14 +231,16 @@ await page.EvaluateAsync("arg => arg.myArray.push(arg.newElement)",
 await myArrayHandle.DisposeAsync();
 ```
 
+
 ## Handle Lifecycle
 
 Handles can be acquired using the page methods such as [`method: Page.evaluateHandle`],
 [`method: Page.querySelector`] or [`method: Page.querySelectorAll`] or their frame counterparts
 [`method: Frame.evaluateHandle`], [`method: Frame.querySelector`] or [`method: Frame.querySelectorAll`]. Once
 created, handles will retain object from
-garbage collection
+[garbage collection](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management)
 unless page navigates or the handle is manually disposed via the [`method: JSHandle.dispose`] method.
+
 
 ### API reference
 - [JSHandle]
@@ -256,6 +254,7 @@ unless page navigates or the handle is manually disposed via the [`method: JSHan
 - [`method: Page.evaluateHandle`]
 - [`method: Page.querySelector`]
 - [`method: Page.querySelectorAll`]
+
 
 ## Locator vs ElementHandle
 
@@ -281,13 +280,13 @@ handle.hover();
 handle.click();
 ```
 
-```python
+```python async
 handle = await page.query_selector("text=Submit")
 await handle.hover()
 await handle.click()
 ```
 
-```python
+```python sync
 handle = page.query_selector("text=Submit")
 handle.hover()
 handle.click()
@@ -314,13 +313,13 @@ locator.hover();
 locator.click();
 ```
 
-```python
+```python async
 locator = page.get_by_text("Submit")
 await locator.hover()
 await locator.click()
 ```
 
-```python
+```python sync
 locator = page.get_by_text("Submit")
 locator.hover()
 locator.click()

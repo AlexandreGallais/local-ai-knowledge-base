@@ -1,23 +1,17 @@
----
-title: "prefer-literal-ascii"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-literal-ascii.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-literal-ascii
 
 📝 Prefer literal printable ASCII characters over escape sequences.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `recommended-css`, 🧩 `recommended-json`, 💎 `recommended-soml`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, 🎨 `recommended-css`, 🧩 `recommended-json`, 💎 `recommended-soml`, ☑️ `unopinionated`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Prefer literal printable ASCII (U+0020–U+007E) over numeric escapes in JavaScript strings and untagged templates, in JSON, JSONC, and JSON5 strings and quoted keys, and in CSS strings and identifiers. This covers each language's valid `\xXX`, `\uXXXX`, and `\u{X…}` escapes, plus CSS hexadecimal escapes. Quotes, backslashes, and template delimiters stay escaped when needed.
 
-In JSON, JSONC, and JSON5, `\/` becomes `/`. For `\/` in JavaScript, use ESLint's `no-useless-escape`. Tagged templates, regex literals, and JSX attribute strings are ignored. Use `prefer-unicode-code-point-escapes` for other legacy escapes.
+In JSON, JSONC, and JSON5, `\/` becomes `/`. For `\/` in JavaScript, use ESLint's [`no-useless-escape`](https://eslint.org/docs/latest/rules/no-useless-escape). Tagged templates, regex literals, and JSX attribute strings are ignored. Use [`prefer-unicode-code-point-escapes`](prefer-unicode-code-point-escapes.md) for other legacy escapes.
 
 In untagged templates, escaped spaces (`\u{20}`) at physical line endings are allowed to keep trailing whitespace visible and prevent editor trimming. They may be mixed with literal spaces or tabs.
 

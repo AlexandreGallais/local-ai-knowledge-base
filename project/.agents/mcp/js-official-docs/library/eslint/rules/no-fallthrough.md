@@ -1,13 +1,11 @@
 ---
-title: "no-fallthrough"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-fallthrough.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-fallthrough
+rule_type: problem
+related_rules:
+- default-case
 ---
 
-# no-fallthrough
+
 
 The `switch` statement in JavaScript is one of the more error-prone constructs of the language thanks in part to the ability to "fall through" from one `case` to the next. For example:
 
@@ -84,7 +82,7 @@ This rule is aimed at eliminating unintentional fallthrough of one case to the o
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-fallthrough: "error"*/
@@ -98,9 +96,11 @@ switch(foo) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-fallthrough: "error"*/
@@ -166,6 +166,8 @@ switch(foo) {
 }
 ```
 
+:::
+
 Note that the last `case` statement in these examples does not cause a warning because there is nothing to fall through into.
 
 ## Options
@@ -182,7 +184,7 @@ This rule has an object option:
 
 Examples of **correct** code for the `{ "commentPattern": "break[\\s\\w]*omitted" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-fallthrough: ["error", { "commentPattern": "break[\\s\\w]*omitted" }]*/
@@ -206,11 +208,13 @@ switch(foo) {
 }
 ```
 
+:::
+
 ### allowEmptyCase
 
 Examples of **correct** code for the `{ "allowEmptyCase": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-fallthrough: ["error", { "allowEmptyCase": true }] */
@@ -231,11 +235,13 @@ switch(foo){
 
 ```
 
+:::
+
 ### reportUnusedFallthroughComment
 
 Examples of **incorrect** code for the `{ "reportUnusedFallthroughComment": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint no-fallthrough: ["error", { "reportUnusedFallthroughComment": true }] */
@@ -265,9 +271,11 @@ function f() {
 }
 ```
 
+:::
+
 Examples of **correct** code for the `{ "reportUnusedFallthroughComment": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-fallthrough: ["error", { "reportUnusedFallthroughComment": true }] */
@@ -280,6 +288,8 @@ switch(foo){
     case 2: doSomething();
 }
 ```
+
+:::
 
 ## When Not To Use It
 

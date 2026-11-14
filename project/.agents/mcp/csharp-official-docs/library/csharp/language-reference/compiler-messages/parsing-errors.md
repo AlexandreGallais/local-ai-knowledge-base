@@ -1,22 +1,32 @@
 ---
 title: "Resolve errors related to parsing C# code"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/compiler-messages/parsing-errors.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "This article helps you diagnose and correct compiler errors related to parsing C# code"
+f1_keywords:
+  - "CS8180"
+  - "CS8300"
+  - "CS8635"
+  - "CS8641"
+helpviewer_keywords:
+  - "CS8180"
+  - "CS8300"
+  - "CS8635"
+  - "CS8641"
+ms.date: 09/23/2026
+ai-usage: ai-assisted
 ---
-
 # Resolve errors related to parsing C# code
 
 This article covers lexer and parser-stage diagnostics for incomplete declarations, unexpected character sequences, unexpected tokens, merge conflict markers, and malformed statement structure. It isn't a general syntax-error catalog.
 
 This article covers the following compiler errors:
 
-- **CS8180**: *{ or ; or => expected*
-- **CS8300**: *Merge conflict marker encountered*
-- **CS8635**: *Unexpected character sequence '...'*
-- **CS8641**: *'else' cannot start a statement.*
+<!-- The text in this list generates issues for Acrolinx, because they don't use contractions.
+That's by design. The text closely matches the text of the compiler error or warning for SEO purposes.
+ -->
+- [**CS8180**](#incomplete-accessor-declarations): *{ or ; or => expected*
+- [**CS8300**](#merge-conflict-markers): *Merge conflict marker encountered*
+- [**CS8635**](#unexpected-parser-stage-tokens-and-statements): *Unexpected character sequence '...'*
+- [**CS8641**](#unexpected-parser-stage-tokens-and-statements): *'else' cannot start a statement.*
 
 ## Incomplete accessor declarations
 
@@ -42,6 +52,6 @@ The source file contains an unresolved version-control merge conflict marker, su
 - **CS8635**: *Unexpected character sequence '...'*
 - **CS8641**: *'else' cannot start a statement.*
 
-The lexer and parser require token <example-value> that form valid C# statements. Remove a stray `...` sequence (**CS8635**). If you intended a range expression, use two dots (`..`). If the dots are part of other text, put that text in a string literal or comment.
+The lexer and parser require token sequences that form valid C# statements. Remove a stray `...` sequence (**CS8635**). If you intended a range expression, use two dots (`..`). If the dots are part of other text, put that text in a string literal or comment.
 
-An `else` clause must immediately follow the matching `if` statement (**CS8641**). Restructure the code so `else` doesn't begin a statement. Add the missing `if`, remove the unmatched `else`, or move intervening statements inside the intended `if` or `else` block.
+An `else` clause must immediately follow the matching [`if` statement](../statements/selection-statements.md#the-if-statement) (**CS8641**). Restructure the code so `else` doesn't begin a statement. Add the missing `if`, remove the unmatched `else`, or move intervening statements inside the intended `if` or `else` block.

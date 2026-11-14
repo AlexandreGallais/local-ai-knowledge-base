@@ -1,12 +1,3 @@
----
-title: "core::io::error"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/io/error.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::io::error
 
 ## type Result
@@ -15,11 +6,16 @@ license: "MIT OR Apache-2.0"
 pub type Result<T> = result::Result<T, Error>
 ```
 
+[`std::io`]: ../../std/io/index.html
+[`io::Error`]: Error
+[`Result`]: crate::result::Result
+[prelude]: crate::prelude
+
 # Examples
 
 A convenience function that bubbles an `io::Result` to its caller:
 
-```rust
+```
 use std::io;
 
 fn get_string() -> io::Result<String> {
@@ -37,15 +33,22 @@ fn get_string() -> io::Result<String> {
 pub struct Error
 ```
 
+[Read]: ../../std/io/trait.Read.html
+[Write]: crate::io::Write
+[Seek]: crate::io::Seek
+
 ## Error::raw_os_error
 
 ```rust
 pub fn raw_os_error(&self) -> Option<RawOsError>
 ```
 
+[last_os_error]: ../../std/io/struct.Error.html#method.last_os_error
+[from_raw_os_error]: ../../std/io/struct.Error.html#method.from_raw_os_error
+
 # Examples
 
-```rust
+```
 use std::io::{Error, ErrorKind};
 
 fn print_os_error(err: &Error) {
@@ -72,12 +75,14 @@ pub fn get_ref(&self) -> Option<&(dyn error::Error + Send + Sync + 'static)>
 
 Returns a reference to the inner error wrapped by this error (if any).
 
-If this `Error` was constructed via `new`[new] then this function will
-return `Some`, otherwise it will return `None`.
+If this [`Error`] was constructed via [`new`][new] then this function will
+return [`Some`], otherwise it will return [`None`].
+
+[new]: ../../alloc/io/struct.Error.html#method.new
 
 # Examples
 
-```rust
+```
 use std::io::{Error, ErrorKind};
 
 fn print_error(err: &Error) {
@@ -102,9 +107,11 @@ fn main() {
 pub fn get_mut(&mut self) -> Option<&mut (dyn error::Error + Send + Sync + 'static)>
 ```
 
+[new]: ../../alloc/io/struct.Error.html#method.new
+
 # Examples
 
-```rust
+```
 use std::io::{Error, ErrorKind};
 use std::{error, fmt};
 use std::fmt::Display;
@@ -163,9 +170,11 @@ fn main() {
 pub fn kind(&self) -> ErrorKind
 ```
 
+[last_os_error]: ../../std/io/struct.Error.html#method.last_os_error
+
 # Examples
 
-```rust
+```
 use std::io::{Error, ErrorKind};
 
 fn print_error(err: Error) {
@@ -192,7 +201,9 @@ A list specifying general categories of I/O error.
 This list is intended to grow over time and it is not recommended to
 exhaustively match against it.
 
-It is used with the `io::Error`[error] type.
+It is used with the [`io::Error`][error] type.
+
+[error]: Error
 
 # Handling errors and matching on `ErrorKind`
 

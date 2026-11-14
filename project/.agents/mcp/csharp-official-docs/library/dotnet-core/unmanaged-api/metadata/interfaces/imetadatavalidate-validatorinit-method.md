@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataValidate::ValidatorInit Method"
 title: "IMetaDataValidate::ValidatorInit Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadatavalidate-validatorinit-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataValidate.ValidatorInit"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataValidate::ValidatorInit"
+  - "ValidatorInit method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataValidate::ValidatorInit Method
 
 Sets a flag that specifies the type of the module in the current metadata scope, and registers the specified callback method for validation errors.
@@ -23,14 +30,14 @@ HRESULT ValidatorInit (
 ## Parameters
 
  `dwModule`
- [in] A value of the CorValidatorModuleType enumeration that specifies the type of the module in the current metadata scope.
+ [in] A value of the [CorValidatorModuleType](../enumerations/corvalidatormoduletype-enumeration.md) enumeration that specifies the type of the module in the current metadata scope.
 
  `pUnk`
- [in] A pointer to an IUnknown instance that serves as a function callback for validation errors.
+ [in] A pointer to an [IUnknown](/cpp/atl/iunknown) instance that serves as a function callback for validation errors.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -38,4 +45,4 @@ HRESULT ValidatorInit (
 
 ## See also
 
-- IMetaDataValidate Interface
+- [IMetaDataValidate Interface](imetadatavalidate-interface.md)

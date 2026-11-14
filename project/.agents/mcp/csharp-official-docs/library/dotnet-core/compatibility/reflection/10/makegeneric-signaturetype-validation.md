@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: Type.MakeGenericSignatureType argument validation"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/reflection/10/makegeneric-signaturetype-validation.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 10 breaking change in core .NET libraries where Type.MakeGenericSignatureType validates that the genericTypeDefinition argument is a generic type definition.
+ms.date: 10/13/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/48902
 ---
-
 # Type.MakeGenericSignatureType argument validation
 
-Starting in .NET 10, the `System.Type.MakeGenericSignatureType(System.Type,System.Type[])` API validates that the `genericTypeDefinition` argument is a generic type definition.
+Starting in .NET 10, the <xref:System.Type.MakeGenericSignatureType(System.Type,System.Type[])?displayProperty=nameWithType> API validates that the `genericTypeDefinition` argument is a generic type definition.
 
 ## Version introduced
 
@@ -17,23 +15,23 @@ Starting in .NET 10, the `System.Type.MakeGenericSignatureType(System.Type,Syste
 
 ## Previous behavior
 
-Previously, `System.Type.MakeGenericSignatureType(System.Type,System.Type[])` accepted any type for the `genericTypeDefinition` argument, including non-generic types.
+Previously, <xref:System.Type.MakeGenericSignatureType(System.Type,System.Type[])?displayProperty=nameWithType> accepted any type for the `genericTypeDefinition` argument, including non-generic types.
 
 ## New behavior
 
-Starting in .NET 10, `System.Type.MakeGenericSignatureType(System.Type,System.Type[])` requires the `genericTypeDefinition` argument to be a generic type definition. If the argument is not a generic type definition, the method throws an `System.ArgumentException`.
+Starting in .NET 10, <xref:System.Type.MakeGenericSignatureType(System.Type,System.Type[])?displayProperty=nameWithType> requires the `genericTypeDefinition` argument to be a generic type definition. If the argument is not a generic type definition, the method throws an <xref:System.ArgumentException>.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-The type created by `System.Type.MakeGenericSignatureType(System.Type,System.Type[])` had non-sensical behavior when the `genericTypeDefinition` argument was not a generic type definition.
+The type created by <xref:System.Type.MakeGenericSignatureType(System.Type,System.Type[])?displayProperty=nameWithType> had non-sensical behavior when the `genericTypeDefinition` argument was not a generic type definition.
 
 ## Recommended action
 
-Avoid calling `System.Type.MakeGenericSignatureType(System.Type,System.Type[])` for types that are not generic type definitions. For example:
+Avoid calling <xref:System.Type.MakeGenericSignatureType(System.Type,System.Type[])?displayProperty=nameWithType> for types that are not generic type definitions. For example:
 
 ```csharp
 // Before
@@ -45,4 +43,4 @@ Type instantiatedType = originalType.IsGenericTypeDefinition ? Type.MakeGenericS
 
 ## Affected APIs
 
-- `System.Type.MakeGenericSignatureType(System.Type,System.Type[])`
+- <xref:System.Type.MakeGenericSignatureType(System.Type,System.Type[])?displayProperty=fullName>

@@ -1,12 +1,3 @@
----
-title: "AtomicMoveNotSupportedException class (java.nio.file)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/file/AtomicMoveNotSupportedException.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AtomicMoveNotSupportedException class (java.nio.file)
 
 ```java
@@ -16,7 +7,7 @@ public class AtomicMoveNotSupportedException extends FileSystemException
 Checked exception thrown when a file cannot be moved as an atomic file system
 operation.
 
-**Since:** 1.7
+@since 1.7
 
 ## AtomicMoveNotSupportedException.AtomicMoveNotSupportedException(String, String, String)
 
@@ -26,8 +17,9 @@ public AtomicMoveNotSupportedException(String source, String target, String reas
 
 Constructs an instance of this class.
 
-Parameters:
-
-- `source`: a string identifying the source file or `null` if not known
-- `target`: a string identifying the target file or `null` if not known
-- `reason`: a reason message with additional information or `null`
+@param   source
+         a string identifying the source file or {@code null} if not known
+@param   target
+         a string identifying the target file or {@code null} if not known
+@param   reason
+         a reason message with additional information or {@code null}

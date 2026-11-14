@@ -1,38 +1,37 @@
 ---
-title: "no-obj-calls"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-obj-calls.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-obj-calls
+rule_type: problem
+handled_by_typescript: true
+further_reading:
+- https://es5.github.io/#x15.8
 ---
 
-# no-obj-calls
+
 
 ECMAScript provides several global objects that are intended to be used as-is. Some of these objects look as if they could be constructors due to their capitalization (such as `Math`, `JSON`, and `Temporal`) but will throw an error if you try to execute them as functions.
 
-The ECMAScript 5 specification makes it clear that both `Math` and `JSON` cannot be invoked:
+The [ECMAScript 5 specification](https://es5.github.io/#x15.8) makes it clear that both `Math` and `JSON` cannot be invoked:
 
 > The Math object does not have a `[[Call]]` internal property; it is not possible to invoke the Math object as a function.
 
-The ECMAScript 2015 specification makes it clear that `Reflect` cannot be invoked:
+The [ECMAScript 2015 specification](https://www.ecma-international.org/ecma-262/6.0/index.html#sec-reflect-object) makes it clear that `Reflect` cannot be invoked:
 
 > The Reflect object also does not have a `[[Call]]` internal method; it is not possible to invoke the Reflect object as a function.
 
-The ECMAScript 2017 specification makes it clear that `Atomics` cannot be invoked:
+The [ECMAScript 2017 specification](https://www.ecma-international.org/ecma-262/8.0/index.html#sec-atomics-object) makes it clear that `Atomics` cannot be invoked:
 
 > The Atomics object does not have a `[[Call]]` internal method; it is not possible to invoke the Atomics object as a function.
 
-The ECMAScript Internationalization API Specification makes it clear that `Intl` cannot be invoked:
+The [ECMAScript Internationalization API Specification](https://tc39.es/ecma402/#intl-object) makes it clear that `Intl` cannot be invoked:
 
 > The Intl object does not have a `[[Call]]` internal method; it is not possible to invoke the Intl object as a function.
 
-The Temporal proposal specification makes it clear that `Temporal` cannot be invoked:
+The [Temporal proposal specification](https://tc39.es/proposal-temporal/#sec-temporal-objects) makes it clear that `Temporal` cannot be invoked:
 
 > The Temporal object does not have a `[[Call]]` internal method; it cannot be invoked as a function.
 
-The ECMAScript 2020 specification defines `globalThis` as the global `this` value of the current realm. Unless the host specifies otherwise, this is the
-  global object, which:
+The [ECMAScript 2020 specification](https://tc39.es/ecma262/2020/#sec-globalthis) defines `globalThis` as the global `this` value of the current realm. Unless the host specifies otherwise, this is the
+  [global object](https://tc39.es/ecma262/2020/#sec-global-object), which:
 
 > does not have a `[[Construct]]` internal method; it cannot be used as a constructor with the `new` operator.
 >
@@ -46,7 +45,7 @@ This rule also disallows using these objects as constructors with the `new` oper
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-obj-calls: "error"*/
@@ -81,9 +80,11 @@ const newGlobalObject = new globalThis();
 
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-obj-calls: "error"*/
@@ -104,6 +105,8 @@ const instant = Temporal.Now.instant();
 
 const parsed = globalThis.parseInt("42", 10);
 ```
+
+:::
 
 ## Options
 

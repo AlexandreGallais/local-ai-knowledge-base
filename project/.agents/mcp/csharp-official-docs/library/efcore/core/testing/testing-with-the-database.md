@@ -1,108 +1,52 @@
 ---
-title: "Testing against your Production Database System - EF Core (part 1 of 2)"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/testing/testing-with-the-database.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Testing against your Production Database System - EF Core
+description: Techniques for testing EF Core applications against your production database system
+author: SamMonoRT
+ms.date: 1/24/2022
+uid: core/testing/testing-with-the-database
 ---
-
 # Testing against your production database system
 
-In this page, we discuss techniques for writing automated tests which involve the database system against which the application runs in production. Alternate testing approaches exist, where the production database system is swapped out by test doubles; see the testing overview page for more information. Note that testing against a different database than what is used in production (e.g. Sqlite) is not covered here, since the different database is used as a test double; this approach is covered in Testing without your production database system.
+In this page, we discuss techniques for writing automated tests which involve the database system against which the application runs in production. Alternate testing approaches exist, where the production database system is swapped out by test doubles; see the [testing overview page](xref:core/testing/index) for more information. Note that testing against a different database than what is used in production (e.g. Sqlite) is not covered here, since the different database is used as a test double; this approach is covered in [Testing without your production database system](xref:core/testing/testing-without-the-database).
 
-The main hurdle with testing which involves a real database is to ensure proper test isolation, so that tests running in parallel (or even in serial) don't interfere with each other. The full sample code for the below can be viewed here.
+The main hurdle with testing which involves a real database is to ensure proper test isolation, so that tests running in parallel (or even in serial) don't interfere with each other. The full sample code for the below can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Testing/TestingWithTheDatabase).
 
-> **Tip:**
-> This page shows xUnit techniques, but similar concepts exist in other testing frameworks, including NUnit.
+> [!TIP]
+> This page shows [xUnit](https://xunit.net/) techniques, but similar concepts exist in other testing frameworks, including [NUnit](https://nunit.org/).
 
 ## Setting up your database system
 
-Most database systems nowadays can be easily installed, both in CI environments and on developer machines. While it's frequently easy enough to install the database via the regular installation mechanism, ready-to-use Docker images are available for most major databases and can make installation particularly easy in CI. Libraries like Testcontainers can further simplify this by automatically managing containerized database instances during testing. For the developer environment, GitHub Workspaces, Dev Container can set up all needed services and dependencies - including the database. While this requires an initial investment in setup, once that's done you have a working testing environment and can concentrate on more important things.
+Most database systems nowadays can be easily installed, both in CI environments and on developer machines. While it's frequently easy enough to install the database via the regular installation mechanism, ready-to-use Docker images are available for most major databases and can make installation particularly easy in CI. Libraries like [Testcontainers](https://dotnet.testcontainers.org/) can further simplify this by automatically managing containerized database instances during testing. For the developer environment, [GitHub Workspaces](https://docs.github.com/en/codespaces/overview), [Dev Container](https://code.visualstudio.com/docs/remote/create-dev-container) can set up all needed services and dependencies - including the database. While this requires an initial investment in setup, once that's done you have a working testing environment and can concentrate on more important things.
 
-In certain cases, databases have a special edition or version which can be helpful for testing. When using SQL Server, LocalDB can be used to run tests locally with virtually no setup at all, spinning up the database instance on demand and possibly saving resources on less powerful developer machines. However, LocalDB is not without its issues:
+In certain cases, databases have a special edition or version which can be helpful for testing. When using SQL Server, [LocalDB](/sql/database-engine/configure-windows/sql-server-express-localdb) can be used to run tests locally with virtually no setup at all, spinning up the database instance on demand and possibly saving resources on less powerful developer machines. However, LocalDB is not without its issues:
 
-* It doesn't support everything that SQL Server Developer Edition does.
+* It doesn't support everything that [SQL Server Developer Edition](/sql/sql-server/editions-and-components-of-sql-server-version-15#-editions) does.
 * It's only available on Windows.
 * It can cause lag on first test run as the service is spun up.
 
 We generally recommend installing SQL Server Developer edition rather than LocalDB, since it provides the full SQL Server feature set and is generally very easy to do.
 
-When using a cloud database, it's usually appropriate to test against a local version of the database, both to improve speed and to decrease costs. For example, when using SQL Azure in production, you can test against a locally-installed SQL Server - the two are extremely similar (though it's still wise to run tests against SQL Azure itself before going into production). When using Azure Cosmos DB, the Azure Cosmos DB emulator is a useful tool both for developing locally and for running tests.
+When using a cloud database, it's usually appropriate to test against a local version of the database, both to improve speed and to decrease costs. For example, when using SQL Azure in production, you can test against a locally-installed SQL Server - the two are extremely similar (though it's still wise to run tests against SQL Azure itself before going into production). When using Azure Cosmos DB, [the Azure Cosmos DB emulator](/azure/cosmos-db/local-emulator) is a useful tool both for developing locally and for running tests.
 
 ## Creating, seeding and managing a test database
 
 Once your database is installed, you're ready to start using it in your tests. In most simple cases, your test suite has a single database that's shared between multiple tests across multiple test classes, so we need some logic to make sure the database is created and seeded exactly once during the lifetime of the test run.
 
-When using Xunit, this can be done via a class fixture, which represents the database and is shared across multiple test runs:
+When using Xunit, this can be done via a [class fixture](https://xunit.net/docs/shared-context#class-fixture), which represents the database and is shared across multiple test runs:
 
-```csharp
-public class TestDatabaseFixture
-{
-    private const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=EFTestSample;Trusted_Connection=True;ConnectRetryCount=0";
+[!code-csharp[Main](../../../samples/core/Testing/TestingWithTheDatabase/TestDatabaseFixture.cs?name=TestDatabaseFixture)]
 
-    private static readonly object _lock = new();
-    private static bool _databaseInitialized;
-
-    public TestDatabaseFixture()
-    {
-        lock (_lock)
-        {
-            if (!_databaseInitialized)
-            {
-                using (var context = CreateContext())
-                {
-                    context.Database.EnsureDeleted();
-                    context.Database.EnsureCreated();
-
-                    context.AddRange(
-                        new Blog { Name = "Blog1", Url = "http://blog1.com" },
-                        new Blog { Name = "Blog2", Url = "http://blog2.com" });
-                    context.SaveChanges();
-                }
-
-                _databaseInitialized = true;
-            }
-        }
-    }
-
-    public BloggingContext CreateContext()
-        => new BloggingContext(
-            new DbContextOptionsBuilder<BloggingContext>()
-                .UseSqlServer(ConnectionString)
-                .Options);
-}
-```
-
-When the above fixture is instantiated, it uses `Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureDeleted` to drop the database (in case it exists from a previous run), and then `Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreated` to create it with your latest model configuration (see the docs for these APIs). Once the database is created, the fixture seeds it with some data our tests can use. It's worth spending some time thinking about your seed data, since changing it later for a new test may cause existing tests to fail.
+When the above fixture is instantiated, it uses <xref:Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureDeleted> to drop the database (in case it exists from a previous run), and then <xref:Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreated> to create it with your latest model configuration ([see the docs for these APIs](xref:core/managing-schemas/ensure-created)). Once the database is created, the fixture seeds it with some data our tests can use. It's worth spending some time thinking about your seed data, since changing it later for a new test may cause existing tests to fail.
 
 To use the fixture in a test class, simply implement `IClassFixture` over your fixture type, and xUnit will inject it into your constructor:
 
-```csharp
-public class BloggingControllerTest : IClassFixture<TestDatabaseFixture>
-{
-    public BloggingControllerTest(TestDatabaseFixture fixture)
-        => Fixture = fixture;
-
-    public TestDatabaseFixture Fixture { get; }
-```
+[!code-csharp[Main](../../../samples/core/Testing/TestingWithTheDatabase/BloggingControllerTest.cs?name=UsingTheFixture)]
 
 Your test class now has a `Fixture` property which can be used by tests to create a fully functional context instance:
 
-```csharp
-[Fact]
-public async Task GetBlog()
-{
-    using var context = Fixture.CreateContext();
-    var controller = new BloggingController(context);
+[!code-csharp[Main](../../../samples/core/Testing/TestingWithTheDatabase/BloggingControllerTest.cs?name=GetBlog&highlight=4)]
 
-    var blog = (await controller.GetBlog("Blog2")).Value;
-
-    Assert.Equal("http://blog2.com", blog.Url);
-}
-```
-
-Finally, you may have noticed some locking in the fixture's creation logic above. If the fixture is only used in a single test class, it is guaranteed to be instantiated exactly once by xUnit; but it's common to use the same database fixture in multiple test classes. xUnit does provide collection fixtures, but that mechanism prevents your test classes from running in parallel, which is important for test performance. To safely manage this with an xUnit class fixture, we take a simple lock around database creation and seeding, and use a static flag to make sure we never have to do it twice.
+Finally, you may have noticed some locking in the fixture's creation logic above. If the fixture is only used in a single test class, it is guaranteed to be instantiated exactly once by xUnit; but it's common to use the same database fixture in multiple test classes. xUnit does provide [collection fixtures](https://xunit.net/docs/shared-context#collection-fixture), but that mechanism prevents your test classes from running in parallel, which is important for test performance. To safely manage this with an xUnit class fixture, we take a simple lock around database creation and seeding, and use a static flag to make sure we never have to do it twice.
 
 ## Tests which modify data
 
@@ -110,41 +54,16 @@ The above example showed a read-only test, which is the easy case from a test is
 
 Here's a controller method which adds a Blog to our database:
 
-```csharp
-[HttpPost]
-public async Task<ActionResult> AddBlog(string name, string url)
-{
-    _context.Blogs.Add(new Blog { Name = name, Url = url });
-    await _context.SaveChangesAsync();
-
-    return Ok();
-}
-```
+[!code-csharp[Main](../../../samples/core/Testing/BloggingWebApi/Controllers/BloggingController.cs?name=AddBlog)]
 
 We can test this method with the following:
 
-```csharp
-[Fact]
-public async Task AddBlog()
-{
-    using var context = Fixture.CreateContext();
-    context.Database.BeginTransaction();
-
-    var controller = new BloggingController(context);
-    await controller.AddBlog("Blog3", "http://blog3.com");
-
-    context.ChangeTracker.Clear();
-
-    var blog = await context.Blogs.SingleAsync(b => b.Name == "Blog3");
-    Assert.Equal("http://blog3.com", blog.Url);
-
-}
-```
+[!code-csharp[Main](../../../samples/core/Testing/TestingWithTheDatabase/BloggingControllerTest.cs?name=AddBlog&highlight=5,10)]
 
 Some notes on the test code above:
 
 * We start a transaction to make sure the changes below aren't committed to the database, and don't interfere with other tests. Since the transaction is never committed, it is implicitly rolled back at the end of the test when the context instance is disposed.
-* After making the updates we want, we clear the context instance's change tracker with `Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.Clear*`, to make sure we actually load the blog from the database below. We could use two context instances instead, but we'd then have to make sure the same transaction is used by both instances.
+* After making the updates we want, we clear the context instance's change tracker with <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ChangeTracker.Clear*?displayProperty=nameWithType>, to make sure we actually load the blog from the database below. We could use two context instances instead, but we'd then have to make sure the same transaction is used by both instances.
 * You may even want to start the transaction in the fixture's `CreateContext`, so that tests receive a context instance that's already in a transaction, and ready for updates. This can help prevent cases where the transaction is accidentally forgotten, leading to test interference which can be hard to debug. You may also want to separate read-only and write tests in different test classes as well.
 
 ## Tests which explicitly manage transactions
@@ -153,102 +72,63 @@ There is one final category of tests which presents an additional difficulty: te
 
 Let's examine the following controller method as an example:
 
-```csharp
-[HttpPost]
-public async Task<ActionResult> UpdateBlogUrl(string name, string url)
-{
-    // Note: it isn't usually necessary to start a transaction for updating. This is done here for illustration purposes only.
-    await using var transaction = await _context.Database.BeginTransactionAsync(IsolationLevel.Serializable);
-
-    var blog = await _context.Blogs.FirstOrDefaultAsync(b => b.Name == name);
-    if (blog is null)
-    {
-        return NotFound();
-    }
-
-    blog.Url = url;
-    await _context.SaveChangesAsync();
-
-    await transaction.CommitAsync();
-    return Ok();
-}
-```
+[!code-csharp[Main](../../../samples/core/Testing/BloggingWebApi/Controllers/BloggingController.cs?name=UpdateBlogUrl&highlight=5)]
 
 Let's assume that for some reason, the method requires a serializable transaction to be used (this isn't typically the case). As a result, we cannot use a transaction to guarantee test isolation. Since the test will actually commit changes to the database, we'll define another fixture with its own, separate database, to make sure we don't interfere with the other tests already shown above:
 
-```csharp
-public class TransactionalTestDatabaseFixture
-{
-    private const string ConnectionString = @"Server=(localdb)\mssqllocaldb;Database=EFTransactionalTestSample;Trusted_Connection=True;ConnectRetryCount=0";
-
-    public BloggingContext CreateContext()
-        => new BloggingContext(
-            new DbContextOptionsBuilder<BloggingContext>()
-                .UseSqlServer(ConnectionString)
-                .Options);
-
-    public TransactionalTestDatabaseFixture()
-    {
-        using var context = CreateContext();
-        context.Database.EnsureDeleted();
-        context.Database.EnsureCreated();
-
-        Cleanup();
-    }
-
-    public void Cleanup()
-    {
-        using var context = CreateContext();
-
-        context.Blogs.RemoveRange(context.Blogs);
-
-        context.AddRange(
-            new Blog { Name = "Blog1", Url = "http://blog1.com" },
-            new Blog { Name = "Blog2", Url = "http://blog2.com" });
-        context.SaveChanges();
-```
+[!code-csharp[Main](../../../samples/core/Testing/TestingWithTheDatabase/TransactionalTestDatabaseFixture.cs?name=TransactionalTestDatabaseFixture)]
 
 This fixture is similar to the one used above, but notably contains a `Cleanup` method; we'll call this after every test to ensure that the database is reset to its starting state.
 
-If this fixture will only be used by a single test class, we can reference it as a class fixture as above - xUnit doesn't parallelize tests within the same class (read more about test collections and parallelization in the xUnit docs). If, however, we want to share this fixture between multiple classes, we must make sure these classes don't run in parallel, to avoid any interference. To do that, we will use this as an xUnit collection fixture rather than as a class fixture.
+If this fixture will only be used by a single test class, we can reference it as a class fixture as above - xUnit doesn't parallelize tests within the same class (read more about test collections and parallelization in the [xUnit docs](https://xunit.net/docs/running-tests-in-parallel.html)). If, however, we want to share this fixture between multiple classes, we must make sure these classes don't run in parallel, to avoid any interference. To do that, we will use this as an xUnit [collection fixture](https://xunit.net/docs/shared-context#collection-fixture) rather than as a [class fixture](https://xunit.net/docs/shared-context#class-fixture).
 
 First, we define a *test collection*, which references our fixture and will be used by all transactional test classes which require it:
 
-```csharp
-[CollectionDefinition("TransactionalTests")]
-public class TransactionalTestsCollection : ICollectionFixture<TransactionalTestDatabaseFixture>
-{
-}
-```
+[!code-csharp[Main](../../../samples/core/Testing/TestingWithTheDatabase/TransactionalTestDatabaseFixture.cs?name=CollectionDefinition)]
 
 We now reference the test collection in our test class, and accept the fixture in the constructor as before:
 
-```csharp
-[Collection("TransactionalTests")]
-public class TransactionalBloggingControllerTest : IDisposable
-{
-    public TransactionalBloggingControllerTest(TransactionalTestDatabaseFixture fixture)
-        => Fixture = fixture;
-
-    public TransactionalTestDatabaseFixture Fixture { get; }
-```
+[!code-csharp[Main](../../../samples/core/Testing/TestingWithTheDatabase/TransactionalBloggingControllerTest.cs?name=UsingTheFixture&highlight=1,4)]
 
 Finally, we make our test class disposable, arranging for the fixture's `Cleanup` method to be called after each test:
 
-```csharp
-public void Dispose()
-    => Fixture.Cleanup();
-```
+[!code-csharp[Main](../../../samples/core/Testing/TestingWithTheDatabase/TransactionalBloggingControllerTest.cs?name=Dispose)]
 
 Note that since xUnit only ever instantiates the collection fixture once, there is no need for us to use locking around database creation and seeding as we did above.
 
-The full sample code for the above can be viewed here.
+The full sample code for the above can be viewed [here](https://github.com/dotnet/EntityFramework.Docs/blob/main/samples/core/Testing/TestingWithTheDatabase/TransactionalBloggingControllerTest.cs).
 
-> **Tip:**
+> [!TIP]
 > If you have multiple test classes with tests which modify the database, you can still run them in parallel by having different fixtures, each referencing its own database. Creating and using many test databases isn't problematic and should be done whenever it's helpful.
 
 ## Efficient database creation
 
-In the samples above, we used `Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureDeleted` and `Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreated` before running tests, to make sure we have an up-to-date test database. These operations can be a bit slow in certain databases, which can be a problem as you iterate over code changes and re-run tests over and over. If that's the case, you may want to temporarily comment out `EnsureDeleted` in your fixture's constructor: this will reuse the same database across test runs.
+In the samples above, we used <xref:Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureDeleted> and <xref:Microsoft.EntityFrameworkCore.Storage.IDatabaseCreator.EnsureCreated> before running tests, to make sure we have an up-to-date test database. These operations can be a bit slow in certain databases, which can be a problem as you iterate over code changes and re-run tests over and over. If that's the case, you may want to temporarily comment out `EnsureDeleted` in your fixture's constructor: this will reuse the same database across test runs.
 
 The disadvantage of this approach is that if you change your EF Core model, your database schema won't be up to date, and tests may fail. As a result, we only recommend doing this temporarily during the development cycle.
+
+## Efficient database cleanup
+
+We saw above that when changes are actually committed to the database, we must clean up the database between every test to avoid interference. In the transactional test sample above, we did this by using EF Core APIs to delete the table's contents:
+
+[!code-csharp[Main](../../../samples/core/Testing/TestingWithTheDatabase/TransactionalTestDatabaseFixture.cs?name=Cleanup)]
+
+This typically isn't the most efficient way to clear out a table. If test speed is a concern, you may want to use raw SQL to delete the table instead:
+
+```sql
+DELETE FROM [Blogs];
+```
+
+You may also want to consider using the [respawn](https://github.com/jbogard/respawn) package, which efficiently clears out a database. In addition, it does not require you to specify the tables to be cleared, and so your cleanup code does not need to be updated as tables are added to your model.
+
+## Summary
+
+* When testing against a real database, it's worth distinguishing between the following test categories:
+  * Read-only tests are relatively simple, and can always execute in parallel against the same database without having to worry about isolation.
+  * Write tests are more problematic, but transactions can be used to make sure they're properly isolated.
+  * Transactional tests are the most problematic, requiring logic to reset the database back to its original state, as well as disabling parallelization.
+* Separating these test categories out into separate classes may avoid confusion and accidental interference between tests.
+* Give some thought up-front to your seeded test data, and try to write your tests in a way that won't break too often if that seed data changes.
+* Use multiple databases to parallelize tests which modify the database, and possibly also to allow different seed data configurations.
+* If test speed is a concern, you may want to look at more efficient techniques for creating your test database, and for cleaning its data between runs.
+* Always keep test parallelization and isolation in mind.

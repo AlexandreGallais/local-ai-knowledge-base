@@ -1,34 +1,23 @@
----
-title: "ClassBuilder interface (java.lang.classfile)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/ClassBuilder.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ClassBuilder interface (java.lang.classfile)
 
 ```java
 public sealed interface ClassBuilder extends ClassFileBuilder<ClassElement, ClassBuilder> permits ChainedClassBuilder, DirectClassBuilder
 ```
 
-A builder for a `class` file.  `ClassFile` provides different
-`build` methods that accept handlers to configure such a builder;
-Consumer) suffices for basic usage, while
-ConstantPoolBuilder, Consumer) allows
-fine-grained control over the constant pool.
+A builder for a {@code class} file.  {@link ClassFile} provides different
+{@code build} methods that accept handlers to configure such a builder;
+{@link ClassFile#build(ClassDesc, Consumer)} suffices for basic usage, while
+{@link ClassFile#build(ClassEntry, ConstantPoolBuilder, Consumer)} allows
+fine-grained control over {@linkplain ClassFileBuilder#constantPool() the
+constant pool}.
+<p>
+Refer to {@link ClassFileBuilder} for general guidance and caution around
+the use of builders for structures in the {@code class} file format.
 
-Refer to `ClassFileBuilder` for general guidance and caution around
-the use of builders for structures in the `class` file format.
-
-**See also:** ClassFile#build(ClassEntry, ConstantPoolBuilder, Consumer)
-
-**See also:** ClassModel
-
-**See also:** ClassTransform
-
-**Since:** 24
+@see ClassFile#build(ClassEntry, ConstantPoolBuilder, Consumer)
+@see ClassModel
+@see ClassTransform
+@since 24
 
 ## ClassBuilder.withVersion(int, int)
 
@@ -38,14 +27,10 @@ default ClassBuilder withVersion(int major, int minor)
 
 Sets the version of this class.
 
-Parameters:
-
-- `major`: the major version number
-- `minor`: the minor version number
-
-**Returns:** this builder
-
-**See also:** ClassFileVersion
+@param major the major version number
+@param minor the minor version number
+@return this builder
+@see ClassFileVersion
 
 ## ClassBuilder.withFlags(int)
 
@@ -55,15 +40,10 @@ default ClassBuilder withFlags(int flags)
 
 Sets the access flags of this class.
 
-Parameters:
-
-- `flags`: the access flags, as a bit mask
-
-**Returns:** this builder
-
-**See also:** AccessFlags
-
-**See also:** AccessFlag.Location#CLASS
+@param flags the access flags, as a bit mask
+@return this builder
+@see AccessFlags
+@see AccessFlag.Location#CLASS
 
 ## ClassBuilder.withFlags(AccessFlag...)
 
@@ -73,19 +53,12 @@ default ClassBuilder withFlags(AccessFlag... flags)
 
 Sets the access flags of this class.
 
-Parameters:
-
-- `flags`: the access flags, as flag enums
-
-**Returns:** this builder
-
-**See also:** AccessFlags
-
-**See also:** AccessFlag.Location#CLASS
-
-Throws:
-
-- `IllegalArgumentException`: if any flag cannot be applied to the `AccessFlag.Location.CLASS` location
+@param flags the access flags, as flag enums
+@return this builder
+@throws IllegalArgumentException if any flag cannot be applied to the
+        {@link AccessFlag.Location#CLASS} location
+@see AccessFlags
+@see AccessFlag.Location#CLASS
 
 ## ClassBuilder.withSuperclass(ClassEntry)
 
@@ -95,13 +68,9 @@ default ClassBuilder withSuperclass(ClassEntry superclassEntry)
 
 Sets the superclass of this class.
 
-Parameters:
-
-- `superclassEntry`: the superclass
-
-**Returns:** this builder
-
-**See also:** Superclass
+@param superclassEntry the superclass
+@return this builder
+@see Superclass
 
 ## ClassBuilder.withSuperclass(ClassDesc)
 
@@ -111,17 +80,10 @@ default ClassBuilder withSuperclass(ClassDesc desc)
 
 Sets the superclass of this class.
 
-Parameters:
-
-- `desc`: the superclass
-
-**Returns:** this builder
-
-**See also:** Superclass
-
-Throws:
-
-- `IllegalArgumentException`: if `desc` represents a primitive type
+@param desc the superclass
+@return this builder
+@throws IllegalArgumentException if {@code desc} represents a primitive type
+@see Superclass
 
 ## ClassBuilder.withInterfaces(List<ClassEntry>)
 
@@ -131,13 +93,9 @@ default ClassBuilder withInterfaces(List<ClassEntry> interfaces)
 
 Sets the interfaces of this class.
 
-Parameters:
-
-- `interfaces`: the interfaces
-
-**Returns:** this builder
-
-**See also:** Interfaces
+@param interfaces the interfaces
+@return this builder
+@see Interfaces
 
 ## ClassBuilder.withInterfaces(ClassEntry...)
 
@@ -147,13 +105,9 @@ default ClassBuilder withInterfaces(ClassEntry... interfaces)
 
 Sets the interfaces of this class.
 
-Parameters:
-
-- `interfaces`: the interfaces
-
-**Returns:** this builder
-
-**See also:** Interfaces
+@param interfaces the interfaces
+@return this builder
+@see Interfaces
 
 ## ClassBuilder.withInterfaceSymbols(List<ClassDesc>)
 
@@ -163,17 +117,10 @@ default ClassBuilder withInterfaceSymbols(List<ClassDesc> interfaces)
 
 Sets the interfaces of this class.
 
-Parameters:
-
-- `interfaces`: the interfaces
-
-**Returns:** this builder
-
-**See also:** Interfaces
-
-Throws:
-
-- `IllegalArgumentException`: if any element of `interfaces` is primitive
+@param interfaces the interfaces
+@return this builder
+@throws IllegalArgumentException if any element of {@code interfaces} is primitive
+@see Interfaces
 
 ## ClassBuilder.withInterfaceSymbols(ClassDesc...)
 
@@ -183,17 +130,10 @@ default ClassBuilder withInterfaceSymbols(ClassDesc... interfaces)
 
 Sets the interfaces of this class.
 
-Parameters:
-
-- `interfaces`: the interfaces
-
-**Returns:** this builder
-
-**See also:** Interfaces
-
-Throws:
-
-- `IllegalArgumentException`: if any element of `interfaces` is primitive
+@param interfaces the interfaces
+@return this builder
+@throws IllegalArgumentException if any element of {@code interfaces} is primitive
+@see Interfaces
 
 ## ClassBuilder.withField(Utf8Entry, Utf8Entry, Consumer<? super FieldBuilder>)
 
@@ -203,15 +143,11 @@ ClassBuilder withField(Utf8Entry name, Utf8Entry descriptor, Consumer<? super Fi
 
 Adds a field.
 
-Parameters:
-
-- `name`: the field name
-- `descriptor`: the field descriptor string
-- `handler`: handler to supply the contents of the field
-
-**Returns:** this builder
-
-**See also:** FieldModel
+@param name the field name
+@param descriptor the field descriptor string
+@param handler handler to supply the contents of the field
+@return this builder
+@see FieldModel
 
 ## ClassBuilder.withField(Utf8Entry, Utf8Entry, int)
 
@@ -221,17 +157,12 @@ default ClassBuilder withField(Utf8Entry name, Utf8Entry descriptor, int flags)
 
 Adds a field, with only access flags.
 
-Parameters:
-
-- `name`: the field name
-- `descriptor`: the field descriptor string
-- `flags`: the access flags for this field, as a bit mask
-
-**Returns:** this builder
-
-**See also:** FieldModel
-
-**See also:** FieldBuilder#withFlags(int)
+@param name the field name
+@param descriptor the field descriptor string
+@param flags the access flags for this field, as a bit mask
+@return this builder
+@see FieldModel
+@see FieldBuilder#withFlags(int)
 
 ## ClassBuilder.withField(String, ClassDesc, Consumer<? super FieldBuilder>)
 
@@ -241,15 +172,11 @@ default ClassBuilder withField(String name, ClassDesc descriptor, Consumer<? sup
 
 Adds a field.
 
-Parameters:
-
-- `name`: the field name
-- `descriptor`: the symbolic field descriptor
-- `handler`: handler to supply the contents of the field
-
-**Returns:** this builder
-
-**See also:** FieldModel
+@param name the field name
+@param descriptor the symbolic field descriptor
+@param handler handler to supply the contents of the field
+@return this builder
+@see FieldModel
 
 ## ClassBuilder.withField(String, ClassDesc, int)
 
@@ -259,17 +186,12 @@ default ClassBuilder withField(String name, ClassDesc descriptor, int flags)
 
 Adds a field, with only access flags.
 
-Parameters:
-
-- `name`: the field name
-- `descriptor`: the symbolic field descriptor
-- `flags`: the access flags for this field, as a bit mask
-
-**Returns:** this builder
-
-**See also:** FieldModel
-
-**See also:** FieldBuilder#withFlags(int)
+@param name the field name
+@param descriptor the symbolic field descriptor
+@param flags the access flags for this field, as a bit mask
+@return this builder
+@see FieldModel
+@see FieldBuilder#withFlags(int)
 
 ## ClassBuilder.transformField(FieldModel, FieldTransform)
 
@@ -278,17 +200,18 @@ ClassBuilder transformField(FieldModel field, FieldTransform transform)
 ```
 
 Adds a field by transforming a field from another class.
-
+<p>
 This method behaves as if:
+{@snippet lang=java :
+// @link substring=withField target="#withField(Utf8Entry, Utf8Entry, Consumer)" :
+withField(field.fieldName(), field.fieldType(),
+          fb -> fb.transform(field, transform)) // @link regex="transform(?=\()" target="FieldBuilder#transform"
+}
 
-Parameters:
-
-- `field`: the field to be transformed
-- `transform`: the transform to apply to the field
-
-**Returns:** this builder
-
-**See also:** FieldTransform
+@param field the field to be transformed
+@param transform the transform to apply to the field
+@return this builder
+@see FieldTransform
 
 ## ClassBuilder.withMethod(Utf8Entry, Utf8Entry, int, Consumer<? super MethodBuilder>)
 
@@ -296,20 +219,17 @@ Parameters:
 ClassBuilder withMethod(Utf8Entry name, Utf8Entry descriptor, int methodFlags, Consumer<? super MethodBuilder> handler)
 ```
 
-Adds a method.  The bit for ACC_STATIC flag
-cannot be modified by the `handler` later, and must be set through
-`methodFlags`.
+Adds a method.  The bit for {@link ClassFile#ACC_STATIC ACC_STATIC} flag
+cannot be modified by the {@code handler} later, and must be set through
+{@code methodFlags}.
 
-Parameters:
-
-- `name`: the method name
-- `descriptor`: the method descriptor
-- `methodFlags`: the access flags as a bit mask, with the `ACC_STATIC` bit definitely set
-- `handler`: handler to supply the contents of the method
-
-**Returns:** this builder
-
-**See also:** MethodModel
+@param name the method name
+@param descriptor the method descriptor
+@param methodFlags the access flags as a bit mask, with the {@code
+       ACC_STATIC} bit definitely set
+@param handler handler to supply the contents of the method
+@return this builder
+@see MethodModel
 
 ## ClassBuilder.withMethodBody(Utf8Entry, Utf8Entry, int, Consumer<? super CodeBuilder>)
 
@@ -317,22 +237,23 @@ Parameters:
 default ClassBuilder withMethodBody(Utf8Entry name, Utf8Entry descriptor, int methodFlags, Consumer<? super CodeBuilder> handler)
 ```
 
-Adds a method, with only access flags and a `CodeModel`.  The bit
-for ACC_STATIC flag cannot be modified by
-the `handler` later, and must be set through `methodFlags`.
-
+Adds a method, with only access flags and a {@link CodeModel}.  The bit
+for {@link ClassFile#ACC_STATIC ACC_STATIC} flag cannot be modified by
+the {@code handler} later, and must be set through {@code methodFlags}.
+<p>
 This method behaves as if:
+{@snippet lang=java :
+// @link substring=withMethod target="#withMethod(Utf8Entry, Utf8Entry, int, Consumer)" :
+withMethod(name, descriptor, methodFlags, mb -> mb.withCode(handler)) // @link substring=withCode target="MethodBuilder#withCode"
+}
 
-Parameters:
-
-- `name`: the method name
-- `descriptor`: the method descriptor
-- `methodFlags`: the access flags as a bit mask, with the `ACC_STATIC` bit definitely set
-- `handler`: handler to supply the contents of the method body
-
-**Returns:** this builder
-
-**See also:** MethodModel
+@param name the method name
+@param descriptor the method descriptor
+@param methodFlags the access flags as a bit mask, with the {@code
+       ACC_STATIC} bit definitely set
+@param handler handler to supply the contents of the method body
+@return this builder
+@see MethodModel
 
 ## ClassBuilder.withMethod(String, MethodTypeDesc, int, Consumer<? super MethodBuilder>)
 
@@ -340,20 +261,17 @@ Parameters:
 default ClassBuilder withMethod(String name, MethodTypeDesc descriptor, int methodFlags, Consumer<? super MethodBuilder> handler)
 ```
 
-Adds a method.  The bit for ACC_STATIC flag
-cannot be modified by the `handler`, and must be set through
-`methodFlags`.
+Adds a method.  The bit for {@link ClassFile#ACC_STATIC ACC_STATIC} flag
+cannot be modified by the {@code handler}, and must be set through
+{@code methodFlags}.
 
-Parameters:
-
-- `name`: the method name
-- `descriptor`: the method descriptor
-- `methodFlags`: the access flags as a bit mask, with the `ACC_STATIC` bit definitely set
-- `handler`: handler to supply the contents of the method
-
-**Returns:** this builder
-
-**See also:** MethodModel
+@param name the method name
+@param descriptor the method descriptor
+@param methodFlags the access flags as a bit mask, with the {@code
+       ACC_STATIC} bit definitely set
+@param handler handler to supply the contents of the method
+@return this builder
+@see MethodModel
 
 ## ClassBuilder.withMethodBody(String, MethodTypeDesc, int, Consumer<? super CodeBuilder>)
 
@@ -361,22 +279,23 @@ Parameters:
 default ClassBuilder withMethodBody(String name, MethodTypeDesc descriptor, int methodFlags, Consumer<? super CodeBuilder> handler)
 ```
 
-Adds a method, with only access flags and a `CodeModel`.  The bit
-for ACC_STATIC flag cannot be modified by
-the `handler`, and must be set through `methodFlags`.
-
+Adds a method, with only access flags and a {@link CodeModel}.  The bit
+for {@link ClassFile#ACC_STATIC ACC_STATIC} flag cannot be modified by
+the {@code handler}, and must be set through {@code methodFlags}.
+<p>
 This method behaves as if:
+{@snippet lang=java :
+// @link substring=withMethod target="#withMethod(String, MethodTypeDesc, int, Consumer)" :
+withMethod(name, descriptor, methodFlags, mb -> mb.withCode(handler)) // @link substring=withCode target="MethodBuilder#withCode"
+}
 
-Parameters:
-
-- `name`: the method name
-- `descriptor`: the method descriptor
-- `methodFlags`: the access flags as a bit mask, with the `ACC_STATIC` bit definitely set
-- `handler`: handler to supply the contents of the method body
-
-**Returns:** this builder
-
-**See also:** MethodModel
+@param name the method name
+@param descriptor the method descriptor
+@param methodFlags the access flags as a bit mask, with the {@code
+       ACC_STATIC} bit definitely set
+@param handler handler to supply the contents of the method body
+@return this builder
+@see MethodModel
 
 ## ClassBuilder.transformMethod(MethodModel, MethodTransform)
 
@@ -385,16 +304,17 @@ ClassBuilder transformMethod(MethodModel method, MethodTransform transform)
 ```
 
 Adds a method by transforming a method from another class.  The transform
-cannot modify the ACC_STATIC flag of the
+cannot modify the {@link ClassFile#ACC_STATIC ACC_STATIC} flag of the
 original method.
-
+<p>
 This method behaves as if:
+{@snippet lang=java :
+// @link substring=withMethod target="#withMethod(Utf8Entry, Utf8Entry, int, Consumer)" :
+withMethod(method.methodName(), method.methodType(), method.flags().flagMask(),
+           mb -> mb.transform(method, transform)) // @link regex="transform(?=\()" target="MethodBuilder#transform"
+}
 
-Parameters:
-
-- `method`: the method to be transformed
-- `transform`: the transform to apply to the method
-
-**Returns:** this builder
-
-**See also:** MethodTransform
+@param method the method to be transformed
+@param transform the transform to apply to the method
+@return this builder
+@see MethodTransform

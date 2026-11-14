@@ -1,17 +1,11 @@
----
-title: "no-unsafe-promise-all-settled-values"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-unsafe-promise-all-settled-values.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-unsafe-promise-all-settled-values
 
 📝 Disallow reading `.value` from `Promise.allSettled()` results without a fulfilled status guard.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 `Promise.allSettled()` returns both fulfilled and rejected result objects. Only fulfilled results have a `.value` property. Reading `.value` without first checking `status === 'fulfilled'` turns rejected results into `undefined`, which can silently drop failures.
 

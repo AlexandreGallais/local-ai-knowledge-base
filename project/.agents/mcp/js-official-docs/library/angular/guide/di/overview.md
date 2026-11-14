@@ -1,25 +1,17 @@
----
-title: "Dependency injection in Angular"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/di/overview.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
-# Dependency injection in Angular
+<docs-decorative-header title="Dependency injection in Angular" imgSrc="adev/src/assets/images/dependency_injection.svg"> <!-- markdownlint-disable-line -->
 
 Dependency Injection (DI) is a design pattern you use to organize and share code across your application by supplying dependencies to a class instead of creating them inside it.
+</docs-decorative-header>
 
-TIP: Check out Angular's Essentials before diving into this comprehensive guide.
+TIP: Check out Angular's [Essentials](essentials/dependency-injection) before diving into this comprehensive guide.
 
-As an application grows, developers often need to reuse and share functionality across different parts of the codebase. Dependency Injection (DI) helps you achieve this by allowing you to provide dependencies to a class instead of creating them directly inside it. This makes different parts of the application more reusable and easier to manage.
+As an application grows, developers often need to reuse and share functionality across different parts of the codebase. [Dependency Injection (DI)](https://en.wikipedia.org/wiki/Dependency_injection) helps you achieve this by allowing you to provide dependencies to a class instead of creating them directly inside it. This makes different parts of the application more reusable and easier to manage.
 
 Dependency injection is a popular pattern because it allows developers to address common challenges such as:
 
 - **Improved code maintainability**: Dependency injection promotes a clear separation of concerns, making code easier to refactor and reducing duplication.
 - **Scalability**: You can reuse modular functionality across different parts of an application, making it easier to scale.
-- **Better testing**: DI allows unit tests to use test doubles in place of real implementations when needed.
+- **Better testing**: DI allows unit tests to use [test doubles](https://en.wikipedia.org/wiki/Test_double) in place of real implementations when needed.
 
 ## How does dependency injection work in Angular?
 
@@ -46,9 +38,9 @@ Common types of services include:
 
 - **Data clients:** Abstracts the details of making requests to a server for data retrieval and mutation
 - **State management:** Defines state shared across multiple components or pages
-- **Authentication and authorization:** Manages user authentication, token <example-value>, and access control
+- **Authentication and authorization:** Manages user authentication, token storage, and access control
 - **Logging and error handling:** Establishes a common API for logging or communicating error states to the user
-- **Event handling and dispatch:** Handles events or notifications that are not associated with a specific component, or for dispatching events and notifications to components, following the observer pattern
+- **Event handling and dispatch:** Handles events or notifications that are not associated with a specific component, or for dispatching events and notifications to components, following the [observer pattern](https://en.wikipedia.org/wiki/Observer_pattern)
 - **Utility functions:** Offers reusable utility functions like data formatting, validation, or calculations
 
 The following example declares a service named `AnalyticsLogger`:
@@ -70,7 +62,7 @@ export class AnalyticsLogger {
 
 NOTE: The `@Service` makes this service available throughout your entire application as a singleton. This is the recommended approach for most services.
 
-HELPFUL: The `@Service` decorator is an ergonomic shorthand for `@Injectable({providedIn: 'root'})`.
+HELPFUL: The [`@Service`](guide/di/creating-and-using-services#using-the-service-vs-injectable-decorator) decorator is an ergonomic shorthand for `@Injectable({providedIn: 'root'})`.
 
 ## Injecting dependencies with `inject()`
 
@@ -101,7 +93,7 @@ export class Navbar {
 
 ### Where can `inject()` be used?
 
-You can inject dependencies during construction of a component, directive, or service. The call to `inject` can appear in either the `constructor` or in a field initializer. Here are some common examples:
+You can inject dependencies during construction of a component, directive, or service. The call to [`inject`](/api/core/inject) can appear in either the `constructor` or in a field initializer. Here are some common examples:
 
 ```ts
 @Component(/* ... */)
@@ -145,15 +137,15 @@ export const authGuard = () => {
 };
 ```
 
-Angular uses the term "injection context" to describe any place in your code where you can call `inject`. While component, directive, and service construction is the most common, see injection contexts for more details.
+Angular uses the term "injection context" to describe any place in your code where you can call [`inject`](/api/core/inject). While component, directive, and service construction is the most common, see [injection contexts](/guide/di/dependency-injection-context) for more details.
 
-For more information, see the inject API docs.
+For more information, see the [inject API docs](api/core/inject#usage-notes).
 
 ## Next steps
 
 Now that you understand the fundamentals of dependency injection in Angular, you're ready to learn how to create your own services.
 
-The next guide, Creating and using services, will show you:
+The next guide, [Creating and using services](guide/di/creating-and-using-services), will show you:
 
 - How to create a service with the Angular CLI or manually
 - How the `providedIn: 'root'` pattern works

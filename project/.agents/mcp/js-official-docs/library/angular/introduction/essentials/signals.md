@@ -1,14 +1,6 @@
----
-title: "Signals"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/introduction/essentials/signals.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
-# Signals
+<docs-decorative-header title="Signals" imgSrc="adev/src/assets/images/signals.svg"> <!-- markdownlint-disable-line -->
 Create and manage dynamic data.
+</docs-decorative-header>
 
 In Angular, you use _signals_ to create and manage state. A signal is a lightweight wrapper around a value.
 
@@ -78,11 +70,13 @@ export class UserProfile {
 }
 ```
 
-TIP: Want to know more about Angular Signals? See the In-depth Signals guide for the full details.
+TIP: Want to know more about Angular Signals? See the [In-depth Signals guide](guide/signals) for the full details.
 
 ## Next Step
 
 Now that you have learned how to declare and manage dynamic data, it's time to learn how to use that data inside of templates.
 
-  - Dynamic interfaces with templates
-  - In-depth signals guide
+<docs-pill-row>
+  <docs-pill title="Dynamic interfaces with templates" href="essentials/templates" />
+  <docs-pill title="In-depth signals guide" href="guide/signals" />
+</docs-pill-row>

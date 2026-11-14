@@ -1,12 +1,3 @@
----
-title: "Control route access with guards"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/routing/route-guards.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Control route access with guards
 
 CRITICAL: Never rely on client-side guards as the sole source of access control. All JavaScript that runs in a web browser can be modified by the user running the browser. Always enforce user authorization server-side, in addition to any client-side guards.
@@ -21,7 +12,7 @@ You can generate a route guard using the Angular CLI:
 ng generate guard CUSTOM_NAME
 ```
 
-This will prompt you to select which type of route guard to use and then create the corresponding `CUSTOM_NAME-guard.ts` file.
+This will prompt you to select which [type of route guard](#types-of-route-guards) to use and then create the corresponding `CUSTOM_NAME-guard.ts` file.
 
 TIP: You can also create a route guard manually by creating a separate TypeScript file in your Angular project. Developers typically add a suffix of `-guard.ts` in the filename to distinguish it from other files.
 
@@ -43,12 +34,14 @@ NOTE: `CanMatch` is different. When it returns `false`, Angular tries other matc
 
 Angular provides four types of route guards, each serving different purposes:
 
-  - CanActivate
-  - CanActivateChild
-  - CanDeactivate
-  - CanMatch
+<docs-pill-row>
+  <docs-pill href="#canactivate" title="CanActivate"/>
+  <docs-pill href="#canactivatechild" title="CanActivateChild"/>
+  <docs-pill href="#candeactivate" title="CanDeactivate"/>
+  <docs-pill href="#canmatch" title="CanMatch"/>
+</docs-pill-row>
 
-All the guards have access to services provided at the route level as well as route-specific information via the `route` argument.
+All the guards have access to [services provided at the route level](guide/di/defining-dependency-providers#route-providers) as well as route-specific information via the `route` argument.
 
 ### CanActivate
 
@@ -59,7 +52,7 @@ It has access to the following default arguments:
 - `route`: `ActivatedRouteSnapshot` - Contains information about the route being activated
 - `state`: `RouterStateSnapshot` - Contains the state the router is navigating to, not the current state (use `Router.routerState` for that)
 
-It can return the standard return guard types.
+It can return the [standard return guard types](#route-guard-return-types).
 
 ```ts
 export const authGuard: CanActivateFn = (
@@ -71,9 +64,9 @@ export const authGuard: CanActivateFn = (
 };
 ```
 
-TIP: If you need to redirect the user, return a `URLTree` or `RedirectCommand`. Do **not** return `false` and then programmatically `navigate` the user.
+TIP: If you need to redirect the user, return a [`URLTree`](api/router/UrlTree) or [`RedirectCommand`](api/router/RedirectCommand). Do **not** return `false` and then programmatically `navigate` the user.
 
-For more information, check out the API docs for CanActivateFn.
+For more information, check out the [API docs for CanActivateFn](api/router/CanActivateFn).
 
 ### CanActivateChild
 
@@ -84,7 +77,7 @@ It has access to the following default arguments:
 - `childRoute`: `ActivatedRouteSnapshot` - Contains information about the "future" snapshot (i.e., state the router is attempting to navigate to) of the child route being activated
 - `state`: `RouterStateSnapshot` - Contains the state the router is navigating to, not the current state (use `Router.routerState` for that)
 
-It can return the standard return guard types.
+It can return the [standard return guard types](#route-guard-return-types).
 
 ```ts
 export const adminChildGuard: CanActivateChildFn = (
@@ -96,7 +89,7 @@ export const adminChildGuard: CanActivateChildFn = (
 };
 ```
 
-For more information, check out the API docs for CanActivateChildFn.
+For more information, check out the [API docs for CanActivateChildFn](api/router/CanActivateChildFn).
 
 ### CanDeactivate
 
@@ -109,7 +102,7 @@ It has access to the following default arguments:
 - `currentState`: `RouterStateSnapshot` - Contains the current router state
 - `nextState`: `RouterStateSnapshot` - Contains the next router state being navigated to
 
-It can return the standard return guard types.
+It can return the [standard return guard types](#route-guard-return-types).
 
 ```ts
 export const unsavedChangesGuard: CanDeactivateFn<Form> = (
@@ -124,7 +117,7 @@ export const unsavedChangesGuard: CanDeactivateFn<Form> = (
 };
 ```
 
-For more information, check out the API docs for CanDeactivateFn.
+For more information, check out the [API docs for CanDeactivateFn](api/router/CanDeactivateFn).
 
 ### CanMatch
 
@@ -136,7 +129,7 @@ It has access to the following default arguments:
 - `segments`: `UrlSegment[]` - The URL segments that have not been consumed by previous parent route evaluations
 - `currentSnapshot: PartialMatchRouteSnapshot` - The current route snapshot up to this point in the matching process
 
-It can return the standard return guard types, but when it returns `false`, Angular tries other matching routes instead of completely blocking navigation.
+It can return the [standard return guard types](#route-guard-return-types), but when it returns `false`, Angular tries other matching routes instead of completely blocking navigation.
 
 ```ts
 export const featureToggleGuard: CanMatchFn = (
@@ -151,7 +144,7 @@ export const featureToggleGuard: CanMatchFn = (
 
 It can also allow you to use different components for the same path.
 
-```ts
+```ts {header: "routes.ts"}
 const routes: Routes = [
   {
     path: 'dashboard',
@@ -168,7 +161,7 @@ const routes: Routes = [
 
 In this example, when the user visits `/dashboard`, the first one that matches the correct guard will be used.
 
-For more information, check out the API docs for CanMatchFn.
+For more information, check out the [API docs for CanMatchFn](api/router/CanMatchFn).
 
 ## Applying guards to routes
 
@@ -188,7 +181,7 @@ import {canDeactivateGuard} from './guards/can-deactivate.guard';
 import {featureToggleGuard} from './guards/feature-toggle.guard';
 
 const routes: Routes = [
-  // Basic <example-value> - requires authentication
+  // Basic CanActivate - requires authentication
   {
     path: 'dashboard',
     component: Dashboard,

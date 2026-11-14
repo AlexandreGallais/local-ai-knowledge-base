@@ -1,33 +1,29 @@
----
-title: "LookupSwitchInstruction interface (java.lang.classfile.instruction)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/instruction/LookupSwitchInstruction.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # LookupSwitchInstruction interface (java.lang.classfile.instruction)
 
 ```java
 public sealed interface LookupSwitchInstruction extends Instruction permits AbstractInstruction.BoundLookupSwitchInstruction, AbstractInstruction.UnboundLookupSwitchInstruction
 ```
 
-Models a lookupswitch instruction in the `code` array of a `Code` attribute.  Delivered as a `CodeElement`
-when traversing the elements of a `CodeModel`.
-
+Models a {@link Opcode#LOOKUPSWITCH lookupswitch} instruction in the {@code
+code} array of a {@code Code} attribute.  Delivered as a {@link CodeElement}
+when traversing the elements of a {@link CodeModel}.
+<p>
 A lookup switch instruction is composite:
-
-If elements in `cases` are not sorted ascending by their caseValue, a sorted version of the `cases` list
+{@snippet lang=text :
+// @link substring="LookupSwitchInstruction" target="#of" :
+LookupSwitchInstruction(
+    Label defaultTarget, // @link substring="defaultTarget" target="#defaultTarget"
+    List<SwitchCase> cases // @link substring="cases" target="#cases()"
+)
+}
+If elements in {@code cases} are not sorted ascending by their {@link
+SwitchCase#caseValue caseValue}, a sorted version of the {@code cases} list
 will be written instead.
 
-**See also:** Opcode.Kind#LOOKUP_SWITCH
-
-**See also:** CodeBuilder#lookupswitch CodeBuilder::lookupswitch
-
-**jvms:** 6.5.lookupswitch *lookupswitch*
-
-**Since:** 24
+@see Opcode.Kind#LOOKUP_SWITCH
+@see CodeBuilder#lookupswitch CodeBuilder::lookupswitch
+@jvms 6.5.lookupswitch <em>lookupswitch</em>
+@since 24
 
 ## LookupSwitchInstruction.defaultTarget()
 
@@ -35,11 +31,15 @@ will be written instead.
 Label defaultTarget()
 ```
 
+{@return the target of the default case}
+
 ## LookupSwitchInstruction.cases()
 
 ```java
 List<SwitchCase> cases()
 ```
+
+{@return the cases of the switch}
 
 ## LookupSwitchInstruction.of(Label, List<SwitchCase>)
 
@@ -47,7 +47,7 @@ List<SwitchCase> cases()
 static LookupSwitchInstruction of(Label defaultTarget, List<SwitchCase> cases)
 ```
 
-Parameters:
+{@return a lookup switch instruction}
 
-- `defaultTarget`: the default target of the switch
-- `cases`: the cases of the switch
+@param defaultTarget the default target of the switch
+@param cases the cases of the switch

@@ -1,21 +1,24 @@
 ---
-title: "How to deserialize an object using XmlSerializer"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/serialization/how-to-deserialize-an-object.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to deserialize an object using XmlSerializer
+description: Learn how to deserialize an object. The transport format determines whether to create a stream or file object.
+ms.date: 03/30/2017
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "deserializing objects"
+  - "objects, deserializing steps"
+ms.assetid: 287129c8-035a-4fea-b7b3-4790057ca076
 ---
-
 # How to deserialize an object using XmlSerializer
 
-When you deserialize an object, the transport format determines whether you will create a stream or file object. After the transport format is determined, you can call the `System.Xml.Serialization.XmlSerializer.Serialize*` or `System.Xml.Serialization.XmlSerializer.Deserialize*` methods, as required.
+When you deserialize an object, the transport format determines whether you will create a stream or file object. After the transport format is determined, you can call the <xref:System.Xml.Serialization.XmlSerializer.Serialize*> or <xref:System.Xml.Serialization.XmlSerializer.Deserialize*> methods, as required.
 
 ## To deserialize an object
 
-1. Construct a `System.Xml.Serialization.XmlSerializer` using the type of the object to deserialize.
+1. Construct a <xref:System.Xml.Serialization.XmlSerializer> using the type of the object to deserialize.
 
-1. Call the `System.Xml.Serialization.XmlSerializer.Deserialize*` method to produce a replica of the object. When deserializing, you must cast the returned object to the type of the original, as shown in the following example, which deserializes the object from a file (although it could also be deserialized from a stream).
+1. Call the <xref:System.Xml.Serialization.XmlSerializer.Deserialize*> method to produce a replica of the object. When deserializing, you must cast the returned object to the type of the original, as shown in the following example, which deserializes the object from a file (although it could also be deserialized from a stream).
 
     ```vb
     ' Construct an instance of the XmlSerializer with the type
@@ -41,5 +44,5 @@ When you deserialize an object, the transport format determines whether you will
 
 ## See also
 
-- Introducing XML Serialization
-- How to: Serialize an Object
+- [Introducing XML Serialization](introducing-xml-serialization.md)
+- [How to: Serialize an Object](how-to-serialize-an-object.md)

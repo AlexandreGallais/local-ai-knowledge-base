@@ -1,10 +1,17 @@
 ---
 title: "COM Callable Wrapper"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/native-interop/com-callable-wrapper.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: When a COM client calls a .NET object, the CLR creates the managed object and a COM callable wrapper for it. COM clients call the wrapper for the object.
+ms.date: "10/23/2018"
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "CCW"
+  - "COM interop, COM wrappers"
+  - "COM wrappers"
+  - "callable wrappers"
+  - "interoperation with unmanaged code, COM wrappers"
+  - "COM callable wrappers"
 ---
 
 # COM Callable Wrapper
@@ -12,6 +19,8 @@ license: "CC-BY-4.0"
 When a COM client calls a .NET object, the common language runtime creates the managed object and a COM callable wrapper (CCW) for the object. Unable to reference a .NET object directly, COM clients use the CCW as a proxy for the managed object.
 
 The runtime creates exactly one CCW for a managed object, regardless of the number of COM clients requesting its services. As the following illustration shows, multiple COM clients can hold a reference to the CCW that exposes the INew interface. The CCW, in turn, holds a single reference to the managed object that implements the interface and is garbage collected. Both COM and .NET clients can make requests on the same managed object simultaneously.
+
+![Multiple COM clients holding a reference to the CCW that exposes INew.](./media/com-callable-wrapper/com-callable-wrapper-clients.gif)
 
 COM callable wrappers are invisible to other classes running within the .NET runtime. Their primary purpose is to marshal calls between managed and unmanaged code; however, CCWs also manage the object identity and object lifetime of the managed objects they wrap.
 
@@ -28,6 +37,8 @@ Unlike the .NET client it wraps, the CCW is reference-counted in traditional COM
 CCW exposes all public, COM-visible interfaces, data types, and return values to COM clients in a manner that is consistent with COM's enforcement of interface-based interaction. For a COM client, invoking methods on a .NET object is identical to invoking methods on a COM object.
 
 To create this seamless approach, the CCW manufactures traditional COM interfaces, such as **IUnknown** and **IDispatch**. As the following illustration shows, the CCW maintains a single reference on the .NET object that it wraps. Both the COM client and the .NET object interact with each other through the proxy and stub construction of the CCW.
+
+![Diagram that shows how CCW manufactures COM interfaces.](./media/com-callable-wrapper/com-callable-wrapper-interfaces.gif)
 
 In addition to exposing the interfaces that are explicitly implemented by a class in the managed environment, the .NET runtime supplies implementations of the COM interfaces listed in the following table on behalf of the object. A .NET class can override the default behavior by providing its own implementation of these interfaces. However, the runtime always provides the implementation for the **IUnknown** and **IDispatch** interfaces.
 
@@ -80,7 +91,7 @@ public class Mammal
 }
 ```
 
-The COM client can obtain a pointer to a class interface named `_Mammal`. On .NET Framework, you can use the Type Library Exporter (Tlbexp.exe) tool to generate a type library containing the `_Mammal` interface definition. The Type Library Exporter is not supported on .NET Core. If the `Mammal` class implemented one or more interfaces, the interfaces would appear under the coclass.
+The COM client can obtain a pointer to a class interface named `_Mammal`. On .NET Framework, you can use the [Type Library Exporter (Tlbexp.exe)](../../framework/tools/tlbexp-exe-type-library-exporter.md) tool to generate a type library containing the `_Mammal` interface definition. The Type Library Exporter is not supported on .NET Core. If the `Mammal` class implemented one or more interfaces, the interfaces would appear under the coclass.
 
 ```console
 [odl, uuid(…), hidden, dual, nonextensible, oleautomation]
@@ -103,9 +114,9 @@ coclass Mammal
 }
 ```
 
-Generating the class interface is optional. By default, COM interop generates a dispatch-only interface for each class you export to a type library. You can prevent or modify the automatic creation of this interface by applying the `System.Runtime.InteropServices.ClassInterfaceAttribute` to your class. Although the class interface can ease the task of exposing managed classes to COM, its uses are limited.
+Generating the class interface is optional. By default, COM interop generates a dispatch-only interface for each class you export to a type library. You can prevent or modify the automatic creation of this interface by applying the <xref:System.Runtime.InteropServices.ClassInterfaceAttribute> to your class. Although the class interface can ease the task of exposing managed classes to COM, its uses are limited.
 
-> **Caution:**
+> [!CAUTION]
 > Using the class interface, instead of explicitly defining your own, can complicate the future versioning of your managed class. Please read the following guidelines before using the class interface.
 
 ### Define an explicit interface for COM clients to use rather than generating the class interface.
@@ -178,9 +189,9 @@ If your application requires early-bound calls to COM event interface methods, y
 
 ## See also
 
-- `System.Runtime.InteropServices.ClassInterfaceAttribute`
-- COM Wrappers
-- Exposing .NET Framework Components to COM
-- Exposing .NET Core Components to COM
-- Qualifying .NET Types for Interoperation
-- Runtime Callable Wrapper
+- <xref:System.Runtime.InteropServices.ClassInterfaceAttribute>
+- [COM Wrappers](com-wrappers.md)
+- [Exposing .NET Framework Components to COM](exposing-dotnet-components-to-com.md)
+- [Exposing .NET Core Components to COM](../../core/native-interop/expose-components-to-com.md)
+- [Qualifying .NET Types for Interoperation](qualify-net-types-for-interoperation.md)
+- [Runtime Callable Wrapper](runtime-callable-wrapper.md)

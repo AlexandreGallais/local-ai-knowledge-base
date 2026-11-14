@@ -1,16 +1,14 @@
 ---
-title: "Manage custom dotnetup installation roots"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/usecases/manage-custom-installation-roots.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Manage custom dotnetup installation roots
+description: Install and manage .NET in custom roots and isolated manifests.
+ms.topic: how-to
+ms.date: 09/30/2026
+ai-usage: ai-assisted
 ---
 
 # Manage custom dotnetup installation roots
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 A custom installation root can isolate repository, test, or tool installations
 from the default dotnetup-managed .NET installation root.
@@ -21,7 +19,7 @@ Select the root with `--install-path`:
 
 ```dotnetcli
 dotnetup sdk install 10.0 --install-path D:\tools\dotnet
-dotnetup runtime install user@example.com --install-path D:\tools\dotnet
+dotnetup runtime install aspnetcore@10.0 --install-path D:\tools\dotnet
 ```
 
 The default manifest records both requirements and their root. A later
@@ -70,5 +68,5 @@ automation.
 
 ## See also
 
-- How dotnetup works
-- dotnetup env script
+- [How dotnetup works](../concepts/how-dotnetup-works.md)
+- [dotnetup env script](../reference/dotnetup-env-script.md)

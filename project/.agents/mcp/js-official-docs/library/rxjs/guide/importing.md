@@ -1,27 +1,18 @@
----
-title: "Importing instructions"
-tool: "rxjs"
-version: "7.8"
-source: "https://github.com/ReactiveX/rxjs/blob/e5351d02e225e275ac0e497c7b66eaa5f0c88791/docs_app/content/guide/importing.md"
-commit: "e5351d02e225e275ac0e497c7b66eaa5f0c88791"
-license: "Apache-2.0"
----
-
 # Importing instructions
 
 There are different ways you can {@link guide/installation install} RxJS. Using/importing RxJS depends on
 the used RxJS version, but also depends on the used installation method.
 
-Pipeable operators were introduced in RxJS version
+[Pipeable operators](https://v6.rxjs.dev/guide/v6/pipeable-operators) were introduced in RxJS version
 5.5. This enabled all operators to be exported from a single place. This new export site was introduced
 with RxJS version 6 where all pipeable operators could have been imported from `'rxjs/operators'`. For
 example, `import { map } from 'rxjs/operators'`.
 
 ## New in RxJS v7.2.0
 
-**With RxJS v7.2.0, most operators have been moved to `{@link api#index 'rxjs'}`
+<span class="informal">**With RxJS v7.2.0, most operators have been moved to `{@link api#index 'rxjs'}`
 export site. This means that the preferred way to import operators is from `'rxjs'`, while
-`'rxjs/operators'` export site has been deprecated.**
+`'rxjs/operators'` export site has been deprecated.**</span>
 
 For example, instead of using:
 
@@ -62,16 +53,16 @@ ending with `With`). Those are:
 
 | `'rxjs/operators'` Operator                             | Replace With Static Creation Operator | Replace With New Operator Name |
 | ------------------------------------------------------- | ------------------------------------- | ------------------------------ |
-| `combineLatest`         | {@link combineLatest}                 | {@link combineLatestWith}      |
-| `concat`                       | {@link concat}                        | {@link concatWith}             |
-| `merge`                         | {@link merge}                         | {@link mergeWith}              |
-| `onErrorResumeNext` | {@link onErrorResumeNext}             | {@link onErrorResumeNextWith}  |
-| `race`                           | {@link race}                          | {@link raceWith}               |
-| `zip`                             | {@link zip}                           | {@link zipWith}                |
+| [`combineLatest`](/api/operators/combineLatest)         | {@link combineLatest}                 | {@link combineLatestWith}      |
+| [`concat`](/api/operators/concat)                       | {@link concat}                        | {@link concatWith}             |
+| [`merge`](/api/operators/merge)                         | {@link merge}                         | {@link mergeWith}              |
+| [`onErrorResumeNext`](/api/operators/onErrorResumeNext) | {@link onErrorResumeNext}             | {@link onErrorResumeNextWith}  |
+| [`race`](/api/operators/race)                           | {@link race}                          | {@link raceWith}               |
+| [`zip`](/api/operators/zip)                             | {@link zip}                           | {@link zipWith}                |
 
 `partition`, the operator, is a special case, as it is deprecated and you should be using the `partition` creation function exported from `'rxjs'` instead.
 
-For example, the old and deprecated way of using `merge` from `'rxjs/operators'`
+For example, the old and deprecated way of using [`merge`](/api/operators/merge) from `'rxjs/operators'`
 is:
 
 ```ts

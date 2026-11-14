@@ -1,67 +1,59 @@
----
-title: "NavigableSet interface (java.util)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/NavigableSet.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # NavigableSet interface (java.util)
 
 ```java
 public interface NavigableSet<E> extends SortedSet<E>
 ```
 
-A `SortedSet` extended with navigation methods reporting
-closest matches for given search targets. Methods `lower`,
-`floor`, `ceiling`, and `higher` return elements
+A {@link SortedSet} extended with navigation methods reporting
+closest matches for given search targets. Methods {@link #lower},
+{@link #floor}, {@link #ceiling}, and {@link #higher} return elements
 respectively less than, less than or equal, greater than or equal,
-and greater than a given element, returning `null` if there
+and greater than a given element, returning {@code null} if there
 is no such element.
 
-A `NavigableSet` may be accessed and traversed in either
-ascending or descending order.  The `descendingSet` method
+<p>A {@code NavigableSet} may be accessed and traversed in either
+ascending or descending order.  The {@link #descendingSet} method
 returns a view of the set with the senses of all relational and
 directional methods inverted. The performance of ascending
 operations and views is likely to be faster than that of descending
-ones.  This interface additionally defines methods `pollFirst` and `pollLast` that return and remove the lowest
-and highest element, if one exists, else returning `null`.
+ones.  This interface additionally defines methods {@link
+#pollFirst} and {@link #pollLast} that return and remove the lowest
+and highest element, if one exists, else returning {@code null}.
 Methods
-boolean, Object, boolean) subSet(E, boolean, E, boolean),
-boolean) headSet(E, boolean), and
-boolean) tailSet(E, boolean)
-differ from the like-named `SortedSet` methods in accepting
+{@link #subSet(Object, boolean, Object, boolean) subSet(E, boolean, E, boolean)},
+{@link #headSet(Object, boolean) headSet(E, boolean)}, and
+{@link #tailSet(Object, boolean) tailSet(E, boolean)}
+differ from the like-named {@code SortedSet} methods in accepting
 additional arguments describing whether lower and upper bounds are
-inclusive versus exclusive.  Subsets of any `NavigableSet`
-must implement the `NavigableSet` interface.
+inclusive versus exclusive.  Subsets of any {@code NavigableSet}
+must implement the {@code NavigableSet} interface.
 
-The return values of navigation methods may be ambiguous in
-implementations that permit `null` elements. However, even
+<p>The return values of navigation methods may be ambiguous in
+implementations that permit {@code null} elements. However, even
 in this case the result can be disambiguated by checking
-`contains(null)`. To avoid such issues, implementations of
-this interface are encouraged to *not* permit insertion of
-`null` elements. (Note that sorted sets of `Comparable` elements intrinsically do not permit `null`.)
+{@code contains(null)}. To avoid such issues, implementations of
+this interface are encouraged to <em>not</em> permit insertion of
+{@code null} elements. (Note that sorted sets of {@link
+Comparable} elements intrinsically do not permit {@code null}.)
 
-Methods
-Object) subSet(E, E),
-headSet(E), and
-tailSet(E)
-are specified to return `SortedSet` to allow existing
-implementations of `SortedSet` to be compatibly retrofitted to
-implement `NavigableSet`, but extensions and implementations
+<p>Methods
+{@link #subSet(Object, Object) subSet(E, E)},
+{@link #headSet(Object) headSet(E)}, and
+{@link #tailSet(Object) tailSet(E)}
+are specified to return {@code SortedSet} to allow existing
+implementations of {@code SortedSet} to be compatibly retrofitted to
+implement {@code NavigableSet}, but extensions and implementations
 of this interface are encouraged to override these methods to return
-`NavigableSet`.
+{@code NavigableSet}.
 
-This interface is a member of the
+<p>This interface is a member of the
+<a href="{@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+Java Collections Framework</a>.
 
-Java Collections Framework.
-
-Parameters:
-
-- `<E>`: the type of elements maintained by this set
-
-**Since:** 1.6
+@author Doug Lea
+@author Josh Bloch
+@param <E> the type of elements maintained by this set
+@since 1.6
 
 ## NavigableSet.lower(E)
 
@@ -70,19 +62,15 @@ E lower(E e)
 ```
 
 Returns the greatest element in this set strictly less than the
-given element, or `null` if there is no such element.
+given element, or {@code null} if there is no such element.
 
-Parameters:
-
-- `e`: the value to match
-
-**Returns:** the greatest element less than `e`,
-        or `null` if there is no such element
-
-Throws:
-
-- `ClassCastException`: if the specified element cannot be compared with the elements currently in the set
-- `NullPointerException`: if the specified element is null and this set does not permit null elements
+@param e the value to match
+@return the greatest element less than {@code e},
+        or {@code null} if there is no such element
+@throws ClassCastException if the specified element cannot be
+        compared with the elements currently in the set
+@throws NullPointerException if the specified element is null
+        and this set does not permit null elements
 
 ## NavigableSet.floor(E)
 
@@ -91,19 +79,15 @@ E floor(E e)
 ```
 
 Returns the greatest element in this set less than or equal to
-the given element, or `null` if there is no such element.
+the given element, or {@code null} if there is no such element.
 
-Parameters:
-
-- `e`: the value to match
-
-**Returns:** the greatest element less than or equal to `e`,
-        or `null` if there is no such element
-
-Throws:
-
-- `ClassCastException`: if the specified element cannot be compared with the elements currently in the set
-- `NullPointerException`: if the specified element is null and this set does not permit null elements
+@param e the value to match
+@return the greatest element less than or equal to {@code e},
+        or {@code null} if there is no such element
+@throws ClassCastException if the specified element cannot be
+        compared with the elements currently in the set
+@throws NullPointerException if the specified element is null
+        and this set does not permit null elements
 
 ## NavigableSet.ceiling(E)
 
@@ -112,19 +96,15 @@ E ceiling(E e)
 ```
 
 Returns the least element in this set greater than or equal to
-the given element, or `null` if there is no such element.
+the given element, or {@code null} if there is no such element.
 
-Parameters:
-
-- `e`: the value to match
-
-**Returns:** the least element greater than or equal to `e`,
-        or `null` if there is no such element
-
-Throws:
-
-- `ClassCastException`: if the specified element cannot be compared with the elements currently in the set
-- `NullPointerException`: if the specified element is null and this set does not permit null elements
+@param e the value to match
+@return the least element greater than or equal to {@code e},
+        or {@code null} if there is no such element
+@throws ClassCastException if the specified element cannot be
+        compared with the elements currently in the set
+@throws NullPointerException if the specified element is null
+        and this set does not permit null elements
 
 ## NavigableSet.higher(E)
 
@@ -133,19 +113,15 @@ E higher(E e)
 ```
 
 Returns the least element in this set strictly greater than the
-given element, or `null` if there is no such element.
+given element, or {@code null} if there is no such element.
 
-Parameters:
-
-- `e`: the value to match
-
-**Returns:** the least element greater than `e`,
-        or `null` if there is no such element
-
-Throws:
-
-- `ClassCastException`: if the specified element cannot be compared with the elements currently in the set
-- `NullPointerException`: if the specified element is null and this set does not permit null elements
+@param e the value to match
+@return the least element greater than {@code e},
+        or {@code null} if there is no such element
+@throws ClassCastException if the specified element cannot be
+        compared with the elements currently in the set
+@throws NullPointerException if the specified element is null
+        and this set does not permit null elements
 
 ## NavigableSet.pollFirst()
 
@@ -154,13 +130,12 @@ E pollFirst()
 ```
 
 Retrieves and removes the first (lowest) element,
-or returns `null` if this set is empty (optional operation).
+or returns {@code null} if this set is empty (optional operation).
 
-**Returns:** the first element, or `null` if this set is empty
+@return the first element, or {@code null} if this set is empty
 
-Throws:
-
-- `UnsupportedOperationException`: if the `pollFirst` operation is not supported by this collection
+@throws UnsupportedOperationException if the {@code pollFirst}
+        operation is not supported by this collection
 
 ## NavigableSet.pollLast()
 
@@ -169,13 +144,12 @@ E pollLast()
 ```
 
 Retrieves and removes the last (highest) element,
-or returns `null` if this set is empty (optional operation).
+or returns {@code null} if this set is empty (optional operation).
 
-**Returns:** the last element, or `null` if this set is empty
+@return the last element, or {@code null} if this set is empty
 
-Throws:
-
-- `UnsupportedOperationException`: if the `pollLast` operation is not supported by this collection
+@throws UnsupportedOperationException if the {@code pollLast}
+        operation is not supported by this collection
 
 ## NavigableSet.iterator()
 
@@ -185,7 +159,7 @@ Iterator<E> iterator()
 
 Returns an iterator over the elements in this set, in ascending order.
 
-**Returns:** an iterator over the elements in this set, in ascending order
+@return an iterator over the elements in this set, in ascending order
 
 ## NavigableSet.descendingSet()
 
@@ -197,15 +171,15 @@ Returns a reverse order view of the elements contained in this set.
 The descending set is backed by this set, so changes to the set are
 reflected in the descending set, and vice-versa.  If either set is
 modified while an iteration over either set is in progress (except
-through the iterator's own `remove` operation), the results of
+through the iterator's own {@code remove} operation), the results of
 the iteration are undefined.
 
-The returned set has an ordering equivalent to
-Collections.reverseOrder`(comparator())`.
-The expression `s.descendingSet().descendingSet()` returns a
-view of `s` essentially equivalent to `s`.
+<p>The returned set has an ordering equivalent to
+{@link Collections#reverseOrder(Comparator) Collections.reverseOrder}{@code (comparator())}.
+The expression {@code s.descendingSet().descendingSet()} returns a
+view of {@code s} essentially equivalent to {@code s}.
 
-**Returns:** a reverse order view of this set
+@return a reverse order view of this set
 
 ## NavigableSet.descendingIterator()
 
@@ -214,9 +188,9 @@ Iterator<E> descendingIterator()
 ```
 
 Returns an iterator over the elements in this set, in descending order.
-Equivalent in effect to `descendingSet().iterator()`.
+Equivalent in effect to {@code descendingSet().iterator()}.
 
-**Returns:** an iterator over the elements in this set, in descending order
+@return an iterator over the elements in this set, in descending order
 
 ## NavigableSet.subSet(E, boolean, E, boolean)
 
@@ -225,30 +199,38 @@ NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement, boolea
 ```
 
 Returns a view of the portion of this set whose elements range from
-`fromElement` to `toElement`.  If `fromElement` and
-`toElement` are equal, the returned set is empty unless `fromInclusive` and `toInclusive` are both true.  The returned set
+{@code fromElement} to {@code toElement}.  If {@code fromElement} and
+{@code toElement} are equal, the returned set is empty unless {@code
+fromInclusive} and {@code toInclusive} are both true.  The returned set
 is backed by this set, so changes in the returned set are reflected in
 this set, and vice-versa.  The returned set supports all optional set
 operations that this set supports.
 
-The returned set will throw an `IllegalArgumentException`
+<p>The returned set will throw an {@code IllegalArgumentException}
 on an attempt to insert an element outside its range.
 
-Parameters:
-
-- `fromElement`: low endpoint of the returned set
-- `fromInclusive`: `true` if the low endpoint is to be included in the returned view
-- `toElement`: high endpoint of the returned set
-- `toInclusive`: `true` if the high endpoint is to be included in the returned view
-
-**Returns:** a view of the portion of this set whose elements range from
-        `fromElement`, inclusive, to `toElement`, exclusive
-
-Throws:
-
-- `ClassCastException`: if `fromElement` and `toElement` cannot be compared to one another using this set's comparator (or, if the set has no comparator, using natural ordering). Implementations may, but are not required to, throw this exception if `fromElement` or `toElement` cannot be compared to elements currently in the set.
-- `NullPointerException`: if `fromElement` or `toElement` is null and this set does not permit null elements
-- `IllegalArgumentException`: if `fromElement` is greater than `toElement`; or if this set itself has a restricted range, and `fromElement` or `toElement` lies outside the bounds of the range.
+@param fromElement low endpoint of the returned set
+@param fromInclusive {@code true} if the low endpoint
+       is to be included in the returned view
+@param toElement high endpoint of the returned set
+@param toInclusive {@code true} if the high endpoint
+       is to be included in the returned view
+@return a view of the portion of this set whose elements range from
+        {@code fromElement}, inclusive, to {@code toElement}, exclusive
+@throws ClassCastException if {@code fromElement} and
+        {@code toElement} cannot be compared to one another using this
+        set's comparator (or, if the set has no comparator, using
+        natural ordering).  Implementations may, but are not required
+        to, throw this exception if {@code fromElement} or
+        {@code toElement} cannot be compared to elements currently in
+        the set.
+@throws NullPointerException if {@code fromElement} or
+        {@code toElement} is null and this set does
+        not permit null elements
+@throws IllegalArgumentException if {@code fromElement} is
+        greater than {@code toElement}; or if this set itself
+        has a restricted range, and {@code fromElement} or
+        {@code toElement} lies outside the bounds of the range.
 
 ## NavigableSet.headSet(E, boolean)
 
@@ -257,27 +239,30 @@ NavigableSet<E> headSet(E toElement, boolean inclusive)
 ```
 
 Returns a view of the portion of this set whose elements are less than
-(or equal to, if `inclusive` is true) `toElement`.  The
+(or equal to, if {@code inclusive} is true) {@code toElement}.  The
 returned set is backed by this set, so changes in the returned set are
 reflected in this set, and vice-versa.  The returned set supports all
 optional set operations that this set supports.
 
-The returned set will throw an `IllegalArgumentException`
+<p>The returned set will throw an {@code IllegalArgumentException}
 on an attempt to insert an element outside its range.
 
-Parameters:
-
-- `toElement`: high endpoint of the returned set
-- `inclusive`: `true` if the high endpoint is to be included in the returned view
-
-**Returns:** a view of the portion of this set whose elements are less than
-        (or equal to, if `inclusive` is true) `toElement`
-
-Throws:
-
-- `ClassCastException`: if `toElement` is not compatible with this set's comparator (or, if the set has no comparator, if `toElement` does not implement `Comparable`). Implementations may, but are not required to, throw this exception if `toElement` cannot be compared to elements currently in the set.
-- `NullPointerException`: if `toElement` is null and this set does not permit null elements
-- `IllegalArgumentException`: if this set itself has a restricted range, and `toElement` lies outside the bounds of the range
+@param toElement high endpoint of the returned set
+@param inclusive {@code true} if the high endpoint
+       is to be included in the returned view
+@return a view of the portion of this set whose elements are less than
+        (or equal to, if {@code inclusive} is true) {@code toElement}
+@throws ClassCastException if {@code toElement} is not compatible
+        with this set's comparator (or, if the set has no comparator,
+        if {@code toElement} does not implement {@link Comparable}).
+        Implementations may, but are not required to, throw this
+        exception if {@code toElement} cannot be compared to elements
+        currently in the set.
+@throws NullPointerException if {@code toElement} is null and
+        this set does not permit null elements
+@throws IllegalArgumentException if this set itself has a
+        restricted range, and {@code toElement} lies outside the
+        bounds of the range
 
 ## NavigableSet.tailSet(E, boolean)
 
@@ -286,27 +271,30 @@ NavigableSet<E> tailSet(E fromElement, boolean inclusive)
 ```
 
 Returns a view of the portion of this set whose elements are greater
-than (or equal to, if `inclusive` is true) `fromElement`.
+than (or equal to, if {@code inclusive} is true) {@code fromElement}.
 The returned set is backed by this set, so changes in the returned set
 are reflected in this set, and vice-versa.  The returned set supports
 all optional set operations that this set supports.
 
-The returned set will throw an `IllegalArgumentException`
+<p>The returned set will throw an {@code IllegalArgumentException}
 on an attempt to insert an element outside its range.
 
-Parameters:
-
-- `fromElement`: low endpoint of the returned set
-- `inclusive`: `true` if the low endpoint is to be included in the returned view
-
-**Returns:** a view of the portion of this set whose elements are greater
-        than or equal to `fromElement`
-
-Throws:
-
-- `ClassCastException`: if `fromElement` is not compatible with this set's comparator (or, if the set has no comparator, if `fromElement` does not implement `Comparable`). Implementations may, but are not required to, throw this exception if `fromElement` cannot be compared to elements currently in the set.
-- `NullPointerException`: if `fromElement` is null and this set does not permit null elements
-- `IllegalArgumentException`: if this set itself has a restricted range, and `fromElement` lies outside the bounds of the range
+@param fromElement low endpoint of the returned set
+@param inclusive {@code true} if the low endpoint
+       is to be included in the returned view
+@return a view of the portion of this set whose elements are greater
+        than or equal to {@code fromElement}
+@throws ClassCastException if {@code fromElement} is not compatible
+        with this set's comparator (or, if the set has no comparator,
+        if {@code fromElement} does not implement {@link Comparable}).
+        Implementations may, but are not required to, throw this
+        exception if {@code fromElement} cannot be compared to elements
+        currently in the set.
+@throws NullPointerException if {@code fromElement} is null
+        and this set does not permit null elements
+@throws IllegalArgumentException if this set itself has a
+        restricted range, and {@code fromElement} lies outside the
+        bounds of the range
 
 ## NavigableSet.subSet(E, E)
 
@@ -314,15 +302,13 @@ Throws:
 SortedSet<E> subSet(E fromElement, E toElement)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-Equivalent to `subSet(fromElement, true, toElement, false)`.
+<p>Equivalent to {@code subSet(fromElement, true, toElement, false)}.
 
-Throws:
-
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
-- `IllegalArgumentException`: (inherited documentation)
+@throws ClassCastException       {@inheritDoc}
+@throws NullPointerException     {@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}
 
 ## NavigableSet.headSet(E)
 
@@ -330,15 +316,13 @@ Throws:
 SortedSet<E> headSet(E toElement)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-Equivalent to `headSet(toElement, false)`.
+<p>Equivalent to {@code headSet(toElement, false)}.
 
-Throws:
-
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
-- `IllegalArgumentException`: (inherited documentation)
+@throws ClassCastException       {@inheritDoc}
+@throws NullPointerException     {@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}
 
 ## NavigableSet.tailSet(E)
 
@@ -346,15 +330,13 @@ Throws:
 SortedSet<E> tailSet(E fromElement)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-Equivalent to `tailSet(fromElement, true)`.
+<p>Equivalent to {@code tailSet(fromElement, true)}.
 
-Throws:
-
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
-- `IllegalArgumentException`: (inherited documentation)
+@throws ClassCastException       {@inheritDoc}
+@throws NullPointerException     {@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}
 
 ## NavigableSet.removeFirst()
 
@@ -362,17 +344,15 @@ Throws:
 default E removeFirst()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Implementation requirements:** If this set is not empty, the implementation in this interface returns the result of calling
-the `pollFirst` method. Otherwise, it throws `NoSuchElementException`.
+@implSpec
+If this set is not empty, the implementation in this interface returns the result of calling
+the {@code pollFirst} method. Otherwise, it throws {@code NoSuchElementException}.
 
-**Since:** 21
-
-Throws:
-
-- `NoSuchElementException`: (inherited documentation)
-- `UnsupportedOperationException`: (inherited documentation)
+@throws NoSuchElementException {@inheritDoc}
+@throws UnsupportedOperationException {@inheritDoc}
+@since 21
 
 ## NavigableSet.removeLast()
 
@@ -380,17 +360,15 @@ Throws:
 default E removeLast()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Implementation requirements:** If this set is not empty, the implementation in this interface returns the result of calling
-the `pollLast` method. Otherwise, it throws `NoSuchElementException`.
+@implSpec
+If this set is not empty, the implementation in this interface returns the result of calling
+the {@code pollLast} method. Otherwise, it throws {@code NoSuchElementException}.
 
-**Since:** 21
-
-Throws:
-
-- `NoSuchElementException`: (inherited documentation)
-- `UnsupportedOperationException`: (inherited documentation)
+@throws NoSuchElementException {@inheritDoc}
+@throws UnsupportedOperationException {@inheritDoc}
+@since 21
 
 ## NavigableSet.reversed()
 
@@ -398,13 +376,13 @@ Throws:
 default NavigableSet<E> reversed()
 ```
 
-(inherited documentation)
+{@inheritDoc}
+<p>
+This method is equivalent to {@link #descendingSet descendingSet}.
 
-This method is equivalent to descendingSet.
+@implSpec
+The implementation in this interface returns the result of calling the
+{@code descendingSet} method.
 
-**Implementation requirements:** The implementation in this interface returns the result of calling the
-`descendingSet` method.
-
-**Returns:** a reverse-ordered view of this collection, as a `NavigableSet`
-
-**Since:** 21
+@return a reverse-ordered view of this collection, as a {@code NavigableSet}
+@since 21

@@ -1,12 +1,3 @@
----
-title: "core::io::error::repr_bitpacked"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/io/error/repr_bitpacked.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::io::error::repr_bitpacked
 
 This is a densely packed error representation which is used on targets with
@@ -21,14 +12,14 @@ other targets. Specifically, you can imagine it as an optimized version of
 the following enum (which is roughly equivalent to what's stored by
 `repr_unpacked::Repr`, e.g. `super::ErrorData<Box<Custom>>`):
 
-```
+```ignore (exposition-only)
 enum ErrorData {
    Os(i32),
    Simple(ErrorKind),
    SimpleMessage(&'static SimpleMessage),
    Custom(Box<Custom>),
 }
-```rust
+```
 
 However, it packs this data into a 64bit non-zero value.
 
@@ -37,6 +28,7 @@ but improves `io::Result` as well, especially for situations like
 `io::Result<()>` (which is now 64 bits) or `io::Result<u64>` (which is now
 128 bits), which are quite common.
 
+# Layout
 Tagged values are 64 bits, with the 2 least significant bits used for the
 tag. This means there are 4 "variants":
 
@@ -72,12 +64,14 @@ tag. This means there are 4 "variants":
   occupy nearly that many. Most of the bits are unused here, but it's not
   like we need them for anything else yet.
 
+# Use of `NonNull<()>`
+
 Everything is stored in a `NonNull<()>`, which is odd, but actually serves a
 purpose.
 
 Conceptually you might think of this more like:
 
-```
+```ignore (exposition-only)
 union Repr {
     // holds integer (Simple/Os) variants, and
     // provides access to the tag bits.
@@ -87,7 +81,7 @@ union Repr {
     // Tagged (offset) `Box<Custom>` pointer.
     tagged_custom: NonNull<()>,
 }
-```rust
+```
 
 But there are a few problems with this:
 

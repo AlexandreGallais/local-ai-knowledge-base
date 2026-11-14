@@ -1,23 +1,19 @@
 ---
 title: ".NET 8 breaking change: FindSystemTimeZoneById doesn't return new object"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/8.0/timezoneinfo-object.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 8 breaking change in core .NET libraries where TimeZoneInfo.FindSystemTimeZoneById doesn't return a new TimeZoneInfo object.
+ms.date: 03/06/2024
 ---
-
 # FindSystemTimeZoneById doesn't return new object
 
-The `System.TimeZoneInfo` object returned by `System.TimeZoneInfo.FindSystemTimeZoneById(System.String)` is now a cached `TimeZoneInfo` instance instead of a new object.
+The <xref:System.TimeZoneInfo> object returned by <xref:System.TimeZoneInfo.FindSystemTimeZoneById(System.String)> is now a cached `TimeZoneInfo` instance instead of a new object.
 
 ## Previous behavior
 
-`System.TimeZoneInfo.FindSystemTimeZoneById(System.String)` returned a new `TimeZoneInfo` object.
+<xref:System.TimeZoneInfo.FindSystemTimeZoneById(System.String)?displayProperty=nameWithType> returned a new `TimeZoneInfo` object.
 
 ## New behavior
 
-Starting in .NET 8, `System.TimeZoneInfo.FindSystemTimeZoneById(System.String)` returns a cached `TimeZoneInfo` instance.
+Starting in .NET 8, <xref:System.TimeZoneInfo.FindSystemTimeZoneById(System.String)?displayProperty=nameWithType> returns a cached `TimeZoneInfo` instance.
 
 ## Version introduced
 
@@ -25,16 +21,16 @@ Starting in .NET 8, `System.TimeZoneInfo.FindSystemTimeZoneById(System.String)` 
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-This change was made to improve performance when calling `System.TimeZoneInfo.FindSystemTimeZoneById(System.String)`. For more information, see dotnet/runtime pull request #85615.
+This change was made to improve performance when calling <xref:System.TimeZoneInfo.FindSystemTimeZoneById(System.String)>. For more information, see [dotnet/runtime pull request #85615](https://github.com/dotnet/runtime/pull/85615).
 
 ## Recommended action
 
-If your code relied on `System.TimeZoneInfo.FindSystemTimeZoneById(System.String)` to create a new instance of `TimeZoneInfo`, refactor the code to call one of these methods instead.
+If your code relied on <xref:System.TimeZoneInfo.FindSystemTimeZoneById(System.String)> to create a new instance of `TimeZoneInfo`, refactor the code to call [one of these methods](xref:System.TimeZoneInfo#remarks) instead.
 
 ## Affected APIs
 
-- `System.TimeZoneInfo.FindSystemTimeZoneById(System.String)`
+- <xref:System.TimeZoneInfo.FindSystemTimeZoneById(System.String)?displayProperty=fullName>

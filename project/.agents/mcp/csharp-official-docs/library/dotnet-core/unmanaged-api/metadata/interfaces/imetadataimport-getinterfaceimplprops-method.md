@@ -1,15 +1,22 @@
 ---
+description: "Learn more about: IMetaDataImport::GetInterfaceImplProps Method"
 title: "IMetaDataImport::GetInterfaceImplProps Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-getinterfaceimplprops-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "02/25/2019"
+api_name:
+  - "IMetaDataImport.GetInterfaceImplProps"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::GetInterfaceImplProps"
+  - "GetInterfaceImpProps method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::GetInterfaceImplProps Method
 
-Gets a pointer to the metadata tokens for the `System.Type` that implements the specified method, and for the interface that declares that method.
+Gets a pointer to the metadata tokens for the <xref:System.Type> that implements the specified method, and for the interface that declares that method.
 
 ## Syntax
 
@@ -24,17 +31,17 @@ HRESULT GetInterfaceImplProps (
 ## Parameters
 
  `iiImpl`
- [in] The metadata token <example-value> the method to return the class and interface tokens for.
+ [in] The metadata token representing the method to return the class and interface tokens for.
 
  `pClass`
- [out] The metadata token <example-value> the class that implements the method.
+ [out] The metadata token representing the class that implements the method.
 
  `ptkIface`
- [out] The metadata token <example-value> the interface that defines the implemented method.
+ [out] The metadata token representing the interface that defines the implemented method.
 
 ## Remarks
 
- You obtain the value for `iImpl` by calling the EnumInterfaceImpls method.
+ You obtain the value for `iImpl` by calling the [EnumInterfaceImpls](imetadataimport-enuminterfaceimpls-method.md) method.
 
  For example, suppose that a class has an `mdTypeDef` token value of 0x02000007 and that it implements three
 interfaces whose types have tokens:
@@ -62,7 +69,7 @@ Recall, the token is a 4-byte value:
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -70,5 +77,5 @@ Recall, the token is a 4-byte value:
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

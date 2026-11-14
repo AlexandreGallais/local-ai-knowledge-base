@@ -1,21 +1,16 @@
 ---
-title: "Parallel and Sequential Test Files | Recipes"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/recipes/parallel-sequential.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Parallel and Sequential Test Files | Recipes
 ---
 
 # Parallel and Sequential Test Files
 
 Most test files are independent and run faster in parallel. The exception is the handful that share an exclusive resource, like a fixed port, a writable temp directory, or a database without per-test isolation. Those files flake when other tests run concurrently with them.
 
-Disabling parallelism globally would slow down every test in the suite. Splitting the suite into two `projects`, one parallel and one sequential, lets only the affected files pay the cost.
+Disabling parallelism globally would slow down every test in the suite. Splitting the suite into two [`projects`](/guide/projects), one parallel and one sequential, lets only the affected files pay the cost.
 
 ## Pattern
 
-```ts
+```ts [vitest.config.ts]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -39,13 +34,13 @@ export default defineConfig({
 })
 ```
 
-`fileParallelism: false` at the project level keeps the rest of your suite running concurrently while the matched files run one at a time. It's a shorthand for `maxWorkers: 1`; the two settings are equivalent.
+[`fileParallelism: false`](/config/fileparallelism) at the project level keeps the rest of your suite running concurrently while the matched files run one at a time. It's a shorthand for [`maxWorkers: 1`](/config/maxworkers); the two settings are equivalent.
 
 ## Run sequential after parallel
 
-By default, projects run in parallel with each other, so the sequential project's first file may overlap with parallel files that still hold the same resource. Use `sequence.groupOrder` <Version>3.2.0</Version> to force the parallel batch to finish first:
+By default, projects run in parallel with each other, so the sequential project's first file may overlap with parallel files that still hold the same resource. Use [`sequence.groupOrder`](/config/sequence#sequence-grouporder) <Version>3.2.0</Version> to force the parallel batch to finish first:
 
-```ts
+```ts [vitest.config.ts]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -79,16 +74,16 @@ There are two different "parallel" knobs in Vitest. Don't confuse them:
 
 | Scope         | Knob                                         | Controls                                         |
 | ------------- | -------------------------------------------- | ------------------------------------------------ |
-| Across files  | `fileParallelism` | Whether two test _files_ run in parallel workers |
+| Across files  | [`fileParallelism`](/config/fileparallelism) | Whether two test _files_ run in parallel workers |
 | Within a file | `describe.concurrent` / `test.concurrent`    | Whether tests _inside one file_ run concurrently |
 
 `fileParallelism: false` doesn't make tests inside a file concurrent; tests inside a file are sequential by default. And `concurrent` on a `describe` or `test` doesn't affect how files are scheduled.
 
 ## See also
 
-- `fileParallelism`
-- `maxWorkers`
-- `sequence.groupOrder`
-- Parallelism
-- Test Projects
-- Per-File Isolation Settings
+- [`fileParallelism`](/config/fileparallelism)
+- [`maxWorkers`](/config/maxworkers)
+- [`sequence.groupOrder`](/config/sequence#sequence-grouporder)
+- [Parallelism](/guide/parallelism)
+- [Test Projects](/guide/projects)
+- [Per-File Isolation Settings](/guide/recipes/disable-isolation)

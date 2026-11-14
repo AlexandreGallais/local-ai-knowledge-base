@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: CorDebugRegister Enumeration"
 title: "CorDebugRegister Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cordebugregister-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "CorDebugRegister"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "CorDebugRegister"
+helpviewer_keywords:
+  - "CorDebugRegister enumeration [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # CorDebugRegister Enumeration
 
 Specifies the registers associated with a given processor architecture.
@@ -187,7 +195,7 @@ For example, if you need to specify the #83 data register on the IA-64 processor
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

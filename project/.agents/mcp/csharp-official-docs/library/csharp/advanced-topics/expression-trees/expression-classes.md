@@ -1,15 +1,12 @@
 ---
-title: ".NET Runtime support for expression trees"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/advanced-topics/expression-trees/expression-classes.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: .NET Runtime support for expression trees
+description: Learn about .NET runtime types supporting expression trees, creating expression trees, and techniques for working with expression tree APIs.
+ms.date: 03/06/2023
 ---
 
 # .NET Runtime support for expression trees
 
-There's a large list of classes in the .NET runtime that work with Expression Trees. You can see the full list at `System.Linq.Expressions`. Rather than enumerate the full list, let's understand how the runtime classes have been designed.
+There's a large list of classes in the .NET runtime that work with Expression Trees. You can see the full list at <xref:System.Linq.Expressions>. Rather than enumerate the full list, let's understand how the runtime classes have been designed.
 
 In language design, an expression is a body of code that evaluates and returns a value. Expressions may be simple: the constant expression `1` returns the constant value of 1. They may be more complicated: The expression `(-B + Math.Sqrt(B*B - 4 * A * C)) / (2 * A)` returns one root for a quadratic equation (in the case where the equation has a solution).
 

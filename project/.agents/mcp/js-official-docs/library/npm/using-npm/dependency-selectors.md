@@ -1,17 +1,12 @@
 ---
-title: "Dependency Selectors"
-tool: "npm"
-version: "12.2"
-source: "https://github.com/npm/cli/blob/60e11343e61316d966c86805d803df5a0eb99230/docs/lib/content/using-npm/dependency-selectors.md"
-commit: "60e11343e61316d966c86805d803df5a0eb99230"
-license: "Artistic-2.0"
+title: Dependency Selectors
+section: 7
+description: Dependency Selector Syntax & Querying
 ---
-
-# Dependency Selectors
 
 ### Description
 
-The `npm query` command exposes a new dependency selector syntax (informed by & respecting many aspects of the CSS Selectors 4 Spec) which:
+The [`npm query`](/commands/npm-query) command exposes a new dependency selector syntax (informed by & respecting many aspects of the [CSS Selectors 4 Spec](https://dev.w3.org/csswg/selectors4/#relational)) which:
 
 - Standardizes the shape of, & querying of, dependency graphs with a robust object model, metadata & selector syntax
 - Leverages existing, known language syntax & operators from CSS to make disparate package information broadly accessible
@@ -48,32 +43,32 @@ The `npm query` command exposes a new dependency selector syntax (informed by & 
 - `.dev` dependency found in the `devDependencies` section of `package.json`, or is a child of said dependency
 - `.optional` dependency found in the `optionalDependencies` section of `package.json`, or has `"optional": true` set in its entry in the `peerDependenciesMeta` section of `package.json`, or a child of said dependency
 - `.peer` dependency found in the `peerDependencies` section of `package.json`
-- `.workspace` dependency found in the `workspaces` section of `package.json`
+- `.workspace` dependency found in the [`workspaces`](https://docs.npmjs.com/cli/v8/using-npm/workspaces) section of `package.json`
 - `.bundled` dependency found in the `bundleDependencies` section of `package.json`, or is a child of said dependency
 
 #### Pseudo Selectors
-- `:not(<selector>)`
-- `:has(<selector>)`
-- `:is(<selector list>)`
-- `:root` matches the root node/dependency
-- `:scope` matches node/dependency it was queried against
-- `:empty` when a dependency has no dependencies
-- `:private` when a dependency is private
-- `:link` when a dependency is linked (for instance, workspaces or packages manually `linked`
+- [`:not(<selector>)`](https://developer.mozilla.org/en-US/docs/Web/CSS/:not)
+- [`:has(<selector>)`](https://developer.mozilla.org/en-US/docs/Web/CSS/:has)
+- [`:is(<selector list>)`](https://developer.mozilla.org/en-US/docs/Web/CSS/:is)
+- [`:root`](https://developer.mozilla.org/en-US/docs/Web/CSS/:root) matches the root node/dependency
+- [`:scope`](https://developer.mozilla.org/en-US/docs/Web/CSS/:scope) matches node/dependency it was queried against
+- [`:empty`](https://developer.mozilla.org/en-US/docs/Web/CSS/:empty) when a dependency has no dependencies
+- [`:private`](https://docs.npmjs.com/cli/v8/configuring-npm/package-json#private) when a dependency is private
+- `:link` when a dependency is linked (for instance, workspaces or packages manually [`linked`](https://docs.npmjs.com/cli/v8/commands/npm-link)
 - `:deduped` when a dependency has been deduped (note that this does *not* always mean the dependency has been hoisted to the root of node_modules)
 - `:overridden` when a dependency has been overridden
 - `:extraneous` when a dependency exists but is not defined as a dependency of any node
 - `:invalid` when a dependency version is out of its ancestors specified range
 - `:missing` when a dependency is not found on disk
-- `:semver(<spec>, [selector], [function])` match a valid `node-semver` version or range to a selector
-- `:path()` glob matching based on dependencies path relative to the project
-- `:type(<type>)` based on currently recognized types.  You can also use the aggregate type of `registry` for any registry dependency (e.g. tag, version, range, alias)
+- `:semver(<spec>, [selector], [function])` match a valid [`node-semver`](https://github.com/npm/node-semver) version or range to a selector
+- `:path(<path>)` [glob](https://www.npmjs.com/package/glob) matching based on dependencies path relative to the project
+- `:type(<type>)` [based on currently recognized types](https://github.com/npm/npm-package-arg#result-object).  You can also use the aggregate type of `registry` for any registry dependency (e.g. tag, version, range, alias)
 - `:outdated(<type>)` when a dependency is outdated
 - `:vuln(<selector>)` when a dependency has a known vulnerability
 
 ##### `:semver(<spec>, [selector], [function])`
 
-The `:semver()` pseudo selector allows comparing fields from each node's `package.json` using semver methods.
+The `:semver()` pseudo selector allows comparing fields from each node's `package.json` using [semver](https://github.com/npm/node-semver#readme) methods.
 It accepts up to 3 parameters, all but the first of which are optional.
 
 - `spec` a semver version or range
@@ -121,7 +116,7 @@ Some examples:
 
 The `:vuln` pseudo selector retrieves data from the registry and returns information about which if your dependencies has a known vulnerability.
 Only dependencies whose current version matches a vulnerability will be returned.
-For example if you have `user@example.com` in your tree, a vulnerability for `semver` which affects versions `<=6.3.1` will not match.
+For example if you have `semver@7.6.0` in your tree, a vulnerability for `semver` which affects versions `<=6.3.1` will not match.
 
 You can also filter results by certain attributes in advisories.
 Currently that includes `severity` and `cwe`.
@@ -136,7 +131,7 @@ Some examples:
 - `:vuln([severity=high],[severity=moderate])` returns only dependencies with a vulnerability with a `high`  or `moderate` severity.
 - `:vuln([cwe=1333])` returns only dependencies with a vulnerability that includes CWE-1333 (ReDoS)
 
-#### Attribute Selectors
+#### [Attribute Selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors)
 
 The attribute selector evaluates the key/value pairs in `package.json` if they are `String`s.
 
@@ -195,7 +190,7 @@ Nested objects are expressed as sequential arguments to `:attr()`.
 ##### Example of an `Array` of `Object`s:
 ```css
 /* returns */
-*:attr(contributors, [email=user@example.com])
+*:attr(contributors, [email=ruyadorno@github.com])
 ```
 
 ### Groups
@@ -248,5 +243,5 @@ arb.loadActual().then(async (tree) => {
 
 ## See Also
 
-* npm query
-* @npmcli/arborist
+* [npm query](/commands/npm-query)
+* [@npmcli/arborist](https://npm.im/@npmcli/arborist)

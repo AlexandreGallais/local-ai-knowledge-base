@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: ConfigurationBinder throws for mismatched value"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/extensions/8.0/configurationbinder-exceptions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 8 breaking change in .NET extensions where ConfigurationBinder throws an exception if ErrorOnUnknownConfiguration is true and a config value doesn't match the model value.
+ms.date: 01/27/2023
 ---
-
 # ConfigurationBinder throws for mismatched value
 
-Previously, `Microsoft.Extensions.Configuration.BinderOptions.ErrorOnUnknownConfiguration` was used solely to raise an exception if a value existed in the configuration but not in the model being bound to. Now, if this property is set to `true`, an exception is also thrown if the value in the configuration can't be converted to the type of value in the model.
+Previously, <xref:Microsoft.Extensions.Configuration.BinderOptions.ErrorOnUnknownConfiguration?displayProperty=nameWithType> was used solely to raise an exception if a value existed in the configuration but not in the model being bound to. Now, if this property is set to `true`, an exception is also thrown if the value in the configuration can't be converted to the type of value in the model.
 
 ## Version introduced
 
@@ -54,28 +50,28 @@ public void SilentlySwallowsInvalidItems()
 
 ## New behavior
 
-Starting in .NET 8, if a configuration value can't be converted to the type of the value in the model, an `System.InvalidOperationException` is thrown.
+Starting in .NET 8, if a configuration value can't be converted to the type of the value in the model, an <xref:System.InvalidOperationException> is thrown.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-The previous behavior was confusing for some developers. They set `Microsoft.Extensions.Configuration.BinderOptions.ErrorOnUnknownConfiguration` to `true` and expected an exception to be thrown if *any* issue was encountered when the configuration was bound.
+The previous behavior was confusing for some developers. They set <xref:Microsoft.Extensions.Configuration.BinderOptions.ErrorOnUnknownConfiguration?displayProperty=nameWithType> to `true` and expected an exception to be thrown if *any* issue was encountered when the configuration was bound.
 
 ## Recommended action
 
 If your app has configuration values that can't be converted to the properties in the bound model, change or remove the values.
 
-Alternatively, set `Microsoft.Extensions.Configuration.BinderOptions.ErrorOnUnknownConfiguration` to `false`.
+Alternatively, set <xref:Microsoft.Extensions.Configuration.BinderOptions.ErrorOnUnknownConfiguration?displayProperty=nameWithType> to `false`.
 
 ## Affected APIs
 
-- `Microsoft.Extensions.Configuration.ConfigurationBinder.Bind(Microsoft.Extensions.Configuration.IConfiguration,System.Object,System.Action{Microsoft.Extensions.Configuration.BinderOptions})`
-- `Microsoft.Extensions.Configuration.ConfigurationBinder.Get``1(Microsoft.Extensions.Configuration.IConfiguration,System.Action{Microsoft.Extensions.Configuration.BinderOptions})`
-- `Microsoft.Extensions.Configuration.ConfigurationBinder.Get(Microsoft.Extensions.Configuration.IConfiguration,System.Type,System.Action{Microsoft.Extensions.Configuration.BinderOptions})`
+- <xref:Microsoft.Extensions.Configuration.ConfigurationBinder.Bind(Microsoft.Extensions.Configuration.IConfiguration,System.Object,System.Action{Microsoft.Extensions.Configuration.BinderOptions})?displayProperty=fullName>
+- <xref:Microsoft.Extensions.Configuration.ConfigurationBinder.Get``1(Microsoft.Extensions.Configuration.IConfiguration,System.Action{Microsoft.Extensions.Configuration.BinderOptions})?displayProperty=fullName>
+- <xref:Microsoft.Extensions.Configuration.ConfigurationBinder.Get(Microsoft.Extensions.Configuration.IConfiguration,System.Type,System.Action{Microsoft.Extensions.Configuration.BinderOptions})?displayProperty=fullName>
 
 ## See also
 
-- ConfigurationBinder silently skips invalid array elements
+- [ConfigurationBinder silently skips invalid array elements](configurationbinder-skips-failed-array-elements.md)

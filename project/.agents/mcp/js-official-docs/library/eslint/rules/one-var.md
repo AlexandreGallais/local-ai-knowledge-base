@@ -1,13 +1,7 @@
 ---
-title: "one-var"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/one-var.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: one-var
+rule_type: suggestion
 ---
-
-# one-var
 
 Variables can be declared at any point in JavaScript code using `var`, `let`, `const`, `using`, or `await using`. There are many styles and preferences related to the declaration of variables, and one of those is deciding on how many variable declarations should be allowed in a single function.
 
@@ -79,7 +73,7 @@ Alternate object option:
 
 Examples of **incorrect** code for this rule with the default `"always"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint one-var: ["error", "always"]*/
@@ -126,9 +120,11 @@ class C {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"always"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint one-var: ["error", "always"]*/
@@ -189,11 +185,13 @@ class C {
 }
 ```
 
+:::
+
 ### never
 
 Examples of **incorrect** code for this rule with the `"never"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint one-var: ["error", "never"]*/
@@ -227,9 +225,11 @@ class C {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"never"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint one-var: ["error", "never"]*/
@@ -270,11 +270,13 @@ for (var i = 0, len = arr.length; i < len; i++) {
 }
 ```
 
+:::
+
 ### consecutive
 
 Examples of **incorrect** code for this rule with the `"consecutive"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint one-var: ["error", "consecutive"]*/
@@ -304,9 +306,11 @@ class C {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"consecutive"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint one-var: ["error", "consecutive"]*/
@@ -337,11 +341,13 @@ class C {
 }
 ```
 
+:::
+
 ### var, let, const, using, and awaitUsing
 
 Examples of **incorrect** code for this rule with the `{ var: "always", let: "never", const: "never", using: "never", awaitUsing: "never" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint one-var: ["error", { var: "always", let: "never", const: "never", using: "never", awaitUsing: "never" }]*/
@@ -368,9 +374,11 @@ async function foo3() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ var: "always", let: "never", const: "never", using: "never", awaitUsing: "never" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint one-var: ["error", { var: "always", let: "never", const: "never", using: "never", awaitUsing: "never" }]*/
@@ -397,9 +405,11 @@ async function foo3() {
 }
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `{ var: "never" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint one-var: ["error", { var: "never" }]*/
@@ -410,9 +420,11 @@ function foo() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ var: "never" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint one-var: ["error", { var: "never" }]*/
@@ -437,11 +449,13 @@ async function foo() {
 }
 ```
 
+:::
+
 The `separateRequires` option applies to any variable whose initializer is a `require()` call. It does not check whether `require` refers to the CommonJS global or to a local binding with the same name, such as a function parameter.
 
 Examples of **incorrect** code for this rule with the `{ separateRequires: true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint one-var: ["error", { separateRequires: true, var: "always" }]*/
@@ -450,9 +464,11 @@ var foo = require("foo"),
     bar = "bar";
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ separateRequires: true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint one-var: ["error", { separateRequires: true, var: "always" }]*/
@@ -461,7 +477,9 @@ var foo = require("foo");
 var bar = "bar";
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint one-var: ["error", { separateRequires: true, var: "always" }]*/
@@ -470,9 +488,11 @@ var foo = require("foo"),
     bar = require("bar");
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `{ var: "never", let: "consecutive", const: "consecutive", using: "consecutive", awaitUsing: "consecutive" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint one-var: ["error", { var: "never", let: "consecutive", const: "consecutive", using: "consecutive", awaitUsing: "consecutive" }]*/
@@ -514,9 +534,11 @@ async function foo4() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ var: "never", let: "consecutive", const: "consecutive", using: "consecutive", awaitUsing: "consecutive" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint one-var: ["error", { var: "never", let: "consecutive", const: "consecutive", using: "consecutive", awaitUsing: "consecutive" }]*/
@@ -562,9 +584,11 @@ async function foo4() {
 }
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `{ var: "consecutive" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint one-var: ["error", { var: "consecutive" }]*/
@@ -575,9 +599,11 @@ function foo() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ var: "consecutive" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint one-var: ["error", { var: "consecutive" }]*/
@@ -598,11 +624,13 @@ async function foo() {
 }
 ```
 
+:::
+
 ### initialized and uninitialized
 
 Examples of **incorrect** code for this rule with the `{ "initialized": "always", "uninitialized": "never" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint one-var: ["error", { "initialized": "always", "uninitialized": "never" }]*/
@@ -614,9 +642,11 @@ function foo() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "initialized": "always", "uninitialized": "never" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint one-var: ["error", { "initialized": "always", "uninitialized": "never" }]*/
@@ -639,9 +669,11 @@ for (z of foo) {
 }
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `{ "initialized": "never" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint one-var: ["error", { "initialized": "never" }]*/
@@ -652,9 +684,11 @@ function foo() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "initialized": "never" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint one-var: ["error", { "initialized": "never" }]*/
@@ -666,9 +700,11 @@ function foo() {
 }
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `{ "initialized": "consecutive", "uninitialized": "never" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint one-var: ["error", { "initialized": "consecutive", "uninitialized": "never" }]*/
@@ -683,9 +719,11 @@ function foo() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "initialized": "consecutive", "uninitialized": "never" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint one-var: ["error", { "initialized": "consecutive", "uninitialized": "never" }]*/
@@ -700,9 +738,11 @@ function foo() {
 }
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `{ "initialized": "consecutive" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint one-var: ["error", { "initialized": "consecutive" }]*/
@@ -718,9 +758,11 @@ function foo() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "initialized": "consecutive" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint one-var: ["error", { "initialized": "consecutive" }]*/
@@ -736,8 +778,10 @@ function foo() {
 }
 ```
 
+:::
+
 ## Compatibility
 
 * **JSHint**: This rule maps to the `onevar` JSHint rule, but allows `let` and `const` to be configured separately.
-* **JSCS**: This rule roughly maps to disallowMultipleVarDecl.
-* **JSCS**: This rule option `separateRequires` roughly maps to requireMultipleVarDecl.
+* **JSCS**: This rule roughly maps to [disallowMultipleVarDecl](https://jscs-dev.github.io/rule/disallowMultipleVarDecl).
+* **JSCS**: This rule option `separateRequires` roughly maps to [requireMultipleVarDecl](https://jscs-dev.github.io/rule/requireMultipleVarDecl).

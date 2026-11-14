@@ -1,32 +1,21 @@
----
-title: "AnnotationValue interface (java.lang.classfile)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/AnnotationValue.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AnnotationValue interface (java.lang.classfile)
 
 ```java
 public sealed interface AnnotationValue
 ```
 
-Models an `element_value` structure, or a value of an element-value
-pair of an annotation, as defined in JVMS .
+Models an {@code element_value} structure, or a value of an element-value
+pair of an annotation, as defined in JVMS {@jvms 4.7.16.1}.
+<p>
+Two {@code AnnotationValue} objects should be compared using the {@link
+Object#equals(Object) equals} method.
 
-Two `AnnotationValue` objects should be compared using the equals method.
+@see Annotation
+@see AnnotationElement
+@see java.lang.reflect.AnnotatedElement Annotations in core reflection
 
-**See also:** Annotation
-
-**See also:** AnnotationElement
-
-**See also:** java.lang.reflect.AnnotatedElement Annotations in core reflection
-
-**sealedGraph:**
-
-**Since:** 24
+@sealedGraph
+@since 24
 
 ## AnnotationValue.annotation()
 
@@ -34,14 +23,19 @@ Two `AnnotationValue` objects should be compared using the equals method.
 Annotation annotation()
 ```
 
+{@return the annotation value}
+
 ## AnnotationValue.values()
 
 ```java
 List<AnnotationValue> values()
 ```
 
-**API note:** All array elements derived from Java source code have the same type,
-which must not be an array type. (JLS ) If such elements are
+{@return the array elements of the array value}
+
+@apiNote
+All array elements derived from Java source code have the same type,
+which must not be an array type. (JLS {@jls 9.6.1}) If such elements are
 annotations, they have the same annotation interface; if such elements
 are enum, they belong to the same enum class.
 
@@ -51,10 +45,15 @@ are enum, they belong to the same enum class.
 AnnotationConstantValueEntry constant()
 ```
 
-**API note:** Different types of constant values may share the same type of entry
-because they have the same computational type.
-For example, `OfInt` and `OfChar` are both
-backed by `IntegerEntry`. Use resolvedValue() for a value of accurate type.
+{@return the constant pool entry backing this constant element}
+
+@apiNote
+Different types of constant values may share the same type of entry
+because they have the same {@linkplain TypeKind##computational-type
+computational type}.
+For example, {@link OfInt} and {@link OfChar} are both
+backed by {@link IntegerEntry}. Use {@link #resolvedValue
+resolvedValue()} for a value of accurate type.
 
 ## AnnotationValue.resolvedValue()
 
@@ -62,16 +61,17 @@ backed by `IntegerEntry`. Use resolvedValue() for a value of accurate type.
 Constable resolvedValue()
 ```
 
-The type of
-the returned value may be a wrapper class or `String`.
+{@return the resolved live constant value, as an object} The type of
+the returned value may be a wrapper class or {@link String}.
 
-**API note:** The returned object, despite being `Constable`, may not
-describe the right constant
+@apiNote
+The returned object, despite being {@link Constable}, may not
+{@linkplain Constable#describeConstable() describe} the right constant
 for encoding the annotation value in a class file. For example,
-`Character` returned by `OfChar` describes itself as a
-`DynamicConstantPoolEntry`, but it is actually backed by
-`IntegerEntry` in annotation format.
-Use constant() for a correct constant pool representation.
+{@link Character} returned by {@link OfChar} describes itself as a
+{@link DynamicConstantPoolEntry}, but it is actually backed by
+{@link IntegerEntry} in annotation format.
+Use {@link #constant constant()} for a correct constant pool representation.
 
 ## AnnotationValue.constant()
 
@@ -79,11 +79,15 @@ Use constant() for a correct constant pool representation.
 Utf8Entry constant()
 ```
 
+{@return the backing UTF8 entry}
+
 ## AnnotationValue.stringValue()
 
 ```java
 String stringValue()
 ```
+
+{@return the constant string value}
 
 ## AnnotationValue.resolvedValue()
 
@@ -91,7 +95,10 @@ String stringValue()
 default String resolvedValue()
 ```
 
-**Implementation requirements:** This method returns the same as `stringValue()`.
+{@return the resolved string value}
+
+@implSpec
+This method returns the same as {@link #stringValue()}.
 
 ## AnnotationValue.constant()
 
@@ -99,11 +106,15 @@ default String resolvedValue()
 DoubleEntry constant()
 ```
 
+{@return the backing double entry}
+
 ## AnnotationValue.doubleValue()
 
 ```java
 double doubleValue()
 ```
+
+{@return the constant double value}
 
 ## AnnotationValue.resolvedValue()
 
@@ -111,7 +122,10 @@ double doubleValue()
 default Double resolvedValue()
 ```
 
-**Implementation requirements:** This method returns the same as `doubleValue()`.
+{@return the resolved double value}
+
+@implSpec
+This method returns the same as {@link #doubleValue()}.
 
 ## AnnotationValue.constant()
 
@@ -119,11 +133,15 @@ default Double resolvedValue()
 FloatEntry constant()
 ```
 
+{@return the backing float entry}
+
 ## AnnotationValue.floatValue()
 
 ```java
 float floatValue()
 ```
+
+{@return the constant float value}
 
 ## AnnotationValue.resolvedValue()
 
@@ -131,7 +149,10 @@ float floatValue()
 default Float resolvedValue()
 ```
 
-**Implementation requirements:** This method returns the same as `floatValue()`.
+{@return the resolved float value}
+
+@implSpec
+This method returns the same as {@link #floatValue()}.
 
 ## AnnotationValue.constant()
 
@@ -139,11 +160,15 @@ default Float resolvedValue()
 LongEntry constant()
 ```
 
+{@return the backing long entry}
+
 ## AnnotationValue.longValue()
 
 ```java
 long longValue()
 ```
+
+{@return the constant long value}
 
 ## AnnotationValue.resolvedValue()
 
@@ -151,13 +176,18 @@ long longValue()
 default Long resolvedValue()
 ```
 
-**Implementation requirements:** This method returns the same as `longValue()`.
+{@return the resolved long value}
+
+@implSpec
+This method returns the same as {@link #longValue()}.
 
 ## AnnotationValue.constant()
 
 ```java
 IntegerEntry constant()
 ```
+
+{@return the backing integer entry}
 
 ## AnnotationValue.intValue()
 
@@ -165,19 +195,26 @@ IntegerEntry constant()
 int intValue()
 ```
 
+{@return the constant int value}
+
 ## AnnotationValue.resolvedValue()
 
 ```java
 default Integer resolvedValue()
 ```
 
-**Implementation requirements:** This method returns the same as `intValue()`.
+{@return the resolved int value}
+
+@implSpec
+This method returns the same as {@link #intValue()}.
 
 ## AnnotationValue.constant()
 
 ```java
 IntegerEntry constant()
 ```
+
+{@return the backing integer entry}
 
 ## AnnotationValue.shortValue()
 
@@ -185,7 +222,8 @@ IntegerEntry constant()
 short shortValue()
 ```
 
-**jvms:** 2.11.1 Types and the Java Virtual Machine
+{@return the constant short value}
+@jvms 2.11.1 Types and the Java Virtual Machine
 
 ## AnnotationValue.resolvedValue()
 
@@ -193,13 +231,18 @@ short shortValue()
 default Short resolvedValue()
 ```
 
-**Implementation requirements:** This method returns the same as `shortValue()`.
+{@return the resolved short value}
+
+@implSpec
+This method returns the same as {@link #shortValue()}.
 
 ## AnnotationValue.constant()
 
 ```java
 IntegerEntry constant()
 ```
+
+{@return the backing integer entry}
 
 ## AnnotationValue.charValue()
 
@@ -207,7 +250,8 @@ IntegerEntry constant()
 char charValue()
 ```
 
-**jvms:** 2.11.1 Types and the Java Virtual Machine
+{@return the constant char value}
+@jvms 2.11.1 Types and the Java Virtual Machine
 
 ## AnnotationValue.resolvedValue()
 
@@ -215,13 +259,18 @@ char charValue()
 default Character resolvedValue()
 ```
 
-**Implementation requirements:** This method returns the same as `charValue()`.
+{@return the resolved char value}
+
+@implSpec
+This method returns the same as {@link #charValue()}.
 
 ## AnnotationValue.constant()
 
 ```java
 IntegerEntry constant()
 ```
+
+{@return the backing integer entry}
 
 ## AnnotationValue.byteValue()
 
@@ -229,7 +278,8 @@ IntegerEntry constant()
 byte byteValue()
 ```
 
-**jvms:** 2.11.1 Types and the Java Virtual Machine
+{@return the constant byte value}
+@jvms 2.11.1 Types and the Java Virtual Machine
 
 ## AnnotationValue.resolvedValue()
 
@@ -237,7 +287,10 @@ byte byteValue()
 default Byte resolvedValue()
 ```
 
-**Implementation requirements:** This method returns the same as `byteValue()`.
+{@return the resolved byte value}
+
+@implSpec
+This method returns the same as {@link #byteValue()}.
 
 ## AnnotationValue.constant()
 
@@ -245,13 +298,16 @@ default Byte resolvedValue()
 IntegerEntry constant()
 ```
 
+{@return the backing integer entry}
+
 ## AnnotationValue.booleanValue()
 
 ```java
 boolean booleanValue()
 ```
 
-**jvms:** 2.3.4 The *boolean* Type
+{@return the constant boolean value}
+@jvms 2.3.4 The <i>boolean</i> Type
 
 ## AnnotationValue.resolvedValue()
 
@@ -259,7 +315,10 @@ boolean booleanValue()
 default Boolean resolvedValue()
 ```
 
-**Implementation requirements:** This method returns the same as `booleanValue()`.
+{@return the resolved boolean value}
+
+@implSpec
+This method returns the same as {@link #booleanValue()}.
 
 ## AnnotationValue.className()
 
@@ -267,11 +326,15 @@ default Boolean resolvedValue()
 Utf8Entry className()
 ```
 
+{@return the class descriptor string}
+
 ## AnnotationValue.classSymbol()
 
 ```java
 default ClassDesc classSymbol()
 ```
+
+{@return the class descriptor}
 
 ## AnnotationValue.className()
 
@@ -279,11 +342,15 @@ default ClassDesc classSymbol()
 Utf8Entry className()
 ```
 
+{@return the enum class descriptor string}
+
 ## AnnotationValue.classSymbol()
 
 ```java
 default ClassDesc classSymbol()
 ```
+
+{@return the enum class descriptor}
 
 ## AnnotationValue.constantName()
 
@@ -291,13 +358,15 @@ default ClassDesc classSymbol()
 Utf8Entry constantName()
 ```
 
+{@return the enum constant name}
+
 ## AnnotationValue.TAG_BYTE
 
 ```java
 int TAG_BYTE
 ```
 
-The tag indicating the value of an element-value pair is `OfByte`.
+The {@link #tag() tag} indicating the value of an element-value pair is {@link OfByte}.
 
 ## AnnotationValue.TAG_CHAR
 
@@ -305,7 +374,7 @@ The tag indicating the value of an element-value pair is `OfByte`.
 int TAG_CHAR
 ```
 
-The tag indicating the value of an element-value pair is `OfChar`.
+The {@link #tag() tag} indicating the value of an element-value pair is {@link OfChar}.
 
 ## AnnotationValue.TAG_DOUBLE
 
@@ -313,7 +382,7 @@ The tag indicating the value of an element-value pair is `OfChar`.
 int TAG_DOUBLE
 ```
 
-The tag indicating the value of an element-value pair is `OfDouble`.
+The {@link #tag() tag} indicating the value of an element-value pair is {@link OfDouble}.
 
 ## AnnotationValue.TAG_FLOAT
 
@@ -321,7 +390,7 @@ The tag indicating the value of an element-value pair is `OfDouble`.
 int TAG_FLOAT
 ```
 
-The tag indicating the value of an element-value pair is `OfFloat`.
+The {@link #tag() tag} indicating the value of an element-value pair is {@link OfFloat}.
 
 ## AnnotationValue.TAG_INT
 
@@ -329,7 +398,7 @@ The tag indicating the value of an element-value pair is `OfFloat`.
 int TAG_INT
 ```
 
-The tag indicating the value of an element-value pair is `OfInt`.
+The {@link #tag() tag} indicating the value of an element-value pair is {@link OfInt}.
 
 ## AnnotationValue.TAG_LONG
 
@@ -337,7 +406,7 @@ The tag indicating the value of an element-value pair is `OfInt`.
 int TAG_LONG
 ```
 
-The tag indicating the value of an element-value pair is `OfLong`.
+The {@link #tag() tag} indicating the value of an element-value pair is {@link OfLong}.
 
 ## AnnotationValue.TAG_SHORT
 
@@ -345,7 +414,7 @@ The tag indicating the value of an element-value pair is `OfLong`.
 int TAG_SHORT
 ```
 
-The tag indicating the value of an element-value pair is `OfShort`.
+The {@link #tag() tag} indicating the value of an element-value pair is {@link OfShort}.
 
 ## AnnotationValue.TAG_BOOLEAN
 
@@ -353,7 +422,7 @@ The tag indicating the value of an element-value pair is `OfShort`.
 int TAG_BOOLEAN
 ```
 
-The tag indicating the value of an element-value pair is `OfBoolean`.
+The {@link #tag() tag} indicating the value of an element-value pair is {@link OfBoolean}.
 
 ## AnnotationValue.TAG_STRING
 
@@ -361,7 +430,7 @@ The tag indicating the value of an element-value pair is `OfBoolean`.
 int TAG_STRING
 ```
 
-The tag indicating the value of an element-value pair is `OfString`.
+The {@link #tag() tag} indicating the value of an element-value pair is {@link OfString}.
 
 ## AnnotationValue.TAG_ENUM
 
@@ -369,7 +438,7 @@ The tag indicating the value of an element-value pair is `OfString`.
 int TAG_ENUM
 ```
 
-The tag indicating the value of an element-value pair is `OfEnum`.
+The {@link #tag() tag} indicating the value of an element-value pair is {@link OfEnum}.
 
 ## AnnotationValue.TAG_CLASS
 
@@ -377,7 +446,7 @@ The tag indicating the value of an element-value pair is `OfEnum`.
 int TAG_CLASS
 ```
 
-The tag indicating the value of an element-value pair is `OfClass`.
+The {@link #tag() tag} indicating the value of an element-value pair is {@link OfClass}.
 
 ## AnnotationValue.TAG_ANNOTATION
 
@@ -385,7 +454,7 @@ The tag indicating the value of an element-value pair is `OfClass`.
 int TAG_ANNOTATION
 ```
 
-The tag indicating the value of an element-value pair is `OfAnnotation`.
+The {@link #tag() tag} indicating the value of an element-value pair is {@link OfAnnotation}.
 
 ## AnnotationValue.TAG_ARRAY
 
@@ -393,7 +462,7 @@ The tag indicating the value of an element-value pair is `OfAnnotation`.
 int TAG_ARRAY
 ```
 
-The tag indicating the value of an element-value pair is `OfArray`.
+The {@link #tag() tag} indicating the value of an element-value pair is {@link OfArray}.
 
 ## AnnotationValue.tag()
 
@@ -401,12 +470,14 @@ The tag indicating the value of an element-value pair is `OfArray`.
 int tag()
 ```
 
+{@return the tag character for this value as per JVMS {@jvms 4.7.16.1}}
 The tag characters have a one-to-one mapping to the types of annotation element values.
 
-**API note:** `TAG_`-prefixed constants in this class, such as `TAG_INT`,
+@apiNote
+{@code TAG_}-prefixed constants in this class, such as {@link #TAG_INT},
 describe the possible return values of this method.  The return type is
-`int` for consistency with union indicator items in other union
-structures in the `class` file format.
+{@code int} for consistency with union indicator items in other union
+structures in the {@code class} file format.
 
 ## AnnotationValue.ofEnum(Utf8Entry, Utf8Entry)
 
@@ -414,10 +485,9 @@ structures in the `class` file format.
 static OfEnum ofEnum(Utf8Entry className, Utf8Entry constantName)
 ```
 
-Parameters:
-
-- `className`: the descriptor string of the enum class
-- `constantName`: the name of the enum constant
+{@return an enum value for an element-value pair}
+@param className the descriptor string of the enum class
+@param constantName the name of the enum constant
 
 ## AnnotationValue.ofEnum(ClassDesc, String)
 
@@ -425,10 +495,9 @@ Parameters:
 static OfEnum ofEnum(ClassDesc className, String constantName)
 ```
 
-Parameters:
-
-- `className`: the descriptor of the enum class
-- `constantName`: the name of the enum constant
+{@return an enum value for an element-value pair}
+@param className the descriptor of the enum class
+@param constantName the name of the enum constant
 
 ## AnnotationValue.ofClass(Utf8Entry)
 
@@ -436,9 +505,8 @@ Parameters:
 static OfClass ofClass(Utf8Entry className)
 ```
 
-Parameters:
-
-- `className`: the descriptor string of the class
+{@return a class value for an element-value pair}
+@param className the descriptor string of the class
 
 ## AnnotationValue.ofClass(ClassDesc)
 
@@ -446,9 +514,8 @@ Parameters:
 static OfClass ofClass(ClassDesc className)
 ```
 
-Parameters:
-
-- `className`: the descriptor of the class
+{@return a class value for an element-value pair}
+@param className the descriptor of the class
 
 ## AnnotationValue.ofString(Utf8Entry)
 
@@ -456,9 +523,8 @@ Parameters:
 static OfString ofString(Utf8Entry value)
 ```
 
-Parameters:
-
-- `value`: the string
+{@return a string value for an element-value pair}
+@param value the string
 
 ## AnnotationValue.ofString(String)
 
@@ -466,9 +532,8 @@ Parameters:
 static OfString ofString(String value)
 ```
 
-Parameters:
-
-- `value`: the string
+{@return a string value for an element-value pair}
+@param value the string
 
 ## AnnotationValue.ofDouble(DoubleEntry)
 
@@ -476,9 +541,8 @@ Parameters:
 static OfDouble ofDouble(DoubleEntry value)
 ```
 
-Parameters:
-
-- `value`: the double value
+{@return a double value for an element-value pair}
+@param value the double value
 
 ## AnnotationValue.ofDouble(double)
 
@@ -486,9 +550,8 @@ Parameters:
 static OfDouble ofDouble(double value)
 ```
 
-Parameters:
-
-- `value`: the double value
+{@return a double value for an element-value pair}
+@param value the double value
 
 ## AnnotationValue.ofFloat(FloatEntry)
 
@@ -496,9 +559,8 @@ Parameters:
 static OfFloat ofFloat(FloatEntry value)
 ```
 
-Parameters:
-
-- `value`: the float value
+{@return a float value for an element-value pair}
+@param value the float value
 
 ## AnnotationValue.ofFloat(float)
 
@@ -506,9 +568,8 @@ Parameters:
 static OfFloat ofFloat(float value)
 ```
 
-Parameters:
-
-- `value`: the float value
+{@return a float value for an element-value pair}
+@param value the float value
 
 ## AnnotationValue.ofLong(LongEntry)
 
@@ -516,9 +577,8 @@ Parameters:
 static OfLong ofLong(LongEntry value)
 ```
 
-Parameters:
-
-- `value`: the long value
+{@return a long value for an element-value pair}
+@param value the long value
 
 ## AnnotationValue.ofLong(long)
 
@@ -526,9 +586,8 @@ Parameters:
 static OfLong ofLong(long value)
 ```
 
-Parameters:
-
-- `value`: the long value
+{@return a long value for an element-value pair}
+@param value the long value
 
 ## AnnotationValue.ofInt(IntegerEntry)
 
@@ -536,9 +595,8 @@ Parameters:
 static OfInt ofInt(IntegerEntry value)
 ```
 
-Parameters:
-
-- `value`: the int value
+{@return an int value for an element-value pair}
+@param value the int value
 
 ## AnnotationValue.ofInt(int)
 
@@ -546,9 +604,8 @@ Parameters:
 static OfInt ofInt(int value)
 ```
 
-Parameters:
-
-- `value`: the int value
+{@return an int value for an element-value pair}
+@param value the int value
 
 ## AnnotationValue.ofShort(IntegerEntry)
 
@@ -556,9 +613,8 @@ Parameters:
 static OfShort ofShort(IntegerEntry value)
 ```
 
-Parameters:
-
-- `value`: the short value
+{@return a short value for an element-value pair}
+@param value the short value
 
 ## AnnotationValue.ofShort(short)
 
@@ -566,9 +622,8 @@ Parameters:
 static OfShort ofShort(short value)
 ```
 
-Parameters:
-
-- `value`: the short value
+{@return a short value for an element-value pair}
+@param value the short value
 
 ## AnnotationValue.ofChar(IntegerEntry)
 
@@ -576,9 +631,8 @@ Parameters:
 static OfChar ofChar(IntegerEntry value)
 ```
 
-Parameters:
-
-- `value`: the char value
+{@return a char value for an element-value pair}
+@param value the char value
 
 ## AnnotationValue.ofChar(char)
 
@@ -586,9 +640,8 @@ Parameters:
 static OfChar ofChar(char value)
 ```
 
-Parameters:
-
-- `value`: the char value
+{@return a char value for an element-value pair}
+@param value the char value
 
 ## AnnotationValue.ofByte(IntegerEntry)
 
@@ -596,9 +649,8 @@ Parameters:
 static OfByte ofByte(IntegerEntry value)
 ```
 
-Parameters:
-
-- `value`: the byte value
+{@return a byte value for an element-value pair}
+@param value the byte value
 
 ## AnnotationValue.ofByte(byte)
 
@@ -606,9 +658,8 @@ Parameters:
 static OfByte ofByte(byte value)
 ```
 
-Parameters:
-
-- `value`: the byte value
+{@return a byte value for an element-value pair}
+@param value the byte value
 
 ## AnnotationValue.ofBoolean(IntegerEntry)
 
@@ -616,9 +667,8 @@ Parameters:
 static OfBoolean ofBoolean(IntegerEntry value)
 ```
 
-Parameters:
-
-- `value`: the boolean value
+{@return a boolean value for an element-value pair}
+@param value the boolean value
 
 ## AnnotationValue.ofBoolean(boolean)
 
@@ -626,9 +676,8 @@ Parameters:
 static OfBoolean ofBoolean(boolean value)
 ```
 
-Parameters:
-
-- `value`: the boolean value
+{@return a boolean value for an element-value pair}
+@param value the boolean value
 
 ## AnnotationValue.ofAnnotation(Annotation)
 
@@ -636,9 +685,8 @@ Parameters:
 static OfAnnotation ofAnnotation(Annotation value)
 ```
 
-Parameters:
-
-- `value`: the annotation
+{@return an annotation value for an element-value pair}
+@param value the annotation
 
 ## AnnotationValue.ofArray(List<AnnotationValue>)
 
@@ -646,12 +694,13 @@ Parameters:
 static OfArray ofArray(List<AnnotationValue> values)
 ```
 
-Parameters:
+{@return an array value for an element-value pair}
 
-- `values`: the array elements
-
-**API note:** See values() for conventions
+@apiNote
+See {@link AnnotationValue.OfArray#values() values()} for conventions
 on array values derived from Java source code.
+
+@param values the array elements
 
 ## AnnotationValue.ofArray(AnnotationValue...)
 
@@ -659,12 +708,13 @@ on array values derived from Java source code.
 static OfArray ofArray(AnnotationValue... values)
 ```
 
-Parameters:
+{@return an array value for an element-value pair}
 
-- `values`: the array elements
-
-**API note:** See values() for conventions
+@apiNote
+See {@link AnnotationValue.OfArray#values() values()} for conventions
 on array values derived from Java source code.
+
+@param values the array elements
 
 ## AnnotationValue.of(Object)
 
@@ -672,14 +722,11 @@ on array values derived from Java source code.
 static AnnotationValue of(Object value)
 ```
 
-The `value` parameter must be
+{@return an annotation element}  The {@code value} parameter must be
 a primitive, a wrapper of primitive, a String, a ClassDesc, an enum
 constant, or an array of one of these.
 
-Parameters:
-
-- `value`: the annotation value
-
-Throws:
-
-- `IllegalArgumentException`: when the `value` parameter is not a primitive, a wrapper of primitive, a String, a ClassDesc, an enum constant, or an array of one of these.
+@param value the annotation value
+@throws IllegalArgumentException when the {@code value} parameter is not
+        a primitive, a wrapper of primitive, a String, a ClassDesc,
+        an enum constant, or an array of one of these.

@@ -1,17 +1,13 @@
 ---
-title: "fakeTimers | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/faketimers.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: fakeTimers | Config
+outline: deep
 ---
 
 # fakeTimers
 
 - **Type:** `FakeTimerConfig`
 
-Options that configure fake timers when using `vi.useFakeTimers()`. Vitest's fake timer implementation is based on `@sinon/fake-timers`, with additional options and behavior tailored to Vitest.
+Options that configure fake timers when using [`vi.useFakeTimers()`](/api/vi#vi-usefaketimers). Vitest's fake timer implementation is based on [`@sinon/fake-timers`](https://npmx.dev/package/@sinonjs/fake-timers), with additional options and behavior tailored to Vitest.
 
 ## fakeTimers.now
 
@@ -38,15 +34,16 @@ Mocking `nextTick` is not supported when running Vitest inside `node:child_proce
 
 An array of global methods and APIs to exclude from fake timers. Vitest always excludes `nextTick` and `queueMicrotask` when this option is used. To fake either API, use `toFake` instead.
 
-**Warning:**
+::: warning
 Using both `toFake` and `toNotFake` together is not supported.
+:::
 
 ## fakeTimers.loopLimit
 
 - **Type:** `number`
 - **Default:** `10_000`
 
-The maximum number of timers that will be run when calling `vi.runAllTimers()`.
+The maximum number of timers that will be run when calling [`vi.runAllTimers()`](/api/vi#vi-runalltimers).
 
 ## fakeTimers.shouldAdvanceTime
 

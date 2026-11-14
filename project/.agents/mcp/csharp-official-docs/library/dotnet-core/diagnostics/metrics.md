@@ -1,10 +1,8 @@
 ---
-title: "Metrics Overview"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/metrics.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Metrics Overview
+description: An overview on using metrics to monitor a .NET application
+ms.topic: overview
+ms.date: 6/26/2023
 ---
 
 # .NET metrics
@@ -28,11 +26,11 @@ There are two parts to using metrics in a .NET app:
 
 ## Next steps
 
-- Instrumentation tutorial - How to create new metrics in code
-- Collection tutorial - How to store and view metric data for your app
-- Metrics configuration - How to filter instruments for listeners that use dependency injection
-- Source generated metrics - How to use source generator to create metrics
-- Source-generated metrics with strongly-typed tags - How to use source-generated metrics with strongly-typed tags
-- Built-in metrics - Discover metrics that are ready for use in .NET runtime libraries
-- Compare metric APIs
-- EventCounters - Learn what EventCounters are, how to implement them, and how to consume them
+- [Instrumentation tutorial](metrics-instrumentation.md) - How to create new metrics in code
+- [Collection tutorial](metrics-collection.md) - How to store and view metric data for your app
+- [Metrics configuration](metrics-configuration.md) - How to filter instruments for listeners that use dependency injection
+- [Source generated metrics](metrics-generator.md) - How to use source generator to create metrics
+- [Source-generated metrics with strongly-typed tags](metrics-strongly-typed.md) - How to use source-generated metrics with strongly-typed tags
+- [Built-in metrics](built-in-metrics.md) - Discover metrics that are ready for use in .NET runtime libraries
+- [Compare metric APIs](compare-metric-apis.md)
+- [EventCounters](event-counters.md) - Learn what EventCounters are, how to implement them, and how to consume them

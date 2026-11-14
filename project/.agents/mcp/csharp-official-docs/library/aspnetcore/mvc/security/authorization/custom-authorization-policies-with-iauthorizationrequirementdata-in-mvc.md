@@ -1,23 +1,21 @@
 ---
-title: "Custom authorization policies with `IAuthorizationRequirementData` in ASP.NET Core MVC"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/mvc/security/authorization/custom-authorization-policies-with-iauthorizationrequirementdata-in-mvc.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Custom authorization policies with `IAuthorizationRequirementData` in ASP.NET Core MVC
+ai-usage: ai-assisted
+description: Learn how to specify requirements associated with the authorization policy in attribute definitions with the IAuthorizationRequirementData interface in ASP.NET Core MVC.
+monikerRange: '>= aspnetcore-8.0'
+ms.date: 03/11/2026
 ---
-
 # Custom authorization policies with `IAuthorizationRequirementData` in ASP.NET Core MVC
 
-This article provides a demonstration on how to use `Microsoft.AspNetCore.Authorization.IAuthorizationRequirementData` to define custom authorization policies in ASP.NET Core MVC. For general guidance on this subject, see Custom authorization policies with `IAuthorizationRequirementData`.
+This article provides a demonstration on how to use <xref:Microsoft.AspNetCore.Authorization.IAuthorizationRequirementData> to define custom authorization policies in ASP.NET Core MVC. For general guidance on this subject, see [Custom authorization policies with `IAuthorizationRequirementData`](../../../security/authorization/custom-authorization-policies-with-iauthorizationrequirementdata.md).
 
 ## Sample app
 
-The MVC sample for this article is the `AuthRequirementsData` sample app (`dotnet/AspNetCore.Docs.Samples` GitHub repository) (how to download). The sample app implements a minimum age handler for users, requiring a user to present a birth date claim indicating that they're at least 21 years old.
+The MVC sample for this article is the [`AuthRequirementsData` sample app (`dotnet/AspNetCore.Docs.Samples` GitHub repository)](https://github.com/dotnet/AspNetCore.Docs.Samples/tree/main/security/authorization/AuthRequirementsData) ([how to download](../../../fundamentals/index.md#how-to-download-a-sample)). The sample app implements a minimum age handler for users, requiring a user to present a birth date claim indicating that they're at least 21 years old.
 
 ## Demonstration
 
-Test the sample with `dotnet user-jwts` and curl.
+Test the sample with [`dotnet user-jwts`](../../../security/authentication/jwt-authn.md) and curl.
 
 From the project's folder in a command shell, execute the following command to create a JWT bearer token with a birth date claim that makes the user over 21 years old:
 
@@ -25,7 +23,7 @@ From the project's folder in a command shell, execute the following command to c
 dotnet user-jwts create --claim http://schemas.xmlsoap.org/ws/2005/05/identity/claims/dateofbirth=1989-01-01
 ```
 
-The output produces a token after "<example-value>" in the command shell:
+The output produces a token after "`Token:`" in the command shell:
 
 ```dotnetcli
 New JWT saved with ID '{JWT ID}'.
@@ -37,7 +35,7 @@ Token: {TOKEN}
 
 Set the value of the token (where the `{TOKEN}` placeholder appears in the preceding output) aside for use later.
 
-You can decode the token in an online JWT decoder, such as `jwt.ms` to see its contents, revealing that it contains a `birthdate` claim with the user's birth date:
+You can decode the token in an online JWT decoder, such as [`jwt.ms`](https://jwt.ms/) to see its contents, revealing that it contains a `birthdate` claim with the user's birth date:
 
 ```json
 {
@@ -76,7 +74,7 @@ dotnet watch
 In a command shell, use the .NET CLI to execute the following `curl.exe` command to request the `api/greetings/hello` endpoint. Replace the `{TOKEN}` placeholder with the first JWT bearer token that you saved earlier:
 
 ```dotnetcli
-curl.exe -i -H "<example-value>" https://localhost:5001/api/greetings/hello
+curl.exe -i -H "Authorization: Bearer {TOKEN}" https://localhost:5001/api/greetings/hello
 ```
 
 The output indicates success because the user's birth date claim indicates that they're at least 21 years old:
@@ -93,7 +91,15 @@ Hello {USER}!
 
 Logging indicates that the age requirement was met:
 
-> :::no-loc text="MinimumAgeAuthorizationHandler: Information: Evaluating authorization requirement for age >= 21":::
+<!-- DOC AUTHOR NOTE
+
+The following block quote uses two spaces at the ends of lines (except the
+last line) to create returns in the rendered content. Don't remove the two 
+spaces at the ends of the lines when editing the following content.
+
+-->
+
+> :::no-loc text="MinimumAgeAuthorizationHandler: Information: Evaluating authorization requirement for age >= 21":::  
 > :::no-loc text="MinimumAgeAuthorizationHandler: Information: Minimum age authorization requirement 21 satisfied":::
 
 Re-execute the `curl.exe` command with the second token, which indicates the user is under 21 years old. The output indicates that the requirement isn't met. Access to the endpoint is forbidden (status code 403):
@@ -107,5 +113,13 @@ Server: Kestrel
 
 Logging indicates that the age requirement wasn't met:
 
-> :::no-loc text="MinimumAgeAuthorizationHandler: Information: Evaluating authorization requirement for age >= 21":::
+<!-- DOC AUTHOR NOTE
+
+The following block quote uses two spaces at the ends of lines (except the
+last line) to create returns in the rendered content. Don't remove the two 
+spaces at the ends of the lines when editing the following content.
+
+-->
+
+> :::no-loc text="MinimumAgeAuthorizationHandler: Information: Evaluating authorization requirement for age >= 21":::  
 > :::no-loc text="MinimumAgeAuthorizationHandler: Information: Current user's DateOfBirth claim (2020-01-01) doesn't satisfy the minimum age authorization requirement 21":::

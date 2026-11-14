@@ -1,12 +1,3 @@
----
-title: "AccessFlag enum (java.lang.reflect)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/reflect/AccessFlag.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AccessFlag enum (java.lang.reflect)
 
 ```java
@@ -14,60 +5,62 @@ public enum AccessFlag
 ```
 
 Represents a JVM access or module-related flag on a runtime member,
-such as a class, field, or
-method.
+such as a {@linkplain Class class}, {@linkplain Field field}, or
+{@linkplain Executable method}.
 
-JVM access and module-related flags are related to, but distinct
-from Java language modifiers. Some modifiers
-and access flags have a one-to-one correspondence, such as `public`. In other cases, some language-level modifiers do
-*not* have an access flag, such as `sealed` (JVMS
-) and some access flags have no corresponding
-modifier, such as synthetic.
+<P>JVM access and module-related flags are related to, but distinct
+from Java language {@linkplain Modifier modifiers}. Some modifiers
+and access flags have a one-to-one correspondence, such as {@code
+public}. In other cases, some language-level modifiers do
+<em>not</em> have an access flag, such as {@code sealed} (JVMS
+{@jvms 4.7.31}) and some access flags have no corresponding
+modifier, such as {@linkplain #SYNTHETIC synthetic}.
 
-The values for the constants representing the access and module
-flags are taken from sections of *The Java Virtual Machine
-Specification* including  (class access and
-property modifiers),  (field access and property flags),
- (method access and property flags),
-(nested class access and property flags),  (method
-parameters), and  (module flags and requires,
+<p>The values for the constants representing the access and module
+flags are taken from sections of <cite>The Java Virtual Machine
+Specification</cite> including {@jvms 4.1} (class access and
+property modifiers), {@jvms 4.5} (field access and property flags),
+{@jvms 4.6} (method access and property flags), {@jvms 4.7.6}
+(nested class access and property flags), {@jvms 4.7.24} (method
+parameters), and {@jvms 4.7.25} (module flags and requires,
 exports, and opens flags).
 
-The mask values for the different access
-flags are *not* distinct. Flags are defined for different
+<p>The {@linkplain #mask() mask} values for the different access
+flags are <em>not</em> distinct. Flags are defined for different
 kinds of JVM structures and the same bit position has different
-meanings in different contexts. For example, `0x0000_0040`
-indicates a volatile field but a bridge method; `0x0000_0080` indicates a transient field but a variable arity (varargs) method.
+meanings in different contexts. For example, {@code 0x0000_0040}
+indicates a {@link #VOLATILE volatile} field but a {@linkplain
+#BRIDGE bridge method}; {@code 0x0000_0080} indicates a {@link
+#TRANSIENT transient} field but a {@linkplain #VARARGS variable
+arity (varargs)} method.
 
-**Implementation requirements:** The access flag constants are ordered by non-decreasing mask
+@implSpec
+The access flag constants are ordered by non-decreasing mask
 value; that is the mask value of a constant is greater than or
 equal to the mask value of an immediate neighbor to its (syntactic)
 left. If new constants are added, this property will be
 maintained. That implies new constants will not necessarily be
 added at the end of the existing list.
 
-**API note:** The JVM class file format has a new version defined for each new
-feature release. A new class
-file version may define new access flags or retire old ones. `AccessFlag` is intended to model the set of access flags across
+@apiNote
+The JVM class file format has a {@linkplain ClassFileFormatVersion new version} defined for each new
+{@linkplain Runtime.Version#feature() feature release}. A new class
+file version may define new access flags or retire old ones. {@code
+AccessFlag} is intended to model the set of access flags across
 class file format versions. The range of versions an access flag is
 recognized is not explicitly indicated in this API. See the current
-*The Java Virtual Machine Specification* for
+<cite>The Java Virtual Machine Specification</cite> for
 details. Unless otherwise indicated, access flags can be assumed to
-be recognized in the current version.
+be recognized in the {@linkplain Runtime#version() current
+version}.
 
-**See also:** java.lang.reflect.Modifier
-
-**See also:** java.lang.module.ModuleDescriptor.Modifier
-
-**See also:** java.lang.module.ModuleDescriptor.Requires.Modifier
-
-**See also:** java.lang.module.ModuleDescriptor.Exports.Modifier
-
-**See also:** java.lang.module.ModuleDescriptor.Opens.Modifier
-
-**See also:** java.compiler/javax.lang.model.element.Modifier
-
-**Since:** 20
+@see java.lang.reflect.Modifier
+@see java.lang.module.ModuleDescriptor.Modifier
+@see java.lang.module.ModuleDescriptor.Requires.Modifier
+@see java.lang.module.ModuleDescriptor.Exports.Modifier
+@see java.lang.module.ModuleDescriptor.Opens.Modifier
+@see java.compiler/javax.lang.model.element.Modifier
+@since 20
 
 ## AccessFlag.mask()
 
@@ -75,8 +68,8 @@ be recognized in the current version.
 public int mask()
 ```
 
-The mask has
-exactly one bit set and is in the range of `char`.
+{@return the corresponding mask for the access flag}  The mask has
+exactly one bit set and is in the range of {@code char}.
 
 ## AccessFlag.sourceModifier()
 
@@ -84,12 +77,18 @@ exactly one bit set and is in the range of `char`.
 public boolean sourceModifier()
 ```
 
+{@return whether or not this flag has a directly corresponding
+modifier in the Java programming language}
+
 ## AccessFlag.locations()
 
 ```java
 public Set<Location> locations()
 ```
 
+{@return locations this flag can be applied to in the current class file
+format version}
+<p>
 This method returns an empty set if this flag is not defined in
 the current class file format version.
 
@@ -99,16 +98,14 @@ the current class file format version.
 public Set<Location> locations(ClassFileFormatVersion cffv)
 ```
 
+{@return locations this flag can be applied to in the given class file
+format version}
+<p>
 This method returns an empty set if this flag is not defined in
-the given `cffv`.
+the given {@code cffv}.
 
-Parameters:
-
-- `cffv`: the class file format version to use
-
-Throws:
-
-- `NullPointerException`: if the parameter is `null`
+@param cffv the class file format version to use
+@throws NullPointerException if the parameter is {@code null}
 
 ## AccessFlag.maskToAccessFlags(int, Location)
 
@@ -116,15 +113,14 @@ Throws:
 public static Set<AccessFlag> maskToAccessFlags(int mask, Location location)
 ```
 
-Parameters:
+{@return an unmodifiable set of access flags for the given mask value
+appropriate for the location in the current class file format version}
 
-- `mask`: bit mask of access flags
-- `location`: context to interpret mask value
-
-Throws:
-
-- `IllegalArgumentException`: if the mask contains bit positions not defined for the location in the current class file format
-- `NullPointerException`: if `location` is `null`
+@param mask bit mask of access flags
+@param location context to interpret mask value
+@throws IllegalArgumentException if the mask contains bit
+positions not defined for the location in the current class file format
+@throws NullPointerException if {@code location} is {@code null}
 
 ## AccessFlag.maskToAccessFlags(int, Location, ClassFileFormatVersion)
 
@@ -132,18 +128,16 @@ Throws:
 public static Set<AccessFlag> maskToAccessFlags(int mask, Location location, ClassFileFormatVersion cffv)
 ```
 
-Parameters:
+{@return an unmodifiable set of access flags for the given mask value
+appropriate for the location in the given class file format version}
 
-- `mask`: bit mask of access flags
-- `location`: context to interpret mask value
-- `cffv`: the class file format to interpret mask value
-
-**Since:** 25
-
-Throws:
-
-- `IllegalArgumentException`: if the mask contains bit positions not defined for the location in the given class file format
-- `NullPointerException`: if `location` or `cffv` is `null`
+@param mask bit mask of access flags
+@param location context to interpret mask value
+@param cffv the class file format to interpret mask value
+@throws IllegalArgumentException if the mask contains bit
+positions not defined for the location in the given class file format
+@throws NullPointerException if {@code location} or {@code cffv} is {@code null}
+@since 25
 
 ## AccessFlag.flagsMask()
 
@@ -151,10 +145,13 @@ Throws:
 public int flagsMask()
 ```
 
-This method returns `0` if this location does not exist in
+{@return the union of masks of all access flags defined for
+this location in the current class file format version}
+<p>
+This method returns {@code 0} if this location does not exist in
 the current class file format version.
 
-**Since:** 25
+@since 25
 
 ## AccessFlag.flagsMask(ClassFileFormatVersion)
 
@@ -162,18 +159,15 @@ the current class file format version.
 public int flagsMask(ClassFileFormatVersion cffv)
 ```
 
-This method returns `0` if this location does not exist in
-the given `cffv`.
+{@return the union of masks of all access flags defined for
+this location in the given class file format version}
+<p>
+This method returns {@code 0} if this location does not exist in
+the given {@code cffv}.
 
-Parameters:
-
-- `cffv`: the class file format version
-
-**Since:** 25
-
-Throws:
-
-- `NullPointerException`: if `cffv` is `null`
+@param cffv the class file format version
+@throws NullPointerException if {@code cffv} is {@code null}
+@since 25
 
 ## AccessFlag.flags()
 
@@ -181,12 +175,13 @@ Throws:
 public Set<AccessFlag> flags()
 ```
 
-The set is immutable.
-
+{@return the set of access flags defined for this location in the
+current class file format version}  The set is immutable.
+<p>
 This method returns an empty set if this location does not exist
 in the current class file format version.
 
-**Since:** 25
+@since 25
 
 ## AccessFlag.flags(ClassFileFormatVersion)
 
@@ -194,17 +189,12 @@ in the current class file format version.
 public Set<AccessFlag> flags(ClassFileFormatVersion cffv)
 ```
 
-The set is immutable.
-
+{@return the set of access flags defined for this location in the
+given class file format version}  The set is immutable.
+<p>
 This method returns an empty set if this location does not exist
-in the given `cffv`.
+in the given {@code cffv}.
 
-Parameters:
-
-- `cffv`: the class file format version
-
-**Since:** 25
-
-Throws:
-
-- `NullPointerException`: if `cffv` is `null`
+@param cffv the class file format version
+@throws NullPointerException if {@code cffv} is {@code null}
+@since 25

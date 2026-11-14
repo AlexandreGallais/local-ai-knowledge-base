@@ -1,10 +1,7 @@
 ---
-title: "Service registration (dependency injection)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/dependency-injection/service-registration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Service registration (dependency injection)
+description: Learn how to register services for dependency injection using different methods for different scenarios.
+ms.date: 10/21/2025
 ---
 
 # Service registration
@@ -13,34 +10,34 @@ This article discusses registering groups of services and framework-provided ser
 
 ## Register groups of services with extension methods
 
-.NET uses a convention for registering a group of related services. The convention is to use a single `Add{GROUP_NAME}` extension method to register all of the services required by a framework feature. For example, the `Microsoft.Extensions.DependencyInjection.OptionsServiceCollectionExtensions.AddOptions*` extension method registers all of the services required for using options.
+.NET uses a convention for registering a group of related services. The convention is to use a single `Add{GROUP_NAME}` extension method to register all of the services required by a framework feature. For example, the <xref:Microsoft.Extensions.DependencyInjection.OptionsServiceCollectionExtensions.AddOptions*> extension method registers all of the services required for using options.
 
 ## Framework-provided services
 
 When using any of the available host or app-builder patterns, defaults are applied and services are registered by the framework. Consider some of the most popular host and app-builder patterns:
 
-- `Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder`
-- `Microsoft.Extensions.Hosting.Host.CreateApplicationBuilder`
-- `Microsoft.AspNetCore.WebHost.CreateDefaultBuilder`
-- `Microsoft.AspNetCore.Builder.WebApplication.CreateBuilder`
-- `Microsoft.AspNetCore.Components.WebAssembly.Hosting.WebAssemblyHostBuilder.CreateDefault*`
-- `Microsoft.Maui.Hosting.MauiApp.CreateBuilder*`
+- <xref:Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder?displayProperty=nameWithType>
+- <xref:Microsoft.Extensions.Hosting.Host.CreateApplicationBuilder?displayProperty=nameWithType>
+- <xref:Microsoft.AspNetCore.WebHost.CreateDefaultBuilder?displayProperty=nameWithType>
+- <xref:Microsoft.AspNetCore.Builder.WebApplication.CreateBuilder?displayProperty=nameWithType>
+- <xref:Microsoft.AspNetCore.Components.WebAssembly.Hosting.WebAssemblyHostBuilder.CreateDefault*?displayProperty=nameWithType>
+- <xref:Microsoft.Maui.Hosting.MauiApp.CreateBuilder*?displayProperty=nameWithType>
 
-After creating a builder from any of these APIs, the `IServiceCollection` has services defined by the framework, depending on how you configured the host. For apps based on the .NET templates, the framework could register hundreds of services.
+After creating a builder from any of these APIs, the `IServiceCollection` has services defined by the framework, depending on [how you configured the host](../generic-host.md#host-configuration). For apps based on the .NET templates, the framework could register hundreds of services.
 
 The following table lists a small sample of these framework-registered services:
 
-| Service type                                                                       | Lifetime  |
+| Service type                                                                       | [Lifetime](service-lifetimes.md)  |
 |------------------------------------------------------------------------------------|-----------|
-| `Microsoft.Extensions.DependencyInjection.IServiceScopeFactory` | Singleton |
-| `Microsoft.Extensions.Hosting.IHostApplicationLifetime`                       | Singleton |
-| `Microsoft.Extensions.Logging.ILogger`1`             | Singleton |
-| `Microsoft.Extensions.Logging.ILoggerFactory`        | Singleton |
-| `Microsoft.Extensions.ObjectPool.ObjectPoolProvider` | Singleton |
-| `Microsoft.Extensions.Options.IConfigureOptions`1`   | Transient |
-| `Microsoft.Extensions.Options.IOptions`1`            | Singleton |
-| `System.Diagnostics.DiagnosticListener`              | Singleton |
-| `System.Diagnostics.DiagnosticSource`                | Singleton |
+| <xref:Microsoft.Extensions.DependencyInjection.IServiceScopeFactory?displayProperty=fullName> | Singleton |
+| <xref:Microsoft.Extensions.Hosting.IHostApplicationLifetime>                       | Singleton |
+| <xref:Microsoft.Extensions.Logging.ILogger`1?displayProperty=fullName>             | Singleton |
+| <xref:Microsoft.Extensions.Logging.ILoggerFactory?displayProperty=fullName>        | Singleton |
+| <xref:Microsoft.Extensions.ObjectPool.ObjectPoolProvider?displayProperty=fullName> | Singleton |
+| <xref:Microsoft.Extensions.Options.IConfigureOptions`1?displayProperty=fullName>   | Transient |
+| <xref:Microsoft.Extensions.Options.IOptions`1?displayProperty=fullName>            | Singleton |
+| <xref:System.Diagnostics.DiagnosticListener?displayProperty=fullName>              | Singleton |
+| <xref:System.Diagnostics.DiagnosticSource?displayProperty=fullName>                | Singleton |
 
 ## Registration methods
 
@@ -48,13 +45,13 @@ The framework provides service-registration extension methods that are useful in
 
 | Method | Automatic object disposal | Multiple implementations | Pass args |
 |--------|:-------------------------:|:------------------------:|:---------:|
-| `Add{LIFETIME}<{SERVICE}, {IMPLEMENTATION}>()`Example:`services.AddSingleton<IMyDep, MyDep>();` | Yes                             | Yes                         | No        |
-| `Add{LIFETIME}<{SERVICE}>(sp => new {IMPLEMENTATION})`Examples:`services.AddSingleton<IMyDep>(sp => new MyDep());``services.AddSingleton<IMyDep>(sp => new MyDep(99));` | Yes | Yes | Yes |
-| `Add{LIFETIME}<{IMPLEMENTATION}>()`Example:`services.AddSingleton<MyDep>();` | Yes | No | No |
-| `AddSingleton<{SERVICE}>(new {IMPLEMENTATION})`Examples:`services.AddSingleton<IMyDep>(new MyDep());``services.AddSingleton<IMyDep>(new MyDep(99));` | No | Yes | Yes |
-| `AddSingleton(new {IMPLEMENTATION})`Examples:`services.AddSingleton(new MyDep());``services.AddSingleton(new MyDep(99));` | No | No | Yes |
+| `Add{LIFETIME}<{SERVICE}, {IMPLEMENTATION}>()`<br><br>Example:<br><br>`services.AddSingleton<IMyDep, MyDep>();` | Yes                             | Yes                         | No        |
+| `Add{LIFETIME}<{SERVICE}>(sp => new {IMPLEMENTATION})`<br><br>Examples:<br><br>`services.AddSingleton<IMyDep>(sp => new MyDep());`<br>`services.AddSingleton<IMyDep>(sp => new MyDep(99));` | Yes | Yes | Yes |
+| `Add{LIFETIME}<{IMPLEMENTATION}>()`<br><br>Example:<br><br>`services.AddSingleton<MyDep>();` | Yes | No | No |
+| `AddSingleton<{SERVICE}>(new {IMPLEMENTATION})`<br><br>Examples:<br><br>`services.AddSingleton<IMyDep>(new MyDep());`<br>`services.AddSingleton<IMyDep>(new MyDep(99));` | No | Yes | Yes |
+| `AddSingleton(new {IMPLEMENTATION})`<br><br>Examples:<br><br>`services.AddSingleton(new MyDep());`<br>`services.AddSingleton(new MyDep(99));` | No | No | Yes |
 
-For more information on type disposal, see Disposal of services.
+For more information on type disposal, see [Disposal of services](guidelines.md#disposal-of-services).
 
 Registering a service with only an implementation type is equivalent to registering that service with the same implementation and service type. For example, consider the following code:
 
@@ -72,44 +69,12 @@ This equivalency is why multiple implementations of a service can't be registere
 
 Any of the service registration methods can be used to register multiple service instances of the same service type. In the following example, `AddSingleton` is called twice with `IMessageWriter` as the service type. The second call to `AddSingleton` overrides the previous one when resolved as `IMessageWriter` and adds to the previous one when multiple services are resolved via `IEnumerable<IMessageWriter>`. Services appear in the order they were registered when resolved via `IEnumerable<{SERVICE}>`.
 
-```csharp
-﻿using ConsoleDI.IEnumerableExample;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+:::code language="csharp" source="snippets/console-ienumerable/Program.cs" highlight="11-16":::
 
-HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
-
-builder.Services.AddSingleton<IMessageWriter, ConsoleMessageWriter>();
-builder.Services.AddSingleton<IMessageWriter, LoggingMessageWriter>();
-builder.Services.AddSingleton<ExampleService>();
-
-using IHost host = builder.Build();
-
-_ = host.Services.GetService<ExampleService>();
-
-await host.RunAsync();
-```
 The preceding sample source code registers two implementations of the `IMessageWriter`.
 
-```csharp
-﻿using System.Diagnostics;
+:::code language="csharp" source="snippets/console-ienumerable/ExampleService.cs" highlight="7-16":::
 
-namespace ConsoleDI.IEnumerableExample;
-
-public sealed class ExampleService
-{
-    public ExampleService(
-        IMessageWriter messageWriter,
-        IEnumerable<IMessageWriter> messageWriters)
-    {
-        Trace.Assert(messageWriter is LoggingMessageWriter);
-
-        var dependencyArray = messageWriters.ToArray();
-        Trace.Assert(dependencyArray[0] is ConsoleMessageWriter);
-        Trace.Assert(dependencyArray[1] is LoggingMessageWriter);
-    }
-}
-```
 The `ExampleService` defines two constructor parameters; a single `IMessageWriter`, and an `IEnumerable<IMessageWriter>`. The single `IMessageWriter` is the last implementation to be registered, whereas the `IEnumerable<IMessageWriter>` represents all registered implementations.
 
 The framework also provides `TryAdd{LIFETIME}` extension methods, which register the service only if there isn't already an implementation registered.
@@ -138,12 +103,12 @@ public class ExampleService
 
 For more information, see:
 
-- `Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAdd*`
-- `Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddTransient*`
-- `Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped*`
-- `Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddSingleton*`
+- <xref:Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAdd*>
+- <xref:Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddTransient*>
+- <xref:Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped*>
+- <xref:Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddSingleton*>
 
-The TryAddEnumerable(ServiceDescriptor) methods register the service only if there isn't already an implementation *of the same type*. Multiple services are resolved via `IEnumerable<{SERVICE}>`. When registering services, add an instance if one of the same types wasn't already added. Library authors use `TryAddEnumerable` to avoid registering multiple copies of an implementation in the container.
+The [TryAddEnumerable(ServiceDescriptor)](xref:Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddEnumerable%2A) methods register the service only if there isn't already an implementation *of the same type*. Multiple services are resolved via `IEnumerable<{SERVICE}>`. When registering services, add an instance if one of the same types wasn't already added. Library authors use `TryAddEnumerable` to avoid registering multiple copies of an implementation in the container.
 
 In the following example, the first call to `TryAddEnumerable` registers `MessageWriter` as an implementation for `IMessageWriter1`. The second call registers `MessageWriter` for `IMessageWriter2`. The third call has no effect because `IMessageWriter1` already has a registered implementation of `MessageWriter`:
 
@@ -162,10 +127,10 @@ services.TryAddEnumerable(ServiceDescriptor.Singleton<IMessageWriter1, MessageWr
 
 Service registration is order-independent except when registering multiple implementations of the same type.
 
-`IServiceCollection` is a collection of `Microsoft.Extensions.DependencyInjection.ServiceDescriptor` objects. The following example shows how to register a service by creating and adding a `ServiceDescriptor`:
+`IServiceCollection` is a collection of <xref:Microsoft.Extensions.DependencyInjection.ServiceDescriptor> objects. The following example shows how to register a service by creating and adding a `ServiceDescriptor`:
 
 ```csharp
-string secretKey = <example-value>["<example-value>"];
+string secretKey = Configuration["SecretKey"];
 var descriptor = new ServiceDescriptor(
     typeof(IMessageWriter),
     _ => new DefaultMessageWriter(secretKey),
@@ -174,4 +139,4 @@ var descriptor = new ServiceDescriptor(
 services.Add(descriptor);
 ```
 
-The built-in `Add{LIFETIME}` methods use the same approach. For example, see the AddScoped source code.
+The built-in `Add{LIFETIME}` methods use the same approach. For example, see the [AddScoped source code](https://github.com/dotnet/extensions/blob/v3.1.8/src/DependencyInjection/DI.Abstractions/src/ServiceCollectionServiceExtensions.cs#L216-L237).

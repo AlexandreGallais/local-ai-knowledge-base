@@ -1,17 +1,11 @@
----
-title: "import-style"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/import-style.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # import-style
 
 📝 Enforce specific import styles per module.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Sometimes a module contains unrelated functions, like `util`, thus it is a good practice to enforce destructuring or named imports here. Other times, in modules like `path`, it is good to use default import as they have similar functions, all likely to be utilized.
 
@@ -88,7 +82,7 @@ The example below:
 ]
 ```
 
-Do not set all styles to `false` for a module. To disallow a module entirely, use the `no-restricted-imports` rule instead.
+Do not set all styles to `false` for a module. To disallow a module entirely, use the [`no-restricted-imports`](https://eslint.org/docs/latest/rules/no-restricted-imports) rule instead.
 
 ### extendDefaultStyles
 

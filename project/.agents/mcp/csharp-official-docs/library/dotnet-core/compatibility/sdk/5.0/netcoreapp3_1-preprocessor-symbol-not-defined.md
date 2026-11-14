@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: NETCOREAPP3_1 preprocessor symbol is not defined when targeting .NET 5"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/5.0/netcoreapp3_1-preprocessor-symbol-not-defined.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 5 where projects no longer define preprocessor symbols for earlier versions.
+ms.date: 09/17/2020
 ---
-
 # NETCOREAPP3_1 preprocessor symbol is not defined when targeting .NET 5
 
 In .NET 5 RC2 and later versions, projects no longer define preprocessor symbols for earlier versions, but only for the version that they target. This is the same behavior as .NET Core 1.0 - 3.1.
@@ -17,7 +13,7 @@ In .NET 5 RC2 and later versions, projects no longer define preprocessor symbols
 
 ## Change description
 
-In .NET 5 preview 7 through RC1, projects that target `net5.0` define both `NETCOREAPP3_1` and `NET5_0` preprocessor symbols. The intent behind this behavior change was that starting with .NET 5, conditional compilation symbols would be cumulative.
+In .NET 5 preview 7 through RC1, projects that target `net5.0` define both `NETCOREAPP3_1` and `NET5_0` preprocessor symbols. The intent behind this behavior change was that starting with .NET 5, conditional compilation [symbols would be cumulative](https://github.com/dotnet/designs/blob/main/accepted/2020/net5/net5.md#preprocessor-symbols).
 
 In .NET 5 RC2 and later, projects only define symbols for the target framework monikers (TFM) that it targets and not for any earlier versions.
 
@@ -42,3 +38,15 @@ For example, if your project multitargets for .NET Core 2.1 and .NET Core 3.1 an
 ## Affected APIs
 
 N/A
+
+<!--
+
+### Affected APIs
+
+Not detectable via API analysis.
+
+### Category
+
+MSBuild
+
+-->

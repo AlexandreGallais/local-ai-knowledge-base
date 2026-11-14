@@ -1,13 +1,13 @@
 ---
-title: "vars-on-top"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/vars-on-top.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: vars-on-top
+rule_type: suggestion
+further_reading:
+- https://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting
+- https://danhough.com/blog/single-var-pattern-rant/
+- https://benalman.com/news/2012/05/multiple-var-statements-javascript/
 ---
 
-# vars-on-top
 
 The `vars-on-top` rule generates warnings when variable declarations are not used serially at the top of a function scope or the top of a program.
 By default variable declarations are always moved (“hoisted”) invisibly to the top of their containing scope by the JavaScript interpreter.
@@ -20,7 +20,7 @@ Allowing multiple declarations helps promote maintainability and is thus allowed
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint vars-on-top: "error"*/
@@ -39,7 +39,9 @@ function doSomethingElse() {
 }
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint vars-on-top: "error"*/
@@ -49,7 +51,9 @@ f();
 var a;
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint vars-on-top: "error"*/
@@ -74,9 +78,11 @@ class C {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint vars-on-top: "error"*/
@@ -95,7 +101,9 @@ function doSomethingElse() {
 }
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint vars-on-top: "error"*/
@@ -104,7 +112,9 @@ var a;
 f();
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint vars-on-top: "error"*/
@@ -126,7 +136,9 @@ class C {
 }
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint vars-on-top: "error"*/
@@ -144,6 +156,8 @@ function doSomething() {
     var second;
 }
 ```
+
+:::
 
 ## Options
 

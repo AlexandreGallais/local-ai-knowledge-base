@@ -1,14 +1,7 @@
 ---
-title: "linebreak-style"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/linebreak-style.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: linebreak-style
+rule_type: layout
 ---
-
-# linebreak-style
-
 When developing with a lot of people all having different editors, VCS applications and operating systems it may occur that
 different line endings are written by either of the mentioned (might especially happen when using the windows and mac versions of SourceTree together).
 
@@ -32,7 +25,7 @@ This rule has a string option:
 
 Examples of **incorrect** code for this rule with the default `"unix"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint linebreak-style: ["error", "unix"]*/
@@ -41,9 +34,11 @@ var a = 'a'; // \r\n
 
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"unix"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint linebreak-style: ["error", "unix"]*/
@@ -57,11 +52,13 @@ function foo(params) { // \n
 
 ```
 
+:::
+
 ### windows
 
 Examples of **incorrect** code for this rule with the `"windows"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint linebreak-style: ["error", "windows"]*/
@@ -70,9 +67,11 @@ var a = 'a'; // \n
 
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"windows"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint linebreak-style: ["error", "windows"]*/ // \r\n
@@ -86,11 +85,13 @@ function foo(params) { // \r\n
 
 ```
 
+:::
+
 ### Using this rule with version control systems
 
 Version control systems sometimes have special behavior for linebreaks. To make it easy for developers to contribute to your codebase from different platforms, you may want to configure your VCS to handle linebreaks appropriately.
 
-For example, the default behavior of git on Windows systems is to convert LF linebreaks to CRLF when checking out files, but to store the linebreaks as LF when committing a change. This will cause the `linebreak-style` rule to report errors if configured with the `"unix"` setting, because the files that ESLint sees will have CRLF linebreaks. If you use git, you may want to add a line to your `.gitattributes` file to prevent git from converting linebreaks in `.js` files:
+For example, the default behavior of [git](https://git-scm.com/) on Windows systems is to convert LF linebreaks to CRLF when checking out files, but to store the linebreaks as LF when committing a change. This will cause the `linebreak-style` rule to report errors if configured with the `"unix"` setting, because the files that ESLint sees will have CRLF linebreaks. If you use git, you may want to add a line to your [`.gitattributes` file](https://git-scm.com/docs/gitattributes) to prevent git from converting linebreaks in `.js` files:
 
 ```txt
 *.js text eol=lf
@@ -102,4 +103,4 @@ If you aren't concerned about having different line endings within your code, th
 
 ## Compatibility
 
-* **JSCS**: validateLineBreaks
+* **JSCS**: [validateLineBreaks](https://jscs-dev.github.io/rule/validateLineBreaks)

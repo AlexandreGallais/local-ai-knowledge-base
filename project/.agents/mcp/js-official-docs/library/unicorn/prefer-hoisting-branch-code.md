@@ -1,23 +1,16 @@
----
-title: "prefer-hoisting-branch-code"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-hoisting-branch-code.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-hoisting-branch-code
 
 📝 Prefer moving code shared by all branches of an `if` statement out of the branches.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
 
 When every branch of an `if`/`else if`/`else` chain begins or ends with the same code, that code does not depend on the condition and only adds duplication. Moving it out of the branches keeps each branch focused on what is actually different.
 
-This rule compares branch statements by token and AST structure, so it ignores comments, formatting, and optional trailing semicolons unless they change how the code is parsed. It only reports a complete chain (one with a final `else`), and only when every branch keeps at least one distinct statement, so it never empties a branch. Fully identical branches are left to `unicorn/no-duplicate-if-branches`.
+This rule compares branch statements by token and AST structure, so it ignores comments, formatting, and optional trailing semicolons unless they change how the code is parsed. It only reports a complete chain (one with a final `else`), and only when every branch keeps at least one distinct statement, so it never empties a branch. Fully identical branches are left to [`unicorn/no-duplicate-if-branches`](./no-duplicate-if-branches.md).
 
 Shared trailing code is auto-fixed, since it already runs after each branch's own code. Shared leading code is only offered as a suggestion when it has side effects, because moving it before the `if` runs it before the conditions are evaluated, which can change behavior:
 
@@ -77,4 +70,4 @@ cleanup();
 
 ## Related rules
 
-- `unicorn/no-duplicate-if-branches` reports whole branches that are identical. This rule reports code shared only at the start or end of branches that otherwise differ.
+- [`unicorn/no-duplicate-if-branches`](./no-duplicate-if-branches.md) reports whole branches that are identical. This rule reports code shared only at the start or end of branches that otherwise differ.

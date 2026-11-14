@@ -1,14 +1,3 @@
----
-title: "tls-handshake-observability"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-11/includes/tls-handshake-observability.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# tls-handshake-observability
-
 ### TLS handshake observability in Kestrel
 
 Two related changes make it easier to diagnose and customize TLS connections in Kestrel.

@@ -1,54 +1,49 @@
----
-title: "ConstantPoolBuilder interface (java.lang.classfile.constantpool) (part 1 of 2)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/constantpool/ConstantPoolBuilder.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ConstantPoolBuilder interface (java.lang.classfile.constantpool)
 
 ```java
 public sealed interface ConstantPoolBuilder extends ConstantPool permits SplitConstantPool, TemporaryConstantPool
 ```
 
-Builder for the constant pool of a `class` file.  Provides read and
-write access to the constant pool that is being built.  Writing is append-only (the index of new entries monotonically
+Builder for the constant pool of a {@code class} file.  Provides read and
+write access to the constant pool that is {@linkplain ClassFileBuilder#constantPool()
+being built}.  Writing is append-only (the index of new entries monotonically
 increase) and idempotent (entry-bearing methods will return an existing entry
 if there is a suitable one).
+<p>
+For {@code class} file building, an overload of {@link ClassFile#build(
+ClassEntry, ConstantPoolBuilder, Consumer) ClassFile::build} takes a
+{@code ConstantPoolBuilder}.  For {@code class} file transformations via
+{@link ClassFile#transformClass ClassFile::transformClass}, the {@link
+ClassFile.ConstantPoolSharingOption} controls how the constant pool builder
+of the resulting {@code class} is created.
 
-For `class` file building, an overload of ClassEntry, ConstantPoolBuilder, Consumer) ClassFile::build takes a
-`ConstantPoolBuilder`.  For `class` file transformations via
-ClassFile::transformClass, the `ClassFile.ConstantPoolSharingOption` controls how the constant pool builder
-of the resulting `class` is created.
-
-#### Alien Constant Pool Entries
-
-In `class` file building and constant pool building, some constant pool
-entries supplied may be alien
+<h2 id="alien">Alien Constant Pool Entries</h2>
+In {@code class} file building and constant pool building, some constant pool
+entries supplied may be {@linkplain #canWriteDirect(ConstantPool) alien}
 to this constant pool builder of the active class file builder.  For example,
-classEntry(Utf8Entry) may be called with an
+{@link #classEntry(Utf8Entry) classEntry(Utf8Entry)} may be called with an
 alien UTF8 entry.  Alien entries will be converted to a pool entry in
 this constant pool builder, reusing equivalent entries or adding new entries
 if there is none.  As a result, all pool entries returned by entry-bearing
 methods in this constant pool builder belong to this constant pool.
-
-Some `ClassFileBuilder` methods may have their outputs adjusted if they
-receive pool entries alien to their constant pools.  For example, if an ldc_w instruction with an alien entry is written to a `CodeBuilder`,
-the `CodeBuilder` may emit a functionally equivalent `ldc`
+<p>
+Some {@link ClassFileBuilder} methods may have their outputs adjusted if they
+receive pool entries alien to {@linkplain ClassFileBuilder#constantPool
+their constant pools}.  For example, if an {@link ConstantInstruction#ofLoad
+ldc_w} instruction with an alien entry is written to a {@link CodeBuilder},
+the {@code CodeBuilder} may emit a functionally equivalent {@code ldc}
 instruction instead, if the converted entry can be encoded in such an
 instruction.
-
+<p>
 To avoid the conversion of alien constant pool entries, such as for the
-accuracy of the generated `class` file, users can always supply
+accuracy of the generated {@code class} file, users can always supply
 constant pool entries obtained by calling the constant pool builder
-entry-bearing methods of the constant pools associated with the `ClassFileBuilder`.  Otherwise, the conversions have no impact on the
-behaviors of the generated `class` files.
+entry-bearing methods of the constant pools associated with the {@code
+ClassFileBuilder}.  Otherwise, the conversions have no impact on the
+behaviors of the generated {@code class} files.
 
-**See also:** ClassFileBuilder#constantPool()
-
-**Since:** 24
+@see ClassFileBuilder#constantPool()
+@since 24
 
 ## ConstantPoolBuilder.of(ClassModel)
 
@@ -56,17 +51,15 @@ behaviors of the generated `class` files.
 static ConstantPoolBuilder of(ClassModel classModel)
 ```
 
-The new constant pool builder will
-be pre-populated with the contents of the constant pool associated with the given class model.  The
-index of new entries will start from the size() of the source pool.
+{@return a new constant pool builder}  The new constant pool builder will
+be pre-populated with the contents of the constant pool {@linkplain
+ClassModel#constantPool() associated with} the given class model.  The
+index of new entries will start from the {@link ConstantPool#size()
+size()} of the source pool.
 
-Parameters:
-
-- `classModel`: the class to copy from
-
-**See also:** ClassFile#build(ClassEntry, ConstantPoolBuilder, Consumer)
-
-**See also:** ClassFile.ConstantPoolSharingOption#SHARED_POOL
+@param classModel the class to copy from
+@see ClassFile#build(ClassEntry, ConstantPoolBuilder, Consumer)
+@see ClassFile.ConstantPoolSharingOption#SHARED_POOL
 
 ## ConstantPoolBuilder.of()
 
@@ -74,10 +67,10 @@ Parameters:
 static ConstantPoolBuilder of()
 ```
 
-The new constant pool builder
-will be empty.  The index of new entries will start from `1`.
+{@return a new constant pool builder}  The new constant pool builder
+will be empty.  The index of new entries will start from {@code 1}.
 
-**See also:** ClassFile.ConstantPoolSharingOption#NEW_POOL
+@see ClassFile.ConstantPoolSharingOption#NEW_POOL
 
 ## ConstantPoolBuilder.canWriteDirect(ConstantPool)
 
@@ -85,20 +78,18 @@ will be empty.  The index of new entries will start from `1`.
 boolean canWriteDirect(ConstantPool constantPool)
 ```
 
-This may be because they
-are the same builder, or because this builder was pre-populated from the given constant pool.
-
+{@return {@code true} if the index of any entry in the given constant
+pool refers to the same entry in this builder}  This may be because they
+are the same builder, or because this builder was {@linkplain
+#of(ClassModel) pre-populated} from the given constant pool.
+<p>
 If the constant pool of an entry is not directly writable to this pool,
-it is alien to this pool, and a `ClassFileBuilder` associated
+it is alien to this pool, and a {@link ClassFileBuilder} associated
 with this constant pool will convert that alien constant pool entry.
 
-Parameters:
-
-- `constantPool`: the given constant pool
-
-**See also:** ClassFileBuilder#constantPool() ClassFileBuilder::constantPool
-
-**See also:** ##alien Alien Constant Pool Entries
+@param constantPool the given constant pool
+@see ClassFileBuilder#constantPool() ClassFileBuilder::constantPool
+@see ##alien Alien Constant Pool Entries
 
 ## ConstantPoolBuilder.utf8Entry(String)
 
@@ -106,11 +97,10 @@ Parameters:
 Utf8Entry utf8Entry(String s)
 ```
 
-Parameters:
+{@return a {@link Utf8Entry} describing the provided {@link String}}
 
-- `s`: the string
-
-**See also:** Utf8Entry#stringValue() Utf8Entry::stringValue
+@param s the string
+@see Utf8Entry#stringValue() Utf8Entry::stringValue
 
 ## ConstantPoolBuilder.utf8Entry(ClassDesc)
 
@@ -118,12 +108,16 @@ Parameters:
 default Utf8Entry utf8Entry(ClassDesc desc)
 ```
 
-Parameters:
+{@return a {@link Utf8Entry} describing the {@linkplain
+ClassDesc#descriptorString() field descriptor string} of the provided
+{@link ClassDesc}}
 
-- `desc`: the symbolic descriptor for the class
-
-**API note:** The resulting `Utf8Entry` is usually not referable by a `ClassEntry`, which uses
+@apiNote
+The resulting {@code Utf8Entry} is usually not {@linkplain
+#classEntry(Utf8Entry) referable by} a {@link ClassEntry}, which uses
 internal form of binary names.
+
+@param desc the symbolic descriptor for the class
 
 ## ConstantPoolBuilder.utf8Entry(MethodTypeDesc)
 
@@ -131,9 +125,11 @@ internal form of binary names.
 default Utf8Entry utf8Entry(MethodTypeDesc desc)
 ```
 
-Parameters:
+{@return a {@link Utf8Entry} describing the {@linkplain
+MethodTypeDesc#descriptorString() method descriptor string} of the
+provided {@link MethodTypeDesc}}
 
-- `desc`: the symbolic descriptor for the method type
+@param desc the symbolic descriptor for the method type
 
 ## ConstantPoolBuilder.classEntry(Utf8Entry)
 
@@ -141,15 +137,13 @@ Parameters:
 ClassEntry classEntry(Utf8Entry ne)
 ```
 
-The `Utf8Entry` describes the internal form
+{@return a {@link ClassEntry} referring to the provided {@link
+Utf8Entry}}  The {@code Utf8Entry} describes the internal form
 of the binary name of a class or interface or the field descriptor
 string of an array type.
 
-Parameters:
-
-- `ne`: the `Utf8Entry`
-
-**See also:** ClassEntry#name() ClassEntry::name
+@param ne the {@code Utf8Entry}
+@see ClassEntry#name() ClassEntry::name
 
 ## ConstantPoolBuilder.classEntry(ClassDesc)
 
@@ -157,15 +151,13 @@ Parameters:
 default ClassEntry classEntry(ClassDesc classDesc)
 ```
 
-Parameters:
+{@return a {@link ClassEntry} describing the same reference type
+as the provided {@link ClassDesc}}
 
-- `classDesc`: the symbolic descriptor for the reference type
-
-**See also:** ClassEntry#asSymbol() ClassEntry::asSymbol
-
-Throws:
-
-- `IllegalArgumentException`: if `classDesc` represents a primitive type
+@param classDesc the symbolic descriptor for the reference type
+@throws IllegalArgumentException if {@code classDesc} represents a
+        primitive type
+@see ClassEntry#asSymbol() ClassEntry::asSymbol
 
 ## ConstantPoolBuilder.packageEntry(Utf8Entry)
 
@@ -173,14 +165,12 @@ Throws:
 PackageEntry packageEntry(Utf8Entry nameEntry)
 ```
 
-The `Utf8Entry` describes the internal form
+{@return a {@link PackageEntry} referring to the provided {@link
+Utf8Entry}}  The {@code Utf8Entry} describes the internal form
 of the name of a package.
 
-Parameters:
-
-- `nameEntry`: the `Utf8Entry`
-
-**See also:** PackageEntry#name() PackageEntry::name
+@param nameEntry the {@code Utf8Entry}
+@see PackageEntry#name() PackageEntry::name
 
 ## ConstantPoolBuilder.packageEntry(PackageDesc)
 
@@ -188,11 +178,11 @@ Parameters:
 default PackageEntry packageEntry(PackageDesc packageDesc)
 ```
 
-Parameters:
+{@return a {@link PackageEntry} describing the same package as the
+provided {@link PackageDesc}}
 
-- `packageDesc`: the symbolic descriptor for the package
-
-**See also:** PackageEntry#asSymbol() PackageEntry::asSymbol
+@param packageDesc the symbolic descriptor for the package
+@see PackageEntry#asSymbol() PackageEntry::asSymbol
 
 ## ConstantPoolBuilder.moduleEntry(Utf8Entry)
 
@@ -200,13 +190,11 @@ Parameters:
 ModuleEntry moduleEntry(Utf8Entry moduleName)
 ```
 
-The `Utf8Entry` describes the module name.
+{@return a {@link ModuleEntry} referring to the provided {@link
+Utf8Entry}}  The {@code Utf8Entry} describes the module name.
 
-Parameters:
-
-- `moduleName`: the constant pool entry describing the module name
-
-**See also:** ModuleEntry#name() ModuleEntry::name
+@param moduleName the constant pool entry describing the module name
+@see ModuleEntry#name() ModuleEntry::name
 
 ## ConstantPoolBuilder.moduleEntry(ModuleDesc)
 
@@ -214,11 +202,11 @@ Parameters:
 default ModuleEntry moduleEntry(ModuleDesc moduleDesc)
 ```
 
-Parameters:
+{@return a {@link ModuleEntry} describing the same module as the provided
+{@link ModuleDesc}}
 
-- `moduleDesc`: the symbolic descriptor for the module
-
-**See also:** ModuleEntry#asSymbol() ModuleEntry::asSymbol
+@param moduleDesc the symbolic descriptor for the module
+@see ModuleEntry#asSymbol() ModuleEntry::asSymbol
 
 ## ConstantPoolBuilder.nameAndTypeEntry(Utf8Entry, Utf8Entry)
 
@@ -226,19 +214,16 @@ Parameters:
 NameAndTypeEntry nameAndTypeEntry(Utf8Entry nameEntry, Utf8Entry typeEntry)
 ```
 
-The name `Utf8Entry` describes an
-unqualified name or the special name `ConstantDescs#INIT_NAME`,
-and the type `Utf8Entry` describes a field or method descriptor
+{@return a {@link NameAndTypeEntry} referring to the provided name and
+type {@link Utf8Entry}}  The name {@code Utf8Entry} describes an
+unqualified name or the special name {@value ConstantDescs#INIT_NAME},
+and the type {@code Utf8Entry} describes a field or method descriptor
 string.
 
-Parameters:
-
-- `nameEntry`: the name `Utf8Entry`
-- `typeEntry`: the type `Utf8Entry`
-
-**See also:** NameAndTypeEntry#name() NameAndTypeEntry::name
-
-**See also:** NameAndTypeEntry#type() NameAndTypeEntry::type
+@param nameEntry the name {@code Utf8Entry}
+@param typeEntry the type {@code Utf8Entry}
+@see NameAndTypeEntry#name() NameAndTypeEntry::name
+@see NameAndTypeEntry#type() NameAndTypeEntry::type
 
 ## ConstantPoolBuilder.nameAndTypeEntry(String, ClassDesc)
 
@@ -246,10 +231,11 @@ Parameters:
 default NameAndTypeEntry nameAndTypeEntry(String name, ClassDesc type)
 ```
 
-Parameters:
+{@return a {@link NameAndTypeEntry} describing the provided unqualified
+name and field descriptor}
 
-- `name`: the unqualified name
-- `type`: the field descriptor
+@param name the unqualified name
+@param type the field descriptor
 
 ## ConstantPoolBuilder.nameAndTypeEntry(String, MethodTypeDesc)
 
@@ -257,13 +243,12 @@ Parameters:
 default NameAndTypeEntry nameAndTypeEntry(String name, MethodTypeDesc type)
 ```
 
-The name can be an unqualified name or the
-special name `ConstantDescs#INIT_NAME`.
+{@return a {@link NameAndTypeEntry} describing the provided name and
+method descriptor}  The name can be an unqualified name or the
+special name {@value ConstantDescs#INIT_NAME}.
 
-Parameters:
-
-- `name`: the unqualified name, or `ConstantDescs#INIT_NAME`
-- `type`: the method descriptor
+@param name the unqualified name, or {@value ConstantDescs#INIT_NAME}
+@param type the method descriptor
 
 ## ConstantPoolBuilder.fieldRefEntry(ClassEntry, NameAndTypeEntry)
 
@@ -271,18 +256,16 @@ Parameters:
 FieldRefEntry fieldRefEntry(ClassEntry owner, NameAndTypeEntry nameAndType)
 ```
 
-The `ClassEntry` describes a class or
-interface that has this field as a member, and the `NameAndTypeEntry` describes the unqualified name and the field descriptor
+{@return a {@link FieldRefEntry} referring to a {@link ClassEntry} and a
+{@link NameAndTypeEntry}}  The {@code ClassEntry} describes a class or
+interface that has this field as a member, and the {@code
+NameAndTypeEntry} describes the unqualified name and the field descriptor
 for this field.
 
-Parameters:
-
-- `owner`: the `ClassEntry`
-- `nameAndType`: the `NameAndTypeEntry`
-
-**See also:** FieldRefEntry#owner() FieldRefEntry::owner
-
-**See also:** FieldRefEntry#nameAndType() FieldRefEntry::nameAndType
+@param owner the {@code ClassEntry}
+@param nameAndType the {@code NameAndTypeEntry}
+@see FieldRefEntry#owner() FieldRefEntry::owner
+@see FieldRefEntry#nameAndType() FieldRefEntry::nameAndType
 
 ## ConstantPoolBuilder.fieldRefEntry(ClassDesc, String, ClassDesc)
 
@@ -290,17 +273,13 @@ Parameters:
 default FieldRefEntry fieldRefEntry(ClassDesc owner, String name, ClassDesc type)
 ```
 
-Parameters:
+{@return a {@link FieldRefEntry} describing a field of a class}
 
-- `owner`: the class or interface the field is a member of
-- `name`: the unqualified name of the field
-- `type`: the field descriptor
-
-**See also:** FieldRefEntry#typeSymbol() FieldRefEntry::typeSymbol
-
-Throws:
-
-- `IllegalArgumentException`: if `owner` represents a primitive type
+@param owner the class or interface the field is a member of
+@param name the unqualified name of the field
+@param type the field descriptor
+@throws IllegalArgumentException if {@code owner} represents a primitive type
+@see FieldRefEntry#typeSymbol() FieldRefEntry::typeSymbol
 
 ## ConstantPoolBuilder.methodRefEntry(ClassEntry, NameAndTypeEntry)
 
@@ -308,19 +287,16 @@ Throws:
 MethodRefEntry methodRefEntry(ClassEntry owner, NameAndTypeEntry nameAndType)
 ```
 
-The `ClassEntry` describes a class that
-has this method as a member, and the `NameAndTypeEntry` describes
-the unqualified name or the special name `ConstantDescs#INIT_NAME`
+{@return a {@link MethodRefEntry} referring to a {@link ClassEntry} and a
+{@link NameAndTypeEntry}}  The {@code ClassEntry} describes a class that
+has this method as a member, and the {@code NameAndTypeEntry} describes
+the unqualified name or the special name {@value ConstantDescs#INIT_NAME}
 and the method descriptor for this method.
 
-Parameters:
-
-- `owner`: the `ClassEntry`
-- `nameAndType`: the `NameAndTypeEntry`
-
-**See also:** MethodRefEntry#owner() MethodRefEntry::owner
-
-**See also:** MethodRefEntry#nameAndType() MethodRefEntry::nameAndType
+@param owner the {@code ClassEntry}
+@param nameAndType the {@code NameAndTypeEntry}
+@see MethodRefEntry#owner() MethodRefEntry::owner
+@see MethodRefEntry#nameAndType() MethodRefEntry::nameAndType
 
 ## ConstantPoolBuilder.methodRefEntry(ClassDesc, String, MethodTypeDesc)
 
@@ -328,17 +304,14 @@ Parameters:
 default MethodRefEntry methodRefEntry(ClassDesc owner, String name, MethodTypeDesc type)
 ```
 
-Parameters:
+{@return a {@link MethodRefEntry} describing a method of a class}
 
-- `owner`: the class the method is a member of
-- `name`: the unqualified name, or special name `ConstantDescs#INIT_NAME`, of the method
-- `type`: the method descriptor
-
-**See also:** MethodRefEntry#typeSymbol() MethodRefEntry::typeSymbol
-
-Throws:
-
-- `IllegalArgumentException`: if `owner` represents a primitive type
+@param owner the class the method is a member of
+@param name the unqualified name, or special name {@value
+       ConstantDescs#INIT_NAME}, of the method
+@param type the method descriptor
+@throws IllegalArgumentException if {@code owner} represents a primitive type
+@see MethodRefEntry#typeSymbol() MethodRefEntry::typeSymbol
 
 ## ConstantPoolBuilder.interfaceMethodRefEntry(ClassEntry, NameAndTypeEntry)
 
@@ -346,18 +319,16 @@ Throws:
 InterfaceMethodRefEntry interfaceMethodRefEntry(ClassEntry owner, NameAndTypeEntry nameAndType)
 ```
 
-The `ClassEntry`
-describes an interface that has this method as a member, and the `NameAndTypeEntry` describes the unqualified name and the method
+{@return an {@link InterfaceMethodRefEntry} referring to a {@link
+ClassEntry} and a {@link NameAndTypeEntry}}  The {@code ClassEntry}
+describes an interface that has this method as a member, and the {@code
+NameAndTypeEntry} describes the unqualified name and the method
 descriptor for this method.
 
-Parameters:
-
-- `owner`: the `ClassEntry`
-- `nameAndType`: the `NameAndTypeEntry`
-
-**See also:** InterfaceMethodRefEntry#owner() InterfaceMethodRefEntry::owner
-
-**See also:** InterfaceMethodRefEntry#nameAndType()
+@param owner the {@code ClassEntry}
+@param nameAndType the {@code NameAndTypeEntry}
+@see InterfaceMethodRefEntry#owner() InterfaceMethodRefEntry::owner
+@see InterfaceMethodRefEntry#nameAndType()
      InterfaceMethodRefEntry::nameAndType
 
 ## ConstantPoolBuilder.interfaceMethodRefEntry(ClassDesc, String, MethodTypeDesc)
@@ -366,17 +337,14 @@ Parameters:
 default InterfaceMethodRefEntry interfaceMethodRefEntry(ClassDesc owner, String name, MethodTypeDesc type)
 ```
 
-Parameters:
+{@return an {@link InterfaceMethodRefEntry} describing a method of an
+interface}
 
-- `owner`: the interface the method is a member of
-- `name`: the unqualified name of the method
-- `type`: the method descriptor
-
-**See also:** InterfaceMethodRefEntry#typeSymbol() InterfaceMethodRefEntry::typeSymbol
-
-Throws:
-
-- `IllegalArgumentException`: if `owner` represents a primitive type
+@param owner the interface the method is a member of
+@param name the unqualified name of the method
+@param type the method descriptor
+@throws IllegalArgumentException if {@code owner} represents a primitive type
+@see InterfaceMethodRefEntry#typeSymbol() InterfaceMethodRefEntry::typeSymbol
 
 ## ConstantPoolBuilder.methodTypeEntry(MethodTypeDesc)
 
@@ -384,11 +352,11 @@ Throws:
 MethodTypeEntry methodTypeEntry(MethodTypeDesc descriptor)
 ```
 
-Parameters:
+{@return a {@link MethodTypeEntry} describing the same method type as
+the provided {@link MethodTypeDesc}}
 
-- `descriptor`: the symbolic descriptor of the method type
-
-**See also:** MethodTypeEntry#asSymbol() MethodTypeEntry::asSymbol
+@param descriptor the symbolic descriptor of the method type
+@see MethodTypeEntry#asSymbol() MethodTypeEntry::asSymbol
 
 ## ConstantPoolBuilder.methodTypeEntry(Utf8Entry)
 
@@ -396,13 +364,11 @@ Parameters:
 MethodTypeEntry methodTypeEntry(Utf8Entry descriptor)
 ```
 
-The `Utf8Entry` represents a method descriptor string.
+{@return a {@link MethodTypeEntry} referring to a {@link Utf8Entry}}
+The {@code Utf8Entry} represents a method descriptor string.
 
-Parameters:
-
-- `descriptor`: the `Utf8Entry`
-
-**See also:** MethodTypeEntry#descriptor() MethodTypeEntry::descriptor
+@param descriptor the {@code Utf8Entry}
+@see MethodTypeEntry#descriptor() MethodTypeEntry::descriptor
 
 ## ConstantPoolBuilder.methodHandleEntry(DirectMethodHandleDesc)
 
@@ -410,11 +376,11 @@ Parameters:
 default MethodHandleEntry methodHandleEntry(DirectMethodHandleDesc descriptor)
 ```
 
-Parameters:
+{@return a {@link MethodHandleEntry} describing the same method handle as
+the given {@link DirectMethodHandleDesc}}
 
-- `descriptor`: the symbolic descriptor of the method handle
-
-**See also:** MethodHandleEntry#asSymbol() MethodHandleEntry::asSymbol
+@param descriptor the symbolic descriptor of the method handle
+@see MethodHandleEntry#asSymbol() MethodHandleEntry::asSymbol
 
 ## ConstantPoolBuilder.methodHandleEntry(int, MemberRefEntry)
 
@@ -422,20 +388,16 @@ Parameters:
 MethodHandleEntry methodHandleEntry(int refKind, MemberRefEntry reference)
 ```
 
-The reference kind must be
-in `[1, 9]`, and the `MemberRefEntry` is subject to
-various restrictions based on the reference kind (JVMS ).
+{@return a {@link MethodHandleEntry} encoding a reference kind and
+referring to a {@link MemberRefEntry}}  The reference kind must be
+in {@code [1, 9]}, and the {@code MemberRefEntry} is subject to
+various restrictions based on the reference kind (JVMS {@jvms 4.4.8}).
 
-Parameters:
-
-- `refKind`: the reference kind of the method handle
-- `reference`: the `MemberRefEntry`
-
-**See also:** MethodHandleInfo##refkinds Reference kinds
-
-**See also:** MethodHandleEntry#kind() MethodHandleEntry::kind
-
-**See also:** MethodHandleEntry#reference() MethodHandleEntry::reference
+@param refKind the reference kind of the method handle
+@param reference the {@code MemberRefEntry}
+@see MethodHandleInfo##refkinds Reference kinds
+@see MethodHandleEntry#kind() MethodHandleEntry::kind
+@see MethodHandleEntry#reference() MethodHandleEntry::reference
 
 ## ConstantPoolBuilder.invokeDynamicEntry(DynamicCallSiteDesc)
 
@@ -443,11 +405,11 @@ Parameters:
 default InvokeDynamicEntry invokeDynamicEntry(DynamicCallSiteDesc dcsd)
 ```
 
-Parameters:
+{@return an {@link InvokeDynamicEntry} describing the same dynamic call
+site as the provided {@link DynamicCallSiteDesc}}
 
-- `dcsd`: the symbolic descriptor of the dynamic call site
-
-**See also:** InvokeDynamicEntry#asSymbol() InvokeDynamicEntry::asSymbol
+@param dcsd the symbolic descriptor of the dynamic call site
+@see InvokeDynamicEntry#asSymbol() InvokeDynamicEntry::asSymbol
 
 ## ConstantPoolBuilder.invokeDynamicEntry(BootstrapMethodEntry, NameAndTypeEntry)
 
@@ -455,18 +417,16 @@ Parameters:
 InvokeDynamicEntry invokeDynamicEntry(BootstrapMethodEntry bootstrapMethodEntry, NameAndTypeEntry nameAndType)
 ```
 
-The `BootstrapMethodEntry` describes the bootstrap method
+{@return an {@link InvokeDynamicEntry} referring to a {@link
+BootstrapMethodEntry} and a {@link NameAndTypeEntry}}
+The {@code BootstrapMethodEntry} describes the bootstrap method
 and its invocation arguments in addition to the name and type,
-and the `NameAndTypeEntry` a name and a method descriptor.
+and the {@code NameAndTypeEntry} a name and a method descriptor.
 
-Parameters:
-
-- `bootstrapMethodEntry`: the `BootstrapMethodEntry`
-- `nameAndType`: the `NameAndTypeEntry`
-
-**See also:** InvokeDynamicEntry#bootstrap() InvokeDynamicEntry::bootstrap
-
-**See also:** InvokeDynamicEntry#nameAndType() InvokeDynamicEntry::nameAndType
+@param bootstrapMethodEntry the {@code BootstrapMethodEntry}
+@param nameAndType the {@code NameAndTypeEntry}
+@see InvokeDynamicEntry#bootstrap() InvokeDynamicEntry::bootstrap
+@see InvokeDynamicEntry#nameAndType() InvokeDynamicEntry::nameAndType
 
 ## ConstantPoolBuilder.constantDynamicEntry(DynamicConstantDesc<?>)
 
@@ -474,11 +434,11 @@ Parameters:
 default ConstantDynamicEntry constantDynamicEntry(DynamicConstantDesc<?> dcd)
 ```
 
-Parameters:
+{@return a {@link ConstantDynamicEntry} describing the dynamic constant
+as the provided {@link DynamicConstantDesc}}
 
-- `dcd`: the symbolic descriptor of the constant
-
-**See also:** ConstantDynamicEntry#asSymbol() ConstantDynamicEntry::asSymbol
+@param dcd the symbolic descriptor of the constant
+@see ConstantDynamicEntry#asSymbol() ConstantDynamicEntry::asSymbol
 
 ## ConstantPoolBuilder.constantDynamicEntry(BootstrapMethodEntry, NameAndTypeEntry)
 
@@ -486,18 +446,16 @@ Parameters:
 ConstantDynamicEntry constantDynamicEntry(BootstrapMethodEntry bootstrapMethodEntry, NameAndTypeEntry nameAndType)
 ```
 
-The `BootstrapMethodEntry` describes the bootstrap method
+{@return a {@link ConstantDynamicEntry} referring to a {@link
+BootstrapMethodEntry} and a {@link NameAndTypeEntry}}
+The {@code BootstrapMethodEntry} describes the bootstrap method
 and its invocation arguments in addition to the name and type,
-and the `NameAndTypeEntry` a name and a field descriptor.
+and the {@code NameAndTypeEntry} a name and a field descriptor.
 
-Parameters:
-
-- `bootstrapMethodEntry`: the `BootstrapMethodEntry`
-- `nameAndType`: the `NameAndTypeEntry`
-
-**See also:** ConstantDynamicEntry#bootstrap() ConstantDynamicEntry::bootstrap
-
-**See also:** ConstantDynamicEntry#nameAndType() ConstantDynamicEntry::nameAndType
+@param bootstrapMethodEntry the {@code BootstrapMethodEntry}
+@param nameAndType the {@code NameAndTypeEntry}
+@see ConstantDynamicEntry#bootstrap() ConstantDynamicEntry::bootstrap
+@see ConstantDynamicEntry#nameAndType() ConstantDynamicEntry::nameAndType
 
 ## ConstantPoolBuilder.intEntry(int)
 
@@ -505,11 +463,10 @@ Parameters:
 IntegerEntry intEntry(int value)
 ```
 
-Parameters:
+{@return an {@link IntegerEntry} describing the provided value}
 
-- `value`: the value
-
-**See also:** IntegerEntry#intValue() IntegerEntry::intValue
+@param value the value
+@see IntegerEntry#intValue() IntegerEntry::intValue
 
 ## ConstantPoolBuilder.floatEntry(float)
 
@@ -517,14 +474,13 @@ Parameters:
 FloatEntry floatEntry(float value)
 ```
 
-All NaN values of the `float` may or may not be collapsed into a
-single "canonical" NaN value.
+{@return a {@link FloatEntry} describing the provided value}
+<p>
+All NaN values of the {@code float} may or may not be collapsed into a
+single {@linkplain Float#NaN "canonical" NaN value}.
 
-Parameters:
-
-- `value`: the value
-
-**See also:** FloatEntry#floatValue() FloatEntry::floatValue
+@param value the value
+@see FloatEntry#floatValue() FloatEntry::floatValue
 
 ## ConstantPoolBuilder.longEntry(long)
 
@@ -532,11 +488,10 @@ Parameters:
 LongEntry longEntry(long value)
 ```
 
-Parameters:
+{@return a {@link LongEntry} describing the provided value}
 
-- `value`: the value
-
-**See also:** LongEntry#longValue() LongEntry::longValue
+@param value the value
+@see LongEntry#longValue() LongEntry::longValue
 
 ## ConstantPoolBuilder.doubleEntry(double)
 
@@ -544,14 +499,13 @@ Parameters:
 DoubleEntry doubleEntry(double value)
 ```
 
-All NaN values of the `double` may or may not be collapsed into a
-single "canonical" NaN value.
+{@return a {@link DoubleEntry} describing the provided value}
+<p>
+All NaN values of the {@code double} may or may not be collapsed into a
+single {@linkplain Double#NaN "canonical" NaN value}.
 
-Parameters:
-
-- `value`: the value
-
-**See also:** DoubleEntry#doubleValue() DoubleEntry::doubleValue
+@param value the value
+@see DoubleEntry#doubleValue() DoubleEntry::doubleValue
 
 ## ConstantPoolBuilder.stringEntry(Utf8Entry)
 
@@ -559,13 +513,11 @@ Parameters:
 StringEntry stringEntry(Utf8Entry utf8)
 ```
 
-The `Utf8Entry` describes the string value.
+{@return a {@link StringEntry} referring to a {@link Utf8Entry}}
+The {@code Utf8Entry} describes the string value.
 
-Parameters:
-
-- `utf8`: the `Utf8Entry`
-
-**See also:** StringEntry#utf8() StringEntry::utf8
+@param utf8 the {@code Utf8Entry}
+@see StringEntry#utf8() StringEntry::utf8
 
 ## ConstantPoolBuilder.stringEntry(String)
 
@@ -573,8 +525,65 @@ Parameters:
 default StringEntry stringEntry(String value)
 ```
 
-Parameters:
+{@return a {@link StringEntry} describing the provided value}
 
-- `value`: the value
+@param value the value
+@see StringEntry#stringValue() StringEntry::stringValue
 
-**See also:** StringEntry#stringValue() StringEntry::stringValue
+## ConstantPoolBuilder.constantValueEntry(ConstantDesc)
+
+```java
+default ConstantValueEntry constantValueEntry(ConstantDesc c)
+```
+
+{@return a {@link ConstantValueEntry} describing the provided constant
+{@link Integer}, {@link Long}, {@link Float}, {@link Double}, or {@link
+String} value}
+
+@param c the provided constant value
+@throws IllegalArgumentException if the value is not one of {@code
+        Integer}, {@code Long}, {@code Float}, {@code Double}, or {@code
+        String}
+@see ConstantValueEntry#constantValue() ConstantValueEntry::constantValue
+@see ConstantValueAttribute#of(ConstantDesc)
+     ConstantValueAttribute::of(ConstantDesc)
+
+## ConstantPoolBuilder.loadableConstantEntry(ConstantDesc)
+
+```java
+default LoadableConstantEntry loadableConstantEntry(ConstantDesc c)
+```
+
+{@return a {@link LoadableConstantEntry} describing the provided constant
+value}
+
+@param c the nominal descriptor for the constant
+
+## ConstantPoolBuilder.bsmEntry(DirectMethodHandleDesc, List<ConstantDesc>)
+
+```java
+default BootstrapMethodEntry bsmEntry(DirectMethodHandleDesc methodReference, List<ConstantDesc> arguments)
+```
+
+{@return a {@link BootstrapMethodEntry} describing the provided
+bootstrap method and arguments}
+
+@param methodReference the bootstrap method
+@param arguments the arguments
+
+## ConstantPoolBuilder.bsmEntry(MethodHandleEntry, List<LoadableConstantEntry>)
+
+```java
+BootstrapMethodEntry bsmEntry(MethodHandleEntry methodReference, List<LoadableConstantEntry> arguments)
+```
+
+{@return a {@link BootstrapMethodEntry} referring to a {@link
+MethodHandleEntry} and a list of {@link LoadableConstantEntry}}
+The {@code MethodHandleEntry} is the bootstrap method, and the
+list of {@code LoadableConstantEntry} is the arguments.
+
+@param methodReference the {@code MethodHandleEntry}
+@param arguments the list of {@code LoadableConstantEntry}
+@see BootstrapMethodEntry#bootstrapMethod()
+     BootstrapMethodEntry::bootstrapMethod
+@see BootstrapMethodEntry#arguments() BootstrapMethodEntry::arguments

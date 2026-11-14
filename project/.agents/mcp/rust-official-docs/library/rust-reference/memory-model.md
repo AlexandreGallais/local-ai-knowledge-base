@@ -1,17 +1,8 @@
----
-title: "Memory model"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/memory-model.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[memory]
 # Memory model
 
 r[memory.intro]
-> **Warning:**
+> [!WARNING]
 > The memory model of Rust is incomplete and not fully decided.
 
 r[memory.bytes]
@@ -20,17 +11,17 @@ r[memory.bytes]
 r[memory.bytes.intro]
 The most basic unit of memory in Rust is a byte.
 
-> **Note:**
+> [!NOTE]
 > While bytes are typically lowered to hardware bytes, Rust uses an "abstract" notion of bytes that can make distinctions which are absent in hardware, such as being uninitialized, or storing part of a pointer. Those distinctions can affect whether your program has undefined behavior, so they still have tangible impact on how compiled Rust programs behave.
 
 r[memory.bytes.contents]
 Each byte may have one of the following values:
 
 r[memory.bytes.init]
-* An initialized byte containing a `u8` value and optional provenance,
+* An initialized byte containing a `u8` value and optional [provenance][std::ptr#provenance],
 
 r[memory.bytes.uninit]
 * An uninitialized byte.
 
-> **Note:**
+> [!NOTE]
 > The above list is not yet guaranteed to be exhaustive.

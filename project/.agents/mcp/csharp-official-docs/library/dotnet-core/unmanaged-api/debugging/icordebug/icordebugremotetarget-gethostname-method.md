@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugRemoteTarget::GetHostName Method"
 title: "ICorDebugRemoteTarget::GetHostName Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugremotetarget-gethostname-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugRemoteTarget.GetHostName"
+api_location:
+  - "CorDebug.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugRemoteTarget::GetHostName"
+helpviewer_keywords:
+  - "ICorDebugRemoteTarget::GetHostName method [.NET debugging]"
+  - "GetHostName method, ICorDebugRemoteTarget interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugRemoteTarget::GetHostName Method
 
 Returns the fully qualified domain name or IPv4 address of the remote debugging target machine. IPV6 is not supported at this time.
@@ -46,7 +55,7 @@ This method is implemented by the debugger writer. It must follow the multiple c
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl
 
@@ -56,5 +65,5 @@ This method is implemented by the debugger writer. It must follow the multiple c
 
 ## See also
 
-- ICorDebugRemoteTarget Interface
-- ICorDebug Interface
+- [ICorDebugRemoteTarget Interface](icordebugremotetarget-interface.md)
+- [ICorDebug Interface](icordebug-interface.md)

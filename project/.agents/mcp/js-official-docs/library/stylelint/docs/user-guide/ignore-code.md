@@ -1,12 +1,3 @@
----
-title: "Ignoring code"
-tool: "stylelint"
-version: "18.0"
-source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/docs/user-guide/ignore-code.md"
-commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
-license: "MIT"
----
-
 # Ignoring code
 
 You can ignore:
@@ -20,6 +11,7 @@ You can temporarily turn off rules using configuration comments in your CSS.
 
 For example, you can either turn all the rules off with an unscoped disable comment:
 
+<!-- prettier-ignore -->
 ```css
 /* stylelint-disable */
 a {}
@@ -28,6 +20,7 @@ a {}
 
 Or you can turn off individual rules with a scoped disable comment:
 
+<!-- prettier-ignore -->
 ```css
 /* stylelint-disable selector-max-id, declaration-no-important */
 #id {
@@ -38,6 +31,7 @@ Or you can turn off individual rules with a scoped disable comment:
 
 You can turn off rules for individual lines with a `/* stylelint-disable-line */` comment, after which you do not need to explicitly re-enable them:
 
+<!-- prettier-ignore -->
 ```css
 #id { /* stylelint-disable-line */
   color: pink !important; /* stylelint-disable-line declaration-no-important */
@@ -46,6 +40,7 @@ You can turn off rules for individual lines with a `/* stylelint-disable-line */
 
 You can also turn off rules for _the next line only_ with a `/* stylelint-disable-next-line */` comment, after which you do not need to explicitly re-enable them:
 
+<!-- prettier-ignore -->
 ```css
 #id {
   /* stylelint-disable-next-line declaration-no-important */
@@ -55,6 +50,7 @@ You can also turn off rules for _the next line only_ with a `/* stylelint-disabl
 
 Stylelint supports complex, overlapping disabling & enabling patterns:
 
+<!-- prettier-ignore -->
 ```css
 /* stylelint-disable */
 /* stylelint-enable foo */
@@ -66,8 +62,8 @@ Stylelint supports complex, overlapping disabling & enabling patterns:
 /* stylelint-enable foo */
 ```
 
-> **Warning:**
-> Configuration commands in non-standard syntax comments (e.g. `// stylelint-disable`) are only minimally supported.
+> [!WARNING]
+> Configuration commands in non-standard syntax comments (e.g. `// stylelint-disable`) are only minimally supported.  
 > They will only work when found outside of selectors or value lists.
 
 You may also include a description at the end of the comment, after two hyphens:
@@ -78,7 +74,7 @@ You may also include a description at the end of the comment, after two hyphens:
 /* stylelint-disable foo, bar -- Reason for disabling the foo and bar rules. */
 ```
 
-> **Warning:**
+> [!WARNING]
 > There must be a space on both sides of the hyphens.
 
 ## Files entirely
@@ -89,9 +85,9 @@ You can use a `.stylelintignore` file to ignore specific files. For example:
 vendor/**/*.css
 ```
 
-The patterns in your `.stylelintignore` file must match `.gitignore` syntax. (Behind the scenes, `node-ignore` parses your patterns.) _Your patterns in `.stylelintignore` are always analyzed relative to `process.cwd()`._
+The patterns in your `.stylelintignore` file must match [`.gitignore` syntax](https://git-scm.com/docs/gitignore). (Behind the scenes, [`node-ignore`](https://github.com/kaelzhang/node-ignore) parses your patterns.) _Your patterns in `.stylelintignore` are always analyzed relative to `process.cwd()`._
 
-Stylelint looks for a `.stylelintignore` file in `process.cwd()`. You can also specify a path to your ignore patterns file (absolute or relative to `process.cwd()`) using the `--ignore-path` (in the CLI) and `ignorePath` (in JS) options.
+Stylelint looks for a `.stylelintignore` file in `process.cwd()`. You can also specify a path to your ignore patterns file (absolute or relative to `process.cwd()`) using the [`--ignore-path`](cli.md#--ignore-path) (in the CLI) and [`ignorePath`](options.md#ignorepath) (in JS) options.
 
 For convenience, if a `.gitignore` file is already present it can be substituted for `.stylelintignore`
 e.g.
@@ -100,6 +96,6 @@ e.g.
 stylelint "*.css" --ignore-path .gitignore
 ```
 
-Alternatively, you can add an `ignoreFiles` property within your configuration object.
+Alternatively, you can add an [`ignoreFiles` property](configure.md#ignorefiles) within your configuration object.
 
-To turn off only specific rules for a subset of files, use the `overrides` configuration property instead.
+To turn off only specific rules for a subset of files, use the [`overrides`](configure.md#overrides) configuration property instead.

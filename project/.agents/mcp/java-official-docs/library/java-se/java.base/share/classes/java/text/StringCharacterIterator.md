@@ -1,27 +1,17 @@
----
-title: "StringCharacterIterator class (java.text)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/text/StringCharacterIterator.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # StringCharacterIterator class (java.text)
 
 ```java
 public final class StringCharacterIterator implements CharacterIterator
 ```
 
-`StringCharacterIterator` implements the
-`CharacterIterator` protocol for a `String`.
-The `StringCharacterIterator` class iterates over the
-entire `String`. All constructors throw `NullPointerException`
-if `text` is `null`.
+{@code StringCharacterIterator} implements the
+{@code CharacterIterator} protocol for a {@code String}.
+The {@code StringCharacterIterator} class iterates over the
+entire {@code String}. All constructors throw {@code NullPointerException}
+if {@code text} is {@code null}.
 
-**See also:** CharacterIterator
-
-**Since:** 1.1
+@see CharacterIterator
+@since 1.1
 
 ## StringCharacterIterator.StringCharacterIterator(String)
 
@@ -31,9 +21,7 @@ public StringCharacterIterator(String text)
 
 Constructs an iterator with an initial index of 0.
 
-Parameters:
-
-- `text`: the `String` to be iterated over
+@param text the {@code String} to be iterated over
 
 ## StringCharacterIterator.StringCharacterIterator(String, int)
 
@@ -43,14 +31,10 @@ public StringCharacterIterator(String text, int pos)
 
 Constructs an iterator with the specified initial index.
 
-Parameters:
-
-- `text`: The String to be iterated over
-- `pos`: Initial iterator position
-
-Throws:
-
-- `IllegalArgumentException`: if `pos` is not within the bounds of range (inclusive) from `0` to the length of `text`
+@param  text   The String to be iterated over
+@param  pos    Initial iterator position
+@throws IllegalArgumentException if {@code pos} is not within the bounds of
+range (inclusive) from {@code 0} to the length of {@code text}
 
 ## StringCharacterIterator.StringCharacterIterator(String, int, int, int)
 
@@ -61,16 +45,14 @@ public StringCharacterIterator(String text, int begin, int end, int pos)
 Constructs an iterator over the given range of the given string, with the
 index set at the specified position.
 
-Parameters:
-
-- `text`: The String to be iterated over
-- `begin`: Index of the first character
-- `end`: Index of the character following the last character
-- `pos`: Initial iterator position
-
-Throws:
-
-- `IllegalArgumentException`: if `begin` and `end` are not within the bounds of range (inclusive) from `0` to the length of `text`, `begin` is greater than `end`, or `pos` is not within the bounds of range (inclusive) from `begin` to `end`
+@param  text   The String to be iterated over
+@param  begin  Index of the first character
+@param  end    Index of the character following the last character
+@param  pos    Initial iterator position
+@throws IllegalArgumentException if {@code begin} and {@code end} are not
+within the bounds of range (inclusive) from {@code 0} to the length of {@code text},
+{@code begin} is greater than {@code end}, or {@code pos} is not within
+the bounds of range (inclusive) from {@code begin} to {@code end}
 
 ## StringCharacterIterator.setText(String)
 
@@ -83,15 +65,9 @@ method is used by other java.text classes that want to avoid allocating
 new StringCharacterIterator objects every time their setText method
 is called.
 
-Parameters:
-
-- `text`: The String to be iterated over
-
-**Since:** 1.2
-
-Throws:
-
-- `NullPointerException`: if `text` is `null`
+@param  text   The String to be iterated over
+@throws NullPointerException if {@code text} is {@code null}
+@since 1.2
 
 ## StringCharacterIterator.first()
 
@@ -100,8 +76,7 @@ public char first()
 ```
 
 Implements CharacterIterator.first() for String.
-
-**See also:** CharacterIterator#first
+@see CharacterIterator#first
 
 ## StringCharacterIterator.last()
 
@@ -110,8 +85,7 @@ public char last()
 ```
 
 Implements CharacterIterator.last() for String.
-
-**See also:** CharacterIterator#last
+@see CharacterIterator#last
 
 ## StringCharacterIterator.setIndex(int)
 
@@ -121,11 +95,9 @@ public char setIndex(int p)
 
 Implements CharacterIterator.setIndex() for String.
 
-**See also:** CharacterIterator#setIndex
-
-Throws:
-
-- `IllegalArgumentException`: if `p` is not within the bounds (inclusive) of `getBeginIndex()` to `getEndIndex()`
+@throws IllegalArgumentException if {@code p} is not within the bounds
+(inclusive) of {@link #getBeginIndex()} to {@link #getEndIndex()}
+@see CharacterIterator#setIndex
 
 ## StringCharacterIterator.current()
 
@@ -134,8 +106,7 @@ public char current()
 ```
 
 Implements CharacterIterator.current() for String.
-
-**See also:** CharacterIterator#current
+@see CharacterIterator#current
 
 ## StringCharacterIterator.next()
 
@@ -144,8 +115,7 @@ public char next()
 ```
 
 Implements CharacterIterator.next() for String.
-
-**See also:** CharacterIterator#next
+@see CharacterIterator#next
 
 ## StringCharacterIterator.previous()
 
@@ -154,8 +124,7 @@ public char previous()
 ```
 
 Implements CharacterIterator.previous() for String.
-
-**See also:** CharacterIterator#previous
+@see CharacterIterator#previous
 
 ## StringCharacterIterator.getBeginIndex()
 
@@ -164,8 +133,7 @@ public int getBeginIndex()
 ```
 
 Implements CharacterIterator.getBeginIndex() for String.
-
-**See also:** CharacterIterator#getBeginIndex
+@see CharacterIterator#getBeginIndex
 
 ## StringCharacterIterator.getEndIndex()
 
@@ -174,8 +142,7 @@ public int getEndIndex()
 ```
 
 Implements CharacterIterator.getEndIndex() for String.
-
-**See also:** CharacterIterator#getEndIndex
+@see CharacterIterator#getEndIndex
 
 ## StringCharacterIterator.getIndex()
 
@@ -184,8 +151,7 @@ public int getIndex()
 ```
 
 Implements CharacterIterator.getIndex() for String.
-
-**See also:** CharacterIterator#getIndex
+@see CharacterIterator#getIndex
 
 ## StringCharacterIterator.equals(Object)
 
@@ -194,12 +160,8 @@ public boolean equals(Object obj)
 ```
 
 Compares the equality of two StringCharacterIterator objects.
-
-Parameters:
-
-- `obj`: the StringCharacterIterator object to be compared with.
-
-**Returns:** true if the given obj is the same as this
+@param obj the StringCharacterIterator object to be compared with.
+@return true if the given obj is the same as this
 StringCharacterIterator object; false otherwise.
 
 ## StringCharacterIterator.hashCode()
@@ -209,8 +171,7 @@ public int hashCode()
 ```
 
 Computes a hashcode for this iterator.
-
-**Returns:** A hash code
+@return A hash code
 
 ## StringCharacterIterator.clone()
 
@@ -219,5 +180,4 @@ public Object clone()
 ```
 
 Creates a copy of this iterator.
-
-**Returns:** A copy of this
+@return A copy of this

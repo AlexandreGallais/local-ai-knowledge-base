@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugProcess::GetHelperThreadID Method"
 title: "ICorDebugProcess::GetHelperThreadID Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess-gethelperthreadid-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugProcess.GetHelperThreadID"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugProcess::GetHelperThreadID"
+helpviewer_keywords:
+  - "GetHelperThreadID method [.NET debugging]"
+  - "ICorDebugProcess::GetHelperThreadID method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugProcess::GetHelperThreadID Method
 
 Gets the operating system (OS) thread ID of the debugger's internal helper thread.
@@ -30,11 +39,11 @@ During managed and unmanaged debugging, it is the debugger's responsibility to e
 
 You cannot cache the thread ID of the helper thread, because it might change over time. You must re-query the thread ID at every stopping event.
 
-The thread ID of the debugger's helper thread will be correct on every unmanaged ICorDebugManagedCallback::CreateThread event, thus allowing a debugger to determine the thread ID of its helper thread and hide it from the user. A thread that is identified as a helper thread during an unmanaged `ICorDebugManagedCallback::CreateThread` event will never run managed user code.
+The thread ID of the debugger's helper thread will be correct on every unmanaged [ICorDebugManagedCallback::CreateThread](icordebugmanagedcallback-createthread-method.md) event, thus allowing a debugger to determine the thread ID of its helper thread and hide it from the user. A thread that is identified as a helper thread during an unmanaged `ICorDebugManagedCallback::CreateThread` event will never run managed user code.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl. CorDebug.h
 

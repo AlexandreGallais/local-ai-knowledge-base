@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: PublishedTrimmed projects fail reflection-based serialization"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/serialization/8.0/publishtrimmed.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 8 breaking change in System.Text.Json serialization where projects with PublishTrimmed enabled now fail reflection-based serialization by default.
+ms.date: 11/08/2023
 ---
-
 # PublishedTrimmed projects fail reflection-based serialization
 
-Projects that enable the PublishTrimmed MSBuild property now automatically turn off the reflection-based defaults of System.Text.Json. In other words, setting `PublishTrimmed` to `true` automatically sets the `JsonSerializerIsReflectionEnabledByDefault` MSBuild property to `false` unless otherwise specified in project configuration.
+Projects that enable the [PublishTrimmed](../../../deploying/trimming/trimming-options.md#enable-trimming) MSBuild property now automatically turn off the reflection-based defaults of [System.Text.Json](../../../../standard/serialization/system-text-json/overview.md). In other words, setting `PublishTrimmed` to `true` automatically sets the `JsonSerializerIsReflectionEnabledByDefault` MSBuild property to `false` unless otherwise specified in project configuration.
 
 ## Previous behavior
 
@@ -31,11 +27,11 @@ Starting in .NET 8, projects that have the `PublishTrimmed` property enabled fai
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-This change ensures that trimmed applications use appropriate defaults. It also guides users towards adopting best practices suitable for trimmed applications—that is, use the source generator, and avoid accidental dependency on the unsafe reflection-based components.
+This change ensures that trimmed applications use appropriate defaults. It also guides users towards adopting best practices suitable for trimmed applications&mdash;that is, use the source generator, and avoid accidental dependency on the unsafe reflection-based components.
 
 ## Recommended action
 
@@ -56,4 +52,4 @@ N/A
 
 ## See also
 
-- Trimming options: Enable trimming
+- [Trimming options: Enable trimming](../../../deploying/trimming/trimming-options.md#enable-trimming)

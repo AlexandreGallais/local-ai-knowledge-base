@@ -1,13 +1,19 @@
 ---
-title: "max-nested-callbacks"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/max-nested-callbacks.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: max-nested-callbacks
+rule_type: suggestion
+related_rules:
+- complexity
+- max-depth
+- max-lines
+- max-lines-per-function
+- max-params
+- max-statements
+further_reading:
+- https://book.mixu.net/node/ch7.html
+- https://web.archive.org/web/20220104141150/https://howtonode.org/control-flow
+- https://web.archive.org/web/20220127215850/https://howtonode.org/control-flow-part-ii
 ---
 
-# max-nested-callbacks
 
 Many JavaScript libraries use the callback pattern to manage asynchronous operations. A program of any complexity will most likely need to manage several asynchronous operations at various levels of concurrency. A common pitfall that is easy to fall into is nesting callbacks, which makes code more difficult to read the deeper the callbacks are nested.
 
@@ -40,7 +46,7 @@ This rule has a number or object option:
 
 Examples of **incorrect** code for this rule with the `{ "max": 3 }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint max-nested-callbacks: ["error", 3]*/
@@ -56,9 +62,11 @@ foo1(function() {
 });
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "max": 3 }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint max-nested-callbacks: ["error", 3]*/
@@ -82,11 +90,13 @@ function handleFoo4() {
 }
 ```
 
+:::
+
 ### checkConstructorCallCallbacks
 
 Examples of **incorrect** code for this rule with the `{ "checkConstructorCallCallbacks": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint max-nested-callbacks: ["error", { "checkConstructorCallCallbacks": true, "max": 1 }]*/
@@ -96,9 +106,11 @@ setTimeout(() => {
 });
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "checkConstructorCallCallbacks": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint max-nested-callbacks: ["error", { "checkConstructorCallCallbacks": true, "max": 1 }]*/
@@ -109,3 +121,5 @@ function handler() {
 
 setTimeout(handler);
 ```
+
+:::

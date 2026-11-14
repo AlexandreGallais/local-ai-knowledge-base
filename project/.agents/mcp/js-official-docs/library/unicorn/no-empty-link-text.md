@@ -1,25 +1,21 @@
----
-title: "no-empty-link-text"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-empty-link-text.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-empty-link-text
 
 📝 Disallow empty link text in Markdown.
 
-💼🚫 This rule is enabled in the 📚 `recommended-markdown` config. This rule is _disabled_ in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼🚫 This rule is enabled in the 📚 `recommended-markdown` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+<!-- Embedded HTML is intentionally outside this rule's content analysis. -->
 
 Disallow empty or whitespace-only labels in inline and reference links. Text, including formatted text and inline code, and non-whitespace image alternative text count as content. Decorative images are allowed alongside text.
 
-Character references such as ` ` are decoded in text and image alternative text, but remain literal in code and math. GFM footnote markers count as content. Inline math is checked when `languageOptions.math` is enabled.
+Character references such as `&nbsp;` are decoded in text and image alternative text, but remain literal in code and math. GFM footnote markers count as content. Inline math is checked when `languageOptions.math` is enabled.
 
 Links containing embedded HTML are ignored because their accessible content cannot be determined reliably. Standalone images, reference definitions, and code blocks are not checked.
 
-Destinations and titles do not count as label content. `markdown/no-empty-links` checks destinations.
+Destinations and titles do not count as label content. [`markdown/no-empty-links`](https://github.com/eslint/markdown/blob/main/docs/rules/no-empty-links.md) checks destinations.
 
 ## Examples
 

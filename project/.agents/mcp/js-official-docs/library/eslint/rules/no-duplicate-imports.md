@@ -1,13 +1,8 @@
 ---
-title: "no-duplicate-imports"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-duplicate-imports.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-duplicate-imports
+rule_type: problem
 ---
 
-# no-duplicate-imports
 
 Using a single `import` statement per module will make the code clearer because you can see everything being imported from that module on one line.
 
@@ -25,7 +20,7 @@ This rule requires that all imports from a single module that can be merged exis
 
 Example of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-duplicate-imports: "error"*/
@@ -35,9 +30,11 @@ import something from 'another-module';
 import { find } from 'module';
 ```
 
+:::
+
 Example of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-duplicate-imports: "error"*/
@@ -46,9 +43,11 @@ import { merge, find } from 'module';
 import something from 'another-module';
 ```
 
+:::
+
 Example of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-duplicate-imports: "error"*/
@@ -57,6 +56,8 @@ Example of **correct** code for this rule:
 import { merge } from 'module';
 import * as something from 'module';
 ```
+
+:::
 
 ## Options
 
@@ -71,7 +72,7 @@ If re-exporting from an imported module, you should add the imports to the `impo
 
 Example of **incorrect** code for this rule with the `{ "includeExports": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-duplicate-imports: ["error", { "includeExports": true }]*/
@@ -81,9 +82,11 @@ import { merge } from 'module';
 export { find } from 'module';
 ```
 
+:::
+
 Example of **correct** code for this rule with the `{ "includeExports": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-duplicate-imports: ["error", { "includeExports": true }]*/
@@ -93,9 +96,11 @@ import { merge, find } from 'module';
 export { find };
 ```
 
+:::
+
 Example of **correct** code for this rule with the `{ "includeExports": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-duplicate-imports: ["error", { "includeExports": true }]*/
@@ -109,13 +114,15 @@ export * as something from 'module';
 export * from 'module';
 ```
 
+:::
+
 ### allowSeparateTypeImports
 
 TypeScript allows importing types using `import type`. By default, this rule flags instances of `import type` that have the same specifier as `import`. The `allowSeparateTypeImports` option allows you to override this behavior.
 
 Example of **incorrect** TypeScript code for this rule with the default `{ "allowSeparateTypeImports": false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /*eslint no-duplicate-imports: ["error", { "allowSeparateTypeImports": false }]*/
@@ -124,9 +131,11 @@ import { someValue } from 'module';
 import type { SomeType } from 'module';
 ```
 
+:::
+
 Example of **correct** TypeScript code for this rule with the default `{ "allowSeparateTypeImports": false }` option:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint no-duplicate-imports: ["error", { "allowSeparateTypeImports": false }]*/
@@ -134,9 +143,11 @@ Example of **correct** TypeScript code for this rule with the default `{ "allowS
 import { someValue, type SomeType } from 'module';
 ```
 
+:::
+
 Example of **incorrect** TypeScript code for this rule with the `{ "allowSeparateTypeImports": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /*eslint no-duplicate-imports: ["error", { "allowSeparateTypeImports": true }]*/
@@ -146,9 +157,11 @@ import type { SomeType } from 'module';
 import type { AnotherType } from 'module';
 ```
 
+:::
+
 Example of **correct** TypeScript code for this rule with the `{ "allowSeparateTypeImports": true }` option:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint no-duplicate-imports: ["error", { "allowSeparateTypeImports": true }]*/
@@ -156,3 +169,5 @@ Example of **correct** TypeScript code for this rule with the `{ "allowSeparateT
 import { someValue } from 'module';
 import type { SomeType, AnotherType } from 'module';
 ```
+
+:::

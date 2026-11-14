@@ -1,10 +1,9 @@
 ---
 title: "Breaking change - Linux native library resolution no longer uses `netcoredeps`"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/interop/8.0/linux-netcoredeps.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 8 where Linux applications no longer search the `netcoredeps` subdirectory for native libraries."
+ms.date: 4/10/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/45777
 ---
 
 # Linux native library resolution no longer uses `netcoredeps`
@@ -25,26 +24,26 @@ In .NET 8 and later, Linux applications no longer search the `netcoredeps` subdi
 
 ## Type of breaking change
 
-This is a behavioral change.
+This is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
 The `netcoredeps` behavior was originally introduced to handle complex dependencies on third-party libraries in earlier .NET versions. .NET 8+ no longer requires this behavior due to improved dependency handling. Additionally, the mechanism isn't aligned with recommended practices for ELF platforms.
 
-For more information, see GitHub issue #114393.
+For more information, see [GitHub issue #114393](https://github.com/dotnet/runtime/issues/114393).
 
 ## Recommended action
 
 If your application relied on the `netcoredeps` subdirectory for p/invokes or custom native library resolution, use the following alternatives:
 
 - Implement a custom resolution mechanism using one of the following:
-  - `System.Runtime.Loader.AssemblyLoadContext.ResolvingUnmanagedDll`
-  - System.Runtime.Loader.AssemblyLoadContext.LoadUnmanagedDll
-  - `System.Runtime.InteropServices.NativeLibrary.SetDllImportResolver(System.Reflection.Assembly,System.Runtime.InteropServices.DllImportResolver)`
-  - `System.Runtime.InteropServices.NativeLibrary.Load*`
+  - <xref:System.Runtime.Loader.AssemblyLoadContext.ResolvingUnmanagedDll?displayProperty=fullName>
+  - [System.Runtime.Loader.AssemblyLoadContext.LoadUnmanagedDll](/dotnet/api/system.runtime.loader.assemblyloadcontext.loadunmanageddll)
+  - <xref:System.Runtime.InteropServices.NativeLibrary.SetDllImportResolver(System.Reflection.Assembly,System.Runtime.InteropServices.DllImportResolver)?displayProperty=fullName>
+  - <xref:System.Runtime.InteropServices.NativeLibrary.Load*?displayProperty=fullName>
 - If an `RPATH` is required in your deployment, modify the ELF file explicitly using the `patchelf` utility.
 
 ## Affected APIs
 
 - `DllImport`
-- `System.Runtime.InteropServices.NativeLibrary.Load*`
+- <xref:System.Runtime.InteropServices.NativeLibrary.Load*?displayProperty=fullName>

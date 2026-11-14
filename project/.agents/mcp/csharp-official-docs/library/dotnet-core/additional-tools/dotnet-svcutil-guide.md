@@ -1,26 +1,23 @@
 ---
-title: "WCF svcutil tool overview"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/additional-tools/dotnet-svcutil-guide.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: WCF svcutil tool overview
+description: An overview of the Microsoft WCF dotnet-svcutil tool that adds functionality for .NET and ASP.NET projects, similar to the WCF svcutil tool for .NET Framework projects.
+author: honggit
+ms.date: 02/22/2019
 ---
-
 # WCF dotnet-svcutil tool for .NET Core
 
 The Windows Communication Foundation (WCF) **dotnet-svcutil** tool is a .NET tool that retrieves metadata from a web service on a network location or from a WSDL file, and generates a WCF class containing client proxy methods that access the web service operations.
 
-Similar to the **Service Model Metadata - svcutil** tool for .NET Framework projects, the **dotnet-svcutil** is a command-line tool for generating a web service reference compatible with .NET projects.
+Similar to the [**Service Model Metadata - svcutil**](../../framework/wcf/servicemodel-metadata-utility-tool-svcutil-exe.md) tool for .NET Framework projects, the **dotnet-svcutil** is a command-line tool for generating a web service reference compatible with .NET projects.
 
-The **dotnet-svcutil** tool is an alternative option to the **WCF Web Service Reference** Visual Studio connected service provider. As a .NET tool, the **dotnet-svcutil** tool is available cross-platform on Linux, macOS, and Windows.
+The **dotnet-svcutil** tool is an alternative option to the [**WCF Web Service Reference**](wcf-web-service-reference-guide.md) Visual Studio connected service provider. As a .NET tool, the **dotnet-svcutil** tool is available cross-platform on Linux, macOS, and Windows.
 
-> **Important:**
+> [!IMPORTANT]
 > You should only reference services from a trusted source. Adding references from an untrusted source may compromise security.
 
 ## Prerequisites
 
-- The latest .NET SDK
+- The latest [.NET SDK](https://dotnet.microsoft.com/download)
 - Your favorite code editor
 
 ## Getting started
@@ -47,14 +44,14 @@ From a Windows, macOS, or Linux command window perform the following steps:
     cd HelloSvcutil
     ```
 
-2. Create a new C# web project in that directory using the `dotnet new` command as follows:
+2. Create a new C# web project in that directory using the [`dotnet new`](../tools/dotnet-new.md) command as follows:
 
     ```dotnetcli
     dotnet new web
     ```
 
-3. Install the `dotnet-svcutil` NuGet package as a CLI tool:
-
+3. Install the [`dotnet-svcutil` NuGet package](https://nuget.org/packages/dotnet-svcutil) as a CLI tool:
+    <!-- markdownlint-disable MD023 -->
     ```dotnetcli
     dotnet tool install --global dotnet-svcutil
     ```
@@ -69,7 +66,7 @@ The generated file is saved as _HelloSvcutil/ServiceReference/Reference.cs_. The
 
 ## Using the service reference
 
-1. Restore the WCF packages using the `dotnet restore` command as follows:
+1. Restore the WCF packages using the [`dotnet restore`](../tools/dotnet-restore.md) command as follows:
 
     ```dotnetcli
     dotnet restore
@@ -103,7 +100,7 @@ The generated file is saved as _HelloSvcutil/ServiceReference/Reference.cs_. The
 
     ```
 
-5. Run the application using the `dotnet run` command as follows:
+5. Run the application using the [`dotnet run`](../tools/dotnet-run.md) command as follows:
 
     ```dotnetcli
     dotnet run
@@ -134,12 +131,12 @@ The reference folder should contain the `ConnectedService.json` file that was cr
 
 ## Feedback & questions
 
-If you have any questions or feedback, open an issue on GitHub. You can also review any existing questions or issues at the WCF repo on GitHub.
+If you have any questions or feedback, [open an issue on GitHub](https://github.com/dotnet/wcf/issues/new). You can also review any existing questions or issues [at the WCF repo on GitHub](https://github.com/dotnet/wcf/issues?utf8=%E2%9C%93&q=is:issue%20label:tooling).
 
 ## Release notes
 
-- Refer to the Release notes for updated release information, including known issues.
+- Refer to the [Release notes](https://github.com/dotnet/wcf/blob/main/release-notes/dotnet-svcutil-notes.md) for updated release information, including known issues.
 
 ## Information
 
-- dotnet-svcutil NuGet Package
+- [dotnet-svcutil NuGet Package](https://nuget.org/packages/dotnet-svcutil)

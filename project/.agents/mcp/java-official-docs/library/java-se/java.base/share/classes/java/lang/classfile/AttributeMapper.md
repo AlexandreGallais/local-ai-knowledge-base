@@ -1,41 +1,27 @@
----
-title: "AttributeMapper interface (java.lang.classfile)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/AttributeMapper.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AttributeMapper interface (java.lang.classfile)
 
 ```java
 public interface AttributeMapper<A extends Attribute<A>>
 ```
 
-Bidirectional mapper between the `class` file representation of an
+Bidirectional mapper between the {@code class} file representation of an
 attribute and its API model.  The attribute mapper identifies an attribute
-by its name, and is used to parse the
-`class` file representation into a model, and to write the model
-representation back to a `class` file.
+by its {@linkplain Attribute#attributeName name}, and is used to parse the
+{@code class} file representation into a model, and to write the model
+representation back to a {@code class} file.
+<p>
+{@link Attributes} defines the mappers for predefined attributes in the JVMS
+and certain conventional attributes.  For other attributes (JVMS {@jvms
+4.7.1}), users can define their own {@code AttributeMapper}; classes that
+model those attributes should extend {@link CustomAttribute}.  To read those
+attributes, user-defined {@code AttributeMapper}s must be registered to the
+{@link ClassFile.AttributeMapperOption}.
 
-`Attributes` defines the mappers for predefined attributes in the JVMS
-and certain conventional attributes.  For other attributes (JVMS ), users can define their own `AttributeMapper`; classes that
-model those attributes should extend `CustomAttribute`.  To read those
-attributes, user-defined `AttributeMapper`s must be registered to the
-`ClassFile.AttributeMapperOption`.
-
-Parameters:
-
-- ``: the attribute type
-
-**See also:** Attributes
-
-**See also:** ClassFile.AttributeMapperOption
-
-**See also:** java.lang.classfile.attribute
-
-**Since:** 24
+@param <A> the attribute type
+@see Attributes
+@see ClassFile.AttributeMapperOption
+@see java.lang.classfile.attribute
+@since 24
 
 ## AttributeMapper.the
 
@@ -44,10 +30,10 @@ STATELESS, /** * In addition to standalone data, the attribute refers to the con
 ```
 
 The attribute contains only standalone data, and has no reference to
-other parts of its enclosing `class` file, besides the name of
+other parts of its enclosing {@code class} file, besides the name of
 the attribute.  Thus, its contents can always be bulk-copied to
-another `class` file.
-
+another {@code class} file.
+<p>
 For example, a bit mask is standalone data.
 
 ## AttributeMapper.the
@@ -57,18 +43,17 @@ CP_REFS, /** * In addition to standalone data and references to the constant poo
 ```
 
 In addition to standalone data, the attribute refers to the constant
-pool, including the BootstrapMethods
-attribute, of its enclosing `class` file.  Thus, it can be
-bulk-copied when the destination `class` file extends its
-constant pool from that of the original `class`.  It must be
+pool, including the {@link BootstrapMethodsAttribute BootstrapMethods}
+attribute, of its enclosing {@code class} file.  Thus, it can be
+bulk-copied when the destination {@code class} file extends its
+constant pool from that of the original {@code class}.  It must be
 expanded to translate constant pool references and rewritten when
 constant pool indices are not compatible.
+<p>
+For example, a {@link Utf8Entry} is a reference to the constant pool.
 
-For example, a `Utf8Entry` is a reference to the constant pool.
-
-**See also:** ConstantPoolBuilder#of(ClassModel)
-
-**See also:** ClassFile.ConstantPoolSharingOption
+@see ConstantPoolBuilder#of(ClassModel)
+@see ClassFile.ConstantPoolSharingOption
 
 ## AttributeMapper.library(type * variable, etc.)
 
@@ -77,16 +62,17 @@ LABELS, /** * The attribute refers to structures not managed by the library (typ
 ```
 
 In addition to standalone data and references to the constant pool,
-the attribute refers to positions into the `code` array of a
-Code attribute.  Thus, it can be bulked-copied
-when the `code` array is unchanged, which requires that the
-destination `class` file extends its constant pool from that of
-the original `class`.  It must be expanded to translate `Label`s or constant pool references and rewritten if the `code`
+the attribute refers to positions into the {@code code} array of a
+{@link CodeAttribute Code} attribute.  Thus, it can be bulked-copied
+when the {@code code} array is unchanged, which requires that the
+destination {@code class} file extends its constant pool from that of
+the original {@code class}.  It must be expanded to translate {@link
+Label}s or constant pool references and rewritten if the {@code code}
 array is perturbed, including when constant pool indices are not
 compatible.
-
-For example, a bci value, modeled by a `Label`, is a reference
-to a position in the `code` array.
+<p>
+For example, a bci value, modeled by a {@link Label}, is a reference
+to a position in the {@code code} array.
 
 ## AttributeMapper.UNSTABLE, /** * The attribute is completely unknown. As a result, expanding and * rewriting is not possible, and any difference between the destination *
 
@@ -98,11 +84,12 @@ The attribute refers to structures not managed by the library (type
 variable lists, etc.).  As a result, even when the attribute is
 expanded, those references may not be correctly translated, and the
 rewritten results may be incorrect.
-
-If the attribute is read from a `class` file, `ClassFile.AttributesProcessingOption` determines whether to preserve
+<p>
+If the attribute is read from a {@code class} file, {@link
+ClassFile.AttributesProcessingOption} determines whether to preserve
 or drop the attribute during transformation.
 
-**See also:** ClassFile.AttributesProcessingOption#DROP_UNSTABLE_ATTRIBUTES
+@see ClassFile.AttributesProcessingOption#DROP_UNSTABLE_ATTRIBUTES
 
 ## AttributeMapper.UNKNOWN } /** *
 
@@ -112,17 +99,15 @@ UNKNOWN } /** *
 
 The attribute is completely unknown.  As a result, expanding and
 rewriting is not possible, and any difference between the destination
-`class` file and its enclosing `class` file may make the
+{@code class} file and its enclosing {@code class} file may make the
 attribute incorrect.
-
-`ClassFile.AttributesProcessingOption` determines whether to
+<p>
+{@link ClassFile.AttributesProcessingOption} determines whether to
 preserve or drop the attribute during transformation.
 
-**See also:** UnknownAttribute
-
-**See also:** ClassFile.AttributesProcessingOption#DROP_UNSTABLE_ATTRIBUTES
-
-**See also:** ClassFile.AttributesProcessingOption#DROP_UNKNOWN_ATTRIBUTES
+@see UnknownAttribute
+@see ClassFile.AttributesProcessingOption#DROP_UNSTABLE_ATTRIBUTES
+@see ClassFile.AttributesProcessingOption#DROP_UNKNOWN_ATTRIBUTES
 
 ## AttributeMapper.name()
 
@@ -130,51 +115,52 @@ preserve or drop the attribute during transformation.
 String name()
 ```
 
+{@return the name of the attribute}
+
 ## AttributeMapper.readAttribute(AttributedElement, ClassReader, int)
 
 ```java
 A readAttribute(AttributedElement enclosing, ClassReader cf, int pos)
 ```
 
-Creates an `Attribute` instance from a `class` file for the
+Creates an {@link Attribute} instance from a {@code class} file for the
 Class-File API.
-
+<p>
 This method is called by the Class-File API to support reading of
 attributes.  Users should never call this method.
-
+<p>
 The Class-File API makes these promises about the call to this method:
-
-- The `Utf8Entry` for the name of the attribute is accessible
-with `cf.readEntry(pos - 6, Utf8Entry.class)`, and is validated;
-
-- The length of the attribute is accessible with `cf.readInt(pos - 4)`, and is validated to be positive and not beyond the length of the
-`class` file;
-
-- The `AttributedElement` attribute access functionalities on the
-`enclosing` model may not be accessed when this method is called,
+<ul>
+<li>The {@link Utf8Entry} for the name of the attribute is accessible
+with {@code cf.readEntry(pos - 6, Utf8Entry.class)}, and is validated;
+<li>The length of the attribute is accessible with {@code cf.readInt(pos
+- 4)}, and is validated to be positive and not beyond the length of the
+{@code class} file;
+<li>The {@link AttributedElement} attribute access functionalities on the
+{@code enclosing} model may not be accessed when this method is called,
 but can be accessed later by the returned attribute when it is accessible
 to users.
+</ul>
+<p>
+The returned {@code Attribute} must fulfill these requirements:
+<ul>
+<li>{@link Attribute#attributeMapper()} returns this mapper;
+<li>{@link Attribute#attributeName()} returns the attribute name in the
+{@code class} file.
+</ul>
 
-The returned `Attribute` must fulfill these requirements:
-
-- `Attribute.attributeMapper()` returns this mapper;
-
-- `Attribute.attributeName()` returns the attribute name in the
-`class` file.
-
-Parameters:
-
-- `enclosing`: the structure in which this attribute appears
-- `cf`: provides access to the `class` file to read from
-- `pos`: the offset into the `class` file at which the contents of the attribute starts
-
-**API note:** Implementations of this method should perform minimal work to return an
+@apiNote
+Implementations of this method should perform minimal work to return an
 attribute, as this method is called even if the resulting attribute is
 never used.  In particular, the implementation should avoid checking the
-validity of the attribute `class` file data or performing actions
+validity of the attribute {@code class} file data or performing actions
 that may throw exceptions.
 
-**Returns:** the read attribute
+@param enclosing the structure in which this attribute appears
+@param cf provides access to the {@code class} file to read from
+@param pos the offset into the {@code class} file at which the contents
+           of the attribute starts
+@return the read attribute
 
 ## AttributeMapper.writeAttribute(BufWriter, A)
 
@@ -182,46 +168,42 @@ that may throw exceptions.
 void writeAttribute(BufWriter buf, A attr)
 ```
 
-Writes an `Attribute` instance to a `class` file for the
+Writes an {@link Attribute} instance to a {@code class} file for the
 Class-File API.
-
+<p>
 This method is called by the Class-File API to support writing of
 attributes.  Users should never call this method.
-
+<p>
 The Class-File API makes these promises about the call to this method:
-
-- attr.attributeMapper() returns
+<ul>
+<li>{@link Attribute#attributeMapper() attr.attributeMapper()} returns
 this mapper;
-
-- The `buf` may already have data written, that its size may not be `0`.
-
-The `class` file writing must fulfill these requirements:
-
-- The attribute name `u2` and attribute length `u4` must
-be written to the `buf`;
-
-- attr.attributeName() is written as
-if with `buf.writeIndex(attr.attributeName())`;
-
-- The attribute length is the length, in bytes, of attribute contents
-written to the `buf`, not including the 6 bytes used by the name
+<li>The {@code buf} may already have data written, that its {@link
+BufWriter#size() size} may not be {@code 0}.
+</ul>
+<p>
+The {@code class} file writing must fulfill these requirements:
+<ul>
+<li>The attribute name {@code u2} and attribute length {@code u4} must
+be written to the {@code buf};
+<li>{@link Attribute#attributeName() attr.attributeName()} is written as
+if with {@code buf.writeIndex(attr.attributeName())};
+<li>The attribute length is the length, in bytes, of attribute contents
+written to the {@code buf}, not including the 6 bytes used by the name
 and the length;
+<li>If any information in the API model of the attribute, {@code attr},
+cannot be represented in the {@code class} file format of the attribute,
+an {@link IllegalArgumentException} is thrown.
+</ul>
 
-- If any information in the API model of the attribute, `attr`,
-cannot be represented in the `class` file format of the attribute,
-an `IllegalArgumentException` is thrown.
+@apiNote
+{@link BufWriter#patchInt} can be used to update the attribute length
+after the attribute contents are written to the {@code buf}.
 
-Parameters:
-
-- `buf`: the `BufWriter` to which the attribute should be written
-- `attr`: the attribute to write
-
-**API note:** `BufWriter.patchInt` can be used to update the attribute length
-after the attribute contents are written to the `buf`.
-
-Throws:
-
-- `IllegalArgumentException`: if some data in the API model of the attribute is invalid for the `class` file format
+@param buf the {@link BufWriter} to which the attribute should be written
+@param attr the attribute to write
+@throws IllegalArgumentException if some data in the API model of the
+        attribute is invalid for the {@code class} file format
 
 ## AttributeMapper.allowMultiple()
 
@@ -229,15 +211,20 @@ Throws:
 default boolean allowMultiple()
 ```
 
+{@return whether this attribute may appear more than once in one
+structure}
+<p>
 If an attribute does not allow multiple instances in one structure,
-can be supplied to a `ClassFileBuilder`, and multiple instances of
+can be supplied to a {@link ClassFileBuilder}, and multiple instances of
 the attribute are supplied to the builder, the last supplied attribute
 appears on the built structure.
 
-**Implementation requirements:** The default implementation returns `false`.
+@implSpec The default implementation returns {@code false}.
 
 ## AttributeMapper.stability()
 
 ```java
 AttributeStability stability()
 ```
+
+{@return the data dependency of this attribute on the {@code class} file}

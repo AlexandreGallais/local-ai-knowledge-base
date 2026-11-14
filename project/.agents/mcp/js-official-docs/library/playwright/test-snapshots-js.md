@@ -1,19 +1,13 @@
 ---
+id: test-snapshots
 title: "Visual comparisons"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/test-snapshots-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# Visual comparisons
 
 ## Introduction
 
 Playwright Test includes the ability to produce and visually compare screenshots using `await expect(page).toHaveScreenshot()`. On first execution, Playwright test will generate reference screenshots. Subsequent runs will compare against the reference.
 
-```js
+```js title="example.spec.ts"
 import { test, expect } from '@playwright/test';
 
 test('example test', async ({ page }) => {
@@ -52,7 +46,7 @@ The snapshot name `example-test-1-chromium-darwin.png` consists of a few parts:
     await expect(page).toHaveScreenshot('landing.png');
     ```
 
-- `chromium-darwin` - the browser name and the platform. Screenshots differ between browsers and platforms due to different rendering, fonts and more, so you will need different snapshots for them. If you use multiple projects in your configuration file, project name will be used instead of `chromium`.
+- `chromium-darwin` - the browser name and the platform. Screenshots differ between browsers and platforms due to different rendering, fonts and more, so you will need different snapshots for them. If you use multiple projects in your [configuration file](./test-configuration.md), project name will be used instead of `chromium`.
 
 The snapshot name and path can be configured with [`property: TestConfig.snapshotPathTemplate`] in the playwright config.
 
@@ -64,7 +58,7 @@ await expect(page).toHaveScreenshot('landing.webp');
 
 To store all unnamed snapshots as WebP, set the `type` option in the [`property: TestConfig.expect`] configuration:
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -100,12 +94,12 @@ await expect(page).toHaveScreenshot();
 
 ### maxDiffPixels and threshold
 
-Playwright Test uses the pixelmatch library. You can pass <example-value> options to modify its behavior:
+Playwright Test uses the [pixelmatch](https://github.com/mapbox/pixelmatch) library. You can [pass various options](./api/class-pageassertions.md#page-assertions-to-have-screenshot-1) to modify its behavior:
 
 - `threshold` defines which pixels are considered different. It is an acceptable perceived color difference between the same pixel in compared images, between `0` (strict) and `1` (lax). Defaults to `0.2`.
 - `maxDiffPixels` is an acceptable amount of pixels that could be different. Unset by default.
 
-```js
+```js title="example.spec.ts"
 import { test, expect } from '@playwright/test';
 
 test('example test', async ({ page }) => {
@@ -116,7 +110,7 @@ test('example test', async ({ page }) => {
 
 If you'd like to share the default values among all the tests in the project, you can specify them in the playwright config, either globally or per project:
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 export default defineConfig({
   expect: {
@@ -131,13 +125,13 @@ You can apply a custom stylesheet to your page while taking screenshot. This
 allows filtering out dynamic or volatile elements, hence improving the screenshot
 determinism.
 
-```css
+```css title="screenshot.css"
 iframe {
   visibility: hidden;
 }
 ```
 
-```js
+```js title="example.spec.ts"
 import { test, expect } from '@playwright/test';
 
 test('example test', async ({ page }) => {
@@ -148,7 +142,7 @@ test('example test', async ({ page }) => {
 
 If you'd like to share the default value among all the tests in the project, you can specify it in the playwright config, either globally or per project:
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 export default defineConfig({
   expect: {
@@ -165,7 +159,7 @@ Apart from screenshots, you can use `expect(value).toMatchSnapshot(snapshotName)
 
 Here we compare text content against the reference.
 
-```js
+```js title="example.spec.ts"
 import { test, expect } from '@playwright/test';
 
 test('example test', async ({ page }) => {

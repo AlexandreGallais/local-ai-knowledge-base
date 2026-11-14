@@ -1,21 +1,13 @@
----
-title: "std::time (part 1 of 2)"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/time.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::time
 
 Temporal quantification.
 
-#### Examples
+# Examples
 
-There are multiple ways to create a new `Duration`:
+There are multiple ways to create a new [`Duration`]:
 
-```rust
+```
+# use std::time::Duration;
 let five_seconds = Duration::from_secs(5);
 assert_eq!(five_seconds, Duration::from_millis(5_000));
 assert_eq!(five_seconds, Duration::from_micros(5_000_000));
@@ -27,9 +19,9 @@ let total = ten_seconds + seven_nanos;
 assert_eq!(total, Duration::new(10, 7));
 ```
 
-Using `Instant` to calculate how long a function took to run:
+Using [`Instant`] to calculate how long a function took to run:
 
-```
+```ignore (incomplete)
 let now = Instant::now();
 
 // Calling a slow function, it may take a while
@@ -37,7 +29,7 @@ slow_function();
 
 let elapsed_time = now.elapsed();
 println!("Running slow_function() took {} seconds.", elapsed_time.as_secs());
-```rust
+```
 
 ## struct Instant
 
@@ -46,7 +38,7 @@ pub struct Instant(time::Instant)
 ```
 
 A measurement of a monotonically nondecreasing clock.
-Opaque and useful only with `Duration`.
+Opaque and useful only with [`Duration`].
 
 Instants are always guaranteed, barring [platform bugs], to be no less than any previously
 measured instant when created, and are often useful for tasks such as measuring
@@ -70,7 +62,7 @@ system.
 
 Example:
 
-```rust
+```no_run
 use std::time::{Duration, Instant};
 use std::thread::sleep;
 
@@ -84,13 +76,15 @@ fn main() {
 }
 ```
 
+[platform bugs]: Instant#monotonicity
+
 # OS-specific behaviors
 
 An `Instant` is a wrapper around system-specific types and it may behave
 differently depending on the underlying operating system. For example,
 the following snippet is fine on Linux but panics on macOS:
 
-```rust
+```no_run
 use std::time::{Instant, Duration};
 
 let now = Instant::now();
@@ -120,10 +114,18 @@ the current time:
 | SOLID     | `get_tim`                                                            |
 | Windows   | [QueryPerformanceCounter]                                            |
 
+[currently]: crate::io#platform-specific-behavior
+[QueryPerformanceCounter]: https://docs.microsoft.com/en-us/windows/win32/api/profileapi/nf-profileapi-queryperformancecounter
+[`insecure_time` usercall]: https://edp.fortanix.com/docs/api/fortanix_sgx_abi/struct.Usercalls.html#method.insecure_time
+[timekeeping in SGX]: https://edp.fortanix.com/docs/concepts/rust-std/#codestdtimecode
+[clock_gettime]: https://pubs.opengroup.org/onlinepubs/9799919799/functions/clock_getres.html
+
 **Disclaimer:** These system calls might change over time.
 
-> Note: mathematical operations like `add` may panic if the underlying
+> Note: mathematical operations like [`add`] may panic if the underlying
 > structure cannot represent the new point in time.
+
+[`add`]: Instant::add
 
 ## Monotonicity
 
@@ -131,12 +133,18 @@ On all platforms `Instant` will try to use an OS API that guarantees monotonic b
 if available, which is the case for all [tier 1] platforms.
 In practice such guarantees are – under rare circumstances – broken by hardware, virtualization
 or operating system bugs. To work around these bugs and platforms not offering monotonic clocks
-`duration_since`, `elapsed` and `sub` saturate to zero. In older
-Rust versions this lead to a panic instead. `checked_duration_since` can be used to detect and
+[`duration_since`], [`elapsed`] and [`sub`](#impl-Sub-for-Instant) saturate to zero. In older
+Rust versions this lead to a panic instead. [`checked_duration_since`] can be used to detect and
 handle situations where monotonicity is violated, or `Instant`s are subtracted in the wrong order.
 
 This workaround obscures programming errors where earlier and later instants are accidentally
 swapped. For this reason future Rust versions may reintroduce panics.
+
+[tier 1]: https://doc.rust-lang.org/rustc/platform-support.html
+[`duration_since`]: Instant::duration_since
+[`elapsed`]: Instant::elapsed
+[`sub`]: Instant::sub
+[`checked_duration_since`]: Instant::checked_duration_since
 
 ## struct SystemTime
 
@@ -147,7 +155,7 @@ pub struct SystemTime(time::SystemTime)
 A measurement of the system clock, useful for talking to
 external entities like the file system or other processes.
 
-Distinct from the `Instant` type, this time measurement **is not
+Distinct from the [`Instant`] type, this time measurement **is not
 monotonic**. This means that you can save a file to the file system, then
 save another file to the file system, **and the second file has a
 `SystemTime` measurement earlier than the first**. In other words, an
@@ -155,10 +163,10 @@ operation that happens after another operation in real time may have an
 earlier `SystemTime`!
 
 Consequently, comparing two `SystemTime` instances to learn about the
-duration between them returns a `Result` instead of an infallible `Duration`
+duration between them returns a [`Result`] instead of an infallible [`Duration`]
 to indicate that this sort of time drift may happen and needs to be handled.
 
-Although a `SystemTime` cannot be directly inspected, the `UNIX_EPOCH`
+Although a `SystemTime` cannot be directly inspected, the [`UNIX_EPOCH`]
 constant is provided in this module as an anchor in time to learn
 information about a `SystemTime`. By calculating the duration from this
 fixed point in time, a `SystemTime` can be converted to a human-readable time,
@@ -177,7 +185,7 @@ so should not be relied on.
 
 Example:
 
-```rust
+```no_run
 use std::time::{Duration, SystemTime};
 use std::thread::sleep;
 
@@ -218,10 +226,20 @@ the current time:
 | SOLID     | `SOLID_RTC_ReadTime`                                                 |
 | Windows   | [GetSystemTimePreciseAsFileTime] / [GetSystemTimeAsFileTime]         |
 
+[currently]: crate::io#platform-specific-behavior
+[`insecure_time` usercall]: https://edp.fortanix.com/docs/api/fortanix_sgx_abi/struct.Usercalls.html#method.insecure_time
+[timekeeping in SGX]: https://edp.fortanix.com/docs/concepts/rust-std/#codestdtimecode
+[clock_gettime (Realtime Clock)]: https://pubs.opengroup.org/onlinepubs/9799919799/functions/clock_getres.html
+[GetSystemTimePreciseAsFileTime]: https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-getsystemtimepreciseasfiletime
+[GetSystemTimeAsFileTime]: https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-getsystemtimeasfiletime
+
 **Disclaimer:** These system calls might change over time.
 
-> Note: mathematical operations like `add` may panic if the underlying
+> Note: mathematical operations like [`add`] may panic if the underlying
 > structure cannot represent the new point in time.
+
+[`add`]: SystemTime::add
+[`UNIX_EPOCH`]: SystemTime::UNIX_EPOCH
 
 ## struct SystemTimeError
 
@@ -235,7 +253,7 @@ lies.
 
 # Examples
 
-```rust
+```no_run
 use std::thread::sleep;
 use std::time::{Duration, SystemTime};
 
@@ -258,7 +276,7 @@ Returns an instant corresponding to "now".
 
 # Examples
 
-```rust
+```
 use std::time::Instant;
 
 let now = Instant::now();
@@ -279,9 +297,11 @@ Previous Rust versions panicked when `earlier` was later than `self`. Currently 
 method saturates. Future versions may reintroduce the panic in some circumstances.
 See [Monotonicity].
 
+[Monotonicity]: Instant#monotonicity
+
 # Examples
 
-```rust
+```no_run
 use std::time::{Duration, Instant};
 use std::thread::sleep;
 
@@ -304,9 +324,11 @@ or None if that instant is later than this one.
 Due to [monotonicity bugs], even under correct logical ordering of the passed `Instant`s,
 this method can return `None`.
 
+[monotonicity bugs]: Instant#monotonicity
+
 # Examples
 
-```rust
+```no_run
 use std::time::{Duration, Instant};
 use std::thread::sleep;
 
@@ -328,7 +350,7 @@ or zero duration if that instant is later than this one.
 
 # Examples
 
-```rust
+```no_run
 use std::time::{Duration, Instant};
 use std::thread::sleep;
 
@@ -353,9 +375,11 @@ Previous Rust versions panicked when the current time was earlier than self. Cur
 method returns a Duration of zero in that case. Future versions may reintroduce the panic.
 See [Monotonicity].
 
+[Monotonicity]: Instant#monotonicity
+
 # Examples
 
-```rust
+```no_run
 use std::thread::sleep;
 use std::time::{Duration, Instant};
 
@@ -404,7 +428,7 @@ and is the same time representation as used in many Internet protocols.
 
 # Examples
 
-```rust
+```no_run
 use std::time::SystemTime;
 
 match SystemTime::now().duration_since(SystemTime::UNIX_EPOCH) {
@@ -423,7 +447,7 @@ Returns the system time corresponding to "now".
 
 # Examples
 
-```rust
+```
 use std::time::SystemTime;
 
 let sys_time = SystemTime::now();
@@ -440,17 +464,17 @@ Returns the amount of time elapsed from an earlier point in time.
 This function may fail because measurements taken earlier are not
 guaranteed to always be before later measurements (due to anomalies such
 as the system clock being adjusted either forwards or backwards).
-`Instant` can be used to measure elapsed time without this risk of failure.
+[`Instant`] can be used to measure elapsed time without this risk of failure.
 
-If successful, `[Ok]\([Duration])` is returned where the duration represents
+If successful, <code>[Ok]\([Duration])</code> is returned where the duration represents
 the amount of time elapsed from the specified measurement to this one.
 
-Returns an `Err` if `earlier` is later than `self`, and the error
+Returns an [`Err`] if `earlier` is later than `self`, and the error
 contains how far from `self` the time is.
 
 # Examples
 
-```rust
+```no_run
 use std::time::SystemTime;
 
 let sys_time = SystemTime::now();
@@ -471,18 +495,18 @@ current clock time.
 
 This function may fail as the underlying system clock is susceptible to
 drift and updates (e.g., the system clock could go backwards), so this
-function might not always succeed. If successful, `[Ok]\([Duration])` is
+function might not always succeed. If successful, <code>[Ok]\([Duration])</code> is
 returned where the duration represents the amount of time elapsed from
 this time measurement to the current time.
 
-To measure elapsed time reliably, use `Instant` instead.
+To measure elapsed time reliably, use [`Instant`] instead.
 
-Returns an `Err` if `self` is later than the current system time, and
+Returns an [`Err`] if `self` is later than the current system time, and
 the error contains how far from the current system time `self` is.
 
 # Examples
 
-```rust
+```no_run
 use std::thread::sleep;
 use std::time::{Duration, SystemTime};
 
@@ -490,4 +514,86 @@ let sys_time = SystemTime::now();
 let one_sec = Duration::from_secs(1);
 sleep(one_sec);
 assert!(sys_time.elapsed().unwrap() >= one_sec);
+```
+
+## SystemTime::checked_add
+
+```rust
+pub fn checked_add(&self, duration: Duration) -> Option<SystemTime>
+```
+
+Returns `Some(t)` where `t` is the time `self + duration` if `t` can be represented as
+`SystemTime` (which means it's inside the bounds of the underlying data structure), `None`
+otherwise.
+
+In the case that the `duration` is smaller than the time precision of the operating
+system, `Some(self)` will be returned.
+
+## SystemTime::checked_sub
+
+```rust
+pub fn checked_sub(&self, duration: Duration) -> Option<SystemTime>
+```
+
+Returns `Some(t)` where `t` is the time `self - duration` if `t` can be represented as
+`SystemTime` (which means it's inside the bounds of the underlying data structure), `None`
+otherwise.
+
+In the case that the `duration` is smaller than the time precision of the operating
+system, `Some(self)` will be returned.
+
+## const UNIX_EPOCH
+
+```rust
+pub const UNIX_EPOCH: SystemTime = SystemTime(time::UNIX_EPOCH)
+```
+
+This constant is defined to be "1970-01-01 00:00:00 UTC" on all systems with
+respect to the system clock. Using `duration_since` on an existing
+[`SystemTime`] instance can tell how far away from this point in time a
+measurement lies, and using `UNIX_EPOCH + duration` can be used to create a
+[`SystemTime`] instance to represent another fixed point in time.
+
+`duration_since(UNIX_EPOCH).unwrap().as_secs()` returns
+the number of non-leap seconds since the start of 1970 UTC.
+This is a POSIX `time_t` (as a `u64`),
+and is the same time representation as used in many Internet protocols.
+
+# Examples
+
+```no_run
+use std::time::{SystemTime, UNIX_EPOCH};
+
+match SystemTime::now().duration_since(UNIX_EPOCH) {
+    Ok(n) => println!("1970-01-01 00:00:00 UTC was {} seconds ago!", n.as_secs()),
+    Err(_) => panic!("SystemTime before UNIX EPOCH!"),
+}
+```
+
+## SystemTimeError::duration
+
+```rust
+pub fn duration(&self) -> Duration
+```
+
+Returns the positive duration which represents how far forward the
+second system time was from the first.
+
+A `SystemTimeError` is returned from the [`SystemTime::duration_since`]
+and [`SystemTime::elapsed`] methods whenever the second system time
+represents a point later in time than the `self` of the method call.
+
+# Examples
+
+```no_run
+use std::thread::sleep;
+use std::time::{Duration, SystemTime};
+
+let sys_time = SystemTime::now();
+sleep(Duration::from_secs(1));
+let new_sys_time = SystemTime::now();
+match sys_time.duration_since(new_sys_time) {
+    Ok(_) => {}
+    Err(e) => println!("SystemTimeError difference: {:?}", e.duration()),
+}
 ```

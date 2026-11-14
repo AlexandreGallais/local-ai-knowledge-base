@@ -1,12 +1,12 @@
 ---
 title: "NETSDK1240: The current .NET SDK feature band is discontinued"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/sdk-errors/netsdk1240.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to resolve build warning NETSDK1240, which reports that the feature band of the .NET SDK that built your project has no newer release.
+ms.topic: error-reference
+ms.date: 11/10/2026
+ai-usage: ai-assisted
+f1_keywords:
+- NETSDK1240
 ---
-
 # NETSDK1240: The current .NET SDK feature band is discontinued
 
 This warning indicates that the feature band of the .NET SDK used to build your project has no newer release, even though a newer SDK exists in a different feature band on the same major version. The full warning message is similar to the following example:
@@ -15,7 +15,7 @@ This warning indicates that the feature band of the .NET SDK used to build your 
 
 A .NET SDK version has the form `<major>.<minor>.<feature-band><patch>` (for example, `8.0.404`, where `4xx` is the feature band). When the recommended servicing path moves to a different feature band, the older band stops receiving updates. To resolve the warning, install the recommended .NET SDK version from <https://dotnet.microsoft.com/download> and update your `global.json` (if present) to select it.
 
-> **Note:**
+> [!NOTE]
 > This check is available in .NET 11 and later versions.
 
 ## How the check works
@@ -32,7 +32,7 @@ The check is opt-in and only runs when the MSBuild property `CheckSdkVulnerabili
 
 You can also pass `/p:CheckSdkVulnerabilities=true` to a .NET CLI command, such as `dotnet build`.
 
-The .NET CLI refreshes a local cache of SDK release metadata in the background under `~/.dotnet/sdk-vulnerability-cache/`. By default, it refreshes the cache at most once every 24 hours. To change that interval, set `DOTNET_SDK_VULNERABILITY_CHECK_INTERVAL_HOURS`. The MSBuild check reads only that cache; it does not make network calls during the build.
+The .NET CLI refreshes a local cache of SDK release metadata in the background under `~/.dotnet/sdk-vulnerability-cache/`. By default, it refreshes the cache at most once every 24 hours. To change that interval, set [`DOTNET_SDK_VULNERABILITY_CHECK_INTERVAL_HOURS`](../dotnet-environment-variables.md#dotnet_sdk_vulnerability_check_interval_hours). The MSBuild check reads only that cache; it does not make network calls during the build.
 
 ## Suppress the warning
 
@@ -45,10 +45,10 @@ To suppress the warning without updating the SDK:
   ```
 
 - Set `CheckSdkVulnerabilities` to `false` (the default) to turn off NETSDK1238, NETSDK1239, and NETSDK1240.
-- Set the `DOTNET_SDK_VULNERABILITY_CHECK_DISABLE` environment variable to `true`.
+- Set the [`DOTNET_SDK_VULNERABILITY_CHECK_DISABLE`](../dotnet-environment-variables.md#dotnet_sdk_vulnerability_check_disable) environment variable to `true`.
 
 ## See also
 
-- NETSDK1238: The current .NET SDK has known vulnerabilities
-- NETSDK1239: The current .NET SDK is end of life
-- .NET SDK versioning
+- [NETSDK1238: The current .NET SDK has known vulnerabilities](netsdk1238.md)
+- [NETSDK1239: The current .NET SDK is end of life](netsdk1239.md)
+- [.NET SDK versioning](../../versions/index.md)

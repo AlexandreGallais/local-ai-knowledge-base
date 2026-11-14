@@ -1,17 +1,16 @@
 ---
-title: "MSTest migration from v3 to v4"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/unit-testing-mstest-migration-v3-v4.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: MSTest migration from v3 to v4
+description: Learn about migrating to MSTest v4.
+author: Youssef1313
+ms.author: ygerges
+ms.date: 07/22/2025
 ---
 
 # Migrate from MSTest v3 to v4
 
 The stable version MSTest v4 is now available. This migration guide explores what's changed in MSTest v4 and how you can migrate to this version.
 
-> **Note:**
+> [!NOTE]
 > Generally speaking, MSTest v4 isn't binary compatible with MSTest v3. Any library compiled against v3 must be recompiled against v4.
 
 ## Source breaking changes
@@ -69,7 +68,7 @@ The `TestMethodAttribute` constructor has changed to have parameters that provid
 
 - If you have attribute applications such as `[TestMethodAttribute("Custom display name")]`, switch them to `[TestMethodAttribute(DisplayName = "Custom display name")]`.
 
-> **Tip:**
+> [!TIP]
 > An analyzer with a codefix is forthcoming to help you with this migration. A single click in the IDE will fix all instances in your solution.
 
 ### ClassCleanupBehavior enum is removed
@@ -132,7 +131,7 @@ The property `TestContext.ManagedType` is removed. Use `TestContext.FullyQualifi
 
 - Assert APIs that accept both `message` and `object[]` parameters now accept only `message`. Use string interpolation instead. This was a necessary change to support caller argument expression for assertion APIs.
 - `Assert.AreEqual` APIs for `IEquatable<T>` are removed. There are very few users of this API, and the API is misleading. Most users aren't affected by this removal, as the API didn't initially exist in MSTest v3 and was introduced in 3.2.2.
-  - This API causes issues for F# users as well. For example, see fsharp/fslang-suggestions/issues/905.
+  - This API causes issues for F# users as well. For example, see [fsharp/fslang-suggestions/issues/905](https://github.com/fsharp/fslang-suggestions/issues/905#issuecomment-2336831360).
   - If you're affected, you'll get a compile error about generic type inference. All you need to do is explicitly specify the type argument as `object`.
 - The deprecated `Assert.ThrowsException` APIs are removed. An analyzer and codefix in MSTest 3.10 help migrate you to the newer APIs.
 - Usages of `Assert.IsInstanceOfType<T>(x, out var t)` should now change to `var t = Assert.IsInstanceOfType<T>(x)`.
@@ -181,18 +180,18 @@ The `ConditionBaseAttribute.ShouldRun` property was renamed to `IsConditionMet`.
 
 The default severity of the following analyzers changed from Info to Warning:
 
-- MSTEST0001
-- MSTEST0007
-- MSTEST0017
-- MSTEST0023
-- MSTEST0024
-- MSTEST0025
-- MSTEST0030
-- MSTEST0031
-- MSTEST0032
-- MSTEST0035
-- MSTEST0037
-- MSTEST0045
+- [MSTEST0001](./mstest-analyzers/mstest0001.md)
+- [MSTEST0007](./mstest-analyzers/mstest0007.md)
+- [MSTEST0017](./mstest-analyzers/mstest0017.md)
+- [MSTEST0023](./mstest-analyzers/mstest0023.md)
+- [MSTEST0024](./mstest-analyzers/mstest0024.md)
+- [MSTEST0025](./mstest-analyzers/mstest0025.md)
+- [MSTEST0030](./mstest-analyzers/mstest0030.md)
+- [MSTEST0031](./mstest-analyzers/mstest0031.md)
+- [MSTEST0032](./mstest-analyzers/mstest0032.md)
+- [MSTEST0035](./mstest-analyzers/mstest0035.md)
+- [MSTEST0037](./mstest-analyzers/mstest0037.md)
+- [MSTEST0045](./mstest-analyzers/mstest0045.md)
 
 ## Behavior breaking changes
 
@@ -204,7 +203,7 @@ In v4, and when running with MTP, AppDomains are disabled by default (when not s
 
 However, the feature remains available. If you have scenarios requiring it, add the `DisableAppDomain` setting in runsettings.
 
-> **Important:**
+> [!IMPORTANT]
 > When AppDomain isolation is enabled, MSTest unloads the AppDomain after all tests finish, which aborts all the threads associated with the AppDomain, including foreground threads. As a result, if you had a foreground thread running forever in MSTest v3, the test run will complete successfully. The same scenario will hang in MSTest v4, which is ideal behavior because the process shouldn't exit when a foreground thread is still running.
 
 ### TestContext throws when used incorrectly

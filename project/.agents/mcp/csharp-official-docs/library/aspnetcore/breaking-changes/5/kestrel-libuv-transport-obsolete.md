@@ -1,21 +1,18 @@
 ---
 title: "Breaking change: Kestrel: Libuv transport marked as obsolete"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/5/kestrel-libuv-transport-obsolete.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 5.0 titled Kestrel: Libuv transport marked as obsolete"
+ms.date: 10/01/2020
+ms.custom: https://github.com/aspnet/Announcements/issues/424
 ---
-
 # Kestrel: Libuv transport marked as obsolete
 
-Earlier versions of ASP.NET Core used Libuv as an implementation detail of how asynchronous input and output was performed. In ASP.NET Core 2.0, an alternative, `System.Net.Sockets.Socket`-based transport was developed. In ASP.NET Core 2.1, Kestrel switched to using the `Socket`-based transport by default. Libuv support was maintained for compatibility reasons.
+Earlier versions of ASP.NET Core used Libuv as an implementation detail of how asynchronous input and output was performed. In ASP.NET Core 2.0, an alternative, <xref:System.Net.Sockets.Socket>-based transport was developed. In ASP.NET Core 2.1, Kestrel switched to using the `Socket`-based transport by default. Libuv support was maintained for compatibility reasons.
 
 At this point, use of the `Socket`-based transport is far more common than the Libuv transport. Consequently, Libuv support is marked as obsolete in .NET 5 and will be removed entirely in .NET 6.0.
 
 As part of this change, Libuv support for new operating system platforms (like Windows Arm64) won't be added in the .NET 5 timeframe.
 
-For discussion on blocking issues that require the use of the Libuv transport, see the GitHub issue at dotnet/aspnetcore#23409.
+For discussion on blocking issues that require the use of the Libuv transport, see the GitHub issue at [dotnet/aspnetcore#23409](https://github.com/dotnet/aspnetcore/issues/23409).
 
 ## Version introduced
 
@@ -35,15 +32,34 @@ The `Socket`-based transport is the default. There aren't any compelling reasons
 
 ## Recommended action
 
-Discontinue use of the Libuv package and extension methods.
+Discontinue use of the [Libuv package](https://www.nuget.org/packages/Libuv) and extension methods.
 
 ## Affected APIs
 
-- WebHostBuilderLibuvExtensions
-- WebHostBuilderLibuvExtensions.UseLibuv
-- Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.LibuvTransportOptions
-- Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.LibuvTransportOptions.ThreadCount
-- Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.LibuvTransportOptions.NoDelay
-- Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.LibuvTransportOptions.MaxWriteBufferSize
-- Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.LibuvTransportOptions.MaxReadBufferSize
+- [WebHostBuilderLibuvExtensions](/dotnet/api/microsoft.aspnetcore.hosting.webhostbuilderlibuvextensions?view=aspnetcore-3.0&preserve-view=false)
+- [WebHostBuilderLibuvExtensions.UseLibuv](/dotnet/api/microsoft.aspnetcore.hosting.webhostbuilderlibuvextensions.uselibuv?view=aspnetcore-3.0&preserve-view=false)
+- [Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.LibuvTransportOptions](/dotnet/api/microsoft.aspnetcore.server.kestrel.transport.libuv.libuvtransportoptions?view=aspnetcore-3.0&preserve-view=false)
+- [Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.LibuvTransportOptions.ThreadCount](/dotnet/api/microsoft.aspnetcore.server.kestrel.transport.libuv.libuvtransportoptions.threadcount?view=aspnetcore-3.0&preserve-view=false)
+- [Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.LibuvTransportOptions.NoDelay](/dotnet/api/microsoft.aspnetcore.server.kestrel.transport.libuv.libuvtransportoptions.nodelay?view=aspnetcore-3.0&preserve-view=false)
+- [Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.LibuvTransportOptions.MaxWriteBufferSize](/dotnet/api/microsoft.aspnetcore.server.kestrel.transport.libuv.libuvtransportoptions.maxwritebuffersize?view=aspnetcore-3.0&preserve-view=false)
+- [Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.LibuvTransportOptions.MaxReadBufferSize](/dotnet/api/microsoft.aspnetcore.server.kestrel.transport.libuv.libuvtransportoptions.maxreadbuffersize?view=aspnetcore-3.0&preserve-view=false)
 - `Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.LibuvTransportOptions.Backlog`
+
+<!--
+
+### Category
+
+ASP.NET Core
+
+### Affected APIs
+
+- `T:Microsoft.AspNetCore.Hosting.WebHostBuilderLibuvExtensions`
+- `Overload:Microsoft.AspNetCore.Hosting.WebHostBuilderLibuvExtensions.UseLibuv`
+- `T:Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.LibuvTransportOptions`
+- `P:Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.LibuvTransportOptions.ThreadCount`
+- `P:Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.LibuvTransportOptions.NoDelay`
+- `P:Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.LibuvTransportOptions.MaxWriteBufferSize`
+- `P:Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.LibuvTransportOptions.MaxReadBufferSize`
+- `P:Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.LibuvTransportOptions.Backlog`
+
+-->

@@ -1,12 +1,3 @@
----
-title: "Buffer class (java.nio)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/Buffer.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Buffer class (java.nio)
 
 ```java
@@ -15,132 +6,156 @@ public abstract sealed class Buffer permits ByteBuffer, CharBuffer, DoubleBuffer
 
 A container for data of a specific primitive type.
 
- A buffer is a linear, finite sequence of elements of a specific
+<p> A buffer is a linear, finite sequence of elements of a specific
 primitive type.  Aside from its content, the essential properties of a
-buffer are its capacity, limit, and position:
+buffer are its capacity, limit, and position: </p>
 
- A buffer's *capacity* is the number of elements it contains.  The
-  capacity of a buffer is never negative and never changes.
+<blockquote>
 
- A buffer's *limit* is the index of the first element that should
+  <p> A buffer's <i>capacity</i> is the number of elements it contains.  The
+  capacity of a buffer is never negative and never changes.  </p>
+
+  <p> A buffer's <i>limit</i> is the index of the first element that should
   not be read or written.  A buffer's limit is never negative and is never
-  greater than its capacity.
+  greater than its capacity.  </p>
 
- A buffer's *position* is the index of the next element to be
+  <p> A buffer's <i>position</i> is the index of the next element to be
   read or written.  A buffer's position is never negative and is never
-  greater than its limit.
+  greater than its limit.  </p>
 
- There is one subclass of this class for each non-boolean primitive type.
+</blockquote>
 
-####  Transferring data
+<p> There is one subclass of this class for each non-boolean primitive type.
 
- Each subclass of this class defines two categories of *get* and
-*put* operations:
 
- *Relative* operations read or write one or more elements starting
+<h2> Transferring data </h2>
+
+<p> Each subclass of this class defines two categories of <i>get</i> and
+<i>put</i> operations: </p>
+
+<blockquote>
+
+  <p> <i>Relative</i> operations read or write one or more elements starting
   at the current position and then increment the position by the number of
   elements transferred.  If the requested transfer exceeds the limit then a
-  relative *get* operation throws a `BufferUnderflowException`
-  and a relative *put* operation throws a `BufferOverflowException`; in either case, no data is transferred.
+  relative <i>get</i> operation throws a {@link BufferUnderflowException}
+  and a relative <i>put</i> operation throws a {@link
+  BufferOverflowException}; in either case, no data is transferred.  </p>
 
- *Absolute* operations take an explicit element index and do not
-  affect the position.  Absolute *get* and *put* operations throw
-  an `IndexOutOfBoundsException` if the index argument exceeds the
-  limit.
+  <p> <i>Absolute</i> operations take an explicit element index and do not
+  affect the position.  Absolute <i>get</i> and <i>put</i> operations throw
+  an {@link IndexOutOfBoundsException} if the index argument exceeds the
+  limit.  </p>
 
- Data may also, of course, be transferred in to or out of a buffer by the
+</blockquote>
+
+<p> Data may also, of course, be transferred in to or out of a buffer by the
 I/O operations of an appropriate channel, which are always relative to the
 current position.
 
-####  Marking and resetting
 
- A buffer's *mark* is the index to which its position will be reset
-when the reset method is invoked.  The mark is not always
+<h2> Marking and resetting </h2>
+
+<p> A buffer's <i>mark</i> is the index to which its position will be reset
+when the {@link #reset reset} method is invoked.  The mark is not always
 defined, but when it is defined it is never negative and is never greater
 than the position.  If the mark is defined then it is discarded when the
 position or the limit is adjusted to a value smaller than the mark.  If the
-mark is not defined then invoking the reset method causes an
-`InvalidMarkException` to be thrown.
+mark is not defined then invoking the {@link #reset reset} method causes an
+{@link InvalidMarkException} to be thrown.
 
-####  Invariants
 
- The following invariant holds for the mark, position, limit, and
+<h2> Invariants </h2>
+
+<p> The following invariant holds for the mark, position, limit, and
 capacity values:
 
-    `0` `<=`
-    *mark* `<=`
-    *position* `<=`
-    *limit* `<=`
-    *capacity*
+<blockquote>
+    {@code 0} {@code <=}
+    <i>mark</i> {@code <=}
+    <i>position</i> {@code <=}
+    <i>limit</i> {@code <=}
+    <i>capacity</i>
+</blockquote>
 
- A newly-created buffer always has a position of zero and a mark that is
+<p> A newly-created buffer always has a position of zero and a mark that is
 undefined.  The initial limit may be zero, or it may be some other value
 that depends upon the type of the buffer and the manner in which it is
 constructed.  Each element of a newly-allocated buffer is initialized
 to zero.
 
-####  Additional operations
 
- In addition to methods for accessing the position, limit, and capacity
+<h2> Additional operations </h2>
+
+<p> In addition to methods for accessing the position, limit, and capacity
 values and for marking and resetting, this class also defines the following
 operations upon buffers:
 
--
+<ul>
 
- `clear` makes a buffer ready for a new sequence of
-  channel-read or relative *put* operations: It sets the limit to the
-  capacity and the position to zero.
+  <li><p> {@link #clear} makes a buffer ready for a new sequence of
+  channel-read or relative <i>put</i> operations: It sets the limit to the
+  capacity and the position to zero.  </p></li>
 
--
+  <li><p> {@link #flip} makes a buffer ready for a new sequence of
+  channel-write or relative <i>get</i> operations: It sets the limit to the
+  current position and then sets the position to zero.  </p></li>
 
- `flip` makes a buffer ready for a new sequence of
-  channel-write or relative *get* operations: It sets the limit to the
-  current position and then sets the position to zero.
-
--
-
- `rewind` makes a buffer ready for re-reading the data that
+  <li><p> {@link #rewind} makes a buffer ready for re-reading the data that
   it already contains: It leaves the limit unchanged and sets the position
-  to zero.
+  to zero.  </p></li>
 
--
-
- The `slice` and slice(index,length)
+  <li><p> The {@link #slice} and {@link #slice(int,int) slice(index,length)}
   methods create a subsequence of a buffer: They leave the limit and the
-  position unchanged.
+  position unchanged. </p></li>
 
--
+  <li><p> {@link #duplicate} creates a shallow copy of a buffer: It leaves
+  the limit and the position unchanged. </p></li>
 
- `duplicate` creates a shallow copy of a buffer: It leaves
-  the limit and the position unchanged.
+</ul>
 
-####  Read-only buffers
 
- Every buffer is readable, but not every buffer is writable.  The
-mutation methods of each buffer class are specified as *optional
-operations* that will throw a `ReadOnlyBufferException` when
+<h2> Read-only buffers </h2>
+
+<p> Every buffer is readable, but not every buffer is writable.  The
+mutation methods of each buffer class are specified as <i>optional
+operations</i> that will throw a {@link ReadOnlyBufferException} when
 invoked upon a read-only buffer.  A read-only buffer does not allow its
 content to be changed, but its mark, position, and limit values are mutable.
 Whether or not a buffer is read-only may be determined by invoking its
-isReadOnly method.
+{@link #isReadOnly isReadOnly} method.
 
-####  Thread safety
 
- Buffers are not safe for use by multiple concurrent threads.  If a
+<h2> Thread safety </h2>
+
+<p> Buffers are not safe for use by multiple concurrent threads.  If a
 buffer is to be used by more than one thread then access to the buffer
 should be controlled by appropriate synchronization.
 
-####  Invocation chaining
 
- Methods in this class that do not otherwise have a value to return are
+<h2> Invocation chaining </h2>
+
+<p> Methods in this class that do not otherwise have a value to return are
 specified to return the buffer upon which they are invoked.  This allows
 method invocations to be chained; for example, the sequence of statements
 
+{@snippet lang=java :
+    b.flip();
+    b.position(23);
+    b.limit(42);
+}
+
 can be replaced by the single, more compact statement
 
-**Since:** 1.4
+{@snippet lang=java :
+    b.flip().position(23).limit(42);
+}
 
-**sealedGraph:**
+
+@author Mark Reinhold
+@author JSR-51 Expert Group
+@since 1.4
+@sealedGraph
 
 ## Buffer.capacity()
 
@@ -150,7 +165,7 @@ public final int capacity()
 
 Returns this buffer's capacity.
 
-**Returns:** The capacity of this buffer
+@return  The capacity of this buffer
 
 ## Buffer.position()
 
@@ -160,7 +175,7 @@ public final int position()
 
 Returns this buffer's position.
 
-**Returns:** The position of this buffer
+@return  The position of this buffer
 
 ## Buffer.position(int)
 
@@ -171,15 +186,14 @@ public Buffer position(int newPosition)
 Sets this buffer's position.  If the mark is defined and larger than the
 new position then it is discarded.
 
-Parameters:
+@param  newPosition
+        The new position value; must be non-negative
+        and no larger than the current limit
 
-- `newPosition`: The new position value; must be non-negative and no larger than the current limit
+@return  This buffer
 
-**Returns:** This buffer
-
-Throws:
-
-- `IllegalArgumentException`: If the preconditions on `newPosition` do not hold
+@throws  IllegalArgumentException
+         If the preconditions on {@code newPosition} do not hold
 
 ## Buffer.limit()
 
@@ -189,7 +203,7 @@ public final int limit()
 
 Returns this buffer's limit.
 
-**Returns:** The limit of this buffer
+@return  The limit of this buffer
 
 ## Buffer.limit(int)
 
@@ -201,15 +215,14 @@ Sets this buffer's limit.  If the position is larger than the new limit
 then it is set to the new limit.  If the mark is defined and larger than
 the new limit then it is discarded.
 
-Parameters:
+@param  newLimit
+        The new limit value; must be non-negative
+        and no larger than this buffer's capacity
 
-- `newLimit`: The new limit value; must be non-negative and no larger than this buffer's capacity
+@return  This buffer
 
-**Returns:** This buffer
-
-Throws:
-
-- `IllegalArgumentException`: If the preconditions on `newLimit` do not hold
+@throws  IllegalArgumentException
+         If the preconditions on {@code newLimit} do not hold
 
 ## Buffer.mark()
 
@@ -219,7 +232,7 @@ public Buffer mark()
 
 Sets this buffer's mark at its position.
 
-**Returns:** This buffer
+@return  This buffer
 
 ## Buffer.reset()
 
@@ -229,14 +242,13 @@ public Buffer reset()
 
 Resets this buffer's position to the previously-marked position.
 
- Invoking this method neither changes nor discards the mark's
-value.
+<p> Invoking this method neither changes nor discards the mark's
+value. </p>
 
-**Returns:** This buffer
+@return  This buffer
 
-Throws:
-
-- `InvalidMarkException`: If the mark has not been set
+@throws  InvalidMarkException
+         If the mark has not been set
 
 ## Buffer.clear()
 
@@ -247,14 +259,19 @@ public Buffer clear()
 Clears this buffer.  The position is set to zero, the limit is set to
 the capacity, and the mark is discarded.
 
- Invoke this method before using a sequence of channel-read or
-*put* operations to fill this buffer.  For example:
+<p> Invoke this method before using a sequence of channel-read or
+<i>put</i> operations to fill this buffer.  For example:
 
- This method does not actually erase the data in the buffer, but it
+{@snippet lang=java :
+    buf.clear();     // Prepare buffer for reading
+    in.read(buf);    // Read data
+}
+
+<p> This method does not actually erase the data in the buffer, but it
 is named as if it did because it will most often be used in situations
-in which that might as well be the case.
+in which that might as well be the case. </p>
 
-**Returns:** This buffer
+@return  This buffer
 
 ## Buffer.flip()
 
@@ -266,14 +283,22 @@ Flips this buffer.  The limit is set to the current position and then
 the position is set to zero.  If the mark is defined then it is
 discarded.
 
- After a sequence of channel-read or *put* operations, invoke
+<p> After a sequence of channel-read or <i>put</i> operations, invoke
 this method to prepare for a sequence of channel-write or relative
-*get* operations.  For example:
+<i>get</i> operations.  For example:
 
- This method is often used in conjunction with the compact method when transferring data from
-one place to another.
+{@snippet lang=java :
+    buf.put(magic);    // Prepend header
+    in.read(buf);      // Read data into rest of buffer
+    buf.flip();        // Flip buffer
+    out.write(buf);    // Write header + data to channel
+}
 
-**Returns:** This buffer
+<p> This method is often used in conjunction with the {@link
+java.nio.ByteBuffer#compact compact} method when transferring data from
+one place to another.  </p>
+
+@return  This buffer
 
 ## Buffer.rewind()
 
@@ -284,11 +309,17 @@ public Buffer rewind()
 Rewinds this buffer.  The position is set to zero and the mark is
 discarded.
 
- Invoke this method before a sequence of channel-write or *get*
+<p> Invoke this method before a sequence of channel-write or <i>get</i>
 operations, assuming that the limit has already been set
 appropriately.  For example:
 
-**Returns:** This buffer
+{@snippet lang=java :
+    out.write(buf);    // Write remaining data
+    buf.rewind();      // Rewind buffer
+    buf.get(array);    // Copy data into array
+}
+
+@return  This buffer
 
 ## Buffer.remaining()
 
@@ -299,7 +330,7 @@ public final int remaining()
 Returns the number of elements between the current position and the
 limit.
 
-**Returns:** The number of elements remaining in this buffer
+@return  The number of elements remaining in this buffer
 
 ## Buffer.hasRemaining()
 
@@ -310,7 +341,7 @@ public final boolean hasRemaining()
 Tells whether there are any elements between the current position and
 the limit.
 
-**Returns:** `true` if, and only if, there is at least one element
+@return  {@code true} if, and only if, there is at least one element
          remaining in this buffer
 
 ## Buffer.isReadOnly()
@@ -321,7 +352,7 @@ public abstract boolean isReadOnly()
 
 Tells whether or not this buffer is read-only.
 
-**Returns:** `true` if, and only if, this buffer is read-only
+@return  {@code true} if, and only if, this buffer is read-only
 
 ## Buffer.hasArray()
 
@@ -332,13 +363,14 @@ public abstract boolean hasArray()
 Tells whether or not this buffer is backed by an accessible
 array.
 
- If this method returns `true` then the array
-and arrayOffset methods may safely be invoked.
+<p> If this method returns {@code true} then the {@link #array() array}
+and {@link #arrayOffset() arrayOffset} methods may safely be invoked.
+</p>
 
-**Returns:** `true` if, and only if, this buffer
+@return  {@code true} if, and only if, this buffer
          is backed by an array and is not read-only
 
-**Since:** 1.6
+@since 1.6
 
 ## Buffer.array()
 
@@ -347,27 +379,28 @@ public abstract Object array()
 ```
 
 Returns the array that backs this
-buffer  *(optional operation)*.
+buffer&nbsp;&nbsp;<i>(optional operation)</i>.
 
- This method is intended to allow array-backed buffers to be
+<p> This method is intended to allow array-backed buffers to be
 passed to native code more efficiently. Concrete subclasses
 provide more strongly-typed return values for this method.
 
- Modifications to this buffer's content will cause the returned
+<p> Modifications to this buffer's content will cause the returned
 array's content to be modified, and vice versa.
 
- Invoke the hasArray method before invoking this
+<p> Invoke the {@link #hasArray hasArray} method before invoking this
 method in order to ensure that this buffer has an accessible backing
-array.
+array.  </p>
 
-**Returns:** The array that backs this buffer
+@return  The array that backs this buffer
 
-**Since:** 1.6
+@throws  ReadOnlyBufferException
+         If this buffer is backed by an array but is read-only
 
-Throws:
+@throws  UnsupportedOperationException
+         If this buffer is not backed by an accessible array
 
-- `ReadOnlyBufferException`: If this buffer is backed by an array but is read-only
-- `UnsupportedOperationException`: If this buffer is not backed by an accessible array
+@since 1.6
 
 ## Buffer.arrayOffset()
 
@@ -376,24 +409,25 @@ public abstract int arrayOffset()
 ```
 
 Returns the offset within this buffer's backing array of the first
-element of the buffer  *(optional operation)*.
+element of the buffer&nbsp;&nbsp;<i>(optional operation)</i>.
 
- If this buffer is backed by an array then buffer position *p*
-corresponds to array index *p* + `arrayOffset()`.
+<p> If this buffer is backed by an array then buffer position <i>p</i>
+corresponds to array index <i>p</i>&nbsp;+&nbsp;{@code arrayOffset()}.
 
- Invoke the hasArray method before invoking this
+<p> Invoke the {@link #hasArray hasArray} method before invoking this
 method in order to ensure that this buffer has an accessible backing
-array.
+array.  </p>
 
-**Returns:** The offset within this buffer's array
+@return  The offset within this buffer's array
          of the first element of the buffer
 
-**Since:** 1.6
+@throws  ReadOnlyBufferException
+         If this buffer is backed by an array but is read-only
 
-Throws:
+@throws  UnsupportedOperationException
+         If this buffer is not backed by an accessible array
 
-- `ReadOnlyBufferException`: If this buffer is backed by an array but is read-only
-- `UnsupportedOperationException`: If this buffer is not backed by an accessible array
+@since 1.6
 
 ## Buffer.isDirect()
 
@@ -402,11 +436,11 @@ public abstract boolean isDirect()
 ```
 
 Tells whether or not this buffer is
-*direct*.
+<a href="ByteBuffer.html#direct"><i>direct</i></a>.
 
-**Returns:** `true` if, and only if, this buffer is direct
+@return  {@code true} if, and only if, this buffer is direct
 
-**Since:** 1.6
+@since 1.6
 
 ## Buffer.slice()
 
@@ -417,20 +451,20 @@ public abstract Buffer slice()
 Creates a new buffer whose content is a shared subsequence of
 this buffer's content.
 
- The content of the new buffer will start at this buffer's current
+<p> The content of the new buffer will start at this buffer's current
 position.  Changes to this buffer's content will be visible in the new
 buffer, and vice versa; the two buffers' position, limit, and mark
 values will be independent.
 
- The new buffer's position will be zero, its capacity and its limit
+<p> The new buffer's position will be zero, its capacity and its limit
 will be the number of elements remaining in this buffer, its mark will be
 undefined. The new buffer will be direct if, and only if, this buffer is
 direct, and it will be read-only if, and only if, this buffer is
-read-only.
+read-only.  </p>
 
-**Returns:** The new buffer
+@return  The new buffer
 
-**Since:** 9
+@since 9
 
 ## Buffer.slice(int, int)
 
@@ -441,28 +475,32 @@ public abstract Buffer slice(int index, int length)
 Creates a new buffer whose content is a shared subsequence of
 this buffer's content.
 
- The content of the new buffer will start at position `index`
-in this buffer, and will contain `length` elements. Changes to
+<p> The content of the new buffer will start at position {@code index}
+in this buffer, and will contain {@code length} elements. Changes to
 this buffer's content will be visible in the new buffer, and vice versa;
 the two buffers' position, limit, and mark values will be independent.
 
- The new buffer's position will be zero, its capacity and its limit
-will be `length`, its mark will be undefined. The new buffer will
+<p> The new buffer's position will be zero, its capacity and its limit
+will be {@code length}, its mark will be undefined. The new buffer will
 be direct if, and only if, this buffer is direct, and it will be
-read-only if, and only if, this buffer is read-only.
+read-only if, and only if, this buffer is read-only.  </p>
 
-Parameters:
+@param   index
+         The position in this buffer at which the content of the new
+         buffer will start; must be non-negative and no larger than
+         {@link #limit() limit()}
 
-- `index`: The position in this buffer at which the content of the new buffer will start; must be non-negative and no larger than limit()
-- `length`: The number of elements the new buffer will contain; must be non-negative and no larger than `limit() - index`
+@param   length
+         The number of elements the new buffer will contain; must be
+         non-negative and no larger than {@code limit() - index}
 
-**Returns:** The new buffer
+@return  The new buffer
 
-**Since:** 13
+@throws  IndexOutOfBoundsException
+         If {@code index} is negative or greater than {@code limit()},
+         {@code length} is negative, or {@code length > limit() - index}
 
-Throws:
-
-- `IndexOutOfBoundsException`: If `index` is negative or greater than `limit()`, `length` is negative, or `length > limit() - index`
+@since 13
 
 ## Buffer.duplicate()
 
@@ -472,16 +510,16 @@ public abstract Buffer duplicate()
 
 Creates a new buffer that shares this buffer's content.
 
- The content of the new buffer will be that of this buffer.  Changes
+<p> The content of the new buffer will be that of this buffer.  Changes
 to this buffer's content will be visible in the new buffer, and vice
 versa; the two buffers' position, limit, and mark values will be
 independent.
 
- The new buffer's capacity, limit, position and mark values will be
+<p> The new buffer's capacity, limit, position and mark values will be
 identical to those of this buffer. The new buffer will be direct if, and
 only if, this buffer is direct, and it will be read-only if, and only if,
-this buffer is read-only.
+this buffer is read-only.  </p>
 
-**Returns:** The new buffer
+@return  The new buffer
 
-**Since:** 9
+@since 9

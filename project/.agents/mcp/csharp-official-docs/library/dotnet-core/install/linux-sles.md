@@ -1,172 +1,72 @@
 ---
-title: "Install .NET on SUSE Enterprise Linux (part 1 of 2)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/install/linux-sles.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Install .NET on SUSE Enterprise Linux
+description: Learn about which versions of .NET SDK and .NET Runtime are supported, and how to install .NET on SUSE Enterprise Linux (SLES).
+author: adegeo
+ms.author: adegeo
+ms.date: 11/11/2026
+ms.custom: linux-related-content
 ---
 
 # Install the .NET SDK or the .NET Runtime on SLES
 
 .NET is supported on SUSE Enterprise Linux (SLES). This article describes how to install .NET on SLES.
 
-Install the SDK (which includes the runtime) if you want to develop .NET apps. Or, if you only need to run apps, install the Runtime. If you're installing the Runtime, we suggest you install the **ASP.NET Core Runtime** as it includes both .NET and ASP.NET Core runtimes.
-
-Use the `dotnet --list-sdks` and `dotnet --list-runtimes` commands to see which versions are installed. For more information, see How to check that .NET is already installed.
+[!INCLUDE [linux-intro-sdk-vs-runtime](includes/linux-intro-sdk-vs-runtime.md)]
 
 ## Supported distributions
 
-The following table is a list of currently supported .NET releases on SLES. These versions remain supported until either the version of .NET reaches end-of-support or the version of SLES is no longer supported.
+The following table is a list of currently supported .NET releases on SLES. These versions remain supported until either the version of [.NET reaches end-of-support](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) or the version of SLES is no longer supported.
 
 | SLES   | .NET   |
 |--------|--------|
 | 16.0   | 11, 10 |
 | 15.7   | 11, 10 |
 
-The following versions of .NET are ❌ no longer supported:
-
-- .NET 9
-- .NET 8
-- .NET 7
-- .NET 6
-- .NET 5
-- .NET Core 3.1
-- .NET Core 3.0
-- .NET Core 2.2
-- .NET Core 2.1
-- .NET Core 2.0
+[!INCLUDE [versions-not-supported](includes/versions-not-supported.md)]
 
 ## Install preview versions
 
-Preview and release candidate versions of .NET aren't available in package repositories. You can install previews and release candidates of .NET in one of the following ways:
-
-- Scripted install with _install-dotnet.sh_
-- Manual binary extraction
+[!INCLUDE [preview installs don't support package managers](./includes/linux-install-previews.md)]
 
 ## Remove preview versions
 
-When using a package manager to manage your installation of .NET, you may run into a conflict if you've previously installed a preview release. The package manager may interpret the non-preview release as an earlier version of .NET. To install the non-preview release, first uninstall the preview versions. For more information about uninstalling .NET, see How to remove the .NET Runtime and SDK.
+[!INCLUDE [package-manager uninstall notice](./includes/linux-uninstall-preview-info.md)]
 
 ## SLES 16
 
-Before you install .NET, run the following commands to add the Microsoft package signing key to your list of trusted keys and add the Microsoft package repository. Open a terminal and run the following commands:
+[!INCLUDE [linux-prep-intro-generic](includes/linux-prep-intro-generic.md)]
 
 ```bash
 sudo rpm -Uvh https://packages.microsoft.com/config/sles/16/packages-microsoft-prod.rpm
 ```
 
-# .NET 10
+# [.NET 10](#tab/dotnet10)
 
-> **Important:**
-> The **Microsoft package feed** only publishes **x64** and **Arm64** packages for .NET 10. If you need to install .NET on other architectures, such as **Arm32**, don't use a package manager with the Microsoft package feed. For more information on installing .NET **without a package manager**, see one of the following articles:
->
-> - Use the `install-dotnet` script to install .NET.
-> - Manually install .NET.
+[!INCLUDE [linux-install-package-manager-x64-arm64](includes/linux-install-package-manager-x64-arm64.md)]
 
-### Install the SDK
+[!INCLUDE [linux-zyp-install-100](includes/linux-install-100-zyp.md)]
 
-The .NET SDK allows you to develop apps with .NET. If you install the .NET SDK, you don't need to install the corresponding runtime. To install the .NET SDK, run the following command:
-
-```bash
-sudo zypper install dotnet-sdk-10.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
-
-### Install the runtime
-
-The ASP.NET Core Runtime allows you to run apps that were made with .NET that didn't provide the runtime. The following command installs the ASP.NET Core Runtime, which is the most compatible runtime for .NET. In your terminal, run the following command:
-
-```bash
-sudo zypper install aspnetcore-runtime-10.0
-```
-
-As an alternative to the ASP.NET Core Runtime, you can install the .NET Runtime, which doesn't include ASP.NET Core support: replace `aspnetcore-runtime-10.0` in the previous command with `dotnet-runtime-10.0`:
-
-```bash
-sudo zypper install dotnet-runtime-10.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
-
-# .NET 9
+# [.NET 9](#tab/dotnet9)
 
 SUSE Enterprise Linux 16 is newly supported with .NET. The packages for .NET 9 aren't published yet.
 
-> **Important:**
-> The **Microsoft package feed** only publishes **x64** packages for .NET 9 and .NET 8. If you need to install .NET on other architectures, such as **Arm64**, don't use a package manager with the Microsoft package feed. For more information on installing .NET **without a package manager**, see one of the following articles:
->
-> - Use the `install-dotnet` script to install .NET.
-> - Manually install .NET.
+[!INCLUDE [linux-install-package-manager-x64-only](includes/linux-install-package-manager-x64-only.md)]
 
-### Install the SDK
+[!INCLUDE [linux-zyp-install-90](includes/linux-install-90-zyp.md)]
 
-The .NET SDK allows you to develop apps with .NET. If you install the .NET SDK, you don't need to install the corresponding runtime. To install the .NET SDK, run the following command:
-
-```bash
-sudo zypper install dotnet-sdk-9.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
-
-### Install the runtime
-
-The ASP.NET Core Runtime allows you to run apps that were made with .NET that didn't provide the runtime. The following command installs the ASP.NET Core Runtime, which is the most compatible runtime for .NET. In your terminal, run the following command:
-
-```bash
-sudo zypper install aspnetcore-runtime-9.0
-```
-
-As an alternative to the ASP.NET Core Runtime, you can install the .NET Runtime, which doesn't include ASP.NET Core support: replace `aspnetcore-runtime-9.0` in the previous command with `dotnet-runtime-9.0`:
-
-```bash
-sudo zypper install dotnet-runtime-9.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
-
-# .NET 8
+# [.NET 8](#tab/dotnet8)
 
 SUSE Enterprise Linux 16 is newly supported with .NET. The packages for .NET 8 aren't published yet.
 
-> **Important:**
-> The **Microsoft package feed** only publishes **x64** packages for .NET 9 and .NET 8. If you need to install .NET on other architectures, such as **Arm64**, don't use a package manager with the Microsoft package feed. For more information on installing .NET **without a package manager**, see one of the following articles:
->
-> - Use the `install-dotnet` script to install .NET.
-> - Manually install .NET.
+[!INCLUDE [linux-install-package-manager-x64-only](includes/linux-install-package-manager-x64-only.md)]
 
-### Install the SDK
-
-The .NET SDK allows you to develop apps with .NET. If you install the .NET SDK, you don't need to install the corresponding runtime. To install the .NET SDK, run the following command:
-
-```bash
-sudo zypper install dotnet-sdk-8.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
-
-### Install the runtime
-
-The ASP.NET Core Runtime allows you to run apps that were made with .NET that didn't provide the runtime. The following command installs the ASP.NET Core Runtime, which is the most compatible runtime for .NET. In your terminal, run the following command:
-
-```bash
-sudo zypper install aspnetcore-runtime-8.0
-```
-
-As an alternative to the ASP.NET Core Runtime, you can install the .NET Runtime, which doesn't include ASP.NET Core support: replace `aspnetcore-runtime-8.0` in the previous command with `dotnet-runtime-8.0`:
-
-```bash
-sudo zypper install dotnet-runtime-8.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
+[!INCLUDE [linux-zyp-install-80](includes/linux-install-80-zyp.md)]
 
 ---
 
 ## SLES 15
 
-Before you install .NET, run the following commands to add the Microsoft package signing key to your list of trusted keys and add the Microsoft package repository. Open a terminal and run the following commands:
+[!INCLUDE [linux-prep-intro-generic](includes/linux-prep-intro-generic.md)]
 
 ```bash
 sudo rpm -Uvh https://packages.microsoft.com/config/sles/15/packages-microsoft-prod.rpm
@@ -178,151 +78,29 @@ Currently, the SLES 15 Microsoft repository setup package installs the `microsof
 sudo ln -s /etc/yum.repos.d/microsoft-prod.repo /etc/zypp/repos.d/microsoft-prod.repo
 ```
 
-# .NET 10
+# [.NET 10](#tab/dotnet10)
 
-> **Important:**
-> The **Microsoft package feed** only publishes **x64** and **Arm64** packages for .NET 10. If you need to install .NET on other architectures, such as **Arm32**, don't use a package manager with the Microsoft package feed. For more information on installing .NET **without a package manager**, see one of the following articles:
->
-> - Use the `install-dotnet` script to install .NET.
-> - Manually install .NET.
+[!INCLUDE [linux-install-package-manager-x64-arm64](includes/linux-install-package-manager-x64-arm64.md)]
 
-### Install the SDK
+[!INCLUDE [linux-zyp-install-100](includes/linux-install-100-zyp.md)]
 
-The .NET SDK allows you to develop apps with .NET. If you install the .NET SDK, you don't need to install the corresponding runtime. To install the .NET SDK, run the following command:
+# [.NET 9](#tab/dotnet9)
 
-```bash
-sudo zypper install dotnet-sdk-10.0
-```
+[!INCLUDE [linux-install-package-manager-x64-only](includes/linux-install-package-manager-x64-only.md)]
 
-To learn how to use the .NET CLI, see .NET CLI overview.
+[!INCLUDE [linux-zyp-install-90](includes/linux-install-90-zyp.md)]
 
-### Install the runtime
+# [.NET 8](#tab/dotnet8)
 
-The ASP.NET Core Runtime allows you to run apps that were made with .NET that didn't provide the runtime. The following command installs the ASP.NET Core Runtime, which is the most compatible runtime for .NET. In your terminal, run the following command:
+[!INCLUDE [linux-install-package-manager-x64-only](includes/linux-install-package-manager-x64-only.md)]
 
-```bash
-sudo zypper install aspnetcore-runtime-10.0
-```
-
-As an alternative to the ASP.NET Core Runtime, you can install the .NET Runtime, which doesn't include ASP.NET Core support: replace `aspnetcore-runtime-10.0` in the previous command with `dotnet-runtime-10.0`:
-
-```bash
-sudo zypper install dotnet-runtime-10.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
-
-# .NET 9
-
-> **Important:**
-> The **Microsoft package feed** only publishes **x64** packages for .NET 9 and .NET 8. If you need to install .NET on other architectures, such as **Arm64**, don't use a package manager with the Microsoft package feed. For more information on installing .NET **without a package manager**, see one of the following articles:
->
-> - Use the `install-dotnet` script to install .NET.
-> - Manually install .NET.
-
-### Install the SDK
-
-The .NET SDK allows you to develop apps with .NET. If you install the .NET SDK, you don't need to install the corresponding runtime. To install the .NET SDK, run the following command:
-
-```bash
-sudo zypper install dotnet-sdk-9.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
-
-### Install the runtime
-
-The ASP.NET Core Runtime allows you to run apps that were made with .NET that didn't provide the runtime. The following command installs the ASP.NET Core Runtime, which is the most compatible runtime for .NET. In your terminal, run the following command:
-
-```bash
-sudo zypper install aspnetcore-runtime-9.0
-```
-
-As an alternative to the ASP.NET Core Runtime, you can install the .NET Runtime, which doesn't include ASP.NET Core support: replace `aspnetcore-runtime-9.0` in the previous command with `dotnet-runtime-9.0`:
-
-```bash
-sudo zypper install dotnet-runtime-9.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
-
-# .NET 8
-
-> **Important:**
-> The **Microsoft package feed** only publishes **x64** packages for .NET 9 and .NET 8. If you need to install .NET on other architectures, such as **Arm64**, don't use a package manager with the Microsoft package feed. For more information on installing .NET **without a package manager**, see one of the following articles:
->
-> - Use the `install-dotnet` script to install .NET.
-> - Manually install .NET.
-
-### Install the SDK
-
-The .NET SDK allows you to develop apps with .NET. If you install the .NET SDK, you don't need to install the corresponding runtime. To install the .NET SDK, run the following command:
-
-```bash
-sudo zypper install dotnet-sdk-8.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
-
-### Install the runtime
-
-The ASP.NET Core Runtime allows you to run apps that were made with .NET that didn't provide the runtime. The following command installs the ASP.NET Core Runtime, which is the most compatible runtime for .NET. In your terminal, run the following command:
-
-```bash
-sudo zypper install aspnetcore-runtime-8.0
-```
-
-As an alternative to the ASP.NET Core Runtime, you can install the .NET Runtime, which doesn't include ASP.NET Core support: replace `aspnetcore-runtime-8.0` in the previous command with `dotnet-runtime-8.0`:
-
-```bash
-sudo zypper install dotnet-runtime-8.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
+[!INCLUDE [linux-zyp-install-80](includes/linux-install-80-zyp.md)]
 
 ---
 
 ## How to install other versions
 
-All versions of .NET are available for download at <https://dotnet.microsoft.com/download/dotnet>, but require manual installation. You can try to use the package manager to install a different version of .NET. However, the requested version might not be available.
-
-The packages added to package manager feeds are named in a hackable format, for example: `{product}-{type}-{version}`.
-
-- **product**\
-The type of .NET product to install. Valid options are:
-
-  - `dotnet`
-  - `aspnetcore`
-
-- **type**\
-Chooses the SDK or the runtime. Valid options are:
-
-  - `sdk` (only available for the **dotnet** product)
-  - `runtime`
-
-- **version**\
-The version of the SDK or runtime to install. Valid options are any released version, such as:
-
-  - `9.0`
-  - `8.0`
-  - `3.1`
-  - `2.1`
-
-  It's possible the SDK/runtime you're trying to download isn't available for your Linux distribution. For a list of supported distributions, see Install .NET on Linux.
-
-### Examples
-
-- Install the ASP.NET Core 9.0 runtime: `aspnetcore-runtime-9.0`
-- Install the .NET Core 2.1 runtime: `dotnet-runtime-2.1`
-- Install the .NET 5 SDK: `dotnet-sdk-5.0`
-- Install the .NET Core 3.1 SDK: `dotnet-sdk-3.1`
-
-> **Note:**
-> Some package might not be available on your Linux distribution.
-
-### Package missing
-
-If the package-version combination doesn't work, it's not available. For example, there isn't an ASP.NET Core SDK. The SDK components for ASP.NET Core are included with the .NET SDK. The value `aspnetcore-sdk-8.0` is incorrect and should be `dotnet-sdk-8.0`. For a list of Linux distributions supported by .NET, see .NET dependencies and requirements.
+[!INCLUDE [package-manager-switcher](./includes/package-manager-heading-hack-pkgname.md)]
 
 ## Troubleshoot the package manager
 
@@ -330,18 +108,37 @@ This section provides information on common errors you might get while using the
 
 ### Unable to find package
 
-> **Important:**
-> The **Microsoft package feed** publishes packages for different architectures depending on the .NET version:
->
-> - **.NET 10**: **x64** and **Arm64** packages only.
-> - **.NET 9**: **x64** packages only.
-> - **.NET 8**: **x64** packages only.
->
-> If you need to install .NET on other architectures, such as **Arm32**, don't use a package manager with the Microsoft package feed. For more information on installing .NET **without a package manager**, see one of the following articles:
->
-> - Use the `install-dotnet` script to install .NET.
-> - Manually install .NET.
+[!INCLUDE [linux-install-package-manager-unsupported-architectures](includes/linux-install-package-manager-unsupported-architectures.md)]
 
 ### Failed to fetch
 
-While installing the .NET package, you may see an error similar to `signature verification failed for file 'repomd.xml' from repository 'packages-microsoft-com-prod'`. Generally speaking, this error means that the package feed for .NET is being upgraded with newer package versions, and that you should try again later. During an upgrade, the package feed should not be unavailable for more than 2 hours. If you continually receive this error for more than 2 hours, please file an issue at <https://github.com/dotnet/core/issues>.
+[!INCLUDE [package-manager-failed-to-fetch-rpm](includes/package-manager-failed-to-fetch-rpm.md)]
+
+## Dependencies
+
+When you install with a package manager, these libraries are installed for you. But, if you manually install .NET or you publish a self-contained app, you must make sure these libraries are installed:
+
+- ca-certificates
+- glibc
+- krb5
+- libgcc_s1
+- libicu
+- libopenssl3
+- libstdc++6
+- timezone
+
+For .NET 8, `libz1` (zlib) is also required.
+
+Dependencies can be installed with the `zypper install` command. The following snippet demonstrates installing the `krb5` library:
+
+```bash
+sudo zypper install krb5
+```
+
+For more information about the dependencies, see [Self-contained Linux apps](https://github.com/dotnet/core/blob/main/Documentation/self-contained-linux-apps.md).
+
+## Next steps
+
+- [.NET CLI overview](../tools/index.md)
+- [How to enable TAB completion for the .NET CLI](../tools/enable-tab-autocomplete.md)
+- [Tutorial: Create a console application with .NET](../tutorials/create-console-app.md)

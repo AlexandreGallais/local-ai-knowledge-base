@@ -1,12 +1,3 @@
----
-title: "core::borrow"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/borrow.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::borrow
 
 Utilities for working with borrowed data.
@@ -22,23 +13,23 @@ A trait for borrowing data.
 In Rust, it is common to provide different representations of a type for
 different use cases. For instance, storage location and management for a
 value can be specifically chosen as appropriate for a particular use via
-pointer types such as `Box<T>` or `Rc<T>`. Beyond these generic
+pointer types such as [`Box<T>`] or [`Rc<T>`]. Beyond these generic
 wrappers that can be used with any type, some types provide optional
 facets providing potentially costly functionality. An example for such a
-type is `String` which adds the ability to extend a string to the basic
-`str`. This requires keeping additional information unnecessary for a
+type is [`String`] which adds the ability to extend a string to the basic
+[`str`]. This requires keeping additional information unnecessary for a
 simple, immutable string.
 
 These types provide access to the underlying data through references
 to the type of that data. They are said to be ‘borrowed as’ that type.
-For instance, a `Box<T>` can be borrowed as `T` while a `String`
+For instance, a [`Box<T>`] can be borrowed as `T` while a [`String`]
 can be borrowed as `str`.
 
 Types express that they can be borrowed as some type `T` by implementing
 `Borrow<T>`, providing a reference to a `T` in the trait’s
-`borrow` method. A type is free to borrow as several different types.
+[`borrow`] method. A type is free to borrow as several different types.
 If it wishes to mutably borrow as the type, allowing the underlying data
-to be modified, it can additionally implement `BorrowMut<T>`.
+to be modified, it can additionally implement [`BorrowMut<T>`].
 
 Further, when providing implementations for additional traits, it needs
 to be considered whether they should behave identically to those of the
@@ -53,26 +44,33 @@ same result as `x == y`.
 
 If generic code merely needs to work for all types that can
 provide a reference to related type `T`, it is often better to use
-`AsRef<T>` as more types can safely implement it.
+[`AsRef<T>`] as more types can safely implement it.
+
+[`Box<T>`]: ../../std/boxed/struct.Box.html
+[`Mutex<T>`]: ../../std/sync/struct.Mutex.html
+[`Rc<T>`]: ../../std/rc/struct.Rc.html
+[`String`]: ../../std/string/struct.String.html
+[`borrow`]: Borrow::borrow
 
 # Examples
 
-As a data collection, `HashMap<K, V>` owns both keys and values. If
+As a data collection, [`HashMap<K, V>`] owns both keys and values. If
 the key’s actual data is wrapped in a managing type of some kind, it
 should, however, still be possible to search for a value using a
 reference to the key’s data. For instance, if the key is a string, then
-it is likely stored with the hash map as a `String`, while it should
-be possible to search using a `&str``str`. Thus, `insert` needs to
+it is likely stored with the hash map as a [`String`], while it should
+be possible to search using a [`&str`][`str`]. Thus, `insert` needs to
 operate on a `String` while `get` needs to be able to use a `&str`.
 
 Slightly simplified, the relevant parts of `HashMap<K, V>` look like
 this:
 
-```rust
+```
 use std::borrow::Borrow;
 use std::hash::Hash;
 
 pub struct HashMap<K, V> {
+    # marker: ::std::marker::PhantomData<(K, V)>,
     // fields omitted
 }
 
@@ -80,6 +78,7 @@ impl<K, V> HashMap<K, V> {
     pub fn insert(&self, key: K, value: V) -> Option<V>
     where K: Hash + Eq
     {
+        # unimplemented!()
         // ...
     }
 
@@ -88,6 +87,7 @@ impl<K, V> HashMap<K, V> {
         K: Borrow<Q>,
         Q: Hash + Eq + ?Sized
     {
+        # unimplemented!()
         // ...
     }
 }
@@ -121,7 +121,7 @@ As a consequence, the hash map breaks if a `K` wrapping a `Q` value
 produces a different hash than `Q`. For instance, imagine you have a
 type that wraps a string but compares ASCII letters ignoring their case:
 
-```rust
+```
 pub struct CaseInsensitiveString(String);
 
 impl PartialEq for CaseInsensitiveString {
@@ -136,7 +136,9 @@ impl Eq for CaseInsensitiveString { }
 Because two equal values need to produce the same hash value, the
 implementation of `Hash` needs to ignore ASCII case, too:
 
-```rust
+```
+# use std::hash::{Hash, Hasher};
+# pub struct CaseInsensitiveString(String);
 impl Hash for CaseInsensitiveString {
     fn hash<H: Hasher>(&self, state: &mut H) {
         for c in self.0.as_bytes() {
@@ -153,6 +155,10 @@ from `str` and therefore must not, in fact, implement `Borrow<str>`.
 If it wants to allow others access to the underlying `str`, it can do
 that via `AsRef<str>` which doesn’t carry any extra requirements.
 
+[`Hash`]: crate::hash::Hash
+[`HashMap<K, V>`]: ../../std/collections/struct.HashMap.html
+[`String`]: ../../std/string/struct.String.html
+
 ## trait BorrowMut
 
 ```rust
@@ -161,6 +167,6 @@ pub const trait BorrowMut<Borrowed: ?Sized>: [const] Borrow<Borrowed>
 
 A trait for mutably borrowing data.
 
-As a companion to `Borrow<T>` this trait allows a type to borrow as
-an underlying type by providing a mutable reference. See `Borrow<T>`
+As a companion to [`Borrow<T>`] this trait allows a type to borrow as
+an underlying type by providing a mutable reference. See [`Borrow<T>`]
 for more information on borrowing as another type.

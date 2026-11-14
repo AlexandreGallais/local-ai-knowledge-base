@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugGuidToTypeEnum Interface"
 title: "ICorDebugGuidToTypeEnum Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugguidtotypeenum-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugGuidToTypeEnum"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugGuidToTypeEnum"
+helpviewer_keywords:
+  - "ICorDebugGuidToTypeEnum interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugGuidToTypeEnum Interface
 
 Provides an enumerator that defines the mapping between a set of GUIDs and their corresponding types, which are represented by ICorDebugType instances. This interface inherits the methods from the ICorDebugEnum interface.
@@ -15,11 +23,11 @@ Provides an enumerator that defines the mapping between a set of GUIDs and their
 
 |Method|Description|
 |------------|-----------------|
-|ICorDebugGuidToTypeEnum::Next|Gets the specified number of CorDebugGuidToTypeMapping instances that map GUIDs to type information.|
+|[ICorDebugGuidToTypeEnum::Next](icordebugguidtotypeenum-next-method.md)|Gets the specified number of [CorDebugGuidToTypeMapping](cordebugguidtotypemapping-structure.md) instances that map GUIDs to type information.|
 
 ## Remarks
 
-An `ICorDebugGuidToTypeEnum` interface object can be retrieved by calling the ICorDebugAppDomain3::GetCachedWinRTTypes method. A debugger can call this interface's Next method to retrieve CorDebugGuidToTypeMapping objects that represent mappings of managed representations of Windows Runtime types loaded in the application domain used for the call to the ICorDebugAppDomain3::GetCachedWinRTTypes method.
+An `ICorDebugGuidToTypeEnum` interface object can be retrieved by calling the [ICorDebugAppDomain3::GetCachedWinRTTypes](icordebugappdomain3-getcachedwinrttypes-method.md) method. A debugger can call this interface's [Next](icordebugguidtotypeenum-next-method.md) method to retrieve [CorDebugGuidToTypeMapping](cordebugguidtotypemapping-structure.md) objects that represent mappings of managed representations of Windows Runtime types loaded in the application domain used for the call to the [ICorDebugAppDomain3::GetCachedWinRTTypes](icordebugappdomain3-getcachedwinrttypes-method.md) method.
 
 ## Requirements
 

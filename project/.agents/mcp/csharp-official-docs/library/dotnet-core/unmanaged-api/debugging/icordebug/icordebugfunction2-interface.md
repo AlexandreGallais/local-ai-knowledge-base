@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugFunction2 Interface"
 title: "ICorDebugFunction2 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugfunction2-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugFunction2"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugFunction2"
+helpviewer_keywords:
+  - "ICorDebugFunction2 interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugFunction2 Interface
 
 Logically extends the ICorDebugFunction interface to provide support for Just My Code step-through debugging, which skips non-user code.
@@ -15,19 +23,19 @@ Logically extends the ICorDebugFunction interface to provide support for Just My
 
 |Method|Description|
 |------------|-----------------|
-|EnumerateNativeCode Method|(Not yet implemented.) Gets an interface pointer to an ICorDebugCodeEnum that contains the native code statements in the function referenced by this ICorDebugFunction2 object.|
-|GetJMCStatus Method|Gets a value that indicates whether this function is marked as user code.|
-|GetVersionNumber Method|Gets the Edit and Continue version of this function.|
-|SetJMCStatus Method|Marks this function for Just My Code stepping.|
+|[EnumerateNativeCode Method](icordebugfunction2-enumeratenativecode-method.md)|(Not yet implemented.) Gets an interface pointer to an ICorDebugCodeEnum that contains the native code statements in the function referenced by this ICorDebugFunction2 object.|
+|[GetJMCStatus Method](icordebugfunction2-getjmcstatus-method.md)|Gets a value that indicates whether this function is marked as user code.|
+|[GetVersionNumber Method](icordebugfunction2-getversionnumber-method.md)|Gets the Edit and Continue version of this function.|
+|[SetJMCStatus Method](icordebugfunction2-setjmcstatus-method.md)|Marks this function for Just My Code stepping.|
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

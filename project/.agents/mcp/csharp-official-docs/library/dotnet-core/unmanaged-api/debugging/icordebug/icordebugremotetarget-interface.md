@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugRemoteTarget Interface"
 title: "ICorDebugRemoteTarget Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugremotetarget-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugRemoteTarget"
+api_location:
+  - "CorDebug.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugRemoteTarget"
+helpviewer_keywords:
+  - "ICorDebugRemoteTarget interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugRemoteTarget Interface
 
 Provides methods that enable developers to debug Silverlight-based applications in the common language runtime (CLR) environment.
@@ -30,7 +38,7 @@ interface ICorDebugRemoteTarget  : IUnknown
 
 |Method|Description|
 |------------|-----------------|
-|ICorDebugRemoteTarget::GetHostName Method|Returns the host name or the IP address of a remote machine.|
+|[ICorDebugRemoteTarget::GetHostName Method](icordebugremotetarget-gethostname-method.md)|Returns the host name or the IP address of a remote machine.|
 
 ## Remarks
 
@@ -38,7 +46,7 @@ Mixed-mode (that is, managed and native code) debugging is not supported on non-
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl
 
@@ -48,5 +56,5 @@ Mixed-mode (that is, managed and native code) debugging is not supported on non-
 
 ## See also
 
-- ICorDebugRemote Interface
-- ICorDebug Interface
+- [ICorDebugRemote Interface](icordebugremote-interface.md)
+- [ICorDebug Interface](icordebug-interface.md)

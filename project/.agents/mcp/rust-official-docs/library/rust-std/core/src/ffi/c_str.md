@@ -1,15 +1,6 @@
----
-title: "core::ffi::c_str"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/ffi/c_str.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::ffi::c_str
 
-`CStr` and its related types.
+[`CStr`] and its related types.
 
 ## enum FromBytesWithNulError
 
@@ -19,15 +10,15 @@ pub enum FromBytesWithNulError
 
 An error indicating that a nul byte was not in the expected position.
 
-The slice used to create a `CStr` must have one and only one nul byte,
+The slice used to create a [`CStr`] must have one and only one nul byte,
 positioned at the end.
 
-This error is created by the `CStr::from_bytes_with_nul` method.
+This error is created by the [`CStr::from_bytes_with_nul`] method.
 See its documentation for more.
 
 # Examples
 
-```rust
+```
 use std::ffi::{CStr, FromBytesWithNulError};
 
 let _: FromBytesWithNulError = CStr::from_bytes_with_nul(b"f\0oo").unwrap_err();
@@ -41,10 +32,10 @@ pub struct FromBytesUntilNulError(())
 
 An error indicating that no nul byte was present.
 
-A slice used to create a `CStr` must contain a nul byte somewhere
+A slice used to create a [`CStr`] must contain a nul byte somewhere
 within the slice.
 
-This error is created by the `CStr::from_bytes_until_nul` method.
+This error is created by the [`CStr::from_bytes_until_nul`] method.
 
 ## CStr::from_ptr
 
@@ -56,8 +47,8 @@ Wraps a raw C string with a safe C string wrapper.
 
 This function will wrap the provided `ptr` with a `CStr` wrapper, which
 allows inspection and interoperation of non-owned C strings. The total
-size of the terminated buffer must be smaller than `isize::MAX` **bytes**
-in memory (a restriction from `slice::from_raw_parts`).
+size of the terminated buffer must be smaller than [`isize::MAX`] **bytes**
+in memory (a restriction from [`slice::from_raw_parts`]).
 
 # Safety
 
@@ -88,7 +79,7 @@ or by explicit annotation.
 
 # Examples
 
-```rust
+```
 use std::ffi::{c_char, CStr};
 
 fn my_string() -> *const c_char {
@@ -101,7 +92,7 @@ unsafe {
 }
 ```
 
-```rust
+```
 use std::ffi::{c_char, CStr};
 
 const HELLO_PTR: *const c_char = {
@@ -113,6 +104,8 @@ const HELLO: &CStr = unsafe { CStr::from_ptr(HELLO_PTR) };
 assert_eq!(c"Hello, world!", HELLO);
 ```
 
+[valid]: core::ptr#safety
+
 ## CStr::from_bytes_until_nul
 
 ```rust
@@ -122,7 +115,7 @@ pub const fn from_bytes_until_nul(bytes: &[u8]) -> Result<&CStr, FromBytesUntilN
 Creates a C string wrapper from a byte slice with any number of nuls.
 
 This method will create a `CStr` from any byte slice that contains at
-least one nul byte. Unlike with `CStr::from_bytes_with_nul`, the caller
+least one nul byte. Unlike with [`CStr::from_bytes_with_nul`], the caller
 does not need to know where the nul byte is located.
 
 If the first byte is a nul character, this method will return an
@@ -130,10 +123,10 @@ empty `CStr`. If multiple nul characters are present, the `CStr` will
 end at the first one.
 
 If the slice only has a single nul byte at the end, this method is
-equivalent to `CStr::from_bytes_with_nul`.
+equivalent to [`CStr::from_bytes_with_nul`].
 
 # Examples
-```rust
+```
 use std::ffi::CStr;
 
 let mut buffer = [0u8; 16];
@@ -162,11 +155,11 @@ wrapper after ensuring that the byte slice is nul-terminated
 and does not contain any interior nul bytes.
 
 If the nul byte may not be at the end,
-`CStr::from_bytes_until_nul` can be used instead.
+[`CStr::from_bytes_until_nul`] can be used instead.
 
 # Examples
 
-```rust
+```
 use std::ffi::CStr;
 
 let cstr = CStr::from_bytes_with_nul(b"hello\0");
@@ -175,7 +168,7 @@ assert_eq!(cstr, Ok(c"hello"));
 
 Creating a `CStr` without a trailing nul terminator is an error:
 
-```rust
+```
 use std::ffi::{CStr, FromBytesWithNulError};
 
 let cstr = CStr::from_bytes_with_nul(b"hello");
@@ -184,7 +177,7 @@ assert_eq!(cstr, Err(FromBytesWithNulError::NotNulTerminated));
 
 Creating a `CStr` with an interior nul byte is an error:
 
-```rust
+```
 use std::ffi::{CStr, FromBytesWithNulError};
 
 let cstr = CStr::from_bytes_with_nul(b"he\0llo\0");
@@ -208,7 +201,7 @@ nul bytes.
 
 # Examples
 
-```rust
+```
 use std::ffi::CStr;
 
 let bytes = b"Hello world!\0";
@@ -230,7 +223,7 @@ to a contiguous region of memory terminated with a 0 byte to represent
 the end of the string.
 
 The type of the returned pointer is
-`*const c_char`[crate::ffi::c_char], and whether it's
+[`*const c_char`][crate::ffi::c_char], and whether it's
 an alias for `*const i8` or `*const u8` is platform-specific.
 
 **WARNING**
@@ -242,7 +235,8 @@ It is your responsibility to make sure that the underlying memory is not
 freed too early. For example, the following code will cause undefined
 behavior when `ptr` is used inside the `unsafe` block:
 
-```rust
+```no_run
+# #![expect(dangling_pointers_from_temporaries)]
 use std::ffi::{CStr, CString};
 
 // 💀 The meaning of this entire program is undefined,
@@ -271,7 +265,7 @@ lifetime information, and the `CString` is deallocated immediately after
 the expression that it is part of has been evaluated.
 To fix the problem, bind the `CString` to a local variable:
 
-```rust
+```
 use std::ffi::{CStr, CString};
 
 let c_str = CString::new("Hi!".to_uppercase()).unwrap();
@@ -294,7 +288,7 @@ Returns the length of `self`. Like C's `strlen`, this does not include the nul t
 
 # Examples
 
-```rust
+```
 assert_eq!(c"foo".count_bytes(), 3);
 assert_eq!(c"".count_bytes(), 0);
 ```
@@ -309,7 +303,7 @@ Returns `true` if `self.to_bytes()` has a length of 0.
 
 # Examples
 
-```rust
+```
 assert!(!c"foo".is_empty());
 assert!(c"".is_empty());
 ```
@@ -331,7 +325,7 @@ string has.
 
 # Examples
 
-```rust
+```
 assert_eq!(c"foo".to_bytes(), b"foo");
 ```
 
@@ -343,7 +337,7 @@ pub const fn to_bytes_with_nul(&self) -> &[u8]
 
 Converts this C string to a byte slice containing the trailing 0 byte.
 
-This function is the equivalent of `CStr::to_bytes` except that it
+This function is the equivalent of [`CStr::to_bytes`] except that it
 will retain the trailing nul terminator instead of chopping it off.
 
 > **Note**: This method is currently implemented as a 0-cost cast, but
@@ -352,7 +346,7 @@ will retain the trailing nul terminator instead of chopping it off.
 
 # Examples
 
-```rust
+```
 assert_eq!(c"foo".to_bytes_with_nul(), b"foo\0");
 ```
 
@@ -362,14 +356,16 @@ assert_eq!(c"foo".to_bytes_with_nul(), b"foo\0");
 pub const fn to_str(&self) -> Result<&str, str::Utf8Error>
 ```
 
-Yields a `&[str]` slice if the `CStr` contains valid UTF-8.
+Yields a <code>&[str]</code> slice if the `CStr` contains valid UTF-8.
 
 If the contents of the `CStr` are valid UTF-8 data, this
-function will return the corresponding `&[str]` slice. Otherwise,
+function will return the corresponding <code>&[str]</code> slice. Otherwise,
 it will return an error with details of where UTF-8 validation failed.
+
+[str]: prim@str "str"
 
 # Examples
 
-```rust
+```
 assert_eq!(c"foo".to_str(), Ok("foo"));
 ```

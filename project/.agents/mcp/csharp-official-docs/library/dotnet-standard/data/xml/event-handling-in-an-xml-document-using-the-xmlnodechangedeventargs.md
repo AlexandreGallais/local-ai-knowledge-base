@@ -1,31 +1,31 @@
 ---
+description: "Learn more about: Event Handling in an XML Document Using the XmlNodeChangedEventArgs"
 title: "Event Handling in an XML Document Using the XmlNodeChangedEventArgs"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/event-handling-in-an-xml-document-using-the-xmlnodechangedeventargs.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs: 
+  - "csharp"
+  - "vb"
+ms.assetid: 0fe844e3-5b6f-4fe7-ad15-22459501738b
 ---
-
 # Event Handling in an XML Document Using the XmlNodeChangedEventArgs
 
-The **XmlNodeChangedEventArgs** encapsulates the arguments passed to the event handlers registered on the **XmlDocument** object for handling events. The events and a description of when they are fired is given in the following table.
-
-|Event|Fired|
-|-----------|-----------|
-|`System.Xml.XmlDocument.NodeInserting`|When a node belonging to the current document is about to be inserted into another node.|
-|`System.Xml.XmlDocument.NodeInserted`|When a node belonging to the current document has been inserted into another node.|
-|`System.Xml.XmlDocument.NodeRemoving`|When a node belonging to this document is about to be removed from the document.|
-|`System.Xml.XmlDocument.NodeRemoved`|When a node belonging to this document has been removed from its parent.|
-|`System.Xml.XmlDocument.NodeChanging`|When the value of a node is about to be changed.|
-|`System.Xml.XmlDocument.NodeChanged`|When the value of a node has been changed.|
-
-> **Note:**
-> If the **XmlDataDocument** memory usage is fully optimized to use **DataSet** storage, the **XmlDataDocument** might not raise any of the events listed above when changes are made to the underlying **DataSet**. If you need these events, you must traverse the whole **XmlDocument** once to make the memory usage non-fully optimized.
-
- The following code example shows how to define an event handler and how to add the event handler to an event.
-
-```vb
+The **XmlNodeChangedEventArgs** encapsulates the arguments passed to the event handlers registered on the **XmlDocument** object for handling events. The events and a description of when they are fired is given in the following table.  
+  
+|Event|Fired|  
+|-----------|-----------|  
+|<xref:System.Xml.XmlDocument.NodeInserting>|When a node belonging to the current document is about to be inserted into another node.|  
+|<xref:System.Xml.XmlDocument.NodeInserted>|When a node belonging to the current document has been inserted into another node.|  
+|<xref:System.Xml.XmlDocument.NodeRemoving>|When a node belonging to this document is about to be removed from the document.|  
+|<xref:System.Xml.XmlDocument.NodeRemoved>|When a node belonging to this document has been removed from its parent.|  
+|<xref:System.Xml.XmlDocument.NodeChanging>|When the value of a node is about to be changed.|  
+|<xref:System.Xml.XmlDocument.NodeChanged>|When the value of a node has been changed.|  
+  
+> [!NOTE]
+> If the **XmlDataDocument** memory usage is fully optimized to use **DataSet** storage, the **XmlDataDocument** might not raise any of the events listed above when changes are made to the underlying **DataSet**. If you need these events, you must traverse the whole **XmlDocument** once to make the memory usage non-fully optimized.  
+  
+ The following code example shows how to define an event handler and how to add the event handler to an event.  
+  
+```vb  
 ' Attach the event handler, NodeInsertedHandler, to the NodeInserted  
 ' event.  
 Dim doc as XmlDocument = new XmlDocument()  
@@ -45,8 +45,8 @@ sub NodeInsertedHandler(src as Object, args as XmlNodeChangedEventArgs)
     Console.WriteLine("Node " + args.Node.Name + " inserted!!")  
 end sub  
 ```  
-
-```csharp
+  
+```csharp  
 // Attach the event handler, NodeInsertedHandler, to the NodeInserted  
 // event.  
 XmlDocument doc = new XmlDocument();  
@@ -65,12 +65,12 @@ void NodeInsertedHandler(Object src, XmlNodeChangedEventArgs args)
     Console.WriteLine("Node " + args.Node.Name + " inserted!!");  
 }  
 ```  
-
- Some XML Document Object Model (DOM) operations are compound operations that can result in multiple events being fired. For example, **AppendChild** may also have to remove the node being appended from its previous parent. In this case, you see a **NodeRemoved** event fired first, followed by a **NodeInserted** event. Operations like setting **InnerXml** could result in multiple events.
-
- The following code example shows the creation of the event handler and the handling of the **NodeInserted** event.
-
-```vb
+  
+ Some XML Document Object Model (DOM) operations are compound operations that can result in multiple events being fired. For example, **AppendChild** may also have to remove the node being appended from its previous parent. In this case, you see a **NodeRemoved** event fired first, followed by a **NodeInserted** event. Operations like setting **InnerXml** could result in multiple events.  
+  
+ The following code example shows the creation of the event handler and the handling of the **NodeInserted** event.  
+  
+```vb  
 Imports System  
 Imports System.IO  
 Imports System.Xml  
@@ -131,8 +131,8 @@ Public Class Sample
   
 End Class        ' End class  
 ```  
-
-```csharp
+  
+```csharp  
 using System;  
 using System.IO;  
 using System.Xml;  
@@ -198,9 +198,9 @@ public class Sample
   
 } // End class
 ```  
-
- For more information, see `System.Xml.XmlNodeChangedEventArgs` and `System.Xml.XmlNodeChangedEventHandler`.
-
+  
+ For more information, see <xref:System.Xml.XmlNodeChangedEventArgs> and <xref:System.Xml.XmlNodeChangedEventHandler>.  
+  
 ## See also
 
-- XML Document Object Model (DOM)
+- [XML Document Object Model (DOM)](xml-document-object-model-dom.md)

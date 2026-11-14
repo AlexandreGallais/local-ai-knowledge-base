@@ -1,12 +1,23 @@
 ---
+description: "Learn more about: ICorDebugCode3::GetReturnValueLiveOffset Method"
 title: "ICorDebugCode3::GetReturnValueLiveOffset Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugcode3-getreturnvalueliveoffset-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "cpp"
+api_name:
+  - "ICorDebugCode3.GetReturnValueLiveOffset"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugCode3::GetReturnValueLiveOffset"
+helpviewer_keywords:
+  - "ICorDebugCode3::GetReturnValueLiveOffset method [.NET debugging]"
+  - "GetReturnValueLiveOffset method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugCode3::GetReturnValueLiveOffset Method
 
 For a specified IL offset, gets the native offsets where a breakpoint should be placed so that the debugger can obtain the return value from a function.
@@ -38,10 +49,10 @@ An array of native offsets. Typically, `pOffsets` contains a single offset, alth
 
 ## Remarks
 
-This method is used along with the ICorDebugILFrame3::GetReturnValueForILOffset method to get the return value of a method that returns a reference type. Passing an IL offset to a function call site to this method returns one or more native offsets. The debugger can then set breakpoints on these native offsets in the function. When the debugger hits one of the breakpoints, you can then pass the same IL offset that you passed to this method to the ICorDebugILFrame3::GetReturnValueForILOffset method to get the return value. The debugger should then clear all the breakpoints that it set.
+This method is used along with the [ICorDebugILFrame3::GetReturnValueForILOffset](icordebugilframe3-getreturnvalueforiloffset-method.md) method to get the return value of a method that returns a reference type. Passing an IL offset to a function call site to this method returns one or more native offsets. The debugger can then set breakpoints on these native offsets in the function. When the debugger hits one of the breakpoints, you can then pass the same IL offset that you passed to this method to the [ICorDebugILFrame3::GetReturnValueForILOffset](icordebugilframe3-getreturnvalueforiloffset-method.md) method to get the return value. The debugger should then clear all the breakpoints that it set.
 
-> **Warning:**
-> The `ICorDebugCode3::GetReturnValueLiveOffset` and ICorDebugILFrame3::GetReturnValueForILOffset methods allow you to get return value information for reference types only. Retrieving return value information from value types (that is, all types that derive from `System.ValueType`) is not supported.
+> [!WARNING]
+> The `ICorDebugCode3::GetReturnValueLiveOffset` and [ICorDebugILFrame3::GetReturnValueForILOffset](icordebugilframe3-getreturnvalueforiloffset-method.md) methods allow you to get return value information for reference types only. Retrieving return value information from value types (that is, all types that derive from <xref:System.ValueType>) is not supported.
 
 The function returns the `HRESULT` values shown in the following table.
 
@@ -55,7 +66,7 @@ The `ICorDebugCode3::GetReturnValueLiveOffset` method is available only on x86-b
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -65,5 +76,5 @@ The `ICorDebugCode3::GetReturnValueLiveOffset` method is available only on x86-b
 
 ## See also
 
-- GetReturnValueForILOffset Method
-- ICorDebugCode3 Interface
+- [GetReturnValueForILOffset Method](icordebugilframe3-getreturnvalueforiloffset-method.md)
+- [ICorDebugCode3 Interface](icordebugcode3-interface.md)

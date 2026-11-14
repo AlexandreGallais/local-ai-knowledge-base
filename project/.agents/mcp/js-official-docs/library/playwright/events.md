@@ -1,13 +1,7 @@
 ---
+id: events
 title: "Events"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/events.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# Events
 
 ## Introduction
 
@@ -36,14 +30,14 @@ Request request = page.waitForRequest("**/*logo*.png", () -> {
 System.out.println(request.url());
 ```
 
-```python
+```python async
 async with page.expect_request("**/*logo*.png") as first:
   await page.goto("https://wikipedia.org")
 first_request = await first.value
 print(first_request.url)
 ```
 
-```python
+```python sync
 with page.expect_request("**/*logo*.png") as first:
   page.goto("https://wikipedia.org")
 print(first.value.url)
@@ -75,14 +69,14 @@ Page popup = page.waitForPopup(() -> {
 popup.navigate("https://wikipedia.org");
 ```
 
-```python
+```python async
 async with page.expect_popup() as popup:
   await page.get_by_text("open the popup").click()
 child_page = await popup.value
 await child_page.goto("https://wikipedia.org")
 ```
 
-```python
+```python sync
 with page.expect_popup() as popup:
   page.get_by_text("open the popup").click()
 popup.value.goto("https://wikipedia.org")
@@ -121,7 +115,7 @@ page.offRequestFinished(listener);
 page.navigate("https://www.openstreetmap.org/");
 ```
 
-```python
+```python async
 def print_request_sent(request):
   print("Request sent: " + request.url)
 
@@ -136,7 +130,7 @@ page.remove_listener("requestfinished", print_request_finished)
 await page.goto("https://www.openstreetmap.org/")
 ```
 
-```python
+```python sync
 def print_request_sent(request):
   print("Request sent: " + request.url)
 
@@ -180,12 +174,12 @@ page.onceDialog(dialog -> dialog.accept("2021"));
 page.evaluate("prompt('Enter a number:')");
 ```
 
-```python
+```python async
 page.once("dialog", lambda dialog: dialog.accept("2021"))
 await page.evaluate("prompt('Enter a number:')")
 ```
 
-```python
+```python sync
 page.once("dialog", lambda dialog: dialog.accept("2021"))
 page.evaluate("prompt('Enter a number:')")
 ```

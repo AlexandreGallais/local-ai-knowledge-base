@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugChain Interface"
 title: "ICorDebugChain Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugchain-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugChain"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugChain"
+helpviewer_keywords:
+  - "ICorDebugChain interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugChain Interface
 
 Represents a segment of a physical or logical call stack.
@@ -15,29 +23,29 @@ Represents a segment of a physical or logical call stack.
 
 |Method|Description|
 |------------|-----------------|
-|EnumerateFrames Method|Gets an enumerator that contains all the managed stack frames in the chain, starting with the most recent frame.|
-|GetActiveFrame Method|Gets the active (that is, most recent) frame on the chain.|
-|GetCallee Method|Gets the chain that was called by this chain.|
-|GetCaller Method|Gets the chain that called this chain.|
-|GetContext Method|Not implemented.|
-|GetNext Method|Gets the next chain of frames for the thread.|
-|GetPrevious Method|Gets the previous chain of frames for the thread.|
-|GetReason Method|Gets the reason for the genesis of this calling chain.|
-|GetRegisterSet Method|Gets the register set for the active part of this chain.|
-|GetStackRange Method|Gets the address range of the stack segment for this chain.|
-|GetThread Method|Gets the physical thread this call chain is part of.|
-|IsManaged Method|Gets a value that indicates whether this chain is running managed code.|
+|[EnumerateFrames Method](icordebugchain-enumerateframes-method.md)|Gets an enumerator that contains all the managed stack frames in the chain, starting with the most recent frame.|
+|[GetActiveFrame Method](icordebugchain-getactiveframe-method.md)|Gets the active (that is, most recent) frame on the chain.|
+|[GetCallee Method](icordebugchain-getcallee-method.md)|Gets the chain that was called by this chain.|
+|[GetCaller Method](icordebugchain-getcaller-method.md)|Gets the chain that called this chain.|
+|[GetContext Method](icordebugchain-getcontext-method.md)|Not implemented.|
+|[GetNext Method](icordebugchain-getnext-method.md)|Gets the next chain of frames for the thread.|
+|[GetPrevious Method](icordebugchain-getprevious-method.md)|Gets the previous chain of frames for the thread.|
+|[GetReason Method](icordebugchain-getreason-method.md)|Gets the reason for the genesis of this calling chain.|
+|[GetRegisterSet Method](icordebugchain-getregisterset-method.md)|Gets the register set for the active part of this chain.|
+|[GetStackRange Method](icordebugchain-getstackrange-method.md)|Gets the address range of the stack segment for this chain.|
+|[GetThread Method](icordebugchain-getthread-method.md)|Gets the physical thread this call chain is part of.|
+|[IsManaged Method](icordebugchain-ismanaged-method.md)|Gets a value that indicates whether this chain is running managed code.|
 
 ## Remarks
 
 The stack frames in a chain occupy contiguous stack space and share the same thread and context. A chain may represent either managed or unmanaged code chains. An empty `ICorDebugChain` instance represents an unmanaged code chain.
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: Default version of Bootstrap used with Identity now 5"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/6/identity-bootstrap4-to-5.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 6.0 where the default version of Bootstrap used with Identity changes from 4 to 5."
+ms.date: 02/15/2022
 ---
-
 # Identity: Default Bootstrap version of UI changed
 
-Starting in ASP.NET Core 6.0, Identity UI defaults to using version 5 of Bootstrap. ASP.NET Core 3.0 to 5.0 used version 4 of Bootstrap.
+Starting in ASP.NET Core 6.0, Identity UI defaults to using [version 5 of Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/). ASP.NET Core 3.0 to 5.0 used version 4 of Bootstrap.
 
 ## Version introduced
 
@@ -17,7 +13,7 @@ ASP.NET Core 6.0
 
 ## Behavior
 
-`Microsoft.Extensions.DependencyInjection.IdentityServiceCollectionUIExtensions.AddDefaultIdentity``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)` calls the internal private method TryResolveUIFramework. `TryResolveUIFramework` reads the `Microsoft.AspNetCore.Identity.UI.UIFramework` from the application assembly. The `UIFramework` version defaults to:
+<xref:Microsoft.Extensions.DependencyInjection.IdentityServiceCollectionUIExtensions.AddDefaultIdentity``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)> calls the internal private method [TryResolveUIFramework](https://github.com/dotnet/aspnetcore/blob/v6.0.2/src/Identity/UI/src/IdentityBuilderUIExtensions.cs#L82-L102). `TryResolveUIFramework` reads the <xref:Microsoft.AspNetCore.Identity.UI.UIFramework> from the application assembly. The `UIFramework` version defaults to:
 
 * Bootstrap 5 for the .NET 6 SDK
 * Bootstrap 4 for the .NET Core 3.1 and .NET 5 SDK
@@ -49,8 +45,8 @@ Take one of the following actions:
 
   The preceding markup sets the `UIFramework` version to Bootstrap 4, the same Bootstrap version as used in ASP.NET Core 3.1 and 5.0.
 
-* Rename or delete the *wwwroot\lib\bootstrap* folder and replace it with the *wwwroot\lib\bootstrap* folder from an ASP.NET Core 6 template-generated app. The Identity templates work with this change but apps using Bootstrap may need to refer to the Bootstrap 5 migration guide.
+* Rename or delete the *wwwroot\lib\bootstrap* folder and replace it with the *wwwroot\lib\bootstrap* folder from an ASP.NET Core 6 template-generated app. The Identity templates work with this change but apps using Bootstrap may need to refer to the [Bootstrap 5 migration guide](https://getbootstrap.com/docs/5.0/migration/).
 
 ## Affected APIs
 
-`Microsoft.Extensions.DependencyInjection.IdentityServiceCollectionUIExtensions.AddDefaultIdentity``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)`
+<xref:Microsoft.Extensions.DependencyInjection.IdentityServiceCollectionUIExtensions.AddDefaultIdentity``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)>

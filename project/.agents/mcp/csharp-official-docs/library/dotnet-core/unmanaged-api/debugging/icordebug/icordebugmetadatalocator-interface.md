@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugMetaDataLocator Interface"
 title: "ICorDebugMetaDataLocator Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmetadatalocator-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugMetaDataLocator"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugMetaDataLocator"
+helpviewer_keywords:
+  - "ICorDebugMetaDataLocator interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugMetaDataLocator Interface
 
 Provides metadata information to the debugger.
@@ -15,16 +23,16 @@ Provides metadata information to the debugger.
 
 |Method|Description|
 |------------|-----------------|
-|GetMetaData Method|Asks the debugger to return the full path to a module whose metadata is needed to complete an operation the debugger requested.|
+|[GetMetaData Method](icordebugmetadatalocator-getmetadata-method.md)|Asks the debugger to return the full path to a module whose metadata is needed to complete an operation the debugger requested.|
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

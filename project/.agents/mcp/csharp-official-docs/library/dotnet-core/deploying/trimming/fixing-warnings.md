@@ -1,27 +1,25 @@
 ---
-title: "Fixing trim warnings"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/deploying/trimming/fixing-warnings.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Fixing trim warnings
+description: Learn practical workflows for addressing trim warnings in your application, including step-by-step instructions for making code trim-compatible.
+author: agocke
+ms.author: angocke
+ms.date: 11/04/2025
 ---
-
 # Fixing trim warnings
 
 When you enable trimming in your application, the .NET SDK performs static analysis to detect code patterns that might not be compatible with trimming. Trim warnings indicate potential issues that could cause behavior changes or crashes after trimming.
 
 **An app that uses trimming shouldn't produce any trim warnings.** If there are any trim warnings, thoroughly test the app after trimming to ensure there are no behavior changes.
 
-This article provides practical workflows for addressing trim warnings. For a deeper understanding of why these warnings occur and how trimming works, see Understanding trim analysis.
+This article provides practical workflows for addressing trim warnings. For a deeper understanding of why these warnings occur and how trimming works, see [Understanding trim analysis](trimming-concepts.md).
 
 ## Understanding warning categories
 
 Trim warnings fall into two main categories:
 
-- **Code incompatible with trimming** - Marked with `System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute`. The code fundamentally can't be made analyzable (for example, dynamic assembly loading or complex reflection patterns). The method is marked as incompatible, and callers receive warnings.
+- **Code incompatible with trimming** - Marked with <xref:System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute>. The code fundamentally can't be made analyzable (for example, dynamic assembly loading or complex reflection patterns). The method is marked as incompatible, and callers receive warnings.
 
-- **Code with requirements** - Annotated with `System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute`. Reflection is used, but types are known at compile time. When requirements are satisfied, the code becomes fully trim-compatible.
+- **Code with requirements** - Annotated with <xref:System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute>. Reflection is used, but types are known at compile time. When requirements are satisfied, the code becomes fully trim-compatible.
 
 ## Workflow: Determine the right approach
 
@@ -60,14 +58,16 @@ void CreateAndProcess<T>() where T : new()
 
 Modern .NET provides source generators for common reflection scenarios:
 
-- **Serialization**: Use System.Text.Json source generation instead of reflection-based serializers
-- **Configuration**: Use the configuration binding source generator
+- **Serialization**: Use [System.Text.Json source generation](../../../standard/serialization/system-text-json/source-generation.md) instead of reflection-based serializers
+- **Configuration**: Use the [configuration binding source generator](../../whats-new/dotnet-8/runtime.md#configuration-binding-source-generator)
 
-For more information, see Known trimming incompatibilities.
+For more information, see [Known trimming incompatibilities](incompatibilities.md).
+
+<a name="functionality-with-requirements-on-its-input"></a>
 
 ## Approach 2: Make code trim-compatible with DynamicallyAccessedMembers
 
-When reflection is necessary but types are known at compile time, use `System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute` to make your code trim-compatible.
+When reflection is necessary but types are known at compile time, use <xref:System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute> to make your code trim-compatible.
 
 ### Step-by-step: Annotate reflection usage
 
@@ -168,7 +168,7 @@ void Method1()
 }
 ```
 
-For more details on how requirements flow through code, see Understanding trim analysis.
+For more details on how requirements flow through code, see [Understanding trim analysis](trimming-concepts.md).
 
 ### Common DynamicallyAccessedMemberTypes values
 
@@ -182,21 +182,21 @@ Choose the minimum access level needed:
 | `PublicProperties` | Using `GetProperty()` or `GetProperties()` (serialization) |
 | `PublicEvents` | Using `GetEvent()` or `GetEvents()` |
 
-> **Warning:**
+> [!WARNING]
 > Using `DynamicallyAccessedMemberTypes.All` preserves all members on the target type and all members on its nested types (but not transitive dependencies like members on a property's return type). This significantly increases app size. More importantly, preserved members become reachable, which means they may contain their own problematic code. For example, if a preserved member calls a method marked with `RequiresUnreferencedCode`, that warning cannot be resolved since the member is being kept through reflection annotation rather than an explicit call. Use the minimum required member types to avoid these cascading issues.
 
 ## Approach 3: Mark code as incompatible with RequiresUnreferencedCode
 
-When code fundamentally cannot be made analyzable, use `System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute` to document the incompatibility.
+When code fundamentally cannot be made analyzable, use <xref:System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute> to document the incompatibility.
 
 ### When to use RequiresUnreferencedCode
 
 Use this attribute when:
 
-- **Types are loaded dynamically**: Using `System.Type.GetType` with runtime-determined strings.
-- **Assemblies are loaded at runtime**: Using `System.Reflection.Assembly.LoadFrom(System.String)`.
+- **Types are loaded dynamically**: Using <xref:System.Type.GetType> with runtime-determined strings.
+- **Assemblies are loaded at runtime**: Using <xref:System.Reflection.Assembly.LoadFrom(System.String)>.
 - **Complex reflection patterns**: Reflection usage too complex to annotate.
-- **Runtime code generation**: Using `System.Reflection.Emit` or the `dynamic` keyword.
+- **Runtime code generation**: Using <xref:System.Reflection.Emit> or the `dynamic` keyword.
 
 ### Step-by-step: Mark incompatible methods
 
@@ -335,10 +335,10 @@ class Container
 
 ## Approach 4: Suppress warnings as last resort
 
-> **Warning:**
+> [!WARNING]
 > Only suppress trim warnings if you're absolutely certain the code is safe. Incorrect suppressions can lead to runtime failures after trimming.
 
-Use `System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessageAttribute` when you've verified that code is trim-safe but the trimmer cannot prove it statically.
+Use <xref:System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessageAttribute> when you've verified that code is trim-safe but the trimmer cannot prove it statically.
 
 ### When suppression is appropriate
 
@@ -362,7 +362,7 @@ void CallerMethod()
 }
 ```
 
-> **Important:**
+> [!IMPORTANT]
 > Do not use `SuppressMessage` or `#pragma warning disable` for trim warnings. These only work for the compiler but aren't preserved in the compiled assembly. The trimmer operates on compiled assemblies and won't see these suppressions. Always use `UnconditionalSuppressMessage`.
 
 ### Minimize suppression scope
@@ -409,7 +409,7 @@ Ensure you've annotated the entire call chain from the reflection usage back to 
 1. Start with your own code - fix warnings in code you control first.
 2. Use `TrimmerSingleWarn` to see individual warnings from packages.
 3. Consider if trimming is appropriate for your application.
-4. Check Known trimming incompatibilities for framework-level issues.
+4. Check [Known trimming incompatibilities](incompatibilities.md) for framework-level issues.
 
 ### Unsure which DynamicallyAccessedMemberTypes to use
 
@@ -425,7 +425,7 @@ Use the narrowest type possible to minimize app size.
 
 ## Next steps
 
-- Understanding trim analysis - Learn the fundamental concepts behind trim warnings
-- Prepare libraries for trimming - Make your libraries trim-compatible
-- Trim warning reference - Detailed information about specific warning codes
-- Known incompatibilities - Patterns that cannot be made trim-compatible
+- [Understanding trim analysis](trimming-concepts.md) - Learn the fundamental concepts behind trim warnings
+- [Prepare libraries for trimming](prepare-libraries-for-trimming.md) - Make your libraries trim-compatible
+- [Trim warning reference](trim-warnings/il2026.md) - Detailed information about specific warning codes
+- [Known incompatibilities](incompatibilities.md) - Patterns that cannot be made trim-compatible

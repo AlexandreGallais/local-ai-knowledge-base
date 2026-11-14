@@ -1,32 +1,28 @@
----
-title: "Angular Press Kit"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/reference/press-kit.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Angular Press Kit
 
-The logo graphics available for download on this page are provided under CC BY 4.0.
+The logo graphics available for download on this page are provided under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
-  **Angular logos**
-
+<docs-card-container>
+  <docs-card title="Angular logos" href="https://drive.google.com/drive/folders/1IgcAwLDVZUz8ycnFa7T4_H6B4V4LhYUQ?usp=sharing" link="Download from Google Drive">
+    ![Angular wordmark gradient logo](assets/images/press-kit/angular_wordmark_gradient.png "Angular wordmark gradient logo")
+    ![Angular wordmark white logo](assets/images/press-kit/angular_wordmark_white.png "Angular wordmark white logo")
+    ![Angular wordmark black logo](assets/images/press-kit/angular_wordmark_black.png "Angular wordmark black logo")
     Black and white are the default color variations and should be used in most circumstances. A gradient version of the icon and lockup is available in both static and animated formats and can be used in cases where a color icon is required.
-
-  **Brand guidelines**
-
+  </docs-card>
+  <docs-card title="Brand guidelines" href="https://drive.google.com/drive/folders/1gD5-kamfribnib6TH4-aqVZxjYaDZlCg?usp=drive_link" link="Download from Google Drive">
+    ![Angular animated gradient logo](assets/images/press-kit/angular_icon_gradient.gif "Angular animated gradient logo")
     Our brand guidelines folders contain the design files, guidance and community examples for how the brand can be adapted.
     Read more about adapting the logo in the section below.
-
-  **Angular mascot**
-
+  </docs-card>
+  <docs-card title="Angular mascot" href="https://drive.google.com/drive/folders/1uX4H3exWWpwPqh52Bxig3GLS736gBEAf?usp=drive_link" link="Download from Google Drive">
+    ![Angular mascot cheerful](assets/images/press-kit/angular_mascot_cheerful.png "Angular mascot cheerful")
     Angie is the official mascot of the Angular framework. The mascot folders contain different file formats and poses of our friendly companion for use in your community assets and presentations.
+  </docs-card>
+</docs-card-container>
 
 ## Press and Media
 
-For inquiries regarding press and media please contact us at user@example.com. For developer inquiries contact user@example.com.
+For inquiries regarding press and media please contact us at press@angular.io. For developer inquiries contact devrel@angular.io.
 
 ## Adapting the logo
 
@@ -36,30 +32,40 @@ Angular has long valued creative expression through customized shield icons. The
 
 We have provided a template to get you started.
 
-If you have any questions on adapting the new logo, or updating your own, please email user@example.com for additional help – we can’t wait to see what you create!
+If you have any questions on adapting the new logo, or updating your own, please email devrel@angular.io for additional help – we can’t wait to see what you create!
 
-### Adapt the logo colors as your own
+<docs-workflow>
+
+<docs-step title="Adapt the logo colors as your own">
 Lean into the shape of Angular’s new logo by changing the logo colors to match your brand colors, flag, cause, etc.
 
 In this example, we’ve adapted the colors to create an Angular Pride logo variation:
+![Angular pride logo](assets/images/press-kit/angular_pride.png#small 'Angular pride logo')
+</docs-step>
 
-### Adapt the logo shape as your own
+<docs-step title="Adapt the logo shape as your own">
 Lean into the shape of Angular’s new logo by adapting the shield to match your own brand.
 
 In this example, we’ve adapted the shield to create an Angular Signals logo variation:
+![Angular Signals logo](assets/images/press-kit/angular_signals.png#medium 'Angular Signals logo')
+</docs-step>
 
-### Do’s and don’ts of using Angular's brand
+<docs-step title="Do’s and don’ts of using Angular's brand">
 If you are creating your own logo, we encourage differentiating your logo from ours to not cause confusion. When adapting the logo, you are free to change and adapt the colors and shape to make it your own.
 
 When representing Angular with the original logo, please follow these guidelines:
+![Rhubarb the small cat](assets/images/press-kit/do_and_dont.png 'Rhubarb the small cat')
+</docs-step>
+
+</docs-workflow>
 
 ## Deprecated logos
 
 ### 2016 Angular (v3-v16)
 
-In 2023, we announced a modernized logo with v17. We advise against using the former Angular logo to prevent confusion. You can view the old press kit on our old docs site.
+In 2023, we announced a modernized logo with v17. We advise against using the former Angular logo to prevent confusion. You can view the old press kit on our [old docs site](https://angular.io/presskit).
 
 ### AngularJS
 
 AngularJS is the v1.x predecessor of modern Angular. We advise against using this logo to prevent confusion.
-Read more about the discontinued LTS (Long Term Support) for AngularJS on our blog.
+Read more about the discontinued LTS (Long Term Support) for AngularJS on our [blog](https://blog.angular.dev/discontinued-long-term-support-for-angularjs-cc066b82e65a).

@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: ICorDebugVirtualUnwinder Interface"
 title: "ICorDebugVirtualUnwinder Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugvirtualunwinder-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugVirtualUnwinder Interface
 
 Provides methods to help in stack unwinding.
@@ -15,19 +11,19 @@ Provides methods to help in stack unwinding.
 
 |Method|Name|
 |------------|----------|
-|GetContext Method|Gets the current context of this unwinder.|
-|Next Method|Advances to the caller's context.|
+|[GetContext Method](icordebugvirtualunwinder-getcontext-method.md)|Gets the current context of this unwinder.|
+|[Next Method](icordebugvirtualunwinder-next-method.md)|Advances to the caller's context.|
 
 ## Remarks
 
 The members of the `ICorDebugVirtualUnwinder` interface are implemented by the debugger to help in stack unwinding.
 
-> **Note:**
+> [!NOTE]
 > This interface is available with .NET Native only. If you implement this interface for ICorDebug scenarios outside of .NET Native, the common language runtime will ignore this interface.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

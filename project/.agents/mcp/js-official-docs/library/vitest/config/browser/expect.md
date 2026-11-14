@@ -1,10 +1,6 @@
 ---
-title: "browser.expect | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/browser/expect.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: browser.expect | Config
+outline: deep
 ---
 
 # browser.expect
@@ -14,13 +10,14 @@ license: "MIT"
 ## browser.expect.toMatchScreenshot
 
 Default options for the
-`toMatchScreenshot` assertion.
+[`toMatchScreenshot` assertion](/api/browser/assertions#tomatchscreenshot).
 These options will be applied to all screenshot assertions.
 
-**Tip:**
+::: tip
 Setting global defaults for screenshot assertions helps maintain consistency
 across your test suite and reduces repetition in individual tests. You can still
 override these defaults at the assertion level when needed for specific test cases.
+:::
 
 ```ts
 import { defineConfig } from 'vitest/config'
@@ -45,7 +42,7 @@ export default defineConfig({
 })
 ```
 
-All options available in the `toMatchScreenshot` assertion
+[All options available in the `toMatchScreenshot` assertion](/api/browser/assertions#options)
 can be configured here. Additionally, two path resolution functions are
 available: `resolveScreenshotPath` and `resolveDiffPath`.
 
@@ -56,7 +53,7 @@ available: `resolveScreenshotPath` and `resolveDiffPath`.
 
 The directory name used for storing reference screenshots.
 
-This value is passed as `screenshotDirectory` to `browser.expect.toMatchScreenshot.resolveScreenshotPath` and `browser.expect.toMatchScreenshot.resolveDiffPath`, and used in the default path resolution of `resolveScreenshotPath`.
+This value is passed as `screenshotDirectory` to [`browser.expect.toMatchScreenshot.resolveScreenshotPath`](#browser-expect-tomatchscreenshot-resolvescreenshotpath) and [`browser.expect.toMatchScreenshot.resolveDiffPath`](#browser-expect-tomatchscreenshot-resolvediffpath), and used in the default path resolution of `resolveScreenshotPath`.
 
 ## browser.expect.toMatchScreenshot.resolveScreenshotPath
 
@@ -100,19 +97,19 @@ receives an object with the following properties:
 - `platform: NodeJS.Platform`
 
   The value of
-  `process.platform`.
+  [`process.platform`](https://nodejs.org/docs/v22.16.0/api/process.html#processplatform).
 
 - `screenshotDirectory: string`
 
-  The value provided to `browser.expect.toMatchScreenshot.screenshotDirectory`, if none is provided, its default value (`__screenshots__`).
+  The value provided to [`browser.expect.toMatchScreenshot.screenshotDirectory`](#browser-expect-tomatchscreenshot-screenshotdirectory), if none is provided, its default value (`__screenshots__`).
 
 - `root: string`
 
-  Absolute path to the project's `root`.
+  Absolute path to the project's [`root`](/config/root).
 
 - `testFileDirectory: string`
 
-  Path to the test file, relative to the project's `root`.
+  Path to the test file, relative to the project's [`root`](/config/root).
 
 - `testFileName: string`
 
@@ -120,17 +117,17 @@ receives an object with the following properties:
 
 - `testName: string`
 
-  The `test`'s name, including parent
-  `describe`, sanitized.
+  The [`test`](/api/test)'s name, including parent
+  [`describe`](/api/describe), sanitized.
 
 - `attachmentsDir: string`
 
-  The value provided to `attachmentsDir`, if none is
+  The value provided to [`attachmentsDir`](/config/attachmentsdir), if none is
   provided, its default value.
 
 - `project: TestProject` <Version type="experimental">4.1.6</Version> <Experimental />
 
-  The `TestProject` the test belongs to.
+  The [`TestProject`](/api/advanced/test-project) the test belongs to.
 
 For example, to group screenshots by browser:
 
@@ -146,7 +143,7 @@ resolveScreenshotPath: ({ arg, browserName, ext, root, testFileName }) =>
 
 A function to customize where diff images are stored when screenshot comparisons
 fail. Receives the same data object as
-`resolveScreenshotPath`.
+[`resolveScreenshotPath`](#browser-expect-tomatchscreenshot-resolvescreenshotpath).
 
 For example, to store diffs in a subdirectory of attachments:
 
@@ -159,7 +156,7 @@ resolveDiffPath: ({ arg, attachmentsDir, browserName, ext, root, testFileName })
 
 - **Type:** `Record<string, Comparator>`
 
-Register custom screenshot comparison algorithms, like SSIM or other perceptual similarity metrics.
+Register custom screenshot comparison algorithms, like [SSIM](https://en.wikipedia.org/wiki/Structural_similarity_index_measure) or other perceptual similarity metrics.
 
 To create a custom comparator, you need to register it in your config. If using TypeScript, declare its options in the `ScreenshotComparatorRegistry` interface.
 
@@ -221,21 +218,21 @@ await expect(locator).toMatchScreenshot({
 type Comparator<Options> = (
   reference: {
     metadata: { height: number; width: number }
-    data: <example-value>
+    data: TypedArray
   },
   actual: {
     metadata: { height: number; width: number }
-    data: <example-value>
+    data: TypedArray
   },
   options: {
     createDiff: boolean
   } & Options
 ) => Promise<{
-  pass: <example-value>
+  pass: boolean
   diff: TypedArray | null
   message: string | null
 }> | {
-  pass: <example-value>
+  pass: boolean
   diff: TypedArray | null
   message: string | null
 }
@@ -248,12 +245,13 @@ The `reference` and `actual` images are decoded using the appropriate codec (cur
 - **Total length**: `width × height × 4` bytes
 - **Alpha channel**: always present. Images without transparency have alpha values set to `255` (fully opaque)
 
-**Performance Considerations**
-The `createDiff` option indicates whether a diff image is needed. During stable screenshot detection, Vitest calls comparators with `createDiff: false` to avoid unnecessary work.
+::: tip Performance Considerations
+The `createDiff` option indicates whether a diff image is needed. During [stable screenshot detection](/guide/browser/visual-regression-testing#how-visual-tests-work), Vitest calls comparators with `createDiff: false` to avoid unnecessary work.
 
 **Respect this flag to keep your tests fast**.
+:::
 
-**Handle Missing Options**
+::: warning Handle Missing Options
 The `options` parameter in `toMatchScreenshot()` is optional, so users might not provide all your comparator options. Always make them optional with default values:
 
 ```ts
@@ -265,3 +263,5 @@ myCustomComparator: (
   // ...comparison logic
 }
 ```
+
+:::

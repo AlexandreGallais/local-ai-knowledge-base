@@ -1,14 +1,11 @@
 ---
-title: "comma-style"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/comma-style.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: comma-style
+rule_type: layout
+related_rules:
+- operator-linebreak
+further_reading:
+- https://gist.github.com/isaacs/357981
 ---
-
-# comma-style
-
 The Comma Style rule enforces styles for comma-separated lists. There are two comma styles primarily used in JavaScript:
 
 * The standard style, in which commas are placed at the end of the current line
@@ -48,13 +45,13 @@ This rule also accepts an additional `exceptions` object:
     * `"VariableDeclaration": true` ignores comma style in variable declarations
     * `"NewExpression": true` ignores comma style in the parameters of constructor expressions
 
-A way to determine the node types as defined by ESTree is to use AST Explorer with the espree parser.
+A way to determine the node types as defined by [ESTree](https://github.com/estree/estree) is to use [AST Explorer](https://astexplorer.net/) with the espree parser.
 
 ### last
 
 Examples of **incorrect** code for this rule with the default `"last"` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint comma-style: ["error", "last"]*/
@@ -77,9 +74,11 @@ function baz() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"last"` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint comma-style: ["error", "last"]*/
@@ -100,11 +99,13 @@ function baz() {
 }
 ```
 
+:::
+
 ### first
 
 Examples of **incorrect** code for this rule with the `"first"` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint comma-style: ["error", "first"]*/
@@ -123,9 +124,11 @@ function baz() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"first"` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint comma-style: ["error", "first"]*/
@@ -146,13 +149,15 @@ function baz() {
 }
 ```
 
+:::
+
 ### exceptions
 
 An example use case is to enforce comma style *only* in var statements.
 
 Examples of **incorrect** code for this rule with sample `"first", { "exceptions": { … } }` options:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint comma-style: ["error", "first", { "exceptions": { "ArrayExpression": true, "ObjectExpression": true } }]*/
@@ -161,9 +166,11 @@ var o = {},
     a = [];
 ```
 
+:::
+
 Examples of **correct** code for this rule with sample `"first", { "exceptions": { … } }` options:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint comma-style: ["error", "first", { "exceptions": { "ArrayExpression": true, "ObjectExpression": true } }]*/
@@ -173,6 +180,8 @@ var o = {fst:1,
                2]}
   , a = [];
 ```
+
+:::
 
 ## When Not To Use It
 

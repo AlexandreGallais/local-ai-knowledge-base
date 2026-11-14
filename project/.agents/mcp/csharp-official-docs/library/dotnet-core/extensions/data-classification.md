@@ -1,26 +1,23 @@
 ---
-title: "Data classification in .NET"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/data-classification.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Data classification in .NET
+description: Learn how to use .NET data classification libraries to categorize your application's data.
+ms.date: 03/21/2025
 ---
 
 # Data classification in .NET
 
-Data classification helps you categorize (or classify) data based on its sensitivity and protection level. The `Microsoft.Extensions.Compliance.Classification.DataClassification` structure lets you label sensitive information and enforce policies based on these labels.
+Data classification helps you categorize (or classify) data based on its sensitivity and protection level. The <xref:Microsoft.Extensions.Compliance.Classification.DataClassification> structure lets you label sensitive information and enforce policies based on these labels.
 
-- `Microsoft.Extensions.Compliance.Classification.DataClassification.TaxonomyName`: Identifies the classification system.
-- `Microsoft.Extensions.Compliance.Classification.DataClassification.Value`: Represents the specific label within the taxonomy.
+- <xref:Microsoft.Extensions.Compliance.Classification.DataClassification.TaxonomyName?displayProperty=nameWithType>: Identifies the classification system.
+- <xref:Microsoft.Extensions.Compliance.Classification.DataClassification.Value?displayProperty=nameWithType>: Represents the specific label within the taxonomy.
 
-In some situations, you might need to specify that data explicitly has no data classification, this is achieved with `Microsoft.Extensions.Compliance.Classification.DataClassification.None`. Similarly, you might need to specify that data classification is unknown—use `Microsoft.Extensions.Compliance.Classification.DataClassification.Unknown` in these cases.
+In some situations, you might need to specify that data explicitly has no data classification, this is achieved with <xref:Microsoft.Extensions.Compliance.Classification.DataClassification.None?displayProperty=nameWithType>. Similarly, you might need to specify that data classification is unknown—use <xref:Microsoft.Extensions.Compliance.Classification.DataClassification.Unknown?displayProperty=nameWithType> in these cases.
 
 ## Install the package
 
-To get started, install the 📦 Microsoft.Extensions.Compliance.Abstractions NuGet package:
+To get started, install the [📦 Microsoft.Extensions.Compliance.Abstractions](https://www.nuget.org/packages/Microsoft.Extensions.Compliance.Abstractions) NuGet package:
 
-### .NET CLI
+### [.NET CLI](#tab/dotnet-cli)
 
 ```dotnetcli
 dotnet add package Microsoft.Extensions.Compliance.Abstractions
@@ -32,7 +29,7 @@ Or, if you're using .NET 10+ SDK:
 dotnet package add Microsoft.Extensions.Compliance.Abstractions
 ```
 
-### PackageReference
+### [PackageReference](#tab/package-reference)
 
 ```xml
 <ItemGroup>
@@ -64,11 +61,11 @@ internal static class MyTaxonomyClassifications
 
 If you want to share your custom classification taxonomy with other apps, this class and its members should be `public` instead of `internal`. For example, you can have a shared library containing custom classifications, that you can use in multiple applications.
 
-`Microsoft.Extensions.Compliance.Classification.DataClassificationSet` lets you compose multiple data classifications into a single set. This allows you classify your data with multiple data classifications. In addition, the .NET redaction APIs make use of a `Microsoft.Extensions.Compliance.Classification.DataClassificationSet`.
+<xref:Microsoft.Extensions.Compliance.Classification.DataClassificationSet> lets you compose multiple data classifications into a single set. This allows you classify your data with multiple data classifications. In addition, the .NET redaction APIs make use of a <xref:Microsoft.Extensions.Compliance.Classification.DataClassificationSet>.
 
-> **Note:**
-> Multiple data classifications going together as a `Microsoft.Extensions.Compliance.Classification.DataClassificationSet` are treated as a single classification. You can think of it as a logical `AND` operation. For example,
-if you configured redaction for data classified as a `Microsoft.Extensions.Compliance.Classification.DataClassificationSet` of `PrivateInformation` and `SocialSecurityNumber`, it will not apply to data classified as only `PrivateInformation` or only `SocialSecurityNumber`.
+> [!NOTE]
+> Multiple data classifications going together as a <xref:Microsoft.Extensions.Compliance.Classification.DataClassificationSet> are treated as a single classification. You can think of it as a logical `AND` operation. For example,
+if you configured redaction for data classified as a <xref:Microsoft.Extensions.Compliance.Classification.DataClassificationSet> of `PrivateInformation` and `SocialSecurityNumber`, it will not apply to data classified as only `PrivateInformation` or only `SocialSecurityNumber`.
 
 ## Create custom classification attributes
 
@@ -84,7 +81,7 @@ public sealed class PrivateInformationAttribute : DataClassificationAttribute
 }
 ```
 
-The preceding code declares a private information attribute, that's a subclass of the `Microsoft.Extensions.Compliance.Classification.DataClassificationAttribute` type. It defines a parameterless constructor and pass the custom `Microsoft.Extensions.Compliance.Classification.DataClassification` to its `base`.
+The preceding code declares a private information attribute, that's a subclass of the <xref:Microsoft.Extensions.Compliance.Classification.DataClassificationAttribute> type. It defines a parameterless constructor and pass the custom <xref:Microsoft.Extensions.Compliance.Classification.DataClassification> to its `base`.
 
 ## Bind data classification settings
 

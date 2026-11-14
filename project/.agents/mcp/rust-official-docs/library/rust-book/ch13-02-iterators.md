@@ -1,14 +1,3 @@
----
-title: "ch13-02-iterators"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch13-02-iterators.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch13-02-iterators
-
 ## Processing a Series of Items with Iterators
 
 The iterator pattern allows you to perform some task on a sequence of items in
@@ -22,13 +11,13 @@ Listing 13-10 creates an iterator over the items in the vector `v1` by calling
 the `iter` method defined on `Vec<T>`. This code by itself doesn’t do anything
 useful.
 
-**Listing 13-10: Creating an iterator** (src/main.rs)
+<Listing number="13-10" file-name="src/main.rs" caption="Creating an iterator">
 
 ```rust
-let v1 = vec![1, 2, 3];
-
-let v1_iter = v1.iter();
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-10/src/main.rs:here}}
 ```
+
+</Listing>
 
 The iterator is stored in the `v1_iter` variable. Once we’ve created an
 iterator, we can use it in a variety of ways. In Listing 3-5, we iterated over
@@ -41,17 +30,13 @@ the use of the iterator in the `for` loop. When the `for` loop is called using
 the iterator in `v1_iter`, each element in the iterator is used in one
 iteration of the loop, which prints out each value.
 
-**Listing 13-11: Using an iterator in a `for` loop** (src/main.rs)
+<Listing number="13-11" file-name="src/main.rs" caption="Using an iterator in a `for` loop">
 
 ```rust
-let v1 = vec![1, 2, 3];
-
-let v1_iter = v1.iter();
-
-for val in v1_iter {
-    println!("Got: {val}");
-}
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-11/src/main.rs:here}}
 ```
+
+</Listing>
 
 In languages that don’t have iterators provided by their standard libraries,
 you would likely write this same functionality by starting a variable at index
@@ -95,21 +80,13 @@ We can call the `next` method on iterators directly; Listing 13-12 demonstrates
 what values are returned from repeated calls to `next` on the iterator created
 from the vector.
 
-**Listing 13-12: Calling the `next` method on an iterator** (src/lib.rs)
+<Listing number="13-12" file-name="src/lib.rs" caption="Calling the `next` method on an iterator">
 
-```rust
-#[test]
-fn iterator_demonstration() {
-    let v1 = vec![1, 2, 3];
-
-    let mut v1_iter = v1.iter();
-
-    assert_eq!(v1_iter.next(), Some(&1));
-    assert_eq!(v1_iter.next(), Some(&2));
-    assert_eq!(v1_iter.next(), Some(&3));
-    assert_eq!(v1_iter.next(), None);
-}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-12/src/lib.rs:here}}
 ```
+
+</Listing>
 
 Note that we needed to make `v1_iter` mutable: Calling the `next` method on an
 iterator changes internal state that the iterator uses to keep track of where
@@ -141,20 +118,13 @@ consuming the iterator. As it iterates through, it adds each item to a running
 total and returns the total when iteration is complete. Listing 13-13 has a
 test illustrating a use of the `sum` method.
 
-**Listing 13-13: Calling the `sum` method to get the total of all items in the iterator** (src/lib.rs)
+<Listing number="13-13" file-name="src/lib.rs" caption="Calling the `sum` method to get the total of all items in the iterator">
 
-```rust
-#[test]
-fn iterator_sum() {
-    let v1 = vec![1, 2, 3];
-
-    let v1_iter = v1.iter();
-
-    let total: i32 = v1_iter.sum();
-
-    assert_eq!(total, 6);
-}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-13/src/lib.rs:here}}
 ```
+
+</Listing>
 
 We aren’t allowed to use `v1_iter` after the call to `sum`, because `sum` takes
 ownership of the iterator we call it on.
@@ -171,35 +141,18 @@ The `map` method returns a new iterator that produces the modified items. The
 closure here creates a new iterator in which each item from the vector will be
 incremented by 1.
 
-**Listing 13-14: Calling the iterator adapter `map` to create a new iterator** (src/main.rs)
+<Listing number="13-14" file-name="src/main.rs" caption="Calling the iterator adapter `map` to create a new iterator">
 
-```rust
-let v1: Vec<i32> = vec![1, 2, 3];
-
-v1.iter().map(|x| x + 1);
+```rust,not_desired_behavior
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-14/src/main.rs:here}}
 ```
+
+</Listing>
 
 However, this code produces a warning:
 
 ```console
-$ cargo run
-   Compiling iterators v0.1.0 (file:///projects/iterators)
-warning: unused `Map` that must be used
- --> src/main.rs:4:5
-  |
-4 |     v1.iter().map(|x| x + 1);
-  |     ^^^^^^^^^^^^^^^^^^^^^^^^
-  |
-  = note: iterators are lazy and do nothing unless consumed
-  = note: `#[warn(unused_must_use)]` (part of `#[warn(unused)]`) on by default
-help: use `let _ = ...` to ignore the resulting value
-  |
-4 |     let _ = v1.iter().map(|x| x + 1);
-  |     +++++++
-
-warning: `iterators` (bin "iterators") generated 1 warning
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.47s
-     Running `target/debug/iterators`
+{{#include ../listings/ch13-functional-features/listing-13-14/output.txt}}
 ```
 
 The code in Listing 13-14 doesn’t do anything; the closure we’ve specified
@@ -214,15 +167,13 @@ In Listing 13-15, we collect the results of iterating over the iterator that’s
 returned from the call to `map` into a vector. This vector will end up
 containing each item from the original vector, incremented by 1.
 
-**Listing 13-15: Calling the `map` method to create a new iterator, and then calling the `collect` method to consume the new iterator and create a vector** (src/main.rs)
+<Listing number="13-15" file-name="src/main.rs" caption="Calling the `map` method to create a new iterator, and then calling the `collect` method to consume the new iterator and create a vector">
 
 ```rust
-let v1: Vec<i32> = vec![1, 2, 3];
-
-let v2: Vec<_> = v1.iter().map(|x| x + 1).collect();
-
-assert_eq!(v2, vec![2, 3, 4]);
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-15/src/main.rs:here}}
 ```
+
+</Listing>
 
 Because `map` takes a closure, we can specify any operation we want to perform
 on each item. This is a great example of how closures let you customize some
@@ -232,6 +183,10 @@ provides.
 You can chain multiple calls to iterator adapters to perform complex actions in
 a readable way. But because all iterators are lazy, you have to call one of the
 consuming adapter methods to get results from calls to iterator adapters.
+
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="using-closures-that-capture-their-environment"></a>
 
 ### Closures That Capture Their Environment
 
@@ -248,58 +203,13 @@ In Listing 13-16, we use `filter` with a closure that captures the `shoe_size`
 variable from its environment to iterate over a collection of `Shoe` struct
 instances. It will return only shoes that are the specified size.
 
-**Listing 13-16: Using the `filter` method with a closure that captures `shoe_size`** (src/lib.rs)
+<Listing number="13-16" file-name="src/lib.rs" caption="Using the `filter` method with a closure that captures `shoe_size`">
 
-```rust
-#[derive(PartialEq, Debug)]
-struct Shoe {
-    size: u32,
-    style: String,
-}
-
-fn shoes_in_size(shoes: Vec<Shoe>, shoe_size: u32) -> Vec<Shoe> {
-    shoes.into_iter().filter(|s| s.size == shoe_size).collect()
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn filters_by_size() {
-        let shoes = vec![
-            Shoe {
-                size: 10,
-                style: String::from("sneaker"),
-            },
-            Shoe {
-                size: 13,
-                style: String::from("sandal"),
-            },
-            Shoe {
-                size: 10,
-                style: String::from("boot"),
-            },
-        ];
-
-        let in_my_size = shoes_in_size(shoes, 10);
-
-        assert_eq!(
-            in_my_size,
-            vec![
-                Shoe {
-                    size: 10,
-                    style: String::from("sneaker")
-                },
-                Shoe {
-                    size: 10,
-                    style: String::from("boot")
-                },
-            ]
-        );
-    }
-}
+```rust,noplayground
+{{#rustdoc_include ../listings/ch13-functional-features/listing-13-16/src/lib.rs}}
 ```
+
+</Listing>
 
 The `shoes_in_size` function takes ownership of a vector of shoes and a shoe
 size as parameters. It returns a vector containing only shoes of the specified

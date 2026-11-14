@@ -1,12 +1,3 @@
----
-title: "PKCS8EncodedKeySpec class (java.security.spec)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/spec/PKCS8EncodedKeySpec.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # PKCS8EncodedKeySpec class (java.security.spec)
 
 ```java
@@ -14,18 +5,18 @@ public non-sealed class PKCS8EncodedKeySpec extends EncodedKeySpec implements DE
 ```
 
 This class represents the ASN.1 encoding of a private key,
-encoded according to the ASN.1 type `OneAsymmetricKey`.
-The `OneAsymmetricKey` syntax is defined in the PKCS#8 standard
+encoded according to the ASN.1 type {@code OneAsymmetricKey}.
+The {@code OneAsymmetricKey} syntax is defined in the PKCS#8 standard
 as follows:
 
-```java
+<pre>
 OneAsymmetricKey ::= SEQUENCE {
   version Version,
   privateKeyAlgorithm PrivateKeyAlgorithmIdentifier,
-  privateKey <example-value>,
+  privateKey PrivateKey,
   attributes       [0] Attributes OPTIONAL,
   ...,
-  [[2: publicKey  [1] PublicKey <example-value> ]],
+  [[2: publicKey  [1] PublicKey OPTIONAL ]],
   ...
 }
 
@@ -40,19 +31,21 @@ PrivateKey ::= OCTET STRING
 PublicKey ::= BIT STRING
 
 Attributes ::= SET OF Attribute
-```
+</pre>
 
-**See also:** java.security.Key
+@author Jan Luehe
 
-**See also:** java.security.KeyFactory
 
-**See also:** KeySpec
+@see java.security.Key
+@see java.security.KeyFactory
+@see KeySpec
+@see EncodedKeySpec
+@see X509EncodedKeySpec
 
-**See also:** EncodedKeySpec
+@spec https://www.rfc-editor.org/info/rfc5958
+    RFC 5958: Asymmetric Key Packages
 
-**See also:** X509EncodedKeySpec
-
-**Since:** 1.2
+@since 1.2
 
 ## PKCS8EncodedKeySpec.PKCS8EncodedKeySpec(byte[])
 
@@ -60,15 +53,13 @@ Attributes ::= SET OF Attribute
 public PKCS8EncodedKeySpec(byte[] encodedKey)
 ```
 
-Creates a new `PKCS8EncodedKeySpec` with the given encoded key.
+Creates a new {@code PKCS8EncodedKeySpec} with the given encoded key.
 
-Parameters:
-
-- `encodedKey`: the key, which is assumed to be encoded according to the PKCS #8 standard. The contents of the array are copied to protect against subsequent modification.
-
-Throws:
-
-- `NullPointerException`: if `encodedKey` is null.
+@param encodedKey the key, which is assumed to be
+encoded according to the PKCS #8 standard. The contents of
+the array are copied to protect against subsequent modification.
+@throws NullPointerException if {@code encodedKey}
+is null.
 
 ## PKCS8EncodedKeySpec.PKCS8EncodedKeySpec(byte[], String)
 
@@ -76,22 +67,26 @@ Throws:
 public PKCS8EncodedKeySpec(byte[] encodedKey, String algorithm)
 ```
 
-Creates a new `PKCS8EncodedKeySpec` with the given encoded key and
+Creates a new {@code PKCS8EncodedKeySpec} with the given encoded key and
 algorithm. This constructor is useful when subsequent callers of
-the `PKCS8EncodedKeySpec` object might not know the
+the {@code PKCS8EncodedKeySpec} object might not know the
 algorithm of the private key.
 
-Parameters:
-
-- `encodedKey`: the key, which is assumed to be encoded according to the PKCS #8 standard. The contents of the array are copied to protect against subsequent modification.
-- `algorithm`: the algorithm name of the encoded private key. See the AsymmetricKey <example-value> section in the  Java Security Standard Algorithm Names Specification for information about standard asymmetric key <example-value> names.
-
-**Since:** 9
-
-Throws:
-
-- `NullPointerException`: if `encodedKey` or `algorithm` is null.
-- `IllegalArgumentException`: if `algorithm` is the empty string `""`
+@param encodedKey the key, which is assumed to be
+encoded according to the PKCS #8 standard. The contents of
+the array are copied to protect against subsequent modification.
+@param algorithm the algorithm name of the encoded private key.
+See the AsymmetricKey Algorithms section in the
+<a href="{@docRoot}/../specs/security/standard-names.html#asymmetrickey-algorithms">
+Java Security Standard Algorithm Names Specification</a>
+for information about standard asymmetric key algorithm names.
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@throws NullPointerException if {@code encodedKey}
+or {@code algorithm} is null.
+@throws IllegalArgumentException if {@code algorithm} is
+the empty string {@code ""}
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@since 9
 
 ## PKCS8EncodedKeySpec.getEncoded()
 
@@ -101,7 +96,7 @@ public byte[] getEncoded()
 
 Returns the key bytes, encoded according to the PKCS #8 standard.
 
-**Returns:** the PKCS #8 encoding of the key. Returns a new array
+@return the PKCS #8 encoding of the key. Returns a new array
 each time this method is called.
 
 ## PKCS8EncodedKeySpec.getFormat()
@@ -113,4 +108,4 @@ public final String getFormat()
 Returns the name of the encoding format associated with this
 key specification.
 
-**Returns:** the string `"PKCS#8"`.
+@return the string {@code "PKCS#8"}.

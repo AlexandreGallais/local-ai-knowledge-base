@@ -1,15 +1,15 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/no-empty-character-class"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/no-empty-character-class.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "disallow character classes that match no characters"
+since: "v1.2.0"
 ---
-
 # regexp/no-empty-character-class
 
 💼 This rule is enabled in the following configs: 🟢 `flat/recommended`, 🔵 `recommended`.
+
+<!-- end auto-generated rule header -->
 
 > disallow character classes that match no characters
 
@@ -47,11 +47,13 @@ Nothing.
 
 - [no-empty-character-class]
 
+[no-empty-character-class]: https://eslint.org/docs/rules/no-empty-character-class
+
 ## :rocket: Version
 
 This rule was introduced in eslint-plugin-regexp v1.2.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/no-empty-character-class.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/no-empty-character-class.ts)

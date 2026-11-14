@@ -1,10 +1,11 @@
 ---
-title: "How to sort elements - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/sort-elements.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to sort elements - LINQ to XML
+description: Learn how to write a query that sorts its results.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to sort elements (LINQ to XML)
@@ -13,7 +14,7 @@ You can sort your results when you query XML. This article provides two examples
 
 ## Example: Write a query that sorts its results
 
-This example shows how to write a query that sorts its results. It uses XML document Sample XML file: Numerical data.
+This example shows how to write a query that sorts its results. It uses XML document [Sample XML file: Numerical data](sample-xml-file-numerical-data.md).
 
 ```csharp
 XElement root = XElement.Load("Data.xml");
@@ -52,9 +53,9 @@ This example produces the following output:
 
 ## Example: Write a query in a namespace that sorts its results
 
-The following example shows the same query for XML that's in a namespace. It uses XML document Sample XML file: Numerical data in a namespace.
+The following example shows the same query for XML that's in a namespace. It uses XML document [Sample XML file: Numerical data in a namespace](sample-xml-file-numerical-data-namespace.md).
 
-For more information, see Namespaces overview.
+For more information, see [Namespaces overview](namespaces-overview.md).
 
 ```csharp
 XElement root = XElement.Load("DataInNamespace.xml");
@@ -100,6 +101,6 @@ This example produces the following output:
 
 ## See also
 
-- Sorting Data (C#)
-- Sorting Data (Visual Basic)
-- Basic <example-value> (LINQ to XML) (Visual Basic)
+- [Sorting Data (C#)](../../csharp/linq/standard-query-operators/sorting-data.md)
+- [Sorting Data (Visual Basic)](../../visual-basic/programming-guide/concepts/linq/sorting-data.md)
+- [Basic Queries (LINQ to XML) (Visual Basic)](./find-element-specific-attribute.md)

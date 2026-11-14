@@ -1,17 +1,10 @@
----
-title: "vitest/no-large-snapshots"
-tool: "eslint-vitest"
-version: "1.6"
-source: "https://github.com/vitest-dev/eslint-plugin-vitest/blob/c5df1054a25044a7ca5baf07461b7aee1f15f5f2/docs/rules/no-large-snapshots.md"
-commit: "c5df1054a25044a7ca5baf07461b7aee1f15f5f2"
-license: "MIT"
----
-
 # vitest/no-large-snapshots
 
 📝 Disallow large snapshots.
 
 ⚠️ This rule _warns_ in the 🌐 `all` config.
+
+<!-- end auto-generated rule header -->
 
 ## Rule Details
 
@@ -19,11 +12,15 @@ This rule aims to prevent large snapshots.
 
 ### Options
 
+<!-- begin auto-generated rule options list -->
+
 | Name               | Description                                                                                                                                                          | Type   |
 | :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----- |
 | `allowedSnapshots` | A map of snapshot absolute file paths to arrays of snapshot names that are allowed to exceed the size limit. Snapshot names can be specified as regular expressions. | Object |
 | `inlineMaxSize`    | Maximum number of lines allowed in inline snapshots.                                                                                                                 | Number |
 | `maxSize`          | Maximum number of lines allowed in external snapshots.                                                                                                               | Number |
+
+<!-- end auto-generated rule options list -->
 
 This rule accepts an object with the following properties:
 

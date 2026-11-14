@@ -1,12 +1,3 @@
----
-title: "Behavior considered undefined"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/behavior-considered-undefined.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[undefined]
 # Behavior considered undefined
 
@@ -16,7 +7,7 @@ Rust code is incorrect if it exhibits any of the behaviors in the following list
 r[undefined.soundness]
 It is the programmer's responsibility when writing `unsafe` code to ensure that any safe code interacting with the `unsafe` code cannot trigger these behaviors. `unsafe` code that satisfies this property for any safe client is called *sound*; if `unsafe` code can be misused by safe code to exhibit undefined behavior, it is *unsound*.
 
-> **Warning:**
+> [!WARNING]
 > The following list is not exhaustive; it may grow or shrink. There is no formal model of Rust's semantics for what is and is not allowed in unsafe code, so there may be more behavior considered unsafe. We also reserve the right to make some of the behavior in that list defined in the future. In other words, this list does not say that anything will *definitely* always be undefined in all future Rust versions (but we might make such commitments for some list items in the future).
 >
 > Please read the [Rustonomicon] before writing unsafe code.
@@ -28,12 +19,12 @@ r[undefined.pointer-access]
 * Accessing (loading from or storing to) a place that is [dangling] or [based on a misaligned pointer].
 
 r[undefined.place-projection]
-* Performing an offsetting place projection that violates the requirements of in-bounds pointer arithmetic. An offsetting place projection is a field expression, a tuple index expression, or an array/slice index expression.
+* Performing an offsetting place projection that violates the requirements of [in-bounds pointer arithmetic](pointer#method.offset). An offsetting place projection is a [field expression][project-field], a [tuple index expression][project-tuple], or an [array/slice index expression][project-slice].
 
 r[undefined.alias]
 * Breaking the pointer aliasing rules. The exact aliasing rules are not determined yet, but here is an outline of the general principles:
 
-  * `&T` must point to memory that is not mutated while they are live (except for data inside an [`UnsafeCell`]).
+  * `&T` must point to memory that is not mutated while they are live (except for data inside an [`UnsafeCell<U>`]).
   * `&mut T` must point to memory that is not read or written by any pointer not derived from the reference and that no other reference points to while they are live (with no exceptions).
   * `Box<T>` is treated similar to `&'static mut T` for the purpose of these rules.
 
@@ -44,12 +35,12 @@ r[undefined.alias]
   * For references, the liveness duration is upper-bounded by the syntactic lifetime assigned by the borrow checker; it cannot be live any *longer* than that lifetime.
   * Each time a reference or box is dereferenced or reborrowed, it is considered live.
   * Each time a reference or box is passed to or returned from a function, it is considered live.
-  * When a reference (but not a `Box`!) is passed to a function, it is live at least as long as that function call, again except if the `&T` contains an [`UnsafeCell`].
+  * When a reference (but not a `Box`!) is passed to a function, it is live at least as long as that function call, again except if the `&T` contains an [`UnsafeCell<U>`].
 
   All this also applies when values of these types are passed in a (nested) field of a compound type, but not behind pointer indirections.
 
 r[undefined.immutable]
-* Mutating immutable bytes. All bytes reachable through a [const-promoted] expression are immutable, as well as bytes reachable through borrows in `static` and `const` initializers that have been [lifetime-extended] to `'static`. The bytes owned by an immutable binding or immutable `static` are immutable, unless those bytes are part of an [`UnsafeCell`].
+* Mutating immutable bytes. All bytes reachable through a [const-promoted] expression are immutable, as well as bytes reachable through borrows in `static` and `const` initializers that have been [lifetime-extended] to `'static`. The bytes owned by an immutable binding or immutable `static` are immutable, unless those bytes are part of an [`UnsafeCell<U>`].
 
   Moreover, the bytes [pointed to] by a shared reference, including transitively through other references (both shared and mutable) and `Box`es, are immutable; transitivity includes those references stored in fields of compound types.
 
@@ -62,21 +53,21 @@ r[undefined.target-feature]
 * Executing code compiled with platform features that the current platform does not support (see [`target_feature`]), *except* if the platform explicitly documents this to be safe.
 
 r[undefined.call]
-* Calling a function with the wrong call ABI, or unwinding past a stack frame that does not allow unwinding (e.g. by calling a `"C-unwind"` function imported or transmuted as a `"C"` function or function pointer).
+* Calling a function with the wrong [call ABI][abi], or unwinding past a stack frame that does not allow unwinding (e.g. by calling a `"C-unwind"` function imported or transmuted as a `"C"` function or function pointer).
 
 r[undefined.invalid]
-* Producing an invalid value. "Producing" a value happens any time a value is assigned to or read from a place, passed to a function/primitive operation or returned from a function/primitive operation.
+* Producing an [invalid value][invalid-values]. "Producing" a value happens any time a value is assigned to or read from a place, passed to a function/primitive operation or returned from a function/primitive operation.
 
 r[undefined.asm]
 * Incorrect use of inline assembly. For more details, refer to the [rules] to follow when writing code that uses inline assembly.
 
 r[undefined.runtime]
 * Violating assumptions of the Rust runtime. Most assumptions of the Rust runtime are currently not explicitly documented.
-  * For assumptions specifically related to unwinding, see the panic documentation.
+  * For assumptions specifically related to unwinding, see the [panic documentation][unwinding-ffi].
   * The runtime assumes that a Rust stack frame is not deallocated without executing destructors for local variables owned by the stack frame. This assumption can be violated by C functions like `longjmp`.
   * For hard-float targets, the runtime assumes that the rounding mode is configured to roundTiesToEven and floating-point exceptions are disabled. The rounding mode and exception behavior can be temporarily changed by code running in a different language (if supported by said language), but must be restored before returning to Rust code.
 
-> **Note:**
+> [!NOTE]
 > Undefined behavior affects the entire program. For example, calling a function in C that exhibits undefined behavior of C means your entire program contains undefined behaviour that can also affect the Rust code. And vice versa, undefined behavior in Rust can cause adverse affects on code executed by any FFI calls to other languages.
 
 r[undefined.pointed-to]
@@ -86,6 +77,7 @@ The span of bytes a pointer or reference "points to" is determined by the pointe
 
 r[undefined.misaligned]
 ## Places based on misaligned pointers
+[based on a misaligned pointer]: #places-based-on-misaligned-pointers
 
 r[undefined.misaligned.ptr]
 A place is said to be "based on a misaligned pointer" if the last `*` projection during place computation was performed on a pointer that was not aligned for its type. (If there is no `*` projection in the place expression, then this is accessing the field of a local or `static` and rustc will guarantee proper alignment. If there are multiple `*` projections, then each of them incurs a load of the pointer-to-be-dereferenced itself from memory, and each of these loads is subject to the alignment constraint. Note that some `*` projections can be omitted in surface Rust syntax due to automatic dereferencing; we are considering the fully expanded place expression here.)
@@ -106,18 +98,20 @@ Taking a reference will lead to a compiler error in cases where the field type m
 
 r[undefined.dangling]
 ## Dangling pointers
+[dangling]: #dangling-pointers
 
 r[undefined.dangling.def]
 A reference/pointer is "dangling" if not all of the bytes it [points to] are part of the same live [allocation] (so in particular they all have to be part of *some* allocation).
 
-> **Note:**
+> [!NOTE]
 > This implies that the dynamic size of a Rust value (as determined by `size_of_val`) must never exceed `isize::MAX`, since it is impossible for a single allocation to be larger than `isize::MAX`.
 
-> **Note:**
-> This also implies that if the size is 0, then the pointer is trivially never "dangling" (even if it is a null pointer).
+> [!NOTE]
+> This also implies that if the [size is 0][zero-sized], then the pointer is trivially never "dangling" (even if it is a null pointer).
 
 r[undefined.validity]
 ## Invalid values
+[invalid-values]: #invalid-values
 
 r[undefined.validity.def]
 The Rust compiler assumes that all values produced during program execution are "valid", and producing an invalid value is hence immediate UB.
@@ -149,7 +143,7 @@ r[undefined.validity.struct]
 * A `struct`, tuple, and array requires all fields/elements to be valid at their respective type.
 
 r[undefined.validity.union]
-* For a `union`, the exact validity requirements are not decided yet. Obviously, all values that can be created entirely in safe code are valid. If the union has a [zero-sized] field, then every possible value is valid. Further details are still being debated.
+* For a `union`, the exact validity requirements are not decided yet. Obviously, all values that can be created entirely in safe code are valid. If the union has a [zero-sized] field, then every possible value is valid. Further details are [still being debated](https://github.com/rust-lang/unsafe-code-guidelines/issues/438).
 
 r[undefined.validity.maybe-uninit]
 * A [`MaybeUninit<T>`] is always valid (see [lang-types.maybe-uninit.validity]).
@@ -164,13 +158,13 @@ r[undefined.validity.wide]
 
   In addition, for a wide reference or [`Box<T>`], the metadata is invalid if it makes the total size of the pointed-to value (as determined by `size_of_val`) bigger than `isize::MAX`.
 
-  > **Note:**
+  > [!NOTE]
   > This bound is on the size of the entire pointed-to value, not just its unsized tail, and it constrains `dyn Trait` metadata just as it does a slice or `str` length. A valid vtable describes an erased type no larger than `isize::MAX`, but a sized prefix can still carry the total past the limit.
 
 r[undefined.validity.valid-range]
 * If a type has a custom range of valid values, then a valid value must be in that range. In the standard library, this affects [`NonNull<T>`] and [`NonZero<T>`].
 
-  > **Note:**
+  > [!NOTE]
   > `rustc` achieves this with the unstable `rustc_layout_scalar_valid_range_*` attributes.
 
 r[undefined.validity.const-provenance]
@@ -204,3 +198,28 @@ r[undefined.validity.const-provenance]
 
 r[undefined.validity.undef]
 **Note:** Uninitialized memory is also implicitly invalid for any type that has a restricted set of valid values. In other words, the only cases in which reading uninitialized memory is permitted are inside `union`s and in "padding" (the gaps between the fields of a type).
+
+[`bool`]: types/boolean.md
+[`const`]: items/constant-items.md
+[abi]: items/external-blocks.md#abi
+[allocation]: core::ptr#allocation
+[const contexts]: const-eval.const-context
+[`target_feature`]: attributes/codegen.md#the-target_feature-attribute
+[`UnsafeCell<U>`]: std::cell::UnsafeCell
+[Rustonomicon]: ../nomicon/index.html
+[`MaybeUninit<T>`]: core::mem::MaybeUninit
+[metadata]: dynamic-sized.pointer-types
+[`NonNull<T>`]: core::ptr::NonNull
+[`NonZero<T>`]: core::num::NonZero
+[place expression context]: expressions.md#place-expressions-and-value-expressions
+[rules]: inline-assembly.md#rules-for-inline-assembly
+[points to]: #pointed-to-bytes
+[pointed to]: #pointed-to-bytes
+[project-field]: expressions/field-expr.md
+[project-tuple]: expressions/tuple-expr.md#tuple-indexing-expressions
+[project-slice]: expressions/array-expr.md#array-and-slice-indexing-expressions
+[unsized tail]: dynamic-sized.tail
+[unwinding-ffi]: panic.md#unwinding-across-ffi-boundaries
+[const-promoted]: destructors.md#constant-promotion
+[lifetime-extended]: destructors.md#temporary-lifetime-extension
+[zero-sized]: glossary.zst

@@ -1,15 +1,23 @@
 ---
 title: "How to: View assembly contents"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/assembly/view-contents.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: You can use the IL Disassembler to view an assembly's attributes and references to other modules and assemblies.
+ms.date: "08/20/2019"
+helpviewer_keywords:
+  - "assembly manifest, viewing information"
+  - "Ildasm.exe"
+  - "MSIL Disassembler"
+  - "assemblies [.NET], viewing contents"
+  - "viewing assembly information"
+  - "MSIL"
+  - "viewing MSIL information"
+ms.topic: how-to
+dev_langs:
+  - "csharp"
+  - "vb"
 ---
-
 # How to: View assembly contents
 
-You can use the Ildasm.exe (IL Disassembler) to view common intermediate language (CIL) information in a file. If the file being examined is an assembly, this information can include the assembly's attributes and references to other modules and assemblies. This information can be helpful in determining whether a file is an assembly or part of an assembly and whether the file has references to other modules or assemblies.
+You can use the [Ildasm.exe (IL Disassembler)](../../framework/tools/ildasm-exe-il-disassembler.md) to view common intermediate language (CIL) information in a file. If the file being examined is an assembly, this information can include the assembly's attributes and references to other modules and assemblies. This information can be helpful in determining whether a file is an assembly or part of an assembly and whether the file has references to other modules or assemblies.
 
 To display the contents of an assembly using *Ildasm.exe*, enter **ildasm \<assembly name>** at a command prompt. For example, the following command disassembles the *Hello.exe* assembly.
 
@@ -86,10 +94,10 @@ The following table describes each directive in the assembly manifest of the *He
 
 An assembly manifest can contain a number of different directives, depending on the contents of the assembly. For an extensive list of the directives in the assembly manifest, see the Ecma documentation, especially "Partition II: Metadata Definition and Semantics" and "Partition III: CIL Instruction Set":
 
-- ECMA C# and Common Language Infrastructure standards
-- Standard ECMA-335 - Common Language Infrastructure (CLI)
+- [ECMA C# and Common Language Infrastructure standards](../../fundamentals/standards.md)
+- [Standard ECMA-335 - Common Language Infrastructure (CLI)](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/)
 
 ## See also
 
-- Application domains and assemblies
-- Ildasm.exe (IL Disassembler)
+- [Application domains and assemblies](../../framework/app-domains/application-domains.md#application-domains-and-assemblies)
+- [Ildasm.exe (IL Disassembler)](../../framework/tools/ildasm-exe-il-disassembler.md)

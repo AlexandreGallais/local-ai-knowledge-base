@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataTables::GetColumn Method"
 title: "IMetaDataTables::GetColumn Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadatatables-getcolumn-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "02/25/2019"
+api_name:
+  - "IMetaDataTables.GetColumn"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataTables::GetColumn"
+  - "GetColumn method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataTables::GetColumn Method
 
 Gets a pointer to the value contained in the cell of the specified column and row in the given table.
@@ -38,7 +45,7 @@ HRESULT GetColumn (
 
 ## Remarks
 
-The interpretation of the value returned through `pVal` depends on the column's type. The column type can be determined by calling IMetaDataTables.GetColumnInfo.
+The interpretation of the value returned through `pVal` depends on the column's type. The column type can be determined by calling [IMetaDataTables.GetColumnInfo](imetadatatables-getcolumninfo-method.md).
 
 - The **GetColumn** method automatically converts columns of type **Rid** or **CodedToken** to full 32-bit `mdToken` values.
 - It also automatically converts 8-bit or 16-bit values to full 32-bit values.
@@ -46,20 +53,20 @@ The interpretation of the value returned through `pVal` depends on the column's 
 
 | Column type              | pVal contains | Comment                          |
 |--------------------------|---------------|-----------------------------------|
-| `0`..`iRidMax`(0..63)  | mdToken     | *pVal* will contain a full Token. The function automatically converts the Rid into a full token. |
-| `iCodedToken`..`iCodedTokenMax`(64..95) | mdToken | Upon return, *pVal* will contain a full Token. The function automatically decompresses the CodedToken into a full token. |
+| `0`..`iRidMax`<br>(0..63)  | mdToken     | *pVal* will contain a full Token. The function automatically converts the Rid into a full token. |
+| `iCodedToken`..`iCodedTokenMax`<br>(64..95) | mdToken | Upon return, *pVal* will contain a full Token. The function automatically decompresses the CodedToken into a full token. |
 | `iSHORT` (96)            | Int16         | Automatically sign-extended to 32-bit.  |
 | `iUSHORT` (97)           | UInt16        | Automatically sign-extended to 32-bit.  |
 | `iLONG` (98)             | Int32         |                                        |
 | `iULONG` (99)            | UInt32        |                                        |
 | `iBYTE` (100)            | Byte          | Automatically sign-extended to 32-bit.  |
-| `iSTRING` (101)          | String heap index | *pVal* is an index into the String heap. Use IMetadataTables::GetString to get the actual column String value. |
-| `iGUID` (102)            | Guid heap index | *pVal* is an index into the Guid heap. Use IMetadataTables::GetGuid to get the actual column Guid value. |
-| `iBLOB` (103)            | Blob heap index | *pVal* is an index into the Blob heap. Use IMetadataTables::GetBlob to get the actual column Blob value. |
+| `iSTRING` (101)          | String heap index | *pVal* is an index into the String heap. Use [IMetadataTables::GetString](imetadatatables-getstring-method.md) to get the actual column String value. |
+| `iGUID` (102)            | Guid heap index | *pVal* is an index into the Guid heap. Use [IMetadataTables::GetGuid](imetadatatables-getguid-method.md) to get the actual column Guid value. |
+| `iBLOB` (103)            | Blob heap index | *pVal* is an index into the Blob heap. Use [IMetadataTables::GetBlob](imetadatatables-getblob-method.md) to get the actual column Blob value. |
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -69,5 +76,5 @@ The interpretation of the value returned through `pVal` depends on the column's 
 
 ## See also
 
-- IMetaDataTables Interface
-- IMetaDataTables2 Interface
+- [IMetaDataTables Interface](imetadatatables-interface.md)
+- [IMetaDataTables2 Interface](imetadatatables2-interface.md)

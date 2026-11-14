@@ -1,13 +1,8 @@
 ---
-title: "no-unmodified-loop-condition"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-unmodified-loop-condition.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-unmodified-loop-condition
+rule_type: problem
 ---
 
-# no-unmodified-loop-condition
 
 Variables in a loop condition often are modified in the loop.
 If not, it's possibly a mistake.
@@ -38,7 +33,7 @@ If a reference is inside of a dynamic expression (e.g. `CallExpression`,
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-unmodified-loop-condition: "error"*/
@@ -59,9 +54,11 @@ while (node !== root) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-unmodified-loop-condition: "error"*/
@@ -99,6 +96,8 @@ while (check(obj)) {
 }
 ```
 
+:::
+
 ## Options
 
 This rule has an object option:
@@ -108,7 +107,7 @@ This rule has an object option:
 
 Examples of **incorrect** code for this rule with the `{ "checkConditionalExpressions": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint no-unmodified-loop-condition: ["error", { "checkConditionalExpressions": true }] */
@@ -120,6 +119,8 @@ while (chunk ? !done : false) {
     chunk = nextOrNull();
 }
 ```
+
+:::
 
 ## When Not To Use It
 

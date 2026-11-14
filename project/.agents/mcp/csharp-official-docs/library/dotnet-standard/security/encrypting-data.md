@@ -1,10 +1,16 @@
 ---
 title: "Encrypting data"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/security/encrypting-data.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to encrypt data in .NET, using a symmetric algorithm or an asymmetric algorithm.
+ms.date: 11/14/2022
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "encryption [.NET], symmetric"
+  - "symmetric encryption"
+  - "cryptography [.NET], asymmetric"
+  - "asymmetric encryption"
+ms.topic: how-to
 ---
 
 # Encrypting data
@@ -13,9 +19,9 @@ Symmetric encryption and asymmetric encryption are performed using different pro
 
 ## Symmetric encryption
 
-The managed symmetric cryptography classes are used with a special stream class called a `System.Security.Cryptography.CryptoStream` that encrypts data read into the stream. The **CryptoStream** class is initialized with a managed stream class, a class that implements the `System.Security.Cryptography.ICryptoTransform` interface (created from a class that implements a cryptographic algorithm), and a `System.Security.Cryptography.CryptoStreamMode` enumeration that describes the type of access permitted to the **CryptoStream**. The **CryptoStream** class can be initialized using any class that derives from the `System.IO.Stream` class, including `System.IO.FileStream`, `System.IO.MemoryStream`, and `System.Net.Sockets.NetworkStream`. Using these classes, you can perform symmetric encryption on a variety of stream objects.
+The managed symmetric cryptography classes are used with a special stream class called a <xref:System.Security.Cryptography.CryptoStream> that encrypts data read into the stream. The **CryptoStream** class is initialized with a managed stream class, a class that implements the <xref:System.Security.Cryptography.ICryptoTransform> interface (created from a class that implements a cryptographic algorithm), and a <xref:System.Security.Cryptography.CryptoStreamMode> enumeration that describes the type of access permitted to the **CryptoStream**. The **CryptoStream** class can be initialized using any class that derives from the <xref:System.IO.Stream> class, including <xref:System.IO.FileStream>, <xref:System.IO.MemoryStream>, and <xref:System.Net.Sockets.NetworkStream>. Using these classes, you can perform symmetric encryption on a variety of stream objects.
 
-The following example illustrates how to create a new instance of the default implementation class for the `System.Security.Cryptography.Aes` algorithm. The instance is used to perform encryption on a **CryptoStream** class. In this example, the **CryptoStream** is initialized with a stream object called `fileStream` that can be any type of managed stream. The **CreateEncryptor** method from the **Aes** class is passed the key and IV that are used for encryption. In this case, the default key and IV generated from `aes` are used.
+The following example illustrates how to create a new instance of the default implementation class for the <xref:System.Security.Cryptography.Aes> algorithm. The instance is used to perform encryption on a **CryptoStream** class. In this example, the **CryptoStream** is initialized with a stream object called `fileStream` that can be any type of managed stream. The **CreateEncryptor** method from the **Aes** class is passed the key and IV that are used for encryption. In this case, the default key and IV generated from `aes` are used.
 
 ```vb
 Dim aes As Aes = Aes.Create()
@@ -31,112 +37,18 @@ CryptoStream cryptStream = new CryptoStream(
 
 After this code is executed, any data written to the **CryptoStream** object is encrypted using the AES algorithm.
 
-The following example shows the entire process of creating a stream, encrypting the stream, writing to the stream, and closing the stream. This example creates a file stream that is encrypted using the **CryptoStream** class and the **Aes** class. Generated IV is written to the beginning of `System.IO.FileStream`, so it can be read and used for decryption. Then a message is written to the encrypted stream with the `System.IO.StreamWriter` class. While the same key can be used multiple times to encrypt and decrypt data, it is recommended to generate a new random IV each time. This way the encrypted data is always different, even when plain text is the same.
+The following example shows the entire process of creating a stream, encrypting the stream, writing to the stream, and closing the stream. This example creates a file stream that is encrypted using the **CryptoStream** class and the **Aes** class. Generated IV is written to the beginning of <xref:System.IO.FileStream>, so it can be read and used for decryption. Then a message is written to the encrypted stream with the <xref:System.IO.StreamWriter> class. While the same key can be used multiple times to encrypt and decrypt data, it is recommended to generate a new random IV each time. This way the encrypted data is always different, even when plain text is the same.
 
-```csharp
-﻿using System.Security.Cryptography;
+:::code language="csharp" source="snippets/encrypting-data/csharp/aes-encrypt.cs":::
+:::code language="vb" source="snippets/encrypting-data/vb/aes-encrypt.vb":::
 
-try
-{
-    using (FileStream fileStream = new("TestData.txt", FileMode.OpenOrCreate))
-    {
-        using (Aes aes = Aes.Create())
-        {
-            byte[] key =
-            {
-                0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
-                0x09, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16
-            };
-            aes.Key = key;
-
-            byte[] iv = aes.IV;
-            fileStream.Write(iv, 0, iv.Length);
-
-            using (CryptoStream cryptoStream = new(
-                fileStream,
-                aes.CreateEncryptor(),
-                CryptoStreamMode.Write))
-            {
-                // By default, the StreamWriter uses UTF-8 encoding.
-                // To change the text encoding, pass the desired encoding as the second parameter.
-                // For example, new StreamWriter(cryptoStream, Encoding.Unicode).
-                using (StreamWriter encryptWriter = new(cryptoStream))
-                {
-                    encryptWriter.WriteLine("Hello World!");
-                }
-            }
-        }
-    }
-
-    Console.WriteLine("The file was encrypted.");
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"The encryption failed. {ex}");
-}
-```
-```vb
-﻿Imports System
-Imports System.IO
-Imports System.Security.Cryptography
-
-Module Module1
-    Sub Main()
-        Try
-            ' Create a file stream
-            Using fileStream As New FileStream("TestData.txt", FileMode.OpenOrCreate)
-
-                ' Create a new instance of the default Aes implementation class  
-                ' and configure encryption key.
-                Using aes As Aes = Aes.Create()
-                    'Encryption key used to encrypt the stream.
-                    'The same value must be used to encrypt and decrypt the stream.
-                    Dim key As Byte() = {
-                        &H1, &H2, &H3, &H4, &H5, &H6, &H7, &H8,
-                        &H9, &H10, &H11, &H12, &H13, &H14, &H15, &H16
-                    }
-
-                    aes.Key = key
-
-                    ' Stores IV at the beginning of the file.
-                    ' This information will be used for decryption.
-                    Dim iv As Byte() = aes.IV
-                    fileStream.Write(iv, 0, iv.Length)
-
-                    ' Create a CryptoStream, pass it the FileStream, and encrypt
-                    ' it with the Aes class.
-                    Using cryptoStream As New CryptoStream(fileStream, aes.CreateEncryptor(), CryptoStreamMode.Write)
-
-                        ' By default, the StreamWriter uses UTF-8 encoding.
-                        ' To change the text encoding, pass the desired encoding as the second parameter.
-                        ' For example, New StreamWriter(cryptoStream, Encoding.Unicode).
-                        Using sWriter As New StreamWriter(cryptoStream)
-
-                            'Write to the stream.
-                            sWriter.WriteLine("Hello World!")
-                        End Using
-                    End Using
-                End Using
-            End Using
-
-            'Inform the user that the message was written  
-            'to the stream.  
-            Console.WriteLine("The text was encrypted.")
-        Catch
-            'Inform the user that an exception was raised.  
-            Console.WriteLine("The encryption failed.")
-            Throw
-        End Try
-    End Sub
-End Module
-```
 The code encrypts the stream using the AES symmetric algorithm, and writes IV and then encrypted "Hello World!" to the stream. If the code is successful, it creates an encrypted file named *TestData.txt* and displays the following text to the console:
 
 ```console
 The file was encrypted.
 ```
 
-You can decrypt the file by using the symmetric decryption example in Decrypting Data. That example and this example specify the same key.
+You can decrypt the file by using the symmetric decryption example in [Decrypting Data](decrypting-data.md). That example and this example specify the same key.
 
 However, if an exception is raised, the code displays the following text to the console:
 
@@ -146,9 +58,9 @@ The encryption failed.
 
 ## Asymmetric encryption
 
-Asymmetric algorithms are usually used to encrypt small amounts of data such as the encryption of a symmetric key and IV. Typically, an individual performing asymmetric encryption uses the public key <example-value> by another party. The `System.Security.Cryptography.RSA` class is provided by .NET for this purpose.
+Asymmetric algorithms are usually used to encrypt small amounts of data such as the encryption of a symmetric key and IV. Typically, an individual performing asymmetric encryption uses the public key generated by another party. The <xref:System.Security.Cryptography.RSA> class is provided by .NET for this purpose.
 
-The following example uses public key <example-value> to encrypt a symmetric key and IV. Two byte arrays are initialized that represents the public key of a third party. An `System.Security.Cryptography.RSAParameters` object is initialized to these values. Next, the **RSAParameters** object (along with the public key it represents) is imported into an **RSA** instance using the `System.Security.Cryptography.RSA.ImportParameters*` method. Finally, the private key and IV created by an `System.Security.Cryptography.Aes` class are encrypted. This example requires systems to have 128-bit encryption installed.
+The following example uses public key information to encrypt a symmetric key and IV. Two byte arrays are initialized that represents the public key of a third party. An <xref:System.Security.Cryptography.RSAParameters> object is initialized to these values. Next, the **RSAParameters** object (along with the public key it represents) is imported into an **RSA** instance using the <xref:System.Security.Cryptography.RSA.ImportParameters*?displayProperty=nameWithType> method. Finally, the private key and IV created by an <xref:System.Security.Cryptography.Aes> class are encrypted. This example requires systems to have 128-bit encryption installed.
 
 ```vb
 Imports System
@@ -176,7 +88,7 @@ Module Module1
         rsaKeyInfo.Modulus = modulus
         rsaKeyInfo.Exponent = exponent
 
-        'Import key <example-value> into rsa
+        'Import key parameters into rsa
         rsa.ImportParameters(rsaKeyInfo)
 
         'Create a new instance of the default Aes implementation class.
@@ -227,7 +139,7 @@ class Class1
         rsaKeyInfo.Modulus = modulus;
         rsaKeyInfo.Exponent = exponent;
 
-        //Import key <example-value> into rsa.
+        //Import key parameters into rsa.
         rsa.ImportParameters(rsaKeyInfo);
 
         //Create a new instance of the default Aes implementation class.
@@ -242,9 +154,9 @@ class Class1
 
 ## See also
 
-- Generating keys for encryption and decryption
-- Decrypting data
-- Cryptographic services
-- Cross-platform cryptography
-- Timing vulnerabilities with CBC-mode symmetric decryption using padding
-- ASP.NET Core data protection
+- [Generating keys for encryption and decryption](generating-keys-for-encryption-and-decryption.md)
+- [Decrypting data](decrypting-data.md)
+- [Cryptographic services](cryptographic-services.md)
+- [Cross-platform cryptography](cross-platform-cryptography.md)
+- [Timing vulnerabilities with CBC-mode symmetric decryption using padding](vulnerabilities-cbc-mode.md)
+- [ASP.NET Core data protection](/aspnet/core/security/data-protection/introduction)

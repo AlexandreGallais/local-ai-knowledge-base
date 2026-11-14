@@ -1,12 +1,12 @@
 ---
 title: "Assembly location"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/assembly/location.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: The location of a .NET assembly determines how the CLR finds it and whether it can be shared with other assemblies. 
+ms.date: "08/20/2019"
+helpviewer_keywords:
+  - "locating assemblies"
+  - "assemblies [.NET], location"
+ms.assetid: 9f1f41a7-2954-49d3-a2c0-62b6ef4d40ab
 ---
-
 # Assembly location
 
 An assembly's location determines whether the common language runtime can locate it when referenced, and can also determine whether the assembly can be shared with other assemblies. You can deploy an assembly in the following locations:
@@ -25,6 +25,6 @@ An assembly's location determines whether the common language runtime can locate
 
 ## See also
 
-- Create assemblies
-- Global assembly cache
-- How the runtime locates assemblies
+- [Create assemblies](create.md)
+- [Global assembly cache](../../framework/app-domains/gac.md)
+- [How the runtime locates assemblies](../../framework/deployment/how-the-runtime-locates-assemblies.md)

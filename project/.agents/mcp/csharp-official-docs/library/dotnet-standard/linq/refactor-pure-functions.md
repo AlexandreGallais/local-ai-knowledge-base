@@ -1,17 +1,18 @@
 ---
-title: "Refactor into pure functions - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/refactor-pure-functions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Refactor into pure functions - LINQ to XML
+description: Learn about pure functions and how to use them to refactor code.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # Refactor into pure functions (LINQ to XML)
 
 An important aspect of pure functional transformations is learning how to refactor code using pure functions.
 
-> **Note:**
+> [!NOTE]
 > The common nomenclature in functional programming is that you refactor programs using pure functions. In Visual Basic and C++, this aligns with the use of functions in the respective languages. However, in C#, functions are called methods. For the purposes of this discussion, a pure function is implemented as a method in C#.
 
 As noted previously in this section, a pure function has two useful characteristics:
@@ -21,7 +22,7 @@ As noted previously in this section, a pure function has two useful characterist
 
 One way of transitioning to functional programming is to refactor existing code to eliminate unnecessary side effects and external dependencies. In this way, you can create pure function versions of existing code.
 
-This article discusses what a pure function is and what it's not. The Tutorial: Manipulate content in a WordprocessingML document tutorial shows how to manipulate a WordprocessingML document, and includes two examples of how to refactor using a pure function.
+This article discusses what a pure function is and what it's not. The [Tutorial: Manipulate content in a WordprocessingML document](xml-shape-wordprocessingml-documents.md) tutorial shows how to manipulate a WordprocessingML document, and includes two examples of how to refactor using a pure function.
 
 The following examples contrast two non-pure functions and a pure function.
 
@@ -105,9 +106,9 @@ Module Module1
 End Module
 ```
 
-This version of the program produces the same output as the first version, because the `HyphenatedConcat` function has changed the value (state) of its first parameter by invoking the `System.Text.StringBuilder.Append*` member function. Note that this alteration occurs despite the fact that `HyphenatedConcat` uses call-by-value parameter passing.
+This version of the program produces the same output as the first version, because the `HyphenatedConcat` function has changed the value (state) of its first parameter by invoking the <xref:System.Text.StringBuilder.Append*> member function. Note that this alteration occurs despite the fact that `HyphenatedConcat` uses call-by-value parameter passing.
 
-> **Important:**
+> [!IMPORTANT]
 > For reference types, if you pass a parameter by value, it results in a copy of the reference to an object being passed. This copy is still associated with the same instance data as the original reference (until the reference variable is assigned to a new object). Call-by-reference isn't necessarily required for a function to modify a parameter.
 
 ## Example: Implement a pure function
@@ -153,9 +154,9 @@ One approach that can be very useful is to write functions that are locally impu
 
 An important characteristic of the standard query operators is that they're implemented as pure functions.
 
-For more information, see Standard Query Operators Overview (C#) and Standard Query Operators Overview (Visual Basic).
+For more information, see [Standard Query Operators Overview (C#)](../../csharp/linq/standard-query-operators/index.md) and [Standard Query Operators Overview (Visual Basic)](../../visual-basic/programming-guide/concepts/linq/standard-query-operators-overview.md).
 
 ## See also
 
-- Introduction to pure functional transformations
-- Functional programming vs. imperative programming
+- [Introduction to pure functional transformations](introduction-pure-functional-transformations.md)
+- [Functional programming vs. imperative programming](functional-vs-imperative-programming.md)

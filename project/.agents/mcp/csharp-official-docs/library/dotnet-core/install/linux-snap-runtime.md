@@ -1,38 +1,33 @@
 ---
-title: "Install .NET Runtime on Linux with Snap"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/install/linux-snap-runtime.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Install .NET Runtime on Linux with Snap
+description: Learn about how to install the .NET Runtime snap package. Canonical maintains and supports .NET-related snap packages.
+author: adegeo
+ms.author: adegeo
+ms.date: 04/23/2026
+ms.topic: install-set-up-deploy
+ms.custom: linux-related-content
+#customer intent: As a Linux user, I want to install .NET Runtime through Snap.
 ---
 
 # Install .NET Runtime with Snap
 
-This article describes how to install the .NET Runtime snap package. .NET Runtime snap packages are provided by and maintained by Canonical. Snaps are a great alternative to the package manager built into your Linux distribution. If you need to install the SDK, see Install .NET SDK with Snap.
+This article describes how to install the .NET Runtime snap package. .NET Runtime snap packages are provided by and maintained by Canonical. Snaps are a great alternative to the package manager built into your Linux distribution. If you need to install the SDK, see [Install .NET SDK with Snap](linux-snap-sdk.md).
 
-A snap is a bundle of an app and its dependencies that works across many different Linux distributions. Snaps are discoverable and installable from the Snap Store. For more information about Snap, see Get started.
+A snap is a bundle of an app and its dependencies that works across many different Linux distributions. Snaps are discoverable and installable from the Snap Store. For more information about Snap, see [Get started](https://snapcraft.io/docs/tutorials/get-started/#tutorials-get-started).
 
-> **Caution:**
-> Snap installations of .NET may have problems running .NET tools. If you wish to use .NET tools, we recommend that you install .NET using the `dotnet-install` script or the package manager for the particular Linux distribution.
+> [!CAUTION]
+> Snap installations of .NET may have problems running [.NET tools](../tools/global-tools.md). If you wish to use .NET tools, we recommend that you install .NET using the [`dotnet-install` script](linux-scripted-manual.md#scripted-install) or the package manager for the particular Linux distribution.
 
 ## Prerequisites
 
 - Linux distribution that supports snap.
 - `snapd` the snap daemon.
 
-Your Linux distribution might already include snap. Try running `snap` from a terminal to see if the command works. For a list of supported Linux distributions, and instructions on how to install snap, see Installing `snapd`.
+Your Linux distribution might already include snap. Try running `snap` from a terminal to see if the command works. For a list of supported Linux distributions, and instructions on how to install snap, see [Installing `snapd`](https://snapcraft.io/docs/installing-snapd).
 
 ## .NET releases
 
-Microsoft publishes .NET under two different support policies, Long Term Support (LTS) and Standard Term Support (STS). The quality of all releases is the same. The only difference is the length of support. LTS releases get free support and patches for three years. STS releases get free support and patches for two years. For more information, see .NET Support Policy.
-
-The versions of .NET that are currently supported by Microsoft are:
-
-- 11.0 (STS)—Support ends **November 14, 2028**.
-- 10.0 (LTS)—Support ends **November 14, 2028**.
-
-Other entities that build and release .NET might introduce different support policies. Be sure to check with them to understand how .NET is supported.
+[!INCLUDE [supported-versions](includes/supported-versions.md)]
 
 ## 1. Install the runtime
 
@@ -49,16 +44,16 @@ Each .NET Runtime is published as an individual snap package. The following tabl
 
 | .NET version                                        | Snap package         | .NET version supported by Microsoft |
 |-----------------------------------------------------|----------------------|-------------------------------------|
-| 10 (LTS) | `dotnet-runtime-100` | Yes                                 |
-| 9 (STS)   | `dotnet-runtime-90`  | Yes                                 |
-| 8 (LTS)   | `dotnet-runtime-80`  | Yes                                 |
-| 7 (STS)   | `dotnet-runtime-70`  | No                                  |
-| 6 (LTS)   | `dotnet-runtime-60`  | No                                  |
-| 5         | `dotnet-runtime-50`  | No                                  |
-| 3.1       | `dotnet-runtime-31`  | No                                  |
-| 3.0       | `dotnet-runtime-30`  | No                                  |
-| 2.2       | `dotnet-runtime-22`  | No                                  |
-| 2.1       | `dotnet-runtime-21`  | No                                  |
+| [10 (LTS)](https://snapcraft.io/dotnet-runtime-100) | `dotnet-runtime-100` | Yes                                 |
+| [9 (STS)](https://snapcraft.io/dotnet-runtime-90)   | `dotnet-runtime-90`  | Yes                                 |
+| [8 (LTS)](https://snapcraft.io/dotnet-runtime-80)   | `dotnet-runtime-80`  | Yes                                 |
+| [7 (STS)](https://snapcraft.io/dotnet-runtime-70)   | `dotnet-runtime-70`  | No                                  |
+| [6 (LTS)](https://snapcraft.io/dotnet-runtime-60)   | `dotnet-runtime-60`  | No                                  |
+| [5](https://snapcraft.io/dotnet-runtime-50)         | `dotnet-runtime-50`  | No                                  |
+| [3.1](https://snapcraft.io/dotnet-runtime-31)       | `dotnet-runtime-31`  | No                                  |
+| [3.0](https://snapcraft.io/dotnet-runtime-30)       | `dotnet-runtime-30`  | No                                  |
+| [2.2](https://snapcraft.io/dotnet-runtime-22)       | `dotnet-runtime-22`  | No                                  |
+| [2.1](https://snapcraft.io/dotnet-runtime-21)       | `dotnet-runtime-21`  | No                                  |
 
 ## 2. Enable the dotnet command
 
@@ -90,8 +85,8 @@ Edit the appropriate source file for your shell and add `export DOTNET_ROOT=/sna
 
 ## Troubleshooting
 
-- The dotnet terminal command doesn't work
-- Can't install Snap on WSL2
+- [The dotnet terminal command doesn't work](#the-dotnet-terminal-command-doesnt-work)
+- [Can't install Snap on WSL2](#cant-install-snap-on-wsl2)
 
 ### The dotnet terminal command doesn't work
 
@@ -141,9 +136,9 @@ path-to-application:
   The path to an application .dll file to execute.
 ```
 
-To learn how to use the .NET CLI, see .NET CLI overview.
+To learn how to use the .NET CLI, see [.NET CLI overview](../tools/index.md).
 
 ## Related content
 
-- .NET CLI overview
-- How to enable TAB completion for the .NET CLI.
+- [.NET CLI overview](../tools/index.md)
+- [How to enable TAB completion for the .NET CLI.](../tools/enable-tab-autocomplete.md)

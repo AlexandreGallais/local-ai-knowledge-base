@@ -1,13 +1,10 @@
 ---
-title: "Circular fixes detected …"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/use/troubleshooting/circular-fixes.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: Circular fixes detected …
+eleventyNavigation:
+    key: circular fixes
+    parent: troubleshooting
+    title: Circular fixes detected …
 ---
-
-# Circular fixes detected …
 
 ## Symptoms
 
@@ -38,4 +35,4 @@ How to find the conflicting rules:
 
 For more information, see:
 
-- Configure Rules for documentation on how to configure rules
+- [Configure Rules](../configure/rules) for documentation on how to configure rules

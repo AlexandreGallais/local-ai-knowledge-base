@@ -1,14 +1,7 @@
 ---
-title: "cli-verbosity-normal"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/includes/cli-verbosity-normal.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 08/04/2021
+ms.topic: include
 ---
-
-# cli-verbosity-normal
-
 **`-v|--verbosity <LEVEL>`**
 
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. The default is `normal`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. The default is `normal`. For more information, see <xref:Microsoft.Build.Framework.LoggerVerbosity>.

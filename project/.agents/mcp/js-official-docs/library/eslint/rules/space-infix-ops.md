@@ -1,14 +1,7 @@
 ---
-title: "space-infix-ops"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/space-infix-ops.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: space-infix-ops
+rule_type: layout
 ---
-
-# space-infix-ops
-
 While formatting preferences are very personal, a number of style guides require spaces around operators, such as:
 
 ```js
@@ -45,7 +38,7 @@ var foo = bar|0; // `foo` is forced to be signed 32 bit integer
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint space-infix-ops: "error"*/
@@ -65,9 +58,11 @@ var {b=0}=bar;
 function foo(a=0) { }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint space-infix-ops: "error"*/
@@ -84,6 +79,8 @@ var {b = 0} = bar;
 
 function foo(a = 0) { }
 ```
+
+:::
 
 ## When Not To Use It
 

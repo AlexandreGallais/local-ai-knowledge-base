@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: Template package installation verifies NuGet signatures"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/11/template-package-signature-verification.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the behavioral change in .NET 8, .NET 9, .NET 10, and .NET 11 where template package installation verifies NuGet package signatures."
+ms.date: 10/30/2026
+ai-usage: ai-assisted
 ---
 
 # Template package installation verifies NuGet signatures
@@ -28,13 +26,13 @@ When signature verification is enabled, signed template packages downloaded from
 
 Unsigned packages are accepted only if the applicable NuGet configuration's `signatureValidationMode` is `accept` (the default) and the source doesn't declare `allRepositorySigned=true`. A client policy of `require` or a repository signing requirement causes unsigned packages to be rejected.
 
-Verification is always enabled on Windows. On Linux, it's enabled by default and can be disabled by setting `DOTNET_NUGET_SIGNATURE_VERIFICATION=false`. On macOS, it's disabled by default and can be enabled by setting `DOTNET_NUGET_SIGNATURE_VERIFICATION=true`. See NuGet signed-package verification for certificate-store requirements and platform limitations.
+Verification is always enabled on Windows. On Linux, it's enabled by default and can be disabled by setting `DOTNET_NUGET_SIGNATURE_VERIFICATION=false`. On macOS, it's disabled by default and can be enabled by setting `DOTNET_NUGET_SIGNATURE_VERIFICATION=true`. See [NuGet signed-package verification](../../../tools/nuget-signed-package-verification.md) for certificate-store requirements and platform limitations.
 
 This verification applies to packages downloaded from configured or additional NuGet sources. It doesn't apply when you install a template package directly from a local `.nupkg` file or folder.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -42,15 +40,15 @@ Signature verification helps validate the authenticity and integrity of download
 
 ## Recommended action
 
-If your template packages pass <example-value>, no action is required.
+If your template packages pass verification, no action is required.
 
-If installation fails, run `dotnet new install` with `--diagnostics` to see verification details. You can also use `dotnet nuget verify` to verify a downloaded package explicitly.
+If installation fails, run `dotnet new install` with `--diagnostics` to see verification details. You can also use [`dotnet nuget verify`](../../../tools/dotnet-nuget-verify.md) to verify a downloaded package explicitly.
 
-For signature or integrity failures, obtain a valid package from a trusted source or contact the package publisher. For certificate-trust failures, review the certificate-store requirements in NuGet signed-package verification.
+For signature or integrity failures, obtain a valid package from a trusted source or contact the package publisher. For certificate-trust failures, review the certificate-store requirements in [NuGet signed-package verification](../../../tools/nuget-signed-package-verification.md).
 
-If an unsigned package is rejected, check the applicable signatureValidationMode and the source's repository-signing requirements. Use a signed package that meets those requirements rather than bypassing verification.
+If an unsigned package is rejected, check the applicable [signatureValidationMode](/nuget/reference/nuget-config-file#signaturevalidationmode) and the source's repository-signing requirements. Use a signed package that meets those requirements rather than bypassing verification.
 
-For command behavior and configuration, see `dotnet new install`.
+For command behavior and configuration, see [`dotnet new install`](../../../tools/dotnet-new-install.md#package-signature-verification).
 
 ## Affected APIs
 

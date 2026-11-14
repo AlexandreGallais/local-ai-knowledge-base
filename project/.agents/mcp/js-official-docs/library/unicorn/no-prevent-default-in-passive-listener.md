@@ -1,21 +1,15 @@
----
-title: "no-prevent-default-in-passive-listener"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-prevent-default-in-passive-listener.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-prevent-default-in-passive-listener
 
 📝 Disallow ineffective `preventDefault()` calls in passive event listeners.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-Calling `preventDefault()` on the event received by a passive listener has no effect, even when the event is cancelable. This applies to every event type, including custom events.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+Calling [`preventDefault()`](https://dom.spec.whatwg.org/#dom-event-preventdefault) on the event received by a passive listener has no effect, even when the event is cancelable. This applies to every event type, including custom events.
 
 If cancellation is intended, use `{passive: false}`. Otherwise, remove the `preventDefault()` call. This rule offers an editor suggestion to change `passive` to `false`, but does not automatically fix the code because enabling cancellation changes runtime behavior.
 
@@ -61,5 +55,5 @@ element.addEventListener('click', async event => {
 
 ## Related rules
 
-- `require-passive-events` requires passive registration for high-frequency listeners that do not need cancellation.
-- `no-late-event-control` checks event-control calls after suspension or inside nested functions and generator callbacks.
+- [`require-passive-events`](require-passive-events.md) requires passive registration for high-frequency listeners that do not need cancellation.
+- [`no-late-event-control`](no-late-event-control.md) checks event-control calls after suspension or inside nested functions and generator callbacks.

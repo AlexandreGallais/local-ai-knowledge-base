@@ -1,71 +1,80 @@
----
-title: "BasicFileAttributeView interface (java.nio.file.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/file/attribute/BasicFileAttributeView.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # BasicFileAttributeView interface (java.nio.file.attribute)
 
 ```java
 public interface BasicFileAttributeView extends FileAttributeView
 ```
 
-A file attribute view that provides a view of a *basic set* of file
+A file attribute view that provides a view of a <em>basic set</em> of file
 attributes common to many file systems. The basic set of file attributes
-consist of *mandatory* and *optional* file attributes as
-defined by the `BasicFileAttributes` interface.
+consist of <em>mandatory</em> and <em>optional</em> file attributes as
+defined by the {@link BasicFileAttributes} interface.
 
- The file attributes are retrieved from the file system as a *bulk
-operation* by invoking the readAttributes method.
-This class also defines the setTimes method to update the
+<p> The file attributes are retrieved from the file system as a <em>bulk
+operation</em> by invoking the {@link #readAttributes() readAttributes} method.
+This class also defines the {@link #setTimes setTimes} method to update the
 file's time attributes.
 
- Where dynamic access to file attributes is required, the attributes
+<p> Where dynamic access to file attributes is required, the attributes
 supported by this attribute view have the following names and types:
+<blockquote>
+ <table class="striped">
+ <caption style="display:none">Supported attributes</caption>
+ <thead>
+  <tr>
+    <th scope="col"> Name </th>
+    <th scope="col"> Type </th>
+  </tr>
+ </thead>
+ <tbody>
+ <tr>
+    <th scope="row"> "lastModifiedTime" </th>
+    <td> {@link FileTime} </td>
+  </tr>
+  <tr>
+    <th scope="row"> "lastAccessTime" </th>
+    <td> {@link FileTime} </td>
+  </tr>
+  <tr>
+    <th scope="row"> "creationTime" </th>
+    <td> {@link FileTime} </td>
+  </tr>
+  <tr>
+    <th scope="row"> "size" </th>
+    <td> {@link Long} </td>
+  </tr>
+  <tr>
+    <th scope="row"> "isRegularFile" </th>
+    <td> {@link Boolean} </td>
+  </tr>
+  <tr>
+    <th scope="row"> "isDirectory" </th>
+    <td> {@link Boolean} </td>
+  </tr>
+  <tr>
+    <th scope="row"> "isSymbolicLink" </th>
+    <td> {@link Boolean} </td>
+  </tr>
+  <tr>
+    <th scope="row"> "isOther" </th>
+    <td> {@link Boolean} </td>
+  </tr>
+  <tr>
+    <th scope="row"> "fileKey" </th>
+    <td> {@link Object} </td>
+  </tr>
+</tbody>
+</table>
+</blockquote>
 
- Supported attributes
+<p> The {@link java.nio.file.Files#getAttribute getAttribute} method may be
+used to read any of these attributes as if by invoking the {@link
+#readAttributes() readAttributes()} method.
 
-     Name
-     Type
-
-     "lastModifiedTime"
-     `FileTime`
-
-     "lastAccessTime"
-     `FileTime`
-
-     "creationTime"
-     `FileTime`
-
-     "size"
-     `Long`
-
-     "isRegularFile"
-     `Boolean`
-
-     "isDirectory"
-     `Boolean`
-
-     "isSymbolicLink"
-     `Boolean`
-
-     "isOther"
-     `Boolean`
-
-     "fileKey"
-     `Object`
-
- The getAttribute method may be
-used to read any of these attributes as if by invoking the readAttributes() method.
-
- The setAttribute method may be
+<p> The {@link java.nio.file.Files#setAttribute setAttribute} method may be
 used to update the file's last modified time, last access time or create time
-attributes as if by invoking the setTimes method.
+attributes as if by invoking the {@link #setTimes setTimes} method.
 
-**Since:** 1.7
+@since 1.7
 
 ## BasicFileAttributeView.name()
 
@@ -74,7 +83,7 @@ String name()
 ```
 
 Returns the name of the attribute view. Attribute views of this type
-have the name `"basic"`.
+have the name {@code "basic"}.
 
 ## BasicFileAttributeView.readAttributes()
 
@@ -84,14 +93,13 @@ BasicFileAttributes readAttributes() throws IOException
 
 Reads the basic file attributes as a bulk operation.
 
- It is implementation specific if all file attributes are read as an
+<p> It is implementation specific if all file attributes are read as an
 atomic operation with respect to other file system operations.
 
-**Returns:** the file attributes
+@return  the file attributes
 
-Throws:
-
-- `IOException`: if an I/O error occurs
+@throws  IOException
+         if an I/O error occurs
 
 ## BasicFileAttributeView.setTimes(FileTime, FileTime, FileTime)
 
@@ -102,35 +110,42 @@ void setTimes(FileTime lastModifiedTime, FileTime lastAccessTime, FileTime creat
 Updates any or all of the file's last modified time, last access time,
 and create time attributes.
 
- This method updates the file's timestamp attributes. The values are
+<p> This method updates the file's timestamp attributes. The values are
 converted to the epoch and precision supported by the file system.
 Converting from finer to coarser granularities results in precision loss.
 The behavior of this method when attempting to set a timestamp that is
 not supported or to a value that is outside the range supported by the
 underlying file store is not defined. It may or not fail by throwing an
-`IOException`.
+{@code IOException}.
 
- If any of the `lastModifiedTime`, `lastAccessTime`,
-or `createTime` parameters has the value `null` then the
+<p> If any of the {@code lastModifiedTime}, {@code lastAccessTime},
+or {@code createTime} parameters has the value {@code null} then the
 corresponding timestamp is not changed. An implementation may require to
 read the existing values of the file attributes when only some, but not
 all, of the timestamp attributes are updated. Consequently, this method
 may not be an atomic operation with respect to other file system
 operations. Reading and re-writing existing values may also result in
-precision loss. If all of the `lastModifiedTime`, `lastAccessTime` and `createTime` parameters are `null` then
+precision loss. If all of the {@code lastModifiedTime}, {@code
+lastAccessTime} and {@code createTime} parameters are {@code null} then
 this method has no effect.
 
- **Usage Example:**
+<p> <b>Usage Example:</b>
 Suppose we want to change a file's last access time.
+{@snippet lang=java :
+    Path path = ...
+    FileTime time = ...
+    Files.getFileAttributeView(path, BasicFileAttributeView.class).setTimes(null, time, null);
+}
 
-Parameters:
+@param   lastModifiedTime
+         the new last modified time, or {@code null} to not change the
+         value
+@param   lastAccessTime
+         the last access time, or {@code null} to not change the value
+@param   createTime
+         the file's create time, or {@code null} to not change the value
 
-- `lastModifiedTime`: the new last modified time, or `null` to not change the value
-- `lastAccessTime`: the last access time, or `null` to not change the value
-- `createTime`: the file's create time, or `null` to not change the value
+@throws  IOException
+         if an I/O error occurs
 
-**See also:** java.nio.file.Files#setLastModifiedTime
-
-Throws:
-
-- `IOException`: if an I/O error occurs
+@see java.nio.file.Files#setLastModifiedTime

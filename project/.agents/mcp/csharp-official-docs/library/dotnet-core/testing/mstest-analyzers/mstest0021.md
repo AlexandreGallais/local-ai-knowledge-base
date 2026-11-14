@@ -1,12 +1,17 @@
 ---
 title: "MSTEST0021: Prefer Dispose over TestCleanup methods"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0021.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0021: Prefer Dispose over TestCleanup methods"
+ms.date: 11/05/2026
+ai-usage: ai-assisted
+f1_keywords:
+- MSTEST0021
+- PreferDisposeOverTestCleanupAnalyzer
+helpviewer_keywords:
+- PreferDisposeOverTestCleanupAnalyzer
+- MSTEST0021
+author: Evangelink
+ms.author: amauryleve
 ---
-
 # MSTEST0021: Prefer Dispose over TestCleanup methods
 
 | Property                            | Value                                   |
@@ -28,7 +33,7 @@ This rule raises a diagnostic when there is a void `[TestCleanup]` method or on 
 
 To express that a test-class instance owns resources, use the standard .NET `IDisposable` or `IAsyncDisposable` pattern. MSTest invokes the disposal methods as part of per-test cleanup, so resource release can follow the same pattern as the rest of your code.
 
-`[TestCleanup]` is also supported. This rule expresses an opt-in convention, not a requirement for correct test execution. MSTEST0022 offers the opposite convention; choose the cleanup policy that fits your project rather than enabling both.
+`[TestCleanup]` is also supported. This rule expresses an opt-in convention, not a requirement for correct test execution. [MSTEST0022](mstest0022.md) offers the opposite convention; choose the cleanup policy that fits your project rather than enabling both.
 
 ## How to fix violations
 
@@ -38,8 +43,7 @@ Replace `[TestCleanup]` method by `Dispose` or `DisposeAsync` pattern.
 
 You usually don't want to suppress warnings from this rule if you decided to opt-in for it.
 
-> **Note:**
-> This rule is opt-in. It's not enabled even when using `<MSTestAnalysisMode>All</MSTestAnalysisMode>`. For more information about `MSTestAnalysisMode`, see MSTest code analysis.
+[!INCLUDE [disabled-in-all](includes/disabled-in-all.md)]
 
 ## Suppress a warning
 
@@ -51,11 +55,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0021
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0021.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

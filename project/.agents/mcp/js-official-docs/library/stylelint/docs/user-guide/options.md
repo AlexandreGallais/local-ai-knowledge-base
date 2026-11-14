@@ -1,21 +1,12 @@
----
-title: "Options"
-tool: "stylelint"
-version: "18.0"
-source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/docs/user-guide/options.md"
-commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
-license: "MIT"
----
-
 # Options
 
 Options shared by the:
 
-- CLI
-- Node.js API
-- PostCSS plugin
+- [CLI](cli.md)
+- [Node.js API](node-api.md)
+- [PostCSS plugin](postcss-plugin.md)
 
-You can use some of these options in the configuration object.
+You can use some of these options in the [configuration object](./configure.md).
 
 ## `allowEmptyInput`
 
@@ -27,7 +18,7 @@ Stylelint does not throw an error when glob pattern matches no files.
 
 CLI flag: `--config, -c`
 
-Path to a JSON, YAML, or JS file that contains your configuration object.
+Path to a JSON, YAML, or JS file that contains your [configuration object](./configure.md).
 
 Use this option if you don't want Stylelint to search for a configuration file.
 
@@ -47,8 +38,8 @@ Automatically fix, where possible, problems reported by rules.
 
 Options are:
 
-- `"strict"` (default) - uses PostCSS Parser and only fixes problems when there are no syntax errors
-- `"lax"` - uses postcss-safe-parser to fix as much as possible, even when there are syntax errors
+- `"strict"` (default) - uses [PostCSS Parser](https://postcss.org/api/#postcss-parser) and only fixes problems when there are no syntax errors
+- `"lax"` - uses [postcss-safe-parser](https://www.npmjs.com/package/postcss-safe-parser) to fix as much as possible, even when there are syntax errors
 
 When using the Node.js API, the autofixed code is available as the value of the `code` property in the returned object.
 
@@ -60,13 +51,13 @@ Compute edit information for autofixable rules.
 
 The edit information will not be computed when:
 
-- the `fix` option is enabled
+- the [`fix` option](#fix) is enabled
 - a rule's fix is disabled:
   - in the configuration object, e.g. `"rule-name": [true, { disableFix: true }]`
   - using configuration comments, e.g. `/* stylelint-disable rule-name */`
 - another edit has already been computed for the same code region
 
-See Node.js API Warning details.
+See [Node.js API Warning details](./node-api.md#edit-info).
 
 ## `customSyntax`
 
@@ -87,13 +78,13 @@ This option allows Stylelint to transform these into something that resembles CS
 - underpins all the other styling languages
 - is best understood by rules built into Stylelint
 
-This option should be a string that resolves to a JS module that exports a PostCSS-compatible syntax. The string can be a module name (like `my-module`) or a path to a JS file (like `path/to/my-module.js`).
+This option should be a string that resolves to a JS module that exports a [PostCSS-compatible syntax](https://github.com/postcss/postcss#syntaxes). The string can be a module name (like `my-module`) or a path to a JS file (like `path/to/my-module.js`).
 
-If you want to lint two or more different languages, you can combine `customSyntax` with the `overrides` configuration property.
+If you want to lint two or more different languages, you can combine `customSyntax` with the [`overrides`](./configure.md#overrides) configuration property.
 
-Using the Node.js API, the `customSyntax` option can also accept a Syntax object. Stylelint treats the `parse` property as a required value. Also, Stylelint supports syntax modules written in ESM.
+Using the Node.js API, the `customSyntax` option can also accept a [Syntax object](https://postcss.org/docs/how-to-write-custom-syntax#syntax). Stylelint treats the `parse` property as a required value. Also, Stylelint supports syntax modules written in ESM.
 
-> **Note:**
+> [!NOTE]
 > Stylelint can provide no guarantee that core rules work with custom syntaxes.
 
 ## `formatter`
@@ -105,14 +96,14 @@ Specify the formatter to format your results.
 Options are:
 
 - `compact` - generates output similar to ESLint's compact formatter
-- `github` - generates messages via workflow commands for GitHub Actions (DEPRECATED)
-- `json` (default for Node API) - generates JSON that can be consumed by another tool
+- `github` - generates messages via [workflow commands for GitHub Actions](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions) (DEPRECATED)
+- `json` (default for Node API) - generates [JSON](https://www.json.org) that can be consumed by another tool
 - `string` (default for CLI) - generates human-readable strings
-- `tap` - generates Test Anything Protocol output
+- `tap` - generates [Test Anything Protocol](http://testanything.org/) output
 - `unix` - generates messages like a C compiler, so that tools like Emacs' _Compilation mode_ can hyperlink them
 - `verbose` - extends `string` to include a list of checked files and a tally for each rule
 
-The `formatter` Node.js API option can also accept a function or a `Promise` function, whereas the `--custom-formatter` CLI flag accepts a path (either a filesystem path or a dependency) to a JS file exporting one. The function in both cases must fit the signature described in the Developer Guide.
+The `formatter` Node.js API option can also accept a function or a `Promise` function, whereas the `--custom-formatter` CLI flag accepts a path (either a filesystem path or a dependency) to a JS file exporting one. The function in both cases must fit the signature described in the [Developer Guide](../developer-guide/formatters.md).
 
 ## `color`
 
@@ -120,7 +111,7 @@ CLI flags: `--color, --no-color`
 
 Force enabling/disabling of color in the formatted results.
 
-When not set, the built-in formatters use color if `node:util.styleText` detects that the terminal supports it. `node:util.styleText` honors the `FORCE_COLOR`, `NO_COLOR` and `NODE_DISABLE_COLORS` environment variables.
+When not set, the built-in formatters use color if [`node:util.styleText`](https://nodejs.org/api/util.html#utilstyletextformat-text-options) detects that the terminal supports it. `node:util.styleText` honors the `FORCE_COLOR`, `NO_COLOR` and `NODE_DISABLE_COLORS` environment variables.
 
 ## `cache`
 
@@ -135,7 +126,7 @@ The following values are used as cache keys:
 
 Enabling this option can dramatically improve Stylelint's speed because only changed files are linted.
 
-> **Warning:**
+> [!WARNING]
 > Plugins version and implementation are not used as cache keys. We recommend that you delete the cache when updating plugins.
 
 _If you run Stylelint with `cache` and then run Stylelint without `cache`, Stylelint deletes the `.stylelintcache` because we have to assume that the second command invalidated `.stylelintcache`._
@@ -164,12 +155,12 @@ CLI flag: `--max-warnings`
 
 Set a limit to the number of warnings accepted.
 
-It is useful when setting `defaultSeverity` to `"warning"` and expecting the process to fail on warnings (e.g. CI build).
+It is useful when setting [`defaultSeverity`](./configure.md#defaultseverity) to `"warning"` and expecting the process to fail on warnings (e.g. CI build).
 
 If the number of warnings exceeds this value, the:
 
 - CLI process exits with code `2`
-- Node.js API adds a `maxWarningsExceeded` property to the returned data
+- Node.js API adds a [`maxWarningsExceeded`](node-api.md#maxwarningsexceeded) property to the returned data
 
 ## `disableDefaultIgnores`
 
@@ -181,7 +172,7 @@ Disable the default ignores. Stylelint will not automatically ignore the content
 
 CLI flag: `--globby-options`
 
-Options for matching the `files` globs, a subset of globby's options. More info.
+Options for matching the `files` globs, a subset of globby's options. [More info](node-api.md#globbyoptions).
 
 ## `ignorePath`
 
@@ -201,15 +192,17 @@ You can use this option to see what your linting results would be like without t
 
 CLI flag: `--report-descriptionless-disables`
 
-Report configuration comments without a description.
+Report [configuration comments][1] without a description.
 
 The following patterns are reported:
 
+<!-- prettier-ignore -->
 ```css
 /* stylelint-disable */
 a {}
 ```
 
+<!-- prettier-ignore -->
 ```css
 /* stylelint-disable-next-line block-no-empty */
 a {}
@@ -217,11 +210,13 @@ a {}
 
 But, the following patterns (`stylelint-disable -- <description>`) are _not_ reported:
 
+<!-- prettier-ignore -->
 ```css
 /* stylelint-disable -- This problem is ignorable. */
 a {}
 ```
 
+<!-- prettier-ignore -->
 ```css
 /* stylelint-disable-next-line block-no-empty -- This problem is ignorable. */
 a {}
@@ -231,7 +226,7 @@ a {}
 
 CLI flag: `--report-invalid-scope-disables`
 
-Report configuration comments that don't match rules that are specified in the configuration object.
+Report [configuration comments][1] that don't match rules that are specified in the configuration object.
 
 For example, with this configuration:
 
@@ -245,12 +240,14 @@ For example, with this configuration:
 
 The following pattern is reported:
 
+<!-- prettier-ignore -->
 ```css
 /* stylelint-disable comment-no-empty */
 ```
 
 The following pattern is _not_ reported:
 
+<!-- prettier-ignore -->
 ```css
 /* stylelint-disable block-no-empty */
 ```
@@ -259,7 +256,7 @@ The following pattern is _not_ reported:
 
 CLI flag: `--report-needless-disables`
 
-Report configuration comments that don't actually match any lints that need to be disabled.
+Report [configuration comments][1] that don't actually match any lints that need to be disabled.
 
 For example, with this configuration:
 
@@ -273,6 +270,7 @@ For example, with this configuration:
 
 The following pattern is reported:
 
+<!-- prettier-ignore -->
 ```css
 /* stylelint-disable block-no-empty */
 a { color: red; }
@@ -280,6 +278,7 @@ a { color: red; }
 
 The following pattern is _not_ reported:
 
+<!-- prettier-ignore -->
 ```css
 /* stylelint-disable block-no-empty */
 a {}
@@ -289,16 +288,18 @@ a {}
 
 CLI flag: `--report-unscoped-disables`
 
-Report configuration comments that aren't scoped to one or more rules.
+Report [configuration comments][1] that aren't scoped to one or more rules.
 
 The following pattern is reported:
 
+<!-- prettier-ignore -->
 ```css
 /* stylelint-disable */
 ```
 
 The following pattern is _not_ reported:
 
+<!-- prettier-ignore -->
 ```css
 /* stylelint-disable block-no-empty */
 ```
@@ -308,7 +309,7 @@ The following pattern is _not_ reported:
 CLI flags: `--validate, --no-validate`
 
 Force enable/disable the validation of the rules' options. Default: `true`.
-For example, your CI might be faster by skipping the validation if `rules` didn't change.
+For example, your CI might be faster by skipping the validation if [`rules`](configure.md#rules) didn't change.
 e.g.
 
 ```js
@@ -338,9 +339,11 @@ CLI flag: `--quiet-deprecation-warnings`
 
 Ignore deprecation warnings.
 
-> **Tip:**
-> For Node.js 20.11.0+, you can disable individual deprecation warnings using the Node.js `--disable-warning` mechanism, e.g.:
+> [!TIP]
+> For Node.js 20.11.0+, you can disable individual deprecation warnings using the Node.js [`--disable-warning`](https://nodejs.org/api/cli.html#--disable-warningcode-or-type) mechanism, e.g.:
 >
 > ```shell
 > NODE_OPTIONS='--disable-warning=stylelint:006' stylelint "**/*.css"
 > ```
+
+[1]: ../user-guide/ignore-code.md#parts-of-a-file

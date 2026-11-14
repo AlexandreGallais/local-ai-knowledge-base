@@ -1,18 +1,15 @@
 ---
-title: "experimental | Config (part 1 of 2)"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/experimental.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: experimental | Config
+outline: deep
 ---
 
 # experimental
 
 ## experimental.openTelemetry <Version type="experimental">4.0.11</Version> {#experimental-opentelemetry}
 
-**FEEDBACK**
-Please leave feedback regarding this feature in a GitHub Discussion.
+::: tip FEEDBACK
+Please leave feedback regarding this feature in a [GitHub Discussion](https://github.com/vitest-dev/vitest/discussions/9222).
+:::
 
 - **Type:**
 
@@ -32,20 +29,21 @@ interface OpenTelemetryOptions {
 
 - **Default:** `{ enabled: false }`
 
-This option controls OpenTelemetry support. Vitest imports the SDK file in the main thread and before every test file, if `enabled` is set to `true`.
+This option controls [OpenTelemetry](https://opentelemetry.io/) support. Vitest imports the SDK file in the main thread and before every test file, if `enabled` is set to `true`.
 
-**PERFORMANCE CONCERNS**
+::: danger PERFORMANCE CONCERNS
 OpenTelemetry may significantly impact Vitest performance; enable it only for local debugging.
+:::
 
-You can use a custom service together with Vitest to pinpoint which tests or files are slowing down your test suite.
+You can use a [custom service](/guide/open-telemetry) together with Vitest to pinpoint which tests or files are slowing down your test suite.
 
-For browser mode, see the Browser Mode section of the OpenTelemetry guide.
+For browser mode, see the [Browser Mode](/guide/open-telemetry#browser-mode) section of the OpenTelemetry guide.
 
-An `sdkPath` is resolved relative to the `root` of the project and should point to a module that exposes a started SDK instance as a default export. For example:
+An `sdkPath` is resolved relative to the [`root`](/config/root) of the project and should point to a module that exposes a started SDK instance as a default export. For example:
 
 ::: code-group
 
-```js
+```js [otel.js]
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node'
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto'
 import { NodeSDK } from '@opentelemetry/sdk-node'
@@ -60,7 +58,7 @@ sdk.start()
 export default sdk
 ```
 
-```js
+```js [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -75,13 +73,17 @@ export default defineConfig({
 })
 ```
 
-**Warning:**
-It's important that Node can process `sdkPath` content because it is not transformed by Vitest. See the guide on how to work with OpenTelemetry inside of Vitest.
+:::
+
+::: warning
+It's important that Node can process `sdkPath` content because it is not transformed by Vitest. See [the guide](/guide/open-telemetry) on how to work with OpenTelemetry inside of Vitest.
+:::
 
 ## experimental.importDurations <Version type="experimental">4.1.0</Version> {#experimental-importdurations}
 
-**FEEDBACK**
-Please leave feedback regarding this feature in a GitHub Discussion.
+::: tip FEEDBACK
+Please leave feedback regarding this feature in a [GitHub Discussion](https://github.com/vitest-dev/vitest/discussions/9224).
+:::
 
 - **Type:**
 
@@ -120,10 +122,13 @@ interface ImportDurationsOptions {
 
 Configure import duration collection and display.
 
-The `print` option controls CLI terminal output. The `limit` option controls how many imports to collect and display. Vitest UI can always toggle the breakdown display regardless of the `print` setting.
+The `print` option controls CLI terminal output. The `limit` option controls how many imports to collect and display. [Vitest UI](/guide/ui#import-breakdown) can always toggle the breakdown display regardless of the `print` setting.
 
 - Self: the time it took to import the module, excluding static imports;
 - Total: the time it took to import the module, including static imports. Note that this does not include `transform` time of the current module.
+
+<img alt="An example of import breakdown in the terminal" src="/reporter-import-breakdown.png" img-dark />
+<img alt="An example of import breakdown in the terminal" src="/reporter-import-breakdown-light.png" img-light />
 
 Note that if the file path is too long, Vitest will truncate it at the start until it fits 45 character limit.
 
@@ -132,7 +137,7 @@ Note that if the file path is too long, Vitest will truncate it at the start unt
 - **Type:** `boolean | 'on-warn'`
 - **Default:** `false`
 
-Controls when to print import breakdown to CLI terminal after tests finish. This only works with `default`, `verbose`, or `tree` reporters.
+Controls when to print import breakdown to CLI terminal after tests finish. This only works with [`default`](/guide/reporters#default), [`verbose`](/guide/reporters#verbose), or [`tree`](/guide/reporters#tree) reporters.
 
 - `false`: Never print breakdown
 - `true`: Always print breakdown
@@ -156,7 +161,7 @@ vitest --experimental.importDurations.failOnDanger
 - **Type:** `number`
 - **Default:** `0` (or `10` if `print`, `failOnDanger`, or UI is enabled)
 
-Maximum number of imports to collect and display in CLI output, Vitest UI, and third-party reporters.
+Maximum number of imports to collect and display in CLI output, [Vitest UI](/guide/ui#import-breakdown), and third-party reporters.
 
 ### experimental.importDurations.thresholds {#experimental-importdurationsthresholds}
 
@@ -168,22 +173,24 @@ Duration thresholds in milliseconds for coloring and warnings:
 - `warn`: Threshold for yellow/warning color (default: 100ms)
 - `danger`: Threshold for red/danger color and `failOnDanger` (default: 500ms)
 
-**Info:**
-Vitest UI shows a breakdown of imports automatically if at least one file took longer than the `danger` threshold to load.
+::: info
+[Vitest UI](/guide/ui#import-breakdown) shows a breakdown of imports automatically if at least one file took longer than the `danger` threshold to load.
+:::
 
 ## experimental.viteModuleRunner <Version type="experimental">4.1.0</Version> {#experimental-vitemodulerunner}
 
-**FEEDBACK**
-Please leave feedback regarding this feature in a GitHub Discussion.
+::: tip FEEDBACK
+Please leave feedback regarding this feature in a [GitHub Discussion](https://github.com/vitest-dev/vitest/discussions/9501).
+:::
 
 - **Type:** `boolean`
 - **Default:** `true`
 
-Controls whether Vitest uses Vite's module runner to run the code or fallback to the native `import`.
+Controls whether Vitest uses Vite's [module runner](https://vite.dev/guide/api-environment-runtimes#modulerunner) to run the code or fallback to the native `import`.
 
-If this option is defined in the root config, all projects will inherit it automatically.
+If this option is defined in the root config, all [projects](/guide/projects) will inherit it automatically.
 
-Consider disabling the module runner if you are running tests in the same environment as your code (server backend or simple scripts, for example). However, we still recommend running `jsdom`/`happy-dom` tests with Vite's module runner or in the browser since it doesn't require any additional configuration.
+Consider disabling the module runner if you are running tests in the same environment as your code (server backend or simple scripts, for example). However, we still recommend running `jsdom`/`happy-dom` tests with Vite's module runner or in [the browser](/guide/browser/) since it doesn't require any additional configuration.
 
 Disabling this flag will disable _all_ file transforms:
 
@@ -192,14 +199,15 @@ Disabling this flag will disable _all_ file transforms:
 - your custom runner/pool/environment files are not processed
 - your config file is still processed by Vite (this happens before Vitest knows the `viteModuleRunner` flag)
 
-**Warning:**
+::: warning
 At the moment, Vitest still requires Vite for certain functionality like the module graph or watch mode.
 
-Also note that this option only works with `forks` or `threads` pools.
+Also note that this option only works with `forks` or `threads` [pools](/config/pool).
+:::
 
 ### Module Runner
 
-By default, Vitest runs tests in a very permissive module runner sandbox powered by Vite's Environment API. Every file is categorized as either an "inline" module or an "external" module.
+By default, Vitest runs tests in a very permissive module runner sandbox powered by Vite's [Environment API](https://vite.dev/guide/api-environment.html#environment-api). Every file is categorized as either an "inline" module or an "external" module.
 
 Module runner runs all "inlined" modules. It provides `import.meta.env`, `require`, `__dirname`, `__filename`, static `import`, and has its own module resolution mechanism. This makes it very easy to run code when you don't want to configure the environment and just need to test that the bare JavaScript logic you wrote works as intended.
 
@@ -209,29 +217,31 @@ While running JSDOM/happy-dom tests in a permissive fake environment might be ju
 
 ### Known Limitations
 
-Some Vitest features rely on files being transformed. Vitest uses synchronous Node.js Loaders API to transform test files and setup files to support these features:
+Some Vitest features rely on files being transformed. Vitest uses synchronous [Node.js Loaders API](https://nodejs.org/api/module.html#customization-hooks) to transform test files and setup files to support these features:
 
-- `import.meta.vitest`
-- `vi.mock`
-- `vi.hoisted`
+- [`import.meta.vitest`](/guide/in-source)
+- [`vi.mock`](/api/vi#vi-mock)
+- [`vi.hoisted`](/api/vi#vi-hoisted)
 
-**Warning:**
+::: warning
 This means that Vitest requires at least Node 22.15 for those features to work. At the moment, they also do not work in Deno or Bun.
 
 Vitest will only detect `vi.mock` and `vi.hoisted` inside of test files, they will not be hoisted inside imported modules.
+:::
 
 This could affect performance because Vitest needs to read the file and process it. If you do not use these features, you can disable the transforms by setting `experimental.nodeLoader` to `false`. Vitest only reads test files and setup files while looking for `vi.mock` or `vi.hoisted`. Using these in other files won't hoist them to the top of the file and can lead to unexpected behavior.
 
 Some features will not work due to the nature of `viteModuleRunner`, including:
 
 - no `import.meta.env`: `import.meta.env` is a Vite feature, use `process.env` instead
-- no `plugins`: plugins are not applied because there is no transformation phase, use customization hooks via `execArgv` instead
+- no `plugins`: plugins are not applied because there is no transformation phase, use [customization hooks](https://nodejs.org/api/module.html#customization-hooks) via [`execArgv`](/config/execargv) instead
 - no `alias`: aliases are not applied because there is no transformation phase
 - `istanbul` coverage provider doesn't work because there is no transformation phase, use `v8` instead
 - `vi.resetModules()`: there is no API to invalidate ES modules from the module cache
 
-**Coverage Support**
-At the moment Vitest supports coverage via `v8` provider as long as files can be transformed into JavaScript. To transform TypeScript, Vitest uses `module.stripTypeScriptTypes` which is available in Node.js since v22.13. If you are using a custom module loader, Vitest is not able to reuse it to transform files for analysis.
+::: warning Coverage Support
+At the moment Vitest supports coverage via `v8` provider as long as files can be transformed into JavaScript. To transform TypeScript, Vitest uses [`module.stripTypeScriptTypes`](https://nodejs.org/api/module.html#modulestriptypescripttypescode-options) which is available in Node.js since v22.13. If you are using a custom [module loader](https://nodejs.org/api/module.html#customization-hooks), Vitest is not able to reuse it to transform files for analysis.
+:::
 
 With regards to mocking, it is also important to point out that ES modules do not support property override. This means that code like this won't work anymore:
 
@@ -270,9 +280,9 @@ This limitation exists because factories can be asynchronous. This should not be
 
 ### TypeScript
 
-If you are using Node.js 22.18/23.6 or higher, TypeScript will be transformed natively by Node.js.
+If you are using Node.js 22.18/23.6 or higher, TypeScript will be [transformed natively](https://nodejs.org/en/learn/typescript/run-natively) by Node.js.
 
-**TypeScript with Node.js 22.6-22.18**
+::: warning TypeScript with Node.js 22.6-22.18
 If you are using Node.js version between 22.6 and 22.18, you can also enable native TypeScript support via `--experimental-strip-types` flag:
 
 ```shell
@@ -282,7 +292,7 @@ NODE_OPTIONS="--experimental-strip-types" vitest
 If you are using TypeScript and Node.js version lower than 22.6, then you will need to either:
 
 - build your test files and source code and run those files directly
-- import a custom loader via `execArgv` flag
+- import a [custom loader](https://nodejs.org/api/module.html#customization-hooks) via `execArgv` flag
 
 ```ts
 import { defineConfig } from 'vitest/config'
@@ -302,3 +312,309 @@ export default defineConfig({
 ```
 
 If you are running tests in Deno, TypeScript files are processed by the runtime without any additional configurations.
+:::
+
+## experimental.vcsProvider <Version type="experimental">4.1.1</Version> {#experimental-vcsprovider}
+
+- **Type:** `'git' | 'mtime' | VCSProvider | string`
+
+```ts
+interface VCSProvider {
+  findChangedFiles(options: VCSProviderOptions): Promise<string[]>
+}
+
+interface VCSProviderOptions {
+  root: string
+  changedSince?: string | boolean
+  /** Resolves the dependencies of the test files of the run. */
+  resolver: ModulesResolver
+}
+
+interface ModulesResolver {
+  /**
+   * Every file whose change can affect the test files of the run.
+   */
+  getDependencies(): Promise<ModuleDependency[]>
+}
+
+interface ModuleDependency {
+  /** Absolute path of the file. */
+  file: string
+  /**
+   * Start time of the oldest run that recorded the file, in milliseconds.
+   * Not set when the dependency comes from the static module graph.
+   */
+  recordedAt?: number
+}
+```
+
+- **Default:** `'git'`
+
+Provider for detecting changed files. Used with the [`--changed`](/guide/cli#changed) flag to determine which files have been modified.
+
+Vitest has two built-in providers:
+
+- `'git'` returns the files that differ from the `--changed` reference, plus staged and untracked files.
+- `'mtime'` <Version type="experimental">5.1.0</Version> returns the recorded dependencies whose modification time is newer than the run that recorded them, and deleted dependencies. It needs [`experimental.recordDependencies`](#experimental-recorddependencies): a dependency without a record is always reported as changed, so every test runs until the records exist. It does not need Git and ignores the `--changed` reference. A `--changed` run updates the records of the tests it ran, so the next `--changed` run selects only the tests whose dependencies changed since, and the test files that failed in their last run.
+
+```ts [vitest.config.ts]
+import { defineConfig } from 'vitest/config'
+
+export default defineConfig({
+  test: {
+    experimental: {
+      recordDependencies: true,
+      vcsProvider: 'mtime',
+    },
+  },
+})
+```
+
+::: warning
+The `mtime` provider compares file times with the clock of the machine that ran the tests. A checkout or a copy that sets file times in the past is not detected.
+:::
+
+You can provide a custom implementation of the `VCSProvider` interface to use a different version control system. `options.resolver.getDependencies()` returns every file the test files of the run depend on, so a provider can limit its work to these files:
+
+```ts [vitest.config.ts]
+import { defineConfig } from 'vitest/config'
+
+export default defineConfig({
+  test: {
+    experimental: {
+      vcsProvider: {
+        async findChangedFiles({ root, changedSince, resolver }) {
+          const dependencies = await resolver.getDependencies()
+          // return the paths of the changed files
+          return []
+        },
+      },
+    },
+  },
+})
+```
+
+You can also pass a string path to a module with a default export that implements the `VCSProvider` interface:
+
+```js [vitest.config.js]
+import { defineConfig } from 'vitest/config'
+
+export default defineConfig({
+  test: {
+    experimental: {
+      vcsProvider: './my-vcs-provider.js',
+    },
+  },
+})
+```
+
+```js [my-vcs-provider.js]
+export default {
+  async findChangedFiles({ root, changedSince }) {
+    // return paths of changed files
+    return []
+  },
+}
+```
+
+## experimental.recordDependencies <Version type="experimental">5.1.0</Version> {#experimental-recorddependencies}
+
+- **Type:** `boolean`
+- **Default:** `false`
+
+Records every file that a test file loads while it runs and uses these records to select tests for [`--changed`](/guide/cli#changed) and [`vitest related`](/guide/cli#vitest-related). Without this option, Vitest transforms the module graph of every test file before the run to find the affected tests. With it, Vitest reads the records from the previous run instead, so the selection does not transform anything.
+
+```ts [vitest.config.ts]
+import { defineConfig } from 'vitest/config'
+
+export default defineConfig({
+  test: {
+    experimental: {
+      recordDependencies: true,
+    },
+  },
+})
+```
+
+The records are stored in `dependencies.json` next to the [results cache](/config/cache) in Vite's `cacheDir`, so this option has no effect if `cache` is disabled. Every `vitest run` with the option enabled updates the records of the test files it ran. A run that skips some tests of a file, for example with [`-t`](/config/testnamepattern) or `.only`, can miss their dynamic imports, so it only adds files to an existing record and never creates one. A test file without a record, for example a new test file or a file that ran in a browser or [typecheck](/guide/testing-types) pool, always runs.
+
+A record contains:
+
+- the test file and every module it imported, including dynamic imports that ran
+- [setup files](/config/setupfiles), the [custom environment](/config/environment), the [custom runner](/config/runner), [snapshot serializers](/config/snapshotserializers) and their imports
+- mock files from the `__mocks__` folder and modules imported by a mock factory
+- files that plugins watch with `this.addWatchFile`
+- the snapshot file and every file used by [`toMatchFileSnapshot`](/api/expect#tomatchfilesnapshot)
+
+A change in a [global setup](/config/globalsetup) file or its imports, in the config file and its imports, or in an `.env` file runs every test of the project.
+
+Because the records come from a real run, they are exact where the static module graph is not. A module replaced with `vi.mock` and a factory does not load its imports, so they are not recorded. A dynamic import inside a function that the test never calls is not recorded either.
+
+::: warning
+The records describe the files that a test loaded during its last run. If a change that adds an import is committed before the test runs again, a later change in the newly imported file does not select the test, because the commit is no longer part of the `--changed` diff. Run the tests once after you change imports to update the records.
+
+Vitest records only the files it loads itself. Files read with `fs` (for example, fixtures) and the imports of [externalized](/config/server#server-deps-external) modules are not recorded.
+
+If [`isolate`](/config/isolate) is disabled, test files that run in the same worker share the module graph. A record can then contain modules that a previous test file loaded dynamically, so `--changed` can select more tests than necessary, but never fewer.
+
+If [`experimental.viteModuleRunner`](#experimental-vitemodulerunner) is disabled, Vitest records the imports with a resolve hook of [`module.registerHooks`](https://nodejs.org/api/module.html#moduleregisterhooksoptions). Node.js versions without it do not write records, so every test runs.
+:::
+
+## experimental.traceTimeline <Version type="experimental">5.1.0</Version> {#experimental-tracetimeline}
+
+- **Type:** `boolean`
+- **Default:** `false`
+
+Records the [`expect.poll`](/api/expect#poll), [`vi.waitFor`](/api/vi#vi-waitfor), and [`vi.waitUntil`](/api/vi#vi-waituntil) steps of each test, and prints them as a timeline under the error when the test fails. This shows what the test waited on before it failed and how long each wait took, which helps with flaky tests that wait on servers, queues, or file watchers.
+
+```ts [vitest.config.ts]
+import { defineConfig } from 'vitest/config'
+
+export default defineConfig({
+  test: {
+    experimental: {
+      traceTimeline: true,
+    },
+  },
+})
+```
+
+<<< ./snippets/trace-timeline-failure.ansi [Error report]
+
+Steps are reported only for failed attempts, so the option adds almost no overhead to passing tests.
+
+Step locations are resolved like error stacks, so a step in a helper file points at that file, and a step in a [`vi.defineHelper`](/api/vi#vi-definehelper) helper points at the line that called the helper.
+
+The `message` option of `expect.poll`, `vi.waitFor`, and `vi.waitUntil` names the step, as with `user saved (vi.waitUntil)` in the report above.
+
+This option has no effect in browser mode, which prints the same timeline with [`browser.traceView`](/config/browser/traceview).
+
+::: warning
+`vi.waitFor`, `vi.waitUntil`, and polls from the global `expect` are attributed to the test that is currently running. When several tests run at the same time with [`test.concurrent`](/api/test#test-concurrent), `vi.waitFor` and `vi.waitUntil` are not recorded, and polls from the global `expect` can appear in another test's timeline. Use `expect` from the [test context](/guide/test-context) in concurrent tests to record polls for the right test.
+:::
+
+## experimental.nodeLoader <Version type="experimental">4.1.0</Version> {#experimental-nodeloader}
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+If module runner is disabled, Vitest uses a native [Node.js module loader](https://nodejs.org/api/module.html#customization-hooks) to transform files to support `import.meta.vitest`, `vi.mock` and `vi.hoisted`.
+
+If you don't use these features, you can disable this to improve performance.
+
+## experimental.preParse <Version type="experimental">4.1.3</Version> {#experimental-preparse}
+
+- **Type:** `boolean`
+- **Default:** `false`
+
+Parses test specifications before running them. This applies the [`.only`](/api/test#test-only) modifier, the [`-t`](/config/testnamepattern) test name pattern, [`--tags-filter`](/guide/test-tags#syntax), [test lines](/api/advanced/test-specification#testlines), and [test IDs](/api/advanced/test-specification#testids) across all files without executing them. For example, if only a single test is marked with `.only`, Vitest will skip all other tests in all files.
+
+::: tip
+This option is recommended when using [`.only`](/api/test#test-only), the [`-t`](/config/testnamepattern) flag, or [`--tags-filter`](/guide/test-tags#syntax).
+
+Enabling it unconditionally may slow down your test runs due to the additional parsing step.
+:::
+
+::: warning
+Pre-parsing uses static analysis (AST parsing) instead of executing your test files. This means that test names, tags, and modifiers (`.only`, `.skip`, `.todo`) must be statically analyzable. Dynamic test names (e.g., names stored in variables or returned from function calls) and non-literal tags will not be resolved correctly.
+
+```ts
+// ✅ works — static string literal
+test('adds numbers', () => {})
+
+// ✅ works — static tags
+test('my test', { tags: ['unit'] }, () => {})
+
+// ❌ won't match correctly — dynamic name
+const name = getName()
+test(name, () => {})
+
+// ❌ won't match correctly — dynamic tags
+const tags = getTags()
+test('my test', { tags }, () => {})
+```
+
+:::
+
+## experimental.diagnostics <Version type="experimental">5.0.0</Version> {#experimental-diagnostics}
+
+- **Type:**
+
+```ts
+interface DiagnosticsOptions {
+  /**
+   * Hint when `isolate: true` spends a significant amount of time spawning
+   * a fresh worker (and re-creating the environment) for every test file,
+   * estimating how much `isolate: false` could save.
+   * @default true
+   */
+  isolate?: boolean
+  /**
+   * Hint when re-creating a DOM environment for every test file dominates
+   * the run and a `vm` pool would set it up once per worker.
+   * @default true
+   */
+  environment?: boolean
+  /**
+   * Hint when test files repeatedly evaluate the same module graph
+   * (typical for barrel-file imports) and `isolate: false` would
+   * evaluate it once per worker.
+   * @default true
+   */
+  import?: boolean
+  /**
+   * Hint when transforming modules dominates the run and
+   * `fsModuleCache` would persist the results across runs.
+   * @default true
+   */
+  transform?: boolean
+}
+```
+
+- **Default:** `true`
+
+Print performance hints after the run when the collected timings show that a configuration change would make the run significantly faster:
+
+```
+Environment  jsdom was created 40 times · 23.80s total, 79% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+```
+
+Hints never suggest changing an option that was set explicitly: if the config defines `pool`, other pools are not suggested, and an explicitly configured `isolate` is never suggested to be disabled. Hints are also printed in CI. Set the option to `false` to disable all hints, or disable them individually.
+
+To measure the impact of a configuration change instead of estimating it, run [`vitest doctor`](/guide/cli#vitest-doctor).
+
+### experimental.diagnostics.isolate {#experimental-diagnostics-isolate}
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+Hint when `isolate: true` spends a significant amount of time spawning a fresh worker (and re-creating the environment) for every test file, estimating how much `isolate: false` could save. Reused workers also keep evaluated modules alive, so files stop re-evaluating the module graph they share. Per-module evaluation times are only collected when [`experimental.importDurations`](#experimental-importdurations) is enabled; without it the estimate counts the worker startups alone and is reported as a lower bound ("at least").
+
+### experimental.diagnostics.environment {#experimental-diagnostics-environment}
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+Hint when re-creating a DOM environment for every test file dominates the run and a `vm` pool would set it up once per worker.
+
+### experimental.diagnostics.import {#experimental-diagnostics-import}
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+Hint when test files repeatedly evaluate the same module graph and `isolate: false` would evaluate it once per worker. This is typical for barrel-file imports: every test file imports a few symbols through an index file and evaluates the whole graph behind it. The duplication is measured from how often each module was served to the workers, so suites whose test files import mostly disjoint modules stay quiet: reusing workers would not reduce their import work.
+
+```
+Import  837 modules were evaluated 16740 times · 15.69s total, 64% of tracked time
+        ~850ms faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+        learn more: https://vitest.dev/guide/improving-performance#test-isolation
+```
+
+### experimental.diagnostics.transform {#experimental-diagnostics-transform}
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+Hint when transforming modules dominates the run. Without a persistent cache every `vitest run` transforms the whole module graph from scratch; [`fsModuleCache`](/config/fsmodulecache) stores the results on disk so repeated runs skip them. The hint estimates the time the next run would save. On CI the hint includes a note that the cache directory must be persisted between runs for the cache to take effect.

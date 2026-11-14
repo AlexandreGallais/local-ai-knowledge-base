@@ -1,17 +1,14 @@
 ---
 title: "Breaking change: Authentication in WebAssembly apps"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/7/wasm-app-authentication.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in ASP.NET Core 7.0 where authentication in WebAssembly apps relies on the history state instead of the URL query string.
+ms.date: 10/20/2022
+ms.custom: https://github.com/aspnet/Announcements/issues/497
 ---
-
 # Authentication in WebAssembly apps
 
 We updated the support for authentication in Blazor WebAssembly apps to rely on the history state instead of query strings in the URL. As a result, existing applications that pass the return URL through the query string will fail to redirect back to the original page after a successful login.
 
-Existing applications should use the new `Microsoft.AspNetCore.Components.WebAssembly.Authentication.NavigationManagerExtensions.NavigateToLogin*` extension method as it's able to flow the data to the login page correctly.
+Existing applications should use the new <xref:Microsoft.AspNetCore.Components.WebAssembly.Authentication.NavigationManagerExtensions.NavigateToLogin*> extension method as it's able to flow the data to the login page correctly.
 
 ## Version introduced
 
@@ -27,7 +24,7 @@ Starting in .NET 7, the return URL and other parameters passed to the `authentic
 
 ## Type of breaking change
 
-This change can affect binary compatibility.
+This change can affect [binary compatibility](/dotnet/core/compatibility/categories#binary-compatibility).
 
 ## Reason for change
 
@@ -54,8 +51,8 @@ Most apps have a *RedirectToLogin.razor* file that you can update as follows:
 
 ## Affected APIs
 
-- `Microsoft.AspNetCore.Components.WebAssembly.Authentication.SignOutSessionStateManager` (obsoleted in favor of new `Microsoft.AspNetCore.Components.WebAssembly.Authentication.NavigationManagerExtensions.NavigateToLogout*` method)
+- <xref:Microsoft.AspNetCore.Components.WebAssembly.Authentication.SignOutSessionStateManager?displayProperty=fullName> (obsoleted in favor of new <xref:Microsoft.AspNetCore.Components.WebAssembly.Authentication.NavigationManagerExtensions.NavigateToLogout*?displayProperty=nameWithType> method)
 
 ## See also
 
-- RedirectToLogin component - Blazor WebAssembly
+- [RedirectToLogin component - Blazor WebAssembly](/aspnet/core/blazor/security/webassembly/standalone-with-authentication-library?tabs=visual-studio#redirecttologin-component)

@@ -1,12 +1,3 @@
----
-title: "Agent Skills"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/ai/agent-skills.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Agent Skills
 
 Agent Skills are specialized, domain-specific instructions and capabilities designed for AI agents like Gemini CLI. These skills provide architectural guidance, generate idiomatic Angular code, and help scaffold new projects using modern best practices.
@@ -24,9 +15,9 @@ The Angular team maintains a collection of official skills that are regularly up
 
 ## Using Agent Skills
 
-Agent Skills are designed to be used with agentic coding tools like Gemini CLI, Antigravity and more. Activating a skill loads the specific instructions and resources needed for that task.
+Agent Skills are designed to be used with agentic coding tools like [Gemini CLI](https://geminicli.com/docs/cli/skills/), [Antigravity](https://antigravity.google/docs/skills) and more. Activating a skill loads the specific instructions and resources needed for that task.
 
-To use these skills in your own environment you may follow the instructions for your specific tool or use a community tool like skills.sh.
+To use these skills in your own environment you may follow the instructions for your specific tool or use a community tool like [skills.sh](https://skills.sh/).
 
 ```bash
 npx skills add https://github.com/angular/skills

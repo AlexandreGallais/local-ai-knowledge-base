@@ -1,155 +1,45 @@
 ---
 title: "delegate operator - Create an anonymous method that can be converted to a delegate type."
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/operators/delegate-operator.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "The C# delegate operator that is used to create anonymous methods. These types can be used for `Func<>` and `Action<>` parameters in many .NET APIs."
+ms.date: 01/20/2026
+helpviewer_keywords:
+  - "delegate [C#]"
+  - "anonymous method [C#]"
 ---
-
 # delegate operator
 
 The `delegate` operator creates an anonymous method that you can convert to a delegate type.
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
+You can convert an anonymous method to types such as <xref:System.Action?displayProperty=nameWithType> and <xref:System.Func`1?displayProperty=nameWithType>. Many methods use these types as arguments.
 
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+:::code language="csharp" source="snippets/shared/DelegateOperator.cs" id="AnonymousMethod":::
 
-You can convert an anonymous method to types such as `System.Action` and `System.Func`1`. Many methods use these types as arguments.
-
-```csharp
-﻿namespace operators;
-
-public static class DelegateOperator
-{
-    public static void Examples()
-    {
-        AnonymousMethod();
-        Lambda();
-        WithoutParameterList();
-        Discards();
-        Static();
-    }
-
-    private static void AnonymousMethod()
-    {
-        Func<int, int, int> sum = delegate (int a, int b) { return a + b; };
-        Console.WriteLine(sum(3, 4));  // output: 7
-    }
-
-    private static void Lambda()
-    {
-        Func<int, int, int> sum = (a, b) => a + b;
-        Console.WriteLine(sum(3, 4));  // output: 7
-    }
-
-    private static void WithoutParameterList()
-    {
-        Action greet = delegate { Console.WriteLine("Hello!"); };
-        greet();
-
-        Action<int, double> introduce = delegate { Console.WriteLine("This is world!"); };
-        introduce(42, 2.7);
-
-        // Output:
-        // Hello!
-        // This is world!
-    }
-
-    private static void Discards()
-    {
-        Func<int, int, int> constant = delegate (int _, int _) { return 42; };
-        Console.WriteLine(constant(3, 4));  // output: 42
-    }
-
-    private static void Static()
-    {
-        Func<int, int, int> sum = static delegate (int a, int b) { return a + b; };
-        Console.WriteLine(sum(10, 4));  // output: 14
-    }
-}
-```
-> **Note:**
-> Lambda expressions provide a more concise and expressive way to create an anonymous function. Use the => operator to construct a lambda expression:
+> [!NOTE]
+> Lambda expressions provide a more concise and expressive way to create an anonymous function. Use the [=> operator](lambda-operator.md) to construct a lambda expression:
 >
 > :::code language="csharp" source="snippets/shared/DelegateOperator.cs" id="Lambda":::
 >
-> For more information about features of lambda expressions, such as capturing outer variables, see Lambda expressions.
+> For more information about features of lambda expressions, such as capturing outer variables, see [Lambda expressions](lambda-expressions.md).
 
 When you use the `delegate` operator, you can omit the parameter list. If you omit the parameter list, you create an anonymous method that you can convert to a delegate type with any list of parameters, as the following example shows:
 
-```csharp
-﻿namespace operators;
+:::code language="csharp" source="snippets/shared/DelegateOperator.cs" id="WithoutParameterList":::
 
-public static class DelegateOperator
-{
-    public static void Examples()
-    {
-        AnonymousMethod();
-        Lambda();
-        WithoutParameterList();
-        Discards();
-        Static();
-    }
+This functionality is the only feature of anonymous methods that lambda expressions don't support. In all other cases, use a lambda expression to write inline code. You can use [discards](../../fundamentals/patterns/discards.md) to specify two or more input parameters of an anonymous method that the method doesn't use:
 
-    private static void AnonymousMethod()
-    {
-        Func<int, int, int> sum = delegate (int a, int b) { return a + b; };
-        Console.WriteLine(sum(3, 4));  // output: 7
-    }
+:::code language="csharp" source="snippets/shared/DelegateOperator.cs" id="SnippetDiscards" :::
 
-    private static void Lambda()
-    {
-        Func<int, int, int> sum = (a, b) => a + b;
-        Console.WriteLine(sum(3, 4));  // output: 7
-    }
-
-    private static void WithoutParameterList()
-    {
-        Action greet = delegate { Console.WriteLine("Hello!"); };
-        greet();
-
-        Action<int, double> introduce = delegate { Console.WriteLine("This is world!"); };
-        introduce(42, 2.7);
-
-        // Output:
-        // Hello!
-        // This is world!
-    }
-
-    private static void Discards()
-    {
-        Func<int, int, int> constant = delegate (int _, int _) { return 42; };
-        Console.WriteLine(constant(3, 4));  // output: 42
-    }
-
-    private static void Static()
-    {
-        Func<int, int, int> sum = static delegate (int a, int b) { return a + b; };
-        Console.WriteLine(sum(10, 4));  // output: 14
-    }
-}
-```
-This functionality is the only feature of anonymous methods that lambda expressions don't support. In all other cases, use a lambda expression to write inline code. You can use discards to specify two or more input parameters of an anonymous method that the method doesn't use:
-
-```csharp
-Func<int, int, int> constant = delegate (int _, int _) { return 42; };
-Console.WriteLine(constant(3, 4));  // output: 42
-```
 For backwards compatibility, if only a single parameter is named `_`, the compiler treats `_` as the name of that parameter within an anonymous method.
 
 Use the `static` modifier when you declare an anonymous method:
 
-```csharp
-Func<int, int, int> sum = static delegate (int a, int b) { return a + b; };
-Console.WriteLine(sum(10, 4));  // output: 14
-```
+:::code language="csharp" source="snippets/shared/DelegateOperator.cs" id="SnippetStatic" :::
+
 A static anonymous method can't capture local variables or instance state from enclosing scopes.
 
-Use the `delegate` keyword to declare a delegate type.
+Use the `delegate` keyword to declare a [delegate type](../builtin-types/reference-types.md#the-delegate-type).
 
 The compiler can cache the delegate object that it creates from a method group. Consider the following method:
 
@@ -165,9 +55,9 @@ Action a = StaticFunction;
 
 ## C# language specification
 
-For more information, see the Anonymous function expressions section of the C# language specification.
+For more information, see the [Anonymous function expressions](~/_csharpstandard/standard/expressions.md#1222-anonymous-function-expressions) section of the [C# language specification](~/_csharpstandard/standard/README.md).
 
 ## See also
 
-- C# operators and expressions
-- => operator
+- [C# operators and expressions](index.md)
+- [=> operator](lambda-operator.md)

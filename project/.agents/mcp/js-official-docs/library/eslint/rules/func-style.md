@@ -1,13 +1,9 @@
 ---
-title: "func-style"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/func-style.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: func-style
+rule_type: suggestion
+further_reading:
+- https://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html
 ---
-
-# func-style
 
 There are two ways of defining functions in JavaScript: `function` declarations and function expressions assigned to variables. Function declarations are statements that begin with the `function` keyword. Function expressions can either be arrow functions or use the `function` keyword with an optional name. Here are some examples:
 
@@ -79,7 +75,7 @@ This rule has an object option for two exceptions:
 
 Examples of **incorrect** code for this rule with the default `"expression"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint func-style: ["error", "expression"]*/
@@ -89,9 +85,11 @@ function foo() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"expression"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint func-style: ["error", "expression"]*/
@@ -105,11 +103,13 @@ const foo1 = () => {};
 // allowed as allowArrowFunctions : false is applied only for declaration
 ```
 
+:::
+
 Overloaded function declarations are not reported as errors by this rule. These are functions that have multiple declarations with the same name but different parameter types or return types (commonly used in TypeScript to provide type information for different ways of calling the same function).
 
 Examples of **correct** TypeScript code for this rule with the default `"expression"` option:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint func-style: ["error", "expression"]*/
@@ -121,11 +121,13 @@ function process(value: unknown) {
 }
 ```
 
+:::
+
 ### declaration
 
 Examples of **incorrect** code for this rule with the `"declaration"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint func-style: ["error", "declaration"]*/
@@ -137,9 +139,11 @@ const foo = function() {
 const foo1 = () => {};
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"declaration"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint func-style: ["error", "declaration"]*/
@@ -154,11 +158,13 @@ SomeObject.foo = function() {
 };
 ```
 
+:::
+
 ### allowArrowFunctions
 
 Examples of additional **correct** code for this rule with the `"declaration", { "allowArrowFunctions": true }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint func-style: ["error", "declaration", { "allowArrowFunctions": true }]*/
@@ -166,11 +172,13 @@ Examples of additional **correct** code for this rule with the `"declaration", {
 const foo = () => {};
 ```
 
+:::
+
 ### allowTypeAnnotation
 
 Examples of **incorrect** TypeScript code for this rule with the `"declaration", { "allowTypeAnnotation": true }` options:
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /*eslint func-style: ["error", "declaration", { "allowTypeAnnotation": true }]*/
@@ -178,9 +186,11 @@ Examples of **incorrect** TypeScript code for this rule with the `"declaration",
 const foo = function(): void {};
 ```
 
+:::
+
 Examples of **correct** TypeScript code for this rule with the `"declaration", { "allowTypeAnnotation": true }` options:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint func-style: ["error", "declaration", { "allowTypeAnnotation": true }]*/
@@ -192,6 +202,8 @@ const foo: Fn = function() {};
 const bar: Fn = () => {};
 ```
 
+:::
+
 ### overrides
 
 #### namedExports
@@ -200,7 +212,7 @@ const bar: Fn = () => {};
 
 Examples of **incorrect** code for this rule with the `"declaration"` and `{"overrides": { "namedExports": "expression" }}` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint func-style: ["error", "declaration", { "overrides": { "namedExports": "expression" } }]*/
@@ -210,9 +222,11 @@ export function foo() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"declaration"` and `{"overrides": { "namedExports": "expression" }}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint func-style: ["error", "declaration", { "overrides": { "namedExports": "expression" } }]*/
@@ -223,12 +237,14 @@ export const foo = function() {
 
 export const bar = () => {};
 ```
+
+:::
 
 ##### declaration
 
 Examples of **incorrect** code for this rule with the `"expression"` and `{"overrides": { "namedExports": "declaration" }}` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint func-style: ["error", "expression", { "overrides": { "namedExports": "declaration" } }]*/
@@ -240,9 +256,11 @@ export const foo = function() {
 export const bar = () => {};
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"expression"` and `{"overrides": { "namedExports": "declaration" }}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint func-style: ["error", "expression", { "overrides": { "namedExports": "declaration" } }]*/
@@ -252,9 +270,11 @@ export function foo() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"expression"` and `{ "allowTypeAnnotation": true, "overrides": { "namedExports": "declaration" }}` option:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint func-style: ["error", "expression", { "allowTypeAnnotation": true, "overrides": { "namedExports": "declaration" } }]*/
@@ -262,11 +282,13 @@ Examples of **correct** code for this rule with the `"expression"` and `{ "allow
 export const foo: () => void = function () {}
 ```
 
+:::
+
 ##### ignore
 
 Examples of **correct** code for this rule with the `{"overrides": { "namedExports": "ignore" }}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint func-style: ["error", "expression", { "overrides": { "namedExports": "ignore" } }]*/
@@ -281,6 +303,8 @@ export function baz() {
     // ...
 }
 ```
+
+:::
 
 ## When Not To Use It
 

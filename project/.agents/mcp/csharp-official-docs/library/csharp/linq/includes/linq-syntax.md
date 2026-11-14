@@ -1,14 +1,10 @@
 ---
-title: "linq-syntax"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/linq/includes/linq-syntax.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+author: BillWagner
+ms.author: wiwagn
+ms.topic: include
+ms.date: 05/29/2024
 ---
 
-# linq-syntax
-
-> **Important:**
+> [!IMPORTANT]
 >
-> These samples use an `System.Collections.Generic.IEnumerable`1` data source. Data sources based on `System.Linq.IQueryProvider` use `System.Linq.IQueryable`1` data sources and expression trees. Expression trees have limitations on the allowed C# syntax. Furthermore, each `IQueryProvider` data source, such as EF Core may impose more restrictions. Check the documentation for your data source.
+> These samples use an <xref:System.Collections.Generic.IEnumerable`1?displayProperty=nameWithType> data source. Data sources based on <xref:System.Linq.IQueryProvider?displayProperty=nameWithType> use <xref:System.Linq.IQueryable`1?displayProperty=nameWithType> data sources and [expression trees](../../advanced-topics/expression-trees/index.md). Expression trees have [limitations](../../advanced-topics/expression-trees/index.md#limitations) on the allowed C# syntax. Furthermore, each `IQueryProvider` data source, such as [EF Core](/ef/core/querying/complex-query-operators) may impose more restrictions. Check the documentation for your data source.

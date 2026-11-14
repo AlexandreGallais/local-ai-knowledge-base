@@ -1,14 +1,11 @@
 ---
-title: "array-bracket-spacing"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/array-bracket-spacing.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: array-bracket-spacing
+rule_type: layout
+related_rules:
+- space-in-parens
+- object-curly-spacing
+- computed-property-spacing
 ---
-
-# array-bracket-spacing
-
 A number of style guides require or disallow spaces between array brackets and other tokens. This rule
 applies to both array literals and destructuring assignments (ECMAScript 6).
 
@@ -52,7 +49,7 @@ This rule has built-in exceptions:
 
 Examples of **incorrect** code for this rule with the default `"never"` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint array-bracket-spacing: ["error", "never"]*/
@@ -70,9 +67,11 @@ var [ x, ...y ] = z;
 var [ ,,x, ] = z;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"never"` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-bracket-spacing: ["error", "never"]*/
@@ -98,11 +97,13 @@ var [x, ...y] = z;
 var [,,x,] = z;
 ```
 
+:::
+
 ### always
 
 Examples of **incorrect** code for this rule with the `"always"` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint array-bracket-spacing: ["error", "always"]*/
@@ -123,9 +124,11 @@ var [x, ...y] = z;
 var [,,x,] = z;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"always"` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-bracket-spacing: ["error", "always"]*/
@@ -151,11 +154,13 @@ var [ x, ...y ] = z;
 var [ ,,x, ] = z;
 ```
 
+:::
+
 ### singleValue
 
 Examples of **incorrect** code for this rule with the `"always", { "singleValue": false }` options:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint array-bracket-spacing: ["error", "always", { "singleValue": false }]*/
@@ -170,9 +175,11 @@ var foo = [ [ 1, 2 ] ];
 var foo = [ { 'foo': 'bar' } ];
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"always", { "singleValue": false }` options:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-bracket-spacing: ["error", "always", { "singleValue": false }]*/
@@ -183,11 +190,13 @@ var foo = [[ 1, 1 ]];
 var foo = [{ 'foo': 'bar' }];
 ```
 
+:::
+
 ### objectsInArrays
 
 Examples of **incorrect** code for this rule with the `"always", { "objectsInArrays": false }` options:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint array-bracket-spacing: ["error", "always", { "objectsInArrays": false }]*/
@@ -198,9 +207,11 @@ var arr = [ {
 } ]
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"always", { "objectsInArrays": false }` options:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-bracket-spacing: ["error", "always", { "objectsInArrays": false }]*/
@@ -211,11 +222,13 @@ var arr = [{
 }];
 ```
 
+:::
+
 ### arraysInArrays
 
 Examples of **incorrect** code for this rule with the `"always", { "arraysInArrays": false }` options:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint array-bracket-spacing: ["error", "always", { "arraysInArrays": false }]*/
@@ -224,9 +237,11 @@ var arr = [ [ 1, 2 ], 2, 3, 4 ];
 var arr = [ [ 1, 2 ], 2, [ 3, 4 ] ];
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"always", { "arraysInArrays": false }` options:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-bracket-spacing: ["error", "always", { "arraysInArrays": false }]*/
@@ -234,6 +249,8 @@ Examples of **correct** code for this rule with the `"always", { "arraysInArrays
 var arr = [[ 1, 2 ], 2, 3, 4 ];
 var arr = [[ 1, 2 ], 2, [ 3, 4 ]];
 ```
+
+:::
 
 ## When Not To Use It
 

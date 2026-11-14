@@ -1,10 +1,5 @@
 ---
-title: "describe"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/api/describe.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+outline: deep
 ---
 
 # describe
@@ -24,11 +19,11 @@ function describe(
 ): void
 ```
 
-`describe` is used to group related tests and benchmarks into a suite. Suites help organize your test files by creating logical blocks, making test output easier to read and enabling shared setup/teardown through lifecycle hooks.
+`describe` is used to group related tests and benchmarks into a suite. Suites help organize your test files by creating logical blocks, making test output easier to read and enabling shared setup/teardown through [lifecycle hooks](/api/hooks).
 
 When you use `test` in the top level of file, they are collected as part of the implicit suite for it. Using `describe` you can define a new suite in the current context, as a set of related tests or benchmarks and other nested suites.
 
-```ts
+```ts [basic.spec.ts]
 import { describe, expect, test } from 'vitest'
 
 const person = {
@@ -81,7 +76,7 @@ describe('numberToCurrency', () => {
 
 ## Test Options
 
-You can use test options to apply configuration to every test inside a suite, including nested suites. This is useful when you want to set timeouts, retries, or other options for a group of related tests.
+You can use [test options](/api/test#test-options) to apply configuration to every test inside a suite, including nested suites. This is useful when you want to set timeouts, retries, or other options for a group of related tests.
 
 ```ts
 import { describe, test } from 'vitest'
@@ -100,8 +95,8 @@ describe('slow tests', { timeout: 10_000 }, () => {
 ### `shuffle`
 
 - **Type:** `boolean`
-- **Default:** `false` (configured by `sequence.shuffle`)
-- **Alias:** `describe.shuffle`
+- **Default:** `false` (configured by [`sequence.shuffle`](/config/sequence#sequence-shuffle))
+- **Alias:** [`describe.shuffle`](#describe-shuffle)
 
 Run tests within the suite in random order. This option is inherited by nested suites.
 
@@ -152,7 +147,7 @@ describe.skipIf(isDev)('prod only test suite', () => {
 
 - **Alias:** `suite.runIf`
 
-Opposite of describe.skipIf.
+Opposite of [describe.skipIf](#describe-skipif).
 
 ```ts
 import { assert, describe, test } from 'vitest'
@@ -213,7 +208,7 @@ describe.concurrent('suite', () => {
 })
 ```
 
-Set `concurrent` to `false` to opt out of concurrency inherited from a parent suite or `sequence.concurrent`:
+Set `concurrent` to `false` to opt out of concurrency inherited from a parent suite or [`sequence.concurrent`](/config/sequence#sequence-concurrent):
 
 ```ts
 describe.concurrent('suite', () => {
@@ -235,7 +230,7 @@ describe.only.concurrent(/* ... */) // or describe.concurrent.only(/* ... */)
 describe.todo.concurrent(/* ... */) // or describe.concurrent.todo(/* ... */)
 ```
 
-When running concurrent tests, Snapshots and Assertions must use `expect` from the local Test Context to ensure the right test is detected.
+When running concurrent tests, Snapshots and Assertions must use `expect` from the local [Test Context](/guide/test-context) to ensure the right test is detected.
 
 ```ts
 describe.concurrent('suite', () => {
@@ -252,7 +247,7 @@ describe.concurrent('suite', () => {
 
 - **Alias:** `suite.shuffle`
 
-Vitest provides a way to run all tests in random order via CLI flag `--sequence.shuffle` or config option `sequence.shuffle`, but if you want to have only part of your test suite to run tests in random order, you can mark it with this flag.
+Vitest provides a way to run all tests in random order via CLI flag [`--sequence.shuffle`](/guide/cli) or config option [`sequence.shuffle`](/config/sequence#sequence-shuffle), but if you want to have only part of your test suite to run tests in random order, you can mark it with this flag.
 
 ```ts
 import { describe, test } from 'vitest'
@@ -295,9 +290,10 @@ describe.todo('unimplemented suite')
 
 - **Alias:** `suite.each`
 
-**Tip:**
+::: tip
 While `describe.each` is provided for Jest compatibility,
-Vitest also has `describe.for` which simplifies argument types and aligns with `test.for`.
+Vitest also has [`describe.for`](#describe-for) which simplifies argument types and aligns with [`test.for`](/api/test#test-for).
+:::
 
 Use `describe.each` if you have more than one test that depends on the same data.
 

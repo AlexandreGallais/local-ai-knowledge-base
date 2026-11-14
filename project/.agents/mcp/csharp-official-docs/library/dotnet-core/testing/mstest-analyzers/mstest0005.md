@@ -1,12 +1,20 @@
 ---
 title: "MSTEST0005: Test context property should have valid layout"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0005.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0005: Test context property should have valid layout"
+ms.date: 11/05/2026
+ai-usage: ai-assisted
+f1_keywords:
+- MSTEST0005
+- TestContextShouldBeValidAnalyzer
+helpviewer_keywords:
+- TestContextShouldBeValidAnalyzer
+- MSTEST0005
+author: evangelink
+ms.author: amauryleve
+dev_langs:
+- CSharp
+- VB
 ---
-
 # MSTEST0005: Test context property should have valid layout
 
 | Property                            | Value                                              |
@@ -36,7 +44,7 @@ For automatic property injection, MSTest locates the `TestContext` property by n
 | Use an instance property, not a static property. | Each test execution receives its own context. A static property would share one context between tests, including tests that run concurrently. |
 | Provide a setter; it can be private. | MSTest must assign the context after construction. A getter-only property can't receive automatic property injection. |
 
-Starting with MSTest 3.6, a test class can instead receive `TestContext` through its constructor. If you assign that parameter to a field or property yourself, the automatic property-injection requirements don't apply to that assignment. Constructor injection also lets you use a `readonly` field or a getter-only property. See Access the TestContext object.
+Starting with MSTest 3.6, a test class can instead receive `TestContext` through its constructor. If you assign that parameter to a field or property yourself, the automatic property-injection requirements don't apply to that assignment. Constructor injection also lets you use a `readonly` field or a getter-only property. See [Access the TestContext object](../unit-testing-mstest-writing-tests-testcontext.md#accessing-the-testcontext-object).
 
 ## How to fix violations
 
@@ -56,11 +64,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0005
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0005.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

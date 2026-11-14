@@ -1,15 +1,14 @@
 ---
-title: "What's new in the SDK and tooling for .NET 9 (part 1 of 2)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/whats-new/dotnet-9/sdk.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: What's new in the SDK and tooling for .NET 9
+description: Learn about the new .NET SDK features introduced in .NET 9, including for unit testing, Terminal Logger, tool roll-forward, and build script analyzers.
+titleSuffix: ""
+ms.date: 11/11/2024
+ms.update-cycle: 3650-days
 ---
 
 # What's new in the SDK and tooling for .NET 9
 
-This article describes new features in the .NET SDK and tooling for .NET 9. You can download .NET 9 here.
+This article describes new features in the .NET SDK and tooling for .NET 9. You can [download .NET 9 here](https://dotnet.microsoft.com/download/dotnet/9.0).
 
 ## Unit testing
 
@@ -17,23 +16,23 @@ This section describes the updates to unit testing in .NET 9: running tests in p
 
 ### Run tests in parallel
 
-In .NET 9, `dotnet test` is more fully integrated with MSBuild. Because MSBuild supports building in parallel, you can run tests for the same project across different target frameworks in parallel. By default, MSBuild limits the number of parallel processes to the number of processors on the computer. You can also set your own limit using the -maxcpucount switch. If you want to opt out of the parallelism, set the `TestTfmsInParallel` MSBuild property to `false`.
+In .NET 9, `dotnet test` is more fully integrated with MSBuild. Because MSBuild supports [building in parallel](/visualstudio/msbuild/building-multiple-projects-in-parallel-with-msbuild), you can run tests for the same project across different target frameworks in parallel. By default, MSBuild limits the number of parallel processes to the number of processors on the computer. You can also set your own limit using the [-maxcpucount](/visualstudio/msbuild/building-multiple-projects-in-parallel-with-msbuild#-maxcpucount-switch) switch. If you want to opt out of the parallelism, set the `TestTfmsInParallel` MSBuild property to `false`.
 
 ### Terminal Logger test display
 
-Test result reporting for `dotnet test` is now supported directly in MSBuild Terminal Logger. You get more fully featured test reporting both _while_ tests are running (displays the running test name) and _after_ tests are completed (any test errors are rendered in a better way).
+Test result reporting for [`dotnet test`](../../tools/dotnet-test.md) is now supported directly in MSBuild Terminal Logger. You get more fully featured test reporting both _while_ tests are running (displays the running test name) and _after_ tests are completed (any test errors are rendered in a better way).
 
-For more information about Terminal Logger, see dotnet build options.
+For more information about Terminal Logger, see [dotnet build options](../../tools/dotnet-build.md#options).
 
 ## .NET tool roll-forward
 
-.NET tools are framework-dependent apps that you can install globally or locally, then run using the .NET SDK and installed .NET runtimes. These tools, like all .NET apps, target a specific major version of .NET. By default, apps don't run on _newer_ versions of .NET. Tool authors have been able to opt in to running their tools on newer versions of the .NET runtime by setting the `RollForward` MSBuild property. However, not all tools do so.
+[.NET tools](../../tools/global-tools.md) are framework-dependent apps that you can install globally or locally, then run using the .NET SDK and installed .NET runtimes. These tools, like all .NET apps, target a specific major version of .NET. By default, apps don't run on _newer_ versions of .NET. Tool authors have been able to opt in to running their tools on newer versions of the .NET runtime by setting the `RollForward` MSBuild property. However, not all tools do so.
 
-A new option for `dotnet tool install` lets _users_ decide how .NET tools should be run. When you install a tool via `dotnet tool install`, or when you run tool via `dotnet tool run <toolname>`, you can specify a new flag called `--allow-roll-forward`. This option configures the tool with roll-forward mode `Major`. This mode allows the tool to run on a newer major version of .NET if the matching .NET version is not available. This feature helps early adopters use .NET tools without tool authors having to change any code.
+A new option for [`dotnet tool install`](../../tools/dotnet-tool-install.md) lets _users_ decide how .NET tools should be run. When you install a tool via `dotnet tool install`, or when you run tool via [`dotnet tool run <toolname>`](../../tools/dotnet-tool-run.md), you can specify a new flag called `--allow-roll-forward`. This option configures the tool with roll-forward mode `Major`. This mode allows the tool to run on a newer major version of .NET if the matching .NET version is not available. This feature helps early adopters use .NET tools without tool authors having to change any code.
 
 ## Terminal Logger
 
-Terminal Logger is now enabled by default and also has improved usability.
+Terminal Logger is now [enabled by default](#enabled-by-default) and also has [improved usability](#usability).
 
 ### Enabled by default
 
@@ -59,7 +58,7 @@ The set of commands that uses Terminal Logger by default is:
 
 ### Usability
 
-Terminal Logger now summarizes the total count of failures and warnings at the end of a build. It also shows errors that contain newlines. (For more information about Terminal Logger, see 'dotnet build' options, specifically the `--tl` option.)
+Terminal Logger now summarizes the total count of failures and warnings at the end of a build. It also shows errors that contain newlines. (For more information about Terminal Logger, see ['dotnet build' options](../../tools/dotnet-build.md#options), specifically the `--tl` option.)
 
 Consider the following project file that emits a warning when the project is built:
 
@@ -110,23 +109,23 @@ Build succeeded with 3 warning(s) in 0.8s
 
 The message lines of the warning no longer have the repeated project and location information that clutter the display. In addition, the build summary shows how many warnings (and errors, if there are any) were generated during the build.
 
-If you have feedback about Terminal Logger, you can provide it in the MSBuild repository.
+If you have feedback about Terminal Logger, you can provide it in the [MSBuild repository](https://github.com/dotnet/msbuild/issues).
 
 ## Faster NuGet dependency resolution for large repos
 
 The NuGet dependency resolver has been overhauled to improve performance and scalability for all `<PackageReference>` projects. Enabled by default, the new algorithm speeds up restore operations without compromising on functionality, strictly adhering to the core dependency resolution rules.
 
-If you encounter any issues, such as restore failures or unexpected package versions, you can revert to the legacy resolver.
+If you encounter any issues, such as restore failures or unexpected package versions, you can [revert to the legacy resolver](/nuget/consume-packages/Package-References-in-Project-Files#nuget-dependency-resolver).
 
 ## MSBuild script analyzers ("BuildChecks")
 
 .NET 9 introduces a feature that helps guard against defects and regressions in your build scripts. To run the build checks, add the `/check` flag to any command that invokes MSBuild. For example, `dotnet build myapp.sln /check` builds the `myapp` solution and runs all configured build checks.
 
-The .NET 9 SDK includes a small number of initial checks, for example, BC0101 and BC0102. For a complete list, see BuildCheck codes.
+The .NET 9 SDK includes a small number of initial checks, for example, [BC0101](../../tools/buildcheck-rules/bc0101.md) and [BC0102](../../tools/buildcheck-rules/bc0102.md). For a complete list, see [BuildCheck codes](https://github.com/dotnet/msbuild/blob/main/documentation/specs/BuildCheck/Codes.md).
 
 When a problem is detected, a diagnostic is produced in the build output for the project that contains the issue.
 
-For more information, see the design documentation.
+For more information, see the [design documentation](https://github.com/dotnet/msbuild/blob/main/documentation/specs/BuildCheck/BuildCheck.md).
 
 ## Analyzer mismatch
 
@@ -164,7 +163,7 @@ Successfully updated workload install mode to use workload-set.
 
 If you need to change back for any reason, you can run the same command with `manifests` instead of `workload-set`. You can also use `dotnet workload config --update-mode` to check the current mode of operation.
 
-For more information, see .NET SDK workload sets.
+For more information, see [.NET SDK workload sets](../../tools/dotnet-workload-sets.md).
 
 ## Workload history
 
@@ -181,16 +180,16 @@ Id  Date                         Command       Workloads                        
 2   9/4/2024 8:15:33 PM -05:00   install       android, aspire, ios, maccatalyst, maui-windows                       9.0.100-rc.1.24453.3
 ```
 
-In this example, the SDK was initially installed with the `android`, `ios`, `maccatalyst`, and `maui-windows` workloads. Then, the `dotnet workload install aspire --version 9.0.100-rc.1.24453.3` command was used to install the `aspire` workload and switch to workload sets mode. To return to the previous state, you can use the ID from the first column in the history table, for example, `dotnet workload update --from-history 1`.
+In this example, the SDK was initially installed with the `android`, `ios`, `maccatalyst`, and `maui-windows` workloads. Then, the `dotnet workload install aspire --version 9.0.100-rc.1.24453.3` command was used to install the `aspire` workload and switch to [workload sets mode](../../tools/dotnet-workload-sets.md). To return to the previous state, you can use the ID from the first column in the history table, for example, `dotnet workload update --from-history 1`.
 
 ## Containers
 
-- Publishing support for insecure registries
-- Environment variable naming
+- [Publishing support for insecure registries](#publishing-support-for-insecure-registries)
+- [Environment variable naming](#environment-variable-naming)
 
 ### Publishing support for insecure registries
 
-The SDK's built-in container publishing support can publish images to container registries. Until .NET 9, those registries were required to be secured—for the .NET SDK to work, they needed HTTPS support and valid certificates. Container engines can usually be configured to work with insecure registries as well, that is, registries that don't have TLS configured, or have TLS configured with a certificate that's invalid. This is a valid use case, but our tooling didn't support this mode of communication.
+The SDK's built-in container publishing support can publish images to container registries. Until .NET 9, those registries were required to be secured&mdash;for the .NET SDK to work, they needed HTTPS support and valid certificates. Container engines can usually be configured to work with insecure registries as well, that is, registries that don't have TLS configured, or have TLS configured with a certificate that's invalid. This is a valid use case, but our tooling didn't support this mode of communication.
 
 Starting in .NET 9, the SDK can communicate with insecure registries.
 
@@ -203,3 +202,19 @@ Requirements (depending on your environment):
 ### Environment variable naming
 
 Environment variables that the container publish tooling uses to control some of the finer aspects of registry communication and security now start with the prefix `DOTNET` instead of `SDK`. The `SDK` prefix will continue to be supported in the near term.
+
+## Code analysis
+
+.NET 9 includes several new code analyzers and fixers to help verify that you're using .NET library APIs correctly and efficiently. The following table summarizes the new analyzers.
+
+| Rule ID | Category | Description |
+|---------|----------|-------------|
+| [CA1514: Avoid redundant length argument](../../../fundamentals/code-analysis/quality-rules/ca1514.md) | Maintainability | An explicitly calculated length argument can be error-prone and is unnecessary when you're slicing to the end of a string or buffer. |
+| [CA1515: Consider making public types internal](../../../fundamentals/code-analysis/quality-rules/ca1515.md) | Maintainability | Types inside an executable assembly should be declared as `internal`. |
+| [CA1871: Do not pass a nullable struct to 'ArgumentNullException.ThrowIfNull'](../../../fundamentals/code-analysis/quality-rules/ca1871.md) | Performance | For improved performance, it's better to check the `HasValue` property and manually throw an exception than to pass a nullable struct to `ArgumentNullException.ThrowIfNull`. |
+| [CA1872: Prefer 'Convert.ToHexString' and 'Convert.ToHexStringLower' over call chains based on 'BitConverter.ToString'](../../../fundamentals/code-analysis/quality-rules/ca1872.md) | Performance | Use <xref:System.Convert.ToHexString*?displayProperty=nameWithType> or <xref:System.Convert.ToHexStringLower*?displayProperty=nameWithType> when encoding bytes to a hexadecimal string representation. |
+| [CA2022: Avoid inexact read with Stream.Read](../../../fundamentals/code-analysis/quality-rules/ca2022.md) | Reliability | A call to `Stream.Read` might return fewer bytes than requested, resulting in unreliable code if the return value isn't checked. |
+| [CA2262: Set 'MaxResponseHeadersLength' properly](../../../fundamentals/code-analysis/quality-rules/ca2262.md) | Usage | The <xref:System.Net.Http.HttpClientHandler.MaxResponseHeadersLength?displayProperty=nameWithType> property is measured in kilobytes, not bytes. |
+| [CA2263: Prefer generic overload when type is known](../../../fundamentals/code-analysis/quality-rules/ca2263.md) | Usage | Generic overloads are preferable to overloads that accept an argument of type <xref:System.Type?displayProperty=fullName> when the type is known at compile time. |
+| [CA2264: Do not pass a non-nullable value to 'ArgumentNullException.ThrowIfNull'](../../../fundamentals/code-analysis/quality-rules/ca2264.md) | Usage | Certain constructs like non-nullable structs (except for <xref:System.Nullable`1>), 'nameof()' expressions, and 'new' expressions are known to never be null, so `ArgumentNullException.ThrowIfNull` will never throw. |
+| [CA2265: Do not compare `Span<T>` to null or default](../../../fundamentals/code-analysis/quality-rules/ca2265.md) | Usage | Comparing a span to `null` or `default` might not do what you intended. `default` and the `null` literal are implicitly converted to <xref:System.Span`1.Empty?displayProperty=nameWithType>. Remove the redundant comparison or make the code more explicit by using `IsEmpty`. |

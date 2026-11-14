@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: .NET 5 API obsoletions with non-default diagnostic IDs"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/5.0/obsolete-apis-with-custom-diagnostics.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+titleSuffix: ""
+description: Learn about the .NET 5 breaking change in core .NET libraries where some APIs have been marked as obsolete with a custom diagnostic ID.
+ms.date: 11/01/2020
 ---
-
 # API obsoletions with non-default diagnostic IDs
 
-Some APIs have been marked as obsolete, starting in .NET 5. This breaking change is specific to APIs that have been marked as obsolete *with a custom diagnostic ID*. Suppressing the default obsoletion diagnostic ID, which is CS0618 for the C# compiler, does not suppress the warnings that the compiler generates when these APIs are used.
+Some APIs have been marked as obsolete, starting in .NET 5. This breaking change is specific to APIs that have been marked as obsolete *with a custom diagnostic ID*. Suppressing the default obsoletion diagnostic ID, which is [CS0618](../../../../csharp/language-reference/compiler-messages/cs0618.md) for the C# compiler, does not suppress the warnings that the compiler generates when these APIs are used.
 
 ## Change description
 
@@ -19,18 +16,18 @@ The following table lists the custom diagnostic IDs and their corresponding warn
 
 | Diagnostic ID | Description | Severity |
 | - | - |
-| SYSLIB0001 | The UTF-7 encoding is insecure and should not be used. Consider using UTF-8 instead. | Warning |
-| SYSLIB0002 | `System.Security.Permissions.PrincipalPermissionAttribute` is not honored by the runtime and must not be used. | Error |
-| SYSLIB0003 | Code access security (CAS) is not supported or honored by the runtime. | Warning |
-| SYSLIB0004 | The constrained execution region (CER) feature is not supported. | Warning |
-| SYSLIB0005 | The global assembly cache (GAC) is not supported. | Warning |
-| SYSLIB0006 | `System.Threading.Thread.Abort` is not supported and throws `System.PlatformNotSupportedException`. | Warning |
-| SYSLIB0007 | The default implementation of this cryptography algorithm is not supported. | Warning |
-| SYSLIB0008 | The `System.Runtime.CompilerServices.DebugInfoGenerator.CreatePdbGenerator` API is not supported and throws `System.PlatformNotSupportedException`. | Warning |
-| SYSLIB0009 | The `System.Net.AuthenticationManager.Authenticate*` and `System.Net.AuthenticationManager.PreAuthenticate*` methods are not supported and throw `System.PlatformNotSupportedException`. | Warning |
-| SYSLIB0010 | Some remoting APIs are not supported and throw `System.PlatformNotSupportedException`. | Warning |
-| SYSLIB0011 | `System.Runtime.Serialization.Formatters.Binary.BinaryFormatter` serialization is obsolete and should not be used. | Warning |
-| SYSLIB0012 | `System.Reflection.Assembly.CodeBase` and `System.Reflection.Assembly.EscapedCodeBase` are only included for .NET Framework compatibility. Use `System.Reflection.Assembly.Location` instead. | Warning |
+| [SYSLIB0001](../../../../fundamentals/syslib-diagnostics/syslib0001.md) | The UTF-7 encoding is insecure and should not be used. Consider using UTF-8 instead. | Warning |
+| [SYSLIB0002](../../../../fundamentals/syslib-diagnostics/syslib0002.md) | <xref:System.Security.Permissions.PrincipalPermissionAttribute> is not honored by the runtime and must not be used. | Error |
+| [SYSLIB0003](../../../../fundamentals/syslib-diagnostics/syslib0003.md) | Code access security (CAS) is not supported or honored by the runtime. | Warning |
+| [SYSLIB0004](../../../../fundamentals/syslib-diagnostics/syslib0004.md) | The constrained execution region (CER) feature is not supported. | Warning |
+| [SYSLIB0005](../../../../fundamentals/syslib-diagnostics/syslib0005.md) | The global assembly cache (GAC) is not supported. | Warning |
+| [SYSLIB0006](../../../../fundamentals/syslib-diagnostics/syslib0006.md) | <xref:System.Threading.Thread.Abort?displayProperty=nameWithType> is not supported and throws <xref:System.PlatformNotSupportedException>. | Warning |
+| [SYSLIB0007](../../../../fundamentals/syslib-diagnostics/syslib0007.md) | The default implementation of this cryptography algorithm is not supported. | Warning |
+| [SYSLIB0008](../../../../fundamentals/syslib-diagnostics/syslib0008.md) | The <xref:System.Runtime.CompilerServices.DebugInfoGenerator.CreatePdbGenerator> API is not supported and throws <xref:System.PlatformNotSupportedException>. | Warning |
+| [SYSLIB0009](../../../../fundamentals/syslib-diagnostics/syslib0009.md) | The <xref:System.Net.AuthenticationManager.Authenticate*?displayProperty=nameWithType> and <xref:System.Net.AuthenticationManager.PreAuthenticate*?displayProperty=nameWithType> methods are not supported and throw <xref:System.PlatformNotSupportedException>. | Warning |
+| [SYSLIB0010](../../../../fundamentals/syslib-diagnostics/syslib0010.md) | Some remoting APIs are not supported and throw <xref:System.PlatformNotSupportedException>. | Warning |
+| [SYSLIB0011](../../../../fundamentals/syslib-diagnostics/syslib0011.md) | <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter> serialization is obsolete and should not be used. | Warning |
+| [SYSLIB0012](../../../../fundamentals/syslib-diagnostics/syslib0012.md) | <xref:System.Reflection.Assembly.CodeBase?displayProperty=nameWithType> and <xref:System.Reflection.Assembly.EscapedCodeBase?displayProperty=nameWithType> are only included for .NET Framework compatibility. Use <xref:System.Reflection.Assembly.Location?displayProperty=nameWithType> instead. | Warning |
 
 ## Version introduced
 
@@ -46,246 +43,246 @@ The following table lists the custom diagnostic IDs and their corresponding warn
 
 ### SYSLIB0001
 
-- `System.Text.Encoding.UTF7`
-- `System.Text.UTF7Encoding.#ctor*`
+- <xref:System.Text.Encoding.UTF7?displayProperty=nameWithType>
+- <xref:System.Text.UTF7Encoding.%23ctor*>
 
 ### SYSLIB0002
 
-- `System.Security.Permissions.PrincipalPermissionAttribute.#ctor(System.Security.Permissions.SecurityAction)`
+- <xref:System.Security.Permissions.PrincipalPermissionAttribute.%23ctor(System.Security.Permissions.SecurityAction)>
 
 ### SYSLIB0003
 
 Classes in the `System.Security.Permissions` namespace:
 
-- `System.Security.Permissions.CodeAccessSecurityAttribute`
-- `System.Security.Permissions.DataProtectionPermission`
-- `System.Security.Permissions.DataProtectionPermissionAttribute`
-- `System.Security.Permissions.EnvironmentPermission`
-- `System.Security.Permissions.EnvironmentPermissionAttribute`
-- `System.Security.Permissions.FileDialogPermission`
-- `System.Security.Permissions.FileDialogPermissionAttribute`
-- `System.Security.Permissions.FileIOPermission`
-- `System.Security.Permissions.FileIOPermissionAttribute`
-- `System.Security.Permissions.GacIdentityPermission`
-- `System.Security.Permissions.GacIdentityPermissionAttribute`
-- `System.Security.Permissions.HostProtectionAttribute`
-- `System.Security.Permissions.IsolatedStorageFilePermission`
-- `System.Security.Permissions.IsolatedStorageFilePermissionAttribute`
-- `System.Security.Permissions.IsolatedStoragePermission`
-- `System.Security.Permissions.IsolatedStoragePermissionAttribute`
-- `System.Security.Permissions.KeyContainerPermission`
-- `System.Security.Permissions.KeyContainerPermissionAccessEntry`
-- `System.Security.Permissions.KeyContainerPermissionAccessEntryCollection`
-- `System.Security.Permissions.KeyContainerPermissionAccessEntryEnumerator`
-- `System.Security.Permissions.KeyContainerPermissionAttribute`
-- `System.Security.Permissions.MediaPermission`
-- `System.Security.Permissions.MediaPermissionAttribute`
-- `System.Security.Permissions.PermissionSetAttribute`
-- `System.Security.Permissions.PrincipalPermission`
-- `System.Security.Permissions.PrincipalPermissionAttribute`
-- `System.Security.Permissions.PublisherIdentityPermission`
-- `System.Security.Permissions.PublisherIdentityPermissionAttribute`
-- `System.Security.Permissions.ReflectionPermission`
-- `System.Security.Permissions.ReflectionPermissionAttribute`
-- `System.Security.Permissions.RegistryPermission`
-- `System.Security.Permissions.RegistryPermissionAttribute`
-- `System.Security.Permissions.ResourcePermissionBase`
-- `System.Security.Permissions.ResourcePermissionBaseEntry`
-- `System.Security.Permissions.SecurityAttribute`
-- `System.Security.Permissions.SecurityPermission`
-- `System.Security.Permissions.SecurityPermissionAttribute`
-- `System.Security.Permissions.SiteIdentityPermission`
-- `System.Security.Permissions.SiteIdentityPermissionAttribute`
-- `System.Security.Permissions.StorePermission`
-- `System.Security.Permissions.StorePermissionAttribute`
-- `System.Security.Permissions.StrongNameIdentityPermission`
-- `System.Security.Permissions.StrongNameIdentityPermissionAttribute`
-- `System.Security.Permissions.StrongNamePublicKeyBlob`
-- `System.Security.Permissions.TypeDescriptorPermission`
-- `System.Security.Permissions.TypeDescriptorPermissionAttribute`
-- `System.Security.Permissions.UIPermission`
-- `System.Security.Permissions.UIPermissionAttribute`
-- `System.Security.Permissions.UrlIdentityPermission`
-- `System.Security.Permissions.UrlIdentityPermissionAttribute`
-- `System.Security.Permissions.WebBrowserPermission`
-- `System.Security.Permissions.WebBrowserPermissionAttribute`
-- `System.Security.Permissions.ZoneIdentityPermission`
-- `System.Security.Permissions.ZoneIdentityPermissionAttribute`
+- <xref:System.Security.Permissions.CodeAccessSecurityAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.DataProtectionPermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.DataProtectionPermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.EnvironmentPermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.EnvironmentPermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.FileDialogPermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.FileDialogPermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.FileIOPermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.FileIOPermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.GacIdentityPermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.GacIdentityPermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.HostProtectionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.IsolatedStorageFilePermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.IsolatedStorageFilePermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.IsolatedStoragePermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.IsolatedStoragePermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.KeyContainerPermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.KeyContainerPermissionAccessEntry?displayProperty=fullName>
+- <xref:System.Security.Permissions.KeyContainerPermissionAccessEntryCollection?displayProperty=fullName>
+- <xref:System.Security.Permissions.KeyContainerPermissionAccessEntryEnumerator?displayProperty=fullName>
+- <xref:System.Security.Permissions.KeyContainerPermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.MediaPermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.MediaPermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.PermissionSetAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.PrincipalPermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.PrincipalPermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.PublisherIdentityPermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.PublisherIdentityPermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.ReflectionPermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.ReflectionPermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.RegistryPermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.RegistryPermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.ResourcePermissionBase?displayProperty=fullName>
+- <xref:System.Security.Permissions.ResourcePermissionBaseEntry?displayProperty=fullName>
+- <xref:System.Security.Permissions.SecurityAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.SecurityPermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.SecurityPermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.SiteIdentityPermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.SiteIdentityPermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.StorePermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.StorePermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.StrongNameIdentityPermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.StrongNameIdentityPermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.StrongNamePublicKeyBlob?displayProperty=fullName>
+- <xref:System.Security.Permissions.TypeDescriptorPermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.TypeDescriptorPermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.UIPermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.UIPermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.UrlIdentityPermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.UrlIdentityPermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.WebBrowserPermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.WebBrowserPermissionAttribute?displayProperty=fullName>
+- <xref:System.Security.Permissions.ZoneIdentityPermission?displayProperty=fullName>
+- <xref:System.Security.Permissions.ZoneIdentityPermissionAttribute?displayProperty=fullName>
 
 Classes that derive from `CodeAccessSecurityAttribute`:
 
-- `System.Configuration.ConfigurationPermissionAttribute`
-- `System.Data.Common.DBDataPermissionAttribute`
-- `System.Data.Odbc.OdbcPermissionAttribute`
-- `System.Data.OleDb.OleDbPermissionAttribute`
-- `System.Data.OracleClient.OraclePermissionAttribute`
-- `System.Data.SqlClient.SqlClientPermissionAttribute`
-- `System.Diagnostics.EventLogPermissionAttribute`
-- `System.Diagnostics.PerformanceCounterPermissionAttribute`
-- `System.DirectoryServices.DirectoryServicesPermissionAttribute`
-- `System.Drawing.Printing.PrintingPermissionAttribute`
-- `System.Net.DnsPermissionAttribute`
-- `System.Net.SocketPermissionAttribute`
-- `System.Net.WebPermissionAttribute`
-- `System.Net.Mail.SmtpPermissionAttribute`
-- `System.Net.NetworkInformation.NetworkInformationPermissionAttribute`
-- `System.Net.PeerToPeer.PnrpPermissionAttribute`
-- `System.Net.PeerToPeer.Collaboration.PeerCollaborationPermissionAttribute`
-- `System.ServiceProcess.ServiceControllerPermissionAttribute`
-- `System.Transactions.DistributedTransactionPermissionAttribute`
-- `System.Web.AspNetHostingPermissionAttribute`
+- <xref:System.Configuration.ConfigurationPermissionAttribute?displayProperty=fullName>
+- <xref:System.Data.Common.DBDataPermissionAttribute?displayProperty=fullName>
+- <xref:System.Data.Odbc.OdbcPermissionAttribute?displayProperty=fullName>
+- <xref:System.Data.OleDb.OleDbPermissionAttribute?displayProperty=fullName>
+- <xref:System.Data.OracleClient.OraclePermissionAttribute?displayProperty=fullName>
+- <xref:System.Data.SqlClient.SqlClientPermissionAttribute?displayProperty=fullName>
+- <xref:System.Diagnostics.EventLogPermissionAttribute?displayProperty=fullName>
+- <xref:System.Diagnostics.PerformanceCounterPermissionAttribute?displayProperty=fullName>
+- <xref:System.DirectoryServices.DirectoryServicesPermissionAttribute?displayProperty=fullName>
+- <xref:System.Drawing.Printing.PrintingPermissionAttribute?displayProperty=fullName>
+- <xref:System.Net.DnsPermissionAttribute?displayProperty=fullName>
+- <xref:System.Net.SocketPermissionAttribute?displayProperty=fullName>
+- <xref:System.Net.WebPermissionAttribute?displayProperty=fullName>
+- <xref:System.Net.Mail.SmtpPermissionAttribute?displayProperty=fullName>
+- <xref:System.Net.NetworkInformation.NetworkInformationPermissionAttribute?displayProperty=fullName>
+- <xref:System.Net.PeerToPeer.PnrpPermissionAttribute?displayProperty=fullName>
+- <xref:System.Net.PeerToPeer.Collaboration.PeerCollaborationPermissionAttribute?displayProperty=fullName>
+- <xref:System.ServiceProcess.ServiceControllerPermissionAttribute?displayProperty=fullName>
+- <xref:System.Transactions.DistributedTransactionPermissionAttribute?displayProperty=fullName>
+- <xref:System.Web.AspNetHostingPermissionAttribute?displayProperty=fullName>
 
 Interfaces:
 
-- `System.Security.Permissions.IUnrestrictedPermission`
-- `System.Security.IPermission`
-- `System.Security.IStackWalk`
-- `System.Security.Policy.IIdentityPermissionFactory`
+- <xref:System.Security.Permissions.IUnrestrictedPermission?displayProperty=fullName>
+- <xref:System.Security.IPermission?displayProperty=fullName>
+- <xref:System.Security.IStackWalk?displayProperty=fullName>
+- <xref:System.Security.Policy.IIdentityPermissionFactory?displayProperty=fullName>
 
 Classes that implement `IStackWalk`:
 
-- `System.Security.NamedPermissionSet`
-- `System.Security.PermissionSet`
+- <xref:System.Security.NamedPermissionSet?displayProperty=fullName>
+- <xref:System.Security.PermissionSet?displayProperty=fullName>
 
 Classes that implement `IPermission`:
 
-- `System.Security.CodeAccessPermission`
+- <xref:System.Security.CodeAccessPermission?displayProperty=fullName>
 
 Classes that derive from `CodeAccessPermission`:
 
-- `System.Configuration.ConfigurationPermission`
-- `System.Data.Common.DBDataPermission`
-- `System.Data.Odbc.OdbcPermission`
-- `System.Data.OleDb.OleDbPermission`
-- `System.Data.SqlClient.SqlClientPermission`
-- `System.Data.OracleClient.OraclePermission`
-- `System.Drawing.Printing.PrintingPermission`
-- `System.Net.DnsPermission`
-- `System.Net.SocketPermission`
-- `System.Net.WebPermission`
-- `System.Net.Mail.SmtpPermission`
-- `System.Net.NetworkInformation.NetworkInformationPermission`
-- `System.Net.PeerToPeer.PnrpPermission`
-- `System.Net.PeerToPeer.Collaboration.PeerCollaborationPermission`
-- `System.Transactions.DistributedTransactionPermission`
-- `System.Web.AspNetHostingPermission`
-- `System.Xaml.Permissions.XamlLoadPermission`
+- <xref:System.Configuration.ConfigurationPermission?displayProperty=fullName>
+- <xref:System.Data.Common.DBDataPermission?displayProperty=fullName>
+- <xref:System.Data.Odbc.OdbcPermission?displayProperty=fullName>
+- <xref:System.Data.OleDb.OleDbPermission?displayProperty=fullName>
+- <xref:System.Data.SqlClient.SqlClientPermission?displayProperty=fullName>
+- <xref:System.Data.OracleClient.OraclePermission?displayProperty=fullName>
+- <xref:System.Drawing.Printing.PrintingPermission?displayProperty=fullName>
+- <xref:System.Net.DnsPermission?displayProperty=fullName>
+- <xref:System.Net.SocketPermission?displayProperty=fullName>
+- <xref:System.Net.WebPermission?displayProperty=fullName>
+- <xref:System.Net.Mail.SmtpPermission?displayProperty=fullName>
+- <xref:System.Net.NetworkInformation.NetworkInformationPermission?displayProperty=fullName>
+- <xref:System.Net.PeerToPeer.PnrpPermission?displayProperty=fullName>
+- <xref:System.Net.PeerToPeer.Collaboration.PeerCollaborationPermission?displayProperty=fullName>
+- <xref:System.Transactions.DistributedTransactionPermission?displayProperty=fullName>
+- <xref:System.Web.AspNetHostingPermission?displayProperty=fullName>
+- <xref:System.Xaml.Permissions.XamlLoadPermission?displayProperty=fullName>
 
 Classes that derive from `ResourcePermissionBase`:
 
-- `System.Diagnostics.EventLogPermission`
-- `System.Diagnostics.PerformanceCounterPermission`
-- `System.DirectoryServices.DirectoryServicesPermission`
-- `System.ServiceProcess.ServiceControllerPermission`
+- <xref:System.Diagnostics.EventLogPermission?displayProperty=fullName>
+- <xref:System.Diagnostics.PerformanceCounterPermission?displayProperty=fullName>
+- <xref:System.DirectoryServices.DirectoryServicesPermission?displayProperty=fullName>
+- <xref:System.ServiceProcess.ServiceControllerPermission?displayProperty=fullName>
 
 Enums in the `System.Security.Permissions` namespace:
 
-- `System.Security.Permissions.DataProtectionPermissionFlags`
-- `System.Security.Permissions.EnvironmentPermissionAccess`
-- `System.Security.Permissions.FileDialogPermissionAccess`
-- `System.Security.Permissions.FileIOPermissionAccess`
-- `System.Security.Permissions.HostProtectionResource`
-- `System.Security.Permissions.IsolatedStorageContainment`
-- `System.Security.Permissions.KeyContainerPermissionFlags`
-- `System.Security.Permissions.MediaPermissionAudio`
-- `System.Security.Permissions.MediaPermissionImage`
-- `System.Security.Permissions.MediaPermissionVideo`
-- `System.Security.Permissions.PermissionState`
-- `System.Security.Permissions.ReflectionPermissionFlag`
-- `System.Security.Permissions.RegistryPermissionAccess`
-- `System.Security.Permissions.SecurityAction`
-- `System.Security.Permissions.SecurityPermissionFlag`
-- `System.Security.Permissions.StorePermissionFlags`
-- `System.Security.Permissions.TypeDescriptorPermissionFlags`
-- `System.Security.Permissions.UIPermissionClipboard`
-- `System.Security.Permissions.UIPermissionWindow`
-- `System.Security.Permissions.WebBrowserPermissionLevel`
+- <xref:System.Security.Permissions.DataProtectionPermissionFlags?displayProperty=fullName>
+- <xref:System.Security.Permissions.EnvironmentPermissionAccess?displayProperty=fullName>
+- <xref:System.Security.Permissions.FileDialogPermissionAccess?displayProperty=fullName>
+- <xref:System.Security.Permissions.FileIOPermissionAccess?displayProperty=fullName>
+- <xref:System.Security.Permissions.HostProtectionResource?displayProperty=fullName>
+- <xref:System.Security.Permissions.IsolatedStorageContainment?displayProperty=fullName>
+- <xref:System.Security.Permissions.KeyContainerPermissionFlags?displayProperty=fullName>
+- <xref:System.Security.Permissions.MediaPermissionAudio?displayProperty=fullName>
+- <xref:System.Security.Permissions.MediaPermissionImage?displayProperty=fullName>
+- <xref:System.Security.Permissions.MediaPermissionVideo?displayProperty=fullName>
+- <xref:System.Security.Permissions.PermissionState?displayProperty=fullName>
+- <xref:System.Security.Permissions.ReflectionPermissionFlag?displayProperty=fullName>
+- <xref:System.Security.Permissions.RegistryPermissionAccess?displayProperty=fullName>
+- <xref:System.Security.Permissions.SecurityAction?displayProperty=fullName>
+- <xref:System.Security.Permissions.SecurityPermissionFlag?displayProperty=fullName>
+- <xref:System.Security.Permissions.StorePermissionFlags?displayProperty=fullName>
+- <xref:System.Security.Permissions.TypeDescriptorPermissionFlags?displayProperty=fullName>
+- <xref:System.Security.Permissions.UIPermissionClipboard?displayProperty=fullName>
+- <xref:System.Security.Permissions.UIPermissionWindow?displayProperty=fullName>
+- <xref:System.Security.Permissions.WebBrowserPermissionLevel?displayProperty=fullName>
 
 Classes and members that depend on code access security types:
 
-- `System.AppDomain.ExecuteAssembly(System.String,System.String[],System.Byte[],System.Configuration.Assemblies.AssemblyHashAlgorithm)`
-- `System.AppDomain.PermissionSet`
-- `System.Runtime.InteropServices.AllowReversePInvokeCallsAttribute`
-- `System.Security.HostProtectionException`
-- `System.Security.Policy.FileCodeGroup`
-- `System.Security.Policy.StrongName`
-- `System.Security.Policy.StrongNameMembershipCondition`
-- System.Security.Policy.ApplicationTrust.ApplicationTrust(PermissionSet, IEnumerable\<StrongName>)
-- `System.Security.Policy.ApplicationTrust.FullTrustAssemblies`
-- `System.Security.Policy.GacInstalled`
-- `System.Security.Policy.PolicyStatement.#ctor*`
-- `System.Security.Policy.PolicyLevel.AddNamedPermissionSet(System.Security.NamedPermissionSet)`
-- `System.Security.Policy.PolicyLevel.ChangeNamedPermissionSet(System.String,System.Security.PermissionSet)`
-- `System.Security.Policy.PolicyLevel.GetNamedPermissionSet(System.String)`
-- `System.Security.Policy.PolicyLevel.RemoveNamedPermissionSet(System.String)`
-- `System.Security.Policy.PolicyLevel.RemoveNamedPermissionSet(System.Security.NamedPermissionSet)`
-- `System.Security.Policy.PolicyStatement.PermissionSet`
-- `System.Security.Policy.Publisher`
-- `System.Security.Policy.Site`
-- `System.Security.Policy.Url`
-- `System.Security.Policy.Zone`
-- `System.Security.SecurityManager`
+- <xref:System.AppDomain.ExecuteAssembly(System.String,System.String[],System.Byte[],System.Configuration.Assemblies.AssemblyHashAlgorithm)?displayProperty=fullName>
+- <xref:System.AppDomain.PermissionSet?displayProperty=fullName>
+- <xref:System.Runtime.InteropServices.AllowReversePInvokeCallsAttribute?displayProperty=fullName>
+- <xref:System.Security.HostProtectionException?displayProperty=fullName>
+- <xref:System.Security.Policy.FileCodeGroup?displayProperty=fullName>
+- <xref:System.Security.Policy.StrongName?displayProperty=fullName>
+- <xref:System.Security.Policy.StrongNameMembershipCondition?displayProperty=fullName>
+- [System.Security.Policy.ApplicationTrust.ApplicationTrust(PermissionSet, IEnumerable\<StrongName>)](/dotnet/api/system.security.policy.applicationtrust.-ctor#System_Security_Policy_ApplicationTrust__ctor_System_Security_PermissionSet_System_Collections_Generic_IEnumerable_System_Security_Policy_StrongName__)
+- <xref:System.Security.Policy.ApplicationTrust.FullTrustAssemblies?displayProperty=fullName>
+- <xref:System.Security.Policy.GacInstalled?displayProperty=fullName>
+- <xref:System.Security.Policy.PolicyStatement.%23ctor*?displayProperty=fullName>
+- <xref:System.Security.Policy.PolicyLevel.AddNamedPermissionSet(System.Security.NamedPermissionSet)?displayProperty=fullName>
+- <xref:System.Security.Policy.PolicyLevel.ChangeNamedPermissionSet(System.String,System.Security.PermissionSet)?displayProperty=fullName>
+- <xref:System.Security.Policy.PolicyLevel.GetNamedPermissionSet(System.String)?displayProperty=fullName>
+- <xref:System.Security.Policy.PolicyLevel.RemoveNamedPermissionSet(System.String)?displayProperty=fullName>
+- <xref:System.Security.Policy.PolicyLevel.RemoveNamedPermissionSet(System.Security.NamedPermissionSet)?displayProperty=nameWithType>
+- <xref:System.Security.Policy.PolicyStatement.PermissionSet?displayProperty=fullName>
+- <xref:System.Security.Policy.Publisher?displayProperty=fullName>
+- <xref:System.Security.Policy.Site?displayProperty=fullName>
+- <xref:System.Security.Policy.Url?displayProperty=fullName>
+- <xref:System.Security.Policy.Zone?displayProperty=fullName>
+- <xref:System.Security.SecurityManager?displayProperty=fullName>
 
 ### SYSLIB0004
 
-- `System.Runtime.CompilerServices.RuntimeHelpers.ExecuteCodeWithGuaranteedCleanup(System.Runtime.CompilerServices.RuntimeHelpers.TryCode,System.Runtime.CompilerServices.RuntimeHelpers.CleanupCode,System.Object)`
-- `System.Runtime.CompilerServices.RuntimeHelpers.PrepareConstrainedRegions`
-- `System.Runtime.CompilerServices.RuntimeHelpers.PrepareConstrainedRegionsNoOP`
-- `System.Runtime.CompilerServices.RuntimeHelpers.PrepareContractedDelegate(System.Delegate)`
-- `System.Runtime.CompilerServices.RuntimeHelpers.ProbeForSufficientStack`
-- `System.Runtime.ConstrainedExecution.Cer`
-- `System.Runtime.ConstrainedExecution.Consistency`
-- `System.Runtime.ConstrainedExecution.PrePrepareMethodAttribute`
-- `System.Runtime.ConstrainedExecution.ReliabilityContractAttribute`
+- <xref:System.Runtime.CompilerServices.RuntimeHelpers.ExecuteCodeWithGuaranteedCleanup(System.Runtime.CompilerServices.RuntimeHelpers.TryCode,System.Runtime.CompilerServices.RuntimeHelpers.CleanupCode,System.Object)?displayProperty=nameWithType>
+- <xref:System.Runtime.CompilerServices.RuntimeHelpers.PrepareConstrainedRegions?displayProperty=nameWithType>
+- <xref:System.Runtime.CompilerServices.RuntimeHelpers.PrepareConstrainedRegionsNoOP?displayProperty=nameWithType>
+- <xref:System.Runtime.CompilerServices.RuntimeHelpers.PrepareContractedDelegate(System.Delegate)?displayProperty=nameWithType>
+- <xref:System.Runtime.CompilerServices.RuntimeHelpers.ProbeForSufficientStack?displayProperty=nameWithType>
+- <xref:System.Runtime.ConstrainedExecution.Cer?displayProperty=nameWithType>
+- <xref:System.Runtime.ConstrainedExecution.Consistency?displayProperty=nameWithType>
+- <xref:System.Runtime.ConstrainedExecution.PrePrepareMethodAttribute?displayProperty=nameWithType>
+- <xref:System.Runtime.ConstrainedExecution.ReliabilityContractAttribute?displayProperty=nameWithType>
 
 ### SYSLIB0005
 
-- `System.Reflection.Assembly.GlobalAssemblyCache`
+- <xref:System.Reflection.Assembly.GlobalAssemblyCache?displayProperty=nameWithType>
 
 ### SYSLIB0006
 
-- `System.Threading.Thread.Abort`
-- `System.Threading.Thread.Abort(System.Object)`
+- <xref:System.Threading.Thread.Abort?displayProperty=nameWithType>
+- <xref:System.Threading.Thread.Abort(System.Object)?displayProperty=nameWithType>
 
 ### SYSLIB0007
 
-- `System.Security.Cryptography.AsymmetricAlgorithm.Create`
-- `System.Security.Cryptography.HashAlgorithm.Create`
-- `System.Security.Cryptography.HMAC.Create`
-- `System.Security.Cryptography.KeyedHashAlgorithm.Create`
-- `System.Security.Cryptography.SymmetricAlgorithm.Create`
+- <xref:System.Security.Cryptography.AsymmetricAlgorithm.Create?displayProperty=fullName>
+- <xref:System.Security.Cryptography.HashAlgorithm.Create?displayProperty=fullName>
+- <xref:System.Security.Cryptography.HMAC.Create?displayProperty=fullName>
+- <xref:System.Security.Cryptography.KeyedHashAlgorithm.Create?displayProperty=fullName>
+- <xref:System.Security.Cryptography.SymmetricAlgorithm.Create?displayProperty=fullName>
 
 ### SYSLIB0008
 
-- `System.Runtime.CompilerServices.DebugInfoGenerator.CreatePdbGenerator`
+- <xref:System.Runtime.CompilerServices.DebugInfoGenerator.CreatePdbGenerator?displayProperty=nameWithType>
 
 ### SYSLIB0009
 
-- `System.Net.AuthenticationManager.Authenticate*`
-- `System.Net.AuthenticationManager.PreAuthenticate*`
+- <xref:System.Net.AuthenticationManager.Authenticate*?displayProperty=nameWithType>
+- <xref:System.Net.AuthenticationManager.PreAuthenticate*?displayProperty=nameWithType>
 
 ### SYSLIB0010
 
-- `System.MarshalByRefObject.GetLifetimeService`
-- `System.MarshalByRefObject.InitializeLifetimeService`
+- <xref:System.MarshalByRefObject.GetLifetimeService?displayProperty=nameWithType>
+- <xref:System.MarshalByRefObject.InitializeLifetimeService?displayProperty=nameWithType>
 
 ### SYSLIB0011
 
-- `System.Exception.SerializeObjectState`
-- `System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.Serialize*`
-- `System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.Deserialize*`
-- `System.Runtime.Serialization.Formatter.Serialize(System.IO.Stream,System.Object)`
-- `System.Runtime.Serialization.Formatter.Deserialize(System.IO.Stream)`
-- `System.Runtime.Serialization.IFormatter.Serialize(System.IO.Stream,System.Object)`
-- `System.Runtime.Serialization.IFormatter.Deserialize(System.IO.Stream)`
+- <xref:System.Exception.SerializeObjectState?displayProperty=fullName>
+- <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.Serialize*?displayProperty=nameWithType>
+- <xref:System.Runtime.Serialization.Formatters.Binary.BinaryFormatter.Deserialize*?displayProperty=nameWithType>
+- <xref:System.Runtime.Serialization.Formatter.Serialize(System.IO.Stream,System.Object)?displayProperty=nameWithType>
+- <xref:System.Runtime.Serialization.Formatter.Deserialize(System.IO.Stream)?displayProperty=nameWithType>
+- <xref:System.Runtime.Serialization.IFormatter.Serialize(System.IO.Stream,System.Object)?displayProperty=nameWithType>
+- <xref:System.Runtime.Serialization.IFormatter.Deserialize(System.IO.Stream)?displayProperty=nameWithType>
 
 ### SYSLIB0012
 
-- `System.Reflection.Assembly.CodeBase`
-- `System.Reflection.Assembly.EscapedCodeBase`
+- <xref:System.Reflection.Assembly.CodeBase?displayProperty=nameWithType>
+- <xref:System.Reflection.Assembly.EscapedCodeBase?displayProperty=nameWithType>
 
 ## See also
 
-- API obsoletions with non-default diagnostic IDs (.NET 6)
-- API obsoletions with non-default diagnostic IDs (.NET 7)
-- Obsolete features in .NET 5+
+- [API obsoletions with non-default diagnostic IDs (.NET 6)](../6.0/obsolete-apis-with-custom-diagnostics.md)
+- [API obsoletions with non-default diagnostic IDs (.NET 7)](../7.0/obsolete-apis-with-custom-diagnostics.md)
+- [Obsolete features in .NET 5+](../../../../fundamentals/syslib-diagnostics/obsoletions-overview.md)

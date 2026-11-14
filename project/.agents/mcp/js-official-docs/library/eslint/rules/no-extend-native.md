@@ -1,13 +1,10 @@
 ---
-title: "no-extend-native"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-extend-native.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-extend-native
+rule_type: suggestion
+related_rules:
+- no-global-assign
 ---
 
-# no-extend-native
 
 In JavaScript, you can extend any object, including builtin or "native" objects. Sometimes people change the behavior of these native objects in ways that break the assumptions made about them in other parts of the code.
 
@@ -37,7 +34,7 @@ Disallows directly modifying the prototype of builtin objects.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-extend-native: "error"*/
@@ -45,6 +42,8 @@ Examples of **incorrect** code for this rule:
 Object.prototype.a = "a";
 Object.defineProperty(Array.prototype, "times", { value: 999 });
 ```
+
+:::
 
 ## Options
 
@@ -54,13 +53,15 @@ This rule accepts an `exceptions` option, which can be used to specify a list of
 
 Examples of **correct** code for the sample `{ "exceptions": ["Object"] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-extend-native: ["error", { "exceptions": ["Object"] }]*/
 
 Object.prototype.a = "a";
 ```
+
+:::
 
 ## Known Limitations
 

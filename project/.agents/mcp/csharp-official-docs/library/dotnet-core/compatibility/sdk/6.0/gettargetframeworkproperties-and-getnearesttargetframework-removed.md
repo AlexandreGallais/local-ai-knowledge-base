@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: GetTargetFrameworkProperties and GetNearestTargetFramework removed"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/6.0/gettargetframeworkproperties-and-getnearesttargetframework-removed.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 6 where the GetTargetFrameworkProperties target and the GetNearestTargetFramework task have been removed from the MSBuild ProjectReference protocol.
+ms.date: 05/19/2021
 ---
-
 # GetTargetFrameworkProperties and GetNearestTargetFramework removed from ProjectReference protocol
 
 The `GetTargetFrameworkProperties` target and `GetNearestTargetFramework` task have been removed from the .NET SDK.
@@ -29,8 +25,20 @@ The `GetTargetFrameworkProperties` target and the `GetNearestTargetFramework` ta
 
 ## Recommended action
 
-Use `GetTargetFrameworks` instead. For more information, see Targets required to be referenceable.
+Use `GetTargetFrameworks` instead. For more information, see [Targets required to be referenceable](https://github.com/dotnet/msbuild/blob/main/documentation/ProjectReference-Protocol.md#targets-required-to-be-referenceable).
 
 ## Affected APIs
 
 N/A
+
+<!--
+
+### Affected APIs
+
+Not detectable via API analysis.
+
+### Category
+
+MSBuild
+
+-->

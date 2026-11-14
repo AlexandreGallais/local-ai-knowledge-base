@@ -1,12 +1,3 @@
----
-title: "Authoring schematics (part 1 of 2)"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/tools/cli/schematics-authoring.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Authoring schematics
 
 You can create your own schematics to operate on Angular projects.
@@ -42,10 +33,10 @@ A change can be accepted or ignored, or throw an exception.
 
 ### Defining rules and actions
 
-When you create a new blank schematic with the Schematics CLI, the generated entry function is a _rule factory_.
+When you create a new blank schematic with the [Schematics CLI](#schematics-cli), the generated entry function is a _rule factory_.
 A `RuleFactory` object defines a higher-order function that creates a `Rule`.
 
-```ts
+```ts {header: "index.ts"}
 import {Rule, SchematicContext, Tree} from '@angular-devkit/schematics';
 
 // You don't have to export the function as default.
@@ -63,7 +54,7 @@ You need a rule, for example, to define how a template in the schematic is to be
 Rules can make use of utilities provided with the `@schematics/angular` package.
 Look for helper functions for working with modules, dependencies, TypeScript, AST, JSON, Angular CLI workspaces and projects, and more.
 
-```ts
+```ts {header: "index.ts"}
 import {
   JsonAstObject,
   JsonObject,
@@ -84,7 +75,7 @@ Define variable or enumerated data types for the schema using TypeScript interfa
 The schema defines the types and default values of variables used in the schematic.
 For example, the hypothetical "Hello World" schematic might have the following schema.
 
-```json
+```json {header: "schema.json"}
 {
   "properties": {
     "name": {
@@ -99,7 +90,7 @@ For example, the hypothetical "Hello World" schematic might have the following s
 }
 ```
 
-See examples of schema files for the Angular CLI command schematics in `@schematics/angular`.
+See examples of schema files for the Angular CLI command schematics in [`@schematics/angular`](https://github.com/angular/angular-cli/blob/main/packages/schematics/angular/application/schema.json).
 
 ### Schematic prompts
 
@@ -114,7 +105,7 @@ To define such a prompt, add an `x-prompt` property to the schema for the `name`
 Similarly, you can add a prompt to let the user decide whether the schematic uses color when executing its hello action.
 The schema with both prompts would be as follows.
 
-```json
+```json {header: "schema.json"}
 {
   "properties": {
     "name": {
@@ -161,7 +152,7 @@ In the short form, the type is inferred from the property's type and constraints
 
 In the following example, the property takes an enumerated value, so the schematic automatically chooses the list type, and creates a menu from the possible values.
 
-```json
+```json {header: "schema.json"}
 {
   "style": {
     "description": "The file extension or preprocessor to use for style files.",
@@ -188,11 +179,11 @@ In this form, the `x-prompt` field value is a JSON object with subfields that cu
 | message | string \(required\)                                                         |
 | items   | string and/or label/value object pair \(only valid with type `list`\)       |
 
-The following example of the long form is from the JSON schema for the schematic that the CLI uses to generate applications.
+The following example of the long form is from the JSON schema for the schematic that the CLI uses to [generate applications](https://github.com/angular/angular-cli/blob/ba8a6ea59983bb52a6f1e66d105c5a77517f062e/packages/schematics/angular/application/schema.json#L56).
 It defines the prompt that lets users choose which style preprocessor they want to use for the application being created.
 By using the long form, the schematic can provide more explicit formatting of the menu choices.
 
-```json
+```json {header: "schema.json"}
 {
   "style": {
     "description": "The file extension or preprocessor to use for style files.",
@@ -222,7 +213,7 @@ The JSON schema that defines a schematic's options supports extensions to allow 
 No additional logic or changes are required to the code of a schematic to support the prompts.
 The following JSON schema is a complete description of the long-form syntax for the `x-prompt` field.
 
-```json
+```json {header: "x-prompt schema"}
 {
   "oneOf": [
     {
@@ -281,7 +272,7 @@ In the following sections, you will create a new schematics collection using the
 
 The most common use of schematics, however, is to integrate an Angular library with the Angular CLI.
 Do this by creating the schematic files directly within the library project in an Angular workspace, without using the Schematics CLI.
-See Schematics for Libraries.
+See [Schematics for Libraries](tools/cli/schematics-for-libraries).
 
 ### Creating a schematics collection
 
@@ -345,3 +336,55 @@ schematics blank --name=goodbye-world
 
 The command generates the new named schematic inside your collection, with a main `index.ts` file and its associated test spec.
 It also adds the name, description, and factory function for the new schematic to the collection's schema in the `collection.json` file.
+
+## Collection contents
+
+The top level of the root project folder for a collection contains configuration files, a `node_modules` folder, and a `src/` folder.
+The `src/` folder contains subfolders for named schematics in the collection, and a schema, `collection.json`, which describes the collected schematics.
+Each schematic is created with a name, description, and factory function.
+
+```json
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "hello-world": {
+      "description": "A blank schematic.",
+      "factory": "./hello-world/index#helloWorld"
+    }
+  }
+}
+```
+
+- The `$schema` property specifies the schema that the CLI uses for validation.
+- The `schematics` property lists named schematics that belong to this collection.
+  Each schematic has a plain-text description, and points to the generated entry function in the main file.
+
+- The `factory` property points to the generated entry function.
+  In this example, you invoke the `hello-world` schematic by calling the `helloWorld()` factory function.
+
+- The optional `schema` property points to a JSON schema file that defines the command-line options available to the schematic.
+- The optional `aliases` array specifies one or more strings that can be used to invoke the schematic.
+  For example, the schematic for the Angular CLI "generate" command has an alias "g", that lets you use the command `ng g`.
+
+### Named schematics
+
+When you use the Schematics CLI to create a blank schematics project, the new blank schematic is the first member of the collection, and has the same name as the collection.
+When you add a new named schematic to this collection, it is automatically added to the `collection.json` schema.
+
+In addition to the name and description, each schematic has a `factory` property that identifies the schematic's entry point.
+In the example, you invoke the schematic's defined functionality by calling the `helloWorld()` function in the main file, `hello-world/index.ts`.
+
+<img alt="overview" src="assets/images/guide/schematics/collection-files.gif">
+
+Each named schematic in the collection has the following main parts.
+
+| Parts         | Details                                                           |
+| :------------ | :---------------------------------------------------------------- |
+| `index.ts`    | Code that defines the transformation logic for a named schematic. |
+| `schema.json` | Schematic variable definition.                                    |
+| `schema.d.ts` | Schematic variables.                                              |
+| `files/`      | Optional component/template files to replicate.                   |
+
+It is possible for a schematic to provide all of its logic in the `index.ts` file, without additional templates.
+You can create dynamic schematics for Angular, however, by providing components and templates in the `files` folder, like those in standalone Angular projects.
+The logic in the index file configures these templates by defining rules that inject data and modify variables.

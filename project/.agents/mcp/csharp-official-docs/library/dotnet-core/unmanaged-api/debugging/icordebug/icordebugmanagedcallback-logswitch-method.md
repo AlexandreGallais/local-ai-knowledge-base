@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugManagedCallback::LogSwitch Method"
 title: "ICorDebugManagedCallback::LogSwitch Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmanagedcallback-logswitch-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugManagedCallback.LogSwitch"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugManagedCallback::LogSwitch"
+helpviewer_keywords:
+  - "LogSwitch method [.NET debugging]"
+  - "ICorDebugManagedCallback::LogSwitch method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugManagedCallback::LogSwitch Method
 
-Notifies the debugger that a common language runtime (CLR) managed thread has called a method in the `System.Diagnostics.Switch` class to create, modify, or delete a debugging/tracing switch.
+Notifies the debugger that a common language runtime (CLR) managed thread has called a method in the <xref:System.Diagnostics.Switch> class to create, modify, or delete a debugging/tracing switch.
 
 ## Syntax
 
@@ -35,7 +44,7 @@ HRESULT LogSwitch (
  [in] A value that indicates the severity level of the descriptive message that was written to the event log.
 
  `ulReason`\
- [in] A value of the LogSwitchCallReason enumeration that indicates the operation performed on the debugging/tracing switch.
+ [in] A value of the [LogSwitchCallReason](logswitchcallreason-enumeration.md) enumeration that indicates the operation performed on the debugging/tracing switch.
 
  `pLogSwitchName`\
  [in] A pointer to the name of the debugging/tracing switch.
@@ -45,7 +54,7 @@ HRESULT LogSwitch (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -55,4 +64,4 @@ HRESULT LogSwitch (
 
 ## See also
 
-- ICorDebugManagedCallback Interface
+- [ICorDebugManagedCallback Interface](icordebugmanagedcallback-interface.md)

@@ -1,12 +1,3 @@
----
-title: "ClassSignature interface (java.lang.classfile)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/ClassSignature.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ClassSignature interface (java.lang.classfile)
 
 ```java
@@ -14,19 +5,14 @@ public sealed interface ClassSignature permits SignaturesImpl.ClassSignatureImpl
 ```
 
 Models the generic signature of a class or interface, as defined by JVMS
-.
+{@jvms 4.7.9.1}.
 
-**See also:** Class
-
-**See also:** SignatureAttribute
-
-**JLS:** 8.1 Class Declarations
-
-**JLS:** 9.1 Interface Declarations
-
-**jvms:** 4.7.9.1 Signatures
-
-**Since:** 24
+@see Class
+@see SignatureAttribute
+@jls 8.1 Class Declarations
+@jls 9.1 Interface Declarations
+@jvms 4.7.9.1 Signatures
+@since 24
 
 ## ClassSignature.typeParameters()
 
@@ -34,11 +20,11 @@ Models the generic signature of a class or interface, as defined by JVMS
 List<Signature.TypeParam> typeParameters()
 ```
 
-**See also:** Class#getTypeParameters()
+{@return the type parameters of this class or interface, may be empty}
 
-**JLS:** 8.1.2 Generic Classes and Type Parameters
-
-**JLS:** 9.1.2 Generic Interfaces and Type Parameters
+@see Class#getTypeParameters()
+@jls 8.1.2 Generic Classes and Type Parameters
+@jls 9.1.2 Generic Interfaces and Type Parameters
 
 ## ClassSignature.superclassSignature()
 
@@ -46,11 +32,11 @@ List<Signature.TypeParam> typeParameters()
 Signature.ClassTypeSig superclassSignature()
 ```
 
-Interfaces return a signature representing the `Object` class.
+{@return the instantiation of the superclass in this signature}
+Interfaces return a signature representing the {@link Object} class.
 
-**See also:** Class#getGenericSuperclass()
-
-**JLS:** 8.1.4 Superclasses and Subclasses
+@see Class#getGenericSuperclass()
+@jls 8.1.4 Superclasses and Subclasses
 
 ## ClassSignature.superinterfaceSignatures()
 
@@ -58,11 +44,12 @@ Interfaces return a signature representing the `Object` class.
 List<Signature.ClassTypeSig> superinterfaceSignatures()
 ```
 
-**See also:** Class#getGenericInterfaces()
+{@return the instantiation of the interfaces in this signature, may be
+empty}
 
-**JLS:** 8.1.5 Superinterfaces
-
-**JLS:** 9.1.3 Superinterfaces and Subinterfaces
+@see Class#getGenericInterfaces()
+@jls 8.1.5 Superinterfaces
+@jls 9.1.3 Superinterfaces and Subinterfaces
 
 ## ClassSignature.signatureString()
 
@@ -70,16 +57,18 @@ List<Signature.ClassTypeSig> superinterfaceSignatures()
 String signatureString()
 ```
 
+{@return the raw signature string}
+
 ## ClassSignature.of(Signature.ClassTypeSig, Signature.ClassTypeSig...)
 
 ```java
 public static ClassSignature of(Signature.ClassTypeSig superclassSignature, Signature.ClassTypeSig... superinterfaceSignatures)
 ```
 
-Parameters:
+{@return a class signature with no type parameter declaration}
 
-- `superclassSignature`: the superclass
-- `superinterfaceSignatures`: the interfaces
+@param superclassSignature the superclass
+@param superinterfaceSignatures the interfaces
 
 ## ClassSignature.of(List<Signature.TypeParam>, Signature.ClassTypeSig, Signature.ClassTypeSig...)
 
@@ -87,11 +76,10 @@ Parameters:
 public static ClassSignature of(List<Signature.TypeParam> typeParameters, Signature.ClassTypeSig superclassSignature, Signature.ClassTypeSig... superinterfaceSignatures)
 ```
 
-Parameters:
-
-- `typeParameters`: the type parameters, may be empty
-- `superclassSignature`: the superclass
-- `superinterfaceSignatures`: the interfaces
+{@return a class signature}
+@param typeParameters the type parameters, may be empty
+@param superclassSignature the superclass
+@param superinterfaceSignatures the interfaces
 
 ## ClassSignature.parseFrom(String)
 
@@ -99,14 +87,8 @@ Parameters:
 public static ClassSignature parseFrom(String classSignature)
 ```
 
-Parses a raw class signature string into a `Signature`.
+Parses a raw class signature string into a {@linkplain Signature}.
 
-Parameters:
-
-- `classSignature`: the raw class signature string
-
-**Returns:** class signature
-
-Throws:
-
-- `IllegalArgumentException`: if the string is not a valid class signature string
+@param classSignature the raw class signature string
+@return class signature
+@throws IllegalArgumentException if the string is not a valid class signature string

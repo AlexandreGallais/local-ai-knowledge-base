@@ -1,12 +1,18 @@
 ---
+description: "C# Compiler Options to control Windows resources embedded in a dotnet application."
 title: "Compiler Options - resource options"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/compiler-options/resources.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 05/27/2026
+ai-usage: ai-assisted
+f1_keywords: 
+  - "cs.build.options"
+helpviewer_keywords: 
+  - "Win32Resource compiler option [C#]"
+  - "Win32Icon compiler option [C#]"
+  - "Win32Manifest compiler option [C#]"
+  - "NoWin32Manifest compiler option [C#]"
+  - "EmbeddedResource compiler option [C#]"
+  - "LinkResource compiler option [C#]"
 ---
-
 # C# compiler options that specify resources
 
 The following options control how the C# compiler creates or imports Win32 resources. The new MSBuild syntax is shown in **Bold**. The older *csc.exe* syntax is shown in `code style`.
@@ -18,8 +24,8 @@ The following options control how the C# compiler creates or imports Win32 resou
 - **EmbeddedResource** / `-resource`: Embed the specified resource (Short form: /res).
 - **LinkResource** / `-linkresource`: Link the specified resource to this assembly.
 
-> **Note:**
-> For more information about configuring these options for your project, see Compiler options.
+> [!NOTE]
+> For more information about configuring these options for your project, see [Compiler options](index.md#how-to-set-options).
 
 ## Win32Resource
 
@@ -34,12 +40,12 @@ The **Win32Resource** option inserts a Win32 resource in the output file.
 ## Win32Icon
 
 The **Win32Icon** option inserts an .ico file in the output file, which gives the output file the desired appearance in File Explorer.
-
+  
 ```xml
 <Win32Icon>filename</Win32Icon>
 ```
 
-`filename` is the *.ico* file that you want to add to your output file. You can create an *.ico* file by using the Resource Compiler. The Resource Compiler is invoked when you compile a Visual C++ program. An *.ico* file is created from the *.rc* file.
+`filename` is the *.ico* file that you want to add to your output file. You can create an *.ico* file by using the [Resource Compiler](/windows/desktop/menurc/resource-compiler). The Resource Compiler is invoked when you compile a Visual C++ program. An *.ico* file is created from the *.rc* file.
 
 ## Win32Manifest
 
@@ -51,31 +57,31 @@ Use the **Win32Manifest** option to specify a user-defined Win32 application man
 
 `filename` is the name and location of the custom manifest file. By default, the C# compiler embeds an application manifest that specifies a requested execution level of `asInvoker`. It creates the manifest in the same folder where the executable is built. If you want to supply a custom manifest, for example to specify a requested execution level of `highestAvailable` or `requireAdministrator`, use this option to specify the name of the file.
 
-> **Note:**
+> [!NOTE]
 > The **Win32Manifest** option and the **Win32Resource** option are mutually exclusive. If you try to use both options in the same command line, you get a build error.
 
-An application that has no application manifest that specifies a requested execution level is subject to file and registry virtualization under the User Account Control feature in Windows. For more information, see User Account Control.
+An application that has no application manifest that specifies a requested execution level is subject to file and registry virtualization under the User Account Control feature in Windows. For more information, see [User Account Control](/windows/access-protection/user-account-control/user-account-control-overview).
 
 Your application is subject to virtualization if either of these conditions is true:
-
+  
 - You use the **NoWin32Manifest** option and you don't provide a manifest in a later build step or as part of a Windows Resource (*.res*) file by using the **Win32Resource** option.
 - You provide a custom manifest that doesn't specify a requested execution level.
 
-Visual Studio creates a default *.manifest* file and stores it in the debug and release directories alongside the executable file. You can add a custom manifest by creating one in any text editor and then adding the file to the project. Or, you can right-click the **Project** icon in **Solution Explorer**, select **Add New Item**, and then select **Application Manifest File**. After you add your new or existing manifest file, it appears in the **Manifest** drop down list. For more information, see Application Page, Project Designer (C#).
+Visual Studio creates a default *.manifest* file and stores it in the debug and release directories alongside the executable file. You can add a custom manifest by creating one in any text editor and then adding the file to the project. Or, you can right-click the **Project** icon in **Solution Explorer**, select **Add New Item**, and then select **Application Manifest File**. After you add your new or existing manifest file, it appears in the **Manifest** drop down list. For more information, see [Application Page, Project Designer (C#)](/visualstudio/ide/reference/application-page-project-designer-csharp).
 
 You can provide the application manifest as a custom post-build step or as part of a Win32 resource file by using the **NoWin32Manifest** option. Use that same option if you want your application to be subject to file or registry virtualization on Windows Vista.
-
+  
 ## NoWin32Manifest
 
 Use the **NoWin32Manifest** option to instruct the compiler not to embed any application manifest into the executable file.
 
-```xml
+```xml  
 <NoWin32Manifest />
 ```
 
 When you use this option, the application is subject to virtualization on Windows Vista unless you provide an application manifest in a Win32 Resource file or during a later build step.
 
-In Visual Studio, set this option in the **Application Property** page by selecting the **Create Application Without a Manifest** option in the **Manifest** drop down list. For more information, see Application Page, Project Designer (C#).
+In Visual Studio, set this option in the **Application Property** page by selecting the **Create Application Without a Manifest** option in the **Manifest** drop down list. For more information, see [Application Page, Project Designer (C#)](/visualstudio/ide/reference/application-page-project-designer-csharp).
 
 ## EmbeddedResource
 
@@ -88,8 +94,8 @@ Embeds the specified resource into the output file.
 </EmbeddedResource>
 ```
 
-`filename` is the .NET resource file that you want to embed in the output file. `identifier` (optional) is the logical name for the resource: the name that you use to load the resource. The default is the name of the file. `accessibility-modifier` (optional) is the accessibility of the resource: public or private. The default is public. By default, resources are public in the assembly when you create them by using the C# compiler. To make the resources private, specify `private` as the accessibility modifier. No other accessibility is allowed. If `filename` is a .NET resource file created, for example, by Resgen.exe or in the development environment, you can access it by using members in the `System.Resources` namespace. For more information, see `System.Resources.ResourceManager`. For all other resources, use the `GetManifestResource` methods in the `System.Reflection.Assembly` class to access the resource at run time. The order of the resources in the output file comes from the order specified in the project file.
-
+`filename` is the .NET resource file that you want to embed in the output file. `identifier` (optional) is the logical name for the resource: the name that you use to load the resource. The default is the name of the file. `accessibility-modifier` (optional) is the accessibility of the resource: public or private. The default is public. By default, resources are public in the assembly when you create them by using the C# compiler. To make the resources private, specify `private` as the accessibility modifier. No other accessibility is allowed. If `filename` is a .NET resource file created, for example, by [Resgen.exe](../../../framework/tools/resgen-exe-resource-file-generator.md) or in the development environment, you can access it by using members in the <xref:System.Resources> namespace. For more information, see <xref:System.Resources.ResourceManager?displayProperty=nameWithType>. For all other resources, use the `GetManifestResource` methods in the <xref:System.Reflection.Assembly> class to access the resource at run time. The order of the resources in the output file comes from the order specified in the project file.  
+  
 ## LinkResource
 
 Creates a link to a .NET resource in the output file. The resource file isn't added to the output file. **LinkResource** differs from the **EmbeddedResource** option, which does embed a resource file in the output file.
@@ -101,4 +107,4 @@ Creates a link to a .NET resource in the output file. The resource file isn't ad
 </LinkResource>
 ```
 
-`filename` is the .NET resource file to which you want to link from the assembly. `identifier` (optional) is the logical name for the resource: the name that you use to load the resource. The default is the name of the file. `accessibility-modifier` (optional) is the accessibility of the resource: public or private. The default is public. By default, linked resources are public in the assembly when you create them by using the C# compiler. To make the resources private, specify `private` as the accessibility modifier. No other modifier is allowed. If `filename` is a .NET resource file created, for example, by Resgen.exe or in the development environment, you can access it by using members in the `System.Resources` namespace. For more information, see `System.Resources.ResourceManager`. For all other resources, use the `GetManifestResource` methods in the `System.Reflection.Assembly` class to access the resource at run time. The file specified in `filename` can be any format. For example, you might want to make a native DLL part of the assembly, so that it can be installed into the global assembly cache and accessed from managed code in the assembly. You can do the same thing in the Assembly Linker. For more information, see Al.exe (Assembly Linker) and Working with Assemblies and the Global Assembly Cache.
+`filename` is the .NET resource file to which you want to link from the assembly. `identifier` (optional) is the logical name for the resource: the name that you use to load the resource. The default is the name of the file. `accessibility-modifier` (optional) is the accessibility of the resource: public or private. The default is public. By default, linked resources are public in the assembly when you create them by using the C# compiler. To make the resources private, specify `private` as the accessibility modifier. No other modifier is allowed. If `filename` is a .NET resource file created, for example, by [Resgen.exe](../../../framework/tools/resgen-exe-resource-file-generator.md) or in the development environment, you can access it by using members in the <xref:System.Resources> namespace. For more information, see <xref:System.Resources.ResourceManager?displayProperty=nameWithType>. For all other resources, use the `GetManifestResource` methods in the <xref:System.Reflection.Assembly> class to access the resource at run time. The file specified in `filename` can be any format. For example, you might want to make a native DLL part of the assembly, so that it can be installed into the global assembly cache and accessed from managed code in the assembly. You can do the same thing in the Assembly Linker. For more information, see [Al.exe (Assembly Linker)](../../../framework/tools/al-exe-assembly-linker.md) and [Working with Assemblies and the Global Assembly Cache](../../../framework/app-domains/working-with-assemblies-and-the-gac.md).

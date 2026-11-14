@@ -1,13 +1,12 @@
 ---
-title: "ASP.NET Core Razor class libraries (RCLs) with static server-side rendering (static SSR)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/components/class-libraries-and-static-server-side-rendering.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core Razor class libraries (RCLs) with static server-side rendering (static SSR)
+description: Learn how component authors can support static server-side rendering (static SSR) in ASP.NET Core Razor class libraries (RCLs).
+monikerRange: '>= aspnetcore-8.0'
+ms.date: 11/11/2025
 ---
-
 # ASP.NET Core Razor class libraries (RCLs) with static server-side rendering (static SSR)
+
+[!INCLUDE[](~/includes/not-latest-version-without-not-supported-content.md)]
 
 This article provides guidance for component library authors considering support for static server-side rendering (static SSR).
 
@@ -26,7 +25,7 @@ All existing components can still be used with static SSR. However, the cost of 
 
 &dagger;There's a special exception for the `@onsubmit` event handler for forms, which is always functional, regardless of render mode.
 
-This is equivalent to how components behave during prerendering, before Blazor's SignalR circuit or the .NET WebAssembly runtime is started.
+This is equivalent to how components behave during [prerendering](../fundamentals/index.md#client-and-server-rendering-concepts), before Blazor's SignalR circuit or the .NET WebAssembly runtime is started.
 
 For components whose only role is to produce read-only DOM content, these behaviors for static SSR are completely sufficient. However, library authors must consider what approach to take when including interactive components in their libraries.
 
@@ -35,32 +34,32 @@ For components whose only role is to produce read-only DOM content, these behavi
 There are three main approaches:
 
 * **Don't use interactive behaviors** (Basic)
-
+    
   For components whose only role is to produce read-only DOM content, the developer isn't required to take any special action. These components naturally work with any render mode.
-
+  
   Examples:
 
   * A "user card" component that loads data corresponding to a person and renders it in a stylized UI with a photo, job title, and other details.
-  * A "video" component that acts as a wrapper around the HTML `` element, making it more convenient to use in a Razor component.
+  * A "video" component that acts as a wrapper around the HTML `<video>` element, making it more convenient to use in a Razor component.
 
 * **Require interactive rendering** (Basic)
-
+ 
   You can choose to require that your component is only used with interactive rendering. This limits the applicability of your component, but means that you may freely rely on arbitrary event handlers. Even then, you should still avoid declaring a specific `@rendermode` and permit the app author who consumes your library to select one.
-
+  
   Examples:
 
   * A video editing component in which users may splice and re-order segments of video. Even if there was a way to represent these edit operations with plain HTML buttons and form posts, the user experience would be unacceptable without true interactivity.
   * A collaborative document editor that must show the activities of other users in real time.
 
 * **Use interactive behaviors, but design for static SSR and progressive enhancement** (Advanced)
-
+ 
   Many interactive behaviors can be implemented using only HTML capabilities. With a good understanding of HTML and CSS, you can often produce a useful baseline of functionality that works with static SSR. You can still declare event handlers that implement more advanced, optional behaviors, which only work in interactive render modes.
-
+  
   Examples:
 
-  * A grid component. Under static SSR, the component may only support displaying data and navigating between pages (implemented with `` links). When used with interactive rendering, the component may add live sorting and filtering.
-  * A tabset component. As long as navigation between tabs is achieved using `` links and state is held only in URL query parameters, the component can work without `@onclick`.
-  * An advanced file upload component. Under static SSR, the component may behave as a native ``. When used with interactive rendering, the component could also display upload progress.
+  * A grid component. Under static SSR, the component may only support displaying data and navigating between pages (implemented with `<a>` links). When used with interactive rendering, the component may add live sorting and filtering.
+  * A tabset component. As long as navigation between tabs is achieved using `<a>` links and state is held only in URL query parameters, the component can work without `@onclick`.
+  * An advanced file upload component. Under static SSR, the component may behave as a native `<input type=file>`. When used with interactive rendering, the component could also display upload progress.
   * A stock ticker. Under static SSR, the component may display the stock quote at the time the HTML was rendered. When used with interactive rendering, the component may then update the stock price in real time.
 
 For any of these strategies, there's also the option of implementing interactive features with JavaScript.
@@ -69,7 +68,7 @@ To choose among these approaches, reusable Razor component authors must make a c
 
 ## When to use the `@rendermode` directive
 
-In most cases, reusable component authors should **not** specify a render mode, even when interactivity is required. This is because the component author doesn't know whether the app enables support for `Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer`, `Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveWebAssembly`, or both with `Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveAuto`. By not specifying a `@rendermode`, the component author leaves the choice to the app developer.
+In most cases, reusable component authors should **not** specify a render mode, even when interactivity is required. This is because the component author doesn't know whether the app enables support for <xref:Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer>, <xref:Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveWebAssembly>, or both with <xref:Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveAuto>. By not specifying a `@rendermode`, the component author leaves the choice to the app developer.
 
 Even if the component author thinks that interactivity is required, there may still be cases where an app author considers it sufficient to use static SSR alone. For example, a map component with drag and zoom interactivity may seem to require interactivity. However, some scenarios may only call for rendering a static map image and avoiding drag/zoom features.
 
@@ -77,11 +76,11 @@ The only reason why a reusable component author should use the `@rendermode` dir
 
 ## Streaming rendering
 
-Reusable Razor components are free to declare `@attribute [StreamRendering]` for streaming rendering (`[StreamRendering]` attribute API). This results in incremental UI updates during static SSR. Since the same data-loading patterns produce incremental UI updates during interactive rendering, regardless of the presence of the `[StreamRendering]` attribute, the component can behave correctly in all cases. Even in cases where streaming static SSR is suppressed on the server, the component still renders its correct final state.
+Reusable Razor components are free to declare `@attribute [StreamRendering]` for [streaming rendering](rendering.md#streaming-rendering) ([`[StreamRendering]` attribute API](xref:Microsoft.AspNetCore.Components.StreamRenderingAttribute)). This results in incremental UI updates during static SSR. Since the same data-loading patterns produce incremental UI updates during interactive rendering, regardless of the presence of the `[StreamRendering]` attribute, the component can behave correctly in all cases. Even in cases where streaming static SSR is suppressed on the server, the component still renders its correct final state.
 
 ## Using links across render modes
 
-Reusable Razor components may use links and enhanced navigation. HTML `` tags should produce equivalent behaviors with or without an interactive `Microsoft.AspNetCore.Components.Routing.Router` component and whether or not enhanced navigation is enabled/disabled at an ancestor level in the DOM.
+Reusable Razor components may use links and enhanced navigation. HTML `<a>` tags should produce equivalent behaviors with or without an interactive <xref:Microsoft.AspNetCore.Components.Routing.Router> component and whether or not enhanced navigation is enabled/disabled at an ancestor level in the DOM.
 
 ## Using forms across render modes
 
@@ -112,13 +111,13 @@ Consider the following example:
 }
 ```
 
-The `Microsoft.AspNetCore.Components.Forms.EditForm.Enhance`, `Microsoft.AspNetCore.Components.Forms.EditForm.FormName`, and `Microsoft.AspNetCore.Components.SupplyParameterFromFormAttribute` APIs are only used during static SSR and are ignored during interactive rendering. The form works correctly during both interactive and static SSR.
+The <xref:Microsoft.AspNetCore.Components.Forms.EditForm.Enhance>, <xref:Microsoft.AspNetCore.Components.Forms.EditForm.FormName>, and <xref:Microsoft.AspNetCore.Components.SupplyParameterFromFormAttribute> APIs are only used during static SSR and are ignored during interactive rendering. The form works correctly during both interactive and static SSR.
 
 ## Avoid APIs that are specific to static SSR
 
-`Microsoft.AspNetCore.Http.HttpContext` is only available during static SSR, so don't rely on `Microsoft.AspNetCore.Http.HttpContext` when creating components that work across render modes. The `Microsoft.AspNetCore.Http.HttpContext` API doesn't make sense to use during interactive rendering either because there's no active HTTP request in flight at those times. It's meaningless to think about setting a HTTP status code or writing to the HTTP response.
+<xref:Microsoft.AspNetCore.Http.HttpContext> is only available during static SSR, so don't rely on <xref:Microsoft.AspNetCore.Http.HttpContext> when creating components that work across render modes. The <xref:Microsoft.AspNetCore.Http.HttpContext> API doesn't make sense to use during interactive rendering either because there's no active HTTP request in flight at those times. It's meaningless to think about setting a HTTP status code or writing to the HTTP response.
 
-Reusable components are free to receive an `Microsoft.AspNetCore.Http.HttpContext` when available, as follows:
+Reusable components are free to receive an <xref:Microsoft.AspNetCore.Http.HttpContext> when available, as follows:
 
 ```csharp
 [CascadingParameter]
@@ -127,4 +126,4 @@ private HttpContext? Context { get; set; }
 
 The value is `null` during interactive rendering and is only set during static SSR.
 
-In many cases, there are better alternatives than using `Microsoft.AspNetCore.Http.HttpContext`. If you need to know the current URL or to perform a redirection, the APIs on `Microsoft.AspNetCore.Components.NavigationManager` work with all render modes. If you need to know the user's authentication state, use Blazor's `Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider` service (`AuthenticationStateProvider` documentation) over using `Microsoft.AspNetCore.Http.HttpContext.User`.
+In many cases, there are better alternatives than using <xref:Microsoft.AspNetCore.Http.HttpContext>. If you need to know the current URL or to perform a redirection, the APIs on <xref:Microsoft.AspNetCore.Components.NavigationManager> work with all render modes. If you need to know the user's authentication state, use Blazor's <xref:Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider> service ([`AuthenticationStateProvider` documentation](../security/authentication-state.md)) over using <xref:Microsoft.AspNetCore.Http.HttpContext.User?displayProperty=nameWithType>.

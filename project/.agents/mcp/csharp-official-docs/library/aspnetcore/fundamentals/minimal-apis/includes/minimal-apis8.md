@@ -1,10 +1,265 @@
----
-title: "minimal-apis8"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/minimal-apis/includes/minimal-apis8.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
+:::moniker range="= aspnetcore-8.0"
 
-# minimal-apis8
+This document provides a quick reference for Minimal APIs. For a guided introduction, see [Tutorial: Create a Minimal API with ASP.NET Core](../../../tutorials/min-web-api.md).
+
+The Minimal APIs consist of:
+
+* [WebApplication and WebApplicationBuilder](../webapplication.md)
+* [Route Handlers](../route-handlers.md)
+
+[!INCLUDE[](~/fundamentals/minimal-apis/includes/webapplication8.md)]
+
+## ASP.NET Core middleware
+
+The following table lists some of the middleware frequently used with Minimal APIs.
+
+| Middleware | Description | API |
+|--|--|--|
+| [Authentication](../../../security/authentication/index.md) | Provides authentication support. | <xref:Microsoft.AspNetCore.Builder.AuthAppBuilderExtensions.UseAuthentication*> |
+| [Authorization](../../../security/authorization/introduction.md) | Provides authorization support. | <xref:Microsoft.AspNetCore.Builder.AuthorizationAppBuilderExtensions.UseAuthorization*> |
+| [CORS](../../../security/cors.md) | Configures Cross-Origin Resource Sharing. | <xref:Microsoft.AspNetCore.Builder.CorsMiddlewareExtensions.UseCors*> |
+| [Exception Handler](../../error-handling-api.md) | Globally handles exceptions thrown by the middleware pipeline. | <xref:Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.UseExceptionHandler*> |
+| [Forwarded Headers](../../middleware/index.md#forwarded-headers-middleware-order) | Forwards proxied headers onto the current request. | <xref:Microsoft.AspNetCore.Builder.ForwardedHeadersExtensions.UseForwardedHeaders*> |
+| [HTTPS Redirection](../../../security/enforcing-ssl.md) | Redirects all HTTP requests to HTTPS. | <xref:Microsoft.AspNetCore.Builder.HttpsPolicyBuilderExtensions.UseHttpsRedirection*> |
+| [HTTP Strict Transport Security (HSTS)](../../middleware/index.md#middleware-order) | Security enhancement middleware that adds a special response header. | <xref:Microsoft.AspNetCore.Builder.HstsBuilderExtensions.UseHsts*> |
+| [Request Logging](../../http-logging/index.md) | Provides support for logging HTTP requests and responses. | <xref:Microsoft.AspNetCore.Builder.HttpLoggingBuilderExtensions.UseHttpLogging*> |
+| [Request Timeouts](../../../performance/timeouts.md) | Provides support for configuring request timeouts, global default and per endpoint. | `UseRequestTimeouts` |
+| [W3C Request Logging](https://www.w3.org/TR/WD-logfile.html) | Provides support for logging HTTP requests and responses in the [W3C format](https://www.w3.org/TR/WD-logfile.html). | <xref:Microsoft.AspNetCore.Builder.HttpLoggingBuilderExtensions.UseW3CLogging*> |
+| [Response Caching](../../../performance/caching/middleware.md) | Provides support for caching responses. | <xref:Microsoft.AspNetCore.Builder.ResponseCachingExtensions.UseResponseCaching*> |
+| [Response Compression](../../../performance/response-compression.md) | Provides support for compressing responses. | <xref:Microsoft.AspNetCore.Builder.ResponseCompressionBuilderExtensions.UseResponseCompression*> |
+| [Session](../../app-state.md) | Provides support for managing user sessions. | <xref:Microsoft.AspNetCore.Builder.SessionMiddlewareExtensions.UseSession*> |
+| [Static Files](../../static-files.md) | Provides support for serving static files and directory browsing. | <xref:Microsoft.AspNetCore.Builder.StaticFileExtensions.UseStaticFiles*>, <xref:Microsoft.AspNetCore.Builder.FileServerExtensions.UseFileServer*> |
+| [WebSockets](../../websockets.md) | Enables the WebSockets protocol. | <xref:Microsoft.AspNetCore.Builder.WebSocketMiddlewareExtensions.UseWebSockets*> |
+
+The following sections cover request handling: routing, parameter binding, and responses.
+
+## Routing
+
+A configured `WebApplication` supports `Map{Verb}` and <xref:Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions.MapMethods*> where `{Verb}` is a camel-cased HTTP method like `Get`, `Post`, `Put`, or `Delete`:
+
+[!code-csharp[](~/fundamentals/minimal-apis/samples/7.0/WebMinAPIs/Program.cs?name=snippet_r1)]
+
+The <xref:System.Delegate> arguments passed to these methods are called "route handlers".
+
+### Route Handlers
+
+[!INCLUDE [route handling](~/fundamentals/minimal-apis/includes/route-handlers.md)]
+
+## Parameter binding
+
+[!INCLUDE [](~/fundamentals/minimal-apis/includes/parameter-binding-summary8-10.md)]
+
+## Responses
+
+Route handlers support the following types of return values:
+
+1. `IResult` based - This includes `Task<IResult>` and `ValueTask<IResult>`
+1. `string` - This includes `Task<string>` and `ValueTask<string>`
+1. `T` (Any other type) - This includes `Task<T>` and `ValueTask<T>`
+
+|Return value|Behavior|Content-Type|
+|--|--|--|
+|`IResult` | The framework calls [IResult.ExecuteAsync](xref:Microsoft.AspNetCore.Http.IResult.ExecuteAsync*)| Decided by the `IResult` implementation
+|`string` | The framework writes the string directly to the response | `text/plain`
+| `T` (Any other type) | The framework JSON-serializes the response| `application/json`
+
+For a more in-depth guide to route handler return values see [Create responses in Minimal API applications](../responses.md)
+
+### Example return values
+
+#### string return values
+
+```csharp
+app.MapGet("/hello", () => "Hello World");
+```
+
+#### JSON return values
+
+```csharp
+app.MapGet("/hello", () => new { Message = "Hello World" });
+```
+
+#### Return TypedResults
+
+The following code returns a <xref:Microsoft.AspNetCore.Http.TypedResults>:
+
+```csharp
+app.MapGet("/hello", () => TypedResults.Ok(new Message() {  Text = "Hello World!" }));
+```
+
+Returning `TypedResults` is preferred to returning <xref:Microsoft.AspNetCore.Http.Results>. For more information, see [`TypedResults` versus `Results`](../responses.md#typedresults-versus-results).
+
+#### IResult return values
+
+```csharp
+app.MapGet("/hello", () => Results.Ok(new { Message = "Hello World" }));
+```
+
+The following example uses the built-in result types to customize the response:
+
+[!code-csharp[](~/fundamentals/minimal-apis/samples/7.0/todo/Program.cs?name=snippet_getCustom)]
+
+#### JSON
+
+```csharp
+app.MapGet("/hello", () => Results.Json(new { Message = "Hello World" }));
+```
+
+#### Custom Status Code
+
+```csharp
+app.MapGet("/405", () => Results.StatusCode(405));
+```
+
+#### Text
+
+```csharp
+app.MapGet("/text", () => Results.Text("This is some text"));
+```
+<a name="stream7"></a>
+
+#### Stream
+
+```csharp
+var proxyClient = new HttpClient();
+app.MapGet("/pokemon", async () =>
+{
+    var stream = await proxyClient.GetStreamAsync("http://contoso/pokedex.json");
+    // Proxy the response as JSON
+    return Results.Stream(stream, "application/json");
+});
+```
+
+See [Create responses in Minimal API applications](../responses.md#stream7) for more examples.
+
+#### Redirect
+
+```csharp
+app.MapGet("/old-path", () => Results.Redirect("/new-path"));
+```
+
+#### File
+
+```csharp
+app.MapGet("/download", () => Results.File("myfile.text"));
+```
+
+<a name="binr7"></a>
+
+### Built-in results
+
+[!INCLUDE [results-helpers](~/fundamentals/minimal-apis/includes/results-helpers.md)]
+
+### Modifying Headers
+
+Use the `HttpResponse` object to modify response headers:
+
+```csharp
+app.MapGet("/", (HttpContext context) => {
+    // Set a custom header
+    context.Response.Headers["X-Custom-Header"] = "CustomValue";
+
+    // Set a known header
+    context.Response.Headers.CacheControl = $"public,max-age=3600";
+
+    return "Hello World";
+});
+```
+
+### Customizing results
+
+Applications can control responses by implementing a custom <xref:Microsoft.AspNetCore.Http.IResult> type. The following code is an example of an HTML result type:
+
+[!code-csharp[](~/fundamentals/minimal-apis/samples/7.0/WebMinAPIs/ResultsExtensions.cs)]
+
+We recommend adding an extension method to <xref:Microsoft.AspNetCore.Http.IResultExtensions?displayProperty=fullName> to make these custom results more discoverable.
+
+[!code-csharp[](~/fundamentals/minimal-apis/samples/7.0/WebMinAPIs/Program.cs?name=snippet_xtn)]
+
+### Typed results
+
+The <xref:Microsoft.AspNetCore.Http.IResult> interface can represent values returned from Minimal APIs that don't utilize the implicit support for JSON serializing the returned object to the HTTP response. The static [Results](/dotnet/api/microsoft.aspnetcore.http.results) class is used to create varying `IResult` objects that represent different types of responses. For example, setting the response status code or redirecting to another URL.
+
+The types implementing `IResult` are public, allowing for type assertions when testing. For example:
+
+[!code-csharp[](~/fundamentals/minimal-apis/samples/misc/typedResults/TypedResultsApiWithTest/Test/WeatherApiTest.cs?name=snippet_1&highlight=7-8)]
+
+You can look at the return types of the corresponding methods on the static [TypedResults](/dotnet/api/microsoft.aspnetcore.http.typedresults) class to find the correct public `IResult` type to cast to.
+
+See [Create responses in Minimal API applications](../responses.md) for more examples.
+
+## Filters
+
+For more information, see [Filters in Minimal API apps](../min-api-filters.md).
+
+## Authorization
+
+Routes can be protected using authorization policies. These can be declared via the [`[Authorize]`](xref:Microsoft.AspNetCore.Authorization.AuthorizeAttribute) attribute or by using the <xref:Microsoft.AspNetCore.Builder.AuthorizationEndpointConventionBuilderExtensions.RequireAuthorization*> method:
+
+[!code-csharp[](~/fundamentals/minimal-apis/samples/7.0/WebRPauth/Program.cs?name=snippet_auth1&highlight=7-8,22)]
+
+The preceding code can be written with <xref:Microsoft.AspNetCore.Builder.AuthorizationEndpointConventionBuilderExtensions.RequireAuthorization*>:
+
+[!code-csharp[](~/fundamentals/minimal-apis/samples/7.0/WebMinAPIs/Program.cs?name=snippet_auth2)]
+
+The following sample uses [policy-based authorization](../../../security/authorization/policies.md):
+
+[!code-csharp[](~/fundamentals/minimal-apis/samples/7.0/WebRPauth/Program.cs?name=snippet_auth3&range=7-8,22-26)]
+
+### Allow unauthenticated users to access an endpoint
+
+The [`[AllowAnonymous]`](xref:Microsoft.AspNetCore.Authorization.AllowAnonymousAttribute)
+allows unauthenticated users to access endpoints:
+
+[!code-csharp[](~/fundamentals/minimal-apis/samples/7.0/WebMinAPIs/Program.cs?name=snippet_auth4)]
+
+## CORS
+
+Routes can be [CORS](../../../security/cors.md) enabled using [CORS policies](../../../security/cors.md#cors-policy-options). CORS can be declared via the [`[EnableCors]`](xref:Microsoft.AspNetCore.Cors.EnableCorsAttribute) attribute or by using the
+<xref:Microsoft.AspNetCore.Builder.CorsEndpointConventionBuilderExtensions.RequireCors*> method. The following samples enable CORS:
+
+[!code-csharp[](~/fundamentals/minimal-apis/samples/7.0/WebMinAPIs/Program.cs?name=snippet_cors)]
+
+[!code-csharp[](~/fundamentals/minimal-apis/samples/7.0/WebMinAPIs/Program.cs?name=snippet_cors2)]
+
+For more information, see [Enable Cross-Origin Requests (CORS) in ASP.NET Core](../../../security/cors.md)
+
+## ValidateScopes and ValidateOnBuild
+
+<xref:Microsoft.Extensions.DependencyInjection.ServiceProviderOptions.ValidateScopes> and <xref:Microsoft.Extensions.DependencyInjection.ServiceProviderOptions.ValidateOnBuild> are enabled by default in the [Development](../../environments.md) environment but disabled in other environments.
+
+When `ValidateOnBuild` is `true`, the DI container validates the service configuration at build time. If the service configuration is invalid, the build fails at app startup, rather than at runtime when the service is requested.
+
+When `ValidateScopes` is `true`, the DI container validates that a scoped service isn't resolved from the root scope. Resolving a scoped service from the root scope can result in a memory leak because the service is retained in memory longer than the scope of the request.
+
+`ValidateScopes` and `ValidateOnBuild` are false by default in non-Development modes for performance reasons.
+
+The following code shows `ValidateScopes` is enabled by default in development mode but disabled in release mode:
+
+:::code language="csharp" source="~/../AspNetCore.Docs.Samples/fundamentals/minimal-apis/samples/ValidateOnBuildWeb/Program.cs" id="snippet_1" highlight="3,16-25":::
+
+The following code shows `ValidateOnBuild` is enabled by default in development mode but disabled in release mode:
+
+:::code language="csharp" source="~/../AspNetCore.Docs.Samples/fundamentals/minimal-apis/samples/ValidateOnBuildWeb/Program.cs" id="snippet_vob" highlight="10":::
+
+The following code disables `ValidateScopes` and `ValidateOnBuild` in `Development`:
+
+:::code language="csharp" source="~/../AspNetCore.Docs.Samples/fundamentals/minimal-apis/samples/ValidateOnBuildWeb/Program.cs" id="snippet_2":::
+
+## See also
+
+* [Minimal APIs quick reference](../../minimal-apis.md)
+* [Generate OpenAPI documents](../../openapi/aspnetcore-openapi.md)
+* [Create responses in Minimal API applications](../responses.md)
+* [Filters in Minimal API apps](../min-api-filters.md)
+* [Handle errors in ASP.NET Core APIs](../../error-handling-api.md)
+* [Authentication and authorization in Minimal APIs](../security.md)
+* [Test Minimal API apps](../test-min-api.md)
+* [Short-circuit routing](https://andrewlock.net/exploring-the-dotnet-8-preview-short-circuit-routing/)
+* [Identity API endpoints](https://andrewlock.net/exploring-the-dotnet-8-preview-introducing-the-identity-api-endpoints/)
+* [Keyed service dependency injection container support](https://andrewlock.net/exploring-the-dotnet-8-preview-keyed-services-dependency-injection-support/)
+* [A look behind the scenes of Minimal API endpoints](https://andrewlock.net/behind-the-scenes-of-minimal-apis-1-a-first-look-behind-the-scenes-of-minimal-api-endpoints/)
+* [Organizing ASP.NET Core Minimal APIs](https://www.tessferrandez.com/blog/2023/10/31/organizing-minimal-apis.html)
+* [Fluent validation discussion on GitHub](https://github.com/dotnet/aspnetcore/issues/51834#issuecomment-1837180853)
+
+:::moniker-end

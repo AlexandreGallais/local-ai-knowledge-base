@@ -1,12 +1,3 @@
----
-title: "X509Extension interface (java.security.cert)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/cert/X509Extension.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # X509Extension interface (java.security.cert)
 
 ```java
@@ -15,9 +6,9 @@ public interface X509Extension
 
 Interface for an X.509 extension.
 
-The extensions defined for X.509 v3
-Certificates and v2
-CRLs (Certificate Revocation
+<p>The extensions defined for X.509 v3
+{@link X509Certificate Certificates} and v2
+{@link X509CRL CRLs} (Certificate Revocation
 Lists) provide methods
 for associating additional attributes with users or public keys,
 for managing the certification hierarchy, and for managing CRL
@@ -25,15 +16,14 @@ distribution. The X.509 extensions format also allows communities
 to define private extensions to carry information unique to those
 communities.
 
-Each extension in a certificate/CRL may be designated as
+<p>Each extension in a certificate/CRL may be designated as
 critical or non-critical.  A certificate/CRL-using system (an application
 validating a certificate/CRL) must reject the certificate/CRL if it
 encounters a critical extension it does not recognize.  A non-critical
 extension may be ignored if it is not recognized.
-
+<p>
 The ASN.1 definition for this is:
-
-```java
+<pre>
 Extensions  ::=  SEQUENCE SIZE (1..MAX) OF Extension
 
 Extension  ::=  SEQUENCE  {
@@ -43,14 +33,15 @@ Extension  ::=  SEQUENCE  {
                   -- contains a DER encoding of a value
                   -- of the type registered for use with
                   -- the extnId object identifier value
-```
-
-Since not all extensions are known, the `getExtensionValue`
+}
+</pre>
+Since not all extensions are known, the {@code getExtensionValue}
 method returns the DER-encoded OCTET STRING of the
-extension value (i.e., the `extnValue`). This can then
-be handled by a *Class* that understands the extension.
+extension value (i.e., the {@code extnValue}). This can then
+be handled by a <em>Class</em> that understands the extension.
 
-**Since:** 1.2
+@author Hemma Prafullchandra
+@since 1.2
 
 ## X509Extension.hasUnsupportedCriticalExtension()
 
@@ -60,8 +51,8 @@ boolean hasUnsupportedCriticalExtension()
 
 Check if there is a critical extension that is not supported.
 
-**Returns:** `true` if a critical extension is found that is
-not supported, otherwise `false`.
+@return {@code true} if a critical extension is found that is
+not supported, otherwise {@code false}.
 
 ## X509Extension.getCriticalExtensionOIDs()
 
@@ -75,8 +66,7 @@ implementing this interface.
 
 Here is sample code to get a Set of critical extensions from an
 X509Certificate and print the OIDs:
-
-```java
+<pre>{@code
 X509Certificate cert = null;
 try (InputStream inStrm = new FileInputStream("DER-encoded-Cert")) {
     CertificateFactory cf = CertificateFactory.getInstance("X.509");
@@ -90,9 +80,8 @@ if (critSet != null && !critSet.isEmpty()) {
         System.out.println(oid);
     }
 }
-```
-
-**Returns:** a Set (or an empty Set if none are marked critical) of
+}</pre>
+@return a Set (or an empty Set if none are marked critical) of
 the extension OID strings for extensions that are marked critical.
 If there are no extensions present at all, then this method returns
 null.
@@ -109,8 +98,7 @@ implementing this interface.
 
 Here is sample code to get a Set of non-critical extensions from an
 X509CRL revoked certificate entry and print the OIDs:
-
-```java
+<pre>{@code
 CertificateFactory cf = null;
 X509CRL crl = null;
 try (InputStream inStrm = new FileInputStream("DER-encoded-CRL")) {
@@ -131,9 +119,9 @@ if (badCert != null) {
             System.out.println(oid);
         }
 }
-```
+}</pre>
 
-**Returns:** a Set (or an empty Set if none are marked non-critical) of
+@return a Set (or an empty Set if none are marked non-critical) of
 the extension OID strings for extensions that are marked non-critical.
 If there are no extensions present at all, then this method returns
 null.
@@ -145,49 +133,50 @@ byte[] getExtensionValue(String oid)
 ```
 
 Gets the DER-encoded OCTET string for the extension value
-(*extnValue*) identified by the passed-in `oid`
+(<em>extnValue</em>) identified by the passed-in {@code oid}
 String.
-The `oid` string is
+The {@code oid} string is
 represented by a set of nonnegative whole numbers separated
 by periods.
 
-For example:
+<p>For example:<br>
+<table class="striped">
+<caption style="display:none">Examples of OIDs and extension names</caption>
+<thead>
+<tr>
+<th scope="col">OID <em>(Object Identifier)</em></th>
+<th scope="col">Extension Name</th></tr>
+</thead>
+<tbody style="text-align:left">
+<tr><th scope="row">1.3.6.1.5.5.7.1.1</th>
+<td>AuthorityInformationAccess</td></tr>
+<tr><th scope="row">2.5.29.14</th>
+<td>SubjectKeyIdentifier</td></tr>
+<tr><th scope="row">2.5.29.15</th>
+<td>KeyUsage</td></tr>
+<tr><th scope="row">2.5.29.17</th>
+<td>SubjectAlternativeName</td></tr>
+<tr><th scope="row">2.5.29.18</th>
+<td>IssuerAlternativeName</td></tr>
+<tr><th scope="row">2.5.29.19</th>
+<td>BasicConstraints</td></tr>
+<tr><th scope="row">2.5.29.30</th>
+<td>NameConstraints</td></tr>
+<tr><th scope="row">2.5.29.31</th>
+<td>CRLDistributionPoints</td></tr>
+<tr><th scope="row">2.5.29.32</th>
+<td>CertificatePolicies</td></tr>
+<tr><th scope="row">2.5.29.33</th>
+<td>PolicyMappings</td></tr>
+<tr><th scope="row">2.5.29.35</th>
+<td>AuthorityKeyIdentifier</td></tr>
+<tr><th scope="row">2.5.29.36</th>
+<td>PolicyConstraints</td></tr>
+<tr><th scope="row">2.5.29.37</th>
+<td>ExtendedKeyUsage</td></tr>
+</tbody>
+</table>
 
-Examples of OIDs and extension names
-
-OID *(Object Identifier)*
-Extension Name
-
-1.3.6.1.5.5.7.1.1
-AuthorityInformationAccess
-2.5.29.14
-SubjectKeyIdentifier
-2.5.29.15
-KeyUsage
-2.5.29.17
-SubjectAlternativeName
-2.5.29.18
-IssuerAlternativeName
-2.5.29.19
-BasicConstraints
-2.5.29.30
-NameConstraints
-2.5.29.31
-CRLDistributionPoints
-2.5.29.32
-CertificatePolicies
-2.5.29.33
-PolicyMappings
-2.5.29.35
-AuthorityKeyIdentifier
-2.5.29.36
-PolicyConstraints
-2.5.29.37
-ExtendedKeyUsage
-
-Parameters:
-
-- `oid`: the Object Identifier value for the extension.
-
-**Returns:** the DER-encoded octet string of the extension value or
+@param oid the Object Identifier value for the extension.
+@return the DER-encoded octet string of the extension value or
 null if it is not present.

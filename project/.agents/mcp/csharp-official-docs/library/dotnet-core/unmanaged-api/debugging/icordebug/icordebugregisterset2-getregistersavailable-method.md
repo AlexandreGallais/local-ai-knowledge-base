@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugRegisterSet2::GetRegistersAvailable Method"
 title: "ICorDebugRegisterSet2::GetRegistersAvailable Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugregisterset2-getregistersavailable-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugRegisterSet2.GetRegistersAvailable"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugRegisterSet2::GetRegistersAvailable"
+helpviewer_keywords:
+  - "GetRegistersAvailable method, ICorDebugRegisterSet2 interface [.NET debugging]"
+  - "ICorDebugRegisterSet2::GetRegistersAvailable method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugRegisterSet2::GetRegistersAvailable Method
 
 Gets an array of bytes that provides a bitmap of the available registers.
@@ -42,7 +51,7 @@ The values of the CorDebugRegister enumeration specify the registers of differen
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -52,5 +61,5 @@ The values of the CorDebugRegister enumeration specify the registers of differen
 
 ## See also
 
-- ICorDebugRegisterSet2 Interface
-- ICorDebugRegisterSet Interface
+- [ICorDebugRegisterSet2 Interface](icordebugregisterset2-interface.md)
+- [ICorDebugRegisterSet Interface](icordebugregisterset-interface.md)

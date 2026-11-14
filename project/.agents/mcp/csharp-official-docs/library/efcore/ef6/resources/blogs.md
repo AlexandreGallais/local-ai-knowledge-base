@@ -1,31 +1,28 @@
 ---
-title: "Entity Framework Blogs - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/resources/blogs.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Entity Framework Blogs - EF6
+description: Entity Framework 6 Blogs
+author: SamMonoRT
+ms.date: 10/23/2016
 ---
-
 # Entity Framework Blogs
 Besides the product documentation, these blogs can be a source of useful information on Entity Framework:
 
 ## EF Team blogs
 
-- .NET Blog - Tag: Entity Framework
-- ADO.NET Blog (no longer in use)
-- EF Design Blog (no longer in use)
+- [.NET Blog - Tag: Entity Framework](https://blogs.msdn.microsoft.com/dotnet/tag/entity-framework/)
+- [ADO.NET Blog (no longer in use)](https://blogs.msdn.microsoft.com/adonet/)
+- [EF Design Blog (no longer in use)](https://blogs.msdn.microsoft.com/efdesign/)
 
 ## Current and former EF team bloggers
 
-- Arthur Vickers
-- Brice Lambson
-- Diego Vega
-- Rowan Miller
-- Pawel Kadluczka
-- Alex James
-- Zlatko Michailov
+- [Arthur Vickers](https://blog.oneunicorn.com/)
+- [Brice Lambson](https://www.bricelam.net/)
+- [Diego Vega](https://blogs.msdn.microsoft.com/diego/)
+- [Rowan Miller](https://romiller.com/category/entity-framework/)
+- [Pawel Kadluczka](https://blog.3d-logic.com/category/entity-framework/)
+- [Alex James](https://blogs.msdn.microsoft.com/alexj/)
+- [Zlatko Michailov](https://blogs.msdn.microsoft.com/esql/)
 
 ## EF Community Bloggers
 
-- Julie Lerman
+- [Julie Lerman](https://thedatafarm.com/blog/)  

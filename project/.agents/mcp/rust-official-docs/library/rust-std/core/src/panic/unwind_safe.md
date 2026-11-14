@@ -1,12 +1,3 @@
----
-title: "core::panic::unwind_safe"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/panic/unwind_safe.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::panic::unwind_safe
 
 ## RefUnwindSafe::AssertUnwindSafe
@@ -17,20 +8,22 @@ pub struct AssertUnwindSafe<T>(#[stable(feature = "catch_unwind", since = "1.9.0
 
 A simple wrapper around a type to assert that it is unwind safe.
 
-When using `catch_unwind` it may be the case that some of the closed over
+When using [`catch_unwind`] it may be the case that some of the closed over
 variables are not unwind safe. For example if `&mut T` is captured the
 compiler will generate a warning indicating that it is not unwind safe. It
 might not be the case, however, that this is actually a problem due to the
-specific usage of `catch_unwind` if unwind safety is specifically taken into
+specific usage of [`catch_unwind`] if unwind safety is specifically taken into
 account. This wrapper struct is useful for a quick and lightweight
 annotation that a variable is indeed unwind safe.
+
+[`catch_unwind`]: ../../std/panic/fn.catch_unwind.html
 
 # Examples
 
 One way to use `AssertUnwindSafe` is to assert that the entire closure
 itself is unwind safe, bypassing all checks for all variables:
 
-```rust
+```
 use std::panic::{self, AssertUnwindSafe};
 
 let mut variable = 4;
@@ -58,7 +51,7 @@ unwind safe, you will get a compilation error at that time, which will
 allow you to consider whether that new capture in fact represent a bug or
 not.
 
-```rust
+```
 use std::panic::{self, AssertUnwindSafe};
 
 let mut variable = 4;

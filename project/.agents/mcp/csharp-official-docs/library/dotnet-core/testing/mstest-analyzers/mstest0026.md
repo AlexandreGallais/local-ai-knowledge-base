@@ -1,12 +1,17 @@
 ---
 title: "MSTEST0026: Avoid conditional access in assertions"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0026.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0026: Avoid conditional access in assertions"
+ms.date: 11/05/2026
+ai-usage: ai-assisted
+f1_keywords:
+- MSTEST0026
+- AssertionArgsShouldAvoidConditionalAccessRuleId
+helpviewer_keywords:
+- AssertionArgsShouldAvoidConditionalAccessRuleId
+- MSTEST0026
+author: fhnaseer
+ms.author: faisalhafeez
 ---
-
 # MSTEST0026: Avoid conditional access in assertions
 
 | Property                            | Value                                                 |
@@ -22,7 +27,7 @@ license: "CC-BY-4.0"
 
 ## Cause
 
-This rule raises a diagnostic when an argument containing a null conditional operator `(?.)` or `?[]` is passed to the assertion methods below:
+This rule raises a diagnostic when an argument containing a [null conditional operator](../../../csharp/language-reference/operators/member-access-operators.md#null-conditional-operators--and-) `(?.)` or `?[]` is passed to the assertion methods below:
 
 - `Assert.IsTrue`
 - `Assert.IsFalse`
@@ -49,7 +54,7 @@ This rule raises a diagnostic when an argument containing a null conditional ope
 
 ## Rule description
 
-Conditional access returns `null` when its receiver is null, without evaluating the member access. An assertion on that result can fail because the receiver is missing rather than because the member has the wrong value. It can also pass <example-value> if both values compare equal as null.
+Conditional access returns `null` when its receiver is null, without evaluating the member access. An assertion on that result can fail because the receiver is missing rather than because the member has the wrong value. It can also pass unexpectedly if both values compare equal as null.
 
 To make the test's preconditions and failures explicit, assert that an object is non-null before you assert its members. A separate null assertion tells you whether the object was missing or its contents were incorrect.
 
@@ -82,11 +87,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0026
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0026.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

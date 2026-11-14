@@ -1,12 +1,3 @@
----
-title: "ECPoint class (java.security.spec)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/spec/ECPoint.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ECPoint class (java.security.spec)
 
 ```java
@@ -18,7 +9,9 @@ in affine coordinates. Other coordinate systems can
 extend this class to represent this point in other
 coordinates.
 
-**Since:** 1.5
+@author Valerie Peng
+
+@since 1.5
 
 ## ECPoint.POINT_INFINITY
 
@@ -35,16 +28,11 @@ public ECPoint(BigInteger x, BigInteger y)
 ```
 
 Creates an ECPoint from the specified affine x-coordinate
-`x` and affine y-coordinate `y`.
-
-Parameters:
-
-- `x`: the affine x-coordinate.
-- `y`: the affine y-coordinate.
-
-Throws:
-
-- `NullPointerException`: if `x` or `y` is null.
+{@code x} and affine y-coordinate {@code y}.
+@param x the affine x-coordinate.
+@param y the affine y-coordinate.
+@throws    NullPointerException if {@code x} or
+{@code y} is null.
 
 ## ECPoint.getAffineX()
 
@@ -52,10 +40,9 @@ Throws:
 public BigInteger getAffineX()
 ```
 
-Returns the affine x-coordinate `x`.
+Returns the affine x-coordinate {@code x}.
 Note: POINT_INFINITY has a null affine x-coordinate.
-
-**Returns:** the affine x-coordinate.
+@return the affine x-coordinate.
 
 ## ECPoint.getAffineY()
 
@@ -63,10 +50,9 @@ Note: POINT_INFINITY has a null affine x-coordinate.
 public BigInteger getAffineY()
 ```
 
-Returns the affine y-coordinate `y`.
+Returns the affine y-coordinate {@code y}.
 Note: POINT_INFINITY has a null affine y-coordinate.
-
-**Returns:** the affine y-coordinate.
+@return the affine y-coordinate.
 
 ## ECPoint.equals(Object)
 
@@ -76,12 +62,8 @@ public boolean equals(Object obj)
 
 Compares this elliptic curve point for equality with
 the specified object.
-
-Parameters:
-
-- `obj`: the object to be compared.
-
-**Returns:** true if `obj` is an instance of
+@param obj the object to be compared.
+@return true if {@code obj} is an instance of
 ECPoint and the affine coordinates match, false otherwise.
 
 ## ECPoint.hashCode()
@@ -89,3 +71,5 @@ ECPoint and the affine coordinates match, false otherwise.
 ```java
 public int hashCode()
 ```
+
+{@return the hash code value for this elliptic curve point}

@@ -1,21 +1,22 @@
 ---
-title: "Mock Functions | Guide"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/learn/mock-functions.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Mock Functions | Guide
+prev:
+  text: Setup and Teardown
+  link: /guide/learn/setup-teardown
+next:
+  text: Snapshot Testing
+  link: /guide/learn/snapshots
 ---
 
 # Mock Functions
 
 When writing tests, you often need to replace a real function or module with a controlled version. This is called **mocking**. There are several reasons you might want to do this: maybe the real function makes network requests that would slow down your tests, or maybe you need to simulate an error that's hard to trigger with real code. Mock functions let you control what a dependency returns, observe how it was called, and isolate the code under test from side effects.
 
-Vitest provides mocking utilities through the `vi` object.
+Vitest provides mocking utilities through the [`vi`](/api/vi) object.
 
 ## Creating Mock Functions
 
-The simplest way to create a mock is with `vi.fn()`. This gives you a function that does nothing by default (returns `undefined`), but tracks every call made to it:
+The simplest way to create a mock is with [`vi.fn()`](/api/vi#vi-fn). This gives you a function that does nothing by default (returns `undefined`), but tracks every call made to it:
 
 ```js
 import { expect, test, vi } from 'vitest'
@@ -56,7 +57,7 @@ test('mock return values', () => {
 })
 ```
 
-If the function you're mocking is async, use `mockResolvedValue` and `mockRejectedValue` to control the promise outcome:
+If the function you're mocking is async, use [`mockResolvedValue`](/api/mock#mockresolvedvalue) and [`mockRejectedValue`](/api/mock#mockrejectedvalue) to control the promise outcome:
 
 ```js
 test('mock async return values', async () => {
@@ -71,12 +72,13 @@ test('mock async return values', async () => {
 })
 ```
 
-**Tip:**
-`mockReturnValue` always returns the same value regardless of the arguments the mock receives. If you need argument-specific return values, `vi.when` lets you attach different behaviors for different argument combinations without writing your own `if/else` logic. See the Conditional Mocking recipe for details.
+::: tip
+`mockReturnValue` always returns the same value regardless of the arguments the mock receives. If you need argument-specific return values, [`vi.when`](/api/vi#vi-when) lets you attach different behaviors for different argument combinations without writing your own `if/else` logic. See the [Conditional Mocking](/guide/recipes/conditional-mocking) recipe for details.
+:::
 
 ## Mock Implementation
 
-Sometimes you need more than a fixed return value. You want the mock to actually do something with its arguments. `mockImplementation` lets you provide a full replacement function:
+Sometimes you need more than a fixed return value. You want the mock to actually do something with its arguments. [`mockImplementation`](/api/mock#mockimplementation) lets you provide a full replacement function:
 
 ```js
 import { expect, test, vi } from 'vitest'
@@ -142,7 +144,7 @@ expect(double.mock.results).toEqual([
 ])
 ```
 
-**Warning:**
+::: warning
 `.mock.calls` stores references to the arguments, not copies. If you pass an object to a mock and then mutate it afterwards, the recorded call will reflect the mutated state, not the state at the time of the call:
 
 ```js
@@ -172,10 +174,11 @@ expect(calls[0]).toEqual({ count: 1 }) // ✅ passes
 ```
 
 Alternatively, you can make your assertion before the mutation happens.
+:::
 
 ## Spying on Methods
 
-`vi.spyOn` is different from `vi.fn()` in an important way. Instead of creating a brand new function, it wraps an _existing_ method on an object. The original implementation still works by default, but you can observe every call and optionally override the behavior:
+[`vi.spyOn`](/api/vi#vi-spyon) is different from `vi.fn()` in an important way. Instead of creating a brand new function, it wraps an _existing_ method on an object. The original implementation still works by default, but you can observe every call and optionally override the behavior:
 
 ```js
 import { expect, test, vi } from 'vitest'
@@ -211,9 +214,9 @@ This is particularly useful when you want to verify that your code calls a metho
 
 Mock functions accumulate state as tests run. They remember every call, every return value, and any custom implementation you've set. If you don't reset them between tests, this state can leak and cause confusing failures. Vitest provides three levels of cleanup:
 
-- **`mockClear()`** clears the recorded call history and return values, but keeps any custom implementation you've set
-- **`mockReset()`** does everything `mockClear` does, and also removes any custom implementation, returning the mock to its default state
-- **`mockRestore()`** is specifically for spies created with `vi.spyOn`. It restores the original object method, effectively undoing the spy. On `vi.fn()` mocks, it behaves the same as `mockReset`
+- **[`mockClear()`](/api/mock#mockclear)** clears the recorded call history and return values, but keeps any custom implementation you've set
+- **[`mockReset()`](/api/mock#mockreset)** does everything `mockClear` does, and also removes any custom implementation, returning the mock to its default state
+- **[`mockRestore()`](/api/mock#mockrestore)** is specifically for spies created with `vi.spyOn`. It restores the original object method, effectively undoing the spy. On `vi.fn()` mocks, it behaves the same as `mockReset`
 
 In practice, the easiest approach is to restore all mocks automatically after each test:
 
@@ -235,9 +238,9 @@ test('spy is restored after the test', () => {
 })
 ```
 
-Even better, you can configure this globally with the `restoreMocks` option so you don't need the `afterEach` at all:
+Even better, you can configure this globally with the [`restoreMocks`](/config/restoremocks) option so you don't need the `afterEach` at all:
 
-```js
+```js [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -249,7 +252,7 @@ export default defineConfig({
 
 ## Mocking Modules
 
-Sometimes you need to replace an entire module rather than a single function. For example, a database client or a logger that you don't want running during tests. `vi.mock` lets you replace a module's exports with mock implementations:
+Sometimes you need to replace an [entire module](/guide/mocking/modules) rather than a single function. For example, a database client or a logger that you don't want running during tests. [`vi.mock`](/api/vi#vi-mock) lets you replace a module's exports with mock implementations:
 
 ```js
 import { expect, test, vi } from 'vitest'
@@ -268,19 +271,21 @@ test('mock a module', () => {
 })
 ```
 
-**Warning:**
-`vi.mock` calls are hoisted to the top of the file. They run before any imports. This means the mocked version is in place by the time your test code runs.
+::: warning
+[`vi.mock`](/api/vi#vi-mock) calls are hoisted to the top of the file. They run before any imports. This means the mocked version is in place by the time your test code runs.
+:::
 
-**Warning:**
+::: warning
 Always pass `import('./db.js')` rather than a plain string `'./db.js'`. When you use `import()`, TypeScript can infer the module's types, so the factory function's return value is type-checked and `importOriginal` returns the correctly typed module. As a bonus, if you rename or move the file in your IDE, the import path will be updated automatically. If you use a string, you lose both the type safety and the automatic refactoring.
+:::
 
 Vitest has comprehensive guides for specific mocking scenarios:
 
-- Mocking Functions
-- Mocking Modules
-- Mocking Timers
-- Mocking Dates
-- Mocking Globals
-- Mocking Requests
-- Mocking the File System
-- Mocking Classes
+- [Mocking Functions](/guide/mocking/functions)
+- [Mocking Modules](/guide/mocking/modules)
+- [Mocking Timers](/guide/mocking/timers)
+- [Mocking Dates](/guide/mocking/dates)
+- [Mocking Globals](/guide/mocking/globals)
+- [Mocking Requests](/guide/mocking/requests)
+- [Mocking the File System](/guide/mocking/file-system)
+- [Mocking Classes](/guide/mocking/classes)

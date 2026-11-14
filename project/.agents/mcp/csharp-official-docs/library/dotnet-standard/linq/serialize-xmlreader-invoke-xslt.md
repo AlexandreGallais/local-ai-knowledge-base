@@ -1,19 +1,20 @@
 ---
-title: "Serialize to an XmlReader (invoke XSLT) - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/serialize-xmlreader-invoke-xslt.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Serialize to an XmlReader (invoke XSLT) - LINQ to XML
+description: You can use CreateReader to create an XmlReader that provides nodes of an XML tree to an XSLT transformation.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # Serialize to an XmlReader (invoke XSLT) (LINQ to XML)
 
-When you use the `System.Xml` interoperability capabilities of LINQ to XML, you can use `System.Xml.Linq.XNode.CreateReader*` to create an `System.Xml.XmlReader`. The module that reads from this `System.Xml.XmlReader` reads the nodes from the XML tree and processes them accordingly.
+When you use the <xref:System.Xml?displayProperty=nameWithType> interoperability capabilities of LINQ to XML, you can use <xref:System.Xml.Linq.XNode.CreateReader*> to create an <xref:System.Xml.XmlReader>. The module that reads from this <xref:System.Xml.XmlReader> reads the nodes from the XML tree and processes them accordingly.
 
 ## Example: Invoke an XSLT transformation
 
-One possible use for this method is when invoking an XSLT transformation. You can create an XML tree, create an `System.Xml.XmlReader` from the XML tree, create a new document, and then create an `System.Xml.XmlWriter` to write into the new document. Then, you can invoke the XSLT transformation, passing in `System.Xml.XmlReader` and `System.Xml.XmlWriter`. After the transformation successfully completes, the new XML tree is populated with the results of the transformation.
+One possible use for this method is when invoking an XSLT transformation. You can create an XML tree, create an <xref:System.Xml.XmlReader> from the XML tree, create a new document, and then create an <xref:System.Xml.XmlWriter> to write into the new document. Then, you can invoke the XSLT transformation, passing in <xref:System.Xml.XmlReader> and <xref:System.Xml.XmlWriter>. After the transformation successfully completes, the new XML tree is populated with the results of the transformation.
 
 ```csharp
 string xslMarkup = @"<?xml version='1.0'?>

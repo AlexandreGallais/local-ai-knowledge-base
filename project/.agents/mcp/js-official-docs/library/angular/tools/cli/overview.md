@@ -1,35 +1,31 @@
----
-title: "The Angular CLI"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/tools/cli/overview.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # The Angular CLI
 
 The Angular CLI is a command-line interface tool which allows you to scaffold, develop, test, deploy, and maintain Angular applications directly from a command shell.
 
 Angular CLI is published on npm as the `@angular/cli` package and includes a binary named `ng`. Commands invoking `ng` are using the Angular CLI.
 
-**Try Angular without local setup**
+<docs-callout title="Try Angular without local setup">
 
-If you are new to Angular, you might want to start with Try it now!, which introduces the essentials of Angular in the context of a ready-made basic <example-value> store app for you to examine and modify.
-This standalone tutorial takes advantage of the interactive StackBlitz environment for online development.
+If you are new to Angular, you might want to start with [Try it now!](tutorials/learn-angular), which introduces the essentials of Angular in the context of a ready-made basic online store app for you to examine and modify.
+This standalone tutorial takes advantage of the interactive [StackBlitz](https://stackblitz.com) environment for online development.
 You don't need to set up your local environment until you're ready.
 
-  **Getting Started**
+</docs-callout>
+
+<docs-card-container>
+  <docs-card title="Getting Started" link="Get Started" href="tools/cli/setup-local">
     Install Angular CLI to create and build your first app.
-
-  **Command Reference**
+  </docs-card>
+  <docs-card title="Command Reference" link="Learn More" href="cli">
     Discover CLI commands to make you more productive with Angular.
-
-  **Schematics**
+  </docs-card>
+  <docs-card title="Schematics" link="Learn More" href="tools/cli/schematics">
     Create and run schematics to generate and modify source files in your application automatically.
-
-  **Builders**
+  </docs-card>
+  <docs-card title="Builders" link="Learn More" href="tools/cli/cli-builder">
     Create and run builders to perform complex transformations from your source code to generated build outputs.
+  </docs-card>
+</docs-card-container>
 
 ## CLI command-language syntax
 

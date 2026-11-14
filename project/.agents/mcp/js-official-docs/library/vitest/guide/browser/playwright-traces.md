@@ -1,22 +1,14 @@
----
-title: "Playwright Traces"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/browser/playwright-traces.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # Playwright Traces
 
-Vitest Browser Mode supports generating Playwright's trace files. To enable tracing, you need to set the `trace` option in the `test.browser` configuration.
+Vitest Browser Mode supports generating Playwright's [trace files](https://playwright.dev/docs/trace-viewer#viewing-remote-traces). To enable tracing, you need to set the [`trace`](/config/browser/trace) option in the `test.browser` configuration.
 
-**Warning:**
-Generating trace files is only available when using the Playwright provider.
+::: warning
+Generating trace files is only available when using the [Playwright provider](/config/browser/playwright).
+:::
 
 ::: code-group
 
-```ts
+```ts [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 import { playwright } from '@vitest/browser-playwright'
 
@@ -30,11 +22,13 @@ export default defineConfig({
 })
 ```
 
-```bash
+```bash [CLI]
 vitest --browser.trace=on
 ```
 
-By default, Vitest will generate a trace file for each test. You can also configure it to only generate traces on test failures by setting `trace` to `'on-first-retry'`, `'on-all-retries'` or `'retain-on-failure'`. The files will be saved in `__traces__` folder next to your test files. The name of the trace includes the project name, the test name, the `repeats` count and `retry` count:
+:::
+
+By default, Vitest will generate a trace file for each test. You can also configure it to only generate traces on test failures by setting `trace` to `'on-first-retry'`, `'on-all-retries'` or `'retain-on-failure'`. The files will be saved in `__traces__` folder next to your test files. The name of the trace includes the project name, the test name, the [`repeats`](/api/test#repeats) count and [`retry`](/api/test#retry) count:
 
 ```
 chromium-my-test-0-0.trace.zip
@@ -46,7 +40,7 @@ chromium-my-test-0-0.trace.zip
 
 To change the output directory, you can set the `tracesDir` option in the `test.browser.trace` configuration. This way all traces will be stored in the same directory, grouped by the test file.
 
-```ts
+```ts [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 import { playwright } from '@vitest/browser-playwright'
 
@@ -64,7 +58,7 @@ export default defineConfig({
 })
 ```
 
-The traces are available in reporters as annotations. For example, in the HTML reporter, you can find the link to the trace file in the test details.
+The traces are available in reporters as [annotations](/guide/test-annotations). For example, in the HTML reporter, you can find the link to the trace file in the test details.
 
 ## Trace markers
 
@@ -86,13 +80,13 @@ You can also group multiple operations under one marker with `page.mark(name, ca
 
 ```ts
 await page.mark('sign in flow', async () => {
-  await page.getByRole('textbox', { name: 'Email' }).fill('user@example.com')
-  await page.getByRole('<example-value>', { name: '<example-value>' }).fill('<example-value>')
+  await page.getByRole('textbox', { name: 'Email' }).fill('john@example.com')
+  await page.getByRole('textbox', { name: 'Password' }).fill('secret')
   await page.getByRole('button', { name: 'Sign in' }).click()
 })
 ```
 
-You can also wrap reusable helpers with `vi.defineHelper()` so trace entries point to where the helper is called, not its internals:
+You can also wrap reusable helpers with [`vi.defineHelper()`](/api/vi#vi-defineHelper) so trace entries point to where the helper is called, not its internals:
 
 ```ts
 import { vi } from 'vitest'
@@ -120,6 +114,9 @@ This will start the Trace Viewer and load the specified trace file.
 
 Alternatively, you can open the Trace Viewer in your browser at https://trace.playwright.dev and upload the trace file there.
 
+<img alt="Trace Viewer showing the trace timeline and rendered component" img-light src="/trace-viewer-light.png">
+<img alt="Trace Viewer showing the trace timeline and rendered component" img-dark src="/trace-viewer-dark.png">
+
 ## Source Location
 
 When you open a trace, you'll notice that Vitest groups browser interactions and links them back to the exact line in your test that triggered them. This happens automatically for:
@@ -129,4 +126,4 @@ When you open a trace, you'll notice that Vitest groups browser interactions and
 
 Under the hood, Playwright still records its own low-level action events as usual. Vitest wraps them with source-location groups so you can jump straight from the trace timeline to the relevant line in your test.
 
-For anything not covered automatically, you can use `page.mark()` or `locator.mark()` to add your own trace groups — see Trace markers above.
+For anything not covered automatically, you can use `page.mark()` or `locator.mark()` to add your own trace groups — see [Trace markers](#trace-markers) above.

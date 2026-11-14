@@ -1,13 +1,10 @@
 ---
-title: "prefer-spread"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/prefer-spread.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: prefer-spread
+rule_type: suggestion
+related_rules:
+- no-useless-call
 ---
 
-# prefer-spread
 
 Before ES2015, one must use `Function.prototype.apply()` to call variadic functions.
 
@@ -29,7 +26,7 @@ This rule is aimed to flag usage of `Function.prototype.apply()` in situations w
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint prefer-spread: "error"*/
@@ -39,9 +36,11 @@ foo.apply(null, args);
 obj.foo.apply(obj, args);
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint prefer-spread: "error"*/
@@ -61,6 +60,8 @@ foo.apply(undefined, [1, 2, 3]);
 foo.apply(null, [1, 2, 3]);
 obj.foo.apply(obj, [1, 2, 3]);
 ```
+
+:::
 
 ## Options
 

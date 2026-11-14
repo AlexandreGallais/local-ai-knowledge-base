@@ -8,10 +8,12 @@
       "version": "2026-11",
       "license": "CC-BY-SA-2.5",
       "attribution": "Mozilla Contributors",
-      "flavor": "mdn",
-      "core": true,
-      "paths": ["files/en-us/web/javascript/"],
-      "docs": ["files/en-us/web/javascript"]
+      "paths": [
+        "files/en-us/web/javascript/"
+      ],
+      "docs": [
+        "files/en-us/web/javascript"
+      ]
     },
     {
       "tool": "mdn-html",
@@ -21,10 +23,12 @@
       "version": "2026-11",
       "license": "CC-BY-SA-2.5",
       "attribution": "Mozilla Contributors",
-      "flavor": "mdn",
-      "core": true,
-      "paths": ["files/en-us/web/html/"],
-      "docs": ["files/en-us/web/html"]
+      "paths": [
+        "files/en-us/web/html/"
+      ],
+      "docs": [
+        "files/en-us/web/html"
+      ]
     },
     {
       "tool": "mdn-css",
@@ -34,10 +38,12 @@
       "version": "2026-11",
       "license": "CC-BY-SA-2.5",
       "attribution": "Mozilla Contributors",
-      "flavor": "mdn",
-      "core": true,
-      "paths": ["files/en-us/web/css/"],
-      "docs": ["files/en-us/web/css"]
+      "paths": [
+        "files/en-us/web/css/"
+      ],
+      "docs": [
+        "files/en-us/web/css"
+      ]
     },
     {
       "tool": "mdn-api",
@@ -47,10 +53,12 @@
       "version": "2026-11",
       "license": "CC-BY-SA-2.5",
       "attribution": "Mozilla Contributors",
-      "flavor": "mdn",
-      "core": true,
-      "paths": ["files/en-us/web/api/"],
-      "docs": ["files/en-us/web/api"]
+      "paths": [
+        "files/en-us/web/api/"
+      ],
+      "docs": [
+        "files/en-us/web/api"
+      ]
     },
     {
       "tool": "mdn-http",
@@ -60,10 +68,12 @@
       "version": "2026-11",
       "license": "CC-BY-SA-2.5",
       "attribution": "Mozilla Contributors",
-      "flavor": "mdn",
-      "core": true,
-      "paths": ["files/en-us/web/http/"],
-      "docs": ["files/en-us/web/http"]
+      "paths": [
+        "files/en-us/web/http/"
+      ],
+      "docs": [
+        "files/en-us/web/http"
+      ]
     },
     {
       "tool": "mdn-svg",
@@ -73,10 +83,12 @@
       "version": "2026-11",
       "license": "CC-BY-SA-2.5",
       "attribution": "Mozilla Contributors",
-      "flavor": "mdn",
-      "core": true,
-      "paths": ["files/en-us/web/svg/"],
-      "docs": ["files/en-us/web/svg"]
+      "paths": [
+        "files/en-us/web/svg/"
+      ],
+      "docs": [
+        "files/en-us/web/svg"
+      ]
     },
     {
       "tool": "mdn-accessibility",
@@ -86,10 +98,12 @@
       "version": "2026-11",
       "license": "CC-BY-SA-2.5",
       "attribution": "Mozilla Contributors",
-      "flavor": "mdn",
-      "core": true,
-      "paths": ["files/en-us/web/accessibility/"],
-      "docs": ["files/en-us/web/accessibility"]
+      "paths": [
+        "files/en-us/web/accessibility/"
+      ],
+      "docs": [
+        "files/en-us/web/accessibility"
+      ]
     },
     {
       "tool": "angular",
@@ -99,10 +113,12 @@
       "version": "22.2",
       "license": "CC-BY-4.0",
       "attribution": "Google LLC and the Angular contributors",
-      "flavor": "angular",
-      "core": true,
-      "paths": ["adev/src/content/"],
-      "docs": ["adev/src/content"],
+      "paths": [
+        "adev/src/content/"
+      ],
+      "docs": [
+        "adev/src/content"
+      ],
       "exclude": [
         "adev/src/content/examples",
         "adev/src/content/tutorials",
@@ -118,10 +134,12 @@
       "version": "6.0",
       "license": "CC-BY-4.0",
       "attribution": "Microsoft and the TypeScript Website contributors",
-      "flavor": "typescript",
-      "core": true,
-      "paths": ["packages/documentation/copy/en/"],
-      "docs": ["packages/documentation/copy/en"]
+      "paths": [
+        "packages/documentation/copy/en/"
+      ],
+      "docs": [
+        "packages/documentation/copy/en"
+      ]
     },
     {
       "tool": "rxjs",
@@ -131,10 +149,12 @@
       "version": "7.8",
       "license": "Apache-2.0",
       "attribution": "Google, Inc., Netflix, Inc., Microsoft Corp. and contributors",
-      "flavor": "markdown",
-      "core": true,
-      "paths": ["docs_app/content/"],
-      "docs": ["docs_app/content"],
+      "paths": [
+        "docs_app/content/"
+      ],
+      "docs": [
+        "docs_app/content"
+      ],
       "exclude": [
         "docs_app/content/marketing",
         "docs_app/content/images",
@@ -152,8 +172,6 @@
       "version": "22.0",
       "license": "MIT",
       "attribution": "Brandon Roberts, Mike Ryan, Victor Savkin, Rob Wormald and the NgRx contributors",
-      "flavor": "mdx",
-      "core": true,
       "paths": [
         "projects/www/src/app/pages/guide/signals/",
         "projects/www/src/app/pages/guide/eslint-plugin/"
@@ -171,10 +189,12 @@
       "version": "26.13",
       "license": "MIT",
       "attribution": "Node.js contributors",
-      "flavor": "node",
-      "core": true,
-      "paths": ["doc/api/"],
-      "docs": ["doc/api"]
+      "paths": [
+        "doc/api/"
+      ],
+      "docs": [
+        "doc/api"
+      ]
     },
     {
       "tool": "npm",
@@ -184,10 +204,12 @@
       "version": "12.2",
       "license": "Artistic-2.0",
       "attribution": "GitHub Inc. and the npm contributors",
-      "flavor": "markdown",
-      "core": true,
-      "paths": ["docs/lib/content/"],
-      "docs": ["docs/lib/content"]
+      "paths": [
+        "docs/lib/content/"
+      ],
+      "docs": [
+        "docs/lib/content"
+      ]
     },
     {
       "tool": "vite",
@@ -197,10 +219,12 @@
       "version": "8.3",
       "license": "MIT",
       "attribution": "VoidZero Inc. and Vite contributors",
-      "flavor": "mdx",
-      "core": true,
-      "paths": ["docs/"],
-      "docs": ["docs"],
+      "paths": [
+        "docs/"
+      ],
+      "docs": [
+        "docs"
+      ],
       "exclude": [
         "docs/blog",
         "docs/team.md",
@@ -216,10 +240,12 @@
       "version": "5.1",
       "license": "MIT",
       "attribution": "VoidZero Inc. and Vitest contributors",
-      "flavor": "mdx",
-      "core": true,
-      "paths": ["docs/"],
-      "docs": ["docs"],
+      "paths": [
+        "docs/"
+      ],
+      "docs": [
+        "docs"
+      ],
       "exclude": [
         "docs/blog",
         "docs/team.md",
@@ -234,10 +260,12 @@
       "version": "1.65",
       "license": "Apache-2.0",
       "attribution": "Microsoft Corporation and the Playwright contributors",
-      "flavor": "markdown",
-      "core": true,
-      "paths": ["docs/src/"],
-      "docs": ["docs/src"],
+      "paths": [
+        "docs/src/"
+      ],
+      "docs": [
+        "docs/src"
+      ],
       "exclude": [
         "docs/src/*-python.md",
         "docs/src/*-java.md",
@@ -253,8 +281,6 @@
       "version": "10.14",
       "license": "MIT",
       "attribution": "OpenJS Foundation and other contributors",
-      "flavor": "eslint",
-      "core": true,
       "paths": [
         "docs/src/rules/",
         "docs/src/use/"
@@ -272,10 +298,12 @@
       "version": "8.72",
       "license": "MIT",
       "attribution": "typescript-eslint and other contributors",
-      "flavor": "mdx",
-      "core": true,
-      "paths": ["packages/eslint-plugin/docs/rules/"],
-      "docs": ["packages/eslint-plugin/docs/rules"]
+      "paths": [
+        "packages/eslint-plugin/docs/rules/"
+      ],
+      "docs": [
+        "packages/eslint-plugin/docs/rules"
+      ]
     },
     {
       "tool": "angular-eslint",
@@ -285,8 +313,6 @@
       "version": "22.6",
       "license": "MIT",
       "attribution": "James Henry and the angular-eslint contributors",
-      "flavor": "markdown",
-      "core": true,
       "paths": [
         "packages/eslint-plugin/docs/rules/",
         "packages/eslint-plugin-template/docs/rules/"
@@ -304,10 +330,12 @@
       "version": "5.10",
       "license": "MIT",
       "attribution": "Anthony Fu and the ESLint Stylistic contributors",
-      "flavor": "mdx",
-      "core": true,
-      "paths": ["packages/eslint-plugin/rules/"],
-      "docs": ["packages/eslint-plugin/rules"]
+      "paths": [
+        "packages/eslint-plugin/rules/"
+      ],
+      "docs": [
+        "packages/eslint-plugin/rules"
+      ]
     },
     {
       "tool": "perfectionist",
@@ -317,10 +345,12 @@
       "version": "5.13",
       "license": "MIT",
       "attribution": "Azat S. and the perfectionist contributors",
-      "flavor": "mdx",
-      "core": true,
-      "paths": ["docs/content/rules/"],
-      "docs": ["docs/content/rules"]
+      "paths": [
+        "docs/content/rules/"
+      ],
+      "docs": [
+        "docs/content/rules"
+      ]
     },
     {
       "tool": "unicorn",
@@ -330,10 +360,12 @@
       "version": "79.0",
       "license": "MIT",
       "attribution": "Sindre Sorhus and the unicorn contributors",
-      "flavor": "markdown",
-      "core": true,
-      "paths": ["docs/rules/"],
-      "docs": ["docs/rules"]
+      "paths": [
+        "docs/rules/"
+      ],
+      "docs": [
+        "docs/rules"
+      ]
     },
     {
       "tool": "eslint-regexp",
@@ -343,23 +375,12 @@
       "version": "3.3",
       "license": "MIT",
       "attribution": "Yosuke Ota and the eslint-plugin-regexp contributors",
-      "flavor": "mdx",
-      "core": true,
-      "paths": ["docs/rules/"],
-      "docs": ["docs/rules"]
-    },
-    {
-      "tool": "import-lite",
-      "title": "eslint-plugin-import-lite rules: the import rules that need no resolver",
-      "repository": "https://github.com/9romise/eslint-plugin-import-lite.git",
-      "ref": "v0.6.0",
-      "version": "0.6",
-      "license": "MIT",
-      "attribution": "Vida Xie and the eslint-plugin-import-lite contributors",
-      "flavor": "markdown",
-      "core": true,
-      "paths": ["src/rules/*/README.md"],
-      "docs": ["src/rules"]
+      "paths": [
+        "docs/rules/"
+      ],
+      "docs": [
+        "docs/rules"
+      ]
     },
     {
       "tool": "eslint-jsdoc",
@@ -369,23 +390,12 @@
       "version": "65.4",
       "license": "BSD-3-Clause",
       "attribution": "Gajus Kuizinas and the eslint-plugin-jsdoc contributors",
-      "flavor": "markdown",
-      "core": true,
-      "paths": ["docs/rules/"],
-      "docs": ["docs/rules"]
-    },
-    {
-      "tool": "eslint-functional",
-      "title": "eslint-plugin-functional rules",
-      "repository": "https://github.com/eslint-functional/eslint-plugin-functional.git",
-      "ref": "v10.0.1",
-      "version": "10.0",
-      "license": "MIT",
-      "attribution": "Jonas Kello and the eslint-plugin-functional contributors",
-      "flavor": "markdown",
-      "core": true,
-      "paths": ["docs/rules/"],
-      "docs": ["docs/rules"]
+      "paths": [
+        "docs/rules/"
+      ],
+      "docs": [
+        "docs/rules"
+      ]
     },
     {
       "tool": "eslint-vitest",
@@ -395,10 +405,12 @@
       "version": "1.6",
       "license": "MIT",
       "attribution": "Verité Mugabo Makuza and the eslint-plugin-vitest contributors",
-      "flavor": "markdown",
-      "core": true,
-      "paths": ["docs/rules/"],
-      "docs": ["docs/rules"]
+      "paths": [
+        "docs/rules/"
+      ],
+      "docs": [
+        "docs/rules"
+      ]
     },
     {
       "tool": "rxjs-x",
@@ -408,23 +420,12 @@
       "version": "1.0",
       "license": "MIT",
       "attribution": "Jason Weinzierl, Nicholas Jamieson and the eslint-plugin-rxjs-x contributors",
-      "flavor": "markdown",
-      "core": true,
-      "paths": ["docs/rules/"],
-      "docs": ["docs/rules"]
-    },
-    {
-      "tool": "eslint-jsonc",
-      "title": "eslint-plugin-jsonc rules",
-      "repository": "https://github.com/ota-meshi/eslint-plugin-jsonc.git",
-      "ref": "v3.4.2",
-      "version": "3.4",
-      "license": "MIT",
-      "attribution": "Yosuke Ota and the eslint-plugin-jsonc contributors",
-      "flavor": "mdx",
-      "core": true,
-      "paths": ["docs/rules/"],
-      "docs": ["docs/rules"]
+      "paths": [
+        "docs/rules/"
+      ],
+      "docs": [
+        "docs/rules"
+      ]
     },
     {
       "tool": "stylelint",
@@ -434,8 +435,6 @@
       "version": "18.0",
       "license": "MIT",
       "attribution": "Maxime Thirouin, David Clark and the Stylelint contributors",
-      "flavor": "markdown",
-      "core": true,
       "paths": [
         "docs/user-guide/",
         "lib/rules/*/README.md"
@@ -446,19 +445,6 @@
       ]
     },
     {
-      "tool": "stylelint-stylistic",
-      "title": "@stylistic/stylelint-plugin rules, the formatting pass for CSS and SCSS",
-      "repository": "https://github.com/stylelint-stylistic/stylelint-stylistic.git",
-      "ref": "v6.0.1",
-      "version": "6.0",
-      "license": "MIT",
-      "attribution": "Stylelint Stylistic contributors",
-      "flavor": "markdown",
-      "core": true,
-      "paths": ["lib/rules/*/README.md"],
-      "docs": ["lib/rules"]
-    },
-    {
       "tool": "stylelint-order",
       "title": "stylelint-order rules",
       "repository": "https://github.com/hudochenkov/stylelint-order.git",
@@ -466,10 +452,297 @@
       "version": "8.1",
       "license": "MIT",
       "attribution": "Aleks Hudochenkov and the stylelint-order contributors",
-      "flavor": "markdown",
-      "core": true,
-      "paths": ["rules/*/README.md"],
-      "docs": ["rules"]
+      "paths": [
+        "rules/*/README.md"
+      ],
+      "docs": [
+        "rules"
+      ]
+    },
+    {
+      "tool": "angular-api",
+      "title": "Angular API reference: the documentation comments of the public API (@publicApi) of the Angular packages",
+      "repository": "https://github.com/angular/angular.git",
+      "ref": "v22.2.6",
+      "version": "22.2",
+      "license": "MIT",
+      "attribution": "Google LLC and the Angular contributors",
+      "paths": [
+        "packages/core/src/",
+        "packages/core/rxjs-interop/src/",
+        "packages/core/testing/src/",
+        "packages/common/src/",
+        "packages/common/http/src/",
+        "packages/common/http/testing/src/",
+        "packages/common/testing/src/",
+        "packages/router/src/",
+        "packages/router/testing/src/",
+        "packages/forms/src/",
+        "packages/platform-browser/src/",
+        "packages/platform-browser/testing/src/",
+        "packages/elements/src/"
+      ],
+      "docs": [
+        "packages/core/src",
+        "packages/core/rxjs-interop/src",
+        "packages/core/testing/src",
+        "packages/common/src",
+        "packages/common/http/src",
+        "packages/common/http/testing/src",
+        "packages/common/testing/src",
+        "packages/router/src",
+        "packages/router/testing/src",
+        "packages/forms/src",
+        "packages/platform-browser/src",
+        "packages/platform-browser/testing/src",
+        "packages/elements/src"
+      ],
+      "extract": "angular-tsdoc",
+      "exclude": [
+        "packages/**/test",
+        "packages/**/testing/src/test"
+      ]
+    },
+    {
+      "tool": "angular-cli",
+      "title": "Angular CLI: the description of each command and the options of each schematic of ng generate",
+      "repository": "https://github.com/angular/angular-cli.git",
+      "ref": "v22.2.7",
+      "version": "22.2",
+      "license": "MIT",
+      "attribution": "Google LLC and the Angular CLI contributors",
+      "paths": [
+        "packages/angular/cli/src/commands/",
+        "packages/schematics/angular/"
+      ],
+      "docs": [
+        "packages/angular/cli/src/commands",
+        "packages/schematics/angular"
+      ],
+      "files": "(?:long-description\\.md|schema\\.json)$",
+      "exclude": [
+        "packages/schematics/angular/**/files"
+      ]
+    },
+    {
+      "tool": "rxjs-api",
+      "title": "RxJS API reference: the documentation comments of the operators, observables and functions",
+      "repository": "https://github.com/ReactiveX/rxjs.git",
+      "ref": "7.8.2",
+      "version": "7.8",
+      "license": "Apache-2.0",
+      "attribution": "Google, Inc., Netflix, Inc., Microsoft Corp. and contributors",
+      "paths": [
+        "src/internal/"
+      ],
+      "docs": [
+        "src/internal"
+      ],
+      "extract": "tsdoc"
+    },
+    {
+      "tool": "ngrx-signals-api",
+      "title": "NgRx Signals API reference: the documentation comments of signalStore, the features, entities, events and rxMethod",
+      "repository": "https://github.com/ngrx/platform.git",
+      "ref": "22.0.1",
+      "version": "22.0",
+      "license": "MIT",
+      "attribution": "Brandon Roberts, Mike Ryan, Victor Savkin, Rob Wormald and the NgRx contributors",
+      "paths": [
+        "modules/signals/src/",
+        "modules/signals/entities/src/",
+        "modules/signals/events/src/",
+        "modules/signals/rxjs-interop/src/",
+        "modules/signals/testing/src/"
+      ],
+      "docs": [
+        "modules/signals/src",
+        "modules/signals/entities/src",
+        "modules/signals/events/src",
+        "modules/signals/rxjs-interop/src",
+        "modules/signals/testing/src"
+      ],
+      "extract": "tsdoc"
+    },
+    {
+      "tool": "tsconfig",
+      "title": "TypeScript tsconfig reference: one page per compiler option",
+      "repository": "https://github.com/microsoft/TypeScript-Website.git",
+      "ref": "v2",
+      "version": "6.0",
+      "license": "CC-BY-4.0",
+      "attribution": "Microsoft and the TypeScript Website contributors",
+      "paths": [
+        "packages/tsconfig-reference/copy/en/"
+      ],
+      "docs": [
+        "packages/tsconfig-reference/copy/en"
+      ]
+    },
+    {
+      "tool": "typescript-eslint-guides",
+      "title": "typescript-eslint guides: getting started, typed linting, shared configs, troubleshooting",
+      "repository": "https://github.com/typescript-eslint/typescript-eslint.git",
+      "ref": "v8.72.2",
+      "version": "8.72",
+      "license": "MIT",
+      "attribution": "typescript-eslint and other contributors",
+      "paths": [
+        "docs/"
+      ],
+      "docs": [
+        "docs"
+      ]
+    },
+    {
+      "tool": "prettier",
+      "title": "Prettier: options, configuration, CLI, ignoring code, integration with linters",
+      "repository": "https://github.com/prettier/prettier.git",
+      "ref": "3.10.1",
+      "version": "3.10",
+      "license": "MIT",
+      "attribution": "James Long and contributors",
+      "paths": [
+        "docs/"
+      ],
+      "docs": [
+        "docs"
+      ]
+    },
+    {
+      "tool": "editorconfig",
+      "title": "EditorConfig specification: the file format and its properties",
+      "repository": "https://github.com/editorconfig/specification.git",
+      "ref": "master",
+      "version": "0.17",
+      "license": "BSD-2-Clause",
+      "attribution": "EditorConfig Team",
+      "paths": [
+        "*.rst"
+      ],
+      "docs": [
+        ""
+      ],
+      "files": "\\.rst$",
+      "exclude": [
+        ".git"
+      ]
+    },
+    {
+      "tool": "import-x",
+      "title": "eslint-plugin-import-x rules",
+      "repository": "https://github.com/un-ts/eslint-plugin-import-x.git",
+      "ref": "v4.18.1",
+      "version": "4.18",
+      "license": "MIT",
+      "attribution": "Ben Mosher, JounQin and the eslint-plugin-import-x contributors",
+      "paths": [
+        "docs/rules/"
+      ],
+      "docs": [
+        "docs/rules"
+      ]
+    },
+    {
+      "tool": "eslint-config-prettier",
+      "title": "eslint-config-prettier: the rules it turns off, the special rules, its CLI helper",
+      "repository": "https://github.com/prettier/eslint-config-prettier.git",
+      "ref": "v10.1.8",
+      "version": "10.1",
+      "license": "MIT",
+      "attribution": "Simon Lydell and the eslint-config-prettier contributors",
+      "paths": [
+        "README.md"
+      ],
+      "docs": [
+        ""
+      ],
+      "exclude": [
+        ".git"
+      ]
+    },
+    {
+      "tool": "stylelint-recess-order",
+      "title": "stylelint-config-recess-order: the property order of Recess for stylelint-order",
+      "repository": "https://github.com/stormwarning/stylelint-config-recess-order.git",
+      "ref": "v7.10.0",
+      "version": "7.10",
+      "license": "ISC",
+      "attribution": "Jeff Nelson and the stylelint-config-recess-order contributors",
+      "paths": [
+        "README.md"
+      ],
+      "docs": [
+        ""
+      ],
+      "exclude": [
+        ".git"
+      ]
+    },
+    {
+      "tool": "eslint-headers",
+      "title": "eslint-plugin-headers: the header-format rule",
+      "repository": "https://github.com/robmisasi/eslint-plugin-headers.git",
+      "ref": "v1.3.5",
+      "version": "1.3",
+      "license": "ISC",
+      "attribution": "Rob Misasi",
+      "paths": [
+        "docs/rules/"
+      ],
+      "docs": [
+        "docs/rules"
+      ]
+    },
+    {
+      "tool": "sass",
+      "title": "Sass documentation: syntax, variables, at-rules, modules, built-in functions, breaking changes",
+      "repository": "https://github.com/sass/sass-site.git",
+      "ref": "main",
+      "version": "2026-11",
+      "license": "MIT",
+      "attribution": "Hampton Lintorn-Catlin, Natalie Weizenbaum, Chris Eppstein, Jina Anne and the Sass contributors",
+      "paths": [
+        "source/documentation/"
+      ],
+      "docs": [
+        "source/documentation"
+      ]
+    },
+    {
+      "tool": "storybook",
+      "title": "Storybook documentation: stories, args, controls, addons, testing, configuration",
+      "repository": "https://github.com/storybookjs/storybook.git",
+      "ref": "v10.6.7",
+      "version": "10.6",
+      "license": "MIT",
+      "attribution": "Storybook contributors",
+      "paths": [
+        "docs/"
+      ],
+      "docs": [
+        "docs"
+      ],
+      "exclude": [
+        "docs/_snippets",
+        "docs/_assets",
+        "docs/versions"
+      ]
+    },
+    {
+      "tool": "aria-practices",
+      "title": "ARIA Authoring Practices Guide (APG): the patterns of accessible components and their examples",
+      "repository": "https://github.com/w3c/aria-practices.git",
+      "ref": "main",
+      "version": "2026-11",
+      "license": "W3C-20150513",
+      "attribution": "W3C (MIT, ERCIM, Keio, Beihang) and the APG contributors",
+      "paths": [
+        "content/patterns/"
+      ],
+      "docs": [
+        "content/patterns"
+      ]
     }
   ]
 }

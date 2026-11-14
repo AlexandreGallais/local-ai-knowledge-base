@@ -1,10 +1,17 @@
 ---
-title: "How to enable case-insensitive property name matching with System.Text.Json"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/serialization/system-text-json/character-casing.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to enable case-insensitive property name matching with System.Text.Json
+description: "Learn how to enable case-insensitive property name matching while serializing to and deserializing from JSON in .NET."
+ms.date: 07/26/2021
+no-loc: [System.Text.Json, Newtonsoft.Json]
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "JSON serialization"
+  - "serializing objects"
+  - "serialization"
+  - "objects, serializing"
+ms.topic: how-to
 ---
 
 # How to enable case-insensitive property name matching with System.Text.Json
@@ -13,24 +20,14 @@ In this article, you learn how to enable case-insensitive property name matching
 
 ## Case-insensitive property matching
 
-By default, deserialization looks for case-sensitive property name matches between JSON and the target object properties. To change that behavior, set `System.Text.Json.JsonSerializerOptions.PropertyNameCaseInsensitive` to `true`:
+By default, deserialization looks for case-sensitive property name matches between JSON and the target object properties. To change that behavior, set <xref:System.Text.Json.JsonSerializerOptions.PropertyNameCaseInsensitive?displayProperty=nameWithType> to `true`:
 
-> **Note:**
-> The web default is case-insensitive.
+> [!NOTE]
+> The [web default](configure-options.md#web-defaults-for-jsonserializeroptions) is case-insensitive.
 
-```csharp
-var options = new JsonSerializerOptions
-{
-    PropertyNameCaseInsensitive = true
-};
-WeatherForecast? weatherForecast = JsonSerializer.Deserialize<WeatherForecast>(jsonString, options);
-```
-```vb
-Dim options As JsonSerializerOptions = New JsonSerializerOptions With {
-    .PropertyNameCaseInsensitive = True
-}
-Dim weatherForecast1 = JsonSerializer.Deserialize(Of WeatherForecast)(jsonString, options)
-```
+:::code language="csharp" source="snippets/how-to/csharp/DeserializeCaseInsensitive.cs" id="Deserialize":::
+:::code language="vb" source="snippets/how-to/vb/DeserializeCaseInsensitive.vb" id="Deserialize":::
+
 Here's example JSON with camel case property names. It can be deserialized into the following type that has Pascal case property names.
 
 ```json
@@ -41,22 +38,10 @@ Here's example JSON with camel case property names. It can be deserialized into 
 }
 ```
 
-```csharp
-public class WeatherForecast
-{
-    public DateTimeOffset Date { get; set; }
-    public int TemperatureCelsius { get; set; }
-    public string? Summary { get; set; }
-}
-```
-```vb
-Public Class WeatherForecast
-    Public Property [Date] As DateTimeOffset
-    Public Property TemperatureCelsius As Integer
-    Public Property Summary As String
-End Class
-```
+:::code language="csharp" source="snippets/how-to/csharp/WeatherForecast.cs" id="WF":::
+:::code language="vb" source="snippets/how-to/vb/WeatherForecast.vb" id="WF":::
+
 ## See also
 
-* System.Text.Json overview
-* How to serialize and deserialize JSON
+* [System.Text.Json overview](overview.md)
+* [How to serialize and deserialize JSON](how-to.md)

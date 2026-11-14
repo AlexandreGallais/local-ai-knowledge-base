@@ -1,15 +1,13 @@
 ---
 title: "Create custom attributes"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/advanced-topics/reflection-and-attributes/creating-custom-attributes.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to create custom attributes in C# by defining an attribute class that derives from the Attribute class.
+ms.date: 03/15/2023
+f1_keywords:
+  - "attributeNamedArgument_CSharpKeyword"
 ---
-
 # Create custom attributes
 
-You can create your own custom attributes by defining an attribute class, a class that derives directly or indirectly from `System.Attribute`, which makes identifying attribute definitions in metadata fast and easy. Suppose you want to tag types with the name of the programmer who wrote the type. You might define a custom `Author` attribute class:
+You can create your own custom attributes by defining an attribute class, a class that derives directly or indirectly from <xref:System.Attribute>, which makes identifying attribute definitions in metadata fast and easy. Suppose you want to tag types with the name of the programmer who wrote the type. You might define a custom `Author` attribute class:
 
 ```csharp
 [System.AttributeUsage(System.AttributeTargets.Class |
@@ -32,47 +30,18 @@ The class name `AuthorAttribute` is the attribute's name, `Author`, plus the `At
 
 You could use this new attribute as follows:
 
-```csharp
-[Author("P. Ackerman", Version = "1.1")]
-class SampleClass
-{
-    // P. Ackerman's code goes here...
-}
-```
+:::code language="csharp" source="./snippets/conceptual/ReadAttributes.cs" id="SampleWithVersion":::
+  
 `AttributeUsage` has a named parameter, `AllowMultiple`, with which you can make a custom attribute single-use or multiuse. In the following code example, a multiuse attribute is created.
 
-```csharp
-[System.AttributeUsage(System.AttributeTargets.Class |
-                       System.AttributeTargets.Struct,
-                       AllowMultiple = true)  // Multiuse attribute.
-]
-public class AuthorAttribute : System.Attribute
-{
-    string Name;
-    public string Version;
+:::code language="csharp" source="./snippets/conceptual/ReadAttributes.cs" id="DefineCustomAttribute":::
 
-    public AuthorAttribute(string name)
-    {
-        Name = name;
-
-        // Default value.
-        Version = "1.0";
-    }
-
-    public string GetName() => Name;
-}
-```
 In the following code example, multiple attributes of the same type are applied to a class.
 
-```csharp
-[Author("P. Ackerman"), Author("R. Koch", Version = "2.0")]
-public class ThirdClass
-{
-    // ...
-}
-```
+:::code language="csharp" source="./snippets/conceptual/ReadAttributes.cs" id="MultipleAuthors":::
+  
 ## See also
 
-- `System.Reflection`
-- Writing Custom Attributes
-- AttributeUsage (C#)
+- <xref:System.Reflection>
+- [Writing Custom Attributes](../../../standard/attributes/writing-custom-attributes.md)
+- [AttributeUsage (C#)](../../language-reference/attributes/general.md)

@@ -1,10 +1,22 @@
 ---
-title: "Comparing Strings in .NET (part 1 of 2)"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/base-types/comparing.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: "Comparing Strings in .NET"
+description: Read about methods to compare strings in .NET. Learn about the Compare, CompareOrdinal, CompareTo, StartsWith, EndsWith, Equals, IndexOf, & LastIndexOf methods.
+ms.date: "03/30/2017"
+ms.topic: concept-article
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "value comparisons of strings"
+  - "LastIndexOf method"
+  - "CompareTo method"
+  - "IndexOf method"
+  - "Compare method"
+  - "strings [.NET], comparing"
+  - "CompareOrdinal method"
+  - "EndsWith method"
+  - "Equals method"
+  - "StartsWith method"
 ---
 
 # Compare strings in .NET
@@ -13,292 +25,125 @@ license: "CC-BY-4.0"
 
 | Method name | Use |
 |--|--|
-| `System.String.Compare*` | Compares the values of two strings. Returns an integer value. |
-| `System.String.CompareOrdinal*` | Compares two strings without regard to local culture. Returns an integer value. |
-| `System.String.CompareTo*` | Compares the current string object to another string. Returns an integer value. |
-| `System.String.StartsWith*` | Determines whether a string begins with the string passed. Returns a Boolean value. |
-| `System.String.EndsWith*` | Determines whether a string ends with the string passed. Returns a Boolean value. |
-| `System.String.Contains*` | Determines whether a character or string occurs within another string. Returns a Boolean value. |
-| `System.String.Equals*` | Determines whether two strings are the same. Returns a Boolean value. |
-| `System.String.IndexOf*` | Returns the index position of a character or string, starting from the beginning of the string you are examining. Returns an integer value. |
-| `System.String.LastIndexOf*` | Returns the index position of a character or string, starting from the end of the string you are examining. Returns an integer value. |
+| <xref:System.String.Compare*?displayProperty=nameWithType> | Compares the values of two strings. Returns an integer value. |
+| <xref:System.String.CompareOrdinal*?displayProperty=nameWithType> | Compares two strings without regard to local culture. Returns an integer value. |
+| <xref:System.String.CompareTo*?displayProperty=nameWithType> | Compares the current string object to another string. Returns an integer value. |
+| <xref:System.String.StartsWith*?displayProperty=nameWithType> | Determines whether a string begins with the string passed. Returns a Boolean value. |
+| <xref:System.String.EndsWith*?displayProperty=nameWithType> | Determines whether a string ends with the string passed. Returns a Boolean value. |
+| <xref:System.String.Contains*?displayProperty=nameWithType> | Determines whether a character or string occurs within another string. Returns a Boolean value. |
+| <xref:System.String.Equals*?displayProperty=nameWithType> | Determines whether two strings are the same. Returns a Boolean value. |
+| <xref:System.String.IndexOf*?displayProperty=nameWithType> | Returns the index position of a character or string, starting from the beginning of the string you are examining. Returns an integer value. |
+| <xref:System.String.LastIndexOf*?displayProperty=nameWithType> | Returns the index position of a character or string, starting from the end of the string you are examining. Returns an integer value. |
 
 ## `Compare` method
 
-The static `System.String.Compare*` method provides a thorough way of comparing two strings. This method is culturally aware. You can use this function to compare two strings or substrings of two strings. Additionally, overloads are provided that regard or disregard case and cultural variance. The following table shows the three integer values that this method might return.
+The static <xref:System.String.Compare*?displayProperty=nameWithType> method provides a thorough way of comparing two strings. This method is culturally aware. You can use this function to compare two strings or substrings of two strings. Additionally, overloads are provided that regard or disregard case and cultural variance. The following table shows the three integer values that this method might return.
 
 | Return value | Condition |
 |--|--|
-| A negative integer | The first string precedes the second string in the sort order. -or- The first string is `null`. |
-| 0 | The first string and the second string are equal. -or- Both strings are `null`. |
-| A positive integer -or- 1 | The first string follows the second string in the sort order. -or- The second string is `null`. |
+| A negative integer | The first string precedes the second string in the sort order.<br /><br /> -or-<br /><br /> The first string is `null`. |
+| 0 | The first string and the second string are equal.<br /><br /> -or-<br /><br /> Both strings are `null`. |
+| A positive integer<br /><br /> -or-<br /><br /> 1 | The first string follows the second string in the sort order.<br /><br /> -or-<br /><br /> The second string is `null`. |
 
-> **Important:**
-> The `System.String.Compare*` method is primarily intended for use when ordering or sorting strings. You should not use the `System.String.Compare*` method to test for equality (that is, to explicitly look for a return value of 0 with no regard for whether one string is less than or greater than the other). Instead, to determine whether two strings are equal, use the `System.String.Equals(System.String,System.String,System.StringComparison)` method.
+> [!IMPORTANT]
+> The <xref:System.String.Compare*?displayProperty=nameWithType> method is primarily intended for use when ordering or sorting strings. You should not use the <xref:System.String.Compare*?displayProperty=nameWithType> method to test for equality (that is, to explicitly look for a return value of 0 with no regard for whether one string is less than or greater than the other). Instead, to determine whether two strings are equal, use the <xref:System.String.Equals%28System.String%2CSystem.String%2CSystem.StringComparison%29?displayProperty=nameWithType> method.
 
- The following example uses the `System.String.Compare*` method to determine the relative values of two strings.
+ The following example uses the <xref:System.String.Compare*?displayProperty=nameWithType> method to determine the relative values of two strings.
 
- ```csharp
-using System;
-
-class Example
-{
-    public static void Main()
-    {
-        Compare();
-        CompareOrdinal();
-        Console.Write("CompareTo: ");
-        CompareTo();
-        Console.Write("Equals: ");
-        Equals1();
-        Equals2();
-        StartsWith();
-        EndsWith();
-        IndexOf();
-        LastIndexOf();
-    }
-
-    public static void Compare()
-    {
-        string string1 = "Hello World!";
-        Console.WriteLine(String.Compare(string1, "Hello World?"));
-    }
-
-    public static void CompareOrdinal()
-    {
-        string string1 = "Hello World!";
-        Console.WriteLine(String.CompareOrdinal(string1, "hello world!"));
-    }
-
-    public static void CompareTo()
-    {
-        string string1 = "Hello World";
-        string string2 = "Hello World!";
-        int MyInt = string1.CompareTo(string2);
-        Console.WriteLine( MyInt );
-    }
-
-    public static void Equals1()
-    {
-        string string1 = "Hello World";
-        Console.WriteLine(string1.Equals("Hello World"));
-    }
-
-    public static void Equals2()
-    {
-        string string1 = "Hello World";
-        string string2 = "Hello World";
-        Console.WriteLine(String.Equals(string1, string2));
-    }
-
-    public static void StartsWith()
-    {
-        string string1 = "Hello World";
-        Console.WriteLine(string1.StartsWith("Hello"));
-    }
-
-    public static void EndsWith()
-    {
-        string string1 = "Hello World";
-        Console.WriteLine(string1.EndsWith("Hello"));
-    }
-
-    public static void IndexOf()
-    {
-        string string1 = "Hello World";
-        Console.WriteLine(string1.IndexOf('l'));
-    }
-
-    public static void LastIndexOf()
-    {
-        string string1 = "Hello World";
-        Console.WriteLine(string1.LastIndexOf('l'));
-    }
-}
-```
+ [!code-csharp[Conceptual.String.BasicOps#6](../../../samples/snippets/csharp/VS_Snippets_CLR/conceptual.string.basicops/cs/compare.cs#6)]
+ [!code-vb[Conceptual.String.BasicOps#6](../../../samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.string.basicops/vb/compare.vb#6)]
 
  This example displays `-1` to the console.
 
- The preceding example is culture-sensitive by default. To perform a culture-insensitive string comparison, use an overload of the `System.String.Compare*` method that allows you to specify the culture to use by supplying a *culture* parameter. For an example that demonstrates how to use the `System.String.Compare*` method to perform a culture-insensitive comparison, see Culture-insensitive string comparisons.
+ The preceding example is culture-sensitive by default. To perform a culture-insensitive string comparison, use an overload of the <xref:System.String.Compare*?displayProperty=nameWithType> method that allows you to specify the culture to use by supplying a *culture* parameter. For an example that demonstrates how to use the <xref:System.String.Compare*?displayProperty=nameWithType> method to perform a culture-insensitive comparison, see [Culture-insensitive string comparisons](../../core/extensions/performing-culture-insensitive-string-comparisons.md).
 
 ## `CompareOrdinal` method
 
-The `System.String.CompareOrdinal*` method compares two string objects without considering the local culture. The return values of this method are identical to the values returned by the `Compare` method in the previous table.
+The <xref:System.String.CompareOrdinal*?displayProperty=nameWithType> method compares two string objects without considering the local culture. The return values of this method are identical to the values returned by the `Compare` method in the previous table.
 
-> **Important:**
-> The `System.String.CompareOrdinal*` method is primarily intended for use when ordering or sorting strings. You should not use the `System.String.CompareOrdinal*` method to test for equality (that is, to explicitly look for a return value of 0 with no regard for whether one string is less than or greater than the other). Instead, to determine whether two strings are equal, use the `System.String.Equals(System.String,System.String,System.StringComparison)` method.
+> [!IMPORTANT]
+> The <xref:System.String.CompareOrdinal*?displayProperty=nameWithType> method is primarily intended for use when ordering or sorting strings. You should not use the <xref:System.String.CompareOrdinal*?displayProperty=nameWithType> method to test for equality (that is, to explicitly look for a return value of 0 with no regard for whether one string is less than or greater than the other). Instead, to determine whether two strings are equal, use the <xref:System.String.Equals%28System.String%2CSystem.String%2CSystem.StringComparison%29?displayProperty=nameWithType> method.
 
  The following example uses the `CompareOrdinal` method to compare the values of two strings.
 
- ```csharp
-using System;
-
-class Example
-{
-    public static void Main()
-    {
-        Compare();
-        CompareOrdinal();
-        Console.Write("CompareTo: ");
-        CompareTo();
-        Console.Write("Equals: ");
-        Equals1();
-        Equals2();
-        StartsWith();
-        EndsWith();
-        IndexOf();
-        LastIndexOf();
-    }
-
-    public static void Compare()
-    {
-        string string1 = "Hello World!";
-        Console.WriteLine(String.Compare(string1, "Hello World?"));
-    }
-
-    public static void CompareOrdinal()
-    {
-        string string1 = "Hello World!";
-        Console.WriteLine(String.CompareOrdinal(string1, "hello world!"));
-    }
-
-    public static void CompareTo()
-    {
-        string string1 = "Hello World";
-        string string2 = "Hello World!";
-        int MyInt = string1.CompareTo(string2);
-        Console.WriteLine( MyInt );
-    }
-
-    public static void Equals1()
-    {
-        string string1 = "Hello World";
-        Console.WriteLine(string1.Equals("Hello World"));
-    }
-
-    public static void Equals2()
-    {
-        string string1 = "Hello World";
-        string string2 = "Hello World";
-        Console.WriteLine(String.Equals(string1, string2));
-    }
-
-    public static void StartsWith()
-    {
-        string string1 = "Hello World";
-        Console.WriteLine(string1.StartsWith("Hello"));
-    }
-
-    public static void EndsWith()
-    {
-        string string1 = "Hello World";
-        Console.WriteLine(string1.EndsWith("Hello"));
-    }
-
-    public static void IndexOf()
-    {
-        string string1 = "Hello World";
-        Console.WriteLine(string1.IndexOf('l'));
-    }
-
-    public static void LastIndexOf()
-    {
-        string string1 = "Hello World";
-        Console.WriteLine(string1.LastIndexOf('l'));
-    }
-}
-```
+ [!code-csharp[Conceptual.String.BasicOps#7](../../../samples/snippets/csharp/VS_Snippets_CLR/conceptual.string.basicops/cs/compare.cs#7)]
+ [!code-vb[Conceptual.String.BasicOps#7](../../../samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.string.basicops/vb/compare.vb#7)]
 
  This example displays `-32` to the console.
 
 ## `CompareTo` method
 
-The `System.String.CompareTo*` method compares the string that the current string object encapsulates to another string or object. The return values of this method are identical to the values returned by the `System.String.Compare*` method in the previous table.
+The <xref:System.String.CompareTo*?displayProperty=nameWithType> method compares the string that the current string object encapsulates to another string or object. The return values of this method are identical to the values returned by the <xref:System.String.Compare*?displayProperty=nameWithType> method in the previous table.
 
-> **Important:**
-> The `System.String.CompareTo*` method is primarily intended for use when ordering or sorting strings. You should not use the `System.String.CompareTo*` method to test for equality (that is, to explicitly look for a return value of 0 with no regard for whether one string is less than or greater than the other). Instead, to determine whether two strings are equal, use the `System.String.Equals(System.String,System.String,System.StringComparison)` method.
+> [!IMPORTANT]
+> The <xref:System.String.CompareTo*?displayProperty=nameWithType> method is primarily intended for use when ordering or sorting strings. You should not use the <xref:System.String.CompareTo*?displayProperty=nameWithType> method to test for equality (that is, to explicitly look for a return value of 0 with no regard for whether one string is less than or greater than the other). Instead, to determine whether two strings are equal, use the <xref:System.String.Equals%28System.String%2CSystem.String%2CSystem.StringComparison%29?displayProperty=nameWithType> method.
 
- The following example uses the `System.String.CompareTo*` method to compare the `string1` object to the `string2` object.
+ The following example uses the <xref:System.String.CompareTo*?displayProperty=nameWithType> method to compare the `string1` object to the `string2` object.
 
- ```csharp
-using System;
-
-class Example
-{
-    public static void Main()
-    {
-        Compare();
-        CompareOrdinal();
-        Console.Write("CompareTo: ");
-        CompareTo();
-        Console.Write("Equals: ");
-        Equals1();
-        Equals2();
-        StartsWith();
-        EndsWith();
-        IndexOf();
-        LastIndexOf();
-    }
-
-    public static void Compare()
-    {
-        string string1 = "Hello World!";
-        Console.WriteLine(String.Compare(string1, "Hello World?"));
-    }
-
-    public static void CompareOrdinal()
-    {
-        string string1 = "Hello World!";
-        Console.WriteLine(String.CompareOrdinal(string1, "hello world!"));
-    }
-
-    public static void CompareTo()
-    {
-        string string1 = "Hello World";
-        string string2 = "Hello World!";
-        int MyInt = string1.CompareTo(string2);
-        Console.WriteLine( MyInt );
-    }
-
-    public static void Equals1()
-    {
-        string string1 = "Hello World";
-        Console.WriteLine(string1.Equals("Hello World"));
-    }
-
-    public static void Equals2()
-    {
-        string string1 = "Hello World";
-        string string2 = "Hello World";
-        Console.WriteLine(String.Equals(string1, string2));
-    }
-
-    public static void StartsWith()
-    {
-        string string1 = "Hello World";
-        Console.WriteLine(string1.StartsWith("Hello"));
-    }
-
-    public static void EndsWith()
-    {
-        string string1 = "Hello World";
-        Console.WriteLine(string1.EndsWith("Hello"));
-    }
-
-    public static void IndexOf()
-    {
-        string string1 = "Hello World";
-        Console.WriteLine(string1.IndexOf('l'));
-    }
-
-    public static void LastIndexOf()
-    {
-        string string1 = "Hello World";
-        Console.WriteLine(string1.LastIndexOf('l'));
-    }
-}
-```
+ [!code-csharp[Conceptual.String.BasicOps#8](../../../samples/snippets/csharp/VS_Snippets_CLR/conceptual.string.basicops/cs/compare.cs#8)]
+ [!code-vb[Conceptual.String.BasicOps#8](../../../samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.string.basicops/vb/compare.vb#8)]
 
  This example displays `-1` to the console.
 
- All overloads of the `System.String.CompareTo*` method perform culture-sensitive and case-sensitive comparisons by default. No overloads of this method are provided that allow you to perform a culture-insensitive comparison. For code clarity, we recommend that you use the `String.Compare` method instead, specifying `System.Globalization.CultureInfo.CurrentCulture*` for culture-sensitive operations or `System.Globalization.CultureInfo.InvariantCulture*` for culture-insensitive operations. For examples that demonstrate how to use the `String.Compare` method to perform both culture-sensitive and culture-insensitive comparisons, see Performing Culture-Insensitive String Comparisons.
+ All overloads of the <xref:System.String.CompareTo*?displayProperty=nameWithType> method perform culture-sensitive and case-sensitive comparisons by default. No overloads of this method are provided that allow you to perform a culture-insensitive comparison. For code clarity, we recommend that you use the `String.Compare` method instead, specifying <xref:System.Globalization.CultureInfo.CurrentCulture*?displayProperty=nameWithType> for culture-sensitive operations or <xref:System.Globalization.CultureInfo.InvariantCulture*?displayProperty=nameWithType> for culture-insensitive operations. For examples that demonstrate how to use the `String.Compare` method to perform both culture-sensitive and culture-insensitive comparisons, see [Performing Culture-Insensitive String Comparisons](../../core/extensions/performing-culture-insensitive-string-comparisons.md).
+
+## `Equals` method
+
+The <xref:System.String.Equals*?displayProperty=nameWithType> method can easily determine if two strings are the same. This case-sensitive method returns a `true` or `false` Boolean value. It can be used from an existing class, as illustrated in the next example. The following example uses the `Equals` method to determine whether a string object contains the phrase "Hello World".
+
+ [!code-csharp[Conceptual.String.BasicOps#9](../../../samples/snippets/csharp/VS_Snippets_CLR/conceptual.string.basicops/cs/compare.cs#9)]
+ [!code-vb[Conceptual.String.BasicOps#9](../../../samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.string.basicops/vb/compare.vb#9)]
+
+ This example displays `True` to the console.
+
+ This method can also be used as a static method. The following example compares two string objects using a static method.
+
+ [!code-csharp[Conceptual.String.BasicOps#10](../../../samples/snippets/csharp/VS_Snippets_CLR/conceptual.string.basicops/cs/compare.cs#10)]
+ [!code-vb[Conceptual.String.BasicOps#10](../../../samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.string.basicops/vb/compare.vb#10)]
+
+ This example displays `True` to the console.
+
+## `StartsWith` and `EndsWith` methods
+
+You can use the <xref:System.String.StartsWith*?displayProperty=nameWithType> method to determine whether a string object begins with the same characters that encompass another string. This case-sensitive method returns `true` if the current string object begins with the passed string and `false` if it does not. The following example uses this method to determine if a string object begins with "Hello".
+
+ [!code-csharp[Conceptual.String.BasicOps#11](../../../samples/snippets/csharp/VS_Snippets_CLR/conceptual.string.basicops/cs/compare.cs#11)]
+ [!code-vb[Conceptual.String.BasicOps#11](../../../samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.string.basicops/vb/compare.vb#11)]
+
+ This example displays `True` to the console.
+
+ The <xref:System.String.EndsWith*?displayProperty=nameWithType> method compares a passed string to the characters that exist at the end of the current string object. It also returns a Boolean value. The following example checks the end of a string using the `EndsWith` method.
+
+ [!code-csharp[Conceptual.String.BasicOps#12](../../../samples/snippets/csharp/VS_Snippets_CLR/conceptual.string.basicops/cs/compare.cs#12)]
+ [!code-vb[Conceptual.String.BasicOps#12](../../../samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.string.basicops/vb/compare.vb#12)]
+
+ This example displays `False` to the console.
+
+## `IndexOf` and `LastIndexOf` methods
+
+You can use the <xref:System.String.IndexOf*?displayProperty=nameWithType> method to determine the position of the first occurrence of a particular character within a string. This case-sensitive method starts counting from the beginning of a string and returns the position of a passed character using a zero-based index. If the character cannot be found, a value of –1 is returned.
+
+The following example uses the `IndexOf` method to search for the first occurrence of the '`l`' character in a string.
+
+ [!code-csharp[Conceptual.String.BasicOps#13](../../../samples/snippets/csharp/VS_Snippets_CLR/conceptual.string.basicops/cs/compare.cs#13)]
+ [!code-vb[Conceptual.String.BasicOps#13](../../../samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.string.basicops/vb/compare.vb#13)]
+
+ This example displays `2` to the console.
+
+ The <xref:System.String.LastIndexOf*?displayProperty=nameWithType> method is similar to the `String.IndexOf` method except that it returns the position of the last occurrence of a particular character within a string. It is case-sensitive and uses a zero-based index.
+
+ The following example uses the `LastIndexOf` method to search for the last occurrence of the '`l`' character in a string.
+
+ [!code-csharp[Conceptual.String.BasicOps#14](../../../samples/snippets/csharp/VS_Snippets_CLR/conceptual.string.basicops/cs/compare.cs#14)]
+ [!code-vb[Conceptual.String.BasicOps#14](../../../samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.string.basicops/vb/compare.vb#14)]
+
+ This example displays `9` to the console.
+
+ Both methods are useful when used in conjunction with the <xref:System.String.Remove*?displayProperty=nameWithType> method. You can use either the `IndexOf` or `LastIndexOf` methods to retrieve the position of a character, and then supply that position to the `Remove` method in order to remove a character or a word that begins with that character.
+
+## See also
+
+- [Best practices for using strings in .NET](best-practices-strings.md)
+- [Perform culture-insensitive string operations](../../core/extensions/performing-culture-insensitive-string-operations.md)
+- [Sorting weight tables](https://www.microsoft.com/download/details.aspx?id=10921) - used by .NET Framework and .NET Core 1.0-3.1 on Windows
+- [Default Unicode collation element table](https://www.unicode.org/Public/UCA/latest/allkeys.txt) - used by .NET 5 on all platforms, and by .NET Core on Linux and macOS

@@ -1,30 +1,23 @@
----
-title: "SignatureSpi class (java.security)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/SignatureSpi.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # SignatureSpi class (java.security)
 
 ```java
 public abstract class SignatureSpi
 ```
 
-This class defines the *Service Provider Interface* (**SPI**)
-for the `Signature` class, which is used to provide the
+This class defines the <i>Service Provider Interface</i> (<b>SPI</b>)
+for the {@code Signature} class, which is used to provide the
 functionality of a digital signature algorithm. Digital signatures are used
 for authentication and integrity assurance of digital data.
 
- All the abstract methods in this class must be implemented by each
+<p> All the abstract methods in this class must be implemented by each
 cryptographic service provider who wishes to supply the implementation
 of a particular signature algorithm.
 
-**Since:** 1.2
+@author Benjamin Renaud
+@since 1.2
 
-**See also:** Signature
+
+@see Signature
 
 ## SignatureSpi.SignatureSpi()
 
@@ -45,57 +38,51 @@ Application-specified source of randomness.
 ## SignatureSpi.engineInitVerify(PublicKey)
 
 ```java
-protected abstract void engineInitVerify(PublicKey <example-value>) throws InvalidKeyException
+protected abstract void engineInitVerify(PublicKey publicKey) throws InvalidKeyException
 ```
 
-Initializes this `Signature` object with the specified
+Initializes this {@code Signature} object with the specified
 public key for verification operations.
 
-Parameters:
+@param publicKey the public key of the identity whose signature is
+going to be verified.
 
-- `publicKey`: the public key of the identity whose signature is going to be verified.
-
-Throws:
-
-- `InvalidKeyException`: if the key is improperly encoded, parameters are missing, and so on.
+@throws    InvalidKeyException if the key is improperly
+encoded, parameters are missing, and so on.
 
 ## SignatureSpi.engineInitSign(PrivateKey)
 
 ```java
-protected abstract void engineInitSign(PrivateKey <example-value>) throws InvalidKeyException
+protected abstract void engineInitSign(PrivateKey privateKey) throws InvalidKeyException
 ```
 
-Initializes this `Signature` object with the specified
+Initializes this {@code Signature} object with the specified
 private key for signing operations.
 
-Parameters:
+@param privateKey the private key of the identity whose signature
+will be generated.
 
-- `privateKey`: the private key of the identity whose signature will be generated.
-
-Throws:
-
-- `InvalidKeyException`: if the key is improperly encoded, parameters are missing, and so on.
+@throws    InvalidKeyException if the key is improperly
+encoded, parameters are missing, and so on.
 
 ## SignatureSpi.engineInitSign(PrivateKey, SecureRandom)
 
 ```java
-protected void engineInitSign(PrivateKey <example-value>, SecureRandom random) throws InvalidKeyException
+protected void engineInitSign(PrivateKey privateKey, SecureRandom random) throws InvalidKeyException
 ```
 
-Initializes this `Signature` object with the specified
+Initializes this {@code Signature} object with the specified
 private key and source of randomness for signing operations.
 
-This concrete method has been added to this previously-defined
+<p>This concrete method has been added to this previously-defined
 abstract class. (For backwards compatibility, it cannot be abstract.)
 
-Parameters:
+@param privateKey the private key of the identity whose signature
+will be generated.
+@param random the source of randomness
 
-- `privateKey`: the private key of the identity whose signature will be generated.
-- `random`: the source of randomness
-
-Throws:
-
-- `InvalidKeyException`: if the key is improperly encoded, parameters are missing, and so on.
+@throws    InvalidKeyException if the key is improperly
+encoded, parameters are missing, and so on.
 
 ## SignatureSpi.engineUpdate(byte)
 
@@ -106,13 +93,10 @@ protected abstract void engineUpdate(byte b) throws SignatureException
 Updates the data to be signed or verified
 using the specified byte.
 
-Parameters:
+@param b the byte to use for the update.
 
-- `b`: the byte to use for the update.
-
-Throws:
-
-- `SignatureException`: if the engine is not initialized properly.
+@throws    SignatureException if the engine is not initialized
+properly.
 
 ## SignatureSpi.engineUpdate(byte[], int, int)
 
@@ -123,15 +107,12 @@ protected abstract void engineUpdate(byte[] b, int off, int len) throws Signatur
 Updates the data to be signed or verified, using the
 specified array of bytes, starting at the specified offset.
 
-Parameters:
+@param b the array of bytes
+@param off the offset to start from in the array of bytes
+@param len the number of bytes to use, starting at offset
 
-- `b`: the array of bytes
-- `off`: the offset to start from in the array of bytes
-- `len`: the number of bytes to use, starting at offset
-
-Throws:
-
-- `SignatureException`: if the engine is not initialized properly
+@throws    SignatureException if the engine is not initialized
+properly
 
 ## SignatureSpi.engineUpdate(ByteBuffer)
 
@@ -140,16 +121,13 @@ protected void engineUpdate(ByteBuffer input)
 ```
 
 Updates the data to be signed or verified using the specified
-ByteBuffer. Processes the `data.remaining()` bytes
-starting at `data.position()`.
+ByteBuffer. Processes the {@code data.remaining()} bytes
+starting at {@code data.position()}.
 Upon return, the buffer's position will be equal to its limit;
 its limit will not have changed.
 
-Parameters:
-
-- `input`: the ByteBuffer
-
-**Since:** 1.5
+@param input the ByteBuffer
+@since 1.5
 
 ## SignatureSpi.engineSign()
 
@@ -162,11 +140,11 @@ updated so far.
 The format of the signature depends on the underlying
 signature scheme.
 
-**Returns:** the signature bytes of the signing operation's result.
+@return the signature bytes of the signing operation's result.
 
-Throws:
-
-- `SignatureException`: if the engine is not initialized properly or if this signature algorithm is unable to process the input data provided.
+@throws    SignatureException if the engine is not
+initialized properly or if this signature algorithm is unable to
+process the input data provided.
 
 ## SignatureSpi.engineSign(byte[], int, int)
 
@@ -175,14 +153,14 @@ protected int engineSign(byte[] outbuf, int offset, int len) throws SignatureExc
 ```
 
 Finishes this signature operation and stores the resulting signature
-bytes in the provided buffer `outbuf`, starting at
-`offset`.
+bytes in the provided buffer {@code outbuf}, starting at
+{@code offset}.
 The format of the signature depends on the underlying
 signature scheme.
 
-The signature implementation is reset to its initial state
+<p>The signature implementation is reset to its initial state
 (the state it was in after a call to one of the
-`engineInitSign` methods)
+{@code engineInitSign} methods)
 and can be reused to generate further signatures with the same private
 key.
 
@@ -190,19 +168,28 @@ This method should be abstract, but we leave it concrete for
 binary compatibility.  Knowledgeable providers should override this
 method.
 
-Parameters:
+@param outbuf buffer for the signature result.
 
-- `outbuf`: buffer for the signature result.
-- `offset`: offset into `outbuf` where the signature is stored.
-- `len`: number of bytes within `outbuf` allotted for the signature. Both this default implementation and the SUN provider do not return partial digests. If the value of this parameter is less than the actual signature length, this method will throw a `SignatureException`. This parameter is ignored if its value is greater than or equal to the actual signature length.
+@param offset offset into {@code outbuf} where the signature is
+stored.
 
-**Returns:** the number of bytes placed into `outbuf`
+@param len number of bytes within {@code outbuf} allotted for the
+signature.
+Both this default implementation and the SUN provider do not
+return partial digests. If the value of this parameter is less
+than the actual signature length, this method will throw a
+{@code SignatureException}.
+This parameter is ignored if its value is greater than or equal to
+the actual signature length.
 
-**Since:** 1.2
+@return the number of bytes placed into {@code outbuf}
 
-Throws:
+@throws    SignatureException if the engine is not
+initialized properly, if this signature algorithm is unable to
+process the input data provided, or if {@code len} is less
+than the actual signature length.
 
-- `SignatureException`: if the engine is not initialized properly, if this signature algorithm is unable to process the input data provided, or if `len` is less than the actual signature length.
+@since 1.2
 
 ## SignatureSpi.engineVerify(byte[])
 
@@ -212,15 +199,14 @@ protected abstract boolean engineVerify(byte[] sigBytes) throws SignatureExcepti
 
 Verifies the passed-in signature.
 
-Parameters:
+@param sigBytes the signature bytes to be verified.
 
-- `sigBytes`: the signature bytes to be verified.
+@return {@code true} if the signature was verified, {@code false} if not.
 
-**Returns:** `true` if the signature was verified, `false` if not.
-
-Throws:
-
-- `SignatureException`: if the engine is not initialized properly, the passed-in signature is improperly encoded or of the wrong type, if this signature algorithm is unable to process the input data provided, etc.
+@throws    SignatureException if the engine is not
+initialized properly, the passed-in signature is improperly
+encoded or of the wrong type, if this signature algorithm is unable to
+process the input data provided, etc.
 
 ## SignatureSpi.engineVerify(byte[], int, int)
 
@@ -231,21 +217,20 @@ protected boolean engineVerify(byte[] sigBytes, int offset, int length) throws S
 Verifies the passed-in signature in the specified array
 of bytes, starting at the specified offset.
 
- Note: Subclasses should overwrite the default implementation.
+<p> Note: Subclasses should overwrite the default implementation.
 
-Parameters:
 
-- `sigBytes`: the signature bytes to be verified.
-- `offset`: the offset to start from in the array of bytes.
-- `length`: the number of bytes to use, starting at offset.
+@param sigBytes the signature bytes to be verified.
+@param offset the offset to start from in the array of bytes.
+@param length the number of bytes to use, starting at offset.
 
-**Returns:** `true` if the signature was verified, `false` if not.
+@return {@code true} if the signature was verified, {@code false} if not.
 
-**Since:** 1.4
-
-Throws:
-
-- `SignatureException`: if the engine is not initialized properly, the passed-in signature is improperly encoded or of the wrong type, if this signature algorithm is unable to process the input data provided, etc.
+@throws    SignatureException if the engine is not
+initialized properly, the passed-in signature is improperly
+encoded or of the wrong type, if this signature algorithm is unable to
+process the input data provided, etc.
+@since 1.4
 
 ## SignatureSpi.engineSetParameter(String, Object)
 
@@ -263,16 +248,18 @@ a specific but optional computation. A uniform algorithm-specific
 naming scheme for each parameter is desirable but left unspecified
 at this time.
 
-Parameters:
+@param param the string identifier of the parameter.
 
-- `param`: the string identifier of the parameter.
-- `value`: the parameter value.
+@param value the parameter value.
 
-**Deprecated:** Replaced by engineSetParameter.
+@throws    InvalidParameterException if {@code param} is an
+invalid parameter for this {@code Signature} object,
+the parameter is already set
+and cannot be set again, a security exception occurs, and so on.
 
-Throws:
-
-- `InvalidParameterException`: if `param` is an invalid parameter for this `Signature` object, the parameter is already set and cannot be set again, a security exception occurs, and so on.
+@deprecated Replaced by {@link
+#engineSetParameter(java.security.spec.AlgorithmParameterSpec)
+engineSetParameter}.
 
 ## SignatureSpi.engineSetParameter(AlgorithmParameterSpec)
 
@@ -280,17 +267,17 @@ Throws:
 protected void engineSetParameter(AlgorithmParameterSpec params) throws InvalidAlgorithmParameterException
 ```
 
-Initializes this `Signature` object with the specified parameter
+Initializes this {@code Signature} object with the specified parameter
 values.
 
-Parameters:
+@param params the parameters
 
-- `params`: the parameters
+@throws    UnsupportedOperationException if this method is not
+overridden by a provider
 
-Throws:
-
-- `UnsupportedOperationException`: if this method is not overridden by a provider
-- `InvalidAlgorithmParameterException`: if this method is overridden by a provider and the given parameters are inappropriate for this `Signature` object
+@throws    InvalidAlgorithmParameterException if this method is
+overridden by a provider and the given parameters
+are inappropriate for this {@code Signature} object
 
 ## SignatureSpi.engineGetParameters()
 
@@ -298,27 +285,25 @@ Throws:
 protected AlgorithmParameters engineGetParameters()
 ```
 
-Returns the parameters used with this `Signature` object.
+Returns the parameters used with this {@code Signature} object.
 
-The returned parameters may be the same that were used to initialize
-this `Signature` object, or may contain additional default or
+<p>The returned parameters may be the same that were used to initialize
+this {@code Signature} object, or may contain additional default or
 random parameter values used by the underlying signature scheme.
 If the required parameters were not supplied and can be generated by
-the `Signature` object, the generated parameters are returned;
-otherwise `null` is returned.
+the {@code Signature} object, the generated parameters are returned;
+otherwise {@code null} is returned.
 
-However, if the signature scheme does not support returning
-the parameters as `AlgorithmParameters`, `null` is always
+<p>However, if the signature scheme does not support returning
+the parameters as {@code AlgorithmParameters}, {@code null} is always
 returned.
 
-**Returns:** the parameters used with this `Signature` object, or
-`null`
+@return the parameters used with this {@code Signature} object, or
+{@code null}
 
-**Since:** 1.4
-
-Throws:
-
-- `UnsupportedOperationException`: if this method is not overridden by a provider
+@throws UnsupportedOperationException if this method is not overridden
+by a provider
+@since 1.4
 
 ## SignatureSpi.engineGetParameter(String)
 
@@ -336,18 +321,16 @@ specific but optional computation. A uniform algorithm-specific
 naming scheme for each parameter is desirable but left unspecified
 at this time.
 
-Parameters:
+@param param the string name of the parameter.
 
-- `param`: the string name of the parameter.
-
-**Returns:** the object that represents the parameter value, or `null`
+@return the object that represents the parameter value, or {@code null}
 if there is none.
 
-**Deprecated:**
+@throws    InvalidParameterException if {@code param} is an
+invalid parameter for this engine, or another exception occurs while
+trying to get this parameter.
 
-Throws:
-
-- `InvalidParameterException`: if `param` is an invalid parameter for this engine, or another exception occurs while trying to get this parameter.
+@deprecated
 
 ## SignatureSpi.clone()
 
@@ -357,8 +340,7 @@ public Object clone() throws CloneNotSupportedException
 
 Returns a clone if the implementation is cloneable.
 
-**Returns:** a clone if the implementation is cloneable.
+@return a clone if the implementation is cloneable.
 
-Throws:
-
-- `CloneNotSupportedException`: if this is called on an implementation that does not support `Cloneable`.
+@throws    CloneNotSupportedException if this is called
+on an implementation that does not support {@code Cloneable}.

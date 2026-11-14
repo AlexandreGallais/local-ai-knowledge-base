@@ -1,12 +1,3 @@
----
-title: "inkex.tester.inx"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/tester/inx.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.tester.inx
 
 Test elements extra logic from svg xml lxml custom classes.
@@ -20,8 +11,8 @@ class InxMixin
 Tools for Testing INX files, use as a mixin class:
 
 class MyTests(InxMixin, TestCase):
-def test_inx_file(self):
-self.assertInxIsGood("some_inx_file.inx")
+    def test_inx_file(self):
+        self.assertInxIsGood("some_inx_file.inx")
 
 ## InxMixin.introspect_arg_parser
 

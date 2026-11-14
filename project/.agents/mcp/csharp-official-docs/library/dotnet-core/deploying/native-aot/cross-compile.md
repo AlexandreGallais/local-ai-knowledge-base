@@ -1,10 +1,10 @@
 ---
-title: "Cross-compilation"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/deploying/native-aot/cross-compile.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Cross-compilation
+description: Instructions and limitations for cross-compilation
+author: agocke
+ms.author: angocke
+ms.date: 10/10/2023
+ms.custom: linux-related-content
 ---
 
 # Cross-compilation

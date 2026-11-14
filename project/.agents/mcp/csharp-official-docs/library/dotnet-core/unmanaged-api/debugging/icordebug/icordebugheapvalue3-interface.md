@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugHeapValue3 Interface"
 title: "ICorDebugHeapValue3 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugheapvalue3-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugHeapValue3"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugHeapValue3"
+helpviewer_keywords:
+  - "ICorDebugHeapValue3 interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugHeapValue3 Interface
 
 Exposes the monitor lock properties of objects. This interface extends the ICorDebugHeapValue and ICorDebugHeapValue2 interfaces.
@@ -15,17 +23,17 @@ Exposes the monitor lock properties of objects. This interface extends the ICorD
 
 |Method|Description|
 |------------|-----------------|
-|GetThreadOwningMonitorLock Method|Returns the managed thread that owns the monitor lock on this object.|
-|GetMonitorEventWaitList Method|Provides an ordered list of threads that are queued on the event that is associated with a monitor lock.|
+|[GetThreadOwningMonitorLock Method](icordebugheapvalue3-getthreadowningmonitorlock-method.md)|Returns the managed thread that owns the monitor lock on this object.|
+|[GetMonitorEventWaitList Method](icordebugheapvalue3-getmonitoreventwaitlist-method.md)|Provides an ordered list of threads that are queued on the event that is associated with a monitor lock.|
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

@@ -1,10 +1,11 @@
 ---
-title: "Comparison of XPath and LINQ to XML - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/comparison-xpath-linq-xml.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Comparison of XPath and LINQ to XML - LINQ to XML
+description: Both XPath and LINQ to XML queries can query XML trees. This articles compares the two options, and finds LINQ to XML queries to be, on the whole, the more powerful, versatile, faster, safer, and more convenient choice.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: 87d361b1-daa9-4fd4-a53a-cbfa40111ad3
 ---
 
 # Comparison of XPath and LINQ to XML
@@ -25,7 +26,7 @@ The XPath 1.0 Recommendation states that a collection that's the result of evalu
 
 However, when iterating through a collection returned by a LINQ to XML XPath axis method, the nodes in the collection are returned in document order. This is the case even when accessing the XPath axes where predicates are expressed in terms of reverse document order, such as `preceding` and `preceding-sibling`.
 
-By contrast, most of the LINQ to XML axes return collections in document order. However, two of them, `System.Xml.Linq.XNode.Ancestors*` and `System.Xml.Linq.XElement.AncestorsAndSelf*`, return collections in reverse document order. The following table enumerates the axes, and indicates the collection order for each:
+By contrast, most of the LINQ to XML axes return collections in document order. However, two of them, <xref:System.Xml.Linq.XNode.Ancestors*> and <xref:System.Xml.Linq.XElement.AncestorsAndSelf*>, return collections in reverse document order. The following table enumerates the axes, and indicates the collection order for each:
 
 |LINQ to XML axis|Ordering|
 |----------------------|--------------|
@@ -93,14 +94,14 @@ There are similar parallels for each of the XPath axes.
 
 |XPath axis|LINQ to XML axis|
 |----------------|----------------------|
-|child (the default axis)|`System.Xml.Linq.XContainer.Elements*`|
-|Parent (..)|`System.Xml.Linq.XObject.Parent*`|
-|attribute axis (@)|`System.Xml.Linq.XElement.Attribute*` or `System.Xml.Linq.XElement.Attributes*`|
-|ancestor axis|`System.Xml.Linq.XNode.Ancestors*`|
-|ancestor-or-self axis|`System.Xml.Linq.XElement.AncestorsAndSelf*`|
-|descendant axis (//)|`System.Xml.Linq.XContainer.Descendants*` or `System.Xml.Linq.XContainer.DescendantNodes*`|
-|descendant-or-self|`System.Xml.Linq.XElement.DescendantsAndSelf*` or `System.Xml.Linq.XElement.DescendantNodesAndSelf*`|
-|following-sibling|`System.Xml.Linq.XNode.ElementsAfterSelf*` or `System.Xml.Linq.XNode.NodesAfterSelf*`|
-|preceding-sibling|`System.Xml.Linq.XNode.ElementsBeforeSelf*` or `System.Xml.Linq.XNode.NodesBeforeSelf*`|
+|child (the default axis)|<xref:System.Xml.Linq.XContainer.Elements*?displayProperty=nameWithType>|
+|Parent (..)|<xref:System.Xml.Linq.XObject.Parent*?displayProperty=nameWithType>|
+|attribute axis (@)|<xref:System.Xml.Linq.XElement.Attribute*?displayProperty=nameWithType><br /><br /> or<br /><br /> <xref:System.Xml.Linq.XElement.Attributes*?displayProperty=nameWithType>|
+|ancestor axis|<xref:System.Xml.Linq.XNode.Ancestors*?displayProperty=nameWithType>|
+|ancestor-or-self axis|<xref:System.Xml.Linq.XElement.AncestorsAndSelf*?displayProperty=nameWithType>|
+|descendant axis (//)|<xref:System.Xml.Linq.XContainer.Descendants*?displayProperty=nameWithType><br /><br /> or<br /><br /> <xref:System.Xml.Linq.XContainer.DescendantNodes*?displayProperty=nameWithType>|
+|descendant-or-self|<xref:System.Xml.Linq.XElement.DescendantsAndSelf*?displayProperty=nameWithType><br /><br /> or<br /><br /> <xref:System.Xml.Linq.XElement.DescendantNodesAndSelf*?displayProperty=nameWithType>|
+|following-sibling|<xref:System.Xml.Linq.XNode.ElementsAfterSelf*?displayProperty=nameWithType><br /><br /> or<br /><br /> <xref:System.Xml.Linq.XNode.NodesAfterSelf*?displayProperty=nameWithType>|
+|preceding-sibling|<xref:System.Xml.Linq.XNode.ElementsBeforeSelf*?displayProperty=nameWithType><br /><br /> or<br /><br /> <xref:System.Xml.Linq.XNode.NodesBeforeSelf*?displayProperty=nameWithType>|
 |following|No direct equivalent.|
 |preceding|No direct equivalent.|

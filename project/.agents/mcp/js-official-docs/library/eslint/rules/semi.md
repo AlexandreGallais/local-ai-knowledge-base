@@ -1,14 +1,14 @@
 ---
-title: "semi"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/semi.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: semi
+rule_type: layout
+related_rules:
+- no-extra-semi
+- no-unexpected-multiline
+- semi-spacing
+further_reading:
+- https://blog.izs.me/2010/12/an-open-letter-to-javascript-leaders-regarding/
+- https://web.archive.org/web/20200420230322/http://inimino.org/~inimino/blog/javascript_semicolons
 ---
-
-# semi
-
 JavaScript doesn't require semicolons at the end of each statement. In many cases, the JavaScript engine can determine that a semicolon should be in a certain spot and will automatically add it. This feature is known as **automatic semicolon insertion (ASI)** and is considered one of the more controversial features of JavaScript. For example, the following lines are both valid:
 
 ```js
@@ -38,7 +38,7 @@ return;
 }
 ```
 
-Effectively, a semicolon is inserted after the `return` statement, causing the code below it (a labeled literal inside a block) to be unreachable. This rule and the no-unreachable rule will protect your code from such cases.
+Effectively, a semicolon is inserted after the `return` statement, causing the code below it (a labeled literal inside a block) to be unreachable. This rule and the [no-unreachable](no-unreachable) rule will protect your code from such cases.
 
 On the other side of the argument are those who say that since semicolons are inserted automatically, they are optional and do not need to be inserted manually. However, the ASI mechanism can also be tricky to people who don't use semicolons. For example, consider this code:
 
@@ -53,7 +53,7 @@ var globalCounter = { }
 })()
 ```
 
-In this example, a semicolon will not be inserted after the first line, causing a run-time error (because an empty object is called as if it's a function). The no-unexpected-multiline rule can protect your code from such cases.
+In this example, a semicolon will not be inserted after the first line, causing a run-time error (because an empty object is called as if it's a function). The [no-unexpected-multiline](no-unexpected-multiline) rule can protect your code from such cases.
 
 Although ASI allows for more freedom over your coding style, it can also make your code behave in an unexpected way, whether you use semicolons or not. Therefore, it is best to know when ASI takes place and when it does not, and have ESLint protect your code from these potentially unexpected cases. In short, as once described by Isaac Schlueter, a `\n` character always ends a statement (just like a semicolon) unless one of the following is true:
 
@@ -92,7 +92,7 @@ Object option (when `"never"`):
 
 Examples of **incorrect** code for this rule with the default `"always"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint semi: ["error", "always"]*/
@@ -108,9 +108,11 @@ class Foo {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"always"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint semi: "error"*/
@@ -126,11 +128,13 @@ class Foo {
 }
 ```
 
+:::
+
 #### omitLastInOneLineBlock
 
 Examples of additional **correct** code for this rule with the `"always", { "omitLastInOneLineBlock": true }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint semi: ["error", "always", { "omitLastInOneLineBlock": true}] */
@@ -148,11 +152,13 @@ class C {
 }
 ```
 
+:::
+
 #### omitLastInOneLineClassBody
 
 Examples of additional **correct** code for this rule with the `"always", { "omitLastInOneLineClassBody": true }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint semi: ["error", "always", { "omitLastInOneLineClassBody": true}] */
@@ -168,11 +174,13 @@ export class Variant1 extends SomeClass{type=1}
 export class Variant2 extends SomeClass{type=2; anotherType=3}
 ```
 
+:::
+
 ### never
 
 Examples of **incorrect** code for this rule with the `"never"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint semi: ["error", "never"]*/
@@ -188,9 +196,11 @@ class Foo {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"never"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint semi: ["error", "never"]*/
@@ -222,11 +232,13 @@ class Foo {
 }
 ```
 
+:::
+
 #### beforeStatementContinuationChars
 
 Examples of additional **incorrect** code for this rule with the `"never", { "beforeStatementContinuationChars": "always" }` options:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint semi: ["error", "never", { "beforeStatementContinuationChars": "always"}] */
@@ -237,9 +249,11 @@ import a from "a"
 })()
 ```
 
+:::
+
 Examples of additional **incorrect** code for this rule with the `"never", { "beforeStatementContinuationChars": "never" }` options:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint semi: ["error", "never", { "beforeStatementContinuationChars": "never"}] */
@@ -249,6 +263,8 @@ import a from "a"
     // ...
 })()
 ```
+
+:::
 
 ## When Not To Use It
 

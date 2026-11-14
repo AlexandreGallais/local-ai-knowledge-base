@@ -1,13 +1,9 @@
 ---
-title: "newline-before-return"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/newline-before-return.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: newline-before-return
+rule_type: layout
+related_rules:
+- newline-after-var
 ---
-
-# newline-before-return
 
 There is no hard and fast rule about whether empty lines should precede `return` statements in JavaScript. However, clearly delineating where a function is returning can greatly increase the readability and clarity of the code. For example:
 
@@ -44,7 +40,7 @@ This rule requires an empty line before `return` statements to increase code cla
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint newline-before-return: "error"*/
@@ -66,9 +62,11 @@ function foo2(bar) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint newline-before-return: "error"*/
@@ -117,6 +115,8 @@ function foo8() {
     return;
 }
 ```
+
+:::
 
 ## When Not To Use It
 

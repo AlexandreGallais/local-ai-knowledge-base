@@ -1,12 +1,22 @@
 ---
+description: "Learn more about: ICorDebugProcess4::ProcessStateChanged Method"
 title: "ICorDebugProcess4::ProcessStateChanged Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess4-processstatechanged-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "02/07/2019"
+api_name:
+  - "ICorDebugProcess4::ProcessStateChanged"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugProcess4::ProcessStateChanged"
+helpviewer_keywords:
+  - "ICorDebugProcess4::ProcessStateChanged method [.NET debugging]"
+topic_type:
+  - "apiref"
+author: "hoyosjs"
+ms.author: "juhoyosa"
 ---
-
 # ICorDebugProcess4::ProcessStateChanged Method
 
 Notifies the ICorDebug pipeline that the out of process debugger is continuing the debugee's execution.
@@ -22,7 +32,7 @@ HRESULT ProcessStateChanged(
 ## Parameters
 
  `eChange`\
-[in] A member of the CorDebugStateChange enumeration describing a change in the process's execution state.
+[in] A member of the [CorDebugStateChange enumeration](cordebugstatechange-enumeration.md) describing a change in the process's execution state.
 
 ## Remarks
 
@@ -30,7 +40,7 @@ The provided method is part of the `ICorDebugProcess4` interface and corresponds
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** None
 
@@ -40,4 +50,4 @@ The provided method is part of the `ICorDebugProcess4` interface and corresponds
 
 ## See also
 
-- ICorDebugProcess4 Interface
+- [ICorDebugProcess4 Interface](icordebugprocess4-interface.md)

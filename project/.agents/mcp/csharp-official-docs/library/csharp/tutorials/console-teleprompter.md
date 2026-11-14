@@ -1,12 +1,10 @@
 ---
-title: "Console Application"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/tutorials/console-teleprompter.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Console Application
+description: This tutorial teaches you a number of features in .NET Core and the C# language.
+ms.date: 10/27/2021
+ms.subservice: fundamentals
+ms.assetid: 883cd93d-50ce-4144-b7c9-2df28d9c11a0
 ---
-
 # Console app
 
 This tutorial teaches you a number of features in .NET and the C# language. You'll learn:
@@ -23,9 +21,7 @@ There are a lot of features in this tutorial. Let's build them one by one.
 
 ## Prerequisites
 
-- The latest .NET SDK
-- Visual Studio Code editor
-- The C# DevKit
+[!INCLUDE [Prerequisites](../../../includes/prerequisites-basic.md)]
 
 ## Create the app
 
@@ -66,7 +62,7 @@ At the top of the file, see a `namespace` statement. Like other Object Oriented 
 
 ## Reading and Echoing the File
 
-The first feature to add is the ability to read a text file and display all that text to the console. First, let's add a text file. Copy the sampleQuotes.txt file from the GitHub repository for this sample into your project directory. This will serve as the script for your application. For information on how to download the sample app for this tutorial, see the instructions in Samples and Tutorials.
+The first feature to add is the ability to read a text file and display all that text to the console. First, let's add a text file. Copy the [sampleQuotes.txt](https://github.com/dotnet/samples/raw/main/csharp/getting-started/console-teleprompter/sampleQuotes.txt) file from the GitHub repository for this [sample](https://github.com/dotnet/samples/tree/main/csharp/getting-started/console-teleprompter) into your project directory. This will serve as the script for your application. For information on how to download the sample app for this tutorial, see the instructions in [Samples and Tutorials](../../samples-and-tutorials/index.md#view-and-download-samples).
 
 Next, add the following method in your `Program` class (right below the `Main` method):
 
@@ -86,11 +82,11 @@ static IEnumerable<string> ReadFrom(string file)
 
 This method is a special type of C# method called an *iterator method*. Iterator methods return sequences that are evaluated lazily. That means
 each item in the sequence is generated as it is requested by the code consuming the sequence. Iterator methods are methods that contain one or
-more `yield return` statements. The object returned by the `ReadFrom` method contains the code to generate each item in the sequence. In this example, that involves reading the next line of text from the source file, and returning that string. Each time the calling code requests the next item from the sequence, the code reads the next line of text from the file and returns it. When the file is completely read, the sequence indicates that there are no more items.
+more [`yield return`](../language-reference/statements/yield.md) statements. The object returned by the `ReadFrom` method contains the code to generate each item in the sequence. In this example, that involves reading the next line of text from the source file, and returning that string. Each time the calling code requests the next item from the sequence, the code reads the next line of text from the file and returns it. When the file is completely read, the sequence indicates that there are no more items.
 
-There are two C# syntax elements that may be new to you. The `using` statement in this method manages resource cleanup. The variable that is initialized in the `using` statement (`reader`, in this example) must implement the `System.IDisposable` interface. That interface defines a single method, `Dispose`, that should be called when the resource should be released. The compiler generates that call when execution reaches the closing brace of the `using` statement. The compiler-generated code ensures that the resource is released even if an exception is thrown from the code in the block defined by the using statement.
+There are two C# syntax elements that may be new to you. The [`using`](../language-reference/statements/using.md) statement in this method manages resource cleanup. The variable that is initialized in the `using` statement (`reader`, in this example) must implement the <xref:System.IDisposable> interface. That interface defines a single method, `Dispose`, that should be called when the resource should be released. The compiler generates that call when execution reaches the closing brace of the `using` statement. The compiler-generated code ensures that the resource is released even if an exception is thrown from the code in the block defined by the using statement.
 
-The `reader` variable is defined using the `var` keyword. `var` defines an *implicitly typed local variable*. That means the type of the variable is determined by the compile-time type of the object assigned to the variable. Here, that is the return value from the `System.IO.File.OpenText(System.String)` method, which is a `System.IO.StreamReader` object.
+The `reader` variable is defined using the `var` keyword. [`var`](../language-reference/statements/declarations.md#implicitly-typed-local-variables) defines an *implicitly typed local variable*. That means the type of the variable is determined by the compile-time type of the object assigned to the variable. Here, that is the return value from the <xref:System.IO.File.OpenText(System.String)> method, which is a <xref:System.IO.StreamReader> object.
 
 Now, let's fill in the code to read the file in the `Main` method:
 
@@ -154,7 +150,7 @@ Run the sample, and you'll be able to read aloud at its pre-configured pace.
 
 ## Async Tasks
 
-In this final step, you'll add the code to write the output asynchronously in one task, while also running another task to read input from the user if they want to speed up or slow down the text display, or stop the text display altogether. This has a few steps in it and by the end, you'll have all the updates that you need. The first step is to create an asynchronous `System.Threading.Tasks.Task` returning method that represents the code you've created so far to read and display the file.
+In this final step, you'll add the code to write the output asynchronously in one task, while also running another task to read input from the user if they want to speed up or slow down the text display, or stop the text display altogether. This has a few steps in it and by the end, you'll have all the updates that you need. The first step is to create an asynchronous <xref:System.Threading.Tasks.Task> returning method that represents the code you've created so far to read and display the file.
 
 Add this method to your `Program` class (it's taken from the body of your `Main` method):
 
@@ -173,7 +169,7 @@ private static async Task ShowTeleprompter()
 }
 ```
 
-You'll notice two changes. First, in the body of the method, instead of calling `System.Threading.Tasks.Task.Wait` to synchronously wait for a task to finish, this version uses the `await` keyword. In order to do that, you need to add the `async` modifier to the method signature. This method returns a `Task`. Notice that there are no return statements that return a `Task` object. Instead, that `Task` object is created by code the compiler generates when you use the `await` operator. You can imagine that this method returns when it reaches an `await`. The returned `Task` indicates that the work has not completed. The method resumes when the awaited task completes. When it has executed to completion, the returned `Task` indicates that it is complete.
+You'll notice two changes. First, in the body of the method, instead of calling <xref:System.Threading.Tasks.Task.Wait> to synchronously wait for a task to finish, this version uses the `await` keyword. In order to do that, you need to add the `async` modifier to the method signature. This method returns a `Task`. Notice that there are no return statements that return a `Task` object. Instead, that `Task` object is created by code the compiler generates when you use the `await` operator. You can imagine that this method returns when it reaches an `await`. The returned `Task` indicates that the work has not completed. The method resumes when the awaited task completes. When it has executed to completion, the returned `Task` indicates that it is complete.
 Calling code can monitor that returned `Task` to determine when it has completed.
 
 Add an `await` keyword before the call to `ShowTeleprompter`:
@@ -188,7 +184,7 @@ This requires you to change the `Main` method signature to:
 static async Task Main(string[] args)
 ```
 
-Learn more about the `async Main` method in our fundamentals section.
+Learn more about the [`async Main` method](../fundamentals/program-structure/main-command-line.md#main-return-values) in our fundamentals section.
 
 Next, you need to write the second asynchronous method to read from the Console and watch for the '<' (less than), '>' (greater than) and 'X' or 'x' keys. Here's the method you add for that task:
 
@@ -218,7 +214,7 @@ private static async Task GetInput()
 }
 ```
 
-This creates a lambda expression to represent an `System.Action` delegate that reads a key from the Console and modifies a local variable representing the delay when the user presses the '<' (less than) or '>' (greater than) keys. The delegate method finishes when user presses the 'X' or 'x'  keys, which allow the user to stop the text display at any time. This method uses `System.Console.ReadKey` to block and wait for the user to press a key.
+This creates a lambda expression to represent an <xref:System.Action> delegate that reads a key from the Console and modifies a local variable representing the delay when the user presses the '<' (less than) or '>' (greater than) keys. The delegate method finishes when user presses the 'X' or 'x'  keys, which allow the user to stop the text display at any time. This method uses <xref:System.Console.ReadKey> to block and wait for the user to press a key.
 
 It's time to create a class that can handle the shared data between these two tasks. This class contains two public properties: the delay, and a flag `Done` to indicate that the file has been completely read:
 
@@ -247,7 +243,7 @@ internal class TelePrompterConfig
 Create a new file; it can be any name ending with .cs. For example TelePrompterConfig.cs. Paste in the TelePrompterConfig class code, save and close. Put that class in the
 `TeleprompterConsole` namespace as shown. Note the `using static`
 statement allows you to reference the `Min` and `Max` methods without the
-enclosing class or namespace names. A `using static` statement imports the
+enclosing class or namespace names. A [`using static`](../language-reference/keywords/using-directive.md) statement imports the
 methods from one class. This is in contrast with the `using` statement without `static`, which imports all classes from a namespace.
 
 Next, you need to update the `ShowTeleprompter` and `GetInput` methods to use the new `config` object. To finish this feature, you need to create a new `async Task` returning method that starts both of these tasks (`GetInput` and `ShowTeleprompter`), and also manages the shared data between these two tasks. Create a RunTelePrompter task to start both tasks and exit when the first task finishes:
@@ -263,7 +259,7 @@ private static async Task RunTeleprompter()
 }
 ```
 
-The one new method here is the `System.Threading.Tasks.Task.WhenAny(System.Threading.Tasks.Task[])` call. That creates a `Task` that finishes as soon as any of the tasks in its argument list completes.
+The one new method here is the <xref:System.Threading.Tasks.Task.WhenAny(System.Threading.Tasks.Task[])> call. That creates a `Task` that finishes as soon as any of the tasks in its argument list completes.
 
 Next, you need to update both the `ShowTeleprompter` and `GetInput` methods to use the `config` object for the delay. The config object is being passed as a parameter to these methods. Use copy/paste to completely replace the methods with the new code here. You can see the code is using attributes and calling methods from the config object:
 
@@ -310,4 +306,4 @@ await RunTeleprompter();
 
 This tutorial showed you a number of the features around the C# language and the .NET Core libraries related to working in Console applications. You can build on this knowledge to explore more about the language, and the classes introduced here. You've seen the basics of File and Console I/O, blocking and non-blocking use of the Task-based asynchronous programming, a tour of the C# language and how C# programs are organized, and the .NET CLI.
 
-For more information about File I/O, see File and Stream I/O. For more information about asynchronous programming model used in this tutorial, see Task-based Asynchronous Programming and Asynchronous programming.
+For more information about File I/O, see [File and Stream I/O](../../standard/io/index.md). For more information about asynchronous programming model used in this tutorial, see [Task-based Asynchronous Programming](../../standard/parallel-programming/task-based-asynchronous-programming.md) and [Asynchronous programming](../asynchronous-programming/index.md).

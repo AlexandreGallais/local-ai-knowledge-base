@@ -1,12 +1,3 @@
----
-title: "std::backtrace"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/backtrace.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::backtrace
 
 Support for capturing a stack backtrace of an OS thread
@@ -20,7 +11,7 @@ A backtrace is typically quite handy to attach to errors (e.g. types
 implementing `std::error::Error`) to get a causal chain of where an error
 was generated.
 
-#### Accuracy
+## Accuracy
 
 Backtraces are attempted to be as accurate as possible, but no guarantees
 are provided about the exact accuracy of a backtrace. Instruction pointers,
@@ -32,7 +23,7 @@ For most platforms a backtrace with a filename/line number requires that
 programs be compiled with debug information. Without debug information
 filenames/line numbers will not be reported.
 
-#### Platform support
+## Platform support
 
 Not all platforms that std compiles for support capturing backtraces. Some
 platforms simply do nothing when capturing a backtrace. To check whether the
@@ -44,7 +35,7 @@ Sometimes libraries might not be available at runtime or something may go
 wrong which would cause a backtrace to not be captured. Please feel free to
 report issues with platforms where a backtrace cannot be captured though!
 
-#### Environment Variables
+## Environment Variables
 
 The `Backtrace::capture` function might not actually capture a backtrace by
 default. Its behavior is governed by two environment variables:

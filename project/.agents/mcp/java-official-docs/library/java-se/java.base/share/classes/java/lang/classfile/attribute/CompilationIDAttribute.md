@@ -1,35 +1,24 @@
----
-title: "CompilationIDAttribute interface (java.lang.classfile.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/attribute/CompilationIDAttribute.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # CompilationIDAttribute interface (java.lang.classfile.attribute)
 
 ```java
 public sealed interface CompilationIDAttribute extends Attribute<CompilationIDAttribute>, ClassElement permits BoundAttribute.BoundCompilationIDAttribute, UnboundAttribute.UnboundCompilationIDAttribute
 ```
 
-Models the CompilationID attribute, which
-records the compilation time of the `class` file.
-
-This attribute only appears on classes, and does not permit multiple instances in a class.  It has a
-data dependency on the constant pool.
-
+Models the {@link Attributes#compilationId() CompilationID} attribute, which
+records the compilation time of the {@code class} file.
+<p>
+This attribute only appears on classes, and does not permit {@linkplain
+AttributeMapper#allowMultiple multiple instances} in a class.  It has a
+data dependency on the {@linkplain AttributeStability#CP_REFS constant pool}.
+<p>
 This attribute is not predefined in the Java SE Platform.  This is a
 JDK-specific nonstandard attribute produced by the reference implementation
-of the system Java compiler, defined by the `jdk.compiler` module.
+of the system Java compiler, defined by the {@code jdk.compiler} module.
 
-**See also:** Attributes#compilationId()
-
-**See also:** CharacterRangeTableAttribute
-
-**See also:** SourceIDAttribute
-
-**Since:** 24
+@see Attributes#compilationId()
+@see CharacterRangeTableAttribute
+@see SourceIDAttribute
+@since 24
 
 ## CompilationIDAttribute.compilationId()
 
@@ -37,8 +26,8 @@ of the system Java compiler, defined by the `jdk.compiler` module.
 Utf8Entry compilationId()
 ```
 
-The compilation ID is the string value of
-`System.currentTimeMillis()` when the `class` file is generated.
+{@return the compilation ID}  The compilation ID is the string value of
+{@link System#currentTimeMillis()} when the {@code class} file is generated.
 
 ## CompilationIDAttribute.of(Utf8Entry)
 
@@ -46,9 +35,8 @@ The compilation ID is the string value of
 static CompilationIDAttribute of(Utf8Entry id)
 ```
 
-Parameters:
-
-- `id`: the compilation ID
+{@return a {@code CompilationID} attribute}
+@param id the compilation ID
 
 ## CompilationIDAttribute.of(String)
 
@@ -56,6 +44,5 @@ Parameters:
 static CompilationIDAttribute of(String id)
 ```
 
-Parameters:
-
-- `id`: the compilation ID
+{@return a {@code CompilationID} attribute}
+@param id the compilation ID

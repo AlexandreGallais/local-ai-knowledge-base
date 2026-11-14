@@ -1,10 +1,6 @@
 ---
-title: "unstubGlobals | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/unstubglobals.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: unstubGlobals | Config
+outline: deep
 ---
 
 # unstubGlobals
@@ -12,9 +8,9 @@ license: "MIT"
 - **Type:** `boolean`
 - **Default:** `false`
 
-Should Vitest automatically call `vi.unstubAllGlobals()` before each test.
+Should Vitest automatically call [`vi.unstubAllGlobals()`](/api/vi#vi-unstuballglobals) before each test.
 
-```js
+```js [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -24,5 +20,6 @@ export default defineConfig({
 })
 ```
 
-**Warning:**
-Be aware that this option may cause problems with async concurrent tests. If enabled, the completion of one test will restore all global values that were changed with `vi.stubGlobal`, including those currently being used by other tests in progress.
+::: warning
+Be aware that this option may cause problems with async [concurrent tests](/api/test#test-concurrent). If enabled, the completion of one test will restore all global values that were changed with [`vi.stubGlobal`](/api/vi#vi-stubglobal), including those currently being used by other tests in progress.
+:::

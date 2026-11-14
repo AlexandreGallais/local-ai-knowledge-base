@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: JSON source-generation API refactoring"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/serialization/6.0/json-source-gen-api-refactor.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 6 breaking change where the APIs called by JSON source generator output were refactored.
+ms.date: 09/22/2021
 ---
-
 # JSON source-generation API refactoring
 
 The APIs that the output of the JSON source generator calls have been refactored. The refactoring makes them easier to extend with new features in the future. Projects that explicitly use the JSON source generator and were compiled with .NET 6 RC 1 or earlier will fail with runtime exceptions when run on the .NET 6 RC 2 runtime.
@@ -25,11 +21,11 @@ Projects that were compiled using the .NET 6 RC 1 version of the System.Text.Jso
 
 ## Type of breaking change
 
-This change can affect binary compatibility.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 
-This change was introduced to make it easier to extend the source-generator implementation with features in the future. For more information, see dotnet/runtime#59243.
+This change was introduced to make it easier to extend the source-generator implementation with features in the future. For more information, see [dotnet/runtime#59243](https://github.com/dotnet/runtime/pull/59243).
 
 ## Recommended action
 
@@ -37,11 +33,11 @@ Recompile your app using the RC 2 SDK.
 
 ## Affected APIs
 
-- `System.Text.Json.Serialization.JsonSerializerContext`
-- `System.Text.Json.Serialization.JsonSerializableAttribute`
-- `System.Text.Json.Serialization.JsonSourceGenerationOptionsAttribute`
-- `System.Text.Json.Serialization.Metadata` (not intended for direct use)
+- <xref:System.Text.Json.Serialization.JsonSerializerContext?displayProperty=fullName>
+- <xref:System.Text.Json.Serialization.JsonSerializableAttribute?displayProperty=fullName>
+- <xref:System.Text.Json.Serialization.JsonSourceGenerationOptionsAttribute?displayProperty=fullName>
+- <xref:System.Text.Json.Serialization.Metadata?displayProperty=fullName> (not intended for direct use)
 
 ## See also
 
-- How to use source generation in System.Text.Json
+- [How to use source generation in System.Text.Json](../../../../standard/serialization/system-text-json/source-generation.md)

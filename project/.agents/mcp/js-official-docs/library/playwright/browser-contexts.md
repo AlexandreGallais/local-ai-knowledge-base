@@ -1,26 +1,20 @@
 ---
+id: browser-contexts
 title: "Isolation"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/browser-contexts.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# Isolation
 
 ## Introduction
 
-Tests written with Playwright execute in isolated clean-slate environments called browser contexts. This isolation model improves reproducibility and prevents cascading test failures.
+Tests written with Playwright execute in isolated clean-slate environments called browser contexts. This isolation model improves reproducibility and prevents cascading test failures. 
 
-## What is Test Isolation?
+## What is Test Isolation? 
 
 Test Isolation is when each test is completely isolated from another test. Every test runs independently from any other test. This means that each test has its own local storage, session storage, cookies etc. Playwright achieves this using [BrowserContext]s which are equivalent to incognito-like profiles. They are fast and cheap to create and are completely isolated, even when running in a single browser. Playwright creates a context for each test, and provides a default [Page] in that context.
 
-## Why is Test Isolation Important?
+## Why is Test Isolation Important? 
 
 - No failure carry-over. If one test fails it doesn't affect the other test.
-- Easy to debug errors or flakiness, because you can run just a single test as many times as you'd like.
+- Easy to debug errors or flakiness, because you can run just a single test as many times as you'd like. 
 - Don't have to think about the order when running in parallel, sharding, etc.
 
 ## Two Ways of Test Isolation
@@ -31,7 +25,7 @@ There are two different strategies when it comes to Test Isolation: start from s
 
 Playwright uses browser contexts to achieve Test Isolation. Each test has its own Browser Context. Running the test creates a new browser context each time.  When using Playwright as a Test Runner, browser contexts are created by default. Otherwise, you can create browser contexts manually.
 
-```js
+```js tab=js-test
 import { test } from '@playwright/test';
 
 test('example test', async ({ page, context }) => {
@@ -45,7 +39,7 @@ test('another test', async ({ page, context }) => {
 });
 ```
 
-```js
+```js tab=js-library
 const browser = await chromium.launch();
 const context = await browser.newContext();
 const page = await context.newPage();
@@ -57,13 +51,13 @@ BrowserContext context = browser.newContext();
 Page page = context.newPage();
 ```
 
-```python
+```python async
 browser = await playwright.chromium.launch()
 context = await browser.new_context()
 page = await context.new_page()
 ```
 
-```python
+```python sync
 browser = playwright.chromium.launch()
 context = browser.new_context()
 page = context.new_page()
@@ -76,13 +70,13 @@ var context = await browser.NewContextAsync();
 var page = await context.NewPageAsync();
 ```
 
-Browser contexts can also be used to emulate multi-page scenarios involving mobile devices, permissions, locale and color scheme. Check out our Emulation guide for more details.
+Browser contexts can also be used to emulate multi-page scenarios involving mobile devices, permissions, locale and color scheme. Check out our [Emulation](./emulation.md) guide for more details.
 
 ## Multiple Contexts in a Single Test
 
 Playwright can create multiple browser contexts within a single scenario. This is useful when you want to test for multi-user functionality, like a chat.
 
-```js
+```js tab=js-test
 import { test } from '@playwright/test';
 
 test('admin and user', async ({ browser }) => {
@@ -96,7 +90,7 @@ test('admin and user', async ({ browser }) => {
 });
 ```
 
-```js
+```js tab=js-library
 const { chromium } = require('playwright');
 
 // Create a Chromium browser instance
@@ -129,7 +123,7 @@ public class Example {
 }
 ```
 
-```python
+```python async
 import asyncio
 from playwright.async_api import async_playwright, Playwright
 
@@ -150,7 +144,7 @@ async def main():
 asyncio.run(main())
 ```
 
-```python
+```python sync
 from playwright.sync_api import sync_playwright, Playwright
 
 def run(playwright: Playwright):

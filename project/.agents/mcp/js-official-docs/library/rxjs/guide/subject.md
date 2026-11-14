@@ -1,17 +1,8 @@
----
-title: "Subject"
-tool: "rxjs"
-version: "7.8"
-source: "https://github.com/ReactiveX/rxjs/blob/e5351d02e225e275ac0e497c7b66eaa5f0c88791/docs_app/content/guide/subject.md"
-commit: "e5351d02e225e275ac0e497c7b66eaa5f0c88791"
-license: "Apache-2.0"
----
-
 # Subject
 
 **What is a Subject?** An RxJS Subject is a special type of Observable that allows values to be multicasted to many Observers. While plain Observables are unicast (each subscribed Observer owns an independent execution of the Observable), Subjects are multicast.
 
-A Subject is like an Observable, but can multicast to many Observers. Subjects are like EventEmitters: they maintain a registry of many listeners.
+<span class="informal">A Subject is like an Observable, but can multicast to many Observers. Subjects are like EventEmitters: they maintain a registry of many listeners.</span>
 
 **Every Subject is an Observable.** Given a Subject, you can `subscribe` to it, providing an Observer, which will start receiving values normally. From the perspective of the Observer, it cannot tell whether the Observable execution is coming from a plain unicast Observable or a Subject.
 
@@ -78,7 +69,7 @@ There are also a few specializations of the `Subject` type: `BehaviorSubject`, `
 
 A "multicasted Observable" passes notifications through a Subject which may have many subscribers, whereas a plain "unicast Observable" only sends notifications to a single Observer.
 
-A multicasted Observable uses a Subject under the hood to make multiple Observers see the same Observable execution.
+<span class="informal">A multicasted Observable uses a Subject under the hood to make multiple Observers see the same Observable execution.</span>
 
 Under the hood, this is how the `multicast` operator works: Observers subscribe to an underlying Subject, and the Subject subscribes to the source Observable. The following example is similar to the previous example which used `observable.subscribe(subject)`:
 
@@ -159,7 +150,7 @@ setTimeout(() => {
 
 If we wish to avoid explicit calls to `connect()`, we can use ConnectableObservable's `refCount()` method (reference counting), which returns an Observable that keeps track of how many subscribers it has. When the number of subscribers increases from `0` to `1`, it will call `connect()` for us, which starts the shared execution. Only when the number of subscribers decreases from `1` to `0` will it be fully unsubscribed, stopping further execution.
 
-`refCount` makes the multicasted Observable automatically start executing when the first subscriber arrives, and stop executing when the last subscriber leaves.
+<span class="informal">`refCount` makes the multicasted Observable automatically start executing when the first subscriber arrives, and stop executing when the last subscriber leaves.</span>
 
 Below is an example:
 
@@ -214,7 +205,7 @@ The `refCount()` method only exists on ConnectableObservable, and it returns an 
 
 One of the variants of Subjects is the `BehaviorSubject`, which has a notion of "the current value". It stores the latest value emitted to its consumers, and whenever a new Observer subscribes, it will immediately receive the "current value" from the `BehaviorSubject`.
 
-BehaviorSubjects are useful for representing "values over time". For instance, an event stream of birthdays is a Subject, but the stream of a person's age would be a BehaviorSubject.
+<span class="informal">BehaviorSubjects are useful for representing "values over time". For instance, an event stream of birthdays is a Subject, but the stream of a person's age would be a BehaviorSubject.</span>
 
 In the following example, the BehaviorSubject is initialized with the value `0` which the first Observer receives when it subscribes. The second Observer receives the value `2` even though it subscribed after the value `2` was sent.
 
@@ -248,7 +239,7 @@ subject.next(3);
 
 A `ReplaySubject` is similar to a `BehaviorSubject` in that it can send old values to new subscribers, but it can also _record_ a part of the Observable execution.
 
-A `ReplaySubject` records multiple values from the Observable execution and replays them to new subscribers.
+<span class="informal">A `ReplaySubject` records multiple values from the Observable execution and replays them to new subscribers.</span>
 
 When creating a `ReplaySubject`, you can specify how many values to replay:
 
@@ -284,6 +275,8 @@ subject.next(5);
 ```
 
 You can also specify a _window time_ in milliseconds, besides of the buffer size, to determine how old the recorded values can be. In the following example we use a large buffer size of `100`, but a window time parameter of just `500` milliseconds.
+
+<!-- skip-example -->
 
 ```ts
 import { ReplaySubject } from 'rxjs';
@@ -345,7 +338,7 @@ subject.complete();
 // observerB: 5
 ```
 
-The AsyncSubject is similar to the `last()` operator, in that it waits for the `complete` notification in order to deliver a single value.
+The AsyncSubject is similar to the [`last()`](/api/operators/last) operator, in that it waits for the `complete` notification in order to deliver a single value.
 
 ## Void subject
 
@@ -381,4 +374,4 @@ subject.subscribe({
 setTimeout(() => subject.next(), 1000);
 ```
 
-Before version 7, the default type of Subject values was `any`. `Subject<any>` disables type checking of the emitted values, whereas `Subject<void>` prevents accidental access to the emitted value. If you want the old behavior, then replace `Subject` with `Subject<any>`.
+<span class="informal">Before version 7, the default type of Subject values was `any`. `Subject<any>` disables type checking of the emitted values, whereas `Subject<void>` prevents accidental access to the emitted value. If you want the old behavior, then replace `Subject` with `Subject<any>`.</span>

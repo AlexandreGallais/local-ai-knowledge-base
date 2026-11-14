@@ -1,22 +1,22 @@
 ---
+description: "Learn more about: Matching Nodes using XPathNavigator"
 title: "Matching Nodes using XPathNavigator"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/matching-nodes-using-xpathnavigator.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: e6848c47-ee5d-401a-89a5-50b5eed40f30
 ---
-
 # Matching Nodes using XPathNavigator
 
-The `System.Xml.XPath.XPathNavigator` class provides the `System.Xml.XPath.XPathNavigator.Matches*` method to determine if a node matches an XPath expression. The `System.Xml.XPath.XPathNavigator.Matches*` method takes an XPath expression as input and returns a `System.Boolean` that indicates if the current node matches the given XPath expression or the given compiled `System.Xml.XPath.XPathExpression` object.
+The <xref:System.Xml.XPath.XPathNavigator> class provides the <xref:System.Xml.XPath.XPathNavigator.Matches*> method to determine if a node matches an XPath expression. The <xref:System.Xml.XPath.XPathNavigator.Matches*> method takes an XPath expression as input and returns a <xref:System.Boolean> that indicates if the current node matches the given XPath expression or the given compiled <xref:System.Xml.XPath.XPathExpression> object.
 
 ## Matching Nodes
 
- The `System.Xml.XPath.XPathNavigator.Matches*` method returns `true` if the current node matches the XPath expression specified. For example, in the code example that follows, the `System.Xml.XPath.XPathNavigator.Matches*` method will return `true` if the current node is the element `b`, and element `b` has an attribute `c`.
+ The <xref:System.Xml.XPath.XPathNavigator.Matches*> method returns `true` if the current node matches the XPath expression specified. For example, in the code example that follows, the <xref:System.Xml.XPath.XPathNavigator.Matches*> method will return `true` if the current node is the element `b`, and element `b` has an attribute `c`.
 
-> **Note:**
-> The `System.Xml.XPath.XPathNavigator.Matches*` method does not change the state of the `System.Xml.XPath.XPathNavigator`.
+> [!NOTE]
+> The <xref:System.Xml.XPath.XPathNavigator.Matches*> method does not change the state of the <xref:System.Xml.XPath.XPathNavigator>.
 
 ```vb
 Dim document as XPathDocument = New XPathDocument("input.xml")
@@ -34,12 +34,12 @@ navigator.Matches("b[@c]");
 
 ## See also
 
-- `System.Xml.XmlDocument`
-- `System.Xml.XPath.XPathDocument`
-- `System.Xml.XPath.XPathNavigator`
-- Process XML Data Using the XPath Data Model
-- Select XML Data Using XPathNavigator
-- Evaluate XPath Expressions using XPathNavigator
-- Node Types Recognized with XPath Queries
-- XPath Queries and Namespaces
-- Compiled XPath Expressions
+- <xref:System.Xml.XmlDocument>
+- <xref:System.Xml.XPath.XPathDocument>
+- <xref:System.Xml.XPath.XPathNavigator>
+- [Process XML Data Using the XPath Data Model](process-xml-data-using-the-xpath-data-model.md)
+- [Select XML Data Using XPathNavigator](select-xml-data-using-xpathnavigator.md)
+- [Evaluate XPath Expressions using XPathNavigator](evaluate-xpath-expressions-using-xpathnavigator.md)
+- [Node Types Recognized with XPath Queries](node-types-recognized-with-xpath-queries.md)
+- [XPath Queries and Namespaces](xpath-queries-and-namespaces.md)
+- [Compiled XPath Expressions](compiled-xpath-expressions.md)

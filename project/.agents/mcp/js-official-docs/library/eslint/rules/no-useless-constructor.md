@@ -1,13 +1,8 @@
 ---
-title: "no-useless-constructor"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-useless-constructor.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-useless-constructor
+rule_type: suggestion
 ---
 
-# no-useless-constructor
 
 ES2015 provides a default class constructor if one is not specified. As such, it is unnecessary to provide an empty constructor or one that simply delegates into its parent class, as in the following examples:
 
@@ -30,7 +25,7 @@ This rule flags class constructors that can be safely removed without changing h
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-useless-constructor: "error"*/
@@ -47,9 +42,11 @@ class B extends A {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-useless-constructor: "error"*/
@@ -76,11 +73,13 @@ class D extends A {
 }
 ```
 
+:::
+
 This rule additionally supports TypeScript type syntax.
 
 Examples of **incorrect** TypeScript code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /* eslint no-useless-constructor: "error" */
@@ -90,9 +89,11 @@ class A {
 }
 ```
 
+:::
+
 Examples of **correct** TypeScript code for this rule:
 
-**Correct:**
+::: correct
 
 ```ts
 /* eslint no-useless-constructor: "error" */
@@ -111,6 +112,8 @@ class C {
     constructor(@decorated param) {}
 }
 ```
+
+:::
 
 ## Options
 

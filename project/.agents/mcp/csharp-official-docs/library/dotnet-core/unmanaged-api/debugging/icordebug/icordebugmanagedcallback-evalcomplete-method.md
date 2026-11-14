@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugManagedCallback::EvalComplete Method"
 title: "ICorDebugManagedCallback::EvalComplete Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmanagedcallback-evalcomplete-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugManagedCallback.EvalComplete"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugManagedCallback::EvalComplete"
+helpviewer_keywords:
+  - "ICorDebugManagedCallback::EvalComplete method [.NET debugging]"
+  - "EvalComplete method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugManagedCallback::EvalComplete Method
 
 Notifies the debugger that an evaluation has been completed.
@@ -34,7 +43,7 @@ HRESULT EvalComplete (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -44,4 +53,4 @@ HRESULT EvalComplete (
 
 ## See also
 
-- ICorDebugManagedCallback Interface
+- [ICorDebugManagedCallback Interface](icordebugmanagedcallback-interface.md)

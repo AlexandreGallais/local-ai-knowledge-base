@@ -1,15 +1,14 @@
 ---
-title: "Test Razor components in ASP.NET Core Blazor"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/test.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Test Razor components in ASP.NET Core Blazor
+description: Learn how to test Razor components in Blazor apps.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 11/11/2025
 ---
-
 # Test Razor components in ASP.NET Core Blazor
 
-By Egil Hansen
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+By [Egil Hansen](https://egilhansen.com/)
 
 Testing Razor components is an important aspect of releasing stable and maintainable Blazor apps.
 
@@ -23,19 +22,19 @@ To test a Razor component, the *component under test* (CUT) is:
 
 Two common approaches for testing Razor components are end-to-end (E2E) testing and unit testing:
 
-* **Unit testing**: Unit tests are written with a unit testing library that provides:
+* **Unit testing**: [Unit tests](/dotnet/core/testing/) are written with a unit testing library that provides:
   * Component rendering.
   * Inspection of component output and state.
   * Triggering of event handlers and life cycle methods.
   * Assertions that component behavior is correct.
 
-  bUnit is an example of a library that enables Razor component unit testing.
+  [bUnit](https://github.com/egil/bUnit) is an example of a library that enables Razor component unit testing.
 
-* **E2E testing**: A test runner runs a Blazor app containing the CUT and automates a browser instance. The testing tool inspects and interacts with the CUT through the browser. Playwright for .NET is an example of an E2E testing framework that can be used with Blazor apps.
+* **E2E testing**: A test runner runs a Blazor app containing the CUT and automates a browser instance. The testing tool inspects and interacts with the CUT through the browser. [Playwright for .NET](https://playwright.dev/dotnet/) is an example of an E2E testing framework that can be used with Blazor apps.
 
 In unit testing, only the Razor component (Razor/C#) is involved. External dependencies, such as services and JS interop, must be mocked. In E2E testing, the Razor component and all of its auxiliary infrastructure are part of the test, including CSS, JS, and the DOM and browser APIs.
 
-*Test scope* describes how extensive the tests are. Test scope typically has an influence on the speed of the tests. Unit tests run on a subset of the app's subsystems and usually execute in milliseconds. E2E tests, which test a broad group of the app's subsystems, can take several seconds to complete.
+*Test scope* describes how extensive the tests are. Test scope typically has an influence on the speed of the tests. Unit tests run on a subset of the app's subsystems and usually execute in milliseconds. E2E tests, which test a broad group of the app's subsystems, can take several seconds to complete. 
 
 Unit testing also provides access to the instance of the CUT, allowing for inspection and verification of the component's internal state. This normally isn't possible in E2E testing.
 
@@ -60,28 +59,28 @@ Consider the scenario when choosing the type of testing to perform. Some conside
 | Scenario | Suggested approach | Remarks |
 | -------- | ------------------ | ------- |
 | Component without JS interop logic | Unit testing | When there's no dependency on JS interop in a Razor component, the component can be tested without access to JS or the DOM API. In this scenario, there are no disadvantages to choosing unit testing. |
-| Component with simple JS interop logic | Unit testing | It's common for components to query the DOM or trigger animations through JS interop. Unit testing is usually preferred in this scenario, since it's straightforward to mock the JS interaction through the `Microsoft.JSInterop.IJSRuntime` interface. |
+| Component with simple JS interop logic | Unit testing | It's common for components to query the DOM or trigger animations through JS interop. Unit testing is usually preferred in this scenario, since it's straightforward to mock the JS interaction through the <xref:Microsoft.JSInterop.IJSRuntime> interface. |
 | Component that depends on complex JS code | Unit testing and separate JS testing | If a component uses JS interop to call a large or complex JS library but the interaction between the Razor component and JS library is simple, then the best approach is likely to treat the component and JS library or code as two separate parts and test each individually. Test the Razor component with a unit testing library, and test the JS with a JS testing library. |
 | Component with logic that depends on JS manipulation of the browser DOM | E2E testing | When a component's functionality is dependent on JS and its manipulation of the DOM, verify both the JS and Blazor code together in an E2E test. This is the approach that the Blazor framework developers have taken with Blazor's browser rendering logic, which has tightly-coupled C# and JS code. The C# and JS code must work together to correctly render Razor components in a browser.
 | Component that depends on 3rd party class library with hard-to-mock dependencies | E2E testing | When a component's functionality is dependent on a 3rd party class library that has hard-to-mock dependencies, such as JS interop, E2E testing might be the only option to test the component. |
 
 ## Test components with bUnit
 
-There's no official Microsoft testing framework for Blazor, but the community-driven project bUnit provides a convenient way to unit test Razor components.
+There's no official Microsoft testing framework for Blazor, but the community-driven project [bUnit](https://github.com/egil/bUnit) provides a convenient way to unit test Razor components.
 
-> **Note:**
+> [!NOTE]
 > bUnit is a third-party testing library and isn't supported or maintained by Microsoft.
 
-bUnit works with general-purpose testing frameworks, such as MSTest, NUnit, and xUnit. These testing frameworks make bUnit tests look and feel like regular unit tests. bUnit tests integrated with a general-purpose testing framework are ordinarily executed with:
+bUnit works with general-purpose testing frameworks, such as [MSTest](/dotnet/core/testing/unit-testing-with-mstest), [NUnit](https://nunit.org/), and [xUnit](https://xunit.net/). These testing frameworks make bUnit tests look and feel like regular unit tests. bUnit tests integrated with a general-purpose testing framework are ordinarily executed with:
 
-* Visual Studio's Test Explorer.
-* `dotnet test` CLI command in a command shell.
+* [Visual Studio's Test Explorer](/visualstudio/test/run-unit-tests-with-test-explorer).
+* [`dotnet test`](/dotnet/core/tools/dotnet-test) CLI command in a command shell.
 * An automated DevOps testing pipeline.
 
-> **Note:**
+> [!NOTE]
 > Test concepts and test implementations across different test frameworks are similar but not identical. Refer to the test framework's documentation for guidance.
 
-The following demonstrates the structure of a bUnit test on the `Counter` component in an app based on a Blazor project template. The `Counter` component displays and increments a counter based on the user selecting a button in the page:
+The following demonstrates the structure of a bUnit test on the `Counter` component in an app based on a [Blazor project template](project-structure.md). The `Counter` component displays and increments a counter based on the user selecting a button in the page:
 
 ```razor
 @page "/counter"
@@ -149,16 +148,16 @@ public class CounterTests
 
 The following actions take place at each step of the test:
 
-* *Arrange*: The `Counter` component is rendered using bUnit's `TestContext`. The CUT's paragraph element (``) is found and assigned to `paraElm`. In Razor syntax, a component can be passed as a `Microsoft.AspNetCore.Components.RenderFragment` to bUnit.
+* *Arrange*: The `Counter` component is rendered using bUnit's `TestContext`. The CUT's paragraph element (`<p>`) is found and assigned to `paraElm`. In Razor syntax, a component can be passed as a <xref:Microsoft.AspNetCore.Components.RenderFragment> to bUnit.
 
-* *Act*: The button's element (``) is located and selected by calling `Click`, which should increment the counter and update the content of the paragraph tag (``). The paragraph element text content is obtained by calling `TextContent`.
+* *Act*: The button's element (`<button>`) is located and selected by calling `Click`, which should increment the counter and update the content of the paragraph tag (`<p>`). The paragraph element text content is obtained by calling `TextContent`.
 
 * *Assert*: `MarkupMatches` is called on the text content to verify that it matches the expected string, which is `Current count: 1`.
 
-> **Note:**
-> The `MarkupMatches` assert method differs from a regular string comparison assertion (for example, `Assert.Equal("Current count: 1", paraElmText);`). `MarkupMatches` performs a semantic comparison of the input and expected HTML markup. A semantic comparison is aware of HTML semantics, meaning things like insignificant whitespace is ignored. This results in more stable tests. For more information, see Customizing the Semantic HTML Comparison.
+> [!NOTE]
+> The `MarkupMatches` assert method differs from a regular string comparison assertion (for example, `Assert.Equal("Current count: 1", paraElmText);`). `MarkupMatches` performs a semantic comparison of the input and expected HTML markup. A semantic comparison is aware of HTML semantics, meaning things like insignificant whitespace is ignored. This results in more stable tests. For more information, see [Customizing the Semantic HTML Comparison](https://bunit.egilhansen.com/docs/verification/semantic-html-comparison).
 
 ## Related content
 
-* Getting Started with bUnit: bUnit instructions include guidance on creating a test project, referencing testing framework packages, and building and running tests.
-* Blazor Testing from A to Z - Egil Hansen - NDC London 2025 (NDC London)
+* [Getting Started with bUnit](https://bunit.dev/docs/getting-started/): bUnit instructions include guidance on creating a test project, referencing testing framework packages, and building and running tests.
+* [Blazor Testing from A to Z - Egil Hansen - NDC London 2025](https://www.youtube.com/watch?v=p-H5fEMCB8s) ([NDC London](https://ndclondon.com/))

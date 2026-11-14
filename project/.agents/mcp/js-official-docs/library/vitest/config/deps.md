@@ -1,10 +1,6 @@
 ---
-title: "deps | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/deps.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: deps | Config
+outline: deep
 ---
 
 # deps
@@ -16,7 +12,7 @@ Handling for dependencies resolution.
 ## deps.optimizer {#deps-optimizer}
 
 - **Type:** `{ ssr?, client? }`
-- **See also:** Dep Optimization Options
+- **See also:** [Dep Optimization Options](https://vitejs.dev/config/dep-optimization-options.html)
 
 Enable dependency optimization. If you have a lot of tests, this might improve their performance.
 
@@ -27,12 +23,13 @@ When Vitest encounters the external library listed in `include`, it will be bund
 - Your `alias` configuration is now respected inside bundled packages
 - Code in your tests is running closer to how it's running in the browser
 
-Be aware that only packages in `deps.optimizer?.[mode].include` option are bundled (some plugins populate this automatically, like Svelte). You can read more about available options in Vite docs (Vitest doesn't support `disable` and `noDiscovery` options). By default, Vitest uses `optimizer.client` for `jsdom` and `happy-dom` environments, and `optimizer.ssr` for `node` and `edge` environments.
+Be aware that only packages in `deps.optimizer?.[mode].include` option are bundled (some plugins populate this automatically, like Svelte). You can read more about available options in [Vite](https://vitejs.dev/config/dep-optimization-options.html) docs (Vitest doesn't support `disable` and `noDiscovery` options). By default, Vitest uses `optimizer.client` for `jsdom` and `happy-dom` environments, and `optimizer.ssr` for `node` and `edge` environments.
 
 This options also inherits your `optimizeDeps` configuration (for web Vitest will extend `optimizeDeps`, for ssr - `ssr.optimizeDeps`). If you redefine `include`/`exclude` option in `deps.optimizer` it will extend your `optimizeDeps` when running tests. Vitest automatically removes the same options from `include`, if they are listed in `exclude`.
 
-**Tip:**
+::: tip
 You will not be able to edit your `node_modules` code for debugging, since the code is actually located in your `cacheDir` directory. If you want to debug with `console.log` statements, edit it directly or force rebundling with `deps.optimizer?.[mode].force` option.
+:::
 
 ### deps.optimizer.{mode}.enabled
 
@@ -47,7 +44,7 @@ Enable dependency optimization.
 
 Options that are applied to external files when the environment is set to `client`. By default, `jsdom` and `happy-dom` use `client` environment, while `node` and `edge` environments use `ssr`, so these options will have no affect on files inside those environments.
 
-Usually, files inside `node_modules` are externalized, but these options also affect files in `server.deps.external`.
+Usually, files inside `node_modules` are externalized, but these options also affect files in [`server.deps.external`](/config/server#server-deps-external).
 
 ### deps.client.transformAssets
 
@@ -58,8 +55,9 @@ Should Vitest process assets (.png, .svg, .jpg, etc) files and resolve them like
 
 This module will have a default export equal to the path to the asset, if no query is specified.
 
-**Warning:**
-At the moment, this option only works with `vmThreads` and `vmForks` pools.
+::: warning
+At the moment, this option only works with [`vmThreads`](/config/pool#vmthreads) and [`vmForks`](/config/pool#vmforks) pools.
+:::
 
 ### deps.client.transformCss
 
@@ -68,10 +66,11 @@ At the moment, this option only works with `vmThreads` and `vmForks` pools.
 
 Should Vitest process CSS (.css, .scss, .sass, etc) files and resolve them like Vite does in the browser.
 
-If CSS files are disabled with `css` options, this option will just silence `ERR_UNKNOWN_FILE_EXTENSION` errors.
+If CSS files are disabled with [`css`](/config/css) options, this option will just silence `ERR_UNKNOWN_FILE_EXTENSION` errors.
 
-**Warning:**
-At the moment, this option only works with `vmThreads` and `vmForks` pools.
+::: warning
+At the moment, this option only works with [`vmThreads`](/config/pool#vmthreads) and [`vmForks`](/config/pool#vmforks) pools.
+:::
 
 ### deps.client.transformGlobPattern
 
@@ -82,8 +81,9 @@ Regexp pattern to match external files that should be transformed.
 
 By default, files inside `node_modules` are externalized and not transformed, unless it's CSS or an asset, and corresponding option is not disabled.
 
-**Warning:**
-At the moment, this option only works with `vmThreads` and `vmForks` pools.
+::: warning
+At the moment, this option only works with [`vmThreads`](/config/pool#vmthreads) and [`vmForks`](/config/pool#vmforks) pools.
+:::
 
 ## deps.interopDefault
 
@@ -117,9 +117,9 @@ A list of directories that contain dependencies. Vitest adds a slash before and 
 
 Vitest treats a file inside one of these directories as a dependency:
 
-- `vi.mock` without a factory looks for the mock only in the `__mocks__` folder in the root of the project.
-- Vitest externalizes JavaScript files that Node.js can import directly, for example, a `.js` file in a package with `"type": "module"`. Vitest imports these files with native Node.js, Vite plugins don't transform them, and `vi.mock` doesn't apply to the modules that they import.
-- Vitest prefixes string values of `server.deps.inline` and `server.deps.external` with these directories.
+- [`vi.mock`](/api/vi#vi-mock) without a factory looks for the mock only in the `__mocks__` folder in the [root](/config/root) of the project.
+- Vitest [externalizes](/config/server#server-deps-external) JavaScript files that Node.js can import directly, for example, a `.js` file in a package with `"type": "module"`. Vitest imports these files with native Node.js, Vite plugins don't transform them, and `vi.mock` doesn't apply to the modules that they import.
+- Vitest prefixes string values of [`server.deps.inline`](/config/server#server-deps-inline) and [`server.deps.external`](/config/server#server-deps-external) with these directories.
 
 ```ts
 import { defineConfig } from 'vitest/config'
@@ -133,8 +133,10 @@ export default defineConfig({
 })
 ```
 
-**Tip:**
+::: tip
 You don't need this option to mock a workspace package in a monorepo. If you call `vi.mock` with a package name, Vitest looks in the root `__mocks__` folder even if the package resolves outside of `node_modules`.
+:::
 
-**Warning:**
+::: warning
 Don't add a directory that contains the source files of your project. For example, if the project is in `packages/app`, the value `packages` makes Vitest treat the files in `packages/app` as dependencies too.
+:::

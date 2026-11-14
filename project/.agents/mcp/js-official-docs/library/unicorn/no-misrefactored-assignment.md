@@ -1,19 +1,13 @@
----
-title: "no-misrefactored-assignment"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-misrefactored-assignment.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-misrefactored-assignment
 
 📝 Disallow misrefactored compound assignments where the target is duplicated in the right-hand side.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 A compound assignment like `a += a + b` repeats the assignment target as an operand of the matching operator. This is almost always a refactoring mistake: it computes `a = a + (a + b)` (that is, `2 * a + b`), when the author most likely meant `a += b`.
 

@@ -1,12 +1,10 @@
 ---
-title: "ReadyToRun deployment overview"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/deploying/ready-to-run.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: ReadyToRun deployment overview
+description: Learn what ReadyToRun deployments are and why you should consider using it as part of the publishing your app with .NET 5 and .NET Core 3.0 and later.
+author: davidwrighton
+ms.author: davidwr
+ms.date: 08/23/2021
 ---
-
 # ReadyToRun Compilation
 
 .NET application startup time and latency can be improved by compiling your application assemblies as ReadyToRun (R2R) format. R2R is a form of ahead-of-time (AOT) compilation.
@@ -17,7 +15,7 @@ To compile your project as ReadyToRun, the application must be published with th
 
 There are two ways to publish your app as ReadyToRun:
 
-01. Specify the PublishReadyToRun flag directly to the dotnet publish command. See dotnet publish for details.
+01. Specify the PublishReadyToRun flag directly to the dotnet publish command. See [dotnet publish](../tools/dotnet-publish.md) for details.
 
     ```dotnetcli
     dotnet publish -c Release -r win-x64 -p:PublishReadyToRun=true
@@ -81,7 +79,7 @@ When compiling an application with ReadyToRun, profilers may require symbols for
 </PropertyGroup>
 ```
 
-These symbols will be placed in the publish directory and for Windows will have a file extension of .ni.pdb, and for Linux will have a file extension of .r2rmap. These files are not generally redistributed to end customers, but instead would typically be stored in a symbol server. In general these symbols are useful for debugging performance issues related to startup of applications, as Tiered Compilation will replace the ReadyToRun generated code with dynamically generated code. However, if attempting to profile an application that disables Tiered Compilation the symbols will be useful.
+These symbols will be placed in the publish directory and for Windows will have a file extension of .ni.pdb, and for Linux will have a file extension of .r2rmap. These files are not generally redistributed to end customers, but instead would typically be stored in a symbol server. In general these symbols are useful for debugging performance issues related to startup of applications, as [Tiered Compilation](../runtime-config/compilation.md#tiered-compilation) will replace the ReadyToRun generated code with dynamically generated code. However, if attempting to profile an application that disables [Tiered Compilation](../runtime-config/compilation.md#tiered-compilation) the symbols will be useful.
 
 ## Composite ReadyToRun
 
@@ -91,10 +89,10 @@ Composite ReadyToRun has the following tradeoffs:
 
 - Compilation takes significantly longer.
 - The application is significantly larger.
-- Only self-contained deployments are supported.
+- Only [self-contained](index.md#publish-as-self-contained) deployments are supported.
 - The compiled assemblies must be distributed together.
 
-Composite ReadyToRun is supported in .NET 6 and later. In .NET 7 and later, it's enabled by default for self-contained single-file deployments that use ReadyToRun.
+Composite ReadyToRun is supported in .NET 6 and later. In .NET 7 and later, it's enabled by default for self-contained [single-file](single-file/overview.md) deployments that use ReadyToRun.
 
 To enable composite ReadyToRun explicitly, set `PublishReadyToRunComposite` to `true`:
 
@@ -104,8 +102,8 @@ To enable composite ReadyToRun explicitly, set `PublishReadyToRunComposite` to `
 </PropertyGroup>
 ```
 
-> **Note:**
-> `PublishReadyToRunComposite` is ignored if the deployment is not self-contained.
+> [!NOTE]
+> `PublishReadyToRunComposite` is ignored if the deployment is not [self-contained](index.md#publish-as-self-contained).
 
 ## Cross platform/architecture restrictions
 

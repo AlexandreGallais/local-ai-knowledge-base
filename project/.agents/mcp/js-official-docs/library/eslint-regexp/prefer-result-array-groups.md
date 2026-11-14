@@ -1,21 +1,21 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/prefer-result-array-groups"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/prefer-result-array-groups.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "enforce using result array `groups`"
+since: "v1.4.0"
 ---
-
 # regexp/prefer-result-array-groups
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 > enforce using result array `groups`
 
 ## :book: Rule Details
 
-This rule reports and fixes regexp result arrays where named capturing groups are accessed by index instead of using `groups`.
+This rule reports and fixes regexp result arrays where named capturing groups are accessed by index instead of using [`groups`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Ranges#using_named_groups).
 
 <eslint-code-block fix>
 
@@ -55,11 +55,15 @@ while (match = regex.exec(str)) {
 - [regexp/prefer-named-capture-group]
 - [regexp/prefer-named-replacement]
 
+[regexp/prefer-named-backreference]: ./prefer-named-backreference.md
+[regexp/prefer-named-capture-group]: ./prefer-named-capture-group.md
+[regexp/prefer-named-replacement]: ./prefer-named-replacement.md
+
 ## :rocket: Version
 
 This rule was introduced in eslint-plugin-regexp v1.4.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/prefer-result-array-groups.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/prefer-result-array-groups.ts)

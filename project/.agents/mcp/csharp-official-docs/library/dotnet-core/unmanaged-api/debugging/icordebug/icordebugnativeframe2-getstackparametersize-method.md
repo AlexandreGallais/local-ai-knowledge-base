@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugNativeFrame2::GetStackParameterSize Method"
 title: "ICorDebugNativeFrame2::GetStackParameterSize Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugnativeframe2-getstackparametersize-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugNativeFrame2.GetStackParameterSize Method"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugNativeFrame2::GetStackParameterSize"
+helpviewer_keywords:
+  - "ICorDebugNativeFrame2::GetStackParameterSize method [.NET debugging]"
+  - "GetStackParameterSize method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugNativeFrame2::GetStackParameterSize Method
 
 Returns the cumulative size of the parameters on the stack on x86 operating systems.
@@ -33,13 +42,15 @@ This method returns the following specific HRESULTs as well as HRESULT errors th
 |E_FAIL|`The size of the parameters could not be returned`.|
 |E_INVALIDARG|`pSize` Is `null`.|
 
+## Exceptions
+
 ## Remarks
 
-The ICorDebugStackWalk methods do not adjust the stack pointer for parameters that are pushed on the stack. Instead, you can use the value returned by `GetStackParameterSize` to adjust the stack pointer to seed a native unwinder, which does adjust for the parameters.
+The [ICorDebugStackWalk](icordebugstackwalk-interface.md) methods do not adjust the stack pointer for parameters that are pushed on the stack. Instead, you can use the value returned by `GetStackParameterSize` to adjust the stack pointer to seed a native unwinder, which does adjust for the parameters.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -49,4 +60,4 @@ The ICorDebugStackWalk methods do not adjust the stack pointer for parameters th
 
 ## See also
 
-- ICorDebugNativeFrame2 Interface
+- [ICorDebugNativeFrame2 Interface](icordebugnativeframe2-interface.md)

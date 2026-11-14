@@ -1,13 +1,12 @@
 ---
-title: "id-length"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/id-length.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: id-length
+rule_type: suggestion
+related_rules:
+- new-cap
+- func-names
+- camelcase
 ---
 
-# id-length
 
 Very short identifier names like `e`, `x`, `_t` or very long ones like `hashGeneratorResultOutputContainerObject` can make code harder to read and potentially less maintainable. To prevent this, one may enforce a minimum and/or maximum identifier length.
 
@@ -19,13 +18,13 @@ const x = 5; // too short; difficult to understand its purpose without context
 
 This rule enforces a minimum and/or maximum identifier length convention.
 
-This rule counts graphemes instead of using `String length`.
+This rule counts [graphemes](https://unicode.org/reports/tr29/#Default_Grapheme_Cluster_Table) instead of using [`String length`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/length).
 
 ## Options
 
 Examples of **incorrect** code for this rule with the default options:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint id-length: "error"*/     // default is minimum 2-chars ({ "min": 2 })
@@ -55,9 +54,11 @@ const { prop: a} = {};
 ({ prop: obj.x } = {});
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default options:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint id-length: "error"*/     // default is minimum 2-chars ({ "min": 2 })
@@ -93,6 +94,8 @@ const data = { "x": 1 };  // excused because of quotes
 data["y"] = 3;  // excused because of calculated property access
 ```
 
+:::
+
 This rule has an object option:
 
 * `"min"` (default: `2`) enforces a minimum identifier length
@@ -106,7 +109,7 @@ This rule has an object option:
 
 Examples of **incorrect** code for this rule with the `{ "min": 4 }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint id-length: ["error", { "min": 4 }]*/
@@ -131,9 +134,11 @@ const { prop: [num]} = {};
 ({ prop: obj.x } = {});
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "min": 4 }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint id-length: ["error", { "min": 4 }]*/
@@ -162,11 +167,13 @@ const data = { "x": 1 };  // excused because of quotes
 data["y"] = 3;  // excused because of calculated property access
 ```
 
+:::
+
 ### max
 
 Examples of **incorrect** code for this rule with the `{ "max": 10 }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint id-length: ["error", { "max": 10 }]*/
@@ -184,9 +191,11 @@ try {
 const [reallyLongFirstElementName] = arr;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "max": 10 }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint id-length: ["error", { "max": 10 }]*/
@@ -204,11 +213,13 @@ try {
 const [first] = arr;
 ```
 
+:::
+
 ### properties
 
 Examples of **correct** code for this rule with the `{ "properties": "never" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint id-length: ["error", { "properties": "never" }]*/
@@ -218,11 +229,13 @@ const myObj = { a: 1 };
 ({ prop: obj.i } = {});
 ```
 
+:::
+
 ### exceptions
 
 Examples of additional **correct** code for this rule with the `{ "exceptions": ["x", "y", "z", "ζ"] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint id-length: ["error", { "exceptions": ["x", "y", "z", "ζ", "i"] }]*/
@@ -242,11 +255,13 @@ const { z } = foo;
 const { a: ζ } = foo;
 ```
 
+:::
+
 ### exceptionPatterns
 
 Examples of additional **correct** code for this rule with the `{ "exceptionPatterns": ["E|S", "[x-z]"] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint id-length: ["error", { "exceptionPatterns": ["E|S|X", "[x-z]"] }]*/
@@ -265,3 +280,5 @@ const [X] = arr;
 const { y } = foo;
 const { a: z } = foo;
 ```
+
+:::

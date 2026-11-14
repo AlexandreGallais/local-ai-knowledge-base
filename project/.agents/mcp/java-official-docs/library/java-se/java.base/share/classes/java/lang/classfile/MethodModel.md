@@ -1,38 +1,27 @@
----
-title: "MethodModel interface (java.lang.classfile)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/MethodModel.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # MethodModel interface (java.lang.classfile)
 
 ```java
 public sealed interface MethodModel extends CompoundElement<MethodElement>, AttributedElement, ClassElement permits BufferedMethodBuilder.Model, MethodImpl
 ```
 
-Models a method.  A method can be viewed as a composition of `MethodElement`s, or by random access via accessor
+Models a method.  A method can be viewed as a {@linkplain CompoundElement
+composition} of {@link MethodElement}s, or by random access via accessor
 methods if only specific parts of the method is needed.
-
-Methods can be obtained from `ClassModel.methods()`, or in the
+<p>
+Methods can be obtained from {@link ClassModel#methods()}, or in the
 traversal of member elements of a class.
-
-MethodTypeDesc, int, Consumer) is the
-main way to construct methods.  `ClassBuilder.transformMethod` allows
+<p>
+{@link ClassBuilder#withMethod(String, MethodTypeDesc, int, Consumer)} is the
+main way to construct methods.  {@link ClassBuilder#transformMethod} allows
 creating a new method by selectively processing the original method elements
 and directing the results to a method builder.
-
+<p>
 All method attributes are accessible as member elements.
 
-**See also:** ClassModel#methods()
-
-**See also:** MethodTransform
-
-**jvms:** 4.6 Methods
-
-**Since:** 24
+@see ClassModel#methods()
+@see MethodTransform
+@jvms 4.6 Methods
+@since 24
 
 ## MethodModel.flags()
 
@@ -40,7 +29,9 @@ All method attributes are accessible as member elements.
 AccessFlags flags()
 ```
 
-**See also:** AccessFlag.Location#METHOD
+{@return the access flags}
+
+@see AccessFlag.Location#METHOD
 
 ## MethodModel.parent()
 
@@ -48,11 +39,15 @@ AccessFlags flags()
 Optional<ClassModel> parent()
 ```
 
+{@return the class model this method is a member of, if known}
+
 ## MethodModel.methodName()
 
 ```java
 Utf8Entry methodName()
 ```
+
+{@return the name of this method}
 
 ## MethodModel.methodType()
 
@@ -60,14 +55,20 @@ Utf8Entry methodName()
 Utf8Entry methodType()
 ```
 
+{@return the method descriptor string of this method}
+
 ## MethodModel.methodTypeSymbol()
 
 ```java
 default MethodTypeDesc methodTypeSymbol()
 ```
 
+{@return the method type, as a symbolic descriptor}
+
 ## MethodModel.code()
 
 ```java
 Optional<CodeModel> code()
 ```
+
+{@return the body of this method, if there is one}

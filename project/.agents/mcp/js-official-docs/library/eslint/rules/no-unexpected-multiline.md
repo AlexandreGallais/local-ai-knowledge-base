@@ -1,15 +1,11 @@
 ---
-title: "no-unexpected-multiline"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-unexpected-multiline.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-unexpected-multiline
+rule_type: problem
 ---
 
-# no-unexpected-multiline
 
-Semicolons are usually optional in JavaScript, because of automatic semicolon insertion (ASI). You can require or disallow semicolons with the semi rule.
+
+Semicolons are usually optional in JavaScript, because of automatic semicolon insertion (ASI). You can require or disallow semicolons with the [semi](./semi) rule.
 
 The rules for ASI are relatively straightforward: As once described by Isaac Schlueter, a newline character always ends a statement, just like a semicolon, **except** where one of the following is true:
 
@@ -26,7 +22,7 @@ This rule disallows confusing multiline expressions where a newline looks like i
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-unexpected-multiline: "error"*/
@@ -48,9 +44,11 @@ const z = foo
 /regex/g.test(bar)
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-unexpected-multiline: "error"*/
@@ -74,6 +72,8 @@ const tag = function() {}
 tag `hello`
 ```
 
+:::
+
 ## Options
 
 This rule has no options.
@@ -82,4 +82,4 @@ This rule has no options.
 
 You can turn this rule off if you are confident that you will not accidentally introduce code like this.
 
-Note that the patterns considered problems are **not** flagged by the semi rule.
+Note that the patterns considered problems are **not** flagged by the [semi](semi) rule.

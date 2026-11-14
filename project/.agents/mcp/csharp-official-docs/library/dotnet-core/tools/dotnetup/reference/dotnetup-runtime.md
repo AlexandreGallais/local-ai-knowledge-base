@@ -1,16 +1,14 @@
 ---
-title: "dotnetup runtime command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/reference/dotnetup-runtime.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnetup runtime command
+description: Command reference for the dotnetup runtime command group.
+ms.topic: reference
+ms.date: 08/07/2026
+ai-usage: ai-assisted
 ---
 
 # dotnetup runtime command
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 ## Name
 
@@ -26,9 +24,9 @@ dotnetup runtime <command> [options]
 
 | Command | Description |
 | --- | --- |
-| `install` | Install one or more runtime requirements. |
-| `update` | Update tracked runtime requirements. |
-| `uninstall` | Remove a runtime requirement and unused files. |
+| [`install`](dotnetup-runtime-install.md) | Install one or more runtime requirements. |
+| [`update`](dotnetup-runtime-update.md) | Update tracked runtime requirements. |
+| [`uninstall`](dotnetup-runtime-uninstall.md) | Remove a runtime requirement and unused files. |
 
 ## Options
 

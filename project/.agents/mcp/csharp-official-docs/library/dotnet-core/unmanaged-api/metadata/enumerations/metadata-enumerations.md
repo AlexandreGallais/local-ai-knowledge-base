@@ -1,93 +1,89 @@
 ---
+description: "Learn more about metadata enumerations in the unmanaged API (.NET)"
 title: "Metadata enumerations (.NET)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/enumerations/metadata-enumerations.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 07/24/2025
 ---
-
 # Metadata enumerations (.NET)
 
-These articles describe the unmanaged enumerations that the metadata API uses. For unmanaged enumerations that apply only to .NET Framework, see Metadata enumerations (.NET Framework).
+These articles describe the unmanaged enumerations that the metadata API uses. For unmanaged enumerations that apply only to .NET Framework, see [Metadata enumerations (.NET Framework)](../../../../framework/unmanaged-api/metadata/metadata-enumerations.md).
 
-CorAssemblyFlags enumeration\
+[CorAssemblyFlags enumeration](corassemblyflags-enumeration.md)\
 Contains values that describe the metadata applied to an assembly compilation.
 
-CorCheckDuplicatesFor enumeration\
+[CorCheckDuplicatesFor enumeration](corcheckduplicatesfor-enumeration.md)\
 Contains values used during checks for duplications.
 
-CorDeclSecurity enumeration\
+[CorDeclSecurity enumeration](cordeclsecurity-enumeration.md)\
 Contains values that describe the types of declarative security used by the common language runtime.
 
-CorElementType enumeration
+[CorElementType enumeration](corelementtype-enumeration.md)
 
-CorErrorIfEmitOutOfOrder enumeration\
+[CorErrorIfEmitOutOfOrder enumeration](corerrorifemitoutoforder-enumeration.md)\
 Contains flag values that indicate the conditions under which an error message should be generated when metadata is emitted out of order.
 
-CorFileFlags enumeration\
-Contains values that describe the type of file defined in a call to theIMetaDataAssemblyEmit::DefineFile method.
+[CorFileFlags enumeration](corfileflags-enumeration.md)\
+Contains values that describe the type of file defined in a call to the[IMetaDataAssemblyEmit::DefineFile](../interfaces/imetadataassemblyemit-definefile-method.md) method.
 
-CorFileMapping enumeration\
-Contains values that describe the type of file mapping that is returned from a call to theIMetaDataInfo::GetFileMapping method.
+[CorFileMapping enumeration](corfilemapping-enumeration.md)\
+Contains values that describe the type of file mapping that is returned from a call to the[IMetaDataInfo::GetFileMapping](../interfaces/imetadatainfo-getfilemapping-method.md) method.
 
-CorGenericParamAttr enumeration\
-Contains values that describe the `System.Type` parameters for generic types, as used in calls to theIMetaDataEmit2::DefineGenericParam method.
+[CorGenericParamAttr enumeration](corgenericparamattr-enumeration.md)\
+Contains values that describe the <xref:System.Type> parameters for generic types, as used in calls to the[IMetaDataEmit2::DefineGenericParam](../interfaces/imetadataemit2-definegenericparam-method.md) method.
 
-CorImportOptions enumeration\
+[CorImportOptions enumeration](corimportoptions-enumeration.md)\
 Contains flag values that control the behavior during importation of an assembly outside the current scope.
 
-CorLinkerOptions enumeration\
+[CorLinkerOptions enumeration](corlinkeroptions-enumeration.md)\
 Specifies flags to select options for the metadata linker.
 
-CorLocalRefPreservation enumeration\
+[CorLocalRefPreservation enumeration](corlocalrefpreservation-enumeration.md)\
 Contains flag values for the treatment of local references.
 
-CorManifestResourceFlags enumeration\
+[CorManifestResourceFlags enumeration](cormanifestresourceflags-enumeration.md)\
 Contains values that describe the visibility of resources encoded in an assembly manifest.
 
-CorMethodAttr enumeration\
+[CorMethodAttr enumeration](cormethodattr-enumeration.md)\
 Contains values that describe metadata about a method.
 
-CorMethodImpl enumeration\
+[CorMethodImpl enumeration](cormethodimpl-enumeration.md)\
 Contains values that describe method implementation features.
 
-CorMethodSemanticsAttr enumeration\
+[CorMethodSemanticsAttr enumeration](cormethodsemanticsattr-enumeration.md)\
 Contains values that describe the relationship between a method and an associated property or event.
 
-CorNotificationForTokenMovement enumeration\
+[CorNotificationForTokenMovement enumeration](cornotificationfortokenmovement-enumeration.md)\
 Contains flag values that influence notifications upon token movement.
 
-CorOpenFlags enumeration\
+[CorOpenFlags enumeration](coropenflags-enumeration.md)\
 Contains flag values that control metadata behavior upon opening manifest files.
 
-CorPEKind enumeration\
-Contains values that describe a portable executable file, as returned from a call to theIMetaDataImport2::GetPEKind method.
+[CorPEKind enumeration](corpekind-enumeration.md)\
+Contains values that describe a portable executable file, as returned from a call to the[IMetaDataImport2::GetPEKind](../interfaces/imetadataimport2-getpekind-method.md) method.
 
-CorPinvokeMap enumeration\
+[CorPinvokeMap enumeration](corpinvokemap-enumeration.md)\
 Contains values that describe features of a PInvoke call.
 
-CorPropertyAttr enumeration\
+[CorPropertyAttr enumeration](corpropertyattr-enumeration.md)\
 Contains values that describe the metadata of a property.
 
-CorRefToDefCheck enumeration\
+[CorRefToDefCheck enumeration](correftodefcheck-enumeration.md)\
 Specifies flags to control which referenced items are converted to their definitions in order to optimize the code.
 
-CorSaveSize enumeration\
+[CorSaveSize enumeration](corsavesize-enumeration.md)\
 Contains values indicating the level of precision required when querying for the size of a save operation.
 
-CorSetENC enumeration\
+[CorSetENC enumeration](corsetenc-enumeration.md)\
 Contains values used to influence behavior during the generation of metadata.
 
-CorThreadSafetyOptions enumeration\
+[CorThreadSafetyOptions enumeration](corthreadsafetyoptions-enumeration.md)\
 Specifies flags to select options for thread safety.
 
-CorTypeAttr enumeration\
+[CorTypeAttr enumeration](cortypeattr-enumeration.md)\
 Contains values that indicate type metadata.
 
-CorValidatorModuleType enumeration\
-Provides values used by theIMetaDataValidate interface to specify the type of the module (PE file vs. .obj file).
+[CorValidatorModuleType enumeration](corvalidatormoduletype-enumeration.md)\
+Provides values used by the[IMetaDataValidate](../interfaces/imetadatavalidate-interface.md) interface to specify the type of the module (PE file vs. .obj file).
 
 ## See also
 
-- Metadata enumerations (.NET Framework)
+- [Metadata enumerations (.NET Framework)](../../../../framework/unmanaged-api/metadata/metadata-enumerations.md)

@@ -1,18 +1,17 @@
 ---
 title: "Lambda expressions"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/fundamentals/building-software/lambdas.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to pass behavior with C# lambda expressions, write parameter and body forms, capture variables, and choose between lambdas, method groups, and local functions.
+ms.date: 10/15/2026
+ms.topic: concept-article
+ai-usage: ai-generated
 ---
 
 # Lambda expressions
 
 Choose a lambda expression when you want to pass a short operation to another method and the operation is clearest beside the call that uses it. An inline rule shows readers how you select or transform items; a named method lets them follow the operation's purpose before they inspect its details.
 
-> **Tip:**
-> This article teaches practical choices for developers who know C# methods and collections. For the complete lambda syntax and rules, see the lambda expressions reference.
+> [!TIP]
+> This article teaches practical choices for developers who know C# methods and collections. For the complete lambda syntax and rules, see the [lambda expressions reference](../../language-reference/operators/lambda-expressions.md).
 
 A *lambda expression* is an unnamed function that you write where another piece of code needs behavior.
 
@@ -24,24 +23,14 @@ session => session.Registered < session.Capacity
 
 The `=>` operator separates the parameters on the left from the body on the right. Read it as "goes to."
 
-## Pass <example-value> to a method
+## Pass behavior to a method
 
-Many .NET APIs accept a delegate, which is a type that represents behavior with a particular parameter list and return type. A lambda provides that behavior. For an introduction to delegate types such as `Func` and `Action`, see Lambda expressions, delegates, and events.
+Many .NET APIs accept a delegate, which is a type that represents behavior with a particular parameter list and return type. A lambda provides that behavior. For an introduction to delegate types such as `Func` and `Action`, see [Lambda expressions, delegates, and events](../types/delegates-lambdas.md).
 
 The following example works with workshop sessions. A `WorkshopSession` contains a title, duration, capacity, and registration count.
 
-```csharp
-int maximumMinutes = 60;
+:::code language="csharp" source="snippets/lambdas/Program.cs" id="PassBehavior":::
 
-var shortSessions = sessions
-    .Where(session => session.DurationMinutes <= maximumMinutes)
-    .OrderBy(session => session.Title);
-
-foreach (WorkshopSession session in shortSessions)
-{
-    Console.WriteLine(session.Title);
-}
-```
 The first lambda tells `Where` which sessions to keep. The second tells `OrderBy` which value to sort by. The methods receive behavior without knowing the details of either rule.
 
 ## Choose a parameter form
@@ -70,7 +59,7 @@ Usually, the method that receives the lambda supplies enough information for the
 (WorkshopSession session) => session.Title
 ```
 
-The lambda expressions reference covers parameter modifiers, attributes, default values, and other specialized forms.
+The [lambda expressions reference](../../language-reference/operators/lambda-expressions.md#input-parameters-of-a-lambda-expression) covers parameter modifiers, attributes, default values, and other specialized forms.
 
 ## Choose an expression or statement body
 
@@ -82,16 +71,8 @@ session => session.Registered < session.Capacity
 
 Use a *statement lambda* when the operation needs more than one statement. Enclose the body in braces, and include `return` when the lambda returns a value:
 
-```csharp
-var descriptions = sessions.Select(session =>
-{
-    int seatsLeft = session.Capacity - session.Registered;
-    string availability = seatsLeft > 0 ? $"{seatsLeft} seats left" : "full";
-    return $"{session.Title}: {availability}";
-});
+:::code language="csharp" source="snippets/lambdas/Program.cs" id="StatementBody":::
 
-Console.WriteLine(string.Join(Environment.NewLine, descriptions));
-```
 Keep statement lambdas brief. When the body needs several steps or the same logic appears more than once, give the behavior a descriptive name with a local function or regular method.
 
 ## Capture values from the surrounding scope
@@ -126,25 +107,16 @@ Several C# forms can supply behavior to a delegate parameter:
 
 A *method group* is a method name without its argument list. The compiler converts the matching method to the required delegate type:
 
-```csharp
-var openSessions = sessions.Where(HasOpenSeats);
+:::code language="csharp" source="snippets/lambdas/Program.cs" id="MethodGroup":::
 
-foreach (WorkshopSession session in openSessions)
-{
-    Console.WriteLine($"Open: {session.Title}");
-}
-
-static bool HasOpenSeats(WorkshopSession session) =>
-    session.Registered < session.Capacity;
-```
 `Where(HasOpenSeats)` communicates the same rule as `Where(session => HasOpenSeats(session))` with less code. The method name tells readers what the rule tests; an inline comparison shows how it tests that rule. Keep the lambda wrapper when it adds an argument, combines operations, or makes the call clearer.
 
-For a detailed local comparison, see Local functions.
+For a detailed local comparison, see [Local functions](local-functions.md#choose-a-local-function-or-lambda-expression).
 
 ## See also
 
-- Building software
-- Local functions
-- Lambda expressions reference
-- Lambda expressions, delegates, and events
-- LINQ
+- [Building software](index.md)
+- [Local functions](local-functions.md)
+- [Lambda expressions reference](../../language-reference/operators/lambda-expressions.md)
+- [Lambda expressions, delegates, and events](../types/delegates-lambdas.md)
+- [LINQ](../statements/linq.md)

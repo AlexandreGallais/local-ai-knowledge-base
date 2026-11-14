@@ -1,17 +1,8 @@
----
-title: "if expressions"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/expressions/if-expr.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[expr.if]
 # `if` expressions
 
 r[expr.if.syntax]
-```grammar
+```grammar,expressions
 IfExpression ->
     `if` Conditions BlockExpressionNoInnerAttributes
     (`else` ( BlockExpressionNoInnerAttributes | IfExpression ) )?
@@ -35,6 +26,9 @@ LetChainCondition ->
     | AssignmentExpression
     | CompoundAssignmentExpression
 ```
+<!-- TODO: The struct exception above needs clarification, see https://github.com/rust-lang/reference/issues/1808
+     The chain grammar could use some work, see https://github.com/rust-lang/reference/issues/1811
+-->
 
 r[expr.if.intro]
 The syntax of an `if` expression is a sequence of one or more condition operands separated by `&&`, followed by a consequent block, any number of `else if` conditions and blocks, and an optional trailing `else` block.
@@ -79,7 +73,7 @@ assert_eq!(y, "Bigger");
 r[expr.if.diverging]
 An `if` expression [diverges] if either the condition expression diverges or if all arms diverge.
 
-```rust
+```rust,no_run
 fn diverging_condition() -> ! {
     // Diverges because the condition expression diverges
     if loop {} {
@@ -192,7 +186,7 @@ fn nested() {
 ```
 
 r[expr.if.chains.or]
-If any condition operand is a `let` pattern, then none of the condition operands can be a `||` lazy boolean operator expression due to ambiguity and precedence with the `let` scrutinee.
+If any condition operand is a `let` pattern, then none of the condition operands can be a `||` [lazy boolean operator expression][expr.bool-logic] due to ambiguity and precedence with the `let` scrutinee.
 
 > [!EXAMPLE]
 > If a `||` expression is needed, then parentheses can be used. For example:
@@ -210,3 +204,8 @@ If any condition operand is a `let` pattern, then none of the condition operands
 r[expr.if.edition2024]
 > [!EDITION-2024]
 > Before the 2024 edition, let chains are not supported. That is, the [LetChain] grammar is not allowed in an `if` expression.
+
+[`match` expressions]: match-expr.md
+[boolean type]: ../types/boolean.md
+[diverges]: divergence
+[scrutinee]: ../glossary.md#scrutinee

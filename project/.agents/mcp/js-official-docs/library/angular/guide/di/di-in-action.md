@@ -1,17 +1,8 @@
----
-title: "DI in action"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/di/di-in-action.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # DI in action
 
 This guide explores additional features of dependency injection (DI) in Angular.
 
-NOTE: For comprehensive coverage of InjectionToken and custom providers, see the defining dependency providers guide.
+NOTE: For comprehensive coverage of InjectionToken and custom providers, see the [defining dependency providers guide](guide/di/defining-dependency-providers#injection-tokens).
 
 ## Inject the component's DOM element
 
@@ -20,7 +11,7 @@ In such cases, you may need to access a component's DOM element.
 
 Angular exposes the underlying DOM element of a `@Component` or `@Directive` through injection using the `ElementRef` token:
 
-```ts
+```ts {highlight:[7]}
 import {Directive, ElementRef, inject} from '@angular/core';
 
 @Directive({
@@ -82,7 +73,7 @@ For example, in its `providers` array.
 The `providers` array is a property of the `@Component()` decorator function, which must appear before the class definition.
 Such circular references can be resolved using `forwardRef`.
 
-```typescript
+```typescript {header: 'app.component.ts', highlight: [4]}
 providers: [
   {
     provide: PARENT_MENU_ITEM,

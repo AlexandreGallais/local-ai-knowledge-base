@@ -1,12 +1,10 @@
 ---
-title: "Related Data and Serialization - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/querying/related-data/serialization.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Related Data and Serialization - EF Core
+description: Information about how cycles in related data with Entity Framework Core can affect serialization frameworks
+author: SamMonoRT
+ms.date: 9/8/2020
+uid: core/querying/related-data/serialization
 ---
-
 # Related data and serialization
 
 Because EF Core automatically does fix-up of navigation properties, you can end up with cycles in your object graph. For example, loading a blog and its related posts will result in a blog object that references a collection of posts. Each of those posts will have a reference back to the blog.

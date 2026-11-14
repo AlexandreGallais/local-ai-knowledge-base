@@ -1,27 +1,19 @@
----
-title: "AtomicLong class (java.util.concurrent.atomic)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/atomic/AtomicLong.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AtomicLong class (java.util.concurrent.atomic)
 
 ```java
 public class AtomicLong extends Number implements java.io.Serializable
 ```
 
-A `long` value that may be updated atomically.  See the
-`VarHandle` specification for descriptions of the properties
-of atomic accesses. An `AtomicLong` is used in applications
+A {@code long} value that may be updated atomically.  See the
+{@link VarHandle} specification for descriptions of the properties
+of atomic accesses. An {@code AtomicLong} is used in applications
 such as atomically incremented sequence numbers, and cannot be used
-as a replacement for a `java.lang.Long`. However, this class
-does extend `Number` to allow uniform access by tools and
+as a replacement for a {@link java.lang.Long}. However, this class
+does extend {@code Number} to allow uniform access by tools and
 utilities that deal with numerically-based classes.
 
-**Since:** 1.5
+@since 1.5
+@author Doug Lea
 
 ## AtomicLong.AtomicLong(long)
 
@@ -31,9 +23,7 @@ public AtomicLong(long initialValue)
 
 Creates a new AtomicLong with the given initial value.
 
-Parameters:
-
-- `initialValue`: the initial value
+@param initialValue the initial value
 
 ## AtomicLong.AtomicLong()
 
@@ -41,7 +31,7 @@ Parameters:
 public AtomicLong()
 ```
 
-Creates a new AtomicLong with initial value `0`.
+Creates a new AtomicLong with initial value {@code 0}.
 
 ## AtomicLong.get()
 
@@ -50,9 +40,9 @@ public final long get()
 ```
 
 Returns the current value,
-with memory effects as specified by `VarHandle.getVolatile`.
+with memory effects as specified by {@link VarHandle#getVolatile}.
 
-**Returns:** the current value
+@return the current value
 
 ## AtomicLong.set(long)
 
@@ -60,12 +50,10 @@ with memory effects as specified by `VarHandle.getVolatile`.
 public final void set(long newValue)
 ```
 
-Sets the value to `newValue`,
-with memory effects as specified by `VarHandle.setVolatile`.
+Sets the value to {@code newValue},
+with memory effects as specified by {@link VarHandle#setVolatile}.
 
-Parameters:
-
-- `newValue`: the new value
+@param newValue the new value
 
 ## AtomicLong.lazySet(long)
 
@@ -73,14 +61,11 @@ Parameters:
 public final void lazySet(long newValue)
 ```
 
-Sets the value to `newValue`,
-with memory effects as specified by `VarHandle.setRelease`.
+Sets the value to {@code newValue},
+with memory effects as specified by {@link VarHandle#setRelease}.
 
-Parameters:
-
-- `newValue`: the new value
-
-**Since:** 1.6
+@param newValue the new value
+@since 1.6
 
 ## AtomicLong.getAndSet(long)
 
@@ -88,14 +73,11 @@ Parameters:
 public final long getAndSet(long newValue)
 ```
 
-Atomically sets the value to `newValue` and returns the old value,
-with memory effects as specified by `VarHandle.getAndSet`.
+Atomically sets the value to {@code newValue} and returns the old value,
+with memory effects as specified by {@link VarHandle#getAndSet}.
 
-Parameters:
-
-- `newValue`: the new value
-
-**Returns:** the previous value
+@param newValue the new value
+@return the previous value
 
 ## AtomicLong.compareAndSet(long, long)
 
@@ -103,16 +85,13 @@ Parameters:
 public final boolean compareAndSet(long expectedValue, long newValue)
 ```
 
-Atomically sets the value to `newValue`
-if the current value `== expectedValue`,
-with memory effects as specified by `VarHandle.compareAndSet`.
+Atomically sets the value to {@code newValue}
+if the current value {@code == expectedValue},
+with memory effects as specified by {@link VarHandle#compareAndSet}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** `true` if successful. False return indicates that
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful. False return indicates that
 the actual value was not equal to the expected value.
 
 ## AtomicLong.weakCompareAndSet(long, long)
@@ -121,24 +100,20 @@ the actual value was not equal to the expected value.
 public final boolean weakCompareAndSet(long expectedValue, long newValue)
 ```
 
-Possibly atomically sets the value to `newValue`
-if the current value `== expectedValue`,
-with memory effects as specified by `VarHandle.weakCompareAndSetPlain`.
+Possibly atomically sets the value to {@code newValue}
+if the current value {@code == expectedValue},
+with memory effects as specified by {@link VarHandle#weakCompareAndSetPlain}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Deprecated:** This method has plain memory effects but the method
+@deprecated This method has plain memory effects but the method
 name implies volatile memory effects (see methods such as
-`compareAndExchange` and `compareAndSet`).  To avoid
+{@link #compareAndExchange} and {@link #compareAndSet}).  To avoid
 confusion over plain or volatile memory effects it is recommended that
-the method `weakCompareAndSetPlain` be used instead.
+the method {@link #weakCompareAndSetPlain} be used instead.
 
-**Returns:** `true` if successful
-
-**See also:** #weakCompareAndSetPlain
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful
+@see #weakCompareAndSetPlain
 
 ## AtomicLong.weakCompareAndSetPlain(long, long)
 
@@ -146,18 +121,14 @@ the method `weakCompareAndSetPlain` be used instead.
 public final boolean weakCompareAndSetPlain(long expectedValue, long newValue)
 ```
 
-Possibly atomically sets the value to `newValue`
-if the current value `== expectedValue`,
-with memory effects as specified by `VarHandle.weakCompareAndSetPlain`.
+Possibly atomically sets the value to {@code newValue}
+if the current value {@code == expectedValue},
+with memory effects as specified by {@link VarHandle#weakCompareAndSetPlain}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** `true` if successful
-
-**Since:** 9
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful
+@since 9
 
 ## AtomicLong.getAndIncrement()
 
@@ -166,11 +137,11 @@ public final long getAndIncrement()
 ```
 
 Atomically increments the current value,
-with memory effects as specified by `VarHandle.getAndAdd`.
+with memory effects as specified by {@link VarHandle#getAndAdd}.
 
-Equivalent to `getAndAdd(1)`.
+<p>Equivalent to {@code getAndAdd(1)}.
 
-**Returns:** the previous value
+@return the previous value
 
 ## AtomicLong.getAndDecrement()
 
@@ -179,11 +150,11 @@ public final long getAndDecrement()
 ```
 
 Atomically decrements the current value,
-with memory effects as specified by `VarHandle.getAndAdd`.
+with memory effects as specified by {@link VarHandle#getAndAdd}.
 
-Equivalent to `getAndAdd(-1)`.
+<p>Equivalent to {@code getAndAdd(-1)}.
 
-**Returns:** the previous value
+@return the previous value
 
 ## AtomicLong.getAndAdd(long)
 
@@ -192,13 +163,10 @@ public final long getAndAdd(long delta)
 ```
 
 Atomically adds the given value to the current value,
-with memory effects as specified by `VarHandle.getAndAdd`.
+with memory effects as specified by {@link VarHandle#getAndAdd}.
 
-Parameters:
-
-- `delta`: the value to add
-
-**Returns:** the previous value
+@param delta the value to add
+@return the previous value
 
 ## AtomicLong.incrementAndGet()
 
@@ -207,11 +175,11 @@ public final long incrementAndGet()
 ```
 
 Atomically increments the current value,
-with memory effects as specified by `VarHandle.getAndAdd`.
+with memory effects as specified by {@link VarHandle#getAndAdd}.
 
-Equivalent to `addAndGet(1)`.
+<p>Equivalent to {@code addAndGet(1)}.
 
-**Returns:** the updated value
+@return the updated value
 
 ## AtomicLong.decrementAndGet()
 
@@ -220,11 +188,11 @@ public final long decrementAndGet()
 ```
 
 Atomically decrements the current value,
-with memory effects as specified by `VarHandle.getAndAdd`.
+with memory effects as specified by {@link VarHandle#getAndAdd}.
 
-Equivalent to `addAndGet(-1)`.
+<p>Equivalent to {@code addAndGet(-1)}.
 
-**Returns:** the updated value
+@return the updated value
 
 ## AtomicLong.addAndGet(long)
 
@@ -233,13 +201,10 @@ public final long addAndGet(long delta)
 ```
 
 Atomically adds the given value to the current value,
-with memory effects as specified by `VarHandle.getAndAdd`.
+with memory effects as specified by {@link VarHandle#getAndAdd}.
 
-Parameters:
-
-- `delta`: the value to add
-
-**Returns:** the updated value
+@param delta the value to add
+@return the updated value
 
 ## AtomicLong.getAndUpdate(LongUnaryOperator)
 
@@ -247,18 +212,15 @@ Parameters:
 public final long getAndUpdate(LongUnaryOperator updateFunction)
 ```
 
-Atomically updates (with memory effects as specified by `VarHandle.compareAndSet`) the current value with the results of
+Atomically updates (with memory effects as specified by {@link
+VarHandle#compareAndSet}) the current value with the results of
 applying the given function, returning the previous value. The
 function should be side-effect-free, since it may be re-applied
 when attempted updates fail due to contention among threads.
 
-Parameters:
-
-- `updateFunction`: a side-effect-free function
-
-**Returns:** the previous value
-
-**Since:** 1.8
+@param updateFunction a side-effect-free function
+@return the previous value
+@since 1.8
 
 ## AtomicLong.updateAndGet(LongUnaryOperator)
 
@@ -266,18 +228,15 @@ Parameters:
 public final long updateAndGet(LongUnaryOperator updateFunction)
 ```
 
-Atomically updates (with memory effects as specified by `VarHandle.compareAndSet`) the current value with the results of
+Atomically updates (with memory effects as specified by {@link
+VarHandle#compareAndSet}) the current value with the results of
 applying the given function, returning the updated value. The
 function should be side-effect-free, since it may be re-applied
 when attempted updates fail due to contention among threads.
 
-Parameters:
-
-- `updateFunction`: a side-effect-free function
-
-**Returns:** the updated value
-
-**Since:** 1.8
+@param updateFunction a side-effect-free function
+@return the updated value
+@since 1.8
 
 ## AtomicLong.getAndAccumulate(long, LongBinaryOperator)
 
@@ -285,7 +244,8 @@ Parameters:
 public final long getAndAccumulate(long x, LongBinaryOperator accumulatorFunction)
 ```
 
-Atomically updates (with memory effects as specified by `VarHandle.compareAndSet`) the current value with the results of
+Atomically updates (with memory effects as specified by {@link
+VarHandle#compareAndSet}) the current value with the results of
 applying the given function to the current and given values,
 returning the previous value. The function should be
 side-effect-free, since it may be re-applied when attempted
@@ -293,14 +253,10 @@ updates fail due to contention among threads.  The function is
 applied with the current value as its first argument, and the
 given update as the second argument.
 
-Parameters:
-
-- `x`: the update value
-- `accumulatorFunction`: a side-effect-free function of two arguments
-
-**Returns:** the previous value
-
-**Since:** 1.8
+@param x the update value
+@param accumulatorFunction a side-effect-free function of two arguments
+@return the previous value
+@since 1.8
 
 ## AtomicLong.accumulateAndGet(long, LongBinaryOperator)
 
@@ -308,7 +264,8 @@ Parameters:
 public final long accumulateAndGet(long x, LongBinaryOperator accumulatorFunction)
 ```
 
-Atomically updates (with memory effects as specified by `VarHandle.compareAndSet`) the current value with the results of
+Atomically updates (with memory effects as specified by {@link
+VarHandle#compareAndSet}) the current value with the results of
 applying the given function to the current and given values,
 returning the updated value. The function should be
 side-effect-free, since it may be re-applied when attempted
@@ -316,14 +273,10 @@ updates fail due to contention among threads.  The function is
 applied with the current value as its first argument, and the
 given update as the second argument.
 
-Parameters:
-
-- `x`: the update value
-- `accumulatorFunction`: a side-effect-free function of two arguments
-
-**Returns:** the updated value
-
-**Since:** 1.8
+@param x the update value
+@param accumulatorFunction a side-effect-free function of two arguments
+@return the updated value
+@since 1.8
 
 ## AtomicLong.toString()
 
@@ -331,17 +284,18 @@ Parameters:
 public String toString()
 ```
 
+{@return the String representation of the current value}
+
 ## AtomicLong.intValue()
 
 ```java
 public int intValue()
 ```
 
-Returns the current value of this `AtomicLong` as an `int`
+Returns the current value of this {@code AtomicLong} as an {@code int}
 after a narrowing primitive conversion,
-with memory effects as specified by `VarHandle.getVolatile`.
-
-**JLS:** 5.1.3 Narrowing Primitive Conversion
+with memory effects as specified by {@link VarHandle#getVolatile}.
+@jls 5.1.3 Narrowing Primitive Conversion
 
 ## AtomicLong.longValue()
 
@@ -349,9 +303,9 @@ with memory effects as specified by `VarHandle.getVolatile`.
 public long longValue()
 ```
 
-Returns the current value of this `AtomicLong` as a `long`,
-with memory effects as specified by `VarHandle.getVolatile`.
-Equivalent to `get()`.
+Returns the current value of this {@code AtomicLong} as a {@code long},
+with memory effects as specified by {@link VarHandle#getVolatile}.
+Equivalent to {@link #get()}.
 
 ## AtomicLong.floatValue()
 
@@ -359,11 +313,10 @@ Equivalent to `get()`.
 public float floatValue()
 ```
 
-Returns the current value of this `AtomicLong` as a `float`
+Returns the current value of this {@code AtomicLong} as a {@code float}
 after a widening primitive conversion,
-with memory effects as specified by `VarHandle.getVolatile`.
-
-**JLS:** 5.1.2 Widening Primitive Conversion
+with memory effects as specified by {@link VarHandle#getVolatile}.
+@jls 5.1.2 Widening Primitive Conversion
 
 ## AtomicLong.doubleValue()
 
@@ -371,11 +324,10 @@ with memory effects as specified by `VarHandle.getVolatile`.
 public double doubleValue()
 ```
 
-Returns the current value of this `AtomicLong` as a `double`
+Returns the current value of this {@code AtomicLong} as a {@code double}
 after a widening primitive conversion,
-with memory effects as specified by `VarHandle.getVolatile`.
-
-**JLS:** 5.1.2 Widening Primitive Conversion
+with memory effects as specified by {@link VarHandle#getVolatile}.
+@jls 5.1.2 Widening Primitive Conversion
 
 ## AtomicLong.getPlain()
 
@@ -384,11 +336,10 @@ public final long getPlain()
 ```
 
 Returns the current value, with memory semantics of reading as if the
-variable was declared non-`volatile`.
+variable was declared non-{@code volatile}.
 
-**Returns:** the value
-
-**Since:** 9
+@return the value
+@since 9
 
 ## AtomicLong.setPlain(long)
 
@@ -396,15 +347,12 @@ variable was declared non-`volatile`.
 public final void setPlain(long newValue)
 ```
 
-Sets the value to `newValue`, with memory semantics
-of setting as if the variable was declared non-`volatile`
-and non-`final`.
+Sets the value to {@code newValue}, with memory semantics
+of setting as if the variable was declared non-{@code volatile}
+and non-{@code final}.
 
-Parameters:
-
-- `newValue`: the new value
-
-**Since:** 9
+@param newValue the new value
+@since 9
 
 ## AtomicLong.getOpaque()
 
@@ -413,11 +361,10 @@ public final long getOpaque()
 ```
 
 Returns the current value,
-with memory effects as specified by `VarHandle.getOpaque`.
+with memory effects as specified by {@link VarHandle#getOpaque}.
 
-**Returns:** the value
-
-**Since:** 9
+@return the value
+@since 9
 
 ## AtomicLong.setOpaque(long)
 
@@ -425,14 +372,11 @@ with memory effects as specified by `VarHandle.getOpaque`.
 public final void setOpaque(long newValue)
 ```
 
-Sets the value to `newValue`,
-with memory effects as specified by `VarHandle.setOpaque`.
+Sets the value to {@code newValue},
+with memory effects as specified by {@link VarHandle#setOpaque}.
 
-Parameters:
-
-- `newValue`: the new value
-
-**Since:** 9
+@param newValue the new value
+@since 9
 
 ## AtomicLong.getAcquire()
 
@@ -441,11 +385,10 @@ public final long getAcquire()
 ```
 
 Returns the current value,
-with memory effects as specified by `VarHandle.getAcquire`.
+with memory effects as specified by {@link VarHandle#getAcquire}.
 
-**Returns:** the value
-
-**Since:** 9
+@return the value
+@since 9
 
 ## AtomicLong.setRelease(long)
 
@@ -453,14 +396,11 @@ with memory effects as specified by `VarHandle.getAcquire`.
 public final void setRelease(long newValue)
 ```
 
-Sets the value to `newValue`,
-with memory effects as specified by `VarHandle.setRelease`.
+Sets the value to {@code newValue},
+with memory effects as specified by {@link VarHandle#setRelease}.
 
-Parameters:
-
-- `newValue`: the new value
-
-**Since:** 9
+@param newValue the new value
+@since 9
 
 ## AtomicLong.compareAndExchange(long, long)
 
@@ -468,20 +408,16 @@ Parameters:
 public final long compareAndExchange(long expectedValue, long newValue)
 ```
 
-Atomically sets the value to `newValue` if the current value,
-referred to as the *witness value*, `== expectedValue`,
+Atomically sets the value to {@code newValue} if the current value,
+referred to as the <em>witness value</em>, {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.compareAndExchange`.
+{@link VarHandle#compareAndExchange}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** the *witness value*, which will be the same as the
+@param expectedValue the expected value
+@param newValue the new value
+@return the <em>witness value</em>, which will be the same as the
 expected value if successful
-
-**Since:** 9
+@since 9
 
 ## AtomicLong.compareAndExchangeAcquire(long, long)
 
@@ -489,20 +425,16 @@ expected value if successful
 public final long compareAndExchangeAcquire(long expectedValue, long newValue)
 ```
 
-Atomically sets the value to `newValue` if the current value,
-referred to as the *witness value*, `== expectedValue`,
+Atomically sets the value to {@code newValue} if the current value,
+referred to as the <em>witness value</em>, {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.compareAndExchangeAcquire`.
+{@link VarHandle#compareAndExchangeAcquire}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** the *witness value*, which will be the same as the
+@param expectedValue the expected value
+@param newValue the new value
+@return the <em>witness value</em>, which will be the same as the
 expected value if successful
-
-**Since:** 9
+@since 9
 
 ## AtomicLong.compareAndExchangeRelease(long, long)
 
@@ -510,20 +442,16 @@ expected value if successful
 public final long compareAndExchangeRelease(long expectedValue, long newValue)
 ```
 
-Atomically sets the value to `newValue` if the current value,
-referred to as the *witness value*, `== expectedValue`,
+Atomically sets the value to {@code newValue} if the current value,
+referred to as the <em>witness value</em>, {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.compareAndExchangeRelease`.
+{@link VarHandle#compareAndExchangeRelease}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** the *witness value*, which will be the same as the
+@param expectedValue the expected value
+@param newValue the new value
+@return the <em>witness value</em>, which will be the same as the
 expected value if successful
-
-**Since:** 9
+@since 9
 
 ## AtomicLong.weakCompareAndSetVolatile(long, long)
 
@@ -531,19 +459,15 @@ expected value if successful
 public final boolean weakCompareAndSetVolatile(long expectedValue, long newValue)
 ```
 
-Possibly atomically sets the value to `newValue`
-if the current value `== expectedValue`,
+Possibly atomically sets the value to {@code newValue}
+if the current value {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.weakCompareAndSet`.
+{@link VarHandle#weakCompareAndSet}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** `true` if successful
-
-**Since:** 9
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful
+@since 9
 
 ## AtomicLong.weakCompareAndSetAcquire(long, long)
 
@@ -551,19 +475,15 @@ Parameters:
 public final boolean weakCompareAndSetAcquire(long expectedValue, long newValue)
 ```
 
-Possibly atomically sets the value to `newValue`
-if the current value `== expectedValue`,
+Possibly atomically sets the value to {@code newValue}
+if the current value {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.weakCompareAndSetAcquire`.
+{@link VarHandle#weakCompareAndSetAcquire}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** `true` if successful
-
-**Since:** 9
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful
+@since 9
 
 ## AtomicLong.weakCompareAndSetRelease(long, long)
 
@@ -571,16 +491,12 @@ Parameters:
 public final boolean weakCompareAndSetRelease(long expectedValue, long newValue)
 ```
 
-Possibly atomically sets the value to `newValue`
-if the current value `== expectedValue`,
+Possibly atomically sets the value to {@code newValue}
+if the current value {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.weakCompareAndSetRelease`.
+{@link VarHandle#weakCompareAndSetRelease}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** `true` if successful
-
-**Since:** 9
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful
+@since 9

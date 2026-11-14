@@ -1,23 +1,16 @@
----
-title: "vitest/consistent-each-for"
-tool: "eslint-vitest"
-version: "1.6"
-source: "https://github.com/vitest-dev/eslint-plugin-vitest/blob/c5df1054a25044a7ca5baf07461b7aee1f15f5f2/docs/rules/consistent-each-for.md"
-commit: "c5df1054a25044a7ca5baf07461b7aee1f15f5f2"
-license: "MIT"
----
-
 # vitest/consistent-each-for
 
 📝 Enforce using `.each` or `.for` consistently.
 
 ⚠️ This rule _warns_ in the 🌐 `all` config.
 
+<!-- end auto-generated rule header -->
+
 ## Rule Details
 
 Vitest provides two ways to run parameterized tests: `.each` and `.for`. This rule enforces consistency in the usage of these methods.
 
-**Key <example-value>:**
+**Key Differences:**
 
 - **`.each`**: Spreads array arguments to individual parameters
 - **`.for`**: Keeps arrays intact, provides better TestContext support
@@ -83,12 +76,16 @@ test.skip.each([[1, 2]])('test', (a, b) => {
 
 ## Options
 
+<!-- begin auto-generated rule options list -->
+
 | Name       | Description                      | Type   | Choices       |
 | :--------- | :------------------------------- | :----- | :------------ |
 | `describe` | Preferred method for `describe`. | String | `each`, `for` |
 | `it`       | Preferred method for `it`.       | String | `each`, `for` |
 | `suite`    | Preferred method for `suite`.    | String | `each`, `for` |
 | `test`     | Preferred method for `test`.     | String | `each`, `for` |
+
+<!-- end auto-generated rule options list -->
 
 ## Configuration
 

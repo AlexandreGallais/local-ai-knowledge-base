@@ -1,17 +1,8 @@
----
-title: "Impl trait"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/types/impl-trait.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[type.impl-trait]
 # Impl trait
 
 r[type.impl-trait.syntax]
-```grammar
+```grammar,types
 ImplTraitType -> `impl` Bounds?
 
 ImplTraitTypeOneBound -> `impl` TraitBound?
@@ -40,7 +31,7 @@ r[type.impl-trait.param]
 ## Anonymous type parameters
 
 r[type.impl-trait.param.intro]
-> **Note:**
+> [!NOTE]
 > This is often called "impl Trait in argument position". (The term "parameter" is more correct here, but "impl Trait in argument position" is the phrasing used during the development of this feature, and it remains in parts of the implementation.)
 
 Functions can use `impl` followed by a set of trait bounds to declare a parameter as having an anonymous type. The caller must provide a type that satisfies the bounds declared by the anonymous type parameter, and the function can only use the methods available through the trait bounds of the anonymous type parameter.
@@ -62,14 +53,14 @@ fn with_impl_trait(arg: impl Trait) {
 r[type.impl-trait.param.generic]
 That is, `impl Trait` in argument position is syntactic sugar for a generic type parameter like `<T: Trait>`, except that the type is anonymous and doesn't appear in the [GenericParams] list.
 
-> **Note:**
+> [!NOTE]
 > For function parameters, generic type parameters and `impl Trait` are not exactly equivalent. With a generic parameter such as `<T: Trait>`, the caller has the option to explicitly specify the generic argument for `T` at the call site using [GenericArgs], for example, `foo::<usize>(1)`. Changing a parameter from either one to the other can constitute a breaking change for the callers of a function, since this changes the number of generic arguments.
 
 r[type.impl-trait.return]
 ## Abstract return types
 
 r[type.impl-trait.return.intro]
-> **Note:**
+> [!NOTE]
 > This is often called "impl Trait in return position".
 
 Functions can use `impl Trait` to return an abstract return type. These types stand in for another concrete type where the caller may only use the methods declared by the specified `Trait`.
@@ -179,3 +170,7 @@ r[type.impl-trait.constraint]
 ## Limitations
 
 `impl Trait` can only appear as a parameter or return type of a non-`extern` function. It cannot be the type of a `let` binding, field type, or appear inside a type alias.
+
+[`use<..>` bound]: ../trait-bounds.md#use-bounds
+[closures]: closure.md
+[trait object]: trait-object.md

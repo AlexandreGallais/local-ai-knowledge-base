@@ -1,17 +1,15 @@
 ---
 title: "Breaking change: .NET 11 obsoletions in cryptography"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/cryptography/11/obsolete-apis.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+titleSuffix: ""
+description: Learn about the cryptography APIs that have been marked as obsolete in .NET 11.
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
-
 # Cryptography obsoletions (.NET 11)
 
 Some cryptography APIs are marked as obsolete, starting in .NET 11.
 
-For obsoletions in other core .NET library areas, see API obsoletions with non-default diagnostic IDs (.NET 11).
+For obsoletions in other core .NET library areas, see [API obsoletions with non-default diagnostic IDs (.NET 11)](../../core-libraries/11/obsolete-apis.md).
 
 ## Previous behavior
 
@@ -25,7 +23,7 @@ The following table lists the custom diagnostic IDs and their corresponding warn
 
 | Diagnostic ID | Description | Severity |
 |---------------|-------------|----------|
-| SYSLIB0065 | The `set` accessor of `System.Security.Cryptography.AsnEncodedData.RawData` is obsolete. Use the constructor of the appropriate type to decode data, or use `System.Security.Cryptography.AsnEncodedData.CopyFrom(System.Security.Cryptography.AsnEncodedData)` for mutable scenarios. | Warning |
+| [SYSLIB0065](../../../../fundamentals/syslib-diagnostics/syslib0065.md) | The `set` accessor of <xref:System.Security.Cryptography.AsnEncodedData.RawData?displayProperty=nameWithType> is obsolete. Use the constructor of the appropriate type to decode data, or use <xref:System.Security.Cryptography.AsnEncodedData.CopyFrom(System.Security.Cryptography.AsnEncodedData)?displayProperty=nameWithType> for mutable scenarios. | Warning |
 
 ## Version introduced
 
@@ -33,7 +31,7 @@ The following table lists the custom diagnostic IDs and their corresponding warn
 
 ## Type of breaking change
 
-These obsoletions can affect source compatibility.
+These obsoletions can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Recommended action
 
@@ -43,9 +41,9 @@ If you must keep use the obsolete APIs, suppress the warning by using the custom
 
 ### SYSLIB0065
 
-- `set` accessor of `System.Security.Cryptography.AsnEncodedData.RawData`
+- `set` accessor of <xref:System.Security.Cryptography.AsnEncodedData.RawData?displayProperty=fullName>
 
 ## See also
 
-- SYSLIB0065: AsnEncodedData.RawData setter is obsolete
-- API obsoletions with non-default diagnostic IDs (.NET 11)
+- [SYSLIB0065: AsnEncodedData.RawData setter is obsolete](../../../../fundamentals/syslib-diagnostics/syslib0065.md)
+- [API obsoletions with non-default diagnostic IDs (.NET 11)](../../core-libraries/11/obsolete-apis.md)

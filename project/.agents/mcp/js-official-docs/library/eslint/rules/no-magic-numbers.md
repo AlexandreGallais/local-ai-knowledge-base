@@ -1,13 +1,8 @@
 ---
-title: "no-magic-numbers"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-magic-numbers.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-magic-numbers
+rule_type: suggestion
 ---
 
-# no-magic-numbers
 
 'Magic numbers' are numbers that occur multiple times in code without an explicit meaning.
 They should preferably be replaced by named constants.
@@ -24,7 +19,7 @@ are declared as constants to make their meaning explicit.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-magic-numbers: "error"*/
@@ -33,7 +28,9 @@ const dutyFreePrice = 100,
     finalPrice = dutyFreePrice + (dutyFreePrice * 0.25);
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint no-magic-numbers: "error"*/
@@ -43,7 +40,9 @@ const data = ['foo', 'bar', 'baz'];
 const dataLast = data[2];
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint no-magic-numbers: "error"*/
@@ -53,9 +52,11 @@ let SECONDS;
 SECONDS = 60;
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-magic-numbers: "error"*/
@@ -65,6 +66,8 @@ const TAX = 0.25;
 const dutyFreePrice = 100,
     finalPrice = dutyFreePrice + (dutyFreePrice * TAX);
 ```
+
+:::
 
 ## Options
 
@@ -78,7 +81,7 @@ If it's a string, the text must be parsed as `bigint` literal (e.g., `"100n"`).
 
 Examples of **correct** code for the sample `{ "ignore": [1] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-magic-numbers: ["error", { "ignore": [1] }]*/
@@ -87,15 +90,19 @@ const data = ['foo', 'bar', 'baz'];
 const dataLast = data.length && data[data.length - 1];
 ```
 
+:::
+
 Examples of **correct** code for the sample `{ "ignore": ["1n"] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-magic-numbers: ["error", { "ignore": ["1n"] }]*/
 
 foo(1n);
 ```
+
+:::
 
 ### ignoreArrayIndexes
 
@@ -105,11 +112,11 @@ This option allows only valid array indexes: numbers that will be coerced to one
 
 Arrays are objects, so they can have property names such as `"-1"` or `"2.5"`. However, those are just "normal" object properties that don't represent array elements. They don't influence the array's `length`, and they are ignored by array methods like `.map` or `.forEach`.
 
-Additionally, since the maximum array length is 232 - 1, all values above 232 - 2 also represent just normal property names and are thus not considered to be array indexes.
+Additionally, since the maximum [array length](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/length) is 2<sup>32</sup> - 1, all values above 2<sup>32</sup> - 2 also represent just normal property names and are thus not considered to be array indexes.
 
 Examples of **correct** code for the `{ "ignoreArrayIndexes": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-magic-numbers: ["error", { "ignoreArrayIndexes": true }]*/
@@ -132,9 +139,11 @@ a = data[10n]; // same as data[10], 10n will be coerced to "10"
 a = data[4294967294]; // max array index
 ```
 
+:::
+
 Examples of **incorrect** code for the `{ "ignoreArrayIndexes": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-magic-numbers: ["error", { "ignoreArrayIndexes": true }]*/
@@ -154,13 +163,15 @@ a = data[4294967295]; // above the max array index
 a = data[1e500]; // same as data["Infinity"]
 ```
 
+:::
+
 ### ignoreDefaultValues
 
 A boolean to specify if numbers used in default value assignments are considered okay. `false` by default.
 
 Examples of **correct** code for the `{ "ignoreDefaultValues": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-magic-numbers: ["error", { "ignoreDefaultValues": true }]*/
@@ -170,7 +181,9 @@ const { tax = 0.25 } = accountancy;
 function mapParallel(concurrency = 3) { /***/ }
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint no-magic-numbers: ["error", { "ignoreDefaultValues": true }]*/
@@ -179,13 +192,15 @@ let head;
 [head = 100] = []
 ```
 
+:::
+
 ### ignoreClassFieldInitialValues
 
 A boolean to specify if numbers used as initial values of class fields are considered okay. `false` by default.
 
 Examples of **correct** code for the `{ "ignoreClassFieldInitialValues": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-magic-numbers: ["error", { "ignoreClassFieldInitialValues": true }]*/
@@ -199,9 +214,11 @@ class C {
 }
 ```
 
+:::
+
 Examples of **incorrect** code for the `{ "ignoreClassFieldInitialValues": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-magic-numbers: ["error", { "ignoreClassFieldInitialValues": true }]*/
@@ -215,13 +232,15 @@ class D {
 }
 ```
 
+:::
+
 ### enforceConst
 
 A boolean to specify if we should check for the const keyword in variable declaration of numbers. `false` by default.
 
 Examples of **incorrect** code for the `{ "enforceConst": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-magic-numbers: ["error", { "enforceConst": true }]*/
@@ -232,13 +251,15 @@ let dutyFreePrice = 100,
     finalPrice = dutyFreePrice + (dutyFreePrice * TAX);
 ```
 
+:::
+
 ### detectObjects
 
 A boolean to specify if we should detect numbers when setting object properties for example. `false` by default.
 
 Examples of **incorrect** code for the `{ "detectObjects": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-magic-numbers: ["error", { "detectObjects": true }]*/
@@ -251,9 +272,11 @@ const dutyFreePrice = 100,
     finalPrice = dutyFreePrice + (dutyFreePrice * magic.tax);
 ```
 
+:::
+
 Examples of **correct** code for the `{ "detectObjects": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-magic-numbers: ["error", { "detectObjects": true }]*/
@@ -268,13 +291,15 @@ const dutyFreePrice = 100,
     finalPrice = dutyFreePrice + (dutyFreePrice * magic.tax);
 ```
 
+:::
+
 ### ignoreEnums (TypeScript only)
 
 Whether enums used in TypeScript are considered okay. `false` by default.
 
 Examples of **incorrect** code for the `{ "ignoreEnums": false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /*eslint no-magic-numbers: ["error", { "ignoreEnums": false }]*/
@@ -284,9 +309,11 @@ enum foo {
 }
 ```
 
+:::
+
 Examples of **correct** code for the `{ "ignoreEnums": true }` option:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint no-magic-numbers: ["error", { "ignoreEnums": true }]*/
@@ -296,13 +323,15 @@ enum foo {
 }
 ```
 
+:::
+
 ### ignoreNumericLiteralTypes (TypeScript only)
 
 Whether numbers used in TypeScript numeric literal types are considered okay. `false` by default.
 
 Examples of **incorrect** code for the `{ "ignoreNumericLiteralTypes": false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /*eslint no-magic-numbers: ["error", { "ignoreNumericLiteralTypes": false }]*/
@@ -310,9 +339,11 @@ Examples of **incorrect** code for the `{ "ignoreNumericLiteralTypes": false }` 
 type Foo = 1 | 2 | 3;
 ```
 
+:::
+
 Examples of **correct** code for the `{ "ignoreNumericLiteralTypes": true }` option:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint no-magic-numbers: ["error", { "ignoreNumericLiteralTypes": true }]*/
@@ -320,13 +351,15 @@ Examples of **correct** code for the `{ "ignoreNumericLiteralTypes": true }` opt
 type Foo = 1 | 2 | 3;
 ```
 
+:::
+
 ### ignoreReadonlyClassProperties (TypeScript only)
 
 Whether numbers used in TypeScript readonly class properties are considered okay. `false` by default.
 
 Examples of **incorrect** code for the `{ "ignoreReadonlyClassProperties": false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /*eslint no-magic-numbers: ["error", { "ignoreReadonlyClassProperties": false }]*/
@@ -339,9 +372,11 @@ class Foo {
 }
 ```
 
+:::
+
 Examples of **correct** code for the `{ "ignoreReadonlyClassProperties": true }` option:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint no-magic-numbers: ["error", { "ignoreReadonlyClassProperties": true }]*/
@@ -354,13 +389,15 @@ class Foo {
 }
 ```
 
+:::
+
 ### ignoreTypeIndexes (TypeScript only)
 
 Whether numbers used to index types are okay. `false` by default.
 
 Examples of **incorrect** code for the `{ "ignoreTypeIndexes": false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /*eslint no-magic-numbers: ["error", { "ignoreTypeIndexes": false }]*/
@@ -369,9 +406,11 @@ type Foo = Bar[0];
 type Baz = Parameters<Foo>[2];
 ```
 
+:::
+
 Examples of **correct** code for the `{ "ignoreTypeIndexes": true }` option:
 
-**Correct:**
+::: correct
 
 ```ts
 /*eslint no-magic-numbers: ["error", { "ignoreTypeIndexes": true }]*/
@@ -379,3 +418,5 @@ Examples of **correct** code for the `{ "ignoreTypeIndexes": true }` option:
 type Foo = Bar[0];
 type Baz = Parameters<Foo>[2];
 ```
+
+:::

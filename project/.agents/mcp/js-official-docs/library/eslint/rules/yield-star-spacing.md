@@ -1,13 +1,9 @@
 ---
-title: "yield-star-spacing"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/yield-star-spacing.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: yield-star-spacing
+rule_type: layout
+further_reading:
+- https://leanpub.com/understandinges6/read/#leanpub-auto-generators
 ---
-
-# yield-star-spacing
 
 ## Rule Details
 
@@ -44,7 +40,7 @@ The option also has a string shorthand:
 
 Examples of **correct** code for this rule with the default `"after"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint yield-star-spacing: ["error", "after"]*/
@@ -54,11 +50,13 @@ function* generator() {
 }
 ```
 
+:::
+
 ### before
 
 Examples of **correct** code for this rule with the `"before"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint yield-star-spacing: ["error", "before"]*/
@@ -68,11 +66,13 @@ function *generator() {
 }
 ```
 
+:::
+
 ### both
 
 Examples of **correct** code for this rule with the `"both"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint yield-star-spacing: ["error", "both"]*/
@@ -82,11 +82,13 @@ function * generator() {
 }
 ```
 
+:::
+
 ### neither
 
 Examples of **correct** code for this rule with the `"neither"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint yield-star-spacing: ["error", "neither"]*/
@@ -95,6 +97,8 @@ function*generator() {
   yield*other();
 }
 ```
+
+:::
 
 ## When Not To Use It
 

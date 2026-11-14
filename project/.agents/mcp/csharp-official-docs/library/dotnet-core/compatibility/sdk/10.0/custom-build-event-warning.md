@@ -1,15 +1,14 @@
 ---
 title: "Breaking change - MSBUILDCUSTOMBUILDEVENTWARNING escape hatch removed"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/custom-build-event-warning.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change where the MSBUILDCUSTOMBUILDEVENTWARNING environment variable is no longer supported."
+ms.date: 2/25/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/44998
 ---
 
 # MSBUILDCUSTOMBUILDEVENTWARNING escape hatch removed
 
-The `MSBUILDCUSTOMBUILDEVENTWARNING` environment variable, which previously allowed custom build events derived from `Microsoft.Build.Framework.BuildEventArgs`, is no longer supported.
+The `MSBUILDCUSTOMBUILDEVENTWARNING` environment variable, which previously allowed custom build events derived from <xref:Microsoft.Build.Framework.BuildEventArgs>, is no longer supported.
 
 ## Version introduced
 
@@ -25,21 +24,21 @@ Starting in .NET 10, the value of the `MSBUILDCUSTOMBUILDEVENTWARNING` environme
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-The escape hatch mechanism provided by the `MSBUILDCUSTOMBUILDEVENTWARNING` environment variable was a temporary workaround. For more information, see the original breaking change.
+The escape hatch mechanism provided by the `MSBUILDCUSTOMBUILDEVENTWARNING` environment variable was a temporary workaround. For more information, see the [original breaking change](../8.0/custombuildeventargs.md).
 
 ## Recommended action
 
 Use one of the following newly introduced, built-in events for extensibility instead of your custom derived build event:
 
-- `Microsoft.Build.Framework.ExtendedCustomBuildEventArgs`
-- `Microsoft.Build.Framework.ExtendedBuildErrorEventArgs`
-- `Microsoft.Build.Framework.ExtendedBuildMessageEventArgs`
-- `Microsoft.Build.Framework.ExtendedBuildWarningEventArgs`
+- <xref:Microsoft.Build.Framework.ExtendedCustomBuildEventArgs>
+- <xref:Microsoft.Build.Framework.ExtendedBuildErrorEventArgs>
+- <xref:Microsoft.Build.Framework.ExtendedBuildMessageEventArgs>
+- <xref:Microsoft.Build.Framework.ExtendedBuildWarningEventArgs>
 
 ## Affected APIs
 
-- `Microsoft.Build.Framework.CustomBuildEventArgs`
+- <xref:Microsoft.Build.Framework.CustomBuildEventArgs?displayProperty=fullName>

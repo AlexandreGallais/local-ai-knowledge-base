@@ -1,12 +1,3 @@
----
-title: "inkex.transforms"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/transforms.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.transforms
 
 Provide transformation parsing to extensions
@@ -35,7 +26,7 @@ def to_polar_tuple(self) -> Tuple[float, Optional[float]]
 
 A tuple of the vector's magnitude and direction
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## ImmutableVector2d.dot
 
@@ -53,7 +44,7 @@ def cross(self, other: VectorLike) -> float
 
 Z component of the cross product of the vectors extended into 3D
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## ImmutableVector2d.is_close
 
@@ -80,7 +71,7 @@ def angle(self) -> Optional[float]
 
 The angle of the vector when represented in polar coordinates
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## ImmutableVector2d.from_polar
 
@@ -92,7 +83,7 @@ Creates a Vector2d from polar coordinates
 
 None is returned when theta is None and radius is not zero.
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## ImmutableVector2d.c2t
 
@@ -138,34 +129,36 @@ finding a point and printing svg ready output.
 
 Use with svg transform attribute input:
 
-tr = Transform("scale(45, 32)")
+  tr = Transform("scale(45, 32)")
 
 Use with triad matrix input (internal representation):
 
-tr = Transform(((1.0, 0.0, 0.0), (0.0, 1.0, 0.0)))
+  tr = Transform(((1.0, 0.0, 0.0), (0.0, 1.0, 0.0)))
 
 Use with hexad matrix input (i.e. svg matrix(...)):
 
-tr = Transform((1.0, 0.0, 0.0, 1.0, 0.0, 0.0))
+  tr = Transform((1.0, 0.0, 0.0, 1.0, 0.0, 0.0))
 
 Once you have a transformation you can operate tr * tr to compose,
 any of the above inputs are also valid operators for composing.
 
-> *Changed in version 1.4.*
-> Internally, the values are stored as complex values. For the hexad
-> `(a, c, e), (b, d, f)` we store:
->
->
-> a_1 &= \frac{a+d}{2} + j \frac{b-c}{2} \
-> a_2 &= \frac{a-d}{2} + j \frac{b+c}{2} \
-> a_3 &= e + f j
->
-> This makes application to another vector a multiplication / addition on
-> primitives: a_1p + a_2 \bar{p} + a_3
->
-> As with paths, this performance benefit is best reaped by using the methods
-> prefixed with "c", such as `capply_to_point()` (which is also what
-> `inkex.paths.Path.transform()` uses internally).
+.. versionchanged:: 1.4
+
+    Internally, the values are stored as complex values. For the hexad
+    ``(a, c, e), (b, d, f)`` we store:
+
+    .. math::
+
+        a_1 &= \frac{a+d}{2} + j \frac{b-c}{2} \\
+        a_2 &= \frac{a-d}{2} + j \frac{b+c}{2} \\
+        a_3 &= e + f j
+    
+    This makes application to another vector a multiplication / addition on 
+    primitives: :math:`a_1p + a_2 \bar{p} + a_3`
+
+    As with paths, this performance benefit is best reaped by using the methods
+    prefixed with "c", such as :func:`capply_to_point` (which is also what
+    :func:`inkex.paths.Path.transform` uses internally).
 
 ## Transform.matrix
 
@@ -335,7 +328,7 @@ def capply_to_point(self, point: complex) -> complex
 
 Transform a tuple (X, Y), return a complex
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## Transform.apply_to_point
 
@@ -353,7 +346,7 @@ def new_xywh(x: float, y: float, width: float, height: float) -> BoundingBox
 
 Create a bounding box using x, y, width and height
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## BoundingBox.area
 
@@ -363,7 +356,7 @@ def area(self)
 
 Return area of the bounding box
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## BoundingBox.size
 
@@ -373,7 +366,7 @@ def size(self)
 
 Returns a vector containing width and height of the bounding box
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## BoundingBox.anchor_distance
 
@@ -384,19 +377,19 @@ def anchor_distance(x: float, y: float, direction: Union[int, str] = 0, selbox: 
 Using the x,y returns a single sortable value based on direction and angle
 
 Args:
-x (float): input x coordinate
-y (float): input y coordinate
-direction (Union[int, str], optional): int/float (custom angle),
-tb/bt (top/bottom), lr/rl (left/right), ri/ro (radial). Defaults to 0.
-selbox (Optional[BoundingBox], optional): The bounding box of the whole
-selection for radial anchors. Defaults to None.
+    x (float): input x coordinate
+    y (float): input y coordinate
+    direction (Union[int, str], optional): int/float (custom angle),
+        tb/bt (top/bottom), lr/rl (left/right), ri/ro (radial). Defaults to 0.
+    selbox (Optional[BoundingBox], optional): The bounding box of the whole
+        selection for radial anchors. Defaults to None.
 
 Raises:
-ValueError: if radial distance is requested without the optional selbox
-parameter.
+    ValueError: if radial distance is requested without the optional selbox
+        parameter.
 
 Returns:
-float: the anchor distance with respect to the direction.
+    float: the anchor distance with respect to the direction.
 
 ## BoundingBox.resize
 
@@ -408,7 +401,7 @@ Enlarges / shrinks a bounding box by a constant value. If only delta_x
 is given, each side is moved by the same amount; if delta_y is given,
 different deltas are applied to horizontal and vertical intervals.
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## class DirectedLineSegment
 

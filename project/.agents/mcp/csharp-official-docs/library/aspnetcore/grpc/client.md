@@ -1,22 +1,21 @@
 ---
-title: "Call gRPC services with the .NET client"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/grpc/client.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Call gRPC services with the .NET client
+description: Learn how to call gRPC services with the .NET gRPC client.
+monikerRange: '>= aspnetcore-3.0'
+ms.date: 03/06/2025
 ---
-
 # Call gRPC services with the .NET client
 
-A .NET gRPC client library is available in the Grpc.Net.Client NuGet package. This document explains how to:
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+A .NET gRPC client library is available in the [Grpc.Net.Client](https://www.nuget.org/packages/Grpc.Net.Client) NuGet package. This document explains how to:
 
 * Configure a gRPC client to call gRPC services.
 * Make gRPC calls to unary, server streaming, client streaming, and bi-directional streaming methods.
 
 ## Configure gRPC client
 
-gRPC clients are concrete client types that are generated from `.proto` files. The concrete gRPC client has methods that translate to the gRPC service in the `.proto` file. For example, a service called `Greeter` generates a `GreeterClient` type with methods to call the service.
+gRPC clients are concrete client types that are [generated from `.proto` files](basics.md#generated-c-assets). The concrete gRPC client has methods that translate to the gRPC service in the `.proto` file. For example, a service called `Greeter` generates a `GreeterClient` type with methods to call the service.
 
 A gRPC client is created from a channel. Start by using `GrpcChannel.ForAddress` to create a channel, and then use the channel to create a gRPC client:
 
@@ -25,7 +24,7 @@ var channel = GrpcChannel.ForAddress("https://localhost:5001");
 var client = new Greet.GreeterClient(channel);
 ```
 
-A channel represents a long-lived connection to a gRPC service. When a channel is created, it's configured with options related to calling a service. For example, the `HttpClient` used to make calls, the maximum send and receive message size, and logging can be specified on `GrpcChannelOptions` and used with `GrpcChannel.ForAddress`. For a complete list of options, see client configuration options.
+A channel represents a long-lived connection to a gRPC service. When a channel is created, it's configured with options related to calling a service. For example, the `HttpClient` used to make calls, the maximum send and receive message size, and logging can be specified on `GrpcChannelOptions` and used with `GrpcChannel.ForAddress`. For a complete list of options, see [client configuration options](configuration.md#configure-client-options).
 
 ```csharp
 var channel = GrpcChannel.ForAddress("https://localhost:5001");
@@ -42,10 +41,10 @@ A gRPC client must use the same connection-level security as the called service.
 
 To configure a gRPC channel to use TLS, ensure the server address starts with `https`. For example, `GrpcChannel.ForAddress("https://localhost:5001")` uses HTTPS protocol. The gRPC channel automatically negotiates a connection secured by TLS and uses a secure connection to make gRPC calls.
 
-> **Tip:**
-> gRPC supports client certificate authentication over TLS. For information on configuring client certificates with a gRPC channel, see Authentication and authorization in gRPC for ASP.NET Core.
+> [!TIP]
+> gRPC supports client certificate authentication over TLS. For information on configuring client certificates with a gRPC channel, see [Authentication and authorization in gRPC for ASP.NET Core](authn-and-authz.md#client-certificate-authentication).
 
-To call unsecured gRPC services, ensure the server address starts with `http`. For example, `GrpcChannel.ForAddress("http://localhost:5000")` uses HTTP protocol. In .NET Core 3.1, additional configuration is required to call insecure gRPC services with the .NET client.
+To call unsecured gRPC services, ensure the server address starts with `http`. For example, `GrpcChannel.ForAddress("http://localhost:5000")` uses HTTP protocol. In .NET Core 3.1, additional configuration is required to [call insecure gRPC services with the .NET client](troubleshoot.md#call-insecure-grpc-services-with-net-client).
 
 ### Client performance
 
@@ -58,9 +57,9 @@ Channel and client performance and usage:
 * A channel and clients created from the channel can safely be used by multiple threads.
 * Clients created from the channel can make multiple simultaneous calls.
 
-`GrpcChannel.ForAddress` isn't the only option for creating a gRPC client. If calling gRPC services from an ASP.NET Core app, consider gRPC client factory integration. gRPC integration with `HttpClientFactory` offers a centralized alternative to creating gRPC clients.
+`GrpcChannel.ForAddress` isn't the only option for creating a gRPC client. If calling gRPC services from an ASP.NET Core app, consider [gRPC client factory integration](clientfactory.md). gRPC integration with `HttpClientFactory` offers a centralized alternative to creating gRPC clients.
 
-When calling gRPC methods, prefer using asynchronous programming with async and await. Making gRPC calls with blocking, such as using `Task.Result` or `Task.Wait()`, prevents other tasks from using a thread. This can lead to thread pool starvation and poor performance. It could cause the app to hang with a deadlock. For more information, see Asynchronous calls in client apps.
+When calling gRPC methods, prefer using [asynchronous programming with async and await](/dotnet/csharp/asynchronous-programming/). Making gRPC calls with blocking, such as using `Task.Result` or `Task.Wait()`, prevents other tasks from using a thread. This can lead to thread pool starvation and poor performance. It could cause the app to hang with a deadlock. For more information, see [Asynchronous calls in client apps](performance.md#asynchronous-calls-in-client-apps).
 
 ## Make gRPC calls
 
@@ -90,7 +89,7 @@ Each unary service method in the `.proto` file will result in two .NET methods o
 * `GreeterClient.SayHelloAsync` - calls the `Greeter.SayHello` service asynchronously. Can be awaited.
 * `GreeterClient.SayHello` - calls the `Greeter.SayHello` service and blocks until complete. Don't use in asynchronous code. Can cause performance and reliability issues.
 
-For more information, see Asynchronous calls in client apps.
+For more information, see [Asynchronous calls in client apps](performance.md#asynchronous-calls-in-client-apps).
 
 ### Server streaming call
 
@@ -193,7 +192,7 @@ The type returned from starting a bi-directional streaming call implements `IDis
 
 ## Access gRPC headers
 
-gRPC calls return response headers. HTTP response headers pass <example-value> metadata about a call that isn't related the returned message.
+gRPC calls return response headers. HTTP response headers pass name/value metadata about a call that isn't related the returned message.
 
 Headers are accessible using `ResponseHeadersAsync`, which returns a collection of metadata. Headers are typically returned with the response message; therefore, you must await them.
 
@@ -279,28 +278,12 @@ Configuring a gRPC call deadline is recommended because it provides an upper lim
 
 Configure `CallOptions.Deadline` to set a deadline for a gRPC call:
 
-```csharp
-var client = new Greet.GreeterClient(channel);
+[!code-csharp[](~/grpc/deadlines-cancellation/deadline-client.cs?highlight=7,12)]
 
-try
-{
-    var response = await client.SayHelloAsync(
-        new HelloRequest { Name = "World" },
-        deadline: DateTime.UtcNow.AddSeconds(5));
-    
-    // Greeting: Hello World
-    Console.WriteLine("Greeting: " + response.Message);
-}
-catch (RpcException ex) when (ex.StatusCode == StatusCode.DeadlineExceeded)
-{
-    Console.WriteLine("Greeting timeout.");
-}
-```
-
-For more information, see Reliable gRPC services with deadlines and cancellation.
+For more information, see [Reliable gRPC services with deadlines and cancellation](deadlines-cancellation.md#deadlines).
 
 ## Related content
 
-* gRPC client factory integration in .NET
-* Reliable gRPC services with deadlines and cancellation
-* gRPC Services with C#
+* [gRPC client factory integration in .NET](clientfactory.md)
+* [Reliable gRPC services with deadlines and cancellation](deadlines-cancellation.md)
+* [gRPC Services with C#](basics.md)

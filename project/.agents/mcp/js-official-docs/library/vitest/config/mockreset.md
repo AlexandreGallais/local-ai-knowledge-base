@@ -1,10 +1,6 @@
 ---
-title: "mockReset | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/mockreset.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: mockReset | Config
+outline: deep
 ---
 
 # mockReset
@@ -12,11 +8,11 @@ license: "MIT"
 - **Type:** `boolean`
 - **Default:** `false`
 
-Should Vitest automatically call `vi.resetAllMocks()` before each test.
+Should Vitest automatically call [`vi.resetAllMocks()`](/api/vi#vi-resetallmocks) before each test.
 
 This will clear mock history and reset each implementation.
 
-```js
+```js [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -26,5 +22,6 @@ export default defineConfig({
 })
 ```
 
-**Warning:**
-Be aware that this option may cause problems with async concurrent tests. If enabled, the completion of one test will clear the mock history and implementation for all mocks, including those currently being used by other tests in progress.
+::: warning
+Be aware that this option may cause problems with async [concurrent tests](/api/test#test-concurrent). If enabled, the completion of one test will clear the mock history and implementation for all mocks, including those currently being used by other tests in progress.
+:::

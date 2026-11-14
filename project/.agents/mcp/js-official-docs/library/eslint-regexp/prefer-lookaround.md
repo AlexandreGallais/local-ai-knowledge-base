@@ -1,15 +1,15 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/prefer-lookaround"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/prefer-lookaround.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "prefer lookarounds over capturing group that do not replace"
+since: "v1.2.0"
 ---
-
 # regexp/prefer-lookaround
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 > prefer lookarounds over capturing group that do not replace
 
@@ -60,5 +60,5 @@ This rule was introduced in eslint-plugin-regexp v1.2.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/prefer-lookaround.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/prefer-lookaround.ts)

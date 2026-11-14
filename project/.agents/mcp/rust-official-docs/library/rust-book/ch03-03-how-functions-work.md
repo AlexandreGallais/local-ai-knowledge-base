@@ -1,14 +1,3 @@
----
-title: "ch03-03-how-functions-work"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch03-03-how-functions-work.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch03-03-how-functions-work
-
 ## Functions
 
 Functions are prevalent in Rust code. You’ve already seen one of the most
@@ -20,18 +9,10 @@ Rust code uses _snake case_ as the conventional style for function and variable
 names, in which all letters are lowercase and underscores separate words.
 Here’s a program that contains an example function definition:
 
-Filename: src/main.rs
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn main() {
-    println!("Hello, world!");
-
-    another_function();
-}
-
-fn another_function() {
-    println!("Another function.");
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-16-functions/src/main.rs}}
 ```
 
 We define a function in Rust by entering `fn` followed by a function name and a
@@ -50,12 +31,7 @@ further. Place the `another_function` example in _src/main.rs_ and run it. You
 should see the following output:
 
 ```console
-$ cargo run
-   Compiling functions v0.1.0 (file:///projects/functions)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.28s
-     Running `target/debug/functions`
-Hello, world!
-Another function.
+{{#include ../listings/ch03-common-programming-concepts/no-listing-16-functions/output.txt}}
 ```
 
 The lines execute in the order in which they appear in the `main` function.
@@ -74,26 +50,16 @@ function.
 
 In this version of `another_function` we add a parameter:
 
-Filename: src/main.rs
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn main() {
-    another_function(5);
-}
-
-fn another_function(x: i32) {
-    println!("The value of x is: {x}");
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-17-functions-with-parameters/src/main.rs}}
 ```
 
 Try running this program; you should get the following output:
 
 ```console
-$ cargo run
-   Compiling functions v0.1.0 (file:///projects/functions)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.21s
-     Running `target/debug/functions`
-The value of x is: 5
+{{#include ../listings/ch03-common-programming-concepts/no-listing-17-functions-with-parameters/output.txt}}
 ```
 
 The declaration of `another_function` has one parameter named `x`. The type of
@@ -110,16 +76,10 @@ more-helpful error messages if it knows what types the function expects.
 When defining multiple parameters, separate the parameter declarations with
 commas, like this:
 
-Filename: src/main.rs
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn main() {
-    print_labeled_measurement(5, 'h');
-}
-
-fn print_labeled_measurement(value: i32, unit_label: char) {
-    println!("The measurement is: {value}{unit_label}");
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-18-functions-with-multiple-parameters/src/main.rs}}
 ```
 
 This example creates a function named `print_labeled_measurement` with two
@@ -132,11 +92,7 @@ project’s _src/main.rs_ file with the preceding example and run it using `carg
 run`:
 
 ```console
-$ cargo run
-   Compiling functions v0.1.0 (file:///projects/functions)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.31s
-     Running `target/debug/functions`
-The measurement is: 5h
+{{#include ../listings/ch03-common-programming-concepts/no-listing-18-functions-with-multiple-parameters/output.txt}}
 ```
 
 Because we called the function with `5` as the value for `value` and `'h'` as
@@ -162,13 +118,13 @@ We’ve actually already used statements and expressions. Creating a variable an
 assigning a value to it with the `let` keyword is a statement. In Listing 3-1,
 `let y = 6;` is a statement.
 
-**Listing 3-1: A `main` function declaration containing one statement** (src/main.rs)
+<Listing number="3-1" file-name="src/main.rs" caption="A `main` function declaration containing one statement">
 
 ```rust
-fn main() {
-    let y = 6;
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/listing-03-01/src/main.rs}}
 ```
+
+</Listing>
 
 Function definitions are also statements; the entire preceding example is a
 statement in itself. (As we’ll see shortly, calling a function is not a
@@ -177,42 +133,16 @@ statement, though.)
 Statements do not return values. Therefore, you can’t assign a `let` statement
 to another variable, as the following code tries to do; you’ll get an error:
 
-Filename: src/main.rs
+<span class="filename">Filename: src/main.rs</span>
 
-```rust
-fn main() {
-    let x = (let y = 6);
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-19-statements-vs-expressions/src/main.rs}}
 ```
 
 When you run this program, the error you’ll get looks like this:
 
 ```console
-$ cargo run
-   Compiling functions v0.1.0 (file:///projects/functions)
-error: expected expression, found `let` statement
- --> src/main.rs:2:14
-  |
-2 |     let x = (let y = 6);
-  |              ^^^
-  |
-  = note: only supported directly in conditions of `if` and `while` expressions
-
-warning: unnecessary parentheses around assigned value
- --> src/main.rs:2:13
-  |
-2 |     let x = (let y = 6);
-  |             ^         ^
-  |
-  = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
-help: remove these parentheses
-  |
-2 -     let x = (let y = 6);
-2 +     let x = let y = 6;
-  |
-
-warning: `functions` (bin "functions") generated 1 warning
-error: could not compile `functions` (bin "functions") due to 1 previous error; 1 warning emitted
+{{#include ../listings/ch03-common-programming-concepts/no-listing-19-statements-vs-expressions/output.txt}}
 ```
 
 The `let y = 6` statement does not return a value, so there isn’t anything for
@@ -229,22 +159,15 @@ expression that evaluates to the value `6`. Calling a function is an
 expression. Calling a macro is an expression. A new scope block created with
 curly brackets is an expression, for example:
 
-Filename: src/main.rs
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn main() {
-    let y = {
-        let x = 3;
-        x + 1
-    };
-
-    println!("The value of y is: {y}");
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-20-blocks-are-expressions/src/main.rs}}
 ```
 
 This expression:
 
-```rust
+```rust,ignore
 {
     let x = 3;
     x + 1
@@ -268,18 +191,10 @@ function by using the `return` keyword and specifying a value, but most
 functions return the last expression implicitly. Here’s an example of a
 function that returns a value:
 
-Filename: src/main.rs
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn five() -> i32 {
-    5
-}
-
-fn main() {
-    let x = five();
-
-    println!("The value of x is: {x}");
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-21-function-return-values/src/main.rs}}
 ```
 
 There are no function calls, macros, or even `let` statements in the `five`
@@ -288,11 +203,7 @@ Rust. Note that the function’s return type is specified too, as `-> i32`. Try
 running this code; the output should look like this:
 
 ```console
-$ cargo run
-   Compiling functions v0.1.0 (file:///projects/functions)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.30s
-     Running `target/debug/functions`
-The value of x is: 5
+{{#include ../listings/ch03-common-programming-concepts/no-listing-21-function-return-values/output.txt}}
 ```
 
 The `5` in `five` is the function’s return value, which is why the return type
@@ -311,55 +222,26 @@ because it’s an expression whose value we want to return.
 
 Let’s look at another example:
 
-Filename: src/main.rs
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn main() {
-    let x = plus_one(5);
-
-    println!("The value of x is: {x}");
-}
-
-fn plus_one(x: i32) -> i32 {
-    x + 1
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-22-function-parameter-and-return/src/main.rs}}
 ```
 
 Running this code will print `The value of x is: 6`. But what happens if we
 place a semicolon at the end of the line containing `x + 1`, changing it from
 an expression to a statement?
 
-Filename: src/main.rs
+<span class="filename">Filename: src/main.rs</span>
 
-```rust
-fn main() {
-    let x = plus_one(5);
-
-    println!("The value of x is: {x}");
-}
-
-fn plus_one(x: i32) -> i32 {
-    x + 1;
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-23-statements-dont-return-values/src/main.rs}}
 ```
 
 Compiling this code will produce an error, as follows:
 
 ```console
-$ cargo run
-   Compiling functions v0.1.0 (file:///projects/functions)
-error[E0308]: mismatched types
- --> src/main.rs:7:24
-  |
-7 | fn plus_one(x: i32) -> i32 {
-  |    --------            ^^^ expected `i32`, found `()`
-  |    |
-  |    implicitly returns `()` as its body has no tail or `return` expression
-8 |     x + 1;
-  |          - help: remove this semicolon to return this value
-
-For more information about this error, try `rustc --explain E0308`.
-error: could not compile `functions` (bin "functions") due to 1 previous error
+{{#include ../listings/ch03-common-programming-concepts/no-listing-23-statements-dont-return-values/output.txt}}
 ```
 
 The main error message, `mismatched types`, reveals the core issue with this

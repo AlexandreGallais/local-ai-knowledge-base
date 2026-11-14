@@ -1,10 +1,8 @@
 ---
-title: "Tracing .NET applications with PerfCollect."
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/trace-perfcollect-lttng.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Tracing .NET applications with PerfCollect.
+description: A tutorial that walks you through collecting a trace with perfcollect in .NET.
+ms.topic: tutorial
+ms.date: 04/10/2025
 ---
 
 # Trace .NET applications with PerfCollect
@@ -13,14 +11,14 @@ license: "CC-BY-4.0"
 
 When performance problems are encountered on Linux, collecting a trace with `perfcollect` can be used to gather detailed information about what was happening on the machine at the time of the performance problem.
 
-`perfcollect` is a bash script that uses Linux Trace Toolkit: next generation (LTTng) to collect events written from the runtime or any EventSource, as well as perf to collect CPU samples of the target process.
+`perfcollect` is a bash script that uses [Linux Trace Toolkit: next generation (LTTng)](https://lttng.org) to collect events written from the runtime or any [EventSource](xref:System.Diagnostics.Tracing.EventListener), as well as [perf](https://perf.wiki.kernel.org/) to collect CPU samples of the target process.
 
 ## Prepare your machine
 
 Follow these steps to prepare your machine to collect a performance trace with `perfcollect`.
 
-> **Note:**
-> If you're capturing from inside a container, your container must have the appropriate capabilities. The minimal required capabilities are `PERFMON` and `SYS_PTRACE`.  If the capture fails with the minimal set, add the `SYS_ADMIN` capability to the container.  For more information on tracing applications inside containers using PerfCollect, see Collect diagnostics in containers.
+> [!NOTE]
+> If you're capturing from inside a container, your container must have the appropriate capabilities. The minimal required capabilities are `PERFMON` and `SYS_PTRACE`.  If the capture fails with the minimal set, add the `SYS_ADMIN` capability to the container.  For more information on tracing applications inside containers using PerfCollect, see [Collect diagnostics in containers](./diagnostics-in-containers.md).
 
 1. Download `perfcollect`.
 
@@ -47,7 +45,7 @@ Follow these steps to prepare your machine to collect a performance trace with `
 
 Recent versions of .NET Core and the Linux perf tool support automatic resolution of method names for framework code.
 
-For resolving method names of native runtime DLLs (such as libcoreclr.so), `perfcollect` will resolve symbols for them when it converts the data, but only if the symbols for these binaries are present. See Getting Symbols for the Native Runtime section for details.
+For resolving method names of native runtime DLLs (such as libcoreclr.so), `perfcollect` will resolve symbols for them when it converts the data, but only if the symbols for these binaries are present. See [Getting Symbols for the Native Runtime](#get-symbols-for-the-native-runtime) section for details.
 
 ## Collect a trace
 
@@ -64,7 +62,7 @@ For resolving method names of native runtime DLLs (such as libcoreclr.so), `perf
     Collection started.  Press CTRL+C to stop.
     ```
 
-    > **Note:**
+    > [!NOTE]
     > LTTng had a breaking change between versions 2.12 and 2.13. The .NET runtime currently supports version 2.12. If your Linux distribution has adopted 2.13 or later then we recommend disabling the LTTng portion of the perfcollect functionality. To do this add the option '-nolttng' to the perfcollect command-line and in step 3 do not set the DOTNET_EnableEventLog environment variable.
 
 1. **[App]** Set up the application shell with the following environment variables - this enables tracing configuration of CoreCLR.
@@ -75,7 +73,7 @@ For resolving method names of native runtime DLLs (such as libcoreclr.so), `perf
     export DOTNET_EnableEventLog=1
     ```
 
-    > **Note:**
+    > [!NOTE]
     > When executing the app with .NET 7, you must also set `DOTNET_EnableWriteXorExecute=0` in addition to the preceding environment variables.  For example:
     >
     > ```bash
@@ -89,7 +87,7 @@ For resolving method names of native runtime DLLs (such as libcoreclr.so), `perf
     dotnet run
     ```
 
-1. **[Trace]** Stop collection - press `Ctrl`+`C`.
+1. **[Trace]** Stop collection - press <kbd>Ctrl</kbd>+<kbd>C</kbd>.
 
     ```output
     ^C
@@ -112,7 +110,7 @@ For resolving method names of native runtime DLLs (such as libcoreclr.so), `perf
 
 ## View a trace
 
-There are a number of options for viewing the trace that was collected. Traces are best viewed using PerfView on Windows, but they can be viewed directly on Linux using `PerfCollect` itself or `TraceCompass`.
+There are a number of options for viewing the trace that was collected. Traces are best viewed using [PerfView](https://aka.ms/perfview) on Windows, but they can be viewed directly on Linux using `PerfCollect` itself or `TraceCompass`.
 
 ### Use PerfCollect to view the trace file
 
@@ -160,15 +158,15 @@ PerfView will display the list of views that are supported based on the data con
 
 For more information on how to interpret views in PerfView, see help links in the view itself, or from the main window in PerfView, choose **Help->Users Guide**.
 
-> **Note:**
-> Events written via `System.Diagnostics.Tracing.EventSource` API (including the events from Framework) won't show up under their provider name. Instead, they are written as `EventSourceEvent` events under `Microsoft-Windows-DotNETRuntime` provider and their payloads are JSON serialized.
+> [!NOTE]
+> Events written via <xref:System.Diagnostics.Tracing.EventSource?displayProperty=nameWithType> API (including the events from Framework) won't show up under their provider name. Instead, they are written as `EventSourceEvent` events under `Microsoft-Windows-DotNETRuntime` provider and their payloads are JSON serialized.
 
-> **Note:**
+> [!NOTE]
 > If you observe `[unknown] /memfd:doublemapper` frames in method names and callstacks, set `DOTNET_EnableWriteXorExecute=0` before running the app that you're tracing with perfcollect.
 
 ### Use TraceCompass to open the trace file
 
-Eclipse TraceCompass is another option you can use to view the traces. `TraceCompass` works on Linux machines as well, so you don't need to move your trace over to a Windows machine. To use `TraceCompass` to open your trace file, you will need to unzip the file.
+[Eclipse TraceCompass](https://www.eclipse.org/tracecompass/) is another option you can use to view the traces. `TraceCompass` works on Linux machines as well, so you don't need to move your trace over to a Windows machine. To use `TraceCompass` to open your trace file, you will need to unzip the file.
 
 ```bash
 unzip myTrace.trace.zip
@@ -178,13 +176,13 @@ unzip myTrace.trace.zip
 
 You can open the CTF trace file in `TraceCompass` by selecting `File -> Open Trace` and select the `metadata` file.
 
-For more details, please refer to `TraceCompass` documentation.
+For more details, please refer to [`TraceCompass` documentation](https://www.eclipse.org/tracecompass/).
 
 ## Get symbols for the native runtime
 
 Most of the time you are interested in your own code, which `perfcollect` resolves by default. Sometimes it is useful to see what is going on inside the .NET DLLs (which is what the last section was about), but sometimes what is going on in the native runtime dlls (typically libcoreclr.so), is interesting.  `perfcollect` will resolve the symbols for these when it converts its data, but only if the symbols for these native DLLs are present (and are beside the library they are for).
 
-There is a global command called dotnet-symbol that does this. To use dotnet-symbol to get native runtime symbols:
+There is a global command called [dotnet-symbol](https://github.com/dotnet/symstore/blob/main/src/dotnet-symbol/README.md#symbol-downloader-dotnet-cli-extension) that does this. To use dotnet-symbol to get native runtime symbols:
 
 1. Install `dotnet-symbol`:
 
@@ -211,7 +209,7 @@ After this, you should get symbolic names for the native dlls when you run `perf
 
 ## Collect in a Docker container
 
-For more information on how to use `perfcollect` in container environments, see Collect diagnostics in containers.
+For more information on how to use `perfcollect` in container environments, see [Collect diagnostics in containers](./diagnostics-in-containers.md).
 
 ## Learn more about collection options
 

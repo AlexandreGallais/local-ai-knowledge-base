@@ -1,12 +1,9 @@
 ---
-title: "dotnet workload install command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-workload-install.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet workload install command
+description: The 'dotnet workload install' command installs optional workloads.
+ms.date: 11/12/2025
+no-loc: [dotnet workload install]
 ---
-
 # dotnet workload install
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -29,16 +26,16 @@ dotnet workload install -?|-h|--help
 
 ## Description
 
-The `dotnet workload install` command installs one or more *optional workloads*. Optional workloads can be installed on top of the .NET SDK to provide support for various application types, such as .NET MAUI and Blazor WebAssembly AOT.
+The `dotnet workload install` command installs one or more *optional workloads*. Optional workloads can be installed on top of the .NET SDK to provide support for various application types, such as [.NET MAUI](/dotnet/maui/what-is-maui) and [Blazor WebAssembly AOT](https://devblogs.microsoft.com/aspnet/asp-net-core-updates-in-net-6-preview-4/#blazor-webassembly-ahead-of-time-aot-compilation).
 
 When the command is in `workload-set` update mode, workload versions installed:
 
 * Are from the latest workload set or a workload set version specified in a global.json or `--version` option.
 * Might not be the latest version available of each individual workload. For example, the `install` command won't install a newer workload set if you previously used the `--version` flag.
 
-For more information, see .NET SDK workload sets. `workload-set` update mode is available since 8.0.400 SDK.
+For more information, see [.NET SDK workload sets](dotnet-workload-sets.md). `workload-set` update mode is available since 8.0.400 SDK.
 
-Use dotnet workload search to learn what workloads are available to install.
+Use [dotnet workload search](dotnet-workload-search.md) to learn what workloads are available to install.
 
 ### When to run elevated
 
@@ -46,7 +43,7 @@ For macOS and Linux SDK installations that are installed to a protected director
 
 ### Results vary by SDK version
 
-The `dotnet workload` commands operate in the context of specific SDK versions. Suppose you have both .NET 6.0.100 SDK and .NET 6.0.200 SDK installed. The `dotnet workload` commands will give different results depending on which SDK version you select. This behavior applies to major and minor version and feature band differences, not to patch version differences. For example, .NET SDK 6.0.101 and 6.0.102 give the same results, whereas 6.0.100 and 6.0.200 give different results. You can specify the SDK version by using the *global.json* file.
+The `dotnet workload` commands operate in the context of specific SDK versions. Suppose you have both .NET 6.0.100 SDK and .NET 6.0.200 SDK installed. The `dotnet workload` commands will give different results depending on which SDK version you select. This behavior applies to major and minor version and feature band differences, not to patch version differences. For example, .NET SDK 6.0.101 and 6.0.102 give the same results, whereas 6.0.100 and 6.0.200 give different results. You can specify the SDK version by using the [*global.json* file](global-json.md).
 
 ### Advertising manifests
 
@@ -56,14 +53,14 @@ The `dotnet workload list` command compares the versions of installed workloads 
 
 To enable these notifications, the latest available versions of the manifests are downloaded and stored as *advertising manifests*.  These downloads happen asynchronously in the background when any of the following commands are run.
 
-* dotnet build
-* dotnet pack
-* dotnet publish
-* dotnet restore
-* dotnet run
-* dotnet test
+* [dotnet build](dotnet-build.md)
+* [dotnet pack](dotnet-pack.md)
+* [dotnet publish](dotnet-publish.md)
+* [dotnet restore](dotnet-restore.md)
+* [dotnet run](dotnet-run.md)
+* [dotnet test](dotnet-test.md)
 
-If a command finishes before the manifest download finishes, the download is stopped. The download is tried again the next time one of these commands is run. You can set environment variables to disable these background downloads or control their frequency. By default, they don't happen more than once a day.
+If a command finishes before the manifest download finishes, the download is stopped. The download is tried again the next time one of these commands is run. You can set environment variables to [disable these background downloads](dotnet-environment-variables.md#dotnet_cli_workload_update_notify_disable) or [control their frequency](dotnet-environment-variables.md#dotnet_cli_workload_update_notify_interval_hours). By default, they don't happen more than once a day.
 
 You can prevent the `dotnet workload install` command from doing manifest downloads by using the `--skip-manifest-update` option.
 
@@ -73,57 +70,33 @@ The `dotnet workload update` command also downloads advertising manifests. The d
 
 - **`WORKLOAD_ID`...**
 
-  The workload ID or multiple IDs to install. Use dotnet workload search to learn what workloads are available.
+  The workload ID or multiple IDs to install. Use [dotnet workload search](dotnet-workload-search.md) to learn what workloads are available.
 
 ## Options
 
-- **`--configfile <FILE>`**
+- [!INCLUDE [config-file](includes/cli-configfile.md)]
 
-The NuGet configuration file (*nuget.config*) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see Common NuGet Configurations.
+- [!INCLUDE [disable-parallel](includes/cli-disable-parallel.md)]
 
-- **`--disable-parallel`**
+- [!INCLUDE [help](includes/cli-help.md)]
 
-Prevents restoring multiple projects in parallel.
+- [!INCLUDE [ignore-failed-sources](includes/cli-ignore-failed-sources.md)]
 
-- **`-?|-h|--help`**
+- [!INCLUDE [include-previews](includes/cli-include-previews.md)]
 
-Prints out a description of how to use the command.
+- [!INCLUDE [interactive](includes/cli-interactive.md)]
 
-- **`--ignore-failed-sources`**
+- [!INCLUDE [no-cache](includes/cli-no-cache.md)]
 
-Treats package source failures as warnings.
+- [!INCLUDE [skip-manifest-update](includes/cli-skip-manifest-update.md)]
 
-- **`--include-previews`**
+- [!INCLUDE [source](includes/cli-source.md)]
 
-Allows prerelease workload manifests.
+- [!INCLUDE [temp-dir](includes/cli-temp-dir.md)]
 
-- **`--interactive`**
+- [!INCLUDE [verbosity](includes/cli-verbosity-packages.md)]
 
-Allows the command to stop and wait for user input or action. For example, to complete authentication.
-
-- **`--no-cache`**
-
-Prevents caching of packages and http requests.
-
-- **`--skip-manifest-update`**
-
-Skip updating the workload manifests. The workload manifests define what assets and versions need to be installed for each workload.
-
-- **`-s|--source `**
-
-Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the *nuget.config* files. Multiple sources can be provided by specifying this option multiple times.
-
-- **`--temp-dir `**
-
-Specify the temporary directory used to download and extract NuGet packages (must be secure).
-
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. The default is `minimal`. If you specify `detailed` or `diagnostic` verbosity, the command displays information about the Nuget packages that it downloads.
-
-- **`version <WORKLOAD_VERSION>`**
-
-A workload version to display, or one or more workloads and their versions joined by the `@` character. Support for the `@` character is available since 9.0.200 SDK.
+- [!INCLUDE [workload-version](includes/cli-workload-version.md)]
 
 ## Examples
 
@@ -132,9 +105,9 @@ A workload version to display, or one or more workloads and their versions joine
   ```dotnetcli
   dotnet workload install maui
   ```
-
+  
 - Install the `maui-android` and `maui-ios` workloads:
-
+  
   ```dotnetcli
   dotnet workload install maui-android maui-ios
   ```
@@ -142,5 +115,5 @@ A workload version to display, or one or more workloads and their versions joine
 - Install the workload version specified by the `@` character:
 
   ```dotnetcli
-  dotnet workload install user@example.com
+  dotnet workload install maui@10.0.100
   ```

@@ -1,12 +1,3 @@
----
-title: "StringWriter class (java.io)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/io/StringWriter.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # StringWriter class (java.io)
 
 ```java
@@ -15,12 +6,13 @@ public class StringWriter extends Writer
 
 A character stream that collects its output in a string buffer, which can
 then be used to construct a string.
-
-Closing a `StringWriter` has no effect. The methods in this class
+<p>
+Closing a {@code StringWriter} has no effect. The methods in this class
 can be called after the stream has been closed without generating an
-`IOException`.
+{@code IOException}.
 
-**Since:** 1.1
+@author      Mark Reinhold
+@since       1.1
 
 ## StringWriter.StringWriter()
 
@@ -40,13 +32,12 @@ public StringWriter(int initialSize)
 Create a new string writer using the specified initial string-buffer
 size.
 
-Parameters:
+@param initialSize
+       The number of {@code char} values that will fit into this buffer
+       before it is automatically expanded
 
-- `initialSize`: The number of `char` values that will fit into this buffer before it is automatically expanded
-
-Throws:
-
-- `IllegalArgumentException`: If `initialSize` is negative
+@throws IllegalArgumentException
+        If {@code initialSize} is negative
 
 ## StringWriter.write(int)
 
@@ -64,15 +55,14 @@ public void write(char[] cbuf, int off, int len)
 
 Write a portion of an array of characters.
 
-Parameters:
+@param  cbuf  Array of characters
+@param  off   Offset from which to start writing characters
+@param  len   Number of characters to write
 
-- `cbuf`: Array of characters
-- `off`: Offset from which to start writing characters
-- `len`: Number of characters to write
-
-Throws:
-
-- `IndexOutOfBoundsException`: If `off` is negative, or `len` is negative, or `off + len` is negative or greater than the length of the given array
+@throws  IndexOutOfBoundsException
+         If {@code off} is negative, or {@code len} is negative,
+         or {@code off + len} is negative or greater than the length
+         of the given array
 
 ## StringWriter.write(String)
 
@@ -90,15 +80,14 @@ public void write(String str, int off, int len)
 
 Write a portion of a string.
 
-Parameters:
+@param  str  String to be written
+@param  off  Offset from which to start writing characters
+@param  len  Number of characters to write
 
-- `str`: String to be written
-- `off`: Offset from which to start writing characters
-- `len`: Number of characters to write
-
-Throws:
-
-- `IndexOutOfBoundsException`: If `off` is negative, or `len` is negative, or `off + len` is negative or greater than the length of the given string
+@throws  IndexOutOfBoundsException
+         If {@code off} is negative, or {@code len} is negative,
+         or {@code off + len} is negative or greater than the length
+         of the given string
 
 ## StringWriter.append(CharSequence)
 
@@ -108,23 +97,28 @@ public StringWriter append(CharSequence csq)
 
 Appends the specified character sequence to this writer.
 
- An invocation of this method of the form `out.append(csq)`
-when `csq` is not `null`, behaves in exactly the same way
+<p> An invocation of this method of the form {@code out.append(csq)}
+when {@code csq} is not {@code null}, behaves in exactly the same way
 as the invocation
 
- Depending on the specification of `toString` for the
-character sequence `csq`, the entire sequence may not be
-appended. For instance, invoking the `toString` method of a
+{@snippet lang=java :
+    out.write(csq.toString())
+}
+
+<p> Depending on the specification of {@code toString} for the
+character sequence {@code csq}, the entire sequence may not be
+appended. For instance, invoking the {@code toString} method of a
 character buffer will return a subsequence whose content depends upon
 the buffer's position and limit.
 
-Parameters:
+@param  csq
+        The character sequence to append.  If {@code csq} is
+        {@code null}, then the four characters {@code "null"} are
+        appended to this writer.
 
-- `csq`: The character sequence to append. If `csq` is `null`, then the four characters `"null"` are appended to this writer.
+@return  This writer
 
-**Returns:** This writer
-
-**Since:** 1.5
+@since  1.5
 
 ## StringWriter.append(CharSequence, int, int)
 
@@ -134,24 +128,36 @@ public StringWriter append(CharSequence csq, int start, int end)
 
 Appends a subsequence of the specified character sequence to this writer.
 
- An invocation of this method of the form
-`out.append(csq, start, end)` when `csq`
-is not `null`, behaves in
+<p> An invocation of this method of the form
+{@code out.append(csq, start, end)} when {@code csq}
+is not {@code null}, behaves in
 exactly the same way as the invocation
 
-Parameters:
+{@snippet lang=java :
+    out.write(csq.subSequence(start, end).toString())
+}
 
-- `csq`: The character sequence from which a subsequence will be appended. If `csq` is `null`, then characters will be appended as if `csq` contained the four characters `"null"`.
-- `start`: The index of the first character in the subsequence
-- `end`: The index of the character following the last character in the subsequence
+@param  csq
+        The character sequence from which a subsequence will be
+        appended.  If {@code csq} is {@code null}, then characters
+        will be appended as if {@code csq} contained the four
+        characters {@code "null"}.
 
-**Returns:** This writer
+@param  start
+        The index of the first character in the subsequence
 
-**Since:** 1.5
+@param  end
+        The index of the character following the last character in the
+        subsequence
 
-Throws:
+@return  This writer
 
-- `IndexOutOfBoundsException`: If `start` or `end` are negative, `start` is greater than `end`, or `end` is greater than `csq.length()`
+@throws  IndexOutOfBoundsException
+         If {@code start} or {@code end} are negative, {@code start}
+         is greater than {@code end}, or {@code end} is greater than
+         {@code csq.length()}
+
+@since  1.5
 
 ## StringWriter.append(char)
 
@@ -161,16 +167,19 @@ public StringWriter append(char c)
 
 Appends the specified character to this writer.
 
- An invocation of this method of the form `out.append(c)`
+<p> An invocation of this method of the form {@code out.append(c)}
 behaves in exactly the same way as the invocation
 
-Parameters:
+{@snippet lang=java :
+    out.write(c)
+}
 
-- `c`: The 16-bit character to append
+@param  c
+        The 16-bit character to append
 
-**Returns:** This writer
+@return  This writer
 
-**Since:** 1.5
+@since 1.5
 
 ## StringWriter.toString()
 
@@ -188,7 +197,7 @@ public StringBuffer getBuffer()
 
 Return the string buffer itself.
 
-**Returns:** StringBuffer holding the current buffer value.
+@return StringBuffer holding the current buffer value.
 
 ## StringWriter.flush()
 
@@ -198,7 +207,7 @@ public void flush()
 
 Flush the stream.
 
- The `flush` method of `StringWriter` does nothing.
+<p> The {@code flush} method of {@code StringWriter} does nothing.
 
 ## StringWriter.close()
 
@@ -206,6 +215,6 @@ Flush the stream.
 public void close() throws IOException
 ```
 
-Closing a `StringWriter` has no effect. The methods in this
+Closing a {@code StringWriter} has no effect. The methods in this
 class can be called after the stream has been closed without generating
-an `IOException`.
+an {@code IOException}.

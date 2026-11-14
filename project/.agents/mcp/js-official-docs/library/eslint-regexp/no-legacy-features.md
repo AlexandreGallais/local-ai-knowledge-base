@@ -1,15 +1,15 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/no-legacy-features"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/no-legacy-features.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "disallow legacy RegExp features"
+since: "v0.6.0"
 ---
-
 # regexp/no-legacy-features
 
 💼 This rule is enabled in the following configs: 🟢 `flat/recommended`, 🔵 `recommended`.
+
+<!-- end auto-generated rule header -->
 
 > disallow legacy RegExp features
 
@@ -72,7 +72,7 @@ regexObj.compile('new foo', 'g');
 
 ## :books: Further reading
 
-- Legacy RegExp features in JavaScript
+- [Legacy RegExp features in JavaScript](https://github.com/tc39/proposal-regexp-legacy-features/)
 
 ## :rocket: Version
 
@@ -80,5 +80,5 @@ This rule was introduced in eslint-plugin-regexp v0.6.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/no-legacy-features.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/no-legacy-features.ts)

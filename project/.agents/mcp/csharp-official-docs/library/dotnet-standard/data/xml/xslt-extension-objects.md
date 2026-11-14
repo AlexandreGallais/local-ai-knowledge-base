@@ -1,15 +1,12 @@
 ---
+description: "Learn more about: XSLT Extension Objects"
 title: "XSLT Extension Objects"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/xslt-extension-objects.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+ms.assetid: a4ebdbad-087c-4cfe-acc0-17c48142f81a
 ---
-
 # XSLT Extension Objects
 
-Extension objects are used to extend the functionality of style sheets. Extension objects are maintained by the `System.Xml.Xsl.XsltArgumentList` class.
+Extension objects are used to extend the functionality of style sheets. Extension objects are maintained by the <xref:System.Xml.Xsl.XsltArgumentList> class.
 
  The following are advantages to using an extension object rather than embedded script:
 
@@ -17,24 +14,24 @@ Extension objects are used to extend the functionality of style sheets. Extensio
 
 - Allows style sheets to be smaller and more maintainable.
 
- XSLT extension objects are added to the `System.Xml.Xsl.XsltArgumentList` object using the `System.Xml.Xsl.XsltArgumentList.AddExtensionObject*` method. A qualified name and namespace URI are associated with the extension object at that time.
+ XSLT extension objects are added to the <xref:System.Xml.Xsl.XsltArgumentList> object using the <xref:System.Xml.Xsl.XsltArgumentList.AddExtensionObject*> method. A qualified name and namespace URI are associated with the extension object at that time.
 
-> **Note:**
-> The FullTrust permission set is required to call the `System.Xml.Xsl.XsltArgumentList.AddExtensionObject*` method. For more information, see Code Access Security and Named Permission Sets.
+> [!NOTE]
+> The FullTrust permission set is required to call the <xref:System.Xml.Xsl.XsltArgumentList.AddExtensionObject*> method. For more information, see [Code Access Security](/previous-versions/dotnet/framework/code-access-security/code-access-security) and [Named Permission Sets](/previous-versions/dotnet/netframework-4.0/4652tyx7(v=vs.100)).
 
  The data types returned from extension objects are one of the four basic XPath data types of `number`, `string`, `Boolean`, and `node set`.
 
- Any method that is defined with the `params` keyword, which allows an unspecified number of parameters to be passed, is not currently supported by the `System.Xml.Xsl.XslCompiledTransform` class. XSLT style sheets that utilize any method defined with the `params` keyword will not work correctly. For details, see params.
+ Any method that is defined with the `params` keyword, which allows an unspecified number of parameters to be passed, is not currently supported by the <xref:System.Xml.Xsl.XslCompiledTransform> class. XSLT style sheets that utilize any method defined with the `params` keyword will not work correctly. For details, see [params](../../../csharp/language-reference/keywords/method-parameters.md#params-modifier).
 
 ### To use an XSLT extension object
 
-1. Create an `System.Xml.Xsl.XsltArgumentList` object and add the extension object using `System.Xml.Xsl.XsltArgumentList.AddExtensionObject*` method.
+1. Create an <xref:System.Xml.Xsl.XsltArgumentList> object and add the extension object using <xref:System.Xml.Xsl.XsltArgumentList.AddExtensionObject*> method.
 
 2. Call the extension object from the style sheet.
 
-3. Pass the `System.Xml.Xsl.XsltArgumentList` object to the `System.Xml.Xsl.XslCompiledTransform.Transform*` method.
+3. Pass the <xref:System.Xml.Xsl.XsltArgumentList> object to the <xref:System.Xml.Xsl.XslCompiledTransform.Transform*> method.
 
 ## See also
 
-- XSLT Transformations
-- XSLT Security Considerations
+- [XSLT Transformations](xslt-transformations.md)
+- [XSLT Security Considerations](xslt-security-considerations.md)

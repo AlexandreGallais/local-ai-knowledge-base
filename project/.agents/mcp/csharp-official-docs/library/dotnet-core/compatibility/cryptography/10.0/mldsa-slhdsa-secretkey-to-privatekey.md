@@ -1,15 +1,14 @@
 ---
 title: "Breaking change - MLDsa and SlhDsa 'SecretKey' members renamed"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/cryptography/10.0/mldsa-slhdsa-secretkey-to-privatekey.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where MLDsa and SlhDsa members were renamed from using 'SecretKey' to using 'PrivateKey'."
+ms.date: 09/05/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/47691
 ---
 
-# MLDsa and SlhDsa '<example-value>' <example-value> renamed
+# MLDsa and SlhDsa 'SecretKey' members renamed
 
-Some methods and properties in the `[Experimental]` post-quantum cryptography (PQC) classes `System.Security.Cryptography.MLDsa` and `System.Security.Cryptography.SlhDsa` have been renamed. APIs that involve the `sk` value from their respective specifications now have `PrivateKey` in their names instead of `SecretKey`.
+Some methods and properties in the `[Experimental]` post-quantum cryptography (PQC) classes <xref:System.Security.Cryptography.MLDsa?displayProperty=fullName> and <xref:System.Security.Cryptography.SlhDsa?displayProperty=fullName> have been renamed. APIs that involve the `sk` value from their respective specifications now have `PrivateKey` in their names instead of `SecretKey`.
 
 ## Version introduced
 
@@ -25,11 +24,11 @@ Starting in .NET 10, you must call methods like `ImportMLDsaPrivateKey` or `Impo
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
-The change was made to align with existing asymmetric cryptography types in .NET and with related members such as `System.Security.Cryptography.MLDsa.ExportPkcs8PrivateKey`.
+The change was made to align with existing asymmetric cryptography types in .NET and with related members such as <xref:System.Security.Cryptography.MLDsa.ExportPkcs8PrivateKey>.
 
 ## Recommended action
 

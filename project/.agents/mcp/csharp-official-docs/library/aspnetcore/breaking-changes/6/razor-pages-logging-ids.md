@@ -1,12 +1,10 @@
 ---
 title: "Breaking change: Razor: Logging ID changes"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/6/razor-pages-logging-ids.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 6.0 where some Razor pages logging IDs were changed."
+no-loc: [ Razor ]
+ms.date: 09/01/2021
+ms.custom: https://github.com/aspnet/Announcements/issues/471
 ---
-
 # Razor: Logging ID changes
 
 Razor Pages log messages have associated IDs and names. These are used to uniquely identify different kinds of log messages. Some of those IDs were incorrectly duplicated. This .NET 6 change corrects the duplication.
@@ -26,7 +24,7 @@ ASP.NET Core 6.0 RC1
 
 ## Change category
 
-This change affects *binary compatibility*.
+This change affects [*binary compatibility*](/dotnet/core/compatibility/categories#binary-compatibility).
 
 ## Reason for change
 

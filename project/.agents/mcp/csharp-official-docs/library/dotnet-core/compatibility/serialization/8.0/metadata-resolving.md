@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Reflection-based deserializer resolves metadata eagerly"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/serialization/8.0/metadata-resolving.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 8 breaking change in System.Text.Json serialization where the reflection-based deserializer resolves property metadata eagerly.
+ms.date: 09/13/2023
 ---
-
 # Reflection-based deserializer resolves metadata eagerly
 
 The System.Text.Json reflection-based serializer previously used a lazy loading approach to resolve property metadata. That approach made it possible for POCOs that contained unsupported property types to deserialize successfully, provided that the underlying JSON didn't bind to any of the unsupported properties. (This was despite the fact that instances of the same type would fail to *serialize*.)
@@ -36,7 +32,7 @@ public class NestedValue
 
 ## New behavior
 
-Starting in .NET 8, the same code from the Previous behavior section throws an `System.InvalidOperationException` at runtime.
+Starting in .NET 8, the same code from the [Previous behavior](#previous-behavior) section throws an <xref:System.InvalidOperationException> at runtime.
 
 > System.InvalidOperationException: The type 'System.ReadOnlySpan`1[System.Byte]' of property 'Span' on type 'NestedValue' is invalid for serialization or deserialization because it is a pointer type, is a ref struct, or contains generic parameters that have not been replaced by specific types.
 
@@ -48,11 +44,11 @@ This error is consistent with the error that was thrown even in previous version
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-This change was necessitated by new requirements related to fast-path serialization support in combined source generated contexts (see dotnet/runtime#71933).
+This change was necessitated by new requirements related to fast-path serialization support in combined source generated contexts (see [dotnet/runtime#71933](https://github.com/dotnet/runtime#71933)).
 
 ## Recommended action
 
@@ -60,7 +56,7 @@ If this change is problematic for you, you can:
 
 - Remove the unsupported property from your type.
 - Author a custom converter for the unsupported type.
-- Add the `System.Text.Json.Serialization.JsonIgnoreAttribute` attribute:
+- Add the <xref:System.Text.Json.Serialization.JsonIgnoreAttribute> attribute:
 
   ```csharp
   public class MyPoco
@@ -74,4 +70,4 @@ If this change is problematic for you, you can:
 
 ## Affected APIs
 
-- `System.Text.Json.JsonSerializer.Deserialize*`
+- <xref:System.Text.Json.JsonSerializer.Deserialize*?displayProperty=fullName>

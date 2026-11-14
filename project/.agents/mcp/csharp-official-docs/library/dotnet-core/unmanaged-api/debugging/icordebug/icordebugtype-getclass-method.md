@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugType::GetClass Method"
 title: "ICorDebugType::GetClass Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugtype-getclass-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugType.GetClass"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugType::GetClass"
+helpviewer_keywords:
+  - "ICorDebugType::GetClass method [.NET debugging]"
+  - "GetClass method, ICorDebugType interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugType::GetClass Method
 
 Gets an interface pointer to an ICorDebugClass that represents the uninstantiated generic type.
@@ -26,11 +35,11 @@ HRESULT GetClass (
 
 ## Remarks
 
- `GetClass` can be called only under certain conditions. Call ICorDebugType::GetType before calling `GetClass`. If `ICorDebugType::GetType` returns a CorElementType value that is ELEMENT_TYPE_CLASS or ELEMENT_TYPE_VALUETYPE, `GetClass` can be called to get the uninstantiated type for a generic type.
+ `GetClass` can be called only under certain conditions. Call [ICorDebugType::GetType](icordebugtype-gettype-method.md) before calling `GetClass`. If `ICorDebugType::GetType` returns a CorElementType value that is ELEMENT_TYPE_CLASS or ELEMENT_TYPE_VALUETYPE, `GetClass` can be called to get the uninstantiated type for a generic type.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

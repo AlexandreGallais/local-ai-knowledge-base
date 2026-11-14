@@ -1,22 +1,16 @@
 ---
+description: "protected internal - C# Reference"
 title: "protected internal keyword"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/keywords/protected-internal.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 01/22/2026
+f1_keywords:
+  - "protectedinternal_CSharpKeyword"
+author: "sputier"
 ---
-
 # protected internal (C# reference)
 
-The `protected internal` keyword combination is a member access modifier. You can access a protected internal member from the current assembly or from types that are derived from the containing class. For a comparison of `protected internal` with the other access modifiers, see Accessibility Levels.
+The `protected internal` keyword combination is a member access modifier. You can access a protected internal member from the current assembly or from types that are derived from the containing class. For a comparison of `protected internal` with the other access modifiers, see [Accessibility Levels](accessibility-levels.md).
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
-
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
-
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
 Any type within the containing assembly can access a protected internal member of a base class. A derived class located in another assembly can access the member only if the access occurs through a variable of the derived class type. For example, consider the following code segment:
 
@@ -108,15 +102,15 @@ class DerivedClassDifferentAssembly : BaseClass
 
 ## C# language specification
 
-For more information, see the C# Language Specification. The language specification is the definitive source for C# syntax and usage.
+[!INCLUDE[CSharplangspec](~/includes/csharplangspec-md.md)]
 
 ## See also
 
-- C# Keywords
-- Access Modifiers
-- Accessibility Levels
-- Modifiers
-- public
-- private
-- internal
-- Security concerns for internal virtual keywords
+- [C# Keywords](index.md)
+- [Access Modifiers](access-modifiers.md)
+- [Accessibility Levels](accessibility-levels.md)
+- [Modifiers](index.md)
+- [public](public.md)
+- [private](private.md)
+- [internal](internal.md)
+- [Security concerns for internal virtual keywords](/previous-versions/dotnet/netframework-4.0/heyd8kky(v=vs.100))

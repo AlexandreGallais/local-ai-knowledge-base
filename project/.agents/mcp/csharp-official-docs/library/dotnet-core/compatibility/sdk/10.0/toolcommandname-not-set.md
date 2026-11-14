@@ -1,10 +1,8 @@
 ---
 title: "Breaking change - ToolCommandName is not set for non tool packages"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/toolcommandname-not-set.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where ToolCommandName is only set for projects with PackAsTool set to true."
+ms.date: 12/02/2025
+ai-usage: ai-assisted
 ---
 
 # `ToolCommandName` not set for non-tool packages
@@ -25,7 +23,7 @@ Starting in .NET 10, the `ToolCommandName` property is only set when `PackAsTool
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 

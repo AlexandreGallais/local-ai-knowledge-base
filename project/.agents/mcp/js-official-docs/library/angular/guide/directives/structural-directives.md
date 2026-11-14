@@ -1,23 +1,14 @@
----
-title: "Structural directives"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/directives/structural-directives.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Structural directives
 
 Structural directives are directives applied to an `<ng-template>` element that conditionally or repeatedly render the content of that `<ng-template>`.
 
-For everyday conditional and repeated rendering, use Angular's built-in control flow blocks (`@if`, `@for`, and `@switch`). Write a structural directive when you need reusable rendering behavior that control flow doesn't cover, such as gating content behind a permission check or providing a template with data from an external source.
+For everyday conditional and repeated rendering, use Angular's built-in [control flow blocks](guide/templates/control-flow) (`@if`, `@for`, and `@switch`). Write a structural directive when you need reusable rendering behavior that control flow doesn't cover, such as gating content behind a permission check or providing a template with data from an external source.
 
 ## Example use case
 
 This guide uses a directive called `SelectDirective` as its running example. The directive fetches data from a given data source and renders its template when that data is available. It is named after the SQL keyword `SELECT` and matched with an attribute selector, `[select]`.
 
-`SelectDirective` has an input naming the data source to use, called `selectFrom`. The `select` prefix for this input is important for the shorthand syntax. The directive instantiates its `<ng-template>` with a template context providing the selected data.
+`SelectDirective` has an input naming the data source to use, called `selectFrom`. The `select` prefix for this input is important for the [shorthand syntax](#structural-directive-shorthand). The directive instantiates its `<ng-template>` with a template context providing the selected data.
 
 Using this directive directly on an `<ng-template>` looks like this:
 
@@ -31,7 +22,7 @@ The structural directive can wait for the data to become available and then rend
 
 HELPFUL: Angular's `<ng-template>` element defines a template that doesn't render anything by default. If you wrap elements in an `<ng-template>` without applying a structural directive, those elements are not rendered.
 
-For more information, see the ng-template API documentation.
+For more information, see the [ng-template API](api/core/ng-template) documentation.
 
 ## Structural directive shorthand
 
@@ -47,7 +38,7 @@ You can use this with `SelectDirective` as follows:
 
 This example shows the flexibility of structural directive shorthand syntax, which is sometimes called _microsyntax_.
 
-When used in this way, only the structural directive and its bindings are applied to the `<ng-template>`. Any other attributes or bindings on the `` tag are left alone. For example, these two forms are equivalent:
+When used in this way, only the structural directive and its bindings are applied to the `<ng-template>`. Any other attributes or bindings on the `<p>` tag are left alone. For example, these two forms are equivalent:
 
 ```angular-html
 <!-- Shorthand syntax: -->
@@ -59,7 +50,7 @@ When used in this way, only the structural directive and its bindings are applie
 </ng-template>
 ```
 
-Shorthand syntax is expanded through a set of conventions. A more thorough grammar is defined below, but in the above example, this transformation can be explained as follows:
+Shorthand syntax is expanded through a set of conventions. A more thorough [grammar](#structural-directive-syntax-reference) is defined below, but in the above example, this transformation can be explained as follows:
 
 The first part of the `*select` expression is `let data`, which declares a template variable `data`. Since no assignment follows, the template variable is bound to the template context property `$implicit`.
 
@@ -73,8 +64,8 @@ You can only apply one structural directive per element when using the shorthand
 
 A structural directive is a directive class that injects two dependencies:
 
-- `TemplateRef` gives the directive access to the content of the `<ng-template>` it is applied to.
-- `ViewContainerRef` represents the location in the DOM where the directive can render that template.
+- [`TemplateRef`](api/core/TemplateRef) gives the directive access to the content of the `<ng-template>` it is applied to.
+- [`ViewContainerRef`](api/core/ViewContainerRef) represents the location in the DOM where the directive can render that template.
 
 The directive controls rendering by creating, or not creating, embedded views from the template in the view container. The complete `SelectDirective` looks like this:
 
@@ -105,21 +96,21 @@ export class SelectDirective {
 }
 ```
 
-The `selectFrom` input names the data source the directive reads from. It uses `input.required()` because the directive can't do anything useful without a data source.
+The `selectFrom` input names the data source the directive reads from. It uses [`input.required()`](guide/components/inputs#required-inputs) because the directive can't do anything useful without a data source.
 
 When Angular initializes the directive, it loads the data and then renders the template by calling `createEmbeddedView()`. The second argument is the template's _context object_: values the template can bind to with `let` declarations. Assigning the data to the `$implicit` key makes it the default value that `let-data` (or `let data` in shorthand) receives.
 
 NOTE: This example renders its template once, when the directive initializes. It does not re-render when the bound data source changes.
 
-Once the directive works, consider adding template type-checking support.
+Once the directive works, consider [adding template type-checking support](#typing-the-directives-context).
 
-HELPFUL: The CLI command `ng generate directive` scaffolds a directive along with its test file.
+HELPFUL: The CLI command [`ng generate directive`](tools/cli/schematics) scaffolds a directive along with its test file.
 
 ## Structural directive syntax reference
 
 When you write your own structural directives, use the following syntax:
 
-```ts
+```ts {hideCopy}
 _: prefix = "( :let | :expression ) (';' | ',')? ( :let | :as | :keyExp )_";
 ```
 
@@ -171,7 +162,7 @@ Two different types of guards are possible:
 - `ngTemplateContextGuard` is used to determine the type of the context object for the template, based on the type of the directive itself.
 
 This section provides examples of both kinds of guards.
-For more information, see Template type checking.
+For more information, see [Template type checking](tools/cli/template-typecheck 'Template type-checking guide').
 
 ### Type narrowing with template guards
 
@@ -244,6 +235,8 @@ export class SelectDirective<T> {
 
 ## What's next
 
-  - Directive composition API
-  - ng-template
-  - Control flow
+<docs-pill-row>
+  <docs-pill href="guide/directives/directive-composition-api" title="Directive composition API"/>
+  <docs-pill href="guide/templates/ng-template" title="ng-template"/>
+  <docs-pill href="guide/templates/control-flow" title="Control flow"/>
+</docs-pill-row>

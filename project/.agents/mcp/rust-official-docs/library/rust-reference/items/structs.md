@@ -1,17 +1,8 @@
----
-title: "Structs"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/items/structs.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[items.struct]
 # Structs
 
 r[items.struct.syntax]
-```grammar
+```grammar,items
 Struct ->
       StructStruct
     | TupleStruct
@@ -72,3 +63,10 @@ let c = [Cookie, Cookie {}, Cookie, Cookie {}];
 
 r[items.struct.layout]
 The precise memory layout of a struct is not specified. One can specify a particular layout using the [`repr` attribute].
+
+[`repr` attribute]: ../type-layout.md#representations
+[constant]: constant-items.md
+[struct type]: ../types/struct.md
+[tuple type]: ../types/tuple.md
+[type namespace]: ../names/namespaces.md
+[value namespace]: ../names/namespaces.md

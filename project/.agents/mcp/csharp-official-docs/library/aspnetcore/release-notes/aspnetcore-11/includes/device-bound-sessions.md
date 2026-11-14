@@ -1,20 +1,9 @@
----
-title: "device-bound-sessions"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-11/includes/device-bound-sessions.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
+### Experimental Device Bound Session Credentials support
 
-# device-bound-sessions
-
-### Experimental Device Bound Session Credentials <example-value>
-
-> **Important:**
+> [!IMPORTANT]
 > The `Microsoft.AspNetCore.Authentication.DeviceBoundSessions` package is experimental and remains prerelease throughout .NET 11 and until the specification stabilizes.
 
-The Device Bound Session Credentials (DBSC) specification defines a protocol that binds session refresh to a private key held by the browser. The app issues a short-lived session cookie, and the browser must provide a signed proof of possession to refresh it. A copied session cookie might remain usable until it expires, but an attacker without the device key can't use it to extend the session.
+The [Device Bound Session Credentials (DBSC) specification](https://w3c.github.io/webappsec-dbsc/) defines a protocol that binds session refresh to a private key held by the browser. The app issues a short-lived session cookie, and the browser must provide a signed proof of possession to refresh it. A copied session cookie might remain usable until it expires, but an attacker without the device key can't use it to extend the session.
 
 ASP.NET Core adds an experimental server-side DBSC implementation in the `Microsoft.AspNetCore.Authentication.DeviceBoundSessions` package. The authentication component layers over an existing cookie authentication scheme and manages the registration and refresh endpoints, a path-scoped refresh cookie, and the short-lived session cookie.
 
@@ -30,4 +19,4 @@ builder.Services
     });
 ```
 
-Browser support currently requires an experimental DBSC implementation. For more information, see Chrome's DBSC documentation.
+Browser support currently requires an experimental DBSC implementation. For more information, see [Chrome's DBSC documentation](https://developer.chrome.com/docs/web-platform/device-bound-session-credentials).

@@ -1,22 +1,21 @@
 ---
-title: "Ignore Files"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/use/configure/ignore.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: Ignore Files
+eleventyNavigation:
+    key: ignore files
+    parent: configure
+    title: Ignore Files
+    order: 7
 ---
-
-# Ignore Files
 
 {%- from 'components/npx_tabs.macro.html' import npx_tabs %}
 
-**Tip:**
+::: tip
 This page explains how to ignore files using the flat config format.
+:::
 
-**Tip:**
-This page explains how to use the `globalIgnores()` function to completely ignore files and directories. For more information on non-global ignores, see Specify files and ignores. For more information on the differences between global and non-global ignores, see Globally ignore files with `ignores`.
-
+::: tip
+This page explains how to use the `globalIgnores()` function to completely ignore files and directories. For more information on non-global ignores, see [Specify files and ignores](configuration-files#specify-files-and-ignores). For more information on the differences between global and non-global ignores, see [Globally ignore files with `ignores`](configuration-files#globally-ignore-files-with-ignores).
+:::
 You can configure ESLint to ignore certain files and directories while linting by specifying one or more glob patterns in the following ways:
 
 - Inside of your `eslint.config.js` file.
@@ -62,7 +61,7 @@ export default defineConfig([
 ]);
 ```
 
-You can also ignore files on the command line using `--ignore-pattern`, such as:
+You can also ignore files on the command line using [`--ignore-pattern`](../command-line-interface#--ignore-pattern), such as:
 
 {{ npx_tabs({
     package: "eslint",
@@ -152,11 +151,12 @@ export default defineConfig([
 
 This configuration ignores all files matching the default patterns except for JavaScript files located within `src` directories.
 
-**Important:**
+::: important
 Note that only global `ignores` patterns can match directories.
 `ignores` patterns that are specific to a configuration will only match file names.
+:::
 
-You can also unignore files on the command line using `--ignore-pattern`, such as:
+You can also unignore files on the command line using [`--ignore-pattern`](../command-line-interface#--ignore-pattern), such as:
 
 {{ npx_tabs({
     package: "eslint",
@@ -168,8 +168,8 @@ You can also unignore files on the command line using `--ignore-pattern`, such a
 How glob patterns are evaluated depends on where they are located and how they are used:
 
 1. When using `globalIgnores()` in an `eslint.config.js` file, glob patterns are evaluated relative to the `eslint.config.js` file.
-1. When using `globalIgnores()` in an alternate configuration file specified using the `--config` command line option, glob patterns are evaluated relative to the current working directory.
-1. When using `--ignore-pattern`, glob patterns are evaluated relative to the current working directory.
+1. When using `globalIgnores()` in an alternate configuration file specified using the [`--config`](../command-line-interface#-c---config) command line option, glob patterns are evaluated relative to the current working directory.
+1. When using [`--ignore-pattern`](../command-line-interface#--ignore-pattern), glob patterns are evaluated relative to the current working directory.
 
 ## Name the Global Ignores Config
 
@@ -188,7 +188,7 @@ The `"Ignore Build Directory"` string in this example is the name of the config 
 
 ## Ignored File Warnings
 
-When you pass <example-value> to the ESLint CLI, files and directories are silently ignored. If you pass a specific file to ESLint, then ESLint creates a warning that the file was skipped. For example, suppose you have an `eslint.config.js` file that looks like this:
+When you pass directories to the ESLint CLI, files and directories are silently ignored. If you pass a specific file to ESLint, then ESLint creates a warning that the file was skipped. For example, suppose you have an `eslint.config.js` file that looks like this:
 
 ```js
 // eslint.config.js
@@ -217,7 +217,7 @@ This message occurs because ESLint is unsure if you wanted to actually lint the 
 
 ## Include `.gitignore` Files
 
-If you want to include patterns from a `.gitignore` file or any other file with gitignore-style patterns, you can use the `includeIgnoreFile` utility.
+If you want to include patterns from a [`.gitignore`](https://git-scm.com/docs/gitignore) file or any other file with gitignore-style patterns, you can use the `includeIgnoreFile` utility.
 
 ```js
 // eslint.config.js

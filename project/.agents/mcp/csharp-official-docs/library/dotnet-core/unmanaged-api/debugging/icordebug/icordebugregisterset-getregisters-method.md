@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugRegisterSet::GetRegisters Method"
 title: "ICorDebugRegisterSet::GetRegisters Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugregisterset-getregisters-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugRegisterSet.GetRegisters"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugRegisterSet::GetRegisters"
+helpviewer_keywords:
+  - "GetRegisters method, ICorDebugRegisterSet interface [.NET debugging]"
+  - "ICorDebugRegisterSet::GetRegisters method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugRegisterSet::GetRegisters Method
 
 Gets the value of each register (on the computer that is currently executing code) that is specified by the bit mask.
@@ -41,7 +50,7 @@ If the bit mask specifies a register that is unavailable, `GetRegisters` returns
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -51,5 +60,5 @@ If the bit mask specifies a register that is unavailable, `GetRegisters` returns
 
 ## See also
 
-- ICorDebugRegisterSet Interface
-- ICorDebugRegisterSet2 Interface
+- [ICorDebugRegisterSet Interface](icordebugregisterset-interface.md)
+- [ICorDebugRegisterSet2 Interface](icordebugregisterset2-interface.md)

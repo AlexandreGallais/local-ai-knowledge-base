@@ -1,15 +1,6 @@
----
-title: "Create template fragments with ng-template"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/templates/ng-template.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Create template fragments with ng-template
 
-Inspired by the native `<template>` element, the `<ng-template>` element lets you declare a **template fragment** – a section of content that you can dynamically or programmatically render.
+Inspired by the [native `<template>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template), the `<ng-template>` element lets you declare a **template fragment** – a section of content that you can dynamically or programmatically render.
 
 ## Creating a template fragment
 
@@ -45,11 +36,11 @@ Expressions or statements in a template fragment are evaluated against the compo
 
 You can get a reference to a template fragment in one of three ways:
 
-- By declaring a template reference variable on the `<ng-template>` element
-- By querying for the fragment with a component or directive query
+- By declaring a [template reference variable](/guide/templates/variables#template-reference-variables) on the `<ng-template>` element
+- By querying for the fragment with [a component or directive query](/guide/components/queries)
 - By injecting the fragment in a directive that's applied directly to an `<ng-template>` element.
 
-In all three cases, the fragment is represented by a TemplateRef object.
+In all three cases, the fragment is represented by a [TemplateRef](/api/core/TemplateRef) object.
 
 ### Referencing a template fragment with a template reference variable
 
@@ -67,7 +58,7 @@ You can then reference this fragment anywhere else in the template via the `myFr
 
 ### Referencing a template fragment with queries
 
-You can get a reference to a template fragment using any component or directive query API.
+You can get a reference to a template fragment using any [component or directive query API](/guide/components/queries).
 
 You can query the `TemplateRef` object directly using a `viewChild` query.
 
@@ -141,7 +132,7 @@ Once you have a reference to a template fragment's `TemplateRef` object, you can
 
 ### Using `NgTemplateOutlet`
 
-The `NgTemplateOutlet` directive from `@angular/common` accepts a `TemplateRef` and renders the fragment as a **sibling** to the element with the outlet. You should generally use `NgTemplateOutlet` on an `<ng-container>` element.
+The `NgTemplateOutlet` directive from `@angular/common` accepts a `TemplateRef` and renders the fragment as a **sibling** to the element with the outlet. You should generally use `NgTemplateOutlet` on an [`<ng-container>` element](/guide/templates/ng-container).
 
 First, import `NgTemplateOutlet`:
 
@@ -346,11 +337,11 @@ This is equivalent to:
 
 Developers typically use structural directives to conditionally render fragments or render fragments multiple times.
 
-For more details, see Structural Directives.
+For more details, see [Structural Directives](/guide/directives/structural-directives).
 
 ## Additional resources
 
 For examples of how `ng-template` is used in other libraries, check out:
 
-- Tabs from Angular Material - nothing gets rendered into the DOM until the tab is activated
-- Table from Angular Material - allows developers to define different ways to render data
+- [Tabs from Angular Material](https://material.angular.dev/components/tabs/overview) - nothing gets rendered into the DOM until the tab is activated
+- [Table from Angular Material](https://material.angular.dev/components/table/overview) - allows developers to define different ways to render data

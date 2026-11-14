@@ -1,14 +1,7 @@
 ---
-title: "space-unary-ops"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/space-unary-ops.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: space-unary-ops
+rule_type: layout
 ---
-
-# space-unary-ops
-
 Some style guides require or disallow spaces before or after unary operators. This is mainly a stylistic issue, however, some JavaScript expressions can be written without spacing which makes it harder to read and maintain.
 
 ## Rule Details
@@ -72,7 +65,7 @@ In this case, spacing will be disallowed after a `new` operator and required bef
 
 Examples of **incorrect** code for this rule with the default `{"words": true, "nonwords": false}` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint space-unary-ops: "error"*/
@@ -94,7 +87,9 @@ foo --;
 + "3";
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint space-unary-ops: "error"*/
@@ -104,7 +99,9 @@ function *foo() {
 }
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint space-unary-ops: "error"*/
@@ -114,9 +111,11 @@ async function foo() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{"words": true, "nonwords": false}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint space-unary-ops: "error"*/
@@ -146,7 +145,9 @@ foo--;
 +"3";
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint space-unary-ops: "error"*/
@@ -156,7 +157,9 @@ function *foo() {
 }
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint space-unary-ops: "error"*/
@@ -165,3 +168,5 @@ async function foo() {
     await (bar);
 }
 ```
+
+:::

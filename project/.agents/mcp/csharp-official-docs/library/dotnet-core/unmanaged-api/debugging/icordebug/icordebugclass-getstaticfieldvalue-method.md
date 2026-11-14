@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugClass::GetStaticFieldValue Method"
 title: "ICorDebugClass::GetStaticFieldValue Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugclass-getstaticfieldvalue-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugClass.GetStaticFieldValue"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugClass::GetStaticFieldValue"
+helpviewer_keywords:
+  - "GetStaticFieldValue method, ICorDebugClass interface [.NET debugging]"
+  - "ICorDebugClass::GetStaticFieldValue method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugClass::GetStaticFieldValue Method
 
 Gets the value of the specified static field.
@@ -36,11 +45,11 @@ If the static field is relative to a thread, a context, or an application domain
 
 ## Remarks
 
-For parameterized types, the value of a static field is relative to the particular instantiation. Therefore, if the class constructor takes parameters of type `System.Type`, call ICorDebugType::GetStaticFieldValue instead of `ICorDebugClass::GetStaticFieldValue`.
+For parameterized types, the value of a static field is relative to the particular instantiation. Therefore, if the class constructor takes parameters of type <xref:System.Type>, call [ICorDebugType::GetStaticFieldValue](icordebugtype-getstaticfieldvalue-method.md) instead of `ICorDebugClass::GetStaticFieldValue`.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

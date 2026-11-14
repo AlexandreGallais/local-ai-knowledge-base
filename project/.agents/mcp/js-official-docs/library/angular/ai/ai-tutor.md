@@ -1,12 +1,3 @@
----
-title: "Angular AI Tutor"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/ai/ai-tutor.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Angular AI Tutor
 
 The Angular AI Tutor is designed to interactively guide you step-by-step through building a complete, modern Angular application from the ground up. You'll learn the latest patterns and best practices by building a real, tangible project: a **"Smart Recipe Box"** for creating and managing recipes.
@@ -15,22 +6,24 @@ Our goal is to foster critical thinking and help you retain what you learn. Inst
 
 ## Get Started
 
-You can access the AI tutor via the Angular MCP server.
+You can access the AI tutor via the [Angular MCP server](ai/mcp).
 
-1. Install the Angular MCP server
+1. [Install](ai/mcp#get-started) the Angular MCP server
 2. Create a new Angular project `ng new <project-name>`
-3. Navigate to your new project (`cd <project-name>`) in an AI-powered editor or tool, like the Gemini CLI
+3. Navigate to your new project (`cd <project-name>`) in an AI-powered editor or tool, like the [Gemini CLI](https://geminicli.com/)
 4. Enter a prompt like `launch the Angular AI tutor`
+   ![A screenshot demonstrating how to launch the Angular AI Tutor in the Gemini CLI.](assets/images/launch-ai-tutor.png 'Launch the Angular AI Tutor')
 
 ## Using the AI Tutor
 
 Each module begins with a brief concept explanation.
-
+![A screenshot of the Angular AI Tutor presenting a brief concept explanation.](assets/images/ai-tutor-preview-1.png 'Angular AI Tutor explanation')
 If applicable, the tutor will present a code example to demonstrate the concept.
-
+![A screenshot of the Angular AI Tutor showing a code example.](assets/images/ai-tutor-preview-2.png 'Angular AI Tutor code example')
 The tutor will also provide an open-ended exercise to test your understanding.
-
+![A screenshot of the Angular AI Tutor providing an exercise.](assets/images/ai-tutor-preview-3.png 'Angular AI Tutor exercise')
 Finally, the tutor will check your work before moving onto the next module.
+![A screenshot of the Angular AI Tutor checking the user's work.](assets/images/ai-tutor-preview-4.png 'Angular AI Tutor check')
 
 ## How It Works: The Learning Cycle
 
@@ -77,7 +70,7 @@ The tutor will display the full learning plan and mark your current location.
 
 ### **A Note on Styling**
 
-The tutor will apply basic <example-value> to your application to keep things looking clean. You are highly encouraged to apply your own styling to make the app your own.
+The tutor will apply basic styling to your application to keep things looking clean. You are highly encouraged to apply your own styling to make the app your own.
 
 ### **Skip the Current Module**
 
@@ -174,7 +167,7 @@ You will build your application over a five-phase journey. You can follow this p
 
 - **Module 13:** Two-Way Binding
 - **Module 14:** Services & Dependency Injection (DI)
-- **Module 15:** Basic <example-value>
+- **Module 15:** Basic Routing
 - **Module 16:** Introduction to Forms
 - **Module 17:** Intro to Angular Material
 
@@ -191,4 +184,4 @@ You will build your application over a five-phase journey. You can follow this p
 
 This tutor is powered by a Large Language Model (LLM). While we've worked hard to make it an expert, AIs can make mistakes. If you encounter an explanation or code example that seems incorrect, please let us know. You can correct the tutor, and it will use your feedback to adjust its response.
 
-For any technical bugs or feature requests, please submit an issue.
+For any technical bugs or feature requests, please [submit an issue](https://github.com/angular/angular-cli/issues).

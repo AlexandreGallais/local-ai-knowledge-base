@@ -1,21 +1,22 @@
 ---
-title: "LINQ to XML vs. DOM"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/linq-xml-vs-dom.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: LINQ to XML vs. DOM
+description: There are key differences between LINQ to XML and DOM. LINQ to XML supports functional construction and XML literals, which better show the structure of the XML trees that they build.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: 51c0e3d2-c047-4e6a-a423-d61a882400b7
 ---
 
 # LINQ to XML vs. DOM
 
-This article describes some key <example-value> between LINQ to XML and the current predominant XML programming API, the W3C Document Object Model (DOM).
+This article describes some key differences between LINQ to XML and the current predominant XML programming API, the W3C Document Object Model (DOM).
 
 ## New ways to construct XML trees
 
 In the W3C DOM, you build an XML tree from the bottom up; that is, you create a document, you create elements, and then you add the elements to the document.
 
-For example, the following example uses a typical way to create an XML tree using the Microsoft implementation of DOM, `System.Xml.XmlDocument`.
+For example, the following example uses a typical way to create an XML tree using the Microsoft implementation of DOM, <xref:System.Xml.XmlDocument>.
 
 ```csharp
 XmlDocument doc = new XmlDocument();
@@ -84,7 +85,7 @@ doc.AppendChild(contacts)
 Console.WriteLine(doc.OuterXml)
 ```
 
-This style of coding hides the structure of the XML tree. LINQ to XML also supports an alternative approach, *functional construction*, that better shows the structure. This approach can be done with the `System.Xml.Linq.XElement` and `System.Xml.Linq.XAttribute` constructors. In Visual Basic, it can also be done with XML literals. This example demonstrates construction of the same XML tree using functional construction:
+This style of coding hides the structure of the XML tree. LINQ to XML also supports an alternative approach, *functional construction*, that better shows the structure. This approach can be done with the <xref:System.Xml.Linq.XElement> and <xref:System.Xml.Linq.XAttribute> constructors. In Visual Basic, it can also be done with XML literals. This example demonstrates construction of the same XML tree using functional construction:
 
 ```csharp
 XElement contacts =
@@ -122,9 +123,9 @@ Dim contacts = _
     </Contacts>
 ```
 
-Notice that indenting the code to construct the XML tree shows the structure of the underlying XML. The Visual Basic <example-value> uses XML literals.
+Notice that indenting the code to construct the XML tree shows the structure of the underlying XML. The Visual Basic version uses XML literals.
 
-For more information, see XML trees.
+For more information, see [XML trees](functional-construction.md).
 
 ## Work directly with XML elements
 
@@ -152,17 +153,17 @@ doc.AppendChild(name)
 
 If you want to use an element across multiple documents, you must import the nodes across documents. LINQ to XML avoids this layer of complexity.
 
-When using LINQ to XML, you use the `System.Xml.Linq.XDocument` class only if you want to add a comment or processing instruction at the root level of the document.
+When using LINQ to XML, you use the <xref:System.Xml.Linq.XDocument> class only if you want to add a comment or processing instruction at the root level of the document.
 
 ## Simplified handling of names and namespaces
 
-Handling names, namespaces, and namespace prefixes is generally a complex part of XML programming. LINQ to XML simplifies names and namespaces by eliminating the requirement to deal with namespace prefixes. If you want to control namespace prefixes, you can. But if you decide to not explicitly control namespace prefixes, LINQ to XML will assign namespace prefixes during serialization if they're required, or will serialize using default namespaces if they're not. If default namespaces are used, there will be no namespace prefixes in the resulting document. For more information, see Namespaces overview.
+Handling names, namespaces, and namespace prefixes is generally a complex part of XML programming. LINQ to XML simplifies names and namespaces by eliminating the requirement to deal with namespace prefixes. If you want to control namespace prefixes, you can. But if you decide to not explicitly control namespace prefixes, LINQ to XML will assign namespace prefixes during serialization if they're required, or will serialize using default namespaces if they're not. If default namespaces are used, there will be no namespace prefixes in the resulting document. For more information, see [Namespaces overview](namespaces-overview.md).
 
-Another problem with the DOM is that it doesn't let you change the name of a node. Instead, you have to create a new node and copy all the child nodes to it, losing the original node identity. LINQ to XML avoids this problem by enabling you to set the `System.Xml.Linq.XName` property on a node.
+Another problem with the DOM is that it doesn't let you change the name of a node. Instead, you have to create a new node and copy all the child nodes to it, losing the original node identity. LINQ to XML avoids this problem by enabling you to set the <xref:System.Xml.Linq.XName> property on a node.
 
 ## Static method support for loading XML
 
-LINQ to XML lets you load XML by using static methods, instead of instance methods. This simplifies loading and parsing. For more information, see How to load XML from a file.
+LINQ to XML lets you load XML by using static methods, instead of instance methods. This simplifies loading and parsing. For more information, see [How to load XML from a file](load-xml-file.md).
 
 ## Removal of support for DTD constructs
 
@@ -170,11 +171,11 @@ LINQ to XML further simplifies XML programming by removing support for entities 
 
 ## Support for fragments
 
-LINQ to XML doesn't provide an equivalent for the `XmlDocumentFragment` class. In many cases, however, the `XmlDocumentFragment` concept can be handled by the result of a query that's typed as `System.Collections.Generic.IEnumerable`1` of `System.Xml.Linq.XNode`, or `System.Collections.Generic.IEnumerable`1` of `System.Xml.Linq.XElement`.
+LINQ to XML doesn't provide an equivalent for the `XmlDocumentFragment` class. In many cases, however, the `XmlDocumentFragment` concept can be handled by the result of a query that's typed as <xref:System.Collections.Generic.IEnumerable`1> of <xref:System.Xml.Linq.XNode>, or <xref:System.Collections.Generic.IEnumerable`1> of <xref:System.Xml.Linq.XElement>.
 
 ## Support for XPathNavigator
 
-LINQ to XML provides support for `System.Xml.XPath.XPathNavigator` through extension methods in the `System.Xml.XPath` namespace. For more information, see `System.Xml.XPath.Extensions`.
+LINQ to XML provides support for <xref:System.Xml.XPath.XPathNavigator> through extension methods in the <xref:System.Xml.XPath?displayProperty=nameWithType> namespace. For more information, see <xref:System.Xml.XPath.Extensions?displayProperty=nameWithType>.
 
 ## Support for white space and indentation
 
@@ -187,16 +188,16 @@ Another common scenario is to read and modify XML that has already been intentio
 - Preserving white space when you load or parse the XML.
 - Disabling formatting when you serialize the XML.
 
-LINQ to XML stores white space as an `System.Xml.Linq.XText` node, instead of having a specialized `System.Xml.XmlNodeType.Whitespace` node type, as the DOM does.
+LINQ to XML stores white space as an <xref:System.Xml.Linq.XText> node, instead of having a specialized <xref:System.Xml.XmlNodeType.Whitespace> node type, as the DOM does.
 
 ## Support for annotations
 
-LINQ to XML elements support an extensible set of annotations. This is useful for tracking miscellaneous information about an element, such as schema information, information about whether the element is bound to a UI, or any other kind of application-specific information. For more information, see LINQ to XML annotations.
+LINQ to XML elements support an extensible set of annotations. This is useful for tracking miscellaneous information about an element, such as schema information, information about whether the element is bound to a UI, or any other kind of application-specific information. For more information, see [LINQ to XML annotations](linq-xml-annotations.md).
 
 ## Support for schema information
 
-LINQ to XML provides support for XSD validation through extension methods in the `System.Xml.Schema` namespace. You can validate that an XML tree complies with an XSD. You can populate the XML tree with the post-schema-validation infoset (PSVI). For more information, see How to validate using XSD and `System.Xml.Schema.Extensions`.
+LINQ to XML provides support for XSD validation through extension methods in the <xref:System.Xml.Schema?displayProperty=nameWithType> namespace. You can validate that an XML tree complies with an XSD. You can populate the XML tree with the post-schema-validation infoset (PSVI). For more information, see [How to validate using XSD](validate-xsd.md) and <xref:System.Xml.Schema.Extensions>.
 
 ## See also
 
-- LINQ to XML overview
+- [LINQ to XML overview](linq-xml-overview.md)

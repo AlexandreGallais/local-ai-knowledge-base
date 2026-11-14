@@ -1,12 +1,17 @@
 ---
+description: "Learn more about: ICorProfilerInfo9::GetNativeCodeStartAddresses Method"
 title: "ICorProfilerInfo9::GetNativeCodeStartAddresses"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/profiling/icorprofilerinfo9-getnativecodestartaddresses-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "08/06/2019"
+dev_langs:
+  - "cpp"
+api_name:
+  - "ICorProfilerInfo9.GetNativeCodeStartAddresses"
+api_location:
+  - "mscorwks.dll"
+api_type:
+  - "COM"
+author: "davmason"
 ---
-
 # ICorProfilerInfo9::GetNativeCodeStartAddresses method
 
 Given a functionId and rejitId, enumerates the native code start address of all jitted versions of this code that currently exist.
@@ -44,7 +49,7 @@ When tiered compilation is enabled, a function may have more than one native cod
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** CorProf.idl, CorProf.h
 
@@ -54,4 +59,4 @@ When tiered compilation is enabled, a function may have more than one native cod
 
 ## See also
 
-- ICorProfilerInfo9 Interface
+- [ICorProfilerInfo9 Interface](icorprofilerinfo9-interface.md)

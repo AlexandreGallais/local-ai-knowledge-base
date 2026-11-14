@@ -1,15 +1,16 @@
 ---
-title: "Work with global namespaces in Visual Basic - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/work-global-namespaces.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Work with global namespaces in Visual Basic - LINQ to XML
+description: You declare a namespace in Visual Basic with the Imports statement, whether the namespace is a default namespace or has a prefix. This article discusses Import statements and other aspects of working with namespaces.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: 0a8064d5-e02f-4315-ad48-6deaa443a2f0
 ---
 
 # Work with global namespaces in Visual Basic (LINQ to XML)
 
-One of the key <example-value> of XML literals in Visual Basic is the capability to declare XML namespaces by using the `Imports` statement. Using this feature, you can declare an XML namespace that uses a prefix, or you can declare a default XML namespace.
+One of the key features of XML literals in Visual Basic is the capability to declare XML namespaces by using the `Imports` statement. Using this feature, you can declare an XML namespace that uses a prefix, or you can declare a default XML namespace.
 
 This capability is useful in two situations:
 
@@ -20,11 +21,11 @@ You can declare global namespaces at the project level. You can also declare glo
 
 When using XML literals or XML properties that are in globally declared namespaces, you can see the expanded name of XML literals or properties by hovering over them in Visual Studio. You will see the expanded name in a tooltip.
 
-You can get an `System.Xml.Linq.XNamespace` object that corresponds to a global namespace using the `GetXmlNamespace` method.
+You can get an <xref:System.Xml.Linq.XNamespace> object that corresponds to a global namespace using the `GetXmlNamespace` method.
 
 ## Example: Use `Imports` to declare a global namespace
 
-The following example declares a default global namespace with the `Imports` statement, and then initializes an `System.Xml.Linq.XElement` object in that namespace with an XML literal:
+The following example declares a default global namespace with the `Imports` statement, and then initializes an <xref:System.Xml.Linq.XElement> object in that namespace with an XML literal:
 
 ```vb
 Imports <xmlns="http://www.adventure-works.com">
@@ -185,7 +186,7 @@ End Module
 
 ## Example: Use `GetXmlNamespace` to get an `XNamespace`
 
-You can obtain an `System.Xml.Linq.XNamespace` object by using the `GetXmlNamespace` method:
+You can obtain an <xref:System.Xml.Linq.XNamespace> object by using the `GetXmlNamespace` method:
 
 ```vb
 Imports <xmlns:aw="http://www.adventure-works.com">
@@ -207,4 +208,4 @@ http://www.adventure-works.com
 
 ## See also
 
-- Namespaces overview
+- [Namespaces overview](namespaces-overview.md)

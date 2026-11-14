@@ -1,10 +1,9 @@
 ---
 title: "Breaking change - Change default workload configuration from 'loose manifests' to 'workload sets' mode"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/default-workload-config.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where the default workload update mode changed."
+ms.date: 3/12/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/45000
 ---
 
 # Change default workload configuration from 'loose manifests' to 'workload sets' mode
@@ -30,7 +29,7 @@ When you perform an update, all workloads will use known-matching versions from 
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

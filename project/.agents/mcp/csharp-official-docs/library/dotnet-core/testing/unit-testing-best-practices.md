@@ -1,19 +1,20 @@
 ---
-title: "Best practices for writing unit tests (part 1 of 2)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/unit-testing-best-practices.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Best practices for writing unit tests
+description: Learn best practices for writing unit tests that drive code quality and resilience for .NET Core and .NET Standard projects.
+author: jpreese
+ms.author: wiwagn
+ms.date: 11/05/2026
+ms.custom: devdivchpfy22
+ai-usage: ai-assisted
 ---
 
 # Unit testing best practices for .NET
 
 There are numerous benefits of writing unit tests. They help with regression, provide documentation, and facilitate good design. But when unit tests are hard to read and brittle, they can wreak havoc on your code base. This article describes some best practices for designing unit tests to support your .NET Core and .NET Standard projects. You learn techniques to keep your tests resilient and easy to understand.
 
-The code examples use the xUnit.net test framework, which provides the `[Fact]` and `[Theory]` attributes and the `Assert` class. For an introduction to xUnit.net, see Unit testing C# in .NET using dotnet test and xUnit. The best practices also apply to other .NET test frameworks.
+The code examples use the [xUnit.net](https://xunit.net/) test framework, which provides the `[Fact]` and `[Theory]` attributes and the `Assert` class. For an introduction to xUnit.net, see [Unit testing C# in .NET using dotnet test and xUnit](unit-testing-csharp-with-xunit.md). The best practices also apply to other .NET test frameworks.
 
-By John Reese with special thanks to Roy Osherove
+By [John Reese](https://reese.dev) with special thanks to [Roy Osherove](https://osherove.com/)
 
 ## Benefits of unit testing
 
@@ -49,13 +50,13 @@ There are several important characteristics that define a good unit test:
 
 A high code coverage percentage is often associated with a higher quality of code. However, the measurement itself *can't* determine the quality of code. Setting an overly ambitious code coverage percentage goal can be counterproductive. Consider a complex project with thousands of conditional branches, and suppose you set a goal of 95% code coverage. Currently, the project maintains 90% code coverage. The amount of time it takes to account for all of the edge cases in the remaining 5% can be a massive undertaking, and the value proposition quickly diminishes.
 
-A high code coverage percentage isn't an indicator of success, and it doesn't imply high code quality. It just represents the amount of code covered by unit tests. For more information, see unit testing code coverage.
+A high code coverage percentage isn't an indicator of success, and it doesn't imply high code quality. It just represents the amount of code covered by unit tests. For more information, see [unit testing code coverage](unit-testing-code-coverage.md).
 
 ## Unit testing terminology
 
 Several terms are used frequently in the context of unit testing: *fake*, *mock*, and *stub*. Unfortunately, these terms can be misapplied, so it's important to understand the correct usage.
 
-> **Note:**
+> [!NOTE]
 > Testing literature and tools use the terms *fake*, *stub*, and *mock* inconsistently. The following definitions represent common .NET usage where a test double can both return values and verify interactions. In classic xUnit and test double literature (for example, Fowler and Meszaros), those sources use these words more narrowly: a *stub* provides data, a *mock* verifies interactions, and a *fake* is a working alternative implementation.
 
 - **Fake**: A fake is a generic term that can be used to describe either a stub or a mock object. Whether the object is a stub or a mock depends on the context in which the object is used. In other words, a fake can be a stub or a mock.
@@ -103,7 +104,360 @@ Assert.True(mockOrder.Validated);
 
 In this design, the code checks a property on the fake (asserting against it), and therefore, the `mockOrder` class is a mock.
 
-> **Important:**
+> [!IMPORTANT]
 > It's important to implement the terminology correctly. If you call your stubs "mocks," other developers are going to make false assumptions about your intent.
 
 The main thing to remember about mocks versus stubs is that mocks are just like stubs, except for the `Assert` process. You run `Assert` operations against a mock object, but not against a stub.
+
+## Best practices
+
+There are several important best practices to follow when writing unit tests. The following sections provide examples that show how to apply the best practices to your code.
+
+### Avoid infrastructure dependencies
+
+Try not to introduce dependencies on infrastructure when writing unit tests. The dependencies make the tests slow and brittle and should be reserved for integration tests. You can avoid these dependencies in your application by following the [Explicit Dependencies Principle](https://deviq.com/principles/explicit-dependencies-principle/) and by using [.NET dependency injection](../extensions/dependency-injection/overview.md). You can also keep your unit tests in a separate project from your integration tests. This approach ensures your unit test project doesn't have references to or dependencies on infrastructure packages.
+
+### Follow test naming standards
+
+The name of your test should consist of three parts:
+
+- Name of the method being tested
+- Scenario under which the method is being tested
+- Expected behavior when the scenario is invoked
+
+To document the expected behavior of the code under test, use descriptive, consistent test names. Each name specifies how the code should behave in a particular scenario, while the test verifies that behavior. Clear names help you understand the expected behavior from the test suite without inspecting the code under test. When a test fails, its name helps you identify which scenario didn't meet your expectations.
+
+:::row:::
+:::column span="":::
+**Original code**
+
+[!code-csharp[BeforeNaming](../../../samples/snippets/core/testing/unit-testing-best-practices/csharp/before/StringCalculatorTests.cs#BeforeNaming)]
+
+:::column-end:::
+:::column span="":::
+**Apply best practice**
+
+[!code-csharp[AfterNamingAndMinimallyPassing](../../../samples/snippets/core/testing/unit-testing-best-practices/csharp/after/StringCalculatorTests.cs#AfterNamingAndMinimallyPassing)]
+
+:::column-end:::
+:::row-end:::
+
+### Arrange your tests
+
+The "Arrange, Act, Assert" pattern is a common approach for writing unit tests. As the name implies, the pattern consists of three main tasks:
+
+- **Arrange** your objects, create, and configure them as necessary
+- **Act** on an object
+- **Assert** that something is as expected
+
+When you follow the pattern, you can clearly separate what is being tested from the Arrange and Assert tasks. The pattern also helps to reduce the opportunity for assertions to intermix with code in the Act task.
+
+Readability is one of the most important aspects when writing a unit test. Separating each pattern action within the test clearly highlights the dependencies required to call your code, how your code is called, and what you're trying to assert. While it might be possible to combine some steps and reduce the size of your test, the overall goal is to make the test as readable as possible.
+
+:::row:::
+:::column span="":::
+**Original code**
+
+[!code-csharp[BeforeArranging](../../../samples/snippets/core/testing/unit-testing-best-practices/csharp/before/StringCalculatorTests.cs#BeforeArranging)]
+
+:::column-end:::
+:::column span="":::
+**Apply best practice**
+
+[!code-csharp[AfterArranging](../../../samples/snippets/core/testing/unit-testing-best-practices/csharp/after/StringCalculatorTests.cs#AfterArranging)]
+
+:::column-end:::
+:::row-end:::
+
+### Write minimally passing tests
+
+The input for a unit test should be the simplest information needed to verify the behavior you're currently testing. The minimalist approach helps tests become more resilient to future changes in the codebase and focus on verifying the behavior over the implementation.
+
+Tests that include more information than required to pass the current test have a higher chance of introducing errors into the test and can make the intent of the test less clear. When writing tests, you want to focus on the behavior. Setting extra properties on models or using nonzero values when not required, only detracts from what you're trying to confirm.
+
+:::row:::
+:::column span="":::
+**Original code**
+
+[!code-csharp[BeforeMinimallyPassing](../../../samples/snippets/core/testing/unit-testing-best-practices/csharp/before/StringCalculatorTests.cs#BeforeMinimallyPassing)]
+
+:::column-end:::
+:::column span="":::
+**Apply best practice**
+
+[!code-csharp[AfterNamingAndMinimallyPassing](../../../samples/snippets/core/testing/unit-testing-best-practices/csharp/after/StringCalculatorTests.cs#AfterNamingAndMinimallyPassing)]
+
+:::column-end:::
+:::row-end:::
+
+### Avoid magic strings
+
+*Magic strings* are string values hard-coded directly in your unit tests without any code extra comment or context. These values make your code less readable and harder to maintain. Magic strings can cause confusion to the reader of your tests. If a string looks out of the ordinary, they might wonder why a certain value was chosen for a parameter or return value. This type of string value might lead them to take a closer look at the implementation details, rather than focus on the test.
+
+> [!TIP]
+> Make your goal to express as much intent as possible in your unit test code. Rather than using magic strings, assign any hard-coded values to constants.
+
+:::row:::
+:::column span="":::
+**Original code**
+
+[!code-csharp[BeforeMagicString](../../../samples/snippets/core/testing/unit-testing-best-practices/csharp/before/StringCalculatorTests.cs#BeforeMagicString)]
+
+:::column-end:::
+:::column span="":::
+**Apply best practice**
+
+[!code-csharp[AfterMagicString](../../../samples/snippets/core/testing/unit-testing-best-practices/csharp/after/StringCalculatorTests.cs#AfterMagicString)]
+
+:::column-end:::
+:::row-end:::
+
+### Avoid coding logic in unit tests
+
+When you write your unit tests, avoid manual string concatenation, logical conditions, such as `if`, `while`, `for`, and `switch`, and other conditions. If you include logic in your test suite, the chance of introducing bugs increases dramatically. The last place you want to find a bug is within your test suite. You should have a high level of confidence that your tests work, otherwise, you can't trust them. Tests that you don't trust, don't provide any value. When a test fails, you want to have a sense that something is wrong with your code and that it can't be ignored.
+
+> [!TIP]
+> If adding logic in your test seems unavoidable, consider splitting the test into two or more different tests to limit the logic requirements.
+
+:::row:::
+:::column span="":::
+**Original code**
+
+[!code-csharp[LogicInTests](../../../samples/snippets/core/testing/unit-testing-best-practices/csharp/before/StringCalculatorTests.cs#LogicInTests)]
+
+:::column-end:::
+:::column span="":::
+**Apply best practice**
+
+[!code-csharp[AfterTestLogic](../../../samples/snippets/core/testing/unit-testing-best-practices/csharp/after/StringCalculatorTests.cs#AfterTestLogic)]
+
+:::column-end:::
+:::row-end:::
+
+### Use helper methods instead of Setup and Teardown
+
+To keep test-specific setup visible, create the objects you need in each test method or call a helper method from the test. Prefer this approach over `Setup` and `Teardown` attributes when tests have different setup requirements:
+
+- Each test shows the setup it requires.
+- Each test creates only the objects and state it needs.
+- Changes to common setup code don't affect tests that don't use it.
+
+Per-test setup methods run before every test in their scope, even when a test doesn't need all of the setup. As tests acquire different requirements, a common setup method can create unnecessary objects or hide which state a particular test depends on.
+
+Common per-test setup can still be appropriate when every test in a class needs the same initialization. For example, MSTest creates a new test-class instance for each test, including each data row, so constructor initialization runs separately for each test. For synchronous initialization, prefer the constructor. Use [`TestInitialize`](xref:Microsoft.VisualStudio.TestTools.UnitTesting.TestInitializeAttribute) when you need asynchronous initialization or timeout support. For details, see [MSTest lifecycle](unit-testing-mstest-writing-tests-lifecycle.md#setup-phase).
+
+> [!NOTE]
+> The `SetUp` and `TearDown` attributes are removed in [xUnit](https://xunit.net/) version 2.x and later.
+
+:::row:::
+:::column span="2":::
+**Original code**
+:::column-end:::
+:::column span="2":::
+**Apply best practice**
+:::column-end:::
+:::row-end:::
+
+:::row:::
+:::column span="2":::
+
+[!code-csharp[BeforeSetup](../../../samples/snippets/core/testing/unit-testing-best-practices/csharp/before/StringCalculatorTests.cs#BeforeSetup)]
+
+:::column-end:::
+:::column span="2":::
+
+[!code-csharp[AfterHelperMethod](../../../samples/snippets/core/testing/unit-testing-best-practices/csharp/after/StringCalculatorTests.cs#AfterHelperMethod)]
+
+:::column-end:::
+:::row-end:::
+
+:::row:::
+:::column span="2":::
+
+```csharp
+// More tests...
+```
+
+:::column-end:::
+:::column span="2":::
+
+```csharp
+// More tests...
+```
+
+:::column-end:::
+:::row-end:::
+
+:::row:::
+:::column span="2":::
+
+[!code-csharp[BeforeHelperMethod](../../../samples/snippets/core/testing/unit-testing-best-practices/csharp/before/StringCalculatorTests.cs#BeforeHelperMethod)]
+
+:::column-end:::
+:::column span="2":::
+
+[!code-csharp[AfterSetup](../../../samples/snippets/core/testing/unit-testing-best-practices/csharp/after/StringCalculatorTests.cs#AfterSetup)]
+
+:::column-end:::
+:::row-end:::
+
+### Avoid multiple Act tasks
+
+When you write your tests, try to include only one Act task per test. Some common approaches for implementing a single Act task include creating a separate test for each Act or using parameterized tests. There are several benefits to using a single Act task for each test:
+
+- You can easily discern which Act task is failing if the test fails.
+- You can ensure the test is focused on just a single case.
+- You gain a clear picture as to why your tests are failing.
+
+Multiple Act tasks need to be individually asserted, and you can't guarantee that all Assert tasks execute. In most unit testing frameworks, after an Assert task fails in a unit test, all subsequent tests are automatically considered as failing. The process can be confusing because some working functionality might be interpreted as failing.
+
+:::row:::
+:::column span="":::
+**Original code**
+
+[!code-csharp[BeforeMultipleAsserts](../../../samples/snippets/core/testing/unit-testing-best-practices/csharp/before/StringCalculatorTests.cs#BeforeMultipleAsserts)]
+
+:::column-end:::
+:::column span="":::
+**Apply best practice**
+
+[!code-csharp[AfterMultipleAsserts](../../../samples/snippets/core/testing/unit-testing-best-practices/csharp/after/StringCalculatorTests.cs#AfterMultipleAsserts)]
+
+:::column-end:::
+:::row-end:::
+
+### Validate private methods with public methods
+
+In most cases, you don't need to test a private method in your code. Private methods are an implementation detail and never exist in isolation. At some point in the development process, you introduce a public-facing method to call the private method as part of its implementation. When you write your unit tests, what you care about is the end result of the public method that calls into the private one.
+
+Consider the following code scenario:
+
+```csharp
+public string ParseLogLine(string input)
+{
+    var sanitizedInput = TrimInput(input);
+    return sanitizedInput;
+}
+
+private string TrimInput(string input)
+{
+    return input.Trim();
+}
+```
+
+In terms of testing, your first reaction might be to write a test for the `TrimInput` method to ensure it works as expected. However, it's possible the `ParseLogLine` method manipulates the `sanitizedInput` object in a way you don't expect. The unknown behavior might render your test against the `TrimInput` method useless.
+
+A better test in this scenario is to verify the public-facing `ParseLogLine` method:
+
+```csharp
+public void ParseLogLine_StartsAndEndsWithSpace_ReturnsTrimmedResult()
+{
+    var parser = new Parser();
+
+    var result = parser.ParseLogLine(" a ");
+
+    Assert.Equals("a", result);
+}
+```
+
+When you encounter a private method, locate the public method that calls the private method, and write your tests against the public method. Just because a private method returns an expected result, doesn't mean the system that eventually calls the private method uses the result correctly.
+
+### Handle stub static references with seams
+
+One principle of a unit test is that it must have full control of the system under test. However, this principle can be problematic when production code includes calls to static references (for example, `DateTime.Now`).
+
+Examine the following code scenario:
+
+```csharp
+public int GetDiscountedPrice(int price)
+{
+    if (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday)
+    {
+        return price / 2;
+    }
+    else
+    {
+        return price;
+    }
+}
+```
+
+Can you write a unit test for this code? You might try running an Assert task on the `price`:
+
+```csharp
+public void GetDiscountedPrice_NotTuesday_ReturnsFullPrice()
+{
+    var priceCalculator = new PriceCalculator();
+
+    var actual = priceCalculator.GetDiscountedPrice(2);
+
+    Assert.Equals(2, actual)
+}
+
+public void GetDiscountedPrice_OnTuesday_ReturnsHalfPrice()
+{
+    var priceCalculator = new PriceCalculator();
+
+    var actual = priceCalculator.GetDiscountedPrice(2);
+
+    Assert.Equals(1, actual);
+}
+```
+
+Unfortunately, you quickly realize there are some problems with your test:
+
+- If the test suite runs on Tuesday, the second test passes, but the first test fails.
+- If the test suite runs on any other day, the first test passes, but the second test fails.
+
+To solve these problems, you need to introduce a *seam* into your production code. One approach is to wrap the code that you need to control in an interface and have the production code depend on that interface:
+
+```csharp
+public interface IDateTimeProvider
+{
+    DayOfWeek DayOfWeek();
+}
+
+public int GetDiscountedPrice(int price, IDateTimeProvider dateTimeProvider)
+{
+    if (dateTimeProvider.DayOfWeek() == DayOfWeek.Tuesday)
+    {
+        return price / 2;
+    }
+    else
+    {
+        return price;
+    }
+}
+```
+
+You also need to write a new version of your test suite:
+
+```csharp
+public void GetDiscountedPrice_NotTuesday_ReturnsFullPrice()
+{
+    var priceCalculator = new PriceCalculator();
+    var dateTimeProviderStub = new Mock<IDateTimeProvider>();
+    dateTimeProviderStub.Setup(dtp => dtp.DayOfWeek()).Returns(DayOfWeek.Monday);
+
+    var actual = priceCalculator.GetDiscountedPrice(2, dateTimeProviderStub);
+
+    Assert.Equals(2, actual);
+}
+
+public void GetDiscountedPrice_OnTuesday_ReturnsHalfPrice()
+{
+    var priceCalculator = new PriceCalculator();
+    var dateTimeProviderStub = new Mock<IDateTimeProvider>();
+    dateTimeProviderStub.Setup(dtp => dtp.DayOfWeek()).Returns(DayOfWeek.Tuesday);
+
+    var actual = priceCalculator.GetDiscountedPrice(2, dateTimeProviderStub);
+
+    Assert.Equals(1, actual);
+}
+```
+
+Now the test suite has full control over the `DateTime.Now` value, and can stub any value when calling into the method.
+
+## Related links
+
+- [Unit testing code coverage](unit-testing-code-coverage.md)

@@ -1,13 +1,13 @@
 ---
-title: "no-unreachable-loop"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-unreachable-loop.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-unreachable-loop
+rule_type: problem
+related_rules:
+- no-unreachable
+- no-constant-condition
+- no-unmodified-loop-condition
+- for-direction
 ---
 
-# no-unreachable-loop
 
 A loop that can never reach the second iteration is a possible error in the code.
 
@@ -33,7 +33,7 @@ This rule checks `while`, `do-while`, `for`, `for-in` and `for-of` loops. You ca
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-unreachable-loop: "error"*/
@@ -82,9 +82,11 @@ for (foo of bar) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-unreachable-loop: "error"*/
@@ -133,11 +135,13 @@ for (foo of bar) {
 }
 ```
 
+:::
+
 Please note that this rule is not designed to check loop conditions, and will not warn in cases such as the following examples.
 
 Examples of additional **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-unreachable-loop: "error"*/
@@ -154,6 +158,8 @@ for (const a of [1]) {
     doSomething(a);
 }
 ```
+
+:::
 
 ## Options
 
@@ -173,7 +179,7 @@ You can specify up to 5 different elements in the `"ignore"` array:
 
 Examples of **correct** code for this rule with the `"ignore"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-unreachable-loop: ["error", { "ignore": ["ForInStatement", "ForOfStatement"] }]*/
@@ -185,6 +191,8 @@ for (let key in obj) {
 
 for (const a of b) break;
 ```
+
+:::
 
 ## Known Limitations
 

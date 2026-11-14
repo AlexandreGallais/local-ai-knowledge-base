@@ -1,31 +1,31 @@
 ---
-title: "ASP.NET Core SignalR production hosting and scaling"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/signalr/scale.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
+title: ASP.NET Core SignalR production hosting and scaling
+description: Learn how to avoid performance and scaling problems in apps that use ASP.NET Core SignalR.
+monikerRange: '>= aspnetcore-2.1'
+ms.custom: linux-related-content
+ms.date: 07/06/2026
 
+# customer intent: As an ASP.NET developer, I want to review hosting and scaling considerations when using SignalR, so I can avoid performance and scaling problems in my high-traffic apps. 
+---
 # ASP.NET Core SignalR hosting and scaling
 
-By Ashley Stanton-Nurse, Brady Gaster, and Tom Dykstra
+By [Ashley Stanton-Nurse](https://github.com/analogrelay), [Brady Gaster](https://twitter.com/bradygaster), and [Tom Dykstra](https://github.com/tdykstra)
 
 This article explains hosting and scaling considerations for high-traffic apps that use ASP.NET Core SignalR.
 
 ## Sticky sessions
 
-SignalR requires the same server process handle all HTTP requests for a specific connection. When SignalR runs on a server farm (multiple servers), "sticky sessions" must be used. "Sticky sessions" are also called _session affinity_. Azure App Service uses Microsoft Application Request Routing (ARR) to route requests. Enabling the "Session affinity" (ARR Affinity) setting in your App Service app enables sticky sessions.
+SignalR requires the same server process handle all HTTP requests for a specific connection. When SignalR runs on a server farm (multiple servers), "sticky sessions" must be used. "Sticky sessions" are also called _session affinity_. Azure App Service uses [Microsoft Application Request Routing (ARR)](/iis/extensions/planning-for-arr/application-request-routing-version-2-overview) to route requests. Enabling the "Session affinity" (ARR Affinity) setting in your App Service app enables sticky sessions.
 
 There are three scenarios where sticky sessions aren't required for an app:
 
 - Hosting on a single server in a single process
 - Using the Azure SignalR Service (sticky sessions are enabled for the service, not the app)
-- All clients are configured to use WebSockets **only** and the client configuration enables SkipNegotiation
+- All clients are configured to use WebSockets **only** and the client configuration enables [SkipNegotiation](configuration.md#configure-other-options)
 
 In all other scenarios (including when the Redis backplane is used), the server environment must be configured for sticky sessions.
 
-For guidance on configuring Azure App Service for SignalR, see Publish an ASP.NET Core SignalR app to Azure App Service. For guidance on configuring sticky sessions for Blazor apps that use the Azure SignalR Service, see Host and deploy ASP.NET Core server-side Blazor apps.
+For guidance on configuring Azure App Service for SignalR, see [Publish an ASP.NET Core SignalR app to Azure App Service](publish-to-azure-web-app.md). For guidance on configuring sticky sessions for Blazor apps that use the [Azure SignalR Service](#azure-signalr-service), see [Host and deploy ASP.NET Core server-side Blazor apps](../blazor/host-and-deploy/server/index.md#signalr-configuration).
 
 ## TCP connection resources
 
@@ -49,35 +49,43 @@ To keep SignalR resource usage from causing errors in a SignalR app, scale out t
 
 An app that uses SignalR needs to keep track of all its connections, which creates problems for a server farm. Add a server, and it gets new connections that the other servers don't know about. For example, SignalR on each server in the following diagram is unaware of the connections on the other servers. When SignalR on one of the servers wants to send a message to all clients, the message only goes to the clients connected to that server.
 
-The options for solving this problem are the Azure SignalR Service and Redis backplane.
+:::image type="content" source="scale/_static/scale-no-backplane.png" border="false" alt-text="Illustration that depicts scaling SignalR without a backplane.":::
+
+The options for solving this problem are the [Azure SignalR Service](#azure-signalr-service) and [Redis backplane](#redis-backplane).
 
 ## Azure SignalR Service
 
 The Azure SignalR Service functions as a proxy for real-time traffic and doubles as a backplane when the app is scaled out across multiple servers. Each time a client initiates a connection to the server, the client is redirected to connect to the service. The following diagram illustrates this process:
 
+:::image type="content" source="scale/_static/azure-signalr-service-one-connection.png" border="false" alt-text="Illustration that depicts establishing a connection to the Azure SignalR Service.":::
+
 The result is that the service manages all of the client connections, while each server needs only a small constant number of connections to the service, as shown in the following diagram:
+
+:::image type="content" source="scale/_static/azure-signalr-service-multiple-connections.png" border="false" alt-text="Illustration that depicts clients and servers connected to the service.":::
 
 This approach to scale out has several advantages over the Redis backplane alternative:
 
-* Sticky sessions, also known as client affinity, isn't required because clients are immediately redirected to the Azure SignalR Service when they connect.
+* Sticky sessions, also known as [client affinity](/iis/extensions/configuring-application-request-routing-arr/http-load-balancing-using-application-request-routing#step-3---configure-client-affinity), isn't required because clients are immediately redirected to the Azure SignalR Service when they connect.
 * A SignalR app can scale out based on the number of messages sent, while the Azure SignalR Service scales to handle any number of connections. For example, there could be thousands of clients, but if only a few messages per second are sent, the SignalR app doesn't need to scale out to multiple servers just to handle the connections themselves.
 * A SignalR app doesn't use many more connection resources than a web app without SignalR.
 
 For these reasons, the recommendation is to use the Azure SignalR Service for all ASP.NET Core SignalR apps hosted on Azure, including App Service, virtual machines, and containers.
 
-For more information, see the Azure SignalR Service documentation.
+For more information, see the [Azure SignalR Service documentation](/azure/azure-signalr/signalr-overview).
 
 ## Redis backplane
 
-Redis is an in-memory key-value store that supports a messaging system with a publish/subscribe model. The SignalR Redis backplane uses the publish/subscribe feature to forward messages to other servers. When a client makes a connection, the connection information is passed to the backplane. When a server wants to send a message to all clients, it sends it to the backplane. The backplane knows all connected clients and which servers they're on. It sends the message to all clients via their respective servers. This process is illustrated in the following diagram:
+[Redis](https://redis.io/) is an in-memory key-value store that supports a messaging system with a publish/subscribe model. The SignalR Redis backplane uses the publish/subscribe feature to forward messages to other servers. When a client makes a connection, the connection information is passed to the backplane. When a server wants to send a message to all clients, it sends it to the backplane. The backplane knows all connected clients and which servers they're on. It sends the message to all clients via their respective servers. This process is illustrated in the following diagram:
+
+:::image type="content" source="scale/_static/redis-backplane.png" border="false" alt-text="Illustration that depicts the Redis backplane with a message sent from one server to all clients.":::
 
 The Redis backplane is the recommended scale-out approach for apps hosted on your own infrastructure. If significant connection latency exists between your data center and an Azure data center, Azure SignalR Service might not be a practical option for on-premises apps with low latency or high throughput requirements.
 
 The Azure SignalR Service advantages described earlier are disadvantages for the Redis backplane:
 
-* Sticky sessions, also known as client affinity, is required, except when **both** of the following are true:
+* Sticky sessions, also known as [client affinity](/iis/extensions/configuring-application-request-routing-arr/http-load-balancing-using-application-request-routing#step-3---configure-client-affinity), is required, except when **both** of the following are true:
   * All clients are configured to **only** use WebSockets.
-  * The SkipNegotiation setting is enabled in the client configuration. After a connection is initiated on a server, the connection has to stay on that server.
+  * The [SkipNegotiation setting](configuration.md#configure-other-options) is enabled in the client configuration. After a connection is initiated on a server, the connection has to stay on that server.
 * A SignalR app must scale out based on number of clients, even when sending few messages.
 * A SignalR app uses many more connection resources than a web app without SignalR.
 
@@ -138,7 +146,7 @@ When multiple back-end servers are used, sticky sessions must be added to preven
 
 The following code supplements the previous example configuration. In the snippets, `backend` is the name of the group of servers.
 
-* With Nginx Open Source, use `ip_hash` to route connections to a server based on the client IP address:
+* With [Nginx Open Source](https://nginx.org/en/), use `ip_hash` to route connections to a server based on the client IP address:
 
    ```nginx
    http {
@@ -153,7 +161,7 @@ The following code supplements the previous example configuration. In the snippe
    }
    ```
 
-* With Nginx Plus, use `sticky` to add a cookie to requests and pin the user requests to a server:
+* With [Nginx Plus](https://www.f5.com/products/nginx/nginx-plus), use `sticky` to add a cookie to requests and pin the user requests to a server:
 
    ```nginx
    http {
@@ -170,20 +178,20 @@ The following code supplements the previous example configuration. In the snippe
 
 * For both configurations, change `proxy_pass http://localhost:5000` in the `server` section to `proxy_pass http://backend`.
 
-You can find more information in Host ASP.NET Core on Linux with Nginx.
-- To use WebSockets over Nginx, see WebSocket proxying with Nginx.
-- To use load balancing and sticky sessions, see HTTP load balancing with Nginx.
+You can find more information in [Host ASP.NET Core on Linux with Nginx](../host-and-deploy/linux-nginx.md).
+- To use WebSockets over Nginx, see [WebSocket proxying with Nginx](https://nginx.org/docs/http/websocket.html).
+- To use load balancing and sticky sessions, see [HTTP load balancing with Nginx](https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/).
 
 ## Other SignalR backplane providers
 
 The following non-Microsoft providers also offer SignalR backplane:
 
-* NCache
-* Orleans
-* Rebus
-* SQL Server
+* [NCache](https://www.alachisoft.com/ncache/asp-net-core-signalr.html)
+* [Orleans](https://github.com/OrleansContrib/SignalR.Orleans)
+* [Rebus](https://github.com/rebus-org/Rebus.SignalR)
+* [SQL Server](https://github.com/IntelliTect/IntelliTect.AspNetCore.SignalR.SqlServer)
 
 ## Related content
 
-* Azure SignalR Service documentation
-* Set up a Redis backplane
+* [Azure SignalR Service documentation](/azure/azure-signalr/signalr-overview)
+* [Set up a Redis backplane](redis-backplane.md)

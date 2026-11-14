@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataEmit::DefineMethod Method"
 title: "IMetaDataEmit::DefineMethod Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataemit-definemethod-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataEmit.DefineMethod"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataEmit::DefineMethod"
+  - "IMetaDataEmit::DefineMethod method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataEmit::DefineMethod Method
 
 Creates a definition for a method or global function with the specified signature, and returns a token to that method definition.
@@ -35,10 +42,10 @@ HRESULT DefineMethod (
  [in] The member name in Unicode.
 
  `dwMethodFlags`
- [in] A value of the CorMethodAttr enumeration that specifies the attributes of the method or global function.
+ [in] A value of the [CorMethodAttr](../enumerations/cormethodattr-enumeration.md) enumeration that specifies the attributes of the method or global function.
 
  `pvSigBlob`
- [in] The method signature. The signature is persisted as supplied. If you need to specify additional information for any parameters, use the IMetaDataEmit::SetParamProps method.
+ [in] The method signature. The signature is persisted as supplied. If you need to specify additional information for any parameters, use the [IMetaDataEmit::SetParamProps](imetadataemit-setparamprops-method.md) method.
 
  `cbSigBlob`
  [in] The count of bytes in `pvSigBlob`.
@@ -47,7 +54,7 @@ HRESULT DefineMethod (
  [in] The address of the code.
 
  `dwImplFlags`
- [in] A value of the CorMethodImpl enumeration that specifies the implementation features of the method.
+ [in] A value of the [CorMethodImpl](../enumerations/cormethodimpl-enumeration.md) enumeration that specifies the implementation features of the method.
 
  `pmd`
  [out] The member token.
@@ -60,7 +67,7 @@ HRESULT DefineMethod (
 
 ## Slots in the V-table
 
- The runtime uses method definitions to set up v-table slots. In the case where one or more slots need to be skipped, such as to preserve parity with a COM interface layout, a dummy method is defined to take up the slot or slots in the v-table; set the `dwMethodFlags` to the `mdRTSpecialName` value of the CorMethodAttr enumeration and specify the name as:
+ The runtime uses method definitions to set up v-table slots. In the case where one or more slots need to be skipped, such as to preserve parity with a COM interface layout, a dummy method is defined to take up the slot or slots in the v-table; set the `dwMethodFlags` to the `mdRTSpecialName` value of the [CorMethodAttr](../enumerations/cormethodattr-enumeration.md) enumeration and specify the name as:
 
  _VtblGap\<*SequenceNumber*>\<\_*CountOfSlots*>
 
@@ -72,7 +79,7 @@ HRESULT DefineMethod (
 
 ## Method Implementation Information
 
- Information about the method implementation is often not known at the time the method is declared. Therefore, you do not need to pass <example-value> in the `ulCodeRVA` and `dwImplFlags` parameters when calling `DefineMethod`. The values can be supplied later through IMetaDataEmit::SetMethodImplFlags or IMetaDataEmit::SetRVA, as appropriate.
+ Information about the method implementation is often not known at the time the method is declared. Therefore, you do not need to pass values in the `ulCodeRVA` and `dwImplFlags` parameters when calling `DefineMethod`. The values can be supplied later through [IMetaDataEmit::SetMethodImplFlags](imetadataemit-setmethodimplflags-method.md) or [IMetaDataEmit::SetRVA](imetadataemit-setrva-method.md), as appropriate.
 
  In some situations, such as platform invocation (PInvoke) or COM interop scenarios, the method body will not be supplied, and `ulCodeRVA` should be set to zero. In these situations, the method should not be tagged as abstract, because the runtime will locate the implementation.
 
@@ -95,7 +102,7 @@ HRESULT DefineMethod (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -103,5 +110,5 @@ HRESULT DefineMethod (
 
 ## See also
 
-- IMetaDataEmit Interface
-- IMetaDataEmit2 Interface
+- [IMetaDataEmit Interface](imetadataemit-interface.md)
+- [IMetaDataEmit2 Interface](imetadataemit2-interface.md)

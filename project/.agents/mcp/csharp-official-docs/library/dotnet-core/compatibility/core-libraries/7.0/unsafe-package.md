@@ -1,19 +1,15 @@
 ---
 title: ".NET 7 breaking change: System.Runtime.CompilerServices.Unsafe NuGet package"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/7.0/unsafe-package.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 7 breaking change in core .NET libraries where the 'Unsafe' type implementations have been unified and the System.Runtime.CompilerServices.Unsafe NuGet package is no longer produced.
+ms.date: 10/12/2022
 ---
-
 # System.Runtime.CompilerServices.Unsafe NuGet package
 
-New versions of the System.Runtime.CompilerServices.Unsafe NuGet package will no longer be produced.
+New versions of the [System.Runtime.CompilerServices.Unsafe NuGet package](https://www.nuget.org/packages/System.Runtime.CompilerServices.Unsafe/) will no longer be produced.
 
 ## Previous behavior
 
-New versions of the System.Runtime.CompilerServices.Unsafe NuGet package were produced with each new .NET \[Core] version.
+New versions of the [System.Runtime.CompilerServices.Unsafe NuGet package](https://www.nuget.org/packages/System.Runtime.CompilerServices.Unsafe/) were produced with each new .NET \[Core] version.
 
 ## New behavior
 
@@ -33,4 +29,4 @@ You can continue to use older versions of the packages if you're targeting .NET 
 
 ## Affected APIs
 
-- All of the APIs under `System.Runtime.CompilerServices.Unsafe`.
+- All of the APIs under <xref:System.Runtime.CompilerServices.Unsafe?displayProperty=fullName>.

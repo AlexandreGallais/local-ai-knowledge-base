@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugEval2::RudeAbort Method"
 title: "ICorDebugEval2::RudeAbort Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugeval2-rudeabort-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugEval2.RudeAbort"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugEval2::RudeAbort"
+helpviewer_keywords:
+  - "ICorDebugEval2::RudeAbort method [.NET debugging]"
+  - "RudeAbort method, ICorDebugEval2 interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugEval2::RudeAbort Method
 
 Aborts the computation that this `ICorDebugEval2` is currently performing.
@@ -23,7 +32,7 @@ HRESULT RudeAbort ();
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

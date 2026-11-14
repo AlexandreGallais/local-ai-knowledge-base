@@ -1,19 +1,12 @@
----
-title: "Disallow use of the toPromise method (rxjs-x/no-topromise)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/no-topromise.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Disallow use of the `toPromise` method (`rxjs-x/no-topromise`)
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, 🔒 `strict`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule effects failures if the `toPromise` method is used.
 
@@ -32,13 +25,13 @@ Type checked lint rules are more powerful than traditional lint rules, but also 
 
 ## Further reading
 
-- Conversion to Promises
+- [Conversion to Promises](https://rxjs.dev/deprecations/to-promise)
 
 ## Related To
 
-- `no-ignored-default-value`
+- [`no-ignored-default-value`](./no-ignored-default-value.md)
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/no-topromise.ts)
+- [Test source](/tests/rules/no-topromise.test.ts)

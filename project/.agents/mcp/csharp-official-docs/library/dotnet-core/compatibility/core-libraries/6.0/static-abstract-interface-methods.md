@@ -1,21 +1,17 @@
 ---
 title: "Breaking change: Static abstract members in interfaces"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/6.0/static-abstract-interface-methods.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 6 breaking change where `static` interface members can now be marked `abstract`.
+ms.date: 09/08/2021
 ---
-
 # Static abstract members declared in interfaces
 
-.NET 6 previews a new feature where `static` interface members can be marked as `abstract`. This feature involves several changes to the ECMA 335 spec to allow intermediate language (IL) metadata patterns that were previously considered illegal. For more information, see dotnet/runtime#49558.
+.NET 6 previews a new feature where `static` interface members can be marked as `abstract`. This feature involves several changes to the ECMA 335 spec to allow intermediate language (IL) metadata patterns that were previously considered illegal. For more information, see [dotnet/runtime#49558](https://github.com/dotnet/runtime/issues/49558).
 
 ## Old behavior
 
 If a static interface was marked as `abstract`:
 
-- The C# compiler generated error CS0112.
+- The C# compiler generated [error CS0112](../../../../csharp/misc/cs0112.md).
 - Tools and other compilers generated illegal IL metadata.
 
 ## New behavior
@@ -24,10 +20,10 @@ Starting in .NET 6, static interface members can be marked as `abstract` and wil
 
 The implementation of `static abstract` interface members is provided by types that implement the interface.
 
-> **Note:**
-> For .NET 6, you must enable preview features in your project to be able to mark an interface member as `static abstract`.
+> [!NOTE]
+> For .NET 6, you must [enable preview features](../../../project-sdk/msbuild-props.md#enablepreviewfeatures) in your project to be able to mark an interface member as `static abstract`.
 
-Since this is a newly legal IL pattern, existing tooling may incorrectly process the associated metadata and have unexpected behavior. It's likely that tooling will encounter the new metadata pattern, because interfaces with `static abstract` members now appear on the primitive types, for example, `System.Int32`.
+Since this is a newly legal IL pattern, existing tooling may incorrectly process the associated metadata and have unexpected behavior. It's likely that tooling will encounter the new metadata pattern, because interfaces with `static abstract` members now appear on the primitive types, for example, <xref:System.Int32?displayProperty=fullName>.
 
 ## Version introduced
 
@@ -35,7 +31,7 @@ Since this is a newly legal IL pattern, existing tooling may incorrectly process
 
 ## Type of breaking change
 
-This change can affect binary compatibility.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 
@@ -51,4 +47,4 @@ N/A
 
 ## See also
 
-- Tutorial: Explore static virtual members in interfaces
+- [Tutorial: Explore static virtual members in interfaces](../../../../csharp/advanced-topics/interface-implementation/static-virtual-interface-members.md)

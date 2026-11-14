@@ -1,15 +1,12 @@
 ---
-title: "Publish an ASP.NET Core web API to Azure API Management with Visual Studio"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/tutorials/publish-to-azure-api-management-using-vs.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Publish an ASP.NET Core web API to Azure API Management with Visual Studio
+description: Learn how to publish an ASP.NET Core web API to Azure API Management using Visual Studio.
+ms.custom: devx-track-csharp
+ms.date: 10/05/2022
 ---
-
 # Publish an ASP.NET Core web API to Azure API Management with Visual Studio
 
-By Matt Soucoup
+By [Matt Soucoup](https://twitter.com/codemillmatt)
 
 In this tutorial you'll learn how to create an ASP.NET Core web API project using Visual Studio, ensure it has OpenAPI support, and then publish the web API to both Azure App Service and Azure API Management.
 
@@ -17,7 +14,7 @@ In this tutorial you'll learn how to create an ASP.NET Core web API project usin
 
 To complete the tutorial you'll need an Azure account.
 
-* Open a free Azure account if you don't have one.
+* Open a [free Azure account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn) if you don't have one.
 
 ## Create an ASP.NET Core web API
 
@@ -100,8 +97,8 @@ Complete the following steps to publish the ASP.NET Core web API to Azure API Ma
 
 Complete the following steps to publish the ASP.NET Core web API to Azure API Management:
 
-1. In **Solution Explorer**, right-click the project and select **Publish**.
-1. In the **Publish** dialog, select **Azure** and select the **Next** button.
+1. In **Solution Explorer**, right-click the project and select **Publish**.    
+1. In the **Publish** dialog, select **Azure** and select the **Next** button.    
 1. Select **Azure App Service (Windows)** and select the **Next** button.
 1. Select **Create a new Azure App Service**.
 
@@ -130,7 +127,7 @@ Complete the following steps to publish the ASP.NET Core web API to Azure API Ma
 Notice the name of the API is named *WeatherAPI*; however, we would like to call it *Weather Forecasts*. Complete the following steps to update the name:
 
 1. Add the following to `Program.cs` immediately after `services.AddSwaggerGen();`
-
+    
     ```csharp
     builder.Services.ConfigureSwaggerGen(setup =>
     {
@@ -141,10 +138,10 @@ Notice the name of the API is named *WeatherAPI*; however, we would like to call
         });
     });
     ```
-
+   
 1. Republish the ASP.NET Core web API and open the Azure API Management instance in the Azure portal.
 1. Refresh the page in your browser. You'll see the name of the API is now correct.
-
+    
 ### Verify the web API is working
 
 You can test the deployed ASP.NET Core web API in Azure API Management from the Azure portal with the following steps:
@@ -155,7 +152,7 @@ You can test the deployed ASP.NET Core web API in Azure API Management from the 
 
 ## Clean up
 
-When you've finished testing the app, go to the Azure portal and delete the app.
+When you've finished testing the app, go to the [Azure portal](https://portal.azure.com/) and delete the app.
 
 1. Select **Resource groups**, then select the resource group you created.
 
@@ -165,5 +162,5 @@ When you've finished testing the app, go to the Azure portal and delete the app.
 
 ## Related content
 
-* Azure API Management
-* Azure App Service
+* [Azure API Management](/azure/api-management/api-management-key-concepts)
+* [Azure App Service](/azure/app-service/app-service-web-overview)

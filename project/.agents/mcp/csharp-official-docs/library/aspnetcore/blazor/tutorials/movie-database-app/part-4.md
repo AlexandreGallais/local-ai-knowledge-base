@@ -1,13 +1,14 @@
 ---
-title: "Build a Blazor movie database app (Part 4 - Work with a database) (part 1 of 2)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/tutorials/movie-database-app/part-4.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Build a Blazor movie database app (Part 4 - Work with a database)
+ai-usage: ai-assisted
+description: This part of the Blazor movie database app tutorial explains the database context and directly working with the database's schema and data. Seeding the database with data is also covered.
+monikerRange: '>= aspnetcore-8.0'
+ms.date: 09/15/2026
+zone_pivot_groups: tooling
 ---
-
 # Build a Blazor movie database app (Part 4 - Work with a database)
+
+[!INCLUDE[](~/includes/not-latest-version-without-not-supported-content.md)]
 
 This article is the fourth part of the Blazor movie database app tutorial that teaches you the basics of building an ASP.NET Core Blazor Web App with features to manage a movie database.
 
@@ -17,23 +18,23 @@ This part of the tutorial series focuses on the database context and directly wo
 
 This tutorial uses a local database that doesn't require user authentication. Production apps should use the most secure authentication flow available. For more information on authentication for deployed test and production Blazor Web Apps, see the following resources:
 
-* ASP.NET Core Blazor authentication and authorization
-* ASP.NET Core Blazor authentication and authorization and the following articles in the *Server* security node
-* Secure an ASP.NET Core Blazor Web App with OpenID Connect (OIDC)
-* Secure an ASP.NET Core Blazor Web App with Microsoft Entra ID
+* [ASP.NET Core Blazor authentication and authorization](../../security/index.md)
+* [ASP.NET Core Blazor authentication and authorization](../../security/index.md) and the following articles in the *Server* security node
+* [Secure an ASP.NET Core Blazor Web App with OpenID Connect (OIDC)](../../security/blazor-web-app-with-oidc.md)
+* [Secure an ASP.NET Core Blazor Web App with Microsoft Entra ID](../../security/blazor-web-app-with-entra.md)
 
 For Microsoft Azure services, we recommend using *managed identities*. Managed identities securely authenticate to Azure services without storing credentials in app code. For more information, see the following resources:
 
-* What are managed identities for Azure resources? (Microsoft Entra documentation)
+* [What are managed identities for Azure resources? (Microsoft Entra documentation)](/entra/identity/managed-identities-azure-resources/overview)
 * Azure services documentation
-  * Managed identities in Microsoft Entra for Azure SQL
-  * How to use managed identities for App Service and Azure Functions
+  * [Managed identities in Microsoft Entra for Azure SQL](/azure/azure-sql/database/authentication-azure-ad-user-assigned-managed-identity)
+  * [How to use managed identities for App Service and Azure Functions](/azure/app-service/overview-managed-identity)
 
 ## Database context
 
 The database context, `BlazorWebAppMoviesContext`, connects to the database and maps model objects to database records. The database context was created in the second part of this series. The scaffolded database context code appears in the `Program` file:
 
-**vs:**
+:::zone pivot="vs"
 
 ```csharp
 builder.Services.AddDbContextFactory<BlazorWebAppMoviesContext>(options =>
@@ -43,7 +44,9 @@ builder.Services.AddDbContextFactory<BlazorWebAppMoviesContext>(options =>
             "Connection string 'BlazorWebAppMoviesContext' not found.")));
 ```
 
-**vsc:**
+:::zone-end
+
+:::zone pivot="vsc"
 
 ```csharp
 builder.Services.AddDbContextFactory<BlazorWebAppMoviesContext>(options =>
@@ -53,7 +56,9 @@ builder.Services.AddDbContextFactory<BlazorWebAppMoviesContext>(options =>
             "Connection string 'BlazorWebAppMoviesContext' not found.")));
 ```
 
-**cli:**
+:::zone-end
+
+:::zone pivot="cli"
 
 ```csharp
 builder.Services.AddDbContextFactory<BlazorWebAppMoviesContext>(options =>
@@ -63,11 +68,13 @@ builder.Services.AddDbContextFactory<BlazorWebAppMoviesContext>(options =>
             "Connection string 'BlazorWebAppMoviesContext' not found.")));
 ```
 
-`Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextFactory*` registers a factory for the given context as a service in the app's service collection.
+:::zone-end
 
-`Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseSqlServer*` or `Microsoft.EntityFrameworkCore.SqliteDbContextOptionsBuilderExtensions.UseSqlite*` configures the context to connect to either a Microsoft SQL Server or SQLite database. Other providers are available to connect to additional types of databases.
+<xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextFactory*> registers a factory for the given context as a service in the app's service collection.
 
-`Microsoft.Extensions.Configuration.ConfigurationExtensions.GetConnectionString*` uses the ASP.NET Core Configuration system to read the `ConnectionStrings` key for the connection string name provided, which in the preceding example is `BlazorWebAppMoviesContext`.
+<xref:Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsExtensions.UseSqlServer*> or <xref:Microsoft.EntityFrameworkCore.SqliteDbContextOptionsBuilderExtensions.UseSqlite*> configures the context to connect to either a Microsoft SQL Server or SQLite database. Other providers are available to connect to additional types of databases.
+
+<xref:Microsoft.Extensions.Configuration.ConfigurationExtensions.GetConnectionString*> uses the ASP.NET Core Configuration system to read the `ConnectionStrings` key for the connection string name provided, which in the preceding example is `BlazorWebAppMoviesContext`.
 
 For local development, configuration obtains the database connection string from the app settings file (`appsettings.json`). The `{CONNECTION STRING}` placeholder in the following example is the connection string:
 
@@ -83,12 +90,11 @@ The following is an example connection string:
 
 When the app is deployed to a test/staging or production server, securely store the connection string outside of the project's configuration files.
 
-> **Warning:**
-> Don'<example-value>'t the most secure approach. For local development testing, the Secret <example-value> tool is recommended for securing sensitive data. For more information, see Securely maintain sensitive data and credentials.
+[!INCLUDE[](~/blazor/security/includes/secure-authentication-flows.md)]
 
 ## Database technology
 
-**vs:**
+:::zone pivot="vs"
 
 The Visual Studio version of this tutorial uses SQL Server.
 
@@ -96,31 +102,51 @@ SQL Server Express LocalDB is a lightweight version of the SQL Server Express da
 
 From the **View** menu, open **SQL Server Object Explorer** (SSOX).
 
+![View menu](~/blazor/tutorials/movie-database-app/part-4/_static/view-ssox.png)
+
 Right-click on the `Movie` table and select **View Designer**:
 
+![Contextual menus to open the Movie table in Solution Explorer (SSOX)](~/blazor/tutorials/movie-database-app/part-4/_static/view-designer.png)
+
 The **View Designer** opens:
+
+![Movie table open in the table designer](~/blazor/tutorials/movie-database-app/part-4/_static/movie-table.png)
 
 Note the key icon next to `ID`. EF creates a property named `ID` for the primary key.
 
 Right-click on the `Movie` table and select **View Data**:
 
+![Contextual menus to open the Movie table data in Solution Explorer (SSOX)](~/blazor/tutorials/movie-database-app/part-4/_static/view-data.png)
+
 The table's data opens in a new tab in Visual Studio:
 
-**vsc:**
+![Movie table open showing movie table data](~/blazor/tutorials/movie-database-app/part-4/_static/movie-data.png)
 
-The VS Code version of this tutorial uses SQLite, which is a public, self-contained, full-featured SQL database engine.
+:::zone-end
 
-There are many third-party tools you can use to manage and view SQLite databases. The following image shows DB Browser for SQLite:
+:::zone pivot="vsc"
+
+The VS Code version of this tutorial uses [SQLite](https://www.sqlite.org/), which is a public, self-contained, full-featured SQL database engine.
+
+There are many third-party tools you can use to manage and view SQLite databases. The following image shows [DB Browser for SQLite](https://sqlitebrowser.org/):
+
+![DB Browser for SQLite showing movie database](~/blazor/tutorials/movie-database-app/part-4/_static/dbb.png)
+
+In this tutorial, EF Core migrations are used. A migration updates the database schema to match changes in the data model. However, migrations can only make changes to the database that the EF Core provider supports. Resources are listed at the end of this article for further reading.
+
+:::zone-end
+
+:::zone pivot="cli"
+
+The VS Code version of this tutorial uses [SQLite](https://www.sqlite.org/), which is a public, self-contained, full-featured SQL database engine.
+
+There are many third-party tools you can use to manage and view SQLite databases. The following image shows [DB Browser for SQLite](https://sqlitebrowser.org/):
+
+![DB Browser for SQLite showing movie database](~/blazor/tutorials/movie-database-app/part-4/_static/dbb.png)
 
 In this tutorial, EF Core migrations are used. A migration updates the database schema to match changes in the data model. However, migrations can only make changes to the database that the EF Core provider supports. Resources are listed at the end of this article for further reading.
 
-**cli:**
-
-The VS Code version of this tutorial uses SQLite, which is a public, self-contained, full-featured SQL database engine.
-
-There are many third-party tools you can use to manage and view SQLite databases. The following image shows DB Browser for SQLite:
-
-In this tutorial, EF Core migrations are used. A migration updates the database schema to match changes in the data model. However, migrations can only make changes to the database that the EF Core provider supports. Resources are listed at the end of this article for further reading.
+:::zone-end
 
 ## Seed the database
 
@@ -197,9 +223,9 @@ public class SeedData
 }
 ```
 
-A database context instance is obtained from the dependency injection (DI) container. If movies are present, `return` is called to avoid seeding the database. When the database is empty, the *Mad Max* franchise (&copy;Warner Bros. Entertainment) movies are seeded.
+A database context instance is obtained from the dependency injection (DI) container. If movies are present, `return` is called to avoid seeding the database. When the database is empty, the [*Mad Max* franchise](https://warnerbros.fandom.com/wiki/Mad_Max_(franchise)) (&copy;[Warner Bros. Entertainment](https://www.warnerbros.com/)) movies are seeded.
 
-To execute the seed initializer, add the following code to the `Program` file immediately after the line that builds the app (`var app = builder.Build();`). The `using` statement ensures that the database context is disposed after the seeding operation completes.
+To execute the seed initializer, add the following code to the `Program` file immediately after the line that builds the app (`var app = builder.Build();`). The [`using` statement](/dotnet/csharp/language-reference/keywords/using-statement) ensures that the database context is disposed after the seeding operation completes.
 
 ```csharp
 using (var scope = app.Services.CreateScope())
@@ -210,21 +236,29 @@ using (var scope = app.Services.CreateScope())
 }
 ```
 
-**vs:**
+:::zone pivot="vs"
 
 If the database contains records from earlier testing, run the app and delete the entities that you created in the database. Stop the app by closing the browser's window.
 
-**vsc:**
+:::zone-end
 
-If the database contains records from earlier testing, run the app and delete the entities that you created in the database. Stop the app by closing the browser's window and pressing `Shift`+`F5` on the keyboard in VS Code.
+:::zone pivot="vsc"
 
-**cli:**
+If the database contains records from earlier testing, run the app and delete the entities that you created in the database. Stop the app by closing the browser's window and pressing <kbd>Shift</kbd>+<kbd>F5</kbd> on the keyboard in VS Code.
 
-If the database contains records from earlier testing, run the app and delete the entities that you created in the database. Stop the app by closing the browser's window and pressing `Ctrl`+`C` (Windows) in the command shell.
+:::zone-end
+
+:::zone pivot="cli"
+
+If the database contains records from earlier testing, run the app and delete the entities that you created in the database. Stop the app by closing the browser's window and pressing <kbd>Ctrl</kbd>+<kbd>C</kbd> (Windows) in the command shell.
+
+:::zone-end
 
 When the database is empty, run the app.
 
 Navigate to the movies `Index` page to see the seeded movies:
+
+![Movies Index page showing Mad Max movie list after seeding the database](~/blazor/tutorials/movie-database-app/part-4/_static/index-page.png)
 
 ## Bind a form to a model
 
@@ -232,11 +266,11 @@ Review the `Edit` component (`Components/Pages/MoviePages/Edit.razor`).
 
 When an HTTP GET request is made for the `Edit` component page (for example at the relative URL: `/movies/edit?id=6`):
 
-* The `Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*` method fetches the movie with an `Id` of `6` from the database and assigns it to the `Movie` property.
-* The `Microsoft.AspNetCore.Components.Forms.EditForm.Model` parameter specifies the top-level model object for the form. An edit context is constructed for the form using the assigned model.
+* The <xref:Microsoft.AspNetCore.Components.ComponentBase.OnInitializedAsync*> method fetches the movie with an `Id` of `6` from the database and assigns it to the `Movie` property.
+* The <xref:Microsoft.AspNetCore.Components.Forms.EditForm.Model?displayProperty=nameWithType> parameter specifies the top-level model object for the form. An edit context is constructed for the form using the assigned model.
 * The form is displayed with the values from the movie.
 
-When the `Edit` page is posted to the server, the form values on the page are bound to the `Movie` property because the `[SupplyParameterFromForm]` attribute is annotated on the `Movie` property:
+When the `Edit` page is posted to the server, the form values on the page are bound to the `Movie` property because the [`[SupplyParameterFromForm]` attribute](xref:Microsoft.AspNetCore.Components.SupplyParameterFromFormAttribute) is annotated on the `Movie` property:
 
 ```csharp
 [SupplyParameterFromForm]
@@ -248,6 +282,8 @@ If the model state has errors when the form is posted, for example if `ReleaseDa
 ## Concurrency exception handling
 
 Examine the `UpdateMovie` method of the `Edit` component (`Components/Pages/MoviePages/Edit.razor`):
+
+:::moniker range=">= aspnetcore-10.0"
 
 ```csharp
 private async Task UpdateMovie()
@@ -275,10 +311,16 @@ private async Task UpdateMovie()
 }
 ```
 
-> **Important:**
-> Due to a bug in the Blazor CRUD template, a `return` statement is missing from the `UpdateMovie` method after `Microsoft.AspNetCore.Components.NavigationManager.NotFound*` is called. The purpose of calling `return` is to ensure the handler (the `UpdateMovie` method) selects only the Not Found outcome, independently of a given database provider synchronously or asynchronously executing `Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync*`. We're in the process of updating the `Edit` component template, and this article will be updated when the scaffolder generates the correct code.
+<!-- UPDATE 11.0 - Delete the following IMPORTANT note and add the 
+                   return statement to the example code above after
+                   scaffolder updates go public per 
+                   https://github.com/dotnet/Scaffolding/issues/3828.
+-->
+
+> [!IMPORTANT]
+> Due to a bug in the Blazor CRUD template, a `return` statement is missing from the `UpdateMovie` method after <xref:Microsoft.AspNetCore.Components.NavigationManager.NotFound*> is called. The purpose of calling `return` is to ensure the handler (the `UpdateMovie` method) selects only the Not Found outcome, independently of a given database provider synchronously or asynchronously executing <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync*>. We're in the process of updating the `Edit` component template, and this article will be updated when the scaffolder generates the correct code.
 >
-> After the line that calls `Microsoft.AspNetCore.Components.NavigationManager.NotFound*`, add a `return` statement:
+> After the line that calls <xref:Microsoft.AspNetCore.Components.NavigationManager.NotFound*>, add a `return` statement:
 >
 > ```csharp
 > return;
@@ -292,7 +334,7 @@ private async Task UpdateMovie()
 >     if (!MovieExists(Movie!.Id))
 >     {
 >         NavigationManager.NotFound();
->
+> 
 >         return;
 >     }
 >     else
@@ -311,26 +353,97 @@ To test how concurrency is handled by the preceding code:
 1. In the previous browser window, post changes to the movie by selecting the **:::no-loc text="Save":::** button.
 1. The browser is navigated to the Not Found page with a 404 (Not Found) status code.
 
+:::moniker-end
+
+:::moniker range="< aspnetcore-10.0"
+
+```csharp
+private async Task UpdateMovie()
+{
+    using var context = DbFactory.CreateDbContext();
+    context.Attach(Movie!).State = EntityState.Modified;
+
+    try
+    {
+        await context.SaveChangesAsync();
+    }
+    catch (DbUpdateConcurrencyException)
+    {
+        if (!MovieExists(Movie!.Id))
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+        else
+        {
+            throw;
+        }
+    }
+
+    NavigationManager.NavigateTo("/movies");
+}
+```
+
+Concurrency exceptions are detected when one client deletes the movie and a different client posts changes to the movie.
+
+To test how concurrency is handled by the preceding code:
+
+1. Select **:::no-loc text="Edit":::** for a movie, make changes, but don't select **:::no-loc text="Save":::**.
+1. In a different browser window, open the app to the movie `Index` page and select the **:::no-loc text="Delete":::** link for the same movie to delete the movie.
+1. In the previous browser window, post changes to the movie by selecting the **:::no-loc text="Save":::** button.
+1. The browser is navigated to the `notfound` endpoint, which doesn't exist and yields a 404 (Not Found) result.
+
+:::moniker-end
+
 Additional guidance on handling concurrency with EF Core in Blazor apps is available in the Blazor documentation.
 
 ## Stop the app
 
-**vs:**
+:::zone pivot="vs"
 
 If the app is running, shut the app down by closing the browser's window.
 
-**vsc:**
+:::zone-end
 
-If the app is running, shut the app down by closing the browser's window and pressing `Shift`+`F5` on the keyboard in VS Code.
+:::zone pivot="vsc"
 
-**cli:**
+If the app is running, shut the app down by closing the browser's window and pressing <kbd>Shift</kbd>+<kbd>F5</kbd> on the keyboard in VS Code.
 
-If the app is running, shut the app down by closing the browser's window and pressing `Ctrl`+`C` in the command shell.
+:::zone-end
+
+:::zone pivot="cli"
+
+If the app is running, shut the app down by closing the browser's window and pressing <kbd>Ctrl</kbd>+<kbd>C</kbd> in the command shell.
+
+:::zone-end
 
 ## Troubleshoot with the completed sample
 
-If you run into a problem while following the tutorial that you can't resolve from the text, compare your code to the completed project in the Blazor samples repository:
+[!INCLUDE[](~/blazor/tutorials/movie-database-app/includes/troubleshoot.md)]
 
-Blazor samples GitHub repository (`dotnet/blazor-samples`)
+## Related content
 
-Select the latest version folder. The sample folder for this tutorial's project is named `BlazorWebAppMovies`.
+* Configuration articles:
+  * [Configuration in ASP.NET Core](../../../fundamentals/configuration/index.md) (ASP.NET Core Configuration system)
+  * [ASP.NET Core Blazor configuration](../../fundamentals/configuration.md) (Blazor documentation)
+  * [Data seeding (EF Core documentation)](/ef/core/modeling/data-seeding)
+* [Concurrency with EF Core in Blazor apps](../../blazor-ef-core.md)
+* Database provider resources:
+  * EF Core documentation
+    * [SQLite EF Core Database Provider Limitations](/ef/core/providers/sqlite/limitations)
+    * [Customize migration code](/ef/core/managing-schemas/migrations/#customize-migration-code)
+  * [SQLite ALTER TABLE statement (SQLite documentation)](https://sqlite.org/lang_altertable.html)
+* Blazor Web App security
+  * [ASP.NET Core Blazor authentication and authorization](../../security/index.md)
+  * [ASP.NET Core Blazor authentication and authorization](../../security/index.md) and the following articles in the *Server* security node
+  * [Secure an ASP.NET Core Blazor Web App with OpenID Connect (OIDC)](../../security/blazor-web-app-with-oidc.md)
+  * [Secure an ASP.NET Core Blazor Web App with Microsoft Entra ID](../../security/blazor-web-app-with-entra.md)
+
+## Legal
+
+[*Mad Max*, *The Road Warrior*, *Mad Max: Beyond Thunderdome*, *Mad Max: Fury Road*, and *Furiosa: A Mad Max Saga*](https://warnerbros.fandom.com/wiki/Mad_Max_(franchise)) are trademarks and copyrights of [Warner Bros. Entertainment](https://www.warnerbros.com/).
+
+## Next steps
+
+> [!div class="step-by-step"]
+> [Previous: Learn about Razor components](part-3.md)
+> [Next: Add Validation](part-5.md)

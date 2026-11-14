@@ -1,31 +1,34 @@
 ---
+description: "Learn more about: ICorProfilerInfo12 Interface"
 title: "ICorProfilerInfo12 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/profiling/icorprofilerinfo12-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/19/2021"
+api_name:
+  - "ICorProfilerInfo12"
+api_location:
+  - "coreclr.dll"
+  - "corprof.idl"
+api_type:
+  - "COM"
 ---
-
 # ICorProfilerInfo12 interface
 
- A subclass of ICorProfilerInfo11 that provides methods to create EventPipe sessions, events, and providers.
+ A subclass of [ICorProfilerInfo11](icorprofilerinfo11-interface.md) that provides methods to create EventPipe sessions, events, and providers.
 
 ## Methods
 
 | Method | Description |
 |------------|-----------------|
-|EventPipeStartSession Method| Starts a profiler EventPipe session. |
-|EventPipeAddProviderToSession Method| Adds a provider to an existing EventPipe session. |
-|EventPipeStopSession Method| Stops an EventPipe session. |
-|EventPipeCreateProvider Method| Creates an EventPipe provider. |
-|EventPipeGetProviderInfo Method| Gets the name of an EventPipe provider from its ID. |
-|EventPipeDefineEvent Method| Defines an event on an existing EventPipe provider. |
-|EventPipeWriteEvent Method| Writes an EventPipe event. |
+|[EventPipeStartSession Method](icorprofilerinfo12-eventpipestartsession-method.md)| Starts a profiler EventPipe session. |
+|[EventPipeAddProviderToSession Method](icorprofilerinfo12-eventpipeaddprovidertosession-method.md)| Adds a provider to an existing EventPipe session. |
+|[EventPipeStopSession Method](icorprofilerinfo12-eventpipestopsession-method.md)| Stops an EventPipe session. |
+|[EventPipeCreateProvider Method](icorprofilerinfo12-eventpipecreateprovider-method.md)| Creates an EventPipe provider. |
+|[EventPipeGetProviderInfo Method](icorprofilerinfo12-eventpipegetproviderinfo-method.md)| Gets the name of an EventPipe provider from its ID. |
+|[EventPipeDefineEvent Method](icorprofilerinfo12-eventpipedefineevent-method.md)| Defines an event on an existing EventPipe provider. |
+|[EventPipeWriteEvent Method](icorprofilerinfo12-eventpipewriteevent-method.md)| Writes an EventPipe event. |
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** CorProf.idl, CorProf.h
 
@@ -33,6 +36,6 @@ license: "CC-BY-4.0"
 
 ## See also
 
-- EventPipe Overview
-- Well Known EventProviders
-- ICorProfilerCallback10 Interface
+- [EventPipe Overview](../../../core/diagnostics/eventpipe.md)
+- [Well Known EventProviders](../../../core/diagnostics/well-known-event-providers.md)
+- [ICorProfilerCallback10 Interface](icorprofilercallback10-interface.md)

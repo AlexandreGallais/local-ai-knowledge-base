@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Containers default to use the 'latest' tag"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/8.0/default-image-tag.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in containers where .NET SDK-built containers default to use the 'latest' tag instead of '$(Version)'.
+ms.date: 07/27/2023
 ---
-
 # Containers default to use the 'latest' tag
 
 The default image tag used for .NET SDK-built containers changed from the value of the `Version` of the project to the value `latest`.
@@ -25,7 +21,7 @@ Starting in .NET 8, the generated image has the `latest` tag in all cases.
 
 ## Type of change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

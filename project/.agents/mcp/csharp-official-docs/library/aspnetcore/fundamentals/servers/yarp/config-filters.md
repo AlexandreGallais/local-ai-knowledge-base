@@ -1,16 +1,16 @@
 ---
-title: "YARP Configuration Filters"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/config-filters.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: YARP Configuration Filters
+description: YARP Configuration Filters
+ms.date: 2/6/2025
+ms.topic: concept-article
+content_well_notification: AI-contribution
+ai-usage: ai-assisted
 ---
 
 # YARP Configuration Filters
 
 ## Introduction
-YARP configuration for routes, clusters, and destinations can be loaded from configuration files or from configuration providers. Configuration filters can be used to modify that raw input before it's validated and applied.
+YARP configuration for routes, clusters, and destinations can be loaded from [configuration files](config-files.md) or from [configuration providers](config-providers.md). Configuration filters can be used to modify that raw input before it's validated and applied.
 
 Filters can be used for a variety of purposes such as:
 
@@ -21,7 +21,7 @@ Filters can be used for a variety of purposes such as:
 * Normalization and error correction
 
 ## AddConfigFilter
-Configuration filters are registered in the Dependency Injection system using the AddConfigFilter API. Any number of unique filters can be added and will be applied in the order added.
+Configuration filters are registered in the Dependency Injection system using the [AddConfigFilter](xref:Microsoft.Extensions.DependencyInjection.ReverseProxyServiceCollectionExtensions) API. Any number of unique filters can be added and will be applied in the order added.
 
 ```csharp
 // Load the configuration and register a config filter
@@ -31,9 +31,9 @@ services.AddReverseProxy()
 ```
 
 ## IProxyConfigFilter
-Configuration filters are written using the IProxyConfigFilter interface. Because filters are registered in DI they may define a constructor to inject any dependencies.
+Configuration filters are written using the [IProxyConfigFilter](xref:Yarp.ReverseProxy.Configuration.IProxyConfigFilter) interface. Because filters are registered in DI they may define a constructor to inject any dependencies.
 
-Filters are called for each route and cluster each time configuration is loaded or re-loaded. They can choose to return the original input unmodified or a modified copy. The C# 9 records syntax is convenient for making modified copies.
+Filters are called for each route and cluster each time configuration is loaded or re-loaded. They can choose to return the original input unmodified or a modified copy. The C# 9 [records syntax](/dotnet/csharp/language-reference/builtin-types/record#nondestructive-mutation) is convenient for making modified copies.
 
 This example fills in destination addresses from environment variables and sets the route's Order field to 1.
 
@@ -55,7 +55,7 @@ public class CustomConfigFilter : IProxyConfigFilter
     // This sample looks at the destination addresses and any of the form {{key}} will be modified, looking up the key
     // as an environment variable. This is useful when hosted in Azure etc, as it enables a simple way to replace
     // destination addresses via the management console
-    public ValueTask<ClusterConfig> ConfigureClusterAsync(ClusterConfig origCluster, CancellationToken <example-value>)
+    public ValueTask<ClusterConfig> ConfigureClusterAsync(ClusterConfig origCluster, CancellationToken cancel)
     {
         // Each cluster has a dictionary of destinations, which is read-only, so we'll create a new one with our updates 
         var newDests = new Dictionary<string, DestinationConfig>(StringComparer.OrdinalIgnoreCase);
@@ -87,7 +87,7 @@ public class CustomConfigFilter : IProxyConfigFilter
         return new ValueTask<ClusterConfig>(origCluster with { Destinations = newDests });
     }
 
-    public ValueTask<RouteConfig> ConfigureRouteAsync(RouteConfig route, ClusterConfig cluster, CancellationToken <example-value>)
+    public ValueTask<RouteConfig> ConfigureRouteAsync(RouteConfig route, ClusterConfig cluster, CancellationToken cancel)
     {
         // Example: do not let config based routes take priority over code based routes.
         // Lower numbers are higher priority. Code routes default to 0.

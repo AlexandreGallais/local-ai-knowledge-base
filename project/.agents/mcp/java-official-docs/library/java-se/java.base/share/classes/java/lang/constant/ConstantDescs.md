@@ -1,26 +1,17 @@
----
-title: "ConstantDescs class (java.lang.constant)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/constant/ConstantDescs.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ConstantDescs class (java.lang.constant)
 
 ```java
 public final class ConstantDescs
 ```
 
-Predefined values of nominal descriptor
+Predefined values of <a href="package-summary.html#nominal">nominal descriptor</a>
 for common constants, including descriptors for primitive class types and
 other common platform types, and descriptors for method handles for standard
 bootstrap methods.
 
-**See also:** ConstantDesc
+@see ConstantDesc
 
-**Since:** 12
+@since 12
 
 ## ConstantDescs.DEFAULT_NAME
 
@@ -38,7 +29,7 @@ callsite when the bootstrap is known to ignore the invocation name.
 public static final ClassDesc CD_Object
 ```
 
-`ClassDesc` representing `Object`
+{@link ClassDesc} representing {@link Object}
 
 ## ConstantDescs.CD_String
 
@@ -46,7 +37,7 @@ public static final ClassDesc CD_Object
 public static final ClassDesc CD_String
 ```
 
-`ClassDesc` representing `String`
+{@link ClassDesc} representing {@link String}
 
 ## ConstantDescs.CD_Class
 
@@ -54,7 +45,7 @@ public static final ClassDesc CD_String
 public static final ClassDesc CD_Class
 ```
 
-`ClassDesc` representing `Class`
+{@link ClassDesc} representing {@link Class}
 
 ## ConstantDescs.CD_Number
 
@@ -62,7 +53,7 @@ public static final ClassDesc CD_Class
 public static final ClassDesc CD_Number
 ```
 
-`ClassDesc` representing `Number`
+{@link ClassDesc} representing {@link Number}
 
 ## ConstantDescs.CD_Integer
 
@@ -70,7 +61,7 @@ public static final ClassDesc CD_Number
 public static final ClassDesc CD_Integer
 ```
 
-`ClassDesc` representing `Integer`
+{@link ClassDesc} representing {@link Integer}
 
 ## ConstantDescs.CD_Long
 
@@ -78,7 +69,7 @@ public static final ClassDesc CD_Integer
 public static final ClassDesc CD_Long
 ```
 
-`ClassDesc` representing `Long`
+{@link ClassDesc} representing {@link Long}
 
 ## ConstantDescs.CD_Float
 
@@ -86,7 +77,7 @@ public static final ClassDesc CD_Long
 public static final ClassDesc CD_Float
 ```
 
-`ClassDesc` representing `Float`
+{@link ClassDesc} representing {@link Float}
 
 ## ConstantDescs.CD_Double
 
@@ -94,7 +85,7 @@ public static final ClassDesc CD_Float
 public static final ClassDesc CD_Double
 ```
 
-`ClassDesc` representing `Double`
+{@link ClassDesc} representing {@link Double}
 
 ## ConstantDescs.CD_Short
 
@@ -102,7 +93,7 @@ public static final ClassDesc CD_Double
 public static final ClassDesc CD_Short
 ```
 
-`ClassDesc` representing `Short`
+{@link ClassDesc} representing {@link Short}
 
 ## ConstantDescs.CD_Byte
 
@@ -110,7 +101,7 @@ public static final ClassDesc CD_Short
 public static final ClassDesc CD_Byte
 ```
 
-`ClassDesc` representing `Byte`
+{@link ClassDesc} representing {@link Byte}
 
 ## ConstantDescs.CD_Character
 
@@ -118,7 +109,7 @@ public static final ClassDesc CD_Byte
 public static final ClassDesc CD_Character
 ```
 
-`ClassDesc` representing `Character`
+{@link ClassDesc} representing {@link Character}
 
 ## ConstantDescs.CD_Boolean
 
@@ -126,7 +117,7 @@ public static final ClassDesc CD_Character
 public static final ClassDesc CD_Boolean
 ```
 
-`ClassDesc` representing `Boolean`
+{@link ClassDesc} representing {@link Boolean}
 
 ## ConstantDescs.CD_Void
 
@@ -134,7 +125,7 @@ public static final ClassDesc CD_Boolean
 public static final ClassDesc CD_Void
 ```
 
-`ClassDesc` representing `Void`
+{@link ClassDesc} representing {@link Void}
 
 ## ConstantDescs.CD_Throwable
 
@@ -142,7 +133,7 @@ public static final ClassDesc CD_Void
 public static final ClassDesc CD_Throwable
 ```
 
-`ClassDesc` representing `Throwable`
+{@link ClassDesc} representing {@link Throwable}
 
 ## ConstantDescs.CD_Exception
 
@@ -150,7 +141,7 @@ public static final ClassDesc CD_Throwable
 public static final ClassDesc CD_Exception
 ```
 
-`ClassDesc` representing `Exception`
+{@link ClassDesc} representing {@link Exception}
 
 ## ConstantDescs.CD_Enum
 
@@ -158,7 +149,7 @@ public static final ClassDesc CD_Exception
 public static final ClassDesc CD_Enum
 ```
 
-`ClassDesc` representing `Enum`
+{@link ClassDesc} representing {@link Enum}
 
 ## ConstantDescs.CD_VarHandle
 
@@ -166,7 +157,7 @@ public static final ClassDesc CD_Enum
 public static final ClassDesc CD_VarHandle
 ```
 
-`ClassDesc` representing `VarHandle`
+{@link ClassDesc} representing {@link VarHandle}
 
 ## ConstantDescs.CD_MethodHandles
 
@@ -174,7 +165,7 @@ public static final ClassDesc CD_VarHandle
 public static final ClassDesc CD_MethodHandles
 ```
 
-`ClassDesc` representing `MethodHandles`
+{@link ClassDesc} representing {@link MethodHandles}
 
 ## ConstantDescs.CD_MethodHandles_Lookup
 
@@ -182,7 +173,7 @@ public static final ClassDesc CD_MethodHandles
 public static final ClassDesc CD_MethodHandles_Lookup
 ```
 
-`ClassDesc` representing `MethodHandles.Lookup`
+{@link ClassDesc} representing {@link MethodHandles.Lookup}
 
 ## ConstantDescs.CD_MethodHandle
 
@@ -190,7 +181,7 @@ public static final ClassDesc CD_MethodHandles_Lookup
 public static final ClassDesc CD_MethodHandle
 ```
 
-`ClassDesc` representing `MethodHandle`
+{@link ClassDesc} representing {@link MethodHandle}
 
 ## ConstantDescs.CD_MethodType
 
@@ -198,7 +189,7 @@ public static final ClassDesc CD_MethodHandle
 public static final ClassDesc CD_MethodType
 ```
 
-`ClassDesc` representing `MethodType`
+{@link ClassDesc} representing {@link MethodType}
 
 ## ConstantDescs.CD_CallSite
 
@@ -206,7 +197,7 @@ public static final ClassDesc CD_MethodType
 public static final ClassDesc CD_CallSite
 ```
 
-`ClassDesc` representing `CallSite`
+{@link ClassDesc} representing {@link CallSite}
 
 ## ConstantDescs.CD_Collection
 
@@ -214,7 +205,7 @@ public static final ClassDesc CD_CallSite
 public static final ClassDesc CD_Collection
 ```
 
-`ClassDesc` representing `Collection`
+{@link ClassDesc} representing {@link Collection}
 
 ## ConstantDescs.CD_List
 
@@ -222,7 +213,7 @@ public static final ClassDesc CD_Collection
 public static final ClassDesc CD_List
 ```
 
-`ClassDesc` representing `List`
+{@link ClassDesc} representing {@link List}
 
 ## ConstantDescs.CD_Set
 
@@ -230,7 +221,7 @@ public static final ClassDesc CD_List
 public static final ClassDesc CD_Set
 ```
 
-`ClassDesc` representing `Set`
+{@link ClassDesc} representing {@link Set}
 
 ## ConstantDescs.CD_Map
 
@@ -238,7 +229,7 @@ public static final ClassDesc CD_Set
 public static final ClassDesc CD_Map
 ```
 
-`ClassDesc` representing `Map`
+{@link ClassDesc} representing {@link Map}
 
 ## ConstantDescs.CD_ConstantDesc
 
@@ -246,7 +237,7 @@ public static final ClassDesc CD_Map
 public static final ClassDesc CD_ConstantDesc
 ```
 
-`ClassDesc` representing `ConstantDesc`
+{@link ClassDesc} representing {@link ConstantDesc}
 
 ## ConstantDescs.CD_ClassDesc
 
@@ -254,7 +245,7 @@ public static final ClassDesc CD_ConstantDesc
 public static final ClassDesc CD_ClassDesc
 ```
 
-`ClassDesc` representing `ClassDesc`
+{@link ClassDesc} representing {@link ClassDesc}
 
 ## ConstantDescs.CD_EnumDesc
 
@@ -262,7 +253,7 @@ public static final ClassDesc CD_ClassDesc
 public static final ClassDesc CD_EnumDesc
 ```
 
-`ClassDesc` representing `EnumDesc`
+{@link ClassDesc} representing {@link EnumDesc}
 
 ## ConstantDescs.CD_MethodTypeDesc
 
@@ -270,7 +261,7 @@ public static final ClassDesc CD_EnumDesc
 public static final ClassDesc CD_MethodTypeDesc
 ```
 
-`ClassDesc` representing `MethodTypeDesc`
+{@link ClassDesc} representing {@link MethodTypeDesc}
 
 ## ConstantDescs.CD_MethodHandleDesc
 
@@ -278,7 +269,7 @@ public static final ClassDesc CD_MethodTypeDesc
 public static final ClassDesc CD_MethodHandleDesc
 ```
 
-`ClassDesc` representing `MethodHandleDesc`
+{@link ClassDesc} representing {@link MethodHandleDesc}
 
 ## ConstantDescs.CD_DirectMethodHandleDesc
 
@@ -286,7 +277,7 @@ public static final ClassDesc CD_MethodHandleDesc
 public static final ClassDesc CD_DirectMethodHandleDesc
 ```
 
-`ClassDesc` representing `DirectMethodHandleDesc`
+{@link ClassDesc} representing {@link DirectMethodHandleDesc}
 
 ## ConstantDescs.CD_VarHandleDesc
 
@@ -294,7 +285,7 @@ public static final ClassDesc CD_DirectMethodHandleDesc
 public static final ClassDesc CD_VarHandleDesc
 ```
 
-`ClassDesc` representing `VarHandleDesc`
+{@link ClassDesc} representing {@link VarHandleDesc}
 
 ## ConstantDescs.CD_MethodHandleDesc_Kind
 
@@ -302,7 +293,7 @@ public static final ClassDesc CD_VarHandleDesc
 public static final ClassDesc CD_MethodHandleDesc_Kind
 ```
 
-`ClassDesc` representing `DirectMethodHandleDesc.Kind`
+{@link ClassDesc} representing {@link DirectMethodHandleDesc.Kind}
 
 ## ConstantDescs.CD_DynamicConstantDesc
 
@@ -310,7 +301,7 @@ public static final ClassDesc CD_MethodHandleDesc_Kind
 public static final ClassDesc CD_DynamicConstantDesc
 ```
 
-`ClassDesc` representing `DynamicConstantDesc`
+{@link ClassDesc} representing {@link DynamicConstantDesc}
 
 ## ConstantDescs.CD_DynamicCallSiteDesc
 
@@ -318,7 +309,7 @@ public static final ClassDesc CD_DynamicConstantDesc
 public static final ClassDesc CD_DynamicCallSiteDesc
 ```
 
-`ClassDesc` representing `DynamicCallSiteDesc`
+{@link ClassDesc} representing {@link DynamicCallSiteDesc}
 
 ## ConstantDescs.CD_ConstantBootstraps
 
@@ -326,7 +317,7 @@ public static final ClassDesc CD_DynamicCallSiteDesc
 public static final ClassDesc CD_ConstantBootstraps
 ```
 
-`ClassDesc` representing `ConstantBootstraps`
+{@link ClassDesc} representing {@link ConstantBootstraps}
 
 ## ConstantDescs.BSM_PRIMITIVE_CLASS
 
@@ -334,7 +325,7 @@ public static final ClassDesc CD_ConstantBootstraps
 public static final DirectMethodHandleDesc BSM_PRIMITIVE_CLASS
 ```
 
-`MethodHandleDesc` representing String, Class) ConstantBootstraps.primitiveClass
+{@link MethodHandleDesc} representing {@link ConstantBootstraps#primitiveClass(Lookup, String, Class) ConstantBootstraps.primitiveClass}
 
 ## ConstantDescs.BSM_ENUM_CONSTANT
 
@@ -342,7 +333,7 @@ public static final DirectMethodHandleDesc BSM_PRIMITIVE_CLASS
 public static final DirectMethodHandleDesc BSM_ENUM_CONSTANT
 ```
 
-`MethodHandleDesc` representing String, Class) ConstantBootstraps.enumConstant
+{@link MethodHandleDesc} representing {@link ConstantBootstraps#enumConstant(Lookup, String, Class) ConstantBootstraps.enumConstant}
 
 ## ConstantDescs.BSM_GET_STATIC_FINAL
 
@@ -350,9 +341,8 @@ public static final DirectMethodHandleDesc BSM_ENUM_CONSTANT
 public static final DirectMethodHandleDesc BSM_GET_STATIC_FINAL
 ```
 
-`MethodHandleDesc` representing String, Class, Class) ConstantBootstraps.getStaticFinal
-
-**Since:** 15
+{@link MethodHandleDesc} representing {@link ConstantBootstraps#getStaticFinal(Lookup, String, Class, Class) ConstantBootstraps.getStaticFinal}
+@since 15
 
 ## ConstantDescs.BSM_NULL_CONSTANT
 
@@ -360,7 +350,7 @@ public static final DirectMethodHandleDesc BSM_GET_STATIC_FINAL
 public static final DirectMethodHandleDesc BSM_NULL_CONSTANT
 ```
 
-`MethodHandleDesc` representing String, Class) ConstantBootstraps.nullConstant
+{@link MethodHandleDesc} representing {@link ConstantBootstraps#nullConstant(Lookup, String, Class) ConstantBootstraps.nullConstant}
 
 ## ConstantDescs.BSM_VARHANDLE_FIELD
 
@@ -368,7 +358,7 @@ public static final DirectMethodHandleDesc BSM_NULL_CONSTANT
 public static final DirectMethodHandleDesc BSM_VARHANDLE_FIELD
 ```
 
-`MethodHandleDesc` representing String, Class, Class, Class) ConstantBootstraps.fieldVarHandle
+{@link MethodHandleDesc} representing {@link ConstantBootstraps#fieldVarHandle(Lookup, String, Class, Class, Class) ConstantBootstraps.fieldVarHandle}
 
 ## ConstantDescs.BSM_VARHANDLE_STATIC_FIELD
 
@@ -376,7 +366,7 @@ public static final DirectMethodHandleDesc BSM_VARHANDLE_FIELD
 public static final DirectMethodHandleDesc BSM_VARHANDLE_STATIC_FIELD
 ```
 
-`MethodHandleDesc` representing String, Class, Class, Class) ConstantBootstraps.staticFieldVarHandle
+{@link MethodHandleDesc} representing {@link ConstantBootstraps#staticFieldVarHandle(Lookup, String, Class, Class, Class) ConstantBootstraps.staticFieldVarHandle}
 
 ## ConstantDescs.BSM_VARHANDLE_ARRAY
 
@@ -384,7 +374,7 @@ public static final DirectMethodHandleDesc BSM_VARHANDLE_STATIC_FIELD
 public static final DirectMethodHandleDesc BSM_VARHANDLE_ARRAY
 ```
 
-`MethodHandleDesc` representing String, Class, Class) ConstantBootstraps.arrayVarHandle
+{@link MethodHandleDesc} representing {@link ConstantBootstraps#arrayVarHandle(Lookup, String, Class, Class) ConstantBootstraps.arrayVarHandle}
 
 ## ConstantDescs.BSM_INVOKE
 
@@ -392,7 +382,7 @@ public static final DirectMethodHandleDesc BSM_VARHANDLE_ARRAY
 public static final DirectMethodHandleDesc BSM_INVOKE
 ```
 
-`MethodHandleDesc` representing String, Class, MethodHandle, Object...) ConstantBootstraps.invoke
+{@link MethodHandleDesc} representing {@link ConstantBootstraps#invoke(Lookup, String, Class, MethodHandle, Object...) ConstantBootstraps.invoke}
 
 ## ConstantDescs.BSM_EXPLICIT_CAST
 
@@ -400,9 +390,8 @@ public static final DirectMethodHandleDesc BSM_INVOKE
 public static final DirectMethodHandleDesc BSM_EXPLICIT_CAST
 ```
 
-`MethodHandleDesc` representing String, Class, Object) ConstantBootstraps.explicitCast
-
-**Since:** 15
+{@link MethodHandleDesc} representing {@link ConstantBootstraps#explicitCast(Lookup, String, Class, Object) ConstantBootstraps.explicitCast}
+@since 15
 
 ## ConstantDescs.CD_int
 
@@ -410,7 +399,7 @@ public static final DirectMethodHandleDesc BSM_EXPLICIT_CAST
 public static final ClassDesc CD_int
 ```
 
-`ClassDesc` representing the primitive type `int`
+{@link ClassDesc} representing the primitive type {@code int}
 
 ## ConstantDescs.CD_long
 
@@ -418,7 +407,7 @@ public static final ClassDesc CD_int
 public static final ClassDesc CD_long
 ```
 
-`ClassDesc` representing the primitive type `long`
+{@link ClassDesc} representing the primitive type {@code long}
 
 ## ConstantDescs.CD_float
 
@@ -426,7 +415,7 @@ public static final ClassDesc CD_long
 public static final ClassDesc CD_float
 ```
 
-`ClassDesc` representing the primitive type `float`
+{@link ClassDesc} representing the primitive type {@code float}
 
 ## ConstantDescs.CD_double
 
@@ -434,7 +423,7 @@ public static final ClassDesc CD_float
 public static final ClassDesc CD_double
 ```
 
-`ClassDesc` representing the primitive type `double`
+{@link ClassDesc} representing the primitive type {@code double}
 
 ## ConstantDescs.CD_short
 
@@ -442,7 +431,7 @@ public static final ClassDesc CD_double
 public static final ClassDesc CD_short
 ```
 
-`ClassDesc` representing the primitive type `short`
+{@link ClassDesc} representing the primitive type {@code short}
 
 ## ConstantDescs.CD_byte
 
@@ -450,7 +439,7 @@ public static final ClassDesc CD_short
 public static final ClassDesc CD_byte
 ```
 
-`ClassDesc` representing the primitive type `byte`
+{@link ClassDesc} representing the primitive type {@code byte}
 
 ## ConstantDescs.CD_char
 
@@ -458,7 +447,7 @@ public static final ClassDesc CD_byte
 public static final ClassDesc CD_char
 ```
 
-`ClassDesc` representing the primitive type `char`
+{@link ClassDesc} representing the primitive type {@code char}
 
 ## ConstantDescs.CD_boolean
 
@@ -466,7 +455,7 @@ public static final ClassDesc CD_char
 public static final ClassDesc CD_boolean
 ```
 
-`ClassDesc` representing the primitive type `boolean`
+{@link ClassDesc} representing the primitive type {@code boolean}
 
 ## ConstantDescs.CD_void
 
@@ -474,7 +463,7 @@ public static final ClassDesc CD_boolean
 public static final ClassDesc CD_void
 ```
 
-`ClassDesc` representing the primitive type `void`
+{@link ClassDesc} representing the primitive type {@code void}
 
 ## ConstantDescs.BSM_CLASS_DATA
 
@@ -482,9 +471,8 @@ public static final ClassDesc CD_void
 public static final DirectMethodHandleDesc BSM_CLASS_DATA
 ```
 
-`MethodHandleDesc` representing String, Class) MethodHandles.classData
-
-**Since:** 21
+{@link MethodHandleDesc} representing {@link MethodHandles#classData(Lookup, String, Class) MethodHandles.classData}
+@since 21
 
 ## ConstantDescs.BSM_CLASS_DATA_AT
 
@@ -492,9 +480,8 @@ public static final DirectMethodHandleDesc BSM_CLASS_DATA
 public static final DirectMethodHandleDesc BSM_CLASS_DATA_AT
 ```
 
-`MethodHandleDesc` representing String, Class, int) MethodHandles.classDataAt
-
-**Since:** 21
+{@link MethodHandleDesc} representing {@link MethodHandles#classDataAt(Lookup, String, Class, int) MethodHandles.classDataAt}
+@since 21
 
 ## ConstantDescs.NULL
 
@@ -502,7 +489,7 @@ public static final DirectMethodHandleDesc BSM_CLASS_DATA_AT
 public static final ConstantDesc NULL
 ```
 
-Nominal descriptor representing the constant `null`
+Nominal descriptor representing the constant {@code null}
 
 ## ConstantDescs.TRUE
 
@@ -510,9 +497,8 @@ Nominal descriptor representing the constant `null`
 public static final DynamicConstantDesc<Boolean> TRUE
 ```
 
-Nominal descriptor representing the constant `Boolean.TRUE`
-
-**Since:** 15
+Nominal descriptor representing the constant {@linkplain Boolean#TRUE}
+@since 15
 
 ## ConstantDescs.FALSE
 
@@ -520,9 +506,8 @@ Nominal descriptor representing the constant `Boolean.TRUE`
 public static final DynamicConstantDesc<Boolean> FALSE
 ```
 
-Nominal descriptor representing the constant `Boolean.FALSE`
-
-**Since:** 15
+Nominal descriptor representing the constant {@linkplain Boolean#FALSE}
+@since 15
 
 ## ConstantDescs.INIT_NAME
 
@@ -530,12 +515,11 @@ Nominal descriptor representing the constant `Boolean.FALSE`
 public static final String INIT_NAME
 ```
 
-The special name of instance initialization methods, ``. An instance
-initialization method has this special name and is `void`.
+The special name of instance initialization methods, {@value}. An instance
+initialization method has this special name and is {@code void}.
 
-**jvms:** 2.9.1 Instance Initialization Methods
-
-**Since:** 21
+@jvms 2.9.1 Instance Initialization Methods
+@since 21
 
 ## ConstantDescs.CLASS_INIT_NAME
 
@@ -543,12 +527,12 @@ initialization method has this special name and is `void`.
 public static final String CLASS_INIT_NAME
 ```
 
-The special name of class initialization methods, ``. A class
-initialization method has this special name, ACC_STATIC flag set, is void and takes no arguments.
+The special name of class initialization methods, {@value}. A class
+initialization method has this special name, {@link java.lang.reflect.AccessFlag#STATIC
+ACC_STATIC} flag set, is {@link #MTD_void void} and takes no arguments.
 
-**jvms:** 2.9.2 Class Initialization Methods
-
-**Since:** 21
+@jvms 2.9.2 Class Initialization Methods
+@since 21
 
 ## ConstantDescs.MTD_void
 
@@ -556,10 +540,10 @@ initialization method has this special name, ACC_STATIC flag set, is void and ta
 public static final MethodTypeDesc MTD_void
 ```
 
-Nominal descriptor representing the method descriptor `()V`,
-taking no argument and returning `void`.
+Nominal descriptor representing the method descriptor {@code ()V},
+taking no argument and returning {@code void}.
 
-**Since:** 21
+@since 21
 
 ## ConstantDescs.ofCallsiteBootstrap(ClassDesc, String, ClassDesc, ClassDesc...)
 
@@ -567,24 +551,17 @@ taking no argument and returning `void`.
 public static DirectMethodHandleDesc ofCallsiteBootstrap(ClassDesc owner, String name, ClassDesc returnType, ClassDesc... paramTypes)
 ```
 
-Returns a `MethodHandleDesc` corresponding to a bootstrap method for
-an `invokedynamic` callsite, which is a static method whose leading
-parameter types are `Lookup`, `String`, and `MethodType`.
+Returns a {@link MethodHandleDesc} corresponding to a bootstrap method for
+an {@code invokedynamic} callsite, which is a static method whose leading
+parameter types are {@code Lookup}, {@code String}, and {@code MethodType}.
 
-Parameters:
-
-- `owner`: the class declaring the method
-- `name`: the unqualified name of the method
-- `returnType`: the return type of the method
-- `paramTypes`: the types of the static bootstrap arguments, if any
-
-**Returns:** the `MethodHandleDesc`
-
-**jvms:** 4.2.2 Unqualified Names
-
-Throws:
-
-- `NullPointerException`: if any of the arguments are null
+@param owner the class declaring the method
+@param name the unqualified name of the method
+@param returnType the return type of the method
+@param paramTypes the types of the static bootstrap arguments, if any
+@return the {@link MethodHandleDesc}
+@throws NullPointerException if any of the arguments are null
+@jvms 4.2.2 Unqualified Names
 
 ## ConstantDescs.ofConstantBootstrap(ClassDesc, String, ClassDesc, ClassDesc...)
 
@@ -592,21 +569,14 @@ Throws:
 public static DirectMethodHandleDesc ofConstantBootstrap(ClassDesc owner, String name, ClassDesc returnType, ClassDesc... paramTypes)
 ```
 
-Returns a `MethodHandleDesc` corresponding to a bootstrap method for a
+Returns a {@link MethodHandleDesc} corresponding to a bootstrap method for a
 dynamic constant, which is a static method whose leading arguments are
-`Lookup`, `String`, and `Class`.
+{@code Lookup}, {@code String}, and {@code Class}.
 
-Parameters:
-
-- `owner`: the class declaring the method
-- `name`: the unqualified name of the method
-- `returnType`: the return type of the method
-- `paramTypes`: the types of the static bootstrap arguments, if any
-
-**Returns:** the `MethodHandleDesc`
-
-**jvms:** 4.2.2 Unqualified Names
-
-Throws:
-
-- `NullPointerException`: if any of the arguments are null
+@param owner the class declaring the method
+@param name the unqualified name of the method
+@param returnType the return type of the method
+@param paramTypes the types of the static bootstrap arguments, if any
+@return the {@link MethodHandleDesc}
+@throws NullPointerException if any of the arguments are null
+@jvms 4.2.2 Unqualified Names

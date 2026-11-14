@@ -1,14 +1,9 @@
 ---
-title: "func-call-spacing"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/func-call-spacing.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: func-call-spacing
+rule_type: layout
+related_rules:
+- no-spaced-func
 ---
-
-# func-call-spacing
-
 When calling a function, developers may insert optional whitespace between the function's name and the parentheses that invoke it. The following pairs of function calls are equivalent:
 
 ```js
@@ -39,7 +34,7 @@ Further, in `"always"` mode, a second object option is available that contains a
 
 Examples of **incorrect** code for this rule with the default `"never"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint func-call-spacing: ["error", "never"]*/
@@ -50,21 +45,25 @@ fn
 ();
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"never"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint func-call-spacing: ["error", "never"]*/
 
 fn();
 ```
+
+:::
 
 ### always
 
 Examples of **incorrect** code for this rule with the `"always"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint func-call-spacing: ["error", "always"]*/
@@ -75,15 +74,19 @@ fn
 ();
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"always"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint func-call-spacing: ["error", "always"]*/
 
 fn ();
 ```
+
+:::
 
 #### allowNewlines
 
@@ -91,7 +94,7 @@ By default, `"always"` does not allow newlines. To permit newlines when in `"alw
 
 Examples of **incorrect** code for this rule with `allowNewlines` option enabled:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint func-call-spacing: ["error", "always", { "allowNewlines": true }]*/
@@ -99,9 +102,11 @@ Examples of **incorrect** code for this rule with `allowNewlines` option enabled
 fn();
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `allowNewlines` option enabled:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint func-call-spacing: ["error", "always", { "allowNewlines": true }]*/
@@ -112,11 +117,13 @@ fn
 ();
 ```
 
+:::
+
 ## When Not To Use It
 
 This rule can safely be turned off if your project does not care about enforcing a consistent style for spacing within function calls.
 
 ## Compatibility
 
-* **JSCS**: disallowSpacesInCallExpression
-* **JSCS**: requireSpacesInCallExpression
+* **JSCS**: [disallowSpacesInCallExpression](https://jscs-dev.github.io/rule/disallowSpacesInCallExpression)
+* **JSCS**: [requireSpacesInCallExpression](https://jscs-dev.github.io/rule/requireSpacesInCallExpression)

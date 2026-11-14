@@ -1,15 +1,14 @@
 ---
 title: "Breaking change - NU1510 is raised for direct references pruned by NuGet"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/nu1510-pruned-references.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in the .NET 10 SDK where NU1510 is raised for unnecessary direct package references."
+ms.date: 09/04/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/45462
 ---
 
 # NU1510 is raised for direct references pruned by NuGet
 
-Starting in the .NET 10 SDK, when pruning is enabled, NuGet raises a `NU1510` warning for projects that:
+Starting in the .NET 10 SDK, when pruning is enabled, NuGet raises a [`NU1510` warning](/nuget/reference/errors-and-warnings/nu1510) for projects that:
 
 - Target or multi-target .NET 10 or a later version.
 - Include a direct package reference that overlaps with a framework-provided library (that is, the reference isn't necessary).
@@ -26,16 +25,16 @@ Previously, the .NET SDK ignored the contents of a package if it overlapped with
 
 Starting with the .NET 10 SDK, if pruning is enabled and the project targets .NET 10 or a later version, NuGet notifies you of any unnecessary package references by raising a `NU1510` warning.
 
-> **Note:**
-> Later in .NET 10, a related change was made such that direct prunable package references are automatically excluded from the `.nuspec` file. However, you'll still get the `NU1510` warning to clean up your project.
+> [!NOTE]
+> Later in .NET 10, a related change was made such that [direct prunable package references](prune-packagereference-privateassets.md) are automatically excluded from the `.nuspec` file. However, you'll still get the `NU1510` warning to clean up your project.
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
-This change reduces the maintenance burden on developers by eliminating unused package references. It prevents unnecessary updates, reduces download and restore times, and ensures cleaner build artifacts. The `NU1510` warning warning helps you identify and clean up these references proactively.
+This change reduces the maintenance burden on developers by eliminating unused package references. It prevents unnecessary updates, reduces download and restore times, and ensures cleaner build artifacts. The [`NU1510` warning](/nuget/reference/errors-and-warnings/nu1510) warning helps you identify and clean up these references proactively.
 
 ## Recommended action
 
@@ -60,4 +59,4 @@ None.
 
 ## See also
 
-- PrunePackageReference privatizes direct prunable references
+- [PrunePackageReference privatizes direct prunable references](prune-packagereference-privateassets.md)

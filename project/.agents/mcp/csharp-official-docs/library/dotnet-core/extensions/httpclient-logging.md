@@ -1,26 +1,23 @@
 ---
-title: "HTTP client logging in .NET"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/httpclient-logging.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: HTTP client logging in .NET
+description: Learn how to enable enhanced logging for HTTP clients with redaction, enrichment, and compliance features in your .NET workloads.
+ms.date: 02/12/2026
 ---
 
 # HTTP client logging in .NET
 
-When you build applications that make HTTP requests, structured logging helps you monitor, troubleshoot, and analyze outgoing traffic. The `Microsoft.Extensions.DependencyInjection.HttpClientLoggingServiceCollectionExtensions.AddExtendedHttpClientLogging*` extension provides enhanced logging for all HTTP clients created with `IHttpClientFactory`, with built-in support for:
+When you build applications that make HTTP requests, structured logging helps you monitor, troubleshoot, and analyze outgoing traffic. The <xref:Microsoft.Extensions.DependencyInjection.HttpClientLoggingServiceCollectionExtensions.AddExtendedHttpClientLogging*> extension provides enhanced logging for all HTTP clients created with `IHttpClientFactory`, with built-in support for:
 
 - **Configurable logging** - Control what gets logged (headers, body, query parameters, route parameters)
 - **Data redaction** - Apply data classification and redaction policies for privacy and compliance
 - **Log enrichment** - Add custom context to HTTP request logs
 - **Minimal overhead** - Opt-in features with performance-conscious defaults
 
-Enable enhanced HTTP client logging by calling the `Microsoft.Extensions.DependencyInjection.HttpClientLoggingServiceCollectionExtensions.AddExtendedHttpClientLogging*` extension method. This replaces the default HTTP client logger with an extended logger that supports fine-grained configuration and data compliance features.
+Enable enhanced HTTP client logging by calling the <xref:Microsoft.Extensions.DependencyInjection.HttpClientLoggingServiceCollectionExtensions.AddExtendedHttpClientLogging*> extension method. This replaces the default HTTP client logger with an extended logger that supports fine-grained configuration and data compliance features.
 
 ## Add the package
 
-### .NET CLI
+### [.NET CLI](#tab/dotnet-cli)
 
 ```dotnetcli
 dotnet add package Microsoft.Extensions.Http.Diagnostics
@@ -32,7 +29,7 @@ Or, if you're using .NET 10+ SDK:
 dotnet package add Microsoft.Extensions.Http.Diagnostics
 ```
 
-### PackageReference
+### [PackageReference](#tab/package-reference)
 
 ```xml
 <PackageReference Include="Microsoft.Extensions.Http.Diagnostics"
@@ -41,11 +38,11 @@ dotnet package add Microsoft.Extensions.Http.Diagnostics
 
 ---
 
-For more information, see dotnet package add or Manage package dependencies in .NET applications.
+For more information, see [dotnet package add](../tools/dotnet-package-add.md) or [Manage package dependencies in .NET applications](../tools/dependencies.md).
 
 ## Enable HTTP client logging
 
-To add enhanced HTTP client logging to your application, call the `Microsoft.Extensions.DependencyInjection.HttpClientLoggingServiceCollectionExtensions.AddExtendedHttpClientLogging*` extension method when configuring your services:
+To add enhanced HTTP client logging to your application, call the <xref:Microsoft.Extensions.DependencyInjection.HttpClientLoggingServiceCollectionExtensions.AddExtendedHttpClientLogging*> extension method when configuring your services:
 
 ```csharp
 using Microsoft.Extensions.DependencyInjection;
@@ -66,13 +63,13 @@ using IHost host = builder.Build();
 await host.RunAsync();
 ```
 
-This registration adds an enhanced logger to all HTTP clients created through `System.Net.Http.IHttpClientFactory`, replacing the default logger with one that supports advanced configuration.
+This registration adds an enhanced logger to all HTTP clients created through <xref:System.Net.Http.IHttpClientFactory>, replacing the default logger with one that supports advanced configuration.
 
-> **Important:**
+> [!IMPORTANT]
 > `AddExtendedHttpClientLogging()` removes all other loggers, including the default one registered via `AddDefaultLogger()`. This ensures consistent logging behavior across all HTTP clients.
 
-> **Important:**
-> You must register redaction services by calling `Microsoft.Extensions.DependencyInjection.RedactionServiceCollectionExtensions.AddRedaction*` from the `Microsoft.Extensions.Compliance.Redaction` package. The HTTP client logging feature redacts sensitive information by default (such as route parameters) and requires a redactor provider in the dependency injection container.
+> [!IMPORTANT]
+> You must register redaction services by calling <xref:Microsoft.Extensions.DependencyInjection.RedactionServiceCollectionExtensions.AddRedaction*> from the `Microsoft.Extensions.Compliance.Redaction` package. The HTTP client logging feature redacts sensitive information by default (such as route parameters) and requires a redactor provider in the dependency injection container.
 
 ### Apply logging to specific HTTP clients
 
@@ -107,7 +104,7 @@ When using the `IHttpClientBuilder` overloads, logging is applied only to that s
 
 Enhanced HTTP client logging adds information to logs using *enrichment*, which means data is added as tags to structured logs rather than to the console message. To view the enriched information, use a logging provider that supports structured logs.
 
-For quick testing, use `Microsoft.Extensions.Logging.ConsoleLoggerExtensions.AddJsonConsole*` to print structured logs to the console:
+For quick testing, use <xref:Microsoft.Extensions.Logging.ConsoleLoggerExtensions.AddJsonConsole*> to print structured logs to the console:
 
 ```csharp
 HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
@@ -128,7 +125,7 @@ For production scenarios, consider using structured logging providers like Appli
 
 ## Configure logging options
 
-You configure HTTP client logging through the `Microsoft.Extensions.Http.Logging.LoggingOptions` class using the standard options pattern. You can configure options in code or bind them from configuration (for example, `appsettings.json`).
+You configure HTTP client logging through the <xref:Microsoft.Extensions.Http.Logging.LoggingOptions> class using the [standard options pattern](options.md). You can configure options in code or bind them from configuration (for example, `appsettings.json`).
 
 ### Configure with a delegate
 
@@ -179,15 +176,15 @@ builder.Services.AddExtendedHttpClientLogging(
 
 ## Configuration options
 
-The `Microsoft.Extensions.Http.Logging.LoggingOptions` class provides the following configuration options:
+The <xref:Microsoft.Extensions.Http.Logging.LoggingOptions> class provides the following configuration options:
 
-### Basic <example-value> options
+### Basic logging options
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `LogRequestStart` | `bool` | `false` | When `true`, logs the request before processing starts. When `false`, logs a single entry with both request and response data. |
 | `LogBody` | `bool` | `false` | Enables logging of HTTP request and response bodies. **Warning**: Avoid enabling in production as it might leak sensitive information. |
-| `BodySizeLimit` | `int` | 32,768 (≈32KB) | Maximum number of bytes to read from request or response body. Keep below 85,000 bytes to avoid large object heap allocation. |
+| `BodySizeLimit` | `int` | 32,768 (≈32KB) | Maximum number of bytes to read from request or response body. Keep below 85,000 bytes to avoid [large object heap](../../standard/garbage-collection/large-object-heap.md) allocation. |
 | `BodyReadTimeout` | `TimeSpan` | 1 second | Maximum time to wait when reading request or response body. Must be between 1 millisecond and 1 minute. |
 | `RequestBodyContentTypes` | `ISet<string>` | Empty | HTTP request content types considered text and eligible for serialization. |
 | `ResponseBodyContentTypes` | `ISet<string>` | Empty | HTTP response content types considered text and eligible for serialization. |
@@ -233,11 +230,11 @@ public class CustomHttpLogEnricher : IHttpClientLogEnricher
 builder.Services.AddHttpClientLogEnricher<CustomHttpLogEnricher>();
 ```
 
-For detailed information on creating and using HTTP client log enrichers, including best practices and advanced scenarios, see HTTP client log enricher.
+For detailed information on creating and using HTTP client log enrichers, including best practices and advanced scenarios, see [HTTP client log enricher](../enrichment/http-client-log-enricher.md).
 
 ## Data classification and redaction
 
-HTTP client logging integrates with the data redaction and data classification features to protect sensitive information. When you specify a `DataClassification` for headers, query parameters, or route parameters, the redaction system applies appropriate redaction based on your configured redactors.
+HTTP client logging integrates with the [data redaction](data-redaction.md) and [data classification](data-classification.md) features to protect sensitive information. When you specify a `DataClassification` for headers, query parameters, or route parameters, the redaction system applies appropriate redaction based on your configured redactors.
 
 ### Example: Redacting sensitive headers
 
@@ -252,11 +249,11 @@ builder.Services.AddExtendedHttpClientLogging(options =>
 
     // Sensitive headers - apply redaction
     options.RequestHeadersDataClasses.Add("Authorization", DataClassification.Unknown);
-    options.RequestHeadersDataClasses.Add("<example-value>", DataClassification.Unknown);
+    options.RequestHeadersDataClasses.Add("X-API-Key", DataClassification.Unknown);
 });
 ```
 
-For more information about configuring redactors, see Data redaction in .NET.
+For more information about configuring redactors, see [Data redaction in .NET](data-redaction.md).
 
 ## Path and route parameter redaction
 
@@ -287,7 +284,7 @@ builder.Services.AddExtendedHttpClientLogging(options =>
 });
 ```
 
-> **Caution:**
+> [!CAUTION]
 > Disabling path redaction might expose sensitive information in logs. Only use `HttpRouteParameterRedactionMode.None` in development or when you're certain paths don't contain sensitive data.
 
 ## Performance considerations
@@ -299,14 +296,14 @@ Enhanced HTTP client logging is designed with performance in mind, but there are
 - **Enrichers**: Each registered enricher is called for every request. Keep enricher logic lightweight.
 - **Redaction**: Data classification and redaction add minimal overhead but scale with the number of classified items.
 
-> **Tip:**
+> [!TIP]
 > In production environments, start with minimal logging (no body, limited headers) and enable additional logging only for troubleshooting.
 
 ## See also
 
-- HTTP client factory in .NET
-- HTTP client log enricher
-- Monitor and analyze HTTP client performance
-- Data redaction in .NET
-- Data classification in .NET
-- Logging in .NET
+- [HTTP client factory in .NET](httpclient-factory.md)
+- [HTTP client log enricher](../enrichment/http-client-log-enricher.md)
+- [Monitor and analyze HTTP client performance](httpclient-latency-extensions.md)
+- [Data redaction in .NET](data-redaction.md)
+- [Data classification in .NET](data-classification.md)
+- [Logging in .NET](logging/overview.md)

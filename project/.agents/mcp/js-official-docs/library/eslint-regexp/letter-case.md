@@ -1,15 +1,15 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/letter-case"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/letter-case.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "enforce into your favorite case"
+since: "v0.3.0"
 ---
-
 # regexp/letter-case
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 > enforce into your favorite case
 
@@ -64,7 +64,7 @@ var foo = /\ca/
 
 The default `"lowercase"` values for `unicodeEscape` and `hexadecimalEscape`
 conflict with the default `"uppercase"` style of
-`unicorn/escape-case`.
+[`unicorn/escape-case`](https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/escape-case.md).
 To use both rules with Unicorn's default, configure both properties as `"uppercase"`:
 
 ```json5
@@ -83,5 +83,5 @@ This rule was introduced in eslint-plugin-regexp v0.3.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/letter-case.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/letter-case.ts)

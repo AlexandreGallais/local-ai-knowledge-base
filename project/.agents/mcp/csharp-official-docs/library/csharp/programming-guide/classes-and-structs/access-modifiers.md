@@ -1,26 +1,25 @@
 ---
 title: "Access Modifiers"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/programming-guide/classes-and-structs/access-modifiers.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: All types and type members in C# have an accessibility level that controls whether they can be used from other code. Review this list of access modifiers.
+ms.date: 12/15/2025
+helpviewer_keywords:
+  - "C# Language, access modifiers"
+  - "access modifiers [C#], about"
 ---
-
 # Access modifiers (C# programming guide)
 
-All types and type members have an accessibility level. The accessibility level controls whether other code in your assembly or other assemblies can use them. An assembly is a *.dll* or *.exe* created by compiling one or more *.cs* files in a single compilation. Use the following access modifiers to specify the accessibility of a type or member when you declare it:
+All types and type members have an accessibility level. The accessibility level controls whether other code in your assembly or other assemblies can use them. An [assembly](../../../standard/glossary.md#assembly) is a *.dll* or *.exe* created by compiling one or more *.cs* files in a single compilation. Use the following access modifiers to specify the accessibility of a type or member when you declare it:
 
-- public: Code in any assembly can access this type or member. The accessibility level of the containing type controls the accessibility level of public members of the type.
-- private: Only code declared in the same `class` or `struct` can access this member.
-- protected: Only code in the same `class` or in a derived `class` can access this type or member.
-- internal: Only code in the same assembly can access this type or member.
-- protected internal: Only code in the same assembly *or* in a derived class in another assembly can access this type or member.
-- private protected: Only code in the same assembly *and* in the same class or a derived class can access the type or member.
+- [public](../../language-reference/keywords/public.md): Code in any assembly can access this type or member. The accessibility level of the containing type controls the accessibility level of public members of the type.
+- [private](../../language-reference/keywords/private.md): Only code declared in the same `class` or `struct` can access this member.
+- [protected](../../language-reference/keywords/protected.md): Only code in the same `class` or in a derived `class` can access this type or member.
+- [internal](../../language-reference/keywords/internal.md): Only code in the same assembly can access this type or member.
+- [protected internal](../../language-reference/keywords/protected-internal.md): Only code in the same assembly *or* in a derived class in another assembly can access this type or member.
+- [private protected](../../language-reference/keywords/private-protected.md): Only code in the same assembly *and* in the same class or a derived class can access the type or member.
 
-Use the file modifier for top-level (non-nested) types. The `file` modifier restricts access to code in the same source file. You can't combine the `file` modifier with any access modifier.
+Use the [file](../../language-reference/keywords/file.md) modifier for top-level (non-nested) types. The `file` modifier restricts access to code in the same source file. You can't combine the `file` modifier with any access modifier.
 
-The `record` modifier on a type causes the compiler to synthesize extra members. The `record` modifier doesn't affect the default accessibility for either a `record class` or a `record struct`.
+The [`record`](../../language-reference/builtin-types/record.md) modifier on a type causes the compiler to synthesize extra members. The `record` modifier doesn't affect the default accessibility for either a `record class` or a `record struct`.
 
 ## Summary table
 
@@ -34,30 +33,11 @@ The `record` modifier on a type causes the compiler to synthesize extra members.
 
 The following examples demonstrate how to specify access modifiers on a type and member:
 
-```csharp
-﻿namespace objectoriented;
+:::code language="csharp" source="./snippets/access-modifiers/accessmodifiers.cs" id="PublicAccess":::
 
-public class Bicycle
-{
-    public void Pedal() { }
-}
-
-// public class:
-public class Tricycle
-{
-    // protected method:
-    protected void Pedal() { }
-
-    // private field:
-    private int _wheels = 3;
-
-    // protected internal property:
-    protected internal int Wheels => _wheels;
-}
-```
 Not all access modifiers are valid for all types or members in all contexts. In some cases, the accessibility of the containing type constrains the accessibility of its members.
 
-Multiple declarations of a partial class or partial member must have the same accessibility. If one declaration doesn't include an access modifier, the other declarations can't declare an access modifier. The compiler generates an error if multiple declarations for the partial class or method declare different accessibilities.
+Multiple declarations of a [partial class or partial member](./partial-classes-and-methods.md) must have the same accessibility. If one declaration doesn't include an access modifier, the other declarations can't declare an access modifier. The compiler generates an error if multiple declarations for the partial class or method declare different accessibilities.
 
 ## Class and struct accessibility
 
@@ -67,15 +47,15 @@ You can declare struct members, including nested classes and structs, as `public
 
 Derived classes can't have greater accessibility than their base types. You can't declare a public class `B` that derives from an internal class `A`. If allowed, it would have the effect of making `A` public, because all `protected` or `internal` members of `A` are accessible from the derived class.
 
-You can enable specific other assemblies to access your internal types by using the `InternalsVisibleToAttribute`. For more information, see Friend Assemblies.
+You can enable specific other assemblies to access your internal types by using the `InternalsVisibleToAttribute`. For more information, see [Friend Assemblies](../../../standard/assembly/friend.md).
 
 ## Other types
 
 You can declare interfaces directly within a namespace as `public` or `internal`. Just like classes and structs, interfaces default to `internal` access. Interface members are `public` by default because the purpose of an interface is to enable other types to access a class or struct. Interface member declarations might include any access modifier. Use access modifiers on `interface` members to provide a common implementation needed by all implementors of an interface.
 
-A `delegate` type declared directly in a namespace has `internal` access by default.
+A [`delegate`](../delegates/index.md) type declared directly in a namespace has `internal` access by default.
 
-For more information about access modifiers, see the Accessibility Levels page.
+For more information about access modifiers, see the [Accessibility Levels](../../language-reference/keywords/accessibility-levels.md) page.
 
 ## Member accessibility
 
@@ -85,50 +65,31 @@ Normally, the accessibility of a member isn't greater than the accessibility of 
 
 The type of any member field, property, or event must be at least as accessible as the member itself. Similarly, the return type and the parameter types of any method, indexer, or delegate must be at least as accessible as the member itself. For example, you can't have a `public` method `M` that returns a class `C` unless `C` is also `public`. Likewise, you can't have a `protected` property of type `A` if `A` is declared as `private`.
 
-You must always declare user-defined operators as `public`. For more information, see Operator overloading.
+You must always declare user-defined operators as `public`. For more information, see [Operator overloading](../../language-reference/operators/operator-overloading.md).
 
 To set the access level for a `class` or `struct` member, add the appropriate keyword to the member declaration, as shown in the following example.
 
-```csharp
-﻿namespace objectoriented;
+:::code language="csharp" source="./snippets/access-modifiers/accessmodifiers.cs" id="MethodAccess":::
 
-public class Bicycle
-{
-    public void Pedal() { }
-}
-
-// public class:
-public class Tricycle
-{
-    // protected method:
-    protected void Pedal() { }
-
-    // private field:
-    private int _wheels = 3;
-
-    // protected internal property:
-    protected internal int Wheels => _wheels;
-}
-```
 Finalizers can't have accessibility modifiers. Members of an `enum` type are always `public`, and you can't apply access modifiers.
 
 ## C# language specification
 
-For more information, see the C# Language Specification. The language specification is the definitive source for C# syntax and usage.
+[!INCLUDE[CSharplangspec](~/includes/csharplangspec-md.md)]
 
 ## See also
 
-- Specify modifier order (style rule IDE0036)
-- The C# type system
-- Interfaces
-- Accessibility Levels
-- private
-- public
-- internal
-- protected
-- protected internal
-- private protected
-- sealed
-- class
-- struct
-- interface
+- [Specify modifier order (style rule IDE0036)](../../../fundamentals/code-analysis/style-rules/ide0036.md)
+- [The C# type system](../../fundamentals/types/index.md)
+- [Interfaces](../../fundamentals/types/interfaces.md)
+- [Accessibility Levels](../../language-reference/keywords/accessibility-levels.md)
+- [private](../../language-reference/keywords/private.md)
+- [public](../../language-reference/keywords/public.md)
+- [internal](../../language-reference/keywords/internal.md)
+- [protected](../../language-reference/keywords/protected.md)
+- [protected internal](../../language-reference/keywords/protected-internal.md)
+- [private protected](../../language-reference/keywords/private-protected.md)
+- [sealed](../../programming-guide/classes-and-structs/abstract-and-sealed-classes-and-class-members.md#sealed-classes-and-class-members)
+- [class](../../language-reference/keywords/class.md)
+- [struct](../../language-reference/builtin-types/struct.md)
+- [interface](../../language-reference/keywords/interface.md)

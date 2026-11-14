@@ -1,21 +1,16 @@
----
-title: "net10pipereader"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/net10pipereader.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
+<!--
+This include file is used in 
+minimal-apis.md
+model-binding.md
+-->
 
-# net10pipereader
-
-Starting in .NET 10, the following functional areas of ASP.NET Core use overloads of `System.Text.Json.JsonSerializer.DeserializeAsync*` based on PipeReader instead of Stream:
+Starting in .NET 10, the following functional areas of ASP.NET Core use overloads of <xref:System.Text.Json.JsonSerializer.DeserializeAsync*?displayProperty=nameWithType> based on PipeReader instead of Stream:
 
 * Minimal APIs (parameter binding, read request body)
 * MVC (input formatters, model)
-* The `Microsoft.AspNetCore.Http.HttpRequestJsonExtensions` Extension methods to read the request body as JSON.
+* The <xref:Microsoft.AspNetCore.Http.HttpRequestJsonExtensions> Extension methods to read the request body as JSON.
 
-For most applications, a transition from Stream to PipeReader provides better performance without requiring changes in application code. But if your application has a custom converter, the converter might not handle `System.Text.Json.Utf8JsonReader.HasValueSequence` correctly. If it doesn't, the result could be errors such as `System.ArgumentOutOfRangeException` or missing data when deserializing. You have the following options for getting your converter to work without PipeReader-related errors.
+For most applications, a transition from Stream to PipeReader provides better performance without requiring changes in application code. But if your application has a custom converter, the converter might not handle <xref:System.Text.Json.Utf8JsonReader.HasValueSequence?displayProperty=nameWithType> correctly. If it doesn't, the result could be errors such as <xref:System.ArgumentOutOfRangeException> or missing data when deserializing. You have the following options for getting your converter to work without PipeReader-related errors.
 
 ### Option 1: Temporary workaround
 
@@ -54,5 +49,5 @@ public override T? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSeria
 ```
 
 For more information, see
-* `System.Text.Json.Serialization.JsonConverter`
-* github.com/dotnet/aspnetcore/pull/62895
+* <xref:System.Text.Json.Serialization.JsonConverter?displayProperty=nameWithType>
+* [github.com/dotnet/aspnetcore/pull/62895](https://github.com/dotnet/aspnetcore/pull/62895)

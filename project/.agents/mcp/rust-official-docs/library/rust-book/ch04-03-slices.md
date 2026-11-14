@@ -1,18 +1,7 @@
----
-title: "ch04-03-slices"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch04-03-slices.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch04-03-slices
-
 ## The Slice Type
 
 _Slices_ let you reference a contiguous sequence of elements in a
-collection. A slice is a kind
+[collection](ch08-00-common-collections.md)<!-- ignore -->. A slice is a kind
 of reference, so it does not have ownership.
 
 Here’s a small programming problem: Write a function that takes a string of
@@ -22,13 +11,13 @@ one word, so the entire string should be returned.
 
 > Note: For the purposes of introducing slices, we are assuming ASCII only in
 > this section; a more thorough discussion of UTF-8 handling is in the
-> “Storing UTF-8 Encoded Text with Strings” section
+> [“Storing UTF-8 Encoded Text with Strings”][strings]<!-- ignore --> section
 > of Chapter 8.
 
 Let’s work through how we’d write the signature of this function without using
 slices, to understand the problem that slices will solve:
 
-```rust
+```rust,ignore
 fn first_word(s: &String) -> ?
 ```
 
@@ -39,37 +28,29 @@ clear as we keep going.) But what should we return? We don’t really have a way
 to talk about *part* of a string. However, we could return the index of the end
 of the word, indicated by a space. Let’s try that, as shown in Listing 4-7.
 
-**Listing 4-7: The `first_word` function that returns a byte index value into the `String` parameter** (src/main.rs)
+<Listing number="4-7" file-name="src/main.rs" caption="The `first_word` function that returns a byte index value into the `String` parameter">
 
 ```rust
-fn first_word(s: &String) -> usize {
-    let bytes = s.as_bytes();
-
-    for (i, &item) in bytes.iter().enumerate() {
-        if item == b' ' {
-            return i;
-        }
-    }
-
-    s.len()
-}
+{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:here}}
 ```
+
+</Listing>
 
 Because we need to go through the `String` element by element and check whether
 a value is a space, we’ll convert our `String` to an array of bytes using the
 `as_bytes` method.
 
-```rust
-let bytes = s.as_bytes();
+```rust,ignore
+{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:as_bytes}}
 ```
 
 Next, we create an iterator over the array of bytes using the `iter` method:
 
-```rust
-for (i, &item) in bytes.iter().enumerate() {
+```rust,ignore
+{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:iter}}
 ```
 
-We’ll discuss iterators in more detail in Chapter 13.
+We’ll discuss iterators in more detail in [Chapter 13][ch13]<!-- ignore -->.
 For now, know that `iter` is a method that returns each element in a collection
 and that `enumerate` wraps the result of `iter` and returns each element as
 part of a tuple instead. The first element of the tuple returned from
@@ -77,8 +58,8 @@ part of a tuple instead. The first element of the tuple returned from
 This is a bit more convenient than calculating the index ourselves.
 
 Because the `enumerate` method returns a tuple, we can use patterns to
-destructure that tuple. We’ll be discussing patterns more in Chapter
-6. In the `for` loop, we specify a pattern that has `i`
+destructure that tuple. We’ll be discussing patterns more in [Chapter
+6][ch6]<!-- ignore -->. In the `for` loop, we specify a pattern that has `i`
 for the index in the tuple and `&item` for the single byte in the tuple.
 Because we get a reference to the element from `.iter().enumerate()`, we use
 `&` in the pattern.
@@ -87,13 +68,8 @@ Inside the `for` loop, we search for the byte that represents the space by
 using the byte literal syntax. If we find a space, we return the position.
 Otherwise, we return the length of the string by using `s.len()`.
 
-```rust
-    if item == b' ' {
-        return i;
-    }
-}
-
-s.len()
+```rust,ignore
+{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-07/src/main.rs:inside_for}}
 ```
 
 We now have a way to find out the index of the end of the first word in the
@@ -103,20 +79,13 @@ because it’s a separate value from the `String`, there’s no guarantee that i
 will still be valid in the future. Consider the program in Listing 4-8 that
 uses the `first_word` function from Listing 4-7.
 
-**Listing 4-8: Storing the result from calling the `first_word` function and then changing the `String` contents** (src/main.rs)
+<Listing number="4-8" file-name="src/main.rs" caption="Storing the result from calling the `first_word` function and then changing the `String` contents">
 
 ```rust
-fn main() {
-    let mut s = String::from("hello world");
-
-    let word = first_word(&s); // word will get the value 5
-
-    s.clear(); // this empties the String, making it equal to ""
-
-    // word still has the value 5 here, but s no longer has any content that we
-    // could meaningfully use with the value 5, so word is now totally invalid!
-}
+{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-08/src/main.rs:here}}
 ```
+
+</Listing>
 
 This program compiles without any errors and would also do so if we used `word`
 after calling `s.clear()`. Because `word` isn’t connected to the state of `s`
@@ -128,7 +97,7 @@ Having to worry about the index in `word` getting out of sync with the data in
 `s` is tedious and error-prone! Managing these indices is even more brittle if
 we write a `second_word` function. Its signature would have to look like this:
 
-```rust
+```rust,ignore
 fn second_word(s: &String) -> (usize, usize) {
 ```
 
@@ -145,10 +114,7 @@ A _string slice_ is a reference to a contiguous sequence of the elements of a
 `String`, and it looks like this:
 
 ```rust
-let s = String::from("hello world");
-
-let hello = &s[0..5];
-let world = &s[6..11];
+{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-17-slice/src/main.rs:here}}
 ```
 
 Rather than a reference to the entire `String`, `hello` is a reference to a
@@ -164,8 +130,14 @@ value of `5`.
 
 Figure 4-7 shows this in a diagram.
 
-Figure 4-7: A string slice referring to part of a
-`String`
+<img alt="Three tables: a table representing the stack data of s, which points
+to the byte at index 0 in a table of the string data &quot;hello world&quot; on
+the heap. The third table represents the stack data of the slice world, which
+has a length value of 5 and points to byte 6 of the heap data table."
+src="img/trpl04-07.svg" class="center" style="width: 50%;" />
+
+<span class="caption">Figure 4-7: A string slice referring to part of a
+`String`</span>
 
 With Rust’s `..` range syntax, if you want to start at index 0, you can drop
 the value before the two periods. In other words, these are equal:
@@ -208,21 +180,13 @@ let slice = &s[..];
 With all this information in mind, let’s rewrite `first_word` to return a
 slice. The type that signifies “string slice” is written as `&str`:
 
-**Listing** (src/main.rs)
+<Listing file-name="src/main.rs">
 
 ```rust
-fn first_word(s: &String) -> &str {
-    let bytes = s.as_bytes();
-
-    for (i, &item) in bytes.iter().enumerate() {
-        if item == b' ' {
-            return &s[0..i];
-        }
-    }
-
-    &s[..]
-}
+{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-18-first-word-slice/src/main.rs:here}}
 ```
+
+</Listing>
 
 We get the index for the end of the word the same way we did in Listing 4-7, by
 looking for the first occurrence of a space. When we find a space, we return a
@@ -235,7 +199,7 @@ the slice and the number of elements in the slice.
 
 Returning a slice would also work for a `second_word` function:
 
-```rust
+```rust,ignore
 fn second_word(s: &String) -> &str {
 ```
 
@@ -249,39 +213,18 @@ an emptied string. Slices make this bug impossible and let us know much sooner
 that we have a problem with our code. Using the slice version of `first_word`
 will throw a compile-time error:
 
-**Listing** (src/main.rs)
+<Listing file-name="src/main.rs">
 
-```rust
-fn main() {
-    let mut s = String::from("hello world");
-
-    let word = first_word(&s);
-
-    s.clear(); // error!
-
-    println!("the first word is: {word}");
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch04-understanding-ownership/no-listing-19-slice-error/src/main.rs:here}}
 ```
+
+</Listing>
 
 Here’s the compiler error:
 
 ```console
-$ cargo run
-   Compiling ownership v0.1.0 (file:///projects/ownership)
-error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable
-  --> src/main.rs:18:5
-   |
-16 |     let word = first_word(&s);
-   |                           -- immutable borrow occurs here
-17 |
-18 |     s.clear(); // error!
-   |     ^^^^^^^^^ mutable borrow occurs here
-19 |
-20 |     println!("the first word is: {word}");
-   |                                   ---- immutable borrow later used here
-
-For more information about this error, try `rustc --explain E0502`.
-error: could not compile `ownership` (bin "ownership") due to 1 previous error
+{{#include ../listings/ch04-understanding-ownership/no-listing-19-slice-error/output.txt}}
 ```
 
 Recall from the borrowing rules that if we have an immutable reference to
@@ -292,6 +235,10 @@ reference must still be active at that point. Rust disallows the mutable
 reference in `clear` and the immutable reference in `word` from existing at the
 same time, and compilation fails. Not only has Rust made our API easier to use,
 but it has also eliminated an entire class of errors at compile time!
+
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="string-literals-are-slices"></a>
 
 #### String Literals as Slices
 
@@ -311,7 +258,7 @@ immutable reference.
 Knowing that you can take slices of literals and `String` values leads us to
 one more improvement on `first_word`, and that’s its signature:
 
-```rust
+```rust,ignore
 fn first_word(s: &String) -> &str {
 ```
 
@@ -319,45 +266,30 @@ A more experienced Rustacean would write the signature shown in Listing 4-9
 instead because it allows us to use the same function on both `&String` values
 and `&str` values.
 
-**Listing 4-9: Improving the `first_word` function by using a string slice for the type of the `s` parameter**
+<Listing number="4-9" caption="Improving the `first_word` function by using a string slice for the type of the `s` parameter">
 
-```rust
-fn first_word(s: &str) -> &str {
+```rust,ignore
+{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-09/src/main.rs:here}}
 ```
+
+</Listing>
 
 If we have a string slice, we can pass that directly. If we have a `String`, we
 can pass a slice of the `String` or a reference to the `String`. This
 flexibility takes advantage of deref coercions, a feature we will cover in
-the “Using Deref Coercions in Functions and Methods” section of Chapter 15.
+the [“Using Deref Coercions in Functions and Methods”][deref-coercions]<!--
+ignore --> section of Chapter 15.
 
 Defining a function to take a string slice instead of a reference to a `String`
 makes our API more general and useful without losing any functionality:
 
-**Listing** (src/main.rs)
+<Listing file-name="src/main.rs">
 
 ```rust
-fn main() {
-    let my_string = String::from("hello world");
-
-    // `first_word` works on slices of `String`s, whether partial or whole.
-    let word = first_word(&my_string[0..6]);
-    let word = first_word(&my_string[..]);
-    // `first_word` also works on references to `String`s, which are equivalent
-    // to whole slices of `String`s.
-    let word = first_word(&my_string);
-
-    let my_string_literal = "hello world";
-
-    // `first_word` works on slices of string literals, whether partial or
-    // whole.
-    let word = first_word(&my_string_literal[0..6]);
-    let word = first_word(&my_string_literal[..]);
-
-    // Because string literals *are* string slices already,
-    // this works too, without the slice syntax!
-    let word = first_word(my_string_literal);
-}
+{{#rustdoc_include ../listings/ch04-understanding-ownership/listing-04-09/src/main.rs:usage}}
 ```
+
+</Listing>
 
 ### Other Slices
 
@@ -395,3 +327,8 @@ means you don’t have to write and debug extra code to get this control.
 Ownership affects how lots of other parts of Rust work, so we’ll talk about
 these concepts further throughout the rest of the book. Let’s move on to
 Chapter 5 and look at grouping pieces of data together in a `struct`.
+
+[ch13]: ch13-02-iterators.html
+[ch6]: ch06-02-match.html#patterns-that-bind-to-values
+[strings]: ch08-02-strings.html#storing-utf-8-encoded-text-with-strings
+[deref-coercions]: ch15-02-deref.html#using-deref-coercions-in-functions-and-methods

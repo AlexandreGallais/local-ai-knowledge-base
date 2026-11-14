@@ -1,12 +1,18 @@
 ---
+description: "Learn more about: IMetaDataInfo Interface"
 title: "IMetaDataInfo Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadatainfo-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataInfo"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataInfo"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataInfo Interface
 
 Provides a method that gets information about the mapping of metadata from an on-disk file into memory.
@@ -15,11 +21,11 @@ Provides a method that gets information about the mapping of metadata from an on
 
 | Method | Description |
 |------------|-----------------|
-|GetFileMapping Method| Gets the memory region of the mapped file, and the kind of mapping. |
+|[GetFileMapping Method](imetadatainfo-getfilemapping-method.md)| Gets the memory region of the mapped file, and the kind of mapping. |
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -29,5 +35,5 @@ Provides a method that gets information about the mapping of metadata from an on
 
 ## See also
 
-- Metadata Interfaces
-- CorFileMapping Enumeration
+- [Metadata Interfaces](metadata-interfaces.md)
+- [CorFileMapping Enumeration](../enumerations/corfilemapping-enumeration.md)

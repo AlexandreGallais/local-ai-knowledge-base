@@ -1,17 +1,15 @@
 ---
-title: "Symbols in .NET"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/symbols.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Symbols in .NET
+description: An introduction to symbols and portable PDBs in .NET
+ms.date: 03/12/2026
+ai-usage: ai-assisted
 ---
 
 # Symbols
 
-Symbols are useful for debugging and other diagnostic tools. The contents of symbol files vary between languages, compilers, and platforms. At a high level, symbols are a mapping between the source code and the binary produced by the compiler. These mappings are used by tools like Visual Studio and Visual Studio Code to resolve source line number information or local variable names.
+Symbols are useful for debugging and other diagnostic tools. The contents of symbol files vary between languages, compilers, and platforms. At a high level, symbols are a mapping between the source code and the binary produced by the compiler. These mappings are used by tools like [Visual Studio](/visualstudio/debugger/what-is-debugging) and [Visual Studio Code](https://code.visualstudio.com/Docs/editor/debugging) to resolve source line number information or local variable names.
 
-The Windows documentation on symbols contain more detailed information on symbols for Windows, although many of the concepts apply to other platforms as well.
+The [Windows documentation on symbols](/windows/win32/dxtecharts/debugging-with-symbols) contain more detailed information on symbols for Windows, although many of the concepts apply to other platforms as well.
 
 ## Learn about .NET's portable PDB format
 
@@ -21,10 +19,10 @@ The Windows documentation on symbols contain more detailed information on symbol
 
 A PDB file is an auxiliary file produced by a compiler to provide other tools, especially debuggers, information about what is in the main executable file and how it was produced. For example, a debugger reads a PDB to map foo.cs line 12 to the right executable location so that it can set a breakpoint. The Windows PDB format has been around a long time, and it evolved from other native debugging symbol formats which were even older. It started out its life as a format for native (C/C++) programs. For the first release of the .NET Framework, the Windows PDB format was extended to support .NET.
 
-The Portable PDB format was introduced in .NET Core, and it's used by default when targeting .NET. When targeting .NET Framework, you can enable portable PDB symbols by specifying `<DebugType>portable</DebugType>` in your project file. The portable PDB format is based on ECMA-335 metadata format. For more information, see Portable PDB v1.0: Format Specification. Diagnostic tools can use the `System.Reflection.Metadata` library to read portable PDB files (for an example, see `System.Reflection.Metadata.Document`).
+The Portable PDB format was introduced in .NET Core, and it's used by default when targeting .NET. When targeting .NET Framework, you can enable portable PDB symbols by specifying `<DebugType>portable</DebugType>` in your project file. The portable PDB format is based on ECMA-335 metadata format. For more information, see [Portable PDB v1.0: Format Specification](https://github.com/dotnet/runtime/blob/main/docs/design/specs/PortablePdb-Metadata.md). Diagnostic tools can use the <xref:System.Reflection.Metadata> library to read portable PDB files (for an example, see <xref:System.Reflection.Metadata.Document?displayProperty=nameWithType>).
 
-> **Caution:**
-> The `System.Reflection.Metadata` library is not designed to handle untrusted input. Malformed or malicious PDB files can cause unexpected behavior, including out-of-bounds memory access, crashes, or hangs. Only use this API with trusted files.
+> [!CAUTION]
+> The <xref:System.Reflection.Metadata> library is not designed to handle untrusted input. Malformed or malicious PDB files can cause unexpected behavior, including out-of-bounds memory access, crashes, or hangs. Only use this API with trusted files.
 
 ## Use the correct PDB format for your scenario
 
@@ -38,11 +36,11 @@ A portable PDB can be read on any operating system and is the recommended symbol
 
 * When you use .NET decompilers such as ildasm or .NET reflector, you won't see source line mappings or local parameter names.
 
-* The latest versions of DIA and tools that use DIA for reading symbols, such as WinDBG, support portable PDBs, but older versions don't.
+* The latest versions of [DIA](/visualstudio/debugger/debug-interface-access/debug-interface-access-sdk) and tools that use DIA for reading symbols, such as WinDBG, support portable PDBs, but older versions don't.
 
 * There might be older versions of profilers that don't support portable PDBs.
 
-To use portable PDBs on tools that do not support them, you can use Pdb2Pdb, which converts between portable PDBs and Windows PDBs.
+To use portable PDBs on tools that do not support them, you can use [Pdb2Pdb](https://github.com/dotnet/symreader-converter#pdb2pdb), which converts between portable PDBs and Windows PDBs.
 
 ### Support for Windows PDBs
 
@@ -50,5 +48,5 @@ Windows PDBs can only be written or read on Windows. Using Windows PDBs for mana
 
 ## See also
 
-* dotnet-symbol can be used to download symbol files for framework binaries
-* Windows documentation on symbols
+* [dotnet-symbol](./dotnet-symbol.md) can be used to download symbol files for framework binaries
+* [Windows documentation on symbols](/windows/win32/dxtecharts/debugging-with-symbols)

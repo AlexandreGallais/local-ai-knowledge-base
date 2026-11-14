@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: PublishDepsFilePath behavior change"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/5.0/publishdepsfilepath-behavior-change.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 5 where the PublishDepsFilePath MSBuild property is empty for single-file applications.
+ms.date: 09/17/2020
 ---
-
 # PublishDepsFilePath behavior change
 
 The `PublishDepsFilePath` MSBuild property is empty for single-file applications. Additionally, for non single-file applications, the *deps.json* file may not be copied to the output directory until later in the build.
@@ -25,7 +21,7 @@ Starting in .NET 5, `PublishDepsFilePath` is empty for single-file applications 
 
 This change was made for a couple of reasons:
 
-- Due to a refactoring of the publish logic in order to support improved single-file apps in .NET 5.
+- Due to a refactoring of the publish logic in order to support [improved single-file apps](https://github.com/dotnet/designs/blob/main/accepted/2020/single-file/design.md) in .NET 5.
 
 - In single-file apps, to help guard against targets that try to rewrite the *deps.json* file after *deps.json* has already been bundled, thus silently not affecting the app. For this reason, `PublishDepsFilePath` is empty for single-file applications.
 
@@ -36,3 +32,15 @@ Targets that rewrite the *deps.json* file should generally do so using the `Inte
 ## Affected APIs
 
 N/A
+
+<!--
+
+### Affected APIs
+
+Not detectable via API analysis.
+
+### Category
+
+MSBuild
+
+-->

@@ -1,13 +1,11 @@
 ---
-title: "no-alert"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-alert.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-alert
+rule_type: suggestion
+related_rules:
+- no-console
+- no-debugger
 ---
 
-# no-alert
 
 JavaScript's `alert`, `confirm`, and `prompt` functions are widely considered to be obtrusive as UI elements and should be replaced by a more appropriate custom UI implementation. Furthermore, `alert` is often used while debugging code, which should be removed before deployment to production.
 
@@ -21,7 +19,7 @@ This rule is aimed at catching debugging code that should be removed and popup U
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint no-alert: "error"*/
@@ -33,9 +31,11 @@ confirm("Are you sure?");
 prompt("What's your name?", "John Doe");
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint no-alert: "error"*/
@@ -51,6 +51,8 @@ function foo() {
     alert();
 }
 ```
+
+:::
 
 ## Options
 

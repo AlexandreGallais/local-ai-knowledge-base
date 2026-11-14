@@ -1,12 +1,11 @@
 ---
 title: "NETSDK1045: The current .NET SDK does not support 'newer version' as a target."
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/sdk-errors/netsdk1045.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about .NET SDK error NETSDK1045, which occurs when the build tools can't find the requested version of the .NET SDK.
+ms.topic: error-reference
+ms.date: 02/12/2021
+f1_keywords:
+- NETSDK1045
 ---
-
 # NETSDK1045: The current .NET SDK does not support 'newer version' as a target.
 
 **This article applies to:** ✔️ .NET Core 2.1.100 SDK and later versions
@@ -33,13 +32,13 @@ dotnet --list-sdks
 
 ### x86 or x64 architecture
 
-Each version of the .NET SDK is available in both x86 and x64 architecture. The project might be trying to find the .NET SDK for the wrong architecture, or the .NET SDK for the architecture your project needs might not be installed. Check the installation folders for the architecture you need. For example, on Windows, the x86 version of the .NET SDK is installed in *C:\Program Files (x86)\dotnet* and the x64 version is installed in *C:\Program Files\dotnet*. See How to check that .NET is already installed and choose your operating system to find out how to detect what's installed on your machine.
+Each version of the .NET SDK is available in both x86 and x64 architecture. The project might be trying to find the .NET SDK for the wrong architecture, or the .NET SDK for the architecture your project needs might not be installed. Check the installation folders for the architecture you need. For example, on Windows, the x86 version of the .NET SDK is installed in *C:\Program Files (x86)\dotnet* and the x64 version is installed in *C:\Program Files\dotnet*. See [How to check that .NET is already installed](../../install/how-to-detect-installed-versions.md) and choose your operating system to find out how to detect what's installed on your machine.
 
-If the version you need isn't installed, find the one you need at the .NET Downloads page.
+If the version you need isn't installed, find the one you need at the [.NET Downloads](https://dotnet.microsoft.com/download/dotnet) page.
 
 ### Visual Studio version
 
-The .NET SDK might have been installed with Visual Studio 2022, so upgrading to a later version of Visual Studio might install a later .NET SDK and resolve this error. For more information, see Update Visual Studio.
+The .NET SDK might have been installed with Visual Studio 2022, so upgrading to a later version of Visual Studio might install a later .NET SDK and resolve this error. For more information, see [Update Visual Studio](/visualstudio/install/update-visual-studio).
 
 ## Preview not enabled
 
@@ -47,7 +46,7 @@ If you have a preview installed of the requested .NET SDK version, you also need
 
 ## Visual Studio version
 
-For example, .NET Core 3.0 and later require Visual Studio 2019. Upgrade to Visual Studio 2019 version 16.3 or later to build your project.
+For example, .NET Core 3.0 and later require Visual Studio 2019. Upgrade to [Visual Studio 2019 version 16.3](https://visualstudio.microsoft.com/downloads) or later to build your project.
 
 ## PATH environment variable
 
@@ -77,5 +76,5 @@ The *Directory.build.props* file is an optional MSBuild file that can set global
 
 ## See also
 
-- .NET Downloads
-- The Current .NET SDK does not support targeting .NET Core 3.0 – Fix
+- [.NET Downloads](https://dotnet.microsoft.com/download/dotnet)
+- [The Current .NET SDK does not support targeting .NET Core 3.0 – Fix](https://www.ryadel.com/current-net-sdk-not-support-net-core-3-0-fix/)

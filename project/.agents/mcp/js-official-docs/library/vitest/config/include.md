@@ -1,10 +1,5 @@
 ---
-title: "include | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/include.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: include | Config
 ---
 
 # include
@@ -13,12 +8,13 @@ license: "MIT"
 - **Default:** `['**/*.{test,spec}.?(c|m)[jt]s?(x)']`
 - **CLI:** `vitest [...include]`, `vitest **/*.test.js`
 
-A list of glob patterns that match your test files. These patterns are resolved relative to the `root` (`process.cwd()` by default).
+A list of [glob patterns](https://superchupu.dev/tinyglobby/comparison) that match your test files. These patterns are resolved relative to the [`root`](/config/root) ([`process.cwd()`](https://nodejs.org/api/process.html#processcwd) by default).
 
-Vitest uses the `tinyglobby` package to resolve the globs.
+Vitest uses the [`tinyglobby`](https://npmx.dev/package/tinyglobby) package to resolve the globs.
 
-**NOTE**
-When using coverage, Vitest automatically adds test files `include` patterns to coverage's default `exclude` patterns. See `coverage.exclude`.
+::: tip NOTE
+When using coverage, Vitest automatically adds test files `include` patterns to coverage's default `exclude` patterns. See [`coverage.exclude`](/config/coverage#exclude).
+:::
 
 ## Example
 
@@ -35,9 +31,9 @@ export default defineConfig({
 })
 ```
 
-Vitest provides reasonable defaults, so normally you wouldn't override them. A good example of defining `include` is for test projects:
+Vitest provides reasonable defaults, so normally you wouldn't override them. A good example of defining `include` is for [test projects](/guide/projects):
 
-```js
+```js{8,12} [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -60,10 +56,10 @@ export default defineConfig({
 })
 ```
 
-**Warning:**
+::: warning
 This option will override Vitest defaults. If you just want to extend them, use `configDefaults` from `vitest/config`:
 
-```js
+```js{6}
 import { configDefaults, defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -76,3 +72,5 @@ export default defineConfig({
   },
 })
 ```
+
+:::

@@ -1,14 +1,15 @@
 ---
-title: "no-multi-spaces"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-multi-spaces.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-multi-spaces
+rule_type: layout
+related_rules:
+- key-spacing
+- space-infix-ops
+- space-in-brackets
+- space-in-parens
+- space-after-keywords
+- space-unary-ops
+- space-return-throw-case
 ---
-
-# no-multi-spaces
-
 Multiple spaces in a row that are not used for indentation are typically mistakes. For example:
 
 ```js
@@ -31,7 +32,7 @@ This rule aims to disallow multiple whitespace around logical expressions, condi
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-multi-spaces: "error"*/
@@ -47,9 +48,11 @@ var arr = [1,  2];
 a ?  b: c
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-multi-spaces: "error"*/
@@ -65,6 +68,8 @@ var arr = [1, 2];
 a ? b: c
 ```
 
+:::
+
 ## Options
 
 This rule's configuration consists of an object with the following properties:
@@ -76,7 +81,7 @@ This rule's configuration consists of an object with the following properties:
 
 Examples of **incorrect** code for this rule with the `{ "ignoreEOLComments": false }` (default) option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-multi-spaces: ["error", { ignoreEOLComments: false }]*/
@@ -87,9 +92,11 @@ var x = 5;      /* multiline
  */
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "ignoreEOLComments": false }` (default) option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-multi-spaces: ["error", { ignoreEOLComments: false }]*/
@@ -100,9 +107,11 @@ var x = 5; /* multiline
  */
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "ignoreEOLComments": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-multi-spaces: ["error", { ignoreEOLComments: true }]*/
@@ -117,17 +126,19 @@ var x = 5;      /* multiline
  */
 ```
 
+:::
+
 ### exceptions
 
 To avoid contradictions with other rules that require multiple spaces, this rule has an `exceptions` option to ignore certain nodes.
 
-This option is an object that expects property names to be AST node types as defined by ESTree. The easiest way to determine the node types for `exceptions` is to use AST Explorer with the espree parser.
+This option is an object that expects property names to be AST node types as defined by [ESTree](https://github.com/estree/estree). The easiest way to determine the node types for `exceptions` is to use [AST Explorer](https://astexplorer.net/) with the espree parser.
 
-Only the `Property` node type is ignored by default, because for the key-spacing rule some alignment options require multiple spaces in properties of object literals.
+Only the `Property` node type is ignored by default, because for the [key-spacing](key-spacing) rule some alignment options require multiple spaces in properties of object literals.
 
 Examples of **correct** code for the default `"exceptions": { "Property": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-multi-spaces: "error"*/
@@ -139,9 +150,11 @@ var obj = {
 };
 ```
 
+:::
+
 Examples of **incorrect** code for the `"exceptions": { "Property": false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-multi-spaces: ["error", { exceptions: { "Property": false } }]*/
@@ -153,9 +166,11 @@ var obj = {
 };
 ```
 
+:::
+
 Examples of **correct** code for the `"exceptions": { "BinaryExpression": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-multi-spaces: ["error", { exceptions: { "BinaryExpression": true } }]*/
@@ -163,9 +178,11 @@ Examples of **correct** code for the `"exceptions": { "BinaryExpression": true }
 var a = 1  *  2;
 ```
 
+:::
+
 Examples of **correct** code for the `"exceptions": { "VariableDeclarator": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-multi-spaces: ["error", { exceptions: { "VariableDeclarator": true } }]*/
@@ -174,9 +191,11 @@ var someVar      = 'foo';
 var someOtherVar = 'barBaz';
 ```
 
+:::
+
 Examples of **correct** code for the `"exceptions": { "ImportDeclaration": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-multi-spaces: ["error", { exceptions: { "ImportDeclaration": true } }]*/
@@ -184,6 +203,8 @@ Examples of **correct** code for the `"exceptions": { "ImportDeclaration": true 
 import mod          from 'mod';
 import someOtherMod from 'some-other-mod';
 ```
+
+:::
 
 ## When Not To Use It
 

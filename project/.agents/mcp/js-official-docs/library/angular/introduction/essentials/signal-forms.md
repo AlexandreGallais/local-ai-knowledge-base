@@ -1,13 +1,4 @@
----
-title: "Forms with signals"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/introduction/essentials/signal-forms.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
-# Forms with signals
+<docs-decorative-header title="Forms with signals" imgSrc="adev/src/assets/images/signals.svg"> </docs-decorative-header>
 
 Signal Forms manage form state using Angular signals to provide automatic synchronization between your data model and the UI with Angular Signals.
 
@@ -22,7 +13,7 @@ Every form starts by creating a signal that holds your form's data model:
 ```ts
 interface LoginData {
   email: string;
-  password: <example-value>;
+  password: string;
 }
 
 const loginModel = signal<LoginData>({
@@ -50,7 +41,7 @@ Next, you bind your HTML inputs to the form using the `[formField]` directive, w
 
 ```html
 <input type="email" [formField]="loginForm.email" />
-<input type="<example-value>" [formField]="<example-value>" />
+<input type="password" [formField]="loginForm.password" />
 ```
 
 As a result, user changes (such as typing in the field) automatically updates the form.
@@ -85,105 +76,23 @@ You can programmatically update values using the `value.set()` method on any nod
 
 ```ts
 // Update the value programmatically
-loginForm.email().value.set('user@example.com');
+loginForm.email().value.set('alice@wonderland.com');
 ```
 
 As a result, both the field value and the model signal are updated automatically:
 
 ```ts
 // The model signal is also updated
-console.log(loginModel().email); // 'user@example.com'
+console.log(loginModel().email); // 'alice@wonderland.com'
 ```
 
 ### Complete example
 
-  File: `app.ts`
-
-```ts
-import {Component, signal} from '@angular/core';
-import {form, FormField} from '@angular/forms/signals';
-
-interface LoginData {
-  email: string;
-  password: <example-value>;
-}
-
-@Component({
-  selector: 'app-root',
-  templateUrl: 'app.html',
-  styleUrl: 'app.css',
-  imports: [FormField],
-})
-export class App {
-  loginModel = signal<LoginData>({
-    email: '',
-    password: '',
-  });
-
-  loginForm = form(this.loginModel);
-
-  onSubmit(event: Event) {
-    event.preventDefault();
-
-    // Perform login logic here
-    const credentials = this.loginModel();
-    console.log('Logging in with:', credentials);
-
-    // e.g., await this.authService.login(credentials);
-  }
-}
-```
-  File: `app.html`
-
-```html
-<form (submit)="onSubmit($event)">
-  <label>
-    Email:
-    <input type="email" [formField]="loginForm.email" />
-  </label>
-
-  <label>
-    Password:
-    <input type="<example-value>" [formField]="<example-value>" />
-  </label>
-
-  <p>Hello {{ loginForm.email().value() }}!</p>
-  <p>Password <example-value>: {{ loginForm.password().value().length }}</p>
-
-  <button type="submit">Log In</button>
-</form>
-```
-  File: `app.css`
-
-```css
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  max-width: 400px;
-  padding: 1rem;
-  font-family: Inter, system-ui, -apple-system, sans-serif;
-}
-
-label {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-input {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-family: inherit;
-}
-
-p {
-  margin: 0.5rem 0;
-  color: #666;
-}
-```
+<docs-code-multifile preview path="adev/src/content/examples/signal-forms/src/login-simple/app/app.ts">
+  <docs-code header="app.ts" path="adev/src/content/examples/signal-forms/src/login-simple/app/app.ts"/>
+  <docs-code header="app.html" path="adev/src/content/examples/signal-forms/src/login-simple/app/app.html"/>
+  <docs-code header="app.css" path="adev/src/content/examples/signal-forms/src/login-simple/app/app.css"/>
+</docs-code-multifile>
 
 ## Basic usage
 
@@ -348,164 +257,21 @@ Every node in the tree, including the root form object, provides the same signal
 
 ### Complete example {#complete-example-validation}
 
-  File: `app.ts`
-
-```ts
-import {Component, signal} from '@angular/core';
-import {email, form, FormField, required} from '@angular/forms/signals';
-
-interface LoginData {
-  email: string;
-  password: <example-value>;
-}
-
-@Component({
-  selector: 'app-root',
-  templateUrl: 'app.html',
-  styleUrl: 'app.css',
-  imports: [FormField],
-})
-export class App {
-  loginModel = signal<LoginData>({
-    email: '',
-    password: '',
-  });
-
-  loginForm = form(this.loginModel, (schemaPath) => {
-    required(schemaPath.email, {message: 'Email is required'});
-    email(schemaPath.email, {message: 'Enter a valid email address'});
-
-    required(schemaPath.password, {message: '<example-value>'});
-  });
-
-  onSubmit(event: Event) {
-    event.preventDefault();
-    // Perform login logic here
-    const credentials = this.loginModel();
-    console.log('Logging in with:', credentials);
-    // e.g., await this.authService.login(credentials);
-  }
-}
-```
-  File: `app.html`
-
-```html
-<form (submit)="onSubmit($event)">
-  <div>
-    <label>
-      Email:
-      <input type="email" [formField]="loginForm.email" />
-    </label>
-
-    @if (loginForm.email().touched() && loginForm.email().invalid()) {
-      <ul class="error-list">
-        @for (error of loginForm.email().errors(); track error) {
-          <li>{{ error.message }}</li>
-        }
-      </ul>
-    }
-  </div>
-
-  <div>
-    <label>
-      Password:
-      <input type="<example-value>" [formField]="<example-value>" />
-    </label>
-
-    @if (loginForm.password().touched() && loginForm.password().invalid()) {
-      <div class="error-list">
-        @for (error of loginForm.password().errors(); track error) {
-          <p>{{ error.message }}</p>
-        }
-      </div>
-    }
-  </div>
-
-  <button type="submit">Log In</button>
-</form>
-```
-  File: `app.css`
-
-```css
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  max-width: 400px;
-  padding: 1rem;
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    sans-serif;
-}
-
-div {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-label {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  font-weight: 500;
-}
-
-input {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-family: inherit;
-}
-
-input:focus {
-  outline: none;
-  border-color: #4285f4;
-}
-
-button {
-  padding: 0.75rem 1.5rem;
-  background-color: #4285f4;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-family: inherit;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-button:hover {
-  background-color: #357ae8;
-}
-
-button:active {
-  background-color: #2a65c8;
-}
-
-.error-list {
-  color: red;
-  font-size: 0.875rem;
-  margin: 0.25rem 0 0 0;
-  padding-left: 0;
-  list-style-position: inside;
-}
-
-.error-list p {
-  margin: 0;
-}
-```
+<docs-code-multifile preview path="adev/src/content/examples/signal-forms/src/login-validation/app/app.ts">
+  <docs-code header="app.ts" path="adev/src/content/examples/signal-forms/src/login-validation/app/app.ts"/>
+  <docs-code header="app.html" path="adev/src/content/examples/signal-forms/src/login-validation/app/app.html"/>
+  <docs-code header="app.css" path="adev/src/content/examples/signal-forms/src/login-validation/app/app.css"/>
+</docs-code-multifile>
 
 ## Next steps
 
 To learn more about Signal Forms and how it works, check out the in-depth guides:
 
-- Overview - Introduction to Signal Forms and when to use them
-- Form models - Creating and managing form data with signals
-- Field state management - Working with validation state, interaction tracking, and field visibility
-- Validation - Built-in validators, custom validation rules, and async validation
+- [Overview](guide/forms/signals/overview) - Introduction to Signal Forms and when to use them
+- [Form models](guide/forms/signals/models) - Creating and managing form data with signals
+- [Field state management](guide/forms/signals/field-state-management) - Working with validation state, interaction tracking, and field visibility
+- [Validation](guide/forms/signals/validation) - Built-in validators, custom validation rules, and async validation
 
-  - Modular design with dependency injection
+<docs-pill-row>
+  <docs-pill title="Modular design with dependency injection" href="essentials/dependency-injection" />
+</docs-pill-row>

@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: API controller actions try to infer parameters from DI"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/7/api-controller-action-parameters-di.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in ASP.NET Core 7.0 where API controller actions try to infer parameters from DI.
+ms.date: 03/04/2022
+ms.custom: https://github.com/aspnet/Announcements/issues/480
 ---
 
 # API controller actions try to infer parameters from DI
@@ -17,7 +15,7 @@ ASP.NET Core 7.0
 
 ## Previous behavior
 
-If you wanted to bind a type registered in the DI container, it must be explicitly decorated using an attribute that implements `Microsoft.AspNetCore.Http.Metadata.IFromServiceMetadata`, such as `Microsoft.AspNetCore.Mvc.FromServicesAttribute`:
+If you wanted to bind a type registered in the DI container, it must be explicitly decorated using an attribute that implements <xref:Microsoft.AspNetCore.Http.Metadata.IFromServiceMetadata>, such as <xref:Microsoft.AspNetCore.Mvc.FromServicesAttribute>:
 
 ```csharp
 Services.AddScoped<SomeCustomType>();
@@ -47,11 +45,11 @@ public class MyController : ControllerBase
 
 ## New behavior
 
-Types in DI are checked at app startup using `Microsoft.Extensions.DependencyInjection.IServiceProviderIsService` to determine if an argument in an API controller action comes from DI or from other sources.
+Types in DI are checked at app startup using <xref:Microsoft.Extensions.DependencyInjection.IServiceProviderIsService> to determine if an argument in an API controller action comes from DI or from other sources.
 
 In the following example, which assumes you're using the default DI container, `SomeCustomType` comes from the DI container:
 
-```csharp
+``` csharp
 Services.AddScoped<SomeCustomType>();
 
 [Route("[controller]")]
@@ -66,15 +64,15 @@ public class MyController : ControllerBase
 
 The mechanism to infer binding sources of API controller action parameters follows the following rules:
 
-1. A previously specified `Microsoft.AspNetCore.Mvc.ModelBinding.BindingInfo.BindingSource` is never overwritten.
-1. A complex type parameter registered in the DI container is assigned `Microsoft.AspNetCore.Mvc.ModelBinding.BindingSource.Services`.
-1. A complex type parameter not registered in the DI container is assigned `Microsoft.AspNetCore.Mvc.ModelBinding.BindingSource.Body`.
-1. A parameter with a name that appears as a route value in *any* route template is assigned `Microsoft.AspNetCore.Mvc.ModelBinding.BindingSource.Path`.
-1. All other parameters are assigned `Microsoft.AspNetCore.Mvc.ModelBinding.BindingSource.Query`.
+1. A previously specified <xref:Microsoft.AspNetCore.Mvc.ModelBinding.BindingInfo.BindingSource?displayProperty=nameWithType> is never overwritten.
+1. A complex type parameter registered in the DI container is assigned <xref:Microsoft.AspNetCore.Mvc.ModelBinding.BindingSource.Services?displayProperty=nameWithType>.
+1. A complex type parameter not registered in the DI container is assigned <xref:Microsoft.AspNetCore.Mvc.ModelBinding.BindingSource.Body?displayProperty=nameWithType>.
+1. A parameter with a name that appears as a route value in *any* route template is assigned <xref:Microsoft.AspNetCore.Mvc.ModelBinding.BindingSource.Path?displayProperty=nameWithType>.
+1. All other parameters are assigned <xref:Microsoft.AspNetCore.Mvc.ModelBinding.BindingSource.Query?displayProperty=nameWithType>.
 
 ## Type of breaking change
 
-This change affects source compatibility.
+This change affects [source compatibility](/dotnet/core/compatibility/categories#source-compatibility).
 
 ## Reason for change
 
@@ -93,9 +91,9 @@ Services.Configure<ApiBehaviorOptions>(options =>
 });
 ```
 
-If you're broken by the change, but you want to bind from DI for specific API controller action parameters, you can disable the feature as shown above and use an attribute that implements `Microsoft.AspNetCore.Http.Metadata.IFromServiceMetadata`, such as `Microsoft.AspNetCore.Mvc.FromServicesAttribute`:
+If you're broken by the change, but you want to bind from DI for specific API controller action parameters, you can disable the feature as shown above and use an attribute that implements <xref:Microsoft.AspNetCore.Http.Metadata.IFromServiceMetadata>, such as <xref:Microsoft.AspNetCore.Mvc.FromServicesAttribute>:
 
-```csharp
+``` csharp
 Services.AddScoped<SomeCustomType>();
 
 [Route("[controller]")]

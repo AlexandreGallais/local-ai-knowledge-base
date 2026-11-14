@@ -1,19 +1,10 @@
----
-title: "Other common Routing Tasks"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/routing/common-router-tasks.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Other common Routing Tasks
 
 This guide covers some other common tasks associated with using Angular router in your application.
 
 ## Getting route information
 
-Often, as a user navigates your application, you want to pass <example-value> from one component to another.
+Often, as a user navigates your application, you want to pass information from one component to another.
 For example, consider an application that displays a shopping list of grocery items.
 Each item in the list has a unique `id`.
 To edit an item, users click an Edit button, which opens an `EditGroceryItem` component.
@@ -24,7 +15,9 @@ To do so, you use the `withComponentInputBinding` feature with `provideRouter` o
 
 To get information from a route:
 
-### Add `withComponentInputBinding`
+<docs-workflow>
+
+<docs-step title="Add `withComponentInputBinding`">
 
 Add the `withComponentInputBinding` feature to the `provideRouter` method.
 
@@ -32,7 +25,9 @@ Add the `withComponentInputBinding` feature to the `provideRouter` method.
 providers: [provideRouter(appRoutes, withComponentInputBinding())];
 ```
 
-### Add an `input` to the component
+</docs-step>
+
+<docs-step title="Add an `input` to the component">
 
 Update the component to have an `input()` property matching the name of the parameter.
 
@@ -41,7 +36,8 @@ id = input.required<string>();
 hero = computed(() => this.service.getHero(this.id()));
 ```
 
-### Optional: Use a default value
+</docs-step>
+<docs-step title="Optional: Use a default value">
 The router assigns values to all inputs based on the current route when `withComponentInputBinding` is enabled.
 The router assigns `undefined` if no route data matches the input key, such as when an optional query parameter is missing.
 You should include `undefined` in the `input`'s type when there's a possibility that an input might not be matched by the route.
@@ -56,6 +52,9 @@ id = input.required({
 id = input<string | undefined>();
 internalId = linkedSignal(() => this.id() ?? getDefaultId());
 ```
+
+</docs-step>
+</docs-workflow>
 
 NOTE: You can bind all route data with key-value pairs to component inputs: route resources, static or resolved route data, path parameters, matrix parameters, and query parameters.
 
@@ -110,11 +109,11 @@ If you need to restore the legacy behavior where parameters were only inherited 
 provideRouter(routes, withRouterConfig({paramsInheritanceStrategy: 'emptyOnly'}));
 ```
 
-See router configuration options for details on other available settings.
+See [router configuration options](guide/routing/customizing-route-behavior#router-configuration-options) for details on other available settings.
 
 ## Displaying a 404 page
 
-To display a 404 page, set up a wildcard route with the `component` property set to the component you'd like to use for your 404 page as follows:
+To display a 404 page, set up a [wildcard route](guide/routing/define-routes#wildcards) with the `component` property set to the component you'd like to use for your 404 page as follows:
 
 ```ts
 const routes: Routes = [
@@ -155,7 +154,7 @@ Provide optional route parameters in an object, as in `{ foo: 'foo' }`:
 <a [routerLink]="['/crisis-center', {foo: 'foo'}]">Crisis Center</a>
 ```
 
-This syntax passes matrix parameters, which are optional parameters associated with a specific URL segment. Learn more about matrix parameters.
+This syntax passes matrix parameters, which are optional parameters associated with a specific URL segment. Learn more about [matrix parameters](/guide/routing/read-route-state#matrix-parameters).
 
 These three examples cover the needs of an application with one level of routing.
 However, with a child router, such as in the crisis center, you create new link array possibilities.
@@ -210,7 +209,7 @@ The link parameters array affords the flexibility to represent any routing depth
 
 When the router navigates to a new component view, it updates the browser's location and history with a URL for that view.
 
-Modern HTML5 browsers support history.pushState, a technique that changes a browser's location and history without triggering a server page request.
+Modern HTML5 browsers support [history.pushState](https://developer.mozilla.org/docs/Web/API/History_API/Working_with_the_History_API#adding_and_modifying_history_entries 'HTML5 browser history push-state'), a technique that changes a browser's location and history without triggering a server page request.
 The router can compose a "natural" URL that is indistinguishable from one that would otherwise require a page load.
 
 Here's the Crisis Center URL in this "HTML5 pushState" style:
@@ -237,4 +236,4 @@ The router supports both styles with two `LocationStrategy` providers:
 The `RouterModule.forRoot()` function sets the `LocationStrategy` to the `PathLocationStrategy`, which makes it the default strategy.
 You also have the option of switching to the `HashLocationStrategy` with an override during the bootstrapping process.
 
-HELPFUL: For more information on providers and the bootstrap process, see Dependency Injection.
+HELPFUL: For more information on providers and the bootstrap process, see [Dependency Injection](guide/di/defining-dependency-providers).

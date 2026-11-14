@@ -1,12 +1,3 @@
----
-title: "core::iter::adapters::zip"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/iter/adapters/zip.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::iter::adapters::zip
 
 ## struct Zip
@@ -17,7 +8,7 @@ pub struct Zip<A, B>
 
 An iterator that iterates two other iterators simultaneously.
 
-This `struct` is created by `zip` or `Iterator::zip`.
+This `struct` is created by [`zip`] or [`Iterator::zip`].
 See their documentation for more.
 
 ## fn zip
@@ -28,11 +19,11 @@ pub fn zip<A, B>(a: A, b: B) -> Zip<A::IntoIter, B::IntoIter> where A: IntoItera
 
 Converts the arguments to iterators and zips them.
 
-See the documentation of `Iterator::zip` for more.
+See the documentation of [`Iterator::zip`] for more.
 
 # Examples
 
-```rust
+```
 use std::iter::zip;
 
 let xs = [1, 2, 3];

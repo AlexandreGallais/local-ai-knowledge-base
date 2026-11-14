@@ -1,15 +1,25 @@
----
-title: "Domain"
-tool: "node"
-version: "26.13"
-source: "https://github.com/nodejs/node/blob/e9c277643b0249c50f6e6de5413be8a88ea11b6a/doc/api/domain.md"
-commit: "e9c277643b0249c50f6e6de5413be8a88ea11b6a"
-license: "MIT"
----
-
 # Domain
 
+<!-- YAML
+deprecated: v1.4.2
+changes:
+  - version: v8.8.0
+    pr-url: https://github.com/nodejs/node/pull/15695
+    description: Any `Promise`s created in VM contexts no longer have a
+                 `.domain` property. Their handlers are still executed in the
+                 proper domain, however, and `Promise`s created in the main
+                 context still possess a `.domain` property.
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12489
+    description: Handlers for `Promise`s are now invoked in the domain in which
+                 the first promise of a chain was created.
+-->
+
+<!--introduced_in=v0.10.0-->
+
 > Stability: 0 - Deprecated
+
+<!-- source_link=lib/domain.js -->
 
 **This module is pending deprecation.** Once a replacement API has been
 finalized, this module will be fully deprecated. Most developers should
@@ -27,10 +37,12 @@ exit immediately with an error code.
 
 ## Warning: Don't ignore errors!
 
+<!-- type=misc -->
+
 Domain error handlers are not a substitute for closing down a
 process when an error occurs.
 
-By the very nature of how `throw` works in JavaScript, there is almost
+By the very nature of how [`throw`][] works in JavaScript, there is almost
 never any way to safely "pick up where it left off", without leaking
 references, or creating some other sort of undefined brittle state.
 
@@ -179,6 +191,8 @@ function handleRequest(req, res) {
 
 ## Additions to `Error` objects
 
+<!-- type=misc -->
+
 Any time an `Error` object is routed through a domain, a few extra fields
 are added to it.
 
@@ -191,6 +205,8 @@ are added to it.
   thrown, emitted, or passed to a bound callback function.
 
 ## Implicit binding
+
+<!--type=misc-->
 
 If domains are in use, then all **new** `EventEmitter` objects (including
 Stream objects, requests, responses, etc.) will be implicitly bound to
@@ -215,6 +231,8 @@ Implicit binding routes thrown errors and `'error'` events to the
 Implicit binding only takes care of thrown errors and `'error'` events.
 
 ## Explicit binding
+
+<!--type=misc-->
 
 Sometimes, the domain in use is not the one that ought to be used for a
 specific event emitter. Or, the event emitter could have been created
@@ -275,6 +293,13 @@ An array of event emitters that have been explicitly added to the domain.
 
 ### `domain.add(emitter)`
 
+<!-- YAML
+changes:
+  - version: v9.3.0
+    pr-url: https://github.com/nodejs/node/pull/16222
+    description: No longer accepts timer objects.
+-->
+
 * `emitter` {EventEmitter} emitter to be added to the domain
 
 Explicitly adds an emitter to the domain. If any event handlers called by
@@ -315,7 +340,7 @@ d.on('error', (er) => {
 The `enter()` method is plumbing used by the `run()`, `bind()`, and
 `intercept()` methods to set the active domain. It sets `domain.active` and
 `process.domain` to the domain, and implicitly pushes the domain onto the domain
-stack managed by the domain module (see `domain.exit()` for details on the
+stack managed by the domain module (see [`domain.exit()`][] for details on the
 domain stack). The call to `enter()` delimits the beginning of a chain of
 asynchronous calls and I/O operations bound to a domain.
 
@@ -343,8 +368,8 @@ single domain.
 * `callback` {Function} The callback function
 * Returns: {Function} The intercepted function
 
-This method is almost identical to `domain.bind(callback)`. However, in
-addition to catching thrown errors, it will also intercept `Error`
+This method is almost identical to [`domain.bind(callback)`][]. However, in
+addition to catching thrown errors, it will also intercept [`Error`][]
 objects sent as the first argument to the function.
 
 In this way, the common `if (err) return callback(err);` pattern can be replaced
@@ -377,7 +402,7 @@ d.on('error', (er) => {
 
 * `emitter` {EventEmitter} emitter to be removed from the domain
 
-The opposite of `domain.add(emitter)`. Removes domain handling from the
+The opposite of [`domain.add(emitter)`][]. Removes domain handling from the
 specified emitter.
 
 ### `domain.run(fn[, ...args])`
@@ -435,7 +460,7 @@ d2.run(() => {
 });
 ```
 
-A callback may be bound to a specific domain using `domain.bind(callback)`:
+A callback may be bound to a specific domain using [`domain.bind(callback)`][]:
 
 ```js
 const d1 = domain.create();
@@ -456,3 +481,9 @@ d2.run(() => {
 Domains will not interfere with the error handling mechanisms for
 promises. In other words, no `'error'` event will be emitted for unhandled
 `Promise` rejections.
+
+[`Error`]: errors.md#class-error
+[`domain.add(emitter)`]: #domainaddemitter
+[`domain.bind(callback)`]: #domainbindcallback
+[`domain.exit()`]: #domainexit
+[`throw`]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw

@@ -1,32 +1,31 @@
----
-title: "InvokeInstruction interface (java.lang.classfile.instruction)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/instruction/InvokeInstruction.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # InvokeInstruction interface (java.lang.classfile.instruction)
 
 ```java
 public sealed interface InvokeInstruction extends Instruction permits AbstractInstruction.BoundInvokeInterfaceInstruction, AbstractInstruction.BoundInvokeInstruction, AbstractInstruction.UnboundInvokeInstruction
 ```
 
-Models a method invocation instruction in the `code` array of a `Code` attribute, other than invokedynamic.
-Corresponding opcodes have a kind of `Opcode.Kind.INVOKE`.
-Delivered as a `CodeElement` when traversing the elements of a `CodeModel`.
-
+Models a method invocation instruction in the {@code code} array of a {@code
+Code} attribute, other than {@link InvokeDynamicInstruction invokedynamic}.
+Corresponding opcodes have a {@linkplain Opcode#kind() kind} of {@link Opcode.Kind#INVOKE}.
+Delivered as a {@link CodeElement} when traversing the elements of a {@link CodeModel}.
+<p>
 A method invocation instruction is composite:
+{@snippet lang=text :
+// @link substring="InvokeInstruction" target="#of(Opcode, MemberRefEntry)" :
+InvokeInstruction(
+    Opcode opcode, // @link substring="opcode" target="#opcode()"
+    MethodRefEntry | InterfaceMethodRefEntry method) // @link substring="method" target="#method()"
+)
+}
+where {@code method} must be an {@code InterfaceMethodRefEntry} for {@link
+Opcode#INVOKEINTERFACE invokeinterface} opcode, and must be a {@code
+MethodRefEntry} for {@link Opcode#INVOKEVIRTUAL invokevirtual} opcode.
+{@link Opcode#INVOKESTATIC invokestatic} and {@link Opcode#INVOKESPECIAL
+invokespecial} can have either type of entry for {@code method}.
 
-where `method` must be an `InterfaceMethodRefEntry` for invokeinterface opcode, and must be a `MethodRefEntry` for invokevirtual opcode.
-invokestatic and invokespecial can have either type of entry for `method`.
-
-**See also:** Opcode.Kind#INVOKE
-
-**See also:** CodeBuilder#invoke CodeBuilder::invoke
-
-**Since:** 24
+@see Opcode.Kind#INVOKE
+@see CodeBuilder#invoke CodeBuilder::invoke
+@since 24
 
 ## InvokeInstruction.method()
 
@@ -34,11 +33,16 @@ invokestatic and invokespecial can have either type of entry for `method`.
 MemberRefEntry method()
 ```
 
+{@return the {@link MethodRefEntry} or {@link InterfaceMethodRefEntry}
+constant described by this instruction}
+
 ## InvokeInstruction.isInterface()
 
 ```java
 boolean isInterface()
 ```
+
+{@return whether the class or interface holding the method is an interface}
 
 ## InvokeInstruction.count()
 
@@ -46,12 +50,15 @@ boolean isInterface()
 int count()
 ```
 
-For an `invokeinterface` instruction, this value must be equivalent
-to the sum of slot sizes of all arguments
+{@return the {@code count} value of an {@code invokeinterface} instruction,
+or {@code 0} for other instructions}
+<p>
+For an {@code invokeinterface} instruction, this value must be equivalent
+to the sum of {@linkplain TypeKind#slotSize() slot sizes} of all arguments
 plus one, which is equal to the number of operand stack depth consumed by
 this interface method invocation instruction.
 
-**jvms:** 6.5.invokeinterface *invokeinterface*
+@jvms 6.5.invokeinterface <em>invokeinterface</em>
 
 ## InvokeInstruction.owner()
 
@@ -59,11 +66,15 @@ this interface method invocation instruction.
 default ClassEntry owner()
 ```
 
+{@return the class or interface holding the method}
+
 ## InvokeInstruction.name()
 
 ```java
 default Utf8Entry name()
 ```
+
+{@return the name of the method}
 
 ## InvokeInstruction.type()
 
@@ -71,8 +82,11 @@ default Utf8Entry name()
 default Utf8Entry type()
 ```
 
-**API note:** A symbolic descriptor for the type of the method is available through
-typeSymbol().
+{@return the method descriptor string of the method}
+
+@apiNote
+A symbolic descriptor for the type of the method is available through
+{@link #typeSymbol() typeSymbol()}.
 
 ## InvokeInstruction.typeSymbol()
 
@@ -80,20 +94,21 @@ typeSymbol().
 default MethodTypeDesc typeSymbol()
 ```
 
+{@return a symbolic descriptor for the method type}
+
 ## InvokeInstruction.of(Opcode, MemberRefEntry)
 
 ```java
 static InvokeInstruction of(Opcode op, MemberRefEntry method)
 ```
 
-Parameters:
+{@return an invocation instruction}
 
-- `op`: the opcode for the specific type of invocation instruction, which must be of kind `Opcode.Kind.INVOKE`
-- `method`: a constant pool entry describing the method
-
-Throws:
-
-- `IllegalArgumentException`: if the opcode kind is not `Opcode.Kind.INVOKE`
+@param op the opcode for the specific type of invocation instruction,
+          which must be of kind {@link Opcode.Kind#INVOKE}
+@param method a constant pool entry describing the method
+@throws IllegalArgumentException if the opcode kind is not
+        {@link Opcode.Kind#INVOKE}
 
 ## InvokeInstruction.of(Opcode, ClassEntry, Utf8Entry, Utf8Entry, boolean)
 
@@ -101,17 +116,16 @@ Throws:
 static InvokeInstruction of(Opcode op, ClassEntry owner, Utf8Entry name, Utf8Entry type, boolean isInterface)
 ```
 
-Parameters:
+{@return an invocation instruction}
 
-- `op`: the opcode for the specific type of invocation instruction, which must be of kind `Opcode.Kind.INVOKE`
-- `owner`: the class holding the method
-- `name`: the name of the method
-- `type`: the method descriptor
-- `isInterface`: whether the class holding the method is an interface
-
-Throws:
-
-- `IllegalArgumentException`: if the opcode kind is not `Opcode.Kind.INVOKE`
+@param op the opcode for the specific type of invocation instruction,
+          which must be of kind {@link Opcode.Kind#INVOKE}
+@param owner the class holding the method
+@param name the name of the method
+@param type the method descriptor
+@param isInterface whether the class holding the method is an interface
+@throws IllegalArgumentException if the opcode kind is not
+        {@link Opcode.Kind#INVOKE}
 
 ## InvokeInstruction.of(Opcode, ClassEntry, NameAndTypeEntry, boolean)
 
@@ -119,13 +133,12 @@ Throws:
 static InvokeInstruction of(Opcode op, ClassEntry owner, NameAndTypeEntry nameAndType, boolean isInterface)
 ```
 
-Parameters:
+{@return an invocation instruction}
 
-- `op`: the opcode for the specific type of invocation instruction, which must be of kind `Opcode.Kind.INVOKE`
-- `owner`: the class holding the method
-- `nameAndType`: the name and type of the method
-- `isInterface`: whether the class holding the method is an interface
-
-Throws:
-
-- `IllegalArgumentException`: if the opcode kind is not `Opcode.Kind.INVOKE`
+@param op the opcode for the specific type of invocation instruction,
+          which must be of kind {@link Opcode.Kind#INVOKE}
+@param owner the class holding the method
+@param nameAndType the name and type of the method
+@param isInterface whether the class holding the method is an interface
+@throws IllegalArgumentException if the opcode kind is not
+        {@link Opcode.Kind#INVOKE}

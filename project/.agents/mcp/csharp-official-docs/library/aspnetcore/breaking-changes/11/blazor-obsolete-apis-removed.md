@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: Obsolete Blazor APIs removed"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/11/blazor-obsolete-apis-removed.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+ai-usage: ai-assisted
+description: "Learn about the breaking change in ASP.NET Core 11 where APIs that were marked obsolete in earlier Blazor releases have been removed."
+ms.date: 06/04/2026
 ---
-
 # Obsolete Blazor APIs removed
 
 A set of APIs across the Blazor Components assemblies that were previously marked obsolete have been removed in ASP.NET Core 11. Most of these APIs were marked obsolete several releases ago and have working replacements that have been recommended for years.
@@ -52,11 +49,11 @@ In ASP.NET Core 11, the following APIs are removed and no longer compile.
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](/dotnet/core/compatibility/categories#source-compatibility).
 
 ## Reason for change
 
-These APIs were marked obsolete in earlier releases (most between .NET 5 and .NET 8). Each had a documented replacement, and continuing to ship the obsolete surface area increased maintenance cost and surface area for Blazor without benefit. For more information, see dotnet/aspnetcore#62755.
+These APIs were marked obsolete in earlier releases (most between .NET 5 and .NET 8). Each had a documented replacement, and continuing to ship the obsolete surface area increased maintenance cost and surface area for Blazor without benefit. For more information, see [dotnet/aspnetcore#62755](https://github.com/dotnet/aspnetcore/pull/62755).
 
 ## Recommended action
 
@@ -78,9 +75,9 @@ Update your code to use the replacement APIs as listed in the following table.
 
 ## Affected APIs
 
-- `Microsoft.AspNetCore.Components.Routing.Router.PreferExactMatches`
-- `Microsoft.AspNetCore.Components.Forms.EditContextDataAnnotationsExtensions.AddDataAnnotationsValidation*`
-- `Microsoft.AspNetCore.Components.Forms.EditContextDataAnnotationsExtensions.EnableDataAnnotationsValidation*`
+- <xref:Microsoft.AspNetCore.Components.Routing.Router.PreferExactMatches?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Components.Forms.EditContextDataAnnotationsExtensions.AddDataAnnotationsValidation*?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Components.Forms.EditContextDataAnnotationsExtensions.EnableDataAnnotationsValidation*?displayProperty=fullName>
 - `Microsoft.AspNetCore.Components.Forms.RemoteBrowserFileStreamOptions`
 - `Microsoft.AspNetCore.Components.Web.WebEventCallbackFactoryEventArgsExtensions`
 - `Microsoft.AspNetCore.Components.RenderTree.WebRenderer.RendererId` (init accessor)

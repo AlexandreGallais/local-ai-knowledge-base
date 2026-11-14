@@ -1,12 +1,3 @@
----
-title: "core::cell::once"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/cell/once.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::cell::once
 
 ## struct OnceCell
@@ -18,18 +9,22 @@ pub struct OnceCell<T>
 A cell which can nominally be written to only once.
 
 This allows obtaining a shared `&T` reference to its inner value without copying or replacing
-it (unlike `Cell`), and without runtime borrow checks (unlike `RefCell`). However,
+it (unlike [`Cell`]), and without runtime borrow checks (unlike [`RefCell`]). However,
 only immutable references can be obtained unless one has a mutable reference to the cell
 itself. In the same vein, the cell can only be re-initialized with such a mutable reference.
 
 A `OnceCell` can be thought of as a safe abstraction over uninitialized data that becomes
 initialized once written.
 
-For a thread-safe version of this struct, see `std::sync::OnceLock`.
+For a thread-safe version of this struct, see [`std::sync::OnceLock`].
+
+[`RefCell`]: crate::cell::RefCell
+[`Cell`]: crate::cell::Cell
+[`std::sync::OnceLock`]: ../../std/sync/struct.OnceLock.html
 
 # Examples
 
-```rust
+```
 use std::cell::OnceCell;
 
 let cell = OnceCell::new();
@@ -85,7 +80,7 @@ and `Err(value)` if it was already initialized.
 
 # Examples
 
-```rust
+```
 use std::cell::OnceCell;
 
 let cell = OnceCell::new();
@@ -116,7 +111,7 @@ so results in a panic.
 
 # Examples
 
-```rust
+```
 use std::cell::OnceCell;
 
 let cell = OnceCell::new();
@@ -138,7 +133,7 @@ Returns `None` if the cell was uninitialized.
 
 # Examples
 
-```rust
+```
 use std::cell::OnceCell;
 
 let cell: OnceCell<String> = OnceCell::new();
@@ -163,7 +158,7 @@ Safety is guaranteed by requiring a mutable reference.
 
 # Examples
 
-```rust
+```
 use std::cell::OnceCell;
 
 let mut cell: OnceCell<String> = OnceCell::new();

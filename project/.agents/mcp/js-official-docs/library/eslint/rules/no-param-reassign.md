@@ -1,15 +1,12 @@
 ---
-title: "no-param-reassign"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-param-reassign.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-param-reassign
+rule_type: suggestion
+further_reading:
+- https://spin.atomicobject.com/2011/04/10/javascript-don-t-reassign-your-function-arguments/
 ---
 
-# no-param-reassign
 
-Assignment to variables declared as function parameters can be misleading and lead to confusing behavior, as modifying function parameters will also mutate the `arguments` object when not in `strict` mode (see When Not To Use It below). Often, assignment to function parameters is unintended and indicative of a mistake or programmer error.
+Assignment to variables declared as function parameters can be misleading and lead to confusing behavior, as modifying function parameters will also mutate the `arguments` object when not in `strict` mode (see [When Not To Use It](#when-not-to-use-it) below). Often, assignment to function parameters is unintended and indicative of a mistake or programmer error.
 
 This rule can be also configured to fail when function parameters are modified. Side effects on parameters can cause counter-intuitive execution flow and make errors difficult to track down.
 
@@ -19,7 +16,7 @@ This rule aims to prevent unintended behavior caused by modification or reassign
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-param-reassign: "error"*/
@@ -41,9 +38,11 @@ const foo3 = function(bar) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-param-reassign: "error"*/
@@ -53,6 +52,8 @@ const foo = function(bar) {
 }
 ```
 
+:::
+
 ## Options
 
 This rule takes one option, an object, with a boolean property `"props"`, and  arrays `"ignorePropertyModificationsFor"` and `"ignorePropertyModificationsForRegex"`. `"props"` is `false` by default. If `"props"` is set to `true`, this rule warns against the modification of parameter properties unless they're included in `"ignorePropertyModificationsFor"` or `"ignorePropertyModificationsForRegex"`, which is an empty array by default.
@@ -61,7 +62,7 @@ This rule takes one option, an object, with a boolean property `"props"`, and  a
 
 Examples of **correct** code for the default `{ "props": false }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-param-reassign: ["error", { "props": false }]*/
@@ -87,9 +88,11 @@ const foo4 = function(bar) {
 }
 ```
 
+:::
+
 Examples of **incorrect** code for the `{ "props": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-param-reassign: ["error", { "props": true }]*/
@@ -115,9 +118,11 @@ const foo4 = function(bar) {
 }
 ```
 
+:::
+
 Examples of **correct** code for the `{ "props": true }` option with `"ignorePropertyModificationsFor"` set:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-param-reassign: ["error", { "props": true, "ignorePropertyModificationsFor": ["bar"] }]*/
@@ -143,9 +148,11 @@ const foo4 = function(bar) {
 }
 ```
 
+:::
+
 Examples of **correct** code for the `{ "props": true }` option with `"ignorePropertyModificationsForRegex"` set:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-param-reassign: ["error", { "props": true, "ignorePropertyModificationsForRegex": ["^bar"] }]*/
@@ -170,6 +177,8 @@ const foo4 = function(barBaz) {
     for (barBaz.aaa of baz) {}
 }
 ```
+
+:::
 
 ## When Not To Use It
 

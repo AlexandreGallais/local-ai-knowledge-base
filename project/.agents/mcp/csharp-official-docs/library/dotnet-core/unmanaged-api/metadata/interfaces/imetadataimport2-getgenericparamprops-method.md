@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataImport2::GetGenericParamProps Method"
 title: "IMetaDataImport2::GetGenericParamProps Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport2-getgenericparamprops-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport2.GetGenericParamProps"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport2::GetGenericParamProps"
+  - "GetGenericParamProps method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport2::GetGenericParamProps Method
 
 Gets the metadata associated with the generic parameter represented by the specified token.
@@ -35,7 +42,7 @@ HRESULT GetGenericParamProps (
  [out] The ordinal position of the `Type` parameter in the parent constructor or method.
 
  `pdwParamFlags`
- [out] A value of the CorGenericParamAttr enumeration that describes the `Type` for the generic parameter.
+ [out] A value of the [CorGenericParamAttr](../enumerations/corgenericparamattr-enumeration.md) enumeration that describes the `Type` for the generic parameter.
 
  `ptOwner`
  [out] A TypeDef or MethodDef token that represents the owner of the parameter.
@@ -54,7 +61,7 @@ HRESULT GetGenericParamProps (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -64,5 +71,5 @@ HRESULT GetGenericParamProps (
 
 ## See also
 
-- IMetaDataImport2 Interface
-- IMetaDataImport Interface
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)
+- [IMetaDataImport Interface](imetadataimport-interface.md)

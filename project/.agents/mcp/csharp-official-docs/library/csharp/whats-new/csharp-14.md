@@ -1,34 +1,35 @@
 ---
-title: "What's new in C# 14"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/whats-new/csharp-14.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: What's new in C# 14
+description: Get an overview of the new features in C# 14. C# 14 ships with .NET 10.
+ms.date: 11/18/2025
+ms.topic: whats-new
+ms.update-cycle: 365-days
 ---
-
 # What's new in C# 14
 
-C# 14 includes the following new features. You can try these features using the latest Visual Studio 2026 version or the .NET 10 SDK:
+C# 14 includes the following new features. You can try these features using the latest [Visual Studio 2026](https://visualstudio.microsoft.com/) version or the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet):
 
-- Extension members
-- Null-conditional assignment
-- `nameof` supports unbound generic types
-- More implicit conversions for `Span<T>` and `ReadOnlySpan<T>`
-- Modifiers on simple lambda parameters
-- `field` backed properties
-- `partial` events and constructors
-- user-defined compound assignment operators
-- new preprocessor directives for File-based apps
+- [Extension members](#extension-members)
+- [Null-conditional assignment](#null-conditional-assignment)
+- [`nameof` supports unbound generic types](#unbound-generic-types-and-nameof)
+- [More implicit conversions for `Span<T>` and `ReadOnlySpan<T>`](#implicit-span-conversions)
+- [Modifiers on simple lambda parameters](#simple-lambda-parameters-with-modifiers)
+- [`field` backed properties](#the-field-keyword)
+- [`partial` events and constructors](#more-partial-members)
+- [user-defined compound assignment operators](#user-defined-compound-assignment)
+- [new preprocessor directives for File-based apps](../language-reference/preprocessor-directives.md#file-based-apps)
 
-C# 14 is the latest C# release. C# 14 is supported on **.NET 10**. For more information, see C# language versioning.
+C# 14 is the latest C# release. C# 14 is supported on **.NET 10**. For more information, see [C# language versioning](../language-reference/configure-language-version.md).
 
-You can download the latest .NET 10 SDK from the .NET downloads page. You can also download Visual Studio 2026, which includes the .NET 10 SDK.
+You can download the latest .NET 10 SDK from the [.NET downloads page](https://dotnet.microsoft.com/download). You can also download [Visual Studio 2026](https://visualstudio.microsoft.com/vs/), which includes the .NET 10 SDK.
 
-You can find any breaking changes introduced in C# 14 in our article on breaking changes.
+<!--  Saving this text for "What's new in C# 15" when I create it.
+New features are added to the "What's new in C#" page when they're available in public preview releases. The [working set](https://github.com/dotnet/roslyn/blob/main/docs/Language%20Feature%20Status.md#working-set) section of the [roslyn feature status page](https://github.com/dotnet/roslyn/blob/main/docs/Language%20Feature%20Status.md) tracks when upcoming features are merged into the main branch.
+-->
 
-> **Note:**
-> We're interested in your feedback on these features. If you find issues with any of these new features, create a new issue in the dotnet/roslyn repository.
+You can find any breaking changes introduced in C# 14 in our article on [breaking changes](~/_roslyn/docs/compilers/CSharp/Compiler%20Breaking%20Changes%20-%20DotNet%2010.md).
+
+[!INCLUDE [released-version-feedback](./includes/released-feedback.md)]
 
 ## Extension members
 
@@ -64,7 +65,7 @@ public static class Enumerable
 
 The members in the first extension block are called as though they're instance members of `IEnumerable<TSource>`, for example `sequence.IsEmpty`. The members in the second extension block are called as though they're static members of `IEnumerable<TSource>`, for example `IEnumerable<int>.Identity`.
 
-You can learn more details by reading the article on extension members in the programming guide, the language reference article on the `extension` keyword, and the feature specification for the new extension members feature.
+You can learn more details by reading the article on [extension members](../programming-guide/classes-and-structs/extension-methods.md) in the programming guide, the language reference article on the [`extension` keyword](../language-reference/keywords/extension.md), and the [feature specification](~/_csharplang/proposals/csharp-14.0/extensions.md) for the new extension members feature.
 
 ## The `field` keyword
 
@@ -123,11 +124,11 @@ There's a potential breaking change or confusion reading code in types that also
 
 ## Implicit span conversions
 
-C# 14 introduces first-class support for `System.Span`1` and `System.ReadOnlySpan`1` in the language. This support involves new implicit conversions allowing more natural programming with these types.
+C# 14 introduces first-class support for <xref:System.Span`1?displayProperty=fullName> and <xref:System.ReadOnlySpan`1?displayProperty=fullName> in the language. This support involves new implicit conversions allowing more natural programming with these types.
 
 `Span<T>` and `ReadOnlySpan<T>` are used in many key ways in C# and the runtime. Their introduction improves performance without risking safety. C# 14 recognizes the relationship and supports some conversions between `ReadOnlySpan<T>`, `Span<T>`, and `T[]`. The span types can be extension method receivers, compose with other conversions, and help with generic type inference scenarios.
 
-You can find the list of implicit span conversions in the article on built-in types in the language reference section. You can learn more details by reading the feature specification for First class span types.
+You can find the list of implicit span conversions in the article on [built-in types](../language-reference/builtin-types/built-in-types.md) in the language reference section. You can learn more details by reading the feature specification for [First class span types](~/_csharplang/proposals/csharp-14.0/first-class-span-types.md).
 
 ## Unbound generic types and `nameof`
 
@@ -151,11 +152,11 @@ TryParse<int> parse2 = (string text, out int result) => Int32.TryParse(text, out
 
 The `params` modifier still requires an explicitly typed parameter list.
 
-You can read more about these changes in the article on lambda expressions in the C# language reference.
+You can read more about these changes in the article on [lambda expressions](../language-reference/operators/lambda-expressions.md#input-parameters-of-a-lambda-expression) in the C# language reference.
 
 ## More partial members
 
-You can now declare instance constructors and events as partial members.
+You can now declare [instance constructors](../programming-guide/classes-and-structs/constructors.md#partial-constructors) and [events](../event-pattern.md) as [partial members](../language-reference/keywords/partial-member.md).
 
 Partial constructors and partial events must include exactly one *defining declaration* and one *implementing declaration*.
 
@@ -165,7 +166,7 @@ The implementing declaration of a partial event must include `add` and `remove` 
 
 ## User defined compound assignment
 
-You can learn more in the feature specification for user-defined compound assignment.
+You can learn more in the feature specification for [user-defined compound assignment](~/_csharplang/proposals/csharp-14.0/user-defined-compound-assignment.md).
 
 ## Null-conditional assignment
 
@@ -190,8 +191,8 @@ The right side of the `=` operator is evaluated only when the left side isn't nu
 
 In addition to assignment, you can use null-conditional member access operators with compound assignment operators (`+=`, `-=`, and others). However, increment and decrement, `++` and `--`, aren't allowed.
 
-You can learn more in the language reference article on the conditional member access and the feature specification for null-conditional assignment.
+You can learn more in the language reference article on the [conditional member access](../language-reference/operators/member-access-operators.md#null-conditional-operators--and-) and the feature specification for [null-conditional assignment](~/_csharplang/proposals/csharp-14.0/null-conditional-assignment.md).
 
 ## See also
 
-- What's new in .NET 10
+- [What's new in .NET 10](../../core/whats-new/dotnet-10/overview.md)

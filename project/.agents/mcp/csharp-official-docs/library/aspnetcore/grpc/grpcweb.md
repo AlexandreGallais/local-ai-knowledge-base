@@ -1,30 +1,32 @@
 ---
-title: "gRPC-Web in ASP.NET Core gRPC apps"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/grpc/grpcweb.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: gRPC-Web in ASP.NET Core gRPC apps
+ai-usage: ai-assisted
+description: Learn how to configure gRPC services on ASP.NET Core to be callable from browser apps using gRPC-Web.
+monikerRange: '>= aspnetcore-3.0'
+ms.date: 07/10/2025
 ---
-
 # gRPC-Web in ASP.NET Core gRPC apps
 
-By James Newton-King
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
-Learn how to configure an existing ASP.NET Core gRPC service to be callable from browser apps, using the gRPC-Web protocol. gRPC-Web allows browser JavaScript and Blazor apps to call gRPC services. It's not possible to call an HTTP/2 gRPC service from a browser-based app. gRPC services hosted in ASP.NET Core can be configured to support gRPC-Web alongside HTTP/2 gRPC.
+By [James Newton-King](https://twitter.com/jamesnk)
 
-For instructions on adding a gRPC service to an existing ASP.NET Core app, see Add gRPC services to an ASP.NET Core app.
+:::moniker range=">= aspnetcore-8.0"
 
-For instructions on creating a gRPC project, see Create a .NET gRPC client and server in ASP.NET Core.
+Learn how to configure an existing ASP.NET Core gRPC service to be callable from browser apps, using the [gRPC-Web](https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-WEB.md) protocol. gRPC-Web allows browser JavaScript and Blazor apps to call gRPC services. It's not possible to call an HTTP/2 gRPC service from a browser-based app. gRPC services hosted in ASP.NET Core can be configured to support gRPC-Web alongside HTTP/2 gRPC.
+
+For instructions on adding a gRPC service to an existing ASP.NET Core app, see [Add gRPC services to an ASP.NET Core app](aspnetcore.md#add-grpc-services-to-an-aspnet-core-app).
+
+For instructions on creating a gRPC project, see [Create a .NET gRPC client and server in ASP.NET Core](../tutorials/grpc/grpc-start.md).
 
 ## ASP.NET Core gRPC-Web versus Envoy
 
 There are two choices for how to add gRPC-Web to an ASP.NET Core app:
 
-* Support gRPC-Web alongside gRPC HTTP/2 in ASP.NET Core. This option uses middleware provided by the `Grpc.AspNetCore.Web` package.
-* Use the Envoy proxy's gRPC-Web support to translate gRPC-Web to gRPC HTTP/2. The translated call is then forwarded onto the ASP.NET Core app.
+* Support gRPC-Web alongside gRPC HTTP/2 in ASP.NET Core. This option uses middleware provided by the [`Grpc.AspNetCore.Web`](https://www.nuget.org/packages/Grpc.AspNetCore.Web) package.
+* Use the [Envoy proxy's](https://www.envoyproxy.io/) gRPC-Web support to translate gRPC-Web to gRPC HTTP/2. The translated call is then forwarded onto the ASP.NET Core app.
 
-There are pros and cons to each approach. If an app's environment is already using Envoy as a proxy, it might make sense to also use Envoy to provide gRPC-Web support. For a basic <example-value> for gRPC-Web that only requires ASP.NET Core, `Grpc.AspNetCore.Web` is a good choice.
+There are pros and cons to each approach. If an app's environment is already using Envoy as a proxy, it might make sense to also use Envoy to provide gRPC-Web support. For a basic solution for gRPC-Web that only requires ASP.NET Core, `Grpc.AspNetCore.Web` is a good choice.
 
 ## Configure gRPC-Web in ASP.NET Core
 
@@ -32,93 +34,33 @@ gRPC services hosted in ASP.NET Core can be configured to support gRPC-Web along
 
 To enable gRPC-Web with an ASP.NET Core gRPC service:
 
-* Add a reference to the `Grpc.AspNetCore.Web` package.
+* Add a reference to the [`Grpc.AspNetCore.Web`](https://www.nuget.org/packages/Grpc.AspNetCore.Web) package.
 * Configure the app to use gRPC-Web by adding `UseGrpcWeb` and `EnableGrpcWeb` to `Program.cs`:
 
-```csharp
-using GrpcGreeter.Services;
+:::code language="csharp" source="~/grpc/grpcweb/samples/8.x/GrpcGreeter/Program.cs" id="snippet_WebEnable" highlight="9,11":::
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddGrpc();
-
-var app = builder.Build();
-
-app.UseGrpcWeb();
-
-app.MapGrpcService<GreeterService>().EnableGrpcWeb();
-app.MapGet("/", () => "This gRPC service is gRPC-Web enabled and is " +
-    "callable from browser apps using the gRPC-Web protocol");
-
-app.Run();
-```
 The preceding code:
 
 * Adds the gRPC-Web middleware, `UseGrpcWeb`, after routing and before endpoints.
-* Specifies that the `endpoints.MapGrpcService<GreeterService>()` method supports gRPC-Web with `EnableGrpcWeb`.
+* Specifies that the `endpoints.MapGrpcService<GreeterService>()` method supports gRPC-Web with `EnableGrpcWeb`. 
 
 Alternatively, the gRPC-Web middleware can be configured so that all services support gRPC-Web by default and `EnableGrpcWeb` isn't required. Specify `new GrpcWebOptions { DefaultEnabled = true }` when the middleware is added.
 
-```csharp
-using GrpcGreeter.Services;
+:::code language="csharp" source="~/grpc/grpcweb/samples/8.x/GrpcGreeter/Program.cs" id="snippet_WebEnableAllServices" highlight="9":::
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddGrpc();
-
-var app = builder.Build();
-
-app.UseGrpcWeb(new GrpcWebOptions { DefaultEnabled = true });
-
-app.MapGrpcService<GreeterService>();
-app.MapGet("/", () => "All gRPC service are supported by default in " +
-    "this example, and are callable from browser apps using the " +
-    "gRPC-Web protocol");
-
-app.Run();
-```
-> **Note:**
-> There is a known issue that causes gRPC-Web to fail when hosted by HTTP.sys in .NET Core 3.x.
+> [!NOTE]
+> There is a known issue that causes gRPC-Web to fail when [hosted by HTTP.sys](../fundamentals/servers/httpsys.md) in .NET Core 3.x.
 >
-> A workaround to get gRPC-Web working on HTTP.sys is available in Grpc-web experimental and UseHttpSys()? (grpc/grpc-dotnet #853).
+> A workaround to get gRPC-Web working on HTTP.sys is available in [Grpc-web experimental and UseHttpSys()? (grpc/grpc-dotnet #853)](https://github.com/grpc/grpc-dotnet/issues/853#issuecomment-610078202).
 
 ### gRPC-Web and CORS
 
 Browser security prevents a web page from making requests to a different domain than the one that served the web page. This restriction applies to making gRPC-Web calls with browser apps. For example, a browser app served by `https://www.contoso.com` is blocked from calling gRPC-Web services hosted on `https://services.contoso.com`. Cross-Origin Resource Sharing (CORS) can be used to relax this restriction.
 
-To allow a browser app to make cross-origin gRPC-Web calls, set up CORS in ASP.NET Core. Use the built-in CORS support, and expose gRPC-specific headers with `Microsoft.AspNetCore.Cors.Infrastructure.CorsPolicyBuilder.WithExposedHeaders*`.
+To allow a browser app to make cross-origin gRPC-Web calls, set up [CORS in ASP.NET Core](../security/cors.md). Use the built-in CORS support, and expose gRPC-specific headers with <xref:Microsoft.AspNetCore.Cors.Infrastructure.CorsPolicyBuilder.WithExposedHeaders*>.
 
-```csharp
-using GrpcGreeter.Services;
+:::code language="csharp" source="~/grpc/grpcweb/samples/8.x/GrpcGreeter/Program.cs" id="snippet_WebEnableCORS" highlight="7-13,18,21":::
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddGrpc();
-
-builder.Services.AddCors(o => o.AddPolicy("AllowAll", builder =>
-{
-    builder.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .WithExposedHeaders("Grpc-Status", "Grpc-Message", 
-                "Grpc-Encoding", "Grpc-Accept-Encoding", 
-                "Grpc-Status-Details-Bin");
-}));
-
-var app = builder.Build();
-
-app.UseGrpcWeb();
-app.UseCors();
-
-app.MapGrpcService<GreeterService>().EnableGrpcWeb()
-                                    .RequireCors("AllowAll");
-
-app.MapGet("/", () => "This gRPC service is gRPC-Web enabled, CORS " +
-    "enabled, and is callable from browser apps using the gRPC-Web " +
-    "protocol");
-
-app.Run();
-```
 The preceding code:
 
 * Calls `AddCors` to add CORS services and configure a CORS policy that exposes gRPC-specific headers.
@@ -151,9 +93,9 @@ Update the default protocol in `appsettings.json`:
 }
 ```
 
-Alternatively, configure Kestrel endpoints in startup code.
+Alternatively, [configure Kestrel endpoints in startup code](../fundamentals/servers/kestrel/endpoints.md).
 
-Enabling HTTP/1.1 and HTTP/2 on the same port requires TLS for protocol negotiation. For more information, see ASP.NET Core gRPC protocol negotiation.
+Enabling HTTP/1.1 and HTTP/2 on the same port requires TLS for protocol negotiation. For more information, see [ASP.NET Core gRPC protocol negotiation](aspnetcore.md#protocol-negotiation).
 
 ## Call gRPC-Web from the browser
 
@@ -161,32 +103,24 @@ Browser apps can use gRPC-Web to call gRPC services. There are some requirements
 
 * The server must contain configuration to support gRPC-Web.
 * Client streaming and bidirectional streaming calls aren't supported. Server streaming is supported.
-* Calling gRPC services on a different domain requires CORS configuration on the server.
+* Calling gRPC services on a different domain requires [CORS](../security/cors.md) configuration on the server.
 
 ### JavaScript gRPC-Web client
 
-A JavaScript gRPC-Web client exists. For instructions on how to use gRPC-Web from JavaScript, see write JavaScript client code with gRPC-Web.
+A JavaScript gRPC-Web client exists. For instructions on how to use gRPC-Web from JavaScript, see [write JavaScript client code with gRPC-Web](https://github.com/grpc/grpc-web/tree/master/net/grpc/gateway/examples/helloworld#write-client-code).
 
 ### Configure gRPC-Web with the .NET gRPC client
 
-The .NET gRPC client can be configured to make gRPC-Web calls. This is useful for Blazor WebAssembly apps, which are hosted in the browser and have the same HTTP limitations of JavaScript code. Calling gRPC-Web with a .NET client is the same as HTTP/2 gRPC. The only modification is how the channel is created.
+The .NET gRPC client can be configured to make gRPC-Web calls. This is useful for [Blazor WebAssembly](../blazor/index.md#blazor-webassembly) apps, which are hosted in the browser and have the same HTTP limitations of JavaScript code. Calling gRPC-Web with a .NET client is the same as [HTTP/2 gRPC](client.md). The only modification is how the channel is created.
 
 To use gRPC-Web:
 
-* Add a reference to the `Grpc.Net.Client.Web` package.
-* Ensure the reference to `Grpc.Net.Client` package is version 2.29.0 or later.
+* Add a reference to the [`Grpc.Net.Client.Web`](https://www.nuget.org/packages/Grpc.Net.Client.Web) package.
+* Ensure the reference to [`Grpc.Net.Client`](https://www.nuget.org/packages/Grpc.Net.Client) package is version 2.29.0 or later.
 * Configure the channel to use the `GrpcWebHandler`:
 
-```csharp
-var channel = GrpcChannel.ForAddress("https://localhost:53305", new GrpcChannelOptions
-{
-    HttpHandler = new GrpcWebHandler(new HttpClientHandler())
-});
+:::code language="csharp" source="~/grpc/grpcweb/samples/8.x/GrpcGreeterClient/Program.cs" id="snippet_Handler":::
 
-var client = new Greeter.GreeterClient(channel);
-var response = await client.SayHelloAsync(
-                  new HelloRequest { Name = "GreeterClient" });
-```
 The preceding code:
 
 * Configures a channel to use gRPC-Web.
@@ -194,25 +128,25 @@ The preceding code:
 
 `GrpcWebHandler` has the following configuration options:
 
-* `InnerHandler`: The underlying `System.Net.Http.HttpMessageHandler` that makes the gRPC HTTP request, for example, `HttpClientHandler`.
+* `InnerHandler`: The underlying <xref:System.Net.Http.HttpMessageHandler> that makes the gRPC HTTP request, for example, `HttpClientHandler`.
 * `GrpcWebMode`: An enumeration type that specifies whether the gRPC HTTP request `Content-Type` is `application/grpc-web` or `application/grpc-web-text`.
   * `GrpcWebMode.GrpcWeb` configures sending content without encoding. Default value.
   * `GrpcWebMode.GrpcWebText` configures base64-encoded content. Required for server streaming calls in browsers.
 
 `GrpcChannelOptions.HttpVersion` and `GrpcChannelOptions.HttpVersionPolicy` can be used to configure the HTTP protocol version.
 
-> **Important:**
+> [!IMPORTANT]
 > Generated gRPC clients have synchronous and asynchronous methods for calling unary methods. For example, `SayHello` is synchronous, and `SayHelloAsync` is asynchronous. Asynchronous methods are always required in Blazor WebAssembly. Calling a synchronous method in a Blazor WebAssembly app causes the app to become unresponsive.
 
 ### Use gRPC client factory with gRPC-Web
 
-Create a .NET client compatible with gRPC-Web using the gRPC client factory:
+Create a .NET client compatible with gRPC-Web using the [gRPC client factory](clientfactory.md):
 
 * Add package references to the project file for the following packages:
-  * `Grpc.Net.Client.Web`
-  * `Grpc.Net.ClientFactory`
+  * [`Grpc.Net.Client.Web`](https://www.nuget.org/packages/Grpc.Net.Client.Web)
+  * [`Grpc.Net.ClientFactory`](https://www.nuget.org/packages/Grpc.Net.ClientFactory)
 * Register a gRPC client with dependency injection (DI) using the generic `AddGrpcClient` extension method. In a Blazor WebAssembly app, services are registered with DI in `Program.cs`.
-* Configure `GrpcWebHandler` using the `Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.ConfigurePrimaryHttpMessageHandler*` extension method.
+* Configure `GrpcWebHandler` using the <xref:Microsoft.Extensions.DependencyInjection.HttpClientBuilderExtensions.ConfigurePrimaryHttpMessageHandler*> extension method.
 
 ```csharp
 builder.Services
@@ -224,10 +158,16 @@ builder.Services
         () => new GrpcWebHandler(new HttpClientHandler()));
 ```
 
-For more information, see gRPC client factory integration in .NET.
+For more information, see [gRPC client factory integration in .NET](clientfactory.md).
 
 ## Related content
 
-* gRPC for Web Clients GitHub project
-* Enable Cross-Origin Requests (CORS) in ASP.NET Core
-* gRPC JSON transcoding in ASP.NET Core gRPC apps
+* [gRPC for Web Clients GitHub project](https://github.com/grpc/grpc-web)
+* [Enable Cross-Origin Requests (CORS) in ASP.NET Core](../security/cors.md)
+* [gRPC JSON transcoding in ASP.NET Core gRPC apps](json-transcoding.md)
+
+:::moniker-end
+
+[!INCLUDE[](~/grpc/grpcweb/includes/grpcweb6-7.md)]
+
+[!INCLUDE[](~/grpc/grpcweb/includes/grpcweb3-5.md)]

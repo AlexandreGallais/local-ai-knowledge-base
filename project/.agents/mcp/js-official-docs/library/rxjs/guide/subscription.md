@@ -1,12 +1,3 @@
----
-title: "Subscription"
-tool: "rxjs"
-version: "7.8"
-source: "https://github.com/ReactiveX/rxjs/blob/e5351d02e225e275ac0e497c7b66eaa5f0c88791/docs_app/content/guide/subscription.md"
-commit: "e5351d02e225e275ac0e497c7b66eaa5f0c88791"
-license: "Apache-2.0"
----
-
 # Subscription
 
 **What is a Subscription?** A Subscription is an object that represents a disposable resource, usually the execution of an Observable. A Subscription has one important method, `unsubscribe`, that takes no argument and just disposes the resource held by the subscription. In previous versions of RxJS, Subscription was called "Disposable".
@@ -22,7 +13,7 @@ const subscription = observable.subscribe(x => console.log(x));
 subscription.unsubscribe(); 
 ```
 
-A Subscription essentially just has an `unsubscribe()` function to release resources or cancel Observable executions.
+<span class="informal">A Subscription essentially just has an `unsubscribe()` function to release resources or cancel Observable executions.</span>
 
 Subscriptions can also be put together, so that a call to an `unsubscribe()` of one Subscription may unsubscribe multiple Subscriptions. You can do this by "adding" one subscription into another:
 

@@ -1,12 +1,3 @@
----
-title: "Router reference"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/routing/router-reference.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Router reference
 
 The following sections highlight some core router concepts and terminology.
@@ -18,22 +9,22 @@ These events are shown in the following table.
 
 | Router event                                              | Details                                                                                                                                                                |
 | :-------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `NavigationStart`           | Triggered when navigation starts.                                                                                                                                      |
-| `RouteConfigLoadStart` | Triggered before the `Router` lazy loads a route configuration.                                                                                                        |
-| `RouteConfigLoadEnd`     | Triggered after a route has been lazy loaded.                                                                                                                          |
-| `RoutesRecognized`         | Triggered when the Router parses the URL and the routes are recognized.                                                                                                |
-| `GuardsCheckStart`         | Triggered when the Router begins the Guards phase of routing.                                                                                                          |
-| `ChildActivationStart` | Triggered when the Router begins activating a route's children.                                                                                                        |
-| `ActivationStart`           | Triggered when the Router begins activating a route.                                                                                                                   |
-| `GuardsCheckEnd`             | Triggered when the Router finishes the Guards phase of routing successfully.                                                                                           |
-| `ResolveStart`                 | Triggered when the Router begins the Resolve phase of routing.                                                                                                         |
-| `ResolveEnd`                     | Triggered when the Router finishes the Resolve phase of routing successfully.                                                                                          |
-| `ChildActivationEnd`     | Triggered when the Router finishes activating a route's children.                                                                                                      |
-| `ActivationEnd`               | Triggered when the Router finishes activating a route.                                                                                                                 |
-| `NavigationEnd`               | Triggered when navigation ends successfully.                                                                                                                           |
-| `NavigationCancel`         | Triggered when navigation is canceled. This can happen when a Route Guard returns false during navigation, or redirects by returning a `UrlTree` or `RedirectCommand`. |
-| `NavigationError`           | Triggered when navigation fails due to an unexpected error.                                                                                                            |
-| `Scroll`                             | Represents a scrolling event.                                                                                                                                          |
+| [`NavigationStart`](api/router/NavigationStart)           | Triggered when navigation starts.                                                                                                                                      |
+| [`RouteConfigLoadStart`](api/router/RouteConfigLoadStart) | Triggered before the `Router` lazy loads a route configuration.                                                                                                        |
+| [`RouteConfigLoadEnd`](api/router/RouteConfigLoadEnd)     | Triggered after a route has been lazy loaded.                                                                                                                          |
+| [`RoutesRecognized`](api/router/RoutesRecognized)         | Triggered when the Router parses the URL and the routes are recognized.                                                                                                |
+| [`GuardsCheckStart`](api/router/GuardsCheckStart)         | Triggered when the Router begins the Guards phase of routing.                                                                                                          |
+| [`ChildActivationStart`](api/router/ChildActivationStart) | Triggered when the Router begins activating a route's children.                                                                                                        |
+| [`ActivationStart`](api/router/ActivationStart)           | Triggered when the Router begins activating a route.                                                                                                                   |
+| [`GuardsCheckEnd`](api/router/GuardsCheckEnd)             | Triggered when the Router finishes the Guards phase of routing successfully.                                                                                           |
+| [`ResolveStart`](api/router/ResolveStart)                 | Triggered when the Router begins the Resolve phase of routing.                                                                                                         |
+| [`ResolveEnd`](api/router/ResolveEnd)                     | Triggered when the Router finishes the Resolve phase of routing successfully.                                                                                          |
+| [`ChildActivationEnd`](api/router/ChildActivationEnd)     | Triggered when the Router finishes activating a route's children.                                                                                                      |
+| [`ActivationEnd`](api/router/ActivationEnd)               | Triggered when the Router finishes activating a route.                                                                                                                 |
+| [`NavigationEnd`](api/router/NavigationEnd)               | Triggered when navigation ends successfully.                                                                                                                           |
+| [`NavigationCancel`](api/router/NavigationCancel)         | Triggered when navigation is canceled. This can happen when a Route Guard returns false during navigation, or redirects by returning a `UrlTree` or `RedirectCommand`. |
+| [`NavigationError`](api/router/NavigationError)           | Triggered when navigation fails due to an unexpected error.                                                                                                            |
+| [`Scroll`](api/router/Scroll)                             | Represents a scrolling event.                                                                                                                                          |
 
 When you enable the `withDebugTracing` feature, Angular logs these events to the console.
 
@@ -58,16 +49,16 @@ Here are the key `Router` terms and their meanings:
 
 ## `<base href>`
 
-The router uses the browser's history.pushState for navigation.
+The router uses the browser's [history.pushState](https://developer.mozilla.org/docs/Web/API/History_API/Working_with_the_History_API#adding_and_modifying_history_entries 'HTML5 browser history push-state') for navigation.
 `pushState` lets you customize in-application URL paths; for example, `localhost:4200/crisis-center`.
 The in-application URLs can be indistinguishable from server URLs.
 
 Modern HTML5 browsers were the first to support `pushState` which is why many people refer to these URLs as "HTML5 style" URLs.
 
 HELPFUL: HTML5 style navigation is the router default.
-In the LocationStrategy and browser URL styles section, learn why HTML5 style is preferable, how to adjust its behavior, and how to switch to the older hash \(`#`\) style, if necessary.
+In the [LocationStrategy and browser URL styles](guide/routing/common-router-tasks#locationstrategy-and-browser-url-styles) section, learn why HTML5 style is preferable, how to adjust its behavior, and how to switch to the older hash \(`#`\) style, if necessary.
 
-You must add a `<base href>` element to the application's `index.html` for `pushState` routing to work.
+You must add a [`<base href>` element](https://developer.mozilla.org/docs/Web/HTML/Element/base 'base href') to the application's `index.html` for `pushState` routing to work.
 The browser uses the `<base href>` value to prefix relative URLs when referencing CSS files, scripts, and images.
 
 Add the `<base>` element just after the `<head>` tag.
@@ -82,16 +73,16 @@ If the `app` folder is the application root, as it is for this application, set 
 The guidelines that follow will refer to different parts of a URL.
 This diagram outlines what those parts refer to:
 
-```text
+```text {hideCopy}
 foo://example.com:8042/over/there?name=ferret#nose
 \_/   \______________/\_________/ \_________/ \__/
  |           |            |            |        |
 scheme    authority      path        query   fragment
 ```
 
-While the router uses the HTML5 pushState style by default, you must configure that strategy with a `<base href>`.
+While the router uses the [HTML5 pushState](https://developer.mozilla.org/docs/Web/API/History_API#Adding_and_modifying_history_entries 'Browser history push-state') style by default, you must configure that strategy with a `<base href>`.
 
-The preferred way to configure the strategy is to add a `<base href>` element tag in the `<head>` of the `index.html`.
+The preferred way to configure the strategy is to add a [`<base href>` element](https://developer.mozilla.org/docs/Web/HTML/Element/base 'base href') tag in the `<head>` of the `index.html`.
 
 ```angular-html
 <base href="/" />
@@ -114,7 +105,7 @@ Those developers can still use HTML5 URLs by taking the following two steps:
 
    - A fragment in the `<base href>` is _never_ persisted
 
-For more complete information on how `<base href>` is used to construct target URIs, see the RFC section on transforming references.
+For more complete information on how `<base href>` is used to construct target URIs, see the [RFC](https://tools.ietf.org/html/rfc3986#section-5.2.2) section on transforming references.
 
 ### `HashLocationStrategy`
 

@@ -1,12 +1,3 @@
----
-title: "PSSParameterSpec class (java.security.spec)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/spec/PSSParameterSpec.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # PSSParameterSpec class (java.security.spec)
 
 ```java
@@ -15,21 +6,19 @@ public class PSSParameterSpec implements AlgorithmParameterSpec
 
 This class specifies a parameter spec for the RSASSA-PSS signature scheme,
 as defined in the
-PKCS#1 v2.2 standard.
+<a href="https://tools.ietf.org/rfc/rfc8017.txt">PKCS#1 v2.2</a> standard.
 
-Its ASN.1 definition in the PKCS #1 standard is described below:
-
-```java
+<p>Its ASN.1 definition in the PKCS #1 standard is described below:
+<pre>
 RSASSA-PSS-params ::= SEQUENCE {
   hashAlgorithm      [0] HashAlgorithm      DEFAULT sha1,
   maskGenAlgorithm   [1] MaskGenAlgorithm   DEFAULT mgf1SHA1,
   saltLength         [2] INTEGER            DEFAULT 20,
   trailerField       [3] TrailerField       DEFAULT trailerFieldBC(1)
-```
-
+}
+</pre>
 where
-
-```java
+<pre>
 HashAlgorithm ::= AlgorithmIdentifier {
   {OAEP-PSSDigestAlgorithms}
 }
@@ -49,15 +38,19 @@ OAEP-PSSDigestAlgorithms    ALGORITHM-IDENTIFIER ::= {
 PKCS1MGFAlgorithms    ALGORITHM-IDENTIFIER ::= {
   { OID id-mgf1 PARAMETERS HashAlgorithm },
   ...  -- Allows for future expansion --
-```
+}
+</pre>
 
-**See also:** MGF1ParameterSpec
+@spec https://www.rfc-editor.org/info/rfc8017
+     RFC 8017: PKCS #1: RSA Cryptography Specifications Version 2.2
+@see MGF1ParameterSpec
+@see AlgorithmParameterSpec
+@see java.security.Signature
 
-**See also:** AlgorithmParameterSpec
+@author Valerie Peng
 
-**See also:** java.security.Signature
 
-**Since:** 1.4
+@since 1.4
 
 ## PSSParameterSpec.TRAILER_FIELD_BC
 
@@ -65,9 +58,9 @@ PKCS1MGFAlgorithms    ALGORITHM-IDENTIFIER ::= {
 public static final int TRAILER_FIELD_BC
 ```
 
-The `TrailerFieldBC` constant as defined in the PKCS #1 standard.
+The {@code TrailerFieldBC} constant as defined in the PKCS #1 standard.
 
-**Since:** 11
+@since 11
 
 ## PSSParameterSpec.DEFAULT
 
@@ -76,17 +69,18 @@ public static final PSSParameterSpec DEFAULT
 ```
 
 The PSS parameter set with all default values.
-
-**Deprecated:** This field uses the default values defined in the PKCS #1
+@spec https://www.rfc-editor.org/info/rfc8017
+     RFC 8017: PKCS #1: RSA Cryptography Specifications Version 2.2
+@deprecated This field uses the default values defined in the PKCS #1
         standard. Some of these defaults are no longer recommended due
         to advances in cryptanalysis -- see the
-        PKCS#1 v2.2
+        <a href="https://tools.ietf.org/rfc/rfc8017.txt">PKCS#1 v2.2</a>
         standard for more details. Thus, it is recommended to create
-        a new `PSSParameterSpec` with the desired parameter values
+        a new {@code PSSParameterSpec} with the desired parameter values
         using the
-        String, AlgorithmParameterSpec, int, int) constructor.
+        {@link #PSSParameterSpec(String, String, AlgorithmParameterSpec, int, int)} constructor.
 
-**Since:** 1.5
+@since 1.5
 
 ## PSSParameterSpec.PSSParameterSpec(String, String, AlgorithmParameterSpec, int, int)
 
@@ -94,25 +88,35 @@ The PSS parameter set with all default values.
 public PSSParameterSpec(String mdName, String mgfName, AlgorithmParameterSpec mgfSpec, int saltLen, int trailerField)
 ```
 
-Creates a new `PSSParameterSpec` as defined in
+Creates a new {@code PSSParameterSpec} as defined in
 the PKCS #1 standard using the specified message digest,
 mask generation function, parameters for mask generation
 function, salt length, and trailer field values.
 
-Parameters:
-
-- `mdName`: the algorithm name of the hash function. See the PSSParameterSpec section of the  Java Security Standard Algorithm Names Specification for information about standard names for the hash function.
-- `mgfName`: the algorithm name of the mask generation function. See the PSSParameterSpec section of the  Java Security Standard Algorithm Names Specification for information about standard names for the mask generation function.
-- `mgfSpec`: the parameters for the mask generation function. If null is specified, null will be returned by getMGFParameters().
-- `saltLen`: the length of salt in bytes
-- `trailerField`: the value of the trailer field
-
-**Since:** 1.5
-
-Throws:
-
-- `NullPointerException`: if `mdName`, or `mgfName` is null
-- `IllegalArgumentException`: if `saltLen` or `trailerField` is less than 0
+@param mdName       the algorithm name of the hash function. See the
+        PSSParameterSpec section of the
+        <a href=
+       "{@docRoot}/../specs/security/standard-names.html#pssparameterspec">
+        Java Security Standard Algorithm Names Specification</a>
+        for information about standard names for the hash function.
+@param mgfName      the algorithm name of the mask generation function.
+        See the PSSParameterSpec section of the
+        <a href=
+       "{@docRoot}/../specs/security/standard-names.html#pssparameterspec">
+        Java Security Standard Algorithm Names Specification</a>
+        for information about standard names for the mask generation
+        function.
+@param mgfSpec      the parameters for the mask generation function.
+        If null is specified, null will be returned by
+        getMGFParameters().
+@param saltLen      the length of salt in bytes
+@param trailerField the value of the trailer field
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@throws    NullPointerException if {@code mdName}, or {@code mgfName}
+        is null
+@throws    IllegalArgumentException if {@code saltLen} or
+        {@code trailerField} is less than 0
+@since 1.5
 
 ## PSSParameterSpec.PSSParameterSpec(int)
 
@@ -120,26 +124,23 @@ Throws:
 public PSSParameterSpec(int saltLen)
 ```
 
-Creates a new `PSSParameterSpec`
+Creates a new {@code PSSParameterSpec}
 using the specified salt length and other default values as
 defined in the PKCS #1 standard.
 
-Parameters:
-
-- `saltLen`: the length of salt in bytes
-
-**Deprecated:** This constructor uses the default values defined in
+@param saltLen the length of salt in bytes
+@throws    IllegalArgumentException if {@code saltLen} is
+        less than 0
+@spec https://www.rfc-editor.org/info/rfc8017
+     RFC 8017: PKCS #1: RSA Cryptography Specifications Version 2.2
+@deprecated This constructor uses the default values defined in
         the PKCS #1 standard except for the salt length. Some of these
         defaults are no longer recommended due to advances in
         cryptanalysis -- see the
-        PKCS#1 v2.2
+        <a href="https://tools.ietf.org/rfc/rfc8017.txt">PKCS#1 v2.2</a>
         standard for more details. Thus, it is recommended to explicitly
         specify all desired parameter values with the
-        String, AlgorithmParameterSpec, int, int) constructor.
-
-Throws:
-
-- `IllegalArgumentException`: if `saltLen` is less than 0
+        {@link #PSSParameterSpec(String, String, AlgorithmParameterSpec, int, int)} constructor.
 
 ## PSSParameterSpec.getDigestAlgorithm()
 
@@ -149,9 +150,8 @@ public String getDigestAlgorithm()
 
 Returns the message digest algorithm name.
 
-**Returns:** the message digest algorithm name
-
-**Since:** 1.5
+@return the message digest algorithm name
+@since 1.5
 
 ## PSSParameterSpec.getMGFAlgorithm()
 
@@ -161,9 +161,9 @@ public String getMGFAlgorithm()
 
 Returns the mask generation function algorithm name.
 
-**Returns:** the mask generation function algorithm name
+@return the mask generation function algorithm name
 
-**Since:** 1.5
+@since 1.5
 
 ## PSSParameterSpec.getMGFParameters()
 
@@ -173,9 +173,8 @@ public AlgorithmParameterSpec getMGFParameters()
 
 Returns the parameters for the mask generation function.
 
-**Returns:** the parameters for the mask generation function
-
-**Since:** 1.5
+@return the parameters for the mask generation function
+@since 1.5
 
 ## PSSParameterSpec.getSaltLength()
 
@@ -185,7 +184,7 @@ public int getSaltLength()
 
 Returns the salt length in bytes.
 
-**Returns:** the salt length
+@return the salt length
 
 ## PSSParameterSpec.getTrailerField()
 
@@ -195,6 +194,5 @@ public int getTrailerField()
 
 Returns the value for the trailer field.
 
-**Returns:** the value for the trailer field
-
-**Since:** 1.5
+@return the value for the trailer field
+@since 1.5

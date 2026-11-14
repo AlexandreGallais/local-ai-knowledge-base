@@ -1,31 +1,25 @@
----
-title: "prefer-number-properties"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-number-properties.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-number-properties
 
 📝 Prefer `Number` static methods over global functions and optionally static properties over global constants.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 ECMAScript 2015 moved global number functions onto the `Number` constructor for consistency and to slightly improve them. This rule enforces their usage to limit the usage of globals:
 
-- `Number.parseInt()` over global `parseInt` references, except no-radix and base-10 calls *(fixable)*
-- `Number.parseFloat()` over global `parseFloat` references *(fixable)*
-- `Number.isNaN()` over `isNaN()` *(they have slightly different behavior, so this is only auto-fixed when the argument is known to be a number, otherwise it's a suggestion)*
-- `Number.isFinite()` over `isFinite()` *(they have slightly different behavior, so this is only auto-fixed when the argument is known to be a number, otherwise it's a suggestion)*
-- `Number.NaN` over `NaN` when `checkNaN` is enabled *(fixable)*
-- `Number.POSITIVE_INFINITY` over `Infinity` when `checkInfinity` is enabled *(fixable)*
-- `Number.NEGATIVE_INFINITY` over `-Infinity` when `checkInfinity` is enabled *(fixable)*
+- [`Number.parseInt()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/parseInt) over global [`parseInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt) references, except no-radix and base-10 calls *(fixable)*
+- [`Number.parseFloat()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/parseFloat) over global [`parseFloat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseFloat) references *(fixable)*
+- [`Number.isNaN()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN) over [`isNaN()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN) *(they have slightly [different behavior](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN#difference_between_number.isnan_and_global_isnan), so this is only auto-fixed when the argument is known to be a number, otherwise it's a suggestion)*
+- [`Number.isFinite()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isFinite) over [`isFinite()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isFinite) *(they have slightly [different behavior](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isFinite#difference_between_number.isfinite_and_global_isfinite), so this is only auto-fixed when the argument is known to be a number, otherwise it's a suggestion)*
+- [`Number.NaN`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/NaN) over [`NaN`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN) when `checkNaN` is enabled *(fixable)*
+- [`Number.POSITIVE_INFINITY`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/POSITIVE_INFINITY) over [`Infinity`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity) when `checkInfinity` is enabled *(fixable)*
+- [`Number.NEGATIVE_INFINITY`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/NEGATIVE_INFINITY) over [`-Infinity`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity) when `checkInfinity` is enabled *(fixable)*
 
-Use `prefer-global-number-constants` if you want to enforce the shorter global forms for `NaN`, `Infinity`, and `-Infinity`.
+Use [`prefer-global-number-constants`](./prefer-global-number-constants.md) if you want to enforce the shorter global forms for `NaN`, `Infinity`, and `-Infinity`.
 
 ## Examples
 
@@ -71,7 +65,7 @@ const foo = Number.parseInt('10', 2);
 const foo = parseInt('10', 10);
 ```
 
-Base-10 `parseInt()` calls are handled by `prefer-number-coercion`, which also suggests `Number()` for `parseFloat()` (with slightly different semantics).
+Base-10 `parseInt()` calls are handled by [`prefer-number-coercion`](./prefer-number-coercion.md), which also suggests `Number()` for `parseFloat()` (with slightly different semantics).
 
 ```js
 // ✅
@@ -93,8 +87,8 @@ const isNegativeZero = value => value === 0 && 1 / value === -Infinity;
 
 Type: `object`
 
-> **Caution:**
-> `checkNaN` and `checkInfinity` enforce the opposite of `prefer-global-number-constants`, which is enabled in the `recommended` and `unopinionated` configs. If you prefer the `Number.*` constant forms, disable `prefer-global-number-constants` to avoid conflicting reports.
+> [!CAUTION]
+> `checkNaN` and `checkInfinity` enforce the opposite of [`prefer-global-number-constants`](./prefer-global-number-constants.md), which is enabled in the `recommended` and `unopinionated` configs. If you prefer the `Number.*` constant forms, disable `prefer-global-number-constants` to avoid conflicting reports.
 
 ### checkInfinity
 

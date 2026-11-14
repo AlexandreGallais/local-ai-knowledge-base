@@ -1,43 +1,41 @@
----
-title: "no-restricted-syntax (part 1 of 2)"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/no-restricted-syntax.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-no-restricted-syntax"></a>
+<a name="no-restricted-syntax"></a>
+# <code>no-restricted-syntax</code>
 
-# `no-restricted-syntax`
+* [Options](#user-content-no-restricted-syntax-options)
+    * [`contexts`](#user-content-no-restricted-syntax-options-contexts)
+* [Context and settings](#user-content-no-restricted-syntax-context-and-settings)
+* [Failing examples](#user-content-no-restricted-syntax-failing-examples)
+* [Passing examples](#user-content-no-restricted-syntax-passing-examples)
 
-* Options
-    * `contexts`
-* Context and settings
-* Failing examples
-* Passing examples
 
 Reports when certain comment structures are present.
 
-Note that this rule differs from ESLint's no-restricted-syntax
+Note that this rule differs from ESLint's [no-restricted-syntax](https://eslint.org/docs/rules/no-restricted-syntax)
 rule in expecting values within a single options object's
 `contexts` property, and with the property `context` being used in place of
 `selector` (as well as allowing for `comment`). The format also differs from
-the format expected by `eslint-plugin-query`.
+the format expected by [`eslint-plugin-query`](https://github.com/brettz9/eslint-plugin-query).
 
 Unlike those rules, this is specific to finding comments attached to
 structures, (whether or not you add a specific `comment` condition).
 
-Note that if your parser supports comment AST (as jsdoc-eslint-parser
+Note that if your parser supports comment AST (as [jsdoc-eslint-parser](https://github.com/brettz9/jsdoc-eslint-parser)
 is designed to do), you can just use ESLint's rule.
 
 For an alternative to this rule, see the
-Advanced docs under
+[Advanced](./docs/advanced.md#forbidding-structures) docs under
 creating your own rules and forbidding structures.
 
+<a name="user-content-no-restricted-syntax-options"></a>
+<a name="no-restricted-syntax-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `contexts`
+<a name="user-content-no-restricted-syntax-options-contexts"></a>
+<a name="no-restricted-syntax-options-contexts"></a>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
 `context` and `comment` properties) where you wish the rule to be applied.
@@ -54,9 +52,12 @@ your files (as is necessary for finding function blocks not attached to a
 function declaration or expression, i.e., `@callback` or `@function` (or its
 aliases `@func` or `@method`) (including those associated with an `@interface`).
 
-See the "AST and Selectors"
+See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
 section of our Advanced docs for more on the expected format.
 
+
+<a name="user-content-no-restricted-syntax-context-and-settings"></a>
+<a name="no-restricted-syntax-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -66,6 +67,8 @@ section of our Advanced docs for more on the expected format.
 |Recommended|false|
 |Options|`contexts`|
 
+<a name="user-content-no-restricted-syntax-failing-examples"></a>
+<a name="no-restricted-syntax-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -276,3 +279,122 @@ function quux () {
 // "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":["FunctionDeclaration","any"]}]
 // Message: Syntax is restricted: any
 ````
+
+
+
+<a name="user-content-no-restricted-syntax-passing-examples"></a>
+<a name="no-restricted-syntax-passing-examples"></a>
+## Passing examples
+
+The following patterns are not considered problems:
+
+````ts
+/**
+ *
+ */
+function quux () {
+
+}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":["FunctionExpression"]}]
+
+/**
+ * @implements {Bar|Foo}
+ */
+function quux () {
+
+}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTypeUnion > JsdocTypeName[value=\"Foo\"]:nth-child(1))","context":"FunctionDeclaration"}]}]
+
+/**
+ * @param ab
+ * @param cd
+ */
+function a () {}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","context":"any","message":"Only allowing names not matching `/^opt_/i`."}]}]
+
+/**
+ * @param ab
+ * @param cd
+ */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","context":"any","message":"Only allowing names not matching `/^opt_/i`."}]}]
+
+/**
+ * @param ab
+ * @param cd
+ */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[name=/opt_/])","message":"Only allowing names not matching `/^opt_/i`."}]}]
+
+/**
+ * @enum {String}
+ * Object holding values of some custom enum
+ */
+const MY_ENUM = Object.freeze({
+  VAL_A: "myvala"
+} as const);
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag ~ JsdocTag[tag=/private|protected/])","context":"any","message":"Access modifier tags must come first"},{"comment":"JsdocBlock[postDelimiter=\"\"]:has(JsdocTag[tag=\"enum\"])","context":":declaration:not(TSEnumDeclaration):not(:has(ObjectExpression)), :function","message":"@enum is only allowed on potential enum types"}]}]
+
+/**
+ * @param {(...args: any[]) => any} fn
+ * @returns {(...args: any[]) => any}
+ */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[tag=\"type\"]:has([value=/FunctionComponent/]))","context":"any","message":"The `FunctionComponent` type is not allowed. Please use `FC` instead."}]}]
+
+/** Does something very important. */
+function foo(): string;
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[endLine=0][description!=/^\\S[\\s\\S]*\\S\\s$/]"}]}]
+
+/** Some text and more */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[descriptionStartLine=0][descriptionEndLine=1]","context":"any","message":"Requiring descriptive text on 0th line and no final newline"}]}]
+
+/** Some text and
+* more */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[descriptionStartLine=0][hasPreterminalDescription=0]","context":"any","message":"Requiring descriptive text on 0th line and no preterminal description"}]}]
+
+/** Some text
+* @param sth Param text followed by newline
+*/
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock[descriptionStartLine=0][hasPreterminalTagDescription=1]","context":"any","message":"Requiring descriptive text on 0th line but no preterminal description"}]}]
+
+/**
+ * @type {123}
+ */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[tag=type][parsedType.type!=JsdocTypeStringValue][parsedType.type!=JsdocTypeNumber][parsedType.type!=JsdocTypeName])","context":"any","message":"@type should be limited to numeric or string literals and names"},{"comment":"JsdocBlock:has(JsdocTag[tag=type][parsedType.type=JsdocTypeName]:not(*[parsedType.value=/^(true|false|null|undefined|boolean|number|string)$/]))","context":"any","message":"@type names should only be recognized primitive types or literals"}]}]
+
+/**
+ * @type {boolean}
+ */
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:has(JsdocTag[tag=type][parsedType.type!=JsdocTypeStringValue][parsedType.type!=JsdocTypeNumber][parsedType.type!=JsdocTypeName])","context":"any","message":"@type should be limited to numeric or string literals and names"},{"comment":"JsdocBlock:has(JsdocTag[tag=type][parsedType.type=JsdocTypeName]:not(*[parsedType.value=/^(true|false|null|undefined|boolean|number|string)$/]))","context":"any","message":"@type names should only be recognized primitive types or literals"}]}]
+
+/**
+ *
+ */
+function test(): void { }
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:not(*:has(JsdocTag[tag=/returns/]))","context":"FunctionDeclaration[returnType.typeAnnotation.type!=/TSVoidKeyword|TSUndefinedKeyword/]","message":"Functions with return types must have a @returns tag"}]}]
+
+/**
+ *
+ */
+let test = (): undefined => { };
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:not(*:has(JsdocTag[tag=/returns/]))","context":"ArrowFunctionExpression[returnType.typeAnnotation.type!=/TSVoidKeyword|TSUndefinedKeyword/]","message":"Functions with non-void return types must have a @returns tag"}]}]
+
+/**
+ * @returns A description
+ */
+let test: () => string;
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:not(*:has(JsdocTag[tag=/returns/]:has(JsdocDescriptionLine)))","context":"VariableDeclaration:has(*[typeAnnotation.typeAnnotation.type=/TSFunctionType/])","message":"FunctionType's with non-void return types must have a @returns tag"}]}]
+
+/**
+ *
+ */
+class Test {
+  abstract Test(): void;
+}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:not(*:has(JsdocTag[tag=/returns/]))","context":"TSEmptyBodyFunctionExpression[returnType.typeAnnotation.type!=/TSVoidKeyword|TSUndefinedKeyword/]","message":"methods with non-void return types must have a @returns tag"}]}]
+
+/**
+ * @private
+ */
+function quux () {}
+// "jsdoc/no-restricted-syntax": ["error"|"warn", {"contexts":[{"comment":"JsdocBlock:not(JsdocBlock:has(JsdocTag[tag=/private|protected|public/]))","context":"any","message":"Access modifier tags must be present"}]}]
+````
+

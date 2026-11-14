@@ -1,19 +1,15 @@
 ---
-title: "dotnet tool list command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-tool-list.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet tool list command
+description: The dotnet tool list command lists the .NET tools that are installed on your machine.
+ms.date: 10/28/2025
 ---
-
 # dotnet tool list
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
 
 ## Name
 
-`dotnet tool list` - Lists all .NET tools of the specified type currently installed on your machine.
+`dotnet tool list` - Lists all [.NET tools](global-tools.md) of the specified type currently installed on your machine.
 
 ## Synopsis
 
@@ -52,15 +48,13 @@ The `dotnet tool list` command provides a way for you to list .NET global, tool-
 
   Lists user-wide global tools. Can't be combined with the `--tool-path` option. Omitting both `--global` and `--tool-path` lists local tools.
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 - **`--local`**
 
   Lists local tools for the current directory. Can't be combined with the `--global` or `--tool-path` options. Omitting both `--global` and `--tool-path` lists local tools even if `--local` is not specified.
 
-- **`--tool-path `**
+- **`--tool-path <PATH>`**
 
   Specifies a custom location where to find global tools. PATH can be absolute or relative. Can't be combined with the `--global` option. Omitting both `--global` and `--tool-path` lists local tools.
 
@@ -84,14 +78,14 @@ Prints out a description of how to use the command.
 
 - **`dotnet tool list -g dotnetsay`**
 
-  Lists the global tool with the package ID dotnetsay
+  Lists the global tool with the package ID [dotnetsay](https://www.nuget.org/packages/dotnetsay/)
 
 - **`dotnet tool list dotnetsay`**
 
-  Lists the local tool with the package ID dotnetsay
+  Lists the local tool with the package ID [dotnetsay](https://www.nuget.org/packages/dotnetsay/)
 
 ## See also
 
-- .NET tools
-- Tutorial: Install and use a .NET global tool using the .NET CLI
-- Tutorial: Install and use a .NET local tool using the .NET CLI
+- [.NET tools](global-tools.md)
+- [Tutorial: Install and use a .NET global tool using the .NET CLI](global-tools-how-to-use.md)
+- [Tutorial: Install and use a .NET local tool using the .NET CLI](local-tools-how-to-use.md)

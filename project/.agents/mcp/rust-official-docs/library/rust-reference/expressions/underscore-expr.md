@@ -1,17 +1,8 @@
----
-title: "_ expressions"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/expressions/underscore-expr.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[expr.placeholder]
 # `_` expressions
 
 r[expr.placeholder.syntax]
-```grammar
+```grammar,expressions
 UnderscoreExpression -> `_`
 ```
 
@@ -22,7 +13,7 @@ r[expr.placeholder.lhs-assignment-only]
 They may only appear in the left-hand side of an assignment.
 
 r[expr.placeholder.pattern]
-Note that this is distinct from the wildcard pattern.
+Note that this is distinct from the [wildcard pattern](../patterns.md#wildcard-pattern).
 
 Examples of `_` expressions:
 

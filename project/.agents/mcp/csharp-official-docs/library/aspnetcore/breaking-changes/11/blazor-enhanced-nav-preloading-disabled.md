@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: Blazor enhanced navigation no longer preloads resources"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/11/blazor-enhanced-nav-preloading-disabled.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+ai-usage: ai-assisted
+description: "Learn about the breaking change in ASP.NET Core 11 where Blazor's ResourcePreloader no longer emits preload link hints for pages reached through enhanced navigation."
+ms.date: 06/04/2026
 ---
-
 # Blazor enhanced navigation no longer preloads resources
 
 Blazor no longer emits `<link rel="modulepreload">` or `<link rel="preload">` resource hints for pages reached through enhanced navigation. Resource preloading still works for the initial page load and for normal (non-enhanced) navigation.
@@ -29,13 +26,13 @@ The previous behavior on the initial page load (the first request, before any en
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](/dotnet/core/compatibility/categories#behavioral-change).
 
 ## Reason for change
 
 The implicit preload hints during enhanced navigation produced redundant browser preload requests because the WebAssembly runtime doesn't restart and the DOM-merge step often produced an unstable order of `<link>` elements. Removing the hints for enhanced navigation gives more predictable network behavior.
 
-For more information, see [Blazor] Disable preloading for enhanced navigation (`dotnet/aspnetcore` #63544), and please don't comment on the closed PR. If you have feedback on this change, open a new issue on the `dotnet/aspnetcore` GitHub repository.
+For more information, see [[Blazor] Disable preloading for enhanced navigation (`dotnet/aspnetcore` #63544)](https://github.com/dotnet/aspnetcore/pull/63544), and please don't comment on the closed PR. If you have feedback on this change, open a new issue on the `dotnet/aspnetcore` GitHub repository.
 
 ## Recommended action
 
@@ -47,7 +44,7 @@ If you relied on the implicit preload hints during enhanced navigation, add expl
 </HeadContent>
 ```
 
-Alternatively, opt the relevant links out of enhanced navigation if preloading is more important to you than the snappier in-place navigation. For more information, see Enhanced navigation and form handling.
+Alternatively, opt the relevant links out of enhanced navigation if preloading is more important to you than the snappier in-place navigation. For more information, see [Enhanced navigation and form handling](../../blazor/fundamentals/navigation.md#enhanced-navigation-and-form-handling).
 
 ## Affected APIs
 

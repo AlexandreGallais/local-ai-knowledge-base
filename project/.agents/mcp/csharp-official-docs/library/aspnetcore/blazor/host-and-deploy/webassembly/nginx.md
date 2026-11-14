@@ -1,23 +1,24 @@
 ---
-title: "Host and deploy ASP.NET Core Blazor WebAssembly with Nginx"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/host-and-deploy/webassembly/nginx.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Host and deploy ASP.NET Core Blazor WebAssembly with Nginx
+ai-usage: ai-assisted
+description: Learn how to host and deploy Blazor WebAssembly using Nginx.
+monikerRange: '>= aspnetcore-3.1'
+ms.custom: linux-related-content
+ms.date: 01/21/2026
 ---
-
 # Host and deploy ASP.NET Core Blazor WebAssembly with Nginx
 
-By Andrii Annenko
+By [Andrii Annenko](https://github.com/aannenko)
 
-This article explains how to host and deploy Blazor WebAssembly that targets .NET 8, 9 or 10 using Nginx.
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+This article explains how to host and deploy Blazor WebAssembly that targets .NET 8, 9 or 10 using [Nginx](https://nginx.org/).
 
 This article covers deploying the app either directly on a host or in a Docker container that includes Nginx and the published app's files. The Docker hosting section covers publishing the app, copying the published output to Nginx's web root in the container image, configuring Nginx for client-side routing, and applying common production settings.
 
 ## Minimal Nginx configuration
 
-The following `nginx.conf` file is a minimal Nginx configuration example showing how to configure Nginx to send the `index.html` file whenever it can't find a corresponding file on disk. It also directs Nginx to serve correct MIME types by defining a `types` block (alternatively, include a `mime.types` file).
+The following `nginx.conf` file is a minimal Nginx configuration example showing how to configure Nginx to send the `index.html` file whenever it can't find a corresponding file on disk. It also directs Nginx to serve correct MIME types by defining a `types` block (alternatively, include a [`mime.types`](https://github.com/nginx/nginx/blob/7fa941a55e211ebd57f512fbfb24d59dbb97940d/conf/mime.types) file).
 
 ```nginx
 events { }
@@ -138,7 +139,7 @@ http {
 
 If browser developer tools or a network traffic tool indicates that requests are receiving a *503 - Service Unavailable* status code, increase the `rate` and `burst` values.
 
-For more information on production Nginx web server configuration, see Creating NGINX Plus and NGINX Configuration Files.
+For more information on production Nginx web server configuration, see [Creating NGINX Plus and NGINX Configuration Files](https://docs.nginx.com/nginx/admin-guide/basic-functionality/managing-configuration-files/).
 
 ## Docker deployment
 
@@ -177,15 +178,56 @@ docker build -t blazor-wasm-nginx .
 docker run --rm -p {PORT}:80 blazor-wasm-nginx
 ```
 
-For more information, refer to Nginx Docker guide.
+For more information, refer to [Nginx Docker guide](https://hub.docker.com/_/nginx).
+
+:::moniker range="< aspnetcore-8.0"
+
+## Hosted deployment on Linux (Nginx)
+
+Configure the app with <xref:Microsoft.AspNetCore.Builder.ForwardedHeadersOptions> to forward the `X-Forwarded-For` and `X-Forwarded-Proto` headers by following the guidance in [Configure ASP.NET Core to work with proxy servers and load balancers](../../../host-and-deploy/proxy-load-balancer.md).
+
+For more information on setting the app's base path, including sub-app path configuration, see [ASP.NET Core Blazor app base path](../app-base-path.md).
+
+Follow the guidance for an [ASP.NET Core SignalR app](../../../signalr/scale.md#linux-with-nginx) with the following changes:
+
+* Remove the configuration for proxy buffering (`proxy_buffering off;`) because the setting only applies to [Server-Sent Events (SSE)](https://developer.mozilla.org/docs/Web/API/Server-sent_events), which aren't relevant to Blazor app client-server interactions.
+* Change the `location` path from `/hubroute` (`location /hubroute { ... }`) to the sub-app path `/{PATH}` (`location /{PATH} { ... }`), where the `{PATH}` placeholder is the sub-app path.
+
+  The following example configures the server for an app that responds to requests at the root path `/`:
+
+  ```nginx
+  http {
+      server {
+          ...
+          location / {
+              ...
+          }
+      }
+  }
+  ```
+
+  The following example configures the sub-app path of `/blazor`:
+
+  ```nginx
+  http {
+      server {
+          ...
+          location /blazor {
+              ...
+          }
+      }
+  }
+  ```
+
+:::moniker-end
 
 ## Related content
 
-* Host ASP.NET Core on Linux with Nginx
+* [Host ASP.NET Core on Linux with Nginx](../../../host-and-deploy/linux-nginx.md)
 * Nginx documentation:
-  * NGINX as a WebSocket Proxy
-  * WebSocket proxying
+  * [NGINX as a WebSocket Proxy](https://www.nginx.com/blog/websocket-nginx/)
+  * [WebSocket proxying](http://nginx.org/docs/http/websocket.html)
 * Developers on non-Microsoft support forums:
-  * Stack Overflow (tag: `blazor`)
-  * ASP.NET Core Slack Team
-  * Blazor Gitter
+  * [Stack Overflow (tag: `blazor`)](https://stackoverflow.com/questions/tagged/blazor)
+  * [ASP.NET Core Slack Team](https://join.slack.com/t/aspnetcore/shared_invite/zt-1mv5487zb-EOZxJ1iqb0A0ajowEbxByQ)
+  * [Blazor Gitter](https://gitter.im/aspnet/Blazor)

@@ -1,15 +1,22 @@
 ---
+description: "Learn more about: IMetaDataEmit::MergeEnd Method"
 title: "IMetaDataEmit::MergeEnd Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataemit-mergeend-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataEmit.MergeEnd"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataEmit::MergeEnd"
+  - "IMetaDataEmit::MergeEnd method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataEmit::MergeEnd Method
 
-Merges into the current scope all the metadata scopes specified by one or more prior calls to IMetaDataEmit::Merge.
+Merges into the current scope all the metadata scopes specified by one or more prior calls to [IMetaDataEmit::Merge](imetadataemit-merge-method.md).
 
 ## Syntax
 
@@ -35,7 +42,7 @@ The following special conditions apply to the merge:
 
 - For type definitions (`TypeDef`), no duplicates are merged into the current scope. `TypeDef` objects are checked for duplicates against each *fully-qualified object name* + *GUID* + *version number*. If there is a match on either name or GUID, and any of the other two elements is different, an error is raised. Otherwise, if all three items match, `MergeEnd` does a cursory check to ensure the entries are indeed duplicates; if not, an error is raised. This cursory check looks for:
 
-  - The same member declarations, occurring in the same order. Members that are flagged as `mdPrivateScope` (see the CorMethodAttr enumeration) are not included in this check; they are merged specially.
+  - The same member declarations, occurring in the same order. Members that are flagged as `mdPrivateScope` (see the [CorMethodAttr](../enumerations/cormethodattr-enumeration.md) enumeration) are not included in this check; they are merged specially.
 
   - The same class layout.
 
@@ -49,7 +56,7 @@ The following special conditions apply to the merge:
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** Cor.h
 
@@ -57,5 +64,5 @@ The following special conditions apply to the merge:
 
 ## See also
 
-- IMetaDataEmit Interface
-- IMetaDataEmit2 Interface
+- [IMetaDataEmit Interface](imetadataemit-interface.md)
+- [IMetaDataEmit2 Interface](imetadataemit2-interface.md)

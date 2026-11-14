@@ -1,35 +1,29 @@
----
-title: "Byte class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/Byte.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Byte class (java.lang)
 
 ```java
 public final class Byte extends Number implements Comparable<Byte>, Constable
 ```
 
-The `Byte` class is the wrapper class for values of the primitive
-type `byte`. An object of type `Byte` contains a
-single field whose type is `byte`.
+The {@code Byte} class is the {@linkplain
+java.lang##wrapperClass wrapper class} for values of the primitive
+type {@code byte}. An object of type {@code Byte} contains a
+single field whose type is {@code byte}.
 
-In addition, this class provides several methods for converting
-a `byte` to a `String` and a `String` to a `byte`, as well as other constants and methods useful when dealing
-with a `byte`.
+<p>In addition, this class provides several methods for converting
+a {@code byte} to a {@code String} and a {@code String} to a {@code
+byte}, as well as other constants and methods useful when dealing
+with a {@code byte}.
 
-This is a value-based
+<p>This is a <a href="{@docRoot}/java.base/java/lang/doc-files/ValueBased.html">value-based</a>
 class; programmers should treat instances that are
-equal as interchangeable and should not
+{@linkplain #equals(Object) equal} as interchangeable and should not
 use instances for synchronization, or unpredictable behavior may
 occur. For example, in a future release, synchronization may fail.
 
-**See also:** java.lang.Number
-
-**Since:** 1.1
+@author  Nakul Saraiya
+@author  Joseph D. Darcy
+@see     java.lang.Number
+@since   1.1
 
 ## Byte.MIN_VALUE
 
@@ -37,8 +31,8 @@ occur. For example, in a future release, synchronization may fail.
 public static final byte MIN_VALUE
 ```
 
-A constant holding the minimum value a `byte` can
-have, -27.
+A constant holding the minimum value a {@code byte} can
+have, -2<sup>7</sup>.
 
 ## Byte.MAX_VALUE
 
@@ -46,8 +40,8 @@ have, -27.
 public static final byte MAX_VALUE
 ```
 
-A constant holding the maximum value a `byte` can
-have, 27-1.
+A constant holding the maximum value a {@code byte} can
+have, 2<sup>7</sup>-1.
 
 ## Byte.TYPE
 
@@ -55,8 +49,8 @@ have, 27-1.
 public static final Class<Byte> TYPE
 ```
 
-The `Class` instance representing the primitive type
-`byte`.
+The {@code Class} instance representing the primitive type
+{@code byte}.
 
 ## Byte.toString(byte)
 
@@ -64,16 +58,12 @@ The `Class` instance representing the primitive type
 public static String toString(byte b)
 ```
 
-Returns a new `String` object representing the
-specified `byte`. The radix is assumed to be 10.
+Returns a new {@code String} object representing the
+specified {@code byte}. The radix is assumed to be 10.
 
-Parameters:
-
-- `b`: the `byte` to be converted
-
-**Returns:** the string representation of the specified `byte`
-
-**See also:** java.lang.Integer#toString(int)
+@param b the {@code byte} to be converted
+@return the string representation of the specified {@code byte}
+@see java.lang.Integer#toString(int)
 
 ## Byte.describeConstable()
 
@@ -81,12 +71,11 @@ Parameters:
 public Optional<DynamicConstantDesc<Byte>> describeConstable()
 ```
 
-Returns an `Optional` containing the nominal descriptor for this
+Returns an {@link Optional} containing the nominal descriptor for this
 instance.
 
-**Returns:** an `Optional` describing the `Byte` instance
-
-**Since:** 15
+@return an {@link Optional} describing the {@linkplain Byte} instance
+@since 15
 
 ## Byte.valueOf(byte)
 
@@ -94,21 +83,17 @@ instance.
 public static Byte valueOf(byte b)
 ```
 
-Returns a `Byte` instance representing the specified
-`byte` value.
-If a new `Byte` instance is not required, this method
+Returns a {@code Byte} instance representing the specified
+{@code byte} value.
+If a new {@code Byte} instance is not required, this method
 should generally be used in preference to the constructor
-`Byte(byte)`, as this method is likely to yield
+{@link #Byte(byte)}, as this method is likely to yield
 significantly better space and time performance since
 all byte values are cached.
 
-Parameters:
-
-- `b`: a byte value.
-
-**Returns:** a `Byte` instance representing `b`.
-
-**Since:** 1.5
+@param  b a byte value.
+@return a {@code Byte} instance representing {@code b}.
+@since  1.5
 
 ## Byte.parseByte(String, int)
 
@@ -116,44 +101,45 @@ Parameters:
 public static byte parseByte(String s, int radix) throws NumberFormatException
 ```
 
-Parses the string argument as a signed `byte` in the
+Parses the string argument as a signed {@code byte} in the
 radix specified by the second argument. The characters in the
 string must all be digits, of the specified radix (as
-determined by whether int) returns a nonnegative value) except that the first
-character may be an ASCII minus sign `'-'`
-(`'\u005Cu002D'`) to indicate a negative value or an
-ASCII plus sign `'+'` (`'\u005Cu002B'`) to
-indicate a positive value.  The resulting `byte` value is
+determined by whether {@link java.lang.Character#digit(char,
+int)} returns a nonnegative value) except that the first
+character may be an ASCII minus sign {@code '-'}
+({@code '\u005Cu002D'}) to indicate a negative value or an
+ASCII plus sign {@code '+'} ({@code '\u005Cu002B'}) to
+indicate a positive value.  The resulting {@code byte} value is
 returned.
 
-An exception of type `NumberFormatException` is
+<p>An exception of type {@code NumberFormatException} is
 thrown if any of the following situations occurs:
-
--  The first argument is `null` or is a string of
+<ul>
+<li> The first argument is {@code null} or is a string of
 length zero.
 
--  The radix is either smaller than `java.lang.Character.MIN_RADIX` or larger than `java.lang.Character.MAX_RADIX`.
+<li> The radix is either smaller than {@link
+java.lang.Character#MIN_RADIX} or larger than {@link
+java.lang.Character#MAX_RADIX}.
 
--  Any character of the string is not a digit of the
+<li> Any character of the string is not a digit of the
 specified radix, except that the first character may be a minus
-sign `'-'` (`'\u005Cu002D'`) or plus sign
-`'+'` (`'\u005Cu002B'`) provided that the
+sign {@code '-'} ({@code '\u005Cu002D'}) or plus sign
+{@code '+'} ({@code '\u005Cu002B'}) provided that the
 string is longer than length 1.
 
--  The value represented by the string is not a value of type
-`byte`.
+<li> The value represented by the string is not a value of type
+{@code byte}.
+</ul>
 
-Parameters:
-
-- `s`: the `String` containing the `byte` representation to be parsed
-- `radix`: the radix to be used while parsing `s`
-
-**Returns:** the `byte` value represented by the string
+@param s         the {@code String} containing the
+                 {@code byte}
+                 representation to be parsed
+@param radix     the radix to be used while parsing {@code s}
+@return          the {@code byte} value represented by the string
                   argument in the specified radix
-
-Throws:
-
-- `NumberFormatException`: If the string does not contain a parsable `byte`.
+@throws          NumberFormatException If the string does
+                 not contain a parsable {@code byte}.
 
 ## Byte.parseByte(String)
 
@@ -161,24 +147,22 @@ Throws:
 public static byte parseByte(String s) throws NumberFormatException
 ```
 
-Parses the string argument as a signed decimal `byte`. The characters in the string must all be decimal digits,
+Parses the string argument as a signed decimal {@code
+byte}. The characters in the string must all be decimal digits,
 except that the first character may be an ASCII minus sign
-`'-'` (`'\u005Cu002D'`) to indicate a negative
-value or an ASCII plus sign `'+'`
-(`'\u005Cu002B'`) to indicate a positive value. The
-resulting `byte` value is returned, exactly as if the
-argument and the radix 10 were given as arguments to the int) method.
+{@code '-'} ({@code '\u005Cu002D'}) to indicate a negative
+value or an ASCII plus sign {@code '+'}
+({@code '\u005Cu002B'}) to indicate a positive value. The
+resulting {@code byte} value is returned, exactly as if the
+argument and the radix 10 were given as arguments to the {@link
+#parseByte(java.lang.String, int)} method.
 
-Parameters:
-
-- `s`: a `String` containing the `byte` representation to be parsed
-
-**Returns:** the `byte` value represented by the
+@param s         a {@code String} containing the
+                 {@code byte} representation to be parsed
+@return          the {@code byte} value represented by the
                  argument in decimal
-
-Throws:
-
-- `NumberFormatException`: if the string does not contain a parsable `byte`.
+@throws          NumberFormatException if the string does not
+                 contain a parsable {@code byte}.
 
 ## Byte.valueOf(String, int)
 
@@ -186,31 +170,29 @@ Throws:
 public static Byte valueOf(String s, int radix) throws NumberFormatException
 ```
 
-Returns a `Byte` object holding the value
-extracted from the specified `String` when parsed
+Returns a {@code Byte} object holding the value
+extracted from the specified {@code String} when parsed
 with the radix given by the second argument. The first argument
-is interpreted as representing a signed `byte` in
+is interpreted as representing a signed {@code byte} in
 the radix specified by the second argument, exactly as if the
-argument were given to the int) method. The result is a `Byte` object that
-represents the `byte` value specified by the string.
+argument were given to the {@link #parseByte(java.lang.String,
+int)} method. The result is a {@code Byte} object that
+represents the {@code byte} value specified by the string.
 
- In other words, this method returns a `Byte` object
+<p> In other words, this method returns a {@code Byte} object
 equal to the value of:
 
-`Byte.valueOf(Byte.parseByte(s, radix))`
+<blockquote>
+{@code Byte.valueOf(Byte.parseByte(s, radix))}
+</blockquote>
 
-Parameters:
-
-- `s`: the string to be parsed
-- `radix`: the radix to be used in interpreting `s`
-
-**Returns:** a `Byte` object holding the value
+@param s         the string to be parsed
+@param radix     the radix to be used in interpreting {@code s}
+@return          a {@code Byte} object holding the value
                  represented by the string argument in the
                  specified radix.
-
-Throws:
-
-- `NumberFormatException`: If the `String` does not contain a parsable `byte`.
+@throws          NumberFormatException If the {@code String} does
+                 not contain a parsable {@code byte}.
 
 ## Byte.valueOf(String)
 
@@ -218,28 +200,26 @@ Throws:
 public static Byte valueOf(String s) throws NumberFormatException
 ```
 
-Returns a `Byte` object holding the value
-given by the specified `String`. The argument is
-interpreted as representing a signed decimal `byte`,
-exactly as if the argument were given to the `parseByte(java.lang.String)` method. The result is a
-`Byte` object that represents the `byte`
+Returns a {@code Byte} object holding the value
+given by the specified {@code String}. The argument is
+interpreted as representing a signed decimal {@code byte},
+exactly as if the argument were given to the {@link
+#parseByte(java.lang.String)} method. The result is a
+{@code Byte} object that represents the {@code byte}
 value specified by the string.
 
- In other words, this method returns a `Byte` object
+<p> In other words, this method returns a {@code Byte} object
 equal to the value of:
 
-`Byte.valueOf(Byte.parseByte(s))`
+<blockquote>
+{@code Byte.valueOf(Byte.parseByte(s))}
+</blockquote>
 
-Parameters:
-
-- `s`: the string to be parsed
-
-**Returns:** a `Byte` object holding the value
+@param s         the string to be parsed
+@return          a {@code Byte} object holding the value
                  represented by the string argument
-
-Throws:
-
-- `NumberFormatException`: If the `String` does not contain a parsable `byte`.
+@throws          NumberFormatException If the {@code String} does
+                 not contain a parsable {@code byte}.
 
 ## Byte.decode(String)
 
@@ -247,47 +227,46 @@ Throws:
 public static Byte decode(String nm) throws NumberFormatException
 ```
 
-Decodes a `String` into a `Byte`.
+Decodes a {@code String} into a {@code Byte}.
 Accepts decimal, hexadecimal, and octal numbers given by
 the following grammar:
 
-*DecodableString:*
-*Signopt DecimalNumeral*
-*Signopt* `0x` *HexDigits*
-*Signopt* `0X` *HexDigits*
-*Signopt* `#` *HexDigits*
-*Signopt* `0` *OctalDigits*
+<blockquote>
+<dl>
+<dt><i>DecodableString:</i>
+<dd><i>Sign<sub>opt</sub> DecimalNumeral</i>
+<dd><i>Sign<sub>opt</sub></i> {@code 0x} <i>HexDigits</i>
+<dd><i>Sign<sub>opt</sub></i> {@code 0X} <i>HexDigits</i>
+<dd><i>Sign<sub>opt</sub></i> {@code #} <i>HexDigits</i>
+<dd><i>Sign<sub>opt</sub></i> {@code 0} <i>OctalDigits</i>
 
-*Sign:*
-`-`
-`+`
+<dt><i>Sign:</i>
+<dd>{@code -}
+<dd>{@code +}
+</dl>
+</blockquote>
 
-*DecimalNumeral*, *HexDigits*, and *OctalDigits*
-are as defined in section  of
-*The Java Language Specification*,
+<i>DecimalNumeral</i>, <i>HexDigits</i>, and <i>OctalDigits</i>
+are as defined in section {@jls 3.10.1} of
+<cite>The Java Language Specification</cite>,
 except that underscores are not accepted between digits.
 
-The sequence of characters following an optional
-sign and/or radix specifier ("`0x`", "`0X`",
-"`#`", or leading zero) is parsed as by the `Byte.parseByte` method with the indicated radix (10, 16, or 8).
+<p>The sequence of characters following an optional
+sign and/or radix specifier ("{@code 0x}", "{@code 0X}",
+"{@code #}", or leading zero) is parsed as by the {@code
+Byte.parseByte} method with the indicated radix (10, 16, or 8).
 This sequence of characters must represent a positive value or
-a `NumberFormatException` will be thrown.  The result is
-negated if first character of the specified `String` is
+a {@link NumberFormatException} will be thrown.  The result is
+negated if first character of the specified {@code String} is
 the minus sign.  No whitespace characters are permitted in the
-`String`.
+{@code String}.
 
-Parameters:
-
-- `nm`: the `String` to decode.
-
-**Returns:** a `Byte` object holding the `byte`
-         value represented by `nm`
-
-**See also:** java.lang.Byte#parseByte(java.lang.String, int)
-
-Throws:
-
-- `NumberFormatException`: if the `String` does not contain a parsable `byte`.
+@param     nm the {@code String} to decode.
+@return   a {@code Byte} object holding the {@code byte}
+         value represented by {@code nm}
+@throws  NumberFormatException  if the {@code String} does not
+           contain a parsable {@code byte}.
+@see java.lang.Byte#parseByte(java.lang.String, int)
 
 ## Byte.Byte(byte)
 
@@ -295,15 +274,15 @@ Throws:
 public Byte(byte value)
 ```
 
-Constructs a newly allocated `Byte` object that
-represents the specified `byte` value.
+Constructs a newly allocated {@code Byte} object that
+represents the specified {@code byte} value.
 
-Parameters:
+@param value     the value to be represented by the
+                 {@code Byte}.
 
-- `value`: the value to be represented by the `Byte`.
-
-**Deprecated:** It is rarely appropriate to use this constructor. The static factory
-`valueOf(byte)` is generally a better choice, as it is
+@deprecated
+It is rarely appropriate to use this constructor. The static factory
+{@link #valueOf(byte)} is generally a better choice, as it is
 likely to yield significantly better space and time performance.
 
 ## Byte.Byte(String)
@@ -312,24 +291,22 @@ likely to yield significantly better space and time performance.
 public Byte(String s) throws NumberFormatException
 ```
 
-Constructs a newly allocated `Byte` object that
-represents the `byte` value indicated by the
-`String` parameter. The string is converted to a
-`byte` value in exactly the manner used by the
-`parseByte` method for radix 10.
+Constructs a newly allocated {@code Byte} object that
+represents the {@code byte} value indicated by the
+{@code String} parameter. The string is converted to a
+{@code byte} value in exactly the manner used by the
+{@code parseByte} method for radix 10.
 
-Parameters:
+@param s         the {@code String} to be converted to a
+                 {@code Byte}
+@throws          NumberFormatException if the {@code String}
+                 does not contain a parsable {@code byte}.
 
-- `s`: the `String` to be converted to a `Byte`
-
-**Deprecated:** It is rarely appropriate to use this constructor.
-Use `parseByte(String)` to convert a string to a
-`byte` primitive, or use `valueOf(String)`
-to convert a string to a `Byte` object.
-
-Throws:
-
-- `NumberFormatException`: if the `String` does not contain a parsable `byte`.
+@deprecated
+It is rarely appropriate to use this constructor.
+Use {@link #parseByte(String)} to convert a string to a
+{@code byte} primitive, or use {@link #valueOf(String)}
+to convert a string to a {@code Byte} object.
 
 ## Byte.byteValue()
 
@@ -337,8 +314,8 @@ Throws:
 public byte byteValue()
 ```
 
-Returns the value of this `Byte` as a
-`byte`.
+Returns the value of this {@code Byte} as a
+{@code byte}.
 
 ## Byte.shortValue()
 
@@ -346,10 +323,9 @@ Returns the value of this `Byte` as a
 public short shortValue()
 ```
 
-Returns the value of this `Byte` as a `short` after
+Returns the value of this {@code Byte} as a {@code short} after
 a widening primitive conversion.
-
-**JLS:** 5.1.2 Widening Primitive Conversion
+@jls 5.1.2 Widening Primitive Conversion
 
 ## Byte.intValue()
 
@@ -357,10 +333,9 @@ a widening primitive conversion.
 public int intValue()
 ```
 
-Returns the value of this `Byte` as an `int` after
+Returns the value of this {@code Byte} as an {@code int} after
 a widening primitive conversion.
-
-**JLS:** 5.1.2 Widening Primitive Conversion
+@jls 5.1.2 Widening Primitive Conversion
 
 ## Byte.longValue()
 
@@ -368,10 +343,9 @@ a widening primitive conversion.
 public long longValue()
 ```
 
-Returns the value of this `Byte` as a `long` after
+Returns the value of this {@code Byte} as a {@code long} after
 a widening primitive conversion.
-
-**JLS:** 5.1.2 Widening Primitive Conversion
+@jls 5.1.2 Widening Primitive Conversion
 
 ## Byte.floatValue()
 
@@ -379,10 +353,9 @@ a widening primitive conversion.
 public float floatValue()
 ```
 
-Returns the value of this `Byte` as a `float` after
+Returns the value of this {@code Byte} as a {@code float} after
 a widening primitive conversion.
-
-**JLS:** 5.1.2 Widening Primitive Conversion
+@jls 5.1.2 Widening Primitive Conversion
 
 ## Byte.doubleValue()
 
@@ -390,10 +363,9 @@ a widening primitive conversion.
 public double doubleValue()
 ```
 
-Returns the value of this `Byte` as a `double`
+Returns the value of this {@code Byte} as a {@code double}
 after a widening primitive conversion.
-
-**JLS:** 5.1.2 Widening Primitive Conversion
+@jls 5.1.2 Widening Primitive Conversion
 
 ## Byte.toString()
 
@@ -401,14 +373,14 @@ after a widening primitive conversion.
 public String toString()
 ```
 
-Returns a `String` object representing this
-`Byte`'s value.  The value is converted to signed
+Returns a {@code String} object representing this
+{@code Byte}'s value.  The value is converted to signed
 decimal representation and returned as a string, exactly as if
-the `byte` value were given as an argument to the
-`java.lang.Byte.toString(byte)` method.
+the {@code byte} value were given as an argument to the
+{@link java.lang.Byte#toString(byte)} method.
 
-**Returns:** a string representation of the value of this object in
-         base 10.
+@return  a string representation of the value of this object in
+         base&nbsp;10.
 
 ## Byte.hashCode()
 
@@ -416,10 +388,10 @@ the `byte` value were given as an argument to the
 public int hashCode()
 ```
 
-Returns a hash code for this `Byte`; equal to the result
-of invoking `intValue()`.
+Returns a hash code for this {@code Byte}; equal to the result
+of invoking {@code intValue()}.
 
-**Returns:** a hash code value for this `Byte`
+@return a hash code value for this {@code Byte}
 
 ## Byte.hashCode(byte)
 
@@ -427,16 +399,12 @@ of invoking `intValue()`.
 public static int hashCode(byte value)
 ```
 
-Returns a hash code for a `byte` value; compatible with
-`Byte.hashCode()`.
+Returns a hash code for a {@code byte} value; compatible with
+{@code Byte.hashCode()}.
 
-Parameters:
-
-- `value`: the value to hash
-
-**Returns:** a hash code value for a `byte` value.
-
-**Since:** 1.8
+@param value the value to hash
+@return a hash code value for a {@code byte} value.
+@since 1.8
 
 ## Byte.equals(Object)
 
@@ -445,16 +413,13 @@ public boolean equals(Object obj)
 ```
 
 Compares this object to the specified object.  The result is
-`true` if and only if the argument is not
-`null` and is a `Byte` object that
-contains the same `byte` value as this object.
+{@code true} if and only if the argument is not
+{@code null} and is a {@code Byte} object that
+contains the same {@code byte} value as this object.
 
-Parameters:
-
-- `obj`: the object to compare with
-
-**Returns:** `true` if the objects are the same;
-                 `false` otherwise.
+@param obj       the object to compare with
+@return          {@code true} if the objects are the same;
+                 {@code false} otherwise.
 
 ## Byte.compareTo(Byte)
 
@@ -462,21 +427,17 @@ Parameters:
 public int compareTo(Byte anotherByte)
 ```
 
-Compares two `Byte` objects numerically.
+Compares two {@code Byte} objects numerically.
 
-Parameters:
-
-- `anotherByte`: the `Byte` to be compared.
-
-**Returns:** the value `0` if this `Byte` is
-         equal to the argument `Byte`; a value less than
-         `0` if this `Byte` is numerically less
-         than the argument `Byte`; and a value greater than
-          `0` if this `Byte` is numerically
-          greater than the argument `Byte` (signed
+@param   anotherByte   the {@code Byte} to be compared.
+@return  the value {@code 0} if this {@code Byte} is
+         equal to the argument {@code Byte}; a value less than
+         {@code 0} if this {@code Byte} is numerically less
+         than the argument {@code Byte}; and a value greater than
+          {@code 0} if this {@code Byte} is numerically
+          greater than the argument {@code Byte} (signed
           comparison).
-
-**Since:** 1.2
+@since   1.2
 
 ## Byte.compare(byte, byte)
 
@@ -484,23 +445,18 @@ Parameters:
 public static int compare(byte x, byte y)
 ```
 
-Compares two `byte` values numerically.
+Compares two {@code byte} values numerically.
 The value returned is identical to what would be returned by:
-
-```java
+<pre>
    Byte.valueOf(x).compareTo(Byte.valueOf(y))
-```
+</pre>
 
-Parameters:
-
-- `x`: the first `byte` to compare
-- `y`: the second `byte` to compare
-
-**Returns:** the value `0` if `x == y`;
-        a value less than `0` if `x < y`; and
-        a value greater than `0` if `x > y`
-
-**Since:** 1.7
+@param  x the first {@code byte} to compare
+@param  y the second {@code byte} to compare
+@return the value {@code 0} if {@code x == y};
+        a value less than {@code 0} if {@code x < y}; and
+        a value greater than {@code 0} if {@code x > y}
+@since 1.7
 
 ## Byte.compareUnsigned(byte, byte)
 
@@ -508,20 +464,16 @@ Parameters:
 public static int compareUnsigned(byte x, byte y)
 ```
 
-Compares two `byte` values numerically treating the values
+Compares two {@code byte} values numerically treating the values
 as unsigned.
 
-Parameters:
-
-- `x`: the first `byte` to compare
-- `y`: the second `byte` to compare
-
-**Returns:** the value `0` if `x == y`; a value less
-        than `0` if `x < y` as unsigned values; and
-        a value greater than `0` if `x > y` as
+@param  x the first {@code byte} to compare
+@param  y the second {@code byte} to compare
+@return the value {@code 0} if {@code x == y}; a value less
+        than {@code 0} if {@code x < y} as unsigned values; and
+        a value greater than {@code 0} if {@code x > y} as
         unsigned values
-
-**Since:** 9
+@since 9
 
 ## Byte.toUnsignedInt(byte)
 
@@ -529,23 +481,20 @@ Parameters:
 public static int toUnsignedInt(byte x)
 ```
 
-Converts the argument to an `int` by an unsigned
-conversion.  In an unsigned conversion to an `int`, the
-high-order 24 bits of the `int` are zero and the
-low-order 8 bits are equal to the bits of the `byte` argument.
+Converts the argument to an {@code int} by an unsigned
+conversion.  In an unsigned conversion to an {@code int}, the
+high-order 24 bits of the {@code int} are zero and the
+low-order 8 bits are equal to the bits of the {@code byte} argument.
 
-Consequently, zero and positive `byte` values are mapped
-to a numerically equal `int` value and negative `byte` values are mapped to an `int` value equal to the
-input plus 28.
+Consequently, zero and positive {@code byte} values are mapped
+to a numerically equal {@code int} value and negative {@code
+byte} values are mapped to an {@code int} value equal to the
+input plus 2<sup>8</sup>.
 
-Parameters:
-
-- `x`: the value to convert to an unsigned `int`
-
-**Returns:** the argument converted to `int` by an unsigned
+@param  x the value to convert to an unsigned {@code int}
+@return the argument converted to {@code int} by an unsigned
         conversion
-
-**Since:** 1.8
+@since 1.8
 
 ## Byte.toUnsignedLong(byte)
 
@@ -553,23 +502,20 @@ Parameters:
 public static long toUnsignedLong(byte x)
 ```
 
-Converts the argument to a `long` by an unsigned
-conversion.  In an unsigned conversion to a `long`, the
-high-order 56 bits of the `long` are zero and the
-low-order 8 bits are equal to the bits of the `byte` argument.
+Converts the argument to a {@code long} by an unsigned
+conversion.  In an unsigned conversion to a {@code long}, the
+high-order 56 bits of the {@code long} are zero and the
+low-order 8 bits are equal to the bits of the {@code byte} argument.
 
-Consequently, zero and positive `byte` values are mapped
-to a numerically equal `long` value and negative `byte` values are mapped to a `long` value equal to the
-input plus 28.
+Consequently, zero and positive {@code byte} values are mapped
+to a numerically equal {@code long} value and negative {@code
+byte} values are mapped to a {@code long} value equal to the
+input plus 2<sup>8</sup>.
 
-Parameters:
-
-- `x`: the value to convert to an unsigned `long`
-
-**Returns:** the argument converted to `long` by an unsigned
+@param  x the value to convert to an unsigned {@code long}
+@return the argument converted to {@code long} by an unsigned
         conversion
-
-**Since:** 1.8
+@since 1.8
 
 ## Byte.SIZE
 
@@ -577,10 +523,10 @@ Parameters:
 public static final int SIZE
 ```
 
-The number of bits used to represent a `byte` value in two's
+The number of bits used to represent a {@code byte} value in two's
 complement binary form.
 
-**Since:** 1.5
+@since 1.5
 
 ## Byte.BYTES
 
@@ -588,7 +534,7 @@ complement binary form.
 public static final int BYTES
 ```
 
-The number of bytes used to represent a `byte` value in two's
+The number of bytes used to represent a {@code byte} value in two's
 complement binary form.
 
-**Since:** 1.8
+@since 1.8

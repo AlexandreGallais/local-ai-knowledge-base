@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: .NET 7 obsoletions with default diagnostic ID"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/7.0/obsolete-apis-with-default-diagnostic.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+titleSuffix: ""
+description: Learn about the .NET 7 breaking change in core .NET libraries where some APIs have been marked as obsolete with the default diagnostic ID.
+ms.date: 10/19/2022
 ---
-
 # API obsoletions with default diagnostic ID (.NET 7)
 
-Several APIs have been marked as obsolete in .NET 7. Referencing these APIs in your code will result in build warnings. In C#, the compiler diagnostic for these obsoletions is CS0618.
+Several [APIs](#affected-apis) have been marked as obsolete in .NET 7. Referencing these APIs in your code will result in build warnings. In C#, the compiler diagnostic for these obsoletions is [CS0618](../../../../csharp/language-reference/compiler-messages/cs0618.md).
 
 ## Previous behavior
 
@@ -25,11 +22,11 @@ Starting in .NET 7, referencing the affected APIs will result in build warnings.
 
 ## Type of breaking change
 
-These obsoletions can affect source compatibility.
+These obsoletions can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
-These APIs were previously marked obsolete in the implementation assemblies but not in the reference assemblies. The reference assemblies have now been updated to match the implementation assemblies.
+These APIs were previously marked obsolete in the implementation assemblies but not in the [reference assemblies](../../../../standard/assembly/reference-assemblies.md). The reference assemblies have now been updated to match the implementation assemblies.
 
 ## Recommended action
 
@@ -37,20 +34,20 @@ Follow the recommended action that's emitted when you use the obsolete API.
 
 ## Affected APIs
 
-- `System.ComponentModel.IComNativeDescriptorHandler`
-- `System.ComponentModel.MemberDescriptor.GetInvokee(System.Type,System.Object)`
-- `System.ComponentModel.RecommendedAsConfigurableAttribute`
-- `System.Data.OleDb.OleDbParameterCollection.Add(System.String,System.Object)`
-- `System.Net.FileWebRequest.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)`
-- `System.Net.FileWebRequest.System#Runtime#Serialization#ISerializable#GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)`
-- `System.Net.FileWebResponse.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)`
-- `System.Net.FileWebResponse.System#Runtime#Serialization#ISerializable#GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)`
-- `System.Net.Http.HttpRequestMessage.Properties`
-- `System.Net.WebRequest.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)`
-- `System.Net.WebRequest.System#Runtime#Serialization#ISerializable#GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)`
-- `System.Net.WebResponse.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)` constructor
-- `System.Net.WebResponse.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)`
-- `System.Net.WebResponse.System#Runtime#Serialization#ISerializable#GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)`
-- `System.Security.Cryptography.PasswordDeriveBytes.GetBytes(System.Int32)`
-- `System.Web.HttpUtility.UrlEncodeUnicode(System.String)`
-- `System.Web.HttpUtility.UrlEncodeUnicodeToBytes(System.String)`
+- <xref:System.ComponentModel.IComNativeDescriptorHandler?displayProperty=fullName>
+- <xref:System.ComponentModel.MemberDescriptor.GetInvokee(System.Type,System.Object)?displayProperty=fullName>
+- <xref:System.ComponentModel.RecommendedAsConfigurableAttribute?displayProperty=fullName>
+- <xref:System.Data.OleDb.OleDbParameterCollection.Add(System.String,System.Object)?displayProperty=fullName>
+- <xref:System.Net.FileWebRequest.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)?displayProperty=fullName>
+- <xref:System.Net.FileWebRequest.System%23Runtime%23Serialization%23ISerializable%23GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)?displayProperty=fullName>
+- <xref:System.Net.FileWebResponse.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)?displayProperty=fullName>
+- <xref:System.Net.FileWebResponse.System%23Runtime%23Serialization%23ISerializable%23GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)?displayProperty=fullName>
+- <xref:System.Net.Http.HttpRequestMessage.Properties?displayProperty=fullName>
+- <xref:System.Net.WebRequest.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)?displayProperty=fullName>
+- <xref:System.Net.WebRequest.System%23Runtime%23Serialization%23ISerializable%23GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)?displayProperty=fullName>
+- <xref:System.Net.WebResponse.%23ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)> constructor
+- <xref:System.Net.WebResponse.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)?displayProperty=fullName>
+- <xref:System.Net.WebResponse.System%23Runtime%23Serialization%23ISerializable%23GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)?displayProperty=fullName>
+- <xref:System.Security.Cryptography.PasswordDeriveBytes.GetBytes(System.Int32)?displayProperty=fullName>
+- <xref:System.Web.HttpUtility.UrlEncodeUnicode(System.String)?displayProperty=fullName>
+- <xref:System.Web.HttpUtility.UrlEncodeUnicodeToBytes(System.String)?displayProperty=fullName>

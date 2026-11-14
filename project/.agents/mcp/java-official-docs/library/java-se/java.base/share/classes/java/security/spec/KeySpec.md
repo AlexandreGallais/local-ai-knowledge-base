@@ -1,49 +1,37 @@
----
-title: "KeySpec interface (java.security.spec)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/spec/KeySpec.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # KeySpec interface (java.security.spec)
 
 ```java
 public interface KeySpec
 ```
 
-A (transparent) specification of the key <example-value>
+A (transparent) specification of the key material
 that constitutes a cryptographic key.
 
-If the key is stored on a hardware device, its
+<p>If the key is stored on a hardware device, its
 specification may contain information that helps identify the key on the
 device.
 
- A key may be specified in an algorithm-specific way, or in an
+<P> A key may be specified in an algorithm-specific way, or in an
 algorithm-independent encoding format (such as ASN.1).
 For example, a DSA private key may be specified by its components
-`x`, `p`, `q`, and `g`
-(see `DSAPrivateKeySpec`), or it may be
+{@code x}, {@code p}, {@code q}, and {@code g}
+(see {@link DSAPrivateKeySpec}), or it may be
 specified using its DER encoding
-(see `PKCS8EncodedKeySpec`).
+(see {@link PKCS8EncodedKeySpec}).
 
- This interface contains no methods or constants. Its only purpose
+<P> This interface contains no methods or constants. Its only purpose
 is to group (and provide type safety for) all key specifications.
-All key <example-value> must implement this interface.
+All key specifications must implement this interface.
 
-**See also:** java.security.Key
+@author Jan Luehe
 
-**See also:** java.security.KeyFactory
 
-**See also:** EncodedKeySpec
+@see java.security.Key
+@see java.security.KeyFactory
+@see EncodedKeySpec
+@see X509EncodedKeySpec
+@see PKCS8EncodedKeySpec
+@see DSAPrivateKeySpec
+@see DSAPublicKeySpec
 
-**See also:** X509EncodedKeySpec
-
-**See also:** PKCS8EncodedKeySpec
-
-**See also:** DSAPrivateKeySpec
-
-**See also:** DSAPublicKeySpec
-
-**Since:** 1.2
+@since 1.2

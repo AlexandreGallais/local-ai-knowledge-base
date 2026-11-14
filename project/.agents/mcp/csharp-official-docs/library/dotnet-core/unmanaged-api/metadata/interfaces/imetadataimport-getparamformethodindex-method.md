@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataImport::GetParamForMethodIndex Method"
 title: "IMetaDataImport::GetParamForMethodIndex Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-getparamformethodindex-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.GetParamForMethodIndex"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::GetParamForMethodIndex"
+  - "GetParamForMethodIndex method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::GetParamForMethodIndex Method
 
 Gets the token that represents a specified parameter of the method represented by the specified MethodDef token.
@@ -34,7 +41,7 @@ HRESULT GetParamForMethodIndex (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -42,5 +49,5 @@ HRESULT GetParamForMethodIndex (
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

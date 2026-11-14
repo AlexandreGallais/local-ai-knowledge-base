@@ -1,12 +1,3 @@
----
-title: "SocketOption interface (java.net)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/net/SocketOption.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # SocketOption interface (java.net)
 
 ```java
@@ -15,17 +6,17 @@ public interface SocketOption<T>
 
 A socket option associated with a socket.
 
- In the channels package, the `java.nio.channels.NetworkChannel` interface defines the setOption
-and getOption
+<p> In the {@link java.nio.channels channels} package, the {@link
+java.nio.channels.NetworkChannel} interface defines the {@link
+java.nio.channels.NetworkChannel#setOption(SocketOption,Object) setOption}
+and {@link java.nio.channels.NetworkChannel#getOption(SocketOption) getOption}
 methods to set and query the channel's socket options.
 
-Parameters:
+@param   <T>     The type of the socket option value.
 
-- `<T>`: The type of the socket option value.
+@since 1.7
 
-**Since:** 1.7
-
-**See also:** StandardSocketOptions
+@see StandardSocketOptions
 
 ## SocketOption.name()
 
@@ -35,7 +26,7 @@ String name()
 
 Returns the name of the socket option.
 
-**Returns:** the name of the socket option
+@return the name of the socket option
 
 ## SocketOption.type()
 
@@ -45,4 +36,4 @@ Class<T> type()
 
 Returns the type of the socket option value.
 
-**Returns:** the type of the socket option value
+@return the type of the socket option value

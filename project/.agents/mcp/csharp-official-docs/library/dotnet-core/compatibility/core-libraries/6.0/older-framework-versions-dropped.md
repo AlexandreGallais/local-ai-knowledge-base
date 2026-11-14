@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Older framework versions dropped from packages"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/6.0/older-framework-versions-dropped.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 6 breaking change in core .NET libraries where older framework versions have been dropped from the core libraries packages.
+ms.date: 06/23/2021
 ---
-
 # Older framework versions dropped from package
 
 Starting with .NET 6, the core libraries packages can no longer be installed into projects whose target framework is older than:
@@ -101,3 +97,11 @@ The following packages will no longer be updated because their implementation is
 - System.Security.Cryptography.Cng
 - System.Security.Cryptography.OpenSsl
 - System.Security.Principal.Windows
+
+<!--
+
+### Category
+
+Core .NET libraries
+
+-->

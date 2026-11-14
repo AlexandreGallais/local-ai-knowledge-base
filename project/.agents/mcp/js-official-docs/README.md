@@ -1,9 +1,11 @@
 # Brick `js-official-docs`
 
-The official documentation of the JavaScript and TypeScript tools, in cleaned Markdown, at a noted
-version: MDN (JavaScript, HTML, CSS, Web APIs, SVG, HTTP, accessibility), Angular, TypeScript, RxJS,
-NgRx Signals, Node.js, npm, Vite, Vitest, Playwright, ESLint and its plugins, Stylelint. The MCP
-server searches it and returns one section at a time.
+The official documentation of the JavaScript and TypeScript tools: MDN (JavaScript, HTML, CSS, Web APIs, SVG, HTTP, accessibility), the ARIA Authoring Practices Guide, Angular (guides, API reference, CLI), TypeScript (handbook, tsconfig reference), RxJS and NgRx Signals (guides and API reference), Node.js, npm, Vite, Vitest, Playwright, Storybook, Sass, Prettier, EditorConfig, ESLint, Stylelint and the plugins of the kit.
+
+Each file is the official file, unchanged, in its own format (Markdown, reStructuredText, AsciiDoc,
+LaTeX, Texinfo, PreTeXt, XML, HTML), at a noted version. An API reference that lives in the
+comments of the source code is taken from those comments, unchanged. The MCP server searches the
+documentation and returns one section at a time.
 
 ## What it holds
 
@@ -11,32 +13,37 @@ server searches it and returns one section at a time.
 | --- | --- |
 | `server.ts` | The MCP server: `search_docs`, then `read_doc` on one section. The same code in every documentation brick. |
 | `brick.json` | The name of the server and the words of its tools. |
-| `search.ts` | The local search: words split as a person reads names, BM25 ranking, exact API names first, 10 hits at most. |
+| `search.ts` | The local search: each file cut into sections by its format, BM25 ranking, exact API names first, 10 hits at most. |
 | `build-index.ts` | Builds `index/`, one plain-text file per tool. The server runs it when `index/` is missing. |
-| `check-versions.ts` | Lists the tools whose documentation is behind the versions of the project. |
-| `library/` | The documentation, one folder per tool, files of 16 KB at most, each with its header. |
-| `licenses/`, `THIRD_PARTY_NOTICES.md` | The license of each source and its attribution. |
+| `library/` | The documentation, one folder per tool; `<tool>.index.md` lists its files; `README.md` lists the tools, their version, license and size; `lock.json` the commit of each. |
+| `licenses/`, `THIRD_PARTY_NOTICES.md` | The license of each source, its copyright and its attribution. |
 | `mcp.ts` | The small MCP core, the same copy in every brick. |
 | `rules.md` | The rules the AI reads at every request. |
 
 `library/` and `index/` stay out of the project's Git (`.gitignore` of this folder): the import of
-the brick brings `library/` back, and the server builds `index/`.
+the brick brings `library/` back and builds `index/`.
 
 ## Usage
 
-From the project root:
+From the project root, after a change of `library/`:
 
 ```sh
-node .agents/mcp/js-official-docs/build-index.ts      # rebuild the index after a change
-node .agents/mcp/js-official-docs/check-versions.ts   # tools behind the project's versions
+node .agents/mcp/js-official-docs/build-index.ts
 ```
+
+## Set aside
+
+- Angular Material, the CDK and Angular Aria: the team writes its components.
+- The rules of the plugins the kit no longer uses (eslint-plugin-import-lite, eslint-plugin-functional, eslint-plugin-jsonc, @stylistic/stylelint-plugin).
+- In the Angular API reference, what is not tagged `@publicApi`: internal code.
 
 ## Licenses
 
-Each source keeps its own license, written in `THIRD_PARTY_NOTICES.md` with its attribution: MDN
-under CC BY-SA 2.5, Angular and TypeScript under CC BY 4.0, most tools under MIT.
+MDN is under CC BY-SA 2.5, Angular and TypeScript under CC BY 4.0, the ARIA Authoring Practices Guide under the W3C Software and Document License, most tools under MIT, RxJS and Playwright under Apache 2.0. `THIRD_PARTY_NOTICES.md` gives each source with its attribution, and `licenses/`
+holds the text of each license. The code of this brick (its `.ts` files) is under the MIT License of
+the base.
 
 ## Remove it
 
-Delete this folder, then remove the line `js-official-docs` from `opencode.json` (the next import of
-the kit removes it too). The other bricks do not use it.
+Delete this folder, then remove the line `js-official-docs` from `opencode.json` (the next import of the kit
+removes it too). The other bricks do not use it.

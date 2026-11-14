@@ -1,23 +1,23 @@
 ---
-title: "Refactor using a pure function - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/refactor-pure-function.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Refactor using a pure function - LINQ to XML
+description: Learn how to refactor using a pure function
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
-
 # Refactor using a pure function (LINQ to XML)
 
-The following example refactors the previous example, Refactor using an extension method, to use a pure function. It moves the code that finds the text of a paragraph to the pure static method `ParagraphText`.
+The following example refactors the previous example, [Refactor using an extension method](refactor-extension-method.md), to use a pure function. It moves the code that finds the text of a paragraph to the pure static method `ParagraphText`.
 
 ## Example: Retrieve the paragraph nodes and their styles
 
 This example processes a WordprocessingML document, retrieving the paragraph nodes. It also identifies the style of each paragraph. This example builds on the previous examples in this tutorial. The refactored code is called out in comments in the code below.
 
-The instructions for creating the source document for this example are in Create the source Office Open XML document.
+The instructions for creating the source document for this example are in [Create the source Office Open XML document](create-source-office-open-xml-document.md).
 
-This example uses classes from the WindowsBase assembly. It uses types in the `System.IO.Packaging` namespace.
+This example uses classes from the WindowsBase assembly. It uses types in the <xref:System.IO.Packaging?displayProperty=nameWithType> namespace.
 
 ```csharp
 public static class LocalExtensions
@@ -322,10 +322,10 @@ StyleName:Code >Hello World<
 
 The next article in this tutorial shows how to project XML into a different shape:
 
-- Project XML in a different shape
+- [Project XML in a different shape](project-xml-different-shape.md)
 
 ## See also
 
-- Tutorial: Manipulate content in a WordprocessingML document
-- Refactor using an extension method
-- Refactor into pure functions
+- [Tutorial: Manipulate content in a WordprocessingML document](xml-shape-wordprocessingml-documents.md)
+- [Refactor using an extension method](refactor-extension-method.md)
+- [Refactor into pure functions](refactor-pure-functions.md)

@@ -1,12 +1,3 @@
----
-title: "Read route state"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/routing/read-route-state.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Read route state
 
 Angular Router allows you to read and use information associated with a route to create responsive and context-aware components.
@@ -41,7 +32,7 @@ The `ActivatedRoute` can provide different information about the route. Some com
 | `queryParams` | An `Observable` that contains the query parameters available to all routes.                                                       |
 | `resources`   | An optional record of `Resource` instances defined on the route (when `withRouterResources` is enabled).                          |
 
-Check out the `ActivatedRoute` API docs for a complete list of what you can access with in the route.
+Check out the [`ActivatedRoute` API docs](/api/router/ActivatedRoute) for a complete list of what you can access with in the route.
 
 ## Understanding route snapshots
 
@@ -79,7 +70,7 @@ export class UserProfile {
 }
 ```
 
-Check out the `ActivatedRoute` API docs and `ActivatedRouteSnapshot` API docs for a complete list of all properties you can access.
+Check out the [`ActivatedRoute` API docs](/api/router/ActivatedRoute) and [`ActivatedRouteSnapshot` API docs](/api/router/ActivatedRouteSnapshot) for a complete list of all properties you can access.
 
 ## Reading parameters on a route
 
@@ -89,7 +80,7 @@ There are two types of parameters that developers can utilize from a route: rout
 
 Route parameters allow you to pass data to a component through the URL. This is useful when you want to display specific content based on an identifier in the URL, like a user ID or a product ID.
 
-You can define route parameters by prefixing the parameter name with a colon (`:`).
+You can [define route parameters](/guide/routing/define-routes#define-url-paths-with-route-parameters) by prefixing the parameter name with a colon (`:`).
 
 ```angular-ts
 import {Routes} from '@angular/router';
@@ -123,7 +114,7 @@ export class ProductDetail {
 
 ### Query Parameters
 
-Query parameters provide a flexible way to pass <example-value> data through URLs without affecting the route structure. Unlike route parameters, query parameters can persist across navigation events and are perfect for handling filtering, sorting, pagination, and other stateful UI elements.
+[Query parameters](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) provide a flexible way to pass optional data through URLs without affecting the route structure. Unlike route parameters, query parameters can persist across navigation events and are perfect for handling filtering, sorting, pagination, and other stateful UI elements.
 
 ```angular-ts
 // Single parameter structure
@@ -189,13 +180,13 @@ export class ProductList {
 
 In this example, users can use a select element to sort the product list by name or price. The associated change handler updates the URL’s query parameters, which in turn triggers a change event that can read the updated query parameters and update the product list.
 
-For more information, check out the official docs on QueryParamsHandling.
+For more information, check out the [official docs on QueryParamsHandling](/api/router/QueryParamsHandling).
 
 ### Matrix Parameters
 
 Matrix parameters are optional parameters that belong to a specific URL segment, rather than applying to the entire route. Unlike query parameters which appear after a `?` and apply globally, matrix parameters use semicolons (`;`) and are scoped to individual path segments.
 
-Matrix parameters are useful when you need to pass <example-value> data to a specific route segment without affecting the route definition or matching behavior. Like query parameters, they don't need to be defined in your route configuration.
+Matrix parameters are useful when you need to pass auxiliary data to a specific route segment without affecting the route definition or matching behavior. Like query parameters, they don't need to be defined in your route configuration.
 
 ```ts
 // URL format: /path;key=value
@@ -320,7 +311,7 @@ If you want to be more precise in how a route is matched, it’s worth noting th
 }
 ```
 
-For more information, check out the official docs for isActiveMatchOptions.
+For more information, check out the official docs for [isActiveMatchOptions](/api/router/IsActiveMatchOptions).
 
 ### Apply RouterLinkActive to an ancestor
 
@@ -333,7 +324,7 @@ The RouterLinkActive directive can also be applied to an ancestor element in ord
 </div>
 ```
 
-For more information, check out the API docs for RouterLinkActive.
+For more information, check out the [API docs for RouterLinkActive](/api/router/RouterLinkActive).
 
 ## Check if a URL is active
 

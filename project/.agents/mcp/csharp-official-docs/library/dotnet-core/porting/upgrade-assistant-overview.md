@@ -1,10 +1,13 @@
 ---
-title: ".NET Upgrade Assistant Overview"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/upgrade-assistant-overview.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: .NET Upgrade Assistant Overview
+description: "Learn more about .NET Upgrade Assistant for .NET-related projects. This tool helps you upgrade from older versions of .NET, including .NET Framework, to the latest version of .NET. Code incompatibilities can be fixed as part of the upgrade."
+author: adegeo
+ms.author: adegeo
+ms.topic: overview
+ms.date: 03/19/2026
+
+#customer intent: As a developer, I want to upgrade my project so that I can take advantage of the latest features.
+
 ---
 
 # What is .NET Upgrade Assistant?
@@ -13,8 +16,7 @@ license: "CC-BY-4.0"
 
 .NET Upgrade Assistant is built into Visual Studio and can be installed as a command-line interface (CLI) tool.
 
-> **Important:**
-> .NET Upgrade Assistant is officially deprecated. Use the GitHub Copilot modernization chat agent instead, which is included with Visual Studio 2026 and Visual Studio 2022 17.14.16 or later. This agent analyzes your projects and dependencies, produces a step-by-step migration plan with targeted recommendations and automated code fixes, and commits each change so you can validate or roll back. It automates common porting tasks—updating project files, replacing deprecated APIs, and resolving build issues—so you can modernize faster with less manual effort.
+[!INCLUDE [github-copilot-suggestion](includes/github-copilot-suggestion.md)]
 
 ## Analyze and upgrade
 
@@ -36,10 +38,10 @@ license: "CC-BY-4.0"
 
 Some products provide guidance on how to use .NET Upgrade Assistant.
 
-- ASP.NET
-- Windows Presentation Foundation
-- Windows Forms
-- Universal Windows Platform
+- [ASP.NET](/aspnet/core/migration/fx-to-core/tooling)
+- [Windows Presentation Foundation](/dotnet/desktop/wpf/migration/)
+- [Windows Forms](/dotnet/desktop/winforms/migration/)
+- [Universal Windows Platform](/windows/apps/windows-app-sdk/migrate-to-windows-app-sdk/upgrade-assistant)
 
 ## Upgrade paths
 
@@ -55,7 +57,7 @@ The following upgrade paths are supported:
 
 ## Upgrade details and options
 
-When an upgrade is started, a wizard walks you through configuring some of the options before the upgrade is initiated. Based on the type of project you're upgrading, the wizard presents different options. For an example of upgrading a project, see Upgrade projects with .NET Upgrade Assistant.
+When an upgrade is started, a wizard walks you through configuring some of the options before the upgrade is initiated. Based on the type of project you're upgrading, the wizard presents different options. For an example of upgrading a project, see [Upgrade projects with .NET Upgrade Assistant](upgrade-assistant-how-to-upgrade.md).
 
 ### How the upgrade should be performed
 
@@ -84,13 +86,17 @@ Once the upgrade is finished, a status screen is displayed which shows all of th
 - **Yellow warning sign**: The artifact was upgraded, but there's important information you should consider.
 - **Red _X_**: The artifact upgrade was unsuccessful.
 
+:::image type="content" source="media/upgrade-assistant-overview/visual-studio-upgrade-results.png" alt-text="The .NET Upgrade Assistant's Upgrade results tab in Visual Studio.":::
+
 Additionally, the actions the performed during the upgrade are logged to the **Output** window under the **Upgrade Assistant** source, as shown in the following image:
+
+:::image type="content" source="media/upgrade-assistant-overview/visual-studio-output-window.png" alt-text="The output window in Visual Studio showing the results from the .NET Upgrade Assistant.":::
 
 After upgrading your project, test it thoroughly!
 
 ## Related content
 
-- What is code analysis with .NET Upgrade Assistant?
-- Install .NET Upgrade Assistant
-- Analyze projects with .NET Upgrade Assistant
-- Upgrade projects with .NET Upgrade Assistant
+- [What is code analysis with .NET Upgrade Assistant?](upgrade-assistant-analyze-overview.md)
+- [Install .NET Upgrade Assistant](upgrade-assistant-install.md)
+- [Analyze projects with .NET Upgrade Assistant](upgrade-assistant-how-to-analyze.md)
+- [Upgrade projects with .NET Upgrade Assistant](upgrade-assistant-how-to-upgrade.md)

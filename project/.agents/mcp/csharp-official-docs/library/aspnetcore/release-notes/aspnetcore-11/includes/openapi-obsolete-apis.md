@@ -1,14 +1,3 @@
----
-title: "openapi-obsolete-apis"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-11/includes/openapi-obsolete-apis.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# openapi-obsolete-apis
-
 ### OpenAPI reflects obsolete APIs
 
 ASP.NET Core OpenAPI generation maps `[Obsolete]` to `deprecated: true` automatically for operations, schema types, and schema properties. API clients and documentation tools can therefore surface the same deprecation information as .NET callers without a custom OpenAPI transformer.
@@ -66,6 +55,6 @@ The generated document marks the legacy operation, its response schema, and the 
 }
 ```
 
-An `Microsoft.AspNetCore.OpenApi.IOpenApiOperationTransformer` or `Microsoft.AspNetCore.OpenApi.IOpenApiSchemaTransformer` can override the generated value for a specific API.
+An <xref:Microsoft.AspNetCore.OpenApi.IOpenApiOperationTransformer> or <xref:Microsoft.AspNetCore.OpenApi.IOpenApiSchemaTransformer> can override the generated value for a specific API.
 
-Thank you @fickleEfrit for this contribution!
+Thank you [@fickleEfrit](https://github.com/fickleEfrit) for this contribution!

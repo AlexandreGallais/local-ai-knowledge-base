@@ -1,274 +1,92 @@
 ---
-title: "group clause (part 1 of 8)"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/keywords/group-clause.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "group clause - C# Reference"
+title: "group clause"
+ms.date: 01/21/2026
+f1_keywords:
+  - "group"
+  - "group_CSharpKeyword"
+helpviewer_keywords:
+  - "group keyword [C#]"
+  - "group clause [C#]"
 ---
-
 # group clause (C# Reference)
 
-The `group` clause returns a sequence of `System.Linq.IGrouping`2` objects. The sequence contains zero or more items that match the key value for the group. For example, you can group a sequence of strings according to the first letter in each string. In this case, the first letter is the key and has a type char. Each `System.Linq.IGrouping`2` object stores this key in its `Key` property. The compiler infers the type of the key.
+The `group` clause returns a sequence of <xref:System.Linq.IGrouping`2> objects. The sequence contains zero or more items that match the key value for the group. For example, you can group a sequence of strings according to the first letter in each string. In this case, the first letter is the key and has a type [char](../builtin-types/char.md). Each <xref:System.Linq.IGrouping`2> object stores this key in its `Key` property. The compiler infers the type of the key.
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
-
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
-
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
 You can end a query expression with a `group` clause, as shown in the following example:
 
+:::code language="csharp" source="./snippets/group.cs" id="10":::
+
+If you want to perform additional query operations on each group, specify a temporary identifier by using the [into](into.md) contextual keyword. When you use `into`, you must continue with the query, and eventually end it with either a `select` statement or another `group` clause, as shown in the following excerpt:
+
+:::code language="csharp" source="./snippets/group.cs" id="11":::
+
+More complete examples of the use of `group` with and without `into` are provided in the Example section of this article.
+
+## Enumerating the results of a group query
+
+Because the <xref:System.Linq.IGrouping`2> objects that a `group` query produces are essentially a list of lists, you must use a nested [foreach](../statements/iteration-statements.md#the-foreach-statement) loop to access the items in each group. The outer loop iterates over the group keys, and the inner loop iterates over each item in the group itself. A group can have a key but no elements. The following `foreach` loop executes the query in the previous code examples:
+
+:::code language="csharp" source="./snippets/group.cs" id="12":::
+
+## Key types
+
+Group keys can be any type, such as a string, a built-in numeric type, or a user-defined named type or anonymous type.
+
+### Grouping by string
+
+The previous code examples used a `char`. You can also specify a string key, such as the complete last name:
+
+:::code language="csharp" source="./snippets/group.cs" id="13":::
+
+### Grouping by bool
+
+The following example uses a bool value for a key to divide the results into two groups. The value comes from a sub-expression in the `group` clause.
+
+:::code language="csharp" source="./snippets/group.cs" id="14":::
+
+### Grouping by numeric range
+
+The next example uses an expression to create numeric group keys that represent a percentile range. It uses [`let`](let-clause.md) to store a method call result, so you don't have to call the method twice in the `group` clause. For more information about how to safely use methods in query expressions, see [Handle exceptions in query expressions](../../linq/get-started/write-linq-queries.md).
+
+:::code language="csharp" source="./snippets/group.cs" id="15":::
+
+### Grouping by composite keys
+
+Use a composite key when you want to group elements by more than one key. Create a composite key by using an anonymous type or a named type to hold the key element. In the following example, assume that a class `Person` has members named `surname` and `city`. The `group` clause creates a separate group for each set of persons with the same last name and the same city.
+
 ```csharp
-namespace Group;
-
-using CommonTypes;
-// For the group clause topic, we only use bits and pieces of this class. The same
-// class is also used for  How To: Group Results in Various Ways HowTo and
-// How To: Enumerate Groups and Group Items
-
-// Code snippets not compilable samples
-class GroupCodeExcerpts : CommonTypes.Common
-{
-    List<Common.Student> students = CommonTypes.Common.GetStudents();
-    // Use a compound from to access the inner sequence within each element.
-    // Note the similarity to a nested foreach statement.
-    void SimpleGroups()
-    {
-
-        // Query variable is an IEnumerable<IGrouping<char, Student>>
-        var studentQuery1 =
-            from student in students
-            group student by student.Last[0];
-
-        // This query could be easily modified to group by the entire last name.
-        // Group students by the first letter of their last name
-        // Query variable is an IEnumerable<IGrouping<char, Student>>
-        var studentQuery2 =
-            from student in students
-            group student by student.Last[0] into g
-            orderby g.Key
-            select g;
-        Console.WriteLine("The SimpleGroup method produces this output:\r\n");
-
-       // Iterate group items with a nested foreach. This IGrouping encapsulates
-       // a sequence of Student objects, and a Key of type char.
-       // For convenience, var can also be used in the foreach statement.
-       foreach (IGrouping<char, Student> studentGroup in studentQuery2)
-       {
-            Console.WriteLine(studentGroup.Key);
-            // Explicit type for student could also be used here.
-            foreach (var student in studentGroup)
-            {
-                Console.WriteLine("   {0}, {1}", student.Last, student.First);
-            }
-        }
-
-        // Same as previous example except we use the entire last name as a key.
-        // Query variable is an IEnumerable<IGrouping<string, Student>>
-        var studentQuery3 =
-            from student in students
-            group student by student.Last;
-    }
-}
-
-// The rest of the samples must run and produce output
-class GroupSample1
-{
-    // The element type of the data source.
-    public class Student
-    {
-        public required string First { get; init; }
-        public required string Last { get; init; }
-        public required int ID { get; init; }
-        public required List<int> Scores;
-    }
-
-    public static List<Student> GetStudents()
-    {
-        // Use a collection initializer to create the data source. Note that each element
-        //  in the list contains an inner sequence of scores.
-        List<Student> students =
-        [
-           new Student {First="Svetlana", Last="Omelchenko", ID=111, Scores= [97, 72, 81, 60]},
-           new Student {First="Claire", Last="O'Donnell", ID=112, Scores= [75, 84, 91, 39]},
-           new Student {First="Sven", Last="Mortensen", ID=113, Scores= [99, 89, 91, 95]},
-           new Student {First="Cesar", Last="Garcia", ID=114, Scores= [72, 81, 65, 84]},
-           new Student {First="Debra", Last="Garcia", ID=115, Scores= [97, 89, 85, 82]}
-        ];
-
-        return students;
-    }
-
-    static void Main()
-    {
-        // Obtain the data source.
-        List<Student> students = GetStudents();
-
-        // Group by true or false.
-        // Query variable is an IEnumerable<IGrouping<bool, Student>>
-        var booleanGroupQuery =
-            from student in students
-            group student by student.Scores.Average() >= 80; //pass or fail!
-
-        // Execute the query and access items in each group
-        foreach (var studentGroup in booleanGroupQuery)
-        {
-            Console.WriteLine(studentGroup.Key == true ? "High averages" : "Low averages");
-            foreach (var student in studentGroup)
-            {
-                Console.WriteLine("   {0}, {1}:{2}", student.Last, student.First, student.Scores.Average());
-            }
-        }
-    }
-}
-/* Output:
-  Low averages
-   Omelchenko, Svetlana:77.5
-   O'Donnell, Claire:72.25
-   Garcia, Cesar:75.5
-  High averages
-   Mortensen, Sven:93.5
-   Garcia, Debra:88.25
-*/
-
-class GroupSample2
-{
-    // The element type of the data source.
-    public class Student
-    {
-        public required string First { get; init; }
-        public required string Last { get; init; }
-        public required int ID { get; init; }
-        public required List<int> Scores;
-    }
-
-    public static List<Student> GetStudents()
-    {
-        // Use a collection initializer to create the data source. Note that each element
-        //  in the list contains an inner sequence of scores.
-        List<Student> students =
-        [
-           new Student {First="Svetlana", Last="Omelchenko", ID=111, Scores= [97, 72, 81, 60]},
-           new Student {First="Claire", Last="O'Donnell", ID=112, Scores= [75, 84, 91, 39]},
-           new Student {First="Sven", Last="Mortensen", ID=113, Scores= [99, 89, 91, 95]},
-           new Student {First="Cesar", Last="Garcia", ID=114, Scores= [72, 81, 65, 84]},
-           new Student {First="Debra", Last="Garcia", ID=115, Scores= [97, 89, 85, 82]}
-        ];
-
-        return students;
-    }
-
-    // This method groups students into percentile ranges based on their
-    // grade average. The Average method returns a double, so to produce a whole
-    // number it is necessary to cast to int before dividing by 10.
-    static void Main()
-    {
-        // Obtain the data source.
-        List<Student> students = GetStudents();
-
-        // Write the query.
-        var studentQuery =
-            from student in students
-            let avg = (int)student.Scores.Average()
-            group student by (avg / 10) into g
-            orderby g.Key
-            select g;
-
-        // Execute the query.
-        foreach (var studentGroup in studentQuery)
-        {
-            int temp = studentGroup.Key * 10;
-            Console.WriteLine($"Students with an average between {temp} and {temp + 10}");
-            foreach (var student in studentGroup)
-            {
-                Console.WriteLine("   {0}, {1}:{2}", student.Last, student.First, student.Scores.Average());
-            }
-        }
-    }
-}
-/* Output:
-     Students with an average between 70 and 80
-       Omelchenko, Svetlana:77.5
-       O'Donnell, Claire:72.25
-       Garcia, Cesar:75.5
-     Students with an average between 80 and 90
-       Garcia, Debra:88.25
-     Students with an average between 90 and 100
-       Mortensen, Sven:93.5
- */
-
-class GroupExample1
-{
-    static void Main()
-    {
-        // Create a data source.
-        string[] words = ["blueberry", "chimpanzee", "abacus", "banana", "apple", "cheese"];
-
-        // Create the query.
-        var wordGroups =
-            from w in words
-            group w by w[0];
-
-        // Execute the query.
-        foreach (var wordGroup in wordGroups)
-        {
-            Console.WriteLine($"Words that start with the letter '{wordGroup.Key}':");
-            foreach (var word in wordGroup)
-            {
-                Console.WriteLine(word);
-            }
-        }
-    }
-}
-/* Output:
-      Words that start with the letter 'b':
-        blueberry
-        banana
-      Words that start with the letter 'c':
-        chimpanzee
-        cheese
-      Words that start with the letter 'a':
-        abacus
-        apple
-     */
-
-class GroupClauseExample2
-{
-    static void Main()
-    {
-        // Create the data source.
-        string[] words2 = ["blueberry", "chimpanzee", "abacus", "banana", "apple", "cheese", "elephant", "umbrella", "anteater"];
-
-        // Create the query.
-        var wordGroups2 =
-            from w in words2
-            group w by w[0] into grps
-            where (grps.Key == 'a' || grps.Key == 'e' || grps.Key == 'i'
-                   || grps.Key == 'o' || grps.Key == 'u')
-            select grps;
-
-        // Execute the query.
-        foreach (var wordGroup in wordGroups2)
-        {
-            Console.WriteLine($"Groups that start with a vowel: {wordGroup.Key}");
-            foreach (var word in wordGroup)
-            {
-                Console.WriteLine($"   {word}");
-            }
-        }
-    }
-}
-/* Output:
-    Groups that start with a vowel: a
-        abacus
-        apple
-        anteater
-    Groups that start with a vowel: e
-        elephant
-    Groups that start with a vowel: u
-        umbrella
-*/
+group person by new {name = person.surname, city = person.city};
 ```
-If you want to perform additional query operations on each group, specify a temporary identifier by using the into contextual keyword. When you use `into`, you must continue with the query, and eventually end it with either a `select` statement or another `group` clause, as shown in the following excerpt:
+
+Use a named type if you need to pass the query variable to another method. Create a special class with automatically implemented properties for the keys, and then override the <xref:System.Object.Equals*> and <xref:System.Object.GetHashCode*> methods. You can also use a struct, which doesn't strictly require those method overrides. For more information, see [How to implement a lightweight class with automatically implemented properties](../../programming-guide/classes-and-structs/how-to-implement-a-lightweight-class-with-auto-implemented-properties.md) and [How to query for duplicate files in a directory tree](../../linq/how-to-query-files-and-directories.md). The latter article has a code example that demonstrates how to use a composite key with a named type.
+
+## Examples
+
+The following example shows the standard pattern for ordering source data into groups when you don't apply any extra query logic to the groups. This pattern is called grouping without a continuation. The example groups the elements in an array of strings according to their first letter. The result of the query is an <xref:System.Linq.IGrouping`2> type that contains a public `Key` property of type `char` and an <xref:System.Collections.Generic.IEnumerable`1> collection that contains each item in the grouping.
+
+The result of a `group` clause is a sequence of sequences. To access the individual elements within each returned group, use a nested `foreach` loop inside the loop that iterates the group keys, as shown in the following example.
+
+:::code language="csharp" source="./snippets/group.cs" id="16":::
+
+The following example shows how to perform extra logic on the groups after you create them, by using a *continuation* with `into`. For more information, see [`into`](into.md). The following example queries each group to select only those whose key value is a vowel.
+
+:::code language="csharp" source="./snippets/group.cs" id="17":::
+
+At compile time, the compiler translates `group` clauses into calls to the <xref:System.Linq.Enumerable.GroupBy*> method.
+
+The syntax of `group` clause query doesn't support custom equality comparer. If you want to use <xref:System.Collections.IEqualityComparer> in your query, explicitly use the <xref:System.Linq.Enumerable.GroupBy*> method.
+
+## See also
+
+- <xref:System.Linq.IGrouping`2>
+- <xref:System.Linq.Enumerable.GroupBy*>
+- <xref:System.Linq.Enumerable.ThenBy*>
+- <xref:System.Linq.Enumerable.ThenByDescending*>
+- [Query Keywords](query-keywords.md)
+- [Language Integrated Query (LINQ)](../../linq/index.md)
+- [Create a nested group](../../linq/standard-query-operators/grouping-data.md)
+- [Group query results](../../linq/standard-query-operators/grouping-data.md)
+- [Perform a subquery on a grouping operation](../../linq/standard-query-operators/grouping-data.md)

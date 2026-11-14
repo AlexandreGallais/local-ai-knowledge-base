@@ -1,13 +1,9 @@
 ---
-title: "no-empty-pattern"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-empty-pattern.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-empty-pattern
+rule_type: problem
 ---
 
-# no-empty-pattern
+
 
 When using destructuring, it's possible to create a pattern that has no effect. This happens when empty curly braces are used to the right of an embedded object destructuring pattern, such as:
 
@@ -38,7 +34,7 @@ This rule aims to flag any empty patterns in destructured objects and arrays, an
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-empty-pattern: "error"*/
@@ -53,9 +49,11 @@ function baz({a: {}}) {}
 function qux({a: []}) {}
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-empty-pattern: "error"*/
@@ -65,6 +63,8 @@ const {b = []} = foo;
 function foo({a = {}}) {}
 function bar({a = []}) {}
 ```
+
+:::
 
 ## Options
 
@@ -78,7 +78,7 @@ Set to `false` by default. Setting this option to `true` allows empty object pat
 
 Examples of **incorrect** code for this rule with the `{"allowObjectPatternsAsParameters": true}` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-empty-pattern: ["error", { "allowObjectPatternsAsParameters": true }]*/
@@ -92,9 +92,11 @@ const item = ({} = { bar: 1 }) => {};
 function baz([]) {}
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{"allowObjectPatternsAsParameters": true}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-empty-pattern: ["error", { "allowObjectPatternsAsParameters": true }]*/
@@ -105,3 +107,5 @@ const qux = ({}) => {};
 
 function baz({} = {}) {}
 ```
+
+:::

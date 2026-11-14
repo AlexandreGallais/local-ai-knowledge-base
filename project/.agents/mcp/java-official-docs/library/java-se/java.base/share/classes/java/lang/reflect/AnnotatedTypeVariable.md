@@ -1,25 +1,15 @@
----
-title: "AnnotatedTypeVariable interface (java.lang.reflect)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/reflect/AnnotatedTypeVariable.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AnnotatedTypeVariable interface (java.lang.reflect)
 
 ```java
 public interface AnnotatedTypeVariable extends AnnotatedType
 ```
 
-`AnnotatedTypeVariable` represents the potentially annotated use of a
+{@code AnnotatedTypeVariable} represents the potentially annotated use of a
 type variable, whose declaration may have bounds which themselves represent
 annotated uses of types.
 
-**JLS:** 4.4 Type Variables
-
-**Since:** 1.8
+@jls 4.4 Type Variables
+@since 1.8
 
 ## AnnotatedTypeVariable.getAnnotatedBounds()
 
@@ -29,11 +19,10 @@ AnnotatedType[] getAnnotatedBounds()
 
 Returns the potentially annotated bounds of this type variable.
 If no bound is explicitly declared, the bound is unannotated
-`Object`.
+{@code Object}.
 
-**Returns:** the potentially annotated bounds of this type variable
-
-**See also:** TypeVariable#getBounds()
+@return the potentially annotated bounds of this type variable
+@see TypeVariable#getBounds()
 
 ## AnnotatedTypeVariable.getAnnotatedOwnerType()
 
@@ -43,11 +32,11 @@ AnnotatedType getAnnotatedOwnerType()
 
 Returns the potentially annotated type that this type is a member of, if
 this type represents a nested type. For example, if this type is
-`@TA O<T>.I`, return a representation of `@TA O<T>`.
+{@code @TA O<T>.I<S>}, return a representation of {@code @TA O<T>}.
 
-Returns `null` for an `AnnotatedType` that is an instance
-    of `AnnotatedTypeVariable`.
+<p>Returns {@code null} for an {@code AnnotatedType} that is an instance
+    of {@code AnnotatedTypeVariable}.
 
-**Returns:** `null`
+@return {@code null}
 
-**Since:** 9
+@since 9

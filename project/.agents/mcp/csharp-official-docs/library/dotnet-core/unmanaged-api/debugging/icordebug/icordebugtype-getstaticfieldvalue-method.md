@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugType::GetStaticFieldValue Method"
 title: "ICorDebugType::GetStaticFieldValue Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugtype-getstaticfieldvalue-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugType.GetStaticFieldValue"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugType::GetStaticFieldValue"
+helpviewer_keywords:
+  - "GetStaticFieldValue method, ICorDebugType interface [.NET debugging]"
+  - "ICorDebugType::GetStaticFieldValue method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugType::GetStaticFieldValue Method
 
 Gets an interface pointer to an ICorDebugValue object that contains the value of the static field referenced by the specified field token in the specified stack frame.
@@ -34,9 +43,9 @@ HRESULT GetStaticFieldValue (
 
 ## Remarks
 
-The `GetStaticFieldValue` method may be used only if the type is ELEMENT_TYPE_CLASS or ELEMENT_TYPE_VALUETYPE, as indicated by the ICorDebugType::GetType method.
+The `GetStaticFieldValue` method may be used only if the type is ELEMENT_TYPE_CLASS or ELEMENT_TYPE_VALUETYPE, as indicated by the [ICorDebugType::GetType](icordebugtype-gettype-method.md) method.
 
-For non-generic types, the operation performed by `GetStaticFieldValue` is identical to calling ICorDebugClass::GetStaticFieldValue on the ICorDebugClass object that is returned by ICorDebugType::GetClass.
+For non-generic types, the operation performed by `GetStaticFieldValue` is identical to calling [ICorDebugClass::GetStaticFieldValue](icordebugclass-getstaticfieldvalue-method.md) on the ICorDebugClass object that is returned by [ICorDebugType::GetClass](icordebugtype-getclass-method.md).
 
 For generic types, a static field value will be relative to a particular instantiation. Also, if the static field could possibly be relative to a thread, a context, or an application domain, then the stack frame will help the debugger determine the proper value.
 
@@ -44,7 +53,7 @@ For generic types, a static field value will be relative to a particular instant
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

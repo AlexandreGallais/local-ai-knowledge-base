@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugAppDomain3::GetCachedWinRTTypesForIIDs Method"
 title: "ICorDebugAppDomain3::GetCachedWinRTTypesForIIDs Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugappdomain3-getcachedwinrttypesforiids-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugAppDomain3.GetCachedWinRTTypesForIIDs"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugAppDomain3::GetCachedWinRTTypesForIIDs"
+helpviewer_keywords:
+  - "ICorDebugAppDomain3::GetCachedWinRTTypesForIIDs method, [.NET debugging]"
+  - "GetCachedWinRTTypesForIIDs method, ICorDebugAppDomain3 interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugAppDomain3::GetCachedWinRTTypesForIIDs Method
 
 Gets an enumerator for cached Windows Runtime types in an application domain based on their interface identifiers.
@@ -48,4 +57,4 @@ If the method fails to retrieve information for a specific interface identifier,
 
 ## See also
 
-- ICorDebugAppDomain3 Interface
+- [ICorDebugAppDomain3 Interface](icordebugappdomain3-interface.md)

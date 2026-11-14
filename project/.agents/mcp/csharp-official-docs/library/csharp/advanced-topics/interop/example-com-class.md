@@ -1,15 +1,15 @@
 ---
 title: "Example COM Class"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/advanced-topics/interop/example-com-class.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to expose a class as a COM object in C#. This example adds code in a .cs file to a project and sets the Register for COM Interop property.
+ms.date: 02/15/2023
+ms.topic: how-to
+helpviewer_keywords: 
+  - "examples [C#], COM classes"
+  - "COM, exposing C# objects to"
 ---
-
 # Example COM Class
 
-The following code is an example of a class that you would expose as a COM object. After you place this code in a .cs file added to your project, set the **Register for COM Interop** property to **True**. For more information, see How to: Register a Component for COM Interop.
+The following code is an example of a class that you would expose as a COM object. After you place this code in a .cs file added to your project, set the **Register for COM Interop** property to **True**. For more information, see [How to: Register a Component for COM Interop](/previous-versions/visualstudio/visual-studio-2010/w29wacsy(v=vs.100)).
 
 Exposing C# objects to COM requires declaring a class interface, an "events interface" if necessary, and the class itself. Class members must follow these rules to be visible to COM:
 
@@ -24,31 +24,9 @@ The class implements the class interface; it can implement more than one interfa
 
 ## Example
 
-```csharp
-﻿using System.Runtime.InteropServices;
+:::code language="csharp" source="./snippets/ExampleCOMClass/ExampleCOM.cs":::
 
-namespace project_name
-{
-    [Guid("EAA4976A-45C3-4BC5-BC0B-E474F4C3C83F")]
-    public interface ComClass1Interface
-    {
-    }
-
-    [Guid("7BD20046-DF8C-44A6-8F6B-687FAA26FA71"),
-        InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]
-    public interface ComClass1Events
-    {
-    }
-
-    [Guid("0D53A3E8-E51A-49C7-944E-E72A2064F938"),
-        ClassInterface(ClassInterfaceType.None),
-        ComSourceInterfaces(typeof(ComClass1Events))]
-    public class ComClass1 : ComClass1Interface
-    {
-    }
-}
-```
 ## See also
 
-- Interoperability
-- Build Page, Project Designer (C#)
+- [Interoperability](./index.md)
+- [Build Page, Project Designer (C#)](/visualstudio/ide/reference/build-page-project-designer-csharp)

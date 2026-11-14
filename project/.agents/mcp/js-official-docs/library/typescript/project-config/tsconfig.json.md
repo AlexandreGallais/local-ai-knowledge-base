@@ -1,13 +1,10 @@
 ---
-title: "What is a tsconfig.json"
-tool: "typescript"
-version: "6.0"
-source: "https://github.com/microsoft/TypeScript-Website/blob/4ec663ac4412c3a7086401bd5a8811565589b11d/packages/documentation/copy/en/project-config/tsconfig.json.md"
-commit: "4ec663ac4412c3a7086401bd5a8811565589b11d"
-license: "CC-BY-4.0"
+title: What is a tsconfig.json
+layout: docs
+permalink: /docs/handbook/tsconfig-json.html
+oneline: Learn about how a TSConfig works
+translatable: true
 ---
-
-# What is a tsconfig.json
 
 ## Overview
 
@@ -29,9 +26,9 @@ When input files are specified on the command line, `tsconfig.json` files are ig
 
 Example `tsconfig.json` files:
 
-- Using the `files` property
+- Using the [`files`](/tsconfig#files) property
 
-  ```json
+  ```json tsconfig
   {
     "compilerOptions": {
       "module": "commonjs",
@@ -58,9 +55,9 @@ Example `tsconfig.json` files:
   }
   ```
 
-- Using the `include` and `exclude` properties
+- Using the [`include`](/tsconfig#include) and [`exclude`](/tsconfig#exclude) properties
 
-  ```json
+  ```json  tsconfig
   {
     "compilerOptions": {
       "module": "system",
@@ -77,12 +74,12 @@ Example `tsconfig.json` files:
 
 ## TSConfig Bases
 
-Depending on the JavaScript runtime environment which you intend to run your code in, there may be a base configuration which you can use at github.com/tsconfig/bases.
+Depending on the JavaScript runtime environment which you intend to run your code in, there may be a base configuration which you can use at [github.com/tsconfig/bases](https://github.com/tsconfig/bases/).
 These are `tsconfig.json` files which your project extends from which simplifies your `tsconfig.json` by handling the runtime support.
 
-For example, if you were writing a project which uses Node.js version 12 and above, then you could use the npm module `@tsconfig/node12`:
+For example, if you were writing a project which uses Node.js version 12 and above, then you could use the npm module [`@tsconfig/node12`](https://www.npmjs.com/package/@tsconfig/node12):
 
-```json
+```json tsconfig
 {
   "extends": "@tsconfig/node12/tsconfig.json",
 
@@ -99,12 +96,12 @@ This lets your `tsconfig.json` focus on the unique choices for your project, and
 
 ## Details
 
-The `"compilerOptions"` property can be omitted, in which case the compiler's defaults are used. See our full list of supported Compiler Options.
+The `"compilerOptions"` property can be omitted, in which case the compiler's defaults are used. See our full list of supported [Compiler Options](/tsconfig).
 
 ## TSConfig Reference
 
-To learn more about the hundreds of configuration options in the TSConfig Reference.
+To learn more about the hundreds of configuration options in the [TSConfig Reference](/tsconfig).
 
 ## Schema
 
-The `tsconfig.json` Schema can be found at the JSON Schema Store.
+The `tsconfig.json` Schema can be found at [the JSON Schema Store](https://json.schemastore.org/tsconfig).

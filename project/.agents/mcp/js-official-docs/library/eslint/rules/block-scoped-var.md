@@ -1,13 +1,11 @@
 ---
-title: "block-scoped-var"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/block-scoped-var.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: block-scoped-var
+rule_type: suggestion
+further_reading:
+- https://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting
 ---
 
-# block-scoped-var
 
 The `block-scoped-var` rule generates warnings when variables are used outside of the block in which they were defined. This emulates C-style block scope.
 
@@ -17,7 +15,7 @@ This rule aims to reduce the usage of variables outside of their binding context
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint block-scoped-var: "error"*/
@@ -63,9 +61,11 @@ class C {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint block-scoped-var: "error"*/
@@ -117,6 +117,8 @@ class C {
     }
 }
 ```
+
+:::
 
 ## Options
 

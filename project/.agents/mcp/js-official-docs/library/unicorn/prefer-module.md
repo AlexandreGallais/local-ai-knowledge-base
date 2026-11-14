@@ -1,21 +1,15 @@
----
-title: "prefer-module"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-module.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-module
 
 📝 Prefer JavaScript modules (ESM) over CommonJS.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-Prefer using the JavaScript module format over the legacy CommonJS module format. Together with other changes, this helps the ecosystem migrate to a single, native module format.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+Prefer using the [JavaScript module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) format over the legacy CommonJS module format. Together with other changes, this helps the ecosystem migrate to a single, native module format.
 
 1. Disallows `'use strict'` directive.
 
@@ -27,9 +21,9 @@ Prefer using the JavaScript module format over the legacy CommonJS module format
 
 1. Disallows the global variables `__dirname` and `__filename`.
 
-	They are not available in JavaScript modules.
+	They are [not available in JavaScript modules](https://nodejs.org/api/esm.html#esm_no_filename_or_dirname).
 
-	Starting with Node.js 20.11, `import.meta.dirname` and `import.meta.filename` have been introduced in ES modules, providing identical functionality to `__dirname` and `__filename` in CommonJS (CJS).
+	Starting with Node.js 20.11, [`import.meta.dirname`](https://nodejs.org/api/esm.html#importmetadirname) and [`import.meta.filename`](https://nodejs.org/api/esm.html#importmetafilename) have been introduced in ES modules, providing identical functionality to `__dirname` and `__filename` in CommonJS (CJS).
 
 	For most cases in Node.js 20.11 and later:
 
@@ -157,4 +151,4 @@ export {foo};
 
 ## Resources
 
-- Get Ready For ESM by @sindresorhus
+- [Get Ready For ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) by @sindresorhus

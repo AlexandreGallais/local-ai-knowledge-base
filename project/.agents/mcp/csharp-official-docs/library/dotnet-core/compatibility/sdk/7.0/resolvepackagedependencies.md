@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: ResolvePackageDependencies no longer called"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/7.0/resolvepackagedependencies.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in SDK for .NET 7 where the .NET SDK no longer calls the ResolvePackageDependencies target to get package information.
+ms.date: 07/14/2023
 ---
-
 # SDK no longer calls ResolvePackageDependencies
 
 Previously, the .NET SDK called the `ResolvePackageDependencies` target in order to generate `PackageDependencies` and `PackageDefinitions`. However, that data was already available from a different target. Instead, those two items are now added from `PreprocessPackageDependenciesDesignTime` into the design-time build cache and the prior target isn't called.
@@ -17,7 +13,7 @@ Previously, the .NET SDK called the `ResolvePackageDependencies` target in order
 
 ## Type of change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Previous behavior
 

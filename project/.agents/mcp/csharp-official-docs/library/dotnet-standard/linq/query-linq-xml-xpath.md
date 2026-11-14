@@ -1,22 +1,23 @@
 ---
-title: "How to query LINQ to XML using XPath - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/query-linq-xml-xpath.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to query LINQ to XML using XPath - LINQ to XML
+description: Learn the extension methods that enable you to query an XML tree by using XPath.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to query LINQ to XML using XPath (LINQ to XML)
 
-This article introduces the extension methods that enable you to query an XML tree by using XPath. For detailed information about using these extension methods, see `System.Xml.XPath.Extensions`.
+This article introduces the extension methods that enable you to query an XML tree by using XPath. For detailed information about using these extension methods, see <xref:System.Xml.XPath.Extensions?displayProperty=nameWithType>.
 
-> **Note:**
+> [!NOTE]
 > Unless you have a very specific reason for querying using XPath, such as extensive use of legacy code, using XPath with LINQ to XML isn't recommended. XPath queries won't perform as well as LINQ to XML queries.
 
 ## Example
 
-The following example creates a small XML tree and uses `System.Xml.XPath.Extensions.XPathSelectElements*` to select a set of elements.
+The following example creates a small XML tree and uses <xref:System.Xml.XPath.Extensions.XPathSelectElements*> to select a set of elements.
 
 ```csharp
 XElement root = new XElement("Root",

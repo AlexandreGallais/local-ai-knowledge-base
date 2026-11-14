@@ -1,12 +1,3 @@
----
-title: "alloc::ffi"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/alloc/src/ffi/mod.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # alloc::ffi
 
 Utilities related to FFI bindings.
@@ -17,10 +8,10 @@ operating system. It is mainly of use for FFI (Foreign Function
 Interface) bindings and code that needs to exchange C-like strings
 with other languages.
 
-#### Overview
+# Overview
 
-Rust represents owned strings with the `String` type, and
-borrowed slices of strings with the `str` primitive. Both are
+Rust represents owned strings with the [`String`] type, and
+borrowed slices of strings with the [`str`] primitive. Both are
 always in UTF-8 encoding, and may contain nul bytes in the middle,
 i.e., if you look at the bytes that make up the string, there may
 be a `\0` among them. Both `String` and `str` store their length
@@ -40,7 +31,7 @@ The C standard leaves the actual sizes of those types open to
 interpretation, but defines different APIs for strings made up of
 each character type. Rust strings are always UTF-8, so different
 Unicode characters will be encoded in a variable number of bytes
-each. The Rust type `char` represents a '[Unicode scalar
+each. The Rust type [`char`] represents a '[Unicode scalar
 value]', which is similar to, but not the same as, a '[Unicode
 code point]'.
 
@@ -66,22 +57,25 @@ truncate the string. Rust strings *can* have nul characters in
 the middle, because nul does not have to mark the end of the
 string in Rust.
 
-#### Representations of non-Rust strings
+# Representations of non-Rust strings
 
-`CString` and `CStr` are useful when you need to transfer
+[`CString`] and [`CStr`] are useful when you need to transfer
 UTF-8 strings to and from languages with a C ABI, like Python.
 
-* **From Rust to C:** `CString` represents an owned, C-friendly
+* **From Rust to C:** [`CString`] represents an owned, C-friendly
 string: it is nul-terminated, and has no internal nul characters.
-Rust code can create a `CString` out of a normal string (provided
+Rust code can create a [`CString`] out of a normal string (provided
 that the string doesn't have nul characters in the middle), and
-then use a variety of methods to obtain a raw `\*mut [u8]` that can
+then use a variety of methods to obtain a raw <code>\*mut [u8]</code> that can
 then be passed as an argument to functions which use the C
 conventions for strings.
 
-* **From C to Rust:** `CStr` represents a borrowed C string; it
-is what you would use to wrap a raw `\*const [u8]` that you got from
-a C function. A `CStr` is guaranteed to be a nul-terminated array
-of bytes. Once you have a `CStr`, you can convert it to a Rust
-`&[str]` if it's valid UTF-8, or lossily convert it by adding
+* **From C to Rust:** [`CStr`] represents a borrowed C string; it
+is what you would use to wrap a raw <code>\*const [u8]</code> that you got from
+a C function. A [`CStr`] is guaranteed to be a nul-terminated array
+of bytes. Once you have a [`CStr`], you can convert it to a Rust
+<code>&[str]</code> if it's valid UTF-8, or lossily convert it by adding
 replacement characters.
+
+[`String`]: crate::string::String
+[`CStr`]: core::ffi::CStr

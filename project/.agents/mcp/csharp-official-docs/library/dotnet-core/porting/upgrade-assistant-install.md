@@ -1,24 +1,26 @@
 ---
-title: "Install .NET Upgrade Assistant"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/upgrade-assistant-install.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Install .NET Upgrade Assistant
+description: "Learn how to install .NET Upgrade Assistant in Visual Studio or as a .NET Global Tool. .NET Upgrade Assistant assists you when upgrading projects to the latest dependencies or when upgrading to a new .NET"
+author: adegeo
+ms.author: adegeo
+ms.topic: install-set-up-deploy
+ms.date: 03/19/2026
+
+#customer intent: As a developer, I want to install .NET Upgrade Assistant so that I can upgrade my projects.
+
 ---
 
 # Install .NET Upgrade Assistant
 
 This article teaches you how to install .NET Upgrade Assistant in Visual Studio or using the command-line interface (CLI) tool.
 
-> **Important:**
-> .NET Upgrade Assistant is officially deprecated. Use the GitHub Copilot modernization chat agent instead, which is included with Visual Studio 2026 and Visual Studio 2022 17.14.16 or later. This agent analyzes your projects and dependencies, produces a step-by-step migration plan with targeted recommendations and automated code fixes, and commits each change so you can validate or roll back. It automates common porting tasks—updating project files, replacing deprecated APIs, and resolving build issues—so you can modernize faster with less manual effort.
+[!INCLUDE [github-copilot-suggestion](includes/github-copilot-suggestion.md)]
 
 ## Prerequisites
 
 - Windows Operating System
-- Visual Studio 2026 (or Visual Studio 2022 version 17.14.17+).
-- .NET SDK 8 or later.
+- [Visual Studio 2026](https://visualstudio.microsoft.com/downloads/) (or Visual Studio 2022 version 17.14.17+).
+- [.NET SDK 8 or later](https://dotnet.microsoft.com/download/dotnet/).
 
 ## Methods
 
@@ -41,9 +43,11 @@ The following steps enable the legacy Upgrade Assistant in Visual Studio.
 01. Select the **Enable legacy Upgrade Assistant** item.
 01. Restart Visual Studio
 
+    :::image type="content" source="media/upgrade-assistant-install/enable.png" alt-text="A screen shot showing the options window in Visual Studio with the Modernization settings page open.":::
+
 ## .NET Global Tool
 
-The following steps install .NET Upgrade Assistant as a .NET Global Tool. .NET Upgrade Assistant is distributed in the upgrade-assistant NuGet package.
+The following steps install .NET Upgrade Assistant as a .NET Global Tool. .NET Upgrade Assistant is distributed in the [upgrade-assistant NuGet package](https://www.nuget.org/packages/upgrade-assistant).
 
 01. Open a command prompt that has the `dotnet` command in Path.
 01. Run the following command to install the tool:
@@ -52,7 +56,7 @@ The following steps install .NET Upgrade Assistant as a .NET Global Tool. .NET U
     dotnet tool install -g upgrade-assistant
     ```
 
-    > **Important:**
+    > [!IMPORTANT]
     > Installing this tool may fail if you've configured another NuGet feed source. Use the `--ignore-failed-sources` parameter to treat those failures as warnings instead of errors, bypassing those other NuGet feed sources:
     >
     > ```dotnetcli

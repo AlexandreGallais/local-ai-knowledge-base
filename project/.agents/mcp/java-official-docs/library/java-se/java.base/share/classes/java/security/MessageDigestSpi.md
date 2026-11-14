@@ -1,33 +1,26 @@
----
-title: "MessageDigestSpi class (java.security)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/MessageDigestSpi.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # MessageDigestSpi class (java.security)
 
 ```java
 public abstract class MessageDigestSpi
 ```
 
-This class defines the *Service Provider Interface* (**SPI**)
-for the `MessageDigest` class, which provides the functionality
+This class defines the <i>Service Provider Interface</i> (<b>SPI</b>)
+for the {@code MessageDigest} class, which provides the functionality
 of a message digest algorithm, such as MD5 or SHA. Message digests are
 secure one-way hash functions that take arbitrary-sized data and output a
 fixed-length hash value.
 
- All the abstract methods in this class must be implemented by a
+<p> All the abstract methods in this class must be implemented by a
 cryptographic service provider who wishes to supply the implementation
 of a particular message digest algorithm.
 
- Implementations are free to implement the Cloneable interface.
+<p> Implementations are free to implement the Cloneable interface.
 
-**Since:** 1.2
+@author Benjamin Renaud
+@since 1.2
 
-**See also:** MessageDigest
+
+@see MessageDigest
 
 ## MessageDigestSpi.MessageDigestSpi()
 
@@ -45,17 +38,17 @@ protected int engineGetDigestLength()
 
 Returns the digest length in bytes.
 
-This concrete method has been added to this previously-defined
+<p>This concrete method has been added to this previously-defined
 abstract class. (For backwards compatibility, it cannot be abstract.)
 
-The default behavior is to return 0.
+<p>The default behavior is to return 0.
 
-This method may be overridden by a provider to return the digest
+<p>This method may be overridden by a provider to return the digest
 length.
 
-**Returns:** the digest length in bytes.
+@return the digest length in bytes.
 
-**Since:** 1.2
+@since 1.2
 
 ## MessageDigestSpi.engineUpdate(byte)
 
@@ -65,9 +58,7 @@ protected abstract void engineUpdate(byte input)
 
 Updates the digest using the specified byte.
 
-Parameters:
-
-- `input`: the byte to use for the update.
+@param input the byte to use for the update.
 
 ## MessageDigestSpi.engineUpdate(byte[], int, int)
 
@@ -78,11 +69,12 @@ protected abstract void engineUpdate(byte[] input, int offset, int len)
 Updates the digest using the specified array of bytes,
 starting at the specified offset.
 
-Parameters:
+@param input the array of bytes to use for the update.
 
-- `input`: the array of bytes to use for the update.
-- `offset`: the offset to start from in the array of bytes.
-- `len`: the number of bytes to use, starting at `offset`.
+@param offset the offset to start from in the array of bytes.
+
+@param len the number of bytes to use, starting at
+{@code offset}.
 
 ## MessageDigestSpi.engineUpdate(ByteBuffer)
 
@@ -91,16 +83,13 @@ protected void engineUpdate(ByteBuffer input)
 ```
 
 Update the digest using the specified ByteBuffer. The digest is
-updated using the `input.remaining()` bytes starting
-at `input.position()`.
+updated using the {@code input.remaining()} bytes starting
+at {@code input.position()}.
 Upon return, the buffer's position will be equal to its limit;
 its limit will not have changed.
 
-Parameters:
-
-- `input`: the ByteBuffer
-
-**Since:** 1.5
+@param input the ByteBuffer
+@since 1.5
 
 ## MessageDigestSpi.engineDigest()
 
@@ -109,13 +98,13 @@ protected abstract byte[] engineDigest()
 ```
 
 Completes the hash computation by performing final
-operations such as padding. Once `engineDigest` has
+operations such as padding. Once {@code engineDigest} has
 been called, the engine should be reset (see
-engineReset).
+{@link #engineReset() engineReset}).
 Resetting is the responsibility of the
 engine implementor.
 
-**Returns:** the array of bytes for the resulting hash value.
+@return the array of bytes for the resulting hash value.
 
 ## MessageDigestSpi.engineDigest(byte[], int, int)
 
@@ -124,9 +113,9 @@ protected int engineDigest(byte[] buf, int offset, int len) throws DigestExcepti
 ```
 
 Completes the hash computation by performing final
-operations such as padding. Once `engineDigest` has
+operations such as padding. Once {@code engineDigest} has
 been called, the engine should be reset (see
-engineReset).
+{@link #engineReset() engineReset}).
 Resetting is the responsibility of the
 engine implementor.
 
@@ -134,19 +123,24 @@ This method should be abstract, but we leave it concrete for
 binary compatibility.  Knowledgeable providers should override this
 method.
 
-Parameters:
+@param buf the output buffer in which to store the digest
 
-- `buf`: the output buffer in which to store the digest
-- `offset`: offset to start from in the output buffer
-- `len`: number of bytes within `buf` allotted for the digest. Both this default implementation and the SUN provider do not return partial digests. The presence of this parameter is solely for consistency in our API's. If the value of this parameter is less than the actual digest length, the method will throw a `DigestException`. This parameter is ignored if its value is greater than or equal to the actual digest length.
+@param offset offset to start from in the output buffer
 
-**Returns:** the length of the digest stored in the output buffer.
+@param len number of bytes within {@code buf} allotted for the digest.
+Both this default implementation and the SUN provider do not
+return partial digests.  The presence of this parameter is solely
+for consistency in our API's.  If the value of this parameter is less
+than the actual digest length, the method will throw a
+{@code DigestException}.
+This parameter is ignored if its value is greater than or equal to
+the actual digest length.
 
-**Since:** 1.2
+@return the length of the digest stored in the output buffer.
 
-Throws:
+@throws    DigestException if an error occurs.
 
-- `DigestException`: if an error occurs.
+@since 1.2
 
 ## MessageDigestSpi.engineReset()
 
@@ -164,8 +158,7 @@ public Object clone() throws CloneNotSupportedException
 
 Returns a clone if the implementation is cloneable.
 
-**Returns:** a clone if the implementation is cloneable.
+@return a clone if the implementation is cloneable.
 
-Throws:
-
-- `CloneNotSupportedException`: if this is called on an implementation that does not support `Cloneable`.
+@throws    CloneNotSupportedException if this is called on an
+implementation that does not support {@code Cloneable}.

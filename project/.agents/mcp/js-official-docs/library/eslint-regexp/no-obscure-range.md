@@ -1,15 +1,15 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/no-obscure-range"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/no-obscure-range.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "disallow obscure character ranges"
+since: "v0.9.0"
 ---
-
 # regexp/no-obscure-range
 
 💼 This rule is enabled in the following configs: 🟢 `flat/recommended`, 🔵 `recommended`.
+
+<!-- end auto-generated rule header -->
 
 > disallow obscure character ranges
 
@@ -56,6 +56,8 @@ var foo = /[😀-😄]/u;
 This option can be used to override the [allowedCharacterRanges] setting.
 
 It allows all values that the [allowedCharacterRanges] setting allows.
+
+[allowedCharacterRanges]: ../settings/index.md#allowedCharacterRanges
 
 ### `"allowed": "alphanumeric"`
 
@@ -126,5 +128,5 @@ This rule was introduced in eslint-plugin-regexp v0.9.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/no-obscure-range.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/no-obscure-range.ts)

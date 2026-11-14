@@ -1,12 +1,3 @@
----
-title: "alloc::io::read (part 1 of 2)"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/alloc/src/io/read.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # alloc::io::read
 
 ## trait Read
@@ -19,19 +10,21 @@ The `Read` trait allows for reading bytes from a source.
 
 Implementors of the `Read` trait are called 'readers'.
 
-Readers are defined by one required method, `read()`. Each call to `read()`
+Readers are defined by one required method, [`read()`]. Each call to [`read()`]
 will attempt to pull bytes from this source into a provided buffer. A
-number of other methods are implemented in terms of `read()`, giving
+number of other methods are implemented in terms of [`read()`], giving
 implementors a number of ways to read bytes while only needing to implement
 a single method.
 
 Readers are intended to be composable with one another. Many implementors
-throughout `std::io` take and provide types which implement the `Read`
+throughout [`std::io`] take and provide types which implement the `Read`
 trait.
 
-Please note that each call to `read()` may involve a system call, and
-therefore, using something that implements `BufRead`, such as
+Please note that each call to [`read()`] may involve a system call, and
+therefore, using something that implements [`BufRead`], such as
 `BufReader`, will be more efficient.
+
+[`BufRead`]: crate::io::BufRead
 
 Repeated calls to the reader use the same cursor, so for example
 calling `read_to_end` twice on a `File` will only return the file's
@@ -41,7 +34,7 @@ contents once. It's recommended to first call `rewind()` in that case.
 
 `File`s implement `Read`:
 
-```rust
+```no_run
 use std::io;
 use std::io::prelude::*;
 use std::fs::File;
@@ -66,9 +59,10 @@ fn main() -> io::Result<()> {
 }
 ```
 
-Read from `&str` because `&[u8]` implements `Read`:
+Read from [`&str`] because [`&[u8]`][prim@slice] implements `Read`:
 
-```rust
+```no_run
+# use std::io;
 use std::io::prelude::*;
 
 fn main() -> io::Result<()> {
@@ -83,6 +77,10 @@ fn main() -> io::Result<()> {
 }
 ```
 
+[`read()`]: Read::read
+[`&str`]: prim@str
+[`std::io`]: crate::io
+
 ## Read::read
 
 ```rust
@@ -94,9 +92,9 @@ how many bytes were read.
 
 This function does not provide any guarantees about whether it blocks
 waiting for data, but if an object needs to block for a read and cannot,
-it will typically signal this via an `Err` return value.
+it will typically signal this via an [`Err`] return value.
 
-If the return value of this method is `Ok(n)`, then implementations must
+If the return value of this method is [`Ok(n)`], then implementations must
 guarantee that `0 <= n <= buf.len()`. A nonzero `n` value indicates
 that the buffer `buf` has been filled in with `n` bytes of data from this
 source. If `n` is `0`, then it can indicate one of two scenarios:
@@ -131,7 +129,9 @@ any guarantees about how the implementation uses `buf`. The trait is safe to imp
 so it is possible that the code that's supposed to write to the buffer might also read
 from it. It is your responsibility to make sure that `buf` is initialized
 before calling `read`. Calling `read` with an uninitialized `buf` (of the kind one
-obtains via `MaybeUninit<T>`) is not safe, and can lead to undefined behavior.
+obtains via [`MaybeUninit<T>`]) is not safe, and can lead to undefined behavior.
+
+[`MaybeUninit<T>`]: core::mem::MaybeUninit
 
 # Errors
 
@@ -139,14 +139,17 @@ If this function encounters any form of I/O or other error, an error
 variant will be returned. If an error is returned then it must be
 guaranteed that no bytes were read.
 
-An error of the `ErrorKind::Interrupted` kind is non-fatal and the read
+An error of the [`ErrorKind::Interrupted`] kind is non-fatal and the read
 operation should be retried if there is nothing else to do.
 
 # Examples
 
 `File`s implement `Read`:
 
-```rust
+[`Ok(n)`]: Ok
+[`ErrorKind::Interrupted`]: crate::io::ErrorKind::Interrupted
+
+```no_run
 use std::io;
 use std::io::prelude::*;
 use std::fs::File;
@@ -188,16 +191,16 @@ fn read_to_end(&mut self, buf: &mut Vec<u8>) -> Result<usize>
 Reads all bytes until EOF in this source, placing them into `buf`.
 
 All bytes read from this source will be appended to the specified buffer
-`buf`. This function will continuously call `read()` to append more data to
-`buf` until `read()` returns either `Ok(0)` or an error of
-non-`ErrorKind::Interrupted` kind.
+`buf`. This function will continuously call [`read()`] to append more data to
+`buf` until [`read()`] returns either [`Ok(0)`] or an error of
+non-[`ErrorKind::Interrupted`] kind.
 
 If successful, this function will return the total number of bytes read.
 
 # Errors
 
 If this function encounters an error of the kind
-`ErrorKind::Interrupted` then the error is ignored and the operation
+[`ErrorKind::Interrupted`] then the error is ignored and the operation
 will continue.
 
 If any other read error is encountered then this function immediately
@@ -208,7 +211,11 @@ returns. Any bytes which have already been read will be appended to
 
 `File`s implement `Read`:
 
-```rust
+[`Ok(0)`]: Ok
+[`ErrorKind::Interrupted`]: crate::io::ErrorKind::Interrupted
+[`read()`]: Read::read
+
+```no_run
 use std::io;
 use std::io::prelude::*;
 use std::fs::File;
@@ -229,11 +236,15 @@ file.)
 ## Implementing `read_to_end`
 
 When implementing the `io::Read` trait, it is recommended to allocate
-memory using `Vec::try_reserve`. However, this behavior is not guaranteed
+memory using [`Vec::try_reserve`]. However, this behavior is not guaranteed
 by all implementations, and `read_to_end` may not handle out-of-memory
 situations gracefully.
 
-```rust
+```no_run
+# #![expect(dead_code)]
+# use std::io::{self, BufRead};
+# struct Example { example_datasource: io::Empty } impl Example {
+# fn get_some_data_for_the_example(&self) -> &'static [u8] { &[] }
 fn read_to_end(&mut self, dest_vec: &mut Vec<u8>) -> io::Result<usize> {
     let initial_vec_len = dest_vec.len();
     loop {
@@ -251,6 +262,7 @@ fn read_to_end(&mut self, dest_vec: &mut Vec<u8>) -> io::Result<usize> {
     }
     Ok(dest_vec.len() - initial_vec_len)
 }
+# }
 ```
 
 # Usage Notes
@@ -262,7 +274,10 @@ is one such stream which may be finite if piped, but is typically continuous. Fo
 Reading user input or running programs that remain open indefinitely will never terminate
 the stream with `EOF` (e.g. `yes | my-rust-program`).
 
-Using `.lines()` with a `BufReader` or using `read` can provide a better solution
+Using `.lines()` with a `BufReader` or using [`read`] can provide a better solution
+
+[`read`]: Read::read
+[`Vec::try_reserve`]: crate::vec::Vec::try_reserve
 
 ## Read::read_to_string
 
@@ -280,13 +295,15 @@ and appended to `buf`.
 If the data in this stream is *not* valid UTF-8 then an error is
 returned and `buf` is unchanged.
 
-See `read_to_end` for other error semantics.
+See [`read_to_end`] for other error semantics.
+
+[`read_to_end`]: Read::read_to_end
 
 # Examples
 
 `File`s implement `Read`:
 
-```rust
+```no_run
 use std::io;
 use std::io::prelude::*;
 use std::fs::File;
@@ -312,7 +329,9 @@ is one such stream which may be finite if piped, but is typically continuous. Fo
 Reading user input or running programs that remain open indefinitely will never terminate
 the stream with `EOF` (e.g. `yes | my-rust-program`).
 
-Using `.lines()` with a `BufReader` or using `read` can provide a better solution
+Using `.lines()` with a `BufReader` or using [`read`] can provide a better solution
+
+[`read`]: Read::read
 
 ## Read::read_exact
 
@@ -327,17 +346,17 @@ specified buffer `buf`.
 
 *Implementations* of this method can make no assumptions about the contents of `buf` when
 this function is called. It is recommended that implementations only write data to `buf`
-instead of reading its contents. The documentation on `read` has a more detailed
+instead of reading its contents. The documentation on [`read`] has a more detailed
 explanation of this subject.
 
 # Errors
 
 If this function encounters an error of the kind
-`ErrorKind::Interrupted` then the error is ignored and the operation
+[`ErrorKind::Interrupted`] then the error is ignored and the operation
 will continue.
 
 If this function encounters an "end of file" before completely filling
-the buffer, it returns an error of the kind `ErrorKind::UnexpectedEof`.
+the buffer, it returns an error of the kind [`ErrorKind::UnexpectedEof`].
 The contents of `buf` are unspecified in this case.
 
 If any other read error is encountered then this function immediately
@@ -351,7 +370,11 @@ completely fill the buffer.
 
 `File`s implement `Read`:
 
-```rust
+[`ErrorKind::Interrupted`]: crate::io::ErrorKind::Interrupted
+[`ErrorKind::UnexpectedEof`]: crate::io::ErrorKind::UnexpectedEof
+[`read`]: Read::read
+
+```no_run
 use std::io;
 use std::io::prelude::*;
 use std::fs::File;
@@ -381,7 +404,7 @@ current reader.
 
 `File`s implement `Read`:
 
-```rust
+```no_run
 use std::io;
 use std::io::Read;
 use std::fs::File;
@@ -411,12 +434,12 @@ fn main() -> io::Result<()> {
 fn bytes(self) -> Bytes<Self> where Self: Sized,
 ```
 
-Transforms this `Read` instance to an `Iterator` over its bytes.
+Transforms this `Read` instance to an [`Iterator`] over its bytes.
 
-The returned type implements `Iterator` where the `Item` is
+The returned type implements [`Iterator`] where the [`Item`] is
 <code>[Result]<[u8], [io::Error]></code>.
-The yielded item is `Ok` if a byte was successfully read and `Err`
-otherwise. EOF is mapped to returning `None` from this iterator.
+The yielded item is [`Ok`] if a byte was successfully read and [`Err`]
+otherwise. EOF is mapped to returning [`None`] from this iterator.
 
 The default implementation calls `read` for each byte,
 which can be very inefficient for data that's not in memory,
@@ -424,15 +447,21 @@ such as `File`. Consider using a `BufReader` in such cases.
 
 # Errors
 
-When the returned iterator calls `Iterator::next`,
-if it encounters an error of the kind `ErrorKind::Interrupted`
+When the returned iterator calls [`Iterator::next`],
+if it encounters an error of the kind [`ErrorKind::Interrupted`]
 then the error is ignored and it will try to read the byte again.
+
+[`ErrorKind::Interrupted`]: crate::io::ErrorKind::Interrupted
 
 # Examples
 
 `File`s implement `Read`:
 
-```rust
+[`Item`]: Iterator::Item
+[Result]: core::result::Result "Result"
+[io::Error]: crate::io::Error "io::Error"
+
+```no_run
 use std::io;
 use std::io::prelude::*;
 use std::io::BufReader;
@@ -464,7 +493,7 @@ output of `next`.
 
 `File`s implement `Read`:
 
-```rust
+```no_run
 use std::io;
 use std::io::prelude::*;
 use std::fs::File;
@@ -492,15 +521,18 @@ fn take(self, limit: u64) -> Take<Self> where Self: Sized,
 Creates an adapter which will read at most `limit` bytes from it.
 
 This function returns a new instance of `Read` which will read at most
-`limit` bytes, after which it will always return EOF (`Ok(0)`). Any
+`limit` bytes, after which it will always return EOF ([`Ok(0)`]). Any
 read errors will not count towards the number of bytes read and future
-calls to `read()` may succeed.
+calls to [`read()`] may succeed.
 
 # Examples
 
 `File`s implement `Read`:
 
-```rust
+[`Ok(0)`]: Ok
+[`read()`]: Read::read
+
+```no_run
 use std::io;
 use std::io::prelude::*;
 use std::fs::File;
@@ -516,3 +548,67 @@ fn main() -> io::Result<()> {
     Ok(())
 }
 ```
+
+## fn read_to_string
+
+```rust
+pub fn read_to_string<R: Read>(mut reader: R) -> Result<String>
+```
+
+Reads all bytes from a [reader][Read] into a new [`String`].
+
+This is a convenience function for [`Read::read_to_string`]. Using this
+function avoids having to create a variable first and provides more type
+safety since you can only get the buffer out if there were no errors. (If you
+use [`Read::read_to_string`] you have to remember to check whether the read
+succeeded because otherwise your buffer will be empty or only partially full.)
+
+# Performance
+
+The downside of this function's increased ease of use and type safety is
+that it gives you less control over performance. For example, you can't
+pre-allocate memory like you can using [`String::with_capacity`] and
+[`Read::read_to_string`]. Also, you can't re-use the buffer if an error
+occurs while reading.
+
+In many cases, this function's performance will be adequate and the ease of use
+and type safety tradeoffs will be worth it. However, there are cases where you
+need more control over performance, and in those cases you should definitely use
+[`Read::read_to_string`] directly.
+
+Note that in some special cases, such as when reading files, this function will
+pre-allocate memory based on the size of the input it is reading. In those
+cases, the performance should be as good as if you had used
+[`Read::read_to_string`] with a manually pre-allocated buffer.
+
+# Errors
+
+This function forces you to handle errors because the output (the `String`)
+is wrapped in a [`Result`]. See [`Read::read_to_string`] for the errors
+that can occur. If any error occurs, you will get an [`Err`], so you
+don't have to worry about your buffer being empty or partially full.
+
+# Examples
+
+```no_run
+# use std::io;
+fn main() -> io::Result<()> {
+    let stdin = io::read_to_string(io::stdin())?;
+    println!("Stdin was:");
+    println!("{stdin}");
+    Ok(())
+}
+```
+
+# Usage Notes
+
+`read_to_string` attempts to read a source until EOF, but many sources are continuous streams
+that do not send EOF. In these cases, `read_to_string` will block indefinitely. Standard input
+is one such stream which may be finite if piped, but is typically continuous. For example,
+`cat file | my-rust-program` will correctly terminate with an `EOF` upon closure of cat.
+Reading user input or running programs that remain open indefinitely will never terminate
+the stream with `EOF` (e.g. `yes | my-rust-program`).
+
+Using `.lines()` with a `BufReader` or using [`read`] can provide a better solution
+
+[`read`]: Read::read

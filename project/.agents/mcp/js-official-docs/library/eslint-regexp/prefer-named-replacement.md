@@ -1,15 +1,15 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/prefer-named-replacement"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/prefer-named-replacement.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "enforce using named replacement"
+since: "v1.4.0"
 ---
-
 # regexp/prefer-named-replacement
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 > enforce using named replacement
 
@@ -51,11 +51,15 @@ This rule reports and fixes `$n` parameter in replacement string that do not use
 - [regexp/prefer-named-capture-group]
 - [regexp/prefer-result-array-groups]
 
+[regexp/prefer-named-backreference]: ./prefer-named-backreference.md
+[regexp/prefer-named-capture-group]: ./prefer-named-capture-group.md
+[regexp/prefer-result-array-groups]: ./prefer-result-array-groups.md
+
 ## :rocket: Version
 
 This rule was introduced in eslint-plugin-regexp v1.4.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/prefer-named-replacement.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/prefer-named-replacement.ts)

@@ -1,19 +1,20 @@
 ---
 title: "How to: Override Encoded SOAP XML Serialization"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/serialization/how-to-override-encoded-soap-xml-serialization.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about overriding XML serialization of objects as SOAP messages, which is similar to the process for overriding standard XML serialization.
+ms.date: "03/30/2017"
+helpviewer_keywords:
+  - "overriding XML serialization"
+  - "SOAP, overriding encoded XML serialization"
+ms.assetid: d0791df8-04e3-46b4-a6be-fe0ed09267e8
 ---
 
 # How to: Override Encoded SOAP XML Serialization
 
-The process for overriding XML serialization of objects as SOAP messages is similar to the process for overriding standard XML serialization. For information about overriding standard XML serialization, see How to: Specify an Alternate Element Name for an XML Stream.
+The process for overriding XML serialization of objects as SOAP messages is similar to the process for overriding standard XML serialization. For information about overriding standard XML serialization, see [How to: Specify an Alternate Element Name for an XML Stream](how-to-specify-an-alternate-element-name-for-an-xml-stream.md).
 
 ## To override serialization of objects as SOAP messages
 
-1. Create an instance of the `System.Xml.Serialization.SoapAttributeOverrides` class.
+1. Create an instance of the <xref:System.Xml.Serialization.SoapAttributeOverrides> class.
 
 2. Create a `SoapAttributes` for each class member that is being serialized.
 
@@ -275,9 +276,9 @@ public class Run
 
 ## See also
 
-- XML and SOAP Serialization
-- Attributes That Control Encoded SOAP Serialization
-- XML Serialization with XML Web Services
-- How to: Serialize an Object
-- How to: Deserialize an Object
-- How to: Serialize an Object as a SOAP-Encoded XML Stream
+- [XML and SOAP Serialization](xml-and-soap-serialization.md)
+- [Attributes That Control Encoded SOAP Serialization](attributes-that-control-encoded-soap-serialization.md)
+- [XML Serialization with XML Web Services](xml-serialization-with-xml-web-services.md)
+- [How to: Serialize an Object](how-to-serialize-an-object.md)
+- [How to: Deserialize an Object](how-to-deserialize-an-object.md)
+- [How to: Serialize an Object as a SOAP-Encoded XML Stream](how-to-serialize-an-object-as-a-soap-encoded-xml-stream.md)

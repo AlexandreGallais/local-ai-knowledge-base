@@ -1,15 +1,13 @@
 ---
-title: "Microsoft SQL Server Database Provider - Vector Search - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/providers/sql-server/vector-search.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Microsoft SQL Server Database Provider - Vector Search - EF Core
+description: Using vectors and embeddings to perform similarity search with the Entity Framework Core Microsoft SQL Server database provider
+author: SamMonoRT
+ms.date: 06/09/2026
+uid: core/providers/sql-server/vector-search
 ---
-
 # Vector search in the SQL Server EF Core Provider
 
-> **Note:**
+> [!NOTE]
 > Vector support was introduced in EF Core 10.0, and is only supported with SQL Server 2025 and above.
 
 The SQL Server vector data type allows storing *embeddings*, which are representations of meaning that can be efficiently searched over for similarity, powering AI workloads such as semantic search and retrieval-augmented generation (RAG).
@@ -18,7 +16,7 @@ The SQL Server vector data type allows storing *embeddings*, which are represent
 
 To use the `vector` data type, simply add a .NET property of type `SqlVector<float>` to your entity type, specifying the dimensions as follows:
 
-### Data Annotations
+### [Data Annotations](#tab/data-annotations)
 
 ```c#
 public class Blog
@@ -30,7 +28,7 @@ public class Blog
 }
 ```
 
-### Fluent API
+### [Fluent API](#tab/fluent-api)
 
 ```c#
 public class Blog
@@ -50,7 +48,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 ***
 
-Once your property is added and the corresponding column created in the database, you can start inserting embeddings. Embedding generation is done outside of the database, usually via a service, and the details for doing this are out of scope for this documentation. However, the .NET Microsoft.Extensions.AI library contains `IEmbeddingGenerator`, which is an abstraction over embedding generators that has implementations for the major providers.
+Once your property is added and the corresponding column created in the database, you can start inserting embeddings. Embedding generation is done outside of the database, usually via a service, and the details for doing this are out of scope for this documentation. However, [the .NET Microsoft.Extensions.AI library](/dotnet/ai/microsoft-extensions-ai) contains [`IEmbeddingGenerator`](/dotnet/ai/microsoft-extensions-ai#create-embeddings), which is an abstraction over embedding generators that has implementations for the major providers.
 
 Once you've chosen your embedding generator and set it up, use it to generate embeddings and insert them as follows:
 
@@ -68,12 +66,12 @@ await context.SaveChangesAsync();
 
 Once you have embeddings saved to your database, you're ready to perform vector similarity search over them.
 
-> **Note:**
+> [!NOTE]
 > Starting with EF Core 11, vector properties are not loaded by default when querying entities, since vectors are typically large and are rarely needed to be read back. Prior to EF Core 11, vector properties were always loaded like any other property.
 
 ## Exact search with VECTOR_DISTANCE()
 
-The `EF.Functions.VectorDistance()` function computes the *exact* distance between two vectors. Use it to perform similarity search for a given user query:
+The [`EF.Functions.VectorDistance()`](/sql/t-sql/functions/vector-distance-transact-sql) function computes the *exact* distance between two vectors. Use it to perform similarity search for a given user query:
 
 ```c#
 var sqlVector = new SqlVector<float>(await embeddingGenerator.GenerateVectorAsync("Some user query to be vectorized"));
@@ -85,17 +83,17 @@ var topSimilarBlogs = await context.Blogs
 
 This function computes the distance between the query vector and every row in the table, then returns the closest matches. While this provides perfectly accurate results, it can be slow for large datasets because SQL Server must scan all rows and compute distances for each one.
 
-> **Note:**
-> The built-in support in EF 10 replaces the previous EFCore.SqlServer.VectorSearch extension, which allowed performing vector search before the `vector` data type was introduced. As part of upgrading to EF 10, remove the extension from your projects.
+> [!NOTE]
+> The built-in support in EF 10 replaces the previous [EFCore.SqlServer.VectorSearch](https://github.com/efcore/EFCore.SqlServer.VectorSearch) extension, which allowed performing vector search before the `vector` data type was introduced. As part of upgrading to EF 10, remove the extension from your projects.
 
 ## Searching with VECTOR_SEARCH()
 
-> **Warning:**
+> [!WARNING]
 > `VECTOR_SEARCH()` and vector indexes are currently experimental features in SQL Server and are subject to change. The APIs in EF Core for these features are also subject to change.
 
 SQL Server's `VECTOR_SEARCH()` table-valued function retrieves rows based on vector similarity. Unlike `VECTOR_DISTANCE()` — which computes the distance between two specific vectors — `VECTOR_SEARCH()` searches an entire table for the most similar vectors to a given query vector.
 
-Use the `VectorSearch()` extension method on your `DbSet`, and chain `OrderBy()`, `Take()`, and `WithApproximate()` to perform an approximate nearest neighbor (ANN) search that uses a vector index:
+Use the `VectorSearch()` extension method on your `DbSet`, and chain `OrderBy()`, `Take()`, and `WithApproximate()` to perform an approximate nearest neighbor (ANN) search that uses a [vector index](/sql/t-sql/statements/create-vector-index-transact-sql):
 
 ```csharp
 var results = await context.Blogs
@@ -186,7 +184,7 @@ Choose the metric that best matches your embedding model and use case. Cosine si
 
 ## Hybrid search
 
-*Hybrid search* combines vector similarity search with traditional full-text search to deliver more relevant results. Vector search excels at finding semantically similar content, while full-text search is better at exact keyword matching. By combining both approaches and using Reciprocal Rank Fusion (RRF) to merge the results, you can build more intelligent search experiences.
+*Hybrid search* combines vector similarity search with traditional [full-text search](xref:core/providers/sql-server/full-text-search) to deliver more relevant results. Vector search excels at finding semantically similar content, while full-text search is better at exact keyword matching. By combining both approaches and using Reciprocal Rank Fusion (RRF) to merge the results, you can build more intelligent search experiences.
 
 The following example shows how to implement hybrid search using EF Core, combining `FreeTextTable()` and `VectorSearch()` in a single query:
 

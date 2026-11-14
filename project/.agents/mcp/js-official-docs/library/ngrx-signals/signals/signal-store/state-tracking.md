@@ -1,12 +1,3 @@
----
-title: "State Tracking"
-tool: "ngrx-signals"
-version: "22.0"
-source: "https://github.com/ngrx/platform/blob/a4995391ef631f1bd60d539f436a1aa5c23c4fe5/projects/www/src/app/pages/guide/signals/signal-store/state-tracking.md"
-commit: "a4995391ef631f1bd60d539f436a1aa5c23c4fe5"
-license: "MIT"
----
-
 # State Tracking
 
 State tracking enables the implementation of custom SignalStore features such as logging, state undo/redo, and storage synchronization.

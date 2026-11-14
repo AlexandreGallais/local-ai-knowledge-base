@@ -1,18 +1,11 @@
----
-title: "ts-ban-ts-comment"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/ts-ban-ts-comment.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
-
-# `ts-ban-ts-comment`
+<a name="user-content-ts-ban-ts-comment"></a>
+<a name="ts-ban-ts-comment"></a>
+# <code>ts-ban-ts-comment</code>
 
 Disallows `@ts-<directive>` comments (`@ts-expect-error`, `@ts-ignore`,
 `@ts-nocheck`, `@ts-check`) or requires that they be accompanied by a
 description, mirroring the behavior of
-`@typescript-eslint/ban-ts-comment`.
+[`@typescript-eslint/ban-ts-comment`](https://typescript-eslint.io/rules/ban-ts-comment/).
 
 This rule is only recommended for `typescript-flavor` configs (i.e., those
 using TypeScript-style JSDoc without an actual TypeScript compiler), since
@@ -32,29 +25,42 @@ codebases should instead configure `ts-ignore` as `false` or
 `"allow-with-description"` so the necessary `@ts-ignore` comments are not
 reported.
 
+<a name="user-content-ts-ban-ts-comment-options"></a>
+<a name="ts-ban-ts-comment-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `minimumDescriptionLength`
+<a name="user-content-ts-ban-ts-comment-options-minimumdescriptionlength"></a>
+<a name="ts-ban-ts-comment-options-minimumdescriptionlength"></a>
+### <code>minimumDescriptionLength</code>
 
 A minimum character length for descriptions when `allow-with-description` is enabled. Defaults to `3`.
 
-### `ts-check`
+<a name="user-content-ts-ban-ts-comment-options-ts-check"></a>
+<a name="ts-ban-ts-comment-options-ts-check"></a>
+### <code>ts-check</code>
 
 Whether (and how) to allow `@ts-check` directives.
 
-### `ts-expect-error`
+<a name="user-content-ts-ban-ts-comment-options-ts-expect-error"></a>
+<a name="ts-ban-ts-comment-options-ts-expect-error"></a>
+### <code>ts-expect-error</code>
 
 Whether (and how) to allow `@ts-expect-error` directives.
 
-### `ts-ignore`
+<a name="user-content-ts-ban-ts-comment-options-ts-ignore"></a>
+<a name="ts-ban-ts-comment-options-ts-ignore"></a>
+### <code>ts-ignore</code>
 
 Whether (and how) to allow `@ts-ignore` directives.
 
-### `ts-nocheck`
+<a name="user-content-ts-ban-ts-comment-options-ts-nocheck"></a>
+<a name="ts-ban-ts-comment-options-ts-nocheck"></a>
+### <code>ts-nocheck</code>
 
 Whether (and how) to allow `@ts-nocheck` directives.
+
 
 |||
 |---|---|
@@ -63,6 +69,8 @@ Whether (and how) to allow `@ts-nocheck` directives.
 |Recommended|false, but recommended for `typescript-flavor` configs|
 |Settings||
 
+<a name="user-content-ts-ban-ts-comment-failing-examples"></a>
+<a name="ts-ban-ts-comment-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -109,6 +117,10 @@ foo();
 // Message: The description for the "@ts-expect-error" directive must match the ^: TS\d+ because .+$ format.
 ````
 
+
+
+<a name="user-content-ts-ban-ts-comment-passing-examples"></a>
+<a name="ts-ban-ts-comment-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -142,3 +154,4 @@ foo();
 foo();
 // "jsdoc/ts-ban-ts-comment": ["error"|"warn", {"ts-expect-error":{"descriptionFormat":"^: TS\\d+ because .+$"}}]
 ````
+

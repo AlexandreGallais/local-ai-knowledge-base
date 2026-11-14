@@ -1,15 +1,33 @@
 ---
-title: "How to: Write a Custom PLINQ Aggregate Function (part 1 of 5)"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/parallel-programming/how-to-write-a-custom-plinq-aggregate-function.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn more about: How to: Write a Custom PLINQ Aggregate Function"
+title: "How to: Write a Custom PLINQ Aggregate Function"
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "PLINQ queries, how to create aggregate function"
+ms.assetid: 5a70dd49-ab2a-4798-b551-196ee7042b1a
 ---
-
 # How to: Write a Custom PLINQ Aggregate Function
 
-This example shows how to use the `System.Linq.ParallelEnumerable.Aggregate*` method to apply a custom aggregation function to a source sequence.
+This example shows how to use the <xref:System.Linq.ParallelEnumerable.Aggregate*> method to apply a custom aggregation function to a source sequence.
 
-> **Warning:**
-> This example is intended to demonstrate usage, and might not run faster than the equivalent sequential LINQ to Objects query. For more information about speedup, see Understanding Speedup in PLINQ.
+> [!WARNING]
+> This example is intended to demonstrate usage, and might not run faster than the equivalent sequential LINQ to Objects query. For more information about speedup, see [Understanding Speedup in PLINQ](understanding-speedup-in-plinq.md).
+
+## Example
+
+ The following example calculates the standard deviation of a sequence of integers.
+
+ [!code-csharp[PLINQ#31](../../../samples/snippets/csharp/VS_Snippets_Misc/plinq/cs/plinqsamples.cs#31)]
+ [!code-vb[PLINQ#31](../../../samples/snippets/visualbasic/VS_Snippets_Misc/plinq/vb/plinqsnippets1.vb#31)]
+
+ This example uses an overload of the Aggregate standard query operator that is unique to PLINQ. This overload takes an extra <xref:System.Func`3?displayProperty=nameWithType> as the third input parameter. This delegate combines the results from all threads before it performs the final calculation on the aggregated results. In this example we add together the sums from all the threads.
+
+ Note that when a lambda expression body consists of a single expression, the return value of the <xref:System.Func`2?displayProperty=nameWithType> delegate is the value of the expression.
+
+## See also
+
+- <xref:System.Linq.ParallelEnumerable>
+- [Parallel LINQ (PLINQ)](introduction-to-plinq.md)

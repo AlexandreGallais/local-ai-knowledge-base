@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugInternalFrame Interface"
 title: "ICorDebugInternalFrame Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebuginternalframe-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugInternalFrame"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugInternalFrame"
+helpviewer_keywords:
+  - "ICorDebugInternalFrame interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugInternalFrame Interface
 
 Represents a runtime-internal frame on the stack. This interface is a subclass of the ICorDebugFrame interface.
@@ -15,16 +23,16 @@ Represents a runtime-internal frame on the stack. This interface is a subclass o
 
 |Method|Description|
 |------------|-----------------|
-|GetFrameType Method|Gets the type of this internal frame.|
+|[GetFrameType Method](icordebuginternalframe-getframetype-method.md)|Gets the type of this internal frame.|
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

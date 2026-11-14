@@ -1,23 +1,21 @@
 ---
-title: "dotnetup uninstall command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/reference/dotnetup-uninstall.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnetup uninstall command
+description: Command reference for removing a tracked .NET SDK requirement.
+ms.topic: reference
+ms.date: 10/13/2026
+ai-usage: ai-assisted
 ---
 
 # dotnetup uninstall command
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 ## Name
 
 `dotnetup uninstall` - Remove an SDK install specification and unused files.
 
 This command is an alias for
-`dotnetup sdk uninstall`.
+[`dotnetup sdk uninstall`](dotnetup-sdk-uninstall.md).
 
 ## Synopsis
 
@@ -63,4 +61,4 @@ Before it changes state, the command warns about these outcomes and asks for
 confirmation in interactive mode.
 Press **Y** or **Enter** to proceed, or **N** or **Esc** to cancel without
 removing specifications or files.
-For details, see SDK uninstall behavior.
+For details, see [SDK uninstall behavior](dotnetup-sdk-uninstall.md#behavior).

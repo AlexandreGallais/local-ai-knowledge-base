@@ -1,29 +1,28 @@
 ---
-title: "ASP.NET Core Blazor Hybrid static files"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/hybrid/static-files.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core Blazor Hybrid static files
+description: Learn how to consume static asset files in Blazor Hybrid apps.
+monikerRange: '>= aspnetcore-6.0'
+ms.date: 11/11/2025
 ---
-
 # ASP.NET Core Blazor Hybrid static files
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
 This article describes how to consume static asset files in Blazor Hybrid apps.
 
 In a Blazor Hybrid app, static files are *app resources*, accessed by Razor components using the following approaches:
 
-* .NET MAUI: :::no-loc text=".NET MAUI file system helpers":::
-* WPF and Windows Forms: `System.Resources.ResourceManager`
+* [.NET MAUI](#net-maui): [:::no-loc text=".NET MAUI file system helpers":::](/dotnet/maui/platform-integration/storage/file-system-helpers)
+* [WPF](#wpf) and [Windows Forms](#windows-forms): <xref:System.Resources.ResourceManager>
 
-When static assets are only used in the Razor components, static assets can be consumed from the web root (`wwwroot` folder) in a similar way to Blazor WebAssembly and Blazor Server apps. For more information, see the Static assets limited to Razor components section.
+When static assets are only used in the Razor components, static assets can be consumed from the web root (`wwwroot` folder) in a similar way to Blazor WebAssembly and Blazor Server apps. For more information, see the [Static assets limited to Razor components](#static-assets-limited-to-razor-components) section.
 
 ## .NET MAUI
 
-In .NET MAUI apps, *raw assets* using the `MauiAsset` build action and :::no-loc text=".NET MAUI file system helpers"::: are used for static assets.
+In .NET MAUI apps, [*raw assets*](/dotnet/maui/fundamentals/single-project#raw-assets) using the `MauiAsset` build action and [:::no-loc text=".NET MAUI file system helpers":::](/dotnet/maui/platform-integration/storage/file-system-helpers) are used for static assets.
 
-> **Note:**
-> Interfaces, classes, and supporting types to work with storage on devices across all supported platforms for features such as choosing a file, saving preferences, and using secure storage are in the `Microsoft.Maui.Storage` namespace. The namespace is available throughout a MAUI Blazor Hybrid app, so there's no need to specify a `using` statement in a class file or an `@using` Razor directive in a Razor component for the namespace.
+> [!NOTE]
+> Interfaces, classes, and supporting types to work with storage on devices across all supported platforms for features such as choosing a file, saving preferences, and using secure storage are in the <xref:Microsoft.Maui.Storage> namespace. The namespace is available throughout a MAUI Blazor Hybrid app, so there's no need to specify a `using` statement in a class file or an `@using` Razor directive in a Razor component for the namespace.
 
 Place raw assets into the `Resources/Raw` folder of the app. The example in this section uses a static text file.
 
@@ -35,9 +34,9 @@ This is text from a static text file resource.
 
 The following Razor component:
 
-* Calls `Microsoft.Maui.Storage.FileSystem.OpenAppPackageFileAsync*` to obtain a `System.IO.Stream` for the resource.
-* Reads the `System.IO.Stream` with a `System.IO.StreamReader`.
-* Calls `System.IO.StreamReader.ReadToEndAsync*` to read the file.
+* Calls <xref:Microsoft.Maui.Storage.FileSystem.OpenAppPackageFileAsync*> to obtain a <xref:System.IO.Stream> for the resource.
+* Reads the <xref:System.IO.Stream> with a <xref:System.IO.StreamReader>.
+* Calls <xref:System.IO.StreamReader.ReadToEndAsync*?displayProperty=nameWithType> to read the file.
 
 `Pages/StaticAssetExample.razor`:
 
@@ -75,8 +74,8 @@ The following Razor component:
 
 For more information, see the following resources:
 
-* Target multiple platforms from .NET MAUI single project (.NET MAUI documentation)
-* Improve consistency with resizetizer (dotnet/maui #4367)
+* [Target multiple platforms from .NET MAUI single project (.NET MAUI documentation)](/dotnet/maui/fundamentals/single-project)
+* [Improve consistency with resizetizer (dotnet/maui #4367)](https://github.com/dotnet/maui/pull/4367)
 
 ## WPF
 
@@ -98,10 +97,10 @@ Select **Strings** > **Files** from the dropdown list.
 
 Select **Add Resource** > **Add Existing File**. If prompted by Visual Studio to confirm editing the file, select **Yes**. Navigate to the `Resources` folder, select the `Data.txt` file, and select **Open**.
 
-In the following example component, `System.Resources.ResourceManager.GetString*` obtains the string resource's text for display.
+In the following example component, <xref:System.Resources.ResourceManager.GetString*?displayProperty=nameWithType> obtains the string resource's text for display.
 
-> **Warning:**
-> Never use `System.Resources.ResourceManager` methods with untrusted data.
+> [!WARNING]
+> Never use <xref:System.Resources.ResourceManager> methods with untrusted data.
 
 `StaticAssetExample.razor`:
 
@@ -146,11 +145,11 @@ Select **Add Resource** > **Add Existing File**. If prompted by Visual Studio to
 
 In the following example component:
 
-* The app's assembly name is `WinFormsBlazor`. The `System.Resources.ResourceManager`'s base name is set to the assembly name of `Form1` ( `WinFormsBlazor.Form1`).
-* `System.Resources.ResourceManager.GetString*` obtains the string resource's text for display.
+* The app's assembly name is `WinFormsBlazor`. The <xref:System.Resources.ResourceManager>'s base name is set to the assembly name of `Form1` ( `WinFormsBlazor.Form1`).
+* <xref:System.Resources.ResourceManager.GetString*?displayProperty=nameWithType> obtains the string resource's text for display.
 
-> **Warning:**
-> Never use `System.Resources.ResourceManager` methods with untrusted data.
+> [!WARNING]
+> Never use <xref:System.Resources.ResourceManager> methods with untrusted data.
 
 `StaticAssetExample.razor`:
 
@@ -179,7 +178,7 @@ In the following example component:
 
 A `BlazorWebView` control has a configured host file (:::no-loc text="HostPage":::), typically `wwwroot/index.html`. The :::no-loc text="HostPage"::: path is relative to the project. All static web assets (scripts, CSS files, images, and other files) that are referenced from a `BlazorWebView` are relative to its configured :::no-loc text="HostPage":::.
 
-Static web assets from a Razor class library (RCL) use special paths: `_content/{PACKAGE ID}/{PATH AND FILE NAME}`. The `{PACKAGE ID}` placeholder is the library's package ID. The package ID defaults to the project's assembly name if `<PackageId>` isn't specified in the project file. The `{PATH AND FILE NAME}` placeholder is path and file name under `wwwroot`. These paths are logically subpaths of the app's `wwwroot` folder, although they're actually coming from other packages or projects. Component-specific CSS style bundles are also built at the root of the `wwwroot` folder.
+Static web assets from a [Razor class library (RCL)](../../razor-pages/ui-class.md) use special paths: `_content/{PACKAGE ID}/{PATH AND FILE NAME}`. The `{PACKAGE ID}` placeholder is the library's [package ID](/nuget/create-packages/creating-a-package-msbuild#set-properties). The package ID defaults to the project's assembly name if `<PackageId>` isn't specified in the project file. The `{PATH AND FILE NAME}` placeholder is path and file name under `wwwroot`. These paths are logically subpaths of the app's `wwwroot` folder, although they're actually coming from other packages or projects. Component-specific CSS style bundles are also built at the root of the `wwwroot` folder.
 
 The web root of the :::no-loc text="HostPage"::: determines which subset of static assets are available:
 
@@ -209,13 +208,15 @@ The following Jeep&reg; image is also used in this section's example. You can ri
 
 `wwwroot/jeep-yj.png`:
 
+![Jeep YJ&reg;](~/blazor/components/class-libraries/_static/jeep-yj.png)
+
 In a Razor component:
 
 * The static text file contents can be read using the following techniques:
-  * .NET MAUI: :::no-loc text=".NET MAUI file system helpers"::: (`Microsoft.Maui.Storage.FileSystem.OpenAppPackageFileAsync*`)
-  * WPF and Windows Forms: `System.IO.StreamReader.ReadToEndAsync*`
+  * .NET MAUI: [:::no-loc text=".NET MAUI file system helpers":::](/dotnet/maui/platform-integration/storage/file-system-helpers) (<xref:Microsoft.Maui.Storage.FileSystem.OpenAppPackageFileAsync*>)
+  * WPF and Windows Forms: <xref:System.IO.StreamReader.ReadToEndAsync*?displayProperty=nameWithType>
 * JavaScript files are available at logical subpaths of `wwwroot` using `./` paths.
-* The image can be the source attribute (`src`) of an image tag (``).
+* The image can be the source attribute (`src`) of an image tag (`<img>`).
 
 `StaticAssetExample2.razor`:
 
@@ -324,7 +325,7 @@ private async Task<string> ReadData()
 }
 ```
 
-Collocated JavaScript files are also accessible at logical subpaths of `wwwroot`. Instead of using the script described earlier for the `showPrompt` function in `wwwroot/scripts.js`, the following collocated JavaScript file for the `StaticAssetExample2` component also makes the function available.
+[Collocated JavaScript files](../javascript-interoperability/location-of-javascript.md#load-a-script-from-an-external-javascript-file-js-collocated-with-a-component) are also accessible at logical subpaths of `wwwroot`. Instead of using the script described earlier for the `showPrompt` function in `wwwroot/scripts.js`, the following collocated JavaScript file for the `StaticAssetExample2` component also makes the function available.
 
 `Pages/StaticAssetExample2.razor.js`:
 
@@ -343,10 +344,10 @@ module = await JS.InvokeAsync<IJSObjectReference>("import",
 
 ## Trademarks
 
-*Jeep* and *Jeep YJ* are registered trademarks of FCA US LLC (Stellantis NV).
+*Jeep* and *Jeep YJ* are registered trademarks of [FCA US LLC (Stellantis NV)](https://www.stellantis.com).
 
 ## Related content
 
-* `System.Resources.ResourceManager`
-* Create resource files for .NET apps (.NET Fundamentals documentation)
-* How to: Use resources in localizable apps (WPF documentation)
+* <xref:System.Resources.ResourceManager>
+* [Create resource files for .NET apps (.NET Fundamentals documentation)](/dotnet/core/extensions/create-resource-files)
+* [How to: Use resources in localizable apps (WPF documentation)](/dotnet/desktop/wpf/advanced/how-to-use-resources-in-localizable-applications)

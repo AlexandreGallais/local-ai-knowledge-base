@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: System.Numerics.Complex special-value results now follow C23 Annex G"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/11/complex-annex-g-special-values.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where System.Numerics.Complex arithmetic and math functions return C23 Annex G-conformant special values for signed zeros, infinities, and NaNs."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # System.Numerics.Complex special-value results now follow C23 Annex G
 
-`System.Numerics.Complex` arithmetic operators and math functions now produce the special-value results (for signed zeros, infinities, and NaNs) required by C23 Annex G (IEC 60559-compatible complex arithmetic). Because `Complex` now delegates most of its implementation to the new `Complex<double>` type, the conformant special-value handling flows through to it.
+<xref:System.Numerics.Complex> arithmetic operators and math functions now produce the special-value results (for signed zeros, infinities, and NaNs) required by C23 Annex G (IEC 60559-compatible complex arithmetic). Because `Complex` now delegates most of its implementation to the new `Complex<double>` type, the conformant special-value handling flows through to it.
 
 ## Version introduced
 
@@ -51,13 +49,13 @@ The change spans `operator *`, `operator /`, `Multiply`, `Divide`, `Reciprocal`,
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
 Complex numbers are outside the scope of IEEE 754 itself, so C23 Annex G is the relevant specification of the special-value behavior IEEE 754 otherwise implies for the scalar operations complex arithmetic is built on. The previous implementation returned `NaN` for many inputs where Annex G requires a directed infinity or a signed result, which is both non-conformant and less useful for downstream numerical code, because it lost the sign or direction information that an infinite intermediate value carries. The new generic `Complex<T>` type was made conformant, and the shipped `Complex` type inherits that conformance by delegation.
 
-For more information, see dotnet/runtime#131132.
+For more information, see [dotnet/runtime#131132](https://github.com/dotnet/runtime/pull/131132).
 
 ## Recommended action
 
@@ -67,15 +65,15 @@ There's no compatibility switch to restore the previous behavior.
 
 ## Affected APIs
 
-- `System.Numerics.Complex.op_Multiply(System.Numerics.Complex,System.Numerics.Complex)`
-- `System.Numerics.Complex.op_Division(System.Numerics.Complex,System.Numerics.Complex)`
-- `System.Numerics.Complex.Multiply(System.Numerics.Complex,System.Numerics.Complex)`
-- `System.Numerics.Complex.Divide(System.Numerics.Complex,System.Numerics.Complex)`
-- `System.Numerics.Complex.Reciprocal(System.Numerics.Complex)`
-- `System.Numerics.Complex.Abs(System.Numerics.Complex)`
-- `System.Numerics.Complex.Pow(System.Numerics.Complex,System.Numerics.Complex)` and `System.Numerics.Complex.Pow(System.Numerics.Complex,System.Double)`
-- `System.Numerics.Complex.Sqrt(System.Numerics.Complex)`
-- `System.Numerics.Complex.Exp(System.Numerics.Complex)`
-- `System.Numerics.Complex.Log(System.Numerics.Complex)` (all overloads) and `System.Numerics.Complex.Log10(System.Numerics.Complex)`
-- `System.Numerics.Complex.Sin(System.Numerics.Complex)`, `System.Numerics.Complex.Cos(System.Numerics.Complex)`, `System.Numerics.Complex.Tan(System.Numerics.Complex)`, `System.Numerics.Complex.Sinh(System.Numerics.Complex)`, `System.Numerics.Complex.Cosh(System.Numerics.Complex)`, `System.Numerics.Complex.Tanh(System.Numerics.Complex)`
-- `System.Numerics.Complex.Asin(System.Numerics.Complex)`, `System.Numerics.Complex.Acos(System.Numerics.Complex)`, `System.Numerics.Complex.Atan(System.Numerics.Complex)`
+- <xref:System.Numerics.Complex.op_Multiply(System.Numerics.Complex,System.Numerics.Complex)?displayProperty=nameWithType>
+- <xref:System.Numerics.Complex.op_Division(System.Numerics.Complex,System.Numerics.Complex)?displayProperty=nameWithType>
+- <xref:System.Numerics.Complex.Multiply(System.Numerics.Complex,System.Numerics.Complex)?displayProperty=nameWithType>
+- <xref:System.Numerics.Complex.Divide(System.Numerics.Complex,System.Numerics.Complex)?displayProperty=nameWithType>
+- <xref:System.Numerics.Complex.Reciprocal(System.Numerics.Complex)?displayProperty=nameWithType>
+- <xref:System.Numerics.Complex.Abs(System.Numerics.Complex)?displayProperty=nameWithType>
+- <xref:System.Numerics.Complex.Pow(System.Numerics.Complex,System.Numerics.Complex)?displayProperty=nameWithType> and <xref:System.Numerics.Complex.Pow(System.Numerics.Complex,System.Double)?displayProperty=nameWithType>
+- <xref:System.Numerics.Complex.Sqrt(System.Numerics.Complex)?displayProperty=nameWithType>
+- <xref:System.Numerics.Complex.Exp(System.Numerics.Complex)?displayProperty=nameWithType>
+- <xref:System.Numerics.Complex.Log(System.Numerics.Complex)?displayProperty=nameWithType> (all overloads) and <xref:System.Numerics.Complex.Log10(System.Numerics.Complex)?displayProperty=nameWithType>
+- <xref:System.Numerics.Complex.Sin(System.Numerics.Complex)?displayProperty=nameWithType>, <xref:System.Numerics.Complex.Cos(System.Numerics.Complex)?displayProperty=nameWithType>, <xref:System.Numerics.Complex.Tan(System.Numerics.Complex)?displayProperty=nameWithType>, <xref:System.Numerics.Complex.Sinh(System.Numerics.Complex)?displayProperty=nameWithType>, <xref:System.Numerics.Complex.Cosh(System.Numerics.Complex)?displayProperty=nameWithType>, <xref:System.Numerics.Complex.Tanh(System.Numerics.Complex)?displayProperty=nameWithType>
+- <xref:System.Numerics.Complex.Asin(System.Numerics.Complex)?displayProperty=nameWithType>, <xref:System.Numerics.Complex.Acos(System.Numerics.Complex)?displayProperty=nameWithType>, <xref:System.Numerics.Complex.Atan(System.Numerics.Complex)?displayProperty=nameWithType>

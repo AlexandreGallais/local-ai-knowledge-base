@@ -1,12 +1,19 @@
 ---
 title: "MSTEST0076: Avoid mutating process-wide culture in a parallelized test"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0076.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0076: Avoid mutating process-wide culture in a parallelized test"
+ms.date: 10/01/2026
+f1_keywords:
+- MSTEST0076
+- CultureMutationUnderParallelizationAnalyzer
+helpviewer_keywords:
+- CultureMutationUnderParallelizationAnalyzer
+- MSTEST0076
+author: evangelink
+ms.author: amauryleve
+ai-usage: ai-assisted
+dev_langs:
+- CSharp
 ---
-
 # MSTEST0076: Avoid mutating process-wide culture in a parallelized test
 
 | Property                            | Value                                              |
@@ -20,12 +27,12 @@ license: "CC-BY-4.0"
 | **Introduced in version**           | 4.4.0                                              |
 | **Is there a code fix**             | No                                                 |
 
-> **Note:**
+> [!NOTE]
 > This analyzer activates only when assembly parallelization is syntactically enabled, for example through `[assembly: Parallelize]` without a matching `[assembly: DoNotParallelize]`, or when a `.editorconfig` file sets `mstest_parallel_safety_mode = always`. The analyzer can't detect parallelization that's enabled only through `.runsettings` or MSBuild properties such as `MSTestParallelizeWorkers`. Set the `.editorconfig` option if you configure parallelization that way and still want this analyzer to run.
 
 ## Cause
 
-A test, or a class-scoped fixture method it runs under, assigns `System.Globalization.CultureInfo.DefaultThreadCurrentCulture` or `DefaultThreadCurrentUICulture` without a matching `[ResourceLock]` or `[DoNotParallelize]`.
+A test, or a class-scoped fixture method it runs under, assigns <xref:System.Globalization.CultureInfo.DefaultThreadCurrentCulture> or `DefaultThreadCurrentUICulture` without a matching `[ResourceLock]` or `[DoNotParallelize]`.
 
 ## Rule description
 
@@ -54,7 +61,7 @@ public void SetsCulture()
 }
 ```
 
-No well-known `[ResourceLock]` key <example-value> for culture, so a declared `[ResourceLock]` of any kind is treated as an acknowledgment that you've coordinated culture access, and this rule stays silent.
+No well-known `[ResourceLock]` key exists for culture, so a declared `[ResourceLock]` of any kind is treated as an acknowledgment that you've coordinated culture access, and this rule stays silent.
 
 ## When to suppress warnings
 
@@ -70,15 +77,15 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0076
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0076.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).
 
 ## See also
 
-- DoNotParallelizeAttribute
+- [DoNotParallelizeAttribute](../unit-testing-mstest-writing-tests-controlling-execution.md#donotparallelizeattribute)

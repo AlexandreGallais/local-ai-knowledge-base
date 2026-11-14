@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: System.Formats.Cbor DateTimeOffset formatting change"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/extensions/8.0/cbor-datetime.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 8 breaking change in .NET extensions where System.Formats.Cbor always formats and parses DateTimeOffset values using the invariant culture.
+ms.date: 11/02/2023
 ---
-
 # System.Formats.Cbor DateTimeOffset formatting change
 
 Since it was released in .NET 5, the System.Formats.Cbor NuGet package included built-in methods for serializing and deserializing DateTimeOffset values according to RFC 7049. Unfortunately, the implementations didn't use invariant culture when formatting and parsing DateTimeOffset values. This resulted in inconsistent or even incorrect date encodings on machines with cultures that use non-Gregorian calendars.
@@ -52,7 +48,7 @@ This encoding corresponds to `0("2020-04-09T14:31:21.3535941+01:00")` in CBOR di
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -94,5 +90,5 @@ Console.WriteLine(date.ToString(CultureInfo.InvariantCulture));
 
 ## Affected APIs
 
-- `System.Formats.Cbor.CborWriter.WriteDateTimeOffset(System.DateTimeOffset)`
-- `System.Formats.Cbor.CborReader.ReadDateTimeOffset`
+- <xref:System.Formats.Cbor.CborWriter.WriteDateTimeOffset(System.DateTimeOffset)?displayProperty=fullName>
+- <xref:System.Formats.Cbor.CborReader.ReadDateTimeOffset?displayProperty=fullName>

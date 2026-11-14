@@ -1,13 +1,11 @@
 ---
-title: "no-useless-escape"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-useless-escape.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-useless-escape
+rule_type: suggestion
 ---
 
-# no-useless-escape
+
+
+
 
 Escaping non-special characters in strings, template literals, and regular expressions doesn't have any effect, as demonstrated in the following example:
 
@@ -23,7 +21,7 @@ This rule flags escapes that can be safely removed without changing behavior.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-useless-escape: "error"*/
@@ -41,9 +39,11 @@ Examples of **incorrect** code for this rule:
 /[a-z\-]/;
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct { "sourceType": "script" }
 
 ```js
 /*eslint no-useless-escape: "error"*/
@@ -65,6 +65,8 @@ Examples of **correct** code for this rule:
 /[a-z-]/;
 ```
 
+:::
+
 ## Options
 
 This rule has an object option:
@@ -75,7 +77,7 @@ This rule has an object option:
 
 Examples of **incorrect** code for the `{ "allowRegexCharacters": ["-"] }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-useless-escape: ["error", { "allowRegexCharacters": ["-"] }]*/
@@ -85,9 +87,11 @@ Examples of **incorrect** code for the `{ "allowRegexCharacters": ["-"] }` optio
 /[a-z\^]/;
 ```
 
+:::
+
 Examples of **correct** code for the `{ "allowRegexCharacters": ["-"] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-useless-escape: ["error", { "allowRegexCharacters": ["-"] }]*/
@@ -96,6 +100,8 @@ Examples of **correct** code for the `{ "allowRegexCharacters": ["-"] }` option:
 /[\-9]/;
 /a\-b/;
 ```
+
+:::
 
 ## When Not To Use It
 

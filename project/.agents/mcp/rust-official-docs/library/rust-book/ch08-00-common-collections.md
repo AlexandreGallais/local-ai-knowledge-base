@@ -1,12 +1,3 @@
----
-title: "Common Collections"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch08-00-common-collections.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
 # Common Collections
 
 Rust’s standard library includes a number of very useful data structures called
@@ -26,7 +17,9 @@ three collections that are used very often in Rust programs:
   particular implementation of the more general data structure called a _map_.
 
 To learn about the other kinds of collections provided by the standard library,
-see the documentation.
+see [the documentation][collections].
 
 We’ll discuss how to create and update vectors, strings, and hash maps, as well
 as what makes each special.
+
+[collections]: ../std/collections/index.html

@@ -1,15 +1,13 @@
 ---
-title: "Code First Migrations in Team Environments - EF6 (part 1 of 2)"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/modeling/code-first/migrations/teams.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Code First Migrations in Team Environments - EF6
+description: Code First Migrations in Team Environments in Entity Framework 6
+author: SamMonoRT
+ms.date: 10/23/2016
+uid: ef6/modeling/code-first/migrations/teams
 ---
-
 # Code First Migrations in Team Environments
-> **Note:**
-> This article assumes you know how to use Code First Migrations in basic scenarios. If you don’t, then you’ll need to read Code First Migrations before continuing.
+> [!NOTE]
+> This article assumes you know how to use Code First Migrations in basic scenarios. If you don’t, then you’ll need to read [Code First Migrations](xref:ef6/modeling/code-first/migrations/index) before continuing.
 
 ## Grab a coffee, you need to read this whole article
 
@@ -33,11 +31,13 @@ Automatic migrations allows you to have your database schema updated to match th
 
 ## Understanding how migrations works
 
-The key to successfully using migrations in a team environment is a basic <example-value> how migrations tracks and uses information about the model to detect model changes.
+The key to successfully using migrations in a team environment is a basic understanding how migrations tracks and uses information about the model to detect model changes.
 
 ### The first migration
 
 When you add the first migration to your project, you run something like **Add-Migration First** in Package Manager Console. The high level steps that this command performs are pictured below.
+
+![First Migration](~/ef6/media/firstmigration.png)
 
 The current model is calculated from your code (1). The required database objects are then calculated by the model differ (2) – since this is the first migration the model differ just uses an empty model for the comparison. The required changes are passed to the code generator to build the required migration code (3) which is then added to your Visual Studio solution (4).
 
@@ -48,6 +48,8 @@ At this point you would probably run **Update-Database** to apply your changes t
 ### Subsequent migrations
 
 Later you come back and make some changes to your model – in our example we’ll add a **Url** property to **Blog**. You would then issue a command such as **Add-Migration AddUrl** to scaffold a migration to apply the corresponding database changes. The high level steps that this command performs are pictured below.
+
+![Second Migration](~/ef6/media/secondmigration.png)
 
 Just like last time, the current model is calculated from code (1). However, this time there are existing migrations so the previous model is retrieved from the latest migration (2). These two models are diffed to find the required database changes (3) and then the process completes as before.
 
@@ -77,14 +79,22 @@ First let’s look at a concrete example of such a merge conflict. We’ll conti
 
 We’ll track the EF model and the migrations through a number of changes. For a starting point, both developers have synced to the source control repository, as depicted in the following graphic.
 
+![Starting Point](~/ef6/media/startingpoint.png)
+
 Developer \#1 and developer \#2 now makes some changes to the EF model in their local code base. Developer \#1 adds a **Rating** property to **Blog** – and generates an **AddRating** migration to apply the changes to the database. Developer \#2 adds a **Readers** property to **Blog** – and generates the corresponding **AddReaders** migration. Both developers run **Update-Database**, to apply the changes to their local databases, and then continue developing the application.
 
-> **Note:**
+> [!NOTE]
 > Migrations are prefixed with a timestamp, so our graphic represents that the AddReaders migration from Developer \#2 comes after the AddRating migration from Developer \#1. Whether developer \#1 or \#2 generated the migration first makes no difference to the issues of working in a team, or the process for merging them that we’ll look at in the next section.
+
+![Local Changes](~/ef6/media/localchanges.png)
 
 It’s a lucky day for Developer \#1 as they happen to submit their changes first. Because no one else has checked in since they synced their repository, they can just submit their changes without performing any merging.
 
+![Submit Changes](~/ef6/media/submit.png)
+
 Now it’s time for Developer \#2 to submit. They aren’t so lucky. Because someone else has submitted changes since they synced, they will need to pull down the changes and merge. The source control system will likely be able to automatically merge the changes at the code level since they are very simple. The state of Developer \#2’s local repository after syncing is depicted in the following graphic. 
+
+![Pull From Source Control](~/ef6/media/pull.png)
 
 At this stage Developer \#2 can run **Update-Database** which will detect the new **AddRating** migration (which hasn’t been applied to Developer \#2’s database) and apply it. Now the **Rating** column is added to the **Blogs** table and the database is in sync with the model.
 
@@ -95,3 +105,61 @@ There are a couple of problems though:
 2.  Running the application would result in an InvalidOperationException stating that “*The model backing the 'BloggingContext' context has changed since the database was created. Consider using Code First Migrations to update the database…”*
     Again, the problem is the model snapshot stored in the last migration doesn’t match the current model.
 3.  Finally, we would expect running **Add-Migration** now would generate an empty migration (since there are no changes to apply to the database). But because migrations compares the current model to the one from the last migration (which is missing the **Rating** property) it will actually scaffold another **AddColumn** call to add in the **Rating** column. Of course, this migration would fail during **Update-Database** because the **Rating** column already exists.
+
+## Resolving the merge conflict
+
+The good news is that it’s not too hard to deal with the merge manually – provided you have an understanding of how migrations works. So if you’ve skipped ahead to this section… sorry, you need to go back and read the rest of the article first!
+
+There are two options, the easiest is to generate a blank migration that has the correct current model as a snapshot. The second option is to update the snapshot in the last migration to have the correct model snapshot. The second option is a little harder and can’t be used in every scenario, but it’s also cleaner because it doesn’t involve adding an extra migration.
+
+### Option 1: Add a blank ‘merge’ migration
+
+In this option we generate a blank migration solely for the purpose of making sure the latest migration has the correct model snapshot stored in it.
+
+This option can be used regardless of who generated the last migration. In the example we’ve been following Developer \#2 is taking care of the merge and they happened to generate the last migration. But these same steps can be used if Developer \#1 generated the last migration. The steps also apply if there are multiple migrations involved – we’ve just been looking at two in order to keep it simple.
+
+The following process can be used for this approach, starting from the time you realize you have changes that need to be synced from source control.
+
+1.  Ensure any pending model changes in your local code base have been written to a migration. This step ensures you don’t miss any legitimate changes when it comes time to generate the blank migration.
+2.  Sync with source control.
+3.  Run **Update-Database** to apply any new migrations that other developers have checked in.
+    **_Note:_** *if you don’t get any warnings from the Update-Database command then there were no new migrations from other developers and there is no need to perform any further merging.*
+4.  Run **Add-Migration &lt;pick\_a\_name&gt; –IgnoreChanges** (for example, **Add-Migration Merge –IgnoreChanges**). This generates a migration with all the metadata (including a snapshot of the current model) but will ignore any changes it detects when comparing the current model to the snapshot in the last migrations (meaning you get a blank **Up** and **Down** method).
+5.  Run **Update-Database** to re-apply the latest migration with the updated metadata.
+6.  Continue developing, or submit to source control (after running your unit tests of course).
+
+Here is the state of Developer \#2’s local code base after using this approach.
+
+![Merge Migration](~/ef6/media/mergemigration.png)
+
+### Option 2: Update the model snapshot in the last migration
+
+This option is very similar to option 1 but removes the extra blank migration – because let’s face it, who wants extra code files in their solution.
+
+**This approach is only feasible if the latest migration exists only in your local code base and has not yet been submitted to source control (for example, if the last migration was generated by the user doing the merge)**. Editing the metadata of migrations that other developers may have already applied to their development database – or even worse applied to a production database – can result in unexpected side effects. During the process we’re going to roll back the last migration in our local database and re-apply it with updated metadata.
+
+While the last migration needs to just be in the local code base there are no restrictions to the number or order of migrations that proceed it. There can be multiple migrations from multiple different developers and the same steps apply– we’ve just been looking at two in order to keep it simple.
+
+The following process can be used for this approach, starting from the time you realize you have changes that need to be synced from source control.
+
+1.  Ensure any pending model changes in your local code base have been written to a migration. This step ensures you don’t miss any legitimate changes when it comes time to generate the blank migration.
+2.  Sync with the source control.
+3.  Run **Update-Database** to apply any new migrations that other developers have checked in.
+    **_Note:_** *if you don’t get any warnings from the Update-Database command then there were no new migrations from other developers and there is no need to perform any further merging.*
+4.  Run **Update-Database –TargetMigration &lt;second\_last\_migration&gt;** (in the example we’ve been following this would be **Update-Database –TargetMigration AddRating**). This rolls the database back to the state of the second last migration – effectively ‘un-applying’ the last migration from the database.
+    **_Note:_** *This step is required to make it safe to edit the metadata of the migration since the metadata is also stored in the \_\_MigrationsHistoryTable of the database. This is why you should only use this option if the last migration is only in your local code base. If other databases had the last migration applied you would also have to roll them back and re-apply the last migration to update the metadata.* 
+5.  Run **Add-Migration &lt;full\_name\_including\_timestamp\_of\_last\_migration**&gt; (in the example we’ve been following this would be something like **Add-Migration 201311062215252\_AddReaders**).
+    **_Note:_** *You need to include the timestamp so that migrations knows you want to edit the existing migration rather than scaffolding a new one.*
+    This will update the metadata for the last migration to match the current model. You’ll get the following warning when the command completes, but that’s exactly what you want. “*Only the Designer Code for migration '201311062215252\_AddReaders' was re-scaffolded. To re-scaffold the entire migration, use the -Force parameter.”*
+6.  Run **Update-Database** to re-apply the latest migration with the updated metadata.
+7.  Continue developing, or submit to source control (after running your unit tests of course).
+
+Here is the state of Developer \#2’s local code base after using this approach.
+
+![Updated Metadata](~/ef6/media/updatedmetadata.png)
+
+## Summary
+
+There are some challenges when using Code First Migrations in a team environment. However, a basic understanding of how migrations works and some simple approaches for resolving merge conflicts make it easy to overcome these challenges.
+
+The fundamental issue is incorrect metadata stored in the latest migration. This causes Code First to incorrectly detect that the current model and database schema don’t match and to scaffold incorrect code in the next migration. This situation can be overcome by generating a blank migration with the correct model, or updating the metadata in the latest migration.

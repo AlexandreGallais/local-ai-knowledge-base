@@ -1,13 +1,12 @@
 ---
-title: "Threat mitigation guidance for ASP.NET Core Blazor static server-side rendering"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/security/static-server-side-rendering.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Threat mitigation guidance for ASP.NET Core Blazor static server-side rendering
+description: Learn how to mitigate security threats in static server-side Blazor.
+monikerRange: '>= aspnetcore-8.0'
+ms.date: 11/11/2025
 ---
-
 # Threat mitigation guidance for ASP.NET Core Blazor static server-side rendering
+
+[!INCLUDE[](~/includes/not-latest-version-without-not-supported-content.md)]
 
 This article explains the security considerations that developers should take into account when developing Blazor Web Apps with static server-side rendering.
 
@@ -19,7 +18,7 @@ All of the general security considerations defined for the interactive rendering
 
 The server-side rendering (SSR) model is based on the traditional request/response model of HTTP. As such, there are common areas of concern between SSR and request/response HTTP. General security considerations and specific threats must be successfully mitigated. The framework provides built-in mechanisms for managing some of these threats, but other threats are specific to app code and must be handled by the app. These threats can be categorized as follows:
 
-* Authentication and authorization: The app must ensure that the user is authenticated and authorized to access the app and the resources it exposes. The framework provides built-in mechanisms for authentication and authorization, but the app must ensure that the mechanisms are properly configured and used. The built-in mechanisms for authentication and authorization are covered in the Blazor documentation's *Server* security node and in the ASP.NET Core documentation's *Security and Identity* node, so they won't be covered here.
+* Authentication and authorization: The app must ensure that the user is authenticated and authorized to access the app and the resources it exposes. The framework provides built-in mechanisms for authentication and authorization, but the app must ensure that the mechanisms are properly configured and used. The built-in mechanisms for authentication and authorization are covered in the [Blazor documentation's *Server* security node](index.md) and in the [ASP.NET Core documentation's *Security and Identity* node](../../security/index.md), so they won't be covered here.
 
 * Input validation and sanitization: All input arriving from a client must be validated and sanitized before use. Otherwise, the app might be exposed to attacks, such as SQL injection, cross-site scripting, cross-site request forgery, open redirection, and other forms of attacks. The input might come from anywhere in the request.
 
@@ -35,7 +34,7 @@ The server-side rendering (SSR) model is based on the traditional request/respon
 
 All input arriving from the client must be considered untrusted unless its information was generated and protected on the server, such as a CSRF token, an authentication cookie, a session identifier, or any other payload that's protected with authenticated encryption.
 
-Input is normally available to the app through a binding process, for example via the `[SupplyParameterFromQuery]` attribute or `[SupplyParameterFromForm]` attribute. Before processing this input, the app must make sure that the data is valid. For example, the app must confirm that there were no binding errors when mapping the form data to a component property. Otherwise, the app might process invalid data.
+Input is normally available to the app through a binding process, for example via the [`[SupplyParameterFromQuery]` attribute](xref:Microsoft.AspNetCore.Components.SupplyParameterFromQueryAttribute) or [`[SupplyParameterFromForm]` attribute](xref:Microsoft.AspNetCore.Components.SupplyParameterFromFormAttribute). Before processing this input, the app must make sure that the data is valid. For example, the app must confirm that there were no binding errors when mapping the form data to a component property. Otherwise, the app might process invalid data.
 
 If the input is used to perform a redirect, the app must make sure that the input is valid and that it isn't pointing to a domain considered invalid or to an invalid subpath within the app base path. Otherwise, the app may be exposed to open redirection attacks, where a cyberattacker can craft a link that redirects the user to a malicious site.
 
@@ -45,10 +44,10 @@ Data that might have come from user input also must be sanitized before included
 
 The framework provides the following mechanisms to help with input validation and sanitization:
 
-* All bound form data is validated for basic correctness. If an input can't be parsed, the binding process reports an error that the app can discover before taking any action with the data. The built-in `Microsoft.AspNetCore.Components.Forms.EditForm` component takes this into account before invoking the `Microsoft.AspNetCore.Components.Forms.EditForm.OnValidSubmit` form callback. Blazor avoids executing the callback if there are one or more binding errors.
-* The framework uses an antiforgery token to protect against cross-site request forgery attacks. For more information, see ASP.NET Core Blazor authentication and authorization and ASP.NET Core Blazor forms overview.
+* All bound form data is validated for basic correctness. If an input can't be parsed, the binding process reports an error that the app can discover before taking any action with the data. The built-in <xref:Microsoft.AspNetCore.Components.Forms.EditForm> component takes this into account before invoking the <xref:Microsoft.AspNetCore.Components.Forms.EditForm.OnValidSubmit> form callback. Blazor avoids executing the callback if there are one or more binding errors.
+* The framework uses an antiforgery token to protect against cross-site request forgery attacks. For more information, see [ASP.NET Core Blazor authentication and authorization](index.md#antiforgery-support) and [ASP.NET Core Blazor forms overview](../forms/index.md#antiforgery-support).
 
-All input and permissions must be validated on the server at the time of performing a given action to ensure that the data is valid and accurate at that time and that the user is allowed to perform the action. This approach is consistent with the security guidance provided for interactive server-side rendering.
+All input and permissions must be validated on the server at the time of performing a given action to ensure that the data is valid and accurate at that time and that the user is allowed to perform the action. This approach is consistent with the [security guidance provided for interactive server-side rendering](interactive-server-side-rendering.md).
 
 ## Session management
 
@@ -90,7 +89,7 @@ In addition, there are limits defined for the form, such as the maximum form key
 
 In general, the app must evaluate when there's a chance that a request triggers an asymmetric amount of work by the server. Examples of this include when the user sends a request parameterized by N and the server performs an operation in response that is N times as expensive, where N is a parameter that a user controls and can grow indefinitely. Normally, the app must either impose a limit on the maximum N that it's willing to process or ensure that any operation is either less, equal, or more expensive than the request by a constant factor.
 
-This aspect has more to do with the difference in growth between the work the client performs and the work the server performs than with a specific 1→N comparison. For example, a client might submit a work item (inserting elements into a list) that takes N units of time to perform, but the server needs N2 to process (because it might be doing something very naive). It's the difference between N and N2 that matters.
+This aspect has more to do with the difference in growth between the work the client performs and the work the server performs than with a specific 1→N comparison. For example, a client might submit a work item (inserting elements into a list) that takes N units of time to perform, but the server needs N<sup>2</sup> to process (because it might be doing something very naive). It's the difference between N and N<sup>2</sup> that matters.
 
 As such, there's a limit on how much work the server must be willing to do, which is specific to the app. This aspect applies to server-side workloads, since the resources are on the server, but doesn't necessarily apply to WebAssembly workloads on the client in most cases.
 
@@ -105,5 +104,5 @@ For WebAssembly workloads, there's usually little concern over the amount of wor
 * Properly manage user sessions to ensure that state isn't mistakenly shared across users.
 * Handle and log errors properly to avoid exposing sensitive information.
 * Log important events in the app to identify potential issues and audit actions performed by users.
-* Protect sensitive information using the ASP.NET Core Data Protection APIs or one of the available components (`Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage`, `Microsoft.AspNetCore.Components.PersistentComponentState`).
+* Protect sensitive information using the ASP.NET Core Data Protection APIs or one of the available components (<xref:Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage>, <xref:Microsoft.AspNetCore.Components.PersistentComponentState>).
 * Ensure that the app understands the resources that can be consumed by a given request and has limits in place to avoid denial of service attacks.

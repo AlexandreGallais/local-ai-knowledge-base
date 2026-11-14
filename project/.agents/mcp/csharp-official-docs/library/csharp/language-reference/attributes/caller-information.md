@@ -1,65 +1,36 @@
 ---
 title: "Attributes interpreted by the compiler: Tracking caller information"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/attributes/caller-information.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 01/14/2026
+description: These attributes instruct the compiler to generate information about the code that calls a member. You use the CallerFilePath, CallerLineNumber, CallerMemberName, and CallerArgumentExpression to provide detailed trace information
 ---
 
 # Determine caller information by using attributes that the C# compiler interprets
 
 By using info attributes, you can get information about the caller to a method. You can get the file path of the source code, the line number in the source code, and the member name of the caller. To get member caller information, use attributes that you apply to optional parameters. Each optional parameter specifies a default value.
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
-
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
-
-The following table lists the Caller Info attributes that are defined in the `System.Runtime.CompilerServices` namespace:
+The following table lists the Caller Info attributes that are defined in the <xref:System.Runtime.CompilerServices?displayProperty=nameWithType> namespace:
 
 | Attribute | Description                                                  | Type |
 |-----------|--------------------------------------------------------------|---|
-| `System.Runtime.CompilerServices.CallerFilePathAttribute`           | Full path of the source file that contains the caller. The full path is the path at compile time. | `String` |
-| `System.Runtime.CompilerServices.CallerLineNumberAttribute`         | Line number in the source file from which the method is called. | `Integer` |
-| `System.Runtime.CompilerServices.CallerMemberNameAttribute`         | Method name or property name of the caller. | `String` |
-| `System.Runtime.CompilerServices.CallerArgumentExpressionAttribute` | String representation of the argument expression. | `String` |
+| <xref:System.Runtime.CompilerServices.CallerFilePathAttribute>           | Full path of the source file that contains the caller. The full path is the path at compile time. | `String` |
+| <xref:System.Runtime.CompilerServices.CallerLineNumberAttribute>         | Line number in the source file from which the method is called. | `Integer` |
+| <xref:System.Runtime.CompilerServices.CallerMemberNameAttribute>         | Method name or property name of the caller. | `String` |
+| <xref:System.Runtime.CompilerServices.CallerArgumentExpressionAttribute> | String representation of the argument expression. | `String` |
 
 This information helps you with tracing and debugging, and helps you to create diagnostic tools. The following example shows how to use caller info attributes. On each call to the `TraceMessage` method, the caller information is inserted for the arguments to the optional parameters.
 
-```csharp
-public void DoProcessing()
-{
-    TraceMessage("Something happened.");
-}
+:::code language="csharp" source="./snippets/CallerInformation.cs" id="CallerFileMemberLine":::
 
-public void TraceMessage(string message,
-        [CallerMemberName] string memberName = "",
-        [CallerFilePath] string sourceFilePath = "",
-        [CallerLineNumber] int sourceLineNumber = 0)
-{
-    Trace.WriteLine("message: " + message);
-    Trace.WriteLine("member name: " + memberName);
-    Trace.WriteLine("source file path: " + sourceFilePath);
-    Trace.WriteLine("source line number: " + sourceLineNumber);
-}
-
-// Sample Output:
-//  message: Something happened.
-//  member name: DoProcessing
-//  source file path: c:\Visual Studio Projects\CallerInfoCS\CallerInfoCS\Form1.cs
-//  source line number: 31
-```
-You specify an explicit default value for each optional parameter. You can't apply caller info attributes to parameters that aren't optional. The caller info attributes don't make a parameter optional. Instead, they affect the default value passed in when the argument is omitted. The compiler emits caller info values as literals into the Intermediate Language (IL) at compile time. Unlike the results of the `System.Exception.StackTrace` property for exceptions, obfuscation doesn't affect the results. You can explicitly supply the optional arguments to control the caller information or to hide caller information.
+You specify an explicit default value for each optional parameter. You can't apply caller info attributes to parameters that aren't optional. The caller info attributes don't make a parameter optional. Instead, they affect the default value passed in when the argument is omitted. The compiler emits caller info values as literals into the Intermediate Language (IL) at compile time. Unlike the results of the <xref:System.Exception.StackTrace> property for exceptions, obfuscation doesn't affect the results. You can explicitly supply the optional arguments to control the caller information or to hide caller information.
 
 ## Member names
 
 Use the `CallerMemberName` attribute to avoid specifying the member name as a `String` argument to the called method. By using this technique, you avoid the problem that **Rename Refactoring** doesn't change the `String` values. This benefit is especially useful for the following tasks:
 
 - Using tracing and diagnostic routines.
-- Implementing the `System.ComponentModel.INotifyPropertyChanged` interface when binding data. This interface allows the property of an object to notify a bound control that the property changed. The control can display the updated information. Without the `CallerMemberName` attribute, you must specify the property name as a literal.
+- Implementing the <xref:System.ComponentModel.INotifyPropertyChanged> interface when binding data. This interface allows the property of an object to notify a bound control that the property changed. The control can display the updated information. Without the `CallerMemberName` attribute, you must specify the property name as a literal.
 
 The following chart shows the member names that are returned when you use the `CallerMemberName` attribute.
 
@@ -75,59 +46,31 @@ The following chart shows the member names that are returned when you use the `C
 
 ## Argument expressions
 
-Use the `System.Runtime.CompilerServices.CallerArgumentExpressionAttribute` when you want the expression passed as an argument. Diagnostic libraries can provide more details about the *expressions* passed to arguments. By providing the expression that triggered the diagnostic, in addition to the parameter name, developers have more details about the condition that triggered the diagnostic. That extra information makes it easier to fix.
+Use the <xref:System.Runtime.CompilerServices.CallerArgumentExpressionAttribute?displayProperty=nameWithType> when you want the expression passed as an argument. Diagnostic libraries can provide more details about the *expressions* passed to arguments. By providing the expression that triggered the diagnostic, in addition to the parameter name, developers have more details about the condition that triggered the diagnostic. That extra information makes it easier to fix.
 
 The following example shows how you can provide detailed information about the argument when it's invalid:
 
-```csharp
-public static void ValidateArgument(string parameterName, bool condition, [CallerArgumentExpression("condition")] string? message=null)
-{
-    if (!condition)
-    {
-        throw new ArgumentException($"Argument failed validation: <{message}>", parameterName);
-    }
-}
-```
+:::code language="csharp" source="./snippets/CallerInformation.cs" id="TestCondition":::
+
 You invoke it as shown in the following example:
 
-```csharp
-public void Operation(Action func)
-{
-    Utilities.ValidateArgument(nameof(func), func is not null);
-    func();
-}
-```
+:::code language="csharp" source="./snippets/CallerInformation.cs" id="InvokeTestCondition":::
+
 The compiler injects the expression used for `condition` into the `message` argument. When a developer calls `Operation` with a `null` argument, the following message is stored in the `ArgumentException`:
 
 ```text
 Argument failed validation: <func is not null>
 ```
 
-By using this attribute, you can write diagnostic utilities that provide more details. Developers can more quickly understand what changes are needed. You can also use the `System.Runtime.CompilerServices.CallerArgumentExpressionAttribute` to determine what expression was used as the receiver for extension members. The following method samples a sequence at regular intervals. If the sequence has fewer elements than the frequency, it reports an error:
+By using this attribute, you can write diagnostic utilities that provide more details. Developers can more quickly understand what changes are needed. You can also use the <xref:System.Runtime.CompilerServices.CallerArgumentExpressionAttribute> to determine what expression was used as the receiver for extension members. The following method samples a sequence at regular intervals. If the sequence has fewer elements than the frequency, it reports an error:
 
-```csharp
-extension<T>(IEnumerable<T> sequence)
-{
-    public IEnumerable<T> Sample(int frequency, 
-        [CallerArgumentExpression(nameof(sequence))] string? message = null)
-    {
-        if (sequence.Count() < frequency)
-            throw new InvalidOperationException($"Expression doesn't have enough elements: {message}");
-        int i = 0;
-        foreach (T item in sequence)
-        {
-            if (i++ % frequency == 0)
-                yield return item;
-        }
-    }
-}
-```
-The previous example uses the `nameof` operator for the parameter `sequence`. You could call this method as follows:
+:::code language="csharp" source="./snippets/CallerInformation.cs" id="ExtensionMethod":::
 
-```csharp
-sample = Enumerable.Range(0, 10).Sample(100);
-```
-The preceding example throws an `System.ArgumentException` whose message is the following text:
+The previous example uses the [`nameof`](../operators/nameof.md) operator for the parameter `sequence`. You could call this method as follows:
+
+:::code language="csharp" source="./snippets/Program.cs" id="ShortSequence":::
+
+The preceding example throws an <xref:System.ArgumentException> whose message is the following text:
 
 ```text
 Expression doesn't have enough elements: Enumerable.Range(0, 10) (Parameter 'sequence')
@@ -135,7 +78,7 @@ Expression doesn't have enough elements: Enumerable.Range(0, 10) (Parameter 'seq
 
 ## See also
 
-- Named and Optional Arguments
-- `System.Reflection`
-- `System.Attribute`
-- Attributes
+- [Named and Optional Arguments](../../programming-guide/classes-and-structs/named-and-optional-arguments.md)
+- <xref:System.Reflection>
+- <xref:System.Attribute>
+- [Attributes](../../../standard/attributes/index.md)

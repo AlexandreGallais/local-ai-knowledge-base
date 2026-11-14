@@ -1,12 +1,19 @@
 ---
 title: "MSTEST0059: Do not use both Parallelize and DoNotParallelize attributes"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0059.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0059: Do not use both Parallelize and DoNotParallelize attributes"
+ms.date: 12/29/2025
+f1_keywords:
+- MSTEST0059
+- UseParallelizeAttributeAnalyzer
+helpviewer_keywords:
+- UseParallelizeAttributeAnalyzer
+- MSTEST0059
+author: evangelink
+ms.author: amauryleve
+ai-usage: ai-assisted
+dev_langs:
+- CSharp
 ---
-
 # MSTEST0059: Do not use both Parallelize and DoNotParallelize attributes
 
 | Property                            | Value                                              |
@@ -22,11 +29,11 @@ license: "CC-BY-4.0"
 
 ## Cause
 
-An assembly contains both `Microsoft.VisualStudio.TestTools.UnitTesting.ParallelizeAttribute` and `Microsoft.VisualStudio.TestTools.UnitTesting.DoNotParallelizeAttribute` attributes.
+An assembly contains both <xref:Microsoft.VisualStudio.TestTools.UnitTesting.ParallelizeAttribute> and <xref:Microsoft.VisualStudio.TestTools.UnitTesting.DoNotParallelizeAttribute> attributes.
 
 ## Rule description
 
-The `Microsoft.VisualStudio.TestTools.UnitTesting.ParallelizeAttribute` and `Microsoft.VisualStudio.TestTools.UnitTesting.DoNotParallelizeAttribute` attributes are mutually exclusive at the assembly level. When both attributes are applied to the same assembly, tests run sequentially. This conflicting configuration indicates unclear intent and should be resolved by choosing one parallelization strategy for your test assembly.
+The <xref:Microsoft.VisualStudio.TestTools.UnitTesting.ParallelizeAttribute> and <xref:Microsoft.VisualStudio.TestTools.UnitTesting.DoNotParallelizeAttribute> attributes are mutually exclusive at the assembly level. When both attributes are applied to the same assembly, tests run sequentially. This conflicting configuration indicates unclear intent and should be resolved by choosing one parallelization strategy for your test assembly.
 
 ```csharp
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -96,11 +103,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0059
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0059.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

@@ -1,13 +1,15 @@
 ---
-title: "no-unused-labels"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-unused-labels.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-unused-labels
+rule_type: suggestion
+related_rules:
+- no-extra-label
+- no-labels
+- no-label-var
 ---
 
-# no-unused-labels
+
+
+
 
 Labels that are declared and not used anywhere in the code are most likely an error due to incomplete refactoring.
 
@@ -32,7 +34,7 @@ Problems reported by this rule can be fixed automatically, except when there are
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-unused-labels: "error"*/
@@ -49,9 +51,11 @@ for (let i = 0; i < 10; ++i) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-unused-labels: "error"*/
@@ -71,6 +75,8 @@ for (let i = 0; i < 10; ++i) {
     bar();
 }
 ```
+
+:::
 
 ## Options
 

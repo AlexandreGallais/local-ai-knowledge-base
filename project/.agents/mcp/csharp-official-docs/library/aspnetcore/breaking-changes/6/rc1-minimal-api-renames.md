@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: Minimal API renames in RC 1"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/6/rc1-minimal-api-renames.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in ASP.NET Core 6.0 RC 1 where some Minimal APIs were renamed.
+ms.date: 10/25/2021
+ms.custom: https://github.com/aspnet/Announcements/issues/474
 ---
-
 # Minimal API renames in RC 1
 
 Some APIs were renamed to improve the consistency of type names and to remove "minimal" and "action" from the API names.
@@ -19,19 +16,19 @@ ASP.NET Core 6.0 RC 1
 
 - The `Microsoft.AspNetCore.Builder.MinimalActionEndpointConventionBuilder` class was renamed to `Microsoft.AspNetCore.Builder.DelegateEndpointConventionBuilder`.
 
-  > **Note:**
-  > This class was renamed again in RC 2 to `Microsoft.AspNetCore.Builder.RouteHandlerBuilder`.
+  > [!NOTE]
+  > This class was renamed again in RC 2 to <xref:Microsoft.AspNetCore.Builder.RouteHandlerBuilder?displayProperty=fullName>.
 
 - The `Microsoft.AspNetCore.Builder.MinimalActionEndpointRouteBuilderExtensions` class was renamed to `Microsoft.AspNetCore.Builder.DelegateEndpointRouteBuilderExtensions`.
 
-  > **Note:**
-  > This class was merged with `Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions` in RC 2.
+  > [!NOTE]
+  > This class was merged with <xref:Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions?displayProperty=fullName> in RC 2.
 
-- The `Microsoft.AspNetCore.Http.RequestDelegate` parameter to `Map`, `MapGet`, `MapPost`, `MapPut`, `MapDelete`, `MapMethod`, `MapFallback`, and `Microsoft.AspNetCore.Http.RequestDelegateFactory.Create(System.Delegate,Microsoft.AspNetCore.Http.RequestDelegateFactoryOptions)` was renamed from `action` to `handler`.
+- The <xref:Microsoft.AspNetCore.Http.RequestDelegate> parameter to `Map`, `MapGet`, `MapPost`, `MapPut`, `MapDelete`, `MapMethod`, `MapFallback`, and <xref:Microsoft.AspNetCore.Http.RequestDelegateFactory.Create(System.Delegate,Microsoft.AspNetCore.Http.RequestDelegateFactoryOptions)?displayProperty=nameWithType> was renamed from `action` to `handler`.
 
 ## Change category
 
-This change affects binary compatibility and source compatibility.
+This change affects [binary compatibility](/dotnet/core/compatibility/categories#binary-compatibility) and [source compatibility](/dotnet/core/compatibility/categories#source-compatibility).
 
 ## Reason for change
 

@@ -1,21 +1,12 @@
----
-title: "Using component harnesses in tests"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/testing/using-component-harnesses.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Using component harnesses in tests
 
 ## Before you start
 
-TIP: This guide assumes you've already read the component harnesses overview guide. Read that first if you're new to using component harnesses.
+TIP: This guide assumes you've already read the [component harnesses overview guide](guide/testing/component-harnesses-overview). Read that first if you're new to using component harnesses.
 
 ### CDK Installation
 
-The Component Dev Kit (CDK) is a set of behavior primitives for building components. To use the component harnesses, first install `@angular/cdk` from npm. You can do this from your terminal using the Angular CLI:
+The [Component Dev Kit (CDK)](https://material.angular.dev/cdk/categories) is a set of behavior primitives for building components. To use the component harnesses, first install `@angular/cdk` from npm. You can do this from your terminal using the Angular CLI:
 
 ```shell
 ng add @angular/cdk
@@ -26,15 +17,15 @@ ng add @angular/cdk
 You can use component test harnesses in different test environments. Angular CDK supports two built-in environments:
 
 - Unit tests with Angular's `TestBed`
-- End-to-end tests with WebDriver
+- End-to-end tests with [WebDriver](https://developer.mozilla.org/en-US/docs/Web/WebDriver)
 
-Each environment provides a harness loader. The loader creates the harness instances you use throughout your tests. See below for more specific guidance on supported testing environments.
+Each environment provides a <strong>harness loader</strong>. The loader creates the harness instances you use throughout your tests. See below for more specific guidance on supported testing environments.
 
-Additional testing environments require custom bindings. See the adding harness support for additional testing environments guide for more information.
+Additional testing environments require custom bindings. See the [adding harness support for additional testing environments guide](guide/testing/component-harnesses-testing-environments) for more information.
 
 ### Using the loader from `TestbedHarnessEnvironment` for unit tests
 
-For unit tests you can create a harness loader from TestbedHarnessEnvironment. This environment uses a component fixture created by Angular's `TestBed`.
+For unit tests you can create a harness loader from [TestbedHarnessEnvironment](/api/cdk/testing/testbed/TestbedHarnessEnvironment). This environment uses a [component fixture](api/core/testing/ComponentFixture) created by Angular's `TestBed`.
 
 To create a harness loader rooted at the fixture's root element, use the `loader()` method:
 
@@ -146,7 +137,7 @@ const allChildLoaders = await loader.getAllChildLoaders('.child');
 
 ### Filtering harnesses
 
-When a page contains multiple instances of a particular component, you may want to filter based on some property of the component to get a particular component instance. You can use a harness predicate, a class used to associate a `ComponentHarness` class with predicates functions that can be used to filter component instances, to do so.
+When a page contains multiple instances of a particular component, you may want to filter based on some property of the component to get a particular component instance. You can use a <strong>harness predicate</strong>, a class used to associate a `ComponentHarness` class with predicates functions that can be used to filter component instances, to do so.
 
 When you ask a `HarnessLoader` for a harness, you're actually providing a HarnessQuery. A query can be one of two things:
 
@@ -174,11 +165,11 @@ For more details refer to the specific harness documentation since additional fi
 
 ## Using test harness APIs
 
-While every harness defines an API specific to its corresponding component, they all share a common base class, ComponentHarness. This base class defines a static property, `hostSelector`, that matches the harness class to instances of the component in the DOM.
+While every harness defines an API specific to its corresponding component, they all share a common base class, [ComponentHarness](/api/cdk/testing/ComponentHarness). This base class defines a static property, `hostSelector`, that matches the harness class to instances of the component in the DOM.
 
 Beyond that, the API of any given harness is specific to its corresponding component; refer to the component's documentation to learn how to use a specific harness.
 
-As an example, the following is a test for a component that uses the Angular Material slider component harness:
+As an example, the following is a test for a component that uses the [Angular Material slider component harness](https://material.angular.dev/components/slider/api#MatSliderHarness):
 
 ```ts
 it('should get value of slider thumb', async () => {
@@ -190,7 +181,7 @@ it('should get value of slider thumb', async () => {
 
 ## Interop with Angular change detection
 
-By default, test harnesses runs Angular's change detection before reading the state of a DOM element and after interacting with a DOM element.
+By default, test harnesses runs Angular's [change detection](/best-practices/runtime-performance) before reading the state of a DOM element and after interacting with a DOM element.
 
 There may be times that you need finer-grained control over change detection in your tests. such as checking the state of a component while an async operation is pending. In these cases use the `manualChangeDetection` function to disable automatic handling of change detection for a block of code.
 
@@ -215,7 +206,7 @@ Almost all harness methods are asynchronous and return a `Promise` to support th
 - Support for end-to-end tests
 - Insulate tests against changes in asynchronous behavior
 
-The Angular team recommends using await to improve the test readability. Calling `await` blocks the execution of your test until the associated `Promise` resolves.
+The Angular team recommends using [await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) to improve the test readability. Calling `await` blocks the execution of your test until the associated `Promise` resolves.
 
 Occasionally, you may want to perform multiple actions simultaneously and wait until they're all done rather than performing each action sequentially. For example, read multiple properties of a single component. In these situations use the `parallel` function to parallelize the operations. The parallel function works similarly to `Promise.all`, while also optimizing change detection checks.
 

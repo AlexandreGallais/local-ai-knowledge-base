@@ -1,12 +1,3 @@
----
-title: "SSR Options"
-tool: "vite"
-version: "8.3"
-source: "https://github.com/vitejs/vite/blob/b39e6e63dcbfc3cf4be871acf3554efbd6d0e268/docs/config/ssr-options.md"
-commit: "b39e6e63dcbfc3cf4be871acf3554efbd6d0e268"
-license: "MIT"
----
-
 # SSR Options
 
 Unless noted, the options in this section are applied to both dev and build.
@@ -14,7 +5,7 @@ Unless noted, the options in this section are applied to both dev and build.
 ## ssr.external
 
 - **Type:** `string[] | true`
-- **Related:** SSR Externals
+- **Related:** [SSR Externals](/guide/ssr#ssr-externals)
 
 Externalize the given dependencies and their transitive dependencies for SSR. By default, all dependencies are externalized except for linked dependencies (for HMR). If you prefer to externalize the linked dependency, you can pass its name to this option.
 
@@ -25,7 +16,7 @@ Note that the explicitly listed dependencies (using `string[]` type) will always
 ## ssr.noExternal
 
 - **Type:** `string | RegExp | (string | RegExp)[] | true`
-- **Related:** SSR Externals
+- **Related:** [SSR Externals](/guide/ssr#ssr-externals)
 
 Prevent listed dependencies from being externalized for SSR, which they will get bundled in build. By default, only linked dependencies are not externalized (for HMR). If you prefer to externalize the linked dependency, you can pass its name to the `ssr.external` option.
 
@@ -44,7 +35,7 @@ Build target for the SSR server.
 
 - **Type:** `string[]`
 - **Default:** `['module', 'node', 'development|production']` (`defaultServerConditions`) (`['module', 'browser', 'development|production']` (`defaultClientConditions`) for `ssr.target === 'webworker'`)
-- **Related:** Resolve Conditions
+- **Related:** [Resolve Conditions](./shared-options.md#resolve-conditions)
 
 These conditions are used in the plugin pipeline, and only affect non-externalized dependencies during the SSR build. Use `ssr.resolve.externalConditions` to affect externalized imports.
 
@@ -55,11 +46,13 @@ These conditions are used in the plugin pipeline, and only affect non-externaliz
 
 Conditions that are used during ssr import (including `ssrLoadModule`) of externalized direct dependencies (external dependencies imported by Vite).
 
-**Tip:**
+:::tip
 
-When using this option, make sure to run Node with `--conditions` flag with the same values in both dev and build to get a consistent behavior.
+When using this option, make sure to run Node with [`--conditions` flag](https://nodejs.org/docs/latest/api/cli.html#-c-condition---conditionscondition) with the same values in both dev and build to get a consistent behavior.
 
 For example, when setting `['node', 'custom']`, you should run `NODE_OPTIONS='--conditions custom' vite` in dev and `NODE_OPTIONS="--conditions custom" node ./dist/server.js` after build.
+
+:::
 
 ## ssr.resolve.mainFields
 

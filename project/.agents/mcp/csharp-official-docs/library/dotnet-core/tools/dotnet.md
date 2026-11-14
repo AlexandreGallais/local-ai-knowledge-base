@@ -1,12 +1,8 @@
 ---
-title: "dotnet command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet command
+description: Learn about the dotnet command (the generic driver for the .NET CLI) and its usage.
+ms.date: 10/28/2025
 ---
-
 # dotnet command
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -52,11 +48,11 @@ The `dotnet` command has two functions:
 
 - It provides commands for working with .NET projects.
 
-  For example, `dotnet build` builds a project. Each command defines its own options and arguments. All commands support the `--help` option for printing out brief documentation about how to use the command.
+  For example, [`dotnet build`](dotnet-build.md) builds a project. Each command defines its own options and arguments. All commands support the `--help` option for printing out brief documentation about how to use the command.
 
 - It runs .NET applications.
 
-  You specify the path to an application `.dll` file to run the application.  To run the application means to find and execute the entry point, which in the case of console apps is the `Main` method. For example, `dotnet myapp.dll` runs the `myapp` application. See .NET application deployment to learn about deployment options.
+  You specify the path to an application `.dll` file to run the application.  To run the application means to find and execute the entry point, which in the case of console apps is the `Main` method. For example, `dotnet myapp.dll` runs the `myapp` application. See [.NET application deployment](../deploying/index.md) to learn about deployment options.
 
 ## Options
 
@@ -82,13 +78,13 @@ Prints out the version of the .NET SDK used by `dotnet` commands, which may be a
 
   Prints out a list of the installed .NET runtimes for the architecture of the invoked `dotnet`. An x86 version of `dotnet` lists only x86 runtimes, and an x64 version of `dotnet` lists only x64 runtimes.
 
-  .NET 10 and later versions support the `--arch` argument. If specified and not the same as the `dotnet` architecture, searches for a .NET installation of the specified architecture and prints out any runtimes installed there. Allowed values include arm64, x64, and x86. The dotnet/runtime repo has the full list of valid architecture values.
+  .NET 10 and later versions support the `--arch` argument. If specified and not the same as the `dotnet` architecture, searches for a .NET installation of the specified architecture and prints out any runtimes installed there. Allowed values include arm64, x64, and x86. The dotnet/runtime repo has the full [list of valid architecture values](https://github.com/dotnet/runtime/blob/1713d65316467e3eaf23514b6642eba5869f1b70/src/native/corehost/hostmisc/utils.cpp#L194-L205).
 
 - **`--list-sdks [--arch <ARCH>]`**
 
   Prints out a list of the installed .NET SDKs for the architecture of the invoked `dotnet`. An x86 version of `dotnet` lists only x86 SDKs, and an x64 version of `dotnet` lists only x64 SDKs.
 
-  .NET 10 and later versions support the `--arch` argument. If specified and not the same as the `dotnet` architecture, searches for a .NET installation of the specified architecture and prints out any SDKs installed there. Allowed values include arm64, x64, and x86. The dotnet/runtime repo has the full list of valid architecture values.
+  .NET 10 and later versions support the `--arch` argument. If specified and not the same as the `dotnet` architecture, searches for a .NET installation of the specified architecture and prints out any SDKs installed there. Allowed values include arm64, x64, and x86. The dotnet/runtime repo has the full [list of valid architecture values](https://github.com/dotnet/runtime/blob/1713d65316467e3eaf23514b6642eba5869f1b70/src/native/corehost/hostmisc/utils.cpp#L194-L205).
 
 - **`-?|-h|--help`**
 
@@ -118,13 +114,17 @@ The following options are for `dotnet` with a command. For example, `dotnet buil
 
 The following options are available when `dotnet` runs an application. For example, `dotnet --roll-forward Major myapp.dll`.
 
-- **`--additionalprobingpath `**
+<a name="additionalprobingpath"></a>
+
+- **`--additionalprobingpath <PATH>`**
 
   Path containing probing policy and assemblies to probe. Repeat the option to specify multiple paths.
 
-- **`--additional-deps `**
+- **`--additional-deps <PATH>`**
 
-  Path to an additional *.deps.json* file. A *deps.json* file contains a list of dependencies, compilation dependencies, and version information used to address assembly conflicts. For more information, see Runtime Configuration Files on GitHub.
+  Path to an additional *.deps.json* file. A *deps.json* file contains a list of dependencies, compilation dependencies, and version information used to address assembly conflicts. For more information, see [Runtime Configuration Files](https://github.com/dotnet/sdk/blob/main/documentation/specs/runtime-configuration-file.md) on GitHub.
+
+<a name="rollforward"></a>
 
 - **`--roll-forward <SETTING>`**
 
@@ -139,7 +139,7 @@ The following options are available when `dotnet` runs an application. For examp
 
   With the exception of `Disable`, all settings will use the highest available patch version.
 
-  Roll forward behavior can also be configured in a project file property, a runtime configuration file property, and an environment variable. For more information, see Major-version runtime roll forward.
+  Roll forward behavior can also be configured in a project file property, a runtime configuration file property, and an environment variable. For more information, see [Major-version runtime roll forward](../whats-new/dotnet-core-3-0.md#major-version-runtime-roll-forward).
 
 - **`--fx-version <VERSION>`**
 
@@ -151,13 +151,13 @@ The following options are available when `dotnet` runs an application. For examp
 
 The following options are available only when `dotnet` runs an application by using the `exec` command. For example, `dotnet exec --runtimeconfig myapp.runtimeconfig.json myapp.dll`.
 
-- **`--depsfile `**
+- **`--depsfile <PATH>`**
 
   Path to a *deps.json* file. A *deps.json* file is a configuration file that contains information about dependencies necessary to run the application. This file is generated by the .NET SDK.
 
-- **`--runtimeconfig `**
+- **`--runtimeconfig <PATH>`**
 
-  Path to a *runtimeconfig.json* file. A *runtimeconfig.json* file contains runtime settings and is typically named *\<applicationname>.runtimeconfig.json*. For more information, see .NET runtime configuration settings.
+  Path to a *runtimeconfig.json* file. A *runtimeconfig.json* file contains runtime settings and is typically named *\<applicationname>.runtimeconfig.json*. For more information, see [.NET runtime configuration settings](../runtime-config/index.md#runtimeconfigjson).
 
 ## dotnet commands
 
@@ -165,83 +165,83 @@ The following options are available only when `dotnet` runs an application by us
 
 | Command                                            | Function                                                            |
 |----------------------------------------------------|---------------------------------------------------------------------|
-| dotnet build                    | Builds a .NET application.                                          |
-| dotnet build-server      | Interacts with servers started by a build.                          |
-| dotnet clean                    | Clean build outputs.                                                |
-| dotnet exec | Runs a .NET application.                                            |
-| dotnet help                      | Shows more detailed documentation online for the command.           |
-| dotnet msbuild                | Provides access to the MSBuild command line.                        |
-| dotnet new                        | Initializes a C# or F# project for a given template.                |
-| dotnet pack                      | Creates a NuGet package of your code.                               |
-| dotnet publish                | Publishes a .NET framework-dependent or self-contained application. |
-| dotnet restore                | Restores the dependencies for a given application.                  |
-| dotnet run                        | Runs the application from source.                                   |
-| dotnet sdk check            | Shows up-to-date status of installed SDK and Runtime versions.      |
-| dotnet sln                        | Options to add, remove, and list projects in a solution file.       |
-| dotnet store                    | Stores assemblies in the runtime package store.                     |
-| dotnet test                      | Runs tests using a test runner.                                     |
+| [dotnet build](dotnet-build.md)                    | Builds a .NET application.                                          |
+| [dotnet build-server](dotnet-build-server.md)      | Interacts with servers started by a build.                          |
+| [dotnet clean](dotnet-clean.md)                    | Clean build outputs.                                                |
+| [dotnet exec](#options-for-running-an-application) | Runs a .NET application.                                            |
+| [dotnet help](dotnet-help.md)                      | Shows more detailed documentation online for the command.           |
+| [dotnet msbuild](dotnet-msbuild.md)                | Provides access to the MSBuild command line.                        |
+| [dotnet new](dotnet-new.md)                        | Initializes a C# or F# project for a given template.                |
+| [dotnet pack](dotnet-pack.md)                      | Creates a NuGet package of your code.                               |
+| [dotnet publish](dotnet-publish.md)                | Publishes a .NET framework-dependent or self-contained application. |
+| [dotnet restore](dotnet-restore.md)                | Restores the dependencies for a given application.                  |
+| [dotnet run](dotnet-run.md)                        | Runs the application from source.                                   |
+| [dotnet sdk check](dotnet-sdk-check.md)            | Shows up-to-date status of installed SDK and Runtime versions.      |
+| [dotnet sln](dotnet-sln.md)                        | Options to add, remove, and list projects in a solution file.       |
+| [dotnet store](dotnet-store.md)                    | Stores assemblies in the runtime package store.                     |
+| [dotnet test](dotnet-test.md)                      | Runs tests using a test runner.                                     |
 
 ### Project references
 
 | Command                                               | Function                     |
 |-------------------------------------------------------|------------------------------|
-| dotnet reference add       | Adds a project reference.    |
-| dotnet reference list     | Lists project references.    |
-| dotnet reference remove | Removes a project reference. |
+| [dotnet reference add](dotnet-reference-add.md)       | Adds a project reference.    |
+| [dotnet reference list](dotnet-reference-list.md)     | Lists project references.    |
+| [dotnet reference remove](dotnet-reference-remove.md) | Removes a project reference. |
 
 ### NuGet packages
 
 | Command                                           | Function                      |
 |---------------------------------------------------|-------------------------------|
-| dotnet package add       | Adds a NuGet package.         |
-| dotnet package list     | Lists NuGet packages.         |
-| dotnet package remove | Removes a NuGet package.      |
-| dotnet package search | Searches for a NuGet package. |
+| [dotnet package add](dotnet-package-add.md)       | Adds a NuGet package.         |
+| [dotnet package list](dotnet-package-list.md)     | Lists NuGet packages.         |
+| [dotnet package remove](dotnet-package-remove.md) | Removes a NuGet package.      |
+| [dotnet package search](dotnet-package-search.md) | Searches for a NuGet package. |
 
 ### NuGet commands
 
 | Command                                       | Function                                         |
 |-----------------------------------------------|--------------------------------------------------|
-| dotnet nuget add client-cert | Adds a client certificate configuration for a NuGet source. |
-| dotnet nuget add source | Adds a NuGet source. |
-| dotnet nuget delete | Deletes or unlists a package from the server.    |
-| dotnet nuget disable source | Disables a NuGet source. |
-| dotnet nuget enable source | Enables a NuGet source. |
-| dotnet nuget list client-cert | Lists configured NuGet client certificates. |
-| dotnet nuget list source | Lists all configured NuGet sources. |
-| dotnet nuget locals | Clears or lists local NuGet resources such as http-request cache, temporary cache, or machine-wide global packages folder. |
-| dotnet nuget push     | Pushes a package to the server and publishes it. |
-| dotnet nuget remove client-cert | Removes a client certificate configuration for a NuGet source. |
-| dotnet nuget remove source | Removes a NuGet source. |
-| dotnet nuget update client-cert | Updates a client certificate configuration for a NuGet source. |
-| dotnet nuget update source | Updates a NuGet source. |
+| [dotnet nuget add client-cert](dotnet-nuget-add-client-cert.md) | Adds a client certificate configuration for a NuGet source. |
+| [dotnet nuget add source](dotnet-nuget-add-source.md) | Adds a NuGet source. |
+| [dotnet nuget delete](dotnet-nuget-delete.md) | Deletes or unlists a package from the server.    |
+| [dotnet nuget disable source](dotnet-nuget-disable-source.md) | Disables a NuGet source. |
+| [dotnet nuget enable source](dotnet-nuget-enable-source.md) | Enables a NuGet source. |
+| [dotnet nuget list client-cert](dotnet-nuget-list-client-cert.md) | Lists configured NuGet client certificates. |
+| [dotnet nuget list source](dotnet-nuget-list-source.md) | Lists all configured NuGet sources. |
+| [dotnet nuget locals](dotnet-nuget-locals.md) | Clears or lists local NuGet resources such as http-request cache, temporary cache, or machine-wide global packages folder. |
+| [dotnet nuget push](dotnet-nuget-push.md)     | Pushes a package to the server and publishes it. |
+| [dotnet nuget remove client-cert](dotnet-nuget-remove-client-cert.md) | Removes a client certificate configuration for a NuGet source. |
+| [dotnet nuget remove source](dotnet-nuget-remove-source.md) | Removes a NuGet source. |
+| [dotnet nuget update client-cert](dotnet-nuget-update-client-cert.md) | Updates a client certificate configuration for a NuGet source. |
+| [dotnet nuget update source](dotnet-nuget-update-source.md) | Updates a NuGet source. |
 
 ### Workload commands
 
 | Command                                                 | Function                                            |
 |---------------------------------------------------------|-----------------------------------------------------|
-| dotnet workload clean       | Removes workload components.                        |
-| dotnet workload config     | Enables or disables workload-set update mode.       |
-| dotnet workload history   | Shows all workload installation actions.            |
-| dotnet workload install   | Installs an optional workload.                      |
-| dotnet workload list         | Lists all installed workloads.                      |
-| dotnet workload repair     | Repairs all installed workloads.                    |
-| dotnet workload restore   | Restore workloads required for a project.           |
-| dotnet workload search     | List selected workloads or all available workloads. |
-| dotnet workload uninstall | Uninstalls a workload.                              |
-| dotnet workload update     | Reinstalls all installed workloads.                 |
+| [dotnet workload clean](dotnet-workload-clean.md)       | Removes workload components.                        |
+| [dotnet workload config](dotnet-workload-config.md)     | Enables or disables workload-set update mode.       |
+| [dotnet workload history](dotnet-workload-history.md)   | Shows all workload installation actions.            |
+| [dotnet workload install](dotnet-workload-install.md)   | Installs an optional workload.                      |
+| [dotnet workload list](dotnet-workload-list.md)         | Lists all installed workloads.                      |
+| [dotnet workload repair](dotnet-workload-repair.md)     | Repairs all installed workloads.                    |
+| [dotnet workload restore](dotnet-workload-restore.md)   | Restore workloads required for a project.           |
+| [dotnet workload search](dotnet-workload-search.md)     | List selected workloads or all available workloads. |
+| [dotnet workload uninstall](dotnet-workload-install.md) | Uninstalls a workload.                              |
+| [dotnet workload update](dotnet-workload-update.md)     | Reinstalls all installed workloads.                 |
 
 ### Global, tool-path, and local tools commands
 
-Tools are console applications that are installed from NuGet packages and are invoked from the command prompt. You can write tools yourself or install tools written by third parties. Tools are also known as global tools, tool-path tools, and local tools. For more information, see .NET tools overview.
+Tools are console applications that are installed from NuGet packages and are invoked from the command prompt. You can write tools yourself or install tools written by third parties. Tools are also known as global tools, tool-path tools, and local tools. For more information, see [.NET tools overview](global-tools.md).
 
 | Command                                       | Function                         |
 |-----------------------------------------------|----------------------------------|
-| dotnet tool install | Installs a tool on your machine. |
-| dotnet tool list | Lists all global, tool-path, or local tools currently installed on your machine. |
-| dotnet tool search | Searches NuGet.org for tools that have the specified search term in their name or metadata. |
-| dotnet tool uninstall | Uninstalls a tool from your machine. |
-| dotnet tool update | Updates a tool that is installed on your machine. |
+| [dotnet tool install](dotnet-tool-install.md) | Installs a tool on your machine. |
+| [dotnet tool list](dotnet-tool-list.md) | Lists all global, tool-path, or local tools currently installed on your machine. |
+| [dotnet tool search](dotnet-tool-search.md) | Searches NuGet.org for tools that have the specified search term in their name or metadata. |
+| [dotnet tool uninstall](dotnet-tool-uninstall.md) | Uninstalls a tool from your machine. |
+| [dotnet tool update](dotnet-tool-update.md) | Updates a tool that is installed on your machine. |
 
 ### Additional tools
 
@@ -249,10 +249,10 @@ The following additional tools are available as part of the .NET SDK:
 
 | Tool                                              | Function                                                     |
 | ------------------------------------------------- | ------------------------------------------------------------ |
-| dev-certs                  | Creates and manages development certificates.                |
-| ef           | Entity Framework Core command-line tools.                    |
-| user-secrets | Manages development user secrets.                            |
-| watch                          | A file watcher that restarts or hot reloads an application when it detects changes in the source code. |
+| [dev-certs](dotnet-dev-certs.md)                  | Creates and manages development certificates.                |
+| [ef](/ef/core/miscellaneous/cli/dotnet)           | Entity Framework Core command-line tools.                    |
+| [user-secrets](/aspnet/core/security/app-secrets) | Manages development user secrets.                            |
+| [watch](dotnet-watch.md)                          | A file watcher that restarts or hot reloads an application when it detects changes in the source code. |
 
 For more information about each tool, type `dotnet <tool-name> --help`.
 
@@ -282,6 +282,6 @@ dotnet myapp.dll
 
 ## See also
 
-- Environment variables used by .NET SDK, .NET CLI, and .NET runtime
-- Runtime Configuration Files
-- .NET runtime configuration settings
+- [Environment variables used by .NET SDK, .NET CLI, and .NET runtime](dotnet-environment-variables.md)
+- [Runtime Configuration Files](https://github.com/dotnet/sdk/blob/main/documentation/specs/runtime-configuration-file.md)
+- [.NET runtime configuration settings](../runtime-config/index.md)

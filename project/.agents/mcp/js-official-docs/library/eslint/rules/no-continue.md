@@ -1,13 +1,8 @@
 ---
-title: "no-continue"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-continue.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-continue
+rule_type: suggestion
 ---
 
-# no-continue
 
 The `continue` statement terminates execution of the statements in the current iteration of the current or labeled loop, and continues execution of the loop with the next iteration. When used incorrectly it makes code less testable, less readable and less maintainable. Structured control flow statements such as `if` should be used instead.
 
@@ -30,7 +25,7 @@ This rule disallows `continue` statements.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-continue: "error"*/
@@ -47,7 +42,9 @@ for(i = 0; i < 10; i++) {
 }
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint no-continue: "error"*/
@@ -64,9 +61,11 @@ labeledLoop: for(i = 0; i < 10; i++) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-continue: "error"*/
@@ -80,6 +79,8 @@ for(i = 0; i < 10; i++) {
     }
 }
 ```
+
+:::
 
 ## Options
 

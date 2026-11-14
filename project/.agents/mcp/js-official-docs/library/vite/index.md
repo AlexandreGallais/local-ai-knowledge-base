@@ -1,61 +1,12 @@
-# vite library index
+---
+title: Vite
+titleTemplate: Next Generation Frontend Tooling
+layout: home
+theme: dark
+---
 
-Vite guide, configuration and API. Version 8.3, from <https://github.com/vitejs/vite> at v8.3.8, commit b39e6e63dcbfc3cf4be871acf3554efbd6d0e268.
-License: MIT, by VoidZero Inc. and Vite contributors; see THIRD_PARTY_NOTICES.md. The text was converted to plain Markdown and cut into files of 16 KB at most.
+<script setup>
+import Home from './.vitepress/theme/landing/Layout.vue'
+</script>
 
-This index is long: search it with grep for your words, never read it whole. Then open one file and read only the section you need.
-
-- [Acknowledgements](library/vite/acknowledgements.md): Vite is built upon the shoulders of giants. (2 KB)
-- [Latest From the Vite Blog](library/vite/blog.md): (1 KB)
-- [HMR hotUpdate Plugin Hook](library/vite/changes/hotupdate-hook.md): We're planning to deprecate the handleHotUpdate plugin hook in favor of hotUpdate hook to be Environment API aware, and handle additional watch events with… (4 KB)
-- [Breaking Changes](library/vite/changes.md): List of breaking changes in Vite including API deprecations, removals, and changes. (1 KB)
-- [Move to Per-environment APIs](library/vite/changes/per-environment-apis.md): Multiple APIs from ViteDevServer related to module graph and modules transforms have been moved to the DevEnvironment instances. (2 KB)
-- [Shared Plugins during Build](library/vite/changes/shared-plugins-during-build.md): See Shared plugins during build. (2 KB)
-- [SSR Using ModuleRunner API](library/vite/changes/ssr-using-modulerunner.md): server.ssrLoadModule has been replaced by importing from a Module Runner. (1 KB)
-- [this.environment in Hooks](library/vite/changes/this-environment-in-hooks.md): Before Vite 6, only two environments were available: client and ssr. (2 KB)
-- [Build Options (part 1 of 2)](library/vite/config/build-options.md): Unless noted, the options in this section are only applied to build. (15 KB)
-- [Build Options (part 2 of 2)](library/vite/config/build-options-p2.md): Limit for chunk size warnings (in kB). (1 KB)
-- [Dep Optimization Options](library/vite/config/dep-optimization-options.md): Unless noted, the options in this section are only applied to the dependency optimizer, which is only used in dev. (6 KB)
-- [Configuring Vite](library/vite/config.md): When running vite from the command line, Vite will automatically try to resolve a config file named vite.config.js inside project root (other JS and… (7 KB)
-- [Preview Options](library/vite/config/preview-options.md): Unless noted, the options in this section are only applied to preview. (3 KB)
-- [Server Options (part 1 of 2)](library/vite/config/server-options.md): Unless noted, the options in this section are only applied to dev. (15 KB)
-- [Server Options (part 2 of 2)](library/vite/config/server-options-p2.md): Restrict files that could be served via /@fs/. (4 KB)
-- [Shared Options (part 1 of 2)](library/vite/config/shared-options.md): Unless noted, the options in this section are applied to all dev, build, and preview. (15 KB)
-- [Shared Options (part 2 of 2)](library/vite/config/shared-options-p2.md): Configures Lightning CSS. (7 KB)
-- [SSR Options](library/vite/config/ssr-options.md): Unless noted, the options in this section are applied to both dev and build. (3 KB)
-- [Worker Options](library/vite/config/worker-options.md): Unless noted, the options in this section are applied to all dev, build, and preview. (1 KB)
-- [Environment API for Frameworks (part 1 of 2)](library/vite/guide/api-environment-frameworks.md): We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment… (15 KB)
-- [Environment API for Frameworks (part 2 of 2)](library/vite/guide/api-environment-frameworks-p2.md): Most of the time, the current environment instance will be available as part of the context of the code being run so the need… (1 KB)
-- [Using Environment Instances](library/vite/guide/api-environment-instances.md): We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment… (11 KB)
-- [Environment API for Plugins](library/vite/guide/api-environment-plugins.md): We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment… (14 KB)
-- [Environment API for Runtimes (part 1 of 2)](library/vite/guide/api-environment-runtimes.md): We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment… (12 KB)
-- [Environment API for Runtimes (part 2 of 2)](library/vite/guide/api-environment-runtimes-p2.md): Transport object that communicates with the environment via an RPC or by directly calling the function. (6 KB)
-- [Environment API](library/vite/guide/api-environment.md): We plan to stabilize these new APIs (with potential breaking changes) in a future major release once downstream projects have had time to experiment… (9 KB)
-- [HMR API](library/vite/guide/api-hmr.md): The manual HMR API is primarily intended for framework and tooling authors. (9 KB)
-- [JavaScript API](library/vite/guide/api-javascript.md): Vite's JavaScript APIs are fully typed, and it's recommended to use TypeScript or enable JS type checking in VS Code to leverage the IntelliSense… (13 KB)
-- [Plugin API (part 1 of 3)](library/vite/guide/api-plugin.md): Vite plugins extends Rolldown's plugin interface with a few extra Vite-specific options. (6 KB)
-- [Plugin API (part 2 of 3)](library/vite/guide/api-plugin-p2.md): Vite plugins can also provide hooks that serve Vite-specific purposes. (15 KB)
-- [Plugin API (part 3 of 3)](library/vite/guide/api-plugin-p3.md): A fair number of Rolldown / Rollup plugins will work directly as a Vite plugin (e.g. (8 KB)
-- [Static Asset Handling](library/vite/guide/assets.md): Importing a static asset will return the resolved public URL when it is served: (6 KB)
-- [Backend Integration](library/vite/guide/backend-integration.md): If you need a custom integration, you can follow the steps in this guide to configure it manually. (11 KB)
-- [Building for Production](library/vite/guide/build.md): When it is time to deploy your app for production, simply run the vite build command. (13 KB)
-- [Command Line Interface (part 1 of 2)](library/vite/guide/cli.md): Start Vite dev server in the current directory. (10 KB)
-- [Command Line Interface (part 2 of 2)](library/vite/guide/cli-p2.md): Pre-bundle dependencies. (7 KB)
-- [Dependency Pre-Bundling](library/vite/guide/dep-pre-bundling.md): When you run vite for the first time, Vite prebundles your project dependencies before loading your site locally. (5 KB)
-- [Env Variables and Modes](library/vite/guide/env-and-mode.md): Vite exposes certain constants under the special import.meta.env object. (10 KB)
-- [Features (part 1 of 3)](library/vite/guide/features.md): At the very basic level, developing using Vite is not that different from using a static file server. (11 KB)
-- [Features (part 2 of 3)](library/vite/guide/features-p2.md): Importing .css files will inject its content to the page via a <style> tag with HMR support. (12 KB)
-- [Features (part 3 of 3)](library/vite/guide/features-p3.md): Vite supports importing pre-compiled .wasm files in two ways: directly as an ES module when you only need the module's exports, or with ?init… (10 KB)
-- [Getting Started](library/vite/guide.md): Vite (French word for "quick", pronounced /viːt/<use href="../images/voice.svg?no-inline#voice" />, like "veet") is a build tool that aims to provide a faster and leaner development… (9 KB)
-- [Migration from v7 (part 1 of 2)](library/vite/guide/migration.md): If you are migrating from rolldown-vite, the technical preview release for Rolldown integrated Vite for v6 & v7, only the sections with <Badge text="NRV"… (14 KB)
-- [Migration from v7 (part 2 of 2)](library/vite/guide/migration-p2.md): These breaking changes are expected to only affect a minority of use cases: (3 KB)
-- [Performance](library/vite/guide/performance.md): While Vite is fast by default, performance issues can creep in as the project's requirements grow. (8 KB)
-- [Project Philosophy](library/vite/guide/philosophy.md): Vite aims to support the most common patterns to build Web apps out-of-the-box, while keeping Vite core lean and maintainable long-term. (3 KB)
-- [Server-Side Rendering (SSR)](library/vite/guide/ssr.md): The following guide also assumes prior experience working with SSR in your framework of choice, and will only focus on Vite-specific integration details. (13 KB)
-- [Deploying a Static Site](library/vite/guide/static-deploy.md): The following guides are based on some shared assumptions: (11 KB)
-- [Troubleshooting](library/vite/guide/troubleshooting.md): See Rollup's troubleshooting guide for more information too. (14 KB)
-- [Using Plugins](library/vite/guide/using-plugins.md): Vite can be extended using plugins, which are based on Rollup's well-designed plugin interface with a few extra Vite-specific options. (3 KB)
-- [Why Vite](library/vite/guide/why.md): As web applications have grown in size and complexity, the tools used to build them have struggled to keep up. (6 KB)
-- [Vite](library/vite/overview.md): (1 KB)
-- [5th anniversary of the Vite Team Creation](library/vite/live.md): (1 KB)
-- [Plugins](library/vite/plugins.md): Check out Using Plugins for information on how to use plugins. (2 KB)
+<Home />

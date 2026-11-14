@@ -1,10 +1,11 @@
 ---
-title: "How to calculate intermediate values - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/calculate-intermediate-values.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to calculate intermediate values - LINQ to XML
+description: Calculate intermediate values for use in sorting, filtering, and selecting.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to calculate intermediate values (LINQ to XML)
@@ -13,7 +14,7 @@ This article shows how to calculate intermediate values for use in sorting, filt
 
 ## Example: Use the `let` clause to calculate based on element data
 
-The following example uses the `let` clause to calculate products of numerical values from elements. It uses XML document Sample XML file: Numerical data.
+The following example uses the `let` clause to calculate products of numerical values from elements. It uses XML document [Sample XML file: Numerical data](sample-xml-file-numerical-data.md).
 
 ```csharp
 XElement root = XElement.Load("Data.xml");
@@ -52,9 +53,9 @@ This example produces the following output:
 
 ## Example: Calculate from XML that's in a namespace
 
-The following example shows the same query as before, but for XML that's in a namespace. It uses the XML document Sample XML file: Numerical data in a namespace.
+The following example shows the same query as before, but for XML that's in a namespace. It uses the XML document [Sample XML file: Numerical data in a namespace](sample-xml-file-numerical-data-namespace.md).
 
-For more information, see Namespaces overview.
+For more information, see [Namespaces overview](namespaces-overview.md).
 
 ```csharp
 XElement root = XElement.Load("DataInNamespace.xml");
@@ -100,4 +101,4 @@ This example produces the following output:
 
 ## See also
 
-- Basic <example-value> (LINQ to XML) (Visual Basic)
+- [Basic Queries (LINQ to XML) (Visual Basic)](./find-element-specific-attribute.md)

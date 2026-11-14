@@ -1,19 +1,13 @@
----
-title: "no-undeclared-class-members"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-undeclared-class-members.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-undeclared-class-members
 
 📝 Require class members to be declared.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Class members should be declared when they are used through `this`. Declaring fields, methods, getters, and setters in the class body makes typos visible and gives readers the class shape upfront.
 
@@ -72,5 +66,5 @@ class Foo {
 }
 ```
 
-> **Note:**
+> [!NOTE]
 > Declaring a class field like `name;` creates an own property with the value `undefined` on every instance before any method runs. This can change observable behavior, for example `Object.hasOwn(instance, 'name')`, so this rule provides editor suggestions instead of an autofix.

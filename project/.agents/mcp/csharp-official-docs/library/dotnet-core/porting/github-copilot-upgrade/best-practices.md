@@ -1,10 +1,12 @@
 ---
-title: "Best practices for GitHub Copilot upgrade"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/github-copilot-upgrade/best-practices.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Best practices for GitHub Copilot upgrade
+description: "Learn how to prepare projects, collaborate with the agent, avoid common upgrade problems, and recover from unsuccessful changes."
+ms.topic: best-practice
+ms.date: 09/21/2026
+ai-usage: ai-assisted
+
+#customer intent: As a developer, I want to follow best practices when I use GitHub Copilot upgrade so that I can improve upgrade results and avoid common problems.
+
 ---
 
 # Best practices for GitHub Copilot upgrade
@@ -52,7 +54,7 @@ git commit -m "Baseline before upgrade"
 
 The agent relies on tests to validate that its changes don't break behavior. Projects with good test coverage get higher-confidence upgrades.
 
-> **Tip:**
+> [!TIP]
 > You don't need 100% coverage. Focus on code the upgrade is most likely to change, such as API boundaries, serialization, database access, and authentication.
 
 ### Start small
@@ -65,7 +67,7 @@ Follow these guidelines while the agent works through your upgrade.
 
 ### Use guided mode for your first upgrade
 
-The agent supports both guided and automatic modes. In guided mode, the agent pauses at key <example-value> points for your review and approval. Start with guided mode to understand what the agent does and why. Switch to automatic mode once you're comfortable with the workflow.
+The agent supports both guided and automatic modes. In guided mode, the agent pauses at key decision points for your review and approval. Start with guided mode to understand what the agent does and why. Switch to automatic mode once you're comfortable with the workflow.
 
 ### Review the assessment carefully
 
@@ -87,7 +89,7 @@ The agent generates a plan based on its assessment. Review the plan before proce
 
 Ask the agent to reorder tasks, skip projects, or change its approach. You know your codebase better than the agent, so use that knowledge. Edit the `plan.md` file directly to adjust task order, add tasks, or remove tasks.
 
-> **Caution:**
+> [!CAUTION]
 > Be careful when editing `plan.md` directly. The agent might not fully interpret your changes if they create contradictory instructions. For example, removing a dependency project while keeping the projects that depend on it.
 
 ### Give feedback immediately
@@ -119,7 +121,7 @@ The agent works project-by-project, so large solutions take time. Be patient and
 
 ### Private package feeds
 
-For private NuGet or npm feeds, authenticate before you start the upgrade. Use your organization's credential <example-value> or package-manager configuration. Without authentication, package restore or installation failures block progress.
+For private NuGet or npm feeds, authenticate before you start the upgrade. Use your organization's credential provider or package-manager configuration. Without authentication, package restore or installation failures block progress.
 
 ### Custom build logic
 
@@ -209,7 +211,7 @@ Your original code is untouched. If you're working without source control, resto
 
 ## Security and privacy
 
-- **Code snippets**: GitHub Copilot processes these according to GitHub's Copilot privacy policy and doesn't retain them beyond the immediate session.
+- **Code snippets**: GitHub Copilot processes these according to [GitHub's Copilot privacy policy](https://docs.github.com/copilot/responsible-use-of-github-copilot-features/responsible-use-of-github-copilot-chat-in-your-ide) and doesn't retain them beyond the immediate session.
 - **Workflow files** (`scenario-instructions.md`, custom tasks, preferences) stay in your repository under `.github/upgrades/`. GitHub doesn't transmit these files to external services.
 - **The `.github/upgrades/` folder** is part of your repository. Commit the folder because it contains your upgrade progress and state. The agent needs the folder to resume work across sessions. You can remove it after the upgrade is complete.
 - **Telemetry**: Disable through your IDE's telemetry settings.
@@ -222,7 +224,7 @@ Your original code is untouched. If you're working without source control, resto
 
 ## Related content
 
-- What is GitHub Copilot upgrade?
-- Upgrade a .NET app with GitHub Copilot upgrade
-- Core concepts
-- Troubleshoot GitHub Copilot upgrade
+- [What is GitHub Copilot upgrade?](overview.md)
+- [Upgrade a .NET app with GitHub Copilot upgrade](dotnet-how-to-upgrade-with-github-copilot.md)
+- [Core concepts](concepts.md)
+- [Troubleshoot GitHub Copilot upgrade](troubleshooting.md)

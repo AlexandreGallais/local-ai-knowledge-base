@@ -1,23 +1,23 @@
 ---
 title: "How to implement a lightweight class with automatically implemented properties"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/programming-guide/classes-and-structs/how-to-implement-a-lightweight-class-with-auto-implemented-properties.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to create an immutable lightweight class in C# that encapsulates automatically implemented properties. There are two implementation approaches.
+ms.date: 07/29/2022
+helpviewer_keywords:
+  - "auto-implemented properties [C#]"
+  - "properties [C#], auto-implemented"
+ms.topic: how-to
 ---
-
 # How to implement a lightweight class with automatically implemented properties
 
 This example shows how to create an immutable lightweight class that serves only to encapsulate a set of automatically implemented properties. Use this kind of construct instead of a struct when you must use reference type semantics.
 
 You can make an immutable property in the following ways:
 
-- Declare only the get accessor, which makes the property immutable everywhere except in the type's constructor.
-- Declare an init accessor instead of a `set` accessor, which makes the property settable only in the constructor or by using an object initializer.
-- Declare the set accessor to be private.  The property is settable within the type, but it's immutable to consumers.
+- Declare only the [get](../../language-reference/keywords/get.md) accessor, which makes the property immutable everywhere except in the type's constructor.
+- Declare an [init](../../language-reference/keywords/init.md) accessor instead of a `set` accessor, which makes the property settable only in the constructor or by using an [object initializer](object-and-collection-initializers.md).
+- Declare the [set](../../language-reference/keywords/set.md) accessor to be [private](../../language-reference/keywords/private.md).  The property is settable within the type, but it's immutable to consumers.
 
-You can add the `required` modifier to the property declaration to force callers to set the property as part of initializing a new object.
+You can add the [`required`](../../language-reference/keywords/required.md) modifier to the property declaration to force callers to set the property as part of initializing a new object.
 
 The following example shows how a property with only get accessor differs than one with get and private set.
 
@@ -139,6 +139,6 @@ The compiler creates backing fields for each automatically implemented property.
 
 ## See also
 
-- Properties
-- struct
-- Object and Collection Initializers
+- [Properties](./properties.md)
+- [struct](../../language-reference/builtin-types/struct.md)
+- [Object and Collection Initializers](./object-and-collection-initializers.md)

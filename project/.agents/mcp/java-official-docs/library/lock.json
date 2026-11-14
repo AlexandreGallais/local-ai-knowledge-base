@@ -1,8 +1,20 @@
 {
   "java-se": {
     "commit": "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f",
-    "files": 1587,
-    "bytes": 11110408,
+    "files": 1220,
+    "bytes": 11602214,
+    "built": "2026-11-14"
+  },
+  "gradle": {
+    "commit": "47a96e4ed1822d6aa7fa32bed4461208e69077a6",
+    "files": 342,
+    "bytes": 4334210,
+    "built": "2026-11-14"
+  },
+  "maven": {
+    "commit": "6a1033235afef25747dc2729ff5fed1224f89ebd",
+    "files": 284,
+    "bytes": 2056306,
     "built": "2026-11-14"
   }
 }

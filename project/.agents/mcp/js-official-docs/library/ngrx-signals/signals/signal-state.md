@@ -1,12 +1,3 @@
----
-title: "SignalState"
-tool: "ngrx-signals"
-version: "22.0"
-source: "https://github.com/ngrx/platform/blob/a4995391ef631f1bd60d539f436a1aa5c23c4fe5/projects/www/src/app/pages/guide/signals/signal-state.md"
-commit: "a4995391ef631f1bd60d539f436a1aa5c23c4fe5"
-license: "MIT"
----
-
 # SignalState
 
 SignalState is a lightweight utility designed for managing signal-based state in a concise and minimalistic manner.

@@ -1,41 +1,46 @@
----
-title: "check-alignment"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/check-alignment.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-check-alignment"></a>
+<a name="check-alignment"></a>
+# <code>check-alignment</code>
 
-# `check-alignment`
+* [Fixer](#user-content-check-alignment-fixer)
+* [Options](#user-content-check-alignment-options)
+    * [`ignoreEmptyLines`](#user-content-check-alignment-options-ignoreemptylines)
+    * [`innerIndent`](#user-content-check-alignment-options-innerindent)
+* [Context and settings](#user-content-check-alignment-context-and-settings)
+* [Failing examples](#user-content-check-alignment-failing-examples)
+* [Passing examples](#user-content-check-alignment-passing-examples)
 
-* Fixer
-* Options
-    * `ignoreEmptyLines`
-    * `innerIndent`
-* Context and settings
-* Failing examples
-* Passing examples
 
 Reports invalid alignment of JSDoc block asterisks.
 
+<a name="user-content-check-alignment-fixer"></a>
+<a name="check-alignment-fixer"></a>
 ## Fixer
 
 Fixes alignment.
 
+<a name="user-content-check-alignment-options"></a>
+<a name="check-alignment-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `ignoreEmptyLines`
+<a name="user-content-check-alignment-options-ignoreemptylines"></a>
+<a name="check-alignment-options-ignoreemptylines"></a>
+### <code>ignoreEmptyLines</code>
 
 Whether to ignore empty and whitespace-only lines (e.g., to allow a formatter to handle)
 
-### `innerIndent`
+<a name="user-content-check-alignment-options-innerindent"></a>
+<a name="check-alignment-options-innerindent"></a>
+### <code>innerIndent</code>
 
 Set to 0 if you wish to avoid the normal requirement for an inner indentation of
 one space. Defaults to 1 (one space of normal inner indentation).
 
+
+<a name="user-content-check-alignment-context-and-settings"></a>
+<a name="check-alignment-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -45,6 +50,8 @@ one space. Defaults to 1 (one space of normal inner indentation).
 |Recommended|true|
 |Options|`ignoreEmptyLines`, `innerIndent`|
 
+<a name="user-content-check-alignment-failing-examples"></a>
+<a name="check-alignment-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -173,6 +180,10 @@ function quux (foo) {
 // Message: Expected JSDoc block to be aligned.
 ````
 
+
+
+<a name="user-content-check-alignment-passing-examples"></a>
+<a name="check-alignment-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -249,3 +260,4 @@ function quux (foo) {
  */
 // "jsdoc/check-alignment": ["error"|"warn", {"ignoreEmptyLines":true}]
 ````
+

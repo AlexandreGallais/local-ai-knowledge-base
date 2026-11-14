@@ -1,12 +1,3 @@
----
-title: "no-multiple-actions-in-effects"
-tool: "ngrx-signals"
-version: "22.0"
-source: "https://github.com/ngrx/platform/blob/a4995391ef631f1bd60d539f436a1aa5c23c4fe5/projects/www/src/app/pages/guide/eslint-plugin/rules/no-multiple-actions-in-effects.md"
-commit: "a4995391ef631f1bd60d539f436a1aa5c23c4fe5"
-license: "MIT"
----
-
 # no-multiple-actions-in-effects
 
 `Effect` should not return multiple actions.
@@ -16,6 +7,9 @@ license: "MIT"
 - **Suggestion**: No
 - **Requires type checking**: Yes
 - **Configurable**: No
+
+<!-- Everything above this generated, do not edit -->
+<!-- MANUAL-DOC:START -->
 
 ## Rule Details
 

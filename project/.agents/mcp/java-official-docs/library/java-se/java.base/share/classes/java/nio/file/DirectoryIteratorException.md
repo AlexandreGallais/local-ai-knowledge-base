@@ -1,12 +1,3 @@
----
-title: "DirectoryIteratorException class (java.nio.file)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/file/DirectoryIteratorException.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # DirectoryIteratorException class (java.nio.file)
 
 ```java
@@ -14,11 +5,11 @@ public final class DirectoryIteratorException extends ConcurrentModificationExce
 ```
 
 Runtime exception thrown if an I/O error is encountered when iterating over
-the entries in a directory. The I/O error is retrieved as an `IOException` using the getCause() method.
+the entries in a directory. The I/O error is retrieved as an {@link
+IOException} using the {@link #getCause() getCause()} method.
 
-**Since:** 1.7
-
-**See also:** DirectoryStream
+@since 1.7
+@see DirectoryStream
 
 ## DirectoryIteratorException.DirectoryIteratorException(IOException)
 
@@ -28,13 +19,12 @@ public DirectoryIteratorException(IOException cause)
 
 Constructs an instance of this class.
 
-Parameters:
+@param   cause
+         the {@code IOException} that caused the directory iteration
+         to fail
 
-- `cause`: the `IOException` that caused the directory iteration to fail
-
-Throws:
-
-- `NullPointerException`: if the cause is `null`
+@throws  NullPointerException
+         if the cause is {@code null}
 
 ## DirectoryIteratorException.getCause()
 
@@ -44,4 +34,4 @@ public IOException getCause()
 
 Returns the cause of this exception.
 
-**Returns:** the cause
+@return  the cause

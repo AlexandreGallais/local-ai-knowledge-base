@@ -1,68 +1,40 @@
 ---
-title: "Respect nullable annotations"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/serialization/system-text-json/nullable-annotations.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Respect nullable annotations
+description: "Learn how to configure serialization and deserialization to respect nullable annotations."
+ms.date: 10/20/2025
+no-loc: [System.Text.Json, Newtonsoft.Json]
+ai-usage: ai-assisted
 ---
-
 # Respect nullable annotations
 
-Starting in .NET 9, `System.Text.Json.JsonSerializer` has (limited) support for non-nullable reference type enforcement in both serialization and deserialization. You can toggle this support using the `System.Text.Json.JsonSerializerOptions.RespectNullableAnnotations` flag.
+Starting in .NET 9, <xref:System.Text.Json.JsonSerializer> has (limited) support for non-nullable reference type enforcement in both serialization and deserialization. You can toggle this support using the <xref:System.Text.Json.JsonSerializerOptions.RespectNullableAnnotations?displayProperty=nameWithType> flag.
 
-For example, the following code snippet throws a `System.Text.Json.JsonException` during serialization with a message like:
+For example, the following code snippet throws a <xref:System.Text.Json.JsonException> during serialization with a message like:
 
 > The property or field 'Name' on type 'Person' doesn't allow getting null values. Consider updating its nullability annotation.
 
-```csharp
-    public static void RunIt()
-    {
-#nullable enable
-        JsonSerializerOptions options = new()
-        {
-            RespectNullableAnnotations = true
-        };
+:::code language="csharp" source="snippets/nullable-annotations/Nullable.cs" id="Serialization":::
 
-        Person invalidValue = new(Name: null!);
-        JsonSerializer.Serialize(invalidValue, options);
-    }
-
-    record Person(string Name);
-```
-Similarly, `System.Text.Json.JsonSerializerOptions.RespectNullableAnnotations` enforces nullability on deserialization. The following code snippet throws a `System.Text.Json.JsonException` during serialization with a message like:
+Similarly, <xref:System.Text.Json.JsonSerializerOptions.RespectNullableAnnotations> enforces nullability on deserialization. The following code snippet throws a <xref:System.Text.Json.JsonException> during serialization with a message like:
 
 > The constructor parameter 'Name' on type 'Person' doesn't allow null values. Consider updating its nullability annotation.
 
-```csharp
-    public static void RunIt()
-    {
-#nullable enable
-        JsonSerializerOptions options = new()
-        {
-            RespectNullableAnnotations = true
-        };
+:::code language="csharp" source="snippets/nullable-annotations/Nullable.cs" id="Deserialization":::
 
-        string json = """{"Name":null}""";
-        JsonSerializer.Deserialize<Person>(json, options);
-    }
-
-    record Person(string Name);
-```
-> **Tip:**
+> [!TIP]
 >
-> - You can configure nullability at an individual property level using the `System.Text.Json.Serialization.Metadata.JsonPropertyInfo.IsGetNullable` and `System.Text.Json.Serialization.Metadata.JsonPropertyInfo.IsSetNullable` properties.
-> - The C# compiler uses the `[NotNull]`, `[AllowNull]`, `[MaybeNull]`, and `[DisallowNull]` attributes to fine-tune annotations in getters and setters. These attributes are also recognized by this System.Text.Json feature. (For more information about the attributes, see Attributes for null-state static analysis.)
+> - You can configure nullability at an individual property level using the <xref:System.Text.Json.Serialization.Metadata.JsonPropertyInfo.IsGetNullable> and <xref:System.Text.Json.Serialization.Metadata.JsonPropertyInfo.IsSetNullable> properties.
+> - The C# compiler uses the [`[NotNull]`](xref:System.Diagnostics.CodeAnalysis.NotNullAttribute), [`[AllowNull]`](xref:System.Diagnostics.CodeAnalysis.AllowNullAttribute), [`[MaybeNull]`](xref:System.Diagnostics.CodeAnalysis.MaybeNullAttribute), and [`[DisallowNull]`](xref:System.Diagnostics.CodeAnalysis.DisallowNullAttribute) attributes to fine-tune annotations in getters and setters. These attributes are also recognized by this System.Text.Json feature. (For more information about the attributes, see [Attributes for null-state static analysis](../../../csharp/language-reference/attributes/nullable-analysis.md).)
 
 ## Limitations
 
-Due to how non-nullable reference types are implemented, this feature comes with some important limitations. Familiarize yourself with these limitations before turning the feature on. The root of the issue is that reference type nullability has no first-class representation in intermediate language (IL). As such, the expressions `MyPoco` and `MyPoco?` are indistinguishable from the perspective of runtime reflection. While the compiler tries to make up for that by emitting attribute metadata (see sharplab.io example), this metadata is restricted to non-generic member annotations that are scoped to a particular type definition. This limitation is the reason that the flag only validates nullability annotations that are present on non-generic properties, fields, and constructor parameters. System.Text.Json does not support nullability enforcement on:
+Due to how non-nullable reference types are implemented, this feature comes with some important limitations. Familiarize yourself with these limitations before turning the feature on. The root of the issue is that reference type nullability has no first-class representation in intermediate language (IL). As such, the expressions `MyPoco` and `MyPoco?` are indistinguishable from the perspective of runtime reflection. While the compiler tries to make up for that by emitting attribute metadata (see [sharplab.io example](https://sharplab.io/#v2:D4AQTAjAsAULBOBTAxge3gEwAQFkCeACqmgBQgQAMWAcqgC7UCuANswMp3wCWAdgOYAaLOQoB+Gi2YBDAEbNEHbvwCUAbiA=)), this metadata is restricted to non-generic member annotations that are scoped to a particular type definition. This limitation is the reason that the flag only validates nullability annotations that are present on non-generic properties, fields, and constructor parameters. System.Text.Json does not support nullability enforcement on:
 
 - Top-level types, or the type that's passed when making the first `JsonSerializer.Deserialize()` or `JsonSerializer.Serialize()` call.
-- Collection element types—for example, the `List<string>` and `List<string?>` types are indistinguishable.
+- Collection element types&mdash;for example, the `List<string>` and `List<string?>` types are indistinguishable.
 - Any properties, fields, or constructor parameters that are generic.
 
-If you want to add nullability enforcement in these cases, either model your type to be a struct (since they don't admit null values), or author a custom converter that overrides its `System.Text.Json.Serialization.JsonConverter`1.HandleNull` property to `true`.
+If you want to add nullability enforcement in these cases, either model your type to be a struct (since they don't admit null values), or author a custom converter that overrides its <xref:System.Text.Json.Serialization.JsonConverter`1.HandleNull> property to `true`.
 
 ## Feature switch
 
@@ -78,24 +50,10 @@ The `RespectNullableAnnotationsDefault` API was implemented as an opt-in flag in
 
 ## Relationship between nullable and optional parameters
 
-`System.Text.Json.JsonSerializerOptions.RespectNullableAnnotations` doesn't extend enforcement to unspecified JSON values, because System.Text.Json treats required and non-nullable properties as orthogonal concepts. For example, the following code snippet doesn't throw an exception during deserialization:
+<xref:System.Text.Json.JsonSerializerOptions.RespectNullableAnnotations> doesn't extend enforcement to unspecified JSON values, because System.Text.Json treats required and non-nullable properties as orthogonal concepts. For example, the following code snippet doesn't throw an exception during deserialization:
 
-```csharp
-public static void RunIt()
-{
-    JsonSerializerOptions options = new()
-    {
-        RespectNullableAnnotations = true
-    };
-    var result = JsonSerializer.Deserialize<MyPoco>("{}", options);
-    Console.WriteLine(result.Name is null); // True.
-}
+:::code language="csharp" source="snippets/nullable-annotations/Nullable.cs" id="Unspecified":::
 
-class MyPoco
-{
-    public string Name { get; set; }
-}
-```
 This behavior stems from the C# language itself, where you can have required properties that are nullable:
 
 ```csharp
@@ -129,7 +87,7 @@ record MyPoco(
 
 ## Missing values versus null values
 
-It's important to understand the distinction between *missing JSON properties* and *properties with explicit `null` values* when you set `System.Text.Json.JsonSerializerOptions.RespectNullableAnnotations`. JavaScript distinguishes between `undefined` (missing property) and `null` (explicit null value). However, .NET doesn't have an `undefined` concept, so both cases deserialize to `null` in .NET.
+It's important to understand the distinction between *missing JSON properties* and *properties with explicit `null` values* when you set <xref:System.Text.Json.JsonSerializerOptions.RespectNullableAnnotations>. JavaScript distinguishes between `undefined` (missing property) and `null` (explicit null value). However, .NET doesn't have an `undefined` concept, so both cases deserialize to `null` in .NET.
 
 During deserialization, when `RespectNullableAnnotations` is `true`:
 
@@ -138,25 +96,10 @@ During deserialization, when `RespectNullableAnnotations` is `true`:
 
   The following code shows how a missing property does NOT throw an exception during deserialization:
 
-```csharp
-    public static void RunIt()
-    {
-#nullable enable
-        JsonSerializerOptions options = new()
-        {
-            RespectNullableAnnotations = true
-        };
+  :::code language="csharp" source="snippets/nullable-annotations/Nullable.cs" id="MissingVsNull":::
 
-        // Missing property - does NOT throw an exception.
-        string jsonMissing = """{}""";
-        var resultMissing = JsonSerializer.Deserialize<Person>(jsonMissing, options);
-        Console.WriteLine(resultMissing.Name is null); // True.
-    }
-
-    record Person(string Name);
-```
-This behavior difference occurs because missing properties are treated as optional (not provided), while explicit `null` values are treated as provided values that violate the non-nullable constraint. If you need to enforce that a property must be present in the JSON, use the `required` modifier or configure the property as required using `System.Text.Json.Serialization.JsonRequiredAttribute` or the contracts model.
+This behavior difference occurs because missing properties are treated as optional (not provided), while explicit `null` values are treated as provided values that violate the non-nullable constraint. If you need to enforce that a property must be present in the JSON, use the `required` modifier or configure the property as required using <xref:System.Text.Json.Serialization.JsonRequiredAttribute> or the contracts model.
 
 ## See also
 
-- Non-optional constructor parameters
+- [Non-optional constructor parameters](required-properties.md#non-optional-constructor-parameters)

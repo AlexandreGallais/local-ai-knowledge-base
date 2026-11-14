@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: Default authentication scheme"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/7/default-authentication-scheme.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in ASP.NET Core 7.0 where a singly registered authentication scheme will cause it to be used as the default.
+ms.date: 07/20/2022
+ms.custom: https://github.com/aspnet/Announcements/issues/490
 ---
-
 # Default authentication scheme
 
 Starting in .NET 7, we introduced new behavior in the authentication area in ASP.NET Core.
@@ -55,7 +52,7 @@ builder.Services.AddAuthentication().AddCookie().AddJwtBearer();
 
 ## Type of breaking change
 
-This change affects binary compatibility.
+This change affects [binary compatibility](/dotnet/core/compatibility/categories#binary-compatibility).
 
 ## Reason for change
 

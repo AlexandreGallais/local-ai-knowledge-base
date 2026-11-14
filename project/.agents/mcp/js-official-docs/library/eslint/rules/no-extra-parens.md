@@ -1,23 +1,22 @@
 ---
-title: "no-extra-parens"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-extra-parens.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-extra-parens
+rule_type: layout
+related_rules:
+- arrow-parens
+- no-cond-assign
+- no-return-assign
+further_reading:
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence
 ---
-
-# no-extra-parens
-
 This rule restricts the use of parentheses to only where they are necessary.
 
 ## Rule Details
 
 This rule always ignores extra parentheses around the following:
 
-* RegExp literals such as `(/abc/).test(var)` to avoid conflicts with the wrap-regex rule
-* immediately-invoked function expressions (also known as IIFEs) such as `var x = (function () {})();` and `var x = (function () {}());` to avoid conflicts with the wrap-iife rule
-* arrow function arguments to avoid conflicts with the arrow-parens rule
+* RegExp literals such as `(/abc/).test(var)` to avoid conflicts with the [wrap-regex](wrap-regex) rule
+* immediately-invoked function expressions (also known as IIFEs) such as `var x = (function () {})();` and `var x = (function () {}());` to avoid conflicts with the [wrap-iife](wrap-iife) rule
+* arrow function arguments to avoid conflicts with the [arrow-parens](arrow-parens) rule
 
 Problems reported by this rule can be fixed automatically, except when removing the parentheses would create a new directive, because that could change the semantics of the code.
 For example, the following script prints `object` to the console, but if the parentheses around `"use strict"` were removed, it would print `undefined` instead.
@@ -62,7 +61,7 @@ This rule has an object option for exceptions to the `"all"` option:
 
 Examples of **incorrect** code for this rule with the default `"all"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint no-extra-parens: "error" */
@@ -90,9 +89,11 @@ class B {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"all"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-extra-parens: "error" */
@@ -122,11 +123,13 @@ class B {
 }
 ```
 
+:::
+
 ### conditionalAssign
 
 Examples of **correct** code for this rule with the `"all"` and `{ "conditionalAssign": false }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-extra-parens: ["error", "all", { "conditionalAssign": false }] */
@@ -140,11 +143,13 @@ do; while ((foo = bar()))
 for (;(a = b););
 ```
 
+:::
+
 ### returnAssign
 
 Examples of **correct** code for this rule with the `"all"` and `{ "returnAssign": false }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-extra-parens: ["error", "all", { "returnAssign": false }] */
@@ -162,11 +167,13 @@ b => (b = 1);
 b => b ? (c = d) : (c = e);
 ```
 
+:::
+
 ### nestedBinaryExpressions
 
 Examples of **correct** code for this rule with the `"all"` and `{ "nestedBinaryExpressions": false }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-extra-parens: ["error", "all", { "nestedBinaryExpressions": false }] */
@@ -176,11 +183,13 @@ x = a + (b * c);
 x = (a * b) / c;
 ```
 
+:::
+
 ### ternaryOperandBinaryExpressions
 
 Examples of **correct** code for this rule with the `"all"` and `{ "ternaryOperandBinaryExpressions": false }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-extra-parens: ["error", "all", { "ternaryOperandBinaryExpressions": false }] */
@@ -194,11 +203,13 @@ foo ? (bar || baz) : qux;
 foo ? bar : (baz || qux);
 ```
 
+:::
+
 ### ignoreJSX
 
 Examples of **correct** code for this rule with the `all` and `{ "ignoreJSX": "all" }` options:
 
-**Correct:**
+::: correct { "parserOptions": { "ecmaFeatures": { "jsx": true } } }
 
 ```jsx
 /* eslint no-extra-parens: ["error", "all", { ignoreJSX: "all" }] */
@@ -210,19 +221,23 @@ const ThatComponent = (
 )
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `all` and `{ "ignoreJSX": "multi-line" }` options:
 
-**Incorrect:**
+::: incorrect { "parserOptions": { "ecmaFeatures": { "jsx": true } } }
 
 ```jsx
 /* eslint no-extra-parens: ["error", "all", { ignoreJSX: "multi-line" }] */
 const ThisComponent = (<div />)
 const ThatComponent = (<div><p /></div>)
 ```
+
+:::
 
 Examples of **correct** code for this rule with the `all` and `{ "ignoreJSX": "multi-line" }` options:
 
-**Correct:**
+::: correct { "parserOptions": { "ecmaFeatures": { "jsx": true } } }
 
 ```jsx
 /* eslint no-extra-parens: ["error", "all", { ignoreJSX: "multi-line" }] */
@@ -238,9 +253,11 @@ const ThatComponent = (
 )
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `all` and `{ "ignoreJSX": "single-line" }` options:
 
-**Incorrect:**
+::: incorrect { "parserOptions": { "ecmaFeatures": { "jsx": true } } }
 
 ```jsx
 /* eslint no-extra-parens: ["error", "all", { ignoreJSX: "single-line" }] */
@@ -256,21 +273,25 @@ const ThatComponent = (
 )
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `all` and `{ "ignoreJSX": "single-line" }` options:
 
-**Correct:**
+::: correct { "parserOptions": { "ecmaFeatures": { "jsx": true } } }
 
 ```jsx
 /* eslint no-extra-parens: ["error", "all", { ignoreJSX: "single-line" }] */
 const ThisComponent = (<div />)
 const ThatComponent = (<div><p /></div>)
 ```
+
+:::
 
 ### enforceForArrowConditionals
 
 Examples of **correct** code for this rule with the `"all"` and `{ "enforceForArrowConditionals": false }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-extra-parens: ["error", "all", { "enforceForArrowConditionals": false }] */
@@ -279,11 +300,13 @@ const b = a => 1 ? 2 : 3;
 const d = c => (1 ? 2 : 3);
 ```
 
+:::
+
 ### enforceForSequenceExpressions
 
 Examples of **correct** code for this rule with the `"all"` and `{ "enforceForSequenceExpressions": false }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-extra-parens: ["error", "all", { "enforceForSequenceExpressions": false }] */
@@ -295,11 +318,13 @@ if ((val = foo(), val < 10)) {}
 while ((val = foo(), val < 10));
 ```
 
+:::
+
 ### enforceForNewInMemberExpressions
 
 Examples of **correct** code for this rule with the `"all"` and `{ "enforceForNewInMemberExpressions": false }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-extra-parens: ["error", "all", { "enforceForNewInMemberExpressions": false }] */
@@ -311,11 +336,13 @@ const quux = (new Bar())[baz];
 (new Bar()).doSomething();
 ```
 
+:::
+
 ### enforceForFunctionPrototypeMethods
 
 Examples of **correct** code for this rule with the `"all"` and `{ "enforceForFunctionPrototypeMethods": false }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-extra-parens: ["error", "all", { "enforceForFunctionPrototypeMethods": false }] */
@@ -329,13 +356,15 @@ const baz = (function () {}.call());
 const quux = (function () {}.apply());
 ```
 
+:::
+
 ### allowParensAfterCommentPattern
 
-To make this rule allow extra parentheses preceded by specific comments, set this option to a string pattern that will be passed to the `RegExp` constructor.
+To make this rule allow extra parentheses preceded by specific comments, set this option to a string pattern that will be passed to the [`RegExp` constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/RegExp).
 
 Examples of **correct** code for this rule with the `"all"` and `{ "allowParensAfterCommentPattern": "@type" }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-extra-parens: ["error", "all", { "allowParensAfterCommentPattern": "@type" }] */
@@ -355,11 +384,13 @@ if (foo) {
 }
 ```
 
+:::
+
 ### functions
 
 Examples of **incorrect** code for this rule with the `"functions"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint no-extra-parens: ["error", "functions"] */
@@ -369,9 +400,11 @@ Examples of **incorrect** code for this rule with the `"functions"` option:
 var y = (function () {return 1;});
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"functions"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-extra-parens: ["error", "functions"] */
@@ -392,3 +425,5 @@ a = (b * c);
 
 typeof (a);
 ```
+
+:::

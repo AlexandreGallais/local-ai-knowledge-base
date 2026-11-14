@@ -1,17 +1,17 @@
 ---
-title: "YARP Response and Response Trailer Transforms"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/transforms-response.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: YARP Response and Response Trailer Transforms
+description: YARP Response and Response Trailer Transforms
+ms.date: 04/04/2025
+ms.topic: concept-article
+content_well_notification: AI-contribution
+ai-usage: ai-assisted
 ---
 
 # Response and Response Trailers
 
 All response headers and trailers are copied from the proxied response to the outgoing client response by default. Response and response trailer transforms may specify if they should be applied only for successful responses or for all responses.
 
-In code these are implemented as derivations of the abstract classes ResponseTransform and ResponseTrailersTransform.
+In code these are implemented as derivations of the abstract classes [ResponseTransform](xref:Yarp.ReverseProxy.Transforms.ResponseTransform) and [ResponseTrailersTransform](xref:Yarp.ReverseProxy.Transforms.ResponseTrailersTransform).
 
 ## ResponseHeadersCopy
 
@@ -127,7 +127,7 @@ routeConfig = routeConfig.WithTransformResponseHeadersAllowed("Header1", "header
 transformBuilderContext.AddResponseHeadersAllowed("Header1", "header2");
 ```
 
-YARP copies most response headers from the proxy response by default (see ResponseHeadersCopy). Some security models only allow specific headers to be proxied. This transform disables ResponseHeadersCopy and only copies the given headers. Other transforms that modify or append to existing headers may be affected if not included in the allow list.
+YARP copies most response headers from the proxy response by default (see [ResponseHeadersCopy](#responseheaderscopy)). Some security models only allow specific headers to be proxied. This transform disables ResponseHeadersCopy and only copies the given headers. Other transforms that modify or append to existing headers may be affected if not included in the allow list.
 
 Note that there are some headers YARP does not copy by default since they are connection specific or otherwise security sensitive (e.g. `Connection`, `Alt-Svc`). Putting those header names in the allow list will bypass that restriction but is strongly discouraged as it may negatively affect the functionality of the proxy or cause security vulnerabilities.
 
@@ -196,7 +196,7 @@ HeaderName: value
 
 Response trailers are headers sent at the end of the response body. Support for trailers is uncommon in HTTP/1.1 implementations but is becoming common in HTTP/2 implementations. Check your client and server for support.
 
-ResponseTrailer follows the same structure and guidance as ResponseHeader.
+ResponseTrailer follows the same structure and guidance as [ResponseHeader](#responseheader).
 
 ## ResponseTrailerRemove
 
@@ -229,7 +229,7 @@ AnotherHeader: another-value
 
 This removes the named trailing header.
 
-ResponseTrailerRemove follows the same structure and guidance as ResponseHeaderRemove.
+ResponseTrailerRemove follows the same structure and guidance as [ResponseHeaderRemove](#responseheaderremove).
 
 ## ResponseTrailersAllowed
 
@@ -251,7 +251,7 @@ routeConfig = routeConfig.WithTransformResponseTrailersAllowed("Header1", "heade
 transformBuilderContext.AddResponseTrailersAllowed("Header1", "header2");
 ```
 
-YARP copies most response trailers from the proxy response by default (see ResponseTrailersCopy). Some security models only allow specific headers to be proxied. This transform disables ResponseTrailersCopy and only copies the given headers. Other transforms that modify or append to existing headers may be affected if not included in the allow list.
+YARP copies most response trailers from the proxy response by default (see [ResponseTrailersCopy](#responsetrailerscopy)). Some security models only allow specific headers to be proxied. This transform disables ResponseTrailersCopy and only copies the given headers. Other transforms that modify or append to existing headers may be affected if not included in the allow list.
 
 Note that there are some headers YARP does not copy by default since they are connection specific or otherwise security sensitive (e.g. `Connection`, `Alt-Svc`). Putting those header names in the allow list will bypass that restriction but is strongly discouraged as it may negatively affect the functionality of the proxy or cause security vulnerabilities.
 

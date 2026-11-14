@@ -1,12 +1,3 @@
----
-title: "inkex.elements._svg"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/elements/_svg.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.elements._svg
 
 Provide a way to load lxml attributes with an svg API on top.
@@ -49,23 +40,22 @@ If size is not given, it is determined automatically from the length of
 existing ids, i.e. those in the document plus those in the blacklist.
 
 Args:
-prefix (str): the prefix of the new ID.
-size (Optional[int], optional): number of digits of the second part of the
-id. If None, the length is chosen based on the amount of existing
-objects. Defaults to None.
+    prefix (str): the prefix of the new ID.
+    size (Optional[int], optional): number of digits of the second part of the
+        id. If None, the length is chosen based on the amount of existing
+        objects. Defaults to None.
 
-> *Changed in version 1.1.*
-> The default of this parameter has been changed from 4 to None.
+        .. versionchanged:: 1.1
+            The default of this parameter has been changed from 4 to None.
+    blacklist (Optional[Iterable[str]], optional): An additional iterable of ids
+        that are not allowed to be used. This is useful when bulk inserting
+        objects.
+        Defaults to None.
 
-blacklist (Optional[Iterable[str]], optional): An additional iterable of ids
-that are not allowed to be used. This is useful when bulk inserting
-objects.
-Defaults to None.
-
-> *Added in version 1.2.*
+        .. versionadded:: 1.2
 
 Returns:
-_type_: _description_
+    _type_: _description_
 
 ## SvgDocumentElement.get_page_bbox
 
@@ -77,15 +67,15 @@ Gets the page dimensions as a bbox. For single-page documents, the viewbox
 dimensions are returned.
 
 Args:
-page (int, optional): Page number. Defaults to the first page.
+    page (int, optional): Page number. Defaults to the first page.
 
-> *Added in version 1.3.*
+        .. versionadded:: 1.3
 
 Raises:
-IndexError: if the page number provided does not exist in the document.
+    IndexError: if the page number provided does not exist in the document.
 
 Returns:
-BoundingBox: the bounding box of the page
+    BoundingBox: the bounding box of the page
 
 ## SvgDocumentElement.get_current_layer
 
@@ -107,7 +97,7 @@ If the prefix or url are already in use with different values, this
 function will raise an error. Remove any attributes or elements using
 this namespace before calling this function in order to rename it.
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 ## SvgDocumentElement.name
 
@@ -161,7 +151,7 @@ the width of the viewbox, as defined in the SVG file. If no viewbox is defined,
 the value of the width attribute is returned. If the height is not defined,
 returns 0.
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## SvgDocumentElement.viewport_width
 
@@ -173,7 +163,7 @@ Returns the width of the `viewport coordinate system
 <https://www.w3.org/TR/SVG2/coords.html#Introduction>`_ in user units, i.e. the
 width attribute of the svg element converted to px
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## SvgDocumentElement.viewbox_height
 
@@ -187,7 +177,7 @@ height of the viewbox, as defined in the SVG file. If no viewbox is defined, the
 value of the height attribute is returned. If the height is not defined,
 returns 0.
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## SvgDocumentElement.viewport_height
 
@@ -199,7 +189,7 @@ Returns the width of the `viewport coordinate system
 <https://www.w3.org/TR/SVG2/coords.html#Introduction>`_ in user units, i.e. the
 height attribute of the svg element converted to px
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## SvgDocumentElement.scale
 
@@ -209,10 +199,10 @@ def scale(self)
 
 Returns the ratio between the viewBox width and the page width.
 
-> *Changed in version 1.2.*
-> Previously, the scale as shown by the document properties was computed,
-> but the computation of this in core Inkscape changed in Inkscape 1.2, so
-> this was moved to `inkscape_scale`.
+.. versionchanged:: 1.2
+    Previously, the scale as shown by the document properties was computed,
+    but the computation of this in core Inkscape changed in Inkscape 1.2, so
+    this was moved to :attr:`inkscape_scale`.
 
 ## SvgDocumentElement.inkscape_scale
 
@@ -224,7 +214,7 @@ Returns the ratio between the viewBox width (in width/height units) and the
 page width, which is displayed as "scale" in the Inkscape document
 properties.
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## SvgDocumentElement.equivalent_transform_scale
 
@@ -236,7 +226,7 @@ Return the scale of the equivalent transform of the svg tag, as defined by
 https://www.w3.org/TR/SVG2/coords.html#ComputingAViewportsTransform
 (highly simplified)
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## SvgDocumentElement.unit
 
@@ -259,7 +249,7 @@ def document_unit(self)
 
 Returns the display unit (Inkscape-specific attribute) of the document
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## SvgDocumentElement.stylesheets
 
@@ -286,10 +276,10 @@ def add_to_tree_callback(self, element)
 Callback called automatically when adding an element to the tree.
 Updates the list of stylesheets and the ID tracker with the subtree of element.
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 Args:
-element (BaseElement): element added to the tree.
+    element (BaseElement): element added to the tree.
 
 ## SvgDocumentElement.remove_from_tree_callback
 
@@ -301,10 +291,10 @@ Callback called automatically when removing an element from the tree.
 Remove elements in the subtree of element from the the list of stylesheets
 and the ID tracker.
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 Args:
-element (BaseElement): element added to the tree.
+    element (BaseElement): element added to the tree.
 
 ## width
 
@@ -312,7 +302,7 @@ element (BaseElement): element added to the tree.
 def width(self)
 ```
 
-Use `viewport_width()` instead
+Use :func:`viewport_width` instead
 
 ## height
 
@@ -320,4 +310,4 @@ Use `viewport_width()` instead
 def height(self)
 ```
 
-Use `viewport_height()` instead
+Use :func:`viewport_height` instead

@@ -1,12 +1,3 @@
----
-title: "SecureCacheResponse class (java.net)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/net/SecureCacheResponse.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # SecureCacheResponse class (java.net)
 
 ```java
@@ -16,7 +7,7 @@ public abstract class SecureCacheResponse extends CacheResponse
 Represents a cache response originally retrieved through secure
 means, such as TLS.
 
-**Since:** 1.5
+@since 1.5
 
 ## SecureCacheResponse.SecureCacheResponse()
 
@@ -35,7 +26,7 @@ public abstract String getCipherSuite()
 Returns the cipher suite in use on the original connection that
 retrieved the network resource.
 
-**Returns:** a string representing the cipher suite
+@return a string representing the cipher suite
 
 ## SecureCacheResponse.getLocalCertificateChain()
 
@@ -48,11 +39,10 @@ handshaking of the original connection that retrieved the
 network resource.  Note: This method is useful only
 when using certificate-based cipher suites.
 
-**Returns:** an immutable List of Certificate representing the
+@return an immutable List of Certificate representing the
           certificate chain that was sent to the server. If no
           certificate chain was sent, null will be returned.
-
-**See also:** #getLocalPrincipal()
+@see #getLocalPrincipal()
 
 ## SecureCacheResponse.getServerCertificateChain()
 
@@ -67,14 +57,10 @@ can be used only when using certificate-based cipher suites;
 using it with non-certificate-based cipher suites, such as
 Kerberos, will throw an SSLPeerUnverifiedException.
 
-**Returns:** an immutable List of Certificate representing the server's
+@return an immutable List of Certificate representing the server's
         certificate chain.
-
-**See also:** #getPeerPrincipal()
-
-Throws:
-
-- `SSLPeerUnverifiedException`: if the peer is not verified.
+@throws SSLPeerUnverifiedException if the peer is not verified.
+@see #getPeerPrincipal()
 
 ## SecureCacheResponse.getPeerPrincipal()
 
@@ -86,17 +72,14 @@ Returns the server's principal which was established as part of
 defining the session during the original connection that
 retrieved the network resource.
 
-**Returns:** the server's principal. Returns an X500Principal of the
+@return the server's principal. Returns an X500Principal of the
 end-entity certificate for X509-based cipher suites, and
 KerberosPrincipal for Kerberos cipher suites.
 
-**See also:** #getServerCertificateChain()
+@throws SSLPeerUnverifiedException if the peer was not verified.
 
-**See also:** #getLocalPrincipal()
-
-Throws:
-
-- `SSLPeerUnverifiedException`: if the peer was not verified.
+@see #getServerCertificateChain()
+@see #getLocalPrincipal()
 
 ## SecureCacheResponse.getLocalPrincipal()
 
@@ -108,14 +91,13 @@ Returns the principal that was sent to the server during
 handshaking in the original connection that retrieved the
 network resource.
 
-**Returns:** the principal sent to the server. Returns an X500Principal
+@return the principal sent to the server. Returns an X500Principal
 of the end-entity certificate for X509-based cipher suites, and
 KerberosPrincipal for Kerberos cipher suites. If no principal was
 sent, then null is returned.
 
-**See also:** #getLocalCertificateChain()
-
-**See also:** #getPeerPrincipal()
+@see #getLocalCertificateChain()
+@see #getPeerPrincipal()
 
 ## SecureCacheResponse.getSSLSession()
 
@@ -123,20 +105,20 @@ sent, then null is returned.
 public Optional<SSLSession> getSSLSession()
 ```
 
-Returns an `Optional` containing the `SSLSession` in
+Returns an {@link Optional} containing the {@code SSLSession} in
 use on the original connection that retrieved the network resource.
-Returns an empty `Optional` if the underlying implementation
+Returns an empty {@code Optional} if the underlying implementation
 does not support this method.
 
-**Implementation requirements:** For compatibility, the default implementation of this
-          method returns an empty `Optional`.  Subclasses
+@implSpec For compatibility, the default implementation of this
+          method returns an empty {@code Optional}.  Subclasses
           should override this method with an appropriate
           implementation since an application may need to access
           additional parameters associated with the SSL session.
 
-**Returns:** an `Optional` containing the `SSLSession` in
+@return   an {@link Optional} containing the {@code SSLSession} in
           use on the original connection
 
-**See also:** SSLSession
+@see SSLSession
 
-**Since:** 12
+@since 12

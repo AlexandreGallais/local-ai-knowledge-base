@@ -1,33 +1,35 @@
 ---
-title: "Create a project template for dotnet new"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tutorials/cli-templates-create-project-template.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Create a project template for dotnet new
+description: Learn how to create a project template for the dotnet new command.
+author: adegeo
+ms.date: 10/23/2025
+ai-usage: ai-assisted
+ms.topic: tutorial
+ms.author: adegeo
 ---
 
 # Tutorial: Create a project template
 
 With .NET, you can create and deploy templates that generate projects, files, and resources. This tutorial is part two of a series that teaches you how to create, install, and uninstall templates for use with the `dotnet new` command.
 
-> **Tip:**
+> [!TIP]
 > The official .NET templates that are shipped with the .NET SDK can be found in the following repositories:
 >
 > | Templates | Repository |
 > |---|---|
-> |Console, class library and common item templates|dotnet/sdk|
-> |ASP.NET and Blazor templates|dotnet/aspnetcore|
-> |ASP.NET Single Page Application templates| dotnet/spa-templates|
-> |WPF templates|dotnet/wpf|
-> |Windows Forms templates|dotnet/winforms|
-> |Test templates|dotnet/test-templates|
-> |MAUI templates|dotnet/maui|
+> |Console, class library and common item templates|[dotnet/sdk](https://github.com/dotnet/sdk)|
+> |ASP.NET and Blazor templates|[dotnet/aspnetcore](https://github.com/dotnet/aspnetcore)|
+> |ASP.NET Single Page Application templates| [dotnet/spa-templates](https://github.com/dotnet/spa-templates)|
+> |WPF templates|[dotnet/wpf](https://github.com/dotnet/wpf)|
+> |Windows Forms templates|[dotnet/winforms](https://github.com/dotnet/winforms)|
+> |Test templates|[dotnet/test-templates](https://github.com/dotnet/test-templates)|
+> |MAUI templates|[dotnet/maui](https://github.com/dotnet/maui)|
 >
 > You can view the templates that are installed on your machine by running the `dotnet new list` command.
 
 In this part of the series, you learn how to:
 
+> [!div class="checklist"]
 >
 > * Create the resources of a project template.
 > * Create the template config folder and file.
@@ -37,9 +39,9 @@ In this part of the series, you learn how to:
 
 ## Prerequisites
 
-- .NET 9 or a later version.
+- [.NET 9](https://dotnet.microsoft.com/download) or a later version.
 
-- Complete part 1 of this tutorial series.
+- Complete [part 1](cli-templates-create-item-template.md) of this tutorial series.
 
 - Open a terminal and navigate to the _working\content_ folder.
 
@@ -102,11 +104,11 @@ Open the _template.json_ with your favorite text editor and paste in the followi
 }
 ```
 
-This config file contains all the settings for your template. You can see the basic <example-value>, such as `name` and `shortName`, but there's also a `tags/type` value that's set to `project`. This categorizes your template as a "project" template. There's no restriction on the type of template you create. The `item` and `project` values are common names that .NET recommends so that users can easily filter the type of template they're searching for.
+This config file contains all the settings for your template. You can see the basic settings, such as `name` and `shortName`, but there's also a `tags/type` value that's set to `project`. This categorizes your template as a "project" template. There's no restriction on the type of template you create. The `item` and `project` values are common names that .NET recommends so that users can easily filter the type of template they're searching for.
 
 The `sourceName` item is what is replaced when the user uses the template. The value of `sourceName` in the config file is searched for in every file name and file content, and by default is replaced with the name of the current folder. When the `-n` or `--name` parameter is passed with the `dotnet new` command, the value provided is used instead of the current folder name. In the case of this template, `consoleasync` is replaced in the name of the _.csproj_ file.
 
-The `classifications` item represents the **tags** column you see when you run `dotnet new` and get a list of templates. Users can also search based on classification tags. Don't confuse the `tags` property in the _template.json_ file with the `classifications` tags list. They're two different concepts that are unfortunately named the same. The full schema for the _template.json_ file is found at the JSON Schema Store and is described at Reference for template.json. For more information about the _template.json_ file, see the dotnet templating wiki.
+The `classifications` item represents the **tags** column you see when you run `dotnet new` and get a list of templates. Users can also search based on classification tags. Don't confuse the `tags` property in the _template.json_ file with the `classifications` tags list. They're two different concepts that are unfortunately named the same. The full schema for the _template.json_ file is found at the [JSON Schema Store](http://json.schemastore.org/template) and is described at [Reference for template.json](https://github.com/dotnet/templating/wiki/Reference-for-template.json). For more information about the _template.json_ file, see the [dotnet templating wiki](https://github.com/dotnet/templating/wiki).
 
 Now that you have a valid _.template.config/template.json_ file, your template is ready to be installed. Before you install the template, make sure that you delete any extra folders and files you don't want included in your template, like the _bin_ or _obj_ folders. In your terminal, navigate to the _consoleasync_ folder and run `dotnet new install .\` to install the template located at the current folder. If you're using a Linux or macOS operating system, use a forward slash: `dotnet new install ./`.
 
@@ -177,4 +179,5 @@ At any time, you can use `dotnet new uninstall` to see a list of installed templ
 
 In this tutorial, you created a project template. To learn how to package both the item and project templates into an easy-to-use file, continue this tutorial series.
 
-> Create a template package
+> [!div class="nextstepaction"]
+> [Create a template package](cli-templates-create-template-package.md)

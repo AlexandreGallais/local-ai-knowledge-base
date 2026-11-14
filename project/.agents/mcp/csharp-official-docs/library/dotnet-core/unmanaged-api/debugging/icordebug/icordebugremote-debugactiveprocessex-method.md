@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugRemote::DebugActiveProcessEx Method"
 title: "ICorDebugRemote::DebugActiveProcessEx Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugremote-debugactiveprocessex-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugRemote.DebugActiveProcessEx"
+api_location:
+  - "CorDebug.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugRemoteTarget::DebugActiveProcessEx"
+helpviewer_keywords:
+  - "ICorDebugRemote::DebugActiveProcessEx method [.NET debugging]"
+  - "DebugActiveProcessEx method, ICorDebugRemote interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugRemote::DebugActiveProcessEx Method
 
 Launches a process on a remote machine under the debugger.
@@ -25,7 +34,7 @@ HRESULT DebugActiveProcessEx (
 ## Parameters
 
  `pRemoteTarget`
- [in] Pointer to an ICorDebugRemoteTarget Interface. This parameter is used to determine the machine on which the process is running.
+ [in] Pointer to an [ICorDebugRemoteTarget Interface](icordebugremotetarget-interface.md). This parameter is used to determine the machine on which the process is running.
 
  `id`
  [in] The ID of the process to which the debugger is to be attached.
@@ -50,7 +59,7 @@ Mixed-mode debugging is not supported in Silverlight.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -60,5 +69,5 @@ Mixed-mode debugging is not supported in Silverlight.
 
 ## See also
 
-- ICorDebugRemote Interface
-- ICorDebug Interface
+- [ICorDebugRemote Interface](icordebugremote-interface.md)
+- [ICorDebug Interface](icordebug-interface.md)

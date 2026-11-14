@@ -1,17 +1,16 @@
 ---
-title: "ASP.NET Core Web SDK"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/razor-pages/web-sdk.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core Web SDK
+description: Overview of Microsoft.NET.Sdk.Web.
+ms.date: 01/25/2023
 ---
 
 # ASP.NET Core Web SDK
 
+ :::moniker range=">= aspnetcore-3.0"
+
 ## Overview
 
-`Microsoft.NET.Sdk.Web` is an MSBuild project SDK for building ASP.NET Core apps. It's possible to build an ASP.NET Core app without this SDK, however, the Web SDK is:
+`Microsoft.NET.Sdk.Web` is an [MSBuild project SDK](/visualstudio/msbuild/how-to-use-project-sdk) for building ASP.NET Core apps. It's possible to build an ASP.NET Core app without this SDK, however, the Web SDK is:
 
 * Tailored towards providing a first-class experience.
 * The recommended target for most users.
@@ -28,8 +27,8 @@ Features enabled by using the Web SDK:
 
 * Implicitly references:
 
-  * The ASP.NET Core shared framework.
-  * Analyzers designed for building ASP.NET Core apps.
+  * The [ASP.NET Core shared framework](../fundamentals/metapackage-app.md).
+  * [Analyzers](/visualstudio/extensibility/getting-started-with-roslyn-analyzers) designed for building ASP.NET Core apps.
 * The Web SDK imports MSBuild targets that enable the use of publish profiles and publishing using WebDeploy.
 
 ## Properties
@@ -40,4 +39,26 @@ Features enabled by using the Web SDK:
 | `DisableImplicitAspNetCoreAnalyzers` | Disables implicit reference to ASP.NET Core analyzers. |
 | `DisableImplicitComponentsAnalyzers` | Disables implicit reference to Razor Components analyzers when building Blazor (server) applications. |
 
-For more information on tasks, targets, properties, implicit blobs, globs, publishing, methods, and more, see the README file in the WebSdk repository.
+For more information on tasks, targets, properties, implicit blobs, globs, publishing, methods, and more, see the [README file](https://github.com/dotnet/sdk/tree/main/src/WebSdk) in the [WebSdk](https://github.com/dotnet/sdk/tree/main/src/WebSdk) repository.
+
+:::moniker-end
+:::moniker range="< aspnetcore-3.0"
+
+### Overview
+
+`Microsoft.NET.Sdk.Web` is an [MSBuild project SDK](/visualstudio/msbuild/how-to-use-project-sdk) for building ASP.NET Core apps. It's possible to build an ASP.NET Core app without this SDK, however, the Web SDK is:
+
+* Tailored towards providing a first-class experience.
+* The recommended target for most users.
+
+Use the Web.SDK in a project:
+
+  ```xml
+  <Project Sdk="Microsoft.NET.Sdk.Web">
+    <!-- omitted for brevity -->
+  </Project>
+  ```
+
+The Web SDK imports MSBuild targets that enable the use of publish profiles and publishing using WebDeploy.
+
+:::moniker-end

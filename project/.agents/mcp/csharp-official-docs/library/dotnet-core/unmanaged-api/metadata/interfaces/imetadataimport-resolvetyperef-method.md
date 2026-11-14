@@ -1,15 +1,22 @@
 ---
+description: "Learn more about: IMetaDataImport::ResolveTypeRef Method"
 title: "IMetaDataImport::ResolveTypeRef Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-resolvetyperef-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.ResolveTypeRef"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::ResolveTypeRef"
+  - "IMetaDataImport::ResolveTypeRef method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::ResolveTypeRef Method
 
-Resolves a `System.Type` reference represented by the specified TypeRef token.
+Resolves a <xref:System.Type> reference represented by the specified TypeRef token.
 
 ## Syntax
 
@@ -38,16 +45,16 @@ HRESULT ResolveTypeRef (
 
 ## Remarks
 
-> **Important:**
+> [!IMPORTANT]
 > Do not use this method if multiple application domains are loaded. The method does not respect application domain boundaries. If multiple versions of an assembly are loaded, and they contain the same type with the same namespace, the method returns the module scope of the first type it finds.
 
  The `ResolveTypeRef` method searches for the type definition in other modules. If the type definition is found, `ResolveTypeRef` returns an interface to that module scope as well as the TypeDef token for the type.
 
- If the type reference to be resolved has a resolution scope of AssemblyRef, the `ResolveTypeRef` method searches for a match only in the metadata scopes that have already been opened with calls to either the IMetaDataDispenser::OpenScope method or the IMetaDataDispenser::OpenScopeOnMemory method. This is because `ResolveTypeRef` cannot determine from only the AssemblyRef scope where on disk or in the global assembly cache the assembly is stored.
+ If the type reference to be resolved has a resolution scope of AssemblyRef, the `ResolveTypeRef` method searches for a match only in the metadata scopes that have already been opened with calls to either the [IMetaDataDispenser::OpenScope](imetadatadispenser-openscope-method.md) method or the [IMetaDataDispenser::OpenScopeOnMemory](imetadatadispenser-openscopeonmemory-method.md) method. This is because `ResolveTypeRef` cannot determine from only the AssemblyRef scope where on disk or in the global assembly cache the assembly is stored.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -55,5 +62,5 @@ HRESULT ResolveTypeRef (
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

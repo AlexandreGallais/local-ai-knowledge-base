@@ -1,13 +1,12 @@
 ---
-title: "no-labels"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-labels.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-labels
+rule_type: suggestion
+related_rules:
+- no-extra-label
+- no-label-var
+- no-unused-labels
 ---
 
-# no-labels
 
 Labeled statements in JavaScript are used in conjunction with `break` and `continue` to control flow around multiple loops. For example:
 
@@ -31,7 +30,7 @@ This rule aims to eliminate the use of labeled statements in JavaScript. It will
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-labels: "error"*/
@@ -68,9 +67,11 @@ label:
     }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-labels: "error"*/
@@ -88,6 +89,8 @@ while (true) {
 }
 ```
 
+:::
+
 ## Options
 
 The options allow labels with loop or switch statements:
@@ -102,7 +105,7 @@ However, this way is ultra rare, not well-known, so this would be confusing deve
 
 Examples of **correct** code for the `{ "allowLoop": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-labels: ["error", { "allowLoop": true }]*/
@@ -113,11 +116,13 @@ label:
     }
 ```
 
+:::
+
 ### allowSwitch
 
 Examples of **correct** code for the `{ "allowSwitch": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-labels: ["error", { "allowSwitch": true }]*/
@@ -128,6 +133,8 @@ label:
             break label;
     }
 ```
+
+:::
 
 ## When Not To Use It
 

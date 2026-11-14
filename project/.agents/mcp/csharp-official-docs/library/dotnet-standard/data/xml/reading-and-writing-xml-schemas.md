@@ -1,61 +1,24 @@
 ---
 title: "Reading and Writing XML Schemas"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/reading-and-writing-xml-schemas.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Read and write XML Schema definition language (XSD) schemas from files or other sources in .NET, using the Schema Object Model (SOM) API.
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
 ---
-
 # Read and write XML schemas
 
-The Schema Object Model (SOM) API can be used to read and write XML Schema definition language (XSD) schemas from files or other sources and build XML schemas in-memory using the classes in the `System.Xml.Schema` namespace that map to the structures defined in the World Wide Web Consortium (W3C) XML Schema Recommendation.
+The Schema Object Model (SOM) API can be used to read and write XML Schema definition language (XSD) schemas from files or other sources and build XML schemas in-memory using the classes in the <xref:System.Xml.Schema?displayProperty=nameWithType> namespace that map to the structures defined in the World Wide Web Consortium (W3C) XML Schema Recommendation.
 
 ## Reading and Writing XML Schemas
 
- The `System.Xml.Schema.XmlSchema` class provides the `System.Xml.Schema.XmlSchema.Read*` and `System.Xml.Schema.XmlSchema.Write*` methods to read and write XML schemas. The `System.Xml.Schema.XmlSchema.Read*` method returns an `System.Xml.Schema.XmlSchema` object representing the XML schema and takes an optional `System.Xml.Schema.ValidationEventHandler` as a parameter to handle schema validation warnings and errors encountered while reading an XML schema.
+ The <xref:System.Xml.Schema.XmlSchema> class provides the <xref:System.Xml.Schema.XmlSchema.Read*> and <xref:System.Xml.Schema.XmlSchema.Write*> methods to read and write XML schemas. The <xref:System.Xml.Schema.XmlSchema.Read*> method returns an <xref:System.Xml.Schema.XmlSchema> object representing the XML schema and takes an optional <xref:System.Xml.Schema.ValidationEventHandler> as a parameter to handle schema validation warnings and errors encountered while reading an XML schema.
 
- The `System.Xml.Schema.XmlSchema.Write*` method writes XML schemas to `System.IO.Stream`, `System.IO.TextWriter` and `System.Xml.XmlWriter` objects and can take an optional `System.Xml.XmlNamespaceManager` object as a parameter. An `System.Xml.XmlNamespaceManager` is used to handle namespaces encountered in an XML schema. For more information about the `System.Xml.XmlNamespaceManager` class, see Managing Namespaces in an XML Document.
+ The <xref:System.Xml.Schema.XmlSchema.Write*> method writes XML schemas to <xref:System.IO.Stream>, <xref:System.IO.TextWriter> and <xref:System.Xml.XmlWriter> objects and can take an optional <xref:System.Xml.XmlNamespaceManager> object as a parameter. An <xref:System.Xml.XmlNamespaceManager> is used to handle namespaces encountered in an XML schema. For more information about the <xref:System.Xml.XmlNamespaceManager> class, see [Managing Namespaces in an XML Document](managing-namespaces-in-an-xml-document.md).
 
- The following code example illustrates reading and writing XML schemas from and to a file. The code example takes the `example.xsd` file, reads it into an `System.Xml.Schema.XmlSchema` object using the `static``System.Xml.Schema.XmlSchema.Read*` method, and then writes the file to the console and a new `new.xsd` file. The code example also provides a `System.Xml.Schema.ValidationEventHandler` as a parameter to the `static``System.Xml.Schema.XmlSchema.Read*` method to handle any schema validation warnings or errors encountered while reading the XML schema. If the `System.Xml.Schema.ValidationEventHandler` is not specified (`null`), no warnings or errors are reported.
- ```csharp
-using System;
-using System.IO;
-using System.Text;
-using System.Xml;
-using System.Xml.Schema;
-
-class XmlSchemaReadWriteExample
-{
-    static void Main()
-    {
-        try
-        {
-            XmlTextReader reader = new XmlTextReader("example.xsd");
-            XmlSchema schema = XmlSchema.Read(reader, ValidationCallback);
-            schema.Write(Console.Out);
-            FileStream file = new FileStream("new.xsd", FileMode.Create, FileAccess.ReadWrite);
-            XmlTextWriter xwriter = new XmlTextWriter(file, new UTF8Encoding());
-            xwriter.Formatting = Formatting.Indented;
-            schema.Write(xwriter);
-        }
-        catch(Exception e)
-        {
-            Console.WriteLine(e);
-        }
-    }
-
-    static void ValidationCallback(object sender, ValidationEventArgs args)
-    {
-        if (args.Severity == XmlSeverityType.Warning)
-            Console.Write("WARNING: ");
-        else if (args.Severity == XmlSeverityType.Error)
-            Console.Write("ERROR: ");
-
-        Console.WriteLine(args.Message);
-    }
-}
-```
+ The following code example illustrates reading and writing XML schemas from and to a file. The code example takes the `example.xsd` file, reads it into an <xref:System.Xml.Schema.XmlSchema> object using the `static`<xref:System.Xml.Schema.XmlSchema.Read*> method, and then writes the file to the console and a new `new.xsd` file. The code example also provides a <xref:System.Xml.Schema.ValidationEventHandler> as a parameter to the `static`<xref:System.Xml.Schema.XmlSchema.Read*> method to handle any schema validation warnings or errors encountered while reading the XML schema. If the <xref:System.Xml.Schema.ValidationEventHandler> is not specified (`null`), no warnings or errors are reported.
+ [!code-csharp[XmlSchemaReadWriteExample#1](../../../../samples/snippets/csharp/VS_Snippets_Data/XmlSchemaReadWriteExample/CS/XmlSchemaReadWriteExample.cs#1)]
+ [!code-vb[XmlSchemaReadWriteExample#1](../../../../samples/snippets/visualbasic/VS_Snippets_Data/XmlSchemaReadWriteExample/VB/XmlSchemaReadWriteExample.vb#1)]
 
  The example takes the `example.xsd` as input.
 
@@ -76,11 +39,11 @@ class XmlSchemaReadWriteExample
 
 ## See also
 
-- XML Schema Object Model Overview
-- Building XML Schemas
-- Traversing XML Schemas
-- Editing XML Schemas
-- Including or Importing XML Schemas
-- XmlSchemaSet for Schema Compilation
-- Post-Schema Compilation Infoset
-- Managing Namespaces in an XML Document
+- [XML Schema Object Model Overview](xml-schema-object-model-overview.md)
+- [Building XML Schemas](building-xml-schemas.md)
+- [Traversing XML Schemas](traversing-xml-schemas.md)
+- [Editing XML Schemas](editing-xml-schemas.md)
+- [Including or Importing XML Schemas](including-or-importing-xml-schemas.md)
+- [XmlSchemaSet for Schema Compilation](xmlschemaset-for-schema-compilation.md)
+- [Post-Schema Compilation Infoset](post-schema-compilation-infoset.md)
+- [Managing Namespaces in an XML Document](managing-namespaces-in-an-xml-document.md)

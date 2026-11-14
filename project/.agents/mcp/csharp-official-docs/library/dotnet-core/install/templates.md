@@ -1,27 +1,29 @@
 ---
-title: "Install and manage SDK templates"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/install/templates.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Install and manage SDK templates
+description: Learn how to install .NET templates on Windows, Linux, and macOS. Templates are installed from NuGet, a NuGet package file, or a file system directory.
+author: adegeo
+ms.author: adegeo
+ms.date: 04/23/2026
+ms.custom: linux-related-content
+zone_pivot_groups: operating-systems-set-one
+no-loc: ['dotnet new', 'dotnet nuget add source']
 ---
 
 # Manage .NET project and item templates
 
 .NET provides a template system that enables users to install or uninstall packages containing templates from NuGet, a NuGet package file, or a file system directory. This article describes how to manage .NET templates through the .NET SDK CLI.
 
-For more information about creating templates, see Tutorial: Create templates.
+For more information about creating templates, see [Tutorial: Create templates](../tutorials/cli-templates-create-item-template.md).
 
 ## Install template
 
-Template packages are installed through the dotnet new install SDK command. You can either provide the NuGet package identifier of a template package, or a folder that contains the template files.
+Template packages are installed through the [dotnet new install](../tools/dotnet-new-install.md) SDK command. You can either provide the NuGet package identifier of a template package, or a folder that contains the template files.
 
 ### NuGet hosted package
 
-.NET CLI template packages are uploaded to NuGet for wide distribution. Template packages can also be installed from a private feed. Instead of uploading a template package to a NuGet feed, *nupkg* template files can be distributed and manually installed, as described in the Local NuGet package section.
+.NET CLI template packages are uploaded to [NuGet](https://www.nuget.org/) for wide distribution. Template packages can also be installed from a private feed. Instead of uploading a template package to a NuGet feed, *nupkg* template files can be distributed and manually installed, as described in the [Local NuGet package](#local-nuget-package) section.
 
-For more information about configuring NuGet feeds, see dotnet nuget add source.
+For more information about configuring NuGet feeds, see [dotnet nuget add source](../tools/dotnet-nuget-add-source.md).
 
 To install a template package from the default NuGet feed, use the `dotnet new install {package-id}` command:
 
@@ -32,47 +34,55 @@ dotnet new install Microsoft.DotNet.Web.Spa.ProjectTemplates
 To install a template package from the default NuGet feed with a specific version, use the `dotnet new install {package-id}@{version}` command:
 
 ```dotnetcli
-dotnet new install user@example.com
+dotnet new install Microsoft.DotNet.Web.Spa.ProjectTemplates@2.2.6
 ```
 
-> **Note:**
+> [!NOTE]
 > The colon separator `::` was depracated in favor of the `@` character in .NET 9.0.200 SDK.
 
 ### Local NuGet package
 
 When a template package is created, a *nupkg* file is generated. If you have a *nupkg* file containing templates, you can install it with the `dotnet new install {path-to-package}` command:
 
-**os-windows:**
+::: zone pivot="os-windows"
 
 ```dotnetcli
 dotnet new install c:\code\nuget-packages\Some.Templates.1.0.0.nupkg
 ```
 
-**os-linux,os-macos:**
+::: zone-end
+
+::: zone pivot="os-linux,os-macos"
 
 ```dotnetcli
 dotnet new install ~/code/nuget-packages/Some.Templates.1.0.0.nupkg
 ```
 
+::: zone-end
+
 ### Folder
 
 As an alternative to installing template from a *nupkg* file, you can also install templates from a folder directly with the `dotnet new install {folder-path}` command. The folder specified is treated as the template package identifier for any template found. Any template found in the specified folder's hierarchy is installed.
 
-**os-windows:**
+::: zone pivot="os-windows"
 
 ```dotnetcli
 dotnet new install c:\code\nuget-packages\some-folder\
 ```
 
-**os-linux,os-macos:**
+::: zone-end
+
+::: zone pivot="os-linux,os-macos"
 
 ```dotnetcli
 dotnet new install ~/code/nuget-packages/some-folder/
 ```
 
-The `{folder-path}` specified on the command becomes the template package identifier for all templates found. As specified in the List template packages section, you can get a list of template packages installed with the `dotnet new uninstall` command. In this example, the template package identifier is shown as the folder used for install:
+::: zone-end
 
-**os-windows:**
+The `{folder-path}` specified on the command becomes the template package identifier for all templates found. As specified in the [List template packages](#list-template-packages) section, you can get a list of template packages installed with the `dotnet new uninstall` command. In this example, the template package identifier is shown as the folder used for install:
+
+::: zone pivot="os-windows"
 
 ```console
 dotnet new uninstall
@@ -88,7 +98,9 @@ Currently installed items:
       dotnet new uninstall c:\code\nuget-packages\some-folder
 ```
 
-**os-linux,os-macos:**
+::: zone-end
+
+::: zone pivot="os-linux,os-macos"
 
 ```console
 dotnet new uninstall
@@ -104,9 +116,11 @@ Currently installed items:
       dotnet new uninstall /home/username/code/templates
 ```
 
+::: zone-end
+
 ## Uninstall template package
 
-Template packages are uninstalled through the dotnet new uninstall SDK command. You can either provide the NuGet package identifier of a template package, or a folder that contains the template files.
+Template packages are uninstalled through the [dotnet new uninstall](../tools/dotnet-new-uninstall.md) SDK command. You can either provide the NuGet package identifier of a template package, or a folder that contains the template files.
 
 ### NuGet package
 
@@ -120,21 +134,25 @@ dotnet new uninstall Microsoft.DotNet.Web.Spa.ProjectTemplates
 
 ### Folder
 
-When templates are installed through a folder path, the folder path becomes the template package identifier.
+When templates are installed through a [folder path](#folder), the folder path becomes the template package identifier.
 
 To uninstall a template package, use the `dotnet new uninstall {package-folder-path}` command:
 
-**os-windows:**
+::: zone pivot="os-windows"
 
 ```dotnetcli
 dotnet new uninstall c:\code\nuget-packages\some-folder
 ```
 
-**os-linux,os-macos:**
+::: zone-end
+
+::: zone pivot="os-linux,os-macos"
 
 ```dotnetcli
 dotnet new uninstall /home/username/code/templates
 ```
+
+::: zone-end
 
 ## List template packages
 
@@ -158,30 +176,30 @@ Currently installed items:
 
 If you've installed each version of the SDK sequentially, for example you installed SDK 6.0, then SDK 7.0, and so on, you'll have every SDK's templates installed. However, if you start with a later SDK version, like 7.0, only the templates for this version are included. Templates for any other release aren't included.
 
-The .NET templates are available on NuGet, and you can install them like any other template. For more information, see Install NuGet hosted package.
+The .NET templates are available on NuGet, and you can install them like any other template. For more information, see [Install NuGet hosted package](#nuget-hosted-package).
 
 | SDK              | NuGet Package Identifier                                                                                                      |
 |------------------|-------------------------------------------------------------------------------------------------------------------------------|
-| .NET Core 2.1    | `Microsoft.DotNet.Common.ProjectTemplates.2.1` |
-| .NET Core 2.2    | `Microsoft.DotNet.Common.ProjectTemplates.2.2` |
-| .NET Core 3.0    | `Microsoft.DotNet.Common.ProjectTemplates.3.0` |
-| .NET Core 3.1    | `Microsoft.DotNet.Common.ProjectTemplates.3.1` |
-| .NET 5.0         | `Microsoft.DotNet.Common.ProjectTemplates.5.0` |
-| .NET 6.0         | `Microsoft.DotNet.Common.ProjectTemplates.6.0` |
-| .NET 7.0         | `Microsoft.DotNet.Common.ProjectTemplates.7.0` |
-| .NET 8.0         | `Microsoft.DotNet.Common.ProjectTemplates.8.0` |
-| .NET 9.0         | `Microsoft.DotNet.Common.ProjectTemplates.9.0` |
-| .NET 10.0         | `Microsoft.DotNet.Common.ProjectTemplates.10.0` |
-| ASP.NET Core 2.1 | `Microsoft.DotNet.Web.ProjectTemplates.2.1`       |
-| ASP.NET Core 2.2 | `Microsoft.DotNet.Web.ProjectTemplates.2.2`       |
-| ASP.NET Core 3.0 | `Microsoft.DotNet.Web.ProjectTemplates.3.0`       |
-| ASP.NET Core 3.1 | `Microsoft.DotNet.Web.ProjectTemplates.3.1`       |
-| ASP.NET Core 5.0 | `Microsoft.DotNet.Web.ProjectTemplates.5.0`       |
-| ASP.NET Core 6.0 | `Microsoft.DotNet.Web.ProjectTemplates.6.0`       |
-| ASP.NET Core 7.0 | `Microsoft.DotNet.Web.ProjectTemplates.7.0`       |
-| ASP.NET Core 8.0 | `Microsoft.DotNet.Web.ProjectTemplates.8.0`       |
-| ASP.NET Core 9.0 | `Microsoft.DotNet.Web.ProjectTemplates.8.0`       |
-| ASP.NET Core 10.0 | `Microsoft.DotNet.Web.ProjectTemplates.10.0`       |
+| .NET Core 2.1    | [`Microsoft.DotNet.Common.ProjectTemplates.2.1`](https://www.nuget.org/packages/Microsoft.DotNet.Common.ProjectTemplates.2.1) |
+| .NET Core 2.2    | [`Microsoft.DotNet.Common.ProjectTemplates.2.2`](https://www.nuget.org/packages/Microsoft.DotNet.Common.ProjectTemplates.2.2) |
+| .NET Core 3.0    | [`Microsoft.DotNet.Common.ProjectTemplates.3.0`](https://www.nuget.org/packages/Microsoft.DotNet.Common.ProjectTemplates.3.0) |
+| .NET Core 3.1    | [`Microsoft.DotNet.Common.ProjectTemplates.3.1`](https://www.nuget.org/packages/Microsoft.DotNet.Common.ProjectTemplates.3.1) |
+| .NET 5.0         | [`Microsoft.DotNet.Common.ProjectTemplates.5.0`](https://www.nuget.org/packages/Microsoft.DotNet.Common.ProjectTemplates.5.0) |
+| .NET 6.0         | [`Microsoft.DotNet.Common.ProjectTemplates.6.0`](https://www.nuget.org/packages/Microsoft.DotNet.Common.ProjectTemplates.6.0) |
+| .NET 7.0         | [`Microsoft.DotNet.Common.ProjectTemplates.7.0`](https://www.nuget.org/packages/Microsoft.DotNet.Common.ProjectTemplates.7.0) |
+| .NET 8.0         | [`Microsoft.DotNet.Common.ProjectTemplates.8.0`](https://www.nuget.org/packages/Microsoft.DotNet.Common.ProjectTemplates.8.0) |
+| .NET 9.0         | [`Microsoft.DotNet.Common.ProjectTemplates.9.0`](https://www.nuget.org/packages/Microsoft.DotNet.Common.ProjectTemplates.9.0) |
+| .NET 10.0         | [`Microsoft.DotNet.Common.ProjectTemplates.10.0`](https://www.nuget.org/packages/Microsoft.DotNet.Common.ProjectTemplates.10.0) |
+| ASP.NET Core 2.1 | [`Microsoft.DotNet.Web.ProjectTemplates.2.1`](https://www.nuget.org/packages/Microsoft.DotNet.Web.ProjectTemplates.2.1)       |
+| ASP.NET Core 2.2 | [`Microsoft.DotNet.Web.ProjectTemplates.2.2`](https://www.nuget.org/packages/Microsoft.DotNet.Web.ProjectTemplates.2.2)       |
+| ASP.NET Core 3.0 | [`Microsoft.DotNet.Web.ProjectTemplates.3.0`](https://www.nuget.org/packages/Microsoft.DotNet.Web.ProjectTemplates.3.0)       |
+| ASP.NET Core 3.1 | [`Microsoft.DotNet.Web.ProjectTemplates.3.1`](https://www.nuget.org/packages/Microsoft.DotNet.Web.ProjectTemplates.3.1)       |
+| ASP.NET Core 5.0 | [`Microsoft.DotNet.Web.ProjectTemplates.5.0`](https://www.nuget.org/packages/Microsoft.DotNet.Web.ProjectTemplates.5.0)       |
+| ASP.NET Core 6.0 | [`Microsoft.DotNet.Web.ProjectTemplates.6.0`](https://www.nuget.org/packages/Microsoft.DotNet.Web.ProjectTemplates.6.0)       |
+| ASP.NET Core 7.0 | [`Microsoft.DotNet.Web.ProjectTemplates.7.0`](https://www.nuget.org/packages/Microsoft.DotNet.Web.ProjectTemplates.7.0)       |
+| ASP.NET Core 8.0 | [`Microsoft.DotNet.Web.ProjectTemplates.8.0`](https://www.nuget.org/packages/Microsoft.DotNet.Web.ProjectTemplates.8.0)       |
+| ASP.NET Core 9.0 | [`Microsoft.DotNet.Web.ProjectTemplates.8.0`](https://www.nuget.org/packages/Microsoft.DotNet.Web.ProjectTemplates.9.0)       |
+| ASP.NET Core 10.0 | [`Microsoft.DotNet.Web.ProjectTemplates.10.0`](https://www.nuget.org/packages/Microsoft.DotNet.Web.ProjectTemplates.10.0)       |
 
 For example, the .NET 9 SDK includes templates for a console app targeting .NET 9. If you wanted to target .NET Core 3.1, you would need to install the 3.1 template package.
 
@@ -220,6 +238,6 @@ For example, the .NET 9 SDK includes templates for a console app targeting .NET 
 
 ## See also
 
-- Tutorial: Create an item template
-- dotnet new
-- dotnet nuget add source
+- [Tutorial: Create an item template](../tutorials/cli-templates-create-item-template.md)
+- [dotnet new](../tools/dotnet-new.md)
+- [dotnet nuget add source](../tools/dotnet-nuget-add-source.md)

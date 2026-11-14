@@ -1,17 +1,17 @@
 ---
-title: "How to retrieve the shallow value of an element - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/retrieve-shallow-value-element.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to retrieve the shallow value of an element - LINQ to XML
+description: Use the `ShallowValue` extension method to retrieve the shallow value of an element. The shallow value is the value of that element only; that is, it doesn't include the values of descendant elements.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
-
 # How to retrieve the shallow value of an element (LINQ to XML)
 
 This article shows how to retrieve the shallow value of an element, which is the value of that element only, not including values of descendent elements. Retrieving the shallow value is useful when you want to select elements based on their content.
 
-When you use casting or the `System.Xml.Linq.XElement.Value` property to retrieve an element value, the value includes the descendants. To retrieve the shallow value you can use the `ShallowValue` extension method, as shown in the following example. The example declares an extension method that retrieves the shallow value of an element. It then uses the extension method in a query to list all elements that contain a calculated value.
+When you use casting or the <xref:System.Xml.Linq.XElement.Value?displayProperty=nameWithType> property to retrieve an element value, the value includes the descendants. To retrieve the shallow value you can use the `ShallowValue` extension method, as shown in the following example. The example declares an extension method that retrieves the shallow value of an element. It then uses the extension method in a query to list all elements that contain a calculated value.
 
 ## Example: Use the `ShallowValue` extension method to retrieve the shallow value of an element
 
@@ -111,4 +111,4 @@ Column  Name="Name"         =Customer.Name
 
 ## See also
 
-- LINQ to XML axes overview
+- [LINQ to XML axes overview](linq-xml-axes-overview.md)

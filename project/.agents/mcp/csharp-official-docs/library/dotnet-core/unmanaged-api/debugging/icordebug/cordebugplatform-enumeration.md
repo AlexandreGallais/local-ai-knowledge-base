@@ -1,15 +1,23 @@
 ---
+description: "Learn more about: CorDebugPlatform Enumeration"
 title: "CorDebugPlatform Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cordebugplatform-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "CorDebugPlatformEnum"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "CorDebugPlatformEnum"
+helpviewer_keywords:
+  - "CorDebugPlatformEnum enumeration [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # CorDebugPlatform Enumeration
 
-Provides target platform values that are used by the ICorDebugDataTarget::GetPlatform method.
+Provides target platform values that are used by the [ICorDebugDataTarget::GetPlatform](icordebugdatatarget-getplatform-method.md) method.
 
 ## Syntax
 
@@ -40,7 +48,7 @@ typedef enum CorDebugPlatform
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

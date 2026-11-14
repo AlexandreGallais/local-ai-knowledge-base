@@ -1,17 +1,11 @@
----
-title: "no-javascript-url"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-javascript-url.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-javascript-url
 
 📝 Disallow `javascript:` URLs in Markdown.
 
 🚫 Disabled by default.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Disallow `javascript:` destinations in Markdown links, images, autolinks, and reference definitions. A link with this scheme can execute JavaScript when followed in a browser, depending on the renderer. The rule checks parsed destinations using browser URL parsing, including mixed-case schemes and character references that the Markdown parser decodes.
 

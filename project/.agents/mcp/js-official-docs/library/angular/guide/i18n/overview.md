@@ -1,13 +1,5 @@
----
-title: "Angular Internationalization (i18n)"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/i18n/overview.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
-# Angular Internationalization (i18n)
+<docs-decorative-header title="Angular Internationalization (i18n)" imgSrc="adev/src/assets/images/i18n.svg"> <!-- markdownlint-disable-line -->
+</docs-decorative-header>
 
 _Internationalization_, sometimes referenced as i18n, is the process of designing and preparing your project for use in different locales around the world.
 _Localization_ is the process of building versions of your project for different locales.
@@ -25,34 +17,39 @@ A locale determines the formatting and parsing of the following details.
 
 For a quick introduction to localization and internationalization watch this video:
 
+<docs-video src="https://www.youtube.com/embed/KNTN-nsbV7M"/>
+
 ## Learn about Angular internationalization
 
-  **Add the localize package**
+<docs-card-container>
+  <docs-card title="Add the localize package" href="guide/i18n/add-package">
     Learn how to add the Angular Localize package to your project
-
-  **Refer to locales by ID**
+  </docs-card>
+  <docs-card title="Refer to locales by ID" href="guide/i18n/locale-id">
     Learn how to identify and specify a locale identifier for your project
-
-  **Format data based on locale**
+  </docs-card>
+  <docs-card title="Format data based on locale" href="guide/i18n/format-data-locale">
     Learn how to implement localized data pipes and override the locale for your project
-
-  **Prepare component for translation**
+  </docs-card>
+  <docs-card title="Prepare component for translation" href="guide/i18n/prepare">
     Learn how to specify source text for translation
-
-  **Work with translation files**
+  </docs-card>
+  <docs-card title="Work with translation files" href="guide/i18n/translation-files">
     Learn how to review and process translation text
-
-  **Merge translations into the application**
+  </docs-card>
+  <docs-card title="Merge translations into the application" href="guide/i18n/merge">
     Learn how to merge translations and build your translated application
-
-  **Deploy multiple locales**
+  </docs-card>
+  <docs-card title="Deploy multiple locales" href="guide/i18n/deploy">
     Learn how to deploy multiple locales for your application
-
-  **Import global variants of the locale data**
+  </docs-card>
+  <docs-card title="Import global variants of the locale data" href="guide/i18n/import-global-variants">
     Learn how to import locale data for language variants
-
-  **Manage marked text with custom IDs**
+  </docs-card>
+  <docs-card title="Manage marked text with custom IDs" href="guide/i18n/manage-marked-text">
     Learn how to implement custom IDs to help you manage your marked text
-
-  **Internationalization example**
+  </docs-card>
+  <docs-card title="Internationalization example" href="guide/i18n/example">
     Review an example of Angular internationalization.
+  </docs-card>
+</docs-card-container>

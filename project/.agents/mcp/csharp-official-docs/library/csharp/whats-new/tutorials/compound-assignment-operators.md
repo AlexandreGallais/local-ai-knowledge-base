@@ -1,15 +1,18 @@
 ---
-title: "Explore user-defined instance compound assignment operators"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/whats-new/tutorials/compound-assignment-operators.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Explore user-defined instance compound assignment operators
+description: "C# 14 enables user-defined instance compound assignment operators. These operators can provide better performance by minimizing allocations or copy operations. Learn how to create these operators."
+author: billwagner
+ms.author: wiwagn
+ms.service: dotnet-csharp
+ms.topic: tutorial
+ms.date: 11/14/2025
+ai-usage: ai-assisted
+ms.custom: peer-review-program
+#customer intent: As a C# developer, I want to implement user-defined instance compound assignment operators so that my algorithms are more efficient.
 ---
-
 # Tutorial: Create compound assignment operators
 
-C#14 adds *user-defined compound assignment operators* that enable mutating a data structure in place, rather than creating a new instance. In previous versions of C#, the expression:
+C#14 adds [*user-defined compound assignment operators*](~/_csharplang/proposals/csharp-14.0/user-defined-compound-assignment.md) that enable mutating a data structure in place, rather than creating a new instance. In previous versions of C#, the expression:
 
 ```csharp
 a += b;
@@ -29,6 +32,7 @@ C# supports the existing expansion, but it uses it only when a compound user-def
 
 In this tutorial, you:
 
+> [!div class="checklist"]
 >
 > * Run the starting sample.
 > * Identify bottlenecks in the code.
@@ -37,31 +41,17 @@ In this tutorial, you:
 
 ## Prerequisites
 
-- The .NET 10 SDK. Download it from the .NET download site.
-- Visual Studio 2026. Download it from the Visual Studio page.
+- The .NET 10 SDK. Download it from the [.NET download site](https://dotnet.microsoft.com/download/dotnet/10.0).
+- Visual Studio 2026. Download it from the [Visual Studio page](https://visualstudio.microsoft.com).
 
 ## Analyze the starting sample
 
-Run the starter application. You can get it from the `dotnet/docs` GitHub repository. The sample application simulates concert attendance tracking at a theater venue. The simulation models realistic arrival patterns throughout the evening, from early attendees to the main rush before showtime. This simulation demonstrates the object allocations when using traditional operators versus the efficiency gains possible with user-defined compound assignment operators.
+Run the starter application. You can get it from [the `dotnet/docs` GitHub repository](https://github.com/dotnet/docs/blob/main/docs/csharp/whats-new/tutorials/snippets/CompoundAssignment). The sample application simulates concert attendance tracking at a theater venue. The simulation models realistic arrival patterns throughout the evening, from early attendees to the main rush before showtime. This simulation demonstrates the object allocations when using traditional operators versus the efficiency gains possible with user-defined compound assignment operators.
 
 The app tracks attendance through multiple theater gates (main floor and balcony sections) as concert-goers arrive. Each gate maintains a count of attendees using a `GateAttendance` record. Throughout the simulation, the code frequently updates these counts using increment (`++`) and addition (`+=`) operations. The following code shows a portion of that simulation:
 
-```csharp
-// Gate 1 - busiest entrance (target: ~100-130 people)
-gates.MainFloorGates[0] += random.Next(8, 15);     // Corporate group
-++gates.MainFloorGates[0];                          // Single patron
-gates.MainFloorGates[0] += random.Next(20, 30);    // Tour/large group arrival
-gates.MainFloorGates[0] += random.Next(5, 12);     // Family groups
-++gates.MainFloorGates[0];                          // Solo attendee
+:::code language="csharp" source="./snippets/CompoundAssignment/GateAttendanceTests.cs" id="Simulation":::
 
-// Gate 2 - second busiest (target: ~85-115 people)
-gates.MainFloorGates[1] = gates.MainFloorGates[1] + random.Next(6, 12);  // Group booking
-++gates.MainFloorGates[1];                          // Single patron
-gates.MainFloorGates[1] += random.Next(18, 28);    // Large family/reunion
-gates.MainFloorGates[1] += random.Next(8, 15);     // Corporate/business group
-gates.MainFloorGates[1] += random.Next(4, 8);      // Couples/small groups
-++gates.MainFloorGates[1];                          // Individual patron
-```
 ## Identify bottlenecks in the code
 
 With traditional operators, each operation creates a new `GateAttendance` instance, leading to significant memory allocations. The starter `GateAttendance` is *immutable*. Your code can't modify the state of the object after it's been initialized. That design decision requires copying objects if you need to modify state.
@@ -102,27 +92,11 @@ Final arrivals processed - concert about to begin!
 
 Examine the starter `GateAttendance` record class:
 
-```csharp
-public record class GateAttendance(string GateId)
-{
-    public int Count { get; init; }
+:::code language="csharp" source="./snippets/CompoundAssignment/GateAttendance.cs" id="GateAttendanceStarter":::
 
-    public static GateAttendance operator ++(GateAttendance gate)
-    {
-        GateAttendance updateGate = gate with { Count = gate.Count + 1 };
-        return updateGate;
-    }
-
-    public static GateAttendance operator +(GateAttendance gate, int partySize)
-    {
-        GateAttendance updateGate = gate with { Count = gate.Count + partySize };
-        return updateGate;
-    }
-}     
-```
 The `InitialImplementation.GateAttendance` record demonstrates the traditional approach to operator overloading in C#. Notice how both the increment operator (`++`) and addition operator (`+`) create entirely new instances of `GateAttendance` using the `with` expression. Each time you write `gate++` or `gate += partySize`, the operators allocate a new record instance with the updated `Count` value, then return that new instance. While this approach maintains immutability and thread safety, it comes at the cost of frequent memory allocations. In scenarios with many operations—like the concert simulation with hundreds of attendance updates—these allocations accumulate quickly, potentially impacting performance and increasing garbage collection pressure.
 
-To measure this allocation behavior, try running the .NET Object Allocation tracking tool in Visual Studio. When you profile the current implementation during the concert simulation, you discover that it allocates 134 `GateAttendance` objects to complete the relatively small simulation. Each operator call creates a new instance, demonstrating how quickly allocations can accumulate in real-world scenarios. This measurement provides a concrete baseline for comparing the performance improvements you achieve with compound assignment operators.
+To measure this allocation behavior, try running the [.NET Object Allocation tracking tool](/visualstudio/profiling/dotnet-alloc-tool) in Visual Studio. When you profile the current implementation during the concert simulation, you discover that it allocates 134 `GateAttendance` objects to complete the relatively small simulation. Each operator call creates a new instance, demonstrating how quickly allocations can accumulate in real-world scenarios. This measurement provides a concrete baseline for comparing the performance improvements you achieve with compound assignment operators.
 
 ## Implement compound assignment operators
 
@@ -135,7 +109,7 @@ public void operator +=(int value) => this.property += value;
 public void operator ++() => this.property++;
 ```
 
-The key <example-value> from traditional operators are:
+The key differences from traditional operators are:
 
 - **Mutation**: They modify the current instance directly using `this`.
 - **No new instances**: Unlike traditional operators that return new objects, compound operators modify existing ones.
@@ -157,17 +131,14 @@ Compound assignment operators provide several advantages:
 
 The new compound assignment operators are shown in the following code:
 
-```csharp
-public void operator ++() => Count++;
+:::code language="csharp" source="./snippets/CompoundAssignment/GateAttendance.cs" id="CompoundAssignmentOperators":::
 
-public void operator +=(int partySize) => Count += partySize;
-```
-> **Note:**
+> [!NOTE]
 > Developers familiar with C++ might wonder why only one `++` or `--` operator is required. The compiler generates the code to use either the expression before or after modification as the return value. The compiler-generated code performs the assignment using either the original value or the modified value based on whether pre-increment (`++x`) or post-increment (`x++`) was called.
 
 ## Analyze finished sample
 
-Now that you implemented the compound assignment operators, it's time to measure the performance improvement. To measure the dramatic difference in memory allocations, run the .NET Object Allocation tracking tool again on the updated code.
+Now that you implemented the compound assignment operators, it's time to measure the performance improvement. To measure the dramatic difference in memory allocations, run the [.NET Object Allocation tracking tool](/visualstudio/profiling/dotnet-alloc-tool) again on the updated code.
 
 When you profile the application with the compound assignment operators enabled, you observe a remarkable reduction: only **10 `GateAttendance` objects** are allocated during the entire concert simulation, compared to the previous 134 allocations. This update represents a 92% reduction in object allocations!
 
@@ -188,6 +159,6 @@ As a final experiment, change the `GateAttendance` type from a `record class` to
 
 ## Related content
 
-- What's new in C# 14
-- Operator overloading - define unary, arithmetic, equality, and comparison operators
-- Analyze memory usage by using the .NET Object Allocation tool - Visual Studio
+- [What's new in C# 14](../csharp-14.md)
+- [Operator overloading - define unary, arithmetic, equality, and comparison operators](../../language-reference/operators/operator-overloading.md)
+- [Analyze memory usage by using the .NET Object Allocation tool - Visual Studio](/visualstudio/profiling/dotnet-alloc-tool)

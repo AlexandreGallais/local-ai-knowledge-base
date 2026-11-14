@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: ActivatorUtilities.CreateInstance requires non-null provider"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/extensions/8.0/activatorutilities-createinstance-null-provider.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 8 breaking change in .NET extensions where ActivatorUtilities.CreateInstance throws an ArgumentNullException if the provider is null.
+ms.date: 02/28/2023
 ---
-
 # ActivatorUtilities.CreateInstance requires non-null provider
 
-The two `Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance*` methods now throw an `System.ArgumentNullException` exception if the `provider` parameter is `null`.
+The two <xref:Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance*?displayProperty=nameWithType> methods now throw an <xref:System.ArgumentNullException> exception if the `provider` parameter is `null`.
 
 ## Version introduced
 
@@ -21,27 +17,27 @@ A `null` value was allowed for the `provider` parameter. In some cases, the spec
 
 ## New behavior
 
-When `provider` is `null`, an `System.ArgumentNullException` exception is thrown.
+When `provider` is `null`, an <xref:System.ArgumentNullException> exception is thrown.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-We fixed the parameter validation along with constructor-matching issues to align with the intended purpose of `Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance*`. The `CreateInstance()` methods have a non-nullable `provider` parameter, so it was generally expected that a `null` provider wasn't allowed.
+We fixed the parameter validation along with [constructor-matching issues](activatorutilities-createinstance-behavior.md) to align with the intended purpose of <xref:Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance*>. The `CreateInstance()` methods have a non-nullable `provider` parameter, so it was generally expected that a `null` provider wasn't allowed.
 
 ## Recommended action
 
-Pass a non-null `System.IServiceProvider` for the `provider` argument. If the provider also implements `Microsoft.Extensions.DependencyInjection.IServiceProviderIsService`, constructor arguments can be obtained through that.
+Pass a non-null <xref:System.IServiceProvider> for the `provider` argument. If the provider also implements <xref:Microsoft.Extensions.DependencyInjection.IServiceProviderIsService>, constructor arguments can be obtained through that.
 
-Alternatively, if your scenario doesn't require dependency injection, since `System.IServiceProvider` is `null`, use `System.Activator.CreateInstance*` instead.
+Alternatively, if your scenario doesn't require dependency injection, since <xref:System.IServiceProvider> is `null`, use <xref:System.Activator.CreateInstance*?displayProperty=nameWithType> instead.
 
 ## Affected APIs
 
-- `Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance``1(System.IServiceProvider,System.Object[])`
-- `Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance(System.IServiceProvider,System.Type,System.Object[])`
+- <xref:Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance``1(System.IServiceProvider,System.Object[])?displayProperty=fullName>
+- <xref:Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance(System.IServiceProvider,System.Type,System.Object[])?displayProperty=fullName>
 
 ## See also
 
-- ActivatorUtilities.CreateInstance behaves consistently
+- [ActivatorUtilities.CreateInstance behaves consistently](activatorutilities-createinstance-behavior.md)

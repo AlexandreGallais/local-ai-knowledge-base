@@ -1,12 +1,3 @@
----
-title: "std::sys::thread_local::key::xous"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sys/thread_local/key/xous.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::sys::thread_local::key::xous
 
 Thread Local Storage
@@ -20,7 +11,7 @@ The index into this register is the `key`. This key is identical
 between all threads, but indexes a different offset within this
 pointer.
 
-#### Dtor registration (stolen from Windows)
+# Dtor registration (stolen from Windows)
 
 Xous has no native support for running destructors so we manage our own
 list of destructors to keep track of how to destroy keys. When a thread

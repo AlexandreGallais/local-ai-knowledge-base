@@ -1,15 +1,14 @@
 ---
-title: "Asynchronous state management"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/async-state.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Asynchronous state management
+description: Learn how to efficiently manage ambient state in asynchronous contexts using Microsoft.Extensions.AsyncState in .NET.
+ms.date: 02/27/2026
+ms.topic: concept-article
+ai-usage: ai-assisted
 ---
 
 # Asynchronous state management
 
-The 📦 `Microsoft.Extensions.AsyncState` NuGet package provides functionality to store and retrieve objects within the current asynchronous context. This package offers performance and usability improvements over using `System.Threading.AsyncLocal`1` directly, particularly when multiple objects need to be shared across asynchronous operations.
+The [📦 `Microsoft.Extensions.AsyncState`](https://www.nuget.org/packages/Microsoft.Extensions.AsyncState) NuGet package provides functionality to store and retrieve objects within the current asynchronous context. This package offers performance and usability improvements over using <xref:System.Threading.AsyncLocal`1> directly, particularly when multiple objects need to be shared across asynchronous operations.
 
 ## Why use AsyncState
 
@@ -27,15 +26,15 @@ The `Microsoft.Extensions.AsyncState` package addresses these concerns by provid
 
 ## Get started
 
-To get started with asynchronous state management, install the `Microsoft.Extensions.AsyncState` NuGet package.
+To get started with asynchronous state management, install the [`Microsoft.Extensions.AsyncState`](https://www.nuget.org/packages/Microsoft.Extensions.AsyncState) NuGet package.
 
-### .NET CLI
+### [.NET CLI](#tab/dotnet-cli)
 
 ```dotnetcli
 dotnet add package Microsoft.Extensions.AsyncState
 ```
 
-### PackageReference
+### [PackageReference](#tab/package-reference)
 
 ```xml
 <PackageReference Include="Microsoft.Extensions.AsyncState" Version="10.0.0" />
@@ -43,11 +42,11 @@ dotnet add package Microsoft.Extensions.AsyncState
 
 ---
 
-For more information, see dotnet add package or Manage package dependencies in .NET applications.
+For more information, see [dotnet add package](../tools/dotnet-package-add.md) or [Manage package dependencies in .NET applications](../tools/dependencies.md).
 
 ## Register async state services
 
-Register the async state services with your dependency injection container using the `Microsoft.Extensions.DependencyInjection.AsyncStateExtensions.AddAsyncState*` extension method:
+Register the async state services with your dependency injection container using the <xref:Microsoft.Extensions.DependencyInjection.AsyncStateExtensions.AddAsyncState*> extension method:
 
 ```csharp
 using Microsoft.Extensions.DependencyInjection;
@@ -59,120 +58,40 @@ services.AddAsyncState();
 ServiceProvider provider = services.BuildServiceProvider();
 ```
 
-This registration makes the `Microsoft.Extensions.AsyncState.IAsyncContext`1` and `Microsoft.Extensions.AsyncState.IAsyncState` interfaces available for dependency injection.
+This registration makes the <xref:Microsoft.Extensions.AsyncState.IAsyncContext`1> and <xref:Microsoft.Extensions.AsyncState.IAsyncState> interfaces available for dependency injection.
 
 ## Use IAsyncContext
 
-The `Microsoft.Extensions.AsyncState.IAsyncContext`1` interface provides methods to get and set values in the current asynchronous context:
+The <xref:Microsoft.Extensions.AsyncState.IAsyncContext`1> interface provides methods to get and set values in the current asynchronous context:
 
-```csharp
-var context = provider.GetRequiredService<IAsyncContext<UserContext>>();
+:::code language="csharp" source="snippets/async-state/csharp/IAsyncContextExample/Program.cs" id="snippet":::
 
-// Set a value in the async context
-var userContext = new UserContext { UserId = "12345", UserName = "Alice" };
-context.Set(userContext);
+:::code language="csharp" source="snippets/async-state/csharp/IAsyncContextExample/Program.cs" id="UserContext":::
 
-// Retrieve the value
-if (context.TryGet(out var retrievedContext))
-{
-    Console.WriteLine($"User: {retrievedContext.UserName}");
-}
-```
-```csharp
-public record class UserContext
-{
-    public required string UserId { get; set; }
-    public required string UserName { get; set; }
-}
-```
 The value set in the context flows through asynchronous operations, making it available to all code executing within the same async context.
 
 ## Use IAsyncState
 
-The `Microsoft.Extensions.AsyncState.IAsyncState` interface is the base lifecycle interface that `IAsyncContext<T>` extends. It provides `Initialize()` and `Reset()` methods for managing the async state lifecycle. For typed access to async state values, use `IAsyncContext<T>` instead.
+The <xref:Microsoft.Extensions.AsyncState.IAsyncState> interface is the base lifecycle interface that `IAsyncContext<T>` extends. It provides `Initialize()` and `Reset()` methods for managing the async state lifecycle. For typed access to async state values, use `IAsyncContext<T>` instead.
 
 ## Practical example: Request correlation
 
 A common use case for async state is maintaining correlation information across an HTTP request:
 
-```csharp
-public class RequestProcessor(IAsyncContext<CorrelationContext> asyncContext)
-{
+:::code language="csharp" source="snippets/async-state/csharp/RequestCorrelation/Program.cs" id="RequestProcessor":::
 
-    public async Task ProcessRequestAsync(string correlationId)
-    {
-        // Set correlation context at the beginning of request processing
-        asyncContext.Set(new CorrelationContext { CorrelationId = correlationId });
+:::code language="csharp" source="snippets/async-state/csharp/RequestCorrelation/Program.cs" id="CorrelationContext":::
 
-        // The correlation ID flows through all async operations
-        await Step1Async();
-        await Step2Async();
-    }
-
-    private async Task Step1Async()
-    {
-        await Task.Yield();
-        
-        if (asyncContext.TryGet(out var context))
-        {
-            Console.WriteLine($"Step 1 - Correlation ID: {context.CorrelationId}");
-        }
-    }
-
-    private async Task Step2Async()
-    {
-        await Task.Yield();
-        
-        if (asyncContext.TryGet(out var context))
-        {
-            Console.WriteLine($"Step 2 - Correlation ID: {context.CorrelationId}");
-        }
-    }
-}
-```
-```csharp
-public class CorrelationContext
-{
-    public required string CorrelationId { get; set; }
-}
-```
 In this example, the correlation ID is set once at the beginning of request processing and is automatically available in all subsequent async operations without needing to pass it as a parameter.
 
 ## ASP.NET Core integration
 
 In ASP.NET Core applications, you can use async state to flow request-specific information through your application:
 
-```csharp
-public class RequestHandler(IAsyncContext<RequestMetadata> asyncContext)
-{
+:::code language="csharp" source="snippets/async-state/csharp/AspNetCoreIntegration/Program.cs" id="RequestHandler":::
 
-    public async Task<object> GetDataAsync()
-    {
-        await Task.Yield();
-        
-        if (asyncContext.TryGet(out var metadata))
-        {
-            var duration = DateTimeOffset.UtcNow - metadata.StartTime;
-            return new
-            {
-                RequestId = metadata.RequestId,
-                RequestPath = metadata.RequestPath,
-                Duration = duration.TotalMilliseconds
-            };
-        }
+:::code language="csharp" source="snippets/async-state/csharp/AspNetCoreIntegration/Program.cs" id="RequestMetadata":::
 
-        return new { Error = "No request metadata available" };
-    }
-}
-```
-```csharp
-public record class RequestMetadata
-{
-    public required string RequestId { get; set; }
-    public required string RequestPath { get; set; }
-    public DateTimeOffset StartTime { get; set; }
-}
-```
 ## Best practices
 
 When using async state, consider the following best practices:
@@ -185,6 +104,6 @@ When using async state, consider the following best practices:
 
 ## See also
 
-- Dependency injection in .NET
-- `System.Threading.AsyncLocal`1`
-- ASP.NET Core middleware
+- [Dependency injection in .NET](dependency-injection/overview.md)
+- <xref:System.Threading.AsyncLocal`1>
+- [ASP.NET Core middleware](/aspnet/core/fundamentals/middleware/)

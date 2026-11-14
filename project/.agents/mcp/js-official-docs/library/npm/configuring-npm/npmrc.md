@@ -1,10 +1,7 @@
 ---
-title: ".npmrc"
-tool: "npm"
-version: "12.2"
-source: "https://github.com/npm/cli/blob/60e11343e61316d966c86805d803df5a0eb99230/docs/lib/content/configuring-npm/npmrc.md"
-commit: "60e11343e61316d966c86805d803df5a0eb99230"
-license: "Artistic-2.0"
+title: .npmrc
+section: 5
+description: The npm config files
 ---
 
 ### Description
@@ -13,7 +10,7 @@ npm gets its config settings from the command line, environment variables, and `
 
 The `npm config` command can be used to update and edit the contents of the user and global npmrc files.
 
-For a list of available configuration options, see config.
+For a list of available configuration options, see [config](/using-npm/config).
 
 ### Files
 
@@ -51,7 +48,7 @@ key[] = "second value"
 Lines in `.npmrc` files are interpreted as comments when they begin with a
 `;` or `#` character.
 `.npmrc` files are parsed by
-npm/ini, which specifies this comment syntax.
+[npm/ini](https://github.com/npm/ini), which specifies this comment syntax.
 
 For example:
 
@@ -132,7 +129,7 @@ Values defined in `package.json#config` are exposed to scripts as environment va
 npm_package_config_mirror
 ```
 
-If you need to pass <example-value> to a script command, use `--` to separate npm arguments from script arguments:
+If you need to pass arguments to a script command, use `--` to separate npm arguments from script arguments:
 
 ```
 npm run build -- --customFlag
@@ -140,28 +137,29 @@ npm run build -- --customFlag
 
 Using environment variables is also recommended for cross-platform configuration instead of defining unsupported keys in `.npmrc`.
 
+
 ```
 ; bad config
-_authToken=<example-value>
+_authToken=MYTOKEN
 
 ; good config
 @myorg:registry=https://somewhere-else.com/myorg
 @another:registry=https://somewhere-else.com/another
-//registry.npmjs.org/:_authToken=<example-value>
+//registry.npmjs.org/:_authToken=MYTOKEN
 
 ; would apply to both @myorg and @another
-//somewhere-else.com/:_authToken=<example-value>
+//somewhere-else.com/:_authToken=MYTOKEN
 
 ; would apply only to @myorg
-//somewhere-else.com/myorg/:_authToken=<example-value>
+//somewhere-else.com/myorg/:_authToken=MYTOKEN1
 
 ; would apply only to @another
-//somewhere-else.com/another/:_authToken=<example-value>
+//somewhere-else.com/another/:_authToken=MYTOKEN2
 ```
 
 ### Custom / third-party config keys
 
-npm only recognizes its own configuration options.
+npm only recognizes its own [configuration options](/using-npm/config).
 If your `.npmrc` contains keys that are not part of npm's config definitions
 (for example, `electron_mirror` or `sass_binary_site`), npm will emit a
 warning:
@@ -188,8 +186,8 @@ of `.npmrc` format.
 
 ### See also
 
-* npm folders
-* npm config
-* config
-* package.json
-* npm
+* [npm folders](/configuring-npm/folders)
+* [npm config](/commands/npm-config)
+* [config](/using-npm/config)
+* [package.json](/configuring-npm/package-json)
+* [npm](/commands/npm)

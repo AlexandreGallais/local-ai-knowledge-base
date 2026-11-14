@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: ICorDebugStaticFieldSymbol Interface"
 title: "ICorDebugStaticFieldSymbol Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugstaticfieldsymbol-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugStaticFieldSymbol Interface
 
 Represents the debug symbol information for a static field.
@@ -15,20 +11,20 @@ Represents the debug symbol information for a static field.
 
 |Method|Description|
 |------------|-----------------|
-|GetAddress Method|Gets the address of the static field.|
-|GetName Method|Gets the name of the static field.|
-|GetSize Method|Gets the size in bytes of the static field.|
+|[GetAddress Method](icordebugstaticfieldsymbol-getaddress-method.md)|Gets the address of the static field.|
+|[GetName Method](icordebugstaticfieldsymbol-getname-method.md)|Gets the name of the static field.|
+|[GetSize Method](icordebugstaticfieldsymbol-getsize-method.md)|Gets the size in bytes of the static field.|
 
 ## Remarks
 
 The `ICorDebugStaticFieldSymbol` interface is used to retrieve the debug symbol information for a static field.
 
-> **Note:**
+> [!NOTE]
 > This interface is available with .NET Native only. If you implement this interface for ICorDebug scenarios outside of .NET Native, the common language runtime will ignore this interface.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -38,4 +34,4 @@ The `ICorDebugStaticFieldSymbol` interface is used to retrieve the debug symbol 
 
 ## See also
 
-- ICorDebugInstanceFieldSymbol Interface
+- [ICorDebugInstanceFieldSymbol Interface](icordebuginstancefieldsymbol-interface.md)

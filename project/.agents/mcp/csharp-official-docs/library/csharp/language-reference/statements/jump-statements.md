@@ -1,195 +1,164 @@
 ---
-title: "Jump statements - break, continue, return, and goto (part 1 of 2)"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/statements/jump-statements.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: "Jump statements - break, continue, return, and goto"
+description: "C# jump statements (break, continue, return, and goto) unconditionally transfer control from the current location to a different statement."
+ms.date: 01/16/2026
+f1_keywords:
+  - "break_CSharpKeyword"
+  - "continue_CSharpKeyword"
+  - "return_CSharpKeyword"
+  - "goto_CSharpKeyword"
+helpviewer_keywords:
+  - "break statement [C#]"
+  - "break keyword [C#]"
+  - "continue statement [C#]"
+  - "continue keyword [C#]"
+  - "return statement [C#]"
+  - "return keyword [C#]"
+  - "goto statement [C#]"
+  - "goto keyword [C#]"
 ---
-
 # Jump statements - `break`, `continue`, `return`, and `goto`
 
-The jump statements unconditionally transfer control. The `break` statement terminates the closest enclosing iteration statement or `switch` statement, or an enclosing labeled iteration or `switch` statement. The `continue` statement starts a new iteration of the closest enclosing iteration statement, or an enclosing labeled iteration statement. The `return` statement terminates execution of the function in which it appears and returns control to the caller. The `goto` statement transfers control to a statement that is marked by a label.
+The jump statements unconditionally transfer control. The [`break` statement](#the-break-statement) terminates the closest enclosing [iteration statement](iteration-statements.md) or [`switch` statement](selection-statements.md#the-switch-statement), or an enclosing labeled iteration or `switch` statement. The [`continue` statement](#the-continue-statement) starts a new iteration of the closest enclosing [iteration statement](iteration-statements.md), or an enclosing labeled iteration statement. The [`return` statement](#the-return-statement) terminates execution of the function in which it appears and returns control to the caller. The [`goto` statement](#the-goto-statement) transfers control to a statement that is marked by a label.
 
-For information about the `throw` statement that throws an exception and unconditionally transfers control as well, see The `throw` statement section of the Exception-handling statements article.
+For information about the `throw` statement that throws an exception and unconditionally transfers control as well, see [The `throw` statement](exception-handling-statements.md#the-throw-statement) section of the [Exception-handling statements](exception-handling-statements.md) article.
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
-
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
-
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
 ## The `break` statement
 
-The `break` statement terminates the closest enclosing iteration statement (that is, `for`, `foreach`, `while`, or `do` loop) or `switch` statement. The `break` statement transfers control to the statement that follows the terminated statement, if any.
+The `break` statement terminates the closest enclosing [iteration statement](iteration-statements.md) (that is, `for`, `foreach`, `while`, or `do` loop) or [`switch` statement](selection-statements.md#the-switch-statement). The `break` statement transfers control to the statement that follows the terminated statement, if any.
 
-```csharp
-int[] numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-foreach (int number in numbers)
-{
-    if (number == 3)
-    {
-        break;
-    }
+:::code language="csharp" source="snippets/jump-statements/BreakStatement.cs" id="BasicExample":::
 
-    Console.Write($"{number} ");
-}
-Console.WriteLine();
-Console.WriteLine("End of the example.");
-// Output:
-// 0 1 2 
-// End of the example.
-```
 In nested loops, the `break` statement terminates only the innermost loop that contains it, as the following example shows:
 
-```csharp
-for (int outer = 0; outer < 5; outer++)
-{
-    for (int inner = 0; inner < 5; inner++)
-    {
-        if (inner > outer)
-        {
-            break;
-        }
+:::code language="csharp" source="snippets/jump-statements/BreakStatement.cs" id="NestedLoop":::
 
-        Console.Write($"{inner} ");
-    }
-    Console.WriteLine();
-}
-// Output:
-// 0
-// 0 1
-// 0 1 2
-// 0 1 2 3
-// 0 1 2 3 4
-```
 Starting in C# 15, a `break` statement can optionally specify a label that identifies an enclosing loop or `switch` statement to exit. Place the label directly on the target construct, as in `outer: for (...)`, then use `break outer;` from within a nested construct to transfer control to the statement that follows the labeled construct, as the following example shows:
 
-```csharp
-string[,] stockChecks =
-{
-    { "Clear", "Clear", "Clear" },
-    { "Clear", "Blocked", "Clear" },
-    { "Clear", "Clear", "Clear" }
-};
+:::code language="csharp" source="snippets/jump-statements/BreakStatement.cs" id="LabeledBreak":::
 
-outer: for (int aisle = 0; aisle < stockChecks.GetLength(0); aisle++)
-{
-    for (int bay = 0; bay < stockChecks.GetLength(1); bay++)
-    {
-        Console.WriteLine($"Checking aisle {aisle}, bay {bay}.");
-
-        if (stockChecks[aisle, bay] == "Blocked")
-        {
-            Console.WriteLine("Blocked bay found. Stop the inspection.");
-            break outer;
-        }
-    }
-}
-// Output:
-// Checking aisle 0, bay 0.
-// Checking aisle 0, bay 1.
-// Checking aisle 0, bay 2.
-// Checking aisle 1, bay 0.
-// Checking aisle 1, bay 1.
-// Blocked bay found. Stop the inspection.
-```
 When you use the `switch` statement inside a loop, a `break` statement at the end of a switch section transfers control only out of the `switch` statement. The loop that contains the `switch` statement is unaffected, as the following example shows:
 
-```csharp
-double[] measurements = [-4, 5, 30, double.NaN];
-foreach (double measurement in measurements)
-{
-    switch (measurement)
-    {
-        case < 0.0:
-            Console.WriteLine($"Measured value is {measurement}; too low.");
-            break;
+:::code language="csharp" source="snippets/jump-statements/BreakStatement.cs" id="SwitchInsideLoop":::
 
-        case > 15.0:
-            Console.WriteLine($"Measured value is {measurement}; too high.");
-            break;
-
-        case double.NaN:
-            Console.WriteLine("Failed measurement.");
-            break;
-
-        default:
-            Console.WriteLine($"Measured value is {measurement}.");
-            break;
-    }
-}
-// Output:
-// Measured value is -4; too low.
-// Measured value is 5.
-// Measured value is 30; too high.
-// Failed measurement.
-```
 ## The `continue` statement
 
-The `continue` statement starts a new iteration of the closest enclosing iteration statement (that is, `for`, `foreach`, `while`, or `do` loop), as the following example shows:
+The `continue` statement starts a new iteration of the closest enclosing [iteration statement](iteration-statements.md) (that is, `for`, `foreach`, `while`, or `do` loop), as the following example shows:
 
-```csharp
-for (int i = 0; i < 5; i++)
-{
-    Console.Write($"Iteration {i}: ");
-    
-    if (i < 3)
-    {
-        Console.WriteLine("skip");
-        continue;
-    }
-    
-    Console.WriteLine("done");
-}
-// Output:
-// Iteration 0: skip
-// Iteration 1: skip
-// Iteration 2: skip
-// Iteration 3: done
-// Iteration 4: done
-```
+:::code language="csharp" source="snippets/jump-statements/ContinueStatement.cs" id="BasicExample":::
+
 Starting in C# 15, a `continue` statement can optionally specify a label that identifies an enclosing iteration statement to continue. The target must be a loop; `continue` doesn't target a `switch` statement. Place the label directly on the target loop, as in `outer: for (...)`, then use `continue outer;` from within a nested construct to start the next iteration of that loop, as the following example shows:
 
-```csharp
-string[][] dailyRoutes =
-[
-    ["North", "West"],
-    ["South", "Bridge closed", "East"],
-    ["Central", "Harbor"]
-];
+:::code language="csharp" source="snippets/jump-statements/ContinueStatement.cs" id="LabeledContinue":::
 
-outer: for (int day = 0; day < dailyRoutes.Length; day++)
-{
-    Console.WriteLine($"Day {day + 1}:");
-
-    foreach (string route in dailyRoutes[day])
-    {
-        if (route == "Bridge closed")
-        {
-            Console.WriteLine("  Bridge closed; move to the next day.");
-            continue outer;
-        }
-
-        Console.WriteLine($"  Schedule the {route} route.");
-    }
-
-    Console.WriteLine("  All routes scheduled.");
-}
-// Output:
-// Day 1:
-//   Schedule the North route.
-//   Schedule the West route.
-//   All routes scheduled.
-// Day 2:
-//   Schedule the South route.
-//   Bridge closed; move to the next day.
-// Day 3:
-//   Schedule the Central route.
-//   Schedule the Harbor route.
-//   All routes scheduled.
-```
 For both labeled `break` and labeled `continue`, only the statement immediately nested in a labeled statement has that label. For example, in `a: b: while (...)`, the `while` statement is labeled `b`, not `a`.
 
-Labeled jump statements often replace a Boolean flag that propagates a break or continue outward through nested loops, or a `goto` that jumps past the loops. The IDE0410 style rule detects those patterns and offers a labeled `break` or `continue` as a clearer replacement.
+Labeled jump statements often replace a Boolean flag that propagates a break or continue outward through nested loops, or a `goto` that jumps past the loops. The [IDE0410](../../../fundamentals/code-analysis/style-rules/ide0410.md) style rule detects those patterns and offers a labeled `break` or `continue` as a clearer replacement.
+
+## The `return` statement
+
+The `return` statement terminates execution of the function where it appears. It returns control and the function's result, if any, to the caller.
+
+If a function member doesn't compute a value, use the `return` statement without an expression, as the following example shows:
+
+:::code language="csharp" source="snippets/jump-statements/ReturnStatement.cs" id="WithoutExpression":::
+
+As the preceding example shows, typically use the `return` statement without an expression to terminate a function member early. If a function member doesn't contain the `return` statement, it terminates after its last statement executes.
+
+If a function member computes a value, use the `return` statement with an expression, as the following example shows:
+
+:::code language="csharp" source="snippets/jump-statements/ReturnStatement.cs" id="WithExpression":::
+
+When the `return` statement has an expression, that expression must be implicitly convertible to the return type of a function member unless it's [async](../keywords/async.md). The expression returned from an `async` function must be implicitly convertible to the type argument of <xref:System.Threading.Tasks.Task`1> or <xref:System.Threading.Tasks.ValueTask`1>, whichever is the return type of the function. If the return type of an `async` function is <xref:System.Threading.Tasks.Task> or <xref:System.Threading.Tasks.ValueTask>, use the `return` statement without expression.
+
+### Ref returns
+
+By default, the `return` statement returns the value of an expression. You can return a reference to a variable. Reference return values (or ref returns) are values that a method returns by reference to the caller. That is, the caller can modify the value returned by a method, and that change is reflected in the state of the object in the called method. To do that, use the `return` statement with the `ref` keyword, as the following example shows:
+
+:::code language="csharp" source="snippets/jump-statements/ReturnStatement.cs" id="RefReturn":::
+
+A reference return value allows a method to return a reference to a variable, rather than a value, back to a caller. The caller can then choose to treat the returned variable as if it were returned by value or by reference. The caller can create a new variable that is itself a reference to the returned value, called a [ref local](declarations.md#reference-variables). A *reference return value* means that a method returns a *reference* (or an alias) to some variable. That variable's scope must include the method. That variable's lifetime must extend beyond the return of the method. Modifications to the method's return value by the caller are made to the variable that is returned by the method.
+
+Declaring that a method returns a *reference return value* indicates that the method returns an alias to a variable. The design intent is often that calling code accesses that variable through the alias, including to modify it. Methods returning by reference can't have the return type `void`.
+
+In order for the caller to modify the object's state, the reference return value must be stored to a variable that is explicitly defined as a [reference variable](../statements/declarations.md#reference-variables).
+
+The `ref` return value is an alias to another variable in the called method's scope. You can interpret any use of the ref return as using the variable it aliases:
+
+- When you assign its value, you're assigning a value to the variable it aliases.
+- When you read its value, you're reading the value of the variable it aliases.
+- If you return it *by reference*, you're returning an alias to that same variable.
+- If you pass it to another method *by reference*, you're passing a reference to the variable it aliases.
+- When you make a [ref local](declarations.md#reference-variables) alias, you make a new alias to the same variable.
+
+A ref return must be [*ref-safe-context*](../keywords/method-parameters.md#safe-context-of-references-and-values) to the calling method. That means:
+
+- The return value must have a lifetime that extends beyond the execution of the method. In other words, it can't be a local variable in the method that returns it. It can be an instance or static field of a class, or it can be an argument passed to the method. Attempting to return a local variable generates compiler error CS8168, "Can't return local 'obj' by reference because it isn't a ref local."
+- The return value can't be the literal `null`. A method with a ref return can return an alias to a variable whose value is currently the `null` (uninstantiated) value or a [nullable value type](../../language-reference/builtin-types/nullable-value-types.md) for a value type.
+- The return value can't be a constant, an enumeration member, the by-value return value from a property, or a method of a `class` or `struct`.
+
+In addition, reference return values aren't allowed on async methods. An asynchronous method may return before it has finished execution, while its return value is still unknown.
+
+A method that returns a *reference return value* must:
+
+- Include the [ref](../../language-reference/keywords/ref.md) keyword in front of the return type.
+- Each [return](../../language-reference/statements/jump-statements.md#the-return-statement) statement in the method body includes the [ref](../../language-reference/keywords/ref.md) keyword in front of the name of the returned instance.
+
+The following example shows a method that satisfies those conditions and returns a reference to a `Person` object named `p`:
+
+```csharp
+public ref Person GetContactInformation(string fname, string lname)
+{
+    // ...method implementation...
+    return ref p;
+}
+```
+
+Here's a more complete ref return example, showing both the method signature and method body.
+
+:::code language="csharp" source="snippets/jump-statements/RefParameterModifier.cs" id="SnippetFindReturningRef":::
+
+The called method can also declare the return value as `ref readonly` to return the value by reference and enforce that the calling code can't modify the returned value. The calling method can avoid copying the returned value by storing the value in a local `ref readonly` reference variable.
+
+The following example defines a `Book` class that has two <xref:System.String> fields, `Title` and `Author`. It also defines a `BookCollection` class that includes a private array of `Book` objects. Individual book objects are returned by reference by calling its `GetBookByTitle` method.
+
+:::code language="csharp" source="snippets/jump-statements/RefParameterModifier.cs" id="Snippet4":::
+
+When the caller stores the value returned by the `GetBookByTitle` method as a ref local, changes that the caller makes to the return value are reflected in the `BookCollection` object, as the following example shows.
+
+:::code language="csharp" source="snippets/jump-statements/RefParameterModifier.cs" id="Snippet5":::
+
+## The `goto` statement
+
+The `goto` statement transfers control to a statement that a label marks, as the following example shows:
+
+:::code language="csharp" source="snippets/jump-statements/GotoStatement.cs" id="NestedLoops":::
+
+As the preceding example shows, you can use the `goto` statement to exit a nested loop.
+
+> [!TIP]
+> When you work with nested loops, consider refactoring separate loops into separate methods. That approach can lead to simpler, more readable code without the `goto` statement.
+
+You can also use the `goto` statement in the [`switch` statement](selection-statements.md#the-switch-statement) to transfer control to a switch section with a constant case label, as the following example shows:
+
+:::code language="csharp" source="snippets/jump-statements/GotoInSwitchExample.cs":::
+
+Within the `switch` statement, you can also use the statement `goto default;` to transfer control to the switch section with the `default` label.
+
+If a label with the given name doesn't exist in the current function member, or if the `goto` statement isn't within the scope of the label, a compile-time error occurs. You can't use the `goto` statement to transfer control out of the current function member or into any nested scope.
+
+## C# language specification
+
+For more information, see the following sections of the [C# language specification](~/_csharpstandard/standard/README.md):
+
+- [The `break` statement](~/_csharpstandard/standard/statements.md#13102-the-break-statement)
+- [The `continue` statement](~/_csharpstandard/standard/statements.md#13103-the-continue-statement)
+- [The `return` statement](~/_csharpstandard/standard/statements.md#13105-the-return-statement)
+- [The `goto` statement](~/_csharpstandard/standard/statements.md#13104-the-goto-statement)
+
+## See also
+
+- [`yield` statement](yield.md)
+- [IDE0410: Use labeled jump statement](../../../fundamentals/code-analysis/style-rules/ide0410.md)

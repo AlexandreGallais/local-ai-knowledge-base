@@ -1,20 +1,18 @@
 ---
-title: "Update or remove dotnetup"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/usecases/manage-dotnetup.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Update or remove dotnetup
+description: Learn how to check the dotnetup version, update dotnetup, and completely remove dotnetup and the .NET installations that it manages.
+ms.topic: how-to
+ms.date: 10/13/2026
+ai-usage: ai-generated
 ---
 
 # Update or remove dotnetup
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 This article describes how to manage the `dotnetup` tool itself. To update or
 remove the .NET SDKs and runtimes that `dotnetup` manages, see
-Update installations.
+[Update installations](update-installations.md).
 
 ## Check the dotnetup version
 
@@ -56,7 +54,7 @@ dotnetup self update --channel preview --force
 
 `--force` can downgrade or reinstall the executable.
 For command options and restrictions, see
-`dotnetup self update`.
+[`dotnetup self update`](../reference/dotnetup-self-update.md).
 
 An update of `dotnetup` doesn't change your .NET installations, your environment
 configuration, or your tracked install specifications.
@@ -107,7 +105,7 @@ dotnetup self update --update-notifications false
 
 To enable notifications again, use `--update-notifications true`.
 For the check frequency and output behavior, see
-Update notifications.
+[Update notifications](../reference/dotnetup-self-update.md#update-notifications).
 
 ## Remove dotnetup
 
@@ -138,7 +136,7 @@ changed, or select that shell with the `--shell` option. In `everywhere` mode
 on Windows, this command changes the system `PATH` and requires elevation.
 
 This command doesn't remove SDKs or runtimes. For more information, see
-Remove environment configuration.
+[Remove environment configuration](../concepts/environment.md#remove-environment-configuration).
 
 ### 3. Delete the installation roots and data directory
 
@@ -168,6 +166,6 @@ Open a new terminal to use the updated environment.
 
 ## See also
 
-- How dotnetup works
-- dotnetup environment configuration
-- Get started with dotnetup
+- [How dotnetup works](../concepts/how-dotnetup-works.md)
+- [dotnetup environment configuration](../concepts/environment.md)
+- [Get started with dotnetup](../getting-started.md)

@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataDispenserEx::GetOption Method"
 title: "IMetaDataDispenserEx::GetOption Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadatadispenserex-getoption-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataDispenserEx.GetOption"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataDispenserEx::GetOption"
+  - "IMetaDataDispenserEx::GetOption method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataDispenserEx::GetOption Method
 
 Gets the value of the specified option for the current metadata scope. The option controls how calls to the current metadata scope are handled.
@@ -30,7 +37,7 @@ HRESULT GetOption (
 
 ## Remarks
 
- The following list shows the GUIDs that are supported for this method. For descriptions, see the IMetaDataDispenserEx::SetOption method. If `optionId` is not in this list, this method returns HRESULT `E_INVALIDARG`, indicating an incorrect parameter.
+ The following list shows the GUIDs that are supported for this method. For descriptions, see the [IMetaDataDispenserEx::SetOption](imetadatadispenserex-setoption-method.md) method. If `optionId` is not in this list, this method returns HRESULT `E_INVALIDARG`, indicating an incorrect parameter.
 
 - MetaDataCheckDuplicatesFor
 
@@ -48,7 +55,7 @@ HRESULT GetOption (
 
 ## Requirements
 
- **Platform:** See .NET supported operating systems.
+ **Platform:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -56,5 +63,5 @@ HRESULT GetOption (
 
 ## See also
 
-- IMetaDataDispenserEx Interface
-- IMetaDataDispenser Interface
+- [IMetaDataDispenserEx Interface](imetadatadispenserex-interface.md)
+- [IMetaDataDispenser Interface](imetadatadispenser-interface.md)

@@ -1,12 +1,3 @@
----
-title: "core::io::write"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/io/write.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::io::write
 
 ## trait Write
@@ -19,22 +10,26 @@ A trait for objects which are byte-oriented sinks.
 
 Implementors of the `Write` trait are sometimes called 'writers'.
 
-Writers are defined by two required methods, `write` and `flush`:
+Writers are defined by two required methods, [`write`] and [`flush`]:
 
-* The `write` method will attempt to write some data into the object,
+* The [`write`] method will attempt to write some data into the object,
   returning how many bytes were successfully written.
 
-* The `flush` method is useful for adapters and explicit buffers
+* The [`flush`] method is useful for adapters and explicit buffers
   themselves for ensuring that all buffered data has been pushed out to the
   'true sink'.
 
 Writers are intended to be composable with one another. Many implementors
-throughout `std::io` take and provide types which implement the `Write`
+throughout [`std::io`] take and provide types which implement the `Write`
 trait.
+
+[`write`]: Write::write
+[`flush`]: Write::flush
+[`std::io`]: crate::io
 
 # Examples
 
-```rust
+```no_run
 use std::io::prelude::*;
 use std::fs::File;
 
@@ -52,8 +47,10 @@ fn main() -> std::io::Result<()> {
 }
 ```
 
-The trait also provides convenience methods like `write_all`, which calls
+The trait also provides convenience methods like [`write_all`], which calls
 `write` in a loop until its entire input has been written.
+
+[`write_all`]: Write::write_all
 
 ## Write::write
 
@@ -70,9 +67,9 @@ any wrapped object.
 
 Calls to `write` are not guaranteed to block waiting for data to be
 written, and a write which would otherwise block can be indicated through
-an `Err` variant.
+an [`Err`] variant.
 
-If this method consumed `n > 0` bytes of `buf` it must return `Ok(n)`.
+If this method consumed `n > 0` bytes of `buf` it must return [`Ok(n)`].
 If the return value is `Ok(n)` then `n` must satisfy `n <= buf.len()`.
 A return value of `Ok(0)` typically means that the underlying object is
 no longer able to accept bytes and will likely not be able to in the
@@ -87,12 +84,14 @@ in the buffer were written to this writer.
 It is **not** considered an error if the entire buffer could not be
 written to this writer.
 
-An error of the `ErrorKind::Interrupted` kind is non-fatal and the
+An error of the [`ErrorKind::Interrupted`] kind is non-fatal and the
 write operation should be retried if there is nothing else to do.
+
+[`ErrorKind::Interrupted`]: crate::io::ErrorKind::Interrupted
 
 # Examples
 
-```rust
+```no_run
 use std::io::prelude::*;
 use std::fs::File;
 
@@ -105,24 +104,26 @@ fn main() -> std::io::Result<()> {
 }
 ```
 
+[`Ok(n)`]: Ok
+
 ## Write::write_vectored
 
 ```rust
 fn write_vectored(&mut self, bufs: &[IoSlice<'_>]) -> Result<usize>
 ```
 
-Like `write`, except that it writes from a slice of buffers.
+Like [`write`], except that it writes from a slice of buffers.
 
 Data is copied from each buffer in order, with the final buffer
 read from possibly being only partially consumed. This method must
-behave as a call to `write` with the buffers concatenated would.
+behave as a call to [`write`] with the buffers concatenated would.
 
-The default implementation calls `write` with either the first nonempty
+The default implementation calls [`write`] with either the first nonempty
 buffer provided, or an empty one if none exists.
 
 # Examples
 
-```rust
+```no_run
 use std::io::IoSlice;
 use std::io::prelude::*;
 use std::fs::File;
@@ -141,6 +142,8 @@ fn main() -> std::io::Result<()> {
 }
 ```
 
+[`write`]: Write::write
+
 ## Write::flush
 
 ```rust
@@ -157,7 +160,7 @@ I/O errors or EOF being reached.
 
 # Examples
 
-```rust
+```no_run
 use std::io::prelude::*;
 use std::io::BufWriter;
 use std::fs::File;
@@ -179,23 +182,27 @@ fn write_all(&mut self, mut buf: &[u8]) -> Result<()>
 
 Attempts to write an entire buffer into this writer.
 
-This method will continuously call `write` until there is no more data
-to be written or an error of non-`ErrorKind::Interrupted` kind is
+This method will continuously call [`write`] until there is no more data
+to be written or an error of non-[`ErrorKind::Interrupted`] kind is
 returned. This method will not return until the entire buffer has been
 successfully written or such an error occurs. The first error that is
-not of `ErrorKind::Interrupted` kind generated from this method will be
+not of [`ErrorKind::Interrupted`] kind generated from this method will be
 returned.
 
-If the buffer contains no data, this will never call `write`.
+[`ErrorKind::Interrupted`]: crate::io::ErrorKind::Interrupted
+
+If the buffer contains no data, this will never call [`write`].
 
 # Errors
 
 This function will return the first error of
-non-`ErrorKind::Interrupted` kind that `write` returns.
+non-[`ErrorKind::Interrupted`] kind that [`write`] returns.
+
+[`write`]: Write::write
 
 # Examples
 
-```rust
+```no_run
 use std::io::prelude::*;
 use std::fs::File;
 
@@ -217,14 +224,16 @@ Writes a formatted string into this writer, returning any error
 encountered.
 
 This method is primarily used to interface with the
-`format_args!()` macro, and it is rare that this should
-explicitly be called. The `write!()` macro should be favored to
+[`format_args!()`] macro, and it is rare that this should
+explicitly be called. The [`write!()`] macro should be favored to
 invoke this method instead.
 
-This function internally uses the `write_all` method on
+This function internally uses the [`write_all`] method on
 this trait and hence will continuously write data so long as no errors
 are received. This also means that partial writes are not indicated in
 this signature.
+
+[`write_all`]: Write::write_all
 
 # Errors
 
@@ -232,7 +241,7 @@ This function will return any I/O error reported while formatting.
 
 # Examples
 
-```rust
+```no_run
 use std::io::prelude::*;
 use std::fs::File;
 
@@ -260,7 +269,7 @@ current writer.
 
 # Examples
 
-```rust
+```no_run
 use std::io::Write;
 use std::fs::File;
 

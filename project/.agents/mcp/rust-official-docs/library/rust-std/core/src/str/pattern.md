@@ -1,12 +1,3 @@
----
-title: "core::str::pattern"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/str/pattern.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::str::pattern
 
 The string Pattern API.
@@ -14,19 +5,19 @@ The string Pattern API.
 The Pattern API provides a generic mechanism for using different pattern
 types when searching through a string.
 
-For more details, see the traits `Pattern`, `Searcher`,
-`ReverseSearcher`, and `DoubleEndedSearcher`.
+For more details, see the traits [`Pattern`], [`Searcher`],
+[`ReverseSearcher`], and [`DoubleEndedSearcher`].
 
 Although this API is unstable, it is exposed via stable APIs on the
-`str` type.
+[`str`] type.
 
-#### Examples
+# Examples
 
-`Pattern` is implemented in the stable API for
-`&str``str`, `char`, slices of `char`, and functions and closures
+[`Pattern`] is [implemented][pattern-impls] in the stable API for
+[`&str`][`str`], [`char`], slices of [`char`], and functions and closures
 implementing `FnMut(char) -> bool`.
 
-```rust
+```
 let s = "Can you find a needle in a haystack?";
 
 // &str pattern
@@ -41,6 +32,8 @@ assert_eq!(s.find(&['a', 'e', 'i', 'o', 'u'][..]), Some(1));
 assert_eq!(s.find(|c: char| c.is_ascii_punctuation()), Some(35));
 ```
 
+[pattern-impls]: Pattern#implementors
+
 ## trait Pattern
 
 ```rust
@@ -50,17 +43,17 @@ pub trait Pattern: Sized
 A string pattern.
 
 A `Pattern` expresses that the implementing type
-can be used as a string pattern for searching in a `&str`[str].
+can be used as a string pattern for searching in a [`&str`][str].
 
 For example, both `'a'` and `"aa"` are patterns that
 would match at index `1` in the string `"baaaab"`.
 
 The trait itself acts as a builder for an associated
-`Searcher` type, which does the actual work of finding
+[`Searcher`] type, which does the actual work of finding
 occurrences of the pattern in a string.
 
 Depending on the type of the pattern, the behavior of methods like
-`str::find` and `str::contains` can change. The table below describes
+[`str::find`] and [`str::contains`] can change. The table below describes
 some of those behaviors.
 
 | Pattern type             | Match condition                           |
@@ -74,7 +67,7 @@ some of those behaviors.
 
 # Examples
 
-```rust
+```
 // &str
 assert_eq!("abaaa".find("ba"), Some(1));
 assert_eq!("abaaa".find("bac"), None);
@@ -170,8 +163,8 @@ Returns the pattern as UTF-8 if possible.
 pub enum Utf8Pattern<'a>
 ```
 
-Result of calling `Pattern::as_utf8_pattern()`.
-Can be used for inspecting the contents of a `Pattern` in cases
+Result of calling [`Pattern::as_utf8_pattern()`].
+Can be used for inspecting the contents of a [`Pattern`] in cases
 where the underlying representation can be represented as UTF-8.
 
 ## enum SearchStep
@@ -180,7 +173,7 @@ where the underlying representation can be represented as UTF-8.
 pub enum SearchStep
 ```
 
-Result of calling `Searcher::next()` or `ReverseSearcher::next_back()`.
+Result of calling [`Searcher::next()`] or [`ReverseSearcher::next_back()`].
 
 ## trait Searcher
 
@@ -194,10 +187,10 @@ This trait provides methods for searching for non-overlapping
 matches of a pattern starting from the front (left) of a string.
 
 It will be implemented by associated `Searcher`
-types of the `Pattern` trait.
+types of the [`Pattern`] trait.
 
 The trait is marked unsafe because the indices returned by the
-`next()`[Searcher::next] methods are required to lie on valid utf8
+[`next()`][Searcher::next] methods are required to lie on valid utf8
 boundaries in the haystack. This enables consumers of this trait to
 slice the haystack without additional runtime checks.
 
@@ -209,7 +202,7 @@ fn haystack(&self) -> &'a str
 
 Getter for the underlying string to be searched in
 
-Will always return the same `&str`[str].
+Will always return the same [`&str`][str].
 
 ## Searcher::next
 
@@ -219,20 +212,20 @@ fn next(&mut self) -> SearchStep
 
 Performs the next search step starting from the front.
 
-- Returns `Match(a, b)`[SearchStep::Match] if `haystack[a..b]` matches
+- Returns [`Match(a, b)`][SearchStep::Match] if `haystack[a..b]` matches
   the pattern.
-- Returns `Reject(a, b)`[SearchStep::Reject] if `haystack[a..b]` can
+- Returns [`Reject(a, b)`][SearchStep::Reject] if `haystack[a..b]` can
   not match the pattern, even partially.
-- Returns `Done`[SearchStep::Done] if every byte of the haystack has
+- Returns [`Done`][SearchStep::Done] if every byte of the haystack has
   been visited.
 
-The stream of `Match`[SearchStep::Match] and
-`Reject`[SearchStep::Reject] values up to a `Done`[SearchStep::Done]
+The stream of [`Match`][SearchStep::Match] and
+[`Reject`][SearchStep::Reject] values up to a [`Done`][SearchStep::Done]
 will contain index ranges that are adjacent, non-overlapping,
 covering the whole haystack, and laying on utf8 boundaries.
 
-A `Match`[SearchStep::Match] result needs to contain the whole matched
-pattern, however `Reject`[SearchStep::Reject] results may be split up
+A [`Match`][SearchStep::Match] result needs to contain the whole matched
+pattern, however [`Reject`][SearchStep::Reject] results may be split up
 into arbitrary many adjacent fragments. Both ranges may have zero length.
 
 As an example, the pattern `"aaa"` and the haystack `"cbaaaaab"`
@@ -245,10 +238,10 @@ might produce the stream
 fn next_match(&mut self) -> Option<(usize, usize)>
 ```
 
-Finds the next `Match`[SearchStep::Match] result. See `next()`[Searcher::next].
+Finds the next [`Match`][SearchStep::Match] result. See [`next()`][Searcher::next].
 
-Unlike `next()`[Searcher::next], there is no guarantee that the returned ranges
-of this and `next_reject`[Searcher::next_reject] will overlap. This will return
+Unlike [`next()`][Searcher::next], there is no guarantee that the returned ranges
+of this and [`next_reject`][Searcher::next_reject] will overlap. This will return
 `(start_match, end_match)`, where start_match is the index of where
 the match begins, and end_match is the index after the end of the match.
 
@@ -258,11 +251,11 @@ the match begins, and end_match is the index after the end of the match.
 fn next_reject(&mut self) -> Option<(usize, usize)>
 ```
 
-Finds the next `Reject`[SearchStep::Reject] result. See `next()`[Searcher::next]
-and `next_match()`[Searcher::next_match].
+Finds the next [`Reject`][SearchStep::Reject] result. See [`next()`][Searcher::next]
+and [`next_match()`][Searcher::next_match].
 
-Unlike `next()`[Searcher::next], there is no guarantee that the returned ranges
-of this and `next_match`[Searcher::next_match] will overlap.
+Unlike [`next()`][Searcher::next], there is no guarantee that the returned ranges
+of this and [`next_match`][Searcher::next_match] will overlap.
 
 ## trait ReverseSearcher
 
@@ -275,15 +268,15 @@ A reverse searcher for a string pattern.
 This trait provides methods for searching for non-overlapping
 matches of a pattern starting from the back (right) of a string.
 
-It will be implemented by associated `Searcher`
-types of the `Pattern` trait if the pattern supports searching
+It will be implemented by associated [`Searcher`]
+types of the [`Pattern`] trait if the pattern supports searching
 for it from the back.
 
 The index ranges returned by this trait are not required
 to exactly match those of the forward search in reverse.
 
 For the reason why this trait is marked unsafe, see the
-parent trait `Searcher`.
+parent trait [`Searcher`].
 
 ## ReverseSearcher::next_back
 
@@ -293,20 +286,20 @@ fn next_back(&mut self) -> SearchStep
 
 Performs the next search step starting from the back.
 
-- Returns `Match(a, b)`[SearchStep::Match] if `haystack[a..b]`
+- Returns [`Match(a, b)`][SearchStep::Match] if `haystack[a..b]`
   matches the pattern.
-- Returns `Reject(a, b)`[SearchStep::Reject] if `haystack[a..b]`
+- Returns [`Reject(a, b)`][SearchStep::Reject] if `haystack[a..b]`
   can not match the pattern, even partially.
-- Returns `Done`[SearchStep::Done] if every byte of the haystack
+- Returns [`Done`][SearchStep::Done] if every byte of the haystack
   has been visited
 
-The stream of `Match`[SearchStep::Match] and
-`Reject`[SearchStep::Reject] values up to a `Done`[SearchStep::Done]
+The stream of [`Match`][SearchStep::Match] and
+[`Reject`][SearchStep::Reject] values up to a [`Done`][SearchStep::Done]
 will contain index ranges that are adjacent, non-overlapping,
 covering the whole haystack, and laying on utf8 boundaries.
 
-A `Match`[SearchStep::Match] result needs to contain the whole matched
-pattern, however `Reject`[SearchStep::Reject] results may be split up
+A [`Match`][SearchStep::Match] result needs to contain the whole matched
+pattern, however [`Reject`][SearchStep::Reject] results may be split up
 into arbitrary many adjacent fragments. Both ranges may have zero length.
 
 As an example, the pattern `"aaa"` and the haystack `"cbaaaaab"`
@@ -319,8 +312,8 @@ might produce the stream
 fn next_match_back(&mut self) -> Option<(usize, usize)>
 ```
 
-Finds the next `Match`[SearchStep::Match] result.
-See `next_back()`[ReverseSearcher::next_back].
+Finds the next [`Match`][SearchStep::Match] result.
+See [`next_back()`][ReverseSearcher::next_back].
 
 ## ReverseSearcher::next_reject_back
 
@@ -328,8 +321,8 @@ See `next_back()`[ReverseSearcher::next_back].
 fn next_reject_back(&mut self) -> Option<(usize, usize)>
 ```
 
-Finds the next `Reject`[SearchStep::Reject] result.
-See `next_back()`[ReverseSearcher::next_back].
+Finds the next [`Reject`][SearchStep::Reject] result.
+See [`next_back()`][ReverseSearcher::next_back].
 
 ## trait DoubleEndedSearcher
 
@@ -337,10 +330,10 @@ See `next_back()`[ReverseSearcher::next_back].
 pub trait DoubleEndedSearcher<'a>: ReverseSearcher<'a>
 ```
 
-A marker trait to express that a `ReverseSearcher`
-can be used for a `DoubleEndedIterator` implementation.
+A marker trait to express that a [`ReverseSearcher`]
+can be used for a [`DoubleEndedIterator`] implementation.
 
-For this, the impl of `Searcher` and `ReverseSearcher` need
+For this, the impl of [`Searcher`] and [`ReverseSearcher`] need
 to follow these conditions:
 
 - All results of `next()` need to be identical
@@ -352,7 +345,7 @@ to follow these conditions:
 # Examples
 
 `char::Searcher` is a `DoubleEndedSearcher` because searching for a
-`char` only requires looking at one at a time, which behaves the same
+[`char`] only requires looking at one at a time, which behaves the same
 from both ends.
 
 `(&str)::Searcher` is not a `DoubleEndedSearcher` because

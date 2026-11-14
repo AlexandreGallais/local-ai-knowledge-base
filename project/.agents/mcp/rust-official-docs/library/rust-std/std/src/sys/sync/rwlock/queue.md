@@ -1,12 +1,3 @@
----
-title: "std::sys::sync::rwlock::queue"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sys/sync/rwlock/queue.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::sys::sync::rwlock::queue
 
 Efficient read-write locking without `pthread_rwlock_t`.
@@ -21,36 +12,40 @@ cannot be inlined.
 lead to undefined behaviour in safe Rust code when not properly guarded against.
 * On some platforms (e.g. macOS), the lock is very slow.
 
-Therefore, we implement our own `RwLock`! Naively, one might reach for a spinlock, but those
+Therefore, we implement our own [`RwLock`]! Naively, one might reach for a spinlock, but those
 can be quite [problematic] when the lock is contended.
 
-Instead, this `RwLock` copies its implementation strategy from the Windows [SRWLOCK] and the
+Instead, this [`RwLock`] copies its implementation strategy from the Windows [SRWLOCK] and the
 [usync] library implementations.
 
 Spinning is still used for the fast path, but it is bounded: after spinning fails, threads will
-locklessly add an information structure (`Node`) containing a `Thread` handle into a queue
+locklessly add an information structure ([`Node`]) containing a [`Thread`] handle into a queue
 of waiters associated with the lock. The lock owner, upon releasing the lock, will scan through
 the queue and wake up threads as appropriate, and the newly-awoken threads will then try to
 acquire the lock themselves.
 
-The resulting `RwLock` is:
+The resulting [`RwLock`] is:
 
 * adaptive, since it spins before doing any heavyweight parking operations
-* allocation-free, modulo the per-thread `Thread` handle, which is allocated anyways when
+* allocation-free, modulo the per-thread [`Thread`] handle, which is allocated anyways when
 using threads created by `std`
 * writer-preferring, even if some readers may still slip through
 * unfair, which reduces context-switching and thus drastically improves performance
 
 and also quite fast in most cases.
 
-#### Implementation
+[problematic]: https://matklad.github.io/2020/01/02/spinlocks-considered-harmful.html
+[SRWLOCK]: https://learn.microsoft.com/en-us/windows/win32/sync/slim-reader-writer--srw--locks
+[usync]: https://crates.io/crates/usync
 
-#### State
+# Implementation
 
-A single `AtomicPtr` is used as state variable. The lowest four bits are used to indicate the
+## State
+
+A single [`AtomicPtr`] is used as state variable. The lowest four bits are used to indicate the
 meaning of the remaining bits:
 
-| `LOCKED` | `QUEUED` | `QUEUE_LOCKED` | `DOWNGRADED` | Remaining    |                                                                                                                             |
+| [`LOCKED`] | [`QUEUED`] | [`QUEUE_LOCKED`] | [`DOWNGRADED`] | Remaining    |                                                                                                                             |
 |------------|:-----------|:-----------------|:---------------|:-------------|:----------------------------------------------------------------------------------------------------------------------------|
 | 0          | 0          | 0                | 0              | 0            | The lock is unlocked, no threads are waiting                                                                                |
 | 1          | 0          | 0                | 0              | 0            | The lock is write-locked, no threads waiting                                                                                |
@@ -58,7 +53,7 @@ meaning of the remaining bits:
 | 0          | 1          | *                | 0              | `*mut Node`  | The lock is unlocked, but some threads are waiting. Only writers may lock the lock                                          |
 | 1          | 1          | *                | *              | `*mut Node`  | The lock is locked, but some threads are waiting. If the lock is read-locked, the last queue node contains the reader count |
 
-#### Waiter Queue
+## Waiter Queue
 
 When threads are waiting on the lock (the `QUEUE` bit is set), the lock state points to a queue
 of waiters, which is implemented as a linked list of nodes stored on the stack to avoid memory
@@ -76,12 +71,12 @@ Also, while the lock is unfair for performance reasons, it is still best to wake
 first (FIFO ordering). Since we always pop nodes off the tail of the queue, we must store
 backlinks to previous nodes so that we can update the `tail` field of the (current) first
 element of the queue. Adding backlinks is done at the same time as finding the tail (via the
-function `find_tail_and_add_backlinks`), and thus encountering a set tail field on a node
+function [`find_tail_and_add_backlinks`]), and thus encountering a set tail field on a node
 indicates that all following nodes in the queue are initialized.
 
 TLDR: Here's a diagram of what the queue looks like:
 
-```
+```text
 state
   │
   ▼
@@ -93,7 +88,7 @@ state
                      │                           ▲
                      └───────────────────────────┘
                                  tail
-```rust
+```
 
 Invariants:
 1. At least one node must contain a non-null, current `tail` field.
@@ -108,13 +103,13 @@ wake up the next waiter(s).
 
 `QUEUE_LOCKED` is set atomically at the same time as the enqueuing/unlocking operations. The
 thread releasing the `QUEUE_LOCKED` bit will check the state of the lock (in particular, whether
-a downgrade was requested using the `DOWNGRADED` bit) and wake up waiters as appropriate. This
+a downgrade was requested using the [`DOWNGRADED`] bit) and wake up waiters as appropriate. This
 guarantees forward progress even if the unlocking thread could not acquire the queue lock.
 
-#### Memory Orderings
+## Memory Orderings
 
 To properly synchronize changes to the data protected by the lock, the lock is acquired and
-released with `Acquire` and `Release` ordering, respectively. To propagate the
+released with [`Acquire`] and [`Release`] ordering, respectively. To propagate the
 initialization of nodes, changes to the queue lock are also performed using these orderings.
 
 ## struct RwLock

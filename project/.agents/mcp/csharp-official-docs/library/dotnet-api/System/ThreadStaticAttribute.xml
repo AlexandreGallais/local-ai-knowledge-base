@@ -1,0 +1,121 @@
+<Type Name="ThreadStaticAttribute" FullName="System.ThreadStaticAttribute">
+  <TypeSignature Language="C#" Value="public class ThreadStaticAttribute : Attribute" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit ThreadStaticAttribute extends System.Attribute" />
+  <TypeSignature Language="DocId" Value="T:System.ThreadStaticAttribute" />
+  <TypeSignature Language="VB.NET" Value="Public Class ThreadStaticAttribute&#xA;Inherits Attribute" />
+  <TypeSignature Language="F#" Value="type ThreadStaticAttribute = class&#xA;    inherit Attribute" />
+  <TypeSignature Language="C++ CLI" Value="public ref class ThreadStaticAttribute : Attribute" />
+  <AssemblyInfo>
+    <AssemblyName>System.Runtime</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <AssemblyVersion>4.0.10.0</AssemblyVersion>
+    <AssemblyVersion>4.0.20.0</AssemblyVersion>
+    <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <AssemblyVersion>4.2.0.0</AssemblyVersion>
+    <AssemblyVersion>4.2.1.0</AssemblyVersion>
+    <AssemblyVersion>4.2.2.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+    <AssemblyVersion>11.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>mscorlib</AssemblyName>
+    <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.5.0</AssemblyVersion>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>netstandard</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+  </TypeForwardingChain>
+  <Base>
+    <BaseTypeName>System.Attribute</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Attributes>
+    <Attribute>
+      <AttributeName Language="C#">[System.AttributeUsage(System.AttributeTargets.Field, Inherited=false)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.AttributeUsage(System.AttributeTargets.Field, Inherited=false)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>Indicates that the value of a static field is unique for each thread.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+A `static` field marked with <xref:System.ThreadStaticAttribute> is not shared between threads. Each executing thread has a separate instance of the field, and independently sets and gets values for that field. If the field is accessed on a different thread, it will contain a different value.
+
+In addition to applying the <xref:System.ThreadStaticAttribute> attribute to a field, you must also define it as `static` (in C# or F#) or `Shared` (in Visual Basic).
+
+> [!NOTE]
+> Don't specify initial values for fields marked with `ThreadStaticAttribute`. Such initialization occurs only once, when the class constructor executes, and therefore affects only one thread. If you don't specify an initial value, the field will be initialized to its default value if it's a value type, or to `null` if it's a reference type.
+
+Use this attribute as it is, and don't derive from it.
+
+For more information about using attributes, see [Attributes](/dotnet/standard/attributes/).
+
+## Examples
+
+The following example code demonstrates how to use the `ThreadStaticAttribute` to ensure that a static field is unique to each thread. In the code, each thread assigns a different request ID to the thread-static field and then simulates request processing across multiple method calls.
+
+ :::code language="csharp" source="~/snippets/csharp/System/ThreadStaticAttribute/Overview/threadsafe2a.cs" id="Snippet1":::
+ :::code language="fsharp" source="~/snippets/fsharp/System/ThreadStaticAttribute/Overview/threadsafe2a.fs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System/ThreadStaticAttribute/Overview/threadsafe2a.vb" id="Snippet1":::
+
+ ]]></format>
+    </remarks>
+    <altmember cref="T:System.Attribute" />
+    <altmember cref="T:System.Threading.Thread" />
+    <altmember cref="T:System.Threading.AsyncLocal`1" />
+    <related type="Article" href="/dotnet/standard/attributes/">Extending Metadata Using Attributes</related>
+    <related type="Article" href="/dotnet/standard/threading/managed-threading-basics">Managed Threading</related>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ThreadStaticAttribute ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.ThreadStaticAttribute.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; ThreadStaticAttribute();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>Initializes a new instance of the <see cref="T:System.ThreadStaticAttribute" /> class.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

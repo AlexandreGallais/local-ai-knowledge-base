@@ -1,20 +1,13 @@
----
-title: "Linkage"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/linkage.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[link]
 # Linkage
 
 r[link.intro]
-> **Note:**
+> [!NOTE]
 > This section is described more in terms of the compiler than of the language.
 
-The compiler supports various methods to link crates together both statically and dynamically. This section will explore the various methods to link crates together, and more information about native libraries can be found in the FFI section of the book.
+The compiler supports various methods to link crates together both statically and dynamically. This section will explore the various methods to link crates together, and more information about native libraries can be found in the [FFI section of the book][ffi].
+
+[ffi]: ../book/ch20-01-unsafe-rust.html#using-extern-functions-to-call-external-code
 
 r[link.type]
 In one session of compilation, the compiler can generate multiple artifacts through the use of either command line flags or the `crate_type` attribute. If one or more command line flags are specified, all `crate_type` attributes will be ignored in favor of only building the artifacts specified by command line.
@@ -120,7 +113,7 @@ fn foo() {
 }
 ```
 
-Also note that Cargo build scripts can learn about this feature through environment variables. In a build script you can detect the linkage via:
+Also note that Cargo build scripts can learn about this feature through [environment variables][cargo]. In a build script you can detect the linkage via:
 
 ```rust
 use std::env;
@@ -135,6 +128,8 @@ fn main() {
     }
 }
 ```
+
+[cargo]: ../cargo/reference/environment-variables.html#environment-variables-cargo-sets-for-build-scripts
 
 To use this feature locally, you typically will use the `RUSTFLAGS` environment variable to specify flags to the compiler through Cargo. For example to compile a statically linked binary on MSVC you would execute:
 
@@ -153,7 +148,7 @@ If you are mixing Rust with foreign code (e.g. C, C++) and wish to make a single
 
 Passing `rlib`s directly into your foreign linker is currently unsupported.
 
-> **Note:**
+> [!NOTE]
 > Rust code compiled or linked with a different instance of the Rust runtime counts as "foreign code" for the purpose of this section.
 
 r[link.unwinding]
@@ -164,18 +159,25 @@ Panic unwinding can only be used if the binary is built consistently according t
 
 r[link.unwinding.potential]
 A Rust artifact is called *potentially unwinding* if any of the following conditions is met:
-- The artifact uses the `unwind` panic handler.
+- The artifact uses the [`unwind` panic handler][panic.panic_handler].
 - The artifact contains a crate built with the `unwind` [panic strategy] that makes a call to a function using a `-unwind` ABI.
 - The artifact makes a `"Rust"` ABI call to code running in another Rust artifact that has a separate copy of the Rust runtime, and that other artifact is potentially unwinding.
 
-> **Note:**
+> [!NOTE]
 > This definition captures whether a `"Rust"` ABI call inside a Rust artifact can ever unwind.
 
 r[link.unwinding.prohibited]
 If a Rust artifact is potentially unwinding, then all its crates must be built with the `unwind` [panic strategy]. Otherwise, unwinding can cause undefined behavior.
 
-> **Note:**
+> [!NOTE]
 > If you are using `rustc` to link, these rules are enforced automatically. If you are *not* using `rustc` to link, you must take care to ensure that unwinding is handled consistently across the entire binary. Linking without `rustc` includes using `dlopen` or similar facilities where linking is done by the system runtime without `rustc` being involved. This can only happen when mixing code with different [`-C panic`] flags, so most users do not have to be concerned about this.
 
-> **Note:**
+> [!NOTE]
 > To guarantee that a library will be sound (and linkable with `rustc`) regardless of the panic runtime used at link-time, the [`ffi_unwind_calls` lint] may be used. The lint flags any calls to `-unwind` foreign functions or function pointers.
+
+[`cfg` attribute `target_feature` option]: conditional-compilation.md#target_feature
+[`ffi_unwind_calls` lint]: ../rustc/lints/listing/allowed-by-default.html#ffi-unwind-calls
+[configuration option]: conditional-compilation.md
+[procedural macros]: procedural-macros.md
+[panic strategy]: panic.md#panic-strategy
+[`-C panic`]: ../rustc/codegen-options/index.html#panic

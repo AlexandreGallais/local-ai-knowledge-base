@@ -1,24 +1,14 @@
----
-title: "X509CRLEntry class (java.security.cert)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/cert/X509CRLEntry.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # X509CRLEntry class (java.security.cert)
 
 ```java
 public abstract class X509CRLEntry implements X509Extension
 ```
 
-Abstract class for a revoked certificate in a CRL (Certificate
+<p>Abstract class for a revoked certificate in a CRL (Certificate
 Revocation List).
 
-The ASN.1 definition for *revokedCertificates* is:
-
-```java
+The ASN.1 definition for <em>revokedCertificates</em> is:
+<pre>
 revokedCertificates    SEQUENCE OF SEQUENCE  {
     userCertificate    CertificateSerialNumber,
     revocationDate     ChoiceOfTime,
@@ -37,13 +27,14 @@ Extension  ::=  SEQUENCE  {
                   -- contains a DER encoding of a value
                   -- of the type registered for use with
                   -- the extnId object identifier value
-```
+}
+</pre>
 
-**See also:** X509CRL
+@see X509CRL
+@see X509Extension
 
-**See also:** X509Extension
-
-**Since:** 1.2
+@author Hemma Prafullchandra
+@since 1.2
 
 ## X509CRLEntry.X509CRLEntry()
 
@@ -60,16 +51,13 @@ public boolean equals(Object other)
 ```
 
 Compares this CRL entry for equality with the given
-object. If the `other` object is an
-`instanceof` `X509CRLEntry`, then
+object. If the {@code other} object is an
+{@code instanceof} {@code X509CRLEntry}, then
 its encoded form (the inner SEQUENCE) is retrieved and compared
 with the encoded form of this CRL entry.
 
-Parameters:
-
-- `other`: the object to test for equality with this CRL entry.
-
-**Returns:** true iff the encoded forms of the two CRL entries
+@param other the object to test for equality with this CRL entry.
+@return true iff the encoded forms of the two CRL entries
 match, false otherwise.
 
 ## X509CRLEntry.hashCode()
@@ -77,6 +65,9 @@ match, false otherwise.
 ```java
 public int hashCode()
 ```
+
+{@return the hashcode value for this CRL entry from its
+encoded form}
 
 ## X509CRLEntry.getEncoded()
 
@@ -87,11 +78,8 @@ public abstract byte[] getEncoded() throws CRLException
 Returns the ASN.1 DER-encoded form of this CRL Entry,
 that is the inner SEQUENCE.
 
-**Returns:** the encoded form of this certificate
-
-Throws:
-
-- `CRLException`: if an encoding error occurs.
+@return the encoded form of this certificate
+@throws    CRLException if an encoding error occurs.
 
 ## X509CRLEntry.getSerialNumber()
 
@@ -100,9 +88,9 @@ public abstract BigInteger getSerialNumber()
 ```
 
 Gets the serial number from this X509CRLEntry,
-the *userCertificate*.
+the <em>userCertificate</em>.
 
-**Returns:** the serial number.
+@return the serial number.
 
 ## X509CRLEntry.getCertificateIssuer()
 
@@ -114,14 +102,14 @@ Get the issuer of the X509Certificate described by this entry. If
 the certificate issuer is also the CRL issuer, this method returns
 null.
 
-This method is used with indirect CRLs. The default implementation
+<p>This method is used with indirect CRLs. The default implementation
 always returns null. Subclasses that wish to support indirect CRLs
 should override it.
 
-**Returns:** the issuer of the X509Certificate described by this entry
+@return the issuer of the X509Certificate described by this entry
 or null if it is issued by the CRL issuer.
 
-**Since:** 1.5
+@since 1.5
 
 ## X509CRLEntry.getRevocationDate()
 
@@ -130,9 +118,9 @@ public abstract Date getRevocationDate()
 ```
 
 Gets the revocation date from this X509CRLEntry,
-the *revocationDate*.
+the <em>revocationDate</em>.
 
-**Returns:** the revocation date.
+@return the revocation date.
 
 ## X509CRLEntry.hasExtensions()
 
@@ -142,7 +130,7 @@ public abstract boolean hasExtensions()
 
 Returns true if this CRL entry has extensions.
 
-**Returns:** true if this entry has extensions, false otherwise.
+@return true if this entry has extensions, false otherwise.
 
 ## X509CRLEntry.toString()
 
@@ -152,7 +140,7 @@ public abstract String toString()
 
 Returns a string representation of this CRL entry.
 
-**Returns:** a string representation of this CRL entry.
+@return a string representation of this CRL entry.
 
 ## X509CRLEntry.getRevocationReason()
 
@@ -163,8 +151,7 @@ public CRLReason getRevocationReason()
 Returns the reason the certificate has been revoked, as specified
 in the Reason Code extension of this CRL entry.
 
-**Returns:** the reason the certificate has been revoked, or
-   `null` if this CRL entry does not have
+@return the reason the certificate has been revoked, or
+   {@code null} if this CRL entry does not have
    a Reason Code extension
-
-**Since:** 1.7
+@since 1.7

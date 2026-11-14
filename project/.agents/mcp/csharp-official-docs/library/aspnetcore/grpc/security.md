@@ -1,15 +1,14 @@
 ---
-title: "Security considerations in gRPC for ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/grpc/security.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Security considerations in gRPC for ASP.NET Core
+description: Learn about security considerations for gRPC for ASP.NET Core.
+monikerRange: '>= aspnetcore-3.0'
+ms.date: 07/07/2019
 ---
-
 # Security considerations in gRPC for ASP.NET Core
 
-By James Newton-King
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+By [James Newton-King](https://twitter.com/jamesnk)
 
 This article provides information on securing gRPC with .NET.
 
@@ -17,16 +16,22 @@ This article provides information on securing gRPC with .NET.
 
 gRPC messages are sent and received using HTTP/2. We recommend:
 
-* Transport Layer Security (TLS) be used to secure messages in production gRPC apps.
+* [Transport Layer Security (TLS)](https://tools.ietf.org/html/rfc5246) be used to secure messages in production gRPC apps.
 * gRPC services should only listen and respond over secured ports.
 
-TLS is configured in Kestrel. For more information on configuring Kestrel endpoints, see Kestrel endpoint configuration.
+:::moniker range=">= aspnetcore-5.0"
+TLS is configured in Kestrel. For more information on configuring Kestrel endpoints, see [Kestrel endpoint configuration](../fundamentals/servers/kestrel/endpoints.md).
+:::moniker-end
 
-A TLS termination proxy can be combined with TLS. The benefits of using TLS termination should be considered against the security risks of sending unsecured HTTP requests between apps in the private network.
+:::moniker range="< aspnetcore-5.0"
+TLS is configured in Kestrel. For more information on configuring Kestrel endpoints, see [Kestrel endpoint configuration](../fundamentals/servers/kestrel.md#endpoint-configuration).
+:::moniker-end
+
+A [TLS termination proxy](https://wikipedia.org/wiki/TLS_termination_proxy) can be combined with TLS. The benefits of using TLS termination should be considered against the security risks of sending unsecured HTTP requests between apps in the private network.
 
 ## Exceptions
 
-Exception messages are generally considered sensitive data that shouldn't be revealed to a client. By default, gRPC doesn't send the details of an exception thrown by a gRPC service to the client. Instead, the client receives a generic message indicating an error occurred. Exception message delivery to the client can be overridden (for example, in development or test) with EnableDetailedErrors. Exception messages shouldn't be exposed to the client in production apps.
+Exception messages are generally considered sensitive data that shouldn't be revealed to a client. By default, gRPC doesn't send the details of an exception thrown by a gRPC service to the client. Instead, the client receives a generic message indicating an error occurred. Exception message delivery to the client can be overridden (for example, in development or test) with [EnableDetailedErrors](configuration.md#configure-services-options). Exception messages shouldn't be exposed to the client in production apps.
 
 ## Message size limits
 
@@ -47,13 +52,13 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-Limits can also be configured for an individual service using `AddServiceOptions<TService>`. For more information on configuring message size limits, see gRPC configuration.
+Limits can also be configured for an individual service using `AddServiceOptions<TService>`. For more information on configuring message size limits, see [gRPC configuration](configuration.md).
 
 ## Client certificate validation
 
-Client certificates are initially validated when the connection is established. By default, Kestrel doesn't perform additional validation of a connection's client certificate.
+[Client certificates](https://tools.ietf.org/html/rfc5246#section-7.4.4) are initially validated when the connection is established. By default, Kestrel doesn't perform additional validation of a connection's client certificate.
 
-We recommend that gRPC services secured by client certificates use the Microsoft.AspNetCore.Authentication.Certificate package. ASP.NET Core certification authentication will perform additional validation on a client certificate, including:
+We recommend that gRPC services secured by client certificates use the [Microsoft.AspNetCore.Authentication.Certificate](../security/authentication/certauth.md) package. ASP.NET Core certification authentication will perform additional validation on a client certificate, including:
 
 * Certificate has a valid extended key use (EKU)
 * Is within its validity period

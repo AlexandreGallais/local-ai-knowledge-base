@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: Restore doesn't search the global packages folder for a higher package version"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/11/restore-global-packages-folder-version-search.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where NuGet restore no longer considers versions in the global packages folder when it selects a higher package version."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # Restore doesn't search the global packages folder for a higher package version
@@ -17,7 +15,7 @@ When a `PackageReference` or package dependency requests a package version that 
 
 ## Previous behavior
 
-Previously, when restore couldn't find the requested version, it searched both the package sources and the global packages folder for the "next best" version, that is, the lowest version that's higher than the requested version. Restore selected that version and raised an NU1603 warning. If no higher version was found, restore reported an NU1102 error.
+Previously, when restore couldn't find the requested version, it searched both the package sources and the global packages folder for the "next best" version, that is, the lowest version that's higher than the requested version. Restore selected that version and raised an [NU1603](/nuget/reference/errors-and-warnings/nu1603) warning. If no higher version was found, restore reported an NU1102 error.
 
 | Package source | Global packages folder | Requested version | Version selected | Restore outcome |
 |----------------|------------------------|-------------------|------------------|-----------------|
@@ -26,7 +24,7 @@ Previously, when restore couldn't find the requested version, it searched both t
 
 ## New behavior
 
-Starting in .NET 11, restore searches only the package sources for the "next best" version. Because the global packages folder is excluded from the search, restore might select a higher version than before, or fail with an NU1102 error if no package source has a higher version.
+Starting in .NET 11, restore searches only the package sources for the "next best" version. Because the global packages folder is excluded from the search, restore might select a higher version than before, or fail with an [NU1102 error](/nuget/reference/errors-and-warnings/nu1102) if no package source has a higher version.
 
 | Package source | Global packages folder | Requested version | Version selected | Restore outcome |
 |----------------|------------------------|-------------------|------------------|-----------------|
@@ -37,7 +35,7 @@ If the global packages folder contains the exact requested version, restore uses
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
@@ -47,7 +45,7 @@ Restore is now more deterministic and repeatable. For performance reasons, NuGet
 
 Reference only package versions that exist on your package sources. This practice ensures that the version selected during restore doesn't change over time as new versions are published to the package sources.
 
-For more information, see Best practices for a secure software supply chain.
+For more information, see [Best practices for a secure software supply chain](/nuget/concepts/security-best-practices).
 
 ## Affected APIs
 

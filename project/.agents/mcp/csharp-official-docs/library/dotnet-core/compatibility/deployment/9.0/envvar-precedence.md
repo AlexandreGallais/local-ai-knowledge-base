@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: Environment variables take precedence in app runtime configuration settings"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/deployment/9.0/envvar-precedence.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 9 where environment variables take precedence over runtimeconfig.json settings for configuring the runtime."
+ms.date: 01/09/2026
+ai-usage: ai-assisted
 ---
-
 # Environment variables take precedence in app runtime configuration settings
 
 Starting in .NET 9, the priority of how app runtime configuration is resolved has changed. If both an environment variable and a corresponding setting in the application's `runtimeconfig.json` (or project file) are provided, the environment variable takes precedence over the configuration file.
@@ -37,11 +34,11 @@ If the environment variable `DOTNET_gcServer` was set to `0` (false), the applic
 
 Starting in .NET 9, when both an environment variable and the corresponding setting in the application's `runtimeconfig.json` are set, the environment variable takes precedence.
 
-Using the same example as in the Previous behavior section, if the environment variable `DOTNET_gcServer` is set to `0` (false), the application now uses workstation garbage collection instead of server garbage collection, even though `runtimeconfig.json` specifies `System.GC.Server` as `true`. The environment variable overrides the configuration file setting.
+Using the same example as in the [Previous behavior](#previous-behavior) section, if the environment variable `DOTNET_gcServer` is set to `0` (false), the application now uses workstation garbage collection instead of server garbage collection, even though `runtimeconfig.json` specifies `System.GC.Server` as `true`. The environment variable overrides the configuration file setting.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -57,4 +54,4 @@ None.
 
 ## See also
 
-- .NET runtime configuration settings
+- [.NET runtime configuration settings](../../../runtime-config/index.md)

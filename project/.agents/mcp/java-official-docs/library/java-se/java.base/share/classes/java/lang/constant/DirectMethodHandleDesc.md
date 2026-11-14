@@ -1,23 +1,14 @@
----
-title: "DirectMethodHandleDesc interface (java.lang.constant)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/constant/DirectMethodHandleDesc.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # DirectMethodHandleDesc interface (java.lang.constant)
 
 ```java
 public sealed interface DirectMethodHandleDesc extends MethodHandleDesc permits DirectMethodHandleDescImpl
 ```
 
-A nominal descriptor for a direct
-`MethodHandle`.  A `DirectMethodHandleDesc` corresponds to
-a `Constant_MethodHandle_info` entry in the constant pool of a classfile.
+A <a href="package-summary.html#nominal">nominal descriptor</a> for a direct
+{@link MethodHandle}.  A {@linkplain DirectMethodHandleDesc} corresponds to
+a {@code Constant_MethodHandle_info} entry in the constant pool of a classfile.
 
-**Since:** 12
+@since 12
 
 ## DirectMethodHandleDesc.STATIC(REF_invokeStatic)
 
@@ -25,7 +16,7 @@ a `Constant_MethodHandle_info` entry in the constant pool of a classfile.
 STATIC(REF_invokeStatic), /** A method handle for a method invoked as with
 ```
 
-A method handle for a method invoked as with `invokestatic`
+A method handle for a method invoked as with {@code invokestatic}
 
 ## DirectMethodHandleDesc.INTERFACE_STATIC(REF_invokeStatic, true)
 
@@ -33,7 +24,7 @@ A method handle for a method invoked as with `invokestatic`
 INTERFACE_STATIC(REF_invokeStatic, true), /** A method handle for a method invoked as with
 ```
 
-A method handle for a method invoked as with `invokestatic`
+A method handle for a method invoked as with {@code invokestatic}
 
 ## DirectMethodHandleDesc.VIRTUAL(REF_invokeVirtual)
 
@@ -41,7 +32,7 @@ A method handle for a method invoked as with `invokestatic`
 VIRTUAL(REF_invokeVirtual), /** A method handle for a method invoked as with
 ```
 
-A method handle for a method invoked as with `invokevirtual`
+A method handle for a method invoked as with {@code invokevirtual}
 
 ## DirectMethodHandleDesc.INTERFACE_VIRTUAL(REF_invokeInterface, true)
 
@@ -49,7 +40,7 @@ A method handle for a method invoked as with `invokevirtual`
 INTERFACE_VIRTUAL(REF_invokeInterface, true), /** A method handle for a method invoked as with
 ```
 
-A method handle for a method invoked as with `invokeinterface`
+A method handle for a method invoked as with {@code invokeinterface}
 
 ## DirectMethodHandleDesc.INTERFACE_SPECIAL(REF_invokeSpecial, true), /** A method handle for a constructor */ CONSTRUCTOR(REF_newInvokeSpecial), /** A method handle for a read accessor for an instance field */ GETTER(REF_getField), /** A method handle for a write accessor for an instance field */ SETTER(REF_putField), /** A method handle for a read accessor for a static field */ STATIC_GETTER(REF_getStatic), /** A method handle for a write accessor for a static field */ STATIC_SETTER(REF_putStatic)
 
@@ -57,7 +48,7 @@ A method handle for a method invoked as with `invokeinterface`
 INTERFACE_SPECIAL(REF_invokeSpecial, true), /** A method handle for a constructor */ CONSTRUCTOR(REF_newInvokeSpecial), /** A method handle for a read accessor for an instance field */ GETTER(REF_getField), /** A method handle for a write accessor for an instance field */ SETTER(REF_putField), /** A method handle for a read accessor for a static field */ STATIC_GETTER(REF_getStatic), /** A method handle for a write accessor for a static field */ STATIC_SETTER(REF_putStatic)
 ```
 
-A method handle for an interface method invoked as with `invokespecial`
+A method handle for an interface method invoked as with {@code invokespecial}
 
 ## DirectMethodHandleDesc.CONSTRUCTOR(REF_newInvokeSpecial), /** A method handle for a read accessor for an instance field */ GETTER(REF_getField), /** A method handle for a write accessor for an instance field */ SETTER(REF_putField), /** A method handle for a read accessor for a static field */ STATIC_GETTER(REF_getStatic), /** A method handle for a write accessor for a static field */ STATIC_SETTER(REF_putStatic)
 
@@ -105,8 +96,8 @@ A method handle for a write accessor for a static field
 public final int refKind
 ```
 
-The corresponding `refKind` value for this kind of method handle,
-as defined by `MethodHandleInfo`
+The corresponding {@code refKind} value for this kind of method handle,
+as defined by {@link MethodHandleInfo}
 
 ## DirectMethodHandleDesc.isInterface
 
@@ -122,20 +113,14 @@ Is this an interface
 public static Kind valueOf(int refKind)
 ```
 
-Returns the enumeration member with the given `refKind` field.
-Behaves as if `valueOf(refKind, false)`.  As a special case,
-if `refKind` is `REF_invokeInterface` (9) then the
-`isInterface` field will be true.
+Returns the enumeration member with the given {@code refKind} field.
+Behaves as if {@code valueOf(refKind, false)}.  As a special case,
+if {@code refKind} is {@code REF_invokeInterface} (9) then the
+{@code isInterface} field will be true.
 
-Parameters:
-
-- `refKind`: refKind of desired member
-
-**Returns:** the matching enumeration member
-
-Throws:
-
-- `IllegalArgumentException`: if there is no such member
+@param refKind refKind of desired member
+@return the matching enumeration member
+@throws IllegalArgumentException if there is no such member
 
 ## DirectMethodHandleDesc.valueOf(int, boolean)
 
@@ -143,41 +128,28 @@ Throws:
 public static Kind valueOf(int refKind, boolean isInterface)
 ```
 
-Returns the enumeration member with the given the `refKind` and
-`isInterface` arguments.
-For most values of `refKind` there is an exact match regardless of the value of `isInterface`.
+Returns the enumeration member with the given the {@code refKind} and
+{@code isInterface} arguments.
+For most values of {@code refKind} there is an exact match regardless of the value of {@code isInterface}.
 These are:
-
-- `REF_invokeVirtual` which matches to `VIRTUAL`
-
-- `REF_invokeInterface` which matches to `INTERFACE_VIRTUAL`
-
-- `REF_newInvokeSpecial` which matches to `CONSTRUCTOR`
-
-- `REF_getField` which matches to `GETTER`
-
-- `REF_putField` which matches to `SETTER`
-
-- `REF_getStatic` which matches to `STATIC_GETTER`
-
-- `REF_putStatic` which matches to `STATIC_SETTER`
-
-As for the rest, the returned kind will depend on the value (false or true accordingly) of `isInterface`:
-
-- `REF_invokeStatic` which matches to `STATIC` or `INTERFACE_STATIC`
-
-- `REF_invokeSpecial` which matches to `SPECIAL` or `INTERFACE_SPECIAL`
-
-Parameters:
-
-- `refKind`: refKind of desired member
-- `isInterface`: whether desired member is for interface methods
-
-**Returns:** the matching enumeration member
-
-Throws:
-
-- `IllegalArgumentException`: if there is no such member
+<UL>
+    <LI>{@code REF_invokeVirtual} which matches to {@code VIRTUAL}
+    <LI>{@code REF_invokeInterface} which matches to {@code INTERFACE_VIRTUAL}
+    <LI>{@code REF_newInvokeSpecial} which matches to {@code CONSTRUCTOR}
+    <LI>{@code REF_getField} which matches to {@code GETTER}
+    <LI>{@code REF_putField} which matches to {@code SETTER}
+    <LI>{@code REF_getStatic} which matches to {@code STATIC_GETTER}
+    <LI>{@code REF_putStatic} which matches to {@code STATIC_SETTER}
+</UL>
+As for the rest, the returned kind will depend on the value (false or true accordingly) of {@code isInterface}:
+<UL>
+    <LI>{@code REF_invokeStatic} which matches to {@code STATIC} or {@code INTERFACE_STATIC}
+    <LI>{@code REF_invokeSpecial} which matches to {@code SPECIAL} or {@code INTERFACE_SPECIAL}
+</UL>
+@param refKind refKind of desired member
+@param isInterface whether desired member is for interface methods
+@return the matching enumeration member
+@throws IllegalArgumentException if there is no such member
 
 ## DirectMethodHandleDesc.kind()
 
@@ -185,10 +157,10 @@ Throws:
 Kind kind()
 ```
 
-Returns the `kind` of the method handle described by this nominal
+Returns the {@code kind} of the method handle described by this nominal
 descriptor.
 
-**Returns:** the `Kind`
+@return the {@link Kind}
 
 ## DirectMethodHandleDesc.refKind()
 
@@ -196,10 +168,10 @@ descriptor.
 int refKind()
 ```
 
-Returns the `refKind` of the method handle described by this nominal
-reference, as defined by `MethodHandleInfo`.
+Returns the {@code refKind} of the method handle described by this nominal
+reference, as defined by {@link MethodHandleInfo}.
 
-**Returns:** the reference kind
+@return the reference kind
 
 ## DirectMethodHandleDesc.isOwnerInterface()
 
@@ -209,7 +181,7 @@ boolean isOwnerInterface()
 
 Indicates if the method is declared by an interface
 
-**Returns:** true if the method is declared by an interface
+@return true if the method is declared by an interface
 
 ## DirectMethodHandleDesc.owner()
 
@@ -217,10 +189,10 @@ Indicates if the method is declared by an interface
 ClassDesc owner()
 ```
 
-Returns a `ClassDesc` describing the class declaring the
+Returns a {@link ClassDesc} describing the class declaring the
 method or field described by this nominal descriptor.
 
-**Returns:** the class declaring the method or field
+@return the class declaring the method or field
 
 ## DirectMethodHandleDesc.methodName()
 
@@ -229,9 +201,9 @@ String methodName()
 ```
 
 Returns the name of the method or field described by this nominal descriptor.
-For constructors, returns the reserved name `ConstantDescs#INIT_NAME`.
+For constructors, returns the reserved name {@value ConstantDescs#INIT_NAME}.
 
-**Returns:** the name of the method or field
+@return the name of the method or field
 
 ## DirectMethodHandleDesc.lookupDescriptor()
 
@@ -243,6 +215,6 @@ Returns the lookup descriptor of the method handle described by this descriptor,
 after adjusting for the invocation mode.  This will correspond to either
 a method type descriptor string (for methods and constructors), or a field
 descriptor string (for field access method handles).  The lookup descriptor
-string is in the same format as accepted by ClassDesc, String, String).
+string is in the same format as accepted by {@link MethodHandleDesc#of(Kind, ClassDesc, String, String)}.
 
-**Returns:** the lookup descriptor string
+@return the lookup descriptor string

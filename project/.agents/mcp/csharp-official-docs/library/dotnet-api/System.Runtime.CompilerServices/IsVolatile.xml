@@ -1,0 +1,71 @@
+<Type Name="IsVolatile" FullName="System.Runtime.CompilerServices.IsVolatile">
+  <TypeSignature Language="C#" Value="public static class IsVolatile" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit IsVolatile extends System.Object" />
+  <TypeSignature Language="DocId" Value="T:System.Runtime.CompilerServices.IsVolatile" />
+  <TypeSignature Language="VB.NET" Value="Public Class IsVolatile" />
+  <TypeSignature Language="F#" Value="type IsVolatile = class" />
+  <TypeSignature Language="C++ CLI" Value="public ref class IsVolatile abstract sealed" />
+  <AssemblyInfo>
+    <AssemblyName>System.Runtime</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <AssemblyVersion>4.0.10.0</AssemblyVersion>
+    <AssemblyVersion>4.0.20.0</AssemblyVersion>
+    <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <AssemblyVersion>4.2.0.0</AssemblyVersion>
+    <AssemblyVersion>4.2.1.0</AssemblyVersion>
+    <AssemblyVersion>4.2.2.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+    <AssemblyVersion>11.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>mscorlib</AssemblyName>
+    <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.5.0</AssemblyVersion>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>netstandard</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+  </TypeForwardingChain>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>Marks a field as volatile. This class cannot be inherited.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+ `IsVolatile` is used only in custom modifiers of method signatures to indicate that the field it marks is volatile. Any compiler that imports metadata with one or more fields marked as volatile must use instructions prefixed with `volatile`. to access such fields.
+
+ The classes in <xref:System.Runtime.CompilerServices> are for compiler writers' use only.
+
+ Compilers emit custom modifiers within metadata to change the way that the just-in-time (JIT) compiler handles values when the default behavior is not appropriate. When the JIT compiler encounters a custom modifier, it handles the value in the way that the modifier specifies. Compilers can apply custom modifiers to methods, parameters, and return values. The JIT compiler must respond to required modifiers but can ignore optional modifiers. A C++ compiler could emit a custom modifier to describe how a byte should be treated in cases where the JIT compiler treats bytes in a manner that is not compatible with C++ by default.
+
+ You can emit custom modifiers into metadata using one of the following techniques:
+
+- Using methods in the <xref:System.Reflection.Emit.TypeBuilder> class such as <xref:System.Reflection.Emit.TypeBuilder.DefineMethod*>, <xref:System.Reflection.Emit.TypeBuilder.DefineField*>, <xref:System.Reflection.Emit.TypeBuilder.DefineConstructor*>, and <xref:System.Reflection.Emit.TypeBuilder.DefineProperty*>.
+
+- Generating a Microsoft intermediate language (MSIL) instruction file that contains calls to `modopt` and `modreq`, and assembling the file with the [Ilasm.exe (IL Assembler)](/dotnet/framework/tools/ilasm-exe-il-assembler).
+
+- Using the unmanaged reflection API.
+
+ ]]></format>
+    </remarks>
+  </Docs>
+  <Members />
+</Type>

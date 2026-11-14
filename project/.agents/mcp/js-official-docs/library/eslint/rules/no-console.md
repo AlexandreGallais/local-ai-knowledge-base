@@ -1,13 +1,11 @@
 ---
-title: "no-console"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-console.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-console
+rule_type: suggestion
+related_rules:
+- no-alert
+- no-debugger
 ---
 
-# no-console
 
 In JavaScript that is designed to be executed in the browser, it's considered a best practice to avoid using methods on `console`. Such messages are considered to be for debugging purposes and therefore not suitable to ship to the client. In general, calls using `console` should be stripped before being pushed to production.
 
@@ -22,7 +20,7 @@ This rule disallows calls or assignments to methods of the `console` object.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint no-console: "error" */
@@ -33,9 +31,11 @@ console.error("Log an error level message.");
 console.log = foo();
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-console: "error" */
@@ -43,6 +43,8 @@ Examples of **correct** code for this rule:
 // custom console
 Console.log("Hello world!");
 ```
+
+:::
 
 ## Options
 
@@ -52,7 +54,7 @@ This rule has an object option for exceptions:
 
 Examples of additional **correct** code for this rule with a sample `{ "allow": ["warn", "error"] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-console: ["error", { allow: ["warn", "error"] }] */
@@ -60,6 +62,8 @@ Examples of additional **correct** code for this rule with a sample `{ "allow": 
 console.warn("Log a warn level message.");
 console.error("Log an error level message.");
 ```
+
+:::
 
 ## When Not To Use It
 

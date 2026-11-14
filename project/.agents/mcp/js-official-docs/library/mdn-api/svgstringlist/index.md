@@ -1,0 +1,46 @@
+---
+title: SVGStringList
+slug: Web/API/SVGStringList
+page-type: web-api-interface
+browser-compat: api.SVGStringList
+---
+
+{{APIRef("SVG")}}
+
+The **`SVGStringList`** interface defines a list of strings.
+
+An `SVGStringList` object can be designated as read only, which means that attempts to modify the object will result in an exception being thrown.
+
+An `SVGStringList` object is indexable and can be accessed like an array using [bracket notation](/en-US/docs/Web/JavaScript/Reference/Operators/Property_accessors#bracket_notation). Reading an index is equivalent to calling {{domxref("SVGStringList.getItem", "getItem()")}}. Assigning to an index is equivalent to calling {{domxref("SVGStringList.replaceItem", "replaceItem()")}}, including the exceptions it throws.
+
+## Instance properties
+
+- {{domxref("SVGStringList.length", "length")}} {{ReadOnlyInline}}
+  - : The number of items in the list.
+- {{domxref("SVGStringList.numberOfItems", "numberOfItems")}} {{ReadOnlyInline}}
+  - : The number of items in the list.
+
+## Instance methods
+
+- {{domxref("SVGStringList.appendItem", "appendItem()")}}
+  - : Inserts a new item at the end of the list.
+- {{domxref("SVGStringList.clear", "clear()")}}
+  - : Clears all existing items from the list, with the result being an empty list.
+- {{domxref("SVGStringList.initialize", "initialize()")}}
+  - : Clears all existing items from the list and re-initializes the list to hold the single item specified by the parameter.
+- {{domxref("SVGStringList.getItem", "getItem()")}}
+  - : Returns the specified item from the list.
+- {{domxref("SVGStringList.insertItemBefore", "insertItemBefore()")}}
+  - : Inserts a new item into the list at the specified position.
+- {{domxref("SVGStringList.removeItem", "removeItem()")}}
+  - : Removes an existing item from the list.
+- {{domxref("SVGStringList.replaceItem", "replaceItem()")}}
+  - : Replaces an existing item in the list with a new item.
+
+## Specifications
+
+{{Specifications}}
+
+## Browser compatibility
+
+{{Compat}}

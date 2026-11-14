@@ -1,25 +1,24 @@
 ---
-title: "Debugging | Guide"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/debugging.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Debugging | Guide
 ---
 
 # Debugging
 
-**Tip:**
+:::tip
 When debugging tests you might want to use following options:
 
-- `--test-timeout=0` to prevent tests from timing out when stopping at breakpoints
-- `--no-file-parallelism` to prevent test files from running parallel
+- [`--test-timeout=0`](/guide/cli#testtimeout) to prevent tests from timing out when stopping at breakpoints
+- [`--no-file-parallelism`](/guide/cli#fileparallelism) to prevent test files from running parallel
+
+:::
 
 ## VS Code
 
-The official VS Code extension supports debugging tests via "Debug Tests" button. However Vitest also exposes tools to define a custom configuration.
+The [official VS Code](https://vitest.dev/vscode) extension supports debugging tests via "Debug Tests" button. However Vitest also exposes tools to define a custom configuration.
 
 Quick way to debug tests in VS Code is via `JavaScript Debug Terminal`. Open a new `JavaScript Debug Terminal` and run `npm run test` or `vitest` directly. _this works with any code run in Node, so will work with most JS testing frameworks_
+
+![image](https://user-images.githubusercontent.com/5594348/212169143-72bf39ce-f763-48f5-822a-0c8b2e6a8484.png)
 
 You can also add a dedicated launch configuration to debug a test file in VS Code:
 
@@ -47,17 +46,17 @@ Then in the debug tab, ensure 'Debug Current Test File' is selected. You can the
 
 ### Browser mode
 
-The simplest way to debug browser tests is to use the official VS Code extension.
+The simplest way to debug browser tests is to use the [official VS Code](https://vitest.dev/vscode) extension.
 
 However you can also pass `--inspect` or `--inspect-brk` in CLI or define it in your Vitest configuration:
 
 ::: code-group
 
-```bash
+```bash [CLI]
 vitest --inspect-brk --browser --no-file-parallelism
 ```
 
-```ts
+```ts [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 import { playwright } from '@vitest/browser-playwright'
 
@@ -73,13 +72,15 @@ export default defineConfig({
 })
 ```
 
+:::
+
 By default Vitest will use port `9229` as debugging port. You can overwrite it with by passing value in `--inspect-brk`:
 
 ```bash
 vitest --inspect-brk=127.0.0.1:3000 --browser --no-file-parallelism
 ```
 
-Use following VSCode Compound configuration for launching Vitest and attaching debugger in the browser:
+Use following [VSCode Compound configuration](https://code.visualstudio.com/docs/editor/debugging#_compound-launch-configurations) for launching Vitest and attaching debugger in the browser:
 
 ```json
 {
@@ -112,7 +113,7 @@ Use following VSCode Compound configuration for launching Vitest and attaching d
 
 ## IntelliJ IDEA
 
-Create a vitest run configuration. Use the following settings to run all tests in debug mode:
+Create a [vitest](https://www.jetbrains.com/help/idea/vitest.html#createRunConfigVitest) run configuration. Use the following settings to run all tests in debug mode:
 
 | Setting           | Value                        |
 | ----------------- | ---------------------------- |
@@ -132,6 +133,6 @@ vitest --inspect-brk --no-file-parallelism
 vitest --inspect-brk --browser --no-file-parallelism
 ```
 
-Once Vitest starts it will stop execution and wait for you to open developer tools that can connect to Node.js inspector. You can use Chrome DevTools for this by opening `chrome://inspect` on browser.
+Once Vitest starts it will stop execution and wait for you to open developer tools that can connect to [Node.js inspector](https://nodejs.org/en/docs/guides/debugging-getting-started/). You can use Chrome DevTools for this by opening `chrome://inspect` on browser.
 
 In watch mode you can keep the debugger open during test re-runs by using the `--isolate false` options.

@@ -1,13 +1,7 @@
 ---
+id: test-annotations
 title: "Annotations"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/test-annotations-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# Annotations
 
 ## Introduction
 
@@ -111,45 +105,45 @@ test.describe('group', {
 });
 ```
 
-You can now run tests that have a particular tag with `--grep` command line option.
+You can now run tests that have a particular tag with [`--grep`](./test-cli.md#all-options) command line option.
 
-```bash
+```bash tab=bash-bash
 npx playwright test --grep @fast
 ```
 
-```powershell
+```powershell tab=bash-powershell
 npx playwright test --grep "@fast"
 ```
 
-```batch
+```batch tab=bash-batch
 npx playwright test --grep @fast
 ```
 
 Or if you want the opposite, you can skip the tests with a certain tag:
 
-```bash
+```bash tab=bash-bash
 npx playwright test --grep-invert @fast
 ```
 
-```powershell
+```powershell tab=bash-powershell
 npx playwright test --grep-invert "@fast"
 ```
 
-```batch
+```batch tab=bash-batch
 npx playwright test --grep-invert @fast
 ```
 
 To run tests containing either tag (logical `OR` operator):
 
-```bash
+```bash tab=bash-bash
 npx playwright test --grep "@fast|@slow"
 ```
 
-```powershell
+```powershell tab=bash-powershell
 npx playwright test --grep --% "@fast^|@slow"
 ```
 
-```batch
+```batch tab=bash-batch
 npx playwright test --grep "@fast^|@slow"
 ```
 
@@ -160,6 +154,8 @@ npx playwright test --grep "(?=.*@fast)(?=.*@slow)"
 ```
 
 You can also filter tests in the configuration file via [`property: TestConfig.grep`] and [`property: TestProject.grep`].
+
+
 
 ## Annotate tests
 
@@ -207,7 +203,7 @@ test.describe('report tests', {
 
 For example, you can run a group of tests just in Chromium by passing a callback.
 
-```js
+```js title="example.spec.ts"
 
 test.describe('chromium only', () => {
   test.skip(({ browserName }) => browserName !== 'chromium', 'Chromium only!');
@@ -230,7 +226,7 @@ test.describe('chromium only', () => {
 
 To avoid running `beforeEach` hooks, you can put annotations in the hook itself.
 
-```js
+```js title="example.spec.ts"
 
 test.beforeEach(async ({ page, isMobile }) => {
   test.fixme(isMobile, 'Settings page does not work in mobile yet');
@@ -246,9 +242,10 @@ test('user profile', async ({ page }) => {
 
 ## Runtime annotations
 
-While the test is already running, you can add annotations to `test.info().annotations`.
+While the test is already running, you can add annotations to [`test.info().annotations`](./api/class-testinfo#test-info-annotations).
 
-```js
+
+```js title="example.spec.ts"
 
 test('example test', async ({ page, browser }) => {
   test.info().annotations.push({

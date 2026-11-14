@@ -1,17 +1,17 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/no-lazy-ends"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/no-lazy-ends.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "disallow lazy quantifiers at the end of an expression"
+since: "v0.8.0"
 ---
-
 # regexp/no-lazy-ends
 
 ⚠️ This rule _warns_ in the following configs: 🟢 `flat/recommended`, 🔵 `recommended`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
 
 > disallow lazy quantifiers at the end of an expression
 
@@ -117,11 +117,14 @@ var foo = /a(?:c|ab+?)?/.test(str)
 This rule was taken from [eslint-plugin-clean-regex].\
 This rule is compatible with [clean-regex/no-lazy-ends] rule.
 
+[eslint-plugin-clean-regex]: https://github.com/RunDevelopment/eslint-plugin-clean-regex
+[clean-regex/no-lazy-ends]: https://github.com/RunDevelopment/eslint-plugin-clean-regex/blob/master/docs/rules/no-lazy-ends.md
+
 ## :rocket: Version
 
 This rule was introduced in eslint-plugin-regexp v0.8.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/no-lazy-ends.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/no-lazy-ends.ts)

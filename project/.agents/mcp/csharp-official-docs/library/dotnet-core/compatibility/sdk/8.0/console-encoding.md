@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: CLI console output uses UTF-8"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/8.0/console-encoding.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in the .NET 8 SDK where the encoding for console input and output is now UTF-8.
+ms.date: 04/04/2023
 ---
-
 # CLI console output uses UTF-8
 
-If the `DOTNET_CLI_UI_LANGUAGE` or `VSLANG` environment variable is set, the .NET CLI console output and input encoding changes to UTF-8, so that the code page can change to UTF-8 as well. This new behavior allows characters from languages set by those environment variables to be rendered correctly.
+If the [`DOTNET_CLI_UI_LANGUAGE`](../../../tools/dotnet-environment-variables.md#dotnet_cli_ui_language) or `VSLANG` environment variable is set, the .NET CLI console output and input encoding changes to UTF-8, so that the code page can change to UTF-8 as well. This new behavior allows characters from languages set by those environment variables to be rendered correctly.
 
 This change only affects Windows operating systems (the encoding was okay on other platforms). Moreover, it only applies to Windows 10 and later versions where the UI culture set by the user is non-English.
 
@@ -33,9 +29,9 @@ MSBuild version 17.3.0-preview[...] for .NET
   正在确定要还原的项目…
 ```
 
-Versions of Windows older than Windows 10 1909 don't fully support UTF-8 and may experience issues after this change. (Starting in .NET 8 and .NET 7.0.300 SDK, the .NET SDK no longer changes the encoding to UTF-8 on these versions, by default. To opt back into using UTF-8 even on Windows 10 versions that don't support it, use the `DOTNET_CLI_FORCE_UTF8_ENCODING` environment variable.)
+Versions of Windows older than Windows 10 1909 don't fully support UTF-8 and may experience issues after this change. (Starting in .NET 8 and .NET 7.0.300 SDK, the .NET SDK no longer changes the encoding to UTF-8 on these versions, by default. To opt back into using UTF-8 even on Windows 10 versions that don't support it, use the [`DOTNET_CLI_FORCE_UTF8_ENCODING`](../../../tools/dotnet-environment-variables.md#dotnet_cli_force_utf8_encoding) environment variable.)
 
-In addition, there was an existing bug where the SDK can affect the encoding of other commands and programs called in the same command prompt after the SDK has finished execution. Now that the SDK more frequently changes the encoding, the impact of this bug may increase. However, the bug was fixed in .NET 8 and .NET 7.0.300 SDK. For more information, see SDK no longer changes console encoding after completion.
+In addition, there was [an existing bug](https://github.com/dotnet/sdk/issues/30170) where the SDK can affect the encoding of other commands and programs called in the same command prompt after the SDK has finished execution. Now that the SDK more frequently changes the encoding, the impact of this bug may increase. However, the bug was fixed in .NET 8 and .NET 7.0.300 SDK. For more information, see [SDK no longer changes console encoding after completion](console-encoding-fix.md).
 
 ## Version introduced
 
@@ -44,7 +40,7 @@ In addition, there was an existing bug where the SDK can affect the encoding of 
 
 ## Type of breaking change
 
-This change can affect source compatibility and binary compatibility. It's also a behavioral change.
+This change can affect [source compatibility](../../categories.md#source-compatibility) and [binary compatibility](../../categories.md#binary-compatibility). It's also a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -61,4 +57,4 @@ The legacy scenarios are already less likely to support the broken languages, so
 
 ## See also
 
-- SDK no longer changes console encoding when finished
+- [SDK no longer changes console encoding when finished](console-encoding-fix.md)

@@ -1,12 +1,3 @@
----
-title: "Divergence"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/divergence.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[divergence]
 # Divergence
 
@@ -37,13 +28,13 @@ See the following rules for specific expression divergence behavior:
 - [expr.match.empty] --- Empty `match` expressions.
 - [expr.return.diverging] --- `return` expressions.
 
-> **Note:**
+> [!NOTE]
 > The [`panic!`] macro and related panic-generating macros like [`unreachable!`] also have the type [`!`] and are diverging.
 
 r[divergence.never]
 Any expression of type [`!`] is a diverging expression. However, diverging expressions are not limited to type [`!`]; expressions of other types may also diverge (e.g., `Some(loop {})` has type `Option<!>`).
 
-> **Note:**
+> [!NOTE]
 > Though `!` is considered an uninhabited type, a type being uninhabited is not sufficient for it to diverge.
 >
 > ```rust,compile_fail,E0308
@@ -65,7 +56,7 @@ Any expression of type [`!`] is a diverging expression. However, diverging expre
 > }
 > ```
 
-> **Note:**
+> [!NOTE]
 > Divergence can propagate to the surrounding block. See [expr.block.diverging].
 
 r[divergence.fallback]
@@ -83,7 +74,7 @@ If a type to be inferred is only unified with diverging expressions, then that t
 > };
 > ```
 
-> **Note:**
+> [!NOTE]
 > Importantly, type unification may happen *structurally*, so the fallback `!` may be part of a larger type. The following compiles:
 >
 > ```rust
@@ -94,3 +85,7 @@ If a type to be inferred is only unified with diverging expressions, then that t
 >     _ => Some(return),
 > };
 > ```
+
+<!-- TODO: This last point should likely should be moved to a more general "type inference" section discussing generalization + unification. -->
+
+[`!`]: type.never

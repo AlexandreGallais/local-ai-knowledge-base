@@ -1,35 +1,30 @@
----
-title: "Internationalization support"
-tool: "node"
-version: "26.13"
-source: "https://github.com/nodejs/node/blob/e9c277643b0249c50f6e6de5413be8a88ea11b6a/doc/api/intl.md"
-commit: "e9c277643b0249c50f6e6de5413be8a88ea11b6a"
-license: "MIT"
----
-
 # Internationalization support
+
+<!--introduced_in=v8.2.0-->
+
+<!-- type=misc -->
 
 Node.js has many features that make it easier to write internationalized
 programs. Some of them are:
 
-* Locale-sensitive or Unicode-aware functions in the ECMAScript Language
-  Specification:
-  * `String.prototype.normalize()`
-  * `String.prototype.toLowerCase()`
-  * `String.prototype.toUpperCase()`
-* All functionality described in the ECMAScript Internationalization API
-  Specification (aka ECMA-402):
-  * `Intl` object
-  * Locale-sensitive methods like `String.prototype.localeCompare()` and
-    `Date.prototype.toLocaleString()`
-* The WHATWG URL parser's internationalized domain names (IDNs) support
-* `require('node:buffer').transcode()`
-* More accurate REPL line editing
-* `require('node:util').TextDecoder`
-* `RegExp` Unicode Property Escapes
+* Locale-sensitive or Unicode-aware functions in the [ECMAScript Language
+  Specification][ECMA-262]:
+  * [`String.prototype.normalize()`][]
+  * [`String.prototype.toLowerCase()`][]
+  * [`String.prototype.toUpperCase()`][]
+* All functionality described in the [ECMAScript Internationalization API
+  Specification][ECMA-402] (aka ECMA-402):
+  * [`Intl`][] object
+  * Locale-sensitive methods like [`String.prototype.localeCompare()`][] and
+    [`Date.prototype.toLocaleString()`][]
+* The [WHATWG URL parser][]'s [internationalized domain names][] (IDNs) support
+* [`require('node:buffer').transcode()`][]
+* More accurate [REPL][] line editing
+* [`require('node:util').TextDecoder`][]
+* [`RegExp` Unicode Property Escapes][]
 
 Node.js and the underlying V8 engine use
-International Components for Unicode (ICU) to implement these features
+[International Components for Unicode (ICU)][ICU] to implement these features
 in native C/C++ code. The full ICU data set is provided by Node.js by default.
 However, due to the size of the ICU data file, several
 options are provided for customizing the ICU data set either when
@@ -39,7 +34,7 @@ building or running Node.js.
 
 To control how ICU is used in Node.js, four `configure` options are available
 during compilation. Additional details on how to compile Node.js are documented
-in BUILDING.md.
+in [BUILDING.md][].
 
 * `--with-intl=none`/`--without-intl`
 * `--with-intl=system-icu`
@@ -51,19 +46,19 @@ option:
 
 | Feature                                  | `none`                            | `system-icu`                 | `small-icu`            | `full-icu` |
 | ---------------------------------------- | --------------------------------- | ---------------------------- | ---------------------- | ---------- |
-| `String.prototype.normalize()`       | none (function is no-op)          | full                         | full                   | full       |
+| [`String.prototype.normalize()`][]       | none (function is no-op)          | full                         | full                   | full       |
 | `String.prototype.to*Case()`             | full                              | full                         | full                   | full       |
-| `Intl`                               | none (object does not exist)      | partial/full (depends on OS) | partial (English-only) | full       |
-| `String.prototype.localeCompare()`   | partial (not locale-aware)        | full                         | full                   | full       |
+| [`Intl`][]                               | none (object does not exist)      | partial/full (depends on OS) | partial (English-only) | full       |
+| [`String.prototype.localeCompare()`][]   | partial (not locale-aware)        | full                         | full                   | full       |
 | `String.prototype.toLocale*Case()`       | partial (not locale-aware)        | full                         | full                   | full       |
-| `Number.prototype.toLocaleString()`  | partial (not locale-aware)        | partial/full (depends on OS) | partial (English-only) | full       |
+| [`Number.prototype.toLocaleString()`][]  | partial (not locale-aware)        | partial/full (depends on OS) | partial (English-only) | full       |
 | `Date.prototype.toLocale*String()`       | partial (not locale-aware)        | partial/full (depends on OS) | partial (English-only) | full       |
-| Legacy URL Parser                    | partial (no IDN support)          | full                         | full                   | full       |
-| WHATWG URL Parser                    | partial (no IDN support)          | full                         | full                   | full       |
-| `require('node:buffer').transcode()` | none (function does not exist)    | full                         | full                   | full       |
-| REPL                                 | partial (inaccurate line editing) | full                         | full                   | full       |
-| `require('node:util').TextDecoder`   | partial (basic <example-value> support) | partial/full (depends on OS) | partial (Unicode-only) | full       |
-| `RegExp` Unicode Property Escapes    | none (invalid `RegExp` error)     | full                         | full                   | full       |
+| [Legacy URL Parser][]                    | partial (no IDN support)          | full                         | full                   | full       |
+| [WHATWG URL Parser][]                    | partial (no IDN support)          | full                         | full                   | full       |
+| [`require('node:buffer').transcode()`][] | none (function does not exist)    | full                         | full                   | full       |
+| [REPL][]                                 | partial (inaccurate line editing) | full                         | full                   | full       |
+| [`require('node:util').TextDecoder`][]   | partial (basic encodings support) | partial/full (depends on OS) | partial (Unicode-only) | full       |
+| [`RegExp` Unicode Property Escapes][]    | none (invalid `RegExp` error)     | full                         | full                   | full       |
 
 The "(not locale-aware)" designation denotes that the function carries out its
 operation just like the non-`Locale` version of the function, if one
@@ -83,9 +78,9 @@ make it possible to reuse the same set of data used by other components in the
 OS.
 
 Functionalities that only require the ICU library itself, such as
-`String.prototype.normalize()` and the WHATWG URL parser, are fully
+[`String.prototype.normalize()`][] and the [WHATWG URL parser][], are fully
 supported under `system-icu`. Features that require ICU locale data in
-addition, such as `Intl.DateTimeFormat` _may_ be fully or partially
+addition, such as [`Intl.DateTimeFormat`][] _may_ be fully or partially
 supported, depending on the completeness of the ICU data installed on the
 system.
 
@@ -96,9 +91,9 @@ and includes a subset of ICU data (typically only the English locale) within
 the `node` executable.
 
 Functionalities that only require the ICU library itself, such as
-`String.prototype.normalize()` and the WHATWG URL parser, are fully
+[`String.prototype.normalize()`][] and the [WHATWG URL parser][], are fully
 supported under `small-icu`. Features that require ICU locale data in addition,
-such as `Intl.DateTimeFormat`, generally only work with the English locale:
+such as [`Intl.DateTimeFormat`][], generally only work with the English locale:
 
 ```js
 const january = new Date(9e8);
@@ -131,13 +126,13 @@ available to ICU through either:
   The actual data file is going to be loaded at runtime from this directory
   path.
 
-* The `NODE_ICU_DATA` environment variable:
+* The [`NODE_ICU_DATA`][] environment variable:
 
   ```bash
   env NODE_ICU_DATA=/runtime/directory/with/dat/file node
   ```
 
-* The `--icu-data-dir` CLI parameter:
+* The [`--icu-data-dir`][] CLI parameter:
 
   ```bash
   node --icu-data-dir=/runtime/directory/with/dat/file
@@ -159,10 +154,10 @@ Node.js version can be computed with:
 `icudt${process.versions.icu.split('.')[0]}${os.endianness()[0].toLowerCase()}.dat`;
 ```
 
-Check "ICU Data" article in the ICU User Guide for other supported formats
+Check ["ICU Data"][] article in the ICU User Guide for other supported formats
 and more details on ICU data in general.
 
-The full-icu npm module can greatly simplify ICU data installation by
+The [full-icu][] npm module can greatly simplify ICU data installation by
 detecting the ICU version of the running `node` executable and downloading the
 appropriate data file. After installing the module through `npm i full-icu`,
 the data file will be available at `./node_modules/full-icu`. This path can be
@@ -194,7 +189,7 @@ const hasICU = typeof process.versions.icu === 'string';
 ```
 
 To check for support for a non-English locale (i.e. `full-icu` or
-`system-icu`), `Intl.DateTimeFormat` can be a good distinguishing factor:
+`system-icu`), [`Intl.DateTimeFormat`][] can be a good distinguishing factor:
 
 ```js
 const hasFullICU = (() => {
@@ -211,7 +206,33 @@ const hasFullICU = (() => {
 For more verbose tests for `Intl` support, the following resources may be found
 to be helpful:
 
-* btest402: Generally used to check whether Node.js with `Intl` support is
+* [btest402][]: Generally used to check whether Node.js with `Intl` support is
   built correctly.
-* Test262: ECMAScript's official conformance test suite includes a section
+* [Test262][]: ECMAScript's official conformance test suite includes a section
   dedicated to ECMA-402.
+
+["ICU Data"]: http://userguide.icu-project.org/icudata
+[BUILDING.md]: https://github.com/nodejs/node/blob/HEAD/BUILDING.md
+[ECMA-262]: https://tc39.github.io/ecma262/
+[ECMA-402]: https://tc39.github.io/ecma402/
+[ICU]: http://site.icu-project.org/
+[Legacy URL parser]: url.md#legacy-url-api
+[REPL]: repl.md#repl
+[Test262]: https://github.com/tc39/test262/tree/HEAD/test/intl402
+[WHATWG URL parser]: url.md#the-whatwg-url-api
+[`--icu-data-dir`]: cli.md#--icu-data-dirfile
+[`Date.prototype.toLocaleString()`]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString
+[`Intl.DateTimeFormat`]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat
+[`Intl`]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl
+[`NODE_ICU_DATA`]: cli.md#node_icu_datafile
+[`Number.prototype.toLocaleString()`]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString
+[`RegExp` Unicode Property Escapes]: https://github.com/tc39/proposal-regexp-unicode-property-escapes
+[`String.prototype.localeCompare()`]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare
+[`String.prototype.normalize()`]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
+[`String.prototype.toLowerCase()`]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase
+[`String.prototype.toUpperCase()`]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase
+[`require('node:buffer').transcode()`]: buffer.md#buffertranscodesource-fromenc-toenc
+[`require('node:util').TextDecoder`]: util.md#class-utiltextdecoder
+[btest402]: https://github.com/srl295/btest402
+[full-icu]: https://www.npmjs.com/package/full-icu
+[internationalized domain names]: https://en.wikipedia.org/wiki/Internationalized_domain_name

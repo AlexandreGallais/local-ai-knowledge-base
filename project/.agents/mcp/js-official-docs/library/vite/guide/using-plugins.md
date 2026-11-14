@@ -1,12 +1,3 @@
----
-title: "Using Plugins"
-tool: "vite"
-version: "8.3"
-source: "https://github.com/vitejs/vite/blob/b39e6e63dcbfc3cf4be871acf3554efbd6d0e268/docs/guide/using-plugins.md"
-commit: "b39e6e63dcbfc3cf4be871acf3554efbd6d0e268"
-license: "MIT"
----
-
 # Using Plugins
 
 Vite can be extended using plugins, which are based on Rollup's well-designed plugin interface with a few extra Vite-specific options. This means that Vite users can rely on the mature ecosystem of Rollup plugins, while also being able to extend the dev server and SSR functionality as needed.
@@ -15,13 +6,13 @@ Vite can be extended using plugins, which are based on Rollup's well-designed pl
 
 ## Adding a Plugin
 
-To use a plugin, it needs to be added to the `devDependencies` of the project and included in the `plugins` array in the `vite.config.js` config file. For example, to provide support for legacy browsers, the official @vitejs/plugin-legacy can be used:
+To use a plugin, it needs to be added to the `devDependencies` of the project and included in the `plugins` array in the `vite.config.js` config file. For example, to provide support for legacy browsers, the official [@vitejs/plugin-legacy](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy) can be used:
 
 ```bash
 $ npm add -D @vitejs/plugin-legacy
 ```
 
-```js
+```js twoslash [vite.config.js]
 import legacy from '@vitejs/plugin-legacy'
 import { defineConfig } from 'vite'
 
@@ -40,10 +31,11 @@ Falsy plugins will be ignored, which can be used to easily activate or deactivat
 
 ## Finding Plugins
 
-**NOTE**
-Vite aims to provide out-of-the-box support for common web development patterns. Before searching for a Vite or compatible Rollup plugin, check out the Features Guide. A lot of the cases where a plugin would be needed in a Rollup project are already covered in Vite.
+:::tip NOTE
+Vite aims to provide out-of-the-box support for common web development patterns. Before searching for a Vite or compatible Rollup plugin, check out the [Features Guide](../guide/features.md). A lot of the cases where a plugin would be needed in a Rollup project are already covered in Vite.
+:::
 
-Check out the Plugins section for information about official plugins. Community plugins that are published to npm are listed in Vite Plugin Registry.
+Check out the [Plugins section](../plugins/) for information about official plugins. Community plugins that are published to npm are listed in [Vite Plugin Registry](https://registry.vite.dev/plugins).
 
 ## Enforcing Plugin Ordering
 
@@ -53,7 +45,7 @@ For compatibility with some Rollup plugins, it may be needed to enforce the orde
 - default: invoke plugin after Vite core plugins
 - `post`: invoke plugin after Vite build plugins
 
-```js
+```js twoslash [vite.config.js]
 import image from '@rollup/plugin-image'
 import { defineConfig } from 'vite'
 
@@ -67,13 +59,13 @@ export default defineConfig({
 })
 ```
 
-Check out Plugins API Guide for detailed information.
+Check out [Plugins API Guide](./api-plugin.md#plugin-ordering) for detailed information.
 
 ## Conditional Application
 
 By default, plugins are invoked for both serve and build. In cases where a plugin needs to be conditionally applied only during serve or build, use the `apply` property to only invoke them during `'build'` or `'serve'`:
 
-```js
+```js twoslash [vite.config.js]
 import typescript2 from 'rollup-plugin-typescript2'
 import { defineConfig } from 'vite'
 
@@ -89,4 +81,4 @@ export default defineConfig({
 
 ## Building Plugins
 
-Check out the Plugins API Guide for documentation about creating plugins.
+Check out the [Plugins API Guide](./api-plugin.md) for documentation about creating plugins.

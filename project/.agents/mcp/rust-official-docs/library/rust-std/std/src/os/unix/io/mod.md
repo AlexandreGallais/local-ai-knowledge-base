@@ -1,12 +1,3 @@
----
-title: "std::os::unix::io"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/os/unix/io/mod.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::os::unix::io
 
 Unix-specific extensions to general I/O primitives.
@@ -17,14 +8,14 @@ or be forged if they're created from invalid values.
 
 This module provides three types for representing file descriptors,
 with different ownership properties: raw, borrowed, and owned, which are
-analogous to types used for representing pointers. These types reflect concepts of I/O
-safety on Unix.
+analogous to types used for representing pointers. These types reflect concepts of [I/O
+safety][io-safety] on Unix.
 
 | Type               | Analogous to |
 | ------------------ | ------------ |
-| `RawFd`          | `*const _`   |
-| `BorrowedFd<'a>` | `&'a Arc<_>` |
-| `OwnedFd`        | `Arc<_>`     |
+| [`RawFd`]          | `*const _`   |
+| [`BorrowedFd<'a>`] | `&'a Arc<_>` |
+| [`OwnedFd`]        | `Arc<_>`     |
 
 Like raw pointers, `RawFd` values are primitive values. And in new code,
 they should be considered unsafe to do I/O on (analogous to dereferencing
@@ -77,9 +68,9 @@ and decrement the reference count when they are dropped (by calling `close`).
 When the reference count reaches 0, the underlying open file description will be freed
 by the kernel.
 
-See the `io` module docs for a general explanation of I/O safety.
+See the [`io` module docs][io-safety] for a general explanation of I/O safety.
 
-#### `/proc/self/mem` and similar OS features
+## `/proc/self/mem` and similar OS features
 
 Some platforms have special files, such as `/proc/self/mem`, which
 provide read and write access to the process's memory. Such reads
@@ -97,3 +88,6 @@ entity.
 If you desire to comprehensively prevent programs from reaching out and
 causing external entities to reach back in and violate memory safety, it's
 necessary to use *sandboxing*, which is outside the scope of `std`.
+
+[`BorrowedFd<'a>`]: crate::os::unix::io::BorrowedFd
+[io-safety]: crate::io#io-safety

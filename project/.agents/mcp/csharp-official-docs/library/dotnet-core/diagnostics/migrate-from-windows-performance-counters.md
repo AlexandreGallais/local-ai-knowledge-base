@@ -1,15 +1,12 @@
 ---
-title: "Migrate from .NET Windows Performance Counters to .NET Core metrics"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/migrate-from-windows-performance-counters.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Migrate from .NET Windows Performance Counters to .NET Core metrics
+description: Learn how to migrate from .NET Framework Windows Performance Counters to .NET Core/NET 5+ metrics using EventCounters and Meters.
+ms.date: 04/27/2025
 ---
 
 # Migrate from .NET Framework Windows Performance Counters to .NET metrics
 
-.NET Framework applications, which only run on Windows, can use Windows Performance Counters to monitor application health and performance. However, in .NET Core and later versions, the platform provides cross-platform alternatives through the EventCounters and System.Diagnostics.Metrics APIs.
+.NET Framework applications, which only run on Windows, can use Windows Performance Counters to monitor application health and performance. However, in .NET Core and later versions, the platform provides [cross-platform alternatives](compare-metric-apis.md) through the [EventCounters](./event-counters.md) and [System.Diagnostics.Metrics](./metrics.md) APIs.
 
 This article provides guidance on migrating from Windows Performance Counters to the newer metrics systems available in modern .NET versions.
 
@@ -18,10 +15,10 @@ This article provides guidance on migrating from Windows Performance Counters to
 .NET applications can be monitored using different mechanisms depending on the .NET version and platform:
 
 - **.NET Framework**: Primarily uses Windows Performance Counters (Windows only)
-- **.NET Core 3.0-3.1, .NET 5+**: Introduced EventCounters (cross-platform) and built-in runtime metrics, networking metrics, and ASP.NET metrics using these APIs
+- **.NET Core 3.0-3.1, .NET 5+**: Introduced EventCounters (cross-platform) and built-in [runtime metrics](./available-counters.md#systemruntime-counters), [networking metrics](./available-counters.md#systemnethttp-counters), and [ASP.NET metrics](./available-counters.md#microsoft-aspnetcore-server-kestrel-counters) using these APIs
 - **.NET 6+**: Added System.Diagnostics.Metrics API (cross-platform, OpenTelemetry compatible)
-- **.NET 8+**: Added built-in networking metrics and ASP.NET metrics using the new System.Diagnostics.Metrics API
-- **.NET 9+**: Added built-in runtime metrics using the new System.Diagnostics.Metrics API
+- **.NET 8+**: Added built-in [networking metrics](./built-in-metrics-system-net.md) and [ASP.NET metrics](/aspnet/core/log-mon/metrics/built-in) using the new System.Diagnostics.Metrics API
+- **.NET 9+**: Added built-in [runtime metrics](./built-in-metrics-runtime.md) using the new System.Diagnostics.Metrics API
 
 The newer metrics systems offer several advantages:
 
@@ -30,16 +27,16 @@ The newer metrics systems offer several advantages:
 - **Modern tooling**: Integrates with OpenTelemetry and observability platforms
 - **Supports xcopy install**: No additional installation steps or privileges are required
 
-For more information, see the Metrics API comparison.
+For more information, see the [Metrics API comparison](compare-metric-apis.md).
 
 ## Collect metrics in modern .NET applications
 
-To collect and analyze metrics, see the System.Diagnostics.Metrics and EventCounters guides.
+To collect and analyze metrics, see the [System.Diagnostics.Metrics](./metrics-collection.md) and [EventCounters](./event-counters.md) guides.
 
 ## Map common Windows Performance Counters to modern metrics
 
-If the monitoring system for your .NET Framework application uses runtime-provided Windows Performance Counters, you'll need to select alternative EventCounters
-or System.Diagnostics.Metrics-based metrics instead. The following tables show alternatives for many common counters. Not all .NET Framework counters have been ported to new alternatives.
+If the monitoring system for your .NET Framework application uses runtime-provided Windows Performance Counters, you'll need to select alternative [EventCounters](./event-counters.md)
+or [System.Diagnostics.Metrics](./metrics.md)-based metrics instead. The following tables show alternatives for many common counters. Not all .NET Framework counters have been ported to new alternatives.
 In some cases, infrequently used counters were discontinued, and in other cases, implementation changes in the platform have made certain counters irrelevant.
 
 ### Memory counters
@@ -55,7 +52,7 @@ In some cases, infrequently used counters were discontinued, and in other cases,
 | `.NET CLR Memory\Large Object Heap Size` | `System.Runtime\LOH Size` (`loh-size`) | `System.Runtime\dotnet.gc.last_collection.heap.size` with attribute `gc.heap.generation=loh` |
 | `.NET CLR Memory\Allocated Bytes/sec` | `System.Runtime\Allocation Rate` (`alloc-rate`) | Calculate rate from `System.Runtime\dotnet.gc.heap.total_allocated` |
 
-> **Note:**
+> [!NOTE]
 > `dotnet.gc.pause.time` allows an improved calculation that avoids some undesirable behavior in the older `% Time in GC` metric. `% Time in GC` computed
 > 100 * `pause_time_in_most_recent_GC` / `time_between_most_recent_two_GCs`. In some cases two GCs would occur very close together producing a high value
 > based on a tiny non-representative portion of the overall time interval. `gc.heap.pause.time` accumulates the total time the GC has paused application threads
@@ -104,15 +101,15 @@ In some cases, infrequently used counters were discontinued, and in other cases,
 
 ### HttpWebRequest counters
 
-`HttpWebRequest` has been superseded by `System.Net.Http.HttpClient`. To learn what metrics are built-in, see the HttpClient EventCounters and System.Diagnostics.Metrics.
+`HttpWebRequest` has been superseded by <xref:System.Net.Http.HttpClient>. To learn what metrics are built-in, see the HttpClient [EventCounters](./available-counters.md#systemnethttp-counters) and [System.Diagnostics.Metrics](./built-in-metrics-system-net.md#systemnethttp).
 
 ### ASP.NET counters
 
-ASP.NET has changed dramatically between .NET Framework and .NET Core. Many counters are obsolete or are measured differently than in the past. To learn what metrics are built-in, see the ASP.NET EventCounters and System.Diagnostics.Metrics.
+ASP.NET has changed dramatically between .NET Framework and .NET Core. Many counters are obsolete or are measured differently than in the past. To learn what metrics are built-in, see the ASP.NET [EventCounters](./available-counters.md#microsoftaspnetcorehosting-counters) and [System.Diagnostics.Metrics](/aspnet/core/log-mon/metrics/built-in).
 
 ## Next steps
 
-- Learn more about EventCounters in .NET
-- Explore the System.Diagnostics.Metrics API
-- Understand how to collect metrics
-- Review well-known EventCounters and built-in metrics
+- Learn more about [EventCounters in .NET](./event-counters.md)
+- Explore the [System.Diagnostics.Metrics API](./metrics.md)
+- Understand how to [collect metrics](./metrics-collection.md)
+- Review [well-known EventCounters](./available-counters.md) and [built-in metrics](./built-in-metrics.md)

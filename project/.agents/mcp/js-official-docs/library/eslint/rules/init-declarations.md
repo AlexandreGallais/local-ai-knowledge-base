@@ -1,13 +1,10 @@
 ---
-title: "init-declarations"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/init-declarations.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: init-declarations
+rule_type: suggestion
+related_rules:
+- no-unassigned-vars
 ---
 
-# init-declarations
 
 In JavaScript, variables can be assigned during declaration, or at any point afterwards using an assignment statement. For example, in the following code, `foo` is initialized during declaration, while `bar` is initialized later.
 
@@ -72,7 +69,7 @@ Variables must not be initialized at declaration, except in for loops, where it 
 
 Examples of **incorrect** code for the default `"always"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint init-declarations: ["error", "always"]*/
@@ -83,9 +80,11 @@ function foo() {
 }
 ```
 
+:::
+
 Examples of **correct** code for the default `"always"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint init-declarations: ["error", "always"]*/
@@ -102,11 +101,13 @@ async function foobar() {
 }
 ```
 
+:::
+
 ### never
 
 Examples of **incorrect** code for the `"never"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint init-declarations: ["error", "never"]*/
@@ -119,9 +120,11 @@ function foo() {
 }
 ```
 
+:::
+
 Examples of **correct** code for the `"never"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint init-declarations: ["error", "never"]*/
@@ -138,24 +141,28 @@ async function foobar() {
 }
 ```
 
+:::
+
 The `"never"` option ignores `const`, `using`, and `await using` variable initializations.
 
 ### ignoreForLoopInit
 
 Examples of **correct** code for the `"never", { "ignoreForLoopInit": true }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint init-declarations: ["error", "never", { "ignoreForLoopInit": true }]*/
 for (let i = 0; i < 1; i++) {}
 ```
 
+:::
+
 This rule additionally supports TypeScript type syntax.
 
 Examples of **incorrect** TypeScript code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /* eslint init-declarations: ["error", "never"] */
@@ -174,7 +181,9 @@ namespace myLib {
 
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```ts
 /* eslint init-declarations: ["error", "always"] */
@@ -195,9 +204,11 @@ namespace myLib1 {
 
 ```
 
+:::
+
 Examples of **correct** TypeScript code for this rule:
 
-**Correct:**
+::: correct
 
 ```ts
 /* eslint init-declarations: ["error", "never"] */
@@ -215,7 +226,9 @@ interface GreetingSettings {
 }
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```ts
 /* eslint init-declarations: ["error", "always"] */
@@ -233,6 +246,9 @@ interface GreetingSettings {
 }
 
 ```
+
+:::
+
 
 ## When Not To Use It
 

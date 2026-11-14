@@ -1,36 +1,34 @@
 ---
-title: "Microsoft SQL Server Database Provider - Spatial Data - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/providers/sql-server/spatial.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Microsoft SQL Server Database Provider - Spatial Data - EF Core
+description: Using spatial data with the Entity Framework Core Microsoft SQL Server database provider
+author: SamMonoRT
+ms.date: 10/02/2020
+uid: core/providers/sql-server/spatial
 ---
-
 # Spatial Data in the SQL Server EF Core Provider
 
-This page includes additional information about using spatial data with the Microsoft SQL Server database provider. For general information about using spatial data in EF Core, see the main Spatial Data documentation.
+This page includes additional information about using spatial data with the Microsoft SQL Server database provider. For general information about using spatial data in EF Core, see the main [Spatial Data](xref:core/modeling/spatial) documentation.
 
 ## Geography or geometry
 
-By default, spatial properties are mapped to `geography` columns in SQL Server. To use `geometry`, configure the column type in your model.
+By default, spatial properties are mapped to `geography` columns in SQL Server. To use `geometry`, [configure the column type](xref:core/modeling/entity-properties#column-data-types) in your model.
 
 ## Geography polygon rings
 
-When using the `geography` column type, SQL Server imposes additional requirements on the exterior ring (or shell) and interior rings (or holes). The exterior ring must be oriented counterclockwise and the interior rings clockwise. NetTopologySuite (NTS) validates this before sending values to the database.
+When using the `geography` column type, SQL Server imposes additional requirements on the exterior ring (or shell) and interior rings (or holes). The exterior ring must be oriented counterclockwise and the interior rings clockwise. [NetTopologySuite](https://nettopologysuite.github.io/NetTopologySuite/) (NTS) validates this before sending values to the database.
 
 ## FullGlobe
 
 SQL Server has a non-standard geometry type to represent the full globe when using the `geography` column type. It also has a way to represent polygons based on the full globe (without an exterior ring). Neither of these are supported by NTS.
 
-> **Warning:**
+> [!WARNING]
 > FullGlobe and polygons based on it aren't supported by NTS.
 
 ## Curves
 
-As mentioned in the main Spatial Data documentation, NTS currently cannot represent curves. This means that you'll need to transform CircularString, CompoundCurve, and CurePolygon values using the STCurveToLine method before using them in EF Core.
+As mentioned in the main [Spatial Data](xref:core/modeling/spatial) documentation, NTS currently cannot represent curves. This means that you'll need to transform CircularString, CompoundCurve, and CurePolygon values using the [STCurveToLine](/sql/t-sql/spatial-geography/stcurvetoline-geography-data-type) method before using them in EF Core.
 
-> **Warning:**
+> [!WARNING]
 > CircularString, CompoundCurve, and CurePolygon aren't supported by NTS.
 
 ## Spatial function mappings
@@ -106,5 +104,5 @@ EnvelopeCombiner.CombineAsGeometry(group.Select(x => x.Property)) | EnvelopeAggr
 
 ## Additional resources
 
-* Spatial Data in SQL Server
-* NetTopologySuite Docs
+* [Spatial Data in SQL Server](/sql/relational-databases/spatial/spatial-data-sql-server)
+* [NetTopologySuite Docs](https://nettopologysuite.github.io/NetTopologySuite/)

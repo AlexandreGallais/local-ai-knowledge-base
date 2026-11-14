@@ -1,17 +1,8 @@
----
-title: "Await expressions"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/expressions/await-expr.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[expr.await]
 # Await expressions
 
 r[expr.await.syntax]
-```grammar
+```grammar,expressions
 AwaitExpression -> Expression `.` `await`
 ```
 
@@ -30,7 +21,7 @@ More specifically, an await expression has the following effect.
 1. Create a future by calling [`IntoFuture::into_future`] on the future operand.
 2. Evaluate the future to a [future] `tmp`;
 3. Pin `tmp` using [`Pin::new_unchecked`];
-4. This pinned future is then polled by calling the [`Future::poll`] method and passing it the current task context;
+4. This pinned future is then polled by calling the [`Future::poll`] method and passing it the current [task context](#task-context);
 5. If the call to `poll` returns [`Poll::Pending`], then the future returns `Poll::Pending`, suspending its state so that, when the surrounding async context is re-polled, execution returns to step 3;
 6. Otherwise the call to `poll` must have returned [`Poll::Ready`], in which case the value contained in the [`Poll::Ready`] variant is used as the result of the `await` expression itself.
 
@@ -48,7 +39,8 @@ r[expr.await.desugar]
 
 Effectively, an await expression is roughly equivalent to the following non-normative desugaring:
 
-```rust
+<!-- ignore: example expansion -->
+```rust,ignore
 match operand.into_future() {
     mut pinned => loop {
         let mut pin = unsafe { Pin::new_unchecked(&mut pinned) };
@@ -61,3 +53,16 @@ match operand.into_future() {
 ```
 
 where the `yield` pseudo-code returns `Poll::Pending` and, when re-invoked, resumes execution from that point. The variable `current_context` refers to the context taken from the async environment.
+
+[`async fn`]: ../items/functions.md#async-functions
+[`async` closure]: closure-expr.md#async-closures
+[`async` block]: block-expr.md#async-blocks
+[`Context`]: std::task::Context
+[`future::poll`]: std::future::Future::poll
+[`pin::new_unchecked`]: std::pin::Pin::new_unchecked
+[`poll::Pending`]: std::task::Poll::Pending
+[`poll::Ready`]: std::task::Poll::Ready
+[async context]: ../expressions/block-expr.md#async-context
+[future]: std::future::Future
+[`IntoFuture`]: std::future::IntoFuture
+[`IntoFuture::into_future`]: std::future::IntoFuture::into_future

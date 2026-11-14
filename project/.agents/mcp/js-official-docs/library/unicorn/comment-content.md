@@ -1,19 +1,13 @@
----
-title: "comment-content"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/comment-content.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # comment-content
 
 📝 Enforce better comment content.
 
 🚫 Disabled by default.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 This rule enforces curated replacements in comments. It is useful for common name, brand, and acronym casing corrections such as `nodejs` → `Node.js`, and for project-specific prose preferences.
 

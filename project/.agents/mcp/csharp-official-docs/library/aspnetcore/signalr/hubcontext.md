@@ -1,20 +1,18 @@
 ---
-title: "SignalR HubContext"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/signalr/hubcontext.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: SignalR HubContext
+ai-usage: ai-assisted
+description: Learn how to use the ASP.NET Core SignalR HubContext service for sending notifications to clients from outside a hub.
+monikerRange: '>= aspnetcore-2.1'
+ms.date: 02/20/2023
 ---
-
 # Send messages from outside a hub
 
 The SignalR hub is the core abstraction for sending messages to clients connected to the SignalR server. It's also possible to send messages from other places in your app using the `IHubContext` service. This article explains how to access a SignalR `IHubContext` to send notifications to clients from outside a hub.
 
-> **Note:**
+> [!NOTE]
 > The `IHubContext` is for sending notifications to clients, it is not used to call methods on the `Hub`.
 
-View or download sample code (how to download)
+[View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/signalr/hubcontext/samples/) [(how to download)](../fundamentals/index.md#how-to-download-a-sample)
 
 ## Get an instance of `IHubContext`
 
@@ -24,27 +22,11 @@ In ASP.NET Core SignalR, you can access an instance of `IHubContext` via depende
 
 You can inject an instance of `IHubContext` into a controller by adding it to your constructor:
 
-```csharp
-public class HomeController : Controller
-{
-    private readonly IHubContext<NotificationHub> _hubContext;
-
-    public HomeController(IHubContext<NotificationHub> hubContext)
-    {
-        _hubContext = hubContext;
-    }
-}
-```
+[!code-csharp[](hubcontext/samples/Controllers/HomeController.cs?range=12-19,57)]
 
 With access to an instance of `IHubContext`, call client methods as if you were in the hub itself:
 
-```csharp
-public async Task<IActionResult> Index()
-{
-    await _hubContext.Clients.All.SendAsync("Notify", $"Home page loaded at: {DateTime.Now}");
-    return View();
-}
-```
+[!code-csharp[](hubcontext/samples/Controllers/HomeController.cs?range=21-25)]
 
 ### Get an instance of `IHubContext` in middleware
 
@@ -64,15 +46,15 @@ app.Use(async (context, next) =>
 });
 ```
 
-> **Note:**
+> [!NOTE]
 > When client methods are called from outside of the `Hub` class, there's no caller associated with the invocation. Therefore, there's no access to the `ConnectionId`, `Caller`, and `Others` properties.
 >
 > Apps that need to map a user to the connection ID and persist that mapping can do one of the following:
 >
-> * Persist mapping of single or multiple connections as groups. See Groups in SignalR for more information.
-> * Retain connection and user information through a singleton service. See Inject services into a hub for more information. The singleton service can use any storage method, such as:
+> * Persist mapping of single or multiple connections as groups. See [Groups in SignalR](groups.md#groups-in-signalr) for more information.
+> * Retain connection and user information through a singleton service. See [Inject services into a hub](hubs.md#inject-services-into-a-hub) for more information. The singleton service can use any storage method, such as:
 >   * In-memory storage in a dictionary.
->   * Permanent external storage.  For example, a database or Azure Table storage using the Azure.Data.Tables NuGet package.
+>   * Permanent external storage.  For example, a database or Azure Table storage using the [Azure.Data.Tables NuGet package](https://www.nuget.org/packages/Azure.Data.Tables/).
 > * Pass the connection ID between clients.
 
 ### Get an instance of `IHubContext` from IHost
@@ -119,7 +101,9 @@ public class ChatController : Controller
 }
 ```
 
-See Use strongly typed hubs for more information.
+See [Use strongly typed hubs](hubs.md#use-strongly-typed-hubs) for more information.
+
+:::moniker range=">= aspnetcore-6.0"
 
 ### Use `IHubContext` in generic code
 
@@ -155,9 +139,11 @@ This is useful when:
 * Writing libraries that don't have a reference to the specific `Hub` type the app is using.
 * Writing code that is generic and can apply to multiple different `Hub` implementations
 
+:::moniker-end
+
 ## Related content
 
-* SignalR assemblies in shared framework
-* Get started with ASP.NET Core SignalR
-* Use hubs in ASP.NET Core SignalR
-* Publish an ASP.NET Core SignalR app to Azure App Service
+* [SignalR assemblies in shared framework](../migration/22-to-30.md#signalr-assemblies-in-shared-framework)
+* [Get started with ASP.NET Core SignalR](../tutorials/signalr.md)
+* [Use hubs in ASP.NET Core SignalR](hubs.md)
+* [Publish an ASP.NET Core SignalR app to Azure App Service](publish-to-azure-web-app.md)

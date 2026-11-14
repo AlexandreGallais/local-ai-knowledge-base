@@ -1,203 +1,19 @@
----
-title: "Accordion (part 1 of 5)"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/aria/accordion.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Accordion
 
-  - Accordion ARIA pattern
-  - Accordion API Reference
+<docs-pill-row>
+  <docs-pill href="https://www.w3.org/WAI/ARIA/apg/patterns/accordion/" title="Accordion ARIA pattern"/>
+  <docs-pill href="/api?query=accordion#angular_aria_accordion" title="Accordion API Reference"/>
+</docs-pill-row>
 
 ## Overview
 
 An accordion organizes related content into expandable and collapsible sections, reducing page scrolling and helping users focus on relevant information. Each section has a trigger button and a content panel. Clicking a trigger toggles the visibility of its associated panel.
 
-  File: `TS`
-
-```ts
-import {Component} from '@angular/core';
-import {
-  AccordionGroup,
-  AccordionTrigger,
-  AccordionPanel,
-  AccordionContent,
-} from '@angular/aria/accordion';
-
-@Component({
-  selector: 'app-root',
-  templateUrl: 'app.html',
-  styleUrl: 'app.css',
-  imports: [AccordionGroup, AccordionTrigger, AccordionPanel, AccordionContent],
-})
-export class App {}
-```
-  File: `HTML`
-
-```html
-<div ngAccordionGroup class="basic-accordion" [multiExpandable]="false">
-  <h3>
-    <span ngAccordionTrigger [panel]="panel1" #trigger1="ngAccordionTrigger" [expanded]="true">
-      Which attribute tells assistive tech whether the panel is open or closed?
-      <span
-        aria-hidden="true"
-        class="expand-icon"
-        [class.expand-icon__expanded]="trigger1.expanded()"
-      ></span>
-    </span>
-  </h3>
-  <div ngAccordionPanel #panel1="ngAccordionPanel">
-    <ng-template ngAccordionContent>
-      <p>
-        Use <code>aria-expanded</code> on the button element. Set it to "true" when the content
-        panel is visible and "false" when the content is hidden. This is a crucial state indicator
-        for screen reader users.
-      </p>
-    </ng-template>
-  </div>
-
-  <h3>
-    <span ngAccordionTrigger [panel]="panel2" #trigger2="ngAccordionTrigger">
-      How do you link the button to the content it controls?
-      <span
-        aria-hidden="true"
-        class="expand-icon"
-        [class.expand-icon__expanded]="trigger2.expanded()"
-      ></span>
-    </span>
-  </h3>
-  <div ngAccordionPanel #panel2="ngAccordionPanel">
-    <ng-template ngAccordionContent>
-      <p>
-        Use the <code>aria-controls</code> attribute on the button, and set its value to match the
-        id of the related content panel. This establishes a programmatic relationship, allowing
-        assistive technologies to jump directly to the relevant content.
-      </p>
-    </ng-template>
-  </div>
-
-  <h3>
-    <span ngAccordionTrigger [panel]="panel3" #trigger3="ngAccordionTrigger">
-      What role should the heading element containing the accordion button have?
-      <span
-        aria-hidden="true"
-        class="expand-icon"
-        [class.expand-icon__expanded]="trigger3.expanded()"
-      ></span>
-    </span>
-  </h3>
-  <div ngAccordionPanel #panel3="ngAccordionPanel">
-    <ng-template ngAccordionContent>
-      <p>
-        The element containing the button should typically have <code>role="heading"</code> with an
-        appropriate <code>aria-level</code> to define the structure. This ensures the accordion
-        section is recognized as a section header, making the page structure navigable for users.
-      </p>
-    </ng-template>
-  </div>
-</div>
-```
-  File: `CSS`
-
-```css
-@import url('https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined');
-
-:host {
-  display: flex;
-  justify-content: center;
-  font-family: var(--inter-font);
-}
-
-[ngAccordionGroup] {
-  width: 500px;
-}
-
-h3 {
-  font-size: 1rem;
-  margin: 0;
-  color: var(--secondary-contrast);
-  box-sizing: border-box;
-  position: relative;
-}
-
-h3:focus-within::before,
-h3:hover::before {
-  content: '';
-  position: absolute;
-  height: 100%;
-  width: 2px;
-  background-color: var(--vivid-pink);
-  top: 0;
-  left: 0;
-}
-
-h3:not(:first-of-type) {
-  border-block-start: 1px solid var(--senary-contrast);
-}
-
-p {
-  margin: 0;
-  padding: 0 1.5rem 1.5rem 1.5rem;
-  color: var(--tertiary-contrast);
-  font-size: 0.875rem;
-}
-
-[ngAccordionTrigger] {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  outline: none;
-  cursor: pointer;
-  padding: 1.5rem;
-}
-
-[ngAccordionTrigger][aria-expanded='true'] {
-  background-image: var(--pink-to-purple-horizontal-gradient);
-  background-clip: text;
-  color: transparent;
-}
-
-[ngAccordionTrigger][aria-disabled='true'] {
-  opacity: 0.5;
-  cursor: default;
-}
-
-.expand-icon {
-  position: relative;
-  width: 1rem;
-  height: 1rem;
-  flex-shrink: 0;
-  margin-left: 1rem;
-}
-
-.expand-icon::before,
-.expand-icon::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  top: 50%;
-  background-color: var(--quaternary-contrast);
-  transition: .3s ease-out;
-}
-
-.expand-icon::after {
-  transform: rotate(90deg);
-}
-
-.expand-icon__expanded::before {
-  transform: translateY(-50%) rotate(-90deg);
-  opacity: 0;
-}
-
-.expand-icon__expanded::after {
-  transform: translateY(-50%) rotate(0);
-  background-color: var(--electric-violet);
-}
-```
+<docs-code-multifile preview hideCode path="adev/src/content/examples/aria/accordion/src/single-expansion/basic/app/app.ts">
+  <docs-code header="TS" path="adev/src/content/examples/aria/accordion/src/single-expansion/basic/app/app.ts"/>
+  <docs-code header="HTML" path="adev/src/content/examples/aria/accordion/src/single-expansion/basic/app/app.html"/>
+  <docs-code header="CSS" path="adev/src/content/examples/aria/accordion/src/single-expansion/basic/app/app.css"/>
+</docs-code-multifile>
 
 ## Usage
 
@@ -212,8 +28,8 @@ Accordions work well for organizing content into logical groups where users typi
 
 **Avoid accordions when:**
 
-- Building navigation menus (use the Menu component instead)
-- Creating tabbed interfaces (use the Tabs component instead)
+- Building navigation menus (use the [Menu](guide/aria/menu) component instead)
+- Creating tabbed interfaces (use the [Tabs](guide/aria/tabs) component instead)
 - Showing a single collapsible section (use a disclosure pattern instead)
 - Users need to see multiple sections simultaneously (consider a different layout)
 
@@ -226,3 +42,176 @@ Accordions work well for organizing content into logical groups where users typi
 - **Focus management** - Control whether disabled items can receive keyboard focus
 - **Programmatic control** - Expand, collapse, or toggle panels from your component code
 - **RTL support** - Automatic support for right-to-left languages
+
+## Examples
+
+### Single expansion mode
+
+Set `[multiExpandable]="false"` to allow only one panel to be open at a time. Opening a new panel automatically closes any previously open panel.
+
+<docs-tab-group>
+  <docs-tab label="Basic">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/accordion/src/single-expansion/basic/app/app.ts">
+      <docs-code header="TS" path="adev/src/content/examples/aria/accordion/src/single-expansion/basic/app/app.ts"/>
+      <docs-code header="HTML" path="adev/src/content/examples/aria/accordion/src/single-expansion/basic/app/app.html"/>
+      <docs-code header="CSS" path="adev/src/content/examples/aria/accordion/src/single-expansion/basic/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+  <docs-tab label="Material">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/accordion/src/single-expansion/material/app/app.ts">
+      <docs-code header="TS" path="adev/src/content/examples/aria/accordion/src/single-expansion/material/app/app.ts"/>
+      <docs-code header="HTML" path="adev/src/content/examples/aria/accordion/src/single-expansion/material/app/app.html"/>
+      <docs-code header="CSS" path="adev/src/content/examples/aria/accordion/src/single-expansion/material/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+  <docs-tab label="Retro">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/accordion/src/single-expansion/retro/app/app.ts">
+      <docs-code header="TS" path="adev/src/content/examples/aria/accordion/src/single-expansion/retro/app/app.ts"/>
+      <docs-code header="HTML" path="adev/src/content/examples/aria/accordion/src/single-expansion/retro/app/app.html"/>
+      <docs-code header="CSS" path="adev/src/content/examples/aria/accordion/src/single-expansion/retro/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+</docs-tab-group>
+
+This mode works well for FAQs or situations where you want users to focus on one answer at a time.
+
+### Multiple expansion mode
+
+Set `[multiExpandable]="true"` to allow multiple panels to be open simultaneously. Users can expand as many panels as needed without closing others.
+
+<docs-tab-group>
+  <docs-tab label="Basic">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/accordion/src/multi-expansion/basic/app/app.ts">
+      <docs-code header="TS" path="adev/src/content/examples/aria/accordion/src/multi-expansion/basic/app/app.ts"/>
+      <docs-code header="HTML" path="adev/src/content/examples/aria/accordion/src/multi-expansion/basic/app/app.html"/>
+      <docs-code header="CSS" path="adev/src/content/examples/aria/accordion/src/multi-expansion/basic/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+  <docs-tab label="Material">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/accordion/src/multi-expansion/material/app/app.ts">
+      <docs-code header="TS" path="adev/src/content/examples/aria/accordion/src/multi-expansion/material/app/app.ts"/>
+      <docs-code header="HTML" path="adev/src/content/examples/aria/accordion/src/multi-expansion/material/app/app.html"/>
+      <docs-code header="CSS" path="adev/src/content/examples/aria/accordion/src/multi-expansion/material/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+  <docs-tab label="Retro">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/accordion/src/multi-expansion/retro/app/app.ts">
+      <docs-code header="TS" path="adev/src/content/examples/aria/accordion/src/multi-expansion/retro/app/app.ts"/>
+      <docs-code header="HTML" path="adev/src/content/examples/aria/accordion/src/multi-expansion/retro/app/app.html"/>
+      <docs-code header="CSS" path="adev/src/content/examples/aria/accordion/src/multi-expansion/retro/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+</docs-tab-group>
+
+This mode is useful for form sections or when users need to compare content across multiple panels.
+
+NOTE: The `multiExpandable` input defaults to `true`. Set it to `false` explicitly if you want single expansion behavior.
+
+### Disabled accordion items
+
+Disable specific triggers using the `disabled` input. Control how disabled items behave during keyboard navigation using the `softDisabled` input on the accordion group.
+
+<docs-tab-group>
+  <docs-tab label="Basic">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/accordion/src/disabled-focusable/basic/app/app.ts">
+      <docs-code header="TS" path="adev/src/content/examples/aria/accordion/src/disabled-focusable/basic/app/app.ts"/>
+      <docs-code header="HTML" path="adev/src/content/examples/aria/accordion/src/disabled-focusable/basic/app/app.html"/>
+      <docs-code header="CSS" path="adev/src/content/examples/aria/accordion/src/disabled-focusable/basic/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+  <docs-tab label="Material">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/accordion/src/disabled-focusable/material/app/app.ts">
+      <docs-code header="TS" path="adev/src/content/examples/aria/accordion/src/disabled-focusable/material/app/app.ts"/>
+      <docs-code header="HTML" path="adev/src/content/examples/aria/accordion/src/disabled-focusable/material/app/app.html"/>
+      <docs-code header="CSS" path="adev/src/content/examples/aria/accordion/src/disabled-focusable/material/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+  <docs-tab label="Retro">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/accordion/src/disabled-focusable/retro/app/app.ts">
+      <docs-code header="TS" path="adev/src/content/examples/aria/accordion/src/disabled-focusable/retro/app/app.ts"/>
+      <docs-code header="HTML" path="adev/src/content/examples/aria/accordion/src/disabled-focusable/retro/app/app.html"/>
+      <docs-code header="CSS" path="adev/src/content/examples/aria/accordion/src/disabled-focusable/retro/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+</docs-tab-group>
+
+When `[softDisabled]="true"` (the default), disabled items can receive focus but cannot be activated. When `[softDisabled]="false"`, disabled items are skipped entirely during keyboard navigation.
+
+### Lazy content rendering
+
+Use the `ngAccordionContent` directive on an `ng-template` to defer rendering content until the panel expands. This improves performance for accordions with heavy content like images, charts, or complex components.
+
+```angular-html
+<div ngAccordionGroup>
+  <div>
+    <button ngAccordionTrigger [panel]="panel1">Trigger Text</button>
+    <div ngAccordionPanel #panel1="ngAccordionPanel">
+      <ng-template ngAccordionContent>
+        <!-- This content only renders when the panel opens -->
+        <img src="large-image.jpg" alt="Description" />
+        <app-expensive-component />
+      </ng-template>
+    </div>
+  </div>
+</div>
+```
+
+By default, content is removed from the DOM when the panel collapses. Set `[preserveContent]="true"` to keep it, for example when the panel contains a video that shouldn't reset on collapse.
+
+## Testing
+
+Angular Aria provides component harnesses for testing accordion components.
+Here is an example of how to use the harnesses in a component test:
+
+```typescript
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {HarnessLoader} from '@angular/cdk/testing';
+import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
+import {AccordionGroupHarness} from '@angular/aria/accordion/testing';
+import {MyAccordionComponent} from './my-accordion'; // Your component
+
+describe('MyAccordionComponent', () => {
+  let fixture: ComponentFixture<MyAccordionComponent>;
+  let loader: HarnessLoader;
+
+  beforeEach(async () => {
+    TestBed.configureTestingModule({
+      imports: [MyAccordionComponent],
+    });
+
+    fixture = TestBed.createComponent(MyAccordionComponent);
+    await fixture.whenStable();
+    loader = TestbedHarnessEnvironment.loader(fixture);
+  });
+
+  it('should allow expanding panels', async () => {
+    // Load the accordion group harness
+    const group = await loader.getHarness(AccordionGroupHarness);
+
+    // Get all individual accordions (items) in the group
+    const accordions = await group.getAccordions();
+    expect(accordions.length).toBe(3);
+
+    // Verify initial state (first expanded, others collapsed)
+    expect(await accordions[0].isExpanded()).toBe(true);
+    expect(await accordions[1].isExpanded()).toBe(false);
+
+    // Expand the second panel
+    await accordions[1].expand();
+
+    // Verify updated state
+    expect(await accordions[1].isExpanded()).toBe(true);
+    // If multiExpandable is false, the first one should now be collapsed
+    expect(await accordions[0].isExpanded()).toBe(false);
+  });
+});
+```
+
+## API reference
+
+For detailed API documentation, inspect the following API references:
+
+- [`AccordionGroup`](/api/aria/accordion/AccordionGroup)
+- [`AccordionTrigger`](/api/aria/accordion/AccordionTrigger)
+- [`AccordionPanel`](/api/aria/accordion/AccordionPanel)
+- [`AccordionContent`](/api/aria/accordion/AccordionContent)

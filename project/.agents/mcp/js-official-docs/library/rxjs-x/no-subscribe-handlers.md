@@ -1,15 +1,8 @@
----
-title: "Disallow passing handlers to subscribe (rxjs-x/no-subscribe-handlers)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/no-subscribe-handlers.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Disallow passing handlers to `subscribe` (`rxjs-x/no-subscribe-handlers`)
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule effects failures whenever `subscribe` is called with handlers.
 
@@ -52,9 +45,9 @@ Type checked lint rules are more powerful than traditional lint rules, but also 
 
 ## Related To
 
-- `no-ignored-subscribe`
+- [`no-ignored-subscribe`](./no-ignored-subscribe.md)
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/no-subscribe-handlers.ts)
+- [Test source](/tests/rules/no-subscribe-handlers.test.ts)

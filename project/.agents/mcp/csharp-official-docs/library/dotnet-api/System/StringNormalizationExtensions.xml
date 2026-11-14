@@ -1,0 +1,350 @@
+<Type Name="StringNormalizationExtensions" FullName="System.StringNormalizationExtensions">
+  <TypeSignature Language="C#" Value="public static class StringNormalizationExtensions" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi abstract sealed beforefieldinit StringNormalizationExtensions extends System.Object" />
+  <TypeSignature Language="DocId" Value="T:System.StringNormalizationExtensions" />
+  <TypeSignature Language="VB.NET" Value="Public Module StringNormalizationExtensions" />
+  <TypeSignature Language="F#" Value="type StringNormalizationExtensions = class" />
+  <TypeSignature Language="C++ CLI" Value="public ref class StringNormalizationExtensions abstract sealed" />
+  <AssemblyInfo>
+    <AssemblyName>System.Globalization.Extensions</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <AssemblyVersion>4.0.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>netstandard</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>System.Runtime.Extensions</AssemblyName>
+    <AssemblyVersion>4.2.0.0</AssemblyVersion>
+    <AssemblyVersion>4.2.1.0</AssemblyVersion>
+    <AssemblyVersion>4.2.2.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>System</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>System.Runtime</AssemblyName>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+    <AssemblyVersion>11.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
+    <TypeForwarding From="System.Globalization.Extensions" FromVersion="10.0.0.0" To="System.Runtime" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
+    <TypeForwarding From="System.Runtime.Extensions" FromVersion="10.0.0.0" To="System.Runtime" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
+    <TypeForwarding From="System.Globalization.Extensions" FromVersion="11.0.0.0" To="System.Runtime" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
+    <TypeForwarding From="System.Runtime.Extensions" FromVersion="11.0.0.0" To="System.Runtime" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="System.Globalization.Extensions" FromVersion="8.0.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="System.Runtime.Extensions" FromVersion="8.0.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+    <TypeForwarding From="System.Globalization.Extensions" FromVersion="9.0.0.0" To="System.Runtime" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+    <TypeForwarding From="System.Runtime.Extensions" FromVersion="9.0.0.0" To="System.Runtime" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+  </TypeForwardingChain>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Attributes>
+    <Attribute FrameworkAlternate="net-8.0;net-9.0">
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>Provides extension methods to work with string normalization.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+
+The extension methods of the <xref:System.StringNormalizationExtensions> class are designed to work with .NET implementations that do not support the <xref:System.String.IsNormalized*?displayProperty=nameWithType> and <xref:System.String.Normalize*?displayProperty=nameWithType> methods. However, these methods are included in the <xref:System.String> class in .NET Standard 2.0 and are therefore available on all .NET implementations that support the .NET Standard 2.0. For more information, see [.NET Standard](/dotnet/standard/net-standard).
+
+        ]]></format>
+    </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="GetNormalizedLength">
+      <MemberSignature Language="C#" Value="public static int GetNormalizedLength (this ReadOnlySpan&lt;char&gt; source, System.Text.NormalizationForm normalizationForm = System.Text.NormalizationForm.FormC);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig int32 GetNormalizedLength(valuetype System.ReadOnlySpan`1&lt;char&gt; source, valuetype System.Text.NormalizationForm normalizationForm) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.StringNormalizationExtensions.GetNormalizedLength(System.ReadOnlySpan{System.Char},System.Text.NormalizationForm)" />
+      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Function GetNormalizedLength (source As ReadOnlySpan(Of Char), Optional normalizationForm As NormalizationForm = System.Text.NormalizationForm.FormC) As Integer" />
+      <MemberSignature Language="F#" Value="static member GetNormalizedLength : ReadOnlySpan&lt;char&gt; * System.Text.NormalizationForm -&gt; int" Usage="System.StringNormalizationExtensions.GetNormalizedLength (source, normalizationForm)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Globalization.Extensions</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Extensions</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="source" Type="System.ReadOnlySpan&lt;System.Char&gt;" RefType="this" Index="0" FrameworkAlternate="net-10.0;net-11.0" />
+        <Parameter Name="normalizationForm" Type="System.Text.NormalizationForm" Index="1" FrameworkAlternate="net-10.0;net-11.0" />
+      </Parameters>
+      <Docs>
+        <param name="source">The character span to get the estimated length of the normalized form.</param>
+        <param name="normalizationForm">The normalization form to use.</param>
+        <summary>Gets the estimated length of the normalized form of the specified string in the <see cref="F:System.Text.NormalizationForm.FormC" />.</summary>
+        <returns>The estimated length of the normalized form of the specified string.</returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">The specified character span contains an invalid code point or the normalization form is invalid.</exception>
+      </Docs>
+    </Member>
+    <MemberGroup MemberName="IsNormalized">
+      <Docs>
+        <summary>Indicates whether a string is normalized.</summary>
+      </Docs>
+    </MemberGroup>
+    <Member MemberName="IsNormalized">
+      <MemberSignature Language="C#" Value="public static bool IsNormalized (this string strInput);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsNormalized(string strInput) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.StringNormalizationExtensions.IsNormalized(System.String)" />
+      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Function IsNormalized (strInput As String) As Boolean" />
+      <MemberSignature Language="F#" Value="static member IsNormalized : string -&gt; bool" Usage="System.StringNormalizationExtensions.IsNormalized strInput" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA;[System::Runtime::CompilerServices::Extension]&#xA; static bool IsNormalized(System::String ^ strInput);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Globalization.Extensions</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Extensions</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="strInput" Type="System.String" RefType="this" />
+      </Parameters>
+      <Docs>
+        <param name="strInput">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsNormalized">
+      <MemberSignature Language="C#" Value="public static bool IsNormalized (this ReadOnlySpan&lt;char&gt; source, System.Text.NormalizationForm normalizationForm = System.Text.NormalizationForm.FormC);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsNormalized(valuetype System.ReadOnlySpan`1&lt;char&gt; source, valuetype System.Text.NormalizationForm normalizationForm) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.StringNormalizationExtensions.IsNormalized(System.ReadOnlySpan{System.Char},System.Text.NormalizationForm)" />
+      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Function IsNormalized (source As ReadOnlySpan(Of Char), Optional normalizationForm As NormalizationForm = System.Text.NormalizationForm.FormC) As Boolean" />
+      <MemberSignature Language="F#" Value="static member IsNormalized : ReadOnlySpan&lt;char&gt; * System.Text.NormalizationForm -&gt; bool" Usage="System.StringNormalizationExtensions.IsNormalized (source, normalizationForm)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Globalization.Extensions</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Extensions</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="source" Type="System.ReadOnlySpan&lt;System.Char&gt;" RefType="this" Index="0" FrameworkAlternate="net-10.0;net-11.0" />
+        <Parameter Name="normalizationForm" Type="System.Text.NormalizationForm" Index="1" FrameworkAlternate="net-10.0;net-11.0" />
+      </Parameters>
+      <Docs>
+        <param name="source">The span of characters to check.</param>
+        <param name="normalizationForm">The normalization form to use.</param>
+        <summary>Determines whether the specified span of characters is in a normalized form.</summary>
+        <returns>
+          <see langword="true" /> if the specified span of characters is in a normalized form; otherwise, <see langword="false" />.</returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">The specified character span contains an invalid code point or the normalization form is invalid.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="IsNormalized">
+      <MemberSignature Language="C#" Value="public static bool IsNormalized (this string strInput, System.Text.NormalizationForm normalizationForm);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool IsNormalized(string strInput, valuetype System.Text.NormalizationForm normalizationForm) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.StringNormalizationExtensions.IsNormalized(System.String,System.Text.NormalizationForm)" />
+      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Function IsNormalized (strInput As String, normalizationForm As NormalizationForm) As Boolean" />
+      <MemberSignature Language="F#" Value="static member IsNormalized : string * System.Text.NormalizationForm -&gt; bool" Usage="System.StringNormalizationExtensions.IsNormalized (strInput, normalizationForm)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA;[System::Runtime::CompilerServices::Extension]&#xA; static bool IsNormalized(System::String ^ strInput, System::Text::NormalizationForm normalizationForm);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Globalization.Extensions</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Extensions</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="strInput" Type="System.String" RefType="this" />
+        <Parameter Name="normalizationForm" Type="System.Text.NormalizationForm" />
+      </Parameters>
+      <Docs>
+        <param name="strInput">To be added.</param>
+        <param name="normalizationForm">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Normalize">
+      <MemberSignature Language="C#" Value="public static string Normalize (this string strInput);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig string Normalize(string strInput) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.StringNormalizationExtensions.Normalize(System.String)" />
+      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Function Normalize (strInput As String) As String" />
+      <MemberSignature Language="F#" Value="static member Normalize : string -&gt; string" Usage="System.StringNormalizationExtensions.Normalize strInput" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA;[System::Runtime::CompilerServices::Extension]&#xA; static System::String ^ Normalize(System::String ^ strInput);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Globalization.Extensions</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Extensions</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="strInput" Type="System.String" RefType="this" />
+      </Parameters>
+      <Docs>
+        <param name="strInput">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Normalize">
+      <MemberSignature Language="C#" Value="public static string Normalize (this string strInput, System.Text.NormalizationForm normalizationForm);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig string Normalize(string strInput, valuetype System.Text.NormalizationForm normalizationForm) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.StringNormalizationExtensions.Normalize(System.String,System.Text.NormalizationForm)" />
+      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Function Normalize (strInput As String, normalizationForm As NormalizationForm) As String" />
+      <MemberSignature Language="F#" Value="static member Normalize : string * System.Text.NormalizationForm -&gt; string" Usage="System.StringNormalizationExtensions.Normalize (strInput, normalizationForm)" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA;[System::Runtime::CompilerServices::Extension]&#xA; static System::String ^ Normalize(System::String ^ strInput, System::Text::NormalizationForm normalizationForm);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Globalization.Extensions</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Extensions</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="strInput" Type="System.String" RefType="this" />
+        <Parameter Name="normalizationForm" Type="System.Text.NormalizationForm" />
+      </Parameters>
+      <Docs>
+        <param name="strInput">To be added.</param>
+        <param name="normalizationForm">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TryNormalize">
+      <MemberSignature Language="C#" Value="public static bool TryNormalize (this ReadOnlySpan&lt;char&gt; source, Span&lt;char&gt; destination, out int charsWritten, System.Text.NormalizationForm normalizationForm = System.Text.NormalizationForm.FormC);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig bool TryNormalize(valuetype System.ReadOnlySpan`1&lt;char&gt; source, valuetype System.Span`1&lt;char&gt; destination, [out] int32&amp; charsWritten, valuetype System.Text.NormalizationForm normalizationForm) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.StringNormalizationExtensions.TryNormalize(System.ReadOnlySpan{System.Char},System.Span{System.Char},System.Int32@,System.Text.NormalizationForm)" />
+      <MemberSignature Language="VB.NET" Value="&lt;Extension()&gt;&#xA;Public Function TryNormalize (source As ReadOnlySpan(Of Char), destination As Span(Of Char), ByRef charsWritten As Integer, Optional normalizationForm As NormalizationForm = System.Text.NormalizationForm.FormC) As Boolean" />
+      <MemberSignature Language="F#" Value="static member TryNormalize : ReadOnlySpan&lt;char&gt; * Span&lt;char&gt; * int * System.Text.NormalizationForm -&gt; bool" Usage="System.StringNormalizationExtensions.TryNormalize (source, destination, charsWritten, normalizationForm)" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Globalization.Extensions</AssemblyName>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime.Extensions</AssemblyName>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="source" Type="System.ReadOnlySpan&lt;System.Char&gt;" RefType="this" Index="0" FrameworkAlternate="net-10.0;net-11.0" />
+        <Parameter Name="destination" Type="System.Span&lt;System.Char&gt;" Index="1" FrameworkAlternate="net-10.0;net-11.0" />
+        <Parameter Name="charsWritten" Type="System.Int32" RefType="out" Index="2" FrameworkAlternate="net-10.0;net-11.0" />
+        <Parameter Name="normalizationForm" Type="System.Text.NormalizationForm" Index="3" FrameworkAlternate="net-10.0;net-11.0" />
+      </Parameters>
+      <Docs>
+        <param name="source">The span of characters to normalize.</param>
+        <param name="destination">The buffer to write the normalized characters to.</param>
+        <param name="charsWritten">When this method returns, contains the number of characters written to <paramref name="destination" />.</param>
+        <param name="normalizationForm">The normalization form to use.</param>
+        <summary>Normalizes the specified span of characters to the specified normalization form.</summary>
+        <returns>
+          <see langword="true" /> if the specified span of characters was successfully normalized; otherwise, <see langword="false" />.</returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentException">The specified character span contains an invalid code point or the normalization form is invalid.</exception>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

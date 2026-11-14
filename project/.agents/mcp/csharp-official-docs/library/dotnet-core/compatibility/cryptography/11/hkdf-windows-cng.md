@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: HKDF on Windows uses CNG implementation"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/cryptography/11/hkdf-windows-cng.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where HKDF on Windows uses the Windows Cryptography API: Next Generation (CNG) implementation, which restricts some input sizes."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # HKDF on Windows uses CNG implementation
 
-Starting in .NET 11, `System.Security.Cryptography.HKDF` on Windows uses Windows' built-in Cryptography API: Next Generation (CNG) implementation. The Windows implementation restricts some input sizes more than the previous .NET implementation, so some inputs that worked in earlier .NET versions now throw `System.Security.Cryptography.CryptographicException`.
+Starting in .NET 11, <xref:System.Security.Cryptography.HKDF> on Windows uses Windows' built-in Cryptography API: Next Generation (CNG) implementation. The Windows implementation restricts some input sizes more than the previous .NET implementation, so some inputs that worked in earlier .NET versions now throw <xref:System.Security.Cryptography.CryptographicException>.
 
 ## Version introduced
 
@@ -17,17 +15,17 @@ Starting in .NET 11, `System.Security.Cryptography.HKDF` on Windows uses Windows
 
 ## Previous behavior
 
-Previously, on Windows, `System.Security.Cryptography.HKDF.DeriveKey*` and `System.Security.Cryptography.HKDF.Expand*` accepted inputs of arbitrary size as long as the inputs were permitted by the HKDF specification.
+Previously, on Windows, <xref:System.Security.Cryptography.HKDF.DeriveKey*> and <xref:System.Security.Cryptography.HKDF.Expand*> accepted inputs of arbitrary size as long as the inputs were permitted by the HKDF specification.
 
 ## New behavior
 
-Starting in .NET 11, on Windows, `System.Security.Cryptography.HKDF.DeriveKey*` and `System.Security.Cryptography.HKDF.Expand*` limit the maximum input length for input keying material and pseudorandom keys. If the input keying material passed to `DeriveKey` or the pseudorandom key <example-value> to `Expand` exceeds the limit, the method throws `System.Security.Cryptography.CryptographicException`.
+Starting in .NET 11, on Windows, <xref:System.Security.Cryptography.HKDF.DeriveKey*> and <xref:System.Security.Cryptography.HKDF.Expand*> limit the maximum input length for input keying material and pseudorandom keys. If the input keying material passed to `DeriveKey` or the pseudorandom key passed to `Expand` exceeds the limit, the method throws <xref:System.Security.Cryptography.CryptographicException>.
 
 Both limits are currently 2,048 bytes.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -39,5 +37,5 @@ Typical uses of HKDF shouldn't reach these limits. If your application passes in
 
 ## Affected APIs
 
-- `System.Security.Cryptography.HKDF.DeriveKey*`
-- `System.Security.Cryptography.HKDF.Expand*`
+- <xref:System.Security.Cryptography.HKDF.DeriveKey*?displayProperty=fullName>
+- <xref:System.Security.Cryptography.HKDF.Expand*?displayProperty=fullName>

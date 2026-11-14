@@ -1,17 +1,10 @@
----
-title: "vitest/max-expects"
-tool: "eslint-vitest"
-version: "1.6"
-source: "https://github.com/vitest-dev/eslint-plugin-vitest/blob/c5df1054a25044a7ca5baf07461b7aee1f15f5f2/docs/rules/max-expects.md"
-commit: "c5df1054a25044a7ca5baf07461b7aee1f15f5f2"
-license: "MIT"
----
-
 # vitest/max-expects
 
 📝 Enforce a maximum number of expect per test.
 
 ⚠️ This rule _warns_ in the 🌐 `all` config.
+
+<!-- end auto-generated rule header -->
 
 ### Rule Details
 
@@ -34,9 +27,13 @@ test('foo', () => {
 
 ### Options
 
+<!-- begin auto-generated rule options list -->
+
 | Name  | Description                                         | Type   | Default |
 | :---- | :-------------------------------------------------- | :----- | :------ |
 | `max` | Maximum number of `expect` calls allowed in a test. | Number | `5`     |
+
+<!-- end auto-generated rule options list -->
 
 > Default: `5`
 

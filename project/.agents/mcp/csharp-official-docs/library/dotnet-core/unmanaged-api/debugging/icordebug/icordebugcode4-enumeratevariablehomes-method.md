@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugCode4::EnumerateVariableHomes Method"
 title: "ICorDebugCode4::EnumerateVariableHomes Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugcode4-enumeratevariablehomes-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugCode4.EnumerateVariableHomes"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugCode4::EnumerateVariableHomes"
+helpviewer_keywords:
+  - "EnumerateVariableHomes method [.NET debugging]"
+  - "ICorDebugCode4::EnumerateVariableHomes method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugCode4::EnumerateVariableHomes Method
 
 Gets an enumerator to the local variables and arguments in a function.
@@ -22,15 +31,15 @@ HRESULT EnumerateVariableHomes(
 ## Parameters
 
  `ppEnum`
-A pointer to the address of an ICorDebugVariableHomeEnum interface object that is an enumerator for the local variables and arguments in a function.
+A pointer to the address of an [ICorDebugVariableHomeEnum](icordebugvariablehomeenum-interface.md) interface object that is an enumerator for the local variables and arguments in a function.
 
 ## Remarks
 
-The ICorDebugVariableHomeEnum interface object is a standard enumerator derived from the "ICorDebugEnum" interface that allows you to enumerate ICorDebugVariableHome objects. The collection may include multiple ICorDebugVariableHome objects for the same slot or      argument index if they have different homes at different points in the      function.
+The [ICorDebugVariableHomeEnum](icordebugvariablehomeenum-interface.md) interface object is a standard enumerator derived from the "ICorDebugEnum" interface that allows you to enumerate [ICorDebugVariableHome](icordebugvariablehome-interface.md) objects. The collection may include multiple [ICorDebugVariableHome](icordebugvariablehome-interface.md) objects for the same slot or      argument index if they have different homes at different points in the      function.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -40,4 +49,4 @@ The ICorDebugVariableHomeEnum interface object is a standard enumerator derived 
 
 ## See also
 
-- ICorDebugCode4 Interface
+- [ICorDebugCode4 Interface](icordebugcode4-interface.md)

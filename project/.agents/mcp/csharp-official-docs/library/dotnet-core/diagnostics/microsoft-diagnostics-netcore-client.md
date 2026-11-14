@@ -1,10 +1,11 @@
 ---
-title: "Microsoft.Diagnostics.NETCore.Client API (part 1 of 2)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/microsoft-diagnostics-netcore-client.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Microsoft.Diagnostics.NETCore.Client API
+description: In this article, you'll learn about the Microsoft.Diagnostics.NETCore.Client APIs.
+ms.date: 08/24/2026
+author: tommcdon
+ms.author: tommcdon
+ms.topic: reference
+ai-usage: ai-assisted
 ---
 
 # Microsoft.Diagnostics.NETCore.Client API
@@ -35,13 +36,13 @@ public sealed class DiagnosticsClient
         IEnumerable<EventPipeProvider> providers,
         bool requestRundown,
         int circularBufferMB = 256,
-        CancellationToken token = <example-value>);
+        CancellationToken token = default);
 
     public Task<EventPipeSession> StartEventPipeSessionAsync(
         EventPipeProvider provider,
         bool requestRundown,
         int circularBufferMB = 256,
-        CancellationToken token = <example-value>);
+        CancellationToken token = default);
 
     public Task<EventPipeSession> StartEventPipeSessionAsync(
         EventPipeSessionConfiguration configuration,
@@ -125,12 +126,12 @@ public Task<EventPipeSession> StartEventPipeSessionAsync(
     IEnumerable<EventPipeProvider> providers,
     bool requestRundown,
     int circularBufferMB = 256,
-    CancellationToken token = <example-value>);
+    CancellationToken token = default);
 ```
 
 Starts an EventPipe tracing session using the given providers and settings.
 
-* `providers` : An `IEnumerable` of `EventPipeProvider`s to start tracing.
+* `providers` : An `IEnumerable` of [`EventPipeProvider`](#eventpipeprovider-class)s to start tracing.
 * `requestRundown`: A `bool` specifying whether rundown provider events from the target app's runtime should be requested.
 * `circularBufferMB`: An `int` specifying the total size of circular buffer used by the target app's runtime on collecting events.
 * `token` (for the async overload): The token to monitor for cancellation requests.
@@ -145,12 +146,12 @@ public Task<EventPipeSession> StartEventPipeSessionAsync(
     EventPipeProvider provider,
     bool requestRundown,
     int circularBufferMB = 256,
-    CancellationToken token = <example-value>);
+    CancellationToken token = default);
 ```
 
 Starts an EventPipe tracing session using a single provider.
 
-* `provider` : An `EventPipeProvider` to start tracing.
+* `provider` : An [`EventPipeProvider`](#eventpipeprovider-class) to start tracing.
 * `requestRundown`: A `bool` specifying whether rundown provider events from the target app's runtime should be requested.
 * `circularBufferMB`: An `int` specifying the total size of circular buffer used by the target app's runtime on collecting events.
 * `token` (for the async overload): The token to monitor for cancellation requests.
@@ -164,12 +165,12 @@ public Task<EventPipeSession> StartEventPipeSessionAsync(
     CancellationToken token);
 ```
 
-Starts an EventPipe tracing session using an `EventPipeSessionConfiguration`.
+Starts an EventPipe tracing session using an [`EventPipeSessionConfiguration`](#eventpipesessionconfiguration-class).
 
 * `config` / `configuration` : An `EventPipeSessionConfiguration` that defines the session.
 * `token` (for the async overload): The token to monitor for cancellation requests.
 
-> **Note:**
+> [!NOTE]
 > Rundown events contain payloads that may be needed for post analysis, such as resolving method names of thread samples. Unless you know you do not want this, we recommend setting `requestRundown` to true. In large applications, this may take a while.
 
 ### WriteDump method
@@ -181,7 +182,7 @@ public void WriteDump(
     bool logDumpGeneration=false);
 ```
 
-Request a dump for post-mortem debugging of the target application. The type of the dump can be specified using the `DumpType` enum.
+Request a dump for post-mortem debugging of the target application. The type of the dump can be specified using the [`DumpType`](#dumptype-enum) enum.
 
 * `dumpType` : Type of the dump to be requested.
 * `dumpPath` : The path to the dump to be written out to.
@@ -194,7 +195,7 @@ public void WriteDump(
     WriteDumpFlags flags)
 ```
 
-Request a dump for post-mortem debugging of the target application. The type of the dump can be specified using the `DumpType` enum.
+Request a dump for post-mortem debugging of the target application. The type of the dump can be specified using the [`DumpType`](#dumptype-enum) enum.
 
 * `dumpType` : Type of the dump to be requested.
 * `dumpPath` : The path to the dump to be written out to.
@@ -208,7 +209,7 @@ public Task WriteDumpAsync(
     CancellationToken token)
 ```
 
-Request a dump for post-mortem debugging of the target application. The type of the dump can be specified using the `DumpType` enum.
+Request a dump for post-mortem debugging of the target application. The type of the dump can be specified using the [`DumpType`](#dumptype-enum) enum.
 
 * `dumpType` : Type of the dump to be requested.
 * `dumpPath` : The path to the dump to be written out to.
@@ -223,7 +224,7 @@ public Task WriteDumpAsync(
     CancellationToken token)
 ```
 
-Request a dump for post-mortem debugging of the target application. The type of the dump can be specified using the `DumpType` enum.
+Request a dump for post-mortem debugging of the target application. The type of the dump can be specified using the [`DumpType`](#dumptype-enum) enum.
 
 * `dumpType` : Type of the dump to be requested.
 * `dumpPath` : The path to the dump to be written out to.
@@ -257,7 +258,7 @@ public void DisablePerfMap();
 
 Controls generation of perf maps in the target process.
 
-* `type` : The `PerfMapType` indicating the type of perf map to enable.
+* `type` : The [`PerfMapType`](#perfmaptype-enum) indicating the type of perf map to enable.
 
 ### AttachProfiler method
 
@@ -366,12 +367,12 @@ public sealed class EventPipeSessionConfiguration
 
 Represents the configuration for an `EventPipeSession`.
 
-* `providers` : An `IEnumerable` of `EventPipeProvider`s to enable.
+* `providers` : An `IEnumerable` of [`EventPipeProvider`](#eventpipeprovider-class)s to enable.
 * `circularBufferSizeMB` : The size in MB of the runtime's buffer for collecting events.
 * `requestRundown` : If `true`, request rundown events from the runtime.
 * `requestStackwalk` : If `true`, record a stack trace for every emitted event.
 * `rundownKeyword` : The keyword mask used for rundown events.
-* `bufferingMode` : The `EventPipeBufferingMode` for the session. Use `Block` to request non-lossy collection. Passing `Block` requires a .NET 11+ target runtime; on an older runtime, `StartEventPipeSession` throws `UnsupportedCommandException`.
+* `bufferingMode` : The [`EventPipeBufferingMode`](#eventpipebufferingmode-enum) for the session. Use `Block` to request non-lossy collection. Passing `Block` requires a .NET 11+ target runtime; on an older runtime, `StartEventPipeSession` throws [`UnsupportedCommandException`](#unsupportedcommandexception).
 
 The `BufferingMode` property returns the buffering mode for the session. The default value, `Drop`, keeps the runtime's lossy buffer.
 
@@ -432,7 +433,7 @@ public EventPipeProvider(
     EventPipeProviderEventFilter eventFilter)
 ```
 
-Creates a new instance of `EventPipeProvider` with the given provider name, `System.Diagnostics.Tracing.EventLevel`, keywords, and arguments. The second overload also takes an `EventPipeProviderEventFilter` that filters which Event IDs the runtime enables for the provider. When you set an event filter, the session requires a .NET 10+ target runtime.
+Creates a new instance of `EventPipeProvider` with the given provider name, <xref:System.Diagnostics.Tracing.EventLevel>, keywords, and arguments. The second overload also takes an [`EventPipeProviderEventFilter`](#eventpipeprovidereventfilter-class) that filters which Event IDs the runtime enables for the provider. When you set an event filter, the session requires a .NET 10+ target runtime.
 
 ### Name property
 
@@ -448,7 +449,7 @@ Gets the name of the Provider.
 public EventLevel EventLevel { get; }
 ```
 
-Gets the `EventLevel` of the given instance of `EventPipeProvider`.
+Gets the `EventLevel` of the given instance of [`EventPipeProvider`](#eventpipeprovider-class).
 
 ### Keywords property
 
@@ -472,8 +473,259 @@ Gets an `IDictionary` of key-value pair strings representing optional arguments 
 public EventPipeProviderEventFilter EventFilter { get; }
 ```
 
-Gets the optional `EventPipeProviderEventFilter` that the runtime applies to this provider's Event IDs after the keyword and level filter. When the value is `null`, the runtime enables every Event ID that the keyword and level filter allows.
+Gets the optional [`EventPipeProviderEventFilter`](#eventpipeprovidereventfilter-class) that the runtime applies to this provider's Event IDs after the keyword and level filter. When the value is `null`, the runtime enables every Event ID that the keyword and level filter allows.
 
 ### Remarks
 
 This class is immutable, because EventPipe does not allow a provider's configuration to be modified during an EventPipe session as of .NET Core 3.1.
+
+## EventPipeProviderEventFilter class
+
+```csharp
+public sealed class EventPipeProviderEventFilter
+{
+    public EventPipeProviderEventFilter(
+        bool enable,
+        IReadOnlyList<uint> eventIds);
+
+    public bool Enable { get; }
+
+    public IReadOnlyList<uint> EventIds { get; }
+}
+```
+
+Represents an optional per-provider filter on Event IDs. The runtime applies the filter after the keyword and level filter of the associated [`EventPipeProvider`](#eventpipeprovider-class). Event filters require a .NET 10+ target runtime.
+
+### Constructor
+
+```csharp
+public EventPipeProviderEventFilter(
+    bool enable,
+    IReadOnlyList<uint> eventIds);
+```
+
+Creates a new instance of `EventPipeProviderEventFilter`.
+
+* `enable` : If `true`, `eventIds` is an allow-list and the runtime enables only those Event IDs. If `false`, `eventIds` is a deny-list and the runtime enables every Event ID except those listed. An empty deny-list therefore enables all events.
+* `eventIds` : The Event IDs to enable or disable, as determined by `enable`.
+
+### Enable property
+
+```csharp
+public bool Enable { get; }
+```
+
+Gets a value that indicates whether [`EventIds`](#eventids-property) is an allow-list (`true`) or a deny-list (`false`).
+
+### EventIds property
+
+```csharp
+public IReadOnlyList<uint> EventIds { get; }
+```
+
+Gets the list of Event IDs that the filter enables or disables.
+
+## EventPipeSession class
+
+```csharp
+public class EventPipeSession : IDisposable
+{
+    public Stream EventStream { get; }
+
+    public void Stop();
+
+    public Task StopAsync(
+        CancellationToken cancellationToken);
+
+    public void Dispose();
+}
+```
+
+This class represents an ongoing EventPipe session. It is immutable and acts as a handle to an EventPipe session of the given runtime.
+
+### EventStream property
+
+```csharp
+public Stream EventStream { get; }
+```
+
+Gets a `Stream` that can be used to read the event stream.
+
+### Stop methods
+
+```csharp
+public void Stop();
+
+public Task StopAsync(
+    CancellationToken cancellationToken);
+```
+
+Stops the given `EventPipe` session.
+
+* `cancellationToken` (for the async overload): The token to monitor for cancellation requests.
+
+### Dispose method
+
+```csharp
+public void Dispose();
+```
+
+Releases resources associated with the `EventPipeSession`.
+
+## DiagnosticsClientConnector class
+
+```csharp
+public sealed class DiagnosticsClientConnector : IAsyncDisposable
+{
+    public DiagnosticsClient Instance { get; }
+
+    public ValueTask DisposeAsync();
+
+    public static Task<DiagnosticsClientConnector> FromDiagnosticPort(
+        string diagnosticPort,
+        CancellationToken ct);
+}
+```
+
+Represents a helper that creates a `DiagnosticsClient` from a diagnostic port and manages the lifetime of the underlying diagnostics server connection.
+
+* `Instance` : The `DiagnosticsClient` connected to the target runtime.
+* `DisposeAsync` : Disposes the underlying server/connection asynchronously.
+* `FromDiagnosticPort` : Creates a new `DiagnosticsClientConnector` from the specified diagnostic port.
+
+```csharp
+public static Task<DiagnosticsClientConnector> FromDiagnosticPort(
+    string diagnosticPort,
+    CancellationToken ct)
+```
+
+* `diagnosticPort` : The diagnostic port string (for example, a listen or connect port) to connect through.
+* `ct` : The token to monitor for cancellation requests.
+
+## DumpType enum
+
+```csharp
+public enum DumpType
+{
+    Normal = 1,
+    WithHeap = 2,
+    Triage = 3,
+    Full = 4
+}
+```
+
+Represents the type of dump that can be requested.
+
+* `Normal`: Include just the information necessary to capture stack traces for all existing traces for all existing threads in a process. Limited GC heap memory and information.
+* `WithHeap`: Includes the GC heaps and information necessary to capture stack traces for all existing threads in a process.
+* `Triage`: Include just the information necessary to capture stack traces for all existing traces for all existing threads in a process. Limited GC heap memory and information. Some content that is known to contain potentially sensitive information such as full module paths will be redacted. While this is intended to mitigate some cases of sensitive data exposure, there is no guarantee this redaction feature on its own is sufficient to comply with any particular law or standard regarding data privacy.
+* `Full`: Include all accessible memory in the process. The raw memory data is included at the end, so that the initial structures can be mapped directly without the raw memory information. This option can result in a very large dump file.
+
+## WriteDumpFlags enum
+
+```csharp
+public enum WriteDumpFlags
+{
+    None = 0x00,
+    LoggingEnabled = 0x01,
+    VerboseLoggingEnabled = 0x02,
+    CrashReportEnabled = 0x04
+}
+```
+
+Represents additional options that can be specified when requesting a dump.
+
+* `None` : No additional behavior.
+* `LoggingEnabled` : Enable basic logging during dump generation.
+* `VerboseLoggingEnabled` : Enable verbose logging during dump generation.
+* `CrashReportEnabled` : Enable generation of a crash report.
+
+## PerfMapType enum
+
+```csharp
+public enum PerfMapType
+{
+    None = 0,
+    All = 1,
+    JitDump = 2,
+    PerfMap = 3
+}
+```
+
+Represents the type of perf map behavior that can be enabled.
+
+* `None` : No perf map output.
+* `All` : Enable all perf map outputs supported by the runtime.
+* `JitDump` : Enable JIT dump perf map output.
+* `PerfMap` : Enable traditional perf map output.
+
+## EventPipeBufferingMode enum
+
+```csharp
+public enum EventPipeBufferingMode
+{
+    Drop = 0,
+    Block = 1
+}
+```
+
+Controls how the runtime's per-session event buffer behaves when it fills faster than the session drains it.
+
+* `Drop` : The runtime default. The session uses a buffer that drops events when it overflows, so collection is lossy.
+* `Block` : Non-lossy collection. The runtime blocks event producers when the buffer is full instead of dropping events. Use it for collections that must be complete, such as a heap snapshot on a large heap. `Block` is non-lossy only up to the buffer's capacity, not against host memory exhaustion: if the runtime can't allocate the memory it needs to reserve buffer space, or during session shutdown, it drops the event instead of blocking. `Block` requires a .NET 11+ target runtime; on an older runtime, starting the session throws [`UnsupportedCommandException`](#unsupportedcommandexception).
+
+## Exceptions
+
+Exceptions that are thrown from the library are of type `DiagnosticsClientException` or a derived type.
+
+```csharp
+public class DiagnosticsClientException : Exception
+```
+
+### UnsupportedProtocolException
+
+```csharp
+public class UnsupportedProtocolException : DiagnosticsClientException
+```
+
+This may be thrown when the target process's runtime is not compatible with the diagnostics IPC protocol used by the library.
+
+### ServerNotAvailableException
+
+```csharp
+public class ServerNotAvailableException : DiagnosticsClientException
+```
+
+This may be thrown when the runtime is not available for diagnostics IPC commands, such as early during runtime startup before the runtime is ready for diagnostics commands, or when the runtime is shutting down.
+
+### ServerErrorException
+
+```csharp
+public class ServerErrorException : DiagnosticsClientException
+```
+
+This may be thrown when the runtime responds with an error to a given command.
+
+### UnsupportedCommandException
+
+```csharp
+public class UnsupportedCommandException : ServerErrorException
+```
+
+This exception is thrown when the command is not supported by either the library or the target process's runtime.
+
+### ProfilerAlreadyActiveException
+
+```csharp
+public class ProfilerAlreadyActiveException : ServerErrorException
+```
+
+This exception is thrown when a profiler is already loaded into the target runtime and another attach is attempted.
+
+### BadEncodingException
+
+```csharp
+public class BadEncodingException : ServerErrorException
+```
+
+This exception is thrown when the target runtime can't decode the command payload and rejects it. From a well-formed client, it usually means the runtime is too old to understand a newer configured option value, so it rejects the request while parsing.

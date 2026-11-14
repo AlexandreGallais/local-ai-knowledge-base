@@ -1,35 +1,27 @@
----
-title: "ReadWriteLock interface (java.util.concurrent.locks)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/locks/ReadWriteLock.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ReadWriteLock interface (java.util.concurrent.locks)
 
 ```java
 public interface ReadWriteLock
 ```
 
-A `ReadWriteLock` maintains a pair of associated locks, one for read-only operations and one for writing.
-The read lock may be held simultaneously
+A {@code ReadWriteLock} maintains a pair of associated {@link
+Lock locks}, one for read-only operations and one for writing.
+The {@linkplain #readLock read lock} may be held simultaneously
 by multiple reader threads, so long as there are no writers.
-The write lock is exclusive.
+The {@linkplain #writeLock write lock} is exclusive.
 
-All `ReadWriteLock` implementations must guarantee that
-the memory synchronization effects of `writeLock` operations
-(as specified in the `Lock` interface) also hold with respect
-to the associated `readLock`. That is, a thread successfully
+<p>All {@code ReadWriteLock} implementations must guarantee that
+the memory synchronization effects of {@code writeLock} operations
+(as specified in the {@link Lock} interface) also hold with respect
+to the associated {@code readLock}. That is, a thread successfully
 acquiring the read lock will see all updates made upon previous
 release of the write lock.
 
-A read-write lock allows for a greater level of concurrency in
+<p>A read-write lock allows for a greater level of concurrency in
 accessing shared data than that permitted by a mutual exclusion lock.
 It exploits the fact that while only a single thread at a time (a
-*writer* thread) can modify the shared data, in many cases any
-number of threads can concurrently read the data (hence *reader*
+<em>writer</em> thread) can modify the shared data, in many cases any
+number of threads can concurrently read the data (hence <em>reader</em>
 threads).
 In theory, the increase in concurrency permitted by the use of a read-write
 lock will lead to performance improvements over the use of a mutual
@@ -37,7 +29,7 @@ exclusion lock. In practice this increase in concurrency will only be fully
 realized on a multi-processor, and then only if the access patterns for
 the shared data are suitable.
 
-Whether or not a read-write lock will improve performance over the use
+<p>Whether or not a read-write lock will improve performance over the use
 of a mutual exclusion lock depends on the frequency that the data is
 read compared to being modified, the duration of the read and write
 operations, and the contention for the data - that is, the number of
@@ -55,41 +47,41 @@ all threads through a small section of code. Ultimately, only profiling
 and measurement will establish whether the use of a read-write lock is
 suitable for your application.
 
-Although the basic <example-value> of a read-write lock is straight-forward,
+<p>Although the basic operation of a read-write lock is straight-forward,
 there are many policy decisions that an implementation must make, which
 may affect the effectiveness of the read-write lock in a given application.
 Examples of these policies include:
-
-- Determining whether to grant the read lock or the write lock, when
+<ul>
+<li>Determining whether to grant the read lock or the write lock, when
 both readers and writers are waiting, at the time that a writer releases
 the write lock. Writer preference is common, as writes are expected to be
 short and infrequent. Reader preference is less common as it can lead to
 lengthy delays for a write if the readers are frequent and long-lived as
-expected. Fair, or "in-order" implementations are also possible.
+expected. Fair, or &quot;in-order&quot; implementations are also possible.
 
-- Determining whether readers that request the read lock while a
+<li>Determining whether readers that request the read lock while a
 reader is active and a writer is waiting, are granted the read lock.
 Preference to the reader can delay the writer indefinitely, while
 preference to the writer can reduce the potential for concurrency.
 
-- Determining whether the locks are reentrant: can a thread with the
+<li>Determining whether the locks are reentrant: can a thread with the
 write lock reacquire it? Can it acquire a read lock while holding the
 write lock? Is the read lock itself reentrant?
 
-- Can the write lock be downgraded to a read lock without allowing
+<li>Can the write lock be downgraded to a read lock without allowing
 an intervening writer? Can a read lock be upgraded to a write lock,
 in preference to other waiting readers or writers?
 
+</ul>
 You should consider all of these things when evaluating the suitability
 of a given implementation for your application.
 
-**See also:** ReentrantReadWriteLock
+@see ReentrantReadWriteLock
+@see Lock
+@see ReentrantLock
 
-**See also:** Lock
-
-**See also:** ReentrantLock
-
-**Since:** 1.5
+@since 1.5
+@author Doug Lea
 
 ## ReadWriteLock.readLock()
 
@@ -99,7 +91,7 @@ Lock readLock()
 
 Returns the lock used for reading.
 
-**Returns:** the lock used for reading
+@return the lock used for reading
 
 ## ReadWriteLock.writeLock()
 
@@ -109,4 +101,4 @@ Lock writeLock()
 
 Returns the lock used for writing.
 
-**Returns:** the lock used for writing
+@return the lock used for writing

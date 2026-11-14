@@ -1,12 +1,3 @@
----
-title: "WriteAbortedException class (java.io)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/io/WriteAbortedException.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # WriteAbortedException class (java.io)
 
 ```java
@@ -20,7 +11,7 @@ exception that terminated the write can be found in the detail
 field. The stream is reset to its initial state and all references
 to objects already deserialized are discarded.
 
-**Since:** 1.1
+@since   1.1
 
 ## WriteAbortedException.detail
 
@@ -30,9 +21,11 @@ public Exception detail
 
 Exception that was caught while writing the ObjectStream.
 
-**Deprecated:** This field predates the general-purpose exception
-chaining facility.  The `Throwable.getCause()` method is
+@deprecated This field predates the general-purpose exception
+chaining facility.  The {@link Throwable#getCause()} method is
 now the preferred means of obtaining this information.
+
+@serial
 
 ## WriteAbortedException.WriteAbortedException(String, Exception)
 
@@ -42,11 +35,8 @@ public WriteAbortedException(String s, Exception ex)
 
 Constructs a WriteAbortedException with a string describing
 the exception and the exception causing the abort.
-
-Parameters:
-
-- `s`: String describing the exception.
-- `ex`: Exception causing the abort.
+@param s   String describing the exception.
+@param ex  Exception causing the abort.
 
 ## WriteAbortedException.getMessage()
 
@@ -63,9 +53,8 @@ exception, if there is one.
 public Throwable getCause()
 ```
 
-Returns the exception that terminated the operation (the *cause*).
+Returns the exception that terminated the operation (the <i>cause</i>).
 
-**Returns:** the exception that terminated the operation (the *cause*),
+@return  the exception that terminated the operation (the <i>cause</i>),
          which may be null.
-
-**Since:** 1.4
+@since   1.4

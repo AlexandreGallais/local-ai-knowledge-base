@@ -1,12 +1,10 @@
 ---
-title: "Introduction to AOT warnings"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/deploying/native-aot/fixing-warnings.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Introduction to AOT warnings
+description: Learn why warnings might be produced when publishing an application as Native AOT, how to address them, and how to make the application "AOT compatible."
+author: MichalStrehovsky
+ms.author: michals
+ms.date: 09/06/2022
 ---
-
 # Introduction to AOT warnings
 
 When publishing your application as Native AOT, the build process produces all the native code and data structures required to support the application at runtime. This is different from non-native deployments, which execute the application from formats that describe the application in abstract terms (a program for a virtual machine) and create native representations on demand at runtime.
@@ -48,7 +46,7 @@ The AOT warnings are meant to bring predictability to Native AOT builds. A major
 
 ### RequiresDynamicCode
 
-`System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute` is simple and broad: it's an attribute that means the member has been annotated as being incompatible with AOT. This annotation means that the member might use reflection or another mechanism to create new native code at runtime. This attribute is used when code is fundamentally not AOT compatible, or the native dependency is too complex to statically predict at build time. This would often be true for methods that use the `Type.MakeGenericType` API, reflection emit, or other runtime code generation technologies. The following code shows an example.
+<xref:System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute> is simple and broad: it's an attribute that means the member has been annotated as being incompatible with AOT. This annotation means that the member might use reflection or another mechanism to create new native code at runtime. This attribute is used when code is fundamentally not AOT compatible, or the native dependency is too complex to statically predict at build time. This would often be true for methods that use the `Type.MakeGenericType` API, reflection emit, or other runtime code generation technologies. The following code shows an example.
 
 ```csharp
 [RequiresDynamicCode("Use 'MethodFriendlyToAot' instead")]
@@ -64,7 +62,7 @@ void TestMethod()
 
 There aren't many workarounds for `RequiresDynamicCode`. The best fix is to avoid calling the method at all when building as Native AOT and use something else that's AOT compatible. If you're writing a library and it's not in your control whether or not to call the method, you can also add `RequiresDynamicCode` to your own method. This will annotate your method as not AOT compatible. Adding `RequiresDynamicCode` silences all AOT warnings in the annotated method but will produce a warning whenever someone else calls it. For this reason, it's mostly useful to library authors to "bubble up" the warning to a public API.
 
-If you can somehow determine that the call is safe, and all native code will be available at runtime, you can also suppress the warning using `System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessageAttribute`. For example:
+If you can somehow determine that the call is safe, and all native code will be available at runtime, you can also suppress the warning using <xref:System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessageAttribute>. For example:
 
 ```csharp
 [RequiresDynamicCode("Use 'MethodFriendlyToAot' instead")]
@@ -81,5 +79,5 @@ void TestMethod()
 
 `UnconditionalSuppressMessage` is like `SuppressMessage` but it can be seen by `publish` and other post-build tools. `SuppressMessage` and `#pragma` directives are only present in source, so they can't be used to silence warnings from the build.
 
-> **Caution:**
+> [!CAUTION]
 > Be careful when suppressing AOT warnings. The call might be AOT-compatible now, but as you update your code, that might change, and you might forget to review all the suppressions.

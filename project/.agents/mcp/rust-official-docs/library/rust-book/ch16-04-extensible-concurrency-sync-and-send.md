@@ -1,13 +1,7 @@
----
-title: "ch16-04-extensible-concurrency-sync-and-send"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch16-04-extensible-concurrency-sync-and-send.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
+<!-- Old headings. Do not remove or links may break. -->
 
-# ch16-04-extensible-concurrency-sync-and-send
+<a id="extensible-concurrency-with-the-sync-and-send-traits"></a>
+<a id="extensible-concurrency-with-the-send-and-sync-traits"></a>
 
 ## Extensible Concurrency with `Send` and `Sync`
 
@@ -17,8 +11,12 @@ options for handling concurrency are not limited to the language or the
 standard library; you can write your own concurrency features or use those
 written by others.
 
-However, among the key <example-value> concepts that are embedded in the language
+However, among the key concurrency concepts that are embedded in the language
 rather than the standard library are the `std::marker` traits `Send` and `Sync`.
+
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="allowing-transference-of-ownership-between-threads-with-send"></a>
 
 ### Transferring Ownership Between Threads
 
@@ -41,6 +39,10 @@ Any type composed entirely of `Send` types is automatically marked as `Send` as
 well. Almost all primitive types are `Send`, aside from raw pointers, which
 we’ll discuss in Chapter 20.
 
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="allowing-access-from-multiple-threads-with-sync"></a>
+
 ### Accessing from Multiple Threads
 
 The `Sync` marker trait indicates that it is safe for the type implementing
@@ -55,8 +57,8 @@ that it doesn’t implement `Send`. The `RefCell<T>` type (which we talked about
 in Chapter 15) and the family of related `Cell<T>` types don’t implement
 `Sync`. The implementation of borrow checking that `RefCell<T>` does at runtime
 is not thread-safe. The smart pointer `Mutex<T>` implements `Sync` and can be
-used to share access with multiple threads, as you saw in “Shared Access to
-`Mutex<T>`”.
+used to share access with multiple threads, as you saw in [“Shared Access to
+`Mutex<T>`”][shared-access]<!-- ignore -->.
 
 ### Implementing `Send` and `Sync` Manually Is Unsafe
 
@@ -69,8 +71,8 @@ concurrency.
 Manually implementing these traits involves implementing unsafe Rust code.
 We’ll talk about using unsafe Rust code in Chapter 20; for now, the important
 information is that building new concurrent types not made up of `Send` and
-`Sync` parts requires careful thought to uphold the safety guarantees. “The
-Rustonomicon” has more information about these guarantees and how to
+`Sync` parts requires careful thought to uphold the safety guarantees. [“The
+Rustonomicon”][nomicon] has more information about these guarantees and how to
 uphold them.
 
 ## Summary
@@ -94,3 +96,6 @@ Once you get your code to compile, you can rest assured that it will happily
 run on multiple threads without the kinds of hard-to-track-down bugs common in
 other languages. Concurrent programming is no longer a concept to be afraid of:
 Go forth and make your programs concurrent, fearlessly!
+
+[shared-access]: ch16-03-shared-state.html#shared-access-to-mutext
+[nomicon]: ../nomicon/index.html

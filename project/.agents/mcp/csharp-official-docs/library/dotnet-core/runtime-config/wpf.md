@@ -1,12 +1,8 @@
 ---
-title: "WPF config settings"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/runtime-config/wpf.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: WPF config settings
+description: Learn about the settings that configure WPF for .NET apps.
+ms.date: 09/08/2023
 ---
-
 # Runtime configuration options for WPF
 
 This article details the settings you can use to configure Windows Presentation Framework (WPF) in .NET.
@@ -18,7 +14,7 @@ This article details the settings you can use to configure Windows Presentation 
 
 | Setting type | Setting name | Values | Version introduced |
 |--------------|--------------|--------|--------------------|
-| **runtimeconfig.json** | `Switch.System.Windows.Media.EnableHardwareAccelerationInRdp` | `true` - enabled`false` - disabled | .NET 8 |
+| **runtimeconfig.json** | `Switch.System.Windows.Media.EnableHardwareAccelerationInRdp` | `true` - enabled<br/>`false` - disabled | .NET 8 |
 | **Environment variable** | N/A | | |
 
-This configuration setting doesn't have a specific MSBuild property. However, you can add a `RuntimeHostConfigurationOption` MSBuild item instead. Use the *runtimeconfig.json* setting name as the value of the `Include` attribute. For an example, see MSBuild properties.
+[!INCLUDE [runtimehostconfigurationoption](includes/runtimehostconfigurationoption.md)]

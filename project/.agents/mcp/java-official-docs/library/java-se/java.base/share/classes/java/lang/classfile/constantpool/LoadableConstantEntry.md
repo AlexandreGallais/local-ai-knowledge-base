@@ -1,12 +1,3 @@
----
-title: "LoadableConstantEntry interface (java.lang.classfile.constantpool)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/constantpool/LoadableConstantEntry.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # LoadableConstantEntry interface (java.lang.classfile.constantpool)
 
 ```java
@@ -14,19 +5,16 @@ public sealed interface LoadableConstantEntry extends PoolEntry permits ClassEnt
 ```
 
 Marker interface for constant pool entries suitable for loading via the
-ldc instructions.
+{@link ConstantInstruction.LoadConstantInstruction ldc} instructions.
+<p>
+The use of a {@code LoadableConstantEntry} is modeled by a {@link ConstantDesc}.
+Conversions are through {@link ConstantPoolBuilder#loadableConstantEntry(ConstantDesc)}
+and {@link #constantValue()}.
 
-The use of a `LoadableConstantEntry` is modeled by a `ConstantDesc`.
-Conversions are through `ConstantPoolBuilder.loadableConstantEntry(ConstantDesc)`
-and `constantValue()`.
-
-**See also:** CodeBuilder#ldc(LoadableConstantEntry)
-
-**jvms:** 4.4 The Constant Pool
-
-**sealedGraph:**
-
-**Since:** 24
+@see CodeBuilder#ldc(LoadableConstantEntry)
+@jvms 4.4 The Constant Pool
+@sealedGraph
+@since 24
 
 ## LoadableConstantEntry.constantValue()
 
@@ -34,7 +22,9 @@ and `constantValue()`.
 ConstantDesc constantValue()
 ```
 
-**See also:** ConstantPoolBuilder#loadableConstantEntry(ConstantDesc)
+{@return a symbolic descriptor of this constant}
+
+@see ConstantPoolBuilder#loadableConstantEntry(ConstantDesc)
 
 ## LoadableConstantEntry.typeKind()
 
@@ -42,6 +32,9 @@ ConstantDesc constantValue()
 default TypeKind typeKind()
 ```
 
-If the data type is of category 2, this
-constant must be loaded with ldc2_w; otherwise, the
-data type is of category 1, and this constant must be loaded with ldc or ldc_w.
+{@return the data type of this constant}
+<p>
+If the data type is of {@linkplain TypeKind#slotSize() category} 2, this
+constant must be loaded with {@link Opcode#LDC2_W ldc2_w}; otherwise, the
+data type is of category 1, and this constant must be loaded with {@link
+Opcode#LDC ldc} or {@link Opcode#LDC_W ldc_w}.

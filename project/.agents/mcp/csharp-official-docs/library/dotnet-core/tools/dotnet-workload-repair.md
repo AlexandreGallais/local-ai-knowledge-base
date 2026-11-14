@@ -1,12 +1,8 @@
 ---
-title: "dotnet workload repair command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-workload-repair.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet workload repair command
+description: The 'dotnet workload repair' command repairs workload installations.
+ms.date: 08/31/2021
 ---
-
 # dotnet workload repair
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -29,51 +25,31 @@ dotnet workload repair -?|-h|--help
 
 ## Description
 
-The `dotnet workload repair` command reinstalls all installed workloads. Workloads are made up of multiple workload packs and it's possible to get into a state where some installed successfully but others didn't. For example, a `dotnet workload install` command might not finish installing because of a dropped internet connection.
+The `dotnet workload repair` command reinstalls all installed workloads. Workloads are made up of multiple workload packs and it's possible to get into a state where some installed successfully but others didn't. For example, a [`dotnet workload install`](dotnet-workload-install.md) command might not finish installing because of a dropped internet connection.
 
-For more information about the `dotnet workload` commands, see the dotnet workload install command.
+For more information about the `dotnet workload` commands, see the [dotnet workload install](dotnet-workload-install.md#description) command.
 
 ## Options
 
-- **`--configfile <FILE>`**
+- [!INCLUDE [config-file](includes/cli-configfile.md)]
 
-The NuGet configuration file (*nuget.config*) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see Common NuGet Configurations.
+- [!INCLUDE [disable-parallel](includes/cli-disable-parallel.md)]
 
-- **`--disable-parallel`**
+- [!INCLUDE [help](includes/cli-help.md)]
 
-Prevents restoring multiple projects in parallel.
+- [!INCLUDE [ignore-failed-sources](includes/cli-ignore-failed-sources.md)]
 
-- **`-?|-h|--help`**
+- [!INCLUDE [include-previews](includes/cli-include-previews.md)]
 
-Prints out a description of how to use the command.
+- [!INCLUDE [interactive](includes/cli-interactive.md)]
 
-- **`--ignore-failed-sources`**
+- [!INCLUDE [no-cache](includes/cli-no-cache.md)]
 
-Treats package source failures as warnings.
+- [!INCLUDE [source](includes/cli-source.md)]
 
-- **`--include-previews`**
+- [!INCLUDE [temp-dir](includes/cli-temp-dir.md)]
 
-Allows prerelease workload manifests.
-
-- **`--interactive`**
-
-Allows the command to stop and wait for user input or action. For example, to complete authentication.
-
-- **`--no-cache`**
-
-Prevents caching of packages and http requests.
-
-- **`-s|--source `**
-
-Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the *nuget.config* files. Multiple sources can be provided by specifying this option multiple times.
-
-- **`--temp-dir `**
-
-Specify the temporary directory used to download and extract NuGet packages (must be secure).
-
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. The default is `minimal`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+- [!INCLUDE [verbosity](includes/cli-verbosity-minimal.md)]
 
 ## Examples
 

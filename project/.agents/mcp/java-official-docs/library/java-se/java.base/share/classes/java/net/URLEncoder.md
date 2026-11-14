@@ -1,12 +1,3 @@
----
-title: "URLEncoder class (java.net)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/net/URLEncoder.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # URLEncoder class (java.net)
 
 ```java
@@ -14,42 +5,45 @@ public final class URLEncoder
 ```
 
 Utility class for HTML form encoding. This class contains static methods
-for converting a String to the `application/x-www-form-urlencoded` MIME
+for converting a String to the <CODE>application/x-www-form-urlencoded</CODE> MIME
 format. For more information about HTML form encoding, consult the HTML
-specification.
+<A HREF="http://www.w3.org/TR/html4/">specification</A>.
 
+<p>
 When encoding a String, the following rules apply:
 
-- The alphanumeric characters "`a`" through
-    "`z`", "`A`" through
-    "`Z`" and "`0`"
-    through "`9`" remain the same.
-
-- The special characters "`.`",
-    "`-`", "`*`", and
-    "`_`" remain the same.
-
-- The space character "   " is
-    converted into a plus sign "`+`".
-
-- All other characters are unsafe and are first converted into
+<ul>
+<li>The alphanumeric characters &quot;{@code a}&quot; through
+    &quot;{@code z}&quot;, &quot;{@code A}&quot; through
+    &quot;{@code Z}&quot; and &quot;{@code 0}&quot;
+    through &quot;{@code 9}&quot; remain the same.
+<li>The special characters &quot;{@code .}&quot;,
+    &quot;{@code -}&quot;, &quot;{@code *}&quot;, and
+    &quot;{@code _}&quot; remain the same.
+<li>The space character &quot; &nbsp; &quot; is
+    converted into a plus sign &quot;{@code +}&quot;.
+<li>All other characters are unsafe and are first converted into
     one or more bytes using some encoding scheme. Then each byte is
     represented by the 3-character string
-    "*`%xy`*", where *xy* is the
+    &quot;<i>{@code %xy}</i>&quot;, where <i>xy</i> is the
     two-digit hexadecimal representation of the byte.
     The recommended encoding scheme to use is UTF-8. However,
     for compatibility reasons, if an encoding is not specified,
     then the default charset is used.
+</ul>
 
-For example using UTF-8 as the encoding scheme the string "The
-string ü@foo-bar" would get converted to
-"The+string+%C3%BC%40foo-bar" because in UTF-8 the character
-ü is encoded as two bytes C3 (hex) and BC (hex), and the
+<p>
+For example using UTF-8 as the encoding scheme the string &quot;The
+string &#252;@foo-bar&quot; would get converted to
+&quot;The+string+%C3%BC%40foo-bar&quot; because in UTF-8 the character
+&#252; is encoded as two bytes C3 (hex) and BC (hex), and the
 character @ is encoded as one byte 40 (hex).
 
-**See also:** Charset#defaultCharset()
+@spec https://www.w3.org/TR/html4 HTML 4.01 Specification
+@see Charset#defaultCharset()
 
-**Since:** 1.0
+@author  Herb Jellinek
+@since   1.0
 
 ## URLEncoder.encode(String)
 
@@ -57,19 +51,15 @@ character @ is encoded as one byte 40 (hex).
 public static String encode(String s)
 ```
 
-Translates a string into `x-www-form-urlencoded`
+Translates a string into {@code x-www-form-urlencoded}
 format. This method uses the default charset
 as the encoding scheme to obtain the bytes for unsafe characters.
 
-Parameters:
-
-- `s`: `String` to be translated.
-
-**Deprecated:** The resulting string may vary depending on the
+@param   s   {@code String} to be translated.
+@deprecated The resulting string may vary depending on the
             default charset. Instead, use the encode(String,String)
             method to specify the encoding.
-
-**Returns:** the translated `String`.
+@return  the translated {@code String}.
 
 ## URLEncoder.encode(String, String)
 
@@ -77,27 +67,22 @@ Parameters:
 public static String encode(String s, String enc) throws UnsupportedEncodingException
 ```
 
-Translates a string into `application/x-www-form-urlencoded`
+Translates a string into {@code application/x-www-form-urlencoded}
 format using a specific encoding scheme.
-
-This method behaves the same as s, Charset charset)
-except that it will look up the charset
+<p>
+This method behaves the same as {@linkplain #encode(String s, Charset charset)}
+except that it will {@linkplain Charset#forName look up the charset}
 using the given encoding name.
 
-Parameters:
-
-- `s`: `String` to be translated.
-- `enc`: The name of a supported character encoding.
-
-**Returns:** the translated `String`.
-
-**See also:** URLDecoder#decode(java.lang.String, java.lang.String)
-
-**Since:** 1.4
-
-Throws:
-
-- `UnsupportedEncodingException`: If the named encoding is not supported
+@param   s   {@code String} to be translated.
+@param   enc   The name of a supported
+   <a href="../lang/package-summary.html#charenc">character
+   encoding</a>.
+@return  the translated {@code String}.
+@throws  UnsupportedEncodingException
+            If the named encoding is not supported
+@see URLDecoder#decode(java.lang.String, java.lang.String)
+@since 1.4
 
 ## URLEncoder.encode(String, Charset)
 
@@ -105,31 +90,24 @@ Throws:
 public static String encode(String s, Charset charset)
 ```
 
-Translates a string into `application/x-www-form-urlencoded`
-format using a specific Charset.
+Translates a string into {@code application/x-www-form-urlencoded}
+format using a specific {@linkplain Charset Charset}.
 This method uses the supplied charset to obtain the bytes for unsafe
 characters.
-
+<p>
 If the input string is malformed, or if the input cannot be mapped
-to a valid byte sequence in the given `Charset`, then the
-erroneous input will be replaced with the `Charset`'s
-replacement values.
+to a valid byte sequence in the given {@code Charset}, then the
+erroneous input will be replaced with the {@code Charset}'s
+{@linkplain CharsetEncoder##cae replacement values}.
 
-Parameters:
-
-- `s`: `String` to be translated.
-- `charset`: the given charset
-
-**API note:** The
-World Wide Web Consortium Recommendation states that
+@apiNote The <a href=
+"http://www.w3.org/TR/html40/appendix/notes.html#non-ascii-chars">
+World Wide Web Consortium Recommendation</a> states that
 UTF-8 should be used. Not doing so may introduce incompatibilities.
-
-**Returns:** the translated `String`.
-
-**See also:** URLDecoder#decode(java.lang.String, Charset)
-
-**Since:** 10
-
-Throws:
-
-- `NullPointerException`: if `s` or `charset` is `null`.
+@param   s   {@code String} to be translated.
+@param charset the given charset
+@return  the translated {@code String}.
+@throws NullPointerException if {@code s} or {@code charset} is {@code null}.
+@spec https://www.w3.org/TR/html4 HTML 4.01 Specification
+@see URLDecoder#decode(java.lang.String, Charset)
+@since 10

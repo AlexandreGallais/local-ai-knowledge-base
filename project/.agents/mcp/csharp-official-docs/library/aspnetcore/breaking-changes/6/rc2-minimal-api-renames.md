@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: Minimal API renames in RC 2"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/6/rc2-minimal-api-renames.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in ASP.NET Core 6.0 RC 2 where some Minimal APIs were renamed.
+ms.date: 10/25/2021
+ms.custom: https://github.com/aspnet/Announcements/issues/474
 ---
-
 # Minimal API renames in RC 2
 
-To improve the consistency of type names, two classes were renamed, and one class was removed and its methods merged into the existing `Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions` class.
+To improve the consistency of type names, two classes were renamed, and one class was removed and its methods merged into the existing <xref:Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions> class.
 
 ## Version introduced
 
@@ -17,17 +14,17 @@ ASP.NET Core 6.0 RC 2
 
 ## Old and new behavior
 
-- The `Microsoft.AspNetCore.Builder.DelegateEndpointConventionBuilder` class was renamed to `Microsoft.AspNetCore.Builder.RouteHandlerBuilder`.
-- The `Microsoft.AspNetCore.Http.OpenApiDelegateEndpointConventionBuilderExtensions` class was renamed to `Microsoft.AspNetCore.Http.OpenApiRouteHandlerBuilderExtensions`.
-- The `Microsoft.AspNetCore.Builder.DelegateEndpointRouteBuilderExtensions` class was removed and all of its methods were merged into the existing `Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions` class.
+- The `Microsoft.AspNetCore.Builder.DelegateEndpointConventionBuilder` class was renamed to <xref:Microsoft.AspNetCore.Builder.RouteHandlerBuilder?displayProperty=fullName>.
+- The `Microsoft.AspNetCore.Http.OpenApiDelegateEndpointConventionBuilderExtensions` class was renamed to <xref:Microsoft.AspNetCore.Http.OpenApiRouteHandlerBuilderExtensions?displayProperty=fullName>.
+- The `Microsoft.AspNetCore.Builder.DelegateEndpointRouteBuilderExtensions` class was removed and all of its methods were merged into the existing <xref:Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions?displayProperty=fullName> class.
 
 ## Change category
 
-This change affects binary compatibility and source compatibility.
+This change affects [binary compatibility](/dotnet/core/compatibility/categories#binary-compatibility) and [source compatibility](/dotnet/core/compatibility/categories#source-compatibility).
 
 ## Reason for change
 
-This change was made to improve the consistency of type names. Now that there is a new `Microsoft.AspNetCore.Routing.RouteHandlerOptions` class, we wanted to replace `DelegateEndpoint` with `RouteHandler`.
+This change was made to improve the consistency of type names. Now that there is a new <xref:Microsoft.AspNetCore.Routing.RouteHandlerOptions> class, we wanted to replace `DelegateEndpoint` with `RouteHandler`.
 
 ## Recommended action
 

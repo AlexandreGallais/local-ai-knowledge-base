@@ -1,14 +1,3 @@
----
-title: "elevated-access-unix"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/includes/elevated-access-unix.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
----
-
-# elevated-access-unix
-
 ### Install the global tool
 
 Package assets should be installed in a protected location using the `--tool-path` option. This separation avoids sharing a restricted user environment with an elevated environment.

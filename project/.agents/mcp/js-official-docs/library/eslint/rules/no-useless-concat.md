@@ -1,13 +1,8 @@
 ---
-title: "no-useless-concat"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-useless-concat.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-useless-concat
+rule_type: suggestion
 ---
 
-# no-useless-concat
 
 It's unnecessary to concatenate two strings together, such as:
 
@@ -27,7 +22,7 @@ This rule aims to flag the concatenation of 2 literals when they could be combin
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-useless-concat: "error"*/
@@ -41,9 +36,11 @@ const d = `1` + '0';
 const e = `1` + `0`;
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-useless-concat: "error"*/
@@ -57,6 +54,8 @@ const d = 1 - 2;
 const e = "foo" +
     "bar";
 ```
+
+:::
 
 ## Options
 

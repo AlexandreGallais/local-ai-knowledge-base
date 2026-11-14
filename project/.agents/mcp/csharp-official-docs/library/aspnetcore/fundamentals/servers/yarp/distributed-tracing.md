@@ -1,12 +1,11 @@
 ---
-title: "YARP Distributed tracing"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/distributed-tracing.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: YARP Distributed tracing
+description: YARP Distributed tracing
+ms.date: 05/15/2026
+ms.topic: concept-article
+content_well_notification: AI-contribution
+ai-usage: ai-assisted
 ---
-
 # YARP Distributed tracing
 
 As an ASP.NET Core component, YARP can easily integrate into different tracing systems the same as any other ASP.NET Core application.
@@ -15,17 +14,17 @@ As an ASP.NET Core component, YARP can easily integrate into different tracing s
 
 ## Using OpenTelemetry (OTEL)
 
-YARP supports distributed tracing using OpenTelemetry (OTEL). When a request comes in, and there is a listener for Activities, then ASP.NET Core will propagate the Trace Context trace-id, or create one if necessary, and create new spans/activities for the work performed.
+YARP supports distributed tracing using [OpenTelemetry (OTEL)](https://opentelemetry.io/). When a request comes in, and there is a listener for Activities, then ASP.NET Core will propagate the [Trace Context](https://www.w3.org/TR/trace-context) trace-id, or create one if necessary, and create new spans/activities for the work performed.
 In addition YARP can create activities for:
 
 * Forwarding Requests
 * Active health checks for clusters
 
-These will only be created if there is a listener for the `ActivitySource` named `Yarp.ReverseProxy`.
+These will only be created if there is a listener for the [`ActivitySource`](/dotnet/core/diagnostics/distributed-tracing-instrumentation-walkthroughs#activitysource) named `Yarp.ReverseProxy`.
 
 ### Example: Application Insights
 
-For example, to monitor the traces with Application Insights, the proxy application needs to use the OpenTelemetry .NET and Azure Monitor SDKs.
+For example, to monitor the traces with Application Insights, the proxy application needs to use the [OpenTelemetry .NET](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry) and [Azure Monitor](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore) SDKs.
 
 `application.csproj`:
 
@@ -116,11 +115,12 @@ app.Run();
 
 Note that the `AddHttpClientInstrumentation()` call is required along with the `AddSource("Yarp.ReverseProxy")` call to make the request spans emit.
 
-See ASP.NET Documentation on Observability with OpenTelemetry.
+See [ASP.NET Documentation on Observability with OpenTelemetry](/dotnet/core/diagnostics/observability-with-otel).
+
 
 Provided that the traces are being logged to the same store for the proxy and destination servers, then the tracing analysis tools can correlate the requests and provide gant charts etc covering the end-to-end processing of the requests as they transition across the servers.
 
-The same pattern can be used with the built-in OTEL exporters for Jaeger and Zipkin, or with many of the APM vendors who are adopting OTEL.
+The same pattern can be used with the built-in OTEL exporters for Jaeger and Zipkin, or with many of the [APM vendors](https://opentelemetry.io/ecosystem/vendors/) who are adopting OTEL.
 
 ## Using custom tracing headers
 
@@ -137,5 +137,6 @@ services.AddReverseProxy()
     .ConfigureHttpClient((context, handler) => handler.ActivityHeadersPropagator = null);
 ```
 
-`DistributedContextPropagator`
-`DistributedContextPropagator.Fields`
+[B3 propagation]: https://github.com/openzipkin/b3-propagation
+[`DistributedContextPropagator`](/dotnet/api/system.diagnostics.distributedcontextpropagator)
+[`DistributedContextPropagator.Fields`](/dotnet/api/system.diagnostics.distributedcontextpropagator.fields)

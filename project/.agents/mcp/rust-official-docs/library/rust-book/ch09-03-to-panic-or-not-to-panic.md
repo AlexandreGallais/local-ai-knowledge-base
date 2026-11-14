@@ -1,14 +1,3 @@
----
-title: "ch09-03-to-panic-or-not-to-panic"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch09-03-to-panic-or-not-to-panic.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch09-03-to-panic-or-not-to-panic
-
 ## To `panic!` or Not to `panic!`
 
 So, how do you decide when you should call `panic!` and when you should return
@@ -46,6 +35,10 @@ that method isn’t the functionality under test. Because `panic!` is how a test
 is marked as a failure, calling `unwrap` or `expect` is exactly what should
 happen.
 
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="cases-in-which-you-have-more-information-than-the-compiler"></a>
+
 ### When You Have More Information Than the Compiler
 
 It would also be appropriate to call `expect` when you have some other logic
@@ -59,11 +52,7 @@ the reason you think you’ll never have an `Err` variant in the argument text.
 Here’s an example:
 
 ```rust
-use std::net::IpAddr;
-
-let home: IpAddr = "127.0.0.1"
-    .parse()
-    .expect("Hardcoded IP address should be valid");
+{{#rustdoc_include ../listings/ch09-error-handling/no-listing-08-unwrap-that-cant-fail/src/main.rs:here}}
 ```
 
 We’re creating an `IpAddr` instance by parsing a hardcoded string. We can see
@@ -93,8 +82,8 @@ more of the following:
 - Your code after this point needs to rely on not being in this bad state,
   rather than checking for the problem at every step.
 - There’s not a good way to encode this information in the types you use. We’ll
-  work through an example of what we mean in “Encoding States and Behavior as
-  Types” in Chapter 18.
+  work through an example of what we mean in [“Encoding States and Behavior as
+  Types”][encoding]<!-- ignore --> in Chapter 18.
 
 If someone calls your code and passes in values that don’t make sense, it’s
 best to return an error if you can so that the user of the library can decide
@@ -134,10 +123,14 @@ logic knowing that the compiler has already ensured that you have a valid
 value. For example, if you have a type rather than an `Option`, your program
 expects to have _something_ rather than _nothing_. Your code then doesn’t have
 to handle two cases for the `Some` and `None` variants: It will only have one
-case for definitely having a value. Code trying to pass <example-value> to your
+case for definitely having a value. Code trying to pass nothing to your
 function won’t even compile, so your function doesn’t have to check for that
 case at runtime. Another example is using an unsigned integer type such as
 `u32`, which ensures that the parameter is never negative.
+
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="creating-custom-types-for-validation"></a>
 
 ### Custom Types for Validation
 
@@ -145,7 +138,7 @@ Let’s take the idea of using Rust’s type system to ensure that we have a val
 value one step further and look at creating a custom type for validation.
 Recall the guessing game in Chapter 2 in which our code asked the user to guess
 a number between 1 and 100. We never validated that the user’s guess was
-between those numbers before checking it against our secret <example-value>; we only
+between those numbers before checking it against our secret number; we only
 validated that the guess was positive. In this case, the consequences were not
 very dire: Our output of “Too high” or “Too low” would still be correct. But it
 would be a useful enhancement to guide the user toward valid guesses and have
@@ -156,17 +149,18 @@ One way to do this would be to parse the guess as an `i32` instead of only a
 `u32` to allow potentially negative numbers, and then add a check for the
 number being in range, like so:
 
-**Listing** (src/main.rs)
+<Listing file-name="src/main.rs">
 
-```rust
-loop {
-    // --snip--
+```rust,ignore
+{{#rustdoc_include ../listings/ch09-error-handling/no-listing-09-guess-out-of-range/src/main.rs:here}}
 ```
+
+</Listing>
 
 The `if` expression checks whether our value is out of range, tells the user
 about the problem, and calls `continue` to start the next iteration of the loop
 and ask for another guess. After the `if` expression, we can proceed with the
-comparisons between `guess` and the secret <example-value> knowing that `guess` is
+comparisons between `guess` and the secret number knowing that `guess` is
 between 1 and 100.
 
 However, this is not an ideal solution: If it were absolutely critical that the
@@ -181,27 +175,13 @@ in their signatures and confidently use the values they receive. Listing 9-13
 shows one way to define a `Guess` type that will only create an instance of
 `Guess` if the `new` function receives a value between 1 and 100.
 
-**Listing 9-13: A `Guess` type that will only continue with values between 1 and 100** (src/guessing_game.rs)
+<Listing number="9-13" caption="A `Guess` type that will only continue with values between 1 and 100" file-name="src/guessing_game.rs">
 
 ```rust
-pub struct Guess {
-    value: i32,
-}
-
-impl Guess {
-    pub fn new(value: i32) -> Guess {
-        if value < 1 || value > 100 {
-            panic!("Guess value must be between 1 and 100, got {value}.");
-        }
-
-        Guess { value }
-    }
-
-    pub fn value(&self) -> i32 {
-        self.value
-    }
-}
+{{#rustdoc_include ../listings/ch09-error-handling/listing-09-13/src/guessing_game.rs}}
 ```
+
+</Listing>
 
 Note that this code in *src/guessing_game.rs* depends on adding a module
 declaration `mod guessing_game;` in *src/lib.rs* that we haven’t shown here.
@@ -252,3 +232,5 @@ situations will make your code more reliable in the face of inevitable problems.
 Now that you’ve seen useful ways that the standard library uses generics with
 the `Option` and `Result` enums, we’ll talk about how generics work and how you
 can use them in your code.
+
+[encoding]: ch18-03-oo-design-patterns.html#encoding-states-and-behavior-as-types

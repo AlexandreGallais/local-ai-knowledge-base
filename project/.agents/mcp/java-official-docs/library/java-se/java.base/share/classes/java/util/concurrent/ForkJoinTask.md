@@ -1,140 +1,144 @@
----
-title: "ForkJoinTask class (java.util.concurrent) (part 1 of 3)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/ForkJoinTask.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ForkJoinTask class (java.util.concurrent)
 
 ```java
 public abstract class ForkJoinTask<V> implements Future<V>, Serializable
 ```
 
-Abstract base class for tasks that run within a `ForkJoinPool`.
-A `ForkJoinTask` is a thread-like entity that is much
+Abstract base class for tasks that run within a {@link ForkJoinPool}.
+A {@code ForkJoinTask} is a thread-like entity that is much
 lighter weight than a normal thread.  Huge numbers of tasks and
 subtasks may be hosted by a small number of actual threads in a
 ForkJoinPool, at the price of some usage limitations.
 
-A "main" `ForkJoinTask` begins execution when it is
-explicitly submitted to a `ForkJoinPool`, or, if not already
-engaged in a ForkJoin computation, commenced in the `ForkJoinPool.commonPool()` via `fork`, `invoke`, or
+<p>A "main" {@code ForkJoinTask} begins execution when it is
+explicitly submitted to a {@link ForkJoinPool}, or, if not already
+engaged in a ForkJoin computation, commenced in the {@link
+ForkJoinPool#commonPool()} via {@link #fork}, {@link #invoke}, or
 related methods.  Once started, it will usually in turn start other
 subtasks.  As indicated by the name of this class, many programs
-using `ForkJoinTask` employ only methods `fork` and
-`join`, or derivatives such as invokeAll.  However, this class also
+using {@code ForkJoinTask} employ only methods {@link #fork} and
+{@link #join}, or derivatives such as {@link
+#invokeAll(ForkJoinTask...) invokeAll}.  However, this class also
 provides a number of other methods that can come into play in
 advanced usages, as well as extension mechanics that allow support
 of new forms of fork/join processing.
 
-A `ForkJoinTask` is a lightweight form of `Future`.
-The efficiency of `ForkJoinTask`s stems from a set of
+<p>A {@code ForkJoinTask} is a lightweight form of {@link Future}.
+The efficiency of {@code ForkJoinTask}s stems from a set of
 restrictions (that are only partially statically enforceable)
 reflecting their main use as computational tasks calculating pure
 functions or operating on purely isolated objects.  The primary
-coordination mechanisms are `fork`, that arranges
-asynchronous execution, and `join`, that doesn't proceed
+coordination mechanisms are {@link #fork}, that arranges
+asynchronous execution, and {@link #join}, that doesn't proceed
 until the task's result has been computed.  Computations should
-ideally avoid `synchronized` methods or blocks, and should
+ideally avoid {@code synchronized} methods or blocks, and should
 minimize other blocking synchronization apart from joining other
 tasks or using synchronizers such as Phasers that are advertised to
 cooperate with fork/join scheduling. Subdividable tasks should also
 not perform blocking I/O, and should ideally access variables that
 are completely independent of those accessed by other running
 tasks. These guidelines are loosely enforced by not permitting
-checked exceptions such as `IOExceptions` to be
+checked exceptions such as {@code IOExceptions} to be
 thrown. However, computations may still encounter unchecked
 exceptions, that are rethrown to callers attempting to join
-them. These exceptions may additionally include `RejectedExecutionException` stemming from internal resource
+them. These exceptions may additionally include {@link
+RejectedExecutionException} stemming from internal resource
 exhaustion, such as failure to allocate internal task
 queues. Rethrown exceptions behave in the same way as regular
 exceptions, but, when possible, contain stack traces (as displayed
-for example using `ex.printStackTrace()`) of both the thread
+for example using {@code ex.printStackTrace()}) of both the thread
 that initiated the computation as well as the thread actually
 encountering the exception; minimally only the latter.
 
-It is possible to define and use ForkJoinTasks that may block,
+<p>It is possible to define and use ForkJoinTasks that may block,
 but doing so requires three further considerations: (1) Completion
-of few if any *other* tasks should be dependent on a task
+of few if any <em>other</em> tasks should be dependent on a task
 that blocks on external synchronization or I/O. Event-style async
-tasks that are never joined (for example, those subclassing `CountedCompleter`) often fall into this category.  (2) To minimize
+tasks that are never joined (for example, those subclassing {@link
+CountedCompleter}) often fall into this category.  (2) To minimize
 resource impact, tasks should be small; ideally performing only the
-(possibly) blocking action. (3) Unless the `ForkJoinPool.ManagedBlocker` API is used, or the number of possibly
-blocked tasks is known to be less than the pool's `ForkJoinPool.getParallelism` level, the pool cannot guarantee that
+(possibly) blocking action. (3) Unless the {@link
+ForkJoinPool.ManagedBlocker} API is used, or the number of possibly
+blocked tasks is known to be less than the pool's {@link
+ForkJoinPool#getParallelism} level, the pool cannot guarantee that
 enough threads will be available to ensure progress or good
 performance.
 
-The primary method for awaiting completion and extracting
-results of a task is `join`, but there are several variants:
-The `Future.get` methods support interruptible and/or timed
-waits for completion and report results using `Future`
-conventions. Method `invoke` is semantically
-equivalent to `fork(); join()` but always attempts to begin
-execution in the current thread. The "*quiet*" forms of
+<p>The primary method for awaiting completion and extracting
+results of a task is {@link #join}, but there are several variants:
+The {@link Future#get} methods support interruptible and/or timed
+waits for completion and report results using {@code Future}
+conventions. Method {@link #invoke} is semantically
+equivalent to {@code fork(); join()} but always attempts to begin
+execution in the current thread. The "<em>quiet</em>" forms of
 these methods do not extract results or report exceptions. These
 may be useful when a set of tasks are being executed, and you need
 to delay processing of results or exceptions until all complete.
-Method `invokeAll` (available in multiple versions)
+Method {@code invokeAll} (available in multiple versions)
 performs the most common form of parallel invocation: forking a set
 of tasks and joining them all.
 
-In the most typical usages, a fork-join pair act like a call
+<p>In the most typical usages, a fork-join pair act like a call
 (fork) and return (join) from a parallel recursive function. As is
 the case with other forms of recursive calls, returns (joins)
-should be performed innermost-first. For example, `a.fork(); b.fork(); b.join(); a.join();` is likely to be substantially more
-efficient than joining `a` before `b`.
+should be performed innermost-first. For example, {@code a.fork();
+b.fork(); b.join(); a.join();} is likely to be substantially more
+efficient than joining {@code a} before {@code b}.
 
-The execution status of tasks may be queried at several levels
-of detail: `isDone` is true if a task completed in any way
+<p>The execution status of tasks may be queried at several levels
+of detail: {@link #isDone} is true if a task completed in any way
 (including the case where a task was cancelled without executing);
-`isCompletedNormally` is true if a task completed without
-cancellation or encountering an exception; `isCancelled` is
-true if the task was cancelled (in which case `getException()`
-returns a `CancellationException`); and
-`isCompletedAbnormally` is true if a task was either
-cancelled or encountered an exception, in which case `getException()` will return either the encountered exception or
-`CancellationException`.
+{@link #isCompletedNormally} is true if a task completed without
+cancellation or encountering an exception; {@link #isCancelled} is
+true if the task was cancelled (in which case {@link #getException()}
+returns a {@link CancellationException}); and
+{@link #isCompletedAbnormally} is true if a task was either
+cancelled or encountered an exception, in which case {@link
+#getException()} will return either the encountered exception or
+{@link CancellationException}.
 
-The ForkJoinTask class is not usually directly subclassed.
+<p>The ForkJoinTask class is not usually directly subclassed.
 Instead, you subclass one of the abstract classes that support a
-particular style of fork/join processing, typically `RecursiveAction` for most computations that do not return results,
-`RecursiveTask` for those that do, and `CountedCompleter` for those in which completed actions trigger
+particular style of fork/join processing, typically {@link
+RecursiveAction} for most computations that do not return results,
+{@link RecursiveTask} for those that do, and {@link
+CountedCompleter} for those in which completed actions trigger
 other actions.  Normally, a concrete ForkJoinTask subclass declares
 fields comprising its parameters, established in a constructor, and
-then defines a `compute` method that somehow uses the control
+then defines a {@code compute} method that somehow uses the control
 methods supplied by this base class.
 
-Method `join` and its variants are appropriate for use
+<p>Method {@link #join} and its variants are appropriate for use
 only when completion dependencies are acyclic; that is, the
 parallel computation can be described as a directed acyclic graph
 (DAG). Otherwise, executions may encounter a form of deadlock as
 tasks cyclically wait for each other.  However, this framework
 supports other methods and techniques (for example the use of
-`Phaser`, `helpQuiesce`, and `complete`) that
+{@link Phaser}, {@link #helpQuiesce}, and {@link #complete}) that
 may be of use in constructing custom subclasses for problems that
 are not statically structured as DAGs. To support such usages, a
-ForkJoinTask may be atomically *tagged* with a `short`
-value using `setForkJoinTaskTag` or `compareAndSetForkJoinTaskTag` and checked using `getForkJoinTaskTag`. The ForkJoinTask implementation does not use
-these `protected` methods or tags for any purpose, but they
+ForkJoinTask may be atomically <em>tagged</em> with a {@code short}
+value using {@link #setForkJoinTaskTag} or {@link
+#compareAndSetForkJoinTaskTag} and checked using {@link
+#getForkJoinTaskTag}. The ForkJoinTask implementation does not use
+these {@code protected} methods or tags for any purpose, but they
 may be of use in the construction of specialized subclasses.  For
 example, parallel graph traversals can use the supplied methods to
 avoid revisiting nodes/tasks that have already been processed.
 (Method names for tagging are bulky in part to encourage definition
 of methods that reflect their usage patterns.)
 
-Most base support methods are `final`, to prevent
+<p>Most base support methods are {@code final}, to prevent
 overriding of implementations that are intrinsically tied to the
 underlying lightweight task scheduling framework.  Developers
-creating new basic <example-value> of fork/join processing should minimally
-implement `protected` methods `exec`, `setRawResult`, and `getRawResult`, while also introducing
+creating new basic styles of fork/join processing should minimally
+implement {@code protected} methods {@link #exec}, {@link
+#setRawResult}, and {@link #getRawResult}, while also introducing
 an abstract computational method that can be implemented in its
-subclasses, possibly relying on other `protected` methods
+subclasses, possibly relying on other {@code protected} methods
 provided by this class.
 
-ForkJoinTasks should perform relatively small amounts of
+<p>ForkJoinTasks should perform relatively small amounts of
 computation. Large tasks should be split into smaller subtasks,
 usually via recursive decomposition. As a very rough rule of thumb,
 a task should perform more than 100 and less than 10000 basic
@@ -143,21 +147,20 @@ are too big, then parallelism cannot improve throughput. If too
 small, then memory and internal task maintenance overhead may
 overwhelm processing.
 
-This class provides `adapt` methods for `Runnable`
-and `Callable`, that may be of use when mixing execution of
-`ForkJoinTasks` with other kinds of tasks. When all tasks are
-of this form, consider using a pool constructed in *asyncMode*.
+<p>This class provides {@code adapt} methods for {@link Runnable}
+and {@link Callable}, that may be of use when mixing execution of
+{@code ForkJoinTasks} with other kinds of tasks. When all tasks are
+of this form, consider using a pool constructed in <em>asyncMode</em>.
 
-ForkJoinTasks are `Serializable`, which enables them to be
+<p>ForkJoinTasks are {@code Serializable}, which enables them to be
 used in extensions such as remote execution frameworks. It is
 sensible to serialize tasks only before or after, but not during,
 execution. Serialization is not relied on during execution itself.
 
-Parameters:
+@param <V> the type of the result of the task
 
-- `<V>`: the type of the result of the task
-
-**Since:** 1.7
+@since 1.7
+@author Doug Lea
 
 ## ForkJoinTask.ForkJoinTask()
 
@@ -174,16 +177,18 @@ public final ForkJoinTask<V> fork()
 ```
 
 Arranges to asynchronously execute this task in the pool the
-current task is running in, if applicable, or using the `ForkJoinPool.commonPool()` if not `inForkJoinPool`.  While
+current task is running in, if applicable, or using the {@link
+ForkJoinPool#commonPool()} if not {@link #inForkJoinPool}.  While
 it is not necessarily enforced, it is a usage error to fork a
 task more than once unless it has completed and been
 reinitialized.  Subsequent modifications to the state of this
 task or any data it operates on are not necessarily
 consistently observable by any thread other than the one
-executing it unless preceded by a call to `join` or
-related methods, or a call to `isDone` returning `true`.
+executing it unless preceded by a call to {@link #join} or
+related methods, or a call to {@link #isDone} returning {@code
+true}.
 
-**Returns:** `this`, to simplify usage
+@return {@code this}, to simplify usage
 
 ## ForkJoinTask.join()
 
@@ -192,14 +197,14 @@ public final V join()
 ```
 
 Returns the result of the computation when it
-is done.
-This method differs from `get()` in that abnormal
-completion results in `RuntimeException` or `Error`,
-not `ExecutionException`, and that interrupts of the
-calling thread do *not* cause the method to abruptly
-return by throwing `InterruptedException`.
+{@linkplain #isDone is done}.
+This method differs from {@link #get()} in that abnormal
+completion results in {@code RuntimeException} or {@code Error},
+not {@code ExecutionException}, and that interrupts of the
+calling thread do <em>not</em> cause the method to abruptly
+return by throwing {@code InterruptedException}.
 
-**Returns:** the computed result
+@return the computed result
 
 ## ForkJoinTask.invoke()
 
@@ -209,10 +214,10 @@ public final V invoke()
 
 Commences performing this task, awaits its completion if
 necessary, and returns its result, or throws an (unchecked)
-`RuntimeException` or `Error` if the underlying
+{@code RuntimeException} or {@code Error} if the underlying
 computation did so.
 
-**Returns:** the computed result
+@return the computed result
 
 ## ForkJoinTask.invokeAll(ForkJoinTask<?>, ForkJoinTask<?>)
 
@@ -220,25 +225,21 @@ computation did so.
 public static void invokeAll(ForkJoinTask<?> t1, ForkJoinTask<?> t2)
 ```
 
-Forks the given tasks, returning when `isDone` holds for
+Forks the given tasks, returning when {@code isDone} holds for
 each task or an (unchecked) exception is encountered, in which
 case the exception is rethrown. If more than one task
 encounters an exception, then this method throws any one of
 these exceptions. If any task encounters an exception, the
 other may be cancelled. However, the execution status of
 individual tasks is not guaranteed upon exceptional return. The
-status of each task may be obtained using `getException()` and related methods to check if they have been
+status of each task may be obtained using {@link
+#getException()} and related methods to check if they have been
 cancelled, completed normally or exceptionally, or left
 unprocessed.
 
-Parameters:
-
-- `t1`: the first task
-- `t2`: the second task
-
-Throws:
-
-- `NullPointerException`: if any task is null
+@param t1 the first task
+@param t2 the second task
+@throws NullPointerException if any task is null
 
 ## ForkJoinTask.invokeAll(ForkJoinTask<?>...)
 
@@ -246,24 +247,19 @@ Throws:
 public static void invokeAll(ForkJoinTask<?>... tasks)
 ```
 
-Forks the given tasks, returning when `isDone` holds for
+Forks the given tasks, returning when {@code isDone} holds for
 each task or an (unchecked) exception is encountered, in which
 case the exception is rethrown. If more than one task
 encounters an exception, then this method throws any one of
 these exceptions. If any task encounters an exception, others
 may be cancelled. However, the execution status of individual
 tasks is not guaranteed upon exceptional return. The status of
-each task may be obtained using `getException()` and
+each task may be obtained using {@link #getException()} and
 related methods to check if they have been cancelled, completed
 normally or exceptionally, or left unprocessed.
 
-Parameters:
-
-- `tasks`: the tasks
-
-Throws:
-
-- `NullPointerException`: if any task is null
+@param tasks the tasks
+@throws NullPointerException if any task is null
 
 ## ForkJoinTask.invokeAll(Collection<T>)
 
@@ -272,26 +268,21 @@ public static <T extends ForkJoinTask<?>> Collection<T> invokeAll(Collection<T> 
 ```
 
 Forks all tasks in the specified collection, returning when
-`isDone` holds for each task or an (unchecked) exception
+{@code isDone} holds for each task or an (unchecked) exception
 is encountered, in which case the exception is rethrown. If
 more than one task encounters an exception, then this method
 throws any one of these exceptions. If any task encounters an
 exception, others may be cancelled. However, the execution
 status of individual tasks is not guaranteed upon exceptional
-return. The status of each task may be obtained using `getException()` and related methods to check if they have been
+return. The status of each task may be obtained using {@link
+#getException()} and related methods to check if they have been
 cancelled, completed normally or exceptionally, or left
 unprocessed.
 
-Parameters:
-
-- `tasks`: the collection of tasks
-- `<T>`: the type of the values returned from the tasks
-
-**Returns:** the tasks argument, to simplify usage
-
-Throws:
-
-- `NullPointerException`: if tasks or any element are null
+@param tasks the collection of tasks
+@param <T> the type of the values returned from the tasks
+@return the tasks argument, to simplify usage
+@throws NullPointerException if tasks or any element are null
 
 ## ForkJoinTask.cancel(boolean)
 
@@ -302,27 +293,28 @@ public boolean cancel(boolean mayInterruptIfRunning)
 Attempts to cancel execution of this task. This attempt will
 fail if the task has already completed or could not be
 cancelled for some other reason. If successful, and this task
-has not started when `cancel` is called, execution of
+has not started when {@code cancel} is called, execution of
 this task is suppressed. After this method returns
-successfully, unless there is an intervening call to `reinitialize`, subsequent calls to `isCancelled`,
-`isDone`, and `cancel` will return `true`
-and calls to `join` and related methods will result in
-`CancellationException`.
+successfully, unless there is an intervening call to {@link
+#reinitialize}, subsequent calls to {@link #isCancelled},
+{@link #isDone}, and {@code cancel} will return {@code true}
+and calls to {@link #join} and related methods will result in
+{@code CancellationException}.
 
-This method may be overridden in subclasses, but if so, must
+<p>This method may be overridden in subclasses, but if so, must
 still ensure that these properties hold. In particular, the
-`cancel` method itself must not throw exceptions.
+{@code cancel} method itself must not throw exceptions.
 
-This method is designed to be invoked by *other*
+<p>This method is designed to be invoked by <em>other</em>
 tasks. To terminate the current task, you can just return or
 throw an unchecked exception from its computation method, or
-invoke `completeExceptionally(Throwable)`.
+invoke {@link #completeExceptionally(Throwable)}.
 
-Parameters:
+@param mayInterruptIfRunning this value has no effect in the
+default implementation because interrupts are not used to
+control cancellation.
 
-- `mayInterruptIfRunning`: this value has no effect in the default implementation because interrupts are not used to control cancellation.
-
-**Returns:** `true` if this task is now cancelled
+@return {@code true} if this task is now cancelled
 
 ## ForkJoinTask.isCompletedAbnormally()
 
@@ -330,9 +322,9 @@ Parameters:
 public final boolean isCompletedAbnormally()
 ```
 
-Returns `true` if this task threw an exception or was cancelled.
+Returns {@code true} if this task threw an exception or was cancelled.
 
-**Returns:** `true` if this task threw an exception or was cancelled
+@return {@code true} if this task threw an exception or was cancelled
 
 ## ForkJoinTask.isCompletedNormally()
 
@@ -340,10 +332,10 @@ Returns `true` if this task threw an exception or was cancelled.
 public final boolean isCompletedNormally()
 ```
 
-Returns `true` if this task completed without throwing an
+Returns {@code true} if this task completed without throwing an
 exception and was not cancelled.
 
-**Returns:** `true` if this task completed without throwing an
+@return {@code true} if this task completed without throwing an
 exception and was not cancelled
 
 ## ForkJoinTask.state()
@@ -352,7 +344,7 @@ exception and was not cancelled
 public State state()
 ```
 
-**Since:** 19
+@since 19
 
 ## ForkJoinTask.resultNow()
 
@@ -360,7 +352,7 @@ public State state()
 public V resultNow()
 ```
 
-**Since:** 19
+@since 19
 
 ## ForkJoinTask.exceptionNow()
 
@@ -368,7 +360,7 @@ public V resultNow()
 public Throwable exceptionNow()
 ```
 
-**Since:** 19
+@since 19
 
 ## ForkJoinTask.getException()
 
@@ -377,7 +369,502 @@ public final Throwable getException()
 ```
 
 Returns the exception thrown by the base computation, or a
-`CancellationException` if cancelled, or `null` if
+{@code CancellationException} if cancelled, or {@code null} if
 none or if the method has not yet completed.
 
-**Returns:** the exception, or `null` if none
+@return the exception, or {@code null} if none
+
+## ForkJoinTask.completeExceptionally(Throwable)
+
+```java
+public void completeExceptionally(Throwable ex)
+```
+
+Completes this task abnormally, and if not already aborted or
+cancelled, causes it to throw the given exception upon
+{@code join} and related operations. This method may be used
+to induce exceptions in asynchronous tasks, or to force
+completion of tasks that would not otherwise complete.  Its use
+in other situations is discouraged.  This method is
+overridable, but overridden versions must invoke {@code super}
+implementation to maintain guarantees.
+
+@param ex the exception to throw. If this exception is not a
+{@code RuntimeException} or {@code Error}, the actual exception
+thrown will be a {@code RuntimeException} with cause {@code ex}.
+
+## ForkJoinTask.complete(V)
+
+```java
+public void complete(V value)
+```
+
+Completes this task, and if not already aborted or cancelled,
+returning the given value as the result of subsequent
+invocations of {@code join} and related operations. This method
+may be used to provide results for asynchronous tasks, or to
+provide alternative handling for tasks that would not otherwise
+complete normally. Its use in other situations is
+discouraged. This method is overridable, but overridden
+versions must invoke {@code super} implementation to maintain
+guarantees.
+
+@param value the result value for this task
+
+## ForkJoinTask.quietlyComplete()
+
+```java
+public final void quietlyComplete()
+```
+
+Completes this task normally without setting a value. The most
+recent value established by {@link #setRawResult} (or {@code
+null} by default) will be returned as the result of subsequent
+invocations of {@code join} and related operations.
+
+@since 1.8
+
+## ForkJoinTask.get()
+
+```java
+public final V get() throws InterruptedException, ExecutionException
+```
+
+Waits if necessary for the computation to complete, and then
+retrieves its result.
+
+@return the computed result
+@throws CancellationException if the computation was cancelled
+@throws ExecutionException if the computation threw an
+exception
+@throws InterruptedException if the current thread is not a
+member of a ForkJoinPool and was interrupted while waiting
+
+## ForkJoinTask.get(long, TimeUnit)
+
+```java
+public final V get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException
+```
+
+Waits if necessary for at most the given time for the computation
+to complete, and then retrieves its result, if available.
+
+@param timeout the maximum time to wait
+@param unit the time unit of the timeout argument
+@return the computed result
+@throws CancellationException if the computation was cancelled
+@throws ExecutionException if the computation threw an
+exception
+@throws InterruptedException if the current thread is not a
+member of a ForkJoinPool and was interrupted while waiting
+@throws TimeoutException if the wait timed out
+
+## ForkJoinTask.quietlyJoin()
+
+```java
+public final void quietlyJoin()
+```
+
+Joins this task, without returning its result or throwing its
+exception. This method may be useful when processing
+collections of tasks when some have been cancelled or otherwise
+known to have aborted.
+
+## ForkJoinTask.quietlyInvoke()
+
+```java
+public final void quietlyInvoke()
+```
+
+Commences performing this task and awaits its completion if
+necessary, without returning its result or throwing its
+exception.
+
+## ForkJoinTask.quietlyJoin(long, TimeUnit)
+
+```java
+public final boolean quietlyJoin(long timeout, TimeUnit unit) throws InterruptedException
+```
+
+Tries to join this task, returning true if it completed
+(possibly exceptionally) before the given timeout elapsed and
+the current thread has not been interrupted.
+
+@param timeout the maximum time to wait
+@param unit the time unit of the timeout argument
+@return true if this task completed
+@throws InterruptedException if the current thread was
+interrupted while waiting
+@since 19
+
+## ForkJoinTask.quietlyJoinUninterruptibly(long, TimeUnit)
+
+```java
+public final boolean quietlyJoinUninterruptibly(long timeout, TimeUnit unit)
+```
+
+Tries to join this task, returning true if it completed
+(possibly exceptionally) before the given timeout elapsed.
+
+@param timeout the maximum time to wait
+@param unit the time unit of the timeout argument
+@return true if this task completed
+@since 19
+
+## ForkJoinTask.helpQuiesce()
+
+```java
+public static void helpQuiesce()
+```
+
+Possibly executes tasks until the pool hosting the current task
+{@linkplain ForkJoinPool#isQuiescent is quiescent}.  This
+method may be of use in designs in which many tasks are forked,
+but none are explicitly joined, instead executing them until
+all are processed.
+
+## ForkJoinTask.reinitialize()
+
+```java
+public void reinitialize()
+```
+
+Resets the internal bookkeeping state of this task, allowing a
+subsequent {@code fork}. This method allows repeated reuse of
+this task, but only if reuse occurs when this task has either
+never been forked, or has been forked, then completed and all
+outstanding joins of this task have also completed. Effects
+under any other usage conditions are not guaranteed.
+This method may be useful when executing
+pre-constructed trees of subtasks in loops.
+
+<p>Upon completion of this method, {@code isDone()} reports
+{@code false}, and {@code getException()} reports {@code
+null}. However, the value returned by {@code getRawResult} is
+unaffected. To clear this value, you can invoke {@code
+setRawResult(null)}.
+
+## ForkJoinTask.getPool()
+
+```java
+public static ForkJoinPool getPool()
+```
+
+Returns the pool hosting the current thread, or {@code null}
+if the current thread is executing outside of any ForkJoinPool.
+
+<p>This method returns {@code null} if and only if {@link
+#inForkJoinPool} returns {@code false}.
+
+@return the pool, or {@code null} if none
+
+## ForkJoinTask.inForkJoinPool()
+
+```java
+public static boolean inForkJoinPool()
+```
+
+Returns {@code true} if the current thread is a {@link
+ForkJoinWorkerThread} executing as a ForkJoinPool computation.
+
+@return {@code true} if the current thread is a {@link
+ForkJoinWorkerThread} executing as a ForkJoinPool computation,
+or {@code false} otherwise
+
+## ForkJoinTask.tryUnfork()
+
+```java
+public boolean tryUnfork()
+```
+
+Tries to unschedule this task for execution. This method will
+typically (but is not guaranteed to) succeed if this task is
+the most recently forked task by the current thread, and has
+not commenced executing in another thread.  This method may be
+useful when arranging alternative local processing of tasks
+that could have been, but were not, stolen.
+
+@return {@code true} if unforked
+
+## ForkJoinTask.getQueuedTaskCount()
+
+```java
+public static int getQueuedTaskCount()
+```
+
+Returns an estimate of the number of tasks that have been
+forked by the current worker thread but not yet executed. This
+value may be useful for heuristic decisions about whether to
+fork other tasks.
+
+@return the number of tasks
+
+## ForkJoinTask.getSurplusQueuedTaskCount()
+
+```java
+public static int getSurplusQueuedTaskCount()
+```
+
+Returns an estimate of how many more locally queued tasks are
+held by the current worker thread than there are other worker
+threads that might steal them, or zero if this thread is not
+operating in a ForkJoinPool. This value may be useful for
+heuristic decisions about whether to fork other tasks. In many
+usages of ForkJoinTasks, at steady state, each worker should
+aim to maintain a small constant surplus (for example, 3) of
+tasks, and to process computations locally if this threshold is
+exceeded.
+
+@return the surplus number of tasks, which may be negative
+
+## ForkJoinTask.getRawResult()
+
+```java
+public abstract V getRawResult()
+```
+
+Returns the result that would be returned by {@link #join}, even
+if this task completed abnormally, or {@code null} if this task
+is not known to have been completed.  This method is designed
+to aid debugging, as well as to support extensions. Its use in
+any other context is discouraged.
+
+@return the result, or {@code null} if not completed
+
+## ForkJoinTask.setRawResult(V)
+
+```java
+protected abstract void setRawResult(V value)
+```
+
+Forces the given value to be returned as a result.  This method
+is designed to support extensions, and should not in general be
+called otherwise.
+
+@param value the value
+
+## ForkJoinTask.exec()
+
+```java
+protected abstract boolean exec()
+```
+
+Immediately performs the base action of this task and returns
+true if, upon return from this method, this task is guaranteed
+to have completed. This method may return false otherwise, to
+indicate that this task is not necessarily complete (or is not
+known to be complete), for example in asynchronous actions that
+require explicit invocations of completion methods. This method
+may also throw an (unchecked) exception to indicate abnormal
+exit. This method is designed to support extensions, and should
+not in general be called otherwise.
+
+@return {@code true} if this task is known to have completed normally
+
+## ForkJoinTask.peekNextLocalTask()
+
+```java
+protected static ForkJoinTask<?> peekNextLocalTask()
+```
+
+Returns, but does not unschedule or execute, a task queued by
+the current thread but not yet executed, if one is immediately
+available. There is no guarantee that this task will actually
+be polled or executed next. Conversely, this method may return
+null even if a task exists but cannot be accessed without
+contention with other threads.  This method is designed
+primarily to support extensions, and is unlikely to be useful
+otherwise.
+
+@return the next task, or {@code null} if none are available
+
+## ForkJoinTask.pollNextLocalTask()
+
+```java
+protected static ForkJoinTask<?> pollNextLocalTask()
+```
+
+Unschedules and returns, without executing, the next task
+queued by the current thread but not yet executed, if the
+current thread is operating in a ForkJoinPool.  This method is
+designed primarily to support extensions, and is unlikely to be
+useful otherwise.
+
+@return the next task, or {@code null} if none are available
+
+## ForkJoinTask.pollTask()
+
+```java
+protected static ForkJoinTask<?> pollTask()
+```
+
+If the current thread is operating in a ForkJoinPool,
+unschedules and returns, without executing, the next task
+queued by the current thread but not yet executed, if one is
+available, or if not available, a task that was forked by some
+other thread, if available. Availability may be transient, so a
+{@code null} result does not necessarily imply quiescence of
+the pool this task is operating in.  This method is designed
+primarily to support extensions, and is unlikely to be useful
+otherwise.
+
+@return a task, or {@code null} if none are available
+
+## ForkJoinTask.pollSubmission()
+
+```java
+protected static ForkJoinTask<?> pollSubmission()
+```
+
+If the current thread is operating in a ForkJoinPool,
+unschedules and returns, without executing, a task externally
+submitted to the pool, if one is available. Availability may be
+transient, so a {@code null} result does not necessarily imply
+quiescence of the pool.  This method is designed primarily to
+support extensions, and is unlikely to be useful otherwise.
+
+@return a task, or {@code null} if none are available
+@since 9
+
+## ForkJoinTask.getForkJoinTaskTag()
+
+```java
+public final short getForkJoinTaskTag()
+```
+
+Returns the tag for this task.
+
+@return the tag for this task
+@since 1.8
+
+## ForkJoinTask.setForkJoinTaskTag(short)
+
+```java
+public final short setForkJoinTaskTag(short newValue)
+```
+
+Atomically sets the tag value for this task and returns the old value.
+
+@param newValue the new tag value
+@return the previous value of the tag
+@since 1.8
+
+## ForkJoinTask.compareAndSetForkJoinTaskTag(short, short)
+
+```java
+public final boolean compareAndSetForkJoinTaskTag(short expect, short update)
+```
+
+Atomically conditionally sets the tag value for this task.
+Among other applications, tags can be used as visit markers
+in tasks operating on graphs, as in methods that check: {@code
+if (task.compareAndSetForkJoinTaskTag((short)0, (short)1))}
+before processing, otherwise exiting because the node has
+already been visited.
+
+@param expect the expected tag value
+@param update the new tag value
+@return {@code true} if successful; i.e., the current value was
+equal to {@code expect} and was changed to {@code update}.
+@since 1.8
+
+## ForkJoinTask.adapt(Runnable)
+
+```java
+public static ForkJoinTask<?> adapt(Runnable runnable)
+```
+
+Returns a new {@code ForkJoinTask} that performs the {@code run}
+method of the given {@code Runnable} as its action, and returns
+a null result upon {@link #join}.
+
+@param runnable the runnable action
+@return the task
+
+## ForkJoinTask.adapt(Runnable, T)
+
+```java
+public static <T> ForkJoinTask<T> adapt(Runnable runnable, T result)
+```
+
+Returns a new {@code ForkJoinTask} that performs the {@code run}
+method of the given {@code Runnable} as its action, and returns
+the given result upon {@link #join}.
+
+@param runnable the runnable action
+@param result the result upon completion
+@param <T> the type of the result
+@return the task
+
+## ForkJoinTask.adapt(Callable<? extends T>)
+
+```java
+public static <T> ForkJoinTask<T> adapt(Callable<? extends T> callable)
+```
+
+Returns a new {@code ForkJoinTask} that performs the {@code call}
+method of the given {@code Callable} as its action, and returns
+its result upon {@link #join}, translating any checked exceptions
+encountered into {@code RuntimeException}.
+
+@param callable the callable action
+@param <T> the type of the callable's result
+@return the task
+
+## ForkJoinTask.adaptInterruptible(Callable<? extends T>)
+
+```java
+public static <T> ForkJoinTask<T> adaptInterruptible(Callable<? extends T> callable)
+```
+
+Returns a new {@code ForkJoinTask} that performs the {@code call}
+method of the given {@code Callable} as its action, and returns
+its result upon {@link #join}, translating any checked exceptions
+encountered into {@code RuntimeException}.  Additionally,
+invocations of {@code cancel} with {@code mayInterruptIfRunning
+true} will attempt to interrupt the thread performing the task.
+
+@param callable the callable action
+@param <T> the type of the callable's result
+@return the task
+
+@since 19
+
+## ForkJoinTask.adaptInterruptible(Runnable, T)
+
+```java
+public static <T> ForkJoinTask<T> adaptInterruptible(Runnable runnable, T result)
+```
+
+Returns a new {@code ForkJoinTask} that performs the {@code run}
+method of the given {@code Runnable} as its action, and returns
+the given result upon {@link #join}, translating any checked exceptions
+encountered into {@code RuntimeException}.  Additionally,
+invocations of {@code cancel} with {@code mayInterruptIfRunning
+true} will attempt to interrupt the thread performing the task.
+
+@param runnable the runnable action
+@param result the result upon completion
+@param <T> the type of the result
+@return the task
+
+@since 22
+
+## ForkJoinTask.adaptInterruptible(Runnable)
+
+```java
+public static ForkJoinTask<?> adaptInterruptible(Runnable runnable)
+```
+
+Returns a new {@code ForkJoinTask} that performs the {@code
+run} method of the given {@code Runnable} as its action, and
+returns null upon {@link #join}, translating any checked
+exceptions encountered into {@code RuntimeException}.
+Additionally, invocations of {@code cancel} with {@code
+mayInterruptIfRunning true} will attempt to interrupt the
+thread performing the task.
+
+@param runnable the runnable action
+@return the task
+
+@since 22

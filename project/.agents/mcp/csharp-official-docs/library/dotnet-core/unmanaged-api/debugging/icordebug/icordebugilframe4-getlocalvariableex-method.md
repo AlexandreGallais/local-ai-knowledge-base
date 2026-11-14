@@ -1,12 +1,18 @@
 ---
+description: "Learn more about: ICorDebugILFrame4::GetLocalVariableEx Method"
 title: "ICorDebugILFrame4::GetLocalVariableEx Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugilframe4-getlocalvariableex-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "cpp"
+api_name:
+  - "ICorDebugILFrame4.GetCodeEx"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugILFrame4::GetLocalVariableEx Method
 
 Gets the value of the specified local variable in this intermediate language (IL) stack frame, and optionally accesses a variable added in profiler ReJIT instrumentation.
@@ -24,7 +30,7 @@ HRESULT GetLocalVariableEx(
 ## Parameters
 
  `flags`
- [in] An ILCodeKind enumeration member that specifies whether a variable added in profiler ReJIT instrumentation is included in the frame.
+ [in] An [ILCodeKind](ilcodekind-enumeration.md) enumeration member that specifies whether a variable added in profiler ReJIT instrumentation is included in the frame.
 
  `dwIndex`
  [in] The index of the local variable in the IL stack frame.
@@ -34,11 +40,11 @@ HRESULT GetLocalVariableEx(
 
 ## Remarks
 
-This method is similar to the GetLocalVariable method, except that it optionally accesses a variable added in profiler ReJIT instrumentation. Calling this method with a `flags` value of `ILCODE_ORIGINAL_IL` is equivalent to calling GetLocalVariable; if the method is instrumented with additional local variables, those variables cannot be accessed. `ILCODE_REJIT_IL` allows the debugger to access the local variables added in profiler ReJIT instrumentation. If the IL is not instrumented, the method returns `E_INVALIDARG`.
+This method is similar to the [GetLocalVariable](icordebugilframe-getlocalvariable-method.md) method, except that it optionally accesses a variable added in profiler ReJIT instrumentation. Calling this method with a `flags` value of `ILCODE_ORIGINAL_IL` is equivalent to calling [GetLocalVariable](icordebugilframe-getlocalvariable-method.md); if the method is instrumented with additional local variables, those variables cannot be accessed. `ILCODE_REJIT_IL` allows the debugger to access the local variables added in profiler ReJIT instrumentation. If the IL is not instrumented, the method returns `E_INVALIDARG`.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -48,5 +54,5 @@ This method is similar to the GetLocalVariable method, except that it optionally
 
 ## See also
 
-- ICorDebugILFrame4 Interface
-- ReJIT: A How-To Guide
+- [ICorDebugILFrame4 Interface](icordebugilframe4-interface.md)
+- [ReJIT: A How-To Guide](/archive/blogs/davbr/rejit-a-how-to-guide)

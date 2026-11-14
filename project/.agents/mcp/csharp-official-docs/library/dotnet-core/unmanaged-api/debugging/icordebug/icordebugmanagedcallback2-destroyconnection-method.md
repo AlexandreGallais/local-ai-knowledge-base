@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugManagedCallback2::DestroyConnection Method"
 title: "ICorDebugManagedCallback2::DestroyConnection Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmanagedcallback2-destroyconnection-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugManagedCallback2.DestroyConnection"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugManagedCallback2::DestroyConnection"
+helpviewer_keywords:
+  - "DestroyConnection method [.NET debugging]"
+  - "ICorDebugManagedCallback2::DestroyConnection method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugManagedCallback2::DestroyConnection Method
 
 Notifies the debugger that the specified connection has been terminated.
@@ -30,11 +39,11 @@ HRESULT DestroyConnection (
 
 ## Remarks
 
-A `DestroyConnection` callback will be fired when a host calls ICLRDebugManager::EndConnection in the hosting API.
+A `DestroyConnection` callback will be fired when a host calls [ICLRDebugManager::EndConnection](../../../../framework/unmanaged-api/hosting/iclrdebugmanager-endconnection-method.md) in the hosting API.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -44,5 +53,5 @@ A `DestroyConnection` callback will be fired when a host calls ICLRDebugManager:
 
 ## See also
 
-- ICorDebugManagedCallback2 Interface
-- ICorDebugManagedCallback Interface
+- [ICorDebugManagedCallback2 Interface](icordebugmanagedcallback2-interface.md)
+- [ICorDebugManagedCallback Interface](icordebugmanagedcallback-interface.md)

@@ -1,17 +1,8 @@
----
-title: "Input format"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/input-format.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[input]
 # Input format
 
 r[input.syntax]
-```grammar
+```grammar,lexer
 CHAR -> [U+0000-U+D7FF U+E000-U+10FFFF] // a Unicode scalar value
 
 ASCII -> [U+0000-U+007F]
@@ -58,7 +49,7 @@ r[input.tokenization]
 
 The resulting sequence of characters is then converted into tokens as described in the remainder of this chapter.
 
-> **Note:**
+> [!NOTE]
 > The standard library [`include!`] macro applies the following transformations to the file it reads:
 >
 > - Byte order mark removal.
@@ -66,3 +57,8 @@ The resulting sequence of characters is then converted into tokens as described 
 > - Shebang removal when invoked in an item context (as opposed to expression or statement contexts).
 >
 > The [`include_str!`] and [`include_bytes!`] macros do not apply these transformations.
+
+[BYTE ORDER MARK]: https://en.wikipedia.org/wiki/Byte_order_mark#UTF-8
+[Crates and source files]: crates-and-source-files.md
+[shebang]: shebang.md
+[whitespace]: whitespace.md

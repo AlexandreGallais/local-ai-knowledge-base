@@ -1,17 +1,10 @@
----
-title: "vitest/prefer-mock-return-shorthand"
-tool: "eslint-vitest"
-version: "1.6"
-source: "https://github.com/vitest-dev/eslint-plugin-vitest/blob/c5df1054a25044a7ca5baf07461b7aee1f15f5f2/docs/rules/prefer-mock-return-shorthand.md"
-commit: "c5df1054a25044a7ca5baf07461b7aee1f15f5f2"
-license: "MIT"
----
-
 # vitest/prefer-mock-return-shorthand
 
 📝 Prefer mock return shorthands.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 When working with mocks of functions that return simple values, vitest provides
 some API sugar functions to reduce the amount of boilerplate you have to write.

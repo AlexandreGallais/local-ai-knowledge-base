@@ -1,27 +1,24 @@
 ---
+description: "Learn more about: Extending XSLT Style Sheets"
 title: "Extending XSLT Style Sheets"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/extending-xslt-style-sheets.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+ms.assetid: df4ba2bf-a99e-4d22-bbf3-04fc67669dbc
 ---
-
 # Extending XSLT Style Sheets
 
-This section describes the different methods of extending the XSLT functionality. You can add extension objects or parameters using the `System.Xml.Xsl.XsltArgumentList` class. The extension objects or parameters can then be called from the style sheet. In addition, you can also embed script blocks into the style sheet by using the `msxsl:script` element.
+This section describes the different methods of extending the XSLT functionality. You can add extension objects or parameters using the <xref:System.Xml.Xsl.XsltArgumentList> class. The extension objects or parameters can then be called from the style sheet. In addition, you can also embed script blocks into the style sheet by using the `msxsl:script` element.  
+  
+## In This Section  
 
-## In This Section
+ [XSLT Extension Objects](xslt-extension-objects.md)  
+ Discusses using the <xref:System.Xml.Xsl.XsltArgumentList> class to process XSLT extension objects.  
+  
+ [XSLT Parameters](xslt-parameters.md)  
+ Discusses using the <xref:System.Xml.Xsl.XsltArgumentList> class to process XSLT parameters.  
+  
+ [Script Blocks Using msxsl:script](script-blocks-using-msxsl-script.md)  
+ Discusses using the `msxsl:script` element.  
+  
+## Related Sections  
 
- XSLT Extension Objects
- Discusses using the `System.Xml.Xsl.XsltArgumentList` class to process XSLT extension objects.
-
- XSLT Parameters
- Discusses using the `System.Xml.Xsl.XsltArgumentList` class to process XSLT parameters.
-
- Script Blocks Using msxsl:script
- Discusses using the `msxsl:script` element.
-
-## Related Sections
-
- XSLT Transformations
+ [XSLT Transformations](xslt-transformations.md)

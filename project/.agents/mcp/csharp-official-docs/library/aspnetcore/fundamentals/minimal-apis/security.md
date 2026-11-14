@@ -1,13 +1,17 @@
 ---
-title: "Authentication and authorization in Minimal APIs"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/minimal-apis/security.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Authentication and authorization in Minimal APIs
+ai-usage: ai-assisted
+content_well_notification: AI-contribution
+description: Learn how to configure authentication and authorization in Minimal API apps, explore concepts, define policies, and run development tests.
+monikerRange: '>= aspnetcore-7.0'
+ms.date: 04/28/2026
+
+# customer intent: As an ASP.NET developer, I want to use authentication and authorization in Minimal API apps, so I can manage user access to my apps.
 ---
 
 # Authentication and authorization in Minimal APIs
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
 Minimal APIs support all authentication and authorization options available in ASP.NET Core, and provide extra functionality to improve the experience for managing authentication.
 
@@ -17,8 +21,8 @@ This article describes the support for authentication and authorization in Minim
 
 Authentication is the process of determining a user's identity while authorization is the process of determining whether a user has access to a resource. Both authentication and authorization scenarios share similar implementation semantics in ASP.NET Core.
 
-* The authentication service, `Microsoft.AspNetCore.Authentication.IAuthenticationService`, handles all authentication and is used by authentication middleware.
-* The authorization service, `Microsoft.AspNetCore.Authorization.IAuthorizationService`, manages all authorization and is used by the authorization middleware.
+* The authentication service, <xref:Microsoft.AspNetCore.Authentication.IAuthenticationService>, handles all authentication and is used by authentication [middleware](../middleware/index.md#middleware-added-automatically-by-webapplication).
+* The authorization service, <xref:Microsoft.AspNetCore.Authorization.IAuthorizationService>, manages all authorization and is used by the authorization middleware.
 
 ### Authentication service
 
@@ -28,72 +32,38 @@ The authentication service uses registered authentication handlers to complete a
 
 In the authorization layer, there are two strategies for determining user access to resources:
 
-* **Role-based strategies** determine a user's access based on their assigned role, such as `Administrator` or `User`. For more information, see Role-based authorization in ASP.NET Core.
+* **Role-based strategies** determine a user's access based on their assigned role, such as `Administrator` or `User`. For more information, see [Role-based authorization in ASP.NET Core](../../security/authorization/roles.md).
 
-* **Claim-based strategies** determine a user's access based on claims issued by a central authority. For more information, see Claim-based authorization in ASP.NET Core.
+* **Claim-based strategies** determine a user's access based on claims issued by a central authority. For more information, see [Claim-based authorization in ASP.NET Core](../../security/authorization/claims.md).
 
-In ASP.NET Core, both strategies are captured into an authorization requirement. The authorization service uses authorization handlers to determine whether or not a particular user meets the authorization requirements for a resource.
+In ASP.NET Core, both strategies are captured into an authorization requirement. The authorization service uses authorization handlers to determine whether or not a particular user meets the authorization requirements for a resource. 
 
 ## Enable authentication in minimal apps
 
-To enable authentication, call the AddAuthentication method to register the required authentication services on the app's service provider.
+To enable authentication, call the [AddAuthentication](/dotnet/api/microsoft.extensions.dependencyinjection.authenticationservicecollectionextensions.addauthentication) method to register the required authentication services on the app's service provider.
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddAuthentication();
-var app = builder.Build();
+:::code language="csharp" source="~/fundamentals/minimal-apis/security/samples/MinApiAuth/MinApiAuth/Program.cs" id="snippet_1" highlight="2":::
 
-app.MapGet("/", () => "Hello World!");
-app.Run();
-```
-Typically, a specific authentication strategy is used. In the following sample, the app is configured with support for JSON Web Token (JWT) bearer-based authentication. This example makes use of the APIs available in the Microsoft.AspNetCore.Authentication.JwtBearer NuGet package.
+Typically, a specific authentication strategy is used. In the following sample, the app is configured with support for JSON Web Token (JWT) bearer-based authentication. This example makes use of the APIs available in the [Microsoft.AspNetCore.Authentication.JwtBearer](https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.JwtBearer) NuGet package.
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-// Requires Microsoft.AspNetCore.Authentication.JwtBearer
-builder.Services.AddAuthentication().AddJwtBearer();
-var app = builder.Build();
+:::code language="csharp" source="~/fundamentals/minimal-apis/security/samples/MinApiAuth/MinApiAuth/Program.cs" id="snippet_jwt1" highlight="2-3":::
 
-app.MapGet("/", () => "Hello World!");
-app.Run();
-```
-By default, the WebApplication automatically registers the authentication and authorization middleware if certain authentication and authorization services are enabled. In the following sample, it's not necessary to invoke the UseAuthentication or UseAuthorization methods to register the middleware. WebApplication automatically completes the registration after calling the `AddAuthentication` or `AddAuthorization` method.
+By default, the [WebApplication](/dotnet/api/microsoft.aspnetcore.builder.webapplication) automatically registers the authentication and authorization middleware if certain authentication and authorization services are enabled. In the following sample, it's not necessary to invoke the [UseAuthentication](/dotnet/api/microsoft.aspnetcore.builder.authappbuilderextensions.useauthentication) or [UseAuthorization](/dotnet/api/microsoft.aspnetcore.builder.authorizationappbuilderextensions.useauthorization) methods to register the middleware. [WebApplication](/dotnet/api/microsoft.aspnetcore.builder.webapplication) automatically completes the registration after calling the `AddAuthentication` or `AddAuthorization` method.
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddAuthentication().AddJwtBearer();
-builder.Services.AddAuthorization();
-var app = builder.Build();
+:::code language="csharp" source="~/fundamentals/minimal-apis/security/samples/MinApiAuth/MinApiAuth/Program.cs" id="snippet_jwt2":::
 
-app.MapGet("/", () => "Hello World!");
-app.Run();
-```
-In some cases, such as controlling middleware order, it's necessary to explicitly register authentication and authorization. In the following sample, the authentication middleware runs _after_ the CORS middleware runs. For more information on middleware and this automatic behavior, see Middleware in ASP.NET Core apps.
+In some cases, such as controlling middleware order, it's necessary to explicitly register authentication and authorization. In the following sample, the authentication middleware runs _after_ the CORS middleware runs. For more information on middleware and this automatic behavior, see [Middleware in ASP.NET Core apps](../middleware/index.md#middleware-added-automatically-by-webapplication).
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
+:::code language="csharp" source="~/fundamentals/minimal-apis/security/samples/MinApiAuth/MinApiAuth/Program.cs" id="snippet_after" highlight="9-11":::
 
-builder.Services.AddCors();
-builder.Services.AddAuthentication().AddJwtBearer();
-builder.Services.AddAuthorization();
-
-var app = builder.Build();
-
-app.UseCors();
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapGet("/", () => "Hello World!");
-app.Run();
-```
 ### Configure authentication strategy
 
 Authentication strategies typically support various configurations that are loaded via options. Minimal apps support loading options from configuration for the following authentication strategies:
 
-* JWT bearer-based authentication
-* OpenID Connect-based authentication
+* [JWT bearer-based authentication](https://jwt.io/introduction#what-is-json-web-token)
+* [OpenID Connect-based authentication](https://openid.net/developers/how-connect-works/)
 
-The ASP.NET Core framework expects to find these options under the `Authentication:Schemes:{SchemeName}` section in the configuration. In the following sample, two different schemes, `Bearer` and `LocalAuthIssuer`, are defined with their respective options. The `Authentication:DefaultScheme` option can be used to configure the default authentication strategy.
+The ASP.NET Core framework expects to find these options under the `Authentication:Schemes:{SchemeName}` section in the [configuration](../configuration/index.md). In the following sample, two different schemes, `Bearer` and `LocalAuthIssuer`, are defined with their respective options. The `Authentication:DefaultScheme` option can be used to configure the default authentication strategy.
 
 ```json
 {
@@ -128,18 +98,8 @@ In the _Program.cs_ file, two JWT bearer-based authentication strategies are reg
 
 The scheme name is used to uniquely identify an authentication strategy. The name is also used as the lookup key when resolving authentication options from config, as shown in the following example:
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
+:::code language="csharp" source="~/fundamentals/minimal-apis/security/samples/MinApiAuth/MinApiAuth/Program.cs" id="snippet_local" highlight="5":::
 
-builder.Services.AddAuthentication()
-  .AddJwtBearer()
-  .AddJwtBearer("LocalAuthIssuer");
-  
-var app = builder.Build();
-
-app.MapGet("/", () => "Hello World!");
-app.Run();
-```
 ## Configure authorization policies in minimal apps
 
 Authentication identifies and validates the identity of users against an API. Authorization validates and verifies access to resources in an API. The `IAuthorizationService` service registered by the `AddAuthorization` extension method facilitates the authorization. In the following scenario, a `/hello` resource is added that requires a user to present an `admin` role claim with a `greetings_api` scope claim.
@@ -149,47 +109,31 @@ Configuration of the authorization requirements on a resource is a two-step proc
 1. Define the authorization requirements in a policy globally.
 1. Apply individual policies to resources.
 
-In the following code, the `Microsoft.Extensions.DependencyInjection.PolicyServiceCollectionExtensions.AddAuthorizationBuilder*` method is invoked, which:
+In the following code, the <xref:Microsoft.Extensions.DependencyInjection.PolicyServiceCollectionExtensions.AddAuthorizationBuilder*> method is invoked, which:
 
 * Adds authorization-related services to the DI container.
-* Returns an `Microsoft.AspNetCore.Authorization.AuthorizationBuilder` object that can be used to directly register authorization policies.
+* Returns an <xref:Microsoft.AspNetCore.Authorization.AuthorizationBuilder> object that can be used to directly register authorization policies.
 
 The code creates a new authorization policy named `admin_greetings` that encapsulates two authorization requirements:
 
-* A role-based requirement via the `Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder.RequireRole*` for users with an `admin` role.
-* A claim-based requirement via the `Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder.RequireClaim*` for which the user must provide a `greetings_api` scope claim.
+* A role-based requirement via the <xref:Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder.RequireRole*> for users with an `admin` role.
+* A claim-based requirement via the <xref:Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder.RequireClaim*> for which the user must provide a `greetings_api` scope claim.
 
 The `admin_greetings` policy is provided as a required policy to the `/hello` endpoint:
 
-```csharp
-using Microsoft.Identity.Web;
+:::code language="csharp" source="~/fundamentals/minimal-apis/security/samples/MinApiAuth/MinApiAuth/Program.cs" id="snippet_greet" highlight="5-9,13-14":::
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddAuthorizationBuilder()
-  .AddPolicy("admin_greetings", policy =>
-        policy
-            .RequireRole("admin")
-            .RequireClaim("scope", "greetings_api"));
-
-var app = builder.Build();
-
-app.MapGet("/hello", () => "Hello world!")
-  .RequireAuthorization("admin_greetings");
-
-app.Run();
-```
 ## Use 'dotnet user-jwts' for development testing
 
 The examples in this article use an app configured with JWT-bearer based authentication. JWT bearer-based authentication requires clients to present a token in the request header, which is used to validate their identity and claims. Typically, a central authority like an identity server issues the tokens.
 
-For development on the local machine, the dotnet user-jwts command-line tool can be used to create bearer tokens.
+For development on the local machine, the [dotnet user-jwts](../../security/authentication/jwt-authn.md) command-line tool can be used to create bearer tokens.
 
 ```dotnetcli
 dotnet user-jwts create
 ```
 
-> **Note:**
+> [!NOTE]
 > When invoked on a project, the tool automatically adds the authentication options that match the generated token to the _appsettings.json_ file.
 
 Tokens can be configured with various customizations. For example, to create a token for the `admin` role and `greetings_api` scope expected by the authorization policy in the preceding code, run the tool as follows:
@@ -201,12 +145,12 @@ dotnet user-jwts create --scope "greetings_api" --role "admin"
 The generated token can then be sent as part of the header in the testing tool of choice. For example, to send the token with curl:
 
 ```dotnetcli
-curl -i -H "<example-value>" https://localhost:{port}/hello
+curl -i -H "Authorization: Bearer {token}" https://localhost:{port}/hello
 ```
 
 ## Related content
 
-* The authentication service (`IAuthenticationService`)
-* The authorization service (`IAuthorizationService`)
-* ASP.NET Core middleware
-* Generate tokens with dotnet user-jwts
+* [The authentication service (`IAuthenticationService`)](xref:Microsoft.AspNetCore.Authentication.IAuthenticationService)
+* [The authorization service (`IAuthorizationService`)](xref:Microsoft.AspNetCore.Authorization.IAuthorizationService)
+* [ASP.NET Core middleware](../middleware/index.md)
+* [Generate tokens with dotnet user-jwts](../../security/authentication/jwt-authn.md)

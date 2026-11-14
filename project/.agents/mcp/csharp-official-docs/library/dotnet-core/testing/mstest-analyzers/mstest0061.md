@@ -1,12 +1,19 @@
 ---
 title: "MSTEST0061: Use OSCondition attribute instead of runtime checks"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0061.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0061: Use OSCondition attribute instead of runtime checks"
+ms.date: 12/29/2025
+f1_keywords:
+- MSTEST0061
+- UseOSConditionAttributeInsteadOfRuntimeCheckAnalyzer
+helpviewer_keywords:
+- UseOSConditionAttributeInsteadOfRuntimeCheckAnalyzer
+- MSTEST0061
+author: evangelink
+ms.author: amauryleve
+ai-usage: ai-assisted
+dev_langs:
+- CSharp
 ---
-
 # MSTEST0061: Use OSCondition attribute instead of runtime checks
 
 | Property                            | Value                                              |
@@ -22,11 +29,11 @@ license: "CC-BY-4.0"
 
 ## Cause
 
-A test method uses `System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform)` checks with an early return instead of the `Microsoft.VisualStudio.TestTools.UnitTesting.OSConditionAttribute` attribute.
+A test method uses <xref:System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform)> checks with an early return instead of the <xref:Microsoft.VisualStudio.TestTools.UnitTesting.OSConditionAttribute> attribute.
 
 ## Rule description
 
-When you want to skip tests based on the operating system, use the `Microsoft.VisualStudio.TestTools.UnitTesting.OSConditionAttribute` attribute instead of manual runtime checks. The attribute approach provides better test discoverability and clearer test intent, and integrates properly with test frameworks to mark tests as skipped rather than passed.
+When you want to skip tests based on the operating system, use the <xref:Microsoft.VisualStudio.TestTools.UnitTesting.OSConditionAttribute> attribute instead of manual runtime checks. The attribute approach provides better test discoverability and clearer test intent, and integrates properly with test frameworks to mark tests as skipped rather than passed.
 
 ```csharp
 using System.Runtime.InteropServices;
@@ -98,11 +105,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0061
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0061.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

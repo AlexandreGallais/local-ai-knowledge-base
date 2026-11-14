@@ -1,10 +1,5 @@
----
-title: "using-openapi-documents-6-8"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/openapi/includes/using-openapi-documents-6-8.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
+:::moniker range=">= aspnetcore-6.0 <= aspnetcore-8.0"
 
-# using-openapi-documents-6-8
+To learn how to use the generated OpenAPI document in a Minimal API in .NET 6, 7, or 8, see the [Swagger and NSwag overview](../../../tutorials/web-api-help-pages-using-swagger.md).
+
+:::moniker-end

@@ -1,12 +1,3 @@
----
-title: "Predicate interface (java.util.function)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/function/Predicate.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Predicate interface (java.util.function)
 
 ```java
@@ -15,14 +6,12 @@ public interface Predicate<T>
 
 Represents a predicate (boolean-valued function) of one argument.
 
-This is a functional interface
-whose functional method is `test(Object)`.
+<p>This is a <a href="package-summary.html">functional interface</a>
+whose functional method is {@link #test(Object)}.
 
-Parameters:
+@param <T> the type of the input to the predicate
 
-- `<T>`: the type of the input to the predicate
-
-**Since:** 1.8
+@since 1.8
 
 ## Predicate.test(T)
 
@@ -32,12 +21,9 @@ boolean test(T t)
 
 Evaluates this predicate on the given argument.
 
-Parameters:
-
-- `t`: the input argument
-
-**Returns:** `true` if the input argument matches the predicate,
-otherwise `false`
+@param t the input argument
+@return {@code true} if the input argument matches the predicate,
+otherwise {@code false}
 
 ## Predicate.and(Predicate<? super T>)
 
@@ -47,23 +33,18 @@ default Predicate<T> and(Predicate<? super T> other)
 
 Returns a composed predicate that represents a short-circuiting logical
 AND of this predicate and another.  When evaluating the composed
-predicate, if this predicate is `false`, then the `other`
+predicate, if this predicate is {@code false}, then the {@code other}
 predicate is not evaluated.
 
-Any exceptions thrown during evaluation of either predicate are relayed
+<p>Any exceptions thrown during evaluation of either predicate are relayed
 to the caller; if evaluation of this predicate throws an exception, the
-`other` predicate will not be evaluated.
+{@code other} predicate will not be evaluated.
 
-Parameters:
-
-- `other`: a predicate that will be logically-ANDed with this predicate
-
-**Returns:** a composed predicate that represents the short-circuiting logical
-AND of this predicate and the `other` predicate
-
-Throws:
-
-- `NullPointerException`: if other is null
+@param other a predicate that will be logically-ANDed with this
+             predicate
+@return a composed predicate that represents the short-circuiting logical
+AND of this predicate and the {@code other} predicate
+@throws NullPointerException if other is null
 
 ## Predicate.negate()
 
@@ -74,7 +55,7 @@ default Predicate<T> negate()
 Returns a predicate that represents the logical negation of this
 predicate.
 
-**Returns:** a predicate that represents the logical negation of this
+@return a predicate that represents the logical negation of this
 predicate
 
 ## Predicate.or(Predicate<? super T>)
@@ -85,23 +66,18 @@ default Predicate<T> or(Predicate<? super T> other)
 
 Returns a composed predicate that represents a short-circuiting logical
 OR of this predicate and another.  When evaluating the composed
-predicate, if this predicate is `true`, then the `other`
+predicate, if this predicate is {@code true}, then the {@code other}
 predicate is not evaluated.
 
-Any exceptions thrown during evaluation of either predicate are relayed
+<p>Any exceptions thrown during evaluation of either predicate are relayed
 to the caller; if evaluation of this predicate throws an exception, the
-`other` predicate will not be evaluated.
+{@code other} predicate will not be evaluated.
 
-Parameters:
-
-- `other`: a predicate that will be logically-ORed with this predicate
-
-**Returns:** a composed predicate that represents the short-circuiting logical
-OR of this predicate and the `other` predicate
-
-Throws:
-
-- `NullPointerException`: if other is null
+@param other a predicate that will be logically-ORed with this
+             predicate
+@return a composed predicate that represents the short-circuiting logical
+OR of this predicate and the {@code other} predicate
+@throws NullPointerException if other is null
 
 ## Predicate.isEqual(Object)
 
@@ -110,15 +86,13 @@ static <T> Predicate<T> isEqual(Object targetRef)
 ```
 
 Returns a predicate that tests if two arguments are equal according
-to Object).
+to {@link Objects#equals(Object, Object)}.
 
-Parameters:
-
-- `<T>`: the type of arguments to the predicate
-- `targetRef`: the object reference with which to compare for equality, which may be `null`
-
-**Returns:** a predicate that tests if two arguments are equal according
-to Object)
+@param <T> the type of arguments to the predicate
+@param targetRef the object reference with which to compare for equality,
+              which may be {@code null}
+@return a predicate that tests if two arguments are equal according
+to {@link Objects#equals(Object, Object)}
 
 ## Predicate.not(Predicate<? super T>)
 
@@ -128,18 +102,14 @@ static <T> Predicate<T> not(Predicate<? super T> target)
 
 Returns a predicate that is the negation of the supplied predicate.
 This is accomplished by returning result of the calling
-`target.negate()`.
+{@code target.negate()}.
 
-Parameters:
+@param <T>     the type of arguments to the specified predicate
+@param target  predicate to negate
 
-- `<T>`: the type of arguments to the specified predicate
-- `target`: predicate to negate
-
-**Returns:** a predicate that negates the results of the supplied
+@return a predicate that negates the results of the supplied
         predicate
 
-**Since:** 11
+@throws NullPointerException if target is null
 
-Throws:
-
-- `NullPointerException`: if target is null
+@since 11

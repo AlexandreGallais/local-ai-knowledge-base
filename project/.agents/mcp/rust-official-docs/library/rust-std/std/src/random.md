@@ -1,22 +1,13 @@
----
-title: "std::random"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/random.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::random
 
 Random value generation.
 
 This module provides two low-level interfaces for random number generation:
-* The `Rng` trait abstracts over all random number generators (RNGs) and
+* The [`Rng`] trait abstracts over all random number generators (RNGs) and
   is intended to be used in all cases where the choice of RNG is left to the
-  user. It provides the `fill_bytes` method that fills a
-  buffer of `u8`s with freshly-generated random data.
-* The `SystemRng` implements the `Rng` trait by asking the operating
+  user. It provides the [`fill_bytes`](Rng::fill_bytes) method that fills a
+  buffer of [`u8`]s with freshly-generated random data.
+* The [`SystemRng`] implements the [`Rng`] trait by asking the operating
   system for cryptographically-secure random data on every call to
   `fill_bytes`.
 
@@ -25,7 +16,7 @@ may be added to this module. Until that time, users of `fill_bytes` should
 take care to avoid sampling bias when using the filled byte buffer to create
 an instance of another type. In particular, the modulo operation is **not**
 suitable for constraining the range of an unconstrained number:
-```rust
+```compile_fail
 let mut buf = [0; 2];
 rng.fill_bytes(&mut buf);
 // 💀 **DO NOT DO THIS** 💀
@@ -33,10 +24,10 @@ rng.fill_bytes(&mut buf);
 let very_bad_random_number = u16::from_ne_bytes(buf) % 45000;
 ```
 
-#### Examples
+# Examples
 
 Generating a [version 4/variant 1 UUID] represented as text:
-```rust
+```
 #![feature(random)]
 
 use std::random::{Rng, SystemRng};
@@ -56,3 +47,5 @@ fn uuid(rng: &mut impl Rng) -> String {
 
 println!("{}", uuid(&mut SystemRng));
 ```
+
+[version 4/variant 1 UUID]: https://en.wikipedia.org/wiki/Universally_unique_identifier#Version_4_(random)

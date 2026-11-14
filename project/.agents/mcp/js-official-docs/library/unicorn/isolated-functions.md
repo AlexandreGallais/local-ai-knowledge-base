@@ -1,19 +1,13 @@
----
-title: "isolated-functions"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/isolated-functions.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # isolated-functions
 
 📝 Prevent usage of variables from outside the scope of isolated functions.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-Some functions need to be isolated from their surrounding scope due to execution context constraints. For example, functions passed to `makeSynchronous()` are executed in a worker or subprocess and cannot access variables from outside their scope. This rule helps identify when functions are using external variables that may cause runtime errors.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+Some functions need to be isolated from their surrounding scope due to execution context constraints. For example, functions passed to [`makeSynchronous()`](https://github.com/sindresorhus/make-synchronous) are executed in a worker or subprocess and cannot access variables from outside their scope. This rule helps identify when functions are using external variables that may cause runtime errors.
 
 Common scenarios where functions must be isolated:
 
@@ -105,7 +99,7 @@ Other `evaluate` calls are not enabled by default. Use `selectors` to opt into p
 Type: `string[]`\
 Default: `[]`
 
-Array of ESLint selectors to identify isolated functions. Useful for custom naming conventions or framework-specific patterns.
+Array of [ESLint selectors](https://eslint.org/docs/developer-guide/selectors) to identify isolated functions. Useful for custom naming conventions or framework-specific patterns.
 
 Selectors must match the function node that should be treated as isolated. To isolate functions passed to a matching call expression, use ESLint selector syntax to select the function argument:
 
@@ -130,7 +124,7 @@ Default: `['@isolated']`
 
 Array of comment strings that mark functions as isolated. Functions with inline, block, or JSDoc comments tagged with these strings will be considered isolated. (Definition of "tagged": either the comment consists solely of the tag, or starts with it, and has an explanation following a hyphen, like `// @isolated - this function will be stringified`).
 
-Tagged comments also apply to object methods, object properties whose value is a function expression or arrow function, and class methods. Isolated functions cannot use `this` or `super`; pass <example-value> state as parameters instead.
+Tagged comments also apply to object methods, object properties whose value is a function expression or arrow function, and class methods. Isolated functions cannot use `this` or `super`; pass required state as parameters instead.
 
 ```js
 {
@@ -267,7 +261,7 @@ makeSynchronous(async () => {
 makeSynchronous(async () => {
 	const response = await fetch('https://api.example.com', {
 		headers: {
-			'Authorization': `Bearer ${process.env.API_TOKEN}` // ❌ '<example-value>' is not configured as an ESLint global or overrideGlobals entry
+			'Authorization': `Bearer ${process.env.API_TOKEN}` // ❌ 'process' is not configured as an ESLint global or overrideGlobals entry
 		}
 	});
 
@@ -285,7 +279,7 @@ makeSynchronous(async () => {
 
 ### Predefined global variables
 
-To enable a predefined set of globals, use the `globals` package similarly to how you would use it in `languageOptions` (see ESLint docs on globals):
+To enable a predefined set of globals, use the [`globals` package](https://npmjs.com/package/globals) similarly to how you would use it in `languageOptions` (see [ESLint docs on globals](https://eslint.org/docs/latest/use/configure/language-options#predefined-global-variables)):
 
 ```js
 import {defineConfig} from 'eslint/config';

@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: TAR-reading APIs verify header checksums when reading"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/11/tar-checksum-validation.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where TarReader validates checksums and throws InvalidDataException for invalid entries."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # TAR-reading APIs verify header checksums when reading
 
-The `System.Formats.Tar.TarReader` class now validates the checksum of TAR archive entries during the reading process. If an entry's checksum is invalid, `TarReader` throws an `System.IO.InvalidDataException`. This change improves data integrity by ensuring that corrupted or tampered TAR files are detected and flagged during processing.
+The <xref:System.Formats.Tar.TarReader> class now validates the checksum of TAR archive entries during the reading process. If an entry's checksum is invalid, `TarReader` throws an <xref:System.IO.InvalidDataException>. This change improves data integrity by ensuring that corrupted or tampered TAR files are detected and flagged during processing.
 
 ## Version introduced
 
@@ -38,21 +36,21 @@ If the TAR file `bad-cksum.tar` contained an entry with an invalid checksum, the
 
 ## New behavior
 
-Starting in .NET 11, when reading a TAR archive with an invalid checksum, `TarReader` throws an `System.IO.InvalidDataException` and stops processing the archive. The exception message indicates the checksum validation failure.
+Starting in .NET 11, when reading a TAR archive with an invalid checksum, `TarReader` throws an <xref:System.IO.InvalidDataException> and stops processing the archive. The exception message indicates the checksum validation failure.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-This change was introduced to improve the reliability and security of the `System.Formats.Tar` library. By validating checksums, `TarReader` can detect and prevent the use of corrupted or tampered TAR files, ensuring that only valid data is processed. For more information, see dotnet/runtime#118577 and dotnet/runtime#117455.
+This change was introduced to improve the reliability and security of the `System.Formats.Tar` library. By validating checksums, `TarReader` can detect and prevent the use of corrupted or tampered TAR files, ensuring that only valid data is processed. For more information, see [dotnet/runtime#118577](https://github.com/dotnet/runtime/pull/118577) and [dotnet/runtime#117455](https://github.com/dotnet/runtime/issues/117455).
 
 ## Recommended action
 
 If your application relies on the `TarReader` to process TAR archives:
 
-- Update your code to handle the `System.IO.InvalidDataException` that might be thrown when a checksum validation fails.
+- Update your code to handle the <xref:System.IO.InvalidDataException> that might be thrown when a checksum validation fails.
 - Ensure that the TAR files being processed are valid and have correct checksums. If you encounter checksum failures, verify the integrity of the source TAR files.
 - If you need to process TAR files with invalid checksums for specific scenarios, consider implementing custom error handling or preprocessing the files to correct the checksums.
 
@@ -81,7 +79,7 @@ catch (InvalidDataException ex)
 
 ## Affected APIs
 
-- `System.Formats.Tar.TarReader.GetNextEntry(System.Boolean)`
-- `System.Formats.Tar.TarReader.GetNextEntryAsync(System.Boolean,System.Threading.CancellationToken)`
-- `System.Formats.Tar.TarFile.ExtractToDirectory(System.IO.Stream,System.String,System.Boolean)`
-- `System.Formats.Tar.TarFile.ExtractToDirectoryAsync(System.IO.Stream,System.String,System.Boolean,System.Threading.CancellationToken)`
+- <xref:System.Formats.Tar.TarReader.GetNextEntry(System.Boolean)?displayProperty=fullName>
+- <xref:System.Formats.Tar.TarReader.GetNextEntryAsync(System.Boolean,System.Threading.CancellationToken)?displayProperty=fullName>
+- <xref:System.Formats.Tar.TarFile.ExtractToDirectory(System.IO.Stream,System.String,System.Boolean)?displayProperty=fullName>
+- <xref:System.Formats.Tar.TarFile.ExtractToDirectoryAsync(System.IO.Stream,System.String,System.Boolean,System.Threading.CancellationToken)?displayProperty=fullName>

@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: `installer` repo version no longer included in `productcommits` files"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/9.0/productcommits-versions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in the .NET 9 SDK where the `installer` repo commit and version are no longer included in the `productcommits` files.
+ms.date: 07/09/2024
 ---
-
 # `installer` repo version no longer included in `productcommits` files
 
 The version and commit of a subset of the repos that comprise .NET are available in the *productcommits-rid.txt* and *.json* files. These files can be queried from aka.ms links, for example, <https://aka.ms/dotnet/9.0.1xx/daily/productCommit-win-x64.txt>. The files enable customers to get the version and commit of the `runtime`, `aspnetcore`, `windowsdesktop`, and `sdk` repos included in a given build. Some customers have built tooling around this file to help others update their repos to new versions of .NET as builds are available.
@@ -27,7 +23,7 @@ Starting in .NET 9, the `installer` line has been removed from the *productcommi
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

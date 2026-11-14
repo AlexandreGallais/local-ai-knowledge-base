@@ -1,31 +1,29 @@
----
-title: "TypeCheckInstruction interface (java.lang.classfile.instruction)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/instruction/TypeCheckInstruction.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # TypeCheckInstruction interface (java.lang.classfile.instruction)
 
 ```java
 public sealed interface TypeCheckInstruction extends Instruction permits AbstractInstruction.BoundTypeCheckInstruction, AbstractInstruction.UnboundTypeCheckInstruction
 ```
 
-Models an instanceof or a checkcast
-instruction in the `code` array of a `Code` attribute.  Corresponding
-opcodes have a kind of `Opcode.Kind.TYPE_CHECK`.
-Delivered as a `CodeElement` when traversing the elements of a `CodeModel`.
-
-An `instanceof` checks the type and pushes an integer to the operand stack.
-A `checkcast` checks the type and throws a `ClassCastException` if
-the check fails.  `instanceof` treat the `null` reference as a
-failure, while `checkcast` treat the `null` reference as a success.
-
+Models an {@link Opcode#INSTANCEOF instanceof} or a {@link Opcode#CHECKCAST checkcast}
+instruction in the {@code code} array of a {@code Code} attribute.  Corresponding
+opcodes have a {@linkplain Opcode#kind() kind} of {@link Opcode.Kind#TYPE_CHECK}.
+Delivered as a {@link CodeElement} when traversing the elements of a {@link CodeModel}.
+<p>
+An {@code instanceof} checks the type and pushes an integer to the operand stack.
+A {@code checkcast} checks the type and throws a {@link ClassCastException} if
+the check fails.  {@code instanceof} treat the {@code null} reference as a
+failure, while {@code checkcast} treat the {@code null} reference as a success.
+<p>
 A type check instruction is composite:
+{@snippet lang=text :
+// @link substring="TypeCheckInstruction" target="#of(Opcode, ClassEntry)" :
+TypeCheckInstruction(
+    Opcode opcode, // @link substring="opcode" target="#opcode"
+    ClassEntry type // @link substring="type" target="#type"
+)
+}
 
-**Since:** 24
+@since 24
 
 ## TypeCheckInstruction.type()
 
@@ -33,20 +31,21 @@ A type check instruction is composite:
 ClassEntry type()
 ```
 
+{@return the type against which the instruction checks}
+
 ## TypeCheckInstruction.of(Opcode, ClassEntry)
 
 ```java
 static TypeCheckInstruction of(Opcode op, ClassEntry type)
 ```
 
-Parameters:
+{@return a type check instruction}
 
-- `op`: the opcode for the specific type of type check instruction, which must be of kind `Opcode.Kind.TYPE_CHECK`
-- `type`: the type against which to check or cast
-
-Throws:
-
-- `IllegalArgumentException`: if the opcode kind is not `Opcode.Kind.TYPE_CHECK`
+@param op the opcode for the specific type of type check instruction,
+          which must be of kind {@link Opcode.Kind#TYPE_CHECK}
+@param type the type against which to check or cast
+@throws IllegalArgumentException if the opcode kind is not
+        {@link Opcode.Kind#TYPE_CHECK}
 
 ## TypeCheckInstruction.of(Opcode, ClassDesc)
 
@@ -54,11 +53,10 @@ Throws:
 static TypeCheckInstruction of(Opcode op, ClassDesc type)
 ```
 
-Parameters:
+{@return a type check instruction}
 
-- `op`: the opcode for the specific type of type check instruction, which must be of kind `Opcode.Kind.TYPE_CHECK`
-- `type`: the type against which to check or cast
-
-Throws:
-
-- `IllegalArgumentException`: if the opcode kind is not `Opcode.Kind.TYPE_CHECK`, or if `type` is primitive
+@param op the opcode for the specific type of type check instruction,
+          which must be of kind {@link Opcode.Kind#TYPE_CHECK}
+@param type the type against which to check or cast
+@throws IllegalArgumentException if the opcode kind is not
+        {@link Opcode.Kind#TYPE_CHECK}, or if {@code type} is primitive

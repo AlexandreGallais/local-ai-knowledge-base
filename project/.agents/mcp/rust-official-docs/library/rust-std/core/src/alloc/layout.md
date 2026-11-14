@@ -1,12 +1,3 @@
----
-title: "core::alloc::layout"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/alloc/layout.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::alloc::layout
 
 ## struct Layout
@@ -59,7 +50,7 @@ Creates a layout, bypassing all checks.
 # Safety
 
 The arguments passed must meet the preconditions from
-`Layout::from_size_align`.
+[`Layout::from_size_align`].
 
 ## Layout::size
 
@@ -113,6 +104,9 @@ field of a tuple or struct until we arrived at a built-in unsized type.
 As a consequence of these rules, it is the case that whenever it is allowed to convert `val`
 into a shared reference, then it is also allowed to invoke this function.
 
+[trait object]: ../../book/ch17-02-trait-objects.html
+[extern type]: ../../unstable-book/language-features/extern-types.html
+
 ## Layout::dangling_ptr
 
 ```rust
@@ -145,7 +139,7 @@ alignment. In other words, if `K` has size 16, `K.align_to(32)`
 will *still* have size 16.
 
 Returns an error if the combination of `self.size()` and the given
-`align` violates the conditions listed in `Layout::from_size_align`.
+`align` violates the conditions listed in [`Layout::from_size_align`].
 
 ## Layout::pad_to_align
 
@@ -180,7 +174,7 @@ On arithmetic overflow, returns `LayoutError`.
 
 # Examples
 
-```rust
+```
 use std::alloc::Layout;
 
 // All rust types have a size that's a multiple of their alignment.
@@ -231,6 +225,7 @@ To calculate the layout of a `#[repr(C)]` structure and the offsets of
 the fields from its fields' layouts:
 
 ```rust
+# use std::alloc::{Layout, LayoutError};
 pub fn repr_c(fields: &[Layout]) -> Result<(Layout, Vec<usize>), LayoutError> {
     let mut offsets = Vec::new();
     let mut layout = Layout::from_size_align(0, 1)?;
@@ -242,6 +237,13 @@ pub fn repr_c(fields: &[Layout]) -> Result<(Layout, Vec<usize>), LayoutError> {
     // Remember to finalize with `pad_to_align`!
     Ok((layout.pad_to_align(), offsets))
 }
+# // test that it works
+# #[repr(C)] struct S { a: u64, b: u32, c: u16, d: u32 }
+# let s = Layout::new::<S>();
+# let u16 = Layout::new::<u16>();
+# let u32 = Layout::new::<u32>();
+# let u64 = Layout::new::<u64>();
+# assert_eq!(repr_c(&[u64, u32, u16, u32]), Ok((s, vec![0, 8, 12, 16])));
 ```
 
 ## Layout::repeat_packed

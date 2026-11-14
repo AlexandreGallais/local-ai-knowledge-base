@@ -1,17 +1,14 @@
 ---
-title: "Compile-time configuration source generation"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/configuration-generator.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Compile-time configuration source generation
+description: Learn how to use the configuration source generator to intercept specific call sites and bypass reflection-based configuration binding.
+ms.date: 10/09/2024
 ---
 
 # Configuration source generator
 
-Starting with .NET 8, a configuration binding source generator was introduced that intercepts specific call sites and generates their functionality. This feature provides a Native ahead-of-time (AOT) and trim-friendly way to use the configuration binder, without the use of the reflection-based implementation. Reflection requires dynamic code generation, which isn't supported in AOT scenarios.
+Starting with .NET 8, a configuration binding source generator was introduced that intercepts specific call sites and generates their functionality. This feature provides a [Native ahead-of-time (AOT)](../deploying/native-aot/index.md) and [trim-friendly](../deploying/trimming/trim-self-contained.md) way to use the [configuration binder](configuration.md#binding), without the use of the reflection-based implementation. Reflection requires dynamic code generation, which isn't supported in AOT scenarios.
 
-This feature uses C# interceptors. Interceptors allow the compiler to replace specific calls with calls to generated code.
+This feature uses [C# interceptors](../../csharp/whats-new/csharp-version-history.md#interceptors). Interceptors allow the compiler to replace specific calls with calls to generated code.
 
 ## Enable the configuration source generator
 
@@ -25,9 +22,9 @@ To enable the configuration source generator, add the following property to your
 
 When the configuration source generator is enabled, the compiler generates a source file that contains the configuration binding code. The generated source intercepts binding APIs from the following classes:
 
-- `Microsoft.Extensions.Configuration.ConfigurationBinder`
-- `Microsoft.Extensions.DependencyInjection.OptionsBuilderConfigurationExtensions`
-- `Microsoft.Extensions.DependencyInjection.OptionsConfigurationServiceCollectionExtensions`
+- <xref:Microsoft.Extensions.Configuration.ConfigurationBinder?displayProperty=fullName>
+- <xref:Microsoft.Extensions.DependencyInjection.OptionsBuilderConfigurationExtensions?displayProperty=fullName>
+- <xref:Microsoft.Extensions.DependencyInjection.OptionsConfigurationServiceCollectionExtensions?displayProperty=nameWithType>
 
 In other words, all APIs that eventually call into these various binding methods are intercepted and replaced with generated code.
 
@@ -35,77 +32,25 @@ In other words, all APIs that eventually call into these various binding methods
 
 Consider a .NET console application configured to publish as a native AOT app. The following code demonstrates how to use the configuration source generator to bind configuration settings:
 
-```xml
-<Project Sdk="Microsoft.NET.Sdk">
+:::code language="xml" source="snippets/configuration/console-binder-gen/console-binder-gen.csproj" highlight="9,11":::
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net10.0</TargetFramework>
-    <RootNamespace>console_binder_gen</RootNamespace>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <PublishAot>true</PublishAot>
-    <InvariantGlobalization>true</InvariantGlobalization>
-    <EnableConfigurationBindingGenerator>true</EnableConfigurationBindingGenerator>
-  </PropertyGroup>
-
-  <ItemGroup>
-
-    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="10.0.14" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.12" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.12" />
-    <PackageReference Include="Microsoft.NET.ILLink.Tasks" Version="10.0.12" />
-  </ItemGroup>
-
-</Project>
-```
 The preceding project file enables the configuration source generator by setting the `EnableConfigurationBindingGenerator` property to `true`.
 
 Next, consider the _Program.cs_ file:
 
-```csharp
-﻿using Microsoft.Extensions.Configuration;
+:::code source="snippets/configuration/console-binder-gen/Program.cs" highlight="13":::
 
-var builder = new ConfigurationBuilder()
-    .AddInMemoryCollection(initialData: [
-            new("port", "5001"),
-            new("enabled", "true"),
-            new("apiUrl", "https://jsonplaceholder.typicode.com/")
-        ]);
-
-var configuration = builder.Build();
-
-var settings = new Settings();
-configuration.Bind(settings);
-
-// Write the values to the console.
-Console.WriteLine($"Port = {settings.Port}");
-Console.WriteLine($"Enabled = {settings.Enabled}");
-Console.WriteLine($"API URL = {settings.ApiUrl}");
-
-class Settings
-{
-    public int Port { get; set; }
-    public bool Enabled { get; set; }
-    public string? ApiUrl { get; set; }
-}
-
-// This will output the following:
-//   Port = 5001
-//   Enabled = True
-//   API URL = https://jsonplaceholder.typicode.com/
-```
 The preceding code:
 
 - Instantiates a configuration builder instance.
-- Calls `Microsoft.Extensions.Configuration.MemoryConfigurationBuilderExtensions.AddInMemoryCollection*` and defines three configuration source values.
-- Calls `Microsoft.Extensions.Configuration.IConfigurationBuilder.Build` to build the configuration.
-- Uses the `Microsoft.Extensions.Configuration.ConfigurationBinder.Bind*` method to bind the `Settings` object to the configuration values.
+- Calls <xref:Microsoft.Extensions.Configuration.MemoryConfigurationBuilderExtensions.AddInMemoryCollection*> and defines three configuration source values.
+- Calls <xref:Microsoft.Extensions.Configuration.IConfigurationBuilder.Build> to build the configuration.
+- Uses the <xref:Microsoft.Extensions.Configuration.ConfigurationBinder.Bind*?displayProperty=nameWithType> method to bind the `Settings` object to the configuration values.
 
 When the application is built, the configuration source generator intercepts the call to `Bind` and generates the binding code.
 
-> **Important:**
-> When the `PublishAot` property is set to `true` (or any other AOT warnings are enabled) and the `EnabledConfigurationBindingGenerator` property is set to `false`, warning `IL2026` is raised. This warning indicates that members are attributed with RequiresUnreferencedCode may break when trimming. For more information, see IL2026.
+> [!IMPORTANT]
+> When the `PublishAot` property is set to `true` (or any other AOT warnings are enabled) and the `EnabledConfigurationBindingGenerator` property is set to `false`, warning `IL2026` is raised. This warning indicates that members are attributed with [RequiresUnreferencedCode](xref:System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute) may break when trimming. For more information, see [IL2026](../deploying/trimming/trim-warnings/il2026.md).
 
 ### Explore the source generated code
 
@@ -203,6 +148,7 @@ namespace Microsoft.Extensions.Configuration.Binder.SourceGeneration
             }
         }
 
+
         /// <summary>If required by the binder options, validates that there are no unknown keys in the input configuration object.</summary>
         public static void ValidateConfigurationKeys(Type type, Lazy<HashSet<string>> keys, IConfiguration configuration, BinderOptions? binderOptions)
         {
@@ -253,7 +199,7 @@ namespace Microsoft.Extensions.Configuration.Binder.SourceGeneration
 }
 ```
 
-> **Note:**
+> [!NOTE]
 > This generated code is subject to change based on the version of the configuration source generator.
 
 The generated code contains the `BindingExtensions` class, which contains the `BindCore` method that performs the actual binding. The `Bind_Settings` method calls the `BindCore` method and casts the instance to the specified type.
@@ -262,6 +208,6 @@ To see the generated code, set the `<EmitCompilerGeneratedFiles>true</EmitCompil
 
 ## See also
 
-- Configuration in .NET
-- Roslyn: Interceptors feature
-- Options pattern in .NET
+- [Configuration in .NET](configuration.md)
+- [Roslyn: Interceptors feature](https://github.com/dotnet/roslyn/blob/main/docs/features/interceptors.md)
+- [Options pattern in .NET](options.md)

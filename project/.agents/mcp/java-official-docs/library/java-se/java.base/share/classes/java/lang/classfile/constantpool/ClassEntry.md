@@ -1,50 +1,44 @@
----
-title: "ClassEntry interface (java.lang.classfile.constantpool)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/constantpool/ClassEntry.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ClassEntry interface (java.lang.classfile.constantpool)
 
 ```java
 public sealed interface ClassEntry extends LoadableConstantEntry permits AbstractPoolEntry.ClassEntryImpl
 ```
 
-Models a `CONSTANT_Class_info` structure, representing a reference
-type, in the constant pool of a `class` file.
-
-The use of a `ClassEntry` is modeled by a `ClassDesc` that is not
-primitive.  Conversions are through ClassDesc) and `asSymbol()`.
-
-A `ClassEntry` is composite:
-
-where `name` represents:
-
-- The internal form of a binary name (JVMS ), if and only if
-this `ClassEntry` represents a class or interface, such as `java/lang/String` for the `String` class.
-
-- A field descriptor string (JVMS ) representing an array type,
-if and only if this `ClassEntry` represents an array type, such as
-`[I` for the `int[]` type, or `[Ljava/lang/String;` for the
-`String[]` type.
-
+Models a {@code CONSTANT_Class_info} structure, representing a reference
+type, in the constant pool of a {@code class} file.
+<p>
+The use of a {@code ClassEntry} is modeled by a {@link ClassDesc} that is not
+primitive.  Conversions are through {@link ConstantPoolBuilder#classEntry(
+ClassDesc)} and {@link #asSymbol()}.
+<p>
+A {@code ClassEntry} is composite:
+{@snippet lang=text :
+// @link substring="ClassEntry" target="ConstantPoolBuilder#classEntry(Utf8Entry)" :
+ClassEntry(Utf8Entry name) // @link substring="name" target="#name"
+}
+where {@code name} represents:
+<ul>
+<li>The internal form of a binary name (JVMS {@jvms 4.2.1}), if and only if
+this {@code ClassEntry} represents a class or interface, such as {@code
+java/lang/String} for the {@link String} class.
+<li>A field descriptor string (JVMS {@jvms 4.3.2}) representing an array type,
+if and only if this {@code ClassEntry} represents an array type, such as
+{@code [I} for the {@code int[]} type, or {@code [Ljava/lang/String;} for the
+{@code String[]} type.
+</ul>
 A field descriptor string for an array type can be distinguished by its
-leading `'['` character.
+leading {@code '['} character.
 
-**API note:** The internal form of a binary name, where all occurrences of `.` in the
-name are replaced by `/`, is informally known as an .  This concept also applies to package names in
+@apiNote
+The internal form of a binary name, where all occurrences of {@code .} in the
+name are replaced by {@code /}, is informally known as an <dfn>{@index
+"internal name"}</dfn>.  This concept also applies to package names in
 addition to class and interface names.
 
-**See also:** ConstantPoolBuilder#classEntry ConstantPoolBuilder::classEntry
-
-**See also:** ClassDesc
-
-**jvms:** 4.4.1 The `CONSTANT_Class_info` Structure
-
-**Since:** 24
+@see ConstantPoolBuilder#classEntry ConstantPoolBuilder::classEntry
+@see ClassDesc
+@jvms 4.4.1 The {@code CONSTANT_Class_info} Structure
+@since 24
 
 ## ClassEntry.constantValue()
 
@@ -52,9 +46,9 @@ addition to class and interface names.
 default ConstantDesc constantValue()
 ```
 
-(inherited documentation)
-
-This is equivalent to asSymbol().
+{@inheritDoc}
+<p>
+This is equivalent to {@link #asSymbol() asSymbol()}.
 
 ## ClassEntry.name()
 
@@ -62,12 +56,13 @@ This is equivalent to asSymbol().
 Utf8Entry name()
 ```
 
-If the
-value of the UTF8 starts with a `[`, this represents an array type
+{@return the {@code Utf8Entry} referred by this structure}  If the
+value of the UTF8 starts with a {@code [}, this represents an array type
 and the value is a descriptor string; otherwise, this represents a class
-or interface and the value is the internal form of a binary name.
+or interface and the value is the {@linkplain ##internalname internal
+form} of a binary name.
 
-**See also:** ConstantPoolBuilder#classEntry(Utf8Entry)
+@see ConstantPoolBuilder#classEntry(Utf8Entry)
      ConstantPoolBuilder::classEntry(Utf8Entry)
 
 ## ClassEntry.asInternalName()
@@ -76,7 +71,9 @@ or interface and the value is the internal form of a binary name.
 String asInternalName()
 ```
 
-This is a shortcut for name().stringValue().
+{@return the represented reference type, as the {@linkplain
+##internalname internal form} of a binary name or an array descriptor
+string}  This is a shortcut for {@link #name() name().stringValue()}.
 
 ## ClassEntry.asSymbol()
 
@@ -84,13 +81,16 @@ This is a shortcut for name().stringValue().
 ClassDesc asSymbol()
 ```
 
-The
-returned descriptor is never primitive.
+{@return the represented reference type, as a symbolic descriptor}  The
+returned descriptor is never {@linkplain ClassDesc#isPrimitive()
+primitive}.
 
-**API note:** If only symbol equivalence is desired, matches should be used.  It requires reduced parsing and can
-improve `class` file reading performance.
+@apiNote
+If only symbol equivalence is desired, {@link #matches(ClassDesc)
+matches} should be used.  It requires reduced parsing and can
+improve {@code class} file reading performance.
 
-**See also:** ConstantPoolBuilder#classEntry(ClassDesc)
+@see ConstantPoolBuilder#classEntry(ClassDesc)
      ConstantPoolBuilder::classEntry(ClassDesc)
 
 ## ClassEntry.matches(ClassDesc)
@@ -99,11 +99,8 @@ improve `class` file reading performance.
 boolean matches(ClassDesc desc)
 ```
 
-Returns
-`false` if `desc` is primitive.
+{@return whether this entry describes the given reference type}  Returns
+{@code false} if {@code desc} is primitive.
 
-Parameters:
-
-- `desc`: the reference type
-
-**Since:** 25
+@param desc the reference type
+@since 25

@@ -1,17 +1,8 @@
----
-title: "Array types"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/types/array.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[type.array]
 # Array types
 
 r[type.array.syntax]
-```grammar
+```grammar,types
 ArrayType -> `[` Type `;` Expression `]`
 ```
 
@@ -34,5 +25,8 @@ let boxed_array: Box<[i32]> = Box::new([1, 2, 3]);
 r[type.array.index]
 All elements of arrays are always initialized, and access to an array is always bounds-checked in safe methods and operators.
 
-> **Note:**
+> [!NOTE]
 > The [`Vec<T>`] standard library type provides a heap-allocated resizable array type.
+
+[`usize`]: numeric.md#machine-dependent-integer-types
+[constant expression]: ../const_eval.md#constant-expressions

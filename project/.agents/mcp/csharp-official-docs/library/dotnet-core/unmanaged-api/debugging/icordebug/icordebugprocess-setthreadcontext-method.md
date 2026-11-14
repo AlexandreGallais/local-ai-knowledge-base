@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugProcess::SetThreadContext Method"
 title: "ICorDebugProcess::SetThreadContext Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess-setthreadcontext-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugProcess.SetThreadContext"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugProcess::SetThreadContext"
+helpviewer_keywords:
+  - "ICorDebugProcess::SetThreadContext method [.NET debugging]"
+  - "SetThreadContext method, ICorDebugProcess interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugProcess::SetThreadContext Method
 
 Sets the context for the given thread in this process.
@@ -36,7 +45,7 @@ The context specifies the architecture of the processor on which the thread is e
 
 ## Remarks
 
-The debugger should call this method rather than the Win32 `SetThreadContext` function, because the thread may actually be in a "hijacked" state, in which its context has been temporarily changed. This method should be used only when a thread is in native code. Use ICorDebugRegisterSet for threads in managed code. You should never need to modify the context of a thread during an out-of-band (OOB) debug event.
+The debugger should call this method rather than the Win32 `SetThreadContext` function, because the thread may actually be in a "hijacked" state, in which its context has been temporarily changed. This method should be used only when a thread is in native code. Use [ICorDebugRegisterSet](icordebugregisterset-interface.md) for threads in managed code. You should never need to modify the context of a thread during an out-of-band (OOB) debug event.
 
 The data passed must be a context structure for the current platform.
 
@@ -44,7 +53,7 @@ This method can corrupt the runtime if used improperly.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

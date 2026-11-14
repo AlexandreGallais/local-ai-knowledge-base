@@ -1,17 +1,10 @@
 ---
-title: "Migrating to v2.0.0"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/use/migrating-to-2.0.0.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: Migrating to v2.0.0
 ---
-
-# Migrating to v2.0.0
 
 ESLint v2.0.0 is the second major version release. As a result, there are some significant changes between how ESLint worked during its life in 0.x and 1.x and how it will work going forward. These changes are the direct result of feedback from the ESLint community of users and were not made without due consideration for the upgrade path. We believe that these changes make ESLint even better, and while some work is necessary to upgrade, we hope the pain of this upgrade is small enough that you will see the benefit of upgrading.
 
-**Important:** If you are upgrading from 0.x, please refer to Migrating to 1.0.0 as your starting point.
+**Important:** If you are upgrading from 0.x, please refer to [Migrating to 1.0.0](./migrating-to-1.0.0) as your starting point.
 
 ## Rule Schema Changes
 
@@ -60,11 +53,11 @@ module.exports = {
 
 The following rules have been deprecated with new rules created to take their place. The following is a list of the removed rules and their replacements:
 
-- no-arrow-condition is replaced by a combination of no-confusing-arrow and no-constant-condition. Turn on both of these rules to get the same functionality as `no-arrow-condition`.
-- no-empty-label is replaced by no-labels with `{"allowLoop": true, "allowSwitch": true}` option.
-- space-after-keywords is replaced by keyword-spacing.
-- space-before-keywords is replaced by keyword-spacing.
-- space-return-throw-case is replaced by keyword-spacing.
+- [no-arrow-condition](../rules/no-arrow-condition) is replaced by a combination of [no-confusing-arrow](../rules/no-confusing-arrow) and [no-constant-condition](../rules/no-constant-condition). Turn on both of these rules to get the same functionality as `no-arrow-condition`.
+- [no-empty-label](../rules/no-empty-label) is replaced by [no-labels](../rules/no-labels) with `{"allowLoop": true, "allowSwitch": true}` option.
+- [space-after-keywords](../rules/space-after-keywords) is replaced by [keyword-spacing](../rules/keyword-spacing).
+- [space-before-keywords](../rules/space-before-keywords) is replaced by [keyword-spacing](../rules/keyword-spacing).
+- [space-return-throw-case](../rules/space-return-throw-case) is replaced by [keyword-spacing](../rules/keyword-spacing).
 
 **To address:** You'll need to update your rule configurations to use the new rules. ESLint v2.0.0 will also warn you when you're using a rule that has been removed and will suggest the replacement rules. Hopefully, this will result in few surprises during the upgrade process.
 
@@ -102,27 +95,27 @@ Prior to 2.0.0, the way to enable language options was by using `ecmaFeatures` i
 
 **To address:** If you are using any ECMAScript 6 feature flags in `ecmaFeatures`, you'll need to use `ecmaVersion: 6` instead. The ECMAScript 6 feature flags are:
 
-- `arrowFunctions` - enable arrow functions
-- `binaryLiterals` - enable binary literals
-- `blockBindings` - enable `let` and `const` (aka block bindings)
+- `arrowFunctions` - enable [arrow functions](https://leanpub.com/understandinges6/read#leanpub-auto-arrow-functions)
+- `binaryLiterals` - enable [binary literals](https://leanpub.com/understandinges6/read#leanpub-auto-octal-and-binary-literals)
+- `blockBindings` - enable `let` and `const` (aka [block bindings](https://leanpub.com/understandinges6/read#leanpub-auto-block-bindings))
 - `classes` - enable classes
-- `defaultParams` - enable default function parameters
-- `destructuring` - enable destructuring
-- `forOf` - enable `for-of` loops
-- `generators` - enable generators
+- `defaultParams` - enable [default function parameters](https://leanpub.com/understandinges6/read/#leanpub-auto-default-parameters)
+- `destructuring` - enable [destructuring](https://leanpub.com/understandinges6/read#leanpub-auto-destructuring-assignment)
+- `forOf` - enable [`for-of` loops](https://leanpub.com/understandinges6/read#leanpub-auto-iterables-and-for-of)
+- `generators` - enable [generators](https://leanpub.com/understandinges6/read#leanpub-auto-generators)
 - `modules` - enable modules and global strict mode
-- `objectLiteralComputedProperties` - enable computed object literal property names
-- `objectLiteralDuplicateProperties` - enable duplicate object literal properties in strict mode
-- `objectLiteralShorthandMethods` - enable object literal shorthand methods
-- `objectLiteralShorthandProperties` - enable object literal shorthand properties
-- `octalLiterals` - enable octal literals
-- `regexUFlag` - enable the regular expression `u` flag
-- `regexYFlag` - enable the regular expression `y` flag
-- `restParams` - enable the rest parameters
-- `spread` - enable the spread operator for arrays
+- `objectLiteralComputedProperties` - enable [computed object literal property names](https://leanpub.com/understandinges6/read#leanpub-auto-computed-property-names)
+- `objectLiteralDuplicateProperties` - enable [duplicate object literal properties](https://leanpub.com/understandinges6/read#leanpub-auto-duplicate-object-literal-properties) in strict mode
+- `objectLiteralShorthandMethods` - enable [object literal shorthand methods](https://leanpub.com/understandinges6/read#leanpub-auto-method-initializer-shorthand)
+- `objectLiteralShorthandProperties` - enable [object literal shorthand properties](https://leanpub.com/understandinges6/read#leanpub-auto-property-initializer-shorthand)
+- `octalLiterals` - enable [octal literals](https://leanpub.com/understandinges6/read#leanpub-auto-octal-and-binary-literals)
+- `regexUFlag` - enable the [regular expression `u` flag](https://leanpub.com/understandinges6/read#leanpub-auto-the-regular-expression-u-flag)
+- `regexYFlag` - enable the [regular expression `y` flag](https://leanpub.com/understandinges6/read#leanpub-auto-the-regular-expression-y-flag)
+- `restParams` - enable the [rest parameters](https://leanpub.com/understandinges6/read#leanpub-auto-rest-parameters)
+- `spread` - enable the [spread operator](https://leanpub.com/understandinges6/read#leanpub-auto-the-spread-operator) for arrays
 - `superInFunctions` - enable `super` references inside of functions
-- `templateStrings` - enable template strings
-- `unicodeCodePointEscapes` - enable code point escapes
+- `templateStrings` - enable [template strings](https://leanpub.com/understandinges6/read/#leanpub-auto-template-strings)
+- `unicodeCodePointEscapes` - enable [code point escapes](https://leanpub.com/understandinges6/read/#leanpub-auto-escaping-non-bmp-characters)
 
 If you're using any of these flags, such as:
 
@@ -216,17 +209,17 @@ If you're not using `ecmaFeatures` in your configuration or your custom/plugin r
 
 In 2.0.0, the following 11 rules were added to `"eslint:recommended"`.
 
-- constructor-super
-- no-case-declarations
-- no-class-assign
-- no-const-assign
-- no-dupe-class-members
-- no-empty-pattern
-- no-new-symbol
-- no-self-assign
-- no-this-before-super
-- no-unexpected-multiline
-- no-unused-labels
+- [constructor-super](../rules/constructor-super)
+- [no-case-declarations](../rules/no-case-declarations)
+- [no-class-assign](../rules/no-class-assign)
+- [no-const-assign](../rules/no-const-assign)
+- [no-dupe-class-members](../rules/no-dupe-class-members)
+- [no-empty-pattern](../rules/no-empty-pattern)
+- [no-new-symbol](../rules/no-new-symbol)
+- [no-self-assign](../rules/no-self-assign)
+- [no-this-before-super](../rules/no-this-before-super)
+- [no-unexpected-multiline](../rules/no-unexpected-multiline)
+- [no-unused-labels](../rules/no-unused-labels)
 
 **To address:** If you don't want to be notified by those rules, you can simply disable those rules.
 
@@ -328,6 +321,9 @@ ESLint 2.0.0 removes these conflicting defaults, and so you may begin seeing lin
 }
 ```
 
+[`no-multiple-empty-lines`]: ../rules/no-multiple-empty-lines
+[`func-style`]: ../rules/func-style
+
 ## SourceCode constructor (Node API) changes
 
 `SourceCode` constructor got to handle Unicode BOM.
@@ -353,7 +349,7 @@ var sourceCode = new SourceCode(text, ast);
 
 ## Rule Changes
 
-- `strict` - defaults to `"safe"` (previous default was `"function"`)
+- [`strict`](../rules/strict) - defaults to `"safe"` (previous default was `"function"`)
 
 ## Plugins No Longer Have Default Configurations
 

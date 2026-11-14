@@ -1,13 +1,8 @@
 ---
-title: "func-name-matching"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/func-name-matching.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: func-name-matching
+rule_type: suggestion
 ---
 
-# func-name-matching
 
 ## Rule Details
 
@@ -15,7 +10,7 @@ This rule requires function names to match the name of the variable or property 
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint func-name-matching: "error"*/
@@ -32,7 +27,9 @@ class C {
 }
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint func-name-matching: ["error", "never"] */
@@ -49,9 +46,11 @@ class C {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint func-name-matching: "error"*/
@@ -95,7 +94,9 @@ module.exports = function foo(name) {};
 module['exports'] = function foo(name) {};
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint func-name-matching: ["error", "never"] */
@@ -139,6 +140,8 @@ module.exports = function foo(name) {};
 module['exports'] = function foo(name) {};
 ```
 
+:::
+
 ## Options
 
 This rule takes an optional string of `"always"` or `"never"` (when omitted, it defaults to `"always"`), and an optional options object with two properties `considerPropertyDescriptor` and `includeCommonJSModuleExports`.
@@ -149,7 +152,7 @@ A boolean value that defaults to `false`. If `considerPropertyDescriptor` is set
 
 Examples of **correct** code for the `{ considerPropertyDescriptor: true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint func-name-matching: ["error", { "considerPropertyDescriptor": true }]*/
@@ -161,9 +164,11 @@ Object.defineProperties(obj, {baz:{value: function baz() {} }});
 Reflect.defineProperty(obj, 'foo', {value: function foo() {}});
 ```
 
+:::
+
 Examples of **incorrect** code for the `{ considerPropertyDescriptor: true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint func-name-matching: ["error", { "considerPropertyDescriptor": true }]*/
@@ -175,13 +180,15 @@ Object.defineProperties(obj, {baz:{value: function foo() {} }});
 Reflect.defineProperty(obj, 'foo', {value: function value() {}});
 ```
 
+:::
+
 ### includeCommonJSModuleExports
 
 A boolean value that defaults to `false`. If `includeCommonJSModuleExports` is set to true, `module.exports` and `module["exports"]` will be checked by this rule.
 
 Examples of **incorrect** code for the `{ includeCommonJSModuleExports: true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint func-name-matching: ["error", { "includeCommonJSModuleExports": true }]*/
@@ -191,10 +198,12 @@ module.exports = function foo(name) {};
 module['exports'] = function foo(name) {};
 ```
 
+:::
+
 ## When Not To Use It
 
 Do not use this rule if you want to allow named functions to have different names from the variable or property to which they are assigned.
 
 ## Compatibility
 
-* **JSCS**: requireMatchingFunctionName
+* **JSCS**: [requireMatchingFunctionName](https://jscs-dev.github.io/rule/requireMatchingFunctionName)

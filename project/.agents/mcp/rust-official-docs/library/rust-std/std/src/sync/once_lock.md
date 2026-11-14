@@ -1,12 +1,3 @@
----
-title: "std::sync::once_lock"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sync/once_lock.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::sync::once_lock
 
 ## struct OnceLock
@@ -17,22 +8,26 @@ pub struct OnceLock<T>
 
 A synchronization primitive which can nominally be written to only once.
 
-This type is a thread-safe `OnceCell`, and can be used in statics.
-In many simple cases, you can use `LazyLock<T, F>` instead to get the benefits of this type
+This type is a thread-safe [`OnceCell`], and can be used in statics.
+In many simple cases, you can use [`LazyLock<T, F>`] instead to get the benefits of this type
 with less effort: `LazyLock<T, F>` "looks like" `&T` because it initializes with `F` on deref!
 Where OnceLock shines is when LazyLock is too simple to support a given case, as LazyLock
-doesn't allow additional inputs to its function after you call `LazyLock::new(|| ...)`.
+doesn't allow additional inputs to its function after you call [`LazyLock::new(|| ...)`].
 
 A `OnceLock` can be thought of as a safe abstraction over uninitialized data that becomes
 initialized once written.
 
-Unlike `Mutex`, `OnceLock` is never poisoned on panic.
+Unlike [`Mutex`](crate::sync::Mutex), `OnceLock` is never poisoned on panic.
+
+[`OnceCell`]: crate::cell::OnceCell
+[`LazyLock<T, F>`]: crate::sync::LazyLock
+[`LazyLock::new(|| ...)`]: crate::sync::LazyLock::new
 
 # Examples
 
 Writing to a `OnceLock` from a separate thread:
 
-```rust
+```
 use std::sync::OnceLock;
 
 static CELL: OnceLock<usize> = OnceLock::new();
@@ -57,7 +52,7 @@ assert_eq!(
 
 You can use `OnceLock` to implement a type that requires "append-only" logic:
 
-```rust
+```
 use std::sync::{OnceLock, atomic::{AtomicU32, Ordering}};
 use std::thread;
 
@@ -91,7 +86,10 @@ impl<T> OnceList<T> {
 static LIST: OnceList<u32> = OnceList::new();
 static COUNTER: AtomicU32 = AtomicU32::new(0);
 
+# const LEN: u32 = if cfg!(miri) { 50 } else { 1000 };
+# /*
 const LEN: u32 = 1000;
+# */
 thread::scope(|s| {
     for _ in 0..thread::available_parallelism().unwrap().get() {
         s.spawn(|| {
@@ -182,7 +180,7 @@ Returns `Ok(())` if the cell was uninitialized and
 
 # Examples
 
-```rust
+```
 use std::sync::OnceLock;
 
 static CELL: OnceLock<i32> = OnceLock::new();
@@ -223,7 +221,7 @@ this may be changed to a panic in the future.
 
 # Examples
 
-```rust
+```
 use std::sync::OnceLock;
 
 let cell = OnceLock::new();
@@ -244,7 +242,7 @@ Consumes the `OnceLock`, returning the wrapped value. Returns
 
 # Examples
 
-```rust
+```
 use std::sync::OnceLock;
 
 let cell: OnceLock<String> = OnceLock::new();
@@ -270,7 +268,7 @@ no active borrows to the `OnceLock` exist, including from other threads.
 
 # Examples
 
-```rust
+```
 use std::sync::OnceLock;
 
 let mut cell: OnceLock<String> = OnceLock::new();

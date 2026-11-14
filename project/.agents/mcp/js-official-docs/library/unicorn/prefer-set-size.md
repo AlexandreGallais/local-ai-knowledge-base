@@ -1,21 +1,15 @@
----
-title: "prefer-set-size"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-set-size.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-set-size
 
 📝 Prefer using `Set#size` instead of `Array#length`.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
-`Set#size` is a direct way to get the number of elements in a `Set`. Converting a `Set` to an array just to access its `.length` is inefficient and defeats the purpose of using a Set. The `size` property is O(1) and doesn't require any conversion.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+[`Set#size`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/size) is a direct way to get the number of elements in a `Set`. Converting a `Set` to an array just to access its `.length` is inefficient and defeats the purpose of using a Set. The `size` property is O(1) and doesn't require any conversion.
 
 ## Examples
 

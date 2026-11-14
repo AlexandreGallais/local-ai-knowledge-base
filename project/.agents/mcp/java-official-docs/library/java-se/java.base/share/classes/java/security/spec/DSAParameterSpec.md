@@ -1,12 +1,3 @@
----
-title: "DSAParameterSpec class (java.security.spec)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/spec/DSAParameterSpec.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # DSAParameterSpec class (java.security.spec)
 
 ```java
@@ -15,9 +6,12 @@ public class DSAParameterSpec implements AlgorithmParameterSpec, java.security.i
 
 This class specifies the set of parameters used with the DSA algorithm.
 
-**See also:** AlgorithmParameterSpec
+@author Jan Luehe
 
-**Since:** 1.2
+
+@see AlgorithmParameterSpec
+
+@since 1.2
 
 ## DSAParameterSpec.DSAParameterSpec(BigInteger, BigInteger, BigInteger)
 
@@ -27,11 +21,11 @@ public DSAParameterSpec(BigInteger p, BigInteger q, BigInteger g)
 
 Creates a new DSAParameterSpec with the specified parameter values.
 
-Parameters:
+@param p the prime.
 
-- `p`: the prime.
-- `q`: the sub-prime.
-- `g`: the base.
+@param q the sub-prime.
+
+@param g the base.
 
 ## DSAParameterSpec.getP()
 
@@ -39,9 +33,9 @@ Parameters:
 public BigInteger getP()
 ```
 
-Returns the prime `p`.
+Returns the prime {@code p}.
 
-**Returns:** the prime `p`.
+@return the prime {@code p}.
 
 ## DSAParameterSpec.getQ()
 
@@ -49,9 +43,9 @@ Returns the prime `p`.
 public BigInteger getQ()
 ```
 
-Returns the sub-prime `q`.
+Returns the sub-prime {@code q}.
 
-**Returns:** the sub-prime `q`.
+@return the sub-prime {@code q}.
 
 ## DSAParameterSpec.getG()
 
@@ -59,6 +53,6 @@ Returns the sub-prime `q`.
 public BigInteger getG()
 ```
 
-Returns the base `g`.
+Returns the base {@code g}.
 
-**Returns:** the base `g`.
+@return the base {@code g}.

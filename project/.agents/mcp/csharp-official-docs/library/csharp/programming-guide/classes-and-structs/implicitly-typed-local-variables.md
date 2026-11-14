@@ -1,19 +1,19 @@
 ---
 title: "Implicitly typed local variables"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/programming-guide/classes-and-structs/implicitly-typed-local-variables.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: The var keyword in C# instructs the compiler to infer the type of the variable from the expression on the right side of the initialization statement.
+ms.date: 07/20/2015
+helpviewer_keywords:
+  - "implicitly-typed local variables [C#]"
+  - "var [C#]"
+ms.assetid: b9218fb2-ef5d-4814-8a8e-2bc29b0bbc9b
 ---
-
 # Implicitly typed local variables (C# Programming Guide)
 
-Local variables can be declared without giving an explicit type. The `var` keyword instructs the compiler to infer the type of the variable from the expression on the right side of the initialization statement. The inferred type may be a built-in type, an anonymous type, a user-defined type, or a type defined in the .NET class library. For more information about how to initialize arrays with `var`, see Implicitly Typed Arrays.
+Local variables can be declared without giving an explicit type. The `var` keyword instructs the compiler to infer the type of the variable from the expression on the right side of the initialization statement. The inferred type may be a built-in type, an anonymous type, a user-defined type, or a type defined in the .NET class library. For more information about how to initialize arrays with `var`, see [Implicitly Typed Arrays](../../language-reference/builtin-types/arrays.md#implicitly-typed-arrays).
 
 The following examples show various ways in which local variables can be declared with `var`:
 
-_Code sample not included: ~/samples/snippets/csharp/VS_Snippets_VBCSharp/csProgGuideLINQ/CS/csRef30LangFeatures_2.cs._
+[!code-csharp[csProgGuideLINQ#43](~/samples/snippets/csharp/VS_Snippets_VBCSharp/csProgGuideLINQ/CS/csRef30LangFeatures_2.cs#43)]
 
 It is important to understand that the `var` keyword does not mean "variant" and does not indicate that the variable is loosely typed, or late-bound. It just means that the compiler determines and assigns the most appropriate type.
 
@@ -21,33 +21,33 @@ The `var` keyword may be used in the following contexts:
 
 - On local variables (variables declared at method scope) as shown in the previous example.
 
-- In a for initialization statement.
+- In a [for](../../language-reference/statements/iteration-statements.md#the-for-statement) initialization statement.
 
     ```csharp
     for (var x = 1; x < 10; x++)
     ```
 
-- In a foreach initialization statement.
+- In a [foreach](../../language-reference/statements/iteration-statements.md#the-foreach-statement) initialization statement.
 
     ```csharp
     foreach (var item in list) {...}
     ```
 
-- In a using statement.
+- In a [using](../../language-reference/statements/using.md) statement.
 
     ```csharp
     using (var file = new StreamReader("C:\\myfile.txt")) {...}
     ```
 
-For more information, see How to use implicitly typed local variables and arrays in a query expression.
+For more information, see [How to use implicitly typed local variables and arrays in a query expression](how-to-use-implicitly-typed-local-variables-and-arrays-in-a-query-expression.md).
 
 ## var and anonymous types
 
-In many cases the use of `var` is optional and is just a syntactic convenience. However, when a variable is initialized with an anonymous type you must declare the variable as `var` if you need to access the properties of the object at a later point. This is a common scenario in LINQ query expressions. For more information, see Anonymous Types.
+In many cases the use of `var` is optional and is just a syntactic convenience. However, when a variable is initialized with an anonymous type you must declare the variable as `var` if you need to access the properties of the object at a later point. This is a common scenario in LINQ query expressions. For more information, see [Anonymous Types](anonymous-types.md).
 
 From the perspective of your source code, an anonymous type has no name. Therefore, if a query variable has been initialized with `var`, then the only way to access the properties in the returned sequence of objects is to use `var` as the type of the iteration variable in the `foreach` statement.
 
-_Code sample not included: ~/samples/snippets/csharp/VS_Snippets_VBCSharp/csProgGuideLINQ/CS/csRef30LangFeatures_2.cs._
+[!code-csharp[csProgGuideLINQ#44](~/samples/snippets/csharp/VS_Snippets_VBCSharp/csProgGuideLINQ/CS/csRef30LangFeatures_2.cs#44)]
 
 ## Remarks
 
@@ -87,17 +87,17 @@ var studentQuery =
     group student by student.Last;
 ```
 
-The use of `var` helps simplify your code, but its use should be restricted to cases where it is required, or when it makes your code easier to read. For more information about when to use `var` properly, see the Implicitly typed local variables section on the C# Coding Guidelines article.
+The use of `var` helps simplify your code, but its use should be restricted to cases where it is required, or when it makes your code easier to read. For more information about when to use `var` properly, see the [Implicitly typed local variables](../../fundamentals/coding-style/coding-conventions.md#implicitly-typed-local-variables) section on the C# Coding Guidelines article.
 
 ## See also
 
-- C# Reference
-- Implicitly Typed Arrays
-- How to use implicitly typed local variables and arrays in a query expression
-- Anonymous Types
-- Object and Collection Initializers
-- var
-- LINQ in C#
-- LINQ (Language-Integrated Query)
-- Iteration statements
-- `using` statement
+- [C# Reference](../../language-reference/index.yml)
+- [Implicitly Typed Arrays](../../language-reference/builtin-types/arrays.md#implicitly-typed-arrays)
+- [How to use implicitly typed local variables and arrays in a query expression](how-to-use-implicitly-typed-local-variables-and-arrays-in-a-query-expression.md)
+- [Anonymous Types](anonymous-types.md)
+- [Object and Collection Initializers](object-and-collection-initializers.md)
+- [var](../../language-reference/statements/declarations.md#implicitly-typed-local-variables)
+- [LINQ in C#](../../linq/index.md)
+- [LINQ (Language-Integrated Query)](../../linq/index.md)
+- [Iteration statements](../../language-reference/statements/iteration-statements.md)
+- [`using` statement](../../language-reference/statements/using.md)

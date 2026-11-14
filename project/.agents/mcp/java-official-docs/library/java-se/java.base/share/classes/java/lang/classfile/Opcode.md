@@ -1,34 +1,24 @@
----
-title: "Opcode enum (java.lang.classfile)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/Opcode.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Opcode enum (java.lang.classfile)
 
 ```java
 public enum Opcode
 ```
 
-Describes the opcodes of the JVM instruction set, as described in JVMS .
-This includes a few pseudo-opcodes modified by wide.
-
+Describes the opcodes of the JVM instruction set, as described in JVMS {@jvms 6.5}.
+This includes a few pseudo-opcodes modified by {@link #isWide() wide}.
+<p>
 An opcode describes the operation of an instruction.
 
-**API note:** The enum constants are named after the opcodes' mnemonics in uppercase.
+@apiNote
+The enum constants are named after the opcodes' mnemonics in uppercase.
 Wide pseudo-opcodes are named with the original opcodes' mnemonic plus
-a `_W` suffix. However, ldc_w, ldc2_w,
-goto_w, and jsr_w are legitimate opcodes
+a {@code _W} suffix. However, {@link #LDC_W ldc_w}, {@link #LDC2_W ldc2_w},
+{@link #GOTO_W goto_w}, and {@link #JSR_W jsr_w} are legitimate opcodes
 instead of wide pseudo-opcodes.
 
-**See also:** Instruction
-
-**jvms:** 6.5 Instructions
-
-**Since:** 24
+@see Instruction
+@jvms 6.5 Instructions
+@since 24
 
 ## Opcode.bytecode()
 
@@ -36,8 +26,8 @@ instead of wide pseudo-opcodes.
 public int bytecode()
 ```
 
-For wide pseudo-opcodes, returns the
-first 2 bytes of the instruction, which are the wide opcode `196` (`0xC4`)
+{@return the opcode value} For {@linkplain #isWide() wide} pseudo-opcodes, returns the
+first 2 bytes of the instruction, which are the wide opcode {@code 196} ({@code 0xC4})
 and the functional opcode, as a U2 value.
 
 ## Opcode.isWide()
@@ -46,33 +36,23 @@ and the functional opcode, as a U2 value.
 public boolean isWide()
 ```
 
-`wide` extends local variable index by additional bytes.
+{@return true if this is a pseudo-opcode modified by wide opcode}
+<p>
+{@code wide} extends local variable index by additional bytes.
 
-**jvms:** 6.5.wide *wide*
-
-**See also:** #ILOAD_W
-
-**See also:** #LLOAD_W
-
-**See also:** #FLOAD_W
-
-**See also:** #DLOAD_W
-
-**See also:** #ALOAD_W
-
-**See also:** #ISTORE_W
-
-**See also:** #LSTORE_W
-
-**See also:** #FSTORE_W
-
-**See also:** #DSTORE_W
-
-**See also:** #ASTORE_W
-
-**See also:** #RET_W
-
-**See also:** #IINC_W
+@jvms 6.5.wide <em>wide</em>
+@see #ILOAD_W
+@see #LLOAD_W
+@see #FLOAD_W
+@see #DLOAD_W
+@see #ALOAD_W
+@see #ISTORE_W
+@see #LSTORE_W
+@see #FSTORE_W
+@see #DSTORE_W
+@see #ASTORE_W
+@see #RET_W
+@see #IINC_W
 
 ## Opcode.sizeIfFixed()
 
@@ -80,10 +60,10 @@ public boolean isWide()
 public int sizeIfFixed()
 ```
 
-This size includes
+{@return size of the instruction in bytes if fixed, or -1 otherwise} This size includes
 the opcode itself.
 
-**See also:** Instruction#sizeInBytes() Instruction::sizeInBytes
+@see Instruction#sizeInBytes() Instruction::sizeInBytes
 
 ## Opcode.kind()
 
@@ -91,5 +71,5 @@ the opcode itself.
 public Kind kind()
 ```
 
-Each kind of operation has its own modeling
+{@return operation kind}  Each kind of operation has its own modeling
 interface to model instructions belonging to that kind.

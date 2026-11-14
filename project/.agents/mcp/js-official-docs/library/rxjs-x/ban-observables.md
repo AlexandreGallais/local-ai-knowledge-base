@@ -1,20 +1,13 @@
----
-title: "Disallow banned observable creators (rxjs-x/ban-observables)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/ban-observables.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Disallow banned observable creators (`rxjs-x/ban-observables`)
+
+<!-- end auto-generated rule header -->
 
 It can sometimes be useful to ban specific `rxjs` imports.
 This rule can be configured to ban a list of specific `rxjs` imports developers want to avoid in their project.
 
-> **Tip:**
+> [!TIP]
 > `ban-observables` only bans at the _import_ site. (In fact, it can ban anything imported from `rxjs`.)
-> See `ban-operators` for banning operators at their _usage_.
+> See [`ban-operators`](./ban-operators.md) for banning operators at their _usage_.
 
 ## Options
 
@@ -41,9 +34,9 @@ If you have no need to ban importing anything from `rxjs`, you don't need this r
 
 ## Related To
 
-- `ban-operators`
+- [`ban-operators`](./ban-operators.md)
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/ban-observables.ts)
+- [Test source](/tests/rules/ban-observables.test.ts)

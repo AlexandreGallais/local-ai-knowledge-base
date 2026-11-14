@@ -1,40 +1,31 @@
----
-title: "LDAPCertStoreParameters class (java.security.cert)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/cert/LDAPCertStoreParameters.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # LDAPCertStoreParameters class (java.security.cert)
 
 ```java
 public class LDAPCertStoreParameters implements CertStoreParameters
 ```
 
-Parameters used as input for the LDAP `CertStore` algorithm.
-
+Parameters used as input for the LDAP {@code CertStore} algorithm.
+<p>
 This class is used to provide necessary configuration parameters (server
-name and port number) to implementations of the LDAP `CertStore`
+name and port number) to implementations of the LDAP {@code CertStore}
 algorithm. However, if you are retrieving certificates or CRLs from
 an ldap URI as specified by RFC 5280, use the
-URICertStoreParameters
+{@link java.security.cert.URICertStoreParameters URICertStoreParameters}
 instead, as the URI may contain additional information such as the
 distinguished name that will help the LDAP CertStore find the specific
 certificates and CRLs.
-
-**Concurrent Access**
-
+<p>
+<b>Concurrent Access</b>
+<p>
 Unless otherwise specified, the methods defined in this class are not
 thread-safe. Multiple threads that need to access a single
 object concurrently should synchronize amongst themselves and
 provide the necessary locking. Multiple threads each manipulating
 separate objects need not synchronize.
 
-**Since:** 1.4
-
-**See also:** CertStore
+@since       1.4
+@author      Steve Hanna
+@see         CertStore
 
 ## LDAPCertStoreParameters.LDAPCertStoreParameters(String, int)
 
@@ -42,17 +33,13 @@ separate objects need not synchronize.
 public LDAPCertStoreParameters(String serverName, int port)
 ```
 
-Creates an instance of `LDAPCertStoreParameters` with the
+Creates an instance of {@code LDAPCertStoreParameters} with the
 specified parameter values.
 
-Parameters:
-
-- `serverName`: the DNS name of the LDAP server
-- `port`: the port number of the LDAP server
-
-Throws:
-
-- `NullPointerException`: if `serverName` is `null`
+@param serverName the DNS name of the LDAP server
+@param port the port number of the LDAP server
+@throws    NullPointerException if {@code serverName} is
+{@code null}
 
 ## LDAPCertStoreParameters.LDAPCertStoreParameters(String)
 
@@ -60,16 +47,12 @@ Throws:
 public LDAPCertStoreParameters(String serverName)
 ```
 
-Creates an instance of `LDAPCertStoreParameters` with the
+Creates an instance of {@code LDAPCertStoreParameters} with the
 specified server name and a default port of 389.
 
-Parameters:
-
-- `serverName`: the DNS name of the LDAP server
-
-Throws:
-
-- `NullPointerException`: if `serverName` is `null`
+@param serverName the DNS name of the LDAP server
+@throws    NullPointerException if {@code serverName} is
+{@code null}
 
 ## LDAPCertStoreParameters.LDAPCertStoreParameters()
 
@@ -77,7 +60,7 @@ Throws:
 public LDAPCertStoreParameters()
 ```
 
-Creates an instance of `LDAPCertStoreParameters` with the
+Creates an instance of {@code LDAPCertStoreParameters} with the
 default parameter values (server name "localhost", port 389).
 
 ## LDAPCertStoreParameters.getServerName()
@@ -88,7 +71,7 @@ public String getServerName()
 
 Returns the DNS name of the LDAP server.
 
-**Returns:** the name (not `null`)
+@return the name (not {@code null})
 
 ## LDAPCertStoreParameters.getPort()
 
@@ -98,7 +81,7 @@ public int getPort()
 
 Returns the port number of the LDAP server.
 
-**Returns:** the port number
+@return the port number
 
 ## LDAPCertStoreParameters.clone()
 
@@ -108,13 +91,13 @@ public Object clone()
 
 Returns a copy of this object. Changes to the copy will not affect
 the original and vice versa.
-
+<p>
 Note: this method currently performs a shallow copy of the object
-(simply calls `Object.clone()`). This may be changed in a
+(simply calls {@code Object.clone()}). This may be changed in a
 future revision to perform a deep copy if new parameters are added
 that should not be shared.
 
-**Returns:** the copy
+@return the copy
 
 ## LDAPCertStoreParameters.toString()
 
@@ -124,4 +107,4 @@ public String toString()
 
 Returns a formatted string describing the parameters.
 
-**Returns:** a formatted string describing the parameters
+@return a formatted string describing the parameters

@@ -1,15 +1,25 @@
 ---
 title: "Event-based Asynchronous Pattern Overview"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/asynchronous-programming-patterns/event-based-asynchronous-pattern-overview.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Review Event-based Asynchronous Patterns (EAPs) in .NET, which make available the advantages of multithreaded applications but hide some design complexities.
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "Event-based Asynchronous Pattern"
+  - "ProgressChangedEventArgs class"
+  - "BackgroundWorker component"
+  - "events [.NET], asynchronous"
+  - "Asynchronous Pattern"
+  - "AsyncOperationManager class"
+  - "threading [.NET], asynchronous features"
+  - "AsyncOperation class"
+  - "AsyncCompletedEventArgs class"
+ms.assetid: 792aa8da-918b-458e-b154-9836b97735f3
 ---
-
 # Event-based Asynchronous Pattern Overview
 
-Applications that perform many tasks simultaneously, yet remain responsive to user interaction, often require a design that uses multiple threads. The `System.Threading` namespace provides all the tools necessary to create high-performance multithreaded applications, but using these tools effectively requires significant experience with multithreaded software engineering. For relatively simple multithreaded applications, the `System.ComponentModel.BackgroundWorker` component provides a straightforward solution. For more sophisticated asynchronous applications, consider implementing a class that adheres to the Event-based Asynchronous Pattern.
+Applications that perform many tasks simultaneously, yet remain responsive to user interaction, often require a design that uses multiple threads. The <xref:System.Threading> namespace provides all the tools necessary to create high-performance multithreaded applications, but using these tools effectively requires significant experience with multithreaded software engineering. For relatively simple multithreaded applications, the <xref:System.ComponentModel.BackgroundWorker> component provides a straightforward solution. For more sophisticated asynchronous applications, consider implementing a class that adheres to the Event-based Asynchronous Pattern.
 
  The Event-based Asynchronous Pattern makes available the advantages of multithreaded applications while hiding many of the complex issues inherent in multithreaded design. Using a class that supports this pattern can allow you to:
 
@@ -19,18 +29,18 @@ Applications that perform many tasks simultaneously, yet remain responsive to us
 
 - Wait for resources to become available without stopping ("blocking") your application.
 
-- Communicate with pending asynchronous operations using the familiar events-and-delegates model. For more information on using event handlers and delegates, see Events.
+- Communicate with pending asynchronous operations using the familiar events-and-delegates model. For more information on using event handlers and delegates, see [Events](../events/index.md).
 
  A class that supports the Event-based Asynchronous Pattern will have one or more methods named _MethodName_**Async**. These methods may mirror synchronous versions, which perform the same operation on the current thread. The class may also have a _MethodName_**Completed** event and it may have a _MethodName_**AsyncCancel** (or simply **CancelAsync**) method.
 
- `System.Windows.Forms.PictureBox` is a typical component that supports the Event-based Asynchronous Pattern. You can download an image synchronously by calling its `System.Windows.Forms.PictureBox.Load*` method, but if the image is large, or if the network connection is slow, your application will stop responding until the download operation is completed and the call to `System.Windows.Forms.PictureBox.Load*` returns.
+ <xref:System.Windows.Forms.PictureBox> is a typical component that supports the Event-based Asynchronous Pattern. You can download an image synchronously by calling its <xref:System.Windows.Forms.PictureBox.Load*> method, but if the image is large, or if the network connection is slow, your application will stop responding until the download operation is completed and the call to <xref:System.Windows.Forms.PictureBox.Load*> returns.
 
- If you want your application to keep running while the image is loading, you can call the `System.Windows.Forms.PictureBox.LoadAsync*` method and handle the `System.Windows.Forms.PictureBox.LoadCompleted` event, just as you would handle any other event. When you call the `System.Windows.Forms.PictureBox.LoadAsync*` method, your application will continue to run while the download proceeds on a separate thread ("in the background"). Your event handler will be called when the image-loading operation is complete, and your event handler can examine the `System.ComponentModel.AsyncCompletedEventArgs` parameter to determine if the download completed successfully.
+ If you want your application to keep running while the image is loading, you can call the <xref:System.Windows.Forms.PictureBox.LoadAsync*> method and handle the <xref:System.Windows.Forms.PictureBox.LoadCompleted> event, just as you would handle any other event. When you call the <xref:System.Windows.Forms.PictureBox.LoadAsync*> method, your application will continue to run while the download proceeds on a separate thread ("in the background"). Your event handler will be called when the image-loading operation is complete, and your event handler can examine the <xref:System.ComponentModel.AsyncCompletedEventArgs> parameter to determine if the download completed successfully.
 
- The Event-based Asynchronous Pattern requires that an asynchronous operation can be canceled, and the `System.Windows.Forms.PictureBox` control supports this requirement with its `System.Windows.Forms.PictureBox.CancelAsync*` method. Calling `System.Windows.Forms.PictureBox.CancelAsync*` submits a request to stop the pending download, and when the task is canceled, the `System.Windows.Forms.PictureBox.LoadCompleted` event is raised.
+ The Event-based Asynchronous Pattern requires that an asynchronous operation can be canceled, and the <xref:System.Windows.Forms.PictureBox> control supports this requirement with its <xref:System.Windows.Forms.PictureBox.CancelAsync*> method. Calling <xref:System.Windows.Forms.PictureBox.CancelAsync*> submits a request to stop the pending download, and when the task is canceled, the <xref:System.Windows.Forms.PictureBox.LoadCompleted> event is raised.
 
-> **Caution:**
-> It is possible that the download will finish just as the `System.Windows.Forms.PictureBox.CancelAsync*` request is made, so `System.ComponentModel.AsyncCompletedEventArgs.Cancelled` may not reflect the request to cancel. This is called a *race condition* and is a common issue in multithreaded programming. For more information on issues in multithreaded programming, see Managed Threading Best Practices.
+> [!CAUTION]
+> It is possible that the download will finish just as the <xref:System.Windows.Forms.PictureBox.CancelAsync*> request is made, so <xref:System.ComponentModel.AsyncCompletedEventArgs.Cancelled> may not reflect the request to cancel. This is called a *race condition* and is a common issue in multithreaded programming. For more information on issues in multithreaded programming, see [Managed Threading Best Practices](../threading/managed-threading-best-practices.md).
 
 ## Characteristics of the Event-based Asynchronous Pattern
 
@@ -40,7 +50,7 @@ Applications that perform many tasks simultaneously, yet remain responsive to us
 
 ### Examples of the Event-based Asynchronous Pattern
 
- The `System.Media.SoundPlayer` and `System.Windows.Forms.PictureBox` components represent simple implementations of the Event-based Asynchronous Pattern. The `System.Net.WebClient` and `System.ComponentModel.BackgroundWorker` components represent more complex implementations of the Event-based Asynchronous Pattern.
+ The <xref:System.Media.SoundPlayer> and <xref:System.Windows.Forms.PictureBox> components represent simple implementations of the Event-based Asynchronous Pattern. The <xref:System.Net.WebClient> and <xref:System.ComponentModel.BackgroundWorker> components represent more complex implementations of the Event-based Asynchronous Pattern.
 
  Below is an example class declaration that conforms to the pattern:
 
@@ -95,16 +105,16 @@ public class AsyncExample
 
 ### Asynchronous Method Overloads
 
- There are potentially two overloads for the asynchronous operations: single-invocation and multiple-invocation. You can distinguish these two forms by their method signatures: the multiple-invocation form has an extra parameter called `userState`. This form makes it possible for your code to call `Method1Async(string param, object userState)` multiple times without waiting for any pending asynchronous operations to finish. If, on the other hand, you try to call `Method1Async(string param)` before a previous invocation has completed, the method raises an `System.InvalidOperationException`.
+ There are potentially two overloads for the asynchronous operations: single-invocation and multiple-invocation. You can distinguish these two forms by their method signatures: the multiple-invocation form has an extra parameter called `userState`. This form makes it possible for your code to call `Method1Async(string param, object userState)` multiple times without waiting for any pending asynchronous operations to finish. If, on the other hand, you try to call `Method1Async(string param)` before a previous invocation has completed, the method raises an <xref:System.InvalidOperationException>.
 
  The `userState` parameter for the multiple-invocation overloads allows you to distinguish among asynchronous operations. You provide a unique value (for example, a GUID or hash code) for each call to `Method1Async(string param, object userState)`, and when each operation is completed, your event handler can determine which instance of the operation raised the completion event.
 
 ### Tracking Pending Operations
 
- If you use the multiple-invocation overloads, your code will need to keep track of the `userState` objects (task IDs) for pending tasks. For each call to `Method1Async(string param, object userState)`, you will typically generate a new, unique `userState` object and add it to a collection. When the task corresponding to this `userState` object raises the completion event, your completion method implementation will examine `System.ComponentModel.AsyncCompletedEventArgs.UserState` and remove it from your collection. Used this way, the `userState` parameter takes the role of a task ID.
+ If you use the multiple-invocation overloads, your code will need to keep track of the `userState` objects (task IDs) for pending tasks. For each call to `Method1Async(string param, object userState)`, you will typically generate a new, unique `userState` object and add it to a collection. When the task corresponding to this `userState` object raises the completion event, your completion method implementation will examine <xref:System.ComponentModel.AsyncCompletedEventArgs.UserState?displayProperty=nameWithType> and remove it from your collection. Used this way, the `userState` parameter takes the role of a task ID.
 
-> **Note:**
-> You must be careful to provide a unique value for `userState` in your calls to multiple-invocation overloads. Non-unique task IDs will cause the asynchronous class throw an `System.ArgumentException`.
+> [!NOTE]
+> You must be careful to provide a unique value for `userState` in your calls to multiple-invocation overloads. Non-unique task IDs will cause the asynchronous class throw an <xref:System.ArgumentException>.
 
 ### Canceling Pending Operations
 
@@ -116,20 +126,20 @@ public class AsyncExample
 
 ### Receiving Progress Updates and Incremental Results
 
- A class that adheres to the Event-based Asynchronous Pattern may optionally provide an event for tracking progress and incremental results. This will typically be named `ProgressChanged` or _MethodName_**ProgressChanged**, and its corresponding event handler will take a `System.ComponentModel.ProgressChangedEventArgs` parameter.
+ A class that adheres to the Event-based Asynchronous Pattern may optionally provide an event for tracking progress and incremental results. This will typically be named `ProgressChanged` or _MethodName_**ProgressChanged**, and its corresponding event handler will take a <xref:System.ComponentModel.ProgressChangedEventArgs> parameter.
 
- The event handler for the `ProgressChanged` event can examine the `System.ComponentModel.ProgressChangedEventArgs.ProgressPercentage` property to determine what percentage of an asynchronous task has been completed. This property will range from 0 to 100, and it can be used to update the `System.Windows.Forms.ProgressBar.Value` property of a `System.Windows.Forms.ProgressBar`. If multiple asynchronous operations are pending, you can use the `System.ComponentModel.ProgressChangedEventArgs.UserState` property to distinguish which operation is reporting progress.
+ The event handler for the `ProgressChanged` event can examine the <xref:System.ComponentModel.ProgressChangedEventArgs.ProgressPercentage?displayProperty=nameWithType> property to determine what percentage of an asynchronous task has been completed. This property will range from 0 to 100, and it can be used to update the <xref:System.Windows.Forms.ProgressBar.Value> property of a <xref:System.Windows.Forms.ProgressBar>. If multiple asynchronous operations are pending, you can use the <xref:System.ComponentModel.ProgressChangedEventArgs.UserState?displayProperty=nameWithType> property to distinguish which operation is reporting progress.
 
- Some classes may report incremental results as asynchronous operations proceed. These results will be stored in a class that derives from `System.ComponentModel.ProgressChangedEventArgs` and they will appear as properties in the derived class. You can access these results in the event handler for the `ProgressChanged` event, just as you would access the `System.ComponentModel.ProgressChangedEventArgs.ProgressPercentage` property. If multiple asynchronous operations are pending, you can use the `System.ComponentModel.ProgressChangedEventArgs.UserState` property to distinguish which operation is reporting incremental results.
+ Some classes may report incremental results as asynchronous operations proceed. These results will be stored in a class that derives from <xref:System.ComponentModel.ProgressChangedEventArgs> and they will appear as properties in the derived class. You can access these results in the event handler for the `ProgressChanged` event, just as you would access the <xref:System.ComponentModel.ProgressChangedEventArgs.ProgressPercentage> property. If multiple asynchronous operations are pending, you can use the <xref:System.ComponentModel.ProgressChangedEventArgs.UserState> property to distinguish which operation is reporting incremental results.
 
 ## See also
 
-- `System.ComponentModel.ProgressChangedEventArgs`
-- `System.ComponentModel.BackgroundWorker`
-- `System.ComponentModel.AsyncCompletedEventArgs`
-- How to: Use Components That Support the Event-based Asynchronous Pattern
-- How to: Run an Operation in the Background
-- How to: Implement a Form That Uses a Background Operation
-- Event-based Asynchronous Pattern (EAP)
-- Best Practices for Implementing the Event-based Asynchronous Pattern
-- Deciding When to Implement the Event-based Asynchronous Pattern
+- <xref:System.ComponentModel.ProgressChangedEventArgs>
+- <xref:System.ComponentModel.BackgroundWorker>
+- <xref:System.ComponentModel.AsyncCompletedEventArgs>
+- [How to: Use Components That Support the Event-based Asynchronous Pattern](how-to-use-components-that-support-the-event-based-asynchronous-pattern.md)
+- [How to: Run an Operation in the Background](/dotnet/desktop/winforms/controls/how-to-run-an-operation-in-the-background)
+- [How to: Implement a Form That Uses a Background Operation](/dotnet/desktop/winforms/controls/how-to-implement-a-form-that-uses-a-background-operation)
+- [Event-based Asynchronous Pattern (EAP)](event-based-asynchronous-pattern-eap.md)
+- [Best Practices for Implementing the Event-based Asynchronous Pattern](best-practices-for-implementing-the-event-based-asynchronous-pattern.md)
+- [Deciding When to Implement the Event-based Asynchronous Pattern](deciding-when-to-implement-the-event-based-asynchronous-pattern.md)

@@ -1,12 +1,3 @@
----
-title: "DecimalStyle class (java.time.format)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/time/format/DecimalStyle.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # DecimalStyle class (java.time.format)
 
 ```java
@@ -14,13 +5,14 @@ public final class DecimalStyle
 ```
 
 Localized decimal style used in date and time formatting.
-
+<p>
 A significant part of dealing with dates and times is the localization.
 This class acts as a central point for accessing the information.
 
-**Implementation requirements:** This class is immutable and thread-safe.
+@implSpec
+This class is immutable and thread-safe.
 
-**Since:** 1.8
+@since 1.8
 
 ## DecimalStyle.STANDARD
 
@@ -29,7 +21,7 @@ public static final DecimalStyle STANDARD
 ```
 
 The standard set of non-localized decimal style symbols.
-
+<p>
 This uses standard ASCII characters for zero, positive, negative and a dot for the decimal point.
 
 ## DecimalStyle.getAvailableLocales()
@@ -39,12 +31,12 @@ public static Set<Locale> getAvailableLocales()
 ```
 
 Lists all the locales that are supported.
+<p>
+At a minimum, the returned {@code Set} must contain a {@code Locale} instance equal to
+{@link Locale#ROOT Locale.ROOT} and a {@code Locale} instance equal to
+{@link Locale#US Locale.US}.
 
-At a minimum, the returned `Set` must contain a `Locale` instance equal to
-Locale.ROOT and a `Locale` instance equal to
-Locale.US.
-
-**Returns:** a Set of Locales for which localization is supported
+@return a Set of Locales for which localization is supported
 
 ## DecimalStyle.ofDefaultLocale()
 
@@ -53,16 +45,16 @@ public static DecimalStyle ofDefaultLocale()
 ```
 
 Obtains the DecimalStyle for the default
-FORMAT locale.
-
+{@link java.util.Locale.Category#FORMAT FORMAT} locale.
+<p>
 This method provides access to locale sensitive decimal style symbols.
-
+<p>
 This is equivalent to calling
-of(Locale.getDefault(Locale.Category.FORMAT)).
+{@link #of(Locale)
+    of(Locale.getDefault(Locale.Category.FORMAT))}.
 
-**See also:** java.util.Locale.Category#FORMAT
-
-**Returns:** the decimal style, not null
+@see java.util.Locale.Category#FORMAT
+@return the decimal style, not null
 
 ## DecimalStyle.of(Locale)
 
@@ -71,19 +63,16 @@ public static DecimalStyle of(Locale locale)
 ```
 
 Obtains the DecimalStyle for the specified locale.
-
+<p>
 This method provides access to locale sensitive decimal style symbols.
 If the locale contains "nu" (Numbering System) and/or "rg"
-(Region Override)
-Unicode extensions, returned instance will reflect the values specified with
+(Region Override) <a href="../../util/Locale.html#def_locale_extension">
+Unicode extensions</a>, returned instance will reflect the values specified with
 those extensions. If both "nu" and "rg" are specified, the value from
 the "nu" extension supersedes the implicit one from the "rg" extension.
 
-Parameters:
-
-- `locale`: the locale, not null
-
-**Returns:** the decimal style, not null
+@param locale  the locale, not null
+@return the decimal style, not null
 
 ## DecimalStyle.getZeroDigit()
 
@@ -92,11 +81,11 @@ public char getZeroDigit()
 ```
 
 Gets the character that represents zero.
-
+<p>
 The character used to represent digits may vary by culture.
 This method specifies the zero character to use, which implies the characters for one to nine.
 
-**Returns:** the character for zero
+@return the character for zero
 
 ## DecimalStyle.withZeroDigit(char)
 
@@ -105,15 +94,12 @@ public DecimalStyle withZeroDigit(char zeroDigit)
 ```
 
 Returns a copy of the info with a new character that represents zero.
-
+<p>
 The character used to represent digits may vary by culture.
 This method specifies the zero character to use, which implies the characters for one to nine.
 
-Parameters:
-
-- `zeroDigit`: the character for zero
-
-**Returns:** a copy with a new character that represents zero, not null
+@param zeroDigit  the character for zero
+@return  a copy with a new character that represents zero, not null
 
 ## DecimalStyle.getPositiveSign()
 
@@ -122,11 +108,11 @@ public char getPositiveSign()
 ```
 
 Gets the character that represents the positive sign.
-
+<p>
 The character used to represent a positive number may vary by culture.
 This method specifies the character to use.
 
-**Returns:** the character for the positive sign
+@return the character for the positive sign
 
 ## DecimalStyle.withPositiveSign(char)
 
@@ -135,15 +121,12 @@ public DecimalStyle withPositiveSign(char positiveSign)
 ```
 
 Returns a copy of the info with a new character that represents the positive sign.
-
+<p>
 The character used to represent a positive number may vary by culture.
 This method specifies the character to use.
 
-Parameters:
-
-- `positiveSign`: the character for the positive sign
-
-**Returns:** a copy with a new character that represents the positive sign, not null
+@param positiveSign  the character for the positive sign
+@return  a copy with a new character that represents the positive sign, not null
 
 ## DecimalStyle.getNegativeSign()
 
@@ -152,11 +135,11 @@ public char getNegativeSign()
 ```
 
 Gets the character that represents the negative sign.
-
+<p>
 The character used to represent a negative number may vary by culture.
 This method specifies the character to use.
 
-**Returns:** the character for the negative sign
+@return the character for the negative sign
 
 ## DecimalStyle.withNegativeSign(char)
 
@@ -165,15 +148,12 @@ public DecimalStyle withNegativeSign(char negativeSign)
 ```
 
 Returns a copy of the info with a new character that represents the negative sign.
-
+<p>
 The character used to represent a negative number may vary by culture.
 This method specifies the character to use.
 
-Parameters:
-
-- `negativeSign`: the character for the negative sign
-
-**Returns:** a copy with a new character that represents the negative sign, not null
+@param negativeSign  the character for the negative sign
+@return  a copy with a new character that represents the negative sign, not null
 
 ## DecimalStyle.getDecimalSeparator()
 
@@ -182,11 +162,11 @@ public char getDecimalSeparator()
 ```
 
 Gets the character that represents the decimal point.
-
+<p>
 The character used to represent a decimal point may vary by culture.
 This method specifies the character to use.
 
-**Returns:** the character for the decimal point
+@return the character for the decimal point
 
 ## DecimalStyle.withDecimalSeparator(char)
 
@@ -195,15 +175,12 @@ public DecimalStyle withDecimalSeparator(char decimalSeparator)
 ```
 
 Returns a copy of the info with a new character that represents the decimal point.
-
+<p>
 The character used to represent a decimal point may vary by culture.
 This method specifies the character to use.
 
-Parameters:
-
-- `decimalSeparator`: the character for the decimal point
-
-**Returns:** a copy with a new character that represents the decimal point, not null
+@param decimalSeparator  the character for the decimal point
+@return  a copy with a new character that represents the decimal point, not null
 
 ## DecimalStyle.equals(Object)
 
@@ -213,11 +190,8 @@ public boolean equals(Object obj)
 
 Checks if this DecimalStyle is equal to another DecimalStyle.
 
-Parameters:
-
-- `obj`: the object to check, null returns false
-
-**Returns:** true if this is equal to the other date
+@param obj  the object to check, null returns false
+@return true if this is equal to the other date
 
 ## DecimalStyle.hashCode()
 
@@ -227,7 +201,7 @@ public int hashCode()
 
 A hash code for this DecimalStyle.
 
-**Returns:** a suitable hash code
+@return a suitable hash code
 
 ## DecimalStyle.toString()
 
@@ -237,4 +211,4 @@ public String toString()
 
 Returns a string describing this DecimalStyle.
 
-**Returns:** a string description, not null
+@return a string description, not null

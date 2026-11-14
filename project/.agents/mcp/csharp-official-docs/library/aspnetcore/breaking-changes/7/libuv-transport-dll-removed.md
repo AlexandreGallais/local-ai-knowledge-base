@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv and libuv.dll removed"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/7/libuv-transport-dll-removed.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in ASP.NET Core 7.0 where Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv and libuv.dll have been removed.
+ms.date: 01/17/2022
+ms.custom: https://github.com/aspnet/Announcements/issues/476
 ---
 
 # Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv and libuv.dll removed
@@ -25,7 +23,7 @@ Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv and its libuv.dll dependency
 
 ## Type of breaking change
 
-This change affects binary compatibility and source compatibility.
+This change affects [binary compatibility](/dotnet/core/compatibility/categories#binary-compatibility) and [source compatibility](/dotnet/core/compatibility/categories#source-compatibility).
 
 ## Reason for change
 
@@ -37,5 +35,5 @@ Remove project references to Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv
 
 ## Affected APIs
 
-* `Microsoft.AspNetCore.Hosting.WebHostBuilderLibuvExtensions.UseLibuv*`
-* `Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.LibuvTransportOptions`
+* <xref:Microsoft.AspNetCore.Hosting.WebHostBuilderLibuvExtensions.UseLibuv*?displayProperty=fullName>
+* <xref:Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv.LibuvTransportOptions?displayProperty=fullName>

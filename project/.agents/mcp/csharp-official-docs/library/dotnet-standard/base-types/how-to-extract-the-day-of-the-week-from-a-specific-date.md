@@ -1,239 +1,101 @@
 ---
 title: "How to: Extract the Day of the Week from a Specific Date"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/base-types/how-to-extract-the-day-of-the-week-from-a-specific-date.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to determine the ordinal day of the week for a particular date in .NET. Learn how to display the localized weekday name for a particular date.
+ms.date: "08/09/2022"
+ms.custom: devdivchpfy22
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "formatting [.NET], dates"
+  - "DateTime.DayOfWeek property"
+  - "DateTime.ToString method"
+  - "dates [.NET], retrieving week information"
+  - "DateTimeOffset.DayOfWeek property"
+  - "dates [.NET], day of week"
+  - "Weekday function"
+  - "day of week [.NET]"
+  - "extracting day of week"
+  - "weekday names"
+  - "WeekdayName function"
+  - "numbers [.NET], day of week"
+  - "formatting [.NET], time"
+  - "DateTimeOffset.ToString method"
+  - "full weekday names"
+ms.assetid: 1c9bef76-5634-46cf-b91c-9b9eb72091d7
 ---
-
 # How to: Extract the Day of the Week from a Specific Date
 
-.NET makes it easy to determine the ordinal day of the week for a particular date, and to display the localized weekday name for a particular date. An enumerated value that indicates the day of the week corresponding to a particular date is available from the `System.DateTime.DayOfWeek*` or `System.DateTimeOffset.DayOfWeek` property. In contrast, retrieving the weekday name is a formatting operation that can be performed by calling a formatting method, such as a date and time value's `ToString` method or the `System.String.Format*` method. This article shows how to perform these formatting operations.
+.NET makes it easy to determine the ordinal day of the week for a particular date, and to display the localized weekday name for a particular date. An enumerated value that indicates the day of the week corresponding to a particular date is available from the <xref:System.DateTime.DayOfWeek*> or <xref:System.DateTimeOffset.DayOfWeek> property. In contrast, retrieving the weekday name is a formatting operation that can be performed by calling a formatting method, such as a date and time value's `ToString` method or the <xref:System.String.Format*?displayProperty=nameWithType> method. This article shows how to perform these formatting operations.
 
 ## Extract a number indicating the day of the week
 
-1. Use the static `System.DateTime.Parse*` or `System.DateTimeOffset.Parse*` method to convert the string representation of a date to a `System.DateTime` or a `System.DateTimeOffset` value.
+1. Use the static <xref:System.DateTime.Parse*?displayProperty=nameWithType> or <xref:System.DateTimeOffset.Parse*?displayProperty=nameWithType> method to convert the string representation of a date to a <xref:System.DateTime> or a <xref:System.DateTimeOffset> value.
 
-1. Use the `System.DateTime.DayOfWeek*` or `System.DateTimeOffset.DayOfWeek` property to retrieve a `System.DayOfWeek` value that indicates the day of the week.
+1. Use the <xref:System.DateTime.DayOfWeek*?displayProperty=nameWithType> or <xref:System.DateTimeOffset.DayOfWeek?displayProperty=nameWithType> property to retrieve a <xref:System.DayOfWeek> value that indicates the day of the week.
 
-1. If necessary, cast (in C#) or convert (in Visual Basic) the `System.DayOfWeek` value to an integer.
+1. If necessary, cast (in C#) or convert (in Visual Basic) the <xref:System.DayOfWeek> value to an integer.
 
  The following example displays an integer that represents the day of the week of a specific date:
 
- ```csharp
-using System;
-
-public class Example
-{
-   public static void Main()
-   {
-      DateTime dateValue = new DateTime(2008, 6, 11);
-      Console.WriteLine((int) dateValue.DayOfWeek);
-   }
-}
-// The example displays the following output:
-//       3
-```
+ [!code-csharp[Formatting.Howto.WeekdayName#7](../../../samples/snippets/csharp/VS_Snippets_CLR/Formatting.HowTo.WeekdayName/cs/weekdaynumber7.cs#7)]
+ [!code-vb[Formatting.Howto.WeekdayName#7](../../../samples/snippets/visualbasic/VS_Snippets_CLR/Formatting.HowTo.WeekdayName/vb/weekdaynumber7.vb#7)]
 
 ## Extract the abbreviated weekday name
 
-1. Use the static `System.DateTime.Parse*` or `System.DateTimeOffset.Parse*` method to convert the string representation of a date to a `System.DateTime` or a `System.DateTimeOffset` value.
+1. Use the static <xref:System.DateTime.Parse*?displayProperty=nameWithType> or <xref:System.DateTimeOffset.Parse*?displayProperty=nameWithType> method to convert the string representation of a date to a <xref:System.DateTime> or a <xref:System.DateTimeOffset> value.
 
 1. You can extract the abbreviated weekday name of the current culture or of a specific culture:
 
-    1. To extract the abbreviated weekday name for the current culture, call the date and time value's `System.DateTime.ToString(System.String)` or `System.DateTimeOffset.ToString(System.String)` instance method, and pass the string `ddd` as the `format` parameter. The following example illustrates the call to the `System.DateTime.ToString(System.String)` method:
+    1. To extract the abbreviated weekday name for the current culture, call the date and time value's <xref:System.DateTime.ToString%28System.String%29?displayProperty=nameWithType> or <xref:System.DateTimeOffset.ToString%28System.String%29?displayProperty=nameWithType> instance method, and pass the string `ddd` as the `format` parameter. The following example illustrates the call to the <xref:System.DateTime.ToString%28System.String%29> method:
 
-         ```csharp
-using System;
+         [!code-csharp[Formatting.Howto.WeekdayName#1](../../../samples/snippets/csharp/VS_Snippets_CLR/Formatting.HowTo.WeekdayName/cs/abbrname1.cs#1)]
+         [!code-vb[Formatting.Howto.WeekdayName#1](../../../samples/snippets/visualbasic/VS_Snippets_CLR/Formatting.HowTo.WeekdayName/vb/abbrname1.vb#1)]
 
-public class Example
-{
-   public static void Main()
-   {
-      DateTime dateValue = new DateTime(2008, 6, 11);
-      Console.WriteLine(dateValue.ToString("ddd"));
-   }
-}
-// The example displays the following output:
- //       Wed
-```
+    1. To extract the abbreviated weekday name for a specific culture, call the date and time value's <xref:System.DateTime.ToString%28System.String%2CSystem.IFormatProvider%29?displayProperty=nameWithType> or <xref:System.DateTimeOffset.ToString%28System.String%2CSystem.IFormatProvider%29?displayProperty=nameWithType> instance method. Pass the string `ddd` as the `format` parameter. Pass either a <xref:System.Globalization.CultureInfo> or a <xref:System.Globalization.DateTimeFormatInfo> object that represents the culture whose weekday name you want to retrieve as the `provider` parameter. The following code illustrates a call to the <xref:System.DateTime.ToString%28System.String%2CSystem.IFormatProvider%29> method using a <xref:System.Globalization.CultureInfo> object that represents the fr-FR culture:
 
-    1. To extract the abbreviated weekday name for a specific culture, call the date and time value's `System.DateTime.ToString(System.String,System.IFormatProvider)` or `System.DateTimeOffset.ToString(System.String,System.IFormatProvider)` instance method. Pass the string `ddd` as the `format` parameter. Pass <example-value> a `System.Globalization.CultureInfo` or a `System.Globalization.DateTimeFormatInfo` object that represents the culture whose weekday name you want to retrieve as the `provider` parameter. The following code illustrates a call to the `System.DateTime.ToString(System.String,System.IFormatProvider)` method using a `System.Globalization.CultureInfo` object that represents the fr-FR culture:
-
-         ```csharp
-using System;
-using System.Globalization;
-
-public class Example
-{
-   public static void Main()
-   {
-      DateTime dateValue = new DateTime(2008, 6, 11);
-      Console.WriteLine(dateValue.ToString("ddd",
-                        new CultureInfo("fr-FR")));
-   }
-}
-// The example displays the following output:
-//       mer.
-```
+         [!code-csharp[Formatting.Howto.WeekdayName#2](../../../samples/snippets/csharp/VS_Snippets_CLR/Formatting.HowTo.WeekdayName/cs/abbrname2.cs#2)]
+         [!code-vb[Formatting.Howto.WeekdayName#2](../../../samples/snippets/visualbasic/VS_Snippets_CLR/Formatting.HowTo.WeekdayName/vb/abbrname2.vb#2)]
 
 ## Extract the full weekday name
 
-1. Use the static `System.DateTime.Parse*` or `System.DateTimeOffset.Parse*` method to convert the string representation of a date to a `System.DateTime` or a `System.DateTimeOffset` value.
+1. Use the static <xref:System.DateTime.Parse*?displayProperty=nameWithType> or <xref:System.DateTimeOffset.Parse*?displayProperty=nameWithType> method to convert the string representation of a date to a <xref:System.DateTime> or a <xref:System.DateTimeOffset> value.
 
 1. You can extract the full weekday name of the current culture or of a specific culture:
 
-    1. To extract the weekday name for the current culture, call the date and time value's `System.DateTime.ToString(System.String)` or `System.DateTimeOffset.ToString(System.String)` instance method, and pass the string `dddd` as the `format` parameter. The following example illustrates the call to the `System.DateTime.ToString(System.String)` method:
+    1. To extract the weekday name for the current culture, call the date and time value's <xref:System.DateTime.ToString%28System.String%29?displayProperty=nameWithType> or <xref:System.DateTimeOffset.ToString%28System.String%29?displayProperty=nameWithType> instance method, and pass the string `dddd` as the `format` parameter. The following example illustrates the call to the <xref:System.DateTime.ToString%28System.String%29> method:
 
-         ```csharp
-using System;
+         [!code-csharp[Formatting.Howto.WeekdayName#4](../../../samples/snippets/csharp/VS_Snippets_CLR/Formatting.HowTo.WeekdayName/cs/fullname4.cs#4)]
+         [!code-vb[Formatting.Howto.WeekdayName#4](../../../samples/snippets/visualbasic/VS_Snippets_CLR/Formatting.HowTo.WeekdayName/vb/fullname4.vb#4)]
 
-public class Example
-{
-   public static void Main()
-   {
-      DateTime dateValue = new DateTime(2008, 6, 11);
-      Console.WriteLine(dateValue.ToString("dddd"));
-   }
-}
-// The example displays the following output:
-//       Wednesday
-```
+    1. To extract the weekday name for a specific culture, call the date and time value's <xref:System.DateTime.ToString%28System.String%2CSystem.IFormatProvider%29?displayProperty=nameWithType> or <xref:System.DateTimeOffset.ToString%28System.String%2CSystem.IFormatProvider%29?displayProperty=nameWithType> instance method. Pass the string `dddd` as the `format` parameter. Pass either a <xref:System.Globalization.CultureInfo> or a <xref:System.Globalization.DateTimeFormatInfo> object that represents the culture whose weekday name you want to retrieve as the `provider` parameter. The following code illustrates a call to the <xref:System.DateTime.ToString%28System.String%2CSystem.IFormatProvider%29> method using a <xref:System.Globalization.CultureInfo> object that represents the es-ES culture:
 
-    1. To extract the weekday name for a specific culture, call the date and time value's `System.DateTime.ToString(System.String,System.IFormatProvider)` or `System.DateTimeOffset.ToString(System.String,System.IFormatProvider)` instance method. Pass the string `dddd` as the `format` parameter. Pass <example-value> a `System.Globalization.CultureInfo` or a `System.Globalization.DateTimeFormatInfo` object that represents the culture whose weekday name you want to retrieve as the `provider` parameter. The following code illustrates a call to the `System.DateTime.ToString(System.String,System.IFormatProvider)` method using a `System.Globalization.CultureInfo` object that represents the es-ES culture:
-
-         ```csharp
-using System;
-using System.Globalization;
-
-public class Example
-{
-   public static void Main()
-   {
-      DateTime dateValue = new DateTime(2008, 6, 11);
-      Console.WriteLine(dateValue.ToString("dddd",
-                        new CultureInfo("es-ES")));
-   }
-}
-// The example displays the following output:
-//       miércoles.
-```
+         [!code-csharp[Formatting.Howto.WeekdayName#5](../../../samples/snippets/csharp/VS_Snippets_CLR/Formatting.HowTo.WeekdayName/cs/fullname5.cs#5)]
+         [!code-vb[Formatting.Howto.WeekdayName#5](../../../samples/snippets/visualbasic/VS_Snippets_CLR/Formatting.HowTo.WeekdayName/vb/fullname5.vb#5)]
 
 ## Example
 
- The following example illustrates calls to the `System.DateTime.DayOfWeek*` and `System.DateTimeOffset.DayOfWeek` properties to retrieve the number that represents the day of the week for a particular date. It also includes calls to the `System.DateTime.ToString*` and `System.DateTimeOffset.ToString*` methods to extract the abbreviated weekday name and the full weekday name.
+ The following example illustrates calls to the <xref:System.DateTime.DayOfWeek*?displayProperty=nameWithType> and <xref:System.DateTimeOffset.DayOfWeek?displayProperty=nameWithType> properties to retrieve the number that represents the day of the week for a particular date. It also includes calls to the <xref:System.DateTime.ToString*?displayProperty=nameWithType> and <xref:System.DateTimeOffset.ToString*?displayProperty=nameWithType> methods to extract the abbreviated weekday name and the full weekday name.
 
- ```csharp
-using System;
-using System.Globalization;
+ [!code-csharp[Formatting.Howto.WeekdayName#6](../../../samples/snippets/csharp/VS_Snippets_CLR/Formatting.HowTo.WeekdayName/cs/example6.cs#6)]
+ [!code-vb[Formatting.Howto.WeekdayName#6](../../../samples/snippets/visualbasic/VS_Snippets_CLR/Formatting.HowTo.WeekdayName/vb/example6.vb#6)]
 
-public class Example
-{
-   public static void Main()
-   {
-      string dateString = "6/11/2007";
-      DateTime dateValue;
-      DateTimeOffset dateOffsetValue;
+ Individual languages might provide functionality that duplicates or supplements the functionality provided by .NET. For example, Visual Basic includes two such functions:
 
-      try
-      {
-         DateTimeFormatInfo dateTimeFormats;
-         // Convert date representation to a date value
-         dateValue = DateTime.Parse(dateString, CultureInfo.InvariantCulture);
-         dateOffsetValue = new DateTimeOffset(dateValue,
-                                      TimeZoneInfo.Local.GetUtcOffset(dateValue));
-
-         // Convert date representation to a number indicating the day of week
-         Console.WriteLine((int) dateValue.DayOfWeek);
-         Console.WriteLine((int) dateOffsetValue.DayOfWeek);
-
-         // Display abbreviated weekday name using current culture
-         Console.WriteLine(dateValue.ToString("ddd"));
-         Console.WriteLine(dateOffsetValue.ToString("ddd"));
-
-         // Display full weekday name using current culture
-         Console.WriteLine(dateValue.ToString("dddd"));
-         Console.WriteLine(dateOffsetValue.ToString("dddd"));
-
-         // Display abbreviated weekday name for de-DE culture
-         Console.WriteLine(dateValue.ToString("ddd", new CultureInfo("de-DE")));
-         Console.WriteLine(dateOffsetValue.ToString("ddd",
-                                                     new CultureInfo("de-DE")));
-
-         // Display abbreviated weekday name with de-DE DateTimeFormatInfo object
-         dateTimeFormats = new CultureInfo("de-DE").DateTimeFormat;
-         Console.WriteLine(dateValue.ToString("ddd", dateTimeFormats));
-         Console.WriteLine(dateOffsetValue.ToString("ddd", dateTimeFormats));
-
-         // Display full weekday name for fr-FR culture
-         Console.WriteLine(dateValue.ToString("ddd", new CultureInfo("fr-FR")));
-         Console.WriteLine(dateOffsetValue.ToString("ddd",
-                                                    new CultureInfo("fr-FR")));
-
-         // Display abbreviated weekday name with fr-FR DateTimeFormatInfo object
-         dateTimeFormats = new CultureInfo("fr-FR").DateTimeFormat;
-         Console.WriteLine(dateValue.ToString("dddd", dateTimeFormats));
-         Console.WriteLine(dateOffsetValue.ToString("dddd", dateTimeFormats));
-      }
-      catch (FormatException)
-      {
-         Console.WriteLine($"Unable to convert {dateString} to a date.");
-      }
-   }
-}
-// The example displays the following output:
-//       1
-//       1
-//       Mon
-//       Mon
-//       Monday
-//       Monday
-//       Mo
-//       Mo
-//       Mo
-//       Mo
-//       lun.
-//       lun.
-//       lundi
-//       lundi
-```
-
- Individual languages might provide functionality that duplicates or supplements the functionality provided by .NET. For example, Visual Basic <example-value> two such functions:
-
-- `Weekday`, which returns a number that indicates the day of the week of a particular date. It considers the ordinal value of the first day of the week to be one, whereas the `System.DateTime.DayOfWeek` property considers it to be zero.
+- `Weekday`, which returns a number that indicates the day of the week of a particular date. It considers the ordinal value of the first day of the week to be one, whereas the <xref:System.DateTime.DayOfWeek?displayProperty=nameWithType> property considers it to be zero.
 
 - `WeekdayName`, which returns the name of the week in the current culture that corresponds to a particular weekday number.
 
  The following example illustrates the use of the Visual Basic `Weekday` and `WeekdayName` functions:
 
- You can also use the value returned by the `System.DateTime.DayOfWeek` property to retrieve the weekday name of a particular date. This process requires only a call to the `System.Enum.ToString*` method on the `System.DayOfWeek` value returned by the property. However, this technique doesn't produce a localized weekday name for the current culture, as the following example illustrates:
+ [!code-vb[Formatting.HowTo.WeekdayName#9](../../../samples/snippets/visualbasic/VS_Snippets_CLR/Formatting.HowTo.WeekdayName/vb/example9.vb#9)]
 
- ```csharp
-using System;
-using System.Globalization;
-using System.Threading;
+ You can also use the value returned by the <xref:System.DateTime.DayOfWeek?displayProperty=nameWithType> property to retrieve the weekday name of a particular date. This process requires only a call to the <xref:System.Enum.ToString*> method on the <xref:System.DayOfWeek> value returned by the property. However, this technique doesn't produce a localized weekday name for the current culture, as the following example illustrates:
 
-public class Example
-{
-   public static void Main()
-   {
-      // Change current culture to fr-FR
-      CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
-      Thread.CurrentThread.CurrentCulture = new CultureInfo("fr-FR");
-
-      DateTime dateValue = new DateTime(2008, 6, 11);
-      // Display the DayOfWeek string representation
-      Console.WriteLine(dateValue.DayOfWeek.ToString());
-      // Restore original current culture
-      Thread.CurrentThread.CurrentCulture = originalCulture;
-   }
-}
-// The example displays the following output:
-//       Wednesday
-```
+ [!code-csharp[Formatting.HowTo.WeekdayName#8](../../../samples/snippets/csharp/VS_Snippets_CLR/Formatting.HowTo.WeekdayName/cs/Howto1.cs#8)]
+ [!code-vb[Formatting.HowTo.WeekdayName#8](../../../samples/snippets/visualbasic/VS_Snippets_CLR/Formatting.HowTo.WeekdayName/vb/Howto1.vb#8)]
 
 ## See also
 
-- Standard Date and Time Format Strings
-- Custom Date and Time Format Strings
+- [Standard Date and Time Format Strings](standard-date-and-time-format-strings.md)
+- [Custom Date and Time Format Strings](custom-date-and-time-format-strings.md)

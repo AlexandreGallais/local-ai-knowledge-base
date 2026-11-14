@@ -1,12 +1,3 @@
----
-title: "Dependent state with linkedSignal"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/signals/linked-signal.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Dependent state with `linkedSignal`
 
 You can use the `signal` function to hold some state in your Angular code. Sometimes, this state depends on some _other_ state. For example, imagine a component that lets the user select a shipping method for an order:
@@ -47,7 +38,7 @@ export class ShippingMethodPicker {
 }
 ```
 
-`linkedSignal` works similarly to `signal` with one key <example-value>— instead of passing a default value, you pass a _computation function_, just like `computed`. When the value of the computation changes, the value of the `linkedSignal` changes to the computation result. This helps ensure that the `linkedSignal` always has a valid value.
+`linkedSignal` works similarly to `signal` with one key difference— instead of passing a default value, you pass a _computation function_, just like `computed`. When the value of the computation changes, the value of the `linkedSignal` changes to the computation result. This helps ensure that the `linkedSignal` always has a valid value.
 
 The following example shows how the value of a `linkedSignal` can change based on its linked state:
 

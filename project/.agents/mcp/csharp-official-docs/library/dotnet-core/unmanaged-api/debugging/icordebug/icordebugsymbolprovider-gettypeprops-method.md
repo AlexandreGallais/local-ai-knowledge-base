@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: ICorDebugSymbolProvider::GetTypeProps Method"
 title: "ICorDebugSymbolProvider::GetTypeProps Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugsymbolprovider-gettypeprops-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugSymbolProvider::GetTypeProps Method
 
 Returns information about a type's properties, such as the number of signature of its generic parameters, given a relative virtual address (RVA) in a vtable.
@@ -40,12 +36,12 @@ HRESULT GetTypeProps(
 
 To get the required size of the type's `signature` array, set the `cbSignature` argument to 0 and `signature` to **null**. When the method returns, `pcbSignature` will contain the number of bytes required for the `signature` array.
 
-> **Note:**
+> [!NOTE]
 > This method is available with .NET Native only.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -55,5 +51,5 @@ To get the required size of the type's `signature` array, set the `cbSignature` 
 
 ## See also
 
-- GetMethodProps Method
-- ICorDebugSymbolProvider Interface
+- [GetMethodProps Method](icordebugsymbolprovider-getmethodprops-method.md)
+- [ICorDebugSymbolProvider Interface](icordebugsymbolprovider-interface.md)

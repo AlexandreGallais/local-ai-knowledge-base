@@ -1,12 +1,3 @@
----
-title: "BaseStream interface (java.util.stream)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/stream/BaseStream.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # BaseStream interface (java.util.stream)
 
 ```java
@@ -15,37 +6,29 @@ public interface BaseStream<T, S extends BaseStream<T, S>> extends AutoCloseable
 
 Base interface for streams, which are sequences of elements supporting
 sequential and parallel aggregate operations.  The following example
-illustrates an aggregate operation using the stream types `Stream`
-and `IntStream`, computing the sum of the weights of the red widgets:
+illustrates an aggregate operation using the stream types {@link Stream}
+and {@link IntStream}, computing the sum of the weights of the red widgets:
 
-```java
+<pre>{@code
     int sum = widgets.stream()
                      .filter(w -> w.getColor() == RED)
                      .mapToInt(w -> w.getWeight())
                      .sum();
-```
+}</pre>
 
-See the class documentation for `Stream` and the package documentation
-for java.util.stream for additional
+See the class documentation for {@link Stream} and the package documentation
+for <a href="package-summary.html">java.util.stream</a> for additional
 specification of streams, stream operations, stream pipelines, and
 parallelism, which governs the behavior of all stream types.
 
-Parameters:
-
-- `<T>`: the type of the stream elements
-- ``: the type of the stream implementing `BaseStream`
-
-**Since:** 1.8
-
-**See also:** Stream
-
-**See also:** IntStream
-
-**See also:** LongStream
-
-**See also:** DoubleStream
-
-**See also:** java.util.stream
+@param <T> the type of the stream elements
+@param <S> the type of the stream implementing {@code BaseStream}
+@since 1.8
+@see Stream
+@see IntStream
+@see LongStream
+@see DoubleStream
+@see <a href="package-summary.html">java.util.stream</a>
 
 ## BaseStream.iterator()
 
@@ -55,14 +38,15 @@ Iterator<T> iterator()
 
 Returns an iterator for the elements of this stream.
 
-This is a terminal
-operation.
+<p>This is a <a href="package-summary.html#StreamOps">terminal
+operation</a>.
 
-**API note:** This operation is provided as an "escape hatch" to enable
+@apiNote
+This operation is provided as an "escape hatch" to enable
 arbitrary client-controlled pipeline traversals in the event that the
 existing operations are not sufficient to the task.
 
-**Returns:** the element iterator for this stream
+@return the element iterator for this stream
 
 ## BaseStream.spliterator()
 
@@ -72,13 +56,15 @@ Spliterator<T> spliterator()
 
 Returns a spliterator for the elements of this stream.
 
-This is a terminal
-operation.
+<p>This is a <a href="package-summary.html#StreamOps">terminal
+operation</a>.
 
-**API note:** This operation is provided as an "escape hatch" to enable
+@apiNote
+This operation is provided as an "escape hatch" to enable
 arbitrary client-controlled pipeline traversals in the event that the
 existing operations are not sufficient to the task.
 
+<p>
 The returned spliterator should report the set of characteristics derived
 from the stream pipeline (namely the characteristics derived from the
 stream source spliterator and the intermediate operations).
@@ -86,7 +72,7 @@ Implementations may report a sub-set of those characteristics.  For
 example, it may be too expensive to compute the entire set for some or
 all possible stream pipelines.
 
-**Returns:** the element spliterator for this stream
+@return the element spliterator for this stream
 
 ## BaseStream.isParallel()
 
@@ -98,7 +84,7 @@ Returns whether this stream, if a terminal operation were to be executed,
 would execute in parallel.  Calling this method after invoking an
 terminal stream operation method may yield unpredictable results.
 
-**Returns:** `true` if this stream would execute in parallel if executed
+@return {@code true} if this stream would execute in parallel if executed
 
 ## BaseStream.sequential()
 
@@ -110,10 +96,10 @@ Returns an equivalent stream that is sequential.  May return
 itself, either because the stream was already sequential, or because
 the underlying stream state was modified to be sequential.
 
-This is an intermediate
-operation.
+<p>This is an <a href="package-summary.html#StreamOps">intermediate
+operation</a>.
 
-**Returns:** a sequential stream
+@return a sequential stream
 
 ## BaseStream.parallel()
 
@@ -125,10 +111,10 @@ Returns an equivalent stream that is parallel.  May return
 itself, either because the stream was already parallel, or because
 the underlying stream state was modified to be parallel.
 
-This is an intermediate
-operation.
+<p>This is an <a href="package-summary.html#StreamOps">intermediate
+operation</a>.
 
-**Returns:** a parallel stream
+@return a parallel stream
 
 ## BaseStream.unordered()
 
@@ -137,14 +123,14 @@ S unordered()
 ```
 
 Returns an equivalent stream that is
-unordered.  May return
+<a href="package-summary.html#Ordering">unordered</a>.  May return
 itself, either because the stream was already unordered, or because
 the underlying stream state was modified to be unordered.
 
-This is an intermediate
-operation.
+<p>This is an <a href="package-summary.html#StreamOps">intermediate
+operation</a>.
 
-**Returns:** an unordered stream
+@return an unordered stream
 
 ## BaseStream.onClose(Runnable)
 
@@ -153,24 +139,21 @@ S onClose(Runnable closeHandler)
 ```
 
 Returns an equivalent stream with an additional close handler.  Close
-handlers are run when the `close()` method
+handlers are run when the {@link #close()} method
 is called on the stream, and are executed in the order they were
 added.  All close handlers are run, even if earlier close handlers throw
 exceptions.  If any close handler throws an exception, the first
-exception thrown will be relayed to the caller of `close()`, with
+exception thrown will be relayed to the caller of {@code close()}, with
 any remaining exceptions added to that exception as suppressed exceptions
 (unless one of the remaining exceptions is the same exception as the
 first exception, since an exception cannot suppress itself.)  May
 return itself.
 
-This is an intermediate
-operation.
+<p>This is an <a href="package-summary.html#StreamOps">intermediate
+operation</a>.
 
-Parameters:
-
-- `closeHandler`: A task to execute when the stream is closed
-
-**Returns:** a stream with a handler that is run if the stream is closed
+@param closeHandler A task to execute when the stream is closed
+@return a stream with a handler that is run if the stream is closed
 
 ## BaseStream.close()
 
@@ -181,4 +164,4 @@ void close()
 Closes this stream, causing all close handlers for this stream pipeline
 to be called.
 
-**See also:** AutoCloseable#close()
+@see AutoCloseable#close()

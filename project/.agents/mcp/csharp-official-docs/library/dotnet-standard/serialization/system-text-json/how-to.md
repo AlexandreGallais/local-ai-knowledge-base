@@ -1,398 +1,112 @@
 ---
 title: "How to serialize JSON in C#"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/serialization/system-text-json/how-to.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn how to use the System.Text.Json namespace to serialize to JSON in .NET. Includes sample code."
+ms.date: 11/20/2025
+no-loc: [System.Text.Json, Newtonsoft.Json]
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "JSON serialization"
+  - "serializing objects"
+  - "serialization"
+  - "objects, serializing"
+ms.topic: how-to
+ms.custom: copilot-scenario-highlight
+adobe-target: true
 ---
 
 # How to write .NET objects as JSON (serialize)
 
-This article shows how to use the `System.Text.Json` namespace to serialize to JavaScript Object Notation (JSON). If you're porting existing code from `Newtonsoft.Json`, see How to migrate to `System.Text.Json`.
+This article shows how to use the <xref:System.Text.Json?displayProperty=fullName> namespace to serialize to JavaScript Object Notation (JSON). If you're porting existing code from `Newtonsoft.Json`, see [How to migrate to `System.Text.Json`](migrate-from-newtonsoft.md).
 
-> **Tip:**
-> You can use AI assistance to serialize to JSON.
+> [!TIP]
+> You can use AI assistance to [serialize to JSON](#use-ai-to-serialize-to-json).
 
-To write JSON to a string or to a file, call the `System.Text.Json.JsonSerializer.Serialize*` method.
+To write JSON to a string or to a file, call the <xref:System.Text.Json.JsonSerializer.Serialize*?displayProperty=nameWithType> method.
 
 ## Serialization examples
 
 The following example creates JSON as a string:
 
-```csharp
-using System.Text.Json;
+:::code language="csharp" source="snippets/how-to/csharp/SerializeBasic.cs" id="all" highlight="23":::
+:::code language="vb" source="snippets/how-to/vb/RoundtripToString.vb" id="Serialize":::
 
-namespace SerializeBasic
-{
-    public class WeatherForecast
-    {
-        public DateTimeOffset Date { get; set; }
-        public int TemperatureCelsius { get; set; }
-        public string? Summary { get; set; }
-    }
-
-    public class Program
-    {
-        public static void Main()
-        {
-            var weatherForecast = new WeatherForecast
-            {
-                Date = DateTime.Parse("2019-08-01"),
-                TemperatureCelsius = 25,
-                Summary = "Hot"
-            };
-
-            string jsonString = JsonSerializer.Serialize(weatherForecast);
-
-            Console.WriteLine(jsonString);
-        }
-    }
-}
-// output:
-//{"Date":"2019-08-01T00:00:00-07:00","TemperatureCelsius":25,"Summary":"Hot"}
-```
-```vb
-Dim jsonString As String
-```
 The JSON output is *minified* (whitespace, indentation, and new-line characters are removed) by default.
 
 The following example uses synchronous code to create a JSON file:
 
-```csharp
-﻿using System.Text.Json;
+:::code language="csharp" source="snippets/how-to/csharp/SerializeToFile.cs" highlight="23-25":::
+:::code language="vb" source="snippets/how-to/vb/RoundtripToFile.vb" id="Serialize":::
 
-namespace SerializeToFile
-{
-    public class WeatherForecast
-    {
-        public DateTimeOffset Date { get; set; }
-        public int TemperatureCelsius { get; set; }
-        public string? Summary { get; set; }
-    }
-
-    public class Program
-    {
-        public static void Main()
-        {
-            var weatherForecast = new WeatherForecast
-            {
-                Date = DateTime.Parse("2019-08-01"),
-                TemperatureCelsius = 25,
-                Summary = "Hot"
-            };
-
-            string fileName = "WeatherForecast.json"; 
-            string jsonString = JsonSerializer.Serialize(weatherForecast);
-            File.WriteAllText(fileName, jsonString);
-
-            Console.WriteLine(File.ReadAllText(fileName));
-        }
-    }
-}
-// output:
-//{"Date":"2019-08-01T00:00:00-07:00","TemperatureCelsius":25,"Summary":"Hot"}
-```
-```vb
-jsonString = JsonSerializer.Serialize(weatherForecast1)
-File.WriteAllText(fileName, jsonString)
-```
 The following example uses asynchronous code to create a JSON file:
 
-```csharp
-﻿using System.Text.Json;
+:::code language="csharp" source="snippets/how-to/csharp/SerializeToFileAsync.cs" highlight="23-26":::
+:::code language="vb" source="snippets/how-to/vb/RoundtripToFileAsync.vb" id="Serialize":::
 
-namespace SerializeToFileAsync
-{
-    public class WeatherForecast
-    {
-        public DateTimeOffset Date { get; set; }
-        public int TemperatureCelsius { get; set; }
-        public string? Summary { get; set; }
-    }
-
-    public class Program
-    {
-        public static async Task Main()
-        {
-            var weatherForecast = new WeatherForecast
-            {
-                Date = DateTime.Parse("2019-08-01"),
-                TemperatureCelsius = 25,
-                Summary = "Hot"
-            };
-
-            string fileName = "WeatherForecast.json";
-            await using FileStream createStream = File.Create(fileName);
-            await JsonSerializer.SerializeAsync(createStream, weatherForecast);
-
-            Console.WriteLine(File.ReadAllText(fileName));
-        }
-    }
-}
-// output:
-//{"Date":"2019-08-01T00:00:00-07:00","TemperatureCelsius":25,"Summary":"Hot"}
-```
-```vb
-Dim createStream As FileStream = File.Create(fileName)
-Await JsonSerializer.SerializeAsync(createStream, weatherForecast1)
-```
 The preceding examples use type inference for the type being serialized. An overload of `Serialize()` takes a generic type parameter:
 
-```csharp
-﻿using System.Text.Json;
+:::code language="csharp" source="snippets/how-to/csharp/SerializeWithGenericParameter.cs" highlight="23":::
+:::code language="vb" source="snippets/how-to/vb/RoundtripToString.vb" id="SerializeWithGenericParameter":::
 
-namespace SerializeWithGenericParameter
-{
-    public class WeatherForecast
-    {
-        public DateTimeOffset Date { get; set; }
-        public int TemperatureCelsius { get; set; }
-        public string? Summary { get; set; }
-    }
-
-    public class Program
-    {
-        public static void Main()
-        {
-            var weatherForecast = new WeatherForecast
-            {
-                Date = DateTime.Parse("2019-08-01"),
-                TemperatureCelsius = 25,
-                Summary = "Hot"
-            };
-
-            string jsonString = JsonSerializer.Serialize<WeatherForecast>(weatherForecast);
-
-            Console.WriteLine(jsonString);
-        }
-    }
-}
-// output:
-//{"Date":"2019-08-01T00:00:00-07:00","TemperatureCelsius":25,"Summary":"Hot"}
-```
-```vb
-jsonString = JsonSerializer.Serialize(Of WeatherForecastWithPOCOs)(weatherForecast)
-```
-You can also use AI to generate serialization code for you. For instructions, see the Use AI section in this article.
+You can also use AI to generate serialization code for you. For instructions, see the [Use AI](#use-ai-to-serialize-to-json) section in this article.
 
 ## Serialization behavior
 
-* By default, all public properties are serialized. You can specify properties to ignore. You can also include private members.
-* The default encoder escapes non-ASCII characters, HTML-sensitive characters within the ASCII-range, and characters that must be escaped according to the RFC 8259 JSON spec.
-* By default, JSON is minified. You can pretty-print the JSON.
-* By default, casing of JSON names matches the .NET names. You can customize JSON name casing.
-* By default, circular references are detected and exceptions thrown. You can preserve references and handle circular references.
-* By default, fields are ignored. You can include fields.
+* By default, all public properties are serialized. You can [specify properties to ignore](ignore-properties.md). You can also include [private members](immutability.md#non-public-members-and-property-accessors).
+* The [default encoder](xref:System.Text.Encodings.Web.JavaScriptEncoder.Default) escapes non-ASCII characters, HTML-sensitive characters within the ASCII-range, and characters that must be escaped according to [the RFC 8259 JSON spec](https://tools.ietf.org/html/rfc8259#section-7).
+* By default, JSON is minified. You can [pretty-print the JSON](#serialize-to-formatted-json).
+* By default, casing of JSON names matches the .NET names. You can [customize JSON name casing](customize-properties.md).
+* By default, circular references are detected and exceptions thrown. You can [preserve references and handle circular references](preserve-references.md).
+* By default, [fields](../../../csharp/programming-guide/classes-and-structs/fields.md) are ignored. You can [include fields](fields.md).
 
-When you use System.Text.Json indirectly in an ASP.NET Core app, some default behaviors are different. For more information, see Web defaults for JsonSerializerOptions.
+When you use System.Text.Json indirectly in an ASP.NET Core app, some default behaviors are different. For more information, see [Web defaults for JsonSerializerOptions](configure-options.md#web-defaults-for-jsonserializeroptions).
 
 Supported types include:
 
 * .NET primitives that map to JavaScript primitives, such as numeric types, strings, and Boolean.
-* User-defined plain old CLR objects (POCOs).
+* User-defined [plain old CLR objects (POCOs)](../../glossary.md#poco).
 * One-dimensional and jagged arrays (`T[][]`).
 * Collections and dictionaries from the following namespaces:
 
-  * `System.Collections`
-  * `System.Collections.Generic`
-  * `System.Collections.Immutable`
-  * `System.Collections.Concurrent`
-  * `System.Collections.Specialized`
-  * `System.Collections.ObjectModel`
+  * <xref:System.Collections>
+  * <xref:System.Collections.Generic>
+  * <xref:System.Collections.Immutable>
+  * <xref:System.Collections.Concurrent>
+  * <xref:System.Collections.Specialized>
+  * <xref:System.Collections.ObjectModel>
 
-  For more information, see Supported types in System.Text.Json.
+  For more information, see [Supported types in System.Text.Json](supported-types.md).
 
-You can implement custom converters to handle additional types or to provide functionality that isn't supported by the built-in converters.
+You can [implement custom converters](converters-how-to.md) to handle additional types or to provide functionality that isn't supported by the built-in converters.
 
 Here's an example showing how a class that contains collection properties and a user-defined type is serialized:
 
-```csharp
-﻿using System.Text.Json;
+:::code language="csharp" source="snippets/how-to/csharp/SerializeExtra.cs" highlight="42-43":::
+:::code language="vb" source="snippets/how-to/vb/WeatherForecast.vb" id="WFWithPOCOs":::
 
-namespace SerializeExtra
-{
-    public class WeatherForecast
-    {
-        public DateTimeOffset Date { get; set; }
-        public int TemperatureCelsius { get; set; }
-        public string? Summary { get; set; }
-        public string? SummaryField;
-        public IList<DateTimeOffset>? DatesAvailable { get; set; }
-        public Dictionary<string, HighLowTemps>? TemperatureRanges { get; set; }
-        public string[]? SummaryWords { get; set; }
-    }
-
-    public class HighLowTemps
-    {
-        public int High { get; set; }
-        public int Low { get; set; }
-    }
-
-    public class Program
-    {
-        public static void Main()
-        {
-            var weatherForecast = new WeatherForecast
-            {
-                Date = DateTime.Parse("2019-08-01"),
-                TemperatureCelsius = 25,
-                Summary = "Hot",
-                SummaryField = "Hot",
-                DatesAvailable = [DateTime.Parse("2019-08-01"), DateTime.Parse("2019-08-02")],
-                TemperatureRanges = new Dictionary<string, HighLowTemps>
-                    {
-                        ["Cold"] = new HighLowTemps { High = 20, Low = -10 },
-                        ["Hot"] = new HighLowTemps { High = 60 , Low = 20 }
-                    },
-                SummaryWords = ["Cool", "Windy", "Humid"]
-            };
-
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            string jsonString = JsonSerializer.Serialize(weatherForecast, options);
-
-            Console.WriteLine(jsonString);
-        }
-    }
-}
-
-// Output:
-//{
-//  "Date": "2019-08-01T00:00:00-07:00",
-//  "TemperatureCelsius": 25,
-//  "Summary": "Hot",
-//  "DatesAvailable": [
-//    "2019-08-01T00:00:00-07:00",
-//    "2019-08-02T00:00:00-07:00"
-//  ],
-//  "TemperatureRanges": {
-//    "Cold": {
-//      "High": 20,
-//      "Low": -10
-//    },
-//    "Hot": {
-//    "High": 60,
-//      "Low": 20
-//    }
-//  },
-//  "SummaryWords": [
-//    "Cool",
-//    "Windy",
-//    "Humid"
-//  ]
-//}
-```
-```vb
-Public Class WeatherForecastWithPOCOs
-    Public Property [Date] As DateTimeOffset
-    Public Property TemperatureCelsius As Integer
-    Public Property Summary As String
-    Public SummaryField As String
-    Public Property DatesAvailable As IList(Of DateTimeOffset)
-    Public Property TemperatureRanges As Dictionary(Of String, HighLowTemps)
-    Public Property SummaryWords As String()
-End Class
-
-Public Class HighLowTemps
-    Public Property High As Integer
-    Public Property Low As Integer
-End Class
-
-' serialization output formatted (pretty-printed with whitespace and indentation):
-' {
-'   "Date": "2019-08-01T00:00:00-07:00",
-'   "TemperatureCelsius": 25,
-'   "Summary": "Hot",
-'   "DatesAvailable": [
-'     "2019-08-01T00:00:00-07:00",
-'     "2019-08-02T00:00:00-07:00"
-'   ],
-'   "TemperatureRanges": {
-'     "Cold": {
-'       "High": 20,
-'       "Low": -10
-'     },
-'     "Hot": {
-'       "High": 60,
-'       "Low": 20
-'     }
-'   },
-'   "SummaryWords": [
-'     "Cool",
-'     "Windy",
-'     "Humid"
-'   ]
-' }
-```
 ## Serialize to UTF-8
 
 It's 5-10% faster to serialize to a UTF-8 byte array than to use the string-based methods. That's because the bytes (as UTF-8) don't need to be converted to strings (UTF-16).
 
-To serialize to a UTF-8 byte array, call the `System.Text.Json.JsonSerializer.SerializeToUtf8Bytes*` method:
+To serialize to a UTF-8 byte array, call the <xref:System.Text.Json.JsonSerializer.SerializeToUtf8Bytes*?displayProperty=nameWithType> method:
 
-```csharp
-byte[] jsonUtf8Bytes = JsonSerializer.SerializeToUtf8Bytes(weatherForecast);
-```
-```vb
-Dim jsonUtf8Bytes As Byte()
-Dim options As JsonSerializerOptions = New JsonSerializerOptions With {
-    .WriteIndented = True
-}
-jsonUtf8Bytes = JsonSerializer.SerializeToUtf8Bytes(weatherForecast1, options)
-```
-A `System.Text.Json.JsonSerializer.Serialize*` overload that takes a `System.Text.Json.Utf8JsonWriter` is also available.
+:::code language="csharp" source="snippets/how-to/csharp/RoundtripToUtf8.cs" id="Serialize":::
+:::code language="vb" source="snippets/how-to/vb/RoundtripToUtf8.vb" id="Serialize":::
+
+A <xref:System.Text.Json.JsonSerializer.Serialize*> overload that takes a <xref:System.Text.Json.Utf8JsonWriter> is also available.
 
 ## Serialize to formatted JSON
 
-To pretty-print the JSON output, set `System.Text.Json.JsonSerializerOptions.WriteIndented` to `true`:
+To pretty-print the JSON output, set <xref:System.Text.Json.JsonSerializerOptions.WriteIndented?displayProperty=nameWithType> to `true`:
 
-```csharp
-﻿using System.Text.Json;
+:::code language="csharp" source="snippets/how-to/csharp/SerializeWriteIndented.cs" highlight="24":::
+:::code language="vb" source="snippets/how-to/vb/RoundtripToString.vb" id="SerializePrettyPrint":::
 
-namespace SerializeWriteIndented
-{
-    public class WeatherForecast
-    {
-        public DateTimeOffset Date { get; set; }
-        public int TemperatureCelsius { get; set; }
-        public string? Summary { get; set; }
-    }
+Starting in .NET 9, you can also customize the indent character and size using <xref:System.Text.Json.JsonSerializerOptions.IndentCharacter> and <xref:System.Text.Json.JsonSerializerOptions.IndentSize>.
 
-    public class Program
-    {
-        public static void Main()
-        {
-            var weatherForecast = new WeatherForecast
-            {
-                Date = DateTime.Parse("2019-08-01"),
-                TemperatureCelsius = 25,
-                Summary = "Hot"
-            };
-
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            string jsonString = JsonSerializer.Serialize(weatherForecast, options);
-
-            Console.WriteLine(jsonString);
-        }
-    }
-}
-// output:
-//{
-//  "Date": "2019-08-01T00:00:00-07:00",
-//  "TemperatureCelsius": 25,
-//  "Summary": "Hot"
-//}
-```
-```vb
-Dim options As JsonSerializerOptions = New JsonSerializerOptions With {
-    .WriteIndented = True
-}
-jsonString = JsonSerializer.Serialize(weatherForecast, options)
-```
-Starting in .NET 9, you can also customize the indent character and size using `System.Text.Json.JsonSerializerOptions.IndentCharacter` and `System.Text.Json.JsonSerializerOptions.IndentSize`.
-
-> **Tip:**
-> If you use `JsonSerializerOptions` repeatedly with the same options, don't create a new `JsonSerializerOptions` instance each time you use it. Reuse the same instance for every call. For more information, see Reuse JsonSerializerOptions instances.
+> [!TIP]
+> If you use `JsonSerializerOptions` repeatedly with the same options, don't create a new `JsonSerializerOptions` instance each time you use it. Reuse the same instance for every call. For more information, see [Reuse JsonSerializerOptions instances](configure-options.md#reuse-jsonserializeroptions-instances).
 
 ## Use AI to serialize to JSON
 
@@ -408,9 +122,9 @@ Ensure the code includes all necessary using directives and compiles without err
 
 Review Copilot's suggestions before applying them.
 
-For more information about GitHub Copilot, see GitHub's FAQs.
+For more information about GitHub Copilot, see GitHub's [FAQs](https://github.com/features/copilot#faq).
 
 ## See also
 
-- GitHub Copilot in Visual Studio
-- GitHub Copilot in Visual Studio Code
+- [GitHub Copilot in Visual Studio](/visualstudio/ide/visual-studio-github-copilot-install-and-states)
+- [GitHub Copilot in Visual Studio Code](https://code.visualstudio.com/docs/copilot/overview)

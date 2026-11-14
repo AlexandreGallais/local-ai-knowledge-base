@@ -1,23 +1,17 @@
 ---
+id: test-parallel
 title: "Parallelism"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/test-parallel-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# Parallelism
 
 ## Introduction
 
 Playwright Test runs tests in parallel. In order to achieve that, it runs several worker processes that run at the same time. By default, **test files** are run in parallel. Tests in a single file are run in order, in the same worker process.
 
-- You can configure tests using `test.describe.configure` to run **tests in a single file** in parallel.
+- You can configure tests using [`test.describe.configure`](#parallelize-tests-in-a-single-file) to run **tests in a single file** in parallel.
 - You can configure **entire project** to have all tests in all files to run in parallel using [`property: TestProject.fullyParallel`] or [`property: TestConfig.fullyParallel`].
-- To **disable** parallelism limit the number of workers to one.
+- To **disable** parallelism limit the number of [workers to one](#disable-parallelism).
 
-You can control the number of parallel worker processes and limit the number of failures in the whole test suite for efficiency.
+You can control the number of [parallel worker processes](#limit-workers) and [limit the number of failures](#limit-failures-and-fail-fast) in the whole test suite for efficiency.
 
 ## Worker processes
 
@@ -25,11 +19,11 @@ All tests run in worker processes. These processes are OS processes, running ind
 
 You can't communicate between the workers. Playwright Test reuses a single worker as much as it can to make testing faster, so multiple test files are usually run in a single worker one after another.
 
-Workers are always shutdown after a test failure to guarantee pristine environment for following tests.
+Workers are always shutdown after a [test failure](./test-retries.md#failures) to guarantee pristine environment for following tests.
 
 ## Limit workers
 
-You can control the maximum number of parallel worker processes via command line or in the configuration file.
+You can control the maximum number of parallel worker processes via [command line](./test-cli.md) or in the [configuration file](./test-configuration.md).
 
 From the command line:
 ```bash
@@ -38,7 +32,7 @@ npx playwright test --workers 4
 
 In the configuration file:
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -72,7 +66,7 @@ test('runs in parallel 2', async ({ page }) => { /* ... */ });
 
 Alternatively, you can opt-in all tests into this fully-parallel mode in the configuration file:
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -82,7 +76,7 @@ export default defineConfig({
 
 You can also opt in for fully-parallel mode for just a few projects:
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -133,9 +127,9 @@ test('runs second', async () => {
 
 ## Test locks
 
-A few tests in your suite may access a shared resource that does not support concurrent access, for example an external service or a global account setting. You can declare named locks on such tests, so that tests sharing a lock name never run at the same time, while all other tests continue to run in parallel. Locks work across files, worker processes and projects.
+A few tests in your suite may access a shared resource that does not support concurrent access, for example an external service or a global account setting. You can declare named locks on such tests, so that tests sharing a lock name never run at the same time, while all other tests continue to run in parallel. Locks work across files, worker processes and [projects](./test-projects.md).
 
-```js
+```js title="settings.spec.ts"
 import { test, expect } from '@playwright/test';
 
 test('update user settings', { lock: 'user-settings' }, async ({ page }) => {
@@ -143,7 +137,7 @@ test('update user settings', { lock: 'user-settings' }, async ({ page }) => {
 });
 ```
 
-```js
+```js title="profile.spec.ts"
 import { test, expect } from '@playwright/test';
 
 // Never runs concurrently with 'update user settings' above,
@@ -178,12 +172,12 @@ test('restart the server', { lock: '-exclusive-' }, async () => {
 ```
 
 :::note
-In the default and serial modes, all tests in a file run together in order, so a lock declared on any test is held for the duration of the whole file.
+In the default and [serial](#serial-mode) modes, all tests in a file run together in order, so a lock declared on any test is held for the duration of the whole file.
 :::
 
 ## Opt out of fully parallel mode
 
-If your configuration applies parallel mode to all tests using [`property: TestConfig.fullyParallel`], you might still want to run some tests with default settings. You can override the mode per describe:
+If your configuration applies parallel mode to all tests using [`property: TestConfig.fullyParallel`], you might still want to run some tests with default settings. You can override the mode per describe: 
 ```js
 test.describe('runs in parallel with other describes', () => {
   test.describe.configure({ mode: 'default' });
@@ -210,7 +204,7 @@ test('creates an order', async ({ page }, testInfo) => {
 });
 ```
 
-If many tests can share one dataset, create it once per worker instead — see Isolate test data between parallel workers.
+If many tests can share one dataset, create it once per worker instead — see [Isolate test data between parallel workers](#isolate-test-data-between-parallel-workers).
 
 ### Write to a unique file path
 
@@ -228,12 +222,12 @@ test('exports a CSV', async ({ page }, testInfo) => {
 
 ### Keep tests independent
 
-Above all, keep your tests isolated from one another. A test that leaks state through a module-level variable or depends on another test's side effects works when tests run in order, but breaks the moment they run in parallel or in a different order. Set up everything a test needs in that test or in a fixture, and never rely on another test having run first.
+Above all, [keep your tests isolated](./writing-tests.md#test-isolation) from one another. A test that leaks state through a module-level variable or depends on another test's side effects works when tests run in order, but breaks the moment they run in parallel or in a different order. Set up everything a test needs in that test or in a [fixture](./test-fixtures.md#creating-a-fixture), and never rely on another test having run first.
 
 ## Shard tests between multiple machines
 
 Playwright Test can shard a test suite, so that it can be executed on multiple machines.
-See sharding guide for more details.
+See [sharding guide](./test-sharding.md) for more details.
 
 ```bash
 npx playwright test --shard=2/3
@@ -252,7 +246,7 @@ npx playwright test --max-failures=10
 
 Setting in the configuration file:
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -273,11 +267,11 @@ You can leverage `process.env.TEST_WORKER_INDEX` or [`property: TestInfo.workerI
 isolate user data in the database between tests running on different workers. All tests run by the worker
 reuse the same user.
 
-Create `playwright/fixtures.ts` file that will create `dbUserName` fixture
+Create `playwright/fixtures.ts` file that will [create `dbUserName` fixture](./test-fixtures#creating-a-fixture)
 and initialize a new user in the test database. Use [`property: TestInfo.workerIndex`] to differentiate
 between workers.
 
-```js
+```js title="playwright/fixtures.ts"
 import { test as baseTest, expect } from '@playwright/test';
 // Import project utils for managing users in the test database.
 import { createUserInTestDatabase, deleteUserFromTestDatabase } from './my-db-utils';
@@ -299,7 +293,7 @@ export const test = baseTest.extend<{}, { dbUserName: string }>({
 
 Now, each test file should import `test` from our fixtures file instead of `@playwright/test`.
 
-```js
+```js title="tests/example.spec.ts"
 // Important: import our fixtures.
 import { test, expect } from '../playwright/fixtures';
 
@@ -308,11 +302,12 @@ test('test', async ({ dbUserName }) => {
 });
 ```
 
+
 ## Control test order
 
-Playwright Test runs tests from a single file in the order of declaration, unless you parallelize tests in a single file.
+Playwright Test runs tests from a single file in the order of declaration, unless you [parallelize tests in a single file](#parallelize-tests-in-a-single-file).
 
-There is no guarantee about the order of test execution across the files, because Playwright Test runs test files in parallel by default. However, if you disable parallelism, you can control test order by either naming your files in alphabetical order or using a "test list" file.
+There is no guarantee about the order of test execution across the files, because Playwright Test runs test files in parallel by default. However, if you [disable parallelism](#disable-parallelism), you can control test order by either naming your files in alphabetical order or using a "test list" file.
 
 ### Sort test files alphabetically
 
@@ -326,7 +321,7 @@ Tests lists are discouraged and supported as a best-effort only. Some features s
 
 You can put your tests in helper functions in multiple files. Consider the following example where tests are not defined directly in the file, but rather in a wrapper function.
 
-```js
+```js title="feature-a.spec.ts"
 import { test, expect } from '@playwright/test';
 
 export default function createTests() {
@@ -337,7 +332,7 @@ export default function createTests() {
 
 ```
 
-```js
+```js title="feature-b.spec.ts"
 import { test, expect } from '@playwright/test';
 
 export default function createTests() {
@@ -351,7 +346,8 @@ export default function createTests() {
 
 You can create a test list file that will control the order of tests - first run `feature-b` tests, then `feature-a` tests. Note how each test file is wrapped in a `test.describe()` block that calls the function where tests are defined. This way `test.use()` calls only affect tests from a single file.
 
-```js
+
+```js title="test.list.ts"
 import { test } from '@playwright/test';
 import featureBTests from './feature-b.spec.ts';
 import featureATests from './feature-a.spec.ts';
@@ -362,7 +358,7 @@ test.describe(featureATests);
 
 Now **disable parallel execution** by setting workers to one, and specify your test list file.
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({

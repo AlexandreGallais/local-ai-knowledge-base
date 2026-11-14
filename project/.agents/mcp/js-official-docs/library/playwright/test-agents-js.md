@@ -1,10 +1,6 @@
 ---
+id: test-agents
 title: "Agents"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/test-agents-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
 
 import LiteYouTube from '@site/src/components/LiteYouTube';
@@ -35,19 +31,19 @@ Start with adding Playwright Test Agent definitions to your project using
 the `init-agents` command. These definitions should be regenerated whenever Playwright
 is updated to pick up new tools and instructions.
 
-```bash
+```bash tab=bash-vscode
 npx playwright init-agents --loop=vscode
 ```
 
-```bash
+```bash tab=bash-claude
 npx playwright init-agents --loop=claude
 ```
 
-```bash
+```bash tab=bash-codex
 npx playwright init-agents --loop=codex
 ```
 
-```bash
+```bash tab=bash-opencode
 npx playwright init-agents --loop=opencode
 ```
 
@@ -55,7 +51,8 @@ npx playwright init-agents --loop=opencode
 VS Code v1.105 (released October 9, 2025) is needed for the agentic experience to function properly in VS Code.
 :::
 
-Once the agents have been generated, you can use your AI tool of choice to command these agents to build Playwright Tests.
+Once the agents have been generated, you can use your AI tool of choice to command these agents to build Playwright Tests. 
+
 
 ## 🎭 Planner
 
@@ -68,12 +65,14 @@ Planner agent explores your app and produces a test plan for one or many scenari
 * *(optional)* A Product Requirement Document (PRD) for context
 
 **Prompt**
+  
+<img src={require("../images/test-agents/planner-prompt.png").src} alt="planner prompt" width="472"/>
 
 > - Notice how the `seed.spec.ts` is included in the context of the planner.
 > - Planner will run this test to execute all the initialization necessary for your test including the global setup, project dependencies and all the necessary fixtures and hooks.
 > - Planner will also use this seed test as an example of all the generated tests. Alternatively, you can mention the file name in the prompt.
 
-```js
+```js title="Example: seed.spec.ts"
 import { test, expect } from './fixtures';
 
 test('seed', async ({ page }) => {
@@ -86,14 +85,15 @@ test('seed', async ({ page }) => {
 * A Markdown test plan saved as `specs/basic-operations.md`.
 * The plan is human-readable but precise enough for test generation.
 
-**Example: specs/basic-operations.md**
+<details>
+<summary>Example: <b>specs/basic-operations.md</b></summary>
 
 ```markdown
-# TodoMVC Application - Basic <example-value> Test Plan
+# TodoMVC Application - Basic Operations Test Plan
 
 ## Application Overview
 
-The TodoMVC application is a React-based todo list manager that demonstrates standard todo application functionality. The application provides comprehensive task management capabilities with a clean, intuitive interface. Key <example-value> include:
+The TodoMVC application is a React-based todo list manager that demonstrates standard todo application functionality. The application provides comprehensive task management capabilities with a clean, intuitive interface. Key features include:
 
 - **Task Management**: Add, edit, complete, and delete individual todos
 - **Bulk Operations**: Mark all todos as complete/incomplete and clear all completed todos  
@@ -124,6 +124,7 @@ The TodoMVC application is a React-based todo list manager that demonstrates sta
 #### 1.2 Add Multiple Todos
 ...
 ```
+</details>
 
 ## 🎭 Generator
 
@@ -138,6 +139,8 @@ behavioral validation.
 
 **Prompt**
 
+<img src={require("../images/test-agents/generator-prompt.png").src} alt="generator prompt" width="472"/>
+
 > - Notice how the `basic-operations.md` is included in the context of the generator.
 > - This is how generator knows where to get the test plan from. Alternatively, you can mention the file name in the prompt.
 
@@ -146,7 +149,8 @@ behavioral validation.
 * A test suite under `tests/`
 * Generated tests may include initial errors that can be healed automatically by the healer agent
 
-**Example: tests/add-valid-todo.spec.ts**
+<details>
+<summary>Example: <b>tests/add-valid-todo.spec.ts</b></summary>
 
 ```ts
 // spec: specs/basic-operations.md
@@ -185,6 +189,7 @@ test.describe('Adding New Todos', () => {
   });
 });
 ```
+</details>
 
 ## 🎭 Healer
 
@@ -200,6 +205,8 @@ When the test fails, the healer agent:
 * Failing test name
 
 **Prompt**
+
+<img src={require("../images/test-agents/healer-prompt.png").src} alt="healer prompt" width="469"/>
 
 **Output**
 

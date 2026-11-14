@@ -1,19 +1,19 @@
 ---
-title: "How to perform streaming transformations of text to XML in C# - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/perform-streaming-transformations-text-xml.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to perform streaming transformations of text to XML in C# - LINQ to XML
+description: You can use an extension method that releases a line at a time to stream a text file for processing. This technique reduces memory requirements compared to techniques which load the entire file and then process it.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+ms.topic: how-to
 ---
 
 # How to perform streaming transformations of text to XML in C# (LINQ to XML)
 
 You can use an extension method that releases a line at a time to stream a text file for processing. This technique reduces memory requirements compared to techniques which load the entire file and then process it.
 
-The extension method can provide the line using the `yield return` construct. A LINQ query can process the stream in a lazy deferred fashion. If you use `System.Xml.Linq.XStreamingElement` to stream output, you can create a transformation from the text file to XML that uses a minimal amount of memory, regardless of the size of the source text file.
+The extension method can provide the line using the `yield return` construct. A LINQ query can process the stream in a lazy deferred fashion. If you use <xref:System.Xml.Linq.XStreamingElement> to stream output, you can create a transformation from the text file to XML that uses a minimal amount of memory, regardless of the size of the source text file.
 
-> **Note:**
+> [!NOTE]
 > The technique is best applied in situations in which you can process the entire file once, taking the lines in order from the source document. Processing the file more than once, or sorting before processing, reduces the performance benefits of a streaming technique.
 
 ## Example Use an extension method to stream text
@@ -91,4 +91,4 @@ The example produces the following output:
 
 ## See also
 
-- `System.Xml.Linq.XStreamingElement`
+- <xref:System.Xml.Linq.XStreamingElement>

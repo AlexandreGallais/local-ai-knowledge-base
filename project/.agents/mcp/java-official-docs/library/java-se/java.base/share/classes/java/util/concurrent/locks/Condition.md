@@ -1,54 +1,44 @@
----
-title: "Condition interface (java.util.concurrent.locks) (part 1 of 2)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/locks/Condition.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Condition interface (java.util.concurrent.locks)
 
 ```java
 public interface Condition
 ```
 
-`Condition` factors out the `Object` monitor
-methods (wait, notify
-and notifyAll) into distinct objects to
+{@code Condition} factors out the {@code Object} monitor
+methods ({@link Object#wait() wait}, {@link Object#notify notify}
+and {@link Object#notifyAll notifyAll}) into distinct objects to
 give the effect of having multiple wait-sets per object, by
-combining them with the use of arbitrary `Lock` implementations.
-Where a `Lock` replaces the use of `synchronized` methods
-and statements, a `Condition` replaces the use of the Object
+combining them with the use of arbitrary {@link Lock} implementations.
+Where a {@code Lock} replaces the use of {@code synchronized} methods
+and statements, a {@code Condition} replaces the use of the Object
 monitor methods.
 
-Conditions (also known as *condition queues* or
-*condition variables*) provide a means for one thread to
-suspend execution (to "wait") until notified by another
+<p>Conditions (also known as <em>condition queues</em> or
+<em>condition variables</em>) provide a means for one thread to
+suspend execution (to &quot;wait&quot;) until notified by another
 thread that some state condition may now be true.  Because access
 to this shared state information occurs in different threads, it
 must be protected, so a lock of some form is associated with the
-condition. The key <example-value> that waiting for a condition provides
-is that it *atomically* releases the associated lock and
-suspends the current thread, just like `Object.wait`.
+condition. The key property that waiting for a condition provides
+is that it <em>atomically</em> releases the associated lock and
+suspends the current thread, just like {@code Object.wait}.
 
-A `Condition` instance is intrinsically bound to a lock.
-To obtain a `Condition` instance for a particular `Lock`
-instance use its newCondition() method.
+<p>A {@code Condition} instance is intrinsically bound to a lock.
+To obtain a {@code Condition} instance for a particular {@link Lock}
+instance use its {@link Lock#newCondition newCondition()} method.
 
-As an example, suppose we have a bounded buffer which supports
-`put` and `take` methods.  If a
-`take` is attempted on an empty buffer, then the thread will block
-until an item becomes available; if a `put` is attempted on a
+<p>As an example, suppose we have a bounded buffer which supports
+{@code put} and {@code take} methods.  If a
+{@code take} is attempted on an empty buffer, then the thread will block
+until an item becomes available; if a {@code put} is attempted on a
 full buffer, then the thread will block until a space becomes available.
-We would like to keep waiting `put` threads and `take`
+We would like to keep waiting {@code put} threads and {@code take}
 threads in separate wait-sets so that we can use the optimization of
 only notifying a single thread at a time when items or spaces become
 available in the buffer. This can be achieved using two
-`Condition` instances.
-
-```java
-class BoundedBuffer<E> {
+{@link Condition} instances.
+<pre>
+class BoundedBuffer&lt;E&gt; {
   <b>final Lock lock = new ReentrantLock();</b>
   final Condition notFull  = <b>lock.newCondition(); </b>
   final Condition notEmpty = <b>lock.newCondition(); </b>
@@ -84,47 +74,48 @@ class BoundedBuffer<E> {
       lock.unlock();
     }</b>
   }
-```
+}
+</pre>
 
-(The `java.util.concurrent.ArrayBlockingQueue` class provides
+(The {@link java.util.concurrent.ArrayBlockingQueue} class provides
 this functionality, so there is no reason to implement this
 sample usage class.)
 
-A `Condition` implementation can provide behavior and semantics
+<p>A {@code Condition} implementation can provide behavior and semantics
 that is
-different from that of the `Object` monitor methods, such as
+different from that of the {@code Object} monitor methods, such as
 guaranteed ordering for notifications, or not requiring a lock to be held
 when performing notifications.
 If an implementation provides such specialized semantics then the
 implementation must document those semantics.
 
-Note that `Condition` instances are just normal objects and can
-themselves be used as the target in a `synchronized` statement,
-and can have their own monitor wait and
-notify methods invoked.
-Acquiring the monitor lock of a `Condition` instance, or using its
+<p>Note that {@code Condition} instances are just normal objects and can
+themselves be used as the target in a {@code synchronized} statement,
+and can have their own monitor {@link Object#wait wait} and
+{@link Object#notify notify} methods invoked.
+Acquiring the monitor lock of a {@code Condition} instance, or using its
 monitor methods, has no specified relationship with acquiring the
-`Lock` associated with that `Condition` or the use of its
-waiting and signalling methods.
-It is recommended that to avoid confusion you never use `Condition`
+{@link Lock} associated with that {@code Condition} or the use of its
+{@linkplain #await waiting} and {@linkplain #signal signalling} methods.
+It is recommended that to avoid confusion you never use {@code Condition}
 instances in this way, except perhaps within their own implementation.
 
-Except where noted, passing a `null` value for any parameter
-will result in a `NullPointerException` being thrown.
+<p>Except where noted, passing a {@code null} value for any parameter
+will result in a {@link NullPointerException} being thrown.
 
-#### Implementation Considerations
+<h2>Implementation Considerations</h2>
 
-When waiting upon a `Condition`, a "*spurious
-wakeup*" is permitted to occur, in
+<p>When waiting upon a {@code Condition}, a &quot;<em>spurious
+wakeup</em>&quot; is permitted to occur, in
 general, as a concession to the underlying platform semantics.
 This has little practical impact on most application programs as a
-`Condition` should always be waited upon in a loop, testing
+{@code Condition} should always be waited upon in a loop, testing
 the state predicate that is being waited for.  An implementation is
 free to remove the possibility of spurious wakeups but it is
 recommended that applications programmers always assume that they can
 occur and so always wait in a loop.
 
-The three forms of condition waiting
+<p>The three forms of condition waiting
 (interruptible, non-interruptible, and timed) may differ in their ease of
 implementation on some platforms and in their performance characteristics.
 In particular, it may be difficult to provide these features and maintain
@@ -132,23 +123,24 @@ specific semantics such as ordering guarantees.
 Further, the ability to interrupt the actual suspension of the thread may
 not always be feasible to implement on all platforms.
 
-Consequently, an implementation is not required to define exactly the
+<p>Consequently, an implementation is not required to define exactly the
 same guarantees or semantics for all three forms of waiting, nor is it
 required to support interruption of the actual suspension of the thread.
 
-An implementation is required to
+<p>An implementation is required to
 clearly document the semantics and guarantees provided by each of the
 waiting methods, and when an implementation does support interruption of
 thread suspension then it must obey the interruption semantics as defined
 in this interface.
 
-As interruption generally implies cancellation, and checks for
+<p>As interruption generally implies cancellation, and checks for
 interruption are often infrequent, an implementation can favor responding
 to an interrupt over normal method return. This is true even if it can be
 shown that the interrupt occurred after another action that may have
 unblocked the thread. An implementation should document this behavior.
 
-**Since:** 1.5
+@since 1.5
+@author Doug Lea
 
 ## Condition.await()
 
@@ -157,57 +149,53 @@ void await() throws InterruptedException
 ```
 
 Causes the current thread to wait until it is signalled or
-interrupted.
+{@linkplain Thread#interrupt interrupted}.
 
-The lock associated with this `Condition` is atomically
+<p>The lock associated with this {@code Condition} is atomically
 released and the current thread becomes disabled for thread scheduling
-purposes and lies dormant until *one* of four things happens:
-
-- Some other thread invokes the `signal` method for this
-`Condition` and the current thread happens to be chosen as the
+purposes and lies dormant until <em>one</em> of four things happens:
+<ul>
+<li>Some other thread invokes the {@link #signal} method for this
+{@code Condition} and the current thread happens to be chosen as the
 thread to be awakened; or
-
-- Some other thread invokes the `signalAll` method for this
-`Condition`; or
-
-- Some other thread interrupts the
+<li>Some other thread invokes the {@link #signalAll} method for this
+{@code Condition}; or
+<li>Some other thread {@linkplain Thread#interrupt interrupts} the
 current thread, and interruption of thread suspension is supported; or
+<li>A &quot;<em>spurious wakeup</em>&quot; occurs.
+</ul>
 
-- A "*spurious wakeup*" occurs.
-
-In all cases, before this method can return the current thread must
+<p>In all cases, before this method can return the current thread must
 re-acquire the lock associated with this condition. When the
-thread returns it is *guaranteed* to hold this lock.
+thread returns it is <em>guaranteed</em> to hold this lock.
 
-If the current thread:
-
-- has its interrupted status set on entry to this method; or
-
-- is interrupted while waiting
+<p>If the current thread:
+<ul>
+<li>has its interrupted status set on entry to this method; or
+<li>is {@linkplain Thread#interrupt interrupted} while waiting
 and interruption of thread suspension is supported,
-
-then `InterruptedException` is thrown and the current thread's
+</ul>
+then {@link InterruptedException} is thrown and the current thread's
 interrupted status is cleared. It is not specified, in the first
 case, whether or not the test for interruption occurs before the lock
 is released.
 
-**Implementation Considerations**
+<p><b>Implementation Considerations</b>
 
-The current thread is assumed to hold the lock associated with this
-`Condition` when this method is called.
+<p>The current thread is assumed to hold the lock associated with this
+{@code Condition} when this method is called.
 It is up to the implementation to determine if this is
 the case and if not, how to respond. Typically, an exception will be
-thrown (such as `IllegalMonitorStateException`) and the
+thrown (such as {@link IllegalMonitorStateException}) and the
 implementation must document that fact.
 
-An implementation can favor responding to an interrupt over normal
+<p>An implementation can favor responding to an interrupt over normal
 method return in response to a signal. In that case the implementation
 must ensure that the signal is redirected to another waiting thread, if
 there is one.
 
-Throws:
-
-- `InterruptedException`: if the current thread is interrupted (and interruption of thread suspension is supported)
+@throws InterruptedException if the current thread is interrupted
+        (and interruption of thread suspension is supported)
 
 ## Condition.awaitUninterruptibly()
 
@@ -217,36 +205,35 @@ void awaitUninterruptibly()
 
 Causes the current thread to wait until it is signalled.
 
-The lock associated with this condition is atomically
+<p>The lock associated with this condition is atomically
 released and the current thread becomes disabled for thread scheduling
-purposes and lies dormant until *one* of three things happens:
-
-- Some other thread invokes the `signal` method for this
-`Condition` and the current thread happens to be chosen as the
+purposes and lies dormant until <em>one</em> of three things happens:
+<ul>
+<li>Some other thread invokes the {@link #signal} method for this
+{@code Condition} and the current thread happens to be chosen as the
 thread to be awakened; or
+<li>Some other thread invokes the {@link #signalAll} method for this
+{@code Condition}; or
+<li>A &quot;<em>spurious wakeup</em>&quot; occurs.
+</ul>
 
-- Some other thread invokes the `signalAll` method for this
-`Condition`; or
-
-- A "*spurious wakeup*" occurs.
-
-In all cases, before this method can return the current thread must
+<p>In all cases, before this method can return the current thread must
 re-acquire the lock associated with this condition. When the
-thread returns it is *guaranteed* to hold this lock.
+thread returns it is <em>guaranteed</em> to hold this lock.
 
-If the current thread's interrupted status is set when it enters
-this method, or it is interrupted
+<p>If the current thread's interrupted status is set when it enters
+this method, or it is {@linkplain Thread#interrupt interrupted}
 while waiting, it will continue to wait until signalled. When it finally
 returns from this method its interrupted status will still
 be set.
 
-**Implementation Considerations**
+<p><b>Implementation Considerations</b>
 
-The current thread is assumed to hold the lock associated with this
-`Condition` when this method is called.
+<p>The current thread is assumed to hold the lock associated with this
+{@code Condition} when this method is called.
 It is up to the implementation to determine if this is
 the case and if not, how to respond. Typically, an exception will be
-thrown (such as `IllegalMonitorStateException`) and the
+thrown (such as {@link IllegalMonitorStateException}) and the
 implementation must document that fact.
 
 ## Condition.awaitNanos(long)
@@ -258,49 +245,45 @@ long awaitNanos(long nanosTimeout) throws InterruptedException
 Causes the current thread to wait until it is signalled or interrupted,
 or the specified waiting time elapses.
 
-The lock associated with this condition is atomically
+<p>The lock associated with this condition is atomically
 released and the current thread becomes disabled for thread scheduling
-purposes and lies dormant until *one* of five things happens:
-
-- Some other thread invokes the `signal` method for this
-`Condition` and the current thread happens to be chosen as the
+purposes and lies dormant until <em>one</em> of five things happens:
+<ul>
+<li>Some other thread invokes the {@link #signal} method for this
+{@code Condition} and the current thread happens to be chosen as the
 thread to be awakened; or
-
-- Some other thread invokes the `signalAll` method for this
-`Condition`; or
-
-- Some other thread interrupts the
+<li>Some other thread invokes the {@link #signalAll} method for this
+{@code Condition}; or
+<li>Some other thread {@linkplain Thread#interrupt interrupts} the
 current thread, and interruption of thread suspension is supported; or
+<li>The specified waiting time elapses; or
+<li>A &quot;<em>spurious wakeup</em>&quot; occurs.
+</ul>
 
-- The specified waiting time elapses; or
-
-- A "*spurious wakeup*" occurs.
-
-In all cases, before this method can return the current thread must
+<p>In all cases, before this method can return the current thread must
 re-acquire the lock associated with this condition. When the
-thread returns it is *guaranteed* to hold this lock.
+thread returns it is <em>guaranteed</em> to hold this lock.
 
-If the current thread:
-
-- has its interrupted status set on entry to this method; or
-
-- is interrupted while waiting
+<p>If the current thread:
+<ul>
+<li>has its interrupted status set on entry to this method; or
+<li>is {@linkplain Thread#interrupt interrupted} while waiting
 and interruption of thread suspension is supported,
-
-then `InterruptedException` is thrown and the current thread's
+</ul>
+then {@link InterruptedException} is thrown and the current thread's
 interrupted status is cleared. It is not specified, in the first
 case, whether or not the test for interruption occurs before the lock
 is released.
 
-The method returns an estimate of the number of nanoseconds
-remaining to wait given the supplied `nanosTimeout`
+<p>The method returns an estimate of the number of nanoseconds
+remaining to wait given the supplied {@code nanosTimeout}
 value upon return, or a value less than or equal to zero if it
 timed out. This value can be used to determine whether and how
 long to re-wait in cases where the wait returns but an awaited
 condition still does not hold. Typical uses of this method take
 the following form:
 
-```java
+<pre> {@code
 boolean aMethod(long timeout, TimeUnit unit)
     throws InterruptedException {
   long nanosRemaining = unit.toNanos(timeout);
@@ -316,44 +299,38 @@ boolean aMethod(long timeout, TimeUnit unit)
   } finally {
     lock.unlock();
   }
-}
-```
+}}</pre>
 
-Design note: This method requires a nanosecond argument so
+<p>Design note: This method requires a nanosecond argument so
 as to avoid truncation errors in reporting remaining times.
 Such precision loss would make it difficult for programmers to
 ensure that total waiting times are not systematically shorter
 than specified when re-waits occur.
 
-**Implementation Considerations**
+<p><b>Implementation Considerations</b>
 
-The current thread is assumed to hold the lock associated with this
-`Condition` when this method is called.
+<p>The current thread is assumed to hold the lock associated with this
+{@code Condition} when this method is called.
 It is up to the implementation to determine if this is
 the case and if not, how to respond. Typically, an exception will be
-thrown (such as `IllegalMonitorStateException`) and the
+thrown (such as {@link IllegalMonitorStateException}) and the
 implementation must document that fact.
 
-An implementation can favor responding to an interrupt over normal
+<p>An implementation can favor responding to an interrupt over normal
 method return in response to a signal, or over indicating the elapse
 of the specified waiting time. In either case the implementation
 must ensure that the signal is redirected to another waiting thread, if
 there is one.
 
-Parameters:
-
-- `nanosTimeout`: the maximum time to wait, in nanoseconds
-
-**Returns:** an estimate of the `nanosTimeout` value minus
+@param nanosTimeout the maximum time to wait, in nanoseconds
+@return an estimate of the {@code nanosTimeout} value minus
         the time spent waiting upon return from this method.
         A positive value may be used as the argument to a
         subsequent call to this method to finish waiting out
         the desired time.  A value less than or equal to zero
         indicates that no time remains.
-
-Throws:
-
-- `InterruptedException`: if the current thread is interrupted (and interruption of thread suspension is supported)
+@throws InterruptedException if the current thread is interrupted
+        (and interruption of thread suspension is supported)
 
 ## Condition.await(long, TimeUnit)
 
@@ -364,19 +341,133 @@ boolean await(long time, TimeUnit unit) throws InterruptedException
 Causes the current thread to wait until it is signalled or interrupted,
 or the specified waiting time elapses. This method is behaviorally
 equivalent to:
+<pre> {@code awaitNanos(unit.toNanos(time)) > 0}</pre>
+
+@param time the maximum time to wait
+@param unit the time unit of the {@code time} argument
+@return {@code false} if the waiting time detectably elapsed
+        before return from the method, else {@code true}
+@throws InterruptedException if the current thread is interrupted
+        (and interruption of thread suspension is supported)
+
+## Condition.awaitUntil(Date)
 
 ```java
-awaitNanos(unit.toNanos(time)) > 0
+boolean awaitUntil(Date deadline) throws InterruptedException
 ```
 
-Parameters:
+Causes the current thread to wait until it is signalled or interrupted,
+or the specified deadline elapses.
 
-- `time`: the maximum time to wait
-- `unit`: the time unit of the `time` argument
+<p>The lock associated with this condition is atomically
+released and the current thread becomes disabled for thread scheduling
+purposes and lies dormant until <em>one</em> of five things happens:
+<ul>
+<li>Some other thread invokes the {@link #signal} method for this
+{@code Condition} and the current thread happens to be chosen as the
+thread to be awakened; or
+<li>Some other thread invokes the {@link #signalAll} method for this
+{@code Condition}; or
+<li>Some other thread {@linkplain Thread#interrupt interrupts} the
+current thread, and interruption of thread suspension is supported; or
+<li>The specified deadline elapses; or
+<li>A &quot;<em>spurious wakeup</em>&quot; occurs.
+</ul>
 
-**Returns:** `false` if the waiting time detectably elapsed
-        before return from the method, else `true`
+<p>In all cases, before this method can return the current thread must
+re-acquire the lock associated with this condition. When the
+thread returns it is <em>guaranteed</em> to hold this lock.
 
-Throws:
+<p>If the current thread:
+<ul>
+<li>has its interrupted status set on entry to this method; or
+<li>is {@linkplain Thread#interrupt interrupted} while waiting
+and interruption of thread suspension is supported,
+</ul>
+then {@link InterruptedException} is thrown and the current thread's
+interrupted status is cleared. It is not specified, in the first
+case, whether or not the test for interruption occurs before the lock
+is released.
 
-- `InterruptedException`: if the current thread is interrupted (and interruption of thread suspension is supported)
+<p>The return value indicates whether the deadline has elapsed,
+which can be used as follows:
+<pre> {@code
+boolean aMethod(Date deadline)
+    throws InterruptedException {
+  boolean stillWaiting = true;
+  lock.lock();
+  try {
+    while (!conditionBeingWaitedFor()) {
+      if (!stillWaiting)
+        return false;
+      stillWaiting = theCondition.awaitUntil(deadline);
+    }
+    // ...
+    return true;
+  } finally {
+    lock.unlock();
+  }
+}}</pre>
+
+<p><b>Implementation Considerations</b>
+
+<p>The current thread is assumed to hold the lock associated with this
+{@code Condition} when this method is called.
+It is up to the implementation to determine if this is
+the case and if not, how to respond. Typically, an exception will be
+thrown (such as {@link IllegalMonitorStateException}) and the
+implementation must document that fact.
+
+<p>An implementation can favor responding to an interrupt over normal
+method return in response to a signal, or over indicating the passing
+of the specified deadline. In either case the implementation
+must ensure that the signal is redirected to another waiting thread, if
+there is one.
+
+@param deadline the absolute time to wait until
+@return {@code false} if the deadline has elapsed upon return, else
+        {@code true}
+@throws InterruptedException if the current thread is interrupted
+        (and interruption of thread suspension is supported)
+
+## Condition.signal()
+
+```java
+void signal()
+```
+
+Wakes up one waiting thread.
+
+<p>If any threads are waiting on this condition then one
+is selected for waking up. That thread must then re-acquire the
+lock before returning from {@code await}.
+
+<p><b>Implementation Considerations</b>
+
+<p>An implementation may (and typically does) require that the
+current thread hold the lock associated with this {@code
+Condition} when this method is called. Implementations must
+document this precondition and any actions taken if the lock is
+not held. Typically, an exception such as {@link
+IllegalMonitorStateException} will be thrown.
+
+## Condition.signalAll()
+
+```java
+void signalAll()
+```
+
+Wakes up all waiting threads.
+
+<p>If any threads are waiting on this condition then they are
+all woken up. Each thread must re-acquire the lock before it can
+return from {@code await}.
+
+<p><b>Implementation Considerations</b>
+
+<p>An implementation may (and typically does) require that the
+current thread hold the lock associated with this {@code
+Condition} when this method is called. Implementations must
+document this precondition and any actions taken if the lock is
+not held. Typically, an exception such as {@link
+IllegalMonitorStateException} will be thrown.

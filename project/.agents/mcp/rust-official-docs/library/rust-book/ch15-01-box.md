@@ -1,14 +1,3 @@
----
-title: "ch15-01-box"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch15-01-box.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch15-01-box
-
 ## Using `Box<T>` to Point to Data on the Heap
 
 The most straightforward smart pointer is a box, whose type is written
@@ -27,16 +16,20 @@ either. You’ll use them most often in these situations:
 - When you want to own a value, and you care only that it’s a type that
   implements a particular trait rather than being of a specific type
 
-We’ll demonstrate the first situation in “Enabling Recursive Types with
-Boxes”. In the second
+We’ll demonstrate the first situation in [“Enabling Recursive Types with
+Boxes”](#enabling-recursive-types-with-boxes)<!-- ignore -->. In the second
 case, transferring ownership of a large amount of data can take a long time
 because the data is copied around on the stack. To improve performance in this
 situation, we can store the large amount of data on the heap in a box. Then,
 only the small amount of pointer data is copied around on the stack, while the
 data it references stays in one place on the heap. The third case is known as a
-_trait object_, and “Using Trait Objects to Abstract over Shared
-Behavior” in Chapter 18 is devoted to that
+_trait object_, and [“Using Trait Objects to Abstract over Shared
+Behavior”][trait-objects]<!-- ignore --> in Chapter 18 is devoted to that
 topic. So, what you learn here you’ll apply again in that section!
+
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="using-boxt-to-store-data-on-the-heap"></a>
 
 ### Storing Data on the Heap
 
@@ -45,14 +38,13 @@ syntax and how to interact with values stored within a `Box<T>`.
 
 Listing 15-1 shows how to use a box to store an `i32` value on the heap.
 
-**Listing 15-1: Storing an `i32` value on the heap using a box** (src/main.rs)
+<Listing number="15-1" file-name="src/main.rs" caption="Storing an `i32` value on the heap using a box">
 
 ```rust
-fn main() {
-    let b = Box::new(5);
-    println!("b = {b}");
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-01/src/main.rs}}
 ```
+
+</Listing>
 
 We define the variable `b` to have the value of a `Box` that points to the
 value `5`, which is allocated on the heap. This program will print `b = 5`; in
@@ -82,6 +74,10 @@ type commonly found in functional programming languages. The cons list type
 we’ll define is straightforward except for the recursion; therefore, the
 concepts in the example we’ll work with will be useful anytime you get into
 more complex situations involving recursive types.
+
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="more-information-about-the-cons-list"></a>
 
 #### Understanding the Cons List
 
@@ -116,14 +112,13 @@ Listing 15-2 contains an enum definition for a cons list. Note that this code
 won’t compile yet, because the `List` type doesn’t have a known size, which
 we’ll demonstrate.
 
-**Listing 15-2: The first attempt at defining an enum to represent a cons list data structure of `i32` values** (src/main.rs)
+<Listing number="15-2" file-name="src/main.rs" caption="The first attempt at defining an enum to represent a cons list data structure of `i32` values">
 
-```rust
-enum List {
-    Cons(i32, List),
-    Nil,
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-02/src/main.rs:here}}
 ```
+
+</Listing>
 
 > Note: We’re implementing a cons list that holds only `i32` values for the
 > purposes of this example. We could have implemented it using generics, as we
@@ -133,17 +128,13 @@ enum List {
 Using the `List` type to store the list `1, 2, 3` would look like the code in
 Listing 15-3.
 
-**Listing 15-3: Using the `List` enum to store the list `1, 2, 3`** (src/main.rs)
+<Listing number="15-3" file-name="src/main.rs" caption="Using the `List` enum to store the list `1, 2, 3`">
 
-```rust
-// --snip--
-
-use crate::List::{Cons, Nil};
-
-fn main() {
-    let list = Cons(1, Cons(2, Cons(3, Nil)));
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-03/src/main.rs:here}}
 ```
+
+</Listing>
 
 The first `Cons` value holds `1` and another `List` value. This `List` value is
 another `Cons` value that holds `2` and another `List` value. This `List` value
@@ -153,27 +144,13 @@ is one more `Cons` value that holds `3` and a `List` value, which is finally
 If we try to compile the code in Listing 15-3, we get the error shown in
 Listing 15-4.
 
-**Listing 15-4: The error we get when attempting to define a recursive enum**
+<Listing number="15-4" caption="The error we get when attempting to define a recursive enum">
 
 ```console
-$ cargo run
-   Compiling cons-list v0.1.0 (file:///projects/cons-list)
-error[E0072]: recursive type `List` has infinite size
- --> src/main.rs:1:1
-  |
-1 | enum List {
-  | ^^^^^^^^^
-2 |     Cons(i32, List),
-  |               ---- recursive without indirection
-  |
-help: insert some indirection (e.g., a `Box`, `Rc`, or `&`) to break the cycle
-  |
-2 |     Cons(i32, Box<List>),
-  |               ++++    +
-
-For more information about this error, try `rustc --explain E0072`.
-error: could not compile `cons-list` (bin "cons-list") due to 1 previous error
+{{#include ../listings/ch15-smart-pointers/listing-15-03/output.txt}}
 ```
+
+</Listing>
 
 The error shows this type “has infinite size.” The reason is that we’ve defined
 `List` with a variant that is recursive: It holds another value of itself
@@ -187,12 +164,7 @@ Recall the `Message` enum we defined in Listing 6-2 when we discussed enum
 definitions in Chapter 6:
 
 ```rust
-enum Message {
-    Quit,
-    Move { x: i32, y: i32 },
-    Write(String),
-    ChangeColor(i32, i32, i32),
-}
+{{#rustdoc_include ../listings/ch06-enums-and-pattern-matching/listing-06-02/src/main.rs:here}}
 ```
 
 To determine how much space to allocate for a `Message` value, Rust goes
@@ -211,13 +183,23 @@ type needs, the compiler looks at the variants, starting with the `Cons`
 variant. The `Cons` variant holds a value of type `i32` and a value of type
 `List`, and this process continues infinitely, as shown in Figure 15-1.
 
-Figure 15-1: An infinite `List` consisting of infinite
-`Cons` variants
+<img alt="An infinite Cons list: a rectangle labeled 'Cons' split into two smaller rectangles. The first smaller rectangle holds the label 'i32', and the second smaller rectangle holds the label 'Cons' and a smaller version of the outer 'Cons' rectangle. The 'Cons' rectangles continue to hold smaller and smaller versions of themselves until the smallest comfortably sized rectangle holds an infinity symbol, indicating that this repetition goes on forever." src="img/trpl15-01.svg" class="center" style="width: 50%;" />
+
+<span class="caption">Figure 15-1: An infinite `List` consisting of infinite
+`Cons` variants</span>
+
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="using-boxt-to-get-a-recursive-type-with-a-known-size"></a>
 
 #### Getting a Recursive Type with a Known Size
 
 Because Rust can’t figure out how much space to allocate for recursively
 defined types, the compiler gives an error with this helpful suggestion:
+
+<!-- manual-regeneration
+after doing automatic regeneration, look at listings/ch15-smart-pointers/listing-15-03/output.txt and copy the relevant line
+-->
 
 ```text
 help: insert some indirection (e.g., a `Box`, `Rc`, or `&`) to break the cycle
@@ -242,20 +224,13 @@ rather than inside one another.
 We can change the definition of the `List` enum in Listing 15-2 and the usage
 of the `List` in Listing 15-3 to the code in Listing 15-5, which will compile.
 
-**Listing 15-5** (src/main.rs)` in order to have a known size">
+<Listing number="15-5" file-name="src/main.rs" caption="The definition of `List` that uses `Box<T>` in order to have a known size">
 
 ```rust
-enum List {
-    Cons(i32, Box<List>),
-    Nil,
-}
-
-use crate::List::{Cons, Nil};
-
-fn main() {
-    let list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-05/src/main.rs}}
 ```
+
+</Listing>
 
 The `Cons` variant needs the size of an `i32` plus the space to store the box’s
 pointer data. The `Nil` variant stores no values, so it needs less space on the
@@ -265,8 +240,10 @@ we’ve broken the infinite, recursive chain, so the compiler can figure out the
 size it needs to store a `List` value. Figure 15-2 shows what the `Cons`
 variant looks like now.
 
-Figure 15-2: A `List` that is not infinitely sized,
-because `Cons` holds a `Box`
+<img alt="A rectangle labeled 'Cons' split into two smaller rectangles. The first smaller rectangle holds the label 'i32', and the second smaller rectangle holds the label 'Box' with one inner rectangle that contains the label 'usize', representing the finite size of the box's pointer." src="img/trpl15-02.svg" class="center" />
+
+<span class="caption">Figure 15-2: A `List` that is not infinitely sized,
+because `Cons` holds a `Box`</span>
 
 Boxes provide only the indirection and heap allocation; they don’t have any
 other special capabilities, like those we’ll see with the other smart pointer
@@ -282,3 +259,5 @@ up as well because of the `Drop` trait implementation. These two traits will be
 even more important to the functionality provided by the other smart pointer
 types we’ll discuss in the rest of this chapter. Let’s explore these two traits
 in more detail.
+
+[trait-objects]: ch18-02-trait-objects.html#using-trait-objects-to-abstract-over-shared-behavior

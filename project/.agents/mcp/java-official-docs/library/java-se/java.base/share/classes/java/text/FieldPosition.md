@@ -1,47 +1,40 @@
----
-title: "FieldPosition class (java.text)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/text/FieldPosition.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # FieldPosition class (java.text)
 
 ```java
 public class FieldPosition
 ```
 
-`FieldPosition` is a simple class used by `Format`
+{@code FieldPosition} is a simple class used by {@code Format}
 and its subclasses to identify fields in formatted output. Fields can
 be identified in two ways:
-
-- By an integer constant, whose names typically end with
-     `_FIELD`. The constants are defined in the various
-     subclasses of `Format`.
-
-- By a `Format.Field` constant, see `ERA_FIELD`
-     and its friends in `DateFormat` for an example.
-
-`FieldPosition` keeps track of the position of the
+<ul>
+ <li>By an integer constant, whose names typically end with
+     {@code _FIELD}. The constants are defined in the various
+     subclasses of {@code Format}.
+ <li>By a {@code Format.Field} constant, see {@code ERA_FIELD}
+     and its friends in {@code DateFormat} for an example.
+</ul>
+<p>
+{@code FieldPosition} keeps track of the position of the
 field within the formatted output with two indices: the index
 of the first character of the field and the index of the last
 character of the field.
 
-One version of the `format` method in the various
-`Format` classes requires a `FieldPosition`
-object as an argument. You use this `format` method
+<p>
+One version of the {@code format} method in the various
+{@code Format} classes requires a {@code FieldPosition}
+object as an argument. You use this {@code format} method
 to perform partial formatting or to get information about the
 formatted output (such as the position of a field).
 
+<p>
 If you are interested in the positions of all attributes in the
-formatted string use the `Format` method
-`formatToCharacterIterator`.
+formatted string use the {@code Format} method
+{@code formatToCharacterIterator}.
 
-**Since:** 1.1
-
-**See also:** java.text.Format
+@author      Mark Davis
+@since 1.1
+@see         java.text.Format
 
 ## FieldPosition.FieldPosition(int)
 
@@ -53,17 +46,11 @@ Creates a FieldPosition object for the given field.  Fields are
 identified by constants, whose names typically end with _FIELD,
 in the various subclasses of Format.
 
-Parameters:
-
-- `field`: the field identifier
-
-**See also:** java.text.NumberFormat#INTEGER_FIELD
-
-**See also:** java.text.NumberFormat#FRACTION_FIELD
-
-**See also:** java.text.DateFormat#YEAR_FIELD
-
-**See also:** java.text.DateFormat#MONTH_FIELD
+@param field the field identifier
+@see java.text.NumberFormat#INTEGER_FIELD
+@see java.text.NumberFormat#FRACTION_FIELD
+@see java.text.DateFormat#YEAR_FIELD
+@see java.text.DateFormat#MONTH_FIELD
 
 ## FieldPosition.FieldPosition(Format.Field)
 
@@ -72,15 +59,12 @@ public FieldPosition(Format.Field attribute)
 ```
 
 Creates a FieldPosition object for the given field constant. Fields are
-identified by constants defined in the various `Format`
+identified by constants defined in the various {@code Format}
 subclasses. This is equivalent to calling
-`new FieldPosition(attribute, -1)`.
+{@code new FieldPosition(attribute, -1)}.
 
-Parameters:
-
-- `attribute`: Format.Field constant identifying a field
-
-**Since:** 1.4
+@param attribute Format.Field constant identifying a field
+@since 1.4
 
 ## FieldPosition.FieldPosition(Format.Field, int)
 
@@ -88,23 +72,20 @@ Parameters:
 public FieldPosition(Format.Field attribute, int fieldID)
 ```
 
-Creates a `FieldPosition` object for the given field.
+Creates a {@code FieldPosition} object for the given field.
 The field is identified by an attribute constant from one of the
-`Field` subclasses as well as an integer field ID
-defined by the `Format` subclasses. `Format`
-subclasses that are aware of `Field` should give precedence
-to `attribute` and ignore `fieldID` if
-`attribute` is not null. However, older `Format`
-subclasses may not be aware of `Field` and rely on
-`fieldID`. If the field has no corresponding integer
-constant, `fieldID` should be -1.
+{@code Field} subclasses as well as an integer field ID
+defined by the {@code Format} subclasses. {@code Format}
+subclasses that are aware of {@code Field} should give precedence
+to {@code attribute} and ignore {@code fieldID} if
+{@code attribute} is not null. However, older {@code Format}
+subclasses may not be aware of {@code Field} and rely on
+{@code fieldID}. If the field has no corresponding integer
+constant, {@code fieldID} should be -1.
 
-Parameters:
-
-- `attribute`: Format.Field constant identifying a field
-- `fieldID`: integer constant identifying a field
-
-**Since:** 1.4
+@param attribute Format.Field constant identifying a field
+@param fieldID integer constant identifying a field
+@since 1.4
 
 ## FieldPosition.getFieldAttribute()
 
@@ -113,12 +94,11 @@ public Format.Field getFieldAttribute()
 ```
 
 Returns the field identifier as an attribute constant
-from one of the `Field` subclasses. May return null if
+from one of the {@code Field} subclasses. May return null if
 the field is specified only by an integer field ID.
 
-**Returns:** Identifier for the field
-
-**Since:** 1.4
+@return Identifier for the field
+@since 1.4
 
 ## FieldPosition.getField()
 
@@ -128,7 +108,7 @@ public int getField()
 
 Retrieves the field identifier.
 
-**Returns:** the field identifier
+@return the field identifier
 
 ## FieldPosition.getBeginIndex()
 
@@ -138,7 +118,7 @@ public int getBeginIndex()
 
 Retrieves the index of the first character in the requested field.
 
-**Returns:** the begin index
+@return the begin index
 
 ## FieldPosition.getEndIndex()
 
@@ -149,7 +129,7 @@ public int getEndIndex()
 Retrieves the index of the character following the last character in the
 requested field.
 
-**Returns:** the end index
+@return the end index
 
 ## FieldPosition.setBeginIndex(int)
 
@@ -159,11 +139,8 @@ public void setBeginIndex(int bi)
 
 Sets the begin index.  For use by subclasses of Format.
 
-Parameters:
-
-- `bi`: the begin index
-
-**Since:** 1.2
+@param bi the begin index
+@since 1.2
 
 ## FieldPosition.setEndIndex(int)
 
@@ -173,11 +150,8 @@ public void setEndIndex(int ei)
 
 Sets the end index.  For use by subclasses of Format.
 
-Parameters:
-
-- `ei`: the end index
-
-**Since:** 1.2
+@param ei the end index
+@since 1.2
 
 ## FieldPosition.equals(Object)
 
@@ -193,6 +167,8 @@ Overrides equals
 public int hashCode()
 ```
 
+{@return a hash code for this FieldPosition}
+
 ## FieldPosition.toString()
 
 ```java
@@ -200,5 +176,4 @@ public String toString()
 ```
 
 Return a string representation of this FieldPosition.
-
-**Returns:** a string representation of this object
+@return  a string representation of this object

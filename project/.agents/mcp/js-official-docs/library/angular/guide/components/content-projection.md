@@ -1,15 +1,6 @@
----
-title: "Content projection with ng-content"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/components/content-projection.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Content projection with ng-content
 
-TIP: This guide assumes you've already read the Essentials Guide. Read that first if you're new to Angular.
+TIP: This guide assumes you've already read the [Essentials Guide](essentials). Read that first if you're new to Angular.
 
 You often need to create components that act as containers for different types of content. For
 example, you may want to create a custom card component:
@@ -37,7 +28,7 @@ export class CustomCard {
 ```
 
 TIP: `<ng-content>` works similarly
-to the native `<slot>` element,
+to [the native `<slot>` element](https://developer.mozilla.org/docs/Web/HTML/Element/slot),
 but with some Angular-specific functionality.
 
 When you use a component with `<ng-content>`, any children of the component host element are
@@ -86,7 +77,7 @@ run time. You cannot add directives, styles, or arbitrary attributes to `<ng-con
 IMPORTANT: You should not conditionally include `<ng-content>` with `@if`, `@for`, or `@switch`. Angular always
 instantiates and creates DOM nodes for content rendered to a `<ng-content>` placeholder, even if
 that `<ng-content>` placeholder is hidden. For conditional rendering of component content,
-see Template fragments.
+see [Template fragments](api/core/ng-template).
 
 ## Multiple content placeholders
 
@@ -150,7 +141,7 @@ export class App {}
 ```
 
 The `<ng-content>` placeholder supports the same CSS selectors
-as component selectors.
+as [component selectors](guide/components/selectors).
 
 IMPORTANT: if using an attribute or class selector, it must be set statically, i.e `class="within"`.
 Dynamic bindings such as `[class.within]="isWithin()"` will not be seen by the `select` selector.
@@ -278,7 +269,7 @@ Even though projected content is _rendered_ inside the receiving component, it i
 </onpush-wrapper>
 ```
 
-**Dependency injection:** Projected content gets its dependencies from the parent's injector, not from the receiving component's `viewProviders`. See Providers and viewProviders for details.
+**Dependency injection:** Projected content gets its dependencies from the parent's injector, not from the receiving component's `viewProviders`. See [Providers and viewProviders](guide/di/hierarchical-dependency-injection) for details.
 
 ### Some library components don't support projected children
 

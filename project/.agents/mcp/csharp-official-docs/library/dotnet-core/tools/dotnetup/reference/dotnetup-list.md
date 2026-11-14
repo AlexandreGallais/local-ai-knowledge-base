@@ -1,16 +1,14 @@
 ---
-title: "dotnetup list command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/reference/dotnetup-list.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnetup list command
+description: Command reference for listing and verifying dotnetup installations.
+ms.topic: reference
+ms.date: 08/07/2026
+ai-usage: ai-assisted
 ---
 
 # dotnetup list command
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 ## Name
 

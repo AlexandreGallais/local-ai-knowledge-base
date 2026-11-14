@@ -1,13 +1,11 @@
 ---
-title: "sort-keys"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/sort-keys.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: sort-keys
+rule_type: suggestion
+related_rules:
+- sort-imports
+- sort-vars
 ---
 
-# sort-keys
 
 When declaring multiple properties, some developers prefer to sort property names alphabetically to more easily find and/or diff necessary properties at a later time. Others feel that it adds complexity and becomes burden to maintain.
 
@@ -17,7 +15,7 @@ This rule checks all property definitions of object expressions and verifies tha
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint sort-keys: "error"*/
@@ -38,9 +36,11 @@ const obj5 = {a: 1, ["c"]: 3, b: 2};
 const obj6 = {a: 1, [S]: 3, b: 2};
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint sort-keys: "error"*/
@@ -67,6 +67,8 @@ const obj10 = {a: 1, [tag`c`]: 3, b: 2};
 // This rule does not report unsorted properties that are separated by a spread property.
 const obj11 = {b: 1, ...c, a: 2};
 ```
+
+:::
 
 ## Options
 
@@ -109,7 +111,7 @@ With `natural` as `false`, the ordering would be
 
 Examples of **incorrect** code for the `"desc"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint sort-keys: ["error", "desc"]*/
@@ -124,9 +126,11 @@ const obj3 = {C: 1, b: 3, a: 2};
 const obj4 = {10: b, 2: c, 1: a};
 ```
 
+:::
+
 Examples of **correct** code for the `"desc"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint sort-keys: ["error", "desc"]*/
@@ -141,11 +145,13 @@ const obj3 = {b: 3, a: 2, C: 1};
 const obj4 = {2: c, 10: b, 1: a};
 ```
 
+:::
+
 ### caseSensitive
 
 Examples of **incorrect** code for the `{caseSensitive: false}` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint sort-keys: ["error", "asc", {caseSensitive: false}]*/
@@ -154,9 +160,11 @@ const obj1 = {a: 1, c: 3, C: 4, b: 2};
 const obj2 = {a: 1, C: 3, c: 4, b: 2};
 ```
 
+:::
+
 Examples of **correct** code for the `{caseSensitive: false}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint sort-keys: ["error", "asc", {caseSensitive: false}]*/
@@ -165,11 +173,13 @@ const obj1 = {a: 1, b: 2, c: 3, C: 4};
 const obj2 = {a: 1, b: 2, C: 3, c: 4};
 ```
 
+:::
+
 ### natural
 
 Examples of **incorrect** code for the `{natural: true}` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint sort-keys: ["error", "asc", {natural: true}]*/
@@ -177,9 +187,11 @@ Examples of **incorrect** code for the `{natural: true}` option:
 const obj = {1: a, 10: c, 2: b};
 ```
 
+:::
+
 Examples of **correct** code for the `{natural: true}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint sort-keys: ["error", "asc", {natural: true}]*/
@@ -187,11 +199,13 @@ Examples of **correct** code for the `{natural: true}` option:
 const obj = {1: a, 2: b, 10: c};
 ```
 
+:::
+
 ### minKeys
 
 Examples of **incorrect** code for the `{minKeys: 4}` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint sort-keys: ["error", "asc", {minKeys: 4}]*/
@@ -214,9 +228,11 @@ const obj2 = {
 };
 ```
 
+:::
+
 Examples of **correct** code for the `{minKeys: 4}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint sort-keys: ["error", "asc", {minKeys: 4}]*/
@@ -235,11 +251,13 @@ const obj2 = {
 };
 ```
 
+:::
+
 ### allowLineSeparatedGroups
 
 Examples of **incorrect** code for the `{allowLineSeparatedGroups: true}` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint sort-keys: ["error", "asc", {allowLineSeparatedGroups: true}]*/
@@ -280,9 +298,11 @@ const obj4 = {
 };
 ```
 
+:::
+
 Examples of **correct** code for the `{allowLineSeparatedGroups: true}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint sort-keys: ["error", "asc", {allowLineSeparatedGroups: true}]*/
@@ -351,11 +371,13 @@ const obj7 = {
 }
 ```
 
+:::
+
 ### ignoreComputedKeys
 
 Examples of **correct** code for the `{ignoreComputedKeys: true}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint sort-keys: ["error", "asc", {ignoreComputedKeys: true}]*/
@@ -378,10 +400,12 @@ const obj3 = {
 }
 ```
 
+:::
+
 ## When Not To Use It
 
 If you don't want to notify about properties' order, then it's safe to disable this rule.
 
 ## Compatibility
 
-* **JSCS:** validateOrderInObjectKeys
+* **JSCS:** [validateOrderInObjectKeys](https://jscs-dev.github.io/rule/validateOrderInObjectKeys)

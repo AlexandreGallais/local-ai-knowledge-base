@@ -1,13 +1,11 @@
 ---
-title: "no-array-constructor"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-array-constructor.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-array-constructor
+rule_type: suggestion
+related_rules:
+- no-new-wrappers
+- no-object-constructor
 ---
 
-# no-array-constructor
 
 Use of the `Array` constructor to construct a new array is generally
 discouraged in favor of array literal notation because of the single-argument
@@ -21,7 +19,7 @@ This rule disallows `Array` constructors.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint no-array-constructor: "error"*/
@@ -35,9 +33,11 @@ new Array(0, 1, 2);
 Array(...args);
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint no-array-constructor: "error"*/
@@ -51,11 +51,13 @@ new Array(someOtherArray.length);
 const createArray = Array => new Array();
 ```
 
+:::
+
 This rule additionally supports TypeScript type syntax.
 
 Examples of **correct** code for this rule:
 
-**Correct:**
+:::correct
 
 ```ts
 /*eslint no-array-constructor: "error"*/
@@ -71,9 +73,11 @@ Array<Foo>();
 Array?.foo();
 ```
 
+:::
+
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+:::incorrect
 
 ```ts
 /*eslint no-array-constructor: "error"*/
@@ -86,6 +90,8 @@ Array?.(x, y);
 
 Array?.(0, 1, 2);
 ```
+
+:::
 
 ## Options
 

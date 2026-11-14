@@ -1,91 +1,55 @@
 ---
 title: "The `is` operator - Match an expression against a type or constant pattern"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/operators/is.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the C# `is` operator that matches an expression against a pattern. The `is` operator returns true when the expression matches the pattern."
+ms.date: 01/20/2026
+f1_keywords: 
+  - "is_CSharpKeyword"
+  - "is"
+helpviewer_keywords: 
+  - "is keyword [C#]"
 ---
-
 # The `is` operator (C# reference)
 
-The `is` operator checks if the result of an expression is compatible with a given type. For information about the type-testing `is` operator, see the is operator section of the Type-testing and cast operators article. You can also use the `is` operator to match an expression against a pattern, as the following example shows:
+The `is` operator checks if the result of an expression is compatible with a given type. For information about the type-testing `is` operator, see the [is operator](type-testing-and-cast.md#the-is-operator) section of the [Type-testing and cast operators](type-testing-and-cast.md) article. You can also use the `is` operator to match an expression against a pattern, as the following example shows:
 
-```csharp
-static bool IsFirstFridayOfOctober(DateTime date) =>
-    date is { Month: 10, Day: <=7, DayOfWeek: DayOfWeek.Friday };
-```
-In the preceding example, the `is` operator matches an expression against a property pattern with nested constant and relational patterns.
+:::code language="csharp" source="snippets/shared/IsOperator.cs" id="IntroExample":::
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
+In the preceding example, the `is` operator matches an expression against a [property pattern](patterns.md#property-pattern) with nested [constant](patterns.md#constant-pattern) and [relational](patterns.md#relational-patterns) patterns.
 
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
-
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
 The `is` operator can be useful in the following scenarios:
 
 - To check the run-time type of an expression, as the following example shows:
 
-```csharp
-int i = 34;
-object iBoxed = i;
-int? jNullable = 42;
-if (iBoxed is int a && jNullable is int b)
-{
-    Console.WriteLine(a + b);  // output 76
-}
-```
-  The preceding example shows the use of a declaration pattern.
+  :::code language="csharp" source="snippets/shared/IsOperator.cs" id="DeclarationPattern":::
+
+  The preceding example shows the use of a [declaration pattern](patterns.md#declaration-and-type-patterns).
 
 - To check for `null`, as the following example shows:
 
-```csharp
-if (input is null)
-{
-    return;
-}
-```
+  :::code language="csharp" source="snippets/shared/IsOperator.cs" id="NullCheck":::
+
   When you match an expression against `null`, the compiler guarantees that no user-overloaded `==` or `!=` operator is invoked.
 
-- To do a non-null check by using a negation pattern, as the following example shows:
+- To do a non-null check by using a [negation pattern](patterns.md#logical-patterns), as the following example shows:
 
-```csharp
-if (result is not null)
-{
-    Console.WriteLine(result.ToString());
-}
-```
-- To match elements of a list or array by using list patterns. The following code checks arrays for integer values in expected positions:
+  :::code language="csharp" source="snippets/shared/IsOperator.cs" id="NonNullCheck":::
 
-```csharp
-int[] empty = [];
-int[] one = [1];
-int[] odd = [1, 3, 5];
-int[] even = [2, 4, 6];
-int[] fib = [1, 1, 2, 3, 5];
+- To match elements of a list or array by using [list patterns](patterns.md#list-patterns). The following code checks arrays for integer values in expected positions:
 
-Console.WriteLine(odd is [1, _, 2, ..]);   // false
-Console.WriteLine(fib is [1, _, 2, ..]);   // true
-Console.WriteLine(fib is [_, 1, 2, 3, ..]);     // true
-Console.WriteLine(fib is [.., 1, 2, 3, _ ]);     // true
-Console.WriteLine(even is [2, _, 6]);     // true
-Console.WriteLine(even is [2, .., 6]);    // true
-Console.WriteLine(odd is [.., 3, 5]); // true
-Console.WriteLine(even is [.., 3, 5]); // false
-Console.WriteLine(fib is [.., 3, 5]); // true
-```
-> **Note:**
-> For the complete list of patterns supported by the `is` operator, see Patterns.
+  :::code language="csharp" source="snippets/shared/IsOperator.cs" id="ListPatterns":::
+
+> [!NOTE]
+> For the complete list of patterns supported by the `is` operator, see [Patterns](patterns.md).
 
 ## C# language specification
 
-For more information, see The is operator section of the C# language specification and Pattern matching.
+For more information, see [The is operator](~/_csharpstandard/standard/expressions.md#121512-the-is-operator) section of the [C# language specification](~/_csharpstandard/standard/README.md) and [Pattern matching](/dotnet/csharp/language-reference/language-specification/patterns).
 
 ## See also
 
-- C# operators and expressions
-- Patterns
-- Tutorial: Build algorithms using pattern matching
-- Type-testing and cast operators
+- [C# operators and expressions](index.md)
+- [Patterns](patterns.md)
+- [Tutorial: Build algorithms using pattern matching](../../fundamentals/tutorials/build-algorithms-using-pattern-matching.md)
+- [Type-testing and cast operators](../operators/type-testing-and-cast.md)

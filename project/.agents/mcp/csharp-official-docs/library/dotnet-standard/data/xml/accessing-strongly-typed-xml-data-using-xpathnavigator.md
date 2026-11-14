@@ -1,60 +1,60 @@
 ---
+description: "Learn more about: Accessing Strongly Typed XML Data Using XPathNavigator"
 title: "Accessing Strongly Typed XML Data Using XPathNavigator"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/accessing-strongly-typed-xml-data-using-xpathnavigator.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: 898e0f52-8a7c-4d1f-afcd-6ffb28b050b4
 ---
-
 # Accessing Strongly Typed XML Data Using XPathNavigator
 
-As an instance of the XPath 2.0 data model, the `System.Xml.XPath.XPathNavigator` class can contain strongly typed data that maps to common language runtime (CLR) types. According to the XPath 2.0 data model, only elements and attributes can contain strongly typed data. The `System.Xml.XPath.XPathNavigator` class provides mechanisms for accessing data within an `System.Xml.XPath.XPathDocument` or `System.Xml.XmlDocument` object as strongly typed data as well as mechanisms for converting from one data type to another.
+As an instance of the XPath 2.0 data model, the <xref:System.Xml.XPath.XPathNavigator> class can contain strongly typed data that maps to common language runtime (CLR) types. According to the XPath 2.0 data model, only elements and attributes can contain strongly typed data. The <xref:System.Xml.XPath.XPathNavigator> class provides mechanisms for accessing data within an <xref:System.Xml.XPath.XPathDocument> or <xref:System.Xml.XmlDocument> object as strongly typed data as well as mechanisms for converting from one data type to another.
 
 ## Type Information Exposed by XPathNavigator
 
  XML 1.0 data is technically without type, unless processed with a DTD, XML schema definition language (XSD) schema, or other mechanism. There are a number of categories of type information that can be associated with an XML element or attribute.
 
-- Simple CLR Types: None of the XML Schema languages support Common Language Runtime (CLR) types directly. Because it is useful to be able to view simple element and attribute content as the most appropriate CLR type, all simple content can be typed as `System.String` in the absence of schema information with any added schema information potentially refining this content to a more appropriate type. You can find the best matching CLR type of simple element and attribute content by using the `System.Xml.XPath.XPathNavigator.ValueType` property. For more information about the mapping from schema built-in types to CLR types, see Type Support in the System.Xml Classes.
+- Simple CLR Types: None of the XML Schema languages support Common Language Runtime (CLR) types directly. Because it is useful to be able to view simple element and attribute content as the most appropriate CLR type, all simple content can be typed as <xref:System.String> in the absence of schema information with any added schema information potentially refining this content to a more appropriate type. You can find the best matching CLR type of simple element and attribute content by using the <xref:System.Xml.XPath.XPathNavigator.ValueType> property. For more information about the mapping from schema built-in types to CLR types, see [Type Support in the System.Xml Classes](type-support-in-the-system-xml-classes.md).
 
-- Lists of Simple (CLR) Types: An element or attribute with simple content can contain a list of values separated by white space. The values are specified by an XML Schema to be a "list type." In the absence of an XML Schema, such simple content would be treated as a single text node. When an XML Schema is available, this simple content can be exposed as a series of atomic values each having a simple type that maps to a collection of CLR objects. For more information about the mapping from schema built-in types to CLR types, see Type Support in the System.Xml Classes.
+- Lists of Simple (CLR) Types: An element or attribute with simple content can contain a list of values separated by white space. The values are specified by an XML Schema to be a "list type." In the absence of an XML Schema, such simple content would be treated as a single text node. When an XML Schema is available, this simple content can be exposed as a series of atomic values each having a simple type that maps to a collection of CLR objects. For more information about the mapping from schema built-in types to CLR types, see [Type Support in the System.Xml Classes](type-support-in-the-system-xml-classes.md).
 
-- Typed Value: A schema-validated attribute or element with a simple type has a typed value. This value is a primitive type such as a numeric, string, or date type. All the built-in simple types in XSD can be mapped to CLR types that provide access to the value of a node as a more appropriate type instead of just as a `System.String`. An element with attributes or element children is considered to be a complex type. The typed value of a complex type with simple content (only text nodes as children) is the same as that of the simple type of its content. The typed value of a complex type with complex content (one or more child elements) is the string value of the concatenation of all its child text nodes returned as a `System.String`. For more information about the mapping from schema built-in types to CLR types, see Type Support in the System.Xml Classes.
+- Typed Value: A schema-validated attribute or element with a simple type has a typed value. This value is a primitive type such as a numeric, string, or date type. All the built-in simple types in XSD can be mapped to CLR types that provide access to the value of a node as a more appropriate type instead of just as a <xref:System.String>. An element with attributes or element children is considered to be a complex type. The typed value of a complex type with simple content (only text nodes as children) is the same as that of the simple type of its content. The typed value of a complex type with complex content (one or more child elements) is the string value of the concatenation of all its child text nodes returned as a <xref:System.String>. For more information about the mapping from schema built-in types to CLR types, see [Type Support in the System.Xml Classes](type-support-in-the-system-xml-classes.md).
 
-- Schema-Language Specific Type Name: In most cases, the CLR types, which are set as a side-effect of applying an external schema, are used to provide access to the value of a node. However, there may be situations where you may want to examine the type associated with a particular schema applied to an XML document. For example, you may wish to search through an XML document, extracting all elements that are determined to have content of type "PurchaseOrder" according to an attached schema. Such type information can be set only as a result of schema validation and this information is accessed through the `System.Xml.XPath.XPathNavigator.XmlType*` and `System.Xml.XPath.XPathNavigator.SchemaInfo` properties of the `System.Xml.XPath.XPathNavigator` class. For more information, see The Post Schema Validation Infoset (PSVI) section below.
+- Schema-Language Specific Type Name: In most cases, the CLR types, which are set as a side-effect of applying an external schema, are used to provide access to the value of a node. However, there may be situations where you may want to examine the type associated with a particular schema applied to an XML document. For example, you may wish to search through an XML document, extracting all elements that are determined to have content of type "PurchaseOrder" according to an attached schema. Such type information can be set only as a result of schema validation and this information is accessed through the <xref:System.Xml.XPath.XPathNavigator.XmlType*> and <xref:System.Xml.XPath.XPathNavigator.SchemaInfo> properties of the <xref:System.Xml.XPath.XPathNavigator> class. For more information, see The Post Schema Validation Infoset (PSVI) section below.
 
-- Schema-Language Specific Type Reflection: In other cases, you may want to obtain further details of the schema-specific type applied to an XML document. For example, when reading an XML file, you may want to extract the `maxOccurs` attribute for each valid node in the XML document in order to perform some custom calculation. Because this information is set only through schema validation, it is accessed through the `System.Xml.XPath.XPathNavigator.SchemaInfo` property of the `System.Xml.XPath.XPathNavigator` class. For more information, see The Post Schema Validation Infoset (PSVI) section below.
+- Schema-Language Specific Type Reflection: In other cases, you may want to obtain further details of the schema-specific type applied to an XML document. For example, when reading an XML file, you may want to extract the `maxOccurs` attribute for each valid node in the XML document in order to perform some custom calculation. Because this information is set only through schema validation, it is accessed through the <xref:System.Xml.XPath.XPathNavigator.SchemaInfo> property of the <xref:System.Xml.XPath.XPathNavigator> class. For more information, see The Post Schema Validation Infoset (PSVI) section below.
 
 ## XPathNavigator Typed Accessors
 
- The following table shows the various properties and methods of the `System.Xml.XPath.XPathNavigator` class that can be used to access the type information about a node.
+ The following table shows the various properties and methods of the <xref:System.Xml.XPath.XPathNavigator> class that can be used to access the type information about a node.
 
 |Property|Description|
 |--------------|-----------------|
-|`System.Xml.XPath.XPathNavigator.XmlType*`|This contains the XML schema type information for the node if it is valid.|
-|`System.Xml.XPath.XPathNavigator.SchemaInfo*`|This contains the Post Schema Validation Infoset of the node that is added after validation. This includes the XML schema type information, as well as validity information.|
-|`System.Xml.XPath.XPathNavigator.ValueType*`|The CLR type of the typed value of the node.|
-|`System.Xml.XPath.XPathNavigator.TypedValue*`|The content of the node as one or more CLR values whose type is the closest match to the XML schema type of the node.|
-|`System.Xml.XPath.XPathNavigator.ValueAsBoolean*`|The `System.String` value of the current node cast to a `System.Boolean` value, according to the XPath 2.0 casting rules for `xs:boolean`.|
-|`System.Xml.XPath.XPathNavigator.ValueAsDateTime*`|The `System.String` value of the current node cast to a `System.DateTime` value, according to the XPath 2.0 casting rules for `xs:datetime`.|
-|`System.Xml.XPath.XPathNavigator.ValueAsDouble*`|The `System.String` value of the current node cast to a `System.Double` value, according to the XPath 2.0 casting rules for `xsd:double`.|
-|`System.Xml.XPath.XPathNavigator.ValueAsInt*`|The `System.String` value of the current node cast to a `System.Int32` value, according to the XPath 2.0 casting rules for `xs:integer`.|
-|`System.Xml.XPath.XPathNavigator.ValueAsLong*`|The `System.String` value of the current node cast to a `System.Int64` value, according to the XPath 2.0 casting rules for `xs:integer`.|
-|`System.Xml.XPath.XPathNavigator.ValueAs*`|The contents of the node cast to the target type according to the XPath 2.0 casting rules.|
+|<xref:System.Xml.XPath.XPathNavigator.XmlType*>|This contains the XML schema type information for the node if it is valid.|
+|<xref:System.Xml.XPath.XPathNavigator.SchemaInfo*>|This contains the Post Schema Validation Infoset of the node that is added after validation. This includes the XML schema type information, as well as validity information.|
+|<xref:System.Xml.XPath.XPathNavigator.ValueType*>|The CLR type of the typed value of the node.|
+|<xref:System.Xml.XPath.XPathNavigator.TypedValue*>|The content of the node as one or more CLR values whose type is the closest match to the XML schema type of the node.|
+|<xref:System.Xml.XPath.XPathNavigator.ValueAsBoolean*>|The <xref:System.String> value of the current node cast to a <xref:System.Boolean> value, according to the XPath 2.0 casting rules for `xs:boolean`.|
+|<xref:System.Xml.XPath.XPathNavigator.ValueAsDateTime*>|The <xref:System.String> value of the current node cast to a <xref:System.DateTime> value, according to the XPath 2.0 casting rules for `xs:datetime`.|
+|<xref:System.Xml.XPath.XPathNavigator.ValueAsDouble*>|The <xref:System.String> value of the current node cast to a <xref:System.Double> value, according to the XPath 2.0 casting rules for `xsd:double`.|
+|<xref:System.Xml.XPath.XPathNavigator.ValueAsInt*>|The <xref:System.String> value of the current node cast to a <xref:System.Int32> value, according to the XPath 2.0 casting rules for `xs:integer`.|
+|<xref:System.Xml.XPath.XPathNavigator.ValueAsLong*>|The <xref:System.String> value of the current node cast to a <xref:System.Int64> value, according to the XPath 2.0 casting rules for `xs:integer`.|
+|<xref:System.Xml.XPath.XPathNavigator.ValueAs*>|The contents of the node cast to the target type according to the XPath 2.0 casting rules.|
 
- For more information about the mapping from schema built-in types to CLR types, see Type Support in the System.Xml Classes.
+ For more information about the mapping from schema built-in types to CLR types, see [Type Support in the System.Xml Classes](type-support-in-the-system-xml-classes.md).
 
 ## The Post Schema Validation Infoset (PSVI)
 
- An XML Schema processor accepts an XML Infoset as input and converts it into a Post Schema Validation Infoset (PSVI). A PSVI is the original input XML infoset with new information items added and new properties added to existing information items. There are three broad classes of information added to the XML Infoset in the PSVI that are exposed by the `System.Xml.XPath.XPathNavigator`.
+ An XML Schema processor accepts an XML Infoset as input and converts it into a Post Schema Validation Infoset (PSVI). A PSVI is the original input XML infoset with new information items added and new properties added to existing information items. There are three broad classes of information added to the XML Infoset in the PSVI that are exposed by the <xref:System.Xml.XPath.XPathNavigator>.
 
-1. Validation Outcomes: Information as to whether an element or attribute was successfully validated or not. This is exposed by the `System.Xml.Schema.IXmlSchemaInfo.Validity` property of the `System.Xml.XPath.XPathNavigator.SchemaInfo` property of the `System.Xml.XPath.XPathNavigator` class.
+1. Validation Outcomes: Information as to whether an element or attribute was successfully validated or not. This is exposed by the <xref:System.Xml.Schema.IXmlSchemaInfo.Validity> property of the <xref:System.Xml.XPath.XPathNavigator.SchemaInfo> property of the <xref:System.Xml.XPath.XPathNavigator> class.
 
-2. Default Information: Indications as to whether the value of the element or attribute was obtained via default values specified in the schema or not. This is exposed by the `System.Xml.Schema.IXmlSchemaInfo.IsDefault` property of the `System.Xml.XPath.XPathNavigator.SchemaInfo` property of the `System.Xml.XPath.XPathNavigator` class.
+2. Default Information: Indications as to whether the value of the element or attribute was obtained via default values specified in the schema or not. This is exposed by the <xref:System.Xml.Schema.IXmlSchemaInfo.IsDefault> property of the <xref:System.Xml.XPath.XPathNavigator.SchemaInfo> property of the <xref:System.Xml.XPath.XPathNavigator> class.
 
-3. Type Annotations: References to schema components that may be type definitions or element and attribute declarations. The `System.Xml.XPath.XPathNavigator.XmlType` property of the `System.Xml.XPath.XPathNavigator` contains the specific type information of the node if it is valid. If the validity of a node is unknown, such as when it was validated then subsequently edited. then the `System.Xml.XPath.XPathNavigator.XmlType` property is set to `null` but type information is still available from the various properties of the `System.Xml.XPath.XPathNavigator.SchemaInfo` property of the `System.Xml.XPath.XPathNavigator` class.
+3. Type Annotations: References to schema components that may be type definitions or element and attribute declarations. The <xref:System.Xml.XPath.XPathNavigator.XmlType> property of the <xref:System.Xml.XPath.XPathNavigator> contains the specific type information of the node if it is valid. If the validity of a node is unknown, such as when it was validated then subsequently edited. then the <xref:System.Xml.XPath.XPathNavigator.XmlType> property is set to `null` but type information is still available from the various properties of the <xref:System.Xml.XPath.XPathNavigator.SchemaInfo> property of the <xref:System.Xml.XPath.XPathNavigator> class.
 
- The following example illustrates using information in the Post Schema Validation Infoset exposed by the `System.Xml.XPath.XPathNavigator`.
+ The following example illustrates using information in the Post Schema Validation Infoset exposed by the <xref:System.Xml.XPath.XPathNavigator>.
 
 ```vb
 Dim settings As XmlReaderSettings = New XmlReaderSettings()
@@ -137,7 +137,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
 ## Obtain Typed Values Using ValueAs Properties
 
- The typed value of a node can be retrieved by accessing the `System.Xml.XPath.XPathNavigator.TypedValue` property of the `System.Xml.XPath.XPathNavigator`. In certain cases you may want to convert the typed value of a node to a different type. A common example is to get a numeric value from an XML node. For example, consider the following unvalidated and untyped XML document.
+ The typed value of a node can be retrieved by accessing the <xref:System.Xml.XPath.XPathNavigator.TypedValue> property of the <xref:System.Xml.XPath.XPathNavigator>. In certain cases you may want to convert the typed value of a node to a different type. A common example is to get a numeric value from an XML node. For example, consider the following unvalidated and untyped XML document.
 
 ```xml
 <books>
@@ -149,9 +149,9 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema">
 </books>
 ```
 
- If the `System.Xml.XPath.XPathNavigator` is positioned on the `price` element the `System.Xml.XPath.XPathNavigator.XmlType` property would be `null`, the `System.Xml.XPath.XPathNavigator.ValueType` property would be `System.String`, and the `System.Xml.XPath.XPathNavigator.TypedValue` property would be the string `10.00`.
+ If the <xref:System.Xml.XPath.XPathNavigator> is positioned on the `price` element the <xref:System.Xml.XPath.XPathNavigator.XmlType> property would be `null`, the <xref:System.Xml.XPath.XPathNavigator.ValueType> property would be <xref:System.String>, and the <xref:System.Xml.XPath.XPathNavigator.TypedValue> property would be the string `10.00`.
 
- However, it is still possible to extract the value as a numeric value using the `System.Xml.XPath.XPathItem.ValueAs*`, `System.Xml.XPath.XPathNavigator.ValueAsDouble*`, `System.Xml.XPath.XPathNavigator.ValueAsInt*`, or `System.Xml.XPath.XPathNavigator.ValueAsLong*` method and properties. The following example illustrates performing such a cast using the `System.Xml.XPath.XPathItem.ValueAs*` method.
+ However, it is still possible to extract the value as a numeric value using the <xref:System.Xml.XPath.XPathItem.ValueAs*>, <xref:System.Xml.XPath.XPathNavigator.ValueAsDouble*>, <xref:System.Xml.XPath.XPathNavigator.ValueAsInt*>, or <xref:System.Xml.XPath.XPathNavigator.ValueAsLong*> method and properties. The following example illustrates performing such a cast using the <xref:System.Xml.XPath.XPathItem.ValueAs*> method.
 
 ```vb
 Dim document As New XmlDocument()
@@ -180,15 +180,15 @@ Decimal price = (decimal)navigator.ValueAs(typeof(decimal));
 Console.WriteLine("The price of the book has been dropped 20% from {0:C} to {1:C}", navigator.Value, (price - price * (decimal)0.20));
 ```
 
- For more information about the mapping from schema built-in types to CLR types, see Type Support in the System.Xml Classes.
+ For more information about the mapping from schema built-in types to CLR types, see [Type Support in the System.Xml Classes](type-support-in-the-system-xml-classes.md).
 
 ## See also
 
-- `System.Xml.XmlDocument`
-- `System.Xml.XPath.XPathDocument`
-- `System.Xml.XPath.XPathNavigator`
-- Type Support in the System.Xml Classes
-- Process XML Data Using the XPath Data Model
-- Node Set Navigation Using XPathNavigator
-- Attribute and Namespace Node Navigation Using XPathNavigator
-- Extract XML Data Using XPathNavigator
+- <xref:System.Xml.XmlDocument>
+- <xref:System.Xml.XPath.XPathDocument>
+- <xref:System.Xml.XPath.XPathNavigator>
+- [Type Support in the System.Xml Classes](type-support-in-the-system-xml-classes.md)
+- [Process XML Data Using the XPath Data Model](process-xml-data-using-the-xpath-data-model.md)
+- [Node Set Navigation Using XPathNavigator](node-set-navigation-using-xpathnavigator.md)
+- [Attribute and Namespace Node Navigation Using XPathNavigator](attribute-and-namespace-node-navigation-using-xpathnavigator.md)
+- [Extract XML Data Using XPathNavigator](extract-xml-data-using-xpathnavigator.md)

@@ -1,101 +1,24 @@
 ---
+description: "ascending - C# Reference"
 title: "ascending keyword"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/keywords/ascending.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 01/21/2026
+f1_keywords: 
+  - "ascending"
+  - "ascending_CSharpKeyword"
+helpviewer_keywords: 
+  - "ascending keyword [C#]"
 ---
-
 # ascending (C# Reference)
 
-Use the `ascending` contextual keyword in the orderby clause of query expressions to specify that the sort order goes from smallest to largest. Because `ascending` is the default sort order, you don't need to specify it.
+Use the `ascending` contextual keyword in the [orderby clause](./orderby-clause.md) of query expressions to specify that the sort order goes from smallest to largest. Because `ascending` is the default sort order, you don't need to specify it.
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
+The following example shows how to use `ascending` in an [orderby clause](./orderby-clause.md).
 
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+:::code language="csharp" source="./snippets/csrefKeywordsContextual.cs" id="14":::
 
-The following example shows how to use `ascending` in an orderby clause.
-
-```csharp
-﻿using System;
-using System.Collections.Generic;
-using System.Collections;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-
-namespace csrefKeywordsContextual
-{
-    class Test
-    {
-        class Student
-        {
-            public string LastName;
-            public Student(string name)
-            {
-                LastName = name;
-            }
-        }
-
-        class Category
-        {
-            public int ID;
-            public string Name;
-
-            public Category(int i, string n)
-            {
-                ID = i;
-                Name = n;
-            }
-        }
-
-        class Product
-        {
-            public string Name;
-            public int ProdID;
-            public int CategoryID;
-            public Product(string n, int pid, int cid)
-            {
-                Name = n;
-                ProdID = pid;
-                CategoryID = cid;
-            }
-        }
-
-        static string[] vegetables = { "carrot", "celery" };
-        static void Main()
-        {
-            List<Student> students = new List<Student>();
-            var query = from student in students
-                        group student by student.LastName[0];
-
-            IEnumerable<string> sortDescendingQuery =
-                from vegetable in vegetables
-                orderby vegetable descending
-                select vegetable;
-
-            IEnumerable<string> sortAscendingQuery =
-                from vegetable in vegetables
-                orderby vegetable ascending
-                select vegetable;
-
-            List<Category> categories = new List<Category>();
-            List<Product> products = new List<Product>();
-
-            var innerJoinQuery =
-                from category in categories
-                join prod in products on category.ID equals prod.CategoryID
-                select new { ProductName = prod.Name, Category = category.Name };
-        }
-
-    }
-}
-```
 ## See also
 
-- LINQ in C#
-- descending
+- [LINQ in C#](../../linq/index.md)
+- [descending](./descending.md)

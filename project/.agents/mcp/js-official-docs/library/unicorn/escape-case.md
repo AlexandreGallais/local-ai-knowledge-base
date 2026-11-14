@@ -1,19 +1,13 @@
----
-title: "escape-case"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/escape-case.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # escape-case
 
 📝 Require escape sequences to use uppercase or lowercase values.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `recommended-css`, 🧩 `recommended-json`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, 📋 `recommended-yaml`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, 🎨 `recommended-css`, 🧩 `recommended-json`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, 📋 `recommended-yaml`, ☑️ `unopinionated`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Enforces a consistent escaped value style by defining escape sequence values with uppercase or lowercase characters. The default style is uppercase, which promotes readability by making the escaped value more distinguishable from the identifier.
 
@@ -21,7 +15,7 @@ Tagged template literals are ignored because tag functions can observe the raw e
 
 In SOML, the configured case is ignored because Unicode escapes must use lowercase hexadecimal digits. Literal strings and keys are skipped.
 
-In TOML, it checks basic <example-value> and quoted keys, including multiline strings. It preserves `\u` and `\U` prefixes and also normalizes parser-tolerated `\x` escapes, which TOML 1.0 does not define. Literal strings and keys are skipped.
+In TOML, it checks basic strings and quoted keys, including multiline strings. It preserves `\u` and `\U` prefixes and also normalizes parser-tolerated `\x` escapes, which TOML 1.0 does not define. Literal strings and keys are skipped.
 
 In JSON, JSONC, and JSON5, it checks strings and quoted keys, including JSON5 hexadecimal escapes. In YAML, it checks hexadecimal and Unicode escapes in double-quoted scalars. In CSS, it checks one- to six-digit hexadecimal escapes in identifiers, strings, and URLs, preserving escape-terminating whitespace and skipping comments.
 

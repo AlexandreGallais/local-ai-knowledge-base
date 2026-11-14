@@ -1,17 +1,18 @@
 ---
-title: "Pre-Atomization of XName objects - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/pre-atomization-xname-objects.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Pre-Atomization of XName objects - LINQ to XML
+description: Learn how to pre-atomize to improve performance when you create a large number of elements with the same name.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # Pre-Atomization of XName objects (LINQ to XML)
 
-One way to improve performance in LINQ to XML is to pre-atomize `System.Xml.Linq.XName` objects. Pre-atomization means that you assign a string to an `System.Xml.Linq.XName` object before you create the XML tree by using the constructors of the `System.Xml.Linq.XElement` and  `System.Xml.Linq.XAttribute` classes. Then, instead of passing a string to the constructor, which would use the implicit conversion from string to `System.Xml.Linq.XName`, you pass the initialized `System.Xml.Linq.XName` object.
+One way to improve performance in LINQ to XML is to pre-atomize <xref:System.Xml.Linq.XName> objects. Pre-atomization means that you assign a string to an <xref:System.Xml.Linq.XName> object before you create the XML tree by using the constructors of the <xref:System.Xml.Linq.XElement> and  <xref:System.Xml.Linq.XAttribute> classes. Then, instead of passing a string to the constructor, which would use the implicit conversion from string to <xref:System.Xml.Linq.XName>, you pass the initialized <xref:System.Xml.Linq.XName> object.
 
-This improves performance when you create a large XML tree in which names are repeated. To do this, you declare and initialize `System.Xml.Linq.XName` objects before you construct the XML tree, and then use the `System.Xml.Linq.XName` objects instead of specifying strings for the element and attribute names. This technique can yield significant performance gains if you're creating a large number of elements or attributes with the same name.
+This improves performance when you create a large XML tree in which names are repeated. To do this, you declare and initialize <xref:System.Xml.Linq.XName> objects before you construct the XML tree, and then use the <xref:System.Xml.Linq.XName> objects instead of specifying strings for the element and attribute names. This technique can yield significant performance gains if you're creating a large number of elements or attributes with the same name.
 
 You should test pre-atomization with your scenario to decide if you should use it.
 
@@ -165,4 +166,4 @@ Console.WriteLine($"Time to construct: {sw.ElapsedMilliseconds} milliseconds")
 
 ## See also
 
-- Atomized XName and XNamespace objects
+- [Atomized XName and XNamespace objects](atomized-xname-xnamespace-objects.md)

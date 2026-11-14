@@ -1,17 +1,8 @@
----
-title: "Migration to output function"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/reference/migrations/outputs.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Migration to output function
 
 Angular introduced an improved API for outputs in v17.3 that is considered
 production ready as of v19. This API mimics the `input()` API but is not based on Signals.
-Read more about custom events output function and its benefits in the dedicated guide.
+Read more about custom events output function and its benefits in the [dedicated guide](guide/components/outputs).
 
 To support existing projects that would like to use output function, the Angular team
 provides an automated migration that converts `@Output` custom events to the new `output()` API.

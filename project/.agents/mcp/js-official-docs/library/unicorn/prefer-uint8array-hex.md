@@ -1,23 +1,17 @@
----
-title: "prefer-uint8array-hex"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-uint8array-hex.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-uint8array-hex
 
 📝 Prefer `Uint8Array#toHex()` and `Uint8Array.fromHex()` over manual and Buffer hex conversions.
 
 🚫 Disabled by default.
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-Prefer `Uint8Array#toHex()` and `Uint8Array.fromHex()` over manual byte-to-hex conversion and Node.js `Buffer` hex conversions.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
-> **Note:**
+Prefer [`Uint8Array#toHex()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array/toHex) and [`Uint8Array.fromHex()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array/fromHex) over manual byte-to-hex conversion and Node.js `Buffer` hex conversions.
+
+> [!NOTE]
 > Enable this rule only when your target runtimes support these methods, or you provide a polyfill. They are not available in Node.js 22, so this rule is disabled in the recommended configs.
 
 ## Examples
@@ -107,7 +101,7 @@ const bytes = Uint8Array.fromHex(text);
 
 Supported regex patterns are `/../g`, `/.{2}/g`, `/.{1,2}/g`, `/[0-9a-f]{2}/g`, and `/[\da-f]{2}/g`. Additional `i`, `s`, and `u` or `v` flags are supported. The result of `match()` may have a `?? []` or `|| []` fallback. Both `parseInt(pair, 16)` and `Number.parseInt(pair, 16)` callbacks are supported.
 
-> **Important:**
+> [!IMPORTANT]
 > Decoding replacements are suggestions because malformed-input handling differs. `Uint8Array.fromHex()` rejects odd lengths, invalid hex characters, whitespace, and `0x` prefixes. Existing Buffer and manual decoders may truncate, skip characters, or produce different values. Empty-input handling may also differ. Replacing Buffer decoding additionally changes the result from `Buffer` to `Uint8Array`.
 
 Buffer decoding is reported without a suggestion when the result is immediately accessed through a member, such as `Buffer.from(text, 'hex').toString()`, since the remaining operation may require a Buffer.
@@ -116,8 +110,8 @@ Calls with inputs known to be non-string are ignored because replacing them with
 
 ## Limitations
 
-The rule does not recognize pipelines split across statements, imperative loops, reducers, lookup tables, other padding idioms, arbitrary regex patterns, optional operations, computed method names, `super` method calls, or `toString('hex', start, end)` ranges. Direct typed-array `map()` encoders are ignored because typed-array mapping coerces the callback's strings back into numbers. Legacy `.substr()` callbacks can be normalized to `.slice()` by `prefer-string-slice` before this rule recognizes them.
+The rule does not recognize pipelines split across statements, imperative loops, reducers, lookup tables, other padding idioms, arbitrary regex patterns, optional operations, computed method names, `super` method calls, or `toString('hex', start, end)` ranges. Direct typed-array `map()` encoders are ignored because typed-array mapping coerces the callback's strings back into numbers. Legacy `.substr()` callbacks can be normalized to `.slice()` by [`prefer-string-slice`](./prefer-string-slice.md) before this rule recognizes them.
 
 Replacements containing comments are reported without a fix or suggestion, so comments are not lost or moved. Compatibility fallbacks are not detected automatically; disable this rule where an older-runtime implementation is intentional.
 
-The `prefer-uint8array-base64` rule covers base64 conversions separately.
+The [`prefer-uint8array-base64`](./prefer-uint8array-base64.md) rule covers base64 conversions separately.

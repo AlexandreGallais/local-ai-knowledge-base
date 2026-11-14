@@ -1,19 +1,20 @@
 ---
-title: "How to find descendants of a child element - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/find-descendants-child-element.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to find descendants of a child element - LINQ to XML
+description: "Learn how to find descendants of a child element or a sequence of child elements. Two methods are shown: one uses XPathEvaluate, the other uses LINQ to XML query."
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to find descendants of a child element (LINQ to XML)
 
-This article shows how to use `System.Xml.XPath.Extensions.XPathEvaluate*` to find the descendant elements of a sequence of child elements, and how to use LINQ to XML query to find the same elements.
+This article shows how to use <xref:System.Xml.XPath.Extensions.XPathEvaluate*> to find the descendant elements of a sequence of child elements, and how to use LINQ to XML query to find the same elements.
 
 ## Example: Find all the `Text` descendant elements of all the `Paragraph` elements
 
-This example extracts text from an XML representation of a simple word processing document. It first selects all `Paragraph` elements, ignoring the `Comment` element, and then it selects all the `Text` descendant elements of each `Paragraph` element. It does this task in two ways: with `System.Xml.XPath.Extensions.XPathEvaluate*` and with LINQ to XML query. It then compares the results and finds them identical.
+This example extracts text from an XML representation of a simple word processing document. It first selects all `Paragraph` elements, ignoring the `Comment` element, and then it selects all the `Text` descendant elements of each `Paragraph` element. It does this task in two ways: with <xref:System.Xml.XPath.Extensions.XPathEvaluate*> and with LINQ to XML query. It then compares the results and finds them identical.
 
 The XPath expression is  `./Paragraph//Text/text()`.
 
@@ -118,4 +119,4 @@ This is the start of a sentence.  This is the second sentence.
 
 ## See also
 
-- LINQ to XML for XPath Users (Visual Basic)
+- [LINQ to XML for XPath Users (Visual Basic)](./comparison-xpath-linq-xml.md)

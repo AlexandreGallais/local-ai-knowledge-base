@@ -1,23 +1,17 @@
----
-title: "prefer-short-escape-sequences"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-short-escape-sequences.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-short-escape-sequences
 
 📝 Prefer shorter alternatives to Unicode escape sequences.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, 🧩 `recommended-json`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, 🧩 `recommended-json`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, ☑️ `unopinionated`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Prefer shorter spellings of `\uXXXX` escapes in JavaScript, JSON, JSONC, JSON5, and TOML strings and quoted keys. Untagged JavaScript templates are also checked. Tagged templates and JSX attributes are ignored because their raw text matters.
 
-Common replacements include `\u000A` → `\n` and `\u0009` → `\t`. JavaScript also uses `\0` and `\v`; `\u0000` is left unchanged before an ASCII digit. Printable ASCII escapes in JavaScript, JSON, JSONC, and JSON5 are handled by `prefer-literal-ascii`. TOML also shortens printable escapes such as `\u002F` → `/`, and uses only escapes valid in TOML 1.0, so `\u001B` is not replaced with TOML 1.1's `\e`.
+Common replacements include `\u000A` → `\n` and `\u0009` → `\t`. JavaScript also uses `\0` and `\v`; `\u0000` is left unchanged before an ASCII digit. Printable ASCII escapes in JavaScript, JSON, JSONC, and JSON5 are handled by [`prefer-literal-ascii`](prefer-literal-ascii.md). TOML also shortens printable escapes such as `\u002F` → `/`, and uses only escapes valid in TOML 1.0, so `\u001B` is not replaced with TOML 1.1's `\e`.
 
 JSON, JSONC, and JSON5 receive only shorter escapes valid in JSON, regardless of filename, because `@eslint/json` does not expose the active dialect. In particular, `\u0000` and `\u000B` remain unchanged in all three variants. TOML literal strings and keys are ignored because their backslashes are not escapes.
 
@@ -65,7 +59,7 @@ For JSON5:
 }
 ```
 
-For TOML basic <example-value>:
+For TOML basic strings:
 
 ```toml
 # ❌

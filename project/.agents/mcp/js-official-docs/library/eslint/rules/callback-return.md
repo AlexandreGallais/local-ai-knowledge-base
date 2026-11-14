@@ -1,13 +1,12 @@
 ---
-title: "callback-return"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/callback-return.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: callback-return
+rule_type: suggestion
+related_rules:
+- handle-callback-err
+further_reading:
+- https://github.com/maxogden/art-of-node#callbacks
+- https://web.archive.org/web/20171224042620/https://docs.nodejitsu.com/articles/errors/what-are-the-error-conventions/
 ---
-
-# callback-return
 
 The callback pattern is at the heart of most I/O and event-driven programming
  in JavaScript.
@@ -39,7 +38,7 @@ The rule takes a single option - an array of possible callback names - which may
 
 Examples of **incorrect** code for this rule with the default `["callback", "cb", "next"]` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint callback-return: "error"*/
@@ -52,9 +51,11 @@ function foo(err, callback) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `["callback", "cb", "next"]` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint callback-return: "error"*/
@@ -67,11 +68,13 @@ function foo(err, callback) {
 }
 ```
 
+:::
+
 ### Supplied callback names
 
 Examples of **incorrect** code for this rule with the option `["done", "send.error", "send.success"]`:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint callback-return: ["error", ["done", "send.error", "send.success"]]*/
@@ -91,9 +94,11 @@ function bar(err, send) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the option `["done", "send.error", "send.success"]`:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint callback-return: ["error", ["done", "send.error", "send.success"]]*/
@@ -112,6 +117,8 @@ function bar(err, send) {
     send.success();
 }
 ```
+
+:::
 
 ## Known Limitations
 

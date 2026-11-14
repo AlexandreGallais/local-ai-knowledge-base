@@ -1,15 +1,11 @@
 ---
 title: ".NET 8 breaking change: Enumerable.Sum throws new OverflowException for some inputs"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/8.0/enumerable-sum.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 8 breaking change in core .NET libraries where Enumerable.Sum can throw new OverflowException exceptions for certain inputs.
+ms.date: 11/08/2023
 ---
-
 # Enumerable.Sum throws new OverflowException for some inputs
 
-.NET 8 adds support for vectorization in the `System.Linq.Enumerable.Sum*` methods where applicable. As a side-effect of that change, the vectorized implementation can change the order in which the different elements are added. While this shouldn't change the final result in successful runs, it can result in unexpected `System.OverflowException` exceptions for certain sets of pathological inputs.
+.NET 8 adds support for vectorization in the <xref:System.Linq.Enumerable.Sum*?displayProperty=nameWithType> methods where applicable. As a side-effect of that change, the vectorized implementation can change the order in which the different elements are added. While this shouldn't change the final result in successful runs, it can result in unexpected <xref:System.OverflowException> exceptions for certain sets of pathological inputs.
 
 ## Previous behavior
 
@@ -66,7 +62,7 @@ OverflowException
 
 ## New behavior
 
-Starting in .NET 8, the code snippet from the Previous behavior section prints the following output:
+Starting in .NET 8, the code snippet from the [Previous behavior](#previous-behavior) section prints the following output:
 
 ```txt
 0
@@ -81,7 +77,7 @@ OverflowException
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -108,4 +104,4 @@ If your code is impacted by the change, you can either:
 
 ## Affected APIs
 
-- `System.Linq.Enumerable.Sum*`
+- <xref:System.Linq.Enumerable.Sum*?displayProperty=fullName>

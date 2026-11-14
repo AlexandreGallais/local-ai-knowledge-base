@@ -1,33 +1,25 @@
----
-title: "ClassReader interface (java.lang.classfile)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/ClassReader.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ClassReader interface (java.lang.classfile)
 
 ```java
 public sealed interface ClassReader extends ConstantPool permits ClassReaderImpl
 ```
 
-Advanced `class` file reading support for `AttributeMapper`s.
-Supports reading arbitrary offsets within a `class` file and reading
-data of various numeric types (e.g., `u2`, `u4`) in addition to
+Advanced {@code class} file reading support for {@link AttributeMapper}s.
+Supports reading arbitrary offsets within a {@code class} file and reading
+data of various numeric types (e.g., {@code u2}, {@code u4}) in addition to
 constant pool access.
-
-All numeric values in the `class` file format are big endian.
-
-Unless otherwise specified, all out-of-bounds access result in an `IllegalArgumentException` to indicate the `class` file data is
-malformed.  Since the `class` file data is arbitrary, users should
+<p>
+All numeric values in the {@code class} file format are {@linkplain
+java.nio.ByteOrder#BIG_ENDIAN big endian}.
+<p>
+Unless otherwise specified, all out-of-bounds access result in an {@link
+IllegalArgumentException} to indicate the {@code class} file data is
+malformed.  Since the {@code class} file data is arbitrary, users should
 sanity-check the structural integrity of the data before attempting to
 interpret the potentially malformed data.
 
-**See also:** AttributeMapper#readAttribute(AttributedElement, ClassReader, int)
-
-**Since:** 24
+@see AttributeMapper#readAttribute(AttributedElement, ClassReader, int)
+@since 24
 
 ## ClassReader.customAttributes()
 
@@ -35,8 +27,8 @@ interpret the potentially malformed data.
 Function<Utf8Entry, AttributeMapper<?>> customAttributes()
 ```
 
-This is derived from
-the processing option `ClassFile.AttributeMapperOption`.
+{@return the table of custom attribute mappers}  This is derived from
+the processing option {@link ClassFile.AttributeMapperOption}.
 
 ## ClassReader.flags()
 
@@ -44,7 +36,9 @@ the processing option `ClassFile.AttributeMapperOption`.
 int flags()
 ```
 
-**See also:** ClassModel#flags()
+{@return the access flags for the class, as a bit mask}
+
+@see ClassModel#flags()
 
 ## ClassReader.thisClassEntry()
 
@@ -52,7 +46,9 @@ int flags()
 ClassEntry thisClassEntry()
 ```
 
-**See also:** ClassModel#thisClass()
+{@return the constant pool entry describing the name of class}
+
+@see ClassModel#thisClass()
 
 ## ClassReader.superclassEntry()
 
@@ -60,7 +56,9 @@ ClassEntry thisClassEntry()
 Optional<ClassEntry> superclassEntry()
 ```
 
-**See also:** ClassModel#superclass()
+{@return the constant pool entry describing the name of the superclass, if any}
+
+@see ClassModel#superclass()
 
 ## ClassReader.classfileLength()
 
@@ -68,21 +66,24 @@ Optional<ClassEntry> superclassEntry()
 int classfileLength()
 ```
 
+{@return the length of the {@code class} file, in number of bytes}
+
 ## ClassReader.readEntry(int)
 
 ```java
 PoolEntry readEntry(int offset)
 ```
 
-Parameters:
+{@return the constant pool entry whose index is given at the specified
+offset within the {@code class} file}
 
-- `offset`: the offset of the index within the `class` file
+@apiNote
+If only a particular type of entry is expected, use {@link #readEntry(
+int, Class) readEntry(int, Class)}.
 
-**API note:** If only a particular type of entry is expected, use int, Class) readEntry(int, Class).
-
-Throws:
-
-- `ConstantPoolException`: if the index is out of range of the constant pool size, or zero
+@param offset the offset of the index within the {@code class} file
+@throws ConstantPoolException if the index is out of range of the
+        constant pool size, or zero
 
 ## ClassReader.readEntry(int, Class<T>)
 
@@ -90,15 +91,13 @@ Throws:
 <T extends PoolEntry> T readEntry(int offset, Class<T> cls)
 ```
 
-Parameters:
-
-- `<T>`: the entry type
-- `offset`: the offset of the index within the `class` file
-- `cls`: the entry type
-
-Throws:
-
-- `ConstantPoolException`: if the index is out of range of the constant pool size, or zero, or the entry is not of the given type
+{@return the constant pool entry of a given type whose index is given
+at the specified offset within the {@code class} file}
+@param <T> the entry type
+@param offset the offset of the index within the {@code class} file
+@param cls the entry type
+@throws ConstantPoolException if the index is out of range of the
+        constant pool size, or zero, or the entry is not of the given type
 
 ## ClassReader.readEntryOrNull(int)
 
@@ -106,15 +105,17 @@ Throws:
 PoolEntry readEntryOrNull(int offset)
 ```
 
-Parameters:
+{@return the constant pool entry whose index is given at the specified
+offset within the {@code class} file, or {@code null} if the index at the
+specified offset is zero}
 
-- `offset`: the offset of the index within the `class` file
+@apiNote
+If only a particular type of entry is expected, use {@link #readEntryOrNull(
+int, Class) readEntryOrNull(int, Class)}.
 
-**API note:** If only a particular type of entry is expected, use int, Class) readEntryOrNull(int, Class).
-
-Throws:
-
-- `ConstantPoolException`: if the index is out of range of the constant pool size
+@param offset the offset of the index within the {@code class} file
+@throws ConstantPoolException if the index is out of range of the
+        constant pool size
 
 ## ClassReader.readEntryOrNull(int, Class<T>)
 
@@ -122,15 +123,15 @@ Throws:
 <T extends PoolEntry> T readEntryOrNull(int offset, Class<T> cls)
 ```
 
-Parameters:
+{@return the constant pool entry of a given type whose index is given
+at the specified offset within the {@code class} file, or {@code null} if
+the index at the specified offset is zero}
 
-- `<T>`: the entry type
-- `offset`: the offset of the index within the `class` file
-- `cls`: the entry type
-
-Throws:
-
-- `ConstantPoolException`: if the index is out of range of the constant pool size, or zero, or the entry is not of the given type
+@param <T> the entry type
+@param offset the offset of the index within the {@code class} file
+@param cls the entry type
+@throws ConstantPoolException if the index is out of range of the
+        constant pool size, or zero, or the entry is not of the given type
 
 ## ClassReader.readU1(int)
 
@@ -138,11 +139,10 @@ Throws:
 int readU1(int offset)
 ```
 
-Reads a byte and zero-extends it to an `int`.
+{@return the unsigned byte at the specified offset within the {@code
+class} file}  Reads a byte and zero-extends it to an {@code int}.
 
-Parameters:
-
-- `offset`: the offset within the `class` file
+@param offset the offset within the {@code class} file
 
 ## ClassReader.readU2(int)
 
@@ -150,11 +150,10 @@ Parameters:
 int readU2(int offset)
 ```
 
-Reads a 2-byte value and zero-extends it to an `int`.
+{@return the unsigned short at the specified offset within the {@code
+class} file}  Reads a 2-byte value and zero-extends it to an {@code int}.
 
-Parameters:
-
-- `offset`: the offset within the `class` file
+@param offset the offset within the {@code class} file
 
 ## ClassReader.readS1(int)
 
@@ -162,11 +161,10 @@ Parameters:
 int readS1(int offset)
 ```
 
-Reads a byte and sign-extends it to an `int`.
+{@return the signed byte at the specified offset within the {@code class}
+file}  Reads a byte and sign-extends it to an {@code int}.
 
-Parameters:
-
-- `offset`: the offset within the `class` file
+@param offset the offset within the {@code class} file
 
 ## ClassReader.readS2(int)
 
@@ -174,11 +172,10 @@ Parameters:
 int readS2(int offset)
 ```
 
-Reads a 2-byte value and sign-extends it to an `int`.
+{@return the signed byte at the specified offset within the {@code class}
+file}  Reads a 2-byte value and sign-extends it to an {@code int}.
 
-Parameters:
-
-- `offset`: the offset within the `class` file
+@param offset the offset within the {@code class} file
 
 ## ClassReader.readInt(int)
 
@@ -186,11 +183,10 @@ Parameters:
 int readInt(int offset)
 ```
 
-Reads 4 bytes of value.
+{@return the signed int at the specified offset within the {@code class}
+file}  Reads 4 bytes of value.
 
-Parameters:
-
-- `offset`: the offset within the `class` file
+@param offset the offset within the {@code class} file
 
 ## ClassReader.readLong(int)
 
@@ -198,11 +194,10 @@ Parameters:
 long readLong(int offset)
 ```
 
-Reads 8 bytes of value.
+{@return the signed long at the specified offset within the {@code class}
+file}  Reads 8 bytes of value.
 
-Parameters:
-
-- `offset`: the offset within the `class` file
+@param offset the offset within the {@code class} file
 
 ## ClassReader.readFloat(int)
 
@@ -210,14 +205,13 @@ Parameters:
 float readFloat(int offset)
 ```
 
-Reads 4 bytes of value.
+{@return the float value at the specified offset within the {@code class}
+file}  Reads 4 bytes of value.
+<p>
+In the conversions, all NaN values of the {@code float} may or may not be
+collapsed into a single {@linkplain Float#NaN "canonical" NaN value}.
 
-In the conversions, all NaN values of the `float` may or may not be
-collapsed into a single "canonical" NaN value.
-
-Parameters:
-
-- `offset`: the offset within the `class` file
+@param offset the offset within the {@code class} file
 
 ## ClassReader.readDouble(int)
 
@@ -225,14 +219,13 @@ Parameters:
 double readDouble(int offset)
 ```
 
-Reads 8 bytes of value.
+{@return the double value at the specified offset within the {@code
+class} file}  Reads 8 bytes of value.
+<p>
+In the conversions, all NaN values of the {@code double} may or may not
+be collapsed into a single {@linkplain Double#NaN "canonical" NaN value}.
 
-In the conversions, all NaN values of the `double` may or may not
-be collapsed into a single "canonical" NaN value.
-
-Parameters:
-
-- `offset`: the offset within the `class` file
+@param offset the offset within the {@code class} file
 
 ## ClassReader.readBytes(int, int)
 
@@ -240,10 +233,11 @@ Parameters:
 byte[] readBytes(int offset, int len)
 ```
 
-Parameters:
+{@return a copy of the bytes at the specified range in the {@code class}
+file}
 
-- `offset`: the offset within the `class` file
-- `len`: the length of the range
+@param offset the offset within the {@code class} file
+@param len the length of the range
 
 ## ClassReader.copyBytesTo(BufWriter, int, int)
 
@@ -251,10 +245,8 @@ Parameters:
 void copyBytesTo(BufWriter buf, int offset, int len)
 ```
 
-Copy a range of bytes from the `class` file to a `BufWriter`.
+Copy a range of bytes from the {@code class} file to a {@link BufWriter}.
 
-Parameters:
-
-- `buf`: the `BufWriter`
-- `offset`: the offset within the `class` file
-- `len`: the length of the range
+@param buf the {@linkplain BufWriter}
+@param offset the offset within the {@code class} file
+@param len the length of the range

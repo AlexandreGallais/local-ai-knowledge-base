@@ -1,12 +1,3 @@
----
-title: "alloc::io::buffered"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/alloc/src/io/buffered/mod.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # alloc::io::buffered
 
 Buffering wrappers for I/O traits
@@ -17,16 +8,17 @@ Buffering wrappers for I/O traits
 pub struct IntoInnerError<W>(W, Error)
 ```
 
-An error returned by `BufWriter::into_inner` which combines an error that
+An error returned by [`BufWriter::into_inner`] which combines an error that
 happened while writing out the buffer, and the buffered writer object
 which may be used to recover from the condition.
 
 # Examples
 
-```rust
+```no_run
 use std::io::BufWriter;
 use std::net::TcpStream;
 
+# #[expect(unused_mut)]
 let mut stream = BufWriter::new(TcpStream::connect("127.0.0.1:34254").unwrap());
 
 // do stuff with the stream
@@ -48,17 +40,18 @@ let stream = match stream.into_inner() {
 pub fn error(&self) -> &Error
 ```
 
-Returns the error which caused the call to `BufWriter::into_inner()`
+Returns the error which caused the call to [`BufWriter::into_inner()`]
 to fail.
 
 This error was returned when attempting to write the internal buffer.
 
 # Examples
 
-```rust
+```no_run
 use std::io::BufWriter;
 use std::net::TcpStream;
 
+# #[expect(unused_mut)]
 let mut stream = BufWriter::new(TcpStream::connect("127.0.0.1:34254").unwrap());
 
 // do stuff with the stream
@@ -91,10 +84,11 @@ re-inspecting the buffer.
 
 # Examples
 
-```rust
+```no_run
 use std::io::BufWriter;
 use std::net::TcpStream;
 
+# #[expect(unused_mut)]
 let mut stream = BufWriter::new(TcpStream::connect("127.0.0.1:34254").unwrap());
 
 // do stuff with the stream
@@ -121,13 +115,13 @@ let stream = match stream.into_inner() {
 pub fn into_error(self) -> Error
 ```
 
-Consumes the `IntoInnerError` and returns the error which caused the call to
-`BufWriter::into_inner()` to fail.  Unlike `error`, this can be used to
+Consumes the [`IntoInnerError`] and returns the error which caused the call to
+[`BufWriter::into_inner()`] to fail.  Unlike `error`, this can be used to
 obtain ownership of the underlying error.
 
 # Example
 
-```rust
+```
 use std::io::{BufWriter, ErrorKind, Write};
 
 let mut not_enough_space = [0u8; 10];
@@ -144,15 +138,15 @@ assert_eq!(err.kind(), ErrorKind::WriteZero);
 pub fn into_parts(self) -> (Error, W)
 ```
 
-Consumes the `IntoInnerError` and returns the error which caused the call to
-`BufWriter::into_inner()` to fail, and the underlying writer.
+Consumes the [`IntoInnerError`] and returns the error which caused the call to
+[`BufWriter::into_inner()`] to fail, and the underlying writer.
 
 This can be used to simply obtain ownership of the underlying error; it can also be used for
 advanced error recovery.
 
 # Example
 
-```rust
+```
 use std::io::{BufWriter, ErrorKind, Write};
 
 let mut not_enough_space = [0u8; 10];

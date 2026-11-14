@@ -1,12 +1,9 @@
 ---
-title: "dotnet nuget add client-cert command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-nuget-add-client-cert.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet nuget add client-cert command
+description: The dotnet nuget add client-cert command configures an HTTPS client certificate for a NuGet package source.
+ms.date: 10/23/2026
+ai-usage: ai-generated
 ---
-
 # dotnet nuget add client-cert
 
 **This article applies to:** ✔️ .NET Core 3.1.400 SDK and later versions
@@ -34,22 +31,20 @@ dotnet nuget add client-cert -h|--help
 
 The `dotnet nuget add client-cert` command adds a client certificate configuration to the `clientCertificates` section of your NuGet configuration files. Use a client certificate to authenticate to an HTTPS package source that requires client certificate authentication.
 
-First, configure the package source with dotnet nuget add source. Then, associate a certificate with the source's name, not its URL. Choose one certificate source:
+First, configure the package source with [dotnet nuget add source](dotnet-nuget-add-source.md). Then, associate a certificate with the source's name, not its URL. Choose one certificate source:
 
 - **File:** Use `--path` to specify a PKCS #12 (`.pfx` or `.p12`) file that contains the certificate and its private key. Specify `--configfile` when you add a certificate from a file.
 - **Certificate store:** Use `--find-value` to select a certificate from a certificate store. By default, NuGet searches by thumbprint in the current user's personal (`My`) store.
 
 Don't combine file options (`--path` and `--password`) with store options (`--store-location`, `--store-name`, `--find-by`, and `--find-value`). Certificate store availability depends on your operating system.
 
-Each package source can have only one client certificate configuration. If a configuration already exists for the source, the command fails. To change an existing configuration, use dotnet nuget update client-cert.
+Each package source can have only one client certificate configuration. If a configuration already exists for the source, the command fails. To change an existing configuration, use [dotnet nuget update client-cert](dotnet-nuget-update-client-cert.md).
 
 Unless you specify `--force`, NuGet checks that it can find and load the certificate before it saves the configuration. The command doesn't test authentication with the package source.
 
 ## Options
 
-- **`--configfile <FILE>`**
-
-The NuGet configuration file (*nuget.config*) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see Common NuGet Configurations.
+- [!INCLUDE [configfile](includes/cli-configfile.md)]
 
   Required when you add a certificate from a file.
 
@@ -67,9 +62,7 @@ The NuGet configuration file (*nuget.config*) to use. If specified, only the set
 
   Saves the configuration even if NuGet can't find or load the certificate. Use this option to configure a certificate before it's available. This option doesn't disable HTTPS server certificate validation.
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 - **`-s|--package-source <SOURCE_NAME>`**
 
@@ -77,10 +70,10 @@ Prints out a description of how to use the command.
 
 - **`--password <PASSWORD>`**
 
-  The password for the certificate file, if needed. Use only with a file configuration. By default, NuGet encrypts the password <example-value> it saves it.
+  The password for the certificate file, if needed. Use only with a file configuration. By default, NuGet encrypts the password before it saves it.
 
-  > **Note:**
-  > Password <example-value> is supported only on Windows. Only the same user on the same machine can decrypt the password.
+  > [!NOTE]
+  > Password encryption is supported only on Windows. Only the same user on the same machine can decrypt the password.
 
 - **`--path <CERTIFICATE_PATH>`**
 
@@ -98,9 +91,9 @@ Prints out a description of how to use the command.
 
 - **`--store-password-in-clear-text`**
 
-  Saves the certificate file password <example-value> encryption. To save a password on a platform other than Windows, specify this option with `--password`.
+  Saves the certificate file password without encryption. To save a password on a platform other than Windows, specify this option with `--password`.
 
-  > **Warning:**
+  > [!WARNING]
   > Avoid clear-text passwords when possible. Restrict access to configuration files that contain passwords, and don't commit passwords or private keys to source control.
 
 ## Examples
@@ -135,8 +128,8 @@ Each example adds a configuration for the same source. Remove the existing confi
 
 ## See also
 
-- dotnet nuget list client-cert
-- dotnet nuget remove client-cert
-- dotnet nuget update client-cert
-- Common NuGet configurations
-- NuGet configuration file reference
+- [dotnet nuget list client-cert](dotnet-nuget-list-client-cert.md)
+- [dotnet nuget remove client-cert](dotnet-nuget-remove-client-cert.md)
+- [dotnet nuget update client-cert](dotnet-nuget-update-client-cert.md)
+- [Common NuGet configurations](/nuget/consume-packages/configuring-nuget-behavior)
+- [NuGet configuration file reference](/nuget/reference/nuget-config-file)

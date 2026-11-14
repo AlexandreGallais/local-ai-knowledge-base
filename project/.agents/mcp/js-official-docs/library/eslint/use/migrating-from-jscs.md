@@ -1,28 +1,21 @@
 ---
-title: "Migrating from JSCS"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/use/migrating-from-jscs.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: Migrating from JSCS
 ---
-
-# Migrating from JSCS
 
 {%- from 'components/npm_tabs.macro.html' import npm_tabs with context %}
 
-In April 2016, we announced that the JSCS project was shutting down and the JSCS team would be joining the ESLint team. This guide is intended to help those who are using JSCS to migrate their settings and projects to use ESLint. We've tried to automate as much of the conversion as possible, but there are some manual changes that are needed.
+In April 2016, we [announced](https://eslint.org/blog/2016/04/welcoming-jscs-to-eslint) that the JSCS project was shutting down and the JSCS team would be joining the ESLint team. This guide is intended to help those who are using JSCS to migrate their settings and projects to use ESLint. We've tried to automate as much of the conversion as possible, but there are some manual changes that are needed.
 
 ## Terminology
 
 Before beginning the process of migrating to ESLint, it's helpful to understand some of the terminology that ESLint uses and how it relates to terminology that JSCS uses.
 
 - **Configuration File** - In JSCS, the configuration file is `.jscsrc`, `.jscsrc.json`, `.jscsrc.yaml`, or `.jscsrs.js`. In ESLint, the configuration file can be `.eslintrc.json`, `.eslintrc.yml`, `.eslintrc.yaml`, or `.eslintrc.js` (there is also a deprecated `.eslintrc` file format).
-- **Presets** - In JSCS, there were numerous predefined configurations shipped directly within JSCS. ESLint ships with just one predefined configuration (`eslint:recommended`) that has no style rules enabled. However, ESLint does support shareable configs. Shareable configs are configurations that are published on their own to npm and there are shareable configs available for almost all of the JSCS presets (see the "Converting Presets" section below). Additionally, the `preset` option in a configuration file is the equivalent of the ESLint `extends` option.
+- **Presets** - In JSCS, there were numerous predefined configurations shipped directly within JSCS. ESLint ships with just one predefined configuration (`eslint:recommended`) that has no style rules enabled. However, ESLint does support [shareable configs](../extend/shareable-configs). Shareable configs are configurations that are published on their own to npm and there are shareable configs available for almost all of the JSCS presets (see [the "Converting Presets" section](#converting-presets) below). Additionally, the `preset` option in a configuration file is the equivalent of the ESLint `extends` option.
 
 ## Convert Configuration Files Using Polyjuice
 
-Polyjuice is a utility for converting JSCS (and JSHint) configuration files into ESLint configuration files automatically. It understands the equivalent rules from each utility and will automatically output an ESLint configuration file that is a good approximation of your existing JSCS file.
+[Polyjuice](https://github.com/brenolf/polyjuice) is a utility for converting JSCS (and JSHint) configuration files into ESLint configuration files automatically. It understands the equivalent rules from each utility and will automatically output an ESLint configuration file that is a good approximation of your existing JSCS file.
 
 To install Polyjuice:
 
@@ -48,7 +41,7 @@ If you have multiple `.jscsrc.json` files, you can pass them all and Polyjuice w
 polyjuice --jscs .jscsrc.json ./foo/.jscsrc.json > .eslintrc.json
 ```
 
-**Note:** Polyjuice does a good job of creating a reasonable ESLint configuration from your JSCS configuration, but it may not be 100%. You may still see different warnings than you saw with JSCS, and so you may need to further modify your configuration after using Polyjuice. This is especially true if you're using inline comments to enable/disable certain rules in JSCS (you'll need to manually convert those to use ESLint-style comments instead, see "Disable Rules Inline" later in this page).
+**Note:** Polyjuice does a good job of creating a reasonable ESLint configuration from your JSCS configuration, but it may not be 100%. You may still see different warnings than you saw with JSCS, and so you may need to further modify your configuration after using Polyjuice. This is especially true if you're using inline comments to enable/disable certain rules in JSCS (you'll need to manually convert those to use ESLint-style comments instead, [see "Disable Rules Inline"](#disable-rules-inline) later in this page).
 
 ### Create a New Configuration From Scratch
 
@@ -60,7 +53,7 @@ If you don't want to convert your JSCS configuration directly into an ESLint con
     args: []
 }) }}
 
-You'll be guided through a series of questions that will help you setup a basic <example-value> file to get you started.
+You'll be guided through a series of questions that will help you setup a basic configuration file to get you started.
 
 ## Converting Presets
 
@@ -68,16 +61,16 @@ There are shareable configs available for most JSCS presets. The equivalent shar
 
 | **JSCS Preset**    | **ESLint Shareable Config**                                                                                        |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------ |
-| `airbnb`           | `eslint-config-airbnb-base` |
+| `airbnb`           | [`eslint-config-airbnb-base`](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base) |
 | `crockford`        | (not available)                                                                                                    |
-| `google`           | `eslint-config-google`                                           |
-| `grunt`            | `eslint-config-grunt`                                           |
-| `idiomatic`        | `eslint-config-idiomatic`                               |
-| `jquery`           | `eslint-config-jquery`                                           |
-| `mdcs`             | `eslint-config-mdcs`                                                     |
-| `node-style-guide` | `eslint-config-node-style-guide`                      |
-| `wikimedia`        | `eslint-config-wikimedia`                                  |
-| `wordpress`        | `eslint-config-wordpress`                 |
+| `google`           | [`eslint-config-google`](https://github.com/google/eslint-config-google)                                           |
+| `grunt`            | [`eslint-config-grunt`](https://github.com/markelog/eslint-config-grunt)                                           |
+| `idiomatic`        | [`eslint-config-idiomatic`](https://github.com/jamespamplin/eslint-config-idiomatic)                               |
+| `jquery`           | [`eslint-config-jquery`](https://github.com/jquery/eslint-config-jquery)                                           |
+| `mdcs`             | [`eslint-config-mdcs`](https://github.com/zz85/mrdoobapproves)                                                     |
+| `node-style-guide` | [`eslint-config-node-style-guide`](https://github.com/pdehaan/eslint-config-node-style-guide)                      |
+| `wikimedia`        | [`eslint-config-wikimedia`](https://github.com/wikimedia/eslint-config-wikimedia)                                  |
+| `wordpress`        | [`eslint-config-wordpress`](https://github.com/WordPress-Coding-Standards/eslint-config-wordpress)                 |
 
 As an example, suppose that you are using the `airbnb` preset, so your `.jscsrc` file looks like this:
 

@@ -1,10 +1,11 @@
 ---
-title: "Snapshot Testing | Guide"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/learn/snapshots.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Snapshot Testing | Guide
+prev:
+  text: Mock Functions
+  link: /guide/learn/mock-functions
+next:
+  text: Testing in Practice
+  link: /guide/learn/testing-in-practice
 ---
 
 # Snapshot Testing
@@ -15,7 +16,7 @@ This approach is particularly useful when you're testing something that produces
 
 ## Your First Snapshot
 
-To create a snapshot test, pass a value to `toMatchSnapshot()`:
+To create a snapshot test, pass a value to [`toMatchSnapshot()`](/api/expect#tomatchsnapshot):
 
 ```js
 import { expect, test } from 'vitest'
@@ -54,12 +55,13 @@ exports['generates a greeting 1'] = `
 
 From now on, every time you run this test, Vitest serializes the output of `generateGreeting('Alice')` and compares it character-by-character against this stored snapshot. If the output changes (say, someone modifies the message format or bumps the version number), the test fails and shows a clear diff of what changed.
 
-**Tip:**
+::: tip
 Commit your snapshot files to version control. They serve as a record of the expected output and should be reviewed in code review just like any other test assertion.
+:::
 
 ## Inline Snapshots
 
-External snapshot files work well, but they mean you have to jump to a different file to see what the expected output actually looks like. For smaller values, it's often more convenient to keep the snapshot right in your test file with `toMatchInlineSnapshot()`.
+External snapshot files work well, but they mean you have to jump to a different file to see what the expected output actually looks like. For smaller values, it's often more convenient to keep the snapshot right in your test file with [`toMatchInlineSnapshot()`](/api/expect#tomatchinlinesnapshot).
 
 Start by writing the assertion without any argument:
 
@@ -87,8 +89,9 @@ Now the expected output lives right next to the code that produces it. You can r
 
 Inline snapshots are great for small, focused values. For large outputs (like a full HTML page), external snapshots or file snapshots are a better fit.
 
-**Tip:**
+::: tip
 Unlike external snapshots, inline snapshots don't create separate `.snap` files. The expected value is stored directly in your test file as the argument to `toMatchInlineSnapshot()`, so there's nothing extra to commit.
+:::
 
 ## Updating Snapshots
 
@@ -98,7 +101,7 @@ There are several ways to do this:
 
 - **In watch mode**: press `u` in the terminal to update all failed snapshots
 - **From the CLI**: run `vitest -u` or `vitest --update` to update snapshots and exit
-- **In VS Code**: use the "Update Snapshots" command on the test gutter icon from the Vitest extension
+- **In VS Code**: use the "Update Snapshots" command on the test gutter icon from the [Vitest extension](https://vitest.dev/vscode)
 
 ```bash
 vitest -u
@@ -106,12 +109,13 @@ vitest -u
 
 For inline snapshots, Vitest modifies your test file directly with the new values. For external snapshots, it rewrites the `.snap` file.
 
-**Warning:**
+::: warning
 Be careful when updating snapshots. Always review the diff to confirm the changes are intentional and not a bug. It's easy to accidentally accept a broken output by blindly pressing `u`.
+:::
 
 ## File Snapshots
 
-Sometimes the output you're testing is large enough that even an external `.snap` file feels awkward, or you want to view the snapshot with proper syntax highlighting in your editor. `toMatchFileSnapshot()` lets you save the snapshot to a file with any extension you want:
+Sometimes the output you're testing is large enough that even an external `.snap` file feels awkward, or you want to view the snapshot with proper syntax highlighting in your editor. [`toMatchFileSnapshot()`](/api/expect#tomatchfilesnapshot) lets you save the snapshot to a file with any extension you want:
 
 ```js
 test('renders the component', async () => {
@@ -132,7 +136,7 @@ Snapshots shine when you're working with structured, serializable output that wo
 - CLI output or log messages with specific formatting
 - JSON API responses where you want to catch any unexpected field changes
 
-On the other hand, snapshots are not always the best tool. If the output changes frequently (for instance, it includes timestamps or random IDs), you'll spend more time updating snapshots than they save you. And if you only care about one or two specific fields, a targeted assertion like `toMatchObject` or `toHaveProperty` expresses your intent more clearly than a snapshot that captures everything.
+On the other hand, snapshots are not always the best tool. If the output changes frequently (for instance, it includes timestamps or random IDs), you'll spend more time updating snapshots than they save you. And if you only care about one or two specific fields, a targeted assertion like [`toMatchObject`](/api/expect#tomatchobject) or [`toHaveProperty`](/api/expect#tohaveproperty) expresses your intent more clearly than a snapshot that captures everything.
 
 The general rule: use snapshots when you want to protect against _any_ change in the output, and use targeted assertions when you only care about _specific_ properties.
 
@@ -155,7 +159,7 @@ The `id` and `createdAt` fields are checked against the matchers (any number, an
 
 ## Error Snapshots
 
-A common use of inline snapshots is capturing error messages. `toThrowErrorMatchingInlineSnapshot` combines `toThrow` with `toMatchInlineSnapshot` so you can snapshot the error message without a separate `.snap` file:
+A common use of inline snapshots is capturing error messages. [`toThrowErrorMatchingInlineSnapshot`](/api/expect#tothrowerrormatchinginlinesnapshot) combines `toThrow` with `toMatchInlineSnapshot` so you can snapshot the error message without a separate `.snap` file:
 
 ```js
 test('throws on invalid input', () => {
@@ -167,5 +171,6 @@ test('throws on invalid input', () => {
 
 This is especially handy for verifying that error messages are clear and don't accidentally change. Like other inline snapshots, Vitest fills in the string on the first run and updates it when you press `u`.
 
-**Tip:**
-For custom snapshot serializers, snapshot matchers, and advanced configuration, see the Snapshot guide.
+::: tip
+For custom snapshot serializers, snapshot matchers, and advanced configuration, see the [Snapshot](/guide/snapshot) guide.
+:::

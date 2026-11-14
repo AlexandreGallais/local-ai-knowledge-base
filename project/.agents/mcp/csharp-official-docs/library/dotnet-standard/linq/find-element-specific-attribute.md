@@ -1,10 +1,11 @@
 ---
-title: "How to find an element with a specific attribute - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/find-element-specific-attribute.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to find an element with a specific attribute - LINQ to XML
+description: Learn how to find an element whose attribute has a specific value.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to find an element with a specific attribute (LINQ to XML)
@@ -13,7 +14,7 @@ This article provides examples of how to find an element whose attribute has a s
 
 ## Example: Find an element whose attribute has a specific value
 
-The following example shows how to find the `Address` element that has a `Type` attribute with a value of "Billing". The example uses XML document Sample XML file: Typical purchase order.
+The following example shows how to find the `Address` element that has a `Type` attribute with a value of "Billing". The example uses XML document [Sample XML file: Typical purchase order](sample-xml-file-typical-purchase-order.md).
 
 ```csharp
 XElement root = XElement.Load("PurchaseOrder.xml");
@@ -51,9 +52,9 @@ This example produces the following output:
 
 ## Example: Find an element in XML that's in a namespace
 
-The following example shows the same query, but for XML that's in a namespace. It uses XML document Sample XML file: typical purchase order in a namespace.
+The following example shows the same query, but for XML that's in a namespace. It uses XML document [Sample XML file: typical purchase order in a namespace](sample-xml-file-typical-purchase-order-namespace.md).
 
-For more information about namespaces, see Namespaces overview.
+For more information about namespaces, see [Namespaces overview](namespaces-overview.md).
 
 ```csharp
 XElement root = XElement.Load("PurchaseOrderInNamespace.xml");
@@ -98,10 +99,10 @@ This example produces the following output:
 
 ## See also
 
-- `System.Xml.Linq.XElement.Attribute*`
-- `System.Xml.Linq.XContainer.Elements*`
-- Standard Query Operators Overview (C#)
-- Projection Operations (C#)
-- Basic <example-value> (LINQ to XML) (Visual Basic)
-- Standard Query Operators Overview (Visual Basic)
-- Projection Operations (Visual Basic)
+- <xref:System.Xml.Linq.XElement.Attribute*>
+- <xref:System.Xml.Linq.XContainer.Elements*>
+- [Standard Query Operators Overview (C#)](../../csharp/linq/standard-query-operators/index.md)
+- [Projection Operations (C#)](../../csharp/linq/standard-query-operators/projection-operations.md)
+- [Basic Queries (LINQ to XML) (Visual Basic)](../../visual-basic/programming-guide/concepts/linq/basic-query-operations.md)
+- [Standard Query Operators Overview (Visual Basic)](../../visual-basic/programming-guide/concepts/linq/standard-query-operators-overview.md)
+- [Projection Operations (Visual Basic)](../../visual-basic/programming-guide/concepts/linq/projection-operations.md)

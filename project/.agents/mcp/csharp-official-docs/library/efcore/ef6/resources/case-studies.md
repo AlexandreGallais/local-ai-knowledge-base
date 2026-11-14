@@ -1,15 +1,12 @@
 ---
-title: "Case Studies for Entity Framework - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/resources/case-studies.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Case Studies for Entity Framework - EF6
+description: Case Studies for Entity Framework 6
+author: SamMonoRT
+ms.date: 10/23/2016
 ---
-
 # Microsoft Case Studies for Entity Framework
 The case studies on this page highlight a few real-world production projects that have employed Entity Framework.
-> **Note:**
+> [!NOTE]
 > The detailed versions of these case studies are no longer available on the Microsoft website. Therefore the links have been removed.
 
 ## Epicor
@@ -20,11 +17,11 @@ Using the Entity Framework 4.0, they were able to achieve these goals and also g
 In particular, the Entity Framework’s rich T4 support allowed them to take full control of their generated code and automatically build in performance-saving features such as pre-compiled queries and caching.
 
 > “We conducted some performance tests recently with existing code, and we were able to reduce the requests to SQL Server by 90 percent.
-That is because of the ADO.NET Entity Framework 4.” – Erik Johnson, Vice President, Product Research
+That is because of the ADO.NET Entity Framework 4.” – Erik Johnson, Vice President, Product Research  
 
 ## Veracity Solutions
 Having acquired an event-planning software system that was going to be difficult to maintain and extend over the long-term, Veracity Solutions used Visual Studio 2010 to re-write it as a powerful and easy-to-use Rich Internet Application built on Silverlight 4.
-Using .NET RIA Services, they were able to quickly build a service layer on top of the Entity Framework that avoided code duplication and allowed for common validation and authentication logic across tiers.
+Using .NET RIA Services, they were able to quickly build a service layer on top of the Entity Framework that avoided code duplication and allowed for common validation and authentication logic across tiers.  
 
 > “We were sold on the Entity Framework when it was first introduced, and the Entity Framework 4 has proven to be even better.
 Tooling is improved, and it’s easier to manipulate the .edmx files that define the conceptual model, storage model, and mapping between those models...
@@ -44,7 +41,7 @@ With the productivity benefits of the Entity Framework, and pulling in component
 Despite having team members split across multiple countries, the team following an agile development process with weekly releases.
 
  > “We try not to create technology for technology’s sake. As a startup, it is crucial that we leverage technology that saves time and money.
- .NET was the choice for fast, cost-effective development.” – Zachary Olsen, Architect
+ .NET was the choice for fast, cost-effective development.” – Zachary Olsen, Architect  
 
 ## Silverware
 With more than 15 years of experience in developing point-of-sale (POS) solutions for small and midsize restaurant groups, the development team at Silverware set out to enhance their product with more enterprise-level features in order to attract larger restaurant chains.

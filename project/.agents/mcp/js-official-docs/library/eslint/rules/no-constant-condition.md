@@ -1,13 +1,11 @@
 ---
-title: "no-constant-condition"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-constant-condition.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-constant-condition
+rule_type: problem
+related_rules:
+- no-constant-binary-expression
 ---
 
-# no-constant-condition
+
 
 A constant expression (for example, a literal) as a test condition might be a typo or development trigger for a specific behavior. For example, the following code looks as if it is not ready for production.
 
@@ -26,7 +24,7 @@ This rule disallows constant expressions in the test condition of:
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-constant-condition: "error"*/
@@ -82,9 +80,11 @@ if(input === "hello" || "bye"){
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-constant-condition: "error"*/
@@ -112,6 +112,8 @@ if(input === "hello" || input === "bye"){
 }
 ```
 
+:::
+
 ## Options
 
 ### checkLoops
@@ -126,7 +128,7 @@ Or instead you can set the `checkLoops` value to booleans where `true` is same a
 
 Examples of **incorrect** code for when `checkLoops` is `"all"` or `true`:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-constant-condition: ["error", { "checkLoops": "all" }]*/
@@ -140,7 +142,9 @@ for (;true;) {
 };
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /*eslint no-constant-condition: ["error", { "checkLoops": true }]*/
@@ -154,9 +158,11 @@ do {
 } while (true)
 ```
 
+:::
+
 Examples of **correct** code for when `checkLoops` is `"all"` or `true`:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-constant-condition: ["error", { "checkLoops": "all" }]*/
@@ -166,7 +172,9 @@ while (a === b) {
 };
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint no-constant-condition: ["error", { "checkLoops": true }]*/
@@ -176,9 +184,11 @@ for (let x = 0; x <= 10; x++) {
 };
 ```
 
+:::
+
 Example of **correct** code for when `checkLoops` is `"allExceptWhileTrue"`:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-constant-condition: "error"*/
@@ -188,9 +198,11 @@ while (true) {
 };
 ```
 
+:::
+
 Examples of **correct** code for when `checkLoops` is `"none"` or `false`:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-constant-condition: ["error", { "checkLoops": "none" }]*/
@@ -210,7 +222,9 @@ do {
 } while (true)
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint no-constant-condition: ["error", { "checkLoops": false }]*/
@@ -229,3 +243,5 @@ for (;true;) {
     }
 };
 ```
+
+:::

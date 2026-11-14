@@ -1,17 +1,11 @@
----
-title: "no-barrel-files"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-barrel-files.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-barrel-files
 
 📝 Disallow barrel files.
 
 🚫 Disabled by default.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 A barrel file only imports and re-exports bindings, including type-only bindings, from other modules. Barrel files make it less clear where a dependency comes from and can cause consumers to load more modules than they need.
 

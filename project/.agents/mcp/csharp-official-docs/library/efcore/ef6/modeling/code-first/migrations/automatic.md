@@ -1,17 +1,15 @@
 ---
-title: "Automatic Code First Migrations - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/modeling/code-first/migrations/automatic.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Automatic Code First Migrations - EF6
+description: Automatic Code First Migrations in Entity Framework 6
+author: SamMonoRT
+ms.date: 10/23/2016
+uid: ef6/modeling/code-first/migrations/automatic
 ---
-
 # Automatic Code First Migrations
 Automatic Migrations allows you to use Code First Migrations without having a code file in your project for each change you make. Not all changes can be applied automatically - for example column renames require the use of a code-based migration.
 
-> **Note:**
-> This article assumes you know how to use Code First Migrations in basic scenarios. If you don’t, then you’ll need to read Code First Migrations before continuing.
+> [!NOTE]
+> This article assumes you know how to use Code First Migrations in basic scenarios. If you don’t, then you’ll need to read [Code First Migrations](xref:ef6/modeling/code-first/migrations/index) before continuing.
 
 ## Recommendation for Team Environments
 
@@ -23,11 +21,11 @@ Before we start using migrations we need a project and a Code First model to wor
 
 -   Create a new **MigrationsAutomaticDemo** Console application
 -   Add the latest version of the **EntityFramework** NuGet package to the project
-    -   **Tools –> Library Package Manager –> Package Manager Console**
+    -   **Tools –&gt; Library Package Manager –&gt; Package Manager Console**
     -   Run the **Install-Package EntityFramework** command
 -   Add a **Model.cs** file with the code shown below. This code defines a single **Blog** class that makes up our domain model and a **BlogContext** class that is our EF Code First context
 
-  ```csharp
+  ``` csharp
       using System.Data.Entity;
       using System.Collections.Generic;
       using System.ComponentModel.DataAnnotations;
@@ -50,7 +48,7 @@ Before we start using migrations we need a project and a Code First model to wor
 
 -   Now that we have a model it’s time to use it to perform data access. Update the **Program.cs** file with the code shown below.
 
-  ```csharp
+  ``` csharp
       using System;
       using System.Collections.Generic;
       using System.Linq;
@@ -82,17 +80,19 @@ Before we start using migrations we need a project and a Code First model to wor
 
 -   Run your application and you will see that a **MigrationsAutomaticCodeDemo.BlogContext** database is created for you.
 
+    ![Database LocalDB](~/ef6/media/databaselocaldb.png)
+
 ## Enabling Migrations
 
 It’s time to make some more changes to our model.
 
 -   Let’s introduce a Url property to the Blog class.
 
-```csharp
+``` csharp
     public string Url { get; set; }
 ```
 
-If you were to run the application again you would get an InvalidOperationException stating *The model backing the 'BlogContext' context has changed since the database was created. Consider using Code First Migrations to update the database (* *http://go.microsoft.com/fwlink/?LinkId=238269**).*
+If you were to run the application again you would get an InvalidOperationException stating *The model backing the 'BlogContext' context has changed since the database was created. Consider using Code First Migrations to update the database (* [*http://go.microsoft.com/fwlink/?LinkId=238269*](https://go.microsoft.com/fwlink/?LinkId=238269)*).*
 
 As the exception suggests, it’s time to start using Code First Migrations. Because we want to use automatic migrations we’re going to specify the **–EnableAutomaticMigrations** switch.
 
@@ -125,7 +125,7 @@ Let’s make another change and let Code First Migrations automatically push the
 
 -   Let's also add a new **Post** class
 
-```csharp
+``` csharp
     public class Post
     {
         public int PostId { get; set; }
@@ -140,7 +140,7 @@ Let’s make another change and let Code First Migrations automatically push the
 
 -   We'll also add a **Posts** collection to the **Blog** class to form the other end of the relationship between **Blog** and **Post**
 
-```csharp
+``` csharp
     public virtual List<Post> Posts { get; set; }
 ```
 
@@ -154,7 +154,7 @@ Now let’s look at something we might want to use a code-based migration for.
 
 -   Let’s add a **Rating** property to the **Blog** class
 
-```csharp
+``` csharp
     public int Rating { get; set; }
 ```
 
@@ -166,7 +166,7 @@ Let’s use the Add-Migration command to write this change out to a code-based m
 
 *The migration also has a code-behind file that captures some metadata. This metadata will allow Code First Migrations to replicate the automatic migrations we performed before this code-based migration. This is important if another developer wants to run our migrations or when it’s time to deploy our application.*
 
-```csharp
+``` csharp
     namespace MigrationsAutomaticDemo.Migrations
     {
         using System;
@@ -197,7 +197,7 @@ We are now free to switch back to automatic migrations for our simpler changes. 
 
 -   Let’s add a Post.Abstract property to our model
 
-```csharp
+``` csharp
     public string Abstract { get; set; }
 ```
 

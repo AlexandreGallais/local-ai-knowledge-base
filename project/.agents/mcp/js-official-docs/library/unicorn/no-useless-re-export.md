@@ -1,17 +1,11 @@
----
-title: "no-useless-re-export"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-useless-re-export.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-useless-re-export
 
 📝 Disallow redundant re-exports.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 This rule reports named exports that are already covered by an `export *` from the same module.
 
@@ -19,7 +13,7 @@ Removing redundant re-exports keeps module API declarations smaller and avoids i
 
 The rule only compares module specifiers as written. It does not resolve paths or inspect the module graph. Named exports are ignored when the file re-exports multiple distinct wildcard module requests, as those exports can resolve conflicting names.
 
-Importing a binding and exporting it locally is the concern of `prefer-export-from`. This rule checks only direct `export … from` declarations.
+Importing a binding and exporting it locally is the concern of [`prefer-export-from`](./prefer-export-from.md). This rule checks only direct `export … from` declarations.
 
 ## Examples
 
@@ -43,20 +37,20 @@ export {default} from './foo.js';
 
 The following patterns are intentionally not reported because another rule handles them:
 
-`no-useless-rename`:
+[`no-useless-rename`](https://eslint.org/docs/latest/rules/no-useless-rename):
 
 ```js
 export {foo as foo} from './foo.js';
 ```
 
-`prefer-export-from`:
+[`prefer-export-from`](./prefer-export-from.md):
 
 ```js
 import {foo} from './foo.js';
 export {foo};
 ```
 
-`no-duplicate-imports` with `includeExports: true`:
+[`no-duplicate-imports`](https://eslint.org/docs/latest/rules/no-duplicate-imports) with `includeExports: true`:
 
 ```js
 export * from './foo.js';

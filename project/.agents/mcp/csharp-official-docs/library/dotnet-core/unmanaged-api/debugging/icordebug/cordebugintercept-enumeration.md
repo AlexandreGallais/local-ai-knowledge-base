@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: CorDebugIntercept Enumeration"
 title: "CorDebugIntercept Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cordebugintercept-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "CorDebugIntercept"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "CorDebugIntercept"
+helpviewer_keywords:
+  - "CorDebugIntercept enumeration [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # CorDebugIntercept Enumeration
 
 Indicates the types of code that can be intercepted (that is, stepped into).
@@ -39,11 +47,11 @@ typedef enum CorDebugIntercept {
 
 ## Remarks
 
- Use the ICorDebugStepper::SetInterceptMask method to establish the types of code that can be intercepted.
+ Use the [ICorDebugStepper::SetInterceptMask](icordebugstepper-setinterceptmask-method.md) method to establish the types of code that can be intercepted.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

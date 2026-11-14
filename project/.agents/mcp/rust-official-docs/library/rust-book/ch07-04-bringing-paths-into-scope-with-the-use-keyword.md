@@ -1,14 +1,3 @@
----
-title: "ch07-04-bringing-paths-into-scope-with-the-use-keyword"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch07-04-bringing-paths-into-scope-with-the-use-keyword.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch07-04-bringing-paths-into-scope-with-the-use-keyword
-
 ## Bringing Paths into Scope with the `use` Keyword
 
 Having to write out the paths to call functions can feel inconvenient and
@@ -23,21 +12,13 @@ scope of the `eat_at_restaurant` function so that we only have to specify
 `hosting::add_to_waitlist` to call the `add_to_waitlist` function in
 `eat_at_restaurant`.
 
-**Listing 7-11: Bringing a module into scope with `use`** (src/lib.rs)
+<Listing number="7-11" file-name="src/lib.rs" caption="Bringing a module into scope with `use`">
 
-```rust
-mod front_of_house {
-    pub mod hosting {
-        pub fn add_to_waitlist() {}
-    }
-}
-
-use crate::front_of_house::hosting;
-
-pub fn eat_at_restaurant() {
-    hosting::add_to_waitlist();
-}
+```rust,noplayground,test_harness
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-11/src/lib.rs}}
 ```
+
+</Listing>
 
 Adding `use` and a path in a scope is similar to creating a symbolic link in
 the filesystem. By adding `use crate::front_of_house::hosting` in the crate
@@ -50,53 +31,19 @@ Note that `use` only creates the shortcut for the particular scope in which the
 child module named `customer`, which is then a different scope than the `use`
 statement, so the function body won’t compile.
 
-**Listing 7-12: A `use` statement only applies in the scope it’s in.** (src/lib.rs)
+<Listing number="7-12" file-name="src/lib.rs" caption="A `use` statement only applies in the scope it’s in.">
 
-```rust
-mod front_of_house {
-    pub mod hosting {
-        pub fn add_to_waitlist() {}
-    }
-}
-
-use crate::front_of_house::hosting;
-
-mod customer {
-    pub fn eat_at_restaurant() {
-        hosting::add_to_waitlist();
-    }
-}
+```rust,noplayground,test_harness,does_not_compile,ignore
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-12/src/lib.rs}}
 ```
+
+</Listing>
 
 The compiler error shows that the shortcut no longer applies within the
 `customer` module:
 
 ```console
-$ cargo build
-   Compiling restaurant v0.1.0 (file:///projects/restaurant)
-error[E0433]: cannot find module or crate `hosting` in this scope
-  --> src/lib.rs:11:9
-   |
-11 |         hosting::add_to_waitlist();
-   |         ^^^^^^^ use of unresolved module or unlinked crate `hosting`
-   |
-   = help: if you wanted to use a crate named `hosting`, use `cargo add hosting` to add it to your `Cargo.toml`
-help: consider importing this module through its public re-export
-   |
-10 +     use crate::hosting;
-   |
-
-warning: unused import: `crate::front_of_house::hosting`
- --> src/lib.rs:7:5
-  |
-7 | use crate::front_of_house::hosting;
-  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  |
-  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
-
-For more information about this error, try `rustc --explain E0433`.
-warning: `restaurant` (lib) generated 1 warning
-error: could not compile `restaurant` (lib) due to 1 previous error; 1 warning emitted
+{{#include ../listings/ch07-managing-growing-projects/listing-07-12/output.txt}}
 ```
 
 Notice there’s also a warning that the `use` is no longer used in its scope! To
@@ -111,21 +58,13 @@ crate::front_of_house::hosting` and then called `hosting::add_to_waitlist` in
 `eat_at_restaurant`, rather than specifying the `use` path all the way out to
 the `add_to_waitlist` function to achieve the same result, as in Listing 7-13.
 
-**Listing 7-13: Bringing the `add_to_waitlist` function into scope with `use`, which is unidiomatic** (src/lib.rs)
+<Listing number="7-13" file-name="src/lib.rs" caption="Bringing the `add_to_waitlist` function into scope with `use`, which is unidiomatic">
 
-```rust
-mod front_of_house {
-    pub mod hosting {
-        pub fn add_to_waitlist() {}
-    }
-}
-
-use crate::front_of_house::hosting::add_to_waitlist;
-
-pub fn eat_at_restaurant() {
-    add_to_waitlist();
-}
+```rust,noplayground,test_harness
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-13/src/lib.rs}}
 ```
+
+</Listing>
 
 Although both Listing 7-11 and Listing 7-13 accomplish the same task, Listing
 7-11 is the idiomatic way to bring a function into scope with `use`. Bringing
@@ -140,16 +79,13 @@ it’s idiomatic to specify the full path. Listing 7-14 shows the idiomatic way
 to bring the standard library’s `HashMap` struct into the scope of a binary
 crate.
 
-**Listing 7-14: Bringing `HashMap` into scope in an idiomatic way** (src/main.rs)
+<Listing number="7-14" file-name="src/main.rs" caption="Bringing `HashMap` into scope in an idiomatic way">
 
 ```rust
-use std::collections::HashMap;
-
-fn main() {
-    let mut map = HashMap::new();
-    map.insert(1, 2);
-}
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-14/src/main.rs}}
 ```
+
+</Listing>
 
 There’s no strong reason behind this idiom: It’s just the convention that has
 emerged, and folks have gotten used to reading and writing Rust code this way.
@@ -159,15 +95,13 @@ into scope with `use` statements, because Rust doesn’t allow that. Listing 7-1
 shows how to bring two `Result` types into scope that have the same name but
 different parent modules, and how to refer to them.
 
-**Listing 7-15: Bringing two types with the same name into the same scope requires using their parent modules.** (src/lib.rs)
+<Listing number="7-15" file-name="src/lib.rs" caption="Bringing two types with the same name into the same scope requires using their parent modules.">
 
-```rust
-use std::fmt;
-use std::io;
-
-fn function1() -> fmt::Result {
-    // --snip--
+```rust,noplayground
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-15/src/lib.rs:here}}
 ```
+
+</Listing>
 
 As you can see, using the parent modules distinguishes the two `Result` types.
 If instead we specified `use std::fmt::Result` and `use std::io::Result`, we’d
@@ -181,15 +115,13 @@ into the same scope with `use`: After the path, we can specify `as` and a new
 local name, or _alias_, for the type. Listing 7-16 shows another way to write
 the code in Listing 7-15 by renaming one of the two `Result` types using `as`.
 
-**Listing 7-16: Renaming a type when it’s brought into scope with the `as` keyword** (src/lib.rs)
+<Listing number="7-16" file-name="src/lib.rs" caption="Renaming a type when it’s brought into scope with the `as` keyword">
 
-```rust
-use std::fmt::Result;
-use std::io::Result as IoResult;
-
-fn function1() -> Result {
-    // --snip--
+```rust,noplayground
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-16/src/lib.rs:here}}
 ```
+
+</Listing>
 
 In the second `use` statement, we chose the new name `IoResult` for the
 `std::io::Result` type, which won’t conflict with the `Result` from `std::fmt`
@@ -208,21 +140,13 @@ scope.
 Listing 7-17 shows the code in Listing 7-11 with `use` in the root module
 changed to `pub use`.
 
-**Listing 7-17: Making a name available for any code to use from a new scope with `pub use`** (src/lib.rs)
+<Listing number="7-17" file-name="src/lib.rs" caption="Making a name available for any code to use from a new scope with `pub use`">
 
-```rust
-mod front_of_house {
-    pub mod hosting {
-        pub fn add_to_waitlist() {}
-    }
-}
-
-pub use crate::front_of_house::hosting;
-
-pub fn eat_at_restaurant() {
-    hosting::add_to_waitlist();
-}
+```rust,noplayground,test_harness
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-17/src/lib.rs}}
 ```
+
+</Listing>
 
 Before this change, external code would have to call the `add_to_waitlist`
 function by using the path
@@ -239,8 +163,8 @@ probably won’t think about the parts of the restaurant in those terms. With `p
 use`, we can write our code with one structure but expose a different structure.
 Doing so makes our library well organized for programmers working on the library
 and programmers calling the library. We’ll look at another example of `pub use`
-and how it affects your crate’s documentation in “Exporting a Convenient Public
-API” in Chapter 14.
+and how it affects your crate’s documentation in [“Exporting a Convenient Public
+API”][ch14-pub-use]<!-- ignore --> in Chapter 14.
 
 ### Using External Packages
 
@@ -248,30 +172,38 @@ In Chapter 2, we programmed a guessing game project that used an external
 package called `rand` to get random numbers. To use `rand` in our project, we
 added this line to _Cargo.toml_:
 
-**Listing** (Cargo.toml)
+<!-- When updating the version of `rand` used, also update the version of
+`rand` used in these files so they all match:
+
+* ch01-01-installation.md
+* ch02-00-guessing-game-tutorial.md
+* ch14-03-cargo-workspaces.md
+-->
+
+<Listing file-name="Cargo.toml">
 
 ```toml
-rand = "0.10.1"
+{{#include ../listings/ch02-guessing-game-tutorial/listing-02-02/Cargo.toml:9:}}
 ```
 
+</Listing>
+
 Adding `rand` as a dependency in _Cargo.toml_ tells Cargo to download the
-`rand` package and any dependencies from crates.io and
+`rand` package and any dependencies from [crates.io](https://crates.io/) and
 make `rand` available to our project.
 
 Then, to bring `rand` definitions into the scope of our package, we added a
 `use` line starting with the name of the crate, `rand`, and listed the items we
-wanted to bring into scope. Recall that in “Generating a Random
-Number” in Chapter 2, we brought items in the
+wanted to bring into scope. Recall that in [“Generating a Random
+Number”][rand]<!-- ignore --> in Chapter 2, we brought items in the
 `rand::prelude` module into scope and called the `rand::rng` function:
 
-```rust
-use rand::prelude::*;
-
-fn main() {
+```rust,ignore
+{{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-03/src/main.rs:ch07-04}}
 ```
 
 Members of the Rust community have made many packages available at
-crates.io, and pulling any of them into your package
+[crates.io](https://crates.io/), and pulling any of them into your package
 involves these same steps: listing them in your package’s _Cargo.toml_ file and
 using `use` to bring items from their crates into scope.
 
@@ -288,6 +220,10 @@ use std::collections::HashMap;
 This is an absolute path starting with `std`, the name of the standard library
 crate.
 
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="using-nested-paths-to-clean-up-large-use-lists"></a>
+
 ### Using Nested Paths to Clean Up `use` Lists
 
 If we’re using multiple items defined in the same crate or same module, listing
@@ -295,27 +231,26 @@ each item on its own line can take up a lot of vertical space in our files. For
 example, these two `use` statements we had in the guessing game in Listing 2-4
 bring items from `std` into scope:
 
-**Listing** (src/main.rs)
+<Listing file-name="src/main.rs">
 
-```rust
-// --snip--
-use std::cmp::Ordering;
-use std::io;
-// --snip--
+```rust,ignore
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-01-use-std-unnested/src/main.rs:here}}
 ```
+
+</Listing>
 
 Instead, we can use nested paths to bring the same items into scope in one
 line. We do this by specifying the common part of the path, followed by two
 colons, and then curly brackets around a list of the parts of the paths that
 differ, as shown in Listing 7-18.
 
-**Listing 7-18: Specifying a nested path to bring multiple items with the same prefix into scope** (src/main.rs)
+<Listing number="7-18" file-name="src/main.rs" caption="Specifying a nested path to bring multiple items with the same prefix into scope">
 
-```rust
-// --snip--
-use std::{cmp::Ordering, io};
-// --snip--
+```rust,ignore
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-18/src/main.rs:here}}
 ```
+
+</Listing>
 
 In bigger programs, bringing many items into scope from the same crate or
 module using nested paths can reduce the number of separate `use` statements
@@ -326,24 +261,31 @@ two `use` statements that share a subpath. For example, Listing 7-19 shows two
 `use` statements: one that brings `std::io` into scope and one that brings
 `std::io::Write` into scope.
 
-**Listing 7-19: Two `use` statements where one is a subpath of the other** (src/lib.rs)
+<Listing number="7-19" file-name="src/lib.rs" caption="Two `use` statements where one is a subpath of the other">
 
-```rust
-use std::io;
-use std::io::Write;
+```rust,noplayground
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-19/src/lib.rs}}
 ```
+
+</Listing>
 
 The common part of these two paths is `std::io`, and that’s the complete first
 path. To merge these two paths into one `use` statement, we can use `self` in
 the nested path, as shown in Listing 7-20.
 
-**Listing 7-20: Combining the paths in Listing 7-19 into one `use` statement** (src/lib.rs)
+<Listing number="7-20" file-name="src/lib.rs" caption="Combining the paths in Listing 7-19 into one `use` statement">
 
-```rust
-use std::io::{self, Write};
+```rust,noplayground
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-20/src/lib.rs}}
 ```
 
+</Listing>
+
 This line brings `std::io` and `std::io::Write` into scope.
+
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="the-glob-operator"></a>
 
 ### Importing Items with the Glob Operator
 
@@ -363,8 +305,12 @@ upgrade the dependency if the dependency adds a definition with the same name
 as a definition of yours in the same scope, for example.
 
 The glob operator is often used when testing to bring everything under test into
-the `tests` module; we’ll talk about that in “How to Write
-Tests” in Chapter 11. The glob operator is also
-sometimes used as part of the prelude pattern: See the standard library
-documentation for more
+the `tests` module; we’ll talk about that in [“How to Write
+Tests”][writing-tests]<!-- ignore --> in Chapter 11. The glob operator is also
+sometimes used as part of the prelude pattern: See [the standard library
+documentation](../std/prelude/index.html#other-preludes)<!-- ignore --> for more
 information on that pattern.
+
+[ch14-pub-use]: ch14-02-publishing-to-crates-io.html#exporting-a-convenient-public-api
+[rand]: ch02-00-guessing-game-tutorial.html#generating-a-random-number
+[writing-tests]: ch11-01-writing-tests.html#how-to-write-tests

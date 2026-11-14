@@ -1,12 +1,3 @@
----
-title: "Async reactivity with resources"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/signals/resource.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Async reactivity with resources
 
 All signal APIs are synchronous— `signal`, `computed`, `input`, etc. However, applications often need to deal with data that is available asynchronously. A `Resource` gives you a way to incorporate async data into your application's signal-based code and still allow you to access its data synchronously.
@@ -48,7 +39,7 @@ The `resource` function accepts a `ResourceOptions` object with two main propert
 
 The `params` property defines a reactive computation that produces a parameter value. Whenever signals read in this computation change, the resource produces a new parameter value, similar to `computed`.
 
-The `loader` property defines a `ResourceLoader`— an async function that retrieves some state. The resource calls the loader every time the `params` computation produces a new value, passing that value to the loader. See Resource loaders below for more details.
+The `loader` property defines a `ResourceLoader`— an async function that retrieves some state. The resource calls the loader every time the `params` computation produces a new value, passing that value to the loader. See [Resource loaders](#resource-loaders) below for more details.
 
 `Resource` has a `value` signal that contains the results of the loader.
 
@@ -62,7 +53,7 @@ The `ResourceLoaderParams` object contains three properties: `params`, `previous
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `params`      | The value of the resource's `params` computation.                                                                                                |
 | `previous`    | An object with a `status` property, containing the previous `ResourceStatus`.                                                                    |
-| `abortSignal` | An `AbortSignal`. See Aborting requests below for details. |
+| `abortSignal` | An [`AbortSignal`](https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal). See [Aborting requests](#aborting-requests) below for details. |
 
 If the `params` computation returns `undefined`, the loader function does not run and the resource status becomes `'idle'`.
 
@@ -106,7 +97,7 @@ const userResource = resource({
 });
 ```
 
-See `AbortSignal` on MDN for more details on request cancellation with `AbortSignal`.
+See [`AbortSignal` on MDN](https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal) for more details on request cancellation with `AbortSignal`.
 
 ### Reloading
 
@@ -203,7 +194,7 @@ NOTE: Pass the chained value directly as the params value rather than wrapping i
 
 You might be tempted to read a resource's value directly inside `params`:
 
-```typescript
+```typescript {avoid, header: 'reads value() directly without status propagation'}
 const companyResource = resource({
   params: () => {
     const user = userResource.value(); // may be undefined
@@ -219,7 +210,7 @@ Reach for `chain` only when the downstream resource performs its own async work 
 
 ## Reactive data fetching with `httpResource`
 
-`httpResource` is a wrapper around `HttpClient` that gives you the request status and response as signals. It makes HTTP requests through the Angular HTTP stack, including interceptors.
+[`httpResource`](/guide/http/http-resource) is a wrapper around `HttpClient` that gives you the request status and response as signals. It makes HTTP requests through the Angular HTTP stack, including interceptors.
 
 ## Resource composition with snapshots
 
@@ -240,7 +231,7 @@ Each snapshot contains a `status` and either a `value` or an `error`.
 
 ### Composing resources with snapshots
 
-IMPORTANT: `resourceFromSnapshots` is experimental. It's ready for you to try, but it might change before it is stable.
+IMPORTANT: `resourceFromSnapshots` is [experimental](reference/releases#experimental). It's ready for you to try, but it might change before it is stable.
 
 You can create new resources from snapshots using `resourceFromSnapshots`. This enables composition with signal APIs like `computed` and `linkedSignal` to transform resource behavior.
 

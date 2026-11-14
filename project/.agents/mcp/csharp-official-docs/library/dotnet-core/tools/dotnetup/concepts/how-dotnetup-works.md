@@ -1,16 +1,14 @@
 ---
-title: "How dotnetup works"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/concepts/how-dotnetup-works.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How dotnetup works
+description: Learn about dotnetup installation roots, components, install specifications, installations, and state files.
+ms.topic: concept-article
+ms.date: 10/13/2026
+ai-usage: ai-assisted
 ---
 
 # How dotnetup works
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 `dotnetup` separates what you request from the files that it installs. This
 model lets several requirements share one .NET installation and lets
@@ -65,7 +63,7 @@ An **install specification** records a component and a channel or exact
 version. For example, an SDK specification for `10.0.1xx` means "keep the
 latest SDK in the 10.0.1xx feature band."
 
-You can learn more about the different kinds of supported channels and versions in Channels and versions.
+You can learn more about the different kinds of supported channels and versions in [Channels and versions](channels.md).
 
 Each specification has one of these sources:
 
@@ -93,8 +91,8 @@ Before uninstall changes state, it warns if another specification retains a
 requested installation or if garbage collection removes additional installations.
 In interactive mode, these warnings require confirmation.
 For details, see
-SDK uninstall behavior and
-Runtime uninstall behavior.
+[SDK uninstall behavior](../reference/dotnetup-sdk-uninstall.md#behavior) and
+[Runtime uninstall behavior](../reference/dotnetup-runtime-uninstall.md#behavior).
 
 ## Tracked and untracked installs
 
@@ -141,11 +139,11 @@ Self-update coordinates replacement of the dotnetup executable separately
 from .NET installation state.
 Other commands can fail while self-update holds its coordination locks.
 Retry those commands after the update finishes. For details, see
-`dotnetup self update`.
+[`dotnetup self update`](../reference/dotnetup-self-update.md).
 
 ## See also
 
-- Channels and versions
-- Repository SDK requirements
-- Environment configuration
-- `dotnetup list`
+- [Channels and versions](channels.md)
+- [Repository SDK requirements](repositories.md)
+- [Environment configuration](environment.md)
+- [`dotnetup list`](../reference/dotnetup-list.md)

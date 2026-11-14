@@ -1,17 +1,17 @@
 ---
-title: "Secure an ASP.NET Core Blazor WebAssembly standalone app with Microsoft Entra ID (part 1 of 3)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/security/webassembly/standalone-with-microsoft-entra-id.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Secure an ASP.NET Core Blazor WebAssembly standalone app with Microsoft Entra ID
+description: Learn how to secure an ASP.NET Core Blazor WebAssembly standalone app with Microsoft Entra ID.
+monikerRange: '>= aspnetcore-3.1'
+ms.custom: devx-track-csharp, sfi-ropc-nochange
+ms.date: 11/11/2025
 ---
-
 # Secure an ASP.NET Core Blazor WebAssembly standalone app with Microsoft Entra ID
 
-This article explains how to create a standalone Blazor WebAssembly app that uses Microsoft Entra ID (ME-ID) for authentication.
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
-For additional security scenario coverage after reading this article, see ASP.NET Core Blazor WebAssembly additional security scenarios.
+This article explains how to create a [standalone Blazor WebAssembly app](../../hosting-models.md#blazor-webassembly) that uses [Microsoft Entra ID (ME-ID)](https://azure.microsoft.com/services/active-directory/) for authentication.
+
+For additional security scenario coverage after reading this article, see [ASP.NET Core Blazor WebAssembly additional security scenarios](additional-scenarios.md).
 
 ## Walkthrough
 
@@ -24,21 +24,21 @@ The subsections of the walkthrough explain how to:
 
 ### Create a tenant in Azure
 
-Follow the guidance in Quickstart: Set up a tenant to create a tenant in ME-ID.
+Follow the guidance in [Quickstart: Set up a tenant](/entra/identity-platform/quickstart-create-new-tenant) to create a tenant in ME-ID.
 
 ### Register an app in Azure
 
 Register an ME-ID app:
 
-1. Navigate to **Microsoft Entra ID** in the Azure portal. Select **Applications** > **App registrations** in the sidebar. Select the **New registration** button.
+1. Navigate to [**Microsoft Entra ID** in the Azure portal](https://entra.microsoft.com/#home). Select **Applications** > **App registrations** in the sidebar. Select the **New registration** button.
 1. Provide a **Name** for the app (for example, **Blazor Standalone ME-ID**).
 1. Choose a **Supported account types**. You may select **Accounts in this organizational directory only** for this experience.
 1. Set the **Redirect URI** dropdown list to **Single-page application (SPA)** and provide the following redirect URI: `https://localhost/authentication/login-callback`. If you know the production redirect URI for the Azure default host (for example, `azurewebsites.net`) or the custom domain host (for example, `contoso.com`), you can also add the production redirect URI at the same time that you're providing the `localhost` redirect URI. Be sure to include the port number for non-`:443` ports in any production redirect URIs that you add.
-1. If you're using an unverified publisher domain, clear the **Permissions** > **Grant admin consent to openid and offline_access permissions** checkbox. If the publisher domain is verified, this checkbox isn't present.
+1. If you're using an [unverified publisher domain](/entra/identity-platform/howto-configure-publisher-domain), clear the **Permissions** > **Grant admin consent to openid and offline_access permissions** checkbox. If the publisher domain is verified, this checkbox isn't present.
 1. Select **Register**.
 
-> **Note:**
-> Supplying the port number for a `localhost` ME-ID redirect URI isn't required. For more information, see Redirect URI (reply URL) restrictions and limitations: Localhost exceptions (Entra documentation).
+> [!NOTE]
+> Supplying the port number for a `localhost` ME-ID redirect URI isn't required. For more information, see [Redirect URI (reply URL) restrictions and limitations: Localhost exceptions (Entra documentation)](/entra/identity-platform/reply-url#localhost-exceptions).
 
 Record the following information:
 
@@ -48,7 +48,7 @@ Record the following information:
 In **Authentication** > **Platform configurations** > **Single-page application**:
 
 1. Confirm the redirect URI of `https://localhost/authentication/login-callback` is present.
-1. In the **Implicit grant** section, ensure that the checkboxes for **Access tokens** and **ID tokens** aren'<example-value>'t recommended for Blazor apps using MSAL v2.0 or later.** For more information, see Secure ASP.NET Core Blazor WebAssembly.
+1. In the **Implicit grant** section, ensure that the checkboxes for **Access tokens** and **ID tokens** aren't selected. **Implicit grant isn't recommended for Blazor apps using MSAL v2.0 or later.** For more information, see [Secure ASP.NET Core Blazor WebAssembly](index.md#use-the-authorization-code-flow-with-pkce).
 1. The remaining defaults for the app are acceptable for this experience.
 1. Select the **Save** button if you made changes.
 
@@ -62,22 +62,13 @@ dotnet new blazorwasm -au SingleOrg --client-id "{CLIENT ID}" -o {PROJECT NAME} 
 
 | Placeholder      | Azure portal name       | Example                                |
 | ---------------- | ----------------------- | -------------------------------------- |
-| `{PROJECT NAME}` | —                 | `BlazorSample`                         |
+| `{PROJECT NAME}` | &mdash;                 | `BlazorSample`                         |
 | `{CLIENT ID}`    | Application (client) ID | `00001111-aaaa-2222-bbbb-3333cccc4444` |
 | `{TENANT ID}`    | Directory (tenant) ID   | `aaaabbbb-0000-cccc-1111-dddd2222eeee` |
 
 The output location specified with the `-o|--output` option creates a project folder if it doesn't exist and becomes part of the project's name.
 
-Add a `Microsoft.Authentication.WebAssembly.Msal.Models.MsalProviderOptions` for `User.Read` permission with `Microsoft.Authentication.WebAssembly.Msal.Models.MsalProviderOptions.DefaultAccessTokenScopes`:
-
-```csharp
-builder.Services.AddMsalAuthentication(options =>
-{
-    ...
-    options.ProviderOptions.DefaultAccessTokenScopes
-        .Add("https://graph.microsoft.com/User.Read");
-});
-```
+[!INCLUDE[](~/blazor/security/includes/additional-scopes-standalone-MEID.md)]
 
 ### Run the app
 
@@ -86,36 +77,141 @@ Use one of the following approaches to run the app:
 * Visual Studio
   * Select the **Run** button.
   * Use **Debug** > **Start Debugging** from the menu.
-  * Press `F5`.
+  * Press <kbd>F5</kbd>.
 * .NET CLI command shell: Execute the `dotnet watch` (or `dotnet run`) command from the app's folder.
 
 ## Remote authentication paths
 
-Remote authentication paths are customized using `Microsoft.AspNetCore.Components.WebAssembly.Authentication.RemoteAuthenticationApplicationPathsOptions` on the `Microsoft.AspNetCore.Components.WebAssembly.Authentication.RemoteAuthenticationOptions`1.AuthenticationPaths` property in the app's `Program` file. For the framework's default path values, see the `dotnet/aspnetcore` reference source.
+[!INCLUDE[](~/blazor/security/includes/remote-authentication-paths.md)]
 
-> **Note:**
-> Documentation links to .NET reference source usually load the repository's default branch, which represents the current development for the next release of .NET. To select a tag for a specific release, use the **Switch branches or tags** dropdown list.
+## Parts of the app
 
-If an app customizes a remote authentication path, take either of the following approaches:
+This section describes the parts of an app generated from the Blazor WebAssembly project template and how the app is configured. There's no specific guidance to follow in this section for a basic working application if you created the app using the guidance in the [Walkthrough](#walkthrough) section. The guidance in this section is helpful for updating an app to authenticate and authorize users. However, an alternative approach to updating an app is to create a new app from the guidance in the [Walkthrough](#walkthrough) section and moving the app's components, classes, and resources to the new app.
 
-* Match the path in hard-coded strings around the app.
+### Authentication package
 
-* Inject `Microsoft.AspNetCore.Components.WebAssembly.Authentication.RemoteAuthenticationOptions`1` to obtain the configured value around the app. The following example demonstrates the approach for the `RedirectToLogin` component.
+When an app is created to use Work or School Accounts (`SingleOrg`), the app automatically receives a package reference for the [Microsoft Authentication Library](/entra/identity-platform/msal-overview) ([`Microsoft.Authentication.WebAssembly.Msal`](https://www.nuget.org/packages/Microsoft.Authentication.WebAssembly.Msal)). The package provides a set of primitives that help the app authenticate users and obtain tokens to call protected APIs.
 
-  Add the following Razor directives to the top of the component's Razor file:
+If adding authentication to an app, manually add the [`Microsoft.Authentication.WebAssembly.Msal` package](https://www.nuget.org/packages/Microsoft.Authentication.WebAssembly.Msal) to the app.
 
-  ```razor
-  @using Microsoft.Extensions.Options
-  @inject IOptionsSnapshot<RemoteAuthenticationOptions<ApiAuthorizationProviderOptions>> RemoteOptions
-  ```
+[!INCLUDE[](~/includes/package-reference.md)]
 
-  Modify the component's redirect in the `OnInitialized` method:
+The [`Microsoft.Authentication.WebAssembly.Msal` package](https://www.nuget.org/packages/Microsoft.Authentication.WebAssembly.Msal) transitively adds the [`Microsoft.AspNetCore.Components.WebAssembly.Authentication` package](https://www.nuget.org/packages/Microsoft.AspNetCore.Components.WebAssembly.Authentication) to the app.
 
-  ```diff
-  - Navigation.NavigateToLogin("authentication/login");
-  + Navigation.NavigateToLogin(RemoteOptions.Get(Options.DefaultName)
-  +     .AuthenticationPaths.LogInPath);
-  ```
+### Authentication service support
 
-  > **Note:**
-  > If other paths differ from the project template's paths or framework's default paths, manage them in the same fashion.
+Support for authenticating users is registered in the service container with the <xref:Microsoft.Extensions.DependencyInjection.MsalWebAssemblyServiceCollectionExtensions.AddMsalAuthentication*> extension method provided by the [`Microsoft.Authentication.WebAssembly.Msal` package](https://www.nuget.org/packages/Microsoft.Authentication.WebAssembly.Msal). This method sets up the services required for the app to interact with the Identity Provider (IP).
+
+In the `Program` file:
+
+```csharp
+builder.Services.AddMsalAuthentication(options =>
+{
+    builder.Configuration.Bind("AzureAd", options.ProviderOptions.Authentication);
+});
+```
+
+The <xref:Microsoft.Extensions.DependencyInjection.MsalWebAssemblyServiceCollectionExtensions.AddMsalAuthentication*> method accepts a callback to configure the parameters required to authenticate an app. The values required for configuring the app can be obtained from the ME-ID configuration when you register the app.
+
+### `wwwroot/appsettings.json` configuration
+
+Configuration is supplied by the `wwwroot/appsettings.json` file:
+
+```json
+{
+  "AzureAd": {
+    "Authority": "https://login.microsoftonline.com/{TENANT ID}",
+    "ClientId": "{CLIENT ID}",
+    "ValidateAuthority": true
+  }
+}
+```
+
+Example:
+
+```json
+{
+  "AzureAd": {
+    "Authority": "https://login.microsoftonline.com/e86c78e2-...-918e0565a45e",
+    "ClientId": "00001111-aaaa-2222-bbbb-3333cccc4444",
+    "ValidateAuthority": true
+  }
+}
+```
+
+### Access token scopes
+
+The Blazor WebAssembly template doesn't automatically configure the app to request an access token for a secure API. To provision an access token as part of the sign-in flow, add the scope to the default access token scopes of the <xref:Microsoft.Authentication.WebAssembly.Msal.Models.MsalProviderOptions>:
+
+```csharp
+builder.Services.AddMsalAuthentication(options =>
+{
+    ...
+    options.ProviderOptions.DefaultAccessTokenScopes.Add("{SCOPE URI}");
+});
+```
+
+Specify additional scopes with `AdditionalScopesToConsent`:
+
+```csharp
+options.ProviderOptions.AdditionalScopesToConsent.Add("{ADDITIONAL SCOPE URI}");
+```
+
+> [!NOTE]
+> <xref:Microsoft.Authentication.WebAssembly.Msal.Models.MsalProviderOptions.AdditionalScopesToConsent> isn't able to provision delegated user permissions for Microsoft Graph via the Microsoft Entra ID consent UI when a user first uses an app registered in Microsoft Azure. For more information, see [Use Graph API with ASP.NET Core Blazor WebAssembly](graph-api.md?pivots=graph-sdk-5#defaultaccesstokenscopes-versus-additionalscopestoconsent).
+
+For more information, see the following resources:
+
+* [Request additional access tokens](additional-scenarios.md#request-additional-access-tokens)
+* [Attach tokens to outgoing requests](additional-scenarios.md#attach-tokens-to-outgoing-requests)
+* [Quickstart: Configure an application to expose web APIs](/entra/identity-platform/quickstart-configure-app-expose-web-apis)
+* [Access token scopes for Microsoft Graph API](graph-api.md)
+
+### Login mode
+
+[!INCLUDE[](~/blazor/security/includes/msal-login-mode.md)]
+
+### Imports file
+
+The <xref:Microsoft.AspNetCore.Components.Authorization?displayProperty=fullName> namespace is made available throughout the app via the imports file (`_Imports.razor`):
+
+```razor
+...
+@using Microsoft.AspNetCore.Components.Authorization
+...
+```
+
+### Index page
+
+[!INCLUDE[](~/blazor/security/includes/index-page-msal.md)]
+
+### App component
+
+[!INCLUDE[](~/blazor/security/includes/app-component.md)]
+
+### RedirectToLogin component
+
+[!INCLUDE[](~/blazor/security/includes/redirecttologin-component.md)]
+
+### LoginDisplay component
+
+[!INCLUDE[](~/blazor/security/includes/logindisplay-component.md)]
+
+### Authentication component
+
+[!INCLUDE[](~/blazor/security/includes/authentication-component.md)]
+
+## Troubleshoot
+
+[!INCLUDE[](~/blazor/security/includes/troubleshoot-wasm.md)]
+
+## Related content
+
+* [Identity and account types for single- and multitenant apps](/security/zero-trust/develop/identity-supported-account-types)
+* [ASP.NET Core Blazor WebAssembly additional security scenarios](additional-scenarios.md)
+* [Replace the Microsoft Authentication Library for JavaScript (`MSAL.js`)](additional-scenarios.md#replace-the-microsoft-authentication-library-for-javascript-msaljs)
+* [Unauthenticated or unauthorized web API requests in an app with a secure default client](additional-scenarios.md#unauthenticated-or-unauthorized-web-api-requests-in-an-app-with-a-secure-default-client)
+* [ASP.NET Core Blazor WebAssembly with Microsoft Entra ID groups and roles](microsoft-entra-id-groups-and-roles.md)
+* [Microsoft identity platform and Microsoft Entra ID with ASP.NET Core](../../../security/authentication/azure-active-directory/index.md)
+* [Microsoft identity platform documentation](/entra/identity-platform/)
+* [Security best practices for application properties in Microsoft Entra ID](/entra/identity-platform/security-best-practices-for-app-registration)

@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: Microsoft.AspNetCore.Http.Features split up"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/6/microsoft-aspnetcore-http-features-package-split.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 6.0 where the Microsoft.AspNetCore.Http.Features package has been split, and no longer ships as a package."
+ms.date: 05/06/2021
+ms.custom: https://github.com/aspnet/Announcements/issues/461
 ---
-
 # Microsoft.AspNetCore.Http.Features split
 
 Microsoft.AspNetCore.Http.Features has been split into the following two assemblies:
@@ -14,7 +11,7 @@ Microsoft.AspNetCore.Http.Features has been split into the following two assembl
 - Microsoft.AspNetCore.Http.Features
 - Microsoft.Extensions.Features
 
-For discussion, see GitHub issue dotnet/aspnetcore#32307.
+For discussion, see GitHub issue [dotnet/aspnetcore#32307](https://github.com/dotnet/aspnetcore/issues/32307).
 
 ## Version introduced
 
@@ -32,10 +29,10 @@ Microsoft.Extensions.Features 6.0 ships in both the ASP.NET shared framework and
 
 The following types have been moved to the new Microsoft.Extensions.Features assembly:
 
-- `Microsoft.AspNetCore.Http.Features.IFeatureCollection`
-- `Microsoft.AspNetCore.Http.Features.FeatureCollection`
-- `Microsoft.AspNetCore.Http.Features.FeatureReference`1`
-- `Microsoft.AspNetCore.Http.Features.FeatureReferences`1`
+- <xref:Microsoft.AspNetCore.Http.Features.IFeatureCollection>
+- <xref:Microsoft.AspNetCore.Http.Features.FeatureCollection>
+- <xref:Microsoft.AspNetCore.Http.Features.FeatureReference`1>
+- <xref:Microsoft.AspNetCore.Http.Features.FeatureReferences`1>
 
 These types are still in the `Microsoft.AspNetCore.Http.Features` namespace, and type forwards have been added for compatibility.
 
@@ -58,19 +55,34 @@ For class libraries that need to consume the types from Microsoft.AspNetCore.Htt
 </ItemGroup>
 ```
 
-For more information about adding the framework reference, see  Use the ASP.NET Core shared framework.
+For more information about adding the framework reference, see  [Use the ASP.NET Core shared framework](/aspnet/core/fundamentals/target-aspnetcore?#use-the-aspnet-core-shared-framework).
 
-Libraries with out of date references may encounter a `System.TypeLoadException` or the following error:
+Libraries with out of date references may encounter a <xref:System.TypeLoadException> or the following error:
 
-**Error CS0433 The type '<example-value>' exists in both '<example-value>' and '<example-value>'**
+**Error CS0433 The type 'IFeatureCollection' exists in both 'Microsoft.AspNetCore.Http.Features, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60' and 'Microsoft.Extensions.Features, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60'**
 
 To resolve the error, add a `FrameworkReference` to Microsoft.AspNetCore.App to any of the affected projects.
 
-For questions, see dotnet/aspnetcore#32307.
+For questions, see [dotnet/aspnetcore#32307](https://github.com/dotnet/aspnetcore/issues/32307).
 
 ## Affected APIs
 
-- `Microsoft.AspNetCore.Http.Features.IFeatureCollection`
-- `Microsoft.AspNetCore.Http.Features.FeatureCollection`
-- `Microsoft.AspNetCore.Http.Features.FeatureReference`1`
-- `Microsoft.AspNetCore.Http.Features.FeatureReferences`1`
+- <xref:Microsoft.AspNetCore.Http.Features.IFeatureCollection?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Http.Features.FeatureCollection?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Http.Features.FeatureReference`1?displayProperty=fullName>
+- <xref:Microsoft.AspNetCore.Http.Features.FeatureReferences`1?displayProperty=fullName>
+
+<!--
+
+## Category
+
+ASP.NET Core
+
+## Affected APIs
+
+- `T:Microsoft.AspNetCore.Http.Features.IFeatureCollection`
+- `T:Microsoft.AspNetCore.Http.Features.FeatureCollection`
+- `T:Microsoft.AspNetCore.Http.Features.FeatureReference`1`
+- `T:Microsoft.AspNetCore.Http.Features.FeatureReferences`1`
+
+-->

@@ -1,12 +1,9 @@
 ---
-title: "Entity Framework 6 Runtime License (ESN) - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/resources/licenses/ef6/esn.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Entity Framework 6 Runtime License (ESN) - EF6
+description: Entity Framework 6 Runtime License (ESN)
+author: SamMonoRT
+ms.date: 10/23/2016
 ---
-
 # Entity Framework 6 Runtime License (ESN)
 **TÉRMINOS DE LICENCIA DEL SOFTWARE DE MICROSOFT**
 

@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugManagedCallback::LoadModule Method"
 title: "ICorDebugManagedCallback::LoadModule Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmanagedcallback-loadmodule-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugManagedCallback.LoadModule"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugManagedCallback::LoadModule"
+helpviewer_keywords:
+  - "ICorDebugManagedCallback::LoadModule method [.NET debugging]"
+  - "LoadModule method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugManagedCallback::LoadModule Method
 
 Notifies the debugger that a common language runtime (CLR) module has been successfully loaded.
@@ -34,7 +43,7 @@ The `LoadModule` callback provides an appropriate time to examine metadata for t
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -44,5 +53,5 @@ The `LoadModule` callback provides an appropriate time to examine metadata for t
 
 ## See also
 
-- UnloadModule Method
-- ICorDebugManagedCallback Interface
+- [UnloadModule Method](icordebugmanagedcallback-unloadmodule-method.md)
+- [ICorDebugManagedCallback Interface](icordebugmanagedcallback-interface.md)

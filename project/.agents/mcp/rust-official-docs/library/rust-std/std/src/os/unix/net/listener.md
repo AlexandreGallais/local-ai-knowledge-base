@@ -1,12 +1,3 @@
----
-title: "std::os::unix::net::listener"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/os/unix/net/listener.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::os::unix::net::listener
 
 ## struct UnixListener
@@ -40,7 +31,7 @@ fn main() -> std::io::Result<()> {
     }
     Ok(())
 }
-```rust
+```
 
 ## UnixListener::bind
 
@@ -57,7 +48,7 @@ let listener = match UnixListener::bind("/path/to/the/socket") {
         return
     }
 };
-```rust
+```
 
 ## UnixListener::bind_addr
 
@@ -80,7 +71,7 @@ fn main() -> std::io::Result<()> {
     };
     Ok(())
 }
-```rust
+```
 
 ## UnixListener::accept
 
@@ -99,7 +90,7 @@ fn main() -> std::io::Result<()> {
     }
     Ok(())
 }
-```rust
+```
 
 ## UnixListener::try_clone
 
@@ -114,7 +105,7 @@ fn main() -> std::io::Result<()> {
     let listener_copy = listener.try_clone().expect("try_clone failed");
     Ok(())
 }
-```rust
+```
 
 ## UnixListener::local_addr
 
@@ -129,7 +120,7 @@ fn main() -> std::io::Result<()> {
     let addr = listener.local_addr().expect("Couldn't get local address");
     Ok(())
 }
-```rust
+```
 
 ## UnixListener::set_nonblocking
 
@@ -144,7 +135,7 @@ fn main() -> std::io::Result<()> {
     listener.set_nonblocking(true).expect("Couldn't set non blocking");
     Ok(())
 }
-```rust
+```
 
 ## UnixListener::take_error
 
@@ -162,8 +153,9 @@ fn main() -> std::io::Result<()> {
     }
     Ok(())
 }
-```rust
+```
 
+# Platform specific
 On Redox this always returns `None`.
 
 ## UnixListener::incoming
@@ -194,7 +186,7 @@ fn main() -> std::io::Result<()> {
     }
     Ok(())
 }
-```rust
+```
 
 ## struct Incoming
 
@@ -224,4 +216,4 @@ fn main() -> std::io::Result<()> {
     }
     Ok(())
 }
-```rust
+```

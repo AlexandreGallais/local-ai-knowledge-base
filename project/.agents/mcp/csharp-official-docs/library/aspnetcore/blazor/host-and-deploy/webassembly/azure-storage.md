@@ -1,15 +1,14 @@
 ---
-title: "Host and deploy ASP.NET Core standalone Blazor WebAssembly with Azure Storage"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/host-and-deploy/webassembly/azure-storage.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Host and deploy ASP.NET Core standalone Blazor WebAssembly with Azure Storage
+description: Learn how to host and deploy standalone Blazor WebAssembly using Microsoft Azure Storage.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 11/11/2025
 ---
-
 # Host and deploy ASP.NET Core standalone Blazor WebAssembly with Azure Storage
 
-This article explains how to host and deploy standalone Blazor WebAssembly using Microsoft Azure Storage.
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+This article explains how to host and deploy standalone Blazor WebAssembly using [Microsoft Azure Storage](/azure/storage/common/storage-introduction).
 
 Azure Storage static file hosting allows serverless Blazor app hosting. Custom domain names, the Azure Content Delivery Network (CDN), and HTTPS are supported.
 
@@ -24,8 +23,8 @@ If files aren't loaded at runtime due to inappropriate MIME types in the files' 
 * Change the MIME types (`Content-Type` headers) for the files after the app is deployed.
 
   In Storage Explorer (Azure portal) for each file:
-
+  
   1. Right-click the file and select **Properties**.
   1. Set the **ContentType** and select the **Save** button.
 
-For more information, see Static website hosting in Azure Storage.
+For more information, see [Static website hosting in Azure Storage](/azure/storage/blobs/storage-blob-static-website).

@@ -1,19 +1,19 @@
 ---
-title: "LINQ to XML events - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/linq-xml-events.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: LINQ to XML events - LINQ to XML
+description: Learn how to use XML events to monitor changes to an XML tree.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
 ---
 
 # LINQ to XML Events (LINQ to XML)
 
 LINQ to XML events enable you to be notified when an XML tree is altered.
 
-You can add events to any instance of any `System.Xml.Linq.XObject`. The event handler will then receive events for modifications to that `System.Xml.Linq.XObject` and any of its descendants. For example, you can add an event handler to the root of the tree, and handle all modifications to the tree from that event handler.
+You can add events to any instance of any <xref:System.Xml.Linq.XObject>. The event handler will then receive events for modifications to that <xref:System.Xml.Linq.XObject> and any of its descendants. For example, you can add an event handler to the root of the tree, and handle all modifications to the tree from that event handler.
 
-For examples of LINQ to XML events, see `System.Xml.Linq.XObject.Changing` and `System.Xml.Linq.XObject.Changed`.
+For examples of LINQ to XML events, see <xref:System.Xml.Linq.XObject.Changing> and <xref:System.Xml.Linq.XObject.Changed>.
 
 ## Types and events
 
@@ -21,15 +21,15 @@ You use the following types when working with events:
 
 |Type|Description|
 |----------|-----------------|
-|`System.Xml.Linq.XObjectChange`|Specifies the event type when an event is raised for an `System.Xml.Linq.XObject`.|
-|`System.Xml.Linq.XObjectChangeEventArgs`|Provides data for the `System.Xml.Linq.XObject.Changing` and `System.Xml.Linq.XObject.Changed` events.|
+|<xref:System.Xml.Linq.XObjectChange>|Specifies the event type when an event is raised for an <xref:System.Xml.Linq.XObject>.|
+|<xref:System.Xml.Linq.XObjectChangeEventArgs>|Provides data for the <xref:System.Xml.Linq.XObject.Changing> and <xref:System.Xml.Linq.XObject.Changed> events.|
 
 The following events are raised when you modify an XML tree:
 
 |Event|Description|
 |-----------|-----------------|
-|`System.Xml.Linq.XObject.Changing`|Occurs just before this `System.Xml.Linq.XObject` or any of its descendants is going to change.|
-|`System.Xml.Linq.XObject.Changed`|Occurs when an `System.Xml.Linq.XObject` has changed or any of its descendants have changed.|
+|<xref:System.Xml.Linq.XObject.Changing>|Occurs just before this <xref:System.Xml.Linq.XObject> or any of its descendants is going to change.|
+|<xref:System.Xml.Linq.XObject.Changed>|Occurs when an <xref:System.Xml.Linq.XObject> has changed or any of its descendants have changed.|
 
 ## Example: Use events to maintain a proper total when items are changed
 

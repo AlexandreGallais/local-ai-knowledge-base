@@ -1,23 +1,14 @@
----
-title: "RecursiveTask class (java.util.concurrent)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/RecursiveTask.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # RecursiveTask class (java.util.concurrent)
 
 ```java
 public abstract class RecursiveTask<V> extends ForkJoinTask<V>
 ```
 
-A recursive result-bearing `ForkJoinTask`.
+A recursive result-bearing {@link ForkJoinTask}.
 
-For example, here is a task-based program for computing Factorials:
+<p>For example, here is a task-based program for computing Factorials:
 
-```java
+<pre> {@code
 import java.util.concurrent.RecursiveTask;
 import java.math.BigInteger;
 public class Factorial {
@@ -45,14 +36,12 @@ public class Factorial {
   public static void main(String[] args) {
     System.out.println(factorial(Integer.parseInt(args[0])));
   }
-}
-```
+}}</pre>
 
-Parameters:
+@param <V> the type of the result of the task
 
-- `<V>`: the type of the result of the task
-
-**Since:** 1.7
+@since 1.7
+@author Doug Lea
 
 ## RecursiveTask.RecursiveTask()
 
@@ -69,8 +58,7 @@ protected abstract V compute()
 ```
 
 The main computation performed by this task.
-
-**Returns:** the result of the computation
+@return the result of the computation
 
 ## RecursiveTask.exec()
 

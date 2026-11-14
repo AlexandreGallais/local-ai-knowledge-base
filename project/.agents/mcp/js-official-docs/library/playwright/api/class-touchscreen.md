@@ -1,19 +1,10 @@
----
-title: "class: Touchscreen"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-touchscreen.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: Touchscreen
 * since: v1.8
 
 The Touchscreen class operates in main-frame CSS pixels relative to the top-left corner of the viewport. Methods on the
 touchscreen can only be used in browser contexts that have been initialized with `hasTouch` set to true.
 
-This class is limited to emulating tap gestures. For examples of other gestures simulated by manually dispatching touch events, see the emulating legacy touch events page.
+This class is limited to emulating tap gestures. For examples of other gestures simulated by manually dispatching touch events, see the [emulating legacy touch events](../touch-events.md) page.
 
 ## async method: Touchscreen.tap
 * since: v1.8

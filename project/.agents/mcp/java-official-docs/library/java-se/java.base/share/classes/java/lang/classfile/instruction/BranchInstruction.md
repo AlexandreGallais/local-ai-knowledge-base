@@ -1,35 +1,32 @@
----
-title: "BranchInstruction interface (java.lang.classfile.instruction)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/instruction/BranchInstruction.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # BranchInstruction interface (java.lang.classfile.instruction)
 
 ```java
 public sealed interface BranchInstruction extends Instruction permits AbstractInstruction.BoundBranchInstruction, AbstractInstruction.UnboundBranchInstruction
 ```
 
-Models a branching instruction (conditional or unconditional) in the `code` array of a `Code` attribute.  Corresponding opcodes have a
-kind of `Opcode.Kind.BRANCH`.  Delivered as
-a `CodeElement` when traversing the elements of a `CodeModel`.
-
+Models a branching instruction (conditional or unconditional) in the {@code
+code} array of a {@code Code} attribute.  Corresponding opcodes have a
+{@linkplain Opcode#kind() kind} of {@link Opcode.Kind#BRANCH}.  Delivered as
+a {@link CodeElement} when traversing the elements of a {@link CodeModel}.
+<p>
 A branch instruction is composite:
-
+{@snippet lang=text :
+// @link substring="BranchInstruction" target="#of":
+BranchInstruction(
+    Opcode opcode, // @link substring="opcode" target="#opcode()"
+    Label target // @link substring="target" target="#target()"
+)
+}
+<p>
 Due to physical restrictions, some types of instructions cannot encode labels
-too far away in the list of code elements.  In such cases, the `ClassFile.ShortJumpsOption` controls how an invalid branch instruction model
-is written by a `CodeBuilder`.
+too far away in the list of code elements.  In such cases, the {@link
+ClassFile.ShortJumpsOption} controls how an invalid branch instruction model
+is written by a {@link CodeBuilder}.
 
-**See also:** Opcode.Kind#BRANCH
-
-**See also:** CodeBuilder#branch CodeBuilder::branch
-
-**See also:** ClassFile.ShortJumpsOption
-
-**Since:** 24
+@see Opcode.Kind#BRANCH
+@see CodeBuilder#branch CodeBuilder::branch
+@see ClassFile.ShortJumpsOption
+@since 24
 
 ## BranchInstruction.target()
 
@@ -37,17 +34,18 @@ is written by a `CodeBuilder`.
 Label target()
 ```
 
+{@return the branch target of this instruction}
+
 ## BranchInstruction.of(Opcode, Label)
 
 ```java
 static BranchInstruction of(Opcode op, Label target)
 ```
 
-Parameters:
+{@return a branch instruction}
 
-- `op`: the opcode for the specific type of branch instruction, which must be of kind `Opcode.Kind.BRANCH`
-- `target`: the target of the branch
-
-Throws:
-
-- `IllegalArgumentException`: if the opcode kind is not `Opcode.Kind.BRANCH`
+@param op the opcode for the specific type of branch instruction,
+          which must be of kind {@link Opcode.Kind#BRANCH}
+@param target the target of the branch
+@throws IllegalArgumentException if the opcode kind is not
+        {@link Opcode.Kind#BRANCH}

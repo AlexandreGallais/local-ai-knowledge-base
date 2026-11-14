@@ -1,12 +1,3 @@
----
-title: "core::io::borrowed_buf"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/io/borrowed_buf.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::io::borrowed_buf
 
 ## struct BorrowedBuf
@@ -22,10 +13,10 @@ without having to initialize it first. It tracks the region of elements that hav
 and whether the unfilled region was initialized.
 
 In summary, the contents of the buffer can be visualized as:
-```
+```not_rust
 [                capacity                ]
 [ filled | unfilled (may be initialized) ]
-```rust
+```
 
 A `BorrowedBuf` is created around some existing elements (or capacity for elements) via a unique
 reference (`&mut`). The `BorrowedBuf` can be configured (e.g., using `clear` or `set_init`), but
@@ -109,13 +100,13 @@ The contents of the buffer are not modified.
 pub struct BorrowedCursor<'a, T>
 ```
 
-A writeable view of the unfilled portion of a `BorrowedBuf`.
+A writeable view of the unfilled portion of a [`BorrowedBuf`].
 
-The unfilled portion may be uninitialized; see `BorrowedBuf` for details.
+The unfilled portion may be uninitialized; see [`BorrowedBuf`] for details.
 
-Data can be written directly to the cursor by using `append` or
+Data can be written directly to the cursor by using [`append`](BorrowedCursor::append) or
 indirectly by getting a slice of part or all of the cursor and writing into the slice. In the
-indirect case, the caller must call `advance` after writing to inform
+indirect case, the caller must call [`advance`](BorrowedCursor::advance) after writing to inform
 the cursor how many elements have been written.
 
 Once elements are written to the cursor, they become part of the filled portion of the

@@ -1,146 +1,94 @@
 ---
-title: "What's new in ASP.NET Core in .NET 9 (part 1 of 6)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-9.0.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: What's new in ASP.NET Core in .NET 9
+description: Learn about the new features in ASP.NET Core in .NET 9.
+ms.date: 10/27/2026
 ---
-
 # What's new in ASP.NET Core in .NET 9
 
 This article highlights the most significant changes in ASP.NET Core in .NET 9 with links to relevant documentation.
 
 ## Static asset delivery optimization
 
-`MapStaticAssets` routing endpoint conventions is a new feature that optimizes the delivery of static assets in ASP.NET Core apps.
+[`MapStaticAssets` routing endpoint conventions](xref:Microsoft.AspNetCore.Builder.StaticAssetsEndpointRouteBuilderExtensions.MapStaticAssets*) is a new feature that optimizes the delivery of static assets in ASP.NET Core apps.
 
-For information on static asset delivery for Blazor apps, see ASP.NET Core Blazor static files.
+For information on static asset delivery for Blazor apps, see [ASP.NET Core Blazor static files](../blazor/fundamentals/static-files.md?view=aspnetcore-9.0&preserve-view=true).
 
-Following production best practices for serving static assets requires a significant amount of work and technical expertise. Without optimizations like compression, caching, and fingerprints:
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/web_asset_delivery.md)]
 
-* The browser has to make additional requests on every page load.
-* More bytes than necessary are transferred through the network.
-* Sometimes stale versions of files are served to clients.
+## Blazor
 
-Creating performant web apps requires optimizing asset delivery to the browser. Possible optimizations include:
+This section describes new features for Blazor.
 
-* Serve a given asset once until the file changes or the browser clears its cache. Set the ETag header.
-* Prevent the browser from using old or stale assets after an app is updated. Set the Last-Modified header.
-* Set up proper caching headers.
-* Use caching middleware.
-* Serve compressed versions of the assets when possible.
-* Use a CDN to serve the assets closer to the user.
-* Minimize the size of assets served to the browser. This optimization doesn't include minification.
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/blazor.md)]
 
-`Microsoft.AspNetCore.Builder.StaticAssetsEndpointRouteBuilderExtensions.MapStaticAssets*` is a new feature that optimizes the delivery of static assets in an app. It's designed to work with all UI frameworks, including Blazor, Razor Pages, and MVC. It's typically a drop-in replacement for `UseStaticFiles`:
+## SignalR
 
-```diff
-var builder = WebApplication.CreateBuilder(args);
+This section describes new features for SignalR.
 
-builder.Services.AddRazorPages();
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/signalr.md)]
 
-var app = builder.Build();
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/signalrActivities.md)]
 
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-    app.UseHsts();
-}
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/signalr-trimming-aot.md)]
 
-app.UseHttpsRedirection();
+## Minimal APIs
 
-app.UseRouting();
+This section describes new features for Minimal APIs.
 
-app.UseAuthorization();
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/status500.md)]
 
-+app.MapStaticAssets();
--app.UseStaticFiles();
-app.MapRazorPages();
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/produces-problem.md)]
 
-app.Run();
-```
+## OpenAPI
 
-`MapStaticAssets` operates by combining build and publish-time processes to collect information about all the static resources in an app. This information is then utilized by the runtime library to efficiently serve these files to the browser.
+This section describes new features for OpenAPI
 
-`MapStaticAssets` can replace `UseStaticFiles` in most situations, however, it's optimized for serving the assets that the app has knowledge of at build and publish time. If the app serves assets from other locations, such as disk or embedded resources, `UseStaticFiles` should be used.
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/openApi.md)]
 
-`MapStaticAssets` provides the following benefits not found with `UseStaticFiles`:
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/openapi-aot.md)]
 
-* Build time compression for all the assets in the app:
-  * `gzip` during development and `gzip + brotli` during publish.
-  * All assets are compressed with the goal of reducing the size of the assets to the minimum.
-* Content based `ETags`: The `Etags` for each resource are the Base64 encoded string of the SHA-256 hash of the content. This ensures that the browser only redownloads a file if its contents have changed.
+## Authentication and authorization
 
-The following table shows the original and compressed sizes of the CSS and JS files in the default Razor Pages template.
+This section describes new features for authentication and authorization.
 
-File | Original | Compressed | % Reduction
--- | -- | --
-bootstrap.min.css | 163 | 17.5 | 89.26%
-jquery.js | 89.6 | 28 | 68.75%
-bootstrap.min.js | 78.5 | 20 | 74.52%
-**Total** | 331.1 | 65.5 | 80.20%
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/par.md)]
 
-The following table shows the original and compressed sizes using the Fluent UI Blazor components library.
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/oidccustomparms.md)]
 
-File | Original | Compressed | % Reduction
--- | -- | -- | --
-fluent.js | 384 | 73 | 80.99%
-fluent.css | 94 | 11 | 88.30%
-**Total** | 478 | 84 | 82.43%
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/httpsysextendedauth.md)]
 
-For a total of 478 KB uncompressed to 84 KB compressed.
+## Miscellaneous
 
-The following table shows the original and compressed sizes using the MudBlazor Blazor components library.
+The following sections describe miscellaneous new features.
 
-File | Original | Compressed | Reduction
--- | -- | -- | --
-MudBlazor.min.css | 541 | 37.5 | 93.07%
-MudBlazor.min.js | 47.4 | 9.2 | 80.59%
-**Total** | 588.4 | 46.7 | 92.07%
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/hybrid-cache.md)]
 
-Optimization happens automatically when using `MapStaticAssets`. When a library is added or updated, for example with new JavaScript or CSS, the assets are optimized as part of the build. Optimization is especially beneficial to mobile environments that can have a lower bandwidth or an unreliable connections.
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/endpoint-metadata.md)]
 
-For more information on the new file delivery features, see the following resources:
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/debugger.md)]
 
-* Serve static files in ASP.NET Core apps
-* ASP.NET Core Blazor static files
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/fix-for-503s.md)]
 
-### Customize build-time compression with MSBuild properties
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/asp0026.md)]
 
-Several MSBuild properties can be used to customize or disable build-time compression behavior:
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/improved-kestrel-connection-metrics.md)]
 
-* `CompressionEnabled`: Completely disables compression when set to `false`.
-* `CompressionExcludePatterns`: Semicolon-delimited list of glob patterns (for example, `**\*.js`) to exclude specific files from being considered for compression.
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/customize-named-pipes.md)]
 
-The following example excludes JavaScript files from compression:
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/exception-type-sets-http-status.md)]
 
-```xml
-<PropertyGroup>
-  <CompressionExcludePatterns>$(CompressionExcludePatterns);**\*.js</CompressionExcludePatterns>
-</PropertyGroup>
-```
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/opt_out_metrics.md)]
 
-To completely disable compression:
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/delete_keys.md)]
 
-```xml
-<PropertyGroup>
-  <CompressionEnabled>false</CompressionEnabled>
-</PropertyGroup>
-```
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/keyedDI.md)]
 
-For more information, see Serve static files in ASP.NET Core apps.
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/trust_dev_cert_linux.md)]
 
-### Enabling dynamic compression on the server vs using `MapStaticAssets`
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/updated-versions.md)]
 
-`MapStaticAssets` has the following advantages over dynamic compression on the server:
+[!INCLUDE[](~/release-notes/aspnetcore-9/includes/websockets-keep-alive-timeout.md)]
 
-* Is simpler because there is no server specific configuration.
-* Is more performant because the assets are compressed at build time.
-* Allows the developer to spend extra time during the build process to ensure that the assets are the minimum size.
+## Breaking changes
 
-Consider the following table comparing MudBlazor compression with IIS dynamic compression and `MapStaticAssets`.
-
-IIS gzip | `MapStaticAssets` | `MapStaticAssets` reduction
--- | -- | --
- &#8773; 90 | 37.5 | 59%
+Use the articles in [Breaking changes in .NET](/dotnet/core/compatibility/breaking-changes) to find breaking changes that might apply when upgrading an app to a newer version of .NET.

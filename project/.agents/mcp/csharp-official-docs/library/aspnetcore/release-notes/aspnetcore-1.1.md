@@ -1,26 +1,23 @@
 ---
-title: "What's new in ASP.NET Core 1.1"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-1.1.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: What's new in ASP.NET Core 1.1
+description: Learn about the new features in ASP.NET Core 1.1.
+ms.date: 12/18/2018
 ---
 
 # What's new in ASP.NET Core 1.1
 
 ASP.NET Core 1.1 includes the following new features:
 
-* URL rewriting middleware
-* Response caching middleware
-* View Components as Tag Helpers
-* Middleware as MVC filters
-* Cookie-based TempData provider
-* Azure App Service logging provider
-* Azure Key Vault configuration provider
-* Azure and Redis Storage Data Protection Key <example-value>
+* [URL rewriting middleware](../fundamentals/url-rewriting.md)
+* [Response caching middleware](../performance/caching/middleware.md)
+* [View Components as Tag Helpers](../mvc/views/view-components.md#invoking-a-view-component-as-a-tag-helper)
+* [Middleware as MVC filters](../mvc/controllers/filters.md#using-middleware-in-the-filter-pipeline)
+* [Cookie-based TempData provider](../fundamentals/app-state.md#tempdata)
+* [Azure App Service logging provider](../fundamentals/logging/index.md#azure-app-service)
+* [Azure Key Vault configuration provider](../security/key-vault-configuration.md)
+* [Azure and Redis Storage Data Protection Key Repositories](../security/data-protection/implementation/key-storage-providers.md)
 * WebListener Server for Windows
-* WebSockets support
+* [WebSockets support](../fundamentals/websockets.md)
 
 ## Choosing between versions 1.0 and 1.1 of ASP.NET Core
 
@@ -28,9 +25,9 @@ ASP.NET Core 1.1 has more features than ASP.NET Core 1.0. In general, we recomme
 
 ## Breaking changes
 
-Use the articles in Breaking changes in .NET to find breaking changes that might apply when upgrading an app to a newer version of .NET.
+Use the articles in [Breaking changes in .NET](/dotnet/core/compatibility/breaking-changes) to find breaking changes that might apply when upgrading an app to a newer version of .NET.
 
 ## Related content
 
-* ASP.NET Core 1.1.0 Release Notes
-* To connect with the ASP.NET Core development team's progress and plans, tune in to the ASP.NET Community Standup.
+* [ASP.NET Core 1.1.0 Release Notes](https://github.com/dotnet/aspnetcore/releases/tag/1.1.0)
+* To connect with the ASP.NET Core development team's progress and plans, tune in to the [ASP.NET Community Standup](https://live.asp.net/).

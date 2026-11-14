@@ -1,14 +1,123 @@
 ---
-title: "What's new in ASP.NET Core in .NET 11 (part 1 of 9)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-11.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: What's new in ASP.NET Core in .NET 11
+ai-usage: ai-assisted
+description: Learn about the new features in ASP.NET Core in .NET 11.
+ms.date: 11/05/2026
 ---
-
 # What's new in ASP.NET Core in .NET 11
 
 This article highlights the most significant changes in ASP.NET Core in .NET 11 with links to relevant documentation.
 
 This article will be updated as new preview releases are made available.
+
+## Blazor
+
+This section describes new features for Blazor.
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/blazor.md)]
+
+## Blazor Hybrid
+
+This section describes new features for Blazor Hybrid.
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/blazor-hybrid.md)]
+
+## SignalR
+
+This section describes new features for SignalR.
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/signalr-authentication-refresh.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/signalr-cancel-hub-invocations.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/signalr-typescript-authentication-refresh.md)]
+
+## gRPC
+
+The `Microsoft.AspNetCore.Grpc.Swagger` package was deprecated. For more information, see [Deprecate Microsoft.AspNetCore.Grpc.Swagger (`dotnet/aspnetcore` #67134)](https://github.com/dotnet/aspnetcore/issues/67134).
+
+## Minimal APIs
+
+This section describes new features for Minimal APIs.
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/endpoint-filters-binding-failures.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/csharp-unions.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/async-validation-minimal-apis.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/short-circuit-endpoints-attribute.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/validation-localization.md)]
+
+## OpenAPI
+
+This section describes new features for OpenAPI.
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/openapi-binary-file-response.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/openapi-3-2-support.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/http-query-openapi.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/file-result-openapi.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/openapi-schema-improvements.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/openapi-3-2-default.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/openapi-server-sent-events.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/openapi-generation-environment.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/openapi-obsolete-apis.md)]
+
+## Authentication and authorization
+
+This section describes new features for authentication and authorization.
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/identity-time-provider.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/infer-passkey-display-name.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/user-jwts-file-based-apps.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/consistent-authorization-metadata.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/negotiate-tls-channel-binding.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/device-bound-sessions.md)]
+
+## Miscellaneous
+
+This section describes miscellaneous new features in .NET 11.
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/output-cache-policy-provider.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/development-certificate-trust.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/native-otel-tracing.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/performance-improvements.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/zstandard-compression.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/http3-early-request-processing.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/mcp-server-template.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/tls-handshake-observability.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/response-compression-vary-header.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/runtime-async-shared-framework.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/rate-limiting-retry-after.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/kestrel-trailer-header-timeouts.md)]
+
+[!INCLUDE[](~/release-notes/aspnetcore-11/includes/tls-channel-binding-token.md)]
+
+## Breaking changes
+
+Use the articles in [Breaking changes in .NET](/dotnet/core/compatibility/breaking-changes) to find breaking changes that might apply when upgrading an app to a newer version of .NET.

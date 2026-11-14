@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: MVC's detection of an empty body in model binding changed"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/7/mvc-empty-body-model-binding.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in ASP.NET Core 7.0 where MVC's detection of an empty body in model binding changed.
+ms.date: 04/04/2022
+ms.custom: https://github.com/aspnet/Announcements/issues/484
 ---
 
 # MVC's detection of an empty body in model binding changed
 
-The mechanism to detect an empty request body during MVC model binding now uses `Microsoft.AspNetCore.Http.Features.IHttpRequestBodyDetectionFeature.CanHaveBody`. This property is set to:
+The mechanism to detect an empty request body during MVC model binding now uses <xref:Microsoft.AspNetCore.Http.Features.IHttpRequestBodyDetectionFeature.CanHaveBody?displayProperty=nameWithType>. This property is set to:
 
 * `true`:
   * For `HTTP/1.x` requests with a non-zero `Content-Length` request header or a `Transfer-Encoding: chunked` request header.
@@ -36,7 +34,7 @@ Expected the input to start with a valid JSON token, when isFinalBlock is true.
 Path: $ | LineNumber: 0 | BytePositionInLine: 0.'
 ```
 
-The following example JSON shows the previous exception formatted as a `Microsoft.AspNetCore.Mvc.ProblemDetails` response:
+The following example JSON shows the previous exception formatted as a <xref:Microsoft.AspNetCore.Mvc.ProblemDetails> response:
 
 ```json
 {
@@ -46,7 +44,7 @@ The following example JSON shows the previous exception formatted as a `Microsof
   "traceId": "00-34e98b5841b88bfb5476965efd9d9c8c-5bb16bc50dfbabb7-00",
   "errors": {
     "$": [
-      "<example-value>"
+      "The input does not contain any JSON tokens. Expected the input to start with a valid JSON token, when isFinalBlock is true. Path: $ | LineNumber: 0 | BytePositionInLine: 0."
     ],
     "value": [
       "The value field is required."
@@ -57,7 +55,7 @@ The following example JSON shows the previous exception formatted as a `Microsof
 
 ## New behavior
 
-Deserialization is no longer attempted if `Microsoft.AspNetCore.Http.Features.IHttpRequestBodyDetectionFeature.CanHaveBody` is `false`. The following example `Microsoft.AspNetCore.Mvc.ProblemDetails` response shows how the error message returned to clients indicates that the request body is empty:
+Deserialization is no longer attempted if <xref:Microsoft.AspNetCore.Http.Features.IHttpRequestBodyDetectionFeature.CanHaveBody?displayProperty=nameWithType> is `false`. The following example <xref:Microsoft.AspNetCore.Mvc.ProblemDetails> response shows how the error message returned to clients indicates that the request body is empty:
 
 ```json
 {
@@ -78,11 +76,11 @@ Deserialization is no longer attempted if `Microsoft.AspNetCore.Http.Features.IH
 
 ## Type of breaking change
 
-This change affects binary compatibility.
+This change affects [binary compatibility](/dotnet/core/compatibility/categories#binary-compatibility).
 
 ## Reason for change
 
-To align with other parts of the framework that use `Microsoft.AspNetCore.Http.Features.IHttpRequestBodyDetectionFeature.CanHaveBody` and to fix Optional `[FromBody]` Model Binding is not working (dotnet/aspnetcore #29570).
+To align with other parts of the framework that use <xref:Microsoft.AspNetCore.Http.Features.IHttpRequestBodyDetectionFeature.CanHaveBody?displayProperty=nameWithType> and to fix [Optional `[FromBody]` Model Binding is not working (dotnet/aspnetcore #29570)](https://github.com/dotnet/aspnetcore/issues/29570).
 
 ## Recommended action
 

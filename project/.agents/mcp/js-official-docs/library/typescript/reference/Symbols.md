@@ -1,13 +1,10 @@
 ---
-title: "Symbols"
-tool: "typescript"
-version: "6.0"
-source: "https://github.com/microsoft/TypeScript-Website/blob/4ec663ac4412c3a7086401bd5a8811565589b11d/packages/documentation/copy/en/reference/Symbols.md"
-commit: "4ec663ac4412c3a7086401bd5a8811565589b11d"
-license: "CC-BY-4.0"
+title: Symbols
+layout: docs
+permalink: /docs/handbook/symbols.html
+oneline: Using the JavaScript Symbol primitive in TypeScript
+translatable: true
 ---
-
-# Symbols
 
 Starting with ECMAScript 2015, `symbol` is a primitive data type, just like `number` and `string`.
 
@@ -59,7 +56,8 @@ let className = c[getClassNameSymbol](); // "C"
 
 To enable treating symbols as unique literals a special type `unique symbol` is available. `unique symbol` is a subtype of `symbol`, and are produced only from calling `Symbol()` or `Symbol.for()`, or from explicit type annotations. This type is only allowed on `const` declarations and `readonly static` properties, and in order to reference a specific unique symbol, you’ll have to use the `typeof` operator. Each reference to a unique symbol implies a completely unique identity that’s tied to a given declaration.
 
-```ts
+```ts twoslash
+// @errors: 1332
 declare const sym1: unique symbol;
 
 // sym2 can only be a constant reference.
@@ -76,7 +74,8 @@ class C {
 
 Because each `unique symbol` has a completely separate identity, no two `unique symbol` types are assignable or comparable to each other.
 
-```ts
+```ts twoslash
+// @errors: 2367
 const sym2 = Symbol();
 const sym3 = Symbol();
 

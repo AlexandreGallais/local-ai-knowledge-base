@@ -1,14 +1,3 @@
----
-title: "xml-comment-generator"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-10/includes/xml-comment-generator.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# xml-comment-generator
-
 ### Improvements to the XML comment generator
 
 XML comment generation handles complex types in .NET 10 better than earlier versions of .NET.
@@ -42,4 +31,5 @@ We expect to include XML comments from a selected set of assemblies in the share
 
 #### Unified handling of documentation IDs in OpenAPI XML comment generator
 
-XML documentation comments from referenced assemblies are correctly merged even when their documentation IDs include return type suffixes. As a result, all valid XML comments are reliably included in generated OpenAPI documentation, improving documentation accuracy and completeness for APIs using referenced assemblies.
+XML documentation comments from referenced assemblies are correctly merged even when their documentation IDs include return type suffixes. As a result, all valid XML comments are reliably included in generated OpenAPI documentation, improving documentation accuracy and completeness for APIs using referenced assemblies.  
+

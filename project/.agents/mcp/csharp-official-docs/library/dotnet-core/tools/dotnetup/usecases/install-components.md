@@ -1,16 +1,14 @@
 ---
-title: "Install .NET SDKs and runtimes with dotnetup"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/usecases/install-components.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Install .NET SDKs and runtimes with dotnetup
+description: Install stable, preview, and exact .NET component requirements.
+ms.topic: how-to
+ms.date: 08/07/2026
+ai-usage: ai-assisted
 ---
 
 # Install .NET SDKs and runtimes with dotnetup
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 ## Install SDKs
 
@@ -36,8 +34,8 @@ Use `component@channel` to select a runtime component:
 
 ```dotnetcli
 dotnetup runtime install 10.0
-dotnetup runtime install user@example.com
-dotnetup runtime install user@example.com
+dotnetup runtime install aspnetcore@10.0
+dotnetup runtime install windowsdesktop@10.0
 ```
 
 A value without a component selects the core .NET runtime.
@@ -82,6 +80,6 @@ dotnetup list
 
 ## See also
 
-- SDK channels and versions
-- dotnetup sdk install
-- dotnetup runtime install
+- [SDK channels and versions](../concepts/channels.md)
+- [dotnetup sdk install](../reference/dotnetup-sdk-install.md)
+- [dotnetup runtime install](../reference/dotnetup-runtime-install.md)

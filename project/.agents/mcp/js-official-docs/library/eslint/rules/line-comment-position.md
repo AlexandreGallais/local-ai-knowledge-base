@@ -1,13 +1,7 @@
 ---
-title: "line-comment-position"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/line-comment-position.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: line-comment-position
+rule_type: layout
 ---
-
-# line-comment-position
 
 Line comments can be positioned above or beside code. This rule helps teams maintain a consistent style.
 
@@ -35,7 +29,7 @@ The `position` option has two settings:
 
 Examples of **correct** code for the `{ "position": "above" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint line-comment-position: ["error", { "position": "above" }]*/
@@ -43,29 +37,35 @@ Examples of **correct** code for the `{ "position": "above" }` option:
 1 + 1;
 ```
 
+:::
+
 Examples of **incorrect** code for the `{ "position": "above" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint line-comment-position: ["error", { "position": "above" }]*/
 1 + 1; // invalid comment
 ```
 
+:::
+
 #### position: beside
 
 Examples of **correct** code for the `{ "position": "beside" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint line-comment-position: ["error", { "position": "beside" }]*/
 1 + 1; // valid comment
 ```
 
+:::
+
 Examples of **incorrect** code for the `{ "position": "beside" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint line-comment-position: ["error", { "position": "beside" }]*/
@@ -73,27 +73,33 @@ Examples of **incorrect** code for the `{ "position": "beside" }` option:
 1 + 1;
 ```
 
+:::
+
 ### ignorePattern
 
 By default this rule ignores comments starting with the following words: `eslint`, `jshint`, `jslint`, `istanbul`, `global`, `exported`, `jscs`, `falls through`. An alternative regular expression can be provided.
 
 Examples of **correct** code for the `ignorePattern` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint line-comment-position: ["error", { "ignorePattern": "pragma" }]*/
 1 + 1; // pragma valid comment
 ```
 
+:::
+
 Examples of **incorrect** code for the `ignorePattern` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint line-comment-position: ["error", { "ignorePattern": "pragma" }]*/
 1 + 1; // invalid comment
 ```
+
+:::
 
 ### applyDefaultIgnorePatterns
 
@@ -101,21 +107,25 @@ Default ignore patterns are applied even when `ignorePattern` is provided. If yo
 
 Examples of **correct** code for the `{ "applyDefaultIgnorePatterns": false }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint line-comment-position: ["error", { "ignorePattern": "pragma", "applyDefaultIgnorePatterns": false }]*/
 1 + 1; // pragma valid comment
 ```
 
+:::
+
 Examples of **incorrect** code for the `{ "applyDefaultIgnorePatterns": false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint line-comment-position: ["error", { "ignorePattern": "pragma", "applyDefaultIgnorePatterns": false }]*/
 1 + 1; // falls through
 ```
+
+:::
 
 **Deprecated:** the object property `applyDefaultPatterns` is deprecated. Please use the property `applyDefaultIgnorePatterns` instead.
 
@@ -125,4 +135,4 @@ If you aren't concerned about having different line comment styles, then you can
 
 ## Compatibility
 
-**JSCS**: validateCommentPosition
+**JSCS**: [validateCommentPosition](https://jscs-dev.github.io/rule/validateCommentPosition)

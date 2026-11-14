@@ -1,34 +1,30 @@
 ---
-title: "Publish an ASP.NET Core app to Azure with Visual Studio Code"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/tutorials/publish-to-azure-webapp-using-vscode.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Publish an ASP.NET Core app to Azure with Visual Studio Code
+description: Learn how to publish an ASP.NET Core app to Azure App Service using Visual Studio Code
+monikerRange: '>= aspnetcore-6.0'
+ms.custom: devx-track-csharp, vscode-azure-extension-update-completed
+ms.date: 08/23/2022
 ---
 
 # Publish an ASP.NET Core app to Azure with Visual Studio Code
 
-With this tutorial, you'll learn how to create an ASP.Net Core MVC Application and deploy it within Visual Studio Code. The tutorial assumes familiarity with VS Code. For more information, see Getting started with VS Code. This tutorial will work on Windows, macOS, or Linux environments. Be sure to use the correct path separating characters (`\` vs `/`) for your environment.
+With this tutorial, you'll learn how to create an ASP.Net Core MVC Application and deploy it within Visual Studio Code. The tutorial assumes familiarity with VS Code. For more information, see [Getting started with VS Code](https://code.visualstudio.com/docs). This tutorial will work on Windows, macOS, or Linux environments. Be sure to use the correct path separating characters (`\` vs `/`) for your environment.
 
-> **Important:**
-> **ASP.NET Core preview releases with Azure App Service**
->
-> ASP.NET Core preview releases aren't deployed to Azure App Service by default. To host an app that uses an ASP.NET Core preview release, see Deploy ASP.NET Core preview release to Azure App Service.
+[!INCLUDE [Azure App Service Preview Notice](../includes/azure-apps-preview-notice.md)]
 
-To troubleshoot an App Service deployment issue, see Troubleshoot ASP.NET Core on Azure App Service and IIS.
+To troubleshoot an App Service deployment issue, see [Troubleshoot ASP.NET Core on Azure App Service and IIS](../test/troubleshoot-azure-iis.md).
 
 ## Prerequisites
 
-* An Azure subscription. Get a free Azure account if you don't have one.
-* .NET SDK (latest stable release).
-* Visual Studio Code.
-  * C# Extension.
-  * Azure App Service Extension. Use the extension to sign into Azure before proceeding.
+* An Azure subscription. Get a [free Azure account](https://azure.microsoft.com/pricing/purchase-options/azure-account?cid=msft_learn) if you don't have one.
+* [.NET SDK](https://dotnet.microsoft.com/download) (latest stable release).
+* [Visual Studio Code](https://code.visualstudio.com/Download).
+  * [C# Extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp).
+  * [Azure App Service Extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice). Use the extension to sign into Azure before proceeding.
 
 ## Create an ASP.Net Core MVC project
 
-1. Open the integrated terminal.
+1. Open the [integrated terminal](https://code.visualstudio.com/docs/editor/integrated-terminal).
 1. Set your working directory (`cd`) to the directory that will contain the project.
 1. Run the following commands:
 
@@ -37,15 +33,15 @@ To troubleshoot an App Service deployment issue, see Troubleshoot ASP.NET Core o
     code -r MyMVCapp
     ```
 
-    For the preceding commands:
+    For the preceding commands:  
 
-    * `dotnet new mvc -o MyMVCapp`
+    * `dotnet new mvc -o MyMVCapp` 
       * Creates a new ASP.NET Core MVC project in the *MyMVCapp* folder.
     * `code -r MyMVCapp`
       * Loads the `MyMVCapp.csproj` project file in Visual Studio Code.
       * Visual Studio Code updates the integrated terminal to the project directory.
 
-> **Note:**
+> [!NOTE]
 > If a dialog box appears with **Required assets to build and debug are missing from 'MyMVCapp'. Add them?**, select **Yes**.
 
 A new ASP.NET Core MVC project is created in a *MyMVCapp* folder with a structure similar to the following:
@@ -70,22 +66,10 @@ A `.vscode` folder will be created under the project structure. It will contain 
 
 Before deploying the app to Azure, make sure it is running properly on your local machine.
 
-1. Open the integrated terminal (if needed).
+1. Open the [integrated terminal](https://code.visualstudio.com/docs/editor/integrated-terminal) (if needed).
 1. Set up the a trusted HTTPS development certificate:
 
-    * Trust the HTTPS development certificate by running the following command:
-
-  ```dotnetcli
-  dotnet dev-certs https --trust
-  ```
-
-  The preceding command displays the following dialog, provided the certificate was not previously trusted:
-
-* Select **Yes** if you agree to trust the development certificate.
-
-  For more information, see the **Trust the ASP.NET Core HTTPS development certificate** section of the Enforcing SSL article.
-
-For information on trusting the Firefox browser, see Firefox SEC_ERROR_INADEQUATE_KEY_USAGE certificate error.
+    [!INCLUDE[](~/includes/trustCertVSC.md)]
 
 1. Run the following command:
 
@@ -95,9 +79,9 @@ For information on trusting the Firefox browser, see Firefox SEC_ERROR_INADEQUAT
 
     The preceding command:
 
-    * Starts Kestrel, ASP.NET Core's built-in web server.
+    * Starts [Kestrel](../fundamentals/servers/kestrel.md), ASP.NET Core's built-in web server.
     * Displays a URL to test the web app such as `http://localhost:<port>`, where `<port>` is the random port number set in `Properties\launchSettings.json` at project creation.
-
+  
     The output shows messages similar to the following, indicating that the app is running and awaiting requests:
 
     ```dotnetcli
@@ -115,8 +99,8 @@ For information on trusting the Firefox browser, see Firefox SEC_ERROR_INADEQUAT
         Content root path: D:\Src\MyMVCapp\
     ```
 
-1. `Ctrl`+*click* the HTTPS URL in the output to test the web app in a browser. In the example above, the URL is `https://localhost:7064`.
-1. Press `Ctrl`+`C` in the integrated terminal to shut down the web app after testing it.
+1. <kbd>Ctrl</kbd>+*click* the HTTPS URL in the output to test the web app in a browser. In the example above, the URL is `https://localhost:7064`.
+1. Press <kbd>Ctrl</kbd>+<kbd>C</kbd> in the integrated terminal to shut down the web app after testing it.
 
 ## Generate the deployment package locally
 
@@ -128,6 +112,8 @@ For information on trusting the Firefox browser, see Firefox SEC_ERROR_INADEQUAT
 
     A new `Publish` subfolder will be created in the `bin` folder. This folder contains the files to be deployed to Azure.
 
+    :::image type="content" source="publish-to-azure-webapp-using-vscode/_static/publish-folder.png" alt-text="Publish folder structure" lightbox="publish-to-azure-webapp-using-vscode/_static/publish-folder.png":::
+
 ## Publish to Azure App Service
 
 Leveraging the Azure App Service extension for Visual Studio Code, follow the steps below to publish the website directly to the Azure App Service.
@@ -137,11 +123,11 @@ Leveraging the Azure App Service extension for Visual Studio Code, follow the st
 If you don't have an existing Azure Web App resource to publish to, you must create one.
 
 1. In the Azure extension tab, in the **RESOURCES** pane, expand the subscription you wish to use.
-1. Right-click **App Services** and select **Create New Web App...**.
+1. Right-click **App Services** and select **Create New Web App...**. 
 1. Follow the prompts:
     1. Enter a unique name for the web app.
     1. Select the most recent stable .NET runtime (such as `.NET 6 (LTS)`). Do not select the ASP.NET runtime, which is for .NET Framework apps.
-    1. Select your pricing tier. Free (F1) is acceptable for this tutorial.
+    1. Select your pricing tier. Free (F1) is acceptable for this tutorial.  
 
 ### Publish to Azure
 
@@ -151,16 +137,20 @@ If you don't have an existing Azure Web App resource to publish to, you must cre
     1. Select **Deploy** when prompted with a confirmation dialog.
 1. Once the deployment is finished, click `Browse Website` to validate the deployment.
 
+    ![Deployment succeeded message](publish-to-azure-webapp-using-vscode/_static/deployment-succeeded-message.jpg)
+
     Once you click `Browse Website`, you'll navigate to it using your default browser:
 
-> **Tip:**
+    ![New Web App successfully deployed](publish-to-azure-webapp-using-vscode/_static/new-webapp-deployed.jpg)
+
+> [!TIP] 
 > You can repeat the above steps to redeploy the app to the same Azure Web App resource as needed. Be sure to run `dotnet publish` again before you deploy to Azure.
 
 ## Next steps
 
-* Create your first Azure DevOps pipeline
+* [Create your first Azure DevOps pipeline](/azure/devops/pipelines/create-first-pipeline)
 
 ## Related content
 
-* Azure App Service
-* Azure resource groups
+* [Azure App Service](/azure/app-service/app-service-web-overview)
+* [Azure resource groups](/azure/azure-resource-manager/resource-group-overview#resource-groups)

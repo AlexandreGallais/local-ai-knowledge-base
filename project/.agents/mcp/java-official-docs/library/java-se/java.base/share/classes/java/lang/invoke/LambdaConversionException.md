@@ -1,12 +1,3 @@
----
-title: "LambdaConversionException class (java.lang.invoke)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/invoke/LambdaConversionException.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # LambdaConversionException class (java.lang.invoke)
 
 ```java
@@ -15,7 +6,7 @@ public class LambdaConversionException extends Exception
 
 LambdaConversionException
 
-**Since:** 1.8
+@since 1.8
 
 ## LambdaConversionException.LambdaConversionException()
 
@@ -23,7 +14,7 @@ LambdaConversionException
 public LambdaConversionException()
 ```
 
-Constructs a `LambdaConversionException`.
+Constructs a {@code LambdaConversionException}.
 
 ## LambdaConversionException.LambdaConversionException(String)
 
@@ -31,11 +22,8 @@ Constructs a `LambdaConversionException`.
 public LambdaConversionException(String message)
 ```
 
-Constructs a `LambdaConversionException` with a message.
-
-Parameters:
-
-- `message`: the detail message
+Constructs a {@code LambdaConversionException} with a message.
+@param message the detail message
 
 ## LambdaConversionException.LambdaConversionException(String, Throwable)
 
@@ -43,12 +31,9 @@ Parameters:
 public LambdaConversionException(String message, Throwable cause)
 ```
 
-Constructs a `LambdaConversionException` with a message and cause.
-
-Parameters:
-
-- `message`: the detail message
-- `cause`: the cause
+Constructs a {@code LambdaConversionException} with a message and cause.
+@param message the detail message
+@param cause the cause
 
 ## LambdaConversionException.LambdaConversionException(Throwable)
 
@@ -56,11 +41,8 @@ Parameters:
 public LambdaConversionException(Throwable cause)
 ```
 
-Constructs a `LambdaConversionException` with a cause.
-
-Parameters:
-
-- `cause`: the cause
+Constructs a {@code LambdaConversionException} with a cause.
+@param cause the cause
 
 ## LambdaConversionException.LambdaConversionException(String, Throwable, boolean, boolean)
 
@@ -68,12 +50,9 @@ Parameters:
 public LambdaConversionException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace)
 ```
 
-Constructs a `LambdaConversionException` with a message,
+Constructs a {@code LambdaConversionException} with a message,
 cause, and other settings.
-
-Parameters:
-
-- `message`: the detail message
-- `cause`: the cause
-- `enableSuppression`: whether or not suppressed exceptions are enabled
-- `writableStackTrace`: whether or not the stack trace is writable
+@param message the detail message
+@param cause the cause
+@param enableSuppression whether or not suppressed exceptions are enabled
+@param writableStackTrace whether or not the stack trace is writable

@@ -1,37 +1,37 @@
 ---
+description: "Learn more about: Saving and Writing a Document"
 title: "Saving and Writing a Document"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/saving-and-writing-a-document.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
-
 # Saving and Writing a Document
 
-When you load and save an `System.Xml.XmlDocument`, the saved document may differ from the original in the following ways:
+When you load and save an <xref:System.Xml.XmlDocument>, the saved document may differ from the original in the following ways:
 
-- If the `System.Xml.XmlDocument.PreserveWhitespace` property is set to `true` before the `System.Xml.XmlDocument.Save*` method is called, white space in the document is preserved in the output; if this property is `false`, `System.Xml.XmlDocument` auto-indents the output.
+- If the <xref:System.Xml.XmlDocument.PreserveWhitespace> property is set to `true` before the <xref:System.Xml.XmlDocument.Save*> method is called, white space in the document is preserved in the output; if this property is `false`, <xref:System.Xml.XmlDocument> auto-indents the output.
 
 - All the white space between attributes is reduced to a single space character.
 
-- The white space between elements is changed. Significant white space is preserved and insignificant white space is not. But when the document is saved, it will use the `System.Xml.XmlTextWriter` **Indenting** mode by default to neatly print the output to make it more readable.
+- The white space between elements is changed. Significant white space is preserved and insignificant white space is not. But when the document is saved, it will use the <xref:System.Xml.XmlTextWriter> **Indenting** mode by default to neatly print the output to make it more readable.
 
-- The quote character used around attribute values is changed to double quote by default. You can use the `System.Xml.XmlTextReader.QuoteChar` property on `System.Xml.XmlTextWriter` to set the quote character to either double quote or single quote.
+- The quote character used around attribute values is changed to double quote by default. You can use the <xref:System.Xml.XmlTextReader.QuoteChar> property on <xref:System.Xml.XmlTextWriter> to set the quote character to either double quote or single quote.
 
 - By default, numeric character entities like `{` are expanded.
 
 - The byte-order mark found in the input document is not preserved. UCS-2 is saved as UTF-8 unless you explicitly create an XML declaration that specifies a different encoding.
 
-- If you want to write out the `System.Xml.XmlDocument` into a file or stream, the output written out is the same as the content of the document. That is, the `System.Xml.XmlDeclaration` is written out only if there is one contained in the document, and the encoding used when writing out the document is the same encoding given in the declaration node.
+- If you want to write out the <xref:System.Xml.XmlDocument> into a file or stream, the output written out is the same as the content of the document. That is, the <xref:System.Xml.XmlDeclaration> is written out only if there is one contained in the document, and the encoding used when writing out the document is the same encoding given in the declaration node.
 
 ## Writing an XmlDeclaration
 
- The `System.Xml.XmlDocument` and `System.Xml.XmlDeclaration` members of `System.Xml.XmlNode.OuterXml*`, `System.Xml.XmlNode.InnerXml*`, and `System.Xml.XmlNode.WriteTo*`, in addition to the `System.Xml.XmlDocument` methods of `System.Xml.XmlDocument.Save*` and `System.Xml.XmlDocument.WriteContentTo*`, create an XML declaration.
+ The <xref:System.Xml.XmlDocument> and <xref:System.Xml.XmlDeclaration> members of <xref:System.Xml.XmlNode.OuterXml*>, <xref:System.Xml.XmlNode.InnerXml*>, and <xref:System.Xml.XmlNode.WriteTo*>, in addition to the <xref:System.Xml.XmlDocument> methods of <xref:System.Xml.XmlDocument.Save*> and <xref:System.Xml.XmlDocument.WriteContentTo*>, create an XML declaration.
 
- For the `System.Xml.XmlDocument` properties of `System.Xml.XmlNode.OuterXml*`, `System.Xml.XmlDocument.InnerXml*`, and the `System.Xml.XmlDocument.Save*`, `System.Xml.XmlDocument.WriteTo*`, and `System.Xml.XmlDocument.WriteContentTo*` methods, the encoding written out in the XML declaration is taken from the `System.Xml.XmlDeclaration` node. If there is no `System.Xml.XmlDeclaration` node, `System.Xml.XmlDeclaration` is not written out. If there is no encoding in the `System.Xml.XmlDeclaration` node, encoding is not written out in the XML declaration.
+ For the <xref:System.Xml.XmlDocument> properties of <xref:System.Xml.XmlNode.OuterXml*>, <xref:System.Xml.XmlDocument.InnerXml*>, and the <xref:System.Xml.XmlDocument.Save*>, <xref:System.Xml.XmlDocument.WriteTo*>, and <xref:System.Xml.XmlDocument.WriteContentTo*> methods, the encoding written out in the XML declaration is taken from the <xref:System.Xml.XmlDeclaration> node. If there is no <xref:System.Xml.XmlDeclaration> node, <xref:System.Xml.XmlDeclaration> is not written out. If there is no encoding in the <xref:System.Xml.XmlDeclaration> node, encoding is not written out in the XML declaration.
 
- The `System.Xml.XmlDocument.Save*` and `System.Xml.XmlDocument.Save*` methods always write out an `System.Xml.XmlDeclaration`. These methods take the encoding from the writer that it is writing to. That is, the encoding value on the writer overrides the encoding on the document and in the `System.Xml.XmlDeclaration`. For example, the following code does not write an encoding in the XML declaration found in the output file `out.xml`.
+ The <xref:System.Xml.XmlDocument.Save*?displayProperty=nameWithType> and <xref:System.Xml.XmlDocument.Save*?displayProperty=nameWithType> methods always write out an <xref:System.Xml.XmlDeclaration>. These methods take the encoding from the writer that it is writing to. That is, the encoding value on the writer overrides the encoding on the document and in the <xref:System.Xml.XmlDeclaration>. For example, the following code does not write an encoding in the XML declaration found in the output file `out.xml`.
 
 ```vb
 Dim doc As New XmlDocument()
@@ -47,13 +47,13 @@ doc.Load("text.xml");
 doc.Save(tw);
 ```
 
- For the `System.Xml.XmlDocument.Save*` method, the XML declaration is written out using the `System.Xml.XmlWriter.WriteStartDocument*` method in the `System.Xml.XmlWriter` class. Therefore, overwriting the `System.Xml.XmlWriter.WriteStartDocument*` method changes how the start of the document is written.
+ For the <xref:System.Xml.XmlDocument.Save*> method, the XML declaration is written out using the <xref:System.Xml.XmlWriter.WriteStartDocument*> method in the <xref:System.Xml.XmlWriter> class. Therefore, overwriting the <xref:System.Xml.XmlWriter.WriteStartDocument*> method changes how the start of the document is written.
 
- For the `System.Xml.XmlDeclaration` members of `System.Xml.XmlNode.OuterXml*`, `System.Xml.XmlDeclaration.WriteTo*`, and `System.Xml.XmlNode.InnerXml*`, if the `System.Xml.XmlDeclaration.Encoding` property is not set, no encoding is written out. Otherwise, the encoding written out in the XML declaration is the same as the encoding found in the `System.Xml.XmlDeclaration.Encoding` property.
+ For the <xref:System.Xml.XmlDeclaration> members of <xref:System.Xml.XmlNode.OuterXml*>, <xref:System.Xml.XmlDeclaration.WriteTo*>, and <xref:System.Xml.XmlNode.InnerXml*>, if the <xref:System.Xml.XmlDeclaration.Encoding> property is not set, no encoding is written out. Otherwise, the encoding written out in the XML declaration is the same as the encoding found in the <xref:System.Xml.XmlDeclaration.Encoding> property.
 
 ## Writing Document Content Using the OuterXml Property
 
- The `System.Xml.XmlNode.OuterXml` property is a Microsoft extension to the World Wide Web Consortium (W3C) XML Document Object Model (DOM) standards. The `System.Xml.XmlNode.OuterXml` property is used to get the markup of the whole XML document, or just the markup of a single node and its child nodes. `System.Xml.XmlNode.OuterXml*` returns the markup representing the given node and all its child nodes.
+ The <xref:System.Xml.XmlNode.OuterXml> property is a Microsoft extension to the World Wide Web Consortium (W3C) XML Document Object Model (DOM) standards. The <xref:System.Xml.XmlNode.OuterXml> property is used to get the markup of the whole XML document, or just the markup of a single node and its child nodes. <xref:System.Xml.XmlNode.OuterXml*> returns the markup representing the given node and all its child nodes.
 
  The following code sample shows how to save a document in its entirety as a string.
 
@@ -83,8 +83,8 @@ Dim xml As String = mydoc.DocumentElement.OuterXml
 string xml = mydoc.DocumentElement.OuterXml;
 ```
 
- In contrast, you can use the `System.Xml.XmlNode.InnerText` property if you want the content of child nodes.
+ In contrast, you can use the <xref:System.Xml.XmlNode.InnerText> property if you want the content of child nodes.
 
 ## See also
 
-- XML Document Object Model (DOM)
+- [XML Document Object Model (DOM)](xml-document-object-model-dom.md)

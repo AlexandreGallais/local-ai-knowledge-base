@@ -1,15 +1,4 @@
----
-title: "overview"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/performance/caching/hybrid/includes/overview.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# overview
-
-The `Microsoft.Extensions.Caching.Hybrid.HybridCache` API bridges gaps in the `Microsoft.Extensions.Caching.Distributed.IDistributedCache` and `Microsoft.Extensions.Caching.Memory.IMemoryCache` APIs. `HybridCache` is an abstract class with a default implementation that handles most aspects of saving to cache and retrieving from cache.
+The <xref:Microsoft.Extensions.Caching.Hybrid.HybridCache> API bridges gaps in the <xref:Microsoft.Extensions.Caching.Distributed.IDistributedCache> and <xref:Microsoft.Extensions.Caching.Memory.IMemoryCache> APIs. `HybridCache` is an abstract class with a default implementation that handles most aspects of saving to cache and retrieving from cache.
 
 ### Features of HybridCache
 
@@ -17,7 +6,7 @@ The `Microsoft.Extensions.Caching.Hybrid.HybridCache` API bridges gaps in the `M
 
 * A unified API for both in-process and out-of-process caching.
 
-  `HybridCache` is designed to be a drop-in replacement for existing `IDistributedCache` and `IMemoryCache` usage, and it provides a
+  `HybridCache` is designed to be a drop-in replacement for existing `IDistributedCache` and `IMemoryCache` usage, and it provides a 
 simple API for adding new caching code. If the app has an `IDistributedCache` implementation, the `HybridCache` service uses it for secondary caching. This two-level caching strategy allows `HybridCache` to provide the speed of an in-memory cache and the durability of a distributed or persistent cache.
 
 * Stampede protection.
@@ -34,7 +23,7 @@ To see the relative simplicity of the `HybridCache` API, compare code that uses 
 public class SomeService(IDistributedCache cache)
 {
     public async Task<SomeInformation> GetSomeInformationAsync
-        (string name, int id, CancellationToken token = <example-value>)
+        (string name, int id, CancellationToken token = default)
     {
         var key = $"someinfo:{name}:{id}"; // Unique key for this combination.
         var bytes = await cache.GetAsync(key, token); // Try to get from cache.
@@ -58,7 +47,7 @@ public class SomeService(IDistributedCache cache)
 
     // This is the work we're trying to cache.
     private async Task<SomeInformation> SomeExpensiveOperationAsync(string name, int id,
-        CancellationToken token = <example-value>)
+        CancellationToken token = default)
     { /* ... */ }
 }
 ```
@@ -71,7 +60,7 @@ Here's equivalent code that uses the `HybridCache` API:
 public class SomeService(HybridCache cache)
 {
     public async Task<SomeInformation> GetSomeInformationAsync
-        (string name, int id, CancellationToken token = <example-value>)
+        (string name, int id, CancellationToken token = default)
     {
         return await cache.GetOrCreateAsync(
             $"someinfo:{name}:{id}", // Unique key for this entry.
@@ -92,6 +81,6 @@ The `HybridCache` library supports older .NET runtimes, including .NET Framework
 
 For more information, see the following resources:
 
-* HybridCache library in ASP.NET Core
-* Hybrid Cache API proposal (GitHub dotnet/aspnetcore issue #54647)
-* HybridCache source code
+* [HybridCache library in ASP.NET Core](../../hybrid.md)
+* [Hybrid Cache API proposal (GitHub dotnet/aspnetcore issue #54647)](https://github.com/dotnet/aspnetcore/issues/54647)
+* [HybridCache source code](https://source.dot.net/#Microsoft.Extensions.Caching.Abstractions/Hybrid/HybridCache.cs,8c0fe94693d1ac8d) <!--keep-->

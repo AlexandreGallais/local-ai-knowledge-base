@@ -4,5 +4,5 @@
   "search": "Search the official documentation of Python (language reference, standard library, tutorial, how-to guides) and of the Inkscape extensions (the inkex API and the guides for extension authors). Returns 10 section ids at most.",
   "queryExample": "\"pathlib glob\" or \"PathElement\"",
   "toolExample": "\"python\" or \"inkex\"",
-  "idExample": "library/python/library/pathlib.md#basic-use"
+  "idExample": "library/python/library/pathlib.rst#basic-use"
 }

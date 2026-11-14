@@ -1,16 +1,9 @@
----
-title: "Profile your application"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/tools/devtools/profiler.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Profile your application
 
 The **Profiler** tab lets you visualize the execution of Angular's change detection.
 This is useful for determining when and how change detection impacts your application's performance.
+
+<img src="assets/images/guide/devtools/profiler.png" alt="A screenshot of the 'Profiler' tab which reads 'Click the play button to start a new recording, or upload a json file containing profiler data.' Next to this is a record button to begin recording a new profile as well as a file picker to select an existing profile.">
 
 The Profiler tab lets you start profiling the current application or import an existing profile from a previous run.
 To start profiling your application, hover over the circle in the top-left corner within the **Profiler** tab and click **Start recording**.
@@ -20,11 +13,13 @@ Interact with your application to trigger change detection and generate data Ang
 To finish recording, click the circle again to **Stop recording**.
 
 You can also import an existing recording.
-Read more about this feature in the Import recording section.
+Read more about this feature in the [Import recording](tools/devtools/profiler#import-and-export-recordings) section.
 
 ## Understand your application's execution
 
 After recording or importing a profile, Angular DevTools displays a visualization of change detection cycles.
+
+<img src="assets/images/guide/devtools/default-profiler-view.png" alt="A screenshot of the 'Profiler' tab after a profile has been recorded or uploaded. It displays a bar chart illustrating various change detection cycles with some text which reads 'Select a bar to preview a particular change detection cycle'.">
 
 Each bar in the sequence represents a change detection cycle in your app.
 The taller a bar is, the longer the application spent running change detection in this cycle.
@@ -34,13 +29,19 @@ When you select a bar, DevTools displays useful information about it including:
 - How much time Angular spent running change detection in this cycle.
 - An estimated frame rate as experienced by the user (if below 60fps)
 
+<img src="assets/images/guide/devtools/profiler-selected-bar.png" alt="A screenshot of the 'Profiler' tab. A single bar has been selected by the user and a nearby dropdown menu displays 'Bar chart`, showing a second bar chart underneath it. The new chart has two bars which take up the majority of the space, one labeled `TodosComponent` and the other labeled `NgForOf`. The other bars are small enough to be negligible in comparison.">
+
 ## Understand component execution
 
 The bar chart displayed after clicking on a change detection cycle displays a detailed view about how much time your application spent running change detection in that particular component or directive.
 
 This example shows the total time spent by the `NgForOf` directive and which method was called on it.
 
+<img src="assets/images/guide/devtools/directive-details.png" alt="A screenshot of the 'Profiler' tab where the `NgForOf` bar is selected. A detailed view of `NgForOf` is visible to the right where it lists 'Total time spent: 1.76 ms'. It includes a with exactly one row, listing `NgForOf` as a directives with an `ngDoCheck` method which took 1.76 ms. It also includes a list labeled 'Parent Hierarchy' containing the parent components of this directive.">
+
 ## Hierarchical views
+
+<img src="assets/images/guide/devtools/flame-graph-view.png" alt="A screenshot of the 'Profiler' tab. A single bar has been selected by the user and a nearby dropdown menu now displays 'Flame graph', showing a flame graph underneath it. The flame graph starts with a row called 'Entire application' and another row called 'AppComponent'. Beneath those, the rows start to break up into multiple items, starting with `[RouterOutlet]` and `DemoAppComponent` on the third row. A few layers deep, one cell is highlighted red.">
 
 You can also visualize the change detection execution in a flame graph-like view.
 
@@ -65,7 +66,11 @@ To visualize only the components in a change detection frame that went through t
 
 This view highlights all the components that went through change detection and displays those that did not in gray, such as `OnPush` components that did not re-render.
 
+<img src="assets/images/guide/devtools/debugging-onpush.png" alt="A screenshot of the 'Profiler' tab displaying a flame chart visualization of a change detection cycle. A checkbox labeled 'Show only change detection' is now checked. The flame graph looks very similar to before, however the color of components has changed from orange to blue. Several tiles labeled `[RouterOutlet]` are no longer highlighted with any color.">
+
 ## Import and export recordings
 
 Click the **Save Profile** button at the top-right of a recorded profiling session to export it as a JSON file and save it to the disk.
 Later, import the file in the initial view of the profiler by clicking the **Choose file** input.
+
+<img src="assets/images/guide/devtools/save-profile.png" alt="A screenshot of the 'Profiler' tab displaying change detection cycles. On the right side a 'Save Profile' button is visible.">

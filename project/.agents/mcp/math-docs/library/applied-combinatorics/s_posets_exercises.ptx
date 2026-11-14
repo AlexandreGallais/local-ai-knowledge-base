@@ -1,0 +1,409 @@
+<exercises xml:id="s_posets_exercises">
+  <exercise>
+    <statement>
+      <p>We say that a relation <m>R</m> on a set <m>X</m> is <term>symmetric</term><idx><h>relation</h><h>symmetric</h></idx> if <m>(x,y)\in R</m> implies <m>(y,x)\in R</m> for all <m>x,y\in X</m>. If <m>X=\{a,b,c,d,e,f\}</m>, how many symmetric relations are there on <m>X</m>?  How many of these are reflexive?</p>
+    </statement>
+  </exercise>
+  <exercise>
+    <statement>
+      <p>A relation <m>R</m> on a set <m>X</m> is an <term>equivalence relation</term><idx><h>relation</h><h>equivalence</h></idx> if <m>R</m> is reflexive, symmetric, and transitive. Fix an integer <m>m\geq 2</m>. Show that the relation defined on the set <m>\ints</m> of integers by <m>aRb</m> (<m>a,b\in\ints</m>) if and only if <m>a\equiv b\pmod{m}</m> is an equivalence relation. (Recall that <m>a\equiv b\pmod{m}</m> means that when dividing <m>a</m> by <m>m</m> and <m>b</m> by <m>m</m> you get the same remainder.)</p>
+    </statement>
+  </exercise>
+  <exercise>
+    <statement>
+      <p>Is the binary relation
+        <md>
+          P=\{(1,1),(2,2),(3,3),(4,4),(1,3),(2,4),(2,5),(4,5),(3,5),(1,5)\}
+        </md>
+        a partial order on the set <m>X=\{1,2,3,4,5\}</m>? If so, discuss what properties you verified and how. If not, list the ordered pairs that must be added to <m>P</m> to make it a partial order or say why it cannot be made a partial order by adding ordered pairs.</p>
+      </statement>
+    </exercise>
+    <exercise xml:id="exer_posets_division">
+      <statement>
+        <p>Draw the diagram of the poset <m>\bfP=(X,P)</m> where
+          <m>X=\{1,2,3,5,6,10,15,30\}</m> and <m>x\leq y</m> in <m>P</m> if and only if
+          <m>x|y</m>. (Recall that <m>x|y</m> means that <m>x</m> evenly divides <m>y</m> without
+          remainder. Equivalently <m>x|y</m>, if and only if <m>y\equiv
+            0\pmod{x}</m>.) </p>
+          </statement>
+        </exercise>
+        <exercise>
+          <statement>
+            <p>Draw the diagram of the poset <m>\PXP</m> where
+              <md>X=\{\{1,3,4,5,6\},\{1,2,4,5,6\},\{1,2,3,6\},\{1,2,3\},\{1,5,6\},\\\{1,3,6\},\{1,2\},\{1,6\},\{3,5\},\{1\},\{3\},\{4\}\}
+              </md>
+              and <m>P</m> is the partial order on <m>X</m> given by the <q>is a subset of</q> relationship.</p>
+            </statement>
+          </exercise>
+          <exercise>
+            <statement>
+              <p>A <term>linear extension</term><idx><h>linear extension</h></idx> of a poset <m>\bfP=(X,P)</m> is a total order <m>L</m> on <m>X</m> such that if <m>x\leq y</m> in <m>P</m>, then <m>x\leq y</m> in <m>L</m>. Give linear extension of the three posets shown in <xref ref="fig_constructposets"/>.  If you feel very ambitious, try to count the number of linear extensions of the poset on the left side of the figure.  Don't list them.  Just provide an integer as your answer.</p>
+            </statement>
+            <solution>
+              <p>
+                There are many linear extensions for each of these posets, so we just give one for each of these posets.
+                For ease of formatting, they are written horizontally with the smallest element at the left:
+                <md>
+                  \{3\} \lt \{2\} \lt \{3,7\} \lt \{2,5\} \lt \{2,3,11\} \lt \{2,3,5,7\} \lt \{2,5,25\}
+                </md>
+                <md>
+                  2 \lt 10\lt 66 \lt 3\lt 21 \lt 210 \lt 50
+                </md>
+                <md>
+                  (1,2,1) \lt (2,5,4) \lt (4,1,5)\lt (3,3,2)\lt (6,4,5)\lt (7,6,7)\lt (5,7,3)
+                </md>
+              </p>
+
+              <p>
+                The count for the rightmost poset is reasonable to do.
+                There's a unique chain of 4 points that has to be in that order and the three points not in that chain form an antichain.
+                (I'm going to omit parentheses and commas when writing the elements here.) If we have both 573 at the top of the linear extension and 415 at the bottom of the linear extension, then there are three spots for 254, so 3 linear extensions in this case.
+                If 573 is at the top of the linear extension but 415 is not at the bottom, then there are two choices for where to put 415 and after doing that, there are 4 spots for where to put 254, which results in 8 linear extensions for this case.
+                The case with 415 at the bottom and 573 not at the top is dual, so 8 more.
+                If we have 767 at the top and 121 at the bottom (the only remaining scenario), then there are 5 ways to place 573 and 415 into the 4-point chain (listing them out is the quickest way to see this, I think).
+                Once that is done, there are 5 spots for 254 to go, so 25 linear extensions in this case.
+                Thus, there are 44 in total.
+              </p>
+
+              <p>
+                The count for the left-hand poset, which is isomorphic to the middle poset, is harder. Using software, there are 73 linear extensions. A reasonable attempt probably splits things up into some cases based on what happens with the minimal elements. To work a bit crudely on a lower bound, you could note that the order diagram is drawn with three "layers" of antichains, so there must be at least \(2!3!2! = 24\) linear extensions if we just focus on keeping the layers together. But then notice that \(\{2,3,11\}\) is also maximal, so we could have drawn it in the top layer. If we want to ensure we don't count anything we've already counted, we need to think of putting \(\{2,3,11\}\) above at least one of \(\{2,3,5,7\}\) and \(\{2,5,25\}\). So then there's \(2!2!\cdot 2\cdot 2! = 16\) more linear extensions here (order the minimal elements, order the two remaining middle layer elements, pick which of \(\{2,3,5,7\}\) and \(\{2,5,25\}\) comes next, order the other one of those with \(\{2,3,11\}\)). One could continue working at this by recognizing that the two minimal elements of the poset not need be the lowest two elements in a linear extension, and so on.
+              </p>
+            </solution>
+          </exercise>
+          <exercise>
+            <statement>
+              <p>Alice and Bob are considering posets <m>\bfP</m> and <m>\bfQ</m>. They soon realize that <m>\bfQ</m> is isomorphic to <m>\bfP^d</m>. After <m>10</m> minutes of work, they figure out that <m>\bfP</m> has height <m>5</m> and width <m>3</m>. Bob doesn't want do find the height and width of <m>\bfQ</m>, since he figures it will take (at least) another <m>10</m> minutes to answer these questions for <m>\bfQ</m>. Alice says Bob is crazy and that she already knows the height and width of <m>\bfQ</m>. Who's right and why?</p>
+            </statement>
+            <solution>
+              <p>
+                Alice is correct.
+                Recall that <m>\mathbf{P}</m> and <m>\mathbf{P}^{d}</m> have the same comparability graph and the same incomparability graph.
+                Recall also that the width of a poset is the clique number of its incomparability graph while the height of a poset is the clique number of its comparability graph.
+                Thus, the width of <m>\mathbf{P}^{d}</m> is the same as the width of <m>\mathbf{P}</m> and the heights are also equal.
+                (One could also explain this by noting that the order diagram of <m>\mathbf{P}^{d}</m> is obtained from the order diagram of <m>\mathbf{P}</m> by rotating it <m>180^{\circ}</m> and that this transformation preserves chains and antichains, so the height and width are unchanged.)
+              </p>
+            </solution>
+          </exercise>
+          <exercise>
+            <statement>
+              <p>For this exercise, consider the poset <m>\bfP</m> in <xref ref="fig_17ptposet"/>.
+                <ol marker="(a)">
+                  <li><p>List the maximal elements of <m>\bfP</m>.</p></li>
+                  <li><p>List the minimal elements of <m>\bfP</m>.</p></li>
+                  <li><p>Find a maximal chain with two points in <m>\bfP</m>.</p></li>
+                  <li><p>Find a chain in <m>\bfP</m> with three points that is <em>not</em> maximal. Say why your chain is not maximal.</p></li>
+                  <li><p>Find a maximal antichain with four points in <m>\bfP</m>.</p></li>
+                  
+                </ol>
+              </p>
+            </statement>
+            <solution>
+              <p>
+                <ol marker="(a)">
+                  <li>
+                    <p>
+                      The maximal elements are those that are not less than any other element: 15,8,11,2,17,3.
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      The minimal elements are those that are not greater than any other element: 16,1,5,14.
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Since <m>\{16,8\}</m> consists of a minimal element and a maximal element and 8 covers 16, this is a maximal chain with two points.
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      The chain <m>\{5,10,2\}</m> contains three points but is not maximal because <m>5\leq 4\leq 10</m>, so we could add 4 to this set and still have a chain.
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      The antichain <m>\{16,1,5,14\}</m> is maximal because it contains all the minimal elements and thus no other points can be added.
+                    </p>
+                  </li>
+                </ol>
+              </p>
+            </solution>
+          </exercise>
+          <exercise>
+            <statement>
+              <p>Find the height <m>h</m> of the poset <m>\PXP</m> shown below as well as a maximum chain and a partition of <m>X</m> into <m>h</m> antichains using the algorithm from this chapter.
+              </p>
+              <sidebyside width="55%">
+                <image source="height_ex_poset">
+                  <description>
+                    <p>
+                      The order diagram of a poset with 26 points. The points are labeled from 1 to 26.
+                    </p>
+                  </description>
+                </image>
+              </sidebyside>
+            </statement>
+            <solution>
+              <p>
+                Applying the algorithm where we label the minimal elements, remove those points, label the minimal elements of what's left, remove those points, etc., we get the following partition into antichains:
+                <md>
+                  <mrow>A_1 \amp = \{22,18,23,12,16\}</mrow>
+                  <mrow>A_2 \amp = \{2,3,13,17,11,21\}</mrow>
+                  <mrow>A_3 \amp = \{4,25,10\}</mrow>
+                  <mrow>A_4 \amp = \{5,24,8\}</mrow>
+                  <mrow>A_5 \amp = \{20\}</mrow>
+                  <mrow>A_6 \amp = \{19,9\}</mrow>
+                  <mrow>A_7 \amp = \{6,7\}</mrow>
+                  <mrow>A_8 \amp = \{1,26\}</mrow>
+                  <mrow>A_9 \amp = \{14,15\}</mrow>
+                </md>
+                Thus, the height is 9 which is witnessed by the 9-element chain <m>\{15,26,7,9,20,5,4,3,22\}</m>.
+              </p>
+            </solution>
+          </exercise>
+          <exercise>
+            <statement>
+              <p>For each of the two distinct (up to isomorphism) posets in <xref ref="fig_constructposets"/>, find the width <m>w</m>, an antichain of size <m>w</m>, and a partition of the ground set into <m>w</m> chains.</p>
+            </statement>
+            <solution>
+              <p>
+                For the two isomorphic posets on the left, let's use the middle one.
+                One three-element antichain is <m>\{10,66,21\}</m>, but there are others.
+                A possible partition into 3 chains is <m>C_{1} = \{2,10,50\}</m>, <m>C_{2} = \{66\}</m>, and <m>C_{3} = \{3,21,210\}</m>.
+                Thus, the width is 3.
+              </p>
+              
+              <p>
+                For the right-hand poset, one three-element antichain is <m>\{(2,5,4),(5,7,3),(4,1,5)\}</m>.
+                A possible partition into 3 chains is <m>C_{1} = \{(2,5,4)\}</m>, <m>C_{2} = \{(1,2,1),(3,3,2),(5,7,3)\}</m>, and <m>C_{3} = \{(4,1,5),(6,4,5),(7,6,7)\}</m>.
+                Thus, the width is 3.
+              </p>
+            </solution>
+          </exercise>
+          
+          <exercise>
+            <statement>
+              <p>A restaurant chef has designed a new set of dishes for his menu. His set of dishes contains <m>10</m> main courses, and he will select a subset of them to place on the menu each night. To ensure variety of main courses for his patrons, he wants to guarantee that a night's menu is neither completely contained in nor completely contains another night's menu. What is the largest number of menus he can plan using his <m>10</m> main courses subject to this requirement?</p>
+            </statement>
+            <solution>
+              <p>
+                We can view a menu as a subset of the list of 10 possible main courses.
+                To avoid a menu that is contained in or contains another night's menu, we need to find a collection of subsets (menus) so that no subset is a subset of any other.
+                That means we need an antichain in <m>\mathbf{2}^{10}</m>.
+                By Sperner's Theorem, we know that the width of <m>\mathbf{2}^{10}</m>, which is the number of points in a maximum antichain, is <m>C(10,5) = 252</m>.
+                Thus, the largest number of menus he can plan subject to this requirement is 252.
+              </p>
+            </solution>
+          </exercise>
+          <exercise>
+            <statement>
+              <p>Draw the diagram of the interval order represented in <xref ref="fig_intord_to_diag_ex"/>.
+              </p>
+              <figure xml:id="fig_intord_to_diag_ex">
+                <caption>An interval representation</caption>
+                <image width="73%" source="intord_to_diag_ex"><description><p>An interval representation</p>
+                </description></image>
+              </figure>
+            </statement>
+            <solution>
+              <image>
+                <description>
+                  <p>
+                    The order diagram of a poset. The points are labeled using letters from <m>c</m> to <m>j</m>. The cover relations are encoded in the annotations.
+                  </p>
+                </description>
+                <prefigure xmlns="https://prefigure.org" label="intord-to-diagram-exercise1">
+                  <diagram xmlns="https://prefigure.org"
+                          dimensions="(300, 450)" margins="22">
+                    <definition>
+                      poset={0:[7],1:[8,6],2:[0,5,8], 3:[6,8], 4:[], 
+                      5:[4,7], 6:[0,5], 7:[], 8:[7] }
+                    </definition>
+                    
+                    <definition>labels={0: 'c', 1: 'd', 2: 'e', 3:'f', 4:'g', 
+                      5:'h', 6:'i', 7:'j', 8:'k'}
+                    </definition>
+                    <coordinates bbox="(-1,0,1,3)">
+                      <!-- <grid-axes/> -->
+                    <poset covers="poset" labeled="yes" node-size="11"
+                      labels="labels" locations="{5:(0.25,2)}"
+                    />
+                    </coordinates>
+                    <annotations>
+                      <annotation ref="figure"
+                                text="The order diagram of an interval order with 9 points labeled by letters from c to k">
+                        <annotation ref="node-0" text="The point c covers points e and i and is covered by point j."/>
+                        <annotation ref="node-1" text="The minimal point d is covered by points i and k."/>
+                        <annotation ref="node-2" text="The minimal point e is covered by points c, h, and k."/>
+                        <annotation ref="node-3" text="The minimal point f is covered by points i and k."/>
+                        <annotation ref="node-4" text="The maximal point g covers point h."/>
+                        <annotation ref="node-5" text="The point h covers points e and i and is covered by points g and j."/>
+                        <annotation ref="node-6" text="The point i covers points d and f and is covered by points c and h."/>
+                        <annotation ref="node-7" text="The maximal point j covers points c, h, and k."/>
+                        <annotation ref="node-8" text="The point k covers points d, e, and f and is covered by point j."/>
+                    </annotation>
+                  </annotations>
+                  </diagram>
+                </prefigure>
+              </image>
+            </solution>
+          </exercise>
+          <exercise>
+            <statement>
+              <p>Draw the diagram of the interval order represented in
+                <xref ref="fig_intord_to_diag_ex2"/>.
+              </p>
+              <figure xml:id="fig_intord_to_diag_ex2">
+                <caption>An interval representation</caption>
+                <image width="85%" source="intord_to_diag_ex2"><description><p>An interval representation</p>
+                </description></image>
+              </figure>
+            </statement>
+          </exercise>
+          <exercise>
+            <statement>
+              <p>Find an interval representation for the poset in <xref ref="fig_intord_find_rep_ex1"/> or give a reason why one does not exist.
+              </p>
+              <figure xml:id="fig_intord_find_rep_ex1">
+                <caption>Is this poset an interval order?</caption>
+                <image width="40%" source="intord_find_rep_ex1"><description><p>Is this poset an interval order?</p>
+                </description></image>
+              </figure>
+              
+            </statement>
+          </exercise>
+          <exercise>
+            <statement>
+              <p>Find an interval representation for the poset in <xref ref="fig_intord_find_rep_ex4"/> or give a reason why one does not exist.</p>
+              <figure xml:id="fig_intord_find_rep_ex4">
+                <caption>Is this poset an interval order?</caption>
+                <image width="35%" source="intord_find_rep_ex4"><description><p>Is this poset an interval order?</p>
+                </description></image>
+              </figure>
+              
+            </statement>
+            <solution>
+              <p>
+                This poset is not an interval order. There are many occurrences of <m>\mathbf{2}+\mathbf{2}</m>. One example would be <m>\set{1,3,8,4}</m>. 
+              </p>
+            </solution>
+          </exercise>
+          <exercise>
+            <statement>
+              <p>Find an interval representation for the poset in <xref ref="fig_intord_find_rep_ex2"/> or give a reason why one does not exist.
+              </p>
+              <figure xml:id="fig_intord_find_rep_ex2">
+                <caption>Is this poset an interval order?</caption>
+                <image width="40%" source="intord_find_rep_ex2"><description><p>Is this poset an interval order?</p>
+                </description></image>
+              </figure>
+            </statement>
+            <solution>
+              <p>
+                We write out the down-sets and up-sets:
+                <md>
+                  <mrow>D(1)\amp = \{2,7\}\amp U(1)\amp = \{6,8,9,11\}</mrow>
+                  <mrow> D(2)\amp = \{7\}\amp U(2)\amp = \{1,3,5,6,8,9,10,11,12\}</mrow>
+                  <mrow> D(3)\amp = \{2,4,7,10\}\amp U(3)\amp = \{\}</mrow>
+                  <mrow> D(4)\amp = \{\}\amp U(4)\amp = \{3,6,8,9,10,11\}</mrow>
+                  <mrow> D(5)\amp = \{2,7\}\amp U(5)\amp = \{8,9,11\}</mrow>
+                  <mrow> D(6)\amp = \{1,2,4,7,10\}\amp U(6)\amp = \{9,11\}</mrow>
+                  <mrow> D(7)\amp = \{\}\amp U(7)\amp = \{1,2,3,5,6,8,9,10,11,12\}</mrow>
+                  <mrow> D(8)\amp = \{1,2,4,5,7,10,12\}\amp U(8)\amp = \{9,11\}</mrow>
+                  <mrow> D(9)\amp = \{1,2,4,5,6,7,8,10,12\}\amp U(9)\amp = \{\}</mrow>
+                  <mrow> D(10)\amp = \{2,4,7\}\amp U(10)\amp = \{3,6,8,9,11\}</mrow>
+                  <mrow> D(11)\amp = \{1,2,4,5,6,7,8,10,12\}\amp U(11)\amp = \{\}</mrow>
+                  <mrow> D(12)\amp = \{2,7\}\amp U(12)\amp = \{8,9,11\}</mrow>
+                </md>
+                
+                Putting the down-sets in ascending order and the up-sets in ascending order, we have
+                <md>
+                  \{\} \subsetneq \{7\}\subsetneq \{2,7\}\subsetneq \{2,4,7\} \subsetneq \{2,4,7,10\}\subsetneq \{1,2,4,7,10\}\subsetneq \{1,2,4,5,7,10,12\}\subsetneq \{1,2,4,5,6,7,8,10,12\}
+                </md>
+                <md>
+                  \{1,2,3,5,6,8,9,10,11,12\}\supsetneq \{1,3,5,6,8,9,10,11,12\}\supsetneq \{3,6,8,9,10,11\}\supsetneq \{3,6,8,9,11\} \supsetneq \{6,8,9,11\}\supsetneq \{8,9,11\}\supsetneq \{9,11\}\supsetneq \{\}
+                </md>
+                Therefore, the the poset is an interval order and an interval representation is
+                
+                <md>
+                  <mrow>I(1)\amp = [3,5]\amp I(7)\amp = [1,1]</mrow>
+                  <mrow> I(2)\amp = [2,2]\amp I(8)\amp = [7,7]</mrow>
+                  <mrow> I(3)\amp = [5,8]\amp I(9)\amp = [8,8]</mrow>
+                  <mrow> I(4)\amp = [1,3]\amp I(10)\amp = [4,4]</mrow>
+                  <mrow> I(5)\amp = [3,6]\amp I(11)\amp = [8,8]</mrow>
+                  <mrow> I(6)\amp = [6,7]\amp I(12)\amp = [3,6]</mrow>
+                  </md>
+                </p>
+              </solution>
+          </exercise>
+          <exercise>
+            <statement>
+              <p>Find an interval representation for the poset in <xref ref="fig_intord_find_rep_ex3"/> or give a reason why one does not exist.
+              </p>
+              <figure xml:id="fig_intord_find_rep_ex3">
+                <caption>Is this poset an interval order?</caption>
+                <image width="40%" source="intord_find_rep_ex3"><description><p>Is this poset an interval order?</p>
+                </description></image>
+              </figure>
+            </statement>
+          </exercise>
+          <exercise>
+            <statement>
+              <p>Use the First Fit algorithm (ordering by left endpoints) to find the width <m>w</m> of the interval order shown in <xref ref="fig_intord_firstfit_ex1"/> and a partition into <m>w</m> chains. Also give an antichain with <m>w</m> points.</p>
+              
+              <figure xml:id="fig_intord_firstfit_ex1">
+                <caption>An interval representation</caption>
+                <image width="85%" source="intord_firstfit_ex1"><description><p>An interval representation</p>
+                </description></image>
+              </figure>
+            </statement>
+            <solution>
+              <p>
+                First Fit produces the chain partition below:
+              
+              <md>
+                <mrow>C_{1}\amp = \{f,d,j,k,\}</mrow>
+                <mrow>C_{2}\amp = \{b,h,c,l,e,m,o\}</mrow>
+                <mrow>C_{3}\amp = \{g,n,a,i\}</mrow>
+              </md>
+              
+              
+                The set <m>\{n,l,j\}</m> is one of many 3-element antichains, so because we have both the chain partition and the antichain of size 3, the width of this interval order is 3.
+              
+              </p>
+            </solution>
+          </exercise>
+          <exercise>
+            <statement>
+              <p>Complete the proof of <xref ref="thm_intord-minrep"/>.  </p>
+            </statement>
+            <hint>
+              <p>The key idea is to show that if <m>d</m> is the least positive integer for which an interval order <m>\bfP</m> has a representation using end points from <m>\{1,2,\dots,n\}</m>, then every integer <m>i</m> from this set must be both a left end point and a right end point of an interval.</p>
+            </hint>
+          </exercise>
+          <exercise>
+            <statement>
+              <p>Show that every poset is isomorphic to a poset of each of the four types illustrated in <xref ref="exa_construct"/>.  </p>
+            </statement>
+            <hint>
+              <p>For each element <m>x</m>, choose some unique identifying key which is an element/prime/coordinate/observer.  Then associate with <m>x</m> a structure that identifies the keys of elements from <m>D[x]</m>.</p>
+            </hint>
+          </exercise>
+          <exercise>
+            <statement>
+              <p>The <term>dimension</term><idx><h>dimension</h></idx> of a poset <m>\PXP</m>, denoted <m>\dim(\bfP)</m>, is the least <m>t</m> for which <m>P</m> is the intersection of <m>t</m> linear orders on <m>X</m>.
+                <ol marker="(a)">
+                  <li><p>Show that the dimension of a poset <m>\bfP</m> is the same as the dimension of its dual.</p></li>
+                  <li><p>Show that <m>\bfP</m> is a subposet of <m>\bfQ</m>, then <m>\dim(\bfP)\le \dim(\bfQ)</m>.</p></li>
+                  <li><p>Show that the removal of a point can reduce the dimension by at most<nbsp/><m>1</m>.</p></li>
+                  <li><p>Find the dimension of the posets in <xref ref="fig_constructposets"/>.</p></li>
+                  <li><p>Use Dilworth's theorem to show that the dimension of a poset is at most its width.</p></li>
+                  <li><p>Use the example on the left side of <xref ref="fig_FirstFit"/> to show that
+                    for every <m>n\ge2</m>, there exists a poset <m>\bfP_n</m> on <m>2n</m> points having width and dimension
+                    equal to <m>n</m>.</p></li>
+                    
+                  </ol>
+                </p>
+              </statement>
+            </exercise>
+          </exercises>

@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: Blazor: Changes to routing logic in Blazor apps"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/5/blazor-routing-logic-changed.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 5.0 titled Blazor: Changes to routing logic in Blazor apps"
+ms.date: 12/14/2020
+ms.custom: https://github.com/aspnet/Announcements/issues/445
 ---
-
 # Blazor: Route precedence logic changed in Blazor apps
 
 A bug in the Blazor routing implementation affected how the precedence of routes was determined. This bug affects catch-all routes or routes with optional parameters within your Blazor app.
@@ -40,3 +37,15 @@ When `PreferExactMatches` is set to `true`, route matching prefers exact matches
 ## Affected APIs
 
 None
+
+<!--
+
+## Category
+
+ASP.NET Core
+
+## Affected APIs
+
+Not detectable via API analysis
+
+-->

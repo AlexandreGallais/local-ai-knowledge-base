@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataImport::EnumParams Method"
 title: "IMetaDataImport::EnumParams Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-enumparams-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.EnumParams"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::EnumParams"
+  - "EnumParams method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::EnumParams Method
 
 Enumerates ParamDef tokens representing the parameters of the method referenced by the specified MethodDef token.
@@ -29,7 +36,7 @@ HRESULT EnumParams (
  [in, out] A pointer to the enumerator. This must be NULL for the first call of this method.
 
  `mb`
- [in] A MethodDef token <example-value> the method with the parameters to enumerate.
+ [in] A MethodDef token representing the method with the parameters to enumerate.
 
  `rParams`
  [out] The array used to store the ParamDef tokens.
@@ -49,7 +56,7 @@ HRESULT EnumParams (
 
 ## Requirements
 
- **Platform:** See .NET supported operating systems.
+ **Platform:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -57,5 +64,5 @@ HRESULT EnumParams (
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

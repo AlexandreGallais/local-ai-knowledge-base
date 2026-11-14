@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: Serialization of custom types in .NET 7"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/7.0/custom-serialization.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in MSBuild for .NET 7 where serialization using BinaryFormatter of certain user-defined types is removed.
+author: baronfel
+ms.date: 05/06/2022
 ---
 
 # BinaryFormatter serialization of custom BuildEventArgs and ITaskItems removed for .NET 7
@@ -25,10 +23,10 @@ MSBuild will no longer support this mechanism, so code that used custom types de
 
 ## Reason for change
 
-BinaryFormatter was made obsolete in .NET 5. Per this plan, all first-party code in the dotnet GitHub organization must migrate away from its use by .NET 7. This change impacts user-exposed functionality of MSBuild.
+BinaryFormatter was [made obsolete in .NET 5](https://github.com/dotnet/designs/blob/main/accepted/2020/better-obsoletion/binaryformatter-obsoletion.md). Per this plan, all first-party code in the dotnet GitHub organization must migrate away from its use by .NET 7. This change impacts user-exposed functionality of MSBuild.
 
 ## Recommended action
 
-* Engage with the MSBuild team on this GitHub discussion about your specific use cases and how you can migrate away from the `TranslateDotNet` mechanism.
+* Engage with the MSBuild team on [this GitHub discussion](https://github.com/dotnet/msbuild/discussions/7582) about your specific use cases and how you can migrate away from the `TranslateDotNet` mechanism.
 
 * Avoid returning custom derived types from tasks or when logging.

@@ -1,18 +1,12 @@
----
-title: "require-property"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/require-property.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-require-property"></a>
+<a name="require-property"></a>
+# <code>require-property</code>
 
-# `require-property`
+* [Fixer](#user-content-require-property-fixer)
+* [Context and settings](#user-content-require-property-context-and-settings)
+* [Failing examples](#user-content-require-property-failing-examples)
+* [Passing examples](#user-content-require-property-passing-examples)
 
-* Fixer
-* Context and settings
-* Failing examples
-* Passing examples
 
 Requires that all `@typedef` and `@namespace` tags have `@property`
 tags when their type is a plain `object`, `Object`, or `PlainObject`.
@@ -20,10 +14,14 @@ tags when their type is a plain `object`, `Object`, or `PlainObject`.
 Note that any other type, including a subtype of object such as
 `object<string, string>`, will not be reported.
 
+<a name="user-content-require-property-fixer"></a>
+<a name="require-property-fixer"></a>
 ## Fixer
 
 The fixer for `require-property` will add an empty `@property`.
 
+<a name="user-content-require-property-context-and-settings"></a>
+<a name="require-property-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -32,6 +30,8 @@ The fixer for `require-property` will add an empty `@property`.
 |Tags|`typedef`, `namespace`|
 |Recommended|true|
 
+<a name="user-content-require-property-failing-examples"></a>
+<a name="require-property-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -93,6 +93,10 @@ function foo( abc ) {
 // Message: Missing JSDoc @property.
 ````
 
+
+
+<a name="user-content-require-property-passing-examples"></a>
+<a name="require-property-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -152,3 +156,4 @@ function quux () {
 
 }
 ````
+

@@ -1,18 +1,14 @@
 ---
-title: "Conditional Mocking with vi.when | Recipes"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/recipes/conditional-mocking.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Conditional Mocking with vi.when | Recipes
 ---
 
 # Conditional Mocking with `vi.when`
 
-**Prerequisites**
-This recipe assumes you already have some familiarity with mocking in Vitest.
+::: tip Prerequisites
+This recipe assumes you already have some familiarity with [mocking](/guide/mocking) in Vitest.
+:::
 
-When a mock needs to return different values depending on the arguments it receives, `mockReturnValue` doesn't help because it always returns the same value. The standard approach would be to use `mockImplementation` with a `switch` or a series of `if/else` statements:
+When a mock needs to return different values depending on the arguments it receives, [`mockReturnValue`](/api/mock#mockreturnvalue) doesn't help because it always returns the same value. The standard approach would be to use [`mockImplementation`](/api/mock#mockimplementation) with a `switch` or a series of `if/else` statements:
 
 ```ts
 db.findById.mockImplementation((id) => {
@@ -28,7 +24,7 @@ db.findById.mockImplementation((id) => {
 })
 ```
 
-This works, but it becomes tedious because you have to write the argument-matching logic yourself. This is something that Vitest can handle for you when using the `vi.when` <Version>5.0.0</Version> API.
+This works, but it becomes tedious because you have to write the argument-matching logic yourself. This is something that Vitest can handle for you when using the [`vi.when`](/api/vi#vi-when) <Version>5.0.0</Version> API.
 
 ## Pattern
 
@@ -97,7 +93,7 @@ For convenience, `then*Once` shorthands are available and equivalent to `{ times
 
 ## Asymmetric matchers
 
-`calledWith` supports asymmetric matchers. This is useful when you care about the shape or type of an argument rather than its exact value:
+`calledWith` supports [asymmetric matchers](/guide/learn/matchers#asymmetric-matchers). This is useful when you care about the shape or type of an argument rather than its exact value:
 
 ```ts
 test('sends email to each recipient', () => {
@@ -119,7 +115,7 @@ test('sends email to each recipient', () => {
 })
 ```
 
-**Behavior Merging**
+::: warning Behavior Merging
 When registering a new behavior, Vitest checks existing behaviors in registration order. If the new arguments already match an existing behavior, the new action is merged into that behavior instead of creating a new one.
 
 This is especially important with broad asymmetric matchers:
@@ -128,11 +124,11 @@ This is especially important with broad asymmetric matchers:
 vi.when(getRole)
   .calledWith(expect.any(String))
   .thenReturn('user')
-  .calledWith('user@example.com')
+  .calledWith('admin@example.com')
   .thenReturnOnce('admin')
 ```
 
-Because the second registration is merged into the existing behavior, the `'admin'` action is not scoped to `'user@example.com'`. Instead, it becomes the next action for the entire `expect.any(String)` behavior. The resulting behavior acts as if it had been written like this:
+Because the second registration is merged into the existing behavior, the `'admin'` action is not scoped to `'admin@example.com'`. Instead, it becomes the next action for the entire `expect.any(String)` behavior. The resulting behavior acts as if it had been written like this:
 
 ```ts
 vi.when(getRole)
@@ -148,15 +144,17 @@ expect(getRole('user@example.com')).toBe('admin')
 expect(getRole('user@example.com')).toBe('user')
 ```
 
+:::
+
 ## Handling unmatched calls
 
 By default, when the spy is called with arguments that match no registered behavior, it falls back to the spy's original implementation. If the spy has no original implementation, it returns `undefined`.
 
 There are three ways to handle this differently:
 
-1. throwing an error;
-2. running a custom function;
-3. using asymmetric matchers as catch-all behaviors.
+1. [throwing an error](#onunmatched-throw);
+2. [running a custom function](#onunmatched-fn);
+3. [using asymmetric matchers as catch-all behaviors](#asymmetric-matcher-as-catch-all).
 
 ### `onUnmatched: 'throw'`
 
@@ -213,7 +211,7 @@ vi.when(db.findById)
 
 ## Asserting that all behaviors were called
 
-To check that all registered behaviors were actually matched and their actions consumed, the object returned by `vi.when` supports the `toHaveBeenExhausted` assertion:
+To check that all registered behaviors were actually matched and their actions consumed, the object returned by `vi.when` supports the [`toHaveBeenExhausted`](/api/expect#tohavebeenexhausted) assertion:
 
 ```ts
 test('loads both users', async () => {
@@ -240,14 +238,15 @@ AssertionError: expected all behaviors to have been exhausted, but some remain:
     ✗ thenReturn({ id: 2, name: 'Gracie' })  never called
 ```
 
-**Caveat**
+::: warning Caveat
 A `vi.when` chain with no behaviors is never considered exhausted. The same applies to a bare `.calledWith()` with no `then*` action attached. Both will always cause `toHaveBeenExhausted` to fail.
 
 Indefinite actions (no `times` limit) satisfy exhaustion checks after being used at least once. The actions keep responding after that, but the assertion is satisfied.
+:::
 
 ## Automatic cleanup with `using`
 
-`vi.when` supports the Explicit Resource Management protocol.
+`vi.when` supports the [Explicit Resource Management](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Resource_management) protocol.
 
 Declare the chain with `using` to scope behaviors to the current block and restore the spy automatically when execution leaves it.
 
@@ -266,7 +265,7 @@ test('without mocked behavior', () => {
 
 ## See also
 
-- `vi.when`
-- `toHaveBeenExhausted`
-- `vi.isWhenChain`
-- Auto-Cleanup with `using`
+- [`vi.when`](/api/vi#vi-when)
+- [`toHaveBeenExhausted`](/api/expect#tohavebeenexhausted)
+- [`vi.isWhenChain`](/api/vi#vi-iswhenchain)
+- [Auto-Cleanup with `using`](/guide/recipes/explicit-resources)

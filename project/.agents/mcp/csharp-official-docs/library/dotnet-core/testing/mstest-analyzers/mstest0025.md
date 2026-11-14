@@ -1,12 +1,16 @@
 ---
 title: "MSTEST0025: Use 'Assert.Fail' instead of an always-failing assert"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0025.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0025: Use 'Assert.Fail' instead of an always-failing assert"
+ms.date: 05/07/2024
+f1_keywords:
+- MSTEST0025
+- PreferAssertFailOverAlwaysFalseConditionsAnalyzer
+helpviewer_keywords:
+- PreferAssertFailOverAlwaysFalseConditionsAnalyzer
+- MSTEST0025
+author: Evangelink
+ms.author: amauryleve
 ---
-
 # MSTEST0025: Use 'Assert.Fail' instead of an always-failing assert
 
 | Property                            | Value                                                 |
@@ -52,11 +56,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0025
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0025.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

@@ -1,20 +1,26 @@
 ---
-title: "Backreference Constructs in .NET Regular Expressions"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/base-types/backreference-constructs-in-regular-expressions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Backreference Constructs in .NET Regular Expressions
+description: Learn how to identify repeated text elements by using backreference constructs in a regular expression.
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "backreferences"
+  - "constructs, backreference"
+  - ".NET regular expressions, backreference constructs"
+  - "regular expressions, backreference constructs"
+ms.assetid: 567a4b8d-0e79-49dc-8df9-f4b1aa376a2a
 ---
 
 # Backreference Constructs in Regular Expressions
 
 Backreferences provide a convenient way to identify a repeated character or substring within a string. For example, if the input string contains multiple occurrences of an arbitrary substring, you can match the first occurrence with a capturing group, and then use a backreference to match subsequent occurrences of the substring.
 
-> **Note:**
-> A separate syntax is used to refer to named and numbered capturing groups in replacement strings. For more information, see Substitutions.
+> [!NOTE]
+> A separate syntax is used to refer to named and numbered capturing groups in replacement strings. For more information, see [Substitutions](substitutions-in-regular-expressions.md).
 
-.NET defines separate language elements to refer to numbered and named capturing groups. For more information about capturing groups, see Grouping Constructs.
+.NET defines separate language elements to refer to numbered and named capturing groups. For more information about capturing groups, see [Grouping Constructs](grouping-constructs-in-regular-expressions.md).
 
 ## Numbered Backreferences
 
@@ -22,7 +28,7 @@ A numbered backreference uses the following syntax:
 
 `\` *number*
 
-where *number* is the ordinal position of the capturing group in the regular expression. For example, `\4` matches the contents of the fourth capturing group. If *number* is not defined in the regular expression pattern, a parsing error occurs, and the regular expression engine throws an `System.ArgumentException`. For example, the regular expression `\b(\w+)\s\1` is valid, because `(\w+)` is the first and only capturing group in the expression. On the other hand, `\b(\w+)\s\2` is invalid and throws an argument exception, because there is no capturing group numbered `\2`. In addition, if *number* identifies a capturing group in a particular ordinal position, but that capturing group has been assigned a numeric name different than its ordinal position, the regular expression parser also throws an `System.ArgumentException`.
+where *number* is the ordinal position of the capturing group in the regular expression. For example, `\4` matches the contents of the fourth capturing group. If *number* is not defined in the regular expression pattern, a parsing error occurs, and the regular expression engine throws an <xref:System.ArgumentException>. For example, the regular expression `\b(\w+)\s\1` is valid, because `(\w+)` is the first and only capturing group in the expression. On the other hand, `\b(\w+)\s\2` is invalid and throws an argument exception, because there is no capturing group numbered `\2`. In addition, if *number* identifies a capturing group in a particular ordinal position, but that capturing group has been assigned a numeric name different than its ordinal position, the regular expression parser also throws an <xref:System.ArgumentException>.
 
 Note the ambiguity between octal escape codes (such as `\16`) and `\`*number* backreferences that use the same notation. This ambiguity is resolved as follows:
 
@@ -32,7 +38,7 @@ Note the ambiguity between octal escape codes (such as `\16`) and `\`*number* ba
 
 - Expressions from `\10` and greater are considered backreferences if there is a backreference corresponding to that number; otherwise, they are interpreted as octal codes.
 
-- If a regular expression contains a backreference to an undefined group number, a parsing error occurs, and the regular expression engine throws an `System.ArgumentException`.
+- If a regular expression contains a backreference to an undefined group number, a parsing error occurs, and the regular expression engine throws an <xref:System.ArgumentException>.
 
 If the ambiguity is a problem, you can use the `\k<`*name*`>` notation, which is unambiguous and cannot be confused with octal character codes. Similarly, hexadecimal codes such as `\xdd` are unambiguous and cannot be confused with backreferences.
 
@@ -43,27 +49,8 @@ The following example finds doubled word characters in a string. It defines a re
 |`(\w)`|Match a word character and assign it to the first capturing group.|
 |`\1`|Match the next character that is the same as the value of the first capturing group.|
 
-```csharp
-using System;
-using System.Text.RegularExpressions;
-
-public class Example
-{
-   public static void Main()
-   {
-      string pattern = @"(\w)\1";
-      string input = "trellis llama webbing dresser swagger";
-      foreach (Match match in Regex.Matches(input, pattern))
-         Console.WriteLine($"Found '{match.Value}' at position {match.Index}.");
-   }
-}
-// The example displays the following output:
-//       Found 'll' at position 3.
-//       Found 'll' at position 8.
-//       Found 'bb' at position 16.
-//       Found 'ss' at position 25.
-//       Found 'gg' at position 33.
-```
+[!code-csharp[RegularExpressions.Language.Backreferences#1](../../../samples/snippets/csharp/VS_Snippets_CLR/regularexpressions.language.backreferences/cs/backreference1.cs#1)]
+[!code-vb[RegularExpressions.Language.Backreferences#1](../../../samples/snippets/visualbasic/VS_Snippets_CLR/regularexpressions.language.backreferences/vb/backreference1.vb#1)]
 
 ## Named Backreferences
 
@@ -75,7 +62,7 @@ or:
 
 `\k'` *name* `'`
 
-where *name* is the name of a capturing group defined in the regular expression pattern. If *name* is not defined in the regular expression pattern, a parsing error occurs, and the regular expression engine throws an `System.ArgumentException`.
+where *name* is the name of a capturing group defined in the regular expression pattern. If *name* is not defined in the regular expression pattern, a parsing error occurs, and the regular expression engine throws an <xref:System.ArgumentException>.
 
 The following example finds doubled word characters in a string. It defines a regular expression, `(?<char>\w)\k<char>`, which consists of the following elements.
 
@@ -84,85 +71,25 @@ The following example finds doubled word characters in a string. It defines a re
 |`(?<char>\w)`|Match a word character and assign it to a capturing group named `char`.|
 |`\k<char>`|Match the next character that is the same as the value of the `char` capturing group.|
 
-```csharp
-using System;
-using System.Text.RegularExpressions;
-
-public class Example
-{
-   public static void Main()
-   {
-      string pattern = @"(?<char>\w)\k<char>";
-      string input = "trellis llama webbing dresser swagger";
-      foreach (Match match in Regex.Matches(input, pattern))
-         Console.WriteLine($"Found '{match.Value}' at position {match.Index}.");
-   }
-}
-// The example displays the following output:
-//       Found 'll' at position 3.
-//       Found 'll' at position 8.
-//       Found 'bb' at position 16.
-//       Found 'ss' at position 25.
-//       Found 'gg' at position 33.
-```
+[!code-csharp[RegularExpressions.Language.Backreferences#2](../../../samples/snippets/csharp/VS_Snippets_CLR/regularexpressions.language.backreferences/cs/backreference2.cs#2)]
+[!code-vb[RegularExpressions.Language.Backreferences#2](../../../samples/snippets/visualbasic/VS_Snippets_CLR/regularexpressions.language.backreferences/vb/backreference2.vb#2)]
 
 ## Named numeric backreferences
 
 In a named backreference with `\k`, *name* can also be the string representation of a number. For example, the following example uses the regular expression `(?<2>\w)\k<2>` to find doubled word characters in a string. In this case, the example defines a capturing group that is explicitly named "2", and the backreference is correspondingly named "2".
 
-```csharp
-using System;
-using System.Text.RegularExpressions;
+[!code-csharp[RegularExpressions.Language.Backreferences#3](../../../samples/snippets/csharp/VS_Snippets_CLR/regularexpressions.language.backreferences/cs/backreference3.cs#3)]
+[!code-vb[RegularExpressions.Language.Backreferences#3](../../../samples/snippets/visualbasic/VS_Snippets_CLR/regularexpressions.language.backreferences/vb/backreference3.vb#3)]
 
-public class Example
-{
-   public static void Main()
-   {
-      string pattern = @"(?<2>\w)\k<2>";
-      string input = "trellis llama webbing dresser swagger";
-      foreach (Match match in Regex.Matches(input, pattern))
-         Console.WriteLine($"Found '{match.Value}' at position {match.Index}.");
-   }
-}
-// The example displays the following output:
-//       Found 'll' at position 3.
-//       Found 'll' at position 8.
-//       Found 'bb' at position 16.
-//       Found 'ss' at position 25.
-//       Found 'gg' at position 33.
-```
+If *name* is the string representation of a number, and no capturing group has that name, `\k<`*name*`>` is the same as the backreference `\`*number*, where *number* is the ordinal position of the capture. In the following example, there is a single capturing group named `char`. The backreference construct refers to it as `\k<1>`. As the output from the example shows, the call to the <xref:System.Text.RegularExpressions.Regex.IsMatch*?displayProperty=nameWithType> succeeds because `char` is the first capturing group.
 
-If *name* is the string representation of a number, and no capturing group has that name, `\k<`*name*`>` is the same as the backreference `\`*number*, where *number* is the ordinal position of the capture. In the following example, there is a single capturing group named `char`. The backreference construct refers to it as `\k<1>`. As the output from the example shows, the call to the `System.Text.RegularExpressions.Regex.IsMatch*` succeeds because `char` is the first capturing group.
+[!code-csharp[Ordinal.Backreference](../../../samples/snippets/csharp/VS_Snippets_CLR/regularexpressions.language.backreferences/cs/backreference6.cs)]
+[!code-vb[Ordinal.BackReference](../../../samples/snippets/visualbasic/VS_Snippets_CLR/regularexpressions.language.backreferences/vb/backreference6.vb)]
 
-```csharp
-﻿using System;
-using System.Text.RegularExpressions;
+However, if *name* is the string representation of a number and the capturing group in that position has been explicitly assigned a numeric name, the regular expression parser cannot identify the capturing group by its ordinal position. Instead, it throws an <xref:System.ArgumentException>. The only capturing group in the following example is named "2". Because the `\k` construct is used to define a backreference named "1", the regular expression parser is unable to identify the first capturing group and throws an exception.
 
-public class Example
-{
-   public static void Main()
-   {
-      Console.WriteLine(Regex.IsMatch("aa", @"(?<char>\w)\k<1>"));
-      // Displays "True".
-   }
-}
-```
-
-However, if *name* is the string representation of a number and the capturing group in that position has been explicitly assigned a numeric name, the regular expression parser cannot identify the capturing group by its ordinal position. Instead, it throws an `System.ArgumentException`. The only capturing group in the following example is named "2". Because the `\k` construct is used to define a backreference named "1", the regular expression parser is unable to identify the first capturing group and throws an exception.
-
-```csharp
-﻿using System;
-using System.Text.RegularExpressions;
-
-public class Example
-{
-   public static void Main()
-   {
-      Console.WriteLine(Regex.IsMatch("aa", @"(?<2>\w)\k<1>"));
-      // Throws an ArgumentException.
-   }
-}
-```
+[!code-csharp[Ordinal.Backreference](../../../samples/snippets/csharp/VS_Snippets_CLR/regularexpressions.language.backreferences/cs/backreference7.cs)]
+[!code-vb[Ordinal.BackReference](../../../samples/snippets/visualbasic/VS_Snippets_CLR/regularexpressions.language.backreferences/vb/backreference7.vb)]
 
 ## What Backreferences Match
 
@@ -175,28 +102,8 @@ The following example includes a regular expression pattern, `(?<1>a)(?<1>\1b)*`
 |`(?<1>a)`|Match the character "a" and assign the result to the capturing group named `1`.|
 |`(?<1>\1b)*`|Match zero or more occurrences of the group named `1` along with a "b", and assign the result to the capturing group named `1`.|
 
-```csharp
-using System;
-using System.Text.RegularExpressions;
-
-public class Example
-{
-   public static void Main()
-   {
-      string pattern = @"(?<1>a)(?<1>\1b)*";
-      string input = "aababb";
-      foreach (Match match in Regex.Matches(input, pattern))
-      {
-         Console.WriteLine("Match: " + match.Value);
-         foreach (Group group in match.Groups)
-            Console.WriteLine("   Group: " + group.Value);
-      }
-   }
-}
-// The example displays the following output:
-//          Group: aababb
-//          Group: abb
-```
+[!code-csharp[RegularExpressions.Language.Backreferences#4](../../../samples/snippets/csharp/VS_Snippets_CLR/regularexpressions.language.backreferences/cs/backreference4.cs#4)]
+[!code-vb[RegularExpressions.Language.Backreferences#4](../../../samples/snippets/visualbasic/VS_Snippets_CLR/regularexpressions.language.backreferences/vb/backreference4.vb#4)]
 
 In comparing the regular expression with the input string ("aababb"), the regular expression engine performs the following operations:
 
@@ -220,49 +127,9 @@ If a group has not captured any substrings, a backreference to that group is und
 
 An input string can match this regular expression even if the two decimal digits that are defined by the second capturing group are not present. The following example shows that even though the match is successful, an empty capturing group is found between two successful capturing groups.
 
-```csharp
-using System;
-using System.Text.RegularExpressions;
-
-public class Example
-{
-   public static void Main()
-   {
-      string pattern = @"\b(\p{Lu}{2})(\d{2})?(\p{Lu}{2})\b";
-      string[] inputs = { "AA22ZZ", "AABB" };
-      foreach (string input in inputs)
-      {
-         Match match = Regex.Match(input, pattern);
-         if (match.Success)
-         {
-            Console.WriteLine($"Match in {input}: {match.Value}");
-            if (match.Groups.Count > 1)
-            {
-               for (int ctr = 1; ctr <= match.Groups.Count - 1; ctr++)
-               {
-                  if (match.Groups[ctr].Success)
-                     Console.WriteLine($"Group {ctr}: {match.Groups[ctr].Value}");
-                  else
-                     Console.WriteLine($"Group {ctr}: <no match>");
-               }
-            }
-         }
-         Console.WriteLine();
-      }
-   }
-}
-// The example displays the following output:
-//       Match in AA22ZZ: AA22ZZ
-//       Group 1: AA
-//       Group 2: 22
-//       Group 3: ZZ
-//
-//       Match in AABB: AABB
-//       Group 1: AA
-//       Group 2: <no match>
-//       Group 3: BB
-```
+[!code-csharp[RegularExpressions.Language.Backreferences#5](../../../samples/snippets/csharp/VS_Snippets_CLR/regularexpressions.language.backreferences/cs/backreference5.cs#5)]
+[!code-vb[RegularExpressions.Language.Backreferences#5](../../../samples/snippets/visualbasic/VS_Snippets_CLR/regularexpressions.language.backreferences/vb/backreference5.vb#5)]
 
 ## See also
 
-- Regular Expression Language - Quick Reference
+- [Regular Expression Language - Quick Reference](regular-expression-language-quick-reference.md)

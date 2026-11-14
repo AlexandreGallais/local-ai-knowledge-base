@@ -1,19 +1,13 @@
----
-title: "no-invalid-fetch-options"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-invalid-fetch-options.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-invalid-fetch-options
 
 📝 Disallow invalid options in `fetch()` and `new Request()`.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-`fetch()` throws a `TypeError` when the method is `GET` or `HEAD` and a body is provided.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+[`fetch()`](https://developer.mozilla.org/en-US/docs/Web/API/fetch) throws a `TypeError` when the method is `GET` or `HEAD` and a body is provided.
 
 ## Examples
 

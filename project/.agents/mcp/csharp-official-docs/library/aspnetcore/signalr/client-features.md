@@ -1,17 +1,13 @@
 ---
-title: "ASP.NET Core SignalR clients"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/signalr/client-features.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core SignalR clients
+description: Learn which features are supported by the various ASP.NET Core SignalR clients.
+ms.date: 08/25/2026
 ---
-
 # ASP.NET Core SignalR clients
 
 ## Versioning, support, and compatibility
 
-The SignalR clients ship alongside the server components and are versioned to match. Any supported client can safely connect to any supported server, and any compatibility issues would be considered bugs to be fixed. SignalR clients are supported in the same support lifecycle as the rest of .NET. See the .NET and .NET Core Support Policy for details.
+The SignalR clients ship alongside the server components and are versioned to match. Any supported client can safely connect to any supported server, and any compatibility issues would be considered bugs to be fixed. SignalR clients are supported in the same support lifecycle as the rest of .NET. See the [.NET and .NET Core Support Policy](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) for details.
 
 Many features require a compatible client **and** server. See below for a table showing the minimum versions for various features.
 
@@ -21,7 +17,7 @@ The 1.x versions of SignalR map to the 2.1 and 2.2 .NET Core releases and have t
 | - | - | - | - |
 | 1.0.x | 2.1.x | Long Term Support | August 21, 2021 |
 | 1.1.x | 2.2.x | End Of Life | December 23, 2019 |
-| 3.x or higher | *same as SignalR version* | See the .NET and .NET Core Support Policy |
+| 3.x or higher | *same as SignalR version* | See the [.NET and .NET Core Support Policy](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) |
 
 **NOTE:** In ASP.NET Core 3.0, the JavaScript client *moved* to the `@microsoft/signalr` npm package.
 
@@ -32,27 +28,25 @@ The table below shows the features and support for the clients that offer real-t
 | Feature | Server | .NET client | JavaScript client | Java client | Swift client |
 | ---- | :-: | :-: | :-: | :-: | :-: |
 | Azure SignalR Service Support |2.1.0|1.0.0|1.0.0|1.0.0|1.0.0-preview.1|
-| Server-to-client Streaming          |2.1.0|1.0.0|1.0.0|1.0.0|1.0.0-preview.1|
-| Client-to-server Streaming          |3.0.0|3.0.0|3.0.0|3.0.0|❌|
-| Automatic Reconnection (.NET, JavaScript)          |3.0.0|3.0.0|3.0.0|❌|1.0.0-preview.1|
+| [Server-to-client Streaming](streaming.md)          |2.1.0|1.0.0|1.0.0|1.0.0|1.0.0-preview.1|
+| [Client-to-server Streaming](streaming.md)          |3.0.0|3.0.0|3.0.0|3.0.0|❌|
+| Automatic Reconnection ([.NET](dotnet-client.md#handle-lost-connection), [JavaScript](javascript-client.md#reconnect-clients))          |3.0.0|3.0.0|3.0.0|❌|1.0.0-preview.1|
 | WebSockets Transport |2.1.0|1.0.0|1.0.0|1.0.0|1.0.0-preview.1|
 | Server-Sent Events Transport |2.1.0|1.0.0|1.0.0|❌|1.0.0-preview.1|
 | Long Polling Transport |2.1.0|1.0.0|1.0.0|3.0.0|1.0.0-preview.1|
 | JSON Hub Protocol |2.1.0|1.0.0|1.0.0|1.0.0|1.0.0-preview.1|
 | MessagePack Hub Protocol |2.1.0|1.0.0|1.0.0|5.0.0|1.0.0-preview.1|
 | Client Results |7.0.0|7.0.0|7.0.0|7.0.0|1.0.0-preview.1|
-| Authentication Refresh |11.0.0|11.0.0|11.0.0|❌|❌|
-| Cancel a non-streaming invocation |11.0.0|11.0.0|❌|❌|❌|
+| [Authentication Refresh](authn-and-authz.md#authentication-refresh) |11.0.0|11.0.0|11.0.0|❌|❌|
+| [Cancel a non-streaming invocation](dotnet-client.md#cancel-a-hub-method-invocation) |11.0.0|11.0.0|❌|❌|❌|
 
-Support for enabling additional client features is tracked in our issue tracker.
+Support for enabling additional client features is tracked in [our issue tracker](https://github.com/dotnet/AspNetCore/issues).
 
-## Browsers that don't support ECMAScript 6 (ES6)
-
-SignalR targets ES6. For browsers that don't support ES6, transpile the library to ES5. For more information, see Getting Started with ES6 – Transpiling ES6 to ES5 with Traceur and Babel.
+[!INCLUDE[](~/includes/SignalR/es6.md)]
 
 ## Related content
 
-* Get started with SignalR for ASP.NET Core
-* Supported platforms
-* Hubs
-* JavaScript client
+* [Get started with SignalR for ASP.NET Core](../tutorials/signalr.md)
+* [Supported platforms](supported-platforms.md)
+* [Hubs](hubs.md)
+* [JavaScript client](javascript-client.md)

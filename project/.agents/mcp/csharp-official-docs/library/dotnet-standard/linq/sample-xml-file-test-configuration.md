@@ -1,12 +1,9 @@
 ---
 title: "Sample XML file: Test configuration - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/sample-xml-file-test-configuration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: This XML file—which is used in examples—has test configuration data.
+ms.date: 07/20/2015
+ms.assetid: 45bfb509-c1d4-4b4f-9690-1cb0c9816516
 ---
-
 # Sample XML file: Test configuration (LINQ to XML)
 
 The following XML file is used in various examples in the LINQ to XML documentation. This is a test configuration file.

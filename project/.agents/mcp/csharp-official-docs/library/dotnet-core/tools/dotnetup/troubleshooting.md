@@ -1,16 +1,14 @@
 ---
-title: "Troubleshoot dotnetup"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/troubleshooting.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Troubleshoot dotnetup
+description: Diagnose and fix common dotnetup problems, such as missing SDKs, untracked installations, locked files, and corrupted state files.
+ms.topic: troubleshooting
+ms.date: 10/13/2026
+ai-usage: ai-generated
 ---
 
 # Troubleshoot dotnetup
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](includes/public-preview.md)]
 
 This article describes common `dotnetup` problems and how to fix them.
 
@@ -67,7 +65,7 @@ dotnetup runtime install --migrate-from-system
 ```
 
 Or, change to the `shell` or `none` access mode. For more information, see
-Everywhere mode considerations.
+[Everywhere mode considerations](concepts/environment.md#everywhere-mode-considerations).
 
 ## dotnet doesn't use the dotnetup-managed installation
 
@@ -97,7 +95,7 @@ the environment configuration doesn't match the stored configuration.
    ```
 
 For more information, see
-Manage the dotnetup environment.
+[Manage the dotnetup environment](usecases/manage-environment.md).
 
 ## Install path already contains an untracked installation
 
@@ -119,7 +117,7 @@ mixing its files with files that another tool owns.
   doesn't list, update, or remove untracked files.
 
 For more information, see
-Manage custom installation roots.
+[Manage custom installation roots](usecases/manage-custom-installation-roots.md).
 
 ## The dotnet executable is in use
 
@@ -176,12 +174,12 @@ permissions, verification, or another active command.
 - Check that you have write access to the installation directory.
 - If another command holds a lock, let it finish, and retry.
 - If verification fails, don't bypass the checksum or signature check. Report the failure.
-- If the executable no longer starts, reinstall it with the download scripts.
+- If the executable no longer starts, reinstall it with the [download scripts](getting-started.md#download-dotnetup).
 
 For older builds that don't recognize the command, use the download scripts
 to install the current preview.
 For verification and unsigned-download policy details, see
-The dotnetup executable.
+[The dotnetup executable](concepts/download-verification.md#the-dotnetup-executable).
 
 ## The manifest is corrupt
 
@@ -200,9 +198,9 @@ manual edit might have changed the file.
 data directory. Then, reinstall the SDKs and runtimes that you need. Because the
 manifest no longer tracks the existing installation root, you might also need
 to delete that folder first. For the location of the data directory, see
-Update or remove dotnetup.
+[Update or remove dotnetup](usecases/manage-dotnetup.md#3-delete-the-installation-roots-and-data-directory).
 
-> **Note:**
+> [!NOTE]
 > Don't edit the manifest file. Use `dotnetup` commands to change the tracked
 > state.
 
@@ -266,9 +264,9 @@ A valid signature doesn't make an expired manifest acceptable.
 1. If the clock is correct and the failure persists, report the problem with
    the command's detailed output.
 
-Don't edit the manifest or change the clock to bypass <example-value> checks.
+Don't edit the manifest or change the clock to bypass expiration checks.
 For more information, see
-Manifest expiration.
+[Manifest expiration](concepts/download-verification.md#manifest-expiration).
 
 ## An installation is blocked by an IT policy
 
@@ -279,22 +277,22 @@ that says that an IT policy requires code-signed downloads.
 
 **Solution:** Install a released version, or ask your administrator to clear
 the policy. For more information, see
-How dotnetup verifies downloads.
+[How dotnetup verifies downloads](concepts/download-verification.md#block-unsigned-downloads).
 
 ## Report a problem
 
 If this article doesn't solve your problem, search the
-existing dotnetup issues.
+[existing dotnetup issues](https://github.com/dotnet/sdk/issues?q=is%3Aissue%20label%3AArea-dotnetup).
 If you don't find a match, open a new issue in the
-dotnet/sdk repository with
+[dotnet/sdk repository](https://github.com/dotnet/sdk/issues/new/choose) with
 the **dotnetup issue** template. Include the output of `dotnetup --info` and
 the output of the failed command with `--verbosity detailed`.
 
 For questions and suggestions, use
-dotnetup discussions.
+[dotnetup discussions](https://github.com/dotnet/sdk/discussions/categories/dotnetup).
 
 ## See also
 
-- How dotnetup works
-- dotnetup environment configuration
-- dotnetup command reference
+- [How dotnetup works](concepts/how-dotnetup-works.md)
+- [dotnetup environment configuration](concepts/environment.md)
+- [dotnetup command reference](reference/dotnetup.md)

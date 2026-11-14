@@ -1,12 +1,10 @@
 ---
-title: "dotnet package download command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-package-download.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet package download command
+description: Learn about the 'dotnet package download' command that downloads a NuGet package.
+author: Nigusu-Allehu
+ms.date: 11/06/2025
+ai-usage: ai-assisted
 ---
-
 # dotnet package download
 
 > Applies to: ✔️ .NET 10.0.2xx SDK and later versions.
@@ -42,23 +40,21 @@ By default, the command downloads only the packages you specify (no transitive d
   One or more package IDs to download.
   Each package can optionally include a version with `@`.
   If a package version isn't specified, the latest version of the package is downloaded.
-  For example, `dotnet package download Contoso.Utilities` or `dotnet package download user@example.com`.
-
+  For example, `dotnet package download Contoso.Utilities` or `dotnet package download Contoso.Utilities@3.2.1`.
+  
 ## Options
 
 * **`--allow-insecure-connections`**
 
-     Allows downloading from HTTP sources. Without this flag, insecure sources cause the command to error per HTTPS-everywhere guidance.
+     Allows downloading from HTTP sources. Without this flag, insecure sources cause the command to error per [HTTPS-everywhere](https://aka.ms/nuget-https-everywhere) guidance.
 
-* **`--configfile `**
+* **`--configfile <path>`**
 
      Path to a NuGet.config to use.
 
-* **`--interactive`**
+* [!INCLUDE [interactive](includes/cli-interactive.md)]
 
-Allows the command to stop and wait for user input or action. For example, to complete authentication.
-
-* **`-o, --output `**
+* **`-o, --output <path>`**
 
      Directory where the package will be placed. Defaults to the current working directory.
 
@@ -70,24 +66,20 @@ Allows the command to stop and wait for user input or action. For example, to co
 
      Specifies the NuGet package source to use.
 
-* **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
-
-* **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+* [!INCLUDE [verbosity](includes/cli-verbosity.md)]
+  
+* [!INCLUDE [help](includes/cli-help.md)]
 
 ## Examples
 
 ### Download a single package at a specific version
 
 ```ps1
-dotnet package download user@example.com --output My/Destination/For/packages
+dotnet package download Contoso@13.0.3 --output My/Destination/For/packages
 ```
 
 ### Download multiple packages to a custom folder
 
 ```ps1
-dotnet package download user@example.com user@example.com --output My/Destination/For/packages
+dotnet package download Contoso@3.1.2 Contoso.Utility@6.12.0 --output My/Destination/For/packages
 ```

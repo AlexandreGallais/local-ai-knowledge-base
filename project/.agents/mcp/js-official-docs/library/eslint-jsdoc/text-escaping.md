@@ -1,21 +1,15 @@
----
-title: "text-escaping"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/text-escaping.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-text-escaping"></a>
+<a name="text-escaping"></a>
+# <code>text-escaping</code>
 
-# `text-escaping`
+* [Fixer](#user-content-text-escaping-fixer)
+* [Options](#user-content-text-escaping-options)
+    * [`escapeHTML`](#user-content-text-escaping-options-escapehtml)
+    * [`escapeMarkdown`](#user-content-text-escaping-options-escapemarkdown)
+* [Context and settings](#user-content-text-escaping-context-and-settings)
+* [Failing examples](#user-content-text-escaping-failing-examples)
+* [Passing examples](#user-content-text-escaping-passing-examples)
 
-* Fixer
-* Options
-    * `escapeHTML`
-    * `escapeMarkdown`
-* Context and settings
-* Failing examples
-* Passing examples
 
 This rule can auto-escape certain characters that are input within block and
 tag descriptions.
@@ -27,26 +21,37 @@ within it or your documentation.
 
 `@example` tag content will not be checked.
 
+<a name="user-content-text-escaping-fixer"></a>
+<a name="text-escaping-fixer"></a>
 ## Fixer
 
 Auto-escapes certain HTML or Markdown characters that are input within block and
 tag descriptions.
 
+<a name="user-content-text-escaping-options"></a>
+<a name="text-escaping-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `escapeHTML`
+<a name="user-content-text-escaping-options-escapehtml"></a>
+<a name="text-escaping-options-escapehtml"></a>
+### <code>escapeHTML</code>
 
 This option escapes all `<` and `&` characters (except those followed by
 whitespace which are treated as literals by Visual Studio Code). Defaults to
 `false`.
 
-### `escapeMarkdown`
+<a name="user-content-text-escaping-options-escapemarkdown"></a>
+<a name="text-escaping-options-escapemarkdown"></a>
+### <code>escapeMarkdown</code>
 
 This option escapes the first backtick (`` ` ``) in a paired sequence.
 Defaults to `false`.
 
+
+<a name="user-content-text-escaping-context-and-settings"></a>
+<a name="text-escaping-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -57,6 +62,8 @@ Defaults to `false`.
 |Settings||
 |Options|`escapeHTML`, `escapeMarkdown`|
 
+<a name="user-content-text-escaping-failing-examples"></a>
+<a name="text-escaping-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -120,6 +127,10 @@ The following patterns are considered problems:
 // Message: You have unescaped Markdown backtick sequences in a tag
 ````
 
+
+
+<a name="user-content-text-escaping-passing-examples"></a>
+<a name="text-escaping-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -187,3 +198,4 @@ The following patterns are not considered problems:
  */
 // "jsdoc/text-escaping": ["error"|"warn", {"escapeMarkdown":true}]
 ````
+

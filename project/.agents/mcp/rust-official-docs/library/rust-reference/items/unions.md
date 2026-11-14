@@ -1,17 +1,8 @@
----
-title: "Unions"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/items/unions.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[items.union]
 # Unions
 
 r[items.union.syntax]
-```grammar
+```grammar,items
 Union ->
     `union` IDENTIFIER GenericParams? WhereClause? `{` StructFields? `}`
 ```
@@ -31,7 +22,7 @@ union MyUnion {
 ```
 
 r[items.union.common-storage]
-The key <example-value> of unions is that all fields of a union share common storage. As a result, writes to one field of a union can overwrite its other fields, and size of a union is determined by the size of its largest field.
+The key property of unions is that all fields of a union share common storage. As a result, writes to one field of a union can overwrite its other fields, and size of a union is determined by the size of its largest field.
 
 r[items.union.field-restrictions]
 Union field types are restricted to the following subset of types:
@@ -133,7 +124,7 @@ fn f(u: MyUnion) {
 }
 ```
 
-> **Warning:**
+> [!WARNING]
 > The order in which the subpatterns of a pattern are tested is not specified. A union field named in a pattern may be read even when the pattern as a whole does not match. Reading a union field is undefined behavior unless it holds a valid value of its type (see [items.union.fields.validity]). Nothing else in the pattern can be relied on to prevent the read.
 >
 > In particular, when implementing a C-style tagged union, avoid matching the tag and the corresponding union field within a single pattern: the union field may be read even when the tag does not match.
@@ -173,7 +164,7 @@ Since union fields share common storage, gaining write access to one field of a 
 r[items.union.ref.borrow]
 Borrow checking rules have to be adjusted to account for this fact. As a result, if one field of a union is borrowed, all its remaining fields are borrowed as well for the same lifetime.
 
-```rust
+```rust,compile_fail
 # union MyUnion { f1: u32, f2: f32 }
 // ERROR: cannot borrow `u` (via `u.f2`) as mutable more than once at a time
 fn test() {
@@ -192,3 +183,9 @@ fn test() {
 
 r[items.union.ref.use]
 As you could see, in many aspects (except for layouts, safety, and ownership) unions behave exactly like structs, largely as a consequence of inheriting their syntactic shape from structs. This is also true for many unmentioned aspects of Rust language (such as privacy, name resolution, type inference, generics, trait implementations, inherent implementations, coherence, pattern checking, etc etc etc).
+
+[`transmute`]: std::mem::transmute
+[boolean type]: ../types/boolean.md
+[the C representation]: ../type-layout.md#reprc-unions
+[type namespace]: ../names/namespaces.md
+[undefined behavior]: ../behavior-considered-undefined.md

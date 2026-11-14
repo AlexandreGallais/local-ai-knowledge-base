@@ -1,17 +1,8 @@
----
-title: "Enumerations"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/items/enumerations.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[items.enum]
 # Enumerations
 
 r[items.enum.syntax]
-```grammar
+```grammar,items
 Enumeration ->
     `enum` IDENTIFIER GenericParams? WhereClause? `{` EnumVariants? `}`
 
@@ -65,7 +56,7 @@ a = Animal::Cat { name: "Spotty".to_string(), weight: 2.7 };
 In this example, `Cat` is a _struct-like enum variant_, whereas `Dog` is simply called an enum variant.
 
 r[items.enum.fieldless]
-An enum where no constructors contain fields is called a *field-less enum*. For example, this is a fieldless enum:
+An enum where no constructors contain fields is called a *<span id="field-less-enum">field-less enum</span>*. For example, this is a fieldless enum:
 
 ```rust
 enum Fieldless {
@@ -76,7 +67,7 @@ enum Fieldless {
 ```
 
 r[items.enum.unit-only]
-If a field-less enum only contains unit variants, the enum is called an *unit-only enum*. For example:
+If a field-less enum only contains unit variants, the enum is called an *<span id="unit-only-enum">unit-only enum</span>*. For example:
 
 ```rust
 enum Enum {
@@ -116,6 +107,7 @@ let y = TupleLike { 0: 123 }; // Struct expression using integer field names.
 let z = StructLike { value: 123 }; // Struct expression.
 ```
 
+<span id="custom-discriminant-values-for-fieldless-enumerations"></span>
 r[items.enum.discriminant]
 ## Discriminants
 
@@ -135,7 +127,7 @@ enum E {
 assert!(size_of::<E>() <= size_of::<isize>());
 ```
 
-```rust
+```rust,compile_fail,E0308
 enum E {
     V = 0u8, // ERROR: Expected `isize`, found `u8`.
 }
@@ -151,7 +143,7 @@ enum E {
 }
 ```
 
-```rust
+```rust,compile_fail,E0308
 #[repr(u8)]
 enum E {
     V = 0isize, // ERROR: Expected `u8`, found `isize`.
@@ -206,7 +198,7 @@ r[items.enum.discriminant.restrictions]
 r[items.enum.discriminant.restrictions.same-discriminant]
 It is an error when two variants share the same discriminant.
 
-```rust
+```rust,compile_fail
 enum SharedDiscriminantError {
     SharedA = 1,
     SharedB = 1,
@@ -222,7 +214,7 @@ enum SharedDiscriminantError2 {
 r[items.enum.discriminant.restrictions.above-max-discriminant]
 It is also an error to have an unspecified discriminant where the previous discriminant is the maximum value for the size of the discriminant.
 
-```rust
+```rust,compile_fail
 #[repr(u8)]
 enum OverflowingDiscriminantError {
     Max = 255,
@@ -240,7 +232,7 @@ enum OverflowingDiscriminantError2 {
 r[items.enum.discriminant.restrictions.generics]
 Explicit enum discriminant initializers may not use generic parameters from the enclosing enum.
 
-```rust
+```rust,compile_fail
 #[repr(u32)]
 enum E<'a, T, const N: u32> {
     Lifetime(&'a T) = {
@@ -353,7 +345,7 @@ enum ZeroVariants {}
 r[items.enum.empty.uninhabited]
 Zero-variant enums are equivalent to the [never type], but they cannot be coerced into other types.
 
-```rust
+```rust,compile_fail
 # enum ZeroVariants {}
 let x: ZeroVariants = panic!();
 let y: u32 = x; // mismatched type error
@@ -388,3 +380,19 @@ enum E {
     pub(super) T { f: String },
 }
 ```
+
+[`C` representation]: ../type-layout.md#the-c-representation
+[call expression]: ../expressions/call-expr.md
+[constant expression]: ../const_eval.md#constant-expressions
+[enumerated type]: ../types/enum.md
+[Field-less enums]: #field-less-enum
+[never type]: ../types/never.md
+[numeric cast]: ../expressions/operator-expr.md#semantics
+[path expression]: ../expressions/path-expr.md
+[primitive representation]: ../type-layout.md#primitive-representations
+[struct expression]: ../expressions/struct-expr.md
+[struct]: structs.md
+[type namespace]: ../names/namespaces.md
+[unit-only]: #unit-only-enum
+[use declarations]: use-declarations.md
+[value namespace]: ../names/namespaces.md

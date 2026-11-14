@@ -1,27 +1,21 @@
----
-title: "check-values"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/check-values.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-check-values"></a>
+<a name="check-values"></a>
+# <code>check-values</code>
 
-# `check-values`
+* [Options](#user-content-check-values-options)
+    * [`allowedAuthors`](#user-content-check-values-options-allowedauthors)
+    * [`allowedLicenses`](#user-content-check-values-options-allowedlicenses)
+    * [`licensePattern`](#user-content-check-values-options-licensepattern)
+    * [`numericOnlyVariation`](#user-content-check-values-options-numericonlyvariation)
+* [Context and settings](#user-content-check-values-context-and-settings)
+* [Failing examples](#user-content-check-values-failing-examples)
+* [Passing examples](#user-content-check-values-passing-examples)
 
-* Options
-    * `allowedAuthors`
-    * `allowedLicenses`
-    * `licensePattern`
-    * `numericOnlyVariation`
-* Context and settings
-* Failing examples
-* Passing examples
 
 This rule checks the values for a handful of tags:
 
 1. `@version` - Checks that there is a present and valid
-    semver version value.
+    [semver](https://semver.org/) version value.
 2. `@since` - As with `@version`
 3. `@license` - Checks that there is a present and valid SPDX identifier
     or is present within an `allowedLicenses` option.
@@ -36,21 +30,29 @@ This rule checks the values for a handful of tags:
     'module', 'namespace', 'typedef',
 7. `@import` - For TypeScript `mode` only. Enforces valid ES import syntax.
 
+<a name="user-content-check-values-options"></a>
+<a name="check-values-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `allowedAuthors`
+<a name="user-content-check-values-options-allowedauthors"></a>
+<a name="check-values-options-allowedauthors"></a>
+### <code>allowedAuthors</code>
 
 An array of allowable author values. If absent, only non-whitespace will
 be checked for.
 
-### `allowedLicenses`
+<a name="user-content-check-values-options-allowedlicenses"></a>
+<a name="check-values-options-allowedlicenses"></a>
+### <code>allowedLicenses</code>
 
 An array of allowable license values or `true` to allow any license text.
-If present as an array, will be used in place of SPDX identifiers.
+If present as an array, will be used in place of [SPDX identifiers](https://spdx.org/licenses/).
 
-### `licensePattern`
+<a name="user-content-check-values-options-licensepattern"></a>
+<a name="check-values-options-licensepattern"></a>
+### <code>licensePattern</code>
 
 A string to be converted into a `RegExp` (with `v` flag) and whose first
 parenthetical grouping, if present, will match the portion of the license
@@ -63,11 +65,16 @@ Note that the `/` delimiters are optional, but necessary to add flags.
 Defaults to using the `v` flag, so to add your own flags, encapsulate
 your expression as a string, but like a literal, e.g., `/^mit$/vi`.
 
-### `numericOnlyVariation`
+<a name="user-content-check-values-options-numericonlyvariation"></a>
+<a name="check-values-options-numericonlyvariation"></a>
+### <code>numericOnlyVariation</code>
 
 Whether to enable validation that `@variation` must be a number. Defaults to
 `false`.
 
+
+<a name="user-content-check-values-context-and-settings"></a>
+<a name="check-values-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -78,6 +85,8 @@ Whether to enable validation that `@variation` must be a number. Defaults to
 |Options|`allowedAuthors`, `allowedLicenses`, `licensePattern`, `numericOnlyVariation`|
 |Settings|`tagNamePreference`|
 
+<a name="user-content-check-values-failing-examples"></a>
+<a name="check-values-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -256,6 +265,10 @@ function quux (foo) {
 // Message: Bad @import tag
 ````
 
+
+
+<a name="user-content-check-values-passing-examples"></a>
+<a name="check-values-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -426,3 +439,4 @@ function quux (foo) {
 /** @type {ReactNode} */
 export const TEST = null
 ````
+

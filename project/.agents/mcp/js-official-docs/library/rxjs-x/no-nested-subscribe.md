@@ -1,17 +1,10 @@
----
-title: "Disallow calling subscribe within a subscribe callback (rxjs-x/no-nested-subscribe)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/no-nested-subscribe.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Disallow calling `subscribe` within a `subscribe` callback (`rxjs-x/no-nested-subscribe`)
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, 🔒 `strict`.
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule effects failures if `subscribe` is called within a `subscribe` handler.
 
@@ -49,5 +42,5 @@ Type checked lint rules are more powerful than traditional lint rules, but also 
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/no-nested-subscribe.ts)
+- [Test source](/tests/rules/no-nested-subscribe.test.ts)

@@ -1,17 +1,15 @@
 ---
 title: "Breaking change: XmlSerializer no longer ignores properties marked with ObsoleteAttribute"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/serialization/10/xmlserializer-obsolete-properties.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where properties marked with ObsoleteAttribute are now serialized by XmlSerializer instead of being ignored."
+ms.date: 10/21/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/49054
 ---
-
 # XmlSerializer no longer ignores properties marked with ObsoleteAttribute
 
-Starting in .NET 10, the behavior of `System.Xml.Serialization.XmlSerializer` has changed with respect to how it handles properties marked with the `System.ObsoleteAttribute` attribute. Previously, properties marked with `[Obsolete]` were treated as if they were also marked with `[XmlIgnore]`, causing them to be excluded from XML serialization. This behavior was unintended and has been corrected.
+Starting in .NET 10, the behavior of <xref:System.Xml.Serialization.XmlSerializer> has changed with respect to how it handles properties marked with the <xref:System.ObsoleteAttribute> attribute. Previously, properties marked with `[Obsolete]` were treated as if they were also marked with `[XmlIgnore]`, causing them to be excluded from XML serialization. This behavior was unintended and has been corrected.
 
-With this change, properties marked with `[Obsolete]` are now serialized by default unless the `System.ObsoleteAttribute.IsError` property is set to `true`. If `IsError` is `true`, the serializer throws an `System.InvalidOperationException` during creation. Additionally, an AppContext switch, `Switch.System.Xml.IgnoreObsoleteMembers`, has been introduced to allow developers to revert to the previous behavior, if necessary.
+With this change, properties marked with `[Obsolete]` are now serialized by default unless the <xref:System.ObsoleteAttribute.IsError> property is set to `true`. If `IsError` is `true`, the serializer throws an <xref:System.InvalidOperationException> during creation. Additionally, an AppContext switch, `Switch.System.Xml.IgnoreObsoleteMembers`, has been introduced to allow developers to revert to the previous behavior, if necessary.
 
 ## Version introduced
 
@@ -53,7 +51,7 @@ Console.WriteLine(writer.ToString());
 Starting in .NET 10, properties marked with `[Obsolete]` are no longer excluded from XML serialization by default. Instead:
 
 - If the `[Obsolete]` attribute is applied with `IsError = false` (default), the property is serialized normally.
-- If the `[Obsolete]` attribute is applied with `IsError = true`, the `System.Xml.Serialization.XmlSerializer` throws an `System.InvalidOperationException` during serializer creation.
+- If the `[Obsolete]` attribute is applied with `IsError = true`, the <xref:System.Xml.Serialization.XmlSerializer> throws an <xref:System.InvalidOperationException> during serializer creation.
 
 Using the same code as shown in the previous behavior section, the output after the change is:
 
@@ -68,12 +66,12 @@ If `[Obsolete(IsError = true)]` is applied to a property, the following exceptio
 
 > System.InvalidOperationException: Cannot serialize member 'ObsoleteProperty' because it is marked with ObsoleteAttribute and IsError is set to true.
 
-> **Note:**
+> [!NOTE]
 > Properties that are marked as `[Obsolete]` have always successfully deserialized when data is present in the XML. While this change allows `[Obsolete]` properties to "round trip" from object to XML and back to object, the new behavior affects only the serialization half (object to XML) of the "round trip."
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -91,4 +89,4 @@ If any properties are marked with `[Obsolete(IsError = true)]` and are being ser
 
 ## Affected APIs
 
-- `System.Xml.Serialization.XmlSerializer`
+- <xref:System.Xml.Serialization.XmlSerializer?displayProperty=fullName>

@@ -1,37 +1,36 @@
 ---
-title: "Plan for Entity Framework Core 5.0"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/what-is-new/ef-core-5.0/plan.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Plan for Entity Framework Core 5.0
+description: The features planned for Entity Framework Core 5.0
+author: SamMonoRT
+ms.date: 08/22/2020
+uid: core/what-is-new/ef-core-5.0/plan
 ---
 
 # Plan for Entity Framework Core 5.0
 
-> **Important:**
-> EF Core 5.0 has now been released. This page remains as a historical record of the plan.
+> [!IMPORTANT]
+> EF Core 5.0 [has now been released](xref:core/what-is-new/index). This page remains as a historical record of the plan.
 
-As described in the planning process, we have gathered input from stakeholders into a tentative plan for the EF Core 5.0 release.
+As described in the [planning process](xref:core/what-is-new/release-planning), we have gathered input from stakeholders into a tentative plan for the EF Core 5.0 release.
 
-> **Important:**
+> [!IMPORTANT]
 > This plan is still a work-in-progress. Nothing here is a commitment. This plan is a starting point that will evolve as we learn more. Some things not currently planned for 5.0 may get pulled in. Some things currently planned for 5.0 may get punted out.
 
 ## General information
 
 ### Version number and release date
 
-EF Core 5.0 is currently scheduled for release at the same time as .NET 5.0. The version "5.0" was chosen to align with .NET 5.0.
+EF Core 5.0 is currently scheduled for release at [the same time as .NET 5.0](https://devblogs.microsoft.com/dotnet/introducing-net-5/). The version "5.0" was chosen to align with .NET 5.0.
 
 ### Supported platforms
 
-EF Core 5.0 is planned to run on any .NET Standard 2.1 platform, including .NET 5.0. This is part of the more general .NET wide convergence of platforms to .NET Core.
+EF Core 5.0 is planned to run on any .NET Standard 2.1 platform, including .NET 5.0. This is part of the more general .NET wide [convergence of platforms to .NET Core](https://devblogs.microsoft.com/dotnet/introducing-net-5/).
 
 EF Core 5.0 will not run on .NET Framework.
 
 ### Breaking changes
 
-EF Core 5.0 will contain some breaking changes, but these will be much less severe than was the case for EF Core 3.0. Our goal is to allow the vast majority of applications to update without breaking.
+EF Core 5.0 will contain some [breaking changes](xref:core/what-is-new/ef-core-5.0/breaking-changes), but these will be much less severe than was the case for EF Core 3.0. Our goal is to allow the vast majority of applications to update without breaking.
 
 It is expected that there will be some breaking changes for database providers, especially around TPT support. However, we expect the work to update a provider for 5.0 will be less than was required to update for 3.0.
 
@@ -43,18 +42,18 @@ We have extracted a few major areas or themes which will form the basis for the 
 
 Lead developers: @smitpatel, @AndriySvyryd, and @lajones
 
-Tracked by #10508
+Tracked by [#10508](https://github.com/dotnet/efcore/issues/10508)
 
 T-shirt size: L
 
 Status: Done
 
-Many-to-many is the most requested feature (~506 votes) on the GitHub backlog.
+Many-to-many is the [most requested feature](https://github.com/dotnet/efcore/issues/1368) (~506 votes) on the GitHub backlog.
 
 Support for many-to-many relationships can be broken down into three major areas:
 
 * Skip navigation properties--covered by the next theme.
-* Property-bag entity types. These allow a standard CLR type (e.g. `Dictionary`) to be used for entity instances such that an explicit CLR type is not needed for each entity type. Tracked by #9914.
+* Property-bag entity types. These allow a standard CLR type (e.g. `Dictionary`) to be used for entity instances such that an explicit CLR type is not needed for each entity type. Tracked by [#9914](https://github.com/dotnet/efcore/issues/9914).
 * Sugar for easy configuration of many-to-many relationships.
 
 In addition to the skip navigation support, we are now pulling these other areas of many-to-many into EF Core 5.0 so as to provide a complete experience.
@@ -63,7 +62,7 @@ In addition to the skip navigation support, we are now pulling these other areas
 
 Lead developers: @smitpatel and @AndriySvyryd
 
-Tracked by #19003
+Tracked by [#19003](https://github.com/dotnet/efcore/issues/19003)
 
 T-shirt size: L
 
@@ -78,7 +77,7 @@ The join table entity type may still exist, but it should not get in the way of 
 
 Lead developer: @AndriySvyryd and @smitpatel
 
-Tracked by #2266
+Tracked by [#2266](https://github.com/dotnet/efcore/issues/2266)
 
 T-shirt size: XL
 
@@ -90,7 +89,7 @@ We're doing TPT because it is both a highly requested feature (~289 votes; 3rd o
 
 Lead developer: @maumar
 
-Tracked by #1833
+Tracked by [#1833](https://github.com/dotnet/efcore/issues/1833)
 
 T-shirt size: M
 
@@ -102,7 +101,7 @@ Filtered Include is a highly-requested feature (~376 votes; 2nd overall) that is
 
 Lead developer: @smitpatel
 
-Tracked by #20892
+Tracked by [#20892](https://github.com/dotnet/efcore/issues/20892)
 
 T-shirt size: L
 
@@ -118,7 +117,7 @@ However, EF Core 5.0 will now allow generation of multiple queries for collectio
 
 Lead developers: @AndriySvyryd and @smitpatel
 
-Tracked by #12100
+Tracked by [#12100](https://github.com/dotnet/efcore/issues/12100)
 
 T-shirt size: M
 
@@ -130,7 +129,7 @@ In EF Core 3.0, all dependents, including owned types are optional (e.g. Person.
 
 Lead developers: @AndriySvyryd and @smitpatel
 
-Tracked by #17270
+Tracked by [#17270](https://github.com/dotnet/efcore/issues/17270)
 
 T-shirt size: L
 
@@ -144,7 +143,7 @@ Note that this item may result in some application-level breaking changes since 
 
 Lead developers: @smitpatel and @maumar
 
-Tracked by issues labeled with `area-query` in the 5.0 milestone
+Tracked by [issues labeled with `area-query` in the 5.0 milestone](https://github.com/dotnet/efcore/issues?utf8=%E2%9C%93&q=is%3Aissue+label%3Aarea-query+milestone%3A5.0.0+)
 
 T-shirt size: XL
 
@@ -156,13 +155,13 @@ The query translation code was extensively rewritten for EF Core 3.0. The query 
 
 Lead developers: @bricelam
 
-Tracked by #19587
+Tracked by [#19587](https://github.com/dotnet/efcore/issues/19587)
 
 T-shirt size: L
 
 Status: Scoped/Done
 
-Scoping: The migrations bundles feature has been deferred until after the EF Core 5.0 release. However, several other targeted improvements related to migrations will be included in EF Core 5.0
+Scoping: The [migrations bundles feature](https://github.com/dotnet/efcore/issues/19693) has been deferred until after the EF Core 5.0 release. However, several other [targeted improvements related to migrations](https://github.com/dotnet/efcore/issues/19587#issuecomment-668794460) will be included in EF Core 5.0
 
 Currently, many developers migrate their databases at application startup time. This is easy but is not recommended because:
 
@@ -185,7 +184,7 @@ The result is likely to be many small improvements in EF Core (for example, bett
 
 Lead developers: @roji and @bricelam
 
-Tracked by #19588
+Tracked by [#19588](https://github.com/dotnet/efcore/issues/19588)
 
 T-shirt size: L
 
@@ -193,8 +192,8 @@ Status: Scope/Done
 
 Scoping: Platform guidance and samples are published for Blazor, Xamarin, WinForms, and WPF. Xamarin and other AOT/linker work is now planned for EF Core 6.0.
 
-> **Important:**
-> Xamarin.Android, Xamarin.iOS, Xamarin.Mac are now integrated directly into .NET (starting with .NET 6) as .NET for Android, .NET for iOS, and .NET for macOS. If you're building with these project types today, they should be upgraded to .NET SDK-style projects for continued support. For more information about upgrading Xamarin projects to .NET, see the Upgrade from Xamarin to .NET & .NET MAUI documentation.
+> [!IMPORTANT]
+> Xamarin.Android, Xamarin.iOS, Xamarin.Mac are now integrated directly into .NET (starting with .NET 6) as .NET for Android, .NET for iOS, and .NET for macOS. If you're building with these project types today, they should be upgraded to .NET SDK-style projects for continued support. For more information about upgrading Xamarin projects to .NET, see the [Upgrade from Xamarin to .NET & .NET MAUI](/dotnet/maui/migration) documentation.
 
 We have good guidance for using EF Core in traditional MVC-like web applications. Guidance for other platforms and application models is either missing or out-of-date. For EF Core 5.0, we plan to investigate, improve, and document the experience of using EF Core with:
 
@@ -216,7 +215,7 @@ Specific areas we plan to look at are:
 
 Lead developer: @roji
 
-Tracked by issues labeled with `area-perf` in the 5.0 milestone
+Tracked by [issues labeled with `area-perf` in the 5.0 milestone](https://github.com/dotnet/efcore/issues?utf8=%E2%9C%93&q=is%3Aissue+label%3Aarea-perf+milestone%3A5.0.0+)
 
 T-shirt size: L
 
@@ -232,7 +231,7 @@ As part of this work we also plan to add ADO.NET/EF Core performance counters an
 
 Lead documenter: @ajcvickers
 
-Tracked by #1920
+Tracked by [#1920](https://github.com/dotnet/EntityFramework.Docs/issues/1920)
 
 T-shirt size: L
 
@@ -251,11 +250,11 @@ We still believe this is important, but unfortunately it won't land with EF Core
 
 Lead documenter: @bricelam
 
-Tracked by #1675
+Tracked by [#1675](https://github.com/dotnet/EntityFramework.Docs/issues/1675)
 
 T-shirt size: M
 
-Status: Completed. The new documentation is live on Microsoft Learn.
+Status: Completed. The new documentation is [live on Microsoft Learn](/dotnet/standard/data/sqlite/?tabs=netcore-cli).
 
 The EF Team also owns the Microsoft.Data.Sqlite ADO.NET provider. We plan to fully document this provider as part of the 5.0 release.
 
@@ -263,7 +262,7 @@ The EF Team also owns the Microsoft.Data.Sqlite ADO.NET provider. We plan to ful
 
 Lead documenter: @ajcvickers
 
-Tracked by issues in the documentation repo in the 5.0 milestone
+Tracked by [issues in the documentation repo in the 5.0 milestone](https://github.com/dotnet/EntityFramework.Docs/issues?utf8=%E2%9C%93&q=is%3Aissue+milestone%3A5.0.0+)
 
 T-shirt size: L
 
@@ -278,7 +277,7 @@ We are already in the process of updating documentation for the 3.0 and 3.1 rele
 
 ## Fixing bugs
 
-Tracked by issues labeled with `type-bug` in the 5.0 milestone
+Tracked by [issues labeled with `type-bug` in the 5.0 milestone](https://github.com/dotnet/efcore/issues?utf8=%E2%9C%93&q=is%3Aissue+milestone%3A5.0.0+label%3Atype-bug+)
 
 Developers: @roji, @maumar, @bricelam, @smitpatel, @AndriySvyryd, @ajcvickers
 
@@ -292,7 +291,7 @@ The incoming rate (issues that end up as work in a milestone) was about 23 issue
 
 ## Small enhancements
 
-Tracked by issues labeled with `type-enhancement` in the 5.0 milestone
+Tracked by [issues labeled with `type-enhancement` in the 5.0 milestone](https://github.com/dotnet/efcore/issues?utf8=%E2%9C%93&q=is%3Aissue+milestone%3A5.0.0+label%3Atype-enhancement+)
 
 Developers: @roji, @maumar, @bricelam, @smitpatel, @AndriySvyryd, @ajcvickers
 
@@ -304,12 +303,12 @@ In addition to the bigger features outlined above, we also have many smaller imp
 
 ## Below-the-line
 
-Tracked by issues labeled with `consider-for-next-release`
+Tracked by [issues labeled with `consider-for-next-release`](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+label%3Aconsider-for-next-release)
 
 These are bug fixes and enhancements that are **not** currently scheduled for the 5.0 release, but we will look at as stretch goals depending on the progress made on the work above.
 
-In addition, we always consider the most voted issues when planning. Cutting any of these issues from a release is always painful, but we do need a realistic plan for the resources we have.
+In addition, we always consider the [most voted issues](https://github.com/dotnet/efcore/issues?q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc) when planning. Cutting any of these issues from a release is always painful, but we do need a realistic plan for the resources we have.
 
 ## Suggestions
 
-Your feedback on planning is important. The best way to indicate the importance of an issue is to vote (thumbs-up) for that issue on GitHub. This data will then feed into the planning process for the next release.
+Your feedback on planning is important. The best way to indicate the importance of an issue is to vote (thumbs-up) for that issue on GitHub. This data will then feed into the [planning process](xref:core/what-is-new/release-planning) for the next release.

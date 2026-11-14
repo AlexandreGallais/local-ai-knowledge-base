@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugCode2::GetCompilerFlags Method"
 title: "ICorDebugCode2::GetCompilerFlags Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugcode2-getcompilerflags-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugCode2.GetCompilerFlags"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugCode2::GetCompilerFlags"
+helpviewer_keywords:
+  - "GetCompilerFlags method [.NET debugging]"
+  - "ICorDebugCode2::GetCompilerFlags method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugCode2::GetCompilerFlags Method
 
 Gets the flags that specify the conditions under which this code object was either just-in-time (JIT) compiled or generated using the native image generator (Ngen.exe).
@@ -22,11 +31,11 @@ HRESULT GetCompilerFlags (
 ## Parameters
 
 `pdwFlags`
-[out] A pointer to a value of the CorDebugJITCompilerFlags enumeration that specifies the behavior of the JIT compiler or the native image generator.
+[out] A pointer to a value of the [CorDebugJITCompilerFlags](cordebugjitcompilerflags-enumeration.md) enumeration that specifies the behavior of the JIT compiler or the native image generator.
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** CorDebug.idl, CorDebug.h
 

@@ -1,17 +1,8 @@
----
-title: "Trait and lifetime bounds"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/trait-bounds.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[bound]
 # Trait and lifetime bounds
 
 r[bound.syntax]
-```grammar
+```grammar,miscellaneous
 Bounds -> Bound ( `+` Bound )* `+`?
 
 Bound -> Lifetime | TraitBound | UseBound
@@ -40,9 +31,9 @@ UseBoundGenericArg ->
 ```
 
 r[bound.intro]
-[Trait] and lifetime bounds provide a way for generic items to restrict which types and lifetimes are used as their parameters. Bounds can be provided on any type in a [where clause]. There are also shorter forms for certain common cases:
+[Trait] and lifetime bounds provide a way for [generic items][generic] to restrict which types and lifetimes are used as their parameters. Bounds can be provided on any type in a [where clause]. There are also shorter forms for certain common cases:
 
-* Bounds written after declaring a generic parameter: `fn f() {}` is the same as `fn f() where A: Copy {}`.
+* Bounds written after declaring a [generic parameter][generic]: `fn f<A: Copy>() {}` is the same as `fn f<A>() where A: Copy {}`.
 * In trait declarations as [supertraits]: `trait Circle : Shape {}` is equivalent to `trait Circle where Self : Shape {}`.
 * In trait declarations as bounds on [associated types]: `trait A { type B: Copy; }` is equivalent to `trait A where Self::B: Copy { type B; }`.
 
@@ -88,7 +79,7 @@ Bounds that don't use the item's parameters or [higher-ranked lifetimes] are che
 r[bound.special]
 [`Copy`], [`Clone`], and [`Sized`] bounds are also checked for certain generic types when using the item, even if the use does not provide a concrete type. It is an error to have `Copy` or `Clone` as a bound on a mutable reference, [trait object], or [slice]. It is an error to have `Sized` as a bound on a trait object or slice.
 
-```rust
+```rust,compile_fail
 struct A<'a, T>
 where
     i32: Default,           // Allowed, but not useful
@@ -132,7 +123,7 @@ r[bound.higher-ranked]
 ## Higher-ranked trait bounds
 
 r[bound.higher-ranked.syntax]
-```grammar
+```grammar,miscellaneous
 ForLifetimes -> `for` GenericParams
 ```
 
@@ -159,7 +150,7 @@ fn call_on_ref_zero<F>(f: F) where for<'a> F: Fn(&'a i32) {
 ```
 
 r[bound.higher-ranked.trait]
-Higher-ranked lifetimes may also be specified just before the trait: the only difference is the scope of the lifetime parameter, which extends only to the end of the following trait instead of the whole bound. This function is equivalent to the last one.
+Higher-ranked lifetimes may also be specified just before the trait: the only difference is the [scope][hrtb-scopes] of the lifetime parameter, which extends only to the end of the following trait instead of the whole bound. This function is equivalent to the last one.
 
 ```rust
 fn call_on_ref_zero<F>(f: F) where F: for<'a> Fn(&'a i32) {
@@ -193,7 +184,7 @@ fn requires_t_outlives_a<'a, T>(x: &'a T) {
 }
 ```
 
-```rust
+```rust,compile_fail,E0309
 # fn requires_t_outlives_a_not_implied<'a, T: 'a>() {}
 fn not_implied<'a, T>() {
     // This errors, because `T: 'a` is not implied by
@@ -205,7 +196,7 @@ fn not_implied<'a, T>() {
 r[bound.implied.trait]
 Only lifetime bounds are implied, trait bounds still have to be explicitly added. The following example therefore causes an error:
 
-```rust
+```rust,compile_fail,E0277
 use std::fmt::Debug;
 struct IsDebug<T: Debug>(T);
 // error[E0277]: `T` doesn't implement `Debug`
@@ -246,3 +237,18 @@ r[bound.use]
 ## Use bounds
 
 Certain bounds lists may include a `use<..>` bound to control which generic parameters are captured by the `impl Trait` [abstract return type].  See [precise capturing] for more details.
+
+[abstract return type]: types/impl-trait.md#abstract-return-types
+[arrays]: types/array.md
+[associated types]: items/associated-items.md#associated-types
+[hrtb-scopes]: names/scopes.md#higher-ranked-trait-bound-scopes
+[supertraits]: items/traits.md#supertraits
+[generic]: items/generics.md
+[higher-ranked lifetimes]: #higher-ranked-trait-bounds
+[precise capturing]: types/impl-trait.md#precise-capturing
+[slice]: types/slice.md
+[Trait]: items/traits.md#trait-bounds
+[trait object]: types/trait-object.md
+[trait objects]: types/trait-object.md
+[type parameters]: types/parameters.md
+[where clause]: items/generics.md#where-clauses

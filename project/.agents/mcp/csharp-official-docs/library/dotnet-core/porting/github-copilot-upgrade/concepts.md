@@ -1,17 +1,19 @@
 ---
-title: "GitHub Copilot upgrade core concepts"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/github-copilot-upgrade/concepts.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: GitHub Copilot upgrade core concepts
+description: "Learn the key concepts behind GitHub Copilot upgrade, including scenarios, skills, tasks, the three-stage workflow, state management, and flow modes."
+ms.topic: concept-article
+ms.date: 09/21/2026
+ai-usage: ai-assisted
+
+#customer intent: As a developer, I want to understand the core concepts of GitHub Copilot upgrade so that I can use the agent effectively and get the best results from my upgrades.
+
 ---
 
 # GitHub Copilot upgrade concepts
 
 GitHub Copilot upgrade uses structured workflows to upgrade supported projects. Learn how the agent uses technology packs, scenarios, skills, tasks, and persistent state to plan and validate changes.
 
-> **Tip:**
+> [!TIP]
 > Describe the outcome that you want instead of memorizing scenario or skill names. The agent detects the technologies in your repository and selects relevant capabilities.
 
 ## The agent as a teammate
@@ -42,7 +44,7 @@ You can also ask directly: _"What scenarios are available for my solution?"_
 
 Each active scenario gets its own folder at `.github/upgrades/{scenarioId}/`. The scenario folder contains the plan, task progress, your preferences, and execution logs. The folder is part of your Git repository.
 
-For available workflows, see .NET scenarios and skills and JavaScript and TypeScript capabilities.
+For available workflows, see [.NET scenarios and skills](dotnet-scenarios-and-skills.md) and [JavaScript and TypeScript capabilities](javascript-typescript-capabilities.md).
 
 ## The workflow lifecycle
 
@@ -105,7 +107,7 @@ During the assessment stage, the agent evaluates your solution and recommends on
 | **Top-down** | Quick feedback on the main app | Start with the application project, fix dependencies as needed. |
 | **All-at-once** | Small, simple solutions | Upgrade everything in one pass. |
 
-> **Tip:**
+> [!TIP]
 > The agent only surfaces decisions that are relevant to your project. A simple console app doesn't see web framework choices, and a project without Entity Framework doesn't see database upgrade options.
 
 ## Skills
@@ -123,7 +125,7 @@ Technology packs provide built-in skills organized by domain. Examples include:
 
 Skills load automatically based on what the agent detects in your codebase. You don't need to manage skill loading. Just describe what you need.
 
-For technology-specific lists, see .NET scenarios and skills and JavaScript and TypeScript capabilities.
+For technology-specific lists, see [.NET scenarios and skills](dotnet-scenarios-and-skills.md) and [JavaScript and TypeScript capabilities](javascript-typescript-capabilities.md).
 
 ## Tasks
 
@@ -173,16 +175,16 @@ Close the chat, close your IDE, or come back the next day. The agent picks up wh
 
 Because state lives in Git, you can switch between VS Code, Visual Studio, and Copilot CLI mid-upgrade. The `.github/upgrades/` folder is the shared state that both IDEs understand.
 
-> **Tip:**
+> [!TIP]
 > Commit the `.github/upgrades/` folder to your branch. Push the branch to a remote repository to let team members view progress or continue the upgrade on a different machine.
 
 ## Flow modes
 
-The agent supports two flow modes that control how much oversight you have: Automatic mode and Guided mode.
+The agent supports two flow modes that control how much oversight you have: [Automatic mode](#automatic-mode) and [Guided mode](#guided-mode).
 
 ### Automatic mode
 
-The agent works through all stages (assessment, planning, and execution) without pausing for approval. It surfaces key <example-value> and progress updates, but keeps moving forward.
+The agent works through all stages (assessment, planning, and execution) without pausing for approval. It surfaces key findings and progress updates, but keeps moving forward.
 
 Best for experienced users, straightforward upgrades, and small solutions.
 
@@ -201,13 +203,13 @@ Best for first-time users, complex solutions, and when you want to learn the pro
 - Say **"pause"** or **"switch to guided"** to switch to Guided mode.
 - Say **"continue"** or **"go ahead"** to switch to Automatic mode.
 
-> **Tip:**
+> [!TIP]
 > Start with Guided mode for your first upgrade to understand the workflow, then switch to Automatic once you're comfortable.
 
 ## Related content
 
-- What is GitHub Copilot upgrade?
-- .NET scenarios and skills
-- Upgrade a .NET app with GitHub Copilot upgrade
-- Best practices
-- Troubleshoot GitHub Copilot upgrade
+- [What is GitHub Copilot upgrade?](overview.md)
+- [.NET scenarios and skills](dotnet-scenarios-and-skills.md)
+- [Upgrade a .NET app with GitHub Copilot upgrade](dotnet-how-to-upgrade-with-github-copilot.md)
+- [Best practices](best-practices.md)
+- [Troubleshoot GitHub Copilot upgrade](troubleshooting.md)

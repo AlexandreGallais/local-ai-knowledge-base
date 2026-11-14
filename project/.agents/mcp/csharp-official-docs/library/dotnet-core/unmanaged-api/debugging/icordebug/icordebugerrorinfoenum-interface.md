@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugErrorInfoEnum Interface"
 title: "ICorDebugErrorInfoEnum Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugerrorinfoenum-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugErrorInfoEnum"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugErrorInfoEnum"
+helpviewer_keywords:
+  - "ICorDebugErrorInfoEnum interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugErrorInfoEnum Interface
 
 `ICorDebugErrorInfoEnum` is obsolete. Do not use this interface.

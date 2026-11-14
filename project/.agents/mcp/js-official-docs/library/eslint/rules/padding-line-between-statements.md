@@ -1,14 +1,7 @@
 ---
-title: "padding-line-between-statements"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/padding-line-between-statements.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: padding-line-between-statements
+rule_type: layout
 ---
-
-# padding-line-between-statements
-
 This rule requires or disallows blank lines between the given 2 kinds of statements.
 Properly blank lines help developers to understand the code.
 
@@ -55,7 +48,7 @@ You can supply any number of configurations. If a statement pair matches multipl
 * `STATEMENT_TYPE` is one of the following, or an array of the following.
     * `"*"` is wildcard. This matches any statements.
     * `"block"` is lonely blocks.
-    * `"<example-value>"` is block like statements. This matches statements that the last token is the closing brace of blocks; e.g. `{ }`, `if (a) { }`, and `while (a) { }`. Also matches immediately invoked function expression statements.
+    * `"block-like"` is block like statements. This matches statements that the last token is the closing brace of blocks; e.g. `{ }`, `if (a) { }`, and `while (a) { }`. Also matches immediately invoked function expression statements.
     * `"break"` is `break` statements.
     * `"case"` is `case` clauses in `switch` statements.
     * `"cjs-export"` is `export` statements of CommonJS; e.g. `module.exports = 0`, `module.exports.foo = 1`, and `exports.foo = 2`. This is a special case of assignment.
@@ -66,11 +59,11 @@ You can supply any number of configurations. If a statement pair matches multipl
     * `"debugger"` is `debugger` statements.
     * `"default"` is `default` clauses in `switch` statements.
     * `"directive"` is directive prologues. This matches directives; e.g. `"use strict"`.
-    * `"<example-value>"` is `do-while` statements. This matches all statements that the first token is `do` keyword.
+    * `"do"` is `do-while` statements. This matches all statements that the first token is `do` keyword.
     * `"empty"` is empty statements.
     * `"export"` is `export` declarations.
     * `"expression"` is expression statements.
-    * `"<example-value>"` is `for` loop families. This matches all statements that the first token is `for` keyword.
+    * `"for"` is `for` loop families. This matches all statements that the first token is `for` keyword.
     * `"function"` is function declarations.
     * `"if"` is `if` statements.
     * `"iife"` is immediately invoked function expression statements. This matches calls on a function expression, optionally prefixed with a unary operator.
@@ -92,11 +85,11 @@ You can supply any number of configurations. If a statement pair matches multipl
     * `"while"` is `while` loop statements.
     * `"with"` is `with` statements.
 
-This configuration would require blank lines before all `return` statements, like the newline-before-return rule.
+This configuration would require blank lines before all `return` statements, like the [newline-before-return](newline-before-return) rule.
 
 Examples of **incorrect** code for the `[{ blankLine: "always", prev: "*", next: "return" }]` configuration:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint padding-line-between-statements: [
@@ -110,9 +103,11 @@ function foo() {
 }
 ```
 
+:::
+
 Examples of **correct** code for the `[{ blankLine: "always", prev: "*", next: "return" }]` configuration:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint padding-line-between-statements: [
@@ -131,13 +126,15 @@ function foo2() {
 }
 ```
 
+:::
+
 ----
 
-This configuration would require blank lines after every sequence of variable declarations, like the newline-after-var rule.
+This configuration would require blank lines after every sequence of variable declarations, like the [newline-after-var](newline-after-var) rule.
 
 Examples of **incorrect** code for the `[{ blankLine: "always", prev: ["const", "let", "var"], next: "*"}, { blankLine: "any", prev: ["const", "let", "var"], next: ["const", "let", "var"]}]` configuration:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint padding-line-between-statements: [
@@ -169,9 +166,11 @@ class C {
 }
 ```
 
+:::
+
 Examples of **correct** code for the `[{ blankLine: "always", prev: ["const", "let", "var"], next: "*"}, { blankLine: "any", prev: ["const", "let", "var"], next: ["const", "let", "var"]}]` configuration:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint padding-line-between-statements: [
@@ -211,13 +210,15 @@ class C {
 }
 ```
 
+:::
+
 ----
 
-This configuration would require blank lines after all directive prologues, like the lines-around-directive rule.
+This configuration would require blank lines after all directive prologues, like the [lines-around-directive](lines-around-directive) rule.
 
 Examples of **incorrect** code for the `[{ blankLine: "always", prev: "directive", next: "*" }, { blankLine: "any", prev: "directive", next: "directive" }]` configuration:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint padding-line-between-statements: [
@@ -230,9 +231,11 @@ Examples of **incorrect** code for the `[{ blankLine: "always", prev: "directive
 foo();
 ```
 
+:::
+
 Examples of **correct** code for the `[{ blankLine: "always", prev: "directive", next: "*" }, { blankLine: "any", prev: "directive", next: "directive" }]` configuration:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint padding-line-between-statements: [
@@ -247,13 +250,15 @@ Examples of **correct** code for the `[{ blankLine: "always", prev: "directive",
 foo();
 ```
 
+:::
+
 ----
 
 This configuration would require blank lines between clauses in `switch` statements.
 
 Examples of **incorrect** code for the `[{ blankLine: "always", prev: ["case", "default"], next: "*" }]` configuration:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint padding-line-between-statements: [
@@ -273,10 +278,12 @@ switch (foo) {
         quux();
 }
 ```
+
+:::
 
 Examples of **correct** code for the `[{ blankLine: "always", prev: ["case", "default"], next: "*" }]` configuration:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint padding-line-between-statements: [
@@ -299,6 +306,8 @@ switch (foo) {
         quux();
 }
 ```
+
+:::
 
 ## When Not To Use It
 
@@ -306,12 +315,12 @@ If you don't want to notify warnings about linebreaks, then it's safe to disable
 
 ## Compatibility
 
-* **JSCS:** requirePaddingNewLineAfterVariableDeclaration
-* **JSCS:** requirePaddingNewLinesAfterBlocks
-* **JSCS:** disallowPaddingNewLinesAfterBlocks
-* **JSCS:** requirePaddingNewLinesAfterUseStrict
-* **JSCS:** disallowPaddingNewLinesAfterUseStrict
-* **JSCS:** requirePaddingNewLinesBeforeExport
-* **JSCS:** disallowPaddingNewLinesBeforeExport
-* **JSCS:** requirePaddingNewlinesBeforeKeywords
-* **JSCS:** disallowPaddingNewlinesBeforeKeywords
+* **JSCS:** [requirePaddingNewLineAfterVariableDeclaration](https://jscs-dev.github.io/rule/requirePaddingNewLineAfterVariableDeclaration)
+* **JSCS:** [requirePaddingNewLinesAfterBlocks](https://jscs-dev.github.io/rule/requirePaddingNewLinesAfterBlocks)
+* **JSCS:** [disallowPaddingNewLinesAfterBlocks](https://jscs-dev.github.io/rule/disallowPaddingNewLinesAfterBlocks)
+* **JSCS:** [requirePaddingNewLinesAfterUseStrict](https://jscs-dev.github.io/rule/requirePaddingNewLinesAfterUseStrict)
+* **JSCS:** [disallowPaddingNewLinesAfterUseStrict](https://jscs-dev.github.io/rule/disallowPaddingNewLinesAfterUseStrict)
+* **JSCS:** [requirePaddingNewLinesBeforeExport](https://jscs-dev.github.io/rule/requirePaddingNewLinesBeforeExport)
+* **JSCS:** [disallowPaddingNewLinesBeforeExport](https://jscs-dev.github.io/rule/disallowPaddingNewLinesBeforeExport)
+* **JSCS:** [requirePaddingNewlinesBeforeKeywords](https://jscs-dev.github.io/rule/requirePaddingNewlinesBeforeKeywords)
+* **JSCS:** [disallowPaddingNewlinesBeforeKeywords](https://jscs-dev.github.io/rule/disallowPaddingNewlinesBeforeKeywords)

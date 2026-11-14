@@ -1,19 +1,13 @@
----
-title: "no-declarations-before-early-exit"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-declarations-before-early-exit.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-declarations-before-early-exit
 
 📝 Disallow declarations before conditional early exits when they are only used after the exit.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Declare variables as close as possible to where they are used. If a variable is declared before a guard clause but only used after it, the declaration can be moved below the guard. This avoids unnecessary initialization on the early-exit path and keeps the variable scope tighter.
 
@@ -89,4 +83,4 @@ This rule intentionally uses a simple statement-list scan instead of full data-f
 
 Declarations whose initializer contains `await` or `yield` are ignored: moving them below the guard would evaluate the guard condition before the suspension instead of after it, which can change observable timing.
 
-Declarations initialized by a React hook call (for example, `const value = useMemo(…)`) are ignored, because hooks must run unconditionally and moving one below an early exit would violate the Rules of Hooks.
+Declarations initialized by a React hook call (for example, `const value = useMemo(…)`) are ignored, because hooks must run unconditionally and moving one below an early exit would violate the [Rules of Hooks](https://react.dev/reference/rules/rules-of-hooks).

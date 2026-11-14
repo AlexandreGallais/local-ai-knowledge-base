@@ -1,28 +1,28 @@
 ---
-title: "Using diagnostic listeners - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/logging-events-diagnostics/diagnostic-listeners.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Using diagnostic listeners - EF Core
+description: Using DiagnosticListener for global consumption of EF Core diagnostics
+author: SamMonoRT
+ms.date: 10/16/2020
+uid: core/logging-events-diagnostics/diagnostic-listeners
+ms.custom: sfi-ropc-nochange
 ---
 
 # Using Diagnostic Listeners in EF Core
 
-> **Tip:**
-> You can download this article's sample from GitHub.
+> [!TIP]
+> You can [download this article's sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/DiagnosticListeners) from GitHub.
 
-Diagnostic listeners allow listening for any EF Core event that occurs in the current .NET process. The `System.Diagnostics.DiagnosticListener` class is a part of a common mechanism across .NET for obtaining diagnostic information from running applications.
+Diagnostic listeners allow listening for any EF Core event that occurs in the current .NET process. The <xref:System.Diagnostics.DiagnosticListener> class is a part of a [common mechanism across .NET](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Diagnostics.DiagnosticSource/src/DiagnosticSourceUsersGuide.md) for obtaining diagnostic information from running applications.
 
-Diagnostic listeners are not suitable for getting events from a single DbContext instance. EF Core interceptors provide access to the same events with per-context registration.
+Diagnostic listeners are not suitable for getting events from a single DbContext instance. EF Core [interceptors](xref:core/logging-events-diagnostics/interceptors) provide access to the same events with per-context registration.
 
-Diagnostic listeners are not designed for logging. Consider using simple logging or Microsoft.Extensions.Logging for logging.
+Diagnostic listeners are not designed for logging. Consider using [simple logging](xref:core/logging-events-diagnostics/simple-logging) or [Microsoft.Extensions.Logging](xref:core/logging-events-diagnostics/extensions-logging) for logging.
 
 ## Example: Observing diagnostic events
 
-Resolving EF Core events is a two-step process. First, an observer for `DiagnosticListener` itself must be created:
+Resolving EF Core events is a two-step process. First, an [observer](/dotnet/standard/events/observer-design-pattern) for `DiagnosticListener` itself must be created:
 
-```csharp
+<!--
 public class DiagnosticObserver : IObserver<DiagnosticListener>
 {
     public void OnCompleted()
@@ -39,19 +39,21 @@ public class DiagnosticObserver : IObserver<DiagnosticListener>
         }
     }
 }
-```
+-->
+[!code-csharp[DiagnosticObserver](../../../samples/core/Miscellaneous/DiagnosticListeners/Program.cs?name=DiagnosticObserver)]
 
-The `OnNext` method looks for the DiagnosticListener that comes from EF Core. This listener has the name "Microsoft.EntityFrameworkCore", which can be obtained from the `Microsoft.EntityFrameworkCore.DbLoggerCategory` class as shown.
+The `OnNext` method looks for the DiagnosticListener that comes from EF Core. This listener has the name "Microsoft.EntityFrameworkCore", which can be obtained from the <xref:Microsoft.EntityFrameworkCore.DbLoggerCategory> class as shown.
 
 This observer must then be registered globally, for example in the application's `Main` method:
 
-```csharp
-DiagnosticListener.AllListeners.Subscribe(new DiagnosticObserver());
-```
+<!--
+        DiagnosticListener.AllListeners.Subscribe(new DiagnosticObserver());
+-->
+[!code-csharp[RegisterDiagnosticListener](../../../samples/core/Miscellaneous/DiagnosticListeners/Program.cs?name=RegisterDiagnosticListener)]
 
 Second, once the EF Core DiagnosticListener is found, a new key-value observer is created to subscribe to the actual EF Core events. For example:
 
-```csharp
+<!--
 public class KeyValueObserver : IObserver<KeyValuePair<string, object>>
 {
     public void OnCompleted()
@@ -75,28 +77,64 @@ public class KeyValueObserver : IObserver<KeyValuePair<string, object>>
         }
     }
 }
-```
+-->
+[!code-csharp[KeyValueObserver](../../../samples/core/Miscellaneous/DiagnosticListeners/Program.cs?name=KeyValueObserver)]
 
 The `OnNext` method is this time called with a key/value pair for each EF Core event. The key is the name of the event, which can be obtained from one of:
 
-* `Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId` for events common to all EF Core database providers
-* `Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId` for events common to all relational database providers
-* A similar class for events specific to the current database provider. For example, `Microsoft.EntityFrameworkCore.Diagnostics.SqlServerEventId` for the SQL Server provider.
+* <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId> for events common to all EF Core database providers
+* <xref:Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId> for events common to all relational database providers
+* A similar class for events specific to the current database provider. For example, <xref:Microsoft.EntityFrameworkCore.Diagnostics.SqlServerEventId> for the SQL Server provider.
 
 The value of the key/value pair is a payload type specific to the event. The type of payload to expect is documented on each event defined in these event classes.
 
-For example, the code above handles the `Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.ContextInitialized` and the `Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.ConnectionOpening` events. For the first of these, the payload is `Microsoft.EntityFrameworkCore.Diagnostics.ContextInitializedEventData`. For the second, it is `Microsoft.EntityFrameworkCore.Diagnostics.ConnectionEventData`.
+For example, the code above handles the <xref:Microsoft.EntityFrameworkCore.Diagnostics.CoreEventId.ContextInitialized> and the <xref:Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.ConnectionOpening> events. For the first of these, the payload is <xref:Microsoft.EntityFrameworkCore.Diagnostics.ContextInitializedEventData>. For the second, it is <xref:Microsoft.EntityFrameworkCore.Diagnostics.ConnectionEventData>.
 
-> **Tip:**
+> [!TIP]
 > ToString is overridden in every EF Core event data class to generate the equivalent log message for the event. For example, calling `ContextInitializedEventData.ToString` generates "Entity Framework Core 5.0.0 initialized 'BlogsContext' using provider 'Microsoft.EntityFrameworkCore.Sqlite' with options: None".
 
-The sample contains a simple console application that makes changes to the blogging database and prints out the diagnostic events encountered.
+The [sample](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Miscellaneous/DiagnosticListeners) contains a simple console application that makes changes to the blogging database and prints out the diagnostic events encountered.
 
-```csharp
-public static async Task Main()
-{
-    DiagnosticListener.AllListeners.Subscribe(new DiagnosticObserver());
-```
+<!--
+    public static void Main()
+    {
+        #region RegisterDiagnosticListener
+        DiagnosticListener.AllListeners.Subscribe(new DiagnosticObserver());
+        #endregion
+
+        using (var context = new BlogsContext())
+        {
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+
+            context.Add(
+                new Blog
+                {
+                    Name = "EF Blog",
+                    Posts =
+                    {
+                        new Post { Title = "EF Core 3.1!" },
+                        new Post { Title = "EF Core 5.0!" }
+                    }
+                });
+
+            context.SaveChanges();
+        }
+
+        using (var context = new BlogsContext())
+        {
+            var blog = context.Blogs.Include(e => e.Posts).Single();
+
+            blog.Name = "EF Core Blog";
+            context.Remove(blog.Posts.First());
+            blog.Posts.Add(new Post { Title = "EF Core 6.0!" });
+
+            context.SaveChanges();
+        }
+        #endregion
+    }
+-->
+[!code-csharp[Program](../../../samples/core/Miscellaneous/DiagnosticListeners/Program.cs?name=Program)]
 
 The output from this code shows the events detected:
 

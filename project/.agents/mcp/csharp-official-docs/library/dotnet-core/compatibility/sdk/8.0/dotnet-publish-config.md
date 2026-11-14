@@ -1,25 +1,21 @@
 ---
 title: "Breaking change: 'dotnet publish' uses Release configuration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/8.0/dotnet-publish-config.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in the .NET 8 SDK where 'dotnet publish' uses the 'Release' configuration by default.
+ms.date: 02/02/2023
 ---
-
 # 'dotnet publish' uses Release configuration
 
-The `dotnet publish` command now uses the `Release` configuration instead of the `Debug` configuration by default if the target framework is .NET 8 or a later version.
+The [`dotnet publish` command](../../../tools/dotnet-publish.md) now uses the `Release` configuration instead of the `Debug` configuration by default if the target framework is .NET 8 or a later version.
 
 ## Previous behavior
 
 Previously, `dotnet publish` used the `Debug` configuration unless the configuration was specified explicitly or `PublishRelease` was set to `true`.
 
-The `PublishRelease` property was added in .NET 7 as a path forward to this breaking change. Previously, you could set the `DOTNET_CLI_ENABLE_PUBLISH_RELEASE_FOR_SOLUTIONS` environment variable to use `PublishRelease` in a project that was part of a Visual Studio solution.
+The [`PublishRelease` property](../../../project-sdk/msbuild-props.md#publishrelease) was added in .NET 7 as a path forward to this breaking change. Previously, you could set the `DOTNET_CLI_ENABLE_PUBLISH_RELEASE_FOR_SOLUTIONS` environment variable to use `PublishRelease` in a project that was part of a Visual Studio solution.
 
 ## New behavior
 
-If you're developing with the .NET 8 SDK or a later version, `dotnet publish` uses the `Release` configuration by default for projects whose `TargetFramework` is set to `net8.0` or a later version. If you have a CI/CD script, tests, or code where you've hardcoded `Debug` into an output path, this change may break your workflow.
+If you're developing with the .NET 8 SDK or a later version, `dotnet publish` uses the `Release` configuration by default for projects whose [`TargetFramework`](../../../project-sdk/msbuild-props.md#targetframework) is set to `net8.0` or a later version. If you have a CI/CD script, tests, or code where you've hardcoded `Debug` into an output path, this change may break your workflow.
 
 If your project targets multiple versions, the new behavior only applies if you specify a target framework of .NET 8 or later when you publish (for example, using `dotnet publish -f net8.0`).
 
@@ -37,7 +33,7 @@ For projects in a solution:
 
 ## Type of breaking change
 
-This change can affect source compatibility and is also a behavioral change.
+This change can affect [source compatibility](../../categories.md#source-compatibility) and is also a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -67,4 +63,4 @@ The `DOTNET_CLI_ENABLE_PUBLISH_RELEASE_FOR_SOLUTIONS` environment variable was r
 
 ## See also
 
-- 'dotnet pack' uses Release configuration
+- ['dotnet pack' uses Release configuration](dotnet-pack-config.md)

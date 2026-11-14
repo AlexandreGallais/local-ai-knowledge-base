@@ -1,10 +1,8 @@
 ---
-title: "XML Literals in Visual Basic - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/xml-literals.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: XML Literals in Visual Basic - LINQ to XML
+description: You can create an XML tree in Visual Basic using XML literals and embedded expressions. Embedded expressions enable you to evaluate an expression and insert the results of the expression into the XML tree.
+ms.date: 07/20/2015
+ms.assetid: 94fc0e03-978e-4c08-ab6c-0dc3c1e64f10
 ---
 
 # XML Literals in Visual Basic (LINQ to XML)
@@ -13,7 +11,7 @@ This article provides information about creating XML trees in Visual Basic using
 
 ## Example: Use XML literals to create an XML tree
 
-The following example shows how to create an `System.Xml.Linq.XElement`, in this case `contacts`, with XML literals:
+The following example shows how to create an <xref:System.Xml.Linq.XElement>, in this case `contacts`, with XML literals:
 
 ```vb
 Dim contacts As XElement = _
@@ -33,7 +31,7 @@ Dim contacts As XElement = _
 
 ## Example: Use XML literals to create an XElement with simple content
 
-You can create an `System.Xml.Linq.XElement` that contains simple content, as follows:
+You can create an <xref:System.Xml.Linq.XElement> that contains simple content, as follows:
 
 ```vb
 Dim n as XElement = <Customer>Adventure Works</Customer>
@@ -48,7 +46,7 @@ This example produces the following output:
 
 ## Example: Use an XML literal to create an empty element
 
-You can create an empty `System.Xml.Linq.XElement`, as follows:
+You can create an empty <xref:System.Xml.Linq.XElement>, as follows:
 
 ```vb
 Dim n As XElement = <Customer/>
@@ -63,7 +61,7 @@ This example produces the following output:
 
 ## Use embedded expressions to create content
 
-An important feature of XML literals is that they allow embedded expressions. Embedded expressions enable you to evaluate an expression and insert the results of the expression into the XML tree. If the expression evaluates to a type of `System.Xml.Linq.XElement`, an element is inserted into the tree. If the expression evaluates to a type of `System.Xml.Linq.XAttribute`, an attribute is inserted into the tree. You can insert elements and attributes into the tree only where they're valid.
+An important feature of XML literals is that they allow embedded expressions. Embedded expressions enable you to evaluate an expression and insert the results of the expression into the XML tree. If the expression evaluates to a type of <xref:System.Xml.Linq.XElement>, an element is inserted into the tree. If the expression evaluates to a type of <xref:System.Xml.Linq.XAttribute>, an attribute is inserted into the tree. You can insert elements and attributes into the tree only where they're valid.
 
 it's important to note that only a single expression can go into an embedded expression. You can't embed multiple statements. If an expression extends beyond a single line, you must use the line continuation character.
 
@@ -204,4 +202,4 @@ Child2 was attached
 
 ## See also
 
-- Functional construction
+- [Functional construction](functional-construction.md)

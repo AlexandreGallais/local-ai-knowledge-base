@@ -1,14 +1,6 @@
----
-title: "Angular Routing"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/routing/overview.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
-# Angular Routing
+<docs-decorative-header title="Angular Routing" imgSrc="adev/src/assets/images/routing.svg"> <!-- markdownlint-disable-line -->
 Routing helps you change what the user sees in a single-page app.
+</docs-decorative-header>
 
 Angular Router (`@angular/router`) is the official library for managing navigation in Angular applications and a core part of the framework. It is included by default in all projects created by Angular CLI.
 
@@ -38,4 +30,4 @@ In addition, the Angular Routing library offers additional functionality such as
 
 ## Next steps
 
-Learn about how you can define routes using Angular router.
+Learn about how you can [define routes using Angular router](/guide/routing/define-routes).

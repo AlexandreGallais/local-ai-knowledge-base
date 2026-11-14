@@ -1,12 +1,19 @@
 ---
 title: "MSTEST0069: Inherited [TestClass] is ignored by the MSTest source generator"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0069.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0069: Inherited [TestClass] is ignored by the MSTest source generator"
+ms.date: 10/01/2026
+f1_keywords:
+- MSTEST0069
+- InheritedTestClassAttributeWithSourceGeneratorAnalyzer
+helpviewer_keywords:
+- InheritedTestClassAttributeWithSourceGeneratorAnalyzer
+- MSTEST0069
+author: evangelink
+ms.author: amauryleve
+ai-usage: ai-assisted
+dev_langs:
+- CSharp
 ---
-
 # MSTEST0069: Inherited \[TestClass] is ignored by the MSTest source generator
 
 | Property                            | Value                                              |
@@ -20,8 +27,8 @@ license: "CC-BY-4.0"
 | **Introduced in version**           | 4.3.0                                              |
 | **Is there a code fix**             | No                                                 |
 
-> **Note:**
-> This analyzer ships in the `MSTest.SourceGeneration` package and is only loaded for projects that have opted into the MSTest reflection source generator. It doesn't apply when the default reflection-based discovery is used.
+> [!NOTE]
+> This analyzer ships in the `MSTest.SourceGeneration` package and is only loaded for projects that have opted into the [MSTest reflection source generator](../unit-testing-mstest-sdk.md). It doesn't apply when the default reflection-based discovery is used.
 
 ## Cause
 
@@ -81,11 +88,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0069
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0069.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

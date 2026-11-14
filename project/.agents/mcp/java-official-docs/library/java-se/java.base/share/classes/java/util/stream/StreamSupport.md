@@ -1,12 +1,3 @@
----
-title: "StreamSupport class (java.util.stream)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/stream/StreamSupport.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # StreamSupport class (java.util.stream)
 
 ```java
@@ -15,11 +6,11 @@ public final class StreamSupport
 
 Low-level utility methods for creating and manipulating streams.
 
-This class is mostly for library writers presenting stream views
+<p>This class is mostly for library writers presenting stream views
 of data structures; most static stream methods intended for end users are in
-the various `Stream` classes.
+the various {@code Stream} classes.
 
-**Since:** 1.8
+@since 1.8
 
 ## StreamSupport.stream(Spliterator<T>, boolean)
 
@@ -27,27 +18,26 @@ the various `Stream` classes.
 public static <T> Stream<T> stream(Spliterator<T> spliterator, boolean parallel)
 ```
 
-Creates a new sequential or parallel `Stream` from a
-`Spliterator`.
+Creates a new sequential or parallel {@code Stream} from a
+{@code Spliterator}.
 
-The spliterator is only traversed, split, or queried for estimated
+<p>The spliterator is only traversed, split, or queried for estimated
 size after the terminal operation of the stream pipeline commences.
 
-It is strongly recommended the spliterator report a characteristic of
-`IMMUTABLE` or `CONCURRENT`, or be
-late-binding.  Otherwise,
-int, boolean) should be used
+<p>It is strongly recommended the spliterator report a characteristic of
+{@code IMMUTABLE} or {@code CONCURRENT}, or be
+<a href="../Spliterator.html#binding">late-binding</a>.  Otherwise,
+{@link #stream(java.util.function.Supplier, int, boolean)} should be used
 to reduce the scope of potential interference with the source.  See
-Non-Interference for
+<a href="package-summary.html#NonInterference">Non-Interference</a> for
 more details.
 
-Parameters:
-
-- `<T>`: the type of stream elements
-- `spliterator`: a `Spliterator` describing the stream elements
-- `parallel`: if `true` then the returned stream is a parallel stream; if `false` the returned stream is a sequential stream.
-
-**Returns:** a new sequential or parallel `Stream`
+@param <T> the type of stream elements
+@param spliterator a {@code Spliterator} describing the stream elements
+@param parallel if {@code true} then the returned stream is a parallel
+       stream; if {@code false} the returned stream is a sequential
+       stream.
+@return a new sequential or parallel {@code Stream}
 
 ## StreamSupport.stream(Supplier<? extends Spliterator<T>>, int, boolean)
 
@@ -55,37 +45,37 @@ Parameters:
 public static <T> Stream<T> stream(Supplier<? extends Spliterator<T>> supplier, int characteristics, boolean parallel)
 ```
 
-Creates a new sequential or parallel `Stream` from a
-`Supplier` of `Spliterator`.
+Creates a new sequential or parallel {@code Stream} from a
+{@code Supplier} of {@code Spliterator}.
 
-The `Supplier.get()` method will be invoked on the supplier no
+<p>The {@link Supplier#get()} method will be invoked on the supplier no
 more than once, and only after the terminal operation of the stream pipeline
 commences.
 
-For spliterators that report a characteristic of `IMMUTABLE`
-or `CONCURRENT`, or that are
-late-binding, it is likely
-more efficient to use boolean)
+<p>For spliterators that report a characteristic of {@code IMMUTABLE}
+or {@code CONCURRENT}, or that are
+<a href="../Spliterator.html#binding">late-binding</a>, it is likely
+more efficient to use {@link #stream(java.util.Spliterator, boolean)}
 instead.
-
-The use of a `Supplier` in this form provides a level of
+<p>The use of a {@code Supplier} in this form provides a level of
 indirection that reduces the scope of potential interference with the
 source.  Since the supplier is only invoked after the terminal operation
 commences, any modifications to the source up to the start of the
 terminal operation are reflected in the stream result.  See
-Non-Interference for
+<a href="package-summary.html#NonInterference">Non-Interference</a> for
 more details.
 
-Parameters:
-
-- `<T>`: the type of stream elements
-- `supplier`: a `Supplier` of a `Spliterator`
-- `characteristics`: Spliterator characteristics of the supplied `Spliterator`. The characteristics must be equal to `supplier.get().characteristics()`, otherwise undefined behavior may occur when terminal operation commences.
-- `parallel`: if `true` then the returned stream is a parallel stream; if `false` the returned stream is a sequential stream.
-
-**Returns:** a new sequential or parallel `Stream`
-
-**See also:** #stream(java.util.Spliterator, boolean)
+@param <T> the type of stream elements
+@param supplier a {@code Supplier} of a {@code Spliterator}
+@param characteristics Spliterator characteristics of the supplied
+       {@code Spliterator}.  The characteristics must be equal to
+       {@code supplier.get().characteristics()}, otherwise undefined
+       behavior may occur when terminal operation commences.
+@param parallel if {@code true} then the returned stream is a parallel
+       stream; if {@code false} the returned stream is a sequential
+       stream.
+@return a new sequential or parallel {@code Stream}
+@see #stream(java.util.Spliterator, boolean)
 
 ## StreamSupport.intStream(Spliterator.OfInt, boolean)
 
@@ -93,26 +83,25 @@ Parameters:
 public static IntStream intStream(Spliterator.OfInt spliterator, boolean parallel)
 ```
 
-Creates a new sequential or parallel `IntStream` from a
-`Spliterator.OfInt`.
+Creates a new sequential or parallel {@code IntStream} from a
+{@code Spliterator.OfInt}.
 
-The spliterator is only traversed, split, or queried for estimated size
+<p>The spliterator is only traversed, split, or queried for estimated size
 after the terminal operation of the stream pipeline commences.
 
-It is strongly recommended the spliterator report a characteristic of
-`IMMUTABLE` or `CONCURRENT`, or be
-late-binding.  Otherwise,
-int, boolean) should be
+<p>It is strongly recommended the spliterator report a characteristic of
+{@code IMMUTABLE} or {@code CONCURRENT}, or be
+<a href="../Spliterator.html#binding">late-binding</a>.  Otherwise,
+{@link #intStream(java.util.function.Supplier, int, boolean)} should be
 used to reduce the scope of potential interference with the source.  See
-Non-Interference for
+<a href="package-summary.html#NonInterference">Non-Interference</a> for
 more details.
 
-Parameters:
-
-- `spliterator`: a `Spliterator.OfInt` describing the stream elements
-- `parallel`: if `true` then the returned stream is a parallel stream; if `false` the returned stream is a sequential stream.
-
-**Returns:** a new sequential or parallel `IntStream`
+@param spliterator a {@code Spliterator.OfInt} describing the stream elements
+@param parallel if {@code true} then the returned stream is a parallel
+       stream; if {@code false} the returned stream is a sequential
+       stream.
+@return a new sequential or parallel {@code IntStream}
 
 ## StreamSupport.intStream(Supplier<? extends Spliterator.OfInt>, int, boolean)
 
@@ -120,36 +109,36 @@ Parameters:
 public static IntStream intStream(Supplier<? extends Spliterator.OfInt> supplier, int characteristics, boolean parallel)
 ```
 
-Creates a new sequential or parallel `IntStream` from a
-`Supplier` of `Spliterator.OfInt`.
+Creates a new sequential or parallel {@code IntStream} from a
+{@code Supplier} of {@code Spliterator.OfInt}.
 
-The `Supplier.get()` method will be invoked on the supplier no
+<p>The {@link Supplier#get()} method will be invoked on the supplier no
 more than once, and only after the terminal operation of the stream pipeline
 commences.
 
-For spliterators that report a characteristic of `IMMUTABLE`
-or `CONCURRENT`, or that are
-late-binding, it is likely
-more efficient to use boolean)
+<p>For spliterators that report a characteristic of {@code IMMUTABLE}
+or {@code CONCURRENT}, or that are
+<a href="../Spliterator.html#binding">late-binding</a>, it is likely
+more efficient to use {@link #intStream(java.util.Spliterator.OfInt, boolean)}
 instead.
-
-The use of a `Supplier` in this form provides a level of
+<p>The use of a {@code Supplier} in this form provides a level of
 indirection that reduces the scope of potential interference with the
 source.  Since the supplier is only invoked after the terminal operation
 commences, any modifications to the source up to the start of the
 terminal operation are reflected in the stream result.  See
-Non-Interference for
+<a href="package-summary.html#NonInterference">Non-Interference</a> for
 more details.
 
-Parameters:
-
-- `supplier`: a `Supplier` of a `Spliterator.OfInt`
-- `characteristics`: Spliterator characteristics of the supplied `Spliterator.OfInt`. The characteristics must be equal to `supplier.get().characteristics()`, otherwise undefined behavior may occur when terminal operation commences.
-- `parallel`: if `true` then the returned stream is a parallel stream; if `false` the returned stream is a sequential stream.
-
-**Returns:** a new sequential or parallel `IntStream`
-
-**See also:** #intStream(java.util.Spliterator.OfInt, boolean)
+@param supplier a {@code Supplier} of a {@code Spliterator.OfInt}
+@param characteristics Spliterator characteristics of the supplied
+       {@code Spliterator.OfInt}.  The characteristics must be equal to
+       {@code supplier.get().characteristics()}, otherwise undefined
+       behavior may occur when terminal operation commences.
+@param parallel if {@code true} then the returned stream is a parallel
+       stream; if {@code false} the returned stream is a sequential
+       stream.
+@return a new sequential or parallel {@code IntStream}
+@see #intStream(java.util.Spliterator.OfInt, boolean)
 
 ## StreamSupport.longStream(Spliterator.OfLong, boolean)
 
@@ -157,26 +146,25 @@ Parameters:
 public static LongStream longStream(Spliterator.OfLong spliterator, boolean parallel)
 ```
 
-Creates a new sequential or parallel `LongStream` from a
-`Spliterator.OfLong`.
+Creates a new sequential or parallel {@code LongStream} from a
+{@code Spliterator.OfLong}.
 
-The spliterator is only traversed, split, or queried for estimated
+<p>The spliterator is only traversed, split, or queried for estimated
 size after the terminal operation of the stream pipeline commences.
 
-It is strongly recommended the spliterator report a characteristic of
-`IMMUTABLE` or `CONCURRENT`, or be
-late-binding.  Otherwise,
-int, boolean) should be
+<p>It is strongly recommended the spliterator report a characteristic of
+{@code IMMUTABLE} or {@code CONCURRENT}, or be
+<a href="../Spliterator.html#binding">late-binding</a>.  Otherwise,
+{@link #longStream(java.util.function.Supplier, int, boolean)} should be
 used to reduce the scope of potential interference with the source.  See
-Non-Interference for
+<a href="package-summary.html#NonInterference">Non-Interference</a> for
 more details.
 
-Parameters:
-
-- `spliterator`: a `Spliterator.OfLong` describing the stream elements
-- `parallel`: if `true` then the returned stream is a parallel stream; if `false` the returned stream is a sequential stream.
-
-**Returns:** a new sequential or parallel `LongStream`
+@param spliterator a {@code Spliterator.OfLong} describing the stream elements
+@param parallel if {@code true} then the returned stream is a parallel
+       stream; if {@code false} the returned stream is a sequential
+       stream.
+@return a new sequential or parallel {@code LongStream}
 
 ## StreamSupport.longStream(Supplier<? extends Spliterator.OfLong>, int, boolean)
 
@@ -184,36 +172,36 @@ Parameters:
 public static LongStream longStream(Supplier<? extends Spliterator.OfLong> supplier, int characteristics, boolean parallel)
 ```
 
-Creates a new sequential or parallel `LongStream` from a
-`Supplier` of `Spliterator.OfLong`.
+Creates a new sequential or parallel {@code LongStream} from a
+{@code Supplier} of {@code Spliterator.OfLong}.
 
-The `Supplier.get()` method will be invoked on the supplier no
+<p>The {@link Supplier#get()} method will be invoked on the supplier no
 more than once, and only after the terminal operation of the stream pipeline
 commences.
 
-For spliterators that report a characteristic of `IMMUTABLE`
-or `CONCURRENT`, or that are
-late-binding, it is likely
-more efficient to use boolean)
+<p>For spliterators that report a characteristic of {@code IMMUTABLE}
+or {@code CONCURRENT}, or that are
+<a href="../Spliterator.html#binding">late-binding</a>, it is likely
+more efficient to use {@link #longStream(java.util.Spliterator.OfLong, boolean)}
 instead.
-
-The use of a `Supplier` in this form provides a level of
+<p>The use of a {@code Supplier} in this form provides a level of
 indirection that reduces the scope of potential interference with the
 source.  Since the supplier is only invoked after the terminal operation
 commences, any modifications to the source up to the start of the
 terminal operation are reflected in the stream result.  See
-Non-Interference for
+<a href="package-summary.html#NonInterference">Non-Interference</a> for
 more details.
 
-Parameters:
-
-- `supplier`: a `Supplier` of a `Spliterator.OfLong`
-- `characteristics`: Spliterator characteristics of the supplied `Spliterator.OfLong`. The characteristics must be equal to `supplier.get().characteristics()`, otherwise undefined behavior may occur when terminal operation commences.
-- `parallel`: if `true` then the returned stream is a parallel stream; if `false` the returned stream is a sequential stream.
-
-**Returns:** a new sequential or parallel `LongStream`
-
-**See also:** #longStream(java.util.Spliterator.OfLong, boolean)
+@param supplier a {@code Supplier} of a {@code Spliterator.OfLong}
+@param characteristics Spliterator characteristics of the supplied
+       {@code Spliterator.OfLong}.  The characteristics must be equal to
+       {@code supplier.get().characteristics()}, otherwise undefined
+       behavior may occur when terminal operation commences.
+@param parallel if {@code true} then the returned stream is a parallel
+       stream; if {@code false} the returned stream is a sequential
+       stream.
+@return a new sequential or parallel {@code LongStream}
+@see #longStream(java.util.Spliterator.OfLong, boolean)
 
 ## StreamSupport.doubleStream(Spliterator.OfDouble, boolean)
 
@@ -221,26 +209,25 @@ Parameters:
 public static DoubleStream doubleStream(Spliterator.OfDouble spliterator, boolean parallel)
 ```
 
-Creates a new sequential or parallel `DoubleStream` from a
-`Spliterator.OfDouble`.
+Creates a new sequential or parallel {@code DoubleStream} from a
+{@code Spliterator.OfDouble}.
 
-The spliterator is only traversed, split, or queried for estimated size
+<p>The spliterator is only traversed, split, or queried for estimated size
 after the terminal operation of the stream pipeline commences.
 
-It is strongly recommended the spliterator report a characteristic of
-`IMMUTABLE` or `CONCURRENT`, or be
-late-binding.  Otherwise,
-int, boolean) should
+<p>It is strongly recommended the spliterator report a characteristic of
+{@code IMMUTABLE} or {@code CONCURRENT}, or be
+<a href="../Spliterator.html#binding">late-binding</a>.  Otherwise,
+{@link #doubleStream(java.util.function.Supplier, int, boolean)} should
 be used to reduce the scope of potential interference with the source.  See
-Non-Interference for
+<a href="package-summary.html#NonInterference">Non-Interference</a> for
 more details.
 
-Parameters:
-
-- `spliterator`: A `Spliterator.OfDouble` describing the stream elements
-- `parallel`: if `true` then the returned stream is a parallel stream; if `false` the returned stream is a sequential stream.
-
-**Returns:** a new sequential or parallel `DoubleStream`
+@param spliterator A {@code Spliterator.OfDouble} describing the stream elements
+@param parallel if {@code true} then the returned stream is a parallel
+       stream; if {@code false} the returned stream is a sequential
+       stream.
+@return a new sequential or parallel {@code DoubleStream}
 
 ## StreamSupport.doubleStream(Supplier<? extends Spliterator.OfDouble>, int, boolean)
 
@@ -248,33 +235,33 @@ Parameters:
 public static DoubleStream doubleStream(Supplier<? extends Spliterator.OfDouble> supplier, int characteristics, boolean parallel)
 ```
 
-Creates a new sequential or parallel `DoubleStream` from a
-`Supplier` of `Spliterator.OfDouble`.
+Creates a new sequential or parallel {@code DoubleStream} from a
+{@code Supplier} of {@code Spliterator.OfDouble}.
 
-The `Supplier.get()` method will be invoked on the supplier no
+<p>The {@link Supplier#get()} method will be invoked on the supplier no
 more than once, and only after the terminal operation of the stream pipeline
 commences.
 
-For spliterators that report a characteristic of `IMMUTABLE`
-or `CONCURRENT`, or that are
-late-binding, it is likely
-more efficient to use boolean)
+<p>For spliterators that report a characteristic of {@code IMMUTABLE}
+or {@code CONCURRENT}, or that are
+<a href="../Spliterator.html#binding">late-binding</a>, it is likely
+more efficient to use {@link #doubleStream(java.util.Spliterator.OfDouble, boolean)}
 instead.
-
-The use of a `Supplier` in this form provides a level of
+<p>The use of a {@code Supplier} in this form provides a level of
 indirection that reduces the scope of potential interference with the
 source.  Since the supplier is only invoked after the terminal operation
 commences, any modifications to the source up to the start of the
 terminal operation are reflected in the stream result.  See
-Non-Interference for
+<a href="package-summary.html#NonInterference">Non-Interference</a> for
 more details.
 
-Parameters:
-
-- `supplier`: A `Supplier` of a `Spliterator.OfDouble`
-- `characteristics`: Spliterator characteristics of the supplied `Spliterator.OfDouble`. The characteristics must be equal to `supplier.get().characteristics()`, otherwise undefined behavior may occur when terminal operation commences.
-- `parallel`: if `true` then the returned stream is a parallel stream; if `false` the returned stream is a sequential stream.
-
-**Returns:** a new sequential or parallel `DoubleStream`
-
-**See also:** #doubleStream(java.util.Spliterator.OfDouble, boolean)
+@param supplier A {@code Supplier} of a {@code Spliterator.OfDouble}
+@param characteristics Spliterator characteristics of the supplied
+       {@code Spliterator.OfDouble}.  The characteristics must be equal to
+       {@code supplier.get().characteristics()}, otherwise undefined
+       behavior may occur when terminal operation commences.
+@param parallel if {@code true} then the returned stream is a parallel
+       stream; if {@code false} the returned stream is a sequential
+       stream.
+@return a new sequential or parallel {@code DoubleStream}
+@see #doubleStream(java.util.Spliterator.OfDouble, boolean)

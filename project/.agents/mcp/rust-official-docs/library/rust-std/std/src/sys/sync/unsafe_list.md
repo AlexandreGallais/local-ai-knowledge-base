@@ -1,18 +1,9 @@
----
-title: "std::sys::sync::unsafe_list"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sys/sync/unsafe_list.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::sys::sync::unsafe_list
 
 A doubly-linked list where callers are in charge of memory allocation
 of the nodes in the list.
 
-#### Safety
+# Safety
 
 `UnsafeList` itself does not synchronize any of its memory accesses, so
 callers must serialize all operations on a list, e.g. with a lock.

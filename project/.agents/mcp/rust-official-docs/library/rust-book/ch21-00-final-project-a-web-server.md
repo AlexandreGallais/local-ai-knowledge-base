@@ -1,12 +1,3 @@
----
-title: "Final Project: Building a Multithreaded Web Server"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch21-00-final-project-a-web-server.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
 # Final Project: Building a Multithreaded Web Server
 
 It’s been a long journey, but we’ve reached the end of the book. In this
@@ -25,12 +16,14 @@ Here is our plan for building the web server:
 4. Create a proper HTTP response.
 5. Improve the throughput of our server with a thread pool.
 
-Figure 21-1: Our final shared project
+<img alt="Screenshot of a web browser visiting the address 127.0.0.1:8080 displaying a webpage with the text content “Hello! Hi from Rust”" src="img/trpl21-01.png" class="center" style="width: 50%;" />
+
+<span class="caption">Figure 21-1: Our final shared project</span>
 
 Before we get started, we should mention two details. First, the method we’ll
 use won’t be the best way to build a web server with Rust. Community members
 have published a number of production-ready crates available at
-crates.io that provide more complete web server and
+[crates.io](https://crates.io/) that provide more complete web server and
 thread pool implementations than we’ll build. However, our intention in this
 chapter is to help you learn, not to take the easy route. Because Rust is a
 systems programming language, we can choose the level of abstraction we want to

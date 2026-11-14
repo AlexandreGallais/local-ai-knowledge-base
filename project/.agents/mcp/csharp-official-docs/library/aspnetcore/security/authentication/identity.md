@@ -1,69 +1,52 @@
 ---
-title: "Introduction to Identity on ASP.NET Core (part 1 of 2)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/authentication/identity.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Introduction to Identity on ASP.NET Core
+ai-usage: ai-assisted
+description: Use Identity with an ASP.NET Core app. Learn how to set password requirements (RequireDigit, RequiredLength, RequiredUniqueChars, and more).
+monikerRange: '>= aspnetcore-3.0'
+ms.date: 09/18/2026
 ---
-
 # Introduction to Identity on ASP.NET Core
+
+:::moniker range=">= aspnetcore-8.0"
 
 ASP.NET Core Identity:
 
 * Is an API that supports user interface (UI) login functionality.
 * Manages users, passwords, profile data, roles, claims, tokens, email confirmation, and more.
 
-Users can create an account with the login information stored in Identity or they can use an external login provider. Supported external login providers include Facebook, Google, Microsoft Account, and Twitter.
+Users can create an account with the login information stored in Identity or they can use an external login provider. Supported external login providers include [Facebook, Google, Microsoft Account, and Twitter](social/index.md).
 
-For information on how to require authentication for all app users, see Require global user authentication.
+For information on how to require authentication for all app users, see [Require global user authentication](../authorization/policies.md#require-global-user-authentication).
 
-The Identity source code is available on GitHub. Scaffold Identity and view the generated files to review the template interaction with Identity.
+The [Identity source code](https://github.com/dotnet/AspNetCore/tree/main/src/Identity) is available on GitHub. [Scaffold Identity](scaffold-identity.md) and view the generated files to review the template interaction with Identity.
 
 Identity is typically configured using a SQL Server database to store user names, passwords, and profile data. Alternatively, another persistent store can be used, for example, Azure Table Storage.
 
-In this topic, you learn how to use Identity to register, log in, and log out a user. Note: the templates treat username and email as the same for users. For more detailed instructions about creating apps that use Identity, see Next Steps.
+In this topic, you learn how to use Identity to register, log in, and log out a user. Note: the templates treat username and email as the same for users. For more detailed instructions about creating apps that use Identity, see [Next Steps](#next).
 
-For more information on Identity in Blazor apps, see ASP.NET Core Blazor authentication and authorization and the articles that follow it in the Blazor documentation.
+For more information on Identity in Blazor apps, see [ASP.NET Core Blazor authentication and authorization](../../blazor/security/index.md) and the articles that follow it in the Blazor documentation.
 
-ASP.NET Core Identity isn't related to the Microsoft identity platform. Microsoft identity platform is:
+ASP.NET Core Identity isn't related to the [Microsoft identity platform](/azure/active-directory/develop/). Microsoft identity platform is:
 
 * An evolution of the Azure Active Directory (Azure AD) developer platform.
 * An alternative identity solution for authentication and authorization in ASP.NET Core apps.
 
-ASP.NET Core Identity adds user interface (UI) login functionality to ASP.NET Core web apps. To secure web APIs and SPAs, consider one of the following:
+[!INCLUDE[](~/includes/DuendeIdentityServer.md)]
 
-* Microsoft Entra ID
-* OpenIddict
-* Duende IdentityServer
-* Other community-supported authentication solutions
+[View or download the sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/security/authentication/identity/samples) ([how to download](../../fundamentals/index.md#how-to-download-a-sample)).
 
-For a comparison of identity solutions, see Identity management solutions for .NET web apps.
-
-Duende IdentityServer is an OpenID Connect and OAuth 2.0 framework for ASP.NET Core. Duende IdentityServer enables the following security features:
-
-* Authentication as a Service (AaaS)
-* Single sign-on/off (SSO) over multiple application types
-* Access control for APIs
-* Federation Gateway
-
-> **Important:**
-> Duende Software might require you to pay a license fee for production use of Duende IdentityServer. For more information, see Migrate from ASP.NET Core in .NET 5 to .NET 6.
-
-For more information, see the Duende IdentityServer documentation (Duende Software website).
-
-View or download the sample code (how to download).
+<a name="adi"></a>
 
 ## Create a Blazor Web App with authentication
 
 Create an ASP.NET Core Blazor Web App project with Individual Accounts.
 
-> **Note:**
-> For a Razor Pages experience, see the Create a Razor Pages app with authentication section.
+> [!NOTE]
+> For a Razor Pages experience, see the [Create a Razor Pages app with authentication](#create-a-razor-pages-app-with-authentication) section.
 >
-> For an MVC experience, see the Create an MVC app with authentication section.
+> For an MVC experience, see the [Create an MVC app with authentication](#create-an-mvc-app-with-authentication) section.
 
-# Visual Studio
+# [Visual Studio](#tab/visual-studio)
 
 * Select the **Blazor Web App** template. Select **Next**.
 * Make the following selections:
@@ -72,7 +55,7 @@ Create an ASP.NET Core Blazor Web App project with Individual Accounts.
   * **Interactivity Location**: **Global**
 * Select **Create**.
 
-# .NET CLI
+# [.NET CLI](#tab/net-cli)
 
 ```dotnetcli
 dotnet new blazor -au Individual -o BlazorApp1
@@ -94,24 +77,23 @@ The generated project includes Identity Razor components. The components are fou
 * `Components/Account/Pages/Login.razor`
 * `Components/Account/Pages/Manage/ChangePassword.razor`
 
-Identity Razor components are described individually in the documentation for specific use cases and are subject to change each release. When you generate a Blazor Web App with Individual Accounts, Identity Razor components are included in the generated project. The Identity Razor components can also be inspected in the `Components/Account` folder of the server project in the Blazor Web App project template (`dotnet/aspnetcore` GitHub repository).
+Identity Razor components are described individually in the documentation for specific use cases and are subject to change each release. When you generate a Blazor Web App with Individual Accounts, Identity Razor components are included in the generated project. The Identity Razor components can also be inspected in the `Components/Account` folder of the server project in the [Blazor Web App project template (`dotnet/aspnetcore` GitHub repository)](https://github.com/dotnet/aspnetcore/tree/main/src/ProjectTemplates/Web.ProjectTemplates/content/BlazorWeb-CSharp). 
 
-> **Note:**
-> Documentation links to .NET reference source usually load the repository's default branch, which represents the current development for the next release of .NET. To select a tag for a specific release, use the **Switch branches or tags** dropdown list.
+[!INCLUDE[](~/includes/aspnetcore-repo-ref-source-links.md)]
 
-For more information, see ASP.NET Core Blazor authentication and authorization and the articles that follow it in the Blazor documentation. Most of the articles in the *Security and Identity* area of the main ASP.NET Core documentation set apply to Blazor apps. However, the Blazor documentation set contains articles and guidance that supersedes or adds information. We recommend studying the general ASP.NET Core documentation set first, followed by accessing the articles in the Blazor *Security and Identity* documentation.
+For more information, see [ASP.NET Core Blazor authentication and authorization](../../blazor/security/index.md) and the articles that follow it in the Blazor documentation. Most of the articles in the *Security and Identity* area of the main ASP.NET Core documentation set apply to Blazor apps. However, the Blazor documentation set contains articles and guidance that supersedes or adds information. We recommend studying the general ASP.NET Core documentation set first, followed by accessing the articles in the Blazor *Security and Identity* documentation.
 
 ## Create a Razor Pages app with authentication
 
 Create an ASP.NET Core Web Application (Razor Pages) project with Individual Accounts.
 
-# Visual Studio
+# [Visual Studio](#tab/visual-studio)
 
 * Select the **ASP.NET Core Web App (Razor Pages)** template. Select **Next**.
 * For **Authentication type**, select **Individual Accounts**.
 * Select **Create**.
 
-# .NET CLI
+# [.NET CLI](#tab/net-cli)
 
 ```dotnetcli
 dotnet new webapp -au Individual -o WebApp1
@@ -127,25 +109,25 @@ dotnet new webapp -au Individual -uld -o WebApp1
 
 ---
 
-The generated project provides ASP.NET Core Identity as a Razor class library (RCL). The Identity Razor class library exposes endpoints with the `Identity` area. For example:
+The generated project provides [ASP.NET Core Identity](identity.md) as a [Razor class library (RCL)](../../razor-pages/ui-class.md). The Identity Razor class library exposes endpoints with the `Identity` area. For example:
 
 * `Areas/Identity/Pages/Account/Register`
 * `Areas/Identity/Pages/Account/Login`
 * `Areas/Identity/Pages/Account/Manage/ChangePassword`
 
-Pages are described individually in the documentation for specific use cases and are subject to change each release. To view all of the pages in the RCL, see the ASP.NET Core reference source (`dotnet/aspnetcore` GitHub repository, `Identity/UI/src/Areas/Identity/Pages` folder). You can *scaffold* individual pages or all of the pages into the app. For more information, see Scaffold Identity in ASP.NET Core projects.
+Pages are described individually in the documentation for specific use cases and are subject to change each release. To view all of the pages in the RCL, see the [ASP.NET Core reference source (`dotnet/aspnetcore` GitHub repository, `Identity/UI/src/Areas/Identity/Pages` folder)](https://github.com/dotnet/aspnetcore/tree/main/src/Identity/UI/src/Areas/Identity/Pages). You can *scaffold* individual pages or all of the pages into the app. For more information, see [Scaffold Identity in ASP.NET Core projects](scaffold-identity.md).
 
 ## Create an MVC app with authentication
 
 Create an ASP.NET Core MVC project with Individual Accounts.
 
-# Visual Studio
+# [Visual Studio](#tab/visual-studio)
 
 * Select the **ASP.NET Core Web App (Model-View-Controller)** template. Select **Next**.
 * For **Authentication type**, select **Individual Accounts**.
 * Select **Create**.
 
-# .NET CLI
+# [.NET CLI](#tab/net-cli)
 
 ```dotnetcli
 dotnet new mvc -au Individual -o WebApplication1
@@ -161,40 +143,29 @@ dotnet new mvc -au Individual -uld -o WebApplication1
 
 ---
 
-The generated project provides ASP.NET Core Identity as a Razor class library (RCL). The Identity Razor class library is based on Razor Pages and exposes endpoints with the `Identity` area. For example:
+The generated project provides [ASP.NET Core Identity](identity.md) as a [Razor class library (RCL)](../../razor-pages/ui-class.md). The Identity Razor class library is based on Razor Pages and exposes endpoints with the `Identity` area. For example:
 
 * `Areas/Identity/Pages/Account/Register`
 * `Areas/Identity/Pages/Account/Login`
 * `Areas/Identity/Pages/Account/Manage/ChangePassword`
 
-Pages are described individually in the documentation for specific use cases and are subject to change each release. To view all of the pages in the RCL, see the ASP.NET Core reference source (`dotnet/aspnetcore` GitHub repository, `Identity/UI/src/Areas/Identity/Pages` folder). You can *scaffold* individual pages or all of the pages into the app. For more information, see Scaffold Identity in ASP.NET Core projects.
+Pages are described individually in the documentation for specific use cases and are subject to change each release. To view all of the pages in the RCL, see the [ASP.NET Core reference source (`dotnet/aspnetcore` GitHub repository, `Identity/UI/src/Areas/Identity/Pages` folder)](https://github.com/dotnet/aspnetcore/tree/main/src/Identity/UI/src/Areas/Identity/Pages). You can *scaffold* individual pages or all of the pages into the app. For more information, see [Scaffold Identity in ASP.NET Core projects](scaffold-identity.md).
 
 ### Apply migrations
 
 Apply the migrations to initialize the database.
 
-# Visual Studio
+# [Visual Studio](#tab/visual-studio)
 
 Run the following command in the Package Manager Console (PMC):
 
 `Update-Database`
 
-# .NET CLI
+# [.NET CLI](#tab/net-cli)
 
 Migrations are not necessary at this step when using SQLite.
 
-If `dotnet ef` has not been installed, install it as a global tool:
-
-```dotnetcli
-  dotnet tool install --global dotnet-ef
-```
-
-For more information on the CLI for EF Core, see EF Core tools reference for the .NET CLI.
-
-> **Note:**
-> By default, the architecture of the .NET binaries to install represents the currently running operating system architecture.
-> To specify a different architecture, review how to use the `dotnet tool install` command with the '--arch' option.
-> For more information, see GitHub dotnet/aspnetcore.docs issue #29262 - _Add '-a arm64' on Apple Silicon_.
+[!INCLUDE [more information on the CLI for EF Core](~/includes/ef-cli.md)]
 
 For LocalDB, run the following command:
 
@@ -208,16 +179,9 @@ dotnet ef database update
 
 Run the app and register a user. Depending on your screen size, you might need to select the navigation toggle button to see the **Register** and **Login** links.
 
-# Visual Studio
+[!INCLUDE[](~/includes/view-identity-db.md)]
 
-* From the **View** menu, select **SQL Server Object Explorer** (SSOX).
-* Navigate to **(localdb)MSSQLLocalDB(SQL Server 13)**. Right-click on **dbo.AspNetUsers** > **View Data**:
-
-# .NET CLI
-
-There are many third party tools you can download to manage and view a SQLite database, for example DB Browser for SQLite.
-
----
+<a name="pw6"></a>
 
 ### Configure Identity services
 
@@ -226,82 +190,170 @@ Services are added in `Program.cs`. The typical pattern is to call methods in th
 1. `Add{Service}`
 1. `builder.Services.Configure{Service}`
 
-```csharp
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using WebApp1.Data;
+:::code language="csharp" source="identity/samples/WebApp6x/Program.cs" id="snippet_":::
 
-var builder = WebApplication.CreateBuilder(args);
+The preceding code configures Identity with default option values. Services are made available to the app through [dependency injection](../../fundamentals/dependency-injection.md).
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+Identity is enabled by calling <xref:Microsoft.AspNetCore.Builder.AuthAppBuilderExtensions.UseAuthentication*>. `UseAuthentication` adds authentication [middleware](../../fundamentals/middleware/index.md) to the request pipeline.
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddRazorPages();
+The template-generated app doesn't use [authorization](../authorization/secure-data.md). `app.UseAuthorization` is included to ensure it's added in the correct order should the app add authorization. `UseRouting`, `UseAuthentication`, and `UseAuthorization` must be called in the order shown in the preceding code.
 
-builder.Services.Configure<IdentityOptions>(options =>
-{
-    // Password settings.
-    options.Password.RequireDigit = true;
-    options.Password.RequireLowercase = true;
-    options.Password.RequireNonAlphanumeric = true;
-    options.Password.RequireUppercase = true;
-    options.Password.RequiredLength = 6;
-    options.Password.RequiredUniqueChars = 1;
+For more information on `IdentityOptions`, see <xref:Microsoft.AspNetCore.Identity.IdentityOptions> and [Application Startup](../../fundamentals/startup.md).
 
-    // Lockout settings.
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-    options.Lockout.MaxFailedAccessAttempts = 5;
-    options.Lockout.AllowedForNewUsers = true;
+:::moniker-end
 
-    // User settings.
-    options.User.AllowedUserNameCharacters =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-    options.User.RequireUniqueEmail = false;
-});
+:::moniker range=">= aspnetcore-10.0"
 
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    // Cookie settings
-    options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+## ASP.NET Core Identity metrics
 
-    options.LoginPath = "/Identity/Account/Login";
-    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-    options.SlidingExpiration = true;
-});
+ASP.NET Core Identity metrics provide monitoring capabilities for user management and authentication processes. These metrics help you detect unusual sign-in patterns that might indicate security threats, track the performance of identity operations, and understand how users interact with authentication features, such as two-factor authentication. This observability is particularly valuable for apps with strict security requirements or those experiencing high authentication traffic.
 
-var app = builder.Build();
+For complete details on available metrics and how to use them, see [ASP.NET Core metrics](../../metrics/overview.md#aspnet-core-identity-metrics).
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseMigrationsEndPoint();
-}
-else
-{
-    app.UseExceptionHandler("/Error");
-    app.UseHsts();
-}
+:::moniker-end
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
+:::moniker range=">= aspnetcore-8.0"
 
-app.UseRouting();
+<!-- Start here for .NET 6 -->
 
-app.UseAuthentication();
-app.UseAuthorization();
+## Scaffold Register, Login, LogOut, and RegisterConfirmation
 
-app.MapRazorPages();
+# [Visual Studio](#tab/visual-studio)
 
-app.Run();
+Add the `Register`, `Login`, `LogOut`, and `RegisterConfirmation` files. Follow the [Scaffold identity into a Razor project with authorization](scaffold-identity.md#scaffold-identity-into-a-razor-project-with-authorization) instructions to generate the code shown in this section.
+
+# [.NET CLI](#tab/net-cli)
+
+If you created the project with name **WebApp1**, and you're not using SQLite, run the following commands. Otherwise, use the correct namespace for the `ApplicationDbContext`:
+
+```dotnetcli
+dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
+dotnet aspnet-codegenerator identity -dc WebApp1.Data.ApplicationDbContext --files "Account.Register;Account.Login;Account.Logout;Account.RegisterConfirmation"
 ```
-The preceding code configures Identity with default option values. Services are made available to the app through dependency injection.
 
-Identity is enabled by calling `Microsoft.AspNetCore.Builder.AuthAppBuilderExtensions.UseAuthentication*`. `UseAuthentication` adds authentication middleware to the request pipeline.
+When using SQLite, append `--useSqLite` or `-sqlite`:
 
-The template-generated app doesn't use authorization. `app.UseAuthorization` is included to ensure it's added in the correct order should the app add authorization. `UseRouting`, `UseAuthentication`, and `UseAuthorization` must be called in the order shown in the preceding code.
+```dotnetcli
+dotnet aspnet-codegenerator identity -dc WebApp1.Data.ApplicationDbContext --files "Account.Register;Account.Login;Account.Logout;Account.RegisterConfirmation" --useSqLite
+```
 
-For more information on `IdentityOptions`, see `Microsoft.AspNetCore.Identity.IdentityOptions` and Application Startup.
+PowerShell uses semicolon as a command separator. When using PowerShell, escape the semicolons in the file list or put the file list in double quotes, as the preceding example shows.
+
+For more information on scaffolding Identity, see [Scaffold identity into a Razor project with authorization](scaffold-identity.md#scaffold-identity-into-a-razor-project-with-authorization).
+
+---
+
+### Examine Register
+
+When a user clicks the **Register** button on the `Register` page, the `RegisterModel.OnPostAsync` action is invoked. The user is created by <xref:Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(`0)> on the `_userManager` object:
+
+:::code language="csharp" source="identity/samples/WebApp3/Areas/Identity/Pages/Account/Register.cshtml.cs" id="snippet" highlight="9":::
+
+<!-- .NET 5 fixes this, see
+https://github.com/dotnet/aspnetcore/blob/main/src/Identity/UI/src/Areas/Identity/Pages/V4/Account/RegisterConfirmation.cshtml.cs#L74-L77
+-->
+[!INCLUDE[](~/includes/disableVer.md)]
+
+### Log in
+
+The Login form is displayed when:
+
+* The **Log in** link is selected.
+* A user attempts to access a restricted page that they aren't authorized to access **or** when they haven't been authenticated by the system.
+
+When the form on the Login page is submitted, the `OnPostAsync` action is called. `PasswordSignInAsync` is called on the `_signInManager` object.
+
+:::code language="csharp" source="identity/samples/WebApp3/Areas/Identity/Pages/Account/Login.cshtml.cs" id="snippet" highlight="10-11":::
+
+For information on how to make authorization decisions, see [Introduction to authorization in ASP.NET Core](../authorization/introduction.md).
+
+### Log out
+
+The **Log out** link invokes the `LogoutModel.OnPost` action. 
+
+:::code language="csharp" source="identity/samples/WebApp3/Areas/Identity/Pages/Account/Logout.cshtml.cs" highlight="36":::
+
+In the preceding code, the code `return RedirectToPage();` needs to be a redirect so that the browser performs a new request and the identity for the user gets updated.
+
+<xref:Microsoft.AspNetCore.Identity.SignInManager`1.SignOutAsync*> clears the user's claims stored in a cookie.
+
+Post is specified in the `Pages/Shared/_LoginPartial.cshtml`:
+
+:::code language="cshtml" source="identity/samples/WebApp3/Pages/Shared/_LoginPartial.cshtml" highlight="15":::
+
+## Test Identity
+
+The default web project templates allow anonymous access to the home pages. To test Identity, add [`[Authorize]`](xref:Microsoft.AspNetCore.Authorization.AuthorizeAttribute):
+
+:::code language="csharp" source="identity/samples/WebApp3/Pages/Privacy.cshtml.cs" highlight="7":::
+
+If you are signed in, sign out. Run the app and select the **Privacy** link. You are redirected to the login page.
+
+### Explore Identity
+
+To explore Identity in more detail:
+
+* [Create full identity UI source](scaffold-identity.md#create-full-identity-ui-source)
+* Examine the source of each page and step through the debugger.
+
+## Identity Components
+
+All the Identity-dependent NuGet packages are included in the [ASP.NET Core shared framework](../../release-notes/aspnetcore-3.0.md#use-the-aspnet-core-shared-framework).
+
+The primary package for Identity is [Microsoft.AspNetCore.Identity](https://www.nuget.org/packages/Microsoft.AspNetCore.Identity/). This package contains the core set of interfaces for ASP.NET Core Identity, and is included by `Microsoft.AspNetCore.Identity.EntityFrameworkCore`.
+
+## Migrating to ASP.NET Core Identity
+
+For more information and guidance on migrating your existing Identity store, see [Migrate Authentication and Identity](../../migration/fx-to-core/examples/identity.md).
+
+## Setting password strength
+
+See [Configuration](#pw6) for a sample that sets the minimum password requirements.
+
+## AddDefaultIdentity and AddIdentity
+
+<xref:Microsoft.Extensions.DependencyInjection.IdentityServiceCollectionUIExtensions.AddDefaultIdentity*> was introduced in ASP.NET Core 2.1. Calling `AddDefaultIdentity` is similar to calling the following:
+
+* <xref:Microsoft.Extensions.DependencyInjection.IdentityServiceCollectionExtensions.AddIdentity*>
+* <xref:Microsoft.AspNetCore.Identity.IdentityBuilderUIExtensions.AddDefaultUI*>
+* <xref:Microsoft.AspNetCore.Identity.IdentityBuilderExtensions.AddDefaultTokenProviders*>
+
+See [AddDefaultIdentity source](https://github.com/dotnet/AspNetCore/blob/release/3.1/src/Identity/UI/src/IdentityServiceCollectionUIExtensions.cs#L47-L63) for more information.
+
+## Prevent publish of static Identity assets
+
+To prevent publishing static Identity assets (stylesheets and JavaScript files for Identity UI) to the web root, add the following `ResolveStaticWebAssetsInputsDependsOn` property and `RemoveIdentityAssets` target to the app's project file:
+
+```xml
+<PropertyGroup>
+  <ResolveStaticWebAssetsInputsDependsOn>RemoveIdentityAssets</ResolveStaticWebAssetsInputsDependsOn>
+</PropertyGroup>
+
+<Target Name="RemoveIdentityAssets">
+  <ItemGroup>
+    <StaticWebAsset Remove="@(StaticWebAsset)" Condition="%(SourceId) == 'Microsoft.AspNetCore.Identity.UI'" />
+  </ItemGroup>
+</Target>
+```
+
+<a name="next"></a>
+
+## Next Steps
+
+* [ASP.NET Core Blazor authentication and authorization](../../blazor/security/index.md)
+* [ASP.NET Core Identity source code](https://github.com/dotnet/aspnetcore/tree/main/src/Identity)
+* [How to work with Roles in ASP.NET Core Identity](https://www.yogihosting.com/aspnet-core-identity-roles/)
+<!-- https://github.com/dotnet/AspNetCore.Docs/issues/7114 -->
+* For information on configuring Identity using SQLite, see [How to config Identity for SQLite (`dotnet/AspNetCore.Docs` #5131)](https://github.com/dotnet/AspNetCore.Docs/issues/5131).
+* [Configure Identity](identity-configuration.md)
+* [Create an ASP.NET Core app with user data protected by authorization](../authorization/secure-data.md)
+* [Add, download, and delete user data to Identity in an ASP.NET Core project](add-user-data.md)
+* [Enable QR code generation for TOTP authentication](identity-enable-qrcodes.md)
+* [Migrate Authentication and Identity to ASP.NET Core](../../migration/fx-to-core/examples/identity.md)
+* [Account confirmation and password recovery](accconfirm.md)
+* [Multi-factor authentication in ASP.NET Core](mfa.md)
+* [Host ASP.NET Core in a web farm](../../host-and-deploy/web-farm.md)
+
+:::moniker-end
+
+[!INCLUDE[](./identity/includes/identity6.md)]

@@ -1,15 +1,14 @@
 ---
-title: "gRPC interceptors on .NET"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/grpc/interceptors.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: gRPC interceptors on .NET
+description: Learn how to use gRPC interceptors on .NET.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 02/26/2022
 ---
-
 # gRPC interceptors on .NET
 
-By Ernest Nguyen
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+By [Ernest Nguyen](https://github.com/erni27)
 
 Interceptors are a gRPC concept that allows apps to interact with incoming or outgoing gRPC calls. They offer a way to enrich the request processing pipeline.
 
@@ -39,12 +38,12 @@ gRPC client interceptors intercept outgoing RPC invocations. They provide access
 * `AsyncServerStreamingCall`: Intercepts an asynchronous invocation of a server-streaming RPC.
 * `AsyncDuplexStreamingCall`: Intercepts an asynchronous invocation of a bidirectional-streaming RPC.
 
-> **Warning:**
+> [!WARNING]
 > Although both `BlockingUnaryCall` and `AsyncUnaryCall` refer to unary RPCs, they aren't interchangeable. A blocking invocation isn't intercepted by `AsyncUnaryCall`, and an asynchronous invocation isn't intercepted by a `BlockingUnaryCall`.
 
 ### Create a client gRPC interceptor
 
-The following code presents a basic <example-value> of intercepting an asynchronous invocation of a unary call:
+The following code presents a basic example of intercepting an asynchronous invocation of a unary call:
 
 ```csharp
 public class ClientLoggingInterceptor : Interceptor
@@ -77,7 +76,7 @@ Overriding `AsyncUnaryCall`:
 Methods on `Interceptor` for each kind of service method have different signatures. However, the concept behind `continuation` and `context` parameters remains the same:
 
 * `continuation` is a delegate which invokes the next interceptor in the chain or the underlying call invoker (if there is no interceptor left in the chain). It isn't an error to call it zero or multiple times. Interceptors aren't required to return a call representation (`AsyncUnaryCall` in case of unary RPC) returned from the `continuation` delegate. Omitting the delegate call and returning your own instance of call representation breaks the interceptors' chain and returns the associated response immediately.
-* `context` carries scoped values associated with the client-side call. Use `context` to pass <example-value>, such as security principals, credentials, or tracing data. Moreover, `context` carries information about deadlines and cancellation. For more information, see Reliable gRPC services with deadlines and cancellation.
+* `context` carries scoped values associated with the client-side call. Use `context` to pass metadata, such as security principals, credentials, or tracing data. Moreover, `context` carries information about deadlines and cancellation. For more information, see [Reliable gRPC services with deadlines and cancellation](deadlines-cancellation.md#deadlines).
 
 ### Awaiting response in client interceptor
 
@@ -124,7 +123,7 @@ The preceding code:
   * Wraps the `ResponseAsync` task using the `HandleResponse` method.
   * Awaits the response with `HandleResponse`. Awaiting the response allows logic to be added after the client received the response. By awaiting the response in a try-catch block, errors from calls can be logged.
 
-For more information on how to create a client interceptor, see the `ClientLoggerInterceptor.cs` example in the `grpc/grpc-dotnet` GitHub repository.
+For more information on how to create a client interceptor, see the [`ClientLoggerInterceptor.cs` example in the `grpc/grpc-dotnet` GitHub repository](https://github.com/grpc/grpc-dotnet/blob/master/examples/Interceptor/Client/ClientLoggerInterceptor.cs).
 
 ### Configure client interceptors
 
@@ -158,7 +157,7 @@ Interceptors are invoked in reverse order of the chained `Intercept` extension m
 1. `ClientMonitoringInterceptor`
 1. `ClientTokenInterceptor`
 
-For information on how to configure interceptors with gRPC client factory, see gRPC client factory integration in .NET.
+For information on how to configure interceptors with gRPC client factory, see [gRPC client factory integration in .NET](clientfactory.md#configure-interceptors).
 
 ## Server interceptors
 
@@ -217,7 +216,7 @@ The signature of both client and server interceptors methods are similar:
 * `continuation` stands for a delegate for an incoming RPC calling the next interceptor in the chain or the service handler (if there is no interceptor left in the chain). Similar to client interceptors, you can call it any time and there's no need to return a response directly from the continuation delegate. Outbound logic can be added after a service handler has executed by awaiting the continuation.
 * `context` carries metadata associated with the server-side call, such as request metadata, deadlines and cancellation, or RPC result.
 
-For more information on how to create a server interceptor, see the `ServerLoggerInterceptor.cs` example in the `grpc/grpc-dotnet` GitHub repository.
+For more information on how to create a server interceptor, see the [`ServerLoggerInterceptor.cs` example in the `grpc/grpc-dotnet` GitHub repository](https://github.com/grpc/grpc-dotnet/blob/master/examples/Interceptor/Server/ServerLoggerInterceptor.cs).
 
 ### Configure server interceptors
 
@@ -252,7 +251,7 @@ public void ConfigureServices(IServiceCollection services)
 
 Interceptors are run in the order that they're added to the `InterceptorCollection`. If both global and single service interceptors are configured, then globally-configured interceptors are run before those configured for a single service.
 
-By default, gRPC server interceptors have a per-request lifetime. Overriding this behavior is possible through registering the interceptor type with dependency injection. The following example registers the `ServerLoggerInterceptor` with a singleton lifetime:
+By default, gRPC server interceptors have a per-request lifetime. Overriding this behavior is possible through registering the interceptor type with [dependency injection](../fundamentals/dependency-injection.md). The following example registers the `ServerLoggerInterceptor` with a singleton lifetime:
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
@@ -268,7 +267,7 @@ public void ConfigureServices(IServiceCollection services)
 
 ### gRPC Interceptors versus middleware
 
-ASP.NET Core middleware offers similar functionalities compared to interceptors in C-core-based gRPC apps. ASP.NET Core middleware and interceptors are conceptually similar. Both:
+ASP.NET Core [middleware](../fundamentals/middleware/index.md) offers similar functionalities compared to interceptors in C-core-based gRPC apps. ASP.NET Core middleware and interceptors are conceptually similar. Both:
 
 * Are used to construct a pipeline that handles a gRPC request.
 * Allow work to be performed before or after the next component in the pipeline.
@@ -279,7 +278,7 @@ ASP.NET Core middleware offers similar functionalities compared to interceptors 
 gRPC Interceptor differences from ASP.NET Core middleware:
 
 * Interceptors:
-  * Operate on the gRPC layer of abstraction using the `ServerCallContext`.
+  * Operate on the gRPC layer of abstraction using the [`ServerCallContext`](https://grpc.io/grpc/csharp/api/Grpc.Core.ServerCallContext.html).
   * Provide access to:
     * The deserialized message sent to a call.
     * The message returned from the call before it's serialized.
@@ -292,8 +291,8 @@ gRPC Interceptor differences from ASP.NET Core middleware:
 
 ## Related content
 
-* Overview for gRPC on .NET
-* Create gRPC services and methods
-* Call gRPC services with the .NET client
-* Example of how to use gRPC on the client and server (`grpc/grpc-dotnet` GitHub repository)
-* Configure interceptors in a gRPC client factory in .NET
+* [Overview for gRPC on .NET](index.md)
+* [Create gRPC services and methods](services.md)
+* [Call gRPC services with the .NET client](client.md)
+* [Example of how to use gRPC on the client and server (`grpc/grpc-dotnet` GitHub repository)](https://github.com/grpc/grpc-dotnet/tree/master/examples#interceptor)
+* [Configure interceptors in a gRPC client factory in .NET](clientfactory.md#configure-interceptors)

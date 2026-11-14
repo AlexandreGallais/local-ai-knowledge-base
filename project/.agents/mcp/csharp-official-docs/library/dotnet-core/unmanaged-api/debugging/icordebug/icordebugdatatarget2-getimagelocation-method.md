@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: ICorDebugDataTarget2::GetImageLocation Method"
 title: "ICorDebugDataTarget2::GetImageLocation Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugdatatarget2-getimagelocation-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugDataTarget2::GetImageLocation Method
 
 Returns the path of a module from the module's base address.
@@ -24,7 +20,7 @@ HRESULT GetImageLocation(    [in] CORDB_ADDRESS baseAddress,
 ## Parameters
 
  `baseAddress`
- [in] A CORDB_ADDRESS value that represents the module's base address.
+ [in] A [CORDB_ADDRESS](../../../../framework/unmanaged-api/common-data-types-unmanaged-api-reference.md) value that represents the module's base address.
 
  `cchName`
  [in] The number of characters in the buffer that is to receive the module path.
@@ -37,12 +33,12 @@ HRESULT GetImageLocation(    [in] CORDB_ADDRESS baseAddress,
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This method is available with .NET Native only.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -52,4 +48,4 @@ HRESULT GetImageLocation(    [in] CORDB_ADDRESS baseAddress,
 
 ## See also
 
-- ICorDebugDataTarget2 Interface
+- [ICorDebugDataTarget2 Interface](icordebugdatatarget2-interface.md)

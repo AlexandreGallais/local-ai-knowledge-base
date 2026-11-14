@@ -1,12 +1,3 @@
----
-title: "class: TestInfoError"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/test-api/class-testinfoerror.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: TestInfoError
 * since: v1.10
 * langs: js
@@ -17,7 +8,7 @@ Information about an error thrown during test execution.
 * since: v1.49
 - type: ?<[TestInfoError]>
 
-Error cause. Set when there is a cause for the error. Will be `undefined` if there is no cause or if the cause is not an instance of [Error].
+Error cause. Set when there is a [cause](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause) for the error. Will be `undefined` if there is no cause or if the cause is not an instance of [Error].
 
 ## property: TestInfoError.message
 * since: v1.10

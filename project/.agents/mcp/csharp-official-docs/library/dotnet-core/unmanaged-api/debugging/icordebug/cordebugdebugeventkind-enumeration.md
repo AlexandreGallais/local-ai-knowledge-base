@@ -1,15 +1,19 @@
 ---
+description: "Learn more about: CorDebugDebugEventKind Enumeration"
 title: "CorDebugDebugEventKind Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cordebugdebugeventkind-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "CorDebugDebugEventKind"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+topic_type:
+  - "apiref"
 ---
-
 # CorDebugDebugEventKind Enumeration
 
-Indicates the type of event whose information is decoded by the DecodeEvent method.
+Indicates the type of event whose information is decoded by the [DecodeEvent](icordebugprocess6-decodeevent-method.md) method.
 
 ## Syntax
 
@@ -37,14 +41,14 @@ typedef enum CorDebugDebugEventKind {
 
 ## Remarks
 
- A member of the `CorDebugDebugEventKind` enumeration is returned by calling the ICorDebugDebugEvent::GetEventKind method.
+ A member of the `CorDebugDebugEventKind` enumeration is returned by calling the [ICorDebugDebugEvent::GetEventKind](icordebugdebugevent-geteventkind-method.md) method.
 
-> **Note:**
+> [!NOTE]
 > This enumeration is intended for use in .NET Native debugging scenarios only.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

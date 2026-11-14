@@ -1,13 +1,7 @@
 ---
+id: intro
 title: "Installation"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/intro-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# Installation
 
 ## Introduction
 
@@ -15,10 +9,10 @@ Playwright Test is an end-to-end test framework for modern web apps. It bundles 
 
 **You will learn**
 
-- How to install Playwright
-- What's installed
-- How to run the example test
-- How to open the HTML test report
+- [How to install Playwright](/intro.md#installing-playwright)
+- [What's installed](/intro.md#whats-installed)
+- [How to run the example test](/intro.md#running-the-example-test)
+- [How to open the HTML test report](/intro.md#html-test-reports)
 
 ## Installing Playwright
 
@@ -73,7 +67,7 @@ You can re-run the command later; it does not overwrite existing tests.
 
 ### Using the VS Code Extension
 
-You can also create and run tests with the VS Code Extension.
+You can also create and run tests with the [VS Code Extension](./getting-started-vscode.md).
 
 ## What's Installed
 
@@ -87,13 +81,13 @@ tests/
   example.spec.ts            # Minimal example test
 ```
 
-The playwright.config centralizes configuration: target browsers, timeouts, retries, projects, reporters and more. In existing projects dependencies are added to your current `package.json`.
+The [playwright.config](./test-configuration.md) centralizes configuration: target browsers, timeouts, retries, projects, reporters and more. In existing projects dependencies are added to your current `package.json`.
 
 `tests/` contains a minimal starter test.
 
 ## Running the Example Test
 
-By default tests run headless in parallel across Chromium, Firefox and WebKit (configurable in playwright.config). Output and aggregated results display in the terminal.
+By default tests run headless in parallel across Chromium, Firefox and WebKit (configurable in [playwright.config](./test-configuration.md)). Output and aggregated results display in the terminal.
 
 <Tabs
   groupId="js-package-manager"
@@ -130,17 +124,19 @@ pnpm exec playwright test
 
 </Tabs>
 
+![tests running in command line](./images/getting-started/run-tests-cli.png)
+
 Tips:
 - See the browser window: add `--headed`.
 - Run a single project/browser: `--project=chromium`.
 - Run one file: `npx playwright test tests/example.spec.ts`.
 - Open testing UI: `--ui`.
 
-See Running Tests for details on filtering, headed mode, sharding and retries.
+See [Running Tests](./running-tests.md) for details on filtering, headed mode, sharding and retries.
 
 ## HTML Test Reports
 
-After a test run, the HTML Reporter provides a dashboard filterable by the browser, passed, failed, skipped, flaky and more. Click a test to inspect errors, attachments and steps. It auto-opens only when failures occur; open manually with the command below.
+After a test run, the [HTML Reporter](./test-reporters.md#html-reporter) provides a dashboard filterable by the browser, passed, failed, skipped, flaky and more. Click a test to inspect errors, attachments and steps. It auto-opens only when failures occur; open manually with the command below.
 
 <Tabs
   groupId="js-package-manager"
@@ -177,9 +173,11 @@ pnpm exec playwright show-report
 
 </Tabs>
 
+![HTML Report](./images/getting-started/html-report-basic.png)
+
 ## Running the Example Test in UI Mode
 
-Run tests with UI Mode for watch mode, live step view, time travel debugging and more.
+Run tests with [UI Mode](./test-ui-mode.md) for watch mode, live step view, time travel debugging and more.
 
 <Tabs
   groupId="js-package-manager"
@@ -217,7 +215,9 @@ pnpm exec playwright test --ui
 
 </Tabs>
 
-See the detailed guide on UI Mode for watch filters, step details and trace integration.
+![UI Mode](./images/getting-started/ui-mode.png)
+
+See the [detailed guide on UI Mode](./test-ui-mode.md) for watch filters, step details and trace integration.
 
 ## Updating Playwright
 
@@ -309,7 +309,7 @@ pnpm exec playwright --version
 
 ## What's next
 
-- Write tests using web-first assertions, fixtures and locators
-- Run single or multiple tests; headed mode
-- Generate tests with Codegen
-- View a trace of your tests
+- [Write tests using web-first assertions, fixtures and locators](./writing-tests.md)
+- [Run single or multiple tests; headed mode](./running-tests.md)
+- [Generate tests with Codegen](./codegen-intro.md)
+- [View a trace of your tests](./trace-viewer-intro.md)

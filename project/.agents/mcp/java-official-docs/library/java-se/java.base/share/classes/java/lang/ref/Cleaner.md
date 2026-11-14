@@ -1,39 +1,30 @@
----
-title: "Cleaner class (java.lang.ref)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/ref/Cleaner.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Cleaner class (java.lang.ref)
 
 ```java
 public final class Cleaner
 ```
 
-`Cleaner` manages a set of object references and corresponding cleaning actions.
-
-Cleaning actions are object, Runnable action) registered
+{@code Cleaner} manages a set of object references and corresponding cleaning actions.
+<p>
+Cleaning actions are {@linkplain #register(Object object, Runnable action) registered}
 to run after the cleaner is notified that the object has become
 phantom reachable.
-The cleaner uses `PhantomReference` and `ReferenceQueue` to be
-notified when the reachability
+The cleaner uses {@link PhantomReference} and {@link ReferenceQueue} to be
+notified when the {@linkplain java.lang.ref##reachability reachability}
 changes.
-
+<p>
 Each cleaner operates independently, managing the pending cleaning actions
 and handling threading and termination when the cleaner is no longer in use.
 Registering an object reference and corresponding cleaning action returns
-a Cleanable. The most efficient use is to explicitly invoke
-the clean method when the object is closed or
+a {@link Cleanable Cleanable}. The most efficient use is to explicitly invoke
+the {@link Cleanable#clean clean} method when the object is closed or
 no longer needed.
-The cleaning action is a `Runnable` to be invoked at most once when
+The cleaning action is a {@link Runnable} to be invoked at most once when
 the object has become phantom reachable unless it has already been explicitly cleaned.
 Note that the cleaning action must not refer to the object being registered.
 If so, the object will not become phantom reachable and the cleaning action
 will not be invoked automatically.
-
+<p>
 The execution of the cleaning action is performed
 by a thread associated with the cleaner.
 All exceptions thrown by the cleaning action are ignored.
@@ -41,16 +32,17 @@ The cleaner and other cleaning actions are not affected by
 exceptions in a cleaning action.
 The thread runs until all registered cleaning actions have
 completed and the cleaner itself is reclaimed by the garbage collector.
-
-The behavior of cleaners during System.exit
+<p>
+The behavior of cleaners during {@link System#exit(int) System.exit}
 is implementation specific. No guarantees are made relating
 to whether cleaning actions are invoked or not.
-
-Unless otherwise noted, passing a `null` argument to a constructor or
+<p>
+Unless otherwise noted, passing a {@code null} argument to a constructor or
 method in this class will cause a
-NullPointerException to be thrown.
+{@link java.lang.NullPointerException NullPointerException} to be thrown.
 
-**API note:** The cleaning action is invoked only after the associated object becomes
+@apiNote
+The cleaning action is invoked only after the associated object becomes
 phantom reachable, so it is important that the object implementing the
 cleaning action does not hold references to the object.
 In this example, a static class encapsulates the cleaning state and action.
@@ -59,13 +51,12 @@ contains a reference to the outer instance, preventing it from becoming
 phantom reachable.
 The choice of a new cleaner or sharing an existing cleaner is determined
 by the use case.
-
+<p>
 If the CleaningExample is used in a try-finally block then the
-`close` method calls the cleaning action.
-If the `close` method is not called, the cleaning action is called
+{@code close} method calls the cleaning action.
+If the {@code close} method is not called, the cleaning action is called
 by the Cleaner when the CleaningExample instance has become phantom reachable.
-
-```java
+<pre>{@code
 public class CleaningExample implements AutoCloseable {
        // A cleaner (preferably one shared within a library,
        // but for the sake of example, a new one is created here)
@@ -97,22 +88,21 @@ public class CleaningExample implements AutoCloseable {
            cleanable.clean();
        }
    }
-```
-
+}</pre>
 The cleaning action could be a lambda but all too easily will capture
 the object reference, by referring to fields of the object being cleaned,
 preventing the object from becoming phantom reachable.
 Using a static nested class, as above, will avoid accidentally retaining the
 object reference.
-
+<p>
+<a id="compatible-cleaners"></a>
 Cleaning actions should be prepared to be invoked concurrently with
 other cleaning actions.
 Typically the cleaning actions should be very quick to execute
 and not block. If the cleaning action blocks, it may delay processing
 other cleaning actions registered to the same cleaner.
 All cleaning actions registered to a cleaner should be mutually compatible.
-
-**Since:** 9
+@since 9
 
 ## Cleaner.create()
 
@@ -120,18 +110,18 @@ All cleaning actions registered to a cleaner should be mutually compatible.
 public static Cleaner create()
 ```
 
-Returns a new `Cleaner`.
-
-The cleaner creates a daemon thread
+Returns a new {@code Cleaner}.
+<p>
+The cleaner creates a {@link Thread#setDaemon(boolean) daemon thread}
 to process the phantom reachable objects and to invoke cleaning actions.
-The context class loader
+The {@linkplain java.lang.Thread#getContextClassLoader context class loader}
 of the thread is set to the
-system class loader.
-
+{@linkplain ClassLoader#getSystemClassLoader() system class loader}.
+<p>
 The cleaner terminates when it is phantom reachable and all of the
 registered cleaning actions are complete.
 
-**Returns:** a new `Cleaner`
+@return a new {@code Cleaner}
 
 ## Cleaner.create(ThreadFactory)
 
@@ -139,26 +129,23 @@ registered cleaning actions are complete.
 public static Cleaner create(ThreadFactory threadFactory)
 ```
 
-Returns a new `Cleaner` using a `Thread` from the `ThreadFactory`.
-
-A thread from the thread factory's newThread
-method is set to be a daemon thread
+Returns a new {@code Cleaner} using a {@code Thread} from the {@code ThreadFactory}.
+<p>
+A thread from the thread factory's {@link ThreadFactory#newThread(Runnable) newThread}
+method is set to be a {@linkplain Thread#setDaemon(boolean) daemon thread}
 and started to process phantom reachable objects and invoke cleaning actions.
-On each call the thread factory
+On each call the {@linkplain ThreadFactory#newThread(Runnable) thread factory}
 must provide a Thread that is suitable for performing the cleaning actions.
-
+<p>
 The cleaner terminates when it is phantom reachable and all of the
 registered cleaning actions are complete.
 
-Parameters:
+@param threadFactory a {@code ThreadFactory} to return a new {@code Thread}
+                     to process cleaning actions
+@return a new {@code Cleaner}
 
-- `threadFactory`: a `ThreadFactory` to return a new `Thread` to process cleaning actions
-
-**Returns:** a new `Cleaner`
-
-Throws:
-
-- `IllegalThreadStateException`: if the thread from the thread factory was not a new thread.
+@throws  IllegalThreadStateException  if the thread from the thread
+              factory was {@linkplain Thread.State#NEW not a new thread}.
 
 ## Cleaner.register(Object, Runnable)
 
@@ -168,20 +155,17 @@ public Cleanable register( Object obj, Runnable action)
 
 Registers an object and a cleaning action to run when the object
 becomes phantom reachable.
-Refer to the API Note above for
+Refer to the <a href="#compatible-cleaners">API Note</a> above for
 cautions about the behavior of cleaning actions.
 
-The given object is kept strongly reachable (and therefore not eligible
+<p>The given object is kept strongly reachable (and therefore not eligible
 for cleaning) during the register() method.
 
-Memory consistency effects:
-Actions in a thread prior to calling `Cleaner.register()`
-*happen-before*
+<p>{@linkplain java.lang.ref##MemoryConsistency Memory consistency effects}:
+Actions in a thread prior to calling {@code Cleaner.register()}
+<a href="{@docRoot}/java.base/java/util/concurrent/package-summary.html#MemoryVisibility"><i>happen-before</i></a>
 the cleaning action is run by the Cleaner's thread.
 
-Parameters:
-
-- `obj`: the object to monitor
-- `action`: a `Runnable` to invoke when the object becomes phantom reachable
-
-**Returns:** a `Cleanable` instance
+@param obj   the object to monitor
+@param action a {@code Runnable} to invoke when the object becomes phantom reachable
+@return a {@code Cleanable} instance

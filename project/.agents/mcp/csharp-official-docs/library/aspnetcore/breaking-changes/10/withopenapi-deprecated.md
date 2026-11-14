@@ -1,15 +1,14 @@
 ---
 title: "Breaking change: Deprecation of WithOpenApi extension method"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/10/withopenapi-deprecated.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 10 where WithOpenApi extension methods have been deprecated and produce a compiler warning."
+ms.date: 08/07/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/aspnet/Announcements/issues/519
 ---
 
 # Deprecation of WithOpenApi extension method
 
-The `Microsoft.AspNetCore.Builder.OpenApiEndpointConventionBuilderExtensions.WithOpenApi*` methods have been deprecated in .NET 10. Invoking these methods now produces the compile-time diagnostic `ASPDEPR002` and a standard `Obsolete` warning that states:
+The <xref:Microsoft.AspNetCore.Builder.OpenApiEndpointConventionBuilderExtensions.WithOpenApi*> methods have been deprecated in .NET 10. Invoking these methods now produces the compile-time diagnostic [`ASPDEPR002`](../../diagnostics/aspdepr002.md) and a standard `Obsolete` warning that states:
 
 > WithOpenApi is deprecated and will be removed in a future release. For more information, visit <https://aka.ms/aspnet/deprecate/002>.
 
@@ -39,17 +38,17 @@ However, the call still compiles and executes.
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](/dotnet/core/compatibility/categories#source-compatibility).
 
 ## Reason for change
 
-`Microsoft.AspNetCore.Builder.OpenApiEndpointConventionBuilderExtensions.WithOpenApi*` duplicated functionality now provided by the built-in OpenAPI document generation pipeline. Deprecating it simplifies the API surface and prepares for its eventual removal.
+<xref:Microsoft.AspNetCore.Builder.OpenApiEndpointConventionBuilderExtensions.WithOpenApi*> duplicated functionality now provided by the built-in OpenAPI document generation pipeline. Deprecating it simplifies the API surface and prepares for its eventual removal.
 
 ## Recommended action
 
 Remove `.WithOpenApi()` calls from your code.
 
-- If you used `Microsoft.AspNetCore.OpenApi` for document generation, use the `Microsoft.AspNetCore.Builder.OpenApiEndpointConventionBuilderExtensions.AddOpenApiOperationTransformer``1(``0,System.Func{Microsoft.OpenApi.OpenApiOperation,Microsoft.AspNetCore.OpenApi.OpenApiOperationTransformerContext,System.Threading.CancellationToken,System.Threading.Tasks.Task})` extension method.
+- If you used `Microsoft.AspNetCore.OpenApi` for document generation, use the <xref:Microsoft.AspNetCore.Builder.OpenApiEndpointConventionBuilderExtensions.AddOpenApiOperationTransformer``1(``0,System.Func{Microsoft.OpenApi.OpenApiOperation,Microsoft.AspNetCore.OpenApi.OpenApiOperationTransformerContext,System.Threading.CancellationToken,System.Threading.Tasks.Task})> extension method.
 
   Before:
 
@@ -96,4 +95,4 @@ Remove `.WithOpenApi()` calls from your code.
 
 ## Affected APIs
 
-- `Microsoft.AspNetCore.Builder.OpenApiEndpointConventionBuilderExtensions.WithOpenApi*`
+- <xref:Microsoft.AspNetCore.Builder.OpenApiEndpointConventionBuilderExtensions.WithOpenApi*?displayProperty=fullName>

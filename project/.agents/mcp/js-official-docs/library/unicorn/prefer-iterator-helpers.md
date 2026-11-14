@@ -1,19 +1,12 @@
----
-title: "prefer-iterator-helpers"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-iterator-helpers.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-iterator-helpers
 
 📝 Prefer iterator helpers over temporary arrays from iterators.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
 
 Prefer calling iterator helpers before converting an iterator to an array. Bounded `.take()` calls can avoid unnecessary consumption. Using only `.drop()` still exhausts the iterator, but avoids storing the discarded prefix.
 
@@ -53,4 +46,4 @@ Calls are ignored when a suggestion would remove their type arguments.
 
 Changes are offered as suggestions because callbacks and iterator consumption can behave differently. In particular, `.take()` can skip later side effects or errors and close the iterator early. Comments that cannot be preserved prevent a suggestion.
 
-The rule does not report `.filter()`, `.map()`, or `.flatMap()` because their iterator versions return iterators. See `prefer-iterator-to-array-at-end` for those methods.
+The rule does not report `.filter()`, `.map()`, or `.flatMap()` because their iterator versions return iterators. See [`prefer-iterator-to-array-at-end`](prefer-iterator-to-array-at-end.md) for those methods.

@@ -1,19 +1,22 @@
 ---
 title: "Exceptions in Managed Threads"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/threading/exceptions-in-managed-threads.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: See how unhandled exceptions are handled in .NET. Most unhandled thread exceptions proceed naturally and lead to application termination.
+ms.date: 03/13/2026
+ai-usage: ai-assisted
+helpviewer_keywords:
+  - "unhandled exceptions,in managed threads"
+  - "threading [.NET],unhandled exceptions"
+  - "threading [.NET],exceptions in managed threads"
+  - "managed threading"
+ms.assetid: 11294769-2e89-43cb-890e-ad4ad79cfbee
 ---
-
 # Exceptions in managed threads
 
 The common language runtime allows most unhandled exceptions in threads to proceed naturally. In most cases, this means that the unhandled exception causes the application to terminate. However, the common language runtime provides a backstop for certain unhandled exceptions that are used for controlling program flow:
 
-- A `System.Threading.ThreadAbortException` is thrown in a thread because `System.Threading.Thread.Abort*` was called. This only applies to .NET Framework apps. In .NET 5 and later versions, `System.Threading.Thread.Abort*` throws a `System.PlatformNotSupportedException`. For more information, see SYSLIB0006: Thread.Abort is not supported.
+- A <xref:System.Threading.ThreadAbortException> is thrown in a thread because <xref:System.Threading.Thread.Abort*> was called. This only applies to .NET Framework apps. In .NET 5 and later versions, <xref:System.Threading.Thread.Abort*?displayProperty=nameWithType> throws a <xref:System.PlatformNotSupportedException>. For more information, see [SYSLIB0006: Thread.Abort is not supported](../../fundamentals/syslib-diagnostics/syslib0006.md).
 
-- An `System.AppDomainUnloadedException` is thrown in a thread because the application domain in which the thread is executing is being unloaded.
+- An <xref:System.AppDomainUnloadedException> is thrown in a thread because the application domain in which the thread is executing is being unloaded.
 
 - The common language runtime or a host process terminates the thread by throwing an internal exception.
 
@@ -21,7 +24,7 @@ If any of these exceptions are unhandled in threads created by the common langua
 
 If these exceptions are unhandled in the main thread, or in threads that entered the runtime from unmanaged code, they proceed normally, resulting in termination of the application.
 
-> **Note:**
+> [!NOTE]
 > It's possible for the runtime to throw an unhandled exception before any managed code has had a chance to install an exception handler. Even though managed code had no chance to handle such an exception, the exception is allowed to proceed naturally.
 
 ## Expose threading problems during development
@@ -32,8 +35,8 @@ If these exceptions are unhandled in the main thread, or in threads that entered
 
 ## Host override
 
-An unmanaged host can use the ICLRPolicyManager interface in the Hosting API to override the default unhandled exception policy of the common language runtime. The ICLRPolicyManager::SetUnhandledExceptionPolicy function is used to set the policy for unhandled exceptions.
+An unmanaged host can use the [ICLRPolicyManager](../../framework/unmanaged-api/hosting/iclrpolicymanager-interface.md) interface in the Hosting API to override the default unhandled exception policy of the common language runtime. The [ICLRPolicyManager::SetUnhandledExceptionPolicy](../../framework/unmanaged-api/hosting/iclrpolicymanager-setunhandledexceptionpolicy-method.md) function is used to set the policy for unhandled exceptions.
 
 ## See also
 
-- Managed Threading Basics
+- [Managed Threading Basics](managed-threading-basics.md)

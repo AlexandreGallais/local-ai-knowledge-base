@@ -1,12 +1,19 @@
 ---
 title: "MSTEST0071: Test method should not specify a display name equal to its name"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0071.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0071: Test method should not specify a display name equal to its name"
+ms.date: 06/30/2026
+f1_keywords:
+- MSTEST0071
+- RedundantTestMethodDisplayNameAnalyzer
+helpviewer_keywords:
+- RedundantTestMethodDisplayNameAnalyzer
+- MSTEST0071
+author: evangelink
+ms.author: amauryleve
+ai-usage: ai-assisted
+dev_langs:
+- CSharp
 ---
-
 # MSTEST0071: Test method should not specify a display name equal to its name
 
 | Property                            | Value                                              |
@@ -22,7 +29,7 @@ license: "CC-BY-4.0"
 
 ## Cause
 
-A test method sets a `DisplayName` (on `Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute` or `Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute`) to a value that's identical to the test method name.
+A test method sets a `DisplayName` (on <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute> or <xref:Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute>) to a value that's identical to the test method name.
 
 ## Rule description
 
@@ -70,11 +77,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0071
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0071.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

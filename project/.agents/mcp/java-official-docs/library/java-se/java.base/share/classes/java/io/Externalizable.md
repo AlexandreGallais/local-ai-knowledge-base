@@ -1,12 +1,3 @@
----
-title: "Externalizable interface (java.io)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/io/Externalizable.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Externalizable interface (java.io)
 
 ```java
@@ -22,7 +13,7 @@ interface are implemented by a class to give the class complete
 control over the format and contents of the stream for an object
 and its supertypes. These methods must explicitly
 coordinate with the supertype to save its state. These methods supersede
-customized implementations of writeObject and readObject methods.
+customized implementations of writeObject and readObject methods.<br>
 
 Object Serialization uses the Serializable and Externalizable
 interfaces.  Object persistence mechanisms can use them as well.  Each
@@ -30,28 +21,21 @@ object to be stored is tested for the Externalizable interface. If
 the object supports Externalizable, the writeExternal method is called. If the
 object does not support Externalizable and does implement
 Serializable, the object is saved using
-ObjectOutputStream.
-
- When an Externalizable object is
+ObjectOutputStream. <br> When an Externalizable object is
 reconstructed, an instance is created using the public no-arg
 constructor, then the readExternal method called.  Serializable
-objects are restored by reading them from an ObjectInputStream.
+objects are restored by reading them from an ObjectInputStream.<br>
 
 An Externalizable instance can designate a substitution object via
 the writeReplace and readResolve methods documented in the Serializable
-interface.
+interface.<br>
 
-**See also:** java.io.ObjectOutputStream
-
-**See also:** java.io.ObjectInputStream
-
-**See also:** java.io.ObjectOutput
-
-**See also:** java.io.ObjectInput
-
-**See also:** java.io.Serializable
-
-**Since:** 1.1
+@see java.io.ObjectOutputStream
+@see java.io.ObjectInputStream
+@see java.io.ObjectOutput
+@see java.io.ObjectInput
+@see java.io.Serializable
+@since   1.1
 
 ## Externalizable.writeExternal(ObjectOutput)
 
@@ -64,13 +48,14 @@ by calling the methods of DataOutput for its primitive values or
 calling the writeObject method of ObjectOutput for objects, strings,
 and arrays.
 
-Parameters:
+@serialData Overriding methods should use this tag to describe
+            the data layout of this Externalizable object.
+            List the sequence of element types and, if possible,
+            relate the element to a public/protected field and/or
+            method of this Externalizable class.
 
-- `out`: the stream to write the object to
-
-Throws:
-
-- `IOException`: Includes any I/O exceptions that may occur
+@param     out the stream to write the object to
+@throws    IOException Includes any I/O exceptions that may occur
 
 ## Externalizable.readExternal(ObjectInput)
 
@@ -84,11 +69,7 @@ types and readObject for objects, strings and arrays.  The
 readExternal method must read the values in the same sequence
 and with the same types as were written by writeExternal.
 
-Parameters:
-
-- `in`: the stream to read data from in order to restore the object
-
-Throws:
-
-- `IOException`: if I/O errors occur
-- `ClassNotFoundException`: If the class for an object being restored cannot be found.
+@param     in the stream to read data from in order to restore the object
+@throws    IOException if I/O errors occur
+@throws    ClassNotFoundException If the class for an object being
+           restored cannot be found.

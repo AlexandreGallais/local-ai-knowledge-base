@@ -1,167 +1,79 @@
 ---
-title: "Handle errors in ASP.NET Core APIs (part 1 of 2)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/error-handling-api.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Handle errors in ASP.NET Core APIs
+description: Learn about error handling in ASP.NET Core APIs with Minimal APIs and controller-based approaches.
+ai-usage: ai-assisted
+monikerRange: '>= aspnetcore-7.0'
+ms.date: 10/27/2026
 ---
 
 # Handle errors in ASP.NET Core APIs
 
-#### Minimal APIs
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
-This article describes how to handle errors in ASP.NET Core APIs. Documentation for Minimal APIs is selected. To see documentation for controller-based APIs, select the **Controllers** tab. For Blazor error handling guidance, see Handle errors in ASP.NET Core Blazor apps.
+#### [Minimal APIs](#tab/minimal-apis)
 
-#### Controllers
+This article describes how to handle errors in ASP.NET Core APIs. Documentation for Minimal APIs is selected. To see documentation for controller-based APIs, select the **Controllers** tab. For Blazor error handling guidance, see [Handle errors in ASP.NET Core Blazor apps](../blazor/fundamentals/handle-errors.md).
 
-This article describes how to handle errors in ASP.NET Core APIs. Documentation for Controller-based APIs is selected. To see documentation for **Minimal APIs**, select the **Minimal APIs** tab. For Blazor error handling guidance, see Handle errors in ASP.NET Core Blazor apps.
+#### [Controllers](#tab/controllers)
+
+This article describes how to handle errors in ASP.NET Core APIs. Documentation for Controller-based APIs is selected. To see documentation for **Minimal APIs**, select the **Minimal APIs** tab. For Blazor error handling guidance, see [Handle errors in ASP.NET Core Blazor apps](../blazor/fundamentals/handle-errors.md).
 
 ---
 
 ## Developer Exception Page
 
-The *Developer Exception Page* displays detailed information about unhandled request exceptions. It uses `Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware` to capture synchronous and asynchronous exceptions from the HTTP pipeline and to generate error responses. The developer exception page runs early in the middleware pipeline, so that it can catch unhandled exceptions thrown in middleware that follows.
+[!INCLUDE [](../includes/developer-exception-page.md)]
 
-ASP.NET Core apps enable the developer exception page by default when both:
-
-* Running in the `Development` environment.
-* The app was created with the current templates, that is, by using `Microsoft.AspNetCore.Builder.WebApplication.CreateBuilder*`.
-
-Apps created using earlier templates, that is, by using `Microsoft.AspNetCore.WebHost.CreateDefaultBuilder*`, can enable the developer exception page by calling `app.UseDeveloperExceptionPage`).
-
-> **Warning:**
-> Don't enable the Developer Exception Page **unless the app is running in the `Development` environment**. Don't share detailed exception information publicly when the app runs in production. For more information on configuring environments, see ASP.NET Core runtime environments.
-
-The Developer Exception Page can include the following information about the exception and the request:
-
-* Stack trace
-* Query string parameters, if any
-* Cookies, if any
-* Headers
-* Endpoint metadata, if any
-
-The Developer Exception Page isn't guaranteed to provide any information. Use Logging for complete error information.
-
-The following image shows a sample developer exception page with animation to show the tabs and the information displayed:
-
-In response to a request with an `Accept: text/plain` header, the Developer Exception Page returns plain text instead of HTML. For example:
-
-```text
-Status: 500 Internal Server Error
-Time: 9.39 msSize: 480 bytes
-FormattedRawHeadersRequest
-Body
-text/plain; charset=utf-8, 480 bytes
-System.InvalidOperationException: Sample Exception
-   at WebApplicationMinimal.Program.<>c.<Main>b__0_0() in C:\Source\WebApplicationMinimal\Program.cs:line 12
-   at lambda_method1(Closure, Object, HttpContext)
-   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
-
-HEADERS
-=======
-Accept: text/plain
-Host: localhost:7267
-traceparent: 00-0eab195ea19d07b90a46cd7d6bf2f
-```
-
-#### Minimal APIs
+#### [Minimal APIs](#tab/minimal-apis)
 
 To see the Developer Exception Page in a Minimal API:
 
-* Run the sample app in the `Development` environment.
+* Run the sample app in the [`Development` environment](environments.md).
 * Go to the `/exception` endpoint.
 
 This section refers to the following sample app to demonstrate ways to handle exceptions in a Minimal API. It throws an exception when the endpoint `/exception` is requested:
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+:::code language="csharp" source="~/fundamentals/minimal-apis/handle-errors/samples/Program.cs" id="snippet_ThrowExceptions" highlight="4-7":::
 
-app.MapGet("/exception", () => 
-{
-    throw new InvalidOperationException("Sample Exception");
-});
-
-app.MapGet("/", () => "Test by calling /exception");
-
-app.Run();
-```
-#### Controllers
+#### [Controllers](#tab/controllers)
 
 To see the Developer Exception Page in a controller-based API:
 
 * Add the following controller action to a controller-based API. The action throws an exception when the endpoint is requested.
 
-```csharp
-[HttpGet("Throw")]
-public IActionResult Throw() =>
-    throw new Exception("Sample exception.");
-```
-* Run the app in the development environment.
+  :::code language="csharp" source="~/web-api/handle-errors/samples/6.x/HandleErrorsSample/Controllers/ErrorsController.cs" id="snippet_Throw":::
+
+* Run the app in the [development environment](environments.md).
 * Go to the endpoint defined by the controller action.
 
 ---
 
 ## Exception handler
 
-In non-development environments, use the exception handler middleware to produce an error payload.
+In non-development environments, use the [exception handler middleware](error-handling.md#exception-handler-page) to produce an error payload.
 
-#### Minimal APIs
+#### [Minimal APIs](#tab/minimal-apis)
 
-To configure the `exception handler middleware`, call `Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.UseExceptionHandler*`. For example, the following code changes the app to respond with an RFC 7807-compliant payload to the client. For more information, see the Problem Details section later in this article.
+To configure the `exception handler middleware`, call <xref:Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.UseExceptionHandler*>. For example, the following code changes the app to respond with an [RFC 7807](https://tools.ietf.org/html/rfc7807)-compliant payload to the client. For more information, see the [Problem Details](#problem-details) section later in this article.
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+:::code language="csharp" source="~/fundamentals/minimal-apis/handle-errors/samples/Program.cs" id="snippet_WithUseExceptionHandler" highlight="4-7":::
 
-app.UseExceptionHandler(exceptionHandlerApp 
-    => exceptionHandlerApp.Run(async context 
-        => await Results.Problem()
-                     .ExecuteAsync(context)));
+#### [Controllers](#tab/controllers)
 
-app.MapGet("/exception", () => 
-{
-    throw new InvalidOperationException("Sample Exception");
-});
+1. In `Program.cs`, call <xref:Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.UseExceptionHandler*> to add the exception handling middleware:
 
-app.MapGet("/", () => "Test by calling /exception");
+    :::code language="csharp" source="~/web-api/handle-errors/samples/6.x/HandleErrorsSample/Program.cs" id="snippet_Middleware" highlight="7":::
 
-app.Run();
-```
-#### Controllers
-
-1. In `Program.cs`, call `Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.UseExceptionHandler*` to add the exception handling middleware:
-
-```csharp
-var app = builder.Build();
-
-app.UseHttpsRedirection();
-
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/error");
-}
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
-```
 1. Configure a controller action to respond to the `/error` route:
 
-```csharp
-[Route("/error")]
-public IActionResult HandleError() =>
-    Problem();
-```
-The preceding `HandleError` action sends an RFC 7807-compliant payload to the client.
+    :::code language="csharp" source="~/web-api/handle-errors/samples/6.x/HandleErrorsSample/Controllers/ErrorsController.cs" id="snippet_HandleError":::
 
-> **Warning:**
+The preceding `HandleError` action sends an [RFC 7807](https://tools.ietf.org/html/rfc7807)-compliant payload to the client.
+
+> [!WARNING]
 > Don't mark the error handler action method with HTTP method attributes, such as `HttpGet`. Explicit verbs prevent some requests from reaching the action method.
 >
-> For web APIs that use Swagger / OpenAPI, mark the error handler action with the [ApiExplorerSettings] attribute and set its `Microsoft.AspNetCore.Mvc.ApiExplorerSettingsAttribute.IgnoreApi` property to `true`. This attribute configuration excludes the error handler action from the app's OpenAPI specification:
+> For web APIs that use [Swagger / OpenAPI](../tutorials/web-api-help-pages-using-swagger.md), mark the error handler action with the [[ApiExplorerSettings]](xref:Microsoft.AspNetCore.Mvc.ApiExplorerSettingsAttribute) attribute and set its <xref:Microsoft.AspNetCore.Mvc.ApiExplorerSettingsAttribute.IgnoreApi> property to `true`. This attribute configuration excludes the error handler action from the app's OpenAPI specification:
 >
 > ```csharp
 > [ApiExplorerSettings(IgnoreApi = true)]
@@ -173,57 +85,201 @@ The preceding `HandleError` action sends an RFC 7807-compliant payload to the cl
 
 ## Client and Server error responses
 
-#### Minimal APIs
+#### [Minimal APIs](#tab/minimal-apis)
 
 Consider the following Minimal API app.
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+:::code language="csharp" source="~/fundamentals/minimal-apis/handle-errors/samples/Program.cs" id="snippet_ClientAndServerErrorResponses":::
 
-app.MapGet("/users/{id:int}", (int id) 
-    => id <= 0 ? Results.BadRequest() : Results.Ok(new User(id)));
+The `/users` endpoint produces `200 OK` with a `json` representation of `User` when `id` is greater than `0`, otherwise a `400 BAD REQUEST` status code without a response body. For more information about creating a response, see [Create responses in Minimal API apps](minimal-apis/responses.md).
 
-app.MapGet("/", () => "Test by calling /users/{id:int}");
+The [`Status Code Pages middleware`](#client-and-server-error-responses) can be configured to produce a common body content, **when empty**, for all HTTP client (`400`-`499`) or server (`500` -`599`) responses. The middleware is configured by calling the 
+[UseStatusCodePages](<xref:Microsoft.AspNetCore.Builder.StatusCodePagesExtensions.UseStatusCodePages*>) extension method.
 
-app.Run();
+For example, the following example changes the app to respond with an [RFC 7807](https://tools.ietf.org/html/rfc7807)-compliant payload to the client for all client and server responses, including routing errors (for example, `404 NOT FOUND`). For more information, see the [Problem Details](#problem-details) section.
 
-public record User(int Id);
-```
-The `/users` endpoint produces `200 OK` with a `json` representation of `User` when `id` is greater than `0`, otherwise a `400 BAD REQUEST` status code without a response body. For more information about creating a response, see Create responses in Minimal API apps.
+:::code language="csharp" source="~/fundamentals/minimal-apis/handle-errors/samples/Program.cs" id="snippet_ClientAndServerErrorResponsesWithUseStatusCodePages" highlight="4-7":::
 
-The `Status Code Pages middleware` can be configured to produce a common body content, **when empty**, for all HTTP client (`400`-`499`) or server (`500` -`599`) responses. The middleware is configured by calling the
-UseStatusCodePages extension method.
-
-For example, the following example changes the app to respond with an RFC 7807-compliant payload to the client for all client and server responses, including routing errors (for example, `404 NOT FOUND`). For more information, see the Problem Details section.
-
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
-
-app.UseStatusCodePages(async statusCodeContext 
-    => await Results.Problem(statusCode: statusCodeContext.HttpContext.Response.StatusCode)
-                 .ExecuteAsync(statusCodeContext.HttpContext));
-
-app.MapGet("/users/{id:int}", (int id) 
-    => id <= 0 ? Results.BadRequest() : Results.Ok(new User(id)) );
-
-app.MapGet("/", () => "Test by calling /users/{id:int}");
-
-app.Run();
-
-public record User(int Id);
-```
-#### Controllers
+#### [Controllers](#tab/controllers)
 
 For controller-based APIs, the error response can be configured in one of the following ways:
 
-1. Use the problem details service
-1. Implement ProblemDetailsFactory
-1. Use ApiBehaviorOptions.ClientErrorMapping
+1. Use the [problem details service](#problem-details-service)
+1. [Implement ProblemDetailsFactory](#implement-problemdetailsfactory)
+1. [Use ApiBehaviorOptions.ClientErrorMapping](#use-apibehavioroptionsclienterrormapping)
 
-An *error result* is defined as a result with an HTTP status code of 400 or higher. For web API controllers, MVC transforms an error result to produce a `Microsoft.AspNetCore.Mvc.ProblemDetails`.
+An *error result* is defined as a result with an HTTP status code of 400 or higher. For web API controllers, MVC transforms an error result to produce a <xref:Microsoft.AspNetCore.Mvc.ProblemDetails>.
 
 The automatic creation of a `ProblemDetails` for error status codes is enabled by default.
 
 ---
+
+## Problem details
+
+[!INCLUDE[](~/includes/problem-details-service.md)]
+
+#### [Minimal APIs](#tab/minimal-apis)
+
+Minimal API apps can be configured to generate problem details response for all HTTP client and server error responses that ***don't have body content yet*** by using the `AddProblemDetails` extension method.
+
+The following code configures the app to generate problem details:
+
+:::code language="csharp" source="~/fundamentals/minimal-apis/handle-errors/samples/Program.cs" id="snippet_ProblemDetails" highlight="2":::
+
+For more information on using `AddProblemDetails`, see [Problem Details](#problem-details)
+
+### Customize bad request handling with `RouteHandlerOptions.ThrowOnBadRequest`
+
+When minimal API parameter binding encounters bad-request failures (such as malformed JSON or type conversion errors), error handling is controlled by <xref:Microsoft.AspNetCore.Routing.RouteHandlerOptions.ThrowOnBadRequest*>:
+
+* In the `Development` environment, `ThrowOnBadRequest` defaults to `true`. Bad-request binding failures throw a <xref:Microsoft.AspNetCore.Http.BadHttpRequestException>, which flows through exception handling middleware (`UseExceptionHandler`) and invokes registered <xref:Microsoft.AspNetCore.Diagnostics.IExceptionHandler> handlers (available in ASP.NET Core 8 and later) or custom exception handlers to produce Problem Details responses.
+* In non-Development environments (such as `Production`), `ThrowOnBadRequest` defaults to `false`. Bad-request binding failures write a `400 Bad Request` status code directly without throwing an exception, bypassing custom exception handlers.
+
+For JSON body binding, unsupported request content types throw a <xref:Microsoft.AspNetCore.Http.BadHttpRequestException> with `StatusCode` set to `415` when `ThrowOnBadRequest` is `true` or return `415 Unsupported Media Type` directly when it is `false`. Unhandled exceptions thrown from custom `BindAsync` implementations always propagate regardless of this setting.
+
+To ensure bad-request binding failures throw an exception and trigger your configured exception handlers across all environments, configure `ThrowOnBadRequest`:
+
+```csharp
+builder.Services.Configure<RouteHandlerOptions>(options =>
+{
+    options.ThrowOnBadRequest = true;
+});
+```
+
+> [!IMPORTANT]
+> When `ThrowOnBadRequest` is enabled, binding failures throw a <xref:Microsoft.AspNetCore.Http.BadHttpRequestException>. In ASP.NET Core 11 and later, `UseExceptionHandler` preserves `BadHttpRequestException.StatusCode` by default in problem details responses. In ASP.NET Core 10 and earlier, unhandled exceptions default to `500 Internal Server Error` unless the handler explicitly preserves `BadHttpRequestException.StatusCode` on both `HttpContext.Response.StatusCode` and the generated <xref:Microsoft.AspNetCore.Mvc.ProblemDetails.Status>. Custom exception handlers or <xref:Microsoft.AspNetCore.Diagnostics.IExceptionHandler> implementations (ASP.NET Core 8 and later) that override the response should still ensure `BadHttpRequestException.StatusCode` is preserved so client errors aren't reported as server failures.
+
+### IProblemDetailsService fallback
+
+In the following code, `httpContext.Response.WriteAsync("Fallback: An error occurred.")` returns an error if the <xref:Microsoft.AspNetCore.Http.IProblemDetailsService> implementation isn't able to generate a <xref:Microsoft.AspNetCore.Mvc.ProblemDetails>:
+
+:::code language="csharp" source="~/fundamentals/minimal-apis/handle-errors/samples/Program.cs" id="snippet_IProblemDetailsServiceWithExceptionFallback" highlight="15":::
+
+The preceding code:
+
+* Writes an error message with the fallback code if the `problemDetailsService` is unable to write a `ProblemDetails`. For example, an endpoint where the [Accept request header](https://developer.mozilla.org/docs/Web/HTTP/Headers/Accept) specifies a media type that the `DefaultProblemDetailsWriter` does not support.
+* Uses the [exception handler middleware](#exception-handler).
+
+> [!NOTE]
+> The `DefaultProblemDetailsWriter` supports the following media types in the `Accept` request header:
+>
+> * `application/json`
+> * `application/problem+json`
+> * Wildcard types such as `*/*` and `application/*`
+>
+> Non-JSON media types, such as `application/xml` or `text/html`, are **not** supported and trigger the fallback behavior.
+
+The following sample is similar to the preceding except that it calls the [`Status Code Pages middleware`](#client-and-server-error-responses).
+
+:::code language="csharp" source="~/fundamentals/minimal-apis/handle-errors/samples/Program.cs" id="snippet_IProblemDetailsServiceWithStatusCodePageFallback" highlight="15":::
+
+#### [Controllers](#tab/controllers)
+
+### Problem details service
+
+ASP.NET Core supports creating [Problem Details for HTTP APIs](https://www.rfc-editor.org/rfc/rfc9457) using the <xref:Microsoft.AspNetCore.Http.IProblemDetailsService>.
+
+The following code configures the app to generate a problem details response for all HTTP client and server error responses that ***don't have body content yet***:
+
+:::code language="csharp" source="~/../AspNetCore.Docs.Samples/fundamentals/middleware/problem-details-service/Program.cs" id="snippet_apishort" highlight="4,8-9,13":::
+
+Consider the API controller from the preceding section, which returns <xref:Microsoft.AspNetCore.Http.HttpResults.BadRequest> when the input is invalid:
+
+:::code language="csharp" source="~/../AspNetCore.Docs.Samples/fundamentals/middleware/problem-details-service/Controllers/ValuesController.cs" id="snippet_1":::
+
+A problem details response is generated with the preceding code when any of the following conditions apply:
+
+* An invalid input is supplied.
+* The URI has no matching endpoint.
+* An unhandled exception occurs.
+
+#### Customize problem details with `CustomizeProblemDetails`
+
+The following code uses <xref:Microsoft.AspNetCore.Http.ProblemDetailsOptions> to set <xref:Microsoft.AspNetCore.Http.ProblemDetailsOptions.CustomizeProblemDetails>:
+
+:::code language="csharp" source="~/../AspNetCore.Docs.Samples/fundamentals/middleware/problem-details-service/Program.cs" id="snippet_api_controller" highlight="6":::
+
+### Implement `ProblemDetailsFactory`
+
+MVC uses <xref:Microsoft.AspNetCore.Mvc.Infrastructure.ProblemDetailsFactory?displayProperty=fullName> to produce all instances of <xref:Microsoft.AspNetCore.Mvc.ProblemDetails> and <xref:Microsoft.AspNetCore.Mvc.ValidationProblemDetails>. This factory is used for:
+
+* Client error responses
+* Validation failure error responses
+* <xref:Microsoft.AspNetCore.Mvc.ControllerBase.Problem*?displayProperty=nameWithType> and <xref:Microsoft.AspNetCore.Mvc.ControllerBase.ValidationProblem*?displayProperty=nameWithType>
+
+To customize the problem details response, register a custom implementation of <xref:Microsoft.AspNetCore.Mvc.Infrastructure.ProblemDetailsFactory> in `Program.cs`:
+
+:::code language="csharp" source="~/web-api/handle-errors/samples/6.x/HandleErrorsSample/Snippets/Program.cs" id="snippet_ReplaceProblemDetailsFactory":::
+
+### Use `ApiBehaviorOptions.ClientErrorMapping`
+
+Use the <xref:Microsoft.AspNetCore.Mvc.ApiBehaviorOptions.ClientErrorMapping> property to configure the contents of the `ProblemDetails` response. For example, the following code in `Program.cs` updates the <xref:Microsoft.AspNetCore.Mvc.ClientErrorData.Link> property for 404 responses:
+
+:::code language="csharp" source="~/web-api/handle-errors/samples/6.x/HandleErrorsSample/Snippets/Program.cs" id="snippet_ClientErrorMapping":::
+
+---
+
+## Additional error handling features
+
+#### [Minimal APIs](#tab/minimal-apis)
+
+### Migration from controllers to Minimal APIs
+
+If you're migrating from controller-based APIs to Minimal APIs:
+
+1. **Replace action filters** with endpoint filters or middleware
+2. **Replace model validation** with manual validation or custom binding
+3. **Replace exception filters** with exception handling middleware
+4. **Configure problem details** using `AddProblemDetails()` for consistent error responses
+
+### When to use controller-based error handling
+
+Consider controller-based APIs if you need:
+
+* Complex model validation scenarios
+* Centralized exception handling across multiple controllers
+* Fine-grained control over error response formatting
+* Integration with MVC features like filters and conventions
+
+For detailed information about controller-based error handling, including validation errors, problem details customization, and exception filters, see the [Controllers](?tabs=controllers) tab sections.
+
+#### [Controllers](#tab/controllers)
+
+### Validation failure error response
+
+For web API controllers, MVC responds with a <xref:Microsoft.AspNetCore.Mvc.ValidationProblemDetails> response type when model validation fails. MVC uses the results of <xref:Microsoft.AspNetCore.Mvc.ApiBehaviorOptions.InvalidModelStateResponseFactory> to construct the error response for a validation failure. The following example replaces the default factory with an implementation that also supports formatting responses as XML, in `Program.cs`:
+
+:::code language="csharp" source="~/web-api/handle-errors/samples/6.x/HandleErrorsSample/Snippets/Program.cs" id="snippet_ConfigureInvalidModelStateResponseFactory":::
+
+### Use exceptions to modify the response
+
+The contents of the response can be modified from outside of the controller using a custom exception and an action filter:
+
+1. Create a well-known exception type named `HttpResponseException`:
+
+    :::code language="csharp" source="~/web-api/handle-errors/samples/6.x/HandleErrorsSample/Snippets/HttpResponseException.cs" id="snippet_Class":::
+
+1. Create an action filter named `HttpResponseExceptionFilter`:
+
+    :::code language="csharp" source="~/web-api/handle-errors/samples/6.x/HandleErrorsSample/Snippets/HttpResponseExceptionFilter.cs" id="snippet_Class":::
+
+    The preceding filter specifies an `Order` of the maximum integer value minus 10. This `Order` allows other filters to run at the end of the pipeline.
+
+1. In `Program.cs`, add the action filter to the filters collection:
+
+    :::code language="csharp" source="~/web-api/handle-errors/samples/6.x/HandleErrorsSample/Snippets/Program.cs" id="snippet_AddHttpResponseExceptionFilter":::
+
+### Key differences for controllers
+
+* **Automatic model validation**: Controllers automatically validate model state and return `400 Bad Request` responses for validation failures
+* **Exception filters**: Use action filters and exception filters for centralized error handling
+* **Built-in problem details**: Configure `ApiBehaviorOptions` for standardized error responses
+* **Custom error responses**: Override `InvalidModelStateResponseFactory` for custom validation error formatting
+
+---
+
+## Related content
+
+* [How to Use ModelState Validation in ASP.NET Core Web API](https://code-maze.com/aspnetcore-modelstate-validation-web-api/)
+* [View or download sample code](https://github.com/dotnet/AspNetCore.Docs.Samples/tree/main/fundamentals/middleware/problem-details-service)
+* [Hellang.Middleware.ProblemDetails](https://www.nuget.org/packages/Hellang.Middleware.ProblemDetails/)

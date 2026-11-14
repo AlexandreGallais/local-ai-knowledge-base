@@ -1,13 +1,7 @@
 ---
-title: "no-sync"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-sync.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-sync
+rule_type: suggestion
 ---
-
-# no-sync
 
 In Node.js, most I/O is done through asynchronous methods. However, there are often synchronous versions of the asynchronous methods. For example, `fs.exists()` and `fs.existsSync()`. In some contexts, using synchronous operations is okay (if, as with ESLint, you are writing a command line utility). However, in other contexts the use of synchronous operations is considered a bad practice that should be avoided. For example, if you are running a high-travel web server on Node.js, you should consider carefully if you want to allow any synchronous operations that could lock up the server.
 
@@ -21,7 +15,7 @@ This rule has an optional object option `{ allowAtRootLevel: <boolean> }`, which
 
 Examples of **incorrect** code for this rule with the default `{ allowAtRootLevel: false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-sync: "error"*/
@@ -33,9 +27,11 @@ function foo() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `{ allowAtRootLevel: false }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-sync: "error"*/
@@ -47,9 +43,11 @@ async(function() {
 });
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `{ allowAtRootLevel: true }` option
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-sync: ["error", { allowAtRootLevel: true }]*/
@@ -61,15 +59,19 @@ function foo() {
 var bar = baz => fs.readFileSync(qux);
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ allowAtRootLevel: true }` option
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-sync: ["error", { allowAtRootLevel: true }]*/
 
 fs.readFileSync(somePath).toString();
 ```
+
+:::
 
 ## When Not To Use It
 

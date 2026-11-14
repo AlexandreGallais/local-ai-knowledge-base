@@ -1,12 +1,3 @@
----
-title: "class: SnapshotAssertions"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-snapshotassertions.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: SnapshotAssertions
 * since: v1.20
 * langs: js
@@ -33,7 +24,7 @@ Ensures that passed value, either a [string] or a [Buffer], matches the expected
 // Basic usage.
 expect(await page.screenshot()).toMatchSnapshot('landing-page.png');
 
-// Pass <example-value> to customize the snapshot comparison and have a generated name.
+// Pass options to customize the snapshot comparison and have a generated name.
 expect(await page.screenshot()).toMatchSnapshot('landing-page.png', {
   maxDiffPixels: 27, // allow no more than 27 different pixels.
 });
@@ -46,7 +37,7 @@ expect(await page.screenshot()).toMatchSnapshot(['landing', 'step2.png']);
 expect(await page.screenshot()).toMatchSnapshot(['landing', 'step3.png']);
 ```
 
-Learn more about visual comparisons.
+Learn more about [visual comparisons](../test-snapshots.md).
 
 Note that matching snapshots only work with Playwright test runner.
 
@@ -80,7 +71,7 @@ Ensures that passed value, either a [string] or a [Buffer], matches the expected
 // Basic usage and the file name is derived from the test name.
 expect(await page.screenshot()).toMatchSnapshot();
 
-// Pass <example-value> to customize the snapshot comparison and have a generated name.
+// Pass options to customize the snapshot comparison and have a generated name.
 expect(await page.screenshot()).toMatchSnapshot({
   maxDiffPixels: 27, // allow no more than 27 different pixels.
 });
@@ -92,7 +83,7 @@ expect(await page.screenshot()).toMatchSnapshot({
 });
 ```
 
-Learn more about visual comparisons.
+Learn more about [visual comparisons](../test-snapshots.md).
 
 Note that matching snapshots only work with Playwright test runner.
 

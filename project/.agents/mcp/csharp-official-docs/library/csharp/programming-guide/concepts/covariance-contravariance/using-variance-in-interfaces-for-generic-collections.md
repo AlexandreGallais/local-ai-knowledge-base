@@ -1,23 +1,20 @@
 ---
 title: "Using Variance in Interfaces for Generic Collections"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/programming-guide/concepts/covariance-contravariance/using-variance-in-interfaces-for-generic-collections.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to use covariant and contravariant interfaces for generic collections. See examples of converting and comparing generic collections.
+ms.date: 07/20/2015
+ms.assetid: a44f0708-10fa-4c76-82cd-daa6e6b31e8e
 ---
-
 # Using Variance in Interfaces for Generic Collections (C#)
 
 A covariant interface allows its methods to return more derived types than those specified in the interface. A contravariant interface allows its methods to accept parameters of less derived types than those specified in the interface.
 
- In .NET Framework 4, several existing interfaces became covariant and contravariant. These include `System.Collections.Generic.IEnumerable`1` and `System.IComparable`1`. This enables you to reuse methods that operate with generic collections of base types for collections of derived types.
+ In .NET Framework 4, several existing interfaces became covariant and contravariant. These include <xref:System.Collections.Generic.IEnumerable`1> and <xref:System.IComparable`1>. This enables you to reuse methods that operate with generic collections of base types for collections of derived types.
 
- For a list of variant interfaces in .NET, see Variance in Generic Interfaces (C#).
+ For a list of variant interfaces in .NET, see [Variance in Generic Interfaces (C#)](./variance-in-generic-interfaces.md).
 
 ## Converting Generic Collections
 
- The following example illustrates the benefits of covariance support in the `System.Collections.Generic.IEnumerable`1` interface. The `PrintFullName` method accepts a collection of the `IEnumerable<Person>` type as a parameter. However, you can reuse it for a collection of the `IEnumerable<Employee>` type because `Employee` inherits `Person`.
+ The following example illustrates the benefits of covariance support in the <xref:System.Collections.Generic.IEnumerable`1> interface. The `PrintFullName` method accepts a collection of the `IEnumerable<Person>` type as a parameter. However, you can reuse it for a collection of the `IEnumerable<Employee>` type because `Employee` inherits `Person`.
 
 ```csharp
 // Simple hierarchy of classes.
@@ -45,7 +42,7 @@ class Program
     {
         IEnumerable<Employee> employees = new List<Employee>();
 
-        // You can pass <example-value><Employee>,
+        // You can pass IEnumerable<Employee>,
         // although the method expects IEnumerable<Person>.
 
         PrintFullName(employees);
@@ -56,7 +53,7 @@ class Program
 
 ## Comparing Generic Collections
 
- The following example illustrates the benefits of contravariance support in the `System.Collections.Generic.IEqualityComparer`1` interface. The `PersonComparer` class implements the `IEqualityComparer<Person>` interface. However, you can reuse this class to compare a sequence of objects of the `Employee` type because `Employee` inherits `Person`.
+ The following example illustrates the benefits of contravariance support in the <xref:System.Collections.Generic.IEqualityComparer`1> interface. The `PersonComparer` class implements the `IEqualityComparer<Person>` interface. However, you can reuse this class to compare a sequence of objects of the `Employee` type because `Employee` inherits `Person`.
 
 ```csharp
 // Simple hierarchy of classes.
@@ -98,7 +95,7 @@ class Program
                new Employee() {FirstName = "Jeff", LastName = "Price"}
             };
 
-        // You can pass <example-value>,
+        // You can pass PersonComparer,
         // which implements IEqualityComparer<Person>,
         // although the method expects IEqualityComparer<Employee>.
 
@@ -113,4 +110,4 @@ class Program
 
 ## See also
 
-- Variance in Generic Interfaces (C#)
+- [Variance in Generic Interfaces (C#)](./variance-in-generic-interfaces.md)

@@ -1,17 +1,8 @@
----
-title: "Unsubscribing with takeUntilDestroyed"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/ecosystem/rxjs-interop/take-until-destroyed.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Unsubscribing with `takeUntilDestroyed`
 
-TIP: This guide assumes you're familiar with component and directive lifecycle.
+TIP: This guide assumes you're familiar with [component and directive lifecycle](guide/components/lifecycle).
 
-The `takeUntilDestroyed` operator, from `@angular/core/rxjs-interop`, provides a concise and reliable way to automatically unsubscribe from an Observable when a component or directive is destroyed. This prevents common memory leaks with RxJS subscriptions. It works similarly to the RxJS `takeUntil` operator but without the need for a separate Subject.
+The `takeUntilDestroyed` operator, from `@angular/core/rxjs-interop`, provides a concise and reliable way to automatically unsubscribe from an Observable when a component or directive is destroyed. This prevents common memory leaks with RxJS subscriptions. It works similarly to the RxJS [`takeUntil`](https://rxjs.dev/api/operators/takeUntil) operator but without the need for a separate Subject.
 
 ```typescript
 import {Component, inject} from '@angular/core';
@@ -35,7 +26,7 @@ export class UserProfile {
 }
 ```
 
-The `takeUntilDestroyed` operator accepts a single optional `DestroyRef` argument. The operator uses `DestroyRef` to know when the component or directive has been destroyed. You can omit this argument when calling `takeUntilDestroyed` in an injection context, typically the constructor of a component or directive. Always provide a `DestroyRef` if your code may call `takeUntilDestroyed` outside of an injection context.
+The `takeUntilDestroyed` operator accepts a single optional [`DestroyRef`](/api/core/DestroyRef) argument. The operator uses `DestroyRef` to know when the component or directive has been destroyed. You can omit this argument when calling `takeUntilDestroyed` in an [injection context](/guide/di/dependency-injection-context), typically the constructor of a component or directive. Always provide a `DestroyRef` if your code may call `takeUntilDestroyed` outside of an injection context.
 
 ```typescript
 @Component(/* ... */)

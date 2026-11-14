@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugAppDomain Interface"
 title: "ICorDebugAppDomain Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugappdomain-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugAppDomain"
+api_location:
+  - "corguids.lib"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugAppDomain"
+helpviewer_keywords:
+  - "ICorDebugAppDomain interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugAppDomain Interface
 
 Provides methods for debugging application domains. This interface is a subclass of ICorDebugController.
@@ -15,25 +23,25 @@ Provides methods for debugging application domains. This interface is a subclass
 
 |Method|Description|
 |------------|-----------------|
-|Attach Method|Attaches the debugger to the application domain.|
-|EnumerateAssemblies Method|Gets an enumerator for the assemblies in the application domain.|
-|EnumerateBreakpoints Method|Gets an enumerator for all active breakpoints in the application domain.|
-|EnumerateSteppers Method|Gets an enumerator for all active steppers in the application domain.|
-|GetId Method|Gets the unique ID of the application domain.|
-|GetModuleFromMetaDataInterface Method|Gets the ICorDebugModule object with the given metadata interface.|
-|GetName Method|Gets the name of the application domain.|
-|GetObject Method|Gets an interface pointer to the common language runtime (CLR) application domain.|
-|GetProcess Method|Gets the process containing the application domain.|
-|IsAttached Method|Determines whether the debugger is attached to the application domain.|
+|[Attach Method](icordebugappdomain-attach-method.md)|Attaches the debugger to the application domain.|
+|[EnumerateAssemblies Method](icordebugappdomain-enumerateassemblies-method.md)|Gets an enumerator for the assemblies in the application domain.|
+|[EnumerateBreakpoints Method](icordebugappdomain-enumeratebreakpoints-method.md)|Gets an enumerator for all active breakpoints in the application domain.|
+|[EnumerateSteppers Method](icordebugappdomain-enumeratesteppers-method.md)|Gets an enumerator for all active steppers in the application domain.|
+|[GetId Method](icordebugappdomain-getid-method.md)|Gets the unique ID of the application domain.|
+|[GetModuleFromMetaDataInterface Method](icordebugappdomain-getmodulefrommetadatainterface-method.md)|Gets the ICorDebugModule object with the given metadata interface.|
+|[GetName Method](icordebugappdomain-getname-method.md)|Gets the name of the application domain.|
+|[GetObject Method](icordebugappdomain-getobject-method.md)|Gets an interface pointer to the common language runtime (CLR) application domain.|
+|[GetProcess Method](icordebugappdomain-getprocess-method.md)|Gets the process containing the application domain.|
+|[IsAttached Method](icordebugappdomain-isattached-method.md)|Determines whether the debugger is attached to the application domain.|
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

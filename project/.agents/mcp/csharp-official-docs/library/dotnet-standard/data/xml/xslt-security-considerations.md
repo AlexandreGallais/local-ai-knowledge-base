@@ -1,15 +1,12 @@
 ---
+description: "Learn more about: XSLT Security Considerations"
 title: "XSLT Security Considerations"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/xslt-security-considerations.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+ms.assetid: fea695be-617c-4977-9567-140e820436fc
 ---
-
 # XSLT Security Considerations
 
-The XSLT language has a rich set of features that give you a great deal of power and flexibility. It includes many features that, while useful, could also be exploited by outside sources. In order to use XSLT safely, you must understand the types of security issues that arise when using XSLT, and the basic <example-value> that you can employ to mitigate these risks.
+The XSLT language has a rich set of features that give you a great deal of power and flexibility. It includes many features that, while useful, could also be exploited by outside sources. In order to use XSLT safely, you must understand the types of security issues that arise when using XSLT, and the basic strategies that you can employ to mitigate these risks.
 
 ## XSLT Extensions
 
@@ -21,13 +18,13 @@ The XSLT language has a rich set of features that give you a great deal of power
 
 ### Extension Objects
 
- Extension objects are added using the `System.Xml.Xsl.XsltArgumentList.AddExtensionObject*` method. The FullTrust permission set is required to support extension objects. This ensures that elevation of permissions does not happen when extension object code is executed. Attempting to call the `System.Xml.Xsl.XsltArgumentList.AddExtensionObject*` method without FullTrust permissions results in a security exception being thrown.
+ Extension objects are added using the <xref:System.Xml.Xsl.XsltArgumentList.AddExtensionObject*> method. The FullTrust permission set is required to support extension objects. This ensures that elevation of permissions does not happen when extension object code is executed. Attempting to call the <xref:System.Xml.Xsl.XsltArgumentList.AddExtensionObject*> method without FullTrust permissions results in a security exception being thrown.
 
 ### Style Sheet Scripts
 
- Scripts can be embedded in a style sheet using the `msxsl:script` extension element. Script support is an optional feature on the `System.Xml.Xsl.XslCompiledTransform` class that is disabled by default. Scripting can be enabled by setting the `System.Xml.Xsl.XsltSettings.EnableScript` property to `true` and passing the `System.Xml.Xsl.XsltSettings` object to the `System.Xml.Xsl.XslCompiledTransform.Load*` method.
+ Scripts can be embedded in a style sheet using the `msxsl:script` extension element. Script support is an optional feature on the <xref:System.Xml.Xsl.XslCompiledTransform> class that is disabled by default. Scripting can be enabled by setting the <xref:System.Xml.Xsl.XsltSettings.EnableScript?displayProperty=nameWithType> property to `true` and passing the <xref:System.Xml.Xsl.XsltSettings> object to the <xref:System.Xml.Xsl.XslCompiledTransform.Load*> method.
 
-> **Note:**
+> [!NOTE]
 > Script blocks are supported only in .NET Framework. They are _not_ supported on .NET Core or .NET 5 or later.
 
 #### Guidelines
@@ -36,32 +33,32 @@ The XSLT language has a rich set of features that give you a great deal of power
 
 ## External Resources
 
- The XSLT language has features such as `xsl:import`, `xsl:include`, or the `document()` function, where the processor needs to resolve URI references. The `System.Xml.XmlResolver` class is used to resolve external resources. External resources may need to be resolved in the following two cases:
+ The XSLT language has features such as `xsl:import`, `xsl:include`, or the `document()` function, where the processor needs to resolve URI references. The <xref:System.Xml.XmlResolver> class is used to resolve external resources. External resources may need to be resolved in the following two cases:
 
-- When compiling a style sheet, the `System.Xml.XmlResolver` is used for `xsl:import` and `xsl:include` resolution.
+- When compiling a style sheet, the <xref:System.Xml.XmlResolver> is used for `xsl:import` and `xsl:include` resolution.
 
-- When executing the transformation, the `System.Xml.XmlResolver` is used to resolve the `document()` function.
+- When executing the transformation, the <xref:System.Xml.XmlResolver> is used to resolve the `document()` function.
 
-    > **Note:**
-    > The `document()` function is disabled by default on the `System.Xml.Xsl.XslCompiledTransform` class. This feature can be enabled by setting the `System.Xml.Xsl.XsltSettings.EnableDocumentFunction` property to `true` and passing the `System.Xml.Xsl.XsltSettings` object to the `System.Xml.Xsl.XslCompiledTransform.Load*` method.
+    > [!NOTE]
+    > The `document()` function is disabled by default on the <xref:System.Xml.Xsl.XslCompiledTransform> class. This feature can be enabled by setting the <xref:System.Xml.Xsl.XsltSettings.EnableDocumentFunction?displayProperty=nameWithType> property to `true` and passing the <xref:System.Xml.Xsl.XsltSettings> object to the <xref:System.Xml.Xsl.XslCompiledTransform.Load*> method.
 
- The `System.Xml.Xsl.XslCompiledTransform.Load*` and `System.Xml.Xsl.XslCompiledTransform.Transform*` methods each include overloads that accept an `System.Xml.XmlResolver` as one of its arguments. If an `System.Xml.XmlResolver` is not specified, a default `System.Xml.XmlUrlResolver` with no credentials is used.
+ The <xref:System.Xml.Xsl.XslCompiledTransform.Load*> and <xref:System.Xml.Xsl.XslCompiledTransform.Transform*> methods each include overloads that accept an <xref:System.Xml.XmlResolver> as one of its arguments. If an <xref:System.Xml.XmlResolver> is not specified, a default <xref:System.Xml.XmlUrlResolver> with no credentials is used.
 
 #### Guidelines
 
  Enable the `document()` function only when the style sheet comes from a trusted source.
 
- The following list describes when you may want to specify an `System.Xml.XmlResolver` object:
+ The following list describes when you may want to specify an <xref:System.Xml.XmlResolver> object:
 
-- If the XSLT process needs to access a network resource that requires authentication, you can use an `System.Xml.XmlResolver` with the necessary credentials.
+- If the XSLT process needs to access a network resource that requires authentication, you can use an <xref:System.Xml.XmlResolver> with the necessary credentials.
 
-- If you want to restrict the resources that the XSLT process can access, you can use an `System.Xml.XmlSecureResolver` with the correct permission set. Use the `System.Xml.XmlSecureResolver` class if you need to open a resource that you do not control, or that is untrusted.
+- If you want to restrict the resources that the XSLT process can access, you can use an <xref:System.Xml.XmlSecureResolver> with the correct permission set. Use the <xref:System.Xml.XmlSecureResolver> class if you need to open a resource that you do not control, or that is untrusted.
 
-- If you want to customize behavior, you can implement your own `System.Xml.XmlResolver` class and use it to resolve resources.
+- If you want to customize behavior, you can implement your own <xref:System.Xml.XmlResolver> class and use it to resolve resources.
 
-- If you want to ensure that no external resources are accessed, you can specify `null` for the `System.Xml.XmlResolver` argument.
+- If you want to ensure that no external resources are accessed, you can specify `null` for the <xref:System.Xml.XmlResolver> argument.
 
 ## See also
 
-- XSLT Transformations
-- Resolving External Resources During XSLT Processing
+- [XSLT Transformations](xslt-transformations.md)
+- [Resolving External Resources During XSLT Processing](resolving-external-resources-during-xslt-processing.md)

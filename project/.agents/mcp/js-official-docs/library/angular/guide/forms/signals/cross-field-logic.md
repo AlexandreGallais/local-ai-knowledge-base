@@ -1,19 +1,10 @@
----
-title: "Cross-field logic"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/forms/signals/cross-field-logic.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Cross-field logic
 
 **Cross-field logic** is necessary when any rule, validation, or behavior of one field depends on another field's value or state.
 
 Signal forms provide a **field context** to every rule function. The field context provides access to the current field's value and state, and lets you read other fields in the form using `valueOf()`, `stateOf()`, and `fieldTreeOf()`.
 
-This guide covers the field context API in depth and shows common cross-field patterns. For single-field validation, see the Validation guide.
+This guide covers the field context API in depth and shows common cross-field patterns. For single-field validation, see the [Validation guide](/guide/forms/signals/validation).
 
 ## Understanding the field context
 
@@ -162,8 +153,8 @@ export class PasswordForm {
       }
       if (value() !== valueOf(schemaPath.password)) {
         return {
-          kind: '<example-value>',
-          message: '<example-value>',
+          kind: 'passwordMismatch',
+          message: 'Passwords do not match',
         };
       }
       return null;
@@ -172,7 +163,7 @@ export class PasswordForm {
 }
 ```
 
-The `stateOf()` call returns the other field'<example-value>'s validity changes.
+The `stateOf()` call returns the other field's [field state](api/forms/signals/FieldState), giving you access to signals like `invalid()`, `touched()`, and `dirty()`. Because these are signals, the rule re-evaluates whenever the password field's validity changes.
 
 CRITICAL: Be careful not to read state which depends on your field's validation, as that creates a circular loop. For example, a validator which checks whether the parent field is valid will create an infinite loop because the parent's validity depends on its children's validity (which includes your validator).
 
@@ -237,12 +228,14 @@ Prefer `validate()` with `valueOf()` when the error belongs on the field being v
 - The validation logic is inherently about a group of fields, not any single field
 - The validator needs to return errors targeting different child fields
 
-TIP: For an introduction to `validateTree` and its return type, see the Validation guide.
+TIP: For an introduction to `validateTree` and its return type, see the [Validation guide](/guide/forms/signals/validation).
 
 ## Next steps
 
 This guide covered the field context API and common cross-field patterns. To learn more about related Signal Forms guide, check out:
 
-  - Validation
-  - Field state management
-  - Custom controls
+<docs-pill-row>
+  <docs-pill href="guide/forms/signals/validation" title="Validation" />
+  <docs-pill href="guide/forms/signals/field-state-management" title="Field state management" />
+  <docs-pill href="guide/forms/signals/custom-controls" title="Custom controls" />
+</docs-pill-row>

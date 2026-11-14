@@ -1,19 +1,18 @@
 ---
-title: "Porting from EF6 to EF Core - Porting a Code-Based Model - EF"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/efcore-and-ef6/porting/port-code.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Porting from EF6 to EF Core - Porting a Code-Based Model - EF
+description: Specific information on porting an Entity Framework 6 code-based model application to Entity Framework Core
+author: SamMonoRT
+ms.date: 12/09/2021
+uid: efcore-and-ef6/porting/port-code
+ms.custom: sfi-ropc-nochange
 ---
-
 # Porting an EF6 Code-Based Model to EF Core
 
 If you've read all the caveats and you are ready to port, then here are some guidelines to help you get started.
 
 ## Install EF Core NuGet packages
 
-To use EF Core, you install the NuGet package for the database provider you want to use. For example, when targeting SQL Server, you would install `Microsoft.EntityFrameworkCore.SqlServer`. See Database Providers for details.
+To use EF Core, you install the NuGet package for the database provider you want to use. For example, when targeting SQL Server, you would install `Microsoft.EntityFrameworkCore.SqlServer`. See [Database Providers](xref:core/providers/index) for details.
 
 If you are planning to use migrations, then you should also install the `Microsoft.EntityFrameworkCore.Tools` package.
 
@@ -25,7 +24,7 @@ Most APIs that you use in EF6 are in the `System.Data.Entity` namespace (and rel
 
 ## Context configuration (connection etc.)
 
-As described in configuring the database  connection, EF Core has less magic around detecting the database to connect to. You will need to override the `OnConfiguring` method on your derived context, and use the database provider specific API to setup the connection to the database.
+As described in [configuring the database  connection](xref:efcore-and-ef6/porting/port-detailed-cases#configuring-the-database-connection), EF Core has less magic around detecting the database to connect to. You will need to override the `OnConfiguring` method on your derived context, and use the database provider specific API to setup the connection to the database.
 
 Most EF6 applications store the connection string in the applications `App/Web.config` file. In EF Core, you read this connection string using the `ConfigurationManager` API. You may need to add a reference to the `System.Configuration` framework assembly to be able to use this API:
 
@@ -43,7 +42,7 @@ public class BloggingContext : DbContext
 ```
 
 > Warning
-> Never store passwords or other sensitive data in source code or configuration files. Production secrets shouldn'<example-value>'t be deployed with the app. Production secrets should be accessed through a controlled means like Azure Key Vault. Azure test and production secrets can be stored and protected with the Azure Key Vault configuration provider.
+> Never store passwords or other sensitive data in source code or configuration files. Production secrets shouldn't be used for development or test. Secrets shouldn't be deployed with the app. Production secrets should be accessed through a controlled means like Azure Key Vault. Azure test and production secrets can be stored and protected with the [Azure Key Vault configuration provider](/aspnet/core/security/key-vault-configuration).
 
 ## Update your code
 
@@ -59,4 +58,4 @@ If possible, it is best to assume that all previous migrations from EF6 have bee
 
 Just because your application compiles, does not mean it is successfully ported to EF Core. You will need to test all areas of your application to ensure that none of the behavior changes have adversely impacted your application.
 
-Finally, review the detailed cases to consider when porting for more advice on specific cases and scenarios in your code.
+Finally, review the [detailed cases to consider when porting](xref:efcore-and-ef6/porting/port-detailed-cases) for more advice on specific cases and scenarios in your code.

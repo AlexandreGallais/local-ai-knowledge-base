@@ -1,15 +1,15 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/unicode-property"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/unicode-property.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "enforce consistent naming of unicode properties"
+since: "v2.5.0"
 ---
-
 # regexp/unicode-property
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 > enforce consistent naming of unicode properties
 
@@ -161,6 +161,8 @@ Similar to `key`, most property names also have long and short forms. E.g. `\p{L
 
 This option controls whether the short or long form is required. Which forms is required can be configured for each property type via an object. The object has to be of the type:
 
+<!-- eslint-skip -->
+
 ```ts
 {
   binary?: "short" | "long" | "ignore",
@@ -175,7 +177,7 @@ This option controls whether the short or long form is required. Which forms is 
 
 If the option is set to a string instead of an object, it will be used for all property types.
 
-> NOTE: The `"short"` and `"long"` options follow the Unicode standard for short and long names. However, short names aren't always shorter than long names. E.g. the short name for `p{sc=Han}` is `\p{sc=Hani}`.
+> NOTE: The `"short"` and `"long"` options follow the [Unicode standard](https://unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt) for short and long names. However, short names aren't always shorter than long names. E.g. the short name for `p{sc=Han}` is `\p{sc=Hani}`.
 >
 > There are also some properties that don't have a short name, such as `\p{sc=Thai}`, and some that have additional aliases that can be longer than the long name, such as `\p{Mark}` (long) with its short name `\p{M}` and alias `\p{Combining_Mark}`.
 
@@ -234,7 +236,7 @@ var re = /\p{sc=Greek}/u;
 
 ## :books: Further reading
 
-- MDN docs on Unicode property escapes
+- [MDN docs on Unicode property escapes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions/Unicode_character_class_escape)
 
 ## :rocket: Version
 
@@ -242,5 +244,5 @@ This rule was introduced in eslint-plugin-regexp v2.5.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/unicode-property.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/unicode-property.ts)

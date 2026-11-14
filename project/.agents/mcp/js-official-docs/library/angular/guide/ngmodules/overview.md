@@ -1,15 +1,6 @@
----
-title: "NgModules"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/ngmodules/overview.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # NgModules
 
-IMPORTANT: The Angular team recommends using standalone components instead of `NgModule` for all new code. Use this guide to understand existing code built with `@NgModule`.
+IMPORTANT: The Angular team recommends using [standalone components](guide/components) instead of `NgModule` for all new code. Use this guide to understand existing code built with `@NgModule`.
 
 An NgModule is a class marked by the `@NgModule` decorator. This decorator accepts _metadata_ that tells Angular how to compile component templates and configure dependency injection.
 
@@ -119,7 +110,7 @@ export class CustomMenuModule {}
 
 ## `NgModule` providers
 
-TIP: See the Dependency Injection guide for information on dependency injection and providers.
+TIP: See the [Dependency Injection guide](guide/di) for information on dependency injection and providers.
 
 An `NgModule` can specify `providers` for injected dependencies. These providers are available to:
 
@@ -178,11 +169,11 @@ export class UserProfile {
 
 ## Bootstrapping an application
 
-IMPORTANT: The Angular team recommends using bootstrapApplication instead of `bootstrapModule` for all new code. Use this guide to understand existing applications bootstrapped with `@NgModule`.
+IMPORTANT: The Angular team recommends using [bootstrapApplication](api/platform-browser/bootstrapApplication) instead of `bootstrapModule` for all new code. Use this guide to understand existing applications bootstrapped with `@NgModule`.
 
 The `@NgModule` decorator accepts an optional `bootstrap` array that may contain one or more components.
 
-You can use the `bootstrapModule` method from either `platformBrowser` or `platformServer` to start an Angular application. When run, this function locates any elements on the page with a CSS selector that matches the listed component(s) and renders those components on the page.
+You can use the [`bootstrapModule`](/api/core/PlatformRef#bootstrapModule) method from either [`platformBrowser`](api/platform-browser/platformBrowser) or [`platformServer`](api/platform-server/platformServer) to start an Angular application. When run, this function locates any elements on the page with a CSS selector that matches the listed component(s) and renders those components on the page.
 
 ```typescript
 import {platformBrowser} from '@angular/platform-browser';

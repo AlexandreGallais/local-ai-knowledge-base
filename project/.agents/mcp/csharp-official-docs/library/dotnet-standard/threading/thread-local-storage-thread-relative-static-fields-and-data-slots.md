@@ -1,23 +1,25 @@
 ---
+description: "Learn more about: Thread Local Storage: Thread-Relative Static Fields and Data Slots"
 title: "Thread Local Storage: Thread-Relative Static Fields and Data Slots"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/threading/thread-local-storage-thread-relative-static-fields-and-data-slots.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 11/01/2026
+helpviewer_keywords:
+  - "threading [.NET], local storage"
+  - "threading [.NET], thread-relative static fields"
+  - "local thread storage"
+  - "TLS"
+ms.assetid: c633a4dc-a790-4ed1-96b5-f72bd968b284
 ---
-
 # Thread Local Storage: Thread-Relative Static Fields and Data Slots
 
 You can use managed thread local storage (TLS) to store data that's unique to a thread and application domain. .NET provides two ways to use managed TLS: thread-relative static fields and data slots.
 
 - Use thread-relative static fields (thread-relative `Shared` fields in Visual Basic) if you can anticipate your exact needs at compile time. Thread-relative static fields provide the best performance. They also give you the benefits of compile-time type checking.
 
-- Use data slots when your actual requirements might be discovered only at runtime. Data slots are slower and more awkward to use than thread-relative static fields, and data is stored as type `System.Object`, so you must cast it to the correct type before you use it.
+- Use data slots when your actual requirements might be discovered only at runtime. Data slots are slower and more awkward to use than thread-relative static fields, and data is stored as type <xref:System.Object>, so you must cast it to the correct type before you use it.
 
-.NET provides thread-local storage capabilities through thread-relative static fields marked with `System.ThreadStaticAttribute`, the `System.Threading.ThreadLocal`1` class, and data slots. Thread-local storage is typically managed internally by the .NET runtime rather than consuming operating system thread-local storage slots for each variable.
+.NET provides thread-local storage capabilities through thread-relative static fields marked with <xref:System.ThreadStaticAttribute>, the <xref:System.Threading.ThreadLocal%601> class, and data slots. Thread-local storage is typically managed internally by the .NET runtime rather than consuming operating system thread-local storage slots for each variable.
 
-You can use the `System.Threading.ThreadLocal`1` class to create thread-local objects that are initialized lazily when the object is first consumed. For more information, see Lazy Initialization.
+You can use the <xref:System.Threading.ThreadLocal%601?displayProperty=nameWithType> class to create thread-local objects that are initialized lazily when the object is first consumed. For more information, see [Lazy Initialization](../../framework/performance/lazy-initialization.md).
 
 ## Uniqueness of Data in Managed TLS
 
@@ -33,7 +35,7 @@ You can use the `System.Threading.ThreadLocal`1` class to create thread-local ob
 
 ## Thread-Relative Static Fields
 
- If you know that a piece of data is always unique to a thread and application-domain combination, apply the `System.ThreadStaticAttribute` attribute to the static field. Use the field as you would use any other static field. The data in the field is unique to each thread that uses it.
+ If you know that a piece of data is always unique to a thread and application-domain combination, apply the <xref:System.ThreadStaticAttribute> attribute to the static field. Use the field as you would use any other static field. The data in the field is unique to each thread that uses it.
 
  Thread-relative static fields provide better performance than data slots and have the benefit of compile-time type checking.
 
@@ -41,20 +43,20 @@ You can use the `System.Threading.ThreadLocal`1` class to create thread-local ob
 
 ## Data Slots
 
-.NET provides dynamic data slots that are unique to a combination of thread and application domain. There are two types of data slots: named slots and unnamed slots. Both are implemented by using the `System.LocalDataStoreSlot` structure.
+.NET provides dynamic data slots that are unique to a combination of thread and application domain. There are two types of data slots: named slots and unnamed slots. Both are implemented by using the <xref:System.LocalDataStoreSlot> structure.
 
-- To create a named data slot, use the `System.Threading.Thread.AllocateNamedDataSlot*` or `System.Threading.Thread.GetNamedDataSlot*` method. To get a reference to an existing named slot, pass its name to the `System.Threading.Thread.GetNamedDataSlot*` method.
+- To create a named data slot, use the <xref:System.Threading.Thread.AllocateNamedDataSlot*?displayProperty=nameWithType> or <xref:System.Threading.Thread.GetNamedDataSlot*?displayProperty=nameWithType> method. To get a reference to an existing named slot, pass its name to the <xref:System.Threading.Thread.GetNamedDataSlot*> method.
 
-- To create an unnamed data slot, use the `System.Threading.Thread.AllocateDataSlot*` method.
+- To create an unnamed data slot, use the <xref:System.Threading.Thread.AllocateDataSlot*?displayProperty=nameWithType> method.
 
- For both named and unnamed slots, use the `System.Threading.Thread.SetData*` and `System.Threading.Thread.GetData*` methods to set and retrieve the information in the slot. These are static methods that always act on the data for the thread that is currently executing them.
+ For both named and unnamed slots, use the <xref:System.Threading.Thread.SetData*?displayProperty=nameWithType> and <xref:System.Threading.Thread.GetData*?displayProperty=nameWithType> methods to set and retrieve the information in the slot. These are static methods that always act on the data for the thread that is currently executing them.
 
- Named slots can be convenient, because you can retrieve the slot when you need it by passing its name to the `System.Threading.Thread.GetNamedDataSlot*` method, instead of maintaining a reference to an unnamed slot. However, if another component uses the same name for its thread-relative storage and a thread executes code from both your component and the other component, the two components might corrupt each other's data. (This scenario assumes that both components are running in the same application domain, and that they are not designed to share the same data.)
+ Named slots can be convenient, because you can retrieve the slot when you need it by passing its name to the <xref:System.Threading.Thread.GetNamedDataSlot*> method, instead of maintaining a reference to an unnamed slot. However, if another component uses the same name for its thread-relative storage and a thread executes code from both your component and the other component, the two components might corrupt each other's data. (This scenario assumes that both components are running in the same application domain, and that they are not designed to share the same data.)
 
 ## See also
 
-- `System.ContextStaticAttribute`
-- `System.Threading.Thread.GetNamedDataSlot*`
-- `System.ThreadStaticAttribute`
-- `System.Runtime.Remoting.Messaging.CallContext`
-- Threading
+- <xref:System.ContextStaticAttribute>
+- <xref:System.Threading.Thread.GetNamedDataSlot*?displayProperty=nameWithType>
+- <xref:System.ThreadStaticAttribute>
+- <xref:System.Runtime.Remoting.Messaging.CallContext>
+- [Threading](managed-threading-basics.md)

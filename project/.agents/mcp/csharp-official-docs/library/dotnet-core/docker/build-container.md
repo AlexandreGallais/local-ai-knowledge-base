@@ -1,10 +1,11 @@
 ---
-title: "Containerize an app with Docker tutorial (part 1 of 2)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/docker/build-container.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Containerize an app with Docker tutorial
+description: In this tutorial, you learn how to containerize a .NET application with Docker.
+ms.date: 11/12/2026
+ms.topic: tutorial
+ms.custom: "mvc"
+zone_pivot_groups: dotnet-version
+#Customer intent: As a developer, I want to containerize my .NET app so that I can deploy it to the cloud.
 ---
 
 # Tutorial: Containerize a .NET app
@@ -13,6 +14,7 @@ In this tutorial, you learn how to containerize a .NET application with Docker. 
 
 In this tutorial, you:
 
+> [!div class="checklist"]
 >
 > - Create and publish a simple .NET app
 > - Create and configure a Dockerfile for .NET
@@ -21,37 +23,45 @@ In this tutorial, you:
 
 You explore the Docker container build and deploy tasks for a .NET application. The _Docker platform_ uses the _Docker engine_ to quickly build and package apps as _Docker images_. These images are written in the _Dockerfile_ format to be deployed and run in a layered container.
 
-> **Tip:**
-> If you're interested in publishing your .NET app as a container without the need for Docker or Podman, see Containerize a .NET app with dotnet publish.
+> [!TIP]
+> If you're interested in publishing your .NET app as a container without the need for Docker or Podman, see [Containerize a .NET app with dotnet publish](../containers/sdk-publish.md).
 
-> **Note:**
-> This tutorial **is not** for ASP.NET Core apps. If you're using ASP.NET Core, see the Learn how to containerize an ASP.NET Core application tutorial.
+> [!NOTE]
+> This tutorial **is not** for ASP.NET Core apps. If you're using ASP.NET Core, see the [Learn how to containerize an ASP.NET Core application](/aspnet/core/host-and-deploy/docker/building-net-docker-images) tutorial.
 
 ## Prerequisites
 
 Install the following prerequisites:
 
-**dotnet-11-0:**
+:::zone pivot="dotnet-11-0"
 
-- .NET 11+ SDK.\
+- [.NET 11+ SDK](https://dotnet.microsoft.com/download/dotnet/11.0).\
 If you have .NET installed, use the `dotnet --info` command to determine which SDK you're using.
 
-**dotnet-10-0:**
+:::zone-end
 
-- .NET 10+ SDK.\
+:::zone pivot="dotnet-10-0"
+
+- [.NET 10+ SDK](https://dotnet.microsoft.com/download/dotnet/10.0).\
 If you have .NET installed, use the `dotnet --info` command to determine which SDK you're using.
 
-**dotnet-9-0:**
+:::zone-end
 
-- .NET 9+ SDK.\
+:::zone pivot="dotnet-9-0"
+
+- [.NET 9+ SDK](https://dotnet.microsoft.com/download/dotnet/9.0).\
 If you have .NET installed, use the `dotnet --info` command to determine which SDK you're using.
 
-**dotnet-8-0:**
+:::zone-end
 
-- .NET 8+ SDK.\
+:::zone pivot="dotnet-8-0"
+
+- [.NET 8+ SDK](https://dotnet.microsoft.com/download/dotnet/8.0).\
 If you have .NET installed, use the `dotnet --info` command to determine which SDK you're using.
 
-- Docker Community Edition.
+:::zone-end
+
+- [Docker Community Edition](https://www.docker.com/products/docker-desktop).
 - A temporary working folder for the _Dockerfile_ and .NET example app. In this tutorial, the name _docker-working_ is used as the working folder.
 
 ## Create .NET app
@@ -64,7 +74,7 @@ dotnet new console -o App -n DotNet.Docker
 
 Your folder tree looks similar to the following directory structure:
 
-```directory
+```Directory
 📁 docker-working
     └──📂 App
         ├──DotNet.Docker.csproj
@@ -87,7 +97,7 @@ Hello World!
 
 The default template creates an app that prints to the terminal and then immediately terminates. For this tutorial, you use an app that loops indefinitely. Open the _Program.cs_ file in a text editor.
 
-> **Tip:**
+> [!TIP]
 > If you're using Visual Studio Code, from the previous terminal session type the following command:
 >
 > ```console
@@ -104,18 +114,9 @@ Console.WriteLine("Hello World!");
 
 Replace the file with the following code that counts numbers every second:
 
-```csharp
-﻿var counter = 0;
-var max = args.Length is not 0 ? Convert.ToInt32(args[0]) : -1;
+:::code source="snippets/App/Program.cs":::
 
-while (max is -1 || counter < max)
-{
-    Console.WriteLine($"Counter: {++counter}");
-
-    await Task.Delay(TimeSpan.FromMilliseconds(1_000));
-}
-```
-Save the file and test the program again with `dotnet run`. Remember that this app runs indefinitely. Use the cancel command `Ctrl+C` to stop it. Consider the following example output:
+Save the file and test the program again with `dotnet run`. Remember that this app runs indefinitely. Use the cancel command <kbd>Ctrl+C</kbd> to stop it. Consider the following example output:
 
 ```dotnetcli
 dotnet run
@@ -128,23 +129,23 @@ Counter: 4
 
 If you pass a number on the command line to the app, it limits the count to that amount and then exits. Try it with `dotnet run -- 5` to count to five.
 
-> **Important:**
+> [!IMPORTANT]
 > Any parameters after `--` aren't passed to the `dotnet run` command and instead are passed to your application.
 
 ## Publish .NET app
 
-In order for the app to be suitable for an image creation it has to compile. The `dotnet publish` command is most apt for this, as it builds and publishes the app. For an in-depth reference, see dotnet build and dotnet publish commands documentation.
+In order for the app to be suitable for an image creation it has to compile. The `dotnet publish` command is most apt for this, as it builds and publishes the app. For an in-depth reference, see [dotnet build](../tools/dotnet-build.md) and [dotnet publish](../tools/dotnet-publish.md) commands documentation.
 
 ```dotnetcli
 dotnet publish -c Release
 ```
 
-> **Tip:**
-> If you're interested in publishing your .NET app as a container without the need for Docker, see Containerize a .NET app with dotnet publish.
+> [!TIP]
+> If you're interested in publishing your .NET app as a container without the need for Docker, see [Containerize a .NET app with dotnet publish](../containers/sdk-publish.md).
 
 The `dotnet publish` command compiles your app to the _publish_ folder. The path to the _publish_ folder from the working folder should be _./App/bin/Release/\<TFM\>/publish/_:
 
-#### Windows
+#### [Windows](#tab/windows)
 
 From the _App_ folder, get a directory listing of the publish folder to verify that the _DotNet.Docker.dll_ file was created.
 
@@ -162,7 +163,7 @@ Mode                 LastWriteTime         Length Name
 -a----          1/6/2025  10:11 AM            340 DotNet.Docker.runtimeconfig.json
 ```
 
-#### Linux
+#### [Linux](#tab/linux)
 
 Use the `ls` command to get a directory listing and verify that the _DotNet.Docker.dll_ file was created.
 
@@ -179,40 +180,25 @@ The _Dockerfile_ file is used by the `docker build` command to create a containe
 
 Create a file named _Dockerfile_ in the directory containing the _.csproj_ and open it in a text editor. This tutorial uses the ASP.NET Core runtime image (which contains the .NET runtime image) and corresponds with the .NET console application.
 
-```docker
-FROM mcr.microsoft.com/dotnet/sdk:9.0@sha256:3fcf6f1e809c0553f9feb222369f58749af314af6f063f389cbd2f913b4ad556 AS build
-WORKDIR /App
+:::code language="docker" source="snippets/App/Dockerfile":::
 
-# Copy everything
-COPY . ./
-# Restore as distinct layers
-RUN dotnet restore
-# Build and publish a release
-RUN dotnet publish -o out
-
-# Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:9.0@sha256:b4bea3a52a0a77317fa93c5bbdb076623f81e3e2f201078d89914da71318b5d8
-WORKDIR /App
-COPY --from=build /App/out .
-ENTRYPOINT ["dotnet", "DotNet.Docker.dll"]
-```
-> **Note:**
+> [!NOTE]
 > The ASP.NET Core runtime image is used intentionally here, although the `mcr.microsoft.com/dotnet/runtime:9.0` image could be used instead.
 
-> **Important:**
-> Including a secure hash algorithm (SHA) after the image tag in a _Dockerfile_ is a best practice. This ensures that the image is not tampered with and that the image is the same as the one you expect. The SHA is a unique identifier for the image. For more information, see Docker Docs: Pull an image by digest.
+> [!IMPORTANT]
+> Including a secure hash algorithm (SHA) after the image tag in a _Dockerfile_ is a best practice. This ensures that the image is not tampered with and that the image is the same as the one you expect. The SHA is a unique identifier for the image. For more information, see [Docker Docs: Pull an image by digest](https://docs.docker.com/reference/cli/docker/image/pull/#pull-an-image-by-digest-immutable-identifier).
 
-> **Tip:**
-> This _Dockerfile_ uses multi-stage builds, which optimize the final size of the image by layering the build and leaving only required artifacts. For more information, see Docker Docs: multi-stage builds.
+> [!TIP]
+> This _Dockerfile_ uses multi-stage builds, which optimize the final size of the image by layering the build and leaving only required artifacts. For more information, see [Docker Docs: multi-stage builds](https://docs.docker.com/build/building/multi-stage/).
 
 The `FROM` keyword requires a fully qualified Docker container image name. The Microsoft Container Registry (MCR, mcr.microsoft.com) is a syndicate of Docker Hub, which hosts publicly accessible containers. The `dotnet` segment is the container repository, whereas the `sdk` or `aspnet` segment is the container image name. The image is tagged with `9.0`, which is used for versioning. Thus, `mcr.microsoft.com/dotnet/aspnet:9.0` is the .NET 9.0 runtime. Make sure that you pull the runtime version that matches the runtime targeted by your SDK. For example, the app created in the previous section used the .NET 9.0 SDK, and the base image referred to in the _Dockerfile_ is tagged with **9.0**.
 
-> **Important:**
-> When using Windows-based container images, you need to specify the image tag beyond simply `9.0`, for example, `mcr.microsoft.com/dotnet/aspnet:9.0-nanoserver-1809` instead of `mcr.microsoft.com/dotnet/aspnet:9.0`. Select an image name based on whether you're using Nano Server or Windows Server Core and which version of that OS. You can find a full list of all supported tags on .NET's Docker Hub page.
+> [!IMPORTANT]
+> When using Windows-based container images, you need to specify the image tag beyond simply `9.0`, for example, `mcr.microsoft.com/dotnet/aspnet:9.0-nanoserver-1809` instead of `mcr.microsoft.com/dotnet/aspnet:9.0`. Select an image name based on whether you're using Nano Server or Windows Server Core and which version of that OS. You can find a full list of all supported tags on .NET's [Docker Hub page](https://hub.docker.com/_/microsoft-dotnet).
 
 Save the _Dockerfile_ file. The directory structure of the working folder should look like the following. Some of the deeper-level files and folders are omitted to save space in the article:
 
-```directory
+```Directory
 📁 docker-working
     └──📂 App
         ├── Dockerfile
@@ -242,7 +228,7 @@ The `ENTRYPOINT` instruction sets `dotnet` as the host for the `DotNet.Docker.dl
 ENTRYPOINT ["./DotNet.Docker"]
 ```
 
-This causes the app to be executed directly, without `dotnet`, and instead relies on the app host and the underlying OS. For more information on publishing cross-platform binaries, see Cross-platform DLL deployment.
+This causes the app to be executed directly, without `dotnet`, and instead relies on the app host and the underlying OS. For more information on publishing cross-platform binaries, see [Cross-platform DLL deployment](../deploying/index.md#cross-platform-dll-deployment).
 
 To build the container, from your terminal, run the following command:
 
@@ -272,11 +258,273 @@ The `COPY` command tells Docker to copy the specified source directory to a dest
 
 The next command, `ENTRYPOINT`, tells Docker to configure the container to run as an executable. When the container starts, the `ENTRYPOINT` command runs. When this command ends, the container automatically stops.
 
-> **Tip:**
+> [!TIP]
 > Before .NET 8, containers configured to run as read-only might fail with `Failed to create CoreCLR, HRESULT: 0x8007000E`. To address this issue, specify a `DOTNET_EnableDiagnostics` environment variable as `0` (just before the `ENTRYPOINT` step):
 >
 > ```dockerfile
 > ENV DOTNET_EnableDiagnostics=0
 > ```
 >
-> For more information on various .NET environment variables, see .NET environment variables.
+> For more information on various .NET environment variables, see [.NET environment variables](../tools/dotnet-environment-variables.md).
+
+## Create a container
+
+Now that you have an image that contains your app, you can create a container. You can create a container in two ways. First, create a new container that is stopped.
+
+```console
+docker create --name core-counter counter-image
+```
+
+This `docker create` command creates a container based on the **counter-image** image. The output of the `docker create` command shows you the **CONTAINER ID** of the container (your identifier will be different):
+
+```console
+d0be06126f7db6dd1cee369d911262a353c9b7fb4829a0c11b4b2eb7b2d429cf
+```
+
+To see a list of _all_ containers, use the `docker ps -a` command:
+
+```console
+docker ps -a
+CONTAINER ID   IMAGE           COMMAND                  CREATED          STATUS    PORTS     NAMES
+d0be06126f7d   counter-image   "dotnet DotNet.Docke…"   12 seconds ago   Created             core-counter
+```
+
+### Manage the container
+
+The container was created with a specific name `core-counter`. This name is used to manage the container. The following example uses the `docker start` command to start the container, and then uses the `docker ps` command to only show containers that are running:
+
+```console
+docker start core-counter
+core-counter
+
+docker ps
+CONTAINER ID   IMAGE           COMMAND                  CREATED          STATUS          PORTS     NAMES
+cf01364df453   counter-image   "dotnet DotNet.Docke…"   53 seconds ago   Up 10 seconds             core-counter
+```
+
+Similarly, the `docker stop` command stops the container. The following example uses the `docker stop` command to stop the container, and then uses the `docker ps` command to show that no containers are running:
+
+```console
+docker stop core-counter
+core-counter
+
+docker ps
+CONTAINER ID    IMAGE    COMMAND    CREATED    STATUS    PORTS    NAMES
+```
+
+### Connect to a container
+
+After a container is running, you can connect to it to see the output. Use the `docker start` and `docker attach` commands to start the container and peek at the output stream. In this example, the <kbd>Ctrl+C</kbd> keystroke is used to detach from the running container. This keystroke ends the process in the container unless otherwise specified, which would stop the container. The `--sig-proxy=false` parameter ensures that <kbd>Ctrl+C</kbd> doesn't stop the process in the container.
+
+After you detach from the container, reattach to verify that it's still running and counting.
+
+```console
+docker start core-counter
+core-counter
+
+docker attach --sig-proxy=false core-counter
+Counter: 7
+Counter: 8
+Counter: 9
+^C
+
+docker attach --sig-proxy=false core-counter
+Counter: 17
+Counter: 18
+Counter: 19
+^C
+```
+
+### Delete a container
+
+For this article, you don't want containers hanging around that don't do anything. Delete the container you previously created. If the container is running, stop it.
+
+```console
+docker stop core-counter
+```
+
+The following example lists all containers. It then uses the `docker rm` command to delete the container and then checks a second time for any running containers.
+
+```console
+docker ps -a
+CONTAINER ID    IMAGE            COMMAND                   CREATED          STATUS                        PORTS    NAMES
+2f6424a7ddce    counter-image    "dotnet DotNet.Dock…"    7 minutes ago    Exited (143) 20 seconds ago            core-counter
+
+docker rm core-counter
+core-counter
+
+docker ps -a
+CONTAINER ID    IMAGE    COMMAND    CREATED    STATUS    PORTS    NAMES
+```
+
+### Single run
+
+Docker provides the `docker run` command to create and run the container as a single command. This command eliminates the need to run `docker create` and then `docker start`. You can also set this command to automatically delete the container when the container stops. For example, use `docker run -it --rm` to do two things, first, automatically use the current terminal to connect to the container, and then when the container finishes, remove it:
+
+```console
+docker run -it --rm counter-image
+Counter: 1
+Counter: 2
+Counter: 3
+Counter: 4
+Counter: 5
+^C
+```
+
+The container also passes parameters into the execution of the .NET app. To instruct the .NET app to count only to three, pass in 3.
+
+```console
+docker run -it --rm counter-image 3
+Counter: 1
+Counter: 2
+Counter: 3
+```
+
+With `docker run -it`, the <kbd>Ctrl+C</kbd> command stops the process that's running in the container, which in turn, stops the container. Since the `--rm` parameter was provided, the container is automatically deleted when the process is stopped. Verify that it doesn't exist:
+
+```console
+docker ps -a
+CONTAINER ID    IMAGE    COMMAND    CREATED    STATUS    PORTS    NAMES
+```
+
+### Change the ENTRYPOINT
+
+The `docker run` command also lets you modify the `ENTRYPOINT` command from the _Dockerfile_ and run something else, but only for that container. For example, use the following command to run `bash` or `cmd.exe`. Edit the command as necessary.
+
+#### [Windows](#tab/windows)
+
+In this example, `ENTRYPOINT` is changed to `cmd.exe`. <kbd>Ctrl+C</kbd> is pressed to end the process and stop the container.
+
+```console
+docker run -it --rm --entrypoint "cmd.exe" counter-image
+
+Microsoft Windows [Version 10.0.17763.379]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\>dir
+ Volume in drive C has no label.
+ Volume Serial Number is 3005-1E84
+
+ Directory of C:\
+
+04/09/2019  08:46 AM    <DIR>          app
+03/07/2019  10:25 AM             5,510 License.txt
+04/02/2019  01:35 PM    <DIR>          Program Files
+04/09/2019  01:06 PM    <DIR>          Users
+04/02/2019  01:35 PM    <DIR>          Windows
+               1 File(s)          5,510 bytes
+               4 Dir(s)  21,246,517,248 bytes free
+
+C:\>^C
+```
+
+> [!NOTE]
+> This example only works on Windows containers. Linux containers don't have `cmd.exe`.
+
+#### [Linux](#tab/linux)
+
+In this example, `ENTRYPOINT` is changed to `bash`. The `exit` command is run which ends the process and stop the container.
+
+```bash
+docker run -it --rm --entrypoint "bash" counter-image
+root@9f8de8fbd4a8:/App# ls
+DotNet.Docker  DotNet.Docker.deps.json  DotNet.Docker.dll  DotNet.Docker.pdb  DotNet.Docker.runtimeconfig.json
+root@9f8de8fbd4a8:/App# dotnet DotNet.Docker.dll 7
+Counter: 1
+Counter: 2
+Counter: 3
+^C
+root@9f8de8fbd4a8:/App# exit
+exit
+```
+
+> [!NOTE]
+> This example only works on Linux containers. Windows containers don't have `bash`.
+
+---
+
+## Essential commands
+
+Docker has many different commands that create, manage, and interact with containers and images. These Docker commands are essential to managing your containers:
+
+- [docker build](https://docs.docker.com/engine/reference/commandline/build/)
+- [docker run](https://docs.docker.com/engine/reference/commandline/run/)
+- [docker ps](https://docs.docker.com/engine/reference/commandline/ps/)
+- [docker stop](https://docs.docker.com/engine/reference/commandline/stop/)
+- [docker rm](https://docs.docker.com/engine/reference/commandline/rm/)
+- [docker rmi](https://docs.docker.com/engine/reference/commandline/rmi/)
+- [docker image](https://docs.docker.com/engine/reference/commandline/image/)
+
+## Clean up resources
+
+During this tutorial, you created containers and images. If you want, delete these resources. Use the following commands to
+
+01. List all containers
+
+    ```console
+    docker ps -a
+    ```
+
+02. Stop containers that are running by their name.
+
+    ```console
+    docker stop core-counter
+    ```
+
+03. Delete the container
+
+    ```console
+    docker rm core-counter
+    ```
+
+Next, delete any images that you no longer want on your machine. Delete the image created by your _Dockerfile_ and then delete the .NET image the _Dockerfile_ was based on. You can use the **IMAGE ID** or the **REPOSITORY:TAG** formatted string.
+
+:::zone pivot="dotnet-11-0"
+
+```console
+docker rmi counter-image:latest
+docker rmi mcr.microsoft.com/dotnet/aspnet:11.0
+```
+
+:::zone-end
+
+:::zone pivot="dotnet-10-0"
+
+```console
+docker rmi counter-image:latest
+docker rmi mcr.microsoft.com/dotnet/aspnet:10.0
+```
+
+:::zone-end
+
+:::zone pivot="dotnet-9-0"
+
+```console
+docker rmi counter-image:latest
+docker rmi mcr.microsoft.com/dotnet/aspnet:9.0
+```
+
+:::zone-end
+
+:::zone pivot="dotnet-8-0"
+
+```console
+docker rmi counter-image:latest
+docker rmi mcr.microsoft.com/dotnet/aspnet:8.0
+```
+
+:::zone-end
+
+Use the `docker images` command to see a list of images installed.
+
+> [!TIP]
+> Image files can be large. Typically, you would remove temporary containers you created while testing and developing your app. You usually keep the base images with the runtime installed if you plan on building other images based on that runtime.
+
+## Next steps
+
+- [Containerize a .NET app with dotnet publish](../containers/sdk-publish.md)
+- [.NET container images](container-images.md)
+- [Containerize an ASP.NET Core application](/aspnet/core/host-and-deploy/docker/building-net-docker-images)
+- [Azure services that support containers](https://azure.microsoft.com/overview/containers/)
+- [Dockerfile commands](https://docs.docker.com/engine/reference/builder/)
+- [Container Tools for Visual Studio](/visualstudio/containers/overview)

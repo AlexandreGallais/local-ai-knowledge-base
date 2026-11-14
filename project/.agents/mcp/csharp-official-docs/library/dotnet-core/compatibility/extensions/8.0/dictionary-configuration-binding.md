@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Empty keys added to dictionary by configuration binder"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/extensions/8.0/dictionary-configuration-binding.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 8 breaking change in .NET extensions where empty keys are now added to dictionary types by the configuration binder.
+ms.date: 07/27/2023
 ---
-
 # Empty keys added to dictionary by configuration binder
 
 In previous versions, when configuration was bound to a dictionary type, any keys without corresponding values in the configuration were skipped and weren't added to the dictionary. The behavior has changed such that those keys are no longer skipped but instead automatically created with their default values. This change ensures that all keys listed in the configuration will be present within the dictionary.
@@ -68,7 +64,7 @@ q2: 2
 
 Starting in .NET 8, empty configuration keys are added to the dictionary with their default value during configuration binding.
 
-Consider the code from the previous behavior section, which now outputs the following text showing that `q3` was added to the dictionary with its default value:
+Consider the code from the [previous behavior](#previous-behavior) section, which now outputs the following text showing that `q3` was added to the dictionary with its default value:
 
 ```output
 q1: 1
@@ -78,7 +74,7 @@ q3: 0
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -90,6 +86,6 @@ Verify and adapt your application logic to accommodate the presence of the newly
 
 ## Affected APIs
 
-- `Microsoft.Extensions.Configuration.ConfigurationBinder`
-- IConfigurationRoot extension methods
-- `Microsoft.Extensions.DependencyInjection.OptionsConfigurationServiceCollectionExtensions`
+- <xref:Microsoft.Extensions.Configuration.ConfigurationBinder?displayProperty=fullName>
+- [IConfigurationRoot extension methods](xref:Microsoft.Extensions.Configuration.IConfigurationRoot#extension-methods)
+- <xref:Microsoft.Extensions.DependencyInjection.OptionsConfigurationServiceCollectionExtensions?displayProperty=fullName>

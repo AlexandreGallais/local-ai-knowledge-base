@@ -1,27 +1,19 @@
----
-title: "AtomicInteger class (java.util.concurrent.atomic)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/atomic/AtomicInteger.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AtomicInteger class (java.util.concurrent.atomic)
 
 ```java
 public class AtomicInteger extends Number implements java.io.Serializable
 ```
 
-An `int` value that may be updated atomically.  See the
-`VarHandle` specification for descriptions of the properties
-of atomic accesses. An `AtomicInteger` is used in
+An {@code int} value that may be updated atomically.  See the
+{@link VarHandle} specification for descriptions of the properties
+of atomic accesses. An {@code AtomicInteger} is used in
 applications such as atomically incremented counters, and cannot be
-used as a replacement for an `java.lang.Integer`. However,
-this class does extend `Number` to allow uniform access by
+used as a replacement for an {@link java.lang.Integer}. However,
+this class does extend {@code Number} to allow uniform access by
 tools and utilities that deal with numerically-based classes.
 
-**Since:** 1.5
+@since 1.5
+@author Doug Lea
 
 ## AtomicInteger.AtomicInteger(int)
 
@@ -31,9 +23,7 @@ public AtomicInteger(int initialValue)
 
 Creates a new AtomicInteger with the given initial value.
 
-Parameters:
-
-- `initialValue`: the initial value
+@param initialValue the initial value
 
 ## AtomicInteger.AtomicInteger()
 
@@ -41,7 +31,7 @@ Parameters:
 public AtomicInteger()
 ```
 
-Creates a new AtomicInteger with initial value `0`.
+Creates a new AtomicInteger with initial value {@code 0}.
 
 ## AtomicInteger.get()
 
@@ -50,9 +40,9 @@ public final int get()
 ```
 
 Returns the current value,
-with memory effects as specified by `VarHandle.getVolatile`.
+with memory effects as specified by {@link VarHandle#getVolatile}.
 
-**Returns:** the current value
+@return the current value
 
 ## AtomicInteger.set(int)
 
@@ -60,12 +50,10 @@ with memory effects as specified by `VarHandle.getVolatile`.
 public final void set(int newValue)
 ```
 
-Sets the value to `newValue`,
-with memory effects as specified by `VarHandle.setVolatile`.
+Sets the value to {@code newValue},
+with memory effects as specified by {@link VarHandle#setVolatile}.
 
-Parameters:
-
-- `newValue`: the new value
+@param newValue the new value
 
 ## AtomicInteger.lazySet(int)
 
@@ -73,14 +61,11 @@ Parameters:
 public final void lazySet(int newValue)
 ```
 
-Sets the value to `newValue`,
-with memory effects as specified by `VarHandle.setRelease`.
+Sets the value to {@code newValue},
+with memory effects as specified by {@link VarHandle#setRelease}.
 
-Parameters:
-
-- `newValue`: the new value
-
-**Since:** 1.6
+@param newValue the new value
+@since 1.6
 
 ## AtomicInteger.getAndSet(int)
 
@@ -88,14 +73,11 @@ Parameters:
 public final int getAndSet(int newValue)
 ```
 
-Atomically sets the value to `newValue` and returns the old value,
-with memory effects as specified by `VarHandle.getAndSet`.
+Atomically sets the value to {@code newValue} and returns the old value,
+with memory effects as specified by {@link VarHandle#getAndSet}.
 
-Parameters:
-
-- `newValue`: the new value
-
-**Returns:** the previous value
+@param newValue the new value
+@return the previous value
 
 ## AtomicInteger.compareAndSet(int, int)
 
@@ -103,16 +85,13 @@ Parameters:
 public final boolean compareAndSet(int expectedValue, int newValue)
 ```
 
-Atomically sets the value to `newValue`
-if the current value `== expectedValue`,
-with memory effects as specified by `VarHandle.compareAndSet`.
+Atomically sets the value to {@code newValue}
+if the current value {@code == expectedValue},
+with memory effects as specified by {@link VarHandle#compareAndSet}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** `true` if successful. False return indicates that
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful. False return indicates that
 the actual value was not equal to the expected value.
 
 ## AtomicInteger.weakCompareAndSet(int, int)
@@ -121,24 +100,20 @@ the actual value was not equal to the expected value.
 public final boolean weakCompareAndSet(int expectedValue, int newValue)
 ```
 
-Possibly atomically sets the value to `newValue`
-if the current value `== expectedValue`,
-with memory effects as specified by `VarHandle.weakCompareAndSetPlain`.
+Possibly atomically sets the value to {@code newValue}
+if the current value {@code == expectedValue},
+with memory effects as specified by {@link VarHandle#weakCompareAndSetPlain}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Deprecated:** This method has plain memory effects but the method
+@deprecated This method has plain memory effects but the method
 name implies volatile memory effects (see methods such as
-`compareAndExchange` and `compareAndSet`).  To avoid
+{@link #compareAndExchange} and {@link #compareAndSet}).  To avoid
 confusion over plain or volatile memory effects it is recommended that
-the method `weakCompareAndSetPlain` be used instead.
+the method {@link #weakCompareAndSetPlain} be used instead.
 
-**Returns:** `true` if successful
-
-**See also:** #weakCompareAndSetPlain
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful
+@see #weakCompareAndSetPlain
 
 ## AtomicInteger.weakCompareAndSetPlain(int, int)
 
@@ -146,18 +121,14 @@ the method `weakCompareAndSetPlain` be used instead.
 public final boolean weakCompareAndSetPlain(int expectedValue, int newValue)
 ```
 
-Possibly atomically sets the value to `newValue`
-if the current value `== expectedValue`,
-with memory effects as specified by `VarHandle.weakCompareAndSetPlain`.
+Possibly atomically sets the value to {@code newValue}
+if the current value {@code == expectedValue},
+with memory effects as specified by {@link VarHandle#weakCompareAndSetPlain}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** `true` if successful
-
-**Since:** 9
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful
+@since 9
 
 ## AtomicInteger.getAndIncrement()
 
@@ -166,11 +137,11 @@ public final int getAndIncrement()
 ```
 
 Atomically increments the current value,
-with memory effects as specified by `VarHandle.getAndAdd`.
+with memory effects as specified by {@link VarHandle#getAndAdd}.
 
-Equivalent to `getAndAdd(1)`.
+<p>Equivalent to {@code getAndAdd(1)}.
 
-**Returns:** the previous value
+@return the previous value
 
 ## AtomicInteger.getAndDecrement()
 
@@ -179,11 +150,11 @@ public final int getAndDecrement()
 ```
 
 Atomically decrements the current value,
-with memory effects as specified by `VarHandle.getAndAdd`.
+with memory effects as specified by {@link VarHandle#getAndAdd}.
 
-Equivalent to `getAndAdd(-1)`.
+<p>Equivalent to {@code getAndAdd(-1)}.
 
-**Returns:** the previous value
+@return the previous value
 
 ## AtomicInteger.getAndAdd(int)
 
@@ -192,13 +163,10 @@ public final int getAndAdd(int delta)
 ```
 
 Atomically adds the given value to the current value,
-with memory effects as specified by `VarHandle.getAndAdd`.
+with memory effects as specified by {@link VarHandle#getAndAdd}.
 
-Parameters:
-
-- `delta`: the value to add
-
-**Returns:** the previous value
+@param delta the value to add
+@return the previous value
 
 ## AtomicInteger.incrementAndGet()
 
@@ -207,11 +175,11 @@ public final int incrementAndGet()
 ```
 
 Atomically increments the current value,
-with memory effects as specified by `VarHandle.getAndAdd`.
+with memory effects as specified by {@link VarHandle#getAndAdd}.
 
-Equivalent to `addAndGet(1)`.
+<p>Equivalent to {@code addAndGet(1)}.
 
-**Returns:** the updated value
+@return the updated value
 
 ## AtomicInteger.decrementAndGet()
 
@@ -220,11 +188,11 @@ public final int decrementAndGet()
 ```
 
 Atomically decrements the current value,
-with memory effects as specified by `VarHandle.getAndAdd`.
+with memory effects as specified by {@link VarHandle#getAndAdd}.
 
-Equivalent to `addAndGet(-1)`.
+<p>Equivalent to {@code addAndGet(-1)}.
 
-**Returns:** the updated value
+@return the updated value
 
 ## AtomicInteger.addAndGet(int)
 
@@ -233,13 +201,10 @@ public final int addAndGet(int delta)
 ```
 
 Atomically adds the given value to the current value,
-with memory effects as specified by `VarHandle.getAndAdd`.
+with memory effects as specified by {@link VarHandle#getAndAdd}.
 
-Parameters:
-
-- `delta`: the value to add
-
-**Returns:** the updated value
+@param delta the value to add
+@return the updated value
 
 ## AtomicInteger.getAndUpdate(IntUnaryOperator)
 
@@ -247,18 +212,15 @@ Parameters:
 public final int getAndUpdate(IntUnaryOperator updateFunction)
 ```
 
-Atomically updates (with memory effects as specified by `VarHandle.compareAndSet`) the current value with the results of
+Atomically updates (with memory effects as specified by {@link
+VarHandle#compareAndSet}) the current value with the results of
 applying the given function, returning the previous value. The
 function should be side-effect-free, since it may be re-applied
 when attempted updates fail due to contention among threads.
 
-Parameters:
-
-- `updateFunction`: a side-effect-free function
-
-**Returns:** the previous value
-
-**Since:** 1.8
+@param updateFunction a side-effect-free function
+@return the previous value
+@since 1.8
 
 ## AtomicInteger.updateAndGet(IntUnaryOperator)
 
@@ -266,18 +228,15 @@ Parameters:
 public final int updateAndGet(IntUnaryOperator updateFunction)
 ```
 
-Atomically updates (with memory effects as specified by `VarHandle.compareAndSet`) the current value with the results of
+Atomically updates (with memory effects as specified by {@link
+VarHandle#compareAndSet}) the current value with the results of
 applying the given function, returning the updated value. The
 function should be side-effect-free, since it may be re-applied
 when attempted updates fail due to contention among threads.
 
-Parameters:
-
-- `updateFunction`: a side-effect-free function
-
-**Returns:** the updated value
-
-**Since:** 1.8
+@param updateFunction a side-effect-free function
+@return the updated value
+@since 1.8
 
 ## AtomicInteger.getAndAccumulate(int, IntBinaryOperator)
 
@@ -285,7 +244,8 @@ Parameters:
 public final int getAndAccumulate(int x, IntBinaryOperator accumulatorFunction)
 ```
 
-Atomically updates (with memory effects as specified by `VarHandle.compareAndSet`) the current value with the results of
+Atomically updates (with memory effects as specified by {@link
+VarHandle#compareAndSet}) the current value with the results of
 applying the given function to the current and given values,
 returning the previous value. The function should be
 side-effect-free, since it may be re-applied when attempted
@@ -293,14 +253,10 @@ updates fail due to contention among threads.  The function is
 applied with the current value as its first argument, and the
 given update as the second argument.
 
-Parameters:
-
-- `x`: the update value
-- `accumulatorFunction`: a side-effect-free function of two arguments
-
-**Returns:** the previous value
-
-**Since:** 1.8
+@param x the update value
+@param accumulatorFunction a side-effect-free function of two arguments
+@return the previous value
+@since 1.8
 
 ## AtomicInteger.accumulateAndGet(int, IntBinaryOperator)
 
@@ -308,7 +264,8 @@ Parameters:
 public final int accumulateAndGet(int x, IntBinaryOperator accumulatorFunction)
 ```
 
-Atomically updates (with memory effects as specified by `VarHandle.compareAndSet`) the current value with the results of
+Atomically updates (with memory effects as specified by {@link
+VarHandle#compareAndSet}) the current value with the results of
 applying the given function to the current and given values,
 returning the updated value. The function should be
 side-effect-free, since it may be re-applied when attempted
@@ -316,14 +273,10 @@ updates fail due to contention among threads.  The function is
 applied with the current value as its first argument, and the
 given update as the second argument.
 
-Parameters:
-
-- `x`: the update value
-- `accumulatorFunction`: a side-effect-free function of two arguments
-
-**Returns:** the updated value
-
-**Since:** 1.8
+@param x the update value
+@param accumulatorFunction a side-effect-free function of two arguments
+@return the updated value
+@since 1.8
 
 ## AtomicInteger.toString()
 
@@ -331,17 +284,19 @@ Parameters:
 public String toString()
 ```
 
+{@return the String representation of the current value}
+
 ## AtomicInteger.intValue()
 
 ```java
 public int intValue()
 ```
 
-Returns the current value of this `AtomicInteger` as an
-`int`,
-with memory effects as specified by `VarHandle.getVolatile`.
+Returns the current value of this {@code AtomicInteger} as an
+{@code int},
+with memory effects as specified by {@link VarHandle#getVolatile}.
 
-Equivalent to `get()`.
+Equivalent to {@link #get()}.
 
 ## AtomicInteger.longValue()
 
@@ -349,11 +304,10 @@ Equivalent to `get()`.
 public long longValue()
 ```
 
-Returns the current value of this `AtomicInteger` as a
-`long` after a widening primitive conversion,
-with memory effects as specified by `VarHandle.getVolatile`.
-
-**JLS:** 5.1.2 Widening Primitive Conversion
+Returns the current value of this {@code AtomicInteger} as a
+{@code long} after a widening primitive conversion,
+with memory effects as specified by {@link VarHandle#getVolatile}.
+@jls 5.1.2 Widening Primitive Conversion
 
 ## AtomicInteger.floatValue()
 
@@ -361,11 +315,10 @@ with memory effects as specified by `VarHandle.getVolatile`.
 public float floatValue()
 ```
 
-Returns the current value of this `AtomicInteger` as a
-`float` after a widening primitive conversion,
-with memory effects as specified by `VarHandle.getVolatile`.
-
-**JLS:** 5.1.2 Widening Primitive Conversion
+Returns the current value of this {@code AtomicInteger} as a
+{@code float} after a widening primitive conversion,
+with memory effects as specified by {@link VarHandle#getVolatile}.
+@jls 5.1.2 Widening Primitive Conversion
 
 ## AtomicInteger.doubleValue()
 
@@ -373,11 +326,10 @@ with memory effects as specified by `VarHandle.getVolatile`.
 public double doubleValue()
 ```
 
-Returns the current value of this `AtomicInteger` as a
-`double` after a widening primitive conversion,
-with memory effects as specified by `VarHandle.getVolatile`.
-
-**JLS:** 5.1.2 Widening Primitive Conversion
+Returns the current value of this {@code AtomicInteger} as a
+{@code double} after a widening primitive conversion,
+with memory effects as specified by {@link VarHandle#getVolatile}.
+@jls 5.1.2 Widening Primitive Conversion
 
 ## AtomicInteger.getPlain()
 
@@ -386,11 +338,10 @@ public final int getPlain()
 ```
 
 Returns the current value, with memory semantics of reading as
-if the variable was declared non-`volatile`.
+if the variable was declared non-{@code volatile}.
 
-**Returns:** the value
-
-**Since:** 9
+@return the value
+@since 9
 
 ## AtomicInteger.setPlain(int)
 
@@ -398,15 +349,12 @@ if the variable was declared non-`volatile`.
 public final void setPlain(int newValue)
 ```
 
-Sets the value to `newValue`, with memory semantics
-of setting as if the variable was declared non-`volatile`
-and non-`final`.
+Sets the value to {@code newValue}, with memory semantics
+of setting as if the variable was declared non-{@code volatile}
+and non-{@code final}.
 
-Parameters:
-
-- `newValue`: the new value
-
-**Since:** 9
+@param newValue the new value
+@since 9
 
 ## AtomicInteger.getOpaque()
 
@@ -415,11 +363,10 @@ public final int getOpaque()
 ```
 
 Returns the current value,
-with memory effects as specified by `VarHandle.getOpaque`.
+with memory effects as specified by {@link VarHandle#getOpaque}.
 
-**Returns:** the value
-
-**Since:** 9
+@return the value
+@since 9
 
 ## AtomicInteger.setOpaque(int)
 
@@ -427,14 +374,11 @@ with memory effects as specified by `VarHandle.getOpaque`.
 public final void setOpaque(int newValue)
 ```
 
-Sets the value to `newValue`,
-with memory effects as specified by `VarHandle.setOpaque`.
+Sets the value to {@code newValue},
+with memory effects as specified by {@link VarHandle#setOpaque}.
 
-Parameters:
-
-- `newValue`: the new value
-
-**Since:** 9
+@param newValue the new value
+@since 9
 
 ## AtomicInteger.getAcquire()
 
@@ -443,11 +387,10 @@ public final int getAcquire()
 ```
 
 Returns the current value,
-with memory effects as specified by `VarHandle.getAcquire`.
+with memory effects as specified by {@link VarHandle#getAcquire}.
 
-**Returns:** the value
-
-**Since:** 9
+@return the value
+@since 9
 
 ## AtomicInteger.setRelease(int)
 
@@ -455,14 +398,11 @@ with memory effects as specified by `VarHandle.getAcquire`.
 public final void setRelease(int newValue)
 ```
 
-Sets the value to `newValue`,
-with memory effects as specified by `VarHandle.setRelease`.
+Sets the value to {@code newValue},
+with memory effects as specified by {@link VarHandle#setRelease}.
 
-Parameters:
-
-- `newValue`: the new value
-
-**Since:** 9
+@param newValue the new value
+@since 9
 
 ## AtomicInteger.compareAndExchange(int, int)
 
@@ -470,20 +410,16 @@ Parameters:
 public final int compareAndExchange(int expectedValue, int newValue)
 ```
 
-Atomically sets the value to `newValue` if the current value,
-referred to as the *witness value*, `== expectedValue`,
+Atomically sets the value to {@code newValue} if the current value,
+referred to as the <em>witness value</em>, {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.compareAndExchange`.
+{@link VarHandle#compareAndExchange}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** the *witness value*, which will be the same as the
+@param expectedValue the expected value
+@param newValue the new value
+@return the <em>witness value</em>, which will be the same as the
 expected value if successful
-
-**Since:** 9
+@since 9
 
 ## AtomicInteger.compareAndExchangeAcquire(int, int)
 
@@ -491,20 +427,16 @@ expected value if successful
 public final int compareAndExchangeAcquire(int expectedValue, int newValue)
 ```
 
-Atomically sets the value to `newValue` if the current value,
-referred to as the *witness value*, `== expectedValue`,
+Atomically sets the value to {@code newValue} if the current value,
+referred to as the <em>witness value</em>, {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.compareAndExchangeAcquire`.
+{@link VarHandle#compareAndExchangeAcquire}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** the *witness value*, which will be the same as the
+@param expectedValue the expected value
+@param newValue the new value
+@return the <em>witness value</em>, which will be the same as the
 expected value if successful
-
-**Since:** 9
+@since 9
 
 ## AtomicInteger.compareAndExchangeRelease(int, int)
 
@@ -512,20 +444,16 @@ expected value if successful
 public final int compareAndExchangeRelease(int expectedValue, int newValue)
 ```
 
-Atomically sets the value to `newValue` if the current value,
-referred to as the *witness value*, `== expectedValue`,
+Atomically sets the value to {@code newValue} if the current value,
+referred to as the <em>witness value</em>, {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.compareAndExchangeRelease`.
+{@link VarHandle#compareAndExchangeRelease}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** the *witness value*, which will be the same as the
+@param expectedValue the expected value
+@param newValue the new value
+@return the <em>witness value</em>, which will be the same as the
 expected value if successful
-
-**Since:** 9
+@since 9
 
 ## AtomicInteger.weakCompareAndSetVolatile(int, int)
 
@@ -533,19 +461,15 @@ expected value if successful
 public final boolean weakCompareAndSetVolatile(int expectedValue, int newValue)
 ```
 
-Possibly atomically sets the value to `newValue` if
-the current value `== expectedValue`,
+Possibly atomically sets the value to {@code newValue} if
+the current value {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.weakCompareAndSet`.
+{@link VarHandle#weakCompareAndSet}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** `true` if successful
-
-**Since:** 9
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful
+@since 9
 
 ## AtomicInteger.weakCompareAndSetAcquire(int, int)
 
@@ -553,19 +477,15 @@ Parameters:
 public final boolean weakCompareAndSetAcquire(int expectedValue, int newValue)
 ```
 
-Possibly atomically sets the value to `newValue` if
-the current value `== expectedValue`,
+Possibly atomically sets the value to {@code newValue} if
+the current value {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.weakCompareAndSetAcquire`.
+{@link VarHandle#weakCompareAndSetAcquire}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** `true` if successful
-
-**Since:** 9
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful
+@since 9
 
 ## AtomicInteger.weakCompareAndSetRelease(int, int)
 
@@ -573,16 +493,12 @@ Parameters:
 public final boolean weakCompareAndSetRelease(int expectedValue, int newValue)
 ```
 
-Possibly atomically sets the value to `newValue` if
-the current value `== expectedValue`,
+Possibly atomically sets the value to {@code newValue} if
+the current value {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.weakCompareAndSetRelease`.
+{@link VarHandle#weakCompareAndSetRelease}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** `true` if successful
-
-**Since:** 9
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful
+@since 9

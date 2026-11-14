@@ -1,15 +1,8 @@
----
-title: "std::os::darwin::fs"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/os/darwin/fs.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::os::darwin::fs
 
-Darwin-specific extension traits to `fs`.
+Darwin-specific extension traits to [`fs`].
+
+[`fs`]: crate::fs
 
 ## trait MetadataExt
 
@@ -17,4 +10,6 @@ Darwin-specific extension traits to `fs`.
 pub trait MetadataExt
 ```
 
-OS-specific extensions to `fs::Metadata`.
+OS-specific extensions to [`fs::Metadata`].
+
+[`fs::Metadata`]: crate::fs::Metadata

@@ -1,12 +1,3 @@
----
-title: "core::hint (part 1 of 2)"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/hint.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::hint
 
 Hints to compiler that affects how code should be emitted or optimized.
@@ -36,7 +27,7 @@ reachable at runtime - the compiler may have generated nonsensical machine
 instructions for this situation, including in seemingly unrelated code,
 causing difficult-to-debug problems.
 
-Use this function sparingly. Consider using the `unreachable!` macro,
+Use this function sparingly. Consider using the [`unreachable!`] macro,
 which may prevent some optimizations but will safely panic in case it is
 actually reached at runtime. Benchmark your code to find out if using
 `unreachable_unchecked()` comes with a performance benefit.
@@ -47,7 +38,7 @@ actually reached at runtime. Benchmark your code to find out if using
 can't prove invariants that were previously established. Such situations
 have a higher chance of occurring if those invariants are upheld by
 external code that the compiler can't analyze.
-```rust
+```
 fn prepare_inputs(divisors: &mut Vec<u32>) {
     // Note to future-self when making changes: The invariant established
     // here is NOT checked in `do_computation()`; if this changes, you HAVE
@@ -89,10 +80,10 @@ assert_eq!(result, 12);
 While using `unreachable_unchecked()` is perfectly sound in the following
 example, as the compiler is able to prove that a division by zero is not
 possible, benchmarking reveals that `unreachable_unchecked()` provides
-no benefit over using `unreachable!`, while the latter does not introduce
+no benefit over using [`unreachable!`], while the latter does not introduce
 the possibility of Undefined Behavior.
 
-```rust
+```
 fn div_1(a: u32, b: u32) -> u32 {
     use std::hint::unreachable_unchecked;
 
@@ -120,8 +111,8 @@ This may allow the optimizer to simplify things, but it might also make the gene
 slower. Either way, calling it will most likely make compilation take longer.
 
 You may know this from other places as
-`llvm.assume` or, in C,
-`__builtin_assume`.
+[`llvm.assume`](https://llvm.org/docs/LangRef.html#llvm-assume-intrinsic) or, in C,
+[`__builtin_assume`](https://clang.llvm.org/docs/LanguageExtensions.html#builtin-assume).
 
 This promotes a correctness requirement to a soundness requirement. Don't do that without
 very good reason.
@@ -136,13 +127,13 @@ The more complicated the condition, the less likely this is to be useful. For ex
 `assert_unchecked(foo.is_sorted())` is a complex enough value that the compiler is unlikely
 to be able to take advantage of it.
 
-There's also no need to `assert_unchecked` basic <example-value> of things.  For example, the
+There's also no need to `assert_unchecked` basic properties of things.  For example, the
 compiler already knows the range of `count_ones`, so there is no benefit to
 `let n = u32::count_ones(x); assert_unchecked(n <= u32::BITS);`.
 
 `assert_unchecked` is logically equivalent to `if !cond { unreachable_unchecked(); }`. If
 ever you are tempted to write `assert_unchecked(false)`, you should instead use
-`unreachable_unchecked()` directly.
+[`unreachable_unchecked()`] directly.
 
 # Safety
 
@@ -150,7 +141,7 @@ ever you are tempted to write `assert_unchecked(false)`, you should instead use
 
 # Example
 
-```rust
+```
 use core::hint;
 
 /// # Safety
@@ -172,7 +163,7 @@ pub unsafe fn next_value(p: *const i32) -> i32 {
 Without the `assert_unchecked`, the above function produces the following with optimizations
 enabled:
 
-```
+```asm
 next_value:
         test    rdi, rdi
         je      .LBB0_1
@@ -182,16 +173,16 @@ next_value:
 .LBB0_1:
         mov     eax, -1
         ret
-```rust
+```
 
 Adding the assertion allows the optimizer to remove the extra check:
 
-```
+```asm
 next_value:
         mov     eax, dword ptr [rdi]
         inc     eax
         ret
-```rust
+```
 
 This example is quite unlike anything that would be used in the real world: it is redundant
 to put an assertion right next to code that checks the same thing, and dereferencing a
@@ -210,7 +201,7 @@ a busy-wait spin-loop ("spin lock").
 Upon receiving the spin-loop signal the processor can optimize its behavior by,
 for example, saving power or switching hyper-threads.
 
-This function is different from `thread::yield_now` which directly
+This function is different from [`thread::yield_now`] which directly
 yields to the system's scheduler, whereas `spin_loop` does not interact
 with the operating system.
 
@@ -225,7 +216,7 @@ function does not do anything at all.
 
 # Examples
 
-```
+```ignore-wasm
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
 use std::{hint, thread};
@@ -255,9 +246,9 @@ while !live.load(Ordering::Acquire) {
 do_some_work();
 bg_work.join()?;
 # Ok::<(), Box<dyn core::any::Any + Send + 'static>>(())
-```rust
+```
 
-`thread::yield_now`: ../../std/thread/fn.yield_now.html
+[`thread::yield_now`]: ../../std/thread/fn.yield_now.html
 
 ## fn black_box
 
@@ -268,10 +259,12 @@ pub const fn black_box<T>(dummy: T) -> T
 An identity function that *__hints__* to the compiler to be maximally pessimistic about what
 `black_box` could do.
 
-Unlike `std::convert::identity`, a Rust compiler is encouraged to assume that `black_box` can
+Unlike [`std::convert::identity`], a Rust compiler is encouraged to assume that `black_box` can
 use `dummy` in any possible valid way that Rust code is allowed to without introducing undefined
 behavior in the calling code. This property makes `black_box` useful for writing code in which
 certain optimizations are not desired, such as benchmarks.
+
+<div class="warning">
 
 Note however, that `black_box` is only (and can only be) provided on a "best-effort" basis. The
 extent to which it can block optimisations may vary depending upon the platform and code-gen
@@ -284,6 +277,10 @@ This limitation is not specific to `black_box`; there is no mechanism in the ent
 language that can provide the guarantees required for constant-time cryptography.
 (There is also no such mechanism in LLVM, so the same is true for every other LLVM-based compiler.)
 
+</div>
+
+[`std::convert::identity`]: crate::convert::identity
+
 # When is this useful?
 
 While not suitable in those mission-critical cases, `black_box`'s functionality can generally be
@@ -291,7 +288,7 @@ relied upon for benchmarking, and should be used there. It will try to ensure th
 compiler doesn't optimize away part of the intended test code based on context. For
 example:
 
-```rust
+```
 fn contains(haystack: &[&str], needle: &str) -> bool {
     haystack.iter().any(|x| x == &needle)
 }
@@ -319,7 +316,7 @@ It is not likely that all of the above happens, but the compiler is definitely a
 optimizations that could result in a very inaccurate benchmark. This is where `black_box` comes
 in:
 
-```rust
+```
 use std::hint::black_box;
 
 // Same `contains` function.
@@ -360,7 +357,7 @@ In practice, `black_box` serves two purposes:
 1. It prevents the compiler from making optimizations related to the value returned by `black_box`
 2. It forces the value passed to `black_box` to be calculated, even if the return value of `black_box` is unused
 
-```rust
+```
 use std::hint::black_box;
 
 let zero = 0;
@@ -381,7 +378,7 @@ While most cases will not be as clear-cut as the above example, it still illustr
 `black_box` so the compiler cannot make optimizations that would be unrealistic in real-life
 use.
 
-```rust
+```
 use std::hint::black_box;
 
 // This is a simple function that increments its input by 1. Note that it is pure, meaning it
@@ -403,12 +400,12 @@ let _ = black_box(increment(black_box(5)));
 
 There may be additional situations where you want to wrap the result of a function in
 `black_box` to force its execution. This is situational though, and may not have any effect
-(such as when the function returns a zero-sized type such as `()` unit).
+(such as when the function returns a zero-sized type such as [`()` unit][unit]).
 
 Note that `black_box` has no effect on how its input is treated, only its output. As such,
 expressions passed to `black_box` may still be optimized:
 
-```rust
+```
 use std::hint::black_box;
 
 // The compiler sees this...
@@ -423,7 +420,7 @@ In the above example, the `5 * 10` expression is considered distinct from the `b
 and thus is still optimized by the compiler. You can prevent this by moving the multiplication
 operation outside of `black_box`:
 
-```rust
+```
 use std::hint::black_box;
 
 // No assumptions can be made about either operand, so the multiplication is not optimized out.
@@ -431,3 +428,51 @@ let y = black_box(5) * black_box(10);
 ```
 
 During constant evaluation, `black_box` is treated as a no-op.
+
+## fn select_unpredictable
+
+```rust
+pub const fn select_unpredictable<T>(condition: bool, true_val: T, false_val: T) -> T where T: [const] Destruct,
+```
+
+Returns either `true_val` or `false_val` depending on the value of
+`condition`, with a hint to the compiler that `condition` is unlikely to be
+correctly predicted by a CPU’s branch predictor.
+
+This method is functionally equivalent to
+```ignore (this is just for illustrative purposes)
+fn select_unpredictable<T>(b: bool, true_val: T, false_val: T) -> T {
+    if b { true_val } else { false_val }
+}
+```
+but might generate different assembly. In particular, on platforms with
+a conditional move or select instruction (like `cmov` on x86 or `csel`
+on ARM) the optimizer might use these instructions to avoid branches,
+which can benefit performance if the branch predictor is struggling
+with predicting `condition`, such as in an implementation of binary
+search.
+
+Note however that this lowering is not guaranteed (on any platform) and
+should not be relied upon when trying to write cryptographic constant-time
+code. Also be aware that this lowering might *decrease* performance if
+`condition` is well-predictable. It is advisable to perform benchmarks to
+tell if this function is useful.
+
+# Examples
+
+Distribute values evenly between two buckets:
+```
+use std::hash::BuildHasher;
+use std::hint;
+
+fn append<H: BuildHasher>(hasher: &H, v: i32, bucket_one: &mut Vec<i32>, bucket_two: &mut Vec<i32>) {
+    let hash = hasher.hash_one(&v);
+    let bucket = hint::select_unpredictable(hash % 2 == 0, bucket_one, bucket_two);
+    bucket.push(v);
+}
+# let hasher = std::collections::hash_map::RandomState::new();
+# let mut bucket_one = Vec::new();
+# let mut bucket_two = Vec::new();
+# append(&hasher, 42, &mut bucket_one, &mut bucket_two);
+# assert_eq!(bucket_one.len() + bucket_two.len(), 1);
+```

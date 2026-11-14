@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: System.Windows.Forms.StatusStrip uses a different default renderer"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/windows-forms/9.0/statusstrip-renderer.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 9 for Windows Forms where System.Windows.Forms.StatusStrip uses a different default value for the RenderMode property.
+ms.date: 02/12/2025
 ---
-
 # System.Windows.Forms.StatusStrip uses a different default renderer
 
-`System.Windows.Forms.StatusStrip` has been updated to use the default renderer.
+<xref:System.Windows.Forms.StatusStrip?displayProperty=nameWithType> has been updated to use the default renderer.
 
 ## Version introduced
 
@@ -17,15 +13,15 @@ license: "CC-BY-4.0"
 
 ## Previous behavior
 
-Previously, the `StatusStrip.RenderMode` property was set to `System.Windows.Forms.ToolStripRenderMode.System` by default.
+Previously, the `StatusStrip.RenderMode` property was set to <xref:System.Windows.Forms.ToolStripRenderMode.System?displayProperty=nameWithType> by default.
 
 ## New behavior
 
-`System.Windows.Forms.StatusStrip` uses the default renderer. You might observe minor changes to the appearance of the `StatusStrip`.
+<xref:System.Windows.Forms.StatusStrip?displayProperty=nameWithType> uses the default renderer. You might observe minor changes to the appearance of the `StatusStrip`.
 
 ## Change category
 
-This change is a *behavioral change*.
+This change is a [*behavioral change*](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -33,12 +29,12 @@ The previous default behavior didn't meet accessibility standards. The focus ind
 
 ## Recommended action
 
-The new behavior is recommended for accessibility reasons. If you want to revert to the previous behavior, set the `RenderMode` property to `System.Windows.Forms.ToolStripRenderMode.System`.
+The new behavior is recommended for accessibility reasons. If you want to revert to the previous behavior, set the `RenderMode` property to <xref:System.Windows.Forms.ToolStripRenderMode.System?displayProperty=nameWithType>.
 
-> **Note:**
-> The new behavior was reverted to the previous behavior in a .NET 9 servicing release and .NET 10 Preview 1.
+> [!NOTE]
+> The new behavior was reverted to the previous behavior in a .NET 9 servicing release and [.NET 10 Preview 1](../10.0/statusstrip-renderer.md).
 
 ## Affected APIs
 
-- `System.Windows.Forms.StatusStrip`
-- `System.Windows.Forms.ToolStripManager.RenderMode`
+- <xref:System.Windows.Forms.StatusStrip?displayProperty=fullName>
+- <xref:System.Windows.Forms.ToolStripManager.RenderMode?displayProperty=fullName>

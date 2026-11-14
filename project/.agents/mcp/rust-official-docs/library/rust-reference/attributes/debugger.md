@@ -1,26 +1,18 @@
----
-title: "Debugger attributes"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/attributes/debugger.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[attributes.debugger]
 # Debugger attributes
 
 r[attributes.debugger.intro]
 The following [attributes] are used for enhancing the debugging experience when using third-party debuggers like GDB or WinDbg.
 
+<!-- template:attributes -->
 r[attributes.debugger.debugger_visualizer]
 ## The `debugger_visualizer` attribute
 
 r[attributes.debugger.debugger_visualizer.intro]
-The *`debugger_visualizer` attribute* can be used to embed a debugger visualizer file into the debug information. This improves the debugger experience when displaying values.
+The *`debugger_visualizer` [attribute][attributes]* can be used to embed a debugger visualizer file into the debug information. This improves the debugger experience when displaying values.
 
 > [!EXAMPLE]
->
+> <!-- ignore: requires external files-->
 > ```rust,ignore
 > #![debugger_visualizer(natvis_file = "Example.natvis")]
 > #![debugger_visualizer(gdb_script_file = "example.py")]
@@ -29,8 +21,8 @@ The *`debugger_visualizer` attribute* can be used to embed a debugger visualizer
 r[attributes.debugger.debugger_visualizer.syntax]
 The `debugger_visualizer` attribute uses the [MetaListNameValueStr] syntax to specify its inputs. One of the following keys must be specified:
 
-- `natvis_file`
-- `gdb_script_file`
+- [`natvis_file`][attributes.debugger.debugger_visualizer.natvis]
+- [`gdb_script_file`][attributes.debugger.debugger_visualizer.gdb]
 
 r[attributes.debugger.debugger_visualizer.allowed-positions]
 The `debugger_visualizer` attribute may only be applied to a [module] or to the crate root.
@@ -51,7 +43,7 @@ r[attributes.debugger.debugger_visualizer.natvis.path]
 The path to the Natvis file is specified with the `natvis_file` key, which is a path relative to the source file.
 
 > [!EXAMPLE]
->
+> <!-- ignore: requires external files and msvc -->
 > ```rust ignore
 > #![debugger_visualizer(natvis_file = "Rectangle.natvis")]
 >
@@ -110,7 +102,7 @@ r[attributes.debugger.debugger_visualizer.gdb]
 r[attributes.debugger.debugger_visualizer.gdb.pretty]
 GDB supports the use of a structured Python script, called a *pretty printer*, that describes how a type should be visualized in the debugger view. For detailed information on pretty printers, refer to GDB's [pretty printing documentation].
 
-> **Note:**
+> [!NOTE]
 > Embedded pretty printers are not automatically loaded when debugging a binary under GDB.
 >
 > There are two ways to enable auto-loading embedded pretty printers:
@@ -122,7 +114,7 @@ r[attributes.debugger.debugger_visualizer.gdb.path]
 These scripts are embedded using the `gdb_script_file` key, which is a path relative to the source file.
 
 > [!EXAMPLE]
->
+> <!-- ignore: requires external files -->
 > ```rust ignore
 > #![debugger_visualizer(gdb_script_file = "printer.py")]
 >
@@ -173,6 +165,12 @@ These scripts are embedded using the `gdb_script_file` key, which is a path rela
 >
 > [^rust-gdb]: Note: This assumes you are using the `rust-gdb` script which configures pretty-printers for standard library types like `String`.
 
+[auto-loading documentation]: https://sourceware.org/gdb/onlinedocs/gdb/Auto_002dloading-safe-path.html
+[attributes]: ../attributes.md
+[Natvis documentation]: https://docs.microsoft.com/en-us/visualstudio/debugger/create-custom-views-of-native-objects
+[pretty printing documentation]: https://sourceware.org/gdb/onlinedocs/gdb/Pretty-Printing.html
+
+<!-- template:attributes -->
 r[attributes.debugger.collapse_debuginfo]
 ## The `collapse_debuginfo` attribute
 
@@ -191,10 +189,12 @@ The *`collapse_debuginfo` [attribute]* controls whether code locations from a ma
 >
 > When using a debugger, invoking the `example` macro may appear as though it is calling a function. That is, when you step to the invocation site, it may show the macro invocation rather than the expanded code.
 
+<!-- TODO: I think it would be nice to extend this to explain a little more about why this is useful, and the kinds of scenarios where you would want one vs the other. See https://github.com/rust-lang/rfcs/pull/2117 for some guidance. -->
+
 r[attributes.debugger.collapse_debuginfo.syntax]
 The syntax for the `collapse_debuginfo` attribute is:
 
-```grammar
+```grammar,attributes
 @root CollapseDebuginfoAttribute -> `collapse_debuginfo` `(` CollapseDebuginfoOption `)`
 
 CollapseDebuginfoOption ->
@@ -219,5 +219,10 @@ The `collapse_debuginfo` attribute accepts these options:
 r[attributes.debugger.collapse_debuginfo.default]
 The `external` behavior is the default for macros that don't have this attribute unless they are built-in macros. For built-in macros the default is `yes`.
 
-> **Note:**
+> [!NOTE]
 > `rustc` has a [`-C collapse-macro-debuginfo`] CLI option to override both the default behavior and the values of any `#[collapse_debuginfo]` attributes.
+
+[`-C collapse-macro-debuginfo`]: ../../rustc/codegen-options/index.html#collapse-macro-debuginfo
+[`macro_rules` definition]: ../macros-by-example.md
+[attribute]: ../attributes.md
+[module]: ../items/modules.md

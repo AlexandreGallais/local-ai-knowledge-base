@@ -1,17 +1,8 @@
----
-title: "Path expressions"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/expressions/path-expr.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[expr.path]
 # Path expressions
 
 r[expr.path.syntax]
-```grammar
+```grammar,expressions
 PathExpression ->
       PathInExpression
     | QualifiedPathInExpression
@@ -42,3 +33,10 @@ let slice_reverse = <[i32]>::reverse;
 
 r[expr.path.const]
 Evaluation of associated constants is handled the same way as [`const` blocks].
+
+[place expressions]: ../expressions.md#place-expressions-and-value-expressions
+[value expressions]: ../expressions.md#place-expressions-and-value-expressions
+[path]: ../paths.md
+[`static mut`]: ../items/static-items.md#mutable-statics
+[`unsafe` block]: block-expr.md#unsafe-blocks
+[`const` blocks]: block-expr.md#const-blocks

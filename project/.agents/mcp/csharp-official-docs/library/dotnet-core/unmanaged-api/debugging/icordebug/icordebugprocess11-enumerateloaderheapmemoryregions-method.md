@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: ICorDebugProcess11::EnumerateLoaderHeapMemoryRegions Method"
 title: "ICorDebugProcess11::EnumerateLoaderHeapMemoryRegions Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess11-enumerateloaderheapmemoryregions-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "06/06/2022"
+dev_langs:
+  - "cpp"
+api_name:
+  - "ICorDebugProcess11.EnumerateLoaderHeapMemoryRegions"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+ms.assetid:
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugProcess11::EnumerateLoaderHeapMemoryRegions Method
 
 Deprecated.
@@ -25,9 +32,11 @@ HRESULT EnumerateLoaderHeapMemoryRegions(
 
  `ppRanges`
 
+## Remarks
+
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -37,4 +46,4 @@ HRESULT EnumerateLoaderHeapMemoryRegions(
 
 ## See also
 
-- ICorDebugProcess11 Interface
+- [ICorDebugProcess11 Interface](icordebugprocess11-interface.md)

@@ -1,14 +1,6 @@
----
-title: "Directives"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/directives/overview.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
-# Directives
+<docs-decorative-header title="Directives" imgSrc="adev/src/assets/images/directives.svg"> <!-- markdownlint-disable-line -->
 Directives add behavior to elements and components in your Angular applications.
+</docs-decorative-header>
 
 A directive can change how an element looks, how it behaves, or how it fits into the DOM. Angular ships with several built-in directives, and you can write your own.
 
@@ -22,7 +14,7 @@ Common examples include:
 - Reading from or writing to the host element's DOM, attributes, or classes.
 - Adding behavior to a component you don't own without changing its source.
 
-If you need to render your own markup or manage a piece of UI with its own template, reach for a component, a specialized directive with its own template.
+If you need to render your own markup or manage a piece of UI with its own template, reach for a [component](guide/components), a specialized directive with its own template.
 
 ## A quick example
 
@@ -62,14 +54,16 @@ Angular has three primary types of directives:
 
 | Directive type                                                  | Details                                                                           |
 | :-------------------------------------------------------------- | :-------------------------------------------------------------------------------- |
-| Components                                  | Define reusable UI with their own template.                                       |
-| Attribute directives   | Change the appearance or behavior of an element, component, or another directive. |
-| Structural directives | Change the DOM layout by adding and removing DOM elements.                        |
+| [Components](guide/components)                                  | Define reusable UI with their own template.                                       |
+| [Attribute directives](guide/directives/attribute-directives)   | Change the appearance or behavior of an element, component, or another directive. |
+| [Structural directives](guide/directives/structural-directives) | Change the DOM layout by adding and removing DOM elements.                        |
 
 ## What's next
 
 Learn more about each type of directive in the following guides.
 
-  - Attribute directives
-  - Structural directives
-  - Directive composition API
+<docs-pill-row>
+  <docs-pill href="guide/directives/attribute-directives" title="Attribute directives"/>
+  <docs-pill href="guide/directives/structural-directives" title="Structural directives"/>
+  <docs-pill href="guide/directives/directive-composition-api" title="Directive composition API"/>
+</docs-pill-row>

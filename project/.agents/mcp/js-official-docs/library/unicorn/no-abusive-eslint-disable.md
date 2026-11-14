@@ -1,21 +1,15 @@
----
-title: "no-abusive-eslint-disable"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-abusive-eslint-disable.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-abusive-eslint-disable
 
 📝 Enforce specifying rules to disable in `eslint-disable` comments.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `recommended-css`, 🌐 `recommended-html`, 🧩 `recommended-json`, 📚 `recommended-markdown`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, 📋 `recommended-yaml`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, 🎨 `recommended-css`, 🌐 `recommended-html`, 🧩 `recommended-json`, 📚 `recommended-markdown`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, 📋 `recommended-yaml`, ☑️ `unopinionated`.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 This rule makes you specify the rules you want to disable when using `eslint-disable`, `eslint-disable-line` or `eslint-disable-next-line` comments.
 
-Because it inspects the disable directives themselves, it applies to files of any language that supports them, not just JavaScript, when linted with the matching ESLint language plugin (for example `@eslint/css` or `@eslint/markdown`).
+Because it inspects the disable directives themselves, it applies to files of any language that supports them, not just JavaScript, when linted with the matching ESLint language plugin (for example [`@eslint/css`](https://github.com/eslint/css) or [`@eslint/markdown`](https://github.com/eslint/markdown)).
 
 If you want to disable an ESLint rule in a file or on a specific line, you can add a comment.
 
@@ -44,7 +38,7 @@ You don't have to specify any rules (like `no-console` in the examples above), b
 console.log(message); // `message` is not defined, but it won't be reported
 ```
 
-This rule enforces specifying the rules to disable. If you want to disable ESLint on a file altogether, you should ignore it through `.eslintignore` for ESLint or through the `ignores` property in `package.json` for `XO`.
+This rule enforces specifying the rules to disable. If you want to disable ESLint on a file altogether, you should ignore it through [`.eslintignore`](https://eslint.org/docs/user-guide/configuring#ignoring-files-and-directories) for ESLint or through the [`ignores` property](https://github.com/xojs/xo#ignores) in `package.json` for `XO`.
 
 ## Examples
 

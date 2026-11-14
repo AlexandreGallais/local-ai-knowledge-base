@@ -1,12 +1,3 @@
----
-title: "InternalError class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/InternalError.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # InternalError class (java.lang)
 
 ```java
@@ -16,7 +7,7 @@ public class InternalError extends VirtualMachineError
 Thrown to indicate some unexpected internal error has occurred in
 the Java Virtual Machine.
 
-**Since:** 1.0
+@since   1.0
 
 ## InternalError.InternalError()
 
@@ -24,7 +15,7 @@ the Java Virtual Machine.
 public InternalError()
 ```
 
-Constructs an `InternalError` with no detail message.
+Constructs an {@code InternalError} with no detail message.
 
 ## InternalError.InternalError(String)
 
@@ -32,12 +23,10 @@ Constructs an `InternalError` with no detail message.
 public InternalError(String message)
 ```
 
-Constructs an `InternalError` with the specified
+Constructs an {@code InternalError} with the specified
 detail message.
 
-Parameters:
-
-- `message`: the detail message.
+@param   message   the detail message.
 
 ## InternalError.InternalError(String, Throwable)
 
@@ -45,19 +34,18 @@ Parameters:
 public InternalError(String message, Throwable cause)
 ```
 
-Constructs an `InternalError` with the specified detail
-message and cause.
-
-Note that the detail message associated
-with `cause` is *not* automatically incorporated in
+Constructs an {@code InternalError} with the specified detail
+message and cause.  <p>Note that the detail message associated
+with {@code cause} is <i>not</i> automatically incorporated in
 this error's detail message.
 
-Parameters:
-
-- `message`: the detail message (which is saved for later retrieval by the `getMessage()` method).
-- `cause`: the cause (which is saved for later retrieval by the `getCause()` method). (A `null` value is permitted, and indicates that the cause is nonexistent or unknown.)
-
-**Since:** 1.8
+@param  message the detail message (which is saved for later retrieval
+        by the {@link #getMessage()} method).
+@param  cause the cause (which is saved for later retrieval by the
+        {@link #getCause()} method).  (A {@code null} value is
+        permitted, and indicates that the cause is nonexistent or
+        unknown.)
+@since  1.8
 
 ## InternalError.InternalError(Throwable)
 
@@ -65,12 +53,13 @@ Parameters:
 public InternalError(Throwable cause)
 ```
 
-Constructs an `InternalError` with the specified cause
-and a detail message of `(cause==null ? null : cause.toString())` (which typically contains the class and
-detail message of `cause`).
+Constructs an {@code InternalError} with the specified cause
+and a detail message of {@code (cause==null ? null :
+cause.toString())} (which typically contains the class and
+detail message of {@code cause}).
 
-Parameters:
-
-- `cause`: the cause (which is saved for later retrieval by the `getCause()` method). (A `null` value is permitted, and indicates that the cause is nonexistent or unknown.)
-
-**Since:** 1.8
+@param  cause the cause (which is saved for later retrieval by the
+        {@link #getCause()} method).  (A {@code null} value is
+        permitted, and indicates that the cause is nonexistent or
+        unknown.)
+@since  1.8

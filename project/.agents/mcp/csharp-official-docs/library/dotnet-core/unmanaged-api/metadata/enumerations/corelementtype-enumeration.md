@@ -1,15 +1,23 @@
 ---
+description: "Learn more about: CorElementType Enumeration"
 title: "CorElementType Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/enumerations/corelementtype-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "CorElementType"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "CorElementType"
+helpviewer_keywords:
+  - "CorElementType enumeration [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # CorElementType Enumeration
 
-Specifies a common language runtime `System.Type`, a type modifier, or information about a type in a metadata type signature.
+Specifies a common language runtime <xref:System.Type>, a type modifier, or information about a type in a metadata type signature.
 
 ## Syntax
 
@@ -106,27 +114,27 @@ typedef enum CorElementType {
 
 The type modifiers form the basis for representing more complex types. A `CorElementType` type modifier value is applied to the value that immediately follows it in the type signature. The value that follows the `CorElementType` type modifier value can be a `CorElementType` simple type value, a metadata token, or other value, as specified in the following table.
 
-> **Note:**
-> All numbers (*number*, *argument Count*, *metadata token*, *rank*, *count*, and *bound*) are stored as compressed integers. See Standard ECMA-335 - Common Language Infrastructure (CLI) on the ECMA Web site for details.
+> [!NOTE]
+> All numbers (*number*, *argument Count*, *metadata token*, *rank*, *count*, and *bound*) are stored as compressed integers. See [Standard ECMA-335 - Common Language Infrastructure (CLI)](https://www.ecma-international.org/publications-and-standards/standards/ecma-335/) on the ECMA Web site for details.
 
 | Type modifier            | Format                                                      |
 |--------------------------|-------------------------------------------------------------|
-| `ELEMENT_TYPE_PTR`       | ELEMENT_TYPE_PTR \                |
-| `ELEMENT_TYPE_BYREF`     | ELEMENT_TYPE_BYREF \              |
+| `ELEMENT_TYPE_PTR`       | ELEMENT_TYPE_PTR \<a `CorElementType` value>                |
+| `ELEMENT_TYPE_BYREF`     | ELEMENT_TYPE_BYREF \<a `CorElementType` value>              |
 | `ELEMENT_TYPE_VALUETYPE` | ELEMENT_TYPE_VALUETYPE \<an `mdTypeDef` metadata token>     |
 | `ELEMENT_TYPE_CLASS`     | ELEMENT_TYPE_CLASS \<an `mdTypeDef` metadata token>         |
 | `ELEMENT_TYPE_VAR`       | ELEMENT_TYPE_VAR \<number>                                  |
-| `ELEMENT_TYPE_ARRAY`     | ELEMENT_TYPE_ARRAY \ \<rank> \<count1> \<bound1> ... \<countN> \<boundN> |
+| `ELEMENT_TYPE_ARRAY`     | ELEMENT_TYPE_ARRAY \<a `CorElementType` value> \<rank> \<count1> \<bound1> ... \<countN> \<boundN> |
 | `ELEMENT_TYPE_GENERICINST` | ELEMENT_TYPE_GENERICINST \<an `mdTypeDef` metadata token> \<argument Count> \<arg1> ... \<argN> |
 | `ELEMENT_TYPE_FNPTR`     | ELEMENT_TYPE_FNPTR \<complete signature for the function, including calling convention> |
-| `ELEMENT_TYPE_SZARRAY`   | ELEMENT_TYPE_SZARRAY \            |
+| `ELEMENT_TYPE_SZARRAY`   | ELEMENT_TYPE_SZARRAY \<a `CorElementType` value>            |
 | `ELEMENT_TYPE_MVAR`      | ELEMENT_TYPE_MVAR \<number>                                 |
-| `ELEMENT_TYPE_CMOD_REQD` | ELEMENT_TYPE_\ |
-| `ELEMENT_TYPE_CMOD_OPT`  | E_T_CMOD_OPT \ |
+| `ELEMENT_TYPE_CMOD_REQD` | ELEMENT_TYPE_\<a `mdTypeRef` or `mdTypeDef` metadata token> |
+| `ELEMENT_TYPE_CMOD_OPT`  | E_T_CMOD_OPT \<a `mdTypeRef` or `mdTypeDef` metadata token> |
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** CorHdr.h
 

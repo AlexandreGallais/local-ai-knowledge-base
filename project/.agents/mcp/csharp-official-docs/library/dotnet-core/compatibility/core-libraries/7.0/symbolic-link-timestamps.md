@@ -1,22 +1,18 @@
 ---
 title: ".NET 7 breaking change: Time fields on symbolic links"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/7.0/symbolic-link-timestamps.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 7 breaking change in core .NET libraries where updating CreationTime[Utc], LastAccessTime[Utc], and LastWriteTime[Utc] on a symbolic link no longer affects the target.
+ms.date: 10/04/2022
 ---
-
 # Time fields on symbolic links
 
 When changes are made to the following time-related fields on a symbolic link ("symlink"), the updates now affect the symlink itself and not the target:
 
-- `System.IO.FileSystemInfo.CreationTime`
-- `System.IO.FileSystemInfo.CreationTimeUtc`
-- `System.IO.FileSystemInfo.LastAccessTime`
-- `System.IO.FileSystemInfo.LastAccessTimeUtc`
-- `System.IO.FileSystemInfo.LastWriteTime`
-- `System.IO.FileSystemInfo.LastWriteTimeUtc`
+- <xref:System.IO.FileSystemInfo.CreationTime>
+- <xref:System.IO.FileSystemInfo.CreationTimeUtc>
+- <xref:System.IO.FileSystemInfo.LastAccessTime>
+- <xref:System.IO.FileSystemInfo.LastAccessTimeUtc>
+- <xref:System.IO.FileSystemInfo.LastWriteTime>
+- <xref:System.IO.FileSystemInfo.LastWriteTimeUtc>
 
 ## Previous behavior
 
@@ -94,7 +90,7 @@ Attributes:     Archive, ReparsePoint, Offline
 
 Starting in .NET 7, updating any of the time-related fields on a symlink affects the fields of the symlink itself and not the target file.
 
-The output of the program shown in the Previous behavior section is as follows:
+The output of the program shown in the [Previous behavior](#previous-behavior) section is as follows:
 
 ```output
 Before update:
@@ -128,7 +124,7 @@ Attributes:     Archive, ReparsePoint, Offline
 
 ## Type of breaking change
 
-This change can affect binary compatibility.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 
@@ -152,21 +148,21 @@ if (targetInfo  != null)
 
 ## Affected APIs
 
-- `System.IO.Directory.SetCreationTime(System.String,System.DateTime)`
-- `System.IO.Directory.SetCreationTimeUtc(System.String,System.DateTime)`
-- `System.IO.Directory.SetLastAccessTime(System.String,System.DateTime)`
-- `System.IO.Directory.SetLastAccessTimeUtc(System.String,System.DateTime)`
-- `System.IO.Directory.SetLastWriteTime(System.String,System.DateTime)`
-- `System.IO.Directory.SetLastWriteTimeUtc(System.String,System.DateTime)`
-- `System.IO.File.SetCreationTime(System.String,System.DateTime)`
-- `System.IO.File.SetCreationTimeUtc(System.String,System.DateTime)`
-- `System.IO.File.SetLastAccessTime(System.String,System.DateTime)`
-- `System.IO.File.SetLastAccessTimeUtc(System.String,System.DateTime)`
-- `System.IO.File.SetLastWriteTime(System.String,System.DateTime)`
-- `System.IO.File.SetLastWriteTimeUtc(System.String,System.DateTime)`
-- `System.IO.FileSystemInfo.CreationTime`
-- `System.IO.FileSystemInfo.CreationTimeUtc`
-- `System.IO.FileSystemInfo.LastAccessTime`
-- `System.IO.FileSystemInfo.LastAccessTimeUtc`
-- `System.IO.FileSystemInfo.LastWriteTime`
-- `System.IO.FileSystemInfo.LastWriteTimeUtc`
+- <xref:System.IO.Directory.SetCreationTime(System.String,System.DateTime)?displayProperty=fullName>
+- <xref:System.IO.Directory.SetCreationTimeUtc(System.String,System.DateTime)?displayProperty=fullName>
+- <xref:System.IO.Directory.SetLastAccessTime(System.String,System.DateTime)?displayProperty=fullName>
+- <xref:System.IO.Directory.SetLastAccessTimeUtc(System.String,System.DateTime)?displayProperty=fullName>
+- <xref:System.IO.Directory.SetLastWriteTime(System.String,System.DateTime)?displayProperty=fullName>
+- <xref:System.IO.Directory.SetLastWriteTimeUtc(System.String,System.DateTime)?displayProperty=fullName>
+- <xref:System.IO.File.SetCreationTime(System.String,System.DateTime)?displayProperty=fullName>
+- <xref:System.IO.File.SetCreationTimeUtc(System.String,System.DateTime)?displayProperty=fullName>
+- <xref:System.IO.File.SetLastAccessTime(System.String,System.DateTime)?displayProperty=fullName>
+- <xref:System.IO.File.SetLastAccessTimeUtc(System.String,System.DateTime)?displayProperty=fullName>
+- <xref:System.IO.File.SetLastWriteTime(System.String,System.DateTime)?displayProperty=fullName>
+- <xref:System.IO.File.SetLastWriteTimeUtc(System.String,System.DateTime)?displayProperty=fullName>
+- <xref:System.IO.FileSystemInfo.CreationTime?displayProperty=fullName>
+- <xref:System.IO.FileSystemInfo.CreationTimeUtc?displayProperty=fullName>
+- <xref:System.IO.FileSystemInfo.LastAccessTime?displayProperty=fullName>
+- <xref:System.IO.FileSystemInfo.LastAccessTimeUtc?displayProperty=fullName>
+- <xref:System.IO.FileSystemInfo.LastWriteTime?displayProperty=fullName>
+- <xref:System.IO.FileSystemInfo.LastWriteTimeUtc?displayProperty=fullName>

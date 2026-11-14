@@ -1,17 +1,6 @@
----
-title: "async-validation-minimal-apis"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-11/includes/async-validation-minimal-apis.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# async-validation-minimal-apis
-
 ### Async validation for Minimal APIs
 
-Minimal API validation now supports asynchronous validators end-to-end (dotnet/aspnetcore #66487, dotnet/aspnetcore #67183). Preview 5 shipped the building blocks for asynchronous form validation in Blazor. Preview 6 adds new asynchronous `DataAnnotations` APIs in the base libraries (`AsyncValidationAttribute` and `IAsyncValidatableObject`), and `Microsoft.Extensions.Validation` now runs them when an endpoint validates a request.
+Minimal API validation now supports asynchronous validators end-to-end ([dotnet/aspnetcore #66487](https://github.com/dotnet/aspnetcore/pull/66487), [dotnet/aspnetcore #67183](https://github.com/dotnet/aspnetcore/pull/67183)). Preview 5 shipped the building blocks for asynchronous form validation in Blazor. Preview 6 adds new asynchronous `DataAnnotations` APIs in the base libraries (`AsyncValidationAttribute` and `IAsyncValidatableObject`), and `Microsoft.Extensions.Validation` now runs them when an endpoint validates a request.
 
 The simplest way to add an asynchronous rule is a custom validation attribute. Derive from `AsyncValidationAttribute` and implement `IsValidAsync` to query a database or call a remote API without blocking a thread. The synchronous `IsValid` is abstract too; throw from it when the attribute validates asynchronously only:
 
@@ -26,7 +15,7 @@ public sealed class UniqueEmailAttribute : AsyncValidationAttribute
         throw new InvalidOperationException("Validate this attribute with IsValidAsync.");
 
     protected override async Task<ValidationResult?> IsValidAsync(
-        object? value, ValidationContext context, CancellationToken <example-value>)
+        object? value, ValidationContext context, CancellationToken cancellationToken)
     {
         var users = context.GetRequiredService<IUserService>();
         
@@ -61,7 +50,7 @@ public class ReservationRequest : IAsyncValidatableObject
 
     public async IAsyncEnumerable<ValidationResult> ValidateAsync(
         ValidationContext context,
-        [EnumeratorCancellation] CancellationToken <example-value> = default)
+        [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         var rooms = context.GetRequiredService<IRoomService>();
 

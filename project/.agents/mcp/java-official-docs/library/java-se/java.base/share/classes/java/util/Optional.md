@@ -1,46 +1,35 @@
----
-title: "Optional class (java.util)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/Optional.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Optional class (java.util)
 
 ```java
 public final class Optional<T>
 ```
 
-A container object which may or may not contain a non-`null` value.
-If a value is present, `isPresent()` returns `true`. If no
-value is present, the object is considered *empty* and
-`isPresent()` returns `false`.
+A container object which may or may not contain a non-{@code null} value.
+If a value is present, {@code isPresent()} returns {@code true}. If no
+value is present, the object is considered <i>empty</i> and
+{@code isPresent()} returns {@code false}.
 
-Additional methods that depend on the presence or absence of a contained
-value are provided, such as orElse()
+<p>Additional methods that depend on the presence or absence of a contained
+value are provided, such as {@link #orElse(Object) orElse()}
 (returns a default value if no value is present) and
-ifPresent() (performs an
+{@link #ifPresent(Consumer) ifPresent()} (performs an
 action if a value is present).
 
-This is a value-based
+<p>This is a <a href="{@docRoot}/java.base/java/lang/doc-files/ValueBased.html">value-based</a>
 class; programmers should treat instances that are
-equal as interchangeable and should not
+{@linkplain #equals(Object) equal} as interchangeable and should not
 use instances for synchronization, or unpredictable behavior may
 occur. For example, in a future release, synchronization may fail.
 
-Parameters:
-
-- `<T>`: the type of value
-
-**API note:** `Optional` is primarily intended for use as a method return type where
-there is a clear need to represent "no result," and where using `null`
-is likely to cause errors. A variable whose type is `Optional` should
-never itself be `null`; it should always point to an `Optional`
+@apiNote
+{@code Optional} is primarily intended for use as a method return type where
+there is a clear need to represent "no result," and where using {@code null}
+is likely to cause errors. A variable whose type is {@code Optional} should
+never itself be {@code null}; it should always point to an {@code Optional}
 instance.
 
-**Since:** 1.8
+@param <T> the type of value
+@since 1.8
 
 ## Optional.empty()
 
@@ -48,19 +37,17 @@ instance.
 public static<T> Optional<T> empty()
 ```
 
-Returns an empty `Optional` instance.  No value is present for this
-`Optional`.
+Returns an empty {@code Optional} instance.  No value is present for this
+{@code Optional}.
 
-Parameters:
+@apiNote
+Though it may be tempting to do so, avoid testing if an object is empty
+by comparing with {@code ==} or {@code !=} against instances returned by
+{@code Optional.empty()}.  There is no guarantee that it is a singleton.
+Instead, use {@link #isEmpty()} or {@link #isPresent()}.
 
-- `<T>`: The type of the non-existent value
-
-**API note:** Though it may be tempting to do so, avoid testing if an object is empty
-by comparing with `==` or `!=` against instances returned by
-`Optional.empty()`.  There is no guarantee that it is a singleton.
-Instead, use `isEmpty()` or `isPresent()`.
-
-**Returns:** an empty `Optional`
+@param <T> The type of the non-existent value
+@return an empty {@code Optional}
 
 ## Optional.of(T)
 
@@ -68,19 +55,13 @@ Instead, use `isEmpty()` or `isPresent()`.
 public static <T> Optional<T> of(T value)
 ```
 
-Returns an `Optional` describing the given non-`null`
+Returns an {@code Optional} describing the given non-{@code null}
 value.
 
-Parameters:
-
-- `value`: the value to describe, which must be non-`null`
-- `<T>`: the type of the value
-
-**Returns:** an `Optional` with the value present
-
-Throws:
-
-- `NullPointerException`: if value is `null`
+@param value the value to describe, which must be non-{@code null}
+@param <T> the type of the value
+@return an {@code Optional} with the value present
+@throws NullPointerException if value is {@code null}
 
 ## Optional.ofNullable(T)
 
@@ -88,16 +69,13 @@ Throws:
 public static <T> Optional<T> ofNullable(T value)
 ```
 
-Returns an `Optional` describing the given value, if
-non-`null`, otherwise returns an empty `Optional`.
+Returns an {@code Optional} describing the given value, if
+non-{@code null}, otherwise returns an empty {@code Optional}.
 
-Parameters:
-
-- `value`: the possibly-`null` value to describe
-- `<T>`: the type of the value
-
-**Returns:** an `Optional` with a present value if the specified value
-        is non-`null`, otherwise an empty `Optional`
+@param value the possibly-{@code null} value to describe
+@param <T> the type of the value
+@return an {@code Optional} with a present value if the specified value
+        is non-{@code null}, otherwise an empty {@code Optional}
 
 ## Optional.get()
 
@@ -106,15 +84,13 @@ public T get()
 ```
 
 If a value is present, returns the value, otherwise throws
-`NoSuchElementException`.
+{@code NoSuchElementException}.
 
-**API note:** The preferred alternative to this method is `orElseThrow()`.
+@apiNote
+The preferred alternative to this method is {@link #orElseThrow()}.
 
-**Returns:** the non-`null` value described by this `Optional`
-
-Throws:
-
-- `NoSuchElementException`: if no value is present
+@return the non-{@code null} value described by this {@code Optional}
+@throws NoSuchElementException if no value is present
 
 ## Optional.isPresent()
 
@@ -122,9 +98,9 @@ Throws:
 public boolean isPresent()
 ```
 
-If a value is present, returns `true`, otherwise `false`.
+If a value is present, returns {@code true}, otherwise {@code false}.
 
-**Returns:** `true` if a value is present, otherwise `false`
+@return {@code true} if a value is present, otherwise {@code false}
 
 ## Optional.isEmpty()
 
@@ -132,12 +108,11 @@ If a value is present, returns `true`, otherwise `false`.
 public boolean isEmpty()
 ```
 
-If a value is  not present, returns `true`, otherwise
-`false`.
+If a value is  not present, returns {@code true}, otherwise
+{@code false}.
 
-**Returns:** `true` if a value is not present, otherwise `false`
-
-**Since:** 11
+@return  {@code true} if a value is not present, otherwise {@code false}
+@since   11
 
 ## Optional.ifPresent(Consumer<? super T>)
 
@@ -148,13 +123,9 @@ public void ifPresent(Consumer<? super T> action)
 If a value is present, performs the given action with the value,
 otherwise does nothing.
 
-Parameters:
-
-- `action`: the action to be performed, if a value is present
-
-Throws:
-
-- `NullPointerException`: if value is present and the given action is `null`
+@param action the action to be performed, if a value is present
+@throws NullPointerException if value is present and the given action is
+        {@code null}
 
 ## Optional.ifPresentOrElse(Consumer<? super T>, Runnable)
 
@@ -165,16 +136,13 @@ public void ifPresentOrElse(Consumer<? super T> action, Runnable emptyAction)
 If a value is present, performs the given action with the value,
 otherwise performs the given empty-based action.
 
-Parameters:
-
-- `action`: the action to be performed, if a value is present
-- `emptyAction`: the empty-based action to be performed, if no value is present
-
-**Since:** 9
-
-Throws:
-
-- `NullPointerException`: if a value is present and the given action is `null`, or no value is present and the given empty-based action is `null`.
+@param action the action to be performed, if a value is present
+@param emptyAction the empty-based action to be performed, if no value is
+       present
+@throws NullPointerException if a value is present and the given action
+        is {@code null}, or no value is present and the given empty-based
+        action is {@code null}.
+@since 9
 
 ## Optional.filter(Predicate<? super T>)
 
@@ -183,20 +151,14 @@ public Optional<T> filter(Predicate<? super T> predicate)
 ```
 
 If a value is present, and the value matches the given predicate,
-returns an `Optional` describing the value, otherwise returns an
-empty `Optional`.
+returns an {@code Optional} describing the value, otherwise returns an
+empty {@code Optional}.
 
-Parameters:
-
-- `predicate`: the predicate to apply to a value, if present
-
-**Returns:** an `Optional` describing the value of this
-        `Optional`, if a value is present and the value matches the
-        given predicate, otherwise an empty `Optional`
-
-Throws:
-
-- `NullPointerException`: if the predicate is `null`
+@param predicate the predicate to apply to a value, if present
+@return an {@code Optional} describing the value of this
+        {@code Optional}, if a value is present and the value matches the
+        given predicate, otherwise an empty {@code Optional}
+@throws NullPointerException if the predicate is {@code null}
 
 ## Optional.map(Function<? super T, ? extends U>)
 
@@ -204,42 +166,37 @@ Throws:
 public <U> Optional<U> map(Function<? super T, ? extends U> mapper)
 ```
 
-If a value is present, returns an `Optional` describing (as if by
-`ofNullable`) the result of applying the given mapping function to
-the value, otherwise returns an empty `Optional`.
+If a value is present, returns an {@code Optional} describing (as if by
+{@link #ofNullable}) the result of applying the given mapping function to
+the value, otherwise returns an empty {@code Optional}.
 
-If the mapping function returns a `null` result then this method
-returns an empty `Optional`.
+<p>If the mapping function returns a {@code null} result then this method
+returns an empty {@code Optional}.
 
-Parameters:
-
-- `mapper`: the mapping function to apply to a value, if present
-- ``: The type of the value returned from the mapping function
-
-**API note:** This method supports post-processing on `Optional` values, without
+@apiNote
+This method supports post-processing on {@code Optional} values, without
 the need to explicitly check for a return status.  For example, the
 following code traverses a stream of URIs, selects one that has not
 yet been processed, and creates a path from that URI, returning
-an `Optional`:
+an {@code Optional<Path>}:
 
-```java
+<pre>{@code
     Optional<Path> p =
         uris.stream().filter(uri -> !isProcessedYet(uri))
                       .findFirst()
                       .map(Paths::get);
-```
+}</pre>
 
-Here, `findFirst` returns an `Optional<URI>`, and then
-`map` returns an `Optional` for the desired
+Here, {@code findFirst} returns an {@code Optional<URI>}, and then
+{@code map} returns an {@code Optional<Path>} for the desired
 URI if one exists.
 
-**Returns:** an `Optional` describing the result of applying a mapping
-        function to the value of this `Optional`, if a value is
-        present, otherwise an empty `Optional`
-
-Throws:
-
-- `NullPointerException`: if the mapping function is `null`
+@param mapper the mapping function to apply to a value, if present
+@param <U> The type of the value returned from the mapping function
+@return an {@code Optional} describing the result of applying a mapping
+        function to the value of this {@code Optional}, if a value is
+        present, otherwise an empty {@code Optional}
+@throws NullPointerException if the mapping function is {@code null}
 
 ## Optional.flatMap(Function<? super T, ? extends Optional<? extends U>>)
 
@@ -248,26 +205,22 @@ public <U> Optional<U> flatMap(Function<? super T, ? extends Optional<? extends 
 ```
 
 If a value is present, returns the result of applying the given
-`Optional`-bearing mapping function to the value, otherwise returns
-an empty `Optional`.
+{@code Optional}-bearing mapping function to the value, otherwise returns
+an empty {@code Optional}.
 
-This method is similar to `map(Function)`, but the mapping
-function is one whose result is already an `Optional`, and if
-invoked, `flatMap` does not wrap it within an additional
-`Optional`.
+<p>This method is similar to {@link #map(Function)}, but the mapping
+function is one whose result is already an {@code Optional}, and if
+invoked, {@code flatMap} does not wrap it within an additional
+{@code Optional}.
 
-Parameters:
-
-- ``: The type of value of the `Optional` returned by the mapping function
-- `mapper`: the mapping function to apply to a value, if present
-
-**Returns:** the result of applying an `Optional`-bearing mapping
-        function to the value of this `Optional`, if a value is
-        present, otherwise an empty `Optional`
-
-Throws:
-
-- `NullPointerException`: if the mapping function is `null` or returns a `null` result
+@param <U> The type of value of the {@code Optional} returned by the
+           mapping function
+@param mapper the mapping function to apply to a value, if present
+@return the result of applying an {@code Optional}-bearing mapping
+        function to the value of this {@code Optional}, if a value is
+        present, otherwise an empty {@code Optional}
+@throws NullPointerException if the mapping function is {@code null} or
+        returns a {@code null} result
 
 ## Optional.or(Supplier<? extends Optional<? extends T>>)
 
@@ -275,22 +228,17 @@ Throws:
 public Optional<T> or(Supplier<? extends Optional<? extends T>> supplier)
 ```
 
-If a value is present, returns an `Optional` describing the value,
-otherwise returns an `Optional` produced by the supplying function.
+If a value is present, returns an {@code Optional} describing the value,
+otherwise returns an {@code Optional} produced by the supplying function.
 
-Parameters:
-
-- `supplier`: the supplying function that produces an `Optional` to be returned
-
-**Returns:** returns an `Optional` describing the value of this
-        `Optional`, if a value is present, otherwise an
-        `Optional` produced by the supplying function.
-
-**Since:** 9
-
-Throws:
-
-- `NullPointerException`: if the supplying function is `null` or produces a `null` result
+@param supplier the supplying function that produces an {@code Optional}
+       to be returned
+@return returns an {@code Optional} describing the value of this
+        {@code Optional}, if a value is present, otherwise an
+        {@code Optional} produced by the supplying function.
+@throws NullPointerException if the supplying function is {@code null} or
+        produces a {@code null} result
+@since 9
 
 ## Optional.stream()
 
@@ -298,20 +246,19 @@ Throws:
 public Stream<T> stream()
 ```
 
-If a value is present, returns a sequential `Stream` containing
-only that value, otherwise returns an empty `Stream`.
+If a value is present, returns a sequential {@link Stream} containing
+only that value, otherwise returns an empty {@code Stream}.
 
-**API note:** This method can be used to transform a `Stream` of optional
-elements to a `Stream` of present value elements:
-
-```java
+@apiNote
+This method can be used to transform a {@code Stream} of optional
+elements to a {@code Stream} of present value elements:
+<pre>{@code
     Stream<Optional<T>> os = ..
     Stream<T> s = os.flatMap(Optional::stream)
-```
+}</pre>
 
-**Returns:** the optional value as a `Stream`
-
-**Since:** 9
+@return the optional value as a {@code Stream}
+@since 9
 
 ## Optional.orElse(T)
 
@@ -320,13 +267,11 @@ public T orElse(T other)
 ```
 
 If a value is present, returns the value, otherwise returns
-`other`.
+{@code other}.
 
-Parameters:
-
-- `other`: the value to be returned, if no value is present. May be `null`.
-
-**Returns:** the value, if present, otherwise `other`
+@param other the value to be returned, if no value is present.
+       May be {@code null}.
+@return the value, if present, otherwise {@code other}
 
 ## Optional.orElseGet(Supplier<? extends T>)
 
@@ -337,16 +282,11 @@ public T orElseGet(Supplier<? extends T> supplier)
 If a value is present, returns the value, otherwise returns the result
 produced by the supplying function.
 
-Parameters:
-
-- `supplier`: the supplying function that produces a value to be returned
-
-**Returns:** the value, if present, otherwise the result produced by the
+@param supplier the supplying function that produces a value to be returned
+@return the value, if present, otherwise the result produced by the
         supplying function
-
-Throws:
-
-- `NullPointerException`: if no value is present and the supplying function is `null`
+@throws NullPointerException if no value is present and the supplying
+        function is {@code null}
 
 ## Optional.orElseThrow()
 
@@ -355,15 +295,11 @@ public T orElseThrow()
 ```
 
 If a value is present, returns the value, otherwise throws
-`NoSuchElementException`.
+{@code NoSuchElementException}.
 
-**Returns:** the non-`null` value described by this `Optional`
-
-**Since:** 10
-
-Throws:
-
-- `NoSuchElementException`: if no value is present
+@return the non-{@code null} value described by this {@code Optional}
+@throws NoSuchElementException if no value is present
+@since 10
 
 ## Optional.orElseThrow(Supplier<? extends X>)
 
@@ -374,21 +310,18 @@ public <X extends Throwable> T orElseThrow(Supplier<? extends X> exceptionSuppli
 If a value is present, returns the value, otherwise throws an exception
 produced by the exception supplying function.
 
-Parameters:
-
-- `<X>`: Type of the exception to be thrown
-- `exceptionSupplier`: the supplying function that produces an exception to be thrown
-
-**API note:** A method reference to the exception constructor with an empty argument
+@apiNote
+A method reference to the exception constructor with an empty argument
 list can be used as the supplier. For example,
-`IllegalStateException::new`
+{@code IllegalStateException::new}
 
-**Returns:** the value, if present
-
-Throws:
-
-- `X`: if no value is present
-- `NullPointerException`: if no value is present and the exception supplying function is `null` or produces a `null` result
+@param <X> Type of the exception to be thrown
+@param exceptionSupplier the supplying function that produces an
+       exception to be thrown
+@return the value, if present
+@throws X if no value is present
+@throws NullPointerException if no value is present and the exception
+        supplying function is {@code null} or produces a {@code null} result
 
 ## Optional.equals(Object)
 
@@ -396,21 +329,17 @@ Throws:
 public boolean equals(Object obj)
 ```
 
-Indicates whether some other object is "equal to" this `Optional`.
+Indicates whether some other object is "equal to" this {@code Optional}.
 The other object is considered equal if:
+<ul>
+<li>it is also an {@code Optional} and;
+<li>both instances have no value present or;
+<li>the present values are "equal to" each other via {@code equals()}.
+</ul>
 
-- it is also an `Optional` and;
-
-- both instances have no value present or;
-
-- the present values are "equal to" each other via `equals()`.
-
-Parameters:
-
-- `obj`: an object to be tested for equality
-
-**Returns:** `true` if the other object is "equal to" this object
-        otherwise `false`
+@param obj an object to be tested for equality
+@return {@code true} if the other object is "equal to" this object
+        otherwise {@code false}
 
 ## Optional.hashCode()
 
@@ -418,10 +347,10 @@ Parameters:
 public int hashCode()
 ```
 
-Returns the hash code of the value, if present, otherwise `0`
+Returns the hash code of the value, if present, otherwise {@code 0}
 (zero) if no value is present.
 
-**Returns:** hash code value of the present value or `0` if no value is
+@return hash code value of the present value or {@code 0} if no value is
         present
 
 ## Optional.toString()
@@ -430,12 +359,13 @@ Returns the hash code of the value, if present, otherwise `0`
 public String toString()
 ```
 
-Returns a non-empty string representation of this `Optional`
+Returns a non-empty string representation of this {@code Optional}
 suitable for debugging.  The exact presentation format is unspecified and
 may vary between implementations and versions.
 
-**Implementation requirements:** If a value is present the result must include its string representation
-in the result.  Empty and present `Optional`s must be unambiguously
+@implSpec
+If a value is present the result must include its string representation
+in the result.  Empty and present {@code Optional}s must be unambiguously
 differentiable.
 
-**Returns:** the string representation of this instance
+@return the string representation of this instance

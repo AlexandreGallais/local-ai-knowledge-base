@@ -1,23 +1,23 @@
 ---
-title: "How to generate text files from XML - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/generate-text-files-xml.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to generate text files from XML - LINQ to XML
+description: You can use C# and Visual Basic to generate a comma-separated values (CSV) text file from an XML file. This article provides an example.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
-
 # How to generate text files from XML (LINQ to XML)
 
 This article provides an example that shows how to use C# and Visual Basic to generate a comma-separated values (CSV) text file from an XML file.
 
 ## Example: Generate a CSV file from an XML document
 
-This example generates a CSV file from XML document Sample XML file: Customers and orders.
+This example generates a CSV file from XML document [Sample XML file: Customers and orders](sample-xml-file-customers-orders.md).
 
-The C# version uses method syntax and the `Aggregate` operator to generate the file in a single expression. For more information, see Query Syntax and Method Syntax in LINQ (C#).
+The C# version uses method syntax and the `Aggregate` operator to generate the file in a single expression. For more information, see [Query Syntax and Method Syntax in LINQ (C#)](../../csharp/linq/get-started/write-linq-queries.md).
 
-The Visual Basic <example-value> uses procedural code to aggregate the collection of strings into a single string.
+The Visual Basic version uses procedural code to aggregate the collection of strings into a single string.
 
 ```csharp
 XElement custOrd = XElement.Load("CustomersOrders.xml");
@@ -82,4 +82,4 @@ LETSS,Let's Stop N Shop,Jaime Yorres,Owner,(415) 555-5938,87 Polk St. Suite 5,Sa
 
 ## See also
 
-- Query Syntax and Method Syntax in LINQ (C#)
+- [Query Syntax and Method Syntax in LINQ (C#)](../../csharp/linq/get-started/write-linq-queries.md)

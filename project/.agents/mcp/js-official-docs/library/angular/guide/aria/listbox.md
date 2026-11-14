@@ -1,375 +1,43 @@
----
-title: "Listbox (part 1 of 2)"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/aria/listbox.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Listbox
 
-  - Listbox pattern
-  - Listbox API Reference
+<docs-pill-row>
+  <docs-pill href="https://www.w3.org/WAI/ARIA/apg/patterns/listbox/" title="Listbox pattern"/>
+  <docs-pill href="/api?query=listbox#angular_aria_listbox" title="Listbox API Reference"/>
+</docs-pill-row>
 
 ## Overview
 
 A directive that displays a list of options for users to select from, supporting keyboard navigation, single or multiple selection, and screen reader support.
 
-  **Basic**
+<docs-tab-group>
+  <docs-tab label="Basic">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/listbox/src/basic/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/listbox/src/basic/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/listbox/src/basic/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/listbox/src/basic/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
 
-      File: `app.ts`
+  <docs-tab label="Material">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/listbox/src/basic/material/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/listbox/src/basic/material/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/listbox/src/basic/material/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/listbox/src/basic/material/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
 
-```ts
-import {Listbox, Option} from '@angular/aria/listbox';
-import {Component} from '@angular/core';
-
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.html',
-  styleUrl: './app.css',
-  imports: [Listbox, Option],
-})
-export class App {
-  /** The options available in the listbox. */
-  options = [
-    'Option 1',
-    'Option 2',
-    'Option 3',
-    'Option 4',
-    'Option 5',
-    'Option 6',
-    'Option 7',
-    'Option 8',
-  ];
-}
-```
-      File: `app.html`
-
-```html
-<div class="listbox-container">
-  <div ngListbox [value]="['Option 1']">
-    @for (option of options; track option) {
-      <div ngOption [value]="option">
-        <span class="example-option-text">{{ option }}</span>
-        <span
-          class="example-option-check material-symbols-outlined"
-          translate="no"
-          aria-hidden="true"
-          >check</span
-        >
-      </div>
-    }
-  </div>
-</div>
-```
-      File: `app.css`
-
-```css
-@import url('https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined');
-
-:host {
-  display: flex;
-  justify-content: center;
-  font-family: var(--inter-font);
-}
-
-.listbox-container {
-  width: 200px;
-  height: 11rem;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  background-color: var(--septenary-contrast);
-  font-size: 0.9rem;
-}
-
-[ngListbox] {
-  gap: 2px;
-  height: 100%;
-  display: flex;
-  overflow: auto;
-  flex-direction: column;
-}
-
-[ngOption] {
-  display: flex;
-  cursor: pointer;
-  align-items: center;
-  margin: 1px;
-  padding: 0 1rem;
-  min-height: 2.25rem;
-  border-radius: 0.5rem;
-}
-
-[ngOption]:hover {
-  background-color: color-mix(in srgb, var(--primary-contrast) 5%, transparent);
-}
-
-[ngOption][data-active='true'] {
-  outline-offset: -2px;
-  outline: 2px solid color-mix(in srgb, var(--hot-pink) 50%, transparent);
-}
-
-[ngOption][aria-selected='true'] {
-  color: var(--hot-pink);
-  background-color: color-mix(in srgb, var(--hot-pink) 5%, transparent);
-}
-
-[ngOption]:not([aria-selected='true']) .example-option-check {
-  display: none;
-}
-
-.example-option-check {
-  font-size: 0.9rem;
-}
-
-.example-option-text {
-  flex: 1;
-}
-```
-
-  **Material**
-
-      File: `app.ts`
-
-```ts
-import {Listbox, Option} from '@angular/aria/listbox';
-import {Component} from '@angular/core';
-
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.html',
-  styleUrl: './app.css',
-  imports: [Listbox, Option],
-})
-export class App {
-  /** The options available in the listbox. */
-  options = [
-    'Option 1',
-    'Option 2',
-    'Option 3',
-    'Option 4',
-    'Option 5',
-    'Option 6',
-    'Option 7',
-    'Option 8',
-  ];
-}
-```
-      File: `app.html`
-
-```html
-<div class="material-listbox">
-  <div ngListbox>
-    @for (option of options; track option) {
-      <div ngOption [value]="option">
-        <span class="example-option-text">{{ option }}</span>
-        <span
-          class="example-option-check material-symbols-outlined"
-          translate="no"
-          aria-hidden="true"
-          >check</span
-        >
-      </div>
-    }
-  </div>
-</div>
-```
-      File: `app.css`
-
-```css
-@import url('https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined');
-
-:host {
-  display: flex;
-  justify-content: center;
-  font-family: var(--inter-font);
-  --primary: var(--hot-pink);
-  --on-primary: var(--page-background);
-}
-
-.docs-light-mode {
-  --on-primary: #fff;
-}
-
-.material-listbox {
-  width: 200px;
-  height: 13rem;
-  padding: 0.5rem;
-  border-radius: 2rem;
-  background-color: var(--septenary-contrast);
-  font-size: 0.9rem;
-}
-
-[ngListbox] {
-  gap: 2px;
-  padding: 2px;
-  height: 100%;
-  display: flex;
-  overflow: auto;
-  flex-direction: column;
-}
-
-[ngOption] {
-  display: flex;
-  cursor: pointer;
-  align-items: center;
-  padding: 0 1rem;
-  min-height: 3rem;
-  border-radius: 3rem;
-}
-
-[ngOption]:hover,
-[ngOption][data-active='true'] {
-  background-color: color-mix(in srgb, var(--primary-contrast) 5%, transparent);
-}
-
-[ngOption][data-active='true'] {
-  outline-offset: -2px;
-  outline: 2px solid var(--primary);
-}
-
-[ngOption][aria-selected='true'] {
-  color: var(--primary);
-  background-color: color-mix(in srgb, var(--primary) 10%, transparent);
-}
-
-[ngOption]:not([aria-selected='true']) .example-option-check {
-  display: none;
-}
-
-.example-option-check {
-  font-size: 0.9rem;
-}
-
-.example-option-text {
-  flex: 1;
-}
-```
-
-  **Retro**
-
-      File: `app.ts`
-
-```ts
-import {Listbox, Option} from '@angular/aria/listbox';
-import {Component} from '@angular/core';
-
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.html',
-  styleUrl: './app.css',
-  imports: [Listbox, Option],
-})
-export class App {
-  /** The options available in the listbox. */
-  options = [
-    'Option 1',
-    'Option 2',
-    'Option 3',
-    'Option 4',
-    'Option 5',
-    'Option 6',
-    'Option 7',
-    'Option 8',
-  ];
-}
-```
-      File: `app.html`
-
-```html
-<div class="retro-listbox">
-  <div ngListbox>
-    @for (option of options; track option) {
-      <div ngOption [value]="option">
-        <span class="example-option-text">{{ option }}</span>
-        <span
-          class="example-option-check material-symbols-outlined"
-          translate="no"
-          aria-hidden="true"
-          >check</span
-        >
-      </div>
-    }
-  </div>
-</div>
-```
-      File: `app.css`
-
-```css
-@import url('https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined');
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
-:host {
-  display: flex;
-  justify-content: center;
-  font-size: 0.8rem;
-
-  font-family: 'Press Start 2P';
-  --retro-button-color: color-mix(in srgb, var(--hot-pink) 80%, var(--page-background));
-  --retro-shadow-light: color-mix(in srgb, var(--retro-button-color) 90%, #fff);
-  --retro-shadow-dark: color-mix(in srgb, var(--retro-button-color) 90%, #000);
-  --retro-flat-shadow:
-    4px 0px 0px 0px var(--tertiary-contrast), 0px 4px 0px 0px var(--tertiary-contrast),
-    -4px 0px 0px 0px var(--tertiary-contrast), 0px -4px 0px 0px var(--tertiary-contrast);
-}
-
-.retro-listbox {
-  width: 200px;
-  height: 11rem;
-  padding: 0.5rem;
-  box-shadow: var(--retro-flat-shadow);
-  background-color: var(--septenary-contrast);
-}
-
-[ngListbox] {
-  gap: 2px;
-  height: 100%;
-  display: flex;
-  overflow: auto;
-  flex-direction: column;
-}
-
-[ngOption] {
-  display: flex;
-  cursor: pointer;
-  align-items: center;
-  padding: 0 1rem;
-  font-size: 0.6rem;
-  min-height: 2.25rem;
-}
-
-[ngOption]:hover {
-  background-color: color-mix(in srgb, var(--primary-contrast) 5%, transparent);
-}
-
-[ngOption][data-active='true'] {
-  outline-offset: -2px;
-  outline: 2px dashed var(--hot-pink);
-}
-
-[ngOption][aria-selected='true'] {
-  color: var(--hot-pink);
-  background-color: color-mix(in srgb, var(--hot-pink) 5%, transparent);
-}
-
-[ngOption]:not([aria-selected='true']) .example-option-check {
-  display: none;
-}
-
-.example-option-icon,
-.example-option-check {
-  font-size: 0.9rem;
-}
-
-.example-option-text {
-  flex: 1;
-}
-```
+  <docs-tab label="Retro">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/listbox/src/basic/retro/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/listbox/src/basic/retro/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/listbox/src/basic/retro/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/listbox/src/basic/retro/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+</docs-tab-group>
 
 ## Usage
 
-Listbox is a foundational directive used by the Select, Multiselect, and Autocomplete patterns. For most dropdown needs, use those documented patterns instead.
+Listbox is a foundational directive used by the [Select](guide/aria/select), [Multiselect](guide/aria/multiselect), and [Autocomplete](guide/aria/autocomplete) patterns. For most dropdown needs, use those documented patterns instead.
 
 Consider using listbox directly when:
 
@@ -379,7 +47,7 @@ Consider using listbox directly when:
 
 Avoid listbox when:
 
-- **Navigation menus are needed** - Use the Menu directive for actions and commands
+- **Navigation menus are needed** - Use the [Menu](guide/aria/menu) directive for actions and commands
 
 ## Features
 
@@ -391,3 +59,141 @@ Angular's listbox provides a fully accessible list implementation with:
 - **Horizontal or Vertical** - `orientation` attribute for layout direction
 - **Type-ahead Search** - Type characters to jump to matching options
 - **Signal-Based Reactivity** - Reactive state management using Angular signals
+
+## Examples
+
+### Basic listbox
+
+Applications sometimes need selectable lists visible directly on the page rather than hidden in a dropdown. A standalone listbox provides keyboard navigation and selection for these visible list interfaces.
+
+<docs-code-multifile preview hideCode path="adev/src/content/examples/aria/listbox/src/basic/app/app.ts">
+  <docs-code header="app.ts" path="adev/src/content/examples/aria/listbox/src/basic/app/app.ts" />
+  <docs-code header="app.html" path="adev/src/content/examples/aria/listbox/src/basic/app/app.html" />
+</docs-code-multifile>
+
+The `value` model signal provides two-way binding to the selected items. With `selectionMode="explicit"`, users press Space or Enter to select options. For dropdown patterns that combine listbox with combobox and overlay positioning, see the [Select](guide/aria/select) pattern.
+
+### Horizontal listbox
+
+Lists sometimes work better horizontally, such as toolbar-like interfaces or tab-style selections. The `orientation` attribute changes both the layout and keyboard navigation direction.
+
+<docs-tab-group>
+  <docs-tab label="Basic">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/listbox/src/horizontal/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/listbox/src/horizontal/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/listbox/src/horizontal/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/listbox/src/horizontal/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+
+  <docs-tab label="Material">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/listbox/src/horizontal/material/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/listbox/src/horizontal/material/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/listbox/src/horizontal/material/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/listbox/src/horizontal/material/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+
+  <docs-tab label="Retro">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/listbox/src/horizontal/retro/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/listbox/src/horizontal/retro/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/listbox/src/horizontal/retro/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/listbox/src/horizontal/retro/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+</docs-tab-group>
+
+With `orientation="horizontal"`, left and right arrow keys navigate between options instead of up and down. The listbox automatically handles right-to-left (RTL) languages by reversing navigation direction.
+
+### Selection modes
+
+Listbox supports two selection modes that control when items become selected.
+
+The `'follow'` mode automatically selects the focused item, providing faster interaction when selection changes frequently. The `'explicit'` mode requires Space or Enter to confirm selection, preventing accidental changes while navigating. Dropdown patterns typically use `'follow'` mode for single selection.
+
+#### Explicit
+
+<docs-code-multifile preview hideCode path="adev/src/content/examples/aria/listbox/src/modes/app/explicit/app.ts">
+  <docs-code header="app.ts" path="adev/src/content/examples/aria/listbox/src/modes/app/explicit/app.ts" />
+  <docs-code header="app.html" path="adev/src/content/examples/aria/listbox/src/modes/app/explicit/app.html" />
+</docs-code-multifile>
+
+#### Follow
+
+<docs-code-multifile preview hideCode path="adev/src/content/examples/aria/listbox/src/modes/app/follow/app.ts">
+  <docs-code header="app.ts" path="adev/src/content/examples/aria/listbox/src/modes/app/follow/app.ts" />
+  <docs-code header="app.html" path="adev/src/content/examples/aria/listbox/src/modes/app/follow/app.html" />
+</docs-code-multifile>
+
+| Mode         | Description                                                                                            |
+| ------------ | ------------------------------------------------------------------------------------------------------ |
+| `'follow'`   | Automatically selects the focused item, providing faster interaction when selection changes frequently |
+| `'explicit'` | Requires Space or Enter to confirm selection, preventing accidental changes while navigating           |
+
+TIP: Dropdown patterns typically use `'follow'` mode for single selection.
+
+## Testing
+
+Angular Aria provides component harnesses for testing listbox components.
+Here is an example of how to use the harnesses in a component test:
+
+```typescript
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {HarnessLoader} from '@angular/cdk/testing';
+import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
+import {ListboxHarness} from '@angular/aria/listbox/testing';
+import {MyListboxComponent} from './my-listbox'; // Your component
+
+describe('MyListboxComponent', () => {
+  let fixture: ComponentFixture<MyListboxComponent>;
+  let loader: HarnessLoader;
+
+  beforeEach(async () => {
+    TestBed.configureTestingModule({
+      imports: [MyListboxComponent],
+    });
+
+    fixture = TestBed.createComponent(MyListboxComponent);
+    await fixture.whenStable();
+    loader = TestbedHarnessEnvironment.loader(fixture);
+  });
+
+  it('should allow selecting options', async () => {
+    const listbox = await loader.getHarness(ListboxHarness);
+
+    // Verify listbox properties
+    expect(await listbox.isMulti()).toBe(true);
+
+    // Get all options
+    const options = await listbox.getOptions();
+    expect(options.length).toBe(2);
+
+    // Click an option
+    await options[0].click();
+
+    // Verify option is selected
+    expect(await options[0].isSelected()).toBe(true);
+
+    // Filter options by text
+    const bananaOption = await listbox.getOptions({text: 'Banana'});
+    expect(bananaOption.length).toBe(1);
+  });
+});
+```
+
+## API reference
+
+For detailed API documentation, inspect the following API references:
+
+- [`Listbox`](/api/aria/listbox/Listbox)
+- [`Option`](/api/aria/listbox/Option)
+
+### Related patterns
+
+Listbox is used by these documented dropdown patterns:
+
+- [Select](guide/aria/select) - Single-selection dropdown pattern using readonly combobox + listbox
+- [Multiselect](guide/aria/multiselect) - Multiple-selection dropdown pattern using readonly combobox + listbox with `multi`
+- [Autocomplete](guide/aria/autocomplete) - Filterable dropdown pattern using combobox + listbox
+
+For complete dropdown patterns with trigger, popup, and overlay positioning, see those pattern guides instead of using listbox alone.

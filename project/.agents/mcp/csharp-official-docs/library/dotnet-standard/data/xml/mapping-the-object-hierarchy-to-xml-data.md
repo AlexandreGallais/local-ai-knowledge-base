@@ -1,39 +1,40 @@
 ---
+description: "Learn more about: Mapping the Object Hierarchy to XML Data"
 title: "Mapping the Object Hierarchy to XML Data"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/mapping-the-object-hierarchy-to-xml-data.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs: 
+  - "csharp"
+  - "vb"
+ms.assetid: 450e350b-6a68-4634-a2a5-33f4dc33baf0
 ---
-
 # Mapping the Object Hierarchy to XML Data
 
-When an XML document is in memory, the conceptual representation is a tree. For programming, you have an object hierarchy to access the nodes of the tree. The following example shows you how the XML content becomes nodes.
-
- As the XML is read into the XML Document Object Model (DOM), the pieces are translated into nodes, and these nodes retain additional metadata about themselves, such as their node type and values. The node type is its object and is what determines what actions can be performed and what properties can be set or retrieved.
-
- If you have the following simple XML:
-
- **Input**
-
-```xml
+When an XML document is in memory, the conceptual representation is a tree. For programming, you have an object hierarchy to access the nodes of the tree. The following example shows you how the XML content becomes nodes.  
+  
+ As the XML is read into the XML Document Object Model (DOM), the pieces are translated into nodes, and these nodes retain additional metadata about themselves, such as their node type and values. The node type is its object and is what determines what actions can be performed and what properties can be set or retrieved.  
+  
+ If you have the following simple XML:  
+  
+ **Input**  
+  
+```xml  
 <book>  
     <title>The Handmaid's Tale</title>  
 </book>  
 ```  
-
- The input is represented in memory as the following node tree with the assigned node type property:
-
-Book and title node tree representation
-
- The `book` element becomes an **XmlElement** object, the next element, `title`, also becomes an **XmlElement**, while the element content becomes an **XmlText** object. In looking at the **XmlElement** methods and properties, the methods and properties are different than the methods and properties available on an **XmlText** object. So knowing what node type the XML markup becomes is vital, as its node type determines the actions that can be performed.
-
- The following example reads in XML data and writes out different text, depending on the node type. Using the following XML data file as input, **items.xml**:
-
- **Input**
-
-```xml
+  
+ The input is represented in memory as the following node tree with the assigned node type property:  
+  
+ ![example node tree](media/simple-xml.gif "Simple_XML")  
+Book and title node tree representation  
+  
+ The `book` element becomes an **XmlElement** object, the next element, `title`, also becomes an **XmlElement**, while the element content becomes an **XmlText** object. In looking at the **XmlElement** methods and properties, the methods and properties are different than the methods and properties available on an **XmlText** object. So knowing what node type the XML markup becomes is vital, as its node type determines the actions that can be performed.  
+  
+ The following example reads in XML data and writes out different text, depending on the node type. Using the following XML data file as input, **items.xml**:  
+  
+ **Input**  
+  
+```xml  
 <?xml version="1.0"?>  
 <!-- This is a sample XML document -->  
 <!DOCTYPE Items [<!ENTITY number "123">]>  
@@ -46,10 +47,10 @@ Book and title node tree representation
   <Item>1234567890ABCD</Item>  
 </Items>  
 ```  
-
- The following code example reads the **items.xml** file and displays information for each node type.
-
-```vb
+  
+ The following code example reads the **items.xml** file and displays information for each node type.  
+  
+```vb  
 Imports System  
 Imports System.IO  
 Imports System.Xml  
@@ -100,8 +101,8 @@ Public Class Sample
     End Sub 'Main ' End class  
 End Class 'Sample  
 ```  
-
-```csharp
+  
+```csharp  
 using System;  
 using System.IO;  
 using System.Xml;  
@@ -167,51 +168,51 @@ public class Sample
     }  
 } // End class  
 ```  
-
- The output from the example reveals the mapping of the data to the node types.
-
- **Output**
-
-```xml
+  
+ The output from the example reveals the mapping of the data to the node types.  
+  
+ **Output**  
+  
+```xml  
 <?xml version='1.0'?><!--This is a sample XML document --><!DOCTYPE Items [<!ENTITY number "123">]<Items><Item>Test with an entity: 123</Item><Item>test with a child element <more> stuff</Item><Item>test with a CDATA section <![CDATA[<456>]]> def</Item><Item>Test with a char entity: A</Item><--Fourteen chars in this element.--><Item>1234567890ABCD</Item></Items>
 ```  
-
- Taking the input one line at a time and using the output generated from the code, you can use the following table to analyze what node test generated which lines of output, thereby understanding what XML data became what kind of node type.
-
-|Input|Output|Node Type Test|
-|-----------|------------|--------------------|
-|\<?xml version="1.0"?>|\<?xml version='1.0'?>|XmlNodeType.XmlDeclaration|
-|\|\|XmlNodeType.Comment|
-|\<!DOCTYPE Items [\<!ENTITY number "123">]>|\<!DOCTYPE Items [\<!ENTITY number "123">]|XmlNodeType.DocumentType|
-|\<Items>|\<Items>|XmlNodeType.Element|
-|\<Item>|\<Item>|XmlNodeType.Element|
-|Test with an entity: &number;|Test with an entity: 123|XmlNodeType.Text|
-|\</Item>|\</Item>|XmlNodeType.EndElement|
-|\<Item>|\<Item>|XmNodeType.Element|
-|test with a child element|test with a child element|XmlNodeType.Text|
-|\<more>|\<more>|XmlNodeType.Element|
-|stuff|stuff|XmlNodeType.Text|
-|\</Item>|\</Item>|XmlNodeType.EndElement|
-|\<Item>|\<Item>|XmlNodeType.Element|
-|test with a CDATA section|test with a CDATA section|XmlTest.Text|
-|<![CDATA[\<456>]]\>|<![CDATA[\<456>]]\>|XmlTest.CDATA|
-|def|def|XmlNodeType.Text|
-|\</Item>|\</Item>|XmlNodeType.EndElement|
-|\<Item>|\<Item>|XmlNodeType.Element|
-|Test with a char entity: &\#65;|Test with a char entity: A|XmlNodeType.Text|
-|\</Item>|\</Item>|XmlNodeType.EndElement|
-|\|\<--Fourteen chars in this element.-->|XmlNodeType.Comment|
-|\<Item>|\<Item>|XmlNodeType.Element|
-|1234567890ABCD|1234567890ABCD|XmlNodeType.Text|
-|\</Item>|\</Item>|XmlNodeType.EndElement|
-|\</Items>|\</Items>|XmlNodeType.EndElement|
-
- You must know what node type is assigned, as the node type controls what kinds of actions are valid and what kind of properties you can set and retrieve.
-
- Node creation for white space is controlled when the data is loaded into the DOM by the **PreserveWhitespace** flag. For more information, see White Space and Significant White Space Handling when Loading the DOM.
-
- To add new nodes to the DOM, see Inserting Nodes into an XML Document. To remove nodes from the DOM, see Removing Nodes, Content, and Values from an XML Document. To modify the content of nodes in the DOM, see Modifying Nodes, Content, and Values in an XML Document.
-
+  
+ Taking the input one line at a time and using the output generated from the code, you can use the following table to analyze what node test generated which lines of output, thereby understanding what XML data became what kind of node type.  
+  
+|Input|Output|Node Type Test|  
+|-----------|------------|--------------------|  
+|\<?xml version="1.0"?>|\<?xml version='1.0'?>|XmlNodeType.XmlDeclaration|  
+|\<!-- This is a sample XML document -->|\<!--This is a sample XML document -->|XmlNodeType.Comment|  
+|\<!DOCTYPE Items [\<!ENTITY number "123">]>|\<!DOCTYPE Items [\<!ENTITY number "123">]|XmlNodeType.DocumentType|  
+|\<Items>|\<Items>|XmlNodeType.Element|  
+|\<Item>|\<Item>|XmlNodeType.Element|  
+|Test with an entity: &number;|Test with an entity: 123|XmlNodeType.Text|  
+|\</Item>|\</Item>|XmlNodeType.EndElement|  
+|\<Item>|\<Item>|XmNodeType.Element|  
+|test with a child element|test with a child element|XmlNodeType.Text|  
+|\<more>|\<more>|XmlNodeType.Element|  
+|stuff|stuff|XmlNodeType.Text|  
+|\</Item>|\</Item>|XmlNodeType.EndElement|  
+|\<Item>|\<Item>|XmlNodeType.Element|  
+|test with a CDATA section|test with a CDATA section|XmlTest.Text|  
+|<![CDATA[\<456>]]\>|<![CDATA[\<456>]]\>|XmlTest.CDATA|  
+|def|def|XmlNodeType.Text|  
+|\</Item>|\</Item>|XmlNodeType.EndElement|  
+|\<Item>|\<Item>|XmlNodeType.Element|  
+|Test with a char entity: &\#65;|Test with a char entity: A|XmlNodeType.Text|  
+|\</Item>|\</Item>|XmlNodeType.EndElement|  
+|\<!-- Fourteen chars in this element.-->|\<--Fourteen chars in this element.-->|XmlNodeType.Comment|  
+|\<Item>|\<Item>|XmlNodeType.Element|  
+|1234567890ABCD|1234567890ABCD|XmlNodeType.Text|  
+|\</Item>|\</Item>|XmlNodeType.EndElement|  
+|\</Items>|\</Items>|XmlNodeType.EndElement|  
+  
+ You must know what node type is assigned, as the node type controls what kinds of actions are valid and what kind of properties you can set and retrieve.  
+  
+ Node creation for white space is controlled when the data is loaded into the DOM by the **PreserveWhitespace** flag. For more information, see [White Space and Significant White Space Handling when Loading the DOM](white-space-and-significant-white-space-handling-when-loading-the-dom.md).  
+  
+ To add new nodes to the DOM, see [Inserting Nodes into an XML Document](inserting-nodes-into-an-xml-document.md). To remove nodes from the DOM, see [Removing Nodes, Content, and Values from an XML Document](removing-nodes-content-and-values-from-an-xml-document.md). To modify the content of nodes in the DOM, see [Modifying Nodes, Content, and Values in an XML Document](modifying-nodes-content-and-values-in-an-xml-document.md).  
+  
 ## See also
 
-- XML Document Object Model (DOM)
+- [XML Document Object Model (DOM)](xml-document-object-model-dom.md)

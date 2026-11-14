@@ -1,19 +1,13 @@
----
-title: "prefer-continue"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-continue.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-continue
 
 📝 Prefer early continues over conditionals wrapping the remainder of the loop body.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Avoid wrapping the rest of a loop body in a conditional. A `continue` guard often makes the main path clearer by skipping uninteresting iterations first.
 
@@ -192,8 +186,8 @@ Autofix preserves an existing `else` block's scope. Direct declarations that wou
 
 ## Related Rules
 
-`unicorn/prefer-early-return` applies the same guard-clause idea to functions.
+[`unicorn/prefer-early-return`](./prefer-early-return.md) applies the same guard-clause idea to functions.
 
-`unicorn/no-useless-continue` removes `continue` statements that do not change control flow. This rule creates a `continue` guard that skips the rest of the loop body, so the two rules are complementary.
+[`unicorn/no-useless-continue`](./no-useless-continue.md) removes `continue` statements that do not change control flow. This rule creates a `continue` guard that skips the rest of the loop body, so the two rules are complementary.
 
-ESLint's `no-continue` enforces the opposite style. Do not enable both rules together.
+ESLint's [`no-continue`](https://eslint.org/docs/latest/rules/no-continue) enforces the opposite style. Do not enable both rules together.

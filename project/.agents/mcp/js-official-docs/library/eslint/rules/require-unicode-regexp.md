@@ -1,13 +1,11 @@
 ---
-title: "require-unicode-regexp"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/require-unicode-regexp.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: require-unicode-regexp
+rule_type: suggestion
+further_reading:
+- https://github.com/tc39/proposal-regexp-v-flag
+- https://v8.dev/features/regexp-v-flag
 ---
 
-# require-unicode-regexp
 
 RegExp `u` flag has two effects:
 
@@ -20,11 +18,11 @@ RegExp `u` flag has two effects:
     /^[👍]$/u.test("👍") //→ true
     ```
 
-2. **Make the regular expression throwing syntax errors early as disabling Annex B extensions.**
+2. **Make the regular expression throwing syntax errors early as disabling [Annex B extensions](https://www.ecma-international.org/ecma-262/6.0/#sec-regular-expressions-patterns).**
 
     Because of historical reason, JavaScript regular expressions are tolerant of syntax errors. For example, `/\w{1, 2/` is a syntax error, but JavaScript doesn't throw the error. It matches strings such as `"a{1, 2"` instead. Such a recovering logic is defined in Annex B.
 
-    The `u` flag disables the recovering logic Annex B defined. As a result, you can find errors early. This is similar to the strict mode.
+    The `u` flag disables the recovering logic Annex B defined. As a result, you can find errors early. This is similar to [the strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode).
 
 The RegExp `v` flag, introduced in ECMAScript 2024, is a superset of the `u` flag, and offers two more features:
 
@@ -62,7 +60,7 @@ This rule aims to enforce the use of `u` or `v` flag on regular expressions.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint require-unicode-regexp: error */
@@ -73,9 +71,11 @@ const c = new RegExp("ccc")
 const d = new RegExp("ddd", "gi")
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint require-unicode-regexp: error */
@@ -96,6 +96,8 @@ function i(flags) {
 }
 ```
 
+:::
+
 ## Options
 
 This rule has one object option:
@@ -108,7 +110,7 @@ The `u` flag may be preferred in environments that do not support the `v` flag.
 
 Examples of **incorrect** code for this rule with the `{ "requireFlag": "u" }` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint require-unicode-regexp: ["error", { "requireFlag": "u" }] */
@@ -122,9 +124,11 @@ const foo = /foo/v;
 const fooRegexp = new RegExp('foo', 'v');
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "requireFlag": "u" }` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint require-unicode-regexp: ["error", { "requireFlag": "u" }] */
@@ -133,6 +137,8 @@ const foo = /foo/u;
 
 const fooRegexp = new RegExp('foo', 'u');
 ```
+
+:::
 
 ### requireFlag: "v"
 
@@ -143,7 +149,7 @@ characters within character classes).
 
 Examples of **incorrect** code for this rule with the `{ "requireFlag": "v" }` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint require-unicode-regexp: ["error", { "requireFlag": "v" }] */
@@ -157,9 +163,11 @@ const foo = /foo/u;
 const fooRegexp = new RegExp('foo', 'u');
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "requireFlag": "v" }` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint require-unicode-regexp: ["error", { "requireFlag": "v" }] */
@@ -168,6 +176,8 @@ const foo = /foo/v;
 
 const fooRegexp = new RegExp('foo', 'v');
 ```
+
+:::
 
 ## When Not To Use It
 

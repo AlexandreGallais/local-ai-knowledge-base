@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataEmit::TranslateSigWithScope Method"
 title: "IMetaDataEmit::TranslateSigWithScope Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataemit-translatesigwithscope-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataEmit.TranslateSigWithScope"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataEmit::TranslateSigWithScope"
+  - "IMetaDataEmit::TranslateSigWithScope method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataEmit::TranslateSigWithScope Method
 
 Imports an assembly into the current scope and gets a new metadata signature for the merged scope.
@@ -66,7 +73,7 @@ HRESULT TranslateSigWithScope (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -74,8 +81,8 @@ HRESULT TranslateSigWithScope (
 
 ## See also
 
-- IMetaDataAssemblyEmit Interface
-- IMetaDataAssemblyImport Interface
-- IMetaDataEmit Interface
-- IMetaDataEmit2 Interface
-- IMetaDataImport Interface
+- [IMetaDataAssemblyEmit Interface](imetadataassemblyemit-interface.md)
+- [IMetaDataAssemblyImport Interface](imetadataassemblyimport-interface.md)
+- [IMetaDataEmit Interface](imetadataemit-interface.md)
+- [IMetaDataEmit2 Interface](imetadataemit2-interface.md)
+- [IMetaDataImport Interface](imetadataimport-interface.md)

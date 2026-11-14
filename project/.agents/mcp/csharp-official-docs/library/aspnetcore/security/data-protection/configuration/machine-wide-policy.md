@@ -1,19 +1,15 @@
 ---
-title: "Data Protection machine-wide policy support in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/data-protection/configuration/machine-wide-policy.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Data Protection machine-wide policy support in ASP.NET Core
+description: Learn about support for setting a default machine-wide policy for all apps that consume ASP.NET Core Data Protection.
+ms.date: 10/14/2016
 ---
-
 # Data Protection machine-wide policy support in ASP.NET Core
 
-By Rick Anderson
+By [Rick Anderson](https://twitter.com/RickAndMSFT)
 
-When running on Windows, the Data Protection system has limited support for setting a default machine-wide policy for all apps that consume ASP.NET Core Data Protection. The general idea is that an administrator might wish to change a default setting, such as the algorithms used or key <example-value>, without the need to manually update every app on the machine.
+When running on Windows, the Data Protection system has limited support for setting a default machine-wide policy for all apps that consume ASP.NET Core Data Protection. The general idea is that an administrator might wish to change a default setting, such as the algorithms used or key lifetime, without the need to manually update every app on the machine.
 
-> **Warning:**
+> [!WARNING]
 > The system administrator can set default policy, but they can't enforce it. The app developer can always override any value with one of their own choosing. The default policy only affects apps where the developer hasn't specified an explicit value for a setting.
 
 ## Setting default policy
@@ -30,11 +26,11 @@ The supported values are shown below.
 | ------------------ | :----: | ----------- |
 | EncryptionType     | string | Specifies which algorithms should be used for data protection. The value must be CNG-CBC, CNG-GCM, or Managed and is described in more detail below. |
 | DefaultKeyLifetime | DWORD  | Specifies the lifetime for newly-generated keys. The value is specified in days and must be >= 7. |
-| KeyEscrowSinks     | string | Specifies the types that are used for key escrow. The value is a semicolon-delimited list of key <example-value> sinks, where each element in the list is the assembly-qualified name of a type that implements `Microsoft.AspNetCore.DataProtection.KeyManagement.IKeyEscrowSink`. |
+| KeyEscrowSinks     | string | Specifies the types that are used for key escrow. The value is a semicolon-delimited list of key escrow sinks, where each element in the list is the assembly-qualified name of a type that implements <xref:Microsoft.AspNetCore.DataProtection.KeyManagement.IKeyEscrowSink>. |
 
 ## Encryption types
 
-If EncryptionType is CNG-CBC, the system is configured to use a CBC-mode symmetric block cipher for confidentiality and HMAC for authenticity with services provided by Windows CNG (see Specifying custom Windows CNG algorithms for more details). The following additional values are supported, each of which corresponds to a property on the CngCbcAuthenticatedEncryptionSettings type.
+If EncryptionType is CNG-CBC, the system is configured to use a CBC-mode symmetric block cipher for confidentiality and HMAC for authenticity with services provided by Windows CNG (see [Specifying custom Windows CNG algorithms](overview.md#specifying-custom-windows-cng-algorithms) for more details). The following additional values are supported, each of which corresponds to a property on the CngCbcAuthenticatedEncryptionSettings type.
 
 | Value                       | Type   | Description |
 | --------------------------- | :----: | ----------- |
@@ -44,7 +40,7 @@ If EncryptionType is CNG-CBC, the system is configured to use a CBC-mode symmetr
 | HashAlgorithm               | string | The name of a hash algorithm understood by CNG. This algorithm is opened in HMAC mode. |
 | HashAlgorithmProvider       | string | The name of the CNG provider implementation that can produce the algorithm HashAlgorithm. |
 
-If EncryptionType is CNG-GCM, the system is configured to use a Galois/Counter Mode symmetric block cipher for confidentiality and authenticity with services provided by Windows CNG (see Specifying custom Windows CNG algorithms for more details). The following additional values are supported, each of which corresponds to a property on the CngGcmAuthenticatedEncryptionSettings type.
+If EncryptionType is CNG-GCM, the system is configured to use a Galois/Counter Mode symmetric block cipher for confidentiality and authenticity with services provided by Windows CNG (see [Specifying custom Windows CNG algorithms](overview.md#specifying-custom-windows-cng-algorithms) for more details). The following additional values are supported, each of which corresponds to a property on the CngGcmAuthenticatedEncryptionSettings type.
 
 | Value                       | Type   | Description |
 | --------------------------- | :----: | ----------- |
@@ -52,7 +48,7 @@ If EncryptionType is CNG-GCM, the system is configured to use a Galois/Counter M
 | EncryptionAlgorithmProvider | string | The name of the CNG provider implementation that can produce the algorithm EncryptionAlgorithm. |
 | EncryptionAlgorithmKeySize  | DWORD  | The length (in bits) of the key to derive for the symmetric block cipher algorithm. |
 
-If EncryptionType is Managed, the system is configured to use a managed SymmetricAlgorithm for confidentiality and KeyedHashAlgorithm for authenticity (see Specifying custom managed algorithms for more details). The following additional values are supported, each of which corresponds to a property on the ManagedAuthenticatedEncryptionSettings type.
+If EncryptionType is Managed, the system is configured to use a managed SymmetricAlgorithm for confidentiality and KeyedHashAlgorithm for authenticity (see [Specifying custom managed algorithms](overview.md#specifying-custom-managed-algorithms) for more details). The following additional values are supported, each of which corresponds to a property on the ManagedAuthenticatedEncryptionSettings type.
 
 | Value                      | Type   | Description |
 | -------------------------- | :----: | ----------- |
@@ -62,5 +58,5 @@ If EncryptionType is Managed, the system is configured to use a managed Symmetri
 
 If EncryptionType has any other value other than null or empty, the Data Protection system throws an exception at startup.
 
-> **Warning:**
+> [!WARNING]
 > When configuring a default policy setting that involves type names (EncryptionAlgorithmType, ValidationAlgorithmType, KeyEscrowSinks), the types must be available to the app. For ASP.NET Core apps, the packages that contain these types should be installed.

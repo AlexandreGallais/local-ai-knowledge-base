@@ -1,14 +1,3 @@
----
-title: "ch16-03-shared-state"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch16-03-shared-state.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch16-03-shared-state
-
 ## Shared-State Concurrency
 
 Message passing is a fine way to handle concurrency, but it’s not the only way.
@@ -28,6 +17,10 @@ add complexity because these different owners need managing. Rust’s type syste
 and ownership rules greatly assist in getting this management correct. For an
 example, let’s look at mutexes, one of the more common concurrency primitives
 for shared memory.
+
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="using-mutexes-to-allow-access-to-data-from-one-thread-at-a-time"></a>
 
 ### Controlling Access with Mutexes
 
@@ -63,22 +56,13 @@ system and ownership rules, you can’t get locking and unlocking wrong.
 As an example of how to use a mutex, let’s start by using a mutex in a
 single-threaded context, as shown in Listing 16-12.
 
-**Listing 16-12** (src/main.rs)` in a single-threaded context for simplicity">
+<Listing number="16-12" file-name="src/main.rs" caption="Exploring the API of `Mutex<T>` in a single-threaded context for simplicity">
 
 ```rust
-use std::sync::Mutex;
-
-fn main() {
-    let m = Mutex::new(5);
-
-    {
-        let mut num = m.lock().unwrap();
-        *num = 6;
-    }
-
-    println!("m = {m:?}");
-}
+{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-12/src/main.rs}}
 ```
+
+</Listing>
 
 As with many types, we create a `Mutex<T>` using the associated function `new`.
 To access the data inside the mutex, we use the `lock` method to acquire the
@@ -107,6 +91,10 @@ used by other threads because the lock release happens automatically.
 After dropping the lock, we can print the mutex value and see that we were able
 to change the inner `i32` to `6`.
 
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="sharing-a-mutext-between-multiple-threads"></a>
+
 #### Shared Access to `Mutex<T>`
 
 Now let’s try to share a value between multiple threads using `Mutex<T>`. We’ll
@@ -115,32 +103,13 @@ counter goes from 0 to 10. The example in Listing 16-13 will have a compiler
 error, and we’ll use that error to learn more about using `Mutex<T>` and how
 Rust helps us use it correctly.
 
-**Listing 16-13** (src/main.rs)`">
+<Listing number="16-13" file-name="src/main.rs" caption="Ten threads, each incrementing a counter guarded by a `Mutex<T>`">
 
-```rust
-use std::sync::Mutex;
-use std::thread;
-
-fn main() {
-    let counter = Mutex::new(0);
-    let mut handles = vec![];
-
-    for _ in 0..10 {
-        let handle = thread::spawn(move || {
-            let mut num = counter.lock().unwrap();
-
-            *num += 1;
-        });
-        handles.push(handle);
-    }
-
-    for handle in handles {
-        handle.join().unwrap();
-    }
-
-    println!("Result: {}", *counter.lock().unwrap());
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-13/src/main.rs}}
 ```
+
+</Listing>
 
 We create a `counter` variable to hold an `i32` inside a `Mutex<T>`, as we did
 in Listing 16-12. Next, we create 10 threads by iterating over a range of
@@ -158,24 +127,7 @@ program.
 We hinted that this example wouldn’t compile. Now let’s find out why!
 
 ```console
-$ cargo run
-   Compiling shared-state v0.1.0 (file:///projects/shared-state)
-error[E0382]: borrow of moved value: `counter`
-  --> src/main.rs:21:29
-   |
- 5 |     let counter = Mutex::new(0);
-   |         ------- move occurs because `counter` has type `std::sync::Mutex<i32>`, which does not implement the `Copy` trait
-...
- 8 |     for _ in 0..10 {
-   |     -------------- inside of this loop
- 9 |         let handle = thread::spawn(move || {
-   |                                    ------- value moved into closure here, in previous iteration of loop
-...
-21 |     println!("Result: {}", *counter.lock().unwrap());
-   |                             ^^^^^^^ value borrowed here after move
-
-For more information about this error, try `rustc --explain E0382`.
-error: could not compile `shared-state` (bin "shared-state") due to 1 previous error
+{{#include ../listings/ch16-fearless-concurrency/listing-16-13/output.txt}}
 ```
 
 The error message states that the `counter` value was moved in the previous
@@ -190,67 +142,19 @@ In Chapter 15, we gave a value to multiple owners by using the smart pointer
 what happens. We’ll wrap the `Mutex<T>` in `Rc<T>` in Listing 16-14 and clone
 the `Rc<T>` before moving ownership to the thread.
 
-**Listing 16-14** (src/main.rs)` to allow multiple threads to own the `Mutex<T>`">
+<Listing number="16-14" file-name="src/main.rs" caption="Attempting to use `Rc<T>` to allow multiple threads to own the `Mutex<T>`">
 
-```rust
-use std::rc::Rc;
-use std::sync::Mutex;
-use std::thread;
-
-fn main() {
-    let counter = Rc::new(Mutex::new(0));
-    let mut handles = vec![];
-
-    for _ in 0..10 {
-        let counter = Rc::clone(&counter);
-        let handle = thread::spawn(move || {
-            let mut num = counter.lock().unwrap();
-
-            *num += 1;
-        });
-        handles.push(handle);
-    }
-
-    for handle in handles {
-        handle.join().unwrap();
-    }
-
-    println!("Result: {}", *counter.lock().unwrap());
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-14/src/main.rs}}
 ```
+
+</Listing>
 
 Once again, we compile and get... different errors! The compiler is teaching us
 a lot:
 
 ```console
-$ cargo run
-   Compiling shared-state v0.1.0 (file:///projects/shared-state)
-error[E0277]: `Rc<std::sync::Mutex<i32>>` cannot be sent between threads safely
-  --> src/main.rs:11:36
-   |
-11 |           let handle = thread::spawn(move || {
-   |                        ------------- ^------
-   |                        |             |
-   |  ______________________|_____________within this `{closure@src/main.rs:11:36: 11:43}`
-   | |                      |
-   | |                      required by a bound introduced by this call
-12 | |             let mut num = counter.lock().unwrap();
-13 | |
-14 | |             *num += 1;
-15 | |         });
-   | |_________^ `Rc<std::sync::Mutex<i32>>` cannot be sent between threads safely
-   |
-   = help: within `{closure@src/main.rs:11:36: 11:43}`, the trait `Send` is not implemented for `Rc<std::sync::Mutex<i32>>`
-note: required because it's used within this closure
-  --> src/main.rs:11:36
-   |
-11 |         let handle = thread::spawn(move || {
-   |                                    ^^^^^^^
-note: required by a bound in `spawn`
-  --> /rustc/58cf8f9c35b355199727627d07ae34a4e2846d67/library/std/src/thread/functions.rs:125:0
-
-For more information about this error, try `rustc --explain E0277`.
-error: could not compile `shared-state` (bin "shared-state") due to 1 previous error
+{{#include ../listings/ch16-fearless-concurrency/listing-16-14/output.txt}}
 ```
 
 Wow, that error message is very wordy! Here’s the important part to focus on:
@@ -275,7 +179,7 @@ Fortunately, `Arc<T>` _is_ a type like `Rc<T>` that is safe to use in
 concurrent situations. The _a_ stands for _atomic_, meaning it’s an _atomically
 reference-counted_ type. Atomics are an additional kind of concurrency
 primitive that we won’t cover in detail here: See the standard library
-documentation for `std::sync::atomic` for more
+documentation for [`std::sync::atomic`][atomic]<!-- ignore --> for more
 details. At this point, you just need to know that atomics work like primitive
 types but are safe to share across threads.
 
@@ -290,35 +194,19 @@ Let’s return to our example: `Arc<T>` and `Rc<T>` have the same API, so we fix
 our program by changing the `use` line, the call to `new`, and the call to
 `clone`. The code in Listing 16-15 will finally compile and run.
 
-**Listing 16-15** (src/main.rs)` to wrap the `Mutex<T>` to be able to share ownership across multiple threads">
+<Listing number="16-15" file-name="src/main.rs" caption="Using an `Arc<T>` to wrap the `Mutex<T>` to be able to share ownership across multiple threads">
 
 ```rust
-use std::sync::{Arc, Mutex};
-use std::thread;
-
-fn main() {
-    let counter = Arc::new(Mutex::new(0));
-    let mut handles = vec![];
-
-    for _ in 0..10 {
-        let counter = Arc::clone(&counter);
-        let handle = thread::spawn(move || {
-            let mut num = counter.lock().unwrap();
-
-            *num += 1;
-        });
-        handles.push(handle);
-    }
-
-    for handle in handles {
-        handle.join().unwrap();
-    }
-
-    println!("Result: {}", *counter.lock().unwrap());
-}
+{{#rustdoc_include ../listings/ch16-fearless-concurrency/listing-16-15/src/main.rs}}
 ```
 
+</Listing>
+
 This code will print the following:
+
+<!-- Not extracting output because changes to this output aren't significant;
+the changes are likely to be due to the threads running differently rather than
+changes in the compiler -->
 
 ```text
 Result: 10
@@ -332,10 +220,14 @@ parts, split those parts across threads, and then use a `Mutex<T>` to have each
 thread update the final result with its part.
 
 Note that if you are doing simple numerical operations, there are types simpler
-than `Mutex<T>` types provided by the `std::sync::atomic` module of the
-standard library. These types provide safe, concurrent,
+than `Mutex<T>` types provided by the [`std::sync::atomic` module of the
+standard library][atomic]<!-- ignore -->. These types provide safe, concurrent,
 atomic access to primitive types. We chose to use `Mutex<T>` with a primitive
 type for this example so that we could concentrate on how `Mutex<T>` works.
+
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="similarities-between-refcelltrct-and-mutextarct"></a>
 
 ### Comparing `RefCell<T>`/`Rc<T>` and `Mutex<T>`/`Arc<T>`
 
@@ -359,3 +251,5 @@ useful information.
 
 We’ll round out this chapter by talking about the `Send` and `Sync` traits and
 how we can use them with custom types.
+
+[atomic]: ../std/sync/atomic/index.html

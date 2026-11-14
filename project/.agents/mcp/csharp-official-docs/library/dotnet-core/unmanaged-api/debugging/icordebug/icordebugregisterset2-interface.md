@@ -1,32 +1,40 @@
 ---
+description: "Learn more about: ICorDebugRegisterSet2 Interface"
 title: "ICorDebugRegisterSet2 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugregisterset2-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugRegisterSet2"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugRegisterSet2"
+helpviewer_keywords:
+  - "ICorDebugRegisterSet2 interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugRegisterSet2 Interface
 
-Extends the capabilities of the ICorDebugRegisterSet interface for hardware platforms that have more than 64 registers.
+Extends the capabilities of the [ICorDebugRegisterSet](icordebugregisterset-interface.md) interface for hardware platforms that have more than 64 registers.
 
 ## Methods
 
 |Method|Description|
 |------------|-----------------|
-|GetRegisters Method|Gets the value of each register (on the computer that is currently executing code) that is specified by the bit mask.|
-|GetRegistersAvailable Method|Gets an array of bytes that provides a bitmap of the available registers.|
-|SetRegisters Method|Not implemented.|
+|[GetRegisters Method](icordebugregisterset2-getregisters-method.md)|Gets the value of each register (on the computer that is currently executing code) that is specified by the bit mask.|
+|[GetRegistersAvailable Method](icordebugregisterset2-getregistersavailable-method.md)|Gets an array of bytes that provides a bitmap of the available registers.|
+|[SetRegisters Method](icordebugregisterset2-setregisters-method.md)|Not implemented.|
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -36,4 +44,4 @@ Extends the capabilities of the ICorDebugRegisterSet interface for hardware plat
 
 ## See also
 
-- ICorDebugRegisterSet Interface
+- [ICorDebugRegisterSet Interface](icordebugregisterset-interface.md)

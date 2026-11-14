@@ -1,22 +1,13 @@
----
-title: "appendix-01-keywords"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/appendix-01-keywords.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# appendix-01-keywords
-
 ## Appendix A: Keywords
 
 The following lists contain keywords that are reserved for current or future
 use by the Rust language. As such, they cannot be used as identifiers (except
-as raw identifiers, as we discuss in the “Raw
-Identifiers” section). _Identifiers_ are names
+as raw identifiers, as we discuss in the [“Raw
+Identifiers”][raw-identifiers]<!-- ignore --> section). _Identifiers_ are names
 of functions, variables, parameters, struct fields, modules, crates, constants,
 macros, static values, attributes, types, traits, or lifetimes.
+
+[raw-identifiers]: #raw-identifiers
 
 ### Keywords Currently in Use
 
@@ -61,12 +52,14 @@ described.
 - **`trait`**: Define a trait.
 - **`true`**: Boolean true literal.
 - **`type`**: Define a type alias or associated type.
-- **`union`**: Define a union; is a keyword only when
+- **`union`**: Define a [union][union]<!-- ignore -->; is a keyword only when
   used in a union declaration.
 - **`unsafe`**: Denote unsafe code, functions, traits, or implementations.
 - **`use`**: Bring symbols into scope.
 - **`where`**: Denote clauses that constrain a type.
 - **`while`**: Loop conditionally based on the result of an expression.
+
+[union]: ../reference/items/unions.html
 
 ### Keywords Reserved for Future Use
 
@@ -96,9 +89,9 @@ normally be allowed. You use a raw identifier by prefixing a keyword with `r#`.
 For example, `match` is a keyword. If you try to compile the following function
 that uses `match` as its name:
 
-Filename: src/main.rs
+<span class="filename">Filename: src/main.rs</span>
 
-```rust
+```rust,ignore,does_not_compile
 fn match(needle: &str, haystack: &str) -> bool {
     haystack.contains(needle)
 }
@@ -118,7 +111,7 @@ The error shows that you can’t use the keyword `match` as the function
 identifier. To use `match` as a function name, you need to use the raw
 identifier syntax, like this:
 
-Filename: src/main.rs
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 fn r#match(needle: &str, haystack: &str) -> bool {
@@ -142,4 +135,6 @@ For example, `try` isn’t a keyword in the 2015 edition but is in the 2018, 202
 and 2024 editions. If you depend on a library that is written using the 2015
 edition and has a `try` function, you’ll need to use the raw identifier syntax,
 `r#try` in this case, to call that function from your code on later editions.
-See Appendix E for more information on editions.
+See [Appendix E][appendix-e]<!-- ignore --> for more information on editions.
+
+[appendix-e]: appendix-05-editions.html

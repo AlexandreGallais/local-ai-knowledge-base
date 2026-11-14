@@ -1,12 +1,9 @@
 ---
 title: "Sample XML file: Test configuration in a namespace - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/sample-xml-file-test-configuration-namespace.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: This XML file—which is used in examples—has test configuration data in a namespace.
+ms.date: 07/20/2015
+ms.assetid: e75ad1bc-5636-4623-9a34-a286a8c485d6
 ---
-
 # Sample XML file: Test configuration in a namespace (LINQ to XML)
 
 The following XML file is used in various examples in the LINQ to XML documentation. This is a test configuration file. The XML is in a namespace.

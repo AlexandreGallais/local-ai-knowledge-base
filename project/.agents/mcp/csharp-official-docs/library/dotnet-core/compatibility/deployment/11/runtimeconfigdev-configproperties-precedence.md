@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: configProperties in .runtimeconfig.dev.json override .runtimeconfig.json"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/deployment/11/runtimeconfigdev-configproperties-precedence.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where configProperties in .runtimeconfig.dev.json override matching configProperties in .runtimeconfig.json."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # configProperties in .runtimeconfig.dev.json override .runtimeconfig.json
@@ -53,13 +51,13 @@ Using the same example, the runtime now uses `System.GC.Concurrent: false`.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
 This change enables developers to override production settings during development without modifying production configuration files.
 
-For more information, see dotnet/runtime#126606.
+For more information, see [dotnet/runtime#126606](https://github.com/dotnet/runtime/issues/126606).
 
 ## Recommended action
 
@@ -73,4 +71,4 @@ None.
 
 ## See also
 
-- .NET runtime configuration settings
+- [.NET runtime configuration settings](../../../runtime-config/index.md)

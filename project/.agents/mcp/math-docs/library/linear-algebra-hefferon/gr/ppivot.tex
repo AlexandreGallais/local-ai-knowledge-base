@@ -1,0 +1,458 @@
+% Chapter 1, Topic from _Linear Algebra_ Jim Hefferon
+%  http://joshua.smcvt.edu/linearalgebra
+%  2001-Jun-09
+\topic{Accuracy of Computations}
+\index{accuracy! of Gauss's Method|(}
+\index{Gauss's Method! accuracy|(}
+Gauss's Method lends itself to computerization.
+This C~language\index{C language} 
+code illustrates.
+It operates on an $\nbyn{n}$ matrix named~\lstinline[style=inline]!a!.
+\begin{lstlisting}
+for(row=1; row<=n-1; row++){
+  for(row_below=row+1; row_below<=n; row_below++){
+    multiplier = a[row_below,row]/a[row,row];
+    for(col=row; col<=n; col++){
+      a[row_below,col] -= multiplier*a[row,col];
+    }
+  }
+}
+\end{lstlisting}
+The 
+\lstinline[style=inline]!for(row=1; row<=n-1; row++){ .. }!
+construct in the top line
+initializes \lstinline[style=inline]!row! to~$1$ and then iterates while
+\lstinline[style=inline]!row! is less than or equal to $n-1$, each time through
+incrementing \lstinline[style=inline]!row! by one with the 
+\lstinline[style=inline]!++! operation.
+The other non-obvious language 
+construct is the \lstinline[style=inline]!-=! in the innermost
+loop, which produces the same result as
+\lstinline[style=inline]!a[row_below,col] = -1*multiplier*a[row,col] + a[row_below,col]!.
+
+That code is a good first take but
+it is naive.
+For one thing, it assumes that 
+the entry in
+\lstinline[style=inline]!row,row! is nonzero.
+So the code needs to be extended to cover
+the case where finding a zero there leads to a row swap or to the
+conclusion that the matrix is singular.
+
+We could add \lstinline[style=inline]!if! statements to cover those cases 
+but we will instead consider another way in which this code is naive.
+It is prone to pitfalls arising from the computer's reliance on 
+floating point arithmetic.
+
+A full discussion of floating point would be a detour.
+But in short, computer numbers are in a form of scientific notation,
+$m\times 10^n$\!. 
+Typically $m$ has at most sixteen digits and~$n$ is bounded
+between about plus and minus one thousand.
+That's quite a range but nonetheless trouble can arise.
+
+Consider this system.
+The numbers in the second line have seventeen digits.
+\newlength{\jhwidenumberlen}
+\settowidth{\jhwidenumberlen}{$3.000\,000\,000\,000\,000\,1$}
+\begin{equation*}
+   \begin{linsys}{2}
+                   x &+ &2y &= &\makebox[\jhwidenumberlen][l]{$3$}  \\
+     1.000\,000\,000\,000\,000\,1x &+ &2y &= &3.000\,000\,000\,000\,000\,1
+   \end{linsys}
+\end{equation*}
+By eye we spot the solution $x=1$, $y=1$.
+A computer
+using floating point will represent the second
+equation as 
+$1.000\,000\,000\,000\,000x+2y=3.000\,000\,000\,000\,000$, losing the
+digits in the last place.
+It will report that the system is 
+singular.
+
+That example is unwieldy.
+Below we illustrate with examples using only a few digits;~tweaking to apply to 
+more digits is easy.
+
+For some intuition into the prior example,
+consider the next system.
+\begin{equation*}
+   \begin{linsys}{2}
+         x &+ &2y &= &3\hfill\hbox{}  \\
+     1.01x &+ &2y &= &3.01
+   \end{linsys}
+   \tag{$*$}
+\end{equation*}
+We have seen that we must handle a singular system as
+a separate case.
+But this system is nearly singular in that
+the two lines are nearly the same, and also requires special care.
+Below on the left, the equation $x+2y=3$ 
+is graphed as a dashed line, while the other equation is solid.
+Looking very close, we can only barely tell the two apart.
+\begin{center}
+  % \includegraphics{gr/mp/ch1.33}
+  \includegraphics{gr/asy/gr000.pdf}
+  \hspace*{3em}
+  \includegraphics{gr/asy/gr001.pdf}
+\end{center}
+The tiny angle between the lines
+means that a small change in an
+equation causes a large change in the solution.
+For instance, switching $3.01$ to $3.03$ 
+moves the intersection from $(1,1)$ to $(3,0)$.
+The solution
+changes radically depending on the final digit, which explains why
+a computer with a limited number of decimal places has trouble.
+% sage: eqns = [x+2*y==3, 5.01*x+2*y==3.01]
+% sage: solve(eqns, x, y)
+% [[x == (1/401), y == (601/401)]]
+% sage: eqns = [x+2*y==3, 5*x+2*y==3]
+% sage: solve(eqns, x, y)
+% [[x == 0, y == (3/2)]]
+(This sensitivity disappears if the angle is not small.
+If ($*$)'s second equation were $5.01x + 2y = 3.01$ then dropping the 
+$.01$'s would change the solution hardly at all, 
+from $(1/401,601/401)$ to $(0,3/2)$.)
+A problem that is very sensitive to changes in
+the input values is \definend{ill-conditioned}.\index{ill-conditioned problem}
+
+That example shows one way in which a system can give
+a computer trouble.
+Its advantage is that the picture of nearly-equal lines is memorable.
+Its disadvantage is that in solving
+large systems we usually do not understand much about the geometry.
+
+There are other ways that the computer's results may be
+unreliable.
+Consider this system (from \cite{Hamming}).
+The graph shows that it is far from singular.
+\begin{equation*}
+  \begin{linsys}{2}
+     0.001x  &+  &y  &=  &1  \\
+          x  &-  &y  &=  &0
+  \end{linsys}
+  \hspace*{3em}
+  \begin{tabular}{c}\includegraphics{gr/asy/gr002.pdf}\end{tabular}
+\tag*{($**$)}\end{equation*}
+The second equation
+gives $x=y$, so $x=y=1/1.001$ and 
+thus we know that the correct answer is that
+both variables have values that are just less than $1$.
+
+A computer using three digits represents the system internally in this way.
+\begin{equation*}
+  \begin{linsys}{2}
+    (1.00\times 10^{-3})\cdot x  &+  &(1.00\times 10^{0})\cdot y  &=  &1.00\times 10^{0}  \\
+    (1.00\times 10^{0})\cdot x   &-  &(1.00\times 10^{0})\cdot y  &=  &0.00\times 10^{0}
+  \end{linsys}
+\end{equation*}
+The Gauss's Method step $-1000\rho_1+\rho_2$ produces 
+a second equation $-1001y=-1000$, which rounds to 
+$(-1.00\times 10^{3})y=-1.00\times 10^{3}$\!.
+The computer decides that $y=1$ 
+and with that it concludes from the first equation that $x=0$.
+The~$y$ value is close but the~$x$ is bad\Dash
+the ratio of the actual answer to the computer's answer is 
+infinite.\index{accuracy!rounding error}
+In short, another cause of 
+unreliable output is using leading entries that are small. 
+
+We can obviously tweak the above to give the
+same trouble in higher digits so we need a strategy.
+A basic improvement on the earlier naive code 
+is to not determine the factor to use for row combinations
+by simply taking the entry in the \lstinline[style=inline]!row,row! position,
+but rather to also look at the entries in that 
+column and below that entry,
+and take one that is not too small.
+This is \definend{partial pivoting}.%
+\index{partial pivoting}\index{pivoting!full} 
+
+For example, to solve the troublesome system~($**$) above
+we can start by looking in the first column 
+of both equations.
+We select the~$1$ in
+the second equation as more likely to give good results.
+The reduction step $-0.001\rho_2+\rho_1$ gives the first equation 
+$1.001y=1$, which the computer represents as 
+$(1.00\times 10^{0})y=1.00\times 10^{0}$\!. 
+It concludes that $y=1$ and after back-substitution that $x=1$, 
+both of which are close to right.  
+We can adapt the code from above to do this.
+\begin{lstlisting}
+for(row=1; row<=n-1; row++){
+/* find the largest entry in this column (in row max) */
+  max=row;
+  for(row_below=row+1; row_below<=n; row_below++){
+    if (abs(a[row_below,row]) > abs(a[max,row]));
+      max = row_below;
+  }
+/* swap rows to move that best entry up */
+  for(col=row; col<=n; col++){
+    temp=a[row,col];
+    a[row,col]=a[max,col];
+    a[max,col]=temp;
+  }
+/* proceed as before */
+  for(row_below=row+1; row_below<=n; row_below++){
+    multiplier=a[row_below,row]/a[row,row];
+     for(col=row; col<=n; col++){
+       a[row_below,col]-=multiplier*a[row,col];
+    }
+  }
+}
+\end{lstlisting}
+
+A full analysis of the best way to implement Gauss's Method 
+is beyond our scope; see \cite{Wilkinson65}.
+But the method recommended by most experts 
+first finds the best entry
+among the candidates and then scales it to a number that is less
+likely to give trouble.
+This is 
+\definend{scaled partial pivoting}.\index{scaled partial pivoting}\index{pivoting!partial!scaled}
+
+In addition to returning a result that is likely to be reliable,
+most well-done code will return a 
+\definend{condition number}.%
+\index{condition number}\index{matrix!condition number} 
+Roughly, it measures how sensitive the answer is to changes in the input data 
+and to rounding errors made while computing the solution.
+(The formal definition is that it is the asymptotic worst-case relative change 
+   in output compared with a change in input.
+% Roughly, it describes the factor by which uncertainties in the input numbers
+% could be magnified to become inaccuracies in the results returned;~see 
+% \cite{Rice}.
+There are different condition numbers for
+different problems.)
+
+The lesson is that
+just because Gauss's Method always works in theory, and just
+because computer code correctly implements that method,
+doesn't mean that the answer is reliable.
+In practice, always use a package
+where experts have worked hard to counter what can go wrong.
+
+\begin{exercises}
+  \item 
+    Using two decimal place numbers, add $253$ and $2/3$.
+    \begin{answer}
+      Scientific notation is convenient for expressing 
+      the two-place restriction:
+      $.25\times 10^{2}+.67\times 10^{0}=.25\times 10^{2}$\!.
+      Adding the $2/3$ has no effect.
+    \end{answer}
+  % \item % Put an example in the body
+  %   This intersect-the-lines problem contrasts with the example
+  %   discussed above.
+  %   \begin{center}
+  %     \vcenteredhbox{\includegraphics{gr/mp/ch1.34}}
+  %     \qquad
+  %     $\displaystyle \begin{linsys}{2}
+  %           x &+ &2y &= &3  \\
+  %           3x &- &2y &= &1
+  %     \end{linsys}$
+  %   \end{center}
+  %   Illustrate that in this system 
+  %   some small change in the numbers will produce only a
+  %   small change in the solution by changing the constant in the
+  %   bottom equation to $1.008$ and solving.
+  %   Compare it to the solution of the unchanged system.
+  %   \begin{answer}
+  %     The reduction
+  %     \begin{equation*}
+  %       \grstep{-3\rho_1+\rho_2}
+  %       \begin{linsys}{2}
+  %         x  &+  &2y   &=  &3  \\
+  %            &   &-8y  &=  &-7.992
+  %       \end{linsys}
+  %     \end{equation*}
+  %     gives \( (x,y)=(1.002,0.999) \).
+  %     So for this system a small change in the constant produces only a small
+  %     change in the solution.
+  %   \end{answer}
+\item 
+    Solve this system (from \cite{Rice}) by rounding at each step to four digits.
+    \begin{equation*}
+      \begin{linsys}{2}
+        0.000\,3x  &+  &1.556y  &=  &1.559 \\
+        0.345\,4x  &-  &2.346y  &=  &1.108
+      \end{linsys}
+    \end{equation*}
+    \begin{answer}
+          Reduction uses the 
+          step $-(0.3454/0.0003)\rho_1+\rho_2$.
+          % \begin{equation*}
+          %   \grstep{-(.3454/.0003)\rho_1+\rho_2}
+          %   \begin{amat}{2}
+          %     .0003  &1.556  &1.559  \\
+          %     0      &-1794   &-1805
+          %   \end{amat}
+          % \end{equation*}
+          First, $-0.3454/0.0003=-1151.33333333333$ and rounding to 
+          four digits gives $-1151=-1.115\times 10^3$\!.
+          % sage: factor = 0.3454/0.0003
+          % sage: n(factor)
+          % 1151.33333333333
+          We take that the leading entry in the second row is now zero
+          (that's the point of the row reduction step).
+          For the second entry, $1.556\cdot(-1151)=-1790.956$, which rounds
+          to four digits as $-1791=-1.791\times 10^3$\!.
+          Adding $-1791-2.346$ rounds to $-1793=-1.793\times 10^3$\!.
+          As to the third entry, $1.559\cdot(-1151)$ rounds to $-1794$,
+          and adding rounds to $-1793=-1.793\times 10^3$\!.
+          % sage: 1.556*(-1151)
+          % -1790.95600000000
+          % sage: -1791-2.346
+          % -1793.34600000000
+          % sage: 1.559*(-1151)
+          % -1794.40900000000
+          % sage: -1794+1.108
+          % -1792.89200000000
+          \begin{equation*}
+            \begin{amat}{2}
+              0.0003  &1.556  &1.559  \\
+              0       &-1793  &-1793
+            \end{amat}
+          \end{equation*}
+          The conclusion is that $y$ is $-1793/-1793$, which rounds to 
+          $1.000=1.000\times 10^0$\!.
+          Substituting gives $1.556\cdot 1.000$, which rounds to 
+          $1.556$, and then $1.559-1.556$ rounds to $0.003$.
+          Solving $0.0003x=0.003$ gives $0.003/0.0003$, which is 
+          $y=10=1.000\times 10^1$\!.
+          Checking that by substitution into the original equations shows
+          that it is correct.
+    \end{answer}
+    \item 
+    Assume that the machine uses four digit numbers.
+    \begin{exparts}
+      \partsitem Show that it will compute 
+         $(x+y)+z$ as unequal to $x+(y+z)$ 
+         when $x=-1.000\times 10^5$, 
+         and $y=1.000\times 10^5$,
+         and~$z=1.000\times 10^0$.
+      \partsitem Compare the computer's versions of $(1/3)x+y=0$
+        and $(2/3)x+2y=0$.
+        Is twice the first equation the same as the second?
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem For the first, $x+y$ is zero and so $(x+y)+z$ is~$1$. 
+          For the other, 
+          $(y+z)$ is $10\,000+1$ rounded to four digits, $1.000\times 10^5$\!.
+          Then $x+(y+z)$ is zero.
+        \partsitem The first equation is 
+          $0.333\,3\cdot x+1.000\,0\cdot y=0.000\,0$
+          while the second is 
+          $0.666\,7\cdot x+2.000\,0\cdot y=0.000\,0$.
+          Twice the first is 
+          $0.666\,6\cdot x+2.000\,0\cdot y=0.000\,0$,
+          so they aren't equal.
+      \end{exparts}
+    \end{answer}
+  \item 
+    Ill-conditioning is not only dependent on the matrix of
+    coefficients.
+    This example \cite{Hamming} shows that it can arise from an
+    interaction between the left and right sides of the system.
+    Let $\varepsilon$ be a small real.
+    \begin{equation*}
+      \begin{linsys}{3}
+        3x  &+  &2y           &+  &z            &=  &6\hfill   \\
+        2x  &+  &2\varepsilon y  &+  &2\varepsilon z  
+                                          &=  &2+4\varepsilon\hfill \\
+         x  &+  &2\varepsilon y  &-  &\varepsilon z   
+                                          &=  &1+\varepsilon\hfill
+      \end{linsys}
+    \end{equation*}
+    \begin{exparts}
+      \partsitem Solve the system by hand.
+        Notice that the $\varepsilon$'s divide out only because there is
+        an exact cancellation of the integer parts on the right side
+        as well as on the left. 
+      \partsitem Solve the system by hand, rounding to two decimal
+        places, and with $\varepsilon=0.001$.
+%      \partsitem If you have access to a computer package for solving
+%        linear systems, see if you can find an $\varepsilon$ small enough
+%        to get your package to give incorrect results.
+    \end{exparts}
+    \begin{answer}
+      \begin{exparts}
+        \partsitem Here is the calculation.
+          \begin{align*}
+            &\grstep[-(1/3)\rho_1+\rho_3]{-(2/3)\rho_1+\rho_2}
+            \begin{amat}{3}
+              3  &2                   &1                   &6               \\
+              0  &-(4/3)+2\varepsilon &-(2/3)+2\varepsilon &-2+4\varepsilon \\
+              0  &-(2/3)+2\varepsilon &-(1/3)-\varepsilon  &-1+\varepsilon 
+            \end{amat}                                                    \\
+            &\grstep{-(1/2)\rho_2+\rho_3}
+            \begin{amat}{3}
+              3  &2                   &1                   &6               \\
+              0  &-(4/3)+2\varepsilon &-(2/3)+2\varepsilon &-2+4\varepsilon \\
+              0  &\varepsilon         &-2\varepsilon       &-\varepsilon 
+            \end{amat}
+          \end{align*}
+          The third equation is $\varepsilon y-2\varepsilon z=-\varepsilon$.
+          Cancel the $\varepsilon$'s and solve to get $y=-1+2z$.
+          Substitute into the second equation.
+          \begin{align*}
+            ((-4/3)+2\varepsilon)(-1+2z)+((-2/3)+2\varepsilon)z
+            &=-2+4\varepsilon     \\
+            (4/3)-2\varepsilon-(10/3)z+6\varepsilon z
+            &=-2+4\varepsilon     \\
+            ((-10/3)+6\varepsilon)z
+            &= (-10/3)+6\varepsilon
+          \end{align*} 
+          Thus $z=1$ and so $y=1$.
+          Then the first equation says that $x=1$. 
+        \partsitem 
+          As above, scientific notation is convenient to express the
+          restriction on the number of digits.
+          With two digits 
+          \begin{multline*}
+            \begin{amat}{3}
+              3.0\times 10^{0}  &2.0\times 10^{0}  &1.0\times 10^{0} 
+                 &6.0\times 10^{0}        \\
+              1.0\times 10^{0}  &2.0\times 10^{-4} &2.0\times 10^{-4} 
+                 &.20\times 10^{1}        \\
+              3.0\times 10^{0}  &2.0\times 10^{-4}  &-1.0\times 10^{-4} 
+                 &1.0\times 10^{0}        
+            \end{amat}                                           \\
+            \begin{aligned}
+            &\grstep[-(1/3)\rho_1+\rho_3]{-(2/3)\rho_1+\rho_2}
+            \begin{amat}{3}
+              3.0\times 10^{0}  &2.0\times 10^{0}  &1.0\times 10^{0} 
+                 &6.0\times 10^{0}        \\
+              0                 &-1.3\times 10^{0} &-6.7\times 10^{-1} 
+                 &-2.0\times 10^{0}        \\
+              0                 &-6.7\times 10^{-1}  &-3.3\times 10^{-1} 
+                 &-1.0\times 10^{0}        
+            \end{amat}                                          \\
+            &\grstep{-(.67/1.3)\rho_2+\rho_3}
+            \begin{amat}{3}
+              3.0\times 10^{0}  &2.0\times 10^{0}  &1.0\times 10^{0} 
+                 &6.0\times 10^{0}        \\
+              0                 &-1.3\times 10^{0} &-6.7\times 10^{-1} 
+                 &-2.0\times 10^{0}        \\
+              0                 &0                  &1.5\times 10^{-3} 
+                 &3.1\times 10^{-3}        
+            \end{amat}
+            \end{aligned}
+          \end{multline*}
+          we get $z=2.1$, $y=2.6$, and $x=-0.43$.
+          These differ significantly
+          from the true values found in the first part.
+      \end{exparts}
+    \end{answer}
+\end{exercises}
+\index{accuracy! of Gauss's Method|)}
+\index{Gauss's Method! accuracy|)}
+
+\endinput
+
+
+
+

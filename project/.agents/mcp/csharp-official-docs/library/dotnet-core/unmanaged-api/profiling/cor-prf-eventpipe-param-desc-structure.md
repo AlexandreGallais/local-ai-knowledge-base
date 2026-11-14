@@ -1,12 +1,15 @@
 ---
+description: "Learn more about: COR_PRF_EVENTPIPE_PARAM_DESC structure"
 title: "COR_PRF_EVENTPIPE_PARAM_DESC structure"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/profiling/cor-prf-eventpipe-param-desc-structure.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/19/2021"
+api_name:
+  - "COR_PRF_EVENTPIPE_PARAM_DESC"
+api_location:
+  - "coreclr.dll"
+  - "corprof.idl"
+api_type:
+  - "COM"
 ---
-
 # COR_PRF_EVENTPIPE_PARAM_DESC structure
 
 Describes the parameter name and type for an EventPipe event.
@@ -32,11 +35,11 @@ typedef struct
 
 ## Remarks
 
- The `COR_PRF_EVENTPIPE_PARAM_DESC` structure is used by the ICorProfilerInfo12::EventPipeDefineEvent method to define the parameter types of the event being defined.
+ The `COR_PRF_EVENTPIPE_PARAM_DESC` structure is used by the [ICorProfilerInfo12::EventPipeDefineEvent](icorprofilerinfo12-eventpipedefineevent-method.md) method to define the parameter types of the event being defined.
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** CorProf.idl, CorProf.h
 
@@ -44,4 +47,4 @@ typedef struct
 
 ## See also
 
-- ICorProfilerInfo12::EventPipeDefineEvent
+- [ICorProfilerInfo12::EventPipeDefineEvent](icorprofilerinfo12-eventpipedefineevent-method.md)

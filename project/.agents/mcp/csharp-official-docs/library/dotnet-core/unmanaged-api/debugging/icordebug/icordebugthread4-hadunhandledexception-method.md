@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugThread4::HadUnhandledException Method"
 title: "ICorDebugThread4::HadUnhandledException Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugthread4-hadunhandledexception-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugThread4.HadUnhandledException Method"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugThread4::HadUnhandledException"
+helpviewer_keywords:
+  - "ICorDebugThread4::HadUnhandledException method [.NET debugging]"
+  - "HadUnhandledException method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugThread4::HadUnhandledException Method
 
 Indicates whether the thread has ever had an unhandled exception.
@@ -22,7 +31,7 @@ HRESULT GetBlockingObjects (
 ## Parameters
 
  `ppBlockingObjectEnum`
- [out] A pointer to the address of an ordered enumeration of CorDebugBlockingObject structures.
+ [out] A pointer to the address of an ordered enumeration of [CorDebugBlockingObject](cordebugblockingobject-structure.md) structures.
 
 ## Return Value
 
@@ -35,11 +44,11 @@ This method returns the following specific HRESULTs as well as HRESULT errors th
 
 ## Remarks
 
-This method indicates whether the thread has ever had an unhandled exception. By the time the unhandled exception callback is triggered or native JIT-attach is initiated, this method is guaranteed to return S_OK. There is no guarantee that the ICorDebugThread.GetCurrentException method will return the unhandled exception; however, it will if the process has not yet been continued after getting the unhandled exception callback or upon native JIT-attach. Furthermore, it is possible (although unlikely) to have more than one thread with an unhandled exception at the time native JIT-attach is triggered. In such a case there is no way to determine which exception triggered the JIT-attach.
+This method indicates whether the thread has ever had an unhandled exception. By the time the unhandled exception callback is triggered or native JIT-attach is initiated, this method is guaranteed to return S_OK. There is no guarantee that the [ICorDebugThread.GetCurrentException](icordebugthread-getcurrentexception-method.md) method will return the unhandled exception; however, it will if the process has not yet been continued after getting the unhandled exception callback or upon native JIT-attach. Furthermore, it is possible (although unlikely) to have more than one thread with an unhandled exception at the time native JIT-attach is triggered. In such a case there is no way to determine which exception triggered the JIT-attach.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -49,4 +58,4 @@ This method indicates whether the thread has ever had an unhandled exception. By
 
 ## See also
 
-- ICorDebugThread4 Interface
+- [ICorDebugThread4 Interface](icordebugthread4-interface.md)

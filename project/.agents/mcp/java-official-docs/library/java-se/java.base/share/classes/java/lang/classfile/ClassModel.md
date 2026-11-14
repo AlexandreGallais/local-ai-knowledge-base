@@ -1,39 +1,31 @@
----
-title: "ClassModel interface (java.lang.classfile)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/ClassModel.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ClassModel interface (java.lang.classfile)
 
 ```java
 public sealed interface ClassModel extends CompoundElement<ClassElement>, AttributedElement permits ClassImpl
 ```
 
-Models a `class` file.  A `class` file can be viewed as a
-composition of `ClassElement`s, or by
-random access via accessor methods if only specific parts of the `class` file is needed.
-
-Use `ClassFile.parse(byte[])`, which parses the binary data of a `class` file into a model, to obtain a `ClassModel`.
-
-To construct a `class` file, use Consumer).  ClassTransform)
+Models a {@code class} file.  A {@code class} file can be viewed as a
+{@linkplain CompoundElement composition} of {@link ClassElement}s, or by
+random access via accessor methods if only specific parts of the {@code
+class} file is needed.
+<p>
+Use {@link ClassFile#parse(byte[])}, which parses the binary data of a {@code
+class} file into a model, to obtain a {@code ClassModel}.
+<p>
+To construct a {@code class} file, use {@link ClassFile#build(ClassDesc,
+Consumer)}.  {@link ClassFile#transformClass(ClassModel, ClassTransform)}
 allows creating a new class by selectively processing the original class
 elements and directing the results to a class builder.
-
+<p>
 A class holds attributes, most of which are accessible as member elements.
-`BootstrapMethodsAttribute` can only be accessed via explicit attribute reading, as it is modeled as part of
-the constant pool.
+{@link BootstrapMethodsAttribute} can only be accessed via {@linkplain
+AttributedElement explicit attribute reading}, as it is modeled as part of
+the {@linkplain #constantPool() constant pool}.
 
-**See also:** ClassFile#parse(byte[])
-
-**See also:** ClassTransform
-
-**jvms:** 4.1 The `ClassFile` Structure
-
-**Since:** 24
+@see ClassFile#parse(byte[])
+@see ClassTransform
+@jvms 4.1 The {@code ClassFile} Structure
+@since 24
 
 ## ClassModel.constantPool()
 
@@ -41,7 +33,9 @@ the constant pool.
 ConstantPool constantPool()
 ```
 
-**See also:** ConstantPoolBuilder#of(ClassModel)
+{@return the constant pool for this class}
+
+@see ConstantPoolBuilder#of(ClassModel)
 
 ## ClassModel.flags()
 
@@ -49,7 +43,9 @@ ConstantPool constantPool()
 AccessFlags flags()
 ```
 
-**See also:** AccessFlag.Location#CLASS
+{@return the access flags}
+
+@see AccessFlag.Location#CLASS
 
 ## ClassModel.thisClass()
 
@@ -57,16 +53,18 @@ AccessFlags flags()
 ClassEntry thisClass()
 ```
 
+{@return the constant pool entry describing the name of this class}
+
 ## ClassModel.majorVersion()
 
 ```java
 int majorVersion()
 ```
 
-It is in the range of unsigned
-short, `[0, 65535]`.
+{@return the major version of this class}  It is in the range of unsigned
+short, {@code [0, 65535]}.
 
-**See also:** ClassFileVersion
+@see ClassFileVersion
 
 ## ClassModel.minorVersion()
 
@@ -74,10 +72,10 @@ short, `[0, 65535]`.
 int minorVersion()
 ```
 
-It is in the range of unsigned
-short, `[0, 65535]`.
+{@return the minor version of this class}  It is in the range of unsigned
+short, {@code [0, 65535]}.
 
-**See also:** ClassFileVersion
+@see ClassFileVersion
 
 ## ClassModel.fields()
 
@@ -85,11 +83,15 @@ short, `[0, 65535]`.
 List<FieldModel> fields()
 ```
 
+{@return the fields of this class}
+
 ## ClassModel.methods()
 
 ```java
 List<MethodModel> methods()
 ```
+
+{@return the methods of this class}
 
 ## ClassModel.superclass()
 
@@ -97,12 +99,13 @@ List<MethodModel> methods()
 Optional<ClassEntry> superclass()
 ```
 
-This `class` file may have no superclass if this represents a
-module descriptor or the `Object`
+{@return the superclass of this class, if there is one}
+This {@code class} file may have no superclass if this represents a
+{@linkplain #isModuleInfo() module descriptor} or the {@link Object}
 class; otherwise, it must have a superclass.  If this is an interface,
-the superclass must be `Object`.
+the superclass must be {@link Object}.
 
-**See also:** Superclass
+@see Superclass
 
 ## ClassModel.interfaces()
 
@@ -110,7 +113,9 @@ the superclass must be `Object`.
 List<ClassEntry> interfaces()
 ```
 
-**See also:** Interfaces
+{@return the interfaces implemented by this class}
+
+@see Interfaces
 
 ## ClassModel.isModuleInfo()
 
@@ -118,4 +123,6 @@ List<ClassEntry> interfaces()
 boolean isModuleInfo()
 ```
 
-**See also:** ClassFile#buildModule(ModuleAttribute, Consumer)
+{@return whether this {@code class} file is a module descriptor}
+
+@see ClassFile#buildModule(ModuleAttribute, Consumer)

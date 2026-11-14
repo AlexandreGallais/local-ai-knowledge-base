@@ -1,34 +1,25 @@
----
-title: "ModuleAttribute interface (java.lang.classfile.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/attribute/ModuleAttribute.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ModuleAttribute interface (java.lang.classfile.attribute)
 
 ```java
 public sealed interface ModuleAttribute extends Attribute<ModuleAttribute>, ClassElement permits BoundAttribute.BoundModuleAttribute, UnboundAttribute.UnboundModuleAttribute
 ```
 
-Models the Module attribute (JVMS ),
-which always appears on classes that represent module descriptors.
-
-This attribute only appears on classes, and does not permit multiple instances in a class.  It has a
-data dependency on the constant pool.
-
+Models the {@link Attributes#module() Module} attribute (JVMS {@jvms 4.7.25}),
+which always appears on classes that {@linkplain ClassModel#isModuleInfo()
+represent} module descriptors.
+<p>
+This attribute only appears on classes, and does not permit {@linkplain
+AttributeMapper#allowMultiple multiple instances} in a class.  It has a
+data dependency on the {@linkplain AttributeMapper.AttributeStability#CP_REFS
+constant pool}.
+<p>
 The attribute was introduced in the Java SE Platform version 9, major version
-`ClassFile#JAVA_9_VERSION`.
+{@value ClassFile#JAVA_9_VERSION}.
 
-**See also:** Attributes#module()
-
-**See also:** ModuleDescriptor
-
-**jvms:** 4.7.25 The `Module` Attribute
-
-**Since:** 24
+@see Attributes#module()
+@see ModuleDescriptor
+@jvms 4.7.25 The {@code Module} Attribute
+@since 24
 
 ## ModuleAttribute.moduleName()
 
@@ -36,7 +27,9 @@ The attribute was introduced in the Java SE Platform version 9, major version
 ModuleEntry moduleName()
 ```
 
-**See also:** ModuleDescriptor#name()
+{@return the name of the module}
+
+@see ModuleDescriptor#name()
 
 ## ModuleAttribute.moduleFlagsMask()
 
@@ -44,12 +37,11 @@ ModuleEntry moduleName()
 int moduleFlagsMask()
 ```
 
-It is in the
-range of unsigned short, `[0, 0xFFFF]`.
+{@return the module flags of the module, as a bit mask}  It is in the
+range of unsigned short, {@code [0, 0xFFFF]}.
 
-**See also:** ModuleDescriptor#modifiers()
-
-**See also:** AccessFlag.Location#MODULE
+@see ModuleDescriptor#modifiers()
+@see AccessFlag.Location#MODULE
 
 ## ModuleAttribute.moduleFlags()
 
@@ -57,13 +49,11 @@ range of unsigned short, `[0, 0xFFFF]`.
 default Set<AccessFlag> moduleFlags()
 ```
 
-**See also:** ModuleDescriptor#accessFlags()
+{@return the module flags of the module, as a set of enum constants}
 
-**See also:** AccessFlag.Location#MODULE
-
-Throws:
-
-- `IllegalArgumentException`: if the flags mask has any undefined bit set
+@throws IllegalArgumentException if the flags mask has any undefined bit set
+@see ModuleDescriptor#accessFlags()
+@see AccessFlag.Location#MODULE
 
 ## ModuleAttribute.has(AccessFlag)
 
@@ -73,13 +63,9 @@ default boolean has(AccessFlag flag)
 
 Tests presence of module flag.
 
-Parameters:
-
-- `flag`: the module flag
-
-**Returns:** true if the flag is set
-
-**See also:** AccessFlag.Location#MODULE
+@param flag the module flag
+@return true if the flag is set
+@see AccessFlag.Location#MODULE
 
 ## ModuleAttribute.moduleVersion()
 
@@ -87,7 +73,9 @@ Parameters:
 Optional<Utf8Entry> moduleVersion()
 ```
 
-**See also:** ModuleDescriptor#version()
+{@return the version of the module, if present}
+
+@see ModuleDescriptor#version()
 
 ## ModuleAttribute.requires()
 
@@ -95,7 +83,9 @@ Optional<Utf8Entry> moduleVersion()
 List<ModuleRequireInfo> requires()
 ```
 
-**See also:** ModuleDescriptor#requires()
+{@return the modules required by this module}
+
+@see ModuleDescriptor#requires()
 
 ## ModuleAttribute.exports()
 
@@ -103,7 +93,9 @@ List<ModuleRequireInfo> requires()
 List<ModuleExportInfo> exports()
 ```
 
-**See also:** ModuleDescriptor#packages()
+{@return the packages exported by this module}
+
+@see ModuleDescriptor#packages()
 
 ## ModuleAttribute.opens()
 
@@ -111,10 +103,14 @@ List<ModuleExportInfo> exports()
 List<ModuleOpenInfo> opens()
 ```
 
-**API note:** Opening a package to another module allows that other module to gain
-the same full privilege access as members in this module.  See `MethodHandles.privateLookupIn` for more details.
+{@return the packages opened by this module}
 
-**See also:** ModuleDescriptor#opens()
+@apiNote
+Opening a package to another module allows that other module to gain
+the same full privilege access as members in this module.  See {@link
+MethodHandles#privateLookupIn} for more details.
+
+@see ModuleDescriptor#opens()
 
 ## ModuleAttribute.uses()
 
@@ -122,10 +118,10 @@ the same full privilege access as members in this module.  See `MethodHandles.pr
 List<ClassEntry> uses()
 ```
 
-Services may be discovered via
-`ServiceLoader`.
+{@return the services used by this module}  Services may be discovered via
+{@link ServiceLoader}.
 
-**See also:** ModuleDescriptor#uses()
+@see ModuleDescriptor#uses()
 
 ## ModuleAttribute.provides()
 
@@ -133,7 +129,9 @@ Services may be discovered via
 List<ModuleProvideInfo> provides()
 ```
 
-**See also:** ModuleDescriptor#provides()
+{@return the service implementations provided by this module}
+
+@see ModuleDescriptor#provides()
 
 ## ModuleAttribute.of(ModuleEntry, int, Utf8Entry, Collection<ModuleRequireInfo>, Collection<ModuleExportInfo>, Collection<ModuleOpenInfo>, Collection<ClassEntry>, Collection<ModuleProvideInfo>)
 
@@ -141,16 +139,16 @@ List<ModuleProvideInfo> provides()
 static ModuleAttribute of(ModuleEntry moduleName, int moduleFlags, Utf8Entry moduleVersion, Collection<ModuleRequireInfo> requires, Collection<ModuleExportInfo> exports, Collection<ModuleOpenInfo> opens, Collection<ClassEntry> uses, Collection<ModuleProvideInfo> provides)
 ```
 
-Parameters:
+{@return a {@code Module} attribute}
 
-- `moduleName`: the module name
-- `moduleFlags`: the module flags
-- `moduleVersion`: the module version, may be `null`
-- `requires`: the required packages
-- `exports`: the exported packages
-- `opens`: the opened packages
-- `uses`: the consumed services
-- `provides`: the provided services
+@param moduleName the module name
+@param moduleFlags the module flags
+@param moduleVersion the module version, may be {@code null}
+@param requires the required packages
+@param exports the exported packages
+@param opens the opened packages
+@param uses the consumed services
+@param provides the provided services
 
 ## ModuleAttribute.of(ModuleDesc, Consumer<ModuleAttributeBuilder>)
 
@@ -158,10 +156,10 @@ Parameters:
 static ModuleAttribute of(ModuleDesc moduleName, Consumer<ModuleAttributeBuilder> attrHandler)
 ```
 
-Parameters:
+{@return a {@code Module} attribute}
 
-- `moduleName`: the module name
-- `attrHandler`: a handler that receives a `ModuleAttributeBuilder`
+@param moduleName the module name
+@param attrHandler a handler that receives a {@link ModuleAttributeBuilder}
 
 ## ModuleAttribute.of(ModuleEntry, Consumer<ModuleAttributeBuilder>)
 
@@ -169,10 +167,10 @@ Parameters:
 static ModuleAttribute of(ModuleEntry moduleName, Consumer<ModuleAttributeBuilder> attrHandler)
 ```
 
-Parameters:
+{@return a {@code Module} attribute}
 
-- `moduleName`: the module name
-- `attrHandler`: a handler that receives a `ModuleAttributeBuilder`
+@param moduleName the module name
+@param attrHandler a handler that receives a {@link ModuleAttributeBuilder}
 
 ## ModuleAttribute.moduleName(ModuleDesc)
 
@@ -182,11 +180,8 @@ ModuleAttributeBuilder moduleName(ModuleDesc moduleName)
 
 Sets the module name.
 
-Parameters:
-
-- `moduleName`: the module name
-
-**Returns:** this builder
+@param moduleName the module name
+@return this builder
 
 ## ModuleAttribute.moduleFlags(int)
 
@@ -196,11 +191,8 @@ ModuleAttributeBuilder moduleFlags(int flagsMask)
 
 Sets the module flags.
 
-Parameters:
-
-- `flagsMask`: the module flags
-
-**Returns:** this builder
+@param flagsMask the module flags
+@return this builder
 
 ## ModuleAttribute.moduleFlags(AccessFlag...)
 
@@ -210,15 +202,10 @@ default ModuleAttributeBuilder moduleFlags(AccessFlag... moduleFlags)
 
 Sets the module flags.
 
-Parameters:
-
-- `moduleFlags`: the module flags
-
-**Returns:** this builder
-
-Throws:
-
-- `IllegalArgumentException`: if any flag cannot be applied to the `AccessFlag.Location.MODULE` location
+@param moduleFlags the module flags
+@return this builder
+@throws IllegalArgumentException if any flag cannot be applied to the
+        {@link AccessFlag.Location#MODULE} location
 
 ## ModuleAttribute.moduleVersion(String)
 
@@ -226,13 +213,10 @@ Throws:
 ModuleAttributeBuilder moduleVersion(String version)
 ```
 
-Sets the module version, which may be `null`.
+Sets the module version, which may be {@code null}.
 
-Parameters:
-
-- `version`: the module version, may be `null`
-
-**Returns:** this builder
+@param version the module version, may be {@code null}
+@return this builder
 
 ## ModuleAttribute.requires(ModuleDesc, int, String)
 
@@ -242,13 +226,10 @@ ModuleAttributeBuilder requires(ModuleDesc module, int requiresFlagsMask, String
 
 Adds a module requirement.
 
-Parameters:
-
-- `module`: the required module
-- `requiresFlagsMask`: the requires flags
-- `version`: the required module version, may be `null`
-
-**Returns:** this builder
+@param module the required module
+@param requiresFlagsMask the requires flags
+@param version the required module version, may be {@code null}
+@return this builder
 
 ## ModuleAttribute.requires(ModuleDesc, Collection<AccessFlag>, String)
 
@@ -258,17 +239,12 @@ default ModuleAttributeBuilder requires(ModuleDesc module, Collection<AccessFlag
 
 Adds a module requirement.
 
-Parameters:
-
-- `module`: the required module
-- `requiresFlags`: the requires flags
-- `version`: the required module version, may be `null`
-
-**Returns:** this builder
-
-Throws:
-
-- `IllegalArgumentException`: if any flag cannot be applied to the `AccessFlag.Location.MODULE_REQUIRES` location
+@param module the required module
+@param requiresFlags the requires flags
+@param version the required module version, may be {@code null}
+@return this builder
+@throws IllegalArgumentException if any flag cannot be applied to the
+        {@link AccessFlag.Location#MODULE_REQUIRES} location
 
 ## ModuleAttribute.requires(ModuleRequireInfo)
 
@@ -278,11 +254,8 @@ ModuleAttributeBuilder requires(ModuleRequireInfo requires)
 
 Adds module requirement.
 
-Parameters:
-
-- `requires`: the module require info
-
-**Returns:** this builder
+@param requires the module require info
+@return this builder
 
 ## ModuleAttribute.exports(PackageDesc, int, ModuleDesc...)
 
@@ -292,13 +265,10 @@ ModuleAttributeBuilder exports(PackageDesc pkge, int exportsFlagsMask, ModuleDes
 
 Adds an exported package.
 
-Parameters:
-
-- `pkge`: the exported package
-- `exportsFlagsMask`: the export flags
-- `exportsToModules`: the modules to export to, or empty for an unqualified export
-
-**Returns:** this builder
+@param pkge the exported package
+@param exportsFlagsMask the export flags
+@param exportsToModules the modules to export to, or empty for an unqualified export
+@return this builder
 
 ## ModuleAttribute.exports(PackageDesc, Collection<AccessFlag>, ModuleDesc...)
 
@@ -308,17 +278,12 @@ default ModuleAttributeBuilder exports(PackageDesc pkge, Collection<AccessFlag> 
 
 Adds an exported package.
 
-Parameters:
-
-- `pkge`: the exported package
-- `exportsFlags`: the export flags
-- `exportsToModules`: the modules to export to, or empty for an unqualified export
-
-**Returns:** this builder
-
-Throws:
-
-- `IllegalArgumentException`: if any flag cannot be applied to the `AccessFlag.Location.MODULE_EXPORTS` location
+@param pkge the exported package
+@param exportsFlags the export flags
+@param exportsToModules the modules to export to, or empty for an unqualified export
+@return this builder
+@throws IllegalArgumentException if any flag cannot be applied to the
+        {@link AccessFlag.Location#MODULE_EXPORTS} location
 
 ## ModuleAttribute.exports(ModuleExportInfo)
 
@@ -328,11 +293,8 @@ ModuleAttributeBuilder exports(ModuleExportInfo exports)
 
 Adds an exported package.
 
-Parameters:
-
-- `exports`: the module export info
-
-**Returns:** this builder
+@param exports the module export info
+@return this builder
 
 ## ModuleAttribute.opens(PackageDesc, int, ModuleDesc...)
 
@@ -342,16 +304,15 @@ ModuleAttributeBuilder opens(PackageDesc pkge, int opensFlagsMask, ModuleDesc...
 
 Opens a package.
 
-Parameters:
+@apiNote
+Opening a package to another module allows that other module to gain
+the same full privilege access as members in this module.  See {@link
+MethodHandles#privateLookupIn} for more details.
 
-- `pkge`: the opened package
-- `opensFlagsMask`: the open package flags
-- `opensToModules`: the modules to open to, or empty for an unqualified open
-
-**API note:** Opening a package to another module allows that other module to gain
-the same full privilege access as members in this module.  See `MethodHandles.privateLookupIn` for more details.
-
-**Returns:** this builder
+@param pkge the opened package
+@param opensFlagsMask the open package flags
+@param opensToModules the modules to open to, or empty for an unqualified open
+@return this builder
 
 ## ModuleAttribute.opens(PackageDesc, Collection<AccessFlag>, ModuleDesc...)
 
@@ -361,20 +322,17 @@ default ModuleAttributeBuilder opens(PackageDesc pkge, Collection<AccessFlag> op
 
 Opens a package.
 
-Parameters:
+@apiNote
+Opening a package to another module allows that other module to gain
+the same full privilege access as members in this module.  See {@link
+MethodHandles#privateLookupIn} for more details.
 
-- `pkge`: the opened package
-- `opensFlags`: the open package flags
-- `opensToModules`: the modules to open to, or empty for an unqualified open
-
-**API note:** Opening a package to another module allows that other module to gain
-the same full privilege access as members in this module.  See `MethodHandles.privateLookupIn` for more details.
-
-**Returns:** this builder
-
-Throws:
-
-- `IllegalArgumentException`: if any flag cannot be applied to the `AccessFlag.Location.MODULE_OPENS` location
+@param pkge the opened package
+@param opensFlags the open package flags
+@param opensToModules the modules to open to, or empty for an unqualified open
+@return this builder
+@throws IllegalArgumentException if any flag cannot be applied to the
+        {@link AccessFlag.Location#MODULE_OPENS} location
 
 ## ModuleAttribute.opens(ModuleOpenInfo)
 
@@ -384,14 +342,13 @@ ModuleAttributeBuilder opens(ModuleOpenInfo opens)
 
 Opens a package.
 
-Parameters:
+@apiNote
+Opening a package to another module allows that other module to gain
+the same full privilege access as members in this module.  See {@link
+MethodHandles#privateLookupIn} for more details.
 
-- `opens`: the module open info
-
-**API note:** Opening a package to another module allows that other module to gain
-the same full privilege access as members in this module.  See `MethodHandles.privateLookupIn` for more details.
-
-**Returns:** this builder
+@param opens the module open info
+@return this builder
 
 ## ModuleAttribute.uses(ClassDesc)
 
@@ -401,15 +358,9 @@ ModuleAttributeBuilder uses(ClassDesc service)
 
 Declares use of a service.
 
-Parameters:
-
-- `service`: the service class used
-
-**Returns:** this builder
-
-Throws:
-
-- `IllegalArgumentException`: if `service` represents a primitive type
+@param service the service class used
+@return this builder
+@throws IllegalArgumentException if {@code service} represents a primitive type
 
 ## ModuleAttribute.uses(ClassEntry)
 
@@ -419,11 +370,8 @@ ModuleAttributeBuilder uses(ClassEntry uses)
 
 Declares use of a service.
 
-Parameters:
-
-- `uses`: the service class used
-
-**Returns:** this builder
+@param uses the service class used
+@return this builder
 
 ## ModuleAttribute.provides(ClassDesc, ClassDesc...)
 
@@ -433,16 +381,10 @@ ModuleAttributeBuilder provides(ClassDesc service, ClassDesc... implClasses)
 
 Declares provision of a service.
 
-Parameters:
-
-- `service`: the service class provided
-- `implClasses`: the implementation classes
-
-**Returns:** this builder
-
-Throws:
-
-- `IllegalArgumentException`: if `service` or any of the `implClasses` represents a primitive type
+@param service the service class provided
+@param implClasses the implementation classes
+@return this builder
+@throws IllegalArgumentException if {@code service} or any of the {@code implClasses} represents a primitive type
 
 ## ModuleAttribute.provides(ModuleProvideInfo)
 
@@ -452,8 +394,5 @@ ModuleAttributeBuilder provides(ModuleProvideInfo provides)
 
 Declares provision of a service.
 
-Parameters:
-
-- `provides`: the module provides info
-
-**Returns:** this builder
+@param provides the module provides info
+@return this builder

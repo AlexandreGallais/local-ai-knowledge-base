@@ -1,23 +1,26 @@
 ---
-title: "Create an item template for dotnet new - .NET CLI"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tutorials/cli-templates-create-item-template.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Create an item template for dotnet new - .NET CLI
+titleSuffix: ""
+description: Learn how to create an item template for the dotnet new command. Item templates can contain any number of files.
+author: adegeo
+ms.date: 10/23/2025
+ai-usage: ai-assisted
+ms.topic: tutorial
+ms.author: adegeo
 ---
 
 # Tutorial: Create an item template
 
 With .NET, you can create and deploy templates that generate projects, files, and resources. This tutorial is part one of a series that teaches you how to create, install, and uninstall templates for use with the `dotnet new` command.
 
-You can view the completed template in the .NET Samples GitHub repository.
+You can view the completed template in the [.NET Samples GitHub repository](https://github.com/dotnet/samples/tree/main/core/tutorials/cli-templates-create-item-template).
 
-> **Tip:**
+> [!TIP]
 > **Item** templates aren't shown in the **Add** > **New Item** dialog of Visual Studio.
 
 In this part of the series, you learn how to:
 
+> [!div class="checklist"]
 >
 > * Create a class for an item template.
 > * Create the template config folder and file.
@@ -27,7 +30,7 @@ In this part of the series, you learn how to:
 
 ## Prerequisites
 
-- .NET 9 or a later version.
+- [.NET 9](https://dotnet.microsoft.com/download) or a later version.
 
 - The reference article explains the basics about templates and how they're put together. Some of this information is reiterated here.
 
@@ -121,9 +124,9 @@ Open the _template.json_ with your favorite text editor and paste in the followi
   }
 ```
 
-This config file contains all the settings for your template. You can see the basic <example-value>, such as `name` and `shortName`, but there's also a `tags/type` value that's set to `item`. This categorizes your template as an "item" template. There's no restriction on the type of template you create. The `item` and `project` values are common names that .NET recommends so that users can easily filter the type of template they're searching for.
+This config file contains all the settings for your template. You can see the basic settings, such as `name` and `shortName`, but there's also a `tags/type` value that's set to `item`. This categorizes your template as an "item" template. There's no restriction on the type of template you create. The `item` and `project` values are common names that .NET recommends so that users can easily filter the type of template they're searching for.
 
-The `classifications` item represents the **tags** column you see when you run `dotnet new` and get a list of templates. Users can also search based on classification tags. Don't confuse the `tags` property in the _template.json_ file with the `classifications` tags list. They're two different concepts that are unfortunately named the same. The full schema for the _template.json_ file is found at the JSON Schema Store and is described at Reference for template.json. For more information about the _template.json_ file, see the dotnet templating wiki.
+The `classifications` item represents the **tags** column you see when you run `dotnet new` and get a list of templates. Users can also search based on classification tags. Don't confuse the `tags` property in the _template.json_ file with the `classifications` tags list. They're two different concepts that are unfortunately named the same. The full schema for the _template.json_ file is found at the [JSON Schema Store](http://json.schemastore.org/template) and is described at [Reference for template.json](https://github.com/dotnet/templating/wiki/Reference-for-template.json). For more information about the _template.json_ file, see the [dotnet templating wiki](https://github.com/dotnet/templating/wiki).
 
 The `symbols` part of this JSON object is used to define the parameters that can be used in the template. In this case, there's one parameter defined, `ClassName`. The defined parameter contains the following settings:
 
@@ -271,4 +274,5 @@ At any time, you can use `dotnet new uninstall` to see a list of installed templ
 
 In this tutorial, you created an item template. To learn how to create a project template, continue this tutorial series.
 
-> Create a project template
+> [!div class="nextstepaction"]
+> [Create a project template](cli-templates-create-project-template.md)

@@ -1,12 +1,17 @@
 ---
+description: "Learn more about: ICorProfilerInfo10::RequestReJITWithInliners Method"
 title: "ICorProfilerInfo10::RequestReJITWithInliners"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/profiling/icorprofilerinfo10-requestrejitwithinliners-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "08/06/2019"
+dev_langs:
+  - "cpp"
+api_name:
+  - "ICorProfilerInfo10.RequestReJITWithInliners"
+api_location:
+  - "mscorwks.dll"
+api_type:
+  - "COM"
+author: "davmason"
 ---
-
 # ICorProfilerInfo10::RequestReJITWithInliners method
 
 ReJITs the methods requested, as well as any inliners of the methods requested.
@@ -23,7 +28,7 @@ HRESULT RequestReJITWithInliners( [in]                       DWORD       dwRejit
 ## Parameters
 
 `dwRejitFlags`\
-[in] A bitmask of COR_PRF_REJIT_FLAGS.
+[in] A bitmask of [COR_PRF_REJIT_FLAGS](cor-prf-rejit-flags-enumeration.md).
 
 `cFunctions`\
 [in] The number of functions to recompile.
@@ -36,11 +41,11 @@ HRESULT RequestReJITWithInliners( [in]                       DWORD       dwRejit
 
 ## Remarks
 
-RequestReJIT doesn't track inlined methods. The profiler is expected to either block inlining or track inlining and call `RequestReJIT` for all inliners to make sure every instance of an inlined method was ReJITted. This poses a problem with ReJIT on attach, since the profiler is not present to monitor inlining. This method, `RequestReJITWithInliners`, can be called to guarantee that the full set of inliners is ReJITted as well.
+[RequestReJIT](../../../framework/unmanaged-api/profiling/icorprofilerinfo4-requestrejit-method.md) doesn't track inlined methods. The profiler is expected to either block inlining or track inlining and call `RequestReJIT` for all inliners to make sure every instance of an inlined method was ReJITted. This poses a problem with ReJIT on attach, since the profiler is not present to monitor inlining. This method, `RequestReJITWithInliners`, can be called to guarantee that the full set of inliners is ReJITted as well.
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** CorProf.idl, CorProf.h
 
@@ -50,4 +55,4 @@ RequestReJIT doesn't track inlined methods. The profiler is expected to either b
 
 ## See also
 
-- ICorProfilerInfo10 Interface
+- [ICorProfilerInfo10 Interface](icorprofilerinfo10-interface.md)

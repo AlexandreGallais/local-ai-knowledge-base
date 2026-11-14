@@ -1,53 +1,26 @@
 ---
-title: "Use the generated OpenAPI documents"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/openapi/using-openapi-documents.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Use the generated OpenAPI documents
+ai-usage: ai-assisted
+description: Learn how to use OpenAPI documents in an ASP.NET Core app.
+monikerRange: '>= aspnetcore-6.0'
+ms.date: 08/28/2026
 ---
-
 # Use openAPI documents
+
+:::moniker range=">= aspnetcore-10.0"
 
 ## Use Swagger UI for local ad-hoc testing
 
-By default, the `Microsoft.AspNetCore.OpenApi` package doesn't ship with built-in support for visualizing or interacting with the OpenAPI document. Popular tools for visualizing or interacting with the OpenAPI document include Swagger UI and ReDoc. Swagger UI and ReDoc can be integrated in an app in several ways. Editors such as Visual Studio and Visual Studio Code offer extensions and built-in experiences for testing against an OpenAPI document.
+By default, the `Microsoft.AspNetCore.OpenApi` package doesn't ship with built-in support for visualizing or interacting with the OpenAPI document. Popular tools for visualizing or interacting with the OpenAPI document include [Swagger UI](https://swagger.io/tools/swaggerhub/) and [ReDoc](https://github.com/Redocly/redoc). Swagger UI and ReDoc can be integrated in an app in several ways. Editors such as Visual Studio and Visual Studio Code offer extensions and built-in experiences for testing against an OpenAPI document.
 
 The `Swashbuckle.AspNetCore.SwaggerUi` package provides a bundle of Swagger UI's web assets for use in apps. This package can be used to render a UI for the generated document. To configure this:
 
 * Install the `Swashbuckle.AspNetCore.SwaggerUi` package.
-* Enable the swagger-ui middleware with a reference to the OpenAPI route registered earlier.
+* Enable the swagger-ui middleware with a reference to the [OpenAPI route registered earlier](aspnetcore-openapi.md#customize-the-openapi-endpoint-route).
 
-```csharp
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.OpenApi;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
+[!code-csharp[](~/fundamentals/openapi/samples/9.x/WebMinOpenApi/Program.cs?name=snippet_swaggerui)]
 
-var builder = WebApplication.CreateBuilder();
-
-builder.Services.AddOpenApi();
-
-var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/openapi/v1.json", "v1");
-    });
-
-}
-
-app.MapGet("/", () => "Hello world!");
-
-app.Run();
-```
-
-As a security best practice on limiting information disclosure, ***OpenAPI user interfaces (Swagger UI, ReDoc, Scalar) should only be enabled in development environments.*** For example, see Swagger OAuth 2.0 configuration.
+As a security best practice on limiting information disclosure, ***OpenAPI user interfaces (Swagger UI, ReDoc, Scalar) should only be enabled in development environments.*** For example, see [Swagger OAuth 2.0 configuration](https://swagger.io/docs/open-source-tools/swagger-ui/usage/oauth2/).
 
 Launch the app and navigate to `https://localhost:<port>/swagger` to view the Swagger UI.
 
@@ -63,31 +36,9 @@ To automatically launch the app at the Swagger UI URL using the `https` profile 
 
 ## Use Scalar for interactive API documentation
 
-Scalar is an open-source interactive document UI for OpenAPI. Scalar can integrate with the OpenAPI endpoint provided by ASP.NET Core. To configure Scalar, install the `Scalar.AspNetCore` package.
+[Scalar](https://scalar.com/) is an open-source interactive document UI for OpenAPI. Scalar can integrate with the OpenAPI endpoint provided by ASP.NET Core. To configure Scalar, install the `Scalar.AspNetCore` package.
 
-```csharp
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.OpenApi;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
-using Scalar.AspNetCore;
-
-var builder = WebApplication.CreateBuilder();
-
-builder.Services.AddOpenApi();
-
-var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-    app.MapScalarApiReference();
-}
-
-app.MapGet("/", () => "Hello world!");
-
-app.Run();
-```
+[!code-csharp[](~/fundamentals/openapi/samples/9.x/WebMinOpenApi/Program.cs?name=snippet_openapiwithscalar)]
 
 Launch the app and navigate to `https://localhost:<port>/scalar` to view the Scalar UI.
 
@@ -103,7 +54,7 @@ To automatically launch the app at the Scalar UI URL using the `https` profile o
 
 ## Lint generated OpenAPI documents with Spectral
 
-Spectral is an open-source OpenAPI document linter. Spectral can be incorporated into an app build to verify the quality of generated OpenAPI documents. Install Spectral according to the package installation directions.
+[Spectral](https://stoplight.io/open-source/spectral) is an open-source OpenAPI document linter. Spectral can be incorporated into an app build to verify the quality of generated OpenAPI documents. Install Spectral according to the [package installation directions](https://github.com/stoplightio/spectral#-installation).
 
 To take advantage of Spectral for linting OpenAPI documents at build time, first install the `Microsoft.Extensions.ApiDescription.Server` package to enable build-time OpenAPI document generation.
 
@@ -148,7 +99,7 @@ The output shows any issues with the OpenAPI document. For example:
 
 ## Support for injecting `IOpenApiDocumentProvider`
 
-Inject `Microsoft.AspNetCore.OpenApi.IOpenApiDocumentProvider` into services to access OpenAPI documents programmatically, even outside HTTP request contexts. The following example customizes version 2 ("`v2`") of the document with title, version, and description information:
+Inject <xref:Microsoft.AspNetCore.OpenApi.IOpenApiDocumentProvider> into services to access OpenAPI documents programmatically, even outside HTTP request contexts. The following example customizes version 2 ("`v2`") of the document with title, version, and description information:
 
 ```csharp
 using Microsoft.AspNetCore.OpenApi;
@@ -158,7 +109,7 @@ public class CustomDocumentService(
     [FromKeyedServices("v2")] IOpenApiDocumentProvider documentProvider)
 {
     public async Task<OpenApiDocument> GetApiDocumentAsync(
-            CancellationToken <example-value> = default)
+            CancellationToken cancellationToken = default)
     {
         var document = 
             await documentProvider.GetOpenApiDocumentAsync(cancellationToken);
@@ -175,7 +126,7 @@ public class CustomDocumentService(
 }
 ```
 
-Register the service in your DI container. Note that the service key <example-value> match the document name passed to `Microsoft.Extensions.DependencyInjection.OpenApiServiceCollectionExtensions.AddOpenApi*`:
+Register the service in your DI container. Note that the service key should match the document name passed to <xref:Microsoft.Extensions.DependencyInjection.OpenApiServiceCollectionExtensions.AddOpenApi*>:
 
 ```csharp
 builder.Services.AddOpenApi(); // Adds "v1" by default
@@ -185,4 +136,9 @@ builder.Services.AddScoped<CustomDocumentService>();
 
 This enables scenarios such as generating client SDKs, validating API contracts in background processes, or exporting documents to external systems.
 
-Support for injecting `IOpenApiDocumentProvider` was introduced in ASP.NET Core in .NET 10. For more information, see dotnet/aspnetcore #61463.
+Support for injecting `IOpenApiDocumentProvider` was introduced in ASP.NET Core in .NET 10. For more information, see [dotnet/aspnetcore #61463](https://github.com/dotnet/aspnetcore/pull/61463).
+
+:::moniker-end
+
+[!INCLUDE[](~/fundamentals/openapi/includes/using-openapi-documents-6-8.md)]
+[!INCLUDE[](~/fundamentals/openapi/includes/using-openapi-documents-9.md)]

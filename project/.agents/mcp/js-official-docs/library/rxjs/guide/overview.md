@@ -1,19 +1,10 @@
----
-title: "Introduction"
-tool: "rxjs"
-version: "7.8"
-source: "https://github.com/ReactiveX/rxjs/blob/e5351d02e225e275ac0e497c7b66eaa5f0c88791/docs_app/content/guide/overview.md"
-commit: "e5351d02e225e275ac0e497c7b66eaa5f0c88791"
-license: "Apache-2.0"
----
-
 # Introduction
 
-RxJS is a library for composing asynchronous and event-based programs by using observable sequences. It provides one core type, the Observable, satellite types (Observer, Schedulers, Subjects) and operators inspired by `Array` methods (`map`, `filter`, `reduce`, `every`, etc) to allow handling asynchronous events as collections.
+RxJS is a library for composing asynchronous and event-based programs by using observable sequences. It provides one core type, the [Observable](./guide/observable), satellite types (Observer, Schedulers, Subjects) and operators inspired by `Array` methods (`map`, `filter`, `reduce`, `every`, etc) to allow handling asynchronous events as collections.
 
-Think of RxJS as Lodash for events.
+<span class="informal">Think of RxJS as Lodash for events.</span>
 
-ReactiveX combines the Observer pattern with the Iterator pattern and functional programming with collections to fill the need for an ideal way of managing sequences of events.
+ReactiveX combines the [Observer pattern](https://en.wikipedia.org/wiki/Observer_pattern) with the [Iterator pattern](https://en.wikipedia.org/wiki/Iterator_pattern) and [functional programming with collections](http://martinfowler.com/articles/collection-pipeline/#NestedOperatorExpressions) to fill the need for an ideal way of managing sequences of events.
 
 The essential concepts in RxJS which solve async event management are:
 
@@ -95,7 +86,7 @@ fromEvent(document, 'click')
   .subscribe((count) => console.log(`Clicked ${count} times`));
 ```
 
-Other flow control operators are **filter**, **delay**, **debounceTime**, **take**, **takeUntil**, **distinct**, **distinctUntilChanged** etc.
+Other flow control operators are [**filter**](../api/operators/filter), [**delay**](../api/operators/delay), [**debounceTime**](../api/operators/debounceTime), [**take**](../api/operators/take), [**takeUntil**](../api/operators/takeUntil), [**distinct**](../api/operators/distinct), [**distinctUntilChanged**](../api/operators/distinctUntilChanged) etc.
 
 ### Values
 
@@ -130,4 +121,4 @@ fromEvent(document, 'click')
   .subscribe((count) => console.log(count));
 ```
 
-Other value producing operators are **pluck**, **pairwise**, **sample** etc.
+Other value producing operators are [**pluck**](../api/operators/pluck), [**pairwise**](../api/operators/pairwise), [**sample**](../api/operators/sample) etc.

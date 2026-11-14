@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugArrayValue Interface"
 title: "ICorDebugArrayValue Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugarrayvalue-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugArrayValue"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugArrayValue interface"
+helpviewer_keywords:
+  - "ICorDebugArrayValue interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugArrayValue Interface
 
 A subclass of ICorDebugHeapValue that represents a single-dimensional or multi-dimensional array.
@@ -15,25 +23,25 @@ A subclass of ICorDebugHeapValue that represents a single-dimensional or multi-d
 
 |Method|Description|
 |------------|-----------------|
-|GetBaseIndicies Method|Gets the base index of each dimension in the array.|
-|GetCount Method|Gets the total number of elements in the array.|
-|GetDimensions Method|Gets the dimensions of the array.|
-|GetElement Method|Gets a value representing the given element in the array.|
-|GetElementAtPosition Method|Gets the element at the given position, treating the array as a zero-based, single-dimensional array.|
-|GetElementType Method|Gets the simple type of the elements in the array.|
-|GetRank Method|Gets the number of dimensions in the array.|
-|HasBaseIndicies Method|Determines whether the array has base indexes.|
+|[GetBaseIndicies Method](icordebugarrayvalue-getbaseindicies-method.md)|Gets the base index of each dimension in the array.|
+|[GetCount Method](icordebugarrayvalue-getcount-method.md)|Gets the total number of elements in the array.|
+|[GetDimensions Method](icordebugarrayvalue-getdimensions-method.md)|Gets the dimensions of the array.|
+|[GetElement Method](icordebugarrayvalue-getelement-method.md)|Gets a value representing the given element in the array.|
+|[GetElementAtPosition Method](icordebugarrayvalue-getelementatposition-method.md)|Gets the element at the given position, treating the array as a zero-based, single-dimensional array.|
+|[GetElementType Method](icordebugarrayvalue-getelementtype-method.md)|Gets the simple type of the elements in the array.|
+|[GetRank Method](icordebugarrayvalue-getrank-method.md)|Gets the number of dimensions in the array.|
+|[HasBaseIndicies Method](icordebugarrayvalue-hasbaseindicies-method.md)|Determines whether the array has base indexes.|
 
 ## Remarks
 
  `ICorDebugArrayValue` supports both single-dimensional and multi-dimensional arrays.
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

@@ -1,12 +1,3 @@
----
-title: "IllegalStateException class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/IllegalStateException.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # IllegalStateException class (java.lang)
 
 ```java
@@ -18,7 +9,8 @@ inappropriate time.  In other words, the Java environment or
 Java application is not in an appropriate state for the requested
 operation.
 
-**Since:** 1.1
+@author  Jonni Kanerva
+@since   1.1
 
 ## IllegalStateException.IllegalStateException()
 
@@ -39,9 +31,7 @@ Constructs an IllegalStateException with the specified detail
 message.  A detail message is a String that describes this particular
 exception.
 
-Parameters:
-
-- `s`: the String that contains a detailed message
+@param s the String that contains a detailed message
 
 ## IllegalStateException.IllegalStateException(String, Throwable)
 
@@ -52,16 +42,17 @@ public IllegalStateException(String message, Throwable cause)
 Constructs a new exception with the specified detail message and
 cause.
 
-Note that the detail message associated with `cause` is
-*not* automatically incorporated in this exception's detail
+<p>Note that the detail message associated with {@code cause} is
+<i>not</i> automatically incorporated in this exception's detail
 message.
 
-Parameters:
-
-- `message`: the detail message (which is saved for later retrieval by the `Throwable.getMessage()` method).
-- `cause`: the cause (which is saved for later retrieval by the `Throwable.getCause()` method). (A `null` value is permitted, and indicates that the cause is nonexistent or unknown.)
-
-**Since:** 1.5
+@param  message the detail message (which is saved for later retrieval
+        by the {@link Throwable#getMessage()} method).
+@param  cause the cause (which is saved for later retrieval by the
+        {@link Throwable#getCause()} method).  (A {@code null} value
+        is permitted, and indicates that the cause is nonexistent or
+        unknown.)
+@since 1.5
 
 ## IllegalStateException.IllegalStateException(Throwable)
 
@@ -70,13 +61,14 @@ public IllegalStateException(Throwable cause)
 ```
 
 Constructs a new exception with the specified cause and a detail
-message of `(cause==null ? null : cause.toString())` (which
-typically contains the class and detail message of `cause`).
+message of {@code (cause==null ? null : cause.toString())} (which
+typically contains the class and detail message of {@code cause}).
 This constructor is useful for exceptions that are little more than
-wrappers for other throwables (for example, `java.security.PrivilegedActionException`).
+wrappers for other throwables (for example, {@link
+java.security.PrivilegedActionException}).
 
-Parameters:
-
-- `cause`: the cause (which is saved for later retrieval by the `Throwable.getCause()` method). (A `null` value is permitted, and indicates that the cause is nonexistent or unknown.)
-
-**Since:** 1.5
+@param  cause the cause (which is saved for later retrieval by the
+        {@link Throwable#getCause()} method).  (A {@code null} value is
+        permitted, and indicates that the cause is nonexistent or
+        unknown.)
+@since  1.5

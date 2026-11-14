@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: Debian container images upgraded to Debian 12"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/containers/8.0/debian-version.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in containers where .NET container images for Linux have been upgraded to Debian 12 (Bookworm).
+ms.date: 07/11/2023
+ms.custom: linux-related-content
 ---
-
 # Debian container images upgraded to Debian 12
 
 The default Linux distro for .NET container images is Debian. In .NET 8, the Debian version has been upgraded to Debian 12 (Bookworm). As a result of upgraded package versions, this new version of Debian may have changes in it that break your application. The most notable change is the upgrade of Open SSL from 1.1 to 3.0.
@@ -35,11 +32,11 @@ Notable package versions:
 
 ## Type of change
 
-This change can affect binary compatibility and is also a behavioral change.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility) and is also a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-According to the container support policy, with each version of .NET, the default version of Debian that's targeted is the latest stable version.
+According to the [container support policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md#linux), with each version of .NET, the default version of Debian that's targeted is the latest stable version.
 
 ## Recommended action
 
@@ -51,4 +48,4 @@ None.
 
 ## See also
 
-- Debian release notes
+- [Debian release notes](https://www.debian.org/releases/stable/releasenotes)

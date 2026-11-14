@@ -1,12 +1,9 @@
 ---
-title: "Entity Framework 6 Runtime Alpha License - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/resources/licenses/ef6/prerelease/alpha.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Entity Framework 6 Runtime Alpha License - EF6
+description: Entity Framework 6 Runtime Alpha License
+author: SamMonoRT
+ms.date: 10/23/2016
 ---
-
 # Entity Framework 6 Runtime Alpha License (ENU)
 **MICROSOFT PRE-RELEASE SOFTWARE LICENSE TERMS**
 
@@ -45,7 +42,7 @@ for this software, unless other terms accompany those items. If so, those terms 
 -   rent, lease or lend the software; or
 -   transfer the software or this agreement to any third party.
 
-**7)   Export Restrictions.**The software is subject to United States export laws and regulations. You must comply with all domestic and international export laws and regulations that apply to the software. These laws include restrictions on destinations, end users and end use. For additional information, see www.microsoft.com/exporting.
+**7)   Export Restrictions.**The software is subject to United States export laws and regulations. You must comply with all domestic and international export laws and regulations that apply to the software. These laws include restrictions on destinations, end users and end use. For additional information, see [www.microsoft.com/exporting](https://www.microsoft.com/exporting).
 
 **8)   SUPPORT SERVICES.** Because this software is “as is,” we may not provide support services for it.
 

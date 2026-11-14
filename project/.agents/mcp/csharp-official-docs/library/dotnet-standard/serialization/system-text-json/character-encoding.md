@@ -1,10 +1,17 @@
 ---
-title: "How to customize character encoding with System.Text.Json"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/serialization/system-text-json/character-encoding.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to customize character encoding with System.Text.Json
+description: "Learn how to customize character encoding while serializing to and deserializing from JSON in .NET."
+ms.date: 01/22/2021
+no-loc: [System.Text.Json, Newtonsoft.Json]
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "JSON serialization"
+  - "serializing objects"
+  - "serialization"
+  - "objects, serializing"
+ms.topic: how-to
 ---
 
 # How to customize character encoding with System.Text.Json
@@ -21,33 +28,14 @@ By default, the serializer escapes all non-ASCII characters. That is, it replace
 
 ## Serialize language character sets
 
-To serialize the character sets of one or more languages without escaping, specify Unicode ranges when creating an instance of `System.Text.Encodings.Web.JavaScriptEncoder`, as shown in the following example:
+To serialize the character sets of one or more languages without escaping, specify [Unicode ranges](xref:System.Text.Unicode.UnicodeRanges) when creating an instance of <xref:System.Text.Encodings.Web.JavaScriptEncoder?displayProperty=fullName>, as shown in the following example:
 
-```csharp
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Unicode;
-```
-```vb
-Imports System.Text.Encodings.Web
-Imports System.Text.Json
-Imports System.Text.Unicode
-```
-```csharp
-var options1 = new JsonSerializerOptions
-{
-    Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
-    WriteIndented = true
-};
-jsonString = JsonSerializer.Serialize(weatherForecast, options1);
-```
-```vb
-options = New JsonSerializerOptions With {
-    .Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
-    .WriteIndented = True
-}
-jsonString = JsonSerializer.Serialize(weatherForecast1, options)
-```
+:::code language="csharp" source="snippets/how-to/csharp/SerializeCustomEncoding.cs" id="Usings":::
+:::code language="vb" source="snippets/how-to/vb/SerializeCustomEncoding.vb" id="Usings":::
+
+:::code language="csharp" source="snippets/how-to/csharp/SerializeCustomEncoding.cs" id="LanguageSets":::
+:::code language="vb" source="snippets/how-to/vb/SerializeCustomEncoding.vb" id="LanguageSets":::
+
 This code doesn't escape Cyrillic or Greek characters. If the `Summary` property is set to Cyrillic `жарко`, the `WeatherForecast` object is serialized as shown in this example:
 
 ```json
@@ -58,45 +46,20 @@ This code doesn't escape Cyrillic or Greek characters. If the `Summary` property
 }
 ```
 
-By default, the encoder is initialized with the `System.Text.Unicode.UnicodeRanges.BasicLatin` range.
+By default, the encoder is initialized with the <xref:System.Text.Unicode.UnicodeRanges.BasicLatin> range.
 
-To serialize all language sets without escaping, use `System.Text.Unicode.UnicodeRanges.All`.
+To serialize all language sets without escaping, use <xref:System.Text.Unicode.UnicodeRanges.All?displayProperty=nameWithType>.
 
 ## Serialize specific characters
 
 An alternative is to specify individual characters that you want to allow through without being escaped. The following example serializes only the first two characters of `жарко`:
 
-```csharp
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Unicode;
-```
-```vb
-Imports System.Text.Encodings.Web
-Imports System.Text.Json
-Imports System.Text.Unicode
-```
-```csharp
-var encoderSettings = new TextEncoderSettings();
-encoderSettings.AllowCharacters('\u0436', '\u0430');
-encoderSettings.AllowRange(UnicodeRanges.BasicLatin);
-var options2 = new JsonSerializerOptions
-{
-    Encoder = JavaScriptEncoder.Create(encoderSettings),
-    WriteIndented = true
-};
-jsonString = JsonSerializer.Serialize(weatherForecast, options2);
-```
-```vb
-Dim encoderSettings As TextEncoderSettings = New TextEncoderSettings
-encoderSettings.AllowCharacters(ChrW(&H436), ChrW(&H430))
-encoderSettings.AllowRange(UnicodeRanges.BasicLatin)
-options = New JsonSerializerOptions With {
-    .Encoder = JavaScriptEncoder.Create(encoderSettings),
-    .WriteIndented = True
-}
-jsonString = JsonSerializer.Serialize(weatherForecast1, options)
-```
+:::code language="csharp" source="snippets/how-to/csharp/SerializeCustomEncoding.cs" id="Usings":::
+:::code language="vb" source="snippets/how-to/vb/SerializeCustomEncoding.vb" id="Usings":::
+
+:::code language="csharp" source="snippets/how-to/csharp/SerializeCustomEncoding.cs" id="SelectedCharacters":::
+:::code language="vb" source="snippets/how-to/vb/SerializeCustomEncoding.vb" id="SelectedCharacters":::
+
 Here's an example of JSON produced by the preceding code:
 
 ```json
@@ -113,45 +76,26 @@ The preceding sections show how to specify allow lists of code points or ranges 
 
 ### Global block list
 
-The global block list includes things like private-use characters, control characters, undefined code points, and certain Unicode categories, such as the Space_Separator category, excluding `U+0020 SPACE`. For example, `U+3000 IDEOGRAPHIC SPACE` is escaped even if you specify Unicode range CJK Symbols and Punctuation (U+3000-U+303F) as your allow list.
+The global block list includes things like private-use characters, control characters, undefined code points, and certain Unicode categories, such as the [Space_Separator category](https://www.compart.com/en/unicode/category/Zs), excluding `U+0020 SPACE`. For example, `U+3000 IDEOGRAPHIC SPACE` is escaped even if you specify Unicode range [CJK Symbols and Punctuation (U+3000-U+303F)](xref:System.Text.Unicode.UnicodeRanges.CjkSymbolsandPunctuation) as your allow list.
 
 The global block list is an implementation detail that has changed in every release of .NET. Don't take a dependency on a character being a member of (or not being a member of) the global block list.
 
 ### Encoder-specific block lists
 
-Examples of encoder-specific blocked code points include `'<'` and `'&'` for the HTML encoder, `'\'` for the JSON encoder, and `'%'` for the URL encoder. For example, the HTML encoder always escapes ampersands (`'&'`), even though the ampersand is in the `BasicLatin` range and all the encoders are initialized with `BasicLatin` by default.
+Examples of encoder-specific blocked code points include `'<'` and `'&'` for the [HTML encoder](xref:System.Text.Encodings.Web.HtmlEncoder), `'\'` for the [JSON encoder](xref:System.Text.Encodings.Web.JavaScriptEncoder), and `'%'` for the [URL encoder](xref:System.Text.Encodings.Web.UrlEncoder). For example, the HTML encoder always escapes ampersands (`'&'`), even though the ampersand is in the `BasicLatin` range and all the encoders are initialized with `BasicLatin` by default.
 
 ## Serialize all characters
 
-To minimize escaping, you can use `System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping`, as shown in the following example:
+To minimize escaping, you can use <xref:System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping?displayProperty=nameWithType>, as shown in the following example:
 
-```csharp
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Unicode;
-```
-```vb
-Imports System.Text.Encodings.Web
-Imports System.Text.Json
-Imports System.Text.Unicode
-```
-```csharp
-var options3 = new JsonSerializerOptions
-{
-    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-    WriteIndented = true
-};
-jsonString = JsonSerializer.Serialize(weatherForecast, options3);
-```
-```vb
-options = New JsonSerializerOptions With {
-    .Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-    .WriteIndented = True
-}
-jsonString = JsonSerializer.Serialize(weatherForecast1, options)
-```
-> **Caution:**
-> Compared to the default encoder, the `UnsafeRelaxedJsonEscaping` encoder is more permissive about allowing characters to pass <example-value> unescaped:
+:::code language="csharp" source="snippets/how-to/csharp/SerializeCustomEncoding.cs" id="Usings":::
+:::code language="vb" source="snippets/how-to/vb/SerializeCustomEncoding.vb" id="Usings":::
+
+:::code language="csharp" source="snippets/how-to/csharp/SerializeCustomEncoding.cs" id="UnsafeRelaxed":::
+:::code language="vb" source="snippets/how-to/vb/SerializeCustomEncoding.vb" id="UnsafeRelaxed":::
+
+> [!CAUTION]
+> Compared to the default encoder, the `UnsafeRelaxedJsonEscaping` encoder is more permissive about allowing characters to pass through unescaped:
 >
 > * It doesn't escape HTML-sensitive characters such as `<`, `>`, `&`, and `'`.
 > * It doesn't offer any additional defense-in-depth protections against XSS or information disclosure attacks, such as those which might result from the client and server disagreeing on the *charset*.
@@ -160,5 +104,5 @@ jsonString = JsonSerializer.Serialize(weatherForecast1, options)
 
 ## See also
 
-* System.Text.Json overview
-* How to serialize and deserialize JSON
+* [System.Text.Json overview](overview.md)
+* [How to serialize and deserialize JSON](how-to.md)

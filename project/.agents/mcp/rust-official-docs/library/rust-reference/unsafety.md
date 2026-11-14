@@ -1,12 +1,3 @@
----
-title: "Unsafety"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/unsafety.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[safety]
 # Unsafety
 
@@ -29,7 +20,7 @@ r[safety.unsafe-call]
 - Calling an unsafe function.
 
 r[safety.unsafe-target-feature-call]
-- Calling a safe function marked with a `target_feature` from a function that does not have a `target_feature` attribute enabling the same features (see [attributes.codegen.target_feature.safety-restrictions]).
+- Calling a safe function marked with a [`target_feature`][attributes.codegen.target_feature] from a function that does not have a `target_feature` attribute enabling the same features (see [attributes.codegen.target_feature.safety-restrictions]).
 
 r[safety.unsafe-impl]
 - Implementing an [unsafe trait].
@@ -39,3 +30,13 @@ r[safety.unsafe-extern]
 
 r[safety.unsafe-attribute]
 - Applying an [unsafe attribute] to an item.
+
+[^extern-2024]: Prior to the 2024 edition, extern blocks were allowed to be declared without `unsafe`.
+
+[`extern`]: items/external-blocks.md
+[`union`]: items/unions.md
+[mutable]: items/static-items.md#mutable-statics
+[external]: items/external-blocks.md
+[raw pointer]: types/pointer.md
+[unsafe trait]: items/traits.md#unsafe-traits
+[unsafe attribute]: attributes.md

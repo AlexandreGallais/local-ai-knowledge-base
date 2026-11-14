@@ -1,10 +1,13 @@
 ---
-title: "Apply custom upgrade instructions for .NET upgrades"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/github-copilot-upgrade/dotnet-how-to-custom-upgrade-instructions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Apply custom upgrade instructions for .NET upgrades
+description: "Create and apply custom upgrade instructions with GitHub Copilot upgrade to automate .NET upgrades. Write, test, and integrate instructions for consistent transformations."
+author: kschlobohm
+ms.topic: how-to
+ms.date: 03/04/2026
+ai-usage: ai-assisted
+
+#customer intent: As a developer, I want to apply custom upgrade instructions during a .NET upgrade so that I can automate specific changes consistently.
+
 ---
 
 # Apply custom upgrade instructions for .NET upgrades
@@ -15,7 +18,7 @@ This article explains how to create and structure a custom upgrade instruction f
 
 ## Prerequisites
 
-Set up GitHub Copilot upgrade in your development environment before creating custom instructions. For installation steps, see Install GitHub Copilot upgrade.
+Set up GitHub Copilot upgrade in your development environment before creating custom instructions. For installation steps, see [Install GitHub Copilot upgrade](install.md).
 
 ## Understand custom upgrade instructions
 
@@ -42,14 +45,7 @@ Follow these steps to generate and refine a new instruction file. These sections
 
 Use the following steps to start an upgrade:
 
-1. Start the agent by using one of these methods:
-
-   - **Visual Studio**: Right-click the solution or project in **Solution Explorer** and select **Modernize**. Alternatively, open the **GitHub Copilot Chat** window and type `@Modernize`.
-   - **Visual Studio Code**: Open the **GitHub Copilot Chat** panel and type `@upgrade`.
-   - **GitHub Copilot CLI**: Type `@upgrade` followed by your upgrade or migration request.
-   - **GitHub Copilot app**: In the **Agent** picker, select `Upgrade`.
-
-1. Tell the agent what to upgrade or migrate.
+[!INCLUDE[github-copilot-how-to-initiate](./includes/how-to-initiate.md)]
 
 ### Create the instruction file
 
@@ -57,7 +53,7 @@ Use the following steps to start an upgrade:
 1. When asked, provide a scenario like `I want to replace Newtonsoft with System.Text.Json` to have Copilot create the file.
 1. When Copilot creates the new file, such as `replace_newtonsoft_with_system_text_json.md`, review the content and refine it in chat. For example, ask Copilot to _"clarify detection criteria"_ or _"add a prerequisite section."_
 
-   > **Tip:**
+   > [!TIP]
    > Add the file to the solution for visibility if it isn't already included.
 
 1. Strengthen the instruction with real diff examples.
@@ -83,14 +79,7 @@ Before running the instruction during an upgrade, validate it in isolation. Isol
 
 Use the following steps to start an upgrade:
 
-1. Start the agent by using one of these methods:
-
-   - **Visual Studio**: Right-click the solution or project in **Solution Explorer** and select **Modernize**. Alternatively, open the **GitHub Copilot Chat** window and type `@Modernize`.
-   - **Visual Studio Code**: Open the **GitHub Copilot Chat** panel and type `@upgrade`.
-   - **GitHub Copilot CLI**: Type `@upgrade` followed by your upgrade or migration request.
-   - **GitHub Copilot app**: In the **Agent** picker, select `Upgrade`.
-
-1. Tell the agent what to upgrade or migrate.
+[!INCLUDE[github-copilot-how-to-initiate](./includes/how-to-initiate.md)]
 
 ### Test the upgrade instruction
 
@@ -123,14 +112,7 @@ Use these steps to incorporate an existing custom upgrade instruction into the a
 
 To start the upgrade, follow these steps:
 
-1. Start the agent by using one of these methods:
-
-   - **Visual Studio**: Right-click the solution or project in **Solution Explorer** and select **Modernize**. Alternatively, open the **GitHub Copilot Chat** window and type `@Modernize`.
-   - **Visual Studio Code**: Open the **GitHub Copilot Chat** panel and type `@upgrade`.
-   - **GitHub Copilot CLI**: Type `@upgrade` followed by your upgrade or migration request.
-   - **GitHub Copilot app**: In the **Agent** picker, select `Upgrade`.
-
-1. Tell the agent what to upgrade or migrate.
+[!INCLUDE[github-copilot-how-to-initiate](./includes/how-to-initiate.md)]
 
 ### Customize the upgrade
 
@@ -177,7 +159,7 @@ Remove or consolidate any temporary instruction files to avoid overlapping trans
 
 ## Related content
 
-- Upgrade a .NET app with GitHub Copilot upgrade
-- GitHub Copilot upgrade FAQ
-- What is GitHub Copilot upgrade?
-- Install GitHub Copilot upgrade
+- [Upgrade a .NET app with GitHub Copilot upgrade](dotnet-how-to-upgrade-with-github-copilot.md)
+- [GitHub Copilot upgrade FAQ](faq.yml)
+- [What is GitHub Copilot upgrade?](overview.md)
+- [Install GitHub Copilot upgrade](install.md)

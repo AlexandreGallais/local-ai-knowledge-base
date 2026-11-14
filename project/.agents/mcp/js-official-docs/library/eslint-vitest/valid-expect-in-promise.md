@@ -1,17 +1,10 @@
----
-title: "vitest/valid-expect-in-promise"
-tool: "eslint-vitest"
-version: "1.6"
-source: "https://github.com/vitest-dev/eslint-plugin-vitest/blob/c5df1054a25044a7ca5baf07461b7aee1f15f5f2/docs/rules/valid-expect-in-promise.md"
-commit: "c5df1054a25044a7ca5baf07461b7aee1f15f5f2"
-license: "MIT"
----
-
 # vitest/valid-expect-in-promise
 
 📝 Require promises that have expectations in their chain to be valid.
 
 💼⚠️ This rule is enabled in the ✅ `recommended` config. This rule _warns_ in the 🌐 `all` config.
+
+<!-- end auto-generated rule header -->
 
 This rule flags any promises within the body of a test that include expectations that have either not been returned or awaited.
 

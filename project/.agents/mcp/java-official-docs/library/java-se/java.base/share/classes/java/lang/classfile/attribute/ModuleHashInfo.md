@@ -1,23 +1,13 @@
----
-title: "ModuleHashInfo interface (java.lang.classfile.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/attribute/ModuleHashInfo.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ModuleHashInfo interface (java.lang.classfile.attribute)
 
 ```java
 public sealed interface ModuleHashInfo permits UnboundAttribute.UnboundModuleHashInfo
 ```
 
-Models hash information for a single module in the `ModuleHashesAttribute`.
+Models hash information for a single module in the {@link ModuleHashesAttribute}.
 
-**See also:** ModuleHashesAttribute#hashes()
-
-**Since:** 24
+@see ModuleHashesAttribute#hashes()
+@since 24
 
 ## ModuleHashInfo.moduleName()
 
@@ -25,11 +15,15 @@ Models hash information for a single module in the `ModuleHashesAttribute`.
 ModuleEntry moduleName()
 ```
 
+{@return the name of the related module}
+
 ## ModuleHashInfo.hash()
 
 ```java
 byte[] hash()
 ```
+
+{@return the hash of the related module}
 
 ## ModuleHashInfo.of(ModuleEntry, byte[])
 
@@ -37,10 +31,9 @@ byte[] hash()
 static ModuleHashInfo of(ModuleEntry moduleName, byte[] hash)
 ```
 
-Parameters:
-
-- `moduleName`: the module name
-- `hash`: the hash value
+{@return a module hash description}
+@param moduleName the module name
+@param hash the hash value
 
 ## ModuleHashInfo.of(ModuleDesc, byte[])
 
@@ -48,7 +41,6 @@ Parameters:
 static ModuleHashInfo of(ModuleDesc moduleDesc, byte[] hash)
 ```
 
-Parameters:
-
-- `moduleDesc`: the module name
-- `hash`: the hash value
+{@return a module hash description}
+@param moduleDesc the module name
+@param hash the hash value

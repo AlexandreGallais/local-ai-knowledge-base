@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataImport::EnumPermissionSets Method"
 title: "IMetaDataImport::EnumPermissionSets Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-enumpermissionsets-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.EnumPermissionSets"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::EnumPermissionSets"
+  - "IMetaDataImport::EnumPermissionSets method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::EnumPermissionSets Method
 
 Enumerates permissions for the objects in a specified metadata scope.
@@ -33,7 +40,7 @@ HRESULT EnumPermissionSets
  [in] A metadata token that limits the scope of the search, or NULL to search the widest scope possible.
 
  `dwActions`
- [in] Flags representing the `System.Security.Permissions.SecurityAction` values to include in `rPermission`, or zero to return all actions.
+ [in] Flags representing the <xref:System.Security.Permissions.SecurityAction> values to include in `rPermission`, or zero to return all actions.
 
  `rPermission`
  [out] The array used to store the Permission tokens.
@@ -53,7 +60,7 @@ HRESULT EnumPermissionSets
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -61,5 +68,5 @@ HRESULT EnumPermissionSets
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

@@ -1,14 +1,9 @@
 ---
-title: "multiline-ternary"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/multiline-ternary.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: multiline-ternary
+rule_type: layout
+related_rules:
+- operator-linebreak
 ---
-
-# multiline-ternary
-
 JavaScript allows operands of ternary expressions to be separated by newlines, which can improve the readability of your program.
 
 For example:
@@ -33,7 +28,7 @@ var foo = bar > baz
 ## Rule Details
 
 This rule enforces or disallows newlines between operands of a ternary expression.
-Note: The location of the operators is not enforced by this rule. Please see the operator-linebreak rule if you are interested in enforcing the location of the operators themselves.
+Note: The location of the operators is not enforced by this rule. Please see the [operator-linebreak](operator-linebreak) rule if you are interested in enforcing the location of the operators themselves.
 
 ## Options
 
@@ -49,7 +44,7 @@ This is the default option.
 
 Examples of **incorrect** code for this rule with the `"always"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint multiline-ternary: ["error", "always"]*/
@@ -63,9 +58,11 @@ foo > bar ?
     value : value2;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"always"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint multiline-ternary: ["error", "always"]*/
@@ -87,11 +84,13 @@ foo > bar
     : value3;
 ```
 
+:::
+
 ### always-multiline
 
 Examples of **incorrect** code for this rule with the `"always-multiline"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint multiline-ternary: ["error", "always-multiline"]*/
@@ -106,9 +105,11 @@ foo > bar &&
     bar > baz ? value1 : value2;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"always-multiline"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint multiline-ternary: ["error", "always-multiline"]*/
@@ -141,11 +142,13 @@ foo > bar
     : value3;
 ```
 
+:::
+
 ### never
 
 Examples of **incorrect** code for this rule with the `"never"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint multiline-ternary: ["error", "never"]*/
@@ -162,9 +165,11 @@ foo >
     value2;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"never"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint multiline-ternary: ["error", "never"]*/
@@ -178,10 +183,12 @@ foo > bar ? (
 ) : value3;
 ```
 
+:::
+
 ## When Not To Use It
 
 You can safely disable this rule if you do not have any strict conventions about whether the operands of a ternary expression should be separated by newlines.
 
 ## Compatibility
 
-* **JSCS**: requireMultiLineTernary
+* **JSCS**: [requireMultiLineTernary](https://jscs-dev.github.io/rule/requireMultiLineTernary)

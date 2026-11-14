@@ -1,12 +1,22 @@
 ---
+description: "Learn more about: ICorDebugProcess4 Interface"
 title: "ICorDebugProcess4 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess4-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "02/07/2019"
+api_name:
+  - "ICorDebugProcess4"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugProcess4"
+helpviewer_keywords:
+  - "ICorDebugProcess4 interface [.NET debugging]"
+topic_type:
+  - "apiref"
+author: "hoyosjs"
+ms.author: "juhoyosa"
 ---
-
 # ICorDebugProcess4 Interface
 
 Provides support for out of process execution control.
@@ -15,7 +25,7 @@ Provides support for out of process execution control.
 
 | Method                                                                 | Description |
 |------------------------------------------------------------------------|-------------|
-| ProcessStateChanged | Notifies the ICorDebug pipeline that the out of process debugger is continuing the debugee's execution. |
+| [ProcessStateChanged](icordebugprocess4-processstatechanged-method.md) | Notifies the ICorDebug pipeline that the out of process debugger is continuing the debugee's execution. |
 
 ## Remarks
 
@@ -23,7 +33,7 @@ This interface lives inside the runtime and isn't exposed through any headers or
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** None
 

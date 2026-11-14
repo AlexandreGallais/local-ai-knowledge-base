@@ -1,21 +1,18 @@
 ---
-title: "Develop ASP.NET Core apps using a file watcher"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/tutorials/dotnet-watch.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Develop ASP.NET Core apps using a file watcher
+ai-usage: ai-assisted
+description: This tutorial demonstrates how to install and use the .NET CLI's file watcher (dotnet watch) tool in an ASP.NET Core app.
+ms.date: 09/23/2026
 ---
-
 # Develop ASP.NET Core apps using a file watcher
 
-By Rick Anderson and Victor Hurdugaci
+By [Rick Anderson](https://twitter.com/RickAndMSFT) and [Victor Hurdugaci](https://twitter.com/victorhurdugaci)
 
-`dotnet watch` is a tool that runs a .NET CLI command when source files change. For example, a file change can trigger compilation, test execution, or deployment.
+`dotnet watch` is a tool that runs a [.NET CLI](/dotnet/core/tools) command when source files change. For example, a file change can trigger compilation, test execution, or deployment.
 
 This tutorial uses an existing web API with two endpoints: one that returns a sum and one that returns a product. The product method has a bug, which is fixed in this tutorial.
 
-Download the sample app. It consists of two projects: *WebApp* (an ASP.NET Core web API) and *WebAppTests* (unit tests for the web API).
+Download the [sample app](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/tutorials/dotnet-watch/samples). It consists of two projects: *WebApp* (an ASP.NET Core web API) and *WebAppTests* (unit tests for the web API).
 
 In a command shell, navigate to the *WebApp* folder. Run the following command:
 
@@ -23,7 +20,7 @@ In a command shell, navigate to the *WebApp* folder. Run the following command:
 dotnet run
 ```
 
-> **Note:**
+> [!NOTE]
 > You can use `dotnet run --project <PROJECT>` to specify a project to run. For example, running `dotnet run --project WebApp` from the root of the sample app will also run the *WebApp* project.
 
 The console output shows messages similar to the following (indicating that the app is running and awaiting requests):
@@ -40,9 +37,31 @@ In a web browser, navigate to `http://localhost:<port number>/api/math/sum?a=4&b
 
 Navigate to the product API (`http://localhost:<port number>/api/math/product?a=4&b=5`). It returns `9`, not `20` as you'd expect. That problem is fixed later in the tutorial.
 
+:::moniker range="<= aspnetcore-2.0"
+
+## Add `dotnet watch` to a project
+
+The `dotnet watch` file watcher tool is included with version 2.1.300 of the .NET SDK. The following steps are required when using an earlier version of the .NET SDK.
+
+1. Add a `Microsoft.DotNet.Watcher.Tools` package reference to the `.csproj` file:
+
+    ```xml
+    <ItemGroup>
+        <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0" />
+    </ItemGroup>
+    ```
+
+1. Install the `Microsoft.DotNet.Watcher.Tools` package by running the following command:
+
+    ```dotnetcli
+    dotnet restore
+    ```
+
+:::moniker-end
+
 ## Run .NET CLI commands using `dotnet watch`
 
-Any .NET CLI command can be run with `dotnet watch`. For example:
+Any [.NET CLI command](/dotnet/core/tools#cli-commands) can be run with `dotnet watch`. For example:
 
 | Command | Command with watch |
 | ---- | ----- |
@@ -53,7 +72,8 @@ Any .NET CLI command can be run with `dotnet watch`. For example:
 
 Run `dotnet watch run` in the *WebApp* folder. The console output indicates `watch` has started.
 
-Running `dotnet watch run` on a web app launches a browser that navigates to the app's URL once ready. `dotnet watch` does this by reading the app's console output and waiting for the ready message displayed by `Microsoft.AspNetCore.WebHost`.
+:::moniker range=">= aspnetcore-5.0"
+Running `dotnet watch run` on a web app launches a browser that navigates to the app's URL once ready. `dotnet watch` does this by reading the app's console output and waiting for the ready message displayed by <xref:Microsoft.AspNetCore.WebHost>.
 
 `dotnet watch` refreshes the browser when it detects changes to watched files. To do this, the watch command injects a middleware to the app that modifies HTML responses created by the app. The middleware adds a JavaScript script block to the page that allows `dotnet watch` to instruct the browser to refresh. Currently, changes to all watched files, including static content such as `.html` and `.css` files cause the app to be rebuilt.
 
@@ -62,9 +82,11 @@ Running `dotnet watch run` on a web app launches a browser that navigates to the
 * Only watches files that impact builds by default.
 * Any additionally watched files (via configuration) still results in a build taking place.
 
-For more information on configuration, see dotnet-watch configuration in this document.
+For more information on configuration, see [dotnet-watch configuration](#dotnet-watch-configuration) in this document.
 
-> **Note:**
+:::moniker-end
+
+> [!NOTE]
 > You can use `dotnet watch --project <PROJECT>` to specify a project to watch. For example, running `dotnet watch --project WebApp run` from the root of the sample app will also run and watch the *WebApp* project.
 
 ## Make changes with `dotnet watch`
@@ -88,7 +110,7 @@ Verify `http://localhost:<port number>/api/math/product?a=4&b=5` returns the cor
 
 1. Change the `Product` method of `MathController.cs` back to returning the sum. Save the file.
 1. In a command shell, navigate to the *WebAppTests* folder.
-1. Run dotnet restore.
+1. Run [dotnet restore](/dotnet/core/tools/dotnet-restore).
 1. Run `dotnet watch test`. Its output indicates that a test failed and that the watcher is awaiting file changes:
 
      ```console
@@ -204,6 +226,7 @@ Visual Studio 17.2 or later includes the .NET SDK 6.0.300 or later. With the .NE
 * Configure the `DOTNET_WATCH_SUPPRESS_EMOJIS=1` environment variable to suppress emitting these values.
 * Switch to a different terminal, such as https://github.com/microsoft/terminal, that  supports rendering non-ASCII characters.
 
+
 ## File watcher limits in Linux
 
 When running `dotnet watch` on Linux or in Docker containers, you may encounter an error indicating that the configured user limit on the number of inotify instances has been reached:
@@ -226,5 +249,5 @@ fs.inotify.max_user_instances=524288
 fs.inotify.max_user_watches=524288
 ```
 
-> **Note:**
+> [!NOTE]
 > For Docker containers, these limits are inherited from the host operating system. You must configure the `sysctl` settings on the host machine, rather than inside the container.

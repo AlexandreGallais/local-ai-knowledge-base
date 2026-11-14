@@ -1,31 +1,67 @@
 ---
-title: "Overview of ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/overview.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Overview of ASP.NET Core
+description: Get an overview of ASP.NET Core, a cross-platform, high-performance, open-source framework for building modern, cloud-enabled, Internet-connected apps.
+ms.date: 07/28/2025
 ---
-
 # Overview of ASP.NET Core
 
-ASP.NET Core is a cross-platform, high-performance, open-source framework for building modern web apps using .NET. The framework is built for large-scale app development and can handle any size workload, making it a robust choice for enterprise-level apps.
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
-Key <example-value>:
+ASP.NET Core is a cross-platform, high-performance, open-source framework for building modern web apps using [.NET](/dotnet/core/introduction). The framework is built for large-scale app development and can handle any size workload, making it a robust choice for enterprise-level apps.
+
+Key features:
+
+:::moniker range=">= aspnetcore-6.0"
 
 * Lightweight and modular HTTP request pipeline.
-* Kestrel: A high-performance and cross-platform HTTP server.
-* Integrated dependency injection.
-* Environment-based configuration.
+* [Kestrel](fundamentals/servers/kestrel.md): A [high-performance](https://github.com/aspnet/benchmarks) and cross-platform HTTP server.
+* Integrated [dependency injection](fundamentals/dependency-injection.md).
+* [Environment-based configuration](fundamentals/configuration/index.md).
 * Rich logging, tracing, and runtime metrics.
-* Blazor: Create rich interactive web UI components using C#—no JavaScript required.
-* Integrate seamlessly with popular client-side frameworks and libraries, including Angular, React, Vue, and Bootstrap.
-* Minimal APIs: Build fast web APIs with minimal code and configuration by fluently declaring API routes and endpoints.
-* SignalR: Add real-time web functionality.
-* gRPC: High performance Remote Procedure Call (RPC) services.
-* Security: Built-in security features for authentication, authorization, and data protection.
+* [Blazor](blazor/index.md): Create rich interactive web UI components using [C#](/dotnet/csharp/)&mdash;no JavaScript required.
+* Integrate seamlessly with popular client-side frameworks and libraries, including [Angular](/visualstudio/javascript/tutorial-asp-net-core-with-angular), [React](/visualstudio/javascript/tutorial-asp-net-core-with-react), [Vue](/visualstudio/javascript/tutorial-asp-net-core-with-vue), and [Bootstrap](https://getbootstrap.com/).
+* [Minimal APIs](fundamentals/minimal-apis.md): Build fast web APIs with minimal code and configuration by fluently declaring API routes and endpoints.
+* [SignalR](xref:signalr/index): Add real-time web functionality.
+* [gRPC](grpc/index.md): High performance Remote Procedure Call (RPC) services.
+* Security: Built-in security features for [authentication](security/authentication/index.md), [authorization](security/authorization/introduction.md), and [data protection](security/data-protection/introduction.md).
 * Testing: Easily create unit and integration tests.
-* Tooling: Maximize your development productivity with Visual Studio and Visual Studio Code.
+* Tooling: Maximize your development productivity with [Visual Studio](https://visualstudio.microsoft.com/) and [Visual Studio Code](https://code.visualstudio.com/).
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-3.0 < aspnetcore-6.0"
+
+* Lightweight and modular HTTP request pipeline.
+* [Kestrel](fundamentals/servers/kestrel.md): A [high-performance](https://github.com/aspnet/benchmarks) and cross-platform HTTP server.
+* Integrated [dependency injection](fundamentals/dependency-injection.md).
+* [Environment-based configuration](fundamentals/configuration/index.md).
+* Rich logging, tracing, and runtime metrics.
+* [Blazor](blazor/index.md): Create rich interactive web UI components using [C#](/dotnet/csharp/)&mdash;no JavaScript required.
+* Integrate seamlessly with popular client-side frameworks and libraries, including [Angular](/visualstudio/javascript/tutorial-asp-net-core-with-angular), [React](/visualstudio/javascript/tutorial-asp-net-core-with-react), [Vue](/visualstudio/javascript/tutorial-asp-net-core-with-vue), and [Bootstrap](https://getbootstrap.com/).
+* [SignalR](xref:signalr/index): Add real-time web functionality.
+* [gRPC](grpc/index.md): High performance Remote Procedure Call (RPC) services.
+* Security: Built-in security features for [authentication](security/authentication/index.md), [authorization](security/authorization/introduction.md), and [data protection](security/data-protection/introduction.md).
+* Testing: Easily create unit and integration tests.
+* Tooling: Maximize your development productivity with [Visual Studio](https://visualstudio.microsoft.com/) and [Visual Studio Code](https://code.visualstudio.com/).
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-3.0"
+
+* Lightweight and modular HTTP request pipeline.
+* [Kestrel](fundamentals/servers/kestrel.md): A [high-performance](https://github.com/aspnet/benchmarks) and cross-platform HTTP server.
+* Integrated [dependency injection](fundamentals/dependency-injection.md).
+* [Environment-based configuration](fundamentals/configuration/index.md).
+* Rich logging, tracing, and runtime metrics.
+* Develop apps and APIs using [Razor Pages](razor-pages/index.md) and [Model-View-Controller (MVC)](mvc/overview.md) frameworks.
+* Integrate seamlessly with popular client-side frameworks and libraries, including [Angular](/visualstudio/javascript/tutorial-asp-net-core-with-angular), [React](/visualstudio/javascript/tutorial-asp-net-core-with-react), [Vue](/visualstudio/javascript/tutorial-asp-net-core-with-vue), and [Bootstrap](https://getbootstrap.com/).
+* [SignalR](xref:signalr/index): Add real-time web functionality.
+* [gRPC](grpc/index.md): High performance Remote Procedure Call (RPC) services.
+* Security: Built-in security features for [authentication](security/authentication/index.md), [authorization](security/authorization/introduction.md), and [data protection](security/data-protection/introduction.md).
+* Testing: Easily create unit and integration tests.
+* Tooling: Maximize your development productivity with [Visual Studio](https://visualstudio.microsoft.com/) and [Visual Studio Code](https://code.visualstudio.com/).
+
+:::moniker-end
 
 ## Why choose ASP.NET Core?
 
@@ -40,4 +76,5 @@ Key <example-value>:
 
 Are you ready to start your ASP.NET Core learning journey? It's time to build your first web app with ASP.NET Core!
 
-> Get started with ASP.NET Core
+> [!div class="nextstepaction"]
+> [Get started with ASP.NET Core](get-started.md)

@@ -1,70 +1,29 @@
 ---
 title: "How to: Return a Value from a Task"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/parallel-programming/how-to-return-a-value-from-a-task.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: See how to use the System.Threading.Tasks.Task<TResult> type to return a value from the Result property in .NET.
+ms.date: "08/10/2022"
+ms.custom: devdivchpfy22
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "tasks, how to return a value"
+ms.assetid: c4bc0f44-eba2-4e96-9e03-1cc787461e61
 ---
-
 # How to: Return a Value from a Task
 
-This example shows how to use the `System.Threading.Tasks.Task`1` class to return a value from the `System.Threading.Tasks.Task`1.Result` property. To use this example, you must ensure that the *C:\Users\Public\Pictures\Sample Pictures* directory exists and that it contains files.
+This example shows how to use the <xref:System.Threading.Tasks.Task`1?displayProperty=nameWithType> class to return a value from the <xref:System.Threading.Tasks.Task`1.Result> property. To use this example, you must ensure that the *C:\Users\Public\Pictures\Sample Pictures* directory exists and that it contains files.
 
 ## Example
 
- ```csharp
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+ [!code-csharp[TPL#10](../../../samples/snippets/csharp/VS_Snippets_Misc/tpl/cs/returnavalue10.cs#10)]
+ [!code-vb[TPL#10](../../../samples/snippets/visualbasic/VS_Snippets_Misc/tpl/vb/10_returnavalue.vb#10)]
 
-class Program
-{
-    static void Main()
-    {
-        // Return a value type with a lambda expression
-        Task<int> task1 = Task<int>.Factory.StartNew(() => 1);
-        int i = task1.Result;
+ The <xref:System.Threading.Tasks.Task`1.Result> property blocks the calling thread until the task finishes.
 
-        // Return a named reference type with a multi-line statement lambda.
-        Task<Test> task2 = Task<Test>.Factory.StartNew(() =>
-        {
-            string s = ".NET";
-            double d = 4.0;
-            return new Test { Name = s, Number = d };
-        });
-        Test test = task2.Result;
-
-        // Return an array produced by a PLINQ query
-        Task<string[]> task3 = Task<string[]>.Factory.StartNew(() =>
-        {
-            string path = @"C:\Users\Public\Pictures\Sample Pictures\";
-            string[] files = System.IO.Directory.GetFiles(path);
-
-            string[] result = (from file in files.AsParallel()
-                          let info = new System.IO.FileInfo(file)
-                          where info.Extension == ".jpg"
-                          select file).ToArray();
-
-            return result;
-        });
-
-        foreach (string name in task3.Result)
-            Console.WriteLine(name);
-    }
-    class Test
-    {
-        public string Name { get; set; }
-        public double Number { get; set; }
-    }
-}
-```
-
- The `System.Threading.Tasks.Task`1.Result` property blocks the calling thread until the task finishes.
-
-To see how to pass the result of a `System.Threading.Tasks.Task`1` class to a continuation task, see Chaining Tasks by Using Continuation Tasks.
+To see how to pass the result of a <xref:System.Threading.Tasks.Task`1?displayProperty=nameWithType> class to a continuation task, see [Chaining Tasks by Using Continuation Tasks](chaining-tasks-by-using-continuation-tasks.md).
 
 ## See also
 
-- Task-based Asynchronous Programming
-- Lambda Expressions in PLINQ and TPL
+- [Task-based Asynchronous Programming](task-based-asynchronous-programming.md)
+- [Lambda Expressions in PLINQ and TPL](lambda-expressions-in-plinq-and-tpl.md)

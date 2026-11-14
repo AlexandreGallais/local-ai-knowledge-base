@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: CborReader and CborWriter enforce a default maximum nesting depth"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/11/cbor-max-depth.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where CborReader and CborWriter enforce a maximum nesting depth by default, throwing exceptions when the limit is exceeded."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # CborReader and CborWriter enforce a default maximum nesting depth
 
-Starting in .NET 11, `System.Formats.Cbor.CborReader` and `System.Formats.Cbor.CborWriter` enforce a maximum nesting depth by default. Reading or writing CBOR data that exceeds the configured maximum depth throws an exception.
+Starting in .NET 11, <xref:System.Formats.Cbor.CborReader> and <xref:System.Formats.Cbor.CborWriter> enforce a maximum nesting depth by default. Reading or writing CBOR data that exceeds the configured maximum depth throws an exception.
 
 ## Version introduced
 
@@ -40,7 +38,7 @@ for (int i = 0; i < 2000; i++)
 
 ## New behavior
 
-Starting in .NET 11, `CborReader` throws `System.Formats.Cbor.CborContentException` when reading a container (array, map, or indefinite-length string) that would exceed the maximum allowed depth (default: 64). `CborWriter` throws `System.InvalidOperationException` when writing a container that would exceed the maximum allowed depth (default: 1000).
+Starting in .NET 11, `CborReader` throws <xref:System.Formats.Cbor.CborContentException> when reading a container (array, map, or indefinite-length string) that would exceed the maximum allowed depth (default: 64). `CborWriter` throws <xref:System.InvalidOperationException> when writing a container that would exceed the maximum allowed depth (default: 1000).
 
 ```csharp
 // Throws CborContentException when nesting depth exceeds 64
@@ -64,11 +62,11 @@ for (int i = 0; i < 1001; i++)
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-This change limits the nesting depth to prevent excessive memory consumption and execution time. When you skip over a deeply nested array or map, the system must process every element in the structure, which can use a surprising amount of memory. This change is also consistent with the behavior of `System.Text.Json.Utf8JsonReader` and `System.Text.Json.Utf8JsonWriter`.
+This change limits the nesting depth to prevent excessive memory consumption and execution time. When you skip over a deeply nested array or map, the system must process every element in the structure, which can use a surprising amount of memory. This change is also consistent with the behavior of <xref:System.Text.Json.Utf8JsonReader> and <xref:System.Text.Json.Utf8JsonWriter>.
 
 ## Recommended action
 
@@ -86,18 +84,18 @@ var writerOptions = new CborWriterOptions { MaxDepth = 2000 };
 var writer = new CborWriter(writerOptions);
 ```
 
-> **Note:**
+> [!NOTE]
 > Unlike `Utf8JsonReader`/`Utf8JsonWriter`, setting `MaxDepth = 0` in CBOR means *no nesting is allowed* (not "use the runtime default"). To use the runtime default, set `MaxDepth = -1` or omit the property when constructing `CborReaderOptions`/`CborWriterOptions`.
 
 There is no AppContext switch to restore the previous unlimited-depth behavior.
 
 ## Affected APIs
 
-- `System.Formats.Cbor.CborReader.ReadStartArray`
-- `System.Formats.Cbor.CborReader.ReadStartMap`
-- `System.Formats.Cbor.CborReader.ReadStartIndefiniteLengthByteString`
-- `System.Formats.Cbor.CborReader.ReadStartIndefiniteLengthTextString`
-- `System.Formats.Cbor.CborWriter.WriteStartArray(System.Nullable{System.Int32})`
-- `System.Formats.Cbor.CborWriter.WriteStartIndefiniteLengthByteString`
-- `System.Formats.Cbor.CborWriter.WriteStartIndefiniteLengthTextString`
-- `System.Formats.Cbor.CborWriter.WriteStartMap(System.Nullable{System.Int32})`
+- <xref:System.Formats.Cbor.CborReader.ReadStartArray?displayProperty=fullName>
+- <xref:System.Formats.Cbor.CborReader.ReadStartMap?displayProperty=fullName>
+- <xref:System.Formats.Cbor.CborReader.ReadStartIndefiniteLengthByteString?displayProperty=fullName>
+- <xref:System.Formats.Cbor.CborReader.ReadStartIndefiniteLengthTextString?displayProperty=fullName>
+- <xref:System.Formats.Cbor.CborWriter.WriteStartArray(System.Nullable{System.Int32})?displayProperty=nameWithType>
+- <xref:System.Formats.Cbor.CborWriter.WriteStartIndefiniteLengthByteString?displayProperty=fullName>
+- <xref:System.Formats.Cbor.CborWriter.WriteStartIndefiniteLengthTextString?displayProperty=fullName>
+- <xref:System.Formats.Cbor.CborWriter.WriteStartMap(System.Nullable{System.Int32})?displayProperty=fullName>

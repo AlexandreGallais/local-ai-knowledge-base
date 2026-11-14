@@ -1,17 +1,8 @@
----
-title: "TestSpecification"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/api/advanced/test-specification.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # TestSpecification
 
 The `TestSpecification` class describes what module to run as a test and its parameters.
 
-You can only create a specification by calling `createSpecification` method on a test project:
+You can only create a specification by calling [`createSpecification`](/api/advanced/test-project#createspecification) method on a test project:
 
 ```ts
 const specification = project.createSpecification(
@@ -29,11 +20,11 @@ const specification = project.createSpecification(
 
 ## taskId
 
-Test module's identifier.
+[Test module's](/api/advanced/test-suite#id) identifier.
 
 ## project
 
-This references the `TestProject` that the test module belongs to.
+This references the [`TestProject`](/api/advanced/test-project) that the test module belongs to.
 
 ## moduleId
 
@@ -47,14 +38,15 @@ The ID of the module in Vite's module graph. Usually, it's an absolute file path
 
 ## testModule
 
-Instance of `TestModule` associated with the specification. If test wasn't queued yet, this will be `undefined`.
+Instance of [`TestModule`](/api/advanced/test-module) associated with the specification. If test wasn't queued yet, this will be `undefined`.
 
 ## pool {#pool}
 
-The `pool` in which the test module will run.
+The [`pool`](/config/pool) in which the test module will run.
 
-**Danger:**
-It's possible to have multiple pools in a single test project with `typecheck.enabled`. This means it's possible to have several specifications with the same `moduleId` but different `pool`. In later versions, the project will only support a single pool.
+::: danger
+It's possible to have multiple pools in a single test project with [`typecheck.enabled`](/config/typecheck#typecheck-enabled). This means it's possible to have several specifications with the same `moduleId` but different `pool`. In later versions, the project will only support a single pool.
+:::
 
 ## testLines
 
@@ -64,14 +56,14 @@ Note that if there is no test on at least one of the lines, the whole suite will
 
 ::: code-group
 
-```ts
+```ts [script.js]
 const specification = project.createSpecification(
   resolve('./example.test.ts'),
   [3, 8, 9],
 )
 ```
 
-```ts
+```ts:line-numbers{3,8,9} [example.test.js]
 import { test, describe } from 'vitest'
 
 test('verification works')
@@ -84,9 +76,11 @@ describe('a group of tests', () => { // [!code error]
 })
 ```
 
+:::
+
 ## testNamePattern <Version>4.1.0</Version> {#testnamepattern}
 
-A regexp that matches the name of the test in this module. This value will override the global `testNamePattern` option if it's set.
+A regexp that matches the name of the test in this module. This value will override the global [`testNamePattern`](/config/testnamepattern) option if it's set.
 
 ## testIds <Version>4.1.0</Version> {#testids}
 
@@ -98,7 +92,7 @@ The full names of the tests inside of this specification to run, including the p
 
 ## testTagsFilter <Version>4.1.0</Version> {#testtagsfilter}
 
-The tags filter that a test must pass in order to be included in the run. Multiple filters are treated as `AND`.
+The [tags filter](/guide/test-tags#syntax) that a test must pass in order to be included in the run. Multiple filters are treated as `AND`.
 
 ## toJSON
 
@@ -106,4 +100,4 @@ The tags filter that a test must pass in order to be included in the run. Multip
 function toJSON(): SerializedTestSpecification
 ```
 
-`toJSON` generates a JSON-friendly object that can be consumed by the Browser Mode or Vitest UI.
+`toJSON` generates a JSON-friendly object that can be consumed by the [Browser Mode](/guide/browser/) or [Vitest UI](/guide/ui).

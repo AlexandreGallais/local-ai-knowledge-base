@@ -1,21 +1,15 @@
----
-title: "no-invalid-response-options"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-invalid-response-options.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-invalid-response-options
 
 📝 Disallow invalid options in `new Response()`, `Response.json()`, and `Response.redirect()`.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-Invalid status and body combinations throw at runtime, even with an empty string or buffer, as defined by the Fetch standard.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+Invalid status and body combinations throw at runtime, even with an empty string or buffer, as defined by the [Fetch standard](https://fetch.spec.whatwg.org/#dom-response).
 
 This rule checks:
 
@@ -49,6 +43,6 @@ The rule suggests replacing a forbidden, statically known primitive constructor 
 
 ## Detection
 
-Checks direct calls with inline constructor or JSON options objects, using conservative static evaluation and Web IDL status conversion. Constructor body conflicts require a provably non-nullish body.
+Checks direct calls with inline constructor or JSON options objects, using conservative static evaluation and [Web IDL status conversion](https://webidl.spec.whatwg.org/#es-unsigned-short). Constructor body conflicts require a provably non-nullish body.
 
 Skips unknown values or overrides, aliases, qualified globals, optional or computed method calls, and spread arguments in the first two positions. Assumes unshadowed built-ins. Headers, `statusText`, and redirect URLs are not checked.

@@ -1,12 +1,17 @@
 ---
 title: "MSTEST0053: Avoid using Assert methods with format parameters"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0053.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0053: Avoid using Assert methods with format parameters"
+ms.date: 11/05/2026
+f1_keywords:
+- MSTEST0053
+- AvoidAssertFormatParametersAnalyzer
+helpviewer_keywords:
+- AvoidAssertFormatParametersAnalyzer
+- MSTEST0053
+author: Youssef1313
+ms.author: ygerges
+ai-usage: ai-generated
 ---
-
 # MSTEST0053: Avoid using Assert methods with format parameters
 
 | Property                            | Value                                                                                    |
@@ -20,7 +25,7 @@ license: "CC-BY-4.0"
 | **Introduced in version**           | 3.11.0                                                                                   |
 | **Is there a code fix**             | Yes                                                                                      |
 
-> **Note:**
+> [!NOTE]
 > This analyzer is no longer relevant for MSTest 4 as the assertion APIs with format parameters were removed.
 
 ## Cause

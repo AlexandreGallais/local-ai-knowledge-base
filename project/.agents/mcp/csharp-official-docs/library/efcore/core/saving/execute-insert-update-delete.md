@@ -1,19 +1,17 @@
 ---
-title: "ExecuteUpdate and ExecuteDelete - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/saving/execute-insert-update-delete.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: ExecuteUpdate and ExecuteDelete - EF Core
+description: Using ExecuteUpdate and ExecuteDelete to save changes with Entity Framework Core
+author: SamMonoRT
+ms.date: 4/30/2023
+uid: core/saving/execute-insert-update-delete
 ---
-
 # ExecuteUpdate and ExecuteDelete
 
-`Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdate*` and `Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteDelete*` are a way to save data to the database without using EF's traditional change tracking and `Microsoft.EntityFrameworkCore.DbContext.SaveChanges` method. For an introductory comparison of these two techniques, see the Overview page on saving data.
+<xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdate*> and <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteDelete*> are a way to save data to the database without using EF's traditional change tracking and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges> method. For an introductory comparison of these two techniques, see the [Overview page](xref:core/saving/index) on saving data.
 
 ## ExecuteDelete
 
-Let's assume that you need to delete all Blogs with a rating below a certain threshold. The traditional `Microsoft.EntityFrameworkCore.DbContext.SaveChanges` approach requires you to do the following:
+Let's assume that you need to delete all Blogs with a rating below a certain threshold. The traditional <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges> approach requires you to do the following:
 
 ```c#
 await foreach (var blog in context.Blogs.Where(b => b.Rating < 3).AsAsyncEnumerable())
@@ -24,9 +22,9 @@ await foreach (var blog in context.Blogs.Where(b => b.Rating < 3).AsAsyncEnumera
 await context.SaveChangesAsync();
 ```
 
-This is quite an inefficient way to perform this task: we query the database for all Blogs matching our filter, and then we query, materialize and track all those instances; the number of matching entities could be huge. We then tell EF's change tracker that each Blog needs to be removed, and apply those changes by calling `Microsoft.EntityFrameworkCore.DbContext.SaveChanges`, which generates a `DELETE` statement for each and every one of them.
+This is quite an inefficient way to perform this task: we query the database for all Blogs matching our filter, and then we query, materialize and track all those instances; the number of matching entities could be huge. We then tell EF's change tracker that each Blog needs to be removed, and apply those changes by calling <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges>, which generates a `DELETE` statement for each and every one of them.
 
-Here is the same task performed via the `Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteDelete*` API:
+Here is the same task performed via the <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteDelete*> API:
 
 ```c#
 await context.Blogs.Where(b => b.Rating < 3).ExecuteDeleteAsync();
@@ -44,7 +42,7 @@ Aside from being simpler and shorter, this executes very efficiently in the data
 
 ## ExecuteUpdate
 
-Rather than deleting these Blogs, what if we wanted to change a property to indicate that they should be hidden instead? `Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdate*` provides a similar way to express a SQL `UPDATE` statement:
+Rather than deleting these Blogs, what if we wanted to change a property to indicate that they should be hidden instead? <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdate*> provides a similar way to express a SQL `UPDATE` statement:
 
 ```c#
 await context.Blogs
@@ -169,7 +167,7 @@ blog.Rating += 2;
 await context.SaveChangesAsync();
 ```
 
-Each `ExecuteUpdate` call causes a single SQL `UPDATE` to be sent to the database. Since no transaction is created, if any sort of failure prevents the second `ExecuteUpdate` from completing successfully, the effects of the first one are still persisted to the database. In fact, the four operations above - two invocations of `ExecuteUpdate`, a query and `SaveChanges` - each execute within their own transaction. To wrap multiple operations in a single transaction, explicitly start a transaction with `Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade`:
+Each `ExecuteUpdate` call causes a single SQL `UPDATE` to be sent to the database. Since no transaction is created, if any sort of failure prevents the second `ExecuteUpdate` from completing successfully, the effects of the first one are still persisted to the database. In fact, the four operations above - two invocations of `ExecuteUpdate`, a query and `SaveChanges` - each execute within their own transaction. To wrap multiple operations in a single transaction, explicitly start a transaction with <xref:Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade>:
 
 ```c#
 using (var transaction = context.Database.BeginTransaction())
@@ -181,11 +179,11 @@ using (var transaction = context.Database.BeginTransaction())
 }
 ```
 
-For more information about transaction handling, see Using Transactions.
+For more information about transaction handling, see [Using Transactions](xref:core/saving/transactions).
 
 ## Concurrency control and rows affected
 
-`SaveChanges` provides automatic Concurrency Control, using a concurrency token to ensure that a row wasn't changed between the moment you loaded it and the moment you save changes to it. Since `ExecuteUpdate` and `ExecuteDelete` do not interact with the change tracker, they cannot automatically apply concurrency control.
+`SaveChanges` provides automatic [Concurrency Control](xref:core/saving/concurrency), using a concurrency token to ensure that a row wasn't changed between the moment you loaded it and the moment you save changes to it. Since `ExecuteUpdate` and `ExecuteDelete` do not interact with the change tracker, they cannot automatically apply concurrency control.
 
 However, both these methods do return the number of rows that were affected by the operation; this can come particularly handy for implementing concurrency control yourself:
 
@@ -205,7 +203,7 @@ In this code, we use a LINQ `Where` operator to apply an update to a specific Bl
 
 ## Limitations
 
-* Only updating and deleting is currently supported; insertion must be done via `Microsoft.EntityFrameworkCore.DbSet`1.Add*` and `Microsoft.EntityFrameworkCore.DbContext.SaveChanges`.
+* Only updating and deleting is currently supported; insertion must be done via <xref:Microsoft.EntityFrameworkCore.DbSet`1.Add*?displayProperty=nameWithType> and <xref:Microsoft.EntityFrameworkCore.DbContext.SaveChanges>.
 * While the SQL UPDATE and DELETE statements allow retrieving original column values for the rows affected, this isn't currently supported by `ExecuteUpdate` and `ExecuteDelete`.
 * Multiple invocations of these methods cannot be batched. Each invocation performs its own roundtrip to the database.
 * Databases typically allow only a single table to be modified with UPDATE or DELETE.
@@ -213,4 +211,4 @@ In this code, we use a LINQ `Where` operator to apply an update to a specific Bl
 
 ## Additional resources
 
-* .NET Data Access Community Standup session where we discuss `ExecuteUpdate` and `ExecuteDelete`.
+* [.NET Data Access Community Standup session](https://www.youtube.com/watch?v=rrKhbiXydKs&list=PLdo4fOcmZ0oX-DBuRG4u58ZTAJgBAeQ-t&index=33) where we discuss `ExecuteUpdate` and `ExecuteDelete`.

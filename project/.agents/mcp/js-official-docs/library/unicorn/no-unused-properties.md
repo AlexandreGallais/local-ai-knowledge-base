@@ -1,17 +1,11 @@
----
-title: "no-unused-properties"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-unused-properties.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-unused-properties
 
 📝 Disallow unused object properties.
 
 🚫 Disabled by default.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Unused properties, much like unused variables, are often a result of incomplete refactoring and may confuse readers.
 
@@ -19,7 +13,7 @@ This rule is primarily useful when you use objects to group constants or model e
 
 ## Example use cases
 
-When using React's inline styles or one of many CSS-in-JS libraries like glamor, one might find it helpful to group component styles into a constant object. Later you might remove one of the styles, but forget to remove its definition, especially if the component grew in complexity by that time. If these were defined as separate constants, ESLint's built-in `no-unused-vars` rule would have helped, but they are not. That's when the `no-unused-properties` rule becomes useful.
+When using [React](https://reactjs.org)'s inline styles or one of [many CSS-in-JS](https://michelebertoli.github.io/css-in-js/) libraries like [glamor](https://github.com/threepointone/glamor), one might find it helpful to group component styles into a constant object. Later you might remove one of the styles, but forget to remove its definition, especially if the component grew in complexity by that time. If these were defined as separate constants, ESLint's built-in `no-unused-vars` rule would have helped, but they are not. That's when the `no-unused-properties` rule becomes useful.
 
 ```js
 const styles = {
@@ -30,7 +24,7 @@ const styles = {
 export default () => r.div({style: styles.success});
 ```
 
-This issue extends to most enumeration and const-like use cases. Below is an example straight from Bootstrap's `scrollspy`. The file contains about 300 lines of DOM/jQuery complexity. It's practically impossible to notice the issue manually. But this extra property indicates that authors intended but forgot to handle dropdown menus specially, or at least have a useless constant defined.
+This issue extends to most enumeration and const-like use cases. Below is an example straight from [Bootstrap's `scrollspy`](https://github.com/twbs/bootstrap/blob/19f70f9d4ccca132f196011958c1b72462c698e7/js/src/scrollspy.js#L44). The file contains about 300 lines of DOM/jQuery complexity. It's practically impossible to notice the issue manually. But this extra property indicates that authors intended but forgot to handle dropdown menus specially, or at least have a useless constant defined.
 
 ```js
 const ClassName = {
@@ -118,4 +112,4 @@ This rule tries hard not to report potentially used properties as unused. Basica
 - Does not follow objects across files. If you export an object, it's like if you used all of its properties.
 - TypeScript support is limited to inline object type literals attached directly to initialized variables and parameters. Named type aliases, interfaces, and destructured typed bindings are not followed.
 
-If you want to lift some of these limitations, you should try tools like Flow or TypeScript.
+If you want to lift some of these limitations, you should try tools like [Flow](https://flow.org) or [TypeScript](https://www.typescriptlang.org).

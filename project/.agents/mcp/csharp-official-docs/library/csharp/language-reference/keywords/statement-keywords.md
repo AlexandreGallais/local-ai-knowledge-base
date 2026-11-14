@@ -1,45 +1,44 @@
 ---
+description: "Statement keywords - C# Reference"
 title: "Statement keywords"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/keywords/statement-keywords.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 01/22/2026
+helpviewer_keywords: 
+  - "keywords [C#], statements"
+  - "statements [C#]"
 ---
-
 # Statement keywords (C# Reference)
 
-Statements are program instructions. Except as described in the topics referenced in the following list, the program executes statements in sequence. The following list shows the C# statement keywords. For more information about statements that don't use a keyword, see Statements.
+Statements are program instructions. Except as described in the topics referenced in the following list, the program executes statements in sequence. The following list shows the C# statement keywords. For more information about statements that don't use a keyword, see [Statements](../../fundamentals/statements/index.md).
 
-- Selection statements
+- [Selection statements](../statements/selection-statements.md)
   - `if`
   - `switch`
-- Iteration statements
+- [Iteration statements](../statements/iteration-statements.md)
   - `do`
   - `for`
   - `foreach`
   - `while`
-- Jump statements
+- [Jump statements](../statements/jump-statements.md)
   - `break`
   - `continue`
   - `goto`
   - `return`
-- Exception-handling statements
+- [Exception-handling statements](../statements/exception-handling-statements.md)
   - `throw`
   - `try-catch`
   - `try-finally`
   - `try-catch-finally`
-- checked and unchecked statements
+- [checked and unchecked statements](../statements/checked-and-unchecked.md)
   - `checked`
   - `unchecked`
-- fixed statement
+- [fixed statement](../statements/fixed.md)
   - `fixed`
-- lock statement
+- [lock statement](../statements/lock.md)
   - `lock`
-- yield statement
+- [yield statement](../statements/yield.md)
   - `yield`
 
 ## See also
 
-- Statements
-- C# Keywords
+- [Statements](../../fundamentals/statements/index.md)
+- [C# Keywords](index.md)

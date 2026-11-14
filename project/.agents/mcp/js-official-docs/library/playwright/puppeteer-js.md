@@ -1,17 +1,11 @@
 ---
+id: puppeteer
 title: "Migrating from Puppeteer"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/puppeteer-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# Migrating from Puppeteer
 
 ## Migration Principles
 
-This guide describes migration to Playwright Library and Playwright Test from Puppeteer. The APIs have similarities, but Playwright offers much more possibilities for web testing and cross-browser automation.
+This guide describes migration to [Playwright Library](./library) and [Playwright Test](./intro.md) from Puppeteer. The APIs have similarities, but Playwright offers much more possibilities for web testing and cross-browser automation.
 
 - Most Puppeteer APIs can be used as is
 - The use of [ElementHandle] is discouraged, use [Locator] objects and web-first assertions instead.
@@ -29,23 +23,23 @@ This guide describes migration to Playwright Library and Playwright Test from Pu
 | `await page.setViewport(...)`                      | `await page.setViewportSize(...)`           |
 | `await page.waitForXPath(XPathSelector)`           | `await page.waitForSelector(XPathSelector)` |
 | `await page.waitForNetworkIdle(...)`               | `await page.waitForLoadState('networkidle')` |
-| `await page.$eval(...)`                            | Assertions can often be used instead to verify text, attribute, class... |
-| `await page.$(...)`                                | Discouraged, use Locators instead |
-| `await page.$x(xpath_selector)`                    | Discouraged, use Locators instead |
-| No methods dedicated to checkbox or radio input    | `await page.locator(selector).check()``await page.locator(selector).uncheck()` |
+| `await page.$eval(...)`                            | [Assertions](./test-assertions) can often be used instead to verify text, attribute, class... |
+| `await page.$(...)`                                | Discouraged, use [Locators](./api/class-locator) instead |
+| `await page.$x(xpath_selector)`                    | Discouraged, use [Locators](./api/class-locator) instead |
+| No methods dedicated to checkbox or radio input    | `await page.locator(selector).check()`<br/>`await page.locator(selector).uncheck()` |
 | `await page.click(selector)`                       | `await page.locator(selector).click()`      |
 | `await page.focus(selector)`                       | `await page.locator(selector).focus()`      |
 | `await page.hover(selector)`                       | `await page.locator(selector).hover()`      |
 | `await page.select(selector, values)`              | `await page.locator(selector).selectOption(values)` |
 | `await page.tap(selector)`                         | `await page.locator(selector).tap()`        |
 | `await page.type(selector, ...)`                   | `await page.locator(selector).fill(...)` |
-| `await page.waitForFileChooser(...)``await elementHandle.uploadFile(...)` | `await page.locator(selector).setInputFiles(...)` |
+| `await page.waitForFileChooser(...)`<br/>`await elementHandle.uploadFile(...)` | `await page.locator(selector).setInputFiles(...)` |
 | `await page.cookies([...urls])`                    | `await browserContext.cookies([urls])`      |
 | `await page.deleteCookie(...cookies)`              | `await browserContext.clearCookies()`       |
 | `await page.setCookie(...cookies)`                 | `await browserContext.addCookies(cookies)`  |
-| `page.on(...)`                                     | `page.on(...)`In order to intercept and mutate requests, see [`method: Page.route`] |
+| `page.on(...)`                                     | `page.on(...)`<br/>In order to intercept and mutate requests, see [`method: Page.route`] |
 
-`page.waitForNavigation` and `page.waitForSelector` remain, but in many cases will not be necessary due to auto-waiting.
+`page.waitForNavigation` and `page.waitForSelector` remain, but in many cases will not be necessary due to [auto-waiting](./actionability).
 
 The use of [ElementHandle] is discouraged, use [Locator] objects and web-first assertions instead.
 
@@ -92,7 +86,7 @@ const { chromium } = require('playwright'); // 1
 Migration highlights (see inline comments in the Playwright code snippet):
 
 1. Each Playwright Library file has explicit import of `chromium`. Other browsers `webkit` or `firefox` can be used.
-1. For browser state isolation, consider browser contexts
+1. For browser state isolation, consider [browser contexts](./browser-contexts.md)
 1. `setViewport` becomes `setViewportSize`
 1. `networkidle2` becomes `networkidle`. Please note that in most cases it is not useful, thanks to auto-waiting.
 
@@ -140,18 +134,18 @@ test.describe('Playwright homepage', () => {
 
 1. Each Playwright Test file has explicit import of the `test` and `expect` functions
 1. Test function is marked with `async`
-1. Playwright Test is given a `page` as one of its parameters. This is one of the many useful fixtures in Playwright Test.
+1. Playwright Test is given a `page` as one of its parameters. This is one of the many [useful fixtures](./api/class-fixtures) in Playwright Test.
 Playwright Test creates an isolated [Page] object for each test. However, if you'd like to reuse a single [Page] object between multiple tests, you can create your own in [`method: Test.beforeAll`] and close it in [`method: Test.afterAll`].
 1. Locator creation with [`method: Page.locator`] is one of the few methods that is sync.
-1. Use assertions to verify the state instead of `page.$eval()`.
+1. Use [assertions](./test-assertions) to verify the state instead of `page.$eval()`.
 
 ## Testing
 
-To improve testing, it is advised to use Locators and web-first Assertions. See Writing Tests
+To improve testing, it is advised to use [Locators](./api/class-locator) and web-first [Assertions](./test-assertions). See [Writing Tests](./writing-tests)
 
-It is common with Puppeteer to use `page.evaluate()` or `page.$eval()` to inspect an [ElementHandle] and extract the value of text content, attribute, class... Web-first Assertions offers several matchers for this purpose, it is more reliable and readable.
+It is common with Puppeteer to use `page.evaluate()` or `page.$eval()` to inspect an [ElementHandle] and extract the value of text content, attribute, class... Web-first [Assertions](./test-assertions) offers several matchers for this purpose, it is more reliable and readable.
 
-Playwright Test is our first-party recommended test runner to be used with Playwright. It provides several features like Page Object Model, parallelism, fixtures or reporters.
+[Playwright Test](./intro.md) is our first-party recommended test runner to be used with Playwright. It provides several features like Page Object Model, parallelism, fixtures or reporters.
 
 ## Playwright Test Super Powers
 
@@ -159,21 +153,21 @@ Once you're on Playwright Test, you get a lot!
 
 - Full zero-configuration TypeScript support
 - Run tests across **all web engines** (Chrome, Firefox, Safari) on **any popular operating system** (Windows, macOS, Ubuntu)
-- Full support for multiple origins, (i)frames, tabs and contexts
+- Full support for multiple origins, [(i)frames](./api/class-frame), [tabs and contexts](./pages)
 - Run tests in isolation in parallel across multiple browsers
-- Built-in test artifact collection
+- Built-in test [artifact collection](./test-use-options.md#recording-options)
 
 You also get all these ✨ awesome tools ✨ that come bundled with Playwright Test:
-- Playwright Inspector
-- Playwright Test Code generation
-- Playwright Tracing for post-mortem debugging
+- [Playwright Inspector](./debug.md)
+- [Playwright Test Code generation](./codegen-intro.md)
+- [Playwright Tracing](./trace-viewer.md) for post-mortem debugging
 
 ## Further Reading
 
 Learn more about Playwright Test runner:
 
-- Getting Started
-- Fixtures
-- Locators
-- Assertions
-- Auto-waiting
+- [Getting Started](./intro)
+- [Fixtures](./test-fixtures)
+- [Locators](./locators.md)
+- [Assertions](./test-assertions)
+- [Auto-waiting](./actionability)

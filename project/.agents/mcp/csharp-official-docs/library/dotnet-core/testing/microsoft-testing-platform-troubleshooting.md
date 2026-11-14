@@ -1,10 +1,10 @@
 ---
-title: "Microsoft.Testing.Platform (MTP) troubleshooting"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/microsoft-testing-platform-troubleshooting.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Microsoft.Testing.Platform (MTP) troubleshooting
+description: Troubleshoot MTP issues, exit codes, and known problems.
+author: Evangelink
+ms.author: amauryleve
+ms.date: 09/21/2026
+ai-usage: ai-assisted
 ---
 
 # Microsoft.Testing.Platform (MTP) troubleshooting
@@ -13,12 +13,12 @@ This article contains troubleshooting guidance for MTP.
 
 ## `dotnet test` reports `No test projects were found`
 
-When `dotnet test` runs in MTP mode against a solution or project, it evaluates the projects and uses `IsTestingPlatformApplication` to identify MTP test applications. Test framework and platform packages normally set this property through NuGet MSBuild imports.
+When `dotnet test` runs in MTP mode against a solution or project, it evaluates the projects and uses [`IsTestingPlatformApplication`](../project-sdk/msbuild-props.md#istestingplatformapplication) to identify MTP test applications. Test framework and platform packages normally set this property through NuGet MSBuild imports.
 
 An implicit restore makes the package imports available. However, in a multi-stage container build, `dotnet test` can report `No test projects were found` when both of the following conditions apply:
 
 - The test stage uses `--no-restore` or `--no-build`, which implies `--no-restore`.
-- The test stage doesn't contain the restore-generated project state in the `obj` folder, or the complete global packages folder that the restore stage used.
+- The test stage doesn't contain the restore-generated project state in the `obj` folder, or the complete [global packages folder](/nuget/consume-packages/managing-the-global-packages-and-cache-folders) that the restore stage used.
 
 Without the package imports, `IsTestingPlatformApplication` can evaluate to an empty value, so `dotnet test` doesn't classify the project as an MTP test application. This issue isn't specific to MSTest.
 
@@ -26,7 +26,7 @@ To resolve the issue, use one of the following approaches:
 
 - Restore the project in the test stage before you run `dotnet test`.
 - Copy or preserve the restore-generated `obj` folder and the complete global packages folder from the restore stage. The `obj` folder includes files such as `project.assets.json`, `*.nuget.g.props`, and `*.nuget.g.targets`. If you set `NUGET_PACKAGES` or `RestorePackagesPath`, preserve the global packages folder at that configured location.
-- If the test stage contains already-built test applications but not the project restore state, use `dotnet test --test-modules <EXPRESSION>`. This option selects built test modules without project evaluation.
+- If the test stage contains already-built test applications but not the project restore state, use [`dotnet test --test-modules <EXPRESSION>`](../tools/dotnet-test-mtp.md#options). This option selects built test modules without project evaluation.
 
 ## Exit codes
 
@@ -37,7 +37,7 @@ MTP uses known exit codes to communicate test failure or app errors. Exit codes 
 | `0` | The `0` exit code indicates success. All tests that were chosen to run ran to completion and there were no errors. |
 | `1` | The `1` exit code indicates unknown errors and acts as a _catch all_. To find additional error information and details, look in the output. |
 | `2` | An exit code of `2` is used to indicate that there was at least one test failure. |
-| `3` | The exit code `3` indicates that the test session was aborted. A session can be aborted using `Ctrl`+`C`, as an example. |
+| `3` | The exit code `3` indicates that the test session was aborted. A session can be aborted using <kbd>Ctrl</kbd>+<kbd>C</kbd>, as an example. |
 | `4` | The exit code `4` indicates that the setup of used extensions is invalid and the tests session cannot run. |
 | `5` | The exit code `5` indicates that the command-line arguments passed to the test app were invalid. |
 | `6` (no longer used) | Exit code `6` is no longer produced by the platform; it previously indicated that the test session was using a non-implemented feature. |
@@ -47,18 +47,18 @@ MTP uses known exit codes to communicate test failure or app errors. Exit codes 
 | `10` | The exit code `10` indicates that the test adapter, Testing.Platform Test Framework, MSTest, NUnit, or xUnit, failed to run tests for an infrastructure reason unrelated to the test's self. An example is failing to create a fixture needed by tests. |
 | `11` | The exit code `11` indicates that the test process will exit if dependent process exits. |
 | `12` | The exit code `12` indicates that the test session was unable to run because the client does not support any of the supported protocol versions. |
-| `13` | The exit code `13` indicates that the test session was stopped due to reaching the specified number of maximum failed tests using `--maximum-failed-tests` command-line option. For more information, see the Options section in MTP CLI options reference |
+| `13` | The exit code `13` indicates that the test session was stopped due to reaching the specified number of maximum failed tests using `--maximum-failed-tests` command-line option. For more information, see [the Options section in MTP CLI options reference](microsoft-testing-platform-cli-options.md) |
 | `14` | The exit code `14` indicates that a compatible coverage collector published a failed coverage threshold evaluation. |
 
 An explicit `--minimum-expected-tests` value supersedes `--zero-tests-policy`. Without the minimum option, strict zero-test handling continues to use exit code `8`. Exit codes `8` and `9` remain distinct so that an unmet minimum isn't confused with a module that ran no tests.
 
-To enable verbose logging and troubleshoot issues, see Diagnostic logging.
+To enable verbose logging and troubleshoot issues, see [Diagnostic logging](#diagnostic-logging).
 
 ### Zero tests in a multi-module run
 
-When `dotnet test` runs several test modules, exit code `8` is a per-module signal, while the zero-tests verdict for the whole run is decided once from the aggregated results. A single empty module therefore doesn't fail the whole run, although the module keeps its `Exit code: 8` diagnostic in the output. When you don't set a global minimum, an all-skipped whole run is treated as a zero-test run regardless of the per-module `--zero-tests-policy` value. For more information, see Whole-run and per-module minimums.
+When `dotnet test` runs several test modules, exit code `8` is a per-module signal, while the zero-tests verdict for the whole run is decided once from the aggregated results. A single empty module therefore doesn't fail the whole run, although the module keeps its `Exit code: 8` diagnostic in the output. When you don't set a global minimum, an all-skipped whole run is treated as a zero-test run regardless of the per-module `--zero-tests-policy` value. For more information, see [Whole-run and per-module minimums](../tools/dotnet-test-mtp.md#whole-run-and-per-module-minimums).
 
-> **Note:**
+> [!NOTE]
 > This whole-run zero-tests verdict requires the .NET 11 SDK or a later version.
 
 ### Ignore specific exit codes
@@ -73,7 +73,7 @@ The platform provides built-in diagnostic logging to help you troubleshoot test 
 
 ### Command-line options
 
-The following platform options provide useful information for troubleshooting your test apps:
+The following [platform options](./microsoft-testing-platform-cli-options.md) provide useful information for troubleshooting your test apps:
 
 - `--info`
 - `--diagnostic`
@@ -94,7 +94,7 @@ You can also enable the diagnostic logs using the environment variables:
 | `TESTINGPLATFORM_DIAGNOSTIC_FILE_PREFIX` | The prefix for the log file name. The default produces `<asm>_<tfm>_<arch>_<timestamp>.diag`. Available in MTP starting with version 2.3.0; the legacy name `TESTINGPLATFORM_DIAGNOSTIC_OUTPUT_FILEPREFIX` is still honored for backward compatibility. |
 | `TESTINGPLATFORM_DIAGNOSTIC_SYNCHRONOUS_WRITE` | Forces the built-in file logger to synchronously write logs. Useful for scenarios where you don't want to lose any log entries (if the process crashes). This does slow down the test execution. Available in MTP starting with version 2.3.0; the legacy name `TESTINGPLATFORM_DIAGNOSTIC_FILELOGGER_SYNCHRONOUSWRITE` is still honored for backward compatibility. |
 
-> **Note:**
+> [!NOTE]
 > Environment variables take precedence over the command line arguments.
 
 MTP writes a diagnostic file for each test source. If two files receive the same timestamp, MTP adds a process and counter suffix instead of overwriting an existing file.
@@ -137,15 +137,15 @@ You can also clear `RootNamespace` entirely (`<RootNamespace />`), in which case
 
 This error can occur if not all of the Fakes assemblies are present in the bin folder.
 
-- Ensure that the project either uses the MSTest.SDK or references Microsoft.Testing.Extensions.Fakes.
+- Ensure that the project either uses the [MSTest.SDK](./unit-testing-mstest-sdk.md) or references [Microsoft.Testing.Extensions.Fakes](./microsoft-testing-platform-fakes.md).
 - For .NET Framework projects, avoid setting `<PlatformTarget>AnyCPU</PlatformTarget>` as this results in NuGet not copying all files to the bin folder.
 
 ### Unrecognized extension command-line option
 
 An extension-specific command-line option can fail with exit code 5 when a test application doesn't register the package that provides the option. For example, `--report-trx` requires `Microsoft.Testing.Extensions.TrxReport`, either as a direct package reference or through a test SDK configuration or profile that includes the package. MTP core doesn't include report, code coverage, dump, retry, or other extension options.
 
-Run the test application with `--help`, or run `dotnet test --help` in MTP mode, to confirm that the option is available. If the option is missing, add its extension package or enable the extension through your test SDK. See Extension options by scenario to find the required package.
+Run the test application with `--help`, or run `dotnet test --help` in MTP mode, to confirm that the option is available. If the option is missing, add its extension package or enable the extension through your test SDK. See [Extension options by scenario](microsoft-testing-platform-cli-options.md#extension-options-by-scenario) to find the required package.
 
 The same failure occurs when a solution contains projects that use different test frameworks (for example, MSTest and xUnit.net) or different sets of extensions (for example, only some projects reference `Microsoft.Testing.Extensions.HangDump`). The option is valid for one project but unrecognized by another.
 
-To resolve this issue, use the `TestingPlatformCommandLineArguments` MSBuild property with conditions to route arguments to the correct projects. For detailed instructions, see Solutions with mixed test frameworks or extensions.
+To resolve this issue, use the `TestingPlatformCommandLineArguments` MSBuild property with conditions to route arguments to the correct projects. For detailed instructions, see [Solutions with mixed test frameworks or extensions](unit-testing-with-dotnet-test.md#solutions-with-mixed-test-frameworks-or-extensions).

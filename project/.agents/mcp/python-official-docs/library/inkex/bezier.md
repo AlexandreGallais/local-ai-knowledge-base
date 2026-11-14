@@ -1,12 +1,3 @@
----
-title: "inkex.bezier"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/bezier.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.bezier
 
 Bezier calculations
@@ -96,13 +87,13 @@ to the a form which can be differentiated more easily
 P(t) = a t³ + b t² + c t + P0
 
 Args:
-bez (List[Tuple[float, float]]): the Bezier curve. The elements of the list the
-coordinates of the points (in this order): Start point, Start control point,
-End control point, End point.
+    bez (List[Tuple[float, float]]): the Bezier curve. The elements of the list the
+        coordinates of the points (in this order): Start point, Start control point,
+        End control point, End point.
 
 Returns:
-Tuple[float, float, float, float, float, float, float, float]:
-the values ax, ay, bx, by, cx, cy, x0, y0
+    Tuple[float, float, float, float, float, float, float, float]:
+        the values ax, ay, bx, by, cx, cy, x0, y0
 
 ## linebezierintersect
 
@@ -127,18 +118,18 @@ def bezierslopeatt(bez, t)
 ```
 
 Get slope at the given time point along a bezier curve
-The slope is computed as (dx, dy) where dx = df_x(t)/dt and dy = df_y(t)/dt.
-Note that for lines P1=P2 and P3=P4, so the slope at the end points is dx=dy=0
-(slope not defined).
+    The slope is computed as (dx, dy) where dx = df_x(t)/dt and dy = df_y(t)/dt.
+    Note that for lines P1=P2 and P3=P4, so the slope at the end points is dx=dy=0
+    (slope not defined).
 
 Args:
-bez (List[Tuple[float, float]]): the Bezier curve. The elements of the list the
-coordinates of the points (in this order): Start point, Start control point,
-End control point, End point.
-t (float): time in the interval [0, 1]
+    bez (List[Tuple[float, float]]): the Bezier curve. The elements of the list the
+        coordinates of the points (in this order): Start point, Start control point,
+        End control point, End point.
+    t (float): time in the interval [0, 1]
 
 Returns:
-Tuple[float, float]: x and y increment
+    Tuple[float, float]: x and y increment
 
 ## beziertatslope
 
@@ -158,13 +149,13 @@ Linearly interpolate between p1 and p2.
 
 t = 0.0 returns p1, t = 1.0 returns p2.
 
-- **return:** Interpolated point
-- **rtype:** tuple
+:return: Interpolated point
+:rtype: tuple
 
-- **param `p1`:** First point as sequence of two floats
-- **param `p2`:** Second point as sequence of two floats
-- **param `t`:** Number between 0.0 and 1.0
-- **type `t`:** float
+:param p1: First point as sequence of two floats
+:param p2: Second point as sequence of two floats
+:param t: Number between 0.0 and 1.0
+:type t: float
 
 ## beziersplitatt
 
@@ -200,15 +191,15 @@ Calculate the length of a bezier curve using Simpson's algorithm:
 http://steve.hollasch.net/cgindex/curves/cbezarclen.html
 
 Args:
-start (int): Start time (between 0 and 1)
-end (int): End time (between start time and 1)
-maxiter (int): Maximum number of iterations. If not a power of 2, the algorithm
-will behave like the value is set to the next power of 2.
-tolerance (float):  maximum error ratio
-bezier_args (list): arguments as computed by bezierparametrize()
+    start (int): Start time (between 0 and 1)
+    end (int): End time (between start time and 1)
+    maxiter (int): Maximum number of iterations. If not a power of 2, the algorithm
+    will behave like the value is set to the next power of 2.
+    tolerance (float):  maximum error ratio
+    bezier_args (list): arguments as computed by bezierparametrize()
 
 Returns:
-float: the appoximate length of the bezier curve
+    float: the appoximate length of the bezier curve
 
 ## bezierlength
 
@@ -258,49 +249,60 @@ def csparea(csp)
 
 Get total area of cubic superpath.
 
-> **Hint:** The results may be slightly inaccurate for paths containing arcs due
-> to the loss of accuracy during arc -> cubic bezier conversion.
+.. hint::
+
+    The results may be slightly inaccurate for paths containing arcs due
+    to the loss of accuracy during arc -> cubic bezier conversion.
+
 
 The function works as follows: For each subpath,
 
-1. compute the area of the polygon created by the path's vertices:
+#. compute the area of the polygon created by the path's vertices:
 
-For a line with coordinates (x_0, y_0) and (x_1, y_1), the area
-of the trapezoid of its projection on the x axis is given by
+   For a line with coordinates :math:`(x_0, y_0)` and :math:`(x_1, y_1)`, the area
+   of the trapezoid of its projection on the x axis is given by
 
-\frac{1}{2} (y_1 + y_0) (x_1 - x_0)
+   .. math::
 
-Summing the contribution of all lines of the polygon yields the polygon's area
-(lines from left to right have a positive contribution, while those right-to
-left have a negative area contribution, canceling out the computed area not
-inside the polygon), so we find (setting x_{0} = x_N etc.):
+       \frac{1}{2} (y_1 + y_0) (x_1 - x_0)
 
-A = \frac{1}{2} * \sum_{i=1}^N (x_i y_i - x_{i-1} y_{i-1} + x_i y_{i-1}
-- x_{i-1} y_{i})
+   Summing the contribution of all lines of the polygon yields the polygon's area
+   (lines from left to right have a positive contribution, while those right-to
+   left have a negative area contribution, canceling out the computed area not
+   inside the polygon), so we find (setting :math:`x_{0} = x_N` etc.):
 
-The first two terms cancel out in the summation over all points, and the second
-two terms can be regrouped as
+   .. math::
 
-A = \frac{1}{2} * \sum_{i=1}^N x_i (y_{i+1} -y_{i-1})
+       A = \frac{1}{2} * \sum_{i=1}^N (x_i y_i - x_{i-1} y_{i-1} + x_i y_{i-1}
+       - x_{i-1} y_{i})
 
-1. The contribution by the bezier curve is considered: We compute
-the integral \int_{x(t=0)}^{x(t=1)} y dx, i.e. the area between the x
-axis and the curve, where y = y(t) (the Bezier curve). By substitution
-dx = x'(t) dt, performing the integration and
-subtracting the trapezoid we already considered above, we find (with control
-points (x_{c1}, y_{c1}) and (x_{c2}, y_{c2}))
+   The first two terms cancel out in the summation over all points, and the second
+   two terms can be regrouped as
 
-\Delta A &= \int_0^1 y(t) x'(t) dt - \frac{1}{2} (y_1 + y_0) (x_1 - x_0) \
-&= \frac{3}{20} \cdot \begin{pmatrix}
-& y_0(& & 2x_{c1} & + x_{c2} & -3x_1&) \
-- & y_{c1}(& -2x_0 & & + x_{c2} &+ x_1&) \
-- & y_{c2}(& -x_0 & -x_{c1} & & + 2x_1&) \
-- & y_1(& 3x_0 & - x_{c1} & -2 x_{c2} &&)
-\end{pmatrix}
+   .. math::
 
-This is computed for every bezier and added to the area. Again, this is a signed
-area: convex beziers have a positive area and concave ones a negative area
-contribution.
+       A = \frac{1}{2} * \sum_{i=1}^N x_i (y_{i+1} -y_{i-1})
+
+#. The contribution by the bezier curve is considered: We compute
+   the integral :math:`\int_{x(t=0)}^{x(t=1)} y dx`, i.e. the area between the x
+   axis and the curve, where :math:`y = y(t)` (the Bezier curve). By substitution
+   :math:`dx = x'(t) dt`, performing the integration and
+   subtracting the trapezoid we already considered above, we find (with control
+   points :math:`(x_{c1}, y_{c1})` and :math:`(x_{c2}, y_{c2})`)
+
+   .. math::
+
+       \Delta A &= \int_0^1 y(t) x'(t) dt - \frac{1}{2} (y_1 + y_0) (x_1 - x_0) \\
+       &= \frac{3}{20} \cdot \begin{pmatrix}
+              & y_0(& & 2x_{c1} & + x_{c2} & -3x_1&) \\
+            + & y_{c1}(& -2x_0 & & + x_{c2} &+ x_1&) \\
+            + & y_{c2}(& -x_0 & -x_{c1} & & + 2x_1&) \\
+            + & y_1(& 3x_0 & - x_{c1} & -2 x_{c2} &&)
+       \end{pmatrix}
+
+   This is computed for every bezier and added to the area. Again, this is a signed
+   area: convex beziers have a positive area and concave ones a negative area
+   contribution.
 
 ## cspcofm
 
@@ -310,13 +312,17 @@ def cspcofm(csp)
 
 Get center of area / gravity for a cubic superpath.
 
-> **Hint:** The results may be slightly inaccurate for paths containing arcs due
-> to the loss of accuracy during arc -> cubic bezier conversion.
+.. hint::
 
-The function works similar to `csparea()`, only the computations are a bit more
+    The results may be slightly inaccurate for paths containing arcs due
+    to the loss of accuracy during arc -> cubic bezier conversion.
+
+The function works similar to :func:`csparea`, only the computations are a bit more
 difficult. Again all subpaths are considered. The total center of mass is given by
 
-C_y = \frac{1}{A} \int_A y dA
+.. math::
+
+    C_y = \frac{1}{A} \int_A y dA
 
 The integral can be expressed as a weighted sum; first, the contributions
 of the polygon created by the path's nodes is computed. Second, we compute the
@@ -324,13 +330,17 @@ contribution of the Bezier curve; this is again done by an integral from which
 the weighted CofM of the trapezoid between end points and horizontal axis is
 removed. For the integrals, we have
 
-A * C_{y,bez} &= \int_A y dA = \int_{x(t=0)}^{y(t=1)} \int_{0}^{y(x)} y dy dx \
-&= \int_{x(t=0)}^{y(t=1)} \frac 12 y(x)^2 dx
-= \int_0^1 \frac 12 y(t)^2  x'(t) dt \
-A * C_{x,bez} &= \int_A x dA = \int_{x(t=0)}^{y(t=1)} x \int_{0}^{y(x)} dy dx \
-&= \int_{x(t=0)}^{y(t=1)} x y(x) dx = \int_0^1 x(t) y(t) x'(t) dt
+.. math::
+
+    A * C_{y,bez} &= \int_A y dA = \int_{x(t=0)}^{y(t=1)} \int_{0}^{y(x)} y dy dx \\
+    &= \int_{x(t=0)}^{y(t=1)} \frac 12 y(x)^2 dx
+    = \int_0^1 \frac 12 y(t)^2  x'(t) dt \\
+    A * C_{x,bez} &= \int_A x dA = \int_{x(t=0)}^{y(t=1)} x \int_{0}^{y(x)} dy dx \\
+    &= \int_{x(t=0)}^{y(t=1)} x y(x) dx = \int_0^1 x(t) y(t) x'(t) dt
 
 from which the trapezoids are removed, in case of the y-CofM this amounts to
 
-\frac{y_0}{2} (x_1-x_0)y_0 + \left(y_0 + \frac 13 (y_1 - y_0)\right)
-\cdot  \frac 12 (y_1 - y_0) (x_1 - x_0)
+.. math::
+
+    \frac{y_0}{2} (x_1-x_0)y_0 + \left(y_0 + \frac 13 (y_1 - y_0)\right)
+    \cdot  \frac 12 (y_1 - y_0) (x_1 - x_0)

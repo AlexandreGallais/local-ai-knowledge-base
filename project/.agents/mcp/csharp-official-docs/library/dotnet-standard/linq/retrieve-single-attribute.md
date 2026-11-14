@@ -1,21 +1,22 @@
 ---
-title: "How to retrieve a single attribute - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/retrieve-single-attribute.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to retrieve a single attribute - LINQ to XML
+description: Retrieve a single attribute of an element, given the attribute name.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to retrieve a single attribute (LINQ to XML)
 
 This article explains how to retrieve a single attribute of an element, given the attribute name. This is useful for writing query expressions where you want to find an element that has a particular attribute.
 
-The `System.Xml.Linq.XElement.Attribute*` method of the `System.Xml.Linq.XElement` class returns the `System.Xml.Linq.XAttribute` with the specified name.
+The <xref:System.Xml.Linq.XElement.Attribute*> method of the <xref:System.Xml.Linq.XElement> class returns the <xref:System.Xml.Linq.XAttribute> with the specified name.
 
 ## Example: Retrieve attribute values, given the element and attribute names
 
-The following example uses the `System.Xml.Linq.XElement` method to create an element named `PhoneNumbers`. It then finds all the descendant elements named `Phone` and, for each, uses the `System.Xml.Linq.XElement.Attribute*` method to obtain and output the value of the attribute named `type`:
+The following example uses the <xref:System.Xml.Linq.XElement> method to create an element named `PhoneNumbers`. It then finds all the descendant elements named `Phone` and, for each, uses the <xref:System.Xml.Linq.XElement.Attribute*> method to obtain and output the value of the attribute named `type`:
 
 ```csharp
 XElement cust = new XElement("PhoneNumbers",
@@ -53,7 +54,7 @@ work
 
 ## Example: Retrieve an attribute value with a cast
 
-You can retrieve the value of an attribute by casting it, just as you do for with `System.Xml.Linq.XElement` objects. The following example demonstrates this:
+You can retrieve the value of an attribute by casting it, just as you do for with <xref:System.Xml.Linq.XElement> objects. The following example demonstrates this:
 
 ```csharp
 XElement cust = new XElement("PhoneNumbers",
@@ -91,11 +92,11 @@ home
 work
 ```
 
-LINQ to XML provides explicit cast operators for the `System.Xml.Linq.XAttribute` class to `string`, `bool`, `bool?`, `int`, `int?`, `uint`, `uint?`, `long`, `long?`, `ulong`, `ulong?`, `float`, `float?`, `double`, `double?`, `decimal`, `decimal?`, `DateTime`, `DateTime?`, `TimeSpan`, `TimeSpan?`, `GUID`, and `GUID?`.
+LINQ to XML provides explicit cast operators for the <xref:System.Xml.Linq.XAttribute> class to `string`, `bool`, `bool?`, `int`, `int?`, `uint`, `uint?`, `long`, `long?`, `ulong`, `ulong?`, `float`, `float?`, `double`, `double?`, `decimal`, `decimal?`, `DateTime`, `DateTime?`, `TimeSpan`, `TimeSpan?`, `GUID`, and `GUID?`.
 
 ## Example: Cast for an attribute in a namespace
 
-The following example shows the same code for an attribute that's in a namespace. For more information, see Namespaces overview.
+The following example shows the same code for an attribute that's in a namespace. For more information, see [Namespaces overview](namespaces-overview.md).
 
 ```csharp
 XNamespace aw = "http://www.adventure-works.com";
@@ -143,4 +144,4 @@ work
 
 ## See also
 
-- LINQ to XML axes overview
+- [LINQ to XML axes overview](linq-xml-axes-overview.md)

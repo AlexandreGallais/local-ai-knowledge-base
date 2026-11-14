@@ -1,15 +1,16 @@
 ---
-title: "Browser link in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/client-side/using-browserlink.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Browser link in ASP.NET Core
+description: Explains how browser link is a Visual Studio feature that links the Development environment with one or more web browsers.
+monikerRange: '>= aspnetcore-1.1'
+ms.date: 06/05/2024
 ---
-
 # Browser link in ASP.NET Core
 
-By Nicolò Carandini and Tom Dykstra
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+:::moniker range=">= aspnetcore-6.0"
+
+By [Nicolò Carandini](https://github.com/ncarandini) and [Tom Dykstra](https://github.com/tdykstra)
 
 Browser link is a Visual Studio feature. It creates a communication channel between the `Development` environment and one or more web browsers. Use browser link to:
 
@@ -20,11 +21,13 @@ Browser link is a Visual Studio feature. It creates a communication channel betw
 
 ## Runtime compilation vs. hot reload
 
-Use browser Link with runtime compilation or hot reload to see the effect of run-time changes in Razor (`.cshtml`) files. We recommend hot reload.
+Use browser Link with [runtime compilation](../mvc/views/view-compilation.md) or [hot reload](../test/hot-reload.md) to see the effect of run-time changes in Razor (`.cshtml`) files. We recommend hot reload.
 
 ## How to use browser link
 
 When you have an ASP.NET Core project open, Visual Studio shows the browser link toolbar control next to the **Debug Type** toolbar control:
+
+![browser link drop-down menu](~/client-side/using-browserlink/_static/browserLink-dropdown-menu.png)
 
 From the browser link toolbar control, you can:
 
@@ -37,13 +40,23 @@ From the browser link toolbar control, you can:
 
 To choose a single web browser to launch when starting the project, use the drop-down menu in the **Debug Target** toolbar control:
 
-To open multiple browsers at once, choose **Browse with...** from the same drop-down. Hold down the `Ctrl` key to select the browsers you want, and then click **Browse**:
+![F5 drop-down menu](~/client-side/using-browserlink/_static/debug-target-dropdown-menu.png)
+
+To open multiple browsers at once, choose **Browse with...** from the same drop-down. Hold down the <kbd>Ctrl</kbd> key to select the browsers you want, and then click **Browse**:
+
+![Open many browsers at once](~/client-side/using-browserlink/_static/open-many-browsers-at-once.png)
 
 The following screenshot shows Visual Studio with the Index view open and two open browsers:
 
+![Sync with two browsers example](~/client-side/using-browserlink/_static/sync-with-two-browsers-example.png)
+
 Hover over the browser link toolbar control to see the browsers that are connected to the project:
 
+![Hover tip](~/client-side/using-browserlink/_static/hoover-tip.png)
+
 Change the Index view, and all connected browsers are updated when you click the browser link refresh button:
+
+![Browsers sync to changes](~/client-side/using-browserlink/_static/browsers-sync-to-changes.png)
 
 browser link also works with browsers that you launch from outside Visual Studio and navigate to the app URL.
 
@@ -51,7 +64,11 @@ browser link also works with browsers that you launch from outside Visual Studio
 
 Open the **browser link dashboard** window from the browser link drop down menu to manage the connection with open browsers:
 
+![how-to-open-browserlink-dashboard](~/client-side/using-browserlink/_static/open-browserlink-dashboard.png)
+
 The connected browsers are shown with the path to the page that each browser is showing:
+
+![Browser link dashboard two connections](~/client-side/using-browserlink/_static/browserlink-dashboard-two-connections.png)
 
 You can also click on an individual browser name to refresh only that browser.
 
@@ -65,7 +82,7 @@ When CSS hot reload is enabled, connected browsers are automatically refreshed w
 
 ## How it works
 
-browser link uses SignalR to create a communication channel between Visual Studio and the browser. When browser link is enabled, Visual Studio acts as a SignalR server that multiple clients (browsers) can connect to. browser link also registers a middleware component in the ASP.NET Core request pipeline. This component injects special `<script>` references into every page request from the server. You can see the script references by selecting **View source** in the browser and scrolling to the end of the `<body>` tag content:
+browser link uses [SignalR](../signalr/introduction.md) to create a communication channel between Visual Studio and the browser. When browser link is enabled, Visual Studio acts as a SignalR server that multiple clients (browsers) can connect to. browser link also registers a middleware component in the ASP.NET Core request pipeline. This component injects special `<script>` references into every page request from the server. You can see the script references by selecting **View source** in the browser and scrolling to the end of the `<body>` tag content:
 
 ```html
     <!-- Visual Studio browser link -->
@@ -80,3 +97,7 @@ browser link uses SignalR to create a communication channel between Visual Studi
 Your source files aren't modified. The middleware component injects the script references dynamically.
 
 Because the browser-side code is all JavaScript, it works on all browsers that SignalR supports without requiring a browser plug-in.
+
+:::moniker-end
+
+[!INCLUDE[](~/client-side/using-browserlink/includes/using-browserlink-1-5.md)]

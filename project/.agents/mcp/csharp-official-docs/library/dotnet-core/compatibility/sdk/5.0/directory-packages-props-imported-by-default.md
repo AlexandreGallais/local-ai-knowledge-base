@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Directory.Packages.props files is imported by default"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/5.0/directory-packages-props-imported-by-default.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 5 where NuGet's .props files automatically import a file named Directory.Packages.props if it's found in the project folder.
+ms.date: 09/17/2020
 ---
-
 # Directory.Packages.props files is imported by default
 
 NuGet's *.props* files automatically import a file named *Directory.Packages.props* if it's found in the project folder or any of its ancestors.
@@ -23,7 +19,7 @@ Starting in .NET 5, such a file *is* automatically imported if it exists in the 
 
 ## Reason for change
 
-This change was made in order to support central package versioning for NuGet.
+This change was made in order to support [central package versioning](https://github.com/NuGet/Home/wiki/Centrally-managing-NuGet-package-versions) for NuGet.
 
 ## Recommended action
 
@@ -32,3 +28,15 @@ Rename the existing *Directory.Packages.props* file if it should not be imported
 ## Affected APIs
 
 N/A
+
+<!--
+
+### Affected APIs
+
+Not detectable via API analysis.
+
+### Category
+
+MSBuild
+
+-->

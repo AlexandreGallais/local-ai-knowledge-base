@@ -1,37 +1,68 @@
 ---
 title: "Resolve errors and warnings related to union type and closed hierarchy declarations"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/compiler-messages/union-declaration-errors.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "This article helps you diagnose and correct compiler errors and warnings related to union type and closed hierarchy declarations."
+f1_keywords:
+  - "CS9370"
+  - "CS9371"
+  - "CS9373"
+  - "CS9374"
+  - "CS9375"
+  - "CS9380"
+  - "CS9381"
+  - "CS9382"
+  - "CS9383"
+  - "CS9384"
+  - "CS9385"
+  - "CS9386"
+  - "CS9387"
+  - "CS9395"
+helpviewer_keywords:
+  - "CS9370"
+  - "CS9371"
+  - "CS9373"
+  - "CS9374"
+  - "CS9375"
+  - "CS9380"
+  - "CS9381"
+  - "CS9382"
+  - "CS9383"
+  - "CS9384"
+  - "CS9385"
+  - "CS9386"
+  - "CS9387"
+  - "CS9395"
+ms.date: 09/14/2026
+ai-usage: ai-assisted
 ---
-
 # Resolve errors and warnings for union type and closed hierarchy declarations
 
-The C# compiler generates errors when you misuse union types or closed type hierarchies. A union type represents a value that can be one of several *case types*, with implicit conversions and exhaustive pattern matching. Closed hierarchies restrict which types can derive from a base type. These diagnostics help you follow the rules for declaring and using union types and closed hierarchies.
+The C# compiler generates errors when you misuse [union types](../builtin-types/union.md) or closed type hierarchies. A union type represents a value that can be one of several *case types*, with implicit conversions and exhaustive pattern matching. Closed hierarchies restrict which types can derive from a base type. These diagnostics help you follow the rules for declaring and using union types and closed hierarchies.
 
-- **CS9370**: *A union declaration must specify at least one case type.*
-- **CS9371**: *Cannot convert type 'type' to 'object' via an implicit reference or boxing conversion.*
-- **CS9373**: *Instance fields, auto-properties or field-like events are not permitted in a 'union' declaration.*
-- **CS9374**: *Explicitly declared public constructors with a single parameter are not permitted in a 'union' declaration.*
-- **CS9375**: *A constructor declared in a 'union' declaration must have a 'this' initializer that calls a synthesized constructor or an explicitly declared constructor.*
-- **CS9380**: *Types and aliases cannot be named 'closed'.*
-- **CS9381**: *'type': a closed type cannot be sealed or static*
-- **CS9382**: *'type': cannot use a closed type 'type' from another assembly as a base type.*
-- **CS9383**: *'type': The type parameter 'parameter' must be referenced in the base type 'type' because the base type is closed.*
-- **CS9384**: *'type': a closed type cannot be marked abstract because it is always implicitly abstract.*
-- **CS9385**: *A union type must have at least one union creation member.*
-- **CS9386**: *A union member provider type must have an instance 'Value' property of type 'object?' or 'object'. The property must have a public get accessor.*
-- **CS9387**: *A 'union' declaration cannot use a union member provider interface.*
-- **CS9395**: *'System.Runtime.CompilerServices.IsClosedTypeAttribute.DerivedTypes' must be an instance property with public get and set accessors, no parameters, and type 'System.Type[]'.*
+<!-- The text in this list generates issues for Acrolinx, because they don't use contractions.
+That's by design. The text closely matches the text of the compiler error / warning for SEO purposes.
+ -->
+
+- [**CS9370**](#union-declaration-requirements): *A union declaration must specify at least one case type.*
+- [**CS9371**](#union-declaration-requirements): *Cannot convert type 'type' to 'object' via an implicit reference or boxing conversion.*
+- [**CS9373**](#union-member-restrictions): *Instance fields, auto-properties or field-like events are not permitted in a 'union' declaration.*
+- [**CS9374**](#union-member-restrictions): *Explicitly declared public constructors with a single parameter are not permitted in a 'union' declaration.*
+- [**CS9375**](#union-member-restrictions): *A constructor declared in a 'union' declaration must have a 'this' initializer that calls a synthesized constructor or an explicitly declared constructor.*
+- [**CS9380**](#closed-hierarchy-restrictions): *Types and aliases cannot be named 'closed'.*
+- [**CS9381**](#closed-hierarchy-restrictions): *'type': a closed type cannot be sealed or static*
+- [**CS9382**](#closed-hierarchy-restrictions): *'type': cannot use a closed type 'type' from another assembly as a base type.*
+- [**CS9383**](#closed-hierarchy-restrictions): *'type': The type parameter 'parameter' must be referenced in the base type 'type' because the base type is closed.*
+- [**CS9384**](#closed-hierarchy-restrictions): *'type': a closed type cannot be marked abstract because it is always implicitly abstract.*
+- [**CS9385**](#union-member-provider-requirements): *A union type must have at least one union creation member.*
+- [**CS9386**](#union-member-provider-requirements): *A union member provider type must have an instance 'Value' property of type 'object?' or 'object'. The property must have a public get accessor.*
+- [**CS9387**](#union-member-provider-requirements): *A 'union' declaration cannot use a union member provider interface.*
+- [**CS9395**](#closed-hierarchy-restrictions): *'System.Runtime.CompilerServices.IsClosedTypeAttribute.DerivedTypes' must be an instance property with public get and set accessors, no parameters, and type 'System.Type[]'.*
 
 ## Union declaration requirements
 
 - **CS9370**: *A union declaration must specify at least one case type.*
 - **CS9371**: *Cannot convert type 'type' to 'object' via an implicit reference or boxing conversion.*
 
-A union declaration specifies a name and a list of case types. These errors enforce the structural requirements of a valid union declaration. For the complete rules, see the union types feature specification.
+A [union declaration](../builtin-types/union.md#union-declarations) specifies a name and a list of case types. These errors enforce the structural requirements of a valid union declaration. For the complete rules, see the [union types feature specification](~/_csharplang/proposals/csharp-15.0/unions.md).
 
 To correct these errors, apply the following changes to your union declaration:
 
@@ -44,7 +75,7 @@ To correct these errors, apply the following changes to your union declaration:
 - **CS9374**: *Explicitly declared public constructors with a single parameter are not permitted in a 'union' declaration.*
 - **CS9375**: *A constructor declared in a 'union' declaration must have a 'this' initializer that calls a synthesized constructor or an explicitly declared constructor.*
 
-A union declaration can include a body with additional members, but the compiler restricts what you can declare. These restrictions ensure that the compiler-generated conversion constructors and storage mechanism work correctly. For the complete rules, see the union types feature specification.
+A [union declaration](../builtin-types/union.md#union-declarations) can include a body with additional members, but the compiler restricts what you can declare. These restrictions ensure that the compiler-generated conversion constructors and storage mechanism work correctly. For the complete rules, see the [union types feature specification](~/_csharplang/proposals/csharp-15.0/unions.md).
 
 To correct these errors, apply the following changes to your union members:
 
@@ -58,7 +89,7 @@ To correct these errors, apply the following changes to your union members:
 - **CS9386**: *A union member provider type must have an instance 'Value' property of type 'object?' or 'object'. The property must have a public get accessor.*
 - **CS9387**: *A 'union' declaration cannot use a union member provider interface.*
 
-A union member provider is a type that implements the union pattern through an interface rather than the `union` keyword. These errors enforce the structural requirements for types participating in the union member provider pattern. For the complete rules, see the union types feature specification.
+A union member provider is a type that implements the union pattern through an interface rather than the `union` keyword. These errors enforce the structural requirements for types participating in the union member provider pattern. For the complete rules, see the [union types feature specification](~/_csharplang/proposals/csharp-15.0/unions.md).
 
 To correct these errors, apply the following changes to your union member provider:
 
@@ -75,7 +106,7 @@ To correct these errors, apply the following changes to your union member provid
 - **CS9384**: *'type': a closed type cannot be marked abstract because it is always implicitly abstract.*
 - **CS9395**: *'System.Runtime.CompilerServices.IsClosedTypeAttribute.DerivedTypes' must be an instance property with public get and set accessors, no parameters, and type 'System.Type[]'.*
 
-A closed type hierarchy restricts which types can derive from a base type. The compiler enforces these restrictions to ensure that the set of derived types is known and exhaustive. For the complete rules, see the closed hierarchies feature specification.
+A closed type hierarchy restricts which types can derive from a base type. The compiler enforces these restrictions to ensure that the set of derived types is known and exhaustive. For the complete rules, see the [closed hierarchies feature specification](~/_csharplang/proposals/csharp-15.0/closed-hierarchies.md).
 
 To correct these errors, apply the following changes to your closed hierarchy declaration:
 

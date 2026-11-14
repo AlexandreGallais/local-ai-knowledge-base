@@ -1,10 +1,10 @@
 ---
-title: "Testing with 'dotnet test'"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/unit-testing-with-dotnet-test.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Testing with 'dotnet test'
+description: Learn more about how 'dotnet test' works and its support for VSTest and Microsoft.Testing.Platform (MTP)
+author: Youssef1313
+ms.author: ygerges
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # Testing with 'dotnet test'
@@ -13,11 +13,11 @@ This article provides insights into the `dotnet test` CLI command, including its
 
 The `dotnet test` command operates in two primary modes:
 
-- *VSTest* mode: This is the default mode for `dotnet test` and was the only mode available before the .NET 10 SDK. It is primarily designed for VSTest but can also run MTP tests via Microsoft.Testing.Platform.MSBuild NuGet package.
+- *VSTest* mode: This is the default mode for `dotnet test` and was the only mode available before the .NET 10 SDK. It is primarily designed for VSTest but can also run MTP tests via [Microsoft.Testing.Platform.MSBuild](https://www.nuget.org/packages/Microsoft.Testing.Platform.MSBuild/) NuGet package.
 - *MTP* mode: Introduced with the .NET 10 SDK, this mode exclusively supports test applications built with MTP.
 
-> **Tip:**
-> For CLI reference, see dotnet test.
+> [!TIP]
+> For CLI reference, see [dotnet test](../tools/dotnet-test.md).
 
 ## VSTest mode of `dotnet test`
 
@@ -27,21 +27,21 @@ The process involves invoking the `VSTest` MSBuild target, which triggers other 
 
 ### Run MTP projects with VSTest mode
 
-`dotnet test` was designed to run VSTest projects in VSTest mode. However, you can run MTP projects in `dotnet test` VSTest mode by using the Microsoft.Testing.Platform.MSBuild package. From the user's perspective, this support is enabled by setting the `TestingPlatformDotnetTestSupport` MSBuild property to `true` (it's `false` by default for backward-compatibility reasons). When this property is set to `true`, Microsoft.Testing.Platform.MSBuild changes the `VSTest` target behavior, redirecting it to call `InvokeTestingPlatform`. `InvokeTestingPlatform` is an MSBuild target included in Microsoft.Testing.Platform.MSBuild that's responsible for correctly running MTP test applications as executables. VSTest-specific command-line options, such as `--logger`, are silently ignored in this mode. To include MTP-specific arguments, such as `--report-trx`, you must append them after an additional `--`. For example, `dotnet test -- --report-trx`. In MTP 1.9, a warning with code MTP0001 is produced when an argument that is silently ignored is detected.
+`dotnet test` was designed to run VSTest projects in VSTest mode. However, you can run MTP projects in `dotnet test` VSTest mode by using the [Microsoft.Testing.Platform.MSBuild](https://www.nuget.org/packages/Microsoft.Testing.Platform.MSBuild) package. From the user's perspective, this support is enabled by setting the `TestingPlatformDotnetTestSupport` MSBuild property to `true` (it's `false` by default for backward-compatibility reasons). When this property is set to `true`, Microsoft.Testing.Platform.MSBuild changes the `VSTest` target behavior, redirecting it to call `InvokeTestingPlatform`. `InvokeTestingPlatform` is an MSBuild target included in Microsoft.Testing.Platform.MSBuild that's responsible for correctly running MTP test applications as executables. VSTest-specific command-line options, such as `--logger`, are silently ignored in this mode. To include MTP-specific arguments, such as `--report-trx`, you must append them after an additional `--`. For example, `dotnet test -- --report-trx`. In MTP 1.9, a warning with code MTP0001 is produced when an argument that is silently ignored is detected.
 
-> **Important:**
-> The `--report-trx` option isn't built into MTP. Each targeted test application must register the extension by referencing `Microsoft.Testing.Extensions.TrxReport` directly or through a test SDK configuration or profile that includes the package. Otherwise, the test application rejects the option with MTP exit code 5. In this legacy VSTest mode, `dotnet test` can report that rejection as an MSBuild failure with exit code 1.
+> [!IMPORTANT]
+> The `--report-trx` option isn't built into MTP. Each targeted test application must register the extension by referencing [`Microsoft.Testing.Extensions.TrxReport`](https://www.nuget.org/packages/Microsoft.Testing.Extensions.TrxReport) directly or through a test SDK configuration or profile that includes the package. Otherwise, the test application rejects the option with MTP exit code 5. In this legacy VSTest mode, `dotnet test` can report that rejection as an MSBuild failure with exit code 1.
 
-> **Note:**
-> MSTest and NUnit use the Microsoft.Testing.Extensions.VSTestBridge package. By setting `EnableMSTestRunner` or `EnableNUnitRunner` (which enables MTP), your test project will support both VSTest and MTP.
+> [!NOTE]
+> MSTest and NUnit use the [Microsoft.Testing.Extensions.VSTestBridge](https://www.nuget.org/packages/Microsoft.Testing.Extensions.VSTestBridge) package. By setting `EnableMSTestRunner` or `EnableNUnitRunner` (which enables MTP), your test project will support both VSTest and MTP.
 > In that scenario, if you use the VSTest mode of `dotnet test` and do not set `TestingPlatformDotnetTestSupport` to true, you are essentially running entirely with VSTest, as if `EnableMSTestRunner` and `EnableNUnitRunner` are not set to true.
 >
-> **Note:**
+> [!NOTE]
 > It is highly recommended to set the `TestingPlatformDotnetTestSupport` property in `Directory.Build.props`. This ensures that you don't need to add it to every test project file individually. Additionally, it prevents the risk of introducing a new test project that doesn't set this property, which could result in a solution where some projects use VSTest while others use MTP. This mixed configuration might not work correctly and is an unsupported scenario.
 >
-> **Important:**
+> [!IMPORTANT]
 > Running MTP projects under VSTest mode is considered legacy in favor of the newer experience in .NET 10 SDK. The support of running under this mode will be removed in MTP version 2 if run with .NET 10 SDK. The support remains available for .NET 9 SDK and earlier for backward compatibility.
-> For more information, see Migrate to MTP mode of `dotnet test`.
+> For more information, see [Migrate to MTP mode of `dotnet test`](#migrate-to-mtp-mode-of-dotnet-test).
 
 The following list outlines the command-line options of `dotnet test` command in VSTest mode that are supported by MTP. These options are specific to the build process and not passed down to VSTest, which is why they work with MTP.
 
@@ -59,7 +59,7 @@ The following list outlines the command-line options of `dotnet test` command in
 - `-r|--runtime <RUNTIME_IDENTIFIER>`
 - `-v|--verbosity <LEVEL>`
 
-> **Tip:**
+> [!TIP]
 > You can customize the command-line arguments of your test application via `TestingPlatformCommandLineArguments` MSBuild property:
 >
 > ```xml
@@ -108,9 +108,9 @@ This scenario is not officially supported, and you should be aware of the follow
 - VSTest-specific command-line options will only apply to VSTest projects and not to MTP test applications.
 - MTP-specific command-line options provided after `--` will be treated as RunSettings arguments for VSTest projects.
 
-#### Key <example-value>
+#### Key takeaways
 
-- To run MTP test applications in `dotnet test` VSTest mode, you should use `Microsoft.Testing.Platform.MSBuild`, pass <example-value> command-line options after the extra `--`, and set `TestingPlatformDotnetTestSupport` to `true`.
+- To run MTP test applications in `dotnet test` VSTest mode, you should use `Microsoft.Testing.Platform.MSBuild`, pass MTP-specific command-line options after the extra `--`, and set `TestingPlatformDotnetTestSupport` to `true`.
 - VSTest-oriented command-line options are silently ignored.
 
 Due to these issues, .NET has introduced a new `dotnet test` mode specifically designed for MTP. We encourage MTP users to transition from the VSTest `dotnet test` mode to the new mode with the .NET 10 SDK.
@@ -129,20 +129,20 @@ To enable this mode, add the following configuration to your `global.json` file:
 }
 ```
 
-Starting with .NET 11, you can instead set the `DOTNET_TEST_RUNNER` environment variable to `Microsoft.Testing.Platform`. A recognized environment variable value overrides `global.json` for the current process. For accepted values and precedence, see Choose a test runner.
+Starting with .NET 11, you can instead set the `DOTNET_TEST_RUNNER` environment variable to `Microsoft.Testing.Platform`. A recognized environment variable value overrides `global.json` for the current process. For accepted values and precedence, see [Choose a test runner](../tools/dotnet-test.md#choose-a-test-runner).
 
-> **Important:**
+> [!IMPORTANT]
 > The `dotnet test` experience for MTP is only supported in `Microsoft.Testing.Platform` version 1.7 and later.
 
 Since this mode is specifically designed for MTP, neither `TestingPlatformDotnetTestSupport` nor the additional `--` are required.
 
-> **Important:**
+> [!IMPORTANT]
 > This mode is only compatible with MTP version 1.7.0 and later.
 >
-> **Important:**
+> [!IMPORTANT]
 > If your test project supports VSTest but does not support MTP, an error will be generated.
 >
-> **Tip:**
+> [!TIP]
 > You can customize the command-line arguments of your test application via `TestingPlatformCommandLineArguments` MSBuild property:
 >
 > ```xml
@@ -164,8 +164,8 @@ For users of MTP that are using the VSTest mode of `dotnet test`, there are few 
 1. If passing a specific project (or directory containing project), for example, `dotnet test MyProject.csproj`, this should become `dotnet test --project MyProject.csproj`.
 1. If passing a specific dll, for example, `dotnet test path/to/UnitTests.dll`, this should become `dotnet test --test-modules path/to/UnitTests.dll`. Note that `--test-modules` also supports globbing.
 
-> **Tip:**
-> Even though `--` is no longer required in MTP mode, you can still use it to mark where test application arguments begin. The separator avoids a parser quirk where unrecognized arguments change meaning when interleaved with options that `dotnet test` understands. The separator also protects your scripts if `dotnet test` later starts recognizing one of those tokens. For more information, see Forward arguments to the test application.
+> [!TIP]
+> Even though `--` is no longer required in MTP mode, you can still use it to mark where test application arguments begin. The separator avoids a parser quirk where unrecognized arguments change meaning when interleaved with options that `dotnet test` understands. The separator also protects your scripts if `dotnet test` later starts recognizing one of those tokens. For more information, see [Forward arguments to the test application](../tools/dotnet-test-mtp.md#forward-arguments-to-the-test-application).
 
 ## Solutions with mixed test frameworks or extensions
 
@@ -174,7 +174,7 @@ When a solution contains test projects that use different test frameworks (for e
 - xUnit.net uses `--filter-trait` while MSTest uses `--filter`, and each framework rejects the other's options.
 - A project that references `Microsoft.Testing.Extensions.HangDump` accepts `--hangdump`, but a project without that extension fails on the same option.
 
-Use the `TestingPlatformCommandLineArguments` MSBuild property with conditions to pass <example-value> only to the projects that understand them.
+Use the [`TestingPlatformCommandLineArguments`](../project-sdk/msbuild-props.md#testingplatformcommandlinearguments) MSBuild property with conditions to pass arguments only to the projects that understand them.
 
 ### Use MSBuild conditions to route arguments
 
@@ -193,10 +193,10 @@ The following example shows a `Directory.Build.props` file for a solution that m
 </PropertyGroup>
 ```
 
-> **Note:**
+> [!NOTE]
 > `UsingMSTestSdk` is a property defined by `MSTest.Sdk`. If your MSTest projects don't use `MSTest.Sdk`, use a different condition. Check whether your test framework's SDK or NuGet package already sets a property you can use. If it doesn't, define your own property in each project and condition on that property instead (in this case, use Directory.Build.targets instead).
 
-With this configuration in place, you can pass <example-value> arguments from the command line using MSBuild properties:
+With this configuration in place, you can pass framework-specific arguments from the command line using MSBuild properties:
 
 ```dotnetcli
 dotnet test -p:MSTestSpecificArgs="--filter FullyQualifiedName~IntegrationTests" -p:XUnitSpecificArgs="--filter-trait Category=Integration"
@@ -204,7 +204,7 @@ dotnet test -p:MSTestSpecificArgs="--filter FullyQualifiedName~IntegrationTests"
 
 Each test project receives only the arguments relevant to its framework, and the other framework's arguments are never passed.
 
-> **Tip:**
+> [!TIP]
 > For arguments that every targeted project recognizes, set them directly in `TestingPlatformCommandLineArguments` without a condition. For example, all projects recognize `--ignore-exit-code 8`. You can pass `--report-trx` globally only when every targeted project registers `Microsoft.Testing.Extensions.TrxReport`.
 
 The same pattern applies when only some test projects in a solution reference a particular extension. For example, if only certain projects reference `Microsoft.Testing.Extensions.HangDump`, passing `--hangdump` globally causes the other projects to fail with an unrecognized option error. Use the same conditional approach to route extension-specific arguments only to the projects that have the extension.

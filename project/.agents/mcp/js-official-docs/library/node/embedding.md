@@ -1,24 +1,17 @@
----
-title: "C++ embedder API"
-tool: "node"
-version: "26.13"
-source: "https://github.com/nodejs/node/blob/e9c277643b0249c50f6e6de5413be8a88ea11b6a/doc/api/embedding.md"
-commit: "e9c277643b0249c50f6e6de5413be8a88ea11b6a"
-license: "MIT"
----
-
 # C++ embedder API
+
+<!--introduced_in=v12.19.0-->
 
 Node.js provides a number of C++ APIs that can be used to execute JavaScript
 in a Node.js environment from other C++ software.
 
-The documentation for these APIs can be found in src/node.h in the Node.js
+The documentation for these APIs can be found in [src/node.h][] in the Node.js
 source tree. In addition to the APIs exposed by Node.js, some required concepts
 are provided by the V8 embedder API.
 
 Because using Node.js as an embedded library is different from writing code
 that is executed by Node.js, breaking changes do not follow typical Node.js
-deprecation policy and may occur on each semver-major release without prior
+[deprecation policy][] and may occur on each semver-major release without prior
 warning.
 
 ## Example embedding application
@@ -28,13 +21,13 @@ to create an application from scratch that will perform the equivalent of
 `node -e <code>`, i.e. that will take a piece of JavaScript and run it in
 a Node.js-specific environment.
 
-The full code can be found in the Node.js source tree.
+The full code can be found [in the Node.js source tree][embedtest.cc].
 
 ### Setting up a per-process state
 
 Node.js requires some per-process state management in order to run:
 
-* Arguments parsing for Node.js CLI options,
+* Arguments parsing for Node.js [CLI options][],
 * V8 per-process requirements, such as a `v8::Platform` instance.
 
 The following example shows how these can be set up. Some class names are from
@@ -81,6 +74,14 @@ int main(int argc, char** argv) {
 
 ### Setting up a per-instance state
 
+<!-- YAML
+changes:
+  - version: v15.0.0
+    pr-url: https://github.com/nodejs/node/pull/35597
+    description:
+      The `CommonEnvironmentSetup` and `SpinEventLoop` utilities were added.
+-->
+
 Node.js has a concept of a “Node.js instance”, that is commonly being referred
 to as `node::Environment`. Each `node::Environment` is associated with:
 
@@ -104,7 +105,7 @@ to be provided. One possible choice is the default Node.js allocator, which
 can be created through `node::ArrayBufferAllocator::Create()`. Using the Node.js
 allocator allows minor performance optimizations when addons use the Node.js
 C++ `Buffer` API, and is required in order to track `ArrayBuffer` memory in
-`process.memoryUsage()`.
+[`process.memoryUsage()`][].
 
 Additionally, each `v8::Isolate` that is used for a Node.js instance needs to
 be registered and unregistered with the `MultiIsolatePlatform` instance, if one
@@ -172,3 +173,9 @@ int RunNodeInstance(MultiIsolatePlatform* platform,
   return exit_code;
 }
 ```
+
+[CLI options]: cli.md
+[`process.memoryUsage()`]: process.md#processmemoryusage
+[deprecation policy]: deprecations.md
+[embedtest.cc]: https://github.com/nodejs/node/blob/HEAD/test/embedding/embedtest.cc
+[src/node.h]: https://github.com/nodejs/node/blob/HEAD/src/node.h

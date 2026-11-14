@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: `dotnet workload` commands output change"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/9.0/dotnet-workload-output.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in the .NET 9 SDK where the `dotnet workload` commands output only the JSON body.
+ms.date: 01/09/2024
 ---
-
 # `dotnet workload` commands output change
 
 There's been in a change in the output of the following commands:
@@ -56,7 +52,7 @@ Starting in .NET 9, the affected `dotnet workload` commands produced output simi
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

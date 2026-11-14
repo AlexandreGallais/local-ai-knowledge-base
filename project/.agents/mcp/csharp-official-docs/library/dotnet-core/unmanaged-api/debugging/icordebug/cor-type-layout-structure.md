@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: COR_TYPE_LAYOUT Structure"
 title: "COR_TYPE_LAYOUT Structure"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cor-type-layout-structure.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "COR_TYPE_LAYOUT"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "COR_TYPE_LAYOUT"
+helpviewer_keywords:
+  - "COR_TYPE_LAYOUT structure [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # COR_TYPE_LAYOUT Structure
 
 Provides information about the layout of an object in memory.
@@ -27,7 +35,7 @@ typedef struct COR_TYPE_LAYOUT {
 
 |Member|Description|
 |------------|-----------------|
-|`parentID`|The identifier of the parent type to this type. This will be the NULL type id (token1= 0, token2 = 0) if the type id corresponds to `System.Object`.|
+|`parentID`|The identifier of the parent type to this type. This will be the NULL type id (token1= 0, token2 = 0) if the type id corresponds to <xref:System.Object?displayProperty=nameWithType>.|
 |`objectSize`|The base size of an object of this type. This is the total size for non-variable sized objects.|
 |`numFields`|The number of fields included in objects of this type.|
 |`boxOffset`|If this type is boxed, the beginning offset of an object's fields. This field is valid only for value types such as primitives and structures.|
@@ -35,11 +43,11 @@ typedef struct COR_TYPE_LAYOUT {
 
 ## Remarks
 
- If `numFields` is greater than zero, you can call the ICorDebugProcess5::GetTypeFields method to obtain information about the fields in this type. If `type` is `ELEMENT_TYPE_STRING`, `ELEMENT_TYPE_ARRAY`, or `ELEMENT_TYPE_SZARRAY`, the size of objects of this type is variable, and you can pass the COR_TYPEID structure to the ICorDebugProcess5::GetArrayLayout method.
+ If `numFields` is greater than zero, you can call the [ICorDebugProcess5::GetTypeFields](icordebugprocess5-gettypefields-method.md) method to obtain information about the fields in this type. If `type` is `ELEMENT_TYPE_STRING`, `ELEMENT_TYPE_ARRAY`, or `ELEMENT_TYPE_SZARRAY`, the size of objects of this type is variable, and you can pass the [COR_TYPEID](cor-typeid-structure.md) structure to the [ICorDebugProcess5::GetArrayLayout](icordebugprocess5-getarraylayout-method.md) method.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

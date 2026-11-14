@@ -1,12 +1,3 @@
----
-title: "Angular versioning and releases (part 1 of 2)"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/reference/releases.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Angular versioning and releases
 
 We recognize that you need stability from the Angular framework.
@@ -20,7 +11,7 @@ This document contains the practices that we follow to provide you with a leadin
 We strive to ensure that future changes are always introduced in a predictable way.
 We want everyone who depends on Angular to know when and how new features are added, and to be well-prepared when obsolete ones are removed.
 
-Sometimes _breaking changes_, such as the removal of APIs or features, are necessary to innovate and stay current with evolving best practices, changing dependencies, or shifts in the web platform. These breaking changes go through a deprecation process explained in our deprecation policy.
+Sometimes _breaking changes_, such as the removal of APIs or features, are necessary to innovate and stay current with evolving best practices, changing dependencies, or shifts in the web platform. These breaking changes go through a deprecation process explained in our [deprecation policy](#deprecation-policy).
 
 To make these transitions as straightforward as possible, the Angular team makes these commitments:
 
@@ -28,13 +19,13 @@ To make these transitions as straightforward as possible, the Angular team makes
 - We follow the deprecation policy described here, so you have time to update your applications to the latest APIs and best practices
 
 HELPFUL: The practices described in this document apply to Angular 2.0 and later.
-If you are currently using AngularJS, see Upgrading from AngularJS.
+If you are currently using AngularJS, see [Upgrading from AngularJS](https://angular.io/guide/upgrade 'Upgrading from AngularJS').
 _AngularJS_ is the name for all v1.x versions of Angular.
 
 ## Angular versioning
 
 Angular version numbers indicate the level of changes that are introduced by the release.
-This use of semantic versioning helps you understand the potential impact of updating to a new version.
+This use of [semantic versioning](https://semver.org/ 'Semantic Versioning Specification') helps you understand the potential impact of updating to a new version.
 
 Angular version numbers have three parts: `major.minor.patch`.
 For example, version 7.2.11 indicates major version 7, minor version 2, and patch level 11.
@@ -59,7 +50,7 @@ We let you preview what's coming by providing "Next" and Release Candidates \(`r
 | Next              | The release that is under active development and testing. The next release is indicated by a release tag appended with the `-next` identifier, such as `8.1.0-next.0`.       |
 | Release candidate | A release that is feature complete and in final testing. A release candidate is indicated by a release tag appended with the `-rc` identifier, such as version `8.1.0-rc.0`. |
 
-The latest `next` or `rc` pre-release version of the documentation is available at next.angular.dev.
+The latest `next` or `rc` pre-release version of the documentation is available at [next.angular.dev](https://next.angular.dev).
 
 ## Release frequency
 
@@ -73,7 +64,7 @@ In general, expect the following release cycle:
 - 4-6 minor releases for each major release
 - A patch release and pre-release \(`next` or `rc`\) build almost every week
 
-This cadence of releases gives eager developers access to new features as soon as they are fully developed and pass <example-value> our code review and integration testing processes, while maintaining the stability and reliability of the platform for production users that prefer to receive features after they have been validated by Google and other developers that use the pre-release builds.
+This cadence of releases gives eager developers access to new features as soon as they are fully developed and pass through our code review and integration testing processes, while maintaining the stability and reliability of the platform for production users that prefer to receive features after they have been validated by Google and other developers that use the pre-release builds.
 
 HELPFUL: Until Angular v22, Angular had a 6-month major release cycle, with 1-3 minor releases for each major release
 
@@ -99,7 +90,7 @@ All major releases are typically supported for 24 months.
 | Support stage     | Support Timing | Details                                                             |
 | :---------------- | :------------- | :------------------------------------------------------------------ |
 | Active            | 12 months      | Regularly-scheduled updates and patches are released                |
-| Long-term \(LTS\) | 12 months      | Only critical fixes and security patches are released |
+| Long-term \(LTS\) | 12 months      | Only [critical fixes and security patches](#lts-fixes) are released |
 
 ### Actively supported versions
 
@@ -128,7 +119,7 @@ To help ensure that you have sufficient time and a clear path to update, this is
 
 | Deprecation stages | Details                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | :----------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Announcement       | We announce deprecated APIs and features in the change log. Deprecated APIs appear in the documentation with ~~strikethrough~~. When we announce a deprecation, we also announce a recommended update path. Additionally, all deprecated APIs are annotated with `@deprecated` in the corresponding documentation, which enables text editors and IDEs to provide hints if your project depends on them. |
+| Announcement       | We announce deprecated APIs and features in the [change log](https://github.com/angular/angular/blob/main/CHANGELOG.md 'Angular change log'). Deprecated APIs appear in the [documentation](api?status=8) with ~~strikethrough~~. When we announce a deprecation, we also announce a recommended update path. Additionally, all deprecated APIs are annotated with `@deprecated` in the corresponding documentation, which enables text editors and IDEs to provide hints if your project depends on them. |
 | Deprecation period | When an API or a feature is deprecated, it is still present in at least the next major release (period of at least 12 months). After that, deprecated APIs and features are candidates for removal. A deprecation can be announced in any release, but the removal of a deprecated API or feature happens only in major release. Until a deprecated API or feature is removed, it is maintained according to the LTS support policy, meaning that only critical and security issues are fixed.             |
 | npm dependencies   | We only make npm dependency updates that require changes to your applications in a major release. In minor releases, we update peer dependencies by expanding the supported versions, but we do not require projects to update these dependencies until a future major version. This means that during minor Angular releases, npm dependency updates within Angular applications and libraries are optional.                                                                                              |
 
@@ -136,7 +127,7 @@ To help ensure that you have sufficient time and a clear path to update, this is
 
 Angular is a collection of many packages, subprojects, and tools.
 To prevent accidental use of private APIs and so that you can clearly understand what is covered by the practices described here — we document what is and is not considered our public API surface.
-For details, see Supported Public API Surface of Angular.
+For details, see [Supported Public API Surface of Angular](https://github.com/angular/angular/blob/main/contributing-docs/public-api-surface.md 'Supported Public API Surface of Angular').
 
 To guarantee backward compatibility of Angular we run a series of checks before we merge any change:
 
@@ -148,13 +139,13 @@ Any changes to the public API surface are made in accordance with the versioning
 
 ## Breaking change policy and update paths
 
-Breaking change requires you to do work because the state after it is not backward compatible with the state before it. You can find the rare exceptions from this rule in the Compatibility policy. Examples of breaking changes are the removal of public APIs or other changes of the type definition of Angular, changing the timing of calls, or updating to a new version of a dependency of Angular, which includes breaking changes itself.
+Breaking change requires you to do work because the state after it is not backward compatible with the state before it. You can find the rare exceptions from this rule in the [Compatibility policy](#compatibility-policy). Examples of breaking changes are the removal of public APIs or other changes of the type definition of Angular, changing the timing of calls, or updating to a new version of a dependency of Angular, which includes breaking changes itself.
 
 To support you in case of breaking changes in Angular:
 
-- We follow our deprecation policy before we remove a public API
+- We follow our [deprecation policy](#deprecation-policy) before we remove a public API
 - Support update automation via the `ng update` command. It provides code transformations which we often have tested ahead of time over hundreds of thousands of projects at Google
-- Step by step instructions how to update from one major version to another at the "Angular Update Guide"
+- Step by step instructions how to update from one major version to another at the ["Angular Update Guide"](update-guide)
 
 You can `ng update` to any version of Angular, provided that the following criteria are met:
 
@@ -173,6 +164,12 @@ For example, to update from version 10 to version 12:
 
 Occasionally we introduce new APIs under the label of "Developer Preview". These are APIs that are fully functional and polished, but that we are not ready to stabilize under our normal deprecation policy.
 
-This may be because we want to gather feedback from real applications before stabilization, or because the associated documentation or migration tooling is not fully complete. Feedback can be provided via a GitHub issue, where developers can share their experiences, report bugs, or suggest improvements to help refine the feature.
+This may be because we want to gather feedback from real applications before stabilization, or because the associated documentation or migration tooling is not fully complete. Feedback can be provided via a [GitHub issue](https://github.com/angular/angular/issues), where developers can share their experiences, report bugs, or suggest improvements to help refine the feature.
 
 The policies and practices that are described in this document do not apply to APIs marked as Developer Preview. Such APIs can change at any time, even in new patch versions of the framework. Teams should decide for themselves whether the benefits of using Developer Preview APIs are worth the risk of breaking changes outside of our normal use of semantic versioning.
+
+## Experimental
+
+These APIs might not become stable at all or have significant changes before becoming stable.
+
+The policies and practices that are described in this document do not apply to APIs marked as experimental. Such APIs can change at any time, even in new patch versions of the framework. Teams should decide for themselves whether the benefits of using experimental APIs are worth the risk of breaking changes outside of our normal use of semantic versioning.

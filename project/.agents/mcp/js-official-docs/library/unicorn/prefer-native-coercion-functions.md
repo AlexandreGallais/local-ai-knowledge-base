@@ -1,21 +1,15 @@
----
-title: "prefer-native-coercion-functions"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-native-coercion-functions.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-native-coercion-functions
 
 📝 Prefer using `String`, `Number`, `BigInt`, `Boolean`, and `Symbol` directly.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-If a function is equivalent to `String`, `Number`, `BigInt`, `Boolean`, or `Symbol`, you should use the built-in one directly. Wrapping the built-in in a function is moot.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+If a function is equivalent to [`String`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), [`Number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number), [`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt), [`Boolean`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean), or [`Symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol), you should use the built-in one directly. Wrapping the built-in in a function is moot.
 
 ## Examples
 
@@ -78,4 +72,4 @@ const toNumber = value => +value;
 const toBoolean = value => !!value;
 ```
 
-It is recommended to enable the built-in ESLint rule `no-implicit-coercion` for a better experience.
+It is recommended to enable the built-in ESLint rule [`no-implicit-coercion`](https://eslint.org/docs/rules/no-implicit-coercion) for a better experience.

@@ -1,26 +1,20 @@
----
-title: "prefer-get-or-insert-computed"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-get-or-insert-computed.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-get-or-insert-computed
 
 📝 Prefer `.getOrInsertComputed()` when the default value has side effects.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
-`Map#getOrInsert()` always evaluates the default value argument, even when the key <example-value> exists. This can cause performance issues or bugs when the default value has side effects (like function calls, database queries, or other operations). Use `Map#getOrInsertComputed()` instead to lazily evaluate the default value only when needed.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+[`Map#getOrInsert()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/getOrInsert) always evaluates the default value argument, even when the key already exists. This can cause performance issues or bugs when the default value has side effects (like function calls, database queries, or other operations). Use [`Map#getOrInsertComputed()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/getOrInsertComputed) instead to lazily evaluate the default value only when needed.
 
 ## Examples
 
 ```js
-// ❌ - expensiveComputation() is called every time, even if key <example-value>
+// ❌ - expensiveComputation() is called every time, even if key exists
 const cache = new Map();
 const result = cache.getOrInsert(key, expensiveComputation());
 
@@ -30,7 +24,7 @@ const result = cache.getOrInsertComputed(key, () => expensiveComputation());
 ```
 
 ```js
-// ❌ - Function is called even if the key <example-value>
+// ❌ - Function is called even if the key exists
 const userCache = new Map();
 const user = userCache.getOrInsert(userId, fetchUserFromDatabase(userId));
 

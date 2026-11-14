@@ -1,17 +1,8 @@
----
-title: "validation-localization"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-11/includes/validation-localization.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# validation-localization
-
 ### Validation localization is built in
 
 `Microsoft.Extensions.Validation` localizes validation messages and display names without a separate package. Calling `AddLocalization` to register an `IStringLocalizerFactory`, followed by `AddValidation`, activates localization automatically. The validation source generator emits the localization lookup into your assembly.
+
+<!-- TODO: Update `AddValidation`, `ValidationOptions.LocalizerProvider`, and `IValidationMessageFormatter` to <xref:> once API docs are published. -->
 
 ```csharp
 builder.Services.AddLocalization();
@@ -66,7 +57,7 @@ The same localization rules apply to validation for minimal APIs and Blazor, so 
 
 Complete feature coverage is available in the following articles:
 
-* Validation in ASP.NET Core
-* Minimal APIs quick reference
+* [Validation in ASP.NET Core](../../../fundamentals/validation.md?view=aspnetcore-11.0#localize-validation-messages)
+* [Minimal APIs quick reference](../../../fundamentals/minimal-apis.md?view=aspnetcore-11.0#localizing-validation-messages)
 
-For more information, see Add localization support to Microsoft.Extensions.Validation (`dotnet/aspnetcore` #66646).
+For more information, see [Add localization support to Microsoft.Extensions.Validation (`dotnet/aspnetcore` #66646)](https://github.com/dotnet/aspnetcore/pull/66646).

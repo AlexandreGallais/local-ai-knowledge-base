@@ -1,12 +1,3 @@
----
-title: "std::sys::personality::gcc"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sys/personality/gcc.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::sys::personality::gcc
 
 Implementation of panics backed by libgcc/libunwind (in some form).
@@ -19,7 +10,7 @@ These are also good reads:
  * <https://nicolasbrailo.github.io/blog/projects_texts/13exceptionsunderthehood.html>
  * <https://www.airs.com/blog/index.php?s=exception+frames>
 
-#### A brief summary
+## A brief summary
 
 Exception handling happens in two phases: a search phase and a cleanup
 phase.

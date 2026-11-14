@@ -1,10 +1,9 @@
 ---
-title: "How to initialize a custom debugger on mobile platforms"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/initialize-debugger-mobile.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to initialize a custom debugger on mobile platforms
+description: Learn how to initialize a custom ICorDebug-based debugger for .NET 11 mobile apps that use CoreCLR.
+ms.date: 09/22/2026
+ms.topic: how-to
+ai-usage: ai-generated
 ---
 
 # How to initialize a custom debugger on mobile platforms
@@ -15,7 +14,7 @@ This article applies only to debugger initialization on mobile platforms (iOS an
 
 ## Implement and deploy the target-side component
 
-The target-side debugger component should be implemented as a profiler dynamic library with a `DllGetClassObject` entry point. For example implementations, see the .NET profiler samples.
+The target-side debugger component should be implemented as a profiler dynamic library with a `DllGetClassObject` entry point. For example implementations, see the [.NET profiler samples](https://github.com/dotnet/samples/tree/main/core/profiling).
 
 It should be deployed together with libmscordbi and libmscordaccore dynamic libraries as part of the application in compliance with the target platform's native library packaging, code-signing, and loading requirements.
 
@@ -31,11 +30,11 @@ To have CoreCLR load your component as a profiler, supply the following environm
 
 Replace `<profiler-CLSID>` with your component's profiler GUID, and keep the enclosing braces. Replace `<component-path>` with the path to the native component in the target app's deployment.
 
-For details about these settings, see Runtime configuration options for debugging and profiling.
+For details about these settings, see [Runtime configuration options for debugging and profiling](../../runtime-config/debugging-profiling.md).
 
 Use your platform's app-launch configuration to supply these settings.
 
-> **Note:**
+> [!NOTE]
 > While this procedure uses the profiler mechanism to initialize a debugger, it doesn't establish general-purpose support for third-party profilers on mobile platforms.
 
 ## Create the debugger interface
@@ -43,8 +42,8 @@ Use your platform's app-launch configuration to supply these settings.
 In the target-side component, perform the following initialization:
 
 1. Load `libmscordbi` dynamic library and call its `CoreCLRCreateCordbObjectEx` export. Query the returned object for `ICorDebug`.
-2. Call ICorDebug::Initialize, and register your managed-event handler with ICorDebug::SetManagedHandler.
-3. Attach to the app with ICorDebug::DebugActiveProcess.
+2. Call [ICorDebug::Initialize](icordebug/icordebug-initialize-method.md), and register your managed-event handler with [ICorDebug::SetManagedHandler](icordebug/icordebug-setmanagedhandler-method.md).
+3. Attach to the app with [ICorDebug::DebugActiveProcess](icordebug/icordebug-debugactiveprocess-method.md).
 
 To avoid missing early module-load and startup events, coordinate attachment with runtime startup so that managed execution doesn't proceed before `DebugActiveProcess` completes.
 

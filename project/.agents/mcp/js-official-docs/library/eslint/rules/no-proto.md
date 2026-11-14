@@ -1,13 +1,10 @@
 ---
-title: "no-proto"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-proto.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-proto
+rule_type: suggestion
+further_reading:
+- https://johnresig.com/blog/objectgetprototypeof/
 ---
 
-# no-proto
 
 `__proto__` property has been deprecated as of ECMAScript 3.1 and shouldn't be used in the code. Use `Object.getPrototypeOf` and `Object.setPrototypeOf` instead.
 
@@ -17,7 +14,7 @@ When an object is created with the `new` operator, `__proto__` is set to the ori
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-proto: "error"*/
@@ -31,9 +28,11 @@ obj.__proto__ = b;
 obj["__proto__"] = b;
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-proto: "error"*/
@@ -44,6 +43,8 @@ Object.setPrototypeOf(obj, b);
 
 const c = { __proto__: a };
 ```
+
+:::
 
 ## Options
 

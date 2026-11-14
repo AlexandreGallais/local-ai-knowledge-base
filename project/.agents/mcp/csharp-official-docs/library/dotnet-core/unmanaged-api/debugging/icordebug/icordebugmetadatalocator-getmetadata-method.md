@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugMetaDataLocator::GetMetaData Method"
 title: "ICorDebugMetaDataLocator::GetMetaData Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmetadatalocator-getmetadata-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugMetaDataLocator.GetMetaData"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugMetaDataLocator::GetMetaData"
+helpviewer_keywords:
+  - "ICorDebugMetaDataLocator::GetMetaData method [.NET debugging]"
+  - "GetMetaData method, ICorDebugMetaDataLocator interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugMetaDataLocator::GetMetaData Method
 
 Asks the debugger to return the full path to a module whose metadata is needed to complete an operation the debugger requested.
@@ -31,7 +40,7 @@ HRESULT GetMetaData(
  [in] A null-terminated string that represents the full path to the file. If the full path is not available, the name and extension of the file (*filename*.*extension*).
 
  `dwImageTimeStamp`
- [in] The time stamp from the image's PE file headers. This parameter can potentially be used for a symbol server (SymSrv) lookup.
+ [in] The time stamp from the image's PE file headers. This parameter can potentially be used for a symbol server ([SymSrv](/windows/desktop/debug/using-symsrv)) lookup.
 
  `dwImageSize`
  [in] The image size from PE file headers. This parameter can potentially be used for a SymSrv lookup.
@@ -47,7 +56,7 @@ If the method returns E_NOT_SUFFICIENT_BUFFER, contains the count of `WCHAR`s ne
  `wszPathBuffer`
  [out] Pointer to a buffer into which the debugger will copy the full path of the file that contains the requested metadata.
 
-The `ofReadOnly` flag from the CorOpenFlags enumeration is used to request read-only access to the metadata in this file.
+The `ofReadOnly` flag from the [CorOpenFlags](../../metadata/enumerations/coropenflags-enumeration.md) enumeration is used to request read-only access to the metadata in this file.
 
 ## Return Value
 
@@ -64,7 +73,7 @@ If `wszImagePath` contains a full path for a module from a dump, it specifies th
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -74,4 +83,4 @@ If `wszImagePath` contains a full path for a module from a dump, it specifies th
 
 ## See also
 
-- ICorDebugThread4 Interface
+- [ICorDebugThread4 Interface](icordebugthread4-interface.md)

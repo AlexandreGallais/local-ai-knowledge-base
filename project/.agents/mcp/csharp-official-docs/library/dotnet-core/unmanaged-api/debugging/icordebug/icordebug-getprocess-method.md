@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebug::GetProcess Method"
 title: "ICorDebug::GetProcess Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebug-getprocess-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebug.GetProcess"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebug::GetProcess"
+helpviewer_keywords:
+  - "GetProcess method, ICorDebug interface [.NET debugging]"
+  - "ICorDebug::GetProcess method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebug::GetProcess Method
 
 Gets a pointer to the "ICorDebugProcess" instance for the specified process.
@@ -30,7 +39,7 @@ HRESULT GetProcess (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -40,4 +49,4 @@ HRESULT GetProcess (
 
 ## See also
 
-- ICorDebug Interface
+- [ICorDebug Interface](icordebug-interface.md)

@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugProcess5::EnumerateHeap Method"
 title: "ICorDebugProcess5::EnumerateHeap Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess5-enumerateheap-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugProcess5.EnumerateHeap"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugProcess5::EnumerateHeap"
+helpviewer_keywords:
+  - "EnumerateHeap method, ICorDebugProcess5 interface [.NET debugging]"
+  - "ICorDebugProcess5::EnumerateHeap method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugProcess5::EnumerateHeap Method
 
 Gets an enumerator for the objects on the managed heap.
@@ -22,17 +31,17 @@ HRESULT EnumerateHeap(
 ## Parameters
 
  `ppObject`
- [out] A pointer to the address of an ICorDebugHeapEnum interface object that is an enumerator for the objects that reside on the managed heap.
+ [out] A pointer to the address of an [ICorDebugHeapEnum](icordebugheapenum-interface.md) interface object that is an enumerator for the objects that reside on the managed heap.
 
 ## Remarks
 
-Before calling the `ICorDebugProcess5::EnumerateHeap` method, you should call the ICorDebugProcess5::GetGCHeapInformation method and examine the value of the `areGCStructuresValid` field of the returned COR_HEAPINFO object to ensure that the garbage collection heap in its current state is enumerable. In addition, the `ICorDebugProcess5::EnumerateHeap` returns `E_FAIL` if you attach too early in the lifetime of the process, before memory for the managed heap is allocated.
+Before calling the `ICorDebugProcess5::EnumerateHeap` method, you should call the [ICorDebugProcess5::GetGCHeapInformation](icordebugprocess5-getgcheapinformation-method.md) method and examine the value of the `areGCStructuresValid` field of the returned [COR_HEAPINFO](cor-heapinfo-structure.md) object to ensure that the garbage collection heap in its current state is enumerable. In addition, the `ICorDebugProcess5::EnumerateHeap` returns `E_FAIL` if you attach too early in the lifetime of the process, before memory for the managed heap is allocated.
 
-The ICorDebugHeapEnum interface object is a standard enumerator derived from the ICorDebugEnum interface that allows you to enumerate COR_HEAPOBJECT objects. This method populates the ICorDebugHeapEnum collection object with COR_HEAPOBJECT instances that provide information about all objects. The collection may also include COR_HEAPOBJECT instances that provide information about objects that are not rooted by any object but have not yet been collected by the garbage collector.
+The [ICorDebugHeapEnum](icordebugheapenum-interface.md) interface object is a standard enumerator derived from the ICorDebugEnum interface that allows you to enumerate [COR_HEAPOBJECT](cor-heapobject-structure.md) objects. This method populates the [ICorDebugHeapEnum](icordebugheapenum-interface.md) collection object with [COR_HEAPOBJECT](cor-heapobject-structure.md) instances that provide information about all objects. The collection may also include [COR_HEAPOBJECT](cor-heapobject-structure.md) instances that provide information about objects that are not rooted by any object but have not yet been collected by the garbage collector.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -42,4 +51,4 @@ The ICorDebugHeapEnum interface object is a standard enumerator derived from the
 
 ## See also
 
-- ICorDebugProcess5 Interface
+- [ICorDebugProcess5 Interface](icordebugprocess5-interface.md)

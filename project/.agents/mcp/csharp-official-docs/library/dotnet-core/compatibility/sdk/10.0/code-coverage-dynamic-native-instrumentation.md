@@ -1,10 +1,9 @@
 ---
 title: "Breaking change - Code coverage EnableDynamicNativeInstrumentation defaults to false"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/code-coverage-dynamic-native-instrumentation.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where dynamic native instrumentation is disabled by default when collecting code coverage."
+ms.date: 11/05/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/49376
 ---
 
 # Code coverage EnableDynamicNativeInstrumentation defaults to false
@@ -17,7 +16,7 @@ Running `dotnet test --collect:"Code Coverage"` now disables dynamic native inst
 
 ## Previous behavior
 
-Previously, dynamic native instrumentation was enabled by default and used a fallback for native modules when static native instrumentation couldn't be used. This behavior is described in Static and dynamic native instrumentation.
+Previously, dynamic native instrumentation was enabled by default and used a fallback for native modules when static native instrumentation couldn't be used. This behavior is described in [Static and dynamic native instrumentation](/visualstudio/test/customizing-code-coverage-analysis#static-and-dynamic-native-instrumentation).
 
 ```bash
 dotnet test --collect:"Code Coverage"
@@ -37,11 +36,11 @@ You can re-enable dynamic native instrumentation by setting `<EnableDynamicNativ
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-Dynamic native instrumentation was enabled by default to maintain backwards compatibility in `dotnet test`. However, its way of injecting DLLs into the process isn't standard. With security hardening changes in the .NET 10 runtime, it fails to find the linked DLL, causing the process to crash with error. The error might not be visible in non-interactive sessions or in the command line, but the process does crash.
+Dynamic native instrumentation was enabled by default to maintain backwards compatibility in `dotnet test`. However, its way of injecting DLLs into the process isn't standard. With [security hardening changes](https://github.com/dotnet/runtime/pull/112359) in the .NET 10 runtime, it fails to find the linked DLL, causing the process to [crash with error](https://github.com/dotnet/sdk/issues/50950). The error might not be visible in non-interactive sessions or in the command line, but the process does crash.
 
 Dynamic native instrumentation is already disabled by default by `dotnet-coverage`, which is an alternative way to collect code coverage using the same underlying tools. It's also disabled by default for solutions in Visual Studio that don't have native projects.
 
@@ -51,7 +50,7 @@ If you collect coverage on solutions that don't have any native components, you 
 
 If you collect coverage on solutions that include native components, such as C++ projects, you have the following options:
 
-- Configure your projects to use static native instrumentation
+- Configure your projects to use [static native instrumentation](/visualstudio/test/customizing-code-coverage-analysis#static-and-dynamic-native-instrumentation)
 
   OR
 

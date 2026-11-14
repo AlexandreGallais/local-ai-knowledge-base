@@ -1,83 +1,68 @@
----
-title: "KeyFactory class (java.security)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/KeyFactory.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # KeyFactory class (java.security)
 
 ```java
 public class KeyFactory
 ```
 
-Key <example-value> are used to convert *keys* (opaque
-cryptographic keys of type `Key`) into *key <example-value>*
-(transparent representations of the underlying key <example-value>), and vice
+Key factories are used to convert <I>keys</I> (opaque
+cryptographic keys of type {@code Key}) into <I>key specifications</I>
+(transparent representations of the underlying key material), and vice
 versa.
 
- Key <example-value> are bidirectional. That is, they allow you to build an
-opaque key <example-value> from a given key <example-value> (key <example-value>), or to
-retrieve the underlying key <example-value> of a key <example-value> in a suitable format.
+<P> Key factories are bidirectional. That is, they allow you to build an
+opaque key object from a given key specification (key material), or to
+retrieve the underlying key material of a key object in a suitable format.
 
- Multiple compatible key <example-value> may exist for the same key.
+<P> Multiple compatible key specifications may exist for the same key.
 For example, a DSA public key may be specified using
-`DSAPublicKeySpec` or
-`X509EncodedKeySpec`. A key <example-value> can be used to translate
+{@code DSAPublicKeySpec} or
+{@code X509EncodedKeySpec}. A key factory can be used to translate
 between compatible key specifications.
 
- The following is an example of how to use a key <example-value> in order to
+<P> The following is an example of how to use a key factory in order to
 instantiate a DSA public key from its encoding.
 Assume Alice has received a digital signature from Bob.
 Bob also sent her his public key (in encoded format) to verify
 his signature. Alice then performs the following actions:
 
-```java
+<pre>
 X509EncodedKeySpec bobPubKeySpec = new X509EncodedKeySpec(bobEncodedPubKey);
 KeyFactory keyFactory = KeyFactory.getInstance("DSA");
-PublicKey <example-value> = keyFactory.generatePublic(bobPubKeySpec);
+PublicKey bobPubKey = keyFactory.generatePublic(bobPubKeySpec);
 Signature sig = Signature.getInstance("DSA");
 sig.initVerify(bobPubKey);
 sig.update(data);
 sig.verify(signature);
-```
+</pre>
 
- Every implementation of the Java platform is required to support the
-following standard `KeyFactory` algorithms:
-
-- `DiffieHellman`
-
-- `DSA`
-
-- `EC`
-
-- `RSA`
-
-- `RSASSA-PSS`
-
-- `X25519`
-
-These algorithms are described in the
-KeyFactory section of the
+<p> Every implementation of the Java platform is required to support the
+following standard {@code KeyFactory} algorithms:
+<ul>
+<li>{@code DiffieHellman}</li>
+<li>{@code DSA}</li>
+<li>{@code EC}</li>
+<li>{@code RSA}</li>
+<li>{@code RSASSA-PSS}</li>
+<li>{@code X25519}</li>
+</ul>
+These algorithms are described in the <a href=
+"{@docRoot}/../specs/security/standard-names.html#keyfactory-algorithms">
+KeyFactory section</a> of the
 Java Security Standard Algorithm Names Specification.
 Consult the release documentation for your implementation to see if any
 other algorithms are supported.
 
-**See also:** Key
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@author Jan Luehe
 
-**See also:** PublicKey
+@see Key
+@see PublicKey
+@see PrivateKey
+@see java.security.spec.KeySpec
+@see java.security.spec.DSAPublicKeySpec
+@see java.security.spec.X509EncodedKeySpec
 
-**See also:** PrivateKey
-
-**See also:** java.security.spec.KeySpec
-
-**See also:** java.security.spec.DSAPublicKeySpec
-
-**See also:** java.security.spec.X509EncodedKeySpec
-
-**Since:** 1.2
+@since 1.2
 
 ## KeyFactory.KeyFactory(KeyFactorySpi, Provider, String)
 
@@ -85,13 +70,12 @@ other algorithms are supported.
 protected KeyFactory(KeyFactorySpi keyFacSpi, Provider provider, String algorithm)
 ```
 
-Creates a `KeyFactory` object.
+Creates a {@code KeyFactory} object.
 
-Parameters:
-
-- `keyFacSpi`: the delegate
-- `provider`: the provider
-- `algorithm`: the name of the algorithm to associate with this `KeyFactory`
+@param keyFacSpi the delegate
+@param provider the provider
+@param algorithm the name of the algorithm
+to associate with this {@code KeyFactory}
 
 ## KeyFactory.getInstance(String)
 
@@ -99,37 +83,42 @@ Parameters:
 public static KeyFactory getInstance(String algorithm) throws NoSuchAlgorithmException
 ```
 
-Returns a `KeyFactory` object that converts
+Returns a {@code KeyFactory} object that converts
 public/private keys of the specified algorithm.
 
- This method traverses the list of registered security providers,
+<p> This method traverses the list of registered security providers,
 starting with the most preferred provider.
-A new `KeyFactory` object encapsulating the
-`KeyFactorySpi` implementation from the first
+A new {@code KeyFactory} object encapsulating the
+{@code KeyFactorySpi} implementation from the first
 provider that supports the specified algorithm is returned.
 
- Note that the list of registered providers may be retrieved via
-the Security.getProviders() method.
+<p> Note that the list of registered providers may be retrieved via
+the {@link Security#getProviders() Security.getProviders()} method.
 
-Parameters:
-
-- `algorithm`: the name of the requested key algorithm. See the KeyFactory section in the  Java Security Standard Algorithm Names Specification for information about standard algorithm names.
-
-**Implementation note:** The JDK Reference Implementation additionally uses the
-`jdk.security.provider.preferred`
-Security property to determine
+@implNote
+The JDK Reference Implementation additionally uses the
+{@code jdk.security.provider.preferred}
+{@link Security#getProperty(String) Security} property to determine
 the preferred provider order for the specified algorithm. This
 may be different from the order of providers returned by
-Security.getProviders().
+{@link Security#getProviders() Security.getProviders()}.
 
-**Returns:** the new `KeyFactory` object
+@param algorithm the name of the requested key algorithm.
+See the KeyFactory section in the <a href=
+"{@docRoot}/../specs/security/standard-names.html#keyfactory-algorithms">
+Java Security Standard Algorithm Names Specification</a>
+for information about standard algorithm names.
 
-**See also:** Provider
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@return the new {@code KeyFactory} object
 
-Throws:
+@throws NoSuchAlgorithmException if no {@code Provider} supports a
+        {@code KeyFactorySpi} implementation for the
+        specified algorithm
 
-- `NoSuchAlgorithmException`: if no `Provider` supports a `KeyFactorySpi` implementation for the specified algorithm
-- `NullPointerException`: if `algorithm` is `null`
+@throws NullPointerException if {@code algorithm} is {@code null}
+
+@see Provider
 
 ## KeyFactory.getInstance(String, String)
 
@@ -137,32 +126,41 @@ Throws:
 public static KeyFactory getInstance(String algorithm, String provider) throws NoSuchAlgorithmException, NoSuchProviderException
 ```
 
-Returns a `KeyFactory` object that converts
+Returns a {@code KeyFactory} object that converts
 public/private keys of the specified algorithm.
 
- A new `KeyFactory` object encapsulating the
-`KeyFactorySpi` implementation from the specified provider
+<p> A new {@code KeyFactory} object encapsulating the
+{@code KeyFactorySpi} implementation from the specified provider
 is returned.  The specified provider must be registered
 in the security provider list.
 
- Note that the list of registered providers may be retrieved via
-the Security.getProviders() method.
+<p> Note that the list of registered providers may be retrieved via
+the {@link Security#getProviders() Security.getProviders()} method.
 
-Parameters:
+@param algorithm the name of the requested key algorithm.
+See the KeyFactory section in the <a href=
+"{@docRoot}/../specs/security/standard-names.html#keyfactory-algorithms">
+Java Security Standard Algorithm Names Specification</a>
+for information about standard algorithm names.
 
-- `algorithm`: the name of the requested key algorithm. See the KeyFactory section in the  Java Security Standard Algorithm Names Specification for information about standard algorithm names.
-- `provider`: the name of the provider.
+@param provider the name of the provider.
 
-**Returns:** the new `KeyFactory` object
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@return the new {@code KeyFactory} object
 
-**See also:** Provider
+@throws IllegalArgumentException if the provider name is {@code null}
+        or empty
 
-Throws:
+@throws NoSuchAlgorithmException if a {@code KeyFactorySpi}
+        implementation for the specified algorithm is not
+        available from the specified provider
 
-- `IllegalArgumentException`: if the provider name is `null` or empty
-- `NoSuchAlgorithmException`: if a `KeyFactorySpi` implementation for the specified algorithm is not available from the specified provider
-- `NoSuchProviderException`: if the specified provider is not registered in the security provider list
-- `NullPointerException`: if `algorithm` is `null`
+@throws NoSuchProviderException if the specified provider is not
+        registered in the security provider list
+
+@throws NullPointerException if {@code algorithm} is {@code null}
+
+@see Provider
 
 ## KeyFactory.getInstance(String, Provider)
 
@@ -170,30 +168,37 @@ Throws:
 public static KeyFactory getInstance(String algorithm, Provider provider) throws NoSuchAlgorithmException
 ```
 
-Returns a `KeyFactory` object that converts
+Returns a {@code KeyFactory} object that converts
 public/private keys of the specified algorithm.
 
- A new `KeyFactory` object encapsulating the
-`KeyFactorySpi` implementation from the specified provider
+<p> A new {@code KeyFactory} object encapsulating the
+{@code KeyFactorySpi} implementation from the specified provider
 is returned.  Note that the specified provider does not
 have to be registered in the provider list.
 
-Parameters:
+@param algorithm the name of the requested key algorithm.
+See the KeyFactory section in the <a href=
+"{@docRoot}/../specs/security/standard-names.html#keyfactory-algorithms">
+Java Security Standard Algorithm Names Specification</a>
+for information about standard algorithm names.
 
-- `algorithm`: the name of the requested key algorithm. See the KeyFactory section in the  Java Security Standard Algorithm Names Specification for information about standard algorithm names.
-- `provider`: the provider.
+@param provider the provider.
 
-**Returns:** the new `KeyFactory` object
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@return the new {@code KeyFactory} object
 
-**See also:** Provider
+@throws IllegalArgumentException if the specified provider is
+        {@code null}
 
-**Since:** 1.4
+@throws NoSuchAlgorithmException if a {@code KeyFactorySpi}
+        implementation for the specified algorithm is not available
+        from the specified {@code Provider} object
 
-Throws:
+@throws NullPointerException if {@code algorithm} is {@code null}
 
-- `IllegalArgumentException`: if the specified provider is `null`
-- `NoSuchAlgorithmException`: if a `KeyFactorySpi` implementation for the specified algorithm is not available from the specified `Provider` object
-- `NullPointerException`: if `algorithm` is `null`
+@see Provider
+
+@since 1.4
 
 ## KeyFactory.getProvider()
 
@@ -201,9 +206,9 @@ Throws:
 public final Provider getProvider()
 ```
 
-Returns the provider of this key <example-value> object.
+Returns the provider of this key factory object.
 
-**Returns:** the provider of this key <example-value> object
+@return the provider of this key factory object
 
 ## KeyFactory.getAlgorithm()
 
@@ -212,10 +217,10 @@ public final String getAlgorithm()
 ```
 
 Gets the name of the algorithm
-associated with this `KeyFactory`.
+associated with this {@code KeyFactory}.
 
-**Returns:** the name of the algorithm associated with this
-`KeyFactory`
+@return the name of the algorithm associated with this
+{@code KeyFactory}
 
 ## KeyFactory.generatePublic(KeySpec)
 
@@ -223,18 +228,15 @@ associated with this `KeyFactory`.
 public final PublicKey generatePublic(KeySpec keySpec) throws InvalidKeySpecException
 ```
 
-Generates a public key <example-value> from the provided key <example-value>
-(key <example-value>).
+Generates a public key object from the provided key specification
+(key material).
 
-Parameters:
+@param keySpec the specification (key material) of the public key.
 
-- `keySpec`: the specification (key <example-value>) of the public key.
+@return the public key.
 
-**Returns:** the public key.
-
-Throws:
-
-- `InvalidKeySpecException`: if the given key <example-value> is inappropriate for this key <example-value> to produce a public key.
+@throws    InvalidKeySpecException if the given key specification
+is inappropriate for this key factory to produce a public key.
 
 ## KeyFactory.generatePrivate(KeySpec)
 
@@ -242,18 +244,15 @@ Throws:
 public final PrivateKey generatePrivate(KeySpec keySpec) throws InvalidKeySpecException
 ```
 
-Generates a private key <example-value> from the provided key <example-value>
-(key <example-value>).
+Generates a private key object from the provided key specification
+(key material).
 
-Parameters:
+@param keySpec the specification (key material) of the private key.
 
-- `keySpec`: the specification (key <example-value>) of the private key.
+@return the private key.
 
-**Returns:** the private key.
-
-Throws:
-
-- `InvalidKeySpecException`: if the given key <example-value> is inappropriate for this key <example-value> to produce a private key.
+@throws    InvalidKeySpecException if the given key specification
+is inappropriate for this key factory to produce a private key.
 
 ## KeyFactory.getKeySpec(Key, Class<T>)
 
@@ -261,25 +260,26 @@ Throws:
 public final <T extends KeySpec> T getKeySpec(Key key, Class<T> keySpec) throws InvalidKeySpecException
 ```
 
-Returns a specification (key <example-value>) of the given key object.
-`keySpec` identifies the specification class in which
-the key <example-value> should be returned. It could, for example, be
-`DSAPublicKeySpec.class`, to indicate that the
-key <example-value> should be returned in an instance of the
-`DSAPublicKeySpec` class.
+Returns a specification (key material) of the given key object.
+{@code keySpec} identifies the specification class in which
+the key material should be returned. It could, for example, be
+{@code DSAPublicKeySpec.class}, to indicate that the
+key material should be returned in an instance of the
+{@code DSAPublicKeySpec} class.
 
-Parameters:
+@param <T> the type of the key specification to be returned
 
-- `<T>`: the type of the key <example-value> to be returned
-- `key`: the key.
-- `keySpec`: the specification class in which the key <example-value> should be returned.
+@param key the key.
 
-**Returns:** the underlying key <example-value> (key <example-value>) in an instance
+@param keySpec the specification class in which
+the key material should be returned.
+
+@return the underlying key specification (key material) in an instance
 of the requested specification class.
 
-Throws:
-
-- `InvalidKeySpecException`: if the requested key <example-value> is inappropriate for the given key, or the given key <example-value> be processed (e.g., the given key has an unrecognized algorithm or format).
+@throws    InvalidKeySpecException if the requested key specification is
+inappropriate for the given key, or the given key cannot be processed
+(e.g., the given key has an unrecognized algorithm or format).
 
 ## KeyFactory.translateKey(Key)
 
@@ -287,15 +287,12 @@ Throws:
 public final Key translateKey(Key key) throws InvalidKeyException
 ```
 
-Translates a key <example-value>, whose provider may be unknown or potentially
-untrusted, into a corresponding key <example-value> of this key factory.
+Translates a key object, whose provider may be unknown or potentially
+untrusted, into a corresponding key object of this key factory.
 
-Parameters:
+@param key the key whose provider is unknown or untrusted.
 
-- `key`: the key whose provider is unknown or untrusted.
+@return the translated key.
 
-**Returns:** the translated key.
-
-Throws:
-
-- `InvalidKeyException`: if the given key <example-value> be processed by this key factory.
+@throws    InvalidKeyException if the given key cannot be processed
+by this key factory.

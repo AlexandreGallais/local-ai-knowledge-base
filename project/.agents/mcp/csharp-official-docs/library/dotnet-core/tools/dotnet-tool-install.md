@@ -1,19 +1,15 @@
 ---
-title: "dotnet tool install command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-tool-install.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet tool install command
+description: The dotnet tool install command installs the specified .NET tool on your machine.
+ms.date: 11/12/2025
 ---
-
 # dotnet tool install
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
 
 ## Name
 
-`dotnet tool install` - Installs the specified .NET tool on your machine.
+`dotnet tool install` - Installs the specified [.NET tool](global-tools.md) on your machine.
 
 ## Synopsis
 
@@ -54,7 +50,7 @@ The `dotnet tool install` command provides a way for you to install .NET tools o
 - To install a global tool in a custom location,  use the `--tool-path` option.
 - To install a local tool, omit the `--global` and `--tool-path` options.
 
-> **Warning:**
+> [!WARNING]
 > Make sure the directory you specify with the `--tool-path` option is secure. Tools installed in this location can be executed directly, so using an untrusted or shared path might introduce security risks.
 
 ## Installation locations
@@ -70,7 +66,7 @@ Global tools are installed in the following directories by default when you spec
 
 Executables are generated in these folders for each globally installed tool, although the actual tool binaries are nested deep into the sibling `.store` directory.
 
-> **Note:**
+> [!NOTE]
 > On Linux after installing a command-line tool with `dotnet tool`, the tool can be executed only from the `$HOME/.dotnet/tools` path.
 > To make the tool executable from any directory, update the `PATH` environment variable.
 > To make the updated `PATH` environment variable permanent in your shell, update your shell settings.
@@ -90,7 +86,7 @@ References to local tools are added to a *dotnet-tools.json* file in a *.config*
 dotnet new tool-manifest
 ```
 
-For more information, see Install a local tool.
+For more information, see [Install a local tool](global-tools.md#install-a-local-tool).
 
 ## Arguments
 
@@ -102,25 +98,17 @@ For more information, see Install a local tool.
 
 ## Options
 
-- **`--allow-downgrade`**
-
-Allow package downgrade when installing or updating a .NET tool package. Suppresses the warning, "The requested version x.x.x is lower than existing version x.x.x."
+- [!INCLUDE [allow-downgrade](includes/cli-allow-downgrade.md)]
 
 - **`--allow-roll-forward`**
 
   Available starting with .NET 9.0 SDK. Allow tool to use a newer version of the .NET runtime if the runtime it targets isn't installed.
 
-- **`-a|--arch <ARCHITECTURE>`**
+- [!INCLUDE [arch](includes/cli-arch.md)]
 
-Specifies the target architecture. This is a shorthand syntax for setting the Runtime Identifier (RID), where the provided value is combined with the default RID. For example, on a `win-x64` machine, specifying `--arch x86` sets the RID to `win-x86`. If you use this option, don't use the `-r|--runtime` option. Available since .NET 6 Preview 7.
+- [!INCLUDE [add-source](includes/cli-add-source.md)]
 
-- **`--add-source `**
-
-Adds an additional NuGet package source to use during installation. Feeds are accessed in parallel, not sequentially in some order of precedence. If the same package and version is in multiple feeds, the fastest feed wins. For more information, see What happens when a NuGet package is installed?.
-
-- **`--configfile <FILE>`**
-
-The NuGet configuration file (*nuget.config*) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see Common NuGet Configurations.
+- [!INCLUDE [configfile](includes/cli-configfile.md)]
 
 - **`--create-manifest-if-needed`**
 
@@ -136,43 +124,32 @@ The NuGet configuration file (*nuget.config*) to use. If specified, only the set
   - If the previous step doesn't find a directory, walk up the directory tree searching for a directory that has a `.sln` or `.git` file. If one is found, create the manifest in that directory.
   - If neither of the previous two steps finds a directory, create the manifest in the current working directory.
 
-  For more information on how manifests are located, see Install a local tool.
+  For more information on how manifests are located, see [Install a local tool](global-tools.md#install-a-local-tool).
 
-  Starting in .NET 10, a manifest is created automatically if no tools manifest is found. This change can be a breaking change. You can opt out by passing `--create-manifest-if-needed=false`.
+  Starting in .NET 10, a manifest is created automatically if no tools manifest is found. This change can be a [breaking change](../compatibility/sdk/10.0/dotnet-tool-install-local-manifest.md). You can opt out by passing `--create-manifest-if-needed=false`.
 
-  > **Warning:**
+  > [!WARNING]
   > Don't run tool commands from the **Downloads** folder or any shared location. The CLI walks up the directory tree to find a tool manifest, which might cause it to use a manifest you don't expect. Always run tool commands from a trusted, project-specific directory.
 
-- **`--disable-parallel`**
-
-Prevents restoring multiple projects in parallel.
+- [!INCLUDE [disable-parallel](includes/cli-disable-parallel.md)]
 
 - **`--framework <FRAMEWORK>`**
 
-  Specifies the target framework to install the tool for. By default, the .NET SDK tries to choose the most appropriate target framework.
+  Specifies the [target framework](../../standard/frameworks.md) to install the tool for. By default, the .NET SDK tries to choose the most appropriate target framework.
 
 - **`-g|--global`**
 
   Specifies that the installation is user wide. Can't be combined with the `--tool-path` option. Omitting both `--global` and `--tool-path` specifies a local tool installation.
 
-- **`--source `**
+- [!INCLUDE [source](includes/cli-tool-source.md)]
 
-Specifies the source for NuGet packages.
-
-> **Caution:**
-> This option completely replaces existing NuGet configuration, including Package Source Mapping.
-
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 - **`--ignore-failed-sources`**
 
   Treat package source failures as warnings.
 
-- **`--interactive`**
-
-Allows the command to stop and wait for user input or action. For example, to complete authentication.
+- [!INCLUDE [interactive](includes/cli-interactive.md)]
 
 - **`--local`**
 
@@ -186,17 +163,15 @@ Allows the command to stop and wait for user input or action. For example, to co
 
   Include prerelease packages.
 
-- **`--tool-manifest `**
+- **`--tool-manifest <PATH>`**
 
   Path to the manifest file.
 
-- **`--tool-path `**
+- **`--tool-path <PATH>`**
 
   Specifies the location to install the Global Tool. PATH can be absolute or relative. If PATH doesn't exist, the command tries to create it. Omitting both `--global` and `--tool-path` specifies a local tool installation.
 
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+- [!INCLUDE [verbosity](includes/cli-verbosity.md)]
 
 - **`--version <VERSION_NUMBER>`**
 
@@ -208,42 +183,42 @@ Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal
 
 - **`dotnet tool install -g dotnetsay`**
 
-  Installs dotnetsay as a global tool in the default location.
+  Installs [dotnetsay](https://www.nuget.org/packages/dotnetsay/) as a global tool in the default location.
 
 - **`dotnet tool install dotnetsay --tool-path c:\global-tools`**
 
-  Installs dotnetsay as a global tool in a specific Windows directory.
+  Installs [dotnetsay](https://www.nuget.org/packages/dotnetsay/) as a global tool in a specific Windows directory.
 
 - **`dotnet tool install dotnetsay --tool-path ~/bin`**
 
-  Installs dotnetsay as a global tool in a specific Linux/macOS directory.
+  Installs [dotnetsay](https://www.nuget.org/packages/dotnetsay/) as a global tool in a specific Linux/macOS directory.
 
 - **`dotnet tool install -g dotnetsay --version 2.0.0`**
 
-  Installs version 2.0.0 of dotnetsay as a global tool.
+  Installs version 2.0.0 of [dotnetsay](https://www.nuget.org/packages/dotnetsay/) as a global tool.
 
-- **`dotnet tool install -g user@example.com`**
+- **`dotnet tool install -g dotnetsay@2.1.7`**
 
-  Installs version 2.1.7 of dotnetsay as a global tool.
+  Installs version 2.1.7 of [dotnetsay](https://www.nuget.org/packages/dotnetsay/) as a global tool.
 
 - **`dotnet tool install dotnetsay`**
 
-  Installs dotnetsay as a local tool for the current directory.
+  Installs [dotnetsay](https://www.nuget.org/packages/dotnetsay/) as a local tool for the current directory.
 
-- **`dotnet tool install user@example.com`**
+- **`dotnet tool install dotnetsay@2.1.7`**
 
-  Installs version 2.1.7 of dotnetsay as a local tool for the current directory.
+  Installs version 2.1.7 of [dotnetsay](https://www.nuget.org/packages/dotnetsay/) as a local tool for the current directory.
 
 - **`dotnet tool install -g dotnetsay --verbosity minimal`**
 
-  Installs dotnetsay as a global tool with the verbosity of minimal. The default verbosity for global tool is quiet.
+  Installs [dotnetsay](https://www.nuget.org/packages/dotnetsay/) as a global tool with the verbosity of minimal. The default verbosity for global tool is quiet.
 
 - **`dotnet tool install -g dotnetsay --allow-roll-forward`**
 
-  Installs dotnetsay as a global tool and allows it to run on newer .NET versions if the target runtime isn't available.
+  Installs [dotnetsay](https://www.nuget.org/packages/dotnetsay/) as a global tool and allows it to run on newer .NET versions if the target runtime isn't available.
 
 ## See also
 
-- .NET tools
-- Tutorial: Install and use a .NET global tool using the .NET CLI
-- Tutorial: Install and use a .NET local tool using the .NET CLI
+- [.NET tools](global-tools.md)
+- [Tutorial: Install and use a .NET global tool using the .NET CLI](global-tools-how-to-use.md)
+- [Tutorial: Install and use a .NET local tool using the .NET CLI](local-tools-how-to-use.md)

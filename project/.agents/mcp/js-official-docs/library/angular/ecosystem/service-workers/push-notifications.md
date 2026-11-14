@@ -1,12 +1,3 @@
----
-title: "Push notifications"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/ecosystem/service-workers/push-notifications.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Push notifications
 
 Push notifications are a compelling way to engage users.
@@ -15,7 +6,7 @@ Through the power of service workers, notifications can be delivered to a device
 The Angular service worker enables the display of push notifications and the handling of notification click events.
 
 HELPFUL: When using the Angular service worker, push notification interactions are handled using the `SwPush` service.
-To learn more about the browser APIs involved see Push API and Using the Notifications API.
+To learn more about the browser APIs involved see [Push API](https://developer.mozilla.org/docs/Web/API/Push_API) and [Using the Notifications API](https://developer.mozilla.org/docs/Web/API/Notifications_API/Using_the_Notifications_API).
 
 ## Notification payload
 
@@ -56,7 +47,7 @@ The Angular service worker supports the following operations:
 | `navigateLastFocusedOrOpen` | Focuses the last focused client and navigates it to the specified URL. If there is no client open, then it opens a new tab at the specified URL. |
 | `sendRequest`               | Send a simple GET request to the specified URL.                                                                                                  |
 
-IMPORTANT: URLs are resolved relative to the service worker's registration scope.If an `onActionClick` item does not define a `url`, then the service worker's registration scope is used.
+IMPORTANT: URLs are resolved relative to the service worker's registration scope.<br />If an `onActionClick` item does not define a `url`, then the service worker's registration scope is used.
 
 ### Actions
 
@@ -97,5 +88,7 @@ IMPORTANT: If an action does not have a corresponding `onActionClick` entry, the
 
 You might also be interested in the following:
 
-  - Communicating with the Service Worker
-  - Service Worker devops
+<docs-pill-row>
+  <docs-pill href="ecosystem/service-workers/communications" title="Communicating with the Service Worker"/>
+  <docs-pill href="ecosystem/service-workers/devops" title="Service Worker devops"/>
+</docs-pill-row>

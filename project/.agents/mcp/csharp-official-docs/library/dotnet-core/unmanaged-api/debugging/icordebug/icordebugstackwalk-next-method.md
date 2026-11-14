@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugStackWalk::Next Method"
 title: "ICorDebugStackWalk::Next Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugstackwalk-next-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugStackWalk.Next Method"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugStackWalk::Next"
+helpviewer_keywords:
+  - "ICorDebugStackWalk::Next method [.NET debugging]"
+  - "Next method, ICorDebugStackWalk interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugStackWalk::Next Method
 
-Moves the ICorDebugStackWalk object to the next frame.
+Moves the [ICorDebugStackWalk](icordebugstackwalk-interface.md) object to the next frame.
 
 ## Syntax
 
@@ -28,13 +37,15 @@ This method returns the following specific HRESULTs as well as HRESULT errors th
 |CORDBG_S_AT_END_OF_STACK|The end of the stack was reached as a result of this unwind.|
 |CORDBG_E_PAST_END_OF_STACK|The frame pointer is already at the end of the stack; therefore, no additional frames can be accessed.|
 
+## Exceptions
+
 ## Remarks
 
 The `Next` method advances the `ICorDebugStackWalk` object to the calling frame only if the runtime can unwind the current frame. Otherwise, the object advances to the next frame that the runtime is able to unwind.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -44,4 +55,4 @@ The `Next` method advances the `ICorDebugStackWalk` object to the calling frame 
 
 ## See also
 
-- ICorDebugStackWalk Interface
+- [ICorDebugStackWalk Interface](icordebugstackwalk-interface.md)

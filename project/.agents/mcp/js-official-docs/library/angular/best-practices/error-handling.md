@@ -1,12 +1,3 @@
----
-title: "Unhandled errors in Angular"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/best-practices/error-handling.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Unhandled errors in Angular
 
 As your Angular application runs, some of your code may throw an error. If left unhandled, these errors can lead to unexpected behavior and a nonresponsive UI. This guide covers how Angular deals with errors that are not explicitly caught by your application code. For guidance on writing your own error handling logic within your application, consult best practices for error handling in JavaScript and Angular.
@@ -53,13 +44,13 @@ export class GlobalErrorHandler implements ErrorHandler {
 
 ### `TestBed` rethrows errors by default
 
-In many cases, `ErrorHandler` may only log errors and otherwise allow the application to continue running. In tests, however, you almost always want to surface these errors. Angular's `TestBed` rethrows unexpected errors to ensure that errors caught by the framework cannot be unintentionally missed or ignored. In rare circumstances, a test may specifically attempt to ensure errors do not cause the application to be unresponsive or crash. In these situations, you can configure `TestBed` to _not_ rethrow application errors with `TestBed.configureTestingModule({rethrowApplicationErrors: false})`.
+In many cases, `ErrorHandler` may only log errors and otherwise allow the application to continue running. In tests, however, you almost always want to surface these errors. Angular's `TestBed` rethrows unexpected errors to ensure that errors caught by the framework cannot be unintentionally missed or ignored. In rare circumstances, a test may specifically attempt to ensure errors do not cause the application to be unresponsive or crash. In these situations, you can [configure `TestBed` to _not_ rethrow application errors](api/core/testing/TestModuleMetadata#rethrowApplicationErrors) with `TestBed.configureTestingModule({rethrowApplicationErrors: false})`.
 
 ### Errors thrown while your app is still starting up
 
 There's a brief moment when Angular can't send errors to your `ErrorHandler` yet: while it is still creating your app's root module or root component. Angular needs that root instance to exist before it can look up the `ErrorHandler` you provided, so an error thrown before then has nowhere to go. It behaves like a normal uncaught error instead of being reported through `ErrorHandler`.
 
-You're most likely to run into this with Angular elements. If you define a custom element while its tag is already present on the page, the browser upgrades it right away, running the component's constructor and `ngOnInit` as part of that early startup work. Any error thrown there can get lost.
+You're most likely to run into this with [Angular elements](guide/elements). If you define a custom element while its tag is already present on the page, the browser upgrades it right away, running the component's constructor and `ngOnInit` as part of that early startup work. Any error thrown there can get lost.
 
 If this happens to you, move the code that throws so it runs after your app has finished starting up, for example:
 
@@ -75,10 +66,10 @@ Errors that are caught neither by the application code nor by the framework's ap
 
 ### Client-side rendering
 
-Adding `provideBrowserGlobalErrorListeners()` to the ApplicationConfig adds the `'error'` and `'unhandledrejection'` listeners to the browser window and forwards those errors to `ErrorHandler`. The Angular CLI generates new applications with this provider by default. The Angular team recommends handling these global errors for most applications, either with the framework's built-in listeners or with your own custom listeners. If you provide custom listeners, you can remove `provideBrowserGlobalErrorListeners`.
+Adding [`provideBrowserGlobalErrorListeners()`](/api/core/provideBrowserGlobalErrorListeners) to the [ApplicationConfig](guide/di/defining-dependency-providers#application-bootstrap) adds the `'error'` and `'unhandledrejection'` listeners to the browser window and forwards those errors to `ErrorHandler`. The Angular CLI generates new applications with this provider by default. The Angular team recommends handling these global errors for most applications, either with the framework's built-in listeners or with your own custom listeners. If you provide custom listeners, you can remove `provideBrowserGlobalErrorListeners`.
 
 ### Server-side and hybrid rendering
 
-When using Angular with SSR, Angular automatically adds the `'unhandledRejection'` and `'uncaughtException'` listeners to the server process. These handlers prevent the server from crashing and instead log captured errors to the console.
+When using [Angular with SSR](guide/ssr), Angular automatically adds the `'unhandledRejection'` and `'uncaughtException'` listeners to the server process. These handlers prevent the server from crashing and instead log captured errors to the console.
 
 IMPORTANT: If the application is using Zone.js, only the `'unhandledRejection'` handler is added. When Zone.js is present, errors inside the Application's Zone are already forwarded to the application `ErrorHandler` and do not reach the server process.

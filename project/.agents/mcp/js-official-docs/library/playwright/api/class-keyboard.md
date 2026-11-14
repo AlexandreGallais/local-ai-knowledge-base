@@ -1,12 +1,3 @@
----
-title: "class: Keyboard"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-keyboard.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: Keyboard
 * since: v1.8
 
@@ -42,7 +33,7 @@ page.keyboard().press("Backspace");
 // Result text will end up saying "Hello!"
 ```
 
-```python
+```python async
 await page.keyboard.type("Hello World!")
 await page.keyboard.press("ArrowLeft")
 await page.keyboard.down("Shift")
@@ -53,7 +44,7 @@ await page.keyboard.press("Backspace")
 # result text will end up saying "Hello!"
 ```
 
-```python
+```python sync
 page.keyboard.type("Hello World!")
 page.keyboard.press("ArrowLeft")
 page.keyboard.down("Shift")
@@ -92,13 +83,13 @@ page.keyboard().press("Shift+KeyA");
 page.keyboard().press("Shift+A");
 ```
 
-```python
+```python async
 await page.keyboard.press("Shift+KeyA")
 # or
 await page.keyboard.press("Shift+A")
 ```
 
-```python
+```python sync
 page.keyboard.press("Shift+KeyA")
 # or
 page.keyboard.press("Shift+A")
@@ -120,11 +111,11 @@ await page.keyboard.press('ControlOrMeta+A');
 page.keyboard().press("ControlOrMeta+A");
 ```
 
-```python
+```python async
 await page.keyboard.press("ControlOrMeta+A")
 ```
 
-```python
+```python sync
 page.keyboard.press("ControlOrMeta+A")
 ```
 
@@ -138,9 +129,9 @@ await page.Keyboard.PressAsync("ControlOrMeta+A");
 Dispatches a `keydown` event.
 
 [`param: key`] can specify the intended
-keyboardEvent.key value or a single character to
+[keyboardEvent.key](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key) value or a single character to
 generate the text for. A superset of the [`param: key`] values can be found
-here. Examples of the keys are:
+[here](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values). Examples of the keys are:
 
 `F1` - `F12`, `Digit0`- `Digit9`, `KeyA`- `KeyZ`, `Backquote`, `Minus`, `Equal`, `Backslash`, `Backspace`, `Tab`,
 `Delete`, `Escape`, `ArrowDown`, `End`, `Enter`, `Home`, `Insert`, `PageDown`, `PageUp`, `ArrowRight`, `ArrowUp`, etc.
@@ -153,11 +144,11 @@ Holding down `Shift` will type the text that corresponds to the [`param: key`] i
 If [`param: key`] is a single character, it is case-sensitive, so the values `a` and `A` will generate different
 respective texts.
 
-If [`param: key`] is a modifier key, `Shift`, `Meta`, `Control`, or `Alt`, subsequent key <example-value> will be sent with that
+If [`param: key`] is a modifier key, `Shift`, `Meta`, `Control`, or `Alt`, subsequent key presses will be sent with that
 modifier active. To release the modifier key, use [`method: Keyboard.up`].
 
 After the key is pressed once, subsequent calls to [`method: Keyboard.down`] will have
-repeat set to true. To release the key, use
+[repeat](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/repeat) set to true. To release the key, use
 [`method: Keyboard.up`].
 
 :::note
@@ -185,11 +176,11 @@ await page.keyboard.insertText('嗨');
 page.keyboard().insertText("嗨");
 ```
 
-```python
+```python async
 await page.keyboard.insert_text("嗨")
 ```
 
-```python
+```python sync
 page.keyboard.insert_text("嗨")
 ```
 
@@ -215,9 +206,9 @@ In most cases, you should use [`method: Locator.press`] instead.
 :::
 
 [`param: key`] can specify the intended
-keyboardEvent.key value or a single character to
+[keyboardEvent.key](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key) value or a single character to
 generate the text for. A superset of the [`param: key`] values can be found
-here. Examples of the keys are:
+[here](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values). Examples of the keys are:
 
 `F1` - `F12`, `Digit0`- `Digit9`, `KeyA`- `KeyZ`, `Backquote`, `Minus`, `Equal`, `Backslash`, `Backspace`, `Tab`,
 `Delete`, `Escape`, `ArrowDown`, `End`, `Enter`, `Home`, `Insert`, `PageDown`, `PageUp`, `ArrowRight`, `ArrowUp`, etc.
@@ -259,7 +250,7 @@ page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get("O.png")));
 browser.close();
 ```
 
-```python
+```python async
 page = await browser.new_page()
 await page.goto("https://keycode.info")
 await page.keyboard.press("a")
@@ -271,7 +262,7 @@ await page.screenshot(path="o.png")
 await browser.close()
 ```
 
-```python
+```python sync
 page = browser.new_page()
 page.goto("https://keycode.info")
 page.keyboard.press("a")
@@ -333,12 +324,12 @@ page.keyboard().type("Hello");
 page.keyboard().type("World", new Keyboard.TypeOptions().setDelay(100));
 ```
 
-```python
+```python async
 await page.keyboard.type("Hello") # types instantly
 await page.keyboard.type("World", delay=100) # types slower, like a user
 ```
 
-```python
+```python sync
 page.keyboard.type("Hello") # types instantly
 page.keyboard.type("World", delay=100) # types slower, like a user
 ```
@@ -366,7 +357,7 @@ A text to type into a focused element.
 * since: v1.8
 - `delay` <[float]>
 
-Time to wait between key <example-value> in milliseconds. Defaults to 0.
+Time to wait between key presses in milliseconds. Defaults to 0.
 
 ## async method: Keyboard.up
 * since: v1.8

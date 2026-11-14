@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: dotnet test needs a writable VSTest artifacts base directory in containers"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/containers/11/vstest-artifacts-base-directory.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 8, .NET 9, .NET 10, and .NET 11 where dotnet test with VSTest shows warnings in Linux containers and fails on Nano Server."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # dotnet test needs a writable VSTest artifacts base directory in containers
@@ -21,7 +19,7 @@ Previously, `dotnet test` with VSTest didn't print artifacts-directory warnings 
 
 ## New behavior
 
-Starting in the SDK versions listed in Version introduced, the SDK creates a new private directory for each test run. VSTest stores the test-session files that attachment post-processing needs in that directory. The default base directory is `/run/user/<uid>` on Linux and Local AppData on Windows, where `<uid>` is the effective user ID of the process. Containers often don't have these locations.
+Starting in the SDK versions listed in [Version introduced](#version-introduced), the SDK creates a new private directory for each test run. VSTest stores the test-session files that attachment post-processing needs in that directory. The default base directory is `/run/user/<uid>` on Linux and Local AppData on Windows, where `<uid>` is the effective user ID of the process. Containers often don't have these locations.
 
 ### Linux containers
 
@@ -49,11 +47,11 @@ On Windows, if the SDK can't resolve the Local AppData directory, the test run s
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-To improve security, the SDK stores test-session files in a private directory that only the current user can access. For more information, see dotnet/sdk issue #57029.
+To improve security, the SDK stores test-session files in a private directory that only the current user can access. For more information, see [dotnet/sdk issue #57029](https://github.com/dotnet/sdk/issues/57029).
 
 ## Recommended action
 

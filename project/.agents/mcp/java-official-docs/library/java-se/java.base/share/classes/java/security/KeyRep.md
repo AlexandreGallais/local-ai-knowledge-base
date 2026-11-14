@@ -1,12 +1,3 @@
----
-title: "KeyRep class (java.security)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/KeyRep.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # KeyRep class (java.security)
 
 ```java
@@ -15,23 +6,22 @@ public class KeyRep implements Serializable
 
 Standardized representation for serialized Key objects.
 
+<p>
+
 Note that a serialized Key may contain sensitive information
 which should not be exposed in untrusted environments.  See the
+<a href="{@docRoot}/../specs/serialization/security.html">
+Security Appendix</a>
+of the <cite>Java Object Serialization Specification</cite> for more information.
 
-Security Appendix
-of the *Java Object Serialization Specification* for more information.
+@spec serialization/index.html Java Object Serialization Specification
+@see Key
+@see KeyFactory
+@see javax.crypto.spec.SecretKeySpec
+@see java.security.spec.X509EncodedKeySpec
+@see java.security.spec.PKCS8EncodedKeySpec
 
-**See also:** Key
-
-**See also:** KeyFactory
-
-**See also:** javax.crypto.spec.SecretKeySpec
-
-**See also:** java.security.spec.X509EncodedKeySpec
-
-**See also:** java.security.spec.PKCS8EncodedKeySpec
-
-**Since:** 1.5
+@since 1.5
 
 ## KeyRep.KeyRep(Type, String, String, byte[])
 
@@ -41,16 +31,19 @@ public KeyRep(Type type, String algorithm, String format, byte[] encoded)
 
 Construct the alternate Key class.
 
-Parameters:
+@param type either one of Type.SECRET, Type.PUBLIC, or Type.PRIVATE
+@param algorithm the algorithm returned from
+         {@code Key.getAlgorithm()}
+@param format the encoding format returned from
+         {@code Key.getFormat()}
+@param encoded the encoded bytes returned from
+         {@code Key.getEncoded()}
 
-- `type`: either one of Type.SECRET, Type.PUBLIC, or Type.PRIVATE
-- `algorithm`: the algorithm returned from `Key.getAlgorithm()`
-- `format`: the encoding format returned from `Key.getFormat()`
-- `encoded`: the encoded bytes returned from `Key.getEncoded()`
-
-Throws:
-
-- `NullPointerException`: if type is `null`, if algorithm is `null`, if format is `null`, or if encoded is `null`
+@throws    NullPointerException
+         if type is {@code null},
+         if algorithm is {@code null},
+         if format is {@code null},
+         or if encoded is {@code null}
 
 ## KeyRep.readResolve()
 
@@ -60,21 +53,21 @@ protected Object readResolve() throws ObjectStreamException
 
 Resolve the Key object.
 
- This method supports three Type/format combinations:
-
--  Type.SECRET/"RAW" - returns a SecretKeySpec object
+<p> This method supports three Type/format combinations:
+<ul>
+<li> Type.SECRET/"RAW" - returns a SecretKeySpec object
 constructed using encoded key bytes and algorithm
-
--  Type.PUBLIC/"X.509" - gets a KeyFactory instance for
-the key <example-value>, constructs an X509EncodedKeySpec with the
+<li> Type.PUBLIC/"X.509" - gets a KeyFactory instance for
+the key algorithm, constructs an X509EncodedKeySpec with the
 encoded key bytes, and generates a public key from the spec
-
--  Type.PRIVATE/"PKCS#8" - gets a KeyFactory instance for
-the key <example-value>, constructs a PKCS8EncodedKeySpec with the
+<li> Type.PRIVATE/"PKCS#8" - gets a KeyFactory instance for
+the key algorithm, constructs a PKCS8EncodedKeySpec with the
 encoded key bytes, and generates a private key from the spec
+</ul>
 
-**Returns:** the resolved Key <example-value>
+@return the resolved Key object
 
-Throws:
-
-- `ObjectStreamException`: if the Type/format combination is unrecognized, if the algorithm, key <example-value>, or encoded key bytes are unrecognized/invalid, of if the resolution of the key fails for any reason
+@throws    ObjectStreamException if the Type/format
+ combination is unrecognized, if the algorithm, key format, or
+ encoded key bytes are unrecognized/invalid, of if the
+ resolution of the key fails for any reason

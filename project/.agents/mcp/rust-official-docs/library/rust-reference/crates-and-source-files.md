@@ -1,23 +1,14 @@
----
-title: "Crates and source files"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/crates-and-source-files.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[crate]
 # Crates and source files
 
 r[crate.syntax]
-```grammar
+```grammar,items
 @root Crate ->
     InnerAttribute*
     Item*
 ```
 
-> **Note:**
+> [!NOTE]
 > Although Rust, like any other language, can be implemented by an interpreter as well as a compiler, the only existing implementation is a compiler, and the language has always been designed to be compiled. For these reasons, this section assumes a compiler.
 
 r[crate.compile-time]
@@ -33,10 +24,10 @@ r[crate.input-source]
 The Rust compiler is always invoked with a single source file as input, and always produces a single output crate. The processing of that source file may result in other source files being loaded as modules. Source files have the extension `.rs`.
 
 r[crate.module-def]
-A Rust source file describes a module, the name and location of which — in the module tree of the current crate — are defined from outside the source file: either by an explicit Module item in a referencing source file, or by the name of the crate itself.
+A Rust source file describes a module, the name and location of which &mdash; in the module tree of the current crate &mdash; are defined from outside the source file: either by an explicit [Module][grammar-Module] item in a referencing source file, or by the name of the crate itself.
 
 r[crate.inline-module]
-Every source file is a module, but not every module needs its own source file: module definitions can be nested within one file.
+Every source file is a module, but not every module needs its own source file: [module definitions][module] can be nested within one file.
 
 r[crate.items]
 Each source file contains a sequence of zero or more [Item] definitions, and may optionally begin with any number of [attributes] that apply to the containing module, most of which influence the behavior of the compiler.
@@ -44,7 +35,7 @@ Each source file contains a sequence of zero or more [Item] definitions, and may
 r[crate.attributes]
 The anonymous crate module can have additional attributes that apply to the crate as a whole.
 
-> **Note:**
+> [!NOTE]
 > The file's contents may be preceded by a [shebang].
 
 ```rust
@@ -94,7 +85,7 @@ mod foo {
 use foo::bar as main;
 ```
 
-> **Note:**
+> [!NOTE]
 > Types with implementations of [`Termination`] in the standard library include:
 >
 > * `()`
@@ -103,12 +94,15 @@ use foo::bar as main;
 > * [`ExitCode`]
 > * `Result<T, E> where T: Termination, E: Debug`
 
+<!-- If the previous section needs updating (from "must take no arguments"
+  onwards, also update it in the testing.md file -->
+
 r[crate.uncaught-foreign-unwinding]
 ### Uncaught foreign unwinding
 
 When a "foreign" unwind (e.g. an exception thrown from C++ code, or a `panic!` in Rust code using a different panic handler) propagates beyond the `main` function, the process will be safely terminated. This may take the form of an abort, in which case it is not guaranteed that any `Drop` calls will be executed, and the error output may be less informative than if the runtime had been terminated by a "native" Rust `panic`.
 
-For more information, see the panic documentation.
+For more information, see the [panic documentation][panic-docs].
 
 r[crate.no_main]
 ### The `no_main` attribute
@@ -127,3 +121,22 @@ The *`crate_name` [attribute]* may be applied at the crate level to specify the 
 
 r[crate.crate_name.restriction]
 The crate name must not be empty, and must only contain [Unicode alphanumeric] or `_` (U+005F) characters.
+
+[^phase-distinction]: This distinction would also exist in an interpreter. Static checks like syntactic analysis, type checking, and lints should happen before the program is executed regardless of when it is executed.
+
+[^cratesourcefile]: A crate is somewhat analogous to an *assembly* in the ECMA-335 CLI model, a *library* in the SML/NJ Compilation Manager, a *unit* in the Owens and Flatt module system, or a *configuration* in Mesa.
+
+[Unicode alphanumeric]: char::is_alphanumeric
+[`!`]: types/never.md
+[`ExitCode`]: std::process::ExitCode
+[`Infallible`]: std::convert::Infallible
+[`Termination`]: std::process::Termination
+[attribute]: attributes.md
+[attributes]: attributes.md
+[function]: items/functions.md
+[module]: items/modules.md
+[module path]: paths.md
+[panic-docs]: panic.md#unwinding-across-ffi-boundaries
+[shebang]: shebang.md
+[trait or lifetime bounds]: trait-bounds.md
+[where clauses]: items/generics.md#where-clauses

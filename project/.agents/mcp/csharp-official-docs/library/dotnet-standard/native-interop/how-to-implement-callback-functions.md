@@ -1,12 +1,15 @@
 ---
 title: "How to: Implement Callback Functions"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/native-interop/how-to-implement-callback-functions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: See how to implement callback functions. In this example, a managed application, using platform invoke, prints the handle value for each window on a computer.
+ms.date: 07/08/2026
+ai-usage: ai-assisted
+dev_langs:
+  - "csharp"
+  - "vb"
+  - "cpp"
+helpviewer_keywords:
+  - "callback function, implementing"
 ---
-
 # How to: Implement callback functions
 
 The following procedure and example demonstrate how a managed application, using platform invoke, can print the handle value for each window on the local computer. Specifically, the procedure and example use the `EnumWindows` function to step through the list of windows and a managed callback function (named CallBack) to print the value of the window handle.
@@ -29,7 +32,7 @@ The following procedure and example demonstrate how a managed application, using
 
 4. Ensure that the garbage collector does not reclaim the delegate before the callback function completes its work. When you pass a delegate as a parameter, or pass a delegate contained as a field in a structure, it remains uncollected for the duration of the call. So, as is the case in the following enumeration example, the callback function completes its work before the call returns and requires no additional action by the managed caller.
 
-   If, however, the callback function can be invoked after the call returns, the managed caller must take steps to ensure that the delegate remains uncollected until the callback function finishes. For an example, see the GCHandle sample.
+   If, however, the callback function can be invoked after the call returns, the managed caller must take steps to ensure that the delegate remains uncollected until the callback function finishes. For an example, see the [GCHandle sample](/previous-versions/dotnet/netframework-4.0/44ey4b32(v=vs.100)).
 
 ## Example
 
@@ -122,5 +125,5 @@ int main()
 
 ## See also
 
-- Callback Functions
-- Calling a DLL Function
+- [Callback Functions](callback-functions.md)
+- [Calling a DLL Function](calling-a-dll-function.md)

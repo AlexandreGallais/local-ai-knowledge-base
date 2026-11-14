@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: Minimum Android API level raised to 24"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/maui/11/android-minimum-api-level.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where the minimum supported Android API level has been raised from 21 to 24."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # Minimum Android API level raised to 24
@@ -25,7 +23,7 @@ Starting in .NET 11, devices running Android API 24 (Android 7.0 Nougat) or newe
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

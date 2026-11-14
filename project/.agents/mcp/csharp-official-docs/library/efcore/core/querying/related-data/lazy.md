@@ -1,17 +1,16 @@
 ---
-title: "Lazy Loading of Related Data - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/querying/related-data/lazy.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Lazy Loading of Related Data - EF Core
+description: Lazy loading of related data with Entity Framework Core
+author: SamMonoRT
+ms.date: 9/8/2020
+uid: core/querying/related-data/lazy
+ms.custom: sfi-ropc-nochange
 ---
-
 # Lazy Loading of Related Data
 
 ## Lazy loading with proxies
 
-The simplest way to use lazy-loading is by installing the Microsoft.EntityFrameworkCore.Proxies package and enabling it with a call to `UseLazyLoadingProxies`. For example:
+The simplest way to use lazy-loading is by installing the [Microsoft.EntityFrameworkCore.Proxies](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Proxies/) package and enabling it with a call to `UseLazyLoadingProxies`. For example:
 
 ```csharp
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -49,12 +48,12 @@ public class Post
 }
 ```
 
-> **Warning:**
-> Lazy loading can cause unneeded extra database roundtrips to occur (the so-called N+1 problem), and care should be taken to avoid this. See the performance section for more details.
+> [!WARNING]
+> Lazy loading can cause unneeded extra database roundtrips to occur (the so-called N+1 problem), and care should be taken to avoid this. See the [performance section](xref:core/performance/efficient-querying#beware-of-lazy-loading) for more details.
 
 ## Lazy loading without proxies
 
-Lazy-loading without proxies work by injecting the `ILazyLoader` service into an entity, as described in Entity Type Constructors. For example:
+Lazy-loading without proxies work by injecting the `ILazyLoader` service into an entity, as described in [Entity Type Constructors](xref:core/modeling/constructors). For example:
 
 ```csharp
 public class Blog
@@ -109,7 +108,7 @@ public class Post
 }
 ```
 
-This method doesn't require entity types to be inherited from or navigation properties to be virtual, and allows entity instances created with `new` to lazy-load once attached to a context. However, it requires a reference to the `ILazyLoader` service, which is defined in the Microsoft.EntityFrameworkCore.Abstractions package. This package contains a minimal set of types so that there is little impact in depending on it. However, to completely avoid depending on any EF Core packages in the entity types, it's possible to inject the `ILazyLoader.Load` method as a delegate. For example:
+This method doesn't require entity types to be inherited from or navigation properties to be virtual, and allows entity instances created with `new` to lazy-load once attached to a context. However, it requires a reference to the `ILazyLoader` service, which is defined in the [Microsoft.EntityFrameworkCore.Abstractions](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Abstractions/) package. This package contains a minimal set of types so that there is little impact in depending on it. However, to completely avoid depending on any EF Core packages in the entity types, it's possible to inject the `ILazyLoader.Load` method as a delegate. For example:
 
 ```csharp
 public class Blog
@@ -183,5 +182,5 @@ public static class PocoLoadingExtensions
 }
 ```
 
-> **Note:**
+> [!NOTE]
 > The constructor parameter for the lazy-loading delegate must be called "lazyLoader". Configuration to use a different name than this is planned for a future release.

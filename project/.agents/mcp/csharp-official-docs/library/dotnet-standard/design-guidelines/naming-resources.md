@@ -1,16 +1,18 @@
 ---
 title: "Naming Resources"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/naming-resources.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Review naming guidelines for resources in .NET, which are similar to the guidelines for naming properties.
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "names [.NET Framework], localized resources"
+  - "localization, naming guidelines"
+  - "resource names"
+  - "global applications, naming guidelines"
+  - "international applications, naming guidelines"
+ms.assetid: 8b0e97f3-7877-44fd-bc76-e05d36d5d79c
 ---
-
 # Naming Resources
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
 Because localizable resources can be referenced via certain objects as if they were properties, the naming guidelines for resources are similar to property guidelines.
 
@@ -32,9 +34,9 @@ Because localizable resources can be referenced via certain objects as if they w
 
  *Portions © 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Framework Design Guidelines
-- Naming Guidelines
+- [Framework Design Guidelines](index.md)
+- [Naming Guidelines](naming-guidelines.md)

@@ -1,23 +1,17 @@
----
-title: "no-instanceof-builtins"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-instanceof-builtins.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-instanceof-builtins
 
 📝 Disallow `instanceof` with built-in objects.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-Using `instanceof` to determine the type of an object has limitations.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
-Therefore, it is recommended to use a safer method, like `Object.prototype.toString.call(foo)` or the npm package @sindresorhus/is to determine the type of an object.
+Using `instanceof` to determine the type of an object has [limitations](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof#instanceof_and_multiple_realms).
+
+Therefore, it is recommended to use a safer method, like `Object.prototype.toString.call(foo)` or the npm package [@sindresorhus/is](https://www.npmjs.com/package/@sindresorhus/is) to determine the type of an object.
 
 Fixes and suggestions that add grouping parentheses are not applied inside Vue event handlers or template function bodies.
 
@@ -79,7 +73,7 @@ foo instanceof Function;
 typeof foo === 'function';
 ```
 
-The following two examples are only reported with `strategy: 'strict'`. The default `'loose'` strategy does not report `Object` or `Map`.
+The following two examples are only reported with [`strategy: 'strict'`](#strategy). The default `'loose'` strategy does not report `Object` or `Map`.
 
 ```js
 // ❌
@@ -163,7 +157,7 @@ Specifies the constructors that should be excluded, with this rule taking preced
 Type: `boolean`\
 Default: `false`
 
-Specifies using `Error.isError()` to determine whether it is an error object.
+Specifies using [`Error.isError()`](https://github.com/tc39/proposal-is-error) to determine whether it is an error object.
 
 ```js
 'unicorn/no-instanceof-builtins': [

@@ -1,12 +1,16 @@
 ---
+description: "Learn more about: ICorDebugFunction3 Interface"
 title: "ICorDebugFunction3 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugfunction3-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugFunction3"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugFunction3 Interface
 
 Logically extends the ICorDebugFunction interface to provide access to code from a ReJIT request.
@@ -15,11 +19,13 @@ Logically extends the ICorDebugFunction interface to provide access to code from
 
 | Method                                                                                         | Description |
 |------------------------------------------------------------------------------------------------|-------------|
-| GetActiveReJitRequestILCode Method | Gets an interface pointer to an ICorDebugILCode that contains the IL from an active ReJIT request. |
+| [GetActiveReJitRequestILCode Method](icordebugfunction3-getactiverejitrequestilcode-method.md) | Gets an interface pointer to an [ICorDebugILCode](icordebugilcode-interface.md) that contains the IL from an active ReJIT request. |
+
+## Remarks
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -29,4 +35,4 @@ Logically extends the ICorDebugFunction interface to provide access to code from
 
 ## See also
 
-- ReJIT: A How-To Guide
+- [ReJIT: A How-To Guide](/archive/blogs/davbr/rejit-a-how-to-guide)

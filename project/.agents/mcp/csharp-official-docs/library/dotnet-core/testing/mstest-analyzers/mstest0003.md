@@ -1,12 +1,20 @@
 ---
 title: "MSTEST0003: Test methods should have valid layout"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0003.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0003: Test methods should have valid layout"
+ms.date: 11/05/2026
+ai-usage: ai-assisted
+f1_keywords:
+- MSTEST0003
+- TestMethodShouldBeValidAnalyzer
+helpviewer_keywords:
+- TestMethodShouldBeValidAnalyzer
+- MSTEST0003
+author: evangelink
+ms.author: amauryleve
+dev_langs:
+- CSharp
+- VB
 ---
-
 # MSTEST0003: Test methods should have valid layout
 
 | Property                            | Value                                                                                     |
@@ -45,7 +53,7 @@ These requirements describe MSTest's discovery and invocation contract, not gene
 
 Ensure that the test method matches the required layout described above.
 
-The MSTest analyzers can report signature problems in your editor, including in code inserted by IntelliSense. In Visual Studio, use the light bulb menu to apply an available code fix. A code fix helps correct the method; it doesn't change the editor's code-generation templates.
+The [MSTest analyzers](overview.md#editor-support) can report signature problems in your editor, including in code inserted by IntelliSense. In Visual Studio, use the light bulb menu to apply an available code fix. A code fix helps correct the method; it doesn't change the editor's code-generation templates.
 
 ## When to suppress warnings
 
@@ -61,11 +69,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0003
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0003.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

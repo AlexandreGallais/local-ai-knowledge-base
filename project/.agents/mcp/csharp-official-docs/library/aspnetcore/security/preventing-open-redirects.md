@@ -1,12 +1,9 @@
 ---
-title: "Prevent open redirect attacks in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/preventing-open-redirects.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Prevent open redirect attacks in ASP.NET Core
+ai-usage: ai-assisted
+description: Shows how to prevent open redirect attacks against an ASP.NET Core app
+ms.date: 08/26/2026
 ---
-
 # Prevent open redirect attacks in ASP.NET Core
 
 A web app that redirects to a URL that's specified via the request such as the query string or form data can potentially be tampered with to redirect users to an external, malicious URL. This tampering is called an open redirection attack.
@@ -30,6 +27,8 @@ A malicious user can develop an attack intended to allow the malicious user acce
 
 The user likely believes that their first attempt to log in failed and that their second attempt is successful. The user most likely remains unaware that their credentials are compromised.
 
+![Open Redirection Attack Process](preventing-open-redirects/_static/open-redirection-attack-process.png)
+
 In addition to login pages, some sites provide redirect pages or endpoints. Imagine your app has a page with an open redirect, `/Home/Redirect`. A cyberattacker could create, for example, a link in an email that goes to `[yoursite]/Home/Redirect?url=http://phishingsite.com/Home/Login`. A typical user will look at the URL and see it begins with your site name. Trusting that, they will click the link. The open redirect would then send the user to the phishing site, which looks identical to yours, and the user would likely login to what they believe is your site.
 
 ## Protecting against open redirect attacks
@@ -38,7 +37,9 @@ When developing web applications, treat all user-provided data as untrustworthy.
 
 ### LocalRedirect
 
-Use the `Microsoft.AspNetCore.Http.Results.LocalRedirect*` result in a Minimal API endpoint:
+:::moniker range=">= aspnetcore-6.0"
+
+Use the <xref:Microsoft.AspNetCore.Http.Results.LocalRedirect*> result in a Minimal API endpoint:
 
 ```csharp
 app.MapGet("/SomeEndpoint", (string redirectUri) =>
@@ -49,7 +50,9 @@ app.MapGet("/SomeEndpoint", (string redirectUri) =>
 });
 ```
 
-Use the `Microsoft.AspNetCore.Mvc.ControllerBase.LocalRedirect*` helper method in MVC actions:
+:::moniker-end
+
+Use the <xref:Microsoft.AspNetCore.Mvc.ControllerBase.LocalRedirect*> helper method in MVC actions:
 
 ```csharp
 public IActionResult SomeAction(string redirectUrl)
@@ -62,7 +65,7 @@ public IActionResult SomeAction(string redirectUrl)
 
 ### IUrlHelper.IsLocalUrl
 
-Use the `Microsoft.AspNetCore.Mvc.IUrlHelper.IsLocalUrl*` method to test URLs before redirecting:
+Use the <xref:Microsoft.AspNetCore.Mvc.IUrlHelper.IsLocalUrl*> method to test URLs before redirecting:
 
 The following example shows how to check whether a URL is local before redirecting.
 
@@ -82,19 +85,23 @@ private IActionResult RedirectToLocal(string returnUrl)
 
 The `IUrlHelper.IsLocalUrl` method protects users from being inadvertently redirected to a malicious site. You can log the details of the URL that was provided when a non-local URL is supplied in a situation where you expected a local URL. Logging redirect URLs may help in diagnosing redirection attacks.
 
+:::moniker range=">= aspnetcore-10.0"
+
 ### Detect if URL is local using `RedirectHttpResult.IsLocalUrl`
 
-The `RedirectHttpResult.IsLocalUrl(url)` helper method detects if a URL is local. A URL is considered local if the following are true:
+The [`RedirectHttpResult.IsLocalUrl(url)`](https://source.dot.net/#Microsoft.AspNetCore.Http.Results/RedirectHttpResult.cs,c0ece2e6266cb369) helper method detects if a URL is local. A URL is considered local if the following are true:
 
-* It doesn't have the host or authority section.
-* It has an absolute path.
+* It doesn't have the [host](https://developer.mozilla.org/docs/Web/API/URL/host) or [authority](https://developer.mozilla.org/docs/Web/URI/Authority) section.
+* It has an [absolute path](https://developer.mozilla.org/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_URL#absolute_urls_vs._relative_urls).
 
-URLs using virtual paths `"~/"` are also local.
+URLs using [virtual paths](/previous-versions/aspnet/ms178116(v=vs.100)) `"~/"` are also local.
 
-`IsLocalUrl` is useful for validating URLs before redirecting to them to prevent open redirection attacks.
+`IsLocalUrl` is useful for validating URLs before redirecting to them to prevent [open redirection attacks](https://brightsec.com/blog/open-redirect-vulnerabilities/).
 
 ```csharp
 if (RedirectHttpResult.IsLocalUrl(url))
 {
     return Results.LocalRedirect(url);
 }
+
+:::moniker-end

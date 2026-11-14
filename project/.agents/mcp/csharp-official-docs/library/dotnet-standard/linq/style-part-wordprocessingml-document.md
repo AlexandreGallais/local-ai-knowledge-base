@@ -1,10 +1,11 @@
 ---
-title: "Style part of a WordprocessingML document - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/style-part-wordprocessingml-document.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Style part of a WordprocessingML document - LINQ to XML
+description: See an example of XML that makes up the style part of an Office Open XML WordprocessingML document.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # Style part of a WordprocessingML document (LINQ to XML)

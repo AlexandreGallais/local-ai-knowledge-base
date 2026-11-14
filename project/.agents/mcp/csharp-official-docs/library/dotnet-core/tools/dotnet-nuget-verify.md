@@ -1,12 +1,9 @@
 ---
-title: "dotnet nuget verify command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-nuget-verify.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet nuget verify command
+description: The dotnet nuget verify command verifies a signed package.
+author: kartheekp-ms
+ms.date: 10/28/2025
 ---
-
 # dotnet nuget verify
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -32,8 +29,8 @@ dotnet nuget verify -h|--help
 The `dotnet nuget verify` command verifies a signed NuGet package.
 In .NET 10 and later versions, the command also outputs the package's content hash, which might be useful to investigate lock file validation errors.
 
-  > **Note:**
-  > This command requires a certificate root store that is valid for both code signing and timestamping. Also, this command may not be supported on some combinations of operating system and .NET SDK. For more information, see NuGet signed package verification.
+  > [!NOTE]
+  > This command requires a certificate root store that is valid for both code signing and timestamping. Also, this command may not be supported on some combinations of operating system and .NET SDK. For more information, see [NuGet signed package verification](nuget-signed-package-verification.md).
 
 ## Arguments
 
@@ -47,7 +44,7 @@ In .NET 10 and later versions, the command also outputs the package's content ha
 
   Specifies that all verifications possible should be performed on the package(s). By default, only `signatures` are verified.
 
-> **Note:**
+> [!NOTE]
 > This command currently supports only `signature` verification.
 
 - **`--certificate-fingerprint <FINGERPRINT>`**
@@ -56,7 +53,7 @@ In .NET 10 and later versions, the command also outputs the package's content ha
 
 - **`-v|--verbosity <LEVEL>`**
 
-  Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. The default is `minimal`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+  Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. The default is `minimal`. For more information, see <xref:Microsoft.Build.Framework.LoggerVerbosity>.
 
   The following table shows what is displayed for each verbosity level.
 
@@ -85,13 +82,9 @@ In .NET 10 and later versions, the command also outputs the package's content ha
 
   ¹ CRL distribution point and OCSP responder URLs require .NET SDK 10.0.400.
 
-- **`--configfile <FILE>`**
+- [!INCLUDE [configfile](includes/cli-configfile.md)]
 
-The NuGet configuration file (*nuget.config*) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see Common NuGet Configurations.
-
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Examples
 

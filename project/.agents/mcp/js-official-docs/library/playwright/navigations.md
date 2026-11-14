@@ -1,17 +1,13 @@
 ---
+id: navigations
 title: "Navigations"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/navigations.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
 
 ## Introduction
 
 Playwright can navigate to URLs and handle navigations caused by the page interactions.
 
-## Basic <example-value>
+## Basic navigation
 
 Simplest form of a navigation is opening a URL:
 
@@ -25,12 +21,12 @@ await page.goto('https://example.com');
 page.navigate("https://example.com");
 ```
 
-```python
+```python async
 # Navigate the page
 await page.goto("https://example.com")
 ```
 
-```python
+```python sync
 # Navigate the page
 page.goto("https://example.com")
 ```
@@ -41,7 +37,7 @@ await page.GotoAsync("https://example.com");
 ```
 
 The code above loads the page and waits for the web page to fire the
-load event.
+[load](https://developer.mozilla.org/en-US/docs/Web/API/Window/load_event) event.
 The load event is fired when the whole page has loaded, including all dependent
 resources such as stylesheets, scripts, iframes, and images.
 
@@ -53,7 +49,7 @@ wait for the redirected page to fire the `load` event.
 :::note
 In Firefox, a navigation triggered by the page can interrupt [`method: Page.goto`]
 with an `NS_BINDING_ABORTED` error. This is a
-known Firefox limitation.
+[known Firefox limitation](https://github.com/microsoft/playwright/issues/20749).
 :::
 
 ## When is the page loaded?
@@ -65,7 +61,7 @@ it depends on the page, framework, etc. So when can you start interacting with
 it?
 
 In Playwright you can interact with the page at any moment. It will automatically
-wait for the target elements to become actionable.
+wait for the target elements to become [actionable](./actionability.md).
 
 ```js
 // Navigate and click element
@@ -81,14 +77,14 @@ page.navigate("https://example.com");
 page.getByText("Example Domain").click();
 ```
 
-```python
+```python async
 # Navigate and click element
 # Click will auto-wait for the element
 await page.goto("https://example.com")
 await page.get_by_text("example domain").click()
 ```
 
-```python
+```python sync
 # Navigate and click element
 # Click will auto-wait for the element
 page.goto("https://example.com")
@@ -108,14 +104,14 @@ and will click it.
 
 Playwright operates as a very fast user - the moment it sees the button, it
 clicks it. In the general case, you don't need to worry about whether all the
-resources loaded, etc.
+resources loaded, etc. 
 
 ## Hydration
 
 At some point in time, you'll stumble upon a use case where Playwright performs
 an action, but nothing seemingly happens. Or you enter some text into the input
 field and it will disappear. The most probable reason behind that is a poor page
-hydration.
+[hydration](https://en.wikipedia.org/wiki/Hydration_%28web_development%29).
 
 When page is hydrated, first, a static version of the page is sent to the browser.
 Then the dynamic part is sent and the page becomes "live". As a very fast user,
@@ -145,12 +141,12 @@ page.getByText("Click me").click();
 page.waitForURL("**/login");
 ```
 
-```python
+```python async
 await page.get_by_text("Click me").click()
 await page.wait_for_url("**/login")
 ```
 
-```python
+```python sync
 page.get_by_text("Click me").click()
 page.wait_for_url("**/login")
 ```
@@ -164,11 +160,11 @@ await page.WaitForURLAsync("**/login");
 
 Modern browsers utilize a Back/Forward Cache (BFCache) to instantly load a page when a user navigates back or forward. This is achieved by freezing the page's DOM and JavaScript heap in memory, and thawing it upon return.
 
-By default, Playwright disables the BFCache across all browsers to ensure consistent, clean testing environments.
+By default, Playwright disables the BFCache across all browsers to ensure consistent, clean testing environments. 
 
-Even if you explicitly enable BFCache, **testing BFCache restorations is not supported**. Because a BFCache restore skips the network fetch phase, the browser does not fire standard navigation lifecycle events (such as `commit`, `domcontentloaded`, or `load`). Playwright's internal `Page` state heavily relies on these network-level events to stay synchronized.
+Even if you explicitly enable BFCache, **testing BFCache restorations is not supported**. Because a BFCache restore skips the network fetch phase, the browser does not fire standard navigation lifecycle events (such as `commit`, `domcontentloaded`, or `load`). Playwright's internal `Page` state heavily relies on these network-level events to stay synchronized. 
 
-Consequently, triggering a BFCache restore (e.g., via `page.goBack()`) will bypass <example-value>'s lifecycle tracking, resulting in timeouts and a completely desynchronized `Page` object where subsequent interactions will fail.
+Consequently, triggering a BFCache restore (e.g., via `page.goBack()`) will bypass Playwright's lifecycle tracking, resulting in timeouts and a completely desynchronized `Page` object where subsequent interactions will fail.
 
 ## Navigation events
 

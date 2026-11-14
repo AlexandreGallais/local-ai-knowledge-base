@@ -1,15 +1,11 @@
 ---
-title: "package-manager-heading-hack-pkgname"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/install/includes/package-manager-heading-hack-pkgname.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+author: adegeo
+ms.author: adegeo
+ms.date: 11/11/2024
+ms.topic: include
 ---
 
-# package-manager-heading-hack-pkgname
-
-All versions of .NET are available for download at <https://dotnet.microsoft.com/download/dotnet>, but require manual installation. You can try to use the package manager to install a different version of .NET. However, the requested version might not be available.
+All versions of .NET are available for download at <https://dotnet.microsoft.com/download/dotnet>, but require [manual installation](../linux-scripted-manual.md). You can try to use the package manager to install a different version of .NET. However, the requested version might not be available.
 
 The packages added to package manager feeds are named in a hackable format, for example: `{product}-{type}-{version}`.
 
@@ -33,7 +29,7 @@ The version of the SDK or runtime to install. Valid options are any released ver
   - `3.1`
   - `2.1`
 
-  It's possible the SDK/runtime you're trying to download isn't available for your Linux distribution. For a list of supported distributions, see Install .NET on Linux.
+  It's possible the SDK/runtime you're trying to download isn't available for your Linux distribution. For a list of supported distributions, see [Install .NET on Linux](../linux.md).
 
 ### Examples
 
@@ -42,9 +38,9 @@ The version of the SDK or runtime to install. Valid options are any released ver
 - Install the .NET 5 SDK: `dotnet-sdk-5.0`
 - Install the .NET Core 3.1 SDK: `dotnet-sdk-3.1`
 
-> **Note:**
+> [!NOTE]
 > Some package might not be available on your Linux distribution.
 
 ### Package missing
 
-If the package-version combination doesn't work, it's not available. For example, there isn't an ASP.NET Core SDK. The SDK components for ASP.NET Core are included with the .NET SDK. The value `aspnetcore-sdk-8.0` is incorrect and should be `dotnet-sdk-8.0`. For a list of Linux distributions supported by .NET, see .NET dependencies and requirements.
+If the package-version combination doesn't work, it's not available. For example, there isn't an ASP.NET Core SDK. The SDK components for ASP.NET Core are included with the .NET SDK. The value `aspnetcore-sdk-8.0` is incorrect and should be `dotnet-sdk-8.0`. For a list of Linux distributions supported by .NET, see [.NET dependencies and requirements](../linux.md).

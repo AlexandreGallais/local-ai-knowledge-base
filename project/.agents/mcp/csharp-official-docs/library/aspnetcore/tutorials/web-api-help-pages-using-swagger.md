@@ -1,38 +1,38 @@
 ---
-title: "ASP.NET Core web API documentation with Swagger / OpenAPI"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/tutorials/web-api-help-pages-using-swagger.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core web API documentation with Swagger / OpenAPI
+ai-usage: ai-assisted
+description: This tutorial provides a walkthrough of adding Swagger to generate documentation and help pages for a web API app.
+monikerRange: ">= aspnetcore-3.1 <= aspnetcore-8.0"
+ms.date: 02/23/2026
 ---
-
 # ASP.NET Core web API documentation with Swagger / OpenAPI
 
-By Rico Suter
+:::moniker range=">= aspnetcore-8.0"
 
-This article covers using **Swagger** tooling — provided by the Swashbuckle.AspNetCore and NSwag packages — to generate OpenAPI documentation and interactive help pages for ASP.NET Core web APIs.
+By [Rico Suter](https://blog.rsuter.com/)
+
+This article covers using **Swagger** tooling — provided by the [Swashbuckle.AspNetCore](https://github.com/domaindrivendev/Swashbuckle.AspNetCore) and [NSwag](https://github.com/RicoSuter/NSwag) packages — to generate OpenAPI documentation and interactive help pages for ASP.NET Core web APIs.
 
 In .NET 9 and later, ASP.NET Core includes built-in OpenAPI support that replaces Swashbuckle as the default. Swashbuckle is no longer included in project templates, but it remains available as a community package you can add manually.
 
-* To understand the built‑in OpenAPI features, see Overview of OpenAPI support in ASP.NET Core API apps.
-* To add Swagger UI for interactive exploration or local ad‑hoc testing alongside the built-in OpenAPI support, see Use the generated OpenAPI documents.
+* To understand the built‑in OpenAPI features, see [Overview of OpenAPI support in ASP.NET Core API apps](../fundamentals/openapi/overview.md?view=aspnetcore-9.0&preserve-view=true).
+* To add Swagger UI for interactive exploration or local ad‑hoc testing alongside the built-in OpenAPI support, see [Use the generated OpenAPI documents](../fundamentals/openapi/using-openapi-documents.md#use-swagger-ui-for-local-ad-hoc-testing).
 
 The following instructions apply to projects using Swashbuckle or NSwag with ASP.NET Core 8.0 and earlier.
 
-Swagger (OpenAPI) is a language-agnostic specification for describing REST APIs. It allows both computers and humans to understand the capabilities of a REST API without direct access to the source code. Its main goals are to:
+[Swagger](https://swagger.io/) ([OpenAPI](https://www.openapis.org/)) is a language-agnostic specification for describing REST APIs. It allows both computers and humans to understand the capabilities of a REST API without direct access to the source code. Its main goals are to:
 
 * Minimize the amount of work needed to connect decoupled services.
 * Reduce the amount of time needed to accurately document a service.
 
-The two main OpenAPI implementations for .NET are Swashbuckle and NSwag, see:
+The two main OpenAPI implementations for .NET are [Swashbuckle](https://github.com/domaindrivendev/Swashbuckle.AspNetCore) and [NSwag](https://github.com/RicoSuter/NSwag), see:
 
-* Getting Started with Swashbuckle
-* Getting Started with NSwag
+* [Getting Started with Swashbuckle](getting-started-with-swashbuckle.md)
+* [Getting Started with NSwag](getting-started-with-NSwag.md)
 
 ## OpenAPI vs. Swagger
 
-The Swagger project was donated to the OpenAPI Initiative in 2015 and has since been referred to as OpenAPI. Both names are used interchangeably. However, "OpenAPI" refers to the specification. "Swagger" refers to the family of open-source and commercial products from SmartBear that work with the OpenAPI Specification. Subsequent open-source products, such as OpenAPIGenerator, also fall under the Swagger family name, despite not being released by SmartBear.
+The Swagger project was donated to the OpenAPI Initiative in 2015 and has since been referred to as OpenAPI. Both names are used interchangeably. However, "OpenAPI" refers to the specification. "Swagger" refers to the family of open-source and commercial products from SmartBear that work with the OpenAPI Specification. Subsequent open-source products, such as [OpenAPIGenerator](https://github.com/OpenAPITools/openapi-generator), also fall under the Swagger family name, despite not being released by SmartBear.
 
 In short:
 
@@ -41,7 +41,7 @@ In short:
 
 ## OpenAPI specification (`openapi.json`)
 
-The OpenAPI specification is a document that describes the capabilities of your API. The document is based on the XML and attribute annotations within the controllers and models. It's the core part of the OpenAPI flow and is used to drive tooling such as SwaggerUI. By default, it's named `openapi.json`. Here's an example of an OpenAPI specification, reduced for brevity:
+The OpenAPI specification is a document that describes the capabilities of your API. The document is based on the [XML](getting-started-with-swashbuckle.md#xml-comments) and attribute annotations within the controllers and models. It's the core part of the OpenAPI flow and is used to drive tooling such as SwaggerUI. By default, it's named `openapi.json`. Here's an example of an OpenAPI specification, reduced for brevity:
 
 ```json
 {
@@ -131,35 +131,44 @@ The OpenAPI specification is a document that describes the capabilities of your 
 
 ## Swagger UI
 
-Swagger UI offers a web-based UI that provides information about the service, using the generated OpenAPI specification. Both Swashbuckle and NSwag include an embedded version of Swagger UI, so that it can be hosted in your ASP.NET Core app using a middleware registration call. The web UI looks like this:
+[Swagger UI](https://swagger.io/swagger-ui/) offers a web-based UI that provides information about the service, using the generated OpenAPI specification. Both Swashbuckle and NSwag include an embedded version of Swagger UI, so that it can be hosted in your ASP.NET Core app using a middleware registration call. The web UI looks like this:
+
+![Swagger UI](~/tutorials/web-api-help-pages-using-swagger/_static/swagger-ui.png)
 
 Each public action method in your controllers can be tested from the UI. Select a method name to expand the section. Add any necessary parameters, and select **Try it out!**.
 
-> **Note:**
-> The Swagger UI version used for the screenshots is version 2. For a version 3 example, see Petstore example.
+![Example Swagger GET test](~/tutorials/web-api-help-pages-using-swagger/_static/get-try-it-out.png)
+
+> [!NOTE]
+> The Swagger UI version used for the screenshots is version 2. For a version 3 example, see [Petstore example](https://petstore.swagger.io/).
 
 ## Securing Swagger UI endpoints
 
-Call `MapSwagger().RequireAuthorization` to secure the Swagger UI endpoints. The following example secures the swagger endpoints:
+Call [`MapSwagger().RequireAuthorization`](xref:Microsoft.AspNetCore.Builder.AuthorizationEndpointConventionBuilderExtensions.RequireAuthorization*) to secure the Swagger UI endpoints. The following example secures the swagger endpoints:
 
-_Code sample not included: ~/../AspNetCore.Docs.Samples/tutorials/webApiSwagger/secureSwagger/Program.cs._
+:::code language="csharp" source="~/../AspNetCore.Docs.Samples/tutorials/webApiSwagger/secureSwagger/Program.cs"  highlight="26":::
+
 In the preceding code, the `/weatherforecast` endpoint doesn't need authorization, but the Swagger endpoints do.
 
 The following Curl passes a JWT token to test the Swagger UI endpoint:
 
 ```bash
-curl -i -H "<example-value>" https://localhost:{PORT}/swagger/v1/swagger.json
+curl -i -H "Authorization: Bearer {TOKEN}" https://localhost:{PORT}/swagger/v1/swagger.json
 ```
 
 where the `{TOKEN}` placeholder is the JWT bearer token and the `{PORT}` placeholder is the port number.
 
-For more information on testing with JWT tokens, see Generate tokens with dotnet user-jwts.
+For more information on testing with JWT tokens, see [Generate tokens with dotnet user-jwts](../security/authentication/jwt-authn.md).
 
 ## Generate an XML documentation file at compile time
 
-See GenerateDocumentationFile for more information.
+See [GenerateDocumentationFile](/dotnet/core/project-sdk/msbuild-props#generatedocumentationfile) for more information.
 
 ## Next steps
 
-* Get started with Swashbuckle
-* Get started with NSwag
+* [Get started with Swashbuckle](getting-started-with-swashbuckle.md)
+* [Get started with NSwag](getting-started-with-NSwag.md)
+
+:::moniker-end
+
+[!INCLUDE[](~/tutorials/web-api-help-pages-using-swagger/includes/web-api-help-pages-using-swagger7.md)]

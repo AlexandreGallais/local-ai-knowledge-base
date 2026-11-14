@@ -1,12 +1,3 @@
----
-title: "core::io::io_slice"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/io/io_slice.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::io::io_slice
 
 ## struct IoSliceMut
@@ -41,7 +32,7 @@ pub fn advance(&mut self, n: usize)
 
 Advance the internal cursor of the slice.
 
-Also see `IoSliceMut::advance_slices` to advance the cursors of
+Also see [`IoSliceMut::advance_slices`] to advance the cursors of
 multiple buffers.
 
 # Panics
@@ -50,7 +41,7 @@ Panics when trying to advance beyond the end of the slice.
 
 # Examples
 
-```rust
+```
 use std::io::IoSliceMut;
 use std::ops::Deref;
 
@@ -83,7 +74,7 @@ Panics when trying to advance beyond the end of the slices.
 
 # Examples
 
-```rust
+```
 use std::io::IoSliceMut;
 use std::ops::Deref;
 
@@ -134,7 +125,7 @@ pub fn advance(&mut self, n: usize)
 
 Advance the internal cursor of the slice.
 
-Also see `IoSlice::advance_slices` to advance the cursors of multiple
+Also see [`IoSlice::advance_slices`] to advance the cursors of multiple
 buffers.
 
 # Panics
@@ -143,7 +134,7 @@ Panics when trying to advance beyond the end of the slice.
 
 # Examples
 
-```rust
+```
 use std::io::IoSlice;
 use std::ops::Deref;
 
@@ -176,7 +167,7 @@ Panics when trying to advance beyond the end of the slices.
 
 # Examples
 
-```rust
+```
 use std::io::IoSlice;
 use std::ops::Deref;
 

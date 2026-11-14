@@ -1,15 +1,6 @@
----
-title: "core::marker"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/marker.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::marker
 
-Primitive traits and types representing basic <example-value> of types.
+Primitive traits and types representing basic properties of types.
 
 Rust types can be classified in various useful ways according to
 their intrinsic properties. These classifications are represented
@@ -26,7 +17,7 @@ Types whose values can be duplicated simply by copying bits.
 By default, variable bindings have 'move semantics.' In other
 words:
 
-```rust
+```
 #[derive(Debug)]
 struct Foo;
 
@@ -41,7 +32,7 @@ let y = x;
 
 However, if a type implements `Copy`, it instead has 'copy semantics':
 
-```rust
+```
 // We can derive a `Copy` implementation. `Clone` is also required, as it's
 // a supertrait of `Copy`.
 #[derive(Debug, Copy, Clone)]
@@ -64,14 +55,14 @@ can result in bits being copied in memory, although this is sometimes optimized 
 
 There are two ways to implement `Copy` on your type. The simplest is to use `derive`:
 
-```rust
+```
 #[derive(Copy, Clone)]
 struct MyStruct;
 ```
 
 You can also implement `Copy` and `Clone` manually:
 
-```rust
+```
 struct MyStruct;
 
 impl Copy for MyStruct { }
@@ -86,7 +77,7 @@ impl Clone for MyStruct {
 There is a small difference between the two. The `derive` strategy will also place a `Copy`
 bound on type parameters:
 
-```rust
+```
 #[derive(Clone)]
 struct MyStruct<T>(T);
 
@@ -94,7 +85,7 @@ impl<T: Copy> Copy for MyStruct<T> { }
 ```
 
 This isn't always desired. For example, shared references (`&T`) can be copied regardless of
-whether `T` is `Copy`. Likewise, a generic struct containing markers such as `PhantomData`
+whether `T` is `Copy`. Likewise, a generic struct containing markers such as [`PhantomData`]
 could potentially be duplicated with a bit-wise copy.
 
 ## What's the difference between `Copy` and `Clone`?
@@ -102,15 +93,15 @@ could potentially be duplicated with a bit-wise copy.
 Copies happen implicitly, for example as part of an assignment `y = x`. The behavior of
 `Copy` is not overloadable; it is always a simple bit-wise copy.
 
-Cloning is an explicit action, `x.clone()`. The implementation of `Clone` can
+Cloning is an explicit action, `x.clone()`. The implementation of [`Clone`] can
 provide any type-specific behavior necessary to duplicate values safely. For example,
-the implementation of `Clone` for `String` needs to copy the pointed-to string
-buffer in the heap. A simple bitwise copy of `String` values would merely copy the
-pointer, leading to a double free down the line. For this reason, `String` is `Clone`
+the implementation of [`Clone`] for [`String`] needs to copy the pointed-to string
+buffer in the heap. A simple bitwise copy of [`String`] values would merely copy the
+pointer, leading to a double free down the line. For this reason, [`String`] is [`Clone`]
 but not `Copy`.
 
-`Clone` is a supertrait of `Copy`, so everything which is `Copy` must also implement
-`Clone`. If a type is `Copy` then its `Clone` implementation only needs to return `*self`
+[`Clone`] is a supertrait of `Copy`, so everything which is `Copy` must also implement
+[`Clone`]. If a type is `Copy` then its [`Clone`] implementation only needs to return `*self`
 (see the example above).
 
 ## When can my type be `Copy`?
@@ -118,7 +109,8 @@ but not `Copy`.
 A type can implement `Copy` if all of its components implement `Copy`. For example, this
 struct can be `Copy`:
 
-```rust
+```
+# #[allow(dead_code)]
 #[derive(Copy, Clone)]
 struct Point {
    x: i32,
@@ -126,21 +118,23 @@ struct Point {
 }
 ```
 
-A struct can be `Copy`, and `i32` is `Copy`, therefore `Point` is eligible to be `Copy`.
+A struct can be `Copy`, and [`i32`] is `Copy`, therefore `Point` is eligible to be `Copy`.
 By contrast, consider
 
-```rust
+```
+# #![allow(dead_code)]
+# struct Point;
 struct PointList {
     points: Vec<Point>,
 }
 ```
 
-The struct `PointList` cannot implement `Copy`, because `Vec<T>` is not `Copy`. If we
+The struct `PointList` cannot implement `Copy`, because [`Vec<T>`] is not `Copy`. If we
 attempt to derive a `Copy` implementation, we'll get an error:
 
-```
+```text
 the trait `Copy` cannot be implemented for this type; field `points` does not implement `Copy`
-```rust
+```
 
 Shared references (`&T`) are also `Copy`, so a type can be `Copy`, even when it holds
 shared references of types `T` that are *not* `Copy`. Consider the following struct,
@@ -154,16 +148,16 @@ type `PointList` from above:
 struct PointListWrapper<'a> {
     point_list_ref: &'a PointList,
 }
-```rust
+```
 
 ## When *can't* my type be `Copy`?
 
 Some types can't be copied safely. For example, copying `&mut T` would create an aliased
-mutable reference. Copying `String` would duplicate responsibility for managing the
-`String`'s buffer, leading to a double free.
+mutable reference. Copying [`String`] would duplicate responsibility for managing the
+[`String`]'s buffer, leading to a double free.
 
-Generalizing the latter case, any type implementing `Drop` can't be `Copy`, because it's
-managing some resource besides its own `size_of::<T>` bytes.
+Generalizing the latter case, any type implementing [`Drop`] can't be `Copy`, because it's
+managing some resource besides its own [`size_of::<T>`] bytes.
 
 If you try to implement `Copy` on a struct or enum containing non-`Copy` data, you will get
 the error [E0204].
@@ -190,9 +184,9 @@ the following types also implement `Copy`:
   (even if the referent doesn't),
   while variables captured by mutable reference never implement `Copy`.
 
-`Vec<T>`: ../../std/vec/struct.Vec.html
-`String`: ../../std/string/struct.String.html
-`size_of::<T>`: size_of
+[`Vec<T>`]: ../../std/vec/struct.Vec.html
+[`String`]: ../../std/string/struct.String.html
+[`size_of::<T>`]: size_of
 [impls]: #implementors
 
 ## ::PhantomData
@@ -208,7 +202,7 @@ type acts as though it stores a value of type `T`, even though it doesn't
 really. This information is used when computing certain safety properties.
 
 For a more in-depth explanation of how to use `PhantomData<T>`, please see
-the Nomicon.
+[the Nomicon](../../nomicon/phantom-data.html).
 
 # A ghastly note 👻👻👻
 
@@ -226,12 +220,12 @@ unused lifetime parameter, typically as part of some unsafe code. For
 example, here is a struct `Slice` that has two pointers of type `*const T`,
 presumably pointing into an array somewhere:
 
-```
+```compile_fail,E0392
 struct Slice<'a, T> {
     start: *const T,
     end: *const T,
 }
-```rust
+```
 
 The intention is that the underlying data is only valid for the
 lifetime `'a`, so `Slice` should not outlive `'a`. However, this
@@ -249,7 +243,7 @@ struct Slice<'a, T> {
     end: *const T,
     phantom: PhantomData<&'a T>,
 }
-```rust
+```
 
 This also in turn infers the lifetime bound `T: 'a`, indicating
 that any references in `T` are valid over the lifetime `'a`.
@@ -273,7 +267,7 @@ fn borrow_vec<T>(vec: &Vec<T>) -> Slice<'_, T> {
         phantom: PhantomData,
     }
 }
-```rust
+```
 
 ## Unused type parameters
 
@@ -317,7 +311,7 @@ impl<R: ResType> ExternalResource<R> {
         foreign_lib::do_stuff(self.resource_handle, foreign_params);
     }
 }
-```rust
+```
 
 ## Ownership and the drop check
 

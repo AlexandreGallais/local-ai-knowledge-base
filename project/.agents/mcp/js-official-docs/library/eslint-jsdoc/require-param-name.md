@@ -1,31 +1,29 @@
----
-title: "require-param-name"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/require-param-name.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-require-param-name"></a>
+<a name="require-param-name"></a>
+# <code>require-param-name</code>
 
-# `require-param-name`
+* [Options](#user-content-require-param-name-options)
+    * [`contexts`](#user-content-require-param-name-options-contexts)
+* [Context and settings](#user-content-require-param-name-context-and-settings)
+* [Failing examples](#user-content-require-param-name-failing-examples)
+* [Passing examples](#user-content-require-param-name-passing-examples)
 
-* Options
-    * `contexts`
-* Context and settings
-* Failing examples
-* Passing examples
 
 Requires that all `@param` tags have names.
 
 > The `@param` tag requires you to specify the name of the parameter you are documenting. You can also include the parameter's type, enclosed in curly brackets, and a description of the parameter.
 >
-> JSDoc
+> [JSDoc](https://jsdoc.app/tags-param.html#overview)
 
+<a name="user-content-require-param-name-options"></a>
+<a name="require-param-name-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `contexts`
+<a name="user-content-require-param-name-options-contexts"></a>
+<a name="require-param-name-options-contexts"></a>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
 optional `context` and `comment` properties) where you wish the rule to be applied.
@@ -39,9 +37,12 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
-See the "AST and Selectors"
+See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
 section of our Advanced docs for more on the expected format.
 
+
+<a name="user-content-require-param-name-context-and-settings"></a>
+<a name="require-param-name-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -52,6 +53,8 @@ section of our Advanced docs for more on the expected format.
 |Recommended|true|
 |Options|`contexts`|
 
+<a name="user-content-require-param-name-failing-examples"></a>
+<a name="require-param-name-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -106,6 +109,10 @@ function quux (foo) {
 // Message: Unexpected tag `@param`
 ````
 
+
+
+<a name="user-content-require-param-name-passing-examples"></a>
+<a name="require-param-name-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -160,3 +167,4 @@ function example(cb) {
   cb(42);
 }
 ````
+

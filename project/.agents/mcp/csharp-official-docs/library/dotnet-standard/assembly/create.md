@@ -1,12 +1,14 @@
 ---
 title: "Create assemblies"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/assembly/create.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about creating single-file or multifile assemblies using an IDE, such as Visual Studio, or the compilers and tools provided by the Windows SDK.
+ms.date: "08/19/2019"
+helpviewer_keywords:
+  - "assemblies [.NET], multifile"
+  - "single-file assemblies"
+  - "assemblies [.NET], creating"
+  - "multifile assemblies"
+ms.assetid: 54832ee9-dca8-4c8b-913c-c0b9d265e9a4
 ---
-
 # Create assemblies
 
 You can create single-file or multifile assemblies using an IDE, such as Visual Studio, or the compilers and tools provided by the Windows SDK. The simplest assembly is a single file that has a simple name and is loaded into a single application domain. This assembly cannot be referenced by other assemblies outside the application directory and does not undergo version checking. To uninstall the application made up of the assembly, you simply delete the directory where it resides. For many developers, an assembly with these features is all that is needed to deploy an application.
@@ -35,12 +37,12 @@ You have several options when grouping code modules and resources into assemblie
 
      Group modules containing types whose visibility should be restricted to the same assembly.
 
-There are special considerations when making common language runtime assemblies available to unmanaged COM applications. For more information about working with unmanaged code, see Expose .NET Framework components to COM.
+There are special considerations when making common language runtime assemblies available to unmanaged COM applications. For more information about working with unmanaged code, see [Expose .NET Framework components to COM](../../standard/native-interop/exposing-dotnet-components-to-com.md).
 
 ## See also
 
-- Assembly versioning
-- How to: Build a single-file assembly
-- How to: Build a multifile assembly
-- How the runtime locates assemblies
-- Multifile assemblies
+- [Assembly versioning](versioning.md)
+- [How to: Build a single-file assembly](../../framework/app-domains/build-single-file-assembly.md)
+- [How to: Build a multifile assembly](../../framework/app-domains/build-multifile-assembly.md)
+- [How the runtime locates assemblies](../../framework/deployment/how-the-runtime-locates-assemblies.md)
+- [Multifile assemblies](../../framework/app-domains/multifile-assemblies.md)

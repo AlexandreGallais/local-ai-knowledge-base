@@ -1,17 +1,11 @@
----
-title: "no-unsafe-dom-html"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-unsafe-dom-html.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-unsafe-dom-html
 
 📝 Disallow unsafe DOM HTML APIs.
 
 🚫 Disabled by default.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Disallows DOM APIs that parse, insert, or replace DOM content from HTML.
 

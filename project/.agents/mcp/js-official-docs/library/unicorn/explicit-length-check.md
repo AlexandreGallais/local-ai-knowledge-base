@@ -1,23 +1,17 @@
----
-title: "explicit-length-check"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/explicit-length-check.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # explicit-length-check
 
 📝 Enforce explicitly comparing the `length` or `size` property of a value.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Explicit comparisons make empty and non-empty intent clear instead of relying on the truthiness of a numeric property.
 
-This rule is fixable, unless it's unsafe to fix.
+This rule is fixable, unless it's [unsafe to fix](#unsafe-to-fix-case).
 
 In Vue templates, checks inside event handler statement bodies or block statements are reported without fixes or suggestions.
 
@@ -176,7 +170,7 @@ The `non-zero` option can be configured with one of the following:
 - `not-equal`
   - Enforces non-zero to be checked with: `foo.length !== 0`
 
-This rule does not support Yoda-style comparisons like `0 < foo.length`. If you use `eslint/yoda`, configure it to allow non-Yoda style for relational comparisons.
+This rule does not support Yoda-style comparisons like `0 < foo.length`. If you use [`eslint/yoda`](https://eslint.org/docs/latest/rules/yoda), configure it to allow non-Yoda style for relational comparisons.
 
 ## Unsafe to fix case
 
@@ -190,7 +184,7 @@ const bothNotEmpty = (a, b) => a.length && b.length;
 if (bothNotEmpty(foo, bar)) {}
 ```
 
-In this case, the `bothNotEmpty` function returns a `number`, but it will most likely be used as a `boolean`. The rule will still report this as an error, but without an auto-fix. You can apply a suggestion in your editor, which will fix it to:
+In this case, the `bothNotEmpty` function returns a `number`, but it will most likely be used as a `boolean`. The rule will still report this as an error, but without an auto-fix. You can apply a [suggestion](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions) in your editor, which will fix it to:
 
 ```js
 const bothNotEmpty = (a, b) => a.length > 0 && b.length > 0;

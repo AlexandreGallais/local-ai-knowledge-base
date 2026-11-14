@@ -1,10 +1,6 @@
 ---
+id: screenshots
 title: "Screenshots"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/screenshots.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
 
 ## Introduction
@@ -15,11 +11,11 @@ Here is a quick way to capture a screenshot and save it into a file:
 await page.screenshot({ path: 'screenshot.png' });
 ```
 
-```python
+```python async
 await page.screenshot(path="screenshot.png")
 ```
 
-```python
+```python sync
 page.screenshot(path="screenshot.png")
 ```
 
@@ -35,7 +31,7 @@ await Page.ScreenshotAsync(new()
 });
 ```
 
-Screenshots API accepts many parameters for image format, clip area, quality, etc. Make sure to check them out.
+[Screenshots API](./api/class-page#page-screenshot) accepts many parameters for image format, clip area, quality, etc. Make sure to check them out.
 
 ## Full page screenshots
 
@@ -52,11 +48,11 @@ page.screenshot(new Page.ScreenshotOptions()
   .setFullPage(true));
 ```
 
-```python
+```python async
 await page.screenshot(path="screenshot.png", full_page=True)
 ```
 
-```python
+```python sync
 page.screenshot(path="screenshot.png", full_page=True)
 ```
 
@@ -82,13 +78,13 @@ byte[] buffer = page.screenshot();
 System.out.println(Base64.getEncoder().encodeToString(buffer));
 ```
 
-```python
+```python async
 # Capture into Image
 screenshot_bytes = await page.screenshot()
 print(base64.b64encode(screenshot_bytes).decode())
 ```
 
-```python
+```python sync
 screenshot_bytes = page.screenshot()
 print(base64.b64encode(screenshot_bytes).decode())
 ```
@@ -97,6 +93,7 @@ print(base64.b64encode(screenshot_bytes).decode())
 var bytes = await page.ScreenshotAsync();
 Console.WriteLine(Convert.ToBase64String(bytes));
 ```
+
 
 ## Element screenshot
 
@@ -110,11 +107,11 @@ await page.locator('.header').screenshot({ path: 'screenshot.png' });
 page.locator(".header").screenshot(new Locator.ScreenshotOptions().setPath(Paths.get("screenshot.png")));
 ```
 
-```python
+```python async
 await page.locator(".header").screenshot(path="screenshot.png")
 ```
 
-```python
+```python sync
 page.locator(".header").screenshot(path="screenshot.png")
 ```
 

@@ -1,17 +1,8 @@
----
-title: "Range expressions"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/expressions/range-expr.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[expr.range]
 # Range expressions
 
 r[expr.range.syntax]
-```grammar
+```grammar,expressions
 RangeExpression ->
       RangeExpr
     | RangeFromExpr
@@ -38,9 +29,9 @@ The `..` and `..=` operators will construct an object of one of the `std::ops::R
 
 | Production             | Syntax        | Type                         | Range                 |
 |------------------------|---------------|------------------------------|-----------------------|
-| [RangeExpr]            | start`..`end  | [std::ops::Range]            | start &le; x < end |
+| [RangeExpr]            | start`..`end  | [std::ops::Range]            | start &le; x &lt; end |
 | [RangeFromExpr]        | start`..`     | [std::ops::RangeFrom]        | start &le; x          |
-| [RangeToExpr]          | `..`end       | [std::ops::RangeTo]          |            x < end |
+| [RangeToExpr]          | `..`end       | [std::ops::RangeTo]          |            x &lt; end |
 | [RangeFullExpr]        | `..`          | [std::ops::RangeFull]        |            -          |
 | [RangeInclusiveExpr]   | start`..=`end | [std::ops::RangeInclusive]   | start &le; x &le; end |
 | [RangeToInclusiveExpr] | `..=`end      | [std::ops::RangeToInclusive] |            x &le; end |

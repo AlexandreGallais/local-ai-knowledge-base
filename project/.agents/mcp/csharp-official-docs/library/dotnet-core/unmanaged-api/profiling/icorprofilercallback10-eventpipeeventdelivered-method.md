@@ -1,12 +1,15 @@
 ---
+description: "Learn more about: ICorProfilerCallback10::EventPipeEventDelivered Method"
 title: "ICorProfilerCallback10::EventPipeEventDelivered Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/profiling/icorprofilercallback10-eventpipeeventdelivered-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/19/2021"
+api_name:
+  - "ICorProfilerCallback10.EventPipeEventDelivered"
+api_location:
+  - "coreclr.dll"
+  - "corprof.idl"
+api_type:
+  - "COM"
 ---
-
 # ICorProfilerCallback10::EventPipeEventDelivered method
 
 Notifies the profiler whenever an EventPipe event has been delivered to the profiler's currently active session.
@@ -69,7 +72,7 @@ Notifies the profiler whenever an EventPipe event has been delivered to the prof
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** CorProf.idl, CorProf.h
 
@@ -77,6 +80,6 @@ Notifies the profiler whenever an EventPipe event has been delivered to the prof
 
 ## See also
 
-- ICorProfilerCallback10 Interface
-- ICorProfilerInfo12 Interface
-- ICorProfilerInfo12.EventPipeStartSession Method
+- [ICorProfilerCallback10 Interface](icorprofilercallback10-interface.md)
+- [ICorProfilerInfo12 Interface](icorprofilerinfo12-interface.md)
+- [ICorProfilerInfo12.EventPipeStartSession Method](icorprofilerinfo12-eventpipestartsession-method.md)

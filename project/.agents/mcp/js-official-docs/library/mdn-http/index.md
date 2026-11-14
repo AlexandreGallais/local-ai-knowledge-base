@@ -1,408 +1,145 @@
-# mdn-http library index
+---
+title: "HTTP: Hypertext Transfer Protocol"
+short-title: HTTP
+slug: Web/HTTP
+page-type: landing-page
+sidebar: http
+---
 
-MDN Web Docs: HTTP headers, methods, status codes and guides. Version 2026-11, from <https://github.com/mdn/content> at main, commit c44f591049bc129b356acb0a9ce281974c035113.
-License: CC-BY-SA-2.5, by Mozilla Contributors; see THIRD_PARTY_NOTICES.md. The text was converted to plain Markdown and cut into files of 16 KB at most.
+**HTTP** is an [application-layer](https://en.wikipedia.org/wiki/Application_Layer) protocol for transmitting hypermedia documents, such as HTML.
+It was designed for communication between web browsers and web servers, but it can also be used for other purposes, such as machine-to-machine communication, programmatic access to APIs, and more.
 
-This index is long: search it with grep for your words, never read it whole. Then open one file and read only the section you need.
+HTTP follows a classical [client-server model](https://en.wikipedia.org/wiki/Client%E2%80%93server_model), with a client opening a connection to make a request, then waiting until it receives a response from the server.
+HTTP is a [stateless protocol](https://en.wikipedia.org/wiki/Stateless_protocol), meaning that the server does not keep any session data between two requests, although the later addition of [cookies](/en-US/docs/Web/HTTP/Guides/Cookies) adds state to some client-server interactions.
 
-- [HTTP authentication](library/mdn-http/guides/authentication.md): HTTP provides a general framework for access control and authentication. (9 KB)
-- [Browser detection using the user agent string (UA sniffing) (part 1 of 2)](library/mdn-http/guides/browser_detection_using_the_user_agent.md): Along with every request to a server, browsers include a User-Agent HTTP header with a value called a user agent (UA) string. (10 KB)
-- [Browser detection using the user agent string (UA sniffing) (part 2 of 2)](library/mdn-http/guides/browser_detection_using_the_user_agent-p2.md): If you've explored all of the options above, and you still need to parse the UA string as a last resort, there are some… (9 KB)
-- [HTTP caching (part 1 of 3)](library/mdn-http/guides/caching.md): The HTTP cache stores a response associated with a request and reuses the stored response for subsequent requests. (12 KB)
-- [HTTP caching (part 2 of 3)](library/mdn-http/guides/caching-p2.md): Stale responses are not immediately discarded. (14 KB)
-- [HTTP caching (part 3 of 3)](library/mdn-http/guides/caching-p3.md): There are many directives in the Cache-Control spec, and it may be difficult to understand all of them. (9 KB)
-- [HTTP Client hints](library/mdn-http/guides/client_hints.md): The set of "hint" headers are listed in the topic HTTP Headers and summarized below. (11 KB)
-- [Compression in HTTP](library/mdn-http/guides/compression.md): In practice, web developers don't need to implement compression mechanisms, both browsers and servers have it implemented already, but they have to be sure… (7 KB)
-- [Compression Dictionary Transport](library/mdn-http/guides/compression_dictionary_transport.md): Compression algorithms are used in HTTP to reduce the size of resources downloaded over the network, reducing bandwidth cost and the time taken to… (12 KB)
-- [HTTP conditional requests](library/mdn-http/guides/conditional_requests.md): HTTP has a concept of conditional requests, where the result, and even the success of a request, can be controlled by comparing the affected… (12 KB)
-- [Connection management in HTTP/1.x](library/mdn-http/guides/connection_management_in_http_1.x.md): Connection management is a key topic in HTTP: opening and maintaining connections largely impacts the performance of websites and Web applications. (9 KB)
-- [Content negotiation](library/mdn-http/guides/content_negotiation.md): In HTTP, content negotiation is the mechanism that is used for serving different representations of a resource to the same URI to help the… (12 KB)
-- [List of default Accept values](library/mdn-http/guides/content_negotiation/list_of_default_accept_values.md): This article documents the default values for the HTTP Accept header for specific inputs and browser versions. (8 KB)
-- [Using HTTP cookies (part 1 of 2)](library/mdn-http/guides/cookies.md): A cookie (also known as a web cookie or browser cookie) is a small piece of data a server sends to a user's web… (8 KB)
-- [Using HTTP cookies (part 2 of 2)](library/mdn-http/guides/cookies-p2.md): When you store information in cookies, by default all cookie values are visible to, and can be changed by, the end user. (13 KB)
-- [Reason: CORS header 'Access-Control-Allow-Origin' does not match 'xyz'](library/mdn-http/guides/cors/errors/corsalloworiginnotmatchingorigin.md): The origin making the request does not match the origin permitted by the Access-Control-Allow-Origin header. (2 KB)
-- [Reason: CORS request did not succeed](library/mdn-http/guides/cors/errors/corsdidnotsucceed.md): The HTTP request which makes use of CORS failed because the HTTP connection failed at either the network or protocol level. (2 KB)
-- [Reason: CORS disabled](library/mdn-http/guides/cors/errors/corsdisabled.md): A request that needs to use CORS was attempted, but CORS is disabled in the user's browser. (1 KB)
-- [Reason: CORS request external redirect not allowed](library/mdn-http/guides/cors/errors/corsexternalredirectnotallowed.md): The CORS request was responded to by the server with an HTTP redirect to a URL on a different origin than the original request,… (1 KB)
-- [Reason: invalid token 'xyz' in CORS header 'Access-Control-Allow-Headers'](library/mdn-http/guides/cors/errors/corsinvalidallowheader.md): The response to the CORS request that was sent by the server includes an Access-Control-Allow-Headers header which includes at least one invalid header name. (1 KB)
-- [Reason: invalid token 'xyz' in CORS header 'Access-Control-Allow-Methods'](library/mdn-http/guides/cors/errors/corsinvalidallowmethod.md): The response to the CORS request that was sent by the server includes an Access-Control-Allow-Methods header which includes at least one invalid method name. (1 KB)
-- [Reason: Did not find method in CORS header 'Access-Control-Allow-Methods'](library/mdn-http/guides/cors/errors/corsmethodnotfound.md): The HTTP method being used by the CORS request is not included in the list of methods specified by the response's Access-Control-Allow-Methods header. (2 KB)
-- [Reason: expected 'true' in CORS header 'Access-Control-Allow-Credentials'](library/mdn-http/guides/cors/errors/corsmissingallowcredentials.md): The CORS request requires that the server permit the use of credentials, but the server's Access-Control-Allow-Credentials header's value isn't set to true to enable… (1 KB)
-- [Reason: missing token 'xyz' in CORS header 'Access-Control-Allow-Headers' from CORS preflight channel](library/mdn-http/guides/cors/errors/corsmissingallowheaderfrompreflight.md): The Access-Control-Allow-Headers header is sent by the server to let the client know which headers it supports for CORS requests. (1 KB)
-- [Reason: CORS header 'Access-Control-Allow-Origin' missing](library/mdn-http/guides/cors/errors/corsmissingalloworigin.md): The response to the CORS request is missing the required Access-Control-Allow-Origin header, which is used to determine whether or not the resource can be… (3 KB)
-- [Reason: Multiple CORS header 'Access-Control-Allow-Origin' not allowed](library/mdn-http/guides/cors/errors/corsmultiplealloworiginnotallowed.md): More than one Access-Control-Allow-Origin header was sent by the server. (1 KB)
-- [Reason: Credential is not supported if the CORS header 'Access-Control-Allow-Origin' is '*'](library/mdn-http/guides/cors/errors/corsnotsupportingcredentials.md): The CORS request was attempted with the credentials flag set, but the server is configured using the wildcard ("") as the value of Access-Control-Allow-Origin,… (1 KB)
-- [Reason: CORS header 'Origin' cannot be added](library/mdn-http/guides/cors/errors/corsoriginheadernotadded.md): The user agent was unable to add the required Origin header to the HTTP request. (1 KB)
-- [Reason: CORS preflight channel did not succeed](library/mdn-http/guides/cors/errors/corspreflightdidnotsucceed.md): The CORS request requires preflight, preflighting could not be performed. (1 KB)
-- [Reason: CORS request not HTTP](library/mdn-http/guides/cors/errors/corsrequestnothttp.md): CORS requests may only use the HTTP or HTTPS URL scheme, but the URL specified by the request is of a different type. (2 KB)
-- [CORS errors](library/mdn-http/guides/cors/errors.md): Cross-Origin Resource Sharing (CORS) is a standard that allows a server to relax the same-origin policy. (7 KB)
-- [Cross-Origin Resource Sharing (CORS) (part 1 of 3)](library/mdn-http/guides/cors.md): An example of a cross-origin request: the front-end JavaScript code served from https://domain-a.com uses fetch() to make a request for https://domain-b.com/data.json. (4 KB)
-- [Cross-Origin Resource Sharing (CORS) (part 2 of 3)](library/mdn-http/guides/cors-p2.md): We present three scenarios that demonstrate how Cross-Origin Resource Sharing works. (12 KB)
-- [Cross-Origin Resource Sharing (CORS) (part 3 of 3)](library/mdn-http/guides/cors-p3.md): The most interesting capability exposed by both fetch() or XMLHttpRequest and CORS is the ability to make "credentialed" requests that are aware of HTTP… (12 KB)
-- [Content Security Policy: The page's settings blocked the loading of a resource: xyz](library/mdn-http/guides/csp/errors/cspviolation.md): The warning "Content Security Policy: The page's settings blocked the loading of a resource: xyz" occurs when the page's CSP configuration given by xyz… (2 KB)
-- [Content Security Policy errors and warnings](library/mdn-http/guides/csp/errors.md): When you see any of the following messages logged in the browser devtools console, it indicates that a problem related to CSP has occurred. (3 KB)
-- [Content Security Policy (CSP) (part 1 of 4)](library/mdn-http/guides/csp.md): The primary use case for CSP is to control which resources, in particular JavaScript resources, a document is allowed to load. (3 KB)
-- [Content Security Policy (CSP) (part 2 of 4)](library/mdn-http/guides/csp-p2.md): A CSP can be used to control the resources that a document is allowed to load. (13 KB)
-- [Content Security Policy (CSP) (part 3 of 4)](library/mdn-http/guides/csp-p3.md): To control script loading as a mitigation against XSS, recommended practice is to use nonce- or hash- based fetch directives. (11 KB)
-- [Content Security Policy (CSP) (part 4 of 4)](library/mdn-http/guides/csp-p4.md): To ease deployment, CSP can be deployed in report-only mode. (4 KB)
-- [Evolution of HTTP (part 1 of 2)](library/mdn-http/guides/evolution_of_http.md): In 1989, while working at CERN, Tim Berners-Lee wrote a proposal to build a hypertext system over the internet. (14 KB)
-- [Evolution of HTTP (part 2 of 2)](library/mdn-http/guides/evolution_of_http-p2.md): The next major version of HTTP, HTTP/3 has the same semantics as earlier versions of HTTP but uses QUIC instead of TCP for the… (1 KB)
-- [Fetch metadata](library/mdn-http/guides/fetch_metadata.md): Among other things, fetch metadata allows the server to know: (10 KB)
-- [IFrame credentialless](library/mdn-http/guides/iframe_credentialless.md): Various web API features can only be used on sites that opt in to cross-origin isolation — examples include SharedArrayBuffer and high-resolution timers. (5 KB)
-- [HTTP guides](library/mdn-http/guides.md): This page lists guides for HTTP. (1 KB)
-- [HTTP messages (part 1 of 2)](library/mdn-http/guides/messages.md): Developers rarely, if ever, build HTTP messages from scratch. (11 KB)
-- [HTTP messages (part 2 of 2)](library/mdn-http/guides/messages-p2.md): HTTP/1.x uses text-based messages that are straightforward to read and construct, but as a result have a few downsides. (7 KB)
-- [Common media types (part 1 of 4)](library/mdn-http/guides/mime_types/common_types.md): This topic lists the most common MIME types with corresponding document types, ordered by their common extensions. (1 KB)
-- [Common media types (part 2 of 4)](library/mdn-http/guides/mime_types/common_types-p2.md): (15 KB)
-- [Common media types (part 3 of 4)](library/mdn-http/guides/mime_types/common_types-p3.md): (15 KB)
-- [Common media types (part 4 of 4)](library/mdn-http/guides/mime_types/common_types-p4.md): (11 KB)
-- [Media types (MIME types) (part 1 of 2)](library/mdn-http/guides/mime_types.md): A media type (formerly known as a Multipurpose Internet Mail Extensions or MIME type) indicates the nature and format of a document, file, or… (7 KB)
-- [Media types (MIME types) (part 2 of 2)](library/mdn-http/guides/mime_types-p2.md): This is the default for binary files. (12 KB)
-- [Network Error Logging (NEL)](library/mdn-http/guides/network_error_logging.md): Network Error Logging is a mechanism that can be configured via the NEL HTTP response header. (5 KB)
-- [Overview of HTTP](library/mdn-http/guides/overview.md): Clients and servers communicate by exchanging individual messages (as opposed to a stream of data). (14 KB)
-- [Permissions Policy](library/mdn-http/guides/permissions_policy.md): Permissions Policy is similar to Content Security Policy but controls features instead of security behavior. (14 KB)
-- [Protocol upgrade mechanism](library/mdn-http/guides/protocol_upgrade_mechanism.md): The HTTP/1.1 protocol provides a special mechanism that can be used to upgrade an already established connection to a different protocol, using the Upgrade… (8 KB)
-- [Proxy servers and tunneling](library/mdn-http/guides/proxy_servers_and_tunneling.md): When navigating through different networks of the Internet, proxy servers and HTTP tunnels are facilitating access to content on the World Wide Web. (5 KB)
-- [Proxy Auto-Configuration (PAC) file (part 1 of 3)](library/mdn-http/guides/proxy_servers_and_tunneling/proxy_auto-configuration_pac_file.md): A Proxy Auto-Configuration (PAC) file is a JavaScript function that determines whether web browser requests (HTTP, HTTPS, and FTP) go directly to the destination… (4 KB)
-- [Proxy Auto-Configuration (PAC) file (part 2 of 3)](library/mdn-http/guides/proxy_servers_and_tunneling/proxy_auto-configuration_pac_file-p2.md): These functions can be used in building the PAC file: (15 KB)
-- [Proxy Auto-Configuration (PAC) file (part 3 of 3)](library/mdn-http/guides/proxy_servers_and_tunneling/proxy_auto-configuration_pac_file-p3.md): In this example all of the hosts in a given subnet are connected-to directly, others are connected through the proxy: (5 KB)
-- [HTTP range requests](library/mdn-http/guides/range_requests.md): An HTTP Range request asks the server to send parts of a resource back to a client. (6 KB)
-- [Redirections in HTTP](library/mdn-http/guides/redirections.md): Redirects accomplish numerous goals: (13 KB)
-- [A typical HTTP session](library/mdn-http/guides/session.md): In client-server protocols, like HTTP, sessions consist of three phases: (7 KB)
-- [User-Agent reduction](library/mdn-http/guides/user-agent_reduction.md): This article shows the differences in UA strings as a result of User-Agent reduction, and explains how you can access both redacted and additional… (6 KB)
-- [HTTP: Hypertext Transfer Protocol](library/mdn-http/overview.md): HTTP follows a classical client-server model, with a client opening a connection to make a request, then waiting until it receives a response from… (11 KB)
-- [Accept-CH header](library/mdn-http/reference/headers/accept-ch.md): The HTTP Accept-CH response header may be set by a server to specify which client hint headers should be included by the client in… (1 KB)
-- [Accept-Encoding header](library/mdn-http/reference/headers/accept-encoding.md): The HTTP Accept-Encoding request and response header indicates the content encoding (usually a compression algorithm) that the sender can understand. (5 KB)
-- [Accept-Language header](library/mdn-http/reference/headers/accept-language.md): The HTTP Accept-Language request header indicates the natural language and locale that the client prefers. (4 KB)
-- [Accept-Patch header](library/mdn-http/reference/headers/accept-patch.md): The HTTP Accept-Patch response header advertises which media types the server is able to understand in a PATCH request. (2 KB)
-- [Accept-Post header](library/mdn-http/reference/headers/accept-post.md): The HTTP Accept-Post response header advertises which media types are accepted by the server in a POST request. (2 KB)
-- [Accept-Query header](library/mdn-http/reference/headers/accept-query.md): The HTTP Accept-Query response header indicates that a resource supports the QUERY method and identifies the query format media types that it accepts. (5 KB)
-- [Accept-Ranges header](library/mdn-http/reference/headers/accept-ranges.md): The HTTP Accept-Ranges response header is used by the server to advertise its support for range requests, allowing clients to request part or several… (2 KB)
-- [Accept header](library/mdn-http/reference/headers/accept.md): The HTTP Accept request and response header indicates which content types, expressed as MIME types, the sender is able to understand. (3 KB)
-- [Access-Control-Allow-Credentials header](library/mdn-http/reference/headers/access-control-allow-credentials.md): The HTTP Access-Control-Allow-Credentials response header tells browsers whether the server allows credentials to be included in cross-origin HTTP requests. (2 KB)
-- [Access-Control-Allow-Headers header](library/mdn-http/reference/headers/access-control-allow-headers.md): The HTTP Access-Control-Allow-Headers response header is used in response to a preflight request to indicate the HTTP headers that can be used during the… (4 KB)
-- [Access-Control-Allow-Methods header](library/mdn-http/reference/headers/access-control-allow-methods.md): The HTTP Access-Control-Allow-Methods response header specifies one or more HTTP request methods allowed when accessing a resource in response to a preflight request. (1 KB)
-- [Access-Control-Allow-Origin header](library/mdn-http/reference/headers/access-control-allow-origin.md): The HTTP Access-Control-Allow-Origin response header indicates whether the response can be shared with requesting code from the given origin. (3 KB)
-- [Access-Control-Expose-Headers header](library/mdn-http/reference/headers/access-control-expose-headers.md): The HTTP Access-Control-Expose-Headers response header allows a server to indicate which response headers should be made available to scripts running in the browser in… (2 KB)
-- [Access-Control-Max-Age header](library/mdn-http/reference/headers/access-control-max-age.md): The HTTP Access-Control-Max-Age response header indicates how long the results of a preflight request (that is, the information contained in the Access-Control-Allow-Methods and Access-Control-Allow-Headers… (1 KB)
-- [Access-Control-Request-Headers header](library/mdn-http/reference/headers/access-control-request-headers.md): The HTTP Access-Control-Request-Headers request header is used by browsers when issuing a preflight request to let the server know which HTTP headers the client… (1 KB)
-- [Access-Control-Request-Method header](library/mdn-http/reference/headers/access-control-request-method.md): The HTTP Access-Control-Request-Method request header is used by browsers when issuing a preflight request to let the server know which HTTP method will be… (1 KB)
-- [Activate-Storage-Access header](library/mdn-http/reference/headers/activate-storage-access.md): The HTTP Activate-Storage-Access response header allows a server to activate a granted permission to access its unpartitioned cookies in a cross-site request. (10 KB)
-- [Age header](library/mdn-http/reference/headers/age.md): The HTTP Age response header indicates the time in seconds for which an object was in a proxy cache. (1 KB)
-- [Allow header](library/mdn-http/reference/headers/allow.md): The HTTP Allow response header lists the set of request methods supported by a resource. (1 KB)
-- [Alt-Svc header](library/mdn-http/reference/headers/alt-svc.md): The HTTP Alt-Svc response header lets a server indicate that another network location (the "alternative service") can be treated as authoritative for that origin… (2 KB)
-- [Alt-Used header](library/mdn-http/reference/headers/alt-used.md): The HTTP Alt-Used request header is used to identify the alternative service in use, just as the Host HTTP header field identifies the host… (1 KB)
-- [Attribution-Reporting-Eligible header](library/mdn-http/reference/headers/attribution-reporting-eligible.md): The HTTP Attribution-Reporting-Eligible request header indicates that the corresponding response is eligible to register an attribution source or trigger. (2 KB)
-- [Attribution-Reporting-Register-Source header](library/mdn-http/reference/headers/attribution-reporting-register-source.md): The HTTP Attribution-Reporting-Register-Source response header registers a page feature as an attribution source. (10 KB)
-- [Attribution-Reporting-Register-Trigger header](library/mdn-http/reference/headers/attribution-reporting-register-trigger.md): The HTTP Attribution-Reporting-Register-Trigger response header registers a page feature as an attribution trigger. (6 KB)
-- [Authorization header](library/mdn-http/reference/headers/authorization.md): The HTTP Authorization request header can be used to provide credentials that authenticate a user agent with a server, allowing access to protected resources. (6 KB)
-- [Available-Dictionary header](library/mdn-http/reference/headers/available-dictionary.md): The HTTP Available-Dictionary request header allows the browser to specify the best matching dictionary it has to allow the server to use Compression Dictionary… (1 KB)
-- [Cache-Control header (part 1 of 3)](library/mdn-http/reference/headers/cache-control.md): The HTTP Cache-Control header holds directives (instructions) in both requests and responses that control caching in browsers and shared caches (e.g., Proxies, CDNs). (4 KB)
-- [Cache-Control header (part 2 of 3)](library/mdn-http/reference/headers/cache-control-p2.md): This section lists directives that affect caching — both response directives and request directives. (13 KB)
-- [Cache-Control header (part 3 of 3)](library/mdn-http/reference/headers/cache-control-p3.md): If you don't want a response stored in caches, use the no-store directive. (5 KB)
-- [Clear-Site-Data header](library/mdn-http/reference/headers/clear-site-data.md): The HTTP Clear-Site-Data response header sends a signal to the client that it should remove all browsing data of certain types (cookies, storage, cache)… (5 KB)
-- [Connection header](library/mdn-http/reference/headers/connection.md): The HTTP Connection header controls whether the network connection stays open after the current transaction finishes. (2 KB)
-- [Content-Digest header](library/mdn-http/reference/headers/content-digest.md): The HTTP Content-Digest request and response header provides a digest calculated using a hashing algorithm applied to the message content. (8 KB)
-- [Content-Disposition header](library/mdn-http/reference/headers/content-disposition.md): The HTTP Content-Disposition header indicates whether content should be displayed inline in the browser as a web page or part of a web page… (7 KB)
-- [Content-DPR header](library/mdn-http/reference/headers/content-dpr.md): The HTTP Content-DPR response header is used to confirm the image device to pixel ratio (DPR) in requests where the screen DPR client hint… (2 KB)
-- [Content-Encoding header](library/mdn-http/reference/headers/content-encoding.md): The HTTP Content-Encoding representation header lists the encodings and the order in which they have been applied to a resource. (4 KB)
-- [Content-Language header](library/mdn-http/reference/headers/content-language.md): The HTTP Content-Language representation header is used to describe the language(s) intended for the audience, so users can differentiate it according to their own… (3 KB)
-- [Content-Length header](library/mdn-http/reference/headers/content-length.md): The HTTP Content-Length header indicates the size, in bytes, of the message body sent to the recipient. (1 KB)
-- [Content-Location header](library/mdn-http/reference/headers/content-location.md): The HTTP Content-Location representation header indicates an alternate location for the returned data. (3 KB)
-- [Content-Range header](library/mdn-http/reference/headers/content-range.md): The HTTP Content-Range response header is used in range requests to indicate where the content of a response body belongs in relation to a… (2 KB)
-- [Content-Security-Policy-Report-Only header](library/mdn-http/reference/headers/content-security-policy-report-only.md): The HTTP Content-Security-Policy-Report-Only response header helps to monitor Content Security Policy (CSP) violations and their effects without enforcing the security policies. (3 KB)
-- [Content-Security-Policy: base-uri directive](library/mdn-http/reference/headers/content-security-policy/base-uri.md): The HTTP Content-Security-Policy base-uri directive restricts the URLs which can be used in a document's <base> element. (2 KB)
-- [Content-Security-Policy: block-all-mixed-content directive](library/mdn-http/reference/headers/content-security-policy/block-all-mixed-content.md): The HTTP Content-Security-Policy (CSP) block-all-mixed-content directive prevents loading any assets over HTTP when the page uses HTTPS. (2 KB)
-- [Content-Security-Policy: child-src directive](library/mdn-http/reference/headers/content-security-policy/child-src.md): The HTTP Content-Security-Policy (CSP) child-src directive defines the valid sources for web workers and nested browsing contexts loaded using elements such as <frame> and… (2 KB)
-- [Content-Security-Policy: connect-src directive](library/mdn-http/reference/headers/content-security-policy/connect-src.md): The HTTP Content-Security-Policy (CSP) connect-src directive restricts the URLs which can be loaded using script interfaces. (2 KB)
-- [Content-Security-Policy: default-src directive](library/mdn-http/reference/headers/content-security-policy/default-src.md): The HTTP Content-Security-Policy (CSP) default-src directive serves as a fallback for the other CSP fetch directives. (3 KB)
-- [Content-Security-Policy: fenced-frame-src directive](library/mdn-http/reference/headers/content-security-policy/fenced-frame-src.md): The HTTP Content-Security-Policy (CSP) fenced-frame-src directive specifies valid sources for nested browsing contexts loaded into <fencedframe> elements. (2 KB)
-- [Content-Security-Policy: font-src directive](library/mdn-http/reference/headers/content-security-policy/font-src.md): The HTTP Content-Security-Policy (CSP) font-src directive specifies valid sources for fonts loaded using @font-face. (2 KB)
-- [Content-Security-Policy: form-action directive](library/mdn-http/reference/headers/content-security-policy/form-action.md): The HTTP Content-Security-Policy (CSP) form-action directive restricts the URLs which can be used as the target of form submissions from a given context. (2 KB)
-- [Content-Security-Policy: frame-ancestors directive](library/mdn-http/reference/headers/content-security-policy/frame-ancestors.md): The HTTP Content-Security-Policy (CSP) frame-ancestors directive specifies valid parents that may embed a page using <frame>, , <object>, or . (3 KB)
-- [Content-Security-Policy: frame-src directive](library/mdn-http/reference/headers/content-security-policy/frame-src.md): The HTTP Content-Security-Policy (CSP) frame-src directive specifies valid sources for nested browsing contexts loading using elements such as <frame> and . (2 KB)
-- [Content-Security-Policy: img-src directive](library/mdn-http/reference/headers/content-security-policy/img-src.md): The HTTP Content-Security-Policy img-src directive specifies valid sources of images and favicons. (2 KB)
-- [Content-Security-Policy (CSP) header (part 1 of 2)](library/mdn-http/reference/headers/content-security-policy.md): The HTTP Content-Security-Policy response header allows website administrators to control resources the user agent is allowed to load for a given page. (7 KB)
-- [Content-Security-Policy (CSP) header (part 2 of 2)](library/mdn-http/reference/headers/content-security-policy-p2.md): All fetch directives may be specified as one of the following: (13 KB)
-- [Content-Security-Policy: manifest-src directive](library/mdn-http/reference/headers/content-security-policy/manifest-src.md): The HTTP Content-Security-Policy manifest-src directive specifies which manifest can be applied to the resource. (2 KB)
-- [Content-Security-Policy: media-src directive](library/mdn-http/reference/headers/content-security-policy/media-src.md): The HTTP Content-Security-Policy (CSP) media-src directive specifies valid sources for loading media using the <audio> and elements. (2 KB)
-- [Content-Security-Policy: object-src directive](library/mdn-http/reference/headers/content-security-policy/object-src.md): The HTTP Content-Security-Policy object-src directive specifies valid sources for the <object> and elements. (2 KB)
-- [Content-Security-Policy: prefetch-src directive](library/mdn-http/reference/headers/content-security-policy/prefetch-src.md): The HTTP Content-Security-Policy (CSP) prefetch-src directive specifies valid resources that may be prefetched or prerendered. (2 KB)
-- [Content-Security-Policy: report-to directive](library/mdn-http/reference/headers/content-security-policy/report-to.md): The Content-Security-Policy report-to directive indicates the name of the endpoint that the browser should use for reporting CSP violations. (3 KB)
-- [Content-Security-Policy: report-uri directive](library/mdn-http/reference/headers/content-security-policy/report-uri.md): The deprecated HTTP Content-Security-Policy (CSP) report-uri directive instructs the user agent to report attempts to violate the Content Security Policy. (8 KB)
-- [Content-Security-Policy: require-trusted-types-for directive](library/mdn-http/reference/headers/content-security-policy/require-trusted-types-for.md): The HTTP Content-Security-Policy (CSP) require-trusted-types-for directive instructs user agents to control the data passed to DOM XSS sink functions, like Element.innerHTML setter. (2 KB)
-- [Content-Security-Policy: sandbox directive](library/mdn-http/reference/headers/content-security-policy/sandbox.md): The HTTP Content-Security-Policy (CSP) sandbox directive enables a sandbox for the requested resource similar to the sandbox attribute. (4 KB)
-- [Content-Security-Policy: script-src-attr directive](library/mdn-http/reference/headers/content-security-policy/script-src-attr.md): The HTTP Content-Security-Policy (CSP) script-src-attr directive specifies valid sources for JavaScript inline event handlers. (2 KB)
-- [Content-Security-Policy: script-src-elem directive](library/mdn-http/reference/headers/content-security-policy/script-src-elem.md): The HTTP Content-Security-Policy (CSP) script-src-elem directive specifies valid sources for JavaScript <script> elements. (2 KB)
-- [Content-Security-Policy: script-src directive](library/mdn-http/reference/headers/content-security-policy/script-src.md): The HTTP Content-Security-Policy (CSP) script-src directive specifies valid sources for JavaScript. (11 KB)
-- [Content-Security-Policy: style-src-attr directive](library/mdn-http/reference/headers/content-security-policy/style-src-attr.md): The HTTP Content-Security-Policy (CSP) style-src-attr directive specifies valid sources for inline styles applied to individual DOM elements. (3 KB)
-- [Content-Security-Policy: style-src-elem directive](library/mdn-http/reference/headers/content-security-policy/style-src-elem.md): The HTTP Content-Security-Policy (CSP) style-src-elem directive specifies valid sources for stylesheet <style> elements and <link> elements with rel="stylesheet". (2 KB)
-- [Content-Security-Policy: style-src directive](library/mdn-http/reference/headers/content-security-policy/style-src.md): The HTTP Content-Security-Policy (CSP) style-src directive specifies valid sources for stylesheets. (5 KB)
-- [Content-Security-Policy: trusted-types directive](library/mdn-http/reference/headers/content-security-policy/trusted-types.md): The HTTP Content-Security-Policy (CSP) trusted-types directive is used to specify an allowlist of Trusted Type policy names that a website can create using trustedTypes.createPolicy(). (2 KB)
-- [Content-Security-Policy: upgrade-insecure-requests directive](library/mdn-http/reference/headers/content-security-policy/upgrade-insecure-requests.md): The HTTP Content-Security-Policy (CSP) upgrade-insecure-requests directive instructs user agents to treat all of a site's insecure URLs (those served over HTTP) as though they… (3 KB)
-- [Content-Security-Policy: worker-src directive](library/mdn-http/reference/headers/content-security-policy/worker-src.md): The HTTP Content-Security-Policy (CSP) worker-src directive specifies valid sources for Worker, SharedWorker, or ServiceWorker scripts. (2 KB)
-- [Content-Type header](library/mdn-http/reference/headers/content-type.md): The HTTP Content-Type representation header is used to indicate the original media type of a resource before any content encoding is applied. (6 KB)
-- [Cookie header](library/mdn-http/reference/headers/cookie.md): The HTTP Cookie request header contains stored HTTP cookies associated with the server (i.e., previously sent by the server with the Set-Cookie header or… (2 KB)
-- [Critical-CH header](library/mdn-http/reference/headers/critical-ch.md): The HTTP Critical-CH response header is used along with Accept-CH to identify the accepted client hints that are critical. (3 KB)
-- [Cross-Origin-Embedder-Policy-Report-Only (COEP) header](library/mdn-http/reference/headers/cross-origin-embedder-policy-report-only.md): The HTTP Cross-Origin-Embedder-Policy-Report-Only (COEP) response header configures the current document's report-only policy for loading and embedding cross-origin resources that are requested in no-cors mode. (4 KB)
-- [Cross-Origin-Embedder-Policy (COEP) header](library/mdn-http/reference/headers/cross-origin-embedder-policy.md): The HTTP Cross-Origin-Embedder-Policy (COEP) response header configures the current document's policy for loading and embedding cross-origin resources that are requested in no-cors mode. (9 KB)
-- [Cross-Origin-Opener-Policy (COOP) header](library/mdn-http/reference/headers/cross-origin-opener-policy.md): The HTTP Cross-Origin-Opener-Policy (COOP) response header allows a website to control whether a new top-level document, opened using Window.open() or by navigating to a… (11 KB)
-- [Cross-Origin-Resource-Policy (CORP) header](library/mdn-http/reference/headers/cross-origin-resource-policy.md): The HTTP Cross-Origin-Resource-Policy response header (CORP) indicates that the browser should block no-cors cross-origin or cross-site requests to the given resource. (1 KB)
-- [Date header](library/mdn-http/reference/headers/date.md): The HTTP Date request and response header contains the date and time at which the message originated. (2 KB)
-- [Device-Memory header](library/mdn-http/reference/headers/device-memory.md): The HTTP Device-Memory request header is used in device client hints to indicate the approximate amount of available RAM on the client device, in… (3 KB)
-- [Dictionary-ID header](library/mdn-http/reference/headers/dictionary-id.md): The HTTP Dictionary-ID request header references a dictionary that can be used in Compression Dictionary Transport to compress the server's response. (2 KB)
-- [DNT header](library/mdn-http/reference/headers/dnt.md): The HTTP DNT (Do Not Track) request header indicates the user's tracking preference. (2 KB)
-- [Downlink header](library/mdn-http/reference/headers/downlink.md): The HTTP Downlink request header is used in Client Hints to provide the approximate bandwidth in Mbps of the client's connection to the server. (2 KB)
-- [DPR header](library/mdn-http/reference/headers/dpr.md): The HTTP DPR request header provides device client hints about the client device pixel ratio (DPR). (2 KB)
-- [Early-Data header](library/mdn-http/reference/headers/early-data.md): The HTTP Early-Data request header is set by an intermediary to indicate that the request has been conveyed in TLS early data, and also… (2 KB)
-- [ECT header](library/mdn-http/reference/headers/ect.md): The HTTP ECT request header is used in Client Hints to indicate the effective connection type: slow-2g, 2g, 3g, or 4g. (2 KB)
-- [ETag header](library/mdn-http/reference/headers/etag.md): The HTTP ETag (entity tag) response header is an identifier for a specific version of a resource. (4 KB)
-- [Expect-CT header](library/mdn-http/reference/headers/expect-ct.md): The Expect-CT response header lets sites opt in to reporting and/or enforcement of Certificate Transparency requirements. (4 KB)
-- [Expect header](library/mdn-http/reference/headers/expect.md): The HTTP Expect request header indicates that there are expectations that need to be met by the server in order to handle the complete… (2 KB)
-- [Expires header](library/mdn-http/reference/headers/expires.md): The HTTP Expires response header contains the date/time after which the response is considered expired in the context of HTTP caching. (2 KB)
-- [Forwarded header](library/mdn-http/reference/headers/forwarded.md): The HTTP Forwarded request header contains information that may be added by reverse proxy servers (load balancers, CDNs, etc.) that would otherwise be altered… (4 KB)
-- [From header](library/mdn-http/reference/headers/from.md): The HTTP From request header contains an Internet email address for an administrator who controls an automated user agent. (1 KB)
-- [Host header](library/mdn-http/reference/headers/host.md): The HTTP Host request header specifies the host and port number of the server to which the request is being sent. (1 KB)
-- [Idempotency-Key header](library/mdn-http/reference/headers/idempotency-key.md): The HTTP Idempotency-Key request header can be used to make POST and PATCH requests idempotent. (6 KB)
-- [If-Match header](library/mdn-http/reference/headers/if-match.md): The HTTP If-Match request header makes a request conditional. (2 KB)
-- [If-Modified-Since header](library/mdn-http/reference/headers/if-modified-since.md): The HTTP If-Modified-Since request header makes a request conditional. (2 KB)
-- [If-None-Match header](library/mdn-http/reference/headers/if-none-match.md): The HTTP If-None-Match request header makes a request conditional. (3 KB)
-- [If-Range header](library/mdn-http/reference/headers/if-range.md): The HTTP If-Range request header makes a range request conditional. (2 KB)
-- [If-Unmodified-Since header](library/mdn-http/reference/headers/if-unmodified-since.md): The HTTP If-Unmodified-Since request header makes the request for the resource conditional. (2 KB)
-- [HTTP headers (part 1 of 3)](library/mdn-http/reference/headers.md): Custom proprietary headers have historically been used with an X- prefix, but this convention was deprecated in 2012 because of the inconveniences it caused… (14 KB)
-- [HTTP headers (part 2 of 3)](library/mdn-http/reference/headers-p2.md): Fetch metadata request headers provide information about the context from which the request originated. (9 KB)
-- [HTTP headers (part 3 of 3)](library/mdn-http/reference/headers-p3.md): The Attribution Reporting API enables developers to measure conversions — for example when a user clicks an ad embedded on one site and then… (11 KB)
-- [Integrity-Policy-Report-Only header](library/mdn-http/reference/headers/integrity-policy-report-only.md): The HTTP Integrity-Policy-Report-Only response header allows website administrators to report on resources that the user agent loads that would violate Subresource Integrity guarantees if… (4 KB)
-- [Integrity-Policy header](library/mdn-http/reference/headers/integrity-policy.md): The HTTP Integrity-Policy response header allows website administrators to ensure that all resources the user agent loads (of a certain type) have Subresource Integrity… (3 KB)
-- [Keep-Alive header](library/mdn-http/reference/headers/keep-alive.md): The HTTP Keep-Alive request and response header allows the sender to hint how a connection may be used in terms of a timeout and… (3 KB)
-- [Last-Modified header](library/mdn-http/reference/headers/last-modified.md): The HTTP Last-Modified response header contains a date and time when the origin server believes the resource was last modified. (2 KB)
-- [Link header](library/mdn-http/reference/headers/link.md): The HTTP Link header provides a means for serializing one or more links in HTTP headers. (4 KB)
-- [Location header](library/mdn-http/reference/headers/location.md): The HTTP Location response header indicates the URL to redirect a page to. (2 KB)
-- [Max-Forwards header](library/mdn-http/reference/headers/max-forwards.md): The HTTP Max-Forwards request header is used with the TRACE and OPTIONS method to limit the number of nodes (usually proxies) that the request… (1 KB)
-- [NEL header](library/mdn-http/reference/headers/nel.md): The HTTP NEL response header is used to configure network request logging. (1 KB)
-- [No-Vary-Search header](library/mdn-http/reference/headers/no-vary-search.md): The HTTP No-Vary-Search response header specifies a set of rules that define how a URL's query parameters will affect cache matching. (8 KB)
-- [Observe-Browsing-Topics header](library/mdn-http/reference/headers/observe-browsing-topics.md): The HTTP Observe-Browsing-Topics response header is used to mark topics of interest inferred from a calling site's URL (i.e., the site where the ad… (1 KB)
-- [Origin-Agent-Cluster header](library/mdn-http/reference/headers/origin-agent-cluster.md): The HTTP Origin-Agent-Cluster response header is used to request whether the associated Document should be placed in an origin-keyed or site-keyed agent cluster. (4 KB)
-- [Origin header](library/mdn-http/reference/headers/origin.md): The HTTP Origin request header indicates the origin (scheme, hostname, and port) that caused the request. (3 KB)
-- [Permissions-Policy-Report-Only header](library/mdn-http/reference/headers/permissions-policy-report-only.md): The HTTP Permissions-Policy-Report-Only response header provides a mechanism for website administrators to report on violations of a Permissions-Policy without enforcing them. (4 KB)
-- [Permissions-Policy: accelerometer directive](library/mdn-http/reference/headers/permissions-policy/accelerometer.md): The HTTP Permissions-Policy header accelerometer directive controls whether the current document is allowed to gather information about the acceleration of the device through the… (1 KB)
-- [Permissions-Policy: ambient-light-sensor directive](library/mdn-http/reference/headers/permissions-policy/ambient-light-sensor.md): The HTTP Permissions-Policy header ambient-light-sensor directive controls whether the current document is allowed to gather information about the amount of light in the environment… (1 KB)
-- [Permissions-Policy: aria-notify directive](library/mdn-http/reference/headers/permissions-policy/aria-notify.md): The HTTP Permissions-Policy header aria-notify directive controls whether the current document is allowed to use the Document.ariaNotify() and Element.ariaNotify() methods to fire screen reader… (1 KB)
-- [Permissions-Policy: attribution-reporting directive](library/mdn-http/reference/headers/permissions-policy/attribution-reporting.md): The HTTP Permissions-Policy header attribution-reporting directive controls whether the current document is allowed to use the Attribution Reporting API. (1 KB)
-- [Permissions-Policy: autoplay directive](library/mdn-http/reference/headers/permissions-policy/autoplay.md): The HTTP Permissions-Policy header autoplay directive controls whether the current document is allowed to autoplay media requested through the HTMLMediaElement interface. (1 KB)
-- [Permissions-Policy: bluetooth directive](library/mdn-http/reference/headers/permissions-policy/bluetooth.md): The HTTP Permissions-Policy header bluetooth directive controls whether the current document is allowed to use the Web Bluetooth API. (3 KB)
-- [Permissions-Policy: browsing-topics directive](library/mdn-http/reference/headers/permissions-policy/browsing-topics.md): The HTTP Permissions-Policy header browsing-topics directive controls access to the Topics API. (1 KB)
-- [Permissions-Policy: camera directive](library/mdn-http/reference/headers/permissions-policy/camera.md): The HTTP Permissions-Policy header camera directive controls whether the current document is allowed to use video input devices. (1 KB)
-- [Permissions-Policy: captured-surface-control directive](library/mdn-http/reference/headers/permissions-policy/captured-surface-control.md): The HTTP Permissions-Policy header captured-surface-control directive controls whether or not the document is permitted to use the Captured Surface Control API. (1 KB)
-- [Permissions-Policy: ch-ua-high-entropy-values directive](library/mdn-http/reference/headers/permissions-policy/ch-ua-high-entropy-values.md): The HTTP Permissions-Policy header ch-ua-high-entropy-values directive controls whether or not the document is permitted to use the NavigatorUAData.getHighEntropyValues() method to retrieve high-entropy user-agent data. (2 KB)
-- [Permissions-Policy: compute-pressure directive](library/mdn-http/reference/headers/permissions-policy/compute-pressure.md): The HTTP Permissions-Policy header compute-pressure directive controls access to the Compute Pressure API. (1 KB)
-- [Permissions-Policy: cross-origin-isolated directive](library/mdn-http/reference/headers/permissions-policy/cross-origin-isolated.md): The HTTP Permissions-Policy header cross-origin-isolated directive controls whether the current document is allowed to use APIs that require cross-origin isolation. (2 KB)
-- [Permissions-Policy: deferred-fetch-minimal directive](library/mdn-http/reference/headers/permissions-policy/deferred-fetch-minimal.md): The deferred-fetch-minimal Permissions-Policy directive is part of the Fetch API. (4 KB)
-- [Permissions-Policy: deferred-fetch directive](library/mdn-http/reference/headers/permissions-policy/deferred-fetch.md): The deferred-fetch Permissions-Policy directive is part of the Fetch API. (3 KB)
-- [Permissions-Policy: display-capture directive](library/mdn-http/reference/headers/permissions-policy/display-capture.md): The HTTP Permissions-Policy header display-capture directive controls whether or not the document is permitted to use Screen Capture API, that is, getDisplayMedia() to capture… (1 KB)
-- [Permissions-Policy: encrypted-media directive](library/mdn-http/reference/headers/permissions-policy/encrypted-media.md): The HTTP Permissions-Policy header encrypted-media directive controls whether the current document is allowed to use the Encrypted Media Extensions API (EME). (1 KB)
-- [Permissions-Policy: fullscreen directive](library/mdn-http/reference/headers/permissions-policy/fullscreen.md): The HTTP Permissions-Policy header fullscreen directive controls whether the current document is allowed to use Element.requestFullscreen(). (2 KB)
-- [Permissions-Policy: gamepad directive](library/mdn-http/reference/headers/permissions-policy/gamepad.md): The HTTP Permissions-Policy header gamepad directive controls whether the current document is allowed to use the Gamepad API. (2 KB)
-- [Permissions-Policy: geolocation directive](library/mdn-http/reference/headers/permissions-policy/geolocation.md): The HTTP Permissions-Policy header geolocation directive controls whether the current document is allowed to use the Geolocation Interface. (2 KB)
-- [Permissions-Policy: gyroscope directive](library/mdn-http/reference/headers/permissions-policy/gyroscope.md): The HTTP Permissions-Policy header gyroscope directive controls whether the current document is allowed to gather information about the orientation of the device through the… (1 KB)
-- [Permissions-Policy: hid directive](library/mdn-http/reference/headers/permissions-policy/hid.md): The HTTP Permissions-Policy header hid directive controls whether the current document is allowed to use the WebHID API to connect to uncommon or exotic… (1 KB)
-- [Permissions-Policy: identity-credentials-get directive](library/mdn-http/reference/headers/permissions-policy/identity-credentials-get.md): The HTTP Permissions-Policy header identity-credentials-get directive controls whether the current document is allowed to use the Federated Credential <example-value> API (FedCM), and more specifically… (1 KB)
-- [Permissions-Policy: idle-detection directive](library/mdn-http/reference/headers/permissions-policy/idle-detection.md): The HTTP Permissions-Policy header idle-detection directive controls whether the current document is allowed to use the Idle Detection API to detect when users are… (1 KB)
-- [Permissions-Policy header (part 1 of 2)](library/mdn-http/reference/headers/permissions-policy.md): The HTTP Permissions-Policy response header provides a mechanism to allow and deny the use of browser features in a document or within any elements… (15 KB)
-- [Permissions-Policy header (part 2 of 2)](library/mdn-http/reference/headers/permissions-policy-p2.md): To allow all origins access to geolocation, you would do this: (6 KB)
-- [Permissions-Policy: language-detector directive](library/mdn-http/reference/headers/permissions-policy/language-detector.md): The HTTP Permissions-Policy header language-detector directive controls access to the language detection functionality of the Translator and Language Detector APIs. (1 KB)
-- [Permissions-Policy: language-model directive](library/mdn-http/reference/headers/permissions-policy/language-model.md): The HTTP Permissions-Policy header language-model directive controls access to the Prompt API. (2 KB)
-- [Permissions-Policy: local-fonts directive](library/mdn-http/reference/headers/permissions-policy/local-fonts.md): The HTTP Permissions-Policy header local-fonts directive controls whether the current document is allowed to gather data on the user's locally-installed fonts via the Window.queryLocalFonts()… (1 KB)
-- [Permissions-Policy: local-network-access directive](library/mdn-http/reference/headers/permissions-policy/local-network-access.md): The HTTP Permissions-Policy header local-network-access directive controls whether the current document is allowed to make network requests to local and loopback addresses. (2 KB)
-- [Permissions-Policy: local-network directive](library/mdn-http/reference/headers/permissions-policy/local-network.md): The HTTP Permissions-Policy header local-network directive controls whether the current document is allowed to make network requests to local addresses. (2 KB)
-- [Permissions-Policy: loopback-network directive](library/mdn-http/reference/headers/permissions-policy/loopback-network.md): The HTTP Permissions-Policy header loopback-network directive controls whether the current document is allowed to make network requests to loopback addresses. (3 KB)
-- [Permissions-Policy: magnetometer directive](library/mdn-http/reference/headers/permissions-policy/magnetometer.md): The HTTP Permissions-Policy header magnetometer directive controls whether the current document is allowed to gather information about the orientation of the device through the… (1 KB)
-- [Permissions-Policy: microphone directive](library/mdn-http/reference/headers/permissions-policy/microphone.md): The HTTP Permissions-Policy header microphone directive controls whether the current document is allowed to use audio input devices. (1 KB)
-- [Permissions-Policy: midi directive](library/mdn-http/reference/headers/permissions-policy/midi.md): The HTTP Permissions-Policy header midi directive controls whether the current document is allowed to use the Web MIDI API. (1 KB)
-- [Permissions-Policy: on-device-speech-recognition directive](library/mdn-http/reference/headers/permissions-policy/on-device-speech-recognition.md): The HTTP Permissions-Policy header on-device-speech-recognition directive controls access to the on-device speech recognition functionality of the Web Speech API. (1 KB)
-- [Permissions-Policy: otp-credentials directive](library/mdn-http/reference/headers/permissions-policy/otp-credentials.md): The HTTP Permissions-Policy header otp-credentials directive controls whether the current document is allowed to use the WebOTP API to request a one-time password (OTP)… (1 KB)
-- [Permissions-Policy: payment directive](library/mdn-http/reference/headers/permissions-policy/payment.md): The HTTP Permissions-Policy header field's payment directive controls whether the current document is allowed to use the Payment Request API. (1 KB)
-- [Permissions-Policy: picture-in-picture directive](library/mdn-http/reference/headers/permissions-policy/picture-in-picture.md): The HTTP Permissions-Policy header picture-in-picture directive controls whether the current document is allowed to play a video in a Picture-in-Picture mode. (1 KB)
-- [Permissions-Policy: private-state-token-issuance directive](library/mdn-http/reference/headers/permissions-policy/private-state-token-issuance.md): The HTTP Permissions-Policy header private-state-token-issuance directive controls usage of private state token token-request operations. (1 KB)
-- [Permissions-Policy: private-state-token-redemption directive](library/mdn-http/reference/headers/permissions-policy/private-state-token-redemption.md): The HTTP Permissions-Policy header private-state-token-redemption directive controls usage of private state token token-redemption and send-redemption-record operations. (1 KB)
-- [Permissions-Policy: publickey-credentials-create directive](library/mdn-http/reference/headers/permissions-policy/publickey-credentials-create.md): The HTTP Permissions-Policy header publickey-credentials-create directive controls whether the current document is allowed to use the Web Authentication API to create new WebAuthn credentials,… (1 KB)
-- [Permissions-Policy: publickey-credentials-get directive](library/mdn-http/reference/headers/permissions-policy/publickey-credentials-get.md): The HTTP Permissions-Policy header publickey-credentials-get directive controls whether the current document is allowed to access the Web Authentication API to retrieve public-key <example-value>, i.e.,… (1 KB)
-- [Permissions-Policy: screen-wake-lock directive](library/mdn-http/reference/headers/permissions-policy/screen-wake-lock.md): The HTTP Permissions-Policy header screen-wake-lock directive controls whether the current document is allowed to use Screen Wake Lock API to indicate that the device… (1 KB)
-- [Permissions-Policy: serial directive](library/mdn-http/reference/headers/permissions-policy/serial.md): The HTTP Permissions-Policy header serial directive controls whether the current document is allowed to use the Web Serial API to communicate with serial devices,… (1 KB)
-- [Permissions-Policy: speaker-selection directive](library/mdn-http/reference/headers/permissions-policy/speaker-selection.md): The HTTP Permissions-Policy header speaker-selection directive controls whether the current document is allowed to enumerate and select audio output devices (speakers, headphones, and so… (1 KB)
-- [Permissions-Policy: storage-access directive](library/mdn-http/reference/headers/permissions-policy/storage-access.md): The HTTP Permissions-Policy header storage-access directive controls whether a document loaded in a third-party context (i.e., embedded in an ) is allowed to use… (1 KB)
-- [Permissions-Policy: summarizer directive](library/mdn-http/reference/headers/permissions-policy/summarizer.md): The HTTP Permissions-Policy header summarizer directive controls access to the Summarizer API. (1 KB)
-- [Permissions-Policy: translator directive](library/mdn-http/reference/headers/permissions-policy/translator.md): The HTTP Permissions-Policy header translator directive controls access to the translation functionality of the Translator and Language Detector APIs. (1 KB)
-- [Permissions-Policy: unload directive](library/mdn-http/reference/headers/permissions-policy/unload.md): The HTTP Permissions-Policy header unload directive controls whether the current document is allowed to run unload event handlers. (2 KB)
-- [Permissions-Policy: usb directive](library/mdn-http/reference/headers/permissions-policy/usb.md): The HTTP Permissions-Policy header usb directive controls whether the current document is allowed to use the WebUSB API. (1 KB)
-- [Permissions-Policy: web-share directive](library/mdn-http/reference/headers/permissions-policy/web-share.md): The HTTP Permissions-Policy header web-share directive controls whether the current document is allowed to use the Navigator.share() method of the Web Share API to… (1 KB)
-- [Permissions-Policy: window-management directive](library/mdn-http/reference/headers/permissions-policy/window-management.md): The HTTP Permissions-Policy header window-management directive controls whether or not the current document is allowed to use the Window Management API to manage windows… (1 KB)
-- [Permissions-Policy: xr-spatial-tracking directive](library/mdn-http/reference/headers/permissions-policy/xr-spatial-tracking.md): The HTTP Permissions-Policy header xr-spatial-tracking directive controls whether the current document is allowed to use the WebXR Device API. (1 KB)
-- [Pragma header](library/mdn-http/reference/headers/pragma.md): The HTTP Pragma header is an implementation-specific header that may have various effects along the request-response chain. (1 KB)
-- [Prefer header](library/mdn-http/reference/headers/prefer.md): The HTTP Prefer header allows clients to indicate preferences for specific server behaviors during request processing. (4 KB)
-- [Preference-Applied header](library/mdn-http/reference/headers/preference-applied.md): The HTTP Preference-Applied header informs the client about which preferences from the Prefer request header were applied by the server. (1 KB)
-- [Priority header](library/mdn-http/reference/headers/priority.md): The HTTP Priority header indicates a client's preference for the priority order at which the response containing the requested resource should be sent, relative… (6 KB)
-- [Proxy-Authenticate header](library/mdn-http/reference/headers/proxy-authenticate.md): The HTTP Proxy-Authenticate response header defines the authentication method (or challenge) that should be used to gain access to a resource behind a proxy… (4 KB)
-- [Proxy-Authorization header](library/mdn-http/reference/headers/proxy-authorization.md): The HTTP Proxy-Authorization request header contains the credentials to authenticate a client with a proxy server, typically after the server has responded with a… (2 KB)
-- [Range header](library/mdn-http/reference/headers/range.md): The HTTP Range request header indicates the part of a resource that the server should return. (5 KB)
-- [Referer header](library/mdn-http/reference/headers/referer.md): The HTTP Referer request header contains the absolute or partial address from which a resource has been requested. (2 KB)
-- [Referrer-Policy header](library/mdn-http/reference/headers/referrer-policy.md): The HTTP Referrer-Policy response header controls how much referrer information (sent with the Referer header) should be included with requests. (10 KB)
-- [Refresh header](library/mdn-http/reference/headers/refresh.md): The HTTP Refresh response header directs a web browser to either refresh or redirect the page when a specified amount of time has passed… (2 KB)
-- [Report-To header](library/mdn-http/reference/headers/report-to.md): The HTTP Report-To response header allows website administrators to define named groups of endpoints that can be used as the destination for warning and… (4 KB)
-- [Reporting-Endpoints header](library/mdn-http/reference/headers/reporting-endpoints.md): The HTTP Reporting-Endpoints response header allows website administrators to specify one or more endpoints that can be sent reports generated by the Reporting API. (3 KB)
-- [Repr-Digest header](library/mdn-http/reference/headers/repr-digest.md): The HTTP Repr-Digest request and response header provides a digest of the selected representation of the target resource. (8 KB)
-- [Retry-After header](library/mdn-http/reference/headers/retry-after.md): The HTTP Retry-After response header indicates how long the user agent should wait before making a follow-up request. (2 KB)
-- [RTT header](library/mdn-http/reference/headers/rtt.md): The HTTP RTT request header is a network client hint which provides the approximate round trip time on the application layer, in milliseconds. (2 KB)
-- [Save-Data header](library/mdn-http/reference/headers/save-data.md): The HTTP Save-Data request header is a network client hint which indicates the client's preference for reduced data usage. (3 KB)
-- [Sec-Browsing-Topics header](library/mdn-http/reference/headers/sec-browsing-topics.md): The HTTP Sec-Browsing-Topics request header sends the selected topics for the current user along with the associated request, which are used by an ad… (2 KB)
-- [Sec-CH-Device-Memory header](library/mdn-http/reference/headers/sec-ch-device-memory.md): The HTTP Sec-CH-Device-Memory request header is used in device client hints to indicate the approximate amount of available RAM on the client device, in… (2 KB)
-- [Sec-CH-DPR header](library/mdn-http/reference/headers/sec-ch-dpr.md): The HTTP Sec-CH-DPR request header provides device client hints about the client device pixel ratio (DPR). (2 KB)
-- [Sec-CH-Prefers-Color-Scheme header](library/mdn-http/reference/headers/sec-ch-prefers-color-scheme.md): The HTTP Sec-CH-Prefers-Color-Scheme request header is a media feature client hint which provides the user's preference for light or dark color themes. (4 KB)
-- [Sec-CH-Prefers-Reduced-Motion header](library/mdn-http/reference/headers/sec-ch-prefers-reduced-motion.md): The HTTP Sec-CH-Prefers-Reduced-Motion request header is a user agent client hint which indicates the user agent's preference for animations to be displayed with reduced… (3 KB)
-- [Sec-CH-Prefers-Reduced-Transparency header](library/mdn-http/reference/headers/sec-ch-prefers-reduced-transparency.md): The HTTP Sec-CH-Prefers-Reduced-Transparency request header is a user agent client hint that indicates the user agent's preference for reduced transparency. (3 KB)
-- [Sec-CH-UA-Arch header](library/mdn-http/reference/headers/sec-ch-ua-arch.md): The HTTP Sec-CH-UA-Arch request header is a user agent client hint which contains the user-agent's underlying CPU architecture, such as ARM or x86. (2 KB)
-- [Sec-CH-UA-Bitness header](library/mdn-http/reference/headers/sec-ch-ua-bitness.md): The HTTP Sec-CH-UA-Bitness request header is a user agent client hint which provides the "bitness" of the user-agent's underlying CPU architecture. (2 KB)
-- [Sec-CH-UA-Form-Factors header](library/mdn-http/reference/headers/sec-ch-ua-form-factors.md): The HTTP Sec-CH-UA-Form-Factors request header is a user agent client hint which provides information on the user-agent's device form factor. (3 KB)
-- [Sec-CH-UA-Full-Version-List header](library/mdn-http/reference/headers/sec-ch-ua-full-version-list.md): The HTTP Sec-CH-UA-Full-Version-List request header is a user agent client hint which provides the user-agent's branding and full version information. (3 KB)
-- [Sec-CH-UA-Full-Version header](library/mdn-http/reference/headers/sec-ch-ua-full-version.md): The HTTP Sec-CH-UA-Full-Version request header is a user agent client hint which provides the user-agent's full version string. (2 KB)
-- [Sec-CH-UA-Mobile header](library/mdn-http/reference/headers/sec-ch-ua-mobile.md): The HTTP Sec-CH-UA-Mobile request header is a user agent client hint which indicates whether the browser is on a mobile device. (2 KB)
-- [Sec-CH-UA-Model header](library/mdn-http/reference/headers/sec-ch-ua-model.md): The HTTP Sec-CH-UA-Model request header is a user agent client hint which indicates the device model on which the browser is running. (2 KB)
-- [Sec-CH-UA-Platform-Version header](library/mdn-http/reference/headers/sec-ch-ua-platform-version.md): The HTTP Sec-CH-UA-Platform-Version request header is a user agent client hint which provides the version of the operating system on which the user agent… (2 KB)
-- [Sec-CH-UA-Platform header](library/mdn-http/reference/headers/sec-ch-ua-platform.md): The HTTP Sec-CH-UA-Platform request header is a user agent client hint which provides the platform or operating system on which the user agent is… (2 KB)
-- [Sec-CH-UA-WoW64 header](library/mdn-http/reference/headers/sec-ch-ua-wow64.md): The HTTP Sec-CH-UA-WoW64 request header is a user agent client hint indicating if a 32-bit user-agent application is running on a 64-bit Windows machine. (2 KB)
-- [Sec-CH-UA header](library/mdn-http/reference/headers/sec-ch-ua.md): The HTTP Sec-CH-UA request header is a user agent client hint which provides the user-agent's branding and significant version information. (3 KB)
-- [Sec-CH-Viewport-Height header](library/mdn-http/reference/headers/sec-ch-viewport-height.md): The HTTP Sec-CH-Viewport-Height request header is a device client hint which provides the client's layout viewport height in CSS pixels. (2 KB)
-- [Sec-CH-Viewport-Width header](library/mdn-http/reference/headers/sec-ch-viewport-width.md): The HTTP Sec-CH-Viewport-Width request header is a device client hint which provides the client's layout viewport width in CSS pixels. (2 KB)
-- [Sec-CH-Width header](library/mdn-http/reference/headers/sec-ch-width.md): The HTTP Sec-CH-Width request header is a device client hint which indicates the desired resource width in physical pixels — the intrinsic size of… (2 KB)
-- [Sec-Fetch-Dest header](library/mdn-http/reference/headers/sec-fetch-dest.md): The HTTP Sec-Fetch-Dest fetch metadata request header indicates the request's destination. (5 KB)
-- [Sec-Fetch-Mode header](library/mdn-http/reference/headers/sec-fetch-mode.md): The HTTP Sec-Fetch-Mode fetch metadata request header indicates the mode of the request. (2 KB)
-- [Sec-Fetch-Site header](library/mdn-http/reference/headers/sec-fetch-site.md): The HTTP Sec-Fetch-Site fetch metadata request header indicates the relationship between a request initiator's origin and the origin of the requested resource. (3 KB)
-- [Sec-Fetch-Storage-Access header](library/mdn-http/reference/headers/sec-fetch-storage-access.md): The HTTP Sec-Fetch-Storage-Access fetch metadata request header provides the "storage access status" for the current fetch context. (3 KB)
-- [Sec-Fetch-User header](library/mdn-http/reference/headers/sec-fetch-user.md): The HTTP Sec-Fetch-User fetch metadata request header is sent for requests initiated by user activation, and its value is always ?1. (2 KB)
-- [Sec-GPC header](library/mdn-http/reference/headers/sec-gpc.md): The HTTP Sec-GPC request header is part of the Global Privacy Control (GPC) mechanism to indicate whether the user consents to a website or… (2 KB)
-- [Sec-Private-State-Token-Crypto-Version header](library/mdn-http/reference/headers/sec-private-state-token-crypto-version.md): The HTTP Sec-Private-State-Token-Crypto-Version Fetch Metadata Request Header is used by the Private State Token API during token <example-value> to indicate to the issuer server… (2 KB)
-- [Sec-Private-State-Token-Lifetime header](library/mdn-http/reference/headers/sec-private-state-token-lifetime.md): The HTTP Sec-Private-State-Token-Lifetime Response Header is used by the Private State Token API during token redemption. (1 KB)
-- [Sec-Private-State-Token header](library/mdn-http/reference/headers/sec-private-state-token.md): The HTTP Sec-Private-State-Token header exists both as a request and a response header. (2 KB)
-- [Sec-Purpose header](library/mdn-http/reference/headers/sec-purpose.md): The HTTP Sec-Purpose fetch metadata request header indicates the purpose for which the requested resource will be used, when that purpose is something other… (3 KB)
-- [Sec-Redemption-Record header](library/mdn-http/reference/headers/sec-redemption-record.md): The HTTP Sec-Redemption-Record Fetch Metadata Request Header is used by the Private State Token API when forwarding redemption records. (1 KB)
-- [Sec-Speculation-Tags header](library/mdn-http/reference/headers/sec-speculation-tags.md): The HTTP Sec-Speculation-Tags request header contains one or more tag values from the speculation rules that resulted in the speculation. (4 KB)
-- [Sec-WebSocket-Accept header](library/mdn-http/reference/headers/sec-websocket-accept.md): The HTTP Sec-WebSocket-Accept response header is used in the WebSocket opening handshake to indicate that the server is willing to upgrade to a WebSocket… (2 KB)
-- [Sec-WebSocket-Extensions header](library/mdn-http/reference/headers/sec-websocket-extensions.md): The HTTP Sec-WebSocket-Extensions request and response header is used in the WebSocket opening handshake to negotiate a protocol extension used by the client and… (3 KB)
-- [Sec-WebSocket-Key header](library/mdn-http/reference/headers/sec-websocket-key.md): The HTTP Sec-WebSocket-Key request header is used in the WebSocket opening handshake to allow a client (user agent) to confirm that it "really wants"… (3 KB)
-- [Sec-WebSocket-Protocol header](library/mdn-http/reference/headers/sec-websocket-protocol.md): The HTTP Sec-WebSocket-Protocol request and response header is used in the WebSocket opening handshake to negotiate a sub-protocol to use in the communication. (3 KB)
-- [Sec-WebSocket-Version header](library/mdn-http/reference/headers/sec-websocket-version.md): The HTTP Sec-WebSocket-Version request and response header is used in the WebSocket opening handshake to indicate the WebSocket protocol supported by the client, and… (3 KB)
-- [Server-Timing header](library/mdn-http/reference/headers/server-timing.md): The HTTP Server-Timing response header communicates one or more performance metrics about the request-response cycle to the user agent. (4 KB)
-- [Server header](library/mdn-http/reference/headers/server.md): The HTTP Server response header describes the software used by the origin server that handled the request and generated a response. (2 KB)
-- [Service-Worker-Allowed header](library/mdn-http/reference/headers/service-worker-allowed.md): The HTTP Service-Worker-Allowed response header is used to broaden the path restriction for a service worker's default scope. (2 KB)
-- [Service-Worker-Navigation-Preload header](library/mdn-http/reference/headers/service-worker-navigation-preload.md): The HTTP Service-Worker-Navigation-Preload request header indicates that the request was the result of a fetch() operation made during service worker navigation preloading. (2 KB)
-- [Service-Worker header](library/mdn-http/reference/headers/service-worker.md): The HTTP Service-Worker request header is included in fetches for a service worker's script resource. (1 KB)
-- [Set-Cookie header](library/mdn-http/reference/headers/set-cookie.md): The HTTP Set-Cookie response header is used to send a cookie from the server to the user agent, so that the user agent can… (14 KB)
-- [Set-Login header](library/mdn-http/reference/headers/set-login.md): The HTTP Set-Login response header is sent by a federated identity provider (IdP) to set its login status, and indicates whether any users are… (2 KB)
-- [SourceMap header](library/mdn-http/reference/headers/sourcemap.md): The HTTP SourceMap response header provides the location of a source map for the resource. (1 KB)
-- [Speculation-Rules header](library/mdn-http/reference/headers/speculation-rules.md): The HTTP Speculation-Rules response header provides one or more URLs pointing to text resources containing speculation rule JSON definitions. (2 KB)
-- [Strict-Transport-Security header](library/mdn-http/reference/headers/strict-transport-security.md): The HTTP Strict-Transport-Security response header (often abbreviated as HSTS) informs browsers that the host should only be accessed using HTTPS, and that any future… (9 KB)
-- [Supports-Loading-Mode header](library/mdn-http/reference/headers/supports-loading-mode.md): The HTTP Supports-Loading-Mode response header allows a response to opt-in to being loaded in a novel, higher-risk context that it would otherwise fail to… (1 KB)
-- [TE header](library/mdn-http/reference/headers/te.md): The HTTP TE request header specifies the transfer encodings the user agent is willing to accept. (2 KB)
-- [Timing-Allow-Origin header](library/mdn-http/reference/headers/timing-allow-origin.md): The HTTP Timing-Allow-Origin response header specifies origins that are allowed to see values of attributes retrieved via features of the Resource Timing API that… (2 KB)
-- [Tk header](library/mdn-http/reference/headers/tk.md): The HTTP Tk response header indicates the tracking status that applied to the corresponding request. (3 KB)
-- [Trailer header](library/mdn-http/reference/headers/trailer.md): The HTTP Trailer request and response header allows the sender to include additional fields at the end of chunked messages in order to supply… (2 KB)
-- [Transfer-Encoding header](library/mdn-http/reference/headers/transfer-encoding.md): The HTTP Transfer-Encoding request and response header specifies the form of encoding used to transfer messages between nodes on the network. (4 KB)
-- [Upgrade-Insecure-Requests header](library/mdn-http/reference/headers/upgrade-insecure-requests.md): The HTTP Upgrade-Insecure-Requests request header sends a signal to the server indicating the client's preference for an encrypted and authenticated response, and that the… (1 KB)
-- [Upgrade header](library/mdn-http/reference/headers/upgrade.md): The HTTP Upgrade request and response header can be used to upgrade an already-established client/server connection to a different protocol (over the same transport… (3 KB)
-- [Use-As-Dictionary header](library/mdn-http/reference/headers/use-as-dictionary.md): The HTTP Use-As-Dictionary response header lists the matching criteria that the Compression Dictionary Transport dictionary can be used for, for future requests. (4 KB)
-- [Firefox user agent string reference](library/mdn-http/reference/headers/user-agent/firefox.md): This document describes the user agent string used in Firefox 4 and later and applications based on Gecko 2.0 and later. (10 KB)
-- [User-Agent header](library/mdn-http/reference/headers/user-agent.md): The HTTP User-Agent request header is a characteristic string that lets servers and network peers identify the application, operating system, vendor, and/or version of… (8 KB)
-- [Vary header](library/mdn-http/reference/headers/vary.md): The HTTP Vary response header describes the parts of the request message (aside from the method and URL) that influenced the content of the… (1 KB)
-- [Via header](library/mdn-http/reference/headers/via.md): The Via request and response header is added by proxies, both forward and reverse. (1 KB)
-- [Viewport-Width header](library/mdn-http/reference/headers/viewport-width.md): The HTTP Viewport-Width request header is a device client hint which provides the client's layout viewport width in CSS pixels. (2 KB)
-- [Want-Content-Digest header](library/mdn-http/reference/headers/want-content-digest.md): The HTTP Want-Content-Digest request and response header indicates a preference for the recipient to send a Content-Digest integrity header in messages associated with the… (3 KB)
-- [Want-Repr-Digest header](library/mdn-http/reference/headers/want-repr-digest.md): The HTTP Want-Repr-Digest request and response header indicates a preference for the recipient to send a Repr-Digest integrity header in messages associated with the… (2 KB)
-- [Warning header](library/mdn-http/reference/headers/warning.md): The HTTP Warning request and response header contains information about possible problems with the status of the message. (4 KB)
-- [Width header](library/mdn-http/reference/headers/width.md): The HTTP Width request header is a device client hint which indicates the desired resource width in physical pixels — the intrinsic size of… (2 KB)
-- [WWW-Authenticate header](library/mdn-http/reference/headers/www-authenticate.md): The HTTP WWW-Authenticate response header advertises the HTTP authentication methods (or challenges) that might be used to gain access to a specific resource. (13 KB)
-- [X-Content-Type-Options header](library/mdn-http/reference/headers/x-content-type-options.md): The HTTP X-Content-Type-Options response header indicates that the MIME types advertised in the Content-Type headers should be respected and not changed. (3 KB)
-- [X-DNS-Prefetch-Control header](library/mdn-http/reference/headers/x-dns-prefetch-control.md): The HTTP X-DNS-Prefetch-Control response header controls DNS prefetching, a feature by which browsers proactively perform domain name resolution on links that the user may… (4 KB)
-- [X-Forwarded-For header](library/mdn-http/reference/headers/x-forwarded-for.md): The HTTP X-Forwarded-For (XFF) request header is a de-facto standard header for identifying the originating IP address of a client connecting to a web… (7 KB)
-- [X-Forwarded-Host header](library/mdn-http/reference/headers/x-forwarded-host.md): The HTTP X-Forwarded-Host (XFH) request header is a de-facto standard header for identifying the original host requested by the client in the Host HTTP… (1 KB)
-- [X-Forwarded-Proto header](library/mdn-http/reference/headers/x-forwarded-proto.md): The HTTP X-Forwarded-Proto (XFP) request header is a de-facto standard header for identifying the protocol (HTTP or HTTPS) that a client used to connect… (2 KB)
-- [X-Frame-Options header](library/mdn-http/reference/headers/x-frame-options.md): The HTTP X-Frame-Options response header can be used to indicate whether a browser should be allowed to render the document in a <frame>, ,… (4 KB)
-- [X-Permitted-Cross-Domain-Policies header](library/mdn-http/reference/headers/x-permitted-cross-domain-policies.md): The HTTP X-Permitted-Cross-Domain-Policies response header defines a meta-policy that controls whether site resources can be accessed cross-origin by a document running in a web… (4 KB)
-- [X-Powered-By header](library/mdn-http/reference/headers/x-powered-by.md): The HTTP X-Powered-By response header is a non-standard header for identifying the application or framework that generated the response. (1 KB)
-- [X-Robots-Tag header](library/mdn-http/reference/headers/x-robots-tag.md): The X-Robots-Tag response header defines how crawlers should index URLs. (8 KB)
-- [X-XSS-Protection header](library/mdn-http/reference/headers/x-xss-protection.md): The HTTP X-XSS-Protection response header was a feature of Internet Explorer, Chrome and Safari that stopped pages from loading when they detected reflected cross-site… (4 KB)
-- [HTTP reference](library/mdn-http/reference.md): This page lists HTTP reference documentation on MDN. (1 KB)
-- [CONNECT request method](library/mdn-http/reference/methods/connect.md): The CONNECT HTTP method requests that a proxy establish an HTTP tunnel to a destination server, and if successful, blindly forward data in both… (4 KB)
-- [DELETE request method](library/mdn-http/reference/methods/delete.md): The DELETE HTTP method asks the server to delete a specified resource. (3 KB)
-- [GET request method](library/mdn-http/reference/methods/get.md): The GET HTTP method requests a representation of the specified resource. (2 KB)
-- [HEAD request method](library/mdn-http/reference/methods/head.md): The HEAD HTTP method requests the metadata of a resource in the form of headers that the server would have sent if the GET… (3 KB)
-- [HTTP request methods](library/mdn-http/reference/methods.md): HTTP defines a set of request methods to indicate the purpose of the request and what is expected if the request is successful. (3 KB)
-- [OPTIONS request method](library/mdn-http/reference/methods/options.md): The OPTIONS HTTP method requests permitted communication options for a given URL or server. (5 KB)
-- [PATCH request method](library/mdn-http/reference/methods/patch.md): The PATCH HTTP method applies partial modifications to a resource. (4 KB)
-- [POST request method](library/mdn-http/reference/methods/post.md): The POST HTTP method sends data to the server. (4 KB)
-- [PUT request method](library/mdn-http/reference/methods/put.md): The PUT HTTP method creates a new resource or replaces a representation of the target resource with the request content. (3 KB)
-- [QUERY request method](library/mdn-http/reference/methods/query.md): The QUERY HTTP method initiates a server-side query. (12 KB)
-- [TRACE request method](library/mdn-http/reference/methods/trace.md): The TRACE HTTP method performs a message loop-back test along the path to the target resource. (3 KB)
-- [HTTP resources and specifications (part 1 of 3)](library/mdn-http/reference/resources_and_specifications.md): HTTP was first specified in the early 1990s. (1 KB)
-- [HTTP resources and specifications (part 2 of 3)](library/mdn-http/reference/resources_and_specifications-p2.md): (15 KB)
-- [HTTP resources and specifications (part 3 of 3)](library/mdn-http/reference/resources_and_specifications-p3.md): (4 KB)
-- [100 Continue](library/mdn-http/reference/status/100.md): The HTTP 100 Continue informational response status code indicates that the initial part of a request has been received and has not yet been… (2 KB)
-- [101 Switching Protocols](library/mdn-http/reference/status/101.md): The HTTP 101 Switching Protocols informational response status code indicates the protocol that a server has switched to. (2 KB)
-- [103 Early Hints](library/mdn-http/reference/status/103.md): The HTTP 103 Early Hints informational response may be sent by a server while it is still preparing a response, with hints about the… (5 KB)
-- [200 OK](library/mdn-http/reference/status/200.md): The HTTP 200 OK successful response status code indicates that a request has succeeded. (3 KB)
-- [201 Created](library/mdn-http/reference/status/201.md): The HTTP 201 Created successful response status code indicates that the HTTP request has led to the creation of a resource. (2 KB)
-- [202 Accepted](library/mdn-http/reference/status/202.md): The HTTP 202 Accepted successful response status code indicates that a request has been accepted for processing, but processing has not been completed or… (2 KB)
-- [203 Non-Authoritative Information](library/mdn-http/reference/status/203.md): The HTTP 203 Non-Authoritative Information successful response status code indicates that the request was successful, but a transforming proxy has modified the headers or… (2 KB)
-- [204 No Content](library/mdn-http/reference/status/204.md): The HTTP 204 No Content successful response status code indicates that a request has succeeded, but the client doesn't need to navigate away from… (3 KB)
-- [205 Reset Content](library/mdn-http/reference/status/205.md): The HTTP 205 Reset Content successful response status code indicates that the request has been successfully processed and the client should reset the document… (2 KB)
-- [206 Partial Content](library/mdn-http/reference/status/206.md): The HTTP 206 Partial Content successful response status code is sent in response to a range request. (3 KB)
-- [207 Multi-Status](library/mdn-http/reference/status/207.md): The HTTP 207 Multi-Status successful response status code indicates a mixture of responses. (2 KB)
-- [208 Already Reported](library/mdn-http/reference/status/208.md): The HTTP 208 Already Reported successful response status code is used in a 207 Multi-Status response to save space and avoid conflicts. (3 KB)
-- [226 IM Used](library/mdn-http/reference/status/226.md): The HTTP 226 IM Used successful response status code indicates that the server is returning a delta in response to a GET request. (2 KB)
-- [300 Multiple Choices](library/mdn-http/reference/status/300.md): The HTTP 300 Multiple Choices redirection response status code indicates that the request has more than one possible response. (3 KB)
-- [301 Moved Permanently](library/mdn-http/reference/status/301.md): The HTTP 301 Moved Permanently redirection response status code indicates that the requested resource has been permanently moved to the URL in the Location… (2 KB)
-- [302 Found](library/mdn-http/reference/status/302.md): The HTTP 302 Found redirection response status code indicates that the requested resource has been temporarily moved to the URL in the Location header. (2 KB)
-- [303 See Other](library/mdn-http/reference/status/303.md): The HTTP 303 See Other redirection response status code indicates that the browser should redirect to the URL in the Location header instead of… (2 KB)
-- [304 Not Modified](library/mdn-http/reference/status/304.md): The HTTP 304 Not Modified redirection response status code indicates that there is no need to retransmit the requested resources. (4 KB)
-- [307 Temporary Redirect](library/mdn-http/reference/status/307.md): The HTTP 307 Temporary Redirect redirection response status code indicates that the resource requested has been temporarily moved to the URL in the Location… (2 KB)
-- [308 Permanent Redirect](library/mdn-http/reference/status/308.md): The HTTP 308 Permanent Redirect redirection response status code indicates that the requested resource has been permanently moved to the URL given by the… (2 KB)
-- [400 Bad Request](library/mdn-http/reference/status/400.md): The HTTP 400 Bad Request client error response status code indicates that the server would not process the request due to something the server… (2 KB)
-- [401 Unauthorized](library/mdn-http/reference/status/401.md): The HTTP 401 Unauthorized client error response status code indicates that a request was not successful because it lacks valid authentication credentials for the… (2 KB)
-- [402 Payment Required](library/mdn-http/reference/status/402.md): The HTTP 402 Payment Required client error response status code is a nonstandard response status code reserved for future use. (2 KB)
-- [403 Forbidden](library/mdn-http/reference/status/403.md): The HTTP 403 Forbidden client error response status code indicates that the server understood the request but refused to process it. (2 KB)
-- [404 Not Found](library/mdn-http/reference/status/404.md): The HTTP 404 Not Found client error response status code indicates that the server cannot find the requested resource. (2 KB)
-- [405 Method Not Allowed](library/mdn-http/reference/status/405.md): The HTTP 405 Method Not Allowed client error response status code indicates that the server knows the request method, but the target resource doesn't… (1 KB)
-- [406 Not Acceptable](library/mdn-http/reference/status/406.md): The HTTP 406 Not Acceptable client error response status code indicates that the server could not produce a response matching the list of acceptable… (2 KB)
-- [407 Proxy Authentication Required](library/mdn-http/reference/status/407.md): The HTTP 407 Proxy Authentication Required client error response status code indicates that the request did not succeed because it lacks valid authentication credentials… (1 KB)
-- [408 Request Timeout](library/mdn-http/reference/status/408.md): The HTTP 408 Request Timeout client error response status code indicates that the server would like to shut down this unused connection. (2 KB)
-- [409 Conflict](library/mdn-http/reference/status/409.md): The HTTP 409 Conflict client error response status code indicates a request conflict with the current state of the target resource. (2 KB)
-- [410 Gone](library/mdn-http/reference/status/410.md): The HTTP 410 Gone client error response status code indicates that the target resource is no longer available at the origin server and that… (1 KB)
-- [411 Length Required](library/mdn-http/reference/status/411.md): The HTTP 411 Length Required client error response status code indicates that the server refused to accept the request without a defined Content-Length header. (1 KB)
-- [412 Precondition Failed](library/mdn-http/reference/status/412.md): The HTTP 412 Precondition Failed client error response status code indicates that access to the target resource was denied. (2 KB)
-- [413 Content Too Large](library/mdn-http/reference/status/413.md): The HTTP 413 Content Too Large client error response status code indicates that the request entity was larger than limits defined by server. (2 KB)
-- [414 URI Too Long](library/mdn-http/reference/status/414.md): The HTTP 414 URI Too Long client error response status code indicates that a URI requested by the client was longer than the server… (2 KB)
-- [415 Unsupported Media Type](library/mdn-http/reference/status/415.md): The HTTP 415 Unsupported Media Type client error response status code indicates that the server refused to accept the request because the message content… (2 KB)
-- [416 Range Not Satisfiable](library/mdn-http/reference/status/416.md): The HTTP 416 Range Not Satisfiable client error response status code indicates that a server could not serve the requested ranges. (2 KB)
-- [417 Expectation Failed](library/mdn-http/reference/status/417.md): The HTTP 417 Expectation Failed client error response status code indicates that the expectation given in the request's Expect header could not be met. (2 KB)
-- [418 I'm a teapot](library/mdn-http/reference/status/418.md): The HTTP 418 I'm a teapot status response code indicates that the server refuses to brew coffee because it is, permanently, a teapot. (1 KB)
-- [421 Misdirected Request](library/mdn-http/reference/status/421.md): The HTTP 421 Misdirected Request client error response status code indicates that the request was directed to a server that is not able to… (1 KB)
-- [422 Unprocessable Content](library/mdn-http/reference/status/422.md): The HTTP 422 Unprocessable Content client error response status code indicates that the server understood the content type of the request content, and the… (2 KB)
-- [423 Locked](library/mdn-http/reference/status/423.md): The HTTP 423 Locked client error response status code indicates that a resource is locked, meaning it can't be accessed. (1 KB)
-- [424 Failed Dependency](library/mdn-http/reference/status/424.md): The HTTP 424 Failed Dependency client error response status code indicates that the method could not be performed on the resource because the requested… (1 KB)
-- [425 Too Early](library/mdn-http/reference/status/425.md): The HTTP 425 Too Early client error response status code indicates that the server was unwilling to risk processing a request that might be… (1 KB)
-- [426 Upgrade Required](library/mdn-http/reference/status/426.md): The HTTP 426 Upgrade Required client error response status code indicates that the server refused to perform the request using the current protocol but… (1 KB)
-- [428 Precondition Required](library/mdn-http/reference/status/428.md): The HTTP 428 Precondition Required client error response status code indicates that the server requires the request to be conditional. (2 KB)
-- [429 Too Many Requests](library/mdn-http/reference/status/429.md): The HTTP 429 Too Many Requests client error response status code indicates the client has sent too many requests in a given amount of… (2 KB)
-- [431 Request Header Fields Too Large](library/mdn-http/reference/status/431.md): The HTTP 431 Request Header Fields Too Large client error response status code indicates that the server refuses to process the request because the… (2 KB)
-- [451 Unavailable For Legal Reasons](library/mdn-http/reference/status/451.md): The HTTP 451 Unavailable For Legal Reasons client error response status code indicates that the user requested a resource that is not available due… (2 KB)
-- [500 Internal Server Error](library/mdn-http/reference/status/500.md): The HTTP 500 Internal Server Error server error response status code indicates that the server encountered an unexpected condition that prevented it from fulfilling… (2 KB)
-- [501 Not Implemented](library/mdn-http/reference/status/501.md): The HTTP 501 Not Implemented server error response status code means that the server does not support the functionality required to fulfill the request. (2 KB)
-- [502 Bad Gateway](library/mdn-http/reference/status/502.md): The HTTP 502 Bad Gateway server error response status code indicates that a server was acting as a gateway or proxy and that it… (2 KB)
-- [503 Service Unavailable](library/mdn-http/reference/status/503.md): The HTTP 503 Service Unavailable server error response status code indicates that the server is not ready to handle the request. (3 KB)
-- [504 Gateway Timeout](library/mdn-http/reference/status/504.md): The HTTP 504 Gateway Timeout server error response status code indicates that the server, while acting as a gateway or proxy, did not get… (2 KB)
-- [505 HTTP Version Not Supported](library/mdn-http/reference/status/505.md): The HTTP 505 HTTP Version Not Supported server error response status code indicates that the HTTP version used in the request is not supported… (2 KB)
-- [506 Variant Also Negotiates](library/mdn-http/reference/status/506.md): The HTTP 506 Variant Also Negotiates server error response status code is returned during content negotiation when there is recursive loop in the process… (3 KB)
-- [507 Insufficient Storage](library/mdn-http/reference/status/507.md): The HTTP 507 Insufficient Storage server error response status code indicates that an action could not be performed because the server does not have… (2 KB)
-- [508 Loop Detected](library/mdn-http/reference/status/508.md): The HTTP 508 Loop Detected server error response status code indicates that the entire operation failed because it encountered an infinite loop while processing… (1 KB)
-- [510 Not Extended](library/mdn-http/reference/status/510.md): The HTTP 510 Not Extended server error response status code is sent when the client request declares an HTTP Extension (2774) that should be… (1 KB)
-- [511 Network Authentication Required](library/mdn-http/reference/status/511.md): The HTTP 511 Network Authentication Required server error response status code indicates that the client needs to authenticate to gain network access. (2 KB)
-- [HTTP response status codes](library/mdn-http/reference/status.md): HTTP response status codes indicate whether a specific HTTP request has been successfully completed. (14 KB)
+## Guides
+
+HTTP is an extensible protocol that relies on concepts like resources and Uniform Resource Identifiers (URIs), a basic message structure, and client-server communication model.
+On top of these concepts, numerous extensions have been developed over the years that add functionality and updated semantics, including additional HTTP methods and headers.
+
+The [HTTP guides](/en-US/docs/Web/HTTP/Guides) are listed in order from general overviews to specialized, use-case-driven topics.
+Beginners are encouraged to start with the foundational guides before exploring more focused articles.
+
+- [Overview of HTTP](/en-US/docs/Web/HTTP/Guides/Overview)
+  - : The basic features of HTTP, what it can do, its intended use in web architecture, and its position in the protocol stack.
+- [Evolution of HTTP](/en-US/docs/Web/HTTP/Guides/Evolution_of_HTTP)
+  - : HTTP was created in the early 1990s and has been extended several times.
+    This article goes through its history and describes HTTP/0.9, HTTP/1.0, HTTP/1.1, through HTTP/2 and HTTP/3, as well as novelties introduced over the years.
+- [A typical HTTP session](/en-US/docs/Web/HTTP/Guides/Session)
+  - : Describes the flow of an HTTP session, from establishing a connection, sending a request, to receiving a response.
+- [HTTP messages](/en-US/docs/Web/HTTP/Guides/Messages)
+  - : HTTP messages transmitted as requests and responses have a defined structure.
+    This article describes this general structure, its purpose, and the different types of messages.
+- [MIME types](/en-US/docs/Web/HTTP/Guides/MIME_types)
+  - : Since HTTP/1.0, different types of content can be transmitted.
+    This article explains how this is accomplished using the {{HTTPHeader("Content-Type")}} header and the MIME standard.
+    A shortlist of common types used by web developers can be found in [Common MIME types](/en-US/docs/Web/HTTP/Guides/MIME_types/Common_types).
+- [Compression in HTTP](/en-US/docs/Web/HTTP/Guides/Compression)
+  - : Browsers and servers compress their messages before sending them over the network to reduce the amount of data that needs to be transmitted, improving transfer speed and bandwidth utilization.
+- [HTTP caching](/en-US/docs/Web/HTTP/Guides/Caching)
+  - : Caching is a highly important mechanism for delivering fast experiences on the Web and for efficient use of resources.
+    This article describes different methods of caching and how to use HTTP headers to control them.
+- [HTTP authentication](/en-US/docs/Web/HTTP/Guides/Authentication)
+  - : Authentication is a way to verify the identity of a client when making requests to a server.
+    It ensures that only authorized users or systems can access certain resources.
+- [Using HTTP cookies](/en-US/docs/Web/HTTP/Guides/Cookies)
+  - : Although HTTP is a stateless protocol, a server can send a {{HTTPHeader("Set-Cookie")}} header with the response.
+    The client then returns the cookie's value with every subsequent request to the server in the form of a {{HTTPHeader("Cookie")}} request header.
+    This adds the ability to store and exchange a small amount of data which effectively adds state to some client-server interactions.
+- [Redirections in HTTP](/en-US/docs/Web/HTTP/Guides/Redirections)
+  - : URL redirection, also known as URL forwarding, is a technique to give more than one URL address to a page, a form, a whole website, or a web application.
+    HTTP has a special kind of response, called an HTTP redirect, for this operation.
+- [HTTP conditional requests](/en-US/docs/Web/HTTP/Guides/Conditional_requests)
+  - : In conditional requests, the outcome of a request depends on the value of a validator in the request.
+    This method is used heavily in [caching](/en-US/docs/Web/HTTP/Guides/Caching) and use cases such as resuming a download, preventing lost updates when modifying a document on the server, and more.
+- [HTTP range requests](/en-US/docs/Web/HTTP/Guides/Range_requests)
+  - : A range request asks the server to send a specific part (or parts) of a resource back to a client instead of the full resource.
+    Range requests are useful for cases when a client knows they need only part of a large file, or for cases where an application allows the user to pause and resume a download.
+- [Content negotiation](/en-US/docs/Web/HTTP/Guides/Content_negotiation)
+  - : HTTP defines a set of message headers, starting with [`Accept`](/en-US/docs/Web/HTTP/Reference/Headers/Accept) as a way for a browser to announce the format, language, or encoding it prefers.
+    This article explains how this advertisement happens, how the server is expected to react, and how it chooses the most adequate response to a request.
+- [Connection management in HTTP/1.x](/en-US/docs/Web/HTTP/Guides/Connection_management_in_HTTP_1.x)
+  - : HTTP/1.1 was the first version of HTTP to support persistent connections and pipelining.
+    This article explains both concepts, including the pros and cons of each.
+- [Protocol upgrade mechanism](/en-US/docs/Web/HTTP/Guides/Protocol_upgrade_mechanism)
+  - : HTTP/1.1 provides a mechanism to upgrade an already-established connection to a different protocol using the {{HTTPHeader("Upgrade")}} header.
+    A client can upgrade a connection from HTTP/1.1 to HTTP/2, or an HTTP(S) connection to a [WebSocket](/en-US/docs/Web/API/WebSocket) (`ws` / `wss`).
+- [Proxy servers and tunneling](/en-US/docs/Web/HTTP/Guides/Proxy_servers_and_tunneling)
+  - : A proxy can be on the user's local computer, or anywhere between the user's computer and a destination server on the Internet.
+    This page outlines some basics about proxies and introduces a few configuration options.
+- [HTTP Client hints](/en-US/docs/Web/HTTP/Guides/Client_hints)
+  - : Client Hints are a set of response headers that a server can use to proactively request information from a client about the device, network, user, and user-agent-specific preferences.
+    The server can then determine which resources to send, based on the information that the client chooses to provide.
+- [Network Error Logging](/en-US/docs/Web/HTTP/Guides/Network_Error_Logging) {{experimental_inline}}
+  - : Network Error Logging is a mechanism that can be configured via the `NEL` HTTP response header.
+    This experimental header allows websites and applications to opt-in to receive reports about failed (or even successful) network fetches from supporting browsers.
+- [Browser detection using the user agent](/en-US/docs/Web/HTTP/Guides/Browser_detection_using_the_user_agent)
+  - : It's very rarely a good idea to use user agent sniffing to detect a browser, but there are edge cases that require it.
+    This document will guide you in doing this as correctly as possible when this is necessary, with an emphasis on considerations to make before embarking on this route.
+
+### Security and privacy
+
+- [Permissions Policy](/en-US/docs/Web/HTTP/Guides/Permissions_Policy)
+  - : Permissions Policy provides mechanisms for web developers to explicitly declare what functionality can and cannot be used on a website.
+    You define a set of "policies" that restrict what APIs the site's code can access or modify the browser's default behavior for certain features.
+- [Cross-Origin Resource Sharing (CORS)](/en-US/docs/Web/HTTP/Guides/CORS)
+  - : Cross-site HTTP requests are requests for resources from a different domain than that of the resource making the request.
+    Web pages today very commonly load cross-site resources, for example, a page 'Domain A' (`http://domaina.example/`) requests an image on 'Domain B' (`http://domainb.foo/image.jpg`) via the `img` element.
+    CORS allows web developers to control how their site reacts to cross-site requests.
+- [Content Security Policy (CSP)](/en-US/docs/Web/HTTP/Guides/CSP)
+  - : CSP allows website administrators to use the {{HTTPHeader("Content-Security-Policy")}} response header to control which resources the client is allowed to load for a given page.
+    The CSP guide describes the overall Content Security Policy mechanism which helps detect and mitigate certain types of attacks, including Cross-Site Scripting (XSS) and data injection attacks.
+- [Cross-Origin Resource Policy (CORP)](/en-US/docs/Web/Security/Practical_implementation_guides/CORP)
+  - : CORP lets websites and applications opt in to protection against specific requests from other origins (such as those issued with elements like `<script>` and `<img>`), to mitigate speculative side-channel attacks.
+- [Mozilla web security guidelines](https://infosec.mozilla.org/guidelines/web_security)
+  - : A collection of tips to help operational teams with creating secure web applications.
+
+### Related resources
+
+- [URIs](/en-US/docs/Web/URI)
+  - : Uniform Resource Identifiers (URIs) are used to describe and locate resources on the web and are an essential component in HTTP requests.
+- [Configuring servers for Ogg media](/en-US/docs/Web/Media/Guides/Formats/Configuring_servers_for_Ogg_media)
+  - : This guide covers a few server configuration changes that may be necessary for your web server to correctly serve Ogg media files.
+    This information may also be useful if you encounter other media types your server isn't already configured to recognize.
+
+## Tools & resources
+
+Helpful tools and resources for understanding and debugging HTTP.
+
+- [Firefox Developer Tools](https://firefox-source-docs.mozilla.org/devtools-user/index.html)
+  - : [Network monitor](https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/index.html)
+- [HTTP Observatory](/en-US/observatory)
+  - : A project designed to help developers, system administrators, and security professionals configure their sites safely and securely.
+- [RedBot](https://redbot.org/)
+  - : Tools to check your cache-related headers.
+- [nghttp2](https://github.com/nghttp2/nghttp2)
+  - : An HTTP/2 client, server and proxy implementation written in C with load test and benchmarking tools and an HPACK encoder and decoder.
+- [curl](https://github.com/curl/curl)
+  - : A command-line tool for transferring data specified with URL syntax.
+    Supports HTTP, HTTPS, WS, WSS, among many other protocols.
+- [How Browsers Work (2011)](https://web.dev/articles/howbrowserswork)
+  - : A very comprehensive article on browser internals and request flow through HTTP protocol.
+
+## Reference
+
+The [HTTP reference](/en-US/docs/Web/HTTP/Reference) documentation contains detailed information about headers, request methods, status responses, and lists relevant specifications and standards documents.
+
+- [HTTP headers](/en-US/docs/Web/HTTP/Reference/Headers)
+  - : Message headers are used to send metadata about a resource or an HTTP message, and to describe the behavior of the client or the server.
+- [HTTP request methods](/en-US/docs/Web/HTTP/Reference/Methods)
+  - : Request methods indicate the purpose of the request and what is expected if the request is successful.
+    The most common methods are {{HTTPMethod("GET")}} and {{HTTPMethod("POST")}} for retrieving and sending data to servers, respectively, but there are other methods which serve different purposes.
+- [HTTP response status codes](/en-US/docs/Web/HTTP/Reference/Status)
+  - : Response status codes indicate the outcome of a specific HTTP request.
+    Responses are grouped in five classes: informational, successful, redirections, client errors, and server errors.
+- [HTTP resources and specifications](/en-US/docs/Web/HTTP/Reference/Resources_and_specifications)
+  - : This page lists relevant resources about HTTP since it was first specified in the early 1990s.
+
+The following subsections are also notable:
+
+- [CSP directives](/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy#directives)
+  - : The {{HTTPHeader("Content-Security-Policy")}} (CSP) response header allows website administrators to specify which resources the user agent is allowed to load for a given page.
+    This section lists directives that can be used in a CSP header, with individual documentation pages that describe how the directives work and how to use them.
+- [Permissions-Policy directives](/en-US/docs/Web/HTTP/Reference/Headers/Permissions-Policy#directives)
+  - : The {{HTTPHeader("Permissions-Policy")}} response header provides a mechanism to allow or deny the use of browser features in a document or within any {{HTMLElement("iframe")}} element in the document.
+    This section lists directives that can be used in a Permissions-Policy header, with individual documentation pages that describe how the directives work and how to use them.

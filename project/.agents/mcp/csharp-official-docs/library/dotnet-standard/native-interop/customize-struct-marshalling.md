@@ -1,22 +1,22 @@
 ---
-title: "Customizing structure marshalling - .NET (part 1 of 2)"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/native-interop/customize-struct-marshalling.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Customizing structure marshalling - .NET
+description: Learn how to customize how .NET marshals structures to a native representation.
+ms.date: 01/18/2019
+dev_langs:
+  - "csharp"
+  - "cpp"
+ms.topic: how-to
 ---
-
 # Customize structure marshalling
 
-Sometimes the default marshalling rules for structures aren't exactly what you need. The .NET runtimes provide a few extension points for you to customize your structure's layout and how fields are marshalled. Customizing structure layout is supported for all scenarios, but customizing field marshalling is only supported for scenarios where runtime marshalling is enabled. If runtime marshalling is disabled, then any field marshalling must be done manually.
+Sometimes the default marshalling rules for structures aren't exactly what you need. The .NET runtimes provide a few extension points for you to customize your structure's layout and how fields are marshalled. Customizing structure layout is supported for all scenarios, but customizing field marshalling is only supported for scenarios where runtime marshalling is enabled. If [runtime marshalling is disabled](disabled-marshalling.md), then any field marshalling must be done manually.
 
-> **Note:**
-> This article doesn't cover customizing marshalling for source-generated interop. If you're using source-generated interop for P/Invokes or COM, see customizing marshalling.
+> [!NOTE]
+> This article doesn't cover customizing marshalling for source-generated interop. If you're using [source-generated interop for P/Invokes](./pinvoke-source-generation.md) or [COM](./comwrappers-source-generation.md), see [customizing marshalling](./custom-marshalling-source-generation.md).
 
 ## Customize structure layout
 
-.NET provides the `System.Runtime.InteropServices.StructLayoutAttribute` attribute and the `System.Runtime.InteropServices.LayoutKind` enumeration to allow you to customize how fields are placed in memory. The following guidance will help you avoid common issues.
+.NET provides the <xref:System.Runtime.InteropServices.StructLayoutAttribute?displayProperty=nameWithType> attribute and the <xref:System.Runtime.InteropServices.LayoutKind?displayProperty=nameWithType> enumeration to allow you to customize how fields are placed in memory. The following guidance will help you avoid common issues.
 
 ✔️ CONSIDER using `LayoutKind.Sequential` whenever possible.
 
@@ -28,11 +28,11 @@ Sometimes the default marshalling rules for structures aren't exactly what you n
 
 ## Fixed-size buffers and inline arrays
 
-If you need to define a fixed-size buffer in a structure, don't use the `System.Runtime.InteropServices.StructLayoutAttribute.Size` property to allocate extra space. The `Size` property controls the unmanaged layout of the type (the layout used when calling `Marshal.StructureToPtr`) and only affects the managed layout for blittable types. For non-blittable types, the runtime only allocates space based on the actual fields, which can lead to memory corruption if you attempt to use the extra space.
+If you need to define a fixed-size buffer in a structure, don't use the <xref:System.Runtime.InteropServices.StructLayoutAttribute.Size?displayProperty=nameWithType> property to allocate extra space. The `Size` property controls the unmanaged layout of the type (the layout used when calling `Marshal.StructureToPtr`) and only affects the managed layout for blittable types. For non-blittable types, the runtime only allocates space based on the actual fields, which can lead to memory corruption if you attempt to use the extra space.
 
 ❌ AVOID using `StructLayoutAttribute.Size` to create fixed-size buffers in managed types.
 
-✔️ DO use `System.Runtime.CompilerServices.InlineArrayAttribute` to define fixed-size buffers in modern .NET (C# 12 and later).
+✔️ DO use <xref:System.Runtime.CompilerServices.InlineArrayAttribute?displayProperty=nameWithType> to define fixed-size buffers in modern .NET (C# 12 and later).
 
 The following example shows the incorrect approach that can lead to memory corruption:
 
@@ -78,13 +78,13 @@ class Good100ByteBuffer
 }
 ```
 
-For more information about inline arrays, see the C# language reference.
+For more information about inline arrays, see the [C# language reference](../../csharp/language-reference/builtin-types/struct.md#inline-arrays).
 
 ## Customizing Boolean field marshalling
 
 Native code has many different Boolean representations. On Windows alone, there are three ways to represent Boolean values. The runtime doesn't know the native definition of your structure, so the best it can do is make a guess on how to marshal your Boolean values. The .NET runtime provides a way to indicate how to marshal your Boolean field. The following examples show how to marshal .NET `bool` to different native Boolean types.
 
-Boolean values default to marshalling as a native 4-byte Win32 `BOOL` value as shown in the following example:
+Boolean values default to marshalling as a native 4-byte Win32 [`BOOL`](/windows/desktop/winprog/windows-data-types#BOOL) value as shown in the following example:
 
 ```csharp
 public struct WinBool
@@ -100,7 +100,7 @@ struct WinBool
 };
 ```
 
-If you want to be explicit, you can use the `System.Runtime.InteropServices.UnmanagedType.Bool` value to get the same behavior as above:
+If you want to be explicit, you can use the <xref:System.Runtime.InteropServices.UnmanagedType.Bool?displayProperty=nameWithType> value to get the same behavior as above:
 
 ```csharp
 public struct WinBool
@@ -134,7 +134,7 @@ struct CBool
 };
 ```
 
-On Windows, you can use the `System.Runtime.InteropServices.UnmanagedType.VariantBool` value to tell the runtime to marshal your Boolean value to a 2-byte `VARIANT_BOOL` value:
+On Windows, you can use the <xref:System.Runtime.InteropServices.UnmanagedType.VariantBool?displayProperty=nameWithType> value to tell the runtime to marshal your Boolean value to a 2-byte `VARIANT_BOOL` value:
 
 ```csharp
 public struct VariantBool
@@ -151,7 +151,7 @@ struct VariantBool
 };
 ```
 
-> **Note:**
+> [!NOTE]
 > `VARIANT_BOOL` is different than most bool types in that `VARIANT_TRUE = -1` and `VARIANT_FALSE = 0`. Additionally, all values that aren't equal to `VARIANT_TRUE` are considered false.
 
 ## Customizing array field marshalling
@@ -174,7 +174,7 @@ struct DefaultArray
 };
 ```
 
-If you're interfacing with COM APIs, you may have to marshal arrays as `SAFEARRAY*` objects. You can use the `System.Runtime.InteropServices.MarshalAsAttribute` and the `System.Runtime.InteropServices.UnmanagedType.SafeArray` value to tell the runtime to marshal an array as a `SAFEARRAY*`:
+If you're interfacing with COM APIs, you may have to marshal arrays as `SAFEARRAY*` objects. You can use the <xref:System.Runtime.InteropServices.MarshalAsAttribute?displayProperty=nameWithType> and the <xref:System.Runtime.InteropServices.UnmanagedType.SafeArray?displayProperty=nameWithType> value to tell the runtime to marshal an array as a `SAFEARRAY*`:
 
 ```csharp
 public struct SafeArrayExample
@@ -191,9 +191,9 @@ struct SafeArrayExample
 };
 ```
 
-If you need to customize what type of element is in the `SAFEARRAY`, then you can use the `System.Runtime.InteropServices.MarshalAsAttribute.SafeArraySubType` and `System.Runtime.InteropServices.MarshalAsAttribute.SafeArrayUserDefinedSubType` fields to customize the exact element type of the `SAFEARRAY`.
+If you need to customize what type of element is in the `SAFEARRAY`, then you can use the <xref:System.Runtime.InteropServices.MarshalAsAttribute.SafeArraySubType?displayProperty=nameWithType> and <xref:System.Runtime.InteropServices.MarshalAsAttribute.SafeArrayUserDefinedSubType?displayProperty=nameWithType> fields to customize the exact element type of the `SAFEARRAY`.
 
-If you need to marshal the array in-place, you can use the `System.Runtime.InteropServices.UnmanagedType.ByValArray` value to tell the marshaller to marshal the array in-place. When you're using this marshalling, you also must supply a value to the `System.Runtime.InteropServices.MarshalAsAttribute.SizeConst` field  for the number of elements in the array so the runtime can correctly allocate space for the structure.
+If you need to marshal the array in-place, you can use the <xref:System.Runtime.InteropServices.UnmanagedType.ByValArray?displayProperty=nameWithType> value to tell the marshaller to marshal the array in-place. When you're using this marshalling, you also must supply a value to the <xref:System.Runtime.InteropServices.MarshalAsAttribute.SizeConst?displayProperty=nameWithType> field  for the number of elements in the array so the runtime can correctly allocate space for the structure.
 
 ```csharp
 public struct InPlaceArray
@@ -210,14 +210,14 @@ struct InPlaceArray
 };
 ```
 
-> **Note:**
+> [!NOTE]
 > .NET doesn't support marshalling a variable length array field as a C99 Flexible Array Member.
 
 ## Customizing string field marshalling
 
 .NET also provides a wide variety of customizations for marshalling string fields.
 
-By default, .NET marshals a string as a pointer to a null-terminated string. The encoding depends on the value of the `System.Runtime.InteropServices.StructLayoutAttribute.CharSet` field in the `System.Runtime.InteropServices.StructLayoutAttribute`. If no attribute is specified, the encoding defaults to an ANSI encoding.
+By default, .NET marshals a string as a pointer to a null-terminated string. The encoding depends on the value of the <xref:System.Runtime.InteropServices.StructLayoutAttribute.CharSet?displayProperty=nameWithType> field in the <xref:System.Runtime.InteropServices.StructLayoutAttribute?displayProperty=nameWithType>. If no attribute is specified, the encoding defaults to an ANSI encoding.
 
 ```csharp
 [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -249,7 +249,7 @@ struct DefaultString
 };
 ```
 
-If you need to use different encodings for different fields or just prefer to be more explicit in your struct definition, you can use the `System.Runtime.InteropServices.UnmanagedType.LPStr` or `System.Runtime.InteropServices.UnmanagedType.LPWStr` values on a `System.Runtime.InteropServices.MarshalAsAttribute` attribute.
+If you need to use different encodings for different fields or just prefer to be more explicit in your struct definition, you can use the <xref:System.Runtime.InteropServices.UnmanagedType.LPStr?displayProperty=nameWithType> or <xref:System.Runtime.InteropServices.UnmanagedType.LPWStr?displayProperty=nameWithType> values on a <xref:System.Runtime.InteropServices.MarshalAsAttribute?displayProperty=nameWithType> attribute.
 
 ```csharp
 public struct AnsiString
@@ -281,7 +281,7 @@ struct UnicodeString
 };
 ```
 
-If you want to marshal your strings using the UTF-8 encoding, you can use the `System.Runtime.InteropServices.UnmanagedType.LPUTF8Str` value in your `System.Runtime.InteropServices.MarshalAsAttribute`.
+If you want to marshal your strings using the UTF-8 encoding, you can use the <xref:System.Runtime.InteropServices.UnmanagedType.LPUTF8Str?displayProperty=nameWithType> value in your <xref:System.Runtime.InteropServices.MarshalAsAttribute>.
 
 ```csharp
 public struct UTF8String
@@ -298,10 +298,10 @@ struct UTF8String
 };
 ```
 
-> **Note:**
-> Using `System.Runtime.InteropServices.UnmanagedType.LPUTF8Str` requires either .NET Framework 4.7 (or later versions) or .NET Core 1.1 (or later versions). It isn't available in .NET Standard 2.0.
+> [!NOTE]
+> Using <xref:System.Runtime.InteropServices.UnmanagedType.LPUTF8Str?displayProperty=nameWithType> requires either .NET Framework 4.7 (or later versions) or .NET Core 1.1 (or later versions). It isn't available in .NET Standard 2.0.
 
-If you're working with COM APIs, you may need to marshal a string as a `BSTR`. Using the `System.Runtime.InteropServices.UnmanagedType.BStr` value, you can marshal a string as a `BSTR`.
+If you're working with COM APIs, you may need to marshal a string as a `BSTR`. Using the <xref:System.Runtime.InteropServices.UnmanagedType.BStr?displayProperty=nameWithType> value, you can marshal a string as a `BSTR`.
 
 ```csharp
 public struct BString
@@ -318,7 +318,7 @@ struct BString
 };
 ```
 
-When using a WinRT-based API, you may need to marshal a string as an `HSTRING`. Using the `System.Runtime.InteropServices.UnmanagedType.HString` value, you can marshal a string as a `HSTRING`. `HSTRING` marshalling is only supported on runtimes with built-in WinRT support. WinRT support was removed in .NET 5, so `HSTRING` marshalling is not supported in .NET 5 or newer.
+When using a WinRT-based API, you may need to marshal a string as an `HSTRING`. Using the <xref:System.Runtime.InteropServices.UnmanagedType.HString?displayProperty=nameWithType> value, you can marshal a string as a `HSTRING`. `HSTRING` marshalling is only supported on runtimes with built-in WinRT support. WinRT support was [removed in .NET 5](../../core/compatibility/interop/5.0/built-in-support-for-winrt-removed.md), so `HSTRING` marshalling is not supported in .NET 5 or newer.
 
 ```csharp
 public struct HString
@@ -335,7 +335,7 @@ struct BString
 };
 ```
 
-If your API requires you to pass the string in-place in the structure, you can use the `System.Runtime.InteropServices.UnmanagedType.ByValTStr` value. Do note that the encoding for a string marshalled by `ByValTStr` is determined from the `CharSet` attribute. Additionally, it requires that a string length is passed by the `System.Runtime.InteropServices.MarshalAsAttribute.SizeConst` field.
+If your API requires you to pass the string in-place in the structure, you can use the <xref:System.Runtime.InteropServices.UnmanagedType.ByValTStr?displayProperty=nameWithType> value. Do note that the encoding for a string marshalled by `ByValTStr` is determined from the `CharSet` attribute. Additionally, it requires that a string length is passed by the <xref:System.Runtime.InteropServices.MarshalAsAttribute.SizeConst?displayProperty=nameWithType> field.
 
 ```csharp
 [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -371,7 +371,7 @@ struct DefaultString
 
 ## Customizing decimal field marshalling
 
-If you're working on Windows, you might encounter some APIs that use the native `CY` or `CURRENCY` structure. By default, the .NET `decimal` type marshals to the native `DECIMAL` structure. However, you can use a `System.Runtime.InteropServices.MarshalAsAttribute` with the `System.Runtime.InteropServices.UnmanagedType.Currency` value to instruct the marshaller to convert a `decimal` value to a native `CY` value.
+If you're working on Windows, you might encounter some APIs that use the native [`CY` or `CURRENCY`](/windows/win32/api/wtypes/ns-wtypes-cy-r1) structure. By default, the .NET `decimal` type marshals to the native [`DECIMAL`](/windows/win32/api/wtypes/ns-wtypes-decimal-r1) structure. However, you can use a <xref:System.Runtime.InteropServices.MarshalAsAttribute> with the <xref:System.Runtime.InteropServices.UnmanagedType.Currency?displayProperty=nameWithType> value to instruct the marshaller to convert a `decimal` value to a native `CY` value.
 
 ```csharp
 public struct Currency
@@ -447,3 +447,89 @@ public struct Config
     }
 }
 ```
+
+## Marshal `System.Object`
+
+On Windows, you can marshal `object`-typed fields to native code. You can marshal these fields to one of three types:
+
+- [`VARIANT`](/windows/win32/api/oaidl/ns-oaidl-variant)
+- [`IUnknown*`](/windows/desktop/api/unknwn/nn-unknwn-iunknown)
+- [`IDispatch*`](/windows/desktop/api/oaidl/nn-oaidl-idispatch)
+
+By default, an `object`-typed field will be marshalled to an `IUnknown*` that wraps the object.
+
+```csharp
+public struct ObjectDefault
+{
+    public object obj;
+}
+```
+
+```cpp
+struct ObjectDefault
+{
+    IUnknown* obj;
+};
+```
+
+If you want to marshal an object field to an `IDispatch*`, add a <xref:System.Runtime.InteropServices.MarshalAsAttribute> with the <xref:System.Runtime.InteropServices.UnmanagedType.IDispatch?displayProperty=nameWithType> value.
+
+```csharp
+public struct ObjectDispatch
+{
+    [MarshalAs(UnmanagedType.IDispatch)]
+    public object obj;
+}
+```
+
+```cpp
+struct ObjectDispatch
+{
+    IDispatch* obj;
+};
+```
+
+If you want to marshal it as a `VARIANT`, add a <xref:System.Runtime.InteropServices.MarshalAsAttribute> with the <xref:System.Runtime.InteropServices.UnmanagedType.Struct?displayProperty=nameWithType> value.
+
+```csharp
+public struct ObjectVariant
+{
+    [MarshalAs(UnmanagedType.Struct)]
+    public object obj;
+}
+```
+
+```cpp
+struct ObjectVariant
+{
+    VARIANT obj;
+};
+```
+
+The following table describes how different runtime types of the `obj` field map to the various types stored in a `VARIANT`:
+
+| .NET Type                                        | VARIANT Type  |
+|--------------------------------------------------|---------------|
+| `byte`                                           | `VT_UI1`      |
+| `sbyte`                                          | `VT_I1`       |
+| `short`                                          | `VT_I2`       |
+| `ushort`                                         | `VT_UI2`      |
+| `int`                                            | `VT_I4`       |
+| `uint`                                           | `VT_UI4`      |
+| `long`                                           | `VT_I8`       |
+| `ulong`                                          | `VT_UI8`      |
+| `float`                                          | `VT_R4`       |
+| `double`                                         | `VT_R8`       |
+| `char`                                           | `VT_UI2`      |
+| `string`                                         | `VT_BSTR`     |
+| `System.Runtime.InteropServices.BStrWrapper`     | `VT_BSTR`     |
+| `object`                                         | `VT_DISPATCH` |
+| `System.Runtime.InteropServices.UnknownWrapper`  | `VT_UNKNOWN`  |
+| `System.Runtime.InteropServices.DispatchWrapper` | `VT_DISPATCH` |
+| `System.Reflection.Missing`                      | `VT_ERROR`    |
+| `(object)null`                                   | `VT_EMPTY`    |
+| `bool`                                           | `VT_BOOL`     |
+| `System.DateTime`                                | `VT_DATE`     |
+| `decimal`                                        | `VT_DECIMAL`  |
+| `System.Runtime.InteropServices.CurrencyWrapper` | `VT_CURRENCY` |
+| `System.DBNull`                                  | `VT_NULL`     |

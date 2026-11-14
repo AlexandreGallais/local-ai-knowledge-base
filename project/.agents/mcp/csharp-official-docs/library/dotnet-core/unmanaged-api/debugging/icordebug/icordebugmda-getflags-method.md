@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugMDA::GetFlags Method"
 title: "ICorDebugMDA::GetFlags Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmda-getflags-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugMDA.GetFlags"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugMDA::GetFlags"
+helpviewer_keywords:
+  - "ICorDebugMDA::GetFlags method [.NET debugging]"
+  - "GetFlags method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugMDA::GetFlags Method
 
-Gets the flags associated with the managed debugging assistant (MDA) represented by ICorDebugMDA.
+Gets the flags associated with the managed debugging assistant (MDA) represented by [ICorDebugMDA](icordebugmda-interface.md).
 
 ## Syntax
 
@@ -22,11 +31,11 @@ HRESULT GetFlags (
 ## Parameters
 
  `pFlags`
- [in] A bitwise combination of the CorDebugMDAFlags enumeration values that specify the settings of the flags for this MDA.
+ [in] A bitwise combination of the [CorDebugMDAFlags](cordebugmdaflags-enumeration.md) enumeration values that specify the settings of the flags for this MDA.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -36,5 +45,5 @@ HRESULT GetFlags (
 
 ## See also
 
-- ICorDebugMDA Interface
-- Diagnose Errors with Managed Debugging Assistants
+- [ICorDebugMDA Interface](icordebugmda-interface.md)
+- [Diagnose Errors with Managed Debugging Assistants](../../../../framework/debug-trace-profile/diagnosing-errors-with-managed-debugging-assistants.md)

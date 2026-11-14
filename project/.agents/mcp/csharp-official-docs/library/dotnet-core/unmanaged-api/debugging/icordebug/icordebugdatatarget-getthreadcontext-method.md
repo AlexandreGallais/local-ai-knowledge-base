@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugDataTarget::GetThreadContext Method"
 title: "ICorDebugDataTarget::GetThreadContext Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugdatatarget-getthreadcontext-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugDataTarget.GetThreadContext Method"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugDataTarget::GetThreadContext"
+helpviewer_keywords:
+  - "ICorDebugDataTarget::GetThreadContext method [.NET debugging]"
+  - "GetThreadContext method, ICorDebugDataTarget interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugDataTarget::GetThreadContext Method
 
 Returns the current thread context for the specified thread.
@@ -37,11 +46,11 @@ HRESULT GetThreadContext(
 
 ## Remarks
 
-On Windows platforms, `pContext` must be a `CONTEXT` structure (defined in WinNT.h) that is appropriate for the machine type specified by the ICorDebugDataTarget::GetPlatform method. `contextFlags` must have the same values as the `ContextFlags` field of the `CONTEXT` structure. The `CONTEXT` structure is processor-specific; refer to the WinNT.h file for details.
+On Windows platforms, `pContext` must be a `CONTEXT` structure (defined in WinNT.h) that is appropriate for the machine type specified by the [ICorDebugDataTarget::GetPlatform](icordebugdatatarget-getplatform-method.md) method. `contextFlags` must have the same values as the `ContextFlags` field of the `CONTEXT` structure. The `CONTEXT` structure is processor-specific; refer to the WinNT.h file for details.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -51,4 +60,4 @@ On Windows platforms, `pContext` must be a `CONTEXT` structure (defined in WinNT
 
 ## See also
 
-- ICorDebugDataTarget Interface
+- [ICorDebugDataTarget Interface](icordebugdatatarget-interface.md)

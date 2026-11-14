@@ -1,12 +1,3 @@
----
-title: "core::iter::sources::empty"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/iter/sources/empty.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::iter::sources::empty
 
 ## fn empty
@@ -21,7 +12,7 @@ Creates an iterator that yields nothing.
 
 Basic usage:
 
-```rust
+```
 use std::iter;
 
 // this could have been an iterator over i32, but alas, it's just not.
@@ -38,4 +29,4 @@ pub struct Empty<T>(marker::PhantomData<fn() -> T>)
 
 An iterator that yields nothing.
 
-This `struct` is created by the `empty()` function. See its documentation for more.
+This `struct` is created by the [`empty()`] function. See its documentation for more.

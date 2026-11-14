@@ -1,10 +1,9 @@
 ---
 title: "Breaking change - .NET CLI `--interactive` defaults to `true` in user scenarios"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/dotnet-cli-interactive.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where the --interactive flag defaults to true in user-centric scenarios."
+ms.date: 4/3/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/45548
 ---
 
 # .NET CLI `--interactive` defaults to `true` in user scenarios
@@ -35,7 +34,7 @@ dotnet restore
 
 ## Type of breaking change
 
-This is a behavioral change.
+This is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

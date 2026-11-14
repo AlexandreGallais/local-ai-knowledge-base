@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: 'Revert behavior with text drag-and-drop operations'"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/wpf/7.0/drag-and-drop.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in Windows Presentation Foundation (WPF) and .NET 7. Drag-and-drop behavior was reverted to .NET Framework behavior when dragging text from a text editor control.
+ms.date: 11/4/2024
+ai-usage: ai-assisted
 ---
 
 # Drag-and-drop operations in text editors
@@ -17,15 +15,15 @@ license: "CC-BY-4.0"
 
 ## Previous behavior
 
-In .NET Core 3.0 through .NET 6, the data type on `System.Windows.DataObject` when dragging text from a text editor control was `System.Windows.DataFormats.Text` or `System.Windows.DataFormats.UnicodeText`.
+In .NET Core 3.0 through .NET 6, the data type on <xref:System.Windows.DataObject?displayProperty=fullName> when dragging text from a text editor control was <xref:System.Windows.DataFormats.Text?displayProperty=nameWithType> or <xref:System.Windows.DataFormats.UnicodeText?displayProperty=nameWithType>.
 
 ## New behavior
 
-Starting in .NET 7, the data type on `System.Windows.DataObject` when dragging text from a text editor control is `System.Windows.DataFormats.StringFormat`.
+Starting in .NET 7, the data type on <xref:System.Windows.DataObject?displayProperty=fullName> when dragging text from a text editor control is <xref:System.Windows.DataFormats.StringFormat?displayProperty=nameWithType>.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -37,4 +35,4 @@ Upgrade older projects to the latest version of .NET to restore the behavior.
 
 ## Affected APIs
 
-- `System.Windows.DataObject`
+- <xref:System.Windows.DataObject?displayProperty=fullName>

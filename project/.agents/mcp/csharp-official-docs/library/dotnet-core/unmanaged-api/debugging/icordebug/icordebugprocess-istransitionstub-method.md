@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugProcess::IsTransitionStub Method"
 title: "ICorDebugProcess::IsTransitionStub Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess-istransitionstub-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugProcess.IsTransitionStub"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugProcess::IsTransitionStub"
+helpviewer_keywords:
+  - "ICorDebugProcess::IsTransitionStub method [.NET debugging]"
+  - "IsTransitionStub method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugProcess::IsTransitionStub Method
 
 Gets a value that indicates whether an address is inside a stub that will cause a transition to managed code.
@@ -35,7 +44,7 @@ You can also identity transition stubs by looking at information in the portable
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

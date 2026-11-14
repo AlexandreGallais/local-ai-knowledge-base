@@ -1,15 +1,6 @@
----
-title: "Migration to Control Flow syntax"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/reference/migrations/control-flow.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Migration to Control Flow syntax
 
-Control flow syntax is available from Angular v17. The new syntax is baked into the template, so you don't need to import `CommonModule` anymore.
+[Control flow syntax](guide/templates/control-flow) is available from Angular v17. The new syntax is baked into the template, so you don't need to import `CommonModule` anymore.
 
 This schematic migrates all existing code in your application to use new Control Flow Syntax.
 

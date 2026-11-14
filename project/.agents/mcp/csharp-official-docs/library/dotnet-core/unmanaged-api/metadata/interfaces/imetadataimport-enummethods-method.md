@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataImport::EnumMethods Method"
 title: "IMetaDataImport::EnumMethods Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-enummethods-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.EnumMethods"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::EnumMethods"
+  - "EnumMethods method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::EnumMethods Method
 
 Enumerates MethodDef tokens representing methods of the specified type.
@@ -29,7 +36,7 @@ HRESULT EnumMethods (
  [in, out] A pointer to the enumerator. This must be NULL for the first call of this method.
 
  `cl`
- [in] A TypeDef token <example-value> the type with the methods to enumerate.
+ [in] A TypeDef token representing the type with the methods to enumerate.
 
  `rMethods`
  [out] The array to store the MethodDef tokens.
@@ -49,7 +56,7 @@ HRESULT EnumMethods (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -57,5 +64,5 @@ HRESULT EnumMethods (
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

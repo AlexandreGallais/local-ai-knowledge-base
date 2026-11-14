@@ -1,22 +1,16 @@
 ---
+id: getting-started-mcp
 title: "Playwright MCP"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/getting-started-mcp.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# Playwright MCP
 
 ## Introduction
 
-The Playwright MCP server provides browser automation capabilities through the Model Context Protocol, enabling LLMs to interact with web pages using structured accessibility snapshots. It works with VS Code, Cursor, Windsurf, Claude Desktop, and any other MCP client — no vision models required.
+The Playwright MCP server provides browser automation capabilities through the [Model Context Protocol](https://modelcontextprotocol.io), enabling LLMs to interact with web pages using structured accessibility snapshots. It works with VS Code, Cursor, Windsurf, Claude Desktop, and any other MCP client — no vision models required.
 
 ## Prerequisites
 
 Before you begin, make sure you have the following installed:
-- Node.js 20 or newer
+- [Node.js](https://nodejs.org/) 20 or newer
 - An MCP client: VS Code, Cursor, Windsurf, Claude Code, Claude Desktop, or similar
 
 ## Getting Started
@@ -42,7 +36,7 @@ Add the Playwright MCP server to your client using the standard configuration:
 
 Click one of the buttons below to install directly:
 
-[](https://insiders.vscode.dev/redirect?url=vscode%3Amcp%2Finstall%3F%257B%2522name%2522%253A%2522playwright%2522%252C%2522command%2522%253A%2522npx%2522%252C%2522args%2522%253A%255B%2522%2540playwright%252Fmcp%2540latest%2522%255D%257D) [](https://insiders.vscode.dev/redirect?url=vscode-insiders%3Amcp%2Finstall%3F%257B%2522name%2522%253A%2522playwright%2522%252C%2522command%2522%253A%2522npx%2522%252C%2522args%2522%253A%255B%2522%2540playwright%252Fmcp%2540latest%2522%255D%257D)
+[<img src="https://img.shields.io/badge/VS_Code-VS_Code?style=flat-square&label=Install%20Server&color=0098FF" alt="Install in VS Code" />](https://insiders.vscode.dev/redirect?url=vscode%3Amcp%2Finstall%3F%257B%2522name%2522%253A%2522playwright%2522%252C%2522command%2522%253A%2522npx%2522%252C%2522args%2522%253A%255B%2522%2540playwright%252Fmcp%2540latest%2522%255D%257D) [<img alt="Install in VS Code Insiders" src="https://img.shields.io/badge/VS_Code_Insiders-VS_Code_Insiders?style=flat-square&label=Install%20Server&color=24bfa5" />](https://insiders.vscode.dev/redirect?url=vscode-insiders%3Amcp%2Finstall%3F%257B%2522name%2522%253A%2522playwright%2522%252C%2522command%2522%253A%2522npx%2522%252C%2522args%2522%253A%255B%2522%2540playwright%252Fmcp%2540latest%2522%255D%257D)
 
 Or install via the VS Code CLI:
 
@@ -52,7 +46,7 @@ code --add-mcp '{"name":"playwright","command":"npx","args":["@playwright/mcp@la
 
 #### Cursor
 
-[](https://cursor.com/en/install-mcp?name=Playwright&config=<example-jwt>%3D%3D)
+[<img src="https://cursor.com/deeplink/mcp-install-dark.svg" alt="Install in Cursor" />](https://cursor.com/en/install-mcp?name=Playwright&config=eyJjb21tYW5kIjoibnB4IEBwbGF5d3JpZ2h0L21jcEBsYXRlc3QifQ%3D%3D)
 
 Or go to `Cursor Settings` → `MCP` → `Add new MCP Server` and use command type with `npx @playwright/mcp@latest`.
 
@@ -64,7 +58,7 @@ claude mcp add playwright npx @playwright/mcp@latest
 
 #### Claude Desktop
 
-Follow the MCP install guide and use the standard config above.
+Follow the MCP install [guide](https://modelcontextprotocol.io/quickstart/user) and use the standard config above.
 
 #### Other clients
 
@@ -137,9 +131,10 @@ Save and restore browser state including cookies and localStorage:
 
 ### WebMCP tools
 
-Pages can register their own tools for agents through the experimental WebMCP API. The tools of the current tab are offered as MCP tools named `webmcp_<tool>`.
+Pages can register their own tools for agents through the experimental [WebMCP](https://webmachinelearning.github.io/webmcp/) API. The tools of the current tab are offered as MCP tools named `webmcp_<tool>`.
 
 Tool names, descriptions, schemas and results are provided by the page, so treat them as untrusted input.
+
 
 ## Configuration
 
@@ -187,7 +182,7 @@ Playwright MCP supports three profile modes:
 
 -   **Persistent (default)**: Login state and cookies are preserved between sessions. The profile is stored in `ms-playwright/mcp-{channel}-{workspace-hash}` in your platform's cache directory, so different projects get separate profiles automatically. Override with `--user-data-dir`.
 -   **Isolated**: Each session starts fresh. Pass `--isolated` to enable. You can load initial state with `--storage-state`.
--   **Browser extension**: Connect to your existing browser tabs with the Playwright Extension. Pass `--extension` to enable.
+-   **Browser extension**: Connect to your existing browser tabs with the [Playwright Extension](https://github.com/microsoft/playwright/blob/main/packages/extension/README.md). Pass `--extension` to enable.
 
 ### Idle timeout
 
@@ -221,7 +216,7 @@ For advanced configuration, use a JSON config file:
 npx @playwright/mcp@latest --config path/to/config.json
 ```
 
-The config file supports browser options, context options, network rules, timeouts, and more. See the Playwright MCP repository for the full schema.
+The config file supports browser options, context options, network rules, timeouts, and more. See the [Playwright MCP repository](https://github.com/microsoft/playwright-mcp/blob/main/config.d.ts) for the full schema.
 
 ### Standalone server
 
@@ -252,7 +247,7 @@ Then point your MCP client to the HTTP endpoint:
 | **Install server**        | Add standard config to your MCP client                        |
 | **Navigate to a page**    | Ask: "Go to https://example.com"                              |
 | **Click an element**      | Ask: "Click the Submit button"                                |
-| **Fill a form**           | Ask: "Fill in the email field with user@example.com"          |
+| **Fill a form**           | Ask: "Fill in the email field with test@example.com"          |
 | **Take a screenshot**     | Ask: "Take a screenshot of the page"                          |
 | **Run Playwright code**   | Ask: "Run this Playwright code: ..."                          |
 | **Mock an API**           | Ask: "Mock the /api/users endpoint to return ..."             |
@@ -261,6 +256,6 @@ Then point your MCP client to the HTTP endpoint:
 
 ## What's Next
 
--   Write tests using web-first assertions, page fixtures, and locators
--   Run your tests on CI
--   Learn more about the Trace Viewer
+-   [Write tests using web-first assertions, page fixtures, and locators](./writing-tests.md)
+-   [Run your tests on CI](./ci-intro.md)
+-   [Learn more about the Trace Viewer](./trace-viewer.md)

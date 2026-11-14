@@ -1,10 +1,10 @@
 ---
-title: "Test organization and metadata in MSTest"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/unit-testing-mstest-writing-tests-organizing.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Test organization and metadata in MSTest
+description: Learn how to organize and categorize tests in MSTest using categories, properties, priorities, owners, and work item references.
+author: Evangelink
+ms.author: amauryleve
+ms.date: 06/16/2026
+ai-usage: ai-assisted
 ---
 
 # Test organization and metadata in MSTest
@@ -24,7 +24,7 @@ Metadata attributes appear in the Visual Studio **Properties** window for test m
 
 ### `TestCategoryAttribute`
 
-The `Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute` groups tests into categories for filtering and organization. You can apply this attribute at the method, class, or assembly level, and categories are combined when applied at multiple levels.
+The <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TestCategoryAttribute> groups tests into categories for filtering and organization. You can apply this attribute at the method, class, or assembly level, and categories are combined when applied at multiple levels.
 
 #### Method-level categories
 
@@ -123,7 +123,7 @@ In Visual Studio Test Explorer, use the search box with `Trait:` prefix:
 
 ### `TestPropertyAttribute`
 
-The `Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute` adds custom key-value metadata to tests. Use this attribute when built-in attributes don't meet your needs.
+The <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute> adds custom key-value metadata to tests. Use this attribute when built-in attributes don't meet your needs.
 
 ```csharp
 [TestClass]
@@ -161,7 +161,7 @@ dotnet test --filter "Feature=Authentication"
 
 ### `OwnerAttribute`
 
-The `Microsoft.VisualStudio.TestTools.UnitTesting.OwnerAttribute` identifies who's responsible for a test.
+The <xref:Microsoft.VisualStudio.TestTools.UnitTesting.OwnerAttribute> identifies who's responsible for a test.
 
 ```csharp
 [TestClass]
@@ -191,7 +191,7 @@ dotnet test --filter Owner=jsmith
 
 ### `PriorityAttribute`
 
-The `Microsoft.VisualStudio.TestTools.UnitTesting.PriorityAttribute` indicates relative test importance. Lower values indicate higher priority.
+The <xref:Microsoft.VisualStudio.TestTools.UnitTesting.PriorityAttribute> indicates relative test importance. Lower values indicate higher priority.
 
 ```csharp
 [TestClass]
@@ -232,10 +232,10 @@ dotnet test --filter "Priority=0|Priority=1"
 
 ### `DescriptionAttribute`
 
-The `Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute` provides a human-readable description of what the test verifies.
+The <xref:Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute> provides a human-readable description of what the test verifies.
 
-> **Warning:**
-> Use `Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute`, not `System.ComponentModel.DescriptionAttribute`. The MSTEST0031 analyzer detects incorrect usage.
+> [!WARNING]
+> Use `Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute`, not `System.ComponentModel.DescriptionAttribute`. The [MSTEST0031](mstest-analyzers/mstest0031.md) analyzer detects incorrect usage.
 
 ```csharp
 [TestClass]
@@ -261,7 +261,7 @@ public class DocumentedTests
 
 ### `WorkItemAttribute`
 
-The `Microsoft.VisualStudio.TestTools.UnitTesting.WorkItemAttribute` links tests to work items in your tracking system (like Azure DevOps).
+The <xref:Microsoft.VisualStudio.TestTools.UnitTesting.WorkItemAttribute> links tests to work items in your tracking system (like Azure DevOps).
 
 ```csharp
 [TestClass]
@@ -287,9 +287,9 @@ public class BugFixTests
 
 ### `GitHubWorkItemAttribute`
 
-The `Microsoft.VisualStudio.TestTools.UnitTesting.GitHubWorkItemAttribute` links tests to GitHub issues.
+The <xref:Microsoft.VisualStudio.TestTools.UnitTesting.GitHubWorkItemAttribute> links tests to GitHub issues.
 
-> **Note:**
+> [!NOTE]
 > The `GitHubWorkItemAttribute` was introduced in MSTest 3.8.
 
 ```csharp
@@ -398,12 +398,12 @@ Use the search box in Test Explorer:
 - `Trait:"Owner=jsmith"` - filter by owner
 - `Trait:"Priority=0"` - filter by priority
 
-For more information on test filtering, see Run selective unit tests.
+For more information on test filtering, see [Run selective unit tests](selective-unit-tests.md).
 
 ## See also
 
-- Run selective unit tests
-- Write tests in MSTest
-- Test execution and control
-- MSTEST0015: Test method should not be ignored
-- MSTEST0031: Do not use System.ComponentModel.DescriptionAttribute
+- [Run selective unit tests](selective-unit-tests.md)
+- [Write tests in MSTest](unit-testing-mstest-writing-tests.md)
+- [Test execution and control](unit-testing-mstest-writing-tests-controlling-execution.md)
+- [MSTEST0015: Test method should not be ignored](mstest-analyzers/mstest0015.md)
+- [MSTEST0031: Do not use System.ComponentModel.DescriptionAttribute](mstest-analyzers/mstest0031.md)

@@ -1,19 +1,13 @@
----
-title: "consistent-function-scoping"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/consistent-function-scoping.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # consistent-function-scoping
 
 📝 Move function definitions to the highest possible scope.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-A function definition should be placed as close to the top-level scope as possible without breaking its captured values. This improves readability, directly improves performance and allows JavaScript engines to better optimize performance.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+A function definition should be placed as close to the top-level scope as possible without breaking its captured values. This improves readability, [directly improves performance](https://stackoverflow.com/a/81329/207247) and allows JavaScript engines to [better optimize performance](https://ponyfoo.com/articles/javascript-performance-pitfalls-v8#optimization-limit).
 
 ## Examples
 
@@ -135,7 +129,7 @@ function doFoo(foo) {
 }
 ```
 
-Immediately invoked function expressions (IIFE) are ignored:
+[Immediately invoked function expressions (IIFE)](https://en.wikipedia.org/wiki/Immediately_invoked_function_expression) are ignored:
 
 ```js
 (function () {
@@ -145,7 +139,7 @@ Immediately invoked function expressions (IIFE) are ignored:
 })();
 ```
 
-Built-in Hooks in React are ignored:
+[Built-in Hooks in React](https://reactjs.org/docs/hooks-reference.html) are ignored:
 
 ```js
 useEffect(() => {

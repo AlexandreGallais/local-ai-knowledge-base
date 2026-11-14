@@ -1,14 +1,3 @@
----
-title: "make-x509-cert"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/make-x509-cert.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
+On Windows, self-signed certificates can be created by using the [New-SelfSignedCertificate PowerShell cmdlet](/powershell/module/pki/new-selfsignedcertificate). For an unsupported example, see the [UpdateIISExpressSSLForChrome.ps1](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/includes/make-x509-cert/UpdateIISExpressSSLForChrome.ps1) certificate file on GitHub.
 
-# make-x509-cert
-
-On Windows, self-signed certificates can be created by using the New-SelfSignedCertificate PowerShell cmdlet. For an unsupported example, see the UpdateIISExpressSSLForChrome.ps1 certificate file on GitHub.
-
-On macOS, Linux, and Windows, create certificates can be created by using OpenSSL.
+On macOS, Linux, and Windows, create certificates can be created by using [OpenSSL](https://www.openssl.org/).

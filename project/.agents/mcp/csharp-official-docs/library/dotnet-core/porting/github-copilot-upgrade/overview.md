@@ -1,10 +1,13 @@
 ---
-title: "GitHub Copilot upgrade overview"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/github-copilot-upgrade/overview.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: GitHub Copilot upgrade overview
+description: "Learn how GitHub Copilot upgrade assesses, plans, executes, and validates upgrades for supported project technologies."
+titleSuffix: ""
+ms.topic: overview
+ms.date: 09/21/2026
+ai-usage: ai-assisted
+
+#customer intent: As a developer, I want to understand GitHub Copilot upgrade so that I can determine whether it supports my project and upgrade goal.
+
 ---
 
 # What is GitHub Copilot upgrade?
@@ -24,8 +27,8 @@ Choose the technology pack that matches your project:
 
 | Technology | Supported work |
 |---|---|
-| .NET | Upgrade .NET and .NET Framework projects, modernize project files, replace libraries, and migrate application architectures. |
-| JavaScript and TypeScript | Upgrade npm dependencies and the TypeScript compiler, repair compatibility problems, and validate application behavior. |
+| [.NET](dotnet-overview.md) | Upgrade .NET and .NET Framework projects, modernize project files, replace libraries, and migrate application architectures. |
+| [JavaScript and TypeScript](javascript-typescript-overview.md) | Upgrade npm dependencies and the TypeScript compiler, repair compatibility problems, and validate application behavior. |
 
 Each technology pack can provide its own scenarios, focused capabilities, prerequisites, and validation process. Additional technology packs can extend the agent without changing the shared workflow concepts.
 
@@ -41,29 +44,29 @@ The agent provides multiple end-to-end modernization workflows called _scenarios
 | **SqlClient upgrade** | Upgrades from System.Data.SqlClient to Microsoft.Data.SqlClient. | _"Update SqlClient"_ |
 | **Azure Functions upgrade** | Upgrades Azure Functions from in-process to isolated worker model. | _"Upgrade my Azure Functions"_ |
 | **Semantic Kernel to Agents** | Upgrades Semantic Kernel Agents to Microsoft Agent Framework. | _"Upgrade my SK agents"_ |
-| **Aspire integration** | Adds Aspire support for inner-loop and Azure deployment. | _"Add Aspire to my app"_ |
+| **Aspire integration** | Adds [Aspire](https://aspire.dev) support for inner-loop and Azure deployment. | _"Add Aspire to my app"_ |
 | **Aspire version upgrade** | Upgrades existing Aspire applications to newer versions. | _"Upgrade my Aspire version"_ |
 | **WebForms-to-Blazor upgrade** | Upgrades ASP.NET Web Forms applications to Blazor. | _"Migrate my Web Forms app to Blazor"_ |
 | **JavaScript and TypeScript dependency upgrade** | Updates selected npm packages or all project dependencies and repairs breaking changes. | _"Upgrade all dependencies in this project"_ |
 | **TypeScript compiler upgrade** | Moves a project through TypeScript compiler versions and resolves new compiler errors. | _"Upgrade TypeScript to version 7"_ |
 
-For technology-specific details, see .NET scenarios and skills or JavaScript and TypeScript capabilities.
+For technology-specific details, see [.NET scenarios and skills](dotnet-scenarios-and-skills.md) or [JavaScript and TypeScript capabilities](javascript-typescript-capabilities.md).
 
 ## Provide feedback
 
 Microsoft values your feedback and uses it to improve the agent. Leave feedback using either of these options:
 
-- In Visual Studio, use the Suggest a feature and Report a problem options.
+- In Visual Studio, use the [Suggest a feature](/visualstudio/ide/suggest-a-feature) and [Report a problem](/visualstudio/ide/report-a-problem) options.
 
-- File an issue at the Upgrade Agent GitHub repository.
+- File an issue at the [Upgrade Agent GitHub repository](https://github.com/microsoft/upgrade-agent-plugins).
 
 ## Prerequisites
 
-Set up GitHub Copilot upgrade in your development environment before using the agent. For installation steps, see Install GitHub Copilot upgrade.
+Set up GitHub Copilot upgrade in your development environment before using the agent. For installation steps, see [Install GitHub Copilot upgrade](install.md).
 
 ## Upgrade .NET projects
 
-The upgrade agent supports upgrading C# and Visual Basic <example-value> of the following types:
+The upgrade agent supports upgrading C# and Visual Basic projects of the following types:
 
 - ASP.NET Core (and related technologies such as MVC, Razor Pages, and Web API)
 - ASP.NET Web Forms
@@ -77,41 +80,29 @@ The upgrade agent supports upgrading C# and Visual Basic <example-value> of the 
 - Console apps
 - Test projects (MSTest, NUnit, and xUnit)
 
-To start an upgrade, see Upgrade a .NET app with GitHub Copilot upgrade.
+To start an upgrade, see [Upgrade a .NET app with GitHub Copilot upgrade](dotnet-how-to-upgrade-with-github-copilot.md).
 
 ### Supported upgrade paths
 
 The agent supports the following upgrade paths:
 
-| Source                       | Target                    |
-|------------------------------|---------------------------|
-| .NET Framework (any version) | .NET 8 or later           |
-| .NET Framework (any version) | .NET Framework 4.8.1      |
-| .NET Core 1.x–3.x            | .NET 8 or later           |
-| .NET 5 or later              | .NET 8 or later           |
+[!INCLUDE[supported-upgrade-paths](./includes/supported-upgrade-paths.md)]
 
 ## Migrate .NET projects to Azure
 
-To migrate your .NET applications to Azure, use the GitHub Copilot modernization agent. The modernization agent handles Azure-specific scenarios such as database migration, storage, identity, messaging, and deployment.
+To migrate your .NET applications to Azure, use the [GitHub Copilot modernization agent](../../../azure/migration/appmod/overview.md). The modernization agent handles Azure-specific scenarios such as database migration, storage, identity, messaging, and deployment.
 
 ## Monitor upgrades with the dashboard
 
 The Upgrade Dashboard provides a visual view of an upgrade session in GitHub Copilot CLI and GitHub Copilot app. Use its panels to track overall progress, scenarios, tasks, projects, dependencies, assessment results, upgrade options, and agent activity.
 
-To open the dashboard, ask Copilot to show it during an upgrade session. The dashboard isn't currently available in Visual Studio, Visual Studio Code, or other IDEs. For details about each panel, see Monitor upgrades with the Upgrade Dashboard.
+To open the dashboard, ask Copilot to show it during an upgrade session. The dashboard isn't currently available in Visual Studio, Visual Studio Code, or other IDEs. For details about each panel, see [Monitor upgrades with the Upgrade Dashboard](dashboard.md).
 
 ## How it works
 
 To start an upgrade or migration process, see:
 
-1. Start the agent by using one of these methods:
-
-   - **Visual Studio**: Right-click the solution or project in **Solution Explorer** and select **Modernize**. Alternatively, open the **GitHub Copilot Chat** window and type `@Modernize`.
-   - **Visual Studio Code**: Open the **GitHub Copilot Chat** panel and type `@upgrade`.
-   - **GitHub Copilot CLI**: Type `@upgrade` followed by your upgrade or migration request.
-   - **GitHub Copilot app**: In the **Agent** picker, select `Upgrade`.
-
-1. Tell the agent what to upgrade or migrate.
+[!INCLUDE[github-copilot-how-to-initiate](./includes/how-to-initiate.md)]
 
 When you ask the upgrade agent to upgrade your app, Copilot first prompts you to create a new branch if you're working in a Git repository. Then Copilot assesses your project and runs a three-stage workflow. Each stage produces Markdown files under `.github/upgrades/{scenarioId}` in your repository so you can review what comes next before you continue. If `.github/upgrades/{scenarioId}` already exists from a prior attempt, Copilot asks whether to continue or start fresh.
 
@@ -162,7 +153,7 @@ The agent stores all upgrade state in `.github/upgrades/{scenarioId}/`. The fold
 
 Because all state lives in this folder, you can close your IDE, switch between sessions, or even switch between development environments (for example, start in VS Code and continue in Visual Studio). The agent picks up where it left off.
 
-> **Tip:**
+> [!TIP]
 > Commit the `.github/upgrades/` folder to your branch. The committed state serves as a backup and lets team members view upgrade progress.
 
 ### Perform the upgrade
@@ -179,15 +170,15 @@ When the upgrade finishes, Copilot displays next steps in the chat response.
 
 ## Telemetry
 
-The tool collects data about project types, intent to upgrade, and upgrade duration. The development environment collects and aggregates the data and doesn't contain any user-identifiable information. For more information about Microsoft's privacy policy, see Visual Studio Customer Experience Improvement Program.
+The tool collects data about project types, intent to upgrade, and upgrade duration. The development environment collects and aggregates the data and doesn't contain any user-identifiable information. For more information about Microsoft's privacy policy, see [Visual Studio Customer Experience Improvement Program](/visualstudio/ide/visual-studio-experience-improvement-program?view=visualstudio&preserve-view=true).
 
 ## Related content
 
-- Install GitHub Copilot upgrade
-- Upgrade a .NET app with GitHub Copilot upgrade
-- Monitor upgrades with the Upgrade Dashboard
-- Core concepts
-- .NET scenarios and skills
-- Best practices
-- Troubleshoot GitHub Copilot upgrade
-- GitHub Copilot upgrade FAQ
+- [Install GitHub Copilot upgrade](install.md)
+- [Upgrade a .NET app with GitHub Copilot upgrade](dotnet-how-to-upgrade-with-github-copilot.md)
+- [Monitor upgrades with the Upgrade Dashboard](dashboard.md)
+- [Core concepts](concepts.md)
+- [.NET scenarios and skills](dotnet-scenarios-and-skills.md)
+- [Best practices](best-practices.md)
+- [Troubleshoot GitHub Copilot upgrade](troubleshooting.md)
+- [GitHub Copilot upgrade FAQ](faq.yml)

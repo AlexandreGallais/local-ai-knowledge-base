@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugGCReferenceEnum::Next Method"
 title: "ICorDebugGCReferenceEnum::Next Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebuggcreferenceenum-next-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugGCReferenceEnum.Next"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugGCReferenceEnum::Next"
+helpviewer_keywords:
+  - "Next method, ICorDebugGCReferenceEnum interface [.NET debugging]"
+  - "ICorDebugGCReferenceEnum::Next method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugGCReferenceEnum::Next Method
 
-Gets the specified number of COR_GC_REFERENCE instances that contain information about objects that will be garbage-collected.
+Gets the specified number of [COR_GC_REFERENCE](cor-gc-reference-structure.md) instances that contain information about objects that will be garbage-collected.
 
 ## Syntax
 
@@ -26,14 +35,16 @@ celt
  [in] The number of roots to be retrieved.
 
 roots
- [out] An array of pointers, each of which points to a COR_GC_REFERENCE object that represents the root of an object to be garbage-collected.
+ [out] An array of pointers, each of which points to a [COR_GC_REFERENCE](cor-gc-reference-structure.md) object that represents the root of an object to be garbage-collected.
 
 pceltFetched
- [out] A pointer to the number of COR_GC_REFERENCE objects actually returned in `roots`. This value may be `null` if `celt` is 1.
+ [out] A pointer to the number of [COR_GC_REFERENCE](cor-gc-reference-structure.md) objects actually returned in `roots`. This value may be `null` if `celt` is 1.
+
+## Remarks
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -43,4 +54,4 @@ pceltFetched
 
 ## See also
 
-- ICorDebugGCReferenceEnum Interface
+- [ICorDebugGCReferenceEnum Interface](icordebuggcreferenceenum-interface.md)

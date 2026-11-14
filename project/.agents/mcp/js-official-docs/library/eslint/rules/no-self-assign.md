@@ -1,13 +1,9 @@
 ---
-title: "no-self-assign"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-self-assign.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-self-assign
+rule_type: problem
 ---
 
-# no-self-assign
+
 
 Self assignments have no effect, so probably those are an error due to incomplete refactoring.
 Those indicate that what you should do is still remaining.
@@ -23,7 +19,7 @@ This rule is aimed at eliminating self assignments.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-self-assign: "error"*/
@@ -41,9 +37,11 @@ foo ||= foo;
 foo ??= foo;
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-self-assign: "error"*/
@@ -76,6 +74,8 @@ obj[a + b] = obj[a + b];
 obj["a" + "b"] = obj["a" + "b"];
 ```
 
+:::
+
 ## Options
 
 This rule has the option to check properties as well.
@@ -92,7 +92,7 @@ This rule has the option to check properties as well.
 
 Examples of **correct** code with the `{ "props": false }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-self-assign: ["error", {"props": false}]*/
@@ -103,6 +103,8 @@ obj.a.b = obj.a.b;
 obj["a"] = obj["a"];
 obj[a] = obj[a];
 ```
+
+:::
 
 ## When Not To Use It
 

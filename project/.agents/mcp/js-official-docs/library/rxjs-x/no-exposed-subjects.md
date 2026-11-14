@@ -1,17 +1,10 @@
----
-title: "Disallow public and protected subjects (rxjs-x/no-exposed-subjects)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/no-exposed-subjects.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Disallow public and protected subjects (`rxjs-x/no-exposed-subjects`)
 
 💼 This rule is enabled in the 🔒 `strict` config.
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule prevents exposed (i.e. non-private) subjects. Developers should instead expose observables via the subjects' `asObservable` method.
 
@@ -43,9 +36,13 @@ class Answers {
 
 ## Options
 
+<!-- begin auto-generated rule options list -->
+
 | Name             | Description               | Type    | Default |
 | :--------------- | :------------------------ | :------ | :------ |
 | `allowProtected` | Allow protected subjects. | Boolean | `false` |
+
+<!-- end auto-generated rule options list -->
 
 This rule accepts a single option which is an object with an `allowProtected` property that determines whether or not protected subjects are allowed. By default, they are not.
 
@@ -67,5 +64,5 @@ Type checked lint rules are more powerful than traditional lint rules, but also 
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/no-exposed-subjects.ts)
+- [Test source](/tests/rules/no-exposed-subjects.test.ts)

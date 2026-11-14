@@ -1,19 +1,20 @@
 ---
-title: "Using Matchers | Guide"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/learn/matchers.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Using Matchers | Guide
+prev:
+  text: Writing Tests
+  link: /guide/learn/writing-tests
+next:
+  text: Testing Asynchronous Code
+  link: /guide/learn/async
 ---
 
 # Using Matchers
 
-Vitest uses `expect` with "matchers" to assert that values meet certain conditions. This page covers the matchers you'll use most often. For the complete list, see the Expect API Reference.
+Vitest uses `expect` with "matchers" to assert that values meet certain conditions. This page covers the matchers you'll use most often. For the complete list, see the [Expect API Reference](/api/expect).
 
 ## Common Matchers
 
-The simplest way to test a value is with exact equality. When you write `expect(2 + 2).toBe(4)`, the `toBe` matcher checks that the value is exactly `4` using `Object.is`.
+The simplest way to test a value is with exact equality. When you write `expect(2 + 2).toBe(4)`, the [`toBe`](/api/expect#tobe) matcher checks that the value is exactly `4` using [`Object.is`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is).
 
 ```js
 import { expect, test } from 'vitest'
@@ -23,7 +24,7 @@ test('two plus two is four', () => {
 })
 ```
 
-This works great for primitive values like numbers, strings, and booleans. But when you're comparing objects, `toBe` checks _identity_ (whether they're the exact same object in memory), not whether they have the same shape. That's where `toEqual` comes in. It recursively compares every field of an object or element of an array, ignoring object identity:
+This works great for primitive values like numbers, strings, and booleans. But when you're comparing objects, `toBe` checks _identity_ (whether they're the exact same object in memory), not whether they have the same shape. That's where [`toEqual`](/api/expect#toequal) comes in. It recursively compares every field of an object or element of an array, ignoring object identity:
 
 ```js
 test('object assignment', () => {
@@ -49,7 +50,7 @@ test('toBe vs toEqual', () => {
 })
 ```
 
-There's also `toStrictEqual`, which is stricter than `toEqual` in three ways: it checks `undefined` properties, distinguishes sparse arrays from `undefined` values, and verifies that objects have the same type (not just the same shape):
+There's also [`toStrictEqual`](/api/expect#tostrictequal), which is stricter than `toEqual` in three ways: it checks `undefined` properties, distinguishes sparse arrays from `undefined` values, and verifies that objects have the same type (not just the same shape):
 
 ```js
 test('toEqual vs toStrictEqual', () => {
@@ -70,8 +71,9 @@ test('toEqual vs toStrictEqual', () => {
 })
 ```
 
-**Tip:**
+::: tip
 A good rule of thumb: use `toBe` for primitives (numbers, strings, booleans), `toEqual` for comparing structure, and `toStrictEqual` when you also care about types and explicit `undefined` values.
+:::
 
 You can also negate any matcher by inserting `.not` before it. This is useful when you want to verify that something is _not_ the case:
 
@@ -85,11 +87,11 @@ test('adding positive numbers is not zero', () => {
 
 In tests you sometimes need to distinguish between `undefined`, `null`, and `false`. Other times you don't care about the exact value and just want to know if something is truthy or falsy. Vitest provides matchers for both situations:
 
-- `toBeNull` matches only `null`
-- `toBeUndefined` matches only `undefined`
-- `toBeDefined` is the opposite of `toBeUndefined`. It passes for anything that isn't `undefined`
-- `toBeTruthy` matches anything that an `if` statement would treat as true
-- `toBeFalsy` matches anything that an `if` statement would treat as false
+- [`toBeNull`](/api/expect#tobenull) matches only `null`
+- [`toBeUndefined`](/api/expect#tobeundefined) matches only `undefined`
+- [`toBeDefined`](/api/expect#tobedefined) is the opposite of `toBeUndefined`. It passes for anything that isn't `undefined`
+- [`toBeTruthy`](/api/expect#tobetruthy) matches anything that an `if` statement would treat as true
+- [`toBeFalsy`](/api/expect#tobefalsy) matches anything that an `if` statement would treat as false
 
 You should pick the matcher that most precisely describes what you're checking. Using `toBeTruthy` when you really mean `toBeDefined` can hide bugs, because `0` and `""` are both defined but falsy.
 
@@ -132,7 +134,7 @@ test('number comparisons', () => {
 })
 ```
 
-There is one common gotcha with floating point arithmetic. In JavaScript, `0.1 + 0.2` doesn't equal `0.3` exactly (it's `0.30000000000000004`). This means a `toBe(0.3)` check will fail. Use `toBeCloseTo` instead, which compares numbers within a small rounding error:
+There is one common gotcha with floating point arithmetic. In JavaScript, `0.1 + 0.2` doesn't equal `0.3` exactly (it's `0.30000000000000004`). This means a `toBe(0.3)` check will fail. Use [`toBeCloseTo`](/api/expect#tobecloseto) instead, which compares numbers within a small rounding error:
 
 ```js
 test('adding floating point numbers', () => {
@@ -148,7 +150,7 @@ test('adding floating point numbers', () => {
 
 ## Strings
 
-You can test strings against regular expressions with `toMatch`. This is especially handy when you care about a pattern rather than an exact value, like checking that an error message contains a certain word or that a URL matches a particular format:
+You can test strings against regular expressions with [`toMatch`](/api/expect#tomatch). This is especially handy when you care about a pattern rather than an exact value, like checking that an error message contains a certain word or that a URL matches a particular format:
 
 ```js
 test('there is no I in team', () => {
@@ -156,13 +158,13 @@ test('there is no I in team', () => {
 })
 
 test('version string matches semver format', () => {
-  expect('user@example.com').toMatch(/vitest@\d+\.\d+\.\d+/)
+  expect('vitest@1.0.0').toMatch(/vitest@\d+\.\d+\.\d+/)
 })
 ```
 
 ## Arrays and Iterables
 
-`toContain` checks that an array (or any iterable, like a `Set`) includes a particular item. It uses `===` for comparison, so it works well for primitives:
+[`toContain`](/api/expect#tocontain) checks that an array (or any iterable, like a `Set`) includes a particular item. It uses `===` for comparison, so it works well for primitives:
 
 ```js
 test('the shopping list has milk in it', () => {
@@ -173,30 +175,30 @@ test('the shopping list has milk in it', () => {
 })
 ```
 
-If you need to check that an array contains an object with a particular structure, use `toContainEqual` instead. It works like `toEqual` but for individual items inside an array.
+If you need to check that an array contains an object with a particular structure, use [`toContainEqual`](/api/expect#tocontainequal) instead. It works like `toEqual` but for individual items inside an array.
 
 ## Objects
 
-When testing objects, you often want to check only a few important fields without specifying every property. `toMatchObject` lets you do exactly that. It verifies that the object contains at least the properties you specify, and ignores any additional ones:
+When testing objects, you often want to check only a few important fields without specifying every property. [`toMatchObject`](/api/expect#tomatchobject) lets you do exactly that. It verifies that the object contains at least the properties you specify, and ignores any additional ones:
 
 ```js
 test('user has expected fields', () => {
   const user = {
     id: 1,
     name: 'Alice',
-    email: 'user@example.com',
+    email: 'alice@example.com',
     createdAt: '2024-01-01'
   }
 
   // We only care about name and email here
   expect(user).toMatchObject({
     name: 'Alice',
-    email: 'user@example.com',
+    email: 'alice@example.com',
   })
 })
 ```
 
-For checking individual properties, especially nested ones, `toHaveProperty` is more readable. You pass a dot-separated path and optionally an expected value:
+For checking individual properties, especially nested ones, [`toHaveProperty`](/api/expect#tohaveproperty) is more readable. You pass a dot-separated path and optionally an expected value:
 
 ```js
 test('object has property', () => {
@@ -231,15 +233,15 @@ test('user has the right shape', () => {
 
 The most common asymmetric matchers are:
 
-- `expect.any(Constructor)` matches any value created with the given constructor (e.g., `Number`, `String`, `Array`)
-- `expect.stringContaining(str)` matches a string that includes the given substring
-- `expect.stringMatching(regex)` matches a string against a regular expression
-- `expect.arrayContaining(arr)` matches an array that includes all items in the expected array (order doesn't matter, extra items are allowed)
-- `expect.objectContaining(obj)` matches an object that includes at least the specified properties
+- [`expect.any(Constructor)`](/api/expect#expect-any) matches any value created with the given constructor (e.g., `Number`, `String`, `Array`)
+- [`expect.stringContaining(str)`](/api/expect#expect-stringcontaining) matches a string that includes the given substring
+- [`expect.stringMatching(regex)`](/api/expect#expect-stringmatching) matches a string against a regular expression
+- [`expect.arrayContaining(arr)`](/api/expect#expect-arraycontaining) matches an array that includes all items in the expected array (order doesn't matter, extra items are allowed)
+- [`expect.objectContaining(obj)`](/api/expect#expect-objectcontaining) matches an object that includes at least the specified properties
 
 ## Exceptions
 
-To verify that a function throws an error, use `toThrow`. You need to wrap the call in another function so that Vitest can catch the error instead of letting it crash the test:
+To verify that a function throws an error, use [`toThrow`](/api/expect#tothrow). You need to wrap the call in another function so that Vitest can catch the error instead of letting it crash the test:
 
 ```js
 function compileCode(code) {
@@ -261,14 +263,15 @@ test('compiling an empty string throws', () => {
 })
 ```
 
-**Tip:**
+::: tip
 The wrapping function `() => compileCode('')` is important. If you wrote `expect(compileCode('')).toThrow()`, the error would be thrown _before_ `expect` gets a chance to catch it, and the test would fail with an unhandled error instead.
+:::
 
 ## Soft Assertions
 
 Normally, a failing assertion stops the test immediately. That's useful most of the time, but sometimes you want to check several independent things and see all the failures at once rather than fixing them one by one.
 
-`expect.soft` does exactly that. It records the failure but lets the test keep running:
+[`expect.soft`](/api/expect#soft) does exactly that. It records the failure but lets the test keep running:
 
 ```js
 test('check multiple fields', () => {

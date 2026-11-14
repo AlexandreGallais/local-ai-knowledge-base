@@ -1,10 +1,8 @@
 ---
 title: "Breaking change - dnx.ps1 file is no longer included in .NET SDK"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/dnx-ps1-removed.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where the dnx.ps1 script is no longer included in Windows versions of the .NET SDK."
+ms.date: 10/13/2025
+ai-usage: ai-assisted
 ---
 
 # dnx.ps1 file is no longer included in .NET SDK
@@ -25,11 +23,11 @@ Starting in .NET 10 GA, the `dnx.ps1` script is no longer included. The `dnx.cmd
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect <a>source compatibility</a>.
 
 ## Reason for change
 
-The `dnx.ps1` script was added to avoid an extra `Terminate Batch Job` prompt when cancelling tools run via `dnx` with `Ctrl+C`. However, PowerShell has special handling for `--`, so if `--` was passed on the command line, it never made it through to `dnx`. This meant that in PowerShell, it was impossible to pass <example-value> to a tool using `dnx` if `dnx` itself has the same option. For example, `dnx dotnet-serve -- --help` showed the help for `dnx` instead of the help for `dotnet-serve`.
+The `dnx.ps1` script was added to avoid an extra `Terminate Batch Job` prompt when cancelling tools run via `dnx` with <kbd>Ctrl+C</kbd>. However, PowerShell has special handling for `--`, so if `--` was passed on the command line, it never made it through to `dnx`. This meant that in PowerShell, it was impossible to pass options to a tool using `dnx` if `dnx` itself has the same option. For example, `dnx dotnet-serve -- --help` showed the help for `dnx` instead of the help for `dotnet-serve`.
 
 ## Recommended action
 

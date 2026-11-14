@@ -1,26 +1,23 @@
----
-title: "vitest/consistent-test-filename"
-tool: "eslint-vitest"
-version: "1.6"
-source: "https://github.com/vitest-dev/eslint-plugin-vitest/blob/c5df1054a25044a7ca5baf07461b7aee1f15f5f2/docs/rules/consistent-test-filename.md"
-commit: "c5df1054a25044a7ca5baf07461b7aee1f15f5f2"
-license: "MIT"
----
-
 # vitest/consistent-test-filename
 
 📝 Require test file pattern.
 
 ⚠️ This rule _warns_ in the 🌐 `all` config.
 
+<!-- end auto-generated rule header -->
+
 ## Rule Details
 
 ### Options
+
+<!-- begin auto-generated rule options list -->
 
 | Name             | Description                                              | Type   | Default                      |
 | :--------------- | :------------------------------------------------------- | :----- | :--------------------------- |
 | `allTestPattern` | Regex pattern used to identify all possible test files.  | String | `.*\.(test\|spec)\.[tj]sx?$` |
 | `pattern`        | Regex pattern for files that should be treated as tests. | String | `.*\.test\.[tj]sx?$`         |
+
+<!-- end auto-generated rule options list -->
 
 ```json
 {

@@ -1,15 +1,21 @@
 ---
+description: "Learn more about: CorGenericParamAttr Enumeration"
 title: "CorGenericParamAttr Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/enumerations/corgenericparamattr-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "CorGenericParamAttr"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "CorGenericParamAttr"
+topic_type:
+  - "apiref"
 ---
-
 # CorGenericParamAttr Enumeration
 
-Contains values that describe the `System.Type` parameters for generic types, as used in calls to IMetaDataEmit2::DefineGenericParam.
+Contains values that describe the <xref:System.Type> parameters for generic types, as used in calls to [IMetaDataEmit2::DefineGenericParam](../interfaces/imetadataemit2-definegenericparam-method.md).
 
 ## Syntax
 
@@ -39,16 +45,16 @@ typedef enum CorGenericParamAttr {
 | `gpNonVariant`              | Indicates the absence of variance.                                                  |
 | `gpCovariant`               | Indicates covariance.                                                               |
 | `gpContravariant`           | Indicates contravariance.                                                           |
-| `gpSpecialConstraintMask`   | Special constraints can apply to any `System.Type` parameter.                  |
-| `gpNoSpecialConstraint`     | Indicates that no constraint applies to the `System.Type` parameter.           |
-| `gpReferenceTypeConstraint` | Indicates that the `System.Type` parameter must be a reference type.           |
-| `gpNotNullableValueTypeConstraint` |Indicates that the `System.Type` parameter must be a value type that cannot be a null value.|
-| `gpDefaultConstructorConstraint` |Indicates that the `System.Type` parameter must have a default public constructor that takes no parameters.|
-| `gpAllowByRefLike` |Indicates that the `System.Type` parameter can be a byref-like type. (Available since .NET 7.) |
+| `gpSpecialConstraintMask`   | Special constraints can apply to any <xref:System.Type> parameter.                  |
+| `gpNoSpecialConstraint`     | Indicates that no constraint applies to the <xref:System.Type> parameter.           |
+| `gpReferenceTypeConstraint` | Indicates that the <xref:System.Type> parameter must be a reference type.           |
+| `gpNotNullableValueTypeConstraint` |Indicates that the <xref:System.Type> parameter must be a value type that cannot be a null value.|
+| `gpDefaultConstructorConstraint` |Indicates that the <xref:System.Type> parameter must have a default public constructor that takes no parameters.|
+| `gpAllowByRefLike` |Indicates that the <xref:System.Type> parameter can be a [byref-like type](xref:System.Type.IsByRefLike). (Available since .NET 7.) |
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorHdr.h
 

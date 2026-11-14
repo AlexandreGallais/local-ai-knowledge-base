@@ -1,20 +1,11 @@
----
-title: "PrimitiveSlot class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/LiveStackFrame.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # PrimitiveSlot class (java.lang)
 
 ```java
 public abstract class PrimitiveSlot
 ```
 
-*UNSUPPORTED* This interface is intended to be package-private
-or moved to an internal package.
+<em>UNSUPPORTED</em> This interface is intended to be package-private
+or moved to an internal package.<p>
 
 Represents a local variable or an entry on the operand stack whose value is
 of primitive type.
@@ -34,12 +25,10 @@ public int intValue()
 ```
 
 Returns the int value if this primitive value is of size 4
+@return the int value if this primitive value is of size 4
 
-**Returns:** the int value if this primitive value is of size 4
-
-Throws:
-
-- `UnsupportedOperationException`: if this primitive value is not of size 4.
+@throws UnsupportedOperationException if this primitive value is not
+of size 4.
 
 ## PrimitiveSlot.longValue()
 
@@ -48,12 +37,10 @@ public long longValue()
 ```
 
 Returns the long value if this primitive value is of size 8
+@return the long value if this primitive value is of size 8
 
-**Returns:** the long value if this primitive value is of size 8
-
-Throws:
-
-- `UnsupportedOperationException`: if this primitive value is not of size 8.
+@throws UnsupportedOperationException if this primitive value is not
+of size 8.
 
 ## PrimitiveSlot.getStackWalker()
 
@@ -61,7 +48,7 @@ Throws:
 public static StackWalker getStackWalker()
 ```
 
-Gets `StackWalker` that can get locals and operands.
+Gets {@code StackWalker} that can get locals and operands.
 
 ## PrimitiveSlot.getStackWalker(Set<StackWalker.Option>)
 
@@ -69,17 +56,15 @@ Gets `StackWalker` that can get locals and operands.
 public static StackWalker getStackWalker(Set<StackWalker.Option> options)
 ```
 
-Gets a `StackWalker` instance with the given options specifying
+Gets a {@code StackWalker} instance with the given options specifying
 the stack frame information it can access, and which will traverse at most
-the given `maxDepth` number of stack frames.  If no option is
-specified, this `StackWalker` obtains the method name and
+the given {@code maxDepth} number of stack frames.  If no option is
+specified, this {@code StackWalker} obtains the method name and
 the class name with all
-hidden frames skipped.
-The returned `StackWalker` can get locals and operands.
+{@linkplain StackWalker.Option#SHOW_HIDDEN_FRAMES hidden frames} skipped.
+The returned {@code StackWalker} can get locals and operands.
 
-Parameters:
-
-- `options`: stack walk options
+@param options stack walk {@link StackWalker.Option options}
 
 ## PrimitiveSlot.getStackWalker(Set<StackWalker.Option>, ContinuationScope)
 
@@ -87,18 +72,16 @@ Parameters:
 public static StackWalker getStackWalker(Set<StackWalker.Option> options, ContinuationScope contScope)
 ```
 
-Gets a `StackWalker` instance with the given options specifying
+Gets a {@code StackWalker} instance with the given options specifying
 the stack frame information it can access, and which will traverse at most
-the given `maxDepth` number of stack frames.  If no option is
-specified, this `StackWalker` obtains the method name and
+the given {@code maxDepth} number of stack frames.  If no option is
+specified, this {@code StackWalker} obtains the method name and
 the class name with all
-hidden frames skipped.
-The returned `StackWalker` can get locals and operands.
+{@linkplain StackWalker.Option#SHOW_HIDDEN_FRAMES hidden frames} skipped.
+The returned {@code StackWalker} can get locals and operands.
 
-Parameters:
-
-- `options`: stack walk options
-- `contScope`: the continuation scope up to which (inclusive) to walk the stack
+@param options stack walk {@link StackWalker.Option options}
+@param contScope the continuation scope up to which (inclusive) to walk the stack
 
 ## PrimitiveSlot.getStackWalker(Continuation)
 
@@ -106,11 +89,9 @@ Parameters:
 public static StackWalker getStackWalker(Continuation continuation)
 ```
 
-Gets `StackWalker` of the given unmounted continuation, that can get locals and operands.
+Gets {@code StackWalker} of the given unmounted continuation, that can get locals and operands.
 
-Parameters:
-
-- `continuation`: the continuation to walk
+@param continuation the continuation to walk
 
 ## PrimitiveSlot.getStackWalker(Set<StackWalker.Option>, ContinuationScope, Continuation)
 
@@ -118,15 +99,13 @@ Parameters:
 public static StackWalker getStackWalker(Set<StackWalker.Option> options, ContinuationScope contScope, Continuation continuation)
 ```
 
-Gets a `StackWalker` instance with the given options specifying
+Gets a {@code StackWalker} instance with the given options specifying
 the stack frame information it can access, and which will traverse at most
-the given `maxDepth` number of stack frames.  If no option is
-specified, this `StackWalker` obtains the method name and
+the given {@code maxDepth} number of stack frames.  If no option is
+specified, this {@code StackWalker} obtains the method name and
 the class name with all
-hidden frames skipped.
-The returned `StackWalker` can get locals and operands.
+{@linkplain StackWalker.Option#SHOW_HIDDEN_FRAMES hidden frames} skipped.
+The returned {@code StackWalker} can get locals and operands.
 
-Parameters:
-
-- `options`: stack walk options
-- `continuation`: the continuation to walk
+@param options stack walk {@link StackWalker.Option options}
+@param continuation the continuation to walk

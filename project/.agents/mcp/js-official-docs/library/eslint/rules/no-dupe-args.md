@@ -1,13 +1,10 @@
 ---
-title: "no-dupe-args"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-dupe-args.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-dupe-args
+rule_type: problem
+handled_by_typescript: true
 ---
 
-# no-dupe-args
+
 
 If more than one parameter has the same name in a function definition, the last occurrence "shadows" the preceding occurrences. A duplicated name might be a typing error.
 
@@ -19,7 +16,7 @@ If ESLint parses code in strict mode, the parser (instead of this rule) reports 
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint no-dupe-args: "error"*/
@@ -33,9 +30,11 @@ const bar = function (a, b, a) {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct { "sourceType": "script" }
 
 ```js
 /*eslint no-dupe-args: "error"*/
@@ -48,6 +47,8 @@ const bar = function (a, b, c) {
     console.log(a, b, c);
 };
 ```
+
+:::
 
 ## Options
 

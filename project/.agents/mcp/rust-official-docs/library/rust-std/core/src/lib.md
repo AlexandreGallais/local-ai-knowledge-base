@@ -1,29 +1,21 @@
----
-title: "core"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/lib.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core
 
-#### The Rust Core Library
+# The Rust Core Library
 
-The Rust Core Library is the dependency-free[^free] foundation of The
-Rust Standard Library. It is the portable glue
+The Rust Core Library is the dependency-free[^free] foundation of [The
+Rust Standard Library](../std/index.html). It is the portable glue
 between the language and its libraries, defining the intrinsic and
 primitive building blocks of all Rust code. It links to no
 upstream libraries, no system libraries, and no libc.
 
+[^free]: Strictly speaking, there are some symbols which are needed but
          they aren't always necessary.
 
 The core library is *minimal*: it isn't even aware of heap allocation,
 nor does it provide concurrency or I/O. These things require
 platform integration, and this library is platform-agnostic.
 
-#### How to use the core library
+# How to use the core library
 
 Please note that all of these details are currently not considered stable.
 
@@ -35,9 +27,9 @@ This library is built on the assumption of a few existing symbols:
   assumptions about their semantics: For `memcpy`, `memmove`, `memset`, `memcmp`, and `bcmp`, if
   the `n` parameter is 0, the function is assumed to not be UB, even if the pointers are NULL or
   dangling. (Note that making extra assumptions about these functions is common among compilers:
-  clang and GCC do the same.)
+  [clang](https://reviews.llvm.org/D86993) and [GCC](https://gcc.gnu.org/onlinedocs/gcc/Standards.html#C-Language) do the same.)
   These functions are often provided by the system libc, but can also be provided by the
-  compiler-builtins crate.
+  [compiler-builtins crate](https://crates.io/crates/compiler_builtins).
   Note that the library does not guarantee that it will always make these assumptions, so Rust
   user code directly calling the C functions should follow the C specification! The advice for
   Rust user code is to call the functions provided by this library instead (such as

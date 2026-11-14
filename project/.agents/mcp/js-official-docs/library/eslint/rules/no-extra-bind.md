@@ -1,13 +1,12 @@
 ---
-title: "no-extra-bind"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-extra-bind.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-extra-bind
+rule_type: suggestion
+further_reading:
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
+- https://www.smashingmagazine.com/2014/01/understanding-javascript-function-prototype-bind/
 ---
 
-# no-extra-bind
+
 
 The `bind()` method is used to create functions with specific `this` values and, optionally, binds arguments to specific values. When used to specify the value of `this`, it's important that the function actually uses `this` in its function body. For example:
 
@@ -42,7 +41,7 @@ This rule is aimed at avoiding the unnecessary use of `bind()` and as such will 
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-extra-bind: "error"*/
@@ -72,9 +71,11 @@ const b = function () {
 }.bind(baz);
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-extra-bind: "error"*/
@@ -87,6 +88,8 @@ const y = function (a) {
     return a + 1;
 }.bind(foo, bar);
 ```
+
+:::
 
 ## Options
 

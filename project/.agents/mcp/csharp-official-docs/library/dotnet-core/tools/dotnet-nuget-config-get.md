@@ -1,12 +1,9 @@
 ---
 title: "'dotnet nuget config get' command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-nuget-config-get.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "The 'dotnet nuget config get' command helps manage NuGet configuration files."
+author: martinrrm
+ms.date: 05/14/2024
 ---
-
 # dotnet nuget config get
 
 **This article applies to:** ✔️ .NET 8.0.2xx SDK and later versions
@@ -47,9 +44,7 @@ The `dotnet nuget config get` Gets the NuGet configuration settings that will be
 
   Specifies the directory to start from when listing configuration files. If not specified, the current directory is used.
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Examples
 
@@ -67,4 +62,4 @@ Prints out a description of how to use the command.
 
 ## See also
 
-- nuGet.config reference
+- [nuGet.config reference](/nuget/reference/nuget-config-file)

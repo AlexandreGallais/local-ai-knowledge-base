@@ -1,12 +1,3 @@
----
-title: "core::num::imp::flt2dec"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/num/imp/flt2dec/mod.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::num::imp::flt2dec
 
 ## const MAX_SIG_DIGITS
@@ -53,7 +44,7 @@ it will only print given digits and nothing else.
 
 The byte buffer should be at least `MAX_SIG_DIGITS` bytes long.
 There should be at least 4 parts available, due to the worst case like
-`+0000[0000]` with `frac_digits = 10`.
+`[+][0.][0000][2][0000]` with `frac_digits = 10`.
 
 ## fn to_shortest_exp_str
 
@@ -80,7 +71,7 @@ cannot be in this range, avoiding any confusion.
 
 The byte buffer should be at least `MAX_SIG_DIGITS` bytes long.
 There should be at least 6 parts available, due to the worst case like
-`+.e[6]`.
+`[+][1][.][2345][e][-][6]`.
 
 ## fn to_exact_exp_str
 
@@ -99,13 +90,13 @@ an empty string if no sign is rendered).
 It should return the part of the buffer that it initialized.
 You probably would want `strategy::grisu::format_exact` for this.
 
-The returned format is `sign.fraction?e|E`.
+The returned format is `[sign][digit][.fraction?][zero padding?][e|E][exponent]`.
 
 The byte buffer should be at least `frac_digits + 1` bytes long unless
 `frac_digits` is so large that only the fixed number of digits will be ever written.
 (The tipping point for `f64` is about 800, so 1000 bytes should be enough.)
 There should be at least 6 parts available, due to the worst case like
-`+.e[6]`.
+`[+][1][.][2345][e][-][6]`.
 
 ## fn to_exact_fixed_str
 
@@ -128,4 +119,4 @@ The byte buffer should be enough for the output unless `frac_digits` is
 so large that only the fixed number of digits will be ever written.
 (The tipping point for `f64` is about 800, and 1000 bytes should be enough.)
 There should be at least 4 parts available, due to the worst case like
-`+0000[0000]` with `frac_digits = 10`.
+`[+][0.][0000][2][0000]` with `frac_digits = 10`.

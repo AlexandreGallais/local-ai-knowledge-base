@@ -1,10 +1,10 @@
 ---
-title: "YARP Cross-Origin Requests (CORS)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/cors.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: YARP Cross-Origin Requests (CORS)
+description: YARP Cross-Origin Requests (CORS)
+ms.date: 2/6/2025
+ms.topic: concept-article
+content_well_notification: AI-contribution
+ai-usage: ai-assisted
 ---
 
 # YARP Cross-Origin Requests (CORS)
@@ -17,7 +17,7 @@ The reverse proxy can handle cross-origin requests before they are proxied to th
 The requests won't be automatically matched for cors preflight requests unless enabled in the route or application configuration.
 
 ## Configuration
-CORS policies can be specified per route via RouteConfig.CorsPolicy and can be bound from the `Routes` sections of the config file. As with other route properties, this can be modified and reloaded without restarting the proxy. Policy names are case insensitive.
+CORS policies can be specified per route via [RouteConfig.CorsPolicy](xref:Yarp.ReverseProxy.Configuration.RouteConfig) and can be bound from the `Routes` sections of the config file. As with other route properties, this can be modified and reloaded without restarting the proxy. Policy names are case insensitive.
 
 Example:
 ```json
@@ -45,7 +45,7 @@ Example:
 }
 ```
 
-CORS policies are an ASP.NET Core concept that the proxy utilizes. The proxy provides the above configuration to specify a policy per route and the rest is handled by existing ASP.NET Core CORS middleware.
+[CORS policies](../../../security/cors.md#cors-with-named-policy-and-middleware) are an ASP.NET Core concept that the proxy utilizes. The proxy provides the above configuration to specify a policy per route and the rest is handled by existing ASP.NET Core CORS middleware.
 
 CORS policies can be configured in the application as follows:
 ```csharp
@@ -66,9 +66,10 @@ app.UseCors();
 app.MapReverseProxy();
 ```
 
+
 ### DefaultPolicy
 
-Specifying the value `default` in a route's `CorsPolicy` parameter means that route will use the policy defined in CorsOptions.DefaultPolicy.
+Specifying the value `default` in a route's `CorsPolicy` parameter means that route will use the policy defined in [CorsOptions.DefaultPolicy](/dotnet/api/microsoft.aspnetcore.cors.infrastructure.corsoptions.defaultpolicyname).
 
 ### Disable CORS
 

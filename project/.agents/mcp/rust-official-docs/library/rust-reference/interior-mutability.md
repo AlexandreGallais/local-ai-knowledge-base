@@ -1,12 +1,3 @@
----
-title: "Interior mutability"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/interior-mutability.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[interior-mut]
 # Interior mutability
 
@@ -17,7 +8,7 @@ r[interior-mut.shared-ref]
 A type has interior mutability if its internal state can be changed through a [shared reference] to it.
 
 r[interior-mut.no-constraint]
-This goes against the usual requirement that the value pointed to by a shared reference is not mutated.
+This goes against the usual [requirement][ub] that the value pointed to by a shared reference is not mutated.
 
 r[interior-mut.unsafe-cell]
 [`std::cell::UnsafeCell<T>`] type is the only allowed way to disable this requirement. When `UnsafeCell<T>` is immutably aliased, it is still safe to mutate, or obtain a mutable reference to, the `T` it contains.
@@ -33,3 +24,6 @@ For example, [`std::cell::RefCell<T>`] uses run-time borrow checks to ensure the
 
 r[interior-mut.atomic]
 The [`std::sync::atomic`] module contains types that wrap a value that is only accessed with atomic operations, allowing the value to be shared and mutated across threads.
+
+[shared reference]: types/pointer.md#shared-references-
+[ub]: behavior-considered-undefined.md

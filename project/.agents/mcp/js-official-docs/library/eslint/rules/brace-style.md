@@ -1,15 +1,13 @@
 ---
-title: "brace-style"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/brace-style.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: brace-style
+rule_type: layout
+related_rules:
+- block-spacing
+- space-before-blocks
+further_reading:
+- https://en.wikipedia.org/wiki/Indent_style
 ---
-
-# brace-style
-
-Brace style is closely related to indent style in programming and describes the placement of braces relative to their control statement and body. There are probably a dozen, if not more, brace styles in the world.
+Brace style is closely related to [indent style](https://en.wikipedia.org/wiki/Indent_style) in programming and describes the placement of braces relative to their control statement and body. There are probably a dozen, if not more, brace styles in the world.
 
 The *one true brace style* is one of the most common brace styles in JavaScript, in which the opening brace of a block is placed on the same line as its corresponding statement or declaration. For example:
 
@@ -32,7 +30,7 @@ else {
 }
 ```
 
-Another style is called Allman, in which all the braces are expected to be on their own lines without any extra indentation. For example:
+Another style is called [Allman](https://en.wikipedia.org/wiki/Indent_style#Allman_style), in which all the braces are expected to be on their own lines without any extra indentation. For example:
 
 ```js
 if (foo)
@@ -67,7 +65,7 @@ This rule has an object option for an exception:
 
 Examples of **incorrect** code for this rule with the default `"1tbs"` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint brace-style: "error"*/
@@ -106,9 +104,11 @@ class C
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"1tbs"` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint brace-style: "error"*/
@@ -144,9 +144,11 @@ if (foo) bar();
 else if (baz) boom();
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"1tbs", { "allowSingleLine": true }` options:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint brace-style: ["error", "1tbs", { "allowSingleLine": true }]*/
@@ -187,11 +189,13 @@ class C {
 class D { static { foo(); } }
 ```
 
+:::
+
 ### stroustrup
 
 Examples of **incorrect** code for this rule with the `"stroustrup"` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint brace-style: ["error", "stroustrup"]*/
@@ -229,9 +233,11 @@ if (foo) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"stroustrup"` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint brace-style: ["error", "stroustrup"]*/
@@ -269,9 +275,11 @@ if (foo) bar();
 else if (baz) boom();
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"stroustrup", { "allowSingleLine": true }` options:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint brace-style: ["error", "stroustrup", { "allowSingleLine": true }]*/
@@ -293,11 +301,13 @@ class C {
 class D { static { foo(); } }
 ```
 
+:::
+
 ### allman
 
 Examples of **incorrect** code for this rule with the `"allman"` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint brace-style: ["error", "allman"]*/
@@ -331,9 +341,11 @@ if (foo) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"allman"` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint brace-style: ["error", "allman"]*/
@@ -379,9 +391,11 @@ if (foo) bar();
 else if (baz) boom();
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"allman", { "allowSingleLine": true }` options:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint brace-style: ["error", "allman", { "allowSingleLine": true }]*/
@@ -406,6 +420,8 @@ class C
 
 class D { static { foo(); } }
 ```
+
+:::
 
 ## When Not To Use It
 

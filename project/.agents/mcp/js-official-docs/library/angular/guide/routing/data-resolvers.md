@@ -1,23 +1,14 @@
----
-title: "Data resolvers"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/routing/data-resolvers.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Data resolvers
 
 Data resolvers allow you to fetch data before navigating to a route, ensuring that your components receive the data they need before rendering. This can help prevent the need for loading states and improve the user experience by pre-loading essential data.
 
-TIP: If your application uses Angular Signals, consider using route resources for reactive data fetching with `Resource` APIs and built-in support for non-blocking data loading.
+TIP: If your application uses Angular Signals, consider using [route resources](/guide/routing/data-fetching-with-resources) for reactive data fetching with `Resource` APIs and built-in support for non-blocking data loading.
 
 ## What are data resolvers?
 
 A data resolver is a service that implements the `ResolveFn` function. It runs before a route activates and can fetch data from APIs, databases, or other sources. The resolved data becomes available to the component through the `ActivatedRoute`.
 
-Data resolvers have access to services provided at the route level as well as route-specific information via the `route` argument.
+Data resolvers have access to [services provided at the route level](guide/di/defining-dependency-providers#route-providers) as well as route-specific information via the `route` argument.
 
 ## Why use data resolvers?
 
@@ -34,7 +25,7 @@ You create a resolver by writing a function with the `ResolveFn` type.
 
 It receives the `ActivatedRouteSnapshot` and `RouterStateSnapshot` as parameters.
 
-Here is a resolver that gets the user information before rendering a route using the `inject` function:
+Here is a resolver that gets the user information before rendering a route using the [`inject`](api/core/inject) function:
 
 ```ts
 import {inject} from '@angular/core';
@@ -80,7 +71,7 @@ export const routes: Routes = [
 ];
 ```
 
-You can learn more about the `resolve` configuration in the API docs.
+You can learn more about the [`resolve` configuration in the API docs](api/router/Route#resolve).
 
 ## Accessing resolved data in components
 
@@ -156,7 +147,7 @@ There are three primary ways to handle errors with data resolvers:
 
 ### Centralize error handling in `withNavigationErrorHandler`
 
-The `withNavigationErrorHandler` feature provides a centralized way to handle all navigation errors, including those from failed data resolvers. This approach keeps error handling logic in one place and prevents duplicate error handling code across resolvers.
+The [`withNavigationErrorHandler`](api/router/withNavigationErrorHandler) feature provides a centralized way to handle all navigation errors, including those from failed data resolvers. This approach keeps error handling logic in one place and prevents duplicate error handling code across resolvers.
 
 ```ts
 import {bootstrapApplication} from '@angular/platform-browser';
@@ -283,7 +274,7 @@ export const userResolver: ResolveFn<User | RedirectCommand> = (route) => {
 
 While data resolvers prevent loading states within components, they introduce a different UX consideration: navigation is blocked while resolvers execute. Users may experience delays between clicking a link and seeing the new route, especially with slow network requests.
 
-TIP: To avoid blocking navigation and render components immediately with skeleton or loading indicators, use non-blocking route resources.
+TIP: To avoid blocking navigation and render components immediately with skeleton or loading indicators, use [non-blocking route resources](/guide/routing/data-fetching-with-resources#blocking-and-non-blocking-resources).
 
 ### Providing navigation feedback
 
@@ -324,7 +315,7 @@ This approach ensures users receive visual feedback that navigation is in progre
 
 Resolvers execute sequentially from parent to child. When a parent route defines a resolver, its resolved data is available to child resolvers that run afterward.
 
-NOTE: Because resolvers execute sequentially from parent to child, each nested level adds to the total navigation wait time (a network waterfall). If your child routes do not depend on parent data, consider route resources, which execute concurrently across all routes.
+NOTE: Because resolvers execute sequentially from parent to child, each nested level adds to the total navigation wait time (a network waterfall). If your child routes do not depend on parent data, consider [route resources](/guide/routing/data-fetching-with-resources), which execute concurrently across all routes.
 
 ```ts
 import {inject} from '@angular/core';
@@ -359,5 +350,7 @@ provideRouter([
 
 ## Next steps
 
-  - Data fetching with resources
-  - Control route access with guards
+<docs-pill-row>
+  <docs-pill href="/guide/routing/data-fetching-with-resources" title="Data fetching with resources"/>
+  <docs-pill href="/guide/routing/route-guards" title="Control route access with guards"/>
+</docs-pill-row>

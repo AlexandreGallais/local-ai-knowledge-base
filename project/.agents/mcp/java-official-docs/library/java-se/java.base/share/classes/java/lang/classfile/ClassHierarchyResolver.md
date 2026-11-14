@@ -1,29 +1,18 @@
----
-title: "ClassHierarchyResolver interface (java.lang.classfile)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/ClassHierarchyResolver.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ClassHierarchyResolver interface (java.lang.classfile)
 
 ```java
 public interface ClassHierarchyResolver
 ```
 
-Provides class hierarchy information for stack maps generation and verification.
+Provides class hierarchy information for {@linkplain StackMapsOption stack
+maps generation} and {@linkplain ClassFile#verify(byte[]) verification}.
 A class hierarchy resolver must be able to process all classes and interfaces
 encountered during these workloads.
 
-**See also:** ClassFile.ClassHierarchyResolverOption
-
-**See also:** StackMapTableAttribute
-
-**jvms:** 4.10.1.2 Verification Type System
-
-**Since:** 24
+@see ClassFile.ClassHierarchyResolverOption
+@see StackMapTableAttribute
+@jvms 4.10.1.2 Verification Type System
+@since 24
 
 ## ClassHierarchyResolver.defaultResolver()
 
@@ -31,6 +20,8 @@ encountered during these workloads.
 static ClassHierarchyResolver defaultResolver()
 ```
 
+{@return the default instance of {@code ClassHierarchyResolver} that
+gets {@link ClassHierarchyInfo} from system class loader with reflection}
 This default instance cannot load classes from other class loaders, such
 as the caller's class loader; it also loads the system classes if they
 are not yet loaded, which makes it unsuitable for instrumentation.
@@ -41,18 +32,17 @@ are not yet loaded, which makes it unsuitable for instrumentation.
 ClassHierarchyInfo getClassInfo(ClassDesc classDesc)
 ```
 
+{@return the {@code ClassHierarchyInfo} for a given class name, or {@code
+null} if the name is unknown to the resolver}
+<p>
 This method is called by the Class-File API to obtain the hierarchy
 information of a class or interface; users should not call this method.
 The symbolic descriptor passed by the Class-File API always represents
 a class or interface.
 
-Parameters:
-
-- `classDesc`: descriptor of the class
-
-Throws:
-
-- `IllegalArgumentException`: if a class shouldn't be queried for hierarchy, such as when it is inaccessible
+@param classDesc descriptor of the class
+@throws IllegalArgumentException if a class shouldn't be queried for
+        hierarchy, such as when it is inaccessible
 
 ## ClassHierarchyResolver.ofClass(ClassDesc)
 
@@ -62,13 +52,9 @@ static ClassHierarchyInfo ofClass(ClassDesc superClass)
 
 Indicates that a class is a declared class, with the specific given super class.
 
-Parameters:
-
-- `superClass`: descriptor of the super class, may be `null`
-
-**Returns:** the info indicating the super class
-
-**See also:** Superclass
+@param superClass descriptor of the super class, may be {@code null}
+@return the info indicating the super class
+@see Superclass
 
 ## ClassHierarchyResolver.ofInterface()
 
@@ -78,7 +64,7 @@ static ClassHierarchyInfo ofInterface()
 
 Indicates that a class is an interface.
 
-**Returns:** the info indicating an interface
+@return the info indicating an interface
 
 ## ClassHierarchyResolver.orElse(ClassHierarchyResolver)
 
@@ -86,16 +72,15 @@ Indicates that a class is an interface.
 default ClassHierarchyResolver orElse(ClassHierarchyResolver other)
 ```
 
-Chains this `ClassHierarchyResolver` with another to be consulted
+Chains this {@code ClassHierarchyResolver} with another to be consulted
 if this resolver does not know about the specified class.
 
-Parameters:
+@implSpec
+The default implementation returns resolver implemented to query {@code
+other} resolver in case this resolver returns {@code null}.
 
-- `other`: the other resolver
-
-**Implementation requirements:** The default implementation returns resolver implemented to query `other` resolver in case this resolver returns `null`.
-
-**Returns:** the chained resolver
+@param other the other resolver
+@return the chained resolver
 
 ## ClassHierarchyResolver.cached(Supplier<Map<ClassDesc, ClassHierarchyInfo>>)
 
@@ -103,20 +88,20 @@ Parameters:
 default ClassHierarchyResolver cached(Supplier<Map<ClassDesc, ClassHierarchyInfo>> cacheFactory)
 ```
 
-The returned resolver will not update if
+{@return a {@code ClassHierarchyResolver} that caches class hierarchy
+information from this resolver}  The returned resolver will not update if
 the query results from this resolver changed over time.  The thread
 safety of the returned resolver depends on the thread safety of the map
-returned by the `cacheFactory`.
+returned by the {@code cacheFactory}.
 
-Parameters:
-
-- `cacheFactory`: the factory for the cache
-
-**Implementation requirements:** The default implementation returns a resolver holding an instance of the
-cache map provided by the `cacheFactory`.  It looks up in the cache
+@implSpec
+The default implementation returns a resolver holding an instance of the
+cache map provided by the {@code cacheFactory}.  It looks up in the cache
 map, or if a class name has not yet been queried, queries this resolver
-and caches the result, including a `null` that indicates unknown
-class names.  The cache map may refuse `null` keys and values.
+and caches the result, including a {@code null} that indicates unknown
+class names.  The cache map may refuse {@code null} keys and values.
+
+@param cacheFactory the factory for the cache
 
 ## ClassHierarchyResolver.cached()
 
@@ -124,12 +109,14 @@ class names.  The cache map may refuse `null` keys and values.
 default ClassHierarchyResolver cached()
 ```
 
-The returned resolver will not update if
+{@return a {@code ClassHierarchyResolver} that caches class hierarchy
+information from this resolver}  The returned resolver will not update if
 the query results from this resolver changed over time.  The returned
 resolver is not thread-safe.
+{@snippet file="PackageSnippets.java" region="lookup-class-hierarchy-resolver"}
 
-**Implementation requirements:** The default implementation calls `cached(Supplier)` with
-          `HashMap` supplier as `cacheFactory`.
+@implSpec The default implementation calls {@link #cached(Supplier)} with
+          {@link HashMap} supplier as {@code cacheFactory}.
 
 ## ClassHierarchyResolver.ofResourceParsing(Function<ClassDesc, InputStream>)
 
@@ -137,15 +124,14 @@ resolver is not thread-safe.
 static ClassHierarchyResolver ofResourceParsing(Function<ClassDesc, InputStream> classStreamResolver)
 ```
 
-The
-mapping function should return `null` if it cannot provide a
-`class` file for a class name.  Any `IOException` from the
-provided input stream is rethrown as an `UncheckedIOException`
-in `getClassInfo(ClassDesc)`.
+{@return a {@code ClassHierarchyResolver} that extracts class hierarchy
+information from {@code class} files returned by a mapping function}  The
+mapping function should return {@code null} if it cannot provide a
+{@code class} file for a class name.  Any {@link IOException} from the
+provided input stream is rethrown as an {@link UncheckedIOException}
+in {@link #getClassInfo(ClassDesc)}.
 
-Parameters:
-
-- `classStreamResolver`: maps class descriptors to `class` file input streams
+@param classStreamResolver maps class descriptors to {@code class} file input streams
 
 ## ClassHierarchyResolver.ofResourceParsing(ClassLoader)
 
@@ -153,9 +139,10 @@ Parameters:
 static ClassHierarchyResolver ofResourceParsing(ClassLoader loader)
 ```
 
-Parameters:
+{@return a {@code ClassHierarchyResolver} that extracts class hierarchy
+information from {@code class} files located by a class loader}
 
-- `loader`: the class loader, to find class files
+@param loader the class loader, to find class files
 
 ## ClassHierarchyResolver.of(Collection<ClassDesc>, Map<ClassDesc, ClassDesc>)
 
@@ -163,10 +150,11 @@ Parameters:
 static ClassHierarchyResolver of(Collection<ClassDesc> interfaces, Map<ClassDesc, ClassDesc> classToSuperClass)
 ```
 
-Parameters:
+{@return a {@code ClassHierarchyResolver} that extracts class hierarchy
+information from collections of class hierarchy metadata}
 
-- `interfaces`: a collection of classes known to be interfaces
-- `classToSuperClass`: a map from classes to their super classes
+@param interfaces a collection of classes known to be interfaces
+@param classToSuperClass a map from classes to their super classes
 
 ## ClassHierarchyResolver.ofClassLoading(ClassLoader)
 
@@ -174,9 +162,10 @@ Parameters:
 static ClassHierarchyResolver ofClassLoading(ClassLoader loader)
 ```
 
-Parameters:
+{@return a {@code ClassHierarchyResolver} that extracts class hierarchy
+information via classes loaded by a class loader with reflection}
 
-- `loader`: the class loader
+@param loader the class loader
 
 ## ClassHierarchyResolver.ofClassLoading(MethodHandles.Lookup)
 
@@ -184,9 +173,10 @@ Parameters:
 static ClassHierarchyResolver ofClassLoading(MethodHandles.Lookup lookup)
 ```
 
-If the class resolved is inaccessible to the given
-lookup, `getClassInfo(ClassDesc)` throws `IllegalArgumentException` instead of returning `null`.
+{@return a {@code ClassHierarchyResolver} that extracts class hierarchy
+information via classes accessible to a {@link MethodHandles.Lookup}
+with reflection} If the class resolved is inaccessible to the given
+lookup, {@link #getClassInfo(ClassDesc)} throws {@link
+IllegalArgumentException} instead of returning {@code null}.
 
-Parameters:
-
-- `lookup`: the lookup, must be able to access classes to resolve
+@param lookup the lookup, must be able to access classes to resolve

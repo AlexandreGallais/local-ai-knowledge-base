@@ -1,28 +1,27 @@
----
-title: "ts-method-signature-style"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/ts-method-signature-style.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-ts-method-signature-style"></a>
+<a name="ts-method-signature-style"></a>
+# <code>ts-method-signature-style</code>
 
-# `ts-method-signature-style`
-
-Inspired by `typescript-eslint`'s method-signature-style rule.
+Inspired by `typescript-eslint`'s [method-signature-style](https://typescript-eslint.io/rules/method-signature-style/) rule.
 
 See that rule for the rationale behind preferring the function
 property.
 
+<a name="user-content-ts-method-signature-style-options"></a>
+<a name="ts-method-signature-style-options"></a>
 ## Options
 
 The first option is a string with the following possible values: "method", "property".
 
+
 The next option is an object with the following properties.
 
-### `enableFixer`
+<a name="user-content-ts-method-signature-style-options-enablefixer"></a>
+<a name="ts-method-signature-style-options-enablefixer"></a>
+### <code>enableFixer</code>
 
 Whether to enable the fixer. Defaults to `true`.
+
 
 |||
 |---|---|
@@ -32,6 +31,8 @@ Whether to enable the fixer. Defaults to `true`.
 |Settings||
 |Options|string ("method", "property") followed by object with `enableFixer`|
 
+<a name="user-content-ts-method-signature-style-failing-examples"></a>
+<a name="ts-method-signature-style-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -158,6 +159,10 @@ The following patterns are considered problems:
 // Message: Found method signature; prefer function property.
 ````
 
+
+
+<a name="user-content-ts-method-signature-style-passing-examples"></a>
+<a name="ts-method-signature-style-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -197,3 +202,4 @@ The following patterns are not considered problems:
  */
 // "jsdoc/ts-method-signature-style": ["error"|"warn", "method"]
 ````
+

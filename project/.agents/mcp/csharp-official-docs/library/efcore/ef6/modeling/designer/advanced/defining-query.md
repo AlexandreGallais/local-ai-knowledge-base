@@ -1,18 +1,16 @@
 ---
-title: "Defining Query - EF Designer - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/modeling/designer/advanced/defining-query.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Defining Query - EF Designer - EF6
+description: Defining Query - EF Designer in Entity Framework 6
+author: SamMonoRT
+ms.date: 10/23/2016
+uid: ef6/modeling/designer/advanced/defining-query
 ---
-
 # Defining Query - EF Designer
-This walkthrough demonstrates how to add a defining query and a corresponding entity type to a model using the EF Designer. A defining query is commonly used to provide functionality similar to that provided by a database view, but the view is defined in the model, not the database. A defining query allows you to execute a SQL statement that is specified in the **DefiningQuery** element of an .edmx file. For more information, see **DefiningQuery** in the SSDL Specification.
+This walkthrough demonstrates how to add a defining query and a corresponding entity type to a model using the EF Designer. A defining query is commonly used to provide functionality similar to that provided by a database view, but the view is defined in the model, not the database. A defining query allows you to execute a SQL statement that is specified in the **DefiningQuery** element of an .edmx file. For more information, see **DefiningQuery** in the [SSDL Specification](xref:ef6/modeling/designer/advanced/edmx/ssdl-spec).
 
 When using defining queries, you also have to define an entity type in your model. The entity type is used to surface data exposed by the defining query. Note that data surfaced through this entity type is read-only.
 
-Parameterized queries cannot be executed as defining queries. However, the data can be updated by mapping the insert, update, and delete functions of the entity type that surfaces the data to stored procedures. For more information, see Insert, Update, and Delete with Stored Procedures.
+Parameterized queries cannot be executed as defining queries. However, the data can be updated by mapping the insert, update, and delete functions of the entity type that surfaces the data to stored procedures. For more information, see [Insert, Update, and Delete with Stored Procedures](xref:ef6/modeling/designer/stored-procedures/cud).
 
 This topic shows how to perform the following tasks.
 
@@ -25,7 +23,7 @@ This topic shows how to perform the following tasks.
 To complete this walkthrough, you will need:
 
 - A recent version of Visual Studio.
-- The School sample database.
+- The [School sample database](xref:ef6/resources/school-database).
 
 ## Set up the Project
 
@@ -51,7 +49,11 @@ This walkthrough is using Visual Studio 2012 or newer.
 -   In Solution Explorer, right-click the **DefiningQueryModel.edmx** file and select **Open With…**.
 -   Select **XML (Text) Editor**.
 
+    ![XML Editor](~/ef6/media/xmleditor.png)
+
 -   Click **Yes** if prompted with the following message:
+
+    ![Warning 2](~/ef6/media/warning2.png)
 
  
 
@@ -64,10 +66,10 @@ In this step we will use the XML Editor to add a defining query and an entity ty
     -   The fully-qualified name of the entity type is used in the **EntityType** attribute.
     -   The SQL statement to be executed is specified in the **DefiningQuery** element.
 
-```xml
+``` xml
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="<example-value>" Alias="<example-value>" Provider="<example-value>" ProviderManifestToken="<example-value>" xmlns:store="<example-value>" xmlns="<example-value>">
+      <Schema Namespace="SchoolModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="SchoolModelStoreContainer">
            <EntitySet Name="GradeReport" EntityType="SchoolModel.Store.GradeReport">
               <DefiningQuery>
@@ -86,7 +88,7 @@ In this step we will use the XML Editor to add a defining query and an entity ty
     -   The property names correspond to the column names returned by the SQL statement in the **DefiningQuery** element (above).
     -   In this example, the entity key is composed of three properties to ensure a unique key value.
 
-```xml
+``` xml
     <EntityType Name="GradeReport">
       <Key>
         <PropertyRef Name="CourseID" />
@@ -111,7 +113,7 @@ In this step we will use the XML Editor to add a defining query and an entity ty
     </EntityType>
 ```
 
->**Note:**
+>[!NOTE]
 > If later you run the **Update Model Wizard** dialog, any changes made to the storage model, including defining queries, will be overwritten.
 
  
@@ -129,13 +131,15 @@ Open the model in the EF Designer.
 -   Double-click the DefiningQueryModel.edmx.
 -   Say **Yes** to the following message:
 
+    ![Warning 2](~/ef6/media/warning2.png)
+
  
 
 The Entity Designer, which provides a design surface for editing your model, is displayed.
 
--   Right-click the designer surface and select **Add New**->**Entity…**.
--   Specify **GradeReport** for the entity name and **CourseID** for the **Key <example-value>**.
--   Right-click the **GradeReport** entity and select **Add New**-> **Scalar Property**.
+-   Right-click the designer surface and select **Add New**-&gt;**Entity…**.
+-   Specify **GradeReport** for the entity name and **CourseID** for the **Key Property**.
+-   Right-click the **GradeReport** entity and select **Add New**-&gt; **Scalar Property**.
 -   Change the default name of the property to **FirstName**.
 -   Add another scalar property and specify **LastName** for the name.
 -   Add another scalar property and specify **Grade** for the name.
@@ -145,7 +149,7 @@ The Entity Designer, which provides a design surface for editing your model, is 
 
 As a result, the following elements were added to the **CSDL** section of the .edmx file.
 
-```xml
+``` xml
     <EntitySet Name="GradeReport" EntityType="SchoolModel.GradeReport" />
 
     <EntityType Name="GradeReport">
@@ -159,14 +163,15 @@ As a result, the following elements were added to the **CSDL** section of the .e
 
 In this step, we will use the Mapping Details window to map the conceptual and storage entity types.
 
--   Right-click the **GradeReport** entity on the design surface and select **Table Mapping**.
+-   Right-click the **GradeReport** entity on the design surface and select **Table Mapping**.  
     The **Mapping Details** window is displayed.
--   Select **GradeReport** from the **<Add a Table or View>** dropdown list (located under **Table**s).
-    Default mappings between the conceptual and storage **GradeReport** entity type appear.
+-   Select **GradeReport** from the **&lt;Add a Table or View&gt;** dropdown list (located under **Table**s).  
+    Default mappings between the conceptual and storage **GradeReport** entity type appear.  
+    ![Mapping Details3](~/ef6/media/mappingdetails.png)
 
 As a result, the **EntitySetMapping** element is added to the mapping section of the .edmx file. 
 
-```xml
+``` xml
     <EntitySetMapping Name="GradeReports">
       <EntityTypeMapping TypeName="IsTypeOf(SchoolModel.GradeReport)">
         <MappingFragment StoreEntitySet="GradeReport">
@@ -187,7 +192,7 @@ As a result, the **EntitySetMapping** element is added to the mapping section o
 
 You can now execute the defining query by using the **GradeReport** entity type. 
 
-```csharp
+``` csharp
     using (var context = new SchoolEntities())
     {
         var report = context.GradeReports.FirstOrDefault();

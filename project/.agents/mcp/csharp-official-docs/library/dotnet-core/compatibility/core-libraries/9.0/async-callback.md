@@ -1,17 +1,13 @@
 ---
 title: "IncrementingPollingCounter initial callback is asynchronous"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/9.0/async-callback.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 9 breaking change in core .NET libraries where the IncrementingPollingCounter initial callback is no longer synchronous.
+ms.date: 09/05/2024
 ---
-
 # IncrementingPollingCounter initial callback is asynchronous
 
-`System.Diagnostics.Tracing.IncrementingPollingCounter` uses a callback to retrieve current values of a metric and reports it via `System.Diagnostics.Tracing.EventSource` events. In the past, the first invocation of the callback might have occurred synchronously on whatever thread was enabling the `EventSource`; future invocations occurred on a dedicated timer thread. Starting in .NET 9, the first callback always occurs asynchronously on the timer thread. This might result in counter changes that occurred just after the counter was enabled going unobserved because the first callback happens later.
+<xref:System.Diagnostics.Tracing.IncrementingPollingCounter> uses a callback to retrieve current values of a metric and reports it via <xref:System.Diagnostics.Tracing.EventSource> events. In the past, the first invocation of the callback might have occurred synchronously on whatever thread was enabling the `EventSource`; future invocations occurred on a dedicated timer thread. Starting in .NET 9, the first callback always occurs asynchronously on the timer thread. This might result in counter changes that occurred just after the counter was enabled going unobserved because the first callback happens later.
 
-This change is most likely to impact tests that use `System.Diagnostics.Tracing.EventListener` to validate an `IncrementingPollingCounter`. If tests enable the counter and then immediately modify the state that's being polled by the counter, that modification might now occur prior to the first time the callback is invoked (and go unnoticed).
+This change is most likely to impact tests that use <xref:System.Diagnostics.Tracing.EventListener> to validate an `IncrementingPollingCounter`. If tests enable the counter and then immediately modify the state that's being polled by the counter, that modification might now occur prior to the first time the callback is invoked (and go unnoticed).
 
 ## Previous behavior
 
@@ -65,7 +61,7 @@ class Listener : EventListener
 
 ## New behavior
 
-Using the same code snippet as the Previous behavior section, the first invocation of the callback occurs asynchronously on the timer thread. It might or might not occur prior to the `Main` thread running `log.SomeInterestingValue++` depending on how the OS schedules multiple threads.
+Using the same code snippet as the [Previous behavior](#previous-behavior) section, the first invocation of the callback occurs asynchronously on the timer thread. It might or might not occur prior to the `Main` thread running `log.SomeInterestingValue++` depending on how the OS schedules multiple threads.
 
 Depending on that timing, the app either outputs "Increment=0" or "Increment=1".
 
@@ -75,7 +71,7 @@ Depending on that timing, the app either outputs "Increment=0" or "Increment=1".
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -85,8 +81,8 @@ The change was made to resolve a potential deadlock that can occur running callb
 
 No action is required for scenarios that use `IncrementingPollingCounters` to visualize metrics in external monitoring tools. These scenarios should continue to work normally.
 
-For scenarios that do in-process testing or other consumption of counter data via `EventListener`, check if your code expects to observe a specific modification to the counter value made on the same thread that called `EnableEvents()`. If it does, we recommend waiting to observe at least one counter event from the `EventListener`, then modifying the counter value. For example, to ensure that the example code snippet prints "Increment=1", you could add a `ManualResetEvent` to the `EventListener`, signal it when the first counter event is received, and wait for it prior to calling `log.SomeInterestingValue++`.
+For scenarios that do in-process testing or other consumption of counter data via `EventListener`, check if your code expects to observe a specific modification to the counter value made on the same thread that called `EnableEvents()`. If it does, we recommend waiting to observe at least one counter event from the `EventListener`, then modifying the counter value. For example, to ensure that the [example code snippet](#previous-behavior) prints "Increment=1", you could add a `ManualResetEvent` to the `EventListener`, signal it when the first counter event is received, and wait for it prior to calling `log.SomeInterestingValue++`.
 
 ## Affected APIs
 
-- `System.Diagnostics.Tracing.IncrementingPollingCounter`
+- <xref:System.Diagnostics.Tracing.IncrementingPollingCounter?displayProperty=fullName>

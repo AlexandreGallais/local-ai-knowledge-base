@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugInternalFrame2::GetFrameAddress Method"
 title: "ICorDebugInternalFrame2::GetFrameAddress Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebuginternalframe2-getframeaddress-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugInternalFrame2.GetFrameAddress Method"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugInternalFrame2::GetFrameAddress"
+helpviewer_keywords:
+  - "GetFrameAddress method [.NET debugging]"
+  - "ICorDebugInternalFrame2::GetFrameAddress method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugInternalFrame2::GetFrameAddress Method
 
 Returns the stack address of the internal frame.
@@ -38,7 +47,7 @@ The value returned in `pAddress` can be used to determine the location of the in
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -48,4 +57,4 @@ The value returned in `pAddress` can be used to determine the location of the in
 
 ## See also
 
-- ICorDebugInternalFrame2 Interface
+- [ICorDebugInternalFrame2 Interface](icordebuginternalframe2-interface.md)

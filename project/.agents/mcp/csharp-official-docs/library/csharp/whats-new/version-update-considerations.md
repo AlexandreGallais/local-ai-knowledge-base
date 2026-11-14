@@ -1,22 +1,20 @@
 ---
-title: "Version and update considerations for C# developers"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/whats-new/version-update-considerations.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Version and update considerations for C# developers
+description: Introducing new languages features in your library can impact the code that uses it.
+ms.topic: language-reference
+ms.date: 06/26/2023
 ---
 
 # Version and update considerations for C# developers
 
 Compatibility is an important goal as new features are added to the C# language. In almost all cases, existing code can be recompiled with a new compiler version without any issue. The .NET runtime team also has a goal to ensure compatibility for updated libraries. In almost all cases, when your app is launched from an updated runtime with updated libraries, the behavior is exactly the same as with previous versions.
 
-The language version used to compile your app typically matches the runtime target framework moniker (TFM) referenced in your project. For more information on changing the default language version, see the article titled configure your language version. This default behavior ensures maximum compatibility.
+The language version used to compile your app typically matches the runtime target framework moniker (TFM) referenced in your project. For more information on changing the default language version, see the article titled [configure your language version](../language-reference/configure-language-version.md). This default behavior ensures maximum compatibility.
 
 When *breaking changes* are introduced, they're classified as:
 
 - *Binary breaking change*: A binary breaking change causes different behavior, including possibly crashing, in your application or library when launched using a new runtime. You must recompile your app to incorporate these changes. The existing binary won't function correctly.
-- *Source breaking change*: A source breaking change changes the meaning of your source code. You need to make source code edits before compiling your application with the latest language version. Your existing binary will run correctly with the newer host and runtime. Note that for language syntax, a *source breaking change* is also a *behavioral change*, as defined in the runtime breaking changes.
+- *Source breaking change*: A source breaking change changes the meaning of your source code. You need to make source code edits before compiling your application with the latest language version. Your existing binary will run correctly with the newer host and runtime. Note that for language syntax, a *source breaking change* is also a *behavioral change*, as defined in the [runtime breaking changes](../../core/compatibility/8.0.md).
 
 When a binary breaking change affects your app, you must recompile your app, but you don't need to edit any source code. When a source breaking change affects your app, the existing binary still runs correctly in environments with the updated runtime and libraries. However, you must make source changes to recompile with the new language version and runtime. If a change is both source breaking and binary breaking, you must recompile your application with the latest version and make source updates.
 
@@ -26,8 +24,8 @@ Because of the goal to avoid breaking changes by the C# language team and runtim
 
 When you adopt new language features in your library's public API, you should evaluate if adopting the feature introduces either a binary or source breaking change for the users of your library. Any changes to your internal implementation that don't appear in the `public` or `protected` interfaces are compatible.
 
-> **Note:**
-> If you use the `System.Runtime.CompilerServices.InternalsVisibleToAttribute` to enable types to see internal members, the internal members can introduce breaking changes.
+> [!NOTE]
+> If you use the <xref:System.Runtime.CompilerServices.InternalsVisibleToAttribute?displayProperty=nameWithType> to enable types to see internal members, the internal members can introduce breaking changes.
 
 A *binary breaking change* requires your users to recompile their code in order to use the new version.  For example, consider this public method:
 

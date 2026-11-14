@@ -1,13 +1,8 @@
 ---
-title: "no-unused-expressions"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-unused-expressions.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-unused-expressions
+rule_type: suggestion
 ---
 
-# no-unused-expressions
 
 An unused expression which has no effect on the state of the program indicates a logic error.
 
@@ -47,7 +42,7 @@ These options allow unused expressions *only if all* of the code paths either di
 
 Examples of **incorrect** code for the default `{ "allowShortCircuit": false, "allowTernary": false }` options:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-unused-expressions: "error"*/
@@ -74,9 +69,11 @@ injectGlobal`body{ color: red; }`
 
 ```
 
+:::
+
 Examples of **correct** code for the default `{ "allowShortCircuit": false, "allowTernary": false }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-unused-expressions: "error"*/
@@ -100,11 +97,13 @@ delete a.b
 void a
 ```
 
+:::
+
 Note that one or more string expression statements (with or without semi-colons) will only be considered as unused if they are not in the beginning of a script, module, or function (alone and uninterrupted by other statements). Otherwise, they will be treated as part of a "directive prologue", a section potentially usable by JavaScript engines. This includes "strict mode" directives.
 
 Examples of **correct** code for this rule in regard to directives:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-unused-expressions: "error"*/
@@ -127,9 +126,11 @@ class Foo {
 }
 ```
 
+:::
+
 Examples of **incorrect** code for this rule in regard to directives:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-unused-expressions: "error"*/
@@ -148,11 +149,13 @@ class Foo {
 }
 ```
 
+:::
+
 ### allowShortCircuit
 
 Examples of **incorrect** code for the `{ "allowShortCircuit": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-unused-expressions: ["error", { "allowShortCircuit": true }]*/
@@ -160,9 +163,11 @@ Examples of **incorrect** code for the `{ "allowShortCircuit": true }` option:
 a || b
 ```
 
+:::
+
 Examples of **correct** code for the `{ "allowShortCircuit": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-unused-expressions: ["error", { "allowShortCircuit": true }]*/
@@ -171,11 +176,13 @@ a && b()
 a() || (b = c)
 ```
 
+:::
+
 ### allowTernary
 
 Examples of **incorrect** code for the `{ "allowTernary": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-unused-expressions: ["error", { "allowTernary": true }]*/
@@ -184,9 +191,11 @@ a ? b : 0
 a ? b : c()
 ```
 
+:::
+
 Examples of **correct** code for the `{ "allowTernary": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-unused-expressions: ["error", { "allowTernary": true }]*/
@@ -195,11 +204,13 @@ a ? b() : c()
 a ? (b = c) : d()
 ```
 
+:::
+
 ### allowShortCircuit and allowTernary
 
 Examples of **correct** code for the `{ "allowShortCircuit": true, "allowTernary": true }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-unused-expressions: ["error", { "allowShortCircuit": true, "allowTernary": true }]*/
@@ -207,11 +218,13 @@ Examples of **correct** code for the `{ "allowShortCircuit": true, "allowTernary
 a ? b() || (c = d) : e()
 ```
 
+:::
+
 ### allowTaggedTemplates
 
 Examples of **incorrect** code for the `{ "allowTaggedTemplates": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-unused-expressions: ["error", { "allowTaggedTemplates": true }]*/
@@ -219,9 +232,11 @@ Examples of **incorrect** code for the `{ "allowTaggedTemplates": true }` option
 `some untagged template string`;
 ```
 
+:::
+
 Examples of **correct** code for the `{ "allowTaggedTemplates": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-unused-expressions: ["error", { "allowTaggedTemplates": true }]*/
@@ -229,13 +244,15 @@ Examples of **correct** code for the `{ "allowTaggedTemplates": true }` option:
 tag`some tagged template string`;
 ```
 
+:::
+
 ### enforceForJSX
 
 JSX is most-commonly used in the React ecosystem, where it is compiled to `React.createElement` expressions. Though free from side-effects, these calls are not automatically flagged by the `no-unused-expressions` rule. If you're using React, or any other side-effect-free JSX pragma, this option can be enabled to flag these expressions.
 
 Examples of **incorrect** code for the `{ "enforceForJSX": true }` option:
 
-**Incorrect:**
+::: incorrect { "parserOptions": { "ecmaFeatures": { "jsx": true } } }
 
 ```jsx
 /*eslint no-unused-expressions: ["error", { "enforceForJSX": true }]*/
@@ -245,9 +262,11 @@ Examples of **incorrect** code for the `{ "enforceForJSX": true }` option:
 <></>;
 ```
 
+:::
+
 Examples of **correct** code for the `{ "enforceForJSX": true }` option:
 
-**Correct:**
+::: correct { "parserOptions": { "ecmaFeatures": { "jsx": true } } }
 
 ```jsx
 /*eslint no-unused-expressions: ["error", { "enforceForJSX": true }]*/
@@ -256,6 +275,8 @@ const myComponentPartial = <MyComponent />;
 
 const myFragment = <></>;
 ```
+
+:::
 
 ### ignoreDirectives
 
@@ -267,7 +288,7 @@ Set this option to `true` to prevent directives from being reported as unused, e
 
 Examples of **incorrect** code for the `{ "ignoreDirectives": false }` option and `ecmaVersion: 3`:
 
-**Incorrect:**
+::: incorrect { "ecmaVersion": 3, "sourceType": "script" }
 
 ```js
 /*eslint no-unused-expressions: ["error", { "ignoreDirectives": false }]*/
@@ -284,9 +305,11 @@ function foo() {
 }
 ```
 
+:::
+
 Examples of **correct** code for the `{ "ignoreDirectives": true }` option and `ecmaVersion: 3`:
 
-**Correct:**
+::: correct { "ecmaVersion": 3, "sourceType": "script" }
 
 ```js
 /*eslint no-unused-expressions: ["error", { "ignoreDirectives": true }]*/
@@ -303,6 +326,8 @@ function foo() {
 }
 ```
 
+:::
+
 ### TypeScript Support
 
 This rule supports TypeScript-specific expressions and follows these guidelines:
@@ -317,7 +342,7 @@ This rule supports TypeScript-specific expressions and follows these guidelines:
 
 Examples of **correct** code for this rule when using TypeScript:
 
-**Correct:**
+::: correct
 
 ```ts
 /* eslint no-unused-expressions: "error" */
@@ -342,9 +367,11 @@ namespace Bar {
 }
 ```
 
+:::
+
 Examples of **incorrect** code for this rule when using TypeScript:
 
-**Incorrect:**
+::: incorrect
 
 ```ts
 /* eslint no-unused-expressions: "error" */
@@ -359,3 +386,5 @@ namespace Bar {
     123;
 }
 ```
+
+:::

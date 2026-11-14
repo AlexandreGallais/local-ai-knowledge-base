@@ -1,22 +1,19 @@
 ---
-title: "onStackTrace | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/onstacktrace.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: onStackTrace | Config
+outline: deep
 ---
 
 # onStackTrace <CRoot />
 
 - **Type:** `(error: Error, frame: ParsedStack) => boolean | void`
 
-Apply a filtering function to each frame of each stack trace when handling errors. This does not apply to stack traces printed by `printConsoleTrace`. The first argument, `error`, is a `TestError`.
+Apply a filtering function to each frame of each stack trace when handling errors. This does not apply to stack traces printed by [`printConsoleTrace`](/config/printconsoletrace#printconsoletrace). The first argument, `error`, is a `TestError`.
 
 Can be useful for filtering out stack trace frames from third-party libraries.
 
-**Tip:**
-The stack trace's total size is also typically limited by V8's `Error.stackTraceLimit` number. You could set this to a high value in your test setup function to prevent stacks from being truncated.
+::: tip
+The stack trace's total size is also typically limited by V8's [`Error.stackTraceLimit`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stackTraceLimit) number. You could set this to a high value in your test setup function to prevent stacks from being truncated.
+:::
 
 ```ts
 import type { ParsedStack, TestError } from 'vitest'

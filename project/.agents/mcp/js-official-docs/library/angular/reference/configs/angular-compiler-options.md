@@ -1,25 +1,10 @@
----
-title: "Angular compiler options"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/reference/configs/angular-compiler-options.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Angular compiler options
 
-When you use ahead-of-time compilation (AOT), you can control how your application is compiled by specifying Angular compiler options in the TypeScript configuration file.
+When you use [ahead-of-time compilation (AOT)](tools/cli/aot-compiler), you can control how your application is compiled by specifying Angular compiler options in the [TypeScript configuration file](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html).
 
 The Angular options object, `angularCompilerOptions`, is a sibling to the `compilerOptions` object that supplies standard options to the TypeScript compiler.
 
-File: `tsconfig.json`
-
-```json
-{
-  "compileOnSave": false,
-  "compilerOptions": {
-```
+<docs-code header="tsconfig.json" path="adev/src/content/examples/angular-compiler-options/tsconfig.json" region="angular-compiler-options"/>
 
 ## Configuration inheritance with `extends`
 
@@ -31,16 +16,9 @@ The configuration options from the base file are loaded first, then overridden b
 
 For example:
 
-File: `tsconfig.app.json`
+<docs-code header="tsconfig.app.json" path="adev/src/content/examples/angular-compiler-options/tsconfig.app.json" region="angular-compiler-options-app"/>
 
-```json
-{
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "outDir": "./out-tsc/app",
-```
-
-For more information, see the TypeScript Handbook.
+For more information, see the [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html).
 
 ## Template options
 
@@ -52,7 +30,7 @@ Modifies how Angular-specific annotations are emitted to improve tree-shaking.
 Non-Angular annotations are not affected.
 One of `static fields` or `decorators`. The default value is `static fields`.
 
-- By default, the compiler replaces decorators with a static field in the class, which allows advanced tree-shakers like Closure compiler to remove unused classes
+- By default, the compiler replaces decorators with a static field in the class, which allows advanced tree-shakers like [Closure compiler](https://github.com/google/closure-compiler) to remove unused classes
 - The `decorators` value leaves the decorators in place, which makes compilation faster.
   TypeScript emits calls to the `__decorate` helper.
   Use `--emitDecoratorMetadata` for runtime reflection.
@@ -61,8 +39,12 @@ One of `static fields` or `decorators`. The default value is `static fields`.
 
 ### `annotateForClosureCompiler`
 
-When `true`, use Tsickle to annotate the emitted JavaScript with JSDoc comments needed by the Closure Compiler.
+<!-- vale Angular.Angular_Spelling = NO -->
+
+When `true`, use [Tsickle](https://github.com/angular/tsickle) to annotate the emitted JavaScript with [JSDoc](https://jsdoc.app) comments needed by the [Closure Compiler](https://github.com/google/closure-compiler).
 Default is `false`.
+
+<!-- vale Angular.Angular_Spelling = YES -->
 
 ### `compilationMode`
 
@@ -91,7 +73,7 @@ Default is `false`.
 ### `enableI18nLegacyMessageIdFormat`
 
 Instructs the Angular template compiler to create legacy ids for messages that are tagged in templates by the `i18n` attribute.
-See Mark text for translations for more information about marking messages for localization.
+See [Mark text for translations][GuideI18nCommonPrepareMarkTextInComponentTemplate] for more information about marking messages for localization.
 
 Set this option to `false` unless your project relies upon translations that were created earlier using legacy IDs.
 Default is `true`.
@@ -150,7 +132,7 @@ Do this when using factory summaries.
 When `false`, the default, removes blank text nodes from compiled templates, which results in smaller emitted template factory modules.
 Set to `true` to preserve blank text nodes.
 
-HELPFUL: When using hydration, it is recommended that you use `preserveWhitespaces: false`, which is the default value. If you choose to enable preserving whitespaces by adding `preserveWhitespaces: true` to your tsconfig, it is possible you may encounter issues with hydration. This is not yet a fully supported configuration. Ensure this is also consistently set between the server and client tsconfig files. See the hydration guide for more details.
+HELPFUL: When using hydration, it is recommended that you use `preserveWhitespaces: false`, which is the default value. If you choose to enable preserving whitespaces by adding `preserveWhitespaces: true` to your tsconfig, it is possible you may encounter issues with hydration. This is not yet a fully supported configuration. Ensure this is also consistently set between the server and client tsconfig files. See the [hydration guide](guide/hydration#preserve-whitespaces-configuration) for more details.
 
 ### `skipMetadataEmit`
 
@@ -164,7 +146,7 @@ You can set to `true` when using factory summaries, because the factory summarie
 
 Set to `true` if you are using TypeScript's `--outFile` option, because the metadata files are not valid for this style of TypeScript output.
 The Angular community does not recommend using `--outFile` with Angular.
-Use a bundler, such as webpack, instead.
+Use a bundler, such as [webpack](https://webpack.js.org), instead.
 
 ### `skipTemplateCodegen`
 
@@ -205,10 +187,10 @@ When you use the Angular CLI command `ng new --strict`, it is set to `true` in t
 
 ### `strictTemplates`
 
-When `true`, enables strict template type checking.
+When `true`, enables [strict template type checking](tools/cli/template-typecheck#strict-mode).
 
 The strictness flags that this option enables allow you to turn on and off specific types of strict template type checking.
-See troubleshooting template errors.
+See [troubleshooting template errors](tools/cli/template-typecheck#troubleshooting-template-errors).
 Default is `true`.
 
 ### `strictStandalone`
@@ -227,9 +209,11 @@ Default is `true`.
 
 ## Command line options
 
-Most of the time, you interact with the Angular Compiler indirectly using Angular CLI. When debugging certain issues, you might find it useful to invoke the Angular Compiler directly.
+Most of the time, you interact with the Angular Compiler indirectly using [Angular CLI](reference/configs/angular-compiler-options). When debugging certain issues, you might find it useful to invoke the Angular Compiler directly.
 You can use the `ngc` command provided by the `@angular/compiler-cli` npm package to call the compiler from the command line.
 
 The `ngc` command is a wrapper around TypeScript's `tsc` compiler command. The Angular Compiler is primarily configured through `tsconfig.json` while Angular CLI is primarily configured through `angular.json`.
 
-Besides the configuration file, you can also use `tsc` command line options to configure `ngc`.
+Besides the configuration file, you can also use [`tsc` command line options](https://www.typescriptlang.org/docs/handbook/compiler-options.html) to configure `ngc`.
+
+[GuideI18nCommonPrepareMarkTextInComponentTemplate]: guide/i18n/prepare#mark-text-in-component-template 'Mark text in component template - Prepare component for translation | Angular'

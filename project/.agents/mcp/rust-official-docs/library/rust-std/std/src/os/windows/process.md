@@ -1,15 +1,8 @@
----
-title: "std::os::windows::process"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/os/windows/process.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::os::windows::process
 
-Windows-specific extensions to primitives in the `std::process` module.
+Windows-specific extensions to primitives in the [`std::process`] module.
+
+[`std::process`]: crate::process
 
 ## ProcThreadAttributeList::build
 
@@ -17,7 +10,7 @@ Windows-specific extensions to primitives in the `std::process` module.
 pub fn build() -> ProcThreadAttributeListBuilder<'a>
 ```
 
-Creates a new builder for constructing a `ProcThreadAttributeList`.
+Creates a new builder for constructing a [`ProcThreadAttributeList`].
 
 ## ProcThreadAttributeListBuilder::attribute
 
@@ -29,12 +22,12 @@ Sets an attribute on the attribute list.
 
 The `attribute` parameter specifies the raw attribute to be set, while
 the `value` parameter holds the value associated with that attribute.
-Please refer to the Windows documentation for a list of valid attributes.
+Please refer to the [Windows documentation][1] for a list of valid attributes.
 
 # Note
 
-The maximum number of attributes is the value of `u32::MAX`. If this
-limit is exceeded, the call to `Self::finish` will return an `Error`
+The maximum number of attributes is the value of [`u32::MAX`]. If this
+limit is exceeded, the call to [`Self::finish`] will return an `Error`
 indicating that the maximum number of attributes has been exceeded.
 
 # Safety Note
@@ -42,6 +35,8 @@ indicating that the maximum number of attributes has been exceeded.
 Remember that improper use of attributes can lead to undefined behavior
 or security vulnerabilities. Always consult the documentation and ensure
 proper attribute values are used.
+
+[1]: <https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-updateprocthreadattribute#parameters>
 
 ## ProcThreadAttributeListBuilder::raw_attribute
 
@@ -109,7 +104,7 @@ let mut child = Command::new("cmd").spawn_with_attributes(&attribute_list)?;
 #
 # child.kill()?;
 # Ok::<(), std::io::Error>(())
-```rust
+```
 
 ## ProcThreadAttributeListBuilder::finish
 

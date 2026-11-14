@@ -1,15 +1,6 @@
----
-title: "Background processing using web workers"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/ecosystem/web-workers.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Background processing using web workers
 
-Web workers let you run CPU-intensive computations in a background thread, freeing the main thread to update the user interface.
+[Web workers](https://developer.mozilla.org/docs/Web/API/Web_Workers_API) let you run CPU-intensive computations in a background thread, freeing the main thread to update the user interface.
 Application's performing a lot of computations, like generating Computer-Aided Design \(CAD\) drawings or doing heavy geometric calculations, can use web workers to increase performance.
 
 HELPFUL: The Angular CLI does not support running itself in a web worker.
@@ -34,7 +25,7 @@ The command performs the following actions.
 1. Configures your project to use web workers, if it isn't already.
 1. Adds the following scaffold code to `src/app/app.worker.ts` to receive messages.
 
-   ```ts
+   ```ts {header:"src/app/app.worker.ts"}
    addEventListener('message', ({data}) => {
      const response = `worker response to ${data}`;
      postMessage(response);
@@ -43,7 +34,7 @@ The command performs the following actions.
 
 1. Adds the following scaffold code to `src/app/app.ts` to use the worker.
 
-   ```ts
+   ```ts {header:"src/app/app.ts"}
    if (typeof Worker !== 'undefined') {
      // Create a new
      const worker = new Worker(new URL('./app.worker', import.meta.url));
@@ -59,6 +50,6 @@ The command performs the following actions.
 
 After you create this initial scaffold, you must refactor your code to use the web worker by sending messages to and from the worker.
 
-IMPORTANT: Some environments or platforms, such as `@angular/platform-server` used in Server-side Rendering, don't support web workers.
+IMPORTANT: Some environments or platforms, such as `@angular/platform-server` used in [Server-side Rendering](guide/ssr), don't support web workers.
 
 To ensure that your application works in these environments, you must provide a fallback mechanism to perform the computations that the worker would otherwise perform.

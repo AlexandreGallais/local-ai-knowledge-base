@@ -1,15 +1,6 @@
----
-title: "Dep Optimization Options"
-tool: "vite"
-version: "8.3"
-source: "https://github.com/vitejs/vite/blob/b39e6e63dcbfc3cf4be871acf3554efbd6d0e268/docs/config/dep-optimization-options.md"
-commit: "b39e6e63dcbfc3cf4be871acf3554efbd6d0e268"
-license: "MIT"
----
-
 # Dep Optimization Options
 
-- **Related:** Dependency Pre-Bundling
+- **Related:** [Dependency Pre-Bundling](/guide/dep-pre-bundling)
 
 Unless noted, the options in this section are only applied to the dependency optimizer, which is only used in dev.
 
@@ -17,9 +8,9 @@ Unless noted, the options in this section are only applied to the dependency opt
 
 - **Type:** `string | string[]`
 
-By default, Vite will crawl all your `.html` files to detect dependencies that need to be pre-bundled (ignoring `node_modules`, `build.outDir`, `__tests__` and `coverage`). If the top-level `input` or `build.rolldownOptions.input` is specified, Vite will crawl those entry points instead.
+By default, Vite will crawl all your `.html` files to detect dependencies that need to be pre-bundled (ignoring `node_modules`, `build.outDir`, `__tests__` and `coverage`). If the top-level [`input`](/config/shared-options#input) or `build.rolldownOptions.input` is specified, Vite will crawl those entry points instead.
 
-If neither of these fit your needs, you can specify custom entries using this option - the value should be a `tinyglobby` pattern or array of patterns that are relative from Vite project root. This will overwrite default entries inference. Only `node_modules` and `build.outDir` folders will be ignored by default when `optimizeDeps.entries` is explicitly defined. If other folders need to be ignored, you can use an ignore pattern as part of the entries list, marked with an initial `!`. `node_modules` will not be ignored for patterns that explicitly include the string `node_modules`.
+If neither of these fit your needs, you can specify custom entries using this option - the value should be a [`tinyglobby` pattern](https://superchupu.dev/tinyglobby/comparison) or array of patterns that are relative from Vite project root. This will overwrite default entries inference. Only `node_modules` and `build.outDir` folders will be ignored by default when `optimizeDeps.entries` is explicitly defined. If other folders need to be ignored, you can use an ignore pattern as part of the entries list, marked with an initial `!`. `node_modules` will not be ignored for patterns that explicitly include the string `node_modules`.
 
 ## optimizeDeps.exclude <NonInheritBadge />
 
@@ -27,10 +18,10 @@ If neither of these fit your needs, you can specify custom entries using this op
 
 Dependencies to exclude from pre-bundling.
 
-**CommonJS**
+:::warning CommonJS
 CommonJS dependencies should not be excluded from optimization. If an ESM dependency is excluded from optimization, but has a nested CommonJS dependency, the CommonJS dependency should be added to `optimizeDeps.include`. Example:
 
-```js
+```js twoslash
 import { defineConfig } from 'vite'
 // ---cut---
 export default defineConfig({
@@ -40,15 +31,17 @@ export default defineConfig({
 })
 ```
 
+:::
+
 ## optimizeDeps.include <NonInheritBadge />
 
 - **Type:** `string[]`
 
 By default, linked packages not inside `node_modules` are not pre-bundled. Use this option to force a linked package to be pre-bundled.
 
-**Experimental:** If you're using a library with many deep imports, you can also specify a trailing glob pattern to pre-bundle all deep imports at once. This will avoid constantly pre-bundling whenever a new deep import is used. Give Feedback. For example:
+**Experimental:** If you're using a library with many deep imports, you can also specify a trailing glob pattern to pre-bundle all deep imports at once. This will avoid constantly pre-bundling whenever a new deep import is used. [Give Feedback](https://github.com/vitejs/vite/discussions/15833). For example:
 
-```js
+```js twoslash
 import { defineConfig } from 'vite'
 // ---cut---
 export default defineConfig({
@@ -60,7 +53,7 @@ export default defineConfig({
 
 ## optimizeDeps.rolldownOptions <NonInheritBadge />
 
-- **Type:** <code>Omit<RolldownOptions, 'input' | 'logLevel' | 'output'> & { output?: Omit<RolldownOutputOptions, 'format' | 'sourcemap' | 'dir' | 'banner'> }</code>
+- **Type:** <code>Omit<<a href="https://rolldown.rs/reference/Interface.RolldownOptions">RolldownOptions</a>, 'input' | 'logLevel' | 'output'> & { output?: Omit<<a href="https://rolldown.rs/reference/#:~:text=Output%20Options">RolldownOutputOptions</a>, 'format' | 'sourcemap' | 'dir' | 'banner'> }</code>
 
 Options to pass to Rolldown during the dep scanning and optimization.
 
@@ -70,7 +63,7 @@ Certain options are omitted since changing them would not be compatible with Vit
 
 ## optimizeDeps.esbuildOptions <NonInheritBadge />
 
-- **Type:** <code>Omit<EsbuildBuildOptions, 'bundle' | 'entryPoints' | 'external' | 'write' | 'watch' | 'outdir' | 'outfile' | 'outbase' | 'outExtension' | 'metafile'></code>
+- **Type:** <code>Omit<<a href="https://esbuild.github.io/api/#general-options">EsbuildBuildOptions</a>, 'bundle' | 'entryPoints' | 'external' | 'write' | 'watch' | 'outdir' | 'outfile' | 'outbase' | 'outExtension' | 'metafile'></code>
 - **Deprecated**
 
 This option is converted to `optimizeDeps.rolldownOptions` internally. Use `optimizeDeps.rolldownOptions` instead.
@@ -90,7 +83,7 @@ When set to `true`, automatic dependency discovery will be disabled and only dep
 
 ## optimizeDeps.holdUntilCrawlEnd <NonInheritBadge />
 
-- **Experimental:** Give Feedback
+- **Experimental:** [Give Feedback](https://github.com/vitejs/vite/discussions/15834)
 - **Type:** `boolean`
 - **Default:** `true`
 
@@ -99,7 +92,7 @@ When enabled, it will hold the first optimized deps results until all static imp
 ## optimizeDeps.disabled <NonInheritBadge />
 
 - **Deprecated**
-- **Experimental:** Give Feedback
+- **Experimental:** [Give Feedback](https://github.com/vitejs/vite/discussions/13839)
 - **Type:** `boolean | 'build' | 'dev'`
 - **Default:** `'build'`
 
@@ -107,8 +100,9 @@ This option is deprecated. As of Vite 5.1, pre-bundling of dependencies during b
 
 To disable the optimizer completely, use `optimizeDeps.noDiscovery: true` to disallow automatic discovery of dependencies and leave `optimizeDeps.include` undefined or empty.
 
-**Warning:**
+:::warning
 Optimizing dependencies during build time was an **experimental** feature. Projects trying out this strategy also removed `@rollup/plugin-commonjs` using `build.commonjsOptions: { include: [] }`. If you did so, a warning will guide you to re-enable it to support CJS only packages while bundling.
+:::
 
 ## optimizeDeps.needsInterop <NonInheritBadge />
 

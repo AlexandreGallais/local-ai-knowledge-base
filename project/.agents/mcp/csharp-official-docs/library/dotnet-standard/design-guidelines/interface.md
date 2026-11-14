@@ -1,22 +1,22 @@
 ---
+description: "Learn more about: Interface Design"
 title: "Interface Design"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "interfaces [.NET Framework], design guidelines"
+  - "type design guidelines, interfaces"
+  - "class library design guidelines [.NET Framework], interfaces"
+ms.assetid: a016bd18-6710-4358-9438-9f190a295392
 ---
-
 # Interface Design
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
 Although most APIs are best modeled using classes and structs, there are cases in which interfaces are more appropriate or are the only option.
 
- The CLR does not support multiple inheritance (i.e., CLR classes cannot inherit from more than one base class), but it does allow types to implement one or more interfaces in addition to inheriting from a base class. Therefore, interfaces are often used to achieve the effect of multiple inheritance. For example, `System.IDisposable` is an interface that allows types to support disposability independent of any other inheritance hierarchy in which they want to participate.
+ The CLR does not support multiple inheritance (i.e., CLR classes cannot inherit from more than one base class), but it does allow types to implement one or more interfaces in addition to inheriting from a base class. Therefore, interfaces are often used to achieve the effect of multiple inheritance. For example, <xref:System.IDisposable> is an interface that allows types to support disposability independent of any other inheritance hierarchy in which they want to participate.
 
- The other situation in which defining an interface is appropriate is in creating a common interface that can be supported by several types, including some value types. Value types cannot inherit from types other than `System.ValueType`, but they can implement interfaces, so using an interface is the only option in order to provide a common base type.
+ The other situation in which defining an interface is appropriate is in creating a common interface that can be supported by several types, including some value types. Value types cannot inherit from types other than <xref:System.ValueType>, but they can implement interfaces, so using an interface is the only option in order to provide a common base type.
 
  ✔️ DO define an interface if you need some common API to be supported by a set of types that includes value types.
 
@@ -28,11 +28,11 @@ Although most APIs are best modeled using classes and structs, there are cases i
 
  ✔️ DO provide at least one type that is an implementation of an interface.
 
- Doing this helps to validate the design of the interface. For example, `System.Collections.Generic.List`1` is an implementation of the `System.Collections.Generic.IList`1` interface.
+ Doing this helps to validate the design of the interface. For example, <xref:System.Collections.Generic.List`1> is an implementation of the <xref:System.Collections.Generic.IList`1> interface.
 
  ✔️ DO provide at least one API that consumes each interface you define (a method taking the interface as a parameter or a property typed as the interface).
 
- Doing this helps to validate the interface design. For example, `System.Collections.Generic.List`1.Sort*` consumes the `System.Collections.Generic.IComparer`1` interface.
+ Doing this helps to validate the interface design. For example, <xref:System.Collections.Generic.List`1.Sort*?displayProperty=nameWithType> consumes the <xref:System.Collections.Generic.IComparer`1?displayProperty=nameWithType> interface.
 
  ❌ DO NOT add members to an interface that has previously shipped.
 
@@ -42,9 +42,9 @@ Although most APIs are best modeled using classes and structs, there are cases i
 
  *Portions © 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Type Design Guidelines
-- Framework Design Guidelines
+- [Type Design Guidelines](type.md)
+- [Framework Design Guidelines](index.md)

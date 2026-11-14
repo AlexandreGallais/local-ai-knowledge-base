@@ -1,15 +1,13 @@
 ---
-title: "Upgrade to a new .NET version"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/install/upgrade.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Upgrade to a new .NET version
+description: Learn how to upgrade an app to a new .NET version. Upgrade .NET when the current version goes out of support or when you want to use new features of .NET. Control versions of SDK, analyzers, and packages for predictable builds.
+ms.date: 07/21/2026
+ai-usage: ai-assisted
 ---
 
 # Upgrade to a new .NET version
 
-New .NET versions are released each year. Many developers start the upgrade process as soon as the new version is available, while others wait until the version they are using is no longer supported. The upgrade process has multiple aspects to consider.
+New .NET versions are [released each year](https://github.com/dotnet/core/blob/main/releases.md). Many developers start the upgrade process as soon as the new version is available, while others wait until the version they are using is no longer supported. The upgrade process has multiple aspects to consider.
 
 Common reasons to upgrade to a new .NET version:
 
@@ -21,17 +19,17 @@ Common reasons to upgrade to a new .NET version:
 
 To upgrade to a new .NET version, the .NET SDK is the primary component to install. It includes an updated .NET CLI, build system, and runtime version.
 
-The .NET website offers installers and archives that you can download and use on any supported operating system and architecture.
+The .NET website offers [installers and archives](https://dotnet.microsoft.com/download) that you can download and use on any supported operating system and architecture.
 
 Some operating systems have a package manager that you can also use to install a new .NET version, which you might prefer.
 
-For user-level installations, dotnetup can track and update .NET SDKs and runtimes.
+For user-level installations, [dotnetup](../tools/dotnetup/index.md) can track and update .NET SDKs and runtimes.
 
-- macOS
-- Linux
-- Windows
+- [macOS](https://formulae.brew.sh/cask/dotnet-sdk)
+- [Linux](linux.md)
+- [Windows](https://github.com/microsoft/winget-pkgs/tree/master/manifests/m/Microsoft/DotNet/SDK)
 
-Visual Studio installs new .NET SDK versions automatically. For Visual Studio users, it's sufficient to upgrade to a newer Visual Studio version.
+Visual Studio installs [new .NET SDK versions automatically](../porting/versioning-sdk-msbuild-vs.md). For Visual Studio users, it's sufficient to upgrade to a newer Visual Studio version.
 
 ## Upgrade source code
 
@@ -43,8 +41,8 @@ Here's how to do it:
 - Change the `<TargetFramework>` property value from, for example, `net6.0` to `net8.0`.
 - The same pattern applies for the `<TargetFrameworks>` property if it is being used.
 
-> **Tip:**
-> The GitHub Copilot modernization chat agent can make these changes automatically.
+> [!TIP]
+> The [GitHub Copilot modernization](../porting/github-copilot-upgrade/overview.md) chat agent can make these changes automatically.
 
 The next step is to build the project (or solution) with the new SDK. If additional changes are needed, the SDK will provide warnings and errors that guide you.
 
@@ -52,9 +50,9 @@ You might need to run `dotnet workload restore` to restore workloads with the ne
 
 More resources:
 
-- Breaking changes in .NET 9
-- Migrate an ASP.NET Core app
-- Upgrade .NET MAUI from .NET 7 to .NET 8
+- [Breaking changes in .NET 9](../compatibility/9.0.md)
+- [Migrate an ASP.NET Core app](/aspnet/core/migration/)
+- [Upgrade .NET MAUI from .NET 7 to .NET 8](https://github.com/dotnet/maui/wiki/Upgrading-.NET-MAUI-from-.NET-7-to-.NET-8)
 
 ## Version pinning
 
@@ -70,10 +68,10 @@ Version pinning provides several benefits:
 
 The following sections describe various mechanisms for controlling versions of different components in your .NET projects:
 
-- Control SDK version with global.json
-- Control analyzer behavior
-- Control NuGet package versions
-- Control MSBuild version
+- [Control SDK version with global.json](#control-sdk-version-with-globaljson)
+- [Control analyzer behavior](#control-analyzer-behavior)
+- [Control NuGet package versions](#control-nuget-package-versions)
+- [Control MSBuild version](#control-msbuild-version)
 
 ### Control SDK version with global.json
 
@@ -98,11 +96,11 @@ This command creates the following *global.json* file that pins the SDK to versi
 
 The `rollForward` policy controls how the SDK version is selected when the exact version isn't available. This configuration ensures that when you upgrade Visual Studio or install a new SDK, your project continues to use SDK 9.0.x until you explicitly update the *global.json* file.
 
-For more information, see global.json overview.
+For more information, see [global.json overview](../tools/global-json.md).
 
 ### Control analyzer behavior
 
-Code analyzers can introduce new warnings or change behavior between versions. You can control analyzer versions to maintain consistent builds by using the `AnalysisLevel` property. This property allows you to lock to a specific version of analyzer rules, preventing new rules from being introduced when you upgrade the SDK.
+Code analyzers can introduce new warnings or change behavior between versions. You can control analyzer versions to maintain consistent builds by using the [`AnalysisLevel` property](../project-sdk/msbuild-props.md#analysislevel). This property allows you to lock to a specific version of analyzer rules, preventing new rules from being introduced when you upgrade the SDK.
 
 ```xml
 <PropertyGroup>
@@ -112,21 +110,21 @@ Code analyzers can introduce new warnings or change behavior between versions. Y
 
 When set to `9.0`, only the analyzer rules that shipped with .NET 9 are enabled, even if you're using the .NET 10 SDK. This prevents new .NET 10 analyzer rules from affecting your build until you're ready to address them.
 
-For more information, see AnalysisLevel.
+For more information, see [AnalysisLevel](../project-sdk/msbuild-props.md#analysislevel).
 
 ### Control NuGet package versions
 
 By managing package versions consistently across projects, you can prevent unexpected updates and maintain reliable builds.
 
-- Package lock files
-- Central package management
-- Package source mapping
+- [Package lock files](#package-lock-files)
+- [Central package management](#central-package-management)
+- [Package source mapping](#package-source-mapping)
 
 #### Package lock files
 
 Package lock files ensure that package restore operations use the exact same package versions across different environments. The lock file (`packages.lock.json`) records the exact versions of all packages and their dependencies.
 
-> **Important:**
+> [!IMPORTANT]
 > A package lock file doesn't isolate the dependency graph from SDK changes. The .NET SDK includes NuGet and controls parts of the restore process. To prevent an SDK update from changing the lock file unexpectedly, pin the SDK version and disable roll-forward.
 
 To lock the SDK and package dependency graph, complete these steps:
@@ -161,7 +159,7 @@ To lock the SDK and package dependency graph, complete these steps:
    </PropertyGroup>
    ```
 
-For more information, see Control SDK version with global.json. For related tracking issues, see <https://github.com/dotnet/aspnetcore/issues/65061> and <https://github.com/dotnet/sdk/issues/48795>.
+For more information, see [Control SDK version with global.json](#control-sdk-version-with-globaljson). For related tracking issues, see <https://github.com/dotnet/aspnetcore/issues/65061> and <https://github.com/dotnet/sdk/issues/48795>.
 
 #### Central package management
 
@@ -217,11 +215,11 @@ Configure source mapping in your *nuget.config* file:
 
 This configuration ensures that all packages starting with `Contoso.` are only restored from the `contoso` feed, while other packages come from `nuget.org`.
 
-For more information, see NuGet package restore.
+For more information, see [NuGet package restore](../tools/dotnet-restore.md).
 
 ### Control MSBuild version
 
-Visual Studio supports side-by-side installation of multiple versions. For example, you can install Visual Studio 2026 and Visual Studio 2022 on the same machine. Each Visual Studio version includes a corresponding .NET SDK. When you update Visual Studio, the included SDK version is updated as well. However, you can continue using older SDK versions by installing them separately from the .NET download page.
+Visual Studio supports side-by-side installation of multiple versions. For example, you can install Visual Studio 2026 and Visual Studio 2022 on the same machine. Each Visual Studio version includes a corresponding .NET SDK. When you update Visual Studio, the included SDK version is updated as well. However, you can continue using older SDK versions by installing them separately from the [.NET download page](https://dotnet.microsoft.com/download).
 
 MSBuild versions correspond to Visual Studio versions. For example, Visual Studio 2022 version 17.8 includes MSBuild 17.8. The .NET SDK also includes MSBuild. When you use `dotnet build`, you're using the MSBuild version included with the SDK specified by *global.json* or the latest installed SDK.
 
@@ -231,17 +229,17 @@ To use a specific MSBuild version:
 - Launch the appropriate Visual Studio Developer Command Prompt, which sets up the environment for that Visual Studio version's MSBuild.
 - Directly invoke MSBuild from a specific Visual Studio installation (for example, `"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe"`).
 
-For more information, see .NET SDK, MSBuild, and Visual Studio versioning.
+For more information, see [.NET SDK, MSBuild, and Visual Studio versioning](../porting/versioning-sdk-msbuild-vs.md).
 
 ## Update continuous integration (CI)
 
-CI pipelines follow a similar update process as project files and Dockerfiles. Typically, you can update CI pipelines by changing only version values.
+CI pipelines follow a similar update process as project files and Dockerfiles. Typically, you can update [CI pipelines](https://github.com/actions/setup-dotnet) by changing only version values.
 
 ## Update hosting environment
 
-There are many patterns that are used for hosting applications. If the hosting environment includes the .NET runtime, then the new version of the .NET runtime needs to be installed. On Linux, dependencies need to be installed, however, they typically don't change across .NET versions.
+There are many patterns that are used for hosting applications. If the hosting environment includes the .NET runtime, then the new version of the .NET runtime needs to be installed. On Linux, [dependencies](https://github.com/dotnet/core/blob/main/release-notes/8.0/linux-packages.md) need to be installed, however, they typically don't change across .NET versions.
 
-For containers, `FROM` statements need to be changed to include new version numbers.
+For containers, [`FROM` statements](https://github.com/dotnet/dotnet-docker/blob/e5e8164460037e77902cd269c788eccbdeea5edd/samples/aspnetapp/Dockerfile#L17) need to be changed to include new version numbers.
 
 The following Dockerfile example demonstrates pulling an ASP.NET Core 9.0 image.
 
@@ -249,10 +247,10 @@ The following Dockerfile example demonstrates pulling an ASP.NET Core 9.0 image.
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
 ```
 
-In a cloud service like Azure App Service, a configuration change is needed.
+In a cloud service like [Azure App Service](/azure/app-service/quickstart-dotnetcore), a configuration change is needed.
 
 ## See also
 
-- Breaking changes in .NET 11
-- Breaking changes in .NET 10
-- Migrate an ASP.NET Core app
+- [Breaking changes in .NET 11](../compatibility/11.md)
+- [Breaking changes in .NET 10](../compatibility/10.md)
+- [Migrate an ASP.NET Core app](/aspnet/core/migration/)

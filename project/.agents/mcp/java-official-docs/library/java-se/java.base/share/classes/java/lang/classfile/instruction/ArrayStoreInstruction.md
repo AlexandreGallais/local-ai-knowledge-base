@@ -1,32 +1,25 @@
----
-title: "ArrayStoreInstruction interface (java.lang.classfile.instruction)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/instruction/ArrayStoreInstruction.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ArrayStoreInstruction interface (java.lang.classfile.instruction)
 
 ```java
 public sealed interface ArrayStoreInstruction extends Instruction permits AbstractInstruction.UnboundArrayStoreInstruction
 ```
 
-Models an array store instruction in the `code` array of a `Code`
-attribute.  Corresponding opcodes have a kind
-of `Opcode.Kind.ARRAY_STORE`.  Delivered as a `CodeElement` when
-traversing the elements of a `CodeModel`.
-
+Models an array store instruction in the {@code code} array of a {@code Code}
+attribute.  Corresponding opcodes have a {@linkplain Opcode#kind() kind}
+of {@link Opcode.Kind#ARRAY_STORE}.  Delivered as a {@link CodeElement} when
+traversing the elements of a {@link CodeModel}.
+<p>
 An array store instruction is composite:
+{@snippet lang=text :
+// @link substring="ArrayStoreInstruction" target="CodeBuilder#arrayStore(TypeKind)" :
+ArrayStoreInstruction(TypeKind typeKind) // @link substring="typeKind" target="#typeKind"
+}
+where {@code typeKind} is not {@link TypeKind#VOID void}, and {@link
+TypeKind#BOOLEAN boolean} is converted to {@link TypeKind#BYTE byte}.
 
-where `typeKind` is not void, and boolean is converted to byte.
-
-**See also:** Opcode.Kind#ARRAY_STORE
-
-**See also:** CodeBuilder#arrayStore CodeBuilder::arrayStore
-
-**Since:** 24
+@see Opcode.Kind#ARRAY_STORE
+@see CodeBuilder#arrayStore CodeBuilder::arrayStore
+@since 24
 
 ## ArrayStoreInstruction.typeKind()
 
@@ -34,10 +27,10 @@ where `typeKind` is not void, and boolean is converted to byte.
 TypeKind typeKind()
 ```
 
-The byte
-type store instruction bastore also operates on
-boolean arrays, so this never returns
-`boolean`.
+{@return the component type of the array}  The {@link TypeKind#BYTE byte}
+type store instruction {@link Opcode#BASTORE bastore} also operates on
+{@link TypeKind#BOOLEAN boolean} arrays, so this never returns
+{@code boolean}.
 
 ## ArrayStoreInstruction.of(Opcode)
 
@@ -45,10 +38,9 @@ boolean arrays, so this never returns
 static ArrayStoreInstruction of(Opcode op)
 ```
 
-Parameters:
+{@return an array store instruction}
 
-- `op`: the opcode for the specific type of array store instruction, which must be of kind `Opcode.Kind.ARRAY_STORE`
-
-Throws:
-
-- `IllegalArgumentException`: if the opcode kind is not `Opcode.Kind.ARRAY_STORE`
+@param op the opcode for the specific type of array store instruction,
+          which must be of kind {@link Opcode.Kind#ARRAY_STORE}
+@throws IllegalArgumentException if the opcode kind is not
+        {@link Opcode.Kind#ARRAY_STORE}

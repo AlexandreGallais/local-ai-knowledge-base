@@ -1,17 +1,19 @@
 ---
-title: "Use Identity to secure a Web API backend for SPAs (part 1 of 2)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/authentication/identity-api-authorization.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Use Identity to secure a Web API backend for SPAs
+ai-usage: ai-assisted
+description: Learn how to use Identity to secure a Web API backend for single page applications (SPAs).
+monikerRange: '>= aspnetcore-3.0'
+ms.date: 10/26/2026
 ---
-
 # How to use Identity to secure a Web API backend for SPAs
 
-ASP.NET Core Identity provides APIs that handle authentication, authorization, and identity management. The APIs make it possible to secure endpoints of a Web API backend with cookie-based authentication. A token-based option is available for clients that can't use cookies, but in using this you are responsible for ensuring the tokens are kept secure. We recommend using cookies for browser-based applications, because, by default, the browser automatically handles them without exposing them to JavaScript.
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
-This article shows how to use Identity to secure a Web API backend for SPAs such as Angular, React, and Vue apps. The same backend APIs can be used to secure Blazor WebAssembly apps.
+:::moniker range=">= aspnetcore-8.0"
+
+[ASP.NET Core Identity](identity.md) provides APIs that handle authentication, authorization, and identity management. The APIs make it possible to secure endpoints of a Web API backend with cookie-based authentication. A token-based option is available for clients that can't use cookies, but in using this you are responsible for ensuring the tokens are kept secure. We recommend using cookies for browser-based applications, because, by default, the browser automatically handles them without exposing them to JavaScript.
+
+This article shows how to use Identity to secure a Web API backend for SPAs such as Angular, React, and Vue apps. The same backend APIs can be used to secure [Blazor WebAssembly apps](../../blazor/security/webassembly/standalone-with-identity/index.md).
 
 ## Prerequisites
 
@@ -21,40 +23,30 @@ The steps shown in this article add authentication and authorization to an ASP.N
 * Targets `net8.0` or later.
 * Can be either Minimal API or controller-based API.
 
-Some of the testing instructions in this article use the Swagger UI that's included with the project template. The Swagger UI isn't required to use Identity with a Web API backend.
+Some of the testing instructions in this article use the [Swagger UI](../../tutorials/web-api-help-pages-using-swagger.md) that's included with the project template. The Swagger UI isn't required to use Identity with a Web API backend.
 
 ## Install NuGet packages
 
 Install the following NuGet packages:
 
-* `Microsoft.AspNetCore.Identity.EntityFrameworkCore` - Enables Identity to work with Entity Framework Core (EF Core).
+* [`Microsoft.AspNetCore.Identity.EntityFrameworkCore`](https://www.nuget.org/packages/Microsoft.AspNetCore.Identity.EntityFrameworkCore) - Enables Identity to work with Entity Framework Core (EF Core).
 * One that enables EF Core to work with a database, such as one of the following packages:
-  * `Microsoft.EntityFrameworkCore.SqlServer` or
-  * `Microsoft.EntityFrameworkCore.Sqlite` or
-  * `Microsoft.EntityFrameworkCore.InMemory`.
+  * [`Microsoft.EntityFrameworkCore.SqlServer`](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer) or
+  * [`Microsoft.EntityFrameworkCore.Sqlite`](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite) or
+  * [`Microsoft.EntityFrameworkCore.InMemory`](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.InMemory).
 
 For the quickest way to get started, use the in-memory database.
 
-Change the database later to SQLite or SQL Server to save user data between sessions when testing or for production use. That introduces some complexity compared to in-memory, as it requires the database to be created through migrations, as shown in the EF Core getting started tutorial.
+Change the database later to SQLite or SQL Server to save user data between sessions when testing or for production use. That introduces some complexity compared to in-memory, as it requires the database to be created through [migrations](/ef/core/managing-schemas/migrations/), as shown in the [EF Core getting started tutorial](/ef/core/get-started/overview/first-app).
 
-Install these packages by using the NuGet package manager in Visual Studio or the dotnet add package CLI command.
+Install these packages by using the [NuGet package manager in Visual Studio](/nuget/consume-packages/install-use-packages-visual-studio) or the [dotnet add package](/dotnet/core/tools/dotnet-add-package) CLI command.
 
 ## Create an `IdentityDbContext`
 
-Add a class named `ApplicationDbContext` that inherits from `Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext`1`:
+Add a class named `ApplicationDbContext` that inherits from <xref:Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext`1>:
 
-```csharp
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+:::code language="csharp" source="~\security\authentication\identity-api-authorization\samples\8\APIforSPA\ApplicationDbContext.cs":::
 
-public class ApplicationDbContext : IdentityDbContext<IdentityUser>
-{
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) :
-        base(options)
-    { }
-}
-```
 The code shown provides a special constructor that makes it possible to configure the database for different environments.
 
 Add one or more of the following `using` directives as needed when adding the code shown in these steps.
@@ -69,74 +61,52 @@ using Microsoft.EntityFrameworkCore;
 
 As noted earlier, the simplest way to get started is to use the in-memory database. With in-memory each run starts with a fresh database, and there's no need to use migrations. After the call to `WebApplication.CreateBuilder(args)`, add the following code to configure Identity to use an in-memory database:
 
-```csharp
-builder.Services.AddDbContext<ApplicationDbContext>(
-    options => options.UseInMemoryDatabase("AppDb"));
-```
-To save user data between sessions when testing or for production use, change the database later to SQLite or SQL Server.
+:::code language="csharp" source="~\security\authentication\identity-api-authorization\samples\8\APIforSPA\Program.cs" id="snippetAppDbContext":::
 
+To save user data between sessions when testing or for production use, change the database later to SQLite or SQL Server.
+    
 ## Add Identity services to the container
 
-After the call to `WebApplication.CreateBuilder(args)`, call `Microsoft.Extensions.DependencyInjection.AuthorizationServiceCollectionExtensions.AddAuthorization*` to add services to the dependency injection (DI) container:
+After the call to `WebApplication.CreateBuilder(args)`, call <xref:Microsoft.Extensions.DependencyInjection.AuthorizationServiceCollectionExtensions.AddAuthorization*> to add services to the dependency injection (DI) container:
 
-```csharp
-builder.Services.AddAuthorization();
-```
+:::code language="csharp" source="~\security\authentication\identity-api-authorization\samples\8\APIforSPA\Program.cs" id="snippetAddAuthorization":::
+
 ## Activate Identity APIs
 
-After the call to `WebApplication.CreateBuilder(args)`, call `Microsoft.Extensions.DependencyInjection.IdentityServiceCollectionExtensions.AddIdentityApiEndpoints``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)` and `Microsoft.Extensions.DependencyInjection.IdentityEntityFrameworkBuilderExtensions.AddEntityFrameworkStores``1(Microsoft.AspNetCore.Identity.IdentityBuilder)`.
+After the call to `WebApplication.CreateBuilder(args)`, call <xref:Microsoft.Extensions.DependencyInjection.IdentityServiceCollectionExtensions.AddIdentityApiEndpoints``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)> and <xref:Microsoft.Extensions.DependencyInjection.IdentityEntityFrameworkBuilderExtensions.AddEntityFrameworkStores``1(Microsoft.AspNetCore.Identity.IdentityBuilder)>.
 
-```csharp
-builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
-```
+:::code language="csharp" source="~\security\authentication\identity-api-authorization\samples\8\APIforSPA\Program.cs" id="snippetActivateAPIs":::
+
 By default, both cookies and proprietary tokens are activated. Cookies are issued at login if either the `useCookies` or `useSessionCookies` query string parameter in the login endpoint is `true`.
+
 
 ## Map Identity routes
 
-After the call to `builder.Build()`, call `Microsoft.AspNetCore.Routing.IdentityApiEndpointRouteBuilderExtensions.MapIdentityApi``1(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)` to map the Identity endpoints:
+After the call to `builder.Build()`, call <xref:Microsoft.AspNetCore.Routing.IdentityApiEndpointRouteBuilderExtensions.MapIdentityApi``1(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)> to map the Identity endpoints:
 
-```csharp
-app.MapIdentityApi<IdentityUser>();
-```
+:::code language="csharp" source="~\security\authentication\identity-api-authorization\samples\8\APIforSPA\Program.cs" id="snippetMapEndpoints":::
+
 ## Secure selected endpoints
 
-To secure an endpoint, use the `Microsoft.AspNetCore.Builder.AuthorizationEndpointConventionBuilderExtensions.RequireAuthorization*` extension method on the `Map{Method}` call that defines the route. For example:
+To secure an endpoint, use the <xref:Microsoft.AspNetCore.Builder.AuthorizationEndpointConventionBuilderExtensions.RequireAuthorization*> extension method on the `Map{Method}` call that defines the route. For example:
 
-```csharp
-app.MapGet("/weatherforecast", (HttpContext httpContext) =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        {
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = summaries[Random.Shared.Next(summaries.Length)]
-        })
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi()
-.RequireAuthorization();
-```
+:::code language="csharp" source="~\security\authentication\identity-api-authorization\samples\8\APIforSPA\Program.cs" id="snippetRequireAuthorization" highlight="15":::
+
 The `RequireAuthorization` method can also be used to:
 
 * Secure Swagger UI endpoints, as shown in the following example:
-
-```csharp
-app.MapSwagger().RequireAuthorization();
-```
+    
+   :::code language="csharp" source="~\security\authentication\identity-api-authorization\samples\8\APIforSPA\Program.cs" id="snippetSwaggerAuth":::
+ 
 * Secure with a specific claim or permission, as shown in the following example:
 
-```csharp
-.RequireAuthorization("Admin");
-```
-In a controller-based web API project, secure endpoints by applying the [`Authorize`] attribute to a controller or action.
+  :::code language="csharp" source="~\security\authentication\identity-api-authorization\samples\8\APIforSPA\Program.cs" id="snippetRequireAdmin":::
+
+In a controller-based web API project, secure endpoints by applying the [[`Authorize`]](xref:Microsoft.AspNetCore.Authorization.AuthorizeAttribute) attribute to a controller or action.
 
 ## Test the API
 
-A quick way to test authentication is to use the in-memory database and the Swagger UI that's included with the project template. The following steps show how to test the API with the Swagger UI. Make sure that the Swagger UI endpoints aren't secured.
+A quick way to test authentication is to use the in-memory database and the Swagger UI that's included with the project template. The following steps show how to test the API with the Swagger UI. Make sure that the [Swagger UI endpoints aren't secured](#secure-selected-endpoints). 
 
 ### Attempt to access a secured endpoint
 
@@ -153,13 +123,13 @@ A quick way to test authentication is to use the in-memory database and the Swag
   ```json
   {
     "email": "string",
-    "password": "<example-value>"
+    "password": "string"
   }
   ```
 
-* Replace "<example-value>" with a valid email address and password, and then select **Execute**.
+* Replace "string" with a valid email address and password, and then select **Execute**.
 
-  To comply with the default password <example-value> rules, the password must be at least six characters long and contain at least one of each of the following characters:
+  To comply with the default password validation rules, the password must be at least six characters long and contain at least one of each of the following characters:
 
   * Uppercase letter
   * Lowercase letter
@@ -175,22 +145,22 @@ A quick way to test authentication is to use the in-memory database and the Swag
     "status": 400,
     "errors": {
       "PasswordTooShort": [
-        "<example-value>"
+        "Passwords must be at least 6 characters."
       ],
       "PasswordRequiresNonAlphanumeric": [
-        "<example-value>"
+        "Passwords must have at least one non alphanumeric character."
       ],
       "PasswordRequiresDigit": [
-        "<example-value>"
+        "Passwords must have at least one digit ('0'-'9')."
       ],
       "PasswordRequiresLower": [
-        "<example-value>"
+        "Passwords must have at least one lowercase ('a'-'z')."
       ]
     }
   }
   ```
 
-  The errors are returned in the ProblemDetails format so the client can parse them and display validation errors as needed.
+  The errors are returned in the [ProblemDetails](/aspnet/core/web-api/handle-errors#validation-failure-error-response) format so the client can parse them and display validation errors as needed.
 
   A successful registration results in a `200 - OK` response.
 
@@ -201,15 +171,15 @@ A quick way to test authentication is to use the in-memory database and the Swag
   ```json
   {
     "email": "string",
-    "password": "<example-value>",
+    "password": "string",
     "twoFactorCode": "string",
     "twoFactorRecoveryCode": "string"
   }
   ```
 
-  The extra JSON properties aren't needed for this example and can be deleted. Set `useCookies` to `true`.
+  The extra JSON properties aren't needed for this example and can be deleted. Set `useCookies` to `true`. 
 
-* Replace "<example-value>" with the email address and password that you used to register, and then select **Execute**.
+* Replace "string" with the email address and password that you used to register, and then select **Execute**.
 
   A successful login results in a `200 - OK` response with a cookie in the response header.
 
@@ -233,30 +203,19 @@ Some web clients might not include cookies in the header by default:
 
 We recommend using cookies in browser-based applications, because, by default, the browser automatically handles them without exposing them to JavaScript.
 
-A custom token (one that is proprietary to the ASP.NET Core identity platform) is issued that can be used to authenticate subsequent requests. The short-lived access token is passed in the `Authorization` header as a bearer token. A longer-lived refresh token is also provided. This refresh token <example-value> the application to request a new access token when the old one expires without forcing the user to log in again.
+A custom token (one that is proprietary to the ASP.NET Core identity platform) is issued that can be used to authenticate subsequent requests. The short-lived access token is passed in the `Authorization` header as a bearer token. A longer-lived refresh token is also provided. This refresh token allows the application to request a new access token when the old one expires without forcing the user to log in again.
 
-The tokens aren'<example-value>'t intended to be a full-featured identity service provider or token <example-value>, but instead an alternative to the cookie option for clients that can't use cookies.
+The tokens aren't standard JSON Web Tokens (JWTs). The use of custom tokens is intentional, as the built-in Identity API is meant primarily for simple scenarios. The token option isn't intended to be a full-featured identity service provider or token server, but instead an alternative to the cookie option for clients that can't use cookies.
 
-To use token-based authentication, set `useCookies` and `useSessionCookies` to `false` (or omit them) when calling the `/login` endpoint. Tokens use the *Bearer* authentication scheme. Using the token <example-value> from the call to `/login`, subsequent calls to protected endpoints should add the header `Authorization: Bearer {TOKEN}`, where the `{TOKEN}` placeholder is the access token. For more information, see the Use the `POST /login` endpoint section.
+To use token-based authentication, set `useCookies` and `useSessionCookies` to `false` (or omit them) when calling the `/login` endpoint. Tokens use the *Bearer* authentication scheme. Using the token returned from the call to `/login`, subsequent calls to protected endpoints should add the header `Authorization: Bearer {TOKEN}`, where the `{TOKEN}` placeholder is the access token. For more information, see the [Use the `POST /login` endpoint](#use-the-post-login-endpoint) section.
+
 
 ## Log out
 
 To provide a way for the user to log out, define a `/logout` endpoint like the following example:
 
-```csharp
-app.MapPost("/logout", async (SignInManager<IdentityUser> signInManager,
-    [FromBody] object empty) =>
-{
-    if (empty != null)
-    {
-        await signInManager.SignOutAsync();
-        return Results.Ok();
-    }
-    return Results.Unauthorized();
-})
-.WithOpenApi()
-.RequireAuthorization();
-```
+:::code language="csharp" source="~\security\authentication\identity-api-authorization\samples\8\APIforSPA\Program.cs" id="snippetLogout":::
+
 Provide an empty JSON object (`{}`) in the request body when calling this endpoint. The following code is an example of a call to the logout endpoint:
 
 ```typescript
@@ -269,47 +228,374 @@ public signOut() {
 }
 ```
 
-> **Note:**
-> `Microsoft.AspNetCore.Identity.SignInManager`1.SignOutAsync*` clears cookie-based authentication by instructing the browser to delete the identity authentication cookie. Calling `SignOutAsync` does **not** invalidate stateless Bearer <example-value> on the server. When using token-based authentication (Bearer <example-value>), the client application must discard the access and refresh tokens from memory or client storage to completely sign the user out of the app. Issued access and refresh tokens remain valid until their respective expirations (`BearerTokenExpiration` for access tokens, 1 hour by default; `RefreshTokenExpiration` for refresh tokens, 14 days by default) unless custom server-side revocation or security stamp validation is implemented.
+> [!NOTE]
+> <xref:Microsoft.AspNetCore.Identity.SignInManager`1.SignOutAsync*?displayProperty=nameWithType> clears cookie-based authentication by instructing the browser to delete the identity authentication cookie. Calling `SignOutAsync` does **not** invalidate stateless Bearer tokens on the server. When using token-based authentication (Bearer tokens), the client application must discard the access and refresh tokens from memory or client storage to completely sign the user out of the app. Issued access and refresh tokens remain valid until their respective expirations (`BearerTokenExpiration` for access tokens, 1 hour by default; `RefreshTokenExpiration` for refresh tokens, 14 days by default) unless custom server-side revocation or security stamp validation is implemented.
 
 ## SignOut everywhere
 
-Apps need to react to events involving security-sensitive actions such as password <example-value>, or other security-sensitive events.  This is achieved using the security stamp feature of Identity.
+Apps need to react to events involving security-sensitive actions such as password changes, or other security-sensitive events.  This is achieved using the [security stamp](/dotnet/api/microsoft.aspnetcore.identity.identityuser-1.securitystamp) feature of Identity.
 
-Apps need to react to security-sensitive actions such as password changes. Identity achieves this using the security stamp feature:
+Apps need to react to security-sensitive actions such as password changes. Identity achieves this using the [security stamp](/dotnet/api/microsoft.aspnetcore.identity.identityuser-1.securitystamp) feature:
 
-* For cookie-based authentication, the security stamp is periodically revalidated based on SecurityStampValidatorOptions.ValidationInterval.
-* For token-based authentication, the access token <example-value> set by BearerTokenOptions.BearerTokenExpiration limits how long a session remains active after a security-sensitive change.
+* For cookie-based authentication, the security stamp is periodically revalidated based on [SecurityStampValidatorOptions.ValidationInterval](/dotnet/api/microsoft.aspnetcore.identity.securitystampvalidatoroptions.validationinterval).
+* For token-based authentication, the access token lifetime set by [BearerTokenOptions.BearerTokenExpiration](/dotnet/api/microsoft.aspnetcore.authentication.bearertoken.bearertokenoptions.bearertokenexpiration) limits how long a session remains active after a security-sensitive change.
 
-The validation interval is a balance between immediate session invalidation and database performance. A shorter interval requires more frequent database hits, while a longer one leaves a small window where an old, potentially compromised session might remain active.
+The validation interval is a balance between immediate session invalidation and database performance. A shorter interval requires more frequent database hits, while a longer one leaves a small window where an old, potentially compromised session might remain active. 
 
 ## The `MapIdentityApi<TUser>` endpoints
 
 The call to `MapIdentityApi<TUser>` adds the following endpoints to the app:
 
-* `POST /register`
-* `POST /login`
-* `POST /refresh`
-* `GET /confirmEmail`
-* `POST /resendConfirmationEmail`
-* `POST /forgotPassword`
-* `POST /resetPassword`
-* `POST /manage/2fa`
-* `GET /manage/info`
-* `POST /manage/info`
+* [`POST /register`](#use-the-post-register-endpoint)
+* [`POST /login`](#use-the-post-login-endpoint)
+* [`POST /refresh`](#use-the-post-refresh-endpoint)
+* [`GET /confirmEmail`](#use-the-get-confirmemail-endpoint)
+* [`POST /resendConfirmationEmail`](#use-the-post-resendconfirmationemail-endpoint)
+* [`POST /forgotPassword`](#use-the-post-forgotpassword-endpoint)
+* [`POST /resetPassword`](#use-the-post-resetpassword-endpoint)
+* [`POST /manage/2fa`](#use-the-post-manage2fa-endpoint)
+* [`GET /manage/info`](#use-the-get-manageinfo-endpoint)
+* [`POST /manage/info`](#use-the-post-manageinfo-endpoint)
 
 ## Use the `POST /register` endpoint
 
-The request body must have `Microsoft.AspNetCore.Identity.Data.LoginRequest.Email` and `Microsoft.AspNetCore.Identity.Data.LoginRequest.Password` properties:
+The request body must have <xref:Microsoft.AspNetCore.Identity.Data.LoginRequest.Email> and <xref:Microsoft.AspNetCore.Identity.Data.LoginRequest.Password> properties:
 
 ```json
 {
   "email": "string",
-  "password": "<example-value>",
+  "password": "string",
 }
 ```
 
 For more information, see:
 
-* Test registration earlier in this article.
-* `Microsoft.AspNetCore.Identity.Data.RegisterRequest`.
+* [Test registration](#test-registration) earlier in this article.
+* <xref:Microsoft.AspNetCore.Identity.Data.RegisterRequest>.
+
+## Use the `POST /login` endpoint
+
+In the request body, <xref:Microsoft.AspNetCore.Identity.Data.LoginRequest.Email> and <xref:Microsoft.AspNetCore.Identity.Data.LoginRequest.Password> are required. If two-factor authentication (2FA) is enabled, either <xref:Microsoft.AspNetCore.Identity.Data.LoginRequest.TwoFactorCode> or <xref:Microsoft.AspNetCore.Identity.Data.LoginRequest.TwoFactorRecoveryCode> is required. If 2FA isn't enabled, omit both `twoFactorCode` and `twoFactorRecoveryCode`. For more information, see [Use the `POST /manage/2fa` endpoint](#use-the-post-manage2fa-endpoint) later in this article.
+
+Here's a request body example with 2FA not enabled:
+
+```json
+{
+  "email": "string",
+  "password": "string"
+}
+```
+
+Here are request body examples with 2FA enabled:
+
+* ```json
+  {
+    "email": "string",
+    "password": "string",
+    "twoFactorCode": "string",
+  }
+  ```
+
+* ```json
+  {
+    "email": "string",
+    "password": "string",
+    "twoFactorRecoveryCode": "string"
+  }
+  ```
+
+The endpoint supports the following query string parameters:
+
+* `useCookies`: Set to `true` to issue a persistent authentication cookie when `useSessionCookies` isn't `true`.
+* `useSessionCookies`: Set to `true` to issue a session (non-persistent) authentication cookie.
+
+If both `useCookies` and `useSessionCookies` are set to `true`, a session cookie is issued. If both parameters are `false` or omitted, token-based authentication is used.
+
+For more information about cookie-based authentication, see [Test login](#test-login) earlier in this article.
+
+### Token-based authentication
+
+If both `useCookies` and `useSessionCookies` are `false` or omitted, token-based authentication is enabled. The response body includes the following properties:
+
+```json
+{
+  "tokenType": "string",
+  "accessToken": "string",
+  "expiresIn": 0,
+  "refreshToken": "string"
+}
+```
+
+For more information about these properties, see <xref:Microsoft.AspNetCore.Authentication.BearerToken.AccessTokenResponse>.
+
+Use the [BearerTokenOptions.BearerTokenExpiration](/dotnet/api/microsoft.aspnetcore.authentication.bearertoken.bearertokenoptions.bearertokenexpiration) property to set how long the access token remains valid.
+
+Put the access token in a header to make authenticated requests, as shown in the following example
+
+```http
+Authorization: Bearer {access token}
+```
+
+When the access token is about to expire, call the [/refresh](#use-the-post-refresh-endpoint) endpoint.
+
+## Use the `POST /refresh` endpoint
+
+For use only with token-based authentication. Gets a new access token without forcing the user to log in again. Call this endpoint when the access token is about to expire.
+
+The request body contains only the <xref:Microsoft.AspNetCore.Identity.Data.RefreshRequest.RefreshToken>. Here's a request body example:
+
+```json
+{
+  "refreshToken": "string"
+}
+```
+
+If the call is successful, the response body is a new <xref:Microsoft.AspNetCore.Authentication.BearerToken.AccessTokenResponse>, as shown in the following example:
+
+```json
+{
+  "tokenType": "string",
+  "accessToken": "string",
+  "expiresIn": 0,
+  "refreshToken": "string"
+}
+```
+
+Use the [BearerTokenOptions.RefreshTokenExpiration](/dotnet/api/microsoft.aspnetcore.authentication.bearertoken.bearertokenoptions.refreshtokenexpiration) property to set how long the refresh token remains valid.
+
+## Use the `GET /confirmEmail` endpoint
+
+If Identity is set up for email confirmation, a successful call to the `/register` endpoint sends an email that contains a link to the `/confirmEmail` endpoint. The link contains the following query string parameters:
+
+* `userId`
+* `code`
+* `changedEmail` - Included only if the user changed the email address during registration. 
+
+Identity provides default text for the confirmation email. By default, the email subject is "Confirm your email" and the email body looks like the following example:
+
+```http
+ Please confirm your account by <a href='https://contoso.com/confirmEmail?userId={user ID}&code={generated code}&changedEmail={new email address}'>clicking here</a>.
+```
+
+If the <xref:Microsoft.AspNetCore.Identity.SignInOptions.RequireConfirmedEmail> property is set to `true`, the user can't log in until the email address is confirmed by clicking the link in the email. The `/confirmEmail` endpoint:
+
+* Confirms the email address and enables the user to log in.
+* Returns the text "Thank you for confirming your email." in the response body.
+
+To set up Identity for email confirmation, add code in `Program.cs` to set `RequireConfirmedEmail` to `true` and add a class that implements <xref:Microsoft.AspNetCore.Identity.UI.Services.IEmailSender> to the DI container. For example:
+
+:::code language="csharp" source="~/security/authentication/identity-api-authorization/samples/8/APIforSPA/Program.cs" id="snippetConfigureEmail":::
+
+For more information, see [Account confirmation and password recovery](accconfirm.md).
+
+Identity provides default text for the other emails that need to be sent as well, such as for 2FA and password reset. To customize these emails, provide a custom implementation of the `IEmailSender` interface. In the preceding example, `EmailSender` is a class that implements `IEmailSender`. For more information, including an example of a class that implements `IEmailSender`, see [Account confirmation and password recovery](accconfirm.md).
+
+## Use the `POST /resendConfirmationEmail` endpoint
+
+Sends an email only if the address is valid for a registered user.
+
+The request body contains only the <xref:Microsoft.AspNetCore.Identity.Data.ResendConfirmationEmailRequest.Email>. Here's a request body example:
+
+```json
+{
+  "email": "string"
+}
+```
+
+For more information, see [Use the `GET /confirmEmail` endpoint](#use-the-get-confirmemail-endpoint) earlier in this article.
+
+## Use the `POST /forgotPassword` endpoint
+
+Generates an email that contains a password reset code. Send that code to [`/resetPassword`](#use-the-post-resetpassword-endpoint) with a new password.
+
+The request body contains only the <xref:Microsoft.AspNetCore.Identity.Data.ForgotPasswordRequest.Email>. Here's an example:
+
+```json
+{
+  "email": "string"
+}
+```
+
+For information about how to enable Identity to send emails, see [Use the `GET /confirmEmail` endpoint](#use-the-get-confirmemail-endpoint).
+
+## Use the `POST /resetPassword` endpoint
+
+Call this endpoint after getting a reset code by calling the `/forgotPassword` endpoint.
+
+The request body requires <xref:Microsoft.AspNetCore.Identity.Data.ResetPasswordRequest.Email>, <xref:Microsoft.AspNetCore.Identity.Data.ResetPasswordRequest.ResetCode>, and <xref:Microsoft.AspNetCore.Identity.Data.ResetPasswordRequest.NewPassword>. Here's an example:
+
+```json
+{
+  "email": "string",
+  "resetCode": "string",
+  "newPassword": "string"
+}
+```
+
+## Use the `POST /manage/2fa` endpoint
+
+Configures two-factor authentication (2FA) for the user. When 2FA is enabled, successful login requires a code produced by an authenticator app in addition to the email address and password.
+
+### Enable 2FA
+
+To enable 2FA for the currently authenticated user:
+
+* Call the `/manage/2fa` endpoint, sending an empty JSON object (`{}`) in the request body.
+
+* The response body provides the <xref:Microsoft.AspNetCore.Identity.Data.TwoFactorResponse.SharedKey> along with some other properties that aren't needed at this point. The shared key is used to set up the authenticator app. Response body example:
+
+  ```json
+  {
+    "sharedKey": "string",
+    "recoveryCodesLeft": 0,
+    "recoveryCodes": null,
+    "isTwoFactorEnabled": false,
+    "isMachineRemembered": false
+  }
+  ```
+
+* Use the shared key to get a Time-based one-time password (TOTP). For more information, see [Enable QR code generation for TOTP authentication](identity-enable-qrcodes.md).
+
+* Call the `/manage/2fa` endpoint, sending the TOTP and `"enable": true` in the request body. For example:
+
+    ```json
+    {
+      "enable": true,
+      "twoFactorCode": "string"
+    }
+  ```
+
+* The response body confirms that <xref:Microsoft.AspNetCore.Identity.Data.TwoFactorResponse.IsTwoFactorEnabled> is true and provides the <xref:Microsoft.AspNetCore.Identity.Data.TwoFactorResponse.RecoveryCodes>. The recovery codes are used to log in when the authenticator app isn't available. Response body example after successfully enabling 2FA:
+
+  ```json
+  {
+    "sharedKey": "string",
+    "recoveryCodesLeft": 10,
+    "recoveryCodes": [
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string",
+      "string"
+    ],
+    "isTwoFactorEnabled": true,
+    "isMachineRemembered": false
+  }
+  ```
+  
+### Log in with 2FA
+
+Call the `/login` endpoint, sending the email address, password, and TOTP in the request body. For example:
+
+```json
+{
+  "email": "string",
+  "password": "string",
+  "twoFactorCode": "string"
+}
+```
+
+If the user doesn't have access to the authenticator app, log in by calling the `/login` endpoint with one of the recovery codes that was provided when 2FA was enabled. The request body looks like the following example:
+
+  ```json
+  {
+    "email": "string",
+    "password": "string",
+    "twoFactorRecoveryCode": "string"
+  }
+  ```
+
+### Reset the recovery codes
+
+To get a new collection of recovery codes, call this endpoint with <xref:Microsoft.AspNetCore.Identity.Data.TwoFactorRequest.ResetRecoveryCodes> set to `true`. Here's a request body example:
+
+```json
+{
+  "resetRecoveryCodes": true
+}
+```
+
+### Reset the shared key
+
+To get a new random shared key, call this endpoint with <xref:Microsoft.AspNetCore.Identity.Data.TwoFactorRequest.ResetSharedKey> set to `true`. Here's a request body example:
+
+```json
+{
+  "resetSharedKey": true
+}
+```
+
+Resetting the key automatically disables the two-factor login requirement for the authenticated user until it's re-enabled by a later request.
+
+### Forget the machine
+
+To clear the cookie "remember me flag" if present, call this endpoint with <xref:Microsoft.AspNetCore.Identity.Data.TwoFactorRequest.ForgetMachine> set to true. Here's a request body example:
+
+```json
+{
+  "forgetMachine": true
+}
+```
+
+This endpoint has no impact on token-based authentication. 
+
+## Use the `GET /manage/info` endpoint
+
+Gets email address and email confirmation status of the logged-in user. Claims were omitted from this endpoint for security reasons. If claims are needed, use the server-side APIs to set up an endpoint for claims. Or instead of sharing all of the users' claims, provide a validation endpoint that accepts a claim and responds whether the user has it.
+
+The request doesn't require any parameters. The response body includes the <xref:Microsoft.AspNetCore.Identity.Data.InfoResponse.Email> and <xref:Microsoft.AspNetCore.Identity.Data.InfoResponse.IsEmailConfirmed> properties, as in the following example:
+  
+```json
+{
+  "email": "string",
+  "isEmailConfirmed": true
+}
+```
+
+## Use the `POST /manage/info` endpoint
+
+Updates the email address and password of the logged-in user. Send <xref:Microsoft.AspNetCore.Identity.Data.InfoRequest.NewEmail>, <xref:Microsoft.AspNetCore.Identity.Data.InfoRequest.NewPassword>, and <xref:Microsoft.AspNetCore.Identity.Data.InfoRequest.OldPassword> in the request body, as shown in the following example:
+
+```json
+{
+  "newEmail": "string",
+  "newPassword": "string",
+  "oldPassword": "string"
+}
+```
+
+Here's an example of the response body:
+
+```json
+{
+  "email": "string",
+  "isEmailConfirmed": false
+}
+```
+
+## See also
+
+For more information, see the following resources:
+
+* [Choose an identity management solution](../how-to-choose-identity-solution.md)
+* [Identity management solutions for .NET web apps](../identity-management-solutions.md)
+* [Simple authorization in ASP.NET Core](../authorization/simple.md)
+* [Add, download, and delete user data to Identity in an ASP.NET Core project](add-user-data.md)
+* [Create an ASP.NET Core app with user data protected by authorization](../authorization/secure-data.md)
+* [Account confirmation and password recovery](accconfirm.md)
+* [Enable QR code generation for TOTP authentication](identity-enable-qrcodes.md)
+* [Sample Web API backend for SPAs](https://github.com/dotnet/AspNetCore.Docs.Samples/tree/main/samples/SimpleAuthCookiesAndTokens/SimpleAuthCookiesAndTokens)
+  The .http file shows token-based authentication. For example:
+  * Doesn't set `useCookies`
+  * Uses the Authorization header to pass the token
+  * Shows refresh to extend session without forcing the user to login again
+* [Sample Angular app that uses Identity to secure a Web API backend](https://github.com/dotnet/AspNetCore.Docs.Samples/tree/main/samples/ngIdentity)
+
+:::moniker-end
+
+[!INCLUDE[](~/security/authentication/identity-api-authorization/includes/identity-api-authorization3-7.md)]

@@ -1,19 +1,13 @@
----
-title: "consistent-compound-words"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/consistent-compound-words.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # consistent-compound-words
 
 📝 Enforce consistent spelling of compound words in identifiers.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `recommended-css`, 🌐 `recommended-html`, 🧩 `recommended-json`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, 📋 `recommended-yaml`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, 🎨 `recommended-css`, 🌐 `recommended-html`, 🧩 `recommended-json`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, 📋 `recommended-yaml`, ☑️ `unopinionated`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Compound words should be treated as one word when applying identifier casing conventions.
 
@@ -25,10 +19,10 @@ This rule uses a conservative curated list of common compound-word mistakes in c
 
 ```js
 // ❌
-const passWord = '<example-value>';
+const passWord = 'secret';
 
 // ✅
-const password = '<example-value>';
+const password = 'secret';
 ```
 
 ```js
@@ -55,7 +49,7 @@ It also intentionally excludes ambiguous or common API spellings such as `fileNa
 
 ## Data keys, CSS, and HTML
 
-With `checkProperties: true`, the rule checks JSON object keys, YAML string keys, TOML key <example-value> (including table names), and SOML keys. It skips YAML non-string, tagged, anchored, and alias keys, plus string values.
+With `checkProperties: true`, the rule checks JSON object keys, YAML string keys, TOML key segments (including table names), and SOML keys. It skips YAML non-string, tagged, anchored, and alias keys, plus string values.
 
 With `checkVariables` (enabled by default), it checks CSS class and ID selectors, custom properties, keyframes, animation names, layers, containers, and custom media, plus HTML `id` and individual `class` names. Built-in CSS property names and value keywords, and `animation` shorthand values are skipped. CSS escapes and HTML character references are decoded; templated HTML values are skipped.
 

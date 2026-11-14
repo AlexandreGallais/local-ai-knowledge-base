@@ -1,21 +1,15 @@
----
-title: "require-yields-check"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/require-yields-check.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-require-yields-check"></a>
+<a name="require-yields-check"></a>
+# <code>require-yields-check</code>
 
-# `require-yields-check`
+* [Options](#user-content-require-yields-check-options)
+    * [`checkGeneratorsOnly`](#user-content-require-yields-check-options-checkgeneratorsonly)
+    * [`contexts`](#user-content-require-yields-check-options-contexts)
+    * [`next`](#user-content-require-yields-check-options-next)
+* [Context and settings](#user-content-require-yields-check-context-and-settings)
+* [Failing examples](#user-content-require-yields-check-failing-examples)
+* [Passing examples](#user-content-require-yields-check-passing-examples)
 
-* Options
-    * `checkGeneratorsOnly`
-    * `contexts`
-    * `next`
-* Context and settings
-* Failing examples
-* Passing examples
 
 Ensures that if a `@yields` is present that a `yield` (or `yield` with a
 value) is present in the function body (or that if a `@next` is present that
@@ -25,18 +19,22 @@ Please also note that JavaScript does allow generators not to have `yield`
 (e.g., with just a return or even no explicit return), but if you want to
 enforce that all generators (except wholly empty ones) have a `yield` in the
 function body, you can use the ESLint
-`require-yield` rule. In
+[`require-yield`](https://eslint.org/docs/rules/require-yield) rule. In
 conjunction with this, you can also use the `checkGeneratorsOnly` option
 as an optimization so that this rule won't need to do its own checking within
 function bodies.
 
 Will also report if multiple `@yields` tags are present.
 
+<a name="user-content-require-yields-check-options"></a>
+<a name="require-yields-check-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `checkGeneratorsOnly`
+<a name="user-content-require-yields-check-options-checkgeneratorsonly"></a>
+<a name="require-yields-check-options-checkgeneratorsonly"></a>
+### <code>checkGeneratorsOnly</code>
 
 Avoids checking the function body and merely insists
 that all generators have `@yields`. This can be an optimization with the
@@ -44,7 +42,9 @@ ESLint `require-yield` rule, as that rule already ensures a `yield` is
 present in generators, albeit assuming the generator is not empty).
 Defaults to `false`.
 
-### `contexts`
+<a name="user-content-require-yields-check-options-contexts"></a>
+<a name="require-yields-check-options-contexts"></a>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
 (or objects with optional `context` and `comment` properties) where you wish
@@ -55,7 +55,9 @@ the rule to be applied.
 Overrides the default contexts (`ArrowFunctionExpression`, `FunctionDeclaration`,
 `FunctionExpression`).
 
-### `next`
+<a name="user-content-require-yields-check-options-next"></a>
+<a name="require-yields-check-options-next"></a>
+### <code>next</code>
 
 If `true`, this option will insist that any use of a (non-standard)
 `@next` tag (in addition to any `@yields` tag) will be matched by a `yield`
@@ -69,6 +71,9 @@ function). This option will report an error if the generator function body
 merely has plain `yield;` or `yield value;` statements without returning
 the values. Defaults to `false`.
 
+
+<a name="user-content-require-yields-check-context-and-settings"></a>
+<a name="require-yields-check-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -79,6 +84,8 @@ the values. Defaults to `false`.
 |Recommended|true|
 |Options|`checkGeneratorsOnly`, `contexts`, `next`|
 
+<a name="user-content-require-yields-check-failing-examples"></a>
+<a name="require-yields-check-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -234,6 +241,10 @@ function * quux (foo) {
 // Message: JSDoc @next declaration set with "never" but yield expression with return value is present in function.
 ````
 
+
+
+<a name="user-content-require-yields-check-passing-examples"></a>
+<a name="require-yields-check-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -550,3 +561,4 @@ function * quux (foo) {
 }
 // "jsdoc/require-yields-check": ["error"|"warn", {"next":true}]
 ````
+

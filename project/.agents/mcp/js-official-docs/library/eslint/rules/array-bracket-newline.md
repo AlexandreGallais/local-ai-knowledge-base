@@ -1,14 +1,9 @@
 ---
-title: "array-bracket-newline"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/array-bracket-newline.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: array-bracket-newline
+rule_type: layout
+related_rules:
+- array-bracket-spacing
 ---
-
-# array-bracket-newline
-
 A number of style guides require or disallow line breaks inside of array brackets.
 
 ## Rule Details
@@ -32,7 +27,7 @@ Or an object option (Requires line breaks if any of properties is satisfied. Oth
 
 Examples of **incorrect** code for this rule with the `"always"` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint array-bracket-newline: ["error", "always"]*/
@@ -47,9 +42,11 @@ const e = [function foo() {
 }];
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"always"` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-bracket-newline: ["error", "always"]*/
@@ -72,12 +69,14 @@ const e = [
     }
 ];
 ```
+
+:::
 
 ### never
 
 Examples of **incorrect** code for this rule with the `"never"` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint array-bracket-newline: ["error", "never"]*/
@@ -101,9 +100,11 @@ const e = [
 ];
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"never"` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-bracket-newline: ["error", "never"]*/
@@ -118,11 +119,13 @@ const e = [function foo() {
 }];
 ```
 
+:::
+
 ### consistent
 
 Examples of **incorrect** code for this rule with the `"consistent"` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint array-bracket-newline: ["error", "consistent"]*/
@@ -141,9 +144,11 @@ const d = [
     }]
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"consistent"` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-bracket-newline: ["error", "consistent"]*/
@@ -165,11 +170,13 @@ const f = [
 ];
 ```
 
+:::
+
 ### multiline
 
 Examples of **incorrect** code for this rule with the default `{ "multiline": true }` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint array-bracket-newline: ["error", { "multiline": true }]*/
@@ -189,9 +196,11 @@ const e = [function foo() {
 }];
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `{ "multiline": true }` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-bracket-newline: ["error", { "multiline": true }]*/
@@ -210,11 +219,13 @@ const e = [
 ];
 ```
 
+:::
+
 ### minItems
 
 Examples of **incorrect** code for this rule with the `{ "minItems": 2 }` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint array-bracket-newline: ["error", { "minItems": 2 }]*/
@@ -234,9 +245,11 @@ const e = [
 ];
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "minItems": 2 }` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-bracket-newline: ["error", { "minItems": 2 }]*/
@@ -255,11 +268,13 @@ const e = [function foo() {
 }];
 ```
 
+:::
+
 ### multiline and minItems
 
 Examples of **incorrect** code for this rule with the `{ "multiline": true, "minItems": 2 }` options:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint array-bracket-newline: ["error", { "multiline": true, "minItems": 2 }]*/
@@ -277,9 +292,11 @@ const e = [function foo() {
 }];
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "multiline": true, "minItems": 2 }` options:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-bracket-newline: ["error", { "multiline": true, "minItems": 2 }]*/
@@ -300,10 +317,12 @@ const e = [
 ];
 ```
 
+:::
+
 ## When Not To Use It
 
 If you don't want to enforce line breaks after opening and before closing array brackets, don't enable this rule.
 
 ## Compatibility
 
-* **JSCS:** validateNewlineAfterArrayElements
+* **JSCS:** [validateNewlineAfterArrayElements](https://jscs-dev.github.io/rule/validateNewlineAfterArrayElements)

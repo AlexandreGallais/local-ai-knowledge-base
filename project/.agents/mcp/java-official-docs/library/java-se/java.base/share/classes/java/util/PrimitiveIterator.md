@@ -1,48 +1,43 @@
----
-title: "PrimitiveIterator interface (java.util)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/PrimitiveIterator.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # PrimitiveIterator interface (java.util)
 
 ```java
 public interface PrimitiveIterator<T, T_CONS> extends Iterator<T>
 ```
 
-A base type for primitive specializations of `Iterator`.  Specialized
-subtypes are provided for int, long, and
-double values.
+A base type for primitive specializations of {@code Iterator}.  Specialized
+subtypes are provided for {@link OfInt int}, {@link OfLong long}, and
+{@link OfDouble double} values.
 
-The specialized subtype default implementations of `Iterator.next`
-and `Iterator.forEachRemaining(java.util.function.Consumer)` box
+<p>The specialized subtype default implementations of {@link Iterator#next}
+and {@link Iterator#forEachRemaining(java.util.function.Consumer)} box
 primitive values to instances of their corresponding wrapper class.  Such
 boxing may offset any advantages gained when using the primitive
 specializations.  To avoid boxing, the corresponding primitive-based methods
-should be used.  For example, `PrimitiveIterator.OfInt.nextInt()` and
-`PrimitiveIterator.OfInt.forEachRemaining(java.util.function.IntConsumer)`
-should be used in preference to `PrimitiveIterator.OfInt.next()` and
-`PrimitiveIterator.OfInt.forEachRemaining(java.util.function.Consumer)`.
+should be used.  For example, {@link PrimitiveIterator.OfInt#nextInt()} and
+{@link PrimitiveIterator.OfInt#forEachRemaining(java.util.function.IntConsumer)}
+should be used in preference to {@link PrimitiveIterator.OfInt#next()} and
+{@link PrimitiveIterator.OfInt#forEachRemaining(java.util.function.Consumer)}.
 
-Iteration of primitive values using boxing-based methods
-next() and
-forEachRemaining(),
+<p>Iteration of primitive values using boxing-based methods
+{@link Iterator#next next()} and
+{@link Iterator#forEachRemaining(java.util.function.Consumer) forEachRemaining()},
 does not affect the order in which the values, transformed to boxed values,
 are encountered.
 
-Parameters:
-
-- `<T>`: the type of elements returned by this PrimitiveIterator. The type must be a wrapper type for a primitive type, such as `Integer` for the primitive `int` type.
-- `<T_CONS>`: the type of primitive consumer. The type must be a primitive specialization of `java.util.function.Consumer` for `T`, such as `java.util.function.IntConsumer` for `Integer`.
-
-**Implementation note:** If the boolean system property `org.openjdk.java.util.stream.tripwire`
-is set to `true` then diagnostic warnings are reported if boxing of
+@implNote
+If the boolean system property {@code org.openjdk.java.util.stream.tripwire}
+is set to {@code true} then diagnostic warnings are reported if boxing of
 primitive values occur when operating on primitive subtype specializations.
 
-**Since:** 1.8
+@param <T> the type of elements returned by this PrimitiveIterator.  The
+       type must be a wrapper type for a primitive type, such as
+       {@code Integer} for the primitive {@code int} type.
+@param <T_CONS> the type of primitive consumer.  The type must be a
+       primitive specialization of {@link java.util.function.Consumer} for
+       {@code T}, such as {@link java.util.function.IntConsumer} for
+       {@code Integer}.
+
+@since 1.8
 
 ## PrimitiveIterator.forEachRemaining(T_CONS)
 
@@ -54,22 +49,17 @@ Performs the given action for each remaining element until all elements
 have been processed or the action throws an exception.  Actions are
 performed in the order of iteration, if that order is specified.
 Exceptions thrown by the action are relayed to the caller.
-
+<p>
 The behavior of an iterator is unspecified if the action modifies the
-source of elements in any way (even by calling the remove
-method or other mutator methods of `Iterator` subtypes),
+source of elements in any way (even by calling the {@link #remove remove}
+method or other mutator methods of {@code Iterator} subtypes),
 unless an overriding class has specified a concurrent modification policy.
-
+<p>
 Subsequent behavior of an iterator is unspecified if the action throws an
 exception.
 
-Parameters:
-
-- `action`: The action to be performed for each element
-
-Throws:
-
-- `NullPointerException`: if the specified action is null
+@param action The action to be performed for each element
+@throws NullPointerException if the specified action is null
 
 ## PrimitiveIterator.nextInt()
 
@@ -77,13 +67,10 @@ Throws:
 int nextInt()
 ```
 
-Returns the next `int` element in the iteration.
+Returns the next {@code int} element in the iteration.
 
-**Returns:** the next `int` element in the iteration
-
-Throws:
-
-- `NoSuchElementException`: if the iteration has no more elements
+@return the next {@code int} element in the iteration
+@throws NoSuchElementException if the iteration has no more elements
 
 ## PrimitiveIterator.forEachRemaining(IntConsumer)
 
@@ -91,14 +78,13 @@ Throws:
 default void forEachRemaining(IntConsumer action)
 ```
 
-(inherited documentation)
-
-**Implementation requirements:** The default implementation behaves as if:
-
-```java
+{@inheritDoc}
+@implSpec
+<p>The default implementation behaves as if:
+<pre>{@code
     while (hasNext())
         action.accept(nextInt());
-```
+}</pre>
 
 ## PrimitiveIterator.next()
 
@@ -106,10 +92,10 @@ default void forEachRemaining(IntConsumer action)
 default Integer next()
 ```
 
-(inherited documentation)
-
-**Implementation requirements:** The default implementation boxes the result of calling
-`nextInt()`, and returns that boxed result.
+{@inheritDoc}
+@implSpec
+The default implementation boxes the result of calling
+{@link #nextInt()}, and returns that boxed result.
 
 ## PrimitiveIterator.forEachRemaining(Consumer<? super Integer>)
 
@@ -117,13 +103,13 @@ default Integer next()
 default void forEachRemaining(Consumer<? super Integer> action)
 ```
 
-(inherited documentation)
-
-**Implementation requirements:** If the action is an instance of `IntConsumer` then it is cast
-to `IntConsumer` and passed to `forEachRemaining`;
+{@inheritDoc}
+@implSpec
+If the action is an instance of {@code IntConsumer} then it is cast
+to {@code IntConsumer} and passed to {@link #forEachRemaining};
 otherwise the action is adapted to an instance of
-`IntConsumer`, by boxing the argument of `IntConsumer`,
-and then passed to `forEachRemaining`.
+{@code IntConsumer}, by boxing the argument of {@code IntConsumer},
+and then passed to {@link #forEachRemaining}.
 
 ## PrimitiveIterator.nextLong()
 
@@ -131,13 +117,10 @@ and then passed to `forEachRemaining`.
 long nextLong()
 ```
 
-Returns the next `long` element in the iteration.
+Returns the next {@code long} element in the iteration.
 
-**Returns:** the next `long` element in the iteration
-
-Throws:
-
-- `NoSuchElementException`: if the iteration has no more elements
+@return the next {@code long} element in the iteration
+@throws NoSuchElementException if the iteration has no more elements
 
 ## PrimitiveIterator.forEachRemaining(LongConsumer)
 
@@ -145,14 +128,13 @@ Throws:
 default void forEachRemaining(LongConsumer action)
 ```
 
-(inherited documentation)
-
-**Implementation requirements:** The default implementation behaves as if:
-
-```java
+{@inheritDoc}
+@implSpec
+<p>The default implementation behaves as if:
+<pre>{@code
     while (hasNext())
         action.accept(nextLong());
-```
+}</pre>
 
 ## PrimitiveIterator.next()
 
@@ -160,10 +142,10 @@ default void forEachRemaining(LongConsumer action)
 default Long next()
 ```
 
-(inherited documentation)
-
-**Implementation requirements:** The default implementation boxes the result of calling
-`nextLong()`, and returns that boxed result.
+{@inheritDoc}
+@implSpec
+The default implementation boxes the result of calling
+{@link #nextLong()}, and returns that boxed result.
 
 ## PrimitiveIterator.forEachRemaining(Consumer<? super Long>)
 
@@ -171,13 +153,13 @@ default Long next()
 default void forEachRemaining(Consumer<? super Long> action)
 ```
 
-(inherited documentation)
-
-**Implementation requirements:** If the action is an instance of `LongConsumer` then it is cast
-to `LongConsumer` and passed to `forEachRemaining`;
+{@inheritDoc}
+@implSpec
+If the action is an instance of {@code LongConsumer} then it is cast
+to {@code LongConsumer} and passed to {@link #forEachRemaining};
 otherwise the action is adapted to an instance of
-`LongConsumer`, by boxing the argument of `LongConsumer`,
-and then passed to `forEachRemaining`.
+{@code LongConsumer}, by boxing the argument of {@code LongConsumer},
+and then passed to {@link #forEachRemaining}.
 
 ## PrimitiveIterator.nextDouble()
 
@@ -185,13 +167,10 @@ and then passed to `forEachRemaining`.
 double nextDouble()
 ```
 
-Returns the next `double` element in the iteration.
+Returns the next {@code double} element in the iteration.
 
-**Returns:** the next `double` element in the iteration
-
-Throws:
-
-- `NoSuchElementException`: if the iteration has no more elements
+@return the next {@code double} element in the iteration
+@throws NoSuchElementException if the iteration has no more elements
 
 ## PrimitiveIterator.forEachRemaining(DoubleConsumer)
 
@@ -199,14 +178,13 @@ Throws:
 default void forEachRemaining(DoubleConsumer action)
 ```
 
-(inherited documentation)
-
-**Implementation requirements:** The default implementation behaves as if:
-
-```java
+{@inheritDoc}
+@implSpec
+<p>The default implementation behaves as if:
+<pre>{@code
     while (hasNext())
         action.accept(nextDouble());
-```
+}</pre>
 
 ## PrimitiveIterator.next()
 
@@ -214,10 +192,10 @@ default void forEachRemaining(DoubleConsumer action)
 default Double next()
 ```
 
-(inherited documentation)
-
-**Implementation requirements:** The default implementation boxes the result of calling
-`nextDouble()`, and returns that boxed result.
+{@inheritDoc}
+@implSpec
+The default implementation boxes the result of calling
+{@link #nextDouble()}, and returns that boxed result.
 
 ## PrimitiveIterator.forEachRemaining(Consumer<? super Double>)
 
@@ -225,11 +203,11 @@ default Double next()
 default void forEachRemaining(Consumer<? super Double> action)
 ```
 
-(inherited documentation)
-
-**Implementation requirements:** If the action is an instance of `DoubleConsumer` then it is
-cast to `DoubleConsumer` and passed to
-`forEachRemaining`; otherwise the action is adapted to
-an instance of `DoubleConsumer`, by boxing the argument of
-`DoubleConsumer`, and then passed to
-`forEachRemaining`.
+{@inheritDoc}
+@implSpec
+If the action is an instance of {@code DoubleConsumer} then it is
+cast to {@code DoubleConsumer} and passed to
+{@link #forEachRemaining}; otherwise the action is adapted to
+an instance of {@code DoubleConsumer}, by boxing the argument of
+{@code DoubleConsumer}, and then passed to
+{@link #forEachRemaining}.

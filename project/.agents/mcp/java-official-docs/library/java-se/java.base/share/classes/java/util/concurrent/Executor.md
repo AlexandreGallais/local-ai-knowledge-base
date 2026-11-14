@@ -1,63 +1,51 @@
----
-title: "Executor interface (java.util.concurrent)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/Executor.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Executor interface (java.util.concurrent)
 
 ```java
 public interface Executor
 ```
 
-An object that executes submitted `Runnable` tasks. This
+An object that executes submitted {@link Runnable} tasks. This
 interface provides a way of decoupling task submission from the
 mechanics of how each task will be run, including details of thread
-use, scheduling, etc.  An `Executor` is normally used
+use, scheduling, etc.  An {@code Executor} is normally used
 instead of explicitly creating threads. For example, rather than
-invoking `new Thread(new RunnableTask()).start()` for each
+invoking {@code new Thread(new RunnableTask()).start()} for each
 of a set of tasks, you might use:
 
-```java
+<pre> {@code
 Executor executor = anExecutor();
 executor.execute(new RunnableTask1());
 executor.execute(new RunnableTask2());
-...
-```
+...}</pre>
 
-However, the `Executor` interface does not strictly require
+However, the {@code Executor} interface does not strictly require
 that execution be asynchronous. In the simplest case, an executor
 can run the submitted task immediately in the caller's thread:
 
-```java
+<pre> {@code
 class DirectExecutor implements Executor {
   public void execute(Runnable r) {
     r.run();
   }
-}
-```
+}}</pre>
 
 More typically, tasks are executed in some thread other than the
 caller's thread.  The executor below spawns a new thread for each
 task.
 
-```java
+<pre> {@code
 class ThreadPerTaskExecutor implements Executor {
   public void execute(Runnable r) {
     new Thread(r).start();
   }
-}
-```
+}}</pre>
 
-Many `Executor` implementations impose some sort of
+Many {@code Executor} implementations impose some sort of
 limitation on how and when tasks are scheduled.  The executor below
 serializes the submission of tasks to a second executor,
 illustrating a composite executor.
 
-```java
+<pre> {@code
 class SerialExecutor implements Executor {
   final Queue<Runnable> tasks = new ArrayDeque<>();
   final Executor executor;
@@ -85,21 +73,21 @@ class SerialExecutor implements Executor {
       executor.execute(active);
     }
   }
-}
-```
+}}</pre>
 
-The `Executor` implementations provided in this package
-implement `ExecutorService`, which is a more extensive
-interface.  The `ThreadPoolExecutor` class provides an
-extensible thread pool implementation. The `Executors` class
+The {@code Executor} implementations provided in this package
+implement {@link ExecutorService}, which is a more extensive
+interface.  The {@link ThreadPoolExecutor} class provides an
+extensible thread pool implementation. The {@link Executors} class
 provides convenient factory methods for these Executors.
 
-Memory consistency effects: Actions in a thread prior to
-submitting a `Runnable` object to an `Executor`
-*happen-before*
+<p>Memory consistency effects: Actions in a thread prior to
+submitting a {@code Runnable} object to an {@code Executor}
+<a href="package-summary.html#MemoryVisibility"><i>happen-before</i></a>
 its execution begins, perhaps in another thread.
 
-**Since:** 1.5
+@since 1.5
+@author Doug Lea
 
 ## Executor.execute(Runnable)
 
@@ -109,13 +97,9 @@ void execute(Runnable command)
 
 Executes the given command at some time in the future.  The command
 may execute in a new thread, in a pooled thread, or in the calling
-thread, at the discretion of the `Executor` implementation.
+thread, at the discretion of the {@code Executor} implementation.
 
-Parameters:
-
-- `command`: the runnable task
-
-Throws:
-
-- `RejectedExecutionException`: if this task cannot be accepted for execution
-- `NullPointerException`: if command is null
+@param command the runnable task
+@throws RejectedExecutionException if this task cannot be
+accepted for execution
+@throws NullPointerException if command is null

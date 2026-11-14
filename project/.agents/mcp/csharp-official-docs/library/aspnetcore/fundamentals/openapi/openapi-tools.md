@@ -1,21 +1,19 @@
 ---
-title: ".NET OpenAPI tool command reference and installation"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/openapi/openapi-tools.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: .NET OpenAPI tool command reference and installation
+ai-usage: ai-assisted
+description: Command reference for the `Microsoft.dotnet-openapi` tool, which adds and manages OpenAPI references that generate clients to consume OpenAPI documents.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 07/30/2026
 ---
-
 # .NET OpenAPI tool command reference and installation
 
-Microsoft.dotnet-openapi is a .NET Global Tool that adds and manages `<OpenApiReference />` entries in a project file. These references let a project generate a strongly typed client from an existing OpenAPI document so the app can call the described API.
+[Microsoft.dotnet-openapi](https://www.nuget.org/packages/Microsoft.dotnet-openapi) is a [.NET Global Tool](/dotnet/core/tools/global-tools) that adds and manages `<OpenApiReference />` entries in a project file. These references let a project generate a strongly typed client from an existing [OpenAPI](https://github.com/OAI/OpenAPI-Specification) document so the app can call the described API.
 
 This tool addresses the *consumer* side of OpenAPI. For guidance on generating and using an OpenAPI document for your own ASP.NET Core API, see the following articles:
 
-* Overview of OpenAPI support in ASP.NET Core API apps
-* Generate OpenAPI documents
-* Use the generated OpenAPI documents
+* [Overview of OpenAPI support in ASP.NET Core API apps](overview.md)
+* [Generate OpenAPI documents](aspnetcore-openapi.md)
+* [Use the generated OpenAPI documents](using-openapi-documents.md)
 
 ## Installation
 
@@ -25,10 +23,7 @@ To install `Microsoft.dotnet-openapi`, run the following command:
 dotnet tool install -g Microsoft.dotnet-openapi
 ```
 
-> **Note:**
-> By default, the architecture of the .NET binaries to install represents the currently running operating system architecture.
-> To specify a different architecture, review how to use the `dotnet tool install` command with the '--arch' option.
-> For more information, see GitHub dotnet/aspnetcore.docs issue #29262 - _Add '-a arm64' on Apple Silicon_.
+[!INCLUDE[](~/includes/dotnet-tool-install-arch-options.md)]
 
 ## Add
 
@@ -39,6 +34,21 @@ Adding an OpenAPI reference using any of the commands on this page adds an `<Ope
 ```
 
 The preceding reference is required for the app to call the generated client code.
+
+<!-- TODO: Restore after https://github.com/dotnet/AspNetCore/issues/12738
+### Add Project
+
+#### Options
+
+| Short option | Long option | Description | Example |
+|-------|------|-------|---------|
+| -p|--project | The project to operate on. |dotnet openapi add project *--project .\Ref.csproj* ../Ref/ProjRef.csproj |
+
+#### Arguments
+
+|  Argument  | Description | Example |
+|-------------|-------------|---------|
+| source-file | The source to create a reference from. Must be a project file. |dotnet openapi add project *../Ref/ProjRef.csproj* | -->
 
 ### Add File
 
@@ -111,9 +121,10 @@ Refreshes the local version of a file that was downloaded using the latest conte
 
 After adding an OpenAPI reference and generating a client, see the following resources to generate code, test pages, and UIs that consume an API described by an OpenAPI document:
 
-* Use the generated OpenAPI documents
-* Get started with NSwag and ASP.NET Core
-* Tutorial: Create a controller-based web API with ASP.NET Core
-* Tutorial: Create a Minimal API with ASP.NET Core
+* [Use the generated OpenAPI documents](using-openapi-documents.md)
+* [Get started with NSwag and ASP.NET Core](../../tutorials/getting-started-with-NSwag.md)
+* [Tutorial: Create a controller-based web API with ASP.NET Core](../../tutorials/first-web-api.md)
+* [Tutorial: Create a Minimal API with ASP.NET Core](../../tutorials/min-web-api.md)
 
 When you generate an OpenAPI document, avoid exposing it in production, because it reveals details of the API that you might not want to make public. The preceding articles show how to make the OpenAPI document and related UI available only in the development environment.
+

@@ -1,18 +1,13 @@
----
-title: "ResultSelector Parameter"
-tool: "rxjs"
-version: "7.8"
-source: "https://github.com/ReactiveX/rxjs/blob/e5351d02e225e275ac0e497c7b66eaa5f0c88791/docs_app/content/deprecations/resultSelector.md"
-commit: "e5351d02e225e275ac0e497c7b66eaa5f0c88791"
-license: "Apache-2.0"
----
-
 # ResultSelector Parameter
 
 Some operator supported a resultSelector argument that acted as mapping function on the result of that operator.
 The same behavior can be reproduced with the `map` operator, therefore this argument became deprecated.
 
+<div class="alert is-important">
+    <span>
         This deprecation was introduced in RxJS 6.0 and will become breaking with RxJS 8.
+    </span>
+</div>
 
 There were two reasons for actually deprecating those parameters:
 
@@ -21,18 +16,19 @@ There were two reasons for actually deprecating those parameters:
 
 ## Operators affected by this Change
 
-- concatMap
-- concatMapTo
-- exhaustMap
-- mergeMap
-- mergeMapTo
-- switchMap
-- swithMapTo
+- [concatMap](/api/operators/concatMap)
+- [concatMapTo](/api/operators/concatMapTo)
+- [exhaustMap](/api/operators/exhaustMap)
+- [mergeMap](/api/operators/mergeMap)
+- [mergeMapTo](/api/operators/mergeMapTo)
+- [switchMap](/api/operators/switchMap)
+- [swithMapTo](/api/operators/swithMapTo)
 
 ## How to Refactor
 
-Instead of using the `resultSelector` Argument, you can leverage the `map` operator on the inner Observable:
+Instead of using the `resultSelector` Argument, you can leverage the [`map`](/api/operators/map) operator on the inner Observable:
 
+<!-- prettier-ignore -->
 ```ts
 import { fromEvent, switchMap, interval, map } from 'rxjs';
 

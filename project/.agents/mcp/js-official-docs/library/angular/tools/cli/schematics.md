@@ -1,12 +1,3 @@
----
-title: "Generating code using schematics"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/tools/cli/schematics.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Generating code using schematics
 
 A schematic is a template-based code generator that supports complex logic.
@@ -38,9 +29,9 @@ ng generate my-schematic-collection:my-schematic-name
 
 A JSON schema associated with a schematic tells the Angular CLI what options are available to commands and sub-commands, and determines the defaults.
 These defaults can be overridden by providing a different value for an option on the command line.
-See Workspace Configuration for information about how to change the generation option defaults for your workspace.
+See [Workspace Configuration](reference/configs/workspace-config) for information about how to change the generation option defaults for your workspace.
 
-The JSON schemas for the default schematics used by the CLI to generate projects and parts of projects are collected in the package `@schematics/angular`.
+The JSON schemas for the default schematics used by the CLI to generate projects and parts of projects are collected in the package [`@schematics/angular`](https://github.com/angular/angular-cli/tree/main/packages/schematics/angular).
 The schema describes the options available to the CLI for each of the `ng generate` sub-commands, as shown in the `--help` output.
 
 ## Developing schematics for libraries
@@ -53,19 +44,21 @@ As a library developer, you can create your own collections of custom schematics
 
 For more details of what these look like and how to create them, see:
 
-  - Authoring Schematics
-  - Schematics for Libraries
+<docs-pill-row>
+  <docs-pill href="tools/cli/schematics-authoring" title="Authoring Schematics"/>
+  <docs-pill href="tools/cli/schematics-for-libraries" title="Schematics for Libraries"/>
+</docs-pill-row>
 
 ### Add schematics
 
 An _add schematic_ is typically supplied with a library, so that the library can be added to an existing project with `ng add`.
 The `add` command uses your package manager to download new dependencies, and invokes an installation script that is implemented as a schematic.
 
-For example, the `@angular/material` schematic tells the `add` command to install and set up Angular Material and theming, and register new starter components that can be created with `ng generate`.
+For example, the [`@angular/material`](https://material.angular.dev/guide/schematics) schematic tells the `add` command to install and set up Angular Material and theming, and register new starter components that can be created with `ng generate`.
 Look at this one as an example and model for your own add schematic.
 
 Partner and third party libraries also support the Angular CLI with add schematics.
-For example, `@ng-bootstrap/schematics` adds ng-bootstrap to an app, and `@clr/angular` installs and sets up Clarity from VMWare.
+For example, `@ng-bootstrap/schematics` adds [ng-bootstrap](https://ng-bootstrap.github.io) to an app, and `@clr/angular` installs and sets up [Clarity from VMWare](https://clarity.design/documentation/get-started).
 
 An _add schematic_ can also update a project with configuration changes, add additional dependencies \(such as polyfills\), or scaffold package-specific initialization code.
 For example, the `@angular/pwa` schematic turns your application into a PWA by adding an application manifest and service worker.
@@ -106,12 +99,12 @@ We analyzed your package.json, there are some packages to update:
 
 If you pass the command a set of libraries to update, it updates those libraries, their peer dependencies, and the peer dependencies that depend on them.
 
-HELPFUL: If there are inconsistencies \(for example, if peer dependencies cannot be matched by a simple semver range\), the command generates an error and does not change anything in the workspace.
+HELPFUL: If there are inconsistencies \(for example, if peer dependencies cannot be matched by a simple [semver](https://semver.org) range\), the command generates an error and does not change anything in the workspace.
 
 We recommend that you do not force an update of all dependencies by default.
 Try updating specific dependencies first.
 
-For more about how the `ng update` command works, see Update Command.
+For more about how the `ng update` command works, see [Update Command](https://github.com/angular/angular-cli/blob/main/docs/specifications/update.md).
 
 If you create a new version of your library that introduces potential breaking changes, you can provide an _update schematic_ to enable the `ng update` command to automatically resolve any such changes in the project being updated.
 

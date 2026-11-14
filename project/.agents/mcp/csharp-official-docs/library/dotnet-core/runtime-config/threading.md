@@ -1,42 +1,38 @@
 ---
-title: "Threading config settings"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/runtime-config/threading.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Threading config settings
+description: Learn about the settings that configure threading for .NET apps.
+ms.date: 08/28/2026
 ---
-
 # Runtime configuration options for threading
 
 This article details the settings you can use to configure threading in .NET.
 
 ## Use all CPU groups on Windows
 
-- On machines that have multiple CPU groups, this setting configures whether components such as the thread pool use all CPU groups or only the primary CPU group of the process. The setting also affects what `System.Environment.ProcessorCount` returns.
-- When this setting is enabled, all CPU groups are used and threads are also automatically distributed across CPU groups by default.
-- This setting is enabled by default on Windows 11 and later versions, and disabled by default on Windows 10 and earlier versions. For this setting to take effect when enabled, the GC must also be configured to use all CPU groups; for more information, see GC CPU groups.
+- On machines that have multiple CPU groups, this setting configures whether components such as the thread pool use all CPU groups or only the primary CPU group of the process. The setting also affects what <xref:System.Environment.ProcessorCount?displayProperty=nameWithType> returns.
+- When this setting is enabled, all CPU groups are used and threads are also [automatically distributed across CPU groups](#assign-threads-to-cpu-groups-on-windows) by default.
+- This setting is enabled by default on Windows 11 and later versions, and disabled by default on Windows 10 and earlier versions. For this setting to take effect when enabled, the GC must also be configured to use all CPU groups; for more information, see [GC CPU groups](./garbage-collector.md#cpu-groups).
 
 |                          | Setting name                    | Values                           |
 |--------------------------|---------------------------------|----------------------------------|
 | **runtimeconfig.json**   | N/A                             | N/A                              |
-| **Environment variable** | `DOTNET_Thread_UseAllCpuGroups` | `0` - disabled`1` - enabled |
+| **Environment variable** | `DOTNET_Thread_UseAllCpuGroups` | `0` - disabled<br/>`1` - enabled |
 
 ## Assign threads to CPU groups on Windows
 
-- On machines that have multiple CPU groups and all CPU groups are being used, this setting configures whether threads are automatically distributed across CPU groups.
+- On machines that have multiple CPU groups and [all CPU groups are being used](#use-all-cpu-groups-on-windows), this setting configures whether threads are automatically distributed across CPU groups.
 - When this setting is enabled, new threads are assigned to a CPU group in a way that tries to fully populate a CPU group that is already in use before utilizing a new CPU group.
 - This setting is enabled by default.
 
 |                          | Setting name                    | Values                           |
 |--------------------------|---------------------------------|----------------------------------|
 | **runtimeconfig.json**   | N/A                             | N/A                              |
-| **Environment variable** | `DOTNET_Thread_AssignCpuGroups` | `0` - disabled`1` - enabled |
+| **Environment variable** | `DOTNET_Thread_AssignCpuGroups` | `0` - disabled<br/>`1` - enabled |
 
 ## Set the stack size for threads created by the .NET runtime
 
 - The default stack size is dictated by .NET and OS policies. The default stack size for .NET apps is 1.5 MB on Windows and macOS, and 8 MB on Linux. The default stack size when the .NET runtime is hosted (for example, COM components) is dictated by the hosting process.
-- This setting allows overriding the default for threads created by the .NET runtime. For example, threads created by the `System.Threading.Thread.#ctor*` API.
+- This setting allows overriding the default for threads created by the .NET runtime. For example, threads created by the <xref:System.Threading.Thread.%23ctor*> API.
 - The specified size should be between 64 KB and 2 GB.
 
 | | Setting name | Values | Version introduced |
@@ -47,7 +43,7 @@ This article details the settings you can use to configure threading in .NET.
 ## Minimum threads
 
 - Specifies the minimum number of threads for the worker thread pool.
-- Corresponds to the `System.Threading.ThreadPool.SetMinThreads*` method.
+- Corresponds to the <xref:System.Threading.ThreadPool.SetMinThreads*?displayProperty=nameWithType> method.
 
 | | Setting name | Values | Version introduced |
 | - | - | - | - |
@@ -94,7 +90,7 @@ Project file:
 ## Maximum threads
 
 - Specifies the maximum number of threads for the worker thread pool.
-- Corresponds to the `System.Threading.ThreadPool.SetMaxThreads*` method.
+- Corresponds to the <xref:System.Threading.ThreadPool.SetMaxThreads*?displayProperty=nameWithType> method.
 
 | | Setting name | Values | Version introduced |
 | - | - | - | - |
@@ -144,13 +140,13 @@ Project file:
 - If you omit this setting or the platform is not Windows, the .NET thread pool is used instead.
 - Only applications published with Native AOT on Windows use the Windows thread pool by default, for which you can opt to use the .NET thread pool instead by disabling the config setting.
 - The Windows thread pool may perform better in some cases, such as in cases where the minimum number of threads is configured to a high value, or when the Windows thread pool is already being heavily used by the app. There may also be cases where the .NET thread pool performs better, such as in heavy I/O handling on larger machines. It's advisable to check performance metrics when changing this config setting.
-- Some APIs are not supported when using the Windows thread pool, such as `System.Threading.ThreadPool.SetMinThreads*`, `System.Threading.ThreadPool.SetMaxThreads*`, and `System.Threading.ThreadPool.BindHandle(System.Runtime.InteropServices.SafeHandle)`. Thread pool config settings for minimum and maximum threads are also not effective. An alternative to `System.Threading.ThreadPool.BindHandle(System.Runtime.InteropServices.SafeHandle)` is the `System.Threading.ThreadPoolBoundHandle` class.
+- Some APIs are not supported when using the Windows thread pool, such as <xref:System.Threading.ThreadPool.SetMinThreads*?displayProperty=nameWithType>, <xref:System.Threading.ThreadPool.SetMaxThreads*?displayProperty=nameWithType>, and <xref:System.Threading.ThreadPool.BindHandle%28System.Runtime.InteropServices.SafeHandle%29?displayProperty=nameWithType>. Thread pool config settings for minimum and maximum threads are also not effective. An alternative to <xref:System.Threading.ThreadPool.BindHandle%28System.Runtime.InteropServices.SafeHandle%29?displayProperty=nameWithType> is the <xref:System.Threading.ThreadPoolBoundHandle> class.
 
 | | Setting name | Values | Version introduced |
 | - | - | - | - |
-| **runtimeconfig.json** | `System.Threading.ThreadPool.UseWindowsThreadPool` | `true` - enabled`false` - disabled | .NET 8 |
-| **MSBuild property** | `UseWindowsThreadPool` | `true` - enabled`false` - disabled | .NET 8 |
-| **Environment variable** | `DOTNET_ThreadPool_UseWindowsThreadPool` | `1` - enabled`0` - disabled | .NET 8 |
+| **runtimeconfig.json** | `System.Threading.ThreadPool.UseWindowsThreadPool` | `true` - enabled<br/>`false` - disabled | .NET 8 |
+| **MSBuild property** | `UseWindowsThreadPool` | `true` - enabled<br/>`false` - disabled | .NET 8 |
+| **Environment variable** | `DOTNET_ThreadPool_UseWindowsThreadPool` | `1` - enabled<br/>`0` - disabled | .NET 8 |
 
 ### Examples
 
@@ -190,7 +186,7 @@ Project file:
 
 ## Thread injection in response to blocking work items
 
-In some cases, the thread pool detects work items that block its threads. To compensate, it injects more threads. In .NET 6+, you can use the following runtime configuration settings to configure thread injection in response to blocking work items. Currently, these settings take effect only for work items that wait for another task to complete, such as in typical sync-over-async cases.
+In some cases, the thread pool detects work items that block its threads. To compensate, it injects more threads. In .NET 6+, you can use the following [runtime configuration](https://github.com/dotnet/docs/blob/main/docs/core/runtime-config/index.md) settings to configure thread injection in response to blocking work items. Currently, these settings take effect only for work items that wait for another task to complete, such as in typical [sync-over-async](https://devblogs.microsoft.com/pfxteam/should-i-expose-synchronous-wrappers-for-asynchronous-methods/) cases.
 
 | *runtimeconfig.json* setting name | Description | Version introduced |
 | - | - | - |
@@ -235,7 +231,7 @@ In some cases, the thread pool detects work items that block its threads. To com
 
 ## `AutoreleasePool` for managed threads
 
-This option configures whether each managed thread receives an implicit NSAutoreleasePool when running on a supported macOS platform.
+This option configures whether each managed thread receives an implicit [NSAutoreleasePool](https://developer.apple.com/documentation/foundation/nsautoreleasepool) when running on a supported macOS platform.
 
 | | Setting name | Values | Version introduced |
 | - | - | - | - |

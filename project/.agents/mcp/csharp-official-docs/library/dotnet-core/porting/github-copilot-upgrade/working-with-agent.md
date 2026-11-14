@@ -1,10 +1,12 @@
 ---
-title: "Work with GitHub Copilot upgrade"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/github-copilot-upgrade/working-with-agent.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Work with GitHub Copilot upgrade
+description: "Learn how to collaborate effectively with GitHub Copilot upgrade, including communication patterns, teaching preferences, mid-session corrections, and multi-session workflows."
+ms.topic: concept-article
+ms.date: 09/21/2026
+ai-usage: ai-assisted
+
+#customer intent: As a developer, I want to work effectively with GitHub Copilot upgrade so that I can guide, review, and resume project upgrades.
+
 ---
 
 # Work with GitHub Copilot upgrade
@@ -23,19 +25,12 @@ compatibility with our existing REST clients, and we can't change the
 public API surface."
 ```
 
-> **Tip:**
+> [!TIP]
 > You don't have to give all context up front. The agent asks follow-up questions when it needs more information.
 
 ## Start a conversation
 
-1. Start the agent by using one of these methods:
-
-   - **Visual Studio**: Right-click the solution or project in **Solution Explorer** and select **Modernize**. Alternatively, open the **GitHub Copilot Chat** window and type `@Modernize`.
-   - **Visual Studio Code**: Open the **GitHub Copilot Chat** panel and type `@upgrade`.
-   - **GitHub Copilot CLI**: Type `@upgrade` followed by your upgrade or migration request.
-   - **GitHub Copilot app**: In the **Agent** picker, select `Upgrade`.
-
-1. Tell the agent what to upgrade or migrate.
+[!INCLUDE [how-to-initiate](includes/how-to-initiate.md)]
 
 ### What to say
 
@@ -75,7 +70,7 @@ In guided mode, the agent pauses at each stage boundary for your review:
 - After assessment, before creating the plan.
 - After planning, before executing any tasks.
 - Before complex task breakdowns.
-- At key <example-value> points where multiple valid approaches exist.
+- At key decision points where multiple valid approaches exist.
 
 Best for first-time users, complex solutions, and when you want to learn the process.
 
@@ -88,7 +83,7 @@ Switch freely between modes at any time:
 | Guided mode | _"Pause"_ or _"Switch to guided mode"_ |
 | Automatic mode | _"Continue"_ or _"Go ahead"_ |
 
-> **Tip:**
+> [!TIP]
 > Start with guided mode for your first upgrade. Guided mode is the best way to learn how the agent thinks and what decisions it makes. Switch to automatic mode once you're comfortable.
 
 ## Teach the agent
@@ -135,10 +130,10 @@ The `scenario-instructions.md` file is organized into clear sections:
 |---|---|---|
 | **User Preferences (Technical)** | Package choices, framework decisions, coding patterns | _"Use System.Text.Json, not Newtonsoft"_ |
 | **User Preferences (Execution Style)** | How the agent works | _"Always use bottom-up strategy"_ |
-| **Key <example-value> Log** | Important decisions and their rationale | _"Chose EF Core over Dapper because..."_ |
+| **Key Decisions Log** | Important decisions and their rationale | _"Chose EF Core over Dapper because..."_ |
 | **Custom Instructions per Task** | Task-specific overrides | _"Skip tests for task 3.1"_ |
 
-> **Tip:**
+> [!TIP]
 > Also edit `scenario-instructions.md` directly. It's a Markdown file in `.github/upgrades/{scenarioId}/`. The agent reads the file at the start of every interaction.
 
 ## Make mid-session corrections
@@ -220,7 +215,7 @@ The agent stores all state in `.github/upgrades/` inside your repository. When y
 
 If a task is in progress from a previous session, the agent recognizes the task might be stale and offers options to continue, restart, or skip.
 
-> **Tip:**
+> [!TIP]
 > Because state lives in `.github/upgrades/` inside your repo, it travels with your code. Push your branch to a remote, pull it on another machine, and the agent picks up right where you left off.
 
 ## Work across multiple sessions
@@ -299,8 +294,8 @@ Positive feedback helps just as much as corrections and confirms the agent is on
 
 ## Related content
 
-- What is GitHub Copilot upgrade?
-- Core concepts
-- Best practices
-- Customize GitHub Copilot upgrade
-- Troubleshoot GitHub Copilot upgrade
+- [What is GitHub Copilot upgrade?](overview.md)
+- [Core concepts](concepts.md)
+- [Best practices](best-practices.md)
+- [Customize GitHub Copilot upgrade](customization.md)
+- [Troubleshoot GitHub Copilot upgrade](troubleshooting.md)

@@ -1,12 +1,3 @@
----
-title: "SocketChannel class (java.nio.channels) (part 1 of 2)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/channels/SocketChannel.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # SocketChannel class (java.nio.channels)
 
 ```java
@@ -15,88 +6,119 @@ public abstract class SocketChannel extends AbstractSelectableChannel implements
 
 A selectable channel for stream-oriented connecting sockets.
 
- A socket channel is created by invoking one of the `open` methods of
-this class. The no-arg open method opens a socket channel
-for an *Internet protocol* socket. The `open(ProtocolFamily)`
+<p> A socket channel is created by invoking one of the {@code open} methods of
+this class. The no-arg {@link #open() open} method opens a socket channel
+for an <i>Internet protocol</i> socket. The {@link #open(ProtocolFamily)}
 method is used to open a socket channel for a socket of a specified protocol
 family. It is not possible to create a channel for an arbitrary, pre-existing
 socket. A newly-created socket channel is open but not yet connected.  An
 attempt to invoke an I/O operation upon an unconnected channel will cause a
-`NotYetConnectedException` to be thrown.  A socket channel can be
-connected by invoking its connect method; once connected,
+{@link NotYetConnectedException} to be thrown.  A socket channel can be
+connected by invoking its {@link #connect connect} method; once connected,
 a socket channel remains connected until it is closed.  Whether or not a
-socket channel is connected may be determined by invoking its isConnected method.
+socket channel is connected may be determined by invoking its {@link #isConnected()
+isConnected} method.
 
- Socket channels support *non-blocking connection:* A socket
+<p> Socket channels support <i>non-blocking connection:</i>&nbsp;A socket
 channel may be created and the process of establishing the link to the
-remote socket may be initiated via the connect method for
-later completion by the finishConnect method.
+remote socket may be initiated via the {@link #connect connect} method for
+later completion by the {@link #finishConnect finishConnect} method.
 Whether or not a connection operation is in progress may be determined by
-invoking the isConnectionPending method.
+invoking the {@link #isConnectionPending isConnectionPending} method.
 
- Socket channels support *asynchronous shutdown*, which is similar
-to the asynchronous close operation specified in the `Channel` class.
+<p> Socket channels support <i>asynchronous shutdown</i>, which is similar
+to the asynchronous close operation specified in the {@link Channel} class.
 If the input side of a socket is shut down by one thread while another
 thread is blocked in a read operation on the socket's channel, then the read
 operation in the blocked thread will complete without reading any bytes and
-will return `-1`.  If the output side of a socket is shut down by one
+will return {@code -1}.  If the output side of a socket is shut down by one
 thread while another thread is blocked in a write operation on the socket's
-channel, then the blocked thread will receive an `AsynchronousCloseException`.
+channel, then the blocked thread will receive an {@link
+AsynchronousCloseException}.
 
- Socket options are configured using the setOption method. Socket channels for  *Internet protocol* sockets support
+<p> Socket options are configured using the {@link #setOption(SocketOption,Object)
+setOption} method. Socket channels for  <i>Internet protocol</i> sockets support
 following options:
+<blockquote>
+<table class="striped">
+<caption style="display:none">Socket options</caption>
+<thead>
+  <tr>
+    <th scope="col">Option Name</th>
+    <th scope="col">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <th scope="row"> {@link java.net.StandardSocketOptions#SO_SNDBUF SO_SNDBUF} </th>
+    <td> The size of the socket send buffer </td>
+  </tr>
+  <tr>
+    <th scope="row"> {@link java.net.StandardSocketOptions#SO_RCVBUF SO_RCVBUF} </th>
+    <td> The size of the socket receive buffer </td>
+  </tr>
+  <tr>
+    <th scope="row"> {@link java.net.StandardSocketOptions#SO_KEEPALIVE SO_KEEPALIVE} </th>
+    <td> Keep connection alive </td>
+  </tr>
+  <tr>
+    <th scope="row"> {@link java.net.StandardSocketOptions#SO_REUSEADDR SO_REUSEADDR} </th>
+    <td> Re-use address </td>
+  </tr>
+  <tr>
+    <th scope="row"> {@link java.net.StandardSocketOptions#SO_LINGER SO_LINGER} </th>
+    <td> Linger on close if data is present (when configured in blocking mode
+         only) </td>
+  </tr>
+  <tr>
+    <th scope="row"> {@link java.net.StandardSocketOptions#TCP_NODELAY TCP_NODELAY} </th>
+    <td> Disable the Nagle algorithm </td>
+  </tr>
+</tbody>
+</table>
+</blockquote>
 
-Socket options
+<p> Socket channels for <i>Unix domain</i> sockets support:
+<blockquote>
+<table class="striped">
+<caption style="display:none">Socket options</caption>
+<thead>
+  <tr>
+    <th scope="col">Option Name</th>
+    <th scope="col">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <th scope="row"> {@link java.net.StandardSocketOptions#SO_SNDBUF SO_SNDBUF} </th>
+    <td> The size of the socket send buffer </td>
+  </tr>
+  <tr>
+    <th scope="row"> {@link java.net.StandardSocketOptions#SO_RCVBUF SO_RCVBUF} </th>
+    <td> The size of the socket receive buffer </td>
+  </tr>
+  <tr>
+    <th scope="row"> {@link java.net.StandardSocketOptions#SO_LINGER SO_LINGER} </th>
+    <td> Linger on close if data is present (when configured in blocking mode
+         only) </td>
+  </tr>
+</tbody>
+</table>
+</blockquote>
 
-    Option Name
-    Description
+<p> Additional (implementation specific) options may also be supported.
 
-     SO_SNDBUF
-     The size of the socket send buffer
-
-     SO_RCVBUF
-     The size of the socket receive buffer
-
-     SO_KEEPALIVE
-     Keep connection alive
-
-     SO_REUSEADDR
-     Re-use address
-
-     SO_LINGER
-     Linger on close if data is present (when configured in blocking mode
-         only)
-
-     TCP_NODELAY
-     Disable the Nagle algorithm
-
- Socket channels for *Unix domain* sockets support:
-
-Socket options
-
-    Option Name
-    Description
-
-     SO_SNDBUF
-     The size of the socket send buffer
-
-     SO_RCVBUF
-     The size of the socket receive buffer
-
-     SO_LINGER
-     Linger on close if data is present (when configured in blocking mode
-         only)
-
- Additional (implementation specific) options may also be supported.
-
- Socket channels are safe for use by multiple concurrent threads.  They
+<p> Socket channels are safe for use by multiple concurrent threads.  They
 support concurrent reading and writing, though at most one thread may be
-reading and at most one thread may be writing at any given time.  The connect and finishConnect methods are
+reading and at most one thread may be writing at any given time.  The {@link
+#connect connect} and {@link #finishConnect finishConnect} methods are
 mutually synchronized against each other, and an attempt to initiate a read
 or write operation while an invocation of one of these methods is in
-progress will block until that invocation is complete.
+progress will block until that invocation is complete.  </p>
 
-**Since:** 1.4
+@author Mark Reinhold
+@author JSR-51 Expert Group
+@since 1.4
 
 ## SocketChannel.SocketChannel(SelectorProvider)
 
@@ -106,9 +128,8 @@ protected SocketChannel(SelectorProvider provider)
 
 Initializes a new instance of this class.
 
-Parameters:
-
-- `provider`: The provider that created this channel
+@param  provider
+        The provider that created this channel
 
 ## SocketChannel.open()
 
@@ -116,17 +137,20 @@ Parameters:
 public static SocketChannel open() throws IOException
 ```
 
-Opens a socket channel for an *Internet protocol* socket.
+Opens a socket channel for an <i>Internet protocol</i> socket.
 
- The new channel is created by invoking the openSocketChannel method of the system-wide default `java.nio.channels.spi.SelectorProvider` object.
+<p> The new channel is created by invoking the {@link
+java.nio.channels.spi.SelectorProvider#openSocketChannel
+openSocketChannel} method of the system-wide default {@link
+java.nio.channels.spi.SelectorProvider} object.  </p>
 
-**Returns:** A new socket channel
+@return  A new socket channel
 
-**See also:** java.net.preferIPv4Stack system property
+@throws  IOException
+         If an I/O error occurs
 
-Throws:
-
-- `IOException`: If an I/O error occurs
+@see     <a href="../../net/doc-files/net-properties.html#Ipv4IPv6">
+         java.net.preferIPv4Stack</a> system property
 
 ## SocketChannel.open(ProtocolFamily)
 
@@ -134,26 +158,31 @@ Throws:
 public static SocketChannel open(ProtocolFamily family) throws IOException
 ```
 
-Opens a socket channel. The `family` parameter specifies the
-protocol family of the channel's socket.
+Opens a socket channel. The {@code family} parameter specifies the
+{@link ProtocolFamily protocol family} of the channel's socket.
 
- The new channel is created by invoking the openSocketChannel(ProtocolFamily) method of the system-wide default.
-`java.nio.channels.spi.SelectorProvider` object.
+<p> The new channel is created by invoking the {@link
+java.nio.channels.spi.SelectorProvider#openSocketChannel(ProtocolFamily)
+openSocketChannel(ProtocolFamily)} method of the system-wide default.
+{@link java.nio.channels.spi.SelectorProvider} object.</p>
 
-Parameters:
+@param   family
+         The protocol family
 
-- `family`: The protocol family
+@return  A new socket channel
 
-**Returns:** A new socket channel
+@throws  UnsupportedOperationException
+         If the specified protocol family is not supported. For example,
+         suppose the parameter is specified as {@link
+         java.net.StandardProtocolFamily#INET6 StandardProtocolFamily.INET6}
+         but IPv6 is not enabled on the platform.
+@throws  IOException
+         If an I/O error occurs
 
-**See also:** java.net.preferIPv4Stack system property
+@see     <a href="../../net/doc-files/net-properties.html#Ipv4IPv6">
+         java.net.preferIPv4Stack</a> system property
 
-**Since:** 15
-
-Throws:
-
-- `UnsupportedOperationException`: If the specified protocol family is not supported. For example, suppose the parameter is specified as StandardProtocolFamily.INET6 but IPv6 is not enabled on the platform.
-- `IOException`: If an I/O error occurs
+@since 15
 
 ## SocketChannel.open(SocketAddress)
 
@@ -163,30 +192,44 @@ public static SocketChannel open(SocketAddress remote) throws IOException
 
 Opens a socket channel and connects it to a remote address.
 
- If the remote address is an `InetSocketAddress` then this
-method works as if by invoking the `open()` method, invoking the
-connect method upon the resulting socket
-channel, passing it `remote`, and then returning that channel.
+<p> If the remote address is an {@link InetSocketAddress} then this
+method works as if by invoking the {@link #open()} method, invoking the
+{@link #connect(SocketAddress) connect} method upon the resulting socket
+channel, passing it {@code remote}, and then returning that channel.
 
- If the remote address is a `UnixDomainSocketAddress` then this
-works by invoking the `open(ProtocolFamily)` method with `StandardProtocolFamily.UNIX` as parameter, invoking the connect method upon the resulting socket channel,
-passing it `remote`, then returning that channel.
+<p> If the remote address is a {@link UnixDomainSocketAddress} then this
+works by invoking the {@link #open(ProtocolFamily)} method with {@link
+StandardProtocolFamily#UNIX} as parameter, invoking the {@link
+#connect(SocketAddress) connect} method upon the resulting socket channel,
+passing it {@code remote}, then returning that channel.  </p>
 
-Parameters:
+@param  remote
+        The remote address to which the new channel is to be connected
 
-- `remote`: The remote address to which the new channel is to be connected
+@return  A new, and connected, socket channel
 
-**Returns:** A new, and connected, socket channel
+@throws  AsynchronousCloseException
+         If another thread closes this channel
+         while the connect operation is in progress
 
-**See also:** java.net.preferIPv4Stack system property
+@throws  ClosedByInterruptException
+         If another thread interrupts the current thread
+         while the connect operation is in progress, thereby
+         closing the channel and setting the current thread's
+         interrupt status
 
-Throws:
+@throws  UnresolvedAddressException
+         If the given remote address is an InetSocketAddress that is not fully
+         resolved
 
-- `AsynchronousCloseException`: If another thread closes this channel while the connect operation is in progress
-- `ClosedByInterruptException`: If another thread interrupts the current thread while the connect operation is in progress, thereby closing the channel and setting the current thread's interrupt status
-- `UnresolvedAddressException`: If the given remote address is an InetSocketAddress that is not fully resolved
-- `UnsupportedAddressTypeException`: If the type of the given remote address is not supported
-- `IOException`: If some other I/O error occurs
+@throws  UnsupportedAddressTypeException
+         If the type of the given remote address is not supported
+
+@throws  IOException
+         If some other I/O error occurs
+
+@see     <a href="../../net/doc-files/net-properties.html#Ipv4IPv6">
+         java.net.preferIPv4Stack</a> system property
 
 ## SocketChannel.validOps()
 
@@ -197,11 +240,12 @@ public final int validOps()
 Returns an operation set identifying this channel's supported
 operations.
 
- Socket channels support connecting, reading, and writing, so this
-method returns `(``SelectionKey.OP_CONNECT`
-`|` `SelectionKey.OP_READ` `|` `SelectionKey.OP_WRITE``)`.
+<p> Socket channels support connecting, reading, and writing, so this
+method returns {@code (}{@link SelectionKey#OP_CONNECT}
+{@code |}&nbsp;{@link SelectionKey#OP_READ} {@code |}&nbsp;{@link
+SelectionKey#OP_WRITE}{@code )}.
 
-**Returns:** The valid-operation set
+@return  The valid-operation set
 
 ## SocketChannel.bind(SocketAddress)
 
@@ -211,42 +255,45 @@ public abstract SocketChannel bind(SocketAddress local) throws IOException
 
 Binds the channel's socket to a local address.
 
- This method is used to establish an association between the socket
-and a local address. For *Internet Protocol* sockets, once an
+<p> This method is used to establish an association between the socket
+and a local address. For <i>Internet Protocol</i> sockets, once an
 association is established then the socket remains bound until the
-channel is closed. If the `local` parameter has the value `null` then the socket will be bound to an address that is assigned
+channel is closed. If the {@code local} parameter has the value {@code
+null} then the socket will be bound to an address that is assigned
 automatically.
 
-Parameters:
-
-- `local`: The address to bind the socket, or `null` to bind the socket to an automatically assigned socket address
-
-**API note:** Binding a socket channel to a *Unix Domain* socket creates a file
-corresponding to the file path in the `UnixDomainSocketAddress`. This
+@apiNote
+Binding a socket channel to a <i>Unix Domain</i> socket creates a file
+corresponding to the file path in the {@link UnixDomainSocketAddress}. This
 file persists after the channel is closed, and must be removed before
 another socket can bind to the same name. If a socket channel to a Unix
-Domain socket is *implicitly* bound by connecting it without calling
+Domain socket is <i>implicitly</i> bound by connecting it without calling
 bind first, then its socket is
-unnamed
+<a href="../../../java/net/UnixDomainSocketAddress.html#unnamed">unnamed</a>
 with no corresponding socket file in the file-system. If a socket channel
-to a Unix Domain socket is *automatically* bound by calling `bind(null)` this results in an unnamed socket also.
+to a Unix Domain socket is <i>automatically</i> bound by calling {@code
+bind(null)} this results in an unnamed socket also.
 
-**Implementation note:** Each platform enforces an implementation specific maximum length for the
-name of a *Unix Domain* socket. This limitation is enforced when a
+@implNote
+Each platform enforces an implementation specific maximum length for the
+name of a <i>Unix Domain</i> socket. This limitation is enforced when a
 channel is bound. The maximum length is typically close to and generally
 not less than 100 bytes.
 
-**Returns:** This channel
+@param   local The address to bind the socket, or {@code null} to bind
+         the socket to an automatically assigned socket address
 
-**Since:** 1.7
+@return  This channel
 
-Throws:
+@throws  ConnectionPendingException
+         If a non-blocking connect operation is already in progress on
+         this channel
+@throws  AlreadyBoundException               {@inheritDoc}
+@throws  UnsupportedAddressTypeException     {@inheritDoc}
+@throws  ClosedChannelException              {@inheritDoc}
+@throws  IOException                         {@inheritDoc}
 
-- `ConnectionPendingException`: If a non-blocking connect operation is already in progress on this channel
-- `AlreadyBoundException`: (inherited documentation)
-- `UnsupportedAddressTypeException`: (inherited documentation)
-- `ClosedChannelException`: (inherited documentation)
-- `IOException`: (inherited documentation)
+@since 1.7
 
 ## SocketChannel.setOption(SocketOption<T>, T)
 
@@ -254,14 +301,12 @@ Throws:
 public abstract <T> SocketChannel setOption(SocketOption<T> name, T value) throws IOException
 ```
 
-**Since:** 1.7
+@throws  UnsupportedOperationException           {@inheritDoc}
+@throws  IllegalArgumentException                {@inheritDoc}
+@throws  ClosedChannelException                  {@inheritDoc}
+@throws  IOException                             {@inheritDoc}
 
-Throws:
-
-- `UnsupportedOperationException`: (inherited documentation)
-- `IllegalArgumentException`: (inherited documentation)
-- `ClosedChannelException`: (inherited documentation)
-- `IOException`: (inherited documentation)
+@since 1.7
 
 ## SocketChannel.shutdownInput()
 
@@ -271,19 +316,20 @@ public abstract SocketChannel shutdownInput() throws IOException
 
 Shutdown the connection for reading without closing the channel.
 
- Once shutdown for reading then further reads on the channel will
-return `-1`, the end-of-stream indication. If the input side of the
+<p> Once shutdown for reading then further reads on the channel will
+return {@code -1}, the end-of-stream indication. If the input side of the
 connection is already shutdown then invoking this method has no effect.
 
-**Returns:** The channel
+@return  The channel
 
-**Since:** 1.7
+@throws  NotYetConnectedException
+         If this channel is not yet connected
+@throws  ClosedChannelException
+         If this channel is closed
+@throws  IOException
+         If some other I/O error occurs
 
-Throws:
-
-- `NotYetConnectedException`: If this channel is not yet connected
-- `ClosedChannelException`: If this channel is closed
-- `IOException`: If some other I/O error occurs
+@since 1.7
 
 ## SocketChannel.shutdownOutput()
 
@@ -293,20 +339,21 @@ public abstract SocketChannel shutdownOutput() throws IOException
 
 Shutdown the connection for writing without closing the channel.
 
- Once shutdown for writing then further attempts to write to the
-channel will throw `ClosedChannelException`. If the output side of
+<p> Once shutdown for writing then further attempts to write to the
+channel will throw {@link ClosedChannelException}. If the output side of
 the connection is already shutdown then invoking this method has no
 effect.
 
-**Returns:** The channel
+@return  The channel
 
-**Since:** 1.7
+@throws  NotYetConnectedException
+         If this channel is not yet connected
+@throws  ClosedChannelException
+         If this channel is closed
+@throws  IOException
+         If some other I/O error occurs
 
-Throws:
-
-- `NotYetConnectedException`: If this channel is not yet connected
-- `ClosedChannelException`: If this channel is closed
-- `IOException`: If some other I/O error occurs
+@since 1.7
 
 ## SocketChannel.socket()
 
@@ -316,11 +363,10 @@ public abstract Socket socket()
 
 Retrieves a socket associated with this channel.
 
-**Returns:** A socket associated with this channel
+@return  A socket associated with this channel
 
-Throws:
-
-- `UnsupportedOperationException`: If the channel's socket is not an *Internet protocol* socket
+@throws  UnsupportedOperationException
+         If the channel's socket is not an <i>Internet protocol</i> socket
 
 ## SocketChannel.isConnected()
 
@@ -330,8 +376,8 @@ public abstract boolean isConnected()
 
 Tells whether or not this channel's network socket is connected.
 
-**Returns:** `true` if, and only if, this channel's network socket
-         is open and connected
+@return  {@code true} if, and only if, this channel's network socket
+         is {@link #isOpen open} and connected
 
 ## SocketChannel.isConnectionPending()
 
@@ -342,9 +388,9 @@ public abstract boolean isConnectionPending()
 Tells whether or not a connection operation is in progress on this
 channel.
 
-**Returns:** `true` if, and only if, a connection operation has been
+@return  {@code true} if, and only if, a connection operation has been
          initiated on this channel but not yet completed by invoking the
-         finishConnect method
+         {@link #finishConnect finishConnect} method
 
 ## SocketChannel.connect(SocketAddress)
 
@@ -354,39 +400,224 @@ public abstract boolean connect(SocketAddress remote) throws IOException
 
 Connects this channel's socket.
 
- If this channel is in non-blocking mode then an invocation of this
+<p> If this channel is in non-blocking mode then an invocation of this
 method initiates a non-blocking connection operation.  If the connection
 is established immediately, as can happen with a local connection, then
-this method returns `true`.  Otherwise this method returns
-`false` and the connection operation must later be completed by
-invoking the finishConnect method.
+this method returns {@code true}.  Otherwise this method returns
+{@code false} and the connection operation must later be completed by
+invoking the {@link #finishConnect finishConnect} method.
 
- If this channel is in blocking mode then an invocation of this
+<p> If this channel is in blocking mode then an invocation of this
 method will block until the connection is established or an I/O error
 occurs.
 
- This method may be invoked at any time.  If a read or write
+<p> This method may be invoked at any time.  If a read or write
 operation upon this channel is invoked while an invocation of this
 method is in progress then that operation will first block until this
 invocation is complete.  If a connection attempt is initiated but fails,
 that is, if an invocation of this method throws a checked exception,
-then the channel will be closed.
+then the channel will be closed.  </p>
 
-Parameters:
+@param  remote
+        The remote address to which this channel is to be connected
 
-- `remote`: The remote address to which this channel is to be connected
-
-**Returns:** `true` if a connection was established,
-         `false` if this channel is in non-blocking mode
+@return  {@code true} if a connection was established,
+         {@code false} if this channel is in non-blocking mode
          and the connection operation is in progress
 
-Throws:
+@throws  AlreadyConnectedException
+         If this channel is already connected
 
-- `AlreadyConnectedException`: If this channel is already connected
-- `ConnectionPendingException`: If a non-blocking connection operation is already in progress on this channel
-- `ClosedChannelException`: If this channel is closed
-- `AsynchronousCloseException`: If another thread closes this channel while the connect operation is in progress
-- `ClosedByInterruptException`: If another thread interrupts the current thread while the connect operation is in progress, thereby closing the channel and setting the current thread's interrupt status
-- `UnresolvedAddressException`: If the given remote address is an InetSocketAddress that is not fully resolved
-- `UnsupportedAddressTypeException`: If the type of the given remote address is not supported
-- `IOException`: If some other I/O error occurs
+@throws  ConnectionPendingException
+         If a non-blocking connection operation is already in progress
+         on this channel
+
+@throws  ClosedChannelException
+         If this channel is closed
+
+@throws  AsynchronousCloseException
+         If another thread closes this channel
+         while the connect operation is in progress
+
+@throws  ClosedByInterruptException
+         If another thread interrupts the current thread
+         while the connect operation is in progress, thereby
+         closing the channel and setting the current thread's
+         interrupt status
+
+@throws  UnresolvedAddressException
+         If the given remote address is an InetSocketAddress that is not fully resolved
+
+@throws  UnsupportedAddressTypeException
+         If the type of the given remote address is not supported
+
+@throws  IOException
+         If some other I/O error occurs
+
+## SocketChannel.finishConnect()
+
+```java
+public abstract boolean finishConnect() throws IOException
+```
+
+Finishes the process of connecting a socket channel.
+
+<p> A non-blocking connection operation is initiated by placing a socket
+channel in non-blocking mode and then invoking its {@link #connect
+connect} method.  Once the connection is established, or the attempt has
+failed, the socket channel will become connectable and this method may
+be invoked to complete the connection sequence.  If the connection
+operation failed then invoking this method will cause an appropriate
+{@link java.io.IOException} to be thrown.
+
+<p> If this channel is already connected then this method will not block
+and will immediately return {@code true}.  If this channel is in
+non-blocking mode then this method will return {@code false} if the
+connection process is not yet complete.  If this channel is in blocking
+mode then this method will block until the connection either completes
+or fails, and will always either return {@code true} or throw a checked
+exception describing the failure.
+
+<p> This method may be invoked at any time.  If a read or write
+operation upon this channel is invoked while an invocation of this
+method is in progress then that operation will first block until this
+invocation is complete.  If a connection attempt fails, that is, if an
+invocation of this method throws a checked exception, then the channel
+will be closed.  </p>
+
+@return  {@code true} if, and only if, this channel's socket is now
+         connected
+
+@throws  NoConnectionPendingException
+         If this channel is not connected and a connection operation
+         has not been initiated
+
+@throws  ClosedChannelException
+         If this channel is closed
+
+@throws  AsynchronousCloseException
+         If another thread closes this channel
+         while the connect operation is in progress
+
+@throws  ClosedByInterruptException
+         If another thread interrupts the current thread
+         while the connect operation is in progress, thereby
+         closing the channel and setting the current thread's
+         interrupt status
+
+@throws  IOException
+         If some other I/O error occurs
+
+## SocketChannel.getRemoteAddress()
+
+```java
+public abstract SocketAddress getRemoteAddress() throws IOException
+```
+
+Returns the remote address to which this channel's socket is connected.
+
+<p> Where the channel's socket is bound and connected to an <i>Internet
+Protocol</i> socket address then the return value is of type
+{@link java.net.InetSocketAddress}.
+
+<p> Where the channel's socket is bound and connected to a <i>Unix Domain</i>
+socket address, the returned address is a {@link UnixDomainSocketAddress}.
+
+@return  The remote address; {@code null} if the channel's socket is not
+         connected
+
+@throws  ClosedChannelException
+         If the channel is closed
+@throws  IOException
+         If an I/O error occurs
+
+@since 1.7
+
+## SocketChannel.read(ByteBuffer)
+
+```java
+public abstract int read(ByteBuffer dst) throws IOException
+```
+
+@throws  NotYetConnectedException
+         If this channel is not yet connected
+@throws  ClosedChannelException      {@inheritDoc}
+@throws  AsynchronousCloseException  {@inheritDoc}
+@throws  ClosedByInterruptException  {@inheritDoc}
+
+## SocketChannel.read(ByteBuffer[], int, int)
+
+```java
+public abstract long read(ByteBuffer[] dsts, int offset, int length) throws IOException
+```
+
+@throws  NotYetConnectedException
+         If this channel is not yet connected
+@throws  ClosedChannelException      {@inheritDoc}
+@throws  AsynchronousCloseException  {@inheritDoc}
+@throws  ClosedByInterruptException  {@inheritDoc}
+
+## SocketChannel.read(ByteBuffer[])
+
+```java
+public final long read(ByteBuffer[] dsts) throws IOException
+```
+
+@throws  NotYetConnectedException
+         If this channel is not yet connected
+@throws  ClosedChannelException      {@inheritDoc}
+@throws  AsynchronousCloseException  {@inheritDoc}
+@throws  ClosedByInterruptException  {@inheritDoc}
+
+## SocketChannel.write(ByteBuffer)
+
+```java
+public abstract int write(ByteBuffer src) throws IOException
+```
+
+@throws  NotYetConnectedException
+         If this channel is not yet connected
+@throws  ClosedChannelException      {@inheritDoc}
+@throws  AsynchronousCloseException  {@inheritDoc}
+@throws  ClosedByInterruptException  {@inheritDoc}
+
+## SocketChannel.write(ByteBuffer[], int, int)
+
+```java
+public abstract long write(ByteBuffer[] srcs, int offset, int length) throws IOException
+```
+
+@throws  NotYetConnectedException
+         If this channel is not yet connected
+@throws  ClosedChannelException      {@inheritDoc}
+@throws  AsynchronousCloseException  {@inheritDoc}
+@throws  ClosedByInterruptException  {@inheritDoc}
+
+## SocketChannel.write(ByteBuffer[])
+
+```java
+public final long write(ByteBuffer[] srcs) throws IOException
+```
+
+@throws  NotYetConnectedException
+         If this channel is not yet connected
+@throws  ClosedChannelException      {@inheritDoc}
+@throws  AsynchronousCloseException  {@inheritDoc}
+@throws  ClosedByInterruptException  {@inheritDoc}
+
+## SocketChannel.getLocalAddress()
+
+```java
+public abstract SocketAddress getLocalAddress() throws IOException
+```
+
+{@inheritDoc}
+
+<p> Where the channel is bound to a Unix Domain socket address, the socket
+address is a {@link UnixDomainSocketAddress}.
+
+@return  The {@code SocketAddress} that the socket is bound to; {@code null}
+         if the channel's socket is not bound
+
+@throws  ClosedChannelException     {@inheritDoc}
+@throws  IOException                {@inheritDoc}

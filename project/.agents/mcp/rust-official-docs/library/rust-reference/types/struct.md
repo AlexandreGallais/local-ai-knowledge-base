@@ -1,12 +1,3 @@
----
-title: "Struct types"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/types/struct.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[type.struct]
 # Struct types
 
@@ -27,3 +18,9 @@ A _tuple struct_ type is just like a struct type, except that the fields are ano
 
 r[type.struct.unit]
 A _unit-like struct_ type is like a struct type, except that it has no fields. The one value constructed by the associated [struct expression] is the only value that inhabits such a type.
+
+[^structtype]: `struct` types are analogous to `struct` types in C, the *record* types of the ML family, or the *struct* types of the Lisp family.
+
+[`repr` attribute]: ../type-layout.md#representations
+[struct expression]: ../expressions/struct-expr.md
+[visibility modifiers]: ../visibility-and-privacy.md

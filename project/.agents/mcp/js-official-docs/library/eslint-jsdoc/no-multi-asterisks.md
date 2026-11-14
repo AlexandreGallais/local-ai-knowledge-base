@@ -1,15 +1,8 @@
----
-title: "no-multi-asterisks"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/no-multi-asterisks.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-no-multi-asterisks"></a>
+<a name="no-multi-asterisks"></a>
+### <code>no-multi-asterisks</code>
 
-# no-multi-asterisks
 
-### `no-multi-asterisks`
 
 Prevents use of multiple asterisks at the beginning of lines.
 
@@ -17,15 +10,21 @@ Note that if you wish to prevent multiple asterisks at the very beginning of
 the JSDoc block, you should use `no-bad-blocks` (as that is not proper jsdoc
 and that rule is for catching blocks which only seem like jsdoc).
 
+<a name="user-content-fixer"></a>
+<a name="fixer"></a>
 ## Fixer
 
 Removes multiple asterisks on middle or end lines.
 
+<a name="user-content-options"></a>
+<a name="options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `allowWhitespace`
+<a name="user-content-options-allowwhitespace"></a>
+<a name="options-allowwhitespace"></a>
+### <code>allowWhitespace</code>
 
 Set to `true` if you wish to allow asterisks after a space (as with Markdown):
 
@@ -37,7 +36,9 @@ Set to `true` if you wish to allow asterisks after a space (as with Markdown):
 
 Defaults to `false`.
 
-### `preventAtEnd`
+<a name="user-content-options-preventatend"></a>
+<a name="options-preventatend"></a>
+### <code>preventAtEnd</code>
 
 Prevent the likes of this:
 
@@ -50,7 +51,9 @@ Prevent the likes of this:
 
 Defaults to `true`.
 
-### `preventAtMiddleLines`
+<a name="user-content-options-preventatmiddlelines"></a>
+<a name="options-preventatmiddlelines"></a>
+### <code>preventAtMiddleLines</code>
 
 Prevent the likes of this:
 
@@ -63,6 +66,9 @@ Prevent the likes of this:
 
 Defaults to `true`.
 
+
+<a name="user-content-context-and-settings"></a>
+<a name="context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -73,6 +79,8 @@ Defaults to `true`.
 |Settings||
 |Options|`allowWhitespace`, `preventAtEnd`, `preventAtMiddleLines`|
 
+<a name="user-content-failing-examples"></a>
+<a name="failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -175,6 +183,10 @@ The following patterns are considered problems:
 // Message: Should be no multiple asterisks on end lines.
 ````
 
+
+
+<a name="user-content-passing-examples"></a>
+<a name="passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -272,3 +284,4 @@ function foo() {
 }
 // "jsdoc/no-multi-asterisks": ["error"|"warn", {"allowWhitespace":true}]
 ````
+

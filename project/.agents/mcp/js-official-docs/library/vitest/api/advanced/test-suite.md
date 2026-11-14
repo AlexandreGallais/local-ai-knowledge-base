@@ -1,15 +1,6 @@
----
-title: "TestSuite"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/api/advanced/test-suite.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # TestSuite
 
-The `TestSuite` class represents a single suite. This class is only available in the main thread. Refer to the "Runner API" if you are working with runtime tasks.
+The `TestSuite` class represents a single suite. This class is only available in the main thread. Refer to the ["Runner API"](/api/advanced/runner#tasks) if you are working with runtime tasks.
 
 The `TestSuite` instance always has a `type` property with the value of `suite`. You can use it to distinguish between different task types:
 
@@ -21,11 +12,11 @@ if (task.type === 'suite') {
 
 ## project
 
-This references the `TestProject` that the test belongs to.
+This references the [`TestProject`](/api/advanced/test-project) that the test belongs to.
 
 ## module
 
-This is a direct reference to the `TestModule` where the test is defined.
+This is a direct reference to the [`TestModule`](/api/advanced/test-module) where the test is defined.
 
 ## name
 
@@ -58,7 +49,7 @@ describe('the validation logic', () => {
 
 ## id
 
-This is suite's unique identifier. This ID is deterministic and will be the same for the same suite across multiple runs. The ID is based on the project name, module ID and suite order.
+This is suite's unique identifier. This ID is deterministic and will be the same for the same suite across multiple runs. The ID is based on the [project](/api/advanced/test-project) name, module ID and suite order.
 
 The ID looks like this:
 
@@ -70,7 +61,7 @@ The ID looks like this:
                ^ test index
 ```
 
-**Tip:**
+::: tip
 You can generate file hash with `generateFileHash` function from `vitest/node` which is available since Vitest 3:
 
 ```ts
@@ -82,16 +73,19 @@ const hash = generateFileHash(
 )
 ```
 
-**Danger:**
+:::
+
+::: danger
 Don't try to parse the ID. It can have a minus at the start: `-1223128da3_0_0_0`.
+:::
 
 ## location
 
-The location in the module where the suite was defined. Locations are collected only if `includeTaskLocation` is enabled in the config. Note that this option is automatically enabled if `--reporter=html`, `--ui` or `--browser` flags are used.
+The location in the module where the suite was defined. Locations are collected only if [`includeTaskLocation`](/config/includetasklocation) is enabled in the config. Note that this option is automatically enabled if `--reporter=html`, `--ui` or `--browser` flags are used.
 
 The location of this suite will be equal to `{ line: 3, column: 1 }`:
 
-```ts
+```ts:line-numbers {3}
 import { describe } from 'vitest'
 
 describe('the validation works correctly', () => {
@@ -101,7 +95,7 @@ describe('the validation works correctly', () => {
 
 ## parent
 
-Parent suite. If the suite was called directly inside the module, the parent will be the module itself.
+Parent suite. If the suite was called directly inside the [module](/api/advanced/test-module), the parent will be the module itself.
 
 ## options
 
@@ -122,7 +116,7 @@ The options that suite was collected with.
 
 ## children
 
-This is a collection of all suites and tests inside the current suite.
+This is a [collection](/api/advanced/test-collection) of all suites and tests inside the current suite.
 
 ```ts
 for (const task of suite.children) {
@@ -136,8 +130,8 @@ for (const task of suite.children) {
 }
 ```
 
-**Warning:**
-Note that `suite.children` will only iterate the first level of nesting, it won't go deeper. If you need to iterate over all tests or suites, use `children.allTests()` or `children.allSuites()`. If you need to iterate over everything, use recursive function:
+::: warning
+Note that `suite.children` will only iterate the first level of nesting, it won't go deeper. If you need to iterate over all tests or suites, use [`children.allTests()`](/api/advanced/test-collection#alltests) or [`children.allSuites()`](/api/advanced/test-collection#allsuites). If you need to iterate over everything, use recursive function:
 
 ```ts
 function visit(collection: TestCollection) {
@@ -153,13 +147,15 @@ function visit(collection: TestCollection) {
 }
 ```
 
+:::
+
 ## ok
 
 ```ts
 function ok(): boolean
 ```
 
-Checks if the suite has any failed tests. This will also return `false` if suite failed during collection. In that case, check the `errors()` for thrown errors.
+Checks if the suite has any failed tests. This will also return `false` if suite failed during collection. In that case, check the [`errors()`](#errors) for thrown errors.
 
 ## state
 
@@ -170,12 +166,13 @@ function state(): TestSuiteState
 Checks the running state of the suite. Possible return values:
 
 - **pending**: the tests in this suite did not finish running yet.
-- **failed**: this suite has failed tests or they couldn't be collected. If `errors()` is not empty, it means the suite failed to collect tests.
+- **failed**: this suite has failed tests or they couldn't be collected. If [`errors()`](#errors) is not empty, it means the suite failed to collect tests.
 - **passed**: every test inside this suite has passed.
 - **skipped**: this suite was skipped during collection.
 
-**Warning:**
-Note that test module also has a `state` method that returns the same values, but it can also return an additional `queued` state if the module wasn't executed yet.
+::: warning
+Note that [test module](/api/advanced/test-module) also has a `state` method that returns the same values, but it can also return an additional `queued` state if the module wasn't executed yet.
+:::
 
 ## errors
 
@@ -185,7 +182,7 @@ function errors(): TestError[]
 
 Errors that happened outside of the test run during collection, like syntax errors.
 
-```ts
+```ts {4}
 import { describe } from 'vitest'
 
 describe('collection failed', () => {
@@ -193,8 +190,9 @@ describe('collection failed', () => {
 })
 ```
 
-**Warning:**
+::: warning
 Note that errors are serialized into simple objects: `instanceof Error` will always return `false`.
+:::
 
 ## meta <Version>3.1.0</Version> {#meta}
 
@@ -202,9 +200,9 @@ Note that errors are serialized into simple objects: `instanceof Error` will alw
 function meta(): TaskMeta
 ```
 
-Custom metadata that was attached to the suite during its execution or collection. Since Vitest 4.1, the meta can be attached by providing a `meta` object during test collection:
+Custom [metadata](/api/advanced/metadata) that was attached to the suite during its execution or collection. Since Vitest 4.1, the meta can be attached by providing a `meta` object during test collection:
 
-```ts
+```ts {7,10}
 import { describe, test, TestRunner } from 'vitest'
 
 describe('the validation works correctly', { meta: { decorated: true } }, () => {
@@ -221,8 +219,9 @@ describe('the validation works correctly', { meta: { decorated: true } }, () => 
 
 Note that suite metadata will be inherited by tests since Vitest 4.1.
 
-**Tip:**
-If metadata was attached during collection (outside of the `test` function), then it will be available in `onTestModuleCollected` hook in the custom reporter.
+:::tip
+If metadata was attached during collection (outside of the `test` function), then it will be available in [`onTestModuleCollected`](./reporters#ontestmodulecollected) hook in the custom reporter.
+:::
 
 ## logs <Version>5.0.0</Version> {#logs}
 
@@ -252,4 +251,4 @@ describe('suite', () => {
 function toTestSpecification(): TestSpecification
 ```
 
-Returns a new test specification that can be used to filter or run this specific test suite.
+Returns a new [test specification](/api/advanced/test-specification) that can be used to filter or run this specific test suite.

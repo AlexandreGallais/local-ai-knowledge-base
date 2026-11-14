@@ -1,25 +1,20 @@
----
-title: "RSAPrivateCrtKey <example-value> (java.security.interfaces)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/interfaces/RSAPrivateCrtKey.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
-# RSAPrivateCrtKey <example-value> (java.security.interfaces)
+# RSAPrivateCrtKey interface (java.security.interfaces)
 
 ```java
-public interface RSAPrivateCrtKey <example-value> RSAPrivateKey
+public interface RSAPrivateCrtKey extends RSAPrivateKey
 ```
 
 The interface to an RSA private key, as defined in the
-PKCS#1 v2.2 standard,
-using the *Chinese Remainder Theorem* (CRT) information values.
+<a href="https://tools.ietf.org/rfc/rfc8017.txt">PKCS#1 v2.2</a> standard,
+using the <i>Chinese Remainder Theorem</i> (CRT) information values.
 
-**Since:** 1.2
+@spec https://www.rfc-editor.org/info/rfc8017
+     RFC 8017: PKCS #1: RSA Cryptography Specifications Version 2.2
+@author Jan Luehe
+@since 1.2
 
-**See also:** RSAPrivateKey
+
+@see RSAPrivateKey
 
 ## RSAPrivateCrtKey.serialVersionUID
 
@@ -31,7 +26,7 @@ The type fingerprint that is set to indicate
 serialization compatibility with a previous
 version of the type.
 
-**Deprecated:** A `serialVersionUID` field in an interface is
+@deprecated A {@code serialVersionUID} field in an interface is
 ineffectual. Do not use; no replacement.
 
 ## RSAPrivateCrtKey.getPublicExponent()
@@ -42,7 +37,7 @@ BigInteger getPublicExponent()
 
 Returns the public exponent.
 
-**Returns:** the public exponent
+@return the public exponent
 
 ## RSAPrivateCrtKey.getPrimeP()
 
@@ -52,7 +47,7 @@ BigInteger getPrimeP()
 
 Returns the primeP.
 
-**Returns:** the primeP
+@return the primeP
 
 ## RSAPrivateCrtKey.getPrimeQ()
 
@@ -62,7 +57,7 @@ BigInteger getPrimeQ()
 
 Returns the primeQ.
 
-**Returns:** the primeQ
+@return the primeQ
 
 ## RSAPrivateCrtKey.getPrimeExponentP()
 
@@ -72,7 +67,7 @@ BigInteger getPrimeExponentP()
 
 Returns the primeExponentP.
 
-**Returns:** the primeExponentP
+@return the primeExponentP
 
 ## RSAPrivateCrtKey.getPrimeExponentQ()
 
@@ -82,7 +77,7 @@ BigInteger getPrimeExponentQ()
 
 Returns the primeExponentQ.
 
-**Returns:** the primeExponentQ
+@return the primeExponentQ
 
 ## RSAPrivateCrtKey.getCrtCoefficient()
 
@@ -92,4 +87,4 @@ BigInteger getCrtCoefficient()
 
 Returns the crtCoefficient.
 
-**Returns:** the crtCoefficient
+@return the crtCoefficient

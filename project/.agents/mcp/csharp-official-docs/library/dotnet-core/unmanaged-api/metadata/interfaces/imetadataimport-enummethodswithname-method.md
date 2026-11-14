@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataImport::EnumMethodsWithName Method"
 title: "IMetaDataImport::EnumMethodsWithName Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-enummethodswithname-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.EnumMethodsWithName"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::EnumMethodsWithName"
+  - "EnumMethodsWithName method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::EnumMethodsWithName Method
 
 Enumerates methods that have the specified name and that are defined by the type referenced by the specified TypeDef token.
@@ -30,7 +37,7 @@ HRESULT EnumMethodsWithName (
  [in, out] A pointer to the enumerator. This must be NULL for the first call of this method.
 
  `cl`
- [in] A TypeDef token <example-value> the type whose methods to enumerate.
+ [in] A TypeDef token representing the type whose methods to enumerate.
 
  `szName`
  [in] The name that limits the scope of the enumeration.
@@ -46,7 +53,7 @@ HRESULT EnumMethodsWithName (
 
 ## Remarks
 
- This method enumerates fields and methods, but not properties or events. Unlike IMetaDataImport::EnumMethods, `EnumMethodsWithName` discards all method tokens that do not have the specified name.
+ This method enumerates fields and methods, but not properties or events. Unlike [IMetaDataImport::EnumMethods](imetadataimport-enummethods-method.md), `EnumMethodsWithName` discards all method tokens that do not have the specified name.
 
 ## Return Value
 
@@ -57,7 +64,7 @@ HRESULT EnumMethodsWithName (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -65,5 +72,5 @@ HRESULT EnumMethodsWithName (
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

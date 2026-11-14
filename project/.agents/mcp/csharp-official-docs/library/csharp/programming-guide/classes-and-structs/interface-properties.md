@@ -1,28 +1,18 @@
 ---
 title: "Interface Properties"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/programming-guide/classes-and-structs/interface-properties.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Properties can be declared on an interface in C#. This example declares an interface property accessor.
+ms.date: 08/20/2024
+helpviewer_keywords: 
+  - "properties [C#], on interfaces"
+  - "interfaces [C#], properties"
 ---
-
 # Interface Properties (C# Programming Guide)
 
-Properties can be declared on an interface. The following example declares an interface property accessor:
+Properties can be declared on an [interface](../../language-reference/keywords/interface.md). The following example declares an interface property accessor:
 
-```csharp
-public interface ISampleInterface
-{
-    // Property declaration:
-    string Name
-    {
-        get;
-        set;
-    }
-}
-```
-Interface properties typically don't have a body. The accessors indicate whether the property is read-write, read-only, or write-only. Unlike in classes and structs, declaring the accessors without a body doesn't declare an automatically implemented property. An interface can define a default implementation for members, including properties. Defining a default implementation for a property in an interface is rare because interfaces can't define instance data fields.
+:::code language="csharp" source="./snippets/properties/interfaces.cs" id="SnippetDeclareInterfaceProperties":::
+
+Interface properties typically don't have a body. The accessors indicate whether the property is read-write, read-only, or write-only. Unlike in classes and structs, declaring the accessors without a body doesn't declare an [automatically implemented property](auto-implemented-properties.md). An interface can define a default implementation for members, including properties. Defining a default implementation for a property in an interface is rare because interfaces can't define instance data fields.
 
 ## Example
 
@@ -30,81 +20,21 @@ In this example, the interface `IEmployee` has a read-write property, `Name`, an
 
 You could use the fully qualified name of the property, which references the interface in which the member is declared. For example:
 
-```csharp
-string IEmployee.Name
-{
-    get { return "Employee Name"; }
-    set { }
-}
-```
-The preceding example demonstrates Explicit Interface Implementation. For example, if the class `Employee` is implementing two interfaces `ICitizen` and `IEmployee` and both interfaces have the `Name` property, the explicit interface member implementation is necessary. That is, the following property declaration:
+:::code language="csharp" source="./snippets/properties/interfaces.cs" id="SnippetExplicitImplementation":::
 
-```csharp
-string IEmployee.Name
-{
-    get { return "Employee Name"; }
-    set { }
-}
-```
+The preceding example demonstrates [Explicit Interface Implementation](../interfaces/explicit-interface-implementation.md). For example, if the class `Employee` is implementing two interfaces `ICitizen` and `IEmployee` and both interfaces have the `Name` property, the explicit interface member implementation is necessary. That is, the following property declaration:
+
+:::code language="csharp" source="./snippets/properties/interfaces.cs" id="SnippetExplicitImplementation":::
+
 Implements the `Name` property on the `IEmployee` interface, while the following declaration:
 
-```csharp
-string ICitizen.Name
-{
-    get { return "Citizen Name"; }
-    set { }
-}
-```
+:::code language="csharp" source="./snippets/properties/interfaces.cs" id="SnippetCitizenImplementation":::
+
 Implements the `Name` property on the `ICitizen` interface.
 
-```csharp
-interface IEmployee
-{
-    string Name
-    {
-        get;
-        set;
-    }
+:::code language="csharp" source="./snippets/properties/interfaces.cs" id="SnippetPropertyExample":::
+:::code language="csharp" source="./snippets/properties/interfaces.cs" id="SnippetUseProperty":::
 
-    int Counter
-    {
-        get;
-    }
-}
-
-public class Employee : IEmployee
-{
-    public static int numberOfEmployees;
-
-    private string _name;
-    public string Name  // read-write instance property
-    {
-        get => _name;
-        set => _name = value;
-    }
-
-    private int _counter;
-    public int Counter  // read-only instance property
-    {
-        get => _counter;
-    }
-
-    // constructor
-    public Employee() => _counter = ++numberOfEmployees;
-}
-```
-```csharp
-System.Console.Write("Enter number of employees: ");
-Employee.numberOfEmployees = int.Parse(System.Console.ReadLine());
-
-Employee e1 = new Employee();
-System.Console.Write("Enter the name of the new employee: ");
-e1.Name = System.Console.ReadLine();
-
-System.Console.WriteLine("The employee information:");
-System.Console.WriteLine($"Employee number: {e1.Counter}");
-System.Console.WriteLine($"Employee name: {e1.Name}");
-```
 ## Sample output
 
 ```console
@@ -117,8 +47,8 @@ Employee name: Hazem Abolrous
 
 ## See also
 
-- Properties
-- Using Properties
-- Comparison Between Properties and Indexers
-- Indexers
-- Interfaces
+- [Properties](./properties.md)
+- [Using Properties](./using-properties.md)
+- [Comparison Between Properties and Indexers](../indexers/comparison-between-properties-and-indexers.md)
+- [Indexers](../indexers/index.md)
+- [Interfaces](../../fundamentals/types/interfaces.md)

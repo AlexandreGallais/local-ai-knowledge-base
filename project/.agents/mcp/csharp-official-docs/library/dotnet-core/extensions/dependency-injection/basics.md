@@ -1,114 +1,65 @@
 ---
-title: "Dependency injection basics quickstart"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/dependency-injection/basics.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Dependency injection basics quickstart
+description: Learn how to use dependency injection (DI) in your .NET apps with this simple example. Follow along with this pragmatic guide to understand DI basics in C#.
+ms.date: 01/22/2025
+no-loc: [Transient, Scoped, Singleton, Example]
+ms.topic: quickstart
 ---
 
 # Quickstart: Dependency injection basics in .NET
 
-In this quickstart, you create a .NET console app that manually creates a `Microsoft.Extensions.DependencyInjection.ServiceCollection` and corresponding `Microsoft.Extensions.DependencyInjection.ServiceProvider`. You learn how to register services and resolve them by using dependency injection (DI). This article uses the Microsoft.Extensions.DependencyInjection NuGet package to demonstrate the basics of DI in .NET.
+In this quickstart, you create a .NET console app that manually creates a <xref:Microsoft.Extensions.DependencyInjection.ServiceCollection> and corresponding <xref:Microsoft.Extensions.DependencyInjection.ServiceProvider>. You learn how to register services and resolve them by using dependency injection (DI). This article uses the [Microsoft.Extensions.DependencyInjection](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection) NuGet package to demonstrate the basics of DI in .NET.
 
-> **Note:**
-> This article doesn't take advantage of the Generic host features. For a more comprehensive guide, see Use dependency injection in .NET.
+> [!NOTE]
+> This article doesn't take advantage of the [Generic host](../generic-host.md) features. For a more comprehensive guide, see [Use dependency injection in .NET](usage.md).
 
 ## Get started
 
-To get started, create a new .NET console application named **DI.Basics**. In Visual Studio, choose **File > New > Project**, or using the .NET CLI, enter `dotnet new console`.
+To get started, create a new .NET console application named **DI.Basics**. In Visual Studio, choose **File > New > Project**, or using the [.NET CLI](../../tools/dotnet-new-sdk-templates.md#console), enter `dotnet new console`.
 
-Next, add a package reference to the Microsoft.Extensions.DependencyInjection in the project file. After you add the package, ensure the project resembles the following XML of the _DI.Basics.csproj_ file:
+Next, add a package reference to the [Microsoft.Extensions.DependencyInjection](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection) in the project file. After you add the package, ensure the project resembles the following XML of the _DI.Basics.csproj_ file:
 
-```xml
-<Project Sdk="Microsoft.NET.Sdk">
+:::code language="XML" source="snippets/basics/di-basics.csproj":::
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.13" />
-  </ItemGroup>
-
-</Project>
-```
 ## Dependency injection basics
 
-Dependency injection is a design pattern that you can use to remove hard-coded dependencies and make your application more maintainable and testable. DI is a technique for achieving Inversion of Control (IoC) between classes and their dependencies.
+Dependency injection is a design pattern that you can use to remove hard-coded dependencies and make your application more maintainable and testable. DI is a technique for achieving [Inversion of Control (IoC)](../../../architecture/modern-web-apps-azure/architectural-principles.md#dependency-inversion) between classes and their dependencies.
 
-The Microsoft.Extensions.DependencyInjection.Abstractions NuGet package defines the abstractions for DI in .NET:
+The [Microsoft.Extensions.DependencyInjection.Abstractions](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection.Abstractions) NuGet package defines the abstractions for DI in .NET:
 
-- `Microsoft.Extensions.DependencyInjection.IServiceCollection`: Defines a contract for a collection of service descriptors.
-- `System.IServiceProvider`: Defines a mechanism for retrieving a service object.
-- `Microsoft.Extensions.DependencyInjection.ServiceDescriptor`: Describes a service with its service type, implementation, and lifetime.
+- <xref:Microsoft.Extensions.DependencyInjection.IServiceCollection>: Defines a contract for a collection of service descriptors.
+- <xref:System.IServiceProvider>: Defines a mechanism for retrieving a service object.
+- <xref:Microsoft.Extensions.DependencyInjection.ServiceDescriptor>: Describes a service with its service type, implementation, and lifetime.
 
-In .NET, you manage DI by adding services and configuring them in an `IServiceCollection`. After you register services, call the `Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider*` method to build an `IServiceProvider` instance. The `IServiceProvider` acts as a container for all the registered services, and you use it to resolve services.
+In .NET, you manage DI by adding services and configuring them in an `IServiceCollection`. After you register services, call the <xref:Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider*> method to build an `IServiceProvider` instance. The `IServiceProvider` acts as a container for all the registered services, and you use it to resolve services.
 
 ## Create example services
 
-Not all services are created equally. Some services require a new instance each time that the service container gets them (_transient_), while others should be shared across requests (_scoped_) or for the entire lifetime of the app (_singleton_). For more information on service lifetimes, see Service lifetimes.
+Not all services are created equally. Some services require a new instance each time that the service container gets them (_transient_), while others should be shared across requests (_scoped_) or for the entire lifetime of the app (_singleton_). For more information on service lifetimes, see [Service lifetimes](service-lifetimes.md).
 
 Likewise, some services only expose a concrete type, while others are expressed as a contract between an interface and an implementation type. You create several variations of services to help demonstrate these concepts.
 
 Create a new C# file named _IConsole.cs_ and add the following code:
 
-```csharp
-﻿public interface IConsole
-{
-    void WriteLine(string message);
-}
-```
+:::code source="snippets/basics/IConsole.cs":::
+
 This file defines an `IConsole` interface that exposes a single method, `WriteLine`. Next, create a new C# file named _DefaultConsole.cs_ and add the following code:
 
-```csharp
-﻿internal sealed class DefaultConsole : IConsole
-{
-    public bool IsEnabled { get; set; } = true;
+:::code source="snippets/basics/DefaultConsole.cs":::
 
-    void IConsole.WriteLine(string message)
-    {
-        if (IsEnabled is false)
-        {
-            return;
-        }
-
-        Console.WriteLine(message);
-    }
-}
-```
 The preceding code represents the default implementation of the `IConsole` interface. The `WriteLine` method conditionally writes to the console based on the `IsEnabled` property.
 
-> **Tip:**
+> [!TIP]
 > The naming of an implementation is a choice that your dev team should agree on. The `Default` prefix is a common convention to indicate a _default_ implementation of an interface, but it's _not_ required.
 
 Next, create an _IGreetingService.cs_ file and add the following C# code:
 
-```csharp
-﻿public interface IGreetingService
-{
-    string Greet(string name);
-}
-```
+:::code source="snippets/basics/IGreetingService.cs":::
+
 Then add a new C# file named _DefaultGreetingService.cs_ and add the following code:
 
-```csharp
-﻿internal sealed class DefaultGreetingService(
-    IConsole console) : IGreetingService
-{
-    public string Greet(string name)
-    {
-        var greeting = $"Hello, {name}!";
+:::code source="snippets/basics/DefaultGreetingService.cs":::
 
-        console.WriteLine(greeting);
-
-        return greeting;
-    }
-}
-```
 The preceding code represents the default implementation of the `IGreetingService` interface. The service implementation requires an `IConsole` as a primary constructor parameter. The `Greet` method:
 
 - Creates a `greeting` given the `name`.
@@ -119,51 +70,16 @@ The `DefaultGreetingService` class demonstrates that you can `seal` service impl
 
 The last service to create is the _FarewellService.cs_ file. Add the following C# code before continuing:
 
-```csharp
-﻿public class FarewellService(IConsole console)
-{
-    public string SayGoodbye(string name)
-    {
-        var farewell = $"Goodbye, {name}!";
+:::code source="snippets/basics/FarewellService.cs":::
 
-        console.WriteLine(farewell);
-
-        return farewell;
-    }
-}
-```
 The `FarewellService` represents a concrete type, not an interface. You should declare it as `public` to make it accessible to consumers. Unlike other service implementation types that you declare as `internal` and `sealed`, this code demonstrates that not all services need to be interfaces.
 
 ## Update the `Program` class
 
 Open the _Program.cs_ file and replace the existing code with the following C# code:
 
-```csharp
-﻿using Microsoft.Extensions.DependencyInjection;
+:::code source="snippets/basics/Program.cs":::
 
-// 1. Create the service collection.
-var services = new ServiceCollection();
-
-// 2. Register (add and configure) the services.
-services.AddSingleton<IConsole>(
-    implementationFactory: static _ => new DefaultConsole
-    {
-        IsEnabled = true
-    });
-services.AddSingleton<IGreetingService, DefaultGreetingService>();
-services.AddSingleton<FarewellService>();
-
-// 3. Build the service provider from the service collection.
-var serviceProvider = services.BuildServiceProvider();
-
-// 4. Resolve the services that you need.
-var greetingService = serviceProvider.GetRequiredService<IGreetingService>();
-var farewellService = serviceProvider.GetRequiredService<FarewellService>();
-
-// 5. Use the services
-var greeting = greetingService.Greet("David");
-var farewell = farewellService.SayGoodbye("David");
-```
 The preceding code demonstrates how to:
 
 - Create a new `ServiceCollection` instance.
@@ -179,12 +95,12 @@ If you update the `IsEnabled` property of the `DefaultConsole` to `false`, the `
 
 All of these services are registered as singletons. For this sample, it works identically if you register them as _transient_ or _scoped_ services.
 
-> **Important:**
+> [!IMPORTANT]
 > In this contrived example, the service lifetimes don't matter. In a real-world application, carefully consider the lifetime of each service.
 
 ## Run the sample app
 
-To run the sample app, either press `F5` in Visual Studio or Visual Studio Code, or run the `dotnet run` command in the terminal. When the app completes, you see the following output:
+To run the sample app, either press <kbd>F5</kbd> in Visual Studio or Visual Studio Code, or run the `dotnet run` command in the terminal. When the app completes, you see the following output:
 
 ```console
 Hello, David!
@@ -199,39 +115,24 @@ The most commonly used APIs for adding services to the `ServiceCollection` are l
 - `AddTransient<TService>`
 - `AddScoped<TService>`
 
-These methods are convenience methods that create a `Microsoft.Extensions.DependencyInjection.ServiceDescriptor` instance and add it to the `ServiceCollection`. The `ServiceDescriptor` is a simple class that describes a service with its service type, implementation type, and lifetime. It can also describe implementation factories and instances.
+These methods are convenience methods that create a <xref:Microsoft.Extensions.DependencyInjection.ServiceDescriptor> instance and add it to the `ServiceCollection`. The `ServiceDescriptor` is a simple class that describes a service with its service type, implementation type, and lifetime. It can also describe implementation factories and instances.
 
 For each service that you registered in the `ServiceCollection`, you could instead call the `Add` method with a `ServiceDescriptor` instance directly. Consider the following examples:
 
-```csharp
-services.Add(ServiceDescriptor.Describe(
-    serviceType: typeof(IConsole),
-    implementationFactory: static _ => new DefaultConsole
-    {
-        IsEnabled = true
-    },
-    lifetime: ServiceLifetime.Singleton));
-```
+:::code source="snippets/basics/Program.ServiceDescriptors.cs" id="console":::
+
 The preceding code is equivalent to how the `IConsole` service was registered in the `ServiceCollection`. The `Add` method adds a `ServiceDescriptor` instance that describes the `IConsole` service. The static method `ServiceDescriptor.Describe` delegates to various `ServiceDescriptor` constructors. Consider the equivalent code for the `IGreetingService` service:
 
-```csharp
-services.Add(ServiceDescriptor.Describe(
-    serviceType: typeof(IGreetingService),
-    implementationType: typeof(DefaultGreetingService),
-    lifetime: ServiceLifetime.Singleton));
-```
+:::code source="snippets/basics/Program.ServiceDescriptors.cs" id="greeting":::
+
 The preceding code describes the `IGreetingService` service with its service type, implementation type, and lifetime. Finally, consider the equivalent code for the `FarewellService` service:
 
-```csharp
-services.Add(ServiceDescriptor.Describe(
-    serviceType: typeof(FarewellService),
-    implementationType: typeof(FarewellService),
-    lifetime: ServiceLifetime.Singleton));
-```
+:::code source="snippets/basics/Program.ServiceDescriptors.cs" id="farewell":::
+
 The preceding code describes the concrete `FarewellService` type as both the service and implementation types. The service is registered as a singleton service.
 
 ## See also
 
-- .NET dependency injection
-- Dependency injection guidelines
-- Dependency injection in ASP.NET Core
+- [.NET dependency injection](overview.md)
+- [Dependency injection guidelines](guidelines.md)
+- [Dependency injection in ASP.NET Core](/aspnet/core/fundamentals/dependency-injection)

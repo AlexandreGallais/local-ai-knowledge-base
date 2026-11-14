@@ -1,22 +1,15 @@
 ---
-title: "Script Tag Helper in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/mvc/views/tag-helpers/built-in/script-tag-helper.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Script Tag Helper in ASP.NET Core
+description: Discover the ASP.NET Core Script Tag Helper attributes and the role each attribute plays in extending behavior of the HTML Script tag.
+ms.date: 9/12/2024
 ---
-
 # Script Tag Helper in ASP.NET Core
 
-By Rick Anderson
+By [Rick Anderson](https://twitter.com/RickAndMSFT)
 
-The Script Tag Helper generates a link to a primary or fall back script file. Typically the primary script file is on a Content Delivery Network (CDN).
+The [Script Tag Helper](xref:Microsoft.AspNetCore.Mvc.TagHelpers.ScriptTagHelper) generates a link to a primary or fall back script file. Typically the primary script file is on a [Content Delivery Network](/office365/enterprise/content-delivery-networks#what-exactly-is-a-cdn) (CDN).
 
-A CDN:
-
-* Provides several performance advantages vs hosting the asset with the web app.
-* Should not be relied on as the only source for the asset. CDNs are not always available, therefore a reliable fallback should be used. Typically the fallback is the site hosting the web app.
+[!INCLUDE[](~/includes/cdn.md)]
 
 The Script Tag Helper allows you to specify a CDN for the script file and a fallback when the CDN is not available. The Script Tag Helper provides the performance advantage of a CDN with the robustness of local hosting.
 
@@ -31,11 +24,11 @@ The following Razor markup shows a `script` element with a fallback:
 </script>
 ```
 
-Don't use the `<script>` element's defer attribute to defer loading the CDN script. The Script Tag Helper renders JavaScript that immediately executes the asp-fallback-test expression. The expression fails if loading the CDN script is deferred.
+Don't use the `<script>` element's [defer](https://developer.mozilla.org/docs/Web/HTML/Element/script) attribute to defer loading the CDN script. The Script Tag Helper renders JavaScript that immediately executes the [asp-fallback-test](#asp-fallback-test) expression. The expression fails if loading the CDN script is deferred.
 
 ## Commonly used Script Tag Helper attributes
 
-See Script Tag Helper for all the Script Tag Helper attributes, properties, and methods.
+See [Script Tag Helper](xref:Microsoft.AspNetCore.Mvc.TagHelpers.ScriptTagHelper) for all the Script Tag Helper attributes, properties, and methods.
 
 ### src
 
@@ -43,9 +36,9 @@ Address of the external script to use.
 
 ### asp-append-version
 
-When `asp-append-version` is specified with a `true` value along with a `src` attribute, a unique version is generated.
+When `asp-append-version` is specified with a `true` value along with a [`src`](https://github.com/dotnet/aspnetcore/blob/main/src/Mvc/Mvc.TagHelpers/src/ScriptTagHelper.cs#L116) attribute, a unique version is generated.
 
-For a Tag Helper to generate a version for a static file outside `wwwroot`, see Serve files from multiple locations
+[!INCLUDE[](~/includes/th_version.md)]
 
 ### asp-fallback-src
 
@@ -61,7 +54,7 @@ A comma-separated list of globbed file patterns of JavaScript scripts to fallbac
 
 ### asp-fallback-test
 
-The script method defined in the primary script to use for the fallback test. For more information, see `Microsoft.AspNetCore.Mvc.TagHelpers.ScriptTagHelper.FallbackTestExpression`.
+The script method defined in the primary script to use for the fallback test. For more information, see <xref:Microsoft.AspNetCore.Mvc.TagHelpers.ScriptTagHelper.FallbackTestExpression>.
 
 ### asp-order
 
@@ -81,7 +74,7 @@ Boolean value that determines if an integrity hash will be compared with the asp
 
 ## Related content
 
-* Tag Helpers in ASP.NET Core
-* Areas in ASP.NET Core
-* Razor Pages architecture and concepts in ASP.NET Core
-* Compatibility version for ASP.NET Core MVC
+* [Tag Helpers in ASP.NET Core](../intro.md)
+* [Areas in ASP.NET Core](../../../controllers/areas.md)
+* [Razor Pages architecture and concepts in ASP.NET Core](../../../../razor-pages/index.md)
+* [Compatibility version for ASP.NET Core MVC](../../../compatibility-version.md)

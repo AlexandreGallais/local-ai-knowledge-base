@@ -1,15 +1,15 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/no-useless-backreference"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/no-useless-backreference.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "disallow useless backreferences in regular expressions"
+since: "v0.1.0"
 ---
-
 # regexp/no-useless-backreference
 
 💼 This rule is enabled in the following configs: 🟢 `flat/recommended`, 🔵 `recommended`.
+
+<!-- end auto-generated rule header -->
 
 > disallow useless backreferences in regular expressions
 
@@ -49,11 +49,11 @@ If the referenced capturing group of a backreference is inside a negated lookaro
 
 To understand why this is the case, let's look at the example `/(?!(a))\w\1/y`.
 
-1. Let's assume the input string is `ab`.
+1. Let's assume the input string is `ab`. <br>
    Since `(a)` accepts the character `a`, `(?!(a))` will reject. So the input is rejected before the backreference `\1` can be reached.
 
    The result of `/(?!(a))\w\1/y.exec("ab")` is `null`.
-2. Let's assume the input string is `bc`.
+2. Let's assume the input string is `bc`. <br>
    Since `(a)` rejects the character `b`, its captured text will be undefined and `(?!(a))` will accept. Then `\w` will accept and consume the character `b`. Since the captured text of `(a)` is undefined, the backreference `\1` will trivially accept without consuming characters.
 
    The result of `/(?!(a))\w\1/y.exec("bc")` is `[ 'b', undefined, index: 0, input: 'bc' ]`.
@@ -90,11 +90,13 @@ Nothing.
 
 - [no-useless-backreference]
 
+[no-useless-backreference]: https://eslint.org/docs/rules/no-useless-backreference
+
 ## :rocket: Version
 
 This rule was introduced in eslint-plugin-regexp v0.1.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/no-useless-backreference.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/no-useless-backreference.ts)

@@ -1,17 +1,9 @@
----
-title: "Forms with Angular Signals"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/forms/signals/overview.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
-# Forms with Angular Signals
+<docs-decorative-header title="Forms with Angular Signals" imgSrc="adev/src/assets/images/signals.svg"> <!-- markdownlint-disable-line -->
+</docs-decorative-header>
 
 Signal Forms is a library that allows you to manage form state in Angular applications by building on the reactive foundation of signals. With automatic two-way binding, type-safe field access, and schema-based validation, Signal Forms help you create robust forms.
 
-TIP: For a quick introduction to Signal Forms, see the Signal Forms essentials guide.
+TIP: For a quick introduction to Signal Forms, see the [Signal Forms essentials guide](essentials/signal-forms).
 
 ## Why Signal Forms?
 
@@ -25,7 +17,7 @@ Signal Forms address these challenges by:
 
 Signal Forms work best in new applications built with signals. If you're working with an existing application that uses reactive forms, reactive forms remain a solid choice.
 
-NOTE: If you're coming from template or reactive forms, you may be interested in the comparison guide.
+NOTE: If you're coming from template or reactive forms, you may be interested in the [comparison guide](guide/forms/signals/comparison).
 
 ## Prerequisites
 
@@ -54,10 +46,12 @@ The `FormField` directive must be imported into any component that binds form fi
 
 To learn more about how Signal Forms work, check out the following guides:
 
-  - Signal forms essentials
-  - Form models
-  - Designing your form model
-  - Field state management
-  - Validation
-  - Custom controls
-  - Comparison with other form systems
+<docs-pill-row>
+  <docs-pill href="essentials/signal-forms" title="Signal forms essentials" />
+  <docs-pill href="guide/forms/signals/models" title="Form models" />
+  <docs-pill href="guide/forms/signals/model-design" title="Designing your form model" />
+  <docs-pill href="guide/forms/signals/field-state-management" title="Field state management" />
+  <docs-pill href="guide/forms/signals/validation" title="Validation" />
+  <docs-pill href="guide/forms/signals/custom-controls" title="Custom controls" />
+  <docs-pill href="guide/forms/signals/comparison" title="Comparison with other form systems" />
+</docs-pill-row>

@@ -1,18 +1,9 @@
----
-title: "inkex.elements._parser"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/elements/_parser.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.elements._parser
 
 Utilities for parsing SVG documents.
 
-> *Added in version 1.2.*
-> Separated out from `inkex.elements._base`
+.. versionadded:: 1.2
+    Separated out from :py:mod:`inkex.elements._base`
 
 ## class NodeBasedLookup
 
@@ -39,7 +30,7 @@ def find_class(cls, xpath)
 
 Find the class for this type of element defined by an xpath
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## load_svg
 

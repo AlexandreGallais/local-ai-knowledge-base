@@ -1,16 +1,15 @@
 ---
 title: "Breaking change: .NET tool packaging might create RuntimeIdentifier-specific tool packages"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/dotnet-tool-pack-publish.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in the .NET 10 SDK where .NET tool packaging might use RuntimeIdentifiers to create platform-specific tools"
+ms.date: 08/11/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/47916
 ---
 
 # .NET tool packaging creates RuntimeIdentifier-specific tool packages
 
 The .NET tool packaging process has changed when `RuntimeIdentifiers` are present in the project.
-Since the SDK now supports creating platform-specific tools, `RuntimeIdentifiers` are used to determine the set of platforms for which to create tool packages.
+Since the SDK now supports creating [platform-specific tools](https://github.com/dotnet/core/blob/main/release-notes/10.0/preview/preview6/sdk.md#platform-specific-net-tools), `RuntimeIdentifiers` are used to determine the set of platforms for which to create tool packages.
 
 ## Version introduced
 
@@ -26,7 +25,7 @@ Starting in .NET 10, `RuntimeIdentifiers` are used to determine the set of platf
 
 ## Type of breaking change
 
-This is a behavioral change.
+This is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

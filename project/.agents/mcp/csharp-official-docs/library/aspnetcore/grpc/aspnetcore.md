@@ -1,39 +1,38 @@
 ---
-title: "gRPC services with ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/grpc/aspnetcore.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: gRPC services with ASP.NET Core
+ai-usage: ai-assisted
+description: Learn the basic concepts when writing gRPC services with ASP.NET Core.
+monikerRange: '>= aspnetcore-3.0'
+ms.date: 09/21/2023
 ---
-
 # gRPC services with ASP.NET Core
 
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+:::moniker range=">= aspnetcore-8.0"
 This document shows how to get started with gRPC services using ASP.NET Core.
 
-# Visual Studio
+## Prerequisites
 
-* Visual Studio 2022 with the **ASP.NET and web development** workload.
+# [Visual Studio](#tab/visual-studio)
 
-# Visual Studio Code
+[!INCLUDE[](~/includes/net-prereqs-vs-8.0.md)]
 
-* Visual Studio Code
-* C# for Visual Studio Code (latest version)
-* .NET 8 SDK
+# [Visual Studio Code](#tab/visual-studio-code)
 
-The Visual Studio Code instructions use the .NET CLI for ASP.NET Core development functions such as project creation. You can follow these instructions on macOS, Linux, or Windows and with any code editor. Minor changes may be required if you use something other than Visual Studio Code.
+[!INCLUDE[](~/includes/net-prereqs-vsc-8.0.md)]
 
 ---
 
 ## Get started with gRPC service in ASP.NET Core
 
-View or download sample code (how to download).
+[View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/tutorials/grpc/grpc-start/samples) ([how to download](../fundamentals/index.md#how-to-download-a-sample)).
 
-# Visual Studio
+# [Visual Studio](#tab/visual-studio)
 
-See Get started with gRPC services for detailed instructions on how to create a gRPC project.
+See [Get started with gRPC services](../tutorials/grpc/grpc-start.md) for detailed instructions on how to create a gRPC project.
 
-# Visual Studio Code
+# [Visual Studio Code](#tab/visual-studio-code)
 
 Run `dotnet new grpc -o GrpcGreeter` from the command line.
 
@@ -41,7 +40,7 @@ Run `dotnet new grpc -o GrpcGreeter` from the command line.
 
 ## Add gRPC services to an ASP.NET Core app
 
-gRPC requires the Grpc.AspNetCore package.
+gRPC requires the [Grpc.AspNetCore](https://www.nuget.org/packages/Grpc.AspNetCore) package.
 
 ### Configure gRPC
 
@@ -50,25 +49,7 @@ In `Program.cs`:
 * gRPC is enabled with the `AddGrpc` method.
 * Each gRPC service is added to the routing pipeline through the `MapGrpcService` method.
 
-```csharp
-using GrpcGreeter.Services;
-
-var builder = WebApplication.CreateBuilder(args);
-
-// Additional configuration is required to successfully run gRPC on macOS.
-// For instructions on how to configure Kestrel and gRPC clients on macOS, visit https://go.microsoft.com/fwlink/?linkid=2099682
-
-// Add services to the container.
-builder.Services.AddGrpc();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-app.MapGrpcService<GreeterService>();
-app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
-
-app.Run();
-```
+[!code-csharp[](~/tutorials/grpc/grpc-start/samples/6/GrpcGreeter/Program.cs?highlight=9,14)]
 
 ASP.NET Core middleware and features share the routing pipeline, therefore an app can be configured to serve additional request handlers. The additional request handlers, such as MVC controllers, work in parallel with the configured gRPC services.
 
@@ -76,6 +57,7 @@ ASP.NET Core middleware and features share the routing pipeline, therefore an ap
 
 gRPC services can be hosted by all built-in ASP.NET Core servers.
 
+> [!div class="checklist"]
 >
 > * Kestrel
 > * TestServer
@@ -84,22 +66,22 @@ gRPC services can be hosted by all built-in ASP.NET Core servers.
 
 &dagger;Requires .NET 5 and Windows 11 Build 22000 or Windows Server 2022 Build 20348 or later.
 
-For more information about choosing the right server for an ASP.NET Core app, see Web server implementations in ASP.NET Core.
+For more information about choosing the right server for an ASP.NET Core app, see [Web server implementations in ASP.NET Core](../fundamentals/servers/index.md).
 
 ## Kestrel
 
-Kestrel is a cross-platform web server for ASP.NET Core. Kestrel focuses on high performance and memory utilization, but it doesn't have some of the advanced features in HTTP.sys such as port sharing.
+[Kestrel](../fundamentals/servers/kestrel.md) is a cross-platform web server for ASP.NET Core. Kestrel focuses on high performance and memory utilization, but it doesn't have some of the advanced features in HTTP.sys such as port sharing.
 
 Kestrel gRPC endpoints:
 
 * Require HTTP/2.
-* Should be secured with Transport Layer Security (TLS).
+* Should be secured with [Transport Layer Security (TLS)](https://tools.ietf.org/html/rfc5246).
 
 ### HTTP/2
 
-gRPC requires HTTP/2. gRPC for ASP.NET Core validates HttpRequest.Protocol is `HTTP/2`.
+gRPC requires HTTP/2. gRPC for ASP.NET Core validates [HttpRequest.Protocol](xref:Microsoft.AspNetCore.Http.HttpRequest.Protocol) is `HTTP/2`.
 
-Kestrel supports HTTP/2 on most modern operating systems. Kestrel endpoints are configured to support HTTP/1.1 and HTTP/2 connections by default.
+Kestrel [supports HTTP/2](../fundamentals/servers/kestrel/http2.md) on most modern operating systems. Kestrel endpoints are configured to support HTTP/1.1 and HTTP/2 connections by default.
 
 ### TLS
 
@@ -107,95 +89,48 @@ Kestrel endpoints used for gRPC should be secured with TLS. In development, an e
 
 In production, TLS must be explicitly configured. In the following `appsettings.json` example, an HTTP/2 endpoint secured with TLS is provided:
 
-```json
-{
-  "Kestrel": {
-    "Endpoints": {
-      "HttpsInlineCertFile": {
-        "Url": "https://localhost:5001",
-        "Protocols": "Http2",
-        "Certificate": {
-          "Path": "<path to .pfx file>",
-          "Password": "<example-value>"
-        }
-      }
-    }
-  }
-}
-```
+[!code-json[](~/grpc/aspnetcore/samples/appsettings.json?highlight=4)]
 
 Alternatively, Kestrel endpoints can be configured in `Program.cs`:
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
+[!code-csharp[](~/grpc/aspnetcore/samples/6/Program.cs?highlight=5&name=snippet)]
 
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.Listen(IPAddress.Any, 5001, listenOptions =>
-    {
-        listenOptions.Protocols = HttpProtocols.Http2;
-        listenOptions.UseHttps("<path to .pfx file>",
-            "<example-value>");
-    });
-});
-```
-
-For more information on enabling TLS with Kestrel, see Kestrel HTTPS endpoint configuration.
+For more information on enabling TLS with Kestrel, see [Kestrel HTTPS endpoint configuration](../fundamentals/servers/kestrel/endpoints.md#listenoptionsusehttps).
 
 ### Protocol negotiation
 
-TLS is used for more than securing communication. The TLS Application-Layer Protocol Negotiation (ALPN) handshake is used to negotiate the connection protocol between the client and the server when an endpoint supports multiple protocols. This negotiation determines whether the connection uses HTTP/1.1 or HTTP/2.
+TLS is used for more than securing communication. The TLS [Application-Layer Protocol Negotiation (ALPN)](https://tools.ietf.org/html/rfc7301#section-3) handshake is used to negotiate the connection protocol between the client and the server when an endpoint supports multiple protocols. This negotiation determines whether the connection uses HTTP/1.1 or HTTP/2.
 
-If an HTTP/2 endpoint is configured without TLS, the endpoint's ListenOptions.Protocols must be set to `HttpProtocols.Http2`. An endpoint with multiple protocols, such as `HttpProtocols.Http1AndHttp2` for example, can't be used without TLS because there's no negotiation. All connections to the unsecured endpoint default to HTTP/1.1, and gRPC calls fail.
+If an HTTP/2 endpoint is configured without TLS, the endpoint's [ListenOptions.Protocols](../fundamentals/servers/kestrel/endpoints.md#listenoptionsprotocols) must be set to `HttpProtocols.Http2`. An endpoint with multiple protocols, such as `HttpProtocols.Http1AndHttp2` for example, can't be used without TLS because there's no negotiation. All connections to the unsecured endpoint default to HTTP/1.1, and gRPC calls fail.
 
-For more information on enabling HTTP/2 and TLS with Kestrel, see Kestrel endpoint configuration.
+For more information on enabling HTTP/2 and TLS with Kestrel, see [Kestrel endpoint configuration](../fundamentals/servers/kestrel/endpoints.md).
 
-> **Note:**
-> macOS doesn't support ASP.NET Core gRPC with TLS before .NET 8. Additional configuration is required to successfully run gRPC services on macOS when using .NET 7 or earlier. For more information, see Unable to start ASP.NET Core gRPC app on macOS.
+> [!NOTE]
+> macOS doesn't support ASP.NET Core gRPC with TLS before .NET 8. Additional configuration is required to successfully run gRPC services on macOS when using .NET 7 or earlier. For more information, see [Unable to start ASP.NET Core gRPC app on macOS](troubleshoot.md#unable-to-start-aspnet-core-grpc-app-on-macos).
 
 ## IIS
 
-Internet Information Services (IIS) is a flexible, secure and manageable Web Server for hosting web apps, including ASP.NET Core. .NET 5 and Windows 11 Build 22000 or Windows Server 2022 Build 20348 or later are required to host gRPC services with IIS.
+[Internet Information Services (IIS)](../host-and-deploy/iis/index.md) is a flexible, secure and manageable Web Server for hosting web apps, including ASP.NET Core. .NET 5 and Windows 11 Build 22000 or Windows Server 2022 Build 20348 or later are required to host gRPC services with IIS.
 
-IIS must be configured to use TLS and HTTP/2. For more information, see Use ASP.NET Core with HTTP/2 on IIS.
+IIS must be configured to use TLS and HTTP/2. For more information, see [Use ASP.NET Core with HTTP/2 on IIS](../host-and-deploy/iis/protocols.md).
 
 ## HTTP.sys
 
-HTTP.sys is a web server for ASP.NET Core that only runs on Windows. .NET 5 and Windows 11 Build 22000 or Windows Server 2022 Build 20348 or later are required to host gRPC services with HTTP.sys.
+[HTTP.sys](../fundamentals/servers/httpsys.md) is a web server for ASP.NET Core that only runs on Windows. .NET 5 and Windows 11 Build 22000 or Windows Server 2022 Build 20348 or later are required to host gRPC services with HTTP.sys.
 
-HTTP.sys must be configured to use TLS and HTTP/2. For more information, see  HTTP.sys web server HTTP/2 support.
+HTTP.sys must be configured to use TLS and HTTP/2. For more information, see  [HTTP.sys web server HTTP/2 support](../fundamentals/servers/httpsys.md#http2-support).
 
 ## Host gRPC in non-ASP.NET Core projects
 
 An ASP.NET Core gRPC server is typically created from the gRPC template. The project file created by the template uses `Microsoft.NET.SDK.Web` as the SDK:
 
-```xml
-<Project Sdk="Microsoft.NET.Sdk.Web">
-
-  <ItemGroup>
-    <PackageReference Include="Grpc.AspNetCore" Version="2.47.0" />
-    <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
-  </ItemGroup>
-
-</Project>
-```
+[!code-xml[](~/grpc/aspnetcore/Server-web.csproj?highlight=1)]
 
 The `Microsoft.NET.SDK.Web` SDK value automatically adds a reference to the ASP.NET Core framework. The reference allows the app to use ASP.NET Core types required to host a server.
 
 You can add a gRPC server to non-ASP.NET Core projects with the following project file settings:
 
-```xml
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <ItemGroup>
-    <PackageReference Include="Grpc.AspNetCore" Version="2.47.0" />
-    <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
-    
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
-
-</Project>
-```
+[!code-xml[](~/grpc/aspnetcore/Server.csproj?highlight=1,7)]
 
 The preceding project file:
 
@@ -204,14 +139,14 @@ The preceding project file:
   * The framework reference allows non-ASP.NET Core apps, such as Windows Services, WPF apps, or WinForms apps to use ASP.NET Core APIs.
   * The app can now use ASP.NET Core APIs to start an ASP.NET Core server.
 * Adds gRPC requirements:
-  * NuGet package reference to `Grpc.AspNetCore`.
+  * NuGet package reference to [`Grpc.AspNetCore`](https://www.nuget.org/packages/Grpc.AspNetCore).
   * `.proto` file.
 
-For more information about using the `Microsoft.AspNetCore.App` framework reference, see Use the ASP.NET Core shared framework.
+For more information about using the `Microsoft.AspNetCore.App` framework reference, see [Use the ASP.NET Core shared framework](../fundamentals/target-aspnetcore.md#use-the-aspnet-core-shared-framework).
 
 ## Integration with ASP.NET Core APIs
 
-gRPC services have full access to the ASP.NET Core features such as dependency injection (DI) and logging. For example, the service implementation can resolve a logger service from the DI container.
+gRPC services have full access to the ASP.NET Core features such as [dependency injection](../fundamentals/dependency-injection.md) (DI) and [logging](../fundamentals/logging/index.md). For example, the service implementation can resolve a logger service from the DI container.
 
 Constructor injection:
 
@@ -242,42 +177,27 @@ By default, the gRPC service implementation can resolve other DI services with a
 
 The gRPC API provides access to some HTTP/2 message data, such as the method, host, header, and trailers. Access is through the `ServerCallContext` argument passed to each gRPC method:
 
-```csharp
-public class GreeterService : Greeter.GreeterBase
-{
-    public override Task<HelloReply> SayHello(
-        HelloRequest request, ServerCallContext context)
-    {
-        return Task.FromResult(new HelloReply
-        {
-            Message = "Hello " + request.Name
-        });
-    }
-}
-```
+[!code-csharp[](~/grpc/aspnetcore/samples/GrcpService/GreeterService.cs?highlight=3-4&name=snippet)]
 
 `ServerCallContext` doesn't provide full access to `HttpContext` in all ASP.NET APIs. The `GetHttpContext` extension method provides full access to the `HttpContext` representing the underlying HTTP/2 message in ASP.NET APIs:
 
-```csharp
-public class GreeterService : Greeter.GreeterBase
-{
-    public override Task<HelloReply> SayHello(
-        HelloRequest request, ServerCallContext context)
-    {
-        var httpContext = context.GetHttpContext();
-        var clientCertificate = httpContext.Connection.ClientCertificate;
-
-        return Task.FromResult(new HelloReply
-        {
-            Message = "Hello " + request.Name + " from " + clientCertificate.Issuer
-        });
-    }
-}
-```
+[!code-csharp[](~/grpc/aspnetcore/samples/GrcpService/GreeterService2.cs?highlight=6-7&name=snippet)]
 
 ## Related content
 
-* Create a .NET gRPC client and server in ASP.NET Core
-* Overview for gRPC on .NET
-* gRPC Services with C#
-* Kestrel web server in ASP.NET Core
+* [Create a .NET gRPC client and server in ASP.NET Core](../tutorials/grpc/grpc-start.md)
+* [Overview for gRPC on .NET](index.md)
+* [gRPC Services with C#](basics.md)
+* [Kestrel web server in ASP.NET Core](../fundamentals/servers/kestrel.md)
+
+:::moniker-end
+
+[!INCLUDE[](~/grpc/aspnetcore/includes/aspnetcore7.md)]
+
+[!INCLUDE[](~/grpc/aspnetcore/includes/aspnetcore6.md)]
+
+[!INCLUDE[](~/grpc/aspnetcore/includes/aspnetcore5.md)]
+
+[!INCLUDE[](~/grpc/aspnetcore/includes/aspnetcore3_1.md)]
+
+[!INCLUDE[](~/grpc/aspnetcore/includes/aspnetcore3.md)]

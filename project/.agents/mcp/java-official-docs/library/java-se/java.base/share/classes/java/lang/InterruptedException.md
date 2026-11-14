@@ -1,12 +1,3 @@
----
-title: "InterruptedException class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/InterruptedException.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # InterruptedException class (java.lang)
 
 ```java
@@ -19,20 +10,19 @@ Occasionally a method may wish to test whether the current
 thread has been interrupted, and if so, to immediately throw
 this exception.  The following code can be used to achieve
 this effect:
+{@snippet lang=java :
+if (Thread.interrupted())  // Clears interrupted status!
+    throw new InterruptedException();
+}
 
-**See also:** java.lang.Object#wait()
-
-**See also:** java.lang.Object#wait(long)
-
-**See also:** java.lang.Object#wait(long, int)
-
-**See also:** java.lang.Thread#sleep(long)
-
-**See also:** java.lang.Thread#interrupt()
-
-**See also:** java.lang.Thread#interrupted()
-
-**Since:** 1.0
+@author  Frank Yellin
+@see     java.lang.Object#wait()
+@see     java.lang.Object#wait(long)
+@see     java.lang.Object#wait(long, int)
+@see     java.lang.Thread#sleep(long)
+@see     java.lang.Thread#interrupt()
+@see     java.lang.Thread#interrupted()
+@since   1.0
 
 ## InterruptedException.InterruptedException()
 
@@ -40,7 +30,7 @@ this effect:
 public InterruptedException()
 ```
 
-Constructs an `InterruptedException` with no detail  message.
+Constructs an {@code InterruptedException} with no detail  message.
 
 ## InterruptedException.InterruptedException(String)
 
@@ -48,9 +38,7 @@ Constructs an `InterruptedException` with no detail  message.
 public InterruptedException(String s)
 ```
 
-Constructs an `InterruptedException` with the
+Constructs an {@code InterruptedException} with the
 specified detail message.
 
-Parameters:
-
-- `s`: the detail message.
+@param   s   the detail message.

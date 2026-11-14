@@ -1,12 +1,16 @@
 ---
 title: "MSTEST0045: Use cooperative cancellation for timeout"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0045.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0045: Use cooperative cancellation for timeout"
+ms.date: 07/24/2025
+f1_keywords:
+- MSTEST0045
+- UseCooperativeCancellationForTimeoutAnalyzer
+helpviewer_keywords:
+- UseCooperativeCancellationForTimeoutAnalyzer
+- MSTEST0045
+author: Evangelink
+ms.author: amauryleve
 ---
-
 # MSTEST0045: Use cooperative cancellation for timeout
 
 | Property                            | Value                                    |
@@ -22,7 +26,7 @@ license: "CC-BY-4.0"
 
 ## Cause
 
-A test method uses `Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute` without setting the `CooperativeCancellation` property to `true`.
+A test method uses <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute> without setting the `CooperativeCancellation` property to `true`.
 
 ## Rule description
 
@@ -31,13 +35,13 @@ There's no way to gracefully abort a running thread. There are two ways for a ti
 - Stop observing the thread running the test. But this can be problematic in many cases and might make the remaining tests unstable due to potential race conditions. This is *non-cooperative cancellation*.
 - Request cancellation once the timeout is reached, and it's the test responsibility to terminate on request. This is *cooperative cancellation*.
 
-When using `Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute`, you should set `CooperativeCancellation` to `true` to enable cooperative cancellation. Without cooperative cancellation, the test framework stops observing the test execution when the timeout is reached, but the test continues running in the background. This can lead to problems for other tests or cleanup steps, as the original test is still executing and might interfere with subsequent operations.
+When using <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute>, you should set `CooperativeCancellation` to `true` to enable cooperative cancellation. Without cooperative cancellation, the test framework stops observing the test execution when the timeout is reached, but the test continues running in the background. This can lead to problems for other tests or cleanup steps, as the original test is still executing and might interfere with subsequent operations.
 
 When using cooperative cancellation mode, MSTest only triggers cancellation of the token and you're responsible for flowing and utilizing the test context token in your test code. This mode aligns with the default behavior of cancellation in .NET.
 
 ## How to fix violations
 
-Use the provided code fixer to automatically set the `CooperativeCancellation` property to `true` on the `Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute`. You can also manually add the property if needed.
+Use the provided code fixer to automatically set the `CooperativeCancellation` property to `true` on the <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TimeoutAttribute>. You can also manually add the property if needed.
 
 ```csharp
 [TestClass]
@@ -54,7 +58,7 @@ public class TestClass1
 }
 ```
 
-Alternatively, you can configure cooperative cancellation globally in your runsettings or testconfig.json file to apply this setting to all timeout attributes in your test project.
+Alternatively, you can configure cooperative cancellation globally in your [runsettings](../unit-testing-mstest-configure.md#mstest-element) or [testconfig.json](../unit-testing-mstest-configure.md#timeout-settings) file to apply this setting to all timeout attributes in your test project.
 
 ## When to suppress warnings
 

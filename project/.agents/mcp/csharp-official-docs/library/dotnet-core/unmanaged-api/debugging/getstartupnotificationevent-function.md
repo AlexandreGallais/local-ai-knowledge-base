@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: GetStartupNotificationEvent Function"
 title: "GetStartupNotificationEvent Function"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/getstartupnotificationevent-function.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/21/2022"
+api_name:
+  - "GetStartupNotificationEvent"
+api_location:
+  - "dbgshim.dll"
+f1_keywords:
+  - "GetStartupNotificationEvent"
+helpviewer_keywords:
+  - "GetStartupNotificationEvent function"
+  - "debugging API [.NET Core]"
+  - ".NET Core, debugging"
+ms.assetid: c94b1b61-045a-4695-bacd-0f18c5acc246
+topic_type:
+  - "apiref"
 ---
-
 # GetStartupNotificationEvent function
 
 Creates or opens an event handle that will be signaled upon by any common language runtime (CLR) that is loading in the specified target process. This API is Windows only.
@@ -47,7 +56,7 @@ HRESULT GetStartupNotificationEvent (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** dbgshim.h
 

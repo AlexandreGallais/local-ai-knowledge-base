@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugStepperEnum Interface"
 title: "ICorDebugStepperEnum Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugstepperenum-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugStepperEnum"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugStepperEnum"
+helpviewer_keywords:
+  - "ICorDebugStepperEnum interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugStepperEnum Interface
 
 Implements ICorDebugEnum methods, and enumerates ICorDebugStepper arrays.
@@ -15,16 +23,16 @@ Implements ICorDebugEnum methods, and enumerates ICorDebugStepper arrays.
 
 |Method|Description|
 |------------|-----------------|
-|Next Method|Gets the specified number of `ICorDebugStepper` instances from the enumeration, starting at the current position.|
+|[Next Method](icordebugstepperenum-next-method.md)|Gets the specified number of `ICorDebugStepper` instances from the enumeration, starting at the current position.|
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

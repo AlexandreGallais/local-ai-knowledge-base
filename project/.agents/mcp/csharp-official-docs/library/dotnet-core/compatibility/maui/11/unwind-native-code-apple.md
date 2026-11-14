@@ -1,10 +1,9 @@
 ---
 title: "Breaking change - UnwindNativeCode isn't supported on Apple targets"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/maui/11/unwind-native-code-apple.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where UnwindNativeCode isn't supported on Apple targets."
+ms.date: 10/21/2026
+ai-usage: ai-generated
+ms.custom: https://github.com/dotnet/docs/issues/56481
 ---
 
 # UnwindNativeCode isn't supported on Apple targets
@@ -27,7 +26,7 @@ Apple workload reports error 0185.
 
 ## Type of breaking change
 
-This change affects source compatibility and is a behavioral change.
+This change affects [source compatibility](../../categories.md#source-compatibility) and is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

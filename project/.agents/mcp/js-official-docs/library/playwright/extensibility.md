@@ -1,12 +1,7 @@
 ---
+id: extensibility
 title: "Extensibility"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/extensibility.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
 ## Custom selector engines
 
 Playwright supports custom selector engines, registered with [`method: Selectors.register`].
@@ -26,7 +21,8 @@ Selectors must be registered before creating the page.
 
 An example of registering selector engine that queries elements based on a tag name:
 
-```js
+
+```js title="baseTest.ts"
 import { test as base } from '@playwright/test';
 
 export { expect } from '@playwright/test';
@@ -54,7 +50,7 @@ export const test = base.extend<{}, { selectorRegistration: void }>({
 });
 ```
 
-```js
+```js title="example.spec.ts"
 import { test, expect } from './baseTest';
 
 test('selector engine test', async ({ page }) => {
@@ -98,7 +94,7 @@ page.locator("tag=div").getByText("Click me").click();
 int buttonCount = (int) page.locator("tag=button").count();
 ```
 
-```python
+```python async
 tag_selector = """
     // Must evaluate to a selector engine instance.
     {
@@ -127,7 +123,7 @@ await page.locator("tag=div").get_by_text("click me").click()
 button_count = await page.locator("tag=button").count()
 ```
 
-```python
+```python sync
 tag_selector = """
     // Must evaluate to a selector engine instance.
     {

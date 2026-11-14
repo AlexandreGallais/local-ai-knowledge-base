@@ -1,22 +1,24 @@
 ---
+description: "Learn more about: Parameter Design"
 title: "Parameter Design"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/parameter-design.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "member design guidelines [.NET Framework], parameters"
+  - "members [.NET Framework], parameters"
+  - "names [.NET Framework], parameters"
+  - "parameters, design guidelines"
+  - "reserved parameters"
+ms.assetid: 3f33bf46-4a7b-43b3-bb78-1ffebe0dcfa6
 ---
-
 # Parameter Design
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
-This section provides broad guidelines on parameter design, including sections with guidelines for checking arguments. In addition, you should refer to the guidelines described in Naming Parameters.
+This section provides broad guidelines on parameter design, including sections with guidelines for checking arguments. In addition, you should refer to the guidelines described in [Naming Parameters](naming-parameters.md).
 
  ✔️ DO use the least derived parameter type that provides the functionality required by the member.
 
- For example, suppose you want to design a method that enumerates a collection and prints each item to the console. Such a method should take `System.Collections.IEnumerable` as the parameter, not `System.Collections.ArrayList` or `System.Collections.IList`, for example.
+ For example, suppose you want to design a method that enumerates a collection and prints each item to the console. Such a method should take <xref:System.Collections.IEnumerable> as the parameter, not <xref:System.Collections.ArrayList> or <xref:System.Collections.IList>, for example.
 
  ❌ DO NOT use reserved parameters.
 
@@ -26,7 +28,7 @@ This section provides broad guidelines on parameter design, including sections w
 
  Pointers and multidimensional arrays are relatively difficult to use properly. In almost all cases, APIs can be redesigned to avoid taking these types as parameters.
 
- ✔️ DO place all `out` parameters following all of the by-value and `ref` parameters (excluding parameter arrays), even if it results in an inconsistency in parameter ordering between overloads (see Member Overloading).
+ ✔️ DO place all `out` parameters following all of the by-value and `ref` parameters (excluding parameter arrays), even if it results in an inconsistency in parameter ordering between overloads (see [Member Overloading](member-overloading.md)).
 
  The `out` parameters can be seen as extra return values, and grouping them together makes the method signature easier to understand.
 
@@ -40,23 +42,23 @@ This section provides broad guidelines on parameter design, including sections w
 
  ❌ DO NOT use Booleans unless you are absolutely sure there will never be a need for more than two values.
 
- Enums give you some room for future addition of values, but you should be aware of all the implications of adding values to enums, which are described in Enum Design.
+ Enums give you some room for future addition of values, but you should be aware of all the implications of adding values to enums, which are described in [Enum Design](enum.md).
 
  ✔️ CONSIDER using Booleans for constructor parameters that are truly two-state values and are simply used to initialize Boolean properties.
 
 ### Validating Arguments
 
- ✔️ DO validate arguments passed to public, protected, or explicitly implemented members. Throw `System.ArgumentException`, or one of its subclasses, if the validation fails.
+ ✔️ DO validate arguments passed to public, protected, or explicitly implemented members. Throw <xref:System.ArgumentException?displayProperty=nameWithType>, or one of its subclasses, if the validation fails.
 
  Note that the actual validation does not necessarily have to happen in the public or protected member itself. It could happen at a lower level in some private or internal routine. The main point is that the entire surface area that is exposed to the end users checks the arguments.
 
- ✔️ DO throw `System.ArgumentNullException` if a null argument is passed and the member does not support null arguments.
+ ✔️ DO throw <xref:System.ArgumentNullException> if a null argument is passed and the member does not support null arguments.
 
  ✔️ DO validate enum parameters.
 
  Do not assume enum arguments will be in the range defined by the enum. The CLR allows casting any integer value into an enum value even if the value is not defined in the enum.
 
- ❌ DO NOT use `System.Enum.IsDefined*` for enum range checks.
+ ❌ DO NOT use <xref:System.Enum.IsDefined*?displayProperty=nameWithType> for enum range checks.
 
  ✔️ DO be aware that mutable arguments might have changed after they were validated.
 
@@ -76,13 +78,13 @@ This section provides broad guidelines on parameter design, including sections w
 
  Using `out` or `ref` parameters requires experience with pointers, understanding how value types and reference types differ, and handling methods with multiple return values. Also, the difference between `out` and `ref` parameters is not widely understood. Framework architects designing for a general audience should not expect users to become proficient in working with `out` or `ref` parameters.
 
- ❌ DO NOT pass <example-value> types by reference.
+ ❌ DO NOT pass reference types by reference.
 
  There are some limited exceptions to the rule, such as a method that can be used to swap references.
 
 ### Members with Variable Number of Parameters
 
- Members that can take a variable number of arguments are expressed by providing an array parameter. For example, `System.String` provides the following method:
+ Members that can take a variable number of arguments are expressed by providing an array parameter. For example, <xref:System.String> provides the following method:
 
 ```csharp
 public class String {
@@ -90,7 +92,7 @@ public class String {
 }
 ```
 
- A user can then call the `System.String.Format*` method, as follows:
+ A user can then call the <xref:System.String.Format*?displayProperty=nameWithType> method, as follows:
 
  `String.Format("File {0} not found in {1}",new object[]{filename,directory});`
 
@@ -108,7 +110,7 @@ public class String {
 
  Note that the params keyword can be added only to the last parameter in the parameter list.
 
- ✔️ CONSIDER adding the params keyword to array parameters if you expect the end users to pass <example-value> with a small number of elements. If it's expected that lots of elements will be passed in common scenarios, users will probably not pass these elements inline anyway, and so the params keyword is not necessary.
+ ✔️ CONSIDER adding the params keyword to array parameters if you expect the end users to pass arrays with a small number of elements. If it's expected that lots of elements will be passed in common scenarios, users will probably not pass these elements inline anyway, and so the params keyword is not necessary.
 
  ❌ AVOID using params arrays if the caller would almost always have the input already in an array.
 
@@ -152,9 +154,9 @@ public class String {
 
  *Portions &copy; 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Member Design Guidelines
-- Framework Design Guidelines
+- [Member Design Guidelines](member.md)
+- [Framework Design Guidelines](index.md)

@@ -1,16 +1,20 @@
 ---
+description: "Learn more about: Struct Design"
 title: "Struct Design"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/struct.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "class library design guidelines [.NET Framework], structures"
+  - "deallocating structures"
+  - "allocating structures"
+  - "value types, structures"
+  - "structure design"
+  - "type design guidelines, structures"
+  - "structures [.NET Framework], design guidelines"
+ms.assetid: 1f48b2d8-608c-4be6-9ba4-d8f203ed9f9f
 ---
-
 # Struct Design
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
 The general-purpose value type is most often referred to as a struct, its C# keyword. This section provides guidelines for general struct design.
 
@@ -26,20 +30,20 @@ The general-purpose value type is most often referred to as a struct, its C# key
 
  This prevents accidental creation of invalid instances when an array of the structs is created.
 
- ✔️ DO implement `System.IEquatable`1` on value types.
+ ✔️ DO implement <xref:System.IEquatable`1> on value types.
 
- The `System.Object.Equals*` method on value types causes boxing, and its default implementation is not very efficient, because it uses reflection. `System.IEquatable`1.Equals*` can have much better performance and can be implemented so that it will not cause boxing.
+ The <xref:System.Object.Equals*?displayProperty=nameWithType> method on value types causes boxing, and its default implementation is not very efficient, because it uses reflection. <xref:System.IEquatable`1.Equals*> can have much better performance and can be implemented so that it will not cause boxing.
 
- ❌ DO NOT explicitly extend `System.ValueType`. In fact, most languages prevent this.
+ ❌ DO NOT explicitly extend <xref:System.ValueType>. In fact, most languages prevent this.
 
  In general, structs can be very useful but should only be used for small, single, immutable values that will not be boxed frequently.
 
  *Portions © 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Type Design Guidelines
-- Framework Design Guidelines
-- Choosing Between Class and Struct
+- [Type Design Guidelines](type.md)
+- [Framework Design Guidelines](index.md)
+- [Choosing Between Class and Struct](choosing-between-class-and-struct.md)

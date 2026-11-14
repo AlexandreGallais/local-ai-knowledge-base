@@ -1,15 +1,16 @@
 ---
 title: "<xmlSerializer> Element"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/serialization/xmlserializer-element.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: The <xmlSerializer> element specifies whether an additional check of progress of the XmlSerializer is done.
+ms.date: "03/30/2017"
+helpviewer_keywords:
+  - "<xmlSerializer> element"
+  - "XML serialization, configuration"
+  - "xmlSerializer element"
+ms.topic: reference
 ---
-
 # `<xmlSerializer>` Element
 
-Specifies whether an additional check of progress of the `System.Xml.Serialization.XmlSerializer` is done.
+Specifies whether an additional check of progress of the <xref:System.Xml.Serialization.XmlSerializer> is done.
 
  `<configuration>`
  `<system.xml.serialization>`
@@ -28,8 +29,8 @@ Specifies whether an additional check of progress of the `System.Xml.Serializati
 
 |Attribute|Description|
 |---------------|-----------------|
-|**checkDeserializeAdvances**|Specifies whether the progress of the `System.Xml.Serialization.XmlSerializer` is checked. Set the attribute to "true" or "false". The default is "true".|
-|**useLegacySerializationGeneration**|Specifies whether the `System.Xml.Serialization.XmlSerializer` uses legacy serialization generation which generates assemblies by writing C# code to a file and then compiling it to an assembly. The default is **false**.|
+|**checkDeserializeAdvances**|Specifies whether the progress of the <xref:System.Xml.Serialization.XmlSerializer> is checked. Set the attribute to "true" or "false". The default is "true".|
+|**useLegacySerializationGeneration**|Specifies whether the <xref:System.Xml.Serialization.XmlSerializer> uses legacy serialization generation which generates assemblies by writing C# code to a file and then compiling it to an assembly. The default is **false**.|
 
 ### Child Elements
 
@@ -39,11 +40,11 @@ Specifies whether an additional check of progress of the `System.Xml.Serializati
 
 |Element|Description|
 |-------------|-----------------|
-|\<system.xml.serialization> Element|Contains configuration settings for the `System.Xml.Serialization.XmlSerializer` and `System.Xml.Serialization.XmlSchemaImporter` classes.|
+|[\<system.xml.serialization> Element](system-xml-serialization-element.md)|Contains configuration settings for the <xref:System.Xml.Serialization.XmlSerializer> and <xref:System.Xml.Serialization.XmlSchemaImporter> classes.|
 
 ## Remarks
 
- By default, the `System.Xml.Serialization.XmlSerializer` provides an additional layer of security against potential denial of service attacks when deserializing untrusted data. It does so by attempting to detect infinite loops during deserialization. If such a condition is detected, an exception is thrown with the following message: "Internal error: deserialization failed to advance over underlying stream."
+ By default, the <xref:System.Xml.Serialization.XmlSerializer> provides an additional layer of security against potential denial of service attacks when deserializing untrusted data. It does so by attempting to detect infinite loops during deserialization. If such a condition is detected, an exception is thrown with the following message: "Internal error: deserialization failed to advance over underlying stream."
 
  Receiving this message does not necessarily indicate that a denial of service attack is in progress. In some rare circumstances, the infinite loop detection mechanism produces a false positive and the exception is thrown for a legitimate incoming message. If you find that in your particular application legitimate messages are being rejected by this extra layer of protection, set **checkDeserializeAdvances** attribute to "false".
 
@@ -61,6 +62,6 @@ Specifies whether an additional check of progress of the `System.Xml.Serializati
 
 ## See also
 
-- `System.Xml.Serialization.XmlSerializer`
-- `<system.xml.serialization>` Element
-- XML and SOAP Serialization
+- <xref:System.Xml.Serialization.XmlSerializer>
+- [`<system.xml.serialization>` Element](system-xml-serialization-element.md)
+- [XML and SOAP Serialization](xml-and-soap-serialization.md)

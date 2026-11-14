@@ -1,18 +1,15 @@
 ---
-title: "no-extra-strict"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-extra-strict.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
----
+title: no-extra-strict
 
-# no-extra-strict
+further_reading:
+- https://es5.github.io/#C
+---
 
 Disallows strict mode directives when already in strict mode.
 
-**Important:**
-This rule was removed in ESLint v1.0.0 and replaced by the strict rule. The `"global"` or `"function"` options in the new rule are similar to the removed rule.
+::: important
+This rule was removed in ESLint v1.0.0 and replaced by the [strict](strict) rule. The `"global"` or `"function"` options in the new rule are similar to the removed rule.
+:::
 
 The `"use strict";` directive applies to the scope in which it appears and all inner scopes contained within that scope. Therefore, using the `"use strict";` directive in one of these inner scopes is unnecessary.
 
@@ -31,7 +28,7 @@ This rule is aimed at preventing unnecessary `"use strict";` directives. As such
 
 Example of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 "use strict";
@@ -41,10 +38,12 @@ Example of **incorrect** code for this rule:
     var foo = true;
 }());
 ```
+
+:::
 
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 "use strict";
@@ -54,7 +53,9 @@ Examples of **correct** code for this rule:
 }());
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 (function () {
@@ -62,3 +63,5 @@ Examples of **correct** code for this rule:
     var foo = true;
 }());
 ```
+
+:::

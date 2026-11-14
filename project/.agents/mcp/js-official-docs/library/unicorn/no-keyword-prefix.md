@@ -1,17 +1,11 @@
----
-title: "no-keyword-prefix"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-keyword-prefix.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-keyword-prefix
 
 📝 Disallow identifiers starting with `new` or `class`.
 
 🚫 Disabled by default.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 `new Foo` and `newFoo` look very similar. Use alternatives that do not look like keyword usage.
 

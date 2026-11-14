@@ -1,12 +1,3 @@
----
-title: "SignalMethod"
-tool: "ngrx-signals"
-version: "22.0"
-source: "https://github.com/ngrx/platform/blob/a4995391ef631f1bd60d539f436a1aa5c23c4fe5/projects/www/src/app/pages/guide/signals/signal-method.md"
-commit: "a4995391ef631f1bd60d539f436a1aa5c23c4fe5"
-license: "MIT"
----
-
 # SignalMethod
 
 `signalMethod` is a standalone factory function used for managing side effects with Angular signals. It accepts a callback and returns a processor function that can handle either a static value, a signal, or a computation function. The input type can be specified using a generic type argument:
@@ -32,7 +23,7 @@ export class Numbers {
 
 </ngrx-code-example>
 
-`logDoubledNumber` can be called with a static value of type `number` or a `Signal<number>`.
+`logDoubledNumber` can be called with a static value of type `number` or a `Signal&lt;number&gt;`.
 
 ```ts
 @Component({

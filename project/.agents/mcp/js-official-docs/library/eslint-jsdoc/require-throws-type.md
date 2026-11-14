@@ -1,13 +1,6 @@
----
-title: "require-throws-type"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/require-throws-type.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
-
-# `require-throws-type`
+<a name="user-content-require-throws-type"></a>
+<a name="require-throws-type"></a>
+# <code>require-throws-type</code>
 
 Requires a type on the `@throws` tag.
 
@@ -19,6 +12,8 @@ Requires a type on the `@throws` tag.
 |Settings||
 |Options||
 
+<a name="user-content-require-throws-type-failing-examples"></a>
+<a name="require-throws-type-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -30,6 +25,10 @@ The following patterns are considered problems:
 // Message: @throws should have a type
 ````
 
+
+
+<a name="user-content-require-throws-type-passing-examples"></a>
+<a name="require-throws-type-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -39,3 +38,4 @@ The following patterns are not considered problems:
  * @throws {SomeType}
  */
 ````
+

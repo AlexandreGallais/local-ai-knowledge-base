@@ -1,21 +1,19 @@
 ---
-title: "Configure access to dotnetup-managed .NET"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/usecases/manage-environment.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Configure access to dotnetup-managed .NET
+description: Configure shell profiles, user environment variables, or command forwarding.
+ms.topic: how-to
+ms.date: 08/11/2026
+ai-usage: ai-assisted
 ---
 
 # Configure access to dotnetup-managed .NET
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 Installation and environment configuration are separate operations. Select
 the access mode that fits your workflow. For descriptions of the available
 modes, see
-dotnetup environment configuration.
+[dotnetup environment configuration](../concepts/environment.md).
 
 ## Use command forwarding
 
@@ -60,9 +58,9 @@ dotnetup env set everywhere --shell pwsh
 
 This mode is not available on Linux or macOS.
 
-> **Important:**
+> [!IMPORTANT]
 > Before enabling `everywhere`, review
-> Everywhere mode considerations,
+> [Everywhere mode considerations](../concepts/environment.md#everywhere-mode-considerations),
 > including how the mode interacts with machine-wide installations and
 > framework-dependent applications.
 
@@ -90,5 +88,5 @@ This command removes dotnetup environment wiring. It does not uninstall .NET.
 
 ## See also
 
-- Environment configuration
-- dotnetup env
+- [Environment configuration](../concepts/environment.md)
+- [dotnetup env](../reference/dotnetup-env.md)

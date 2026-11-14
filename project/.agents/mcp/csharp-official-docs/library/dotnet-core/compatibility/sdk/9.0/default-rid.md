@@ -1,15 +1,14 @@
 ---
 title: "Default RID used when targeting .NET Framework"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/9.0/default-rid.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in the .NET 9 SDK where a new default RID is used for apps that target .NET Framework."
+ms.date: 12/5/2024
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/43692
 ---
 
 # Default RID used when targeting .NET Framework
 
-In .NET 8, a change was introduced to use a smaller runtime identifier (RID) graph when targeting `net8.0` and later versions.
+In .NET 8, a change was introduced to [use a smaller runtime identifier (RID) graph](../8.0/rid-graph.md) when targeting `net8.0` and later versions.
 
 However, this broke customers who multi-target .NET and .NET Framework. That's because the restore happens once, but the .NET Framework project tries to use the old RID default and the .NET (Core) project tries to use the new reduced RID graph.
 
@@ -29,7 +28,7 @@ SDK-style projects that target .NET Framework with no RID set default to `win-x8
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
@@ -37,7 +36,7 @@ This change can affect source compatibility.
 
 > Sdks\Microsoft.NET.Sdk\targets\Microsoft.PackageDependencyResolution.targets(266,5): error NETSDK1047: Assets file 'D:\1\s\artifacts\obj\MSBuild\project.assets.json' doesn't have a target for 'net472/win7-x64'. Ensure that restore has run and that you have included 'net472' in the TargetFrameworks for your project. You may also need to include 'win7-x64' in your project's RuntimeIdentifiers. \[MSBuild.csproj::TargetFramework=net472]>
 
-For more information, see dotnet/sdk issue #35575.
+For more information, see [dotnet/sdk issue #35575](https://github.com/dotnet/sdk/issues/35575).
 
 ## Recommended action
 

@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: Host determines RID-specific assets"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/deployment/8.0/rid-asset-list.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in deployment in .NET 8 where the runtime host looks for RID-specific assets via a known list.
+ms.date: 06/07/2023
 ---
-
 # Host determines RID-specific assets
 
-When running an application with runtime identifier (RID) specific assets, the host determines what assets are relevant for the platform on which it's running. This applies to both the application itself and the resolution logic used by `System.Runtime.Loader.AssemblyDependencyResolver`.
+When running an application with [runtime identifier (RID)](../../../rid-catalog.md) specific assets, the host determines what assets are relevant for the platform on which it's running. This applies to both the application itself and the resolution logic used by <xref:System.Runtime.Loader.AssemblyDependencyResolver>.
 
 Previously, the host tried to compute the RID at runtime and then read the RID graph to determine which RID-specific assets matched or were compatible with the computed RID. Now, the default behavior doesn't compute the RID or use the RID graph. Instead, the host relies on a known list of RIDs based on how the runtime itself was built.
 
@@ -57,7 +53,7 @@ For non-portable builds of the host or runtime, the build might also set a non-p
 
 ## Type of breaking change
 
-This change can affect binary compatibility and is also a behavioral change.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility) and is also a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -65,7 +61,7 @@ The RID graph was costly to maintain and understand, requiring .NET itself to be
 
 ## Recommended action
 
-Use portable RIDs, for example, `linux`, `linux-musl`, `osx`, and `win`. For specialized use cases, you can use APIs like `System.Runtime.InteropServices.NativeLibrary.SetDllImportResolver(System.Reflection.Assembly,System.Runtime.InteropServices.DllImportResolver)` or `System.Runtime.Loader.AssemblyLoadContext.ResolvingUnmanagedDll` for custom loading logic.
+Use portable RIDs, for example, `linux`, `linux-musl`, `osx`, and `win`. For specialized use cases, you can use APIs like <xref:System.Runtime.InteropServices.NativeLibrary.SetDllImportResolver(System.Reflection.Assembly,System.Runtime.InteropServices.DllImportResolver)?displayProperty=nameWithType> or <xref:System.Runtime.Loader.AssemblyLoadContext.ResolvingUnmanagedDll?displayProperty=nameWithType> for custom loading logic.
 
 If you need to revert to the previous behavior, set the backwards compatibility switch `System.Runtime.Loader.UseRidGraph` to `true` in your *runtimeconfig.json* file. Setting the switch to `true` instructs the host to use the previous behavior of reading the RID graph. Alternatively, you can set the `UseRidGraph` MSBuild property to `true` in your project file. For example
 
@@ -77,8 +73,8 @@ If you need to revert to the previous behavior, set the backwards compatibility 
 
 ## Affected APIs
 
-- `System.Runtime.Loader.AssemblyDependencyResolver`
+- <xref:System.Runtime.Loader.AssemblyDependencyResolver?displayProperty=fullName>
 
 ## See also
 
-- .NET SDK uses a smaller RID graph
+- [.NET SDK uses a smaller RID graph](../../sdk/8.0/rid-graph.md)

@@ -1,52 +1,44 @@
----
-title: "ResourceBundleProvider interface (java.util.spi)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/spi/ResourceBundleProvider.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ResourceBundleProvider interface (java.util.spi)
 
 ```java
 public interface ResourceBundleProvider
 ```
 
-`ResourceBundleProvider` is a service provider interface for
+{@code ResourceBundleProvider} is a service provider interface for
 resource bundles. It is used by
-ResourceBundle.getBundle
+{@link ResourceBundle#getBundle(String) ResourceBundle.getBundle}
 factory methods to locate and load the service providers that are deployed as
-modules via ServiceLoader.
+modules via {@link java.util.ServiceLoader ServiceLoader}.
 
-#### Developing resource bundle services
+<h2>Developing resource bundle services</h2>
 
-A service for a resource bundle of a given *`baseName`* must have
+A service for a resource bundle of a given <em>{@code baseName}</em> must have
 a fully-qualified class name of the form:
+<blockquote>
+{@code <package of baseName> + ".spi." + <simple name of baseName> + "Provider"}
+</blockquote>
 
-`<package of baseName> + ".spi." + <simple name of baseName> + "Provider"`
-
-The service type is in a `spi` subpackage as it may be packaged in
+The service type is in a {@code spi} subpackage as it may be packaged in
 a module separate from the resource bundle providers.
 For example, the service for a resource bundle named
-`com.example.app.MyResources` must be
-`com.example.app.spi.MyResourcesProvider`:
+{@code com.example.app.MyResources} must be
+{@code com.example.app.spi.MyResourcesProvider}:
 
-```java
-package com.example.app.spi;
+<blockquote><pre>
+{@code package com.example.app.spi;
 public interface MyResourcesProvider extends ResourceBundleProvider {
 }
-```
+}</pre></blockquote>
 
-#### Deploying resource bundle service providers
+<h2>Deploying resource bundle service providers</h2>
 
 Resource bundles can be deployed in one or more service providers
 in modules.  For example, a provider for a service
-named "`com.example.app.spi.MyResourcesProvider`"
+named "{@code com.example.app.spi.MyResourcesProvider}"
 has the following implementation class:
 
-```java
-import com.example.app.spi.MyResourcesProvider;
+<blockquote><pre>
+{@code import com.example.app.spi.MyResourcesProvider;
 class MyResourcesProviderImpl extends AbstractResourceBundleProvider
     implements MyResourcesProvider
 {
@@ -66,66 +58,64 @@ class MyResourcesProviderImpl extends AbstractResourceBundleProvider
         // otherwise return null
         return null;
     }
-}
-```
+}}</pre></blockquote>
 
-This example provides "`com.example.app.MyResources`"
+This example provides "{@code com.example.app.MyResources}"
 resource bundle of the French locale.  Traditionally resource bundles of
 all locales are packaged in the same package as the resource bundle base name.
 When deploying resource bundles in more than one modules and two modules
-containing a package of the same name, *split package*,
+containing a package of the same name, <em>split package</em>,
 is not supported, resource bundles in each module can be packaged in
 a different package as shown in this example where this provider packages
-the resource bundles in per-language package, i.e. `com.example.app.fr`
+the resource bundles in per-language package, i.e. {@code com.example.app.fr}
 for French locale.
 
- A provider can provide more than one services, each of which is a service
+<p> A provider can provide more than one services, each of which is a service
 for a resource bundle of a different base name.
 
-`AbstractResourceBundleProvider`
-provides the basic <example-value> for `ResourceBundleProvider`
-and a subclass can override the Locale) toBundleName
+<p>{@link AbstractResourceBundleProvider}
+provides the basic implementation for {@code ResourceBundleProvider}
+and a subclass can override the {@link
+AbstractResourceBundleProvider#toBundleName(String, Locale) toBundleName}
 method to return a provider-specific location of the resource to be loaded,
 for example, per-language package.
-A provider can override ResourceBundleProvider.getBundle
+A provider can override {@link #getBundle ResourceBundleProvider.getBundle}
 method for example to only search the known supported locales or
 return resource bundles in other formats such as XML.
 
-The module declaration of this provider module specifies the following
+<p>The module declaration of this provider module specifies the following
 directive:
-
-```java
+<pre>
     provides com.example.app.spi.MyResourcesProvider with com.example.impl.MyResourcesProviderImpl;
-```
+</pre>
 
-#### Obtaining resource bundles from providers
+<h2><a id="obtain-resource-bundle">Obtaining resource bundles from providers</a></h2>
 
-The module declaration of the *consumer module* that calls one of the
-`ResourceBundle.getBundle` factory methods to obtain a resource
+The module declaration of the <em>consumer module</em> that calls one of the
+{@code ResourceBundle.getBundle} factory methods to obtain a resource
 bundle from service providers must specify the following directive:
-
-```java
+<pre>
     uses com.example.app.spi.MyResourcesProvider;
-```
+</pre>
 
-Locale) ResourceBundle.getBundle("com.example.app.MyResource", locale)
-locates and loads the providers for `com.example.app.spi.MyResourcesProvider`
-service and then invokes Locale) ResourceBundleProvider.getBundle("com.example.app.MyResource", locale) to
+{@link ResourceBundle#getBundle(String, Locale)
+ResourceBundle.getBundle("com.example.app.MyResource", locale)}
+locates and loads the providers for {@code com.example.app.spi.MyResourcesProvider}
+service and then invokes {@link #getBundle(String, Locale)
+ResourceBundleProvider.getBundle("com.example.app.MyResource", locale)} to
 find the resource bundle of the given base name and locale.
 If the consumer module is a resource bundle service provider for
-`com.example.app.spi.MyResourcesProvider`, `ResourceBundle.getBundle`
+{@code com.example.app.spi.MyResourcesProvider}, {@code ResourceBundle.getBundle}
 will locate resource bundles only from service providers.
-Otherwise, `ResourceBundle.getBundle` may continue the search of
+Otherwise, {@code ResourceBundle.getBundle} may continue the search of
 the resource bundle in other modules and class path per the specification
-of the `ResourceBundle.getBundle` method being called.
+of the {@code ResourceBundle.getBundle} method being called.
 
-**See also:** AbstractResourceBundleProvider
-
-**See also:** Resource Bundles and Named Modules
-
-**See also:** java.util.ServiceLoader
-
-**Since:** 9
+@see AbstractResourceBundleProvider
+@see <a href="../ResourceBundle.html#resource-bundle-modules">
+     Resource Bundles and Named Modules</a>
+@see java.util.ServiceLoader
+@since 9
 
 ## ResourceBundleProvider.getBundle(String, Locale)
 
@@ -133,14 +123,15 @@ of the `ResourceBundle.getBundle` method being called.
 public ResourceBundle getBundle(String baseName, Locale locale)
 ```
 
-Returns a `ResourceBundle` for the given bundle name and locale.
-This method returns `null` if there is no `ResourceBundle`
+Returns a {@code ResourceBundle} for the given bundle name and locale.
+This method returns {@code null} if there is no {@code ResourceBundle}
 found for the given parameters.
 
-Parameters:
 
-- `baseName`: the base bundle name of the resource bundle, a fully qualified class name
-- `locale`: the locale for which the resource bundle should be loaded
-
-**Returns:** the ResourceBundle created for the given parameters, or null if no
-        `ResourceBundle` for the given parameters is found
+@param baseName
+       the base bundle name of the resource bundle, a fully
+       qualified class name
+@param locale
+       the locale for which the resource bundle should be loaded
+@return the ResourceBundle created for the given parameters, or null if no
+        {@code ResourceBundle} for the given parameters is found

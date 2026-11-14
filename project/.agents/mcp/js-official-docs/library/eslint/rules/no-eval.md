@@ -1,13 +1,13 @@
 ---
-title: "no-eval"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-eval.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-eval
+rule_type: suggestion
+related_rules:
+- no-implied-eval
+further_reading:
+- https://ericlippert.com/2003/11/01/eval-is-evil-part-one/
+- https://javascriptweblog.wordpress.com/2010/04/19/how-evil-is-eval/
 ---
 
-# no-eval
 
 JavaScript's `eval()` function is potentially dangerous and is often misused. Using `eval()` on untrusted code can open a program up to several different injection attacks. The use of `eval()` in most contexts can be substituted for a better, alternative approach to a problem.
 
@@ -23,7 +23,7 @@ This rule is aimed at preventing potentially dangerous, unnecessary, and slow co
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint no-eval: "error"*/
@@ -41,9 +41,11 @@ foo("const a = 0");
 this.eval("const a = 0");
 ```
 
+:::
+
 Example of additional **incorrect** code for this rule with `window` global variable:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-eval: "error"*/
@@ -52,9 +54,11 @@ Example of additional **incorrect** code for this rule with `window` global vari
 window.eval("const a = 0");
 ```
 
+:::
+
 Example of additional **incorrect** code for this rule with `global` global variable:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-eval: "error"*/
@@ -63,9 +67,11 @@ Example of additional **incorrect** code for this rule with `global` global vari
 global.eval("const a = 0");
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct { "sourceType": "script" }
 
 ```js
 /*eslint no-eval: "error"*/
@@ -93,11 +99,13 @@ class A {
 }
 ```
 
+:::
+
 ## Options
 
 ### allowIndirect
 
-This rule has an option to allow "indirect eval".
+This rule has an option to allow ["indirect eval"](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#direct_and_indirect_eval).
 Indirect calls to `eval` are less dangerous than direct calls to `eval` because they cannot dynamically change the scope. Because of this, they also will not negatively impact performance to the degree of direct `eval`.
 
 ```js
@@ -108,7 +116,7 @@ Indirect calls to `eval` are less dangerous than direct calls to `eval` because 
 
 Example of **incorrect** code for this rule with the `{"allowIndirect": true}` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-eval: ["error", {"allowIndirect": true} ]*/
@@ -118,9 +126,11 @@ const obj = { x: "foo" },
     value = eval("obj." + key);
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{"allowIndirect": true}` option:
 
-**Correct:**
+::: correct { "sourceType": "script" }
 
 ```js
 /*eslint no-eval: ["error", {"allowIndirect": true} ]*/
@@ -133,7 +143,9 @@ foo("const a = 0");
 this.eval("const a = 0");
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint no-eval: ["error", {"allowIndirect": true} ]*/
@@ -142,7 +154,9 @@ this.eval("const a = 0");
 window.eval("const a = 0");
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /*eslint no-eval: ["error", {"allowIndirect": true} ]*/
@@ -150,6 +164,8 @@ window.eval("const a = 0");
 
 global.eval("const a = 0");
 ```
+
+:::
 
 ## Known Limitations
 

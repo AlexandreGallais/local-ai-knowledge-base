@@ -1,12 +1,3 @@
----
-title: "Testing Signal Forms"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/forms/signals/testing.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Testing Signal Forms
 
 Forms are often critical to applications, and testing gives you confidence they behave correctly as the codebase changes. Signal Forms keeps most of its logic in the schema rather than the template, which means you can test the majority of form behavior without rendering a component.
@@ -17,11 +8,11 @@ This guide walks through how to set up those tests, starting with isolated logic
 
 When you only need to verify validation, disabled state, required state, or error output, test the form directly instead of rendering a component. Isolated tests keep the setup small and let the test focus on the form's behavior.
 
-The key <example-value> is the injector. Signal Forms needs an injection context during form creation. If a test calls `form()` without one, the call throws before the test can assert anything about the form.
+The key requirement is the injector. Signal Forms needs an injection context during form creation. If a test calls `form()` without one, the call throws before the test can assert anything about the form.
 
 The most direct way to satisfy this requirement is to pass an injector explicitly. The following test creates a form with a `required` rule and verifies that the field becomes valid after receiving a value:
 
-```ts
+```ts {header: 'profile-form.spec.ts'}
 import {Injector, signal} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {form, required} from '@angular/forms/signals';
@@ -54,7 +45,7 @@ This pattern works well for most isolated tests because the injector requirement
 
 When the code under test calls `form()` internally, you may not be able to pass the injector directly. In that case, wrap the call in an ambient injection context:
 
-```ts
+```ts {header: 'profile-form.spec.ts'}
 import {signal} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {form, required} from '@angular/forms/signals';
@@ -83,9 +74,9 @@ Once the form exists, test it through field state signals. Common assertions inc
 
 After the injector setup is in place, a good next step is a complete test that exercises a few pieces of form logic together. This kind of test is still isolated, but it looks much closer to a real application form.
 
-For example, this test verifies both a basic <example-value> rule and a conditional required rule that depends on another field:
+For example, this test verifies both a basic required rule and a conditional required rule that depends on another field:
 
-```ts
+```ts {header: 'profile-form.spec.ts'}
 import {Injector, signal} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {form, required} from '@angular/forms/signals';
@@ -150,7 +141,7 @@ When you need to verify behavior that depends on template bindings, user interac
 
 Component-bound tests render the component so you can interact with actual DOM elements. Create the component with `TestBed.createComponent()` and wait for rendering to complete before asserting:
 
-```angular-ts
+```angular-ts {header: 'profile-form.ts'}
 import {Component, signal} from '@angular/core';
 import {form, FormField, required} from '@angular/forms/signals';
 
@@ -167,7 +158,7 @@ export class ProfileForm {
 }
 ```
 
-```ts
+```ts {header: 'profile-form.spec.ts'}
 import {TestBed} from '@angular/core/testing';
 import {describe, expect, it} from 'vitest';
 import {ProfileForm} from './profile-form';
@@ -216,6 +207,8 @@ Most forms only need isolated tests. The form's logic (such as validation, disab
 
 This guide covered testing Signal Forms in isolation and with component templates. Here are related guides that explore other aspects of Signal Forms:
 
-  - Validation
-  - Field state management
-  - Form submission
+<docs-pill-row>
+  <docs-pill href="guide/forms/signals/validation" title="Validation" />
+  <docs-pill href="guide/forms/signals/field-state-management" title="Field state management" />
+  <docs-pill href="guide/forms/signals/form-submission" title="Form submission" />
+</docs-pill-row>

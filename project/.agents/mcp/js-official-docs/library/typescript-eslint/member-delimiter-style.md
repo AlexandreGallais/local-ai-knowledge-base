@@ -1,15 +1,15 @@
 ---
-title: "member-delimiter-style"
-tool: "typescript-eslint"
-version: "8.72"
-source: "https://github.com/typescript-eslint/typescript-eslint/blob/12e452f0292212bf9bf443b3988ec230f4ae7097/packages/eslint-plugin/docs/rules/member-delimiter-style.md"
-commit: "12e452f0292212bf9bf443b3988ec230f4ae7097"
-license: "MIT"
+displayed_sidebar: rulesSidebar
 ---
 
-# member-delimiter-style
+:::danger Deprecated
 
-**Deprecated**
+This rule has been moved to the [ESLint stylistic plugin](https://eslint.style).
+See [#8072](https://github.com/typescript-eslint/typescript-eslint/issues/8072) and [#8074](https://github.com/typescript-eslint/typescript-eslint/issues/8074) for more information.
 
-This rule has been moved to the ESLint stylistic plugin.
-See #8072 and #8074 for more information.
+:::
+
+<!-- This doc file has been left on purpose to help direct people to the stylistic plugin.
+
+Note that there is no actual way to get to this page in the normal navigation,
+so end-users will only be able to get to this page from the search bar. -->

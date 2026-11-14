@@ -1,102 +1,45 @@
 ---
-title: "Middleware activation with a third-party container in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/middleware/extensibility-third-party-container.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Middleware activation with a third-party container in ASP.NET Core
+description: Learn how to use strongly-typed middleware with factory-based activation and a third-party container in ASP.NET Core.
+monikerRange: '>= aspnetcore-2.1'
+ms.date: 09/22/2019
 ---
-
 # Middleware activation with a third-party container in ASP.NET Core
 
-This article demonstrates how to use `Microsoft.AspNetCore.Http.IMiddlewareFactory` and `Microsoft.AspNetCore.Http.IMiddleware` as an extensibility point for middleware activation with a third-party container. For introductory information on `IMiddlewareFactory` and `IMiddleware`, see Factory-based middleware activation in ASP.NET Core.
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
-View or download sample code (how to download)
+:::moniker range=">= aspnetcore-3.0"
 
-The sample app demonstrates middleware activation by an `IMiddlewareFactory` implementation, `SimpleInjectorMiddlewareFactory`. The sample uses the Simple Injector dependency injection (DI) container.
+This article demonstrates how to use <xref:Microsoft.AspNetCore.Http.IMiddlewareFactory> and <xref:Microsoft.AspNetCore.Http.IMiddleware> as an extensibility point for [middleware](index.md) activation with a third-party container. For introductory information on `IMiddlewareFactory` and `IMiddleware`, see [Factory-based middleware activation in ASP.NET Core](extensibility.md).
+
+[View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/fundamentals/middleware/extensibility-third-party-container/samples/) ([how to download](../index.md#how-to-download-a-sample))
+
+The sample app demonstrates middleware activation by an `IMiddlewareFactory` implementation, `SimpleInjectorMiddlewareFactory`. The sample uses the [Simple Injector](https://simpleinjector.org) dependency injection (DI) container.
 
 The sample's middleware implementation records the value provided by a query string parameter (`key`). The middleware uses an injected database context (a scoped service) to record the query string value in an in-memory database.
 
-> **Note:**
-> The sample app uses Simple Injector purely for demonstration purposes. Use of Simple Injector isn't an endorsement. Middleware activation approaches described in the Simple Injector documentation and GitHub issues are recommended by the maintainers of Simple Injector. For more information, see the Simple Injector documentation and Simple Injector GitHub repository.
+> [!NOTE]
+> The sample app uses [Simple Injector](https://github.com/simpleinjector/SimpleInjector) purely for demonstration purposes. Use of Simple Injector isn't an endorsement. Middleware activation approaches described in the Simple Injector documentation and GitHub issues are recommended by the maintainers of Simple Injector. For more information, see the [Simple Injector documentation](https://simpleinjector.readthedocs.io/en/latest/index.html) and [Simple Injector GitHub repository](https://github.com/simpleinjector/SimpleInjector).
 
 ## IMiddlewareFactory
 
-`Microsoft.AspNetCore.Http.IMiddlewareFactory` provides methods to create middleware.
+<xref:Microsoft.AspNetCore.Http.IMiddlewareFactory> provides methods to create middleware.
 
 In the sample app, a middleware factory is implemented to create a `SimpleInjectorActivatedMiddleware` instance. The middleware factory uses the Simple Injector container to resolve the middleware:
 
-```csharp
-public class SimpleInjectorMiddlewareFactory : IMiddlewareFactory
-{
-    private readonly Container _container;
-
-    public SimpleInjectorMiddlewareFactory(Container container)
-    {
-        _container = container;
-    }
-
-    public IMiddleware Create(Type middlewareType)
-    {
-        return _container.GetInstance(middlewareType) as IMiddleware;
-    }
-
-    public void Release(IMiddleware middleware)
-    {
-        // The container is responsible for releasing resources.
-    }
-}
-```
+[!code-csharp[](extensibility-third-party-container/samples/3.x/SampleApp/Middleware/SimpleInjectorMiddlewareFactory.cs?name=snippet1&highlight=5-8,12)]
 
 ## IMiddleware
 
-`Microsoft.AspNetCore.Http.IMiddleware` defines middleware for the app's request pipeline.
+<xref:Microsoft.AspNetCore.Http.IMiddleware> defines middleware for the app's request pipeline.
 
 Middleware activated by an `IMiddlewareFactory` implementation (`Middleware/SimpleInjectorActivatedMiddleware.cs`):
 
-```csharp
-public class SimpleInjectorActivatedMiddleware : IMiddleware
-{
-    private readonly AppDbContext _db;
-
-    public SimpleInjectorActivatedMiddleware(AppDbContext db)
-    {
-        _db = db;
-    }
-
-    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
-    {
-        var keyValue = context.Request.Query["key"];
-
-        if (!string.IsNullOrWhiteSpace(keyValue))
-        {
-            _db.Add(new Request()
-                {
-                    DT = DateTime.UtcNow, 
-                    MiddlewareActivation = "SimpleInjectorActivatedMiddleware", 
-                    Value = keyValue
-                });
-
-            await _db.SaveChangesAsync();
-        }
-
-        await next(context);
-    }
-}
-```
+[!code-csharp[](extensibility-third-party-container/samples/3.x/SampleApp/Middleware/SimpleInjectorActivatedMiddleware.cs?name=snippet1)]
 
 An extension is created for the middleware (`Middleware/MiddlewareExtensions.cs`):
 
-```csharp
-public static class MiddlewareExtensions
-{
-    public static IApplicationBuilder UseSimpleInjectorActivatedMiddleware(
-        this IApplicationBuilder builder)
-    {
-        return builder.UseMiddleware<SimpleInjectorActivatedMiddleware>();
-    }
-}
-```
+[!code-csharp[](extensibility-third-party-container/samples/3.x/SampleApp/Middleware/MiddlewareExtensions.cs?name=snippet1)]
 
 `Startup.ConfigureServices` must perform several tasks:
 
@@ -104,74 +47,64 @@ public static class MiddlewareExtensions
 * Register the factory and middleware.
 * Make the app's database context available from the Simple Injector container.
 
-```csharp
-private Container _container = new Container();
-
-public void ConfigureServices(IServiceCollection services)
-{
-    services.AddRazorPages();
-
-    // Replace the default middleware factory with the 
-    // SimpleInjectorMiddlewareFactory.
-    services.AddTransient<IMiddlewareFactory>(_ =>
-    {
-        return new SimpleInjectorMiddlewareFactory(_container);
-    });
-
-    // Wrap ASP.NET Core requests in a Simple Injector execution 
-    // context.
-    services.UseSimpleInjectorAspNetRequestScoping(_container);
-
-    // Provide the database context from the Simple 
-    // Injector container whenever it's requested from 
-    // the default service container.
-    services.AddScoped<AppDbContext>(provider => 
-        _container.GetInstance<AppDbContext>());
-
-    _container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
-
-    _container.Register<AppDbContext>(() => 
-    {
-        var optionsBuilder = new DbContextOptionsBuilder<DbContext>();
-        optionsBuilder.UseInMemoryDatabase("InMemoryDb");
-        return new AppDbContext(optionsBuilder.Options);
-    }, Lifestyle.Scoped);
-
-    _container.Register<SimpleInjectorActivatedMiddleware>();
-
-    _container.Verify();
-}
-```
+[!code-csharp[](extensibility-third-party-container/samples/3.x/SampleApp/Startup.cs?name=snippet1)]
 
 The middleware is registered in the request processing pipeline in `Startup.Configure`:
 
-```csharp
-public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-{
-    if (env.IsDevelopment())
-    {
-        app.UseDeveloperExceptionPage();
-    }
-    else
-    {
-        app.UseExceptionHandler("/Error");
-    }
+[!code-csharp[](extensibility-third-party-container/samples/3.x/SampleApp/Startup.cs?name=snippet2&highlight=12)]
 
-    app.UseSimpleInjectorActivatedMiddleware();
+:::moniker-end
 
-    app.UseStaticFiles();
-    app.UseRouting();
+:::moniker range="< aspnetcore-3.0"
 
-    app.UseEndpoints(endpoints =>
-    {
-        endpoints.MapRazorPages();
-    });
-}
-```
+This article demonstrates how to use <xref:Microsoft.AspNetCore.Http.IMiddlewareFactory> and <xref:Microsoft.AspNetCore.Http.IMiddleware> as an extensibility point for [middleware](index.md) activation with a third-party container. For introductory information on `IMiddlewareFactory` and `IMiddleware`, see [Factory-based middleware activation in ASP.NET Core](extensibility.md).
+
+[View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/fundamentals/middleware/extensibility-third-party-container/samples/) ([how to download](../index.md#how-to-download-a-sample))
+
+The sample app demonstrates middleware activation by an `IMiddlewareFactory` implementation, `SimpleInjectorMiddlewareFactory`. The sample uses the [Simple Injector](https://simpleinjector.org) dependency injection (DI) container.
+
+The sample's middleware implementation records the value provided by a query string parameter (`key`). The middleware uses an injected database context (a scoped service) to record the query string value in an in-memory database.
+
+> [!NOTE]
+> The sample app uses [Simple Injector](https://github.com/simpleinjector/SimpleInjector) purely for demonstration purposes. Use of Simple Injector isn't an endorsement. Middleware activation approaches described in the Simple Injector documentation and GitHub issues are recommended by the maintainers of Simple Injector. For more information, see the [Simple Injector documentation](https://simpleinjector.readthedocs.io/en/latest/index.html) and [Simple Injector GitHub repository](https://github.com/simpleinjector/SimpleInjector).
+
+## IMiddlewareFactory
+
+<xref:Microsoft.AspNetCore.Http.IMiddlewareFactory> provides methods to create middleware.
+
+In the sample app, a middleware factory is implemented to create a `SimpleInjectorActivatedMiddleware` instance. The middleware factory uses the Simple Injector container to resolve the middleware:
+
+[!code-csharp[](extensibility-third-party-container/samples/2.x/SampleApp/Middleware/SimpleInjectorMiddlewareFactory.cs?name=snippet1&highlight=5-8,12)]
+
+## IMiddleware
+
+<xref:Microsoft.AspNetCore.Http.IMiddleware> defines middleware for the app's request pipeline.
+
+Middleware activated by an `IMiddlewareFactory` implementation (`Middleware/SimpleInjectorActivatedMiddleware.cs`):
+
+[!code-csharp[](extensibility-third-party-container/samples/2.x/SampleApp/Middleware/SimpleInjectorActivatedMiddleware.cs?name=snippet1)]
+
+An extension is created for the middleware (`Middleware/MiddlewareExtensions.cs`):
+
+[!code-csharp[](extensibility-third-party-container/samples/2.x/SampleApp/Middleware/MiddlewareExtensions.cs?name=snippet1)]
+
+`Startup.ConfigureServices` must perform several tasks:
+
+* Set up the Simple Injector container.
+* Register the factory and middleware.
+* Make the app's database context available from the Simple Injector container.
+
+[!code-csharp[](extensibility-third-party-container/samples/2.x/SampleApp/Startup.cs?name=snippet1)]
+
+The middleware is registered in the request processing pipeline in `Startup.Configure`:
+
+[!code-csharp[](extensibility-third-party-container/samples/2.x/SampleApp/Startup.cs?name=snippet2&highlight=12)]
+
+:::moniker-end
 
 ## Related content
 
-* Middleware
-* Factory-based middleware activation
-* Simple Injector GitHub repository
-* Simple Injector documentation
+* [Middleware](index.md)
+* [Factory-based middleware activation](extensibility.md)
+* [Simple Injector GitHub repository](https://github.com/simpleinjector/SimpleInjector)
+* [Simple Injector documentation](https://simpleinjector.readthedocs.io/en/latest/index.html)

@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: ICorDebugComObjectValue::GetCachedInterfaceTypes Method"
 title: "ICorDebugComObjectValue::GetCachedInterfaceTypes Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugcomobjectvalue-getcachedinterfacetypes-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugComObjectValue::GetCachedInterfaceTypes"
+api_location:
+  - "mscordbi.dll"
+f1_keywords:
+  - "ICorDebugComObjectValue::GetCachedInterfaceTypes"
+helpviewer_keywords:
+  - "GetCachedInterface method, ICorDebugComObjectValue interface [.NET debugging]"
+  - "ICorDebugComObjectValue::GetCachedInterface method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugComObjectValue::GetCachedInterfaceTypes Method
 
 Provides an enumerator for the interface types that the current object has been cast to or used as.
@@ -27,9 +34,11 @@ HRESULT GetCachedInterfaceTypes(
  `ppInterfacesEnum`
  [out] A pointer to the address of an ICorDebugTypeEnum enumerator that provides access to ICorDebugType objects that represent cached interface types filtered according to `bIInspectableOnly`.
 
+## Remarks
+
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -39,4 +48,4 @@ HRESULT GetCachedInterfaceTypes(
 
 ## See also
 
-- ICorDebugComObjectValue Interface
+- [ICorDebugComObjectValue Interface](icordebugcomobjectvalue-interface.md)

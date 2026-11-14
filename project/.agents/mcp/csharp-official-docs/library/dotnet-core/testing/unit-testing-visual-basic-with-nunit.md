@@ -1,21 +1,18 @@
 ---
-title: "Unit testing Visual Basic in .NET Core with dotnet test and NUnit"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/unit-testing-visual-basic-with-nunit.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Unit testing Visual Basic in .NET Core with dotnet test and NUnit
+description: Learn unit test concepts in .NET Core through an interactive experience building a sample Visual Basic solution step-by-step using NUnit.
+author: rprouse
+ms.date: 03/27/2024
 ---
-
 # Unit testing Visual Basic .NET Core libraries using dotnet test and NUnit
 
-This tutorial takes you through an interactive experience building a sample solution step-by-step to learn unit testing concepts. If you prefer to follow the tutorial using a pre-built solution, view or download the sample code before you begin. For download instructions, see Samples and Tutorials.
+This tutorial takes you through an interactive experience building a sample solution step-by-step to learn unit testing concepts. If you prefer to follow the tutorial using a pre-built solution, [view or download the sample code](https://github.com/dotnet/samples/tree/main/core/getting-started/unit-testing-vb-nunit/) before you begin. For download instructions, see [Samples and Tutorials](../../samples-and-tutorials/index.md#view-and-download-samples).
 
-This article is about testing a .NET Core project. If you're testing an ASP.NET Core project, see Integration tests in ASP.NET Core.
+[!INCLUDE [testing an ASP.NET Core project from .NET Core](../../../includes/core-testing-note-aspnet.md)]
 
 ## Prerequisites
 
-- .NET 8 SDK or later versions.
+- [.NET 8 SDK](https://dotnet.microsoft.com/download) or later versions.
 - A text editor or code editor of your choice.
 
 ## Creating the source project
@@ -77,18 +74,20 @@ Make the *PrimeService.Tests* directory the current directory and create a new p
 dotnet new nunit -lang VB
 ```
 
-The dotnet new command creates a test project that uses NUnit as the test library. The generated template configures the test runner in the *PrimeServiceTests.vbproj* file:
+The [dotnet new](../tools/dotnet-new.md) command creates a test project that uses NUnit as the test library. The generated template configures the test runner in the *PrimeServiceTests.vbproj* file:
 
-> **Note:**
-> Prior to .NET 9, the generated code may reference older versions of the NUnit test framework. You may use dotnet CLI to update the packages. Alternatively, open the *PrimeService.Tests.vbproj* file and replace the contents of the package references item group with the code above.
+[!code-xml[Packages](~/samples/snippets/core/testing/unit-testing-vb-nunit/vb/PrimeService.Tests/PrimeService.Tests.vbproj#Packages)]
 
-The test project requires other packages to create and run unit tests. `dotnet new` in the previous step added NUnit and the NUnit test adapter. Now, add the `PrimeService` class library as another dependency to the project. Use the `dotnet reference add` command:
+> [!NOTE]
+> Prior to .NET 9, the generated code may reference older versions of the NUnit test framework. You may use [dotnet CLI](/nuget/consume-packages/install-use-packages-dotnet-cli) to update the packages. Alternatively, open the *PrimeService.Tests.vbproj* file and replace the contents of the package references item group with the code above.
+
+The test project requires other packages to create and run unit tests. `dotnet new` in the previous step added NUnit and the NUnit test adapter. Now, add the `PrimeService` class library as another dependency to the project. Use the [`dotnet reference add`](../tools/dotnet-reference-add.md) command:
 
 ```dotnetcli
 dotnet reference add ../PrimeService/PrimeService.vbproj
 ```
 
-You can see the entire file in the samples repository on GitHub.
+You can see the entire file in the [samples repository](https://github.com/dotnet/samples/blob/main/core/getting-started/unit-testing-vb-nunit/PrimeService.Tests/PrimeService.Tests.vbproj) on GitHub.
 
 You have the following final solution layout:
 
@@ -132,7 +131,7 @@ Namespace PrimeService.Tests
 End Namespace
 ```
 
-The `<TestFixture>` attribute indicates a class that contains tests. The `<Test>` attribute denotes a method that is run by the test runner. From the *unit-testing-vb-nunit*, execute `dotnet test` to build the tests and the class library and then run the tests. The NUnit test runner contains the program entry point to run your tests. `dotnet test` starts the test runner using the unit test project you've created.
+The `<TestFixture>` attribute indicates a class that contains tests. The `<Test>` attribute denotes a method that is run by the test runner. From the *unit-testing-vb-nunit*, execute [`dotnet test`](../tools/dotnet-test.md) to build the tests and the class library and then run the tests. The NUnit test runner contains the program entry point to run your tests. `dotnet test` starts the test runner using the unit test project you've created.
 
 Your test fails. You haven't created the implementation yet. Make this test pass by writing the simplest code in the `PrimeService` class that works:
 
@@ -153,12 +152,14 @@ Now that you've made one test pass, it's time to write more. There are a few oth
 
 Instead of creating new tests, apply these two attributes to create a series of tests that test several values less than two, which is the lowest prime number:
 
+[!code-vb[Sample_TestCode](../../../samples/snippets/core/testing/unit-testing-vb-nunit/vb/PrimeService.Tests/PrimeService_IsPrimeShould.vb?name=Sample_TestCode)]
+
 Run `dotnet test`, and two of these tests fail. To make all of the tests pass, change the `if` clause at the beginning of the `Main` method in the *PrimeServices.cs* file:
 
 ```vb
 if candidate < 2
 ```
 
-Continue to iterate by adding more tests, more theories, and more code in the main library. You have the finished version of the tests and the complete implementation of the library.
+Continue to iterate by adding more tests, more theories, and more code in the main library. You have the [finished version of the tests](https://github.com/dotnet/samples/blob/main/core/getting-started/unit-testing-vb-nunit/PrimeService.Tests/PrimeService_IsPrimeShould.vb) and the [complete implementation of the library](https://github.com/dotnet/samples/blob/main/core/getting-started/unit-testing-vb-nunit/PrimeService/PrimeService.vb).
 
 You've built a small library and a set of unit tests for that library. You've structured the solution so that adding new packages and tests is part of the normal workflow. You've concentrated most of your time and effort on solving the goals of the application.

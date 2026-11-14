@@ -1,18 +1,25 @@
 ---
 title: "Resolve errors and warnings when throwing and catching exceptions"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/compiler-messages/throwing-and-catching-exceptions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about C# compiler errors and warnings related to throwing and catching exceptions."
+f1_keywords:
+  - "CS8359"
+  - "CS8360"
+helpviewer_keywords:
+  - "CS8359"
+  - "CS8360"
+ms.date: 09/23/2026
+ai-usage: ai-assisted
 ---
-
 # Resolve errors and warnings when throwing and catching exceptions
 
 This article covers compiler diagnostics related to throwing and catching exceptions. The following warnings are generated when an exception filter is a constant `false`:
 
-- **CS8359**: *Filter expression is a constant 'false', consider removing the catch clause*
-- **CS8360**: *Filter expression is a constant 'false', consider removing the try-catch block*
+<!-- The text in this list generates issues for Acrolinx, because they don't use contractions.
+That's by design. The text closely matches the text of the compiler error or warning for SEO purposes.
+ -->
+
+- [**CS8359**](#remove-a-constant-false-exception-filter): *Filter expression is a constant 'false', consider removing the catch clause*
+- [**CS8360**](#remove-a-constant-false-exception-filter): *Filter expression is a constant 'false', consider removing the try-catch block*
 
 ## Remove a constant false exception filter
 
@@ -61,4 +68,4 @@ catch (InvalidOperationException ex) when (false) // CS8360
 
 Remove the `try`-`catch` statement while preserving the statements from the `try` block. If the handler is required conditionally, replace the constant filter with a meaningful runtime condition.
 
-For more information, see Advantages of exception filters.
+For more information, see [Advantages of exception filters](../statements/exception-handling-statements.md#advantages-of-exception-filters).

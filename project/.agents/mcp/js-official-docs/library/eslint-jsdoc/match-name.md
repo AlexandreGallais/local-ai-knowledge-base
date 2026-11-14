@@ -1,15 +1,8 @@
----
-title: "match-name"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/match-name.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-match-name"></a>
+<a name="match-name"></a>
+### <code>match-name</code>
 
-# match-name
 
-### `match-name`
 
 Reports the name portion of a JSDoc tag if matching or not matching
 a given regular expression.
@@ -20,15 +13,21 @@ name will actually be part of the description (e.g., for
 `structuredTags` setting (if `name: false`, this rule will not apply to
 that tag).
 
+<a name="user-content-fixer"></a>
+<a name="fixer"></a>
 ## Fixer
 
 Will replace `disallowName` with `replacement` if these are provided.
 
+<a name="user-content-options"></a>
+<a name="options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `match`
+<a name="user-content-options-match"></a>
+<a name="options-match"></a>
+### <code>match</code>
 
 `match` is a required option containing an array of objects which determine
 the conditions whereby a name is reported as being problematic.
@@ -46,43 +45,60 @@ be applied, however.
 
 A single options object has the following properties.
 
-##### `allowName`
+<a name="user-content-options-match-allowname"></a>
+<a name="options-match-allowname"></a>
+##### <code>allowName</code>
 
 Indicates which names are allowed for the given tag (or `*`).
 Accepts a string regular expression (optionally wrapped between two
 `/` delimiters followed by optional flags) used to match the name.
 
-##### `comment`
+<a name="user-content-options-match-comment"></a>
+<a name="options-match-comment"></a>
+##### <code>comment</code>
 
 As with `context` but AST for the JSDoc block comment and types.
 
-##### `context`
+<a name="user-content-options-match-context"></a>
+<a name="options-match-context"></a>
+##### <code>context</code>
 
 AST to confine the allowing or disallowing to JSDoc blocks
 associated with a particular context. See the
-"AST and Selectors"
+["AST and Selectors"](../advanced.md#ast-and-selectors)
 section of our Advanced docs for more on the expected format.
 
-##### `disallowName`
+<a name="user-content-options-match-disallowname"></a>
+<a name="options-match-disallowname"></a>
+##### <code>disallowName</code>
 
 As with `allowName` but indicates names that are not allowed.
 
-##### `message`
+<a name="user-content-options-match-message"></a>
+<a name="options-match-message"></a>
+##### <code>message</code>
 
 An optional custom message to use when there is a match.
 
-##### `replacement`
+<a name="user-content-options-match-replacement"></a>
+<a name="options-match-replacement"></a>
+##### <code>replacement</code>
 
 If `disallowName` is supplied and this value is present, it
 will replace the matched `disallowName` text.
 
-##### `tags`
+<a name="user-content-options-match-tags"></a>
+<a name="options-match-tags"></a>
+##### <code>tags</code>
 
 This array should include tag names or `*` to indicate the
   match will apply for all tags (except as confined by any context
   properties). If `*` is not used, then these rules will only apply to
   the specified tags. If `tags` is omitted, then `*` is assumed.
 
+
+<a name="user-content-context-and-settings"></a>
+<a name="context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -93,6 +109,8 @@ This array should include tag names or `*` to indicate the
 |Settings|`structuredTags`|
 |Options|`match`|
 
+<a name="user-content-failing-examples"></a>
+<a name="failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -201,6 +219,10 @@ function quux () {}
 // Message: Only allowing names not matching `/^$/v` but found "".
 ````
 
+
+
+<a name="user-content-passing-examples"></a>
+<a name="passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -264,3 +286,4 @@ class A {
  */
 // "jsdoc/match-name": ["error"|"warn", {"match":[{"allowName":"/^[A-Z]{1}$/","message":"The name should be a single capital letter.","tags":["template"]}]}]
 ````
+

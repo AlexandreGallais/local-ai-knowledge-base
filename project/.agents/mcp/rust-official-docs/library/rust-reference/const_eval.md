@@ -1,12 +1,3 @@
----
-title: "Constant evaluation"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/const_eval.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[const-eval]
 # Constant evaluation
 
@@ -32,7 +23,7 @@ r[const-eval.const-expr.error]
 Behaviors such as out of bounds [array indexing] or [overflow] are compiler errors if the value must be evaluated at compile time (i.e. in const contexts). Otherwise, these behaviors are warnings, but will likely panic at run-time.
 
 r[const-eval.const-expr.list]
-The following expressions are constant expressions, so long as any operands are also constant expressions and do not cause any `Drop::drop` calls to be run.
+The following expressions are constant expressions, so long as any operands are also constant expressions and do not cause any [`Drop::drop`][destructors] calls to be run.
 
 r[const-eval.const-expr.literal]
 * [Literals].
@@ -71,7 +62,7 @@ r[const-eval.const-expr.field]
 * [Field expressions].
 
 r[const-eval.const-expr.index]
-* Array and slice indexing expressions, where the index is a `usize`.
+* [Array and slice indexing expressions][array indexing], where the index is a `usize`.
 
 r[const-eval.const-expr.range]
 * [Range expressions].
@@ -87,26 +78,26 @@ r[const-eval.const-expr.borrows]
   * Mutable borrows.
   * Shared borrows of expressions that result in values with [interior mutability].
 
-  ```rust
+  ```rust,compile_fail,E0764
   // Due to being in tail position, this borrow extends the scope of the
   // temporary to the end of the program. Since the borrow is mutable,
   // this is not allowed in a const expression.
   const C: &u8 = &mut 0; // ERROR not allowed
   ```
 
-  ```rust
+  ```rust,compile_fail,E0764
   // Const blocks are similar to initializers of `const` items.
   let _: &u8 = const { &mut 0 }; // ERROR not allowed
   ```
 
-  ```rust
+  ```rust,compile_fail,E0492
   # use core::sync::atomic::AtomicU8;
   // This is not allowed as 1) the temporary scope is extended to the
   // end of the program and 2) the temporary has interior mutability.
   const C: &AtomicU8 = &AtomicU8::new(0); // ERROR not allowed
   ```
 
-  ```rust
+  ```rust,compile_fail,E0492
   # use core::sync::atomic::AtomicU8;
   // As above.
   let _: &_ = const { &AtomicU8::new(0) }; // ERROR not allowed
@@ -145,7 +136,7 @@ r[const-eval.const-expr.borrows]
   //                                     Promoted temporary.
   ```
 
-  > **Note:**
+  > [!NOTE]
   > In other words --- to focus on what's allowed rather than what's not allowed --- shared borrows of interior mutable data and mutable borrows are only allowed in a [const context] when the borrowed [place expression] is *transient*, *indirect*, or *static*.
   >
   > A place expression is *transient* if it is a variable local to the current const context or an expression whose temporary scope is contained inside the current const context.
@@ -181,7 +172,7 @@ r[const-eval.const-expr.borrows]
   > const C: &u8 = unsafe { static mut S: u8 = 0; &mut S };
   > ```
 
-  > **Note:**
+  > [!NOTE]
   > One surprising consequence of these rules is that we allow this,
   >
   > ```rust
@@ -202,12 +193,12 @@ r[const-eval.const-expr.borrows]
   >
   > The effect is surprising because temporary lifetime extension, in this case, causes less code to compile than would without it.
   >
-  > See issue #143129 for more details.
+  > See [issue #143129](https://github.com/rust-lang/rust/issues/143129) for more details.
 
 r[const-eval.const-expr.deref]
 * [Dereference expressions].
 
-  ```rust
+  ```rust,no_run
   # use core::cell::UnsafeCell;
   const _: u8 = unsafe {
       let x: *mut u8 = &raw mut *&mut 0;
@@ -243,6 +234,7 @@ r[const-eval.const-expr.if-match]
 
 r[const-eval.const-context]
 ## Const context
+[const context]: #const-context
 
 r[const-eval.const-context.def]
 A _const context_ is one of the following:
@@ -251,7 +243,7 @@ r[const-eval.const-context.array-length]
 * [Array type length expressions]
 
 r[const-eval.const-context.repeat-length]
-* Array repeat length expressions
+* [Array repeat length expressions][array expressions]
 
 r[const-eval.const-context.init]
 * The initializer of
@@ -295,3 +287,57 @@ Const functions are not allowed to be [async].
 
 r[const-eval.const-fn.type-restrictions]
 The types of a const function's parameters and return type are restricted to those that are compatible with a const context.
+<!-- TODO: Define the type restrictions. -->
+
+[arithmetic]:           expressions/operator-expr.md#arithmetic-and-logical-binary-operators
+[array expressions]:    expressions/array-expr.md
+[array indexing]:       expressions/array-expr.md#array-and-slice-indexing-expressions
+[array type length expressions]: types/array.md
+[assignment expressions]: expressions/operator-expr.md#assignment-expressions
+[async]:                items/functions.md#async-functions
+[compound assignment expressions]: expressions/operator-expr.md#compound-assignment-expressions
+[block expressions]:    expressions/block-expr.md
+[borrow]:               expressions/operator-expr.md#borrow-operators
+[cast]:                 expressions/operator-expr.md#type-cast-expressions
+[closure expressions]:  expressions/closure-expr.md
+[comparison]:           expressions/operator-expr.md#comparison-operators
+[const block]:          expressions/block-expr.md#const-blocks
+[const functions]:      items/functions.md#const-functions
+[const generic argument]: items/generics.md#const-generics
+[const generic parameters]: items/generics.md#const-generics
+[constant expressions]: #constant-expressions
+[constants]:            items/constant-items.md
+[Const parameters]:     items/generics.md
+[dereference expression]: expr.deref
+[dereference expressions]: expr.deref
+[destructors]:          destructors.md
+[enum discriminants]:   items/enumerations.md#discriminants
+[expression statements]: statements.md#expression-statements
+[expressions]:          expressions.md
+[`extern` statics]:     items/external-blocks.md#statics
+[field expressions]:    expressions/field-expr.md
+[functions]:            items/functions.md
+[grouped]:              expressions/grouped-expr.md
+[interior mutability]:  interior-mutability.md
+[if]:                   expressions/if-expr.md#if-expressions
+[lazy boolean]:         expressions/operator-expr.md#lazy-boolean-operators
+[let statements]:       statements.md#let-statements
+[literals]:             expressions/literal-expr.md
+[logical]:              expressions/operator-expr.md#arithmetic-and-logical-binary-operators
+[loop]:                 expressions/loop-expr.md#infinite-loops
+[match]:                expressions/match-expr.md
+[negation]:             expressions/operator-expr.md#negation-operators
+[overflow]:             expressions/operator-expr.md#overflow
+[paths]:                expressions/path-expr.md
+[patterns]:             patterns.md
+[place expression]:     expr.place-value.place-memory-location
+[promoted expression]:  destructors.md#constant-promotion
+[promoted]:             destructors.md#constant-promotion
+[range expressions]:    expressions/range-expr.md
+[statics]:              items/static-items.md
+[Struct expressions]:   expressions/struct-expr.md
+[temporary lifetime extension]: destructors.scope.lifetime-extension
+[tuple enum variant]:   items/enumerations.md
+[tuple expressions]:    expressions/tuple-expr.md
+[tuple struct]:         items/structs.md
+[while]:                expressions/loop-expr.md#predicate-loops

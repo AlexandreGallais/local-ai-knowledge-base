@@ -1,16 +1,14 @@
 ---
-title: "How dotnetup verifies downloads"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/concepts/download-verification.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How dotnetup verifies downloads
+description: Learn how dotnetup verifies .NET release manifests and archives, how daily builds differ, and how administrators can block unsigned downloads.
+ms.topic: concept-article
+ms.date: 10/13/2026
+ai-usage: ai-generated
 ---
 
 # How dotnetup verifies downloads
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 `dotnetup` verifies the .NET SDKs and runtimes that it downloads before it
 extracts them. The type of verification depends on where the build comes
@@ -46,7 +44,7 @@ It also checks that the manifest was signed before its expiration time.
 
 An incorrect system clock or an expired manifest can cause verification to
 fail. For recovery guidance, see
-A release manifest has expired.
+[A release manifest has expired](../troubleshooting.md#a-release-manifest-has-expired).
 
 ### Trusted certificates
 
@@ -78,7 +76,7 @@ Before the installation starts, `dotnetup` shows this warning:
 ```
 
 For more information about daily builds, see
-Use preview and daily builds.
+[Use preview and daily builds](../usecases/try-daily-builds.md).
 
 ## Block unsigned downloads
 
@@ -94,7 +92,7 @@ example, run these commands in an elevated PowerShell session:
 
 ```powershell
 $key = 'HKLM:\SOFTWARE\Policies\Microsoft\dotnet\Dotnetup'
-New-Item -Path $key <example-value> | Out-Null
+New-Item -Path $key -Force | Out-Null
 New-ItemProperty -Path $key -Name 'BlockUnsignedDownloads' -PropertyType DWord -Value 1 -Force | Out-Null
 ```
 
@@ -128,9 +126,9 @@ the policy.
 
 The `get-dotnetup` download scripts verify the downloaded `dotnetup`
 executable with its SHA-512 checksum file. For more information, see
-Get started with dotnetup.
+[Get started with dotnetup](../getting-started.md).
 
-`dotnetup self update` also verifies
+[`dotnetup self update`](../reference/dotnetup-self-update.md) also verifies
 the downloaded executable's SHA-512 checksum.
 On Windows, if the installed executable is Authenticode-signed, the
 replacement must have an Authenticode signature with a Microsoft-trusted root.
@@ -147,6 +145,6 @@ This startup check doesn't authenticate the download.
 
 ## See also
 
-- How dotnetup works
-- Channels and versions
-- Daily channels
+- [How dotnetup works](how-dotnetup-works.md)
+- [Channels and versions](channels.md)
+- [Daily channels](../channels/daily.md)

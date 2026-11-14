@@ -1,10 +1,7 @@
 ---
-title: "EventSource Activity IDs"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/eventsource-activity-ids.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: EventSource Activity IDs
+description: Understand how to use EventSource Activity IDs
+ms.date: 03/24/2022
 ---
 
 # EventSource Activity IDs
@@ -12,8 +9,8 @@ license: "CC-BY-4.0"
 **This article applies to: ✔️** .NET Core 3.1 and later versions **✔️** .NET Framework 4.5 and later versions
 
 This guide explains Activity IDs, an optional identifier that can be logged with each event generated using
-`System.Diagnostics.Tracing.EventSource`. For an introduction, see
-Getting Started with EventSource.
+<xref:System.Diagnostics.Tracing.EventSource?displayProperty=nameWithType>. For an introduction, see
+[Getting Started with EventSource](./eventsource-getting-started.md).
 
 ## The challenge of logging concurrent work
 
@@ -44,7 +41,7 @@ correlate together all the messages produced for one request. Activity IDs solve
 grain identifier that can track individual requests, or portions of requests, regardless of if the work
 is spread across different threads.
 
-> **Note:**
+> [!NOTE]
 > The Activity ID concept referred to here is not the same as the System.Diagnostics.Tracing.Activity, despite the
 > similar naming.
 
@@ -52,7 +49,7 @@ is spread across different threads.
 
 You can run the code below to see Activity tracking in action.
 
-```c#
+```C#
 using System.Diagnostics.Tracing;
 
 public static class Program
@@ -150,7 +147,7 @@ TID   Activity ID                              Event           Arguments
 14728 00000011-0000-0000-0000-00006ab99d59     WorkStop
 ```
 
-> **Note:**
+> [!NOTE]
 > There is a known issue where Visual Studio debugger may cause invalid Activity IDs to be generated. Either don't run this sample under the debugger
 > or set a breakpoint at the beginning of Main and evaluate the expression 'System.Threading.Tasks.TplEventSource.Log.TasksSetActivityIds = false' in
 > the immediate window before continuing to work around the issue.
@@ -164,7 +161,7 @@ _Something_Stop is considered the start and stop of a unit of work. Logging the 
 Activity ID and begins logging all events on the same thread with that Activity ID until the stop event is logged. The ID also
 automatically follows async control flow when using `async` and `await`. Although we recommend that you use the Start/Stop naming suffixes,
 you may name the events anything you like by explicitly annotating them using the
-`System.Diagnostics.Tracing.EventAttribute.Opcode` property. Set the first event to
+<xref:System.Diagnostics.Tracing.EventAttribute.Opcode?displayProperty=nameWithType> property. Set the first event to
 `EventOpcode.Start` and the second to `EventOpcode.Stop`.
 
 ## Log requests that do parallel work
@@ -178,7 +175,7 @@ Activity ID logs an extra field called Related Activity ID to describe its paren
 
 Run the following code:
 
-```c#
+```C#
 using System.Diagnostics.Tracing;
 
 public static class Program
@@ -279,12 +276,12 @@ This example only ran one top-level request, which was assigned Activity ID `000
 a new branch of the request with Activity IDs `00001011-...` and `00002011-...` respectively. You can identify these IDs are
 children of the original request because both of the start events logged their parent `00000011-...` in the Related Activity ID field.
 
-> **Note:**
+> [!NOTE]
 > You may have noticed the numerical values of the IDs have some clear patterns between parent and child and aren't random. Although it
 > can assist in spotting the relationship visually in simple cases, it's best for tools not to rely on this and treat the IDs as opaque identifiers.
 > As the nesting level grows deeper, the byte pattern will change. Using the Related Activity ID field is the best way to ensure tools
 > work reliably regardless of nesting level.
 
 Because requests with complex trees of subwork items will generate many different Activity IDs, these IDs are usually
-best parsed by tools rather than trying to reconstruct the tree by hand. PerfView is one tool
+best parsed by tools rather than trying to reconstruct the tree by hand. [PerfView](https://github.com/Microsoft/perfview) is one tool
 that knows how to correlate events annotated with these IDs.

@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: C# 14 overload resolution with span parameters"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/10.0/csharp-overload-resolution.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 10 breaking change in core .NET libraries where overloads with span parameters are applicable in more scenarios.
+ms.date: 01/30/2025
+ai-usage: ai-assisted
 ---
-
 # C# 14 overload resolution with span parameters
 
-C# 14, which ships with .NET 10, introduces new built-in span conversions and type inference rules. Those changes make overloads with span parameters applicable in more scenarios.
+C# 14, which ships with .NET 10, introduces new [built-in span conversions and type inference rules](https://github.com/dotnet/csharplang/issues/7905). Those changes make overloads with span parameters applicable in more scenarios.
 
 ## Previous behavior
 
@@ -25,11 +22,11 @@ In C# 14 and later, methods with `ReadOnlySpan<T>` or `Span<T>` parameters can p
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-The C# language feature allows simplified API design and usage (for example, one `System.ReadOnlySpan`1` extension method can apply to both spans and arrays).
+The C# language feature allows simplified API design and usage (for example, one <xref:System.ReadOnlySpan`1> extension method can apply to both spans and arrays).
 
 ## Recommended action
 
@@ -51,4 +48,4 @@ void M(Expression<Func<int[], int, bool>> e) => e.Compile(preferInterpretation: 
 
 ## Affected APIs
 
-- `System.Linq.Expressions.Expression`1.Compile*`
+- <xref:System.Linq.Expressions.Expression`1.Compile*?displayProperty=fullName>

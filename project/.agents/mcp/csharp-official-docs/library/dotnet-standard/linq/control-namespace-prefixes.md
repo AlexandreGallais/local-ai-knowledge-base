@@ -1,10 +1,11 @@
 ---
-title: "How to control namespace prefixes - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/control-namespace-prefixes.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to control namespace prefixes - LINQ to XML
+description: You can control namespace prefixes when serializing an XML tree in C# and Visual Basic. To do this, insert attributes that declare namespaces.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to control namespace prefixes (LINQ to XML)
@@ -17,7 +18,7 @@ Another reason is that you want users to edit the XML document manually, and you
 
 To control namespace prefixes, you insert attributes that declare namespaces. If you declare the namespaces with specific prefixes, LINQ to XML will attempt to honor the namespace prefixes when serializing.
 
-To create an attribute that declares a namespace with a prefix, you create an attribute where the namespace of the name of the attribute is `System.Xml.Linq.XNamespace.Xmlns*`, and the name of the attribute is the namespace prefix. The value of the attribute is the URI of the namespace.
+To create an attribute that declares a namespace with a prefix, you create an attribute where the namespace of the name of the attribute is <xref:System.Xml.Linq.XNamespace.Xmlns*>, and the name of the attribute is the namespace prefix. The value of the attribute is the URI of the namespace.
 
 ## Example: Create two namespaces that have prefixes
 
@@ -70,4 +71,4 @@ This example produces the following output:
 
 ## See also
 
-- Namespaces overview
+- [Namespaces overview](namespaces-overview.md)

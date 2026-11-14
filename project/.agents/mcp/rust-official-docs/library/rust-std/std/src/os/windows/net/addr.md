@@ -1,12 +1,3 @@
----
-title: "std::os::windows::net::addr"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/os/windows/net/addr.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::os::windows::net::addr
 
 ## SocketAddr::as_pathname
@@ -25,7 +16,7 @@ fn main() -> std::io::Result<()> {
     assert_eq!(addr.as_pathname(), Some(Path::new("/tmp/sock")));
     Ok(())
 }
-```rust
+```
 
 ## SocketAddr::from_pathname
 
@@ -37,7 +28,7 @@ pub fn from_pathname<P>(path: P) -> io::Result<SocketAddr> where P: AsRef<Path>,
 use std::os::windows::net::SocketAddr;
 
 assert!(SocketAddr::from_pathname("/path/with/\0/bytes").is_err());
-```rust
+```
 
 ## SocketAddr::is_unnamed
 
@@ -54,4 +45,4 @@ fn main() -> std::io::Result<()> {
     assert_eq!(addr.is_unnamed(), false);
     Ok(())
 }
-```rust
+```

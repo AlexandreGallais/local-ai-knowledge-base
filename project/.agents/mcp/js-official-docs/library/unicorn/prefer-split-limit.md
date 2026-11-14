@@ -1,21 +1,15 @@
----
-title: "prefer-split-limit"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-split-limit.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-split-limit
 
 📝 Prefer `String#split()` with a limit.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
-When you only need a prefix of the results from splitting a string, pass a `limit` to `String#split()`. This can improve performance by allowing the method to stop once enough parts have been produced, and it makes your intent clearer.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+When you only need a prefix of the results from splitting a string, pass a [`limit`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split#limit) to `String#split()`. This can improve performance by allowing the method to stop once enough parts have been produced, and it makes your intent clearer.
 
 This rule checks two patterns with a non-empty string literal or regular expression literal separator: direct array destructuring in a variable declaration or standalone assignment expression, and direct access using a statically known non-negative integer index.
 
@@ -56,5 +50,5 @@ const parts = string.split(dynamicSeparator)[unknownIndex];
 const [firstPart, ...remainingParts] = string.split('/');
 ```
 
-> **Note:**
+> [!NOTE]
 > Performance benefits depend on the JavaScript engine. The main benefit is clearer intent showing you only need specific parts.

@@ -1,18 +1,16 @@
 ---
-title: "C# classes (part 1 of 2)"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/fundamentals/types/classes.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: "C# classes"
+description: Learn how to define and use classes in C#, including reference type semantics, constructors, static classes, object initializers, collection initializers, and inheritance basics.
+ms.date: 03/25/2026
+ms.topic: concept-article
+ai-usage: ai-assisted
 ---
-
 # C# classes
 
-> **Tip:**
-> **New to developing software?** Start with the Get started tutorials first. You'll encounter classes once you need to model objects with behavior and state.
+> [!TIP]
+> **New to developing software?** Start with the [Get started](../../tour-of-csharp/tutorials/index.md) tutorials first. You'll encounter classes once you need to model objects with behavior and state.
 >
-> **Experienced in another language?** C# classes are similar to classes in Java or C++. Skim the object initializers section for C#-specific patterns, and see Records for a data-focused alternative.
+> **Experienced in another language?** C# classes are similar to classes in Java or C++. Skim the [object initializers](#object-initializers) section for C#-specific patterns, and see [Records](records.md) for a data-focused alternative.
 
 A *class* is a reference type that defines a blueprint for objects. When you create a variable of a class type, the variable holds a *reference* to an object on the managed heap. The variable doesn't hold the object data itself. Assigning a class variable to another variable copies the reference, so both variables point to the same object. Classes are the most common way to define custom types in C#. Use them when you need complex behavior, inheritance, or shared identity between references.
 
@@ -23,493 +21,90 @@ Use a class when:
 - The type has complex behavior or manages mutable state.
 - You need inheritance to create a base class with derived specializations, or to create a derived type that extends an existing class.
 - Instances represent a shared identity, not objects that happen to hold equal values. Two references to the same object should stay in sync.
-- The type is large or long-lived and benefits from heap allocation and reference semantics.
+- The type is large or long-lived and benefits from [heap allocation](../../../standard/garbage-collection/fundamentals.md#the-managed-heap) and reference semantics.
 
 ## Declare a class
 
-Define a class with the `class` keyword followed by the type name. An optional access modifier controls visibility. The default is `internal`. Specify `public` to allow callers from other assemblies to use your types.
+Define a class with the `class` keyword followed by the type name. An optional [access modifier](../../language-reference/keywords/access-modifiers.md) controls visibility. The default is `internal`. Specify `public` to allow callers from other assemblies to use your types.
 
-```csharp
-﻿// --- Top-level statements ---
+:::code language="csharp" source="snippets/classes/Program.cs" ID="ClassDeclaration":::
 
-var customer = new Customer("Allison");
-Console.WriteLine(customer.Name); // Allison
-
-var c1 = new Customer("Grace");
-var c2 = c1; // both variables reference the same object
-
-c2.Name = "Hopper";
-Console.WriteLine(c1.Name); // Hopper — c1 sees the change made through c2
-
-// var missing = new Person(); // Error: required properties not set
-var person = new Person { FirstName = "Grace", LastName = "Hopper" };
-Console.WriteLine($"{person.FirstName} {person.LastName}"); // Grace Hopper
-
-double circumference = MathHelpers.CircleCircumference(5.0);
-Console.WriteLine($"Circumference: {circumference:F2}"); // Circumference: 31.42
-
-var options = new ConnectionOptions
-{
-    Host = "db.example.com",
-    Port = 5432,
-    UseSsl = true
-};
-Console.WriteLine($"{options.Host}:{options.Port} (SSL: {options.UseSsl})");
-// db.example.com:5432 (SSL: True)
-
-var manager = new Manager("Satya", "Engineering");
-Console.WriteLine($"{manager.Name} manages {manager.Department}");
-// Satya manages Engineering
-
-// --- Type declarations ---
-
-public class Customer
-{
-    public string Name { get; set; }
-
-    public Customer(string name) => Name = name;
-}
-
-public class Person
-{
-    public required string FirstName { get; set; }
-    public required string LastName { get; set; }
-}
-
-static class MathHelpers
-{
-    public static double CircleCircumference(double radius) =>
-        2 * Math.PI * radius;
-}
-
-class ConnectionOptions
-{
-    public string Host { get; init; } = "localhost";
-    public int Port { get; init; } = 80;
-    public bool UseSsl { get; init; }
-}
-
-class Employee
-{
-    public string Name { get; set; }
-    public Employee(string name) => Name = name;
-}
-
-class Manager : Employee
-{
-    public string Department { get; set; }
-
-    public Manager(string name, string department) : base(name) =>
-        Department = department;
-}
-```
-The class body contains fields, properties, methods, and events, collectively called *class members*. The name must be a valid C# identifier name.
+The class body contains fields, properties, methods, and events, collectively called *class members*. The name must be a valid C# [identifier name](../coding-style/identifier-names.md).
 
 ## Create objects
 
 A class defines a type, but it isn't an object itself. You create an object (an *instance* of the class) with the `new` keyword:
 
-```csharp
-﻿// --- Top-level statements ---
+:::code language="csharp" source="snippets/classes/Program.cs" ID="CreateObject":::
 
-var customer = new Customer("Allison");
-Console.WriteLine(customer.Name); // Allison
-
-var c1 = new Customer("Grace");
-var c2 = c1; // both variables reference the same object
-
-c2.Name = "Hopper";
-Console.WriteLine(c1.Name); // Hopper — c1 sees the change made through c2
-
-// var missing = new Person(); // Error: required properties not set
-var person = new Person { FirstName = "Grace", LastName = "Hopper" };
-Console.WriteLine($"{person.FirstName} {person.LastName}"); // Grace Hopper
-
-double circumference = MathHelpers.CircleCircumference(5.0);
-Console.WriteLine($"Circumference: {circumference:F2}"); // Circumference: 31.42
-
-var options = new ConnectionOptions
-{
-    Host = "db.example.com",
-    Port = 5432,
-    UseSsl = true
-};
-Console.WriteLine($"{options.Host}:{options.Port} (SSL: {options.UseSsl})");
-// db.example.com:5432 (SSL: True)
-
-var manager = new Manager("Satya", "Engineering");
-Console.WriteLine($"{manager.Name} manages {manager.Department}");
-// Satya manages Engineering
-
-// --- Type declarations ---
-
-public class Customer
-{
-    public string Name { get; set; }
-
-    public Customer(string name) => Name = name;
-}
-
-public class Person
-{
-    public required string FirstName { get; set; }
-    public required string LastName { get; set; }
-}
-
-static class MathHelpers
-{
-    public static double CircleCircumference(double radius) =>
-        2 * Math.PI * radius;
-}
-
-class ConnectionOptions
-{
-    public string Host { get; init; } = "localhost";
-    public int Port { get; init; } = 80;
-    public bool UseSsl { get; init; }
-}
-
-class Employee
-{
-    public string Name { get; set; }
-    public Employee(string name) => Name = name;
-}
-
-class Manager : Employee
-{
-    public string Department { get; set; }
-
-    public Manager(string name, string department) : base(name) =>
-        Department = department;
-}
-```
 The variable `customer` holds a reference to the object, not the object itself. You can assign multiple variables to the same object. Changes through one reference are visible through the other:
 
-```csharp
-﻿// --- Top-level statements ---
+:::code language="csharp" source="snippets/classes/Program.cs" ID="ReferenceSemantics":::
 
-var customer = new Customer("Allison");
-Console.WriteLine(customer.Name); // Allison
-
-var c1 = new Customer("Grace");
-var c2 = c1; // both variables reference the same object
-
-c2.Name = "Hopper";
-Console.WriteLine(c1.Name); // Hopper — c1 sees the change made through c2
-
-// var missing = new Person(); // Error: required properties not set
-var person = new Person { FirstName = "Grace", LastName = "Hopper" };
-Console.WriteLine($"{person.FirstName} {person.LastName}"); // Grace Hopper
-
-double circumference = MathHelpers.CircleCircumference(5.0);
-Console.WriteLine($"Circumference: {circumference:F2}"); // Circumference: 31.42
-
-var options = new ConnectionOptions
-{
-    Host = "db.example.com",
-    Port = 5432,
-    UseSsl = true
-};
-Console.WriteLine($"{options.Host}:{options.Port} (SSL: {options.UseSsl})");
-// db.example.com:5432 (SSL: True)
-
-var manager = new Manager("Satya", "Engineering");
-Console.WriteLine($"{manager.Name} manages {manager.Department}");
-// Satya manages Engineering
-
-// --- Type declarations ---
-
-public class Customer
-{
-    public string Name { get; set; }
-
-    public Customer(string name) => Name = name;
-}
-
-public class Person
-{
-    public required string FirstName { get; set; }
-    public required string LastName { get; set; }
-}
-
-static class MathHelpers
-{
-    public static double CircleCircumference(double radius) =>
-        2 * Math.PI * radius;
-}
-
-class ConnectionOptions
-{
-    public string Host { get; init; } = "localhost";
-    public int Port { get; init; } = 80;
-    public bool UseSsl { get; init; }
-}
-
-class Employee
-{
-    public string Name { get; set; }
-    public Employee(string name) => Name = name;
-}
-
-class Manager : Employee
-{
-    public string Department { get; set; }
-
-    public Manager(string name, string department) : base(name) =>
-        Department = department;
-}
-```
-This reference-sharing behavior is one distinction between classes and structs. With structs, assignment copies the data. More importantly, classes support inheritance. You can build hierarchies where derived types reuse and specialize behavior from a base class. Structs can't participate in inheritance hierarchies. For more on the distinction, see Value types and reference types.
+This reference-sharing behavior is one distinction between classes and [structs](structs.md). With structs, assignment copies the data. More importantly, classes support [inheritance](#inheritance). You can build hierarchies where derived types reuse and specialize behavior from a base class. Structs can't participate in inheritance hierarchies. For more on the distinction, see [Value types and reference types](index.md#value-types-and-reference-types).
 
 ## Constructors and initialization
 
 When you create an instance, you want its fields and properties initialized to useful values. C# offers several approaches: field initializers, constructor parameters, primary constructors, and required properties.
 
-**Field initializers** set a default value directly on the field declaration:
+**[Field initializers](../../programming-guide/classes-and-structs/instance-constructors.md)** set a default value directly on the field declaration:
 
-```csharp
-#pragma warning disable CS0414 // Field is assigned but never read (snippets demonstrate declaration patterns)
+:::code language="csharp" source="snippets/classes/Containers.cs" ID="ContainerFieldInitializer":::
 
-namespace FieldInit
-{
-    public class Container
-    {
-        private int _capacity = 10;
-    }
-}
-
-namespace ConstructorInit
-{
-    public class Container
-    {
-        private int _capacity;
-
-        public Container(int capacity) => _capacity = capacity;
-    }
-}
-
-namespace PrimaryInit
-{
-    public class Container(int capacity)
-    {
-        private int _capacity = capacity;
-    }
-}
-```
 Field initializers assign a reasonable default to a field or property. This distinguishes it from the following approaches where callers can provide the initial value.
 
 **Constructor parameters** require callers to provide values:
 
-```csharp
-#pragma warning disable CS0414 // Field is assigned but never read (snippets demonstrate declaration patterns)
+:::code language="csharp" source="snippets/classes/Containers.cs" ID="ContainerConstructor":::
 
-namespace FieldInit
-{
-    public class Container
-    {
-        private int _capacity = 10;
-    }
-}
+**[Primary constructors](../../whats-new/tutorials/primary-constructors.md)** add parameters directly to the class declaration. Those parameters are available throughout the class body:
 
-namespace ConstructorInit
-{
-    public class Container
-    {
-        private int _capacity;
+:::code language="csharp" source="snippets/classes/Containers.cs" ID="ContainerPrimaryConstructor":::
 
-        public Container(int capacity) => _capacity = capacity;
-    }
-}
-
-namespace PrimaryInit
-{
-    public class Container(int capacity)
-    {
-        private int _capacity = capacity;
-    }
-}
-```
-**Primary constructors** add parameters directly to the class declaration. Those parameters are available throughout the class body:
-
-```csharp
-#pragma warning disable CS0414 // Field is assigned but never read (snippets demonstrate declaration patterns)
-
-namespace FieldInit
-{
-    public class Container
-    {
-        private int _capacity = 10;
-    }
-}
-
-namespace ConstructorInit
-{
-    public class Container
-    {
-        private int _capacity;
-
-        public Container(int capacity) => _capacity = capacity;
-    }
-}
-
-namespace PrimaryInit
-{
-    public class Container(int capacity)
-    {
-        private int _capacity = capacity;
-    }
-}
-```
 Primary constructors and field initializers can work together: the field initializer `_capacity = capacity` uses the primary-constructor parameter as its value. This pattern lets you capture constructor arguments in fields with a single, concise declaration.
 
-**Required properties** enforce that callers set specific properties through an object initializer:
+**[Required properties](../../language-reference/keywords/required.md)** enforce that callers set specific properties through an object initializer:
 
-```csharp
-﻿// --- Top-level statements ---
+:::code language="csharp" source="snippets/classes/Program.cs" ID="RequiredProperties":::
 
-var customer = new Customer("Allison");
-Console.WriteLine(customer.Name); // Allison
+:::code language="csharp" source="snippets/classes/Program.cs" ID="UsingRequired":::
 
-var c1 = new Customer("Grace");
-var c2 = c1; // both variables reference the same object
+For a deeper look at constructor patterns, including parameter validation and constructor chaining, see [Constructors](../../programming-guide/classes-and-structs/constructors.md).
 
-c2.Name = "Hopper";
-Console.WriteLine(c1.Name); // Hopper — c1 sees the change made through c2
+## Static classes
 
-// var missing = new Person(); // Error: required properties not set
-var person = new Person { FirstName = "Grace", LastName = "Hopper" };
-Console.WriteLine($"{person.FirstName} {person.LastName}"); // Grace Hopper
+A `static` class can't be instantiated and contains only static members. Use static classes to organize utility methods that don't operate on instance data:
 
-double circumference = MathHelpers.CircleCircumference(5.0);
-Console.WriteLine($"Circumference: {circumference:F2}"); // Circumference: 31.42
+:::code language="csharp" source="snippets/classes/Program.cs" ID="StaticClass":::
 
-var options = new ConnectionOptions
-{
-    Host = "db.example.com",
-    Port = 5432,
-    UseSsl = true
-};
-Console.WriteLine($"{options.Host}:{options.Port} (SSL: {options.UseSsl})");
-// db.example.com:5432 (SSL: True)
+:::code language="csharp" source="snippets/classes/Program.cs" ID="UsingStaticClass":::
 
-var manager = new Manager("Satya", "Engineering");
-Console.WriteLine($"{manager.Name} manages {manager.Department}");
-// Satya manages Engineering
+The .NET class library includes many static classes, such as <xref:System.Math> and <xref:System.Console>. A static class is implicitly sealed. You can't derive from it or instantiate it.
 
-// --- Type declarations ---
+## Object initializers
 
-public class Customer
-{
-    public string Name { get; set; }
+*[Object initializers](../../programming-guide/classes-and-structs/object-and-collection-initializers.md)* let you set properties when you create an object, without writing a constructor for every combination of values:
 
-    public Customer(string name) => Name = name;
-}
+:::code language="csharp" source="snippets/classes/Program.cs" ID="ObjectInitializer":::
 
-public class Person
-{
-    public required string FirstName { get; set; }
-    public required string LastName { get; set; }
-}
+:::code language="csharp" source="snippets/classes/Program.cs" ID="UsingObjectInitializer":::
 
-static class MathHelpers
-{
-    public static double CircleCircumference(double radius) =>
-        2 * Math.PI * radius;
-}
+Object initializers work with any accessible property that has a `set` or [`init`](../../language-reference/keywords/init.md) accessor. They combine naturally with `required` properties and with constructors that accept some parameters while letting the caller set others.
 
-class ConnectionOptions
-{
-    public string Host { get; init; } = "localhost";
-    public int Port { get; init; } = 80;
-    public bool UseSsl { get; init; }
-}
+When the property is a *collection*, you can use a [Collection expressions (C# reference)](../../language-reference/operators/collection-expressions.md) to initialize that object.
 
-class Employee
-{
-    public string Name { get; set; }
-    public Employee(string name) => Name = name;
-}
+## Inheritance
 
-class Manager : Employee
-{
-    public string Department { get; set; }
+Classes support *inheritance*. You can define a new class that reuses, extends, or modifies the behavior of an existing class. The class you inherit from is the *base class*, and the new class is the *derived class*:
 
-    public Manager(string name, string department) : base(name) =>
-        Department = department;
-}
-```
-```csharp
-﻿// --- Top-level statements ---
+:::code language="csharp" source="snippets/classes/Program.cs" ID="Inheritance":::
 
-var customer = new Customer("Allison");
-Console.WriteLine(customer.Name); // Allison
+A class can inherit from one base class and implement multiple interfaces. Derived classes inherit all members of the base class except constructors. For more information, see [Inheritance](../object-oriented/inheritance.md) and [Interfaces](interfaces.md).
 
-var c1 = new Customer("Grace");
-var c2 = c1; // both variables reference the same object
+## See also
 
-c2.Name = "Hopper";
-Console.WriteLine(c1.Name); // Hopper — c1 sees the change made through c2
-
-// var missing = new Person(); // Error: required properties not set
-var person = new Person { FirstName = "Grace", LastName = "Hopper" };
-Console.WriteLine($"{person.FirstName} {person.LastName}"); // Grace Hopper
-
-double circumference = MathHelpers.CircleCircumference(5.0);
-Console.WriteLine($"Circumference: {circumference:F2}"); // Circumference: 31.42
-
-var options = new ConnectionOptions
-{
-    Host = "db.example.com",
-    Port = 5432,
-    UseSsl = true
-};
-Console.WriteLine($"{options.Host}:{options.Port} (SSL: {options.UseSsl})");
-// db.example.com:5432 (SSL: True)
-
-var manager = new Manager("Satya", "Engineering");
-Console.WriteLine($"{manager.Name} manages {manager.Department}");
-// Satya manages Engineering
-
-// --- Type declarations ---
-
-public class Customer
-{
-    public string Name { get; set; }
-
-    public Customer(string name) => Name = name;
-}
-
-public class Person
-{
-    public required string FirstName { get; set; }
-    public required string LastName { get; set; }
-}
-
-static class MathHelpers
-{
-    public static double CircleCircumference(double radius) =>
-        2 * Math.PI * radius;
-}
-
-class ConnectionOptions
-{
-    public string Host { get; init; } = "localhost";
-    public int Port { get; init; } = 80;
-    public bool UseSsl { get; init; }
-}
-
-class Employee
-{
-    public string Name { get; set; }
-    public Employee(string name) => Name = name;
-}
-
-class Manager : Employee
-{
-    public string Department { get; set; }
-
-    public Manager(string name, string department) : base(name) =>
-        Department = department;
-}
-```
-For a deeper look at constructor patterns, including parameter validation and constructor chaining, see Constructors.
+- [Type system overview](index.md)
+- [Structs](structs.md)
+- [Records](records.md)
+- [Interfaces](interfaces.md)
+- [Inheritance](../object-oriented/inheritance.md)

@@ -1,0 +1,105 @@
+{
+  "sources": [
+    {
+      "tool": "cppreference",
+      "title": "cppreference.com: the C and C++ languages and standard libraries, offline HTML book",
+      "repository": "https://github.com/PeterFeicht/cppreference-doc/releases/tag/v20250209",
+      "archive": "https://github.com/PeterFeicht/cppreference-doc/releases/download/v20250209/html-book-20250209.zip",
+      "ref": "v20250209",
+      "version": "2025-02",
+      "license": "CC-BY-SA-3.0 OR GFDL-1.3-or-later",
+      "attribution": "The cppreference.com contributors",
+      "paths": [
+        "reference/en/"
+      ],
+      "docs": [
+        "reference/en"
+      ],
+      "licenseTexts": {
+        "LICENSE-CC-BY-SA-3.0": "https://creativecommons.org/licenses/by-sa/3.0/legalcode.txt",
+        "LICENSE-GFDL-1.3": "https://www.gnu.org/licenses/fdl-1.3.txt"
+      }
+    },
+    {
+      "tool": "cmake",
+      "title": "CMake documentation: commands, variables, properties, modules, the cmake tool",
+      "repository": "https://github.com/Kitware/CMake.git",
+      "ref": "v4.5.0",
+      "version": "4.5",
+      "license": "BSD-3-Clause",
+      "attribution": "Kitware, Inc. and the CMake contributors",
+      "paths": [
+        "Help/"
+      ],
+      "docs": [
+        "Help"
+      ],
+      "exclude": [
+        "Help/release/dev"
+      ]
+    },
+    {
+      "tool": "clang",
+      "title": "Clang documentation: the user manual, diagnostics, sanitizers, language extensions, clang-tidy is apart",
+      "repository": "https://github.com/llvm/llvm-project.git",
+      "ref": "llvmorg-23.1.5",
+      "version": "23.1",
+      "license": "Apache-2.0 WITH LLVM-exception",
+      "attribution": "The LLVM Project contributors",
+      "paths": [
+        "clang/docs/"
+      ],
+      "docs": [
+        "clang/docs"
+      ],
+      "exclude": [
+        "clang/docs/analyzer/developer-docs"
+      ],
+      "licenseTexts": {
+        "LICENSE": "https://raw.githubusercontent.com/llvm/llvm-project/llvmorg-23.1.5/clang/LICENSE.TXT"
+      }
+    },
+    {
+      "tool": "gnu-make",
+      "title": "GNU Make manual",
+      "repository": "https://git.savannah.gnu.org/git/make.git",
+      "ref": "4.4.1",
+      "version": "4.4",
+      "license": "GFDL-1.3-or-later",
+      "attribution": "Free Software Foundation, Inc.",
+      "paths": [
+        "doc/"
+      ],
+      "docs": [
+        "doc"
+      ],
+      "files": "\\.texi$",
+      "licenseTexts": {
+        "LICENSE-GFDL-1.3": "https://www.gnu.org/licenses/fdl-1.3.txt"
+      }
+    },
+    {
+      "tool": "gcc",
+      "title": "GCC manual: invoking GCC, options, C and C++ extensions, warnings",
+      "repository": "https://gcc.gnu.org/git/gcc.git",
+      "ref": "releases/gcc-16.2.0",
+      "version": "16.2",
+      "license": "GFDL-1.3-or-later",
+      "attribution": "Free Software Foundation, Inc.",
+      "paths": [
+        "gcc/doc/"
+      ],
+      "docs": [
+        "gcc/doc"
+      ],
+      "files": "\\.texi$",
+      "exclude": [
+        "gcc/doc/gccint.texi",
+        "gcc/doc/include"
+      ],
+      "licenseTexts": {
+        "LICENSE-GFDL-1.3": "https://www.gnu.org/licenses/fdl-1.3.txt"
+      }
+    }
+  ]
+}

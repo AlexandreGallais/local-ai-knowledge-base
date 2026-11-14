@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataEmit2::DefineMethodSpec Method"
 title: "IMetaDataEmit2::DefineMethodSpec Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataemit2-definemethodspec-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataEmit2.DefineMethodSpec"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataEmit2::DefineMethodSpec"
+  - "IMetaDataEmit2::DefineMethodSpec method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataEmit2::DefineMethodSpec Method
 
 Creates a generic instance of a method, and gets a token to the definition.
@@ -15,7 +22,7 @@ Creates a generic instance of a method, and gets a token to the definition.
 
 ```cpp
 HRESULT DefineMethodSpec (
-    [in]  mdToken           <example-value>,
+    [in]  mdToken           tkParent,
     [in]  PCCOR_SIGNATURE   pvSigBlob,
     [in]  ULONG             cbSigBlob,
     [out] mdMethodSpec      *pmi
@@ -38,7 +45,7 @@ HRESULT DefineMethodSpec (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -48,5 +55,5 @@ HRESULT DefineMethodSpec (
 
 ## See also
 
-- IMetaDataEmit2 Interface
-- IMetaDataEmit Interface
+- [IMetaDataEmit2 Interface](imetadataemit2-interface.md)
+- [IMetaDataEmit Interface](imetadataemit-interface.md)

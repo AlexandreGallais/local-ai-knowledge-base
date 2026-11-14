@@ -1,33 +1,62 @@
 ---
-title: "HTMLOptionElement: index property"
-tool: "mdn-api"
-version: "2026-11"
-source: "https://github.com/mdn/content/blob/c44f591049bc129b356acb0a9ce281974c035113/files/en-us/web/api/htmloptionelement/index/index.md"
-commit: "c44f591049bc129b356acb0a9ce281974c035113"
-license: "CC-BY-SA-2.5"
+title: HTMLOptionElement
+slug: Web/API/HTMLOptionElement
+page-type: web-api-interface
+browser-compat: api.HTMLOptionElement
 ---
 
-# HTMLOptionElement: index property
+{{APIRef("HTML DOM")}}
 
-The read-only **`index`** property of the `HTMLOptionElement` interface specifies the 0-based index of the element; that is, the position of the `<option>` within the list of options it belongs to, in tree-order, as an integer. If the `<option>` is not part of an option-list, the value is `0`.
+The **`HTMLOptionElement`** interface represents {{HTMLElement("option")}} elements and inherits all properties and methods of the {{domxref("HTMLElement")}} interface.
 
-## Value
+{{InheritanceDiagram}}
 
-A number.
+## Constructor
 
-## Examples
+- {{domxref("HTMLOptionElement.Option", "Option()")}}
+  - : Returns a newly created `HTMLOptionElement` object. It has four parameters: the text to display, `text`, the value associated, `value`, the value of `defaultSelected`, and the value of `selected`. The last three parameters are optional.
 
-```js
-const optionElement = document.getElementById("myOption");
-console.log(optionElement.index);
-```
+## Instance properties
+
+_Inherits properties from its parent, {{domxref("HTMLElement")}}._
+
+- {{domxref("HTMLOptionElement.defaultSelected")}}
+  - : Has a value of either `true` or `false` that shows the initial value of the [`selected`](/en-US/docs/Web/HTML/Reference/Elements/option#selected) HTML attribute, indicating whether the option is selected by default or not.
+- {{domxref("HTMLOptionElement.disabled")}}
+  - : Has a value of either `true` or `false` representing the value of the [`disabled`](/en-US/docs/Web/HTML/Reference/Elements/option#disabled) HTML attribute, which indicates that the option is unavailable to be selected.
+- {{domxref("HTMLOptionElement.form")}} {{ReadOnlyInline}}
+  - : A {{domxref("HTMLFormElement")}} representing the same value as the `form` of the corresponding {{HTMLElement("select")}} element, if the option is a descendant of a {{HTMLElement("select")}} element, or null if none is found.
+- {{domxref("HTMLOptionElement.index")}} {{ReadOnlyInline}}
+  - : A `long` representing the position of the option within the list of options it belongs to, in tree-order. If the option is not part of a list of options, like when it is part of the {{HTMLElement("datalist")}} element, the value is `0`.
+- {{domxref("HTMLOptionElement.label")}}
+  - : A string that reflects the value of the [`label`](/en-US/docs/Web/HTML/Reference/Elements/option#label) HTML attribute, which provides a label for the option. If this attribute isn't specifically set, reading it returns the element's {{domxref("HTMLOptionElement.text", "text")}} content.
+- {{domxref("HTMLOptionElement.selected")}}
+  - : Has a value of either `true` or `false` that indicates whether the option is currently selected.
+- {{domxref("HTMLOptionElement.text")}}
+  - : A string that contains the text content of the element.
+- {{domxref("HTMLOptionElement.value")}}
+  - : A string that reflects the value of the [`value`](/en-US/docs/Web/HTML/Reference/Elements/option#value) HTML attribute, if it exists; otherwise reflects value of the {{domxref("Node.textContent")}} property.
+
+## Instance methods
+
+_Doesn't implement any specific method, but inherits methods from its parent, {{domxref("HTMLElement")}}._
+
+## Specifications
+
+{{Specifications}}
+
+## Browser compatibility
+
+{{Compat}}
 
 ## See also
 
-- `<option>`
-- `<select>`
-- `<datalist>`
-- `HTMLOptionElement.defaultSelected`
-- `HTMLOptionElement.selected`
-- `HTMLSelectElement.selectedIndex`
-- `HTMLOptionsCollection`
+- {{HTMLElement("option")}}
+- {{HTMLElement("select")}}
+- {{HTMLElement("datalist")}}
+- {{HTMLElement("optgroup")}}
+- {{domxref("HTMLOptionsCollection")}}
+- {{domxref("HTMLSelectElement")}}
+- {{domxref("HTMLOptGroupElement")}}
+- {{domxref("HTMLElement")}}
+- {{domxref("HTMLCollection")}}

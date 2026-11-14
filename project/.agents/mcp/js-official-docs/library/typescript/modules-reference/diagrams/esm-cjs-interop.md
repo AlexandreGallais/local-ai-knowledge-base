@@ -1,14 +1,3 @@
----
-title: "esm-cjs-interop"
-tool: "typescript"
-version: "6.0"
-source: "https://github.com/microsoft/TypeScript-Website/blob/4ec663ac4412c3a7086401bd5a8811565589b11d/packages/documentation/copy/en/modules-reference/diagrams/esm-cjs-interop.md"
-commit: "4ec663ac4412c3a7086401bd5a8811565589b11d"
-license: "CC-BY-4.0"
----
-
-# esm-cjs-interop
-
 ```mermaid
 graph TB
   subgraph Transpiled[ESM transpiled to CJS]

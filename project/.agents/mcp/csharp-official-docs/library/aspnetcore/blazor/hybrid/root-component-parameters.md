@@ -1,33 +1,32 @@
 ---
-title: "Pass root component parameters in ASP.NET Core Blazor Hybrid"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/hybrid/root-component-parameters.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Pass root component parameters in ASP.NET Core Blazor Hybrid
+description: Learn how to pass an optional dictionary of parameters to the root component in an ASP.NET Core Blazor Hybrid app.
+monikerRange: '>= aspnetcore-6.0'
+ms.date: 11/11/2025
 ---
-
 # Pass root component parameters in ASP.NET Core Blazor Hybrid
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
 This article explains how to pass root component parameters in a Blazor Hybrid app.
 
 The `RootComponent` class of a `BlazorWebView` defines a `Parameters` property of type `IDictionary<string, object?>?`, which represents an optional dictionary of parameters to pass to the root component:
 
-* .NET MAUI: `Microsoft.AspNetCore.Components.WebView.Maui.RootComponent`
-* WPF: `Microsoft.AspNetCore.Components.WebView.Wpf.RootComponent`
-* Windows Forms: `Microsoft.AspNetCore.Components.WebView.WindowsForms.RootComponent`
+* .NET MAUI: <xref:Microsoft.AspNetCore.Components.WebView.Maui.RootComponent?displayProperty=nameWithType>
+* WPF: <xref:Microsoft.AspNetCore.Components.WebView.Wpf.RootComponent?displayProperty=nameWithType>
+* Windows Forms: <xref:Microsoft.AspNetCore.Components.WebView.WindowsForms.RootComponent?displayProperty=nameWithType>
 
 The following example passes a view model to the root component, which further passes the view model as a cascading type to a Razor component in the Blazor portion of the app. The example is based on the keypad example in the .NET MAUI documentation:
 
-* Data binding and MVVM: Commanding (.NET MAUI documentation): Explains data binding with MVVM using a keypad example.
-* .NET MAUI Samples
+* [Data binding and MVVM: Commanding (.NET MAUI documentation)](/dotnet/maui/xaml/fundamentals/mvvm#commanding): Explains data binding with MVVM using a keypad example.
+* [.NET MAUI Samples](https://github.com/dotnet/maui-samples/)
 
 Although the keypad example focuses on implementing the MVVM pattern in .NET MAUI Blazor Hybrid apps:
 
 * The dictionary of objects passed to root components can include any type for any purpose where you need to pass one or more parameters to the root component for use by Razor components in the app.
 * The concepts demonstrated by the following .NET MAUI Blazor example are the same for Windows Forms Blazor apps and WPF Blazor apps.
 
-Place the following view model into your .NET MAUI Blazor Hybrid app.
+Place the following view model into your .NET MAUI Blazor Hybrid app. 
 
 `KeypadViewModel.cs`:
 
@@ -127,7 +126,7 @@ In this article's example, the app's root namespace is `MauiBlazor`. Change the 
 namespace MauiBlazor;
 ```
 
-> **Note:**
+> [!NOTE]
 > At the time the `KeypadViewModel` view model was created for the .NET MAUI sample app and the .NET MAUI documentation, view models were placed in a folder named `ViewModels`, but the namespace was set to the root of the app and didn't include the folder name. If you wish to update the namespace to include the folder in the `KeypadViewModel.cs` file, modify the example code in this article to match. Add `using` (C#) and `@using` (Razor) statements to the following files or fully-qualify the references to the view model type as `{APP NAMESPACE}.ViewModels.KeypadViewModel`, where the `{APP NAMESPACE}` placeholder is the app's root namespace.
 
 Although you can set `Parameters` directly in XAML, the following example names the root component (`rootComponent`) in the XAML file and sets the parameter dictionary in the code-behind file.
@@ -155,7 +154,7 @@ public MainPage()
 }
 ```
 
-The following example cascades the object (`KeypadViewModel`) down component hierarchies in the Blazor portion of the app as a `CascadingValue`.
+The following example [cascades](../components/cascading-values-and-parameters.md) the object (`KeypadViewModel`) down component hierarchies in the Blazor portion of the app as a [`CascadingValue`](../components/cascading-values-and-parameters.md#cascadingvalue-component).
 
 In the `Main` component (`Main.razor`):
 
@@ -168,7 +167,7 @@ In the `Main` component (`Main.razor`):
   }
   ```
 
-* Cascade the `KeypadViewModel` with the `CascadingValue` component. Update the `<Found>` XAML content to the following markup:
+* Cascade the `KeypadViewModel` with the [`CascadingValue` component](../components/cascading-values-and-parameters.md#cascadingvalue-component). Update the `<Found>` XAML content to the following markup:
 
   ```xaml
   <Found Context="routeData">
@@ -179,13 +178,13 @@ In the `Main` component (`Main.razor`):
   </Found>
   ```
 
-At this point, the cascaded type is available to Razor components throughout the app as a `CascadingParameter`.
+At this point, the cascaded type is available to Razor components throughout the app as a [`CascadingParameter`](xref:Microsoft.AspNetCore.Components.CascadingParameterAttribute).
 
 The following `Keypad` component example:
 
 * Displays the current value of `KeypadViewModel.DisplayText`.
-* Permits character deletion by calling the `KeypadViewModel.DeleteCharCommand` command if the display string length is greater than 0 (zero), which is checked by the call to `System.Windows.Input.ICommand.CanExecute*`.
-* Permits adding characters by calling `KeypadViewModel.AddCharCommand` with the key <example-value> in the UI.
+* Permits character deletion by calling the `KeypadViewModel.DeleteCharCommand` command if the display string length is greater than 0 (zero), which is checked by the call to <xref:System.Windows.Input.ICommand.CanExecute*?displayProperty=nameWithType>.
+* Permits adding characters by calling `KeypadViewModel.AddCharCommand` with the key pressed in the UI.
 
 `Pages/Keypad.razor`:
 
@@ -269,6 +268,6 @@ Create a sidebar navigation entry in the `NavMenu` component (`Shared/NavMenu.ra
 
 ## Related content
 
-* Host a Blazor web app in a .NET MAUI app using BlazorWebView
-* Data binding and MVVM: Commanding (.NET MAUI documentation)
-* ASP.NET Core Blazor cascading values and parameters
+* [Host a Blazor web app in a .NET MAUI app using BlazorWebView](/dotnet/maui/user-interface/controls/blazorwebview)
+* [Data binding and MVVM: Commanding (.NET MAUI documentation)](/dotnet/maui/xaml/fundamentals/mvvm#commanding)
+* [ASP.NET Core Blazor cascading values and parameters](../components/cascading-values-and-parameters.md)

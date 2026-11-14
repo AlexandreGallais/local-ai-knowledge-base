@@ -1,23 +1,19 @@
 ---
 title: "Breaking change: IDispatchImplAttribute API is removed"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/interop/8.0/idispatchimplattribute-removed.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in interop in .NET 8 where the IDispatchImplAttribute API has been removed.
+ms.date: 08/22/2023
 ---
-
 # IDispatchImplAttribute API is removed
 
-The `System.Runtime.InteropServices.IDispatchImplAttribute` implementation has officially been removed from .NET. This type was only discoverable at runtime and its removal has no impact on visible API surface area. However, if an assembly targeting .NET Framework uses this type and is loaded in .NET 8 or a later version, the runtime will throw a `System.TypeLoadException`.
+The <xref:System.Runtime.InteropServices.IDispatchImplAttribute> implementation has officially been removed from .NET. This type was only discoverable at runtime and its removal has no impact on visible API surface area. However, if an assembly targeting .NET Framework uses this type and is loaded in .NET 8 or a later version, the runtime will throw a <xref:System.TypeLoadException>.
 
 ## Previous behavior
 
-The `System.Runtime.InteropServices.IDispatchImplAttribute` type could be found at runtime, but none of the documented semantics of the deprecated attribute applied.
+The <xref:System.Runtime.InteropServices.IDispatchImplAttribute> type could be found at runtime, but none of the documented semantics of the deprecated attribute applied.
 
 ## New behavior
 
-Starting in .NET 8, attempting to load an assembly that contains this attribute throws a `System.TypeLoadException`.
+Starting in .NET 8, attempting to load an assembly that contains this attribute throws a <xref:System.TypeLoadException>.
 
 ## Version introduced
 
@@ -25,7 +21,7 @@ Starting in .NET 8, attempting to load an assembly that contains this attribute 
 
 ## Type of breaking change
 
-This change can affect binary compatibility.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 
@@ -37,4 +33,4 @@ Remove use of this API in assemblies that are loaded in .NET 8 and later version
 
 ## Affected APIs
 
-- `System.Runtime.InteropServices.IDispatchImplAttribute`
+- <xref:System.Runtime.InteropServices.IDispatchImplAttribute?displayProperty=fullName>

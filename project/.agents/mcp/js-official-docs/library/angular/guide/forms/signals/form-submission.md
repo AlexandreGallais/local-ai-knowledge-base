@@ -1,12 +1,3 @@
----
-title: "Form submission"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/forms/signals/form-submission.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Form submission
 
 When a user submits a form, your application typically needs to handle multiple concerns at once: surfacing validation errors, preventing duplicate submission, sending data to a server, and much more. Handling each of these manually can be tedious and prone to error.
@@ -30,7 +21,7 @@ The most common way to use the `submit()` function is through the `FormRoot` dir
 
 The `FormRoot` directive handles three things automatically when bound to a `<form>` element:
 
-1. **Sets `novalidate`** — Disables the browser's built-in validation so Signal Forms manages validation instead
+1. **Sets [`novalidate`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/form#novalidate)** — Disables the browser's built-in validation so Signal Forms manages validation instead
 1. **Prevents default** — Stops the browser from navigating on form submission
 1. **Calls `submit()`** — Triggers the submission flow when the user submits the form, if the form was created with a `submission` option
 
@@ -91,7 +82,7 @@ export class Contact {
 }
 ```
 
-The `action` function runs only when no validation rules have failed. By default, pending async validators do not block submission (see Controlling validation gating for more details). The action receives the field tree and a `detail` object with `root` and `submitted` field trees, which is useful when submitting a sub-form.
+The `action` function runs only when no validation rules have failed. By default, pending async validators do not block submission (see [Controlling validation gating](#controlling-validation-gating-with-ignorevalidators) for more details). The action receives the field tree and a `detail` object with `root` and `submitted` field trees, which is useful when submitting a sub-form.
 
 After validation passes, the action itself may still fail due to scenarios such as a network error or duplicate entry. In those cases, you can surface the failure by returning the error(s). On the other hand, to indicate success, you only need to return `null` or `undefined`, or call an empty `return`.
 
@@ -166,7 +157,7 @@ Submission errors clear automatically when the user edits the field. If the `act
 
 This differs from validation errors, which recompute reactively. Validation rules run again on each change and may produce the same error. Submission errors are one-time results from the server — once cleared, they do not reappear unless the form is submitted again.
 
-TIP: Submission errors appear alongside validation errors in the field's `errors()` signal. For guidance on displaying errors in your template, see the Field State Management guide.
+TIP: Submission errors appear alongside validation errors in the field's `errors()` signal. For guidance on displaying errors in your template, see the [Field State Management guide](guide/forms/signals/field-state-management).
 
 ## Handling invalid submissions with `onInvalid`
 
@@ -329,6 +320,8 @@ When a submission is in progress, subsequent calls to `submit()` for the same fo
 
 This guide covered submitting forms and handling form submission errors. Related guides explore other aspects of Signal Forms:
 
-  - Validation
-  - Field state management
-  - Adding form logic
+<docs-pill-row>
+  <docs-pill href="guide/forms/signals/validation" title="Validation" />
+  <docs-pill href="guide/forms/signals/field-state-management" title="Field state management" />
+  <docs-pill href="guide/forms/signals/form-logic" title="Adding form logic" />
+</docs-pill-row>

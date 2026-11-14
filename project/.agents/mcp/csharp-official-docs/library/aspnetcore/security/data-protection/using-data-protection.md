@@ -1,13 +1,11 @@
 ---
-title: "Get started with the Data Protection APIs in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/data-protection/using-data-protection.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Get started with the Data Protection APIs in ASP.NET Core
+description: Learn how to use the ASP.NET Core data protection APIs for protecting and unprotecting data in an app.
+ms.date: 11/12/2019
 ---
-
 # Get started with the Data Protection APIs in ASP.NET Core
+
+<a name="security-data-protection-getting-started"></a>
 
 Basically, protecting data consists of the following steps:
 
@@ -15,73 +13,23 @@ Basically, protecting data consists of the following steps:
 1. Call the `Protect` method with the data you want to protect.
 1. Call the `Unprotect` method with the data you want to turn back into plain text.
 
-Most frameworks and app models, such as ASP.NET Core or SignalR, already configure the data protection system and add it to a service container that is accessed via dependency injection. The following sample demonstrates:
+Most frameworks and app models, such as ASP.NET Core or SignalR, already configure the data protection system and add it to a service container that is accessed via [dependency injection](../../fundamentals/dependency-injection.md). The following sample demonstrates:
 
 * Configuring a service container for dependency injection and registering the data protection stack.
 * Receiving the data protection provider via DI.
 * Creating a protector.
 * Protecting then unprotecting data.
 
-```csharp
-using System;
-using Microsoft.AspNetCore.DataProtection;
-using Microsoft.Extensions.DependencyInjection;
+[!code-csharp[](../../security/data-protection/using-data-protection/samples/protectunprotect.cs?highlight=26,34,35,36,37,38,39,40)]
 
-public class Program
-{
-    public static void Main(string[] args)
-    {
-        // add data protection services
-        var serviceCollection = new ServiceCollection();
-        serviceCollection.AddDataProtection();
-        var services = serviceCollection.BuildServiceProvider();
+When you create a protector you must provide one or more [Purpose Strings](consumer-apis/purpose-strings.md). A purpose string provides isolation between consumers. For example, a protector created with a purpose string of "green" wouldn't be able to unprotect data provided by a protector with a purpose of "purple".
 
-        // create an instance of MyClass using the service provider
-        var instance = ActivatorUtilities.CreateInstance<MyClass>(services);
-        instance.RunSample();
-    }
-
-    public class MyClass
-    {
-        IDataProtector _protector;
-
-        // the 'provider' parameter is provided by DI
-        public MyClass(IDataProtectionProvider provider)
-        {
-            _protector = provider.CreateProtector("Contoso.MyClass.v1");
-        }
-
-        public void RunSample()
-        {
-            Console.Write("Enter input: ");
-            string input = Console.ReadLine();
-
-            // protect the payload
-            string protectedPayload = _protector.Protect(input);
-            Console.WriteLine($"Protect returned: {protectedPayload}");
-
-            // unprotect the payload
-            string unprotectedPayload = _protector.Unprotect(protectedPayload);
-            Console.WriteLine($"Unprotect returned: {unprotectedPayload}");
-        }
-    }
-}
-
-/*
- * SAMPLE OUTPUT
- *
- * Enter input: Hello world!
- * Protect returned: CfDJ8ICcgQwZZhlAlTZT...OdfH66i1PnGmpCR5e441xQ
- * Unprotect returned: Hello world!
- */
-```
-
-When you create a protector you must provide one or more Purpose Strings. A purpose string provides isolation between consumers. For example, a protector created with a purpose string of "green" wouldn't be able to unprotect data provided by a protector with a purpose of "purple".
-
->**Tip:**
+>[!TIP]
 > Instances of `IDataProtectionProvider` and `IDataProtector` are thread-safe for multiple callers. It's intended that once a component gets a reference to an `IDataProtector` via a call to `CreateProtector`, it will use that reference for multiple calls to `Protect` and `Unprotect`.
 >
 >A call to `Unprotect` will throw CryptographicException if the protected payload cannot be verified or deciphered. Some components may wish to ignore errors during unprotect operations; a component which reads authentication cookies might handle this error and treat the request as if it had no cookie at all rather than fail the request outright. Components which want this behavior should specifically catch CryptographicException instead of swallowing all exceptions.
+
+<a name="add-opt"></a>
 
 ## Use AddOptions to configure custom repository
 
@@ -104,85 +52,14 @@ The preceding code logs the following warning:
 
 The following code provides the `IXmlRepository` implementation without having to build the service provider and therefore making additional copies of singleton services:
 
-```csharp
-public void ConfigureServices(IServiceCollection services)
-{
-    services.AddDbContext<DataProtectionDbContext>(options =>
-        options.UseSqlServer(
-            Configuration.GetConnectionString("DefaultConnection")));
-
-    // Register XmlRepository for data protection.
-    services.AddOptions<KeyManagementOptions>()
-    .Configure<IServiceScopeFactory>((options, factory) =>
-    {
-        options.XmlRepository = new CustomXmlRepository(factory);
-    });
-
-    services.AddRazorPages();
-}
-```
+[!code-csharp[](~/security/data-protection/using-data-protection/samples/CustomXMLrepo/CustomXMLrepo/Startup.cs?name=snippet)]
 
 The preceding code removes the call to `GetService` and hides `IConfigureOptions<T>`.
 
 The following code shows the custom XML repository:
 
-```csharp
-﻿using CustomXMLrepo.Data;
-using Microsoft.AspNetCore.DataProtection.Repositories;
-using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
-
-public class CustomXmlRepository : IXmlRepository
-{
-    private readonly IServiceScopeFactory factory;
-
-    public CustomXmlRepository(IServiceScopeFactory factory)
-    {
-        this.factory = factory;
-    }
-
-    public IReadOnlyCollection<XElement> GetAllElements()
-    {
-        using (var scope = factory.CreateScope())
-        {
-            var context = scope.ServiceProvider.GetRequiredService<DataProtectionDbContext>();
-            var keys = context.XmlKeys.ToList()
-                .Select(x => XElement.Parse(x.Xml))
-                .ToList();
-            return keys;
-        }
-    }
-
-    public void StoreElement(XElement element, string friendlyName)
-    {
-        var key = new XmlKey
-        {
-            Xml = element.ToString(SaveOptions.DisableFormatting)
-        };
-
-        using (var scope = factory.CreateScope())
-        {
-            var context = scope.ServiceProvider.GetRequiredService<DataProtectionDbContext>();
-            context.XmlKeys.Add(key);
-            context.SaveChanges();
-        }
-    }
-}
-```
+[!code-csharp[](~/security/data-protection/using-data-protection/samples/CustomXMLrepo/CustomXMLrepo/CustomXmlRepository.cs)]
 
 The following code shows the XmlKey class:
 
-```csharp
-public class XmlKey
-{
-    public Guid Id { get; set; }
-    public string Xml { get; set; }
-
-    public XmlKey()
-    {
-        this.Id = Guid.NewGuid();
-    }
-}
-```
+[!code-csharp[](~/security/data-protection/using-data-protection/samples/CustomXMLrepo/CustomXMLrepo/XmlKey.cs?name=snippet)]

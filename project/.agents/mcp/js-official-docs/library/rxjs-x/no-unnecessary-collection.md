@@ -1,15 +1,8 @@
----
-title: "Disallow unnecessary usage of collection arguments with single values (rxjs-x/no-unnecessary-collection)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/no-unnecessary-collection.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Disallow unnecessary usage of collection arguments with single values (`rxjs-x/no-unnecessary-collection`)
 
 💼 This rule is enabled in the 🔒 `strict` config.
+
+<!-- end auto-generated rule header -->
 
 This rule effects failures when passing a collection (object or array) containing a single observable
 to the static observable creators that accept multiple observables
@@ -62,5 +55,5 @@ then you don't need this rule.
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/no-unnecessary-collection.ts)
+- [Test source](/tests/rules/no-unnecessary-collection.test.ts)

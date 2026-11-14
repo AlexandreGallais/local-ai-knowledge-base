@@ -1,12 +1,3 @@
----
-title: "Mocks (part 1 of 2)"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/api/mock.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # Mocks
 
 You can create a mock function or a class to track its execution with the `vi.fn` method. If you want to track a property on an already created object, you can use the `vi.spyOn` method:
@@ -27,14 +18,14 @@ market.getApples()
 getApplesSpy.mock.calls.length === 1
 ```
 
-You should use mock assertions (e.g., `toHaveBeenCalled`) on `expect` to assert mock results. This API reference describes available properties and methods to manipulate mock behavior.
+You should use mock assertions (e.g., [`toHaveBeenCalled`](/api/expect#tohavebeencalled)) on [`expect`](/api/expect) to assert mock results. This API reference describes available properties and methods to manipulate mock behavior.
 
-**IMPORTANT**
-Vitest spies inherit implementation's `length` property when initialized, but it doesn't override it if the implementation was changed later:
+::: warning IMPORTANT
+Vitest spies inherit implementation's [`length`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/length) property when initialized, but it doesn't override it if the implementation was changed later:
 
 ::: code-group
 
-```ts
+```ts [vi.fn]
 const fn = vi.fn((arg1) => {})
 fn.length // == 1
 
@@ -42,7 +33,7 @@ fn.mockImplementation(() => {})
 fn.length // == 1
 ```
 
-```ts
+```ts [vi.spyOn]
 const example = {
   fn(arg1, arg2) {
     // ...
@@ -56,13 +47,16 @@ fn.mockImplementation(() => {})
 fn.length // == 2
 ```
 
-**Tip:**
+:::
+
+::: tip
 The custom function implementation in the types below is marked with a generic `<T>`.
+:::
 
-**Class Support {#class-support}**
-The `mockReturnValue`, `mockReturnValueOnce`, `mockResolvedValue`, `mockResolvedValueOnce`, `mockRejectedValue` and `mockRejectedValueOnce` methods cannot be used when the mock is called with the `new` keyword. Class constructors have unintuitive behaviour regarding the return value:
+::: warning Class Support {#class-support}
+The `mockReturnValue`, `mockReturnValueOnce`, `mockResolvedValue`, `mockResolvedValueOnce`, `mockRejectedValue` and `mockRejectedValueOnce` methods cannot be used when the mock is called with the `new` keyword. Class constructors have [unintuitive behaviour](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor) regarding the return value:
 
-```ts
+```ts {2,7}
 const CorrectDogClass = vi.fn(class {
   constructor(public name: string) {}
 })
@@ -99,17 +93,19 @@ mock.mockImplementation(class {
 })
 ```
 
+:::
+
 ## getMockImplementation
 
 ```ts
 function getMockImplementation(): T | undefined
 ```
 
-Returns the current mock implementation if there is one. If an implementation was queued with `mockImplementationOnce`, it returns the first queued implementation instead.
+Returns the current mock implementation if there is one. If an implementation was queued with [`mockImplementationOnce`](#mockimplementationonce), it returns the first queued implementation instead.
 
-If the mock was created with `vi.fn`, it will use the provided method as the mock implementation.
+If the mock was created with [`vi.fn`](/api/vi#vi-fn), it will use the provided method as the mock implementation.
 
-If the mock was created with `vi.spyOn`, it will return `undefined` unless a custom implementation is provided.
+If the mock was created with [`vi.spyOn`](/api/vi#vi-spyon), it will return `undefined` unless a custom implementation is provided.
 
 ## getMockName
 
@@ -142,7 +138,7 @@ expect(person.greet('Bob')).toBe('mocked')
 expect(spy.mock.calls).toEqual([['Bob']])
 ```
 
-To automatically call this method before each test, enable the `clearMocks` setting in the configuration.
+To automatically call this method before each test, enable the [`clearMocks`](/config/clearmocks) setting in the configuration.
 
 ## mockName
 
@@ -174,7 +170,7 @@ mockFn.mock.calls[0][0] === 0 // true
 mockFn.mock.calls[1][0] === 1 // true
 ```
 
-If the implementation is a class, the mock's `prototype` is re-pointed to the implementation's prototype, so constructed instances see its prototype methods and pass `instanceof` checks against it. See Mocking Classes for details.
+If the implementation is a class, the mock's `prototype` is re-pointed to the implementation's prototype, so constructed instances see its prototype methods and pass `instanceof` checks against it. See [Mocking Classes](/guide/mocking/classes) for details.
 
 ## mockImplementationOnce
 
@@ -249,7 +245,7 @@ test('async callback', async () => {
 })
 ```
 
-Note that this method takes precedence over the `mockImplementationOnce`.
+Note that this method takes precedence over the [`mockImplementationOnce`](#mockimplementationonce).
 
 ## mockRejectedValue
 
@@ -289,7 +285,7 @@ await asyncMock() // throws Error<'Async error'>
 function mockReset(): Mock<T>
 ```
 
-Does what `mockClear` does and resets the mock implementation. This also resets all "once" implementations.
+Does what [`mockClear`](#mockclear) does and resets the mock implementation. This also resets all "once" implementations.
 
 Note that resetting a mock from `vi.fn()` will set the implementation to an empty function that returns `undefined`.
 Resetting a mock from `vi.fn(impl)` will reset the implementation to `impl`.
@@ -314,7 +310,7 @@ expect(person.greet('Bob')).toBe('Hello Bob')
 expect(spy.mock.calls).toEqual([['Bob']])
 ```
 
-To automatically call this method before each test, enable the `mockReset` setting in the configuration.
+To automatically call this method before each test, enable the [`mockReset`](/config/mockreset) setting in the configuration.
 
 ## mockRestore
 
@@ -322,9 +318,9 @@ To automatically call this method before each test, enable the `mockReset` setti
 function mockRestore(): void
 ```
 
-Does what `mockReset` does and restores the original descriptors of spied-on objects, if the mock was created with `vi.spyOn`.
+Does what [`mockReset`](#mockreset) does and restores the original descriptors of spied-on objects, if the mock was created with [`vi.spyOn`](/api/vi#vi-spyon).
 
-`mockRestore` on a `vi.fn()` mock is identical to `mockReset`.
+`mockRestore` on a `vi.fn()` mock is identical to [`mockReset`](#mockreset).
 
 ```ts
 const person = {
@@ -342,7 +338,7 @@ expect(person.greet('Bob')).toBe('Hello Bob')
 expect(spy.mock.calls).toEqual([])
 ```
 
-To automatically call this method before each test, enable the `restoreMocks` setting in the configuration.
+To automatically call this method before each test, enable the [`restoreMocks`](/config/restoremocks) setting in the configuration.
 
 ## mockResolvedValue
 
@@ -484,8 +480,8 @@ fn.mock.calls === [
 ]
 ```
 
-**Objects are Stored by Reference**
-Note that Vitest always stores objects by reference in all properties of the `mock` state. This means that if the properties were changed by your code, then some assertions like `.toHaveBeenCalledWith` will not pass:
+:::warning Objects are Stored by Reference
+Note that Vitest always stores objects by reference in all properties of the `mock` state. This means that if the properties were changed by your code, then some assertions like [`.toHaveBeenCalledWith`](/api/expect#tohavebeencalledwith) will not pass:
 
 ```ts
 const argument = {
@@ -505,7 +501,7 @@ expect(fn).toHaveBeenCalledWith({ value: 10 }) // [!code ++]
 
 In this case you can clone the argument yourself:
 
-```ts
+```ts{6}
 const calledArguments = []
 const fn = vi.fn((arg) => {
   calledArguments.push(structuredClone(arg))
@@ -514,6 +510,8 @@ const fn = vi.fn((arg) => {
 expect(calledArguments[0]).toEqual({ value: 0 })
 ```
 
+:::
+
 ## mock.lastCall
 
 ```ts
@@ -521,3 +519,198 @@ const lastCall: Parameters<T> | undefined
 ```
 
 This contains the arguments of the last call. If the mock wasn't called, it will return `undefined`.
+
+## mock.results
+
+```ts
+interface MockResultReturn<T> {
+  type: 'return'
+  /**
+   * The value that was returned from the function.
+   * If the function returned a Promise, then this will be the Promise, not its resolved value.
+   */
+  value: T
+}
+
+interface MockResultIncomplete {
+  type: 'incomplete'
+  value: undefined
+}
+
+interface MockResultThrow {
+  type: 'throw'
+  /**
+   * An error that was thrown during function execution.
+   */
+  value: any
+}
+
+type MockResult<T>
+  = | MockResultReturn<T>
+    | MockResultThrow
+    | MockResultIncomplete
+
+const results: MockResult<ReturnType<T>>[]
+```
+
+This is an array containing all values that were `returned` from the function. One item of the array is an object with properties `type` and `value`. Available types are:
+
+- `'return'` - function returned without throwing.
+- `'throw'` - function threw a value.
+- `'incomplete'` - the function did not finish running yet.
+
+The `value` property contains the returned value or thrown error. If the function returned a `Promise`, then `result` will always be `'return'` even if the promise was rejected.
+
+```js
+const fn = vi.fn()
+  .mockReturnValueOnce('result')
+  .mockImplementationOnce(() => { throw new Error('thrown error') })
+
+const result = fn() // returned 'result'
+
+try {
+  fn() // threw Error
+}
+catch {}
+
+fn.mock.results === [
+  // first result
+  {
+    type: 'return',
+    value: 'result',
+  },
+  // last result
+  {
+    type: 'throw',
+    value: Error,
+  },
+]
+```
+
+## mock.settledResults
+
+```ts
+interface MockSettledResultIncomplete {
+  type: 'incomplete'
+  value: undefined
+}
+
+interface MockSettledResultFulfilled<T> {
+  type: 'fulfilled'
+  value: T
+}
+
+interface MockSettledResultRejected {
+  type: 'rejected'
+  value: any
+}
+
+export type MockSettledResult<T>
+  = | MockSettledResultFulfilled<T>
+    | MockSettledResultRejected
+    | MockSettledResultIncomplete
+
+const settledResults: MockSettledResult<Awaited<ReturnType<T>>>[]
+```
+
+An array containing all values that were resolved or rejected by the function.
+
+If the function returned non-promise values, the `value` will be kept as is, but the `type` will still say `fulfilled` or `rejected`.
+
+Until the value is resolved or rejected, the `settledResult` type will be `incomplete`.
+
+```js
+const fn = vi.fn().mockResolvedValueOnce('result')
+
+const result = fn()
+
+fn.mock.settledResults === [
+  {
+    type: 'incomplete',
+    value: undefined,
+  },
+]
+
+await result
+
+fn.mock.settledResults === [
+  {
+    type: 'fulfilled',
+    value: 'result',
+  },
+]
+```
+
+## mock.invocationCallOrder
+
+```ts
+const invocationCallOrder: number[]
+```
+
+This property returns the order of the mock function's execution. It is an array of numbers that are shared between all defined mocks.
+
+```js
+const fn1 = vi.fn()
+const fn2 = vi.fn()
+
+fn1()
+fn2()
+fn1()
+
+fn1.mock.invocationCallOrder === [1, 3]
+fn2.mock.invocationCallOrder === [2]
+```
+
+## mock.contexts
+
+```ts
+type MockProcedureContext<T> = T extends new (...args: any[]) => any
+  ? InstanceType<T>
+  : ThisParameterType<T>
+
+const contexts: MockProcedureContext<T>[]
+```
+
+This property is an array of `this` values used during each call to the mock function. If the mock was called with the `new` keyword, the value is the same as in [`mock.instances`](#mock-instances).
+
+```js
+const fn = vi.fn()
+const context = {}
+
+fn.apply(context)
+fn.call(context)
+
+fn.mock.contexts[0] === context
+fn.mock.contexts[1] === context
+```
+
+## mock.instances
+
+```ts
+const instances: MockProcedureContext<T>[]
+```
+
+This property is an array with one value for each call to the mock function. If the mock was called with the `new` keyword, the value is the object that `new` returned, or `undefined` if the constructor threw an error. Otherwise, the value is the context (`this`) of the call, the same as in [`mock.contexts`](#mock-contexts).
+
+```js
+const MyClass = vi.fn()
+const context = {}
+
+const a = new MyClass()
+MyClass.call(context)
+
+MyClass.mock.instances[0] === a
+MyClass.mock.instances[1] === context
+```
+
+If the implementation returns an object from the constructor, `mock.instances` stores that object:
+
+```js
+const Spy = vi.fn(function () {
+  return { method: vi.fn() }
+})
+const a = new Spy()
+
+Spy.mock.instances[0] === a
+Spy.mock.results[0].value === a
+```

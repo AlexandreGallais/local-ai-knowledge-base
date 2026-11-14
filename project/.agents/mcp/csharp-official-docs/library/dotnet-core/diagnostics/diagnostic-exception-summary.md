@@ -1,21 +1,18 @@
 ---
-title: "Exception summarization in C#"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/diagnostic-exception-summary.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Exception summarization in C#
+description: Learn the value proposition of exception summarization within diagnostic metrics for .NET app development.
+ms.date: 11/29/2023
 ---
 
 # Exception summarization
 
-When you're trying to generate meaningful diagnostic messages for exceptions, maintaining the inclusion of pertinent information can pose a challenge. The standard exception message often lacks critical details that accompany the exception, while invoking the `System.Exception.ToString*` method yields an excess of state information.
+When you're trying to generate meaningful diagnostic messages for exceptions, maintaining the inclusion of pertinent information can pose a challenge. The standard exception message often lacks critical details that accompany the exception, while invoking the <xref:System.Exception.ToString*?displayProperty=nameWithType> method yields an excess of state information.
 
-This article relies on the Microsoft.Extensions.Diagnostics.ExceptionSummarization NuGet package.
+This article relies on the [Microsoft.Extensions.Diagnostics.ExceptionSummarization](https://www.nuget.org/packages/Microsoft.Extensions.Diagnostics.ExceptionSummarization) NuGet package.
 
 ## The goal of exception summarization
 
-Metric tags typically support a limited number of distinct values, and as such they are not suitable to represent values which are highly variable, such as the result of `System.Exception.ToString`. An exception summary represents a low-cardinality version of an exception's information, suitable for such cases.
+Metric tags typically support a limited number of distinct values, and as such they are not suitable to represent values which are highly variable, such as the result of <xref:System.Exception.ToString?displayProperty=nameWithType>. An exception summary represents a low-cardinality version of an exception's information, suitable for such cases.
 
 The goal of exception summarization is twofold:
 
@@ -24,67 +21,34 @@ The goal of exception summarization is twofold:
 
 ## Exception summarization API
 
-The `Microsoft.Extensions.Diagnostics.ExceptionSummarization.IExceptionSummarizer` interface offers methods for extracting crucial details from recognized exception types, thereby furnishing a singular `string` that serves as the foundation for crafting top-quality diagnostic messages.
+The <xref:Microsoft.Extensions.Diagnostics.ExceptionSummarization.IExceptionSummarizer> interface offers methods for extracting crucial details from recognized exception types, thereby furnishing a singular `string` that serves as the foundation for crafting top-quality diagnostic messages.
 
-The `Microsoft.Extensions.Diagnostics.ExceptionSummarization.IExceptionSummarizer.Summarize*` method systematically traverses the roster of registered summarizers until it identifies a summarizer capable of handling the specific exception type. In the event that no summarizer is capable of recognizing the exception type, a meaningful default exception summary is provided instead.
+The <xref:Microsoft.Extensions.Diagnostics.ExceptionSummarization.IExceptionSummarizer.Summarize*?displayProperty=nameWithType> method systematically traverses the roster of registered summarizers until it identifies a summarizer capable of handling the specific exception type. In the event that no summarizer is capable of recognizing the exception type, a meaningful default exception summary is provided instead.
 
-The result of the `Summarize` method returns an `Microsoft.Extensions.Diagnostics.ExceptionSummarization.ExceptionSummary` struct, and it contains the following properties:
+The result of the `Summarize` method returns an <xref:Microsoft.Extensions.Diagnostics.ExceptionSummarization.ExceptionSummary> struct, and it contains the following properties:
 
-- `Microsoft.Extensions.Diagnostics.ExceptionSummarization.ExceptionSummary.Description`: The summary description of the exception.
-- `Microsoft.Extensions.Diagnostics.ExceptionSummarization.ExceptionSummary.AdditionalDetails`: Intended for low-level diagnostic use, this property contains additional details about the exception and has a relatively high cardinality. This property may contain privacy-sensitive information.
-- `Microsoft.Extensions.Diagnostics.ExceptionSummarization.ExceptionSummary.ExceptionType`:  The type of the exception, unless inner exceptions are present, in which case both outer and inner types are reflected.
+- <xref:Microsoft.Extensions.Diagnostics.ExceptionSummarization.ExceptionSummary.Description?displayProperty=nameWithType>: The summary description of the exception.
+- <xref:Microsoft.Extensions.Diagnostics.ExceptionSummarization.ExceptionSummary.AdditionalDetails?displayProperty=nameWithType>: Intended for low-level diagnostic use, this property contains additional details about the exception and has a relatively high cardinality. This property may contain privacy-sensitive information.
+- <xref:Microsoft.Extensions.Diagnostics.ExceptionSummarization.ExceptionSummary.ExceptionType?displayProperty=nameWithType>:  The type of the exception, unless inner exceptions are present, in which case both outer and inner types are reflected.
 
 ## Example exception summarization usage
 
 The following example demonstrates how to use the `IExceptionSummarizer` interface to retrieve a summary of an exception.
 
-```csharp
-﻿using System.Net;
-using System.Net.Sockets;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.ExceptionSummarization;
+:::code source="snippets/exception-summary/Program.cs":::
 
-// Add exception summarization services.
-var services = new ServiceCollection()
-    .AddExceptionSummarizer(static builder => builder.AddHttpProvider());
-
-var provider = services.BuildServiceProvider();
-
-// Get the exception summarizer.
-IExceptionSummarizer summarizer = provider.GetRequiredService<IExceptionSummarizer>();
-
-// Define exceptions to summarize.
-Exception[] exceptions =
-[
-    new OperationCanceledException("Operation cancelled..."),
-    new TaskCanceledException("Task cancelled..."),
-    new SocketException(10_024, "Too many sockets open..."),
-    new WebException("Keep alive failure...",
-        WebExceptionStatus.KeepAliveFailure)
-];
-
-foreach (var exception in exceptions)
-{
-    // Summarize the exception.
-    ExceptionSummary summary = summarizer.Summarize(exception);
-
-    Console.WriteLine(summary);
-}
-
-Console.ReadLine();
-```
 The preceding code:
 
-- Instantiates a new `Microsoft.Extensions.DependencyInjection.ServiceCollection` instance, chaining a call to the `Microsoft.Extensions.DependencyInjection.ExceptionSummarizationServiceCollectionExtensions.AddExceptionSummarizer*` extension method.
+- Instantiates a new <xref:Microsoft.Extensions.DependencyInjection.ServiceCollection> instance, chaining a call to the <xref:Microsoft.Extensions.DependencyInjection.ExceptionSummarizationServiceCollectionExtensions.AddExceptionSummarizer*> extension method.
   - The `AddExceptionSummarizer` extension method accepts a delegate that is used to configure the `ExceptionSummarizerBuilder` instance.
   - The `builder` is used to add the HTTP provider, which handles exceptions of type:
-    - `System.OperationCanceledException`
-    - `System.Threading.Tasks.TaskCanceledException`
-    - `System.Net.Sockets.SocketException`
-    - `System.Net.WebException`
+    - <xref:System.OperationCanceledException>
+    - <xref:System.Threading.Tasks.TaskCanceledException>
+    - <xref:System.Net.Sockets.SocketException>
+    - <xref:System.Net.WebException>
 - Builds a new `ServiceProvider` instance from the `ServiceCollection` instance.
 - Gets an instance of the `IExceptionSummarizer` interface from the `ServiceProvider` instance.
 - Iterates over a collection of exceptions, calling the `Summarize` method on each exception and displaying the result.
 
-> **Note:**
-> The primary focus in the design of all exception summarization implementations is to provide diagnostic convenience, rather than prioritizing the protection of personally identifiable information (PII). The `Microsoft.Extensions.Diagnostics.ExceptionSummarization.ExceptionSummary.Description` doesn't contain sensitive information, but the `Microsoft.Extensions.Diagnostics.ExceptionSummarization.ExceptionSummary.AdditionalDetails` might contain sensitive information depending on the implementation.
+> [!NOTE]
+> The primary focus in the design of all exception summarization implementations is to provide diagnostic convenience, rather than prioritizing the protection of personally identifiable information (PII). The <xref:Microsoft.Extensions.Diagnostics.ExceptionSummarization.ExceptionSummary.Description?displayProperty=nameWithType> doesn't contain sensitive information, but the <xref:Microsoft.Extensions.Diagnostics.ExceptionSummarization.ExceptionSummary.AdditionalDetails?displayProperty=nameWithType> might contain sensitive information depending on the implementation.

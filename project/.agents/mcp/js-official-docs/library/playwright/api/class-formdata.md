@@ -1,12 +1,3 @@
----
-title: "class: FormData"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-formdata.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: FormData
 * since: v1.18
 * langs: java, csharp, python
@@ -23,7 +14,7 @@ FormData form = FormData.create()
 page.request().post("http://localhost/submit", RequestOptions.create().setForm(form));
 ```
 
-```python
+```python async
 form = FormData()
 form.set("firstName", "John")
 form.set("lastName", "Doe")
@@ -31,7 +22,7 @@ form.set("age", 30)
 await page.request.post("http://localhost/submit", form=form)
 ```
 
-```python
+```python sync
 form = FormData()
 form.set("firstName", "John")
 form.set("lastName", "Doe")
@@ -43,11 +34,11 @@ page.request.post("http://localhost/submit", form=form)
 * since: v1.44
 - returns: <[FormData]>
 
-Appends a new value onto an existing key <example-value> a FormData object, or adds the key if it
+Appends a new value onto an existing key inside a FormData object, or adds the key if it
 does not already exist. File values can be passed either as `Path` or as `FilePayload`.
 Multiple fields with the same name can be added.
 
-The difference between [`method: FormData.set`] and [`method: FormData.append`] is that if the specified key <example-value> exists,
+The difference between [`method: FormData.set`] and [`method: FormData.append`] is that if the specified key already exists,
 [`method: FormData.set`] will overwrite all existing values with the new one, whereas [`method: FormData.append`] will append
 the new value onto the end of the existing set of values.
 
@@ -85,7 +76,7 @@ multipart.Append("attachment", new FilePayload()
 await Page.APIRequest.PostAsync("https://localhost/submit", new() { Multipart = multipart });
 ```
 
-```python
+```python async
 form = FormData()
 # Only name and value are set.
 form.append("firstName", "John")
@@ -100,7 +91,7 @@ form.append("attachment", {
 await page.request.post("http://localhost/submit", multipart=form)
 ```
 
-```python
+```python sync
 form = FormData()
 # Only name and value are set.
 form.append("firstName", "John")
@@ -182,7 +173,7 @@ multipart.Set("age", 30);
 await Page.APIRequest.PostAsync("https://localhost/submit", new() { Multipart = multipart });
 ```
 
-```python
+```python async
 form = FormData()
 # Only name and value are set.
 form.set("firstName", "John")
@@ -198,7 +189,7 @@ form.set("age", 30)
 await page.request.post("http://localhost/submit", multipart=form)
 ```
 
-```python
+```python sync
 form = FormData()
 # Only name and value are set.
 form.set("firstName", "John")

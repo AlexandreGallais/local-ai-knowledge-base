@@ -1,17 +1,8 @@
----
-title: "Loops and other breakable expressions"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/expressions/loop-expr.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[expr.loop]
 # Loops and other breakable expressions
 
 r[expr.loop.syntax]
-```grammar
+```grammar,expressions
 LoopExpression ->
     LoopLabel? (
         InfiniteLoopExpression
@@ -24,25 +15,25 @@ LoopExpression ->
 r[expr.loop.intro]
 Rust supports four loop expressions:
 
-*   A `loop` expression denotes an infinite loop.
-*   A `while` expression loops until a predicate is false.
-*   A `for` expression extracts values from an iterator, looping until the iterator is empty.
-*   A labeled block expression runs a loop exactly once, but allows exiting the loop early with `break`.
+*   A [`loop` expression](#infinite-loops) denotes an infinite loop.
+*   A [`while` expression](#predicate-loops) loops until a predicate is false.
+*   A [`for` expression](#iterator-loops) extracts values from an iterator, looping until the iterator is empty.
+*   A [labeled block expression][expr.loop.block-labels] runs a loop exactly once, but allows exiting the loop early with `break`.
 
 r[expr.loop.break-label]
-All four types of loop support `break` expressions, and labels.
+All four types of loop support [`break` expressions](#break-expressions), and [labels](#loop-labels).
 
 r[expr.loop.continue-label]
-All except labeled block expressions support `continue` expressions.
+All except labeled block expressions support [`continue` expressions](#continue-expressions).
 
 r[expr.loop.explicit-result]
-Only `loop` and labeled block expressions support evaluation to non-trivial values.
+Only `loop` and labeled block expressions support [evaluation to non-trivial values](#break-and-loop-values).
 
 r[expr.loop.infinite]
 ## Infinite loops
 
 r[expr.loop.infinite.syntax]
-```grammar
+```grammar,expressions
 InfiniteLoopExpression -> `loop` BlockExpression
 ```
 
@@ -53,13 +44,13 @@ r[expr.loop.infinite.diverging]
 A `loop` expression without an associated `break` expression is [diverging] and has type [`!`].
 
 r[expr.loop.infinite.break]
-A `loop` expression containing associated `break` expression(s) may terminate, and must have type compatible with the value of the `break` expression(s).
+A `loop` expression containing associated [`break` expression(s)](#break-expressions) may terminate, and must have type compatible with the value of the `break` expression(s).
 
 r[expr.loop.while]
 ## Predicate loops
 
 r[expr.loop.while.syntax]
-```grammar
+```grammar,expressions
 PredicateLoopExpression -> `while` Conditions BlockExpression
 ```
 
@@ -111,7 +102,8 @@ while let _ = 5 {
 r[expr.loop.while.let.desugar]
 A `while let` loop is equivalent to a `loop` expression containing a [`match` expression] as follows.
 
-```rust
+<!-- ignore: expansion example -->
+```rust,ignore
 'label: while let PATS = EXPR {
     /* loop body */
 }
@@ -119,7 +111,8 @@ A `while let` loop is equivalent to a `loop` expression containing a [`match` ex
 
 is equivalent to
 
-```rust
+<!-- ignore: expansion example -->
+```rust,ignore
 'label: loop {
     match EXPR {
         PATS => { /* loop body */ },
@@ -165,10 +158,11 @@ r[expr.loop.for]
 ## Iterator loops
 
 r[expr.loop.for.syntax]
-```grammar
+```grammar,expressions
 IteratorLoopExpression ->
     `for` Pattern `in` Expression _except [StructExpression]_ BlockExpression
 ```
+<!-- TODO: The exception above isn't accurate, see https://github.com/rust-lang/reference/issues/569 -->
 
 r[expr.loop.for.intro]
 A `for` expression is a syntactic construct for looping over elements provided by an implementation of `std::iter::IntoIterator`.
@@ -199,7 +193,8 @@ assert_eq!(sum, 55);
 r[expr.loop.for.desugar]
 A `for` loop is equivalent to a `loop` expression containing a [`match` expression] as follows:
 
-```rust
+<!-- ignore: expansion example -->
+```rust,ignore
 'label: for PATTERN in iter_expr {
     /* loop body */
 }
@@ -207,7 +202,8 @@ A `for` loop is equivalent to a `loop` expression containing a [`match` expressi
 
 is equivalent to
 
-```rust
+<!-- ignore: expansion example -->
+```rust,ignore
 {
     let result = match IntoIterator::into_iter(iter_expr) {
         mut iter => 'label: loop {
@@ -229,14 +225,14 @@ r[expr.loop.for.lang-items]
 
 The variable names `next`, `iter`, and `val` are for exposition only, they do not actually have names the user can type.
 
-> **Note:**
+> [!NOTE]
 > The outer `match` is used to ensure that any [temporary values] in `iter_expr` don't get dropped before the loop is finished. `next` is declared before being assigned because it results in types being inferred correctly more often.
 
 r[expr.loop.label]
 ## Loop labels
 
 r[expr.loop.label.syntax]
-```grammar
+```grammar,expressions
 LoopLabel -> LIFETIME_OR_LABEL `:`
 ```
 
@@ -244,7 +240,7 @@ r[expr.loop.label.intro]
 A loop expression may optionally have a _label_. The label is written as a lifetime preceding the loop expression, as in `'foo: loop { break 'foo; }`, `'bar: while false {}`, `'humbug: for _ in 0..0 {}`.
 
 r[expr.loop.label.control-flow]
-If a label is present, then labeled `break` and `continue` expressions nested within this loop may exit out of this loop or return control to its head. See break expressions and continue expressions.
+If a label is present, then labeled `break` and `continue` expressions nested within this loop may exit out of this loop or return control to its head. See [break expressions](#break-expressions) and [continue expressions](#continue-expressions).
 
 r[expr.loop.label.ref]
 Labels follow the hygiene and shadowing rules of local variables. For example, this code will print "outer loop":
@@ -265,7 +261,7 @@ r[expr.loop.break]
 ## `break` expressions
 
 r[expr.loop.break.syntax]
-```grammar
+```grammar,expressions
 BreakExpression -> `break` LIFETIME_OR_LABEL? Expression?
 ```
 
@@ -287,7 +283,7 @@ r[expr.loop.break.diverging]
 A `break` expression is [diverging] and has a type of [`!`].
 
 r[expr.loop.break.label]
-A `break` expression is normally associated with the innermost `loop`, `for` or `while` loop enclosing the `break` expression, but a label can be used to specify which enclosing loop is affected. Example:
+A `break` expression is normally associated with the innermost `loop`, `for` or `while` loop enclosing the `break` expression, but a [label](#loop-labels) can be used to specify which enclosing loop is affected. Example:
 
 ```rust
 'outer: loop {
@@ -298,16 +294,16 @@ A `break` expression is normally associated with the innermost `loop`, `for` or 
 ```
 
 r[expr.loop.break.value]
-A `break` expression is only permitted in the body of a loop, and has one of the forms `break`, `break 'label` or (see below) `break EXPR` or `break 'label EXPR`.
+A `break` expression is only permitted in the body of a loop, and has one of the forms `break`, `break 'label` or ([see below](#break-and-loop-values)) `break EXPR` or `break 'label EXPR`.
 
 r[expr.loop.break-value.implicit-value]
-In a `loop` with break expressions or a [labeled block expression], a `break` without an expression is equivalent to `break ()`.
+In a [`loop` with break expressions][expr.loop.break-value] or a [labeled block expression], a `break` without an expression is equivalent to `break ()`.
 
 r[expr.loop.block-labels]
 ## Labeled block expressions
 
 r[expr.loop.block-labels.syntax]
-```grammar
+```grammar,expressions
 LabelBlockExpression -> BlockExpression
 ```
 
@@ -340,7 +336,7 @@ let result = 'block: {
 ```
 
 r[expr.loop.block-labels.type]
-The type of a labeled block expression is the [least upper bound] of all of the break operands and the final operand. If the final operand is omitted, the type of the final operand defaults to the [unit type], unless the block diverges, in which case it is the [never type].
+The type of a labeled block expression is the [least upper bound] of all of the break operands and the final operand. If the final operand is omitted, the type of the final operand defaults to the [unit type], unless the block [diverges][expr.block.diverging], in which case it is the [never type].
 
 > [!EXAMPLE]
 > ```rust
@@ -360,7 +356,7 @@ r[expr.loop.continue]
 ## `continue` expressions
 
 r[expr.loop.continue.syntax]
-```grammar
+```grammar,expressions
 ContinueExpression -> `continue` LIFETIME_OR_LABEL?
 ```
 
@@ -449,3 +445,17 @@ A `loop` with associated `break` expressions does not [diverge] if any of the br
 >     } // ERROR: expected `!`, found `i32`
 > }
 > ```
+
+[`!`]: type.never
+[`if` condition chains]: if-expr.md#chains-of-conditions
+[`if` expressions]: if-expr.md
+[`match` expression]: match-expr.md
+[boolean type]: ../types/boolean.md
+[diverge]: divergence
+[diverging]: divergence
+[labeled block expression]: expr.loop.block-labels
+[least upper bound]: coerce.least-upper-bound
+[never type]: type.never
+[scrutinee]: ../glossary.md#scrutinee
+[temporary values]: ../expressions.md#temporaries
+[unit type]: type.tuple.unit

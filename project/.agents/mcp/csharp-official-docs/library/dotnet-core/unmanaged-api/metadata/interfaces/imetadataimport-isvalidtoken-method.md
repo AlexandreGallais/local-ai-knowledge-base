@@ -1,13 +1,20 @@
 ---
+description: "Learn more about: IMetaDataImport::IsValidToken Method"
 title: "IMetaDataImport::IsValidToken Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-isvalidtoken-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.IsValidToken"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::IsValidToken"
+  - "IsValidToken method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
-# IMetaDataImport::IsValidToken <example-value>
+# IMetaDataImport::IsValidToken Method
 
 Gets a value indicating whether the specified token holds a valid reference to a code object.
 
@@ -26,11 +33,11 @@ BOOL IsValidToken (
 
 ## Return Value
 
- `true` if `tk` is a valid metadata token <example-value> the current scope. Otherwise, `false`.
+ `true` if `tk` is a valid metadata token within the current scope. Otherwise, `false`.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -38,5 +45,5 @@ BOOL IsValidToken (
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

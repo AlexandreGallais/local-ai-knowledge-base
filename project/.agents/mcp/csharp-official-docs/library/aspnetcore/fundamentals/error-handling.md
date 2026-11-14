@@ -1,92 +1,45 @@
 ---
-title: "Handle errors in ASP.NET Core (part 1 of 4)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/error-handling.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Handle errors in ASP.NET Core
+ai-usage: ai-assisted
+description: Discover how to handle errors in ASP.NET Core apps.
+monikerRange: '>= aspnetcore-10.0'
+ms.date: 10/27/2026
 ---
-
 # Handle errors in ASP.NET Core
 
-This article covers common approaches to handling errors in ASP.NET Core web apps. See also Handle errors in ASP.NET Core APIs.
+[!INCLUDE[](~/includes/not-latest-version-without-not-supported-content.md)]
 
-For Blazor error handling guidance, which adds to or supersedes the guidance in this article, see Handle errors in ASP.NET Core Blazor apps.
+:::moniker range=">= aspnetcore-10.0"
+
+This article covers common approaches to handling errors in ASP.NET Core web apps. See also [Handle errors in ASP.NET Core APIs](error-handling-api.md).
+
+For Blazor error handling guidance, which adds to or supersedes the guidance in this article, see [Handle errors in ASP.NET Core Blazor apps](../blazor/fundamentals/handle-errors.md).
 
 ## Developer exception page
 
-The *Developer Exception Page* displays detailed information about unhandled request exceptions. It uses `Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware` to capture synchronous and asynchronous exceptions from the HTTP pipeline and to generate error responses. The developer exception page runs early in the middleware pipeline, so that it can catch unhandled exceptions thrown in middleware that follows.
-
-ASP.NET Core apps enable the developer exception page by default when both:
-
-* Running in the `Development` environment.
-* The app was created with the current templates, that is, by using `Microsoft.AspNetCore.Builder.WebApplication.CreateBuilder*`.
-
-Apps created using earlier templates, that is, by using `Microsoft.AspNetCore.WebHost.CreateDefaultBuilder*`, can enable the developer exception page by calling `app.UseDeveloperExceptionPage`).
-
-> **Warning:**
-> Don't enable the Developer Exception Page **unless the app is running in the `Development` environment**. Don't share detailed exception information publicly when the app runs in production. For more information on configuring environments, see ASP.NET Core runtime environments.
-
-The Developer Exception Page can include the following information about the exception and the request:
-
-* Stack trace
-* Query string parameters, if any
-* Cookies, if any
-* Headers
-* Endpoint metadata, if any
-
-The Developer Exception Page isn't guaranteed to provide any information. Use Logging for complete error information.
-
-The following image shows a sample developer exception page with animation to show the tabs and the information displayed:
-
-In response to a request with an `Accept: text/plain` header, the Developer Exception Page returns plain text instead of HTML. For example:
-
-```text
-Status: 500 Internal Server Error
-Time: 9.39 msSize: 480 bytes
-FormattedRawHeadersRequest
-Body
-text/plain; charset=utf-8, 480 bytes
-System.InvalidOperationException: Sample Exception
-   at WebApplicationMinimal.Program.<>c.<Main>b__0_0() in C:\Source\WebApplicationMinimal\Program.cs:line 12
-   at lambda_method1(Closure, Object, HttpContext)
-   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
-
-HEADERS
-=======
-Accept: text/plain
-Host: localhost:7267
-traceparent: 00-0eab195ea19d07b90a46cd7d6bf2f
-```
+[!INCLUDE [](../includes/developer-exception-page.md)]
 
 ## Exception handler page
 
-To configure a custom error handling page for the `Production` environment, call `Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.UseExceptionHandler*`. This exception handling middleware:
+To configure a custom error handling page for the [`Production` environment](environments.md), call <xref:Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.UseExceptionHandler*>. This exception handling middleware:
 
 * Catches and logs unhandled exceptions.
 * Re-executes the request in an alternate pipeline using the path indicated. The request isn't re-executed if the response has started. The template-generated code re-executes the request using the `/Error` path.
 
-> **Warning:**
+> [!WARNING]
 > If the alternate pipeline throws an exception of its own, exception handling middleware rethrows the original exception.
 
 Since this middleware can re-execute the request pipeline:
 
 * Middlewares need to handle reentrancy with the same request. This normally means either cleaning up their state after calling `_next` or caching their processing on the `HttpContext` to avoid redoing it. When dealing with the request body, this either means buffering or caching the results like the Form reader.
-* For the `Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.UseExceptionHandler(Microsoft.AspNetCore.Builder.IApplicationBuilder,System.String)` overload that is used in templates, only the request path is modified, and the route data is cleared. Request data such as headers, method, and items are all reused as-is.
+* For the <xref:Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.UseExceptionHandler(Microsoft.AspNetCore.Builder.IApplicationBuilder,System.String)> overload that is used in templates, only the request path is modified, and the route data is cleared. Request data such as headers, method, and items are all reused as-is.
 * Scoped services remain the same.
 
-In the following example, `Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.UseExceptionHandler*` adds the exception handling middleware in non-`Development` environments:
+In the following example, <xref:Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.UseExceptionHandler*> adds the exception handling middleware in non-`Development` environments:
 
-```csharp
-var app = builder.Build();
+:::code language="csharp" source="~/fundamentals/error-handling/samples/10.x/ErrorHandlingSample/Program.cs" id="snippet_UseExceptionHandler" highlight="3,5":::
 
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-    app.UseHsts();
-}
-```
-The Razor Pages app template provides an Error page (`.cshtml`) and `Microsoft.AspNetCore.Mvc.RazorPages.PageModel` class (`ErrorModel`) in the *Pages* folder. For an MVC app, the project template includes an `Error` action method and an Error view for the Home controller.
+The Razor Pages app template provides an Error page (`.cshtml`) and <xref:Microsoft.AspNetCore.Mvc.RazorPages.PageModel> class (`ErrorModel`) in the *Pages* folder. For an MVC app, the project template includes an `Error` action method and an Error view for the Home controller.
 
 The exception handling middleware re-executes the request using the *original* HTTP method. If an error handler endpoint is restricted to a specific set of HTTP methods, it runs only for those HTTP methods. For example, an MVC controller action that uses the `[HttpGet]` attribute runs only for GET requests. To ensure that *all* requests reach the custom error handling page, don't restrict them to a specific set of HTTP methods.
 
@@ -99,9 +52,9 @@ To allow unauthenticated users to view the custom error handling page, ensure th
 
 ### Access the exception and original routing details
 
-Use `Microsoft.AspNetCore.Diagnostics.IExceptionHandlerPathFeature` or `Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature` to access the exception, the original request path, and endpoint metadata in an error handler.
+Use <xref:Microsoft.AspNetCore.Diagnostics.IExceptionHandlerPathFeature> or <xref:Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature> to access the exception, the original request path, and endpoint metadata in an error handler.
 
-The exception handling middleware clears the original endpoint and route data from `Microsoft.AspNetCore.Http.HttpContext` so error-handling endpoints don't execute filters or route constraints from the failed endpoint. As a result, calling `HttpContext.GetEndpoint` or `HttpContext.GetRouteData` directly does not return the original endpoint or route values that triggered the exception. To inspect the original endpoint or route values that caused the exception, retrieve them from the exception feature:
+The exception handling middleware clears the original endpoint and route data from <xref:Microsoft.AspNetCore.Http.HttpContext> so error-handling endpoints don't execute filters or route constraints from the failed endpoint. As a result, calling [`HttpContext.GetEndpoint`](xref:Microsoft.AspNetCore.Http.EndpointHttpContextExtensions.GetEndpoint*) or [`HttpContext.GetRouteData`](xref:Microsoft.AspNetCore.Routing.RoutingHttpContextExtensions.GetRouteData*) directly does not return the original endpoint or route values that triggered the exception. To inspect the original endpoint or route values that caused the exception, retrieve them from the exception feature:
 
 ```csharp
 var exceptionFeature = HttpContext.Features.Get<IExceptionHandlerFeature>();
@@ -109,97 +62,362 @@ var originalEndpoint = exceptionFeature?.Endpoint;
 var routeValues = exceptionFeature?.RouteValues;
 ```
 
-The following example uses `Microsoft.AspNetCore.Diagnostics.IExceptionHandlerPathFeature` to get more information about the exception that was thrown:
+The following example uses <xref:Microsoft.AspNetCore.Diagnostics.IExceptionHandlerPathFeature> to get more information about the exception that was thrown:
 
-```csharp
-[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-[IgnoreAntiforgeryToken]
-public class ErrorModel : PageModel
-{
-    public string? RequestId { get; set; }
+:::code language="csharp" source="~/fundamentals/error-handling/samples/10.x/ErrorHandlingSample/Pages/Error.cshtml.cs" id="snippet_Class" highlight="15-27":::
 
-    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-
-    public string? ExceptionMessage { get; set; }
-
-    public void OnGet()
-    {
-        RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
-
-        var exceptionHandlerPathFeature =
-            HttpContext.Features.Get<IExceptionHandlerPathFeature>();
-
-        if (exceptionHandlerPathFeature?.Error is FileNotFoundException)
-        {
-            ExceptionMessage = "The file was not found.";
-        }
-
-        if (exceptionHandlerPathFeature?.Path == "/")
-        {
-            ExceptionMessage ??= string.Empty;
-            ExceptionMessage += " Page: Home.";
-        }
-    }
-}
-```
-> **Warning:**
+> [!WARNING]
 > Do **not** serve sensitive error information to clients. Serving errors is a security risk.
 
 ## Exception handler lambda
 
-An alternative to a custom exception handler page is to provide a lambda to `Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.UseExceptionHandler*`. Using a lambda allows access to the error before returning the response.
+An alternative to a [custom exception handler page](#exception-handler-page) is to provide a lambda to <xref:Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.UseExceptionHandler*>. Using a lambda allows access to the error before returning the response.
 
 The following code uses a lambda for exception handling:
 
-```csharp
-var app = builder.Build();
+:::code language="csharp" source="~/fundamentals/error-handling/samples/10.x/ErrorHandlingSample/Snippets/Program.cs" id="snippet_UseExceptionHandlerInline" highlight="5-29":::
 
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler(exceptionHandlerApp =>
-    {
-        exceptionHandlerApp.Run(async context =>
-        {
-            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-
-            // using static System.Net.Mime.MediaTypeNames;
-            context.Response.ContentType = Text.Plain;
-
-            await context.Response.WriteAsync("An exception was thrown.");
-
-            var exceptionHandlerPathFeature =
-                context.Features.Get<IExceptionHandlerPathFeature>();
-
-            if (exceptionHandlerPathFeature?.Error is FileNotFoundException)
-            {
-                await context.Response.WriteAsync(" The file was not found.");
-            }
-
-            if (exceptionHandlerPathFeature?.Path == "/")
-            {
-                await context.Response.WriteAsync(" Page: Home.");
-            }
-        });
-    });
-
-    app.UseHsts();
-}
-```
 Another way to use a lambda is to set the status code based on the exception type, as in the following example:
 
+:::code language="csharp" source="~/fundamentals/error-handling/samples/10.x/StatusCodeSelectionSample/Program.cs" id="snippet_lambda" highlight="2,6-11":::
+
+> [!WARNING]
+> Do **not** serve sensitive error information to clients. Serving errors is a security risk.
+
+## IExceptionHandler
+
+[IExceptionHandler](/dotnet/api/microsoft.aspnetcore.diagnostics.iexceptionhandler) is an interface that gives the developer a callback for handling known exceptions in a central location. The interface contains a single method, [`TryHandleAsync`](/dotnet/api/microsoft.aspnetcore.diagnostics.iexceptionhandler.tryhandleasync), which receives an `HttpContext` and an `Exception` parameter.
+
+`IExceptionHandler` implementations are registered by calling [`IServiceCollection.AddExceptionHandler<T>`](/dotnet/api/microsoft.extensions.dependencyinjection.exceptionhandlerservicecollectionextensions.addexceptionhandler). The lifetime of an `IExceptionHandler` instance is singleton. Multiple implementations can be added, and they're called in the order registered.
+
+> [!IMPORTANT]
+> Registering an `IExceptionHandler` implementation isn't sufficient on its own. Registered handlers are invoked by the exception handling middleware, so the app must also add that middleware by calling <xref:Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.UseExceptionHandler*>. If `UseExceptionHandler` isn't called, the registered `IExceptionHandler` implementations are never called.
+
+Exception handling middleware iterates through registered exception handlers in order until one returns `true` from `TryHandleAsync`, indicating that the exception has been handled. If an exception handler handles an exception, it can return `true` to stop processing. If an exception isn't handled by any exception handler, then control falls back to the default behavior and options from the middleware.
+
+Starting in .NET 10, the default behavior is to suppress emission of diagnostics such as logs and metrics for handled exceptions (when `TryHandleAsync` returns `true`). This differs from earlier versions (.NET 8 and 9) where diagnostics were always emitted regardless of whether the exception was handled. The default behavior can be changed by setting [SuppressDiagnosticsCallback](#suppressdiagnosticscallback).
+
+The following example shows an `IExceptionHandler` implementation:
+
+:::code language="csharp" source="~/fundamentals/error-handling/samples/10.x/ErrorHandlingSample/CustomExceptionHandler.cs":::
+
+The following example shows how to register an `IExceptionHandler` implementation for dependency injection and add the exception handling middleware that calls it:
+
+:::code language="csharp" source="~/fundamentals/error-handling/samples/10.x/ErrorHandlingSample/Program.cs" id="snippet_RegisterIExceptionHandler" highlight="7,13":::
+
+### Configure `UseExceptionHandler` when using `IExceptionHandler`
+
+The exception handling middleware requires a fallback for exceptions that no `IExceptionHandler` handles. If none is configured, calling `app.UseExceptionHandler()` with no arguments throws the following exception at startup:
+
+`System.InvalidOperationException: An error occurred when configuring the exception handler middleware. Either the 'ExceptionHandlingPath' or the 'ExceptionHandler' property must be set in 'UseExceptionHandler()'.`
+
+Use any one of the following to satisfy the requirement:
+
+* Specify an error path: `app.UseExceptionHandler("/Error");`
+* Enable problem details: call `builder.Services.AddProblemDetails();` and then `app.UseExceptionHandler();`
+* Supply a fallback handler: `app.UseExceptionHandler(exceptionHandlerApp => { ... });`
+
+The `IExceptionHandler` implementations still run first in all of these cases. The configured path, problem details response, or fallback handler is used only when every `TryHandleAsync` returns `false`.
+
+If an `IExceptionHandler` returns `true` without writing a response or setting a status code, the response ends up as `404 Not Found` and the middleware logs:
+
+`The exception handler configured on ExceptionHandlerOptions produced a 404 status response.`
+
+An `IExceptionHandler` that returns `true` should write the complete response, including the status code. For example, set `httpContext.Response.StatusCode` and write the body, or call `IProblemDetailsService.TryWriteAsync`. If a 404 response is intentional, set <xref:Microsoft.AspNetCore.Builder.ExceptionHandlerOptions.AllowStatusCode404Response> to `true`.
+
+When the preceding code runs in the `Development` environment:
+
+* The `CustomExceptionHandler` is called first to handle an exception.
+* After logging the exception, the `TryHandleAsync` method returns `false`, so the [developer exception page](#developer-exception-page) is shown.
+
+In other environments:
+
+* The `CustomExceptionHandler` is called first to handle an exception.
+* After logging the exception, the `TryHandleAsync` method returns `false`, so the [`/Error` page](#exception-handler-page) is shown.
+
+If `TryHandleAsync` returns `true` instead:
+
+* The remaining `IExceptionHandler` implementations aren't called.
+* The exception handler page, path, or lambda configured on `UseExceptionHandler` isn't used. The handler is responsible for writing the entire response.
+
+### SuppressDiagnosticsCallback
+
+Starting in .NET 10, you can control whether the exception handling middleware writes diagnostics for handled exceptions by configuring the `SuppressDiagnosticsCallback` property on `ExceptionHandlerOptions`. This callback receives the exception context and allows you to determine whether diagnostics should be suppressed based on the specific exception or request.
+
+To revert to the .NET 8 and 9 behavior where diagnostics are always emitted for handled exceptions, set the callback to always return `false`:
+
 ```csharp
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddProblemDetails();
-var app = builder.Build();
-if (app.Environment.IsDevelopment())
+app.UseExceptionHandler(new ExceptionHandlerOptions
 {
-    app.UseExceptionHandler(new ExceptionHandlerOptions
-    {
-        StatusCodeSelector = ex => ex is TimeoutException
-            ? StatusCodes.Status503ServiceUnavailable
-            : StatusCodes.Status500InternalServerError
-    });
+    SuppressDiagnosticsCallback = context => false
+});
+```
+
+You can also conditionally suppress diagnostics based on the exception type or other context:
+
+```csharp
+app.UseExceptionHandler(new ExceptionHandlerOptions
+{
+    SuppressDiagnosticsCallback = context => context.Exception is ArgumentException
+});
+```
+
+When an exception isn't handled by any `IExceptionHandler` implementation (all handlers return `false` from `TryHandleAsync`), control falls back to the default behavior and options from the middleware, and diagnostics are emitted according to the middleware's standard behavior.
+
+<!-- links to this in other docs require sestatuscodepages -->
+<a name="sestatuscodepages"></a>
+
+## UseStatusCodePages
+
+By default, an ASP.NET Core app doesn't provide a status code page for HTTP error status codes, such as *404 - Not Found*. When the app sets an HTTP 400-599 error status code that doesn't have a body, it returns the status code and an empty response body. To enable default text-only handlers for common error status codes, call <xref:Microsoft.AspNetCore.Builder.StatusCodePagesExtensions.UseStatusCodePages*> in `Program.cs`:
+
+:::code language="csharp" source="~/fundamentals/error-handling/samples/10.x/ErrorHandlingSample/Snippets/Program.cs" id="snippet_UseStatusCodePages" highlight="9":::
+
+Call `UseStatusCodePages` before request handling middleware. For example, call `UseStatusCodePages` before the static file middleware and the endpoints middleware.
+
+When `UseStatusCodePages` isn't used, navigating to a URL without an endpoint returns a browser-dependent error message indicating the endpoint can't be found. When `UseStatusCodePages` is called, the browser returns the following response:
+
+```console
+Status Code: 404; Not Found
+```
+
+`UseStatusCodePages` isn't typically used in production because it returns a message that isn't useful to users.
+
+> [!NOTE]
+> The status code pages middleware does **not** catch exceptions. To provide a custom error handling page, use the [exception handler page](#exception-handler-page).
+
+### UseStatusCodePages with format string
+
+To customize the response content type and text, use the overload of <xref:Microsoft.AspNetCore.Builder.StatusCodePagesExtensions.UseStatusCodePages*> that takes a content type and format string:
+
+:::code language="csharp" source="~/fundamentals/error-handling/samples/10.x/ErrorHandlingSample/Snippets/Program.cs" id="snippet_UseStatusCodePagesContent" highlight="10":::
+
+In the preceding code, `{0}` is a placeholder for the error code.
+
+`UseStatusCodePages` with a format string isn't typically used in production because it returns a message that isn't useful to users.
+
+### UseStatusCodePages with lambda
+
+To specify custom error-handling and response-writing code, use the overload of <xref:Microsoft.AspNetCore.Builder.StatusCodePagesExtensions.UseStatusCodePages*> that takes a lambda expression:
+
+:::code language="csharp" source="~/fundamentals/error-handling/samples/10.x/ErrorHandlingSample/Snippets/Program.cs" id="snippet_UseStatusCodePagesInline" highlight="9-16":::
+
+`UseStatusCodePages` with a lambda isn't typically used in production because it returns a message that isn't useful to users.
+
+### UseStatusCodePagesWithRedirects
+
+The <xref:Microsoft.AspNetCore.Builder.StatusCodePagesExtensions.UseStatusCodePagesWithRedirects*> extension method:
+
+* Sends a [302 - Found](https://developer.mozilla.org/docs/Web/HTTP/Status/302) status code to the client.
+* Redirects the client to the error handling endpoint provided in the URL template. The error handling endpoint typically displays error information and returns HTTP 200.
+
+:::code language="csharp" source="~/fundamentals/error-handling/samples/10.x/ErrorHandlingSample/Snippets/Program.cs" id="snippet_UseStatusCodePagesRedirect" highlight="9":::
+
+The URL template can include a `{0}` placeholder for the status code, as shown in the preceding code. If the URL template starts with `~` (tilde), the `~` is replaced by the app's `PathBase`. When specifying an endpoint in the app, create an MVC view or Razor page for the endpoint.
+
+This method is commonly used when the app:
+
+* Should redirect the client to a different endpoint, usually in cases where a different app processes the error. For web apps, the client's browser address bar reflects the redirected endpoint.
+* Shouldn't preserve and return the original status code with the initial redirect response.
+
+### UseStatusCodePagesWithReExecute
+
+The <xref:Microsoft.AspNetCore.Builder.StatusCodePagesExtensions.UseStatusCodePagesWithReExecute*> extension method:
+
+* Generates the response body by re-executing the request pipeline using an alternate path.
+* Does not alter the status code before or after re-executing the pipeline.
+
+The new pipeline execution may alter the response's status code, as the new pipeline has full control of the status code. If the new pipeline does not alter the status code, the original status code will be sent to the client.
+
+:::code language="csharp" source="~/fundamentals/error-handling/samples/10.x/ErrorHandlingSample/Snippets/Program.cs" id="snippet_UseStatusCodePagesReExecute" highlight="9":::
+
+If an endpoint within the app is specified, create an MVC view or Razor page for the endpoint.
+
+This method is commonly used when the app should:
+
+* Process the request without redirecting to a different endpoint. For web apps, the client's browser address bar reflects the originally requested endpoint.
+* Preserve and return the original status code with the response.
+
+The URL template must start with `/` and may include a placeholder `{0}` for the status code. To pass the status code as a query-string parameter, pass a second argument into `UseStatusCodePagesWithReExecute`. For example:
+
+:::code language="csharp" source="~/fundamentals/error-handling/samples/10.x/ErrorHandlingSample/Snippets/Program.cs" id="snippet_UseStatusCodePagesReExecuteQueryString":::
+
+The endpoint that processes the error can get the original URL that generated the error, as shown in the following example:
+
+:::code language="csharp" source="~/fundamentals/error-handling/samples/10.x/ErrorHandlingSample/Pages/StatusCode.cshtml.cs" id="snippet_Class" highlight="12-21":::
+
+Similar to `UseExceptionHandler`, only the request path is modified, and the route data is cleared. Request data such as headers (including the referrer), HTTP method, and items are reused as-is on `HttpContext.Request`. Original path and query string details can be retrieved using <xref:Microsoft.AspNetCore.Diagnostics.IStatusCodeReExecuteFeature>.
+
+> [!IMPORTANT]
+> Because the request's original HTTP method is preserved during pipeline re-execution, an error occurring during an HTTP POST request re-executes the status code endpoint with the POST method. If the error-handling endpoint is constrained to GET requests (for example, an MVC controller action with `[HttpGet]`), the endpoint returns `405 Method Not Allowed`. In Razor Pages, a page without an `OnPost` handler renders the page on POST without running the `OnGet` initialization logic. Ensure status code handling endpoints accommodate the HTTP methods used by the application (for example, implementing `OnPost` alongside `OnGet` so error details are populated for POST requests), and apply `[IgnoreAntiforgeryToken]` if the error page should accept re-executed POST requests without requiring antiforgery token validation.
+
+Since this middleware can re-execute the request pipeline:
+
+* Middlewares need to handle reentrancy with the same request. This normally means either cleaning up their state after calling `_next` or caching their processing on the `HttpContext` to avoid redoing it. When dealing with the request body, this either means buffering or caching the results like the Form reader.
+* Scoped services remain the same.
+
+Re-execution runs routing again, followed only by the middleware registered after the status code pages middleware. Middleware registered before `UseStatusCodePagesWithReExecute` doesn't run again for the re-executed request. For example, if <xref:Microsoft.AspNetCore.Builder.RateLimiterApplicationBuilderExtensions.UseRateLimiter*> is called before `UseStatusCodePagesWithReExecute`, endpoint-specific rate limiting policies aren't applied to the re-executed endpoint. To have middleware such as the rate limiter evaluate the re-executed endpoint, call `UseStatusCodePagesWithReExecute` before `UseRouting` and register that middleware after `UseRouting`:
+
+```csharp
+app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
+app.UseRouting();
+app.UseRateLimiter();
+```
+
+For more information, see [Rate limiting middleware in ASP.NET Core](../performance/rate-limit.md).
+
+## Disable status code pages
+
+To disable status code pages for an MVC controller or action method, use the [[SkipStatusCodePages]](xref:Microsoft.AspNetCore.Mvc.SkipStatusCodePagesAttribute) attribute.
+
+To disable status code pages for specific requests in a Razor Pages handler method or in an MVC controller, use <xref:Microsoft.AspNetCore.Diagnostics.IStatusCodePagesFeature>:
+
+:::code language="csharp" source="~/fundamentals/error-handling/samples/10.x/ErrorHandlingSample/Snippets/Pages/Index.cshtml.cs" id="snippet_OnGet":::
+
+## Exception-handling code
+
+Code in exception handling pages can also throw exceptions. Production error pages should be tested thoroughly and take extra care to avoid throwing exceptions of their own.
+
+### Response headers
+
+Once the headers for a response are sent:
+
+* The app can't change the response's status code.
+* Any exception pages or handlers can't run. The response must be completed or the connection aborted.
+
+## Server exception handling
+
+In addition to the exception handling logic in an app, the [HTTP server implementation](servers/index.md) can handle some exceptions. If the server catches an exception before response headers are sent, the server sends a `500 - Internal Server Error` response without a response body. If the server catches an exception after response headers are sent, the server closes the connection. Requests that aren't handled by the app are handled by the server. Any exception that occurs when the server is handling the request is handled by the server's exception handling. The app's custom error pages, exception handling middleware, and filters don't affect this behavior.
+
+## Startup exception handling
+
+Only the hosting layer can handle exceptions that take place during app startup. The host can be configured to [capture startup errors](host/web-host.md#capture-startup-errors) and [capture detailed errors](host/web-host.md#detailed-errors).
+
+The hosting layer can show an error page for a captured startup error only if the error occurs after host address/port binding. If binding fails:
+
+* The hosting layer logs a critical exception.
+* The dotnet process crashes.
+* No error page is displayed when the HTTP server is [Kestrel](servers/kestrel.md).
+
+When running on [IIS](/iis) (or Azure App Service) or [IIS Express](/iis/extensions/introduction-to-iis-express/iis-express-overview), a *502.5 - Process Failure* is returned by the [ASP.NET Core Module](../host-and-deploy/aspnet-core-module.md) if the process can't start. For more information, see [Troubleshoot ASP.NET Core on Azure App Service and IIS](../test/troubleshoot-azure-iis.md).
+
+## Database error page
+
+The Database developer page exception filter <xref:Microsoft.Extensions.DependencyInjection.DatabaseDeveloperPageExceptionFilterServiceExtensions.AddDatabaseDeveloperPageExceptionFilter*> captures database-related exceptions that can be resolved by using Entity Framework Core migrations. When these exceptions occur, an HTML response is generated with details of possible actions to resolve the issue. This page is enabled only in the `Development` environment. The following code adds the Database developer page exception filter:
+
+:::code language="csharp" source="~/fundamentals/error-handling/samples/10.x/ErrorHandlingSample/Program.cs" id="snippet_AddDatabaseDeveloperPageExceptionFilter" highlight="3":::
+
+## Exception filters
+
+In MVC apps, exception filters can be configured globally or on a per-controller or per-action basis. In Razor Pages apps, they can be configured globally or per page model. These filters handle any unhandled exceptions that occur during the execution of a controller action or another filter. For more information, see [Filters in ASP.NET Core](../mvc/controllers/filters.md#exception-filters).
+
+Exception filters are useful for trapping exceptions that occur within MVC actions, but they're not as flexible as the built-in [exception handling middleware](https://github.com/dotnet/aspnetcore/blob/main/src/Middleware/Diagnostics/src/ExceptionHandler/ExceptionHandlerMiddleware.cs), <xref:Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.UseExceptionHandler*>. We recommend using `UseExceptionHandler`, unless you need to perform error handling differently based on which MVC action is chosen.
+
+## Model state errors
+
+For information about how to handle model state errors, see [Model binding](../mvc/models/model-binding.md) and [Model validation](../mvc/models/validation.md).
+
+<a name="pds7"></a>
+
+## Problem details
+
+[!INCLUDE[](~/includes/problem-details-service.md)]
+
+The following code configures the app to generate a problem details response for all HTTP client and server error responses that ***don't have body content yet***:
+
+:::code language="csharp" source="~/fundamentals/error-handling/samples/10.x/ErrorHandlingSample/Snippets/Program.cs" id="snippet_AddProblemDetails" highlight="1":::
+
+The next section shows how to customize the problem details response body.
+
+<a name="cpd7"></a>
+
+### Customize problem details
+
+The automatic creation of a `ProblemDetails` can be customized using any of the following options:
+
+1. Use [`ProblemDetailsOptions.CustomizeProblemDetails`](#customizeproblemdetails-operation)
+2. Use a custom [`IProblemDetailsWriter`](#custom-iproblemdetailswriter)
+3. Call the [`IProblemDetailsService` in a middleware](#problem-details-from-middleware)
+
+#### `CustomizeProblemDetails` operation
+
+The generated problem details can be customized using <xref:Microsoft.AspNetCore.Http.ProblemDetailsOptions.CustomizeProblemDetails>, and the customizations are applied to all auto-generated problem details.
+
+The following code uses <xref:Microsoft.AspNetCore.Http.ProblemDetailsOptions> to set <xref:Microsoft.AspNetCore.Http.ProblemDetailsOptions.CustomizeProblemDetails>:
+
+:::code language="csharp" source="~/fundamentals/error-handling/samples/10.x/ErrorHandlingSample/Snippets/Program.cs" id="snippet_CustomizeProblemDetails" highlight="1-3":::
+
+For example, an [`HTTP Status 400 Bad Request`](https://developer.mozilla.org/docs/Web/HTTP/Status/400) endpoint result produces the following problem details response body:
+
+```json
+{
+  "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
+  "title": "Bad Request",
+  "status": 400,
+  "nodeId": "my-machine-name"
 }
 ```
-> **Warning:**
+
+#### Custom `IProblemDetailsWriter`
+
+An <xref:Microsoft.AspNetCore.Http.IProblemDetailsWriter> implementation can be created for advanced customizations.
+
+:::code language="csharp" source="~/../AspNetCore.Docs.Samples/fundamentals/middleware/problem-details-service/SampleProblemDetailsWriter.cs" :::
+
+***Note:*** When using a custom `IProblemDetailsWriter`, the custom `IProblemDetailsWriter` must be registered before calling <xref:Microsoft.Extensions.DependencyInjection.MvcServiceCollectionExtensions.AddRazorPages*>, <xref:Microsoft.Extensions.DependencyInjection.MvcServiceCollectionExtensions.AddControllers*>, <xref:Microsoft.Extensions.DependencyInjection.MvcServiceCollectionExtensions.AddControllersWithViews*>, or <xref:Microsoft.Extensions.DependencyInjection.MvcServiceCollectionExtensions.AddMvc*>:
+
+:::code language="csharp" source="~/../AspNetCore.Docs.Samples/fundamentals/middleware/problem-details-service/Program.cs" id="snippet_sampleproblemdetailswriter" :::
+
+#### Problem details from middleware
+
+An alternative approach to using <xref:Microsoft.AspNetCore.Http.ProblemDetailsOptions> with <xref:Microsoft.AspNetCore.Http.ProblemDetailsOptions.CustomizeProblemDetails> is to set the <xref:Microsoft.AspNetCore.Http.ProblemDetailsContext.ProblemDetails> in middleware. A problem details response can be written by calling [`IProblemDetailsService.WriteAsync`](/dotnet/api/microsoft.aspnetcore.http.iproblemdetailsservice.writeasync?view=aspnetcore-7.0&preserve-view=true):
+
+:::code language="csharp" source="~/../AspNetCore.Docs.Samples/fundamentals/middleware/problem-details-service/Program.cs" id="snippet_middleware" highlight="5,19-40":::
+
+In the preceding code, the Minimal API endpoints `/divide` and `/squareroot` return the expected custom problem response on error input.
+
+The API controller endpoints return the default problem response on error input, not the custom problem response. The default problem response is returned because the API controller has written to the response stream, [Problem details for error status codes](../web-api/index.md#problem-details-for-error-status-codes), before [`IProblemDetailsService.WriteAsync`](https://github.com/dotnet/aspnetcore/blob/ce2db7ea0b161fc5eb35710fca6feeafeeac37bc/src/Http/Http.Extensions/src/ProblemDetailsService.cs#L24) is called and the response is **not** written again.
+
+The following `ValuesController` returns <xref:Microsoft.AspNetCore.Mvc.BadRequestResult>, which writes to the response stream and therefore prevents the custom problem response from being returned.
+
+:::code language="csharp" source="~/../AspNetCore.Docs.Samples/fundamentals/middleware/problem-details-service/Controllers/ValuesController.cs" id="snippet"  highlight="9-17,27-35":::
+
+The following `Values3Controller` returns [`ControllerBase.Problem`](/dotnet/api/microsoft.aspnetcore.mvc.controllerbase.problem) so the expected custom problem result is returned:
+
+:::code language="csharp" source="~/../AspNetCore.Docs.Samples/fundamentals/middleware/problem-details-service/Controllers/ValuesController.cs" id="snippet3"  highlight="16-21":::
+
+## Produce a ProblemDetails payload for exceptions
+
+Consider the following app:
+
+:::code language="csharp" source="~/../AspNetCore.Docs.Samples/fundamentals/middleware/problem-details-service/Program.cs" id="snippet_apishort" highlight="4,8":::
+
+In non-development environments, when an exception occurs, the following is a standard [ProblemDetails response](https://datatracker.ietf.org/doc/html/rfc7807) that is returned to the client:
+
+```json
+{
+"type":"https://tools.ietf.org/html/rfc7231#section-6.6.1",
+"title":"An error occurred while processing your request.",
+"status":500,"traceId":"00-b644<snip>-00"
+}
+```
+
+For most apps, the preceding code is all that's needed for exceptions. However, the following section shows how to get more detailed problem responses.
+
+An alternative to a [custom exception handler page](error-handling.md#exception-handler-page) is to provide a lambda to <xref:Microsoft.AspNetCore.Builder.ExceptionHandlerExtensions.UseExceptionHandler*>. Using a lambda allows access to the error and writing a problem details response with [`IProblemDetailsService.WriteAsync`](/dotnet/api/microsoft.aspnetcore.http.iproblemdetailsservice.writeasync?view=aspnetcore-7.0&preserve-view=true):
+
+:::code language="csharp" source="~/../AspNetCore.Docs.Samples/fundamentals/middleware/problem-details-service/Program.cs" id="snippet_lambda" :::
+
+> [!WARNING]
 > Do **not** serve sensitive error information to clients. Serving errors is a security risk.
+
+An alternative approach to generate problem details is to use the third-party NuGet package [Hellang.Middleware.ProblemDetails](https://www.nuget.org/packages/Hellang.Middleware.ProblemDetails/) that can be used to map exceptions and client errors to problem details.
+
+:::moniker-end
+
+## Related content
+
+* [View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/fundamentals/error-handling/samples) ([how to download](index.md#how-to-download-a-sample))
+* [Troubleshoot ASP.NET Core on Azure App Service and IIS](../test/troubleshoot-azure-iis.md)
+* [Common error troubleshooting for Azure App Service and IIS with ASP.NET Core](../host-and-deploy/azure-iis-errors-reference.md)
+* [Handle errors in ASP.NET Core APIs](error-handling-api.md)

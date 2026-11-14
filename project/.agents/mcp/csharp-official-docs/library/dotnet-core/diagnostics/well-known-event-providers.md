@@ -1,10 +1,8 @@
 ---
-title: "Well-known event providers in .NET"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/well-known-event-providers.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Well-known event providers in .NET
+description: Review the providers and events published by the .NET runtime and libraries.
+ms.topic: reference
+ms.date: 12/21/2020
 ---
 
 # Well-known event providers in .NET
@@ -15,11 +13,11 @@ The .NET runtime and libraries write diagnostic events through a number of diffe
 
 ### "Microsoft-Windows-DotNETRuntime" provider
 
-This provider emits various events from the .NET runtime, including GC, loader, JIT, exception, and other events. Read more about each event from this provider in Runtime Provider Events List.
+This provider emits various events from the .NET runtime, including GC, loader, JIT, exception, and other events. Read more about each event from this provider in [Runtime Provider Events List](../../fundamentals/diagnostics/runtime-events.md).
 
 ### "Microsoft-DotNETCore-SampleProfiler" provider
 
-This provider is a .NET runtime event provider that is used for CPU sampling for managed callstacks. When enabled, it captures a snapshot of each thread's managed callstack every millisecond. To enable this capture, you must specify an `System.Diagnostics.Tracing.EventLevel` of `Informational` or higher.
+This provider is a .NET runtime event provider that is used for CPU sampling for managed callstacks. When enabled, it captures a snapshot of each thread's managed callstack every millisecond. To enable this capture, you must specify an <xref:System.Diagnostics.Tracing.EventLevel> of `Informational` or higher.
 
 ## Framework libraries
 
@@ -32,11 +30,11 @@ This provider logs information from DependencyInjection. The following table sho
 |`CallSiteBuilt`||Verbose (5)|A call site has been built.|
 |`ServiceResolved`||Verbose (5)|A service has been resolved.|
 |`ExpressionTreeGenerated`||Verbose (5)|An expression tree has been generated.|
-|`DynamicMethodBuilt`||Verbose (5)|A `System.Reflection.Emit.DynamicMethod` has been built.|
+|`DynamicMethodBuilt`||Verbose (5)|A <xref:System.Reflection.Emit.DynamicMethod> has been built.|
 |`ScopeDisposed`||Verbose (5)|A scope has been disposed.|
 |`ServiceRealizationFailed`||Verbose (5)|A service realization has failed.|
-|`ServiceProviderBuilt`|`ServiceProviderInitialized(0x1)`|Verbose (5)|A `Microsoft.Extensions.DependencyInjection.ServiceProvider` has been built.|
-|`ServiceProviderDescriptors`|`ServiceProviderInitialized(0x1)`|Verbose (5)|A list of `Microsoft.Extensions.DependencyInjection.ServiceDescriptor` that has been used during the `Microsoft.Extensions.DependencyInjection.ServiceProvider` build.|
+|`ServiceProviderBuilt`|`ServiceProviderInitialized(0x1)`|Verbose (5)|A <xref:Microsoft.Extensions.DependencyInjection.ServiceProvider> has been built.|
+|`ServiceProviderDescriptors`|`ServiceProviderInitialized(0x1)`|Verbose (5)|A list of <xref:Microsoft.Extensions.DependencyInjection.ServiceDescriptor> that has been used during the <xref:Microsoft.Extensions.DependencyInjection.ServiceProvider> build.|
 
 ### "System.Buffers.ArrayPoolEventSource" provider
 
@@ -84,7 +82,7 @@ This provider logs information related to domain name resolution. The following 
 
 ### "System.Net.Sockets" provider
 
-This provider logs information from `System.Net.Sockets.Socket`. The following table shows the events logged by `System.Net.Sockets` provider:
+This provider logs information from <xref:System.Net.Sockets.Socket>. The following table shows the events logged by `System.Net.Sockets` provider:
 
 |Event name|Level|Description|
 |----------|-----|-----------|
@@ -97,27 +95,27 @@ This provider logs information from `System.Net.Sockets.Socket`. The following t
 
 ### "System.Threading.Tasks.TplEventSource" provider
 
-This provider logs information on the Task Parallel Library, such as Task scheduler events. The following table shows the events logged by `TplEventSource`:
+This provider logs information on the [Task Parallel Library](../../standard/parallel-programming/task-parallel-library-tpl.md), such as Task scheduler events. The following table shows the events logged by `TplEventSource`:
 
 |Event name|Keyword|Level|Description|
 |----------|-------|-----|-----------|
-|`TaskScheduled`|`TaskTransfer`(`0x1`)`Tasks`(`0x2`)|Informational (4)|A `System.Threading.Tasks.Task` is queued to the Task scheduler.|
-|`TaskStarted`|`Tasks`(`0x2`)|Informational (4)|A `System.Threading.Tasks.Task` has started executing.|
-|`TaskCompleted`|`TaskStops`(`0x40`)|Informational (4)|A `System.Threading.Tasks.Task` has finished executing.|
-|`TaskWaitBegin`|`TaskTransfer`(`0x1`)`TaskWait`(`0x2`)|Informational (4)|Fired when an implicit or an explicit wait on a `System.Threading.Tasks.Task` completion has started.|
-|`TaskWaitEnd`|`Tasks`(`0x2`)|Verbose (5)|Fired when the wait for a `System.Threading.Tasks.Task` completion returns.|
+|`TaskScheduled`|`TaskTransfer`(`0x1`)<br /><br />`Tasks`(`0x2`)|Informational (4)|A <xref:System.Threading.Tasks.Task> is queued to the Task scheduler.|
+|`TaskStarted`|`Tasks`(`0x2`)|Informational (4)|A <xref:System.Threading.Tasks.Task> has started executing.|
+|`TaskCompleted`|`TaskStops`(`0x40`)|Informational (4)|A <xref:System.Threading.Tasks.Task> has finished executing.|
+|`TaskWaitBegin`|`TaskTransfer`(`0x1`)<br /><br />`TaskWait`(`0x2`)|Informational (4)|Fired when an implicit or an explicit wait on a <xref:System.Threading.Tasks.Task> completion has started.|
+|`TaskWaitEnd`|`Tasks`(`0x2`)|Verbose (5)|Fired when the wait for a <xref:System.Threading.Tasks.Task> completion returns.|
 |`TaskWaitContinuationStarted`|`Tasks`(`0x2`)|Verbose (5)|Fired when the work (method) associated with a `TaskWaitEnd` is started.|
 |`TaskWaitContinuationCompleted`|`TaskStops`(`0x40`)|Verbose (5)|Fired when the work (method) associated with a `TaskWaitEnd` is completed.|
-|`AwaitTaskContinuationScheduled`|`TaskTransfer`(`0x1`)`Tasks`(`0x2`)|Informational (4)|Fired when the an asynchronous continuation for a `System.Threading.Tasks.Task` is scheduled.|
+|`AwaitTaskContinuationScheduled`|`TaskTransfer`(`0x1`)<br /><br />`Tasks`(`0x2`)|Informational (4)|Fired when the an asynchronous continuation for a <xref:System.Threading.Tasks.Task> is scheduled.|
 
 ## ASP.NET Core
 
 ASP.NET Core also provides several events to help you diagnose issues in the ASP.NET Core stack.
 
-To learn more about the events in ASP.NET Core and how to consume them, see Logging in .NET Core and ASP.NET Core.
+To learn more about the events in ASP.NET Core and how to consume them, see [Logging in .NET Core and ASP.NET Core](/aspnet/core/fundamentals/logging/).
 
 ## Entity Framework core
 
 EF Core also provides events to help you diagnose issues in EF Core.
 
-To learn more about the events in EF Core and how to consume them, see .NET Events in EF Core.
+To learn more about the events in EF Core and how to consume them, see [.NET Events in EF Core](/ef/core/logging-events-diagnostics/events).

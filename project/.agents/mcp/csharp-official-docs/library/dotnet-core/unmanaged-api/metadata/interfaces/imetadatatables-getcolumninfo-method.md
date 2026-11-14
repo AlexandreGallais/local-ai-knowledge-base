@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataTables::GetColumnInfo Method"
 title: "IMetaDataTables::GetColumnInfo Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadatatables-getcolumninfo-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "10/10/2019"
+api_name:
+  - "IMetaDataTables.GetColumnInfo"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataTables::GetColumnInfo"
+  - "GetColumnInfo method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataTables::GetColumnInfo Method
 
 Gets data about the specified column in the specified table.
@@ -52,8 +59,8 @@ The returned column type falls within a range of values:
 
 | pType                    | Description   | Helper function                   |
 |--------------------------|---------------|-----------------------------------|
-| `0`..`iRidMax`(0..63)   | Rid           | **IsRidType****IsRidOrToken** |
-| `iCodedToken`..`iCodedTokenMax`(64..95) | Coded token | **IsCodedTokenType** **IsRidOrToken** |
+| `0`..`iRidMax`<br>(0..63)   | Rid           | **IsRidType**<br>**IsRidOrToken** |
+| `iCodedToken`..`iCodedTokenMax`<br>(64..95) | Coded token | **IsCodedTokenType** <br>**IsRidOrToken** |
 | `iSHORT` (96)            | Int16         | **IsFixedType**                   |
 | `iUSHORT` (97)           | UInt16        | **IsFixedType**                   |
 | `iLONG` (98)             | Int32         | **IsFixedType**                   |
@@ -69,12 +76,12 @@ Values that are stored in the *heap* (that is, `IsHeapType == true`) can be read
 - `iGUID`: **IMetadataTables.GetGUID**
 - `iBLOB`: **IMetadataTables.GetBlob**
 
-> **Important:**
+> [!IMPORTANT]
 > To use the constants defined in the table above, include the directive `#define _DEFINE_META_DATA_META_CONSTANTS` provided by the *cor.h* header file.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -82,5 +89,5 @@ Values that are stored in the *heap* (that is, `IsHeapType == true`) can be read
 
 ## See also
 
-- IMetaDataTables Interface
-- IMetaDataTables2 Interface
+- [IMetaDataTables Interface](imetadatatables-interface.md)
+- [IMetaDataTables2 Interface](imetadatatables2-interface.md)

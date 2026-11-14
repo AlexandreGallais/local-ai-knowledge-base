@@ -1,15 +1,13 @@
 ---
-title: "Namespaces overview - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/namespaces-overview.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Namespaces overview - LINQ to XML
+description: Learn about XML names, XML namespaces, and XML namespace prefixes, and about the XName and XNamespace classes.
+ms.date: 07/20/2015
+ms.assetid: 16283322-8238-4918-ab11-802ac6748eb7
 ---
 
 # Namespaces overview (LINQ to XML)
 
-This article introduces *XML names*, *XML namespaces*, *XML namespace prefixes*, and the `System.Xml.Linq.XName` and `System.Xml.Linq.XNamespace` classes.
+This article introduces *XML names*, *XML namespaces*, *XML namespace prefixes*, and the <xref:System.Xml.Linq.XName> and <xref:System.Xml.Linq.XNamespace> classes.
 
 XML names are often a source of complexity in XML programming. An XML name consists of an XML namespace (also called an XML namespace URI) and a local name. An XML namespace is similar to a namespace in a .NET program. It enables you to uniquely qualify the names of elements and attributes to avoid name conflicts between various parts of an XML document. When you've declared an XML namespace, you can select a local name that only has to be unique within that namespace.
 
@@ -19,6 +17,6 @@ One of the advantages of using LINQ to XML with C# is that you don't have to use
 
 When using LINQ to XML with Visual Basic and XML literals, you must use namespace prefixes when working with documents in namespaces.
 
-In LINQ to XML, the class that represents XML names is `System.Xml.Linq.XName`. XML names appear frequently throughout the LINQ to XML API, and wherever an XML name is required, you will find an `System.Xml.Linq.XName` parameter. However, you rarely work directly with an `System.Xml.Linq.XName`. `System.Xml.Linq.XName` contains an implicit conversion from string.
+In LINQ to XML, the class that represents XML names is <xref:System.Xml.Linq.XName>. XML names appear frequently throughout the LINQ to XML API, and wherever an XML name is required, you will find an <xref:System.Xml.Linq.XName> parameter. However, you rarely work directly with an <xref:System.Xml.Linq.XName>. <xref:System.Xml.Linq.XName> contains an implicit conversion from string.
 
-For more information, see `System.Xml.Linq.XNamespace` and `System.Xml.Linq.XName`.
+For more information, see <xref:System.Xml.Linq.XNamespace> and <xref:System.Xml.Linq.XName>.

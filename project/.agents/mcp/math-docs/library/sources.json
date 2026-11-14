@@ -1,0 +1,93 @@
+{
+  "sources": [
+    {
+      "tool": "linear-algebra-hefferon",
+      "title": "Linear Algebra, by Jim Hefferon: the LaTeX source of the book",
+      "repository": "https://gitlab.com/jim.hefferon/linear-algebra.git",
+      "ref": "master",
+      "version": "2026-11",
+      "license": "CC-BY-SA-2.5 OR GFDL-1.2-or-later",
+      "attribution": "Jim Hefferon",
+      "paths": [
+        "src/"
+      ],
+      "docs": [
+        "src"
+      ],
+      "files": "\\.tex$"
+    },
+    {
+      "tool": "understanding-linear-algebra",
+      "title": "Understanding Linear Algebra, by David Austin: the PreTeXt source of the book",
+      "repository": "https://github.com/davidaustinm/ula.git",
+      "ref": "master",
+      "version": "2026-11",
+      "license": "CC-BY-4.0",
+      "attribution": "David Austin",
+      "paths": [
+        "src/"
+      ],
+      "docs": [
+        "src"
+      ],
+      "files": "\\.xml$",
+      "exclude": [
+        "src/prefigure"
+      ],
+      "licenseTexts": {
+        "LICENSE-CC-BY-4.0": "https://creativecommons.org/licenses/by/4.0/legalcode.txt"
+      }
+    },
+    {
+      "tool": "discrete-mathematics",
+      "title": "Discrete Mathematics: An Open Introduction, 3rd edition, by Oscar Levin: the PreTeXt source",
+      "repository": "https://github.com/oscarlevin/discrete-book.git",
+      "ref": "3rd-ed",
+      "version": "3",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "Oscar Levin",
+      "paths": [
+        "ptx/"
+      ],
+      "docs": [
+        "ptx"
+      ],
+      "files": "\\.ptx$"
+    },
+    {
+      "tool": "applied-combinatorics",
+      "title": "Applied Combinatorics, by Mitchel T. Keller and William T. Trotter: the PreTeXt source",
+      "repository": "https://github.com/mitchkeller/applied-combinatorics.git",
+      "ref": "main",
+      "version": "2026-11",
+      "license": "CC-BY-SA-4.0",
+      "attribution": "Mitchel T. Keller and William T. Trotter",
+      "paths": [
+        "source/"
+      ],
+      "docs": [
+        "source"
+      ],
+      "files": "\\.ptx$"
+    },
+    {
+      "tool": "linear-algebra-beezer",
+      "title": "A First Course in Linear Algebra, by Robert A. Beezer: the XML source of the book",
+      "repository": "https://github.com/rbeezer/fcla.git",
+      "ref": "master",
+      "version": "2026-11",
+      "license": "GFDL-1.3-or-later",
+      "attribution": "Robert A. Beezer",
+      "paths": [
+        "src/"
+      ],
+      "docs": [
+        "src"
+      ],
+      "files": "\\.xml$",
+      "licenseTexts": {
+        "LICENSE-GFDL-1.3": "https://www.gnu.org/licenses/fdl-1.3.txt"
+      }
+    }
+  ]
+}

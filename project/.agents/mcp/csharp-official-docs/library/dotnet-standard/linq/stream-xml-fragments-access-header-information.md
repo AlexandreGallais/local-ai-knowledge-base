@@ -1,21 +1,22 @@
 ---
-title: "How to stream XML fragments with access to header information - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/stream-xml-fragments-access-header-information.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to stream XML fragments with access to header information - LINQ to XML
+description: Learn how to implement and use a custom axis method that streams XML fragments from the file specified by a URI.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to stream XML fragments with access to header information (LINQ to XML)
 
 Sometimes you have to read arbitrarily large XML files, and write your application so that the memory footprint of the application is predictable. If you attempt to populate an XML tree with a large XML file, your memory usage will be proportional to the size of the file—that is, excessive. Therefore, you should use a streaming technique instead.
 
-One option is to write your application using `System.Xml.XmlReader`. However, you might want to use LINQ to query the XML tree. If so, you can write your own custom axis method. For more information, see How to write a LINQ to XML axis method.
+One option is to write your application using <xref:System.Xml.XmlReader>. However, you might want to use LINQ to query the XML tree. If so, you can write your own custom axis method. For more information, see [How to write a LINQ to XML axis method](write-linq-xml-axis-method.md).
 
-To write your own axis method, you write a small method that uses the `System.Xml.XmlReader` to read nodes until it reaches one of the nodes in which you're interested. The method then calls `System.Xml.Linq.XNode.ReadFrom*`, which reads from the `System.Xml.XmlReader` and instantiates an XML fragment. It then yields each fragment through `yield return` to the method that's enumerating your custom axis method. You can then write LINQ queries on your custom axis method.
+To write your own axis method, you write a small method that uses the <xref:System.Xml.XmlReader> to read nodes until it reaches one of the nodes in which you're interested. The method then calls <xref:System.Xml.Linq.XNode.ReadFrom*>, which reads from the <xref:System.Xml.XmlReader> and instantiates an XML fragment. It then yields each fragment through `yield return` to the method that's enumerating your custom axis method. You can then write LINQ queries on your custom axis method.
 
-Streaming techniques are best applied in situations where you need to process the source document only once, and you can process the elements in document order. Certain standard query operators, such as `System.Linq.Enumerable.OrderBy*`, iterate their source, collect all of the data, sort it, and then finally yield the first item in the sequence. If you use a query operator that materializes its source before yielding the first item, you won't retain a small memory footprint.
+Streaming techniques are best applied in situations where you need to process the source document only once, and you can process the elements in document order. Certain standard query operators, such as <xref:System.Linq.Enumerable.OrderBy*>, iterate their source, collect all of the data, sort it, and then finally yield the first item in the sequence. If you use a query operator that materializes its source before yielding the first item, you won't retain a small memory footprint.
 
 ## Example: Implement and use a custom axis method that streams XML fragments from the file specified by a URI
 

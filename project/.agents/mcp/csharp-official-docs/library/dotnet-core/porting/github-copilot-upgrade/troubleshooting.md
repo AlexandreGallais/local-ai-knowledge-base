@@ -1,10 +1,12 @@
 ---
-title: "Troubleshoot GitHub Copilot upgrade"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/github-copilot-upgrade/troubleshooting.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Troubleshoot GitHub Copilot upgrade
+description: "Find solutions to common GitHub Copilot upgrade workflow, build, package, Git, performance, and customization problems."
+ms.topic: troubleshooting-general
+ms.date: 09/21/2026
+ai-usage: ai-assisted
+
+#customer intent: As a developer, I want to troubleshoot GitHub Copilot upgrade so that I can resolve problems and continue my project upgrade.
+
 ---
 
 # Troubleshoot GitHub Copilot upgrade
@@ -35,7 +37,7 @@ These issues relate to scenario discovery, resuming work, and task state.
 1. If you accidentally deleted the folder, start the scenario fresh. The agent can't recover without its state files.
 1. If the folder exists but files appear corrupted, ask the agent to _"reassess and re-plan"_ to regenerate them.
 
-> **Tip:**
+> [!TIP]
 > Commit the `.github/upgrades/` folder to your branch so it's preserved across sessions and machines.
 
 ### Tasks stuck in progress
@@ -70,7 +72,7 @@ These issues relate to build failures, package restore or installation problems,
 
 ### Build fails after agent's changes
 
-**Cause:** Upgrades can introduce breaking API changes, missing packages, or incompatible code patterns.
+**Cause:** Upgrades can introduce [breaking API changes](../../compatibility/breaking-changes.md), missing packages, or incompatible code patterns.
 
 **Solution:**
 
@@ -111,7 +113,7 @@ These issues relate to build failures, package restore or installation problems,
 
 ## Git issues
 
-> **Note:**
+> [!NOTE]
 > The agent works with non-Git folders too. If your workspace isn't a Git repository, the agent skips Git operations (branching, committing) and applies changes directly to your files. Without Git, back up your project manually before you start so you can revert if needed.
 
 ### Agent can't create a branch
@@ -135,7 +137,7 @@ These issues relate to build failures, package restore or installation problems,
 1. To remove the agent's branch entirely, run `git branch -D <agent-branch-name>`.
 1. To keep some changes, cherry-pick specific commits with `git cherry-pick <commit-hash>`.
 
-> **Tip:**
+> [!TIP]
 > The agent makes granular commits per task, so you can selectively keep the changes that worked.
 
 ## Performance issues
@@ -187,7 +189,7 @@ These issues relate to custom skills and scenario instruction files.
 1. Ask the agent to _"reload instructions"_ or start a new chat session to force a reread.
 1. Verify that your edits are in the correct sections of the file:
    - **User Preferences:** For general preferences and constraints.
-   - **Key <example-value>:** For recording important decisions made during the upgrade.
+   - **Key Decisions:** For recording important decisions made during the upgrade.
    - **Custom Instructions:** For specific behavioral overrides.
 1. Verify that the file is saved and in the expected path: `.github/upgrades/{scenarioId}/scenario-instructions.md`.
 
@@ -197,11 +199,11 @@ When something isn't working as expected:
 
 1. **Ask the agent:** Ask _"What went wrong with the last task?"_ The agent can often explain what happened and suggest next steps.
 1. **Review the task progress:** Open `tasks.md` in `.github/upgrades/{scenarioId}/` to find the last task ID, and then open `tasks/{taskId}/progress-details.md`. The progress details show what the agent did, including any errors it encountered.
-1. **File an issue:** If you've found a bug or the agent consistently fails at something, file an issue at the upgrade-agent-plugins GitHub repository.
+1. **File an issue:** If you've found a bug or the agent consistently fails at something, file an issue at the [upgrade-agent-plugins GitHub repository](https://github.com/microsoft/upgrade-agent-plugins).
 
 ## Related content
 
-- What is GitHub Copilot upgrade?
-- Best practices
-- Core concepts
-- GitHub Copilot upgrade FAQ
+- [What is GitHub Copilot upgrade?](overview.md)
+- [Best practices](best-practices.md)
+- [Core concepts](concepts.md)
+- [GitHub Copilot upgrade FAQ](faq.yml)

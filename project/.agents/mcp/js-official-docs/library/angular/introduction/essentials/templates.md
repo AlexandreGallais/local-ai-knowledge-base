@@ -1,14 +1,6 @@
----
-title: "Templates"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/introduction/essentials/templates.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
-# Templates
+<docs-decorative-header title="Templates" imgSrc="adev/src/assets/images/templates.svg"> <!-- markdownlint-disable-line -->
 Use Angular's template syntax to create dynamic user interfaces.
+</docs-decorative-header>
 
 Component templates aren't just static HTML— they can use data from your component class and set up handlers for user interaction.
 
@@ -90,7 +82,7 @@ export class UserProfile {
 }
 ```
 
-If you need to pass the event object to your listener, you can use Angular's built-in `$event` variable inside the function call:
+If you need to pass the [event](https://developer.mozilla.org/docs/Web/API/Event) object to your listener, you can use Angular's built-in `$event` variable inside the function call:
 
 ```angular-ts
 @Component({
@@ -146,13 +138,15 @@ You can repeat part of a template multiple times with Angular's `@for` block:
 </ul>
 ```
 
-Angular uses the `track` keyword, shown in the example above, to associate data with the DOM elements created by `@for`. See _Why is track in @for blocks important?_ for more info.
+Angular uses the `track` keyword, shown in the example above, to associate data with the DOM elements created by `@for`. See [_Why is track in @for blocks important?_](guide/templates/control-flow#why-is-track-in-for-blocks-important) for more info.
 
-TIP: Want to know more about Angular templates? See the In-depth Templates guide for the full details.
+TIP: Want to know more about Angular templates? See the [In-depth Templates guide](guide/templates) for the full details.
 
 ## Next Step
 
 Now that you have dynamic data and templates in the application, it's time to learn how to enhance templates by conditionally hiding or showing certain elements, looping over elements, and more.
 
-  - Forms with Signals
-  - In-depth template guide
+<docs-pill-row>
+  <docs-pill title="Forms with Signals" href="essentials/signal-forms" />
+  <docs-pill title="In-depth template guide" href="guide/templates" />
+</docs-pill-row>

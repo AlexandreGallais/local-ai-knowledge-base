@@ -1,20 +1,14 @@
----
-title: "check-syntax"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/check-syntax.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-check-syntax"></a>
+<a name="check-syntax"></a>
+# <code>check-syntax</code>
 
-# `check-syntax`
+* [Fixer](#user-content-check-syntax-fixer)
+* [Options](#user-content-check-syntax-options)
+    * [`enableFixer`](#user-content-check-syntax-options-enablefixer)
+* [Context and settings](#user-content-check-syntax-context-and-settings)
+* [Failing examples](#user-content-check-syntax-failing-examples)
+* [Passing examples](#user-content-check-syntax-passing-examples)
 
-* Fixer
-* Options
-    * `enableFixer`
-* Context and settings
-* Failing examples
-* Passing examples
 
 Reports against syntax not encouraged for the mode (e.g., Google Closure
 Compiler in "jsdoc" or "typescript" mode). Note that this rule will not check
@@ -29,6 +23,8 @@ Note that "jsdoc" actually allows Closure syntax, but with another
 option available for optional parameters (enclosing the name in brackets), the
 rule is enforced (except under "permissive" and "closure" modes).
 
+<a name="user-content-check-syntax-fixer"></a>
+<a name="check-syntax-fixer"></a>
 ## Fixer
 
 With the `enableFixer` option, the Closure style `{type=}` is fixed:
@@ -43,17 +39,24 @@ With the `enableFixer` option, the Closure style `{type=}` is fixed:
 All the tags of the block are fixed at once, and the problem is reported once
 per block.
 
+<a name="user-content-check-syntax-options"></a>
+<a name="check-syntax-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `enableFixer`
+<a name="user-content-check-syntax-options-enablefixer"></a>
+<a name="check-syntax-options-enablefixer"></a>
+### <code>enableFixer</code>
 
 Whether to enable the fixer to replace the Closure Compiler style `{type=}`
 with `{type} [name]` on `@param` and `@property` tags, and with
 `{type|undefined}` on other tags.
 Defaults to `false`.
 
+
+<a name="user-content-check-syntax-context-and-settings"></a>
+<a name="check-syntax-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -63,6 +66,8 @@ Defaults to `false`.
 |Recommended|false|
 |Options|`enableFixer`|
 
+<a name="user-content-check-syntax-failing-examples"></a>
+<a name="check-syntax-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -191,6 +196,10 @@ function quux (foo) {
 // Message: Syntax should not be Google Closure Compiler style.
 ````
 
+
+
+<a name="user-content-check-syntax-passing-examples"></a>
+<a name="check-syntax-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -235,3 +244,4 @@ function quux (foo) {
 
 }
 ````
+

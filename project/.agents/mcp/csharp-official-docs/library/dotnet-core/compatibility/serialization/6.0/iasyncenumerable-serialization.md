@@ -1,24 +1,20 @@
 ---
 title: "Breaking change: System.Text.Json IAsyncEnumerable serialization"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/serialization/6.0/iasyncenumerable-serialization.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 6 breaking change where the System.Text.Json supports IAsyncEnumerable serialization.
+ms.date: 10/01/2021
 ---
-
 # System.Text.Json IAsyncEnumerable serialization
 
-`System.Text.Json` now supports serializing and deserializing of
-`System.Collections.Generic.IAsyncEnumerable`1` instances.
+<xref:System.Text.Json?displayProperty=fullName> now supports serializing and deserializing of
+<xref:System.Collections.Generic.IAsyncEnumerable`1> instances.
 
 ## Previous behavior
 
-In previous versions, `System.Text.Json` serialized `System.Collections.Generic.IAsyncEnumerable`1` instances as empty JSON objects (`{}`). Deserialization failed with a `System.Text.Json.JsonException`.
+In previous versions, <xref:System.Text.Json?displayProperty=fullName> serialized <xref:System.Collections.Generic.IAsyncEnumerable`1> instances as empty JSON objects (`{}`). Deserialization failed with a <xref:System.Text.Json.JsonException>.
 
 ## New behavior
 
-Asynchronous serialization methods now enumerate any `System.Collections.Generic.IAsyncEnumerable`1` instances in an object graph and then serialize them as JSON arrays. Synchronous serializations methods do not support `System.Collections.Generic.IAsyncEnumerable`1` serialization and throw a `System.NotSupportedException`.
+Asynchronous serialization methods now enumerate any <xref:System.Collections.Generic.IAsyncEnumerable`1> instances in an object graph and then serialize them as JSON arrays. Synchronous serializations methods do not support <xref:System.Collections.Generic.IAsyncEnumerable`1> serialization and throw a <xref:System.NotSupportedException>.
 
 ## Version introduced
 
@@ -26,24 +22,24 @@ Asynchronous serialization methods now enumerate any `System.Collections.Generic
 
 ## Type of breaking change
 
-This change can affect source compatibility. If you retarget to .NET 6, you won't get any compile-time errors, but you may encounter runtime serialization behavior differences.
+This change can affect [source compatibility](../../categories.md#source-compatibility). If you retarget to .NET 6, you won't get any compile-time errors, but you may encounter runtime serialization behavior differences.
 
 ## Reason for change
 
-This change was introduced to add support for streaming `System.Collections.Generic.IAsyncEnumerable`1` responses in ASP.NET Core MVC.
+This change was introduced to add support for streaming <xref:System.Collections.Generic.IAsyncEnumerable`1> responses in ASP.NET Core MVC.
 
 ## Recommended action
 
-Check if your serialization models contain types that implement `System.Collections.Generic.IAsyncEnumerable`1` and determine if emitting the enumeration in the JSON output is desirable. You can disable `System.Collections.Generic.IAsyncEnumerable`1` serialization in one of the following ways:
+Check if your serialization models contain types that implement <xref:System.Collections.Generic.IAsyncEnumerable`1> and determine if emitting the enumeration in the JSON output is desirable. You can disable <xref:System.Collections.Generic.IAsyncEnumerable`1> serialization in one of the following ways:
 
-- Attach a `System.Text.Json.Serialization.JsonIgnoreAttribute` to the property containing the `System.Collections.Generic.IAsyncEnumerable`1`.
-- Define a custom converter factory that serializes `System.Collections.Generic.IAsyncEnumerable`1` instances as empty JSON objects.
+- Attach a <xref:System.Text.Json.Serialization.JsonIgnoreAttribute> to the property containing the <xref:System.Collections.Generic.IAsyncEnumerable`1>.
+- Define a [custom converter factory](../../../../standard/serialization/system-text-json/converters-how-to.md#sample-factory-pattern-converter) that serializes <xref:System.Collections.Generic.IAsyncEnumerable`1> instances as empty JSON objects.
 
 ## Affected APIs
 
-- `System.Text.Json.JsonSerializer.SerializeAsync*`
-- `System.Text.Json.JsonSerializer.Serialize*`
+- <xref:System.Text.Json.JsonSerializer.SerializeAsync*?displayProperty=fullName>
+- <xref:System.Text.Json.JsonSerializer.Serialize*?displayProperty=fullName>
 
 ## See also
 
-- System.Text.Json support for IAsyncEnumerable
+- [System.Text.Json support for IAsyncEnumerable](https://devblogs.microsoft.com/dotnet/announcing-net-6-preview-4/#system-text-json-support-for-iasyncenumerable)

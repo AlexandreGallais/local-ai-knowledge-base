@@ -1,52 +1,41 @@
----
-title: "ArrayBlockingQueue class (java.util.concurrent)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/ArrayBlockingQueue.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ArrayBlockingQueue class (java.util.concurrent)
 
 ```java
 public class ArrayBlockingQueue<E> extends AbstractQueue<E> implements BlockingQueue<E>, java.io.Serializable
 ```
 
-A bounded blocking queue backed by an
+A bounded {@linkplain BlockingQueue blocking queue} backed by an
 array.  This queue orders elements FIFO (first-in-first-out).  The
-*head* of the queue is that element that has been on the
-queue the longest time.  The *tail* of the queue is that
+<em>head</em> of the queue is that element that has been on the
+queue the longest time.  The <em>tail</em> of the queue is that
 element that has been on the queue the shortest time. New elements
 are inserted at the tail of the queue, and the queue retrieval
 operations obtain elements at the head of the queue.
 
-This is a classic "bounded buffer", in which a
+<p>This is a classic &quot;bounded buffer&quot;, in which a
 fixed-sized array holds elements inserted by producers and
 extracted by consumers.  Once created, the capacity cannot be
-changed.  Attempts to `put` an element into a full queue
-will result in the operation blocking; attempts to `take` an
+changed.  Attempts to {@code put} an element into a full queue
+will result in the operation blocking; attempts to {@code take} an
 element from an empty queue will similarly block.
 
-This class supports an optional fairness policy for ordering
+<p>This class supports an optional fairness policy for ordering
 waiting producer and consumer threads.  By default, this ordering
 is not guaranteed. However, a queue constructed with fairness set
-to `true` grants threads access in FIFO order. Fairness
+to {@code true} grants threads access in FIFO order. Fairness
 generally decreases throughput but reduces variability and avoids
 starvation.
 
-This class and its iterator implement all of the *optional*
-methods of the `Collection` and `Iterator` interfaces.
+<p>This class and its iterator implement all of the <em>optional</em>
+methods of the {@link Collection} and {@link Iterator} interfaces.
 
-This class is a member of the
+<p>This class is a member of the
+<a href="{@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+Java Collections Framework</a>.
 
-Java Collections Framework.
-
-Parameters:
-
-- `<E>`: the type of elements held in this queue
-
-**Since:** 1.5
+@since 1.5
+@author Doug Lea
+@param <E> the type of elements held in this queue
 
 ## ArrayBlockingQueue.ArrayBlockingQueue(int)
 
@@ -54,16 +43,11 @@ Parameters:
 public ArrayBlockingQueue(int capacity)
 ```
 
-Creates an `ArrayBlockingQueue` with the given (fixed)
+Creates an {@code ArrayBlockingQueue} with the given (fixed)
 capacity and default access policy.
 
-Parameters:
-
-- `capacity`: the capacity of this queue
-
-Throws:
-
-- `IllegalArgumentException`: if `capacity < 1`
+@param capacity the capacity of this queue
+@throws IllegalArgumentException if {@code capacity < 1}
 
 ## ArrayBlockingQueue.ArrayBlockingQueue(int, boolean)
 
@@ -71,17 +55,14 @@ Throws:
 public ArrayBlockingQueue(int capacity, boolean fair)
 ```
 
-Creates an `ArrayBlockingQueue` with the given (fixed)
+Creates an {@code ArrayBlockingQueue} with the given (fixed)
 capacity and the specified access policy.
 
-Parameters:
-
-- `capacity`: the capacity of this queue
-- `fair`: if `true` then queue accesses for threads blocked on insertion or removal, are processed in FIFO order; if `false` the access order is unspecified.
-
-Throws:
-
-- `IllegalArgumentException`: if `capacity < 1`
+@param capacity the capacity of this queue
+@param fair if {@code true} then queue accesses for threads blocked
+       on insertion or removal, are processed in FIFO order;
+       if {@code false} the access order is unspecified.
+@throws IllegalArgumentException if {@code capacity < 1}
 
 ## ArrayBlockingQueue.ArrayBlockingQueue(int, boolean, Collection<? extends E>)
 
@@ -89,21 +70,20 @@ Throws:
 public ArrayBlockingQueue(int capacity, boolean fair, Collection<? extends E> c)
 ```
 
-Creates an `ArrayBlockingQueue` with the given (fixed)
+Creates an {@code ArrayBlockingQueue} with the given (fixed)
 capacity, the specified access policy and initially containing the
 elements of the given collection,
 added in traversal order of the collection's iterator.
 
-Parameters:
-
-- `capacity`: the capacity of this queue
-- `fair`: if `true` then queue accesses for threads blocked on insertion or removal, are processed in FIFO order; if `false` the access order is unspecified.
-- `c`: the collection of elements to initially contain
-
-Throws:
-
-- `IllegalArgumentException`: if `capacity` is less than `c.size()`, or less than 1.
-- `NullPointerException`: if the specified collection or any of its elements are null
+@param capacity the capacity of this queue
+@param fair if {@code true} then queue accesses for threads blocked
+       on insertion or removal, are processed in FIFO order;
+       if {@code false} the access order is unspecified.
+@param c the collection of elements to initially contain
+@throws IllegalArgumentException if {@code capacity} is less than
+        {@code c.size()}, or less than 1.
+@throws NullPointerException if the specified collection or any
+        of its elements are null
 
 ## ArrayBlockingQueue.add(E)
 
@@ -113,19 +93,13 @@ public boolean add(E e)
 
 Inserts the specified element at the tail of this queue if it is
 possible to do so immediately without exceeding the queue's capacity,
-returning `true` upon success and throwing an
-`IllegalStateException` if this queue is full.
+returning {@code true} upon success and throwing an
+{@code IllegalStateException} if this queue is full.
 
-Parameters:
-
-- `e`: the element to add
-
-**Returns:** `true` (as specified by `Collection.add`)
-
-Throws:
-
-- `IllegalStateException`: if this queue is full
-- `NullPointerException`: if the specified element is null
+@param e the element to add
+@return {@code true} (as specified by {@link Collection#add})
+@throws IllegalStateException if this queue is full
+@throws NullPointerException if the specified element is null
 
 ## ArrayBlockingQueue.offer(E)
 
@@ -135,13 +109,11 @@ public boolean offer(E e)
 
 Inserts the specified element at the tail of this queue if it is
 possible to do so immediately without exceeding the queue's capacity,
-returning `true` upon success and `false` if this queue
-is full.  This method is generally preferable to method `add`,
+returning {@code true} upon success and {@code false} if this queue
+is full.  This method is generally preferable to method {@link #add},
 which can fail to insert an element only by throwing an exception.
 
-Throws:
-
-- `NullPointerException`: if the specified element is null
+@throws NullPointerException if the specified element is null
 
 ## ArrayBlockingQueue.put(E)
 
@@ -152,10 +124,8 @@ public void put(E e) throws InterruptedException
 Inserts the specified element at the tail of this queue, waiting
 for space to become available if the queue is full.
 
-Throws:
-
-- `InterruptedException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
+@throws InterruptedException {@inheritDoc}
+@throws NullPointerException {@inheritDoc}
 
 ## ArrayBlockingQueue.offer(E, long, TimeUnit)
 
@@ -167,10 +137,8 @@ Inserts the specified element at the tail of this queue, waiting
 up to the specified wait time for space to become available if
 the queue is full.
 
-Throws:
-
-- `InterruptedException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
+@throws InterruptedException {@inheritDoc}
+@throws NullPointerException {@inheritDoc}
 
 ## ArrayBlockingQueue.size()
 
@@ -180,7 +148,7 @@ public int size()
 
 Returns the number of elements in this queue.
 
-**Returns:** the number of elements in this queue
+@return the number of elements in this queue
 
 ## ArrayBlockingQueue.remainingCapacity()
 
@@ -191,10 +159,10 @@ public int remainingCapacity()
 Returns the number of additional elements that this queue can ideally
 (in the absence of memory or resource constraints) accept without
 blocking. This is always equal to the initial capacity of this queue
-less the current `size` of this queue.
+less the current {@code size} of this queue.
 
-Note that you *cannot* always tell if an attempt to insert
-an element will succeed by inspecting `remainingCapacity`
+<p>Note that you <em>cannot</em> always tell if an attempt to insert
+an element will succeed by inspecting {@code remainingCapacity}
 because it may be the case that another thread is about to
 insert or remove an element.
 
@@ -205,23 +173,20 @@ public boolean remove(Object o)
 ```
 
 Removes a single instance of the specified element from this queue,
-if it is present.  More formally, removes an element `e` such
-that `o.equals(e)`, if this queue contains one or more such
+if it is present.  More formally, removes an element {@code e} such
+that {@code o.equals(e)}, if this queue contains one or more such
 elements.
-Returns `true` if this queue contained the specified element
+Returns {@code true} if this queue contained the specified element
 (or equivalently, if this queue changed as a result of the call).
 
-Removal of interior elements in circular array based queues
+<p>Removal of interior elements in circular array based queues
 is an intrinsically slow and disruptive operation, so should
 be undertaken only in exceptional circumstances, ideally
 only when the queue is known not to be accessible by other
 threads.
 
-Parameters:
-
-- `o`: element to be removed from this queue, if present
-
-**Returns:** `true` if this queue changed as a result of the call
+@param o element to be removed from this queue, if present
+@return {@code true} if this queue changed as a result of the call
 
 ## ArrayBlockingQueue.contains(Object)
 
@@ -229,15 +194,12 @@ Parameters:
 public boolean contains(Object o)
 ```
 
-Returns `true` if this queue contains the specified element.
-More formally, returns `true` if and only if this queue contains
-at least one element `e` such that `o.equals(e)`.
+Returns {@code true} if this queue contains the specified element.
+More formally, returns {@code true} if and only if this queue contains
+at least one element {@code e} such that {@code o.equals(e)}.
 
-Parameters:
-
-- `o`: object to be checked for containment in this queue
-
-**Returns:** `true` if this queue contains the specified element
+@param o object to be checked for containment in this queue
+@return {@code true} if this queue contains the specified element
 
 ## ArrayBlockingQueue.toArray()
 
@@ -248,14 +210,14 @@ public Object[] toArray()
 Returns an array containing all of the elements in this queue, in
 proper sequence.
 
-The returned array will be "safe" in that no references to it are
+<p>The returned array will be "safe" in that no references to it are
 maintained by this queue.  (In other words, this method must allocate
 a new array).  The caller is thus free to modify the returned array.
 
-This method acts as bridge between array-based and collection-based
+<p>This method acts as bridge between array-based and collection-based
 APIs.
 
-**Returns:** an array containing all of the elements in this queue
+@return an array containing all of the elements in this queue
 
 ## ArrayBlockingQueue.toArray(T[])
 
@@ -269,37 +231,33 @@ the specified array.  If the queue fits in the specified array, it
 is returned therein.  Otherwise, a new array is allocated with the
 runtime type of the specified array and the size of this queue.
 
-If this queue fits in the specified array with room to spare
+<p>If this queue fits in the specified array with room to spare
 (i.e., the array has more elements than this queue), the element in
 the array immediately following the end of the queue is set to
-`null`.
+{@code null}.
 
-Like the `toArray()` method, this method acts as bridge between
+<p>Like the {@link #toArray()} method, this method acts as bridge between
 array-based and collection-based APIs.  Further, this method allows
 precise control over the runtime type of the output array, and may,
 under certain circumstances, be used to save allocation costs.
 
-Suppose `x` is a queue known to contain only strings.
+<p>Suppose {@code x} is a queue known to contain only strings.
 The following code can be used to dump the queue into a newly
-allocated array of `String`:
+allocated array of {@code String}:
 
-```java
-String[] y = x.toArray(new String[0]);
-```
+<pre> {@code String[] y = x.toArray(new String[0]);}</pre>
 
-Note that `toArray(new Object[0])` is identical in function to
-`toArray()`.
+Note that {@code toArray(new Object[0])} is identical in function to
+{@code toArray()}.
 
-Parameters:
-
-- `a`: the array into which the elements of the queue are to be stored, if it is big enough; otherwise, a new array of the same runtime type is allocated for this purpose
-
-**Returns:** an array containing all of the elements in this queue
-
-Throws:
-
-- `ArrayStoreException`: if the runtime type of the specified array is not a supertype of the runtime type of every element in this queue
-- `NullPointerException`: if the specified array is null
+@param a the array into which the elements of the queue are to
+         be stored, if it is big enough; otherwise, a new array of the
+         same runtime type is allocated for this purpose
+@return an array containing all of the elements in this queue
+@throws ArrayStoreException if the runtime type of the specified array
+        is not a supertype of the runtime type of every element in
+        this queue
+@throws NullPointerException if the specified array is null
 
 ## ArrayBlockingQueue.clear()
 
@@ -316,12 +274,10 @@ The queue will be empty after this call returns.
 public int drainTo(Collection<? super E> c)
 ```
 
-Throws:
-
-- `UnsupportedOperationException`: (inherited documentation)
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
-- `IllegalArgumentException`: (inherited documentation)
+@throws UnsupportedOperationException {@inheritDoc}
+@throws ClassCastException            {@inheritDoc}
+@throws NullPointerException          {@inheritDoc}
+@throws IllegalArgumentException      {@inheritDoc}
 
 ## ArrayBlockingQueue.drainTo(Collection<? super E>, int)
 
@@ -329,12 +285,10 @@ Throws:
 public int drainTo(Collection<? super E> c, int maxElements)
 ```
 
-Throws:
-
-- `UnsupportedOperationException`: (inherited documentation)
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
-- `IllegalArgumentException`: (inherited documentation)
+@throws UnsupportedOperationException {@inheritDoc}
+@throws ClassCastException            {@inheritDoc}
+@throws NullPointerException          {@inheritDoc}
+@throws IllegalArgumentException      {@inheritDoc}
 
 ## ArrayBlockingQueue.iterator()
 
@@ -345,10 +299,10 @@ public Iterator<E> iterator()
 Returns an iterator over the elements in this queue in proper sequence.
 The elements will be returned in order from first (head) to last (tail).
 
-The returned iterator is
-*weakly consistent*.
+<p>The returned iterator is
+<a href="package-summary.html#Weakly"><i>weakly consistent</i></a>.
 
-**Returns:** an iterator over the elements in this queue in proper sequence
+@return an iterator over the elements in this queue in proper sequence
 
 ## ArrayBlockingQueue.hasNext()
 
@@ -367,20 +321,20 @@ triggered by queue modifications.
 public Spliterator<E> spliterator()
 ```
 
-Returns a `Spliterator` over the elements in this queue.
+Returns a {@link Spliterator} over the elements in this queue.
 
-The returned spliterator is
-*weakly consistent*.
+<p>The returned spliterator is
+<a href="package-summary.html#Weakly"><i>weakly consistent</i></a>.
 
-The `Spliterator` reports `Spliterator.CONCURRENT`,
-`Spliterator.ORDERED`, and `Spliterator.NONNULL`.
+<p>The {@code Spliterator} reports {@link Spliterator#CONCURRENT},
+{@link Spliterator#ORDERED}, and {@link Spliterator#NONNULL}.
 
-**Implementation note:** The `Spliterator` implements `trySplit` to permit limited
+@implNote
+The {@code Spliterator} implements {@code trySplit} to permit limited
 parallelism.
 
-**Returns:** a `Spliterator` over the elements in this queue
-
-**Since:** 1.8
+@return a {@code Spliterator} over the elements in this queue
+@since 1.8
 
 ## ArrayBlockingQueue.forEach(Consumer<? super E>)
 
@@ -388,9 +342,7 @@ parallelism.
 public void forEach(Consumer<? super E> action)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## ArrayBlockingQueue.removeIf(Predicate<? super E>)
 
@@ -398,9 +350,7 @@ Throws:
 public boolean removeIf(Predicate<? super E> filter)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## ArrayBlockingQueue.removeAll(Collection<?>)
 
@@ -408,9 +358,7 @@ Throws:
 public boolean removeAll(Collection<?> c)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## ArrayBlockingQueue.retainAll(Collection<?>)
 
@@ -418,6 +366,4 @@ Throws:
 public boolean retainAll(Collection<?> c)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}

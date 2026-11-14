@@ -1,14 +1,3 @@
----
-title: "synchronous-js-interop-call-dotnet"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/includes/js-interop/synchronous-js-interop-call-dotnet.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# synchronous-js-interop-call-dotnet
-
 *This section only applies to client-side components.*
 
 JS interop calls are asynchronous, regardless of whether the called code is synchronous or asynchronous. Calls are asynchronous to ensure that components are compatible across server-side and client-side render modes. On the server, all JS interop calls must be asynchronous because they're sent over a network connection.
@@ -20,4 +9,4 @@ To make a synchronous call from JavaScript to .NET in a client-side component, u
 Synchronous calls work if:
 
 * The component is only rendered for execution on WebAssembly.
-* The called function returns a value synchronously. The function isn't an `async` method and doesn't return a .NET `System.Threading.Tasks.Task` or JavaScript `Promise`.
+* The called function returns a value synchronously. The function isn't an `async` method and doesn't return a .NET <xref:System.Threading.Tasks.Task> or JavaScript [`Promise`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise).

@@ -1,17 +1,11 @@
----
-title: "no-duplicate-loops"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-duplicate-loops.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-duplicate-loops
 
 📝 Disallow `.map()` and `.filter()` in `for…of` and `for await…of` loop headers.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Using `.map()` or `.filter()` directly in a `for…of` or `for await…of` loop header creates an intermediate array and then iterates over that array. Move the operation into the loop body when that preserves the intended behavior, so the original collection is only iterated once.
 

@@ -1,18 +1,15 @@
 ---
-title: "Language strategy"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/tour-of-csharp/strategy.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Language strategy
+description: We keep evolving C# to meet the changing needs of developers and remain a state-of-the-art programming language. We will innovate eagerly and broadly in collaboration with C# developers
+ms.date: 02/06/2026
+ms.update-cycle: 1825-days
 ---
-
 # Annotated C# strategy
 
-> **Tip:**
-> This article is most useful for professionals and students who want to understand C#'s design philosophy and how the language evolves. If you're new to C#, start with A tour of C# or the beginner tutorials instead.
+> [!TIP]
+> This article is most useful for professionals and students who want to understand C#'s design philosophy and how the language evolves. If you're new to C#, start with [A tour of C#](./overview.md) or the [beginner tutorials](./tutorials/index.md) instead.
 
-We will keep evolving C# to meet the changing needs of developers and remain a state-of-the-art programming language. We will innovate eagerly and broadly in collaboration with the teams responsible for .NET libraries, developer tools, and workload support, while being careful to stay within the spirit of the language. Recognizing the diversity of domains where C# is being used, we will prefer language and performance improvements that benefit all or most developers and maintain a high commitment to backwards compatibility. We will continue to empower the broader .NET ecosystem and grow its role in C#’s future, while maintaining stewardship of design decisions.
+[!INCLUDE [csharp](../../../includes/csharp-strategy.md)]
 
 ## How strategy guides C\#
 
@@ -28,7 +25,7 @@ We evaluate new ideas in the spirit and history of the C# language. We prioritiz
 
 > "improvements that benefit all or most developers"
 
-Developers use C# in all .NET workloads. Developers build web front and back ends, cloud native apps, and desktop apps with C#. C# enables cross platform applications. We focus on new features that have the most impact either directly, or by empowering improvements to common libraries. Language feature development includes integration into our developer tools and learning resources.
+Developers use C# in all .NET [workloads](./what-you-can-build.md). Developers build web front and back ends, cloud native apps, and desktop apps with C#. C# enables cross platform applications. We focus on new features that have the most impact either directly, or by empowering improvements to common libraries. Language feature development includes integration into our developer tools and learning resources.
 
 > "high commitment to backwards compatibility"
 
@@ -36,4 +33,4 @@ We respect that there's a massive amount of C# code in use today. Any potential 
 
 > "maintaining stewardship"
 
-C# language design takes place in the open with community participation. Anyone can propose new C# features in our GitHub repos. The Language Design Team makes the final decisions after weighing community input.
+[C# language design](https://github.com/dotnet/csharplang/tree/main/meetings) takes place in the open with community participation. Anyone can propose new C# features in our [GitHub repos](https://github.com/dotnet/csharplang). The [Language Design Team](https://github.com/dotnet/csharplang/tree/main/meetings) makes the final decisions after weighing community input.

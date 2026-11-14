@@ -1,10 +1,6 @@
 ---
-title: "browser.trace | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/browser/trace.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: browser.trace | Config
+outline: deep
 ---
 
 # browser.trace
@@ -13,9 +9,9 @@ license: "MIT"
 - **CLI:** `--browser.trace=on`, `--browser.trace=retain-on-failure`
 - **Default:** `'off'`
 
-Capture a trace of your browser test runs. You can preview traces with Playwright Trace Viewer.
+Capture a trace of your browser test runs. You can preview traces with [Playwright Trace Viewer](https://trace.playwright.dev/).
 
-See Playwright Traces for the full workflow.
+See [Playwright Traces](/guide/browser/playwright-traces) for the full workflow.
 
 This options supports the following values:
 
@@ -49,5 +45,6 @@ interface TraceOptions {
 }
 ```
 
-**WARNING**
-This option is supported only by the **playwright** provider.
+::: danger WARNING
+This option is supported only by the [**playwright**](/config/browser/playwright) provider.
+:::

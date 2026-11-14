@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: Blazor: Insignificant whitespace trimmed from components at compile time"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/5/blazor-components-trim-insignificant-whitespace.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 5.0 titled Blazor: Insignificant whitespace trimmed from components at compile time"
+ms.date: 10/01/2020
+ms.custom: https://github.com/aspnet/Announcements/issues/426
 ---
-
 # Blazor: Insignificant whitespace trimmed from components at compile time
 
-Starting with ASP.NET Core 5.0, the Razor compiler omits insignificant whitespace in Razor components (*.razor* files) at compile time. For discussion, see issue dotnet/aspnetcore#23568.
+Starting with ASP.NET Core 5.0, the Razor compiler omits insignificant whitespace in Razor components (*.razor* files) at compile time. For discussion, see issue [dotnet/aspnetcore#23568](https://github.com/dotnet/aspnetcore/issues/23568).
 
 ## Version introduced
 
@@ -35,7 +32,7 @@ Consider the following Razor component code:
 The preceding example renders two whitespace nodes:
 
 * Outside of the `@foreach` code block.
-* Around the `` element.
+* Around the `<li>` element.
 * Around the `@item.Text` output.
 
 A list containing 100 items results in 402 whitespace nodes. That's over half of all nodes rendered, even though none of the whitespace nodes visually affect the rendered output.
@@ -76,3 +73,15 @@ In most cases, no action is required, as applications will typically continue to
 ## Affected APIs
 
 None
+
+<!--
+
+### Category
+
+ASP.NET Core
+
+### Affected APIs
+
+Not detectable via API analysis
+
+-->

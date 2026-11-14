@@ -1,12 +1,3 @@
----
-title: "core::str::traits"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/str/traits.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::str::traits
 
 Trait implementations for `str`.
@@ -19,8 +10,11 @@ pub const trait FromStr: Sized
 
 Parse a value from a string
 
-`FromStr`'s `from_str` method is often used implicitly, through
-`str`'s `parse` method. See `parse`'s documentation for examples.
+`FromStr`'s [`from_str`] method is often used implicitly, through
+[`str`]'s [`parse`] method. See [`parse`]'s documentation for examples.
+
+[`from_str`]: FromStr::from_str
+[`parse`]: str::parse
 
 `FromStr` does not have a lifetime parameter, and so you can only parse types
 that do not contain a lifetime parameter themselves. In other words, you can
@@ -43,9 +37,9 @@ surprise users.
 
 # Examples
 
-Basic <example-value> of `FromStr` on an example `Point` type:
+Basic implementation of `FromStr` on an example `Point` type:
 
-```rust
+```
 use std::str::FromStr;
 
 #[derive(Debug, PartialEq)]

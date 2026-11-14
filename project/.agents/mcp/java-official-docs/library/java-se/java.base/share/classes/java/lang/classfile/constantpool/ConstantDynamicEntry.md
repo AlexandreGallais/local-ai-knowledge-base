@@ -1,39 +1,40 @@
----
-title: "ConstantDynamicEntry interface (java.lang.classfile.constantpool)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/constantpool/ConstantDynamicEntry.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ConstantDynamicEntry interface (java.lang.classfile.constantpool)
 
 ```java
 public sealed interface ConstantDynamicEntry extends DynamicConstantPoolEntry, LoadableConstantEntry permits AbstractPoolEntry.ConstantDynamicEntryImpl
 ```
 
-Models a `CONSTANT_Dynamic_info` structure, representing a , in the constant pool of a `class` file.
-
-The use of a `ConstantDynamicEntry` is modeled by a `DynamicConstantDesc`.  Conversions are through `asSymbol()` and `ConstantPoolBuilder.constantDynamicEntry(DynamicConstantDesc)`.
-
+Models a {@code CONSTANT_Dynamic_info} structure, representing a <dfn>{@index
+"dynamically-computed constant"}</dfn>, in the constant pool of a {@code
+class} file.
+<p>
+The use of a {@code ConstantDynamicEntry} is modeled by a {@link
+DynamicConstantDesc}.  Conversions are through {@link #asSymbol()} and {@link
+ConstantPoolBuilder#constantDynamicEntry(DynamicConstantDesc)}.
+<p>
 A dynamic constant entry is composite:
+{@snippet lang=text :
+// @link substring="ConstantDynamicEntry" target="ConstantPoolBuilder#constantDynamicEntry(BootstrapMethodEntry, NameAndTypeEntry)" :
+ConstantDynamicEntry(
+    BootstrapMethodEntry bootstrap, // @link substring="bootstrap" target="#bootstrap()"
+    NameAndTypeEntry nameAndType // @link substring="nameAndType" target="#nameAndType()"
+)
+}
+where {@link #type() nameAndType.type()} is a {@linkplain #typeSymbol()
+field descriptor} string.
 
-where nameAndType.type() is a field descriptor string.
-
-**API note:** A dynamically-computed constant is frequently called a , or a , from the abbreviation of
+@apiNote
+A dynamically-computed constant is frequently called a <dfn>{@index "dynamic
+constant"}</dfn>, or a <dfn>{@index "condy"}</dfn>, from the abbreviation of
 "constant dynamic".
 
-**See also:** ConstantPoolBuilder#constantDynamicEntry
+@see ConstantPoolBuilder#constantDynamicEntry
      ConstantPoolBuilder::constantDynamicEntry
-
-**See also:** DynamicConstantDesc
-
-**See also:** java.lang.invoke##condycon Dynamically-computed constants
-
-**jvms:** 4.4.10 The `CONSTANT_Dynamic_info` and `CONSTANT_InvokeDynamic_info` Structures
-
-**Since:** 24
+@see DynamicConstantDesc
+@see java.lang.invoke##condycon Dynamically-computed constants
+@jvms 4.4.10 The {@code CONSTANT_Dynamic_info} and {@code
+             CONSTANT_InvokeDynamic_info} Structures
+@since 24
 
 ## ConstantDynamicEntry.typeSymbol()
 
@@ -41,15 +42,18 @@ where nameAndType.type() is a field descriptor string.
 default ClassDesc typeSymbol()
 ```
 
+{@return a symbolic descriptor for the {@linkplain #type() field type} of
+this dynamically-computed constant}
+
 ## ConstantDynamicEntry.constantValue()
 
 ```java
 default ConstantDesc constantValue()
 ```
 
-(inherited documentation)
-
-This is equivalent to asSymbol().
+{@inheritDoc}
+<p>
+This is equivalent to {@link #asSymbol() asSymbol()}.
 
 ## ConstantDynamicEntry.asSymbol()
 
@@ -57,7 +61,9 @@ This is equivalent to asSymbol().
 default DynamicConstantDesc<?> asSymbol()
 ```
 
-**See also:** ConstantPoolBuilder#constantDynamicEntry(DynamicConstantDesc)
+{@return a symbolic descriptor for this dynamically-computed constant}
+
+@see ConstantPoolBuilder#constantDynamicEntry(DynamicConstantDesc)
      ConstantPoolBuilder::constantDynamicEntry(DynamicConstantDesc)
 
 ## ConstantDynamicEntry.typeKind()
@@ -66,8 +72,9 @@ default DynamicConstantDesc<?> asSymbol()
 default TypeKind typeKind()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**API note:** The data type of a dynamically-computed constant depends on its
-descriptor, while the data type of all other
-constants can be determined by their constant type.
+@apiNote
+The data type of a dynamically-computed constant depends on its
+{@linkplain #type() descriptor}, while the data type of all other
+constants can be determined by their {@linkplain #tag() constant type}.

@@ -1,12 +1,19 @@
 ---
 title: "MSTEST0070: [MemberCondition] arguments should be valid"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0070.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0070: [MemberCondition] arguments should be valid"
+ms.date: 06/19/2026
+f1_keywords:
+- MSTEST0070
+- MemberConditionShouldBeValidAnalyzer
+helpviewer_keywords:
+- MemberConditionShouldBeValidAnalyzer
+- MSTEST0070
+author: evangelink
+ms.author: amauryleve
+ai-usage: ai-assisted
+dev_langs:
+- CSharp
 ---
-
 # MSTEST0070: \[MemberCondition] arguments should be valid
 
 | Property                            | Value                                              |
@@ -28,7 +35,7 @@ A `[MemberCondition]` attribute references a member that the test framework can'
 
 The `[MemberCondition]` attribute conditionally runs or skips a test class or test method based on the value of one or more static `bool` members. You reference each member by its declaring type and name, for example `[MemberCondition(typeof(MyConditions), nameof(MyConditions.IsEnabled))]`.
 
-Because the member is referenced by name, the test framework resolves it through reflection at runtime. If the member doesn't exist, isn't `public`, isn't `static`, doesn't return `bool`, requires parameters, or is a write-only property, evaluating the condition throws an `System.InvalidOperationException` and the test fails. This analyzer surfaces those problems at build time so that typos and refactors don't silently break test gating.
+Because the member is referenced by name, the test framework resolves it through reflection at runtime. If the member doesn't exist, isn't `public`, isn't `static`, doesn't return `bool`, requires parameters, or is a write-only property, evaluating the condition throws an <xref:System.InvalidOperationException> and the test fails. This analyzer surfaces those problems at build time so that typos and refactors don't silently break test gating.
 
 The rule reports a violation when a referenced member:
 
@@ -96,7 +103,7 @@ public class MyTestClass
 
 Use `nameof` instead of a string literal so the compiler and this rule keep the reference in sync when you rename the member.
 
-You can also reference a field or a parameterless method, combine several members (they're AND-combined), and use `Microsoft.VisualStudio.TestTools.UnitTesting.ConditionMode` to invert the condition:
+You can also reference a field or a parameterless method, combine several members (they're AND-combined), and use <xref:Microsoft.VisualStudio.TestTools.UnitTesting.ConditionMode> to invert the condition:
 
 ```csharp
 [TestMethod]
@@ -129,11 +136,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0070
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0070.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

@@ -1,12 +1,3 @@
----
-title: "class: WebSocket"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-websocket.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: WebSocket
 * since: v1.8
 
@@ -88,7 +79,7 @@ value. Will throw an error if the webSocket is closed before the event is fired.
 
 **Usage**
 
-```python
+```python async
 async with ws.expect_event("framereceived") as event_info:
     await page.get_by_text("Send message").click()
 
@@ -96,7 +87,7 @@ payload = await event_info.value
 print(payload)
 ```
 
-```python
+```python sync
 with ws.expect_event("framereceived") as event_info:
     page.get_by_text("Send message").click()
 
@@ -124,6 +115,7 @@ Either a predicate that receives an event or an options object. Optional.
 
 ### option: WebSocket.waitForEvent.timeout = %%-wait-for-event-timeout-%%
 * since: v1.8
+### option: WebSocket.waitForEvent.signal = %%-wait-for-event-signal-%%
 
 ## async method: WebSocket.waitForFrameReceived
 * since: v1.10
@@ -142,6 +134,7 @@ Receives the [WebSocketFrame] object and resolves to truthy value when the waiti
 
 ### option: WebSocket.waitForFrameReceived.timeout = %%-wait-for-event-timeout-%%
 * since: v1.9
+### option: WebSocket.waitForFrameReceived.signal = %%-wait-for-event-signal-%%
 
 ### param: WebSocket.waitForFrameReceived.callback = %%-java-wait-for-event-callback-%%
 * since: v1.9
@@ -163,6 +156,7 @@ Receives the [WebSocketFrame] object and resolves to truthy value when the waiti
 
 ### option: WebSocket.waitForFrameSent.timeout = %%-wait-for-event-timeout-%%
 * since: v1.9
+### option: WebSocket.waitForFrameSent.signal = %%-wait-for-event-signal-%%
 
 ### param: WebSocket.waitForFrameSent.callback = %%-java-wait-for-event-callback-%%
 * since: v1.9
@@ -189,3 +183,4 @@ Will throw an error if the socket is closed before the `event` is fired.
 
 ### option: WebSocket.waitForEvent2.timeout = %%-wait-for-event-timeout-%%
 * since: v1.8
+### option: WebSocket.waitForEvent2.signal = %%-wait-for-event-signal-%%

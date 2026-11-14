@@ -1,25 +1,19 @@
----
-title: "prefer-then-catch"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-then-catch.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-then-catch
 
 📝 Prefer `.then().catch()` over `.then(…, …)` for error handling.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 The second callback of `.then(onFulfilled, onRejected)` handles rejections from earlier in the chain, but not errors thrown by, or rejected promises returned from, `onFulfilled`. Attach the rejection handler to the promise returned by `.then()` to handle both.
 
 The change intentionally broadens the error boundary, so the rule provides an editor suggestion instead of an autofix. Use an inline disable when handling only the original promise rejection is intentional.
 
-Unlike `eslint-plugin-promise/prefer-catch`, this rule does not preserve the original behavior with `.catch(onRejected).then(onFulfilled)`. It specifically places `.catch()` after `.then()` to catch errors from the fulfillment handler too.
+Unlike [`eslint-plugin-promise/prefer-catch`](https://github.com/eslint-community/eslint-plugin-promise/blob/main/docs/rules/prefer-catch.md), this rule does not preserve the original behavior with `.catch(onRejected).then(onFulfilled)`. It specifically places `.catch()` after `.then()` to catch errors from the fulfillment handler too.
 
 ## Examples
 

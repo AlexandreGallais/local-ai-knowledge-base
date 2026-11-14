@@ -1,12 +1,3 @@
----
-title: "Chronology interface (java.time.chrono) (part 1 of 2)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/time/chrono/Chronology.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Chronology interface (java.time.chrono)
 
 ```java
@@ -14,83 +5,75 @@ public interface Chronology extends Comparable<Chronology>
 ```
 
 A calendar system, used to organize and identify dates.
-
+<p>
 The main date and time API is built on the ISO calendar system.
 The chronology operates behind the scenes to represent the general concept of a calendar system.
 For example, the Japanese, Minguo, Thai Buddhist and others.
-
+<p>
 Most other calendar systems also operate on the shared concepts of year, month and day,
 linked to the cycles of the Earth around the Sun, and the Moon around the Earth.
-These shared concepts are defined by `ChronoField` and are available
-for use by any `Chronology` implementation:
-
-```java
+These shared concepts are defined by {@link ChronoField} and are available
+for use by any {@code Chronology} implementation:
+<pre>
   LocalDate isoDate = ...
   ThaiBuddhistDate thaiDate = ...
   int isoYear = isoDate.get(ChronoField.YEAR);
   int thaiYear = thaiDate.get(ChronoField.YEAR);
-```
-
+</pre>
 As shown, although the date objects are in different calendar systems, represented by different
-`Chronology` instances, both can be queried using the same constant on `ChronoField`.
-For a full discussion of the implications of this, see `ChronoLocalDate`.
-In general, the advice is to use the known ISO-based `LocalDate`, rather than
-`ChronoLocalDate`.
-
-While a `Chronology` object typically uses `ChronoField` and is based on
+{@code Chronology} instances, both can be queried using the same constant on {@code ChronoField}.
+For a full discussion of the implications of this, see {@link ChronoLocalDate}.
+In general, the advice is to use the known ISO-based {@code LocalDate}, rather than
+{@code ChronoLocalDate}.
+<p>
+While a {@code Chronology} object typically uses {@code ChronoField} and is based on
 an era, year-of-era, month-of-year, day-of-month model of a date, this is not required.
-A `Chronology` instance may represent a totally different kind of calendar system,
+A {@code Chronology} instance may represent a totally different kind of calendar system,
 such as the Mayan.
-
-In practical terms, the `Chronology` instance also acts as a factory.
-The `of(String)` method allows an instance to be looked up by identifier,
-while the `ofLocale(Locale)` method allows lookup by locale.
-
-The `Chronology` instance provides a set of methods to create `ChronoLocalDate` instances.
+<p>
+In practical terms, the {@code Chronology} instance also acts as a factory.
+The {@link #of(String)} method allows an instance to be looked up by identifier,
+while the {@link #ofLocale(Locale)} method allows lookup by locale.
+<p>
+The {@code Chronology} instance provides a set of methods to create {@code ChronoLocalDate} instances.
 The date classes are used to manipulate specific dates.
+<ul>
+<li> {@link #dateNow() dateNow()}
+<li> {@link #dateNow(Clock) dateNow(clock)}
+<li> {@link #dateNow(ZoneId) dateNow(zone)}
+<li> {@link #date(int, int, int) date(yearProleptic, month, day)}
+<li> {@link #date(Era, int, int, int) date(era, yearOfEra, month, day)}
+<li> {@link #dateYearDay(int, int) dateYearDay(yearProleptic, dayOfYear)}
+<li> {@link #dateYearDay(Era, int, int) dateYearDay(era, yearOfEra, dayOfYear)}
+<li> {@link #date(TemporalAccessor) date(TemporalAccessor)}
+</ul>
 
--  dateNow()
-
--  dateNow(clock)
-
--  dateNow(zone)
-
--  int, int) date(yearProleptic, month, day)
-
--  int, int, int) date(era, yearOfEra, month, day)
-
--  int) dateYearDay(yearProleptic, dayOfYear)
-
--  int, int) dateYearDay(era, yearOfEra, dayOfYear)
-
--  date(TemporalAccessor)
-
-#### Adding New Calendars
-
+<h2 id="addcalendars">Adding New Calendars</h2>
 The set of available chronologies can be extended by applications.
 Adding a new calendar system requires the writing of an implementation of
-`Chronology`, `ChronoLocalDate` and `Era`.
+{@code Chronology}, {@code ChronoLocalDate} and {@code Era}.
 The majority of the logic specific to the calendar system will be in the
-`ChronoLocalDate` implementation.
-The `Chronology` implementation acts as a factory.
-
-To permit the discovery of additional chronologies, the ServiceLoader
-is used. A file must be added to the `META-INF/services` directory with the
+{@code ChronoLocalDate} implementation.
+The {@code Chronology} implementation acts as a factory.
+<p>
+To permit the discovery of additional chronologies, the {@link java.util.ServiceLoader ServiceLoader}
+is used. A file must be added to the {@code META-INF/services} directory with the
 name 'java.time.chrono.Chronology' listing the implementation classes.
 See the ServiceLoader for more details on service loading.
 For lookup by id or calendarType, the system provided calendars are found
 first followed by application provided calendars.
-
+<p>
 Each chronology must define a chronology ID that is unique within the system.
 If the chronology represents a calendar system defined by the
 CLDR specification then the calendar type is the concatenation of the
 CLDR type and, if applicable, the CLDR variant.
 
-**Implementation requirements:** This interface must be implemented with care to ensure other classes operate correctly.
+@implSpec
+This interface must be implemented with care to ensure other classes operate correctly.
 All implementations that can be instantiated must be final, immutable and thread-safe.
 Subclasses should be Serializable wherever possible.
 
-**Since:** 1.8
+@since 1.8
 
 ## Chronology.from(TemporalAccessor)
 
@@ -98,27 +81,21 @@ Subclasses should be Serializable wherever possible.
 static Chronology from(TemporalAccessor temporal)
 ```
 
-Obtains an instance of `Chronology` from a temporal object.
-
+Obtains an instance of {@code Chronology} from a temporal object.
+<p>
 This obtains a chronology based on the specified temporal.
-A `TemporalAccessor` represents an arbitrary set of date and time information,
-which this factory converts to an instance of `Chronology`.
+A {@code TemporalAccessor} represents an arbitrary set of date and time information,
+which this factory converts to an instance of {@code Chronology}.
+<p>
+The conversion will obtain the chronology using {@link TemporalQueries#chronology()}.
+If the specified temporal object does not have a chronology, {@link IsoChronology} is returned.
+<p>
+This method matches the signature of the functional interface {@link TemporalQuery}
+allowing it to be used as a query via method reference, {@code Chronology::from}.
 
-The conversion will obtain the chronology using `TemporalQueries.chronology()`.
-If the specified temporal object does not have a chronology, `IsoChronology` is returned.
-
-This method matches the signature of the functional interface `TemporalQuery`
-allowing it to be used as a query via method reference, `Chronology::from`.
-
-Parameters:
-
-- `temporal`: the temporal to convert, not null
-
-**Returns:** the chronology, not null
-
-Throws:
-
-- `DateTimeException`: if unable to convert to a `Chronology`
+@param temporal  the temporal to convert, not null
+@return the chronology, not null
+@throws DateTimeException if unable to convert to a {@code Chronology}
 
 ## Chronology.ofLocale(Locale)
 
@@ -126,50 +103,44 @@ Throws:
 static Chronology ofLocale(Locale locale)
 ```
 
-Obtains an instance of `Chronology` from a locale.
-
-This returns a `Chronology` based on the specified locale,
-typically returning `IsoChronology`. Other calendar systems
+Obtains an instance of {@code Chronology} from a locale.
+<p>
+This returns a {@code Chronology} based on the specified locale,
+typically returning {@code IsoChronology}. Other calendar systems
 are only returned if they are explicitly selected within the locale.
-
-The `Locale` class provide access to a range of information useful
+<p>
+The {@link Locale} class provide access to a range of information useful
 for localizing an application. This includes the language and region,
 such as "en-GB" for English as used in Great Britain.
-
-The `Locale` class also supports an extension mechanism that
+<p>
+The {@code Locale} class also supports an extension mechanism that
 can be used to identify a calendar system. The mechanism is a form
 of key-value pairs, where the calendar system has the key "ca".
 For example, the locale "en-JP-u-ca-japanese" represents the English
 language as used in Japan with the Japanese calendar system.
-
+<p>
 This method finds the desired calendar system in a manner equivalent
-to passing "ca" to `Locale.getUnicodeLocaleType(String)`.
-If the "ca" key is not present, then `IsoChronology` is returned.
-
+to passing "ca" to {@link Locale#getUnicodeLocaleType(String)}.
+If the "ca" key is not present, then {@code IsoChronology} is returned.
+<p>
 Note that the behavior of this method differs from the older
-`java.util.Calendar.getInstance(Locale)` method.
-If that method receives a locale of "th_TH" it will return `BuddhistCalendar`.
-By contrast, this method will return `IsoChronology`.
+{@link java.util.Calendar#getInstance(Locale)} method.
+If that method receives a locale of "th_TH" it will return {@code BuddhistCalendar}.
+By contrast, this method will return {@code IsoChronology}.
 Passing the locale "th-TH-u-ca-buddhist" into either method will
 result in the Thai Buddhist calendar system and is therefore the
 recommended approach going forward for Thai calendar system localization.
-
+<p>
 A similar, but simpler, situation occurs for the Japanese calendar system.
 The locale "jp_JP_JP" has previously been used to access the calendar.
 However, unlike the Thai locale, "ja_JP_JP" is automatically converted by
-`Locale` to the modern and recommended form of "ja-JP-u-ca-japanese".
+{@code Locale} to the modern and recommended form of "ja-JP-u-ca-japanese".
 Thus, there is no difference in behavior between this method and
-`Calendar#getInstance(Locale)`.
+{@code Calendar#getInstance(Locale)}.
 
-Parameters:
-
-- `locale`: the locale to use to obtain the calendar system, not null
-
-**Returns:** the calendar system associated with the locale, not null
-
-Throws:
-
-- `DateTimeException`: if the locale-specified calendar cannot be found
+@param locale  the locale to use to obtain the calendar system, not null
+@return the calendar system associated with the locale, not null
+@throws DateTimeException if the locale-specified calendar cannot be found
 
 ## Chronology.of(String)
 
@@ -177,30 +148,24 @@ Throws:
 static Chronology of(String id)
 ```
 
-Obtains an instance of `Chronology` from a chronology ID or
+Obtains an instance of {@code Chronology} from a chronology ID or
 calendar system type.
-
+<p>
 This returns a chronology based on either the ID or the type.
-The chronology ID uniquely identifies the chronology.
-The calendar system type is defined by the
+The {@link #getId() chronology ID} uniquely identifies the chronology.
+The {@link #getCalendarType() calendar system type} is defined by the
 CLDR specification.
-
+<p>
 The chronology may be a system chronology or a chronology
 provided by the application via ServiceLoader configuration.
-
+<p>
 Since some calendars can be customized, the ID or type typically refers
 to the default customization. For example, the Gregorian calendar can have multiple
 cutover dates from the Julian, but the lookup only provides the default cutover date.
 
-Parameters:
-
-- `id`: the chronology ID or calendar system type, not null
-
-**Returns:** the chronology with the identifier requested, not null
-
-Throws:
-
-- `DateTimeException`: if the chronology cannot be found
+@param id  the chronology ID or calendar system type, not null
+@return the chronology with the identifier requested, not null
+@throws DateTimeException if the chronology cannot be found
 
 ## Chronology.getAvailableChronologies()
 
@@ -209,13 +174,13 @@ static Set<Chronology> getAvailableChronologies()
 ```
 
 Returns the available chronologies.
-
-Each returned `Chronology` is available for use in the system.
+<p>
+Each returned {@code Chronology} is available for use in the system.
 The set of chronologies includes the system chronologies and
 any chronologies provided by the application via ServiceLoader
 configuration.
 
-**Returns:** the independent, modifiable set of the available chronology IDs, not null
+@return the independent, modifiable set of the available chronology IDs, not null
 
 ## Chronology.getId()
 
@@ -224,13 +189,12 @@ String getId()
 ```
 
 Gets the ID of the chronology.
+<p>
+The ID uniquely identifies the {@code Chronology}.
+It can be used to lookup the {@code Chronology} using {@link #of(String)}.
 
-The ID uniquely identifies the `Chronology`.
-It can be used to lookup the `Chronology` using `of(String)`.
-
-**Returns:** the chronology ID, not null
-
-**See also:** #getCalendarType()
+@return the chronology ID, not null
+@see #getCalendarType()
 
 ## Chronology.getCalendarType()
 
@@ -239,17 +203,16 @@ String getCalendarType()
 ```
 
 Gets the calendar type of the calendar system.
-
+<p>
 The calendar type is an identifier defined by the CLDR and
-*Unicode Locale Data Markup Language (LDML)* specifications
+<em>Unicode Locale Data Markup Language (LDML)</em> specifications
 to uniquely identify a calendar.
-The `getCalendarType` is the concatenation of the CLDR calendar type
+The {@code getCalendarType} is the concatenation of the CLDR calendar type
 and the variant, if applicable, is appended separated by "-".
-The calendar type is used to lookup the `Chronology` using `of(String)`.
+The calendar type is used to lookup the {@code Chronology} using {@link #of(String)}.
 
-**Returns:** the calendar system type, null if the calendar is not defined by CLDR/LDML
-
-**See also:** #getId()
+@return the calendar system type, null if the calendar is not defined by CLDR/LDML
+@see #getId()
 
 ## Chronology.date(Era, int, int, int)
 
@@ -260,22 +223,17 @@ default ChronoLocalDate date(Era era, int yearOfEra, int month, int dayOfMonth)
 Obtains a local date in this chronology from the era, year-of-era,
 month-of-year and day-of-month fields.
 
-Parameters:
+@implSpec
+The default implementation combines the era and year-of-era into a proleptic
+year before calling {@link #date(int, int, int)}.
 
-- `era`: the era of the correct type for the chronology, not null
-- `yearOfEra`: the chronology year-of-era
-- `month`: the chronology month-of-year
-- `dayOfMonth`: the chronology day-of-month
-
-**Implementation requirements:** The default implementation combines the era and year-of-era into a proleptic
-year before calling int, int).
-
-**Returns:** the local date in this chronology, not null
-
-Throws:
-
-- `DateTimeException`: if unable to create the date
-- `ClassCastException`: if the `era` is not of the correct type for the chronology
+@param era  the era of the correct type for the chronology, not null
+@param yearOfEra  the chronology year-of-era
+@param month  the chronology month-of-year
+@param dayOfMonth  the chronology day-of-month
+@return the local date in this chronology, not null
+@throws DateTimeException if unable to create the date
+@throws ClassCastException if the {@code era} is not of the correct type for the chronology
 
 ## Chronology.date(int, int, int)
 
@@ -286,17 +244,11 @@ ChronoLocalDate date(int prolepticYear, int month, int dayOfMonth)
 Obtains a local date in this chronology from the proleptic-year,
 month-of-year and day-of-month fields.
 
-Parameters:
-
-- `prolepticYear`: the chronology proleptic-year
-- `month`: the chronology month-of-year
-- `dayOfMonth`: the chronology day-of-month
-
-**Returns:** the local date in this chronology, not null
-
-Throws:
-
-- `DateTimeException`: if unable to create the date
+@param prolepticYear  the chronology proleptic-year
+@param month  the chronology month-of-year
+@param dayOfMonth  the chronology day-of-month
+@return the local date in this chronology, not null
+@throws DateTimeException if unable to create the date
 
 ## Chronology.dateYearDay(Era, int, int)
 
@@ -307,21 +259,16 @@ default ChronoLocalDate dateYearDay(Era era, int yearOfEra, int dayOfYear)
 Obtains a local date in this chronology from the era, year-of-era and
 day-of-year fields.
 
-Parameters:
+@implSpec
+The default implementation combines the era and year-of-era into a proleptic
+year before calling {@link #dateYearDay(int, int)}.
 
-- `era`: the era of the correct type for the chronology, not null
-- `yearOfEra`: the chronology year-of-era
-- `dayOfYear`: the chronology day-of-year
-
-**Implementation requirements:** The default implementation combines the era and year-of-era into a proleptic
-year before calling int).
-
-**Returns:** the local date in this chronology, not null
-
-Throws:
-
-- `DateTimeException`: if unable to create the date
-- `ClassCastException`: if the `era` is not of the correct type for the chronology
+@param era  the era of the correct type for the chronology, not null
+@param yearOfEra  the chronology year-of-era
+@param dayOfYear  the chronology day-of-year
+@return the local date in this chronology, not null
+@throws DateTimeException if unable to create the date
+@throws ClassCastException if the {@code era} is not of the correct type for the chronology
 
 ## Chronology.dateYearDay(int, int)
 
@@ -332,16 +279,10 @@ ChronoLocalDate dateYearDay(int prolepticYear, int dayOfYear)
 Obtains a local date in this chronology from the proleptic-year and
 day-of-year fields.
 
-Parameters:
-
-- `prolepticYear`: the chronology proleptic-year
-- `dayOfYear`: the chronology day-of-year
-
-**Returns:** the local date in this chronology, not null
-
-Throws:
-
-- `DateTimeException`: if unable to create the date
+@param prolepticYear  the chronology proleptic-year
+@param dayOfYear  the chronology day-of-year
+@return the local date in this chronology, not null
+@throws DateTimeException if unable to create the date
 
 ## Chronology.dateEpochDay(long)
 
@@ -350,19 +291,13 @@ ChronoLocalDate dateEpochDay(long epochDay)
 ```
 
 Obtains a local date in this chronology from the epoch-day.
-
-The definition of EPOCH_DAY is the same
+<p>
+The definition of {@link ChronoField#EPOCH_DAY EPOCH_DAY} is the same
 for all calendar systems, thus it can be used for conversion.
 
-Parameters:
-
-- `epochDay`: the epoch day
-
-**Returns:** the local date in this chronology, not null
-
-Throws:
-
-- `DateTimeException`: if unable to create the date
+@param epochDay  the epoch day
+@return the local date in this chronology, not null
+@throws DateTimeException if unable to create the date
 
 ## Chronology.dateNow()
 
@@ -371,20 +306,18 @@ default ChronoLocalDate dateNow()
 ```
 
 Obtains the current local date in this chronology from the system clock in the default time-zone.
-
-This will query the system clock in the default
+<p>
+This will query the {@link Clock#systemDefaultZone() system clock} in the default
 time-zone to obtain the current date.
-
+<p>
 Using this method will prevent the ability to use an alternate clock for testing
 because the clock is hard-coded.
 
-**Implementation requirements:** The default implementation invokes `dateNow(Clock)`.
+@implSpec
+The default implementation invokes {@link #dateNow(Clock)}.
 
-**Returns:** the current local date using the system clock and default time-zone, not null
-
-Throws:
-
-- `DateTimeException`: if unable to create the date
+@return the current local date using the system clock and default time-zone, not null
+@throws DateTimeException if unable to create the date
 
 ## Chronology.dateNow(ZoneId)
 
@@ -393,24 +326,19 @@ default ChronoLocalDate dateNow(ZoneId zone)
 ```
 
 Obtains the current local date in this chronology from the system clock in the specified time-zone.
-
-This will query the system clock to obtain the current date.
+<p>
+This will query the {@link Clock#system(ZoneId) system clock} to obtain the current date.
 Specifying the time-zone avoids dependence on the default time-zone.
-
+<p>
 Using this method will prevent the ability to use an alternate clock for testing
 because the clock is hard-coded.
 
-Parameters:
+@implSpec
+The default implementation invokes {@link #dateNow(Clock)}.
 
-- `zone`: the zone ID to use, not null
-
-**Implementation requirements:** The default implementation invokes `dateNow(Clock)`.
-
-**Returns:** the current local date using the system clock, not null
-
-Throws:
-
-- `DateTimeException`: if unable to create the date
+@param zone  the zone ID to use, not null
+@return the current local date using the system clock, not null
+@throws DateTimeException if unable to create the date
 
 ## Chronology.dateNow(Clock)
 
@@ -419,22 +347,17 @@ default ChronoLocalDate dateNow(Clock clock)
 ```
 
 Obtains the current local date in this chronology from the specified clock.
-
+<p>
 This will query the specified clock to obtain the current date - today.
 Using this method allows the use of an alternate clock for testing.
-The alternate clock may be introduced using dependency injection.
+The alternate clock may be introduced using {@link Clock dependency injection}.
 
-Parameters:
+@implSpec
+The default implementation invokes {@link #date(TemporalAccessor)}.
 
-- `clock`: the clock to use, not null
-
-**Implementation requirements:** The default implementation invokes `date(TemporalAccessor)`.
-
-**Returns:** the current local date, not null
-
-Throws:
-
-- `DateTimeException`: if unable to create the date
+@param clock  the clock to use, not null
+@return the current local date, not null
+@throws DateTimeException if unable to create the date
 
 ## Chronology.date(TemporalAccessor)
 
@@ -443,25 +366,394 @@ ChronoLocalDate date(TemporalAccessor temporal)
 ```
 
 Obtains a local date in this chronology from another temporal object.
-
+<p>
 This obtains a date in this chronology based on the specified temporal.
-A `TemporalAccessor` represents an arbitrary set of date and time information,
-which this factory converts to an instance of `ChronoLocalDate`.
-
-The conversion typically uses the EPOCH_DAY
+A {@code TemporalAccessor} represents an arbitrary set of date and time information,
+which this factory converts to an instance of {@code ChronoLocalDate}.
+<p>
+The conversion typically uses the {@link ChronoField#EPOCH_DAY EPOCH_DAY}
 field, which is standardized across calendar systems.
+<p>
+This method matches the signature of the functional interface {@link TemporalQuery}
+allowing it to be used as a query via method reference, {@code aChronology::date}.
 
-This method matches the signature of the functional interface `TemporalQuery`
-allowing it to be used as a query via method reference, `aChronology::date`.
+@param temporal  the temporal object to convert, not null
+@return the local date in this chronology, not null
+@throws DateTimeException if unable to create the date
+@see ChronoLocalDate#from(TemporalAccessor)
 
-Parameters:
+## Chronology.localDateTime(TemporalAccessor)
 
-- `temporal`: the temporal object to convert, not null
+```java
+default ChronoLocalDateTime<? extends ChronoLocalDate> localDateTime(TemporalAccessor temporal)
+```
 
-**Returns:** the local date in this chronology, not null
+Obtains a local date-time in this chronology from another temporal object.
+<p>
+This obtains a date-time in this chronology based on the specified temporal.
+A {@code TemporalAccessor} represents an arbitrary set of date and time information,
+which this factory converts to an instance of {@code ChronoLocalDateTime}.
+<p>
+The conversion extracts and combines the {@code ChronoLocalDate} and the
+{@code LocalTime} from the temporal object.
+Implementations are permitted to perform optimizations such as accessing
+those fields that are equivalent to the relevant objects.
+The result uses this chronology.
+<p>
+This method matches the signature of the functional interface {@link TemporalQuery}
+allowing it to be used as a query via method reference, {@code aChronology::localDateTime}.
 
-**See also:** ChronoLocalDate#from(TemporalAccessor)
+@param temporal  the temporal object to convert, not null
+@return the local date-time in this chronology, not null
+@throws DateTimeException if unable to create the date-time
+@see ChronoLocalDateTime#from(TemporalAccessor)
 
-Throws:
+## Chronology.zonedDateTime(TemporalAccessor)
 
-- `DateTimeException`: if unable to create the date
+```java
+default ChronoZonedDateTime<? extends ChronoLocalDate> zonedDateTime(TemporalAccessor temporal)
+```
+
+Obtains a {@code ChronoZonedDateTime} in this chronology from another temporal object.
+<p>
+This obtains a zoned date-time in this chronology based on the specified temporal.
+A {@code TemporalAccessor} represents an arbitrary set of date and time information,
+which this factory converts to an instance of {@code ChronoZonedDateTime}.
+<p>
+The conversion will first obtain a {@code ZoneId} from the temporal object,
+falling back to a {@code ZoneOffset} if necessary. It will then try to obtain
+an {@code Instant}, falling back to a {@code ChronoLocalDateTime} if necessary.
+The result will be either the combination of {@code ZoneId} or {@code ZoneOffset}
+with {@code Instant} or {@code ChronoLocalDateTime}.
+Implementations are permitted to perform optimizations such as accessing
+those fields that are equivalent to the relevant objects.
+The result uses this chronology.
+<p>
+This method matches the signature of the functional interface {@link TemporalQuery}
+allowing it to be used as a query via method reference, {@code aChronology::zonedDateTime}.
+
+@param temporal  the temporal object to convert, not null
+@return the zoned date-time in this chronology, not null
+@throws DateTimeException if unable to create the date-time
+@see ChronoZonedDateTime#from(TemporalAccessor)
+
+## Chronology.zonedDateTime(Instant, ZoneId)
+
+```java
+default ChronoZonedDateTime<? extends ChronoLocalDate> zonedDateTime(Instant instant, ZoneId zone)
+```
+
+Obtains a {@code ChronoZonedDateTime} in this chronology from an {@code Instant}.
+<p>
+This obtains a zoned date-time with the same instant as that specified.
+
+@param instant  the instant to create the date-time from, not null
+@param zone  the time-zone, not null
+@return the zoned date-time, not null
+@throws DateTimeException if the result exceeds the supported range
+
+## Chronology.isLeapYear(long)
+
+```java
+boolean isLeapYear(long prolepticYear)
+```
+
+Checks if the specified year is a leap year.
+<p>
+A leap-year is a year of a longer length than normal.
+The exact meaning is determined by the chronology according to the following constraints.
+<ul>
+<li>a leap-year must imply a year-length longer than a non leap-year.
+<li>a chronology that does not support the concept of a year must return false.
+<li>the correct result must be returned for all years within the
+    valid range of years for the chronology.
+</ul>
+<p>
+Outside the range of valid years an implementation is free to return
+either a best guess or false.
+An implementation must not throw an exception, even if the year is
+outside the range of valid years.
+
+@param prolepticYear  the proleptic-year to check, not validated for range
+@return true if the year is a leap year
+
+## Chronology.prolepticYear(Era, int)
+
+```java
+int prolepticYear(Era era, int yearOfEra)
+```
+
+Calculates the proleptic-year given the era and year-of-era.
+<p>
+This combines the era and year-of-era into the single proleptic-year field.
+<p>
+If the chronology makes active use of eras, such as {@code JapaneseChronology}
+then the year-of-era will be validated against the era.
+For other chronologies, validation is optional.
+
+@param era  the era of the correct type for the chronology, not null
+@param yearOfEra  the chronology year-of-era
+@return the proleptic-year
+@throws DateTimeException if unable to convert to a proleptic-year,
+ such as if the year is invalid for the era
+@throws ClassCastException if the {@code era} is not of the correct type for the chronology
+
+## Chronology.eraOf(int)
+
+```java
+Era eraOf(int eraValue)
+```
+
+Creates the chronology era object from the numeric value.
+<p>
+The era is, conceptually, the largest division of the time-line.
+Most calendar systems have a single epoch dividing the time-line into two eras.
+However, some have multiple eras, such as one for the reign of each leader.
+The exact meaning is determined by the chronology according to the following constraints.
+<p>
+The era in use at 1970-01-01 must have the value 1.
+Later eras must have sequentially higher values.
+Earlier eras must have sequentially lower values.
+Each chronology must refer to an enum or similar singleton to provide the era values.
+<p>
+This method returns the singleton era of the correct type for the specified era value.
+
+@param eraValue  the era value
+@return the calendar system era, not null
+@throws DateTimeException if unable to create the era
+
+## Chronology.eras()
+
+```java
+List<Era> eras()
+```
+
+Gets the list of eras for the chronology.
+<p>
+Most calendar systems have an era, within which the year has meaning.
+If the calendar system does not support the concept of eras, an empty
+list must be returned.
+
+@return the list of eras for the chronology, may be immutable, not null
+
+## Chronology.range(ChronoField)
+
+```java
+ValueRange range(ChronoField field)
+```
+
+Gets the range of valid values for the specified field.
+<p>
+All fields can be expressed as a {@code long} integer.
+This method returns an object that describes the valid range for that value.
+<p>
+Note that the result only describes the minimum and maximum valid values
+and it is important not to read too much into them. For example, there
+could be values within the range that are invalid for the field.
+<p>
+This method will return a result whether or not the chronology supports the field.
+
+@param field  the field to get the range for, not null
+@return the range of valid values for the field, not null
+@throws DateTimeException if the range for the field cannot be obtained
+
+## Chronology.getDisplayName(TextStyle, Locale)
+
+```java
+default String getDisplayName(TextStyle style, Locale locale)
+```
+
+Gets the textual representation of this chronology.
+<p>
+This returns the textual name used to identify the chronology,
+suitable for presentation to the user.
+The parameters control the style of the returned text and the locale.
+
+@implSpec
+The default implementation behaves as though the formatter was used to
+format the chronology textual name.
+
+@param style  the style of the text required, not null
+@param locale  the locale to use, not null
+@return the text value of the chronology, not null
+
+## Chronology.resolveDate(Map<TemporalField, Long>, ResolverStyle)
+
+```java
+ChronoLocalDate resolveDate(Map<TemporalField, Long> fieldValues, ResolverStyle resolverStyle)
+```
+
+Resolves parsed {@code ChronoField} values into a date during parsing.
+<p>
+Most {@code TemporalField} implementations are resolved using the
+resolve method on the field. By contrast, the {@code ChronoField} class
+defines fields that only have meaning relative to the chronology.
+As such, {@code ChronoField} date fields are resolved here in the
+context of a specific chronology.
+<p>
+The default implementation, which explains typical resolve behaviour,
+is provided in {@link AbstractChronology}.
+
+@param fieldValues  the map of fields to values, which can be updated, not null
+@param resolverStyle  the requested type of resolve, not null
+@return the resolved date, null if insufficient information to create a date
+@throws DateTimeException if the date cannot be resolved, typically
+ because of a conflict in the input data
+
+## Chronology.period(int, int, int)
+
+```java
+default ChronoPeriod period(int years, int months, int days)
+```
+
+Obtains a period for this chronology based on years, months and days.
+<p>
+This returns a period tied to this chronology using the specified
+years, months and days.  All supplied chronologies use periods
+based on years, months and days, however the {@code ChronoPeriod} API
+allows the period to be represented using other units.
+
+@implSpec
+The default implementation returns an implementation class suitable
+for most calendar systems. It is based solely on the three units.
+Normalization, addition and subtraction derive the number of months
+in a year from the {@link #range(ChronoField)}. If the number of
+months within a year is fixed, then the calculation approach for
+addition, subtraction and normalization is slightly different.
+<p>
+If implementing an unusual calendar system that is not based on
+years, months and days, or where you want direct control, then
+the {@code ChronoPeriod} interface must be directly implemented.
+<p>
+The returned period is immutable and thread-safe.
+
+@param years  the number of years, may be negative
+@param months  the number of years, may be negative
+@param days  the number of years, may be negative
+@return the period in terms of this chronology, not null
+
+## Chronology.epochSecond(int, int, int, int, int, int, ZoneOffset)
+
+```java
+default long epochSecond(int prolepticYear, int month, int dayOfMonth, int hour, int minute, int second, ZoneOffset zoneOffset)
+```
+
+Gets the number of seconds from the epoch of 1970-01-01T00:00:00Z.
+<p>
+The number of seconds is calculated using the proleptic-year,
+month, day-of-month, hour, minute, second, and zoneOffset.
+
+@param prolepticYear the chronology proleptic-year
+@param month the chronology month-of-year
+@param dayOfMonth the chronology day-of-month
+@param hour the hour-of-day, from 0 to 23
+@param minute the minute-of-hour, from 0 to 59
+@param second the second-of-minute, from 0 to 59
+@param zoneOffset the zone offset, not null
+@return the number of seconds relative to 1970-01-01T00:00:00Z, may be negative
+@throws DateTimeException if any of the values are out of range
+@since 9
+
+## Chronology.epochSecond(Era, int, int, int, int, int, int, ZoneOffset)
+
+```java
+default long epochSecond(Era era, int yearOfEra, int month, int dayOfMonth, int hour, int minute, int second, ZoneOffset zoneOffset)
+```
+
+Gets the number of seconds from the epoch of 1970-01-01T00:00:00Z.
+<p>
+The number of seconds is calculated using the era, year-of-era,
+month, day-of-month, hour, minute, second, and zoneOffset.
+
+@param era  the era of the correct type for the chronology, not null
+@param yearOfEra the chronology year-of-era
+@param month the chronology month-of-year
+@param dayOfMonth the chronology day-of-month
+@param hour the hour-of-day, from 0 to 23
+@param minute the minute-of-hour, from 0 to 59
+@param second the second-of-minute, from 0 to 59
+@param zoneOffset the zone offset, not null
+@return the number of seconds relative to 1970-01-01T00:00:00Z, may be negative
+@throws DateTimeException if any of the values are out of range
+@since 9
+
+## Chronology.isIsoBased()
+
+```java
+default boolean isIsoBased()
+```
+
+Checks if this chronology is ISO based.
+<p>
+An ISO based chronology has the same basic structure as the {@link IsoChronology
+ISO chronology}, i.e., the chronology has the same number of months, the number
+of days in each month, and day-of-year and leap years are the same as ISO chronology.
+It also supports the concept of week-based-year of ISO chronology.
+For example, the {@link MinguoChronology Minguo}, {@link ThaiBuddhistChronology
+ThaiThaiBuddhist} and {@link JapaneseChronology Japanese} chronologies are ISO based.
+
+@implSpec
+The default implementation returns {@code false}.
+
+@return {@code true} only if all the fields of {@link IsoFields} are supported by
+         this chronology. Otherwise, returns {@code false}.
+@see IsoChronology
+@see JapaneseChronology
+@see MinguoChronology
+@see ThaiBuddhistChronology
+@see IsoFields
+@since 19
+
+## Chronology.compareTo(Chronology)
+
+```java
+int compareTo(Chronology other)
+```
+
+Compares this chronology to another chronology.
+<p>
+The comparison order first by the chronology ID string, then by any
+additional information specific to the subclass.
+It is "consistent with equals", as defined by {@link Comparable}.
+
+@param other  the other chronology to compare to, not null
+@return the comparator value, that is this ID string compared with the {@code other}'s ID string
+         unless the ID strings are equal and
+         the chronology distinguishes instances using additional information
+
+## Chronology.equals(Object)
+
+```java
+boolean equals(Object obj)
+```
+
+Checks if this chronology is equal to another chronology.
+<p>
+The comparison is based on the entire state of the object.
+
+@param obj  the object to check, null returns false
+@return true if this is equal to the other chronology
+
+## Chronology.hashCode()
+
+```java
+int hashCode()
+```
+
+A hash code for this chronology.
+<p>
+The hash code should be based on the entire state of the object.
+
+@return a suitable hash code
+
+## Chronology.toString()
+
+```java
+String toString()
+```
+
+Outputs this chronology as a {@code String}.
+<p>
+The format should include the entire state of the object.
+
+@return a string representation of this chronology, not null

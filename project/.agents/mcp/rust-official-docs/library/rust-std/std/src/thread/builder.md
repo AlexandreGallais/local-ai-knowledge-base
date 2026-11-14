@@ -1,12 +1,3 @@
----
-title: "std::thread::builder"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/thread/builder.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::thread::builder
 
 ## struct Builder
@@ -22,22 +13,22 @@ Methods can be chained on it in order to configure it.
 
 The two configurations available are:
 
-- `name`: specifies an associated name for the thread
-- `stack_size`: specifies the desired stack size for the thread
+- [`name`]: specifies an [associated name for the thread][naming-threads]
+- [`stack_size`]: specifies the [desired stack size for the thread][stack-size]
 
-The `spawn` method will take ownership of the builder and create an
-`io::Result` to the thread handle with the given configuration.
+The [`spawn`] method will take ownership of the builder and create an
+[`io::Result`] to the thread handle with the given configuration.
 
-The `thread::spawn` free function uses a `Builder` with default
-configuration and `unwrap`s its return value.
+The [`thread::spawn`] free function uses a `Builder` with default
+configuration and [`unwrap`]s its return value.
 
-You may want to use `spawn` instead of `thread::spawn`, when you want
+You may want to use [`spawn`] instead of [`thread::spawn`], when you want
 to recover from a failure to launch a thread, indeed the free function will
-panic where the `Builder` method will return a `io::Result`.
+panic where the `Builder` method will return a [`io::Result`].
 
 # Examples
 
-```rust
+```
 use std::thread;
 
 let builder = thread::Builder::new();
@@ -48,6 +39,14 @@ let handler = builder.spawn(|| {
 
 handler.join().unwrap();
 ```
+
+[`stack_size`]: Builder::stack_size
+[`name`]: Builder::name
+[`spawn`]: Builder::spawn
+[`thread::spawn`]: super::spawn
+[`unwrap`]: crate::result::Result::unwrap
+[naming-threads]: ./index.html#naming-threads
+[stack-size]: ./index.html#stack-size
 
 ## Builder::new
 
@@ -60,7 +59,7 @@ configuration methods can be chained.
 
 # Examples
 
-```rust
+```
 use std::thread;
 
 let builder = thread::Builder::new()
@@ -86,11 +85,11 @@ only in panic messages.
 The name must not contain null bytes (`\0`).
 
 For more information about named threads, see
-this module-level documentation.
+[this module-level documentation][naming-threads].
 
 # Examples
 
-```rust
+```
 use std::thread;
 
 let builder = thread::Builder::new()
@@ -102,6 +101,8 @@ let handler = builder.spawn(|| {
 
 handler.join().unwrap();
 ```
+
+[naming-threads]: ./index.html#naming-threads
 
 ## Builder::stack_size
 
@@ -115,15 +116,17 @@ The actual stack size may be greater than this value if
 the platform specifies a minimal stack size.
 
 For more information about the stack size for threads, see
-this module-level documentation.
+[this module-level documentation][stack-size].
 
 # Examples
 
-```rust
+```
 use std::thread;
 
 let builder = thread::Builder::new().stack_size(32 * 1024);
 ```
+
+[stack-size]: ./index.html#stack-size
 
 ## Builder::spawn
 
@@ -132,19 +135,19 @@ pub fn spawn<F, T>(self, f: F) -> io::Result<JoinHandle<T>> where F: FnOnce() ->
 ```
 
 Spawns a new thread by taking ownership of the `Builder`, and returns an
-`io::Result` to its `JoinHandle`.
+[`io::Result`] to its [`JoinHandle`].
 
 The spawned thread may outlive the caller (unless the caller thread
 is the main thread; the whole process is terminated when the main
 thread finishes). The join handle can be used to block on
 termination of the spawned thread, including recovering its panics.
 
-For a more complete documentation see `thread::spawn`.
+For a more complete documentation see [`thread::spawn`].
 
 # Errors
 
-Unlike the `spawn` free function, this method yields an
-`io::Result` to capture any failure to create the thread at
+Unlike the [`spawn`] free function, this method yields an
+[`io::Result`] to capture any failure to create the thread at
 the OS level.
 
 # Panics
@@ -153,7 +156,7 @@ Panics if a thread name was set and it contained null bytes.
 
 # Examples
 
-```rust
+```
 use std::thread;
 
 let builder = thread::Builder::new();
@@ -165,6 +168,9 @@ let handler = builder.spawn(|| {
 handler.join().unwrap();
 ```
 
+[`thread::spawn`]: super::spawn
+[`spawn`]: super::spawn
+
 ## Builder::spawn_unchecked
 
 ```rust
@@ -172,21 +178,21 @@ pub unsafe fn spawn_unchecked<F, T>(self, f: F) -> io::Result<JoinHandle<T>> whe
 ```
 
 Spawns a new thread without any lifetime restrictions by taking ownership
-of the `Builder`, and returns an `io::Result` to its `JoinHandle`.
+of the `Builder`, and returns an [`io::Result`] to its [`JoinHandle`].
 
 The spawned thread may outlive the caller (unless the caller thread
 is the main thread; the whole process is terminated when the main
 thread finishes). The join handle can be used to block on
 termination of the spawned thread, including recovering its panics.
 
-This method is identical to `thread::Builder::spawn``Builder::spawn`,
+This method is identical to [`thread::Builder::spawn`][`Builder::spawn`],
 except for the relaxed lifetime bounds, which render it unsafe.
-For a more complete documentation see `thread::spawn`.
+For a more complete documentation see [`thread::spawn`].
 
 # Errors
 
-Unlike the `spawn` free function, this method yields an
-`io::Result` to capture any failure to create the thread at
+Unlike the [`spawn`] free function, this method yields an
+[`io::Result`] to capture any failure to create the thread at
 the OS level.
 
 # Panics
@@ -199,15 +205,15 @@ The caller has to ensure that the spawned thread does not outlive any
 references in the supplied thread closure and its return type.
 This can be guaranteed in two ways:
 
-- ensure that `join``JoinHandle::join` is called before any referenced
+- ensure that [`join`][`JoinHandle::join`] is called before any referenced
 data is dropped
 - use only types with `'static` lifetime bounds, i.e., those with no or only
-`'static` references (both `thread::Builder::spawn``Builder::spawn`
-and `thread::spawn` enforce this property statically)
+`'static` references (both [`thread::Builder::spawn`][`Builder::spawn`]
+and [`thread::spawn`] enforce this property statically)
 
 # Examples
 
-```rust
+```
 use std::thread;
 
 let builder = thread::Builder::new();
@@ -226,3 +232,6 @@ let handler = unsafe {
 // dropped before the thread closure is executed!
 handler.join().unwrap();
 ```
+
+[`thread::spawn`]: super::spawn
+[`spawn`]: super::spawn

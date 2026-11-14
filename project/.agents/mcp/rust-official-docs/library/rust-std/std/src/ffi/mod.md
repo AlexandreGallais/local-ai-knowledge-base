@@ -1,12 +1,3 @@
----
-title: "std::ffi"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/ffi/mod.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::ffi
 
 Utilities related to FFI bindings.
@@ -17,10 +8,10 @@ operating system. It is mainly of use for FFI (Foreign Function
 Interface) bindings and code that needs to exchange C-like strings
 with other languages.
 
-#### Overview
+# Overview
 
-Rust represents owned strings with the `String` type, and
-borrowed slices of strings with the `str` primitive. Both are
+Rust represents owned strings with the [`String`] type, and
+borrowed slices of strings with the [`str`] primitive. Both are
 always in UTF-8 encoding, and may contain nul bytes in the middle,
 i.e., if you look at the bytes that make up the string, there may
 be a `\0` among them. Both `String` and `str` store their length
@@ -40,7 +31,7 @@ The C standard leaves the actual sizes of those types open to
 interpretation, but defines different APIs for strings made up of
 each character type. Rust strings are always UTF-8, so different
 Unicode characters will be encoded in a variable number of bytes
-each. The Rust type `char` represents a '[Unicode scalar
+each. The Rust type [`char`] represents a '[Unicode scalar
 value]', which is similar to, but not the same as, a '[Unicode
 code point]'.
 
@@ -66,89 +57,106 @@ truncate the string. Rust strings *can* have nul characters in
 the middle, because nul does not have to mark the end of the
 string in Rust.
 
-#### Representations of non-Rust strings
+# Representations of non-Rust strings
 
-`CString` and `CStr` are useful when you need to transfer
+[`CString`] and [`CStr`] are useful when you need to transfer
 UTF-8 strings to and from languages with a C ABI, like Python.
 
-* **From Rust to C:** `CString` represents an owned, C-friendly
+* **From Rust to C:** [`CString`] represents an owned, C-friendly
 string: it is nul-terminated, and has no internal nul characters.
-Rust code can create a `CString` out of a normal string (provided
+Rust code can create a [`CString`] out of a normal string (provided
 that the string doesn't have nul characters in the middle), and
-then use a variety of methods to obtain a raw `\*mut [u8]` that can
+then use a variety of methods to obtain a raw <code>\*mut [u8]</code> that can
 then be passed as an argument to functions which use the C
 conventions for strings.
 
-* **From C to Rust:** `CStr` represents a borrowed C string; it
-is what you would use to wrap a raw `\*const [u8]` that you got from
-a C function. A `CStr` is guaranteed to be a nul-terminated array
-of bytes. Once you have a `CStr`, you can convert it to a Rust
-`&[str]` if it's valid UTF-8, or lossily convert it by adding
+* **From C to Rust:** [`CStr`] represents a borrowed C string; it
+is what you would use to wrap a raw <code>\*const [u8]</code> that you got from
+a C function. A [`CStr`] is guaranteed to be a nul-terminated array
+of bytes. Once you have a [`CStr`], you can convert it to a Rust
+<code>&[str]</code> if it's valid UTF-8, or lossily convert it by adding
 replacement characters.
 
-`OsString` and `OsStr` are useful when you need to transfer
+[`OsString`] and [`OsStr`] are useful when you need to transfer
 strings to and from the operating system itself, or when capturing
-the output of external commands. Conversions between `OsString`,
-`OsStr` and Rust strings work similarly to those for `CString`
-and `CStr`.
+the output of external commands. Conversions between [`OsString`],
+[`OsStr`] and Rust strings work similarly to those for [`CString`]
+and [`CStr`].
 
-* `OsString` losslessly represents an owned platform string. However, this
+* [`OsString`] losslessly represents an owned platform string. However, this
 representation is not necessarily in a form native to the platform.
 In the Rust standard library, various APIs that transfer strings to/from the operating
-system use `OsString` instead of plain strings. For example,
-`env::var_os()` is used to query environment variables; it
+system use [`OsString`] instead of plain strings. For example,
+[`env::var_os()`] is used to query environment variables; it
 returns an <code>[Option]<[OsString]></code>. If the environment variable
-exists you will get a `[Some]\(os_string)`, which you can
-*then* try to convert to a Rust string. This yields a `Result`, so that
+exists you will get a <code>[Some]\(os_string)</code>, which you can
+*then* try to convert to a Rust string. This yields a [`Result`], so that
 your code can detect errors in case the environment variable did
 not in fact contain valid Unicode data.
 
-* `OsStr` losslessly represents a borrowed reference to a platform string.
+* [`OsStr`] losslessly represents a borrowed reference to a platform string.
 However, this representation is not necessarily in a form native to the platform.
 It can be converted into a UTF-8 Rust string slice in a similar way to
-`OsString`.
+[`OsString`].
 
-#### Conversions
+# Conversions
 
-#### On Unix
+## On Unix
 
-On Unix, `OsStr` implements the
-`std::os::unix::ffi::OsStrExt` trait, which
-augments it with two methods, `from_bytes` and `as_bytes`.
+On Unix, [`OsStr`] implements the
+<code>std::os::unix::ffi::[OsStrExt][unix.OsStrExt]</code> trait, which
+augments it with two methods, [`from_bytes`] and [`as_bytes`].
 These do inexpensive conversions from and to byte slices.
 
-Additionally, on Unix `OsString` implements the
-`std::os::unix::ffi::OsStringExt` trait,
-which provides `from_vec` and `into_vec` methods that consume
-their arguments, and take or produce vectors of `u8`.
+Additionally, on Unix [`OsString`] implements the
+<code>std::os::unix::ffi::[OsStringExt][unix.OsStringExt]</code> trait,
+which provides [`from_vec`] and [`into_vec`] methods that consume
+their arguments, and take or produce vectors of [`u8`].
 
-#### On Windows
+## On Windows
 
-An `OsStr` can be losslessly converted to a native Windows string. And
-a native Windows string can be losslessly converted to an `OsString`.
+An [`OsStr`] can be losslessly converted to a native Windows string. And
+a native Windows string can be losslessly converted to an [`OsString`].
 
-On Windows, `OsStr` implements the
-`std::os::windows::ffi::OsStrExt` trait,
-which provides an `encode_wide` method. This provides an
-iterator that can be `collect`ed into a vector of `u16`. After a nul
+On Windows, [`OsStr`] implements the
+<code>std::os::windows::ffi::[OsStrExt][windows.OsStrExt]</code> trait,
+which provides an [`encode_wide`] method. This provides an
+iterator that can be [`collect`]ed into a vector of [`u16`]. After a nul
 characters is appended, this is the same as a native Windows string.
 
-Additionally, on Windows `OsString` implements the
-`std::os::windows:ffi::OsStringExt`
-trait, which provides a `from_wide` method to convert a native Windows
-string (without the terminating nul character) to an `OsString`.
+Additionally, on Windows [`OsString`] implements the
+<code>std::os::windows:ffi::[OsStringExt][windows.OsStringExt]</code>
+trait, which provides a [`from_wide`] method to convert a native Windows
+string (without the terminating nul character) to an [`OsString`].
 
-#### Other platforms
+## Other platforms
 
 Many other platforms provide their own extension traits in a
 `std::os::*::ffi` module.
 
-#### On all platforms
+## On all platforms
 
-On all platforms, `OsStr` consists of a sequence of bytes that is encoded as a superset of
-UTF-8; see `OsString` for more details on its encoding on different platforms.
+On all platforms, [`OsStr`] consists of a sequence of bytes that is encoded as a superset of
+UTF-8; see [`OsString`] for more details on its encoding on different platforms.
 
-For limited, inexpensive conversions from and to bytes, see `OsStr::as_encoded_bytes` and
-`OsStr::from_encoded_bytes_unchecked`.
+For limited, inexpensive conversions from and to bytes, see [`OsStr::as_encoded_bytes`] and
+[`OsStr::from_encoded_bytes_unchecked`].
 
-For basic <example-value> processing, see `OsStr::slice_encoded_bytes`.
+For basic string processing, see [`OsStr::slice_encoded_bytes`].
+
+[Unicode scalar value]: https://www.unicode.org/glossary/#unicode_scalar_value
+[Unicode code point]: https://www.unicode.org/glossary/#code_point
+[`env::set_var()`]: crate::env::set_var "env::set_var"
+[`env::var_os()`]: crate::env::var_os "env::var_os"
+[unix.OsStringExt]: crate::os::unix::ffi::OsStringExt "os::unix::ffi::OsStringExt"
+[`from_vec`]: crate::os::unix::ffi::OsStringExt::from_vec "os::unix::ffi::OsStringExt::from_vec"
+[`into_vec`]: crate::os::unix::ffi::OsStringExt::into_vec "os::unix::ffi::OsStringExt::into_vec"
+[unix.OsStrExt]: crate::os::unix::ffi::OsStrExt "os::unix::ffi::OsStrExt"
+[`from_bytes`]: crate::os::unix::ffi::OsStrExt::from_bytes "os::unix::ffi::OsStrExt::from_bytes"
+[`as_bytes`]: crate::os::unix::ffi::OsStrExt::as_bytes "os::unix::ffi::OsStrExt::as_bytes"
+[`OsStrExt`]: crate::os::unix::ffi::OsStrExt "os::unix::ffi::OsStrExt"
+[windows.OsStrExt]: crate::os::windows::ffi::OsStrExt "os::windows::ffi::OsStrExt"
+[`encode_wide`]: crate::os::windows::ffi::OsStrExt::encode_wide "os::windows::ffi::OsStrExt::encode_wide"
+[`collect`]: crate::iter::Iterator::collect "iter::Iterator::collect"
+[windows.OsStringExt]: crate::os::windows::ffi::OsStringExt "os::windows::ffi::OsStringExt"
+[`from_wide`]: crate::os::windows::ffi::OsStringExt::from_wide "os::windows::ffi::OsStringExt::from_wide"

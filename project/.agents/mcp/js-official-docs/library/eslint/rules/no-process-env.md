@@ -1,13 +1,10 @@
 ---
-title: "no-process-env"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-process-env.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-process-env
+rule_type: suggestion
+further_reading:
+- https://stackoverflow.com/questions/5869216/how-to-store-node-js-deployment-settings-configuration-files
+- https://blog.benhall.me.uk/2012/02/storing-application-config-data-in/
 ---
-
-# no-process-env
 
 The `process.env` object in Node.js is used to store deployment/configuration parameters. Littering it through out a project could lead to maintenance issues as it's another kind of global dependency. As such, it could lead to merge conflicts in a multi-user setup and deployment issues in a multi-server setup. Instead, one of the best practices is to define all those parameters in a single configuration/settings file which could be accessed throughout the project.
 
@@ -17,7 +14,7 @@ This rule is aimed at discouraging use of `process.env` to avoid global dependen
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-process-env: "error"*/
@@ -27,9 +24,11 @@ if(process.env.NODE_ENV === "development") {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-process-env: "error"*/
@@ -40,6 +39,8 @@ if(config.env === "development") {
     //...
 }
 ```
+
+:::
 
 ## When Not To Use It
 

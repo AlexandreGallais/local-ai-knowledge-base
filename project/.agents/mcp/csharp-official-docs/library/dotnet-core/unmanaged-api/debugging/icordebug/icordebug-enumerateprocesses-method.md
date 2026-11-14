@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebug::EnumerateProcesses Method"
 title: "ICorDebug::EnumerateProcesses Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebug-enumerateprocesses-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebug.EnumerateProcesses"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "EnumerateProcesses"
+helpviewer_keywords:
+  - "EnumerateProcesses method [.NET debugging]"
+  - "ICorDebug::EnumerateProcesses method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebug::EnumerateProcesses Method
 
 Gets an enumerator for the processes that are being debugged.
@@ -26,7 +35,7 @@ A pointer to the address of an ICorDebugProcessEnum object that is the enumerato
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -36,4 +45,4 @@ A pointer to the address of an ICorDebugProcessEnum object that is the enumerato
 
 ## See also
 
-- ICorDebug Interface
+- [ICorDebug Interface](icordebug-interface.md)

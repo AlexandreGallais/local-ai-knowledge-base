@@ -1,13 +1,21 @@
 ---
-title: "complexity"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/complexity.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: complexity
+rule_type: suggestion
+related_rules:
+- max-depth
+- max-lines
+- max-lines-per-function
+- max-nested-callbacks
+- max-params
+- max-statements
+further_reading:
+- https://en.wikipedia.org/wiki/Cyclomatic_complexity
+- https://ariya.io/2012/12/complexity-analysis-of-javascript-code
+- https://web.archive.org/web/20231210222710/https://craftsmanshipforsoftware.com/2015/05/25/complexity-for-javascript/
+- https://web.archive.org/web/20160808115119/http://jscomplexity.org/complexity
+- https://github.com/eslint/eslint/issues/4808#issuecomment-167795140
 ---
 
-# complexity
 
 Cyclomatic complexity measures the number of linearly independent paths through a program's source code. This rule allows setting a cyclomatic complexity threshold.
 
@@ -29,7 +37,7 @@ This rule is aimed at reducing code complexity by capping the amount of cyclomat
 
 Examples of **incorrect** code for a maximum of `2`:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint complexity: ["error", 2]*/
@@ -58,9 +66,11 @@ function d(a) {
 }
 ```
 
+:::
+
 Examples of **correct** code for a maximum of `2`:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint complexity: ["error", 2]*/
@@ -78,11 +88,13 @@ function b() {
 }
 ```
 
+:::
+
 Class field initializers and class static blocks are implicit functions. Therefore, their complexity is calculated separately for each initializer and each static block, and it doesn't contribute to the complexity of the enclosing code.
 
 Examples of additional **incorrect** code for a maximum of `2`:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint complexity: ["error", 2]*/
@@ -100,9 +112,11 @@ class D { // this static block has complexity = 3
 }
 ```
 
+:::
+
 Examples of additional **correct** code for a maximum of `2`:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint complexity: ["error", 2]*/
@@ -128,6 +142,8 @@ function foo() { // this function has complexity = 1
     }
 }
 ```
+
+:::
 
 ## Options
 
@@ -164,7 +180,7 @@ _Modified cyclomatic complexity_ is the same as the classic cyclomatic complexit
 
 Examples of **correct** code for this rule with the `{ "max": 3, "variant": "modified" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint complexity: ["error", {"max": 3, "variant": "modified"}]*/
@@ -187,6 +203,8 @@ function a(x) {     // initial modified complexity is 1
     }
 }
 ```
+
+:::
 
 The classic cyclomatic complexity of the above function is `5`, but the modified cyclomatic complexity is only `3`.
 

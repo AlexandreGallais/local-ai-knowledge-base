@@ -1,17 +1,8 @@
----
-title: "Struct expressions"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/expressions/struct-expr.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[expr.struct]
 # Struct expressions
 
 r[expr.struct.syntax]
-```grammar
+```grammar,expressions
 StructExpression ->
     PathInExpression `{` (StructExprFields | StructBase)? `}`
 
@@ -44,8 +35,8 @@ let u = game::User {name: "Joe", age: 35, score: 100_000};
 Enum::Variant {};
 ```
 
-> **Note:**
-> Tuple structs and tuple enum variants are typically instantiated using a call expression referring to the constructor in the value namespace. These are distinct from a struct expression using curly braces referring to the constructor in the type namespace.
+> [!NOTE]
+> Tuple structs and tuple enum variants are typically instantiated using a [call expression][expr.call] referring to the [constructor in the value namespace][items.struct.tuple]. These are distinct from a struct expression using curly braces referring to the constructor in the type namespace.
 >
 > ```rust
 > struct Position(i32, i32, i32);
@@ -74,7 +65,7 @@ Enum::Variant {};
 >
 > ----
 >
-> Unit structs and unit enum variants are typically instantiated using a path expression referring to the constant in the value namespace.
+> Unit structs and unit enum variants are typically instantiated using a [path expression][expr.path] referring to the [constant in the value namespace][items.struct.unit].
 >
 > ```rust
 > struct Gamma;
@@ -147,3 +138,14 @@ When initializing a data structure (struct, enum, union) with named (but not num
 Point3d { x: x, y: y_value, z: z };
 Point3d { x, y: y_value, z };
 ```
+
+[enum variant]: ../items/enumerations.md
+[if let]: if-expr.md#if-let-patterns
+[if]: if-expr.md#if-expressions
+[loop]: loop-expr.md
+[match]: match-expr.md
+[parentheses]: grouped-expr.md
+[struct]: ../items/structs.md
+[union]: ../items/unions.md
+[visible]: ../visibility-and-privacy.md
+[scrutinee]: ../glossary.md#scrutinee

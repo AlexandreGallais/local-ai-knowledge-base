@@ -1,15 +1,14 @@
 ---
-title: "Intrinsic APIs marked RequiresUnreferencedCode"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/deploying/trimming/intrinsic-requiresunreferencedcode-apis.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Intrinsic APIs marked RequiresUnreferencedCode
+description: Learn how the tooling recognizes certain patterns in calls to APIs annotated with RequiresUnreferencedCode.
+author: MichalStrehovsky
+ms.author: michals
+ms.date: 09/13/2024
 ---
 
 # Intrinsic APIs marked RequiresUnreferencedCode
 
-Under normal circumstances, calling APIs annotated with `System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute` in an app published with trimming triggers warning IL2026 (Members attributed with RequiresUnreferencedCode may break when trimming). APIs that trigger the warning might not behave correctly in a trimmed deployment.
+Under normal circumstances, calling APIs annotated with <xref:System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute> in an app published with trimming triggers warning [IL2026 (Members attributed with RequiresUnreferencedCode may break when trimming)](trim-warnings/il2026.md). APIs that trigger the warning might not behave correctly in a trimmed deployment.
 
 Some APIs annotated `[RequiresUnreferencedCode]` can still be used without triggering the warning if they're called in a specific pattern. When used as part of a pattern, the call to the API can be statically analyzed by the compiler, does not generate a warning, and behaves as expected at runtime.
 

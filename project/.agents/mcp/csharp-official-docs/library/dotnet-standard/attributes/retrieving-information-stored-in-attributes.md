@@ -1,140 +1,40 @@
 ---
-title: "Retrieving Information Stored in Attributes (part 1 of 2)"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/attributes/retrieving-information-stored-in-attributes.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: "Retrieving Information Stored in Attributes"
+description: Learn to retrieve information stored in attributes, including for an attribute instance, multiple instances for the same scope, multiple instances for different scopes, and attributes applied to class members.
+ms.date: "08/05/2022"
+ms.custom: devdivchpfy22
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "retrieving attributes"
+  - "multiple attribute instances"
+  - "attributes [.NET], retrieving"
+ms.topic: how-to
 ---
-
 # Retrieving Information Stored in Attributes
 
-Retrieving a custom attribute is a simple process. First, declare an instance of the attribute you want to retrieve. Then, use the `System.Attribute.GetCustomAttribute*` method to initialize the new attribute to the value of the attribute you want to retrieve. Once the new attribute is initialized, you can use its properties to get the values.
+Retrieving a custom attribute is a simple process. First, declare an instance of the attribute you want to retrieve. Then, use the <xref:System.Attribute.GetCustomAttribute*?displayProperty=nameWithType> method to initialize the new attribute to the value of the attribute you want to retrieve. Once the new attribute is initialized, you can use its properties to get the values.
 
-> **Important:**
-> This article describes how to retrieve attributes for code loaded into the execution context. To retrieve attributes for code loaded into the reflection-only context, you must use the `System.Reflection.CustomAttributeData` class, as shown in How to: Load Assemblies into the Reflection-Only Context.
+> [!IMPORTANT]
+> This article describes how to retrieve attributes for code loaded into the execution context. To retrieve attributes for code loaded into the reflection-only context, you must use the <xref:System.Reflection.CustomAttributeData> class, as shown in [How to: Load Assemblies into the Reflection-Only Context](../../framework/reflection-and-codedom/how-to-load-assemblies-into-the-reflection-only-context.md).
 
  This section describes the following ways to retrieve attributes:
 
-- Retrieving a single instance of an attribute
+- [Retrieving a single instance of an attribute](#cpconretrievingsingleinstanceofattribute)
 
-- Retrieving multiple instances of an attribute applied to the same scope
+- [Retrieving multiple instances of an attribute applied to the same scope](#cpconretrievingmultipleinstancesofattributeappliedtosamescope)
 
-- Retrieving multiple instances of an attribute applied to different scopes
+- [Retrieving multiple instances of an attribute applied to different scopes](#cpconretrievingmultipleinstancesofattributeappliedtodifferentscopes)
+
+<a name="cpconretrievingsingleinstanceofattribute"></a>
 
 ## Retrieving a Single Instance of an Attribute
 
  In the following example, the `DeveloperAttribute` (described in the previous section) is applied to the `MainApp` class on the class level. The `GetAttribute` method uses `GetCustomAttribute` to retrieve the values stored in `DeveloperAttribute` on the class level before displaying them to the console.
 
- ```csharp
-using System;
-using System.Reflection;
-using CustomCodeAttributes;
-
-[Developer("Joan Smith", "42", Reviewed = true)]
-class MainApp
-{
-    public static void Main()
-    {
-        // Call function to get and display the attribute.
-        GetAttribute(typeof(MainApp));
-    }
-
-    public static void GetAttribute(Type t)
-    {
-        // Get instance of the attribute.
-        DeveloperAttribute MyAttribute =
-            (DeveloperAttribute) Attribute.GetCustomAttribute(t, typeof (DeveloperAttribute));
-
-        if (MyAttribute == null)
-        {
-            Console.WriteLine("The attribute was not found.");
-        }
-        else
-        {
-            // Get the Name value.
-            Console.WriteLine($"The Name Attribute is: {MyAttribute.Name}.");
-            // Get the Level value.
-            Console.WriteLine($"The Level Attribute is: {MyAttribute.Level}.");
-            // Get the Reviewed value.
-            Console.WriteLine($"The Reviewed Attribute is: {MyAttribute.Reviewed}.");
-        }
-    }
-}
-
-class GetAttribTest1
-{
-    public static void GetAttribute(Type t)
-    {
-        DeveloperAttribute[] MyAttributes =
-            (DeveloperAttribute[]) Attribute.GetCustomAttributes(t, typeof (DeveloperAttribute));
-
-        if (MyAttributes.Length == 0)
-        {
-            Console.WriteLine("The attribute was not found.");
-        }
-        else
-        {
-            for (int i = 0 ; i < MyAttributes.Length ; i++)
-            {
-                // Get the Name value.
-                Console.WriteLine($"The Name Attribute is: {MyAttributes[i].Name}.");
-                // Get the Level value.
-                Console.WriteLine($"The Level Attribute is: {MyAttributes[i].Level}.");
-                // Get the Reviewed value.
-                Console.WriteLine($"The Reviewed Attribute is: {MyAttributes[i].Reviewed}.");
-            }
-        }
-    }
-}
-
-class GetAttribTest2
-{
-    public static void GetAttribute(Type t)
-    {
-        DeveloperAttribute att;
-
-        // Get the class-level attributes.
-
-        // Put the instance of the attribute on the class level in the att object.
-        att = (DeveloperAttribute) Attribute.GetCustomAttribute (t, typeof (DeveloperAttribute));
-
-        if (att == null)
-        {
-            Console.WriteLine($"No attribute in class {t.ToString()}.\n");
-        }
-        else
-        {
-            Console.WriteLine($"The Name Attribute on the class level is: {att.Name}.");
-            Console.WriteLine($"The Level Attribute on the class level is: {att.Level}.");
-            Console.WriteLine($"The Reviewed Attribute on the class level is: {att.Reviewed}.\n");
-        }
-
-        // Get the method-level attributes.
-
-        // Get all methods in this class, and put them
-        // in an array of System.Reflection.MemberInfo objects.
-        MemberInfo[] MyMemberInfo = t.GetMethods();
-
-        // Loop through all methods in this class that are in the
-        // MyMemberInfo array.
-        for (int i = 0; i < MyMemberInfo.Length; i++)
-        {
-            att = (DeveloperAttribute) Attribute.GetCustomAttribute(MyMemberInfo[i], typeof (DeveloperAttribute));
-            if (att == null)
-            {
-                Console.WriteLine($"No attribute in member function {MyMemberInfo[i].ToString()}.\n");
-            }
-            else
-            {
-                Console.WriteLine($"The Name Attribute for the {MyMemberInfo[i].ToString()} member is: {att.Name}.");
-                Console.WriteLine($"The Level Attribute for the {MyMemberInfo[i].ToString()} member is: {att.Level}.");
-                Console.WriteLine($"The Reviewed Attribute for the {MyMemberInfo[i].ToString()} member is: {att.Reviewed}.\n");
-            }
-        }
-    }
-}
-```
+ [!code-csharp[Conceptual.Attributes.Usage#18](../../../samples/snippets/csharp/VS_Snippets_CLR/conceptual.attributes.usage/cs/source3.cs#18)]
+ [!code-vb[Conceptual.Attributes.Usage#18](../../../samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.attributes.usage/vb/source3.vb#18)]
 
  The execution of the preceding program displays the following text:
 
@@ -152,120 +52,47 @@ The attribute was not found.
 
  The preceding example assumes that the attribute definition is in the current namespace. Remember to import the namespace in which the attribute definition resides if it isn't in the current namespace.
 
+<a name="cpconretrievingmultipleinstancesofattributeappliedtosamescope"></a>
+
 ## Retrieving Multiple Instances of an Attribute Applied to the Same Scope
 
-In the preceding example, the class to inspect and the specific attribute to find are passed to the `System.Attribute.GetCustomAttribute*` method. That code works well if only one instance of an attribute is applied on the class level. However, if multiple instances of an attribute are applied on the same class level, the `GetCustomAttribute` method doesn't retrieve all the information. In cases where multiple instances of the same attribute are applied to the same scope, you can use `System.Attribute.GetCustomAttributes*` method to place all instances of an attribute into an array. For example, if two instances of `DeveloperAttribute` are applied on the class level of the same class, the `GetAttribute` method can be modified to display the information found in both attributes. To apply multiple attributes on the same level, the attribute must be defined with the `AllowMultiple` property set to `true` in the `System.AttributeUsageAttribute` class.
+In the preceding example, the class to inspect and the specific attribute to find are passed to the <xref:System.Attribute.GetCustomAttribute*> method. That code works well if only one instance of an attribute is applied on the class level. However, if multiple instances of an attribute are applied on the same class level, the `GetCustomAttribute` method doesn't retrieve all the information. In cases where multiple instances of the same attribute are applied to the same scope, you can use <xref:System.Attribute.GetCustomAttributes*?displayProperty=nameWithType> method to place all instances of an attribute into an array. For example, if two instances of `DeveloperAttribute` are applied on the class level of the same class, the `GetAttribute` method can be modified to display the information found in both attributes. To apply multiple attributes on the same level, the attribute must be defined with the `AllowMultiple` property set to `true` in the <xref:System.AttributeUsageAttribute> class.
 
  The following code example shows how to use the `GetCustomAttributes` method to create an array that references all instances of `DeveloperAttribute` in any given class. The code then outputs the values of all the attributes to the console.
 
- ```csharp
-using System;
-using System.Reflection;
-using CustomCodeAttributes;
-
-[Developer("Joan Smith", "42", Reviewed = true)]
-class MainApp
-{
-    public static void Main()
-    {
-        // Call function to get and display the attribute.
-        GetAttribute(typeof(MainApp));
-    }
-
-    public static void GetAttribute(Type t)
-    {
-        // Get instance of the attribute.
-        DeveloperAttribute MyAttribute =
-            (DeveloperAttribute) Attribute.GetCustomAttribute(t, typeof (DeveloperAttribute));
-
-        if (MyAttribute == null)
-        {
-            Console.WriteLine("The attribute was not found.");
-        }
-        else
-        {
-            // Get the Name value.
-            Console.WriteLine($"The Name Attribute is: {MyAttribute.Name}.");
-            // Get the Level value.
-            Console.WriteLine($"The Level Attribute is: {MyAttribute.Level}.");
-            // Get the Reviewed value.
-            Console.WriteLine($"The Reviewed Attribute is: {MyAttribute.Reviewed}.");
-        }
-    }
-}
-
-class GetAttribTest1
-{
-    public static void GetAttribute(Type t)
-    {
-        DeveloperAttribute[] MyAttributes =
-            (DeveloperAttribute[]) Attribute.GetCustomAttributes(t, typeof (DeveloperAttribute));
-
-        if (MyAttributes.Length == 0)
-        {
-            Console.WriteLine("The attribute was not found.");
-        }
-        else
-        {
-            for (int i = 0 ; i < MyAttributes.Length ; i++)
-            {
-                // Get the Name value.
-                Console.WriteLine($"The Name Attribute is: {MyAttributes[i].Name}.");
-                // Get the Level value.
-                Console.WriteLine($"The Level Attribute is: {MyAttributes[i].Level}.");
-                // Get the Reviewed value.
-                Console.WriteLine($"The Reviewed Attribute is: {MyAttributes[i].Reviewed}.");
-            }
-        }
-    }
-}
-
-class GetAttribTest2
-{
-    public static void GetAttribute(Type t)
-    {
-        DeveloperAttribute att;
-
-        // Get the class-level attributes.
-
-        // Put the instance of the attribute on the class level in the att object.
-        att = (DeveloperAttribute) Attribute.GetCustomAttribute (t, typeof (DeveloperAttribute));
-
-        if (att == null)
-        {
-            Console.WriteLine($"No attribute in class {t.ToString()}.\n");
-        }
-        else
-        {
-            Console.WriteLine($"The Name Attribute on the class level is: {att.Name}.");
-            Console.WriteLine($"The Level Attribute on the class level is: {att.Level}.");
-            Console.WriteLine($"The Reviewed Attribute on the class level is: {att.Reviewed}.\n");
-        }
-
-        // Get the method-level attributes.
-
-        // Get all methods in this class, and put them
-        // in an array of System.Reflection.MemberInfo objects.
-        MemberInfo[] MyMemberInfo = t.GetMethods();
-
-        // Loop through all methods in this class that are in the
-        // MyMemberInfo array.
-        for (int i = 0; i < MyMemberInfo.Length; i++)
-        {
-            att = (DeveloperAttribute) Attribute.GetCustomAttribute(MyMemberInfo[i], typeof (DeveloperAttribute));
-            if (att == null)
-            {
-                Console.WriteLine($"No attribute in member function {MyMemberInfo[i].ToString()}.\n");
-            }
-            else
-            {
-                Console.WriteLine($"The Name Attribute for the {MyMemberInfo[i].ToString()} member is: {att.Name}.");
-                Console.WriteLine($"The Level Attribute for the {MyMemberInfo[i].ToString()} member is: {att.Level}.");
-                Console.WriteLine($"The Reviewed Attribute for the {MyMemberInfo[i].ToString()} member is: {att.Reviewed}.\n");
-            }
-        }
-    }
-}
-```
+ [!code-csharp[Conceptual.Attributes.Usage#19](../../../samples/snippets/csharp/VS_Snippets_CLR/conceptual.attributes.usage/cs/source3.cs#19)]
+ [!code-vb[Conceptual.Attributes.Usage#19](../../../samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.attributes.usage/vb/source3.vb#19)]
 
  If no attributes are found, this code alerts the user. Otherwise, the information contained in both instances of `DeveloperAttribute` is displayed.
+
+<a name="cpconretrievingmultipleinstancesofattributeappliedtodifferentscopes"></a>
+
+## Retrieving Multiple Instances of an Attribute Applied to Different Scopes
+
+ The <xref:System.Attribute.GetCustomAttributes*> and <xref:System.Attribute.GetCustomAttribute*> methods don't search an entire class and return all instances of an attribute in that class. Rather, they search only one specified method or member at a time. If you have a class with the same attribute applied to every member and you want to retrieve the values in all the attributes applied to those members, you must supply every method or member individually to `GetCustomAttributes` and `GetCustomAttribute`.
+
+ The following code example takes a class as a parameter and searches for the `DeveloperAttribute` (defined previously) on the class level and on every individual method of that class:
+
+ [!code-csharp[Conceptual.Attributes.Usage#20](../../../samples/snippets/csharp/VS_Snippets_CLR/conceptual.attributes.usage/cs/source3.cs#20)]
+ [!code-vb[Conceptual.Attributes.Usage#20](../../../samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.attributes.usage/vb/source3.vb#20)]
+
+ If no instances of the `DeveloperAttribute` are found on the method level or class level, the `GetAttribute` method notifies the user that no attributes were found and displays the name of the method or class that doesn't contain the attribute. If an attribute is found, the console displays the `Name`, `Level`, and `Reviewed` fields.
+
+ You can use the members of the <xref:System.Type> class to get the individual methods and members in the passed class. This example first queries the `Type` object to get attribute information for the class level. Next, it uses <xref:System.Type.GetMethods*?displayProperty=nameWithType> to place instances of all methods into an array of <xref:System.Reflection.MemberInfo?displayProperty=nameWithType> objects to retrieve attribute information for the method level. You can also use the <xref:System.Type.GetProperties*?displayProperty=nameWithType> method to check for attributes on the property level or <xref:System.Type.GetConstructors*?displayProperty=nameWithType> to check for attributes on the constructor level.
+
+## Retrieving Attributes from Class Members
+
+In addition to retrieving attributes at the class level, attributes can also be applied to individual members such as methods, properties, and fields. The `GetCustomAttribute` and `GetCustomAttributes` methods can be used to retrieve these attributes.
+
+### Example
+
+The following example demonstrates how to retrieve an attribute applied to a method:
+
+[!code-csharp[Conceptual.Attributes.Usage#21](../../../samples/snippets/csharp/VS_Snippets_CLR/conceptual.attributes.usage/cs/source4.cs#21)]
+
+## See also
+
+- <xref:System.Type?displayProperty=nameWithType>
+- <xref:System.Attribute.GetCustomAttribute*?displayProperty=nameWithType>
+- <xref:System.Attribute.GetCustomAttributes*?displayProperty=nameWithType>
+- [Attributes](index.md)

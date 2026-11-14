@@ -1,13 +1,9 @@
 ---
+description: "Learn more about: ICorDebugMergedAssemblyRecord::GetPublicKeyToken Method"
 title: "ICorDebugMergedAssemblyRecord::GetPublicKeyToken Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmergedassemblyrecord-getpublickeytoken-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
-# ICorDebugMergedAssemblyRecord::GetPublicKeyToken <example-value>
+# ICorDebugMergedAssemblyRecord::GetPublicKeyToken Method
 
 Gets the assembly's public key token.
 
@@ -36,12 +32,12 @@ HRESULT GetPublicKeyToken(
 
 An assembly's public key token is the last eight bytes of a SHA1 hash of its public key.
 
-> **Note:**
+> [!NOTE]
 > This method is available with .NET Native only.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -51,4 +47,4 @@ An assembly's public key token is the last eight bytes of a SHA1 hash of its pub
 
 ## See also
 
-- ICorDebugMergedAssemblyRecord Interface
+- [ICorDebugMergedAssemblyRecord Interface](icordebugmergedassemblyrecord-interface.md)

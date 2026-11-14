@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugStackWalk::GetFrame Method"
 title: "ICorDebugStackWalk::GetFrame Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugstackwalk-getframe-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugStackWalk.GetFrame Method"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugStackWalk::GetFrame"
+helpviewer_keywords:
+  - "GetFrame method [.NET debugging]"
+  - "ICorDebugStackWalk::GetFrame method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugStackWalk::GetFrame Method
 
-Gets the current frame in the ICorDebugStackWalk object.
+Gets the current frame in the [ICorDebugStackWalk](icordebugstackwalk-interface.md) object.
 
 ## Syntax
 
@@ -34,13 +43,15 @@ This method returns the following specific HRESULTs as well as HRESULT errors th
 | E_INVALIDARG               | `pFrame` is null.                                    |
 | CORDBG_E_PAST_END_OF_STACK | The frame pointer is already at the end of the stack; therefore, no additional frames can be accessed. |
 
+## Exceptions
+
 ## Remarks
 
- `ICorDebugStackWalk` returns only actual stack frames. Use the ICorDebugThread3::GetActiveInternalFrames method to return internal frames. (Internal frames are data structures pushed onto the stack by the runtime to store temporary data.)
+ `ICorDebugStackWalk` returns only actual stack frames. Use the [ICorDebugThread3::GetActiveInternalFrames](icordebugthread3-getactiveinternalframes-method.md) method to return internal frames. (Internal frames are data structures pushed onto the stack by the runtime to store temporary data.)
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -50,4 +61,4 @@ This method returns the following specific HRESULTs as well as HRESULT errors th
 
 ## See also
 
-- ICorDebugStackWalk Interface
+- [ICorDebugStackWalk Interface](icordebugstackwalk-interface.md)

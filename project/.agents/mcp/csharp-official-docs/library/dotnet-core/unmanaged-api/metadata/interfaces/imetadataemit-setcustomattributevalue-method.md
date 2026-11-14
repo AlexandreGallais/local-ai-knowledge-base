@@ -1,15 +1,22 @@
 ---
+description: "Learn more about: IMetaDataEmit::SetCustomAttributeValue Method"
 title: "IMetaDataEmit::SetCustomAttributeValue Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataemit-setcustomattributevalue-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataEmit.SetCustomAttributeValue"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataEmit::SetCustomAttributeValue"
+  - "IMetaDataEmit::SetCustomAttributeValue method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataEmit::SetCustomAttributeValue Method
 
-Sets or updates the value of a custom attribute defined by a prior call to IMetaDataEmit::DefineCustomAttribute.
+Sets or updates the value of a custom attribute defined by a prior call to [IMetaDataEmit::DefineCustomAttribute](imetadataemit-definecustomattribute-method.md).
 
 ## Syntax
 
@@ -34,7 +41,7 @@ HRESULT SetCustomAttributeValue (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -42,5 +49,5 @@ HRESULT SetCustomAttributeValue (
 
 ## See also
 
-- IMetaDataEmit Interface
-- IMetaDataEmit2 Interface
+- [IMetaDataEmit Interface](imetadataemit-interface.md)
+- [IMetaDataEmit2 Interface](imetadataemit2-interface.md)

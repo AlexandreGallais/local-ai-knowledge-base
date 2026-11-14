@@ -1,29 +1,20 @@
----
-title: "Usage of Angular libraries published to npm"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/tools/libraries/using-libraries.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Usage of Angular libraries published to npm
 
 When you build your Angular application, take advantage of sophisticated first-party libraries, as well as a rich ecosystem of third-party libraries.
-Angular Material is an example of a sophisticated first-party library.
+[Angular Material][AngularMaterialMain] is an example of a sophisticated first-party library.
 
 ## Install libraries
 
-Libraries are published as npm packages, usually together with schematics that integrate them with the Angular CLI.
+Libraries are published as [npm packages][GuideNpmPackages], usually together with schematics that integrate them with the Angular CLI.
 To integrate reusable library code into an application, you need to install the package and import the provided functionality in the location you use it.
 For most published Angular libraries, use the `ng add <lib_name>` Angular CLI command.
 
 The `ng add` Angular CLI command uses a package manager to install the library package and invokes schematics that are included in the package to other scaffolding within the project code.
-Examples of package managers include npm or yarn.
+Examples of package managers include [npm][NpmjsMain] or [yarn][YarnpkgMain].
 Additional scaffolding within the project code includes import statements, fonts, and themes.
 
 A published library typically provides a `README` file or other documentation on how to add that library to your application.
-For an example, see the Angular Material documentation.
+For an example, see the [Angular Material][AngularMaterialMain] documentation.
 
 ### Library typings
 
@@ -74,21 +65,21 @@ Define more typings as needed.
 ## Updating libraries
 
 A library is able to be updated by the publisher, and also has individual dependencies which need to be kept current.
-To check for updates to your installed libraries, use the `ng update` Angular CLI command.
+To check for updates to your installed libraries, use the [`ng update`][CliUpdate] Angular CLI command.
 
 Use `ng update <lib_name>` Angular CLI command to update individual library versions.
 The Angular CLI checks the latest published release of the library, and if the latest version is newer than your installed version, downloads it and updates your `package.json` to match the latest version.
 
 When you update Angular to a new version, you need to make sure that any libraries you are using are current.
 If libraries have interdependencies, you might have to update them in a particular order.
-See the Angular Update Guide for help.
+See the [Angular Update Guide][AngularUpdateMain] for help.
 
 ## Adding a library to the runtime global scope
 
 If a legacy JavaScript library is not imported into an application, you may add it to the runtime global scope and load it as if it was added in a script tag.
-Configure the Angular CLI to do this at build time using the `scripts` and `styles` options of the build target in the `angular.json` workspace build configuration file.
+Configure the Angular CLI to do this at build time using the `scripts` and `styles` options of the build target in the [`angular.json`][GuideWorkspaceConfig] workspace build configuration file.
 
-For example, to use the Bootstrap 4 library
+For example, to use the [Bootstrap 4][GetbootstrapDocs40GettingStartedIntroduction] library
 
 1. Install the library and the associated dependencies using the npm package manager:
 
@@ -166,3 +157,13 @@ If you do not add the interface for the script-defined extension, your IDE shows
 [TS][Error] Property 'myPlugin' does not exist on type 'JQuery'
 
 ```
+
+[CliUpdate]: cli/update 'ng update | CLI |Angular'
+[GuideNpmPackages]: reference/configs/npm-packages 'Workspace npm dependencies | Angular'
+[GuideWorkspaceConfig]: reference/configs/workspace-config 'Angular workspace configuration | Angular'
+[Resources]: resources 'Explore Angular Resources | Angular'
+[AngularMaterialMain]: https://material.angular.dev 'Angular Material | Angular'
+[AngularUpdateMain]: /update-guide 'Angular Update Guide | Angular'
+[GetbootstrapDocs40GettingStartedIntroduction]: https://getbootstrap.com/docs/4.0/getting-started/introduction 'Introduction | Bootstrap'
+[NpmjsMain]: https://www.npmjs.com 'npm'
+[YarnpkgMain]: https://yarnpkg.com ' Yarn'

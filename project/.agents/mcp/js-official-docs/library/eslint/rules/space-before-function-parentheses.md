@@ -1,18 +1,16 @@
 ---
-title: "space-before-function-parentheses"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/space-before-function-parentheses.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
----
+title: space-before-function-parentheses
 
-# space-before-function-parentheses
+related_rules:
+- space-after-keywords
+- space-return-throw-case
+---
 
 Enforces consistent spacing before opening parenthesis in function definitions.
 
-**Important:**
-This rule was removed in ESLint v1.0.0 and replaced by the space-before-function-paren rule. The name of the rule changed from "parentheses" to "paren" for consistency with the names of other rules.
+::: important
+This rule was removed in ESLint v1.0.0 and replaced by the [space-before-function-paren](space-before-function-paren) rule. The name of the rule changed from "parentheses" to "paren" for consistency with the names of other rules.
+:::
 
 When formatting a function, whitespace is allowed between the function name or `function` keyword and the opening paren. Named functions also require a space between the `function` keyword and the function name, but anonymous functions require no whitespace. For example:
 
@@ -40,7 +38,7 @@ This rule takes one argument. If it is `"always"`, which is the default option, 
 
 Examples of **incorrect** code for this rule with the default `"always"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 function foo() {
@@ -67,10 +65,12 @@ var baz = {
     }
 };
 ```
+
+:::
 
 Examples of **correct** code for this rule with the default `"always"` option:
 
-**Correct:**
+::: correct
 
 ```js
 function foo () {
@@ -97,10 +97,12 @@ var baz = {
     }
 };
 ```
+
+:::
 
 Examples of **incorrect** code for this rule with the `"never"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 function foo () {
@@ -128,9 +130,11 @@ var baz = {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"never"` option:
 
-**Correct:**
+::: correct
 
 ```js
 function foo() {
@@ -158,9 +162,11 @@ var baz = {
 };
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `{"anonymous": "always", "named": "never"}` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 function foo () {
@@ -183,10 +189,12 @@ var baz = {
     }
 };
 ```
+
+:::
 
 Examples of **correct** code for this rule with the `{"anonymous": "always", "named": "never"}` option:
 
-**Correct:**
+::: correct
 
 ```js
 function foo() {
@@ -209,10 +217,12 @@ var baz = {
     }
 };
 ```
+
+:::
 
 Examples of **incorrect** code for this rule with the `{"anonymous": "never", "named": "always"}` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 function foo() {
@@ -236,9 +246,11 @@ var baz = {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{"anonymous": "never", "named": "always"}` option:
 
-**Correct:**
+::: correct
 
 ```js
 function foo () {
@@ -261,6 +273,8 @@ var baz = {
     }
 };
 ```
+
+:::
 
 ## When Not To Use It
 

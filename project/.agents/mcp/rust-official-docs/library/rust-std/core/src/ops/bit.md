@@ -1,12 +1,3 @@
----
-title: "core::ops::bit"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/ops/bit.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::ops::bit
 
 ## trait Not
@@ -22,7 +13,7 @@ The unary logical negation operator `!`.
 An implementation of `Not` for `Answer`, which enables the use of `!` to
 invert its value.
 
-```rust
+```
 use std::ops::Not;
 
 #[derive(Debug, PartialEq)]
@@ -60,7 +51,7 @@ Note that `Rhs` is `Self` by default, but this is not mandatory.
 
 An implementation of `BitAnd` for a wrapper around `bool`.
 
-```rust
+```
 use std::ops::BitAnd;
 
 #[derive(Debug, PartialEq)]
@@ -83,7 +74,7 @@ assert_eq!(Scalar(false) & Scalar(false), Scalar(false));
 
 An implementation of `BitAnd` for a wrapper around `Vec<bool>`.
 
-```rust
+```
 use std::ops::BitAnd;
 
 #[derive(Debug, PartialEq)]
@@ -124,7 +115,7 @@ Note that `Rhs` is `Self` by default, but this is not mandatory.
 
 An implementation of `BitOr` for a wrapper around `bool`.
 
-```rust
+```
 use std::ops::BitOr;
 
 #[derive(Debug, PartialEq)]
@@ -147,7 +138,7 @@ assert_eq!(Scalar(false) | Scalar(false), Scalar(false));
 
 An implementation of `BitOr` for a wrapper around `Vec<bool>`.
 
-```rust
+```
 use std::ops::BitOr;
 
 #[derive(Debug, PartialEq)]
@@ -188,7 +179,7 @@ Note that `Rhs` is `Self` by default, but this is not mandatory.
 
 An implementation of `BitXor` that lifts `^` to a wrapper around `bool`.
 
-```rust
+```
 use std::ops::BitXor;
 
 #[derive(Debug, PartialEq)]
@@ -211,7 +202,7 @@ assert_eq!(Scalar(false) ^ Scalar(false), Scalar(false));
 
 An implementation of `BitXor` trait for a wrapper around `Vec<bool>`.
 
-```rust
+```
 use std::ops::BitXor;
 
 #[derive(Debug, PartialEq)]
@@ -256,7 +247,7 @@ standpoint, they are different when it comes to type inference.
 An implementation of `Shl` that lifts the `<<` operation on integers to a
 wrapper around `usize`.
 
-```rust
+```
 use std::ops::Shl;
 
 #[derive(PartialEq, Debug)]
@@ -276,7 +267,7 @@ assert_eq!(Scalar(4) << Scalar(2), Scalar(16));
 
 An implementation of `Shl` that spins a vector leftward by a given amount.
 
-```rust
+```
 use std::ops::Shl;
 
 #[derive(PartialEq, Debug)]
@@ -319,7 +310,7 @@ standpoint, they are different when it comes to type inference.
 An implementation of `Shr` that lifts the `>>` operation on integers to a
 wrapper around `usize`.
 
-```rust
+```
 use std::ops::Shr;
 
 #[derive(PartialEq, Debug)]
@@ -339,7 +330,7 @@ assert_eq!(Scalar(16) >> Scalar(2), Scalar(4));
 
 An implementation of `Shr` that spins a vector rightward by a given amount.
 
-```rust
+```
 use std::ops::Shr;
 
 #[derive(PartialEq, Debug)]
@@ -377,7 +368,7 @@ The bitwise AND assignment operator `&=`.
 An implementation of `BitAndAssign` that lifts the `&=` operator to a
 wrapper around `bool`.
 
-```rust
+```
 use std::ops::BitAndAssign;
 
 #[derive(Debug, PartialEq)]
@@ -410,7 +401,7 @@ assert_eq!(scalar, Scalar(false));
 Here, the `BitAndAssign` trait is implemented for a wrapper around
 `Vec<bool>`.
 
-```rust
+```
 use std::ops::BitAndAssign;
 
 #[derive(Debug, PartialEq)]
@@ -446,7 +437,7 @@ The bitwise OR assignment operator `|=`.
 
 # Examples
 
-```rust
+```
 use std::ops::BitOrAssign;
 
 #[derive(Debug, PartialEq)]
@@ -477,7 +468,7 @@ The bitwise XOR assignment operator `^=`.
 
 # Examples
 
-```rust
+```
 use std::ops::BitXorAssign;
 
 #[derive(Debug, PartialEq)]
@@ -510,7 +501,7 @@ The left shift assignment operator `<<=`.
 
 An implementation of `ShlAssign` for a wrapper around `usize`.
 
-```rust
+```
 use std::ops::ShlAssign;
 
 #[derive(Debug, PartialEq)]
@@ -539,7 +530,7 @@ The right shift assignment operator `>>=`.
 
 An implementation of `ShrAssign` for a wrapper around `usize`.
 
-```rust
+```
 use std::ops::ShrAssign;
 
 #[derive(Debug, PartialEq)]

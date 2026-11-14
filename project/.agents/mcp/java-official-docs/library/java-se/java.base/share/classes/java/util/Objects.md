@@ -1,25 +1,16 @@
----
-title: "Objects class (java.util)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/Objects.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Objects class (java.util)
 
 ```java
 public final class Objects
 ```
 
-This class consists of `static` utility methods for operating
+This class consists of {@code static} utility methods for operating
 on objects, or checking certain conditions before operation.  These utilities
-include `null`-safe or `null`-tolerant methods for computing the
+include {@code null}-safe or {@code null}-tolerant methods for computing the
 hash code of an object, returning a string for an object, comparing two
 objects, and checking if indexes or sub-range values are out of bounds.
 
-**Since:** 1.7
+@since 1.7
 
 ## Objects.equals(Object, Object)
 
@@ -27,17 +18,18 @@ objects, and checking if indexes or sub-range values are out of bounds.
 public static boolean equals(Object a, Object b)
 ```
 
-Consequently, if both arguments are `null`, `true`
-is returned.  Otherwise, if the first argument is not `null`, equality is determined by calling the equals method of the first argument with the
-second argument of this method. Otherwise, `false` is
+{@return {@code true} if the arguments are equal to each other
+and {@code false} otherwise}
+Consequently, if both arguments are {@code null}, {@code true}
+is returned.  Otherwise, if the first argument is not {@code
+null}, equality is determined by calling the {@link
+Object#equals equals} method of the first argument with the
+second argument of this method. Otherwise, {@code false} is
 returned.
 
-Parameters:
-
-- `a`: an object
-- `b`: an object to be compared with `a` for equality
-
-**See also:** Object#equals(Object)
+@param a an object
+@param b an object to be compared with {@code a} for equality
+@see Object#equals(Object)
 
 ## Objects.deepEquals(Object, Object)
 
@@ -45,18 +37,19 @@ Parameters:
 public static boolean deepEquals(Object a, Object b)
 ```
 
-Two `null` values are deeply equal.  If both arguments are
-arrays, the algorithm in Object[]) Arrays.deepEquals is used to determine equality.
-Otherwise, equality is determined by using the equals method of the first argument.
+{@return {@code true} if the arguments are deeply equal to each other
+and {@code false} otherwise}
 
-Parameters:
+Two {@code null} values are deeply equal.  If both arguments are
+arrays, the algorithm in {@link Arrays#deepEquals(Object[],
+Object[]) Arrays.deepEquals} is used to determine equality.
+Otherwise, equality is determined by using the {@link
+Object#equals equals} method of the first argument.
 
-- `a`: an object
-- `b`: an object to be compared with `a` for deep equality
-
-**See also:** Arrays#deepEquals(Object[], Object[])
-
-**See also:** Objects#equals(Object, Object)
+@param a an object
+@param b an object to be compared with {@code a} for deep equality
+@see Arrays#deepEquals(Object[], Object[])
+@see Objects#equals(Object, Object)
 
 ## Objects.hashCode(Object)
 
@@ -64,11 +57,11 @@ Parameters:
 public static int hashCode(Object o)
 ```
 
-Parameters:
+{@return the hash code of a non-{@code null} argument and 0 for
+a {@code null} argument}
 
-- `o`: an object
-
-**See also:** Object#hashCode
+@param o an object
+@see Object#hashCode
 
 ## Objects.hash(Object...)
 
@@ -76,29 +69,29 @@ Parameters:
 public static int hash(Object... values)
 ```
 
-The hash
+{@return a hash code for a sequence of input values} The hash
 code is generated as if all the input values were placed into an
-array, and that array were hashed by calling `Arrays.hashCode(Object[])`.
+array, and that array were hashed by calling {@link
+Arrays#hashCode(Object[])}.
 
-This method is useful for implementing `Object.hashCode()` on objects containing multiple fields. For
-example, if an object that has three fields, `x`, `y`, and `z`, one could write:
+<p>This method is useful for implementing {@link
+Object#hashCode()} on objects containing multiple fields. For
+example, if an object that has three fields, {@code x}, {@code
+y}, and {@code z}, one could write:
 
-```java
-@Override public int hashCode() {
+<blockquote><pre>
+&#064;Override public int hashCode() {
     return Objects.hash(x, y, z);
-```
+}
+</pre></blockquote>
 
-**Warning: When a single object reference is supplied, the returned
-value does not equal the hash code of that object reference.** This
-value can be computed by calling `hashCode(Object)`.
+<b>Warning: When a single object reference is supplied, the returned
+value does not equal the hash code of that object reference.</b> This
+value can be computed by calling {@link #hashCode(Object)}.
 
-Parameters:
-
-- `values`: the values to be hashed
-
-**See also:** Arrays#hashCode(Object[])
-
-**See also:** List#hashCode
+@param values the values to be hashed
+@see Arrays#hashCode(Object[])
+@see List#hashCode
 
 ## Objects.toString(Object)
 
@@ -106,13 +99,13 @@ Parameters:
 public static String toString(Object o)
 ```
 
-Parameters:
+{@return the result of calling {@code toString} for a
+non-{@code null} argument and {@code "null"} for a
+{@code null} argument}
 
-- `o`: an object
-
-**See also:** Object#toString
-
-**See also:** String#valueOf(Object)
+@param o an object
+@see Object#toString
+@see String#valueOf(Object)
 
 ## Objects.toString(Object, String)
 
@@ -120,12 +113,14 @@ Parameters:
 public static String toString(Object o, String nullDefault)
 ```
 
-Parameters:
+{@return the result of calling {@code toString} on the first
+argument if the first argument is not {@code null} and the
+second argument otherwise}
 
-- `o`: an object
-- `nullDefault`: string to return if the first argument is `null`
-
-**See also:** Objects#toString(Object)
+@param o an object
+@param nullDefault string to return if the first argument is
+       {@code null}
+@see Objects#toString(Object)
 
 ## Objects.toIdentityString(Object)
 
@@ -133,26 +128,23 @@ Parameters:
 public static String toIdentityString(Object o)
 ```
 
-Parameters:
+{@return a string equivalent to the string returned by {@code
+Object.toString} if that method and {@code hashCode} are not
+overridden}
 
-- `o`: an object
-
-**Implementation note:** This method constructs a string for an object without calling
+@implNote
+This method constructs a string for an object without calling
 any overridable methods of the object.
 
-**Implementation requirements:** The method returns a string equivalent to:
+@implSpec
+The method returns a string equivalent to:<br>
+{@code o.getClass().getName() + "@" + Integer.toHexString(System.identityHashCode(o))}
 
-`o.getClass().getName() + "@" + Integer.toHexString(System.identityHashCode(o))`
-
-**See also:** Object#toString
-
-**See also:** System#identityHashCode(Object)
-
-**Since:** 19
-
-Throws:
-
-- `NullPointerException`: if the argument is null
+@param o an object
+@throws NullPointerException if the argument is null
+@see Object#toString
+@see System#identityHashCode(Object)
+@since 19
 
 ## Objects.compare(T, T, Comparator<? super T>)
 
@@ -160,23 +152,22 @@ Throws:
 public static <T> int compare(T a, T b, Comparator<? super T> c)
 ```
 
-Consequently, if both arguments are `null` 0
+{@return 0 if the arguments are identical and {@code
+c.compare(a, b)} otherwise}
+Consequently, if both arguments are {@code null} 0
 is returned.
 
-Note that if one of the arguments is `null`, a `NullPointerException` may or may not be thrown depending on
-what ordering policy, if any, the Comparator
-chooses to have for `null` values.
+<p>Note that if one of the arguments is {@code null}, a {@code
+NullPointerException} may or may not be thrown depending on
+what ordering policy, if any, the {@link Comparator Comparator}
+chooses to have for {@code null} values.
 
-Parameters:
-
-- `<T>`: the type of the objects being compared
-- `a`: an object
-- `b`: an object to be compared with `a`
-- `c`: the `Comparator` to compare the first two arguments
-
-**See also:** Comparable
-
-**See also:** Comparator
+@param <T> the type of the objects being compared
+@param a an object
+@param b an object to be compared with {@code a}
+@param c the {@code Comparator} to compare the first two arguments
+@see Comparable
+@see Comparator
 
 ## Objects.requireNonNull(T)
 
@@ -184,25 +175,19 @@ Parameters:
 public static <T> T requireNonNull(T obj)
 ```
 
-Checks that the specified object reference is not `null`. This
+Checks that the specified object reference is not {@code null}. This
 method is designed primarily for doing parameter validation in methods
 and constructors, as demonstrated below:
-
-```java
+<blockquote><pre>
 public Foo(Bar bar) {
     this.bar = Objects.requireNonNull(bar);
-```
+}
+</pre></blockquote>
 
-Parameters:
-
-- `obj`: the object reference to check for nullity
-- `<T>`: the type of the reference
-
-**Returns:** `obj` if not `null`
-
-Throws:
-
-- `NullPointerException`: if `obj` is `null`
+@param obj the object reference to check for nullity
+@param <T> the type of the reference
+@return {@code obj} if not {@code null}
+@throws NullPointerException if {@code obj} is {@code null}
 
 ## Objects.requireNonNull(T, String)
 
@@ -210,28 +195,23 @@ Throws:
 public static <T> T requireNonNull(T obj, String message)
 ```
 
-Checks that the specified object reference is not `null` and
-throws a customized `NullPointerException` if it is. This method
+Checks that the specified object reference is not {@code null} and
+throws a customized {@link NullPointerException} if it is. This method
 is designed primarily for doing parameter validation in methods and
 constructors with multiple parameters, as demonstrated below:
-
-```java
+<blockquote><pre>
 public Foo(Bar bar, Baz baz) {
     this.bar = Objects.requireNonNull(bar, "bar must not be null");
     this.baz = Objects.requireNonNull(baz, "baz must not be null");
-```
+}
+</pre></blockquote>
 
-Parameters:
-
-- `obj`: the object reference to check for nullity
-- `message`: detail message to be used in the event that a `NullPointerException` is thrown
-- `<T>`: the type of the reference
-
-**Returns:** `obj` if not `null`
-
-Throws:
-
-- `NullPointerException`: if `obj` is `null`
+@param obj     the object reference to check for nullity
+@param message detail message to be used in the event that a {@code
+               NullPointerException} is thrown
+@param <T> the type of the reference
+@return {@code obj} if not {@code null}
+@throws NullPointerException if {@code obj} is {@code null}
 
 ## Objects.isNull(Object)
 
@@ -239,16 +219,16 @@ Throws:
 public static boolean isNull(Object obj)
 ```
 
-Parameters:
+{@return {@code true} if the provided reference is {@code
+null}; {@code false} otherwise}
 
-- `obj`: a reference to be checked against `null`
+@apiNote This method exists to be used as a
+{@link java.util.function.Predicate}, {@code filter(Objects::isNull)}
 
-**API note:** This method exists to be used as a
-`java.util.function.Predicate`, `filter(Objects::isNull)`
+@param obj a reference to be checked against {@code null}
 
-**See also:** java.util.function.Predicate
-
-**Since:** 1.8
+@see java.util.function.Predicate
+@since 1.8
 
 ## Objects.nonNull(Object)
 
@@ -256,16 +236,16 @@ Parameters:
 public static boolean nonNull(Object obj)
 ```
 
-Parameters:
+{@return {@code true} if the provided reference is non-{@code null};
+{@code false} otherwise}
 
-- `obj`: a reference to be checked against `null`
+@apiNote This method exists to be used as a
+{@link java.util.function.Predicate}, {@code filter(Objects::nonNull)}
 
-**API note:** This method exists to be used as a
-`java.util.function.Predicate`, `filter(Objects::nonNull)`
+@param obj a reference to be checked against {@code null}
 
-**See also:** java.util.function.Predicate
-
-**Since:** 1.8
+@see java.util.function.Predicate
+@since 1.8
 
 ## Objects.requireNonNullElse(T, T)
 
@@ -273,17 +253,16 @@ Parameters:
 public static <T> T requireNonNullElse(T obj, T defaultObj)
 ```
 
-Parameters:
+{@return the first argument if it is non-{@code null} and
+otherwise the second argument if it is non-{@code null}}
 
-- `obj`: an object
-- `defaultObj`: a non-`null` object to return if the first argument is `null`
-- `<T>`: the type of the reference
-
-**Since:** 9
-
-Throws:
-
-- `NullPointerException`: if both `obj` is null and `defaultObj` is `null`
+@param obj an object
+@param defaultObj a non-{@code null} object to return if the first argument
+                  is {@code null}
+@param <T> the type of the reference
+@throws NullPointerException if both {@code obj} is null and
+       {@code defaultObj} is {@code null}
+@since 9
 
 ## Objects.requireNonNullElseGet(T, Supplier<? extends T>)
 
@@ -291,17 +270,18 @@ Throws:
 public static <T> T requireNonNullElseGet(T obj, Supplier<? extends T> supplier)
 ```
 
-Parameters:
+{@return the first argument if it is non-{@code null} and
+otherwise the value from {@code supplier.get()} if it is
+non-{@code null}}
 
-- `obj`: an object
-- `supplier`: of a non-`null` object to return if the first argument is `null`
-- `<T>`: the type of the first argument and return type
-
-**Since:** 9
-
-Throws:
-
-- `NullPointerException`: if both `obj` is null and either the `supplier` is `null` or the `supplier.get()` value is `null`
+@param obj an object
+@param supplier of a non-{@code null} object to return if the first argument
+                is {@code null}
+@param <T> the type of the first argument and return type
+@throws NullPointerException if both {@code obj} is null and
+       either the {@code supplier} is {@code null} or
+       the {@code supplier.get()} value is {@code null}
+@since 9
 
 ## Objects.requireNonNull(T, Supplier<String>)
 
@@ -309,10 +289,10 @@ Throws:
 public static <T> T requireNonNull(T obj, Supplier<String> messageSupplier)
 ```
 
-Checks that the specified object reference is not `null` and
-throws a customized `NullPointerException` if it is.
+Checks that the specified object reference is not {@code null} and
+throws a customized {@link NullPointerException} if it is.
 
-Unlike the method String),
+<p>Unlike the method {@link #requireNonNull(Object, String)},
 this method allows creation of the message to be deferred until
 after the null check is made. While this may confer a
 performance advantage in the non-null case, when deciding to
@@ -320,19 +300,13 @@ call this method care should be taken that the costs of
 creating the message supplier are less than the cost of just
 creating the string message directly.
 
-Parameters:
-
-- `obj`: the object reference to check for nullity
-- `messageSupplier`: supplier of the detail message to be used in the event that a `NullPointerException` is thrown
-- `<T>`: the type of the reference
-
-**Returns:** `obj` if not `null`
-
-**Since:** 1.8
-
-Throws:
-
-- `NullPointerException`: if `obj` is `null`
+@param obj     the object reference to check for nullity
+@param messageSupplier supplier of the detail message to be
+used in the event that a {@code NullPointerException} is thrown
+@param <T> the type of the reference
+@return {@code obj} if not {@code null}
+@throws NullPointerException if {@code obj} is {@code null}
+@since 1.8
 
 ## Objects.checkIndex(int, int)
 
@@ -340,30 +314,22 @@ Throws:
 public static int checkIndex(int index, int length)
 ```
 
-Checks if the `index` is within the bounds of the range from
-`0` (inclusive) to `length` (exclusive).
+Checks if the {@code index} is within the bounds of the range from
+{@code 0} (inclusive) to {@code length} (exclusive).
 
-The `index` is defined to be out of bounds if any of the
+<p>The {@code index} is defined to be out of bounds if any of the
 following inequalities is true:
+<ul>
+ <li>{@code index < 0}</li>
+ <li>{@code index >= length}</li>
+ <li>{@code length < 0}, which is implied from the former inequalities</li>
+</ul>
 
-- `index < 0`
-
-- `index >= length`
-
-- `length < 0`, which is implied from the former inequalities
-
-Parameters:
-
-- `index`: the index
-- `length`: the upper-bound (exclusive) of the range
-
-**Returns:** `index` if it is within bounds of the range
-
-**Since:** 9
-
-Throws:
-
-- `IndexOutOfBoundsException`: if the `index` is out of bounds
+@param index the index
+@param length the upper-bound (exclusive) of the range
+@return {@code index} if it is within bounds of the range
+@throws IndexOutOfBoundsException if the {@code index} is out of bounds
+@since 9
 
 ## Objects.checkFromToIndex(int, int, int)
 
@@ -371,34 +337,25 @@ Throws:
 public static int checkFromToIndex(int fromIndex, int toIndex, int length)
 ```
 
-Checks if the sub-range from `fromIndex` (inclusive) to
-`toIndex` (exclusive) is within the bounds of range from `0`
-(inclusive) to `length` (exclusive).
+Checks if the sub-range from {@code fromIndex} (inclusive) to
+{@code toIndex} (exclusive) is within the bounds of range from {@code 0}
+(inclusive) to {@code length} (exclusive).
 
-The sub-range is defined to be out of bounds if any of the following
+<p>The sub-range is defined to be out of bounds if any of the following
 inequalities is true:
+<ul>
+ <li>{@code fromIndex < 0}</li>
+ <li>{@code fromIndex > toIndex}</li>
+ <li>{@code toIndex > length}</li>
+ <li>{@code length < 0}, which is implied from the former inequalities</li>
+</ul>
 
-- `fromIndex < 0`
-
-- `fromIndex > toIndex`
-
-- `toIndex > length`
-
-- `length < 0`, which is implied from the former inequalities
-
-Parameters:
-
-- `fromIndex`: the lower-bound (inclusive) of the sub-range
-- `toIndex`: the upper-bound (exclusive) of the sub-range
-- `length`: the upper-bound (exclusive) the range
-
-**Returns:** `fromIndex` if the sub-range within bounds of the range
-
-**Since:** 9
-
-Throws:
-
-- `IndexOutOfBoundsException`: if the sub-range is out of bounds
+@param fromIndex the lower-bound (inclusive) of the sub-range
+@param toIndex the upper-bound (exclusive) of the sub-range
+@param length the upper-bound (exclusive) the range
+@return {@code fromIndex} if the sub-range within bounds of the range
+@throws IndexOutOfBoundsException if the sub-range is out of bounds
+@since 9
 
 ## Objects.checkFromIndexSize(int, int, int)
 
@@ -406,34 +363,25 @@ Throws:
 public static int checkFromIndexSize(int fromIndex, int size, int length)
 ```
 
-Checks if the sub-range from `fromIndex` (inclusive) to
-`fromIndex + size` (exclusive) is within the bounds of range from
-`0` (inclusive) to `length` (exclusive).
+Checks if the sub-range from {@code fromIndex} (inclusive) to
+{@code fromIndex + size} (exclusive) is within the bounds of range from
+{@code 0} (inclusive) to {@code length} (exclusive).
 
-The sub-range is defined to be out of bounds if any of the following
+<p>The sub-range is defined to be out of bounds if any of the following
 inequalities is true:
+<ul>
+ <li>{@code fromIndex < 0}</li>
+ <li>{@code size < 0}</li>
+ <li>{@code fromIndex + size > length}, taking into account integer overflow</li>
+ <li>{@code length < 0}, which is implied from the former inequalities</li>
+</ul>
 
-- `fromIndex < 0`
-
-- `size < 0`
-
-- `fromIndex + size > length`, taking into account integer overflow
-
-- `length < 0`, which is implied from the former inequalities
-
-Parameters:
-
-- `fromIndex`: the lower-bound (inclusive) of the sub-interval
-- `size`: the size of the sub-range
-- `length`: the upper-bound (exclusive) of the range
-
-**Returns:** `fromIndex` if the sub-range within bounds of the range
-
-**Since:** 9
-
-Throws:
-
-- `IndexOutOfBoundsException`: if the sub-range is out of bounds
+@param fromIndex the lower-bound (inclusive) of the sub-interval
+@param size the size of the sub-range
+@param length the upper-bound (exclusive) of the range
+@return {@code fromIndex} if the sub-range within bounds of the range
+@throws IndexOutOfBoundsException if the sub-range is out of bounds
+@since 9
 
 ## Objects.checkIndex(long, long)
 
@@ -441,30 +389,22 @@ Throws:
 public static long checkIndex(long index, long length)
 ```
 
-Checks if the `index` is within the bounds of the range from
-`0` (inclusive) to `length` (exclusive).
+Checks if the {@code index} is within the bounds of the range from
+{@code 0} (inclusive) to {@code length} (exclusive).
 
-The `index` is defined to be out of bounds if any of the
+<p>The {@code index} is defined to be out of bounds if any of the
 following inequalities is true:
+<ul>
+ <li>{@code index < 0}</li>
+ <li>{@code index >= length}</li>
+ <li>{@code length < 0}, which is implied from the former inequalities</li>
+</ul>
 
-- `index < 0`
-
-- `index >= length`
-
-- `length < 0`, which is implied from the former inequalities
-
-Parameters:
-
-- `index`: the index
-- `length`: the upper-bound (exclusive) of the range
-
-**Returns:** `index` if it is within bounds of the range
-
-**Since:** 16
-
-Throws:
-
-- `IndexOutOfBoundsException`: if the `index` is out of bounds
+@param index the index
+@param length the upper-bound (exclusive) of the range
+@return {@code index} if it is within bounds of the range
+@throws IndexOutOfBoundsException if the {@code index} is out of bounds
+@since 16
 
 ## Objects.checkFromToIndex(long, long, long)
 
@@ -472,34 +412,25 @@ Throws:
 public static long checkFromToIndex(long fromIndex, long toIndex, long length)
 ```
 
-Checks if the sub-range from `fromIndex` (inclusive) to
-`toIndex` (exclusive) is within the bounds of range from `0`
-(inclusive) to `length` (exclusive).
+Checks if the sub-range from {@code fromIndex} (inclusive) to
+{@code toIndex} (exclusive) is within the bounds of range from {@code 0}
+(inclusive) to {@code length} (exclusive).
 
-The sub-range is defined to be out of bounds if any of the following
+<p>The sub-range is defined to be out of bounds if any of the following
 inequalities is true:
+<ul>
+ <li>{@code fromIndex < 0}</li>
+ <li>{@code fromIndex > toIndex}</li>
+ <li>{@code toIndex > length}</li>
+ <li>{@code length < 0}, which is implied from the former inequalities</li>
+</ul>
 
-- `fromIndex < 0`
-
-- `fromIndex > toIndex`
-
-- `toIndex > length`
-
-- `length < 0`, which is implied from the former inequalities
-
-Parameters:
-
-- `fromIndex`: the lower-bound (inclusive) of the sub-range
-- `toIndex`: the upper-bound (exclusive) of the sub-range
-- `length`: the upper-bound (exclusive) the range
-
-**Returns:** `fromIndex` if the sub-range within bounds of the range
-
-**Since:** 16
-
-Throws:
-
-- `IndexOutOfBoundsException`: if the sub-range is out of bounds
+@param fromIndex the lower-bound (inclusive) of the sub-range
+@param toIndex the upper-bound (exclusive) of the sub-range
+@param length the upper-bound (exclusive) the range
+@return {@code fromIndex} if the sub-range within bounds of the range
+@throws IndexOutOfBoundsException if the sub-range is out of bounds
+@since 16
 
 ## Objects.checkFromIndexSize(long, long, long)
 
@@ -507,31 +438,22 @@ Throws:
 public static long checkFromIndexSize(long fromIndex, long size, long length)
 ```
 
-Checks if the sub-range from `fromIndex` (inclusive) to
-`fromIndex + size` (exclusive) is within the bounds of range from
-`0` (inclusive) to `length` (exclusive).
+Checks if the sub-range from {@code fromIndex} (inclusive) to
+{@code fromIndex + size} (exclusive) is within the bounds of range from
+{@code 0} (inclusive) to {@code length} (exclusive).
 
-The sub-range is defined to be out of bounds if any of the following
+<p>The sub-range is defined to be out of bounds if any of the following
 inequalities is true:
+<ul>
+ <li>{@code fromIndex < 0}</li>
+ <li>{@code size < 0}</li>
+ <li>{@code fromIndex + size > length}, taking into account integer overflow</li>
+ <li>{@code length < 0}, which is implied from the former inequalities</li>
+</ul>
 
-- `fromIndex < 0`
-
-- `size < 0`
-
-- `fromIndex + size > length`, taking into account integer overflow
-
-- `length < 0`, which is implied from the former inequalities
-
-Parameters:
-
-- `fromIndex`: the lower-bound (inclusive) of the sub-interval
-- `size`: the size of the sub-range
-- `length`: the upper-bound (exclusive) of the range
-
-**Returns:** `fromIndex` if the sub-range within bounds of the range
-
-**Since:** 16
-
-Throws:
-
-- `IndexOutOfBoundsException`: if the sub-range is out of bounds
+@param fromIndex the lower-bound (inclusive) of the sub-interval
+@param size the size of the sub-range
+@param length the upper-bound (exclusive) of the range
+@return {@code fromIndex} if the sub-range within bounds of the range
+@throws IndexOutOfBoundsException if the sub-range is out of bounds
+@since 16

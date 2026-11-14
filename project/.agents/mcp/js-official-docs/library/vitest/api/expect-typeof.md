@@ -1,16 +1,8 @@
----
-title: "expectTypeOf"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/api/expect-typeof.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # expectTypeOf
 
-**Warning:**
-During runtime this function doesn't do anything. To enable typechecking, don't forget to pass down `--typecheck` flag.
+::: warning
+During runtime this function doesn't do anything. To [enable typechecking](/guide/testing-types#run-typechecking), don't forget to pass down `--typecheck` flag.
+:::
 
 - **Type:** `<T>(a: unknown) => ExpectTypeOf`
 
@@ -39,10 +31,11 @@ expectTypeOf({ a: 1, b: 1 }).not.toEqualTypeOf<{ a: number }>()
 
 - **Type:** `<T>(expected: T) => void`
 
-**DEPRECATED**
-This matcher has been deprecated since expect-type v1.2.0. Use `toExtend` instead.
+::: warning DEPRECATED
+This matcher has been deprecated since expect-type v1.2.0. Use [`toExtend`](#toextend) instead.
+:::
 
-This matcher checks if expect type extends provided type. It is different from `toEqual` and is more similar to expect's `toMatchObject()`. With this matcher, you can check if an object “matches” a type.
+This matcher checks if expect type extends provided type. It is different from `toEqual` and is more similar to [expect's](/api/expect) `toMatchObject()`. With this matcher, you can check if an object “matches” a type.
 
 ```ts
 import { expectTypeOf } from 'vitest'
@@ -56,7 +49,7 @@ expectTypeOf<string | number>().not.toMatchTypeOf<number>()
 
 - **Type:** `<T>(expected: T) => void`
 
-This matcher checks if expect type extends provided type. It is different from `toEqual` and is more similar to expect's `toMatchObject()`. With this matcher, you can check if an object "matches" a type.
+This matcher checks if expect type extends provided type. It is different from `toEqual` and is more similar to [expect's](/api/expect) `toMatchObject()`. With this matcher, you can check if an object "matches" a type.
 
 ```ts
 import { expectTypeOf } from 'vitest'
@@ -70,7 +63,7 @@ expectTypeOf<string | number>().not.toExtend<number>()
 
 - **Type:** `() => void`
 
-This matcher performs a strict check on object types, ensuring that the expected type matches the provided object type. It's stricter than `toExtend` and is the recommended choice when working with object types as it's more likely to catch issues like readonly properties.
+This matcher performs a strict check on object types, ensuring that the expected type matches the provided object type. It's stricter than [`toExtend`](#toextend) and is the recommended choice when working with object types as it's more likely to catch issues like readonly properties.
 
 ```ts
 import { expectTypeOf } from 'vitest'
@@ -86,8 +79,9 @@ const user = {
 expectTypeOf(user).toMatchObjectType<{ name: string; address: { city: string } }>()
 ```
 
-**Warning:**
-This matcher only works with plain object types. It will fail for union types and other complex types. For those cases, use `toExtend` instead.
+::: warning
+This matcher only works with plain object types. It will fail for union types and other complex types. For those cases, use [`toExtend`](#toextend) instead.
+:::
 
 ## extract
 
@@ -117,8 +111,9 @@ expectTypeOf(getResponsiveProp(cssProperties))
   .toEqualTypeOf<CSSProperties[]>()
 ```
 
-**Warning:**
+::: warning
 If no type is found in the union, `.extract` will return `never`.
+:::
 
 ## exclude
 
@@ -145,8 +140,9 @@ expectTypeOf(getResponsiveProp(cssProperties))
   .toEqualTypeOf<CSSProperties>()
 ```
 
-**Warning:**
+::: warning
 If no type is found in the union, `.exclude` will return `never`.
+:::
 
 ## returns
 
@@ -161,8 +157,9 @@ expectTypeOf(() => {}).returns.toBeVoid()
 expectTypeOf((a: number) => [a, a]).returns.toEqualTypeOf([1, 2])
 ```
 
-**Warning:**
+::: warning
 If used on a non-function type, it will return `never`, so you won't be able to chain it with other matchers.
+:::
 
 ## parameters
 
@@ -180,11 +177,13 @@ expectTypeOf<NoParam>().parameters.toEqualTypeOf<[]>()
 expectTypeOf<HasParam>().parameters.toEqualTypeOf<[string]>()
 ```
 
-**Warning:**
+::: warning
 If used on a non-function type, it will return `never`, so you won't be able to chain it with other matchers.
+:::
 
-**Tip:**
-You can also use `.toBeCallableWith` matcher as a more expressive assertion.
+::: tip
+You can also use [`.toBeCallableWith`](#tobecallablewith) matcher as a more expressive assertion.
+:::
 
 ## parameter
 
@@ -203,8 +202,9 @@ expectTypeOf(foo).parameter(0).toBeNumber()
 expectTypeOf(foo).parameter(1).toBeString()
 ```
 
-**Warning:**
+::: warning
 If used on a non-function type, it will return `never`, so you won't be able to chain it with other matchers.
+:::
 
 ## constructorParameters
 
@@ -218,11 +218,13 @@ import { expectTypeOf } from 'vitest'
 expectTypeOf(Date).constructorParameters.toEqualTypeOf<[] | [string | number | Date]>()
 ```
 
-**Warning:**
+::: warning
 If used on a non-function type, it will return `never`, so you won't be able to chain it with other matchers.
+:::
 
-**Tip:**
-You can also use `.toBeConstructibleWith` matcher as a more expressive assertion.
+::: tip
+You can also use [`.toBeConstructibleWith`](#tobeconstructiblewith) matcher as a more expressive assertion.
+:::
 
 ## instance
 
@@ -236,8 +238,9 @@ import { expectTypeOf } from 'vitest'
 expectTypeOf(Date).instance.toHaveProperty('toISOString')
 ```
 
-**Warning:**
+::: warning
 If used on a non-function type, it will return `never`, so you won't be able to chain it with other matchers.
+:::
 
 ## items
 
@@ -269,8 +272,9 @@ expectTypeOf(asyncFunc).returns.resolves.toBeNumber()
 expectTypeOf(Promise.resolve('string')).resolves.toBeString()
 ```
 
-**Warning:**
+::: warning
 If used on a non-promise type, it will return `never`, so you won't be able to chain it with other matchers.
+:::
 
 ## guards
 
@@ -287,8 +291,9 @@ function isString(v: any): v is string {
 expectTypeOf(isString).guards.toBeString()
 ```
 
-**Warning:**
+::: warning
 Returns `never`, if the value is not a guard function, so you won't be able to chain it with other matchers.
+:::
 
 ## asserts
 
@@ -308,8 +313,9 @@ function assertNumber(v: any): asserts v is number {
 expectTypeOf(assertNumber).asserts.toBeNumber()
 ```
 
-**Warning:**
+::: warning
 Returns `never`, if the value is not an assert function, so you won't be able to chain it with other matchers.
+:::
 
 ## toBeAny
 
@@ -505,8 +511,9 @@ expectTypeOf<NoParam>().toBeCallableWith()
 expectTypeOf<HasParam>().toBeCallableWith('some string')
 ```
 
-**Warning:**
+::: warning
 If used on a non-function type, it will return `never`, so you won't be able to chain it with other matchers.
+:::
 
 ## toBeConstructibleWith
 
@@ -521,8 +528,9 @@ expectTypeOf(Date).toBeConstructibleWith(new Date())
 expectTypeOf(Date).toBeConstructibleWith('01-01-2000')
 ```
 
-**Warning:**
+::: warning
 If used on a non-function type, it will return `never`, so you won't be able to chain it with other matchers.
+:::
 
 ## toHaveProperty
 
@@ -559,5 +567,6 @@ expectTypeOf<{ a: { b: 1 } & { c: 1 } }>().toEqualTypeOf<{ a: { b: 1; c: 1 } }>(
 expectTypeOf<{ a: { b: 1 } & { c: 1 } }>().branded.toEqualTypeOf<{ a: { b: 1; c: 1 } }>()
 ```
 
-**Warning:**
+::: warning
 This helper comes at a performance cost and can cause the TypeScript compiler to 'give up' if used with excessively deep types. Use it sparingly and only when necessary.
+:::

@@ -1,10 +1,11 @@
 ---
-title: "How to write queries with complex filtering - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/write-queries-complex-filtering.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to write queries with complex filtering - LINQ to XML
+description: Sometimes you want to write LINQ to XML queries with complex filters. For example, you might have to find all elements that have a child element with a particular name and value.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to write queries with complex filtering (LINQ to XML)
@@ -18,9 +19,9 @@ This example shows how to find all `PurchaseOrder` elements that have:
 - A child `Address` element whose `Type` attribute equals "Shipping".
 - A child `State` element that equals "NY".
 
-It uses a nested query in the `Where` clause, and the `Any` operator returns `true` if the collection has any elements in it. The example uses XML document Sample XML file: Multiple purchase orders.
+It uses a nested query in the `Where` clause, and the `Any` operator returns `true` if the collection has any elements in it. The example uses XML document [Sample XML file: Multiple purchase orders](sample-xml-file-multiple-purchase-orders.md).
 
-For more information about the `Any` operator, see Quantifier Operations (C#) and Quantifier Operations (Visual Basic).
+For more information about the `Any` operator, see [Quantifier Operations (C#)](../../csharp/linq/standard-query-operators/quantifier-operations.md) and [Quantifier Operations (Visual Basic)](../../visual-basic/programming-guide/concepts/linq/quantifier-operations.md).
 
 ```csharp
 XElement root = XElement.Load("PurchaseOrders.xml");
@@ -63,9 +64,9 @@ This example produces the following output:
 
 ## Example: Find in XML that's in a namespace
 
-The following example shows the same query as above, but for XML that's in a namespace. For more information, see Namespaces overview.
+The following example shows the same query as above, but for XML that's in a namespace. For more information, see [Namespaces overview](namespaces-overview.md).
 
-This example uses XML document Sample XML file: Multiple purchase orders in a namespace.
+This example uses XML document [Sample XML file: Multiple purchase orders in a namespace](sample-xml-file-multiple-purchase-orders-namespace.md).
 
 ```csharp
 XElement root = XElement.Load("PurchaseOrdersInNamespace.xml");
@@ -115,12 +116,12 @@ This example produces the following output:
 
 ## See also
 
-- `System.Xml.Linq.XElement.Attribute*`
-- `System.Xml.Linq.XContainer.Elements*`
-- Projection Operations (C#)
-- Quantifier Operations (C#)
-- XML Child Axis Property (Visual Basic)
-- XML Attribute Axis Property (Visual Basic)
-- XML Value Property (Visual Basic)
-- Projection Operations (Visual Basic)
-- Quantifier Operations (Visual Basic)
+- <xref:System.Xml.Linq.XElement.Attribute*>
+- <xref:System.Xml.Linq.XContainer.Elements*>
+- [Projection Operations (C#)](../../csharp/linq/standard-query-operators/projection-operations.md)
+- [Quantifier Operations (C#)](../../csharp/linq/standard-query-operators/quantifier-operations.md)
+- [XML Child Axis Property (Visual Basic)](../../visual-basic/language-reference/xml-axis/xml-child-axis-property.md)
+- [XML Attribute Axis Property (Visual Basic)](../../visual-basic/language-reference/xml-axis/xml-attribute-axis-property.md)
+- [XML Value Property (Visual Basic)](../../visual-basic/language-reference/xml-axis/xml-value-property.md)
+- [Projection Operations (Visual Basic)](../../visual-basic/programming-guide/concepts/linq/projection-operations.md)
+- [Quantifier Operations (Visual Basic)](../../visual-basic/programming-guide/concepts/linq/quantifier-operations.md)

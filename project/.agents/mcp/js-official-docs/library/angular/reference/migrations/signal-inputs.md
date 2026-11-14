@@ -1,17 +1,8 @@
----
-title: "Migration to signal inputs"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/reference/migrations/signal-inputs.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Migration to signal inputs
 
 Angular introduced an improved API for inputs that is considered
 production ready as of v19.
-Read more about signal inputs and their benefits in the dedicated guide.
+Read more about signal inputs and their benefits in the [dedicated guide](guide/components/inputs).
 
 To support existing teams that would like to use signal inputs, the Angular team
 provides an automated migration that converts `@Input` fields to the new `input()` API.
@@ -22,9 +13,9 @@ Run the schematic using the following command:
 ng generate @angular/core:signal-input-migration
 ```
 
-Alternatively, the migration is available as a code refactor action in VSCode.
+Alternatively, the migration is available as a [code refactor action](https://code.visualstudio.com/docs/typescript/typescript-refactoring#_refactoring) in VSCode.
 Install the latest version of the VSCode extension and click on an `@Input` field.
-See more details in the section below.
+See more details in the section [below](#vscode-extension).
 
 ## What does the migration change?
 
@@ -54,7 +45,7 @@ export class MyComponent {
 
 **After**
 
-```angular-ts
+```angular-ts {highlight: [[4],[7], [10,12]]}
 import {Component, input} from '@angular/core';
 
 @Component({
@@ -112,7 +103,9 @@ references outside this directory are silently skipped, potentially breaking you
 
 ## VSCode extension
 
-The migration is available as a code refactor action in VSCode.
+![Screenshot of the VSCode extension and clicking on an `@Input` field](assets/images/migrations/signal-inputs-vscode.png 'Screenshot of the VSCode extension and clicking on an `@Input` field.')
+
+The migration is available as a [code refactor action](https://code.visualstudio.com/docs/typescript/typescript-refactoring#_refactoring) in VSCode.
 
 To make use of the migration via VSCode, install the latest version of the VSCode extension and either click:
 

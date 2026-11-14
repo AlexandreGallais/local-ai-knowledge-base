@@ -1,12 +1,3 @@
----
-title: "PKCS12Attribute class (java.security)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/PKCS12Attribute.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # PKCS12Attribute class (java.security)
 
 ```java
@@ -17,7 +8,7 @@ An attribute associated with a PKCS12 keystore entry.
 The attribute name is an ASN.1 Object Identifier and the attribute
 value is a set of ASN.1 types.
 
-**Since:** 1.8
+@since 1.8
 
 ## PKCS12Attribute.PKCS12Attribute(String, String)
 
@@ -33,20 +24,18 @@ A binary value is represented as a string of colon-separated
 pairs of hexadecimal digits.
 Multivalued attributes are represented as a comma-separated
 list of values, enclosed in square brackets. See
-`Arrays.toString(java.lang.Object[])`.
-
+{@link Arrays#toString(java.lang.Object[])}.
+<p>
 A string value will be DER-encoded as an ASN.1 UTF8String and a
 binary value will be DER-encoded as an ASN.1 Octet String.
 
-Parameters:
+@param name the attribute's identifier
+@param value the attribute's value
 
-- `name`: the attribute's identifier
-- `value`: the attribute's value
-
-Throws:
-
-- `NullPointerException`: if `name` or `value` is `null`
-- `IllegalArgumentException`: if `name` or `value` is incorrectly formatted
+@throws    NullPointerException if {@code name} or {@code value}
+    is {@code null}
+@throws    IllegalArgumentException if {@code name} or
+    {@code value} is incorrectly formatted
 
 ## PKCS12Attribute.PKCS12Attribute(byte[])
 
@@ -56,24 +45,24 @@ public PKCS12Attribute(byte[] encoded)
 
 Constructs a PKCS12 attribute from its ASN.1 DER encoding.
 The DER encoding is specified by the following ASN.1 definition:
+<pre>
 
-```java
 Attribute ::= SEQUENCE {
     type   AttributeType,
     values SET OF AttributeValue
 }
 AttributeType ::= OBJECT IDENTIFIER
 AttributeValue ::= ANY defined by type
-```
 
-Parameters:
+</pre>
 
-- `encoded`: the attribute's ASN.1 DER encoding. It is cloned to prevent subsequent modification.
+@param encoded the attribute's ASN.1 DER encoding. It is cloned
+    to prevent subsequent modification.
 
-Throws:
-
-- `NullPointerException`: if `encoded` is `null`
-- `IllegalArgumentException`: if `encoded` is incorrectly formatted
+@throws    NullPointerException if {@code encoded} is
+    {@code null}
+@throws    IllegalArgumentException if {@code encoded} is
+    incorrectly formatted
 
 ## PKCS12Attribute.getName()
 
@@ -84,7 +73,7 @@ public String getName()
 Returns the attribute's ASN.1 Object Identifier represented as a
 list of dot-separated integers.
 
-**Returns:** the attribute's identifier
+@return the attribute's identifier
 
 ## PKCS12Attribute.getValue()
 
@@ -94,25 +83,24 @@ public String getValue()
 
 Returns the attribute's ASN.1 DER-encoded value as a string.
 An ASN.1 DER-encoded value is returned in one of the following
-`String` formats:
-
--  the DER encoding of a basic ASN.1 type that has a natural
+{@code String} formats:
+<ul>
+<li> the DER encoding of a basic ASN.1 type that has a natural
      string representation is returned as the string itself.
      Such types are currently limited to BOOLEAN, INTEGER,
      OBJECT IDENTIFIER, UTCTime, GeneralizedTime and the
      following six ASN.1 string types: UTF8String,
      PrintableString, T61String, IA5String, BMPString and
      GeneralString.
-
--  the DER encoding of any other ASN.1 type is not decoded but
+<li> the DER encoding of any other ASN.1 type is not decoded but
      returned as a binary string of colon-separated pairs of
      hexadecimal digits.
-
+</ul>
 Multivalued attributes are represented as a comma-separated
 list of values, enclosed in square brackets. See
-`Arrays.toString(java.lang.Object[])`.
+{@link Arrays#toString(java.lang.Object[])}.
 
-**Returns:** the attribute value's string encoding
+@return the attribute value's string encoding
 
 ## PKCS12Attribute.getEncoded()
 
@@ -122,7 +110,7 @@ public byte[] getEncoded()
 
 Returns the attribute's ASN.1 DER encoding.
 
-**Returns:** a clone of the attribute's DER encoding
+@return a clone of the attribute's DER encoding
 
 ## PKCS12Attribute.equals(Object)
 
@@ -130,14 +118,12 @@ Returns the attribute's ASN.1 DER encoding.
 public boolean equals(Object obj)
 ```
 
-Compares this `PKCS12Attribute` and a specified object for
+Compares this {@code PKCS12Attribute} and a specified object for
 equality.
 
-Parameters:
+@param obj the comparison object
 
-- `obj`: the comparison object
-
-**Returns:** true if `obj` is a `PKCS12Attribute` and
+@return true if {@code obj} is a {@code PKCS12Attribute} and
 their DER encodings are equal.
 
 ## PKCS12Attribute.hashCode()
@@ -146,6 +132,7 @@ their DER encodings are equal.
 public int hashCode()
 ```
 
+{@return the hashcode for this {@code PKCS12Attribute}}
 The hash code is computed from its DER encoding.
 
 ## PKCS12Attribute.toString()
@@ -154,6 +141,6 @@ The hash code is computed from its DER encoding.
 public String toString()
 ```
 
-Returns a string representation of this `PKCS12Attribute`.
+Returns a string representation of this {@code PKCS12Attribute}.
 
-**Returns:** a name/value pair separated by an 'equals' symbol
+@return a name/value pair separated by an 'equals' symbol

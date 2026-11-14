@@ -1,10 +1,6 @@
 ---
-title: "detectAsyncLeaks | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/detectasyncleaks.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: detectAsyncLeaks | Config
+outline: deep
 ---
 
 # detectAsyncLeaks
@@ -13,11 +9,12 @@ license: "MIT"
 - **CLI:** `--detectAsyncLeaks`, `--detect-async-leaks`
 - **Default:** `false`
 
-**Warning:**
+::: warning
 Enabling this option will make your tests run much slower. Use only when debugging or developing tests.
+:::
 
 Detect asynchronous resources leaking from the test file.
-Uses `node:async_hooks` to track creation of async resources. If a resource is not cleaned up, it will be logged after tests have finished.
+Uses [`node:async_hooks`](https://nodejs.org/api/async_hooks.html) to track creation of async resources. If a resource is not cleaned up, it will be logged after tests have finished.
 
 For example if your code has `setTimeout` calls that execute the callback after tests have finished, you will see following error:
 

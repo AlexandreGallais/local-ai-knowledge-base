@@ -1,12 +1,11 @@
 ---
 title: "NETSDK1182: Targeting .NET 6.0 or higher in Visual Studio 2019 is not supported."
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/sdk-errors/netsdk1182.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the 'Targeting .NET 6.0 or higher in Visual Studio 2019 is not supported' error message.
+ms.topic: error-reference
+ms.date: 07/08/2022
+f1_keywords:
+- NETSDK1182
 ---
-
 # NETSDK1182: Targeting .NET 6.0 or higher in Visual Studio 2019 is not supported
 
 NETSDK1182 indicates that you're trying to open a .NET 6+ project in Visual Studio 2019. Or you might be trying to build from the command line using MSBuild from Visual Studio 2019. The full error message is similar to the following example:
@@ -17,4 +16,4 @@ To resolve this error, switch to Visual Studio 2022 or later, or change your pro
 
 ## See also
 
-* Overview of .NET, MSBuild, and Visual Studio versioning
+* [Overview of .NET, MSBuild, and Visual Studio versioning](../../porting/versioning-sdk-msbuild-vs.md)

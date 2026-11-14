@@ -1,13 +1,9 @@
 ---
-title: "no-var"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-var.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-var
+rule_type: suggestion
 ---
 
-# no-var
+
 
 ECMAScript 6 allows programmers to create variables with block scope instead of function scope using the `let`
 and `const` keywords. Block scope is common in many other programming languages and helps programmers avoid mistakes
@@ -32,7 +28,7 @@ This rule is aimed at discouraging the use of `var` and encouraging the use of `
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-var: "error"*/
@@ -41,9 +37,11 @@ var x = "y";
 var CONFIG = {};
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-var: "error"*/
@@ -52,11 +50,13 @@ let x = "y";
 const CONFIG = {};
 ```
 
-This rule additionally supports TypeScript type syntax. There are multiple ways to declare global variables in TypeScript. Only using `var` works for all cases. See this TypeScript playground for reference.
+:::
+
+This rule additionally supports TypeScript type syntax. There are multiple ways to declare global variables in TypeScript. Only using `var` works for all cases. See this [TypeScript playground](https://www.typescriptlang.org/play/?#code/PQgEB4CcFMDNpgOwMbVAGwJYCMC8AiAEwHsBbfUYAPgFgAoew6ZdAQxlAHN1jtX1QAb3qhRGaABdQAGUkAuUAGcJkTIk4ixAN3agAauwXLV6+ptFqJCWK1SgA6mpIB3IebGjHiIyrUa6HgC+9MEMdGDcvPygtqiKivSyEvQGkPReZuHAoM5OxK6ckvS5iC4AdEnFec5lqVWl+WUZYWAlLkpFdG2NSaC4oADkA-XlqX2Dw13VTWrjQ5kRPHzoACoAFpiKXJ2Ry+ubFTtL-PuKtez0uycbZ830i1GrNx3JdFdPB73982-HH2djb6Td6nGaIOaTe7ZRTQdCwbavGFww6I2Gwc5pOhI9F3LIdOEvejYlEQolojGkrHkryU+jQAAeAAdiJApIJAkA) for reference.
 
 Examples of **incorrect** TypeScript code for this rule:
 
-**Incorrect:**
+:::incorrect
 
 ```ts
 /*eslint no-var: "error"*/
@@ -72,9 +72,11 @@ declare module 'module' {
 }
 ```
 
+:::
+
 Examples of **correct** TypeScript code for this rule:
 
-**Correct:**
+:::correct
 
 ```ts
 /*eslint no-var: "error"*/
@@ -83,6 +85,8 @@ declare global {
     declare var x: number
 }
 ```
+
+:::
 
 ## Options
 

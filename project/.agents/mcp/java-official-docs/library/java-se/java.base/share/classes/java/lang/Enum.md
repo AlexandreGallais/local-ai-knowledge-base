@@ -1,12 +1,3 @@
----
-title: "Enum class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/Enum.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Enum class (java.lang)
 
 ```java
@@ -17,36 +8,34 @@ This is the common base class of all Java language enumeration classes.
 
 More information about enums, including descriptions of the
 implicitly declared methods synthesized by the compiler, can be
-found in section  of *The Java Language
-Specification*.
+found in section {@jls 8.9} of <cite>The Java Language
+Specification</cite>.
 
 Enumeration classes are all serializable and receive special handling
 by the serialization mechanism. The serialized representation used
 for enum constants cannot be customized. Declarations of methods
 and fields that would otherwise interact with serialization are
-ignored, including `serialVersionUID`; see the
-*Java
-Object Serialization Specification* for details.
+ignored, including {@code serialVersionUID}; see the
+<a href="{@docRoot}/../specs/serialization/index.html"><cite>Java
+Object Serialization Specification</cite></a> for details.
 
- Note that when using an enumeration type as the type of a set
+<p> Note that when using an enumeration type as the type of a set
 or as the type of the keys in a map, specialized and efficient
-set and map implementations are available.
+{@linkplain java.util.EnumSet set} and {@linkplain
+java.util.EnumMap map} implementations are available.
 
-Parameters:
+@param <E> The type of the enum subclass
 
-- `<E>`: The type of the enum subclass
-
-**See also:** Class#getEnumConstants()
-
-**See also:** java.util.EnumSet
-
-**See also:** java.util.EnumMap
-
-**JLS:** 8.9 Enum Classes
-
-**JLS:** 8.9.3 Enum Members
-
-**Since:** 1.5
+@spec serialization/index.html Java Object Serialization Specification
+@serial exclude
+@author  Josh Bloch
+@author  Neal Gafter
+@see     Class#getEnumConstants()
+@see     java.util.EnumSet
+@see     java.util.EnumMap
+@jls 8.9 Enum Classes
+@jls 8.9.3 Enum Members
+@since   1.5
 
 ## Enum.name()
 
@@ -57,13 +46,13 @@ public final String name()
 Returns the name of this enum constant, exactly as declared in its
 enum declaration.
 
-**Most programmers should use the `toString` method in
+<b>Most programmers should use the {@link #toString} method in
 preference to this one, as the toString method may return
-a more user-friendly name.**  This method is designed primarily for
+a more user-friendly name.</b>  This method is designed primarily for
 use in specialized situations where correctness depends on getting the
 exact name, which will not vary from release to release.
 
-**Returns:** the name of this enum constant
+@return the name of this enum constant
 
 ## Enum.ordinal()
 
@@ -77,9 +66,9 @@ an ordinal of zero).
 
 Most programmers will have no use for this method.  It is
 designed for use by sophisticated enum-based data structures, such
-as `java.util.EnumSet` and `java.util.EnumMap`.
+as {@link java.util.EnumSet} and {@link java.util.EnumMap}.
 
-**Returns:** the ordinal of this enumeration constant
+@return the ordinal of this enumeration constant
 
 ## Enum.Enum(String, int)
 
@@ -91,10 +80,11 @@ Sole constructor.  Programmers cannot invoke this constructor.
 It is for use by code emitted by the compiler in response to
 enum class declarations.
 
-Parameters:
-
-- `name`: The name of this enum constant, which is the identifier used to declare it.
-- `ordinal`: The ordinal of this enumeration constant (its position in the enum declaration, where the initial constant is assigned an ordinal of zero).
+@param name The name of this enum constant, which is the identifier
+              used to declare it.
+@param ordinal The ordinal of this enumeration constant (its position
+        in the enum declaration, where the initial constant is assigned
+        an ordinal of zero).
 
 ## Enum.toString()
 
@@ -107,7 +97,7 @@ declaration.  This method may be overridden, though it typically
 isn't necessary or desirable.  An enum class should override this
 method when a more "programmer-friendly" string form exists.
 
-**Returns:** the name of this enum constant
+@return the name of this enum constant
 
 ## Enum.equals(Object)
 
@@ -118,11 +108,8 @@ public final boolean equals(Object other)
 Returns true if the specified object is equal to this
 enum constant.
 
-Parameters:
-
-- `other`: the object to be compared for equality with this object.
-
-**Returns:** true if the specified object is equal to this
+@param other the object to be compared for equality with this object.
+@return  true if the specified object is equal to this
          enum constant.
 
 ## Enum.hashCode()
@@ -133,7 +120,7 @@ public final int hashCode()
 
 Returns a hash code for this enum constant.
 
-**Returns:** a hash code for this enum constant.
+@return a hash code for this enum constant.
 
 ## Enum.clone()
 
@@ -145,7 +132,7 @@ Throws CloneNotSupportedException.  This guarantees that enums
 are never cloned, which is necessary to preserve their "singleton"
 status.
 
-**Returns:** (never returns)
+@return (never returns)
 
 ## Enum.compareTo(E)
 
@@ -172,10 +159,10 @@ enum type.  Two enum constants e1 and  e2 are of the
 same enum type if and only if
   e1.getDeclaringClass() == e2.getDeclaringClass().
 (The value returned by this method may differ from the one returned
-by the `Object.getClass` method for enum constants with
+by the {@link Object#getClass} method for enum constants with
 constant-specific class bodies.)
 
-**Returns:** the Class object corresponding to this enum constant's
+@return the Class object corresponding to this enum constant's
     enum type
 
 ## Enum.describeConstable()
@@ -184,13 +171,12 @@ constant-specific class bodies.)
 public final Optional<EnumDesc<E>> describeConstable()
 ```
 
-Returns an enum descriptor `EnumDesc` for this instance, if one can be
-constructed, or an empty `Optional` if one cannot be.
+Returns an enum descriptor {@code EnumDesc} for this instance, if one can be
+constructed, or an empty {@link Optional} if one cannot be.
 
-**Returns:** An `Optional` containing the resulting nominal descriptor,
-or an empty `Optional` if one cannot be constructed.
-
-**Since:** 12
+@return An {@link Optional} containing the resulting nominal descriptor,
+or an empty {@link Optional} if one cannot be constructed.
+@since 12
 
 ## Enum.valueOf(Class<T>, String)
 
@@ -203,29 +189,26 @@ specified name.  The name must match exactly an identifier used
 to declare an enum constant in this class.  (Extraneous whitespace
 characters are not permitted.)
 
-Note that for a particular enum class `T`, the
-implicitly declared `public static T valueOf(String)`
+<p>Note that for a particular enum class {@code T}, the
+implicitly declared {@code public static T valueOf(String)}
 method on that enum may be used instead of this method to map
 from a name to the corresponding enum constant.  All the
 constants of an enum class can be obtained by calling the
-implicit `public static T[] values()` method of that
+implicit {@code public static T[] values()} method of that
 class.
 
-Parameters:
-
-- `<T>`: The enum class whose constant is to be returned
-- `enumClass`: the `Class` object of the enum class from which to return a constant
-- `name`: the name of the constant to return
-
-**Returns:** the enum constant of the specified enum class with the
+@param <T> The enum class whose constant is to be returned
+@param enumClass the {@code Class} object of the enum class from which
+     to return a constant
+@param name the name of the constant to return
+@return the enum constant of the specified enum class with the
      specified name
-
-**Since:** 1.5
-
-Throws:
-
-- `IllegalArgumentException`: if the specified enum class has no constant with the specified name, or the specified class object does not represent an enum class
-- `NullPointerException`: if `enumClass` or `name` is null
+@throws IllegalArgumentException if the specified enum class has
+        no constant with the specified name, or the specified
+        class object does not represent an enum class
+@throws NullPointerException if {@code enumClass} or {@code name}
+        is null
+@since 1.5
 
 ## Enum.finalize()
 
@@ -235,8 +218,8 @@ protected final void finalize()
 
 enum classes cannot have finalize methods.
 
-**Deprecated:** Finalization has been deprecated for removal.  See
-`java.lang.Object.finalize` for background information and details
+@deprecated Finalization has been deprecated for removal.  See
+{@link java.lang.Object#finalize} for background information and details
 about migration options.
 
 ## Enum.of(ClassDesc, String)
@@ -245,20 +228,12 @@ about migration options.
 public static<E extends Enum<E>> EnumDesc<E> of(ClassDesc enumClass, String constantName)
 ```
 
-Returns a nominal descriptor for the specified `enum` class and name
+Returns a nominal descriptor for the specified {@code enum} class and name
 
-Parameters:
-
-- `<E>`: the type of the enum constant
-- `enumClass`: a `ClassDesc` describing the `enum` class
-- `constantName`: the unqualified name of the enum constant
-
-**Returns:** the nominal descriptor
-
-**jvms:** 4.2.2 Unqualified Names
-
-**Since:** 12
-
-Throws:
-
-- `NullPointerException`: if any argument is null
+@param <E> the type of the enum constant
+@param enumClass a {@link ClassDesc} describing the {@code enum} class
+@param constantName the unqualified name of the enum constant
+@return the nominal descriptor
+@throws NullPointerException if any argument is null
+@jvms 4.2.2 Unqualified Names
+@since 12

@@ -1,12 +1,3 @@
----
-title: "std::sys::thread_local::guard::windows"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sys/thread_local/guard/windows.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::sys::thread_local::guard::windows
 
 Support for Windows TLS destructors.
@@ -17,6 +8,8 @@ which behaves similarly to a TLS variable for our purpose [1].
 All TLS destructors are tracked by *us*, not the Windows runtime.
 This means that we have a global list of destructors for
 each TLS key or variable that we know about.
+
+[1]: https://devblogs.microsoft.com/oldnewthing/20191011-00/?p=102989
 
 ## fn enable
 

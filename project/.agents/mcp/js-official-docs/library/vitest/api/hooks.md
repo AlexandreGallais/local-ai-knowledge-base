@@ -1,17 +1,12 @@
 ---
-title: "Hooks"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/api/hooks.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+outline: deep
 ---
 
 # Hooks
 
-These functions allow you to hook into the life cycle of tests to avoid repeating setup and teardown code. They apply to the current context: the file if they are used at the top-level or the current suite if they are inside a `describe` block. These hooks are not called, when you are running Vitest as a type checker.
+These functions allow you to hook into the life cycle of tests to avoid repeating setup and teardown code. They apply to the current context: the file if they are used at the top-level or the current suite if they are inside a `describe` block. These hooks are not called, when you are running Vitest as a [type checker](/guide/testing-types).
 
-Test hooks are called in a stack order ("after" hooks are reversed) by default, but you can configure it via `sequence.hooks` option.
+Test hooks are called in a stack order ("after" hooks are reversed) by default, but you can configure it via [`sequence.hooks`](/config/sequence#sequence-hooks) option.
 
 ## beforeEach
 
@@ -25,7 +20,7 @@ function beforeEach(
 Register a callback to be called before each of the tests in the current suite runs.
 If the function returns a promise, Vitest waits until the promise resolve before running the test.
 
-Optionally, you can pass a timeout (in milliseconds) defining how long to wait before terminating. The default is 10 seconds, and can be configured globally with `hookTimeout`.
+Optionally, you can pass a timeout (in milliseconds) defining how long to wait before terminating. The default is 10 seconds, and can be configured globally with [`hookTimeout`](/config/hooktimeout).
 
 ```ts
 import { beforeEach } from 'vitest'
@@ -39,7 +34,7 @@ beforeEach(async () => {
 
 Here, the `beforeEach` ensures that user is added for each test.
 
-`beforeEach` can also return an optional cleanup function. It's similar to `afterEach`. The only difference is that it's executed after all other `afterEach` hooks:
+`beforeEach` can also return an optional cleanup function. It's similar to [`afterEach`](#aftereach). The only difference is that it's executed after all other `afterEach` hooks:
 
 ```ts
 import { beforeEach } from 'vitest'
@@ -67,7 +62,7 @@ function afterEach(
 Register a callback to be called after each one of the tests in the current suite completes.
 If the function returns a promise, Vitest waits until the promise resolve before continuing.
 
-Optionally, you can provide a timeout (in milliseconds) for specifying how long to wait before terminating. The default is 10 seconds, and can be configured globally with `hookTimeout`.
+Optionally, you can provide a timeout (in milliseconds) for specifying how long to wait before terminating. The default is 10 seconds, and can be configured globally with [`hookTimeout`](/config/hooktimeout).
 
 ```ts
 import { afterEach } from 'vitest'
@@ -79,8 +74,9 @@ afterEach(async () => {
 
 Here, the `afterEach` ensures that testing data is cleared after each test runs.
 
-**Tip:**
-You can also use `onTestFinished` during the test execution to cleanup any state after the test has finished running.
+::: tip
+You can also use [`onTestFinished`](#ontestfinished) during the test execution to cleanup any state after the test has finished running.
+:::
 
 ## beforeAll
 
@@ -94,7 +90,7 @@ function beforeAll(
 Register a callback to be called once before starting to run all tests in the current suite.
 If the function returns a promise, Vitest waits until the promise resolve before running tests.
 
-Optionally, you can provide a timeout (in milliseconds) for specifying how long to wait before terminating. The default is 10 seconds, and can be configured globally with `hookTimeout`.
+Optionally, you can provide a timeout (in milliseconds) for specifying how long to wait before terminating. The default is 10 seconds, and can be configured globally with [`hookTimeout`](/config/hooktimeout).
 
 ```ts
 import { beforeAll } from 'vitest'
@@ -106,7 +102,7 @@ beforeAll(async () => {
 
 Here the `beforeAll` ensures that the mock data is set up before tests run.
 
-`beforeAll` can also return an optional cleanup function. It's similar to `afterAll`. The only difference is that it's executed after all other `afterAll` hooks:
+`beforeAll` can also return an optional cleanup function. It's similar to [`afterAll`](#afterall). The only difference is that it's executed after all other `afterAll` hooks:
 
 ```ts
 import { beforeAll } from 'vitest'
@@ -134,7 +130,7 @@ function afterAll(
 Register a callback to be called once after all tests have run in the current suite.
 If the function returns a promise, Vitest waits until the promise resolve before continuing.
 
-Optionally, you can provide a timeout (in milliseconds) for specifying how long to wait before terminating. The default is 10 seconds, and can be configured globally with `hookTimeout`.
+Optionally, you can provide a timeout (in milliseconds) for specifying how long to wait before terminating. The default is 10 seconds, and can be configured globally with [`hookTimeout`](/config/hooktimeout).
 
 ```ts
 import { afterAll } from 'vitest'
@@ -162,10 +158,11 @@ Register a callback function that wraps around each test within the current suit
 
 The `runTest()` function runs `beforeEach` hooks, the test itself, fixtures accessed in the test, and `afterEach` hooks. Fixtures that are accessed in the `aroundEach` callback are initialized before `runTest()` is called and are torn down after the aroundEach teardown code completes, allowing you to safely use them in both setup and teardown phases.
 
-**Warning:**
+::: warning
 You **must** call `runTest()` within your callback. If `runTest()` is not called, the test will fail with an error.
+:::
 
-Optionally, you can provide a timeout (in milliseconds) for specifying how long to wait before terminating. The timeout applies independently to the setup phase (before `runTest()`) and teardown phase (after `runTest()`). The default is 10 seconds, and can be configured globally with `hookTimeout`.
+Optionally, you can provide a timeout (in milliseconds) for specifying how long to wait before terminating. The timeout applies independently to the setup phase (before `runTest()`) and teardown phase (after `runTest()`). The default is 10 seconds, and can be configured globally with [`hookTimeout`](/config/hooktimeout).
 
 ```ts
 import { aroundEach, test } from 'vitest'
@@ -180,14 +177,14 @@ test('insert user', async () => {
 })
 ```
 
-**When to use `aroundEach`**
+::: tip When to use `aroundEach`
 Use `aroundEach` when your test needs to run **inside a context** that wraps around it, such as:
 
-- Wrapping tests in AsyncLocalStorage context
+- Wrapping tests in [AsyncLocalStorage](https://nodejs.org/api/async_context.html#class-asynclocalstorage) context
 - Wrapping tests with tracing spans
 - Database transactions
 
-If you just need to run code before and after tests, prefer using `beforeEach` with a cleanup return function:
+If you just need to run code before and after tests, prefer using [`beforeEach`](#beforeeach) with a cleanup return function:
 
 ```ts
 beforeEach(async () => {
@@ -197,6 +194,8 @@ beforeEach(async () => {
   }
 })
 ```
+
+:::
 
 ### Multiple Hooks
 
@@ -272,10 +271,11 @@ Register a callback function that wraps around all tests within the current suit
 
 The `runSuite()` function runs all tests in the suite, including `beforeAll`/`afterAll`/`beforeEach`/`afterEach` hooks, `aroundEach` hooks, and fixtures.
 
-**Warning:**
+::: warning
 You **must** call `runSuite()` within your callback. If `runSuite()` is not called, the hook will fail with an error and all tests in the suite will be skipped.
+:::
 
-Optionally, you can provide a timeout (in milliseconds) for specifying how long to wait before terminating. The timeout applies independently to the setup phase (before `runSuite()`) and teardown phase (after `runSuite()`). The default is 10 seconds, and can be configured globally with `hookTimeout`.
+Optionally, you can provide a timeout (in milliseconds) for specifying how long to wait before terminating. The timeout applies independently to the setup phase (before `runSuite()`) and teardown phase (after `runSuite()`). The default is 10 seconds, and can be configured globally with [`hookTimeout`](/config/hooktimeout).
 
 ```ts
 import { aroundAll, test } from 'vitest'
@@ -293,14 +293,14 @@ test('test 2', () => {
 })
 ```
 
-**When to use `aroundAll`**
+::: tip When to use `aroundAll`
 Use `aroundAll` when your suite needs to run **inside a context** that wraps around all tests, such as:
 
-- Wrapping an entire suite in AsyncLocalStorage context
+- Wrapping an entire suite in [AsyncLocalStorage](https://nodejs.org/api/async_context.html#class-asynclocalstorage) context
 - Wrapping a suite with tracing spans
 - Database transactions
 
-If you just need to run code once before and after all tests, prefer using `beforeAll` with a cleanup return function:
+If you just need to run code once before and after all tests, prefer using [`beforeAll`](#beforeall) with a cleanup return function:
 
 ```ts
 beforeAll(async () => {
@@ -310,6 +310,8 @@ beforeAll(async () => {
   }
 })
 ```
+
+:::
 
 ### Multiple Hooks
 
@@ -363,14 +365,15 @@ describe('nested', () => {
 
 Vitest provides a few hooks that you can call _during_ the test execution to cleanup the state when the test has finished running.
 
-**Warning:**
+::: warning
 These hooks will throw an error if they are called outside of the test body.
+:::
 
 ### onTestFinished {#ontestfinished}
 
 This hook is always called after the test has finished running. It is called after `afterEach` hooks since they can influence the test result. It receives an `TestContext` object like `beforeEach` and `afterEach`.
 
-```ts
+```ts {1,5}
 import { onTestFinished, test } from 'vitest'
 
 test('performs a query', () => {
@@ -380,10 +383,10 @@ test('performs a query', () => {
 })
 ```
 
-**Warning:**
+::: warning
 If you are running tests concurrently, you should always use `onTestFinished` hook from the test context since Vitest doesn't track concurrent tests in global hooks:
 
-```ts
+```ts {3,5}
 import { test } from 'vitest'
 
 test.concurrent('performs a query', ({ onTestFinished }) => {
@@ -392,6 +395,8 @@ test.concurrent('performs a query', ({ onTestFinished }) => {
   db.query('SELECT * FROM users')
 })
 ```
+
+:::
 
 This hook is particularly useful when creating reusable logic:
 
@@ -418,7 +423,7 @@ test('performs an organization query', async () => {
 })
 ```
 
-It is also a good practice to cleanup your spies after each test, so they don't leak into other tests. You can do so by enabling `restoreMocks` config globally, or restoring the spy inside `onTestFinished` (if you try to restore the mock at the end of the test, it won't be restored if one of the assertions fails - using `onTestFinished` ensures the code always runs):
+It is also a good practice to cleanup your spies after each test, so they don't leak into other tests. You can do so by enabling [`restoreMocks`](/config/restoremocks) config globally, or restoring the spy inside `onTestFinished` (if you try to restore the mock at the end of the test, it won't be restored if one of the assertions fails - using `onTestFinished` ensures the code always runs):
 
 ```ts
 import { onTestFinished, test } from 'vitest'
@@ -432,14 +437,15 @@ test('performs a query', () => {
 })
 ```
 
-**Tip:**
-This hook is always called in reverse order and is not affected by `sequence.hooks` option.
+::: tip
+This hook is always called in reverse order and is not affected by [`sequence.hooks`](/config/sequence#sequence-hooks) option.
+:::
 
 ### onTestFailed
 
 This hook is called only after the test has failed. It is called after `afterEach` hooks since they can influence the test result. It receives a `TestContext` object like `beforeEach` and `afterEach`. This hook is useful for debugging.
 
-```ts
+```ts {1,5-7}
 import { onTestFailed, test } from 'vitest'
 
 test('performs a query', () => {
@@ -451,10 +457,10 @@ test('performs a query', () => {
 })
 ```
 
-**Warning:**
+::: warning
 If you are running tests concurrently, you should always use `onTestFailed` hook from the test context since Vitest doesn't track concurrent tests in global hooks:
 
-```ts
+```ts {3,5-7}
 import { test } from 'vitest'
 
 test.concurrent('performs a query', ({ onTestFailed }) => {
@@ -465,3 +471,5 @@ test.concurrent('performs a query', ({ onTestFailed }) => {
   db.query('SELECT * FROM users')
 })
 ```
+
+:::

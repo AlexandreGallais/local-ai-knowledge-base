@@ -1,25 +1,21 @@
 ---
 title: "Breaking change: CreateObjectFlags.Unwrap only unwraps on target instance"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/interop/8.0/comwrappers-unwrap.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in interop in .NET 8 where 'GetOrCreateObjectForComInstance()' with the 'CreateObjectFlags.Unwrap' flag only unwraps wrappers from the target 'ComWrappers' instance.
+ms.date: 06/12/2023
 ---
-
 # CreateObjectFlags.Unwrap only unwraps on target instance
 
-Previously, if you called `System.Runtime.InteropServices.ComWrappers.GetOrCreateObjectForComInstance(System.IntPtr,System.Runtime.InteropServices.CreateObjectFlags)` on a `System.Runtime.InteropServices.ComWrappers` instance with the `System.Runtime.InteropServices.CreateObjectFlags.Unwrap` flag, a managed object wrapper was unwrapped from *any* `System.Runtime.InteropServices.ComWrappers` instance. Now when the flag is specified, only wrappers from the `System.Runtime.InteropServices.ComWrappers` instance that `GetOrCreateObjectFromComInstance` was called on are unwrapped.
+Previously, if you called <xref:System.Runtime.InteropServices.ComWrappers.GetOrCreateObjectForComInstance(System.IntPtr,System.Runtime.InteropServices.CreateObjectFlags)?displayProperty=fullName?displayProperty=nameWithType> on a <xref:System.Runtime.InteropServices.ComWrappers> instance with the <xref:System.Runtime.InteropServices.CreateObjectFlags.Unwrap?displayProperty=nameWithType> flag, a managed object wrapper was unwrapped from *any* <xref:System.Runtime.InteropServices.ComWrappers> instance. Now when the flag is specified, only wrappers from the <xref:System.Runtime.InteropServices.ComWrappers> instance that `GetOrCreateObjectFromComInstance` was called on are unwrapped.
 
-The `System.Runtime.InteropServices.CreateObjectFlags.Unwrap` flag was the only API that reached "across" `System.Runtime.InteropServices.ComWrappers` instances, so its behavior was unintuitive. Additionally, the new `System.Runtime.InteropServices.ComWrappers.TryGetObject(System.IntPtr,System.Object@)` API is available to unwrap a COM object from any `System.Runtime.InteropServices.ComWrappers` instance.
+The <xref:System.Runtime.InteropServices.CreateObjectFlags.Unwrap> flag was the only API that reached "across" <xref:System.Runtime.InteropServices.ComWrappers> instances, so its behavior was unintuitive. Additionally, the new <xref:System.Runtime.InteropServices.ComWrappers.TryGetObject(System.IntPtr,System.Object@)?displayProperty=nameWithType> API is available to unwrap a COM object from any <xref:System.Runtime.InteropServices.ComWrappers> instance.
 
 ## Previous behavior
 
-Calling `System.Runtime.InteropServices.ComWrappers.GetOrCreateObjectForComInstance(System.IntPtr,System.Runtime.InteropServices.CreateObjectFlags)` on a `System.Runtime.InteropServices.ComWrappers` instance with the `System.Runtime.InteropServices.CreateObjectFlags.Unwrap` flag unwrapped a managed object wrapper from any `System.Runtime.InteropServices.ComWrappers` instance.
+Calling <xref:System.Runtime.InteropServices.ComWrappers.GetOrCreateObjectForComInstance(System.IntPtr,System.Runtime.InteropServices.CreateObjectFlags)> on a <xref:System.Runtime.InteropServices.ComWrappers> instance with the <xref:System.Runtime.InteropServices.CreateObjectFlags.Unwrap?displayProperty=nameWithType> flag unwrapped a managed object wrapper from any <xref:System.Runtime.InteropServices.ComWrappers> instance.
 
 ## New behavior
 
-Calling `System.Runtime.InteropServices.ComWrappers.GetOrCreateObjectForComInstance(System.IntPtr,System.Runtime.InteropServices.CreateObjectFlags)` on a `System.Runtime.InteropServices.ComWrappers` instance with the `System.Runtime.InteropServices.CreateObjectFlags.Unwrap` flag only unwraps a managed object wrapper from the `System.Runtime.InteropServices.ComWrappers` instance that `GetOrCreateObjectForComInstance` was called on. If given a wrapper from a different `System.Runtime.InteropServices.ComWrappers` instance, the `ComWrappers` instance creates a new wrapper.
+Calling <xref:System.Runtime.InteropServices.ComWrappers.GetOrCreateObjectForComInstance(System.IntPtr,System.Runtime.InteropServices.CreateObjectFlags)> on a <xref:System.Runtime.InteropServices.ComWrappers> instance with the <xref:System.Runtime.InteropServices.CreateObjectFlags.Unwrap?displayProperty=nameWithType> flag only unwraps a managed object wrapper from the <xref:System.Runtime.InteropServices.ComWrappers> instance that `GetOrCreateObjectForComInstance` was called on. If given a wrapper from a different <xref:System.Runtime.InteropServices.ComWrappers> instance, the `ComWrappers` instance creates a new wrapper.
 
 ## Version introduced
 
@@ -27,16 +23,16 @@ Calling `System.Runtime.InteropServices.ComWrappers.GetOrCreateObjectForComInsta
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-The previous behavior was unintuitive. It also broke the encapsulation experience where developers can define how COM interop works for their code by using their own custom `System.Runtime.InteropServices.ComWrappers` instances.
+The previous behavior was unintuitive. It also broke the encapsulation experience where developers can define how COM interop works for their code by using their own custom <xref:System.Runtime.InteropServices.ComWrappers> instances.
 
 ## Recommended action
 
-If you want to keep the previous behavior, call `System.Runtime.InteropServices.ComWrappers.TryGetObject(System.IntPtr,System.Object@)` before calling `System.Runtime.InteropServices.ComWrappers.GetOrCreateObjectForComInstance(System.IntPtr,System.Runtime.InteropServices.CreateObjectFlags)`.
+If you want to keep the previous behavior, call <xref:System.Runtime.InteropServices.ComWrappers.TryGetObject(System.IntPtr,System.Object@)?displayProperty=nameWithType> before calling <xref:System.Runtime.InteropServices.ComWrappers.GetOrCreateObjectForComInstance(System.IntPtr,System.Runtime.InteropServices.CreateObjectFlags)>.
 
 ## Affected APIs
 
-- `System.Runtime.InteropServices.ComWrappers.GetOrCreateObjectForComInstance(System.IntPtr,System.Runtime.InteropServices.CreateObjectFlags)`
+- <xref:System.Runtime.InteropServices.ComWrappers.GetOrCreateObjectForComInstance(System.IntPtr,System.Runtime.InteropServices.CreateObjectFlags)?displayProperty=fullName>

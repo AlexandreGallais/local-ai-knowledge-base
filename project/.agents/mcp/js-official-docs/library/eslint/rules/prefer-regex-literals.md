@@ -1,13 +1,12 @@
 ---
-title: "prefer-regex-literals"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/prefer-regex-literals.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: prefer-regex-literals
+rule_type: suggestion
+further_reading:
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp
 ---
 
-# prefer-regex-literals
+
 
 There are two ways to create a regular expression:
 
@@ -53,7 +52,7 @@ dynamically generated regular expressions.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint prefer-regex-literals: "error"*/
@@ -73,9 +72,11 @@ RegExp(`^\\d\\.$`);
 new RegExp(String.raw`^\d\.$`);
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint prefer-regex-literals: "error"*/
@@ -101,6 +102,8 @@ RegExp(`${prefix}abc`);
 new RegExp(String.raw`^\d\. ${suffix}`);
 ```
 
+:::
+
 ## Options
 
 This rule has an object option:
@@ -113,7 +116,7 @@ By default, this rule doesn’t check when a regex literal is unnecessarily wrap
 
 Examples of `incorrect` code for `{ "disallowRedundantWrapping": true }`
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint prefer-regex-literals: ["error", {"disallowRedundantWrapping": true}]*/
@@ -123,9 +126,11 @@ new RegExp(/abc/);
 new RegExp(/abc/, 'u');
 ```
 
+:::
+
 Examples of `correct` code for `{ "disallowRedundantWrapping": true }`
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint prefer-regex-literals: ["error", {"disallowRedundantWrapping": true}]*/
@@ -136,3 +141,5 @@ Examples of `correct` code for `{ "disallowRedundantWrapping": true }`
 
 new RegExp(/abc/, flags);
 ```
+
+:::

@@ -1,12 +1,9 @@
 ---
 title: "Sample XML file: Typical purchase order - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/sample-xml-file-typical-purchase-order.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: This XML file—which is used in examples—has data about a purchase order.
+ms.date: 07/20/2015
+ms.assetid: dcbfb859-24fc-4758-b01c-51d1b6f644e6
 ---
-
 # Sample XML file: Typical purchase order (LINQ to XML)
 
 The following XML file is used in various examples in the LINQ to XML documentation. This file is a typical purchase order.

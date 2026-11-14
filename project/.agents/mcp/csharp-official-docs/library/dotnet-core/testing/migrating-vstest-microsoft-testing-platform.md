@@ -1,10 +1,10 @@
 ---
-title: "Migration guide from VSTest to Microsoft.Testing.Platform (MTP) (part 1 of 2)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/migrating-vstest-microsoft-testing-platform.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Migration guide from VSTest to Microsoft.Testing.Platform (MTP)
+description: Step-by-step guide to migrate from VSTest to Microsoft.Testing.Platform (MTP), including argument mapping, project configuration, and CI pipeline updates.
+author: Youssef1313
+ms.author: ygerges
+ms.date: 08/31/2026
+ai-usage: ai-assisted
 ---
 
 # Migrate from VSTest to Microsoft.Testing.Platform (MTP)
@@ -13,14 +13,14 @@ In this article, you learn how to migrate from VSTest to MTP.
 
 This article focuses on migration steps and argument mapping.
 
-If you still need to choose a platform, start with Test platforms overview.
+If you still need to choose a platform, start with [Test platforms overview](./test-platforms-overview.md).
 
-If you need detailed behavior of `dotnet test` modes, see Testing with `dotnet test`.
+If you need detailed behavior of `dotnet test` modes, see [Testing with `dotnet test`](./unit-testing-with-dotnet-test.md).
 
-If you need a single list of platform and extension command-line options, see MTP CLI options reference.
+If you need a single list of platform and extension command-line options, see [MTP CLI options reference](./microsoft-testing-platform-cli-options.md).
 
-> **Tip:**
-> To automate a repository-wide migration with an AI coding assistant, install the `dotnet-test` and `dotnet-test-migration` plugins from .NET Agent Skills. Ask the `test-migration` agent to detect and migrate your test setup, or invoke the `migrate-vstest-to-mtp` skill for this specific migration. Review the generated changes before you merge them.
+> [!TIP]
+> To automate a repository-wide migration with an AI coding assistant, install the [`dotnet-test`](https://github.com/dotnet/skills/tree/main/plugins/dotnet-test) and [`dotnet-test-migration`](https://github.com/dotnet/skills/tree/main/plugins/dotnet-test-migration) plugins from [.NET Agent Skills](https://github.com/dotnet/skills). Ask the [`test-migration` agent](https://github.com/dotnet/skills/blob/main/plugins/dotnet-test-migration/agents/test-migration.agent.md) to detect and migrate your test setup, or invoke the [`migrate-vstest-to-mtp` skill](https://github.com/dotnet/skills/tree/main/plugins/dotnet-test-migration/skills/migrate-vstest-to-mtp) for this specific migration. Review the generated changes before you merge them.
 
 ## Opt-in to use MTP
 
@@ -32,30 +32,30 @@ For all test frameworks, add `<OutputType>Exe</OutputType>` to all test projects
 
 MTP is supported by MSTest starting with 3.2.0. However, we recommend updating to the latest available MSTest version.
 
-To opt-in, add `<EnableMSTestRunner>true</EnableMSTestRunner>` under a `PropertyGroup` in `Directory.Build.props` file.
+To opt-in, add `<EnableMSTestRunner>true</EnableMSTestRunner>` under a `PropertyGroup` in [`Directory.Build.props`](/visualstudio/msbuild/customize-by-directory) file.
 
-> **Note:**
+> [!NOTE]
 > When using MSTest.Sdk, MTP is used by default, unless `<UseVSTest>true</UseVSTest>` is specified.
 
 ### NUnit
 
 MTP is supported by NUnit3TestAdapter starting with 5.0.0.
 
-To opt-in, add `<EnableNUnitRunner>true</EnableNUnitRunner>` under a `PropertyGroup` in `Directory.Build.props` file.
+To opt-in, add `<EnableNUnitRunner>true</EnableNUnitRunner>` under a `PropertyGroup` in [`Directory.Build.props`](/visualstudio/msbuild/customize-by-directory) file.
 
 ### xUnit.net
 
 MTP is supported starting with xunit.v3.
 
-To opt-in, add `<UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>` under a `PropertyGroup` in `Directory.Build.props` file.
+To opt-in, add `<UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>` under a `PropertyGroup` in [`Directory.Build.props`](/visualstudio/msbuild/customize-by-directory) file.
 
 ## `dotnet test`
 
 ### Opt-in for .NET 9 SDK and earlier
 
-In .NET 9 SDK and earlier, there is no *native* support for MTP for `dotnet test`. Support is built on top of the VSTest infrastructure. To use that, add `<TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>` under a `PropertyGroup` in `Directory.Build.props` file.
+In .NET 9 SDK and earlier, there is no *native* support for MTP for `dotnet test`. Support is built on top of the VSTest infrastructure. To use that, add `<TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>` under a `PropertyGroup` in [`Directory.Build.props`](/visualstudio/msbuild/customize-by-directory) file.
 
-> **Important:**
+> [!IMPORTANT]
 > When running MTP support in this mode, you need to add `--` to separate the `dotnet test` arguments from the new platform arguments. For example, `dotnet test --no-build -- --list-tests`.
 
 ### Opt-in for .NET 10 SDK and later
@@ -70,7 +70,7 @@ Starting with .NET 10 SDK, there is *native* support for MTP. To use it, you mus
 }
 ```
 
-> **Important:**
+> [!IMPORTANT]
 > In this mode, the extra `--` is no longer required. Keep it to forward test application arguments unambiguously.
 
 ### Update `dotnet test` invocations
@@ -109,7 +109,7 @@ dotnet test --project MyTests.csproj -c Debug --arch x86
 
 Replace `x86` with `x64` to target x64. MTP runs test modules in parallel by default, so `/Parallel` doesn't need a replacement. To limit module-level parallelism, use `--max-parallel-test-modules <NUMBER>`.
 
-> **Important:**
+> [!IMPORTANT]
 > You can't combine `--solution` with `--arch`, `--os`, or `--runtime`. These options set `RuntimeIdentifier` as a global MSBuild property, and solution builds don't support a global `RuntimeIdentifier`. To test a solution across architectures, invoke each test project separately or set `RuntimeIdentifier` in the individual test projects.
 
 For example, replace these four solution-level VSTest commands:
@@ -147,12 +147,12 @@ The test-related arguments are VSTest specific and so need to be transformed to 
 |-----------------|-----------------------|
 | `--test-adapter-path <ADAPTER_PATH>` | Not relevant for MTP |
 | `--blame` | Not relevant for MTP |
-| `--blame-crash` | `--crashdump` (requires Crash dump extension) |
-| `--blame-crash-dump-type <DUMP_TYPE>` | `--crashdump-type` (requires Crash dump extension) |
+| `--blame-crash` | `--crashdump` (requires [Crash dump extension](./microsoft-testing-platform-crash-hang-dumps.md#crash-dump)) |
+| `--blame-crash-dump-type <DUMP_TYPE>` | `--crashdump-type` (requires [Crash dump extension](./microsoft-testing-platform-crash-hang-dumps.md#crash-dump)) |
 | `--blame-crash-collect-always` | Not supported |
-| `--blame-hang` | `--hangdump` (requires Hang dump extension) |
-| `--blame-hang-dump-type <DUMP_TYPE>` | `--hangdump-type` (requires Hang dump extension) |
-| `--blame-hang-timeout <TIMESPAN>` | `--hangdump-timeout` (requires Hang dump extension) |
+| `--blame-hang` | `--hangdump` (requires [Hang dump extension](./microsoft-testing-platform-crash-hang-dumps.md#hang-dump)) |
+| `--blame-hang-dump-type <DUMP_TYPE>` | `--hangdump-type` (requires [Hang dump extension](./microsoft-testing-platform-crash-hang-dumps.md#hang-dump)) |
+| `--blame-hang-timeout <TIMESPAN>` | `--hangdump-timeout` (requires [Hang dump extension](./microsoft-testing-platform-crash-hang-dumps.md#hang-dump)) |
 | `--collect <DATA_COLLECTOR_NAME>` | Depends on the data collector |
 | `-d\|--diag <LOG_FILE>` | `--diagnostic` |
 | `--filter <EXPRESSION>` | Depends upon the selected test framework |
@@ -162,7 +162,7 @@ The test-related arguments are VSTest specific and so need to be transformed to 
 | `-t\|--list-tests` | `--list-tests` |
 | `-- RunConfiguration.TargetPlatform=<ARCHITECTURE>` | `--arch <ARCHITECTURE>` for a project invocation |
 | `/Parallel` | No option required. MTP runs test modules in parallel by default. |
-| `-- <RunSettings arguments>` | `--test-parameter` (provided by VSTestBridge) |
+| `-- <RunSettings arguments>` | `--test-parameter` (provided by [VSTestBridge](microsoft-testing-platform-extensions-vstest-bridge.md)) |
 
 #### `--collect`
 
@@ -178,10 +178,10 @@ With MTP, this becomes:
 dotnet test --coverage --coverage-output-format cobertura
 ```
 
-> **Important:**
+> [!IMPORTANT]
 > To use `--coverage`, each targeted test application must reference the `Microsoft.Testing.Extensions.CodeCoverage` NuGet package directly or through a test SDK configuration or profile that includes it.
 >
-> **Important:**
+> [!IMPORTANT]
 > As explained earlier, when using MTP with the VSTest-based `dotnet test`, extra `--` is needed before the arguments intended to be passed to the platform.
 > So, this becomes `dotnet test -- --coverage --coverage-output-format cobertura`.
 
@@ -205,10 +205,10 @@ xUnit.net specific options:
 - `--filter-not-trait`
 - `--filter-query`
 
-For more information, see Microsoft.Testing.Platform documentation for xUnit.net and Query Filter Language for xUnit.net.
+For more information, see [Microsoft.Testing.Platform documentation for xUnit.net](https://xunit.net/docs/getting-started/v3/microsoft-testing-platform) and [Query Filter Language for xUnit.net](https://xunit.net/docs/query-filter-language).
 
-> **Tip:**
-> If your solution mixes test frameworks that use different filter syntaxes (for example, MSTest and xUnit.net), you can conditionally route framework-specific arguments using the `TestingPlatformCommandLineArguments` MSBuild property. For details, see Solutions with mixed test frameworks or extensions.
+> [!TIP]
+> If your solution mixes test frameworks that use different filter syntaxes (for example, MSTest and xUnit.net), you can conditionally route framework-specific arguments using the `TestingPlatformCommandLineArguments` MSBuild property. For details, see [Solutions with mixed test frameworks or extensions](unit-testing-with-dotnet-test.md#solutions-with-mixed-test-frameworks-or-extensions).
 
 #### `--logger`
 
@@ -228,10 +228,10 @@ With MTP, the command becomes:
 dotnet test --report-trx
 ```
 
-> **Important:**
+> [!IMPORTANT]
 > To use `--report-trx`, each targeted test application must reference the `Microsoft.Testing.Extensions.TrxReport` NuGet package directly or through a test SDK configuration or profile that includes it.
 >
-> **Important:**
+> [!IMPORTANT]
 > As explained earlier, when using MTP with the VSTest-based `dotnet test`, extra `--` is needed before the arguments intended to be passed to the platform.
 > So, this becomes `dotnet test -- --report-trx`.
 
@@ -239,8 +239,8 @@ GitHub Actions reporter options are package-specific and aren't interchangeable:
 
 | Reporter package | MTP option |
 |---|---|
-| Microsoft.Testing.Extensions.GitHubActionsReport | `--report-gh` |
-| GitHubActionsTestLogger | `--report-github` |
+| [Microsoft.Testing.Extensions.GitHubActionsReport](microsoft-testing-platform-test-reports.md#github-actions-reports) | `--report-gh` |
+| [GitHubActionsTestLogger](https://www.nuget.org/packages/GitHubActionsTestLogger) | `--report-github` |
 
 The test application recognizes an option only when the package that owns it is installed and registered. For example, if you migrate `--logger GitHubActions` and keep the `GitHubActionsTestLogger` package, replace the VSTest command:
 
@@ -258,7 +258,7 @@ For .NET 9 SDK and earlier versions, use `dotnet test -- --report-github` instea
 
 #### `--settings`
 
-VSTest's `--settings` is used to specify a RunSettings file for the test run. RunSettings isn't supported by the core MTP and was replaced by a more modern `testconfig.json` configuration file. However, MSTest and NUnit still support the old RunSettings when running MTP and `--settings` is still supported.
+VSTest's `--settings` is used to specify a RunSettings file for the test run. RunSettings isn't supported by the core MTP and was replaced by a more modern [`testconfig.json`](./microsoft-testing-platform-config.md) configuration file. However, MSTest and NUnit still support the old RunSettings when running MTP and `--settings` is still supported.
 
 ## `vstest.console.exe`
 
@@ -282,12 +282,12 @@ When using Azure DevOps tasks, you might need to update your pipeline to use MTP
 
 ### VSTest task
 
-If you're using the VSTest task in Azure DevOps, you can replace it with the .NET Core task.
+If you're using the [VSTest task](/azure/devops/pipelines/tasks/reference/vstest-v3) in Azure DevOps, you can replace it with the [.NET Core task](/azure/devops/pipelines/tasks/reference/dotnet-core-cli-v2).
 
 ### .NET Core CLI task
 
 - If you have custom `arguments` passed to the task, follow the same guidance for `dotnet test` migration.
-- If you're using the DotNetCoreCLI task without opting-in to the native MTP experience for .NET 10 SDK and later via `global.json` file, you need to set the task `arguments` to correctly point to the results directory it used to point to, as well as the requested TRX report. For example:
+- If you're using the [DotNetCoreCLI](/azure/devops/pipelines/tasks/reference/dotnet-core-cli-v2) task without opting-in to the native MTP experience for .NET 10 SDK and later via `global.json` file, you need to set the task `arguments` to correctly point to the results directory it used to point to, as well as the requested TRX report. For example:
 
     ```yml
     - task: DotNetCoreCLI@2
@@ -298,3 +298,46 @@ If you're using the VSTest task in Azure DevOps, you can replace it with the .NE
     ```
 
     The test applications in this example must register `Microsoft.Testing.Extensions.TrxReport`. Add the package directly, or use a test SDK configuration or profile that includes it.
+
+## Behavioral differences between VSTest and MTP
+
+### Running zero tests
+
+If a test assembly ran zero tests, VSTest tolerates that and exits with success. However, MTP fails with exit code 8. There are multiple ways to work around this:
+
+- Pass `--ignore-exit-code 8` when running your tests.
+- If you want to ignore that exit code for a specific test project, add the following in the project file:
+
+  ```xml
+  <PropertyGroup>
+    <TestingPlatformCommandLineArguments>$(TestingPlatformCommandLineArguments) --ignore-exit-code 8</TestingPlatformCommandLineArguments>
+  </PropertyGroup>
+  ```
+
+- Use the `TESTINGPLATFORM_EXITCODE_IGNORE` environment variable.
+
+### Console.InputEncoding preservation
+
+If you run your tests in a console where the codepage was explicitly changed (for example, in Azure DevOps, the codepage is set to 65001 which corresponds to UTF8), the behavior can be different between VSTest and MTP.
+
+- With MTP, that encoding is always preserved.
+- With VSTest not running in isolation mode (the default behavior of vstest.console), that encoding is preserved, similar to MTP.
+- With VSTest running in isolation mode (the default behavior of `dotnet test`), that encoding isn't preserved in the testhost, which is the process that runs the tests.
+
+> [!TIP]
+> The reason the encoding isn't preserved with VSTest isolation mode is that the testhost process is started with `CreateNoWindow = true`. So it's not attached to the original console.
+
+If you have a test that starts yet another child process and redirects its standard output, you might face issues if all the following apply:
+
+- The console codepage is set to 65001 (UTF8). This can be the case on CI but generally not locally. To get a local behavior similar to in CI, run `chcp 65001` before running the tests.
+- The child process is started with non-UTF8 encoding. This can also happen if your own test also sets `CreateNoWindow = true`.
+
+This is especially problematic when the child process doesn't expect to see the UTF8 BOM (Byte-Order-Mark) byte, which it might get in the previous scenario on .NET Framework.
+
+As this behavior difference is likely to be problematic specifically for the BOM byte, a workaround is to set InputEncoding during assembly initialization to UTF8 without BOM:
+
+```csharp
+Console.InputEncoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
+```
+
+A different workaround for that is to not use `CreateNoWindow = true` for child processes that redirect standard input.

@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataEmit::DefineTypeRefByName Method"
 title: "IMetaDataEmit::DefineTypeRefByName Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataemit-definetyperefbyname-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataEmit.DefineTypeRefByName"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataEmit::DefineTypeRefByName"
+  - "IMetaDataEmit::DefineTypeRefByName method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataEmit::DefineTypeRefByName Method
 
 Gets a metadata token for a type that is defined in the specified scope, which is outside the current scope.
@@ -15,7 +22,7 @@ Gets a metadata token for a type that is defined in the specified scope, which i
 
 ```cpp
 HRESULT DefineTypeRefByName (
-    [in]  mdToken     <example-value>,
+    [in]  mdToken     tkResolutionScope,
     [in]  LPCWSTR     szName,
     [out] mdTypeRef   *ptr
 );
@@ -24,7 +31,7 @@ HRESULT DefineTypeRefByName (
 ## Parameters
 
  `tkResolutionScope`
- [in] The token <example-value> the resolution scope. The following token types are valid:
+ [in] The token specifying the resolution scope. The following token types are valid:
 
 - `mdModuleRef`, if the type is defined in the same assembly in which the caller is defined.
 
@@ -44,7 +51,7 @@ HRESULT DefineTypeRefByName (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -52,5 +59,5 @@ HRESULT DefineTypeRefByName (
 
 ## See also
 
-- IMetaDataEmit Interface
-- IMetaDataEmit2 Interface
+- [IMetaDataEmit Interface](imetadataemit-interface.md)
+- [IMetaDataEmit2 Interface](imetadataemit2-interface.md)

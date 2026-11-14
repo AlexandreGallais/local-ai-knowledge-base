@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: FileConfigurationProvider doesn't raise reload token after ignored load failure"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/extensions/11/fileconfigurationprovider-reload-token-load-failure.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where FileConfigurationProvider doesn't raise its reload token after an ignored load failure."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # FileConfigurationProvider doesn't raise reload token after ignored load failure
 
-`Microsoft.Extensions.Configuration.FileConfigurationProvider` no longer calls `OnReload` or fires its reload token after `Microsoft.Extensions.Configuration.FileConfigurationProvider.Load` fails and its `Microsoft.Extensions.Configuration.FileConfigurationSource.OnLoadException` callback ignores the exception.
+<xref:Microsoft.Extensions.Configuration.FileConfigurationProvider> no longer calls `OnReload` or fires its reload token after <xref:Microsoft.Extensions.Configuration.FileConfigurationProvider.Load> fails and its <xref:Microsoft.Extensions.Configuration.FileConfigurationSource.OnLoadException> callback ignores the exception.
 
 ## Version introduced
 
@@ -17,27 +15,27 @@ license: "CC-BY-4.0"
 
 ## Previous behavior
 
-Previously, after `Load` failed and the `OnLoadException` callback set `Microsoft.Extensions.Configuration.FileLoadExceptionContext.Ignore` to `true`, `Microsoft.Extensions.Configuration.FileConfigurationProvider` called `OnReload`. The reload token <example-value> by `Microsoft.Extensions.Configuration.IConfiguration.GetReloadToken` fired even though the provider didn't load data.
+Previously, after `Load` failed and the `OnLoadException` callback set <xref:Microsoft.Extensions.Configuration.FileLoadExceptionContext.Ignore> to `true`, <xref:Microsoft.Extensions.Configuration.FileConfigurationProvider> called `OnReload`. The reload token returned by <xref:Microsoft.Extensions.Configuration.IConfiguration.GetReloadToken> fired even though the provider didn't load data.
 
 ## New behavior
 
-Starting in .NET 11, `Microsoft.Extensions.Configuration.FileConfigurationProvider` doesn'<example-value>'t fire because the provider didn't load data.
+Starting in .NET 11, <xref:Microsoft.Extensions.Configuration.FileConfigurationProvider> doesn't call `OnReload` after `Load` fails and the `OnLoadException` callback sets <xref:Microsoft.Extensions.Configuration.FileLoadExceptionContext.Ignore> to `true`. The reload token doesn't fire because the provider didn't load data.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-To avoid a notification when no data changes, `Microsoft.Extensions.Configuration.FileConfigurationProvider` calls `OnReload` only after it loads data. This behavior resulted from a control-flow fix in dotnet/runtime#126093.
+To avoid a notification when no data changes, <xref:Microsoft.Extensions.Configuration.FileConfigurationProvider> calls `OnReload` only after it loads data. This behavior resulted from a control-flow fix in [dotnet/runtime#126093](https://github.com/dotnet/runtime/pull/126093).
 
 ## Recommended action
 
-Don'<example-value>'t load data. If your application must run code after an ignored load failure, call that code from your `OnLoadException` callback.
+Don't depend on the reload token when the provider doesn't load data. If your application must run code after an ignored load failure, call that code from your `OnLoadException` callback.
 
 ## Affected APIs
 
-- `Microsoft.Extensions.Configuration.FileConfigurationProvider.Load`
-- `Microsoft.Extensions.Configuration.Ini.IniConfigurationProvider.Load(System.IO.Stream)`
-- `Microsoft.Extensions.Configuration.Json.JsonConfigurationProvider.Load(System.IO.Stream)`
-- `Microsoft.Extensions.Configuration.Xml.XmlConfigurationProvider.Load(System.IO.Stream)`
+- <xref:Microsoft.Extensions.Configuration.FileConfigurationProvider.Load?displayProperty=fullName>
+- <xref:Microsoft.Extensions.Configuration.Ini.IniConfigurationProvider.Load(System.IO.Stream)?displayProperty=fullName>
+- <xref:Microsoft.Extensions.Configuration.Json.JsonConfigurationProvider.Load(System.IO.Stream)?displayProperty=fullName>
+- <xref:Microsoft.Extensions.Configuration.Xml.XmlConfigurationProvider.Load(System.IO.Stream)?displayProperty=fullName>

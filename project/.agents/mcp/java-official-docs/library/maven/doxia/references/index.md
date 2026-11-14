@@ -1,0 +1,143 @@
+---
+title: Doxia Markup Languages References
+author: 
+  - Lukas Theussl
+  - Vincent Siveton
+---
+
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+# Doxia Markup Languages References
+
+The following table gives an overview of the markup languages currently supported by Doxia: 
+
+- if a _Parser_ is available for a given format, it means that you can write your documentation in this language and Doxia can generate output from it,
+
+- if a _Sink_ is available, it means you can generate output in this format.
+
+The source directory is the directory under which Maven expects source documents in this format (e.g. `src/site/apt/` for Apt), the file extension is the default file extension, and the parser id is the unique identifier used to look up the corresponding component. 
+
+|Format|Short description|Parser<br />(input)|Sink<br />(output)|Source Directory|File Extension|Doxia Module|Parser Id|
+|---|---|---|---|---|---|---|---|
+|[Apt](./apt-format.html)|Almost Plain Text, predates Doxia's Markdown support|![Yes](/images/icon_success_sml.gif)|![Yes](/images/icon_success_sml.gif)|`apt`|`apt`|[`doxia-module-apt`](../doxia/doxia-modules/doxia-module-apt/)|`apt`|
+|[AsciiDoc](https://asciidoctor.org/)|[Asciidoctor Converter Doxia Module](https://docs.asciidoctor.org/maven-tools/latest/site-integration/converter-module-setup-and-configuration/), only emits `Sink.rawText()`|![Yes](/images/icon_success_sml.gif)|![No](/images/icon_error_sml.gif)|`asciidoc`|`adoc`, `asciidoc`|[`asciidoctor-converter-doxia-module`](https://github.com/asciidoctor/asciidoctor-maven-plugin#maven-site-integration)|`asciidoc`|
+|[AsciiDoc](https://asciidoctor.org/)|[Asciidoctor Parser Doxia Module](https://docs.asciidoctor.org/maven-tools/latest/site-integration/parser-module-setup-and-configuration/), still in beta|![Yes](/images/icon_success_sml.gif)|![No](/images/icon_error_sml.gif)|`asciidoc`|`adoc`, `asciidoc`|[`asciidoctor-parser-doxia-module`](https://github.com/asciidoctor/asciidoctor-maven-plugin#maven-site-integration)|`asciidoc`|
+|[FML](./fml-format.html)|FAQ Markup Language|![Yes](/images/icon_success_sml.gif)|![No](/images/icon_error_sml.gif)|`fml`|`fml`|[`doxia-module-fml`](../doxia/doxia-modules/doxia-module-fml/)|`fml`|
+|[Markdown](./markdown-format.html)|Markdown markup language|![Yes](/images/icon_success_sml.gif)|![Yes](/images/icon_success_sml.gif)|`markdown`|`md`, `markdown`|[`doxia-module-markdown`](../doxia/doxia-modules/doxia-module-markdown/)|`markdown`|
+|[Xdoc](./xdoc-format.html)|XML Documentation Format|![Yes](/images/icon_success_sml.gif)|![Yes](/images/icon_success_sml.gif)|`xdoc`|`xml`|[`doxia-module-xdoc`](../doxia/doxia-modules/doxia-module-xdoc/)|`xdoc`|
+|[XHTML5](../modules/index.html#XHTML)|Extensible Hypertext Markup Language, HTML5 serialisation|![Yes](/images/icon_success_sml.gif)|![Yes](/images/icon_success_sml.gif)|`xhtml`|`xhtml`|[`doxia-module-xhtml5`](../doxia/doxia-modules/doxia-module-xhtml5/)|`xhtml`|
+
+Note some modules are not included per default with the site plugin. Have a look at the available modules here: [https://repo.maven.apache.org/maven2/org/apache/maven/doxia/](https://repo.maven.apache.org/maven2/org/apache/maven/doxia/).   
+
+If you need to add a module that is not bundled, for example AsciiDoc, add it as a dependency of the plugin:
+
+```xml
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-site-plugin</artifactId>
+  <version>...</version>
+  <dependencies>
+    <dependency>
+      <groupId>org.asciidoctor</groupId>
+      <artifactId>asciidoctor-parser-doxia-module</artifactId>
+      <version>3.2.0</version>
+    </dependency>
+  </dependencies>
+</plugin>
+```
+
+## Limitations
+
+Every format is converted through the Doxia Sink API. A markup feature that the API cannot express, or that the target format has no syntax for, is dropped or approximated in the output. The following sections list what an author sees per format. A feature that is not listed is written as expected.
+
+### Markdown sink
+
+The Markdown sink writes CommonMark with GitHub-style tables. For the cases that Markdown cannot express at all, such as a table caption or a table without a header row, see [What Markdown cannot express](./markdown-format.html#What_Markdown_cannot_express). The sink handles the following features as shown.
+
+| Feature | Output |
+|---|---|
+| Anchor | An empty `<a id="name"></a>` element in front of the text, because Markdown has no anchor syntax. The text that follows is not wrapped. A name that is not a valid id is encoded, so `my anchor` becomes `my_anchor`, and links to it get the same encoding. |
+| Figure | `![caption](src)`. The caption becomes the alternative text, and the `alt`, `title`, `width` and `id` attributes are dropped. A standalone image keeps its `alt` text but loses `title` and `width`. |
+| Table alignment | Written once, in the delimiter row after the first row, from the column alignment or from the alignment of the first-row cells. Alignment on later rows is ignored. A column without alignment inherits the one before it. |
+| Table cell spans and grid | `colspan`, `rowspan` and the grid flag are dropped, so a spanning cell occupies one column. |
+| Numbered list style | Always decimal. Other styles, such as roman numerals, are replaced with a warning. |
+| Definition list | Raw HTML `<dl>`, `<dt>` and `<dd>` elements, with a warning. |
+| Inline styles | Code, emphasis, strong and strikethrough use Markdown syntax. Others, such as subscript, superscript and small, are written as raw HTML elements. |
+| Elements without a Sink event | Raw HTML, for example `<div>`, `<wbr />`, `<time>` and `<data>`. |
+| Page break | Ignored, with a warning. |
+| Source block language | A source block opens with the info string `unknown`, because the language is not carried over. |
+| Link inside a code block | Dropped, with a warning. |
+| `id`, `class`, `style` and other attributes | Dropped on headings, paragraphs, lists, tables and links. |
+
+### APT sink
+
+| Feature | Output |
+|---|---|
+| Anchor | The anchor name is ignored. The anchored text becomes the name, written as `{text}`. |
+| Inline styles | Only italic, bold and monospaced are written. Others, such as strikethrough and subscript, keep their text and lose the markup. |
+| Table alignment | Taken from the column alignment only. Cell alignment attributes are ignored, and columns without alignment are centered. |
+| Table caption | Written as plain text after the table. |
+| Table cell spans | Not written. |
+| Line break in a table cell | Splits the table row. |
+| Figure | `[src] caption` on one line. The figure attributes are dropped. |
+| Block quote, division, article, header, footer, navigation, time and data | No markup. The text content is kept. |
+| Section title deeper than level 5 | Written as level 5, with a warning. |
+| Elements without a Sink event | Dropped, with a warning. |
+
+### XDoc sink
+
+| Feature | Output |
+|---|---|
+| Section titles at level 3 to 6 | XDoc has only `section` and `subsection` elements. Deeper titles are written as `<h3>` to `<h6>` headings without an enclosing element. |
+| Page break | An XML comment, `<!-- PB -->`. |
+
+### XHTML5 sink
+
+| Feature | Output |
+|---|---|
+| Page break | An HTML comment, `<!-- PB -->`. |
+| Anchor | A name that is not a valid id is encoded, so `my anchor` becomes `my_anchor`. |
+| Elements without a Sink event and without a known HTML tag | Dropped, with a warning. |
+
+### Parsers
+
+The following parser behavior is visible in the output of other formats.
+
+- Markdown: task list syntax is not recognized. `- [ ] task` stays a list item with the literal text `[ ] task`.
+- Markdown: a footnote becomes an item of a numbered list at the end of the document, with a back link.
+- Markdown: front matter keys other than `title`, `author` and `date`, such as `keywords` or `subtitle`, reach the sink as `meta` elements without a Sink event. The APT sink drops them.
+- Markdown: table alignment is passed on cell by cell, not as column alignment, so the APT sink does not write it.
+- XHTML5, XDoc and FML: an element that is not recognized is passed to the sink as an element without a Sink event, with a warning. What survives depends on the sink, as in the tables above.
+- FML has a parser but no sink.
+
+## Former Doxia Formats
+
+The following table gives an overview of the formats which used to be supported mostly as Parser in former versions of Doxia: 
+
+|Format|Short description|Doxia Module|Removed Since|
+|---|---|---|---|
+|iText|iText PDF Library|[`doxia-module-itext`](../doxia-archives/doxia-1.11.1/doxia-modules/doxia-module-itext/)|2.0|
+|FO|XSL formatting objects (XSL-FO)|[`doxia-module-fo`](../doxia-archives/doxia-1.11.1/doxia-modules/doxia-module-fo/)|2.0|
+|LaTeX|LaTeX typesetting system|[`doxia-module-latex`](../doxia-archives/doxia-1.11.1/doxia-modules/doxia-module-latex/)|2.0|
+|RTF|Microsoft Rich Text Format|[`doxia-module-rtf`](../doxia-archives/doxia-1.11.1/doxia-modules/doxia-module-rtf/)|2.0|
+|Confluence|Confluence Enterprise Wiki|[`doxia-module-confluence`](../doxia-archives/doxia-1.11.1/doxia-modules/doxia-module-confluence/)|2.0|
+|Simplified DocBook|Simplified DocBook XML Standard|[`doxia-module-docbook-simple`](../doxia-archives/doxia-1.11.1/doxia-modules/doxia-module-docbook-simple/)|2.0|
+|TWiki|TWiki Structured Wiki|[`doxia-module-twiki`](../doxia-archives/doxia-1.11.1/doxia-modules/doxia-module-twiki/)|2.0|
+|XHTML|XHTML 1.0, superseded by the XHTML5 module|[`doxia-module-xhtml`](../doxia-archives/doxia-1.11.1/doxia-modules/doxia-module-xhtml/)|2.0|

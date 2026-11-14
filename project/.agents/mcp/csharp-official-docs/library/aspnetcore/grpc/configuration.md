@@ -1,17 +1,17 @@
 ---
-title: "gRPC for .NET configuration"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/grpc/configuration.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: gRPC for .NET configuration
+ai-usage: ai-assisted
+description: Learn how to configure gRPC for .NET apps.
+monikerRange: '>= aspnetcore-3.0'
+ms.date: 11/23/2020
 ---
-
 # gRPC for .NET configuration
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
 ## Configure services options
 
-gRPC services are configured with `AddGrpc` in `Startup.cs`. Configuration options are in the `Grpc.AspNetCore.Server` package.
+gRPC services are configured with `AddGrpc` in `Startup.cs`. Configuration options are in the [`Grpc.AspNetCore.Server`](https://www.nuget.org/packages/Grpc.AspNetCore.Server) package.
 
 The following table describes options for configuring gRPC services.
 
@@ -23,48 +23,20 @@ The following table describes options for configuring gRPC services.
 | `CompressionProviders` | gzip | A collection of compression providers used to compress and decompress messages. Custom compression providers can be created and added to the collection. The default configured providers support **gzip** compression. |
 | `ResponseCompressionAlgorithm` | `null` | The compression algorithm used to compress messages sent from the server. The algorithm must match a compression provider in `CompressionProviders`. For the algorithm to compress a response, the client must indicate it supports the algorithm by sending it in the **grpc-accept-encoding** header. |
 | `ResponseCompressionLevel` | `null` | The compress level used to compress messages sent from the server. |
-| `Interceptors` | None | A collection of interceptors that are run with each gRPC call. Interceptors are run in the order they are registered. Globally configured interceptors are run before interceptors configured for a single service.Interceptors have a per-request lifetime by default. The interceptor constructor is called and parameters are resolved from dependency injection (DI). An interceptor type can also be registered with DI to override how it is created and its lifetime.Interceptors offer similar functionalities compared to ASP.NET Core middleware. For more information, see gRPC Interceptors vs. middleware. |
+| `Interceptors` | None | A collection of interceptors that are run with each gRPC call. Interceptors are run in the order they are registered. Globally configured interceptors are run before interceptors configured for a single service.<br/><br/>Interceptors have a per-request lifetime by default. The interceptor constructor is called and parameters are resolved from [dependency injection (DI)](../fundamentals/dependency-injection.md). An interceptor type can also be registered with DI to override how it is created and its lifetime.<br/><br/>Interceptors offer similar functionalities compared to ASP.NET Core middleware. For more information, see [gRPC Interceptors vs. middleware](interceptors.md#grpc-interceptors-versus-middleware). |
 | `IgnoreUnknownServices` | `false` | If `true`, calls to unknown services and methods don't return an **UNIMPLEMENTED** status, and the request passes to the next registered middleware in ASP.NET Core. |
 
 Options can be configured for all services by providing an options delegate to the `AddGrpc` call in `Startup.ConfigureServices`:
 
-```csharp
-public void ConfigureServices(IServiceCollection services)
-{
-    services.AddGrpc(options =>
-    {
-        options.EnableDetailedErrors = true;
-        options.MaxReceiveMessageSize = 2 * 1024 * 1024; // 2 MB
-        options.MaxSendMessageSize = 5 * 1024 * 1024; // 5 MB
-    });
-}
-```
+[!code-csharp[](~/grpc/configuration/samples/GrcpService/Startup.cs?name=snippet)]
 
 Options for a single service override the global options provided in `AddGrpc` and can be configured using `AddServiceOptions<TService>`:
 
-```csharp
-public void ConfigureServices(IServiceCollection services)
-{
-    services.AddGrpc().AddServiceOptions<MyService>(options =>
-    {
-        options.MaxReceiveMessageSize = 2 * 1024 * 1024; // 2 MB
-        options.MaxSendMessageSize = 5 * 1024 * 1024; // 5 MB
-    });
-}
-```
+[!code-csharp[](~/grpc/configuration/samples/GrcpService/Startup2.cs?name=snippet)]
 
 Service interceptors have a per-request lifetime by default. Registering the interceptor type with DI overrides how an interceptor is created and its lifetime.
 
-```csharp
-public void ConfigureServices(IServiceCollection services)
-{
-    services.AddGrpc(options =>
-    {
-        options.Interceptors.Add<LoggingInterceptor>();
-    });
-    services.AddSingleton<LoggingInterceptor>();
-}
-```
+[!code-csharp[](~/grpc/configuration/samples/GrcpService/Startup3.cs?name=snippet)]
 
 ### ASP.NET Core server options
 
@@ -74,13 +46,13 @@ The server used by an ASP.NET Core app is configured in app startup code. The de
 
 For more information about the different servers and their configuration options, see:
 
-* Kestrel web server in ASP.NET Core
-* HTTP.sys web server implementation in ASP.NET Core
-* Host ASP.NET Core on Windows with IIS
+* [Kestrel web server in ASP.NET Core](../fundamentals/servers/kestrel.md)
+* [HTTP.sys web server implementation in ASP.NET Core](../fundamentals/servers/httpsys.md)
+* [Host ASP.NET Core on Windows with IIS](../host-and-deploy/iis/index.md)
 
 ## Configure client options
 
-gRPC client configuration is set on `GrpcChannelOptions`. Configuration options are in the `Grpc.Net.Client` package.
+gRPC client configuration is set on `GrpcChannelOptions`. Configuration options are in the [`Grpc.Net.Client`](https://www.nuget.org/packages/Grpc.Net.Client) package.
 
 The following table describes options for configuring gRPC channels.
 
@@ -89,68 +61,43 @@ The following table describes options for configuring gRPC channels.
 | `HttpHandler` | New instance | The `HttpMessageHandler` used to make gRPC calls. A client can be set to configure a custom `HttpClientHandler` or add additional handlers to the HTTP pipeline for gRPC calls. If no `HttpMessageHandler` is specified, a new `HttpClientHandler` instance is created for the channel with automatic disposal. |
 | `HttpClient` | `null` | The `HttpClient` used to make gRPC calls. This setting is an alternative to `HttpHandler`. |
 | `DisposeHttpClient` | `false` | If set to `true` and an `HttpMessageHandler` or `HttpClient` is specified, then either the `HttpHandler` or `HttpClient`, respectively, is disposed when the `GrpcChannel` is disposed. |
-| `LoggerFactory` | `null` | The `LoggerFactory` used by the client to log information about gRPC calls. A `LoggerFactory` instance can be resolved from dependency injection or created using `LoggerFactory.Create`. For examples of configuring logging, see Logging and diagnostics in gRPC on .NET. |
+| `LoggerFactory` | `null` | The `LoggerFactory` used by the client to log information about gRPC calls. A `LoggerFactory` instance can be resolved from dependency injection or created using `LoggerFactory.Create`. For examples of configuring logging, see [Logging and diagnostics in gRPC on .NET](diagnostics.md#grpc-client-logging). |
 | `MaxSendMessageSize` | `null` | The maximum message size in bytes that can be sent from the client. Attempting to send a message that exceeds the configured maximum message size results in an exception. When set to `null`, the message size is unlimited. |
 | `MaxReceiveMessageSize` | 4 MB | The maximum message size in bytes that can be received by the client. If the client receives a message that exceeds this limit, it throws an exception. Increasing this value allows the client to receive larger messages, but can negatively impact memory consumption. When set to `null`, the message size is unlimited. |
 | `Credentials` | `null` | A `ChannelCredentials` instance. Credentials are used to add authentication metadata to gRPC calls. |
 | `CompressionProviders` | gzip | A collection of compression providers used to compress and decompress messages. Custom compression providers can be created and added to the collection. The default configured providers support **gzip** compression. |
-| `ThrowOperationCanceledOnCancellation` | `false` | If set to `true`, clients throw `System.OperationCanceledException` when a call is canceled or its deadline is exceeded. |
+| `ThrowOperationCanceledOnCancellation` | `false` | If set to `true`, clients throw <xref:System.OperationCanceledException> when a call is canceled or its deadline is exceeded. |
 | `UnsafeUseInsecureChannelCallCredentials` | `false` | If set to `true`, `CallCredentials` are applied to gRPC calls made by an insecure channel. Sending authentication headers over an insecure connection has security implications and shouldn't be done in production environments. |
-| `MaxRetryAttempts` | 5 | The maximum retry attempts. This value limits any retry and hedging attempt values specified in the service config. Setting this value alone doesn't enable retries. Retries are enabled in the service config, which can be done using `ServiceConfig`. A `null` value removes the maximum retry attempts limit. For more information about retries, see Transient fault handling with gRPC retries. |
+| `MaxRetryAttempts` | 5 | The maximum retry attempts. This value limits any retry and hedging attempt values specified in the service config. Setting this value alone doesn't enable retries. Retries are enabled in the service config, which can be done using `ServiceConfig`. A `null` value removes the maximum retry attempts limit. For more information about retries, see [Transient fault handling with gRPC retries](retries.md). |
 | `MaxRetryBufferSize` | 16 MB | The maximum buffer size in bytes that can be used to store sent messages when retrying or hedging calls. If the buffer limit is exceeded, then no more retry attempts are made and all hedging calls but one will be canceled. This limit is applied across all calls made using the channel. A `null` value removes the maximum retry buffer size limit. |
 | `MaxRetryBufferPerCallSize` | 1 MB | The maximum buffer size in bytes that can be used to store sent messages when retrying or hedging calls. If the buffer limit is exceeded, then no more retry attempts are made and all hedging calls but one will be canceled. This limit is applied to one call. A `null` value removes the maximum retry buffer size limit per call. |
-| `ServiceConfig` | `null` | The service config for a gRPC channel. A service config can be used to configure gRPC retries. |
+| `ServiceConfig` | `null` | The service config for a gRPC channel. A service config can be used to configure [gRPC retries](retries.md). |
 
 The following code:
 
 * Sets the maximum send and receive message size on the channel.
 * Creates a client.
 
-```csharp
-static async Task Main(string[] args)
-{
-    var channel = GrpcChannel.ForAddress("https://localhost:5001", new GrpcChannelOptions
-    {
-        MaxReceiveMessageSize = 5 * 1024 * 1024, // 5 MB
-        MaxSendMessageSize = 2 * 1024 * 1024 // 2 MB
-    });
-    var client = new Greeter.GreeterClient(channel);
-
-    var reply = await client.SayHelloAsync(
-                      new HelloRequest { Name = "GreeterClient" });
-    Console.WriteLine("Greeting: " + reply.Message);
-}
-```
+[!code-csharp[](~/grpc/configuration/samples/Program.cs?name=snippet&highlight=3-8)]
 
 Note that client interceptors aren't configured with `GrpcChannelOptions`. Instead, client interceptors are configured using the `Intercept` extension method with a channel. This extension method is in the `Grpc.Core.Interceptors` namespace.
 
-```csharp
-static async Task Main(string[] args)
-{
-    var channel = GrpcChannel.ForAddress("https://localhost:5001");
-    var callInvoker = channel.Intercept(new LoggingInterceptor());
-    var client = new Greeter.GreeterClient(callInvoker);
-
-    var reply = await client.SayHelloAsync(
-                      new HelloRequest { Name = "GreeterClient" });
-    Console.WriteLine("Greeting: " + reply.Message);
-}
-```
+[!code-csharp[](~/grpc/configuration/samples/Program2.cs?name=snippet&highlight=4)]
 
 ### System.Net handler options
 
 `Grpc.Net.Client` uses a HTTP transport derived from `HttpMessageHandler` to make HTTP requests. Each handler offers additional options for how HTTP requests are made.
 
-The handler is configured on a channel and can be overridden by setting `GrpcChannelOptions.HttpHandler`. .NET Core 3 and .NET 5 or later uses `System.Net.Http.SocketsHttpHandler` by default. gRPC client apps on .NET Framework should configure WinHttpHandler.
+The handler is configured on a channel and can be overridden by setting `GrpcChannelOptions.HttpHandler`. .NET Core 3 and .NET 5 or later uses <xref:System.Net.Http.SocketsHttpHandler> by default. gRPC client apps on .NET Framework [should configure WinHttpHandler](netstandard.md#net-framework).
 
 For more information about the different handlers and their configuration options, see:
 
-* `System.Net.Http.SocketsHttpHandler`
-* `System.Net.Http.WinHttpHandler`
+* <xref:System.Net.Http.SocketsHttpHandler?displayProperty=fullName>
+* <xref:System.Net.Http.WinHttpHandler?displayProperty=fullName>
 
 ## Related content
 
-* gRPC services with ASP.NET Core
-* Call gRPC services with the .NET client
-* Logging and diagnostics in gRPC on .NET
-* Create a .NET gRPC client and server in ASP.NET Core
+* [gRPC services with ASP.NET Core](aspnetcore.md)
+* [Call gRPC services with the .NET client](client.md)
+* [Logging and diagnostics in gRPC on .NET](diagnostics.md)
+* [Create a .NET gRPC client and server in ASP.NET Core](../tutorials/grpc/grpc-start.md)

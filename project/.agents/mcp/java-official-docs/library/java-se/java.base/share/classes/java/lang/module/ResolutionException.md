@@ -1,12 +1,3 @@
----
-title: "ResolutionException class (java.lang.module)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/module/ResolutionException.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ResolutionException class (java.lang.module)
 
 ```java
@@ -16,9 +7,8 @@ public class ResolutionException extends RuntimeException
 Thrown when resolving a set of modules, or resolving a set of modules with
 service binding, fails.
 
-**See also:** Configuration
-
-**Since:** 9
+@see Configuration
+@since 9
 
 ## ResolutionException.ResolutionException()
 
@@ -26,7 +16,7 @@ service binding, fails.
 public ResolutionException()
 ```
 
-Constructs a `ResolutionException` with no detail message.
+Constructs a {@code ResolutionException} with no detail message.
 
 ## ResolutionException.ResolutionException(String)
 
@@ -34,12 +24,11 @@ Constructs a `ResolutionException` with no detail message.
 public ResolutionException(String msg)
 ```
 
-Constructs a `ResolutionException` with the given detail
+Constructs a {@code ResolutionException} with the given detail
 message.
 
-Parameters:
-
-- `msg`: The detail message; can be `null`
+@param msg
+       The detail message; can be {@code null}
 
 ## ResolutionException.ResolutionException(Throwable)
 
@@ -49,9 +38,8 @@ public ResolutionException(Throwable cause)
 
 Constructs an instance of this exception with the given cause.
 
-Parameters:
-
-- `cause`: The cause; can be `null`
+@param cause
+       The cause; can be {@code null}
 
 ## ResolutionException.ResolutionException(String, Throwable)
 
@@ -59,10 +47,10 @@ Parameters:
 public ResolutionException(String msg, Throwable cause)
 ```
 
-Constructs a `ResolutionException` with the given detail message
+Constructs a {@code ResolutionException} with the given detail message
 and cause.
 
-Parameters:
-
-- `msg`: The detail message; can be `null`
-- `cause`: The cause; can be `null`
+@param msg
+       The detail message; can be {@code null}
+@param cause
+       The cause; can be {@code null}

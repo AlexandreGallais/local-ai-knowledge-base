@@ -1,50 +1,44 @@
----
-title: "X509CRLSelector class (java.security.cert)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/cert/X509CRLSelector.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # X509CRLSelector class (java.security.cert)
 
 ```java
 public class X509CRLSelector implements CRLSelector
 ```
 
-A `CRLSelector` that selects `X509CRLs` that
+A {@code CRLSelector} that selects {@code X509CRLs} that
 match all specified criteria. This class is particularly useful when
-selecting CRLs from a `CertStore` to check revocation status
+selecting CRLs from a {@code CertStore} to check revocation status
 of a particular certificate.
-
-When first constructed, an `X509CRLSelector` has no criteria
-enabled and each of the `get` methods return a default
-value (`null`). Therefore, the match method
-would return `true` for any `X509CRL`. Typically,
-several criteria are enabled (by calling setIssuers
-or setDateAndTime, for instance) and then the
-`X509CRLSelector` is passed to
-CertStore.getCRLs or some similar
+<p>
+When first constructed, an {@code X509CRLSelector} has no criteria
+enabled and each of the {@code get} methods return a default
+value ({@code null}). Therefore, the {@link #match match} method
+would return {@code true} for any {@code X509CRL}. Typically,
+several criteria are enabled (by calling {@link #setIssuers setIssuers}
+or {@link #setDateAndTime setDateAndTime}, for instance) and then the
+{@code X509CRLSelector} is passed to
+{@link CertStore#getCRLs CertStore.getCRLs} or some similar
 method.
-
-Please refer to RFC 5280:
-Internet X.509 Public Key <example-value> Certificate and CRL Profile
+<p>
+Please refer to <a href="https://tools.ietf.org/html/rfc5280">RFC 5280:
+Internet X.509 Public Key Infrastructure Certificate and CRL Profile</a>
 for definitions of the X.509 CRL fields and extensions mentioned below.
-
-**Concurrent Access**
-
+<p>
+<b>Concurrent Access</b>
+<p>
 Unless otherwise specified, the methods defined in this class are not
 thread-safe. Multiple threads that need to access a single
 object concurrently should synchronize amongst themselves and
 provide the necessary locking. Multiple threads each manipulating
 separate objects need not synchronize.
 
-**See also:** CRLSelector
+@spec https://www.rfc-editor.org/info/rfc5280
+     RFC 5280: Internet X.509 Public Key Infrastructure Certificate
+             and Certificate Revocation List (CRL) Profile
+@see CRLSelector
+@see X509CRL
 
-**See also:** X509CRL
-
-**Since:** 1.4
+@since       1.4
+@author      Steve Hanna
 
 ## X509CRLSelector.X509CRLSelector()
 
@@ -52,8 +46,8 @@ separate objects need not synchronize.
 public X509CRLSelector()
 ```
 
-Creates an `X509CRLSelector`. Initially, no criteria are set
-so any `X509CRL` will match.
+Creates an {@code X509CRLSelector}. Initially, no criteria are set
+so any {@code X509CRL} will match.
 
 ## X509CRLSelector.setIssuers(Collection<X500Principal>)
 
@@ -62,33 +56,30 @@ public void setIssuers(Collection<X500Principal> issuers)
 ```
 
 Sets the issuerNames criterion. The issuer distinguished name in the
-`X509CRL` must match at least one of the specified
-distinguished names. If `null`, any issuer distinguished name
+{@code X509CRL} must match at least one of the specified
+distinguished names. If {@code null}, any issuer distinguished name
 will do.
-
+<p>
 This method allows the caller to specify, with a single method call,
-the complete set of issuer names which `X509CRLs` may contain.
+the complete set of issuer names which {@code X509CRLs} may contain.
 The specified value replaces the previous value for the issuerNames
 criterion.
-
-The `names` parameter (if not `null`) is a
-`Collection` of `X500Principal`s.
-
-Note that the `names` parameter can contain duplicate
+<p>
+The {@code names} parameter (if not {@code null}) is a
+{@code Collection} of {@code X500Principal}s.
+<p>
+Note that the {@code names} parameter can contain duplicate
 distinguished names, but they may be removed from the
-`Collection` of names returned by the
-getIssuers method.
-
-Note that a copy is performed on the `Collection` to
+{@code Collection} of names returned by the
+{@link #getIssuers getIssuers} method.
+<p>
+Note that a copy is performed on the {@code Collection} to
 protect against subsequent modifications.
 
-Parameters:
-
-- `issuers`: a `Collection` of X500Principals (or `null`)
-
-**See also:** #getIssuers
-
-**Since:** 1.5
+@param issuers a {@code Collection} of X500Principals
+  (or {@code null})
+@see #getIssuers
+@since 1.5
 
 ## X509CRLSelector.setIssuerNames(Collection<?>)
 
@@ -96,37 +87,36 @@ Parameters:
 public void setIssuerNames(Collection<?> names) throws IOException
 ```
 
-**Note:** use `setIssuers(Collection)` instead
+<strong>Note:</strong> use {@linkplain #setIssuers(Collection)} instead
 or only specify the byte array form of distinguished names when using
-this method. See `addIssuerName(String)` for more information.
-
+this method. See {@link #addIssuerName(String)} for more information.
+<p>
 Sets the issuerNames criterion. The issuer distinguished name in the
-`X509CRL` must match at least one of the specified
-distinguished names. If `null`, any issuer distinguished name
+{@code X509CRL} must match at least one of the specified
+distinguished names. If {@code null}, any issuer distinguished name
 will do.
-
+<p>
 This method allows the caller to specify, with a single method call,
-the complete set of issuer names which `X509CRLs` may contain.
+the complete set of issuer names which {@code X509CRLs} may contain.
 The specified value replaces the previous value for the issuerNames
 criterion.
-
-The `names` parameter (if not `null`) is a
-`Collection` of names. Each name is a `String`
+<p>
+The {@code names} parameter (if not {@code null}) is a
+{@code Collection} of names. Each name is a {@code String}
 or a byte array representing a distinguished name (in
-RFC 2253 or
-ASN.1 DER encoded form, respectively). If `null` is supplied
+<a href="http://www.ietf.org/rfc/rfc2253.txt">RFC 2253</a> or
+ASN.1 DER encoded form, respectively). If {@code null} is supplied
 as the value for this argument, no issuerNames check will be performed.
-
-Note that the `names` parameter can contain duplicate
+<p>
+Note that the {@code names} parameter can contain duplicate
 distinguished names, but they may be removed from the
-`Collection` of names returned by the
-getIssuerNames method.
-
+{@code Collection} of names returned by the
+{@link #getIssuerNames getIssuerNames} method.
+<p>
 If a name is specified as a byte array, it should contain a single DER
 encoded distinguished name, as defined in X.501. The ASN.1 notation for
 this structure is as follows.
-
-```java
+<pre>{@code
 Name ::= CHOICE {
   RDNSequence }
 
@@ -149,20 +139,18 @@ DirectoryString ::= CHOICE {
       universalString         UniversalString (SIZE (1..MAX)),
       utf8String              UTF8String (SIZE (1.. MAX)),
       bmpString               BMPString (SIZE (1..MAX)) }
-```
-
-Note that a deep copy is performed on the `Collection` to
+}</pre>
+<p>
+Note that a deep copy is performed on the {@code Collection} to
 protect against subsequent modifications.
 
-Parameters:
+@param names a {@code Collection} of names (or {@code null})
+@throws IOException if a parsing error occurs
 
-- `names`: a `Collection` of names (or `null`)
-
-**See also:** #getIssuerNames
-
-Throws:
-
-- `IOException`: if a parsing error occurs
+@spec https://www.rfc-editor.org/info/rfc2253
+     RFC 2253: Lightweight Directory Access Protocol (v3):
+             UTF-8 String Representation of Distinguished Names
+@see #getIssuerNames
 
 ## X509CRLSelector.addIssuer(X500Principal)
 
@@ -171,19 +159,16 @@ public void addIssuer(X500Principal issuer)
 ```
 
 Adds a name to the issuerNames criterion. The issuer distinguished
-name in the `X509CRL` must match at least one of the specified
+name in the {@code X509CRL} must match at least one of the specified
 distinguished names.
-
+<p>
 This method allows the caller to add a name to the set of issuer names
-which `X509CRLs` may contain. The specified name is added to
+which {@code X509CRLs} may contain. The specified name is added to
 any previous value for the issuerNames criterion.
 If the specified name is a duplicate, it may be ignored.
 
-Parameters:
-
-- `issuer`: the issuer as X500Principal
-
-**Since:** 1.5
+@param issuer the issuer as X500Principal
+@since 1.5
 
 ## X509CRLSelector.addIssuerName(String)
 
@@ -192,27 +177,26 @@ public void addIssuerName(String name) throws IOException
 ```
 
 Adds a name to the issuerNames criterion. The issuer distinguished
-name in the `X509CRL` must match at least one of the specified
+name in the {@code X509CRL} must match at least one of the specified
 distinguished names.
-
+<p>
 This method allows the caller to add a name to the set of issuer names
-which `X509CRLs` may contain. The specified name is added to
+which {@code X509CRLs} may contain. The specified name is added to
 any previous value for the issuerNames criterion.
 If the specified name is a duplicate, it may be ignored.
 
-Parameters:
+@param name the name in
+    <a href="http://www.ietf.org/rfc/rfc2253.txt">RFC 2253</a> form
+@throws IOException if a parsing error occurs
 
-- `name`: the name in RFC 2253 form
-
-**Deprecated:** Use `addIssuer(X500Principal)` or
-`addIssuerName(byte[])` instead. This method should not be
+@spec https://www.rfc-editor.org/info/rfc2253
+     RFC 2253: Lightweight Directory Access Protocol (v3):
+             UTF-8 String Representation of Distinguished Names
+@deprecated Use {@link #addIssuer(X500Principal)} or
+{@link #addIssuerName(byte[])} instead. This method should not be
 relied on as it can fail to match some CRLs because of a loss of
 encoding information in the RFC 2253 String form of some distinguished
 names.
-
-Throws:
-
-- `IOException`: if a parsing error occurs
 
 ## X509CRLSelector.addIssuerName(byte[])
 
@@ -221,32 +205,27 @@ public void addIssuerName(byte[] name) throws IOException
 ```
 
 Adds a name to the issuerNames criterion. The issuer distinguished
-name in the `X509CRL` must match at least one of the specified
+name in the {@code X509CRL} must match at least one of the specified
 distinguished names.
-
+<p>
 This method allows the caller to add a name to the set of issuer names
-which `X509CRLs` may contain. The specified name is added to
+which {@code X509CRLs} may contain. The specified name is added to
 any previous value for the issuerNames criterion. If the specified name
 is a duplicate, it may be ignored.
 If a name is specified as a byte array, it should contain a single DER
 encoded distinguished name, as defined in X.501. The ASN.1 notation for
 this structure is as follows.
-
+<p>
 The name is provided as a byte array. This byte array should contain
 a single DER encoded distinguished name, as defined in X.501. The ASN.1
 notation for this structure appears in the documentation for
-setIssuerNames(Collection names).
-
+{@link #setIssuerNames setIssuerNames(Collection names)}.
+<p>
 Note that the byte array supplied here is cloned to protect against
 subsequent modifications.
 
-Parameters:
-
-- `name`: a byte array containing the name in ASN.1 DER encoded form
-
-Throws:
-
-- `IOException`: if a parsing error occurs
+@param name a byte array containing the name in ASN.1 DER encoded form
+@throws IOException if a parsing error occurs
 
 ## X509CRLSelector.setMinCRLNumber(BigInteger)
 
@@ -254,14 +233,12 @@ Throws:
 public void setMinCRLNumber(BigInteger minCRL)
 ```
 
-Sets the minCRLNumber criterion. The `X509CRL` must have a
+Sets the minCRLNumber criterion. The {@code X509CRL} must have a
 CRL number extension whose value is greater than or equal to the
-specified value. If `null`, no minCRLNumber check will be
+specified value. If {@code null}, no minCRLNumber check will be
 done.
 
-Parameters:
-
-- `minCRL`: the minimum CRL number accepted (or `null`)
+@param minCRL the minimum CRL number accepted (or {@code null})
 
 ## X509CRLSelector.setMaxCRLNumber(BigInteger)
 
@@ -269,14 +246,12 @@ Parameters:
 public void setMaxCRLNumber(BigInteger maxCRL)
 ```
 
-Sets the maxCRLNumber criterion. The `X509CRL` must have a
+Sets the maxCRLNumber criterion. The {@code X509CRL} must have a
 CRL number extension whose value is less than or equal to the
-specified value. If `null`, no maxCRLNumber check will be
+specified value. If {@code null}, no maxCRLNumber check will be
 done.
 
-Parameters:
-
-- `maxCRL`: the maximum CRL number accepted (or `null`)
+@param maxCRL the maximum CRL number accepted (or {@code null})
 
 ## X509CRLSelector.setDateAndTime(Date)
 
@@ -286,19 +261,17 @@ public void setDateAndTime(Date dateAndTime)
 
 Sets the dateAndTime criterion. The specified date must be
 equal to or later than the value of the thisUpdate component
-of the `X509CRL` and earlier than the value of the
-nextUpdate component. There is no match if the `X509CRL`
+of the {@code X509CRL} and earlier than the value of the
+nextUpdate component. There is no match if the {@code X509CRL}
 does not contain a nextUpdate component.
-If `null`, no dateAndTime check will be done.
-
-Note that the `Date` supplied here is cloned to protect
+If {@code null}, no dateAndTime check will be done.
+<p>
+Note that the {@code Date} supplied here is cloned to protect
 against subsequent modifications.
 
-Parameters:
-
-- `dateAndTime`: the `Date` to match against (or `null`)
-
-**See also:** #getDateAndTime
+@param dateAndTime the {@code Date} to match against
+                   (or {@code null})
+@see #getDateAndTime
 
 ## X509CRLSelector.setCertificateChecking(X509Certificate)
 
@@ -307,16 +280,14 @@ public void setCertificateChecking(X509Certificate cert)
 ```
 
 Sets the certificate being checked. This is not a criterion. Rather,
-it is optional information that may help a `CertStore`
+it is optional information that may help a {@code CertStore}
 find CRLs that would be relevant when checking revocation for the
-specified certificate. If `null` is specified, then no
+specified certificate. If {@code null} is specified, then no
 such optional information is provided.
 
-Parameters:
-
-- `cert`: the `X509Certificate` being checked (or `null`)
-
-**See also:** #getCertificateChecking
+@param cert the {@code X509Certificate} being checked
+            (or {@code null})
+@see #getCertificateChecking
 
 ## X509CRLSelector.getIssuers()
 
@@ -325,19 +296,17 @@ public Collection<X500Principal> getIssuers()
 ```
 
 Returns the issuerNames criterion. The issuer distinguished
-name in the `X509CRL` must match at least one of the specified
-distinguished names. If the value returned is `null`, any
+name in the {@code X509CRL} must match at least one of the specified
+distinguished names. If the value returned is {@code null}, any
 issuer distinguished name will do.
+<p>
+If the value returned is not {@code null}, it is a
+unmodifiable {@code Collection} of {@code X500Principal}s.
 
-If the value returned is not `null`, it is a
-unmodifiable `Collection` of `X500Principal`s.
-
-**Returns:** an unmodifiable `Collection` of names
-  (or `null`)
-
-**See also:** #setIssuers
-
-**Since:** 1.5
+@return an unmodifiable {@code Collection} of names
+  (or {@code null})
+@see #setIssuers
+@since 1.5
 
 ## X509CRLSelector.getIssuerNames()
 
@@ -346,28 +315,31 @@ public Collection<Object> getIssuerNames()
 ```
 
 Returns a copy of the issuerNames criterion. The issuer distinguished
-name in the `X509CRL` must match at least one of the specified
-distinguished names. If the value returned is `null`, any
+name in the {@code X509CRL} must match at least one of the specified
+distinguished names. If the value returned is {@code null}, any
 issuer distinguished name will do.
-
-If the value returned is not `null`, it is a
-`Collection` of names. Each name is a `String`
+<p>
+If the value returned is not {@code null}, it is a
+{@code Collection} of names. Each name is a {@code String}
 or a byte array representing a distinguished name (in
-RFC 2253 or
+<a href="http://www.ietf.org/rfc/rfc2253.txt">RFC 2253</a> or
 ASN.1 DER encoded form, respectively).  Note that the
-`Collection` returned may contain duplicate names.
-
+{@code Collection} returned may contain duplicate names.
+<p>
 If a name is specified as a byte array, it should contain a single DER
 encoded distinguished name, as defined in X.501. The ASN.1 notation for
 this structure is given in the documentation for
-setIssuerNames(Collection names).
-
-Note that a deep copy is performed on the `Collection` to
+{@link #setIssuerNames setIssuerNames(Collection names)}.
+<p>
+Note that a deep copy is performed on the {@code Collection} to
 protect against subsequent modifications.
 
-**Returns:** a `Collection` of names (or `null`)
+@return a {@code Collection} of names (or {@code null})
 
-**See also:** #setIssuerNames
+@spec https://www.rfc-editor.org/info/rfc2253
+     RFC 2253: Lightweight Directory Access Protocol (v3):
+             UTF-8 String Representation of Distinguished Names
+@see #setIssuerNames
 
 ## X509CRLSelector.getMinCRL()
 
@@ -375,11 +347,11 @@ protect against subsequent modifications.
 public BigInteger getMinCRL()
 ```
 
-Returns the minCRLNumber criterion. The `X509CRL` must have a
+Returns the minCRLNumber criterion. The {@code X509CRL} must have a
 CRL number extension whose value is greater than or equal to the
-specified value. If `null`, no minCRLNumber check will be done.
+specified value. If {@code null}, no minCRLNumber check will be done.
 
-**Returns:** the minimum CRL number accepted (or `null`)
+@return the minimum CRL number accepted (or {@code null})
 
 ## X509CRLSelector.getMaxCRL()
 
@@ -387,12 +359,12 @@ specified value. If `null`, no minCRLNumber check will be done.
 public BigInteger getMaxCRL()
 ```
 
-Returns the maxCRLNumber criterion. The `X509CRL` must have a
+Returns the maxCRLNumber criterion. The {@code X509CRL} must have a
 CRL number extension whose value is less than or equal to the
-specified value. If `null`, no maxCRLNumber check will be
+specified value. If {@code null}, no maxCRLNumber check will be
 done.
 
-**Returns:** the maximum CRL number accepted (or `null`)
+@return the maximum CRL number accepted (or {@code null})
 
 ## X509CRLSelector.getDateAndTime()
 
@@ -402,17 +374,16 @@ public Date getDateAndTime()
 
 Returns the dateAndTime criterion. The specified date must be
 equal to or later than the value of the thisUpdate component
-of the `X509CRL` and earlier than the value of the
+of the {@code X509CRL} and earlier than the value of the
 nextUpdate component. There is no match if the
-`X509CRL` does not contain a nextUpdate component.
-If `null`, no dateAndTime check will be done.
-
-Note that the `Date` returned is cloned to protect against
+{@code X509CRL} does not contain a nextUpdate component.
+If {@code null}, no dateAndTime check will be done.
+<p>
+Note that the {@code Date} returned is cloned to protect against
 subsequent modifications.
 
-**Returns:** the `Date` to match against (or `null`)
-
-**See also:** #setDateAndTime
+@return the {@code Date} to match against (or {@code null})
+@see #setDateAndTime
 
 ## X509CRLSelector.getCertificateChecking()
 
@@ -421,14 +392,13 @@ public X509Certificate getCertificateChecking()
 ```
 
 Returns the certificate being checked. This is not a criterion. Rather,
-it is optional information that may help a `CertStore`
+it is optional information that may help a {@code CertStore}
 find CRLs that would be relevant when checking revocation for the
-specified certificate. If the value returned is `null`, then
+specified certificate. If the value returned is {@code null}, then
 no such optional information is provided.
 
-**Returns:** the certificate being checked (or `null`)
-
-**See also:** #setCertificateChecking
+@return the certificate being checked (or {@code null})
+@see #setCertificateChecking
 
 ## X509CRLSelector.toString()
 
@@ -436,10 +406,10 @@ no such optional information is provided.
 public String toString()
 ```
 
-Returns a printable representation of the `X509CRLSelector`.
+Returns a printable representation of the {@code X509CRLSelector}.
 
-**Returns:** a `String` describing the contents of the
-        `X509CRLSelector`.
+@return a {@code String} describing the contents of the
+        {@code X509CRLSelector}.
 
 ## X509CRLSelector.match(CRL)
 
@@ -447,14 +417,11 @@ Returns a printable representation of the `X509CRLSelector`.
 public boolean match(CRL crl)
 ```
 
-Decides whether a `CRL` should be selected.
+Decides whether a {@code CRL} should be selected.
 
-Parameters:
-
-- `crl`: the `CRL` to be checked
-
-**Returns:** `true` if the `CRL` should be selected,
-        `false` otherwise
+@param crl the {@code CRL} to be checked
+@return {@code true} if the {@code CRL} should be selected,
+        {@code false} otherwise
 
 ## X509CRLSelector.clone()
 
@@ -464,4 +431,4 @@ public Object clone()
 
 Returns a copy of this object.
 
-**Returns:** the copy
+@return the copy

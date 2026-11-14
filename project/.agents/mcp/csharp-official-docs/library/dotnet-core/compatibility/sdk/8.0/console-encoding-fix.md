@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: SDK no longer changes console encoding after completion"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/8.0/console-encoding-fix.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change where the .NET 8 SDK no longer changes the console encoding after running a command.
+ms.date: 04/04/2023
 ---
-
 # Console encoding doesn't remain UTF-8 after completion
 
-The bug mentioned in the CLI console output uses UTF-8 breaking change, where the .NET SDK changed the encoding of the entire console, has been fixed. The console encoding no longer remains UTF-8 after the .NET SDK executes a command. It's possible that users came to rely on that behavior, hence this is a breaking change.
+The bug mentioned in the [CLI console output uses UTF-8](console-encoding.md) breaking change, where the .NET SDK changed the encoding of the entire console, has been fixed. The console encoding no longer remains UTF-8 after the .NET SDK executes a command. It's possible that users came to rely on that behavior, hence this is a breaking change.
 
 In addition, the .NET SDK no longer changes the encoding to UTF-8 on older Windows 10 versions that don't fully support it.
 
@@ -30,7 +26,7 @@ In addition, the .NET SDK no longer changes the encoding to UTF-8 on older Windo
 
 ## Type of breaking change
 
-This change can affect binary compatibility. It's also a behavioral change.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility). It's also a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -42,8 +38,8 @@ Older versions of Windows 10 (that is, versions before the November 2019 update)
 
 If your app needs to change the code page on Windows, it can run a process to invoke the `chcp` command. Your app shouldn't rely on the .NET SDK to change the encoding.
 
-For older Windows 10 versions that don't officially support UTF-8 where you want the .NET SDK to continue to change the encoding to UTF-8 for non-English languages, can you set the environment variable `DOTNET_CLI_FORCE_UTF8_ENCODING` to `true` or 1.
+For older Windows 10 versions that don't officially support UTF-8 where you want the .NET SDK to continue to change the encoding to UTF-8 for non-English languages, can you set the environment variable [`DOTNET_CLI_FORCE_UTF8_ENCODING`](../../../tools/dotnet-environment-variables.md#dotnet_cli_force_utf8_encoding) to `true` or 1.
 
 ## See also
 
-- SDK no longer changes console encoding after completion
+- [SDK no longer changes console encoding after completion](console-encoding-fix.md)

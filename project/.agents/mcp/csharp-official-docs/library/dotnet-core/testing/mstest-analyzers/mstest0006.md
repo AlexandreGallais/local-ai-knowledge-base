@@ -1,12 +1,19 @@
 ---
 title: "MSTEST0006: Avoid '[ExpectedException]'"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0006.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0006: Avoid '[ExpectedException]'"
+ms.date: 11/12/2024
+f1_keywords:
+- MSTEST0006
+- AvoidExpectedExceptionAttributeAnalyzer
+helpviewer_keywords:
+- AvoidExpectedExceptionAttributeAnalyzer
+- MSTEST0006
+author: evangelink
+ms.author: amauryleve
+dev_langs:
+- CSharp
+- VB
 ---
-
 # MSTEST0006: Avoid `[ExpectedException]`
 
 | Property                            | Value                                              |
@@ -20,7 +27,7 @@ license: "CC-BY-4.0"
 | **Introduced in version**           | 3.2.0                                              |
 | **Is there a code fix**             | Yes, starting with 3.7.0                           |
 
-> **Note:**
+> [!NOTE]
 > This analyzer is no longer relevant for MSTest 4 as the attribute was removed.
 
 ## Cause
@@ -105,11 +112,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0006
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0006.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

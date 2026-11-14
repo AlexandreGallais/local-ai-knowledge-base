@@ -1,12 +1,3 @@
----
-title: "Comparison with other form approaches"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/forms/signals/comparison.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Comparison with other form approaches
 
 Angular provides three approaches to building forms: Signal Forms, Reactive Forms, and Template-driven Forms. Each has distinct patterns for managing state, validation, and data flow. This guide helps you understand the differences and choose the right approach for your project.
@@ -28,214 +19,11 @@ Angular provides three approaches to building forms: Signal Forms, Reactive Form
 
 The best way to understand the differences is to see the same form implemented in all three approaches.
 
-  File: `Signal forms`
-
-```angular-ts
-import {Component, signal} from '@angular/core';
-import {
-  email,
-  form,
-  FormField,
-  FormRoot,
-  minLength,
-  required,
-  submit,
-} from '@angular/forms/signals';
-
-@Component({
-  selector: 'app-login',
-  imports: [FormField, FormRoot],
-  template: `
-    <form [formRoot]="loginForm" (submit)="onSubmit()">
-      <div>
-        <label>
-          Email
-          <input type="email" [formField]="loginForm.email" />
-        </label>
-        @if (loginForm.email().touched() && loginForm.email().invalid()) {
-          <span class="error">
-            {{ loginForm.email().errors()[0].message }}
-          </span>
-        }
-      </div>
-
-      <div>
-        <label>
-          Password
-          <input type="<example-value>" [formField]="<example-value>" />
-        </label>
-        @if (loginForm.password().touched() && loginForm.password().invalid()) {
-          <span class="error">
-            {{ loginForm.password().errors()[0].message }}
-          </span>
-        }
-      </div>
-
-      <button type="submit" [disabled]="loginForm().invalid()">Sign In</button>
-    </form>
-  `,
-})
-export class LoginComponent {
-  loginModel = signal({
-    email: '',
-    password: '',
-  });
-
-  loginForm = form(this.loginModel, (fieldPath) => {
-    required(fieldPath.email, {message: 'Email is required'});
-    email(fieldPath.email, {message: 'Enter a valid email address'});
-
-    required(fieldPath.password, {message: '<example-value>'});
-    minLength(fieldPath.password, 8, {message: '<example-value>'});
-  });
-
-  onSubmit() {
-    // Only runs the action when the form is valid.
-    submit(this.loginForm, async (field) => {
-      console.log('Submitting:', field().value());
-    });
-  }
-}
-```
-  File: `Reactive forms`
-
-```ts
-import {Component} from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-
-@Component({
-  selector: 'app-login',
-  imports: [ReactiveFormsModule],
-  template: `
-    <form [formGroup]="loginForm" (submit)="onSubmit()">
-      <div>
-        <label>
-          Email
-          <input type="email" formControlName="email" />
-        </label>
-        @if (loginForm.controls.email.touched && loginForm.controls.email.invalid) {
-          <span class="error">
-            @if (loginForm.controls.email.errors?.['required']) {
-              Email is required
-            }
-            @if (loginForm.controls.email.errors?.['email']) {
-              Enter a valid email address
-            }
-          </span>
-        }
-      </div>
-
-      <div>
-        <label>
-          Password
-          <input type="<example-value>" <example-value>"<example-value>" />
-        </label>
-        @if (loginForm.controls.password.touched && loginForm.controls.password.invalid) {
-          <span class="error">
-            @if (loginForm.controls.password.errors?.['<example-value>']) {
-              Password is required
-            }
-            @if (loginForm.controls.password.errors?.['<example-value>']) {
-              Password must be at least 8 characters
-            }
-          </span>
-        }
-      </div>
-
-      <button type="submit" [disabled]="loginForm.invalid">Sign In</button>
-    </form>
-  `,
-})
-export class LoginComponent {
-  loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-  });
-
-  onSubmit() {
-    if (this.loginForm.valid) {
-      const credentials = this.loginForm.value;
-      console.log('Submitting:', credentials);
-    }
-  }
-}
-```
-  File: `Template-driven forms`
-
-```ts
-import {Component} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-
-@Component({
-  selector: 'app-login',
-  imports: [FormsModule],
-  template: `
-    <form #loginForm="ngForm" (submit)="onSubmit()">
-      <div>
-        <label>
-          Email
-          <input
-            type="email"
-            name="email"
-            [(ngModel)]="email"
-            #emailInput="ngModel"
-            required
-            email
-          />
-        </label>
-        @if (emailInput.touched && emailInput.invalid) {
-          <span class="error">
-            @if (emailInput.errors?.['required']) {
-              Email is required
-            }
-            @if (emailInput.errors?.['email']) {
-              Enter a valid email address
-            }
-          </span>
-        }
-      </div>
-
-      <div>
-        <label>
-          Password
-          <input
-            type="<example-value>"
-            name="<example-value>"
-            [(ngModel)]="<example-value>"
-            #passwordInput="<example-value>"
-            required
-            minlength="8"
-          />
-        </label>
-        @if (passwordInput.touched && passwordInput.invalid) {
-          <span class="error">
-            @if (passwordInput.errors?.['<example-value>']) {
-              Password is required
-            }
-            @if (passwordInput.errors?.['<example-value>']) {
-              Password must be at least 8 characters
-            }
-          </span>
-        }
-      </div>
-
-      <button type="submit" [disabled]="loginForm.invalid">Sign In</button>
-    </form>
-  `,
-})
-export class LoginComponent {
-  email = '';
-  password = '';
-
-  onSubmit() {
-    const credentials = {
-      email: this.email,
-      password: this.password,
-    };
-    console.log('Submitting:', credentials);
-  }
-}
-```
+<docs-code-multifile>
+  <docs-code language="angular-ts" header="Signal forms" path="adev/src/content/examples/signal-forms/src/comparison/app/signal-forms.ts"/>
+  <docs-code header="Reactive forms" path="adev/src/content/examples/signal-forms/src/comparison/app/reactive-forms.ts"/>
+  <docs-code header="Template-driven forms" path="adev/src/content/examples/signal-forms/src/comparison/app/template-driven-forms.ts"/>
+</docs-code-multifile>
 
 ## Understanding the differences
 
@@ -248,7 +36,7 @@ The most fundamental difference is where each approach considers the "source of 
 Signal Forms stores data in a writable signal. When you need the current form values, you call the signal:
 
 ```ts
-const credentials = this.loginModel(); // { email: '<example-value>', password: '<example-value>' }
+const credentials = this.loginModel(); // { email: '...', password: '...' }
 ```
 
 This keeps your form data in a single reactive container that automatically notifies Angular when values change. The form structure mirrors your data model exactly.
@@ -256,7 +44,7 @@ This keeps your form data in a single reactive container that automatically noti
 Reactive Forms stores data inside FormControl and FormGroup instances. You access values through the form hierarchy:
 
 ```ts
-const credentials = this.loginForm.value; // { email: '<example-value>', password: '<example-value>' }
+const credentials = this.loginForm.value; // { email: '...', password: '...' }
 ```
 
 This separates form state management from your component's data model. The form structure is explicit but requires more setup code.
@@ -367,6 +155,6 @@ TypeScript understands your component properties but has no knowledge of form st
 
 To learn more about each approach:
 
-- **Signal Forms**: See the Overview guide to get started, or dive into Form Models, Validation, and Field State Management
-- **Reactive Forms**: See the Reactive Forms guide in Angular documentation
-- **Template-driven Forms**: See the Template-driven Forms guide in Angular documentation
+- **Signal Forms**: See the [Overview guide](guide/forms/signals/overview) to get started, or dive into [Form Models](guide/forms/signals/models), [Validation](guide/forms/signals/validation), and [Field State Management](guide/forms/signals/field-state-management)
+- **Reactive Forms**: See the [Reactive Forms guide](guide/forms/reactive-forms) in Angular documentation
+- **Template-driven Forms**: See the [Template-driven Forms guide](guide/forms/template-driven-forms) in Angular documentation

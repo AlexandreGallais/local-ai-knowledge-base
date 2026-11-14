@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugProcess5::EnableNGENPolicy Method"
 title: "ICorDebugProcess5::EnableNGENPolicy Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess5-enablengenpolicy-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugProcess5::EnableNGenPolicy"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugProcess5::EnableNGENPolicy"
+helpviewer_keywords:
+  - "ICorDebugProcess5::EnableNGENPolicy method [.NET debugging]"
+  - "EnableNGENPolicy method, ICorDebugProcess5 interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugProcess5::EnableNGENPolicy Method
 
 Sets a value that determines how an application loads native images while running under a managed debugger.
@@ -22,17 +31,17 @@ HRESULT EnableNGENPolicy(
 ## Parameters
 
  `ePolicy`
- [in] A CorDebugNGenPolicy constant that determines how an application loads native images while running under a managed debugger.
+ [in] A [CorDebugNGenPolicy](cordebugngenpolicy-enumeration.md) constant that determines how an application loads native images while running under a managed debugger.
 
 ## Remarks
 
-If the policy is set successfully, the method returns `S_OK`. If `ePolicy` is outside the range of the enumerated values defined by CorDebugNGenPolicy, the method returns `E_INVALIDARG` and the method call has no effect. If the policy of the Native Image Generator (Ngen.exe) cannot be updated, the method returns `E_FAIL`.
+If the policy is set successfully, the method returns `S_OK`. If `ePolicy` is outside the range of the enumerated values defined by [CorDebugNGenPolicy](cordebugngenpolicy-enumeration.md), the method returns `E_INVALIDARG` and the method call has no effect. If the policy of the Native Image Generator (Ngen.exe) cannot be updated, the method returns `E_FAIL`.
 
 The `ICorDebugProcess5::EnableNGenPolicy` method can be called at any time during the lifetime of the process. The policy is in effect for any modules that are loaded after the policy is set.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -42,4 +51,4 @@ The `ICorDebugProcess5::EnableNGenPolicy` method can be called at any time durin
 
 ## See also
 
-- ICorDebugProcess5 Interface
+- [ICorDebugProcess5 Interface](icordebugprocess5-interface.md)

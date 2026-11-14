@@ -1,10 +1,9 @@
 ---
 title: "Breaking change - CoreCLR trace events replace Mono trace events"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/maui/11/runtime-trace-events.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where CoreCLR trace events replace Mono trace events."
+ms.date: 10/21/2026
+ai-usage: ai-generated
+ms.custom: https://github.com/dotnet/docs/issues/56483
 ---
 
 # CoreCLR trace events replace Mono trace events
@@ -27,7 +26,7 @@ component out.
 ## New behavior
 
 `dotnet-trace` and `.nettrace` files remain supported.
-dotnet-dsrouter
+[dotnet-dsrouter](../../../diagnostics/dotnet-dsrouter.md)
 can connect the mobile diagnostic port over TCP.
 
 CoreCLR events replace the smaller set of Mono events. A provider with the same
@@ -38,13 +37,13 @@ EventPipe should otherwise work in the same way for most users. CoreCLR
 diagnostics are part of the mobile runtime, but diagnostics must be enabled when
 the app is built. Set `EnableDiagnostics=true` to enable diagnostics.
 
-See Tracing .NET for Android applications
+See [Tracing .NET for Android applications](https://github.com/dotnet/android/blob/main/Documentation/guides/tracing.md)
 and the
-Apple `EnableDiagnostics` build property.
+[Apple `EnableDiagnostics` build property](/dotnet/ios/building-apps/build-properties#enablediagnostics).
 
 ## Type of breaking change
 
-This change can affect source compatibility, binary compatibility, and behavior.
+This change can affect [source compatibility](../../categories.md#source-compatibility), [binary compatibility](../../categories.md#binary-compatibility), and [behavior](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -53,9 +52,9 @@ CoreCLR and Mono provide different runtime events and profiler features.
 ## Recommended action
 
 - Test custom trace tools with the documented
-  runtime events
+  [runtime events](../../../../fundamentals/diagnostics/runtime-events.md)
   and
-  well-known providers.
+  [well-known providers](../../../diagnostics/well-known-event-providers.md).
 - Stop requesting `Microsoft-DotNETRuntimeMonoProfiler`.
 
 ## Affected APIs

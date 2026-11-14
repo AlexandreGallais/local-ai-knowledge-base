@@ -1,20 +1,18 @@
 ---
-title: "no-return-await"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-return-await.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-return-await
+rule_type: suggestion
+further_reading:
+- https://v8.dev/blog/fast-async
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
+- https://jakearchibald.com/2017/await-vs-return-vs-return-await/
 ---
-
-# no-return-await
 
 It is NOT recommended to use the `no-return-await` rule anymore because:
 
 * `return await` on a promise will not result in an extra microtask.
 * `return await` yields a better stack trace for debugging.
 
-Historical context: When promises were first introduced, calling `return await` introduced an additional microtask, one for the `await` and one for the return value of the async function. Each extra microtask delays the computation of a result and so this rule was added to help avoid this performance trap. Later, ECMA-262 changed the way `return await` worked so it would create a single microtask, which means this rule is no longer necessary.
+Historical context: When promises were first introduced, calling `return await` introduced an additional microtask, one for the `await` and one for the return value of the async function. Each extra microtask delays the computation of a result and so this rule was added to help avoid this performance trap. Later, [ECMA-262 changed the way](https://github.com/tc39/ecma262/pull/1250) `return await` worked so it would create a single microtask, which means this rule is no longer necessary.
 
 ## Rule Details
 
@@ -22,7 +20,7 @@ This rule warns on any usage of `return await` except in `try` blocks.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-return-await: "error"*/
@@ -32,9 +30,11 @@ async function foo() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-return-await: "error"*/
@@ -61,6 +61,8 @@ async function foo4() {
     } catch (error) {}
 }
 ```
+
+:::
 
 ## When Not To Use It
 

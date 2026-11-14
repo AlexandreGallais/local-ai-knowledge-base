@@ -1,12 +1,11 @@
 ---
 title: "NETSDK1004: Assets file not found"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/sdk-errors/netsdk1004.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about .NET SDK error NETSDK1004, which occurs when the project.assets.json file is not found.
+ms.topic: error-reference
+ms.date: 01/29/2021
+f1_keywords:
+- NETSDK1004
 ---
-
 # NETSDK1004: Assets file not found
 
 **This article applies to:** ✔️ .NET Core 2.1.100 SDK and later versions

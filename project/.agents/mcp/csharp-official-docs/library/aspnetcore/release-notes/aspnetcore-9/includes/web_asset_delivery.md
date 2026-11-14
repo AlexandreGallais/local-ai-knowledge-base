@@ -1,15 +1,4 @@
----
-title: "web_asset_delivery"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-9/includes/web_asset_delivery.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# web_asset_delivery
-
-Following production best practices for serving static assets requires a significant amount of work and technical expertise. Without optimizations like compression, caching, and fingerprints:
+Following production best practices for serving static assets requires a significant amount of work and technical expertise. Without optimizations like compression, caching, and [fingerprints](https://en.wikipedia.org/wiki/Fingerprint_(computing)):
 
 * The browser has to make additional requests on every page load.
 * More bytes than necessary are transferred through the network.
@@ -17,15 +6,15 @@ Following production best practices for serving static assets requires a signifi
 
 Creating performant web apps requires optimizing asset delivery to the browser. Possible optimizations include:
 
-* Serve a given asset once until the file changes or the browser clears its cache. Set the ETag header.
-* Prevent the browser from using old or stale assets after an app is updated. Set the Last-Modified header.
-* Set up proper caching headers.
-* Use caching middleware.
-* Serve compressed versions of the assets when possible.
-* Use a CDN to serve the assets closer to the user.
+* Serve a given asset once until the file changes or the browser clears its cache. Set the [ETag](https://developer.mozilla.org/docs/Web/HTTP/Headers/ETag) header.
+* Prevent the browser from using old or stale assets after an app is updated. Set the [Last-Modified](https://developer.mozilla.org/docs/Web/HTTP/Headers/Last-Modified) header.
+* Set up proper [caching headers](https://developer.mozilla.org/docs/Web/HTTP/Headers/Cache-Control).
+* Use [caching middleware](../../../performance/caching/middleware.md).
+* Serve [compressed](../../../performance/response-compression.md) versions of the assets when possible.
+* Use a [CDN](/microsoft-365/enterprise/content-delivery-networks?view=o365-worldwide&preserve-view=true) to serve the assets closer to the user.
 * Minimize the size of assets served to the browser. This optimization doesn't include minification.
 
-`Microsoft.AspNetCore.Builder.StaticAssetsEndpointRouteBuilderExtensions.MapStaticAssets*` is a new feature that optimizes the delivery of static assets in an app. It's designed to work with all UI frameworks, including Blazor, Razor Pages, and MVC. It's typically a drop-in replacement for `UseStaticFiles`:
+<xref:Microsoft.AspNetCore.Builder.StaticAssetsEndpointRouteBuilderExtensions.MapStaticAssets*> is a new feature that optimizes the delivery of static assets in an app. It's designed to work with all UI frameworks, including Blazor, Razor Pages, and MVC. It's typically a drop-in replacement for [`UseStaticFiles`](/dotnet/api/microsoft.aspnetcore.builder.staticfileextensions.usestaticfiles):
 
 ```diff
 var builder = WebApplication.CreateBuilder(args);
@@ -55,14 +44,14 @@ app.Run();
 
 `MapStaticAssets` operates by combining build and publish-time processes to collect information about all the static resources in an app. This information is then utilized by the runtime library to efficiently serve these files to the browser.
 
-`MapStaticAssets` can replace `UseStaticFiles` in most situations, however, it's optimized for serving the assets that the app has knowledge of at build and publish time. If the app serves assets from other locations, such as disk or embedded resources, `UseStaticFiles` should be used.
+`MapStaticAssets` can replace [`UseStaticFiles`](/dotnet/api/microsoft.aspnetcore.builder.staticfileextensions.usestaticfiles) in most situations, however, it's optimized for serving the assets that the app has knowledge of at build and publish time. If the app serves assets from other locations, such as disk or embedded resources, `UseStaticFiles` should be used.
 
 `MapStaticAssets` provides the following benefits not found with `UseStaticFiles`:
 
 * Build time compression for all the assets in the app:
   * `gzip` during development and `gzip + brotli` during publish.
   * All assets are compressed with the goal of reducing the size of the assets to the minimum.
-* Content based `ETags`: The `Etags` for each resource are the Base64 encoded string of the SHA-256 hash of the content. This ensures that the browser only redownloads a file if its contents have changed.
+* Content based `ETags`: The `Etags` for each resource are the [Base64](https://developer.mozilla.org/docs/Glossary/Base64) encoded string of the [SHA-256](/dotnet/api/system.security.cryptography.sha256?view=net-8.0&preserve-view=true) hash of the content. This ensures that the browser only redownloads a file if its contents have changed.
 
 The following table shows the original and compressed sizes of the CSS and JS files in the default Razor Pages template.
 
@@ -73,7 +62,7 @@ jquery.js | 89.6 | 28 | 68.75%
 bootstrap.min.js | 78.5 | 20 | 74.52%
 **Total** | 331.1 | 65.5 | 80.20%
 
-The following table shows the original and compressed sizes using the Fluent UI Blazor components library.
+The following table shows the original and compressed sizes using the [Fluent UI Blazor components library](https://www.fluentui-blazor.net/).
 
 File | Original | Compressed | % Reduction
 -- | -- | -- | --
@@ -83,7 +72,7 @@ fluent.css | 94 | 11 | 88.30%
 
 For a total of 478 KB uncompressed to 84 KB compressed.
 
-The following table shows the original and compressed sizes using the MudBlazor Blazor components library.
+The following table shows the original and compressed sizes using the [MudBlazor](https://mudblazor.com) Blazor components library.
 
 File | Original | Compressed | Reduction
 -- | -- | -- | --
@@ -95,8 +84,8 @@ Optimization happens automatically when using `MapStaticAssets`. When a library 
 
 For more information on the new file delivery features, see the following resources:
 
-* Serve static files in ASP.NET Core apps
-* ASP.NET Core Blazor static files
+* [Serve static files in ASP.NET Core apps](../../../fundamentals/static-files.md?view=aspnetcore-9.0&preserve-view=true)
+* [ASP.NET Core Blazor static files](../../../blazor/fundamentals/static-files.md?view=aspnetcore-9.0&preserve-view=true)
 
 ### Customize build-time compression with MSBuild properties
 
@@ -121,18 +110,25 @@ To completely disable compression:
 </PropertyGroup>
 ```
 
-For more information, see Serve static files in ASP.NET Core apps.
+For more information, see [Serve static files in ASP.NET Core apps](../../../fundamentals/static-files.md?view=aspnetcore-9.0&preserve-view=true#msbuild-properties).
 
 ### Enabling dynamic compression on the server vs using `MapStaticAssets`
 
 `MapStaticAssets` has the following advantages over dynamic compression on the server:
 
+<!--
+I'm confused about the following:
+If we take MudBlazor as an example, IIS will compress the CSS bundle at around 90Kb, while brotli with max settings will result in 37Kb. That is still a whopping 59% size reduction or 41% of its dynamically compressed size -->
+
 * Is simpler because there is no server specific configuration.
-* Is more performant because the assets are compressed at build time.
+* Is more performant because the assets are compressed at build time. <!-- IIS can do static compression -->
 * Allows the developer to spend extra time during the build process to ensure that the assets are the minimum size.
 
 Consider the following table comparing MudBlazor compression with IIS dynamic compression and `MapStaticAssets`.
+<!-- MapStaticAssets uses brotli max so it's the same as IIS brotli max is the same as -->
 
 IIS gzip | `MapStaticAssets` | `MapStaticAssets` reduction
 -- | -- | --
  &#8773; 90 | 37.5 | 59%
+
+<!--  “always flush” does not work with IIS Brotli AND might degrade Zlib compression ratio. See https://microsoft.sharepoint.com/:p:/r/teams/GlobalDAS/WebApps/_layouts/15/Doc.aspx?sourcedoc=%7BDC4A0B9B-6A27-498F-BC7D-6B6647AAC39F%7D&file=IIS_Compression_new_API.pptx -->

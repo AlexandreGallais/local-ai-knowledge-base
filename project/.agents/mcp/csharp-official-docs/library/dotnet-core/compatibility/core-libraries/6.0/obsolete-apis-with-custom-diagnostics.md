@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: .NET 6 obsoletions with non-default diagnostic IDs"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/6.0/obsolete-apis-with-custom-diagnostics.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+titleSuffix: ""
+description: Learn about the .NET 6 breaking change in core .NET libraries where some APIs have been marked as obsolete with a custom diagnostic ID.
+ms.date: 09/07/2021
 ---
-
 # API obsoletions with non-default diagnostic IDs (.NET 6)
 
-Some APIs have been marked as obsolete, starting in .NET 6. This breaking change is specific to APIs that have been marked as obsolete *with a custom diagnostic ID*. Suppressing the default obsoletion diagnostic ID, which is CS0618 for the C# compiler, does not suppress the warnings that the compiler generates when these APIs are used.
+Some APIs have been marked as obsolete, starting in .NET 6. This breaking change is specific to APIs that have been marked as obsolete *with a custom diagnostic ID*. Suppressing the default obsoletion diagnostic ID, which is [CS0618](../../../../csharp/language-reference/compiler-messages/cs0618.md) for the C# compiler, does not suppress the warnings that the compiler generates when these APIs are used.
 
 ## Change description
 
@@ -19,29 +16,29 @@ The following table lists the custom diagnostic IDs and their corresponding warn
 
 | Diagnostic ID | Description | Severity |
 | - | - |
-| SYSLIB0013 | `System.Uri.EscapeUriString(System.String)` can corrupt the URI string in some cases. Consider using `System.Uri.EscapeDataString(System.String)` for query string components instead. | Warning |
-| SYSLIB0014 | `System.Net.WebRequest`, `System.Net.HttpWebRequest`, `System.Net.ServicePoint`, and `System.Net.WebClient` are obsolete. Use `System.Net.Http.HttpClient` instead. | Warning |
-| SYSLIB0015 | `System.Runtime.CompilerServices.DisablePrivateReflectionAttribute` has no effect in .NET 6+. | Warning |
-| SYSLIB0016 | Use the `System.Drawing.Graphics.GetContextInfo*` overloads that accept arguments for better performance and fewer allocations. | Warning |
-| SYSLIB0017 | Strong-name signing is not supported and throws `System.PlatformNotSupportedException`. | Warning |
-| SYSLIB0018 | Reflection-only loading is not supported and throws `System.PlatformNotSupportedException`. | Warning |
-| SYSLIB0019 | The `System.Runtime.InteropServices.RuntimeEnvironment` members `System.Runtime.InteropServices.RuntimeEnvironment.SystemConfigurationFile`, `System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeInterfaceAsIntPtr(System.Guid,System.Guid)`, and `System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeInterfaceAsObject(System.Guid,System.Guid)` are no longer supported and throw `System.PlatformNotSupportedException`. | Warning |
-| SYSLIB0020 | `System.Text.Json.JsonSerializerOptions.IgnoreNullValues` is obsolete. To ignore null values when serializing, set `System.Text.Json.JsonSerializerOptions.DefaultIgnoreCondition` to `System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull`. | Warning |
-| SYSLIB0021 | Derived cryptographic types are obsolete. Use the `Create` method on the base type instead. | Warning |
-| SYSLIB0022 | The `System.Security.Cryptography.Rijndael` and `System.Security.Cryptography.RijndaelManaged` types are obsolete. Use `System.Security.Cryptography.Aes` instead. | Warning |
-| SYSLIB0023 | `System.Security.Cryptography.RNGCryptoServiceProvider` is obsolete. To generate a random number, use one of the `System.Security.Cryptography.RandomNumberGenerator` static methods instead. | Warning |
-| SYSLIB0024 | Creating and unloading AppDomains is not supported and throws an exception. | Warning |
-| SYSLIB0025 | `System.Runtime.CompilerServices.SuppressIldasmAttribute` has no effect in .NET 6+. | Warning |
-| SYSLIB0026 | `System.Security.Cryptography.X509Certificates.X509Certificate` and `System.Security.Cryptography.X509Certificates.X509Certificate2` are immutable. Use the appropriate constructor to create a new certificate. | Warning |
-| SYSLIB0027 | `System.Security.Cryptography.X509Certificates.PublicKey.Key` is obsolete. Use the appropriate method to get the public key, such as `System.Security.Cryptography.X509Certificates.PublicKey.GetRSAPublicKey`. | Warning |
-| SYSLIB0028 | `System.Security.Cryptography.X509Certificates.X509Certificate2.PrivateKey` is obsolete. Use the appropriate method to get the private key, such as `System.Security.Cryptography.X509Certificates.RSACertificateExtensions.GetRSAPrivateKey(System.Security.Cryptography.X509Certificates.X509Certificate2)`, or use the `System.Security.Cryptography.X509Certificates.X509Certificate2.CopyWithPrivateKey(System.Security.Cryptography.ECDiffieHellman)` method to create a new instance with a private key. | Warning |
-| SYSLIB0029 | `ProduceLegacyHmacValues` is obsolete. Producing legacy HMAC values is no longer supported. | Warning |
-| SYSLIB0030 | `HMACSHA1` always uses the algorithm implementation provided by the platform. Use a constructor without the `useManagedSha1` parameter. | Warning |
-| SYSLIB0031 | `System.Security.Cryptography.CryptoConfig.EncodeOID(System.String)` is obsolete. Use the ASN.1 functionality provided in `System.Formats.Asn1`. | Warning |
-| SYSLIB0032 | Recovery from corrupted process state exceptions is not supported; `System.Runtime.ExceptionServices.HandleProcessCorruptedStateExceptionsAttribute` is ignored. | Warning |
-| SYSLIB0033 | `System.Security.Cryptography.Rfc2898DeriveBytes.CryptDeriveKey(System.String,System.String,System.Int32,System.Byte[])` is obsolete and is not supported. Use `System.Security.Cryptography.PasswordDeriveBytes.CryptDeriveKey(System.String,System.String,System.Int32,System.Byte[])` instead. | Warning |
-| SYSLIB0034 | `System.Security.Cryptography.Pkcs.CmsSigner.#ctor(System.Security.Cryptography.CspParameters)` is obsolete. Use an alternative constructor instead. | Warning |
-| SYSLIB0035 | `System.Security.Cryptography.Pkcs.SignerInfo.ComputeCounterSignature` is obsolete. Use the overload that accepts a `System.Security.Cryptography.Pkcs.CmsSigner` instead. | Warning |
+| [SYSLIB0013](../../../../fundamentals/syslib-diagnostics/syslib0013.md) | <xref:System.Uri.EscapeUriString(System.String)?displayProperty=nameWithType> can corrupt the URI string in some cases. Consider using <xref:System.Uri.EscapeDataString(System.String)?displayProperty=nameWithType> for query string components instead. | Warning |
+| [SYSLIB0014](../../../../fundamentals/syslib-diagnostics/syslib0014.md) | <xref:System.Net.WebRequest>, <xref:System.Net.HttpWebRequest>, <xref:System.Net.ServicePoint>, and <xref:System.Net.WebClient> are obsolete. Use <xref:System.Net.Http.HttpClient> instead. | Warning |
+| [SYSLIB0015](../../../../fundamentals/syslib-diagnostics/syslib0015.md) | <xref:System.Runtime.CompilerServices.DisablePrivateReflectionAttribute> has no effect in .NET 6+. | Warning |
+| [SYSLIB0016](../../../../fundamentals/syslib-diagnostics/syslib0016.md) | Use the <xref:System.Drawing.Graphics.GetContextInfo*?displayProperty=nameWithType> overloads that accept arguments for better performance and fewer allocations. | Warning |
+| [SYSLIB0017](../../../../fundamentals/syslib-diagnostics/syslib0017.md) | Strong-name signing is not supported and throws <xref:System.PlatformNotSupportedException>. | Warning |
+| [SYSLIB0018](../../../../fundamentals/syslib-diagnostics/syslib0018.md) | Reflection-only loading is not supported and throws <xref:System.PlatformNotSupportedException>. | Warning |
+| [SYSLIB0019](../../../../fundamentals/syslib-diagnostics/syslib0019.md) | The <xref:System.Runtime.InteropServices.RuntimeEnvironment?displayProperty=nameWithType> members <xref:System.Runtime.InteropServices.RuntimeEnvironment.SystemConfigurationFile>, <xref:System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeInterfaceAsIntPtr(System.Guid,System.Guid)>, and <xref:System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeInterfaceAsObject(System.Guid,System.Guid)> are no longer supported and throw <xref:System.PlatformNotSupportedException>. | Warning |
+| [SYSLIB0020](../../../../fundamentals/syslib-diagnostics/syslib0020.md) | <xref:System.Text.Json.JsonSerializerOptions.IgnoreNullValues?displayProperty=nameWithType> is obsolete. To ignore null values when serializing, set <xref:System.Text.Json.JsonSerializerOptions.DefaultIgnoreCondition> to <xref:System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull?displayProperty=nameWithType>. | Warning |
+| [SYSLIB0021](../../../../fundamentals/syslib-diagnostics/syslib0021.md) | Derived cryptographic types are obsolete. Use the `Create` method on the base type instead. | Warning |
+| [SYSLIB0022](../../../../fundamentals/syslib-diagnostics/syslib0022.md) | The <xref:System.Security.Cryptography.Rijndael> and <xref:System.Security.Cryptography.RijndaelManaged> types are obsolete. Use <xref:System.Security.Cryptography.Aes> instead. | Warning |
+| [SYSLIB0023](../../../../fundamentals/syslib-diagnostics/syslib0023.md) | <xref:System.Security.Cryptography.RNGCryptoServiceProvider> is obsolete. To generate a random number, use one of the <xref:System.Security.Cryptography.RandomNumberGenerator> static methods instead. | Warning |
+| [SYSLIB0024](../../../../fundamentals/syslib-diagnostics/syslib0024.md) | Creating and unloading [AppDomains](xref:System.AppDomain) is not supported and throws an exception. | Warning |
+| [SYSLIB0025](../../../../fundamentals/syslib-diagnostics/syslib0025.md) | <xref:System.Runtime.CompilerServices.SuppressIldasmAttribute> has no effect in .NET 6+. | Warning |
+| [SYSLIB0026](../../../../fundamentals/syslib-diagnostics/syslib0026.md) | <xref:System.Security.Cryptography.X509Certificates.X509Certificate> and <xref:System.Security.Cryptography.X509Certificates.X509Certificate2> are immutable. Use the appropriate constructor to create a new certificate. | Warning |
+| [SYSLIB0027](../../../../fundamentals/syslib-diagnostics/syslib0027.md) | <xref:System.Security.Cryptography.X509Certificates.PublicKey.Key?displayProperty=nameWithType> is obsolete. Use the appropriate method to get the public key, such as <xref:System.Security.Cryptography.X509Certificates.PublicKey.GetRSAPublicKey>. | Warning |
+| [SYSLIB0028](../../../../fundamentals/syslib-diagnostics/syslib0028.md) | <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.PrivateKey?displayProperty=nameWithType> is obsolete. Use the appropriate method to get the private key, such as <xref:System.Security.Cryptography.X509Certificates.RSACertificateExtensions.GetRSAPrivateKey(System.Security.Cryptography.X509Certificates.X509Certificate2)?displayProperty=nameWithType>, or use the <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.CopyWithPrivateKey(System.Security.Cryptography.ECDiffieHellman)?displayProperty=nameWithType> method to create a new instance with a private key. | Warning |
+| [SYSLIB0029](../../../../fundamentals/syslib-diagnostics/syslib0029.md) | `ProduceLegacyHmacValues` is obsolete. Producing legacy HMAC values is no longer supported. | Warning |
+| [SYSLIB0030](../../../../fundamentals/syslib-diagnostics/syslib0030.md) | `HMACSHA1` always uses the algorithm implementation provided by the platform. Use a constructor without the `useManagedSha1` parameter. | Warning |
+| [SYSLIB0031](../../../../fundamentals/syslib-diagnostics/syslib0031.md) | <xref:System.Security.Cryptography.CryptoConfig.EncodeOID(System.String)?displayProperty=nameWithType> is obsolete. Use the ASN.1 functionality provided in <xref:System.Formats.Asn1?displayProperty=fullName>. | Warning |
+| [SYSLIB0032](../../../../fundamentals/syslib-diagnostics/syslib0032.md) | Recovery from corrupted process state exceptions is not supported; <xref:System.Runtime.ExceptionServices.HandleProcessCorruptedStateExceptionsAttribute> is ignored. | Warning |
+| [SYSLIB0033](../../../../fundamentals/syslib-diagnostics/syslib0033.md) | <xref:System.Security.Cryptography.Rfc2898DeriveBytes.CryptDeriveKey(System.String,System.String,System.Int32,System.Byte[])?displayProperty=nameWithType> is obsolete and is not supported. Use <xref:System.Security.Cryptography.PasswordDeriveBytes.CryptDeriveKey(System.String,System.String,System.Int32,System.Byte[])?displayProperty=nameWithType> instead. | Warning |
+| [SYSLIB0034](../../../../fundamentals/syslib-diagnostics/syslib0034.md) | <xref:System.Security.Cryptography.Pkcs.CmsSigner.%23ctor(System.Security.Cryptography.CspParameters)> is obsolete. Use an alternative constructor instead. | Warning |
+| [SYSLIB0035](../../../../fundamentals/syslib-diagnostics/syslib0035.md) | <xref:System.Security.Cryptography.Pkcs.SignerInfo.ComputeCounterSignature?displayProperty=nameWithType> is obsolete. Use the overload that accepts a <xref:System.Security.Cryptography.Pkcs.CmsSigner> instead. | Warning |
 
 ## Version introduced
 
@@ -57,125 +54,125 @@ The following table lists the custom diagnostic IDs and their corresponding warn
 
 ### SYSLIB0013
 
-- `System.Uri.EscapeUriString(System.String)`
+- <xref:System.Uri.EscapeUriString(System.String)?displayProperty=fullName>
 
 ### SYSLIB0014
 
-- `System.Net.WebRequest`
-- `System.Net.HttpWebRequest`
-- `System.Net.ServicePoint`
-- `System.Net.WebClient`
+- <xref:System.Net.WebRequest?displayProperty=fullName>
+- <xref:System.Net.HttpWebRequest?displayProperty=fullName>
+- <xref:System.Net.ServicePoint?displayProperty=fullName>
+- <xref:System.Net.WebClient?displayProperty=fullName>
 
 ### SYSLIB0015
 
-- `System.Runtime.CompilerServices.DisablePrivateReflectionAttribute`
+- <xref:System.Runtime.CompilerServices.DisablePrivateReflectionAttribute?displayProperty=fullName>
 
 ### SYSLIB0016
 
-- `System.Drawing.Graphics.GetContextInfo`
+- <xref:System.Drawing.Graphics.GetContextInfo?displayProperty=fullName>
 
 ### SYSLIB0017
 
-- `System.Reflection.AssemblyName.KeyPair`
-- `System.Reflection.StrongNameKeyPair`
+- <xref:System.Reflection.AssemblyName.KeyPair?displayProperty=fullName>
+- <xref:System.Reflection.StrongNameKeyPair?displayProperty=fullName>
 
 ### SYSLIB0018
 
-- `System.Reflection.Assembly.ReflectionOnlyLoad*`
-- `System.Reflection.Assembly.ReflectionOnlyLoadFrom(System.String)`
-- `System.Type.ReflectionOnlyGetType(System.String,System.Boolean,System.Boolean)`
+- <xref:System.Reflection.Assembly.ReflectionOnlyLoad*?displayProperty=fullName>
+- <xref:System.Reflection.Assembly.ReflectionOnlyLoadFrom(System.String)?displayProperty=fullName>
+- <xref:System.Type.ReflectionOnlyGetType(System.String,System.Boolean,System.Boolean)?displayProperty=fullName>
 
 ### SYSLIB0019
 
-- `System.Runtime.InteropServices.RuntimeEnvironment.SystemConfigurationFile`
-- `System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeInterfaceAsIntPtr(System.Guid,System.Guid)`
-- `System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeInterfaceAsObject(System.Guid,System.Guid)`
+- <xref:System.Runtime.InteropServices.RuntimeEnvironment.SystemConfigurationFile?displayProperty=fullName>
+- <xref:System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeInterfaceAsIntPtr(System.Guid,System.Guid)?displayProperty=fullName>
+- <xref:System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeInterfaceAsObject(System.Guid,System.Guid)?displayProperty=fullName>
 
 ### SYSLIB0020
 
-- `System.Text.Json.JsonSerializerOptions.IgnoreNullValues`
+- <xref:System.Text.Json.JsonSerializerOptions.IgnoreNullValues?displayProperty=fullName>
 
 ### SYSLIB0021
 
-- `System.Security.Cryptography.AesCryptoServiceProvider`
-- `System.Security.Cryptography.AesManaged`
-- `System.Security.Cryptography.DESCryptoServiceProvider`
-- `System.Security.Cryptography.MD5CryptoServiceProvider`
-- `System.Security.Cryptography.RC2CryptoServiceProvider`
-- `System.Security.Cryptography.SHA1CryptoServiceProvider`
-- `System.Security.Cryptography.SHA1Managed`
-- `System.Security.Cryptography.SHA256Managed`
-- `System.Security.Cryptography.SHA256CryptoServiceProvider`
-- `System.Security.Cryptography.SHA384Managed`
-- `System.Security.Cryptography.SHA384CryptoServiceProvider`
-- `System.Security.Cryptography.SHA512Managed`
-- `System.Security.Cryptography.SHA512CryptoServiceProvider`
-- `System.Security.Cryptography.TripleDESCryptoServiceProvider`
+- <xref:System.Security.Cryptography.AesCryptoServiceProvider?displayProperty=fullName>
+- <xref:System.Security.Cryptography.AesManaged?displayProperty=fullName>
+- <xref:System.Security.Cryptography.DESCryptoServiceProvider?displayProperty=fullName>
+- <xref:System.Security.Cryptography.MD5CryptoServiceProvider?displayProperty=fullName>
+- <xref:System.Security.Cryptography.RC2CryptoServiceProvider?displayProperty=fullName>
+- <xref:System.Security.Cryptography.SHA1CryptoServiceProvider?displayProperty=fullName>
+- <xref:System.Security.Cryptography.SHA1Managed?displayProperty=fullName>
+- <xref:System.Security.Cryptography.SHA256Managed?displayProperty=fullName>
+- <xref:System.Security.Cryptography.SHA256CryptoServiceProvider?displayProperty=fullName>
+- <xref:System.Security.Cryptography.SHA384Managed?displayProperty=fullName>
+- <xref:System.Security.Cryptography.SHA384CryptoServiceProvider?displayProperty=fullName>
+- <xref:System.Security.Cryptography.SHA512Managed?displayProperty=fullName>
+- <xref:System.Security.Cryptography.SHA512CryptoServiceProvider?displayProperty=fullName>
+- <xref:System.Security.Cryptography.TripleDESCryptoServiceProvider?displayProperty=fullName>
 
 ### SYSLIB0022
 
-- `System.Security.Cryptography.Rijndael`
-- `System.Security.Cryptography.RijndaelManaged`
+- <xref:System.Security.Cryptography.Rijndael?displayProperty=fullName>
+- <xref:System.Security.Cryptography.RijndaelManaged?displayProperty=fullName>
 
 ### SYSLIB0023
 
-- `System.Security.Cryptography.RNGCryptoServiceProvider`
+- <xref:System.Security.Cryptography.RNGCryptoServiceProvider>
 
 ### SYSLIB0024
 
-- `System.AppDomain.CreateDomain(System.String)`
-- `System.AppDomain.Unload(System.AppDomain)`
+- <xref:System.AppDomain.CreateDomain(System.String)?displayProperty=fullName>
+- <xref:System.AppDomain.Unload(System.AppDomain)?displayProperty=fullName>
 
 ### SYSLIB0025
 
-- `System.Runtime.CompilerServices.SuppressIldasmAttribute`
+- <xref:System.Runtime.CompilerServices.SuppressIldasmAttribute?displayProperty=fullName>
 
 ### SYSLIB0026
 
-- `System.Security.Cryptography.X509Certificates.X509Certificate.#ctor`
-- `System.Security.Cryptography.X509Certificates.X509Certificate.Import*`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2.#ctor`
-- `System.Security.Cryptography.X509Certificates.X509Certificate2.Import*`
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate.%23ctor>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate.Import*?displayProperty=nameWithType>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.%23ctor>
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.Import*?displayProperty=nameWithType>
 
 ### SYSLIB0027
 
-- `System.Security.Cryptography.X509Certificates.PublicKey.Key`
+- <xref:System.Security.Cryptography.X509Certificates.PublicKey.Key?displayProperty=nameWithType>
 
 ### SYSLIB0028
 
-- `System.Security.Cryptography.X509Certificates.X509Certificate2.PrivateKey`
+- <xref:System.Security.Cryptography.X509Certificates.X509Certificate2.PrivateKey?displayProperty=nameWithType>
 
 ### SYSLIB0029
 
-- `System.Security.Cryptography.HMACSHA384.ProduceLegacyHmacValues`
-- `System.Security.Cryptography.HMACSHA512.ProduceLegacyHmacValues`
+- <xref:System.Security.Cryptography.HMACSHA384.ProduceLegacyHmacValues?displayProperty=nameWithType>
+- <xref:System.Security.Cryptography.HMACSHA512.ProduceLegacyHmacValues?displayProperty=nameWithType>
 
 ### SYSLIB0030
 
-- `System.Security.Cryptography.HMACSHA1.#ctor(System.Byte[],System.Boolean)`
+- <xref:System.Security.Cryptography.HMACSHA1.%23ctor(System.Byte[],System.Boolean)>
 
 ### SYSLIB0031
 
-- `System.Security.Cryptography.CryptoConfig.EncodeOID(System.String)`
+- <xref:System.Security.Cryptography.CryptoConfig.EncodeOID(System.String)?displayProperty=nameWithType>
 
 ### SYSLIB0032
 
-- `System.Runtime.ExceptionServices.HandleProcessCorruptedStateExceptionsAttribute`
+- <xref:System.Runtime.ExceptionServices.HandleProcessCorruptedStateExceptionsAttribute?displayProperty=nameWithType>
 
 ### SYSLIB0033
 
-- `System.Security.Cryptography.Rfc2898DeriveBytes.CryptDeriveKey(System.String,System.String,System.Int32,System.Byte[])`
+- <xref:System.Security.Cryptography.Rfc2898DeriveBytes.CryptDeriveKey(System.String,System.String,System.Int32,System.Byte[])?displayProperty=nameWithType>
 
 ### SYSLIB0034
 
-- `System.Security.Cryptography.Pkcs.CmsSigner.#ctor(System.Security.Cryptography.CspParameters)`
+- <xref:System.Security.Cryptography.Pkcs.CmsSigner.%23ctor(System.Security.Cryptography.CspParameters)>
 
 ### SYSLIB0035
 
-- `System.Security.Cryptography.Pkcs.SignerInfo.ComputeCounterSignature`
+- <xref:System.Security.Cryptography.Pkcs.SignerInfo.ComputeCounterSignature?displayProperty=nameWithType?displayProperty=nameWithType>
 
 ## See also
 
-- API obsoletions with non-default diagnostic IDs (.NET 7)
-- API obsoletions with non-default diagnostic IDs (.NET 5)
-- Obsolete features in .NET 5+
+- [API obsoletions with non-default diagnostic IDs (.NET 7)](../7.0/obsolete-apis-with-custom-diagnostics.md)
+- [API obsoletions with non-default diagnostic IDs (.NET 5)](../5.0/obsolete-apis-with-custom-diagnostics.md)
+- [Obsolete features in .NET 5+](../../../../fundamentals/syslib-diagnostics/obsoletions-overview.md)

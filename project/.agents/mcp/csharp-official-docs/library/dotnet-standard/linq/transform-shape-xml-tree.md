@@ -1,17 +1,18 @@
 ---
-title: "How to transform the shape of an XML tree - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/transform-shape-xml-tree.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to transform the shape of an XML tree - LINQ to XML
+description: You can use functional construction to change the shape of an XML document; that is, to retain the data but change such things as element names, attribute names, and hierarchy.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to transform the shape of an XML tree (LINQ to XML)
 
 The *shape* of an XML document refers to its element names, attribute names, and the characteristics of its hierarchy.
 
-Sometimes you will have to change the shape of an XML document. For example, you might have to send an existing XML document to another system that requires different element and attribute names. You could go through the document, deleting and renaming elements as required, but using functional construction results in more readable and maintainable code. For more information about functional construction, see Functional construction.
+Sometimes you will have to change the shape of an XML document. For example, you might have to send an existing XML document to another system that requires different element and attribute names. You could go through the document, deleting and renaming elements as required, but using functional construction results in more readable and maintainable code. For more information about functional construction, see [Functional construction](functional-construction.md).
 
 The first example in this article changes the organization of an XML document. It moves complex elements from one location in the tree to another.
 
@@ -21,7 +22,7 @@ The second example creates an XML document whose shape differs from that of the 
 
 The following example changes the shape of an XML file using embedded query expressions.
 
-The source XML document for this example, Sample XML file: Customers and orders, contains a `Customers` element under the `Root` element that contains all customers. It also contains an `Orders` element under the `Root` element that contains all orders. The example creates a new XML tree in which the orders for each customer are contained in an `Orders` element within the `Customer` element. The original document also contains a `CustomerID` element in the `Order` element; this element is omitted from the new tree.
+The source XML document for this example, [Sample XML file: Customers and orders](sample-xml-file-customers-orders.md), contains a `Customers` element under the `Root` element that contains all customers. It also contains an `Orders` element under the `Root` element that contains all orders. The example creates a new XML tree in which the orders for each customer are contained in an `Orders` element within the `Customer` element. The original document also contains a `CustomerID` element in the `Order` element; this element is omitted from the new tree.
 
 ```csharp
 XElement co = XElement.Load("CustomersOrders.xml");
@@ -114,7 +115,7 @@ This example produces the following output:
 
 ## Example: Create a document whose shape differs from that of the source document
 
-This example renames some elements and converts some attributes to elements. It calls `ConvertAddress`, which returns a list of `System.Xml.Linq.XElement` objects. The argument to the method is a query that determines the `Address` complex element where the `Type` attribute has a value of `"Shipping"`. The example uses XML document Sample XML file: Typical purchase order.
+This example renames some elements and converts some attributes to elements. It calls `ConvertAddress`, which returns a list of <xref:System.Xml.Linq.XElement> objects. The argument to the method is a query that determines the `Address` complex element where the `Type` attribute has a value of `"Shipping"`. The example uses XML document [Sample XML file: Typical purchase order](sample-xml-file-typical-purchase-order.md).
 
 ```csharp
 static IEnumerable<XElement> ConvertAddress(XElement add)
@@ -195,4 +196,4 @@ This example produces the following output:
 
 ## See also
 
-- Projections and Transformations (LINQ to XML) (Visual Basic)
+- [Projections and Transformations (LINQ to XML) (Visual Basic)](./work-dictionaries-linq-xml.md)

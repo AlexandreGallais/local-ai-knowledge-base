@@ -1,19 +1,19 @@
 ---
-title: "Create a single file for application deployment"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/deploying/single-file/overview.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Create a single file for application deployment
+description: Learn what single file application is and why you should consider using this application deployment model.
+author: lakshanf
+ms.date: 03/25/2026
+ms.custom: kr2b-contr-experiment
+ai-usage: ai-assisted
 ---
 
 # Single-file deployment
 
-Bundling all application-dependent files into a single binary provides an application developer with the attractive option to deploy and distribute the application as a single file. Single-file deployment is available for both the framework-dependent deployment model and self-contained applications.
+Bundling all application-dependent files into a single binary provides an application developer with the attractive option to deploy and distribute the application as a single file. Single-file deployment is available for both the [framework-dependent deployment model](../index.md#publish-as-framework-dependent) and [self-contained applications](../index.md#publish-as-self-contained).
 
-The size of the single file in a self-contained application is large since it includes the runtime and the framework libraries. In .NET 6, you can publish trimmed to reduce the total size of trim-compatible applications. The single file deployment option can be combined with ReadyToRun and Trim publish options.
+The size of the single file in a self-contained application is large since it includes the runtime and the framework libraries. In .NET 6, you can [publish trimmed](../trimming/trim-self-contained.md) to reduce the total size of trim-compatible applications. The single file deployment option can be combined with [ReadyToRun](../ready-to-run.md) and [Trim](../trimming/trim-self-contained.md) publish options.
 
-> **Important:**
+> [!IMPORTANT]
 > To run a single file app on Windows 7, you must use .NET Runtime 6.0.3 or later.
 
 ## Sample project file
@@ -38,15 +38,17 @@ These properties have the following functions:
 
 - `PublishSingleFile`. Enables single file publishing. Also enables single file warnings during `dotnet build`.
 - `SelfContained`. Determines whether the app is self-contained or framework-dependent.
-- `RuntimeIdentifier`. Specifies the OS and CPU type you're targeting. Also sets `<SelfContained>true</SelfContained>` by default.
+- `RuntimeIdentifier`. Specifies the [OS and CPU type](../../rid-catalog.md) you're targeting. Also sets `<SelfContained>true</SelfContained>` by default.
 
 Single file apps are always OS and architecture specific. You need to publish for each configuration, such as Linux x64, Linux Arm64, Windows x64, and so forth.
 
 Runtime configuration files, such as _\*.runtimeconfig.json_ and _\*.deps.json_, are included in the single file.
 
-# CLI
+## Publish a single-file app
 
-Publish a single file application using the dotnet publish command.
+# [CLI](#tab/cli)
+
+Publish a single file application using the [dotnet publish](../../tools/dotnet-publish.md) command.
 
 1. Add `<PublishSingleFile>true</PublishSingleFile>` to your project file.
 
@@ -74,9 +76,9 @@ Publish a single file application using the dotnet publish command.
 dotnet publish -r linux-x64 -p:PublishSingleFile=true --self-contained false
 ```
 
-For more information, see .NET application publishing overview.
+For more information, see [.NET application publishing overview](../../deploying/index.md).
 
-# Visual Studio
+# [Visual Studio](#tab/vs)
 
 Visual Studio creates reusable publishing profiles that control how your application is published.
 
@@ -84,9 +86,13 @@ Visual Studio creates reusable publishing profiles that control how your applica
 
 1. On the **Solution Explorer** pane, right-click on the project you want to publish. Select **Publish**.
 
+   :::image type="content" source="../media/single-file/visual-studio-solution-explorer.png" alt-text="Screenshot shows Solution Explorer with a context menu highlighting the Publish option.":::
+
    If you don't already have a publishing profile, follow the instructions to create one and choose the **Folder** target-type.
 
 1. Choose **Edit**.
+
+   :::image type="content" source="../media/single-file/visual-studio-publish-edit-settings.png" alt-text="Screenshot shows Visual Studio Publish profile with Edit button highlighted.":::
 
 1. In the **Profile settings** dialog, set the following options:
 
@@ -96,9 +102,11 @@ Visual Studio creates reusable publishing profiles that control how your applica
 
    Choose **Save** to save the settings and return to the **Publish** dialog.
 
+   :::image type="content" source="../media/single-file/visual-studio-publish-single-file-properties.png" alt-text="Screenshot shows Profile settings dialog with Deployment mode, Target runtime, and Produce single file options highlighted.":::
+
 1. Choose **Publish** to publish your app as a single file.
 
-For more information, see.NET application publishing overview.
+For more information, see[.NET application publishing overview](../../deploying/index.md).
 
 ---
 
@@ -139,10 +147,10 @@ For example, add the following property to the project file of an assembly to em
 
 ## Other considerations
 
-> **Important:**
-> IIS doesn't support hosting ASP.NET Core apps that use single-file deployment with the in-process hosting model. If you host an ASP.NET Core app in IIS, publish your app using the standard folder deployment model, or use the out-of-process hosting model instead. For more information, see Host ASP.NET Core on Windows with IIS.
+> [!IMPORTANT]
+> IIS doesn't support hosting ASP.NET Core apps that use single-file deployment with the in-process hosting model. If you host an ASP.NET Core app in IIS, publish your app using the standard folder deployment model, or use the out-of-process hosting model instead. For more information, see [Host ASP.NET Core on Windows with IIS](/aspnet/core/host-and-deploy/iis).
 
-Single file applications have all related PDB files alongside the application, not bundled by default. If you want to include PDBs inside the assembly for projects you build, set the `DebugType` to `embedded`. See Include PDB files inside the bundle.
+Single file applications have all related PDB files alongside the application, not bundled by default. If you want to include PDBs inside the assembly for projects you build, set the `DebugType` to `embedded`. See [Include PDB files inside the bundle](#include-pdb-files-inside-the-bundle).
 
 Managed C++ components aren't well suited for single file deployment. We recommend that you write applications in C# or another non-managed C++ language to be single file compatible.
 
@@ -154,7 +162,7 @@ To embed those files for extraction and get one output file, set the property `I
 
 Specifying `IncludeAllContentForSelfExtract` extracts all files, including the managed assemblies, before running the executable. This may be helpful for rare application compatibility problems. This mode is not recommended: it's a .NET Core 3.1 compatibility mode and might be removed in a future release.
 
-> **Important:**
+> [!IMPORTANT]
 > If extraction is used, the files are extracted to disk before the app starts:
 >
 > - If the `DOTNET_BUNDLE_EXTRACT_BASE_DIR` environment variable is set to a path, the files are extracted to a directory under that path.
@@ -163,7 +171,7 @@ Specifying `IncludeAllContentForSelfExtract` extracts all files, including the m
 >
 > To prevent tampering, these directories shouldn't be writable by users or services with different privileges. Don't use _/tmp_ or _/var/tmp_ on most Linux and macOS systems.
 
-> **Note:**
+> [!NOTE]
 > In some Linux environments, such as under `systemd`, the default extraction doesn't work because `$HOME` isn't defined. In such cases, it's recommended that you set `$DOTNET_BUNDLE_EXTRACT_BASE_DIR` explicitly.
 >
 > For `systemd`, a good alternative is to define `DOTNET_BUNDLE_EXTRACT_BASE_DIR` in your service's unit file as `%h/.net`, which `systemd` expands correctly to `$HOME/.net` for the account running the service.
@@ -182,10 +190,10 @@ The table below has the relevant runtime library API details for single file use
 
 | API                            | Note                                                                   |
 |--------------------------------|------------------------------------------------------------------------|
-| `Assembly.CodeBase`            | Throws `System.PlatformNotSupportedException`.                    |
-| `Assembly.EscapedCodeBase`     | Throws `System.PlatformNotSupportedException`.                    |
-| `Assembly.GetFile`             | Throws `System.IO.IOException`.                                   |
-| `Assembly.GetFiles`            | Throws `System.IO.IOException`.                                   |
+| `Assembly.CodeBase`            | Throws <xref:System.PlatformNotSupportedException>.                    |
+| `Assembly.EscapedCodeBase`     | Throws <xref:System.PlatformNotSupportedException>.                    |
+| `Assembly.GetFile`             | Throws <xref:System.IO.IOException>.                                   |
+| `Assembly.GetFiles`            | Throws <xref:System.IO.IOException>.                                   |
 | `Assembly.Location`            | Returns an empty string.                                               |
 | `AssemblyName.CodeBase`        | Returns `null`.                                                        |
 | `AssemblyName.EscapedCodeBase` | Returns `null`.                                                        |
@@ -195,11 +203,11 @@ The table below has the relevant runtime library API details for single file use
 
 We have some recommendations for fixing common scenarios:
 
-- To access files next to the executable, use `System.AppContext.BaseDirectory`.
+- To access files next to the executable, use <xref:System.AppContext.BaseDirectory?displayProperty=nameWithType>.
 
-- To find the executable path, use `System.Environment.ProcessPath`. Starting in .NET 11, `System.Environment.GetCommandLineArgs` preserves the invocation name, which might differ from the executable path.
+- To find the executable path, use <xref:System.Environment.ProcessPath?displayProperty=nameWithType>. Starting in .NET 11, <xref:System.Environment.GetCommandLineArgs?displayProperty=nameWithType> preserves the invocation name, which might differ from the executable path.
 
-- To avoid shipping loose files entirely, consider using embedded resources.
+- To avoid shipping loose files entirely, consider using [embedded resources](../../extensions/create-resource-files.md).
 
 ### Post-processing binaries before bundling
 
@@ -227,9 +235,9 @@ Compression comes with a performance cost. On application start, the assemblies 
 
 ### Inspect a single-file app
 
-Single file apps can be inspected using the ILSpy tool. The tool can show all of the files bundled into the application and can inspect the contents of managed assemblies.
+Single file apps can be inspected using the [ILSpy tool](https://ilspy.net/). The tool can show all of the files bundled into the application and can inspect the contents of managed assemblies.
 
 ## See also
 
-- .NET application publishing overview
-- `dotnet publish` command
+- [.NET application publishing overview](../../deploying/index.md)
+- [`dotnet publish` command](../../tools/dotnet-publish.md)

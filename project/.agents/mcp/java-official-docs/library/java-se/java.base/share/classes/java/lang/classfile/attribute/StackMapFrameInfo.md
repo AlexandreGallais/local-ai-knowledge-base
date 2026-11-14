@@ -1,36 +1,25 @@
----
-title: "StackMapFrameInfo interface (java.lang.classfile.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/attribute/StackMapFrameInfo.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # StackMapFrameInfo interface (java.lang.classfile.attribute)
 
 ```java
 public sealed interface StackMapFrameInfo permits StackMapDecoder.StackMapFrameImpl
 ```
 
-Models a stack map frame in a StackMapTable
-attribute (JVMS ).  A stack map frame must appear at the
-beginning of each basic block in a method (JVMS ).
+Models a stack map frame in a {@link StackMapTableAttribute StackMapTable}
+attribute (JVMS {@jvms 4.7.4}).  A stack map frame must appear at the
+beginning of each basic block in a method (JVMS {@jvms 4.10.1}).
 
-**API note:** In general, a stack map frame should be defined for each target of a
-`BranchInstruction`, or unreachable code right after an unconditional
-branch instruction like goto.  The automatic stack map
+@apiNote
+In general, a stack map frame should be defined for each target of a
+{@link BranchInstruction}, or unreachable code right after an unconditional
+branch instruction like {@link Opcode#GOTO goto}.  The automatic stack map
 generation cannot handle unreachable code right after an unconditional jump;
-The `ClassFile.DeadCodeOption` allows substituting such code, or
+The {@link ClassFile.DeadCodeOption} allows substituting such code, or
 advanced users can provide their own stack maps for dead code.
 
-**See also:** StackMapTableAttribute#entries()
-
-**jvms:** 4.7.4 The `StackMapTable` Attribute
-
-**jvms:** 4.10.1 Verification by Type Checking
-
-**Since:** 24
+@see StackMapTableAttribute#entries()
+@jvms 4.7.4 The {@code StackMapTable} Attribute
+@jvms 4.10.1 Verification by Type Checking
+@since 24
 
 ## StackMapFrameInfo.frameType()
 
@@ -38,11 +27,15 @@ advanced users can provide their own stack maps for dead code.
 int frameType()
 ```
 
+{@return the raw {@code u1 frame_type}}
+
 ## StackMapFrameInfo.target()
 
 ```java
 Label target()
 ```
+
+{@return the frame target label}
 
 ## StackMapFrameInfo.locals()
 
@@ -50,11 +43,15 @@ Label target()
 List<VerificationTypeInfo> locals()
 ```
 
+{@return the expanded local variable types}
+
 ## StackMapFrameInfo.stack()
 
 ```java
 List<VerificationTypeInfo> stack()
 ```
+
+{@return the expanded operand stack types}
 
 ## StackMapFrameInfo.of(Label, List<VerificationTypeInfo>, List<VerificationTypeInfo>)
 
@@ -62,11 +59,11 @@ List<VerificationTypeInfo> stack()
 public static StackMapFrameInfo of(Label target, List<VerificationTypeInfo> locals, List<VerificationTypeInfo> stack)
 ```
 
-Parameters:
+{@return a new stack map frame}
 
-- `target`: the location of the frame
-- `locals`: the complete list of frame locals
-- `stack`: the complete frame stack
+@param target the location of the frame
+@param locals the complete list of frame locals
+@param stack the complete frame stack
 
 ## StackMapFrameInfo.ITEM_TOP
 
@@ -74,7 +71,7 @@ Parameters:
 int ITEM_TOP
 ```
 
-The tag for verification type info TOP.
+The {@link #tag() tag} for verification type info {@link SimpleVerificationTypeInfo#TOP TOP}.
 
 ## StackMapFrameInfo.ITEM_INTEGER
 
@@ -82,7 +79,7 @@ The tag for verification type info TOP.
 int ITEM_INTEGER
 ```
 
-The tag for verification type info INTEGER.
+The {@link #tag() tag} for verification type info {@link SimpleVerificationTypeInfo#INTEGER INTEGER}.
 
 ## StackMapFrameInfo.ITEM_FLOAT
 
@@ -90,7 +87,7 @@ The tag for verification type info INTEGER.
 int ITEM_FLOAT
 ```
 
-The tag for verification type info FLOAT.
+The {@link #tag() tag} for verification type info {@link SimpleVerificationTypeInfo#FLOAT FLOAT}.
 
 ## StackMapFrameInfo.ITEM_DOUBLE
 
@@ -98,7 +95,7 @@ The tag for verification type info FLOAT.
 int ITEM_DOUBLE
 ```
 
-The tag for verification type info DOUBLE.
+The {@link #tag() tag} for verification type info {@link SimpleVerificationTypeInfo#DOUBLE DOUBLE}.
 
 ## StackMapFrameInfo.ITEM_LONG
 
@@ -106,7 +103,7 @@ The tag for verification type info DOUBLE.
 int ITEM_LONG
 ```
 
-The tag for verification type info LONG.
+The {@link #tag() tag} for verification type info {@link SimpleVerificationTypeInfo#LONG LONG}.
 
 ## StackMapFrameInfo.ITEM_NULL
 
@@ -114,7 +111,7 @@ The tag for verification type info LONG.
 int ITEM_NULL
 ```
 
-The tag for verification type info NULL.
+The {@link #tag() tag} for verification type info {@link SimpleVerificationTypeInfo#NULL NULL}.
 
 ## StackMapFrameInfo.ITEM_UNINITIALIZED_THIS
 
@@ -122,7 +119,7 @@ The tag for verification type info NULL.
 int ITEM_UNINITIALIZED_THIS
 ```
 
-The tag for verification type info UNINITIALIZED_THIS.
+The {@link #tag() tag} for verification type info {@link SimpleVerificationTypeInfo#UNINITIALIZED_THIS UNINITIALIZED_THIS}.
 
 ## StackMapFrameInfo.ITEM_OBJECT
 
@@ -130,7 +127,7 @@ The tag for verification type info UNINITIALIZED_THIS.
 int ITEM_OBJECT
 ```
 
-The tag for verification type info OBJECT.
+The {@link #tag() tag} for verification type info {@link ObjectVerificationTypeInfo OBJECT}.
 
 ## StackMapFrameInfo.ITEM_UNINITIALIZED
 
@@ -138,7 +135,7 @@ The tag for verification type info OBJECT.
 int ITEM_UNINITIALIZED
 ```
 
-The tag for verification type info UNINITIALIZED.
+The {@link #tag() tag} for verification type info {@link UninitializedVerificationTypeInfo UNINITIALIZED}.
 
 ## StackMapFrameInfo.tag()
 
@@ -146,7 +143,10 @@ The tag for verification type info UNINITIALIZED.
 int tag()
 ```
 
-**API note:** `ITEM_`-prefixed constants in this class, such as `ITEM_TOP`, describe the
+{@return the tag of the type info}
+
+@apiNote
+{@code ITEM_}-prefixed constants in this class, such as {@link #ITEM_TOP}, describe the
 possible return values of this method.
 
 ## StackMapFrameInfo.TOP(ITEM_TOP), /** Verification type int. */ INTEGER(ITEM_INTEGER), /** Verification type float. */ FLOAT(ITEM_FLOAT), /** Verification type double. */ DOUBLE(ITEM_DOUBLE), /** Verification type long. */ LONG(ITEM_LONG), /** Verification type null. */ NULL(ITEM_NULL), /** Verification type uninitializedThis. */ UNINITIALIZED_THIS(ITEM_UNINITIALIZED_THIS)
@@ -211,9 +211,8 @@ Verification type uninitializedThis.
 public static ObjectVerificationTypeInfo of(ClassEntry className)
 ```
 
-Parameters:
-
-- `className`: the class of the object
+{@return a new object verification type info}
+@param className the class of the object
 
 ## StackMapFrameInfo.of(ClassDesc)
 
@@ -221,13 +220,9 @@ Parameters:
 public static ObjectVerificationTypeInfo of(ClassDesc classDesc)
 ```
 
-Parameters:
-
-- `classDesc`: the class of the object
-
-Throws:
-
-- `IllegalArgumentException`: if `classDesc` represents a primitive type
+{@return a new object verification type info}
+@param classDesc the class of the object
+@throws IllegalArgumentException if {@code classDesc} represents a primitive type
 
 ## StackMapFrameInfo.className()
 
@@ -235,11 +230,15 @@ Throws:
 ClassEntry className()
 ```
 
+{@return the class of the object}
+
 ## StackMapFrameInfo.classSymbol()
 
 ```java
 default ClassDesc classSymbol()
 ```
+
+{@return the class of the object, as a symbolic descriptor}
 
 ## StackMapFrameInfo.newTarget()
 
@@ -247,12 +246,15 @@ default ClassDesc classSymbol()
 Label newTarget()
 ```
 
+{@return the label immediately before the {@link Opcode#NEW new}
+instruction that creates this uninitialized object}
+
 ## StackMapFrameInfo.of(Label)
 
 ```java
 public static UninitializedVerificationTypeInfo of(Label newTarget)
 ```
 
-Parameters:
-
-- `newTarget`: the label immediately before the new instruction that creates this uninitialized object
+{@return an uninitialized verification type info}
+@param newTarget the label immediately before the {@link Opcode#NEW new}
+                 instruction that creates this uninitialized object

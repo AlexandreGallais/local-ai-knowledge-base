@@ -1,17 +1,8 @@
----
-title: "Field access expressions"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/expressions/field-expr.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[expr.field]
 # Field access expressions
 
 r[expr.field.syntax]
-```grammar
+```grammar,expressions
 FieldExpression -> Expression `.` IDENTIFIER
 ```
 
@@ -27,7 +18,7 @@ The syntax for a field expression is an expression, called the *container operan
 r[expr.field.not-method-call]
 Field expressions cannot be followed by a parenthetical comma-separated list of expressions, as that is instead parsed as a [method call expression]. That is, they cannot be the function operand of a [call expression].
 
-> **Note:**
+> [!NOTE]
 > Wrap the field expression in a [parenthesized expression] to use it in a call expression.
 >
 > ```rust
@@ -43,7 +34,8 @@ Field expressions cannot be followed by a parenthetical comma-separated list of 
 
 Examples:
 
-```rust
+<!-- ignore: needs lots of support code -->
+```rust,ignore
 mystruct.myfield;
 foo().x;
 (Struct {a: 10, b: 20}).a;
@@ -53,7 +45,7 @@ foo().x;
 r[expr.field.autoref-deref]
 ## Automatic dereferencing
 
-If the type of the container operand implements [`Deref`] or `DerefMut` depending on whether the operand is [mutable], it is *automatically dereferenced* as many times as necessary to make the field access possible. This process is also called *autoderef* for short.
+If the type of the container operand implements [`Deref`] or [`DerefMut`][`Deref`] depending on whether the operand is [mutable], it is *automatically dereferenced* as many times as necessary to make the field access possible. This process is also called *autoderef* for short.
 
 r[expr.field.borrow]
 ## Borrowing
@@ -73,3 +65,15 @@ let b: &String = &x.f2;         // x.f2 borrowed immutably
 let c: &String = &x.f2;         // Can borrow again
 let d: String = x.f3;           // Move out of x.f3
 ```
+
+[`Box`]: ../special-types-and-traits.md#boxt
+[`Deref`]: ../special-types-and-traits.md#deref-and-derefmut
+[`drop`]: ../special-types-and-traits.md#drop
+[identifier]: ../identifiers.md
+[call expression]: call-expr.md
+[method call expression]: method-call-expr.md
+[mutable]: ../expressions.md#mutability
+[parenthesized expression]: grouped-expr.md
+[place expression]: ../expressions.md#place-expressions-and-value-expressions
+[struct]: ../items/structs.md
+[union]: ../items/unions.md

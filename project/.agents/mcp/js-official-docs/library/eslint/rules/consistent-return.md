@@ -1,13 +1,8 @@
 ---
-title: "consistent-return"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/consistent-return.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: consistent-return
+rule_type: suggestion
 ---
 
-# consistent-return
 
 Unlike statically-typed languages which enforce that a function returns a specified type of value, JavaScript allows different code paths in a function to return different types of values.
 
@@ -40,7 +35,7 @@ This rule requires `return` statements to either always or never specify values.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint consistent-return: "error"*/
@@ -60,9 +55,11 @@ function doSomethingElse(condition) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint consistent-return: "error"*/
@@ -84,6 +81,8 @@ function Foo() {
 }
 ```
 
+:::
+
 ## Options
 
 This rule has an object option:
@@ -95,7 +94,7 @@ This rule has an object option:
 
 Examples of **incorrect** code for this rule with the default `{ "treatUndefinedAsUnspecified": false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint consistent-return: ["error", { "treatUndefinedAsUnspecified": false }]*/
@@ -115,9 +114,11 @@ function bar(condition) {
 }
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `{ "treatUndefinedAsUnspecified": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint consistent-return: ["error", { "treatUndefinedAsUnspecified": true }]*/
@@ -136,10 +137,12 @@ function bar(condition) {
     return true;
 }
 ```
+
+:::
 
 Examples of **correct** code for this rule with the `{ "treatUndefinedAsUnspecified": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint consistent-return: ["error", { "treatUndefinedAsUnspecified": true }]*/
@@ -158,6 +161,8 @@ function bar(condition) {
     // no return statement
 }
 ```
+
+:::
 
 ## When Not To Use It
 

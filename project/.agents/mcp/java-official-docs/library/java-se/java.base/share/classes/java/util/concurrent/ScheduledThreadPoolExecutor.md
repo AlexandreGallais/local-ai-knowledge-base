@@ -1,80 +1,71 @@
----
-title: "ScheduledThreadPoolExecutor class (java.util.concurrent) (part 1 of 2)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/ScheduledThreadPoolExecutor.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ScheduledThreadPoolExecutor class (java.util.concurrent)
 
 ```java
 public class ScheduledThreadPoolExecutor extends ThreadPoolExecutor implements ScheduledExecutorService
 ```
 
-A `ThreadPoolExecutor` that can additionally schedule
+A {@link ThreadPoolExecutor} that can additionally schedule
 commands to run after a given delay, or to execute periodically.
-This class is preferable to `java.util.Timer` when multiple
+This class is preferable to {@link java.util.Timer} when multiple
 worker threads are needed, or when the additional flexibility or
-capabilities of `ThreadPoolExecutor` (which this class
+capabilities of {@link ThreadPoolExecutor} (which this class
 extends) are required.
 
-Delayed tasks execute no sooner than they are enabled, but
+<p>Delayed tasks execute no sooner than they are enabled, but
 without any real-time guarantees about when, after they are
 enabled, they will commence. Tasks scheduled for exactly the same
 execution time are enabled in first-in-first-out (FIFO) order of
 submission.
 
-When a submitted task is cancelled before it is run, execution
+<p>When a submitted task is cancelled before it is run, execution
 is suppressed.  By default, such a cancelled task is not
 automatically removed from the work queue until its delay elapses.
 While this enables further inspection and monitoring, it may also
 cause unbounded retention of cancelled tasks.  To avoid this, use
-`setRemoveOnCancelPolicy` to cause tasks to be immediately
+{@link #setRemoveOnCancelPolicy} to cause tasks to be immediately
 removed from the work queue at time of cancellation.
 
-Successive executions of a periodic task scheduled via
-scheduleAtFixedRate or
-scheduleWithFixedDelay
+<p>Successive executions of a periodic task scheduled via
+{@link #scheduleAtFixedRate scheduleAtFixedRate} or
+{@link #scheduleWithFixedDelay scheduleWithFixedDelay}
 do not overlap. While different executions may be performed by
 different threads, the effects of prior executions
-*happen-before*
+<a href="package-summary.html#MemoryVisibility"><i>happen-before</i></a>
 those of subsequent ones.
 
-While this class inherits from `ThreadPoolExecutor`, a few
+<p>While this class inherits from {@link ThreadPoolExecutor}, a few
 of the inherited tuning methods are not useful for it. In
 particular, because it acts as a fixed-sized pool using
-`corePoolSize` threads and an unbounded queue, adjustments
-to `maximumPoolSize` have no useful effect. Additionally, it
-is almost never a good idea to set `corePoolSize` to zero or
-use `allowCoreThreadTimeOut` because this may leave the pool
+{@code corePoolSize} threads and an unbounded queue, adjustments
+to {@code maximumPoolSize} have no useful effect. Additionally, it
+is almost never a good idea to set {@code corePoolSize} to zero or
+use {@code allowCoreThreadTimeOut} because this may leave the pool
 without threads to handle tasks once they become eligible to run.
 
-As with `ThreadPoolExecutor`, if not otherwise specified,
-this class uses `Executors.defaultThreadFactory` as the
-default thread factory, and `ThreadPoolExecutor.AbortPolicy`
+<p>As with {@code ThreadPoolExecutor}, if not otherwise specified,
+this class uses {@link Executors#defaultThreadFactory} as the
+default thread factory, and {@link ThreadPoolExecutor.AbortPolicy}
 as the default rejected execution handler.
 
-**Extension notes:** This class overrides the
-execute and
-submit
-methods to generate internal `ScheduledFuture` objects to
+<p><b>Extension notes:</b> This class overrides the
+{@link ThreadPoolExecutor#execute(Runnable) execute} and
+{@link AbstractExecutorService#submit(Runnable) submit}
+methods to generate internal {@link ScheduledFuture} objects to
 control per-task delays and scheduling.  To preserve
 functionality, any further overrides of these methods in
 subclasses must invoke superclass versions, which effectively
 disables additional task customization.  However, this class
 provides alternative protected extension method
-`decorateTask` (one version each for `Runnable` and
-`Callable`) that can be used to customize the concrete task
-types used to execute commands entered via `execute`,
-`submit`, `schedule`, `scheduleAtFixedRate`,
-and `scheduleWithFixedDelay`.  By default, a
-`ScheduledThreadPoolExecutor` uses a task type extending
-`FutureTask`. However, this may be modified or replaced using
+{@code decorateTask} (one version each for {@code Runnable} and
+{@code Callable}) that can be used to customize the concrete task
+types used to execute commands entered via {@code execute},
+{@code submit}, {@code schedule}, {@code scheduleAtFixedRate},
+and {@code scheduleWithFixedDelay}.  By default, a
+{@code ScheduledThreadPoolExecutor} uses a task type extending
+{@link FutureTask}. However, this may be modified or replaced using
 subclasses of the form:
 
-```java
+<pre> {@code
 public class CustomScheduledExecutor extends ScheduledThreadPoolExecutor {
 
   static class CustomTask<V> implements RunnableScheduledFuture<V> { ... }
@@ -89,10 +80,10 @@ public class CustomScheduledExecutor extends ScheduledThreadPoolExecutor {
       return new CustomTask<V>(c, task);
   }
   // ... add constructors, etc.
-}
-```
+}}</pre>
 
-**Since:** 1.5
+@since 1.5
+@author Doug Lea
 
 ## ScheduledThreadPoolExecutor.isPeriodic()
 
@@ -100,9 +91,9 @@ public class CustomScheduledExecutor extends ScheduledThreadPoolExecutor {
 public boolean isPeriodic()
 ```
 
-Returns `true` if this is a periodic (not a one-shot) action.
+Returns {@code true} if this is a periodic (not a one-shot) action.
 
-**Returns:** `true` if periodic
+@return {@code true} if periodic
 
 ## ScheduledThreadPoolExecutor.run()
 
@@ -123,15 +114,11 @@ This method can be used to override the concrete
 class used for managing internal tasks.
 The default implementation simply returns the given task.
 
-Parameters:
-
-- `runnable`: the submitted Runnable
-- `task`: the task created to execute the runnable
-- `<V>`: the type of the task's result
-
-**Returns:** a task that can execute the runnable
-
-**Since:** 1.6
+@param runnable the submitted Runnable
+@param task the task created to execute the runnable
+@param <V> the type of the task's result
+@return a task that can execute the runnable
+@since 1.6
 
 ## ScheduledThreadPoolExecutor.decorateTask(Callable<V>, RunnableScheduledFuture<V>)
 
@@ -144,15 +131,11 @@ This method can be used to override the concrete
 class used for managing internal tasks.
 The default implementation simply returns the given task.
 
-Parameters:
-
-- `callable`: the submitted Callable
-- `task`: the task created to execute the callable
-- `<V>`: the type of the task's result
-
-**Returns:** a task that can execute the callable
-
-**Since:** 1.6
+@param callable the submitted Callable
+@param task the task created to execute the callable
+@param <V> the type of the task's result
+@return a task that can execute the callable
+@since 1.6
 
 ## ScheduledThreadPoolExecutor.ScheduledThreadPoolExecutor(int)
 
@@ -160,16 +143,12 @@ Parameters:
 public ScheduledThreadPoolExecutor(int corePoolSize)
 ```
 
-Creates a new `ScheduledThreadPoolExecutor` with the
+Creates a new {@code ScheduledThreadPoolExecutor} with the
 given core pool size.
 
-Parameters:
-
-- `corePoolSize`: the number of threads to keep in the pool, even if they are idle, unless `allowCoreThreadTimeOut` is set
-
-Throws:
-
-- `IllegalArgumentException`: if `corePoolSize < 0`
+@param corePoolSize the number of threads to keep in the pool, even
+       if they are idle, unless {@code allowCoreThreadTimeOut} is set
+@throws IllegalArgumentException if {@code corePoolSize < 0}
 
 ## ScheduledThreadPoolExecutor.ScheduledThreadPoolExecutor(int, ThreadFactory)
 
@@ -177,18 +156,15 @@ Throws:
 public ScheduledThreadPoolExecutor(int corePoolSize, ThreadFactory threadFactory)
 ```
 
-Creates a new `ScheduledThreadPoolExecutor` with the
+Creates a new {@code ScheduledThreadPoolExecutor} with the
 given initial parameters.
 
-Parameters:
-
-- `corePoolSize`: the number of threads to keep in the pool, even if they are idle, unless `allowCoreThreadTimeOut` is set
-- `threadFactory`: the factory to use when the executor creates a new thread
-
-Throws:
-
-- `IllegalArgumentException`: if `corePoolSize < 0`
-- `NullPointerException`: if `threadFactory` is null
+@param corePoolSize the number of threads to keep in the pool, even
+       if they are idle, unless {@code allowCoreThreadTimeOut} is set
+@param threadFactory the factory to use when the executor
+       creates a new thread
+@throws IllegalArgumentException if {@code corePoolSize < 0}
+@throws NullPointerException if {@code threadFactory} is null
 
 ## ScheduledThreadPoolExecutor.ScheduledThreadPoolExecutor(int, RejectedExecutionHandler)
 
@@ -196,18 +172,15 @@ Throws:
 public ScheduledThreadPoolExecutor(int corePoolSize, RejectedExecutionHandler handler)
 ```
 
-Creates a new `ScheduledThreadPoolExecutor` with the
+Creates a new {@code ScheduledThreadPoolExecutor} with the
 given initial parameters.
 
-Parameters:
-
-- `corePoolSize`: the number of threads to keep in the pool, even if they are idle, unless `allowCoreThreadTimeOut` is set
-- `handler`: the handler to use when execution is blocked because the thread bounds and queue capacities are reached
-
-Throws:
-
-- `IllegalArgumentException`: if `corePoolSize < 0`
-- `NullPointerException`: if `handler` is null
+@param corePoolSize the number of threads to keep in the pool, even
+       if they are idle, unless {@code allowCoreThreadTimeOut} is set
+@param handler the handler to use when execution is blocked
+       because the thread bounds and queue capacities are reached
+@throws IllegalArgumentException if {@code corePoolSize < 0}
+@throws NullPointerException if {@code handler} is null
 
 ## ScheduledThreadPoolExecutor.ScheduledThreadPoolExecutor(int, ThreadFactory, RejectedExecutionHandler)
 
@@ -215,19 +188,18 @@ Throws:
 public ScheduledThreadPoolExecutor(int corePoolSize, ThreadFactory threadFactory, RejectedExecutionHandler handler)
 ```
 
-Creates a new `ScheduledThreadPoolExecutor` with the
+Creates a new {@code ScheduledThreadPoolExecutor} with the
 given initial parameters.
 
-Parameters:
-
-- `corePoolSize`: the number of threads to keep in the pool, even if they are idle, unless `allowCoreThreadTimeOut` is set
-- `threadFactory`: the factory to use when the executor creates a new thread
-- `handler`: the handler to use when execution is blocked because the thread bounds and queue capacities are reached
-
-Throws:
-
-- `IllegalArgumentException`: if `corePoolSize < 0`
-- `NullPointerException`: if `threadFactory` or `handler` is null
+@param corePoolSize the number of threads to keep in the pool, even
+       if they are idle, unless {@code allowCoreThreadTimeOut} is set
+@param threadFactory the factory to use when the executor
+       creates a new thread
+@param handler the handler to use when execution is blocked
+       because the thread bounds and queue capacities are reached
+@throws IllegalArgumentException if {@code corePoolSize < 0}
+@throws NullPointerException if {@code threadFactory} or
+        {@code handler} is null
 
 ## ScheduledThreadPoolExecutor.schedule(Runnable, long, TimeUnit)
 
@@ -235,10 +207,8 @@ Throws:
 public ScheduledFuture<?> schedule(Runnable command, long delay, TimeUnit unit)
 ```
 
-Throws:
-
-- `RejectedExecutionException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
+@throws RejectedExecutionException {@inheritDoc}
+@throws NullPointerException       {@inheritDoc}
 
 ## ScheduledThreadPoolExecutor.schedule(Callable<V>, long, TimeUnit)
 
@@ -246,10 +216,8 @@ Throws:
 public <V> ScheduledFuture<V> schedule(Callable<V> callable, long delay, TimeUnit unit)
 ```
 
-Throws:
-
-- `RejectedExecutionException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
+@throws RejectedExecutionException {@inheritDoc}
+@throws NullPointerException       {@inheritDoc}
 
 ## ScheduledThreadPoolExecutor.scheduleAtFixedRate(Runnable, long, long, TimeUnit)
 
@@ -260,36 +228,34 @@ public ScheduledFuture<?> scheduleAtFixedRate(Runnable command, long initialDela
 Submits a periodic action that becomes enabled first after the
 given initial delay, and subsequently with the given period;
 that is, executions will commence after
-`initialDelay`, then `initialDelay + period`, then
-`initialDelay + 2 * period`, and so on.
+{@code initialDelay}, then {@code initialDelay + period}, then
+{@code initialDelay + 2 * period}, and so on.
 
-The sequence of task executions continues indefinitely until
+<p>The sequence of task executions continues indefinitely until
 one of the following exceptional completions occur:
-
-- The task is explicitly cancelled
+<ul>
+<li>The task is {@linkplain Future#cancel explicitly cancelled}
 via the returned future.
-
-- Method `shutdown` is called and the policy on whether to continue after shutdown is not set true, or method
-`shutdownNow` is called; also resulting in task
+<li>Method {@link #shutdown} is called and the {@linkplain
+#getContinueExistingPeriodicTasksAfterShutdownPolicy policy on
+whether to continue after shutdown} is not set true, or method
+{@link #shutdownNow} is called; also resulting in task
 cancellation.
-
-- An execution of the task throws an exception.  In this case
-calling get on the returned future will throw
-`ExecutionException`, holding the exception as its cause.
-
+<li>An execution of the task throws an exception.  In this case
+calling {@link Future#get() get} on the returned future will throw
+{@link ExecutionException}, holding the exception as its cause.
+</ul>
 Subsequent executions are suppressed.  Subsequent calls to
-isDone() on the returned future will
-return `true`.
+{@link Future#isDone isDone()} on the returned future will
+return {@code true}.
 
-If any execution of this task takes longer than its period, then
+<p>If any execution of this task takes longer than its period, then
 subsequent executions may start late, but will not concurrently
 execute.
 
-Throws:
-
-- `RejectedExecutionException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
-- `IllegalArgumentException`: (inherited documentation)
+@throws RejectedExecutionException {@inheritDoc}
+@throws NullPointerException       {@inheritDoc}
+@throws IllegalArgumentException   {@inheritDoc}
 
 ## ScheduledThreadPoolExecutor.scheduleWithFixedDelay(Runnable, long, long, TimeUnit)
 
@@ -302,29 +268,27 @@ given initial delay, and subsequently with the given delay
 between the termination of one execution and the commencement of
 the next.
 
-The sequence of task executions continues indefinitely until
+<p>The sequence of task executions continues indefinitely until
 one of the following exceptional completions occur:
-
-- The task is explicitly cancelled
+<ul>
+<li>The task is {@linkplain Future#cancel explicitly cancelled}
 via the returned future.
-
-- Method `shutdown` is called and the policy on whether to continue after shutdown is not set true, or method
-`shutdownNow` is called; also resulting in task
+<li>Method {@link #shutdown} is called and the {@linkplain
+#getContinueExistingPeriodicTasksAfterShutdownPolicy policy on
+whether to continue after shutdown} is not set true, or method
+{@link #shutdownNow} is called; also resulting in task
 cancellation.
-
-- An execution of the task throws an exception.  In this case
-calling get on the returned future will throw
-`ExecutionException`, holding the exception as its cause.
-
+<li>An execution of the task throws an exception.  In this case
+calling {@link Future#get() get} on the returned future will throw
+{@link ExecutionException}, holding the exception as its cause.
+</ul>
 Subsequent executions are suppressed.  Subsequent calls to
-isDone() on the returned future will
-return `true`.
+{@link Future#isDone isDone()} on the returned future will
+return {@code true}.
 
-Throws:
-
-- `RejectedExecutionException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
-- `IllegalArgumentException`: (inherited documentation)
+@throws RejectedExecutionException {@inheritDoc}
+@throws NullPointerException       {@inheritDoc}
+@throws IllegalArgumentException   {@inheritDoc}
 
 ## ScheduledThreadPoolExecutor.execute(Runnable)
 
@@ -332,23 +296,24 @@ Throws:
 public void execute(Runnable command)
 ```
 
-Executes `command` with zero required delay.
+Executes {@code command} with zero required delay.
 This has effect equivalent to
-schedule(command, 0, anyUnit).
+{@link #schedule(Runnable,long,TimeUnit) schedule(command, 0, anyUnit)}.
 Note that inspections of the queue and of the list returned by
-`shutdownNow` will access the zero-delayed
-`ScheduledFuture`, not the `command` itself.
+{@code shutdownNow} will access the zero-delayed
+{@link ScheduledFuture}, not the {@code command} itself.
 
-A consequence of the use of `ScheduledFuture` objects is
-that afterExecute is always
-called with a null second `Throwable` argument, even if the
-`command` terminated abruptly.  Instead, the `Throwable`
-thrown by such a task can be obtained via `Future.get`.
+<p>A consequence of the use of {@code ScheduledFuture} objects is
+that {@link ThreadPoolExecutor#afterExecute afterExecute} is always
+called with a null second {@code Throwable} argument, even if the
+{@code command} terminated abruptly.  Instead, the {@code Throwable}
+thrown by such a task can be obtained via {@link Future#get}.
 
-Throws:
-
-- `RejectedExecutionException`: at discretion of `RejectedExecutionHandler`, if the task cannot be accepted for execution because the executor has been shut down
-- `NullPointerException`: (inherited documentation)
+@throws RejectedExecutionException at discretion of
+        {@code RejectedExecutionHandler}, if the task
+        cannot be accepted for execution because the
+        executor has been shut down
+@throws NullPointerException {@inheritDoc}
 
 ## ScheduledThreadPoolExecutor.submit(Runnable)
 
@@ -356,10 +321,8 @@ Throws:
 public Future<?> submit(Runnable task)
 ```
 
-Throws:
-
-- `RejectedExecutionException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
+@throws RejectedExecutionException {@inheritDoc}
+@throws NullPointerException       {@inheritDoc}
 
 ## ScheduledThreadPoolExecutor.submit(Runnable, T)
 
@@ -367,10 +330,8 @@ Throws:
 public <T> Future<T> submit(Runnable task, T result)
 ```
 
-Throws:
-
-- `RejectedExecutionException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
+@throws RejectedExecutionException {@inheritDoc}
+@throws NullPointerException       {@inheritDoc}
 
 ## ScheduledThreadPoolExecutor.submit(Callable<T>)
 
@@ -378,10 +339,8 @@ Throws:
 public <T> Future<T> submit(Callable<T> task)
 ```
 
-Throws:
-
-- `RejectedExecutionException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
+@throws RejectedExecutionException {@inheritDoc}
+@throws NullPointerException       {@inheritDoc}
 
 ## ScheduledThreadPoolExecutor.setContinueExistingPeriodicTasksAfterShutdownPolicy(boolean)
 
@@ -390,16 +349,13 @@ public void setContinueExistingPeriodicTasksAfterShutdownPolicy(boolean value)
 ```
 
 Sets the policy on whether to continue executing existing
-periodic tasks even when this executor has been `shutdown`.
-In this case, executions will continue until `shutdownNow`
-or the policy is set to `false` when already shutdown.
-This value is by default `false`.
+periodic tasks even when this executor has been {@code shutdown}.
+In this case, executions will continue until {@code shutdownNow}
+or the policy is set to {@code false} when already shutdown.
+This value is by default {@code false}.
 
-Parameters:
-
-- `value`: if `true`, continue after shutdown, else don't
-
-**See also:** #getContinueExistingPeriodicTasksAfterShutdownPolicy
+@param value if {@code true}, continue after shutdown, else don't
+@see #getContinueExistingPeriodicTasksAfterShutdownPolicy
 
 ## ScheduledThreadPoolExecutor.getContinueExistingPeriodicTasksAfterShutdownPolicy()
 
@@ -408,14 +364,13 @@ public boolean getContinueExistingPeriodicTasksAfterShutdownPolicy()
 ```
 
 Gets the policy on whether to continue executing existing
-periodic tasks even when this executor has been `shutdown`.
-In this case, executions will continue until `shutdownNow`
-or the policy is set to `false` when already shutdown.
-This value is by default `false`.
+periodic tasks even when this executor has been {@code shutdown}.
+In this case, executions will continue until {@code shutdownNow}
+or the policy is set to {@code false} when already shutdown.
+This value is by default {@code false}.
 
-**Returns:** `true` if will continue after shutdown
-
-**See also:** #setContinueExistingPeriodicTasksAfterShutdownPolicy
+@return {@code true} if will continue after shutdown
+@see #setContinueExistingPeriodicTasksAfterShutdownPolicy
 
 ## ScheduledThreadPoolExecutor.setExecuteExistingDelayedTasksAfterShutdownPolicy(boolean)
 
@@ -424,17 +379,14 @@ public void setExecuteExistingDelayedTasksAfterShutdownPolicy(boolean value)
 ```
 
 Sets the policy on whether to execute existing delayed
-tasks even when this executor has been `shutdown`.
+tasks even when this executor has been {@code shutdown}.
 In this case, these tasks will only terminate upon
-`shutdownNow`, or after setting the policy to
-`false` when already shutdown.
-This value is by default `true`.
+{@code shutdownNow}, or after setting the policy to
+{@code false} when already shutdown.
+This value is by default {@code true}.
 
-Parameters:
-
-- `value`: if `true`, execute after shutdown, else don't
-
-**See also:** #getExecuteExistingDelayedTasksAfterShutdownPolicy
+@param value if {@code true}, execute after shutdown, else don't
+@see #getExecuteExistingDelayedTasksAfterShutdownPolicy
 
 ## ScheduledThreadPoolExecutor.getExecuteExistingDelayedTasksAfterShutdownPolicy()
 
@@ -443,15 +395,14 @@ public boolean getExecuteExistingDelayedTasksAfterShutdownPolicy()
 ```
 
 Gets the policy on whether to execute existing delayed
-tasks even when this executor has been `shutdown`.
+tasks even when this executor has been {@code shutdown}.
 In this case, these tasks will only terminate upon
-`shutdownNow`, or after setting the policy to
-`false` when already shutdown.
-This value is by default `true`.
+{@code shutdownNow}, or after setting the policy to
+{@code false} when already shutdown.
+This value is by default {@code true}.
 
-**Returns:** `true` if will execute after shutdown
-
-**See also:** #setExecuteExistingDelayedTasksAfterShutdownPolicy
+@return {@code true} if will execute after shutdown
+@see #setExecuteExistingDelayedTasksAfterShutdownPolicy
 
 ## ScheduledThreadPoolExecutor.setRemoveOnCancelPolicy(boolean)
 
@@ -461,12 +412,94 @@ public void setRemoveOnCancelPolicy(boolean value)
 
 Sets the policy on whether cancelled tasks should be immediately
 removed from the work queue at time of cancellation.  This value is
-by default `false`.
+by default {@code false}.
 
-Parameters:
+@param value if {@code true}, remove on cancellation, else don't
+@see #getRemoveOnCancelPolicy
+@since 1.7
 
-- `value`: if `true`, remove on cancellation, else don't
+## ScheduledThreadPoolExecutor.getRemoveOnCancelPolicy()
 
-**See also:** #getRemoveOnCancelPolicy
+```java
+public boolean getRemoveOnCancelPolicy()
+```
 
-**Since:** 1.7
+Gets the policy on whether cancelled tasks should be immediately
+removed from the work queue at time of cancellation.  This value is
+by default {@code false}.
+
+@return {@code true} if cancelled tasks are immediately removed
+        from the queue
+@see #setRemoveOnCancelPolicy
+@since 1.7
+
+## ScheduledThreadPoolExecutor.shutdown()
+
+```java
+public void shutdown()
+```
+
+Initiates an orderly shutdown in which previously submitted
+tasks are executed, but no new tasks will be accepted.
+Invocation has no additional effect if already shut down.
+
+<p>This method does not wait for previously submitted tasks to
+complete execution.  Use {@link #awaitTermination awaitTermination}
+to do that.
+
+<p>If the {@code ExecuteExistingDelayedTasksAfterShutdownPolicy}
+has been set {@code false}, existing delayed tasks whose delays
+have not yet elapsed are cancelled.  And unless the {@code
+ContinueExistingPeriodicTasksAfterShutdownPolicy} has been set
+{@code true}, future executions of existing periodic tasks will
+be cancelled.
+
+## ScheduledThreadPoolExecutor.shutdownNow()
+
+```java
+public List<Runnable> shutdownNow()
+```
+
+Attempts to stop all actively executing tasks, halts the
+processing of waiting tasks, and returns a list of the tasks
+that were awaiting execution. These tasks are drained (removed)
+from the task queue upon return from this method.
+
+<p>This method does not wait for actively executing tasks to
+terminate.  Use {@link #awaitTermination awaitTermination} to
+do that.
+
+<p>There are no guarantees beyond best-effort attempts to stop
+processing actively executing tasks.  This implementation
+interrupts tasks via {@link Thread#interrupt}; any task that
+fails to respond to interrupts may never terminate.
+
+@return list of tasks that never commenced execution.
+        Each element of this list is a {@link ScheduledFuture}.
+        For tasks submitted via one of the {@code schedule}
+        methods, the element will be identical to the returned
+        {@code ScheduledFuture}.  For tasks submitted using
+        {@link #execute execute}, the element will be a
+        zero-delay {@code ScheduledFuture}.
+
+## ScheduledThreadPoolExecutor.getQueue()
+
+```java
+public BlockingQueue<Runnable> getQueue()
+```
+
+Returns the task queue used by this executor.  Access to the
+task queue is intended primarily for debugging and monitoring.
+This queue may be in active use.  Retrieving the task queue
+does not prevent queued tasks from executing.
+
+<p>Each element of this queue is a {@link ScheduledFuture}.
+For tasks submitted via one of the {@code schedule} methods, the
+element will be identical to the returned {@code ScheduledFuture}.
+For tasks submitted using {@link #execute execute}, the element
+will be a zero-delay {@code ScheduledFuture}.
+
+<p>Iteration over this queue is <em>not</em> guaranteed to traverse
+tasks in the order in which they will execute.
+
+@return the task queue

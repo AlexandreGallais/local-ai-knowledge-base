@@ -1,12 +1,23 @@
 ---
+description: "Learn more about: EnumerateCLRs Function"
 title: "EnumerateCLRs Function"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/enumerateclrs-function.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/21/2022"
+api_name:
+  - "EnumerateCLRs"
+api_location:
+  - "dbgshim.dll"
+  - "libdbgshim.so"
+  - "libdbgshim.dylib"
+f1_keywords:
+  - "EnumerateCLRs"
+helpviewer_keywords:
+  - "debugging API [.NET Core]"
+  - ".NET Core, debugging"
+  - "EnumerateCLRs function"
+ms.assetid: f8d50cb3-ec4f-4529-8fe3-bd61fd28e13c
+topic_type:
+  - "apiref"
 ---
-
 # EnumerateCLRs function
 
 Provides a mechanism for enumerating the CLRs in a process.
@@ -56,13 +67,13 @@ HRESULT EnumerateCLRs (
 
  On the Windows operating system, `debuggeePID` maps to an OS process identifier.
 
- The memory for `ppHandleArrayOut` and `ppStringArrayOut` are allocated by this function. To free the memory allocated, you must call CloseCLREnumeration Function.
+ The memory for `ppHandleArrayOut` and `ppStringArrayOut` are allocated by this function. To free the memory allocated, you must call [CloseCLREnumeration Function](closeclrenumeration-function.md).
 
  This function can be called with both array parameters set to null in order to return the count of CLRs in the target process. From this count, a caller can infer the size of the buffer that will be created: `(sizeof(HANDLE) * count) + (sizeof(LPWSTR) * count) + (sizeof(WCHAR*) * count * MAX_PATH)`.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** dbgshim.h
 

@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: 'ca-certificates' package removed from Alpine images"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/containers/8.0/ca-certificates-package.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in containers where the 'ca-certificates' package was removed from Alpine container images.
+ms.date: 08/01/2023
 ---
-
 # 'ca-certificates' package removed from Alpine images
 
 The `ca-certificates` package is no longer installed in .NET Alpine container images. The Alpine base image includes the `ca-certificates-bundle` package, which provides the same baseline content that's needed for most .NET apps. It's expected that very few .NET apps will be affected by this change.
@@ -25,7 +21,7 @@ Prior to .NET 8, the `ca-certificates` package was included in .NET's Alpine con
 
 ## Type of change
 
-This change can affect binary compatibility.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 
@@ -41,4 +37,4 @@ RUN apk add --upgrade ca-certificates
 
 ## Affected APIs
 
-- `System.Net.Http.HttpClient`
+- <xref:System.Net.Http.HttpClient?displayProperty=fullName>

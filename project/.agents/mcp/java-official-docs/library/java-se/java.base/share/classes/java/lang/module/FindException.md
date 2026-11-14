@@ -1,23 +1,16 @@
----
-title: "FindException class (java.lang.module)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/module/FindException.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # FindException class (java.lang.module)
 
 ```java
 public class FindException extends RuntimeException
 ```
 
-Thrown by a ModuleFinder when an error occurs finding
-a module. Also thrown by Configuration.resolve when resolution fails for observability-related
+Thrown by a {@link ModuleFinder ModuleFinder} when an error occurs finding
+a module. Also thrown by {@link
+Configuration#resolve(ModuleFinder,java.util.List,ModuleFinder,java.util.Collection)
+Configuration.resolve} when resolution fails for observability-related
 reasons.
 
-**Since:** 9
+@since 9
 
 ## FindException.FindException()
 
@@ -25,7 +18,7 @@ reasons.
 public FindException()
 ```
 
-Constructs a `FindException` with no detail message.
+Constructs a {@code FindException} with no detail message.
 
 ## FindException.FindException(String)
 
@@ -33,12 +26,11 @@ Constructs a `FindException` with no detail message.
 public FindException(String msg)
 ```
 
-Constructs a `FindException` with the given detail
+Constructs a {@code FindException} with the given detail
 message.
 
-Parameters:
-
-- `msg`: The detail message; can be `null`
+@param msg
+       The detail message; can be {@code null}
 
 ## FindException.FindException(Throwable)
 
@@ -46,11 +38,10 @@ Parameters:
 public FindException(Throwable cause)
 ```
 
-Constructs a `FindException` with the given cause.
+Constructs a {@code FindException} with the given cause.
 
-Parameters:
-
-- `cause`: The cause; can be `null`
+@param cause
+       The cause; can be {@code null}
 
 ## FindException.FindException(String, Throwable)
 
@@ -58,10 +49,10 @@ Parameters:
 public FindException(String msg, Throwable cause)
 ```
 
-Constructs a `FindException` with the given detail message
+Constructs a {@code FindException} with the given detail message
 and cause.
 
-Parameters:
-
-- `msg`: The detail message; can be `null`
-- `cause`: The cause; can be `null`
+@param msg
+       The detail message; can be {@code null}
+@param cause
+       The cause; can be {@code null}

@@ -1,15 +1,13 @@
 ---
-title: "Migrate C++/CLI projects to .NET"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/cpp-cli.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Migrate C++/CLI projects to .NET
+description: Learn about porting C++/CLI projects to .NET.
+author: mjrousos
+ms.date: 01/23/2024
 ---
 
 # How to port a C++/CLI project to .NET
 
-Beginning with Visual Studio 2019, C++/CLI projects can target .NET. This support makes it possible to port Windows desktop applications with C++/CLI interop layers from .NET Framework to .NET. This article describes how to port C++/CLI projects from .NET Framework to .NET.
+Beginning with Visual Studio 2019, [C++/CLI projects](/cpp/dotnet/dotnet-programming-with-cpp-cli-visual-cpp) can target .NET. This support makes it possible to port Windows desktop applications with C++/CLI interop layers from .NET Framework to .NET. This article describes how to port C++/CLI projects from .NET Framework to .NET.
 
 ## C++/CLI .NET Core limitations
 
@@ -29,7 +27,7 @@ To port a C++/CLI project to .NET, make the following changes to the _.vcxproj_ 
 01. Replace `<CLRSupport>true</CLRSupport>` properties with `<CLRSupport>NetCore</CLRSupport>`. This property is often in configuration-specific property groups, so you might need to replace it in multiple places.
 01. Replace `<TargetFrameworkVersion>` properties with `<TargetFramework>net8.0</TargetFramework>`. Be sure to change the tag and value.
 01. Remove any .NET Framework references to `System`, `System.Data`, `System.Windows.Forms`, and `System.Xml`, like `<Reference Include="System" />`. .NET SDK assemblies are automatically referenced when using `<CLRSupport>NetCore</CLRSupport>`.
-01. Update API usage in _.cpp_ files, as necessary, to remove APIs unavailable to .NET. Because C++/CLI projects tend to be fairly thin interop layers, there are often not many changes needed. You can use the .NET Portability Analyzer to identify unsupported .NET APIs used by C++/CLI binaries.
+01. Update API usage in _.cpp_ files, as necessary, to remove APIs unavailable to .NET. Because C++/CLI projects tend to be fairly thin interop layers, there are often not many changes needed. You can use the [.NET Portability Analyzer](../../standard/analyzers/portability-analyzer.md) to identify unsupported .NET APIs used by C++/CLI binaries.
 01. If your project was an executable, perform the following steps:
     01. Change the project type to a library.
     01. Create a new .NET executable project.
@@ -71,7 +69,7 @@ It's also possible to build C++/CLI projects without using MSBuild. Follow these
 01. Reference necessary .NET reference assemblies.
 01. When linking, provide the .NET app host directory as a `LibPath`, so that _ijwhost.lib_ can be found.
 01. Copy _ijwhost.dll_ from the .NET app host directory to the project's output directory.
-01. Make sure a _runtimeconfig.json_ file exists for the first component of the application that runs managed code. For latest versions of Visual Studio, a _runtime.config_ file is created and copied automatically.
+01. Make sure a [_runtimeconfig.json_](https://github.com/dotnet/sdk/blob/main/documentation/specs/runtime-configuration-file.md) file exists for the first component of the application that runs managed code. For latest versions of Visual Studio, a _runtime.config_ file is created and copied automatically.
 
     For older versions of Visual Studio, if the application has a native entry point, you need to manually create the following _runtimeconfig.json_ file for the first C++/CLI library to use the .NET runtime. If a C++/CLI library is called from a managed entry point, the library doesn't need a _runtimeconfig.json_ file, because the entry point assembly has one that is used when starting the runtime.
 
@@ -87,10 +85,10 @@ It's also possible to build C++/CLI projects without using MSBuild. Follow these
     }
     ```
 
-> **Note:**
-> C++/CLI assemblies that target .NET 7 or a later version are always loaded into the default `System.Runtime.Loader.AssemblyLoadContext`. However, in .NET 6 and earlier versions, C++/CLI assemblies might be loaded multiple times, each time into a new `AssemblyLoadContext`. If the first time that managed code in a C++/CLI assembly is executed:
+> [!NOTE]
+> C++/CLI assemblies that target .NET 7 or a later version are always loaded into the default <xref:System.Runtime.Loader.AssemblyLoadContext>. However, in .NET 6 and earlier versions, C++/CLI assemblies might be loaded multiple times, each time into a new `AssemblyLoadContext`. If the first time that managed code in a C++/CLI assembly is executed:
 >
 > - Is from a native caller, the assembly is loaded into a separate `AssemblyLoadContext`.
 > - Is from a managed caller, the assembly is loaded into the same `AssemblyLoadContext` as the caller, usually the default.
 >
-> To always load your C++/CLI assembly into the default `AssemblyLoadContext`, you can add an "initialize" style call from your entry-point assembly to your C++/CLI assembly. For more information, see this dotnet/runtime issue.
+> To always load your C++/CLI assembly into the default `AssemblyLoadContext`, you can add an "initialize" style call from your entry-point assembly to your C++/CLI assembly. For more information, see this [dotnet/runtime issue](https://github.com/dotnet/runtime/issues/61105).

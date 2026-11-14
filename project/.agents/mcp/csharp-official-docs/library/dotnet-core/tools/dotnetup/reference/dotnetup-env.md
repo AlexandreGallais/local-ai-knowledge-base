@@ -1,16 +1,14 @@
 ---
-title: "dotnetup env command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/reference/dotnetup-env.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnetup env command
+description: Command reference for the dotnetup environment command group.
+ms.topic: reference
+ms.date: 08/07/2026
+ai-usage: ai-assisted
 ---
 
 # dotnetup env command
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 ## Name
 
@@ -26,10 +24,10 @@ dotnetup env <command> [options]
 
 | Command | Description |
 | --- | --- |
-| `set` | Apply or reapply environment settings. |
-| `clear` | Remove all dotnetup environment wiring. |
-| `show` | Show stored settings and detected drift. |
-| `script` | Generate a shell activation script. |
+| [`set`](dotnetup-env-set.md) | Apply or reapply environment settings. |
+| [`clear`](dotnetup-env-clear.md) | Remove all dotnetup environment wiring. |
+| [`show`](dotnetup-env-show.md) | Show stored settings and detected drift. |
+| [`script`](dotnetup-env-script.md) | Generate a shell activation script. |
 
 ## Options
 
@@ -38,4 +36,4 @@ dotnetup env <command> [options]
 | `-?`, `-h`, `--help` | Show command help. |
 
 For the access-mode model, see
-Environment configuration.
+[Environment configuration](../concepts/environment.md).

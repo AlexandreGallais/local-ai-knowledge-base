@@ -1,12 +1,9 @@
 ---
-title: "dotnet sdk check command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-sdk-check.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet sdk check command
+description: The 'dotnet sdk check' command tells you what is the latest available version of the .NET SDK and .NET Runtime.
+ms.date: 05/15/2026
+ai-usage: ai-assisted
 ---
-
 # dotnet sdk check
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -58,9 +55,7 @@ The latest versions of .NET can be installed from https://aka.ms/dotnet-core-dow
 
 ## Options
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Examples
 
@@ -72,4 +67,4 @@ Prints out a description of how to use the command.
 
 ## See also
 
-To get similar SDK status information as a build warning for the SDK that your build resolves, set the `CheckSdkVulnerabilities` MSBuild property to `true` in your project. See NETSDK1238, NETSDK1239, and NETSDK1240.
+To get similar SDK status information as a build warning for the SDK that your build resolves, set the `CheckSdkVulnerabilities` MSBuild property to `true` in your project. See [NETSDK1238](sdk-errors/netsdk1238.md), [NETSDK1239](sdk-errors/netsdk1239.md), and [NETSDK1240](sdk-errors/netsdk1240.md).

@@ -1,12 +1,3 @@
----
-title: "CertificateFactory class (java.security.cert) (part 1 of 2)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/cert/CertificateFactory.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # CertificateFactory class (java.security.cert)
 
 ```java
@@ -14,31 +5,31 @@ public class CertificateFactory
 ```
 
 This class defines the functionality of a certificate factory, which is
-used to generate certificate, certification path (`CertPath`)
+used to generate certificate, certification path ({@code CertPath})
 and certificate revocation list (CRL) objects from their encodings.
 
-For encodings consisting of multiple certificates, use
-`generateCertificates` when you want to
+<p>For encodings consisting of multiple certificates, use
+{@code generateCertificates} when you want to
 parse a collection of possibly unrelated certificates. Otherwise,
-use `generateCertPath` when you want to generate
-a `CertPath` (a certificate chain) and subsequently
-validate it with a `CertPathValidator`.
+use {@code generateCertPath} when you want to generate
+a {@code CertPath} (a certificate chain) and subsequently
+validate it with a {@code CertPathValidator}.
 
-A certificate factory for X.509 must return certificates that are an
-instance of `java.security.cert.X509Certificate`, and CRLs
-that are an instance of `java.security.cert.X509CRL`.
+<p>A certificate factory for X.509 must return certificates that are an
+instance of {@code java.security.cert.X509Certificate}, and CRLs
+that are an instance of {@code java.security.cert.X509CRL}.
 
-The following example reads a file with Base64 encoded certificates,
+<p>The following example reads a file with Base64 encoded certificates,
 which are each bounded at the beginning by -----BEGIN CERTIFICATE-----, and
 bounded at the end by -----END CERTIFICATE-----. We convert the
-`FileInputStream` (which does not support `mark`
-and `reset`) to a `BufferedInputStream` (which
+{@code FileInputStream} (which does not support {@code mark}
+and {@code reset}) to a {@code BufferedInputStream} (which
 supports those methods), so that each call to
-`generateCertificate` consumes only one certificate, and the
+{@code generateCertificate} consumes only one certificate, and the
 read position of the input stream is positioned to the next certificate in
 the file:
 
-```java
+<pre>{@code
 FileInputStream fis = new FileInputStream(filename);
 BufferedInputStream bis = new BufferedInputStream(fis);
 
@@ -48,12 +39,12 @@ while (bis.available() > 0) {
    Certificate cert = cf.generateCertificate(bis);
    System.out.println(cert.toString());
 }
-```
+}</pre>
 
-The following example parses a PKCS#7-formatted certificate reply stored
+<p>The following example parses a PKCS#7-formatted certificate reply stored
 in a file and extracts all the certificates from it:
 
-```java
+<pre>
 FileInputStream fis = new FileInputStream(filename);
 CertificateFactory cf = CertificateFactory.getInstance("X.509");
 Collection c = cf.generateCertificates(fis);
@@ -61,37 +52,40 @@ Iterator i = c.iterator();
 while (i.hasNext()) {
    Certificate cert = (Certificate)i.next();
    System.out.println(cert);
-```
+}
+</pre>
 
- Every implementation of the Java platform is required to support the
-following standard `CertificateFactory` type:
-
-- `X.509`
-
-and the following standard `CertPath` encodings:
-
-- `PKCS7`
-
-- `PkiPath`
-
-The type and encodings are described in the
-CertificateFactory section and the
-CertPath Encodings section of the
+<p> Every implementation of the Java platform is required to support the
+following standard {@code CertificateFactory} type:
+<ul>
+<li>{@code X.509}</li>
+</ul>
+and the following standard {@code CertPath} encodings:
+<ul>
+<li>{@code PKCS7}</li>
+<li>{@code PkiPath}</li>
+</ul>
+The type and encodings are described in the <a href=
+"{@docRoot}/../specs/security/standard-names.html#certificatefactory-types">
+CertificateFactory section</a> and the <a href=
+"{@docRoot}/../specs/security/standard-names.html#certpath-encodings">
+CertPath Encodings section</a> of the
 Java Security Standard Algorithm Names Specification.
 Consult the release documentation for your implementation to see if any
 other types or encodings are supported.
 
-**See also:** Certificate
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@author Hemma Prafullchandra
+@author Jan Luehe
+@author Sean Mullan
 
-**See also:** X509Certificate
+@see Certificate
+@see X509Certificate
+@see CertPath
+@see CRL
+@see X509CRL
 
-**See also:** CertPath
-
-**See also:** CRL
-
-**See also:** X509CRL
-
-**Since:** 1.2
+@since 1.2
 
 ## CertificateFactory.CertificateFactory(CertificateFactorySpi, Provider, String)
 
@@ -102,11 +96,9 @@ protected CertificateFactory(CertificateFactorySpi certFacSpi, Provider provider
 Creates a CertificateFactory object of the given type, and encapsulates
 the given provider implementation (SPI object) in it.
 
-Parameters:
-
-- `certFacSpi`: the provider implementation.
-- `provider`: the provider.
-- `type`: the certificate type.
+@param certFacSpi the provider implementation.
+@param provider the provider.
+@param type the certificate type.
 
 ## CertificateFactory.getInstance(String)
 
@@ -117,34 +109,39 @@ public static final CertificateFactory getInstance(String type) throws Certifica
 Returns a certificate factory object that implements the
 specified certificate type.
 
- This method traverses the list of registered security Providers,
+<p> This method traverses the list of registered security Providers,
 starting with the most preferred Provider.
 A new CertificateFactory object encapsulating the
 CertificateFactorySpi implementation from the first
 Provider that supports the specified type is returned.
 
- Note that the list of registered providers may be retrieved via
-the Security.getProviders() method.
+<p> Note that the list of registered providers may be retrieved via
+the {@link Security#getProviders() Security.getProviders()} method.
 
-Parameters:
-
-- `type`: the name of the requested certificate type. See the CertificateFactory section in the  Java Security Standard Algorithm Names Specification for information about standard certificate types.
-
-**Implementation note:** The JDK Reference Implementation additionally uses the
-`jdk.security.provider.preferred`
-Security property to determine
+@implNote
+The JDK Reference Implementation additionally uses the
+{@code jdk.security.provider.preferred}
+{@link Security#getProperty(String) Security} property to determine
 the preferred provider order for the specified algorithm. This
 may be different from the order of providers returned by
-Security.getProviders().
+{@link Security#getProviders() Security.getProviders()}.
 
-**Returns:** a certificate factory object for the specified type
+@param type the name of the requested certificate type.
+See the CertificateFactory section in the <a href=
+"{@docRoot}/../specs/security/standard-names.html#certificatefactory-types">
+Java Security Standard Algorithm Names Specification</a>
+for information about standard certificate types.
 
-**See also:** java.security.Provider
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@return a certificate factory object for the specified type
 
-Throws:
+@throws CertificateException if no {@code Provider} supports a
+        {@code CertificateFactorySpi} implementation for the
+        specified type
 
-- `CertificateException`: if no `Provider` supports a `CertificateFactorySpi` implementation for the specified type
-- `NullPointerException`: if `type` is `null`
+@throws NullPointerException if {@code type} is {@code null}
+
+@see java.security.Provider
 
 ## CertificateFactory.getInstance(String, String)
 
@@ -155,29 +152,38 @@ public static final CertificateFactory getInstance(String type, String provider)
 Returns a certificate factory object for the specified
 certificate type.
 
- A new CertificateFactory object encapsulating the
+<p> A new CertificateFactory object encapsulating the
 CertificateFactorySpi implementation from the specified provider
 is returned.  The specified provider must be registered
 in the security provider list.
 
- Note that the list of registered providers may be retrieved via
-the Security.getProviders() method.
+<p> Note that the list of registered providers may be retrieved via
+the {@link Security#getProviders() Security.getProviders()} method.
 
-Parameters:
+@param type the certificate type.
+See the CertificateFactory section in the <a href=
+"{@docRoot}/../specs/security/standard-names.html#certificatefactory-types">
+Java Security Standard Algorithm Names Specification</a>
+for information about standard certificate types.
 
-- `type`: the certificate type. See the CertificateFactory section in the  Java Security Standard Algorithm Names Specification for information about standard certificate types.
-- `provider`: the name of the provider.
+@param provider the name of the provider.
 
-**Returns:** a certificate factory object for the specified type
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@return a certificate factory object for the specified type
 
-**See also:** java.security.Provider
+@throws CertificateException if a {@code CertificateFactorySpi}
+        implementation for the specified algorithm is not
+        available from the specified provider
 
-Throws:
+@throws IllegalArgumentException if the provider name is {@code null}
+        or empty
 
-- `CertificateException`: if a `CertificateFactorySpi` implementation for the specified algorithm is not available from the specified provider
-- `IllegalArgumentException`: if the provider name is `null` or empty
-- `NoSuchProviderException`: if the specified provider is not registered in the security provider list
-- `NullPointerException`: if `type` is `null`
+@throws NoSuchProviderException if the specified provider is not
+        registered in the security provider list
+
+@throws NullPointerException if {@code type} is {@code null}
+
+@see java.security.Provider
 
 ## CertificateFactory.getInstance(String, Provider)
 
@@ -188,27 +194,33 @@ public static final CertificateFactory getInstance(String type, Provider provide
 Returns a certificate factory object for the specified
 certificate type.
 
- A new CertificateFactory object encapsulating the
+<p> A new CertificateFactory object encapsulating the
 CertificateFactorySpi implementation from the specified Provider
 object is returned.  Note that the specified Provider object
 does not have to be registered in the provider list.
 
-Parameters:
+@param type the certificate type.
+See the CertificateFactory section in the <a href=
+"{@docRoot}/../specs/security/standard-names.html#certificatefactory-types">
+Java Security Standard Algorithm Names Specification</a>
+for information about standard certificate types.
+@param provider the provider.
 
-- `type`: the certificate type. See the CertificateFactory section in the  Java Security Standard Algorithm Names Specification for information about standard certificate types.
-- `provider`: the provider.
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@return a certificate factory object for the specified type
 
-**Returns:** a certificate factory object for the specified type
+@throws CertificateException if a {@code CertificateFactorySpi}
+        implementation for the specified algorithm is not available
+        from the specified {@code Provider} object
 
-**See also:** java.security.Provider
+@throws IllegalArgumentException if the {@code provider} is
+        {@code null}
 
-**Since:** 1.4
+@throws NullPointerException if {@code type} is {@code null}
 
-Throws:
+@see java.security.Provider
 
-- `CertificateException`: if a `CertificateFactorySpi` implementation for the specified algorithm is not available from the specified `Provider` object
-- `IllegalArgumentException`: if the `provider` is `null`
-- `NullPointerException`: if `type` is `null`
+@since 1.4
 
 ## CertificateFactory.getProvider()
 
@@ -218,7 +230,7 @@ public final Provider getProvider()
 
 Returns the provider of this certificate factory.
 
-**Returns:** the provider of this certificate factory.
+@return the provider of this certificate factory.
 
 ## CertificateFactory.getType()
 
@@ -229,7 +241,7 @@ public final String getType()
 Returns the name of the certificate type associated with this
 certificate factory.
 
-**Returns:** the name of the certificate type associated with this
+@return the name of the certificate type associated with this
 certificate factory.
 
 ## CertificateFactory.generateCertificate(InputStream)
@@ -239,43 +251,39 @@ public final Certificate generateCertificate(InputStream inStream) throws Certif
 ```
 
 Generates a certificate object and initializes it with
-the data read from the input stream `inStream`.
+the data read from the input stream {@code inStream}.
 
-In order to take advantage of the specialized certificate format
+<p>In order to take advantage of the specialized certificate format
 supported by this certificate factory,
 the returned certificate object can be typecast to the corresponding
 certificate class. For example, if this certificate
 factory implements X.509 certificates, the returned certificate object
-can be typecast to the `X509Certificate` class.
+can be typecast to the {@code X509Certificate} class.
 
-In the case of a certificate factory for X.509 certificates, the
-certificate provided in `inStream` must be DER-encoded and
+<p>In the case of a certificate factory for X.509 certificates, the
+certificate provided in {@code inStream} must be DER-encoded and
 may be supplied in binary or printable (Base64) encoding. If the
 certificate is provided in Base64 encoding, it must be bounded at
 the beginning by -----BEGIN CERTIFICATE-----, and must be bounded at
 the end by -----END CERTIFICATE-----.
 
-Note that if the given input stream does not support
-mark and
-reset, this method will
+<p>Note that if the given input stream does not support
+{@link java.io.InputStream#mark(int) mark} and
+{@link java.io.InputStream#reset() reset}, this method will
 consume the entire input stream. Otherwise, each call to this
 method consumes one certificate and the read position of the
 input stream is positioned to the next available byte after
 the inherent end-of-certificate marker. If the data in the input stream
 does not contain an inherent end-of-certificate marker (other
 than EOF) and there is trailing data after the certificate is parsed, a
-`CertificateException` is thrown.
+{@code CertificateException} is thrown.
 
-Parameters:
+@param inStream an input stream with the certificate data.
 
-- `inStream`: an input stream with the certificate data.
-
-**Returns:** a certificate object initialized with the data
+@return a certificate object initialized with the data
 from the input stream.
 
-Throws:
-
-- `CertificateException`: on parsing errors.
+@throws    CertificateException on parsing errors.
 
 ## CertificateFactory.getCertPathEncodings()
 
@@ -283,20 +291,21 @@ Throws:
 public final Iterator<String> getCertPathEncodings()
 ```
 
-Returns an iteration of the `CertPath` encodings supported
+Returns an iteration of the {@code CertPath} encodings supported
 by this certificate factory, with the default encoding first. See
-the CertPath Encodings section in the
-Java Security Standard Algorithm Names Specification
+the CertPath Encodings section in the <a href=
+"{@docRoot}/../specs/security/standard-names.html#certpath-encodings">
+Java Security Standard Algorithm Names Specification</a>
 for information about standard encoding names and their formats.
+<p>
+Attempts to modify the returned {@code Iterator} via its
+{@code remove} method result in an
+{@code UnsupportedOperationException}.
 
-Attempts to modify the returned `Iterator` via its
-`remove` method result in an
-`UnsupportedOperationException`.
-
-**Returns:** an `Iterator` over the names of the supported
-        `CertPath` encodings (as `String`s)
-
-**Since:** 1.4
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@return an {@code Iterator} over the names of the supported
+        {@code CertPath} encodings (as {@code String}s)
+@since 1.4
 
 ## CertificateFactory.generateCertPath(InputStream)
 
@@ -304,24 +313,17 @@ Attempts to modify the returned `Iterator` via its
 public final CertPath generateCertPath(InputStream inStream) throws CertificateException
 ```
 
-Generates a `CertPath` object and initializes it with
-the data read from the `InputStream` inStream. The data
+Generates a {@code CertPath} object and initializes it with
+the data read from the {@code InputStream} inStream. The data
 is assumed to be in the default encoding. The name of the default
-encoding is the first element of the `Iterator` returned by
-the getCertPathEncodings method.
+encoding is the first element of the {@code Iterator} returned by
+the {@link #getCertPathEncodings getCertPathEncodings} method.
 
-Parameters:
-
-- `inStream`: an `InputStream` containing the data
-
-**Returns:** a `CertPath` initialized with the data from the
-  `InputStream`
-
-**Since:** 1.4
-
-Throws:
-
-- `CertificateException`: if an exception occurs while decoding
+@param inStream an {@code InputStream} containing the data
+@return a {@code CertPath} initialized with the data from the
+  {@code InputStream}
+@throws    CertificateException if an exception occurs while decoding
+@since 1.4
 
 ## CertificateFactory.generateCertPath(InputStream, String)
 
@@ -329,26 +331,22 @@ Throws:
 public final CertPath generateCertPath(InputStream inStream, String encoding) throws CertificateException
 ```
 
-Generates a `CertPath` object and initializes it with
-the data read from the `InputStream` inStream. The data
+Generates a {@code CertPath} object and initializes it with
+the data read from the {@code InputStream} inStream. The data
 is assumed to be in the specified encoding. See
-the CertPath Encodings section in the
-Java Security Standard Algorithm Names Specification
+the CertPath Encodings section in the <a href=
+"{@docRoot}/../specs/security/standard-names.html#certpath-encodings">
+Java Security Standard Algorithm Names Specification</a>
 for information about standard encoding names and their formats.
 
-Parameters:
-
-- `inStream`: an `InputStream` containing the data
-- `encoding`: the encoding used for the data
-
-**Returns:** a `CertPath` initialized with the data from the
-  `InputStream`
-
-**Since:** 1.4
-
-Throws:
-
-- `CertificateException`: if an exception occurs while decoding or the encoding requested is not supported
+@param inStream an {@code InputStream} containing the data
+@param encoding the encoding used for the data
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@return a {@code CertPath} initialized with the data from the
+  {@code InputStream}
+@throws    CertificateException if an exception occurs while decoding or
+  the encoding requested is not supported
+@since 1.4
 
 ## CertificateFactory.generateCertPath(List<? extends Certificate>)
 
@@ -356,25 +354,18 @@ Throws:
 public final CertPath generateCertPath(List<? extends Certificate> certificates) throws CertificateException
 ```
 
-Generates a `CertPath` object and initializes it with
-a `List` of `Certificate`s.
-
+Generates a {@code CertPath} object and initializes it with
+a {@code List} of {@code Certificate}s.
+<p>
 The certificates supplied must be of a type supported by the
-`CertificateFactory`. They will be copied out of the supplied
-`List` object.
+{@code CertificateFactory}. They will be copied out of the supplied
+{@code List} object.
 
-Parameters:
-
-- `certificates`: a `List` of `Certificate`s
-
-**Returns:** a `CertPath` initialized with the supplied list of
+@param certificates a {@code List} of {@code Certificate}s
+@return a {@code CertPath} initialized with the supplied list of
   certificates
-
-**Since:** 1.4
-
-Throws:
-
-- `CertificateException`: if an exception occurs
+@throws    CertificateException if an exception occurs
+@since 1.4
 
 ## CertificateFactory.generateCertificates(InputStream)
 
@@ -383,42 +374,38 @@ public final Collection<? extends Certificate> generateCertificates (InputStream
 ```
 
 Returns a (possibly empty) collection view of the certificates read
-from the given input stream `inStream`.
+from the given input stream {@code inStream}.
 
-In order to take advantage of the specialized certificate format
+<p>In order to take advantage of the specialized certificate format
 supported by this certificate factory, each element in
 the returned collection view can be typecast to the corresponding
 certificate class. For example, if this certificate
 factory implements X.509 certificates, the elements in the returned
-collection can be typecast to the `X509Certificate` class.
+collection can be typecast to the {@code X509Certificate} class.
 
-In the case of a certificate factory for X.509 certificates,
-`inStream` may contain a sequence of DER-encoded certificates
+<p>In the case of a certificate factory for X.509 certificates,
+{@code inStream} may contain a sequence of DER-encoded certificates
 in the formats described for
-generateCertificate.
-In addition, `inStream` may contain a PKCS#7 certificate
-chain. This is a PKCS#7 *SignedData* object, with the only
-significant field being *certificates*. In particular, the
+{@link #generateCertificate(java.io.InputStream) generateCertificate}.
+In addition, {@code inStream} may contain a PKCS#7 certificate
+chain. This is a PKCS#7 <i>SignedData</i> object, with the only
+significant field being <i>certificates</i>. In particular, the
 signature and the contents are ignored. This format allows multiple
 certificates to be downloaded at once. If no certificates are present,
 an empty collection is returned.
 
-Note that if the given input stream does not support
-mark and
-reset, this method will
+<p>Note that if the given input stream does not support
+{@link java.io.InputStream#mark(int) mark} and
+{@link java.io.InputStream#reset() reset}, this method will
 consume the entire input stream.
 
-Parameters:
+@param inStream the input stream with the certificates.
 
-- `inStream`: the input stream with the certificates.
-
-**Returns:** a (possibly empty) collection view of
+@return a (possibly empty) collection view of
 java.security.cert.Certificate objects
 initialized with the data from the input stream.
 
-Throws:
-
-- `CertificateException`: on parsing errors.
+@throws    CertificateException on parsing errors.
 
 ## CertificateFactory.generateCRL(InputStream)
 
@@ -427,33 +414,67 @@ public final CRL generateCRL(InputStream inStream) throws CRLException
 ```
 
 Generates a certificate revocation list (CRL) object and initializes it
-with the data read from the input stream `inStream`.
+with the data read from the input stream {@code inStream}.
 
-In order to take advantage of the specialized CRL format
+<p>In order to take advantage of the specialized CRL format
 supported by this certificate factory,
 the returned CRL object can be typecast to the corresponding
 CRL class. For example, if this certificate
 factory implements X.509 CRLs, the returned CRL object
-can be typecast to the `X509CRL` class.
+can be typecast to the {@code X509CRL} class.
 
-Note that if the given input stream does not support
-mark and
-reset, this method will
+<p>Note that if the given input stream does not support
+{@link java.io.InputStream#mark(int) mark} and
+{@link java.io.InputStream#reset() reset}, this method will
 consume the entire input stream. Otherwise, each call to this
 method consumes one CRL and the read position of the input stream
 is positioned to the next available byte after the inherent
 end-of-CRL marker. If the data in the
 input stream does not contain an inherent end-of-CRL marker (other
 than EOF) and there is trailing data after the CRL is parsed, a
-`CRLException` is thrown.
+{@code CRLException} is thrown.
 
-Parameters:
+@param inStream an input stream with the CRL data.
 
-- `inStream`: an input stream with the CRL data.
-
-**Returns:** a CRL object initialized with the data
+@return a CRL object initialized with the data
 from the input stream.
 
-Throws:
+@throws    CRLException on parsing errors.
 
-- `CRLException`: on parsing errors.
+## CertificateFactory.generateCRLs(InputStream)
+
+```java
+public final Collection<? extends CRL> generateCRLs(InputStream inStream) throws CRLException
+```
+
+Returns a (possibly empty) collection view of the CRLs read
+from the given input stream {@code inStream}.
+
+<p>In order to take advantage of the specialized CRL format
+supported by this certificate factory, each element in
+the returned collection view can be typecast to the corresponding
+CRL class. For example, if this certificate
+factory implements X.509 CRLs, the elements in the returned
+collection can be typecast to the {@code X509CRL} class.
+
+<p>In the case of a certificate factory for X.509 CRLs,
+{@code inStream} may contain a sequence of DER-encoded CRLs.
+In addition, {@code inStream} may contain a PKCS#7 CRL
+set. This is a PKCS#7 <i>SignedData</i> object, with the only
+significant field being <i>crls</i>. In particular, the
+signature and the contents are ignored. This format allows multiple
+CRLs to be downloaded at once. If no CRLs are present,
+an empty collection is returned.
+
+<p>Note that if the given input stream does not support
+{@link java.io.InputStream#mark(int) mark} and
+{@link java.io.InputStream#reset() reset}, this method will
+consume the entire input stream.
+
+@param inStream the input stream with the CRLs.
+
+@return a (possibly empty) collection view of
+java.security.cert.CRL objects initialized with the data from the input
+stream.
+
+@throws    CRLException on parsing errors.

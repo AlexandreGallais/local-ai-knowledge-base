@@ -1,43 +1,39 @@
 ---
-title: "What's new in C# 13"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/whats-new/csharp-13.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: What's new in C# 13
+description: "Discover what's new in C# 13, including params collections, a new lock object, ref struct interfaces, partial properties, and more. Try examples in your code."
+ms.date: 11/18/2025
+ms.topic: whats-new
 ---
-
 # What's new in C# 13
 
-C# 13 includes the following new features. You can try these features using the latest Visual Studio 2022 version or the .NET 9 SDK:
+C# 13 includes the following new features. You can try these features using the latest [Visual Studio 2022](https://visualstudio.microsoft.com/vs/preview/) version or the [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet):
 
-- `params` collections
-- New `lock` type and semantics.
-- New escape sequence - `\e`.
-- Method group natural type improvements
-- Implicit indexer access in object initializers
-- Enable `ref` locals and `unsafe` contexts in iterators and async methods
-- Enable `ref struct` types to implement interfaces.
-- Allow ref struct types as arguments for type parameters in generics.
-- Partial properties and indexers are now allowed in `partial` types.
-- Overload resolution priority allows library authors to designate one overload as better than others.
+- [`params` collections](#params-collections)
+- [New `lock` type and semantics](#new-lock-object).
+- [New escape sequence - `\e`](#new-escape-sequence).
+- [Method group natural type improvements](#method-group-natural-type)
+- [Implicit indexer access in object initializers](#implicit-index-access)
+- [Enable `ref` locals and `unsafe` contexts in iterators and async methods](#ref-and-unsafe-in-iterators-and-async-methods)
+- [Enable `ref struct` types to implement interfaces](#ref-struct-interfaces).
+- [Allow ref struct types](#allows-ref-struct) as arguments for type parameters in generics.
+- [Partial properties and indexers](#more-partial-members) are now allowed in `partial` types.
+- [Overload resolution priority](#overload-resolution-priority) allows library authors to designate one overload as better than others.
 
-Beginning with Visual Studio 17.12, C# 13 includes the `field` contextual keyword as a preview feature.
+Beginning with Visual Studio 17.12, C# 13 includes the [`field`](#the-field-keyword) contextual keyword as a preview feature.
 
-C# 13 is supported on **.NET 9**. For more information, see C# language versioning.
+C# 13 is supported on **.NET 9**. For more information, see [C# language versioning](../language-reference/configure-language-version.md).
 
-You can download the latest .NET 9 SDK from the .NET downloads page. You can also download Visual Studio 2022, which includes the .NET 9 SDK.
+You can download the latest .NET 9 SDK from the [.NET downloads page](https://dotnet.microsoft.com/download). You can also download [Visual Studio 2022](https://visualstudio.microsoft.com/vs/), which includes the .NET 9 SDK.
 
-You can find any breaking changes introduced in C# 13 in our article on breaking changes.
+You can find any breaking changes introduced in C# 13 in our article on [breaking changes](~/_roslyn/docs/compilers/CSharp/Compiler%20Breaking%20Changes%20-%20DotNet%209.md).
 
-> **Note:**
-> We're interested in your feedback on these features. If you find issues with any of these new features, create a new issue in the dotnet/roslyn repository.
+[!INCLUDE [released-version-feedback](./includes/released-feedback.md)]
 
 ## `params` collections
 
-The `params` modifier isn't limited to array types. You can now use `params` with any recognized collection type, including `System.Span`1`, `System.ReadOnlySpan`1`, and types that implement `System.Collections.Generic.IEnumerable`1` and have an `Add` method. In addition to concrete types, the interfaces `System.Collections.Generic.IEnumerable`1`, `System.Collections.Generic.IReadOnlyCollection`1`, `System.Collections.Generic.IReadOnlyList`1`, `System.Collections.Generic.ICollection`1`, and `System.Collections.Generic.IList`1` can also be used.
+The `params` modifier isn't limited to array types. You can now use `params` with any recognized collection type, including <xref:System.Span`1?displayProperty=nameWithType>, <xref:System.ReadOnlySpan`1?displayProperty=nameWithType>, and types that implement <xref:System.Collections.Generic.IEnumerable`1?displayProperty=nameWithType> and have an `Add` method. In addition to concrete types, the interfaces <xref:System.Collections.Generic.IEnumerable`1?displayProperty=nameWithType>, <xref:System.Collections.Generic.IReadOnlyCollection`1?displayProperty=nameWithType>, <xref:System.Collections.Generic.IReadOnlyList`1?displayProperty=nameWithType>, <xref:System.Collections.Generic.ICollection`1?displayProperty=nameWithType>, and <xref:System.Collections.Generic.IList`1?displayProperty=nameWithType> can also be used.
 
-When an interface type is used, the compiler synthesizes the storage for the arguments supplied. You can learn more in the C# language specification for `params` collections.
+When an interface type is used, the compiler synthesizes the storage for the arguments supplied. You can learn more in the C# language specification for [`params` collections](~/_csharpstandard/standard/classes.md#15624-parameter-collections).
 
 For example, method declarations can declare spans as `params` parameters:
 
@@ -55,15 +51,15 @@ public void Concat<T>(params ReadOnlySpan<T> items)
 
 ## New lock object
 
-The .NET 9 runtime includes a new type for thread synchronization, the `System.Threading.Lock` type. This type provides better thread synchronization through its API. The `System.Threading.Lock.EnterScope` method enters an exclusive scope. The `ref struct` returned from that supports the `Dispose()` pattern to exit the exclusive scope.
+The .NET 9 runtime includes a new type for thread synchronization, the <xref:System.Threading.Lock?displayProperty=fullName> type. This type provides better thread synchronization through its API. The <xref:System.Threading.Lock.EnterScope?displayProperty=nameWithType> method enters an exclusive scope. The `ref struct` returned from that supports the `Dispose()` pattern to exit the exclusive scope.
 
-The C# `lock` statement recognizes if the target of the lock is a `Lock` object. If so, it uses the updated API, rather than the traditional API using `System.Threading.Monitor`. The compiler also recognizes if you convert a `Lock` object to another type and the `Monitor` based code would be generated. You can read more in the C# language specification for the new lock object.
+The C# [`lock`](../language-reference/statements/lock.md) statement recognizes if the target of the lock is a `Lock` object. If so, it uses the updated API, rather than the traditional API using <xref:System.Threading.Monitor?displayProperty=nameWithType>. The compiler also recognizes if you convert a `Lock` object to another type and the `Monitor` based code would be generated. You can read more in the C# language specification for the [new lock object](~/_csharpstandard/standard/statements.md#1313-the-lock-statement).
 
 This feature allows you to get the benefits of the new library type by changing the type of object you `lock`. No other code needs to change.
 
 ## New escape sequence
 
-You can use `\e` as a character literal escape sequence for the `ESCAPE` character, Unicode `U+001B`. Previously, you used `\u001b` or `\x1b`. Using `\x1b` wasn't recommended because if the next characters following `1b` were valid hexadecimal digits, those characters became part of the escape sequence.
+You can use `\e` as a [character literal](~/_csharpstandard/standard/lexical-structure.md#6455-character-literals) escape sequence for the `ESCAPE` character, Unicode `U+001B`. Previously, you used `\u001b` or `\x1b`. Using `\x1b` wasn't recommended because if the next characters following `1b` were valid hexadecimal digits, those characters became part of the escape sequence.
 
 ## Method group natural type
 
@@ -71,7 +67,7 @@ This feature makes small optimizations to overload resolution involving method g
 
 The new behavior is to prune the set of candidate methods at each scope, removing those candidate methods that aren't applicable. Typically, the removed methods are generic methods with the wrong arity, or constraints that aren't satisfied. The process continues to the next outer scope only if no candidate methods are found. This process more closely follows the general algorithm for overload resolution. If all candidate methods found at a given scope don't match, the method group doesn't have a natural type.
 
-You can read the details of the changes in the anonymous function type clause of the C# language specification.
+You can read the details of the changes in the [anonymous function type](~/_csharpstandard/standard/expressions.md#12228-anonymous-function-type) clause of the C# language specification.
 
 ## Implicit index access
 
@@ -107,13 +103,13 @@ In versions before C# 13, the `^` operator can't be used in an object initialize
 
 ## `ref` and `unsafe` in iterators and `async` methods
 
-This feature and the following two features enable `ref struct` types to use new constructs. You won't use these features unless you write your own `ref struct` types. More likely, you see an indirect benefit as `System.Span`1` and `System.ReadOnlySpan`1` gain more functionality.
+This feature and the following two features enable `ref struct` types to use new constructs. You won't use these features unless you write your own `ref struct` types. More likely, you see an indirect benefit as <xref:System.Span`1?displayProperty=nameWithType> and <xref:System.ReadOnlySpan`1?displayProperty=nameWithType> gain more functionality.
 
 Before C# 13, iterator methods (methods that use `yield return`) and `async` methods couldn't declare local `ref` variables, nor could they have an `unsafe` context.
 
 In C# 13, `async` methods can declare `ref` local variables, or local variables of a `ref struct` type. However, those variables can't be accessed across an `await` boundary. Neither can they be accessed across a `yield return` boundary.
 
-This relaxed restriction enables the compiler to allow verifiably safe use of `ref` local variables and `ref struct` types in more places. You can safely use types like `System.ReadOnlySpan`1` in these methods. The compiler tells you if you violate safety rules.
+This relaxed restriction enables the compiler to allow verifiably safe use of `ref` local variables and `ref struct` types in more places. You can safely use types like <xref:System.ReadOnlySpan`1?displayProperty=nameWithType> in these methods. The compiler tells you if you violate safety rules.
 
 In the same fashion, C# 13 allows `unsafe` contexts in iterator methods. However, all `yield return` and `yield break` statements must be in safe contexts.
 
@@ -134,13 +130,13 @@ public class C<T> where T : allows ref struct
 }
 ```
 
-This enables types such as `System.Span`1` and `System.ReadOnlySpan`1` to be used with generic algorithms, where applicable. You can learn more in the updates for `where` and the programming guide article on generic constraints.
+This enables types such as <xref:System.Span`1?displayProperty=nameWithType> and <xref:System.ReadOnlySpan`1?displayProperty=nameWithType> to be used with generic algorithms, where applicable. You can learn more in the updates for [`where`](../language-reference/keywords/where-generic-type-constraint.md) and the programming guide article on [generic constraints](../programming-guide/generics/constraints-on-type-parameters.md).
 
 ## `ref struct` interfaces
 
-Before C# 13, `ref struct` types weren't allowed to implement interfaces. Beginning with C# 13, they can. You can declare that a `ref struct` type implements an interface. However, to ensure ref safety rules, a `ref struct` type can't be converted to an interface type. That conversion is a boxing conversion, and could violate ref safety. Explicit interface method declarations in a `ref struct` can be accessed only through a type parameter where that type parameter `allows ref struct`. Also, `ref struct` types must implement all methods declared in an interface, including those methods with a default implementation.
+Before C# 13, `ref struct` types weren't allowed to implement interfaces. Beginning with C# 13, they can. You can declare that a `ref struct` type implements an interface. However, to ensure ref safety rules, a `ref struct` type can't be converted to an interface type. That conversion is a boxing conversion, and could violate ref safety. Explicit interface method declarations in a `ref struct` can be accessed only through a type parameter where that type parameter [`allows ref struct`](../programming-guide/generics/constraints-on-type-parameters.md#allows-ref-struct). Also, `ref struct` types must implement all methods declared in an interface, including those methods with a default implementation.
 
-Learn more in the updates on `ref struct` types and the addition of the `allows ref struct` generic constraint.
+Learn more in the updates on [`ref struct` types](../language-reference/builtin-types/ref-struct.md#restrictions-for-ref-struct-types-that-implement-an-interface) and the addition of the [`allows ref struct`](../programming-guide/generics/constraints-on-type-parameters.md#allows-ref-struct) generic constraint.
 
 ## More partial members
 
@@ -165,26 +161,26 @@ public partial class C
 }
 ```
 
-You can learn more in the article on partial members.
+You can learn more in the article on [partial members](../language-reference/keywords/partial-member.md).
 
 ## Overload resolution priority
 
-In C# 13, the compiler recognizes the `System.Runtime.CompilerServices.OverloadResolutionPriorityAttribute` to prefer one overload over another. Library authors can use this attribute to ensure that a new, better overload is preferred over an existing overload. For example, you might add a new overload that's more performant. You don't want to break existing code that uses your library, but you want users to update to the new version when they recompile. You can use Overload resolution priority to inform the compiler which overload should be preferred. Overloads with the highest priority are preferred.
+In C# 13, the compiler recognizes the <xref:System.Runtime.CompilerServices.OverloadResolutionPriorityAttribute> to prefer one overload over another. Library authors can use this attribute to ensure that a new, better overload is preferred over an existing overload. For example, you might add a new overload that's more performant. You don't want to break existing code that uses your library, but you want users to update to the new version when they recompile. You can use [Overload resolution priority](../language-reference/attributes/general.md#overloadresolutionpriority-attribute) to inform the compiler which overload should be preferred. Overloads with the highest priority are preferred.
 
 This feature is intended for library authors to avoid ambiguity when adding new overloads. Library authors should use care with this attribute to avoid confusion.
 
 ## The `field` keyword
 
-The `field` contextual keyword is in C# 13 as a preview feature. The token `field` accesses the compiler synthesized backing field in a property accessor. It enables you to write an accessor body without declaring an explicit backing field in your type declaration. You can declare a body for one or both accessors for a field backed property.
+The [`field`](../language-reference/keywords/field.md) contextual keyword is in C# 13 as a preview feature. The token `field` accesses the compiler synthesized backing field in a property accessor. It enables you to write an accessor body without declaring an explicit backing field in your type declaration. You can declare a body for one or both accessors for a field backed property.
 
 The `field` feature is released as a preview feature. We want to learn from your experiences using it. There's a potential breaking change or confusion reading code in types that also include a field named `field`. You can use `@field` or `this.field` to disambiguate between the `field` keyword and the identifier.
 
-> **Important:**
+> [!IMPORTANT]
 >
-> You should be careful using the `field` keyword feature in a class that has a field named `field`. The new `field` keyword shadows a field named `field` in the scope of a property accessor. You can either change the name of the `field` variable, or use the `@` token to reference the `field` identifier as `@field`. You can learn more by reading the feature specification for the `field` keyword.
+> You should be careful using the `field` keyword feature in a class that has a field named `field`. The new `field` keyword shadows a field named `field` in the scope of a property accessor. You can either change the name of the `field` variable, or use the `@` token to reference the `field` identifier as `@field`. You can learn more by reading the feature specification for [the `field` keyword](~/_csharplang/proposals/csharp-14.0/field-keyword.md).
 
-If you try this feature and have feedback, add it to the feature issue in the `csharplang` repository.
+If you try this feature and have feedback, add it to the [feature issue](https://github.com/dotnet/csharplang/issues/140) in the `csharplang` repository.
 
 ## See also
 
-- What's new in .NET 9
+- [What's new in .NET 9](../../core/whats-new/dotnet-9/overview.md)

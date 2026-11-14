@@ -1,12 +1,8 @@
 ---
-title: "Breaking changes and .NET libraries"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/library-guidance/breaking-changes.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Breaking changes and .NET libraries
+description: Best practice recommendations for navigating breaking changes when creating .NET libraries.
+ms.date: 05/13/2021
 ---
-
 # Breaking changes
 
 It's important for a .NET library to find a balance between stability for existing users and innovation for the future. Library authors lean towards refactoring and rethinking code until it's perfect, but breaking your existing users has a negative impact, especially for low-level libraries.
@@ -52,15 +48,15 @@ Behavior changes are the most common type of breaking change: almost any change 
 
 Adding features and improving bad behaviors is a good thing, but without care it can make it very hard for existing users to upgrade. One approach to helping developers deal with behavior breaking changes is to hide them behind settings. Settings let developers update to the latest version of your library while at the same time choosing to opt in or opt out of breaking changes. This strategy lets developers stay up to date while letting their consuming code adapt over time.
 
-For example, ASP.NET Core MVC has the concept of a compatibility version that modifies the features enabled and disabled on `MvcOptions`.
+For example, ASP.NET Core MVC has the concept of a [compatibility version](/aspnet/core/mvc/compatibility-version) that modifies the features enabled and disabled on `MvcOptions`.
 
 ✔️ CONSIDER leaving new features off by default, if they affect existing users, and let developers opt in to the feature with a setting.
 
-For more information about behavior breaking changes in .NET APIs, see .NET behavioral changes compatibility.
+For more information about behavior breaking changes in .NET APIs, see [.NET behavioral changes compatibility](../../core/compatibility/library-change-rules.md#behavioral-changes).
 
 ### Binary breaking change
 
-A binary breaking change happens when you change the public API of your library, so assemblies compiled against older versions of your library are no longer able to call the API. For example, changing a method's signature by adding a new parameter will cause assemblies compiled against the older version of the library to throw a `System.MissingMethodException`.
+A binary breaking change happens when you change the public API of your library, so assemblies compiled against older versions of your library are no longer able to call the API. For example, changing a method's signature by adding a new parameter will cause assemblies compiled against the older version of the library to throw a <xref:System.MissingMethodException>.
 
 A binary breaking change can also break an **entire assembly**. Renaming an assembly with `AssemblyName` will change the assembly's identity, as will adding, removing, or changing the assembly's strong naming key. A change of an assembly's identity will break all compiled code that uses it.
 
@@ -72,9 +68,9 @@ A binary breaking change can also break an **entire assembly**. Renaming an asse
 
 > Adding anything to an interface will cause existing types that implement it to fail. An abstract base class allows you to add a default virtual implementation.
 
-✔️ CONSIDER placing the `System.ObsoleteAttribute` on types and members that you intend to remove. The attribute should have instructions for updating code to no longer use the obsolete API.
+✔️ CONSIDER placing the <xref:System.ObsoleteAttribute> on types and members that you intend to remove. The attribute should have instructions for updating code to no longer use the obsolete API.
 
-> Code that calls types and methods with the `System.ObsoleteAttribute` will generate a build warning with the message supplied to the attribute. The warnings give people who use the obsolete API surface time to migrate so that when the obsolete API is removed, most are no longer using it.
+> Code that calls types and methods with the <xref:System.ObsoleteAttribute> will generate a build warning with the message supplied to the attribute. The warnings give people who use the obsolete API surface time to migrate so that when the obsolete API is removed, most are no longer using it.
 
 ```csharp
 public class Document
@@ -92,15 +88,16 @@ public class Document
 }
 ```
 
-✔️ CONSIDER keeping types and methods with the `System.ObsoleteAttribute` indefinitely in low and middle-level libraries.
+✔️ CONSIDER keeping types and methods with the <xref:System.ObsoleteAttribute> indefinitely in low and middle-level libraries.
 
 > Removing APIs is a binary breaking change. Considering keeping obsolete types and methods if maintaining them is low cost and doesn't add lot of technical debt to your library. Not removing types and methods can help avoid the worst-case scenarios mentioned above.
 
-For more information about what .NET API changes break binary compatibility, see .NET public contract compatibility.
+For more information about what .NET API changes break binary compatibility, see [.NET public contract compatibility](../../core/compatibility/library-change-rules.md#modifications-to-the-public-contract).
 
 ## See also
 
-- Version and update considerations for C# developers
-- Change rules for compatibility
+- [Version and update considerations for C# developers](../../csharp/whats-new/version-update-considerations.md)
+- [Change rules for compatibility](../../core/compatibility/library-change-rules.md)
 
->Previous
+>[!div class="step-by-step"]
+>[Previous](versioning.md)

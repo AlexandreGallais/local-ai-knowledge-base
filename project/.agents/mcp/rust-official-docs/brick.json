@@ -4,5 +4,5 @@
   "search": "Search the official documentation of Rust: The Rust Programming Language (the book), The Rust Reference and the standard library (core, alloc, std). Returns 10 section ids at most.",
   "queryExample": "\"Vec push\" or \"HashMap entry\"",
   "toolExample": "\"rust-std\" or \"rust-book\"",
-  "idExample": "library/rust-std/alloc/src/vec/mod-p2.md#vecpush"
+  "idExample": "library/rust-std/alloc/src/vec/mod.md#struct-vec"
 }

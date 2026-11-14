@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugObjectValue::SetFromManagedCopy Method"
 title: "ICorDebugObjectValue::SetFromManagedCopy Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugobjectvalue-setfrommanagedcopy-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugObjectValue.SetFromManagedCopy"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugObjectValue::SetFromManagedCopy"
+helpviewer_keywords:
+  - "ICorDebugObjectValue::SetFromManagedCopy method [.NET debugging]"
+  - "SetFromManagedCopy method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugObjectValue::SetFromManagedCopy Method
 
 `SetFromManagedCopy` is obsolete. Do not call this method.
@@ -22,3 +31,5 @@ HRESULT SetFromManagedCopy (
 ## Requirements
 
  **Header:** CorDebug.idl, CorDebug.h
+
+## See also

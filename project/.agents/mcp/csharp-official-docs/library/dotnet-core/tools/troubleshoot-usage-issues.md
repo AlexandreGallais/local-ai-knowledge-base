@@ -1,10 +1,9 @@
 ---
-title: "Troubleshoot .NET tool usage issues"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/troubleshoot-usage-issues.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Troubleshoot .NET tool usage issues
+description: Discover the common issues when running .NET tools and possible solutions.
+author: kdollard
+ms.topic: troubleshooting
+ms.date: 09/29/2021
 ---
 
 # Troubleshoot .NET tool usage issues
@@ -15,8 +14,8 @@ You might come across issues when trying to install or run a .NET tool, which ca
 
 When a .NET tool fails to run, most likely you ran into one of the following issues:
 
-- The executable file for the tool wasn't found.
-- The correct version of the .NET runtime wasn't found.
+- [The executable file for the tool wasn't found.](#executable-file-not-found)
+- [The correct version of the .NET runtime wasn't found.](#runtime-not-found)
 
 ### Executable file not found
 
@@ -56,7 +55,7 @@ The .NET CLI tries to add the default location to the PATH environment variable 
 * If you've installed the .NET Core 3.0 SDK and you've set the `DOTNET_ADD_GLOBAL_TOOLS_TO_PATH` environment variable to `false`.
 * If you've installed .NET Core 2.2 SDK or earlier versions, and you've set the `DOTNET_SKIP_FIRST_TIME_EXPERIENCE` environment variable to `true`.
 
-In these scenarios or if you specified the `--tool-path` option while installing a dotnet tool, the `PATH` environment variable on your machine doesn't automatically contain the path where you installed the global tool. In that case, append the tool location (for example, `$HOME/.dotnet/tools`) to the `PATH` environment variable by using whatever method your shell provides for updating environment variables. For more information, see .NET tools.
+In these scenarios or if you specified the `--tool-path` option [while installing a dotnet tool](global-tools.md#install-a-global-tool-in-a-custom-location), the `PATH` environment variable on your machine doesn't automatically contain the path where you installed the global tool. In that case, append the tool location (for example, `$HOME/.dotnet/tools`) to the `PATH` environment variable by using whatever method your shell provides for updating environment variables. For more information, see [.NET tools](global-tools.md).
 
 #### Local tools
 
@@ -70,7 +69,7 @@ If you're trying to run a .NET tool that was installed with a specified path, yo
 
 ### Runtime not found
 
-.NET tools are framework-dependent applications, which means they rely on a .NET runtime installed on your machine. If the expected runtime isn't found, they follow normal .NET runtime roll-forward rules such as:
+.NET tools are [framework-dependent applications](../deploying/index.md#publish-as-framework-dependent), which means they rely on a .NET runtime installed on your machine. If the expected runtime isn't found, they follow normal .NET runtime roll-forward rules such as:
 
 - An application rolls forward to the highest patch release of the specified major and minor version.
 - If there's no matching runtime with a matching major and minor version number, the next higher minor version is used.
@@ -90,7 +89,7 @@ dotnet --list-runtimes
 dotnet --info
 ```
 
-If you think the tool should support the runtime version you currently have installed, you can contact the tool author and see if they can update the version number or multi-target. Once they've recompiled and republished their tool package to NuGet with an updated version number, you can update your copy. While that doesn't happen, the quickest solution for you is to install a version of the runtime that would work with the tool you're trying to run. To download a specific .NET runtime version, visit the .NET download page.
+If you think the tool should support the runtime version you currently have installed, you can contact the tool author and see if they can update the version number or multi-target. Once they've recompiled and republished their tool package to NuGet with an updated version number, you can update your copy. While that doesn't happen, the quickest solution for you is to install a version of the runtime that would work with the tool you're trying to run. To download a specific .NET runtime version, visit the [.NET download page](https://dotnet.microsoft.com/download/dotnet).
 
 If you install the .NET SDK to a non-default location, you need to set the environment variable `DOTNET_ROOT` to the directory that contains the `dotnet` executable.
 
@@ -111,12 +110,12 @@ For more reasons, including package naming enforcement, visit https://aka.ms/fai
 
 To help diagnose these failures, NuGet messages are shown directly to the user, along with the previous message. The NuGet message may help you identify the problem.
 
-- Package naming enforcement
-- Preview releases
-- Package isn't a .NET tool
-- NuGet feed can't be accessed
-- Package ID incorrect
-- 401 (Unauthorized)
+- [Package naming enforcement](#package-naming-enforcement)
+- [Preview releases](#preview-releases)
+- [Package isn't a .NET tool](#package-isnt-a-net-tool)
+- [NuGet feed can't be accessed](#nuget-feed-cant-be-accessed)
+- [Package ID incorrect](#package-id-incorrect)
+- [401 (Unauthorized)](#401-unauthorized)
 
 ### Package naming enforcement
 
@@ -165,7 +164,7 @@ A common reason for failure is that the tool name isn't correct. This can happen
 
 Most likely you've specified an alternative NuGet feed, and that feed requires authentication. There are a few different ways to solve this:
 
-- Add the `--ignore-failed-sources` parameter to bypass the error from the private feed and use the public Microsoft feed.
+- Add the [`--ignore-failed-sources`](dotnet-tool-install.md#arguments) parameter to bypass the error from the private feed and use the public Microsoft feed.
 
   If you're installing a tool from the Microsoft NuGet feed, your custom feed is returning this error before Microsoft's NuGet feed returns a result. The error terminates the request, canceling any other pending feed requests, which could be Microsoft's NuGet feed. Adding the `--ignore-failed-sources` option causes the command to treat this error as a warning and allows other feeds to process the request.
 
@@ -173,7 +172,7 @@ Most likely you've specified an alternative NuGet feed, and that feed requires a
   dotnet tool install -g --ignore-failed-sources <toolName>
   ```
 
-- Force the Microsoft NuGet feed with the `--add-source` parameter.
+- Force the Microsoft NuGet feed with the [`--add-source`](dotnet-tool-install.md#arguments) parameter.
 
   It's possible that the global or local NuGet config file is missing the public Microsoft NuGet feed. Use a combination of the `--add-source` and `--ignore-failed-sources` parameters to avoid the erroneous feed and rely on the public Microsoft feed.
 
@@ -200,12 +199,12 @@ Most likely you've specified an alternative NuGet feed, and that feed requires a
   </configuration>
   ```
 
-  For more information, see nuget.config reference.
+  For more information, see [nuget.config reference](/nuget/reference/nuget-config-file).
 
 - Add the required credentials to the config file.
 
-  If you know the package exists in the configured feed, provide the login credentials in the NuGet config file. For more information about credentials in a nuget config file, see the nuget.config reference's packageSourceCredentials section.
+  If you know the package exists in the configured feed, provide the login credentials in the NuGet config file. For more information about credentials in a nuget config file, see the [nuget.config reference's packageSourceCredentials section](/nuget/reference/nuget-config-file#packagesourcecredentials).
 
 ## See also
 
-- .NET tools
+- [.NET tools](global-tools.md)

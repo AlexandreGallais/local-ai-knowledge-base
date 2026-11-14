@@ -1,83 +1,21 @@
 ---
 title: "Breaking change: Partial and zero-byte reads in DeflateStream, GZipStream, and CryptoStream"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/6.0/partial-byte-reads-in-streams.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 6 breaking change in core .NET libraries where DeflateStream, GZipStream, and CryptoStream handle partial and zero-byte reads differently.
+ms.date: 03/18/2024
 ---
-
 # Partial and zero-byte reads in DeflateStream, GZipStream, and CryptoStream
 
-The `Read()` and `ReadAsync()` methods on `System.IO.Compression.DeflateStream`, `System.IO.Compression.GZipStream`, and `System.Security.Cryptography.CryptoStream` might no longer return as many bytes as were requested.
+The `Read()` and `ReadAsync()` methods on <xref:System.IO.Compression.DeflateStream>, <xref:System.IO.Compression.GZipStream>, and <xref:System.Security.Cryptography.CryptoStream> might no longer return as many bytes as were requested.
 
-Previously, `System.IO.Compression.DeflateStream`, `System.IO.Compression.GZipStream`, and `System.Security.Cryptography.CryptoStream` diverged from typical `System.IO.Stream.Read*` and `System.IO.Stream.ReadAsync*` behavior in the following two ways, both of which this change addresses:
+Previously, <xref:System.IO.Compression.DeflateStream>, <xref:System.IO.Compression.GZipStream>, and <xref:System.Security.Cryptography.CryptoStream> diverged from typical <xref:System.IO.Stream.Read*?displayProperty=nameWithType> and <xref:System.IO.Stream.ReadAsync*?displayProperty=nameWithType> behavior in the following two ways, both of which this change addresses:
 
 - They didn't complete the read operation until either the buffer passed to the read operation was completely filled or the end of the stream was reached.
 - As wrapper streams, they didn't delegate zero-length buffer functionality to the stream they wrap.
 
 Consider this example that creates and compresses 150 random bytes. It then sends the compressed data one byte at a time from the client to the server, and the server decompresses the data by calling `Read` and requesting all 150 bytes.
 
-```csharp
-﻿using System.IO.Compression;
-using System.Net;
-using System.Net.Sockets;
+:::code language="csharp" source="./snippets/ReadStream.cs":::
 
-internal class Program
-{
-    private static async Task Main()
-    {
-        // Connect two sockets and wrap a stream around each.
-        using (Socket listener = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
-        using (Socket client = new(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
-        {
-            listener.Bind(new IPEndPoint(IPAddress.Loopback, 0));
-            listener.Listen(int.MaxValue);
-            client.Connect(listener.LocalEndPoint!);
-            using (Socket server = listener.Accept())
-            {
-                var clientStream = new NetworkStream(client, ownsSocket: true);
-                var serverStream = new NetworkStream(server, ownsSocket: true);
-
-                // Create some compressed data.
-                var compressedData = new MemoryStream();
-                using (var gz = new GZipStream(compressedData, CompressionLevel.Fastest, leaveOpen: true))
-                {
-                    byte[] bytes = new byte[150];
-                    new Random().NextBytes(bytes);
-                    gz.Write(bytes, 0, bytes.Length);
-                }
-
-                // Trickle it from the client stream to the server.
-                Task sendTask = Task.Run(() =>
-                {
-                    foreach (byte b in compressedData.ToArray())
-                    {
-                        clientStream.WriteByte(b);
-                    }
-                    clientStream.Dispose();
-                });
-
-                // Read and decompress all the sent bytes.
-                byte[] buffer = new byte[150];
-                int total = 0;
-                using (var gz = new GZipStream(serverStream, CompressionMode.Decompress))
-                {
-                    int numRead = 0;
-                    while ((numRead = gz.Read(buffer.AsSpan(numRead))) > 0)
-                    {
-                        total += numRead;
-                        Console.WriteLine($"Read: {numRead} bytes");
-                    }
-                }
-                Console.WriteLine($"Total received: {total} bytes");
-
-                await sendTask;
-            }
-        }
-    }
-}
-```
 In previous versions of .NET and .NET Framework, the following output shows that `Read` was only called once. Even though data was available for `GZipStream` to return, `Read` was forced to wait until the requested number of bytes was available.
 
 ```output
@@ -164,13 +102,13 @@ In general, code should:
   }
   ```
 
-  Starting in .NET 7, you can also use `System.IO.Stream.ReadExactly*` or `System.IO.Stream.ReadExactlyAsync*` to read the exact number of bytes requested into the buffer:
+  Starting in .NET 7, you can also use <xref:System.IO.Stream.ReadExactly*?displayProperty=nameWithType> or <xref:System.IO.Stream.ReadExactlyAsync*?displayProperty=nameWithType> to read the exact number of bytes requested into the buffer:
 
   ```csharp
   stream.ReadExactly(buffer);
   ```
 
-- When reading textual data from a stream, such as reading decrypted text from a `CryptoStream`, consider using `System.IO.StreamReader` to read to the end instead of manually reading into byte arrays:
+- When reading textual data from a stream, such as reading decrypted text from a `CryptoStream`, consider using <xref:System.IO.StreamReader> to read to the end instead of manually reading into byte arrays:
 
   ```csharp
   using var reader = new StreamReader(cryptoStream);
@@ -189,16 +127,16 @@ In general, code should:
 
 ## Affected APIs
 
-- `System.IO.Compression.DeflateStream.Read*`
-- `System.IO.Compression.DeflateStream.ReadAsync*`
-- `System.IO.Compression.DeflateStream.BeginRead(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)`
-- `System.IO.Compression.GZipStream.Read*`
-- `System.IO.Compression.GZipStream.ReadAsync*`
-- `System.IO.Compression.GZipStream.BeginRead(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)`
-- `System.Security.Cryptography.CryptoStream.Read*`
-- `System.Security.Cryptography.CryptoStream.ReadAsync*`
-- `System.Security.Cryptography.CryptoStream.BeginRead(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)`
+- <xref:System.IO.Compression.DeflateStream.Read*?displayProperty=fullName>
+- <xref:System.IO.Compression.DeflateStream.ReadAsync*?displayProperty=fullName>
+- <xref:System.IO.Compression.DeflateStream.BeginRead(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)?displayProperty=fullName>
+- <xref:System.IO.Compression.GZipStream.Read*?displayProperty=fullName>
+- <xref:System.IO.Compression.GZipStream.ReadAsync*?displayProperty=fullName>
+- <xref:System.IO.Compression.GZipStream.BeginRead(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)?displayProperty=fullName>
+- <xref:System.Security.Cryptography.CryptoStream.Read*?displayProperty=fullName>
+- <xref:System.Security.Cryptography.CryptoStream.ReadAsync*?displayProperty=fullName>
+- <xref:System.Security.Cryptography.CryptoStream.BeginRead(System.Byte[],System.Int32,System.Int32,System.AsyncCallback,System.Object)?displayProperty=fullName>
 
 ## See also
 
-- CA2022: Avoid inexact read with Stream.Read
+- [CA2022: Avoid inexact read with Stream.Read](../../../../fundamentals/code-analysis/quality-rules/ca2022.md)

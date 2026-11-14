@@ -1,33 +1,31 @@
 ---
-title: "Complex Types - EF Core (part 1 of 2)"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/modeling/complex-types.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Complex Types - EF Core
+description: How to configure and use complex types to model value objects in Entity Framework Core
+author: AndriySvyryd
+ms.date: 07/27/2026
+uid: core/modeling/complex-types
 ---
-
 # Complex Types
 
 Objects saved to the database can be split into three broad categories:
 
 - Objects that are unstructured and hold a single value. For example, `int`, `Guid`, `string`, `IPAddress`. These are (somewhat loosely) called _primitive types_.
 - Objects that are structured to hold multiple values, and where the identity of the object is defined by a key value. For example, `Blog`, `Post`, `Customer`. These are called _entity types_.
-- Objects that are structured to hold multiple values, but the object has no key <example-value> its identity. For example, `Address`, `Coordinate`, `Money`. These are called _value objects_, and EF Core maps them as _complex types_.
+- Objects that are structured to hold multiple values, but the object has no key defining its identity. For example, `Address`, `Coordinate`, `Money`. These are called _value objects_, and EF Core maps them as _complex types_.
 
-A _complex type_ groups several properties into a single .NET type that is contained within an entity type; it doesn't have an identity of its own and cannot be tracked or queried independently. This makes complex types the natural way to model value objects.
+A _complex type_ groups several properties into a single .NET type that is contained within an entity type; it doesn't have an identity of its own and cannot be tracked or queried independently. This makes complex types the natural way to model [value objects](https://martinfowler.com/bliki/ValueObject.html).
 
-> **Tip:**
-> You can run and debug into the full sample project for this article on GitHub.
+> [!TIP]
+> You can run and debug into the [full sample project](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/ComplexTypes) for this article on GitHub.
 
-> **Note:**
+> [!NOTE]
 > Complex types were introduced in EF Core 8, and have been extended substantially in later releases. Features are annotated below with the version that introduced them.
 
 ## Complex types vs. owned entity types
 
-Before complex types existed, owned entity types were the recommended way to model objects without key properties. However, owned types are still _entity types_ behind the scenes: they have a hidden key and identity, and therefore operate with reference semantics. This causes a number of friction points that complex types are designed to solve.
+Before complex types existed, [owned entity types](xref:core/modeling/owned-entities) were the recommended way to model objects without key properties. However, owned types are still _entity types_ behind the scenes: they have a hidden key and identity, and therefore operate with reference semantics. This causes a number of friction points that complex types are designed to solve.
 
-The key <example-value> are:
+The key differences are:
 
 | Aspect | Owned entity types | Complex types |
 | --- | --- | --- |
@@ -55,62 +53,15 @@ For these reasons, complex types are generally the better choice for modeling va
 
 Consider an `Address` type that holds several related values but has no identity of its own:
 
-```csharp
-public record Address
-{
-    public required string Line1 { get; init; }
-    public string? Line2 { get; init; }
-    public required string City { get; init; }
-    public required string Country { get; init; }
-    public required string PostCode { get; init; }
-}
-```
+[!code-csharp[Address](../../../samples/core/Modeling/ComplexTypes/Model.cs?name=Address)]
 
 `Address` can then be used in several places across a customer/orders model:
 
-```csharp
-public class Customer
-{
-    public int Id { get; set; }
-    public required string Name { get; set; }
-
-    // A required (non-nullable) complex property.
-    public required Address Address { get; set; }
-
-    // An optional (nullable) complex property.
-    public Address? SecondaryAddress { get; set; }
-
-    public List<Order> Orders { get; } = new();
-}
-
-public class Order
-{
-    public int Id { get; set; }
-    public required string Contents { get; set; }
-    public required Address ShippingAddress { get; set; }
-    public required Address BillingAddress { get; set; }
-    public Customer Customer { get; set; } = null!;
-}
-```
+[!code-csharp[CustomerOrders](../../../samples/core/Modeling/ComplexTypes/Model.cs?name=CustomerOrders)]
 
 Creating and saving a customer works as usual:
 
-```csharp
-var customer = new Customer
-{
-    Name = "Willow",
-    Address = new Address
-    {
-        Line1 = "Barking Gate",
-        City = "Walpole St Peter",
-        Country = "UK",
-        PostCode = "PE14 7AV"
-    }
-};
-
-context.Add(customer);
-await context.SaveChangesAsync();
-```
+[!code-csharp[SaveCustomer](../../../samples/core/Modeling/ComplexTypes/Program.cs?name=SaveCustomer)]
 
 On a relational database, the complex type does not get its own table. Instead, its properties are saved inline as additional columns on the containing entity's table (this is known as _table splitting_):
 
@@ -122,55 +73,19 @@ VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
 
 Because complex types have value semantics, the same `Address` instance can be shared across multiple properties without any issues:
 
-```csharp
-// The same Address instance can be assigned to multiple complex properties.
-customer.Orders.Add(
-    new Order
-    {
-        Contents = "Tesco Tasty Treats",
-        BillingAddress = customer.Address,
-        ShippingAddress = customer.Address
-    });
-
-await context.SaveChangesAsync();
-```
+[!code-csharp[SharedInstance](../../../samples/core/Modeling/ComplexTypes/Program.cs?name=SharedInstance)]
 
 ## Configuring complex types
 
-Unlike most entity types, complex types are **not discovered by convention**. You must configure them explicitly, either by annotating the type with `System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute`, or by calling the `ComplexProperty` Fluent API in `OnModelCreating` for each property that should be mapped as a complex type:
+Unlike most entity types, complex types are **not discovered by convention**. You must configure them explicitly, either by annotating the type with <xref:System.ComponentModel.DataAnnotations.Schema.ComplexTypeAttribute>, or by calling the `ComplexProperty` Fluent API in `OnModelCreating` for each property that should be mapped as a complex type:
 
-### Data Annotations
+### [Data Annotations](#tab/data-annotations)
 
-```csharp
-[ComplexType]
-public record Address
-{
-    public required string Line1 { get; init; }
-    public string? Line2 { get; init; }
-    public required string City { get; init; }
-    public required string Country { get; init; }
-    public required string PostCode { get; init; }
-}
-```
+[!code-csharp[AddressAttribute](../../../samples/core/Modeling/ComplexTypes/DataAnnotations.cs?name=AddressAttribute)]
 
-### Fluent API
+### [Fluent API](#tab/fluent-api)
 
-```csharp
-modelBuilder.Entity<Customer>(b =>
-{
-    // A required complex property; mapped to columns in the Customers table.
-    b.ComplexProperty(c => c.Address);
-
-    // An optional complex property (EF Core 10+).
-    b.ComplexProperty(c => c.SecondaryAddress);
-});
-
-modelBuilder.Entity<Order>(b =>
-{
-    b.ComplexProperty(o => o.ShippingAddress);
-    b.ComplexProperty(o => o.BillingAddress);
-});
-```
+[!code-csharp[ComplexPropertyConfig](../../../samples/core/Modeling/ComplexTypes/ComplexTypesContext.cs?name=ComplexPropertyConfig)]
 
 ***
 
@@ -178,41 +93,21 @@ modelBuilder.Entity<Order>(b =>
 
 The nested `Property` builder can be used to configure the scalar properties of a complex type, just like properties of an entity type - for example, to set the column name or maximum length:
 
-```csharp
-modelBuilder.Entity<Order>()
-    .ComplexProperty(
-        o => o.ShippingAddress,
-        b =>
-        {
-            b.Property(a => a.Line1).HasColumnName("ShipsToStreet").HasMaxLength(100);
-            b.Property(a => a.City).HasColumnName("ShipsToCity");
-        });
-```
+[!code-csharp[ComplexPropertyFacets](../../../samples/core/Modeling/ComplexTypes/ComplexTypesContext.cs?name=ComplexPropertyFacets)]
 
 Starting with EF Core 11, you can configure a property nested inside a complex type directly by chaining member access in the lambda, without first obtaining the complex-type builder:
 
-```csharp
-// EF Core 11 allows configuring a complex-type property directly by chaining
-// member access, without first obtaining the complex-type builder.
-modelBuilder.Entity<Customer>()
-    .Property(c => c.Address.Line1)
-    .HasMaxLength(200);
-```
+[!code-csharp[PropertyChaining](../../../samples/core/Modeling/ComplexTypes/ComplexTypesContext.cs?name=PropertyChaining)]
 
 ## Reference and value types
 
-A complex type can be a .NET reference type (a `class` or `record`) or a value type (a `struct` or `record struct`, introduced in EF Core 10).
+A complex type can be a .NET [reference type](/dotnet/csharp/language-reference/keywords/reference-types) (a `class` or `record`) or a [value type](/dotnet/csharp/language-reference/builtin-types/value-types) (a `struct` or `record struct`, introduced in EF Core 10).
 
 ### Mutability
 
 Because a reference-type instance can be shared by multiple properties, mutating one of its properties changes the value everywhere it is used. This is usually not what you want. A good way to avoid it - and a natural fit for value objects - is to make the complex type **immutable**, so that changing a value requires creating a new instance. The `Address` type used throughout this article is an immutable `record`; changing an address is therefore done with a `with` expression:
 
-```csharp
-// Address is an immutable record, so create a new instance to change a value.
-customer.Address = customer.Address with { Line1 = "Peacock Lodge" };
-
-await context.SaveChangesAsync();
-```
+[!code-csharp[ChangeImmutableRecord](../../../samples/core/Modeling/ComplexTypes/Program.cs?name=ChangeImmutableRecord)]
 
 Even though a whole new `Address` instance is assigned, EF still tracks changes at the individual property level, so only the columns whose values actually changed are updated:
 
@@ -222,9 +117,9 @@ OUTPUT 1
 WHERE [Id] = @p1;
 ```
 
-Immutability can be expressed with an immutable `class` (init-only or read-only properties), a `record`, a `readonly struct`, or a `readonly record struct`. Value types (`struct`) have copy semantics, so assigning them always copies the values and avoids the accidental-sharing problem, even when mutable - but mutable structs are generally discouraged in C#, so an immutable form is still recommended.
+Immutability can be expressed with an immutable `class` (init-only or read-only properties), a `record`, a `readonly struct`, or a `readonly record struct`. Value types (`struct`) have copy semantics, so assigning them always copies the values and avoids the accidental-sharing problem, even when mutable - but [mutable structs are generally discouraged in C#](/archive/blogs/ericlippert/mutating-readonly-structs), so an immutable form is still recommended.
 
-> **Tip:**
+> [!TIP]
 > If several entities really should observe the same address and update together when it changes, then model the address as an _entity type_ with its own identity and reference it via a navigation, rather than using a complex type.
 
 ## Nested complex types
@@ -250,66 +145,24 @@ When mapped via table splitting, the columns of a nested complex type are prefix
 
 By default, a complex property is **required**: the CLR property must always have a value, and it maps to non-nullable columns. Starting with EF Core 10, a complex property can be made optional by declaring it as nullable:
 
-```csharp
-public class Customer
-{
-    public int Id { get; set; }
-    public required string Name { get; set; }
-
-    // A required (non-nullable) complex property.
-    public required Address Address { get; set; }
-
-    // An optional (nullable) complex property.
-    public Address? SecondaryAddress { get; set; }
-
-    public List<Order> Orders { get; } = new();
-}
-
-public class Order
-{
-    public int Id { get; set; }
-    public required string Contents { get; set; }
-    public required Address ShippingAddress { get; set; }
-    public required Address BillingAddress { get; set; }
-    public Customer Customer { get; set; } = null!;
-}
-```
+[!code-csharp[CustomerOrders](../../../samples/core/Modeling/ComplexTypes/Model.cs?name=CustomerOrders)]
 
 An optional complex property that is `null` results in `NULL` values in all of its columns.
 
-> **Note:**
+> [!NOTE]
 > An optional complex type currently requires at least one **required** property to be defined on the complex type. This is because EF needs at least one non-nullable column to distinguish a `null` complex value from a complex value whose properties all happen to be `null`.
 
 If the complex type has no required property of its own, you can instead configure a discriminator property. While EF Core does not yet support inheritance for complex types, the discriminator is created as a **required shadow property** by default, which satisfies the requirement above:
 
-```csharp
-// GeoLocation has no required property, so configure a discriminator. EF creates
-// it as a required shadow property, which satisfies the requirement that an
-// optional complex type have at least one required property.
-modelBuilder.Entity<Place>()
-    .ComplexProperty(p => p.Location, b => b.HasDiscriminator());
-```
+[!code-csharp[OptionalWithDiscriminator](../../../samples/core/Modeling/ComplexTypes/ComplexTypesContext.cs?name=OptionalWithDiscriminator)]
 
 ## Collections of complex types
 
 Starting with EF Core 10, a property can hold a _collection_ of complex types. On relational databases, complex collections must be mapped to a single JSON column using `ToJson` - they cannot be mapped to a different table:
 
-```csharp
-public class Distributor
-{
-    public int Id { get; set; }
-    public required string Name { get; set; }
+[!code-csharp[Distributor](../../../samples/core/Modeling/ComplexTypes/Model.cs?name=Distributor)]
 
-    // A collection of complex types, mapped to a single JSON column.
-    public List<Address> ShippingCenters { get; set; } = new();
-}
-```
-
-```csharp
-// Collections of complex types must be mapped to JSON on relational providers.
-modelBuilder.Entity<Distributor>()
-    .ComplexCollection(d => d.ShippingCenters, b => b.ToJson());
-```
+[!code-csharp[ComplexCollectionJson](../../../samples/core/Modeling/ComplexTypes/ComplexTypesContext.cs?name=ComplexCollectionJson)]
 
 Each element of the collection is stored as a JSON object inside the array, and the entire collection maps to one column:
 
@@ -322,7 +175,7 @@ CREATE TABLE [Distributors] (
 );
 ```
 
-> **Note:**
+> [!NOTE]
 > Collections of value types (`struct`) are not currently supported; use a reference type (`class` or `record`) for complex collection elements.
 
 ## Mapping complex types to JSON
@@ -349,6 +202,86 @@ CREATE TABLE [Customers] (
 );
 ```
 
-On SQL Server 2025 and Azure SQL, EF uses the native `json` data type by default; on other databases and older SQL Server versions, JSON is stored in a text column. You can override the column type with `HasColumnType` if needed.
+On SQL Server 2025 and Azure SQL, EF uses the native [`json` data type](/sql/t-sql/data-types/json-data-type) by default; on other databases and older SQL Server versions, JSON is stored in a text column. You can override the column type with `HasColumnType` if needed.
 
-Unlike table splitting, JSON mapping allows collections _within_ the mapped type, and lets you query and update individual properties inside the document just like any other property. Values inside JSON columns can also be efficiently updated in bulk with `Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdateAsync*`.
+Unlike table splitting, JSON mapping allows collections _within_ the mapped type, and lets you query and update individual properties inside the document just like any other property. Values inside JSON columns can also be efficiently updated in bulk with <xref:Microsoft.EntityFrameworkCore.RelationalQueryableExtensions.ExecuteUpdateAsync*>.
+
+## Keys and indexes on complex type properties
+
+Starting with EF Core 11, keys and indexes can target scalar properties nested inside non-collection complex types. This can be done with a lambda:
+
+[!code-csharp[IndexOnComplexProperty](../../../samples/core/Modeling/ComplexTypes/ComplexTypesContext.cs?name=IndexOnComplexProperty)]
+
+The same paths can be configured by name, using `.` to navigate into a complex property:
+
+```csharp
+modelBuilder.Entity<Customer>()
+    .HasIndex("Address.PostCode");
+```
+
+For relational providers, indexes can also target paths inside complex types mapped to JSON columns. Complex collection paths use `[]` to refer to all elements, or a numeric indexer for a specific element:
+
+[!code-csharp[IndexOnComplexCollection](../../../samples/core/Modeling/ComplexTypes/ComplexTypesContext.cs?name=IndexOnComplexCollection)]
+
+> [!NOTE]
+> Indexing into a JSON-mapped complex collection requires a database that supports JSON indexes, such as SQL Server 2025.
+
+For more information, see [Keys](xref:core/modeling/keys) and [Indexes and constraints](xref:core/modeling/indexes).
+
+## Complex types with entity inheritance
+
+Starting with EF Core 11, complex types and JSON columns can be used on entity types that use [TPT (table-per-type) or TPC (table-per-concrete-type)](xref:core/modeling/inheritance). This lets you combine the flexibility of these inheritance strategies with the modeling power of complex types.
+
+```csharp
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Animal>()
+        .UseTptMappingStrategy()
+        .ComplexProperty(a => a.Details);
+}
+```
+
+## Change tracking
+
+EF Core tracks changes to the individual properties of a complex type, so only the affected columns are updated when you call `SaveChanges`. You can inspect and manipulate this tracking state through the change tracker.
+
+Use `EntityEntry.ComplexProperty` to reach a complex property, and then drill into its scalar properties:
+
+[!code-csharp[ChangeTracking](../../../samples/core/Modeling/ComplexTypes/Program.cs?name=ChangeTracking)]
+
+The <xref:Microsoft.EntityFrameworkCore.ChangeTracking.ComplexPropertyEntry> API mirrors the entity `EntityEntry` API: you can read and set `CurrentValue`, check and set `IsModified`, and navigate into further nested complex properties or complex collections. Complex properties are also exposed through the entity's [property values](xref:core/change-tracking/entity-entries) APIs (`CurrentValues`/`OriginalValues`).
+
+## Querying complex types
+
+Complex type members can be used in LINQ queries just like properties of the entity itself - you can filter on them, project them, and order by them:
+
+[!code-csharp[QueryComplexMember](../../../samples/core/Modeling/ComplexTypes/Program.cs?name=QueryComplexMember)]
+
+Because complex types have value semantics, you can also compare an entire complex value in a query, and EF will compare all of its properties:
+
+```csharp
+var ordersToHomeAddress = await context.Orders
+    .Where(o => o.ShippingAddress == o.BillingAddress)
+    .ToListAsync();
+```
+
+For complex types mapped to JSON, EF Core 11 adds `EF.Functions.JsonPathExists`, which checks whether a given JSON path exists in the document:
+
+```csharp
+var withPostCode = await context.Customers
+    .Where(c => EF.Functions.JsonPathExists(c.Address, "$.PostCode"))
+    .ToListAsync();
+```
+
+## Limitations
+
+Complex types are designed for modeling value objects, and intentionally do not support every capability of entity types. The main limitations are:
+
+- **No identity or tracking of their own.** A complex type can only exist as part of an entity; you cannot have a `DbSet<T>` of a complex type, nor track or query it independently.
+- **No navigations.** A complex type cannot contain navigation properties to entity types.
+- **No separate table.** On relational databases, a complex type is always stored in its container's table (via table splitting) or in a JSON column - never in its own table.
+- **Collections require JSON.** On relational providers, complex collections must be mapped to JSON with `ToJson`; they cannot be mapped via table splitting.
+- **Collections of value types are not supported.** Complex collection elements must be reference types.
+- **Optional complex types require a required property.** An optional (nullable) complex type must define at least one required property.
+
+Complex type support continues to be broadened across releases; see the [what's new](xref:core/what-is-new/ef-core-11.0/whatsnew#complex-types) pages for the latest additions.

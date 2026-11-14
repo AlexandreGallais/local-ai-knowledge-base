@@ -1,12 +1,3 @@
----
-title: "Subtyping and variance"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/subtyping.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[subtype]
 # Subtyping and variance
 
@@ -51,10 +42,10 @@ r[subtyping.variance.intro]
 Variance is a property that generic types have with respect to their arguments. A generic type's *variance* in a parameter is how the subtyping of the parameter affects the subtyping of the type.
 
 r[subtyping.variance.covariant]
-* `F<T>` is *covariant* over `T` if `T` being a subtype of `U` implies that `F<T>` is a subtype of `F` (subtyping "passes through")
+* `F<T>` is *covariant* over `T` if `T` being a subtype of `U` implies that `F<T>` is a subtype of `F<U>` (subtyping "passes through")
 
 r[subtyping.variance.contravariant]
-* `F<T>` is *contravariant* over `T` if `T` being a subtype of `U` implies that `F` is a subtype of `F<T>`
+* `F<T>` is *contravariant* over `T` if `T` being a subtype of `U` implies that `F<U>` is a subtype of `F<T>`
 
 r[subtyping.variance.invariant]
 * `F<T>` is *invariant* over `T` otherwise (no subtyping relation can be derived)
@@ -116,3 +107,7 @@ fn takes_fn_ptr<'short, 'middle: 'short>(
     let _: fn(&'static ()) -> &'short () = f;
 }
 ```
+
+[function pointers]: types/function-pointer.md
+[Higher-ranked]: ../nomicon/hrtb.html
+[trait objects]: types/trait-object.md

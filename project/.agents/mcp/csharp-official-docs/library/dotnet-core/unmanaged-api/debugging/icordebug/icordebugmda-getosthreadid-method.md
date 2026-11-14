@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugMDA::GetOSThreadId Method"
 title: "ICorDebugMDA::GetOSThreadId Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmda-getosthreadid-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugMDA.GetOSThreadId"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugMDA::GetOSThreadId"
+helpviewer_keywords:
+  - "ICorDebugMDA::GetOSThreadId method [.NET debugging]"
+  - "GetOSThreadId method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugMDA::GetOSThreadId Method
 
-Gets the operating system (OS) thread identifier upon which the managed debugging assistant (MDA) represented by ICorDebugMDA is executing.
+Gets the operating system (OS) thread identifier upon which the managed debugging assistant (MDA) represented by [ICorDebugMDA](icordebugmda-interface.md) is executing.
 
 ## Syntax
 
@@ -30,7 +39,7 @@ The OS thread is used instead of an ICorDebugThread to allow for situations in w
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -40,5 +49,5 @@ The OS thread is used instead of an ICorDebugThread to allow for situations in w
 
 ## See also
 
-- ICorDebugMDA Interface
-- Diagnose Errors with Managed Debugging Assistants
+- [ICorDebugMDA Interface](icordebugmda-interface.md)
+- [Diagnose Errors with Managed Debugging Assistants](../../../../framework/debug-trace-profile/diagnosing-errors-with-managed-debugging-assistants.md)

@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugThread3::GetActiveInternalFrames Method"
 title: "ICorDebugThread3::GetActiveInternalFrames Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugthread3-getactiveinternalframes-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugThread3.GetActiveInternalFrames Method"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugThread3::GetActiveInternalFrames"
+helpviewer_keywords:
+  - "ICorDebugThread3::GetActiveInternalFrames method [.NET debugging]"
+  - "GetActiveInternalFrames method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugThread3::GetActiveInternalFrames Method
 
-Returns an array of internal frames (ICorDebugInternalFrame2 objects) on the stack.
+Returns an array of internal frames ([ICorDebugInternalFrame2](icordebuginternalframe2-interface.md) objects) on the stack.
 
 ## Syntax
 
@@ -40,9 +49,11 @@ This method returns the following specific HRESULTs as well as HRESULT errors th
 
 |HRESULT|Description|
 |-------------|-----------------|
-|S_OK|The ICorDebugInternalFrame2 object was successfully created.|
+|S_OK|The [ICorDebugInternalFrame2](icordebuginternalframe2-interface.md) object was successfully created.|
 |E_INVALIDARG|`cInternalFrames` is not zero and `ppInternalFrames` is `null`, or `pcInternalFrames` is `null`.|
 |HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER)|`ppInternalFrames` is smaller than the count of internal frames.|
+
+## Exceptions
 
 ## Remarks
 
@@ -52,11 +63,11 @@ When you first call `GetActiveInternalFrames`, you should set the `cInternalFram
 
  `GetActiveInternalFrames` should then be called a second time. You should pass the proper count (`pcInternalFrames`) in the `cInternalFrames` parameter, and specify a pointer to an appropriately sized array in `ppInternalFrames`.
 
-Use the ICorDebugStackWalk::GetFrame method to return actual stack frames.
+Use the [ICorDebugStackWalk::GetFrame](icordebugthread3-getactiveinternalframes-method.md) method to return actual stack frames.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

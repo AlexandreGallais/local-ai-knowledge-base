@@ -1,32 +1,25 @@
----
-title: "ModuleEntry interface (java.lang.classfile.constantpool)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/constantpool/ModuleEntry.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ModuleEntry interface (java.lang.classfile.constantpool)
 
 ```java
 public sealed interface ModuleEntry extends PoolEntry permits AbstractPoolEntry.ModuleEntryImpl
 ```
 
-Models a `CONSTANT_Module_info` structure, denoting a module, in the
-constant pool of a `class` file.
-
-The use of a `ModuleEntry` is modeled by a `ModuleDesc`.
-Conversions are through `ConstantPoolBuilder.moduleEntry(ModuleDesc)`
-and `asSymbol()`.
-
+Models a {@code CONSTANT_Module_info} structure, denoting a module, in the
+constant pool of a {@code class} file.
+<p>
+The use of a {@code ModuleEntry} is modeled by a {@link ModuleDesc}.
+Conversions are through {@link ConstantPoolBuilder#moduleEntry(ModuleDesc)}
+and {@link #asSymbol()}.
+<p>
 A module entry is composite:
+{@snippet lang=text :
+// @link substring="ModuleEntry" target="ConstantPoolBuilder#moduleEntry(Utf8Entry)" :
+ModuleEntry(Utf8Entry name) // @link substring="name" target="#name()"
+}
+where {@code name} is a {@linkplain #asSymbol() module name}.
 
-where `name` is a module name.
-
-**jvms:** 4.4.11 The `CONSTANT_Module_info` Structure
-
-**Since:** 24
+@jvms 4.4.11 The {@code CONSTANT_Module_info} Structure
+@since 24
 
 ## ModuleEntry.name()
 
@@ -34,14 +27,20 @@ where `name` is a module name.
 Utf8Entry name()
 ```
 
+{@return the name of the {@linkplain #asSymbol() module}}
+
 ## ModuleEntry.asSymbol()
 
 ```java
 ModuleDesc asSymbol()
 ```
 
-**API note:** If only symbol equivalence is desired, matches should be used.  It requires reduced parsing and can
-improve `class` file reading performance.
+{@return a symbolic descriptor for the {@linkplain #name() module name}}
+
+@apiNote
+If only symbol equivalence is desired, {@link #matches(ModuleDesc)
+matches} should be used.  It requires reduced parsing and can
+improve {@code class} file reading performance.
 
 ## ModuleEntry.matches(ModuleDesc)
 
@@ -49,8 +48,7 @@ improve `class` file reading performance.
 boolean matches(ModuleDesc desc)
 ```
 
-Parameters:
+{@return whether this entry describes the given module}
 
-- `desc`: the module descriptor
-
-**Since:** 25
+@param desc the module descriptor
+@since 25

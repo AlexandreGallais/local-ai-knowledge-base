@@ -1,19 +1,13 @@
----
-title: "consistent-boolean-name"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/consistent-boolean-name.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # consistent-boolean-name
 
 📝 Enforce consistent naming for boolean names.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 By default, this rule checks boolean variables, parameters, and functions. Object, class, and TypeScript property and method names are ignored unless enabled with their respective options.
 
@@ -62,7 +56,7 @@ React hook function bindings are checked after the required `use` prefix. For ex
 
 React refs initialized with a boolean-like value may use boolean prefixes when the binding name ends in `Ref` or `Reference`, such as `isMountedRef`, `hasConsentRef`, or `hasConsentReference`. The suffix identifies the binding as a ref object. The binding must not be reassigned after initialization.
 
-Direct Vue `ref()` calls with boolean-like values and `computed()` calls with synchronous getters returning booleans may use boolean prefixes, such as `isBranch` or `hasDepartment`. The binding must not be reassigned after initialization. For refs returned by other calls, such as composables returning `ShallowRef<boolean>`, use type-aware `wrappers` with `{Ref: 'value'}`, which also covers `ComputedRef`.
+Direct Vue `ref()` calls with boolean-like values and `computed()` calls with synchronous getters returning booleans may use boolean prefixes, such as `isBranch` or `hasDepartment`. The binding must not be reassigned after initialization. For refs returned by other calls, such as composables returning `ShallowRef<boolean>`, use type-aware [`wrappers`](#wrappers) with `{Ref: 'value'}`, which also covers `ComputedRef`.
 
 This rule intentionally does not check destructuring bindings, imports, class names, or catch parameters.
 

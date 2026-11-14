@@ -1,12 +1,9 @@
 ---
-title: "dotnet new details"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-new-details.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet new details
+ai-usage: ai-assisted
+description: The dotnet new details command displays template package metadata.
+ms.date: 06/07/2023
 ---
-
 # dotnet new details
 
 **This article applies to:** ✔️ .NET 8
@@ -35,22 +32,18 @@ If the package is installed locally or is found on the official NuGet website, i
 
 ## Options
 
-- **`--add-source|--nuget-source `**
+- **`--add-source|--nuget-source <SOURCE>`**
 
   By default, `dotnet new details` uses the hierarchy of NuGet configuration files from the current directory to determine the NuGet sources for the operation. Specify `--nuget-source` to use a source in addition to the configured sources.
-  To check the configured sources for the current directory, use `dotnet nuget list source`. For more information, see Common NuGet Configurations.
+  To check the configured sources for the current directory, use [`dotnet nuget list source`](dotnet-nuget-list-source.md). For more information, see [Common NuGet Configurations](/nuget/consume-packages/configuring-nuget-behavior).
 
-- **`--interactive`**
-
-Allows the command to stop and wait for user input or action. For example, to complete authentication.
+- [!INCLUDE [interactive](includes/cli-interactive.md)]
 
 - **`-d|--diagnostics`**
 
   Enables diagnostic output.
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Examples
 
@@ -68,8 +61,8 @@ Prints out a description of how to use the command.
 
 ## See also
 
-- dotnet new command
-- dotnet new uninstall command
-- dotnet new list command
-- dotnet new search command
-- .NET templates for authors
+- [dotnet new command](dotnet-new.md)
+- [dotnet new uninstall command](dotnet-new-uninstall.md)
+- [dotnet new list command](dotnet-new-list.md)
+- [dotnet new search command](dotnet-new-search.md)
+- [.NET templates for authors](templates.md)

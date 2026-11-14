@@ -1,10 +1,10 @@
 ---
-title: "YARP HTTP/3"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/http3.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: YARP HTTP/3
+description: YARP HTTP/3
+ms.date: 2/6/2025
+ms.topic: concept-article
+content_well_notification: AI-contribution
+ai-usage: ai-assisted
 ---
 
 # YARP HTTP/3
@@ -13,7 +13,7 @@ license: "CC-BY-4.0"
 YARP 1.1 supports HTTP/3 for inbound and outbound connections using the HTTP/3 support in .NET 7. To enable the HTTP/3 protocol in YARP you need to:
 
 * Configure inbound connections in Kestrel
-* Configure outbound connections in HttpClient
+* Configure outbound connections in HttpClient 
 
 ## Set up HTTP/3 on Kestrel
 
@@ -32,4 +32,6 @@ builder.WebHost.ConfigureKestrel(kestrel =>
 
 ## HttpClient
 
-The default version of HttpRequest should be replaced by "3", find more details about HttpRequest configuration.
+The default version of HttpRequest should be replaced by "3", find more details about [HttpRequest configuration](http-client-config.md#httprequest).
+
+

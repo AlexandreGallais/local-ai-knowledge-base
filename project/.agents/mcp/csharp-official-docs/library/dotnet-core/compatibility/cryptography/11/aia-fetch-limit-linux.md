@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: Linux AIA certificate fetching limited to two fetches per chain build"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/cryptography/11/aia-fetch-limit-linux.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where certificate chain building on OpenSSL-based platforms performs at most two Authority Information Access (AIA) fetches."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # Linux AIA certificate fetching limited to two fetches per chain build
@@ -17,7 +15,7 @@ On Linux and other OpenSSL-based platforms, certificate chain building via Autho
 
 ## Previous behavior
 
-Previously, on OpenSSL-based platforms, `System.Security.Cryptography.X509Certificates.X509Chain.Build(System.Security.Cryptography.X509Certificates.X509Certificate2)` performed AIA fetches to download intermediate certificates as many times as needed to complete the chain. For example, a chain that required three intermediate certificates downloaded through AIA could succeed:
+Previously, on OpenSSL-based platforms, <xref:System.Security.Cryptography.X509Certificates.X509Chain.Build(System.Security.Cryptography.X509Certificates.X509Certificate2)?displayProperty=nameWithType> performed AIA fetches to download intermediate certificates as many times as needed to complete the chain. For example, a chain that required three intermediate certificates downloaded through AIA could succeed:
 
 ```csharp
 using var cert = X509Certificate2.CreateFromPem(leafCertificateWithThreeAiaHops);
@@ -31,7 +29,7 @@ Console.WriteLine(result); // Could print True with 3+ AIA fetches
 
 ## New behavior
 
-Starting in .NET 11, on OpenSSL-based platforms, `System.Security.Cryptography.X509Certificates.X509Chain.Build(System.Security.Cryptography.X509Certificates.X509Certificate2)` performs at most two AIA fetches per chain build, which matches Windows behavior. If the chain requires more than two intermediates to be downloaded through AIA, the chain build doesn't succeed through AIA downloads alone:
+Starting in .NET 11, on OpenSSL-based platforms, <xref:System.Security.Cryptography.X509Certificates.X509Chain.Build(System.Security.Cryptography.X509Certificates.X509Certificate2)?displayProperty=nameWithType> performs at most two AIA fetches per chain build, which matches Windows behavior. If the chain requires more than two intermediates to be downloaded through AIA, the chain build doesn't succeed through AIA downloads alone:
 
 ```csharp
 using var cert = X509Certificate2.CreateFromPem(leafCertificateWithThreeAiaHops);
@@ -45,11 +43,11 @@ Console.WriteLine(result); // Prints False if more than two AIA fetches are need
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-Windows has always limited AIA fetches to two per chain build, while the Linux implementation had no such limit, which created an inconsistency across platforms. The same limit on Linux makes cross-platform behavior consistent and better limits the network and memory resources required to construct a certificate chain. For more information, see dotnet/runtime#130456.
+Windows has always limited AIA fetches to two per chain build, while the Linux implementation had no such limit, which created an inconsistency across platforms. The same limit on Linux makes cross-platform behavior consistent and better limits the network and memory resources required to construct a certificate chain. For more information, see [dotnet/runtime#130456](https://github.com/dotnet/runtime/pull/130456).
 
 ## Recommended action
 
@@ -74,4 +72,4 @@ Alternatively, install the intermediate certificates in the user or system inter
 
 ## Affected APIs
 
-* `System.Security.Cryptography.X509Certificates.X509Chain.Build(System.Security.Cryptography.X509Certificates.X509Certificate2)`
+* <xref:System.Security.Cryptography.X509Certificates.X509Chain.Build(System.Security.Cryptography.X509Certificates.X509Certificate2)?displayProperty=fullName>

@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: Warning emitted when targeting net7.0"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/9.0/net70-warning.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in the .NET SDK where a warning is issued for apps that target net7.0, which is out of support.
+ms.date: 11/6/2024
 ---
 
 # Warning emitted when targeting net7.0
 
-Starting with the November 2024 releases of the .NET 8 and 9 SDKs, warning NETSDK1138 is issued if your app targets `net7.0`. .NET 7 is now out of support.
+Starting with the November 2024 releases of the .NET 8 and 9 SDKs, warning [NETSDK1138](../../../tools/sdk-errors/netsdk1138.md) is issued if your app targets `net7.0`. .NET 7 is now out of support.
 
 When a version of .NET goes out of support, it's marked as such in Visual Studio the following month. The .NET SDK waits 6 months before adding a warning.
 
@@ -25,13 +22,13 @@ Previously, apps could target `net7.0` without a warning, even though it was out
 
 ## New behavior
 
-Starting in .NET 9 and the other affected versions, the following warning is issued at compile time for apps that target `net7.0`:
+Starting in .NET 9 and the other [affected versions](#version-introduced), the following warning is issued at compile time for apps that target `net7.0`:
 
 > warning NETSDK1138: The target framework 'net7.0' is out of support
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
@@ -60,4 +57,4 @@ None.
 
 ## See also
 
-- NETSDK1138: The target framework is out of support
+- [NETSDK1138: The target framework is out of support](../../../tools/sdk-errors/netsdk1138.md)

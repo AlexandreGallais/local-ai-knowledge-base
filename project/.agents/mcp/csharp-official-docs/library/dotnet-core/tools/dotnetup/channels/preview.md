@@ -1,16 +1,14 @@
 ---
-title: "Use the dotnetup preview channel"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/channels/preview.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Use the dotnetup preview channel
+description: Install and update supported .NET preview releases with dotnetup.
+ms.topic: how-to
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # Use the dotnetup preview channel
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 The `preview` channel selects the latest available preview or GoLive .NET
 release. If no active preview is available, the resolver selects an active
@@ -59,7 +57,7 @@ Use the `preview` channel when you want the latest available preview instead.
 
 The `preview` channel uses published release metadata. A daily channel uses
 daily-build endpoints and can select builds that are not published previews.
-For more information, see Daily channels.
+For more information, see [Daily channels](daily.md).
 
 ## Remove the preview requirement
 

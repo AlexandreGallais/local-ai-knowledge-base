@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugILFrame::EnumerateArguments Method"
 title: "ICorDebugILFrame::EnumerateArguments Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugilframe-enumeratearguments-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugILFrame.EnumerateArguments"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugILFrame::EnumerateArguments"
+helpviewer_keywords:
+  - "ICorDebugILFrame::EnumerateArguments method [.NET debugging]"
+  - "EnumerateArguments method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugILFrame::EnumerateArguments Method
 
 Gets an enumerator for the arguments in this frame.
@@ -26,11 +35,11 @@ HRESULT EnumerateArguments (
 
 ## Remarks
 
- `EnumerateArguments` gets an enumerator that can list the arguments available in the call frame that is represented by this ICorDebugILFrame object. The list will include arguments that are vararg (that is, a variable number of arguments) as well as arguments that are not `vararg`.
+ `EnumerateArguments` gets an enumerator that can list the arguments available in the call frame that is represented by this ICorDebugILFrame object. The list will include arguments that are [vararg](/cpp/windows/vararg) (that is, a variable number of arguments) as well as arguments that are not `vararg`.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

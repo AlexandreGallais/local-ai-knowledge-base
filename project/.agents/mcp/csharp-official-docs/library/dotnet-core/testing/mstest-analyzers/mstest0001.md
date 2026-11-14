@@ -1,12 +1,19 @@
 ---
 title: "MSTEST0001: Explicitly enable or disable tests parallelization"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0001.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0001: Explicitly enable or disable tests parallelization"
+ms.date: 12/20/2023
+f1_keywords:
+- MSTEST0001
+- UseParallelizeAttributeAnalyzer
+helpviewer_keywords:
+- UseParallelizeAttributeAnalyzer
+- MSTEST0001
+author: evangelink
+ms.author: amauryleve
+dev_langs:
+- CSharp
+- VB
 ---
-
 # MSTEST0001: Explicitly enable or disable tests parallelization
 
 | Property                            | Value                                              |
@@ -26,7 +33,7 @@ The assembly is not marked with `[assembly: Parallelize]` or `[assembly: DoNotPa
 
 ## Rule description
 
-By default, MSTest runs tests within the same assembly sequentially, which can lead to severe performance limitations. It is recommended to enable assembly attribute `[assembly: Parallelize]` to run tests in parallel, or if the assembly is known to not be parallelizable, to use explicitly the assembly level attribute `[assembly: DoNotParallelize]`.
+By default, MSTest runs tests within the same assembly sequentially, which can lead to severe performance limitations. It is recommended to enable assembly attribute [`[assembly: Parallelize]`](../unit-testing-mstest-writing-tests-controlling-execution.md#parallelizeattribute) to run tests in parallel, or if the assembly is known to not be parallelizable, to use explicitly the assembly level attribute [`[assembly: DoNotParallelize]`](../unit-testing-mstest-writing-tests-controlling-execution.md#donotparallelizeattribute).
 
 The default configuration of `[assembly: Parallelize]` is equivalent to `[assembly: Parallelize(Scope = ExecutionScope.ClassLevel)]`, meaning that the parallelization will be set at class level (not method level) and will use as many threads as possible (depending on internal implementation).
 
@@ -44,7 +51,7 @@ Because this rule is reported at the compilation level and not in a *.cs* or *.v
 
 To disable the rule for a project, add `<NoWarn>$(NoWarn);MSTEST0001</NoWarn>` to the project file or `Directory.Build.props` file.
 
-To control the severity of this rule, you can do it only via a `.globalconfig` file. For more information, see Configuration files.
+To control the severity of this rule, you can do it only via a `.globalconfig` file. For more information, see [Configuration files](../../../fundamentals/code-analysis/configuration-files.md#global-analyzerconfig).
 
 ```ini
 is_global = true
@@ -52,4 +59,4 @@ is_global = true
 dotnet_diagnostic.MSTEST0001.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

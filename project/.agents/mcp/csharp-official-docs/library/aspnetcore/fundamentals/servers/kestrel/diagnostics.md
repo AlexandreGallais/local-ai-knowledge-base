@@ -1,25 +1,25 @@
 ---
-title: "Logging and diagnostics in Kestrel"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/kestrel/diagnostics.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Logging and diagnostics in Kestrel
+description: Learn how to gather diagnostics from Kestrel.
+monikerRange: '>= aspnetcore-6.0'
+ms.date: 01/26/2023
 ---
 
 # Diagnostics in Kestrel
 
-By Sourabh Shirhatti
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+By [Sourabh Shirhatti](https://twitter.com/sshirhatti)
 
 This article provides guidance for gathering diagnostics from Kestrel to help troubleshoot issues. Topics covered include:
 
-* **Logging**: Structured logs written to .NET logging. `Microsoft.Extensions.Logging.ILogger` is used by app frameworks to write logs, and by users for their own logging in an app.
-* **Metrics**: Representation of data measures over intervals of time, for example, requests per second. Metrics are emitted using `EventCounter` and can be observed using the dotnet-counters command line tool or with Application Insights.
+* **Logging**: Structured logs written to [.NET logging](../../logging/index.md). <xref:Microsoft.Extensions.Logging.ILogger> is used by app frameworks to write logs, and by users for their own logging in an app.
+* **Metrics**: Representation of data measures over intervals of time, for example, requests per second. Metrics are emitted using `EventCounter` and can be observed using the [dotnet-counters](/dotnet/core/diagnostics/dotnet-counters) command line tool or with [Application Insights](/azure/azure-monitor/app/eventcounters).
 * **DiagnosticSource**: `DiagnosticSource` is a mechanism for production-time logging with rich data payloads for consumption within the process. Unlike logging, which assumes data will leave the process and expects serializable data, `DiagnosticSource` works well with complex data.
 
 ## Logging
 
-Like most components in ASP.NET Core, Kestrel uses `Microsoft.Extensions.Logging` to emit log information. Kestrel employs the use of multiple categories which allows you to be selective on which logs you listen to.
+Like most components in ASP.NET Core, Kestrel uses `Microsoft.Extensions.Logging` to emit log information. Kestrel employs the use of multiple [categories](../../logging/index.md#log-category) which allows you to be selective on which logs you listen to.
 
 | Logging Category Name | Logging Events |
 |--|--|
@@ -31,13 +31,13 @@ Like most components in ASP.NET Core, Kestrel uses `Microsoft.Extensions.Logging
 
 ### Connection logging
 
-Kestrel also supports the ability to emit `Debug` level logs for byte-level communication and can be enabled on a per-endpoint basis. To enable connection logging, see configure endpoints for Kestrel
+Kestrel also supports the ability to emit `Debug` level logs for byte-level communication and can be enabled on a per-endpoint basis. To enable connection logging, see [configure endpoints for Kestrel](endpoints.md)
 
 ## Metrics
 
 Metrics is a representation of data measures over intervals of time, for example, requests per second. Metrics data allows observation of the state of an app at a high-level. Kestrel metrics are emitted using `EventCounter`.
 
-> **Note:**
+> [!NOTE]
 > The `connections-per-second` and `tls-handshakes-per-second` counters are named incorrectly. The counters:
 > * Do ***not*** always contain the number of new connections or TLS handshakes per second
 > * Display the number of new connection or TLS handshakes in the last update interval as requested as the consumer of Events via the `EventCounterIntervalSec` argument in the `filterPayload` to `KestrelEventSource`.
@@ -115,4 +115,4 @@ app.Run();
 
 ## Behavior with debugger attached
 
-Certain timeouts and rate limits aren't enforced when a debugger is attached to a Kestrel process. For more information, see Behavior with debugger attached.
+Certain timeouts and rate limits aren't enforced when a debugger is attached to a Kestrel process. For more information, see [Behavior with debugger attached](options.md#behavior-with-debugger-attached).

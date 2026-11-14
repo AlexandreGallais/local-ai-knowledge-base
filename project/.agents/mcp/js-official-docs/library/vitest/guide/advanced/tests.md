@@ -1,16 +1,8 @@
----
-title: "Running Tests <Badge type=\"danger\">advanced</Badge> {#running-tests}"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/advanced/tests.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # Running Tests <Badge type="danger">advanced</Badge> {#running-tests}
 
-**Warning:**
-This guide explains how to use the advanced API to run tests via a Node.js script. If you just want to run tests, you probably don't need this. It is primarily used by library authors.
+::: warning
+This guide explains how to use the advanced API to run tests via a Node.js script. If you just want to [run tests](/guide/), you probably don't need this. It is primarily used by library authors.
+:::
 
 Vitest exposes two methods to initiate Vitest:
 
@@ -36,7 +28,7 @@ for (const testModule of testModules) {
 
 ## `createVitest`
 
-Creates a Vitest instances without running tests.
+Creates a [Vitest](/api/advanced/vitest) instances without running tests.
 
 `createVitest` method doesn't validate that required packages are installed. It also doesn't respect `config.standalone` or `config.mergeReports`. Vitest won't be closed automatically even if `watch` is disabled.
 
@@ -71,9 +63,9 @@ finally {
 }
 ```
 
-If you intend to keep the `Vitest` instance, make sure to at least call `init`. This will initialise reporters and the coverage provider, but won't run any tests. It is also recommended to enable the `watch` mode even if you don't intend to use the Vitest watcher, but want to keep the instance running. Vitest relies on this flag for some of its features to work correctly in a continuous process.
+If you intend to keep the `Vitest` instance, make sure to at least call [`init`](/api/advanced/vitest#init). This will initialise reporters and the coverage provider, but won't run any tests. It is also recommended to enable the `watch` mode even if you don't intend to use the Vitest watcher, but want to keep the instance running. Vitest relies on this flag for some of its features to work correctly in a continuous process.
 
-After reporters are initialised, use `runTestSpecifications` or `rerunTestSpecifications` to run tests if manual run is required:
+After reporters are initialised, use [`runTestSpecifications`](/api/advanced/vitest#runtestspecifications) or [`rerunTestSpecifications`](/api/advanced/vitest#reruntestspecifications) to run tests if manual run is required:
 
 ```ts
 watcher.on('change', async (file) => {
@@ -87,7 +79,7 @@ watcher.on('change', async (file) => {
 })
 ```
 
-**Warning:**
+::: warning
 The example above shows a potential use-case if you disable the default watcher behaviour. By default, Vitest already reruns tests if files change.
 
 Also note that `getModuleSpecifications` will not resolve test files unless they were already processed by `globTestSpecifications`. If the file was just created, use `project.matchesGlobPattern` instead:
@@ -106,6 +98,8 @@ watcher.on('add', async (file) => {
   }
 })
 ```
+
+:::
 
 In cases where you need to disable the watcher, you can pass down `server.watch: null` since Vite 5.3 or `server.watch: { ignored: ['*/*'] }` to a Vite config:
 

@@ -1,17 +1,25 @@
 ---
+description: "Learn more about: COR_DEBUG_STEP_RANGE Structure"
 title: "COR_DEBUG_STEP_RANGE Structure"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/cor-debug-step-range-structure.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "COR_DEBUG_STEP_RANGE"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "COR_DEBUG_STEP_RANGE"
+helpviewer_keywords:
+  - "COR_DEBUG_STEP_RANGE structure [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # COR_DEBUG_STEP_RANGE Structure
 
 Contains the offset information for a range of code.
 
-This structure is used by the ICorDebugStepper::StepRange method.
+This structure is used by the [ICorDebugStepper::StepRange](icordebugstepper-steprange-method.md) method.
 
 ## Syntax
 
@@ -31,7 +39,7 @@ typedef struct {
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl
 
@@ -41,4 +49,4 @@ typedef struct {
 
 ## See also
 
-- StepRange Method
+- [StepRange Method](icordebugstepper-steprange-method.md)

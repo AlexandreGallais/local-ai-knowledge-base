@@ -1,12 +1,9 @@
 ---
-title: "dotnet package search command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-package-search.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet package search command
+description: Searches a given source using the query string provided. If no sources are specified, all sources defined in the NuGet.Config file are used.
+author: Nigusu-Allehu
+ms.date: 10/26/2023
 ---
-
 # dotnet package search
 
 **This article applies to:** ✔️ .NET 8.0.2xx SDK and later versions
@@ -37,9 +34,7 @@ The `dotnet package search` command searches for a NuGet package.
 
 ## Options
 
-- **`--configfile <FILE>`**
-
-The NuGet configuration file (*nuget.config*) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see Common NuGet Configurations.
+- [!INCLUDE [configfile](includes/cli-configfile.md)]
 
 - **`--exact-match`**
 
@@ -50,9 +45,7 @@ The NuGet configuration file (*nuget.config*) to use. If specified, only the set
 
     The format options are `table` and `json`. The default is `table`.
 
-- **`--interactive`**
-
-Allows the command to stop and wait for user input or action. For example, to complete authentication.
+- [!INCLUDE [interactive](includes/cli-interactive.md)]
 
 - **`--prerelease`**
 
@@ -62,21 +55,17 @@ Allows the command to stop and wait for user input or action. For example, to co
 
     The number of results to skip, for pagination. The default value is 0.
 
-- **`--source `**
+- **`--source <SOURCE>`**
 
-    The package source to search. You can pass <example-value> --source options to search multiple package sources.
+    The package source to search. You can pass multiple --source options to search multiple package sources.
 
 - **`--take`**
 
     The number of results to return. The default value is 20.
 
-- **`-v|--verbosity <LEVEL>`**
+- [!INCLUDE [verbosity](includes/cli-verbosity.md)]
 
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
-
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Examples
 

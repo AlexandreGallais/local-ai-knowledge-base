@@ -1,25 +1,16 @@
----
-title: "ModuleHashesAttribute interface (java.lang.classfile.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/attribute/ModuleHashesAttribute.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ModuleHashesAttribute interface (java.lang.classfile.attribute)
 
 ```java
 public sealed interface ModuleHashesAttribute extends Attribute<ModuleHashesAttribute>, ClassElement permits BoundAttribute.BoundModuleHashesAttribute, UnboundAttribute.UnboundModuleHashesAttribute
 ```
 
-Models the ModuleHashes attribute, which
-appears on classes that represent
+Models the {@link Attributes#moduleHashes() ModuleHashes} attribute, which
+appears on classes that {@linkplain ClassModel#isModuleInfo() represent}
 module descriptors to capture the hashes of a set of co-delivered modules.
+<p>
+The specification of the {@code ModuleHashes} attribute is:
+<pre> {@code
 
-The specification of the `ModuleHashes` attribute is:
-
-```java
 ModuleHashes_attribute {
   // index to CONSTANT_utf8_info structure in constant pool representing
   // the string "ModuleHashes"
@@ -37,22 +28,20 @@ ModuleHashes_attribute {
   } hashes[hashes_count];
 
 }
-```
-
-This attribute only appears on classes, and does not permit multiple instances in a class.  It has a
-data dependency on the constant pool.
-
+} </pre>
+<p>
+This attribute only appears on classes, and does not permit {@linkplain
+AttributeMapper#allowMultiple multiple instances} in a class.  It has a
+data dependency on the {@linkplain AttributeStability#CP_REFS constant pool}.
+<p>
 This attribute is not predefined in the Java SE Platform.  This is a
-JDK-specific nonstandard attribute produced by the `jdk.jlink` module,
-which defines the `jlink` and `jmod` tools.
+JDK-specific nonstandard attribute produced by the {@code jdk.jlink} module,
+which defines the {@code jlink} and {@code jmod} tools.
 
-**See also:** Attributes#moduleHashes()
-
-**See also:** ModuleResolutionAttribute
-
-**See also:** ModuleTargetAttribute
-
-**Since:** 24
+@see Attributes#moduleHashes()
+@see ModuleResolutionAttribute
+@see ModuleTargetAttribute
+@since 24
 
 ## ModuleHashesAttribute.algorithm()
 
@@ -60,11 +49,15 @@ which defines the `jlink` and `jmod` tools.
 Utf8Entry algorithm()
 ```
 
+{@return the algorithm name used to compute the hash}
+
 ## ModuleHashesAttribute.hashes()
 
 ```java
 List<ModuleHashInfo> hashes()
 ```
+
+{@return the hash information about related modules}
 
 ## ModuleHashesAttribute.of(String, List<ModuleHashInfo>)
 
@@ -72,10 +65,9 @@ List<ModuleHashInfo> hashes()
 static ModuleHashesAttribute of(String algorithm, List<ModuleHashInfo> hashes)
 ```
 
-Parameters:
-
-- `algorithm`: the hashing algorithm
-- `hashes`: the hash descriptions
+{@return a {@code ModuleHashes} attribute}
+@param algorithm the hashing algorithm
+@param hashes the hash descriptions
 
 ## ModuleHashesAttribute.of(String, ModuleHashInfo...)
 
@@ -83,10 +75,9 @@ Parameters:
 static ModuleHashesAttribute of(String algorithm, ModuleHashInfo... hashes)
 ```
 
-Parameters:
-
-- `algorithm`: the hashing algorithm
-- `hashes`: the hash descriptions
+{@return a {@code ModuleHashes} attribute}
+@param algorithm the hashing algorithm
+@param hashes the hash descriptions
 
 ## ModuleHashesAttribute.of(Utf8Entry, List<ModuleHashInfo>)
 
@@ -94,10 +85,9 @@ Parameters:
 static ModuleHashesAttribute of(Utf8Entry algorithm, List<ModuleHashInfo> hashes)
 ```
 
-Parameters:
-
-- `algorithm`: the hashing algorithm
-- `hashes`: the hash descriptions
+{@return a {@code ModuleHashes} attribute}
+@param algorithm the hashing algorithm
+@param hashes the hash descriptions
 
 ## ModuleHashesAttribute.of(Utf8Entry, ModuleHashInfo...)
 
@@ -105,7 +95,6 @@ Parameters:
 static ModuleHashesAttribute of(Utf8Entry algorithm, ModuleHashInfo... hashes)
 ```
 
-Parameters:
-
-- `algorithm`: the hashing algorithm
-- `hashes`: the hash descriptions
+{@return a {@code ModuleHashes} attribute}
+@param algorithm the hashing algorithm
+@param hashes the hash descriptions

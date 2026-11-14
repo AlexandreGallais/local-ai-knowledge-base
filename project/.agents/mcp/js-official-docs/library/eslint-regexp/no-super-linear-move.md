@@ -1,19 +1,19 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/no-super-linear-move"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/no-super-linear-move.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "disallow quantifiers that cause quadratic moves"
+since: "v0.13.0"
 ---
-
 # regexp/no-super-linear-move
+
+<!-- end auto-generated rule header -->
 
 > disallow quantifiers that cause quadratic moves
 
 ## :book: Rule Details
 
-This rule reports super-linear worst-case runtime caused by a regex being moved across the input string. The reported cases are a problem because the super-linear worst-case runtime can be exploited by attackers in what is called Regular expression Denial of Service - ReDoS.
+This rule reports super-linear worst-case runtime caused by a regex being moved across the input string. The reported cases are a problem because the super-linear worst-case runtime can be exploited by attackers in what is called [Regular expression Denial of Service - ReDoS][1].
 
 <eslint-code-block>
 
@@ -91,11 +91,11 @@ Note: The maximum of the quantifier should be reasonably small (typically <100).
 
 Example: `/((?:\\{2})*)(\\?)\|/g`
 
-This regex **was** used by `minimatch` to find escaped and unescaped `|` characters.
+This regex **was** used by [`minimatch`](https://github.com/isaacs/minimatch) to find escaped and unescaped `|` characters.
 
 This rule says that the `(?:\\{2})*` causes quadratic runtime for "any attack string `/(?:\\{2})+/`."
 
-The fix is to limit the `(?:\\{2})*` quantifier. `minimatch` limited it to at most 64 repetitions. You read more about this vulnerability here.
+The fix is to limit the `(?:\\{2})*` quantifier. `minimatch` limited it to at most 64 repetitions. You read more about this vulnerability [here](https://medium.com/node-security/minimatch-redos-vulnerability-590da24e6d3c).
 
 <eslint-code-block>
 
@@ -117,13 +117,13 @@ Adding a lookbehind, `\b`, or `^` assertion at the start of the pattern can solv
 
 This fix is typically only applicable if the exploitable quantifier can consume exactly one character per iteration. Quantifiers that can consume more than character per iteration (e.g. `(?:abc)+`, `(?:ab?)+`) are very difficult to fix with this approach.
 
-Example: `/a-z_*(?=\s*\()/i`
+Example: `/[a-z_][a-z_0-9]*(?=\s*\()/i`
 
 This is a simple regex to find the names of functions and function-like macros in a C program.
 
 This rule says that the first `[a-z_0-9]*` causes quadratic runtime for "any attack string `/[A-Z_]+/i`."
 
-The problem is that `a-z_*` isn't guaranteed to start at the start of the function name, the `[a-z_]` can also match anywhere inside the function name.
+The problem is that `[a-z_][a-z_0-9]*` isn't guaranteed to start at the start of the function name, the `[a-z_]` can also match anywhere inside the function name.
 
 The fix is to add an assertion to make sure that `[a-z_]` matches the first character of a name. We can use the lookbehind `(?<![a-z_0-9])` == `(?<!\w)`. In this case, it's also possible to use the built-in `\b` assertion.
 
@@ -164,7 +164,7 @@ This means that this rule might not be able to verify fixed regexes. This rule m
 
 ### `report: "certain" | "potential"`
 
-This option has the same function as the `report` option of `regexp/no-super-linear-backtracking`. The default value is `"certain"`.
+This option has the same function as the [`report` option of `regexp/no-super-linear-backtracking`](./no-super-linear-backtracking.html#report). The default value is `"certain"`.
 
 ### `ignoreSticky: boolean`
 
@@ -201,9 +201,13 @@ Even if a fragment had exploitable quantifiers, it might not cause super-linear 
 
 ## :books: Further reading
 
-- Regular expression Denial of Service - ReDoS
-- Polynomial regular expression used on uncontrolled data
+- [Regular expression Denial of Service - ReDoS][1]
+- [Polynomial regular expression used on uncontrolled data][2]
 - [scslre]
+
+[1]: https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS
+[2]: https://codeql.github.com/codeql-query-help/javascript/js-polynomial-redos/
+[scslre]: https://github.com/RunDevelopment/scslre
 
 ## :rocket: Version
 
@@ -211,5 +215,5 @@ This rule was introduced in eslint-plugin-regexp v0.13.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/no-super-linear-move.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/no-super-linear-move.ts)

@@ -1,12 +1,3 @@
----
-title: "std::ascii"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/ascii.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::ascii
 
 Operations on ASCII strings and characters.
@@ -15,11 +6,11 @@ Most string operations in Rust act on UTF-8 strings. However, at times it
 makes more sense to only consider the ASCII character set for a specific
 operation.
 
-The `AsciiExt` trait provides methods that allow for character
+The [`AsciiExt`] trait provides methods that allow for character
 operations that only act on the ASCII subset and leave non-ASCII characters
 alone.
 
-The `escape_default` function provides an iterator over the bytes of an
+The [`escape_default`] function provides an iterator over the bytes of an
 escaped version of the character given.
 
 ## trait AsciiExt
@@ -33,7 +24,7 @@ Extension methods for ASCII-subset only operations.
 Be aware that operations on seemingly non-ASCII characters can sometimes
 have unexpected results. Consider this example:
 
-```rust
+```
 use std::ascii::AsciiExt;
 
 assert_eq!(AsciiExt::to_ascii_uppercase("café"), "CAFÉ");
@@ -48,6 +39,8 @@ example, the lowercased string is represented `"caf\u{e9}"` (the last
 character is a single Unicode character representing an 'e' with an acute
 accent). Since the last character is defined outside the scope of ASCII,
 it will not get mapped to an uppercase variant, resulting in `"CAF\u{e9}"`.
+
+[combining character]: https://en.wikipedia.org/wiki/Combining_character
 
 ## AsciiExt::Owned
 
@@ -81,15 +74,17 @@ Makes a copy of the value in its ASCII upper case equivalent.
 ASCII letters 'a' to 'z' are mapped to 'A' to 'Z',
 but non-ASCII letters are unchanged.
 
-To uppercase the value in-place, use `make_ascii_uppercase`.
+To uppercase the value in-place, use [`make_ascii_uppercase`].
 
 To uppercase ASCII characters in addition to non-ASCII characters, use
-`str::to_uppercase`.
+[`str::to_uppercase`].
 
 # Note
 
 This method is deprecated in favor of the identically-named
 inherent methods on `u8`, `char`, `[u8]` and `str`.
+
+[`make_ascii_uppercase`]: AsciiExt::make_ascii_uppercase
 
 ## AsciiExt::to_ascii_lowercase
 
@@ -102,15 +97,17 @@ Makes a copy of the value in its ASCII lower case equivalent.
 ASCII letters 'A' to 'Z' are mapped to 'a' to 'z',
 but non-ASCII letters are unchanged.
 
-To lowercase the value in-place, use `make_ascii_lowercase`.
+To lowercase the value in-place, use [`make_ascii_lowercase`].
 
 To lowercase ASCII characters in addition to non-ASCII characters, use
-`str::to_lowercase`.
+[`str::to_lowercase`].
 
 # Note
 
 This method is deprecated in favor of the identically-named
 inherent methods on `u8`, `char`, `[u8]` and `str`.
+
+[`make_ascii_lowercase`]: AsciiExt::make_ascii_lowercase
 
 ## AsciiExt::eq_ignore_ascii_case
 
@@ -140,12 +137,14 @@ ASCII letters 'a' to 'z' are mapped to 'A' to 'Z',
 but non-ASCII letters are unchanged.
 
 To return a new uppercased value without modifying the existing one, use
-`to_ascii_uppercase`.
+[`to_ascii_uppercase`].
 
 # Note
 
 This method is deprecated in favor of the identically-named
 inherent methods on `u8`, `char`, `[u8]` and `str`.
+
+[`to_ascii_uppercase`]: AsciiExt::to_ascii_uppercase
 
 ## AsciiExt::make_ascii_lowercase
 
@@ -159,9 +158,11 @@ ASCII letters 'A' to 'Z' are mapped to 'a' to 'z',
 but non-ASCII letters are unchanged.
 
 To return a new lowercased value without modifying the existing one, use
-`to_ascii_lowercase`.
+[`to_ascii_lowercase`].
 
 # Note
 
 This method is deprecated in favor of the identically-named
 inherent methods on `u8`, `char`, `[u8]` and `str`.
+
+[`to_ascii_lowercase`]: AsciiExt::to_ascii_lowercase

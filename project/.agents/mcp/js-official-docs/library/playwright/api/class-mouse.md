@@ -1,19 +1,10 @@
----
-title: "class: Mouse"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-mouse.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: Mouse
 * since: v1.8
 
 The Mouse class operates in main-frame CSS pixels relative to the top-left corner of the viewport.
 
 :::tip
-If you want to debug where the mouse moved, you can use the Trace viewer or Playwright Inspector. A red dot showing the location of the mouse will be shown for every mouse action.
+If you want to debug where the mouse moved, you can use the [Trace viewer](../trace-viewer-intro.md) or [Playwright Inspector](../running-tests.md). A red dot showing the location of the mouse will be shown for every mouse action.
 :::
 
 Every `page` object has its own Mouse, accessible with [`property: Page.mouse`].
@@ -40,7 +31,7 @@ page.mouse().move(0, 0);
 page.mouse().up();
 ```
 
-```python
+```python async
 # using ‘page.mouse’ to trace a 100x100 square.
 await page.mouse.move(0, 0)
 await page.mouse.down()
@@ -51,7 +42,7 @@ await page.mouse.move(0, 0)
 await page.mouse.up()
 ```
 
-```python
+```python sync
 # using ‘page.mouse’ to trace a 100x100 square.
 page.mouse.move(0, 0)
 page.mouse.down()
@@ -169,7 +160,7 @@ Dispatches a `mouseup` event.
 ## async method: Mouse.wheel
 * since: v1.15
 
-Dispatches a `wheel` event. This method is usually used to manually scroll the page. See scrolling for alternative ways to scroll.
+Dispatches a `wheel` event. This method is usually used to manually scroll the page. See [scrolling](../input.md#scrolling) for alternative ways to scroll.
 
 :::note
 Wheel events may cause scrolling if they are not handled, and this method does not

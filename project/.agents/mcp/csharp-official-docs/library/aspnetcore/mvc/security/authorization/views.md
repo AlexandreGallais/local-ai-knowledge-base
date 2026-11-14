@@ -1,24 +1,22 @@
 ---
-title: "View-based authorization in ASP.NET Core MVC"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/mvc/security/authorization/views.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: View-based authorization in ASP.NET Core MVC
+ai-usage: ai-assisted
+description: This document demonstrates how to inject and utilize the authorization service inside of an ASP.NET Core Razor view.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 07/22/2026
 ---
-
 # View-based authorization in ASP.NET Core MVC
 
-A developer often wants to show, hide, or otherwise modify a UI based on the current user identity. Access the authorization service within MVC views via dependency injection. To inject the authorization service (`Microsoft.AspNetCore.Authorization.IAuthorizationService`) into a Razor view, use the `@inject` directive:
+A developer often wants to show, hide, or otherwise modify a UI based on the current user identity. Access the authorization service within MVC views via [dependency injection](../../../fundamentals/dependency-injection.md). To inject the authorization service (<xref:Microsoft.AspNetCore.Authorization.IAuthorizationService>) into a Razor view, use the `@inject` directive:
 
 ```razor
 @using Microsoft.AspNetCore.Authorization
 @inject IAuthorizationService AuthService
 ```
 
-To inject the authorization service into every view, place the `@inject` directive in the `Views/_ViewImports.cshtml` file. For more information, see Dependency injection into views in ASP.NET Core.
+To inject the authorization service into every view, place the `@inject` directive in the `Views/_ViewImports.cshtml` file. For more information, see [Dependency injection into views in ASP.NET Core](../../views/dependency-injection.md).
 
-Use the injected authorization service to invoke `Microsoft.AspNetCore.Authorization.IAuthorizationService.AuthorizeAsync*` in exactly the same way an app would check authorization during resource-based authorization:
+Use the injected authorization service to invoke <xref:Microsoft.AspNetCore.Authorization.IAuthorizationService.AuthorizeAsync*?displayProperty=nameWithType> in exactly the same way an app would check authorization during [resource-based authorization](resource-based.md#use-imperative-authorization):
 
 ```razor
 @if ((await AuthService.AuthorizeAsync(User, "PolicyName")).Succeeded)
@@ -27,7 +25,7 @@ Use the injected authorization service to invoke `Microsoft.AspNetCore.Authoriza
 }
 ```
 
-In some cases, the resource is the view model. Invoke `Microsoft.AspNetCore.Authorization.IAuthorizationService.AuthorizeAsync*` in exactly the same way the app would check authorization during resource-based authorization. The model is passed as a resource for the policy's evaluation:
+In some cases, the resource is the view model. Invoke <xref:Microsoft.AspNetCore.Authorization.IAuthorizationService.AuthorizeAsync*> in exactly the same way the app would check authorization during [resource-based authorization](resource-based.md#use-imperative-authorization). The model is passed as a resource for the policy's evaluation:
 
 ```razor
 @if ((await AuthService.AuthorizeAsync(User, Model, Operations.Edit)).Succeeded)
@@ -37,5 +35,5 @@ In some cases, the resource is the view model. Invoke `Microsoft.AspNetCore.Auth
 }
 ```
 
-> **Warning:**
+> [!WARNING]
 > Don't rely on toggling the visibility of the app's UI elements as the sole authorization check. Hiding a UI element may not completely prevent access to its associated controller action. For example, consider the button in the preceding code snippet. A user can invoke the `Edit` action method if they know the relative resource URL is `/Document/Edit/1`. For this reason, the `Edit` action method should perform its own authorization check.

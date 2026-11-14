@@ -1,15 +1,11 @@
 ---
 title: "Some X509Certificate2 and X509Certificate constructors are obsolete"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/cryptography/9.0/x509-certificates.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 9 breaking change in cryptography where X509Certificate2 and X509Certificate constructors for binary and file content are obsolete.
+ms.date: 08/01/2024
 ---
-
 # Some X509Certificate2 and X509Certificate constructors are obsolete
 
-The constructors on `System.Security.Cryptography.X509Certificates.X509Certificate` and `System.Security.Cryptography.X509Certificates.X509Certificate2` that accept content as a `byte[]`, `ReadOnlySpan<byte>`, or a `string` file path are obsolete, starting in .NET 9. The `System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import*` methods on X509Certificate2Collection are also obsolete. Calling them in code generates warning `SYSLIB0057` at compile time.
+The constructors on <xref:System.Security.Cryptography.X509Certificates.X509Certificate> and <xref:System.Security.Cryptography.X509Certificates.X509Certificate2> that accept content as a `byte[]`, `ReadOnlySpan<byte>`, or a `string` file path are obsolete, starting in .NET 9. The <xref:System.Security.Cryptography.X509Certificates.X509Certificate2Collection.Import*> methods on X509Certificate2Collection are also obsolete. Calling them in code generates warning `SYSLIB0057` at compile time.
 
 ## Previous behavior
 
@@ -17,7 +13,7 @@ Developers could use the affected APIs without an obsolete warning.
 
 ## New behavior
 
-Affected APIs will receive an obsolete compilation warning with ID SYSLIB0057.
+Affected APIs will receive an obsolete compilation warning with ID [SYSLIB0057](../../../../fundamentals/syslib-diagnostics/syslib0057.md).
 
 ## Version introduced
 
@@ -25,7 +21,7 @@ Affected APIs will receive an obsolete compilation warning with ID SYSLIB0057.
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
@@ -35,8 +31,8 @@ While this method was easy to use, it created issues where user-supplied data wa
 
 ## Recommended action
 
-For workarounds, see Workaround.
+For workarounds, see [Workaround](../../../../fundamentals/syslib-diagnostics/syslib0057.md#workaround).
 
 ## Affected APIs
 
-For affected APIs, see SYSLIB0057.
+For affected APIs, see [SYSLIB0057](../../core-libraries/9.0/obsolete-apis-with-custom-diagnostics.md#syslib0057).

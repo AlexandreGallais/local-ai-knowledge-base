@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataDispenserEx::OpenScopeOnITypeInfo Method"
 title: "IMetaDataDispenserEx::OpenScopeOnITypeInfo Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadatadispenserex-openscopeonitypeinfo-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataDispenserEx.OpenScopeOnITypeInfo"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataDispenserEx::OpenScopeOnITypeInfo"
+  - "IMetaDataDispenserEx::OpenScopeOnITypeInfo method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataDispenserEx::OpenScopeOnITypeInfo Method
 
 This method is not implemented. If called, it returns E_NOTIMPL.
@@ -25,7 +32,7 @@ HRESULT OpenScopeOnITypeInfo (
 ## Parameters
 
  `pITI`
- [in] Pointer to an ITypeInfo interface that provides the type information on which to open the scope.
+ [in] Pointer to an [ITypeInfo](/previous-versions/windows/desktop/api/oaidl/nn-oaidl-itypeinfo) interface that provides the type information on which to open the scope.
 
  `dwOpenFlags`
  [in] The open mode flags.
@@ -38,7 +45,7 @@ HRESULT OpenScopeOnITypeInfo (
 
 ## Requirements
 
- **Platform:** See .NET supported operating systems.
+ **Platform:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -46,5 +53,5 @@ HRESULT OpenScopeOnITypeInfo (
 
 ## See also
 
-- IMetaDataDispenserEx Interface
-- IMetaDataDispenser Interface
+- [IMetaDataDispenserEx Interface](imetadatadispenserex-interface.md)
+- [IMetaDataDispenser Interface](imetadatadispenser-interface.md)

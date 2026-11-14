@@ -1,10 +1,5 @@
 ---
-title: "globals | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/globals.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: globals | Config
 ---
 
 # globals
@@ -25,12 +20,13 @@ export default defineConfig({
 })
 ```
 
-**Tip:**
+::: tip
 Note that some libraries, e.g., `@testing-library/react`, rely on globals being present to perform auto cleanup.
+:::
 
 To get TypeScript working with the global APIs, add `vitest/globals` to the `types` field in your `tsconfig.json`:
 
-```json
+```json [tsconfig.json]
 {
   "compilerOptions": {
     "types": ["vitest/globals"]
@@ -38,9 +34,9 @@ To get TypeScript working with the global APIs, add `vitest/globals` to the `typ
 }
 ```
 
-If you have redefined your `typeRoots` to include additional types in your compilation, you will need to add back the `node_modules` to make `vitest/globals` discoverable:
+If you have redefined your [`typeRoots`](https://www.typescriptlang.org/tsconfig/#typeRoots) to include additional types in your compilation, you will need to add back the `node_modules` to make `vitest/globals` discoverable:
 
-```json
+```json [tsconfig.json]
 {
   "compilerOptions": {
     "typeRoots": ["./types", "./node_modules/@types", "./node_modules"],

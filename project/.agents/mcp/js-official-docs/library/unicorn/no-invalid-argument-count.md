@@ -1,17 +1,11 @@
----
-title: "no-invalid-argument-count"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-invalid-argument-count.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-invalid-argument-count
 
 📝 Disallow calling functions and constructors with an invalid number of arguments.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 JavaScript allows functions and constructors to be called with too few or too many arguments. This can hide refactoring mistakes when a local function signature changes but some call sites are not updated, and it can silently ignore values passed to built-in APIs.
 

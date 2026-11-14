@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: JSFunctionBinding implicit public default constructor removed"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/interop/8.0/jsfunctionbinding-constructor.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in interop in .NET 8 where the implicit public default constructor for System.Runtime.InteropServices.JavaScript.JSFunctionBinding was removed.
+ms.date: 11/02/2023
 ---
-
 # JSFunctionBinding implicit public default constructor removed
 
 The implicit public default constructor for `System.Runtime.InteropServices.JavaScript.JSFunctionBinding` has been removed.
@@ -25,7 +21,7 @@ Starting in .NET 8, you can't instantiate a `System.Runtime.InteropServices.Java
 
 ## Type of breaking change
 
-This change can affect binary compatibility.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 

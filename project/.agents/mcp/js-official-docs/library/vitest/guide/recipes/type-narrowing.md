@@ -1,17 +1,12 @@
 ---
-title: "Type Narrowing in Tests | Recipes"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/recipes/type-narrowing.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Type Narrowing in Tests | Recipes
 ---
 
 # Type Narrowing in Tests
 
 Tests deal with possibly-null values everywhere. `document.querySelector` returns `Element | null`, `Map.get(key)` returns `T | undefined`, and similar optional shapes show up throughout. The usual workarounds in test code are an unsafe cast with `as`, a non-null assertion with `!` on every access, or a runtime check like `expect(x).toBeTruthy()` that throws when the value is missing. All three add noise, and the runtime check is actively misleading because it doesn't narrow the type the way it looks like it should.
 
-`expect.assert` <Version>4.0.0</Version> throws at runtime and narrows the TypeScript type. The same call replaces all three.
+[`expect.assert`](/api/expect#assert) <Version>4.0.0</Version> throws at runtime and narrows the TypeScript type. The same call replaces all three.
 
 ## Pattern
 
@@ -54,7 +49,7 @@ expect.assert(error instanceof MyError)
 expect(error.code).toBe('E_FOO') // error is `MyError`
 ```
 
-For common shapes there are pre-built helpers from chai's `assert` API, reachable via the same `expect.assert` namespace:
+For common shapes there are pre-built helpers from chai's [`assert` API](/api/assert), reachable via the same `expect.assert` namespace:
 
 ```ts
 expect.assert.isDefined(maybeUser) // narrows away `undefined`
@@ -64,6 +59,6 @@ expect.assert.instanceOf(error, MyError) // narrows to MyError
 
 ## See also
 
-- `expect.assert`
-- Chai `assert` API
-- Waiting for Async Conditions
+- [`expect.assert`](/api/expect#assert)
+- [Chai `assert` API](/api/assert)
+- [Waiting for Async Conditions](/guide/recipes/wait-for)

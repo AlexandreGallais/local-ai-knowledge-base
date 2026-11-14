@@ -1,10 +1,10 @@
 ---
-title: "What's new in .NET 11 runtime (part 1 of 3)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/whats-new/dotnet-11/runtime.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: What's new in .NET 11 runtime
+description: Learn about the new features introduced in the .NET 11 runtime.
+titleSuffix: ""
+ms.date: 11/10/2026
+ai-usage: ai-assisted
+ms.update-cycle: 3650-days
 ---
 
 # What's new in the .NET 11 runtime
@@ -21,7 +21,7 @@ For Apple, there's no change to the minimum hardware or the ReadyToRun target. T
 
 For Linux, there's no change to the minimum hardware. .NET continues to support devices such as Raspberry Pi that might only provide support for the `AdvSimd` instruction set. The ReadyToRun target has been updated to include the `LSE` instruction set, which might result in additional jitting overhead if you launch an application.
 
-For Windows, the baseline is updated to require the `LSE` instruction set. This is required by Windows 11 and by all Arm64 CPUs officially supported by Windows 10. Additionally, it's inline with the Arm SBSA (Server Base System Architecture) requirements. The ReadyToRun target has been updated to be `armv8.2-a + RCPC`, which provides support for at least `AdvSimd`, `CRC`, `LSE`, `RCPC`, and `RDMA`, and covers the majority of hardware officially supported.
+For Windows, the baseline is updated to require the `LSE` instruction set. This is [required by Windows 11](/windows-hardware/design/minimum/minimum-hardware-requirements-overview) and by [all Arm64 CPUs officially supported by Windows 10](/windows-hardware/design/minimum/windows-processor-requirements). Additionally, it's inline with the Arm SBSA (Server Base System Architecture) requirements. The ReadyToRun target has been updated to be `armv8.2-a + RCPC`, which provides support for at least `AdvSimd`, `CRC`, `LSE`, `RCPC`, and `RDMA`, and covers the majority of hardware officially supported.
 
 | OS      | Previous JIT/AOT minimum | New JIT/AOT minimum | Previous R2R target | New R2R target   |
 |---------|--------------------------|---------------------|---------------------|------------------|
@@ -47,7 +47,7 @@ Starting with .NET 11, .NET fails to run on older hardware and might print a mes
 
 > The current CPU is missing one or more of the baseline instruction sets.
 
-For ReadyToRun-capable assemblies, there might be additional startup overhead on some supported hardware that doesn't meet the expected support for a typical device.
+For [ReadyToRun](../../deploying/ready-to-run.md)-capable assemblies, there might be additional startup overhead on some supported hardware that doesn't meet the expected support for a typical device.
 
 ### Reason for change
 
@@ -55,7 +55,7 @@ For ReadyToRun-capable assemblies, there might be additional startup overhead on
 
 The update to the minimum baseline was made to reduce the maintenance complexity of the codebase and to better align with the documented (and often enforced) hardware requirements of the underlying operating system.
 
-For more information, see Minimum hardware requirements updated.
+For more information, see [Minimum hardware requirements updated](../../compatibility/jit/11/minimum-hardware-requirements.md).
 
 ## Runtime Async
 
@@ -78,37 +78,15 @@ The .NET runtime libraries themselves are compiled with `runtime-async=on`. The 
 - **Covariant `Task` → `Task<T>` overrides:** When a derived class returns `Task<T>` for a base method that returns `Task`, the runtime now generates a void-returning thunk that bridges the calling convention difference, so virtual dispatch works for both flavors. The same fix applies to NativeAOT.
 - **Inlining in crossgen2:** Restrictions that prevented runtime-async methods from being inlined during ReadyToRun (R2R) compilation have been removed. All async tests pass with both crossgen2 and composite R2R, and inlining of await-less async calls (the synchronous fast path) is confirmed end-to-end.
 
-> **Note:**
+> [!NOTE]
 > The `DOTNET_RuntimeAsync` and `UNSUPPORTED_RuntimeAsync` environment variables that previously controlled runtime-async behavior have been removed. To opt out of runtime-async per project, set `<UseRuntimeAsync>false</UseRuntimeAsync>` in your project file instead of relying on the environment variable.
 
 ### Cleaner live stack traces
 
 The most visible improvement is in *live stack traces*—what profilers, debuggers, and `new StackTrace()` see during execution. With compiler-generated async, each async method produces multiple frames from state-machine infrastructure. With Runtime Async, the actual methods appear directly on the call stack.
 
-```csharp
-// To enable runtime async, add the following to your .csproj:
-//   <Features>runtime-async=on</Features>
+:::code language="csharp" source="./snippets/csharp/Runtime.cs" id="RuntimeAsyncStackTrace":::
 
-await OuterAsync();
-
-static async Task OuterAsync()
-{
-    await Task.CompletedTask;
-    await MiddleAsync();
-}
-
-static async Task MiddleAsync()
-{
-    await Task.CompletedTask;
-    await InnerAsync();
-}
-
-static async Task InnerAsync()
-{
-    await Task.CompletedTask;
-    Console.WriteLine(new StackTrace(fNeedFileInfo: true));
-}
-```
 **Without `runtime-async`—13 frames, state-machine infrastructure visible:**
 
 ```text
@@ -137,7 +115,7 @@ static async Task InnerAsync()
    at Program.<Main>(String[] args)
 ```
 
-> **Note:**
+> [!NOTE]
 > Exception stack traces (from `catch (Exception ex)`) already look the same with or without Runtime Async, because existing `ExceptionDispatchInfo` cleanup in compiler-generated code handles that case. The improvement is in what you see *during* live execution.
 
 This improvement benefits anything that inspects the live execution stack, including profiling tools, diagnostic logging, and the debugger call stack window.
@@ -167,3 +145,209 @@ Runtime Async includes several performance improvements:
 Async continuations can now opt out of `ExecutionContext` capture and restore. `ExecutionContext` carries ambient state—such as `AsyncLocal<T>` values—across `await` points. Every `Task` continuation previously captured a snapshot of the context and restored it before running, even when no `AsyncLocal<T>` state was in use and the restore was a no-op.
 
 The runtime now detects when a continuation has nothing to restore and skips the capture/restore cycle entirely. `Task`, `Task<T>`, `ValueTask`, and `ValueTask<T>` all benefit from this change, as does the runtime-async implementation path. Applications that use `ConfigureAwait(false)` and `AsyncLocal<T>` sparingly see reduced overhead in high-throughput async code paths.
+
+## JIT improvements
+
+- **Bounds check elimination:** The just-in-time (JIT) compiler now eliminates bounds checks for the common pattern where an index plus a constant is compared against a length, such as `i + cns < len`. It also eliminates more redundant bounds checks for index-from-end access (for example, `values[^1]`). These improvements reduce redundant checks in tight loops and improve throughput for array and span operations.
+- **Redundant checked context removal:** The JIT can now prove and remove redundant checked arithmetic contexts—for example, when a value is already known to be in range. This optimization eliminates unnecessary overflow checks in generated code.
+- **Switch expression folding:** Multi-target `switch` expressions now fold into simpler branchless checks when the targets are a small set of constants, for example `x is 0 or 1 or 2 or 3 or 4`.
+- **Faster uint-to-float/double casts:** Casting `uint` to `float` or `double` is faster on pre-AVX-512 x86 hardware.
+- **SVE2 intrinsics:** New Arm SVE2 (Scalable Vector Extension 2) intrinsics are available: `ShiftRightLogicalNarrowingSaturate(Even|Odd)`. These expand the set of vectorized operations available on Arm hardware that supports SVE2.
+- **`Math.BigMul` on x64:** `Math.BigMul(long, long, out long)` is now significantly faster on x64. The JIT generates a single `MUL r/m64` instruction when both operands are 64-bit values and the caller requests the high half of the result, eliminating the previous helper call.
+- **Single-IG prolog restriction removed:** The JIT no longer requires the function prolog to fit in a single instruction group (IG). Complex prologues with many saved registers, large stack allocations, or runtime-async state setup no longer trigger fallback paths.
+- **`SELECT(cond, cns, cns)` folding:** The JIT now folds conditional selects whose two branches both produce the same constant into just that constant—for example, `condition ? 42 : 42` becomes `42`. This fold eliminates unnecessary comparisons that can appear after earlier optimizations unify branches.
+- **AVX-VNNI-512 intrinsics:** <xref:System.Runtime.Intrinsics.X86.AvxVnni.V512?displayProperty=nameWithType> exposes 512-bit forms of the `AVX-VNNI` multiply-add intrinsics on CPUs with `AVX512-VNNI` support.
+- **Saturating floating-point conversions:** Unchecked `float` and `double` conversions to small integer types now saturate to type bounds instead of wrapping through intermediate truncation.
+- **ARM64 `Vector<T>` by reference for SVE:** When the runtime is compiled with ARM SVE support, `Vector<T>` values are passed by reference rather than by value, aligning with the ARM calling convention for scalable types and enabling better code generation for SVE-intensive code.
+
+For better performance and code quality, .NET 11 adds several more JIT optimizations:
+
+### Constant-folding SequenceEqual
+
+The JIT can now fold a `string.Equals` or `ReadOnlySpan<T>.SequenceEqual` call whose operands are both compile-time constants, replacing the byte-by-byte comparison with the constant `true` or `false` result. This matters most after inlining, when a caller passes another literal to a helper that compares against a known string. When `IsAdmin` is inlined into a caller that passes `"Guest"`, the JIT sees `"Guest" == "Admin"` and folds it to `false`:
+
+```csharp
+static bool IsAdmin(string role) => role == "Admin";
+```
+
+The optimization applies to string literals, `const string` fields, and UTF-8 literals (for example, `"PNG"u8`).
+
+### Devirtualization improvements
+
+The JIT can now devirtualize generic virtual methods, including non-shared generic virtual methods and shared generic virtual methods that don't require a runtime lookup. Default interface methods declared on generic interfaces can now be devirtualized as well.
+
+In addition, the result of `Activator.CreateInstance<T>()` is now treated as having an exact type, allowing the JIT to devirtualize subsequent calls made on the returned object.
+
+These improvements unlock further downstream optimizations such as inlining and constant folding, reducing runtime dispatch overhead and improving performance. For example:
+
+```csharp
+IfaceGeneric<string> caller = new Caller<string>();
+Iface obj = Activator.CreateInstance<Impl>();
+caller.DefaultImpl(obj, "test"); // Can be optimized down to Console.WriteLine("test")
+
+interface Iface
+{
+    void GenericMethod<T>(T value);
+}
+
+interface IfaceGeneric<T>
+{
+    void DefaultImpl(Iface obj, T value) => obj.GenericMethod(value);
+}
+
+class Impl : Iface
+{
+    public void GenericMethod<T>(T value) => Console.WriteLine(value);
+}
+
+class Caller<T> : IfaceGeneric<T>
+{
+}
+```
+
+Here the JIT can determine the exact implementation behind both interface calls, devirtualize them, inline through the call chain, and ultimately fold the code down to the equivalent of `Console.WriteLine("test")`.
+
+### Eliminating bounds checks after an empty-span guard
+
+The JIT now picks up the `length != 0` assertion from an empty-span check and uses it to prove the bounds check on the first element succeeds:
+
+```csharp
+if (!span.IsEmpty && span[0] == value)
+{
+    // The bounds check on span[0] is now eliminated.
+}
+```
+
+### Redundant branch and test elimination
+
+When an outer predicate is already implied by an inner branch, the JIT now removes the redundant outer check. Similarly, when code assigns a value in a conditional and then immediately tests it, the second test is eliminated:
+
+```csharp
+if (x > 0)
+{
+    if (x > 1) S();  // The outer x > 0 check is folded away.
+}
+
+int y = condition ? 1 : 2;
+if (y == 1) A(); else B();  // The y == 1 test is eliminated;
+                             // each branch of the ternary goes directly to A() or B().
+```
+
+These optimizations are most visible after inlining, where guards from different methods land in the same compiled body.
+
+## Hardware intrinsics and code generation
+
+.NET 11 includes several new hardware intrinsics and code generation improvements:
+
+- **Hardware FP16 instructions for `Half` arithmetic and conversions:** The JIT uses hardware FP16 instructions for <xref:System.Half> arithmetic and conversions when the processor supports them. On x64, arithmetic uses AVX10.1, while conversions between `Half` and `float` can use F16C (available on most AVX2-capable hardware). On Arm64, arithmetic uses the optional FP16 instruction set, while conversions between `Half` and `float` or `double` use baseline Arm64 instructions. The optimization requires no application changes and preserves the existing ABI representation of `Half`.
+- **Better cost modeling for x86/x64 SIMD:** The JIT's floating-point execution and size costs previously reflected x87-era assumptions. Updated costs that reflect modern SSE/AVX hardware let the JIT make better decisions about hoisting and common subexpression elimination (CSE) around SIMD code.
+- **Faster `DotProduct` on AVX:** Lowering for `Vector128.Dot`-style operations now emits a `mul + permute + add` sequence instead of `vdpps`/`vdppd` when AVX is available, which is consistently faster.
+- **Faster `IndexOfAnyAsciiSearcher` on Arm64:** Arm64 versions of `Vector*.Count`, `IndexOf`, and `LastIndexOf` no longer route through `ExtractMostSignificantBits`, yielding a 5–50% improvement in workloads that use these APIs in their core loop.
+- **Arm64 `ToScalar` for 64-bit integers:** `ToScalar` on `Vector*<long>` and `Vector*<ulong>` now uses `fmov` instead of `umov`, which is shorter and faster on most cores.
+- **SVE `CreateWhile` API expansion:** `CreateWhile` gains signed, `double`, and `single` variants alongside the existing unsigned ones, completing the predicate-generation surface for SVE loops.
+- **New SVE2 and Arm64 instruction-set detection:** The runtime now reports `SVE_AES`, `SVE_SHA3`, `SVE_SM4`, `SHA3`, and `SM4` as separate instruction sets, allowing `Sve2*.IsSupported` queries for those features on capable hardware.
+- **AVX10 detection fix:** The CPUID-bit cache for AVX10 was being overwritten by a later query, which could cause AVX10 to be misreported on capable hardware. This is now fixed.
+
+## ReadyToRun improvements
+
+`Comparer<T>.Default` and `EqualityComparer<T>.Default` are now specialized in ReadyToRun (R2R) images. Previously, the default comparers used reflection that R2R couldn't see ahead of time, causing callers to fall back to the JIT. R2R now generates a specialized helper in the image—mirroring the NativeAOT approach—and benchmarks show up to a 20× improvement for collections operations that rely on the default comparer.
+
+## VM improvements
+
+- **Cached interface dispatch on non-JIT platforms:** On platforms that lack JIT support, such as iOS, interface dispatch was falling back to an expensive generic fixup path. Cached dispatch yields up to 200x improvements in interface-heavy code on these targets.
+- **`Guid.NewGuid()` on Linux:** <xref:System.Guid.NewGuid?displayProperty=nameWithType> on Linux now uses the `getrandom()` syscall with batch caching instead of reading from `/dev/urandom`, yielding approximately 12% throughput improvement for GUID generation.
+
+## WebAssembly improvements
+
+Browser and WebAssembly support has several improvements:
+
+- **WebCIL payload loading:** The runtime can now load WebCIL payloads directly, improving compatibility with browser-based deployment scenarios.
+- **Better debugging symbols:** Symbol and stack trace quality for WebAssembly debugging has improved, making it easier to diagnose issues in browser-hosted .NET apps.
+- **`float[]`, `Span<float>`, and `ArraySegment<float>` marshaling:** `float[]`, `Span<float>`, and `ArraySegment<float>` are now marshaled more directly across JavaScript boundaries, reducing overhead for interop-heavy code.
+
+.NET includes improvements to CoreCLR-on-WebAssembly:
+
+- **WebCIL V1 is the default for CoreCLR WASM builds:** The shared WebCIL header gains a `TableBase` field (28 → 32 bytes). Both Mono and CoreCLR readers accept V0 and V1. Crossgen2's `WasmObjectWriter` produces V1 directly, and CoreCLR-flavored WASM SDK builds default `WasmWebcilVersion` to `V1`.
+- **Native re-link works for CoreCLR WASM apps:** A full Emscripten-based pipeline replaces the previous stub targets. Re-linking `dotnet.native.wasm` from the runtime pack and including custom native code via `NativeFileReference` now works.
+- **JavaScript minification in Release builds:** Browser CoreCLR Release builds ship minified JavaScript.
+- **NativeAOT publish for WASM no longer drops package satellites:** Satellite assemblies from NuGet packages are now passed to ILC and pruned from the publish output, fixing localization for AOT-published apps that depend on packages such as `System.CommandLine`.
+
+CoreCLR on WebAssembly now runs the libraries test suite end to end.
+
+## Platform support for more than 1024 CPUs
+
+The .NET runtime can now initialize on machines with more than 1024 logical processors. Previously, `sched_getaffinity` was called with the default `cpu_set_t` (capped at 1024), causing initialization to fail on high-core-count servers. The runtime now allocates the CPU set dynamically. The GC retains its 1024-heap limit, but the CPU count limit is removed.
+
+## In-process crash report logging
+
+A new in-process crash reporting mechanism captures diagnostic information from within the crashing process before it terminates. Previously, crash diagnostics were collected by an out-of-process monitor. While the out-of-process approach is safe, it can miss information that's only available inside the dying process. The new in-process path logs the managed stack trace, module list, and key runtime state to a well-known path before the process exits.
+
+This capability originated on mobile platforms and is now also available on Linux and macOS. When `DOTNET_DbgEnableMiniDump` isn't enabled, set `DOTNET_EnableCrashReport=1` or `DOTNET_EnableCrashReportOnly=1` to select the in-process reporter. Existing `createdump` behavior remains in place when minidumps are enabled.
+
+## NativeAOT: faster interface dispatch
+
+NativeAOT now uses a dispatch helper for interface method calls. Instead of a direct fat-pointer call sequence, the runtime routes interface dispatch through a shared helper that can be patched to the correct implementation after the call site warms up. This reduces the binary size of interface call sites and improves throughput on workloads with many interface method calls.
+
+Generic virtual method dispatch also uses the shared dispatch-cell infrastructure, which improves both monomorphic and polymorphic call performance. In addition, <xref:System.Reflection.Assembly.GetCallingAssembly?displayProperty=nameWithType> now works on NativeAOT when stack trace data is available.
+
+## SIMD lane construction and composition
+
+`System.Runtime.Intrinsics` now includes lane construction and composition APIs for hardware vector types. The new APIs let you construct a vector from individually specified lanes and extract or reorder lanes between vectors. This enables precise, portable control over SIMD vector element placement without falling back to platform-specific intrinsics.
+
+The new methods fall into a few families:
+
+- **Patterned construction:** `CreateGeometricSequence`, `CreateAlternatingSequence`, and `CreateHarmonicSequence` build a vector from a starting value and a rule.
+- **Interleave and de-interleave:** `Zip`, `ZipLower`/`ZipUpper`, `Unzip`, `UnzipEven`/`UnzipOdd`.
+- **Rearrange:** The `Concat` family (`ConcatLowerLower`, `ConcatLowerUpper`, `ConcatUpperLower`, `ConcatUpperUpper`) and `Reverse`.
+
+```csharp
+using System.Runtime.Intrinsics;
+
+// {1, 2, 4, 8} — each lane is the previous lane times two
+Vector128<int> powers = Vector128.CreateGeometricSequence(1, 2);
+
+// Interleave two vectors lane-by-lane
+(Vector128<int> lower, Vector128<int> upper) =
+    Vector128.Zip(Vector128.Create(1), Vector128.Create(2));
+```
+
+These APIs are available on `Vector128<T>`, `Vector256<T>`, `Vector512<T>`, `Vector64<T>`, and `Vector<T>`. They're building blocks for image processing, audio digital signal processing (DSP), and other SIMD-intensive workloads that need fine-grained control over vector element layout.
+
+## File locking on iOS and tvOS
+
+On iOS and tvOS, including simulators, CoreCLR now disables advisory file locking by default. A <xref:System.IO.FileStream> that acquired an advisory lock could cause the operating system to terminate an app when the app entered the background while it held the lock. As a result, <xref:System.IO.FileShare> restrictions are no longer enforced by those locks on iOS and tvOS, including between handles in the same process. Mac Catalyst and other platforms keep their existing defaults.
+
+If your app relies on `FileShare` enforcement and you accept the risk of suspension-related termination, restore file locking by using either of the following settings:
+
+- Set the `DOTNET_SYSTEM_IO_DISABLEFILELOCKING` environment variable to `0`.
+- Set the `System.IO.DisableFileLocking` runtime configuration property to `false`. For example, in the *runtimeconfig.json* file:
+
+  ```json
+  {
+    "configProperties": {
+      "System.IO.DisableFileLocking": false
+    }
+  }
+  ```
+
+## Reliability fixes
+
+The runtime includes fixes for the following issues:
+
+- On Linux, the SDK no longer crashes on Red Hat Enterprise Linux (RHEL) 8 on Arm64, and the runtime correctly traverses cgroup v2 memory limits at the root of the hierarchy.
+- Array marshalling to native code now produces correct values and avoids unexpected exceptions.
+- Sharing Unix named mutexes with older .NET processes no longer causes spurious abandoned-mutex errors.
+- On macOS, terminating a process tree no longer hangs.
+- Generic virtual method dispatch no longer hangs after repeated <xref:System.Runtime.Loader.AssemblyLoadContext> unloads.
+- <xref:System.Collections.Concurrent.ConcurrentQueue`1.TryDequeue*> no longer spuriously reports an empty queue while a segment freezes during growth. <xref:System.Collections.Concurrent.ConcurrentQueue`1.TryPeek*> has the same reliability fix.
+- On Windows, garbage collection works correctly on machines with multiple CPU groups.
+
+## Runtime diagnostics
+
+The async profiler now instruments both runtime-async methods and compiler-generated async state-machine methods, so tools receive one consistent event model regardless of async implementation style. The runtime also adds improved interpreter perf-map logging support, and fixes parsing of `CORECLR_NOTIFICATION_PROFILERS` lists that don't end with a semicolon.
+
+## See also
+
+- [What's new in .NET libraries for .NET 11](libraries.md)
+- [What's new in the SDK for .NET 11](sdk.md)
+- [Breaking changes in .NET 11](../../compatibility/11.md)

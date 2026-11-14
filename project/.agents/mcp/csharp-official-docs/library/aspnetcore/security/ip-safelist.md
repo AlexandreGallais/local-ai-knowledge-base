@@ -1,15 +1,12 @@
 ---
-title: "Client IP safelist for ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/ip-safelist.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Client IP safelist for ASP.NET Core
+description: Learn how to write middleware or action filters to validate remote IP addresses against a list of approved IP addresses.
+monikerRange: '>= aspnetcore-2.1'
+ms.date: 03/12/2020
 ---
-
 # Client IP safelist for ASP.NET Core
 
-By Damien Bowden and Tom Dykstra
+By [Damien Bowden](https://github.com/damienbod) and [Tom Dykstra](https://github.com/tdykstra)
 
 This article shows three ways to implement an IP address safelist (also known as an allow list) in an ASP.NET Core app. An accompanying sample app demonstrates all three approaches. You can use:
 
@@ -24,20 +21,16 @@ In each case, a string containing approved client IP addresses is stored in an a
 
 Access is allowed if the array contains the IP address. Otherwise, an HTTP 403 Forbidden status code is returned.
 
-View or download sample code (how to download)
+[View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/security/ip-safelist/samples) ([how to download](../fundamentals/index.md#how-to-download-a-sample))
 
 ## IP address safelist
 
 In the sample app, the IP address safelist is:
 
 * Defined by the `AdminSafeList` property in the `appsettings.json` file.
-* A semicolon-delimited string that may contain both Internet Protocol version 4 (IPv4) and Internet Protocol version 6 (IPv6) addresses.
+* A semicolon-delimited string that may contain both [Internet Protocol version 4 (IPv4)](https://wikipedia.org/wiki/IPv4) and [Internet Protocol version 6 (IPv6)](https://wikipedia.org/wiki/IPv6) addresses.
 
-```json
-{
-  "AdminSafeList": "127.0.0.1;192.168.1.5;::1",
-  "Logging": {
-```
+[!code-json[](ip-safelist/samples/3.x/ClientIpAspNetCore/appsettings.json?range=1-3&highlight=2)]
 
 In the preceding example, the IPv4 addresses of `127.0.0.1` and `192.168.1.5` and the IPv6 loopback address of `::1` (compressed format for `0:0:0:0:0:0:0:1`) are allowed.
 
@@ -45,138 +38,35 @@ In the preceding example, the IPv4 addresses of `127.0.0.1` and `192.168.1.5` an
 
 The `Startup.Configure` method adds the custom `AdminSafeListMiddleware` middleware type to the app's request pipeline. The safelist is retrieved with the .NET configuration provider and is passed as a constructor parameter.
 
-```csharp
-app.UseMiddleware<AdminSafeListMiddleware>(Configuration["AdminSafeList"]);
-```
+[!code-csharp[](ip-safelist/samples/3.x/ClientIpAspNetCore/Startup.cs?name=snippet_ConfigureAddMiddleware)]
 
 The middleware parses the string into an array and searches for the remote IP address in the array. If the remote IP address isn't found, the middleware returns HTTP 403 Forbidden. This validation process is bypassed for HTTP GET requests.
 
-```csharp
-public class AdminSafeListMiddleware
-{
-    private readonly RequestDelegate _next;
-    private readonly ILogger<AdminSafeListMiddleware> _logger;
-    private readonly byte[][] _safelist;
-
-    public AdminSafeListMiddleware(
-        RequestDelegate next,
-        ILogger<AdminSafeListMiddleware> logger,
-        string safelist)
-    {
-        var ips = safelist.Split(';');
-        _safelist = new byte[ips.Length][];
-        for (var i = 0; i < ips.Length; i++)
-        {
-            _safelist[i] = IPAddress.Parse(ips[i]).GetAddressBytes();
-        }
-
-        _next = next;
-        _logger = logger;
-    }
-
-    public async Task Invoke(HttpContext context)
-    {
-        if (context.Request.Method != HttpMethod.Get.Method)
-        {
-            var remoteIp = context.Connection.RemoteIpAddress;
-            _logger.LogDebug("Request from Remote IP address: {RemoteIp}", remoteIp);
-
-            var bytes = remoteIp.GetAddressBytes();
-            var badIp = true;
-            foreach (var address in _safelist)
-            {
-                if (address.SequenceEqual(bytes))
-                {
-                    badIp = false;
-                    break;
-                }
-            }
-
-            if (badIp)
-            {
-                _logger.LogWarning(
-                    "Forbidden Request from Remote IP address: {RemoteIp}", remoteIp);
-                context.Response.StatusCode = (int) HttpStatusCode.Forbidden;
-                return;
-            }
-        }
-
-        await _next.Invoke(context);
-    }
-}
-```
+[!code-csharp[](ip-safelist/samples/Shared/ClientIpSafelistComponents/Middlewares/AdminSafeListMiddleware.cs?name=snippet_ClassOnly)]
 
 ## Action filter
 
 If you want safelist-driven access control for specific MVC controllers or action methods, use an action filter. For example:
 
-```csharp
-public class ClientIpCheckActionFilter : ActionFilterAttribute
-{
-    private readonly ILogger _logger;
-    private readonly string _safelist;
-
-    public ClientIpCheckActionFilter(string safelist, ILogger logger)
-    {
-        _safelist = safelist;
-        _logger = logger;
-    }
-
-    public override void OnActionExecuting(ActionExecutingContext context)
-    {
-        var remoteIp = context.HttpContext.Connection.RemoteIpAddress;
-        _logger.LogDebug("Remote IpAddress: {RemoteIp}", remoteIp);
-        var ip = _safelist.Split(';');
-        var badIp = true;
-        
-        if (remoteIp.IsIPv4MappedToIPv6)
-        {
-            remoteIp = remoteIp.MapToIPv4();
-        }
-        
-        foreach (var address in ip)
-        {
-            var testIp = IPAddress.Parse(address);
-            
-            if (testIp.Equals(remoteIp))
-            {
-                badIp = false;
-                break;
-            }
-        }
-
-        if (badIp)
-        {
-            _logger.LogWarning("Forbidden Request from IP: {RemoteIp}", remoteIp);
-            context.Result = new StatusCodeResult(StatusCodes.Status403Forbidden);
-            return;
-        }
-
-        base.OnActionExecuting(context);
-    }
-}
-```
+[!code-csharp[](ip-safelist/samples/Shared/ClientIpSafelistComponents/Filters/ClientIpCheckActionFilter.cs?name=snippet_ClassOnly)]
 
 In `Startup.ConfigureServices`, add the action filter to the MVC filters collection. In the following example, a `ClientIpCheckActionFilter` action filter is added. A safelist and a console logger instance are passed as constructor parameters.
 
-```csharp
-services.AddScoped<ClientIpCheckActionFilter>(container =>
-{
-    var loggerFactory = container.GetRequiredService<ILoggerFactory>();
-    var logger = loggerFactory.CreateLogger<ClientIpCheckActionFilter>();
+:::moniker range=">= aspnetcore-3.0"
 
-    return new ClientIpCheckActionFilter(
-        Configuration["AdminSafeList"], logger);
-});
-```
+[!code-csharp[](ip-safelist/samples/3.x/ClientIpAspNetCore/Startup.cs?name=snippet_ConfigureServicesActionFilter)]
 
-The action filter can then be applied to a controller or action method with the [ServiceFilter] attribute:
+:::moniker-end
 
-```csharp
-[ServiceFilter(typeof(ClientIpCheckActionFilter))]
-[HttpGet]
-public IEnumerable<string> Get()
-```
+:::moniker range="<= aspnetcore-2.2"
+
+[!code-csharp[](ip-safelist/samples/2.x/ClientIpAspNetCore/Startup.cs?name=snippet_ConfigureServicesActionFilter)]
+
+:::moniker-end
+
+The action filter can then be applied to a controller or action method with the [[ServiceFilter]](xref:Microsoft.AspNetCore.Mvc.ServiceFilterAttribute) attribute:
+
+[!code-csharp[](ip-safelist/samples/3.x/ClientIpAspNetCore/Controllers/ValuesController.cs?name=snippet_ActionFilter&highlight=1)]
 
 In the sample app, the action filter is applied to the controller's `Get` action method. When you test the app by sending:
 
@@ -195,79 +85,21 @@ In the sample app, the action filter is applied to the controller's `Get` action
 
 If you want safelist-driven access control for a Razor Pages app, use a Razor Pages filter. For example:
 
-```csharp
-public class ClientIpCheckPageFilter : IPageFilter
-{
-    private readonly ILogger _logger;
-    private readonly IPAddress[] _safelist;
-
-    public ClientIpCheckPageFilter(
-        string safelist,
-        ILogger logger)
-    {
-        var ips = safelist.Split(';');
-        _safelist = new IPAddress[ips.Length];
-        for (var i = 0; i < ips.Length; i++)
-        {
-            _safelist[i] = IPAddress.Parse(ips[i]);
-        }
-
-        _logger = logger;
-    }
-
-    public void OnPageHandlerExecuting(PageHandlerExecutingContext context)
-    {
-        var remoteIp = context.HttpContext.Connection.RemoteIpAddress;
-        if (remoteIp.IsIPv4MappedToIPv6)
-        {
-            remoteIp = remoteIp.MapToIPv4();
-        }
-        _logger.LogDebug(
-            "Remote IpAddress: {RemoteIp}", remoteIp);
-
-        var badIp = true;
-        foreach (var testIp in _safelist)
-        {
-            if (testIp.Equals(remoteIp))
-            {
-                badIp = false;
-                break;
-            }
-        }
-
-        if (badIp)
-        {
-            _logger.LogWarning(
-                "Forbidden Request from Remote IP address: {RemoteIp}", remoteIp);
-            context.Result = new StatusCodeResult(StatusCodes.Status403Forbidden);
-            return;
-        }
-    }
-
-    public void OnPageHandlerExecuted(PageHandlerExecutedContext context)
-    {
-    }
-
-    public void OnPageHandlerSelected(PageHandlerSelectedContext context)
-    {
-    }
-}
-```
+[!code-csharp[](ip-safelist/samples/Shared/ClientIpSafelistComponents/Filters/ClientIpCheckPageFilter.cs?name=snippet_ClassOnly)]
 
 In `Startup.ConfigureServices`, enable the Razor Pages filter by adding it to the MVC filters collection. In the following example, a `ClientIpCheckPageFilter` Razor Pages filter is added. A safelist and a console logger instance are passed as constructor parameters.
 
-```csharp
-services.AddRazorPages()
-    .AddMvcOptions(options =>
-    {
-        var logger = LoggerFactory.Create(builder => builder.AddConsole())
-                        .CreateLogger<ClientIpCheckPageFilter>();
-        var filter = new ClientIpCheckPageFilter(
-            Configuration["AdminSafeList"], logger);
-        
-        options.Filters.Add(filter);
-    });
-```
+:::moniker range=">= aspnetcore-3.0"
+
+[!code-csharp[](ip-safelist/samples/3.x/ClientIpAspNetCore/Startup.cs?name=snippet_ConfigureServicesPageFilter)]
+
+:::moniker-end
+
+:::moniker range="<= aspnetcore-2.2"
+
+[!code-csharp[](ip-safelist/samples/2.x/ClientIpAspNetCore/Startup.cs?name=snippet_ConfigureServicesPageFilter)]
+
+:::moniker-end
 
 When the sample app's *Index* Razor page is requested, the Razor Pages filter validates the client IP address. The filter produces a variation of the following console output:
 
@@ -278,6 +110,6 @@ dbug: ClientIpSafelistComponents.Filters.ClientIpCheckPageFilter[0]
 
 ## Related content
 
-* ASP.NET Core middleware
-* Action filters
-* Filter methods for Razor Pages in ASP.NET Core
+* [ASP.NET Core middleware](../fundamentals/middleware/index.md)
+* [Action filters](../mvc/controllers/filters.md#action-filters)
+* [Filter methods for Razor Pages in ASP.NET Core](../razor-pages/filter.md)

@@ -1,17 +1,8 @@
----
-title: "MinimalAPIValidationRecordTypes"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-10/includes/MinimalAPIValidationRecordTypes.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# MinimalAPIValidationRecordTypes
-
 #### Validation with record types
+<!-- https://github.com/dotnet/aspnetcore/pull/61193 -->
+<!-- https://github.com/dotnet/aspnetcore/pull/61402 -->
 
-Minimal APIs also support validation with C# record types. Record types can be validated using attributes from the `System.ComponentModel.DataAnnotations` namespace, similar to classes. For example:
+Minimal APIs also support validation with C# record types. Record types can be validated using attributes from the <xref:System.ComponentModel.DataAnnotations?displayProperty=fullName> namespace, similar to classes. For example:
 
 ```csharp
 public record Product(

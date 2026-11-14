@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugAssembly2::IsFullyTrusted Method"
 title: "ICorDebugAssembly2::IsFullyTrusted Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugassembly2-isfullytrusted-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugAssembly2.IsFullyTrusted"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugAssembly2::IsFullyTrusted"
+helpviewer_keywords:
+  - "ICorDebugAssembly2::IsFullyTrusted method [.NET debugging]"
+  - "IsFullyTrusted method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugAssembly2::IsFullyTrusted Method
 
 Gets a value that indicates whether the assembly has been granted full trust by the runtime security system.
@@ -30,7 +39,7 @@ This method returns an HRESULT of CORDBG_E_NOTREADY if the security policy for t
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

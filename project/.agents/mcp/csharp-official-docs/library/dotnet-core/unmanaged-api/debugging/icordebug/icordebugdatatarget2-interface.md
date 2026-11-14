@@ -1,34 +1,30 @@
 ---
+description: "Learn more about: ICorDebugDataTarget2 Interface"
 title: "ICorDebugDataTarget2 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugdatatarget2-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugDataTarget2 Interface
 
-Logically extends the ICorDebugDataTargetinterface.
+Logically extends the [ICorDebugDataTarget](icordebugdatatarget-interface.md)interface.
 
 ## Methods
 
 |Method|Description|
 |------------|-----------------|
-|CreateVirtualUnwinder Method|Creates a new stack unwinder that starts unwinding from an initial context (which isn't necessarily the leaf of a thread).|
-|EnumerateThreadIDs Method|Returns a list of active thread IDs.|
-|GetImageFromPointer Method|Returns the module base address and size from an address in that module.|
-|GetImageLocation Method|Returns the path of a module from the module's base address.|
-|GetSymbolProviderForImage Method|Returns the symbol-provider for a module from the base address of that module.|
+|[CreateVirtualUnwinder Method](icordebugdatatarget2-createvirtualunwinder-method.md)|Creates a new stack unwinder that starts unwinding from an initial context (which isn't necessarily the leaf of a thread).|
+|[EnumerateThreadIDs Method](icordebugdatatarget2-enumeratethreadids-method.md)|Returns a list of active thread IDs.|
+|[GetImageFromPointer Method](icordebugdatatarget2-getimagefrompointer-method.md)|Returns the module base address and size from an address in that module.|
+|[GetImageLocation Method](icordebugdatatarget2-getimagelocation-method.md)|Returns the path of a module from the module's base address.|
+|[GetSymbolProviderForImage Method](icordebugdatatarget2-getsymbolproviderforimage-method.md)|Returns the symbol-provider for a module from the base address of that module.|
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This interface is available with .NET Native only. If you implement this interface for ICorDebug scenarios outside of .NET Native, the common language runtime will ignore this interface.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

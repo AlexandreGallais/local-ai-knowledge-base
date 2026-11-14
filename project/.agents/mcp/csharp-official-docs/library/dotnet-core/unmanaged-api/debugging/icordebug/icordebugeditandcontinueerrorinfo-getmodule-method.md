@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugEditAndContinueErrorInfo::GetModule Method"
 title: "ICorDebugEditAndContinueErrorInfo::GetModule Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugeditandcontinueerrorinfo-getmodule-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugEditAndContinueErrorInfo.GetModule"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugEditAndContinueErrorInfo::GetModule"
+helpviewer_keywords:
+  - "GetModule method, ICorDebugEditAndContinueErrorInfo interface [.NET debugging]"
+  - "ICorDebugEditAndContinueErrorInfo::GetModule method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugEditAndContinueErrorInfo::GetModule Method
 
 `GetModule` is obsolete. Do not call this method.

@@ -1,12 +1,3 @@
----
-title: "Binding dynamic text, properties and attributes"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/templates/binding.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Binding dynamic text, properties and attributes
 
 In Angular, a **binding** creates a dynamic connection between a component's template and its data. This connection ensures that changes to the component's data automatically update the rendered template.
@@ -34,7 +25,7 @@ In this example, when the snippet is rendered to the page, Angular will replace 
 <p>Your color preference is dark.</p>
 ```
 
-Bindings that change over time should read values from signals. Angular tracks the signals read in the template, and updates the rendered page when those signal values change.
+Bindings that change over time should read values from [signals](/guide/signals). Angular tracks the signals read in the template, and updates the rendered page when those signal values change.
 
 ```angular-ts
 @Component({
@@ -52,7 +43,7 @@ export class App {
 }
 ```
 
-For more details, see the Signals guide.
+For more details, see the [Signals guide](/guide/signals).
 
 Continuing the theme example, if a user clicks on a button that updates the `theme` signal to `'light'` after the page loads, the page updates accordingly to:
 
@@ -69,11 +60,11 @@ Expression values are converted to a string. `null` and `undefined` render as an
 
 Angular supports binding dynamic values into object properties and HTML attributes with square brackets.
 
-You can bind to properties on an HTML element's DOM instance, a component instance, or a directive instance.
+You can bind to properties on an HTML element's DOM instance, a [component](/guide/components) instance, or a [directive](/guide/directives) instance.
 
 ### Native element properties
 
-Every HTML element has a corresponding DOM representation. For example, each `` HTML element corresponds to an instance of `HTMLButtonElement` in the DOM. In Angular, you use property bindings to set values directly to the DOM representation of the element.
+Every HTML element has a corresponding DOM representation. For example, each `<button>` HTML element corresponds to an instance of `HTMLButtonElement` in the DOM. In Angular, you use property bindings to set values directly to the DOM representation of the element.
 
 ```angular-html
 <!-- Bind the `disabled` property on the button element's DOM object -->
@@ -104,12 +95,13 @@ You can bind to directive properties as well.
 
 When you need to set HTML attributes that do not have corresponding DOM properties, such as SVG attributes, you can bind attributes to elements in your template with the `attr.` prefix.
 
+<!-- prettier-ignore -->
 ```angular-html
 <!-- Bind the `role` attribute on the `<ul>` element to the component's `listRole` property. -->
 <ul [attr.role]="listRole()">
 ```
 
-In this example, every time `listRole` changes, Angular automatically sets the `role` attribute of the `` element by calling `setAttribute`.
+In this example, every time `listRole` changes, Angular automatically sets the `role` attribute of the `<ul>` element by calling `setAttribute`.
 
 If the value of an attribute binding is `null` or `undefined`, Angular removes the attribute by calling `removeAttribute`.
 
@@ -128,8 +120,9 @@ Angular supports additional features for binding CSS classes and CSS style prope
 
 ### CSS classes
 
-You can create a CSS class binding to conditionally add or remove a CSS class on an element based on whether the bound value is truthy or falsy.
+You can create a CSS class binding to conditionally add or remove a CSS class on an element based on whether the bound value is [truthy or falsy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy).
 
+<!-- prettier-ignore -->
 ```angular-html
 <!-- When `isExpanded` is truthy, add the `expanded` CSS class. -->
 <ul [class.expanded]="isExpanded()">
@@ -164,6 +157,7 @@ export class UserProfile {
 
 The above example renders the following DOM:
 
+<!-- prettier-ignore -->
 ```angular-html
 <ul class="full-width outlined"> ... </ul>
 <section class="expandable elevated"> ... </section>
@@ -187,6 +181,7 @@ export class Listbox {
 
 In the example above, Angular renders the `ul` element with all three CSS classes.
 
+<!-- prettier-ignore -->
 ```angular-html
 <ul class="list box expanded">
 ```
@@ -197,12 +192,13 @@ When binding `class` to an array or an object, Angular compares the previous val
 
 If an element has multiple bindings for the same CSS class, Angular resolves collisions by following its style precedence order.
 
-NOTE: Class bindings do not support space-separated class names in a single key. They also don't support mutations on objects as the reference of the binding remains the same. If you need one or the other, use the ngClass directive.
+NOTE: Class bindings do not support space-separated class names in a single key. They also don't support mutations on objects as the reference of the binding remains the same. If you need one or the other, use the [ngClass](/api/common/NgClass) directive.
 
 ### CSS style properties
 
 You can also bind to CSS style properties directly on an element.
 
+<!-- prettier-ignore -->
 ```angular-html
 <!-- Set the CSS `display` property based on the `isExpanded` property. -->
 <section [style.display]="isExpanded() ? 'block' : 'none'">
@@ -210,6 +206,7 @@ You can also bind to CSS style properties directly on an element.
 
 You can further specify units for CSS properties that accept units.
 
+<!-- prettier-ignore -->
 ```angular-html
 <!-- Set the CSS `height` property to a pixel value based on the `sectionHeightInPixels` property. -->
 <section [style.height.px]="sectionHeightInPixels()">
@@ -241,6 +238,7 @@ export class UserProfile {
 
 The above example renders the following DOM.
 
+<!-- prettier-ignore -->
 ```angular-html
 <ul style="display: flex; padding: 8px"> ... </ul>
 <section style="border: 1px solid black; font-weight: bold"> ... </section>
@@ -262,4 +260,4 @@ Angular supports binding string values to ARIA attributes.
 
 Angular writes the string value to the element’s `aria-label` attribute and removes it when the bound value is `null` or `undefined`.
 
-Some ARIA features expose DOM properties or directive inputs that accept structured values (such as element references). Use standard property bindings for those cases. See the accessibility guide for examples and additional guidance.
+Some ARIA features expose DOM properties or directive inputs that accept structured values (such as element references). Use standard property bindings for those cases. See the [accessibility guide](/best-practices/a11y#aria-attributes-and-properties) for examples and additional guidance.

@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugAppDomain3 Interface"
 title: "ICorDebugAppDomain3 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugappdomain3-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugAppDomain3"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugAppDomain3"
+helpviewer_keywords:
+  - "ICorDebugAppDomain3 interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugAppDomain3 Interface
 
 Provides methods to retrieve information about the managed representations of Windows Runtime types currently loaded in an application domain. This interface is an extension of the ICorDebugAppDomain and ICorDebugAppDomain2 interfaces.
@@ -15,8 +23,8 @@ Provides methods to retrieve information about the managed representations of Wi
 
 |Method|Description|
 |------------|-----------------|
-|ICorDebugAppDomain3::GetCachedWinRTTypes|Gets an enumerator for all cached Windows Runtime types.|
-|ICorDebugAppDomain3::GetCachedWinRTTypesForIIDs|Gets an enumerator for cached Windows Runtime types in an application domain based on their interface identifiers.|
+|[ICorDebugAppDomain3::GetCachedWinRTTypes](icordebugappdomain3-getcachedwinrttypes-method.md)|Gets an enumerator for all cached Windows Runtime types.|
+|[ICorDebugAppDomain3::GetCachedWinRTTypesForIIDs](icordebugappdomain3-getcachedwinrttypesforiids-method.md)|Gets an enumerator for cached Windows Runtime types in an application domain based on their interface identifiers.|
 
 ## Remarks
 
@@ -24,7 +32,7 @@ This interface is meant to be used by a debugger in conjunction with a function 
 
 To retrieve an instance of this interface, run `QueryInterface` on an instance of the ICorDebugAppDomain or ICorDebugAppDomain2 interface.
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements

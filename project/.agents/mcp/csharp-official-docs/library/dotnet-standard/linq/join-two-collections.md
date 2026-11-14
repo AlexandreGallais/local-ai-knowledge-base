@@ -1,31 +1,32 @@
 ---
-title: "How to join two collections - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/join-two-collections.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to join two collections - LINQ to XML
+description: An XSD file can establish relationships in an XML file, to enable joining of elements to create new types of elements. This article provides an example for C# and Visual Basic that joins elements and creates a new XML document.
+ms.date: 07/20/2015
+ms.topic: how-to
+dev_langs:
+  - "csharp"
+  - "vb"
 ---
 
 # How to join two collections (LINQ to XML)
 
 An XSD file can establish relationships in an XML file, to enable joining of elements to create new types of elements. This article provides an example for C# and Visual Basic that joins elements and creates a new XML document.
 
-An element or attribute in an XML document can sometimes refer to another element or attribute. For example, XML document Sample XML file: Customers and orders contains a list of customers and a list of orders. Every `Customer` element has a `CustomerID` attribute, and every `Order` element contains a `CustomerID` element. The `CustomerID` element value in an `Order` element refers to the `Customer` element that has a matching `CustomerID` attribute value.
+An element or attribute in an XML document can sometimes refer to another element or attribute. For example, XML document [Sample XML file: Customers and orders](sample-xml-file-customers-orders.md) contains a list of customers and a list of orders. Every `Customer` element has a `CustomerID` attribute, and every `Order` element contains a `CustomerID` element. The `CustomerID` element value in an `Order` element refers to the `Customer` element that has a matching `CustomerID` attribute value.
 
-The article Sample XSD file: Customers and orders contains an XSD that can be used to validate the `Customers and orders` document. It uses the `xs:key` and `xs:keyref` features of XSD to establish that the `CustomerID` attribute of the `Customer` element is a key, and to establish a relationship between the key and the `CustomerID` element of the  `Order`elements.
+The article [Sample XSD file: Customers and orders](sample-xsd-file-customers-orders.md) contains an XSD that can be used to validate the `Customers and orders` document. It uses the `xs:key` and `xs:keyref` features of XSD to establish that the `CustomerID` attribute of the `Customer` element is a key, and to establish a relationship between the key and the `CustomerID` element of the  `Order`elements.
 
 With LINQ to XML, you can take advantage of this relationship by using the `join` clause to join customer information to order information.
 
-For more detailed information about `join`, see Join Operations (C#) and Join Operations (Visual Basic).
-> **Note:**
+For more detailed information about `join`, see [Join Operations (C#)](../../csharp/linq/standard-query-operators/join-operations.md) and [Join Operations (Visual Basic)](../../visual-basic/programming-guide/concepts/linq/join-operations.md).
+> [!NOTE]
 > Joins are done using linear searches. There are no indexes to boost search performance.
 
 ## Example: Create a new XML document that has `Customer` and `Order` elements joined
 
-The following example generates a new XML document that joins the `Customer` elements of Sample XML file: Customers and orders to the `Order` elements, and includes the `CompanyName` element in the orders.
+The following example generates a new XML document that joins the `Customer` elements of [Sample XML file: Customers and orders](sample-xml-file-customers-orders.md) to the `Order` elements, and includes the `CompanyName` element in the orders.
 
-Before executing the query, the example validates that the document complies with the schema in Sample XSD file: Customers and orders. This ensures that the join clause will work.
+Before executing the query, the example validates that the document complies with the schema in [Sample XSD file: Customers and orders](sample-xsd-file-customers-orders.md). This ensures that the join clause will work.
 
 The query selects only the orders for customers with a `CustomerID` greater than "K". It projects  new `Order` elements that contains the customer information within each order.
 
@@ -105,7 +106,7 @@ Public Class Program
                     <%= From c In custOrd.<Customers>.<Customer> _
                         Join o In custOrd.<Orders>.<Order> _
                         On c.@CustomerID Equals o.<CustomerID>.Value _
-                        Where user@example.com("K") > 0 _
+                        Where c.@CustomerID.CompareTo("K") > 0 _
                         Select _
                         <Order>
                             <CustomerID><%= c.@CustomerID %></CustomerID>

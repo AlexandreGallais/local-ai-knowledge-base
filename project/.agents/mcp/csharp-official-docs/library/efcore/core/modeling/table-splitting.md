@@ -1,10 +1,9 @@
 ---
-title: "Advanced table mapping - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/modeling/table-splitting.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Advanced table mapping - EF Core
+description: How to configure table splitting and entity splitting using Entity Framework Core.
+author: AndriySvyryd
+ms.date: 10/10/2022
+uid: core/modeling/table-splitting
 ---
 
 # Advanced table mapping
@@ -25,111 +24,40 @@ A common scenario for table splitting is using only a subset of the columns in t
 
 In this example `Order` represents a subset of `DetailedOrder`.
 
-```csharp
-public class Order
-{
-    public int Id { get; set; }
-    public OrderStatus? Status { get; set; }
-    public DetailedOrder DetailedOrder { get; set; }
-}
-```
+[!code-csharp[Order](../../../samples/core/Modeling/TableSplitting/Order.cs?name=Order)]
 
-```csharp
-public class DetailedOrder
-{
-    public int Id { get; set; }
-    public OrderStatus? Status { get; set; }
-    public string BillingAddress { get; set; }
-    public string ShippingAddress { get; set; }
-    public byte[] Version { get; set; }
-}
-```
+[!code-csharp[DetailedOrder](../../../samples/core/Modeling/TableSplitting/DetailedOrder.cs?name=DetailedOrder)]
 
 In addition to the required configuration we call `Property(o => o.Status).HasColumnName("Status")` to map `DetailedOrder.Status` to the same column as `Order.Status`.
 
-```csharp
-modelBuilder.Entity<DetailedOrder>(
-    dob =>
-    {
-        dob.ToTable("Orders");
-        dob.Property(o => o.Status).HasColumnName("Status");
-    });
+[!code-csharp[TableSplittingConfiguration](../../../samples/core/Modeling/TableSplitting/TableSplittingContext.cs?name=TableSplitting)]
 
-modelBuilder.Entity<Order>(
-    ob =>
-    {
-        ob.ToTable("Orders");
-        ob.Property(o => o.Status).HasColumnName("Status");
-        ob.HasOne(o => o.DetailedOrder).WithOne()
-            .HasForeignKey<DetailedOrder>(o => o.Id);
-        ob.Navigation(o => o.DetailedOrder).IsRequired();
-    });
-```
-
-> **Tip:**
-> See the full sample project for more context.
+> [!TIP]
+> See the [full sample project](https://github.com/dotnet/EntityFramework.Docs/tree/main/samples/core/Modeling/TableSplitting) for more context.
 
 ### Usage
 
 Saving and querying entities using table splitting is done in the same way as other entities:
 
-```csharp
-using (var context = new TableSplittingContext())
-{
-    await context.Database.EnsureDeletedAsync();
-    await context.Database.EnsureCreatedAsync();
-
-    context.Add(
-        new Order
-        {
-            Status = OrderStatus.Pending,
-            DetailedOrder = new DetailedOrder
-            {
-                Status = OrderStatus.Pending,
-                ShippingAddress = "221 B Baker St, London",
-                BillingAddress = "11 Wall Street, New York"
-            }
-        });
-
-    await context.SaveChangesAsync();
-}
-
-using (var context = new TableSplittingContext())
-{
-    var pendingCount = await context.Orders.CountAsync(o => o.Status == OrderStatus.Pending);
-    Console.WriteLine($"Current number of pending orders: {pendingCount}");
-}
-
-using (var context = new TableSplittingContext())
-{
-    var order = await context.DetailedOrders.FirstAsync(o => o.Status == OrderStatus.Pending);
-    Console.WriteLine($"First pending order will ship to: {order.ShippingAddress}");
-}
-```
+[!code-csharp[Usage](../../../samples/core/Modeling/TableSplitting/Program.cs?name=Usage)]
 
 ### Optional dependent entity
 
 If all of the columns used by a dependent entity are `NULL` in the database, then no instance for it will be created when queried. This allows modeling an optional dependent entity, where the relationship property on the principal would be null. Note that this would also happen if all of the dependent's properties are optional and set to `null`, which might not be expected.
 
-However, the additional check can impact query performance. In addition, if the dependent entity type has dependents of its own, then determining whether an instance should be created becomes non-trivial. To avoid these issues the dependent entity type can be marked as required, see Required one-to-one dependents for more information.
+However, the additional check can impact query performance. In addition, if the dependent entity type has dependents of its own, then determining whether an instance should be created becomes non-trivial. To avoid these issues the dependent entity type can be marked as required, see [Required one-to-one dependents](xref:core/modeling/relationships/navigations#required-navigations) for more information.
 
 ### Concurrency tokens
 
 If any of the entity types sharing a table has a concurrency token then it must be included in all other entity types as well. This is necessary in order to avoid a stale concurrency token value when only one of the entities mapped to the same table is updated.
 
-To avoid exposing the concurrency token to the consuming code, it's possible the create one as a shadow property:
+To avoid exposing the concurrency token to the consuming code, it's possible the create one as a [shadow property](xref:core/modeling/shadow-properties):
 
-```csharp
-modelBuilder.Entity<Order>()
-    .Property<byte[]>("Version").IsRowVersion().HasColumnName("Version");
-
-modelBuilder.Entity<DetailedOrder>()
-    .Property(o => o.Version).IsRowVersion().HasColumnName("Version");
-```
+[!code-csharp[TableSplittingConfiguration](../../../samples/core/Modeling/TableSplitting/TableSplittingContext.cs?name=ConcurrencyToken&highlight=2)]
 
 ### Inheritance
 
-It's recommended to read the dedicated page on inheritance before continuing with this section.
+It's recommended to read [the dedicated page on inheritance](xref:core/modeling/inheritance) before continuing with this section.
 
 The dependent types using table splitting can have an inheritance hierarchy, but there are some limitations:
 
@@ -178,69 +106,72 @@ CREATE TABLE [Addresses] (
 
 Each of these tables would typically be mapped to their own entity type, with relationships between the types. However, if all three tables are always used together, then it can be more convenient to map them all to a single entity type. For example:
 
-```csharp
-public class Customer
-{
-    public Customer(string name, string street, string city, string? postCode, string country)
+<!--
+    public class Customer
     {
-        Name = name;
-        Street = street;
-        City = city;
-        PostCode = postCode;
-        Country = country;
-    }
+        public Customer(string name, string street, string city, string? postCode, string country)
+        {
+            Name = name;
+            Street = street;
+            City = city;
+            PostCode = postCode;
+            Country = country;
+        }
 
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string? PhoneNumber { get; set; }
-    public string Street { get; set; }
-    public string City { get; set; }
-    public string? PostCode { get; set; }
-    public string Country { get; set; }
-}
-```
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string Street { get; set; }
+        public string City { get; set; }
+        public string? PostCode { get; set; }
+        public string Country { get; set; }
+    }
+-->
+[!code-csharp[CombinedCustomer](../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=CombinedCustomer)]
 
 This is achieved in EF7 by calling `SplitToTable` for each split in the entity type. For example, the following code splits the `Customer` entity type to the `Customers`, `PhoneNumbers`, and `Addresses` tables shown above:
 
-```csharp
-modelBuilder.Entity<Customer>(
-    entityBuilder =>
-    {
-        entityBuilder
-            .ToTable("Customers")
-            .SplitToTable(
-                "PhoneNumbers",
-                tableBuilder =>
+<!--
+            modelBuilder.Entity<Customer>(
+                entityBuilder =>
                 {
-                    tableBuilder.Property(customer => customer.Id).HasColumnName("CustomerId");
-                    tableBuilder.Property(customer => customer.PhoneNumber);
-                })
-            .SplitToTable(
-                "Addresses",
-                tableBuilder =>
-                {
-                    tableBuilder.Property(customer => customer.Id).HasColumnName("CustomerId");
-                    tableBuilder.Property(customer => customer.Street);
-                    tableBuilder.Property(customer => customer.City);
-                    tableBuilder.Property(customer => customer.PostCode);
-                    tableBuilder.Property(customer => customer.Country);
+                    entityBuilder
+                        .ToTable("Customers")
+                        .SplitToTable(
+                            "PhoneNumbers",
+                            tableBuilder =>
+                            {
+                                tableBuilder.Property(customer => customer.Id).HasColumnName("CustomerId");
+                                tableBuilder.Property(customer => customer.PhoneNumber);
+                            })
+                        .SplitToTable(
+                            "Addresses",
+                            tableBuilder =>
+                            {
+                                tableBuilder.Property(customer => customer.Id).HasColumnName("CustomerId");
+                                tableBuilder.Property(customer => customer.Street);
+                                tableBuilder.Property(customer => customer.City);
+                                tableBuilder.Property(customer => customer.PostCode);
+                                tableBuilder.Property(customer => customer.Country);
+                            });
                 });
-    });
-```
+-->
+[!code-csharp[EntitySplitting](../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=EntitySplitting)]
 
-Notice also that, if necessary, different column names can be specified for each of the tables. To configure the column name for the main table see Table-specific facet configuration.
+Notice also that, if necessary, different column names can be specified for each of the tables. To configure the column name for the main table see [Table-specific facet configuration](#table-specific-facet-configuration).
 
 ### Configuring the linking foreign key
 
-The FK linking the mapped tables is targeting the same properties on which it is declared. Normally it wouldn't be created in the database, as it would be redundant. But there's an exception for when the entity type is mapped to more than one table. To change its facets you can use the relationship configuration Fluent API:
+The FK linking the mapped tables is targeting the same properties on which it is declared. Normally it wouldn't be created in the database, as it would be redundant. But there's an exception for when the entity type is mapped to more than one table. To change its facets you can use the [relationship configuration Fluent API](xref:core/modeling/relationships/foreign-and-principal-keys):
 
-```csharp
-modelBuilder.Entity<Customer>()
-    .HasOne<Customer>()
-    .WithOne()
-    .HasForeignKey<Customer>(a => a.Id)
-    .OnDelete(DeleteBehavior.Restrict);
-```
+<!--
+            modelBuilder.Entity<Customer>()
+                .HasOne<Customer>()
+                .WithOne()
+                .HasForeignKey<Customer>(a => a.Id)
+                .OnDelete(DeleteBehavior.Restrict);
+-->
+[!code-csharp[LinkingForeignKey](../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=LinkingForeignKey)]
 
 ### Limitations
 
@@ -251,25 +182,26 @@ modelBuilder.Entity<Customer>()
 
 Some mapping patterns result in the same CLR property being mapped to a column in each of multiple different tables. EF7 allows these columns to have different names. For example, consider a simple inheritance hierarchy:
 
-```csharp
-public abstract class Animal
-{
-    public int Id { get; set; }
-    public string Breed { get; set; } = null!;
-}
+<!--
+    public class Animal
+    {
+        public int Id { get; set; }
+        public string Breed { get; set; } = null!;
+    }
 
-public class Cat : Animal
-{
-    public string? EducationalLevel { get; set; }
-}
+    public class Cat : Animal
+    {
+        public string? EducationalLevel { get; set; }
+    }
 
-public class Dog : Animal
-{
-    public string? FavoriteToy { get; set; }
-}
-```
+    public class Dog : Animal
+    {
+        public string? FavoriteToy { get; set; }
+    }
+-->
+[!code-csharp[Animals](../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=Animals)]
 
-With the TPT inheritance mapping strategy, these types will be mapped to three tables. However, the primary key <example-value> in each table may have a different name. For example:
+With the TPT [inheritance mapping strategy](xref:core/modeling/inheritance), these types will be mapped to three tables. However, the primary key column in each table may have a different name. For example:
 
 ```sql
 CREATE TABLE [Animals] (
@@ -295,19 +227,20 @@ CREATE TABLE [Dogs] (
 
 EF7 allows this mapping to be configured using a nested table builder:
 
-```csharp
-modelBuilder.Entity<Animal>().ToTable("Animals");
+<!--
+            modelBuilder.Entity<Animal>().ToTable("Animals");
 
-modelBuilder.Entity<Cat>()
-    .ToTable(
-        "Cats",
-        tableBuilder => tableBuilder.Property(cat => cat.Id).HasColumnName("CatId"));
+            modelBuilder.Entity<Cat>()
+                .ToTable(
+                    "Cats",
+                    tableBuilder => tableBuilder.Property(cat => cat.Id).HasColumnName("CatId"));
 
-modelBuilder.Entity<Dog>()
-    .ToTable(
-        "Dogs",
-        tableBuilder => tableBuilder.Property(dog => dog.Id).HasColumnName("DogId"));
-```
+            modelBuilder.Entity<Dog>()
+                .ToTable(
+                    "Dogs",
+                    tableBuilder => tableBuilder.Property(dog => dog.Id).HasColumnName("DogId"));
+-->
+[!code-csharp[AnimalsTpt](../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=AnimalsTpt)]
 
 With the TPC inheritance mapping, the `Breed` property can also be mapped to different column names in different tables. For example, consider the following TPC tables:
 
@@ -329,24 +262,25 @@ CREATE TABLE [Dogs] (
 
 EF7 supports this table mapping:
 
-```csharp
-modelBuilder.Entity<Animal>().UseTpcMappingStrategy();
+<!--
+            modelBuilder.Entity<Animal>().UseTpcMappingStrategy();
 
-modelBuilder.Entity<Cat>()
-    .ToTable(
-        "Cats",
-        builder =>
-        {
-            builder.Property(cat => cat.Id).HasColumnName("CatId");
-            builder.Property(cat => cat.Breed).HasColumnName("CatBreed");
-        });
+            modelBuilder.Entity<Cat>()
+                .ToTable(
+                    "Cats",
+                    builder =>
+                    {
+                        builder.Property(cat => cat.Id).HasColumnName("CatId");
+                        builder.Property(cat => cat.Breed).HasColumnName("CatBreed");
+                    });
 
-modelBuilder.Entity<Dog>()
-    .ToTable(
-        "Dogs",
-        builder =>
-        {
-            builder.Property(dog => dog.Id).HasColumnName("DogId");
-            builder.Property(dog => dog.Breed).HasColumnName("DogBreed");
-        });
-```
+            modelBuilder.Entity<Dog>()
+                .ToTable(
+                    "Dogs",
+                    builder =>
+                    {
+                        builder.Property(dog => dog.Id).HasColumnName("DogId");
+                        builder.Property(dog => dog.Breed).HasColumnName("DogBreed");
+                    });
+-->
+[!code-csharp[AnimalsTpc](../../../samples/core/Miscellaneous/NewInEFCore7/ModelBuildingSample.cs?name=AnimalsTpc)]

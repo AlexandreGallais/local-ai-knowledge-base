@@ -1,14 +1,11 @@
 ---
-title: "semi-style"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/semi-style.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: semi-style
+rule_type: layout
+related_rules:
+- no-extra-semi
+- semi
+- semi-spacing
 ---
-
-# semi-style
-
 Generally, semicolons are at the end of lines. However, in semicolon-less style, semicolons are at the beginning of lines. This rule enforces that semicolons are at the configured location.
 
 ## Rule Details
@@ -28,7 +25,7 @@ This rule has an option.
 
 Examples of **incorrect** code for this rule with `"last"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint semi-style: ["error", "last"]*/
@@ -51,10 +48,12 @@ class C {
     }
 }
 ```
+
+:::
 
 Examples of **correct** code for this rule with `"last"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint semi-style: ["error", "last"]*/
@@ -78,9 +77,11 @@ class C {
 }
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with `"first"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint semi-style: ["error", "first"]*/
@@ -104,9 +105,11 @@ class C {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with `"first"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint semi-style: ["error", "first"]*/
@@ -129,6 +132,8 @@ class C {
     }
 }
 ```
+
+:::
 
 ## When Not To Use It
 

@@ -1,0 +1,8 @@
+{
+  "name": "math-docs",
+  "instructions": "The official documentation of mathematics, kept locally: free textbooks in their own source format (LaTeX, PreTeXt, XML): linear algebra (Hefferon, Austin, Beezer), discrete mathematics (Levin) and combinatorics (Keller and Trotter). Search with search_docs, then read one section with read_doc. Look it up rather than guess it.",
+  "search": "Search the official documentation of mathematics: free textbooks in their own source format (LaTeX, PreTeXt, XML): linear algebra (Hefferon, Austin, Beezer), discrete mathematics (Levin) and combinatorics (Keller and Trotter). Returns 10 section ids at most.",
+  "queryExample": "\"rotation matrix\" or \"graph coloring\"",
+  "toolExample": "\"understanding-linear-algebra\" or \"discrete-mathematics\"",
+  "idExample": "library/understanding-linear-algebra/section2-6.xml#the-geometry-of-2times2-matrix-transformations"
+}

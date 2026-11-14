@@ -1,13 +1,6 @@
----
-title: "require-throws-description"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/require-throws-description.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
-
-# `require-throws-description`
+<a name="user-content-require-throws-description"></a>
+<a name="require-throws-description"></a>
+# <code>require-throws-description</code>
 
 Requires a description for `@throws` tags.
 
@@ -19,6 +12,8 @@ Requires a description for `@throws` tags.
 |Settings||
 |Options||
 
+<a name="user-content-require-throws-description-failing-examples"></a>
+<a name="require-throws-description-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -30,6 +25,10 @@ The following patterns are considered problems:
 // Message: @throws should have a description
 ````
 
+
+
+<a name="user-content-require-throws-description-passing-examples"></a>
+<a name="require-throws-description-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -39,3 +38,4 @@ The following patterns are not considered problems:
  * @throws {SomeType} Has a description
  */
 ````
+

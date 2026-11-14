@@ -1,38 +1,28 @@
----
-title: "SecurityPermission class (java.security)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/SecurityPermission.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # SecurityPermission class (java.security)
 
 ```java
 public final class SecurityPermission extends BasicPermission
 ```
 
-This class is for security permissions. A `SecurityPermission`
+This class is for security permissions. A {@code SecurityPermission}
 contains a name (also referred to as a "target name") but no actions list;
 you either have the named permission or you don't.
-
+<p>
 The target name is the name of a security configuration parameter.
 
-**Deprecated:** This permission cannot be used for controlling access to resources
+@deprecated
+This permission cannot be used for controlling access to resources
 as the Security Manager is no longer supported.
 
-**See also:** java.security.BasicPermission
+@see java.security.BasicPermission
+@see java.security.Permission
+@see java.security.Permissions
+@see java.security.PermissionCollection
+@see java.lang.SecurityManager
 
-**See also:** java.security.Permission
-
-**See also:** java.security.Permissions
-
-**See also:** java.security.PermissionCollection
-
-**See also:** java.lang.SecurityManager
-
-**Since:** 1.2
+@author Marianne Mueller
+@author Roland Schemers
+@since 1.2
 
 ## SecurityPermission.SecurityPermission(String)
 
@@ -40,19 +30,15 @@ as the Security Manager is no longer supported.
 public SecurityPermission(String name)
 ```
 
-Creates a new `SecurityPermission` with the specified name.
-The name is the symbolic name of the `SecurityPermission`.
+Creates a new {@code SecurityPermission} with the specified name.
+The name is the symbolic name of the {@code SecurityPermission}.
 An asterisk may appear at the end of the name, following a ".",
 or by itself, to signify a wildcard match.
 
-Parameters:
+@param name the name of the {@code SecurityPermission}
 
-- `name`: the name of the `SecurityPermission`
-
-Throws:
-
-- `NullPointerException`: if `name` is `null`.
-- `IllegalArgumentException`: if `name` is empty.
+@throws NullPointerException if {@code name} is {@code null}.
+@throws IllegalArgumentException if {@code name} is empty.
 
 ## SecurityPermission.SecurityPermission(String, String)
 
@@ -60,16 +46,12 @@ Throws:
 public SecurityPermission(String name, String actions)
 ```
 
-Creates a new `SecurityPermission` object with the specified name.
-The name is the symbolic name of the `SecurityPermission`, and the
-actions `String` is currently unused and should be `null`.
+Creates a new {@code SecurityPermission} object with the specified name.
+The name is the symbolic name of the {@code SecurityPermission}, and the
+actions {@code String} is currently unused and should be {@code null}.
 
-Parameters:
+@param name the name of the {@code SecurityPermission}
+@param actions should be {@code null}.
 
-- `name`: the name of the `SecurityPermission`
-- `actions`: should be `null`.
-
-Throws:
-
-- `NullPointerException`: if `name` is `null`.
-- `IllegalArgumentException`: if `name` is empty.
+@throws NullPointerException if {@code name} is {@code null}.
+@throws IllegalArgumentException if {@code name} is empty.

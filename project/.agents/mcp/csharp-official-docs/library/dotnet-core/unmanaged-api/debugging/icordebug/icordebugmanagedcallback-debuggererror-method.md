@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugManagedCallback::DebuggerError Method"
 title: "ICorDebugManagedCallback::DebuggerError Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmanagedcallback-debuggererror-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugManagedCallback.DebuggerError"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugManagedCallback::DebuggerError"
+helpviewer_keywords:
+  - "DebuggerError method [.NET debugging]"
+  - "ICorDebugManagedCallback::DebuggerError method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugManagedCallback::DebuggerError Method
 
 Notifies the debugger that an error has occurred while attempting to handle an event from the common language runtime (CLR).
@@ -36,11 +45,11 @@ HRESULT DebuggerError (
 
 The process may be placed into pass-through mode, depending on the nature of the error.
 
-The `DebugError` callback indicates that debugging services have been disabled due to an error, so debuggers should make the error message available to the user. ICorDebugProcess::GetID will be safe to call, but all other methods, including ICorDebug::Terminate, should not be called. The debugger should use operating-system facilities for terminating processes.
+The `DebugError` callback indicates that debugging services have been disabled due to an error, so debuggers should make the error message available to the user. [ICorDebugProcess::GetID](icordebugprocess-getid-method.md) will be safe to call, but all other methods, including [ICorDebug::Terminate](icordebug-terminate-method.md), should not be called. The debugger should use operating-system facilities for terminating processes.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -50,4 +59,4 @@ The `DebugError` callback indicates that debugging services have been disabled d
 
 ## See also
 
-- ICorDebugManagedCallback Interface
+- [ICorDebugManagedCallback Interface](icordebugmanagedcallback-interface.md)

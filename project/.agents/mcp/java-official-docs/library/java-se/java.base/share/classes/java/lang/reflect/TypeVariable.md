@@ -1,12 +1,3 @@
----
-title: "TypeVariable interface (java.lang.reflect)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/reflect/TypeVariable.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # TypeVariable interface (java.lang.reflect)
 
 ```java
@@ -17,12 +8,12 @@ TypeVariable is the common superinterface for type variables of kinds.
 A type variable is created the first time it is needed by a reflective
 method, as specified in this package.  If a type variable t is referenced
 by a type (i.e, class, interface or annotation type) T, and T is declared
-by the nth enclosing class of T (see JLS ), then the creation of t
-requires the resolution (see JVMS ) of the ith enclosing class of T,
+by the n<sup>th</sup> enclosing class of T (see JLS {@jls 8.1.2}), then the creation of t
+requires the resolution (see JVMS {@jvms 5}) of the i<sup>th</sup> enclosing class of T,
 for i = 0 to n, inclusive. Creating a type variable must not cause the
 creation of its bounds. Repeated creation of a type variable has no effect.
 
-Multiple objects may be instantiated at run-time to
+<p>Multiple objects may be instantiated at run-time to
 represent a given type variable. Even though a type variable is
 created only once, this does not imply any requirement to cache
 instances representing the type variable. However, all instances
@@ -30,13 +21,11 @@ representing a type variable must be equal() to each other.
 As a consequence, users of type variables must not rely on the identity
 of instances of classes implementing this interface.
 
-Parameters:
+@param <D> the type of generic declaration that declared the
+underlying type variable.
 
-- `<D>`: the type of generic declaration that declared the underlying type variable.
-
-**JLS:** 4.4 Type Variables
-
-**Since:** 1.5
+@jls 4.4 Type Variables
+@since 1.5
 
 ## TypeVariable.getBounds()
 
@@ -44,24 +33,23 @@ Parameters:
 Type[] getBounds()
 ```
 
-Returns an array of `Type` objects representing the
+Returns an array of {@code Type} objects representing the
 upper bound(s) of this type variable.  If no upper bound is
-explicitly declared, the upper bound is `Object`.
+explicitly declared, the upper bound is {@code Object}.
 
-For each upper bound B:
-- if B is a parameterized
-type or a type variable, it is created, (see ParameterizedType for the
+<p>For each upper bound B: <ul> <li>if B is a parameterized
+type or a type variable, it is created, (see {@link
+java.lang.reflect.ParameterizedType ParameterizedType} for the
 details of the creation process for parameterized types).
+<li>Otherwise, B is resolved.  </ul>
 
-- Otherwise, B is resolved.
-
-**Returns:** an array of `Type`s representing the upper
+@throws TypeNotPresentException  if any of the
+    bounds refers to a non-existent type declaration
+@throws MalformedParameterizedTypeException if any of the
+    bounds refer to a parameterized type that cannot be instantiated
+    for any reason
+@return an array of {@code Type}s representing the upper
     bound(s) of this type variable
-
-Throws:
-
-- `TypeNotPresentException`: if any of the bounds refers to a non-existent type declaration
-- `MalformedParameterizedTypeException`: if any of the bounds refer to a parameterized type that cannot be instantiated for any reason
 
 ## TypeVariable.getGenericDeclaration()
 
@@ -69,12 +57,12 @@ Throws:
 D getGenericDeclaration()
 ```
 
-Returns the `GenericDeclaration` object representing the
+Returns the {@code GenericDeclaration} object representing the
 generic declaration declared for this type variable.
 
-**Returns:** the generic declaration declared for this type variable.
+@return the generic declaration declared for this type variable.
 
-**Since:** 1.5
+@since 1.5
 
 ## TypeVariable.getName()
 
@@ -84,7 +72,7 @@ String getName()
 
 Returns the name of this type variable, as it occurs in the source code.
 
-**Returns:** the name of this type variable, as it appears in the source code
+@return the name of this type variable, as it appears in the source code
 
 ## TypeVariable.getAnnotatedBounds()
 
@@ -97,8 +85,7 @@ types to denote the upper bounds of the type parameter represented by
 this TypeVariable. The order of the objects in the array corresponds to
 the order of the bounds in the declaration of the type parameter. Note that
 if no upper bound is explicitly declared, the upper bound is unannotated
-`Object`.
+{@code Object}.
 
-**Returns:** an array of objects representing the upper bound(s) of the type variable
-
-**Since:** 1.8
+@return an array of objects representing the upper bound(s) of the type variable
+@since 1.8

@@ -1,17 +1,11 @@
----
-title: "no-async-iterator-callback"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-async-iterator-callback.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-async-iterator-callback
 
 📝 Disallow asynchronous callbacks in synchronous iterator helpers.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Synchronous iterator helpers do not await callback results:
 
@@ -71,6 +65,6 @@ const total = await Iterator.from(values).reduce(
 
 The rule checks recognized synchronous iterators, including `Iterator.from(…)`, collection iterator methods, `matchAll(…)`, helper chains, iterator values followed through plain, unannotated `const` bindings, local synchronous generator calls, and known TypeScript iterator types. Receiver detection is best-effort; arrays, async iterators, and unknown receivers are ignored.
 
-Without type information, it detects inline async functions, direct `const` bindings to async functions, and unreassigned local async function declarations. This syntax-only analysis does not follow arbitrary aliases or inspect callback bodies. With TypeScript type information, it also detects callbacks whose return types include `Promise` or `PromiseLike`, including imported functions and object methods. Async generator callbacks are ignored.
+Without type information, it detects inline async functions, direct `const` bindings to async functions, and unreassigned local async function declarations. This syntax-only analysis does not follow arbitrary aliases or inspect callback bodies. With [TypeScript type information](https://typescript-eslint.io/getting-started/typed-linting/), it also detects callbacks whose return types include `Promise` or `PromiseLike`, including imported functions and object methods. Async generator callbacks are ignored.
 
 The rule does not provide fixes or suggestions because choosing sequential or concurrent execution requires understanding the intended behavior.

@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: ICorDebugExceptionDebugEvent::GetStackPointer Method"
 title: "ICorDebugExceptionDebugEvent::GetStackPointer Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugexceptiondebugevent-getstackpointer-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugExceptionDebugEvent::GetStackPointer Method
 
 Gets the stack pointer for this exception debug event.
@@ -30,19 +26,19 @@ The meaning of this stack pointer depends on the event type, as shown in the fol
 
 |Event type|Meaning of `pStackPointer` value|
 |----------------|--------------------------------------|
-|MANAGED_EXCEPTION_FIRST_CHANCE|The stack pointer for the frame that threw the exception.|
-|MANAGED_EXCEPTION_USER_FIRST_CHANCE|The stack pointer for the user-code frame closest to the point of the thrown exception.|
-|MANAGED_EXCEPTION_CATCH_HANDLER_FOUND|The stack pointer for the frame that contains the catch handler.|
-|MANAGED_EXCEPTION_UNHANDLED|`pStackPointer` is **null**.|
+|[MANAGED_EXCEPTION_FIRST_CHANCE](cordebugrecordformat-enumeration.md)|The stack pointer for the frame that threw the exception.|
+|[MANAGED_EXCEPTION_USER_FIRST_CHANCE](cordebugrecordformat-enumeration.md)|The stack pointer for the user-code frame closest to the point of the thrown exception.|
+|[MANAGED_EXCEPTION_CATCH_HANDLER_FOUND](cordebugrecordformat-enumeration.md)|The stack pointer for the frame that contains the catch handler.|
+|[MANAGED_EXCEPTION_UNHANDLED](cordebugrecordformat-enumeration.md)|`pStackPointer` is **null**.|
 
-> **Note:**
+> [!NOTE]
 > This method is available with .NET Native only.
 
-The event type is available from the ICorDebugDebugEvent::GetEventKind method.
+The event type is available from the [ICorDebugDebugEvent::GetEventKind](icordebugdebugevent-geteventkind-method.md) method.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -52,4 +48,4 @@ The event type is available from the ICorDebugDebugEvent::GetEventKind method.
 
 ## See also
 
-- ICorDebugExceptionDebugEvent Interface
+- [ICorDebugExceptionDebugEvent Interface](icordebugexceptiondebugevent-interface.md)

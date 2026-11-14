@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: ICorDebugProcess6::DecodeEvent Method"
 title: "ICorDebugProcess6::DecodeEvent Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess6-decodeevent-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugProcess6::DecodeEvent Method
 
 Decodes managed debug events that have been encapsulated in the payload of specially crafted native exception debug events.
@@ -33,25 +29,25 @@ HRESULT DecodeEvent(
  [in] The number of elements in the `pRecord` byte array.
 
  `format`
- [in] A CorDebugRecordFormat enumeration member that specifies the format of the unmanaged debug event.
+ [in] A [CorDebugRecordFormat](cordebugrecordformat-enumeration.md) enumeration member that specifies the format of the unmanaged debug event.
 
  `dwFlags`
- [in] A bit field that depends on the target architecture and that specifies additional information about the debug event. For Windows systems, it can be a member of the CorDebugDecodeEventFlagsWindows enumeration.
+ [in] A bit field that depends on the target architecture and that specifies additional information about the debug event. For Windows systems, it can be a member of the [CorDebugDecodeEventFlagsWindows](cordebugdecodeeventflagswindows-enumeration.md) enumeration.
 
  `dwThreadId`
  [in] The operating system identifier of the thread on which the exception was thrown.
 
  `ppEvent`
- [out] A pointer to the address of an ICorDebugDebugEvent object that represents a decoded managed debug event.
+ [out] A pointer to the address of an [ICorDebugDebugEvent](icordebugdebugevent-interface.md) object that represents a decoded managed debug event.
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This method is available with .NET Native only.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -61,4 +57,4 @@ HRESULT DecodeEvent(
 
 ## See also
 
-- ICorDebugProcess6 Interface
+- [ICorDebugProcess6 Interface](icordebugprocess6-interface.md)

@@ -1,16 +1,12 @@
 ---
-title: "TestProject"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/api/advanced/test-project.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: TestProject
 ---
 
 # TestProject <Version>3.0.0</Version> {#testproject}
 
-**Warning:**
-This guide describes the advanced Node.js API. If you just want to define projects, follow the "Test Projects" guide.
+::: warning
+This guide describes the advanced Node.js API. If you just want to define projects, follow the ["Test Projects"](/guide/projects) guide.
+:::
 
 ## name
 
@@ -18,7 +14,7 @@ The name is a unique string assigned by the user or interpreted by Vitest. If us
 
 ::: code-group
 
-```ts
+```ts [node.js]
 import { createVitest } from 'vitest/node'
 
 const vitest = await createVitest('test')
@@ -30,7 +26,7 @@ vitest.projects.map(p => p.name) === [
 ]
 ```
 
-```ts
+```ts [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -55,16 +51,19 @@ export default defineConfig({
 })
 ```
 
-**Info:**
-If the root project is not part of user projects, its `name` will not be resolved.
+:::
+
+::: info
+If the [root project](/api/advanced/vitest#getrootproject) is not part of user projects, its `name` will not be resolved.
+:::
 
 ## vitest
 
-`vitest` references the global `Vitest` process.
+`vitest` references the global [`Vitest`](/api/advanced/vitest) process.
 
 ## serializedConfig
 
-This is the config that test processes receive. Vitest serializes config manually by removing all functions and properties that are not possible to serialize. Since this value is available in both tests and node, its type is exported from the main entry point.
+This is the config that test processes receive. Vitest [serializes config](https://github.com/vitest-dev/vitest/blob/main/packages/vitest/src/node/config/serializeConfig.ts) manually by removing all functions and properties that are not possible to serialize. Since this value is available in both tests and node, its type is exported from the main entry point.
 
 ```ts
 import type { SerializedConfig } from 'vitest'
@@ -72,16 +71,18 @@ import type { SerializedConfig } from 'vitest'
 const config: SerializedConfig = vitest.projects[0].serializedConfig
 ```
 
-**Warning:**
+::: warning
 The `serializedConfig` property is a getter. Every time it's accessed Vitest serializes the config again in case it was changed. This also means that it always returns a different reference:
 
 ```ts
 project.serializedConfig === project.serializedConfig // ❌
 ```
 
+:::
+
 ## globalConfig
 
-The test config that `Vitest` was initialized with. If this is the root project, `globalConfig` and `config` will reference the same object. This config is useful for values that cannot be set on the project level, like `coverage` or `reporters`.
+The test config that [`Vitest`](/api/advanced/vitest) was initialized with. If this is the [root project](/api/advanced/vitest#getrootproject), `globalConfig` and `config` will reference the same object. This config is useful for values that cannot be set on the project level, like `coverage` or `reporters`.
 
 ```ts
 import type { ResolvedConfig } from 'vitest/node'
@@ -101,7 +102,7 @@ It is based on the root of the project and its name. Note that the root path is 
 
 ## vite
 
-This is project's `ViteDevServer`. Note that the server is not necessarily exclusive to this project: other projects can reuse it when the `sharedViteServer` option applies, and browser instances of the same cluster share a single browser server.
+This is project's [`ViteDevServer`](https://vite.dev/guide/api-javascript#vitedevserver). Note that the server is not necessarily exclusive to this project: other projects can reuse it when the [`sharedViteServer`](/config/sharedviteserver) option applies, and browser instances of the same cluster share a single browser server.
 
 ## sharedViteServer
 
@@ -109,14 +110,15 @@ This is project's `ViteDevServer`. Note that the server is not necessarily exclu
 const sharedViteServer: boolean
 ```
 
-`true` when the project reuses the Vite server of the config that declared it instead of resolving its own (see the `sharedViteServer` option). The project that owns the server reports `false` even when other projects reuse it. To detect any two projects sharing a server (including browser instances), compare their `vite` references.
+`true` when the project reuses the Vite server of the config that declared it instead of resolving its own (see the [`sharedViteServer`](/config/sharedviteserver) option). The project that owns the server reports `false` even when other projects reuse it. To detect any two projects sharing a server (including browser instances), compare their [`vite`](#vite) references.
 
 ## browser
 
 This value will be set only if tests are running in the browser. If `browser` is enabled, but tests didn't run yet, this will be `undefined`. If you need to check if the project supports browser tests, use `project.isBrowserEnabled()` method.
 
-**Warning:**
+::: warning
 The browser API is even more experimental and doesn't follow SemVer. The browser API will be standardized separately from the rest of the APIs.
+:::
 
 ## provide
 
@@ -127,11 +129,11 @@ function provide<T extends keyof ProvidedContext & string>(
 ): void
 ```
 
-A way to provide custom values to tests in addition to `config.provide` field. All values are validated with `structuredClone` before they are stored, but the values on `providedContext` themselves are not cloned.
+A way to provide custom values to tests in addition to [`config.provide`](/config/provide) field. All values are validated with [`structuredClone`](https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone) before they are stored, but the values on `providedContext` themselves are not cloned.
 
 ::: code-group
 
-```ts
+```ts [node.js]
 import { createVitest } from 'vitest/node'
 
 const vitest = await createVitest('test')
@@ -140,21 +142,25 @@ project.provide('key', 'value')
 await vitest.start()
 ```
 
-```ts
+```ts [test.spec.js]
 import { inject } from 'vitest'
 const value = inject('key')
 ```
 
+:::
+
 The values can be provided dynamically. Provided value in tests will be updated on their next run.
 
-**Tip:**
-This method is also available to global setup files for cases where you cannot use the public API:
+::: tip
+This method is also available to [global setup files](/config/globalsetup) for cases where you cannot use the public API:
 
 ```js
 export default function setup({ provide }) {
   provide('wsPort', 3000)
 }
 ```
+
+:::
 
 ## getProvidedContext
 
@@ -176,8 +182,9 @@ project.provide('key', 'value')
 const context = project.getProvidedContext()
 ```
 
-**Tip:**
+::: tip
 Project context values will always override root project's context.
+:::
 
 ## createSpecification
 
@@ -188,7 +195,7 @@ function createSpecification(
 ): TestSpecification
 ```
 
-Create a test specification that can be used in `vitest.runTestSpecifications`. Specification scopes the test file to a specific `project` and test `locations` (optional). Test locations are code lines where the test is defined in the source code. If locations are provided, Vitest will only run tests defined on those lines. Note that if `testNamePattern` is defined, then it will also be applied.
+Create a [test specification](/api/advanced/test-specification) that can be used in [`vitest.runTestSpecifications`](/api/advanced/vitest#runtestspecifications). Specification scopes the test file to a specific `project` and test `locations` (optional). Test [locations](/api/advanced/test-case#location) are code lines where the test is defined in the source code. If locations are provided, Vitest will only run tests defined on those lines. Note that if [`testNamePattern`](/config/testnamepattern) is defined, then it will also be applied.
 
 ```ts
 import { createVitest } from 'vitest/node'
@@ -203,10 +210,11 @@ const specification = project.createSpecification(
 await vitest.runTestSpecifications([specification])
 ```
 
-**Warning:**
-`createSpecification` expects resolved module ID. It doesn't auto-resolve the file or check that it exists on the file system.
+::: warning
+`createSpecification` expects resolved [module ID](/api/advanced/test-specification#moduleid). It doesn't auto-resolve the file or check that it exists on the file system.
 
 Also note that `project.createSpecification` always returns a new instance.
+:::
 
 ## isRootProject
 
@@ -214,7 +222,7 @@ Also note that `project.createSpecification` always returns a new instance.
 function isRootProject(): boolean
 ```
 
-Checks if the current project is the root project. You can also get the root project by calling `vitest.getRootProject()`.
+Checks if the current project is the root project. You can also get the root project by calling [`vitest.getRootProject()`](/api/advanced/vitest#getrootproject).
 
 ## globTestFiles
 
@@ -233,21 +241,23 @@ function globTestFiles(filters?: string[]): {
 
 Globs all test files. This function returns an object with regular tests and typecheck tests.
 
-This method accepts `filters`. Filters can only a part of the file path, unlike in other methods on the `Vitest` instance:
+This method accepts `filters`. Filters can only a part of the file path, unlike in other methods on the [`Vitest`](/api/advanced/vitest) instance:
 
 ```js
 project.globTestFiles(['foo']) // ✅
 project.globTestFiles(['basic/foo.js:10']) // ❌
 ```
 
-**Tip:**
-Vitest uses fast-glob to find test files. `test.dir`, `test.root`, `root` or `process.cwd()` define the `cwd` option.
+::: tip
+Vitest uses [fast-glob](https://npmx.dev/package/fast-glob) to find test files. `test.dir`, `test.root`, `root` or `process.cwd()` define the `cwd` option.
 
 This method looks at several config options:
 
 - `test.include`, `test.exclude` to find regular test files
 - `test.includeSource`, `test.exclude` to find in-source tests
 - `test.typecheck.include`, `test.typecheck.exclude` to find typecheck tests
+
+:::
 
 ## matchesTestGlob
 
@@ -280,9 +290,11 @@ if (import.meta.vitest) {
 
 ## import
 
+<!--@include: ./import-example.md-->
+
 Import a file using Vite module runner. The file will be transformed by Vite with provided project's config and executed in a separate context. Note that `moduleId` will be relative to the `config.root`.
 
-**Danger:**
+::: danger
 `project.import` reuses Vite's module graph, so importing the same module using a regular import will return a different module:
 
 ```ts
@@ -292,8 +304,11 @@ const dynamicExample = await project.import('./example.js')
 dynamicExample !== staticExample // ✅
 ```
 
-**Info:**
+:::
+
+::: info
 Internally, Vitest uses this method to import global setups, custom coverage providers and custom reporters, meaning all of them share the same module graph as long as they belong to the same Vite server.
+:::
 
 ## onTestsRerun
 
@@ -301,7 +316,7 @@ Internally, Vitest uses this method to import global setups, custom coverage pro
 function onTestsRerun(cb: OnTestsRerunHandler): void
 ```
 
-This is a shorthand for `project.vitest.onTestsRerun`. It accepts a callback that will be awaited when the tests have been scheduled to rerun (usually, due to a file change).
+This is a shorthand for [`project.vitest.onTestsRerun`](/api/advanced/vitest#ontestsrerun). It accepts a callback that will be awaited when the tests have been scheduled to rerun (usually, due to a file change).
 
 ```ts
 project.onTestsRerun((specs) => {

@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: `RuntimeIdentifier` warning if self-contained is unspecified"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/6.0/runtimeidentifier-self-contained.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 6 where specifying a `RuntimeIdentifier` without specifying whether an app is self-contained results in a warning.
+ms.date: 09/20/2021
 ---
-
 # RuntimeIdentifier warning if self-contained is unspecified
 
 If you specify a `RuntimeIdentifier` in your project file or use the `-r` option with `dotnet`, the .NET SDK defaults the build, publish, and run outputs to be self-contained applications. The default without specifying a `RuntimeIdentifier` is to have a framework-dependent application. This change introduces a new warning (NETSDK1179) if you specify a `RuntimeIdentifier` without specifying whether the application is self-contained.
@@ -33,7 +29,7 @@ dotnet publish -r win-x86
 
 ## Change category
 
-This change might affect *source compatibility*.
+This change might affect [*source compatibility*](../../categories.md#source-compatibility).
 
 ## Reason for change
 
@@ -54,5 +50,5 @@ N/A
 
 ## See also
 
-- dotnet build command
-- dotnet publish command
+- [dotnet build command](../../../tools/dotnet-build.md)
+- [dotnet publish command](../../../tools/dotnet-publish.md)

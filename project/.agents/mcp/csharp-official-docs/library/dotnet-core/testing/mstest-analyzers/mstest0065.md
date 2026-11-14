@@ -1,12 +1,19 @@
 ---
 title: "MSTEST0065: Avoid Assert.AreEqual on collection types"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0065.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0065: Avoid Assert.AreEqual on collection types"
+ms.date: 08/06/2026
+f1_keywords:
+- MSTEST0065
+- AvoidAssertAreEqualOnCollectionsAnalyzer
+helpviewer_keywords:
+- AvoidAssertAreEqualOnCollectionsAnalyzer
+- MSTEST0065
+author: Evangelink
+ms.author: amauryleve
+ai-usage: ai-assisted
+dev_langs:
+- CSharp
 ---
-
 # MSTEST0065: Avoid `Assert.AreEqual` on collection types
 
 | Property                            | Value                                              |
@@ -20,18 +27,18 @@ license: "CC-BY-4.0"
 | **Introduced in version**           | 4.3.0                                              |
 | **Is there a code fix**             | No                                                 |
 
-> **Note:**
+> [!NOTE]
 > This rule is available starting with MSTest 4.3.
 >
 > Starting with MSTest 4.3.3, the rule doesn't report collection types that declare their own equality behavior.
 
 ## Cause
 
-A call to `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual*` or `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreNotEqual*` is made on a value whose static type implements `System.Collections.Generic.IEnumerable`1` (other than `System.String`).
+A call to <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual*?displayProperty=nameWithType> or <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreNotEqual*?displayProperty=nameWithType> is made on a value whose static type implements <xref:System.Collections.Generic.IEnumerable`1> (other than <xref:System.String>).
 
 ## Rule description
 
-`Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual*` and `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreNotEqual*` use `System.Collections.Generic.EqualityComparer`1.Default`. For most collection types — for example arrays, `System.Collections.Generic.List`1`, or any user-defined type implementing `System.Collections.Generic.IEnumerable`1` — this falls back to reference equality (or to whatever equality the type defines for itself), and not to element-wise comparison. As a result, the assertion almost never asserts what the test author intended.
+<xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual*> and <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreNotEqual*> use <xref:System.Collections.Generic.EqualityComparer`1.Default?displayProperty=nameWithType>. For most collection types — for example arrays, <xref:System.Collections.Generic.List`1>, or any user-defined type implementing <xref:System.Collections.Generic.IEnumerable`1> — this falls back to reference equality (or to whatever equality the type defines for itself), and not to element-wise comparison. As a result, the assertion almost never asserts what the test author intended.
 
 ```csharp
 [TestClass]
@@ -86,11 +93,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0065
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0065.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

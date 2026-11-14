@@ -1,17 +1,15 @@
 ---
-title: "eqeqeq"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/eqeqeq.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: eqeqeq
+rule_type: suggestion
+further_reading:
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Equality_comparisons_and_sameness
 ---
 
-# eqeqeq
+
 
 It is considered good practice to use the type-safe equality operators `===` and `!==` instead of their regular counterparts `==` and `!=`.
 
-The reason for this is that `==` and `!=` do type coercion which follows the rather obscure Abstract Equality Comparison Algorithm.
+The reason for this is that `==` and `!=` do type coercion which follows the rather obscure [Abstract Equality Comparison Algorithm](https://www.ecma-international.org/ecma-262/5.1/#sec-11.9.3).
 For instance, the following statements are all considered `true`:
 
 * `[] == false`
@@ -26,7 +24,7 @@ This rule is aimed at eliminating the type-unsafe equality operators.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint eqeqeq: "error"*/
@@ -37,6 +35,8 @@ if ("" == text) { }
 
 if (obj.getStuff() != undefined) { }
 ```
+
+:::
 
 The `--fix` option on the command line automatically fixes some problems reported by this rule. A problem is only fixed if one of the operands is a `typeof` expression, or if both operands are literals with the same type.
 
@@ -50,7 +50,7 @@ The `"always"` option (default) enforces the use of `===` and `!==` in every sit
 
 Examples of **incorrect** code for the `"always"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint eqeqeq: ["error", "always"]*/
@@ -67,9 +67,11 @@ foo == null
 
 ```
 
+:::
+
 Examples of **correct** code for the `"always"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint eqeqeq: ["error", "always"]*/
@@ -85,6 +87,8 @@ true === true
 foo === null
 
 ```
+
+:::
 
 This rule optionally takes a second argument, which should be an object with the following supported properties:
 
@@ -103,7 +107,7 @@ The `"smart"` option enforces the use of `===` and `!==` except for these cases:
 
 Examples of **incorrect** code for the `"smart"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint eqeqeq: ["error", "smart"]*/
@@ -119,9 +123,11 @@ bananas != 1
 value == undefined
 ```
 
+:::
+
 Examples of **correct** code for the `"smart"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint eqeqeq: ["error", "smart"]*/
@@ -132,6 +138,8 @@ typeof foo == 'undefined'
 true == true
 foo == null
 ```
+
+:::
 
 ### allow-null
 

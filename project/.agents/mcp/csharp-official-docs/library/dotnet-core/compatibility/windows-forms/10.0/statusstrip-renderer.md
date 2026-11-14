@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: System.Windows.Forms.StatusStrip uses System RenderMode by default"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/windows-forms/10.0/statusstrip-renderer.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 10 for Windows Forms where System.Windows.Forms.StatusStrip uses a different default value for the RenderMode property.
+ms.date: 02/12/2025
 ---
-
 # System.Windows.Forms.StatusStrip uses System RenderMode by default
 
-`System.Windows.Forms.StatusStrip` has been updated to use the system renderer.
+<xref:System.Windows.Forms.StatusStrip?displayProperty=nameWithType> has been updated to use the system renderer.
 
 ## Version introduced
 
@@ -17,19 +13,19 @@ license: "CC-BY-4.0"
 
 ## Previous behavior
 
-Previously, `System.Windows.Forms.StatusStrip` used the default renderer.
+Previously, <xref:System.Windows.Forms.StatusStrip?displayProperty=nameWithType> used the default renderer.
 
 ## New behavior
 
-The `StatusStrip.RenderMode` property is set to `System.Windows.Forms.ToolStripRenderMode.System` by default. You might observe minor changes to the appearance of the `StatusStrip`.
+The `StatusStrip.RenderMode` property is set to <xref:System.Windows.Forms.ToolStripRenderMode.System?displayProperty=nameWithType> by default. You might observe minor changes to the appearance of the `StatusStrip`.
 
 ## Change category
 
-This change is a *behavioral change*.
+This change is a [*behavioral change*](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-The previous behavior was changed in .NET 9. This reverts the behavior to the previous default behavior.
+The previous behavior was [changed in .NET 9](../9.0/statusstrip-renderer.md). This reverts the behavior to the previous default behavior.
 
 ## Recommended action
 
@@ -37,5 +33,5 @@ N/A
 
 ## Affected APIs
 
-- `System.Windows.Forms.StatusStrip`
-- `System.Windows.Forms.ToolStripManager.RenderMode`
+- <xref:System.Windows.Forms.StatusStrip?displayProperty=fullName>
+- <xref:System.Windows.Forms.ToolStripManager.RenderMode?displayProperty=fullName>

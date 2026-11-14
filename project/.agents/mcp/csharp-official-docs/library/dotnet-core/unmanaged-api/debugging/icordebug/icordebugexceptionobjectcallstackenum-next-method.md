@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugExceptionObjectCallStackEnum::Next Method"
 title: "ICorDebugExceptionObjectCallStackEnum::Next Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugexceptionobjectcallstackenum-next-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugExceptionObjectCallStackEnum::Next"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugExceptionObjectCallStackEnum::Next"
+helpviewer_keywords:
+  - "ICorDebugExceptionObjectCallStackEnum::Next method [.NET debugging]"
+  - "Next method, ICorDebugExceptionObjectCallStackEnum interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugExceptionObjectCallStackEnum::Next Method
 
-Gets the specified number of CorDebugExceptionObjectStackFrame instances that contain information from an exception object's call stack.
+Gets the specified number of [CorDebugExceptionObjectStackFrame](cordebugexceptionobjectstackframe-structure.md) instances that contain information from an exception object's call stack.
 
 ## Syntax
 
@@ -24,17 +33,19 @@ HRESULT Next(
 ## Parameters
 
  `celt`
- [in] The number of CorDebugExceptionObjectStackFrame instances to be retrieved.
+ [in] The number of [CorDebugExceptionObjectStackFrame](cordebugexceptionobjectstackframe-structure.md) instances to be retrieved.
 
  `values`
- [out] An array of pointers, each of which points to a CorDebugExceptionObjectStackFrame object.
+ [out] An array of pointers, each of which points to a [CorDebugExceptionObjectStackFrame](cordebugexceptionobjectstackframe-structure.md) object.
 
  `pceltFetched`
- [out] A pointer to the number of CorDebugExceptionObjectStackFrame instances actually returned.
+ [out] A pointer to the number of [CorDebugExceptionObjectStackFrame](cordebugexceptionobjectstackframe-structure.md) instances actually returned.
+
+## Remarks
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -44,4 +55,4 @@ HRESULT Next(
 
 ## See also
 
-- ICorDebugExceptionObjectCallStackEnum Interface
+- [ICorDebugExceptionObjectCallStackEnum Interface](icordebugexceptionobjectcallstackenum-interface.md)

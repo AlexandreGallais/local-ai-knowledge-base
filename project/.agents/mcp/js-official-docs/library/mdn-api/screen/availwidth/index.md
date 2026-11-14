@@ -1,0 +1,31 @@
+---
+title: "Screen: availWidth property"
+short-title: availWidth
+slug: Web/API/Screen/availWidth
+page-type: web-api-instance-property
+browser-compat: api.Screen.availWidth
+---
+
+{{APIRef("CSSOM view API")}}
+
+The **`availWidth`** read-only property of the {{domxref("Screen")}} interface returns the amount of horizontal space (in CSS pixels) available to the window.
+
+## Value
+
+A number.
+
+## Examples
+
+```js
+const screenAvailWidth = window.screen.availWidth;
+
+console.log(screenAvailWidth);
+```
+
+## Specifications
+
+{{Specifications}}
+
+## Browser compatibility
+
+{{Compat}}

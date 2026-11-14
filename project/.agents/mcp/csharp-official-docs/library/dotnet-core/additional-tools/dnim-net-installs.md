@@ -1,10 +1,9 @@
 ---
-title: "Managed .NET installations on Windows"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/additional-tools/dnim-net-installs.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Managed .NET installations on Windows
+description: Provides a technical overview of .NET installations on Windows, including composition and reference counting.
+author: joeloff
+ms.date: 09/14/2026
+ai-usage: ai-assisted
 ---
 
 # Managed .NET installations on Windows
@@ -15,7 +14,7 @@ On Windows, .NET components like the runtime and SDK consist of multiple MSIs. I
 
 ## Acquiring .NET on Windows
 
-- Standalone bundles (EXEs) can be downloaded from the .NET website.
+- Standalone bundles (EXEs) can be downloaded from [the .NET website](https://dotnet.microsoft.com/download).
 - WinGet provides packages that contain the .NET bundles.
 - Servicing updates distribute the bundles through Microsoft Update using automatic updates, WSUS and the Windows Update Catalog.
 - Independent software vendors (ISVs) may redistribute .NET bundles as part of their software.
@@ -27,7 +26,7 @@ On Windows, .NET components like the runtime and SDK consist of multiple MSIs. I
 
 Visual Studio can also be used to acquire .NET and uses the same MSIs as the standalone bundles.
 
-> **Note:**
+> [!NOTE]
 > The .NET SDK bundle shipped with Visual Studio until 16.2. Starting with .NET Core 3.0 in Visual Studio 16.3, the SDK bundles were replaced with the individual .NET MSIs.
 
 ## Upgrades
@@ -36,17 +35,19 @@ Visual Studio can also be used to acquire .NET and uses the same MSIs as the sta
 
 The majority of upgrades are handled at the bundle level. The previous version is only removed once the new version is installed. There are two exceptions: the .NET host and ASP.NET Core Module MSIs are updated in place.
 
-Starting with .NET 8, users have the option to defer removing the previous version of a bundle.
+Starting with .NET 8, users have the option to [defer](/dotnet/core/install/windows#choose-when-previous-versions-are-removed) removing the previous version of a bundle.
 
 ## Bundle composition and reference counting
 
 Bundles are composed from multiple MSIs, some of which are shared between multiple bundles.
 
+![.NET installer composition](media/dnim/dotnet-bundles.svg)
+
 - The runtime bundle contains three MSIs that also ship in the desktop runtime and SDK bundles.
 - The desktop bundle includes an additional MSI that is shared with the SDK bundle.
 - The SDK includes additional MSIs that contain the CLI, templates, and targeting packs used to create and build .NET applications.
 
-Shared MSIs are managed using reference counting. Every .NET MSI creates a registry key <example-value> a provider key that allows a bundle to register itself as a dependent. If an MSI is already installed, the bundle only updates the registration information. Bundles are unregistered when they're removed. The shared MSIs are only removed once there are no registered dependents.
+Shared MSIs are managed using reference counting. Every .NET MSI creates a registry key called a provider key that allows a bundle to register itself as a dependent. If an MSI is already installed, the bundle only updates the registration information. Bundles are unregistered when they're removed. The shared MSIs are only removed once there are no registered dependents.
 
 The registry information below is an example of the .NET host MSI provider key. There are four registered dependents, including Visual Studio.
 
@@ -65,10 +66,10 @@ HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Installer\Dependencies\Dotnet_CLI_SharedHost
 HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Installer\Dependencies\Dotnet_CLI_SharedHost_10.0_x64\Dependents\{FD5EA214-C690-466F-B8FB-1741881913F9}
 ```
 
-> **Note:**
+> [!NOTE]
 > Individual MSIs become orphaned when dependents remain registered after a bundle is removed, for example, when the uninstall is interrupted.
 
-> **Note:**
+> [!NOTE]
 > Visual Studio uses a well-known value, `VS.{AEF703B8-D2CC-4343-915C-F54A30B90937}`, to register itself as a dependent. The actual reference count is determined by checking the installation manifest for each Visual Studio instance.
 
 ## Bin deployed installations
@@ -87,7 +88,7 @@ Bundles are identified using their display names and file information stored in 
 
 DNIM performs an exhaustive search against the installer component data stored in the registry under `HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Components` to identify .NET MSIs.
 
-Each subkey <example-value> a different component ID. The values under each key <example-value> product codes. Both the component ID and product codes are stored as packed GUIDs. The example below is of the component associated with `dotnet.exe`.
+Each subkey represents a different component ID. The values under each key represent product codes. Both the component ID and product codes are stored as packed GUIDs. The example below is of the component associated with `dotnet.exe`.
 
 ```console
 HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\Components\BBB993545ADD68342A9E16F83B5CA481
@@ -120,7 +121,7 @@ There are some special cases worth mentioning.
 
 Ensuring consistent behavior requires installations to define their product, release, and support phase. The targeting pack for .NET Standard 2.1 presents an interesting challenge. It doesn't contain executable code and only provides reference assemblies for the APIs defined by the standard. The targeting pack first shipped as part of the .NET Core 3.0.100 SDK, but was included in every subsequent SDK until .NET 10. While DNIM will classify the release and product under .NET Core 3.0, the support phase is always reported as active since it may be included in SDKs that are in active support.
 
-> **Note:**
+> [!NOTE]
 > The .NET Standard 2.1 targeting pack was removed from the SDK installation in .NET 10. SDKs automatically download missing targeting packs using NuGet packages when building applications.
 
 ### .NET SDK feature bands

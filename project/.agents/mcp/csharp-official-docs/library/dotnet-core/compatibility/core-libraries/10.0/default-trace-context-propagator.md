@@ -1,10 +1,9 @@
 ---
 title: "Breaking change - Default trace context propagator updated to W3C standard"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/10.0/default-trace-context-propagator.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where the default trace context propagator is switched from Legacy to W3C."
+ms.date: 4/21/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/45793
 ---
 
 # Default trace context propagator updated to W3C standard
@@ -17,11 +16,11 @@ The default trace context propagator has been switched from the legacy propagato
 
 ## Previous behavior
 
-Previously, the `System.Diagnostics.DistributedContextPropagator.CreateDefaultPropagator` method returned an instance of the legacy propagator. By default, `System.Diagnostics.DistributedContextPropagator.Current` was set to this legacy instance.
+Previously, the <xref:System.Diagnostics.DistributedContextPropagator.CreateDefaultPropagator?displayProperty=nameWithType> method returned an instance of the legacy propagator. By default, <xref:System.Diagnostics.DistributedContextPropagator.Current?displayProperty=nameWithType> was set to this legacy instance.
 
 ## New behavior
 
-Starting in .NET 10, the `System.Diagnostics.DistributedContextPropagator.CreateDefaultPropagator` method returns an instance of the W3C propagator. By default, `System.Diagnostics.DistributedContextPropagator.Current` is set to this W3C instance.
+Starting in .NET 10, the <xref:System.Diagnostics.DistributedContextPropagator.CreateDefaultPropagator?displayProperty=nameWithType> method returns an instance of the W3C propagator. By default, <xref:System.Diagnostics.DistributedContextPropagator.Current?displayProperty=nameWithType> is set to this W3C instance.
 
 Example of setting the default propagator to the legacy propagator:
 
@@ -31,7 +30,7 @@ DistributedContextPropagator.Current = DistributedContextPropagator.CreatePreW3C
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -39,8 +38,8 @@ This change ensures full compliance with the W3C Trace Context and Baggage speci
 
 For more details, see the following GitHub issues:
 
-- Pull Request #114583
-- Issue #114584
+- [Pull Request #114583](https://github.com/dotnet/runtime/pull/114583)
+- [Issue #114584](https://github.com/dotnet/runtime/issues/114584)
 
 ## Recommended action
 
@@ -52,5 +51,5 @@ DistributedContextPropagator.Current = DistributedContextPropagator.CreatePreW3C
 
 ## Affected APIs
 
-- `System.Diagnostics.DistributedContextPropagator.Current`
-- `System.Diagnostics.DistributedContextPropagator.CreateDefaultPropagator`
+- <xref:System.Diagnostics.DistributedContextPropagator.Current?displayProperty=fullName>
+- <xref:System.Diagnostics.DistributedContextPropagator.CreateDefaultPropagator?displayProperty=fullName>

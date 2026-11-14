@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: Middleware types with multiple constructors"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/9/middleware-constructors.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in ASP.NET Core 9 where having multiple constructors in a middleware type can cause an exception at runtime.
+ms.date: 11/6/2024
+ms.custom: https://github.com/aspnet/Announcements/issues/514
 ---
 
 # Middleware types with multiple constructors
 
-Previously, when a middleware type with multiple satisfiable constructors was instantiated from the dependency injection container, the one with the most parameters was used. Now that only happens if the dependency injection container implements `Microsoft.Extensions.DependencyInjection.IServiceProviderIsService`. If it doesn't, an exception is thrown at runtime.
+Previously, when a middleware type with multiple satisfiable constructors was instantiated from the dependency injection container, the one with the most parameters was used. Now that only happens if the dependency injection container implements <xref:Microsoft.Extensions.DependencyInjection.IServiceProviderIsService>. If it doesn't, an exception is thrown at runtime.
 
 ## Version introduced
 
@@ -42,7 +40,7 @@ Starting in .NET 9, neither constructor is preferred, and construction fails wit
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](/dotnet/core/compatibility/categories#behavioral-change).
 
 ## Reason for change
 
@@ -50,8 +48,8 @@ The activation mechanism was changed to help support keyed dependency injection.
 
 ## Recommended action
 
-If this happens and you can't upgrade to a dependency injection container that implements `Microsoft.Extensions.DependencyInjection.IServiceProviderIsService`, you can add the `Microsoft.Extensions.DependencyInjection.ActivatorUtilitiesConstructorAttribute` to the preferred constructor of the affected middleware type.
+If this happens and you can't upgrade to a dependency injection container that implements <xref:Microsoft.Extensions.DependencyInjection.IServiceProviderIsService>, you can add the <xref:Microsoft.Extensions.DependencyInjection.ActivatorUtilitiesConstructorAttribute> to the preferred constructor of the affected middleware type.
 
 ## Affected APIs
 
-This change is known to cause errors when instantiating `Microsoft.AspNetCore.CookiePolicy.CookiePolicyMiddleware` with Autofac.Extensions.DependencyInjection 7.x.
+This change is known to cause errors when instantiating <xref:Microsoft.AspNetCore.CookiePolicy.CookiePolicyMiddleware?displayProperty=fullName> with [Autofac.Extensions.DependencyInjection](https://www.nuget.org/packages/Autofac.Extensions.DependencyInjection) 7.x.

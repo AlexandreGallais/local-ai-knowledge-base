@@ -1,42 +1,42 @@
----
-title: "InvokeDynamicEntry interface (java.lang.classfile.constantpool)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/constantpool/InvokeDynamicEntry.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # InvokeDynamicEntry interface (java.lang.classfile.constantpool)
 
 ```java
 public sealed interface InvokeDynamicEntry extends DynamicConstantPoolEntry permits AbstractPoolEntry.InvokeDynamicEntryImpl
 ```
 
-Models a `CONSTANT_InvokeDynamic_info` structure, or the symbolic
-reference to a , in the
-constant pool of a `class` file.
-
-The use of a `InvokeDynamicEntry` is modeled by a `DynamicCallSiteDesc` symbolic descriptor.  It can be obtained from InvokeDynamicEntry::asSymbol and converted back to a constant
-pool entry through ConstantPoolBuilder::invokeDynamicEntry.
-
+Models a {@code CONSTANT_InvokeDynamic_info} structure, or the symbolic
+reference to a <dfn>{@index "dynamically-computed call site"}</dfn>, in the
+constant pool of a {@code class} file.
+<p>
+The use of a {@code InvokeDynamicEntry} is modeled by a {@link
+DynamicCallSiteDesc} symbolic descriptor.  It can be obtained from {@link
+#asSymbol() InvokeDynamicEntry::asSymbol} and converted back to a constant
+pool entry through {@link ConstantPoolBuilder#invokeDynamicEntry(DynamicCallSiteDesc)
+ConstantPoolBuilder::invokeDynamicEntry}.
+<p>
 An invoke dynamic entry is composite:
+{@snippet lang=text :
+// @link substring="InvokeDynamicEntry" target="ConstantPoolBuilder#invokeDynamicEntry(BootstrapMethodEntry, NameAndTypeEntry)" :
+InvokeDynamicEntry(
+    BootstrapMethodEntry bootstrap, // @link substring="bootstrap" target="#bootstrap()"
+    NameAndTypeEntry nameAndType // @link substring="nameAndType" target="#nameAndType()"
+)
+}
+where the {@link #type() type} in the {@code nameAndType} is a {@linkplain
+#typeSymbol() method descriptor} string.
 
-where the type in the `nameAndType` is a method descriptor string.
-
-**API note:** A dynamically-computed call site is frequently called a , or an , from the abbreviation of
+@apiNote
+A dynamically-computed call site is frequently called a <dfn>{@index "dynamic
+call site"}</dfn>, or an <dfn>{@index "indy"}</dfn>, from the abbreviation of
 "invoke dynamic".
 
-**See also:** ConstantPoolBuilder#invokeDynamicEntry
+@see ConstantPoolBuilder#invokeDynamicEntry
      ConstantPoolBuilder::invokeDynamicEntry
-
-**See also:** DynamicCallSiteDesc
-
-**See also:** java.lang.invoke##indyinsn Dynamically-computed call sites
-
-**jvms:** 4.4.10 The `CONSTANT_Dynamic_info` and `CONSTANT_InvokeDynamic_info` Structures
-
-**Since:** 24
+@see DynamicCallSiteDesc
+@see java.lang.invoke##indyinsn Dynamically-computed call sites
+@jvms 4.4.10 The {@code CONSTANT_Dynamic_info} and {@code
+             CONSTANT_InvokeDynamic_info} Structures
+@since 24
 
 ## InvokeDynamicEntry.typeSymbol()
 
@@ -44,11 +44,16 @@ where the type in the `nameAndType` is a method descriptor string.
 default MethodTypeDesc typeSymbol()
 ```
 
+{@return a symbolic descriptor for the {@linkplain #type() invocation
+type} of this dynamic call site}
+
 ## InvokeDynamicEntry.asSymbol()
 
 ```java
 default DynamicCallSiteDesc asSymbol()
 ```
 
-**See also:** ConstantPoolBuilder#invokeDynamicEntry(DynamicCallSiteDesc)
+{@return a symbolic descriptor for this dynamic call site}
+
+@see ConstantPoolBuilder#invokeDynamicEntry(DynamicCallSiteDesc)
      ConstantPoolBuilder::invokeDynamicEntry(DynamicCallSiteDesc)

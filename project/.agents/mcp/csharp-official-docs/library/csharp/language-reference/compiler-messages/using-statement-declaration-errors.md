@@ -1,26 +1,48 @@
 ---
-title: "Resolve errors related to `using` statements and `using` declarations"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/compiler-messages/using-statement-declaration-errors.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Resolve errors related to `using` statements and `using` declarations
+description: These errors indicate an incorrect use of the `using` statement or `using` declarations. Learn about the errors and how to fix them.
+f1_keywords:
+  - "CS0245"
+  - "CS0728"
+  - "CS1674"
+  - "CS8410"
+  - "CS8417"
+  - "CS8418"
+  - "CS8647"
+  - "CS8648"
+  - "CS8649"
+  - "CS9229"
+helpviewer_keywords:
+  - "CS0245"
+  - "CS0728"
+  - "CS1674"
+  - "CS8410"
+  - "CS8417"
+  - "CS8418"
+  - "CS8647"
+  - "CS8648"
+  - "CS8649"
+  - "CS9229"
+ms.date: 10/27/2025
+ai-usage: ai-assisted
 ---
-
 # Resolve warnings related to the `using` statements and `using` declarations
 
 This article covers the following compiler errors:
 
-- **CS0245**: *Destructors and `object.Finalize` cannot be called directly. Consider calling `IDisposable.Dispose` if available.*
-- **CS0728**: *Possibly incorrect assignment to local variable which is the argument to a using or `lock` statement. The `Dispose` call or unlocking will happen on the original value of the local.*
-- **CS1674**: *Type used in a using statement must be implicitly convertible to '`System.IDisposable`'.*
-- **CS8410**: *'Type used in an asynchronous `using` statement must be implicitly convertible to '`System.IAsyncDisposable`' or implement a suitable '`DisposeAsync`' method.*
-- **CS8417**: *Type used in an asynchronous using statement must implement '`System.IAsyncDisposable`' or implement a suitable '`DisposeAsync`' method. Did you mean '`using`' rather than '`await using`'?*
-- **CS8418**: *Type used in a using statement must implement '`System.IDisposable`'. Did you mean '`await using`' rather than 'using'?*
-- **CS8647**: *A using variable cannot be used directly within a switch section (consider using braces).*
-- **CS8648**: *A `goto` cannot jump to a location after a using declaration.*
-- **CS8649**: *A `goto` cannot jump to a location before a using declaration within the same block.*
-- **CS9229**: *Modifiers cannot be placed on using declarations.*
+<!-- The text in this list generates issues for Acrolinx, because they don't use contractions.
+That's be design. The text closely matches the text of the compiler error / warning for SEO purposes.
+ -->
+- [**CS0245**](#implementing-idisposable-and-iasyncdisposable): *Destructors and `object.Finalize` cannot be called directly. Consider calling `IDisposable.Dispose` if available.*
+- [**CS0728**](#using-variable-scope-and-control-flow): *Possibly incorrect assignment to local variable which is the argument to a using or `lock` statement. The `Dispose` call or unlocking will happen on the original value of the local.*
+- [**CS1674**](#implementing-idisposable-and-iasyncdisposable): *Type used in a using statement must be implicitly convertible to '`System.IDisposable`'.*
+- [**CS8410**](#implementing-idisposable-and-iasyncdisposable): *'Type used in an asynchronous `using` statement must be implicitly convertible to '`System.IAsyncDisposable`' or implement a suitable '`DisposeAsync`' method.*
+- [**CS8417**](#implementing-idisposable-and-iasyncdisposable): *Type used in an asynchronous using statement must implement '`System.IAsyncDisposable`' or implement a suitable '`DisposeAsync`' method. Did you mean '`using`' rather than '`await using`'?*
+- [**CS8418**](#implementing-idisposable-and-iasyncdisposable): *Type used in a using statement must implement '`System.IDisposable`'. Did you mean '`await using`' rather than 'using'?*
+- [**CS8647**](#using-variable-scope-and-control-flow): *A using variable cannot be used directly within a switch section (consider using braces).*
+- [**CS8648**](#using-variable-scope-and-control-flow): *A `goto` cannot jump to a location after a using declaration.*
+- [**CS8649**](#using-variable-scope-and-control-flow): *A `goto` cannot jump to a location before a using declaration within the same block.*
+- [**CS9229**](#incorrect-using-declaration): *Modifiers cannot be placed on using declarations.*
 
 ## Implementing IDisposable and IAsyncDisposable
 
@@ -32,14 +54,14 @@ The following compiler errors and warnings indicate issues with implementing or 
 - **CS8417**: *Type used in an asynchronous `using` statement must implement '`System.IAsyncDisposable`' or implement a suitable '`DisposeAsync`' method. Did you mean '`using`' rather than '`await using`'?*
 - **CS8418**: *Type used in a using statement must implement '`System.IDisposable`'. Did you mean '`await using`' rather than '`using`'?*
 
-The using statement ensures proper disposal of resources at the end of the `using` block. To use a type with a `using` statement, it must implement the appropriate disposal interface. For synchronous `using` statements, the type must implement `System.IDisposable`. For asynchronous `await using` statements, the type must implement `System.IAsyncDisposable`.
+The [using statement](../statements/using.md) ensures proper disposal of resources at the end of the `using` block. To use a type with a `using` statement, it must implement the appropriate disposal interface. For synchronous `using` statements, the type must implement <xref:System.IDisposable>. For asynchronous `await using` statements, the type must implement <xref:System.IAsyncDisposable>.
 
-- **Cannot call Finalize directly (CS0245)**: You can't directly call a destructor or the `System.Object.Finalize*` method. The garbage collector automatically invokes finalizers when objects are no longer referenced. For deterministic cleanup, implement `System.IDisposable` and call the `Dispose` method instead.
-- **Type must implement IDisposable (CS1674)**: Only types that implement `System.IDisposable` can be used in a `using` statement. Value types don't implement this interface, and generic type parameters without proper constraints can't be assumed to be disposable. Apply a type constraint like `where T : IDisposable` when working with generic types.
-- **Type must implement IAsyncDisposable (CS8410)**: Types used with `await using` must implement `System.IAsyncDisposable` or provide a suitable `DisposeAsync` method. If your type doesn't support asynchronous disposal, use a synchronous `using` statement instead or implement the required interface.
-- **Mismatched disposal pattern (CS8417, CS8418)**: CS8417 occurs when you use `await using` with a type that only implements `System.IDisposable`. CS8418 occurs when you use synchronous `using` with a type that only implements `System.IAsyncDisposable`. Match the `using` keyword to the interface your type implements, or implement both interfaces if you need to support both patterns.
+- **Cannot call Finalize directly (CS0245)**: You can't directly call a destructor or the <xref:System.Object.Finalize*?displayProperty=nameWithType> method. The garbage collector automatically invokes finalizers when objects are no longer referenced. For deterministic cleanup, implement <xref:System.IDisposable> and call the `Dispose` method instead.
+- **Type must implement IDisposable (CS1674)**: Only types that implement <xref:System.IDisposable> can be used in a `using` statement. Value types don't implement this interface, and generic type parameters without proper constraints can't be assumed to be disposable. Apply a type constraint like `where T : IDisposable` when working with generic types.
+- **Type must implement IAsyncDisposable (CS8410)**: Types used with `await using` must implement <xref:System.IAsyncDisposable> or provide a suitable `DisposeAsync` method. If your type doesn't support asynchronous disposal, use a synchronous `using` statement instead or implement the required interface.
+- **Mismatched disposal pattern (CS8417, CS8418)**: CS8417 occurs when you use `await using` with a type that only implements <xref:System.IDisposable>. CS8418 occurs when you use synchronous `using` with a type that only implements <xref:System.IAsyncDisposable>. Match the `using` keyword to the interface your type implements, or implement both interfaces if you need to support both patterns.
 
-For more information, see Finalizers, Implement a Dispose method, and Implement a DisposeAsync method.
+For more information, see [Finalizers](../../programming-guide/classes-and-structs/finalizers.md), [Implement a Dispose method](../../../standard/garbage-collection/implementing-dispose.md), and [Implement a DisposeAsync method](../../../standard/garbage-collection/implementing-disposeasync.md).
 
 ## Using variable scope and control flow
 
@@ -58,7 +80,7 @@ Variables declared with `using` have specific scoping rules that prevent resourc
 
 - **Goto statements and using declarations (CS8648, CS8649)**: You can't use `goto` statements to jump over `using` declarations because jumping would skip proper resource management. CS8648 occurs when jumping forward over a `using` declaration, and CS8649 occurs when jumping backward to a location before a `using` declaration. Restructure your code to use structured control flow like loops, or move the `using` declaration outside the jump target.
 
-For more information, see using statement.
+For more information, see [using statement](../statements/using.md).
 
 ## Incorrect `using` declaration
 
@@ -101,4 +123,4 @@ To correct this error, remove the modifier from the `using` declaration:
 using var resource = new Resource();
 ```
 
-For more information, see using statement.
+For more information, see [using statement](../statements/using.md).

@@ -1,25 +1,22 @@
----
-title: "vitest/require-top-level-describe"
-tool: "eslint-vitest"
-version: "1.6"
-source: "https://github.com/vitest-dev/eslint-plugin-vitest/blob/c5df1054a25044a7ca5baf07461b7aee1f15f5f2/docs/rules/require-top-level-describe.md"
-commit: "c5df1054a25044a7ca5baf07461b7aee1f15f5f2"
-license: "MIT"
----
-
 # vitest/require-top-level-describe
 
 📝 Enforce that all tests are in a top-level describe.
 
 ⚠️ This rule _warns_ in the 🌐 `all` config.
 
+<!-- end auto-generated rule header -->
+
 This rule triggers warning if a test case (`test` and `it`) or a hook (`beforeAll`, `beforeEach`, `afterEach`, `afterAll`) is not located in a top-level `describe` block.
 
 ## Options
 
+<!-- begin auto-generated rule options list -->
+
 | Name                           | Description                                                   | Type   | Default    |
 | :----------------------------- | :------------------------------------------------------------ | :----- | :--------- |
 | `maxNumberOfTopLevelDescribes` | Maximum number of `describe` blocks allowed at the top level. | Number | `Infinity` |
+
+<!-- end auto-generated rule options list -->
 
 This rule accepts an object with the following properties:
 

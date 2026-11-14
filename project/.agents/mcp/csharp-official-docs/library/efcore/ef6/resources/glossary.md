@@ -1,12 +1,10 @@
 ---
-title: "Entity Framework Glossary - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/resources/glossary.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Entity Framework Glossary - EF6
+description: Entity Framework 6 Glossary
+author: SamMonoRT
+ms.date: 10/23/2016
+uid: ef6/resources/glossary
 ---
-
 # Entity Framework Glossary
 ## Code First
 Creating an Entity Framework model using code. The model can target an existing database or a new database.
@@ -38,7 +36,7 @@ A pattern of loading related data where related objects are loaded by calling an
 ## Fluent API
 An API that can be used to configure a Code First model.
 
-## Foreign key <example-value>
+## Foreign key association
 An association between entities where a property that represents the foreign key is included in the class of the dependent entity. For example, Product contains a CategoryId property.
 
 ## Identifying relationship
@@ -57,7 +55,7 @@ Creating an Entity Framework model, using the EF Designer, that is then used to 
 A property of an entity that references another entity. For example, Product contains a Category navigation property and Category contains a Products navigation property.
 
 ## POCO
-Acronym for Plain-Old CLR Object. A simple user class that has no dependencies with any framework. In the context of EF, an entity class that does not derive from EntityObject, implements any interfaces or carries any attributes defined in EF. Such entity classes that are decoupled from the persistence framework are also said to be "persistence ignorant".
+Acronym for Plain-Old CLR Object. A simple user class that has no dependencies with any framework. In the context of EF, an entity class that does not derive from EntityObject, implements any interfaces or carries any attributes defined in EF. Such entity classes that are decoupled from the persistence framework are also said to be "persistence ignorant".  
 
 ## Relationship inverse
 The opposite end of a relationship, for example, product.Category and category.Product.

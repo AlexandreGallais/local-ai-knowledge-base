@@ -1,13 +1,12 @@
 ---
-title: "no-div-regex"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-div-regex.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-div-regex
+rule_type: suggestion
+related_rules:
+- no-control-regex
+- no-regex-spaces
 ---
 
-# no-div-regex
+
 
 Characters `/=` at the beginning of a regular expression literal can be confused with a division assignment operator.
 
@@ -21,7 +20,7 @@ This rule forbids equal signs (`=`) after the slash (`/`) at the beginning of a 
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint no-div-regex: "error"*/
@@ -29,15 +28,19 @@ Examples of **incorrect** code for this rule:
 function bar() { return /=foo/; }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint no-div-regex: "error"*/
 
 function bar() { return /[=]foo/; }
 ```
+
+:::
 
 ## Options
 

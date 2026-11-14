@@ -1,39 +1,31 @@
----
-title: "Executors class (java.util.concurrent) (part 1 of 2)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/Executors.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Executors class (java.util.concurrent)
 
 ```java
 public final class Executors
 ```
 
-Factory and utility methods for `Executor`, `ExecutorService`, `ScheduledExecutorService`, `ThreadFactory`, and `Callable` classes defined in this
+Factory and utility methods for {@link Executor}, {@link
+ExecutorService}, {@link ScheduledExecutorService}, {@link
+ThreadFactory}, and {@link Callable} classes defined in this
 package. This class supports the following kinds of methods:
 
-- Methods that create and return an `ExecutorService`
+<ul>
+  <li>Methods that create and return an {@link ExecutorService}
       set up with commonly useful configuration settings.
-
-- Methods that create and return a `ScheduledExecutorService`
+  <li>Methods that create and return a {@link ScheduledExecutorService}
       set up with commonly useful configuration settings.
-
-- Methods that create and return a "wrapped" ExecutorService, that
+  <li>Methods that create and return a "wrapped" ExecutorService, that
       disables reconfiguration by making implementation-specific methods
       inaccessible.
-
-- Methods that create and return a `ThreadFactory`
+  <li>Methods that create and return a {@link ThreadFactory}
       that sets newly created threads to a known state.
-
-- Methods that create and return a `Callable`
+  <li>Methods that create and return a {@link Callable}
       out of other closure-like forms, so they can be used
-      in execution methods requiring `Callable`.
+      in execution methods requiring {@code Callable}.
+</ul>
 
-**Since:** 1.5
+@since 1.5
+@author Doug Lea
 
 ## Executors.newFixedThreadPool(int)
 
@@ -43,23 +35,17 @@ public static ExecutorService newFixedThreadPool(int nThreads)
 
 Creates a thread pool that reuses a fixed number of threads
 operating off a shared unbounded queue.  At any point, at most
-`nThreads` threads will be active processing tasks.
+{@code nThreads} threads will be active processing tasks.
 If additional tasks are submitted when all threads are active,
 they will wait in the queue until a thread is available.
 If any thread terminates due to a failure during execution
 prior to shutdown, a new one will take its place if needed to
 execute subsequent tasks.  The threads in the pool will exist
-until it is explicitly shutdown.
+until it is explicitly {@link ExecutorService#shutdown shutdown}.
 
-Parameters:
-
-- `nThreads`: the number of threads in the pool
-
-**Returns:** the newly created thread pool
-
-Throws:
-
-- `IllegalArgumentException`: if `nThreads <= 0`
+@param nThreads the number of threads in the pool
+@return the newly created thread pool
+@throws IllegalArgumentException if {@code nThreads <= 0}
 
 ## Executors.newWorkStealingPool(int)
 
@@ -76,17 +62,10 @@ grow and shrink dynamically. A work-stealing pool makes no
 guarantees about the order in which submitted tasks are
 executed.
 
-Parameters:
-
-- `parallelism`: the targeted parallelism level
-
-**Returns:** the newly created thread pool
-
-**Since:** 1.8
-
-Throws:
-
-- `IllegalArgumentException`: if `parallelism <= 0`
+@param parallelism the targeted parallelism level
+@return the newly created thread pool
+@throws IllegalArgumentException if {@code parallelism <= 0}
+@since 1.8
 
 ## Executors.newWorkStealingPool()
 
@@ -95,14 +74,12 @@ public static ExecutorService newWorkStealingPool()
 ```
 
 Creates a work-stealing thread pool using the number of
-available processors
+{@linkplain Runtime#availableProcessors available processors}
 as its target parallelism level.
 
-**Returns:** the newly created thread pool
-
-**See also:** #newWorkStealingPool(int)
-
-**Since:** 1.8
+@return the newly created thread pool
+@see #newWorkStealingPool(int)
+@since 1.8
 
 ## Executors.newFixedThreadPool(int, ThreadFactory)
 
@@ -113,25 +90,20 @@ public static ExecutorService newFixedThreadPool(int nThreads, ThreadFactory thr
 Creates a thread pool that reuses a fixed number of threads
 operating off a shared unbounded queue, using the provided
 ThreadFactory to create new threads when needed.  At any point,
-at most `nThreads` threads will be active processing
+at most {@code nThreads} threads will be active processing
 tasks.  If additional tasks are submitted when all threads are
 active, they will wait in the queue until a thread is
 available.  If any thread terminates due to a failure during
 execution prior to shutdown, a new one will take its place if
 needed to execute subsequent tasks.  The threads in the pool will
-exist until it is explicitly shutdown.
+exist until it is explicitly {@link ExecutorService#shutdown
+shutdown}.
 
-Parameters:
-
-- `nThreads`: the number of threads in the pool
-- `threadFactory`: the factory to use when creating new threads
-
-**Returns:** the newly created thread pool
-
-Throws:
-
-- `NullPointerException`: if threadFactory is null
-- `IllegalArgumentException`: if `nThreads <= 0`
+@param nThreads the number of threads in the pool
+@param threadFactory the factory to use when creating new threads
+@return the newly created thread pool
+@throws NullPointerException if threadFactory is null
+@throws IllegalArgumentException if {@code nThreads <= 0}
 
 ## Executors.newSingleThreadExecutor()
 
@@ -146,10 +118,10 @@ shutdown, a new one will take its place if needed to execute
 subsequent tasks.)  Tasks are guaranteed to execute
 sequentially, and no more than one task will be active at any
 given time. Unlike the otherwise equivalent
-`newFixedThreadPool(1)` the returned executor is
+{@code newFixedThreadPool(1)} the returned executor is
 guaranteed not to be reconfigurable to use additional threads.
 
-**Returns:** the newly created single-threaded Executor
+@return the newly created single-threaded Executor
 
 ## Executors.newSingleThreadExecutor(ThreadFactory)
 
@@ -160,19 +132,13 @@ public static ExecutorService newSingleThreadExecutor(ThreadFactory threadFactor
 Creates an Executor that uses a single worker thread operating
 off an unbounded queue, and uses the provided ThreadFactory to
 create a new thread when needed. Unlike the otherwise
-equivalent `newFixedThreadPool(1, threadFactory)` the
+equivalent {@code newFixedThreadPool(1, threadFactory)} the
 returned executor is guaranteed not to be reconfigurable to use
 additional threads.
 
-Parameters:
-
-- `threadFactory`: the factory to use when creating new threads
-
-**Returns:** the newly created single-threaded Executor
-
-Throws:
-
-- `NullPointerException`: if threadFactory is null
+@param threadFactory the factory to use when creating new threads
+@return the newly created single-threaded Executor
+@throws NullPointerException if threadFactory is null
 
 ## Executors.newCachedThreadPool()
 
@@ -184,16 +150,16 @@ Creates a thread pool that creates new threads as needed, but
 will reuse previously constructed threads when they are
 available.  These pools will typically improve the performance
 of programs that execute many short-lived asynchronous tasks.
-Calls to `execute` will reuse previously constructed
+Calls to {@code execute} will reuse previously constructed
 threads if available. If no existing thread is available, a new
 thread will be created and added to the pool. Threads that have
 not been used for sixty seconds are terminated and removed from
 the cache. Thus, a pool that remains idle for long enough will
 not consume any resources. Note that pools with similar
 properties but different details (for example, timeout parameters)
-may be created using `ThreadPoolExecutor` constructors.
+may be created using {@link ThreadPoolExecutor} constructors.
 
-**Returns:** the newly created thread pool
+@return the newly created thread pool
 
 ## Executors.newCachedThreadPool(ThreadFactory)
 
@@ -206,15 +172,9 @@ will reuse previously constructed threads when they are
 available, and uses the provided
 ThreadFactory to create new threads when needed.
 
-Parameters:
-
-- `threadFactory`: the factory to use when creating new threads
-
-**Returns:** the newly created thread pool
-
-Throws:
-
-- `NullPointerException`: if threadFactory is null
+@param threadFactory the factory to use when creating new threads
+@return the newly created thread pool
+@throws NullPointerException if threadFactory is null
 
 ## Executors.newThreadPerTaskExecutor(ThreadFactory)
 
@@ -225,21 +185,15 @@ public static ExecutorService newThreadPerTaskExecutor(ThreadFactory threadFacto
 Creates an Executor that starts a new Thread for each task.
 The number of threads created by the Executor is unbounded.
 
- Invoking cancel(true) on a Future representing the pending result of a task submitted to
-the Executor will interrupt the thread
+<p> Invoking {@link Future#cancel(boolean) cancel(true)} on a {@link
+Future Future} representing the pending result of a task submitted to
+the Executor will {@link Thread#interrupt() interrupt} the thread
 executing the task.
 
-Parameters:
-
-- `threadFactory`: the factory to use when creating new threads
-
-**Returns:** a new executor that creates a new Thread for each task
-
-**Since:** 21
-
-Throws:
-
-- `NullPointerException`: if threadFactory is null
+@param threadFactory the factory to use when creating new threads
+@return a new executor that creates a new Thread for each task
+@throws NullPointerException if threadFactory is null
+@since 21
 
 ## Executors.newVirtualThreadPerTaskExecutor()
 
@@ -250,13 +204,12 @@ public static ExecutorService newVirtualThreadPerTaskExecutor()
 Creates an Executor that starts a new virtual Thread for each task.
 The number of threads created by the Executor is unbounded.
 
- This method is equivalent to invoking
-`newThreadPerTaskExecutor(ThreadFactory)` with a thread factory
+<p> This method is equivalent to invoking
+{@link #newThreadPerTaskExecutor(ThreadFactory)} with a thread factory
 that creates virtual threads.
 
-**Returns:** a new executor that creates a new virtual Thread for each task
-
-**Since:** 21
+@return a new executor that creates a new virtual Thread for each task
+@since 21
 
 ## Executors.newSingleThreadScheduledExecutor()
 
@@ -272,10 +225,10 @@ shutdown, a new one will take its place if needed to execute
 subsequent tasks.)  Tasks are guaranteed to execute
 sequentially, and no more than one task will be active at any
 given time. Unlike the otherwise equivalent
-`newScheduledThreadPool(1)` the returned executor is
+{@code newScheduledThreadPool(1)} the returned executor is
 guaranteed not to be reconfigurable to use additional threads.
 
-**Returns:** the newly created scheduled executor
+@return the newly created scheduled executor
 
 ## Executors.newSingleThreadScheduledExecutor(ThreadFactory)
 
@@ -290,19 +243,13 @@ during execution prior to shutdown, a new one will take its
 place if needed to execute subsequent tasks.)  Tasks are
 guaranteed to execute sequentially, and no more than one task
 will be active at any given time. Unlike the otherwise
-equivalent `newScheduledThreadPool(1, threadFactory)`
+equivalent {@code newScheduledThreadPool(1, threadFactory)}
 the returned executor is guaranteed not to be reconfigurable to
 use additional threads.
 
-Parameters:
-
-- `threadFactory`: the factory to use when creating new threads
-
-**Returns:** the newly created scheduled executor
-
-Throws:
-
-- `NullPointerException`: if threadFactory is null
+@param threadFactory the factory to use when creating new threads
+@return the newly created scheduled executor
+@throws NullPointerException if threadFactory is null
 
 ## Executors.newScheduledThreadPool(int)
 
@@ -312,16 +259,10 @@ public static ScheduledExecutorService newScheduledThreadPool(int corePoolSize)
 
 Creates a thread pool that can schedule commands to run after a
 given delay, or to execute periodically.
-
-Parameters:
-
-- `corePoolSize`: the number of threads to keep in the pool, even if they are idle
-
-**Returns:** the newly created scheduled thread pool
-
-Throws:
-
-- `IllegalArgumentException`: if `corePoolSize < 0`
+@param corePoolSize the number of threads to keep in the pool,
+even if they are idle
+@return the newly created scheduled thread pool
+@throws IllegalArgumentException if {@code corePoolSize < 0}
 
 ## Executors.newScheduledThreadPool(int, ThreadFactory)
 
@@ -331,18 +272,13 @@ public static ScheduledExecutorService newScheduledThreadPool( int corePoolSize,
 
 Creates a thread pool that can schedule commands to run after a
 given delay, or to execute periodically.
-
-Parameters:
-
-- `corePoolSize`: the number of threads to keep in the pool, even if they are idle
-- `threadFactory`: the factory to use when the executor creates a new thread
-
-**Returns:** the newly created scheduled thread pool
-
-Throws:
-
-- `IllegalArgumentException`: if `corePoolSize < 0`
-- `NullPointerException`: if threadFactory is null
+@param corePoolSize the number of threads to keep in the pool,
+even if they are idle
+@param threadFactory the factory to use when the executor
+creates a new thread
+@return the newly created scheduled thread pool
+@throws IllegalArgumentException if {@code corePoolSize < 0}
+@throws NullPointerException if threadFactory is null
 
 ## Executors.unconfigurableExecutorService(ExecutorService)
 
@@ -350,20 +286,14 @@ Throws:
 public static ExecutorService unconfigurableExecutorService(ExecutorService executor)
 ```
 
-Returns an object that delegates all defined `ExecutorService` methods to the given executor, but not any
+Returns an object that delegates all defined {@link
+ExecutorService} methods to the given executor, but not any
 other methods that might otherwise be accessible using
 casts. This provides a way to safely "freeze" configuration and
 disallow tuning of a given concrete implementation.
-
-Parameters:
-
-- `executor`: the underlying implementation
-
-**Returns:** an `ExecutorService` instance
-
-Throws:
-
-- `NullPointerException`: if executor null
+@param executor the underlying implementation
+@return an {@code ExecutorService} instance
+@throws NullPointerException if executor null
 
 ## Executors.unconfigurableScheduledExecutorService(ScheduledExecutorService)
 
@@ -371,20 +301,14 @@ Throws:
 public static ScheduledExecutorService unconfigurableScheduledExecutorService(ScheduledExecutorService executor)
 ```
 
-Returns an object that delegates all defined `ScheduledExecutorService` methods to the given executor, but
+Returns an object that delegates all defined {@link
+ScheduledExecutorService} methods to the given executor, but
 not any other methods that might otherwise be accessible using
 casts. This provides a way to safely "freeze" configuration and
 disallow tuning of a given concrete implementation.
-
-Parameters:
-
-- `executor`: the underlying implementation
-
-**Returns:** a `ScheduledExecutorService` instance
-
-Throws:
-
-- `NullPointerException`: if executor null
+@param executor the underlying implementation
+@return a {@code ScheduledExecutorService} instance
+@throws NullPointerException if executor null
 
 ## Executors.defaultThreadFactory()
 
@@ -394,17 +318,16 @@ public static ThreadFactory defaultThreadFactory()
 
 Returns a default thread factory used to create new threads.
 This factory creates all new threads used by an Executor in the
-same `ThreadGroup`. It uses the group of the thread
-invoking this `defaultThreadFactory` method. Each new
+same {@link ThreadGroup}. It uses the group of the thread
+invoking this {@code defaultThreadFactory} method. Each new
 thread is created as a non-daemon thread with priority set to
-the smaller of `Thread.NORM_PRIORITY` and the maximum
+the smaller of {@code Thread.NORM_PRIORITY} and the maximum
 priority permitted in the thread group.  New threads have names
-accessible via `Thread.getName` of
-*pool-N-thread-M*, where *N* is the sequence
-number of this factory, and *M* is the sequence number
+accessible via {@link Thread#getName} of
+<em>pool-N-thread-M</em>, where <em>N</em> is the sequence
+number of this factory, and <em>M</em> is the sequence number
 of the thread created by this factory.
-
-**Returns:** a thread factory
+@return a thread factory
 
 ## Executors.privilegedThreadFactory()
 
@@ -415,30 +338,31 @@ public static ThreadFactory privilegedThreadFactory()
 Returns a thread factory used to create new threads that have
 the current context class loader as the context class loader.
 
-This factory creates threads with the same settings as `Executors.defaultThreadFactory`, additionally setting the
+This factory creates threads with the same settings as {@link
+Executors#defaultThreadFactory}, additionally setting the
 contextClassLoader of new threads to
 be the same as the thread invoking this
-`privilegedThreadFactory` method.
+{@code privilegedThreadFactory} method.
 
-Note that while tasks running within such threads will have the
+<p>Note that while tasks running within such threads will have the
 same class loader as the current thread, they need not have the same
-`ThreadLocal` or `InheritableThreadLocal` values. If
+{@link ThreadLocal} or {@link InheritableThreadLocal} values. If
 necessary, particular values of thread locals can be set or reset
-before any task runs in `ThreadPoolExecutor` subclasses using
-Runnable).
+before any task runs in {@link ThreadPoolExecutor} subclasses using
+{@link ThreadPoolExecutor#beforeExecute(Thread, Runnable)}.
 Also, if it is necessary to initialize worker threads to have
 the same InheritableThreadLocal settings as some other
 designated thread, you can create a custom ThreadFactory in
 which that thread waits for and services requests to create
 others that will inherit its values.
 
-**Returns:** a thread factory
+@return a thread factory
 
-**Deprecated:** This method originally returned a thread factory that
+@deprecated This method originally returned a thread factory that
       created new threads that had the same access control context
       as the current thread. Access control contexts were
       only useful in conjunction with
-      the Security Manager, which is no
+      {@linkplain SecurityManager the Security Manager}, which is no
       longer supported. There is no replacement for the Security Manager
       or this method.
 
@@ -448,22 +372,15 @@ others that will inherit its values.
 public static <T> Callable<T> callable(Runnable task, T result)
 ```
 
-Returns a `Callable` object that, when
+Returns a {@link Callable} object that, when
 called, runs the given task and returns the given result.  This
 can be useful when applying methods requiring a
-`Callable` to an otherwise resultless action.
-
-Parameters:
-
-- `task`: the task to run
-- `result`: the result to return
-- `<T>`: the type of the result
-
-**Returns:** a callable object
-
-Throws:
-
-- `NullPointerException`: if task null
+{@code Callable} to an otherwise resultless action.
+@param task the task to run
+@param result the result to return
+@param <T> the type of the result
+@return a callable object
+@throws NullPointerException if task null
 
 ## Executors.callable(Runnable)
 
@@ -471,15 +388,79 @@ Throws:
 public static Callable<Object> callable(Runnable task)
 ```
 
-Returns a `Callable` object that, when
-called, runs the given task and returns `null`.
+Returns a {@link Callable} object that, when
+called, runs the given task and returns {@code null}.
+@param task the task to run
+@return a callable object
+@throws NullPointerException if task null
 
-Parameters:
+## Executors.callable(PrivilegedAction<?>)
 
-- `task`: the task to run
+```java
+public static Callable<Object> callable(final PrivilegedAction<?> action)
+```
 
-**Returns:** a callable object
+Returns a {@link Callable} object that, when
+called, runs the given privileged action and returns its result.
+@param action the privileged action to run
+@return a callable object
+@throws NullPointerException if action null
 
-Throws:
+## Executors.callable(PrivilegedExceptionAction<?>)
 
-- `NullPointerException`: if task null
+```java
+public static Callable<Object> callable(final PrivilegedExceptionAction<?> action)
+```
+
+Returns a {@link Callable} object that, when
+called, runs the given privileged exception action and returns
+its result.
+@param action the privileged exception action to run
+@return a callable object
+@throws NullPointerException if action null
+
+## Executors.privilegedCallable(Callable<T>)
+
+```java
+public static <T> Callable<T> privilegedCallable(Callable<T> callable)
+```
+
+Returns a {@link Callable} object that will, when called,
+execute the given {@code callable} and return its result.
+
+@param callable the underlying task
+@param <T> the type of the callable's result
+@return a callable object
+@throws NullPointerException if callable null
+
+@deprecated This method originally returned a {@code Callable} object
+      that when called, executed the given {@code callable} under the
+      current access control context. Access control contexts were
+      only useful in conjunction with
+      {@linkplain SecurityManager the Security Manager}, which is no
+      longer supported. There is no replacement for the Security Manager
+      or this method.
+
+## Executors.privilegedCallableUsingCurrentClassLoader(Callable<T>)
+
+```java
+public static <T> Callable<T> privilegedCallableUsingCurrentClassLoader(Callable<T> callable)
+```
+
+Returns a {@link Callable} object that will, when called,
+execute the given {@code callable} with the current context
+class loader as the context class loader.
+
+@param callable the underlying task
+@param <T> the type of the callable's result
+@return a callable object
+@throws NullPointerException if callable null
+
+@deprecated This method originally returned a {@code Callable} object
+      that when called, executed the given {@code callable} under the
+      current access control context, with the current context class
+      loader as the context class loader. Access control contexts were
+      only useful in conjunction with
+      {@linkplain SecurityManager the Security Manager}, which is no
+      longer supported. There is no replacement for the Security Manager
+      or this method.

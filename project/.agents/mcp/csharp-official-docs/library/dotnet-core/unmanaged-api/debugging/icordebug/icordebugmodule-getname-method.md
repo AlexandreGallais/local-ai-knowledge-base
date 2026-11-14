@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugModule::GetName Method"
 title: "ICorDebugModule::GetName Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmodule-getname-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugModule.GetName"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugModule::GetName"
+helpviewer_keywords:
+  - "ICorDebugModule::GetName method [.NET debugging]"
+  - "GetName method, ICorDebugModule interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugModule::GetName Method
 
 Gets the file name of the module.
@@ -38,10 +47,12 @@ The `GetName` method returns an S_OK HRESULT if the module's file name matches t
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
  **Library:** CorGuids.lib
 
  **.NET versions:** Available since .NET Framework 1.0
+
+## See also

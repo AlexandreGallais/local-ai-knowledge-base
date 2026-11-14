@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: Fallback file endpoints"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/7/fallback-file-endpoints.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in ASP.NET Core 7.0 where endpoints configured with 'MapFallbackToFile()' now only match 'HEAD' and 'GET' requests.
+ms.date: 10/10/2022
+ms.custom: https://github.com/aspnet/Announcements/issues/495
 ---
-
 # Fallback file endpoints
 
-The `Microsoft.AspNetCore.Mvc.ConsumesAttribute` attribute allows controller actions to specify their supported content types. Starting in .NET 6, if a fallback file endpoint was configured, it could match routes that were discarded because the request had a different content type than what was specified in an action's `Microsoft.AspNetCore.Mvc.ConsumesAttribute`. The .NET 6 behavior was an undesirable change from the .NET 5 behavior. This breaking change partially addresses the issue by making fallback file endpoints only match `GET` and `HEAD` requests.
+The <xref:Microsoft.AspNetCore.Mvc.ConsumesAttribute> attribute allows controller actions to specify their supported content types. Starting in .NET 6, if a fallback file endpoint was configured, it could match routes that were discarded because the request had a different content type than what was specified in an action's <xref:Microsoft.AspNetCore.Mvc.ConsumesAttribute>. The .NET 6 behavior was an undesirable change from the .NET 5 behavior. This breaking change partially addresses the issue by making fallback file endpoints only match `GET` and `HEAD` requests.
 
 ## Version introduced
 
@@ -17,15 +14,15 @@ ASP.NET Core 7.0 RC 2
 
 ## Previous behavior
 
-Endpoints configured with `Microsoft.AspNetCore.Builder.StaticFilesEndpointRouteBuilderExtensions.MapFallbackToFile*` matched requests made with any request method.
+Endpoints configured with <xref:Microsoft.AspNetCore.Builder.StaticFilesEndpointRouteBuilderExtensions.MapFallbackToFile*?displayProperty=nameWithType> matched requests made with any request method.
 
 ## New behavior
 
-Endpoints configured with `Microsoft.AspNetCore.Builder.StaticFilesEndpointRouteBuilderExtensions.MapFallbackToFile*` only match `HEAD` and `GET` requests.
+Endpoints configured with <xref:Microsoft.AspNetCore.Builder.StaticFilesEndpointRouteBuilderExtensions.MapFallbackToFile*?displayProperty=nameWithType> only match `HEAD` and `GET` requests.
 
 ## Type of breaking change
 
-This change can affect binary compatibility.
+This change can affect [binary compatibility](/dotnet/core/compatibility/categories#binary-compatibility).
 
 ## Reason for change
 
@@ -42,4 +39,4 @@ endpoints.MapFallbackToFile("index.html")
 
 ## Affected APIs
 
-- `Microsoft.AspNetCore.Builder.StaticFilesEndpointRouteBuilderExtensions.MapFallbackToFile*`
+- <xref:Microsoft.AspNetCore.Builder.StaticFilesEndpointRouteBuilderExtensions.MapFallbackToFile*?displayProperty=fullName>

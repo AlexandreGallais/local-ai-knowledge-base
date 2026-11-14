@@ -1,99 +1,63 @@
 ---
 title: "Timers"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/threading/timers.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn what .NET timers to use in a multithreaded environment.
+ms.date: "07/03/2018"
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "threading [.NET], timers"
+  - "timers, about timers"
+author: "pkulikov"
 ---
-
 # Timers
 
 .NET provides three timers to use in a multithreaded environment:
 
-- `System.Threading.Timer`, which executes a single callback method on a `System.Threading.ThreadPool` thread at regular intervals.
-- `System.Timers.Timer`, which by default raises an event on a `System.Threading.ThreadPool` thread at regular intervals.
-- `System.Threading.PeriodicTimer`, which allows the caller to perform work after awaiting individual ticks of the timer.
+- <xref:System.Threading.Timer?displayProperty=nameWithType>, which executes a single callback method on a <xref:System.Threading.ThreadPool> thread at regular intervals.
+- <xref:System.Timers.Timer?displayProperty=nameWithType>, which by default raises an event on a <xref:System.Threading.ThreadPool> thread at regular intervals.
+- <xref:System.Threading.PeriodicTimer?displayProperty=nameWithType>, which allows the caller to perform work after awaiting individual ticks of the timer.
 
-> **Note:**
+> [!NOTE]
 > Some .NET implementations may include additional timers:
 >
-> - `System.Windows.Forms.Timer`: a Windows Forms component that fires an event at regular intervals. The component has no user interface and is designed for use in a single-threaded environment.
-> - `System.Web.UI.Timer`: an ASP.NET component that performs asynchronous or synchronous web page postbacks at a regular interval.
-> - `System.Windows.Threading.DispatcherTimer`: a timer that is integrated into the `System.Windows.Threading.Dispatcher` queue which is processed at a specified interval of time and at a specified priority.
+> - <xref:System.Windows.Forms.Timer?displayProperty=nameWithType>: a Windows Forms component that fires an event at regular intervals. The component has no user interface and is designed for use in a single-threaded environment.
+> - <xref:System.Web.UI.Timer?displayProperty=nameWithType>: an ASP.NET component that performs asynchronous or synchronous web page postbacks at a regular interval.
+> - <xref:System.Windows.Threading.DispatcherTimer?displayProperty=nameWithType>: a timer that is integrated into the <xref:System.Windows.Threading.Dispatcher> queue which is processed at a specified interval of time and at a specified priority.
 
 ## The System.Threading.Timer class
 
-The `System.Threading.Timer` class enables you to continuously call a delegate at specified time intervals. You can also use this class to schedule a single call to a delegate in a specified time interval. The delegate is executed on a `System.Threading.ThreadPool` thread.
+The <xref:System.Threading.Timer?displayProperty=nameWithType> class enables you to continuously call a delegate at specified time intervals. You can also use this class to schedule a single call to a delegate in a specified time interval. The delegate is executed on a <xref:System.Threading.ThreadPool> thread.
 
-When you create a `System.Threading.Timer` object, you specify a `System.Threading.TimerCallback` delegate that defines the callback method, an optional state object that is passed to the callback, the amount of time to delay before the first invocation of the callback, and the time interval between callback invocations. To cancel a pending timer, call the `System.Threading.Timer.Dispose*` method.
+When you create a <xref:System.Threading.Timer?displayProperty=nameWithType> object, you specify a <xref:System.Threading.TimerCallback> delegate that defines the callback method, an optional state object that is passed to the callback, the amount of time to delay before the first invocation of the callback, and the time interval between callback invocations. To cancel a pending timer, call the <xref:System.Threading.Timer.Dispose*?displayProperty=nameWithType> method.
 
 The following example creates a timer that calls the provided delegate for the first time after one second (1000 milliseconds) and then calls it every two seconds. The state object in the example is used to count how many times the delegate is called. The timer is stopped when the delegate has been called at least 10 times.
-```csharp
-using System;
-using System.Threading;
-using System.Threading.Tasks;
+[!code-csharp[System.Threading.Timer#2](../../../samples/snippets/csharp/VS_Snippets_CLR_System/system.Threading.Timer/CS/source2.cs#2)]
+[!code-vb[System.Threading.Timer#2](../../../samples/snippets/visualbasic/VS_Snippets_CLR_System/system.Threading.Timer/VB/source2.vb#2)]
 
-class Program
-{
-    private static Timer timer;
-
-    static void Main(string[] args)
-    {
-        var timerState = new TimerState { Counter = 0 };
-
-        timer = new Timer(
-            callback: new TimerCallback(TimerTask),
-            state: timerState,
-            dueTime: 1000,
-            period: 2000);
-
-        while (timerState.Counter <= 10)
-        {
-            Task.Delay(1000).Wait();
-        }
-
-        timer.Dispose();
-        Console.WriteLine($"{DateTime.Now:HH:mm:ss.fff}: done.");
-    }
-
-    private static void TimerTask(object timerState)
-    {
-        Console.WriteLine($"{DateTime.Now:HH:mm:ss.fff}: starting a new callback.");
-        var state = timerState as TimerState;
-        Interlocked.Increment(ref state.Counter);
-    }
-
-    class TimerState
-    {
-        public int Counter;
-    }
-}
-```
-
-For more information and examples, see `System.Threading.Timer`.
+For more information and examples, see <xref:System.Threading.Timer?displayProperty=nameWithType>.
 
 ## The System.Timers.Timer class
 
-Another timer that can be used in a multithreaded environment is `System.Timers.Timer` that by default raises an event on a `System.Threading.ThreadPool` thread.
+Another timer that can be used in a multithreaded environment is <xref:System.Timers.Timer?displayProperty=nameWithType> that by default raises an event on a <xref:System.Threading.ThreadPool> thread.
 
-When you create a `System.Timers.Timer` object, you may specify the time interval in which to raise an `System.Timers.Timer.Elapsed` event. Use the `System.Timers.Timer.Enabled` property to indicate if a timer should raise an `System.Timers.Timer.Elapsed` event. If you need an `System.Timers.Timer.Elapsed` event to be raised only once after the specified interval has elapsed, set `System.Timers.Timer.AutoReset` to `false`. The default value of the `System.Timers.Timer.AutoReset` property is `true`, which means that an `System.Timers.Timer.Elapsed` event is raised regularly at the interval defined by the `System.Timers.Timer.Interval` property.
+When you create a <xref:System.Timers.Timer?displayProperty=nameWithType> object, you may specify the time interval in which to raise an <xref:System.Timers.Timer.Elapsed> event. Use the <xref:System.Timers.Timer.Enabled> property to indicate if a timer should raise an <xref:System.Timers.Timer.Elapsed> event. If you need an <xref:System.Timers.Timer.Elapsed> event to be raised only once after the specified interval has elapsed, set <xref:System.Timers.Timer.AutoReset> to `false`. The default value of the <xref:System.Timers.Timer.AutoReset> property is `true`, which means that an <xref:System.Timers.Timer.Elapsed> event is raised regularly at the interval defined by the <xref:System.Timers.Timer.Interval> property.
 
-For more information and examples, see `System.Timers.Timer`.
+For more information and examples, see <xref:System.Timers.Timer?displayProperty=nameWithType>.
 
 ## The System.Threading.PeriodicTimer class
 
-The `System.Threading.PeriodicTimer` class enables you to await individual ticks of a specified interval, performing work after calling `System.Threading.PeriodicTimer.WaitForNextTickAsync*`.
+The <xref:System.Threading.PeriodicTimer?displayProperty=nameWithType> class enables you to await individual ticks of a specified interval, performing work after calling <xref:System.Threading.PeriodicTimer.WaitForNextTickAsync*?displayProperty=nameWithType>.
 
-When you create a `System.Threading.PeriodicTimer` object, you specify a `System.TimeSpan` that determines the length of time between each tick of the timer. Instead of passing a callback or setting an event handler as in the previous timer classes, you perform work directly in scope, awaiting `System.Threading.PeriodicTimer.WaitForNextTickAsync*` to advance the timer by the specified interval.
+When you create a <xref:System.Threading.PeriodicTimer?displayProperty=nameWithType> object, you specify a <xref:System.TimeSpan> that determines the length of time between each tick of the timer. Instead of passing a callback or setting an event handler as in the previous timer classes, you perform work directly in scope, awaiting <xref:System.Threading.PeriodicTimer.WaitForNextTickAsync*> to advance the timer by the specified interval.
 
-The `System.Threading.PeriodicTimer.WaitForNextTickAsync*` method returns a `ValueTask<bool>`; `true` upon successful firing of the timer, and `false` when the timer has been canceled by calling `System.Threading.PeriodicTimer.Dispose*`. `System.Threading.PeriodicTimer.WaitForNextTickAsync*` optionally accepts a `System.Threading.CancellationToken`, which results in a `System.Threading.Tasks.TaskCanceledException` when a cancellation has been requested.
+The <xref:System.Threading.PeriodicTimer.WaitForNextTickAsync*> method returns a [`ValueTask<bool>`](xref:System.Threading.Tasks.ValueTask`1); `true` upon successful firing of the timer, and `false` when the timer has been canceled by calling <xref:System.Threading.PeriodicTimer.Dispose*?displayProperty=nameWithType>. <xref:System.Threading.PeriodicTimer.WaitForNextTickAsync*> optionally accepts a <xref:System.Threading.CancellationToken>, which results in a <xref:System.Threading.Tasks.TaskCanceledException> when a cancellation has been requested.
 
-For more information, see `System.Threading.PeriodicTimer`.
+For more information, see <xref:System.Threading.PeriodicTimer?displayProperty=nameWithType>.
 
 ## See also
 
-- `System.Threading.Timer`
-- `System.Timers.Timer`
-- `System.Threading.PeriodicTimer`
-- Threading Objects and Features
+- <xref:System.Threading.Timer?displayProperty=nameWithType>
+- <xref:System.Timers.Timer?displayProperty=nameWithType>
+- <xref:System.Threading.PeriodicTimer?displayProperty=nameWithType>
+- [Threading Objects and Features](threading-objects-and-features.md)

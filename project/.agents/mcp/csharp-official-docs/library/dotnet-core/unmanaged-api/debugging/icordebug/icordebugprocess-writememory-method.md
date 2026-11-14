@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugProcess::WriteMemory Method"
 title: "ICorDebugProcess::WriteMemory Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess-writememory-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugProcess.WriteMemory"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugProcess::WriteMemory"
+helpviewer_keywords:
+  - "ICorDebugProcess::WriteMemory method [.NET debugging]"
+  - "WriteMemory method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugProcess::WriteMemory Method
 
 Writes data to an area of memory in this process.
@@ -37,13 +46,13 @@ HRESULT WriteMemory(
 
 ## Remarks
 
-Data is automatically written behind any breakpoints. Native debuggers should not use this method to inject breakpoints into the instruction stream. Use ICorDebugProcess2::SetUnmanagedBreakpoint instead.
+Data is automatically written behind any breakpoints. Native debuggers should not use this method to inject breakpoints into the instruction stream. Use [ICorDebugProcess2::SetUnmanagedBreakpoint](icordebugprocess2-setunmanagedbreakpoint-method.md) instead.
 
 The `WriteMemory` method should be used only outside of managed code. This method can corrupt the runtime if used improperly.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

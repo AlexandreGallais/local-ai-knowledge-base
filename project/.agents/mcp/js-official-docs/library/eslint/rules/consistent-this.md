@@ -1,13 +1,8 @@
 ---
-title: "consistent-this"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/consistent-this.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: consistent-this
+rule_type: suggestion
 ---
 
-# consistent-this
 
 It is often necessary to capture the current execution context in order to make it available subsequently. A prominent example of this are jQuery callbacks:
 
@@ -36,7 +31,7 @@ This rule has one or more string options:
 
 Examples of **incorrect** code for this rule with the default `"that"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint consistent-this: ["error", "that"]*/
@@ -50,9 +45,11 @@ that = 42;
 self = this;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"that"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint consistent-this: ["error", "that"]*/
@@ -68,9 +65,11 @@ that = this;
 foo.bar = this;
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the default `"that"` option, if the variable is not initialized:
 
-**Incorrect:**
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint consistent-this: ["error", "that"]*/
@@ -81,11 +80,13 @@ function f() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"that"` option, if the variable is not initialized:
 
 Declaring a variable `that` and assigning `this` to it.
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint consistent-this: ["error", "that"]*/
@@ -94,9 +95,11 @@ let that;
 that = this;
 ```
 
+:::
+
 Declaring two variables, `foo` and `that`, with `foo` initialized, and then assigning `this` to `that`.
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint consistent-this: ["error", "that"]*/
@@ -104,6 +107,8 @@ Declaring two variables, `foo` and `that`, with `foo` initialized, and then assi
 let foo = 42, that;
 that = this;
 ```
+
+:::
 
 ## When Not To Use It
 

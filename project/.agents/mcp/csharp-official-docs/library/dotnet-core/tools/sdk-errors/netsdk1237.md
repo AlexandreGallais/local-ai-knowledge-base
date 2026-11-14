@@ -1,15 +1,15 @@
 ---
 title: "NETSDK1237: Assembly listed in PublishReadyToRunPartialAssemblies but compiled into a composite image"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/sdk-errors/netsdk1237.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about .NET SDK warning NETSDK1237, which occurs when an assembly is listed in PublishReadyToRunPartialAssemblies but is being compiled into a ReadyToRun composite image.
+ms.topic: error-reference
+ms.date: 04/13/2026
+f1_keywords:
+- NETSDK1237
+ai-usage: ai-generated
 ---
-
 # NETSDK1237: Assembly listed in PublishReadyToRunPartialAssemblies but compiled into a composite image
 
-NETSDK1237 warns you when you list an assembly in `PublishReadyToRunPartialAssemblies` but also compile it into a ReadyToRun composite image. You can only use partial compilation for assemblies compiled separately. The SDK compiles the assembly fully into the composite image and ignores the `PublishReadyToRunPartialAssemblies` setting for it.
+NETSDK1237 warns you when you list an assembly in `PublishReadyToRunPartialAssemblies` but also compile it into a [ReadyToRun composite image](../../deploying/ready-to-run.md). You can only use partial compilation for assemblies compiled separately. The SDK compiles the assembly fully into the composite image and ignores the `PublishReadyToRunPartialAssemblies` setting for it.
 
 NETSDK1237 appears when you set both `PublishReadyToRunComposite` to `true` and include assemblies in `PublishReadyToRunPartialAssemblies` in your project file:
 

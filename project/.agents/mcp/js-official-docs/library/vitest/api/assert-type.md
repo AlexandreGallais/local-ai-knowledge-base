@@ -1,20 +1,12 @@
----
-title: "assertType"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/api/assert-type.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # assertType
 
-**Warning:**
-During runtime this function doesn't do anything. To enable typechecking, don't forget to pass down `--typecheck` flag.
+::: warning
+During runtime this function doesn't do anything. To [enable typechecking](/guide/testing-types#run-typechecking), don't forget to pass down `--typecheck` flag.
+:::
 
 - **Type:** `<T>(value: T): void`
 
-You can use this function as an alternative for `expectTypeOf` to easily assert that the argument type is equal to the generic provided.
+You can use this function as an alternative for [`expectTypeOf`](/api/expect-typeof) to easily assert that the argument type is equal to the generic provided.
 
 ```ts
 import { assertType } from 'vitest'

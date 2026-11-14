@@ -1,33 +1,27 @@
----
-title: "ProtectionDomain class (java.security)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/ProtectionDomain.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ProtectionDomain class (java.security)
 
 ```java
 public class ProtectionDomain
 ```
 
-The `ProtectionDomain` class encapsulates the characteristics of a
+The {@code ProtectionDomain} class encapsulates the characteristics of a
 domain, which encloses a set of classes whose instances are granted a set
 of permissions.
-
-A static set of permissions can be bound to a `ProtectionDomain`
+<p>
+A static set of permissions can be bound to a {@code ProtectionDomain}
 when it is constructed; such permissions are granted to the domain
 regardless of the policy in force. However, to support dynamic security
-policies, a `ProtectionDomain` can also be constructed such that it
+policies, a {@code ProtectionDomain} can also be constructed such that it
 is dynamically mapped to a set of permissions by the current policy.
 
-**API note:** Installing a system-wide `Policy` object is
-no longer supported. The current policy
-is always a `Policy` object that grants no permissions.
+@apiNote Installing a system-wide {@link Policy} object is
+no longer supported. The {@linkplain Policy#getPolicy current policy}
+is always a {@code Policy} object that grants no permissions.
 
-**Since:** 1.2
+@author Li Gong
+@author Roland Schemers
+@author Gary Ellison
+@since 1.2
 
 ## ProtectionDomain.ProtectionDomain(CodeSource, PermissionCollection)
 
@@ -35,25 +29,23 @@ is always a `Policy` object that grants no permissions.
 public ProtectionDomain(CodeSource codesource, PermissionCollection permissions)
 ```
 
-Creates a new `ProtectionDomain` with the given `CodeSource`
-and permissions. If permissions is not `null`, then
-`setReadOnly()` will be called on the passed in
+Creates a new {@code ProtectionDomain} with the given {@code CodeSource}
+and permissions. If permissions is not {@code null}, then
+{@code setReadOnly()} will be called on the passed in
 permissions.
-
+<p>
 The permissions granted to this domain are static, i.e.
-invoking the `staticPermissionsOnly()` method returns
-`true`.
+invoking the {@link #staticPermissionsOnly()} method returns
+{@code true}.
 They contain only the ones passed to this constructor and
 the current policy will not be consulted.
 
-Parameters:
+@apiNote Installing a system-wide {@link Policy} object is
+no longer supported. The {@linkplain Policy#getPolicy current policy}
+is always a {@code Policy} object that grants no permissions.
 
-- `codesource`: the codesource associated with this domain
-- `permissions`: the permissions granted to this domain
-
-**API note:** Installing a system-wide `Policy` object is
-no longer supported. The current policy
-is always a `Policy` object that grants no permissions.
+@param codesource the codesource associated with this domain
+@param permissions the permissions granted to this domain
 
 ## ProtectionDomain.ProtectionDomain(CodeSource, PermissionCollection, ClassLoader, Principal[])
 
@@ -61,31 +53,29 @@ is always a `Policy` object that grants no permissions.
 public ProtectionDomain(CodeSource codesource, PermissionCollection permissions, ClassLoader classloader, Principal[] principals)
 ```
 
-Creates a new `ProtectionDomain` qualified by the given
-`CodeSource`, permissions, `ClassLoader` and array
-of principals. If permissions is not `null`, then
-`setReadOnly()` will be called on the passed in permissions.
-
+Creates a new {@code ProtectionDomain} qualified by the given
+{@code CodeSource}, permissions, {@code ClassLoader} and array
+of principals. If permissions is not {@code null}, then
+{@code setReadOnly()} will be called on the passed in permissions.
+<p>
 The permissions granted to this domain are dynamic, i.e.
-invoking the `staticPermissionsOnly()` method returns
-`false`.
+invoking the {@link #staticPermissionsOnly()} method returns
+{@code false}.
 They include both the static permissions passed to this constructor,
 and any permissions granted to this domain by the current policy.
 
-Parameters:
+@apiNote Installing a system-wide {@link Policy} object is
+no longer supported. The {@linkplain Policy#getPolicy current policy}
+is always a {@code Policy} object that grants no permissions.
 
-- `codesource`: the `CodeSource` associated with this domain
-- `permissions`: the permissions granted to this domain
-- `classloader`: the `ClassLoader` associated with this domain
-- `principals`: the array of `Principal` objects associated with this domain. The contents of the array are copied to protect against subsequent modification.
-
-**API note:** Installing a system-wide `Policy` object is
-no longer supported. The current policy
-is always a `Policy` object that grants no permissions.
-
-**See also:** Policy#getPermissions(ProtectionDomain)
-
-**Since:** 1.4
+@param codesource the {@code CodeSource} associated with this domain
+@param permissions the permissions granted to this domain
+@param classloader the {@code ClassLoader} associated with this domain
+@param principals the array of {@code Principal} objects associated
+with this domain. The contents of the array are copied to protect against
+subsequent modification.
+@see Policy#getPermissions(ProtectionDomain)
+@since 1.4
 
 ## ProtectionDomain.getCodeSource()
 
@@ -93,11 +83,9 @@ is always a `Policy` object that grants no permissions.
 public final CodeSource getCodeSource()
 ```
 
-Returns the `CodeSource` of this domain.
-
-**Returns:** the `CodeSource` of this domain which may be `null`.
-
-**Since:** 1.2
+Returns the {@code CodeSource} of this domain.
+@return the {@code CodeSource} of this domain which may be {@code null}.
+@since 1.2
 
 ## ProtectionDomain.getClassLoader()
 
@@ -105,11 +93,10 @@ Returns the `CodeSource` of this domain.
 public final ClassLoader getClassLoader()
 ```
 
-Returns the `ClassLoader` of this domain.
+Returns the {@code ClassLoader} of this domain.
+@return the {@code ClassLoader} of this domain which may be {@code null}.
 
-**Returns:** the `ClassLoader` of this domain which may be `null`.
-
-**Since:** 1.4
+@since 1.4
 
 ## ProtectionDomain.getPrincipals()
 
@@ -118,11 +105,10 @@ public final Principal[] getPrincipals()
 ```
 
 Returns an array of principals for this domain.
-
-**Returns:** a non-null array of principals for this domain.
+@return a non-null array of principals for this domain.
 Returns a new array each time this method is called.
 
-**Since:** 1.4
+@since 1.4
 
 ## ProtectionDomain.getPermissions()
 
@@ -132,12 +118,10 @@ public final PermissionCollection getPermissions()
 
 Returns the static permissions granted to this domain.
 
-**Returns:** the static set of permissions for this domain which may be
-`null`.
-
-**See also:** Policy#refresh
-
-**See also:** Policy#getPermissions(ProtectionDomain)
+@return the static set of permissions for this domain which may be
+{@code null}.
+@see Policy#refresh
+@see Policy#getPermissions(ProtectionDomain)
 
 ## ProtectionDomain.staticPermissionsOnly()
 
@@ -145,16 +129,16 @@ Returns the static permissions granted to this domain.
 public final boolean staticPermissionsOnly()
 ```
 
-Returns `true` if this domain contains only static permissions
-and does not check the current `Policy`.
+Returns {@code true} if this domain contains only static permissions
+and does not check the current {@code Policy}.
 
-**API note:** Installing a system-wide `Policy` object is
-no longer supported. The current policy
-is always a `Policy` object that grants no permissions.
+@apiNote Installing a system-wide {@link Policy} object is
+no longer supported. The {@linkplain Policy#getPolicy current policy}
+is always a {@code Policy} object that grants no permissions.
 
-**Returns:** `true` if this domain contains only static permissions.
+@return {@code true} if this domain contains only static permissions.
 
-**Since:** 9
+@since 9
 
 ## ProtectionDomain.implies(Permission)
 
@@ -162,31 +146,29 @@ is always a `Policy` object that grants no permissions.
 public boolean implies(Permission perm)
 ```
 
-Check and see if this `ProtectionDomain` implies the permissions
-expressed in the `Permission` object.
-
+Check and see if this {@code ProtectionDomain} implies the permissions
+expressed in the {@code Permission} object.
+<p>
 The set of permissions evaluated is a function of whether the
-`ProtectionDomain` was constructed with a static set of permissions
+{@code ProtectionDomain} was constructed with a static set of permissions
 or it was bound to a dynamically mapped set of permissions.
-
-If the `staticPermissionsOnly()` method returns
-`true`, then the permission will only be checked against the
-`PermissionCollection` supplied at construction.
-
+<p>
+If the {@link #staticPermissionsOnly()} method returns
+{@code true}, then the permission will only be checked against the
+{@code PermissionCollection} supplied at construction.
+<p>
 Otherwise, the permission will be checked against the combination
-of the `PermissionCollection` supplied at construction and
+of the {@code PermissionCollection} supplied at construction and
 the current policy.
 
-Parameters:
+@apiNote Installing a system-wide {@link Policy} object is
+no longer supported. The {@linkplain Policy#getPolicy current policy}
+is always a {@code Policy} object that grants no permissions.
 
-- `perm`: the {code Permission} object to check.
+@param perm the {code Permission} object to check.
 
-**API note:** Installing a system-wide `Policy` object is
-no longer supported. The current policy
-is always a `Policy` object that grants no permissions.
-
-**Returns:** `true` if `perm` is implied by this
-`ProtectionDomain`.
+@return {@code true} if {@code perm} is implied by this
+{@code ProtectionDomain}.
 
 ## ProtectionDomain.toString()
 
@@ -194,4 +176,4 @@ is always a `Policy` object that grants no permissions.
 public String toString()
 ```
 
-Convert a `ProtectionDomain` to a `String`.
+Convert a {@code ProtectionDomain} to a {@code String}.

@@ -1,21 +1,15 @@
----
-title: "informative-docs"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/informative-docs.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-informative-docs"></a>
+<a name="informative-docs"></a>
+# <code>informative-docs</code>
 
-# `informative-docs`
+* [Options](#user-content-informative-docs-options)
+    * [`aliases`](#user-content-informative-docs-options-aliases)
+    * [`excludedTags`](#user-content-informative-docs-options-excludedtags)
+    * [`uselessWords`](#user-content-informative-docs-options-uselesswords)
+* [Context and settings](#user-content-informative-docs-context-and-settings)
+* [Failing examples](#user-content-informative-docs-failing-examples)
+* [Passing examples](#user-content-informative-docs-passing-examples)
 
-* Options
-    * `aliases`
-    * `excludedTags`
-    * `uselessWords`
-* Context and settings
-* Failing examples
-* Passing examples
 
 Reports on JSDoc texts that serve only to restate their attached name.
 
@@ -29,11 +23,15 @@ let userId;
 Those "uninformative" docs comments take up space without being helpful.
 This rule requires all docs comments contain at least one word not already in the code.
 
+<a name="user-content-informative-docs-options"></a>
+<a name="informative-docs-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `aliases`
+<a name="user-content-informative-docs-options-aliases"></a>
+<a name="informative-docs-options-aliases"></a>
+### <code>aliases</code>
 
 The `aliases` option allows indicating words as synonyms (aliases) of each other.
 
@@ -52,7 +50,9 @@ The default `aliases` option is:
 }
 ```
 
-### `excludedTags`
+<a name="user-content-informative-docs-options-excludedtags"></a>
+<a name="informative-docs-options-excludedtags"></a>
+### <code>excludedTags</code>
 
 Tags that should not be checked for valid contents.
 
@@ -67,7 +67,9 @@ function computeTypes(node) {
 
 No tags are excluded by default.
 
-### `uselessWords`
+<a name="user-content-informative-docs-options-uselesswords"></a>
+<a name="informative-docs-options-uselesswords"></a>
+### <code>uselessWords</code>
 
 Words that are ignored when searching for one that adds meaning.
 
@@ -84,6 +86,9 @@ The default `uselessWords` option is:
 ["a", "an", "i", "in", "of", "s", "the"]
 ```
 
+
+<a name="user-content-informative-docs-context-and-settings"></a>
+<a name="informative-docs-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -94,6 +99,8 @@ The default `uselessWords` option is:
 |Settings||
 |Options|`aliases`, `excludedTags`, `uselessWords`|
 
+<a name="user-content-informative-docs-failing-examples"></a>
+<a name="informative-docs-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -288,6 +295,10 @@ export default function packageNameFromPath(path) {
 // Message: This description only repeats the name it describes.
 ````
 
+
+
+<a name="user-content-informative-docs-passing-examples"></a>
+<a name="informative-docs-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -441,3 +452,4 @@ function MyAmazingThing(value) {}
  */
 // "jsdoc/informative-docs": ["error"|"warn", {"uselessWords":["an"]}]
 ````
+

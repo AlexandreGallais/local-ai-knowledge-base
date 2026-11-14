@@ -1,17 +1,14 @@
 ---
 title: "Breaking change: SignalR: UseSignalR and UseConnections methods removed"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/5/signalr-usesignalr-useconnections-removed.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 5.0 titled SignalR: UseSignalR and UseConnections methods removed"
+ms.date: 10/01/2020
+ms.custom: https://github.com/aspnet/Announcements/issues/412
 ---
-
 # SignalR: UseSignalR and UseConnections methods removed
 
-In ASP.NET Core 3.0, SignalR adopted endpoint routing. As part of that change, the `Microsoft.AspNetCore.Builder.SignalRAppBuilderExtensions.UseSignalR*`, `Microsoft.AspNetCore.Builder.ConnectionsAppBuilderExtensions.UseConnections*`, and some related methods were marked as obsolete. In ASP.NET Core 5.0, those obsolete methods were removed. For the full list of methods, see Affected APIs.
+In ASP.NET Core 3.0, SignalR adopted endpoint routing. As part of that change, the <xref:Microsoft.AspNetCore.Builder.SignalRAppBuilderExtensions.UseSignalR*>, <xref:Microsoft.AspNetCore.Builder.ConnectionsAppBuilderExtensions.UseConnections*>, and some related methods were marked as obsolete. In ASP.NET Core 5.0, those obsolete methods were removed. For the full list of methods, see [Affected APIs](#affected-apis).
 
-For discussion on this issue, see dotnet/aspnetcore#20082.
+For discussion on this issue, see [dotnet/aspnetcore#20082](https://github.com/dotnet/aspnetcore/issues/20082).
 
 ## Version introduced
 
@@ -23,7 +20,7 @@ SignalR hubs and connection handlers could be registered in the middleware pipel
 
 ## New behavior
 
-SignalR hubs and connection handlers should be registered within `Microsoft.AspNetCore.Builder.EndpointRoutingApplicationBuilderExtensions.UseEndpoints*` using the `Microsoft.AspNetCore.SignalR.HubRouteBuilder.MapHub*` and `Microsoft.AspNetCore.Http.Connections.ConnectionsRouteBuilder.MapConnectionHandler*` extension methods on `Microsoft.AspNetCore.Routing.IEndpointRouteBuilder`.
+SignalR hubs and connection handlers should be registered within <xref:Microsoft.AspNetCore.Builder.EndpointRoutingApplicationBuilderExtensions.UseEndpoints*> using the <xref:Microsoft.AspNetCore.SignalR.HubRouteBuilder.MapHub*> and <xref:Microsoft.AspNetCore.Http.Connections.ConnectionsRouteBuilder.MapConnectionHandler*> extension methods on <xref:Microsoft.AspNetCore.Routing.IEndpointRouteBuilder>.
 
 ## Reason for change
 
@@ -55,8 +52,24 @@ In general, your previous `MapHub` and `MapConnectionHandler` calls can be trans
 
 ## Affected APIs
 
-- `Microsoft.AspNetCore.Builder.ConnectionsAppBuilderExtensions.UseConnections*`
-- `Microsoft.AspNetCore.Builder.SignalRAppBuilderExtensions.UseSignalR*`
-- `Microsoft.AspNetCore.Http.Connections.ConnectionsRouteBuilder.MapConnections*`
-- `Microsoft.AspNetCore.Http.Connections.ConnectionsRouteBuilder.MapConnectionHandler*`
-- `Microsoft.AspNetCore.SignalR.HubRouteBuilder.MapHub*`
+- <xref:Microsoft.AspNetCore.Builder.ConnectionsAppBuilderExtensions.UseConnections*?displayProperty=nameWithType>
+- <xref:Microsoft.AspNetCore.Builder.SignalRAppBuilderExtensions.UseSignalR*?displayProperty=nameWithType>
+- <xref:Microsoft.AspNetCore.Http.Connections.ConnectionsRouteBuilder.MapConnections*?displayProperty=nameWithType>
+- <xref:Microsoft.AspNetCore.Http.Connections.ConnectionsRouteBuilder.MapConnectionHandler*?displayProperty=nameWithType>
+- <xref:Microsoft.AspNetCore.SignalR.HubRouteBuilder.MapHub*?displayProperty=nameWithType>
+
+<!--
+
+### Category
+
+ASP.NET Core
+
+### Affected APIs
+
+- `Overload:Microsoft.AspNetCore.Builder.ConnectionsAppBuilderExtensions.UseConnections`
+- `Overload:Microsoft.AspNetCore.Builder.SignalRAppBuilderExtensions.UseSignalR`
+- `Overload:Microsoft.AspNetCore.Http.Connections.ConnectionsRouteBuilder.MapConnections`
+- `Overload:Microsoft.AspNetCore.Http.Connections.ConnectionsRouteBuilder.MapConnectionHandler`
+- `Overload:Microsoft.AspNetCore.SignalR.HubRouteBuilder.MapHub`
+
+-->

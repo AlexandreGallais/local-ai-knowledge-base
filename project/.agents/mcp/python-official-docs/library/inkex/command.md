@@ -1,12 +1,3 @@
----
-title: "inkex.command"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/command.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.command
 
 This API provides methods for calling Inkscape to execute a given
@@ -38,7 +29,7 @@ class ProgramRunError(ValueError)
 A specialized ValueError that is raised when a call to an external command fails.
 It stores additional information about a failed call to an external program.
 
-If only the `program` parameter is given, it is interpreted as the error message.
+If only the ``program`` parameter is given, it is interpreted as the error message.
 Otherwise, the error message is compiled from all constructor parameters.
 
 ## which
@@ -74,28 +65,28 @@ def to_args(prog, *positionals, **arguments)
 Compile arguments and keyword arguments into a list of strings which Popen will
 understand.
 
-- **param `prog`:**
-Program executable prepended to the output.
-- **type `first`:** `str`
+:param prog:
+    Program executable prepended to the output.
+:type first: ``str``
 
-- **Arguments:**
-- (`str`) -- String added as given
-- (`tuple`) -- Ordered version of Keyword Arguments, see below
+:Arguments:
+    * (``str``) -- String added as given
+    * (``tuple``) -- Ordered version of Keyword Arguments, see below
 
-- **Keyword `Arguments`:**
-- *name* (`str`) --
-Becomes `--name="val"`
-- *name* (`bool`) --
-Becomes `--name`
-- *name* (`list`) --
-Becomes `--name="val1"` ...
-- *n* (`str`) --
-Becomes `-n=val`
-- *n* (`bool`) --
-Becomes `-n`
+:Keyword Arguments:
+    * *name* (``str``) --
+      Becomes ``--name="val"``
+    * *name* (``bool``) --
+      Becomes ``--name``
+    * *name* (``list``) --
+      Becomes ``--name="val1"`` ...
+    * *n* (``str``) --
+      Becomes ``-n=val``
+    * *n* (``bool``) --
+      Becomes ``-n``
 
-- **return:** Returns a list of compiled arguments ready for Popen.
-- **rtype:** `list[str]`
+:return: Returns a list of compiled arguments ready for Popen.
+:rtype: ``list[str]``
 
 ## to_args_sorted
 
@@ -103,9 +94,9 @@ Becomes `-n`
 def to_args_sorted(prog, *positionals, **arguments)
 ```
 
-same as `to_args()`, but keyword arguments are sorted beforehand
+same as :func:`to_args`, but keyword arguments are sorted beforehand
 
-> *Added in version 1.2.*
+.. versionadded:: 1.2
 
 ## call
 
@@ -113,22 +104,19 @@ same as `to_args()`, but keyword arguments are sorted beforehand
 def call(program, *args, **kwargs)
 ```
 
-Generic caller to open any program and return its stdout:
+Generic caller to open any program and return its stdout::
 
-```
-stdout = call('executable', arg1, arg2, dash_dash_arg='foo', d=True, ...)
-```
+    stdout = call('executable', arg1, arg2, dash_dash_arg='foo', d=True, ...)
 
-Will raise `ProgramRunError` if return code is not 0.
+Will raise :class:`ProgramRunError` if return code is not 0.
 
 Keyword arguments:
-return_binary: Should stdout return raw bytes (default: False)
+    return_binary: Should stdout return raw bytes (default: False)
 
-> *Added in version 1.1.*
+        .. versionadded:: 1.1
+    stdin: The string or bytes containing the stdin (default: None)
 
-stdin: The string or bytes containing the stdin (default: None)
-
-All other arguments converted using `to_args()` function.
+All other arguments converted using :func:`to_args` function.
 
 ## inkscape
 
@@ -140,16 +128,16 @@ Call Inkscape with the given svg_file and the given arguments, see call().
 
 Returns the stdout of the call.
 
-> *Changed in version 1.3.*
-> If the "actions" kwargs parameter is passed, it is checked whether the length of
-> the action string might lead to issues with the Windows CLI call character
-> limit. In this case, Inkscape is called in `--shell`
-> mode and the actions are fed in via stdin. This avoids violating the character
-> limit for command line arguments on Windows, which results in errors like this:
-> `[WinError 206] The filename or extension is too long`.
-> This workaround is also possible when calling Inkscape with long arguments
-> to `--export-id` and `--query-id`, by converting the call to the appropriate
-> action sequence. The stdout is cleaned to resemble non-interactive mode.
+.. versionchanged:: 1.3
+    If the "actions" kwargs parameter is passed, it is checked whether the length of
+    the action string might lead to issues with the Windows CLI call character
+    limit. In this case, Inkscape is called in `--shell`
+    mode and the actions are fed in via stdin. This avoids violating the character
+    limit for command line arguments on Windows, which results in errors like this:
+    `[WinError 206] The filename or extension is too long`.
+    This workaround is also possible when calling Inkscape with long arguments
+    to `--export-id` and `--query-id`, by converting the call to the appropriate
+    action sequence. The stdout is cleaned to resemble non-interactive mode.
 
 ## inkscape_command
 
@@ -157,9 +145,9 @@ Returns the stdout of the call.
 def inkscape_command(svg, select=None, actions=None, *args, **kwargs)
 ```
 
-Executes Inkscape batch actions with the given  input and returns a new .
+Executes Inkscape batch actions with the given <svg> input and returns a new <svg>.
 
-inkscape_command('', [select=...], [actions=...], [...])
+inkscape_command('<svg...>', [select=...], [actions=...], [...])
 
 ## take_snapshot
 

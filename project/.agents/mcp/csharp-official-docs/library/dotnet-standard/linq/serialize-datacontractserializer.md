@@ -1,19 +1,20 @@
 ---
-title: "How to serialize using DataContractSerializer - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/serialize-datacontractserializer.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to serialize using DataContractSerializer - LINQ to XML
+description: Learn how to serialize and deserialize using DataContractSerializer.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to serialize using DataContractSerializer (LINQ to XML)
 
-This article shows an example that serializes and deserializes using `System.Runtime.Serialization.DataContractSerializer` in C# and Visual Basic.
+This article shows an example that serializes and deserializes using <xref:System.Runtime.Serialization.DataContractSerializer> in C# and Visual Basic.
 
 ## Example: Create objects that contain `XElement` objects, then serialize and deserialize them
 
-The following example creates a number of objects that contain `System.Xml.Linq.XElement` objects. It then serializes them to text files, and then deserializes them from the text files.
+The following example creates a number of objects that contain <xref:System.Xml.Linq.XElement> objects. It then serializes them to text files, and then deserializes them from the text files.
 
 ```csharp
 using System;

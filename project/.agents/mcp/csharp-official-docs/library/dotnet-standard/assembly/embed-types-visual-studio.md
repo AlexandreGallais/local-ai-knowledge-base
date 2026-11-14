@@ -1,19 +1,19 @@
 ---
-title: "Walkthrough: Embed types from managed assemblies in Visual Studio (part 1 of 2)"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/assembly/embed-types-visual-studio.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: "Walkthrough: Embed types from managed assemblies in Visual Studio"
+description: This walkthrough shows you how to embed types from managed assemblies in .NET using Visual Studio. Embedded types can support version independence.
+ms.date: 08/19/2019
+ms.topic: tutorial
+dev_langs:
+  - "csharp"
+  - "vb"
 ---
-
 # Walkthrough: Embed types from managed assemblies in Visual Studio
 
 If you embed type information from a strong-named managed assembly, you can loosely couple types in an application to achieve version independence. That is, your program can be written to use types from any version of a managed library without having to be recompiled for each new version.
 
 Type embedding is frequently used with COM interop, such as an application that uses automation objects from Microsoft Office. Embedding type information enables the same build of a program to work with different versions of Microsoft Office on different computers. However, you can also use type embedding with fully managed solutions.
 
-After you specify the public interfaces that can be embedded, you create runtime classes that implement those interfaces. A client program can embed the type information for the interfaces at design time by referencing the assembly that contains the public interfaces and setting the `Embed Interop Types` property of the reference to `True`. The client program can then load instances of the runtime objects typed as those interfaces. This is equivalent to using the command line compiler and referencing the assembly by using the **EmbedInteropTypes** compiler option.
+After you specify the public interfaces that can be embedded, you create runtime classes that implement those interfaces. A client program can embed the type information for the interfaces at design time by referencing the assembly that contains the public interfaces and setting the `Embed Interop Types` property of the reference to `True`. The client program can then load instances of the runtime objects typed as those interfaces. This is equivalent to using the command line compiler and referencing the assembly by using the [**EmbedInteropTypes** compiler option](../../csharp/language-reference/compiler-options/inputs.md#embedinteroptypes).
 
 If you create a new version of your strong-named runtime assembly, the client program doesn't have to be recompiled. The client program continues to use whichever version of the runtime assembly is available to it, using the embedded type information for the public interfaces.
 
@@ -25,8 +25,7 @@ In this walkthrough, you:
 1. Modify and rebuild the runtime assembly.
 1. Run the client program to see that it uses the new version of the runtime assembly without having to be recompiled.
 
-> **Note:**
-> Your computer might show different names or locations for some of the Visual Studio user interface elements in the following instructions. The Visual Studio edition that you have and the settings that you use determine these elements. For more information, see Personalizing the IDE.
+[!INCLUDE[note_settings_general](../../../includes/note-settings-general-md.md)]
 
 ## Conditions and limitations
 
@@ -34,14 +33,14 @@ You can embed type information from an assembly under the following conditions:
 
 - The assembly exposes at least one public interface.
 - The embedded interfaces are annotated with `ComImport` attributes and `Guid` attributes with unique GUIDs.
-- The assembly is annotated with the `ImportedFromTypeLib` attribute or the `PrimaryInteropAssembly` attribute, and an assembly-level `Guid` attribute. The Visual C# and Visual Basic <example-value> templates include an assembly-level `Guid` attribute by default.
+- The assembly is annotated with the `ImportedFromTypeLib` attribute or the `PrimaryInteropAssembly` attribute, and an assembly-level `Guid` attribute. The Visual C# and Visual Basic project templates include an assembly-level `Guid` attribute by default.
 
 Because the primary function of type embedding is to support COM interop assemblies, the following limitations apply when you embed type information in a fully-managed solution:
 
 - Only attributes specific to COM interop are embedded. Other attributes are ignored.
 - If a type uses generic parameters, and the type of the generic parameter is an embedded type, that type cannot be used across an assembly boundary. Examples of crossing an assembly boundary include calling a method from another assembly or deriving a type from a type defined in another assembly.
 - Constants are not embedded.
-- The `System.Collections.Generic.Dictionary`2` class does not support an embedded type as a key. You can implement your own dictionary type to support an embedded type as a key.
+- The <xref:System.Collections.Generic.Dictionary`2?displayProperty=nameWithType> class does not support an embedded type as a key. You can implement your own dictionary type to support an embedded type as a key.
 
 ## Create an interface
 
@@ -61,7 +60,7 @@ The first step is to create the type equivalence interface assembly.
 
 1. Select **Build** > **Strong naming** on the left pane of the **Properties** screen, and then select the **Sign the assembly** check box. In the **Strong name key file**, select **Browse**.
 
-1. Navigate to and select the *key.snk* file you created in the *TypeEquivalenceInterface* project, and then select **OK**. For more information, see Create a public-private key pair.
+1. Navigate to and select the *key.snk* file you created in the *TypeEquivalenceInterface* project, and then select **OK**. For more information, see [Create a public-private key pair](create-public-private-key-pair.md).
 
 1. Open the *ISampleInterface* class file in the code editor, and replace its contents with the following code to create the `ISampleInterface` interface:
 
@@ -106,7 +105,7 @@ The first step is to create the type equivalence interface assembly.
    <Assembly: ImportedFromTypeLib("")>
    ```
 
-1. Select **File** > **Save All** or press `Ctrl`+`Shift`+`S` to save the files and project.
+1. Select **File** > **Save All** or press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> to save the files and project.
 
 1. In **Solution Explorer**, right-click the **TypeEquivalenceInterface** project and select **Build**. The class library DLL file is compiled and saved to the specified build output path, for example *C:\TypeEquivalenceSample*.
 
@@ -128,7 +127,7 @@ Next, create the type equivalence runtime class.
 
 1. Select **Build** > **Strong naming** on the left pane of the **Properties** screen, and then select the **Sign the assembly** check box. In the **Strong name key file**, select **Browse**.
 
-1. Navigate to and select the *key.snk* file you created in the *TypeEquivalenceInterface* project, and then select **OK**. For more information, see Create a public-private key pair.
+1. Navigate to and select the *key.snk* file you created in the *TypeEquivalenceInterface* project, and then select **OK**. For more information, see [Create a public-private key pair](create-public-private-key-pair.md).
 
 1. In **Solution Explorer**, right-click the **TypeEquivalenceRuntime** project and select **Add** > **Reference**.
 
@@ -178,7 +177,7 @@ Next, create the type equivalence runtime class.
    End Class
    ```
 
-1. Select **File** > **Save All** or press `Ctrl`+`Shift`+`S` to save the files and project.
+1. Select **File** > **Save All** or press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> to save the files and project.
 
 1. In **Solution Explorer**, right-click the **TypeEquivalenceRuntime** project and select **Build**. The class library DLL file is compiled and saved to the specified build output path.
 
@@ -246,9 +245,9 @@ Finally, create a type equivalence client program that references the interface 
    End Module
    ```
 
-1. Select **File** > **Save All** or press `Ctrl`+`Shift`+`S` to save the files and project.
+1. Select **File** > **Save All** or press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> to save the files and project.
 
-1. Press `Ctrl`+`F5` to build and run the program. Note that the console output returns the assembly version **1.0.0.0**.
+1. Press <kbd>Ctrl</kbd>+<kbd>F5</kbd> to build and run the program. Note that the console output returns the assembly version **1.0.0.0**.
 
 ## Modify the interface
 
@@ -272,6 +271,49 @@ Now, modify the interface assembly, and change its version.
    Function GetDate() As Date
    ```
 
-1. Select **File** > **Save All** or press `Ctrl`+`Shift`+`S` to save the files and project.
+1. Select **File** > **Save All** or press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> to save the files and project.
 
 1. In **Solution Explorer**, right-click the **TypeEquivalenceInterface** project and select **Build**. A new version of the class library DLL file is compiled and saved to the build output path.
+
+## Modify the runtime class
+
+Also modify the runtime class and update its version.
+
+1. In Visual Studio, select **File** > **Open** > **Project/Solution**, and open the **TypeEquivalenceRuntime** project.
+
+1. In **Solution Explorer**, right-click the **TypeEquivalenceRuntime** project and select **Properties**.
+
+1. Select **Application** on the left pane of the **Properties** screen, and then select **Assembly Information**.
+
+1. In the **Assembly Information** dialog box, change the **Assembly version** and **File version** values to *2.0.0.0*, and then select **OK**.
+
+1. Open the *SampleClass.cs* or *SampleClass.vb* file, and add the following code to the `SampleClass` class:
+
+   ```csharp
+    public DateTime GetDate()
+    {
+        return DateTime.Now;
+    }
+   ```
+
+   ```vb
+   Public Function GetDate() As DateTime Implements ISampleInterface.GetDate
+       Return Now
+   End Function
+   ```
+
+1. Select **File** > **Save All** or press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> to save the files and project.
+
+1. In **Solution Explorer**, right-click the **TypeEquivalenceRuntime** project and select **Build**. A new version of the class library DLL file is compiled and saved to the build output path.
+
+## Run the updated client program
+
+Go to the build output folder location and run *TypeEquivalenceClient.exe*. Note that the console output now reflects the new version of the `TypeEquivalenceRuntime` assembly, *2.0.0.0*, without the program being recompiled.
+
+## See also
+
+- [**EmbedInteropTypes** (C# Compiler Options)](../../csharp/language-reference/compiler-options/inputs.md#embedinteroptypes)
+- [-link (Visual Basic)](../../visual-basic/reference/command-line-compiler/link.md)
+- [C# programming guide](../../csharp/programming-guide/concepts/index.md)
+- [Programming concepts (Visual Basic)](../../visual-basic/programming-guide/concepts/index.md)
+- [Assemblies in .NET](index.md)

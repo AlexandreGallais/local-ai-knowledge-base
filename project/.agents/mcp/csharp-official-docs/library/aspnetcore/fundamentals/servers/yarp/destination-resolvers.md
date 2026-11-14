@@ -1,10 +1,10 @@
 ---
-title: "YARP Extensibility Destination Resolvers"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/destination-resolvers.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: YARP Extensibility Destination Resolvers
+description: YARP Extensibility Destination Resolvers
+ms.date: 2/6/2025
+ms.topic: concept-article
+content_well_notification: AI-contribution
+ai-usage: ai-assisted
 ---
 
 # YARP Extensibility Destination Resolvers
@@ -14,7 +14,7 @@ license: "CC-BY-4.0"
 YARP uses a destination resolver to expand the set of configured destination addresses. The destination resolver can be used as an integration point with service discovery systems.
 
 ## Structure
-IDestinationResolver has a single method `ResolveDestinationsAsync(IReadOnlyDictionary<string, DestinationConfig> destinations, CancellationToken <example-value>)` which should return a ResolvedDestinationCollection instance. The ResolvedDestinationCollection has a collection of DestinationConfig instances, as well as an `IChangeToken` to notify the proxy when this information is out of date and should be reloaded, which will cause `ResolveDestinationsAsync` to be called again.
+[IDestinationResolver](xref:Yarp.ReverseProxy.ServiceDiscovery.IDestinationResolver) has a single method `ResolveDestinationsAsync(IReadOnlyDictionary<string, DestinationConfig> destinations, CancellationToken cancellationToken)` which should return a [ResolvedDestinationCollection](xref:Yarp.ReverseProxy.ServiceDiscovery.ResolvedDestinationCollection) instance. The [ResolvedDestinationCollection](xref:Yarp.ReverseProxy.ServiceDiscovery.ResolvedDestinationCollection) has a collection of [DestinationConfig](xref:Yarp.ReverseProxy.Configuration.DestinationConfig) instances, as well as an `IChangeToken` to notify the proxy when this information is out of date and should be reloaded, which will cause `ResolveDestinationsAsync` to be called again.
 
 ### DestinationConfig
 `DestinationConfig` has a `Host` property which can be used to specify the default `Host` header value which the proxy should use when communicating with that destination. This allows the `IDestinationResolver` to resolve destinations to a collection of IP addresses, for example, without causing SNI or host-based routing to fail.
@@ -45,9 +45,9 @@ Once the new destinations have been applied, the proxy will register a callback 
 
 ## DNS Destination Resolver
 
-YARP includes an IDestinationResolver implementation which expands the set of configured destinations by resolving each host name to one or more IP addresses using DNS, creating a destination for each resolved IP.
+YARP includes an [IDestinationResolver](xref:Yarp.ReverseProxy.ServiceDiscovery.IDestinationResolver) implementation which expands the set of configured destinations by resolving each host name to one or more IP addresses using DNS, creating a destination for each resolved IP.
 The DNS destination resolver can be added to your reverse proxy using the `IReverseProxyBuilder.AddDnsDestinationResolver(Action<DnsDestinationResolverOptions>)` method.
-The method accepts an optional delegate to configure the resolver's options, DnsDestinationResolverOptions.
+The method accepts an optional delegate to configure the resolver's options, [DnsDestinationResolverOptions](xref:Yarp.ReverseProxy.ServiceDiscovery.DnsDestinationResolverOptions).
 
 ### Example
 
@@ -58,7 +58,7 @@ reverseProxyBuilder.AddDnsDestinationResolver(o => o.AddressFamily = AddressFami
 
 ### Configuration
 
-The DNS destination resolver's options, DnsDestinationResolverOptions, has the following properties:
+The DNS destination resolver's options, [DnsDestinationResolverOptions](xref:Yarp.ReverseProxy.ServiceDiscovery.DnsDestinationResolverOptions), has the following properties:
 
 #### RefreshPeriod
 

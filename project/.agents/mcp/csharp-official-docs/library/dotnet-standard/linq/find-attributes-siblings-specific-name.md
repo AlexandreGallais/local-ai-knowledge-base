@@ -1,19 +1,20 @@
 ---
-title: "How to find attributes of siblings with a specific name - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/find-attributes-siblings-specific-name.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to find attributes of siblings with a specific name - LINQ to XML
+description: "Learn how to find every attribute that has a specific name and that also belongs to a sibling of the context node. Two methods are shown: one uses XPathEvaluate, the other uses LINQ to XML query."
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to find attributes of siblings with a specific name (LINQ to XML)
 
-This article shows how to use `System.Xml.XPath.Extensions.XPathEvaluate*` to find every attribute that has a specific name and that also belongs to a sibling of the context node. The article also shows how to use LINQ to XML query to do the same thing.
+This article shows how to use <xref:System.Xml.XPath.Extensions.XPathEvaluate*> to find every attribute that has a specific name and that also belongs to a sibling of the context node. The article also shows how to use LINQ to XML query to do the same thing.
 
 ## Example: Find all sibling elements named `Book`, and then find all attributes named `id`
 
-This example finds a `Book` element in XML document Sample XML file: Books. It then finds all sibling elements named `Book`, and all attributes named `id` of those elements. The result is a collection of attributes.
+This example finds a `Book` element in XML document [Sample XML file: Books](sample-xml-file-books.md). It then finds all sibling elements named `Book`, and all attributes named `id` of those elements. The result is a collection of attributes.
 
 The XPath expression is `../Book/@id`.
 
@@ -78,4 +79,4 @@ id="bk102"
 
 ## See also
 
-- LINQ to XML for XPath Users (Visual Basic)
+- [LINQ to XML for XPath Users (Visual Basic)](./comparison-xpath-linq-xml.md)

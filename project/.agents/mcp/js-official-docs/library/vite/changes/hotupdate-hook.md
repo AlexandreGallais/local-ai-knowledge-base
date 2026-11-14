@@ -1,27 +1,20 @@
----
-title: "HMR hotUpdate Plugin Hook"
-tool: "vite"
-version: "8.3"
-source: "https://github.com/vitejs/vite/blob/b39e6e63dcbfc3cf4be871acf3554efbd6d0e268/docs/changes/hotupdate-hook.md"
-commit: "b39e6e63dcbfc3cf4be871acf3554efbd6d0e268"
-license: "MIT"
----
-
 # HMR `hotUpdate` Plugin Hook
 
-**Feedback**
-Give us feedback at Environment API feedback discussion
+::: tip Feedback
+Give us feedback at [Environment API feedback discussion](https://github.com/vitejs/vite/discussions/16358)
+:::
 
-We're planning to deprecate the `handleHotUpdate` plugin hook in favor of `hotUpdate` hook to be Environment API aware, and handle additional watch events with `create` and `delete`.
+We're planning to deprecate the `handleHotUpdate` plugin hook in favor of [`hotUpdate` hook](/guide/api-environment-plugins#the-hotupdate-hook) to be [Environment API](/guide/api-environment.md) aware, and handle additional watch events with `create` and `delete`.
 
 Affected scope: `Vite Plugin Authors`
 
-**Future Deprecation**
+::: warning Future Deprecation
 `hotUpdate` was first introduced in `v6.0`. The deprecation of `handleHotUpdate` is planned for a future major. We don't recommend moving away from `handleHotUpdate` yet. If you want to experiment and give us feedback, you can use the `future.removePluginHookHandleHotUpdate` to `"warn"` in your vite config.
+:::
 
 ## Motivation
 
-The `handleHotUpdate` hook allows to perform custom HMR update handling. A list of modules to be updated is passed in the `HmrContext`.
+The [`handleHotUpdate` hook](/guide/api-plugin.md#handlehotupdate) allows to perform custom HMR update handling. A list of modules to be updated is passed in the `HmrContext`.
 
 ```ts
 interface HmrContext {

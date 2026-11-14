@@ -1,15 +1,22 @@
 ---
-title: "How to: Pad a Number with Leading Zeros (part 1 of 2)"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/base-types/how-to-pad-a-number-with-leading-zeros.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: "How to: Pad a Number with Leading Zeros"
+description: Learn to pad a number with leading zeros. Add leading zeros to integers or numeric values to a specific total length or a specific number of leading zeros.
+ms.date: "07/26/2022"
+ms.custom: devdivchpfy22
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "numeric format strings [.NET]"
+  - "formatting [.NET], numbers"
+  - "number formatting [.NET]"
+  - "numbers [.NET], format strings"
+ms.assetid: 0b2c2cb5-c580-4891-8d81-cb632f5ec384
 ---
 
 # How to: Pad a Number with Leading Zeros
 
-You can add leading zeros to an integer by using the "D" standard numeric format string with a precision specifier. You can add leading zeros to both integer and floating-point numbers by using a custom numeric format string. This article shows how to use both methods to pad a number with leading zeros.
+You can add leading zeros to an integer by using the "D" [standard numeric format string](standard-numeric-format-strings.md) with a precision specifier. You can add leading zeros to both integer and floating-point numbers by using a [custom numeric format string](custom-numeric-format-strings.md). This article shows how to use both methods to pad a number with leading zeros.
 
 ## To pad an integer with leading zeros to a specific length
 
@@ -21,138 +28,12 @@ You can add leading zeros to an integer by using the "D" standard numeric format
 
     - To display the integer as a hexadecimal value, call its `ToString(String)` method and pass the string "X*n*" as the value of the format parameter, where *n* represents the minimum length of the string.
 
-You can also use the format string in an interpolated string in both C# and Visual Basic. Alternatively, you can call a method such as `System.String.Format*` or `System.Console.WriteLine*` that uses composite formatting.
+You can also use the format string in an interpolated string in both [C#](../../csharp/language-reference/tokens/interpolated.md) and [Visual Basic](../../visual-basic/programming-guide/language-features/strings/interpolated-strings.md). Alternatively, you can call a method such as <xref:System.String.Format*?displayProperty=nameWithType> or <xref:System.Console.WriteLine*?displayProperty=nameWithType> that uses [composite formatting](composite-formatting.md).
 
 The following example formats several integer values with leading zeros so that the total length of the formatted number is at least eight characters.
 
-```csharp
-﻿using System;
-
-public class Example
-{
-   public static void Main()
-   {
-      PadInteger();
-      Console.WriteLine("-----");
-      PadIntegerWithNZeroes();
-      Console.WriteLine("-----");
-      PadNumber();
-      Console.WriteLine("-----");
-      PadNumberWithNZeroes();
-   }
-
-   private static void PadInteger()
-   {
-      byte byteValue = 254;
-      short shortValue = 10342;
-      int intValue = 1023983;
-      long lngValue = 6985321;
-      ulong ulngValue = UInt64.MaxValue;
-
-      // Display integer values by calling the ToString method.
-      Console.WriteLine("{0,22} {1,22}", byteValue.ToString("D8"), byteValue.ToString("X8"));
-      Console.WriteLine("{0,22} {1,22}", shortValue.ToString("D8"), shortValue.ToString("X8"));
-      Console.WriteLine("{0,22} {1,22}", intValue.ToString("D8"), intValue.ToString("X8"));
-      Console.WriteLine("{0,22} {1,22}", lngValue.ToString("D8"), lngValue.ToString("X8"));
-      Console.WriteLine("{0,22} {1,22}", ulngValue.ToString("D8"), ulngValue.ToString("X8"));
-      Console.WriteLine();
-
-      // Display the same integer values by using composite formatting.
-      Console.WriteLine("{0,22:D8} {0,22:X8}", byteValue);
-      Console.WriteLine("{0,22:D8} {0,22:X8}", shortValue);
-      Console.WriteLine("{0,22:D8} {0,22:X8}", intValue);
-      Console.WriteLine("{0,22:D8} {0,22:X8}", lngValue);
-      Console.WriteLine("{0,22:D8} {0,22:X8}", ulngValue);
-      // The example displays the following output:
-      //                     00000254               000000FE
-      //                     00010342               00002866
-      //                     01023983               000F9FEF
-      //                     06985321               006A9669
-      //         18446744073709551615       FFFFFFFFFFFFFFFF
-      //
-      //                     00000254               000000FE
-      //                     00010342               00002866
-      //                     01023983               000F9FEF
-      //                     06985321               006A9669
-      //         18446744073709551615       FFFFFFFFFFFFFFFF
-      //         18446744073709551615       FFFFFFFFFFFFFFFF
-   }
-
-   private static void PadIntegerWithNZeroes()
-   {
-      int value = 160934;
-      int decimalLength = value.ToString("D").Length + 5;
-      int hexLength = value.ToString("X").Length + 5;
-      Console.WriteLine(value.ToString("D" + decimalLength.ToString()));
-      Console.WriteLine(value.ToString("X" + hexLength.ToString()));
-      // The example displays the following output:
-      //       00000160934
-      //       00000274A6
-   }
-
-   private static void PadNumber()
-   {
-      string fmt = "00000000.##";
-      int intValue = 1053240;
-      decimal decValue = 103932.52m;
-      float sngValue = 1549230.10873992f;
-      double dblValue = 9034521202.93217412;
-
-      // Display the numbers using the ToString method.
-      Console.WriteLine(intValue.ToString(fmt));
-      Console.WriteLine(decValue.ToString(fmt));
-      Console.WriteLine(sngValue.ToString(fmt));
-      Console.WriteLine(dblValue.ToString(fmt));
-      Console.WriteLine();
-
-      // Display the numbers using composite formatting.
-      string formatString = " {0,15:" + fmt + "}";
-      Console.WriteLine(formatString, intValue);
-      Console.WriteLine(formatString, decValue);
-      Console.WriteLine(formatString, sngValue);
-      Console.WriteLine(formatString, dblValue);
-      // The example displays the following output:
-      //       01053240
-      //       00103932.52
-      //       01549230
-      //       9034521202.93
-      //
-      //               01053240
-      //            00103932.52
-      //               01549230
-      //          9034521202.93
-   }
-
-   private static void PadNumberWithNZeroes()
-   {
-      double[] dblValues = { 9034521202.93217412, 9034521202 };
-      foreach (double dblValue in dblValues)
-      {
-         string decSeparator = System.Globalization.NumberFormatInfo.CurrentInfo.NumberDecimalSeparator;
-         string fmt, formatString;
-
-         if (dblValue.ToString().Contains(decSeparator))
-         {
-            int digits = dblValue.ToString().IndexOf(decSeparator);
-            fmt = new String('0', 5) + new String('#', digits) + ".##";
-         }
-         else
-         {
-            fmt = new String('0', dblValue.ToString().Length);
-         }
-         formatString = "{0,20:" + fmt + "}";
-
-         Console.WriteLine(dblValue.ToString(fmt));
-         Console.WriteLine(formatString, dblValue);
-      }
-      // The example displays the following output:
-      //       000009034521202.93
-      //         000009034521202.93
-      //       9034521202
-      //                 9034521202
-   }
-}
-```
+[!code-csharp[Formatting.HowTo.PadNumber#1](../../../samples/snippets/csharp/VS_Snippets_CLR/Formatting.HowTo.PadNumber/cs/Pad1.cs#1)]
+[!code-vb[Formatting.HowTo.PadNumber#1](../../../samples/snippets/visualbasic/VS_Snippets_CLR/Formatting.HowTo.PadNumber/vb/Pad1.vb#1)]
 
 ## To pad an integer with a specific number of leading zeros
 
@@ -172,131 +53,46 @@ public class Example
 
 The following example pads an integer value with five leading zeros:
 
-```csharp
-﻿using System;
+[!code-csharp[Formatting.HowTo.PadNumber#2](../../../samples/snippets/csharp/VS_Snippets_CLR/Formatting.HowTo.PadNumber/cs/Pad1.cs#2)]
+[!code-vb[Formatting.HowTo.PadNumber#2](../../../samples/snippets/visualbasic/VS_Snippets_CLR/Formatting.HowTo.PadNumber/vb/Pad1.vb#2)]
 
-public class Example
-{
-   public static void Main()
-   {
-      PadInteger();
-      Console.WriteLine("-----");
-      PadIntegerWithNZeroes();
-      Console.WriteLine("-----");
-      PadNumber();
-      Console.WriteLine("-----");
-      PadNumberWithNZeroes();
-   }
+## To pad a numeric value with leading zeros to a specific length
 
-   private static void PadInteger()
-   {
-      byte byteValue = 254;
-      short shortValue = 10342;
-      int intValue = 1023983;
-      long lngValue = 6985321;
-      ulong ulngValue = UInt64.MaxValue;
+1. Determine how many digits to the left of the decimal you want the string representation of the number to have. Include any leading zeros in this total number of digits.
 
-      // Display integer values by calling the ToString method.
-      Console.WriteLine("{0,22} {1,22}", byteValue.ToString("D8"), byteValue.ToString("X8"));
-      Console.WriteLine("{0,22} {1,22}", shortValue.ToString("D8"), shortValue.ToString("X8"));
-      Console.WriteLine("{0,22} {1,22}", intValue.ToString("D8"), intValue.ToString("X8"));
-      Console.WriteLine("{0,22} {1,22}", lngValue.ToString("D8"), lngValue.ToString("X8"));
-      Console.WriteLine("{0,22} {1,22}", ulngValue.ToString("D8"), ulngValue.ToString("X8"));
-      Console.WriteLine();
+1. Define a custom numeric format string that uses the zero placeholder ("0") to represent the minimum number of zeros.
 
-      // Display the same integer values by using composite formatting.
-      Console.WriteLine("{0,22:D8} {0,22:X8}", byteValue);
-      Console.WriteLine("{0,22:D8} {0,22:X8}", shortValue);
-      Console.WriteLine("{0,22:D8} {0,22:X8}", intValue);
-      Console.WriteLine("{0,22:D8} {0,22:X8}", lngValue);
-      Console.WriteLine("{0,22:D8} {0,22:X8}", ulngValue);
-      // The example displays the following output:
-      //                     00000254               000000FE
-      //                     00010342               00002866
-      //                     01023983               000F9FEF
-      //                     06985321               006A9669
-      //         18446744073709551615       FFFFFFFFFFFFFFFF
-      //
-      //                     00000254               000000FE
-      //                     00010342               00002866
-      //                     01023983               000F9FEF
-      //                     06985321               006A9669
-      //         18446744073709551615       FFFFFFFFFFFFFFFF
-      //         18446744073709551615       FFFFFFFFFFFFFFFF
-   }
+1. Call the number's `ToString(String)` method and pass it the custom format string. You can also use the custom format string with string interpolation or a method that supports composite formatting.
 
-   private static void PadIntegerWithNZeroes()
-   {
-      int value = 160934;
-      int decimalLength = value.ToString("D").Length + 5;
-      int hexLength = value.ToString("X").Length + 5;
-      Console.WriteLine(value.ToString("D" + decimalLength.ToString()));
-      Console.WriteLine(value.ToString("X" + hexLength.ToString()));
-      // The example displays the following output:
-      //       00000160934
-      //       00000274A6
-   }
+The following example formats several numeric values with leading zeros. As a result, the total length of the formatted number is at least eight digits to the left of the decimal.
 
-   private static void PadNumber()
-   {
-      string fmt = "00000000.##";
-      int intValue = 1053240;
-      decimal decValue = 103932.52m;
-      float sngValue = 1549230.10873992f;
-      double dblValue = 9034521202.93217412;
+[!code-csharp[Formatting.HowTo.PadNumber#3](../../../samples/snippets/csharp/VS_Snippets_CLR/Formatting.HowTo.PadNumber/cs/Pad1.cs#3)]
+[!code-vb[Formatting.HowTo.PadNumber#3](../../../samples/snippets/visualbasic/VS_Snippets_CLR/Formatting.HowTo.PadNumber/vb/Pad1.vb#3)]
 
-      // Display the numbers using the ToString method.
-      Console.WriteLine(intValue.ToString(fmt));
-      Console.WriteLine(decValue.ToString(fmt));
-      Console.WriteLine(sngValue.ToString(fmt));
-      Console.WriteLine(dblValue.ToString(fmt));
-      Console.WriteLine();
+## To pad a numeric value with a specific number of leading zeros
 
-      // Display the numbers using composite formatting.
-      string formatString = " {0,15:" + fmt + "}";
-      Console.WriteLine(formatString, intValue);
-      Console.WriteLine(formatString, decValue);
-      Console.WriteLine(formatString, sngValue);
-      Console.WriteLine(formatString, dblValue);
-      // The example displays the following output:
-      //       01053240
-      //       00103932.52
-      //       01549230
-      //       9034521202.93
-      //
-      //               01053240
-      //            00103932.52
-      //               01549230
-      //          9034521202.93
-   }
+1. Determine how many leading zeros you want the numeric value to have.
 
-   private static void PadNumberWithNZeroes()
-   {
-      double[] dblValues = { 9034521202.93217412, 9034521202 };
-      foreach (double dblValue in dblValues)
-      {
-         string decSeparator = System.Globalization.NumberFormatInfo.CurrentInfo.NumberDecimalSeparator;
-         string fmt, formatString;
+1. Determine the number of digits to the left of the decimal in the unpadded numeric string:
 
-         if (dblValue.ToString().Contains(decSeparator))
-         {
-            int digits = dblValue.ToString().IndexOf(decSeparator);
-            fmt = new String('0', 5) + new String('#', digits) + ".##";
-         }
-         else
-         {
-            fmt = new String('0', dblValue.ToString().Length);
-         }
-         formatString = "{0,20:" + fmt + "}";
+    1. Determine whether the string representation of a number includes a decimal point symbol.
 
-         Console.WriteLine(dblValue.ToString(fmt));
-         Console.WriteLine(formatString, dblValue);
-      }
-      // The example displays the following output:
-      //       000009034521202.93
-      //         000009034521202.93
-      //       9034521202
-      //                 9034521202
-   }
-}
-```
+    1. If it does include a decimal point symbol, determine the number of characters to the left of the decimal point. If it doesn't include a decimal point symbol, determine the string's length.
+
+1. Create a custom format string that uses:
+
+    - The zero placeholder ("0") for each of the leading zeros to appear in the string.
+    - Either the zero placeholder or the digit placeholder "#" to represent each digit in the default string.
+
+1. Supply the custom format string as a parameter either to the number's `ToString(String)` method or to a method that supports composite formatting.
+
+The following example pads two <xref:System.Double> values with five leading zeros:
+
+[!code-csharp[Formatting.HowTo.PadNumber#4](../../../samples/snippets/csharp/VS_Snippets_CLR/Formatting.HowTo.PadNumber/cs/Pad1.cs#4)]
+[!code-vb[Formatting.HowTo.PadNumber#4](../../../samples/snippets/visualbasic/VS_Snippets_CLR/Formatting.HowTo.PadNumber/vb/Pad1.vb#4)]
+
+## See also
+
+- [Custom Numeric Format Strings](custom-numeric-format-strings.md)
+- [Standard Numeric Format Strings](standard-numeric-format-strings.md)
+- [Composite Formatting](composite-formatting.md)

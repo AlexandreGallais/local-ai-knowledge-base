@@ -1,17 +1,10 @@
----
-title: "vitest/max-nested-describe"
-tool: "eslint-vitest"
-version: "1.6"
-source: "https://github.com/vitest-dev/eslint-plugin-vitest/blob/c5df1054a25044a7ca5baf07461b7aee1f15f5f2/docs/rules/max-nested-describe.md"
-commit: "c5df1054a25044a7ca5baf07461b7aee1f15f5f2"
-license: "MIT"
----
-
 # vitest/max-nested-describe
 
 📝 Require describe block to be less than set max value or default value.
 
 ⚠️ This rule _warns_ in the 🌐 `all` config.
+
+<!-- end auto-generated rule header -->
 
 ## Rule Details
 
@@ -35,9 +28,13 @@ describe('inner', () => {
 
 ## Options
 
+<!-- begin auto-generated rule options list -->
+
 | Name  | Description                                          | Type   | Default |
 | :---- | :--------------------------------------------------- | :----- | :------ |
 | `max` | Maximum allowed nesting depth for `describe` blocks. | Number | `5`     |
+
+<!-- end auto-generated rule options list -->
 
 > Default: `5`
 

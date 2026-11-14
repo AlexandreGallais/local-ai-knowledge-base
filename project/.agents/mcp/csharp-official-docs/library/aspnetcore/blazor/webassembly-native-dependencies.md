@@ -1,23 +1,22 @@
 ---
-title: "ASP.NET Core Blazor WebAssembly native dependencies"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/webassembly-native-dependencies.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core Blazor WebAssembly native dependencies
+description: Learn how to build Blazor WebAssembly apps with native dependencies built to run on WebAssembly in the browser.
+monikerRange: '>= aspnetcore-6.0'
+ms.date: 07/06/2026
 ---
-
 # ASP.NET Core Blazor WebAssembly native dependencies
 
-Blazor WebAssembly apps can use native dependencies built to run on WebAssembly. You can statically link native dependencies into the .NET WebAssembly runtime using the **.NET WebAssembly build tools**, the same tools used to ahead-of-time (AOT) compile a Blazor app to WebAssembly and to relink the runtime to remove unused features.
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+Blazor WebAssembly apps can use native dependencies built to run on WebAssembly. You can statically link native dependencies into the .NET WebAssembly runtime using the **.NET WebAssembly build tools**, the same tools used to [ahead-of-time (AOT) compile](webassembly-build-tools-and-aot.md#ahead-of-time-aot-compilation) a Blazor app to WebAssembly and to [relink the runtime to remove unused features](performance/webassembly-runtime-performance.md#runtime-relinking).
 
 *This article only applies to Blazor WebAssembly.*
 
 ## .NET WebAssembly build tools
 
-The .NET WebAssembly build tools are based on Emscripten, a compiler toolchain for the web platform. For more information on the build tools, including installation, see ASP.NET Core Blazor WebAssembly build tools and ahead-of-time (AOT) compilation.
+The .NET WebAssembly build tools are based on [Emscripten](https://emscripten.org/), a compiler toolchain for the web platform. For more information on the build tools, including installation, see [ASP.NET Core Blazor WebAssembly build tools and ahead-of-time (AOT) compilation](webassembly-build-tools-and-aot.md).
 
-Add native dependencies to a Blazor WebAssembly app by adding `NativeFileReference` items in the app's project file. When the project is built, each `NativeFileReference` is passed to Emscripten by the .NET WebAssembly build tools so that they are compiled and linked into the runtime. Next, `p/invoke` into the native code from the app's .NET code.
+Add native dependencies to a Blazor WebAssembly app by adding `NativeFileReference` items in the app's project file. When the project is built, each `NativeFileReference` is passed to Emscripten by the .NET WebAssembly build tools so that they are compiled and linked into the runtime. Next, [`p/invoke`](/dotnet/standard/native-interop/pinvoke) into the native code from the app's .NET code.
 
 Generally, any portable native code can be used as a native dependency with Blazor WebAssembly. You can add native dependencies to C/C++ code or code previously compiled using Emscripten:
 
@@ -28,8 +27,8 @@ Generally, any portable native code can be used as a native dependency with Blaz
 
 Prebuilt dependencies typically must be built using the same version of Emscripten used to build the .NET WebAssembly runtime.
 
-> **Note:**
-> For Mono/WebAssembly MSBuild properties and targets, see `WasmApp.targets` (`dotnet/runtime` GitHub repository). Official documentation for common MSBuild properties is planned per Document blazor msbuild configuration options (`dotnet/docs` #27395).
+> [!NOTE]
+> For [Mono](https://github.com/mono/mono)/WebAssembly MSBuild properties and targets, see [`WasmApp.targets` (`dotnet/runtime` GitHub repository)](https://github.com/dotnet/runtime/blob/main/src/mono/wasm/build/WasmApp.Common.targets). Official documentation for common MSBuild properties is planned per [Document blazor msbuild configuration options (`dotnet/docs` #27395)](https://github.com/dotnet/docs/issues/27395).
 
 ## Use native code
 
@@ -57,7 +56,7 @@ Add a `NativeFileReference` MSBuild item for `Test.c` in the app's project file 
 </ItemGroup>
 ```
 
-In a Razor component, add a `[DllImport]` attribute for the `fact` function in the generated `Test` library and call the `fact` method from .NET code in the component.
+In a Razor component, add a [`[DllImport]` attribute](xref:System.Runtime.InteropServices.DllImportAttribute) for the `fact` function in the generated `Test` library and call the `fact` method from .NET code in the component.
 
 `Pages/NativeCTest.razor`:
 
@@ -83,31 +82,30 @@ When you build the app with the .NET WebAssembly build tools installed, the nati
 
 ## C++ managed method callbacks
 
-Label managed methods that are passed to C++ with the `[UnmanagedCallersOnly]` attribute. The method marked with the attribute must be `static`. To call an instance method in a Razor component, pass a `System.Runtime.InteropServices.GCHandle` for the instance to C++ and then pass it back to native. Alternatively, use some other method to identify the instance of the component.
+Label managed methods that are passed to C++ with the [`[UnmanagedCallersOnly]` attribute](xref:System.Runtime.InteropServices.UnmanagedCallersOnlyAttribute). The method marked with the attribute must be `static`. To call an instance method in a Razor component, pass a <xref:System.Runtime.InteropServices.GCHandle> for the instance to C++ and then pass it back to native. Alternatively, use some other method to identify the instance of the component.
 
-The method marked with the `[DllImport]` attribute must use a function pointer (C# 9 or later) rather than a delegate type for the callback argument.
+The method marked with the [`[DllImport]` attribute](xref:System.Runtime.InteropServices.DllImportAttribute) must use a [function pointer (C# 9 or later)](/dotnet/csharp/language-reference/language-specification/unsafe-code#2433-function-pointers) rather than a delegate type for the callback argument.
 
-> **Note:**
-> For C# function pointer types in `[DllImport]` methods, use `System.IntPtr` in the method signature on the managed side instead of `delegate *unmanaged<int, void>`. For more information, see [WASM] callback from native code to .NET: Parsing function pointer types in signatures is not supported (`dotnet/runtime` #56145).
+> [!NOTE]
+> For C# function pointer types in [`[DllImport]`](xref:System.Runtime.InteropServices.DllImportAttribute) methods, use <xref:System.IntPtr> in the method signature on the managed side instead of `delegate *unmanaged<int, void>`. For more information, see [[WASM] callback from native code to .NET: Parsing function pointer types in signatures is not supported (`dotnet/runtime` #56145)](https://github.com/dotnet/runtime/issues/56145).
 
 ## Package native dependencies in a NuGet package
 
-NuGet packages can contain native dependencies for use on WebAssembly. These libraries and their native functionality are then available to any Blazor WebAssembly app. The files for the native dependencies should be built for WebAssembly and packaged in the `browser-wasm` architecture-specific folder. WebAssembly-specific dependencies aren't referenced automatically and must be referenced manually as `NativeFileReference`s. Package authors can choose to add the native references by including a `.props` file in the package with the references.
+NuGet packages can contain native dependencies for use on WebAssembly. These libraries and their native functionality are then available to any Blazor WebAssembly app. The files for the native dependencies should be built for WebAssembly and packaged in the `browser-wasm` [architecture-specific folder](/nuget/create-packages/supporting-multiple-target-frameworks#architecture-specific-folders). WebAssembly-specific dependencies aren't referenced automatically and must be referenced manually as `NativeFileReference`s. Package authors can choose to add the native references by including a `.props` file in the package with the references.
 
 ## SkiaSharp example library use
 
-SkiaSharp is a cross-platform 2D graphics library for .NET based on the native Skia graphics library with support for Blazor WebAssembly.
+[SkiaSharp](https://github.com/mono/SkiaSharp) is a cross-platform 2D graphics library for .NET based on the native [Skia graphics library](https://skia.org/) with support for Blazor WebAssembly.
 
 The section demonstrates how to implement SkiaSharp in a Blazor WebAssembly app.
 
-Add a package reference to the `SkiaSharp.Views.Blazor` package in a Blazor WebAssembly project. Use Visual Studio's process for adding packages to an app (**Manage NuGet Packages** with **Include prerelease** selected) or execute the `dotnet add package` command in a command shell with the `--prerelease` option:
+Add a package reference to the [`SkiaSharp.Views.Blazor` package](https://www.nuget.org/packages/SkiaSharp.Views.Blazor) in a Blazor WebAssembly project. Use Visual Studio's process for adding packages to an app (**Manage NuGet Packages** with **Include prerelease** selected) or execute the [`dotnet add package`](/dotnet/core/tools/dotnet-add-package) command in a command shell with the `--prerelease` option:
 
 ```dotnetcli
 dotnet add package –-prerelease SkiaSharp.Views.Blazor
 ```
 
-> **Note:**
-> For guidance on adding packages to .NET apps, see the articles under *Install and manage packages* at Package consumption workflow (NuGet documentation). Confirm correct package versions at NuGet.org.
+[!INCLUDE[](~/includes/package-reference.md)]
 
 Add a `SKCanvasView` component to the app with the following:
 
@@ -150,5 +148,5 @@ Build the app, which might take several minutes. Run the app and navigate to the
 
 ## Related content
 
-* .NET WebAssembly build tools
-* Mono/WebAssembly MSBuild properties and targets (`WasmApp.targets`, `dotnet/runtime` GitHub repository)
+* [.NET WebAssembly build tools](webassembly-build-tools-and-aot.md)
+* [Mono/WebAssembly MSBuild properties and targets (`WasmApp.targets`, `dotnet/runtime` GitHub repository)](https://github.com/dotnet/runtime/blob/main/src/mono/wasm/build/WasmApp.Common.targets)

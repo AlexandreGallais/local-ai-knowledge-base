@@ -1,16 +1,14 @@
 ---
-title: "dotnetup sdk command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/reference/dotnetup-sdk.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnetup sdk command
+description: Command reference for the dotnetup SDK command group.
+ms.topic: reference
+ms.date: 08/07/2026
+ai-usage: ai-assisted
 ---
 
 # dotnetup sdk command
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 ## Name
 
@@ -26,9 +24,9 @@ dotnetup sdk <command> [options]
 
 | Command | Description |
 | --- | --- |
-| `install` | Install one or more SDK requirements. |
-| `update` | Update tracked SDK requirements. |
-| `uninstall` | Remove an SDK requirement and unused files. |
+| [`install`](dotnetup-sdk-install.md) | Install one or more SDK requirements. |
+| [`update`](dotnetup-sdk-update.md) | Update tracked SDK requirements. |
+| [`uninstall`](dotnetup-sdk-uninstall.md) | Remove an SDK requirement and unused files. |
 
 ## Options
 

@@ -1,22 +1,14 @@
----
-title: "RejectedExecutionException class (java.util.concurrent)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/RejectedExecutionException.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # RejectedExecutionException class (java.util.concurrent)
 
 ```java
 public class RejectedExecutionException extends RuntimeException
 ```
 
-Exception thrown by an `Executor` when a task cannot be
+Exception thrown by an {@link Executor} when a task cannot be
 accepted for execution.
 
-**Since:** 1.5
+@since 1.5
+@author Doug Lea
 
 ## RejectedExecutionException.RejectedExecutionException()
 
@@ -24,9 +16,9 @@ accepted for execution.
 public RejectedExecutionException()
 ```
 
-Constructs a `RejectedExecutionException` with no detail message.
+Constructs a {@code RejectedExecutionException} with no detail message.
 The cause is not initialized, and may subsequently be
-initialized by a call to initCause.
+initialized by a call to {@link #initCause(Throwable) initCause}.
 
 ## RejectedExecutionException.RejectedExecutionException(String)
 
@@ -34,13 +26,12 @@ initialized by a call to initCause.
 public RejectedExecutionException(String message)
 ```
 
-Constructs a `RejectedExecutionException` with the
+Constructs a {@code RejectedExecutionException} with the
 specified detail message. The cause is not initialized, and may
-subsequently be initialized by a call to initCause.
+subsequently be initialized by a call to {@link
+#initCause(Throwable) initCause}.
 
-Parameters:
-
-- `message`: the detail message
+@param message the detail message
 
 ## RejectedExecutionException.RejectedExecutionException(String, Throwable)
 
@@ -48,13 +39,12 @@ Parameters:
 public RejectedExecutionException(String message, Throwable cause)
 ```
 
-Constructs a `RejectedExecutionException` with the
+Constructs a {@code RejectedExecutionException} with the
 specified detail message and cause.
 
-Parameters:
-
-- `message`: the detail message
-- `cause`: the cause (which is saved for later retrieval by the `getCause()` method)
+@param  message the detail message
+@param  cause the cause (which is saved for later retrieval by the
+        {@link #getCause()} method)
 
 ## RejectedExecutionException.RejectedExecutionException(Throwable)
 
@@ -62,10 +52,10 @@ Parameters:
 public RejectedExecutionException(Throwable cause)
 ```
 
-Constructs a `RejectedExecutionException` with the
-specified cause.  The detail message is set to `(cause == null ? null : cause.toString())` (which typically contains
-the class and detail message of `cause`).
+Constructs a {@code RejectedExecutionException} with the
+specified cause.  The detail message is set to {@code (cause ==
+null ? null : cause.toString())} (which typically contains
+the class and detail message of {@code cause}).
 
-Parameters:
-
-- `cause`: the cause (which is saved for later retrieval by the `getCause()` method)
+@param  cause the cause (which is saved for later retrieval by the
+        {@link #getCause()} method)

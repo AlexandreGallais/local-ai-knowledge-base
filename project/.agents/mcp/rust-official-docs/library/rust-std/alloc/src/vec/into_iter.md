@@ -1,12 +1,3 @@
----
-title: "alloc::vec::into_iter"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/alloc/src/vec/into_iter.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # alloc::vec::into_iter
 
 ## struct IntoIter
@@ -17,12 +8,12 @@ pub struct IntoIter< T, #[unstable(feature = "allocator_ext", issue = "163177", 
 
 An iterator that moves out of a vector.
 
-This `struct` is created by the `into_iter` method on `Vec`
-(provided by the `IntoIterator` trait).
+This `struct` is created by the `into_iter` method on [`Vec`](super::Vec)
+(provided by the [`IntoIterator`] trait).
 
 # Example
 
-```rust
+```
 let v = vec![0, 1, 2];
 let iter: std::vec::IntoIter<_> = v.into_iter();
 ```
@@ -37,7 +28,7 @@ Returns the remaining items of this iterator as a slice.
 
 # Examples
 
-```rust
+```
 let vec = vec!['a', 'b', 'c'];
 let mut into_iter = vec.into_iter();
 assert_eq!(into_iter.as_slice(), &['a', 'b', 'c']);
@@ -55,7 +46,7 @@ Returns the remaining items of this iterator as a mutable slice.
 
 # Examples
 
-```rust
+```
 let vec = vec!['a', 'b', 'c'];
 let mut into_iter = vec.into_iter();
 assert_eq!(into_iter.as_slice(), &['a', 'b', 'c']);

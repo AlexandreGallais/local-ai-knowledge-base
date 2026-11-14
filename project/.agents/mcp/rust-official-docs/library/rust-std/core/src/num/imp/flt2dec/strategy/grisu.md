@@ -1,18 +1,10 @@
----
-title: "core::num::imp::flt2dec::strategy::grisu"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/num/imp/flt2dec/strategy/grisu.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::num::imp::flt2dec::strategy::grisu
 
 Rust adaptation of the Grisu3 algorithm described in "Printing Floating-Point Numbers Quickly
 and Accurately with Integers"[^1]. It uses about 1KB of precomputed table, and in turn, it's
 very quick for most inputs.
 
+[^1]: Florian Loitsch. 2010. Printing floating-point numbers quickly and
   accurately with integers. SIGPLAN Not. 45, 6 (June 2010), 233-243.
 
 ## fn format_shortest_opt

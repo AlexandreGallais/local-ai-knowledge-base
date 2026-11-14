@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: DefaultKeyResolution.ShouldGenerateNewKey has altered meaning"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/9/key-resolution.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in ASP.NET Core 9.0 where DefaultKeyResolution.ShouldGenerateNewKey has a slightly altered meaning.
+ms.date: 04/01/2024
+ms.custom: https://github.com/aspnet/Announcements/issues/512
 ---
-
 # DefaultKeyResolution.ShouldGenerateNewKey has altered meaning
 
 `DefaultKeyResolution.ShouldGenerateNewKey` no longer reflects whether the default key is close to its expiration time.
@@ -21,17 +18,17 @@ It was an undocumented, but consistent, feature of the API that `ShouldGenerateN
 
 ## New behavior
 
-Starting in .NET 9, if `ShouldGenerateNewKey` is `true`, it indicates that either there's no default key or that for some other policy reason (in a specialized implementation of `IDefaultKeyResolver`), a new key <example-value> be generated. The `ICacheableKeyRingProvider` makes its own decision about whether the expiration time is close enough to warrant generating a new key.
+Starting in .NET 9, if `ShouldGenerateNewKey` is `true`, it indicates that either there's no default key or that for some other policy reason (in a specialized implementation of `IDefaultKeyResolver`), a new key should be generated. The `ICacheableKeyRingProvider` makes its own decision about whether the expiration time is close enough to warrant generating a new key.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](/dotnet/core/compatibility/categories#behavioral-change).
 
 ## Reason for change
 
 This change was made for two reasons:
 
-- To change the logic around key <example-value> near expiration time.
+- To change the logic around key generation near expiration time.
 - To make it simpler to implement a custom `IDefaultKeyResolver`.
 
 ## Recommended action

@@ -1,19 +1,13 @@
----
-title: "no-url-in-search-params"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-url-in-search-params.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-url-in-search-params
 
 📝 Disallow passing full URLs to `URLSearchParams`.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 `URLSearchParams` parses query strings, not full URLs. A URL string makes the URL prefix part of the first parameter name and leaves the fragment intact; a URL object is treated as a record instead of having its query extracted.
 
@@ -67,4 +61,4 @@ Constructor and `.href` aliases and URL subclasses are unsupported. Mutable URL 
 
 Comments may suppress suggestions. With `no-unreadable-new-expression`, assign inline URLs to variables first.
 
-See the URL Standard for the parsing algorithm.
+See the [URL Standard](https://url.spec.whatwg.org/#urlsearchparams) for the parsing algorithm.

@@ -1,22 +1,32 @@
 ---
 title: "Resolve errors and warnings related to readonly structs and members"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/compiler-messages/readonly-struct-errors.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "This article helps you diagnose and correct compiler errors and warnings related to readonly structs and members"
+f1_keywords:
+  - "CS8340"
+  - "CS8342"
+  - "CS8656"
+  - "CS8662"
+helpviewer_keywords:
+  - "CS8340"
+  - "CS8342"
+  - "CS8656"
+  - "CS8662"
+ms.date: 07/16/2026
+ai-usage: ai-assisted
 ---
-
 # Resolve errors and warnings related to readonly structs and members
 
 This article covers the following compiler errors and warnings:
 
-- **CS8340**: *Instance fields of readonly structs must be readonly.*
-- **CS8342**: *Field-like events are not allowed in readonly structs.*
-- **CS8656**: *Call to non-readonly member 'member' from a 'readonly' member results in an implicit copy of 'type'.*
-- **CS8662**: *Field-like event 'event' cannot be 'readonly'.*
+<!-- The text in this list generates issues for Acrolinx, because they don't use contractions.
+That's by design. The text closely matches the text of the compiler error / warning for SEO purposes.
+ -->
+- [**CS8340**](#readonly-struct-declaration-rules): *Instance fields of readonly structs must be readonly.*
+- [**CS8342**](#readonly-struct-declaration-rules): *Field-like events are not allowed in readonly structs.*
+- [**CS8656**](#readonly-struct-member-restrictions): *Call to non-readonly member 'member' from a 'readonly' member results in an implicit copy of 'type'.*
+- [**CS8662**](#readonly-struct-member-restrictions): *Field-like event 'event' cannot be 'readonly'.*
 
-A `readonly struct` declaration promises that instance state doesn't mutate. A `readonly` instance member promises that the member doesn't mutate the current instance. The diagnostics in this article cover both declarations and member bodies.
+A [`readonly struct`](../builtin-types/struct.md#readonly-struct) declaration promises that instance state doesn't mutate. A [`readonly` instance member](../builtin-types/struct.md#readonly-instance-members) promises that the member doesn't mutate the current instance. The diagnostics in this article cover both declarations and member bodies.
 
 ## Readonly struct declaration rules
 
@@ -38,7 +48,7 @@ Field-like events can't be marked `readonly` (**CS8662**). Remove the `readonly`
 
 ## Related diagnostics
 
-- For more information about auto-implemented properties in readonly structs, see Compiler Errors on property declarations in C# compiler messages. That article includes **CS8341**, the third readonly struct declaration rule.
-- For more information about readonly properties, indexers, and accessors, see Compiler Errors on property declarations in C# compiler messages.
-- For more information about readonly partial declarations, see Compiler Errors on partial type and member declarations in C# compiler messages.
-- For more information about readonly types and primary constructors, see Resolve errors related to constructor declarations and module initializers in C# compiler messages.
+- For more information about auto-implemented properties in readonly structs, see [Compiler Errors on property declarations](property-declaration-errors.md) in C# compiler messages. That article includes **CS8341**, the third readonly struct declaration rule.
+- For more information about readonly properties, indexers, and accessors, see [Compiler Errors on property declarations](property-declaration-errors.md) in C# compiler messages.
+- For more information about readonly partial declarations, see [Compiler Errors on partial type and member declarations](partial-declarations.md) in C# compiler messages.
+- For more information about readonly types and primary constructors, see [Resolve errors related to constructor declarations and module initializers](constructor-errors.md) in C# compiler messages.

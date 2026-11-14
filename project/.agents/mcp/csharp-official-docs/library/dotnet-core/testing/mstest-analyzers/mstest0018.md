@@ -1,12 +1,17 @@
 ---
 title: "MSTEST0018: DynamicData should be valid"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0018.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0018: DynamicData should be valid"
+ms.date: 11/05/2026
+ai-usage: ai-assisted
+f1_keywords:
+- MSTEST0018
+- DynamicDataShouldBeValidAnalyzer
+helpviewer_keywords:
+- DynamicDataShouldBeValidAnalyzer
+- MSTEST0018
+author: Evangelink
+ms.author: amauryleve
 ---
-
 # MSTEST0018: DynamicData should be valid
 
 | Property                            | Value                                 |
@@ -38,7 +43,7 @@ MSTest can enumerate data during discovery, before it creates a per-test instanc
 | Use a parameterless method, or in MSTest 3.10 and later, supply matching data-source arguments through `[DynamicData]`. | The runner only supplies the data-source arguments specified by the attribute, not arbitrary values or the test's `TestContext`. |
 | Return an enumerable of supported test-data rows. | MSTest enumerates the source and binds each row to the test method's parameters. The row shape must supply compatible arguments. Common return types include `IEnumerable<object[]>`, `IEnumerable<Tuple<...>>`, and `IEnumerable<ValueTuple<...>>`. |
 
-For supported row types and parameterized sources, see DynamicDataAttribute. For automatic member-kind detection, see MSTEST0052.
+For supported row types and parameterized sources, see [DynamicDataAttribute](../unit-testing-mstest-writing-tests-data-driven.md#dynamicdataattribute). For automatic member-kind detection, see [MSTEST0052](mstest0052.md).
 
 If you specify a custom display-name member, it must meet a separate callback contract:
 
@@ -76,11 +81,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0018
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0018.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

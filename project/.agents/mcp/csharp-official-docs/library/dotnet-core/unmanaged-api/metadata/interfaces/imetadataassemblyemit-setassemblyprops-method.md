@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataAssemblyEmit::SetAssemblyProps Method"
 title: "IMetaDataAssemblyEmit::SetAssemblyProps Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataassemblyemit-setassemblyprops-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataAssemblyEmit.SetAssemblyProps"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataAssemblyEmit::SetAssemblyProps"
+  - "IMetaDataAssemblyEmit::SetAssemblyProps method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataAssemblyEmit::SetAssemblyProps Method
 
 Modifies the specified `Assembly` metadata structure.
@@ -46,15 +53,15 @@ HRESULT SetAssemblyProps (
  [in] A pointer to the ASSEMBLYMETADATA that contains version, platform, and locale information for the assembly.
 
  `dwAssemblyFlags`
- [in] A bitwise combination of CorAssemblyFlags values that specify various attributes of the assembly.
+ [in] A bitwise combination of [CorAssemblyFlags](../enumerations/corassemblyflags-enumeration.md) values that specify various attributes of the assembly.
 
 ## Remarks
 
- To create an `Assembly` metadata structure, use the IMetaDataAssemblyEmit::DefineAssembly method.
+ To create an `Assembly` metadata structure, use the [IMetaDataAssemblyEmit::DefineAssembly](imetadataassemblyemit-defineassembly-method.md) method.
 
 ## Requirements
 
- **Platform:** See .NET supported operating systems.
+ **Platform:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -62,4 +69,4 @@ HRESULT SetAssemblyProps (
 
 ## See also
 
-- IMetaDataAssemblyEmit Interface
+- [IMetaDataAssemblyEmit Interface](imetadataassemblyemit-interface.md)

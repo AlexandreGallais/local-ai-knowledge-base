@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataAssemblyImport::GetFileProps Method"
 title: "IMetaDataAssemblyImport::GetFileProps Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataassemblyimport-getfileprops-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataAssemblyImport.GetFileProps"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataAssemblyImport::GetFileProps"
+  - "IMetaDataAssemblyImport::GetFileProps method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataAssemblyImport::GetFileProps Method
 
 Gets the properties of the file with the specified metadata signature.
@@ -46,11 +53,11 @@ HRESULT GetFileProps (
  [out] The number of wide chars in the returned hash value.
 
  `pdwFileFlags`
- [out] A pointer to the flags that describe the metadata applied to a file. The flags value is a combination of one or more CorFileFlags values.
+ [out] A pointer to the flags that describe the metadata applied to a file. The flags value is a combination of one or more [CorFileFlags](../enumerations/corfileflags-enumeration.md) values.
 
 ## Requirements
 
- **Platform:** See .NET supported operating systems.
+ **Platform:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -58,4 +65,4 @@ HRESULT GetFileProps (
 
 ## See also
 
-- IMetaDataAssemblyImport Interface
+- [IMetaDataAssemblyImport Interface](imetadataassemblyimport-interface.md)

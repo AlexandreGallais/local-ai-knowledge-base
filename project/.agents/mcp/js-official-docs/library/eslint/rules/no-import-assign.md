@@ -1,13 +1,11 @@
 ---
-title: "no-import-assign"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-import-assign.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-import-assign
+rule_type: problem
+handled_by_typescript: true
+extra_typescript_info: Note that the compiler will not catch the `Object.assign()` case. Thus, if you use `Object.assign()` in your codebase, this rule will still provide some value.
 ---
 
-# no-import-assign
+
 
 The updates of imported bindings by ES Modules cause runtime errors.
 
@@ -17,7 +15,7 @@ This rule warns the assignments, increments, and decrements of imported bindings
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-import-assign: "error"*/
@@ -33,9 +31,11 @@ mod_ns = {}      // ERROR: 'mod_ns' is readonly.
 Object.assign(mod_ns, { foo: "foo" }) // ERROR: The members of 'mod_ns' are readonly.
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-import-assign: "error"*/
@@ -53,6 +53,8 @@ function test(obj) {
 }
 test(mod_ns) // Not errored because it doesn't know that 'test' updates the member of the argument.
 ```
+
+:::
 
 ## Options
 

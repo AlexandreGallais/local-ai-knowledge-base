@@ -1,24 +1,21 @@
 ---
-title: "Strong naming and .NET libraries"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/library-guidance/strong-naming.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Strong naming and .NET libraries
+description: Best practice recommendations for strong naming .NET libraries.
+ms.date: 03/23/2026
+ai-usage: ai-assisted
 ---
-
 # Strong naming
 
-Strong naming refers to signing an assembly with a key, producing a strong-named assembly. When an assembly is strong-named, it creates a unique identity based on the name and assembly version number, and it can help prevent assembly conflicts.
+Strong naming refers to signing an assembly with a key, producing a [strong-named assembly](../assembly/strong-named.md). When an assembly is strong-named, it creates a unique identity based on the name and assembly version number, and it can help prevent assembly conflicts.
 
-The downside to strong naming is that .NET Framework on Windows enables strict loading of assemblies once an assembly is strong named. A strong-named assembly reference must exactly match the version of the loaded assembly, forcing developers to configure binding redirects when using the assembly:
+The downside to strong naming is that .NET Framework on Windows enables strict loading of assemblies once an assembly is strong named. A strong-named assembly reference must exactly match the version of the loaded assembly, forcing developers to [configure binding redirects](../../framework/configure-apps/redirect-assembly-versions.md) when using the assembly:
 
 ```xml
 <configuration>
    <runtime>
       <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
          <dependentAssembly>
-            <assemblyIdentity name="<example-value>" publicKeyToken="<example-value>" culture="<example-value>" />
+            <assemblyIdentity name="myAssembly" publicKeyToken="32ab4ba45e0a69a1" culture="neutral" />
             <bindingRedirect oldVersion="1.0.0.0" newVersion="2.0.0.0"/>
          </dependentAssembly>
       </assemblyBinding>
@@ -42,7 +39,7 @@ Strong naming has no benefits on .NET Core/5+. C# compiler produces CS8002 warni
 
 Strong naming is not required for libraries that target .NET Core/5+ only. You should strong name your open-source .NET libraries if their targets include .NET Framework or .NET Standard.
 
-> **Note:**
+> [!NOTE]
 > This guidance is specific to publicly distributed .NET libraries, such as .NET libraries published on NuGet.org. Strong naming is not required by most .NET applications and should not be done by default.
 
 ✔️ CONSIDER strong naming your library's assemblies if you only target .NET Framework or .NET Standard.
@@ -55,20 +52,20 @@ Strong naming is not required for libraries that target .NET Core/5+ only. You s
 
 > A publicly available key pair lets developers modify and recompile your library source code with the same key.
 >
-> You shouldn't make the strong naming key pair public if it has been used in the past to give special permissions in partial-trust scenarios. Otherwise, you might compromise existing environments.
+> You shouldn't make the strong naming key pair public if it has been used in the past to give special permissions in [partial-trust scenarios](/previous-versions/dotnet/framework/code-access-security/using-libraries-from-partially-trusted-code). Otherwise, you might compromise existing environments.
 >
-> If you can't check in the public + private key pair, then check in the public key and use public signing for regular builds. Public signing still allows developers to recompile and use your library in most scenarios.
+> If you can't check in the public + private key pair, then check in the public key and use [public signing](../../csharp/language-reference/compiler-options/security.md#publicsign) for regular builds. Public signing still allows developers to recompile and use your library in most scenarios.
 
-> **Important:**
-> When the identity of the publisher of the code is desired, Authenticode and NuGet Package Signing are recommended. Code Access Security (CAS) should not be used as a security mitigation.
+> [!IMPORTANT]
+> When the identity of the publisher of the code is desired, [Authenticode](/windows-hardware/drivers/install/authenticode) and [NuGet Package Signing](/nuget/create-packages/sign-a-package) are recommended. Code Access Security (CAS) should not be used as a security mitigation.
 
 ✔️ CONSIDER incrementing the assembly version on only major version changes to help users reduce binding redirects, and how often they're updated.
 
-> Read more about versioning and the assembly version.
+> Read more about [versioning and the assembly version](./versioning.md#assembly-version).
 
 ❌ DO NOT add, remove, or change the strong naming key.
 
-> Modifying an assembly's strong naming key <example-value> the assembly's identity and breaks compiled code that uses it. For more information, see binary breaking changes.
+> Modifying an assembly's strong naming key changes the assembly's identity and breaks compiled code that uses it. For more information, see [binary breaking changes](./breaking-changes.md#binary-breaking-change).
 
 ❌ DO NOT publish strong-named and non-strong-named versions of your library. For example, `Contoso.Api` and `Contoso.Api.StrongNamed`.
 
@@ -78,11 +75,12 @@ Strong naming is not required for libraries that target .NET Core/5+ only. You s
 
 The following popular open-source .NET libraries use strong naming and have the key pair checked into source control. They can serve as references when you set up strong naming for your library:
 
-- Newtonsoft.Json (MIT license) is strong-named and checks its key pair into source control.
-- AutoMapper (MIT license) is strong-named and checks its key pair into source control.
-- NodaTime (Apache 2.0 license) is strong-named and checks its key pair into source control.
+- [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json) (MIT license) is strong-named and checks its key pair into source control.
+- [AutoMapper](https://github.com/AutoMapper/AutoMapper) (MIT license) is strong-named and checks its key pair into source control.
+- [NodaTime](https://github.com/nodatime/nodatime) (Apache 2.0 license) is strong-named and checks its key pair into source control.
 
-For more information about how the .NET team itself approaches strong naming across the runtime and core libraries, see Strong Name Signing in the dotnet/runtime repository.
+For more information about how the .NET team itself approaches strong naming across the runtime and core libraries, see [Strong Name Signing](https://github.com/dotnet/runtime/blob/main/docs/project/strong-name-signing.md) in the dotnet/runtime repository.
 
->Previous
->Next
+>[!div class="step-by-step"]
+>[Previous](cross-platform-targeting.md)
+>[Next](nuget.md)

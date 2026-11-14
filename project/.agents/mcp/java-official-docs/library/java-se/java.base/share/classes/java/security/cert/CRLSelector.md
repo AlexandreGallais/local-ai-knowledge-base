@@ -1,37 +1,27 @@
----
-title: "CRLSelector interface (java.security.cert)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/cert/CRLSelector.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # CRLSelector interface (java.security.cert)
 
 ```java
 public interface CRLSelector extends Cloneable
 ```
 
-A selector that defines a set of criteria for selecting `CRL`s.
+A selector that defines a set of criteria for selecting {@code CRL}s.
 Classes that implement this interface are often used to specify
-which `CRL`s should be retrieved from a `CertStore`.
-
-**Concurrent Access**
-
+which {@code CRL}s should be retrieved from a {@code CertStore}.
+<p>
+<b>Concurrent Access</b>
+<p>
 Unless otherwise specified, the methods defined in this interface are not
 thread-safe. Multiple threads that need to access a single
 object concurrently should synchronize amongst themselves and
 provide the necessary locking. Multiple threads each manipulating
 separate objects need not synchronize.
 
-**See also:** CRL
+@see CRL
+@see CertStore
+@see CertStore#getCRLs
 
-**See also:** CertStore
-
-**See also:** CertStore#getCRLs
-
-**Since:** 1.4
+@author      Steve Hanna
+@since       1.4
 
 ## CRLSelector.match(CRL)
 
@@ -39,14 +29,11 @@ separate objects need not synchronize.
 boolean match(CRL crl)
 ```
 
-Decides whether a `CRL` should be selected.
+Decides whether a {@code CRL} should be selected.
 
-Parameters:
-
-- `crl`: the `CRL` to be checked
-
-**Returns:** `true` if the `CRL` should be selected,
-`false` otherwise
+@param   crl     the {@code CRL} to be checked
+@return  {@code true} if the {@code CRL} should be selected,
+{@code false} otherwise
 
 ## CRLSelector.clone()
 
@@ -54,7 +41,7 @@ Parameters:
 Object clone()
 ```
 
-Makes a copy of this `CRLSelector`. Changes to the
+Makes a copy of this {@code CRLSelector}. Changes to the
 copy will not affect the original and vice versa.
 
-**Returns:** a copy of this `CRLSelector`
+@return a copy of this {@code CRLSelector}

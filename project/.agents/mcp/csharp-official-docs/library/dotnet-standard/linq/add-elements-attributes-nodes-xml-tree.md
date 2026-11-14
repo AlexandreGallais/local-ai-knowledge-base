@@ -1,10 +1,11 @@
 ---
-title: "Add elements, attributes, and nodes to an XML tree - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/add-elements-attributes-nodes-xml-tree.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Add elements, attributes, and nodes to an XML tree - LINQ to XML
+description: Learn how to add content (elements, attributes, comments, processing instructions, text, and CDATA) to an XML tree.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # Add elements, attributes, and nodes to an XML tree (LINQ to XML)
@@ -13,19 +14,19 @@ You can add content (elements, attributes, comments, processing instructions, te
 
 ## Methods for adding content
 
-The following methods add child content to an `System.Xml.Linq.XElement` or an `System.Xml.Linq.XDocument`:
+The following methods add child content to an <xref:System.Xml.Linq.XElement> or an <xref:System.Xml.Linq.XDocument>:
 
 |Method|Description|
 |------------|-----------------|
-|`System.Xml.Linq.XContainer.Add*`|Adds content at the end of the child content of the `System.Xml.Linq.XContainer`.|
-|`System.Xml.Linq.XContainer.AddFirst*`|Adds content at the beginning of the child content of the `System.Xml.Linq.XContainer`.|
+|<xref:System.Xml.Linq.XContainer.Add*>|Adds content at the end of the child content of the <xref:System.Xml.Linq.XContainer>.|
+|<xref:System.Xml.Linq.XContainer.AddFirst*>|Adds content at the beginning of the child content of the <xref:System.Xml.Linq.XContainer>.|
 
-The following methods add content as sibling nodes of an `System.Xml.Linq.XNode`. The most common node to which you add sibling content is `System.Xml.Linq.XElement`, although you can add valid sibling content to other types of nodes such as `System.Xml.Linq.XText` or `System.Xml.Linq.XComment`.
+The following methods add content as sibling nodes of an <xref:System.Xml.Linq.XNode>. The most common node to which you add sibling content is <xref:System.Xml.Linq.XElement>, although you can add valid sibling content to other types of nodes such as <xref:System.Xml.Linq.XText> or <xref:System.Xml.Linq.XComment>.
 
 |Method|Description|
 |------------|-----------------|
-|`System.Xml.Linq.XNode.AddAfterSelf*`|Adds content after the `System.Xml.Linq.XNode`.|
-|`System.Xml.Linq.XNode.AddBeforeSelf*`|Adds content before the `System.Xml.Linq.XNode`.|
+|<xref:System.Xml.Linq.XNode.AddAfterSelf*>|Adds content after the <xref:System.Xml.Linq.XNode>.|
+|<xref:System.Xml.Linq.XNode.AddBeforeSelf*>|Adds content before the <xref:System.Xml.Linq.XNode>.|
 
 ## Example: Create two XML trees and modify one of them
 

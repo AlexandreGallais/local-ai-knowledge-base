@@ -1,137 +1,66 @@
 ---
-title: "Implement the IHostedService interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/timer-service.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Implement the IHostedService interface
+description: Learn how to implement a custom IHostedService interface in C#, much like the inbuilt .NET BackgroundService.
+ms.date: 10/20/2025
+ms.topic: tutorial
 ---
 
 # Implement the `IHostedService` interface
 
-When you need finite control beyond the provided `Microsoft.Extensions.Hosting.BackgroundService`, you can implement your own `Microsoft.Extensions.Hosting.IHostedService`. The `Microsoft.Extensions.Hosting.IHostedService` interface is the basis for all long running services in .NET. Custom implementations are registered with the `Microsoft.Extensions.DependencyInjection.ServiceCollectionHostedServiceExtensions.AddHostedService``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)` extension method.
+When you need finite control beyond the provided <xref:Microsoft.Extensions.Hosting.BackgroundService>, you can implement your own <xref:Microsoft.Extensions.Hosting.IHostedService>. The <xref:Microsoft.Extensions.Hosting.IHostedService> interface is the basis for all long running services in .NET. Custom implementations are registered with the <xref:Microsoft.Extensions.DependencyInjection.ServiceCollectionHostedServiceExtensions.AddHostedService``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)> extension method.
 
 In this tutorial, you learn how to:
 
+> [!div class="checklist"]
 >
-> - Implement the `Microsoft.Extensions.Hosting.IHostedService`, and `System.IAsyncDisposable` interfaces.
+> - Implement the <xref:Microsoft.Extensions.Hosting.IHostedService>, and <xref:System.IAsyncDisposable> interfaces.
 > - Create a timer-based service.
 > - Register the custom implementation with dependency injection and logging.
 
-> **Tip:**
-> All of the "Workers in .NET" example source code is available in the **Samples Browser** for download. For more information, see Browse code samples: Workers in .NET.
+[!INCLUDE [workers-samples-browser](includes/workers-samples-browser.md)]
 
 ## Prerequisites
 
-- The .NET 8.0 SDK or later
+- The [.NET 8.0 SDK or later](https://dotnet.microsoft.com/download/dotnet/8.0)
 - A .NET integrated development environment (IDE)
-  - Feel free to use Visual Studio
+  - Feel free to use [Visual Studio](https://visualstudio.microsoft.com)
 
-## Create a new project
-
-To create a new Worker Service project with Visual Studio, you'd select **File** > **New** > **Project...**. From the **Create a new project** dialog search for "Worker Service", and select Worker Service template. If you'd rather use the .NET CLI, open your favorite terminal in a working directory. Run the `dotnet new` command, and replace the `<Project.Name>` with your desired project name.
-
-```dotnetcli
-dotnet new worker --name <Project.Name>
-```
-
-For more information on the .NET CLI new worker service project command, see dotnet new worker.
-
-> **Tip:**
-> If you're using Visual Studio Code, you can run .NET CLI commands from the integrated terminal. For more information, see Visual Studio Code: Integrated Terminal.
+<!-- ## Create a new project -->
+[!INCLUDE [file-new-worker](includes/file-new-worker.md)]
 
 ## Create timer service
 
-The timer-based background service makes use of the `System.Threading.Timer` class. The timer triggers the `DoWork` method. The timer is disabled on `Microsoft.Extensions.Hosting.IHostLifetime.StopAsync(System.Threading.CancellationToken)` and disposed when the service container is disposed on `System.IAsyncDisposable.DisposeAsync`:
+The timer-based background service makes use of the <xref:System.Threading.Timer?displayProperty=fullName> class. The timer triggers the `DoWork` method. The timer is disabled on <xref:Microsoft.Extensions.Hosting.IHostLifetime.StopAsync(System.Threading.CancellationToken)?displayProperty=nameWithType> and disposed when the service container is disposed on <xref:System.IAsyncDisposable.DisposeAsync?displayProperty=nameWithType>:
 
 Replace the contents of the `Worker` from the template with the following C# code, and rename the file to *TimerService.cs*:
 
-```csharp
-﻿namespace App.TimerHostedService;
+:::code source="snippets/workers/timer-service/TimerService.cs" highlight="32,39-42":::
 
-public sealed class TimerService(ILogger<TimerService> logger) : IHostedService, IAsyncDisposable
-{
-    private readonly Task _completedTask = Task.CompletedTask;
-    private int _executionCount = 0;
-    private Timer? _timer;
+> [!IMPORTANT]
+> The `Worker` was a subclass of <xref:Microsoft.Extensions.Hosting.BackgroundService>. Now, the `TimerService` implements both the <xref:Microsoft.Extensions.Hosting.IHostedService>, and <xref:System.IAsyncDisposable> interfaces.
 
-    public Task StartAsync(CancellationToken <example-value>)
-    {
-        logger.LogInformation("{Service} is running.", nameof(TimerHostedService));
-        _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
+The `TimerService` is `sealed`, and cascades the `DisposeAsync` call from its `_timer` instance. For more information on the "cascading dispose pattern", see [Implement a `DisposeAsync` method](../../standard/garbage-collection/implementing-disposeasync.md).
 
-        return _completedTask;
-    }
+When <xref:Microsoft.Extensions.Hosting.IHostedService.StartAsync*> is called, the timer is instantiated, thus starting the timer.
 
-    private void DoWork(object? state)
-    {
-        int count = Interlocked.Increment(ref _executionCount);
-
-        logger.LogInformation(
-            "{Service} is working, execution count: {Count:#,0}",
-            nameof(TimerHostedService),
-            count);
-    }
-
-    public Task StopAsync(CancellationToken <example-value>)
-    {
-        logger.LogInformation(
-            "{Service} is stopping.", nameof(TimerHostedService));
-
-        _timer?.Change(Timeout.Infinite, 0);
-
-        return _completedTask;
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        if (_timer is IAsyncDisposable timer)
-        {
-            await timer.DisposeAsync();
-        }
-
-        _timer = null;
-    }
-}
-```
-> **Important:**
-> The `Worker` was a subclass of `Microsoft.Extensions.Hosting.BackgroundService`. Now, the `TimerService` implements both the `Microsoft.Extensions.Hosting.IHostedService`, and `System.IAsyncDisposable` interfaces.
-
-The `TimerService` is `sealed`, and cascades the `DisposeAsync` call from its `_timer` instance. For more information on the "cascading dispose pattern", see Implement a `DisposeAsync` method.
-
-When `Microsoft.Extensions.Hosting.IHostedService.StartAsync*` is called, the timer is instantiated, thus starting the timer.
-
-> **Tip:**
-> The `System.Threading.Timer` doesn't wait for previous executions of `DoWork` to finish, so the approach shown might not be suitable for every scenario. `System.Threading.Interlocked.Increment*` is used to increment the execution counter as an atomic operation, which ensures that multiple threads don't update `_executionCount` concurrently.
+> [!TIP]
+> The <xref:System.Threading.Timer> doesn't wait for previous executions of `DoWork` to finish, so the approach shown might not be suitable for every scenario. <xref:System.Threading.Interlocked.Increment*?displayProperty=nameWithType> is used to increment the execution counter as an atomic operation, which ensures that multiple threads don't update `_executionCount` concurrently.
 
 Replace the existing `Program` contents with the following C# code:
 
-```csharp
-﻿using App.TimerHostedService;
+:::code source="snippets/workers/timer-service/Program.cs" highlight="4":::
 
-HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
-builder.Services.AddHostedService<TimerService>();
+The service is registered in (*Program.cs*) with the `AddHostedService` extension method. This is the same extension method you use when registering <xref:Microsoft.Extensions.Hosting.BackgroundService> subclasses, as they both implement the <xref:Microsoft.Extensions.Hosting.IHostedService> interface.
 
-IHost host = builder.Build();
-host.Run();
-```
-The service is registered in (*Program.cs*) with the `AddHostedService` extension method. This is the same extension method you use when registering `Microsoft.Extensions.Hosting.BackgroundService` subclasses, as they both implement the `Microsoft.Extensions.Hosting.IHostedService` interface.
-
-For more information on registering services, see Dependency injection in .NET.
+For more information on registering services, see [Dependency injection in .NET](dependency-injection/overview.md).
 
 ## Verify service functionality
 
-To run the application from Visual Studio, select `F5` or select the **Debug** > **Start Debugging** menu option. If you're using the .NET CLI, run the `dotnet run` command from the working directory:
-
-```dotnetcli
-dotnet run
-```
-
-For more information on the .NET CLI run command, see dotnet run.
+[!INCLUDE [run-app](includes/run-app.md)]
 
 Let the application run for a bit to generate several execution count increments. You will see output similar to the following:
 
-```output
+```Output
 info: App.TimerHostedService.TimerService[0]
       TimerHostedService is running.
 info: Microsoft.Hosting.Lifetime[0]
@@ -154,13 +83,13 @@ info: App.TimerHostedService.TimerService[0]
       TimerHostedService is stopping.
 ```
 
-If running the application from within Visual Studio, select **Debug** > **Stop Debugging...**. Alternatively, select `Ctrl` + `C` from the console window to signal cancellation.
+[!INCLUDE [stop-app](includes/stop-app.md)]
 
 ## See also
 
 There are several related tutorials to consider:
 
-- Worker Services in .NET
-- Create a Queue Service
-- Use scoped services within a `BackgroundService`
-- Create a Windows Service using `BackgroundService`
+- [Worker Services in .NET](workers.md)
+- [Create a Queue Service](queue-service.md)
+- [Use scoped services within a `BackgroundService`](scoped-service.md)
+- [Create a Windows Service using `BackgroundService`](windows-service.md)

@@ -1,17 +1,11 @@
----
-title: "no-invalid-integrity"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-invalid-integrity.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-invalid-integrity
 
 📝 Disallow invalid subresource integrity metadata.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, 🌐 `recommended-html`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, 🌐 `recommended-html`, ☑️ `unopinionated`.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Validates existing `integrity` attributes on HTML and native JSX `<script>` and `<link>` elements. Malformed hashes can block resources; unknown algorithms can leave integrity checking ineffective.
 
@@ -56,13 +50,13 @@ Separate entries with HTML ASCII whitespace (space, tab, LF, FF, or CR). Empty a
 
 Every malformed recognized entry is reported, even beside a valid or stronger hash. Unknown entries are allowed if a recognized algorithm is present; otherwise, nonempty metadata is reported.
 
-Based on the SRI grammar, CSP base64 grammar, and signature-based integrity metadata.
+Based on the [SRI grammar](https://www.w3.org/TR/sri/#parse-metadata), [CSP base64 grammar](https://w3c.github.io/webappsec-csp/#grammardef-base64-value), and [signature-based integrity metadata](https://wicg.github.io/signature-based-sri/).
 
 ## Static values
 
-HTML names are case-insensitive and character references are decoded. Checks the first `integrity` attribute. Ignores markup inside `<textarea>`, `<title>`, and ``, dynamic template names or values, configured delimiters, and common template markers (`{{`, `{%`, `<%`, `${`).
+HTML names are case-insensitive and character references are decoded. Checks the first `integrity` attribute. Ignores markup inside `<textarea>`, `<title>`, and `<iframe>`, dynamic template names or values, configured delimiters, and common template markers (`{{`, `{%`, `<%`, `${`).
 
-> **Note:**
+> [!NOTE]
 > Quote URL and `integrity` values: the HTML parser may miss attributes after unquoted URLs containing `/`, or unquoted `integrity` values starting with `/`.
 
 Checks lowercase native JSX tags with an `integrity` prop. Supports safely resolved static strings, including constants, concatenations, and TypeScript assertions. Uses the last explicit `integrity` prop unless followed by a spread; ignores custom components, unresolved expressions, and nonstrings.

@@ -1,29 +1,29 @@
 ---
-title: "How to modify an Office Open XML document - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/modify-office-open-xml-document.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to modify an Office Open XML document - LINQ to XML
+description: This article presents an example for C# and Visual Basic that opens an Office Open XML document, modifies it, and saves it.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
-
 # How to modify an Office Open XML document (LINQ to XML)
 
 This article presents an example for C# and Visual Basic that opens an Office Open XML document, modifies it, and saves it.
 
-For more information on Office Open XML, see Open XML SDK and www.ericwhite.com.
+For more information on Office Open XML, see [Open XML SDK](https://github.com/OfficeDev/Open-XML-SDK) and [www.ericwhite.com](http://ericwhite.com/).
 
 ## Example
 
 This example finds the first paragraph element in the document. It retrieves the text from the paragraph, and deletes all text runs. It creates a new text run that consists of the text of the first paragraph converted to upper case. It then serializes the changed XML into the Open XML package and closes it.
 
-The example operates on Office Open XML document described in Create the source Office Open XML document.
+The example operates on Office Open XML document described in [Create the source Office Open XML document](create-source-office-open-xml-document.md).
 
 It makes use of the following:
 
 - The `StringConcatenate` extension method, defined as part of the example.
 - Classes found in the WindowsBase assembly.
-- Types in the `System.IO.Packaging` namespace.
+- Types in the <xref:System.IO.Packaging?displayProperty=nameWithType> namespace.
 
 ```csharp
 public static class LocalExtensions

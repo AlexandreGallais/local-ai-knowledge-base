@@ -1,12 +1,9 @@
 ---
-title: "dotnet new update"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-new-update.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet new update
+ai-usage: ai-assisted
+description: The dotnet new update command updates installed template packages.
+ms.date: 10/28/2025
 ---
-
 # dotnet new update
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -30,18 +27,8 @@ dotnet new update --check-only|--dry-run [--interactive] [--add-source|--nuget-s
 The `dotnet new update` command updates installed template packages.
 The `dotnet new update` command with `--check-only` option checks for available updates for installed template packages without applying them.
 
-> **Note:**
-> Starting with the .NET 7 SDK, the `dotnet new` syntax has changed:
-
-- The `--list`, `--search`, `--install`, and `--uninstall` options became `list`, `search`, `install`, and `uninstall` subcommands.
-- The `--update-apply` option became the `update` subcommand.
-- To use `--update-check`, use the `update` subcommand with the `--check-only` option.
-
-Other options that were available before are still available to use with their respective subcommands.
-Separate help for each subcommand is available via the `-h` or `--help` option: `dotnet new <subcommand> --help` lists all supported options for the subcommand.
-
-Additionally, tab completion is now available for `dotnet new`. It supports completion for installed template names and for the options a selected template provides.
-To activate tab completion for the .NET SDK, see Enable tab completion.
+> [!NOTE]
+> [!INCLUDE [new syntax](includes/dotnet-new-7-0-syntax.md)]
 >
 > Examples of the old syntax:
 >
@@ -61,14 +48,12 @@ To activate tab completion for the .NET SDK, see Enable tab completion.
 
 ## Options
 
-- **`--interactive`**
+- [!INCLUDE [interactive](includes/cli-interactive.md)]
 
-Allows the command to stop and wait for user input or action. For example, to complete authentication.
-
-- **`--add-source|--nuget-source `**
+- **`--add-source|--nuget-source <SOURCE>`**
 
   By default, `dotnet new update` uses the hierarchy of NuGet configuration files from the current directory to determine the NuGet sources for the operation. Specify `--nuget-source` to use a source in addition to the configured sources.
-  To check the configured sources for the current directory, use `dotnet nuget list source`. For more information, see Common NuGet Configurations. Available since .NET SDK 7.0.100.
+  To check the configured sources for the current directory, use [`dotnet nuget list source`](dotnet-nuget-list-source.md). For more information, see [Common NuGet Configurations](/nuget/consume-packages/configuring-nuget-behavior). Available since .NET SDK 7.0.100.
 
 - **`--check-only|--dry-run`**
 
@@ -78,13 +63,9 @@ Allows the command to stop and wait for user input or action. For example, to co
 
   Enables diagnostic output. Available since .NET SDK 7.0.100.
 
-- **`-?|-h|--help`**
+- [!INCLUDE [help](includes/cli-help.md)]
 
-Prints out a description of how to use the command.
-
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+- [!INCLUDE [verbosity](includes/cli-verbosity.md)]
 
 ## Examples
 
@@ -102,7 +83,7 @@ Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal
 
 ## See also
 
-- dotnet new command
-- dotnet new search command
-- dotnet new install command
-- .NET templates for authors
+- [dotnet new command](dotnet-new.md)
+- [dotnet new search command](dotnet-new-search.md)
+- [dotnet new install command](dotnet-new-install.md)
+- [.NET templates for authors](templates.md)

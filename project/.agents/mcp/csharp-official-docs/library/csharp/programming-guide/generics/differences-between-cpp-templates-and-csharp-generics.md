@@ -1,17 +1,16 @@
 ---
 title: "Differences Between C++ Templates and C# Generics"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/programming-guide/generics/differences-between-cpp-templates-and-csharp-generics.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the differences between C++ templates and C# generics. Both are language features that provide support for parameterized types.
+ms.date: 07/20/2015
+helpviewer_keywords:
+  - "generics [C#], vs. C++ templates"
+ms.assetid: 1da6beeb-d4a4-4da0-87b7-0cfbe04920b7
 ---
-
 # Differences Between C++ Templates and C# Generics (C# Programming Guide)
 
-C# Generics and C++ templates are both language features that provide support for parameterized types. However, there are many differences between the two. At the syntax level, C# generics are a simpler approach to parameterized types without the complexity of C++ templates. In addition, C# does not attempt to provide all of the functionality that C++ templates provide. At the implementation level, the primary difference is that C# generic type substitutions are performed at run time and generic type information is thereby preserved for instantiated objects. For more information, see Generics in the Runtime.
+C# Generics and C++ templates are both language features that provide support for parameterized types. However, there are many differences between the two. At the syntax level, C# generics are a simpler approach to parameterized types without the complexity of C++ templates. In addition, C# does not attempt to provide all of the functionality that C++ templates provide. At the implementation level, the primary difference is that C# generic type substitutions are performed at run time and generic type information is thereby preserved for instantiated objects. For more information, see [Generics in the Runtime](./generics-in-the-run-time.md).
 
- The following are the key <example-value> between C# Generics and C++ templates:
+ The following are the key differences between C# Generics and C++ templates:
 
 - C# generics do not provide the same amount of flexibility as C++ templates. For example, it is not possible to call arithmetic operators in a C# generic class, although it is possible to call user defined operators.
 
@@ -31,5 +30,5 @@ C# Generics and C++ templates are both language features that provide support fo
 
 ## See also
 
-- Introduction to Generics
-- Templates
+- [Introduction to Generics](../../fundamentals/types/generics.md)
+- [Templates](/cpp/cpp/templates-cpp)

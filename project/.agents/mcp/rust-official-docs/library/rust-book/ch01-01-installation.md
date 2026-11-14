@@ -1,14 +1,3 @@
----
-title: "ch01-01-installation"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch01-01-installation.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch01-01-installation
-
 ## Installation
 
 The first step is to install Rust. We’ll download Rust through `rustup`, a
@@ -16,7 +5,7 @@ command line tool for managing Rust versions and associated tools. You’ll need
 an internet connection for the download.
 
 > Note: If you prefer not to use `rustup` for some reason, please see the
-> Other Rust Installation Methods page for more options.
+> [Other Rust Installation Methods page][otherinstall] for more options.
 
 The following steps install the latest stable version of the Rust compiler.
 Rust’s stability guarantees ensure that all the examples in the book that
@@ -68,11 +57,13 @@ the `build-essential` package.
 
 ### Installing `rustup` on Windows
 
-On Windows, go to https://www.rust-lang.org/tools/install and follow the instructions for installing Rust. At some point in the
+On Windows, go to [https://www.rust-lang.org/tools/install][install]<!-- ignore
+--> and follow the instructions for installing Rust. At some point in the
 installation, you’ll be prompted to install Visual Studio. This provides a
 linker and the native libraries needed to compile programs. If you need more
 help with this step, see
-https://rust-lang.github.io/rustup/installation/windows-msvc.html.
+[https://rust-lang.github.io/rustup/installation/windows-msvc.html][msvc]<!--
+ignore -->.
 
 The rest of this book uses commands that work in both _cmd.exe_ and PowerShell.
 If there are specific differences, we’ll explain which to use.
@@ -117,7 +108,7 @@ $ echo $PATH
 
 If that’s all correct and Rust still isn’t working, there are a number of
 places you can get help. Find out how to get in touch with other Rustaceans (a
-silly nickname we call ourselves) on the community page.
+silly nickname we call ourselves) on [the community page][community].
 
 ### Updating and Uninstalling
 
@@ -135,6 +126,9 @@ shell:
 $ rustup self uninstall
 ```
 
+<!-- Old headings. Do not remove or links may break. -->
+<a id="local-documentation"></a>
+
 ### Reading the Local Documentation
 
 The installation of Rust also includes a local copy of the documentation so
@@ -145,13 +139,16 @@ Any time a type or function is provided by the standard library and you’re not
 sure what it does or how to use it, use the application programming interface
 (API) documentation to find out!
 
+<!-- Old headings. Do not remove or links may break. -->
+<a id="text-editors-and-integrated-development-environments"></a>
+
 ### Using Text Editors and IDEs
 
 This book makes no assumptions about what tools you use to author Rust code.
 Just about any text editor will get the job done! However, many text editors and
 integrated development environments (IDEs) have built-in support for Rust. You
-can always find a fairly current list of many editors and IDEs on the tools
-page on the Rust website.
+can always find a fairly current list of many editors and IDEs on [the tools
+page][tools] on the Rust website.
 
 ### Working Offline with This Book
 
@@ -161,10 +158,18 @@ or to have downloaded those dependencies ahead of time. To download the
 dependencies ahead of time, you can run the following commands. (We’ll explain
 what `cargo` is and what each of these commands does in detail later.)
 
+<!-- When updating the version of `rand` used, also update the version of
+`rand` used in these files so they all match:
+
+* ch02-00-guessing-game-tutorial.md
+* ch07-04-bringing-paths-into-scope-with-the-use-keyword.md
+* ch14-03-cargo-workspaces.md
+-->
+
 ```console
 $ cargo new get-dependencies
 $ cd get-dependencies
-$ cargo add user@example.com user@example.com
+$ cargo add rand@0.10.1 trpl@0.2.0
 ```
 
 This will cache the downloads for these packages so you will not need to
@@ -172,3 +177,9 @@ download them later. Once you have run this command, you do not need to keep the
 `get-dependencies` folder. If you have run this command, you can use the
 `--offline` flag with all `cargo` commands in the rest of the book to use these
 cached versions instead of attempting to use the network.
+
+[otherinstall]: https://forge.rust-lang.org/infra/other-installation-methods.html
+[install]: https://www.rust-lang.org/tools/install
+[msvc]: https://rust-lang.github.io/rustup/installation/windows-msvc.html
+[community]: https://www.rust-lang.org/community
+[tools]: https://www.rust-lang.org/tools

@@ -1,13 +1,11 @@
 ---
-title: "Getting Started with ESLint"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/use/getting-started.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: Getting Started with ESLint
+eleventyNavigation:
+    key: getting started
+    parent: use eslint
+    title: Getting Started
+    order: 1
 ---
-
-# Getting Started with ESLint
 
 {%- from 'components/npm_tabs.macro.html' import npm_tabs with context %}
 {%- from 'components/npx_tabs.macro.html' import npx_tabs %}
@@ -18,7 +16,7 @@ ESLint is completely pluggable. Every single rule is a plugin and you can add mo
 
 ## Prerequisites
 
-To use ESLint, you must have Node.js (`^20.19.0`, `^22.13.0`, or `>=24`) installed and built with SSL and ICU support. (If you are using an official Node.js distribution, both SSL and ICU are always built in.)
+To use ESLint, you must have [Node.js](https://nodejs.org/en/) (`^20.19.0`, `^22.13.0`, or `>=24`) installed and built with SSL and ICU support. (If you are using an official Node.js distribution, both SSL and ICU are always built in.)
 
 If you use ESLint's TypeScript type definitions, TypeScript 5.3 or later is required.
 
@@ -52,7 +50,7 @@ After that, you can run ESLint on any file or directory like this:
 
 ## Configuration
 
-**Note:** If you are coming from a version before 9.0.0 please see the migration guide.
+**Note:** If you are coming from a version before 9.0.0 please see the [migration guide](configure/migration-guide).
 
 When you run `npm init @eslint/config`, you'll be asked a series of questions to determine how you're using ESLint and what options should be included. After answering these questions, you'll have an `eslint.config.js` (or `eslint.config.mjs`) file created in your directory.
 
@@ -69,7 +67,7 @@ export default defineConfig([
 ]);
 ```
 
-The `"js/recommended"` configuration ensures all of the rules marked as recommended on the rules page will be turned on. Alternatively, you can use configurations that others have created by searching for "eslint-config" on npmjs.com. ESLint will not lint your code unless you extend from a shared configuration or explicitly turn rules on in your configuration.
+The `"js/recommended"` configuration ensures all of the rules marked as recommended on the [rules page](../rules) will be turned on. Alternatively, you can use configurations that others have created by searching for "eslint-config" on [npmjs.com](https://www.npmjs.com/search?q=eslint-config). ESLint will not lint your code unless you extend from a shared configuration or explicitly turn rules on in your configuration.
 
 You can configure rules individually by defining a new object with a `rules` key, as in this example:
 
@@ -89,7 +87,7 @@ export default defineConfig([
 ]);
 ```
 
-The names `"no-unused-vars"` and `"no-undef"` are the names of rules in ESLint. The first value is the error level of the rule and can be one of these values:
+The names `"no-unused-vars"` and `"no-undef"` are the names of [rules](../rules) in ESLint. The first value is the error level of the rule and can be one of these values:
 
 - `"off"` or `0` - turn the rule off
 - `"warn"` or `1` - turn the rule on as a warning (doesn’t affect exit code)
@@ -105,8 +103,8 @@ It is also possible to install ESLint globally, rather than locally, using `npm 
 
 You can also manually set up ESLint in your project.
 
-**Important:**
-If you are using pnpm, be sure to create a `.npmrc` file with at least the following settings:
+::: important
+If you are using [pnpm](https://pnpm.io), be sure to create a `.npmrc` file with at least the following settings:
 
 ```text
 auto-install-peers=true
@@ -114,6 +112,7 @@ node-linker=hoisted
 ```
 
 This ensures that pnpm installs dependencies in a way that is more compatible with npm and is less likely to produce errors.
+:::
 
 Before you begin, you must already have a `package.json` file. If you don't, make sure to run `npm init` or `yarn init` to create the file beforehand.
 
@@ -132,7 +131,7 @@ Before you begin, you must already have a `package.json` file. If you don't, mak
     touch eslint.config.js
     ```
 
-3. Add configuration to the `eslint.config.js` file. Refer to the Configure ESLint documentation to learn how to add rules, custom configurations, plugins, and more.
+3. Add configuration to the `eslint.config.js` file. Refer to the [Configure ESLint documentation](configure/) to learn how to add rules, custom configurations, plugins, and more.
 
     ```js
     import { defineConfig } from "eslint/config";
@@ -160,14 +159,14 @@ Before you begin, you must already have a `package.json` file. If you don't, mak
     args: ["project-dir/", "file.js"]
 }) }}
 
-For more information on the available CLI options, refer to Command Line Interface.
+For more information on the available CLI options, refer to [Command Line Interface](./command-line-interface).
 
 ---
 
 ## Next Steps
 
-- Learn about advanced configuration of ESLint.
-- Get familiar with the command line options.
-- Explore ESLint integrations into other tools like editors, build systems, and more.
-- Can't find just the right rule? Make your own custom rule.
-- Make ESLint even better by contributing.
+- Learn about [advanced configuration](configure/) of ESLint.
+- Get familiar with the [command line options](command-line-interface).
+- Explore [ESLint integrations](integrations) into other tools like editors, build systems, and more.
+- Can't find just the right rule? Make your own [custom rule](../extend/custom-rules).
+- Make ESLint even better by [contributing](../contribute/).

@@ -1,12 +1,3 @@
----
-title: "ClassFormatError class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/ClassFormatError.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ClassFormatError class (java.lang)
 
 ```java
@@ -17,7 +8,7 @@ Thrown when the Java Virtual Machine attempts to read a class
 file and determines that the file is malformed or otherwise cannot
 be interpreted as a class file.
 
-**Since:** 1.0
+@since   1.0
 
 ## ClassFormatError.ClassFormatError()
 
@@ -25,7 +16,7 @@ be interpreted as a class file.
 public ClassFormatError()
 ```
 
-Constructs a `ClassFormatError` with no detail message.
+Constructs a {@code ClassFormatError} with no detail message.
 
 ## ClassFormatError.ClassFormatError(String)
 
@@ -33,9 +24,7 @@ Constructs a `ClassFormatError` with no detail message.
 public ClassFormatError(String s)
 ```
 
-Constructs a `ClassFormatError` with the specified
+Constructs a {@code ClassFormatError} with the specified
 detail message.
 
-Parameters:
-
-- `s`: the detail message.
+@param   s   the detail message.

@@ -1,12 +1,8 @@
 ---
-title: "dotnet package add command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-package-add.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet package add command
+description: The 'dotnet package add' command provides a convenient option to add a NuGet package reference to a project.
+ms.date: 10/28/2025
 ---
-
 # dotnet package add
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -15,8 +11,8 @@ license: "CC-BY-4.0"
 
 `dotnet package add` - Adds or updates a package reference in a project file.
 
-> **Note:**
-> If you're using .NET 9 SDK or earlier, use the "verb first" form (`dotnet add package`) instead. The "noun first" form was introduced in .NET 10. For more information, see More consistent command order.
+> [!NOTE]
+> If you're using .NET 9 SDK or earlier, use the "verb first" form (`dotnet add package`) instead. The "noun first" form was introduced in .NET 10. For more information, see [More consistent command order](../whats-new/dotnet-10/sdk.md#more-consistent-command-order).
 
 ## Synopsis
 
@@ -31,7 +27,7 @@ dotnet package add -h|--help
 
 ## Description
 
-The `dotnet package add` command provides a convenient option to add or update a package reference in a project file. When you run the command, there's a compatibility check to ensure the package is compatible with the frameworks in the project. If the check passes and the package isn't referenced in the project file, a `<PackageReference>` element is added to the project file. If the check passes and the package is already referenced in the project file, the `<PackageReference>` element is updated to the latest compatible version. After the project file is updated, dotnet restore is run.
+The `dotnet package add` command provides a convenient option to add or update a package reference in a project file. When you run the command, there's a compatibility check to ensure the package is compatible with the frameworks in the project. If the check passes and the package isn't referenced in the project file, a `<PackageReference>` element is added to the project file. If the check passes and the package is already referenced in the project file, the `<PackageReference>` element is updated to the latest compatible version. After the project file is updated, [dotnet restore](dotnet-restore.md) is run.
 
 For example, adding `Microsoft.EntityFrameworkCore` to *ToDo.csproj* produces output similar to the following example:
 
@@ -52,15 +48,15 @@ info : Writing assets file to disk. Path: C:\ToDo\obj\project.assets.json
 log  : Restored C:\ToDo\ToDo.csproj (in 171 ms).
 ```
 
-The *ToDo.csproj* file now contains a `<PackageReference>` element for the referenced package.
+The *ToDo.csproj* file now contains a [`<PackageReference>`](/nuget/consume-packages/package-references-in-project-files) element for the referenced package.
 
 ```xml
 <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
 ```
 
-If the project is onboarded onto Central Package Management (CPM) the `<PackageVersion>` element in the `Directory.Packages.props file` is added/updated and the `<PackageReference>` element is added to the project file.
+If the project is onboarded onto [Central Package Management (CPM)](https://devblogs.microsoft.com/nuget/introducing-central-package-management/) the `<PackageVersion>` element in the `Directory.Packages.props file` is added/updated and the `<PackageReference>` element is added to the project file.
 
-The following scenarios are currently supported. These examples assume that the latest version of `Microsoft.EntityFrameworkCore` is 6.0.4. Additional scenarios related to CPM are documented in this design spec.
+The following scenarios are currently supported. These examples assume that the latest version of `Microsoft.EntityFrameworkCore` is 6.0.4. Additional scenarios related to CPM are documented in [this design spec](https://github.com/NuGet/Home/pull/11915).
 
 Scenario 1: `<PackageReference>` does not exist in the project file, `<PackageVersion>` element does not exist in the `Directory.Packages.props file`, and the version argument is not passed from the commandline.
 
@@ -128,11 +124,7 @@ Scenario 4: `<PackageReference>` does not exist in the project file, `<PackageVe
 
 ### Implicit restore
 
-You don't have to run `dotnet restore` because it's run implicitly by all commands that require a restore to occur, such as `dotnet new`, `dotnet build`, `dotnet run`, `dotnet test`, `dotnet publish`, and `dotnet pack`. To disable implicit restore, use the `--no-restore` option.
-
-The `dotnet restore` command is still useful in certain scenarios where explicitly restoring makes sense, such as continuous integration builds in Azure DevOps Services or in build systems that need to explicitly control when the restore occurs.
-
-For information about how to manage NuGet feeds, see the `dotnet restore` documentation.
+[!INCLUDE[DotNet Restore Note](~/includes/dotnet-restore-note.md)]
 
 ## Arguments
 
@@ -148,15 +140,11 @@ For information about how to manage NuGet feeds, see the `dotnet restore` docume
 
 - **`-f|--framework <FRAMEWORK>`**
 
-  Adds a package reference only when targeting a specific framework.
+  Adds a package reference only when targeting a specific [framework](../../standard/frameworks.md).
 
-- **`-?|-h|--help`**
+- [!INCLUDE [help](includes/cli-help.md)]
 
-Prints out a description of how to use the command.
-
-- **`--interactive`**
-
-Allows the command to stop and wait for user input or action. For example, to complete authentication.
+- [!INCLUDE [interactive](includes/cli-interactive.md)]
 
 - **`-n|--no-restore`**
 
@@ -164,19 +152,19 @@ Allows the command to stop and wait for user input or action. For example, to co
 
 - **`--package-directory <PACKAGE_DIRECTORY>`**
 
-  The directory where to restore the packages. The default package restore location is `%userprofile%\.nuget\packages` on Windows and `~/.nuget/packages` on macOS and Linux. For more information, see Managing the global packages, cache, and temp folders in NuGet.
+  The directory where to restore the packages. The default package restore location is `%userprofile%\.nuget\packages` on Windows and `~/.nuget/packages` on macOS and Linux. For more information, see [Managing the global packages, cache, and temp folders in NuGet](/nuget/consume-packages/managing-the-global-packages-and-cache-folders).
 
 - **`--prerelease`**
 
   Allows prerelease packages to be installed.
 
-- **`-s|--source `**
+- **`-s|--source <SOURCE>`**
 
   The URI of the NuGet package source to use during the restore operation.
 
 - **`-v|--version <VERSION>`**
 
-  Version of the package. See NuGet package versioning.
+  Version of the package. See [NuGet package versioning](/nuget/reference/package-versioning).
 
 ## Examples
 
@@ -200,5 +188,5 @@ Allows the command to stop and wait for user input or action. For example, to co
 
 ## See also
 
-- Managing the global packages, cache, and temp folders in NuGet
-- NuGet package versioning
+- [Managing the global packages, cache, and temp folders in NuGet](/nuget/consume-packages/managing-the-global-packages-and-cache-folders)
+- [NuGet package versioning](/nuget/reference/package-versioning)

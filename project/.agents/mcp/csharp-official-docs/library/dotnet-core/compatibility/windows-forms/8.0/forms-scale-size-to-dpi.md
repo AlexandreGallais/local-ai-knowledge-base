@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: Top-level forms scale to DPI"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/windows-forms/8.0/forms-scale-size-to-dpi.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 8 for Windows Forms where top-level forms scale their minimum and maximum size values according to the DPI of the monitor.
+ms.date: 01/19/2023
 ---
-
 # Top-level forms scale minimum and maximum size to DPI
 
-Top-level forms in Windows Forms now scale their `System.Windows.Forms.Form.MinimumSize` and `System.Windows.Forms.Form.MaximumSize` values according to the dots per inch (DPI) of the monitor when running in `System.Windows.Forms.HighDpiMode.PerMonitorV2` mode.
+Top-level forms in Windows Forms now scale their <xref:System.Windows.Forms.Form.MinimumSize> and <xref:System.Windows.Forms.Form.MaximumSize> values according to the dots per inch (DPI) of the monitor when running in <xref:System.Windows.Forms.HighDpiMode.PerMonitorV2?displayProperty=nameWithType> mode.
 
 ## Version introduced
 
@@ -17,21 +13,21 @@ Top-level forms in Windows Forms now scale their `System.Windows.Forms.Form.Mini
 
 ## Previous behavior
 
-In .NET 8, the `System.Windows.Forms.Form.MinimumSize` and `System.Windows.Forms.Form.MaximumSize` values for top-level forms remained constant regardless of the application DPI mode and the DPI of the monitor where the form is rendered. This sometimes resulted in scaling limitations of the top-level form.
+In .NET 8, the <xref:System.Windows.Forms.Form.MinimumSize> and <xref:System.Windows.Forms.Form.MaximumSize> values for top-level forms remained constant regardless of the application DPI mode and the DPI of the monitor where the form is rendered. This sometimes resulted in scaling limitations of the top-level form.
 
-You can also opt in to this behavior in .NET 7. To opt in, set the `System.Windows.Forms.ScaleTopLevelFormMinMaxSizeForDpi` runtime configuration option described in the Recommended action section.
+You can also opt in to this behavior in .NET 7. To opt in, set the `System.Windows.Forms.ScaleTopLevelFormMinMaxSizeForDpi` runtime configuration option described in the [Recommended action](#recommended-action) section.
 
 ## New behavior
 
-Starting in .NET 8, top-level forms scale their `System.Windows.Forms.Form.MinimumSize` and `System.Windows.Forms.Form.MaximumSize` values according to the DPI of the monitor when running in `System.Windows.Forms.HighDpiMode.PerMonitorV2` mode. The behavior of your app might change in the following ways:
+Starting in .NET 8, top-level forms scale their <xref:System.Windows.Forms.Form.MinimumSize> and <xref:System.Windows.Forms.Form.MaximumSize> values according to the DPI of the monitor when running in <xref:System.Windows.Forms.HighDpiMode.PerMonitorV2?displayProperty=nameWithType> mode. The behavior of your app might change in the following ways:
 
 - Runtime dependencies might be impacted when the minimum and maximum size of the form change.
-- New `System.Windows.Forms.Form.MinimumSizeChanged` and `System.Windows.Forms.Form.MaximumSizeChanged` events might be raised.
+- New <xref:System.Windows.Forms.Form.MinimumSizeChanged> and <xref:System.Windows.Forms.Form.MaximumSizeChanged> events might be raised.
 - The scaled form size now has new constraint values for the minimum and maximum sizes.
 
 ## Change category
 
-This change is a *behavioral change*.
+This change is a [*behavioral change*](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -69,4 +65,4 @@ N/A
 
 ## See also
 
-- Forms scale according to AutoScaleMode
+- [Forms scale according to AutoScaleMode](top-level-window-scaling.md)

@@ -1,22 +1,20 @@
 ---
-title: "dotnetup install command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/reference/dotnetup-install.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnetup install command
+description: Command reference for installing .NET SDKs with dotnetup.
+ms.topic: reference
+ms.date: 08/07/2026
+ai-usage: ai-assisted
 ---
 
 # dotnetup install command
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 ## Name
 
 `dotnetup install` - Install one or more .NET SDK requirements.
 
-This command is an alias for `dotnetup sdk install`.
+This command is an alias for [`dotnetup sdk install`](dotnetup-sdk-install.md).
 
 ## Synopsis
 

@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: DateOnly and TimeOnly TryParse methods throw for invalid input"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/11/dateonly-timeonly-tryparse-argumentexception.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where DateOnly and TimeOnly TryParse methods throw ArgumentException for invalid DateTimeStyles values or format specifiers."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # DateOnly and TimeOnly TryParse methods throw for invalid input
 
-The `System.DateOnly` and `System.TimeOnly` `TryParse` and `TryParseExact` methods now throw an `System.ArgumentException` when invalid `System.Globalization.DateTimeStyles` values or format specifiers are provided. This aligns their behavior with other `TryParse` APIs in .NET.
+The <xref:System.DateOnly> and <xref:System.TimeOnly> `TryParse` and `TryParseExact` methods now throw an <xref:System.ArgumentException> when invalid <xref:System.Globalization.DateTimeStyles> values or format specifiers are provided. This aligns their behavior with other `TryParse` APIs in .NET.
 
 ## Version introduced
 
@@ -17,7 +15,7 @@ The `System.DateOnly` and `System.TimeOnly` `TryParse` and `TryParseExact` metho
 
 ## Previous behavior
 
-Previously, passing invalid `System.Globalization.DateTimeStyles` values or format specifiers to `DateOnly.TryParse`, `DateOnly.TryParseExact`, `TimeOnly.TryParse`, or `TimeOnly.TryParseExact` caused the methods to return `false` without throwing an exception.
+Previously, passing invalid <xref:System.Globalization.DateTimeStyles> values or format specifiers to `DateOnly.TryParse`, `DateOnly.TryParseExact`, `TimeOnly.TryParse`, or `TimeOnly.TryParseExact` caused the methods to return `false` without throwing an exception.
 
 ```csharp
 using System;
@@ -35,7 +33,7 @@ Console.WriteLine(result); // Output: False
 
 ## New behavior
 
-Starting in .NET 11, passing invalid `System.Globalization.DateTimeStyles` values or format specifiers to these methods throws an `System.ArgumentException`. The exception includes details about the invalid argument, such as the parameter name.
+Starting in .NET 11, passing invalid <xref:System.Globalization.DateTimeStyles> values or format specifiers to these methods throws an <xref:System.ArgumentException>. The exception includes details about the invalid argument, such as the parameter name.
 
 ```csharp
 using System;
@@ -59,7 +57,7 @@ catch (ArgumentException ex)
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -67,7 +65,7 @@ This change aligns the behavior of `DateOnly` and `TimeOnly` parsing methods wit
 
 ## Recommended action
 
-Review your usage of `DateOnly.TryParse`, `DateOnly.TryParseExact`, `TimeOnly.TryParse`, and `TimeOnly.TryParseExact` to ensure that valid `System.Globalization.DateTimeStyles` values and format specifiers are being passed. If invalid arguments are possible in your code paths, wrap the calls in a `try`-`catch` block to handle `System.ArgumentException`.
+Review your usage of `DateOnly.TryParse`, `DateOnly.TryParseExact`, `TimeOnly.TryParse`, and `TimeOnly.TryParseExact` to ensure that valid <xref:System.Globalization.DateTimeStyles> values and format specifiers are being passed. If invalid arguments are possible in your code paths, wrap the calls in a `try`-`catch` block to handle <xref:System.ArgumentException>.
 
 ```csharp
 using System;
@@ -91,11 +89,11 @@ catch (ArgumentException ex)
 
 ## Affected APIs
 
-- `System.DateOnly.TryParse(System.String,System.DateOnly@)`
-- `System.DateOnly.TryParse(System.String,System.IFormatProvider,System.Globalization.DateTimeStyles,System.DateOnly@)`
-- `System.DateOnly.TryParseExact(System.String,System.String,System.IFormatProvider,System.Globalization.DateTimeStyles,System.DateOnly@)`
-- `System.DateOnly.TryParseExact(System.String,System.String[],System.IFormatProvider,System.Globalization.DateTimeStyles,System.DateOnly@)`
-- `System.TimeOnly.TryParse(System.String,System.TimeOnly@)`
-- `System.TimeOnly.TryParse(System.String,System.IFormatProvider,System.Globalization.DateTimeStyles,System.TimeOnly@)`
-- `System.TimeOnly.TryParseExact(System.String,System.String,System.IFormatProvider,System.Globalization.DateTimeStyles,System.TimeOnly@)`
-- `System.TimeOnly.TryParseExact(System.String,System.String[],System.IFormatProvider,System.Globalization.DateTimeStyles,System.TimeOnly@)`
+- <xref:System.DateOnly.TryParse(System.String,System.DateOnly@)?displayProperty=fullName>
+- <xref:System.DateOnly.TryParse(System.String,System.IFormatProvider,System.Globalization.DateTimeStyles,System.DateOnly@)?displayProperty=fullName>
+- <xref:System.DateOnly.TryParseExact(System.String,System.String,System.IFormatProvider,System.Globalization.DateTimeStyles,System.DateOnly@)?displayProperty=fullName>
+- <xref:System.DateOnly.TryParseExact(System.String,System.String[],System.IFormatProvider,System.Globalization.DateTimeStyles,System.DateOnly@)?displayProperty=fullName>
+- <xref:System.TimeOnly.TryParse(System.String,System.TimeOnly@)?displayProperty=fullName>
+- <xref:System.TimeOnly.TryParse(System.String,System.IFormatProvider,System.Globalization.DateTimeStyles,System.TimeOnly@)?displayProperty=fullName>
+- <xref:System.TimeOnly.TryParseExact(System.String,System.String,System.IFormatProvider,System.Globalization.DateTimeStyles,System.TimeOnly@)?displayProperty=fullName>
+- <xref:System.TimeOnly.TryParseExact(System.String,System.String[],System.IFormatProvider,System.Globalization.DateTimeStyles,System.TimeOnly@)?displayProperty=fullName>

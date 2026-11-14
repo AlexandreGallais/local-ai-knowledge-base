@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataImport::EnumUnresolvedMethods Method"
 title: "IMetaDataImport::EnumUnresolvedMethods Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-enumunresolvedmethods-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.EnumUnresolvedMethods"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::EnumUnresolvedMethods"
+  - "IMetaDataImport::EnumUnresolvedMethods method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::EnumUnresolvedMethods Method
 
 Enumerates MemberDef tokens representing the unresolved methods in the current metadata scope.
@@ -16,7 +23,7 @@ Enumerates MemberDef tokens representing the unresolved methods in the current m
 ```cpp
 HRESULT EnumUnresolvedMethods (
    [in, out] HCORENUM    *phEnum,
-   [out]     mdToken     <example-value>[],
+   [out]     mdToken     rMethods[],
    [in]      ULONG       cMax,
    [out]     ULONG       *pcTokens
 );
@@ -51,7 +58,7 @@ HRESULT EnumUnresolvedMethods (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -59,5 +66,5 @@ HRESULT EnumUnresolvedMethods (
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

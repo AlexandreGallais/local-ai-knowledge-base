@@ -1,15 +1,12 @@
 ---
-title: "Choose between .NET and .NET Framework for server apps"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/choosing-core-framework-server.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Choose between .NET and .NET Framework for server apps
+description: A guide to help you decide which implementation of .NET to use when building a server app.
+ms.date: 11/11/2026
+ms.custom: updateeachrelease
 ---
-
 # .NET vs. .NET Framework for server apps
 
-There are two supported .NET implementations for building server-side apps: .NET and .NET Framework. **The latest .NET version (currently .NET 11) is the preferred version of .NET to use for server development.** The reasons to continue using .NET Framework are specific and limited.
+There are two supported [.NET implementations](glossary.md#implementation-of-net) for building server-side apps: .NET and .NET Framework. **The latest .NET version (currently .NET 11) is the preferred version of .NET to use for server development.** The reasons to continue using .NET Framework are specific and limited.
 
 | Implementation | Included versions                                   |
 |----------------|-----------------------------------------------------|
@@ -22,25 +19,25 @@ There are two supported .NET implementations for building server-side apps: .NET
 
 - **Works cross-platform.**
 
-  .NET enables your web or service app to run on multiple platforms, for example, Windows, Linux, and macOS. You can also use any of these operating systems as your development workstation. Use the Visual Studio integrated development environment (IDE) on Windows, or use Visual Studio Code on macOS, Linux, or Windows. Visual Studio Code supports IntelliSense and debugging. Most third-party editors, such as Sublime, Emacs, and VI, work with .NET. These third-party editors get editor IntelliSense using Omnisharp. You can also skip the code editor and directly use the .NET CLI.
+  .NET enables your web or service app to run on multiple platforms, for example, Windows, Linux, and macOS. You can also use any of these operating systems as your development workstation. Use the Visual Studio integrated development environment (IDE) on Windows, or use Visual Studio Code on macOS, Linux, or Windows. Visual Studio Code supports IntelliSense and debugging. Most third-party editors, such as Sublime, Emacs, and VI, work with .NET. These third-party editors get editor IntelliSense using [Omnisharp](https://www.omnisharp.net/). You can also skip the code editor and directly use the [.NET CLI](../core/tools/index.md).
 
 - **Lets you target microservices.**
 
   A microservices architecture allows a mix of technologies across a service boundary. This technology mix enables a gradual embrace of .NET for new microservices that work with other microservices or services. For example, you can mix microservices or services developed with .NET Framework, Java, Ruby, or other monolithic technologies.
 
-  There are many infrastructure platforms available. Azure Service Fabric is designed for large and complex microservice systems. Azure App Service is a good choice for stateless microservices. Microservices alternatives based on Docker fit any microservices approach, as explained in the next section (Supports Docker containers). All these platforms support .NET and make them ideal for hosting your microservices.
+  There are many infrastructure platforms available. [Azure Service Fabric](https://azure.microsoft.com/services/service-fabric/) is designed for large and complex microservice systems. [Azure App Service](https://azure.microsoft.com/services/app-service/) is a good choice for stateless microservices. Microservices alternatives based on Docker fit any microservices approach, as explained in the next section (Supports Docker containers). All these platforms support .NET and make them ideal for hosting your microservices.
 
-  For more information about microservices architecture, see .NET Microservices: Architecture for containerized .NET apps.
+  For more information about microservices architecture, see [.NET Microservices: Architecture for containerized .NET apps](../architecture/microservices/index.md).
 
 - **Supports Docker containers.**
 
   Containers are commonly used with a microservices architecture. Containers can also be used to containerize web apps or services that follow any architectural pattern. While .NET Framework can be used on Windows containers, the modularity and lightweight nature of .NET make it a better choice for containers. When you're creating and deploying a container, the size of its image is much smaller with .NET than with .NET Framework. Because it's cross-platform, you can deploy server apps to Linux Docker containers.
 
-  You can host Docker containers in your own Linux or Windows infrastructure or in a cloud service such as Azure Kubernetes Service. Azure Kubernetes Service can manage, orchestrate, and scale container-based applications in the cloud.
+  You can host Docker containers in your own Linux or Windows infrastructure or in a cloud service such as [Azure Kubernetes Service](https://azure.microsoft.com/services/kubernetes-service/). Azure Kubernetes Service can manage, orchestrate, and scale container-based applications in the cloud.
 
 - **Is high-performance and scalable.**
 
-  When your system needs the best possible performance and scalability, .NET and ASP.NET Core are your best options. The high-performance server runtime for Windows Server and Linux makes ASP.NET Core a top-performing web framework on TechEmpower benchmarks.
+  When your system needs the best possible performance and scalability, .NET and ASP.NET Core are your best options. The high-performance server runtime for Windows Server and Linux makes ASP.NET Core a top-performing web framework on [TechEmpower benchmarks](https://www.techempower.com/benchmarks/#hw=ph&test=plaintext).
 
   Performance and scalability are especially relevant for microservices architectures, where hundreds of microservices might be running. With ASP.NET Core, systems run with a much lower number of servers or virtual machines (VMs), which saves costs on infrastructure and hosting.
 
@@ -62,7 +59,7 @@ As previously mentioned, the *.NET* implementation offers significant benefits f
 
 - Your app uses third-party libraries or NuGet packages that aren't available for .NET.
 
-  .NET Standard enables sharing code across all .NET implementations, including .NET 6+. With .NET Standard 2.0, a compatibility mode allows .NET Standard and .NET projects to reference .NET Framework libraries. For more information, see Support for .NET Framework libraries.
+  .NET Standard enables sharing code across all .NET implementations, including .NET 6+. With .NET Standard 2.0, a compatibility mode allows .NET Standard and .NET projects to reference .NET Framework libraries. For more information, see [Support for .NET Framework libraries](whats-new/whats-new-in-dotnet-standard.md#support-for-net-framework-libraries).
 
   You should only use .NET Framework when the libraries or NuGet packages use technologies that aren't available in .NET Standard or .NET.
 
@@ -73,9 +70,9 @@ As previously mentioned, the *.NET* implementation offers significant benefits f
   - **ASP.NET Web Forms applications**: ASP.NET Web Forms are only available in .NET Framework. ASP.NET Core can't be used for ASP.NET Web Forms.
   - **ASP.NET Web Pages applications**: ASP.NET Web Pages aren't included in ASP.NET Core.
   - **Workflow-related services**: Windows Workflow Foundation (WF), Workflow Services (WCF + WF in a single service), and WCF Data Services (formerly known as "ADO.NET Data Services") are only available in .NET Framework.
-  - **Language support**: Visual Basic and F# are supported in .NET but *not for all project types*. For a list of supported project templates, see Template options for dotnet new.
+  - **Language support**: Visual Basic and F# are supported in .NET but *not for all project types*. For a list of supported project templates, see [Template options for dotnet new](../core/tools/dotnet-new.md#arguments).
 
-  For more information, see .NET Framework technologies unavailable in .NET.
+  For more information, see [.NET Framework technologies unavailable in .NET](../core/porting/net-framework-tech-unavailable.md).
 
 - Your app uses a platform that doesn't support .NET.
 
@@ -83,11 +80,11 @@ As previously mentioned, the *.NET* implementation offers significant benefits f
 
 ## See also
 
-- Choose between ASP.NET and ASP.NET Core
-- ASP.NET Core targeting .NET Framework
-- Target frameworks
-- .NET introduction
-- Port from .NET Framework to .NET
-- Introduction to .NET and Docker
-- .NET implementations
-- .NET Microservices. Architecture for Containerized .NET Applications
+- [Choose between ASP.NET and ASP.NET Core](/aspnet/core/choose-aspnet-framework)
+- [ASP.NET Core targeting .NET Framework](/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-2.2&preserve-view=true#aspnet-core-targeting-net-framework)
+- [Target frameworks](frameworks.md)
+- [.NET introduction](../core/introduction.md)
+- [Port from .NET Framework to .NET](../core/porting/framework-overview.md)
+- [Introduction to .NET and Docker](../core/docker/introduction.md)
+- [.NET implementations](../fundamentals/implementations.md)
+- [.NET Microservices. Architecture for Containerized .NET Applications](../architecture/microservices/index.md)

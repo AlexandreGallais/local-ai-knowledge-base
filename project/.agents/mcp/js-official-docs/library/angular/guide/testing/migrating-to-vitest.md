@@ -1,15 +1,6 @@
----
-title: "Migrating from Karma to Vitest"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/testing/migrating-to-vitest.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Migrating from Karma to Vitest
 
-The Angular CLI uses Vitest as the default unit test runner for new projects. This guide provides instructions for migrating an existing project from Karma and Jasmine to Vitest.
+The Angular CLI uses [Vitest](https://vitest.dev/) as the default unit test runner for new projects. This guide provides instructions for migrating an existing project from Karma and Jasmine to Vitest.
 
 IMPORTANT: Migrating an existing project to Vitest is considered experimental. This process also requires the use of the `application` build system, which is the default for all newly created projects.
 
@@ -19,27 +10,22 @@ Before using the automated refactoring schematic, you must manually update your 
 
 ### 1. Install dependencies
 
-Install `vitest` and a DOM emulation library. While browser testing is still possible (see step 5), Vitest uses a DOM emulation library by default to simulate a browser environment within Node.js for faster test execution. The CLI automatically detects and uses `happy-dom` if it's installed; otherwise, it falls back to `jsdom`. You must have one of these packages installed.
+Install `vitest` and a DOM emulation library. While browser testing is still possible (see [step 5](#5-configure-browser-mode-optional)), Vitest uses a DOM emulation library by default to simulate a browser environment within Node.js for faster test execution. The CLI automatically detects and uses `happy-dom` if it's installed; otherwise, it falls back to `jsdom`. You must have one of these packages installed.
 
-```
-  
+<docs-code-multifile>
+  <docs-code header="npm" language="shell">
     npm install --save-dev vitest jsdom
-```
-  File: `yarn`
-
-```shell
+  </docs-code>
+  <docs-code header="yarn" language="shell">
     yarn add --dev vitest jsdom
-```
-  File: `pnpm`
-
-```shell
+  </docs-code>
+  <docs-code header="pnpm" language="shell">
     pnpm add -D vitest jsdom
-```
-  File: `bun`
-
-```shell
+  </docs-code>
+  <docs-code header="bun" language="shell">
     bun add --dev vitest jsdom
-```
+  </docs-code>
+</docs-code-multifile>
 
 ### 2. Update `angular.json`
 
@@ -75,31 +61,26 @@ Common migration paths include:
 - **Plugins**: Karma plugins may have Vitest equivalents that you will need to find and install. Note that code coverage is a first-class feature in the Angular CLI and can be enabled with `ng test --coverage`.
 - **Custom Browser Launchers**: These are replaced by the `browsers` option in `angular.json` and the installation of a browser provider like `@vitest/browser-playwright`.
 
-For other settings, consult the official Vitest documentation.
+For other settings, consult the official [Vitest documentation](https://vitest.dev/config/).
 
 ### 4. Remove Karma and `test.ts` files
 
 You can now delete `karma.conf.js` and `src/test.ts` from your project and uninstall the Karma-related packages. The following commands are based on the packages installed in a new Angular CLI project; your project may have other Karma-related packages to remove.
 
-```
-  
+<docs-code-multifile>
+  <docs-code header="npm" language="shell">
     npm uninstall karma karma-chrome-launcher karma-coverage karma-jasmine karma-jasmine-html-reporter jasmine-core
-```
-  File: `yarn`
-
-```shell
+  </docs-code>
+  <docs-code header="yarn" language="shell">
     yarn remove karma karma-chrome-launcher karma-coverage karma-jasmine karma-jasmine-html-reporter jasmine-core
-```
-  File: `pnpm`
-
-```shell
+  </docs-code>
+  <docs-code header="pnpm" language="shell">
     pnpm remove karma karma-chrome-launcher karma-coverage karma-jasmine karma-jasmine-html-reporter jasmine-core
-```
-  File: `bun`
-
-```shell
+  </docs-code>
+  <docs-code header="bun" language="shell">
     bun remove karma karma-chrome-launcher karma-coverage karma-jasmine karma-jasmine-html-reporter jasmine-core
-```
+  </docs-code>
+</docs-code-multifile>
 
 ### 5. Configure browser mode (optional)
 
@@ -113,25 +94,20 @@ Choose one of the following browser providers based on your needs:
 - **WebdriverIO**: `@vitest/browser-webdriverio` for Chrome, Firefox, Safari, and Edge.
 - **Preview**: `@vitest/browser-preview` for WebContainer environments (like StackBlitz).
 
-```
-  
+<docs-code-multifile>
+  <docs-code header="npm" language="shell">
     npm install --save-dev @vitest/browser-playwright
-```
-  File: `yarn`
-
-```shell
+  </docs-code>
+  <docs-code header="yarn" language="shell">
     yarn add --dev @vitest/browser-playwright
-```
-  File: `pnpm`
-
-```shell
+  </docs-code>
+  <docs-code header="pnpm" language="shell">
     pnpm add -D @vitest/browser-playwright
-```
-  File: `bun`
-
-```shell
+  </docs-code>
+  <docs-code header="bun" language="shell">
     bun add --dev @vitest/browser-playwright
-```
+  </docs-code>
+</docs-code-multifile>
 
 **Update `angular.json` for browser mode:**
 
@@ -200,9 +176,9 @@ You can use the following options to customize the schematic's behavior:
 
 | Option                   | Description                                                                                         |
 | :----------------------- | :-------------------------------------------------------------------------------------------------- |
-| `--project <name>`       | Specify the project to refactor in a multi-project workspace.  Example: `--project=my-lib`      |
-| `--include `       | Refactor only a specific file or directory.  Example: `--include=src/app/app.component.spec.ts` |
-| `--file-suffix <suffix>` | Specify a different file suffix for test files.  Example: `--file-suffix=.test.ts`              |
+| `--project <name>`       | Specify the project to refactor in a multi-project workspace. <br> Example: `--project=my-lib`      |
+| `--include <path>`       | Refactor only a specific file or directory. <br> Example: `--include=src/app/app.component.spec.ts` |
+| `--file-suffix <suffix>` | Specify a different file suffix for test files. <br> Example: `--file-suffix=.test.ts`              |
 | `--add-imports`          | Add explicit `vitest` imports if you have disabled globals in your Vitest configuration.            |
 | `--verbose`              | See detailed logging of all transformations applied.                                                |
 | `--browser-mode`         | If you intend to run the tests in browser mode.                                                     |
@@ -224,7 +200,7 @@ The Angular CLI takes care of the Vitest configuration for you, constructing the
 
 IMPORTANT: While using a custom configuration enables advanced options, the Angular team does not provide direct support for the specific contents of the configuration file or for any third-party plugins used within it. The CLI will also override certain properties (`test.projects`, `test.include`) to ensure proper operation.
 
-You can provide a custom Vitest configuration file to override the default settings. For a full list of available options, see the official Vitest documentation.
+You can provide a custom Vitest configuration file to override the default settings. For a full list of available options, see the official [Vitest documentation](https://vitest.dev/config/).
 
 **1. Direct path:**
 Provide a direct path to a Vitest configuration file in your `angular.json`:
@@ -253,10 +229,10 @@ In order to use functions like `fakeAsync`, `flush` or `waitForAsync`, or to ena
 
 Regardless, we strongly recommend you start planning to convert your existing test suites to native `async` and Vitest fake timers, since this is the established approach.
 
-See an example here for fake timers usage with Vitest.
+See [an example here](/guide/testing/components-scenarios#async-test-with-a-vitest-fake-timers) for fake timers usage with Vitest.
 
 ## Bug reports
 
-Report issues and feature requests on GitHub.
+Report issues and feature requests on [GitHub](https://github.com/angular/angular-cli/issues).
 
 Please provide a minimal reproduction where possible to aid the team in addressing issues.

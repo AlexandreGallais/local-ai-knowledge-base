@@ -1,15 +1,16 @@
 ---
-title: "YARP Configuration Files"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/config-files.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
+title: YARP Configuration Files
+description: Explore how to work with YARP configuration files, examine the file structure and properties, define routes, clusters, and sources, and load proxy configuration. 
+ms.date: 04/24/2026
+ms.topic: concept-article
+content_well_notification: AI-contribution
+ai-usage: ai-assisted
 
+# customer intent: As an ASP.NET developer, I want to get started with the YARP library, so I can learn how customize the modules.
+---
 # YARP Configuration Files
 
-The reverse proxy can load configuration for routes and clusters from files by using the IConfiguration abstraction from Microsoft.Extensions.
+The reverse proxy can load configuration for routes and clusters from files by using the [IConfiguration](/dotnet/api/microsoft.extensions.configuration.iconfiguration) abstraction from Microsoft.Extensions.
 
 This article provides example proxy configuration for YARP. Although the configuration example uses JSON, any `IConfiguration` source should work. Also, the configuration updates without restarting the proxy when the source file changes.
 
@@ -36,16 +37,16 @@ app.MapReverseProxy();
 app.Run();
 ```
 
-> **Note:**
-> For details about middleware ordering, see ASP.NET Core middleware > Middleware order.
+> [!NOTE]
+> For details about middleware ordering, see [ASP.NET Core middleware > Middleware order](../../middleware/index.md#middleware-order).
 
-Configuration can be modified during the load sequence by using YARP configuration filters.
+Configuration can be modified during the load sequence by using [YARP configuration filters](config-filters.md).
 
 ## Load from multiple configuration sources
 
 Starting in version 1.1, YARP supports loading the proxy configuration from multiple sources. You can call the `LoadFromConfig` method multiple times and reference different `IConfiguration` sections. You can also combine the call with a different config source, such as InMemory. Routes can reference clusters from other sources.
 
-> **Note:**
+> [!NOTE]
 > Merging partial config from different sources for a given route or cluster isn't supported.
 
 ```csharp
@@ -64,7 +65,7 @@ services.AddReverseProxy()
 
 ## Review the configuration contract
 
-File-based configuration is dynamically mapped to the types in the Yarp.ReverseProxy.Configuration namespace by an IProxyConfigProvider implementation. The contract converts at application start and each time the configuration changes.
+File-based configuration is dynamically mapped to the types in the [Yarp.ReverseProxy.Configuration](xref:Yarp.ReverseProxy.Configuration) namespace by an [IProxyConfigProvider](xref:Yarp.ReverseProxy.Configuration.IProxyConfigProvider) implementation. The contract converts at application start and each time the configuration changes.
 
 ## Examine the configuration structure
 
@@ -103,11 +104,11 @@ Each route requires at least the following fields:
 
 * `RouteId`: A unique name for the route.
 * `ClusterId`: The name of an entry in the `Clusters` section.
-* `Match`: Either a `Hosts` array or a `Path` pattern string. You can define the path by using Routing in ASP.NET Core > Route templates.
+* `Match`: Either a `Hosts` array or a `Path` pattern string. You can define the path by using [Routing in ASP.NET Core > Route templates](../../routing.md#route-templates).
 
-Route matching is based on the most specific routes having highest precedence, as described in URL matching. Explicit ordering can be achieved by using the `order` field, where lower values take higher priority.
+Route matching is based on the most specific routes having highest precedence, as described in [URL matching](../../routing.md#url-matching). Explicit ordering can be achieved by using the `order` field, where lower values take higher priority.
 
-YARP headers, authentication and authorization, cross-origin requests (CORS), and other route-based policies can be configured on each route entry. For other fields, see the RouteConfig reference.
+[YARP headers](header-routing.md), [authentication and authorization](authn-authz.md), [cross-origin requests (CORS)](cors.md), and other route-based policies can be configured on each route entry. For other fields, see the [RouteConfig](xref:Yarp.ReverseProxy.Configuration.RouteConfig) reference.
 
 The proxy applies the given matching criteria and policies, and passes off the request to the specified cluster.
 
@@ -115,7 +116,7 @@ The proxy applies the given matching criteria and policies, and passes off the r
 
 The `Clusters` section is an unordered collection of named clusters. A cluster primarily contains a collection of named destinations and their addresses, any of which is considered capable of handling requests for a given route. The proxy processes the request according to the route and cluster configuration to select a destination.
 
-For other fields, see the ClusterConfig reference.
+For other fields, see the [ClusterConfig](xref:Yarp.ReverseProxy.Configuration.ClusterConfig) reference.
 
 ## Review all config properties
 
@@ -252,5 +253,5 @@ The following JSON example shows all properties available for the YARP proxy con
 
 ## Related content
 
-- Logging configuration
-- HTTP client configuration
+- [Logging configuration](diagnosing-yarp-issues.md#logging)
+- [HTTP client configuration](http-client-config.md)

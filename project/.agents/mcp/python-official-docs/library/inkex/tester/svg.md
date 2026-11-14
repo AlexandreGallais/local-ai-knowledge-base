@@ -1,12 +1,3 @@
----
-title: "inkex.tester.svg"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/tester/svg.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.tester.svg
 
 SVG specific utilities for tests.
@@ -20,7 +11,7 @@ def svg(svg_attrs="")
 Returns xml etree based on a simple SVG element.
 
 svg_attrs: A string containing attributes to add to the
-root  element of a minimal SVG document.
+    root <svg> element of a minimal SVG document.
 
 ## svg_unit_scaled
 

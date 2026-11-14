@@ -1,12 +1,11 @@
 ---
 title: "NETSDK1100: Set the `EnableWindowsTargeting` property to true"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/sdk-errors/netsdk1100.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET SDK error message that instructs you to set the EnableWindowsTargeting property to true.
+ms.topic: error-reference
+ms.date: 07/08/2022
+f1_keywords:
+- NETSDK1100
 ---
-
 # NETSDK1100: Set the EnableWindowsTargeting property to true
 
 NETSDK1100 indicates that you're building a project that targets Windows on Linux or macOS. The full error message is similar to the following example:
@@ -31,4 +30,4 @@ By default, .NET downloads all targeting packs (and runtime packs for self-conta
 
 ## See also
 
-- EnableWindowsTargeting property
+- [EnableWindowsTargeting property](../../project-sdk/msbuild-props.md#enablewindowstargeting)

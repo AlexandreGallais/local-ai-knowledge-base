@@ -1,21 +1,21 @@
 ---
+description: "Learn more about: Reading XML Data using XPathDocument and XmlDocument"
 title: "Reading XML Data using XPathDocument and XmlDocument"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/reading-xml-data-using-xpathdocument-and-xmldocument.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: 5711b225-6aa2-4e4f-9898-19f2d518ad1a
 ---
-
 # Reading XML Data using XPathDocument and XmlDocument
 
-There are two ways to read an XML document in the `System.Xml.XPath` namespace. One is to read an XML document using the read-only `System.Xml.XPath.XPathDocument` class and the other is to read an XML document using the editable `System.Xml.XmlDocument` class in the `System.Xml` namespace.
+There are two ways to read an XML document in the <xref:System.Xml.XPath?displayProperty=nameWithType> namespace. One is to read an XML document using the read-only <xref:System.Xml.XPath.XPathDocument> class and the other is to read an XML document using the editable <xref:System.Xml.XmlDocument> class in the <xref:System.Xml?displayProperty=nameWithType> namespace.
 
 ## Reading XML Documents using the XPathDocument Class
 
- The `System.Xml.XPath.XPathDocument` class provides a fast, read-only, in-memory representation of an XML document using the XPath data model. Instances of the `System.Xml.XPath.XPathDocument` class are created using one of its six constructors. These constructors allow you to read an XML document using a `System.IO.Stream`, `System.IO.TextReader`, or `System.Xml.XmlReader` object, as well as the `string` path to an XML file.
+ The <xref:System.Xml.XPath.XPathDocument> class provides a fast, read-only, in-memory representation of an XML document using the XPath data model. Instances of the <xref:System.Xml.XPath.XPathDocument> class are created using one of its six constructors. These constructors allow you to read an XML document using a <xref:System.IO.Stream>, <xref:System.IO.TextReader>, or <xref:System.Xml.XmlReader> object, as well as the `string` path to an XML file.
 
- The following example illustrates using the `System.Xml.XPath.XPathDocument` class's `string` constructor to read an XML document.
+ The following example illustrates using the <xref:System.Xml.XPath.XPathDocument> class's `string` constructor to read an XML document.
 
 ```vb
 Dim document As XPathDocument = New XPathDocument("books.xml")
@@ -27,9 +27,9 @@ XPathDocument document = new XPathDocument("books.xml");
 
 ## Reading XML Documents using the XmlDocument Class
 
- The `System.Xml.XmlDocument` class is an editable in-memory representation of an XML document implementing W3C Document Object Model (DOM) Level 1 Core and Core DOM Level 2. Instances of the `System.Xml.XmlDocument` class are created using one of its three constructors. You can create a new, empty `System.Xml.XmlDocument` object by calling the `System.Xml.XmlDocument` class constructor with no parameters. After calling the constructor, use the `System.Xml.XmlDocument.Load*` method to load XML data into the new `System.Xml.XmlDocument` object from a `System.IO.Stream`, `System.IO.TextReader`, or `System.Xml.XmlReader` object, as well as the `string` path to an XML file.
+ The <xref:System.Xml.XmlDocument> class is an editable in-memory representation of an XML document implementing W3C Document Object Model (DOM) Level 1 Core and Core DOM Level 2. Instances of the <xref:System.Xml.XmlDocument> class are created using one of its three constructors. You can create a new, empty <xref:System.Xml.XmlDocument> object by calling the <xref:System.Xml.XmlDocument> class constructor with no parameters. After calling the constructor, use the <xref:System.Xml.XmlDocument.Load*> method to load XML data into the new <xref:System.Xml.XmlDocument> object from a <xref:System.IO.Stream>, <xref:System.IO.TextReader>, or <xref:System.Xml.XmlReader> object, as well as the `string` path to an XML file.
 
- The following example illustrates using the `System.Xml.XmlDocument` class constructor with no parameters and the `System.Xml.XmlDocument.Load*` method to read an XML document.
+ The following example illustrates using the <xref:System.Xml.XmlDocument> class constructor with no parameters and the <xref:System.Xml.XmlDocument.Load*> method to read an XML document.
 
 ```vb
 Dim document As XmlDocument = New XmlDocument()
@@ -43,39 +43,39 @@ document.Load("books.xml");
 
 ## Determining the Encoding of an XML Document
 
- An `System.Xml.XmlReader` object can be used to read an XML document and to create `System.Xml.XPath.XPathDocument` and `System.Xml.XmlDocument` objects as shown in the previous sections. However, an `System.Xml.XmlReader` object may read data that is not encoded and as a result does not provide any encoding information.
+ An <xref:System.Xml.XmlReader> object can be used to read an XML document and to create <xref:System.Xml.XPath.XPathDocument> and <xref:System.Xml.XmlDocument> objects as shown in the previous sections. However, an <xref:System.Xml.XmlReader> object may read data that is not encoded and as a result does not provide any encoding information.
 
- The `System.Xml.XmlTextReader` class inherits from the `System.Xml.XmlReader` class, provides encoding information using its `System.Xml.XmlTextReader.Encoding` property, and can be used to create an `System.Xml.XPath.XPathDocument` object or `System.Xml.XmlDocument` object.
+ The <xref:System.Xml.XmlTextReader> class inherits from the <xref:System.Xml.XmlReader> class, provides encoding information using its <xref:System.Xml.XmlTextReader.Encoding> property, and can be used to create an <xref:System.Xml.XPath.XPathDocument> object or <xref:System.Xml.XmlDocument> object.
 
- For more information about the encoding information provided by the `System.Xml.XmlTextReader` class, see the `System.Xml.XmlTextReader.Encoding` property in the `System.Xml.XmlTextReader` class reference documentation.
+ For more information about the encoding information provided by the <xref:System.Xml.XmlTextReader> class, see the <xref:System.Xml.XmlTextReader.Encoding> property in the <xref:System.Xml.XmlTextReader> class reference documentation.
 
 ## Creating XPathNavigator Objects
 
- After you have read an XML document into either an `System.Xml.XPath.XPathDocument` or `System.Xml.XmlDocument` object, you can create an `System.Xml.XPath.XPathNavigator` object to select, evaluate, navigate, and in some cases, edit the underlying XML data.
+ After you have read an XML document into either an <xref:System.Xml.XPath.XPathDocument> or <xref:System.Xml.XmlDocument> object, you can create an <xref:System.Xml.XPath.XPathNavigator> object to select, evaluate, navigate, and in some cases, edit the underlying XML data.
 
- Both the `System.Xml.XPath.XPathDocument` and `System.Xml.XmlDocument` classes, in addition to the `System.Xml.XmlNode` class, implement the `System.Xml.XPath.IXPathNavigable` interface of the `System.Xml.XPath` namespace. As a result, all three classes provide a `System.Xml.XPath.IXPathNavigable.CreateNavigator*` method that returns an `System.Xml.XPath.XPathNavigator` object.
+ Both the <xref:System.Xml.XPath.XPathDocument> and <xref:System.Xml.XmlDocument> classes, in addition to the <xref:System.Xml.XmlNode> class, implement the <xref:System.Xml.XPath.IXPathNavigable> interface of the <xref:System.Xml.XPath?displayProperty=nameWithType> namespace. As a result, all three classes provide a <xref:System.Xml.XPath.IXPathNavigable.CreateNavigator*> method that returns an <xref:System.Xml.XPath.XPathNavigator> object.
 
 ### Editing XML Documents using the XPathNavigator Class
 
- In addition to selecting, evaluating, and navigating XML data, the `System.Xml.XPath.XPathNavigator` class can be used to edit an XML document in some cases, based on the object that created it.
+ In addition to selecting, evaluating, and navigating XML data, the <xref:System.Xml.XPath.XPathNavigator> class can be used to edit an XML document in some cases, based on the object that created it.
 
- The `System.Xml.XPath.XPathDocument` class is read-only while the `System.Xml.XmlDocument` class is editable and as a result, `System.Xml.XPath.XPathNavigator` objects created from an `System.Xml.XPath.XPathDocument` object cannot be used to edit an XML document while those created from an `System.Xml.XmlDocument` object can. The `System.Xml.XPath.XPathDocument` class should be used to read an XML document only. In cases where you need to edit an XML document, or require access to the additional functionality provided by the `System.Xml.XmlDocument` class, like event handling, the `System.Xml.XmlDocument` class should be used.
+ The <xref:System.Xml.XPath.XPathDocument> class is read-only while the <xref:System.Xml.XmlDocument> class is editable and as a result, <xref:System.Xml.XPath.XPathNavigator> objects created from an <xref:System.Xml.XPath.XPathDocument> object cannot be used to edit an XML document while those created from an <xref:System.Xml.XmlDocument> object can. The <xref:System.Xml.XPath.XPathDocument> class should be used to read an XML document only. In cases where you need to edit an XML document, or require access to the additional functionality provided by the <xref:System.Xml.XmlDocument> class, like event handling, the <xref:System.Xml.XmlDocument> class should be used.
 
- The `System.Xml.XPath.XPathNavigator.CanEdit` property of the `System.Xml.XPath.XPathNavigator` class specifies if an `System.Xml.XPath.XPathNavigator` object may edit XML data.
+ The <xref:System.Xml.XPath.XPathNavigator.CanEdit> property of the <xref:System.Xml.XPath.XPathNavigator> class specifies if an <xref:System.Xml.XPath.XPathNavigator> object may edit XML data.
 
- The following table describes the value of the `System.Xml.XPath.XPathNavigator.CanEdit` property for each class.
+ The following table describes the value of the <xref:System.Xml.XPath.XPathNavigator.CanEdit> property for each class.
 
-|`System.Xml.XPath.IXPathNavigable` Implementation|`System.Xml.XPath.XPathNavigator.CanEdit` Value|
+|<xref:System.Xml.XPath.IXPathNavigable> Implementation|<xref:System.Xml.XPath.XPathNavigator.CanEdit> Value|
 |--------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|`System.Xml.XPath.XPathDocument`|`false`|
-|`System.Xml.XmlDocument`|`true`|
+|<xref:System.Xml.XPath.XPathDocument>|`false`|
+|<xref:System.Xml.XmlDocument>|`true`|
 
 ## See also
 
-- `System.Xml.XmlDocument`
-- `System.Xml.XPath.XPathDocument`
-- `System.Xml.XPath.XPathNavigator`
-- Process XML Data Using the XPath Data Model
-- Accessing XML Data using XPathNavigator
-- Editing XML Data using XPathNavigator
-- Schema Validation using XPathNavigator
+- <xref:System.Xml.XmlDocument>
+- <xref:System.Xml.XPath.XPathDocument>
+- <xref:System.Xml.XPath.XPathNavigator>
+- [Process XML Data Using the XPath Data Model](process-xml-data-using-the-xpath-data-model.md)
+- [Accessing XML Data using XPathNavigator](accessing-xml-data-using-xpathnavigator.md)
+- [Editing XML Data using XPathNavigator](editing-xml-data-using-xpathnavigator.md)
+- [Schema Validation using XPathNavigator](schema-validation-using-xpathnavigator.md)

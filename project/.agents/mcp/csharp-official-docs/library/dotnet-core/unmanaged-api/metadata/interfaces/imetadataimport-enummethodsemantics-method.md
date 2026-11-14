@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataImport::EnumMethodSemantics Method"
 title: "IMetaDataImport::EnumMethodSemantics Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-enummethodsemantics-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.EnumMethodSemantics"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::EnumMethodSemantics"
+  - "IMetaDataImport::EnumMethodSemantics method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::EnumMethodSemantics Method
 
 Enumerates the properties and the property-change events to which the specified method is related.
@@ -17,7 +24,7 @@ Enumerates the properties and the property-change events to which the specified 
 HRESULT EnumMethodSemantics (
    [in, out] HCORENUM    *phEnum,
    [in]  mdMethodDef     mb,
-   [out] mdToken         <example-value>[],
+   [out] mdToken         rEventProp[],
    [in]  ULONG           cMax,
    [out] ULONG           *pcEventProp
 );
@@ -49,11 +56,11 @@ HRESULT EnumMethodSemantics (
 
 ## Remarks
 
- Many common language runtime types define *Property*`Changed` events and `On`*Property*`Changed` methods related to their properties. For example, the `System.Windows.Forms.Control` type defines a `System.Windows.Forms.Control.Font` property, a `System.Windows.Forms.Control.FontChanged` event, and an `System.Windows.Forms.Control.OnFontChanged*` method. The set accessor method of the `System.Windows.Forms.Control.Font` property calls `System.Windows.Forms.Control.OnFontChanged*` method, which in turn raises the `System.Windows.Forms.Control.FontChanged` event. You would call `EnumMethodSemantics` using the MethodDef for `System.Windows.Forms.Control.OnFontChanged*` to get references to the `System.Windows.Forms.Control.Font` property and the `System.Windows.Forms.Control.FontChanged` event.
+ Many common language runtime types define *Property*`Changed` events and `On`*Property*`Changed` methods related to their properties. For example, the <xref:System.Windows.Forms.Control?displayProperty=nameWithType> type defines a <xref:System.Windows.Forms.Control.Font> property, a <xref:System.Windows.Forms.Control.FontChanged> event, and an <xref:System.Windows.Forms.Control.OnFontChanged*> method. The set accessor method of the <xref:System.Windows.Forms.Control.Font> property calls <xref:System.Windows.Forms.Control.OnFontChanged*> method, which in turn raises the <xref:System.Windows.Forms.Control.FontChanged> event. You would call `EnumMethodSemantics` using the MethodDef for <xref:System.Windows.Forms.Control.OnFontChanged*> to get references to the <xref:System.Windows.Forms.Control.Font> property and the <xref:System.Windows.Forms.Control.FontChanged> event.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -61,5 +68,5 @@ HRESULT EnumMethodSemantics (
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

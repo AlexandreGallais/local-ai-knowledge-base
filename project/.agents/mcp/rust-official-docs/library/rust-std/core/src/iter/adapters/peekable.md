@@ -1,12 +1,3 @@
----
-title: "core::iter::adapters::peekable"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/iter/adapters/peekable.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::iter::adapters::peekable
 
 ## struct Peekable
@@ -18,8 +9,11 @@ pub struct Peekable<I: Iterator>
 An iterator with a `peek()` that returns an optional reference to the next
 element.
 
-This `struct` is created by the `peekable` method on `Iterator`. See its
+This `struct` is created by the [`peekable`] method on [`Iterator`]. See its
 documentation for more.
+
+[`peekable`]: Iterator::peekable
+[`Iterator`]: trait.Iterator.html
 
 ## Peekable::peek
 
@@ -29,8 +23,10 @@ pub fn peek(&mut self) -> Option<&I::Item>
 
 Returns a reference to the next() value without advancing the iterator.
 
-Like `next`, if there is a value, it is wrapped in a `Some(T)`.
+Like [`next`], if there is a value, it is wrapped in a `Some(T)`.
 But if the iteration is over, `None` is returned.
+
+[`next`]: Iterator::next
 
 Because `peek()` returns a reference, and many iterators iterate over
 references, there can be a possibly confusing situation where the
@@ -41,7 +37,7 @@ examples below.
 
 Basic usage:
 
-```rust
+```
 let xs = [1, 2, 3];
 
 let mut iter = xs.iter().peekable();
@@ -71,7 +67,7 @@ pub fn peek_mut(&mut self) -> Option<&mut I::Item>
 
 Returns a mutable reference to the next() value without advancing the iterator.
 
-Like `next`, if there is a value, it is wrapped in a `Some(T)`.
+Like [`next`], if there is a value, it is wrapped in a `Some(T)`.
 But if the iteration is over, `None` is returned.
 
 Because `peek_mut()` returns a reference, and many iterators iterate over
@@ -79,11 +75,13 @@ references, there can be a possibly confusing situation where the
 return value is a double reference. You can see this effect in the examples
 below.
 
+[`next`]: Iterator::next
+
 # Examples
 
 Basic usage:
 
-```rust
+```
 let mut iter = [1, 2, 3].iter().peekable();
 
 // Like with `peek()`, we can see into the future without advancing the iterator.
@@ -114,7 +112,7 @@ Otherwise, return `None`.
 
 # Examples
 Consume a number if it's equal to 0.
-```rust
+```
 let mut iter = (0..5).peekable();
 // The first item of the iterator is 0; consume it.
 assert_eq!(iter.next_if(|&x| x == 0), Some(0));
@@ -125,7 +123,7 @@ assert_eq!(iter.next(), Some(1));
 ```
 
 Consume any number less than 10.
-```rust
+```
 let mut iter = (1..20).peekable();
 // Consume all numbers less than 10
 while iter.next_if(|&x| x < 10).is_some() {}
@@ -143,7 +141,7 @@ Consume and return the next item if it is equal to `expected`.
 
 # Example
 Consume a number if it's equal to 0.
-```rust
+```
 let mut iter = (0..5).peekable();
 // The first item of the iterator is 0; consume it.
 assert_eq!(iter.next_if_eq(&0), Some(0));
@@ -172,12 +170,12 @@ This is similar to modifying the output of `peek_mut()`.
 If the closure panics, the next value will always be consumed and dropped
 even if the panic is caught, because the closure never returned an `Err` value to put back.
 
-See also: `next_if_map_mut`.
+See also: [`next_if_map_mut`](Self::next_if_map_mut).
 
 # Examples
 
 Parse the leading decimal number from an iterator of characters.
-```rust
+```
 let mut iter = "125 GOTO 10".chars().peekable();
 let mut line_num = 0_u32;
 while let Some(digit) = iter.next_if_map(|c| c.to_digit(10).ok_or(c)) {
@@ -188,7 +186,7 @@ assert_eq!(iter.collect::<String>(), " GOTO 10");
 ```
 
 Matching custom types.
-```rust
+```
 
 #[derive(Debug, PartialEq, Eq)]
 enum Node {
@@ -225,6 +223,27 @@ fn combine_comments(nodes: Vec<Node>) -> Vec<Node> {
     }
     result
 }
+# assert_eq!( // hiding the test to avoid cluttering the documentation.
+#     combine_comments(vec![
+#         Node::Comment("The".to_owned()),
+#         Node::Comment("Quick".to_owned()),
+#         Node::Comment("Brown".to_owned()),
+#         Node::Red("Fox".to_owned()),
+#         Node::Green("Jumped".to_owned()),
+#         Node::Comment("Over".to_owned()),
+#         Node::Blue("The".to_owned()),
+#         Node::Comment("Lazy".to_owned()),
+#         Node::Comment("Dog".to_owned()),
+#     ]),
+#     vec![
+#         Node::Comment("TheQuickBrown".to_owned()),
+#         Node::Red("Fox".to_owned()),
+#         Node::Green("Jumped".to_owned()),
+#         Node::Comment("Over".to_owned()),
+#         Node::Blue("The".to_owned()),
+#         Node::Comment("LazyDog".to_owned()),
+#     ],
+# )
 ```
 
 ## Peekable::next_if_map_mut
@@ -241,13 +260,13 @@ Otherwise, if `f` returns `None`, the next value is kept for the next iteration.
 If `f` panics, the item that is consumed from the iterator as if `Some` was returned from `f`.
 The value will be dropped.
 
-This is similar to `next_if_map`, except ownership of the item is not given to `f`.
+This is similar to [`next_if_map`](Self::next_if_map), except ownership of the item is not given to `f`.
 This can be preferable if `f` would copy the item anyway.
 
 # Examples
 
 Parse the leading decimal number from an iterator of characters.
-```rust
+```
 let mut iter = "125 GOTO 10".chars().peekable();
 let mut line_num = 0_u32;
 while let Some(digit) = iter.next_if_map_mut(|c| c.to_digit(10)) {

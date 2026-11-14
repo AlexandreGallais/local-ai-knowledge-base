@@ -1,15 +1,6 @@
----
-title: "imports-as-dependencies"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/imports-as-dependencies.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
-
-# imports-as-dependencies
-
-### `imports-as-dependencies`
+<a name="user-content-imports-as-dependencies"></a>
+<a name="imports-as-dependencies"></a>
+### <code>imports-as-dependencies</code>
 
 This rule will report an issue if JSDoc `import()` statements point to a package
 which is not listed in `dependencies` or `devDependencies`.
@@ -22,6 +13,8 @@ which is not listed in `dependencies` or `devDependencies`.
 |Settings||
 |Options||
 
+<a name="user-content-failing-examples"></a>
+<a name="failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -59,6 +52,10 @@ The following patterns are considered problems:
 // Message: import points to package which is not found in dependencies
 ````
 
+
+
+<a name="user-content-passing-examples"></a>
+<a name="passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -117,3 +114,4 @@ The following patterns are not considered problems:
  * @type {null|import('ts-api-utils').SomeApi}
  */
 ````
+

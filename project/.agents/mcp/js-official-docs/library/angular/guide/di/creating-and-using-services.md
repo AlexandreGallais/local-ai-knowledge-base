@@ -1,19 +1,10 @@
----
-title: "Creating and using services"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/di/creating-and-using-services.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Creating and using services
 
 Services are reusable pieces of code that you can share across your Angular application. You commonly use them to handle data fetching, business logic, or other functionality that multiple components need to access.
 
 ## Creating a service
 
-You can create a service using the Angular CLI with the following command:
+You can create a service using the [Angular CLI](tools/cli) with the following command:
 
 ```bash
 ng generate service CUSTOM_NAME
@@ -25,7 +16,7 @@ You can also manually create a service by adding the `@Service()` decorator to a
 
 The following example defines a service that allows users to add and retrieve data:
 
-```ts
+```ts {header: "src/app/basic-data-store.ts"}
 import {Service} from '@angular/core';
 
 @Service()
@@ -69,13 +60,13 @@ Use this quick reference to decide which decorator fits your scenario:
 
 If you need to control how the singleton is created, for example, to swap in a different implementation depending on the environment, pass a `factory` function.
 
-The factory runs in an injection context, so you can use `inject()` inside it to read other dependencies.
+The factory runs in an [injection context](guide/di/dependency-injection-context), so you can use [`inject()`](api/core/inject) inside it to read other dependencies.
 
 The following `Analytics` service is a no-op locally so events don't pollute the console during development. In production, the factory reads an `ANALYTICS_ENABLED` token and returns a `GoogleAnalytics` subclass that forwards events to the real tracker:
 
-```ts
-import {inject, InjectionToken, Service} from '<example-value>';
-import {ANALYTICS_ENABLED} from '<example-value>';
+```ts {header: "src/app/analytics.ts"}
+import {inject, InjectionToken, Service} from '@angular/core';
+import {ANALYTICS_ENABLED} from './token';
 
 @Service({
   factory: () => (inject(ANALYTICS_ENABLED) ? new GoogleAnalytics() : new Analytics()),
@@ -99,7 +90,7 @@ NOTE: The `factory` option replaces the `useClass`, `useValue`, `useExisting`, a
 
 By default, `@Service` provides the class at the root injector. If you want to provide it manually, for example, to scope it to a specific route or component, set `autoProvided: false`:
 
-```ts
+```ts {header: "src/app/analytics-logger.ts"}
 import {Service} from '@angular/core';
 
 @Service({autoProvided: false})
@@ -116,7 +107,7 @@ You are then responsible for adding the service to a `providers` array, just lik
 
 Reach for `@Service` when you are creating a new singleton class that uses `inject()` for its dependencies. Keep using `@Injectable` when you need any of the following:
 
-- **Constructor-based dependency injection.** `@Service` only supports the `inject()` function.
+- **Constructor-based dependency injection.** `@Service` only supports the [`inject()`](api/core/inject) function.
 - **Advanced provider configuration** such as `useClass`, `useValue`, `useExisting`, or `useFactory`. `@Service` exposes a single `factory` option instead.
 - **Non-root scopes** such as `providedIn: 'platform'`.
 
@@ -174,4 +165,4 @@ While `providedIn: 'root'` covers most use cases, Angular also provides addition
 - **Factory providers** - For dynamic service creation based on runtime conditions
 - **Value providers** - For providing configuration objects or constants
 
-You can learn more about these advanced patterns in the next guide: defining dependency providers.
+You can learn more about these advanced patterns in the next guide: [defining dependency providers](/guide/di/defining-dependency-providers).

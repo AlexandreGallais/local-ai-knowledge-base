@@ -1,23 +1,20 @@
 ---
 title: "Using Variance for Func and Action Generic Delegates"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/programming-guide/concepts/covariance-contravariance/using-variance-for-func-and-action-generic-delegates.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about using covariance and contravariance in the Func and Action generic delegates to give you more flexibility in your code.
+ms.date: 07/20/2015
+ms.assetid: 1826774f-2b7a-470f-b110-17cfdd6abdae
 ---
-
 # Using Variance for Func and Action Generic Delegates (C#)
 
-These examples demonstrate how to use covariance and contravariance in the `Func` and `Action` generic delegates to enable reuse of methods and provide more flexibility in your code.
+These examples demonstrate how to use covariance and contravariance in the `Func` and `Action` generic delegates to enable reuse of methods and provide more flexibility in your code.  
+  
+ For more information about covariance and contravariance, see [Variance in Delegates (C#)](./variance-in-delegates.md).  
+  
+## Using Delegates with Covariant Type Parameters  
 
- For more information about covariance and contravariance, see Variance in Delegates (C#).
-
-## Using Delegates with Covariant Type Parameters
-
- The following example illustrates the benefits of covariance support in the generic `Func` delegates. The `FindByTitle` method takes a parameter of the `String` type and returns an object of the `Employee` type. However, you can assign this method to the `Func<String, Person>` delegate because `Employee` inherits `Person`.
-
-```csharp
+ The following example illustrates the benefits of covariance support in the generic `Func` delegates. The `FindByTitle` method takes a parameter of the `String` type and returns an object of the `Employee` type. However, you can assign this method to the `Func<String, Person>` delegate because `Employee` inherits `Person`.  
+  
+```csharp  
 // Simple hierarchy of classes.  
 public class Person { }  
 public class Employee : Person { }  
@@ -47,12 +44,12 @@ class Program
     }  
 }  
 ```  
+  
+## Using Delegates with Contravariant Type Parameters  
 
-## Using Delegates with Contravariant Type Parameters
-
- The following example illustrates the benefits of contravariance support in the generic `Action` delegates. The `AddToContacts` method takes a parameter of the `Person` type. However, you can assign this method to the `Action<Employee>` delegate because `Employee` inherits `Person`.
-
-```csharp
+ The following example illustrates the benefits of contravariance support in the generic `Action` delegates. The `AddToContacts` method takes a parameter of the `Person` type. However, you can assign this method to the `Action<Employee>` delegate because `Employee` inherits `Person`.  
+  
+```csharp  
 public class Person { }  
 public class Employee : Person { }  
 class Program  
@@ -114,7 +111,7 @@ class Program
 
 This behavior seems contradictory: if contravariance allows assigning a delegate that accepts a base type (`Person`) to a delegate variable expecting a derived type (`Employee`), why does direct assignment of the lambda expression fail?
 
-The key <example-value> is **type inference**. In the first case, the lambda expression is first assigned to a variable with type `var`, which causes the compiler to infer the lambda's type as `Action<Person>`. The subsequent assignment to `Action<Employee>` succeeds because of contravariance rules for delegates.
+The key difference is **type inference**. In the first case, the lambda expression is first assigned to a variable with type `var`, which causes the compiler to infer the lambda's type as `Action<Person>`. The subsequent assignment to `Action<Employee>` succeeds because of contravariance rules for delegates.
 
 In the second case, the compiler cannot directly infer that the lambda expression `(Person p) => p.ReadContact()` should have type `Action<Person>` when it's being assigned to `Action<Employee>`. The type inference rules for anonymous functions don't automatically apply contravariance during the initial type determination.
 
@@ -134,5 +131,5 @@ This behavior illustrates the difference between delegate contravariance (which 
 
 ## See also
 
-- Covariance and Contravariance (C#)
-- Generics
+- [Covariance and Contravariance (C#)](./index.md)
+- [Generics](../../../../standard/generics/index.md)

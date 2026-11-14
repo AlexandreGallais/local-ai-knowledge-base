@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: Repeated XML elements include index"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/extensions/6.0/repeated-xml-elements.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 6 breaking change where repeated XML elements now include an index key when using Microsoft.Extensions.Configuration.Xml.
+ms.date: 10/04/2022
+ms.custom: sfi-ropc-nochange
 ---
-
 # Repeated XML elements include index
 
-When `Microsoft.Extensions.Configuration.Xml` is used to read an XML document that has repeated XML elements without a `Name` attribute, the `Configuration` entries created with these repeated elements now have an index appended to their configuration path.
+When <xref:Microsoft.Extensions.Configuration.Xml?displayProperty=fullName> is used to read an XML document that has repeated XML elements without a `Name` attribute, the `Configuration` entries created with these repeated elements now have an index appended to their configuration path.
 
 ## Version introduced
 
@@ -53,7 +50,7 @@ respectively.
 
 ## New behavior
 
-The configurations created from the XML files in the Previous behavior section are now:
+The configurations created from the XML files in the [Previous behavior](#previous-behavior) section are now:
 
 ```txt
 Data:0:ConnectionString = TestConnectionString
@@ -71,7 +68,7 @@ respectively.
 
 ## Type of breaking change
 
-This change can affect binary compatibility.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 
@@ -103,10 +100,10 @@ configRoot.GetSection("Level1:Level2:0")
 
 ## Affected APIs
 
-- `Microsoft.Extensions.Configuration.XmlConfigurationExtensions`
-- `Microsoft.Extensions.Configuration.Xml.XmlStreamConfigurationProvider`
-- `Microsoft.Extensions.Configuration.Xml.XmlConfigurationSource`
+- <xref:Microsoft.Extensions.Configuration.XmlConfigurationExtensions?displayProperty=fullName>
+- <xref:Microsoft.Extensions.Configuration.Xml.XmlStreamConfigurationProvider?displayProperty=fullName>
+- <xref:Microsoft.Extensions.Configuration.Xml.XmlConfigurationSource?displayProperty=fullName>
 
 ## See also
 
-- XML configuration provider
+- [XML configuration provider](../../../extensions/configuration-providers.md#xml-configuration-provider)

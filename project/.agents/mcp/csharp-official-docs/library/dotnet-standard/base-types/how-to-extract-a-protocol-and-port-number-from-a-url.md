@@ -1,43 +1,31 @@
 ---
+description: "Learn more about: How to: Extract a Protocol and Port Number from a URL"
 title: "How to: Extract a Protocol and Port Number from a URL"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/base-types/how-to-extract-a-protocol-and-port-number-from-a-url.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "06/30/2020"
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "searching with regular expressions, examples"
+  - "parsing text with regular expressions, examples"
+  - "regular expressions, examples"
+  - ".NET regular expressions, examples"
+  - "regular expressions [.NET], examples"
+  - "pattern-matching with regular expressions, examples"
+ms.assetid: ab7f62b3-6d2c-4efb-8ac6-28600df5fd5c
 ---
-
 # How to: Extract a Protocol and Port Number from a URL
 
 The following example extracts a protocol and port number from a URL.
 
-> **Warning:**
-> Unrestricted use of `System.Text.RegularExpressions` with untrusted input can subject applications to denial-of-service attacks. Consult Best practices for regular expressions in .NET for guidance on how to safely use .NET regular expressions with untrusted input.
+[!INCLUDE [regex](../../../includes/regex.md)]
 
 ## Example
 
- The example uses the `System.Text.RegularExpressions.Match.Result*` method to return the protocol followed by a colon followed by the port number.
+ The example uses the <xref:System.Text.RegularExpressions.Match.Result*?displayProperty=nameWithType> method to return the protocol followed by a colon followed by the port number.
 
- ```csharp
-using System;
-using System.Text.RegularExpressions;
-
-public class Example
-{
-   public static void Main()
-   {
-      string url = "http://www.contoso.com:8080/letters/readme.html";
-
-      Regex r = new Regex(@"^(?<proto>\w+)://[^/]+?(?<port>:\d+)?/",
-                          RegexOptions.None, TimeSpan.FromMilliseconds(150));
-      Match m = r.Match(url);
-      if (m.Success)
-         Console.WriteLine(m.Result("${proto}${port}"));
-   }
-}
-// The example displays the following output:
-//       http:8080
-```
+ [!code-csharp[RegularExpressions.Examples.Protocol#1](../../../samples/snippets/csharp/VS_Snippets_CLR/RegularExpressions.Examples.Protocol/cs/Example.cs#1)]
+ [!code-vb[RegularExpressions.Examples.Protocol#1](../../../samples/snippets/visualbasic/VS_Snippets_CLR/RegularExpressions.Examples.Protocol/vb/Example.vb#1)]
 
  The regular expression pattern `^(?<proto>\w+)://[^/]+?(?<port>:\d+)?/` can be interpreted as shown in the following table.
 
@@ -50,31 +38,13 @@ public class Example
 |`(?<port>:\d+)?`|Match zero or one occurrence of a colon followed by one or more digit characters. Name this group `port`.|
 |`/`|Match a slash mark.|
 
- The `System.Text.RegularExpressions.Match.Result*` method expands the `${proto}${port}` replacement sequence, which concatenates the value of the two named groups captured in the regular expression pattern. It is a convenient alternative to explicitly concatenating the strings retrieved from the collection object returned by the `System.Text.RegularExpressions.Match.Groups` property.
+ The <xref:System.Text.RegularExpressions.Match.Result*?displayProperty=nameWithType> method expands the `${proto}${port}` replacement sequence, which concatenates the value of the two named groups captured in the regular expression pattern. It is a convenient alternative to explicitly concatenating the strings retrieved from the collection object returned by the <xref:System.Text.RegularExpressions.Match.Groups?displayProperty=nameWithType> property.
 
- The example uses the `System.Text.RegularExpressions.Match.Result*` method with two substitutions, `${proto}` and `${port}`, to include the captured groups in the output string. You can retrieve the captured groups from the match's `System.Text.RegularExpressions.GroupCollection` object instead, as the following code shows.
+ The example uses the <xref:System.Text.RegularExpressions.Match.Result*?displayProperty=nameWithType> method with two substitutions, `${proto}` and `${port}`, to include the captured groups in the output string. You can retrieve the captured groups from the match's <xref:System.Text.RegularExpressions.GroupCollection> object instead, as the following code shows.
 
- ```csharp
-﻿using System;
-using System.Text.RegularExpressions;
-
-public class Example
-{
-   public static void Main()
-   {
-      string url = "http://www.contoso.com:8080/letters/readme.html";
-
-      Regex r = new Regex(@"^(?<proto>\w+)://[^/]+?(?<port>:\d+)?/",
-                          RegexOptions.None, TimeSpan.FromMilliseconds(150));
-      Match m = r.Match(url);
-      if (m.Success)
-         Console.WriteLine(m.Groups["proto"].Value + m.Groups["port"].Value);
-   }
-}
-// The example displays the following output:
-//       http:8080
-```
+ [!code-csharp[RegularExpressions.Examples.Protocol#2](../../../samples/snippets/csharp/VS_Snippets_CLR/RegularExpressions.Examples.Protocol/cs/example2.cs#2)]
+ [!code-vb[RegularExpressions.Examples.Protocol#2](../../../samples/snippets/visualbasic/VS_Snippets_CLR/RegularExpressions.Examples.Protocol/vb/example2.vb#2)]
 
 ## See also
 
-- .NET Regular Expressions
+- [.NET Regular Expressions](regular-expressions.md)

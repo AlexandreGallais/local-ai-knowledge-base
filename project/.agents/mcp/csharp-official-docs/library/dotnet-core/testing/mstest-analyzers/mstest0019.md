@@ -1,12 +1,17 @@
 ---
 title: "MSTEST0019: Prefer TestInitialize methods over constructors"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0019.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0019: Prefer TestInitialize methods over constructors"
+ms.date: 11/05/2026
+ai-usage: ai-assisted
+f1_keywords:
+- MSTEST0019
+- PreferTestInitializeOverConstructorAnalyzer
+helpviewer_keywords:
+- PreferTestInitializeOverConstructorAnalyzer
+- MSTEST0019
+author: Evangelink
+ms.author: amauryleve
 ---
-
 # MSTEST0019: Prefer TestInitialize methods over constructors
 
 | Property                            | Value                                           |
@@ -28,7 +33,7 @@ This rule raises a diagnostic when there is a parameterless explicit constructor
 
 To use one setup convention for synchronous and asynchronous tests, prefer `[TestInitialize]`. A constructor can't return an awaitable operation to MSTest, while the runner can await a `Task` or `ValueTask` returned by a test-initialization method before it starts the test.
 
-Constructors are still supported for synchronous setup. This rule expresses an opt-in convention, not a runtime requirement. MSTEST0020 offers the alternative convention for constructor-based setup; don't enable both competing conventions.
+Constructors are still supported for synchronous setup. This rule expresses an opt-in convention, not a runtime requirement. [MSTEST0020](mstest0020.md) offers the alternative convention for constructor-based setup; don't enable both competing conventions.
 
 ## How to fix violations
 
@@ -38,8 +43,7 @@ Move the setup from the parameterless constructor into a `[TestInitialize]` meth
 
 You usually don't want to suppress warnings from this rule if you decided to opt-in for it.
 
-> **Note:**
-> This rule is opt-in. It's not enabled even when using `<MSTestAnalysisMode>All</MSTestAnalysisMode>`. For more information about `MSTestAnalysisMode`, see MSTest code analysis.
+[!INCLUDE [disabled-in-all](includes/disabled-in-all.md)]
 
 ## Suppress a warning
 
@@ -51,11 +55,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0019
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0019.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

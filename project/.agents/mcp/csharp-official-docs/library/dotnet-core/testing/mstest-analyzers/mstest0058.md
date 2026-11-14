@@ -1,12 +1,19 @@
 ---
 title: "MSTEST0058: Avoid assertions in catch blocks"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0058.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0058: Avoid assertions in catch blocks"
+ms.date: 12/29/2025
+f1_keywords:
+- MSTEST0058
+- AvoidAssertsInCatchBlocksAnalyzer
+helpviewer_keywords:
+- AvoidAssertsInCatchBlocksAnalyzer
+- MSTEST0058
+author: evangelink
+ms.author: amauryleve
+ai-usage: ai-assisted
+dev_langs:
+- CSharp
 ---
-
 # MSTEST0058: Avoid assertions in `catch` blocks
 
 | Property                            | Value                                              |
@@ -28,7 +35,7 @@ A test method contains assertion statements within a `catch` block.
 
 Placing assertions in `catch` blocks is an anti-pattern that can lead to confusing test results and makes tests harder to understand. When an exception is thrown, the `catch` block executes, and the assertion runs. However, if no exception is thrown, the `catch` block never executes, potentially giving false confidence that the test passed.
 
-Instead, use `Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Throws*` or similar methods to verify that expected exceptions are thrown. This makes the test intent clearer and ensures proper test behavior.
+Instead, use <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Throws*?displayProperty=nameWithType> or similar methods to verify that expected exceptions are thrown. This makes the test intent clearer and ensures proper test behavior.
 
 ```csharp
 [TestClass]
@@ -81,11 +88,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0058
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0058.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

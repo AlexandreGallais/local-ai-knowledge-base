@@ -1,23 +1,20 @@
 ---
-title: "Unit testing C# with NUnit and .NET Core"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/unit-testing-csharp-with-nunit.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Unit testing C# with NUnit and .NET Core
+description: Learn unit test concepts in C# and .NET Core through an interactive experience building a sample solution step-by-step using dotnet test and NUnit.
+author: rprouse
+ms.date: 10/22/2025
+ms.custom: devdivchpfy22
+ai-usage: ai-assisted
 ---
-
 # Unit testing C# with NUnit and .NET Core
 
-This tutorial takes you through an interactive experience building a sample solution step-by-step to learn unit testing concepts. If you prefer to follow the tutorial using a pre-built solution, view or download the sample code before you begin. For download instructions, see Samples and Tutorials.
+This tutorial takes you through an interactive experience building a sample solution step-by-step to learn unit testing concepts. If you prefer to follow the tutorial using a pre-built solution, [view or download the sample code](https://github.com/dotnet/samples/blob/main/core/getting-started/unit-testing-using-nunit/) before you begin. For download instructions, see [Samples and Tutorials](../../samples-and-tutorials/index.md#view-and-download-samples).
 
-This article is about testing a .NET Core project. If you're testing an ASP.NET Core project, see Integration tests in ASP.NET Core.
+[!INCLUDE [testing an ASP.NET Core project from .NET Core](../../../includes/core-testing-note-aspnet.md)]
 
 ## Prerequisites
 
-- The latest .NET SDK
-- Visual Studio Code editor
-- The C# DevKit
+[!INCLUDE [Prerequisites](../../../includes/prerequisites-basic.md)]
 
 ## Creating the source project
 
@@ -83,23 +80,23 @@ Change the directory to the *PrimeService.Tests* directory and create a new proj
 dotnet new nunit
 ```
 
-The dotnet new command creates a test project that uses NUnit as the test library. The generated template configures the test runner in the *PrimeService.Tests.csproj* file:
+The [dotnet new](../tools/dotnet-new.md) command creates a test project that uses NUnit as the test library. The generated template configures the test runner in the *PrimeService.Tests.csproj* file:
 
-_Code sample not included: ~/samples/snippets/core/testing/unit-testing-using-nunit/csharp/PrimeService.Tests/PrimeService.Tests.csproj._
+[!code-xml[Packages](~/samples/snippets/core/testing/unit-testing-using-nunit/csharp/PrimeService.Tests/PrimeService.Tests.csproj#Packages)]
 
-> **Note:**
-> Prior to .NET 9, the generated code might reference older versions of the NUnit test framework. You can use dotnet CLI to update the packages. Alternatively, open the *PrimeService.Tests.csproj* file and replace the contents of the package references item group with the code shown previously.
+> [!NOTE]
+> Prior to .NET 9, the generated code might reference older versions of the NUnit test framework. You can use [dotnet CLI](/nuget/consume-packages/install-use-packages-dotnet-cli) to update the packages. Alternatively, open the *PrimeService.Tests.csproj* file and replace the contents of the package references item group with the code shown previously.
 
-The test project requires other packages to create and run unit tests. The `dotnet new` command in the previous step added the Microsoft test SDK, the NUnit test framework, and the NUnit test adapter. Now, add the `PrimeService` class library as another dependency to the project. Use the `dotnet add reference` command:
+The test project requires other packages to create and run unit tests. The `dotnet new` command in the previous step added the Microsoft test SDK, the NUnit test framework, and the NUnit test adapter. Now, add the `PrimeService` class library as another dependency to the project. Use the [`dotnet add reference`](../tools/dotnet-reference-add.md) command:
 
 ```dotnetcli
 dotnet add reference ../PrimeService/PrimeService.csproj
 ```
 
-> **Note:**
+> [!NOTE]
 > If you're using .NET 10 SDK or later, you can use the "noun first" form: `dotnet reference add ../PrimeService/PrimeService.csproj`.
 
-You can see the entire file in the samples repository on GitHub.
+You can see the entire file in the [samples repository](https://github.com/dotnet/samples/blob/main/core/getting-started/unit-testing-using-nunit/PrimeService.Tests/PrimeService.Tests.csproj) on GitHub.
 
 The following outline shows the final solution layout:
 
@@ -154,7 +151,7 @@ namespace Prime.UnitTests.Services
 
 The `[TestFixture]` attribute denotes a class that contains unit tests. The `[Test]` attribute indicates a method is a test method.
 
-Save this file and execute the `dotnet test` command to build the tests and the class library and run the tests. The NUnit test runner contains the program entry point to run your tests. `dotnet test` starts the test runner using the unit test project you created.
+Save this file and execute the [`dotnet test`](../tools/dotnet-test.md) command to build the tests and the class library and run the tests. The NUnit test runner contains the program entry point to run your tests. `dotnet test` starts the test runner using the unit test project you created.
 
 Your test fails. You didn't create the implementation yet. Make the test pass by writing the simplest code in the `PrimeService` class that works:
 
@@ -177,7 +174,7 @@ Now that you made one test pass, it's time to write more. There are a few other 
 
 Instead of creating new tests, apply this attribute to create a single data-driven test. The data driven test is a method that tests several values less than two, which is the lowest prime number:
 
-_Code sample not included: ~/samples/snippets/core/testing/unit-testing-using-nunit/csharp/PrimeService.Tests/PrimeService_IsPrimeShould.cs._
+[!code-csharp[Sample_TestCode](~/samples/snippets/core/testing/unit-testing-using-nunit/csharp/PrimeService.Tests/PrimeService_IsPrimeShould.cs?name=Sample_TestCode)]
 
 Run `dotnet test`, and two of these tests fail. To make all of the tests pass, change the `if` clause at the beginning of the `IsPrime` method in the *PrimeService.cs* file:
 
@@ -185,6 +182,6 @@ Run `dotnet test`, and two of these tests fail. To make all of the tests pass, c
 if (candidate < 2)
 ```
 
-Continue to iterate by adding more tests, theories, and code in the main library. You have the finished version of the tests and the complete implementation of the library.
+Continue to iterate by adding more tests, theories, and code in the main library. You have the [finished version of the tests](https://github.com/dotnet/samples/blob/main/core/getting-started/unit-testing-using-nunit/PrimeService.Tests/PrimeService_IsPrimeShould.cs) and the [complete implementation of the library](https://github.com/dotnet/samples/blob/main/core/getting-started/unit-testing-using-nunit/PrimeService/PrimeService.cs).
 
 You built a small library and a set of unit tests for that library. You've also structured the solution so that adding new packages and tests is part of the standard workflow. You've concentrated most of your time and effort on solving the goals of the application.

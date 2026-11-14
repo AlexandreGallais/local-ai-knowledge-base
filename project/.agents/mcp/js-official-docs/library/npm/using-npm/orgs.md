@@ -1,13 +1,8 @@
 ---
-title: "Organizations"
-tool: "npm"
-version: "12.2"
-source: "https://github.com/npm/cli/blob/60e11343e61316d966c86805d803df5a0eb99230/docs/lib/content/using-npm/orgs.md"
-commit: "60e11343e61316d966c86805d803df5a0eb99230"
-license: "Artistic-2.0"
+title: Organizations
+section: 7
+description: Working with teams & organizations
 ---
-
-# Organizations
 
 ### Description
 
@@ -29,8 +24,8 @@ Access is either read-write or read-only.
 
 There are two main commands:
 
-1. `npm team` see npm team for more details
-2. `npm access` see npm access for more details
+1. `npm team` see [npm team](/commands/npm-team) for more details
+2. `npm access` see [npm access](/commands/npm-access) for more details
 
 ### Team Admins create teams
 
@@ -64,7 +59,7 @@ npm init --scope=<org>
 ```
 to scope it for your org & publish as usual
 
-* Grant access:
+* Grant access:  
 
 ```bash
 npm access grant <read-only|read-write> <org:team> [<package>]
@@ -98,6 +93,6 @@ npm access list collaborators <pkg>
 
 ### See also
 
-* npm team
-* npm access
-* npm scope
+* [npm team](/commands/npm-team)
+* [npm access](/commands/npm-access)
+* [npm scope](/using-npm/scope)

@@ -1,15 +1,12 @@
 ---
-title: "Install and use LLDB on Linux"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/lldb-linux.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Install and use LLDB on Linux
+description: Instructions for installing and using LLDB to debug a .NET application on Linux
+ms.date: 02/13/2025
 ---
 
 # Install and use LLDB on Linux
 
-LLDB is a powerful, open-source debugger that's part of the LLVM project. When you're debugging .NET applications on Linux, you can use LLDB with the .NET debugger extensions to inspect managed application state. LLDB can work with both dumps and live processes.
+[LLDB](https://lldb.llvm.org/) is a powerful, open-source debugger that's part of the LLVM project. When you're debugging .NET applications on Linux, you can use LLDB with the [.NET debugger extensions](debugger-extensions.md) to inspect managed application state. LLDB can work with both dumps and live processes.
 
 ## Install
 
@@ -91,17 +88,17 @@ To launch LLDB:
 
 #### RHEL 7.5 and later
 
-See LLDB on RedHat's website.
+See [LLDB](https://access.redhat.com/documentation/en-us/red_hat_developer_tools/1/html/using_llvm_12.0.1_toolset/assembly_llvm#proc_installing-comp-toolset_assembly_llvm) on RedHat's website.
 
 ### Install the .NET debugger extensions
 
-Install the .NET debugger extensions using the dotnet-debugger-extensions install tool. The installer creates a `.lldbinit` file in your home directory that automatically loads the extensions when you start LLDB.
+Install the .NET debugger extensions using the [dotnet-debugger-extensions](dotnet-debugger-extensions.md) install tool. The installer creates a `.lldbinit` file in your home directory that automatically loads the extensions when you start LLDB.
 
-> **Note:**
+> [!NOTE]
 > The version of the debugger extensions does not need to match the version of the .NET runtime. We recommend using the latest extension version.
 
-> **Note:**
-> Installing with dotnet-sos instead of dotnet-debugger-extensions also works, but only installs a subset of the extension commands.
+> [!NOTE]
+> Installing with [dotnet-sos](dotnet-sos.md) instead of [dotnet-debugger-extensions](dotnet-debugger-extensions.md) also works, but only installs a subset of the extension commands.
 
 ## Getting started with LLDB
 
@@ -122,7 +119,7 @@ This example shows using LLDB to attach to a pre-existing .NET application (`dot
 
 1. Run LLDB and attach to the process.
 
-   Launch LLDB using the appropriate command for your distribution (shown previously in the Install LLDB section). Often this is just `lldb`, but some distros require a version number in the name, like `lldb-3.9`.
+   Launch LLDB using the appropriate command for your distribution (shown previously in the [Install LLDB](#install-lldb) section). Often this is just `lldb`, but some distros require a version number in the name, like `lldb-3.9`.
 
    ```console
        $ lldb
@@ -152,7 +149,7 @@ This example shows using LLDB to attach to a pre-existing .NET application (`dot
 
    The debugger is now attached and you can use both built-in LLDB commands and .NET debugger extension commands to inspect the process state.
 
-   > **Note:**
+   > [!NOTE]
    > If LLDB outputs 'error: attach failed: Operation not permitted', this means you don't have sufficient privileges to debug. The most reliable way to resolve this is to quit LLDB and restart using sudo. When elevated LLDB won't automatically run the normal .lldbinit script, you can do so explicitly by using the `--source` argument on the command line: `sudo lldb --source ~/.lldbinit`.
 
 1. Run an example command
@@ -179,10 +176,10 @@ This example shows using LLDB to attach to a pre-existing .NET application (`dot
 
 ## Next steps
 
-To learn more about the commands available when debugging .NET applications with LLDB, see the documentation for the .NET debugger extensions and LLDB.
+To learn more about the commands available when debugging .NET applications with LLDB, see the documentation for the [.NET debugger extensions](debugger-extensions.md) and [LLDB](https://lldb.llvm.org/).
 
 ## See also
 
-- LLDB for more information about the LLDB debugger.
-- .NET debugger extensions for a reference of the extension commands available.
-- dotnet-symbol for more details on installing and using the symbol download tool.
+- [LLDB](https://lldb.llvm.org/) for more information about the LLDB debugger.
+- [.NET debugger extensions](debugger-extensions.md) for a reference of the extension commands available.
+- [dotnet-symbol](dotnet-symbol.md) for more details on installing and using the symbol download tool.

@@ -1,16 +1,5 @@
----
-title: "git-download"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/git-download.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# git-download
-
-> **Tip:**
-> Use the `git sparse-checkout` command to download a single folder from the main branch of a GitHub repository.
+> [!TIP]
+> Use the [`git sparse-checkout` command](https://git-scm.com/docs/git-sparse-checkout) to download a single folder from the main branch of a GitHub repository.
 >
 > In the following example, the `security/authorization/BlazorWebAppAuthorization` subfolder is downloaded from the `dotnet/AspNetCore.Docs.Samples` repository. Replace `https://github.com/dotnet/AspNetCore.Docs.Samples.git` with the URL of the repository that you want to clone, and replace the `security/authorization/BlazorWebAppAuthorization` path with the path to the subfolder that you want to download:
 >

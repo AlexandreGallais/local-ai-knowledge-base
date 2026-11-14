@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugManagedCallback::UpdateModuleSymbols Method"
 title: "ICorDebugManagedCallback::UpdateModuleSymbols Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmanagedcallback-updatemodulesymbols-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugManagedCallback.UpdateModuleSymbols"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugManagedCallback::UpdateModuleSymbols"
+helpviewer_keywords:
+  - "UpdateModuleSymbols method [.NET debugging]"
+  - "ICorDebugManagedCallback::UpdateModuleSymbols method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugManagedCallback::UpdateModuleSymbols Method
 
 Notifies the debugger that the symbols for a common language runtime module have changed.
@@ -34,7 +43,7 @@ HRESULT UpdateModuleSymbols (
 
 ## Remarks
 
-This method provides an opportunity to update the debugger's view of a module's symbols by calling ISymUnmanagedReader::UpdateSymbolStore or ISymUnmanagedReader::ReplaceSymbolStore.
+This method provides an opportunity to update the debugger's view of a module's symbols by calling [ISymUnmanagedReader::UpdateSymbolStore](../../../../framework/unmanaged-api/diagnostics/isymunmanagedreader-updatesymbolstore-method.md) or [ISymUnmanagedReader::ReplaceSymbolStore](../../../../framework/unmanaged-api/diagnostics/isymunmanagedreader-replacesymbolstore-method.md).
 
 This callback can occur multiple times for the same module.
 
@@ -42,7 +51,7 @@ A debugger should try to bind unbound source-level breakpoints.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -52,4 +61,4 @@ A debugger should try to bind unbound source-level breakpoints.
 
 ## See also
 
-- ICorDebugManagedCallback Interface
+- [ICorDebugManagedCallback Interface](icordebugmanagedcallback-interface.md)

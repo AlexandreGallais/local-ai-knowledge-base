@@ -1,12 +1,3 @@
----
-title: "Testing attributes"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/attributes/testing.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[attributes.testing]
 # Testing attributes
 
@@ -16,11 +7,12 @@ tests. Compiling a crate in "test" mode enables building the test functions
 along with a test harness for executing the tests. Enabling the test mode also
 enables the [`test` conditional compilation option].
 
+<!-- template:attributes -->
 r[attributes.testing.test]
 ## The `test` attribute
 
 r[attributes.testing.test.intro]
-The *`test` attribute* marks a function to be executed as a test.
+The *`test` [attribute][attributes]* marks a function to be executed as a test.
 
 > [!EXAMPLE]
 > ```rust,no_run
@@ -38,7 +30,7 @@ The `test` attribute uses the [MetaWord] syntax.
 r[attributes.testing.test.allowed-positions]
 The `test` attribute may only be applied to [free functions] that are monomorphic, that take no arguments, and where the return type implements the [`Termination`] trait.
 
-> **Note:**
+> [!NOTE]
 > Some of types that implement the [`Termination`] trait include:
 > * `()`
 > * `Result<T, E> where T: Termination, E: Debug`
@@ -46,8 +38,10 @@ The `test` attribute may only be applied to [free functions] that are monomorphi
 r[attributes.testing.test.duplicates]
 Only the first use of `test` on a function has effect.
 
-> **Note:**
+> [!NOTE]
 > `rustc` lints against any use following the first. This may become an error in the future.
+
+<!-- TODO: This is a minor lie. Currently rustc warns that duplicates are ignored, but it then generates multiple test entries with the same name. I would vote for rejecting this in the future. -->
 
 r[attributes.testing.test.stdlib]
 The `test` attribute is exported from the standard library prelude as [`std::prelude::v1::test`].
@@ -55,7 +49,7 @@ The `test` attribute is exported from the standard library prelude as [`std::pre
 r[attributes.testing.test.enabled]
 These functions are only compiled when in test mode.
 
-> **Note:**
+> [!NOTE]
 > The test mode is enabled by passing the `--test` argument to `rustc` or using `cargo test`.
 
 r[attributes.testing.test.success]
@@ -79,11 +73,12 @@ In particular:
 > }
 > ```
 
+<!-- template:attributes -->
 r[attributes.testing.ignore]
 ## The `ignore` attribute
 
 r[attributes.testing.ignore.intro]
-The *`ignore` attribute* can be used with the `test` attribute to tell the test harness to not execute that function as a test.
+The *`ignore` [attribute][attributes]* can be used with the [`test` attribute][attributes.testing.test] to tell the test harness to not execute that function as a test.
 
 > [!EXAMPLE]
 > ```rust,no_run
@@ -94,7 +89,7 @@ The *`ignore` attribute* can be used with the `test` attribute to tell the test 
 > }
 > ```
 
-> **Note:**
+> [!NOTE]
 > The `rustc` test harness supports the `--include-ignored` flag to force ignored tests to be run.
 
 r[attributes.testing.ignore.syntax]
@@ -115,23 +110,24 @@ The [MetaNameValueStr] form of the `ignore` attribute provides a way to specify 
 r[attributes.testing.ignore.allowed-positions]
 The `ignore` attribute may only be applied to functions annotated with the `test` attribute.
 
-> **Note:**
+> [!NOTE]
 > `rustc` ignores use in other positions but lints against it. This may become an error in the future.
 
 r[attributes.testing.ignore.duplicates]
 Only the first use of `ignore` on a function has effect.
 
-> **Note:**
+> [!NOTE]
 > `rustc` lints against any use following the first. This may become an error in the future.
 
 r[attributes.testing.ignore.behavior]
 Ignored tests are still compiled when in test mode, but they are not executed.
 
+<!-- template:attributes -->
 r[attributes.testing.should_panic]
 ## The `should_panic` attribute
 
 r[attributes.testing.should_panic.intro]
-The *`should_panic` attribute* causes a test to pass only if the test function to which the attribute is applied panics.
+The *`should_panic` [attribute][attributes]* causes a test to pass only if the [test function][attributes.testing.test] to which the attribute is applied panics.
 
 > [!EXAMPLE]
 > ```rust,no_run
@@ -172,13 +168,13 @@ The `should_panic` attribute has these forms:
 r[attributes.testing.should_panic.allowed-positions]
 The `should_panic` attribute may only be applied to functions annotated with the `test` attribute.
 
-> **Note:**
+> [!NOTE]
 > `rustc` ignores use in other positions but lints against it. This may become an error in the future.
 
 r[attributes.testing.should_panic.duplicates]
 Only the first use of `should_panic` on a function has effect.
 
-> **Note:**
+> [!NOTE]
 > `rustc` lints against any use following the first with a future-compatibility warning. This may become an error in the future.
 
 r[attributes.testing.should_panic.expected]
@@ -186,3 +182,10 @@ When the [MetaNameValueStr] form or the [MetaListNameValueStr] form with the `ex
 
 r[attributes.testing.should_panic.return]
 The return type of the test function must be `()`.
+
+[`Termination`]: std::process::Termination
+[`report`]: std::process::Termination::report
+[`test` conditional compilation option]: ../conditional-compilation.md#test
+[attributes]: ../attributes.md
+[`ExitCode`]: std::process::ExitCode
+[free functions]: ../glossary.md#free-item

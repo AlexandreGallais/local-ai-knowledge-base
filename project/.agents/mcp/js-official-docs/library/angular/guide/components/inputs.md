@@ -1,20 +1,11 @@
----
-title: "Accepting data with input properties"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/components/inputs.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Accepting data with input properties
 
-TIP: This guide assumes you've already read the Essentials Guide. Read that first if you're new to Angular. If you're familiar with other web frameworks, input properties are similar to _props_.
+TIP: This guide assumes you've already read the [Essentials Guide](essentials). Read that first if you're new to Angular. If you're familiar with other web frameworks, input properties are similar to _props_.
 
 When you use a component, you commonly want to pass some data to it. A component specifies the data that it accepts by declaring
 **inputs**:
 
-```ts
+```ts {highlight:[6]}
 import {Component, input} from '@angular/core';
 
 @Component(/* ... */)
@@ -64,7 +55,7 @@ When extending a component class, **inputs are inherited by the child class.**
 
 The `input` function returns an `InputSignal`. You can read the value by calling the signal:
 
-```ts
+```ts {highlight:[9]}
 import {Component, input, computed} from '@angular/core';
 
 @Component(/* ... */)
@@ -83,7 +74,7 @@ Signals created by the `input` function are read-only.
 
 You can declare that an input is `required` by calling `input.required` instead of `input`:
 
-```ts
+```ts {highlight:[4]}
 @Component(/* ... */)
 export class CustomSlider {
   // Declare a required input named value. Returns an `InputSignal<number>`.
@@ -103,7 +94,7 @@ The `input` function accepts a config object as a second parameter that lets you
 
 You can specify a `transform` function to change the value of an input when it's set by Angular.
 
-```ts
+```ts {highlight:[6]}
 @Component({
   selector: 'custom-slider',
   /*...*/
@@ -127,7 +118,7 @@ The most common use-case for input transforms is to accept a wider range of valu
 
 **Input transform function must be statically analyzable at build-time.** You cannot set transform functions conditionally or as the result of an expression evaluation.
 
-**Input transform functions should always be pure functions.** Relying on state outside the transform function can lead to unpredictable behavior.
+**Input transform functions should always be [pure functions](https://en.wikipedia.org/wiki/Pure_function).** Relying on state outside the transform function can lead to unpredictable behavior.
 
 #### Type checking
 
@@ -160,7 +151,7 @@ export class CustomSlider {
 }
 ```
 
-`booleanAttribute` imitates the behavior of standard HTML boolean attributes, where the
+`booleanAttribute` imitates the behavior of standard HTML [boolean attributes](https://developer.mozilla.org/docs/Glossary/Boolean/HTML), where the
 _presence_ of the attribute indicates a "true" value. However, Angular's `booleanAttribute` treats the literal string `"false"` as the boolean `false`.
 
 `numberAttribute` attempts to parse the given value to a number, producing `NaN` if parsing fails.
@@ -169,7 +160,7 @@ _presence_ of the attribute indicates a "true" value. However, Angular's `boolea
 
 You can specify the `alias` option to change the name of an input in templates.
 
-```ts
+```ts {highlight:[3]}
 @Component(/* ... */)
 export class CustomSlider {
   value = input(0, {alias: 'sliderValue'});
@@ -219,9 +210,9 @@ export class MediaControls {
 
 In the above example, the `CustomSlider` can write values into its `value` model input, which then propagates those values back to the `volume` signal in `MediaControls`. This binding keeps the values of `value` and `volume` in sync. Notice that the binding passes the `volume` signal instance, not the _value_ of the signal.
 
-In other respects, model inputs work similarly to standard inputs. You can read the value by calling the signal function, including in reactive contexts like `computed` and `effect`.
+In other respects, model inputs work similarly to standard inputs. You can read the value by calling the signal function, including in [reactive contexts](guide/signals#reactive-contexts) like `computed` and `effect`.
 
-See Two-way binding for more details on two-way binding in templates.
+See [Two-way binding](guide/templates/two-way-binding) for more details on two-way binding in templates.
 
 ### Two-way binding with plain properties
 
@@ -243,7 +234,7 @@ In the example above, the `CustomSlider` can write values into its `value` model
 
 ### Implicit `change` events
 
-When you declare a model input in a component or directive, Angular automatically creates a corresponding output for that model. The output's name is the model input's name suffixed with "Change".
+When you declare a model input in a component or directive, Angular automatically creates a corresponding [output](guide/components/outputs) for that model. The output's name is the model input's name suffixed with "Change".
 
 ```ts
 @Directive(/* ... */)
@@ -256,11 +247,11 @@ export class CustomCheckbox {
 
 Angular emits this change event whenever you write a new value into the model input by calling its `set` or `update` methods.
 
-See Custom events with outputs for more details on outputs.
+See [Custom events with outputs](guide/components/outputs) for more details on outputs.
 
 ### Customizing model inputs
 
-You can mark a model input as required or provide an alias in the same way as a standard input.
+You can mark a model input as [required](#required-inputs) or provide an [alias](#input-aliases) in the same way as a standard input.
 
 Model inputs do not support input transforms.
 
@@ -280,7 +271,7 @@ TIP: While the Angular team recommends using the signal-based `input` function f
 
 You can alternatively declare component inputs by adding the `@Input` decorator to a property:
 
-```ts
+```ts {highlight:[3]}
 @Component(/* ... */)
 export class CustomSlider {
   @Input() value = 0;
@@ -301,7 +292,7 @@ The `@Input` decorator accepts a config object that lets you change the way that
 
 You can specify the `required` option to enforce that a given input must always have a value.
 
-```ts
+```ts {highlight:[3]}
 @Component(/* ... */)
 export class CustomSlider {
   @Input({required: true}) value = 0;
@@ -314,7 +305,7 @@ If you try to use a component without specifying all of its required inputs, Ang
 
 You can specify a `transform` function to change the value of an input when it's set by Angular. This transform function works identically to transform functions for signal-based inputs described above.
 
-```ts
+```ts {highlight:[6]}
 @Component({
   selector: 'custom-slider',
   ...
@@ -332,7 +323,7 @@ function trimString(value: string | undefined) {
 
 You can specify the `alias` option to change the name of an input in templates.
 
-```ts
+```ts {highlight:[3]}
 @Component(/* ... */)
 export class CustomSlider {
   @Input({alias: 'sliderValue'}) value = 0;
@@ -387,7 +378,7 @@ Avoid complex or costly getters and setters. Angular may invoke an input's sette
 
 In addition to the `@Input` decorator, you can also specify a component's inputs with the `inputs` property in the `@Component` decorator. This can be useful when a component inherits a property from a base class:
 
-```ts
+```ts {highlight:[4]}
 // `CustomSlider` inherits the `disabled` property from `BaseSlider`.
 @Component({
   ...,
@@ -398,7 +389,7 @@ export class CustomSlider extends BaseSlider { }
 
 You can additionally specify an input alias in the `inputs` list by putting the alias after a colon in the string:
 
-```ts
+```ts {highlight:[4]}
 // `CustomSlider` inherits the `disabled` property from `BaseSlider`.
 @Component({
   ...,

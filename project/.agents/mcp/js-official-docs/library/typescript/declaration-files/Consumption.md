@@ -1,13 +1,9 @@
 ---
-title: "Consumption"
-tool: "typescript"
-version: "6.0"
-source: "https://github.com/microsoft/TypeScript-Website/blob/4ec663ac4412c3a7086401bd5a8811565589b11d/packages/documentation/copy/en/declaration-files/Consumption.md"
-commit: "4ec663ac4412c3a7086401bd5a8811565589b11d"
-license: "CC-BY-4.0"
+title: Consumption
+layout: docs
+permalink: /docs/handbook/declaration-files/consumption.html
+oneline: "How to download d.ts files for your project"
 ---
-
-# Consumption
 
 ## Downloading
 
@@ -19,7 +15,7 @@ As an example, getting the declarations for a library like lodash takes nothing 
 npm install --save-dev @types/lodash
 ```
 
-It is worth noting that if the npm package already includes its declaration file as described in Publishing, downloading the corresponding `@types` package is not needed.
+It is worth noting that if the npm package already includes its declaration file as described in [Publishing](/docs/handbook/declaration-files/publishing.html), downloading the corresponding `@types` package is not needed.
 
 ## Consuming
 
@@ -42,7 +38,7 @@ _.padStart("Hello TypeScript!", 20, " ");
 ## Searching
 
 For the most part, type declaration packages should always have the same name as the package name on `npm`, but prefixed with `@types/`,
-but if you need, you can use the Yarn package search to find the package for your favorite library.
+but if you need, you can use the [Yarn package search](https://yarnpkg.com/) to find the package for your favorite library.
 
 > Note: if the declaration file you are searching for is not present, you can always contribute one back and help out the next developer looking for it.
-> Please see the DefinitelyTyped contribution guidelines page for details.
+> Please see the DefinitelyTyped [contribution guidelines page](https://definitelytyped.org/guides/contributing.html) for details.

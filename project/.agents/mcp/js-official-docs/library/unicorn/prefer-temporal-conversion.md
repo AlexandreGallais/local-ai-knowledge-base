@@ -1,21 +1,14 @@
----
-title: "prefer-temporal-conversion"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-temporal-conversion.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-temporal-conversion
 
 📝 Prefer direct Temporal conversion methods.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-Temporal conversion methods convert directly between Temporal types. They avoid indirect static conversions and manual reconstruction from fields or serialized strings, removing boilerplate and preserving information that reconstruction can lose, such as submillisecond precision and calendars.
+<!-- end auto-generated rule header -->
+
+[Temporal conversion methods](https://tc39.es/proposal-temporal/docs/zoneddatetime.html) convert directly between Temporal types. They avoid indirect static conversions and manual reconstruction from fields or serialized strings, removing boilerplate and preserving information that reconstruction can lose, such as submillisecond precision and calendars.
 
 ## Examples
 

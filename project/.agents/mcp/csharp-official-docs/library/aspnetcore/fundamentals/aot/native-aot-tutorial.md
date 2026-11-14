@@ -1,40 +1,48 @@
 ---
 title: "Tutorial: Publish an ASP.NET Core app using Native AOT"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/aot/native-aot-tutorial.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about how to publish an ASP.NET Core app using Native AOT.
+monikerRange: '>= aspnetcore-8.0'
+ms.reviewer: midenn
+ms.topic: tutorial
+content_well_notification: AI-contribution
+ms.date: 05/13/2025
+ai-usage: ai-assisted
 ---
-
 # Tutorial: Publish an ASP.NET Core app using Native AOT
 
-.NET native ahead-of-time (AOT) is available in ASP.NET Core.
+[.NET native ahead-of-time (AOT)](/dotnet/core/deploying/native-aot/) is available in ASP.NET Core.
 
-> **Note:**
+> [!NOTE]
 > Minimal APIs are ***not*** compatible with native AOT.
 
-See Native AOT deployment for more information, including:
+See [Native AOT deployment](/dotnet/core/deploying/native-aot/) for more information, including:
 
-* Limitations of Native AOT deployment
-* Supported platforms
+* [Limitations of Native AOT deployment](/dotnet/core/deploying/native-aot/#limitations-of-native-aot-deployment)
+* [Supported platforms](/dotnet/core/deploying/native-aot/#platformarchitecture-restrictions)
 
-# .NET CLI
+## Prerequisites
 
-* .NET SDK
-* On Linux, see Prerequisites for Native AOT deployment.
-* Visual Studio 2022 with the **Desktop development with C++** workload installed.
+# [.NET CLI](#tab/net-cli)
+<!-- explicitly specify SDK version or we could just list
+https://dotnet.microsoft.com//download and tell them to install the version they're targeting   -->
+* [.NET SDK](https://dotnet.microsoft.com//download)
+* On Linux, see [Prerequisites for Native AOT deployment](/dotnet/core/deploying/native-aot/?tabs=net8plus#prerequisites-for-native-aot-deployment).
+* [Visual Studio 2022](https://visualstudio.microsoft.com/downloads/) with the **Desktop development with C++** workload installed.
 
-> **Note:**
-> Visual Studio 2022 is required because Native AOT requires link.exe and the Visual C++ static runtime libraries. There are no plans to support Native AOT ***without*** Visual Studio.
+  ![Visual Studio workload selection dialog showing "Desktop development with C++" selected.](~/fundamentals/aot/_static/cpponly.png)
 
-# Visual Studio
+> [!NOTE]
+> Visual Studio 2022 is required because Native AOT requires [link.exe](/cpp/build/reference/linker-options) and the Visual C++ static runtime libraries. There are no plans to support Native AOT ***without*** Visual Studio.
 
-.NET SDK
+# [Visual Studio](#tab/visual-studio)
 
-* Visual Studio 2022 with the following workloads installed:
+[.NET SDK](https://dotnet.microsoft.com//download)
+
+* [Visual Studio 2022](https://visualstudio.microsoft.com/downloads/) with the following workloads installed:
   * **ASP.NET and web development**
   * **Desktop development with C++**
+
+  ![Visual Studio workload selection dialog showing "ASP.NET and web development" and "Desktop development with C++" selected.](~/fundamentals/aot/_static/ddcpp.png)
 
 ---
 
@@ -42,7 +50,7 @@ See Native AOT deployment for more information, including:
 
 Create an ASP.NET Core API app that is configured to work with Native AOT:
 
-# .NET CLI
+# [.NET CLI](#tab/net-cli) 
 
 Run the following commands:
 
@@ -62,7 +70,7 @@ Restoring C:\Code\Demos\MyFirstAotWebApi\MyFirstAotWebApi.csproj:
 Restore succeeded.
 ```
 
-# Visual Studio
+# [Visual Studio](#tab/visual-studio)
 
 1. Create a new `ASP.NET Core Web API (Native AOT)` project.
 1. Name the project **MyFirstAotWebApi**.
@@ -74,13 +82,13 @@ Restore succeeded.
 
 Verify the app can be published using Native AOT:
 
-# .NET CLI
+# [.NET CLI](#tab/net-cli) 
 
 ```dotnetcli
 dotnet publish
 ```
 
-# Visual Studio
+# [Visual Studio](#tab/visual-studio)
 
 Visual studio doesn't support publishing an AOT app. Use the CLI command:
 
@@ -120,7 +128,7 @@ dir bin\Release\net8.0\win-x64\publish
 
 Output similar to the following example is displayed:
 
-```output
+```Output
     Directory: C:\Code\Demos\MyFirstAotWebApi\bin\Release\net8.0\win-x64\publish
 
 Mode                 LastWriteTime         Length Name
@@ -148,28 +156,16 @@ info: Microsoft.Hosting.Lifetime[0]
       Content root path: C:\Code\Demos\MyFirstAotWebApi
 ```
 
-### Use libraries with Native AOT
-
-Many popular libraries used in ASP.NET Core projects currently have some compatibility issues when they're incorporated into projects that target Native AOT, such as:
-
-* Using reflection to inspect and discover types
-* Loading libraries conditionally at runtime
-* Generating code on the fly to implement functionality
-
-Libraries that use these dynamic features require updates to work with Native AOT. Various tools are available for applying the necessary updates, such as Roslyn source generators.
-
-Library authors hoping to support Native AOT are encouraged to review the following articles:
-
-* Native AOT deployment
-* Prepare .NET libraries for trimming
+[!INCLUDE[](~/fundamentals/aot/includes/aot_lib.md)]
 
 ## See also
 
-* ASP.NET Core support for Native AOT
-* Native AOT deployment
-* Using the configuration binder source generator
-* The Minimal API AOT compilation template
-* Comparing `WebApplication.CreateBuilder` to `CreateSlimBuilder`
-* Exploring the new Minimal API source generator
-* Replacing method calls with Interceptors
-* Configuration-binding source generator
+* [ASP.NET Core support for Native AOT](../native-aot.md)
+* [Native AOT deployment](/dotnet/core/deploying/native-aot/)
+* [Using the configuration binder source generator](https://andrewlock.net/exploring-the-dotnet-8-preview-using-the-new-configuration-binder-source-generator/)
+* [The Minimal API AOT compilation template](https://andrewlock.net/exploring-the-dotnet-8-preview-the-minimal-api-aot-template/)
+* [Comparing `WebApplication.CreateBuilder` to `CreateSlimBuilder`](https://andrewlock.net/exploring-the-dotnet-8-preview-comparing-createbuilder-to-the-new-createslimbuilder-method/)
+* [Exploring the new Minimal API source generator](https://andrewlock.net/exploring-the-dotnet-8-preview-exploring-the-new-minimal-api-source-generator/)
+* [Replacing method calls with Interceptors](https://andrewlock.net/exploring-the-dotnet-8-preview-changing-method-calls-with-interceptors/)
+* [Configuration-binding source generator](/dotnet/core/whats-new/dotnet-8#configuration-binding-source-generator)
+

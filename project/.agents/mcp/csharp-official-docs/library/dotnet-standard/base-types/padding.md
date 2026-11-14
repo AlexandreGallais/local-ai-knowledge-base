@@ -1,79 +1,40 @@
 ---
 title: "Padding Strings in .NET"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/base-types/padding.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to pad strings in .NET. Use the String.PadLeft and String.PadRight methods to add leading or trailing characters to achieve a specified total length.
+ms.date: "03/15/2018"
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "strings [.NET], padding"
+  - "white space"
+  - "PadRight method"
+  - "PadLeft method"
+  - "padding strings"
 ---
-
 # Pad strings in .NET
 
-Use one of the following `System.String` methods to create a new string that consists of an original string that is padded with leading or trailing characters to a specified total length. The padding character can be a space or a specified character. The resulting string appears to be either right-aligned or left-aligned. If the original string's length is already equal to or greater than the desired total length, the padding methods return the original string unchanged; for more information, see the **Returns** sections of the two overloads of the `System.String.PadLeft*` and `System.String.PadRight*` methods.
+Use one of the following <xref:System.String> methods to create a new string that consists of an original string that is padded with leading or trailing characters to a specified total length. The padding character can be a space or a specified character. The resulting string appears to be either right-aligned or left-aligned. If the original string's length is already equal to or greater than the desired total length, the padding methods return the original string unchanged; for more information, see the **Returns** sections of the two overloads of the <xref:System.String.PadLeft*?displayProperty=nameWithType> and <xref:System.String.PadRight*?displayProperty=nameWithType> methods.
 
 |Method name|Use|
 |-----------------|---------|
-|`System.String.PadLeft*`|Pads a string with leading characters to a specified total length.|
-|`System.String.PadRight*`|Pads a string with trailing characters to a specified total length.|
+|<xref:System.String.PadLeft*?displayProperty=nameWithType>|Pads a string with leading characters to a specified total length.|
+|<xref:System.String.PadRight*?displayProperty=nameWithType>|Pads a string with trailing characters to a specified total length.|
 
 ## PadLeft
 
- The `System.String.PadLeft*` method creates a new string by concatenating enough leading pad characters to an original string to achieve a specified total length. The `System.String.PadLeft(System.Int32)` method uses white space as the padding character and the `System.String.PadLeft(System.Int32,System.Char)` method enables you to specify your own padding character.
+ The <xref:System.String.PadLeft*?displayProperty=nameWithType> method creates a new string by concatenating enough leading pad characters to an original string to achieve a specified total length. The <xref:System.String.PadLeft%28System.Int32%29?displayProperty=nameWithType> method uses white space as the padding character and the <xref:System.String.PadLeft%28System.Int32%2CSystem.Char%29?displayProperty=nameWithType> method enables you to specify your own padding character.
 
- The following code example uses the `System.String.PadLeft*` method to create a new string that is twenty characters long. The example displays "`--------Hello World!`" to the console.
+ The following code example uses the <xref:System.String.PadLeft*> method to create a new string that is twenty characters long. The example displays "`--------Hello World!`" to the console.
 
- ```csharp
-using System;
-
-class Example
-{
-    public static void Main()
-    {
-        PadLeft();
-        PadRight();
-    }
-
-    public static void PadLeft()
-    {
-        string MyString = "Hello World!";
-        Console.WriteLine(MyString.PadLeft(20, '-'));
-    }
-
-    public static void PadRight()
-    {
-        string MyString = "Hello World!";
-        Console.WriteLine(MyString.PadRight(20, '-'));
-    }
-}
-```
+ [!code-csharp[Conceptual.String.BasicOps#3](../../../samples/snippets/csharp/VS_Snippets_CLR/conceptual.string.basicops/cs/padding.cs#3)]
+ [!code-vb[Conceptual.String.BasicOps#3](../../../samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.string.basicops/vb/padding.vb#3)]
 
 ## PadRight
 
- The `System.String.PadRight*` method creates a new string by concatenating enough trailing pad characters to an original string to achieve a specified total length. The `System.String.PadRight(System.Int32)` method uses white space as the padding character and the `System.String.PadRight(System.Int32,System.Char)` method enables you to specify your own padding character.
+ The <xref:System.String.PadRight*?displayProperty=nameWithType> method creates a new string by concatenating enough trailing pad characters to an original string to achieve a specified total length. The <xref:System.String.PadRight%28System.Int32%29?displayProperty=nameWithType> method uses white space as the padding character and the <xref:System.String.PadRight%28System.Int32%2CSystem.Char%29?displayProperty=nameWithType> method enables you to specify your own padding character.
 
- The following code example uses the `System.String.PadRight*` method to create a new string that is twenty characters long. The example displays "`Hello World!--------`" to the console.
+ The following code example uses the <xref:System.String.PadRight*> method to create a new string that is twenty characters long. The example displays "`Hello World!--------`" to the console.
 
- ```csharp
-using System;
-
-class Example
-{
-    public static void Main()
-    {
-        PadLeft();
-        PadRight();
-    }
-
-    public static void PadLeft()
-    {
-        string MyString = "Hello World!";
-        Console.WriteLine(MyString.PadLeft(20, '-'));
-    }
-
-    public static void PadRight()
-    {
-        string MyString = "Hello World!";
-        Console.WriteLine(MyString.PadRight(20, '-'));
-    }
-}
-```
+ [!code-csharp[Conceptual.String.BasicOps#4](../../../samples/snippets/csharp/VS_Snippets_CLR/conceptual.string.basicops/cs/padding.cs#4)]
+ [!code-vb[Conceptual.String.BasicOps#4](../../../samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.string.basicops/vb/padding.vb#4)]

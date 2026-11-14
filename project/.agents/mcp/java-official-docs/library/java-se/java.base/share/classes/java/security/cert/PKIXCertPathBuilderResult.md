@@ -1,12 +1,3 @@
----
-title: "PKIXCertPathBuilderResult class (java.security.cert)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/cert/PKIXCertPathBuilderResult.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # PKIXCertPathBuilderResult class (java.security.cert)
 
 ```java
@@ -18,47 +9,47 @@ path builder algorithm. All certification paths that are built and
 returned using this algorithm are also validated according to the PKIX
 certification path validation algorithm.
 
-Instances of `PKIXCertPathBuilderResult` are returned by
-the `build` method of `CertPathBuilder`
+<p>Instances of {@code PKIXCertPathBuilderResult} are returned by
+the {@code build} method of {@code CertPathBuilder}
 objects implementing the PKIX algorithm.
 
-All `PKIXCertPathBuilderResult` objects contain the
+<p>All {@code PKIXCertPathBuilderResult} objects contain the
 certification path constructed by the build algorithm, the
-valid policy tree and subject public key <example-value> from the build
-algorithm, and a `TrustAnchor` describing the certification
+valid policy tree and subject public key resulting from the build
+algorithm, and a {@code TrustAnchor} describing the certification
 authority (CA) that served as a trust anchor for the certification path.
-
-**Concurrent Access**
-
+<p>
+<b>Concurrent Access</b>
+<p>
 Unless otherwise specified, the methods defined in this class are not
 thread-safe. Multiple threads that need to access a single
 object concurrently should synchronize amongst themselves and
 provide the necessary locking. Multiple threads each manipulating
 separate objects need not synchronize.
 
-**See also:** CertPathBuilderResult
+@see CertPathBuilderResult
 
-**Since:** 1.4
+@since       1.4
+@author      Anne Anderson
 
 ## PKIXCertPathBuilderResult.PKIXCertPathBuilderResult(CertPath, TrustAnchor, PolicyNode, PublicKey)
 
 ```java
-public PKIXCertPathBuilderResult(CertPath certPath, TrustAnchor trustAnchor, PolicyNode policyTree, PublicKey <example-value>)
+public PKIXCertPathBuilderResult(CertPath certPath, TrustAnchor trustAnchor, PolicyNode policyTree, PublicKey subjectPublicKey)
 ```
 
-Creates an instance of `PKIXCertPathBuilderResult`
+Creates an instance of {@code PKIXCertPathBuilderResult}
 containing the specified parameters.
 
-Parameters:
-
-- `certPath`: the validated `CertPath`
-- `trustAnchor`: a `TrustAnchor` describing the CA that served as a trust anchor for the certification path
-- `policyTree`: the immutable valid policy tree, or `null` if there are no valid policies
-- `subjectPublicKey`: the public key of the subject
-
-Throws:
-
-- `NullPointerException`: if the `certPath`, `trustAnchor` or `subjectPublicKey` parameters are `null`
+@param certPath the validated {@code CertPath}
+@param trustAnchor a {@code TrustAnchor} describing the CA that
+served as a trust anchor for the certification path
+@param policyTree the immutable valid policy tree, or {@code null}
+if there are no valid policies
+@param subjectPublicKey the public key of the subject
+@throws NullPointerException if the {@code certPath},
+{@code trustAnchor} or {@code subjectPublicKey} parameters
+are {@code null}
 
 ## PKIXCertPathBuilderResult.getCertPath()
 
@@ -67,13 +58,13 @@ public CertPath getCertPath()
 ```
 
 Returns the built and validated certification path. The
-`CertPath` object does not include the trust anchor.
-Instead, use the getTrustAnchor() method to
-obtain the `TrustAnchor` that served as the trust anchor
+{@code CertPath} object does not include the trust anchor.
+Instead, use the {@link #getTrustAnchor() getTrustAnchor()} method to
+obtain the {@code TrustAnchor} that served as the trust anchor
 for the certification path.
 
-**Returns:** the built and validated `CertPath` (never
-`null`)
+@return the built and validated {@code CertPath} (never
+{@code null})
 
 ## PKIXCertPathBuilderResult.toString()
 
@@ -82,7 +73,7 @@ public String toString()
 ```
 
 Return a printable representation of this
-`PKIXCertPathBuilderResult`.
+{@code PKIXCertPathBuilderResult}.
 
-**Returns:** a `String` describing the contents of this
-        `PKIXCertPathBuilderResult`
+@return a {@code String} describing the contents of this
+        {@code PKIXCertPathBuilderResult}

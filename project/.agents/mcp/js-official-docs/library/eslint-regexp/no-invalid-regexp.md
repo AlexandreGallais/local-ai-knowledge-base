@@ -1,15 +1,15 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/no-invalid-regexp"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/no-invalid-regexp.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "disallow invalid regular expression strings in `RegExp` constructors"
+since: "v1.0.0"
 ---
-
 # regexp/no-invalid-regexp
 
 💼 This rule is enabled in the following configs: 🟢 `flat/recommended`, 🔵 `recommended`.
+
+<!-- end auto-generated rule header -->
 
 > disallow invalid regular expression strings in `RegExp` constructors
 
@@ -39,7 +39,7 @@ RegExp('=' + space + '+(\\w+)', 'u')
 
 ### Differences to ESLint's `no-invalid-regexp` rule
 
-This rule is almost functionally equivalent to ESLint's [no-invalid-regexp] rule. The only difference is that this rule doesn't validate flags (see no-non-standard-flag).
+This rule is almost functionally equivalent to ESLint's [no-invalid-regexp] rule. The only difference is that this rule doesn't validate flags (see [no-non-standard-flag](./no-non-standard-flag.html)).
 
 There are two reasons we provide this rule:
 
@@ -59,11 +59,13 @@ Nothing.
 
 - [no-invalid-regexp]
 
+[no-invalid-regexp]: https://eslint.org/docs/rules/no-invalid-regexp
+
 ## :rocket: Version
 
 This rule was introduced in eslint-plugin-regexp v1.0.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/no-invalid-regexp.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/no-invalid-regexp.ts)

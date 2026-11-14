@@ -1,21 +1,12 @@
----
-title: "Reactive data fetching with httpResource"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/http/http-resource.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Reactive data fetching with `httpResource`
 
 `httpResource` is a reactive wrapper around `HttpClient` that gives you the request status and response as signals. You can thus use these signals with `computed`, `effect`, `linkedSignal`, or any other reactive API. Because it's built on top of `HttpClient`, `httpResource` supports all the same features, such as interceptors.
 
-For more about Angular's `resource` pattern, see Async reactivity with `resource`.
+For more about Angular's `resource` pattern, see [Async reactivity with `resource`](/guide/signals/resource).
 
 ## `Using httpResource`
 
-TIP: `httpResource` uses the globally available `HttpClient`. Use `provideHttpClient(...)` only when you need to configure HTTP features, such as interceptors or XSRF options. See Setting up HttpClient for details.
+TIP: `httpResource` uses the globally available `HttpClient`. Use `provideHttpClient(...)` only when you need to configure HTTP features, such as interceptors or XSRF options. See [Setting up HttpClient](/guide/http/setup) for details.
 
 You can define an HTTP resource by returning a url:
 
@@ -102,9 +93,9 @@ NOTE: Unlike `HttpClient`, where `reportProgress` is deprecated in favor of `rep
 
 ## Response parsing and validation
 
-When fetching data, you may want to validate responses against a predefined schema, often using popular open-source libraries like Zod or Valibot. You can integrate validation libraries like this with `httpResource` by specifying a `parse` option. The return type of the `parse` function determines the type of the resource's `value`.
+When fetching data, you may want to validate responses against a predefined schema, often using popular open-source libraries like [Zod](https://zod.dev) or [Valibot](https://valibot.dev). You can integrate validation libraries like this with `httpResource` by specifying a `parse` option. The return type of the `parse` function determines the type of the resource's `value`.
 
-The following example uses Zod to parse and validate the response from the StarWars API. The resource is then typed the same as the output type of Zod’s parsing.
+The following example uses Zod to parse and validate the response from the [StarWars API](https://swapi.info/). The resource is then typed the same as the output type of Zod’s parsing.
 
 ```ts
 const starWarsPersonSchema = z.object({
@@ -125,7 +116,7 @@ export class CharacterViewer {
 
 ## Testing an httpResource
 
-Because `httpResource` is a wrapper around `HttpClient`, you can test `httpResource` with the exact same APIs as `HttpClient`. See HttpClient Testing for details.
+Because `httpResource` is a wrapper around `HttpClient`, you can test `httpResource` with the exact same APIs as `HttpClient`. See [HttpClient Testing](/guide/http/testing) for details.
 
 The following example shows a unit test for code using `httpResource`.
 

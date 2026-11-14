@@ -1,12 +1,3 @@
----
-title: "std::collections (part 1 of 2)"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/collections/mod.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::collections
 
 Collection types.
@@ -16,7 +7,7 @@ most common general purpose programming data structures. By using the
 standard implementations, it should be possible for two libraries to
 communicate without significant data conversion.
 
-To get this out of the way: you should probably just use `Vec` or `HashMap`.
+To get this out of the way: you should probably just use [`Vec`] or [`HashMap`].
 These two collections cover most use cases for generic data storage and
 processing. They are exceptionally good at doing what they do. All the other
 collections in the standard library have specific use cases where they are
@@ -26,18 +17,18 @@ good enough choice to get started.
 
 Rust's collections can be grouped into four major categories:
 
-* Sequences: `Vec`, `VecDeque`, `LinkedList`
-* Maps: `HashMap`, `BTreeMap`
-* Sets: `HashSet`, `BTreeSet`
-* Misc: `BinaryHeap`
+* Sequences: [`Vec`], [`VecDeque`], [`LinkedList`]
+* Maps: [`HashMap`], [`BTreeMap`]
+* Sets: [`HashSet`], [`BTreeSet`]
+* Misc: [`BinaryHeap`]
 
-#### When Should You Use Which Collection?
+# When Should You Use Which Collection?
 
 These are fairly high-level and quick break-downs of when each collection
 should be considered. Detailed discussions of strengths and weaknesses of
 individual collections can be found on their own documentation pages.
 
-#### Use a `Vec` when:
+### Use a [`Vec`] when:
 * You want to collect items up to be processed or sent elsewhere later, and
   don't care about any properties of the actual values being stored.
 * You want a sequence of elements in a particular order, and will only be
@@ -46,43 +37,43 @@ individual collections can be found on their own documentation pages.
 * You want a resizable array.
 * You want a heap-allocated array.
 
-#### Use a `VecDeque` when:
-* You want a `Vec` that supports efficient insertion at both ends of the
+### Use a [`VecDeque`] when:
+* You want a [`Vec`] that supports efficient insertion at both ends of the
   sequence.
 * You want a queue.
 * You want a double-ended queue (deque).
 
-#### Use a `LinkedList` when:
-* You want a `Vec` or `VecDeque` of unknown size, and can't tolerate
+### Use a [`LinkedList`] when:
+* You want a [`Vec`] or [`VecDeque`] of unknown size, and can't tolerate
   amortization.
 * You want to efficiently split and append lists.
 * You are *absolutely* certain you *really*, *truly*, want a doubly linked
   list.
 
-#### Use a `HashMap` when:
+### Use a [`HashMap`] when:
 * You want to associate arbitrary keys with an arbitrary value.
 * You want a cache.
 * You want a map, with no extra functionality.
 
-#### Use a `BTreeMap` when:
+### Use a [`BTreeMap`] when:
 * You want a map sorted by its keys.
 * You want to be able to get a range of entries on-demand.
 * You're interested in what the smallest or largest key-value pair is.
 * You want to find the largest or smallest key that is smaller or larger
   than something.
 
-#### Use the `Set` variant of any of these `Map`s when:
+### Use the `Set` variant of any of these `Map`s when:
 * You just want to remember which keys you've seen.
 * There is no meaningful value to associate with your keys.
 * You just want a set.
 
-#### Use a `BinaryHeap` when:
+### Use a [`BinaryHeap`] when:
 
 * You want to store a bunch of elements, but only ever want to process the
   "biggest" or "most important" one at any given time.
 * You want a priority queue.
 
-#### Performance
+# Performance
 
 Choosing the right collection for the job requires an understanding of what
 each collection is good at. Here we briefly summarize the performance of
@@ -111,29 +102,30 @@ cost.
 Rust's collections never automatically shrink, so removal operations aren't
 amortized.
 
-`HashMap` uses *expected* costs. It is theoretically possible, though very
-unlikely, for `HashMap` to experience significantly worse performance than
+[`HashMap`] uses *expected* costs. It is theoretically possible, though very
+unlikely, for [`HashMap`] to experience significantly worse performance than
 the expected cost. This is due to the probabilistic nature of hashing - i.e.
 it is possible to generate a duplicate hash given some input key that will
 require extra computation to correct.
 
-#### Cost of Collection Operations
+## Cost of Collection Operations
+
 
 |                | get(i)                 | insert(i)               | remove(i)              | append(Vec(m))    | split_off(i)           | range           | append       |
 |----------------|------------------------|-------------------------|------------------------|-------------------|------------------------|-----------------|--------------|
-| `Vec`        | *O*(1)                 | *O*(*n*-*i*)*           | *O*(*n*-*i*)           | *O*(*m*)*         | *O*(*n*-*i*)           | N/A             | N/A          |
-| `VecDeque`   | *O*(1)                 | *O*(min(*i*, *n*-*i*))* | *O*(min(*i*, *n*-*i*)) | *O*(*m*)*         | *O*(min(*i*, *n*-*i*)) | N/A             | N/A          |
-| `LinkedList` | *O*(min(*i*, *n*-*i*)) | *O*(min(*i*, *n*-*i*))  | *O*(min(*i*, *n*-*i*)) | *O*(1)            | *O*(min(*i*, *n*-*i*)) | N/A             | N/A          |
-| `HashMap`    | *O*(1)~                | *O*(1)~*                | *O*(1)~                | N/A               | N/A                    | N/A             | N/A          |
-| `BTreeMap`   | *O*(log(*n*))          | *O*(log(*n*))           | *O*(log(*n*))          | N/A               | N/A                    | *O*(log(*n*))   | *O*(*n*+*m*) |
+| [`Vec`]        | *O*(1)                 | *O*(*n*-*i*)*           | *O*(*n*-*i*)           | *O*(*m*)*         | *O*(*n*-*i*)           | N/A             | N/A          |
+| [`VecDeque`]   | *O*(1)                 | *O*(min(*i*, *n*-*i*))* | *O*(min(*i*, *n*-*i*)) | *O*(*m*)*         | *O*(min(*i*, *n*-*i*)) | N/A             | N/A          |
+| [`LinkedList`] | *O*(min(*i*, *n*-*i*)) | *O*(min(*i*, *n*-*i*))  | *O*(min(*i*, *n*-*i*)) | *O*(1)            | *O*(min(*i*, *n*-*i*)) | N/A             | N/A          |
+| [`HashMap`]    | *O*(1)~                | *O*(1)~*                | *O*(1)~                | N/A               | N/A                    | N/A             | N/A          |
+| [`BTreeMap`]   | *O*(log(*n*))          | *O*(log(*n*))           | *O*(log(*n*))          | N/A               | N/A                    | *O*(log(*n*))   | *O*(*n*+*m*) |
 
-Note that where ties occur, `Vec` is generally going to be faster than
-`VecDeque`, and `VecDeque` is generally going to be faster than
-`LinkedList`.
+Note that where ties occur, [`Vec`] is generally going to be faster than
+[`VecDeque`], and [`VecDeque`] is generally going to be faster than
+[`LinkedList`].
 
 For Sets, all operations have the cost of the equivalent Map operation.
 
-#### Correct and Efficient Usage of Collections
+# Correct and Efficient Usage of Collections
 
 Of course, knowing which collection is the right one for the job doesn't
 instantly permit you to use it correctly. Here are some quick tips for
@@ -141,7 +133,7 @@ efficient and correct usage of the standard collections in general. If
 you're interested in how to use a specific collection in particular, consult
 its documentation for detailed discussion and code examples.
 
-#### Capacity Management
+## Capacity Management
 
 Many collections provide several constructors and methods that refer to
 "capacity". These collections are generally built on top of an array.
@@ -188,9 +180,9 @@ collection is, most collections provide a `capacity` method to query this
 information on demand. This can be useful for debugging purposes, or for
 use with the `reserve` methods.
 
-#### Iterators
+## Iterators
 
-Iterators
+[Iterators][crate::iter]
 are a powerful and robust mechanism used throughout Rust's
 standard libraries. Iterators provide a sequence of values in a generic,
 safe, efficient and convenient way. The contents of an iterator are usually
@@ -207,15 +199,15 @@ Some of these are not provided on collections where it would be unsound or
 unreasonable to provide them.
 
 `iter` provides an iterator of immutable references to all the contents of a
-collection in the most "natural" order. For sequence collections like `Vec`,
+collection in the most "natural" order. For sequence collections like [`Vec`],
 this means the items will be yielded in increasing order of index starting
-at 0. For ordered collections like `BTreeMap`, this means that the items
-will be yielded in sorted order. For unordered collections like `HashMap`,
+at 0. For ordered collections like [`BTreeMap`], this means that the items
+will be yielded in sorted order. For unordered collections like [`HashMap`],
 the items will be yielded in whatever order the internal representation made
 most convenient. This is great for reading through all the contents of the
 collection.
 
-```rust
+```
 let vec = vec![1, 2, 3, 4];
 for x in vec.iter() {
    println!("vec contained {x:?}");
@@ -225,7 +217,7 @@ for x in vec.iter() {
 `iter_mut` provides an iterator of *mutable* references in the same order as
 `iter`. This is great for mutating all the contents of the collection.
 
-```rust
+```
 let mut vec = vec![1, 2, 3, 4];
 for x in vec.iter_mut() {
    *x += 1;
@@ -236,19 +228,19 @@ for x in vec.iter_mut() {
 contents by-value. This is great when the collection itself is no longer
 needed, and the values are needed elsewhere. Using `extend` with `into_iter`
 is the main way that contents of one collection are moved into another.
-`extend` automatically calls `into_iter`, and takes any `T: [IntoIterator]`.
+`extend` automatically calls `into_iter`, and takes any <code>T: [IntoIterator]</code>.
 Calling `collect` on an iterator itself is also a great way to convert one
 collection into another. Both of these methods should internally use the
 capacity management tools discussed in the previous section to do this as
 efficiently as possible.
 
-```rust
+```
 let mut vec1 = vec![1, 2, 3, 4];
 let vec2 = vec![10, 20, 30, 40];
 vec1.extend(vec2);
 ```
 
-```rust
+```
 use std::collections::VecDeque;
 
 let vec = [1, 2, 3, 4];
@@ -262,7 +254,7 @@ threads to sequences. Among the adapters are functional favorites like `map`,
 collections provide reversible iterators as the way to iterate over them in
 reverse order.
 
-```rust
+```
 let vec = vec![1, 2, 3, 4];
 for x in vec.iter().rev() {
    println!("vec contained {x:?}");
@@ -272,13 +264,13 @@ for x in vec.iter().rev() {
 Several other collection methods also return iterators to yield a sequence
 of results but avoid allocating an entire collection to store the result in.
 This provides maximum flexibility as
-`collect`[crate::iter::Iterator::collect] or
-`extend`[crate::iter::Extend::extend] can be called to
+[`collect`][crate::iter::Iterator::collect] or
+[`extend`][crate::iter::Extend::extend] can be called to
 "pipe" the sequence into any collection if desired. Otherwise, the sequence
 can be looped over with a `for` loop. The iterator can also be discarded
 after partial use, preventing the computation of the unused items.
 
-#### Entries
+## Entries
 
 The `entry` API is intended to provide an efficient mechanism for
 manipulating the contents of a map conditionally on the presence of a key or
@@ -306,14 +298,14 @@ value of the occupied entry. Additionally, they can convert the occupied
 entry into a mutable reference to its value, providing symmetry to the
 vacant `insert` case.
 
-#### Examples
+### Examples
 
 Here are the two primary ways in which `entry` is used. First, a simple
 example where the logic performed on the values is trivial.
 
 #### Counting the number of times each character in a string occurs
 
-```rust
+```
 use std::collections::btree_map::BTreeMap;
 
 let mut count = BTreeMap::new();
@@ -336,3 +328,83 @@ use the `entry` API to ensure that the value is initialized and perform the
 logic afterwards.
 
 #### Tracking the inebriation of customers at a bar
+
+```
+use std::collections::btree_map::BTreeMap;
+
+// A client of the bar. They have a blood alcohol level.
+struct Person { blood_alcohol: f32 }
+
+// All the orders made to the bar, by client ID.
+let orders = vec![1, 2, 1, 2, 3, 4, 1, 2, 2, 3, 4, 1, 1, 1];
+
+// Our clients.
+let mut blood_alcohol = BTreeMap::new();
+
+for id in orders {
+    // If this is the first time we've seen this customer, initialize them
+    // with no blood alcohol. Otherwise, just retrieve them.
+    let person = blood_alcohol.entry(id).or_insert(Person { blood_alcohol: 0.0 });
+
+    // Reduce their blood alcohol level. It takes time to order and drink a beer!
+    person.blood_alcohol *= 0.9;
+
+    // Check if they're sober enough to have another beer.
+    if person.blood_alcohol > 0.3 {
+        // Too drunk... for now.
+        println!("Sorry {id}, I have to cut you off");
+    } else {
+        // Have another!
+        person.blood_alcohol += 0.1;
+    }
+}
+```
+
+# Insert and complex keys
+
+If we have a more complex key, calls to `insert` will
+not update the value of the key. For example:
+
+```
+use std::cmp::Ordering;
+use std::collections::BTreeMap;
+use std::hash::{Hash, Hasher};
+
+#[derive(Debug)]
+struct Foo {
+    a: u32,
+    b: &'static str,
+}
+
+// we will compare `Foo`s by their `a` value only.
+impl PartialEq for Foo {
+    fn eq(&self, other: &Self) -> bool { self.a == other.a }
+}
+
+impl Eq for Foo {}
+
+// we will hash `Foo`s by their `a` value only.
+impl Hash for Foo {
+    fn hash<H: Hasher>(&self, h: &mut H) { self.a.hash(h); }
+}
+
+impl PartialOrd for Foo {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> { self.a.partial_cmp(&other.a) }
+}
+
+impl Ord for Foo {
+    fn cmp(&self, other: &Self) -> Ordering { self.a.cmp(&other.a) }
+}
+
+let mut map = BTreeMap::new();
+map.insert(Foo { a: 1, b: "baz" }, 99);
+
+// We already have a Foo with an a of 1, so this will be updating the value.
+map.insert(Foo { a: 1, b: "xyz" }, 100);
+
+// The value has been updated...
+assert_eq!(map.values().next().unwrap(), &100);
+
+// ...but the key hasn't changed. b is still "baz", not "xyz".
+assert_eq!(map.keys().next().unwrap().b, "baz");
+```

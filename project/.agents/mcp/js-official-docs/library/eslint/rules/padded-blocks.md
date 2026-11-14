@@ -1,14 +1,10 @@
 ---
-title: "padded-blocks"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/padded-blocks.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: padded-blocks
+rule_type: layout
+related_rules:
+- lines-between-class-members
+- padding-line-between-statements
 ---
-
-# padded-blocks
-
 Some style guides require block statements to start and end with blank lines. The goal is
 to improve readability by visually separating the block content and the surrounding code.
 
@@ -53,7 +49,7 @@ Object option:
 
 Examples of **incorrect** code for this rule with the default `"always"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint padded-blocks: ["error", "always"]*/
@@ -87,9 +83,11 @@ class C {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"always"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint padded-blocks: ["error", "always"]*/
@@ -124,12 +122,14 @@ class C {
 
 }
 ```
+
+:::
 
 ### never
 
 Examples of **incorrect** code for this rule with the `"never"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint padded-blocks: ["error", "never"]*/
@@ -167,10 +167,12 @@ class C {
 
 }
 ```
+
+:::
 
 Examples of **correct** code for this rule with the `"never"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint padded-blocks: ["error", "never"]*/
@@ -190,12 +192,14 @@ class C {
     }
 }
 ```
+
+:::
 
 ### blocks
 
 Examples of **incorrect** code for this rule with the `{ "blocks": "always" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint padded-blocks: ["error", { "blocks": "always" }]*/
@@ -236,9 +240,11 @@ class C {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "blocks": "always" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint padded-blocks: ["error", { "blocks": "always" }]*/
@@ -283,9 +289,11 @@ class D {
 }
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `{ "blocks": "never" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint padded-blocks: ["error", { "blocks": "never" }]*/
@@ -322,9 +330,11 @@ class C {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "blocks": "never" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint padded-blocks: ["error", { "blocks": "never" }]*/
@@ -352,12 +362,14 @@ class D {
 
 }
 ```
+
+:::
 
 ### classes
 
 Examples of **incorrect** code for this rule with the `{ "classes": "always" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint padded-blocks: ["error", { "classes": "always" }]*/
@@ -367,10 +379,12 @@ class  A {
     }
 }
 ```
+
+:::
 
 Examples of **correct** code for this rule with the `{ "classes": "always" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint padded-blocks: ["error", { "classes": "always" }]*/
@@ -383,9 +397,11 @@ class  A {
 }
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `{ "classes": "never" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint padded-blocks: ["error", { "classes": "never" }]*/
@@ -397,10 +413,12 @@ class  A {
 
 }
 ```
+
+:::
 
 Examples of **correct** code for this rule with the `{ "classes": "never" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint padded-blocks: ["error", { "classes": "never" }]*/
@@ -410,12 +428,14 @@ class  A {
     }
 }
 ```
+
+:::
 
 ### switches
 
 Examples of **incorrect** code for this rule with the `{ "switches": "always" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint padded-blocks: ["error", { "switches": "always" }]*/
@@ -424,10 +444,12 @@ switch (a) {
     case 0: foo();
 }
 ```
+
+:::
 
 Examples of **correct** code for this rule with the `{ "switches": "always" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint padded-blocks: ["error", { "switches": "always" }]*/
@@ -443,9 +465,11 @@ if (a) {
 }
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `{ "switches": "never" }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint padded-blocks: ["error", { "switches": "never" }]*/
@@ -457,9 +481,11 @@ switch (a) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "switches": "never" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint padded-blocks: ["error", { "switches": "never" }]*/
@@ -474,12 +500,14 @@ if (a) {
 
 }
 ```
+
+:::
 
 ### always + allowSingleLineBlocks
 
 Examples of **incorrect** code for this rule with the `"always", {"allowSingleLineBlocks": true}` options:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint padded-blocks: ["error", "always", { allowSingleLineBlocks: true }]*/
@@ -499,9 +527,11 @@ if (a) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"always", {"allowSingleLineBlocks": true}` options:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint padded-blocks: ["error", "always", { allowSingleLineBlocks: true }]*/
@@ -514,6 +544,8 @@ if (a) {
 
 }
 ```
+
+:::
 
 ## When Not To Use It
 

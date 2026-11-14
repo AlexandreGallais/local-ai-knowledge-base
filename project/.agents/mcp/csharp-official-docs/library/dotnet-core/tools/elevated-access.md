@@ -1,23 +1,20 @@
 ---
-title: "Elevated access for dotnet commands"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/elevated-access.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Elevated access for dotnet commands
+description: Learn the best practices for dotnet commands that require elevated access.
+author: wli3
+ms.date: 06/26/2019
 ---
-
 # Elevated access for dotnet commands
 
 Software development best practices guide developers to writing software that requires the least amount of privilege. However, some software, like performance monitoring tools, requires admin permission because of operating system rules. The following guidance describes supported scenarios for writing such software with .NET Core.
 
 The following commands can be run elevated:
 
-- `dotnet tool` commands, such as dotnet tool install.
+- `dotnet tool` commands, such as [dotnet tool install](dotnet-tool-install.md).
 - `dotnet run --no-build`
 - `dotnet-core-uninstall`
 
-We don't recommend running other commands elevated. In particular, we don't recommend elevation with commands that use MSBuild, such as dotnet restore, dotnet build, and dotnet run. The primary issue is permission management problems when a user transitions back and forth between root and a restricted account after issuing dotnet commands. You may find as a restricted user that you don't have access to the file built by a root user. There are ways to resolve this situation, but they're unnecessary to get into in the first place.
+We don't recommend running other commands elevated. In particular, we don't recommend elevation with commands that use MSBuild, such as [dotnet restore](dotnet-restore.md), [dotnet build](dotnet-build.md), and [dotnet run](dotnet-run.md). The primary issue is permission management problems when a user transitions back and forth between root and a restricted account after issuing dotnet commands. You may find as a restricted user that you don't have access to the file built by a root user. There are ways to resolve this situation, but they're unnecessary to get into in the first place.
 
 You can run commands as root as long as you don't transition back and forth between root and a restricted account. For example, Docker containers run as root by default, so they have this characteristic.
 
@@ -25,7 +22,7 @@ You can run commands as root as long as you don't transition back and forth betw
 
 The following instructions demonstrate the recommended way to install, run, and uninstall .NET tools that require elevated permissions to execute.
 
-# Windows
+# [Windows](#tab/windows)
 
 ### Install the tool
 
@@ -69,93 +66,13 @@ In an elevated prompt, type the following command:
 dotnet tool uninstall PACKAGEID --tool-path "%ProgramFiles%\dotnet-tools"
 ```
 
-# Linux
+# [Linux](#tab/linux)
 
-### Install the global tool
+[!INCLUDE [elevated-access-unix](includes/elevated-access-unix.md)]
 
-Package assets should be installed in a protected location using the `--tool-path` option. This separation avoids sharing a restricted user environment with an elevated environment.
+# [macOS](#tab/macos)
 
-```bash
-sudo dotnet tool install PACKAGEID --tool-path /usr/local/share/dotnet-tools
-```
-
-`/usr/local/share/dotnet-tools` will be created with permission `drwxr-xr-x`. If the directory already exists, use the `ls -l` command to verify the restricted user doesn't have permission to edit the directory. If so, use the `sudo chmod o-w -R /usr/share/dotnet-tools` command to remove the access.
-
-### Run the global tool
-
-**Option 1** Use the full path with sudo:
-
-```bash
-sudo /usr/local/share/dotnet-tools/TOOLCOMMAND
-```
-
-**Option 2** Add the symbol link of the tool, once per tool:
-
-```bash
-sudo ln -s /usr/local/share/dotnet-tools/TOOLCOMMAND /usr/local/bin/TOOLCOMMAND
-```
-
-And run with:
-
-```bash
-sudo TOOLCOMMAND
-```
-
-### Uninstall the global tool
-
-```bash
-sudo dotnet tool uninstall PACKAGEID --tool-path /usr/local/share/dotnet-tools
-```
-
-If you made a symbol link, you also need to remove it:
-
-```bash
-sudo rm /usr/local/bin/TOOLCOMMAND
-```
-
-# macOS
-
-### Install the global tool
-
-Package assets should be installed in a protected location using the `--tool-path` option. This separation avoids sharing a restricted user environment with an elevated environment.
-
-```bash
-sudo dotnet tool install PACKAGEID --tool-path /usr/local/share/dotnet-tools
-```
-
-`/usr/local/share/dotnet-tools` will be created with permission `drwxr-xr-x`. If the directory already exists, use the `ls -l` command to verify the restricted user doesn't have permission to edit the directory. If so, use the `sudo chmod o-w -R /usr/share/dotnet-tools` command to remove the access.
-
-### Run the global tool
-
-**Option 1** Use the full path with sudo:
-
-```bash
-sudo /usr/local/share/dotnet-tools/TOOLCOMMAND
-```
-
-**Option 2** Add the symbol link of the tool, once per tool:
-
-```bash
-sudo ln -s /usr/local/share/dotnet-tools/TOOLCOMMAND /usr/local/bin/TOOLCOMMAND
-```
-
-And run with:
-
-```bash
-sudo TOOLCOMMAND
-```
-
-### Uninstall the global tool
-
-```bash
-sudo dotnet tool uninstall PACKAGEID --tool-path /usr/local/share/dotnet-tools
-```
-
-If you made a symbol link, you also need to remove it:
-
-```bash
-sudo rm /usr/local/bin/TOOLCOMMAND
-```
+[!INCLUDE [elevated-access-unix](includes/elevated-access-unix.md)]
 
 ---
 
@@ -174,7 +91,7 @@ During development, you may need elevated access to test your application. This 
    sudo ./bin/Debug/netcoreapp3.0/APPLICATIONNAME
    ```
 
-- Using the dotnet run command with the `—no-build` flag to avoid generating new binaries:
+- Using the [dotnet run](dotnet-run.md) command with the `—no-build` flag to avoid generating new binaries:
 
    ```dotnetcli
    dotnet build
@@ -183,4 +100,4 @@ During development, you may need elevated access to test your application. This 
 
 ## See also
 
-- .NET tools overview
+- [.NET tools overview](global-tools.md)

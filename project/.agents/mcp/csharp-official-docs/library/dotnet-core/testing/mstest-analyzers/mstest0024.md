@@ -1,12 +1,17 @@
 ---
 title: "MSTEST0024: Do not store TestContext in a static member"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0024.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0024: Do not store TestContext in a static member"
+ms.date: 11/05/2026
+f1_keywords:
+- MSTEST0024
+- DoNotStoreStaticTestContextAnalyzer
+helpviewer_keywords:
+- DoNotStoreStaticTestContextAnalyzer
+- MSTEST0024
+author: Evangelink
+ms.author: amauryleve
+ai-usage: ai-assisted
 ---
-
 # MSTEST0024: Do not store TestContext in a static member
 
 | Property                            | Value                                       |
@@ -50,11 +55,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0024
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0024.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: NuGet audit sources no longer allow insecure HTTP by default"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/nuget-audit-source-http-disallowed.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 SDK where NuGet raises error NU1302 when an audit source uses an insecure HTTP URL without explicitly allowing insecure connections."
+ms.date: 07/29/2026
+ai-usage: ai-assisted
 ---
 
 # NuGet audit sources no longer allow insecure HTTP by default
@@ -25,7 +23,7 @@ Starting in .NET 10.0.400 SDK, NuGet raises error NU1302 when an `auditSource` u
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

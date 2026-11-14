@@ -1,12 +1,9 @@
 ---
-title: "Analyze dependencies to port code"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/third-party-deps.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Analyze dependencies to port code
+description: Learn how to analyze external dependencies to port your project from .NET Framework to .NET.
+author: StephenBonikowsky
+ms.date: 12/12/2023
 ---
-
 # Analyze your dependencies to port code from .NET Framework to .NET
 
 To identify the unsupported third-party dependencies in your project, you must first understand your dependencies. External dependencies are the NuGet packages or `.dll` files you reference in your project, but that you don't build yourself.
@@ -15,9 +12,9 @@ Porting your code to .NET Standard 2.0 or below ensures that it can be used with
 
 ## Migrate your NuGet packages to `PackageReference`
 
-.NET can't use the _packages.config_ file for NuGet references. Both .NET and .NET Framework can use PackageReference to specify package dependencies. If you're using _packages.config_ to specify your packages in your project, convert it to the `PackageReference` format.
+.NET can't use the [_packages.config_](/nuget/reference/packages-config) file for NuGet references. Both .NET and .NET Framework can use [PackageReference](/nuget/consume-packages/package-references-in-project-files) to specify package dependencies. If you're using _packages.config_ to specify your packages in your project, convert it to the `PackageReference` format.
 
-To learn how to migrate, see the Migrate from packages.config to PackageReference article.
+To learn how to migrate, see the [Migrate from packages.config to PackageReference](/nuget/reference/migrate-packages-config-to-package-reference) article.
 
 ## Upgrade your NuGet packages
 
@@ -29,12 +26,12 @@ First, upgrade your packages to the latest version that you can. This can be don
 
 If you haven't already verified that your converted and upgraded package dependencies work on .NET Core, there are two ways that you can achieve that:
 
-- Using nuget.org
-- Using NuGet Package Explorer
+- [Using nuget.org](#use-nugetorg)
+- [Using NuGet Package Explorer](#use-nuget-package-explorer)
 
 ### Use nuget.org
 
-You can see the Target Framework Monikers (TFMs) that each package supports on nuget.org under the **Dependencies** section of the package page.
+You can see the Target Framework Monikers (TFMs) that each package supports on [nuget.org](https://www.nuget.org/) under the **Dependencies** section of the package page.
 
 Although using the site is an easier method to verify the compatibility, **Dependencies** information isn't available on the site for all packages.
 
@@ -42,7 +39,7 @@ Although using the site is an easier method to verify the compatibility, **Depen
 
 A NuGet package is itself a set of folders that contain platform-specific assemblies. Check if there's a folder that contains a compatible assembly inside the package.
 
-The easiest way to inspect NuGet package folders is to use the NuGet Package Explorer tool. After installing it, use the following steps to see the folder names:
+The easiest way to inspect NuGet package folders is to use the [NuGet Package Explorer](https://github.com/NuGetPackageExplorer/NuGetPackageExplorer) tool. After installing it, use the following steps to see the folder names:
 
 1. Open the NuGet Package Explorer.
 2. Click **Open package from online feed**.
@@ -52,10 +49,10 @@ The easiest way to inspect NuGet package folders is to use the NuGet Package Exp
 
 Look for a folder with names using one the following patterns: `netstandardX.Y`, `netX.Y`, or `netcoreappX.Y`.
 
-These values are the Target Framework Monikers (TFMs) that map to versions of .NET Standard, .NET, and .NET Core, which are all compatible with .NET.
+These values are the [Target Framework Monikers (TFMs)](../../standard/frameworks.md) that map to versions of [.NET Standard](../../standard/net-standard.md), .NET, and .NET Core, which are all compatible with .NET.
 
-> **Important:**
-> When looking at the TFMs that a package supports, note that a TFM other than `netstandard*` targets a specific implementation of .NET, such as .NET 5, .NET Core, or .NET Framework. Starting with .NET 5, the `net*` TFM (without an operating system designation) effectively replaces `netstandard*` as a portable target. For example, `net5.0` targets the .NET 5 API surface and is cross-platform friendly, but `net5.0-windows` targets the .NET 5 API surface as implemented on the Windows operating system.
+> [!IMPORTANT]
+> When looking at the TFMs that a package supports, note that a TFM other than `netstandard*` targets a specific implementation of .NET, such as .NET 5, .NET Core, or .NET Framework. Starting with .NET 5, the `net*` TFM (without an operating system designation) effectively replaces `netstandard*` as a [portable target](../../standard/net-standard.md#net-5-and-net-standard). For example, `net5.0` targets the .NET 5 API surface and is cross-platform friendly, but `net5.0-windows` targets the .NET 5 API surface as implemented on the Windows operating system.
 
 ## .NET Framework compatibility mode
 
@@ -63,7 +60,7 @@ After analyzing the NuGet packages, you might find that they only target .NET Fr
 
 Starting with .NET Standard 2.0, the .NET Framework compatibility mode was introduced. This compatibility mode allows .NET Standard and .NET Core projects to reference .NET Framework libraries. Referencing .NET Framework libraries doesn't work for all projects, such as if the library uses Windows Presentation Foundation (WPF) APIs, but it does unblock many porting scenarios.
 
-When you reference NuGet packages that target .NET Framework in your project, such as `Huitian.PowerCollections`, you get a package fallback warning (NU1701) similar to the following example:
+When you reference NuGet packages that target .NET Framework in your project, such as [`Huitian.PowerCollections`](https://www.nuget.org/packages/Huitian.PowerCollections), you get a package fallback warning ([NU1701](/nuget/reference/errors-and-warnings/nu1701)) similar to the following example:
 
 `NU1701: Package ‘Huitian.PowerCollections 1.0.0’ was restored using ‘.NETFramework,Version=v4.6.1’ instead of the project target framework ‘.NETStandard,Version=v2.0’. This package may not be fully compatible with your project.`
 
@@ -77,14 +74,14 @@ To suppress the warning by editing the project file, find the `PackageReference`
 </ItemGroup>
 ```
 
-For more information on how to suppress compiler warnings in Visual Studio, see Suppressing warnings for NuGet packages.
+For more information on how to suppress compiler warnings in Visual Studio, see [Suppressing warnings for NuGet packages](/visualstudio/ide/how-to-suppress-compiler-warnings#suppress-warnings-for-nuget-packages).
 
 ## If NuGet packages won't run on .NET
 
 There are a few things you can do if a NuGet package you depend on doesn't run on .NET Core:
 
 - If the project is open source and hosted somewhere like GitHub, you can engage the developers directly.
-- You can contact the author directly on nuget.org. Search for the package and click **Contact Owners** on the left-hand side of the package's page.
+- You can contact the author directly on [nuget.org](https://www.nuget.org/). Search for the package and click **Contact Owners** on the left-hand side of the package's page.
 - You can search for another package that runs on .NET Core that accomplishes the same task as the package you were using.
 - You can attempt to write the code the package was doing yourself.
 - You could eliminate the dependency on the package by changing the functionality of your app, at least until a compatible version of the package becomes available.
@@ -93,12 +90,12 @@ Remember that open-source project maintainers and NuGet package publishers are o
 
 If you can't resolve your issue with any of these options, you may have to port to .NET Core at a later date.
 
-The .NET Team would like to know which libraries are the most important to support with .NET Core. You can send an email to <user@example.com> about the libraries you'd like to use.
+The .NET Team would like to know which libraries are the most important to support with .NET Core. You can send an email to <dotnet@microsoft.com> about the libraries you'd like to use.
 
 ## Analyze non-NuGet dependencies
 
-You might have a dependency that isn't a NuGet package, such as a DLL in the file system. You can determine the portability of that dependency with the GitHub Copilot modernization agent.
+You might have a dependency that isn't a NuGet package, such as a DLL in the file system. You can determine the portability of that dependency with the [GitHub Copilot modernization agent](github-copilot-upgrade/overview.md).
 
 ## Next steps
 
-- Overview of porting from .NET Framework to .NET
+- [Overview of porting from .NET Framework to .NET](index.md)

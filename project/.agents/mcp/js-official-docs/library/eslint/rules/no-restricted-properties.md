@@ -1,13 +1,11 @@
 ---
-title: "no-restricted-properties"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-restricted-properties.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-restricted-properties
+rule_type: suggestion
+related_rules:
+- no-restricted-globals
+- no-restricted-syntax
 ---
 
-# no-restricted-properties
 
 Certain properties on objects may be disallowed in a codebase. This is useful for deprecating an API or restricting usage of a module's methods. For example, you may want to disallow using `describe.only` when using Mocha or telling people to use `Object.assign` instead of `_.extend`.
 
@@ -105,7 +103,7 @@ Note that the `allowObjects` option cannot be used together with the `object` op
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint no-restricted-properties: [2, {
@@ -118,7 +116,9 @@ const example = disallowedObjectName.disallowedPropertyName; /*error Disallowed 
 disallowedObjectName.disallowedPropertyName(); /*error Disallowed object property: disallowedObjectName.disallowedPropertyName.*/
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /* eslint no-restricted-properties: [2, {
@@ -132,7 +132,9 @@ const { __defineGetter__ } = qux();
 ({ __defineGetter__ }) => {};
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /* eslint no-restricted-properties: [2, {
@@ -142,7 +144,9 @@ const { __defineGetter__ } = qux();
 require.resolve('foo');
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /* eslint no-restricted-properties: [2, {
@@ -153,7 +157,9 @@ require.resolve('foo');
 myArray.push(5);
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect
 
 ```js
 /* eslint no-restricted-properties: [2, {
@@ -161,13 +167,15 @@ myArray.push(5);
     "allowProperties": ["settings", "version"]
 }] */
 
-config.apiKey = "<example-value>";
+config.apiKey = "12345";
 config.timeout = 5000;
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-restricted-properties: [2, {
@@ -180,7 +188,9 @@ const example = disallowedObjectName.somePropertyName;
 allowedObjectName.disallowedPropertyName();
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /* eslint no-restricted-properties: [2, {
@@ -190,7 +200,9 @@ allowedObjectName.disallowedPropertyName();
 require('foo');
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /* eslint no-restricted-properties: [2, {
@@ -202,7 +214,9 @@ router.push('/home');
 history.push('/about');
 ```
 
-**Correct:**
+:::
+
+::: correct
 
 ```js
 /* eslint no-restricted-properties: [2, {
@@ -213,6 +227,8 @@ history.push('/about');
 config.settings = { theme: "dark" };
 config.version = "1.0.0";  
 ```
+
+:::
 
 ## When Not To Use It
 

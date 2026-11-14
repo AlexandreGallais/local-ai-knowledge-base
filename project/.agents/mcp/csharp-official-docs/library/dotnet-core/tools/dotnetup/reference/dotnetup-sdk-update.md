@@ -1,16 +1,14 @@
 ---
-title: "dotnetup sdk update command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/reference/dotnetup-sdk-update.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnetup sdk update command
+description: Command reference for updating tracked .NET SDK requirements.
+ms.topic: reference
+ms.date: 10/13/2026
+ai-usage: ai-assisted
 ---
 
 # dotnetup sdk update command
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 ## Name
 

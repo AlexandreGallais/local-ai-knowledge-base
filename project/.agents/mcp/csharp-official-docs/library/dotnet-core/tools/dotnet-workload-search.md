@@ -1,12 +1,8 @@
 ---
-title: "dotnet workload search command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-workload-search.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet workload search command
+description: The 'dotnet workload search' command searches for optional workloads.
+ms.date: 11/12/2025
 ---
-
 # dotnet workload search
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -27,7 +23,7 @@ dotnet workload search -?|-h|--help
 
 The `dotnet workload search` command lists available workloads. You can filter the list by specifying all or part of the workload ID you're looking for.
 
-For more information about the `dotnet workload` commands, see the dotnet workload install command.
+For more information about the `dotnet workload` commands, see the [dotnet workload install](dotnet-workload-install.md#description) command.
 
 ## Arguments
 
@@ -37,17 +33,11 @@ For more information about the `dotnet workload` commands, see the dotnet worklo
 
 ## Options
 
-- **`-?|-h|--help`**
+- [!INCLUDE [help](includes/cli-help.md)]
 
-Prints out a description of how to use the command.
+- [!INCLUDE [verbosity](includes/cli-verbosity-minimal.md)]
 
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. The default is `minimal`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
-
-- **`version <WORKLOAD_VERSION>`**
-
-A workload version to display, or one or more workloads and their versions joined by the `@` character. Support for the `@` character is available since 9.0.200 SDK.
+- [!INCLUDE [workload-version](includes/cli-workload-version.md)]
 
 ## Examples
 
@@ -66,5 +56,5 @@ A workload version to display, or one or more workloads and their versions joine
 - Search for a workload that matches the provided version:
 
   ```dotnetcli
-  dotnet workload search version user@example.com
+  dotnet workload search version maui@10.0.100
   ```

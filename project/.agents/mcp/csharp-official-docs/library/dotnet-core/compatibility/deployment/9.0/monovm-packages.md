@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Deprecated desktop Windows/macOS/Linux MonoVM runtime packages"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/deployment/9.0/monovm-packages.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 9 where the desktop Windows, macOS, and Linux MonoVM runtime packages are deprecated.
+ms.date: 08/05/2024
 ---
-
 # Deprecated desktop Windows/macOS/Linux MonoVM runtime packages
 
 The following desktop MonoVM runtime NuGet packages are obsolete starting in .NET 9:
@@ -41,7 +37,7 @@ Starting in .NET 9, these desktop MonoVM NuGet runtime packages are no longer av
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 

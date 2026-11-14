@@ -1,12 +1,3 @@
----
-title: "RSAMultiPrimePrivateCrtKeySpec class (java.security.spec)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/spec/RSAMultiPrimePrivateCrtKeySpec.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # RSAMultiPrimePrivateCrtKeySpec class (java.security.spec)
 
 ```java
@@ -14,25 +5,24 @@ public class RSAMultiPrimePrivateCrtKeySpec extends RSAPrivateKeySpec
 ```
 
 This class specifies an RSA multi-prime private key, as defined in the
-PKCS#1 v2.2 standard
+<a href="https://tools.ietf.org/rfc/rfc8017.txt">PKCS#1 v2.2</a> standard
 using the Chinese Remainder Theorem (CRT) information values
 for efficiency.
 
-**See also:** java.security.Key
+@spec https://www.rfc-editor.org/info/rfc8017
+     RFC 8017: PKCS #1: RSA Cryptography Specifications Version 2.2
+@author Valerie Peng
 
-**See also:** java.security.KeyFactory
 
-**See also:** KeySpec
+@see java.security.Key
+@see java.security.KeyFactory
+@see KeySpec
+@see PKCS8EncodedKeySpec
+@see RSAPrivateKeySpec
+@see RSAPublicKeySpec
+@see RSAOtherPrimeInfo
 
-**See also:** PKCS8EncodedKeySpec
-
-**See also:** RSAPrivateKeySpec
-
-**See also:** RSAPublicKeySpec
-
-**See also:** RSAOtherPrimeInfo
-
-**Since:** 1.4
+@since 1.4
 
 ## RSAMultiPrimePrivateCrtKeySpec.RSAMultiPrimePrivateCrtKeySpec(BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, RSAOtherPrimeInfo[])
 
@@ -40,28 +30,28 @@ for efficiency.
 public RSAMultiPrimePrivateCrtKeySpec(BigInteger modulus, BigInteger publicExponent, BigInteger privateExponent, BigInteger primeP, BigInteger primeQ, BigInteger primeExponentP, BigInteger primeExponentQ, BigInteger crtCoefficient, RSAOtherPrimeInfo[] otherPrimeInfo)
 ```
 
-Creates a new `RSAMultiPrimePrivateCrtKeySpec`.
+Creates a new {@code RSAMultiPrimePrivateCrtKeySpec}.
 
-Note that the contents of `otherPrimeInfo`
+<p>Note that the contents of {@code otherPrimeInfo}
 are copied to protect against subsequent modification when
 constructing this object.
 
-Parameters:
-
-- `modulus`: the modulus n
-- `publicExponent`: the public exponent e
-- `privateExponent`: the private exponent d
-- `primeP`: the prime factor p of n
-- `primeQ`: the prime factor q of n
-- `primeExponentP`: this is d mod (p-1)
-- `primeExponentQ`: this is d mod (q-1)
-- `crtCoefficient`: the Chinese Remainder Theorem coefficient q-1 mod p
-- `otherPrimeInfo`: triplets of the rest of primes, null can be specified if there are only two prime factors (p and q)
-
-Throws:
-
-- `NullPointerException`: if any of the specified parameters except `otherPrimeInfo` is null
-- `IllegalArgumentException`: if an empty, i.e. 0-length, `otherPrimeInfo` is specified
+@param modulus         the modulus n
+@param publicExponent  the public exponent e
+@param privateExponent the private exponent d
+@param primeP          the prime factor p of n
+@param primeQ          the prime factor q of n
+@param primeExponentP  this is d mod (p-1)
+@param primeExponentQ  this is d mod (q-1)
+@param crtCoefficient  the Chinese Remainder Theorem
+                       coefficient q-1 mod p
+@param otherPrimeInfo  triplets of the rest of primes, null can be
+                       specified if there are only two prime factors
+                       (p and q)
+@throws NullPointerException     if any of the specified parameters
+        except {@code otherPrimeInfo} is null
+@throws IllegalArgumentException if an empty, i.e. 0-length,
+        {@code otherPrimeInfo} is specified
 
 ## RSAMultiPrimePrivateCrtKeySpec.RSAMultiPrimePrivateCrtKeySpec(BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, RSAOtherPrimeInfo[], AlgorithmParameterSpec)
 
@@ -69,32 +59,32 @@ Throws:
 public RSAMultiPrimePrivateCrtKeySpec(BigInteger modulus, BigInteger publicExponent, BigInteger privateExponent, BigInteger primeP, BigInteger primeQ, BigInteger primeExponentP, BigInteger primeExponentQ, BigInteger crtCoefficient, RSAOtherPrimeInfo[] otherPrimeInfo, AlgorithmParameterSpec keyParams)
 ```
 
-Creates a new `RSAMultiPrimePrivateCrtKeySpec` with additional
+Creates a new {@code RSAMultiPrimePrivateCrtKeySpec} with additional
 key parameters.
 
-Note that the contents of `otherPrimeInfo`
+<p>Note that the contents of {@code otherPrimeInfo}
 are copied to protect against subsequent modification when
 constructing this object.
 
-Parameters:
-
-- `modulus`: the modulus n
-- `publicExponent`: the public exponent e
-- `privateExponent`: the private exponent d
-- `primeP`: the prime factor p of n
-- `primeQ`: the prime factor q of n
-- `primeExponentP`: this is d mod (p-1)
-- `primeExponentQ`: this is d mod (q-1)
-- `crtCoefficient`: the Chinese Remainder Theorem coefficient q-1 mod p
-- `otherPrimeInfo`: triplets of the rest of primes, null can be specified if there are only two prime factors (p and q)
-- `keyParams`: the parameters associated with key
-
-**Since:** 11
-
-Throws:
-
-- `NullPointerException`: if any of the specified parameters except `otherPrimeInfo` and `keyParams` is null
-- `IllegalArgumentException`: if an empty, i.e. 0-length, `otherPrimeInfo` is specified
+@param modulus          the modulus n
+@param publicExponent   the public exponent e
+@param privateExponent  the private exponent d
+@param primeP           the prime factor p of n
+@param primeQ           the prime factor q of n
+@param primeExponentP   this is d mod (p-1)
+@param primeExponentQ   this is d mod (q-1)
+@param crtCoefficient   the Chinese Remainder Theorem coefficient
+                        q-1 mod p
+@param otherPrimeInfo   triplets of the rest of primes, null can be
+                        specified if there are only two prime factors
+                        (p and q)
+@param keyParams        the parameters associated with key
+@throws NullPointerException     if any of the specified parameters
+        except {@code otherPrimeInfo} and {@code keyParams}
+        is null
+@throws IllegalArgumentException if an empty, i.e. 0-length,
+        {@code otherPrimeInfo} is specified
+@since 11
 
 ## RSAMultiPrimePrivateCrtKeySpec.getPublicExponent()
 
@@ -104,7 +94,7 @@ public BigInteger getPublicExponent()
 
 Returns the public exponent.
 
-**Returns:** the public exponent.
+@return the public exponent.
 
 ## RSAMultiPrimePrivateCrtKeySpec.getPrimeP()
 
@@ -114,7 +104,7 @@ public BigInteger getPrimeP()
 
 Returns the primeP.
 
-**Returns:** the primeP.
+@return the primeP.
 
 ## RSAMultiPrimePrivateCrtKeySpec.getPrimeQ()
 
@@ -124,7 +114,7 @@ public BigInteger getPrimeQ()
 
 Returns the primeQ.
 
-**Returns:** the primeQ.
+@return the primeQ.
 
 ## RSAMultiPrimePrivateCrtKeySpec.getPrimeExponentP()
 
@@ -134,7 +124,7 @@ public BigInteger getPrimeExponentP()
 
 Returns the primeExponentP.
 
-**Returns:** the primeExponentP.
+@return the primeExponentP.
 
 ## RSAMultiPrimePrivateCrtKeySpec.getPrimeExponentQ()
 
@@ -144,7 +134,7 @@ public BigInteger getPrimeExponentQ()
 
 Returns the primeExponentQ.
 
-**Returns:** the primeExponentQ.
+@return the primeExponentQ.
 
 ## RSAMultiPrimePrivateCrtKeySpec.getCrtCoefficient()
 
@@ -154,7 +144,7 @@ public BigInteger getCrtCoefficient()
 
 Returns the crtCoefficient.
 
-**Returns:** the crtCoefficient.
+@return the crtCoefficient.
 
 ## RSAMultiPrimePrivateCrtKeySpec.getOtherPrimeInfo()
 
@@ -165,5 +155,5 @@ public RSAOtherPrimeInfo[] getOtherPrimeInfo()
 Returns a copy of the otherPrimeInfo or null if there are
 only two prime factors (p and q).
 
-**Returns:** the otherPrimeInfo. Returns a new array each time this method
+@return the otherPrimeInfo. Returns a new array each time this method
         is called.

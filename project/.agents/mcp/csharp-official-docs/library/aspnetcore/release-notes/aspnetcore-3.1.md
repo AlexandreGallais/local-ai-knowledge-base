@@ -1,21 +1,18 @@
 ---
-title: "What's new in ASP.NET Core 3.1"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-3.1.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: What's new in ASP.NET Core 3.1
+ai-usage: ai-assisted
+description: Learn about the new features in ASP.NET Core 3.1.
+ms.date: 02/12/2020
 ---
-
 # What's new in ASP.NET Core 3.1
 
 This article highlights the most significant changes in ASP.NET Core 3.1 with links to relevant documentation.
 
 ## Partial class support for Razor components
 
-Razor components are now generated as partial classes. Code for a Razor component can be written using a code-behind file defined as a partial class rather than defining all the code for the component in a single file. For more information, see Partial class support.
+Razor components are now generated as partial classes. Code for a Razor component can be written using a code-behind file defined as a partial class rather than defining all the code for the component in a single file. For more information, see [Partial class support](../blazor/components/index.md#partial-class-support).
 
-## Component Tag Helper and pass <example-value> to top-level components
+## Component Tag Helper and pass parameters to top-level components
 
 In Blazor with ASP.NET Core 3.0, components were rendered into pages and views using an HTML Helper (`Html.RenderComponentAsync`). In ASP.NET Core 3.1, render a component from a page or view with the new Component Tag Helper:
 
@@ -25,7 +22,7 @@ In Blazor with ASP.NET Core 3.0, components were rendered into pages and views u
 
 The HTML Helper remains supported in ASP.NET Core 3.1, but the Component Tag Helper is recommended.
 
-Blazor Server apps can now pass <example-value> to top-level components during the initial render. Previously you could only pass <example-value> to a top-level component with RenderMode.Static. With this release, both RenderMode.Server and RenderMode.ServerPrerendered are supported. Any specified parameter values are serialized as JSON and included in the initial response.
+Blazor Server apps can now pass parameters to top-level components during the initial render. Previously you could only pass parameters to a top-level component with [RenderMode.Static](xref:Microsoft.AspNetCore.Mvc.Rendering.RenderMode.Static). With this release, both [RenderMode.Server](xref:Microsoft.AspNetCore.Mvc.Rendering.RenderMode.Server) and [RenderMode.ServerPrerendered](xref:Microsoft.AspNetCore.Mvc.Rendering.RenderMode.ServerPrerendered) are supported. Any specified parameter values are serialized as JSON and included in the initial response.
 
 For example, prerender a `Counter` component with an increment amount (`IncrementAmount`):
 
@@ -34,29 +31,17 @@ For example, prerender a `Counter` component with an increment amount (`Incremen
     param-IncrementAmount="10" />
 ```
 
-For more information, see Integrate components into Razor Pages and MVC apps.
+For more information, see [Integrate components into Razor Pages and MVC apps](../blazor/components/integration.md?view=aspnetcore-3.1&preserve-view=true).
 
 ## Support for shared queues in HTTP.sys
 
-HTTP.sys supports creating anonymous request queues. In ASP.NET Core 3.1, we've added the ability to create or attach to an existing named HTTP.sys request queue. Creating or attaching to an existing named HTTP.sys request queue enables scenarios where the HTTP.sys controller process that owns the queue is independent of the listener process. This independence makes it possible to preserve existing connections and enqueued requests between listener process restarts:
+[HTTP.sys](../fundamentals/servers/httpsys.md) supports creating anonymous request queues. In ASP.NET Core 3.1, we've added the ability to create or attach to an existing named HTTP.sys request queue. Creating or attaching to an existing named HTTP.sys request queue enables scenarios where the HTTP.sys controller process that owns the queue is independent of the listener process. This independence makes it possible to preserve existing connections and enqueued requests between listener process restarts:
 
-```csharp
-public static IHostBuilder CreateHostBuilder(string[] args) =>
-     Host.CreateDefaultBuilder(args)
-        .ConfigureWebHostDefaults(webBuilder =>
-        {
-            // ...
-            webBuilder.UseHttpSys(options =>
-            {
-                options.RequestQueueName = "MyExistingQueue";
-                options.RequestQueueMode = RequestQueueMode.CreateOrAttach;
-            });
-        });
-```
+[!code-csharp[](samples/Program.cs?name=snippet)]
 
 ## Breaking changes for SameSite cookies
 
-The behavior of SameSite cookies has changed to reflect upcoming browser changes. This may affect authentication scenarios like AzureAd, OpenIdConnect, or WsFederation. For more information, see Work with SameSite cookies in ASP.NET Core.
+The behavior of SameSite cookies has changed to reflect upcoming browser changes. This may affect authentication scenarios like AzureAd, OpenIdConnect, or WsFederation. For more information, see [Work with SameSite cookies in ASP.NET Core](../security/samesite.md).
 
 ## Prevent default actions for events in Blazor apps
 
@@ -66,11 +51,11 @@ Use the `@on{EVENT}:preventDefault` directive attribute to prevent the default a
 <input value="@_count" @onkeypress="KeyHandler" @onkeypress:preventDefault />
 ```
 
-For more information, see Prevent default actions.
+For more information, see [Prevent default actions](../blazor/components/event-handling.md#prevent-default-actions).
 
 ## Stop event propagation in Blazor apps
 
-Use the `@on{EVENT}:stopPropagation` directive attribute to stop event propagation. In the following example, selecting the checkbox prevents click events from the child `` from propagating to the parent ``:
+Use the `@on{EVENT}:stopPropagation` directive attribute to stop event propagation. In the following example, selecting the checkbox prevents click events from the child `<div>` from propagating to the parent `<div>`:
 
 ```razor
 <input @bind="_stopPropagation" type="checkbox" />
@@ -86,7 +71,7 @@ Use the `@on{EVENT}:stopPropagation` directive attribute to stop event propagati
 }
 ```
 
-For more information, see Stop event propagation.
+For more information, see [Stop event propagation](../blazor/components/event-handling.md#stop-event-propagation).
 
 ## Detailed errors during Blazor app development
 
@@ -95,8 +80,8 @@ When a Blazor app isn't functioning properly during development, receiving detai
 * During development, the gold bar directs you to the browser console, where you can see the exception.
 * In production, the gold bar notifies the user that an error has occurred and recommends refreshing the browser.
 
-For more information, see Handle errors in ASP.NET Core Blazor apps.
+For more information, see [Handle errors in ASP.NET Core Blazor apps](../blazor/fundamentals/handle-errors.md).
 
 ## Breaking changes
 
-Use the articles in Breaking changes in .NET to find breaking changes that might apply when upgrading an app to a newer version of .NET.
+Use the articles in [Breaking changes in .NET](/dotnet/core/compatibility/breaking-changes) to find breaking changes that might apply when upgrading an app to a newer version of .NET.

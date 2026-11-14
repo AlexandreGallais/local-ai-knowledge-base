@@ -1,15 +1,6 @@
----
-title: "std::sys::pal::windows::api"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/sys/pal/windows/api.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::sys::pal::windows::api
 
-#### Safe(r) wrappers around Windows API functions.
+# Safe(r) wrappers around Windows API functions.
 
 This module contains fairly thin wrappers around Windows API functions,
 aimed at centralising safety instead of having unsafe blocks spread
@@ -19,7 +10,7 @@ Not all functions can be made completely safe without more context but in
 such cases we should still endeavour to reduce the caller's burden of safety
 as much as possible.
 
-#### Guidelines for wrappers
+## Guidelines for wrappers
 
 Items here should be named similarly to their raw Windows API name, except
 that they follow Rust's case conventions. E.g. function names are
@@ -67,7 +58,7 @@ pub unsafe trait SetFileInformation
 The `SetFileInformationByHandle` function takes a generic parameter by
 making the user specify the type (class), a pointer to the data and its
 size. This trait allows attaching that information to a Rust type so that
-`set_file_information_by_handle` can be called safely.
+[`set_file_information_by_handle`] can be called safely.
 
 This trait is designed so that it can support variable sized types.
 However, currently Rust's std only uses fixed sized structures.
@@ -118,7 +109,7 @@ avoid the risk of another function overwriting it.
 pub struct WinError
 ```
 
-An error code as returned by `get_last_error`.
+An error code as returned by [`get_last_error`].
 
 This is usually a 16-bit Win32 error code but may be a 32-bit HRESULT or NTSTATUS.
 Check the documentation of the Windows API function being called for expected errors.
@@ -163,5 +154,7 @@ pub fn get_logical_drives() -> impl Iterator<Item = u8>
 
 Returns a list of enabled drive letters.
 
-This is a wrapper around `GetLogicalDrives`.
+This is a wrapper around [`GetLogicalDrives`].
 Each letter is returned as an ascii byte.
+
+[`GetLogicalDrives`]: (https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getlogicaldrives)

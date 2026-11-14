@@ -1,12 +1,3 @@
----
-title: "core::ops::arith"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/ops/arith.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::ops::arith
 
 ## trait Add
@@ -18,14 +9,16 @@ pub const trait Add<Rhs = Self>
 The addition operator `+`.
 
 Note that `Rhs` is `Self` by default, but this is not mandatory. For
-example, `std::time::SystemTime` implements `Add<Duration>`, which permits
+example, [`std::time::SystemTime`] implements `Add<Duration>`, which permits
 operations of the form `SystemTime = SystemTime + Duration`.
+
+[`std::time::SystemTime`]: ../../std/time/struct.SystemTime.html
 
 # Examples
 
 ## `Add`able points
 
-```rust
+```
 use std::ops::Add;
 
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -54,7 +47,7 @@ assert_eq!(Point { x: 1, y: 0 } + Point { x: 2, y: 3 },
 Here is an example of the same `Point` struct implementing the `Add` trait
 using generics.
 
-```rust
+```
 use std::ops::Add;
 
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -88,14 +81,16 @@ pub const trait Sub<Rhs = Self>
 The subtraction operator `-`.
 
 Note that `Rhs` is `Self` by default, but this is not mandatory. For
-example, `std::time::SystemTime` implements `Sub<Duration>`, which permits
+example, [`std::time::SystemTime`] implements `Sub<Duration>`, which permits
 operations of the form `SystemTime = SystemTime - Duration`.
+
+[`std::time::SystemTime`]: ../../std/time/struct.SystemTime.html
 
 # Examples
 
 ## `Sub`tractable points
 
-```rust
+```
 use std::ops::Sub;
 
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -124,7 +119,7 @@ assert_eq!(Point { x: 3, y: 3 } - Point { x: 2, y: 3 },
 Here is an example of the same `Point` struct implementing the `Sub` trait
 using generics.
 
-```rust
+```
 use std::ops::Sub;
 
 #[derive(Debug, PartialEq)]
@@ -163,7 +158,7 @@ Note that `Rhs` is `Self` by default, but this is not mandatory.
 
 ## `Mul`tipliable rational numbers
 
-```rust
+```
 use std::ops::Mul;
 
 // By the fundamental theorem of arithmetic, rational numbers in lowest
@@ -222,7 +217,7 @@ assert_eq!(Rational::new(2, 3) * Rational::new(3, 4),
 
 ## Multiplying vectors by scalars as in linear algebra
 
-```rust
+```
 use std::ops::Mul;
 
 struct Scalar { value: usize }
@@ -257,7 +252,7 @@ Note that `Rhs` is `Self` by default, but this is not mandatory.
 
 ## `Div`idable rational numbers
 
-```rust
+```
 use std::ops::Div;
 
 // By the fundamental theorem of arithmetic, rational numbers in lowest
@@ -320,7 +315,7 @@ assert_eq!(Rational::new(1, 2) / Rational::new(3, 4),
 
 ## Dividing vectors by scalars as in linear algebra
 
-```rust
+```
 use std::ops::Div;
 
 struct Scalar { value: f32 }
@@ -358,7 +353,7 @@ implemented, one can use the `%` operator to find out what the remaining
 elements of the slice would be after splitting it into equal slices of a
 given length.
 
-```rust
+```
 use std::ops::Rem;
 
 #[derive(PartialEq, Debug)]
@@ -396,7 +391,7 @@ The unary negation operator `-`.
 An implementation of `Neg` for `Sign`, which allows the use of `-` to
 negate its value.
 
-```rust
+```
 use std::ops::Neg;
 
 #[derive(Debug, PartialEq)]
@@ -439,7 +434,7 @@ The addition assignment operator `+=`.
 This example creates a `Point` struct that implements the `AddAssign`
 trait, and then demonstrates add-assigning to a mutable `Point`.
 
-```rust
+```
 use std::ops::AddAssign;
 
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -475,7 +470,7 @@ The subtraction assignment operator `-=`.
 This example creates a `Point` struct that implements the `SubAssign`
 trait, and then demonstrates sub-assigning to a mutable `Point`.
 
-```rust
+```
 use std::ops::SubAssign;
 
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -508,7 +503,7 @@ The multiplication assignment operator `*=`.
 
 # Examples
 
-```rust
+```
 use std::ops::MulAssign;
 
 #[derive(Debug, PartialEq)]
@@ -535,7 +530,7 @@ The division assignment operator `/=`.
 
 # Examples
 
-```rust
+```
 use std::ops::DivAssign;
 
 #[derive(Debug, PartialEq)]
@@ -562,7 +557,7 @@ The remainder assignment operator `%=`.
 
 # Examples
 
-```rust
+```
 use std::ops::RemAssign;
 
 struct CookieJar { cookies: u32 }

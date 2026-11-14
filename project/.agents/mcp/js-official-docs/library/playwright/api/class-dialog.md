@@ -1,12 +1,3 @@
----
-title: "class: Dialog"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-dialog.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: Dialog
 * since: v1.8
 
@@ -49,7 +40,7 @@ public class Example {
 }
 ```
 
-```python
+```python async
 import asyncio
 from playwright.async_api import async_playwright, Playwright
 
@@ -71,7 +62,7 @@ async def main():
 asyncio.run(main())
 ```
 
-```python
+```python sync
 from playwright.sync_api import sync_playwright, Playwright
 
 def handle_dialog(dialog):
@@ -115,7 +106,7 @@ class DialogExample
 
 :::note
 Dialogs are dismissed automatically, unless there is a [`event: Page.dialog`] listener.
-When listener is present, it **must** either [`method: Dialog.accept`] or [`method: Dialog.dismiss`] the dialog - otherwise the page will freeze waiting for the dialog, and actions like click will never finish.
+When listener is present, it **must** either [`method: Dialog.accept`] or [`method: Dialog.dismiss`] the dialog - otherwise the page will [freeze](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop#never_blocking) waiting for the dialog, and actions like click will never finish.
 :::
 
 ## async method: Dialog.accept

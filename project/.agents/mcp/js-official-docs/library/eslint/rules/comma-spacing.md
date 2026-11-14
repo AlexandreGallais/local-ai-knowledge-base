@@ -1,14 +1,20 @@
 ---
-title: "comma-spacing"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/comma-spacing.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: comma-spacing
+rule_type: layout
+related_rules:
+- array-bracket-spacing
+- comma-style
+- object-curly-spacing
+- space-in-brackets
+- space-in-parens
+- space-infix-ops
+- space-after-keywords
+- space-unary-ops
+- space-return-throw-case
+further_reading:
+- https://www.crockford.com/code.html
+- https://dojotoolkit.org/reference-guide/1.9/developer/styleguide.html
 ---
-
-# comma-spacing
-
 Spacing around commas improves readability of a list of items. Although most of the style guidelines for languages prescribe adding a space after a comma and not before it, it is subjective to the preferences of a project.
 
 ```js
@@ -23,10 +29,10 @@ This rule enforces consistent spacing before and after commas in variable declar
 This rule does not apply in either of the following cases:
 
 * between two commas
-* between opening bracket `[` and comma, to avoid conflicts with the `array-bracket-spacing` rule
-* between comma and closing bracket `]`, to avoid conflicts with the `array-bracket-spacing` rule
-* between comma and closing brace `}`, to avoid conflicts with the `object-curly-spacing` rule
-* between comma and closing parentheses `)`, to avoid conflicts with the `space-in-parens` rule
+* between opening bracket `[` and comma, to avoid conflicts with the [`array-bracket-spacing`](array-bracket-spacing) rule
+* between comma and closing bracket `]`, to avoid conflicts with the [`array-bracket-spacing`](array-bracket-spacing) rule
+* between comma and closing brace `}`, to avoid conflicts with the [`object-curly-spacing`](object-curly-spacing) rule
+* between comma and closing parentheses `)`, to avoid conflicts with the [`space-in-parens`](space-in-parens) rule
 
 ## Options
 
@@ -41,7 +47,7 @@ This rule has an object option:
 
 Examples of **incorrect** code for this rule with the default `{ "before": false, "after": true }` options:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint comma-spacing: ["error", { "before": false, "after": true }]*/
@@ -55,9 +61,11 @@ function baz(a ,b){}
 a ,b
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `{ "before": false, "after": true }` options:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint comma-spacing: ["error", { "before": false, "after": true }]*/
@@ -73,9 +81,11 @@ function qur(a, b){}
 a, b
 ```
 
+:::
+
 Additional examples of **correct** code for this rule with the default `{ "before": false, "after": true }` options:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint comma-spacing: ["error", { "before": false, "after": true }]*/
@@ -103,11 +113,13 @@ import {foo, bar,} from "mod";
 foo(a, b,)
 ```
 
+:::
+
 ### before
 
 Examples of **incorrect** code for this rule with the `{ "before": true, "after": false }` options:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint comma-spacing: ["error", { "before": true, "after": false }]*/
@@ -120,9 +132,11 @@ function baz(a,b){}
 a, b
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "before": true, "after": false }` options:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint comma-spacing: ["error", { "before": true, "after": false }]*/
@@ -137,6 +151,8 @@ new Foo(a ,b);
 function qur(a ,b){}
 a ,b
 ```
+
+:::
 
 ## When Not To Use It
 

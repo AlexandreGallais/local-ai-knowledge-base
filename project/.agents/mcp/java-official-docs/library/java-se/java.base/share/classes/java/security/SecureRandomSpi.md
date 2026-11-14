@@ -1,74 +1,64 @@
----
-title: "SecureRandomSpi class (java.security)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/SecureRandomSpi.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # SecureRandomSpi class (java.security)
 
 ```java
 public abstract class SecureRandomSpi implements java.io.Serializable
 ```
 
-This class defines the *Service Provider Interface* (**SPI**)
-for the `SecureRandom` class.
-
+This class defines the <i>Service Provider Interface</i> (<b>SPI</b>)
+for the {@link SecureRandom} class.
+<p>
 All the abstract methods in this class must be implemented by each
 service provider who wishes to supply the implementation
 of a cryptographically strong pseudo-random number generator.
 
-**Implementation requirements:** If the `SecureRandomSpi(SecureRandomParameters)`
+@implSpec
+If the {@link #SecureRandomSpi(SecureRandomParameters)}
 constructor is overridden in an implementation, it will always be called
-whenever a `SecureRandom` is instantiated. Precisely, if an object is
-instantiated with one of `SecureRandom`'s `getInstance` methods
-*without* a `SecureRandomParameters` parameter,
-the constructor will be called with a `null` argument and the
+whenever a {@code SecureRandom} is instantiated. Precisely, if an object is
+instantiated with one of {@code SecureRandom}'s {@code getInstance} methods
+<em>without</em> a {@link SecureRandomParameters} parameter,
+the constructor will be called with a {@code null} argument and the
 implementation is responsible for creating its own
-`SecureRandomParameters` parameter for use when
-`engineGetParameters()` is called. If an object
-is instantiated with one of `SecureRandom`'s `getInstance`
-methods *with* a `SecureRandomParameters` argument,
+{@code SecureRandomParameters} parameter for use when
+{@link #engineGetParameters()} is called. If an object
+is instantiated with one of {@code SecureRandom}'s {@code getInstance}
+methods <em>with</em> a {@code SecureRandomParameters} argument,
 the constructor will be called with that argument. The
-`engineGetParameters()` method must not return `null`.
-
-Otherwise, if the `SecureRandomSpi(SecureRandomParameters)`
+{@link #engineGetParameters()} method must not return {@code null}.
+<p>
+Otherwise, if the {@code SecureRandomSpi(SecureRandomParameters)}
 constructor is not overridden in an implementation, the
-`SecureRandomSpi()` constructor must be overridden, and it will be
-called if an object is instantiated with one of `SecureRandom`'s
-`getInstance` methods *without* a
-`SecureRandomParameters` argument. Calling one of
-`SecureRandom`'s `getInstance` methods *with*
-a `SecureRandomParameters` argument will never
+{@link #SecureRandomSpi()} constructor must be overridden, and it will be
+called if an object is instantiated with one of {@code SecureRandom}'s
+{@code getInstance} methods <em>without</em> a
+{@code SecureRandomParameters} argument. Calling one of
+{@code SecureRandom}'s {@code getInstance} methods <em>with</em>
+a {@code SecureRandomParameters} argument will never
 return an instance of this implementation. The
-`engineGetParameters()` method must return `null`.
-
-See `SecureRandom` for additional details on thread safety. By
-default, a `SecureRandomSpi` implementation is considered to be
-not safe for use by multiple concurrent threads and `SecureRandom`
+{@link #engineGetParameters()} method must return {@code null}.
+<p>
+See {@link SecureRandom} for additional details on thread safety. By
+default, a {@code SecureRandomSpi} implementation is considered to be
+not safe for use by multiple concurrent threads and {@code SecureRandom}
 will synchronize access to each of the applicable engine methods
-(see `SecureRandom` for the list of methods). However, if a
-`SecureRandomSpi` implementation is thread-safe, the
-service provider attribute "ThreadSafe" should be set to "true" during
+(see {@link SecureRandom} for the list of methods). However, if a
+{@code SecureRandomSpi} implementation is thread-safe, the <a href=
+"{@docRoot}/../specs/security/standard-names.html#service-attributes">
+service provider attribute</a> "ThreadSafe" should be set to "true" during
 its registration, as follows:
-
-```java
-put("SecureRandom.AlgName ThreadSafe", "true");
-```
-
+<blockquote><pre>
+put("SecureRandom.AlgName ThreadSafe", "true");</pre>
+</blockquote>
 or
-
-```java
+<blockquote><pre>
 putService(new Service(this, "SecureRandom", "AlgName", className,
-         null, Map.of("ThreadSafe", "true")));
-```
-
-`SecureRandom` will call the applicable engine methods
+         null, Map.of("ThreadSafe", "true")));</pre>
+</blockquote>
+{@code SecureRandom} will call the applicable engine methods
 without any synchronization.
 
-**Since:** 1.2
+@spec security/standard-names.html Java Security Standard Algorithm Names
+@since 1.2
 
 ## SecureRandomSpi.SecureRandomSpi()
 
@@ -86,15 +76,12 @@ protected SecureRandomSpi(SecureRandomParameters params)
 
 Constructor with a parameter.
 
-Parameters:
+@param params the {@link SecureRandomParameters} object.
+              This argument can be {@code null}.
+@throws IllegalArgumentException if {@code params} is
+        unrecognizable or unsupported by this {@code SecureRandom}
 
-- `params`: the `SecureRandomParameters` object. This argument can be `null`.
-
-**Since:** 9
-
-Throws:
-
-- `IllegalArgumentException`: if `params` is unrecognizable or unsupported by this `SecureRandom`
+@since 9
 
 ## SecureRandomSpi.engineSetSeed(byte[])
 
@@ -106,9 +93,7 @@ Reseeds this random object with the given seed. The seed supplements,
 rather than replaces, the existing seed. Thus, repeated calls
 are guaranteed never to reduce randomness.
 
-Parameters:
-
-- `seed`: the seed.
+@param seed the seed.
 
 ## SecureRandomSpi.engineNextBytes(byte[])
 
@@ -117,16 +102,14 @@ protected abstract void engineNextBytes(byte[] bytes)
 ```
 
 Generates a user-specified number of random bytes.
-
+<p>
 Some random number generators can only generate a limited amount
-of random bytes per invocation. If the size of `bytes`
+of random bytes per invocation. If the size of {@code bytes}
 is greater than this limit, the implementation should invoke
 its generation process multiple times to completely fill the
 buffer before returning from this method.
 
-Parameters:
-
-- `bytes`: the array to be filled in with random bytes.
+@param bytes the array to be filled in with random bytes.
 
 ## SecureRandomSpi.engineNextBytes(byte[], SecureRandomParameters)
 
@@ -136,27 +119,24 @@ protected void engineNextBytes( byte[] bytes, SecureRandomParameters params)
 
 Generates a user-specified number of random bytes with
 additional parameters.
-
+<p>
 Some random number generators can only generate a limited amount
-of random bytes per invocation. If the size of `bytes`
+of random bytes per invocation. If the size of {@code bytes}
 is greater than this limit, the implementation should invoke
 its generation process multiple times to completely fill the
 buffer before returning from this method.
 
-Parameters:
+@implSpec The default implementation throws
+an {@link UnsupportedOperationException}.
 
-- `bytes`: the array to be filled in with random bytes
-- `params`: additional parameters
+@param bytes the array to be filled in with random bytes
+@param params additional parameters
+@throws UnsupportedOperationException if the implementation
+        has not overridden this method
+@throws IllegalArgumentException if {@code params} is {@code null},
+        illegal or unsupported by this {@code SecureRandom}
 
-**Implementation requirements:** The default implementation throws
-an `UnsupportedOperationException`.
-
-**Since:** 9
-
-Throws:
-
-- `UnsupportedOperationException`: if the implementation has not overridden this method
-- `IllegalArgumentException`: if `params` is `null`, illegal or unsupported by this `SecureRandom`
+@since 9
 
 ## SecureRandomSpi.engineGenerateSeed(int)
 
@@ -167,11 +147,9 @@ protected abstract byte[] engineGenerateSeed(int numBytes)
 Returns the given number of seed bytes.  This call may be used to
 seed other random number generators.
 
-Parameters:
+@param numBytes the number of seed bytes to generate.
 
-- `numBytes`: the number of seed bytes to generate.
-
-**Returns:** the seed bytes.
+@return the seed bytes.
 
 ## SecureRandomSpi.engineReseed(SecureRandomParameters)
 
@@ -181,26 +159,23 @@ protected void engineReseed(SecureRandomParameters params)
 
 Reseeds this random object with entropy input read from its
 entropy source with additional parameters.
-
-If this method is called by `SecureRandom.reseed()`,
-`params` will be `null`.
-
+<p>
+If this method is called by {@link SecureRandom#reseed()},
+{@code params} will be {@code null}.
+<p>
 Do not override this method if the implementation does not
 support reseeding.
 
-Parameters:
+@implSpec The default implementation throws
+          an {@link UnsupportedOperationException}.
 
-- `params`: extra parameters, can be `null`.
+@param params extra parameters, can be {@code null}.
+@throws UnsupportedOperationException if the implementation
+        has not overridden this method
+@throws IllegalArgumentException if {@code params} is
+        illegal or unsupported by this {@code SecureRandom}
 
-**Implementation requirements:** The default implementation throws
-          an `UnsupportedOperationException`.
-
-**Since:** 9
-
-Throws:
-
-- `UnsupportedOperationException`: if the implementation has not overridden this method
-- `IllegalArgumentException`: if `params` is illegal or unsupported by this `SecureRandom`
+@since 9
 
 ## SecureRandomSpi.engineGetParameters()
 
@@ -208,15 +183,15 @@ Throws:
 protected SecureRandomParameters engineGetParameters()
 ```
 
-Returns the effective `SecureRandomParameters` for this
-`SecureRandom` instance.
+Returns the effective {@link SecureRandomParameters} for this
+{@code SecureRandom} instance.
 
-**Implementation requirements:** The default implementation returns `null`.
+@implSpec The default implementation returns {@code null}.
 
-**Returns:** the effective `SecureRandomParameters` parameters,
-or `null` if no parameters were used.
+@return the effective {@link SecureRandomParameters} parameters,
+or {@code null} if no parameters were used.
 
-**Since:** 9
+@since 9
 
 ## SecureRandomSpi.toString()
 
@@ -225,6 +200,6 @@ public String toString()
 ```
 
 Returns a Human-readable string representation of this
-`SecureRandom`.
+{@code SecureRandom}.
 
-**Returns:** the string representation
+@return the string representation

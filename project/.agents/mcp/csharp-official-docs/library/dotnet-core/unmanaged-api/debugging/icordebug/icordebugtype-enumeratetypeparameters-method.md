@@ -1,15 +1,24 @@
 ---
 title: "ICorDebugType::EnumerateTypeParameters Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugtype-enumeratetypeparameters-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn more about: ICorDebugType::EnumerateTypeParameters Method"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugType.EnumerateTypeParameters"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugType::EnumerateTypeParameters"
+helpviewer_keywords:
+  - "EnumerateTypeParameters method, ICorDebugType interface [.NET debugging]"
+  - "ICorDebugType::EnumerateTypeParameters method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugType::EnumerateTypeParameters Method
 
-Gets an interface pointer to an ICorDebugTypeEnum that contains the `System.Type` parameters of the class referenced by this ICorDebugType.
+Gets an interface pointer to an ICorDebugTypeEnum that contains the <xref:System.Type> parameters of the class referenced by this ICorDebugType.
 
 ## Syntax
 
@@ -26,7 +35,7 @@ HRESULT EnumerateTypeParameters (
 
 ## Remarks
 
-You can use `EnumerateTypeParameters` if the CorElementType value returned by ICorDebugType::GetType is ELEMENT_TYPE_CLASS, ELEMENT_TYPE_VALUETYPE, ELEMENT_TYPE_ARRAY, ELEMENT_TYPE_SZARRAY, ELEMENT_TYPE_BYREF, ELEMENT_TYPE_PTR, or ELEMENT_TYPE_FNPTR. The number of parameters and their order depends on the type:
+You can use `EnumerateTypeParameters` if the CorElementType value returned by [ICorDebugType::GetType](icordebugtype-gettype-method.md) is ELEMENT_TYPE_CLASS, ELEMENT_TYPE_VALUETYPE, ELEMENT_TYPE_ARRAY, ELEMENT_TYPE_SZARRAY, ELEMENT_TYPE_BYREF, ELEMENT_TYPE_PTR, or ELEMENT_TYPE_FNPTR. The number of parameters and their order depends on the type:
 
 - ELEMENT_TYPE_CLASS or ELEMENT_TYPE_VALUETYPE: The number of type parameters contained in the `ICorDebugTypeEnum` that this method returns, will depend on the number of formal type parameters for the corresponding class. For example, if the type is `class Dict<String,int32>`, then `EnumerateTypeParameters` will return an `ICorDebugTypeEnum` that contains objects representing `String` and `int32` in sequence.
 
@@ -36,7 +45,7 @@ You can use `EnumerateTypeParameters` if the CorElementType value returned by IC
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

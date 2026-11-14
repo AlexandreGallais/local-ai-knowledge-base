@@ -1,17 +1,14 @@
 ---
 title: "Breaking change: ActionResult<T> sets StatusCode to 200"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/6/actionresult-statuscode.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 6.0 where ActionResult<T> always sets the status code to 200, even if it was set manually."
+ms.date: 05/23/2022
+ms.custom: https://github.com/aspnet/Announcements/issues/485
 ---
-
 # ActionResult\<T> sets StatusCode to 200
 
-When returning a `T` in an MVC/API controller action that declares the return type as `Microsoft.AspNetCore.Mvc.ActionResult`1`, the `Microsoft.AspNetCore.Mvc.ObjectResult.StatusCode` is always set to 200, except when the `T` is a `Microsoft.AspNetCore.Mvc.ProblemDetails`.
+When returning a `T` in an MVC/API controller action that declares the return type as <xref:Microsoft.AspNetCore.Mvc.ActionResult`1>, the <xref:Microsoft.AspNetCore.Mvc.ObjectResult.StatusCode?displayProperty=nameWithType> is always set to 200, except when the `T` is a <xref:Microsoft.AspNetCore.Mvc.ProblemDetails>.
 
-This change can cause unexpected behavior in some scenarios where you set the status code manually, since previously the `Microsoft.AspNetCore.Mvc.ObjectResult.StatusCode` was `null`. Also, an action filter could be affected by this change if it expects a null value instead of 200.
+This change can cause unexpected behavior in some scenarios where you set the status code manually, since previously the <xref:Microsoft.AspNetCore.Mvc.ObjectResult.StatusCode?displayProperty=nameWithType> was `null`. Also, an action filter could be affected by this change if it expects a null value instead of 200.
 
 ## Version introduced
 
@@ -45,11 +42,11 @@ public ActionResult<Model> Get()
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](/dotnet/core/compatibility/categories#source-compatibility).
 
 ## Reason for change
 
-Returning a status code of `200 OK` is documented since ASP.NET Core 3.1. However, it keeps `Microsoft.AspNetCore.Mvc.ObjectResult.StatusCode` as `null` and eventually generates a `200 OK` response only because it's the default. Since the default internal behavior could change, we decided to avoid relying on the default and to explicitly set `Microsoft.AspNetCore.Mvc.ObjectResult.StatusCode` to the expected `200 OK`.
+Returning a status code of `200 OK` is [documented since ASP.NET Core 3.1](../../web-api/action-return-types.md#actionresultt-type). However, it keeps <xref:Microsoft.AspNetCore.Mvc.ObjectResult.StatusCode> as `null` and eventually generates a `200 OK` response only because it's the default. Since the default internal behavior could change, we decided to avoid relying on the default and to explicitly set <xref:Microsoft.AspNetCore.Mvc.ObjectResult.StatusCode> to the expected `200 OK`.
 
 ## Recommended action
 
@@ -93,4 +90,4 @@ public Model Get()
 
 ## See also
 
-- ActionResult\<T> type
+- [ActionResult\<T> type](../../web-api/action-return-types.md#actionresultt-type)

@@ -1,12 +1,3 @@
----
-title: "std::thread::functions (part 1 of 2)"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/thread/functions.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::thread::functions
 
 Free functions.
@@ -17,19 +8,19 @@ Free functions.
 pub fn spawn<F, T>(f: F) -> JoinHandle<T> where F: FnOnce() -> T, F: Send + 'static, T: Send + 'static,
 ```
 
-Spawns a new thread, returning a `JoinHandle` for it.
+Spawns a new thread, returning a [`JoinHandle`] for it.
 
-The join handle provides a `join` method that can be used to join the spawned
-thread. If the spawned thread panics, `join` will return an `Err` containing
-the argument given to `panic!`.
+The join handle provides a [`join`] method that can be used to join the spawned
+thread. If the spawned thread panics, [`join`] will return an [`Err`] containing
+the argument given to [`panic!`].
 
 If the join handle is dropped, the spawned thread will implicitly be *detached*.
 In this case, the spawned thread may no longer be joined.
 (It is the responsibility of the program to either eventually join threads it
 creates or detach them; otherwise, a resource leak will result.)
 
-This function creates a thread with the default parameters of `Builder`.
-To specify the new thread's stack size or the name, use `Builder::spawn`.
+This function creates a thread with the default parameters of [`Builder`].
+To specify the new thread's stack size or the name, use [`Builder::spawn`].
 
 As you can see in the signature of `spawn` there are two constraints on
 both the closure given to `spawn` and its return value, let's explain them:
@@ -43,24 +34,24 @@ both the closure given to `spawn` and its return value, let's explain them:
   we *can't* know when it will return we need to have them valid as long as
   possible, that is until the end of the program, hence the `'static`
   lifetime.
-- The `Send` constraint is because the closure will need to be passed
+- The [`Send`] constraint is because the closure will need to be passed
   *by value* from the thread where it is spawned to the new thread. Its
   return value will need to be passed from the new thread to the thread
   where it is `join`ed.
-  As a reminder, the `Send` marker trait expresses that it is safe to be
-  passed from thread to thread. `Sync` expresses that it is safe to have a
+  As a reminder, the [`Send`] marker trait expresses that it is safe to be
+  passed from thread to thread. [`Sync`] expresses that it is safe to have a
   reference be passed from thread to thread.
 
 # Panics
 
-Panics if the OS fails to create a thread; use `Builder::spawn`
+Panics if the OS fails to create a thread; use [`Builder::spawn`]
 to recover from such errors.
 
 # Examples
 
 Creating a thread.
 
-```rust
+```
 use std::thread;
 
 let handler = thread::spawn(|| {
@@ -71,12 +62,12 @@ handler.join().unwrap();
 ```
 
 As mentioned in the module documentation, threads are usually made to
-communicate using `channels`, here is how it usually looks.
+communicate using [`channels`], here is how it usually looks.
 
 This example also shows how to use `move`, in order to give ownership
 of values to a thread.
 
-```rust
+```
 use std::thread;
 use std::sync::mpsc::channel;
 
@@ -96,11 +87,11 @@ sender.join().expect("The sender thread has panicked");
 receiver.join().expect("The receiver thread has panicked");
 ```
 
-A thread can also return a value through its `JoinHandle`, you can use
+A thread can also return a value through its [`JoinHandle`], you can use
 this to make asynchronous computations (futures might be more appropriate
 though).
 
-```rust
+```
 use std::thread;
 
 let computation = thread::spawn(|| {
@@ -116,13 +107,18 @@ println!("{result}");
 
 This function has the same minimal guarantee regarding "foreign" unwinding operations (e.g.
 an exception thrown from C++ code, or a `panic!` in Rust code compiled or linked with a
-different runtime) as `catch_unwind`; namely, if the thread created with `thread::spawn`
+different runtime) as [`catch_unwind`]; namely, if the thread created with `thread::spawn`
 unwinds all the way to the root with such an exception, one of two behaviors are possible,
 and it is unspecified which will occur:
 
 * The process aborts.
-* The process does not abort, and `join` will return a `Result::Err`
+* The process does not abort, and [`join`] will return a `Result::Err`
   containing an opaque type.
+
+[`catch_unwind`]: ../../std/panic/fn.catch_unwind.html
+[`channels`]: crate::sync::mpsc
+[`join`]: JoinHandle::join
+[`Err`]: crate::result::Result::Err
 
 ## fn yield_now
 
@@ -141,8 +137,8 @@ other ready threads to run on the current CPU, the thread will effectively
 busy-wait, which wastes CPU time and energy.
 
 Therefore, when waiting for events of interest, a programmer's first
-choice should be to use synchronization devices such as `channel`s,
-`Condvar`s, `Mutex`es or `join` since these primitives are
+choice should be to use synchronization devices such as [`channel`]s,
+[`Condvar`]s, [`Mutex`]es or [`join`] since these primitives are
 implemented in a blocking manner, giving up the CPU until the event
 of interest has occurred which avoids repeated yielding.
 
@@ -152,11 +148,16 @@ learn when an event of interest has occurred.
 
 # Examples
 
-```rust
+```
 use std::thread;
 
 thread::yield_now();
 ```
+
+[`channel`]: crate::sync::mpsc
+[`join`]: JoinHandle::join
+[`Condvar`]: crate::sync::Condvar
+[`Mutex`]: crate::sync::Mutex
 
 ## fn panicking
 
@@ -173,7 +174,7 @@ when `panic=abort` is set.
 A common use of this feature is to poison shared resources when writing
 unsafe code, by checking `panicking` when the `drop` is called.
 
-This is usually not needed when writing safe code, as `Mutex`es
+This is usually not needed when writing safe code, as [`Mutex`es][Mutex]
 already poison themselves when a thread panics while holding the lock.
 
 This can also be used in multithreaded applications, in order to send a
@@ -182,7 +183,7 @@ monitoring purposes).
 
 # Examples
 
-```rust
+```should_panic
 use std::thread;
 
 struct SomeStruct;
@@ -209,13 +210,15 @@ impl Drop for SomeStruct {
 }
 ```
 
+[Mutex]: crate::sync::Mutex
+
 ## fn sleep_ms
 
 ```rust
 pub fn sleep_ms(ms: u32)
 ```
 
-Uses `sleep`.
+Uses [`sleep`].
 
 Puts the current thread to sleep for at least the specified amount of time.
 
@@ -233,7 +236,7 @@ times.
 
 # Examples
 
-```rust
+```no_run
 use std::thread;
 
 // Let's sleep for 2 seconds:
@@ -263,14 +266,17 @@ Platforms which do not support nanosecond precision for sleeping will
 have `dur` rounded up to the nearest granularity of time they can sleep for.
 
 Currently, specifying a zero duration on Unix platforms returns immediately
-without invoking the underlying `nanosleep` syscall, whereas on Windows
-platforms the underlying `Sleep` syscall is always invoked.
+without invoking the underlying [`nanosleep`] syscall, whereas on Windows
+platforms the underlying [`Sleep`] syscall is always invoked.
 If the intention is to yield the current time-slice you may want to use
-`yield_now` instead.
+[`yield_now`] instead.
+
+[`nanosleep`]: https://linux.die.net/man/2/nanosleep
+[`Sleep`]: https://docs.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-sleep
 
 # Examples
 
-```rust
+```no_run
 use std::{thread, time};
 
 let ten_millis = time::Duration::from_millis(10);
@@ -296,30 +302,30 @@ process if the implementation encounters some rare errors).
 
 # `park` and `unpark`
 
-Every thread is equipped with some basic <example-value> blocking support, via the
-`thread::park``park` function and `thread::Thread::unpark``unpark`
-method. `park` blocks the current thread, which can then be resumed from
-another thread by calling the `unpark` method on the blocked thread's
+Every thread is equipped with some basic low-level blocking support, via the
+[`thread::park`][`park`] function and [`thread::Thread::unpark`][`unpark`]
+method. [`park`] blocks the current thread, which can then be resumed from
+another thread by calling the [`unpark`] method on the blocked thread's
 handle.
 
-Conceptually, each `Thread` handle has an associated token, which is
+Conceptually, each [`Thread`] handle has an associated token, which is
 initially not present:
 
-* The `thread::park``park` function blocks the current thread unless or
+* The [`thread::park`][`park`] function blocks the current thread unless or
   until the token is available for its thread handle, at which point it
   atomically consumes the token. It may also return *spuriously*, without
-  consuming the token. `thread::park_timeout` does the same, but allows
+  consuming the token. [`thread::park_timeout`] does the same, but allows
   specifying a maximum time to block the thread for.
 
-* The `unpark` method on a `Thread` atomically makes the token <example-value>
+* The [`unpark`] method on a [`Thread`] atomically makes the token available
   if it wasn't already. Because the token can be held by a thread even if it is currently not
-  parked, `unpark` followed by `park` will result in the second call returning immediately.
+  parked, [`unpark`] followed by [`park`] will result in the second call returning immediately.
   However, note that to rely on this guarantee, you need to make sure that your `unpark` happens
   after all `park` that may be done by other data structures!
 
 The API is typically used by acquiring a handle to the current thread, placing that handle in a
 shared data structure so that other threads can find it, and then `park`ing in a loop. When some
-desired condition is met, another thread calls `unpark` on the handle. The last bullet point
+desired condition is met, another thread calls [`unpark`] on the handle. The last bullet point
 above guarantees that even if the `unpark` occurs before the thread is finished `park`ing, it
 will be woken up properly.
 
@@ -357,7 +363,7 @@ making *all* wakeups spurious.
 
 # Examples
 
-```rust
+```
 use std::thread;
 use std::sync::atomic::{Ordering, AtomicBool};
 use std::time::Duration;
@@ -406,21 +412,162 @@ parked_thread.thread().unpark();
 parked_thread.join().unwrap();
 ```
 
+[`Thread`]: super::Thread
+[`unpark`]: super::Thread::unpark
+[`thread::park_timeout`]: park_timeout
+[release sequence]: https://en.cppreference.com/w/cpp/atomic/memory_order#Release_sequence
+
 ## fn park_timeout_ms
 
 ```rust
 pub fn park_timeout_ms(ms: u32)
 ```
 
-Uses `park_timeout`.
+Uses [`park_timeout`].
 
 Blocks unless or until the current thread's token is made available or
 the specified duration has been reached (may wake spuriously).
 
-The semantics of this function are equivalent to `park` except
+The semantics of this function are equivalent to [`park`] except
 that the thread will be blocked for roughly no longer than `dur`. This
 method should not be used for precise timing due to anomalies such as
 preemption or platform differences that might not cause the maximum
 amount of time waited to be precisely `ms` long.
 
-See the [park documentation]`park` for more detail.
+See the [park documentation][`park`] for more detail.
+
+## fn park_timeout
+
+```rust
+pub fn park_timeout(dur: Duration)
+```
+
+Blocks unless or until the current thread's token is made available or
+the specified duration has been reached (may wake spuriously).
+
+The semantics of this function are equivalent to [`park`][park] except
+that the thread will be blocked for roughly no longer than `dur`. This
+method should not be used for precise timing due to anomalies such as
+preemption or platform differences that might not cause the maximum
+amount of time waited to be precisely `dur` long.
+
+See the [park documentation][park] for more details.
+
+# Platform-specific behavior
+
+Platforms which do not support nanosecond precision for sleeping will have
+`dur` rounded up to the nearest granularity of time they can sleep for.
+
+# Examples
+
+Waiting for the complete expiration of the timeout:
+
+```rust,no_run
+use std::thread::park_timeout;
+use std::time::{Instant, Duration};
+
+let timeout = Duration::from_secs(2);
+let beginning_park = Instant::now();
+
+let mut timeout_remaining = timeout;
+loop {
+    park_timeout(timeout_remaining);
+    let elapsed = beginning_park.elapsed();
+    if elapsed >= timeout {
+        break;
+    }
+    println!("restarting park_timeout after {elapsed:?}");
+    timeout_remaining = timeout - elapsed;
+}
+```
+
+## fn available_parallelism
+
+```rust
+pub fn available_parallelism() -> io::Result<NonZero<usize>>
+```
+
+Returns an estimate of the default amount of parallelism a program should use.
+
+Parallelism is a resource. A given machine provides a certain capacity for
+parallelism, i.e., a bound on the number of computations it can perform
+simultaneously. This number often corresponds to the amount of CPUs a
+computer has, but it may diverge in various cases.
+
+Host environments such as VMs or container orchestrators may want to
+restrict the amount of parallelism made available to programs in them. This
+is often done to limit the potential impact of (unintentionally)
+resource-intensive programs on other programs running on the same machine.
+
+# Limitations
+
+The purpose of this API is to provide an easy and portable way to query
+the default amount of parallelism the program should use. Among other things it
+does not expose information on NUMA regions, does not account for
+differences in (co)processor capabilities or current system load,
+and will not modify the program's global state in order to more accurately
+query the amount of available parallelism.
+
+Where both fixed steady-state and burst limits are available the steady-state
+capacity will be used to ensure more predictable latencies.
+
+Resource limits can be changed during the runtime of a program, therefore the value is
+not cached and instead recomputed every time this function is called. It should not be
+called from hot code.
+
+The value returned by this function should be considered a simplified
+approximation of the actual amount of parallelism available at any given
+time. To get a more detailed or precise overview of the amount of
+parallelism available to the program, you may wish to use
+platform-specific APIs as well. The following platform limitations currently
+apply to `available_parallelism`:
+
+On Windows:
+- It may undercount the amount of parallelism available on systems with more
+  than 64 logical CPUs, because it reports only the logical CPUs in one
+  processor group. Before Windows 11 and Windows Server 2022, a process was by
+  default confined to a single processor group, so this count reflected the CPUs
+  it could use without explicitly opting into other groups. Starting with Windows
+  11 and Windows Server 2022, a process and its threads have affinities that by
+  default span all processor groups, so on systems with more than 64 logical CPUs
+  this may report fewer CPUs than are available to the program.
+- It may overcount the amount of parallelism available on systems limited by
+  process-wide affinity masks, or job object limitations.
+
+On Linux:
+- It may overcount the amount of parallelism available when limited by a
+  process-wide affinity mask or cgroup quotas and `sched_getaffinity()` or cgroup fs can't be
+  queried, e.g. due to sandboxing.
+- It may undercount the amount of parallelism if the current thread's affinity mask
+  does not reflect the process' cpuset, e.g. due to pinned threads.
+- If the process is in a cgroup v1 cpu controller, this may need to
+  scan mountpoints to find the corresponding cgroup v1 controller,
+  which may take time on systems with large numbers of mountpoints.
+  (This does not apply to cgroup v2, or to processes not in a
+  cgroup.)
+- It does not attempt to take `ulimit` into account. If there is a limit set on the number of
+  threads, `available_parallelism` cannot know how much of that limit a Rust program should
+  take, or know in a reliable and race-free way how much of that limit is already taken.
+
+On all targets:
+- It may overcount the amount of parallelism available when running in a VM
+with CPU usage limits (e.g. an overcommitted host).
+
+# Errors
+
+This function will, but is not limited to, return errors in the following
+cases:
+
+- If the amount of parallelism is not known for the target platform.
+- If the program lacks permission to query the amount of parallelism made
+  available to it.
+
+# Examples
+
+```
+use std::thread;
+
+if let Ok(count) = thread::available_parallelism() {
+  assert!(count.get() >= 1_usize);
+}
+```

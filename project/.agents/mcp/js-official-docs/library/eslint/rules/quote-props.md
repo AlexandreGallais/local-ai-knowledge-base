@@ -1,14 +1,10 @@
 ---
-title: "quote-props"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/quote-props.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: quote-props
+rule_type: suggestion
+further_reading:
+- https://compat-table.github.io/compat-table/es5/#test-Object/array_literal_extensions_Reserved_words_as_property_names
+- https://mathiasbynens.be/notes/javascript-properties
 ---
-
-# quote-props
-
 Object literal property names can be defined in two ways: using literals or using strings. For example, these two objects are equivalent:
 
 ```js
@@ -65,7 +61,7 @@ Object option:
 
 Examples of **incorrect** code for this rule with the default `"always"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint quote-props: ["error", "always"]*/
@@ -76,9 +72,11 @@ var object = {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"always"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint quote-props: ["error", "always"]*/
@@ -102,11 +100,13 @@ var object3 = {
 };
 ```
 
+:::
+
 ### as-needed
 
 Examples of **incorrect** code for this rule with the `"as-needed"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint quote-props: ["error", "as-needed"]*/
@@ -119,9 +119,11 @@ var object = {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"as-needed"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint quote-props: ["error", "as-needed"]*/
@@ -147,11 +149,13 @@ var object3 = {
 };
 ```
 
+:::
+
 ### consistent
 
 Examples of **incorrect** code for this rule with the `"consistent"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint quote-props: ["error", "consistent"]*/
@@ -168,9 +172,11 @@ var object2 = {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"consistent"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint quote-props: ["error", "consistent"]*/
@@ -192,11 +198,13 @@ var object3 = {
 };
 ```
 
+:::
+
 ### consistent-as-needed
 
 Examples of **incorrect** code for this rule with the `"consistent-as-needed"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint quote-props: ["error", "consistent-as-needed"]*/
@@ -213,9 +221,11 @@ var object2 = {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"consistent-as-needed"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint quote-props: ["error", "consistent-as-needed"]*/
@@ -232,11 +242,13 @@ var object2 = {
 };
 ```
 
+:::
+
 ### keywords
 
 Examples of additional **incorrect** code for this rule with the `"as-needed", { "keywords": true }` options:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint quote-props: ["error", "as-needed", { "keywords": true }]*/
@@ -247,9 +259,11 @@ var x = {
 };
 ```
 
+:::
+
 Examples of additional **incorrect** code for this rule with the `"consistent-as-needed", { "keywords": true }` options:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint quote-props: ["error", "consistent-as-needed", { "keywords": true }]*/
@@ -260,11 +274,13 @@ var x = {
 };
 ```
 
+:::
+
 ### unnecessary
 
 Examples of additional **correct** code for this rule with the `"as-needed", { "unnecessary": false }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint quote-props: ["error", "as-needed", { "keywords": true, "unnecessary": false }]*/
@@ -275,11 +291,13 @@ var x = {
 };
 ```
 
+:::
+
 ### numbers
 
 Examples of additional **incorrect** code for this rule with the `"as-needed", { "numbers": true }` options:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint quote-props: ["error", "as-needed", { "numbers": true }]*/
@@ -288,6 +306,8 @@ var x = {
     100: 1
 }
 ```
+
+:::
 
 ## When Not To Use It
 

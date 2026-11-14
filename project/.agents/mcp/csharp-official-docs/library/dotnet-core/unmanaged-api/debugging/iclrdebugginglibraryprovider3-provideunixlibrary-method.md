@@ -1,12 +1,24 @@
 ---
+description: "Learn more about: ICLRDebuggingLibraryProvider3::ProvideUnixLibrary Method"
 title: "ICLRDebuggingLibraryProvider3::ProvideUnixLibrary Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/iclrdebugginglibraryprovider3-provideunixlibrary-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICLRDebuggingLibraryProvider3.ProvideUnixLibrary Method"
+api_location:
+  - "dbgshim.dll"
+  - "libdbgshim.so"
+  - "libdbgshim.dylib"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICLRDebuggingLibraryProvider3::ProvideUnixLibrary"
+helpviewer_keywords:
+  - "ProvideUnixLibrary method [.NET Core debugging]"
+  - "ICLRDebuggingLibraryProvider3::ProvideUnixLibrary method [.NET Core debugging]"
+ms.assetid: 86f06245-9517-49be-8d8c-ca5deaf34c02
+topic_type:
+  - "apiref"
 ---
-
 # ICLRDebuggingLibraryProvider3::ProvideUnixLibrary method
 
 Allows the debugger to provide a path to a version-specific common language runtime (CLR) debugging library on macOS and Linux.
@@ -32,7 +44,7 @@ HRESULT ProvideUnixLibrary (
 [in] The runtime or single-file module path.
 
 `indexType` \
-[in] The type of index information (pBuildId) provided. See LIBRARY_PROVIDER_INDEX_TYPE enum.
+[in] The type of index information (pBuildId) provided. See [LIBRARY_PROVIDER_INDEX_TYPE](libraryproviderindextype-enumeration.md) enum.
 
 `pbBuildId` \
 [in] The Linux or macOS module build id. Can be null if something went wrong retrieving the build id.
@@ -57,14 +69,14 @@ This method returns the following specific HRESULT as well as HRESULT errors tha
 
 The debugger may use any available means to locate or procure the debugging module.
 
-> **Important:**
+> [!IMPORTANT]
 > This feature allows the API caller to provide modules that contain executable, and possibly malicious, code. As a security precaution, the caller should not use `ProvideUnixLibrary` to distribute any code that it is not willing to execute itself.
 >
 > If a serious security issue is discovered in an already released library, such as mscordbi.dll or mscordacwks.dll, the shim can be patched to recognize the bad versions of the files. The shim can then issue requests for the patched versions of the files and reject the bad versions if they are provided in response to any request. This can occur only if the user has patched to a new version of the shim. Unpatched versions will remain vulnerable.
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** dbgshim.h
 

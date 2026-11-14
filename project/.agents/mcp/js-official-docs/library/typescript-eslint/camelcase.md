@@ -1,14 +1,15 @@
 ---
-title: "camelcase"
-tool: "typescript-eslint"
-version: "8.72"
-source: "https://github.com/typescript-eslint/typescript-eslint/blob/12e452f0292212bf9bf443b3988ec230f4ae7097/packages/eslint-plugin/docs/rules/camelcase.md"
-commit: "12e452f0292212bf9bf443b3988ec230f4ae7097"
-license: "MIT"
+displayed_sidebar: rulesSidebar
 ---
 
-# camelcase
+:::danger Deprecated
 
-**Deprecated**
+This rule has been deprecated in favour of the [`naming-convention`](./naming-convention.mdx) rule.
 
-This rule has been deprecated in favour of the `naming-convention` rule.
+:::
+
+<!-- This doc file has been left on purpose because `camelcase` is a core ESLint
+rule. This exists to help direct people to the replacement rule.
+
+Note that there is no actual way to get to this page in the normal navigation,
+so end-users will only be able to get to this page from the search bar. -->

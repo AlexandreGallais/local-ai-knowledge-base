@@ -1,12 +1,19 @@
 ---
 title: "MSTEST0068: Use Assert instead of CollectionAssert"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0068.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0068: Use Assert instead of CollectionAssert"
+ms.date: 06/04/2026
+f1_keywords:
+- MSTEST0068
+- CollectionAssertToAssertAnalyzer
+helpviewer_keywords:
+- CollectionAssertToAssertAnalyzer
+- MSTEST0068
+author: Evangelink
+ms.author: amauryleve
+ai-usage: ai-assisted
+dev_langs:
+- CSharp
 ---
-
 # MSTEST0068: Use Assert instead of CollectionAssert
 
 | Property                            | Value                                              |
@@ -20,18 +27,18 @@ license: "CC-BY-4.0"
 | **Introduced in version**           | 4.3.0                                              |
 | **Is there a code fix**             | Yes                                                |
 
-> **Note:**
+> [!NOTE]
 > This rule is available starting with MSTest 4.3.
 
 ## Cause
 
-A test method uses `Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert` methods instead of equivalent `Microsoft.VisualStudio.TestTools.UnitTesting.Assert` methods.
+A test method uses <xref:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert> methods instead of equivalent <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert> methods.
 
 ## Rule description
 
-Most `Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert` methods have equivalent counterparts in `Microsoft.VisualStudio.TestTools.UnitTesting.Assert` that provide the same functionality. Prefer the `Microsoft.VisualStudio.TestTools.UnitTesting.Assert` methods for consistency, better readability, improved discoverability, and alignment with behavior across all test frameworks.
+Most <xref:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert> methods have equivalent counterparts in <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert> that provide the same functionality. Prefer the <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert> methods for consistency, better readability, improved discoverability, and alignment with behavior across all test frameworks.
 
-The following `Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert` methods have equivalent `Microsoft.VisualStudio.TestTools.UnitTesting.Assert` methods:
+The following <xref:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert> methods have equivalent <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert> methods:
 
 - `CollectionAssert.AreEqual(a, b)` → `Assert.AreSequenceEqual(a, b)`
 - `CollectionAssert.AreNotEqual(a, b)` → `Assert.AreNotSequenceEqual(a, b)`
@@ -43,18 +50,18 @@ The following `Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert` me
 - `CollectionAssert.Contains(collection, value)` → `Assert.Contains(value, collection)`
 - `CollectionAssert.DoesNotContain(collection, value)` → `Assert.DoesNotContain(value, collection)`
 
-> **Warning:**
-> When migrating from `Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert` to `Microsoft.VisualStudio.TestTools.UnitTesting.Assert`, be careful about the change in parameter order for `Contains`, `DoesNotContain`, and `AllItemsAreInstancesOfType`. In `Microsoft.VisualStudio.TestTools.UnitTesting.Assert`, the expected value is always the first parameter.
+> [!WARNING]
+> When migrating from <xref:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert> to <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert>, be careful about the change in parameter order for `Contains`, `DoesNotContain`, and `AllItemsAreInstancesOfType`. In <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert>, the expected value is always the first parameter.
 
-Overloads of `AreEqual`/`AreNotEqual` that take an `System.Collections.IComparer` are skipped because `Assert.AreSequenceEqual` expects an `System.Collections.Generic.IEqualityComparer`1` (different semantics). Overloads of `AreEquivalent`/`AreNotEquivalent` that take an `System.Collections.Generic.IEqualityComparer`1` are also skipped. `IsSubsetOf`/`IsNotSubsetOf` have no direct `Microsoft.VisualStudio.TestTools.UnitTesting.Assert` equivalent today and are not handled.
+Overloads of `AreEqual`/`AreNotEqual` that take an <xref:System.Collections.IComparer> are skipped because `Assert.AreSequenceEqual` expects an <xref:System.Collections.Generic.IEqualityComparer`1> (different semantics). Overloads of `AreEquivalent`/`AreNotEquivalent` that take an <xref:System.Collections.Generic.IEqualityComparer`1> are also skipped. `IsSubsetOf`/`IsNotSubsetOf` have no direct <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert> equivalent today and are not handled.
 
 ## How to fix violations
 
-Use the provided code fixer to automatically replace `Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert` method calls with their equivalent `Microsoft.VisualStudio.TestTools.UnitTesting.Assert` methods. You can also manually replace the method calls if needed.
+Use the provided code fixer to automatically replace <xref:Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert> method calls with their equivalent <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert> methods. You can also manually replace the method calls if needed.
 
 ## When to suppress warnings
 
-Don't suppress warnings from this rule. The `Microsoft.VisualStudio.TestTools.UnitTesting.Assert` methods provide the same functionality with better consistency.
+Don't suppress warnings from this rule. The <xref:Microsoft.VisualStudio.TestTools.UnitTesting.Assert> methods provide the same functionality with better consistency.
 
 ## Suppress a warning
 
@@ -66,11 +73,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0068
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0068.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

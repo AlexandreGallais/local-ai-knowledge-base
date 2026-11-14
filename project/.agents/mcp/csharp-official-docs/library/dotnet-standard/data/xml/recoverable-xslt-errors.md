@@ -1,25 +1,22 @@
 ---
+description: "Learn more about: Recoverable XSLT Errors"
 title: "Recoverable XSLT Errors"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/recoverable-xslt-errors.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+ms.topic: error-reference
 ---
-
 # Recoverable XSLT Errors
 
 The W3C XSL Transformations (XSLT) Version 1.0 Recommendation includes areas in which the implementation provider may decide how to handle a situation. These areas are considered to be discretionary behavior. For example, in section 7.3 Creating Processing Instructions, the XSLT 1.0 recommendation states that it is an error if instantiating the content of `xsl:processing-instruction` creates nodes other than text nodes. For some problems, the XSLT 1.0 recommendation indicates what decision should be made if the processor decides to recover from the error. For the problem given in section 7.3, the W3C says that the implementation can recover from this error by ignoring the nodes and their content.
 
 ## Discretionary Behaviors
 
- The following table lists each of the discretionary behaviors allowed by the XSLT 1.0 recommendation, and how these behaviors are handled by the `System.Xml.Xsl.XslCompiledTransform` class.
+ The following table lists each of the discretionary behaviors allowed by the XSLT 1.0 recommendation, and how these behaviors are handled by the <xref:System.Xml.Xsl.XslCompiledTransform> class.
 
-- Recover indicates that the `System.Xml.Xsl.XslCompiledTransform` class will recover from this error. The `System.Xml.Xsl.XsltArgumentList.XsltMessageEncountered` event can be used to report any events from the XSLT processor.
+- Recover indicates that the <xref:System.Xml.Xsl.XslCompiledTransform> class will recover from this error. The <xref:System.Xml.Xsl.XsltArgumentList.XsltMessageEncountered?displayProperty=nameWithType> event can be used to report any events from the XSLT processor.
 
 - Error indicates that an exception is raised for this condition.
 
-- The section references can be found in the W3C XSL Transformations (XSLT) Version 1.0 Recommendation and the W3C XSL Transformations (XSLT) Version 1.0 Specification Errata.
+- The section references can be found in the [W3C XSL Transformations (XSLT) Version 1.0 Recommendation](https://www.w3.org/TR/xslt) and the [W3C XSL Transformations (XSLT) Version 1.0 Specification Errata](https://www.w3.org/1999/11/REC-xslt-19991116-errata/).
 
 |XSLT condition|Section|XslCompiledTransform behavior|
 |--------------------|-------------|-----------------------------------|
@@ -49,8 +46,8 @@ The W3C XSL Transformations (XSLT) Version 1.0 Recommendation includes areas in 
 |The `value` attribute of an `xsl:number` is NAN, infinite or less than 0.5|errata 24|Recover|
 |The second argument node-set to the document function is empty and the URI reference is relative.|errata 14|Recover|
 
- * This behavior is different than that of the `System.Xml.Xsl.XslTransform` class. For more information, see Implementation of Discretionary Behaviors in the XslTransform Class.
+ <sup>*</sup> This behavior is different than that of the <xref:System.Xml.Xsl.XslTransform> class. For more information, see [Implementation of Discretionary Behaviors in the XslTransform Class](/previous-versions/dotnet/framework/data/xml/xslt/implementation-of-discretionary-behaviors-in-the-xsltransform-class).
 
 ## See also
 
-- XSLT Transformations
+- [XSLT Transformations](xslt-transformations.md)

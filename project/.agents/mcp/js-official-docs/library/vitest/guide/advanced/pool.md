@@ -1,16 +1,8 @@
----
-title: "Custom Pool <Badge type=\"danger\">advanced</Badge> {#custom-pool}"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/advanced/pool.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # Custom Pool <Badge type="danger">advanced</Badge> {#custom-pool}
 
-**Warning:**
-This is an advanced, experimental and very low-level API. If you just want to run tests, you probably don't need this. It is primarily used by library authors.
+::: warning
+This is an advanced, experimental and very low-level API. If you just want to [run tests](/guide/), you probably don't need this. It is primarily used by library authors.
+:::
 
 Vitest runs tests in a pool. By default, there are several pool runners:
 
@@ -20,14 +12,15 @@ Vitest runs tests in a pool. By default, there are several pool runners:
 - `browser` to run tests using browser providers
 - `typescript` to run typechecking on tests
 
-**Tip:**
-See `vitest-pool-example` for example of a custom pool runner implementation.
+::: tip
+See [`vitest-pool-example`](https://npmx.dev/package/vitest-pool-example) for example of a custom pool runner implementation.
+:::
 
 ## Usage
 
 You can provide your own pool runner by a function that returns `PoolRunnerInitializer`.
 
-```ts
+```ts [vitest.config.ts]
 import { defineConfig } from 'vitest/config'
 import customPool from './my-custom-pool.ts'
 
@@ -41,9 +34,9 @@ export default defineConfig({
 })
 ```
 
-If you need to run tests in different pools, use the `projects` feature:
+If you need to run tests in different pools, use the [`projects`](/guide/projects) feature:
 
-```ts
+```ts [vitest.config.ts]
 import customPool from './my-custom-pool.ts'
 
 export default defineConfig({
@@ -70,7 +63,7 @@ export default defineConfig({
 
 The `pool` option accepts a `PoolRunnerInitializer` that can be used for custom pool runners. The `name` property should indicate name of the custom pool runner. It should be identical with your worker's `name` property.
 
-```ts
+```ts [my-custom-pool.ts]
 import type { PoolRunnerInitializer } from 'vitest/node'
 
 export function customPool(customOptions: CustomOptions): PoolRunnerInitializer {
@@ -83,7 +76,7 @@ export function customPool(customOptions: CustomOptions): PoolRunnerInitializer 
 
 In your `CustomPoolWorker` you need to define all required methods:
 
-```ts
+```ts [my-custom-pool.ts]
 import type { PoolOptions, PoolWorker, WorkerRequest } from 'vitest/node'
 
 class CustomPoolWorker implements PoolWorker {
@@ -124,7 +117,7 @@ Your `CustomPoolRunner` will be controlling how your custom test runner worker l
 
 In your worker file, you can import helper utilities from `vitest/worker`:
 
-```ts
+```ts [my-worker.ts]
 import { init, runBaseTests, setupEnvironment } from 'vitest/worker'
 
 init({

@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugILFrame::GetStackDepth Method"
 title: "ICorDebugILFrame::GetStackDepth Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugilframe-getstackdepth-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugILFrame.GetStackDepth"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugILFrame::GetStackDepth"
+helpviewer_keywords:
+  - "GetStackDepth method [.NET debugging]"
+  - "ICorDebugILFrame::GetStackDepth method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugILFrame::GetStackDepth Method
 
 This method has not been implemented.

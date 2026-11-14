@@ -1,17 +1,10 @@
----
-title: "Disallow passing async functions to subscribe (rxjs-x/no-async-subscribe)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/no-async-subscribe.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Disallow passing `async` functions to `subscribe` (`rxjs-x/no-async-subscribe`)
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, 🔒 `strict`.
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule effects failures if async functions are passed to `subscribe`.
 Developers are encouraged to avoid race conditions
@@ -65,10 +58,10 @@ Type checked lint rules are more powerful than traditional lint rules, but also 
 
 ## Further reading
 
-- Why does this rule exist?
-- Higher-order Observables
+- [Why does this rule exist?](https://stackoverflow.com/q/71559135)
+- [Higher-order Observables](https://rxjs.dev/guide/higher-order-observables)
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/no-async-subscribe.ts)
+- [Test source](/tests/rules/no-async-subscribe.test.ts)

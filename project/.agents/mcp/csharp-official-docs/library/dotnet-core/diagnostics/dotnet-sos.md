@@ -1,18 +1,16 @@
 ---
-title: "dotnet-sos diagnostic tool - .NET CLI"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/dotnet-sos.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet-sos diagnostic tool - .NET CLI
+description: Learn how to install and use the dotnet-sos CLI tool to manage the SOS debugger extension, which is used with native debuggers on Windows and Linux. 
+ms.date: 11/17/2020
+ms.topic: reference
+ms.custom: linux-related-content
 ---
-
 # SOS installer (dotnet-sos)
 
 **This article applies to:** ✔️ .NET 6.0 SDK and later versions
 
-> **Note:**
-> Consider using the .NET debugger extensions instead, which include the SOS functionality and additional features.
+> [!NOTE]
+> Consider using the [.NET debugger extensions](dotnet-debugger-extensions.md) instead, which include the SOS functionality and additional features.
 
 ## Install
 
@@ -20,7 +18,7 @@ There are two ways to download and install `dotnet-sos`:
 
 - **dotnet global tool:**
 
-  To install the latest release version of the `dotnet-sos` NuGet package, use the dotnet tool install command:
+  To install the latest release version of the `dotnet-sos` [NuGet package](https://www.nuget.org/packages/dotnet-sos), use the [dotnet tool install](../tools/dotnet-tool-install.md) command:
 
   ```dotnetcli
   dotnet tool install --global dotnet-sos
@@ -32,8 +30,8 @@ There are two ways to download and install `dotnet-sos`:
 
   | OS  | Platform |
   | --- | -------- |
-  | Windows | x86 \| x64 \| Arm \| Arm-x64 |
-  | Linux   | x64 \| Arm \| Arm64 \| musl-x64 \| musl-Arm64 |
+  | Windows | [x86](https://aka.ms/dotnet-sos/win-x86) \| [x64](https://aka.ms/dotnet-sos/win-x64) \| [Arm](https://aka.ms/dotnet-sos/win-arm) \| [Arm-x64](https://aka.ms/dotnet-sos/win-arm64) |
+  | Linux   | [x64](https://aka.ms/dotnet-sos/linux-x64) \| [Arm](https://aka.ms/dotnet-sos/linux-arm) \| [Arm64](https://aka.ms/dotnet-sos/linux-arm64) \| [musl-x64](https://aka.ms/dotnet-sos/linux-musl-x64) \| [musl-Arm64](https://aka.ms/dotnet-sos/linux-musl-arm64) |
 
 ## Synopsis
 
@@ -43,7 +41,7 @@ dotnet-sos [-h|--help] [options] [command]]
 
 ## Description
 
-The `dotnet-sos` global tool installs the SOS debugger extension. This extension lets you inspect managed .NET Core state from native debuggers like LLDB and WinDbg.
+The `dotnet-sos` global tool installs the [SOS debugger extension](sos-debugging-extension.md). This extension lets you inspect managed .NET Core state from native debuggers like LLDB and WinDbg.
 
 ## Options
 
@@ -57,7 +55,7 @@ The `dotnet-sos` global tool installs the SOS debugger extension. This extension
 
 ## dotnet-sos install
 
-Installs the SOS extension locally for debugging .NET Core processes. On macOS and Linux, the *.lldbinit* file is updated so that the extension automatically loads at LLDB startup. If you're installing SOS on Windows with older debugging tools (before version 10.0.18317.1001), you need to manually load the extension in WinDbg or cdb by running `.load %USERPROFILE%\.dotnet\sos\sos.dll` in the debugger.
+Installs the [SOS extension](sos-debugging-extension.md) locally for debugging .NET Core processes. On macOS and Linux, the *.lldbinit* file is updated so that the extension automatically loads at LLDB startup. If you're installing SOS on Windows with older debugging tools (before version 10.0.18317.1001), you need to manually load the extension in WinDbg or cdb by running `.load %USERPROFILE%\.dotnet\sos\sos.dll` in the debugger.
 
 This overwrites any previous installations from the dotnet-debugger-extensions or dotnet-sos installers.
 
@@ -82,7 +80,7 @@ dotnet-sos install [--architecture <arch>]
 
 ## dotnet-sos uninstall
 
-Uninstalls the SOS extension and, on Linux and macOS, removes it from LLDB configuration.
+Uninstalls the [SOS extension](sos-debugging-extension.md) and, on Linux and macOS, removes it from LLDB configuration.
 
 ### Synopsis
 

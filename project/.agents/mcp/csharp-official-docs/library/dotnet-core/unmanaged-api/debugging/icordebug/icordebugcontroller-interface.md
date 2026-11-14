@@ -1,15 +1,23 @@
 ---
+description: "Learn more about: ICorDebugController Interface"
 title: "ICorDebugController Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugcontroller-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugController"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugController"
+helpviewer_keywords:
+  - "ICorDebugController interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugController Interface
 
-Represents a scope, either a `System.Diagnostics.Process` or an `System.AppDomain`, in which code execution context can be controlled.
+Represents a scope, either a <xref:System.Diagnostics.Process> or an <xref:System.AppDomain>, in which code execution context can be controlled.
 
 ## Methods
 
@@ -17,25 +25,25 @@ Represents a scope, either a `System.Diagnostics.Process` or an `System.AppDomai
 |------------|-----------------|
 |`ICorDebugController::CanCommitChanges`|This method is obsolete.|
 |`ICorDebugController::CommitChanges`|This method is obsolete.|
-|Continue Method|Resumes execution of managed threads after a call to ICorDebugController::Stop.|
-|Detach Method|Detaches the debugger from the process or application domain.|
-|EnumerateThreads Method|Gets an enumerator for the active managed threads in the process.|
-|HasQueuedCallbacks Method|Gets a value that indicates whether any managed callbacks are currently queued for the specified thread.|
-|IsRunning Method|Gets a value that indicates whether the threads in the process are currently running freely.|
-|SetAllThreadsDebugState Method|Sets the debug state of all managed threads in the process.|
-|Stop Method|Performs a cooperative stop on all threads that are running managed code in the process.|
-|Terminate Method|Terminates the process with the specified exit code.|
+|[Continue Method](icordebugcontroller-continue-method.md)|Resumes execution of managed threads after a call to [ICorDebugController::Stop](icordebugcontroller-stop-method.md).|
+|[Detach Method](icordebugcontroller-detach-method.md)|Detaches the debugger from the process or application domain.|
+|[EnumerateThreads Method](icordebugcontroller-enumeratethreads-method.md)|Gets an enumerator for the active managed threads in the process.|
+|[HasQueuedCallbacks Method](icordebugcontroller-hasqueuedcallbacks-method.md)|Gets a value that indicates whether any managed callbacks are currently queued for the specified thread.|
+|[IsRunning Method](icordebugcontroller-isrunning-method.md)|Gets a value that indicates whether the threads in the process are currently running freely.|
+|[SetAllThreadsDebugState Method](icordebugcontroller-setallthreadsdebugstate-method.md)|Sets the debug state of all managed threads in the process.|
+|[Stop Method](icordebugcontroller-stop-method.md)|Performs a cooperative stop on all threads that are running managed code in the process.|
+|[Terminate Method](icordebugcontroller-terminate-method.md)|Terminates the process with the specified exit code.|
 
 ## Remarks
 
 If `ICorDebugController` is controlling a process, the scope includes all threads of the process. If `ICorDebugController` is controlling an application domain, the scope includes only the threads of that particular application domain.
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

@@ -1,17 +1,10 @@
----
-title: "vitest/require-hook"
-tool: "eslint-vitest"
-version: "1.6"
-source: "https://github.com/vitest-dev/eslint-plugin-vitest/blob/c5df1054a25044a7ca5baf07461b7aee1f15f5f2/docs/rules/require-hook.md"
-commit: "c5df1054a25044a7ca5baf07461b7aee1f15f5f2"
-license: "MIT"
----
-
 # vitest/require-hook
 
 📝 Require setup and teardown to be within a hook.
 
 ⚠️ This rule _warns_ in the 🌐 `all` config.
+
+<!-- end auto-generated rule header -->
 
 It's common when writing tests to need to perform a particular setup work before and after a test suite run. Because Vitest executes all `describe` handlers in a test file _before_ it executes any of the actual tests, it's important to ensure setup and teardown work is done inside `before*` and `after*` handlers respectively, rather than inside the `describe` blocks.
 
@@ -59,9 +52,13 @@ describe('foo', () => {
 
 ## Options
 
+<!-- begin auto-generated rule options list -->
+
 | Name                   | Description                                       | Type     | Default |
 | :--------------------- | :------------------------------------------------ | :------- | :------ |
 | `allowedFunctionCalls` | Function calls that are allowed outside of hooks. | String[] | `[]`    |
+
+<!-- end auto-generated rule options list -->
 
 If there are methods that you want to call outside of hooks and tests, you can mark them as allowed using the `allowedFunctionCalls` option.
 

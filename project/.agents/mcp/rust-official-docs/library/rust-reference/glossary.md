@@ -1,12 +1,3 @@
----
-title: "Glossary (part 1 of 2)"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/glossary.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 # Glossary
 
 r[glossary.ast]
@@ -16,7 +7,7 @@ An ‘abstract syntax tree’, or ‘AST’, is an intermediate representation o
 
 ### Alignment
 
-The alignment of a value specifies what addresses values are preferred to start at. Always a power of two. References to a value must be aligned. More.
+The alignment of a value specifies what addresses values are preferred to start at. Always a power of two. References to a value must be aligned. [More][alignment].
 
 r[glossary.abi]
 ### Application binary interface (ABI)
@@ -40,7 +31,7 @@ An associated item is an item that is associated with another item. Associated i
 
 ### Blanket implementation
 
-Any implementation where a type appears uncovered. `impl<T> Foo for T`, `impl<T> Bar<T> for T`, `impl<T> Bar<Vec<T>> for T`, and `impl<T> Bar<T> for Vec<T>` are considered blanket impls. However, `impl<T> Bar<Vec<T>> for Vec<T>` is not a blanket impl, as all instances of `T` which appear in this `impl` are covered by `Vec`.
+Any implementation where a type appears [uncovered](#uncovered-type). `impl<T> Foo for T`, `impl<T> Bar<T> for T`, `impl<T> Bar<Vec<T>> for T`, and `impl<T> Bar<T> for Vec<T>` are considered blanket impls. However, `impl<T> Bar<Vec<T>> for Vec<T>` is not a blanket impl, as all instances of `T` which appear in this `impl` are covered by `Vec`.
 
 ### Bound
 
@@ -52,15 +43,15 @@ Combinators are higher-order functions that apply only functions and earlier def
 
 ### Crate
 
-A crate is the unit of compilation and linking. There are different [types of crates], such as libraries or executables. Crates may link and refer to other library crates, called external crates. A crate has a self-contained tree of [modules], starting from an unnamed root module called the crate root. [Items] may be made visible to other crates by marking them as public in the crate root, including through [paths] of public modules. More.
+A crate is the unit of compilation and linking. There are different [types of crates], such as libraries or executables. Crates may link and refer to other library crates, called external crates. A crate has a self-contained tree of [modules], starting from an unnamed root module called the crate root. [Items] may be made visible to other crates by marking them as public in the crate root, including through [paths] of public modules. [More][crate].
 
 ### Dispatch
 
-Dispatch is the mechanism to determine which specific version of code is actually run when it involves polymorphism. Two major forms of dispatch are static dispatch and dynamic dispatch. Rust supports dynamic dispatch through the use of trait objects.
+Dispatch is the mechanism to determine which specific version of code is actually run when it involves polymorphism. Two major forms of dispatch are static dispatch and dynamic dispatch. Rust supports dynamic dispatch through the use of [trait objects][type.trait-object].
 
 ### Dyn-compatible traits
 
-[Traits] that can be used in [trait object types] (`dyn Trait`). Only traits that follow specific rules are *dyn compatible*.
+[Traits] that can be used in [trait object types] (`dyn Trait`). Only traits that follow specific [rules][dyn compatibility] are *dyn compatible*.
 
 These were formerly known as *object safe* traits.
 
@@ -70,7 +61,7 @@ A dynamically sized type (DST) is a type without a statically known size or alig
 
 ### Entity
 
-An [*entity*] is a language construct that can be referred to in some way within the source program, usually via a path. Entities include [types], [items], [generic parameters], [variable bindings], [loop labels], [lifetimes], [fields], [attributes], and [lints].
+An [*entity*] is a language construct that can be referred to in some way within the source program, usually via a [path][paths]. Entities include [types], [items], [generic parameters], [variable bindings], [loop labels], [lifetimes], [fields], [attributes], and [lints].
 
 ### Expression
 
@@ -88,17 +79,17 @@ A fundamental trait is one where adding an impl of it for an existing type is a 
 
 ### Fundamental type constructors
 
-A fundamental type constructor is a type where implementing a blanket implementation over it is a breaking change. `&`, `&mut`, `Box`, and `Pin`  are fundamental.
+A fundamental type constructor is a type where implementing a [blanket implementation](#blanket-implementation) over it is a breaking change. `&`, `&mut`, `Box`, and `Pin`  are fundamental.
 
-Any time a type `T` is considered local, `&T`, `&mut T`, `Box<T>`, and `Pin<T>` are also considered local. Fundamental type constructors cannot cover other types. Any time the term "covered type" is used, the `T` in `&T`, `&mut T`, `Box<T>`, and `Pin<T>` is not considered covered.
+Any time a type `T` is considered [local](#local-type), `&T`, `&mut T`, `Box<T>`, and `Pin<T>` are also considered local. Fundamental type constructors cannot [cover](#uncovered-type) other types. Any time the term "covered type" is used, the `T` in `&T`, `&mut T`, `Box<T>`, and `Pin<T>` is not considered covered.
 
 ### Inhabited
 
-A type is inhabited if it has constructors and therefore can be instantiated. An inhabited type is not "empty" in the sense that there can be values of the type. Opposite of Uninhabited.
+A type is inhabited if it has constructors and therefore can be instantiated. An inhabited type is not "empty" in the sense that there can be values of the type. Opposite of [Uninhabited](#uninhabited).
 
 ### Inherent implementation
 
-An [implementation] that applies to a nominal type, not to a trait-type pair. More.
+An [implementation] that applies to a nominal type, not to a trait-type pair. [More][inherent implementation].
 
 ### Inherent method
 
@@ -118,7 +109,7 @@ A `struct`, `enum`, or `union` which was defined in the current crate. This is n
 
 ### Module
 
-A module is a container for zero or more [items]. Modules are organized in a tree, starting from an unnamed module at the root called the crate root or the root module. [Paths] may be used to refer to items from other modules, which may be restricted by [visibility rules]. More
+A module is a container for zero or more [items]. Modules are organized in a tree, starting from an unnamed module at the root called the crate root or the root module. [Paths] may be used to refer to items from other modules, which may be restricted by [visibility rules]. [More][modules]
 
 r[glossary.n-zst]
 #### N-aligned zero-sized type (n-ZST)
@@ -172,15 +163,15 @@ assert!(is_1_zst::<MaybeUninit<[(); 2]>>());
 
 ### Name
 
-A [*name*] is an [identifier] or [lifetime or loop label] that refers to an entity. A *name binding* is when an entity declaration introduces an identifier or label associated with that entity. [Paths], identifiers, and labels are used to refer to an entity.
+A [*name*] is an [identifier] or [lifetime or loop label] that refers to an [entity](#entity). A *name binding* is when an entity declaration introduces an identifier or label associated with that entity. [Paths], identifiers, and labels are used to refer to an entity.
 
 ### Name resolution
 
-[*Name resolution*] is the compile-time process of tying [paths], [identifiers], and [labels] to entity declarations.
+[*Name resolution*] is the compile-time process of tying [paths], [identifiers], and [labels] to [entity](#entity) declarations.
 
 ### Namespace
 
-A *namespace* is a logical grouping of declared names based on the kind of entity the name refers to. Namespaces allow the occurrence of a name in one namespace to not conflict with the same name in another namespace.
+A *namespace* is a logical grouping of declared [names](#name) based on the kind of [entity](#entity) the name refers to. Namespaces allow the occurrence of a name in one namespace to not conflict with the same name in another namespace.
 
 Within a namespace, names are organized in a hierarchy, where each level of the hierarchy has its own collection of named entities.
 
@@ -190,7 +181,7 @@ Types that can be referred to by a path directly. Specifically [enums], [structs
 
 ### Path
 
-A [*path*] is a sequence of one or more path segments used to refer to an entity in the current scope or other levels of a namespace hierarchy.
+A [*path*] is a sequence of one or more path segments used to refer to an [entity](#entity) in the current scope or other levels of a [namespace](#namespace) hierarchy.
 
 ### Prelude
 
@@ -198,7 +189,7 @@ Prelude, or The Rust Prelude, is a small collection of items - mostly traits - t
 
 ### Scope
 
-A [*scope*] is the region of source text where a named entity may be referenced with that name.
+A [*scope*] is the region of source text where a named [entity](#entity) may be referenced with that name.
 
 ### Scrutinee
 
@@ -214,7 +205,7 @@ The second is that it is the offset in bytes between successive elements in an a
 
 It is a multiple of the alignment, including zero. The size can change depending on compiler version (as new optimizations are made) and target platform (similar to how `usize` varies per-platform).
 
-More.
+[More][alignment].
 
 ### Slice
 
@@ -255,7 +246,7 @@ let ok_num = Ok::<_, ()>(5);
 let vec = [1, 2, 3].iter().map(|n| n * 2).collect::<Vec<_>>();
 ```
 
-This `::` prefix is required to disambiguate generic paths with multiple comparisons in a comma-separate list. See the bastion of the turbofish for an example where not having the prefix would be ambiguous.
+This `::` prefix is required to disambiguate generic paths with multiple comparisons in a comma-separate list. See [the bastion of the turbofish][turbofish test] for an example where not having the prefix would be ambiguous.
 
 ### Uncovered type
 
@@ -263,14 +254,178 @@ A type which does not appear as an argument to another type. For example, `T` is
 
 ### Undefined behavior
 
-Compile-time or run-time behavior that is not specified. This may result in, but is not limited to: process termination or corruption; improper, incorrect, or unintended computation; or platform-specific results. More.
+Compile-time or run-time behavior that is not specified. This may result in, but is not limited to: process termination or corruption; improper, incorrect, or unintended computation; or platform-specific results. [More][undefined-behavior].
 
 r[glossary.uninhabited]
 ### Uninhabited
 
-A type is uninhabited if it has no constructors and therefore can never be instantiated. An uninhabited type is "empty" in the sense that there are no values of the type. The canonical example of an uninhabited type is the [never type] (`!`), or an enum with no variants (e.g., `enum Never { }`). Opposite of Inhabited.
+A type is uninhabited if it has no constructors and therefore can never be instantiated. An uninhabited type is "empty" in the sense that there are no values of the type. The canonical example of an uninhabited type is the [never type] (`!`), or an enum with no variants (e.g., `enum Never { }`). Opposite of [Inhabited](#inhabited).
 
-> **Note:**
+> [!NOTE]
 > Uninhabited types are not necessarily [zero sized]. For example, `enum Never { }` is uninhabited and zero sized, but `(u8, Never)` is uninhabited and not zero sized.
 
 r[glossary.zst]
+### Zero-sized type (ZST)
+
+A type is zero sized (a ZST) if its size is 0. Such types have at most one possible value. Examples include:
+
+- The [unit type] (see [layout.tuple.unit]).
+- The [never type] (see [type.never.layout]).
+- [Function items] (see [type.fn-item.intro]).
+- The constructors of [tuple-like structs] (see [type.fn-item.intro]).
+- The constructors of [tuple-like enum variants] (see [type.fn-item.intro]).
+- `repr(Rust)` [structs] with no fields or where all fields are zero sized (see [layout.repr.rust.struct-zst]).
+- `repr(C)` [structs] with no fields or where all fields are zero-sized (see [layout.repr.c.struct.size-field-offset]).
+- `repr(transparent)` [structs] with no fields or where all fields are zero-sized (see [layout.repr.transparent.layout-abi]).
+- `repr(Rust)` [enums] (without a [primitive representation] specified) with no variants (see [layout.repr.rust.enum-empty-zst]).
+- `repr(Rust)` [enums] (without a [primitive representation] specified) with a single [field-struct-like variant], a single [unit-struct-like variant], or a single [tuple-struct-like variant] and where the struct-like thing has no fields or where all of the fields are zero sized (see [layout.repr.rust.enum-struct-like-zst]).
+- [Arrays] of zero-sized types (see [layout.array]).
+- [Arrays] of length zero (see [layout.array]).
+- [Unions] of zero-sized types (see [items.union.common-storage]).
+- [`PhantomData<T>`] for any type `T` (see [lang-types.phantom-data]).
+- [`MaybeUninit<T>`] for a type `T` that is itself a zero-sized type (see [lang-types.maybe-uninit.layout]).
+
+```rust
+# use core::marker::PhantomData;
+# use core::mem::{MaybeUninit, size_of, size_of_val};
+fn f() {}
+struct S(u8);
+enum E { V(u8) }
+struct UnitLike;
+struct NoFields {}
+struct OnlyZST {
+    f1: (),
+    f2: [(); 10],
+    f3: [u8; 0],
+}
+#[repr(C)]
+struct C1 {}
+#[repr(C)]
+struct C2 {
+    f1: (),
+    f2: [(); 10],
+    f3: [u8; 0],
+    f4: C1,
+}
+#[repr(transparent)]
+struct T1 {}
+#[repr(transparent)]
+struct T2 {
+    f1: (),
+    f2: [(); 10],
+    f3: [u8; 0],
+}
+union U {
+    f1: (),
+    f2: [(); 10],
+    f3: [u8; 0],
+}
+# /// An enum with a single field-struct-like variant with all fields
+# /// being ZSTs.
+enum E2 {
+    V1 { f1: (), f2: [(); 10] },
+}
+# /// An enum with a single field-struct-like variant with no fields.
+enum E3 {
+    V1 {},
+}
+# /// An enum with a single unit-struct-like variant.
+enum E4 {
+    V1,
+}
+# /// An enum with a single tuple-struct-like variant with all fields
+# /// being ZSTs.
+enum E5 {
+    V1 ((), [(); 10]),
+}
+# /// An enum with a single tuple-struct-like variant with no fields.
+enum E6 {
+    V1 (),
+}
+# /// An enum with no variants.
+enum E7 {}
+
+assert_eq!(0, size_of::<()>());
+assert_eq!(0, size_of::<!>());
+assert_eq!(0, size_of_val(&f));
+assert_eq!(0, size_of_val(&S));
+assert_eq!(0, size_of_val(&E::V));
+assert_eq!(0, size_of::<UnitLike>());
+assert_eq!(0, size_of::<NoFields>());
+assert_eq!(0, size_of::<OnlyZST>());
+assert_eq!(0, size_of::<C1>());
+assert_eq!(0, size_of::<C2>());
+assert_eq!(0, size_of::<T1>());
+assert_eq!(0, size_of::<T2>());
+assert_eq!(0, size_of::<[(); 10]>());
+assert_eq!(0, size_of::<[u8; 0]>());
+assert_eq!(0, size_of::<U>());
+assert_eq!(0, size_of::<E2>());
+assert_eq!(0, size_of::<E3>());
+assert_eq!(0, size_of::<E4>());
+assert_eq!(0, size_of::<E5>());
+assert_eq!(0, size_of::<E6>());
+assert_eq!(0, size_of::<E7>());
+# // `PhantomData` for a ZST.
+assert_eq!(0, size_of::<PhantomData<()>>());
+# // `PhantomData` for a type that is not a ZST.
+assert_eq!(0, size_of::<PhantomData<u16>>());
+assert_eq!(0, size_of::<MaybeUninit<[(); 2]>>());
+```
+
+[`extern` blocks]: items.extern
+[`extern fn`]: items.fn.extern
+[`MaybeUninit<T>`]: lang-types.maybe-uninit
+[`PhantomData<T>`]: lang-types.phantom-data
+[alignment]: type-layout.md#size-and-alignment
+[arrays]: type.array
+[associated item]: #associated-item
+[attributes]: attributes.md
+[*entity*]: names.md
+[crate]: crates-and-source-files.md
+[dyn compatibility]: items/traits.md#dyn-compatibility
+[enums]: items/enumerations.md
+[field-struct-like variant]: EnumVariantStruct
+[fields]: expressions/field-expr.md
+[free item]: #free-item
+[function items]: type.fn-item
+[generic parameters]: items/generics.md
+[identifier]: identifiers.md
+[identifiers]: identifiers.md
+[implementation]: items/implementations.md
+[implementations]: items/implementations.md
+[inherent implementation]: items/implementations.md#inherent-implementations
+[item]: items.md
+[items]: items.md
+[labels]: tokens.md#lifetimes-and-loop-labels
+[lifetime or loop label]: tokens.md#lifetimes-and-loop-labels
+[lifetimes]: tokens.md#lifetimes-and-loop-labels
+[lints]: attributes/diagnostics.md#lint-check-attributes
+[loop labels]: tokens.md#lifetimes-and-loop-labels
+[method]: items/associated-items.md#methods
+[modules]: items/modules.md
+[*Name resolution*]: names/name-resolution.md
+[*name*]: names.md
+[*namespace*]: names/namespaces.md
+[never type]: types/never.md
+[*path*]: paths.md
+[Paths]: paths.md
+[primitive representation]: layout.repr.primitive
+[*scope*]: names/scopes.md
+[structs]: items/structs.md
+[tuple-like enum variants]: items.enum.constructor-namespace
+[tuple-like structs]: items.struct.tuple
+[tuple-struct-like variant]: EnumVariantTuple
+[trait object types]: types/trait-object.md
+[traits]: items/traits.md
+[turbofish test]: https://github.com/rust-lang/rust/blob/1.58.0/src/test/ui/parser/bastion-of-the-turbofish.rs
+[types of crates]: linkage.md
+[types]: types.md
+[undefined-behavior]: behavior-considered-undefined.md
+[unions]: items/unions.md
+[unit type]: type.tuple.unit
+[unit-struct-like variant]: EnumVariant
+[variable bindings]: patterns.md
+[visibility rules]: visibility-and-privacy.md
+[zero sized]: glossary.zst
+[ZST]: glossary.zst

@@ -1,15 +1,17 @@
 ---
-title: "Code samples migrated to the new minimal hosting model in 6.0"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/migration/50-to-60-samples.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Code samples migrated to the new minimal hosting model in 6.0
+ai-usage: ai-assisted
+description: Learn how to migrate ASP.NET Core samples to the new minimal hosting model in 6.0.
+monikerRange: '>= aspnetcore-5.0'
+ms.date: 09/18/2026
 ---
-
 # Code samples migrated to the new minimal hosting model in ASP.NET Core in .NET 6
 
-This article provides samples of code migrated to ASP.NET Core in .NET 6. ASP.NET Core in .NET 6 uses a new minimal hosting model. For more information, see New hosting model.
+<!-- 
+This content from https://gist.github.com/davidfowl/0e0372c3c1d895c3ce195ba983b1e03d#differences-in-the-hosting-model
+ -->
+
+This article provides samples of code migrated to ASP.NET Core in .NET 6. ASP.NET Core in .NET 6 uses a new minimal hosting model. For more information, see [New hosting model](50-to-60.md#new-hosting-model).
 
 ## Middleware
 
@@ -27,16 +29,9 @@ public class Startup
 
 The following code adds the static file middleware to an ASP.NET Core in .NET 6 app:
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+[!code-csharp[](samples/50-to-60/samples/Web6Samples/Program.cs?name=snippet_mid)]
 
-app.UseStaticFiles();
-
-app.Run();
-```
-
-WebApplication.CreateBuilder initializes a new instance of the `Microsoft.AspNetCore.Builder.WebApplicationBuilder` class with preconfigured defaults. For more information, see ASP.NET Core middleware
+[WebApplication.CreateBuilder](xref:Microsoft.AspNetCore.Builder.WebApplication.CreateBuilder*) initializes a new instance of the <xref:Microsoft.AspNetCore.Builder.WebApplicationBuilder> class with preconfigured defaults. For more information, see [ASP.NET Core middleware](../fundamentals/middleware/index.md?view=aspnetcore-6.0)
 
 ## Routing
 
@@ -56,18 +51,17 @@ public class Startup
 }
 ```
 
-In .NET 6, routes can be added directly to the `Microsoft.AspNetCore.Builder.WebApplication` without an explicit call to `Microsoft.AspNetCore.Builder.EndpointRoutingApplicationBuilderExtensions.UseEndpoints*` or `Microsoft.AspNetCore.Builder.EndpointRoutingApplicationBuilderExtensions.UseRouting*`. The following code adds an endpoint to an ASP.NET Core in .NET 6 app:
+In .NET 6, routes can be added directly to the <xref:Microsoft.AspNetCore.Builder.WebApplication> without an explicit call to <xref:Microsoft.AspNetCore.Builder.EndpointRoutingApplicationBuilderExtensions.UseEndpoints*> or <xref:Microsoft.AspNetCore.Builder.EndpointRoutingApplicationBuilderExtensions.UseRouting*>. The following code adds an endpoint to an ASP.NET Core in .NET 6 app:
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+[!code-csharp[](samples/50-to-60/samples/Web6Samples/Program.cs?name=snippet_rt)]
 
-app.MapGet("/", () => "Hello World!");
+**Note:** Routes added directly to the <xref:Microsoft.AspNetCore.Builder.WebApplication> execute at the ***end*** of the pipeline.
 
-app.Run();
-```
+<!-- TODO, uncomment when article is updated for .NET 6
+For more information, see [Routing in ASP.NET Core](../fundamentals/routing.md)
+-->
 
-**Note:** Routes added directly to the `Microsoft.AspNetCore.Builder.WebApplication` execute at the ***end*** of the pipeline.
+<a name="ccr"></a>
 
 ## Change the content root, app name, and environment
 
@@ -88,25 +82,9 @@ public static IHostBuilder CreateHostBuilder(string[] args) =>
 
 ### ASP.NET Core in .NET 6
 
-```csharp
-var builder = WebApplication.CreateBuilder(new WebApplicationOptions
-{
-    Args = args,
-    ApplicationName = typeof(Program).Assembly.FullName,
-    ContentRootPath = Directory.GetCurrentDirectory(),
-    EnvironmentName = Environments.Staging,
-    WebRootPath = "customwwwroot"
-});
+[!code-csharp[](samples/50-to-60/samples/Web6Samples/Program.cs?name=snippet_root)]
 
-Console.WriteLine($"Application Name: {builder.Environment.ApplicationName}");
-Console.WriteLine($"Environment Name: {builder.Environment.EnvironmentName}");
-Console.WriteLine($"ContentRoot Path: {builder.Environment.ContentRootPath}");
-Console.WriteLine($"WebRootPath: {builder.Environment.WebRootPath}");
-
-var app = builder.Build();
-```
-
-For more information, see ASP.NET Core fundamentals overview
+For more information, see [ASP.NET Core fundamentals overview](../fundamentals/index.md)
 
 #### Change the content root, app name, and environment by environment variables or command line
 
@@ -137,15 +115,9 @@ public static IHostBuilder CreateHostBuilder(string[] args) =>
 
 ### ASP.NET Core in .NET 6
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
+[!code-csharp[](samples/50-to-60/samples/Web6Samples/Program.cs?name=snippet_conf)]
 
-builder.Configuration.AddIniFile("appsettings.ini");
-
-var app = builder.Build();
-```
-
-For detailed information, see File configuration providers in Configuration in ASP.NET Core.
+For detailed information, see [File configuration providers](../fundamentals/configuration/index.md?view=aspnetcore-6.0#file-configuration-provider) in [Configuration in ASP.NET Core](../fundamentals/configuration/index.md?view=aspnetcore-6.0).
 
 ## Add logging providers
 
@@ -166,16 +138,9 @@ public static IHostBuilder CreateHostBuilder(string[] args) =>
 
 ### ASP.NET Core in .NET 6
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
+[!code-csharp[](samples/50-to-60/samples/Web6Samples/Program.cs?name=snippet_log)]
 
-// Configure JSON logging to the console.
-builder.Logging.AddJsonConsole();
-
-var app = builder.Build();
-```
-
-For more information, see  Logging in .NET and ASP.NET Core.
+For more information, see  [Logging in .NET and ASP.NET Core](../fundamentals/logging/index.md?view=aspnetcore-6.0#).
 
 ## Add services
 
@@ -197,18 +162,11 @@ public class Startup
 
 ### ASP.NET Core in .NET 6
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
+[!code-csharp[](samples/50-to-60/samples/Web6Samples/Program.cs?name=snippet_svc)]
 
-// Add the memory cache services.
-builder.Services.AddMemoryCache();
+For more information, see  [Dependency injection in ASP.NET Core](../fundamentals/dependency-injection.md?view=aspnetcore-6.0#).
 
-// Add a custom scoped service.
-builder.Services.AddScoped<ITodoRepository, TodoRepository>();
-var app = builder.Build();
-```
-
-For more information, see  Dependency injection in ASP.NET Core.
+<a name="cii"></a>
 
 ## Customize IHostBuilder or IWebHostBuilder
 
@@ -228,14 +186,9 @@ public static IHostBuilder CreateHostBuilder(string[] args) =>
 
 #### ASP.NET Core in .NET 6
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
+[!code-csharp[](samples/50-to-60/samples/Web6Samples/Program.cs?name=snippet_hb)]
 
-// Wait 30 seconds for graceful shutdown.
-builder.Host.ConfigureHostOptions(o => o.ShutdownTimeout = TimeSpan.FromSeconds(30));
-
-var app = builder.Build();
-```
+### Customize IWebHostBuilder
 
 ### ASP.NET Core in .NET 5
 
@@ -252,19 +205,11 @@ public static IHostBuilder CreateHostBuilder(string[] args) =>
 
 ### ASP.NET Core in .NET 6
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-
-// Change the HTTP server implementation to be HTTP.sys based.
-// Windows only.
-builder.WebHost.UseHttpSys();
-
-var app = builder.Build();
-```
+[!code-csharp[](samples/50-to-60/samples/Web6Samples/Program.cs?name=snippet_whb)]
 
 ## Change the web root
 
-By default, the web root is relative to the content root in the `wwwroot` folder. Web root is where the static file middleware looks for static files. Web root can be changed by setting the `Microsoft.AspNetCore.Builder.WebApplicationOptions.WebRootPath` property on `Microsoft.AspNetCore.Builder.WebApplicationOptions`:
+By default, the web root is relative to the content root in the `wwwroot` folder. Web root is where the static file middleware looks for static files. Web root can be changed by setting the <xref:Microsoft.AspNetCore.Builder.WebApplicationOptions.WebRootPath> property on <xref:Microsoft.AspNetCore.Builder.WebApplicationOptions>:
 
 ### ASP.NET Core in .NET 5
 
@@ -281,20 +226,13 @@ public static IHostBuilder CreateHostBuilder(string[] args) =>
 
 ### ASP.NET Core in .NET 6
 
-```csharp
-var builder = WebApplication.CreateBuilder(new WebApplicationOptions
-{
-    Args = args,
-    // Look for static files in webroot
-    WebRootPath = "webroot"
-});
+[!code-csharp[](samples/50-to-60/samples/Web6Samples/Program.cs?name=snippet_wr)]
 
-var app = builder.Build();
-```
+<a name="cdi"></a>
 
 ## Custom dependency injection (DI) container
 
-The following .NET 5 and .NET 6 samples use Autofac
+The following .NET 5 and .NET 6 samples use [Autofac](https://docs.autofac.org/en/latest/integration/aspnetcore.html)
 
 ### ASP.NET Core in .NET 5
 
@@ -337,7 +275,7 @@ var app = builder.Build();
 
 ## Access additional services
 
-`Startup.Configure`  can inject any service added via the `Microsoft.Extensions.DependencyInjection.IServiceCollection`.
+`Startup.Configure`  can inject any service added via the <xref:Microsoft.Extensions.DependencyInjection.IServiceCollection>.
 
 ### ASP.NET Core in .NET 5
 
@@ -370,32 +308,18 @@ public class Startup
 
 In ASP.NET Core in .NET 6:
 
-* There are a few common services available as top level properties on `Microsoft.AspNetCore.Builder.WebApplication`.
-* Additional services need to be manually resolved from the `IServiceProvider` via WebApplication.Services.
+* There are a few common services available as top level properties on <xref:Microsoft.AspNetCore.Builder.WebApplication>.
+* Additional services need to be manually resolved from the `IServiceProvider` via [WebApplication.Services](xref:Microsoft.AspNetCore.Builder.WebApplication.Services).
 
-```csharp
-var builder = WebApplication.CreateBuilder(args);
+[!code-csharp[](samples/50-to-60/samples/Web6Samples/Program.cs?name=snippet_af)]
 
-builder.Services.AddSingleton<IService, Service>();
-
-var app = builder.Build();
-
-IService service = app.Services.GetRequiredService<IService>();
-ILogger logger = app.Logger;
-IHostApplicationLifetime lifetime = app.Lifetime;
-IWebHostEnvironment env = app.Environment;
-
-lifetime.ApplicationStarted.Register(() =>
-    logger.LogInformation(
-        $"The application {env.ApplicationName} started" +
-        $" with injected {service}"));
-```
+<a name="twa"></a>
 
 ## Test with WebApplicationFactory or TestServer
 
 ### ASP.NET Core in .NET 5
 
-In the following samples, the test project uses `TestServer` and `Microsoft.AspNetCore.Mvc.Testing.WebApplicationFactory`1`. These ship as separate packages that require explicit reference:
+In the following samples, the test project uses `TestServer` and <xref:Microsoft.AspNetCore.Mvc.Testing.WebApplicationFactory`1>. These ship as separate packages that require explicit reference:
 
 #### WebApplicationFactory
 
@@ -508,22 +432,7 @@ class MockHelloService : IHelloService
 
 ### ASP.NET Core in .NET 6
 
-```csharp
-
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddSingleton<IHelloService, HelloService>();
-
-var app = builder.Build();
-
-var helloService = app.Services.GetRequiredService<IHelloService>();
-
-app.MapGet("/", async context =>
-{
-    await context.Response.WriteAsync(helloService.HelloMessage);
-});
-
-app.Run();
-```
+[!code-csharp[](samples/50-to-60/samples/Web6Samples/Program.cs?name=snippet_test)]
 
 #### Project file (.csproj)
 
@@ -541,7 +450,7 @@ Or
 [assembly: InternalsVisibleTo("MyTestProject")]
 ```
 
-An alternative solution is to make the `Program` class public. `Program` can be made public with  Top-level statements by defining a `public partial Program` class in the project or in `Program.cs`:
+An alternative solution is to make the `Program` class public. `Program` can be made public with  [Top-level statements](/dotnet/csharp/fundamentals/program-structure/top-level-statements) by defining a `public partial Program` class in the project or in `Program.cs`:
 
 ```csharp
 var builder = WebApplication.CreateBuilder(args);

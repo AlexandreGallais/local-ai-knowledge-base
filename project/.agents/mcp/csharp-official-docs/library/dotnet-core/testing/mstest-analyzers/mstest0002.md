@@ -1,12 +1,20 @@
 ---
 title: "MSTEST0002: Test classes should have valid layout"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0002.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0002: Test classes should have valid layout"
+ms.date: 11/05/2026
+ai-usage: ai-assisted
+f1_keywords:
+- MSTEST0002
+- TestClassShouldBeValidAnalyzer
+helpviewer_keywords:
+- TestClassShouldBeValidAnalyzer
+- MSTEST0002
+author: evangelink
+ms.author: amauryleve
+dev_langs:
+- CSharp
+- VB
 ---
-
 # MSTEST0002: Test classes should have valid layout
 
 | Property                            | Value                                              |
@@ -35,7 +43,7 @@ MSTest uses a test class as the fixture that owns test methods, per-test state, 
 
 Generic base classes aren't inherently invalid. MSTest needs a concrete type to create a test instance, so runnable classes must have fully specified type arguments. A generic abstract base class can supply inherited tests to concrete derived classes that specify those arguments.
 
-Static classes can contain assembly or global lifecycle methods, which don't require a test-class instance. For more information, see MSTest lifecycle.
+Static classes can contain assembly or global lifecycle methods, which don't require a test-class instance. For more information, see [MSTest lifecycle](../unit-testing-mstest-writing-tests-lifecycle.md).
 
 ## How to fix violations
 
@@ -55,11 +63,11 @@ If you just want to suppress a single violation, add preprocessor directives to 
 #pragma warning restore MSTEST0002
 ```
 
-To disable the rule for a file, folder, or project, set its severity to `none` in the configuration file.
+To disable the rule for a file, folder, or project, set its severity to `none` in the [configuration file](../../../fundamentals/code-analysis/configuration-files.md).
 
 ```ini
 [*.{cs,vb}]
 dotnet_diagnostic.MSTEST0002.severity = none
 ```
 
-For more information, see How to suppress code analysis warnings.
+For more information, see [How to suppress code analysis warnings](../../../fundamentals/code-analysis/suppress-warnings.md).

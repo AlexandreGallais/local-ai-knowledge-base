@@ -1,143 +1,54 @@
 ---
-title: "Install .NET on Ubuntu (part 1 of 3)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/install/linux-ubuntu-install.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Install .NET on Ubuntu
+description: Demonstrates the various ways to install .NET SDK and .NET Runtime on Ubuntu. .NET is usually installed through APT.
+author: adegeo
+ms.author: adegeo
+ms.date: 11/11/2026
+ms.custom: updateeachrelease, linux-related-content
+zone_pivot_groups: ubuntu-install-set-one
 ---
 
 # Install .NET SDK or .NET Runtime on Ubuntu
 
 This article discusses how to install .NET on Ubuntu.
 
-Install the SDK (which includes the runtime) if you want to develop .NET apps. Or, if you only need to run apps, install the Runtime. If you're installing the Runtime, we suggest you install the **ASP.NET Core Runtime** as it includes both .NET and ASP.NET Core runtimes.
+[!INCLUDE [linux-intro-sdk-vs-runtime](includes/linux-intro-sdk-vs-runtime.md)]
 
-Use the `dotnet --list-sdks` and `dotnet --list-runtimes` commands to see which versions are installed. For more information, see How to check that .NET is already installed.
+[!INCLUDE [linux-install-package-manager-x64-vs-arm-ubuntu](includes/linux-install-package-manager-x64-vs-arm-ubuntu.md)]
 
-> **Important:**
-> Using a package manager to install .NET from the **Microsoft package feed** only supports the **x64** architecture. Other architectures, such as **Arm64**, aren't supported by the **Microsoft package feed**. Use the Ubuntu feeds or manually install .NET. Be cautious of package mix up problems when using multiple feeds. For more information, see .NET package mix ups on Linux.
+<!--
+===== Ubuntu 26.04
+-->
 
-For more information on installing .NET **without a package manager**, see one of the following articles:
-
-- Use the `install-dotnet` script to install .NET.
-- Manually install .NET.
-
-**os-linux-ubuntu-2604:**
+::: zone pivot="os-linux-ubuntu-2604"
 
 ## Ubuntu 26.04
 
-.NET is available in the Ubuntu package manager feeds. The Microsoft package repository no longer contains .NET packages for Ubuntu.
+[!INCLUDE [linux-ubuntu-package-feed-only](includes/linux-ubuntu-package-feed-only.md)]
 
 The following versions of .NET are supported or available for Ubuntu 26.04:
 
-| Supported .NET versions | Available inbuilt-in Ubuntu feed | Available inbackportsUbuntu feed | Available inMicrosoft feed |
+| Supported .NET versions | Available in<br>built-in Ubuntu feed | [Available in<br>backports<br>Ubuntu feed](linux-ubuntu-decision.md#ubuntu-net-backports-package-repository) | [Available in<br>Microsoft feed](linux-ubuntu-decision.md#register-the-microsoft-package-repository) |
 |-------------------------|--------------------------------------|-----------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
 | 11.0, 10.0              | 10.0                                 | 9.0, 8.0                                                                                            |None                                                                                         |
 
-When an Ubuntu version falls out of support, .NET is no longer supported with that version.
+When an [Ubuntu version](https://wiki.ubuntu.com/Releases) falls out of support, .NET is no longer supported with that version.
 
-# .NET 10
+# [.NET 10](#tab/dotnet10)
 
-### Install the SDK
+[!INCLUDE [linux-apt-install-100](includes/linux-install-100-apt.md)]
 
-The .NET SDK allows you to develop apps with .NET. If you install the .NET SDK, you don't need to install the corresponding runtime. To install the .NET SDK, run the following commands:
+# [.NET 9](#tab/dotnet9)
 
-```bash
-sudo apt-get update && \
-  sudo apt-get install -y dotnet-sdk-10.0
-```
+[!INCLUDE [linux-ubuntu-register-backports](includes/linux-ubuntu-register-backports.md)]
 
-To learn how to use the .NET CLI, see .NET CLI overview.
+[!INCLUDE [linux-apt-install-90](includes/linux-install-90-apt.md)]
 
-### Install the runtime
+# [.NET 8](#tab/dotnet8)
 
-The ASP.NET Core Runtime allows you to run apps that were made with .NET that didn't provide the runtime. The following commands install the ASP.NET Core Runtime, which is the most compatible runtime for .NET. In your terminal, run the following commands:
+[!INCLUDE [linux-ubuntu-register-backports](includes/linux-ubuntu-register-backports.md)]
 
-```bash
-sudo apt-get update && \
-  sudo apt-get install -y aspnetcore-runtime-10.0
-```
-
-As an alternative to the ASP.NET Core Runtime, you can install the .NET Runtime, which doesn't include ASP.NET Core support: replace `aspnetcore-runtime-10.0` in the previous command with `dotnet-runtime-10.0`:
-
-```bash
-sudo apt-get install -y dotnet-runtime-10.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
-
-# .NET 9
-
-.NET is available in the Ubuntu .NET backports package repository. To add the repository, open a terminal and run the following command:
-
-```bash
-sudo add-apt-repository ppa:dotnet/backports
-```
-
-### Install the SDK
-
-The .NET SDK allows you to develop apps with .NET. If you install the .NET SDK, you don't need to install the corresponding runtime. To install the .NET SDK, run the following commands:
-
-```bash
-sudo apt-get update && \
-  sudo apt-get install -y dotnet-sdk-9.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
-
-### Install the runtime
-
-The ASP.NET Core Runtime allows you to run apps that were made with .NET that didn't provide the runtime. The following commands install the ASP.NET Core Runtime, which is the most compatible runtime for .NET. In your terminal, run the following commands:
-
-```bash
-sudo apt-get update && \
-  sudo apt-get install -y aspnetcore-runtime-9.0
-```
-
-As an alternative to the ASP.NET Core Runtime, you can install the .NET Runtime, which doesn't include ASP.NET Core support: replace `aspnetcore-runtime-9.0` in the previous command with `dotnet-runtime-9.0`:
-
-```bash
-sudo apt-get install -y dotnet-runtime-9.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
-
-# .NET 8
-
-.NET is available in the Ubuntu .NET backports package repository. To add the repository, open a terminal and run the following command:
-
-```bash
-sudo add-apt-repository ppa:dotnet/backports
-```
-
-### Install the SDK
-
-The .NET SDK allows you to develop apps with .NET. If you install the .NET SDK, you don't need to install the corresponding runtime. To install the .NET SDK, run the following commands:
-
-```bash
-sudo apt-get update && \
-  sudo apt-get install -y dotnet-sdk-8.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
-
-### Install the runtime
-
-The ASP.NET Core Runtime allows you to run apps that were made with .NET that didn't provide the runtime. The following commands install the ASP.NET Core Runtime, which is the most compatible runtime for .NET. In your terminal, run the following commands:
-
-```bash
-sudo apt-get update && \
-  sudo apt-get install -y aspnetcore-runtime-8.0
-```
-
-As an alternative to the ASP.NET Core Runtime, you can install the .NET Runtime, which doesn't include ASP.NET Core support: replace `aspnetcore-runtime-8.0` in the previous command with `dotnet-runtime-8.0`:
-
-```bash
-sudo apt-get install -y dotnet-runtime-8.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
+[!INCLUDE [linux-apt-install-80](includes/linux-install-80-apt.md)]
 
 ---
 
@@ -156,115 +67,39 @@ When you install with a package manager, these libraries are installed for you. 
 - tzdata
 - zlib1g
 
-Dependencies can be installed with the `apt install` command. The following snippet demonstrates installing the `zlib1g` library:
+[!INCLUDE [linux-ubuntu-deps-example](includes/linux-ubuntu-deps-example.md)]
 
-```bash
-sudo apt install zlib1g
-```
+::: zone-end
 
-**os-linux-ubuntu-2510:**
+<!--
+===== Ubuntu 25.10
+-->
+
+::: zone pivot="os-linux-ubuntu-2510"
 
 ## Ubuntu 25.10
 
-.NET is available in the Ubuntu package manager feeds. The Microsoft package repository no longer contains .NET packages for Ubuntu.
+[!INCLUDE [linux-ubuntu-package-feed-only](includes/linux-ubuntu-package-feed-only.md)]
 
 The following versions of .NET are supported or available for Ubuntu 25.10:
 
-| Supported .NET versions | Available inbuilt-in Ubuntu feed | Available inbackportsUbuntu feed | Available inMicrosoft feed |
+| Supported .NET versions | Available in<br>built-in Ubuntu feed | [Available in<br>backports<br>Ubuntu feed](linux-ubuntu-decision.md#ubuntu-net-backports-package-repository) | [Available in<br>Microsoft feed](linux-ubuntu-decision.md#register-the-microsoft-package-repository) |
 |-------------------------|--------------------------------------|-----------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
 | None                    | 10.0, 9.0, 8.0                       | None                                                                                                |None                                                                                         |
 
-When an Ubuntu version falls out of support, .NET is no longer supported with that version.
+When an [Ubuntu version](https://wiki.ubuntu.com/Releases) falls out of support, .NET is no longer supported with that version.
 
-# .NET 10
+# [.NET 10](#tab/dotnet10)
 
-### Install the SDK
+[!INCLUDE [linux-apt-install-100](includes/linux-install-100-apt.md)]
 
-The .NET SDK allows you to develop apps with .NET. If you install the .NET SDK, you don't need to install the corresponding runtime. To install the .NET SDK, run the following commands:
+# [.NET 9](#tab/dotnet9)
 
-```bash
-sudo apt-get update && \
-  sudo apt-get install -y dotnet-sdk-10.0
-```
+[!INCLUDE [linux-apt-install-90](includes/linux-install-90-apt.md)]
 
-To learn how to use the .NET CLI, see .NET CLI overview.
+# [.NET 8](#tab/dotnet8)
 
-### Install the runtime
-
-The ASP.NET Core Runtime allows you to run apps that were made with .NET that didn't provide the runtime. The following commands install the ASP.NET Core Runtime, which is the most compatible runtime for .NET. In your terminal, run the following commands:
-
-```bash
-sudo apt-get update && \
-  sudo apt-get install -y aspnetcore-runtime-10.0
-```
-
-As an alternative to the ASP.NET Core Runtime, you can install the .NET Runtime, which doesn't include ASP.NET Core support: replace `aspnetcore-runtime-10.0` in the previous command with `dotnet-runtime-10.0`:
-
-```bash
-sudo apt-get install -y dotnet-runtime-10.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
-
-# .NET 9
-
-### Install the SDK
-
-The .NET SDK allows you to develop apps with .NET. If you install the .NET SDK, you don't need to install the corresponding runtime. To install the .NET SDK, run the following commands:
-
-```bash
-sudo apt-get update && \
-  sudo apt-get install -y dotnet-sdk-9.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
-
-### Install the runtime
-
-The ASP.NET Core Runtime allows you to run apps that were made with .NET that didn't provide the runtime. The following commands install the ASP.NET Core Runtime, which is the most compatible runtime for .NET. In your terminal, run the following commands:
-
-```bash
-sudo apt-get update && \
-  sudo apt-get install -y aspnetcore-runtime-9.0
-```
-
-As an alternative to the ASP.NET Core Runtime, you can install the .NET Runtime, which doesn't include ASP.NET Core support: replace `aspnetcore-runtime-9.0` in the previous command with `dotnet-runtime-9.0`:
-
-```bash
-sudo apt-get install -y dotnet-runtime-9.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
-
-# .NET 8
-
-### Install the SDK
-
-The .NET SDK allows you to develop apps with .NET. If you install the .NET SDK, you don't need to install the corresponding runtime. To install the .NET SDK, run the following commands:
-
-```bash
-sudo apt-get update && \
-  sudo apt-get install -y dotnet-sdk-8.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
-
-### Install the runtime
-
-The ASP.NET Core Runtime allows you to run apps that were made with .NET that didn't provide the runtime. The following commands install the ASP.NET Core Runtime, which is the most compatible runtime for .NET. In your terminal, run the following commands:
-
-```bash
-sudo apt-get update && \
-  sudo apt-get install -y aspnetcore-runtime-8.0
-```
-
-As an alternative to the ASP.NET Core Runtime, you can install the .NET Runtime, which doesn't include ASP.NET Core support: replace `aspnetcore-runtime-8.0` in the previous command with `dotnet-runtime-8.0`:
-
-```bash
-sudo apt-get install -y dotnet-runtime-8.0
-```
-
-To learn how to use the .NET CLI, see .NET CLI overview.
+[!INCLUDE [linux-apt-install-80](includes/linux-install-80-apt.md)]
 
 ---
 
@@ -282,10 +117,188 @@ When you install with a package manager, these libraries are installed for you. 
 - tzdata
 - zlib1g
 
-Dependencies can be installed with the `apt install` command. The following snippet demonstrates installing the `zlib1g` library:
+[!INCLUDE [linux-ubuntu-deps-example](includes/linux-ubuntu-deps-example.md)]
 
-```bash
-sudo apt install zlib1g
-```
+::: zone-end
 
-**os-linux-ubuntu-2504:**
+<!--
+===== Ubuntu 25.04
+-->
+
+::: zone pivot="os-linux-ubuntu-2504"
+
+## Ubuntu 25.04
+
+[!INCLUDE [linux-ubuntu-package-feed-only](includes/linux-ubuntu-package-feed-only.md)]
+
+The following versions of .NET are supported or available for Ubuntu 25.04:
+
+| Supported .NET versions | Available in<br>built-in Ubuntu feed | [Available in<br>backports<br>Ubuntu feed](linux-ubuntu-decision.md#ubuntu-net-backports-package-repository) | [Available in<br>Microsoft feed](linux-ubuntu-decision.md#register-the-microsoft-package-repository) |
+|-------------------------|--------------------------------------|-----------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| None                    | 10.0, 9.0, 8.0                       | None                                                                                                |None                                                                                         |
+
+When an [Ubuntu version](https://wiki.ubuntu.com/Releases) falls out of support, .NET is no longer supported with that version.
+
+# [.NET 10](#tab/dotnet10)
+
+[!INCLUDE [linux-apt-install-100](includes/linux-install-100-apt.md)]
+
+# [.NET 9](#tab/dotnet9)
+
+[!INCLUDE [linux-apt-install-90](includes/linux-install-90-apt.md)]
+
+# [.NET 8](#tab/dotnet8)
+
+[!INCLUDE [linux-apt-install-80](includes/linux-install-80-apt.md)]
+
+---
+
+## Dependencies
+
+When you install with a package manager, these libraries are installed for you. But, if you manually install .NET or you publish a self-contained app, you'll need to make sure these libraries are installed:
+
+- ca-certificates
+- libc6
+- libgcc-s1
+- libgssapi-krb5-2
+- libicu76
+- libssl3t64
+- libstdc++6
+- tzdata
+- zlib1g
+
+[!INCLUDE [linux-ubuntu-deps-example](includes/linux-ubuntu-deps-example.md)]
+
+::: zone-end
+
+<!--
+===== Ubuntu 24.04
+-->
+
+::: zone pivot="os-linux-ubuntu-2404"
+
+## Ubuntu 24.04
+
+[!INCLUDE [linux-ubuntu-package-feed-only](includes/linux-ubuntu-package-feed-only.md)]
+
+The following versions of .NET are supported or available for Ubuntu 24.04:
+
+| Supported .NET versions | Available in<br>built-in Ubuntu feed | [Available in<br>backports<br>Ubuntu feed](linux-ubuntu-decision.md#ubuntu-net-backports-package-repository) | [Available in<br>Microsoft feed](linux-ubuntu-decision.md#register-the-microsoft-package-repository) |
+|-------------------------|--------------------------------------|-----------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| 11.0, 10.0              | 10.0, 8.0                            | 9.0, 7.0, 6.0                                                                                       |None                                                                                         |
+
+When an [Ubuntu version](https://wiki.ubuntu.com/Releases) falls out of support, .NET is no longer supported with that version.
+
+# [.NET 10](#tab/dotnet10)
+
+[!INCLUDE [linux-apt-install-100](includes/linux-install-100-apt.md)]
+
+# [.NET 9](#tab/dotnet9)
+
+[!INCLUDE [linux-ubuntu-register-backports](includes/linux-ubuntu-register-backports.md)]
+
+[!INCLUDE [linux-apt-install-90](includes/linux-install-90-apt.md)]
+
+# [.NET 8](#tab/dotnet8)
+
+[!INCLUDE [linux-apt-install-80](includes/linux-install-80-apt.md)]
+
+---
+
+## Dependencies
+
+When you install with a package manager, these libraries are installed for you. But, if you manually install .NET or you publish a self-contained app, you'll need to make sure these libraries are installed:
+
+- ca-certificates
+- libc6
+- libgcc-s1
+- libgssapi-krb5-2
+- libicu74
+- libssl3t64
+- libstdc++6
+- tzdata
+- zlib1g
+
+[!INCLUDE [linux-ubuntu-deps-example](includes/linux-ubuntu-deps-example.md)]
+
+::: zone-end
+
+<!--
+===== Ubuntu 22.04
+-->
+
+::: zone pivot="os-linux-ubuntu-2204"
+
+## Ubuntu 22.04
+
+[!INCLUDE [linux-ubuntu-package-feed-both](includes/linux-ubuntu-package-feed-both.md)]
+
+The following versions of .NET are supported or available for Ubuntu 22.04:
+
+| Supported .NET versions | Available in<br>built-in Ubuntu feed | [Available in<br>.NET backports<br>Ubuntu feed](linux-ubuntu-decision.md#ubuntu-net-backports-package-repository) | [Available in<br>Microsoft feed](linux-ubuntu-decision.md#register-the-microsoft-package-repository) |
+|-------------------------|--------------------------------------|----------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| 11.0, 10.0              | 8.0, 7.0, 6.0                        | 10.0, 9.0                                                                                                | 8.0, 7.0, 6.0, 3.1                |
+
+[!INCLUDE [linux-ubuntu-feed-sdk-note](includes/linux-ubuntu-feed-sdk-note.md)]
+
+When an [Ubuntu version](https://wiki.ubuntu.com/Releases) falls out of support, .NET is no longer supported with that version.
+
+# [.NET 10](#tab/dotnet10)
+
+[!INCLUDE [linux-ubuntu-register-backports](includes/linux-ubuntu-register-backports.md)]
+
+[!INCLUDE [linux-apt-install-100](includes/linux-install-100-apt.md)]
+
+# [.NET 9](#tab/dotnet9)
+
+[!INCLUDE [linux-ubuntu-register-backports](includes/linux-ubuntu-register-backports.md)]
+
+[!INCLUDE [linux-apt-install-90](includes/linux-install-90-apt.md)]
+
+# [.NET 8](#tab/dotnet8)
+
+[!INCLUDE [linux-apt-install-80](includes/linux-install-80-apt.md)]
+
+---
+
+## Dependencies
+
+When you install with a package manager, these libraries are installed for you. But, if you manually install .NET or you publish a self-contained app, you'll need to make sure these libraries are installed:
+
+- ca-certificates
+- libc6
+- libgcc-s1
+- libgssapi-krb5-2
+- libicu70
+- libssl3
+- libstdc++6
+- tzdata
+- zlib1g
+
+[!INCLUDE [linux-ubuntu-deps-example](includes/linux-ubuntu-deps-example.md)]
+
+::: zone-end
+
+<!--
+===== All versions
+-->
+
+::: zone pivot="os-linux-ubuntu-2604,os-linux-ubuntu-2510,os-linux-ubuntu-2504,os-linux-ubuntu-2404,os-linux-ubuntu-2204"
+
+## Unsupported versions
+
+[!INCLUDE [versions-not-supported](includes/versions-not-supported.md)]
+
+## How to install other versions
+
+.NET package names are standardized across all Linux distributions. The following table lists the packages:
+
+[!INCLUDE [package-manager-switcher](./includes/package-manager-heading-hack-pkgname.md)]
+
+::: zone-end
+
+## Next steps
+
+- [.NET CLI overview](../tools/index.md)
+- [How to enable TAB completion for the .NET CLI.](../tools/enable-tab-autocomplete.md)
+- [Tutorial: Create a console application with .NET.](../tutorials/create-console-app.md)

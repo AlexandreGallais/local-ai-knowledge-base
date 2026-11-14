@@ -1,12 +1,3 @@
----
-title: "std::os::unix::net::datagram"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/os/unix/net/datagram.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::os::unix::net::datagram
 
 ## struct UnixDatagram
@@ -25,7 +16,7 @@ fn main() -> std::io::Result<()> {
     println!("socket {:?} sent {:?}", address, &buf[..count]);
     Ok(())
 }
-```rust
+```
 
 ## UnixDatagram::bind
 
@@ -42,7 +33,7 @@ let sock = match UnixDatagram::bind("/path/to/the/socket") {
         return
     }
 };
-```rust
+```
 
 ## UnixDatagram::bind_addr
 
@@ -65,7 +56,7 @@ fn main() -> std::io::Result<()> {
     };
     Ok(())
 }
-```rust
+```
 
 ## UnixDatagram::unbound
 
@@ -82,7 +73,7 @@ let sock = match UnixDatagram::unbound() {
         return
     }
 };
-```rust
+```
 
 ## UnixDatagram::pair
 
@@ -99,7 +90,7 @@ let (sock1, sock2) = match UnixDatagram::pair() {
         return
     }
 };
-```rust
+```
 
 ## UnixDatagram::connect
 
@@ -120,7 +111,7 @@ fn main() -> std::io::Result<()> {
     };
     Ok(())
 }
-```rust
+```
 
 ## UnixDatagram::connect_addr
 
@@ -144,7 +135,7 @@ fn main() -> std::io::Result<()> {
     };
     Ok(())
 }
-```rust
+```
 
 ## UnixDatagram::try_clone
 
@@ -159,7 +150,7 @@ fn main() -> std::io::Result<()> {
     let sock_copy = sock.try_clone().expect("try_clone failed");
     Ok(())
 }
-```rust
+```
 
 ## UnixDatagram::local_addr
 
@@ -174,7 +165,7 @@ fn main() -> std::io::Result<()> {
     let addr = sock.local_addr().expect("Couldn't get local address");
     Ok(())
 }
-```rust
+```
 
 ## UnixDatagram::peer_addr
 
@@ -191,7 +182,7 @@ fn main() -> std::io::Result<()> {
     let addr = sock.peer_addr().expect("Couldn't get peer address");
     Ok(())
 }
-```rust
+```
 
 ## UnixDatagram::recv_from
 
@@ -208,7 +199,7 @@ fn main() -> std::io::Result<()> {
     println!("received {size} bytes from {sender:?}");
     Ok(())
 }
-```rust
+```
 
 ## UnixDatagram::recv
 
@@ -224,7 +215,7 @@ fn main() -> std::io::Result<()> {
     sock.recv(buf.as_mut_slice()).expect("recv function failed");
     Ok(())
 }
-```rust
+```
 
 ## UnixDatagram::send_to
 
@@ -239,7 +230,7 @@ fn main() -> std::io::Result<()> {
     sock.send_to(b"omelette au fromage", "/some/sock").expect("send_to function failed");
     Ok(())
 }
-```rust
+```
 
 ## UnixDatagram::send_to_addr
 
@@ -257,7 +248,7 @@ fn main() -> std::io::Result<()> {
     sock.send_to_addr(b"bacon egg and cheese", &addr).expect("send_to_addr function failed");
     Ok(())
 }
-```rust
+```
 
 ## UnixDatagram::send
 
@@ -273,7 +264,7 @@ fn main() -> std::io::Result<()> {
     sock.send(b"omelette au fromage").expect("send_to function failed");
     Ok(())
 }
-```rust
+```
 
 ## UnixDatagram::set_read_timeout
 
@@ -292,7 +283,7 @@ fn main() -> std::io::Result<()> {
     assert_eq!(err.kind(), io::ErrorKind::InvalidInput);
     Ok(())
 }
-```rust
+```
 
 ## UnixDatagram::set_write_timeout
 
@@ -311,7 +302,7 @@ fn main() -> std::io::Result<()> {
     assert_eq!(err.kind(), io::ErrorKind::InvalidInput);
     Ok(())
 }
-```rust
+```
 
 ## UnixDatagram::read_timeout
 
@@ -329,7 +320,7 @@ fn main() -> std::io::Result<()> {
     assert_eq!(sock.read_timeout()?, Some(Duration::new(1, 0)));
     Ok(())
 }
-```rust
+```
 
 ## UnixDatagram::write_timeout
 
@@ -347,7 +338,7 @@ fn main() -> std::io::Result<()> {
     assert_eq!(sock.write_timeout()?, Some(Duration::new(1, 0)));
     Ok(())
 }
-```rust
+```
 
 ## UnixDatagram::set_nonblocking
 
@@ -362,7 +353,7 @@ fn main() -> std::io::Result<()> {
     sock.set_nonblocking(true).expect("set_nonblocking function failed");
     Ok(())
 }
-```rust
+```
 
 ## UnixDatagram::take_error
 
@@ -379,7 +370,7 @@ fn main() -> std::io::Result<()> {
     }
     Ok(())
 }
-```rust
+```
 
 ## UnixDatagram::shutdown
 
@@ -395,4 +386,4 @@ fn main() -> std::io::Result<()> {
     sock.shutdown(Shutdown::Both).expect("shutdown function failed");
     Ok(())
 }
-```rust
+```

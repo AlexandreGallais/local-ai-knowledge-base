@@ -1,15 +1,14 @@
 ---
 title: "Managing Namespaces in an XML Document"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/managing-namespaces-in-an-xml-document.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to manage namespaces in an XML document. XML namespaces associate element and attribute names in an XML document with custom and predefined URIs.
+ms.date: "03/30/2017"
+ms.assetid: 682643fc-b848-4e42-8c0d-50deeaeb5f2a
 ---
-
 # Managing Namespaces in an XML Document
 
 XML namespaces associate element and attribute names in an XML document with custom and predefined URIs. To create these associations, you define prefixes for namespace URIs, and use those prefixes to qualify element and attribute names in XML data. Namespaces prevent element and attribute name collisions, and enable elements and attributes of the same name to be handled and validated differently.
+
+<a name="declare"></a>
 
 ## Declaring namespaces
 
@@ -28,6 +27,8 @@ XML namespaces associate element and attribute names in an XML document with cus
 ```
 
  To signify that an element is a part of a particular namespace, add the namespace prefix to it. For example, if an `Author` element belongs to the `mybook` namespace, it is declared as `<mybook:Author>`.
+
+<a name="scope"></a>
 
 ## Declaration scope
 
@@ -58,28 +59,28 @@ XML namespaces associate element and attribute names in an XML document with cus
 
 ## Managing namespaces
 
- The `System.Xml.XmlNamespaceManager` class stores a collection of namespace URIs and their prefixes, and lets you look up, add, and remove namespaces from this collection. In certain contexts, this class is required for better XML processing performance. For example, the `System.Xml.Xsl.XsltContext` class uses `System.Xml.XmlNamespaceManager` for XPath support.
+ The <xref:System.Xml.XmlNamespaceManager> class stores a collection of namespace URIs and their prefixes, and lets you look up, add, and remove namespaces from this collection. In certain contexts, this class is required for better XML processing performance. For example, the <xref:System.Xml.Xsl.XsltContext> class uses <xref:System.Xml.XmlNamespaceManager> for XPath support.
 
- The namespace manager doesn't perform any validation on the namespaces, but assumes that prefixes and namespaces have already been verified and conform to the W3C Namespaces specification.
+ The namespace manager doesn't perform any validation on the namespaces, but assumes that prefixes and namespaces have already been verified and conform to the [W3C Namespaces](https://www.w3.org/TR/REC-xml-names/) specification.
 
-> **Note:**
-> LINQ TO XML in C# and Visual Basic don't use `System.Xml.XmlNamespaceManager` to manage namespaces. See Working with XML Namespaces (C#) and Working with XML Namespaces (Visual Basic) in the LINQ documentation for information about managing namespaces when using LINQ to XML.
+> [!NOTE]
+> LINQ TO XML in [C#](../../linq/linq-xml-overview.md) and [Visual Basic](../../linq/linq-xml-overview.md) don't use <xref:System.Xml.XmlNamespaceManager> to manage namespaces. See [Working with XML Namespaces (C#)](../../linq/namespaces-overview.md) and [Working with XML Namespaces (Visual Basic)](../../linq/namespaces-overview.md) in the LINQ documentation for information about managing namespaces when using LINQ to XML.
 
- Here are some of the management and lookup tasks you can perform with the `System.Xml.XmlNamespaceManager` class. For more information and examples, follow the links to the reference page for each method or property.
+ Here are some of the management and lookup tasks you can perform with the <xref:System.Xml.XmlNamespaceManager> class. For more information and examples, follow the links to the reference page for each method or property.
 
 |To|Use|
 |--------|---------|
-|Add a namespace|`System.Xml.XmlNamespaceManager.AddNamespace*` method|
-|Remove a namespace|`System.Xml.XmlNamespaceManager.RemoveNamespace*` method|
-|Find the URI for the default namespace|`System.Xml.XmlNamespaceManager.DefaultNamespace` property|
-|Find the URI for a namespace prefix|`System.Xml.XmlNamespaceManager.LookupNamespace*` method|
-|Find the prefix for a namespace URI|`System.Xml.XmlNamespaceManager.LookupPrefix*` method|
-|Get a list of namespaces in the current node|`System.Xml.XmlNamespaceManager.GetNamespacesInScope*` method|
-|Scope a namespace|`System.Xml.XmlNamespaceManager.PushScope*` and `System.Xml.XmlNamespaceManager.PopScope*` methods|
-|Check whether a prefix is defined in the current scope|`System.Xml.XmlNamespaceManager.HasNamespace*` method|
-|Get the name table used to look up prefixes and URIs|`System.Xml.XmlNamespaceManager.NameTable` property|
+|Add a namespace|<xref:System.Xml.XmlNamespaceManager.AddNamespace*> method|
+|Remove a namespace|<xref:System.Xml.XmlNamespaceManager.RemoveNamespace*> method|
+|Find the URI for the default namespace|<xref:System.Xml.XmlNamespaceManager.DefaultNamespace> property|
+|Find the URI for a namespace prefix|<xref:System.Xml.XmlNamespaceManager.LookupNamespace*> method|
+|Find the prefix for a namespace URI|<xref:System.Xml.XmlNamespaceManager.LookupPrefix*> method|
+|Get a list of namespaces in the current node|<xref:System.Xml.XmlNamespaceManager.GetNamespacesInScope*> method|
+|Scope a namespace|<xref:System.Xml.XmlNamespaceManager.PushScope*> and <xref:System.Xml.XmlNamespaceManager.PopScope*> methods|
+|Check whether a prefix is defined in the current scope|<xref:System.Xml.XmlNamespaceManager.HasNamespace*> method|
+|Get the name table used to look up prefixes and URIs|<xref:System.Xml.XmlNamespaceManager.NameTable> property|
 
 ## See also
 
-- `System.Xml.XmlNamespaceManager`
-- XML Documents and Data
+- <xref:System.Xml.XmlNamespaceManager>
+- [XML Documents and Data](index.md)

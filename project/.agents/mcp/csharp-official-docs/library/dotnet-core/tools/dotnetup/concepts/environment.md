@@ -1,16 +1,14 @@
 ---
-title: "dotnetup environment configuration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/concepts/environment.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnetup environment configuration
+description: Learn how dotnetup configures PATH and DOTNET_ROOT for managed .NET installations.
+ms.topic: concept-article
+ms.date: 08/11/2026
+ai-usage: ai-assisted
 ---
 
 # dotnetup environment configuration
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 Dotnetup can configure the environment to make the .NET SDKs and Runtimes it
 installs available.  It does this by setting the following environment
@@ -125,7 +123,7 @@ For PowerShell:
 dotnetup env script --shell pwsh | Invoke-Expression
 ```
 
-`env script` follows the stored configuration when you do not pass <example-value>
+`env script` follows the stored configuration when you do not pass selection
 options. Use `--dotnet`, `--dotnetup`, or both to select the generated
 content.
 

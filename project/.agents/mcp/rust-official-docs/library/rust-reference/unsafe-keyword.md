@@ -1,12 +1,3 @@
----
-title: "The unsafe keyword"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/unsafe-keyword.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[unsafe]
 # The `unsafe` keyword
 
@@ -18,7 +9,7 @@ The `unsafe` keyword is used to create or discharge the obligation to prove some
 - It is used to mark code that the programmer *asserts* satisfies safety conditions defined elsewhere.
   - This includes `unsafe {}`, `unsafe impl`, `unsafe fn` without [`unsafe_op_in_unsafe_fn`], `unsafe extern`, and `#[unsafe(attr)]`.
 
-The following discusses each of these cases. See the keyword documentation for some illustrative examples.
+The following discusses each of these cases. See the [keyword documentation][keyword] for some illustrative examples.
 
 r[unsafe.positions]
 The `unsafe` keyword can occur in several different contexts:
@@ -55,7 +46,9 @@ Unsafe blocks are the logical dual to unsafe functions: where unsafe functions d
 
 Unsafe blocks are used to wrap foreign libraries, make direct use of hardware or implement features not directly present in the language. For example, Rust provides the language features necessary to implement memory-safe concurrency in the language but the implementation of threads and message passing in the standard library uses unsafe blocks.
 
-Rust's type system is a conservative approximation of the dynamic safety requirements, so in some cases there is a performance cost to using safe code. For example, a doubly-linked list is not a tree structure and can only be represented with reference-counted pointers in safe code. By using `unsafe` blocks to represent the reverse links as raw pointers, it can be implemented without reference counting. (See "Learn Rust With Entirely Too Many Linked Lists" for a more in-depth exploration of this particular example.)
+Rust's type system is a conservative approximation of the dynamic safety requirements, so in some cases there is a performance cost to using safe code. For example, a doubly-linked list is not a tree structure and can only be represented with reference-counted pointers in safe code. By using `unsafe` blocks to represent the reverse links as raw pointers, it can be implemented without reference counting. (See ["Learn Rust With Entirely Too Many Linked Lists"](https://rust-unofficial.github.io/too-many-lists/) for a more in-depth exploration of this particular example.)
+
+[Unsafety]: unsafety.md
 
 r[unsafe.trait]
 ## Unsafe traits (`unsafe trait`)
@@ -73,6 +66,10 @@ When implementing an unsafe trait, the implementation needs to be prefixed with 
 
 Unsafe trait implementations are the logical dual to unsafe traits: where unsafe traits define a proof obligation that implementations must uphold, unsafe implementations state that all relevant proof obligations have been discharged.
 
+[keyword]: ../std/keyword.unsafe.html
+[`get_unchecked`]: slice::get_unchecked
+[`unsafe_op_in_unsafe_fn`]: ../rustc/lints/listing/allowed-by-default.html#unsafe-op-in-unsafe-fn
+
 r[unsafe.extern]
 ## Unsafe external blocks (`unsafe extern`)
 
@@ -83,7 +80,11 @@ r[unsafe.extern.edition2024]
 > [!EDITION-2024]
 > Prior to edition 2024, `extern` blocks were allowed without being qualified as `unsafe`.
 
+[external block]: items/external-blocks.md
+
 r[unsafe.attribute]
 ## Unsafe attributes (`#[unsafe(attr)]`)
 
 An [unsafe attribute] is one that has extra safety conditions that must be upheld when using the attribute. The compiler cannot check whether these conditions have been upheld.  To assert that they have been, these attributes must be wrapped in `unsafe(..)`, e.g. `#[unsafe(no_mangle)]`.
+
+[unsafe attribute]: attributes.md

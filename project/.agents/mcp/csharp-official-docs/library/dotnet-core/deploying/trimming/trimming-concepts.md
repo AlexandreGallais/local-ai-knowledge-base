@@ -1,12 +1,11 @@
 ---
-title: "Understanding trim analysis"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/deploying/trimming/trimming-concepts.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Understanding trim analysis
+description: Learn the fundamental concepts of how trim analysis works, why certain patterns produce warnings, and how to make code trim-compatible from first principles.
+author: agocke
+ms.author: angocke
+ms.date: 11/04/2025
+ai-usage: ai-assisted
 ---
-
 # Understanding trim analysis
 
 This article explains the fundamental concepts behind trim analysis to help you understand why certain code patterns produce warnings and how to make your code trim-compatible. Understanding these concepts will help you make informed decisions when addressing trim warnings rather than simply "spreading attributes around to silence the tooling."
@@ -87,7 +86,7 @@ Consequently, the trimmer produces a warning on this code.
 
 ## Understanding DynamicallyAccessedMembers
 
-`System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute` solves the reflection problem by creating an explicit contract between the caller and the called method.
+<xref:System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute> solves the reflection problem by creating an explicit contract between the caller and the called method.
 
 ### The fundamental purpose
 
@@ -187,15 +186,15 @@ If you can't fulfill the contract (like in the second example), you'll get a war
 
 ## Understanding RequiresUnreferencedCode
 
-Some code patterns simply cannot be made statically analyzable. For these cases, use `System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute`.
+Some code patterns simply cannot be made statically analyzable. For these cases, use <xref:System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute>.
 
 ### When to use RequiresUnreferencedCode
 
-Use the `System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute` attribute when:
+Use the <xref:System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute> attribute when:
 
 - **The reflection pattern is fundamentally dynamic**: Loading assemblies or types by string names from external sources.
 - **The complexity is too high to annotate**: Code that uses reflection in complex, data-driven ways.
-- **You're using runtime code generation**: Technologies like `System.Reflection.Emit` or the `dynamic` keyword.
+- **You're using runtime code generation**: Technologies like <xref:System.Reflection.Emit> or the `dynamic` keyword.
 
 Example:
 
@@ -387,7 +386,7 @@ void LoadPlugins(string pluginDirectory)
 // Use source generators to create plugin registration code at compile time
 ```
 
-## Key <example-value>
+## Key takeaways
 
 - **The trimmer uses static analysis** - it can only understand code paths visible at compile time.
 - **Reflection breaks static analysis** - the trimmer can't see what reflection will access at runtime.
@@ -398,6 +397,6 @@ void LoadPlugins(string pluginDirectory)
 
 ## Next steps
 
-- Fix trim warnings - Apply these concepts to resolve warnings in your code
-- Prepare libraries for trimming - Make your libraries trim-compatible
-- Trim warning reference - Detailed information about specific warnings
+- [Fix trim warnings](fixing-warnings.md) - Apply these concepts to resolve warnings in your code
+- [Prepare libraries for trimming](prepare-libraries-for-trimming.md) - Make your libraries trim-compatible
+- [Trim warning reference](trim-warnings/il2026.md) - Detailed information about specific warnings

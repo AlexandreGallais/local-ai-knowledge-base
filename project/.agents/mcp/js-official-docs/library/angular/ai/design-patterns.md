@@ -1,15 +1,6 @@
----
-title: "Design patterns for AI SDKs and signal APIs"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/ai/design-patterns.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Design patterns for AI SDKs and signal APIs
 
-Interacting with AI and Large Language Model (LLM) APIs introduces unique challenges, such as managing asynchronous operations, handling streaming data, and designing a responsive user experience for potentially slow or unreliable network requests. Angular signals and the `resource` API provide powerful tools to solve these problems elegantly.
+Interacting with AI and Large Language Model (LLM) APIs introduces unique challenges, such as managing asynchronous operations, handling streaming data, and designing a responsive user experience for potentially slow or unreliable network requests. Angular [signals](guide/signals) and the [`resource`](guide/signals/resource) API provide powerful tools to solve these problems elegantly.
 
 ## Triggering requests with signals
 
@@ -21,7 +12,7 @@ A common pattern when working with user-provided prompts is to separate the user
 
 This setup ensures the resource's **`loader`** function only runs when the user explicitly submits their prompt, not on every keystroke. You can use additional signal parameters, like a `sessionId` or `userId` (which can be useful for creating persistent LLM sessions), in the `loader` field. This way, the request always uses these parameters' current values without re-triggering the asynchronous function defined in the `loader` field.
 
-Many AI SDKs provide helper methods for making API calls. For example, the Genkit client library exposes a `runFlow` method for calling Genkit flows, which you can call from a resource's `loader`. For other APIs, you can use the `httpResource`.
+Many AI SDKs provide helper methods for making API calls. For example, the Genkit client library exposes a `runFlow` method for calling Genkit flows, which you can call from a resource's `loader`. For other APIs, you can use the [`httpResource`](guide/signals/resource#reactive-data-fetching-with-httpresource).
 
 The following example shows a `resource` that fetches parts of an AI-generated story. The `loader` is triggered only when the `storyInput` signal changes.
 
@@ -51,7 +42,7 @@ storyResource = resource({
 
 You can configure LLM APIs to return structured data. Strongly typing your `resource` to match the expected output from the LLM provides better type safety and editor autocompletion.
 
-To manage state derived from a resource, use a `computed` signal or `linkedSignal`. Because `linkedSignal` provides access to prior values, it can serve a variety of AI-related use cases, including
+To manage state derived from a resource, use a `computed` signal or `linkedSignal`. Because `linkedSignal` [provides access to prior values](guide/signals/linked-signal), it can serve a variety of AI-related use cases, including
 
 - building a chat history
 - preserving or customizing data that templates display while LLMs generate content
@@ -78,8 +69,8 @@ LLM APIs may be slower and more error-prone than conventional, more deterministi
 
 - **Scoped Loading:** place the `resource` in the component that directly uses the data. This helps limit change detection cycles (especially in zoneless applications) and prevents blocking other parts of your application. If data needs to be shared across multiple components, provide the `resource` from a service.
 - **SSR and Hydration:** use Server-Side Rendering (SSR) with incremental hydration to render the initial page content quickly. You can show a placeholder for the AI-generated content and defer fetching the data until the component hydrates on the client.
-- **Loading State:** use the `resource` `LOADING` status to show an indicator, like a spinner, while the request is in flight. This status covers both initial loads and reloads.
-- **Error Handling and Retries:** use the `resource` **`reload()`** method as a simple way for users to retry failed requests, may be more prevalent when relying on AI generated content.
+- **Loading State:** use the `resource` `LOADING` [status](guide/signals/resource#resource-status) to show an indicator, like a spinner, while the request is in flight. This status covers both initial loads and reloads.
+- **Error Handling and Retries:** use the `resource` [**`reload()`**](guide/signals/resource#reloading) method as a simple way for users to retry failed requests, may be more prevalent when relying on AI generated content.
 
 The following example demonstrates how to create a responsive UI to dynamically display an AI generated image with loading and retry functionality.
 

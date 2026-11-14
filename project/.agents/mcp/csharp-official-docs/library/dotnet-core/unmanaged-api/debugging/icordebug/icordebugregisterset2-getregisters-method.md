@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugRegisterSet2::GetRegisters method"
 title: "ICorDebugRegisterSet2::GetRegisters Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugregisterset2-getregisters-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugRegisterSet2.GetRegisters"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugRegisterSet2::GetRegisters"
+helpviewer_keywords:
+  - "GetRegisters method, ICorDebugRegisterSet2 interface [.NET debugging]"
+  - "ICorDebugRegisterSet2::GetRegisters method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugRegisterSet2::GetRegisters method
 
 Gets the value of each register (for the platform on which code is currently executing) that is specified by the given bit mask.
@@ -44,11 +53,11 @@ If an unavailable register is indicated by the mask, an indeterminate value will
 
 The `ICorDebugRegisterSet2::GetRegisters` method is necessary for platforms that have more than 64 registers. For example, IA64 has 128 general purpose registers and 128 floating-point registers, so you need more than 64 bits in the bit mask.
 
-If you don't have more than 64 registers, as is the case on platforms such as x86, the `GetRegisters` method just translates the bytes in the `mask` byte array into a `ULONG64` and then calls the ICorDebugRegisterSet::GetRegisters method, which takes the `ULONG64` mask.
+If you don't have more than 64 registers, as is the case on platforms such as x86, the `GetRegisters` method just translates the bytes in the `mask` byte array into a `ULONG64` and then calls the [ICorDebugRegisterSet::GetRegisters](icordebugregisterset-getregisters-method.md) method, which takes the `ULONG64` mask.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -58,5 +67,5 @@ If you don't have more than 64 registers, as is the case on platforms such as x8
 
 ## See also
 
-- ICorDebugRegisterSet2 Interface
-- ICorDebugRegisterSet Interface
+- [ICorDebugRegisterSet2 Interface](icordebugregisterset2-interface.md)
+- [ICorDebugRegisterSet Interface](icordebugregisterset-interface.md)

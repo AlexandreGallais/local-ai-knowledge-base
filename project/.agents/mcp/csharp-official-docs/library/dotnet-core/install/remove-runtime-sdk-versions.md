@@ -1,50 +1,57 @@
 ---
-title: "Remove the .NET runtime and SDK"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/install/remove-runtime-sdk-versions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Remove the .NET runtime and SDK
+description: This article describes how to uninstall .NET on Windows, macOS, and Linux. Uninstall .NET manually, through a package manager, with the .NET Uninstall Tool, or the .NET Install Manager.
+author: adegeo
+ms.author: adegeo
+ms.date: 04/23/2026
+ms.custom: linux-related-content
+zone_pivot_groups: operating-systems-set-one
 ---
 
 # How to remove the .NET Runtime and SDK
 
-Over time, as you install updated versions of the .NET runtime and SDK, you may want to remove outdated versions of .NET from your machine. Uninstalling older versions of the runtime may change the runtime chosen to run shared framework applications, as detailed in the article on .NET version selection.
+Over time, as you install updated versions of the .NET runtime and SDK, you may want to remove outdated versions of .NET from your machine. Uninstalling older versions of the runtime may change the runtime chosen to run shared framework applications, as detailed in the article on [.NET version selection](../versions/selection.md).
 
 ## Should I remove a version?
 
-The .NET version selection behaviors and the runtime compatibility of .NET across updates enables safe removal of previous versions. .NET runtime updates are compatible within a major version **band** such as 8.x and 7.x. Additionally, newer releases of the .NET SDK generally maintain the ability to build applications that target previous versions of the runtime in a compatible manner.
+The [.NET version selection](../versions/selection.md) behaviors and the runtime compatibility of .NET across updates enables safe removal of previous versions. .NET runtime updates are compatible within a major version **band** such as 8.x and 7.x. Additionally, newer releases of the .NET SDK generally maintain the ability to build applications that target previous versions of the runtime in a compatible manner.
 
 In general, you only need the latest SDK and latest patch version of the runtimes required for your application. Instances where you might want to keep older SDK or runtime versions include maintaining *project.json*-based applications. Unless your application has specific reasons for earlier SDKs or runtimes, you may safely remove older versions.
 
 ## Determine what is installed
 
-The .NET CLI has options you can use to list the versions of the SDK and runtime that are installed on your computer. Use `dotnet --list-sdks` to see the list of installed SDKs and `dotnet --list-runtimes` for the list of runtimes. For more information, see How to check that .NET is already installed.
+The .NET CLI has options you can use to list the versions of the SDK and runtime that are installed on your computer. Use [`dotnet --list-sdks`](../tools/dotnet.md#options) to see the list of installed SDKs and [`dotnet --list-runtimes`](../tools/dotnet.md#options) for the list of runtimes. For more information, see [How to check that .NET is already installed](how-to-detect-installed-versions.md).
 
 ## Uninstall .NET
 
-**os-windows:**
+::: zone pivot="os-windows"
 
 .NET uses the Windows **Apps & features** or **Apps > Installed Apps** settings page to remove versions of the .NET runtime and SDK. Use the Start Menu to search for **Add or Remove Programs** to open the settings page, as illustrated by the following image: figure shows the **Apps & features** dialog. You can search for **core** or **.net** to filter and show installed versions of .NET.
 
+:::image type="content" source="media/remove-runtime-sdk-versions/add-or-remove.png" alt-text="The Windows Start Menu showing the text Add or Remove to filter the search results":::
+
 In the settings page, search for **.net** to find the versions installed on your machine. Select **...** > **Uninstall** to uninstall the item. If you're using Windows 10, select the **Uninstall** button for the item you want to uninstall. The following image shows the **Installed Apps** settings page on Windows 11:
 
-> **Important:**
+:::image type="content" source="media/remove-runtime-sdk-versions/search-net-filter.png" alt-text="The Windows Installed Apps dialog with the word '.net' in the search bar. The results show versions of .NET Framework and .NET that are installed.":::
+
+> [!IMPORTANT]
 > If the item you're uninstalling indicates that it's from Visual Studio, use the Visual Studio Installer to remove those versions of .NET.
 
-**os-linux:**
+::: zone-end
+
+::: zone pivot="os-linux"
 
 The best way for you to uninstall .NET is to mirror the action you used to install .NET. The specifics depend on your chosen Linux distribution and the installation method.
 
-Preview releases are manually installed, and must be manually uninstalled. For more information, see the Scripted or manual section.
+Preview releases are manually installed, and must be manually uninstalled. For more information, see the [Scripted or manual](#scripted-or-manual) section.
 
-> **Important:**
-> For Red Hat installations, consult the Red Hat Product Documentation for .NET.
+> [!IMPORTANT]
+> For Red Hat installations, consult the [Red Hat Product Documentation for .NET](https://access.redhat.com/documentation/en-us/net/6.0/).
 
 You can remove the following types if .NET installations:
 
-- Package manager
-- Manually or scripted installs
+- [Package manager](#package-manager)
+- [Manually or scripted installs](#scripted-or-manual)
 
 ### Package manager
 
@@ -52,10 +59,10 @@ There's no need to first uninstall the .NET SDK when upgrading it using a packag
 
 If you installed .NET using a package manager, use that same package manager to uninstall the .NET SDK or runtime. .NET installations support most popular package managers. Consult the documentation for your distribution's package manager for the precise syntax in your environment:
 
-- apt-get(8) is used by Debian based systems, including Ubuntu.
-- yum(8) is used on Fedora, CentOS Stream, Oracle Linux, and RHEL.
-- zypper(8) is used on openSUSE and SUSE Linux Enterprise System (SLES).
-- dnf(8) is used on Fedora.
+- [apt-get(8)](https://linux.die.net/man/8/apt-get) is used by Debian based systems, including Ubuntu.
+- [yum(8)](https://linux.die.net/man/8/yum) is used on Fedora, CentOS Stream, Oracle Linux, and RHEL.
+- [zypper(8)](https://en.opensuse.org/SDB:Zypper_manual_(plain)) is used on openSUSE and SUSE Linux Enterprise System (SLES).
+- [dnf(8)](https://dnf.readthedocs.io/en/latest/command_ref.html) is used on Fedora.
 
 In almost all cases, the command to remove a package is `remove`.
 
@@ -65,7 +72,7 @@ For machines that have installed only the runtime, and not the SDK, the package 
 
 ### Scripted or manual
 
-If you installed .NET using the dotnet-install script, or by extracting a tarball, you must remove .NET using the manual method.
+If you installed .NET using the [dotnet-install script](linux-scripted-manual.md#scripted-install), or by [extracting a tarball](linux-scripted-manual.md#manual-install), you must remove .NET using the manual method.
 
 When you manually install .NET, it's generally installed to the `/usr/share/dotnet/`, `/usr/lib/dotnet/`, or the `$HOME/.dotnet` directory. The SDK, runtime, and .NET host, are installed into separate sub directories. These "component" directories contain a directory for each version of .NET. By removing the versioned directories, you remove that version of .NET from your system. These directories may vary depending on your Linux distribution.
 
@@ -95,10 +102,12 @@ Use the `rm -rf` command to remove a version of .NET. For example, to remove the
 sudo rm -rf /usr/share/dotnet/sdk/6.0.406
 ```
 
-> **Important:**
-> The version directories might not match the "version" you're uninstalling. The individual runtimes and SDKs that are installed with a single .NET release might have different versions. For example, you might have installed ASP.NET Core 8 Runtime, which installed the 8.0.2 ASP.NET Core runtime and the 8.0.8 .NET runtime. Each has a different versioned directory. For more information, see Overview of how .NET is versioned.
+> [!IMPORTANT]
+> The version directories might not match the "version" you're uninstalling. The individual runtimes and SDKs that are installed with a single .NET release might have different versions. For example, you might have installed ASP.NET Core 8 Runtime, which installed the 8.0.2 ASP.NET Core runtime and the 8.0.8 .NET runtime. Each has a different versioned directory. For more information, see [Overview of how .NET is versioned](../versions/index.md).
 
-**os-macos:**
+::: zone-end
+
+::: zone pivot="os-macos"
 
 When you manually install .NET, it's generally installed to the `/usr/local/share/dotnet/` or the `$HOME/.dotnet` directory. The SDK, runtime, and .NET host are installed into separate sub directories. These "component" directories contain a directory for each version of .NET. By removing the versioned directories, you remove that version of .NET from your system. These directories may vary depending on your macOS version.
 
@@ -128,15 +137,17 @@ Use the `rm -rf` command to remove a version of .NET. For example, to remove the
 sudo rm -rf /usr/local/share/dotnet/sdk/6.0.406
 ```
 
-> **Important:**
-> The version directories might not match the "version" you're uninstalling. The individual runtimes and SDKs that are installed with a single .NET release might have different versions. For example, you might have installed ASP.NET Core 8 Runtime, which installed the 8.0.2 ASP.NET Core runtime and the 8.0.8 .NET runtime. Each has a different versioned directory. For more information, see Overview of how .NET is versioned.
+> [!IMPORTANT]
+> The version directories might not match the "version" you're uninstalling. The individual runtimes and SDKs that are installed with a single .NET release might have different versions. For example, you might have installed ASP.NET Core 8 Runtime, which installed the 8.0.2 ASP.NET Core runtime and the 8.0.8 .NET runtime. Each has a different versioned directory. For more information, see [Overview of how .NET is versioned](../versions/index.md).
 
-> **Important:**
-> If you're using an Arm-based Mac, such as one with an M1 chip, review the directory paths described in Install .NET on Arm-based Macs.
+> [!IMPORTANT]
+> If you're using an Arm-based Mac, such as one with an M1 chip, review the directory paths described in [Install .NET on Arm-based Macs](macos.md#arm-based-macs).
+
+::: zone-end
 
 ## .NET Uninstall Tool
 
-The .NET Uninstall Tool lets you remove .NET SDKs and runtimes from a system. A collection of options is available to specify which versions should be uninstalled. For more information, see .NET uninstall tool overview.
+The .NET Uninstall Tool lets you remove .NET SDKs and runtimes from a system. A collection of options is available to specify which versions should be uninstalled. For more information, see [.NET uninstall tool overview](../additional-tools/uninstall-tool-overview.md).
 
 ## .NET Install Manager
 

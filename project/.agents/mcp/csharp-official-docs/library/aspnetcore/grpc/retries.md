@@ -1,19 +1,18 @@
 ---
-title: "Transient fault handling with gRPC retries"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/grpc/retries.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Transient fault handling with gRPC retries
+description: Learn how to make resilient, fault tolerant gRPC calls with retries in .NET.
+monikerRange: '>= aspnetcore-3.0'
+ms.date: 03/18/2021
 ---
-
 # Transient fault handling with gRPC retries
 
-By James Newton-King
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+By [James Newton-King](https://twitter.com/jamesnk)
 
 gRPC retries is a feature that allows gRPC clients to automatically retry failed calls. This article discusses how to configure a retry policy to make resilient, fault tolerant gRPC apps in .NET.
 
-gRPC retries requires Grpc.Net.Client version 2.36.0 or later.
+gRPC retries requires [Grpc.Net.Client](https://www.nuget.org/packages/Grpc.Net.Client) version 2.36.0 or later.
 
 ## Transient fault handling
 
@@ -95,7 +94,7 @@ Calls are retried when:
 A gRPC call becomes committed in two scenarios:
 
 * The client receives response headers. Response headers are sent by the server when `ServerCallContext.WriteResponseHeadersAsync` is called, or when the first message is written to the server response stream.
-* The client's outgoing message (or messages if streaming) has exceeded the client's maximum buffer size. `MaxRetryBufferSize` and `MaxRetryBufferPerCallSize` are configured on the channel.
+* The client's outgoing message (or messages if streaming) has exceeded the client's maximum buffer size. `MaxRetryBufferSize` and `MaxRetryBufferPerCallSize` are [configured on the channel](configuration.md#configure-client-options).
 
 Committed calls won't retry, regardless of the status code or the previous number of attempts.
 
@@ -106,11 +105,11 @@ Streaming calls can be used with gRPC retries, but there are important considera
 * **Server streaming**, **bidirectional streaming**: Streaming RPCs that return multiple messages from the server won't retry after the first message has been received. Apps must add additional logic to manually re-establish server and bidirectional streaming calls.
 * **Client streaming**, **bidirectional streaming**: Streaming RPCs that send multiple messages to the server won't retry if the outgoing messages have exceeded the client's maximum buffer size. The maximum buffer size can be increased with configuration.
 
-For more information, see When retries are valid.
+For more information, see [When retries are valid](#when-retries-are-valid).
 
 ### Retry backoff delay
 
-The backoff delay between retry attempts is configured with `InitialBackoff`, `MaxBackoff`, and `BackoffMultiplier`. More information about each option is available in the gRPC retry options section.
+The backoff delay between retry attempts is configured with `InitialBackoff`, `MaxBackoff`, and `BackoffMultiplier`. More information about each option is available in the [gRPC retry options section](#grpc-retry-options).
 
 The actual delay between retry attempts is randomized. A randomized delay between 0 and the current backoff determines when the next retry attempt is made. Consider that even with exponential backoff configured, increasing the current backoff between attempts, the actual delay between attempts isn't always larger. The delay is randomized to prevent retries from multiple calls from clustering together and potentially overloading the server.
 
@@ -142,15 +141,15 @@ The following table describes options for configuring gRPC retry policies.
 | `InitialBackoff` | The initial backoff delay between retry attempts. A randomized delay between 0 and the current backoff determines when the next retry attempt is made. After each attempt, the current backoff is multiplied by `BackoffMultiplier`. A value is required and must be greater than zero. |
 | `MaxBackoff` | The maximum backoff places an upper limit on exponential backoff growth. A value is required and must be greater than zero. |
 | `BackoffMultiplier` | The backoff will be multiplied by this value after each retry attempt and will increase exponentially when the multiplier is greater than 1. A value is required and must be greater than zero. |
-| `RetryableStatusCodes` | A collection of status codes. A gRPC call that fails with a matching status will be automatically retried. For more information about status codes, see Status codes and their use in gRPC. At least one retryable status code is required. |
+| `RetryableStatusCodes` | A collection of status codes. A gRPC call that fails with a matching status will be automatically retried. For more information about status codes, see [Status codes and their use in gRPC](https://grpc.github.io/grpc/core/md_doc_statuscodes.html). At least one retryable status code is required. |
 
 ## Hedging
 
 Hedging is an alternative retry strategy. Hedging enables aggressively sending multiple copies of a single gRPC call without waiting for a response. Hedged gRPC calls may be executed multiple times on the server and the first successful result is used. It's important that hedging is only enabled for methods that are safe to execute multiple times without adverse effect.
 
-Hedging has pros and cons when compared to retries:
+Hedging has pros and cons when compared to retries: 
 
-* An advantage to hedging is it might return a successful result faster. It allows for multiple simultaneously gRPC calls and will complete when the first successful result is available.
+* An advantage to hedging is it might return a successful result faster. It allows for multiple simultaneously gRPC calls and will complete when the first successful result is available. 
 * A disadvantage to hedging is it can be wasteful. Multiple calls could be made and all succeed. Only the first result is used and the rest are discarded.
 
 ## Configure a gRPC hedging policy
@@ -182,9 +181,9 @@ The following table describes options for configuring gRPC hedging policies.
 | ------ | ----------- |
 | `MaxAttempts` | The hedging policy will send up to this number of calls. `MaxAttempts` represents the total number of all attempts, including the original attempt. This value is limited by `GrpcChannelOptions.MaxRetryAttempts` which defaults to 5. A value is required and must be 2 or greater. |
 | `HedgingDelay` | The first call is sent immediately, subsequent hedging calls are delayed by this value. When the delay is set to zero or `null`, all hedged calls are sent immediately. `HedgingDelay` is optional and defaults to zero. A value must be zero or greater. |
-| `NonFatalStatusCodes` | A collection of status codes which indicate other hedge calls may still succeed. If a non-fatal status code is returned by the server, hedged calls will continue. Otherwise, outstanding requests will be canceled and the error returned to the app. For more information about status codes, see Status codes and their use in gRPC. |
+| `NonFatalStatusCodes` | A collection of status codes which indicate other hedge calls may still succeed. If a non-fatal status code is returned by the server, hedged calls will continue. Otherwise, outstanding requests will be canceled and the error returned to the app. For more information about status codes, see [Status codes and their use in gRPC](https://grpc.github.io/grpc/core/md_doc_statuscodes.html). |
 
 ## Related content
 
-* Call gRPC services with the .NET client
-* Retry general guidance - Best practices for cloud applications
+* [Call gRPC services with the .NET client](client.md)
+* [Retry general guidance - Best practices for cloud applications](/azure/architecture/best-practices/transient-faults)

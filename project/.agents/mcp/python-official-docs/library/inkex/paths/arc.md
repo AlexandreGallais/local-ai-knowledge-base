@@ -1,12 +1,3 @@
----
-title: "inkex.paths.arc"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/paths/arc.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.paths.arc
 
 Arc path commands
@@ -70,9 +61,9 @@ Return the parameterization of the arc
 See http://www.w3.org/TR/SVG/implnote.html#ArcImplementationNotes
 
 Returns:
-A tuple (radius, phi, rot_matrix, center, theta1, deltatheta)
+    A tuple (radius, phi, rot_matrix, center, theta1, deltatheta)
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## Arc.to_curves
 
@@ -131,14 +122,14 @@ def arc_to_path(point, params)
 Approximates an arc with cubic bezier segments.
 
 Args:
-point:  Starting point (absolute coords)
-params: Arcs parameters as per
-https://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
+    point:  Starting point (absolute coords)
+    params: Arcs parameters as per
+          https://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
 
 Returns:
-A list of triplets of points
-`[control_point_before, node, control_point_after]`
-(first and last returned triplets are `[p1, p1, *]` and `[*, p2, p2]`)
+    A list of triplets of points
+    `[control_point_before, node, control_point_after]`
+    (first and last returned triplets are `[p1, p1, *]` and `[*, p2, p2]`)
 
 ## matprod
 

@@ -1,10 +1,10 @@
 ---
-title: "Microsoft.Testing.Platform (MTP) VSTest bridge extension"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/microsoft-testing-platform-extensions-vstest-bridge.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Microsoft.Testing.Platform (MTP) VSTest bridge extension
+description: Learn about the MTP VSTest bridge extension and how to use it.
+author: evangelink
+ms.author: amauryleve
+ms.date: 11/05/2026
+ai-usage: ai-assisted
 ---
 
 # VSTest Bridge extension
@@ -14,7 +14,7 @@ This extension provides a compatibility layer with VSTest allowing test framewor
 - Run easily with Microsoft.Testing.Platform (MTP) without a major rewrite.
 - Support both VSTest and MTP with the same test framework implementation.
 
-This extension is shipped as part of Microsoft.Testing.Extensions.VSTestBridge NuGet package.
+This extension is shipped as part of [Microsoft.Testing.Extensions.VSTestBridge](https://nuget.org/packages/Microsoft.Testing.Extensions.VSTestBridge) NuGet package.
 
 ## Compatibility with VSTest
 
@@ -22,11 +22,11 @@ The main purpose of this extension is to offer an easy and smooth upgrade experi
 
 The bridge adapts a VSTest-based test framework to MTP. It doesn't turn `VsTestConsoleWrapper` into a native MTP client or guarantee that every MTP framework can run through VSTest. An existing `Microsoft.TestPlatform.TranslationLayer` integration still requires `vstest.console` and a compatible VSTest adapter.
 
-For new tools that discover and run MTP tests, use the MTP server-mode client. For other integration options, see Programmatic test discovery and execution.
+For new tools that discover and run MTP tests, use the [MTP server-mode client](./microsoft-testing-platform-server-mode.md). For other integration options, see [Programmatic test discovery and execution](./unit-testing-mstest-running-tests.md#programmatic-test-discovery-and-execution).
 
 ## Runsettings support
 
-This extension allows you to provide a VSTest *.runsettings* file, but not all options in this file are picked up by the platform. We describe below the supported and unsupported settings, configuration options and alternatives for the most used VSTest configuration options.
+This extension allows you to provide a [VSTest *.runsettings* file](/visualstudio/test/configure-unit-tests-by-using-a-dot-runsettings-file), but not all options in this file are picked up by the platform. We describe below the supported and unsupported settings, configuration options and alternatives for the most used VSTest configuration options.
 
 When enabled by the test framework, you can use `--settings <SETTINGS_FILE>` to provide the `.runsettings` file.
 
@@ -36,22 +36,22 @@ The following **RunConfiguration** elements are not supported by MTP:
 
 | Node | Description | Reason / Workaround |
 |------|-------------|---------------------|
-| **MaxCpuCount** | This setting controls the level of parallelism on process-level. Use 0 to enable the maximum process-level parallelism.| When MTP is used with MSBuild, this option is offloaded to MSBuild. When a single executable is run, this option has no meaning for MTP. |
-| **ResultsDirectory** | The directory where test results are placed. The path is relative to the directory that contains the *.runsettings* file.| Use the `--results-directory` command-line option to set the results directory. For `dotnet test` defaults and layouts, see Results and artifacts. |
+| **MaxCpuCount** | This setting controls the level of parallelism on process-level. Use 0 to enable the maximum process-level parallelism.| When MTP is used with MSBuild, this option is [offloaded to MSBuild](/visualstudio/msbuild/building-multiple-projects-in-parallel-with-msbuild). When a single executable is run, this option has no meaning for MTP. |
+| **ResultsDirectory** | The directory where test results are placed. The path is relative to the directory that contains the *.runsettings* file.| Use the [`--results-directory`](microsoft-testing-platform-cli-options.md) command-line option to set the results directory. For `dotnet test` defaults and layouts, see [Results and artifacts](../tools/dotnet-test-mtp.md#results-and-artifacts). |
 | **TargetFrameworkVersion** | This setting defines the framework version, or framework family to use to run tests.| This option is ignored. The `<TargetFramework>` or `<TargetFrameworks>` MSBuild properties determine the target framework of the application. The tests are hosted in the final application. |
 | **TargetPlatform** | This setting defines the architecture to use to run tests. | `<RuntimeIdentifier>` determines the architecture of the final application that hosts the tests. |
 | **TreatTestAdapterErrorsAsWarnings** | Suppresses test adapter errors to become warnings. | MTP allows only one type of tests to be run from a single assembly, and failure to load the test framework or other parts of infrastructure will become an un-skippable error, because it signifies that some tests could not be discovered or run. |
 | **TestAdaptersPaths** | One or more paths to the directory where the TestAdapters are located| MTP does not use the concept of test adapters and does not allow dynamic loading of extensions unless they are part of the build, and are registered in `Program.cs`, either automatically via build targets or manually. |
 | **TestCaseFilter** | A filter to limit tests which will run. | Starting with v1.6, this runsettings entry is now supported. Before this version, you should use `--filter` command line option instead. |
 | **TestSessionTimeout** | Allows users to terminate a test session when it exceeds a given timeout.| There is no alternative option. |
-| **DotnetHostPath** | Specify a custom path to dotnet host that is used to run the test host. | MTP is not doing any additional resolving of dotnet. It depends fully on how dotnet resolves itself, which can be controlled by environment variables such as `DOTNET_HOST_PATH`. |
+| **DotnetHostPath** | Specify a custom path to dotnet host that is used to run the test host. | MTP is not doing any additional resolving of dotnet. It depends fully on how dotnet resolves itself, which can be controlled by environment variables such as [`DOTNET_HOST_PATH`](../tools/dotnet-environment-variables.md#dotnet_host_path). |
 | **TreatNoTestsAsError** | Exit with non-zero exit code when no tests are discovered. | MTP will error by default when no tests are discovered or run in a test application. You can set how many tests you expect to find in the assembly by using `--minimum-expected-tests` command line parameter, which defaults to 1. |
 
 ### DataCollectors element
 
 MTP is not using data collectors. Instead it has the concept of in-process and out-of-process extensions. Each extension is configured by its respective configuration file or through the command line.
 
-Most importantly hang and crash extension, and code coverage extension.
+Most importantly [hang](microsoft-testing-platform-crash-hang-dumps.md#hang-dump) and [crash](microsoft-testing-platform-crash-hang-dumps.md#crash-dump) extension, and [code coverage](microsoft-testing-platform-code-coverage.md) extension.
 
 ### LoggerRunSettings element
 
@@ -59,15 +59,15 @@ Loggers in MTP are configured through command-line parameters or by settings in 
 
 ## VSTest filter support
 
-This extension also offer the ability to use VSTest filtering mechanism to discover or run only the tests that matches the filter expression. For more information, see the Filter option details section or for framework specific details see the Running selective unit tests page.
+This extension also offer the ability to use VSTest filtering mechanism to discover or run only the tests that matches the filter expression. For more information, see the [Filter option details](../tools/dotnet-test-vstest.md#filter-option-details) section or for framework specific details see the [Running selective unit tests](./selective-unit-tests.md) page.
 
 When enabled by the test framework, you can use `--filter <FILTER_EXPRESSION>`.
 
 ## TestRun parameters
 
-You can pass <example-value> to the test run by using the `--test-parameter` command line option in the format `key=value`. This option can be specified multiple times, one for each parameter to set.
+You can pass parameters to the test run by using the `--test-parameter` command line option in the format `key=value`. This option can be specified multiple times, one for each parameter to set.
 
 These parameters can then be accessed by the test framework in the test run:
 
-- for MSTest, use `Microsoft.VisualStudio.TestTools.UnitTesting.TestContext.Properties`
-- for NUnit, use TestContext.TestParameters
+- for MSTest, use <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext.Properties>
+- for NUnit, use [TestContext.TestParameters](https://docs.nunit.org/articles/nunit/writing-tests/TestContext.html#testparameters)

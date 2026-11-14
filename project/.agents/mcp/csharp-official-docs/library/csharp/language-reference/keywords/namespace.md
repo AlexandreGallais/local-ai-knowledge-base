@@ -1,102 +1,25 @@
 ---
+description: "Organize related types and functionality using the namespace keyword - C# Reference"
 title: "The namespace keyword"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/keywords/namespace.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 01/22/2026
+f1_keywords: 
+  - "namespace_CSharpKeyword"
+  - "namespace"
+helpviewer_keywords: 
+  - "namespace keyword [C#]"
+  - "scope [C#]"
 ---
-
 # The `namespace` keyword
 
 Use the `namespace` keyword to declare a scope that contains a set of related objects. Use a namespace to organize code elements and to create globally unique types.
 
-```csharp
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
+:::code language="csharp" source="snippets/csrefKeywordsNamespace.cs" id="Snippet1":::
 
-namespace SampleNamespace
-{
-    class SampleClass { }
-
-    interface ISampleInterface { }
-
-    struct SampleStruct { }
-
-    enum SampleEnum { a, b }
-
-    delegate void SampleDelegate(int i);
-
-    namespace Nested
-    {
-        class SampleClass2 { }
-    }
-}
-
-namespace MyCompany.Proj1
-{
-    class MyClass
-    {
-    }
-}
-
-namespace MyCompany.Proj1
-{
-    class MyClass1
-    {
-    }
-}
-
-namespace SomeNameSpace
-{
-    public class MyClass
-    {
-        static void Main()
-        {
-            Nested.NestedNameSpaceClass.SayHello();
-        }
-    }
-
-    // a nested namespace
-    namespace Nested
-    {
-        public class NestedNameSpaceClass
-        {
-            public static void SayHello()
-            {
-                Console.WriteLine("Hello");
-            }
-        }
-    }
-}
-// Output: Hello
-```
 *File scoped namespace declarations* enable you to declare that all types in a file are in a single namespace. The following example is similar to the previous example but uses a file scoped namespace declaration:
 
-```csharp
-using System;
+:::code language="csharp" source="snippets/filescopednamespace.cs" :::
 
-namespace SampleFileScopedNamespace;
-
-class SampleClass { }
-
-interface ISampleInterface { }
-
-struct SampleStruct { }
-
-enum SampleEnum { a, b }
-
-delegate void SampleDelegate(int i);
-```
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
-
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
-
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
 ## Using statements in file-scoped namespaces
 
@@ -148,157 +71,35 @@ namespace ANestedNamespace // Not allowed!
 
 Within a namespace, you can declare zero or more of the following types:
 
-- class
-- interface
-- struct
-- enum
-- delegate
+- [class](class.md)
+- [interface](interface.md)
+- [struct](../builtin-types/struct.md)
+- [enum](../builtin-types/enum.md)
+- [delegate](../builtin-types/reference-types.md#the-delegate-type)
 - nested namespaces can be declared except in file scoped namespace declarations
 
 The compiler adds a default namespace. This unnamed namespace, sometimes referred to as the global namespace, is present in every file. It contains declarations not included in a declared namespace. Any identifier in the global namespace is available for use in a named namespace.
 
-Namespaces implicitly have public access. For a discussion of the access modifiers you can assign to elements in a namespace, see Access Modifiers.
+Namespaces implicitly have public access. For a discussion of the access modifiers you can assign to elements in a namespace, see [Access Modifiers](access-modifiers.md).
 
 It's possible to define a namespace in two or more declarations. For example, the following example defines two classes as part of the `MyCompany` namespace:
 
-```csharp
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
+:::code language="csharp" source="snippets/csrefKeywordsNamespace.cs" id="Snippet2":::
 
-namespace SampleNamespace
-{
-    class SampleClass { }
-
-    interface ISampleInterface { }
-
-    struct SampleStruct { }
-
-    enum SampleEnum { a, b }
-
-    delegate void SampleDelegate(int i);
-
-    namespace Nested
-    {
-        class SampleClass2 { }
-    }
-}
-
-namespace MyCompany.Proj1
-{
-    class MyClass
-    {
-    }
-}
-
-namespace MyCompany.Proj1
-{
-    class MyClass1
-    {
-    }
-}
-
-namespace SomeNameSpace
-{
-    public class MyClass
-    {
-        static void Main()
-        {
-            Nested.NestedNameSpaceClass.SayHello();
-        }
-    }
-
-    // a nested namespace
-    namespace Nested
-    {
-        public class NestedNameSpaceClass
-        {
-            public static void SayHello()
-            {
-                Console.WriteLine("Hello");
-            }
-        }
-    }
-}
-// Output: Hello
-```
 The following example shows how to call a static method in a nested namespace.
 
-```csharp
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
+:::code language="csharp" source="snippets/csrefKeywordsNamespace.cs" id="Snippet3":::
 
-namespace SampleNamespace
-{
-    class SampleClass { }
-
-    interface ISampleInterface { }
-
-    struct SampleStruct { }
-
-    enum SampleEnum { a, b }
-
-    delegate void SampleDelegate(int i);
-
-    namespace Nested
-    {
-        class SampleClass2 { }
-    }
-}
-
-namespace MyCompany.Proj1
-{
-    class MyClass
-    {
-    }
-}
-
-namespace MyCompany.Proj1
-{
-    class MyClass1
-    {
-    }
-}
-
-namespace SomeNameSpace
-{
-    public class MyClass
-    {
-        static void Main()
-        {
-            Nested.NestedNameSpaceClass.SayHello();
-        }
-    }
-
-    // a nested namespace
-    namespace Nested
-    {
-        public class NestedNameSpaceClass
-        {
-            public static void SayHello()
-            {
-                Console.WriteLine("Hello");
-            }
-        }
-    }
-}
-// Output: Hello
-```
 ## C# language specification
 
-For more information, see the Namespaces section of the C# language specification.
-For more information on file-scoped namespace declarations, see Namespace declarations.
+For more information, see the [Namespaces](~/_csharpstandard/standard/namespaces.md) section of the [C# language specification](~/_csharpstandard/standard/README.md).
+For more information on file-scoped namespace declarations, see [Namespace declarations](~/_csharpstandard/standard/namespaces.md#143-namespace-declarations).
 
 ## See also
 
-- Namespace declaration preferences (IDE0160 and IDE0161)
-- C# keywords
-- using
-- using static
-- Namespace alias qualifier `::`
-- Organize types with namespaces
+- [Namespace declaration preferences (IDE0160 and IDE0161)](../../../fundamentals/code-analysis/style-rules/ide0160-ide0161.md)
+- [C# keywords](index.md)
+- [using](using-directive.md)
+- [using static](using-directive.md)
+- [Namespace alias qualifier `::`](../operators/namespace-alias-qualifier.md)
+- [Organize types with namespaces](../../fundamentals/namespaces/overview.md)

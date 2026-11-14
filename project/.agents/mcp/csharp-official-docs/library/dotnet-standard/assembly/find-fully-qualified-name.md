@@ -1,23 +1,27 @@
 ---
 title: "How to: Find an assembly's fully qualified name"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/assembly/find-fully-qualified-name.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: This article shows you how to get the fully qualified name of a .NET assembly.
+ms.date: "08/20/2019"
+helpviewer_keywords:
+  - "names [.NET], fully qualified type names"
+  - "names [.NET], assemblies"
+  - "assemblies [.NET], names"
+ms.topic: how-to
+dev_langs:
+  - "csharp"
+  - "vb"
 ---
-
 # How to: Find an assembly's fully qualified name
 
-To discover the fully qualified name of a .NET Framework assembly in the global assembly cache, use the Global Assembly Cache tool (Gacutil.exe). See How to: View the contents of the global assembly cache.
+To discover the fully qualified name of a .NET Framework assembly in the global assembly cache, use the Global Assembly Cache tool ([Gacutil.exe](../../framework/tools/gacutil-exe-gac-tool.md)). See [How to: View the contents of the global assembly cache](../../framework/app-domains/how-to-view-the-contents-of-the-gac.md).
 
 For .NET Core assemblies, and for .NET Framework assemblies that aren't in the global assembly cache, you can get the fully qualified assembly name in a number of ways:
 
-- You can use code to output the information to the console or to a variable, or you can use the Ildasm.exe (IL Disassembler) to examine the assembly's metadata, which contains the fully qualified name.
+- You can use code to output the information to the console or to a variable, or you can use the [Ildasm.exe (IL Disassembler)](../../framework/tools/ildasm-exe-il-disassembler.md) to examine the assembly's metadata, which contains the fully qualified name.
 
-- If the assembly is already loaded by the application, you can retrieve the value of the `System.Reflection.Assembly.FullName` property to get the fully qualified name. You can use the `System.Type.Assembly` property of a `System.Type` defined in that assembly to retrieve a reference to the `System.Reflection.Assembly` object. The example provides an illustration.
+- If the assembly is already loaded by the application, you can retrieve the value of the <xref:System.Reflection.Assembly.FullName?displayProperty=nameWithType> property to get the fully qualified name. You can use the <xref:System.Type.Assembly> property of a <xref:System.Type> defined in that assembly to retrieve a reference to the <xref:System.Reflection.Assembly> object. The example provides an illustration.
 
-- If you know the assembly's file system path, you can call the `static` (C#) or `Shared` (Visual Basic) `System.Reflection.AssemblyName.GetAssemblyName*` method to get the fully qualified assembly name. The following is a simple example.
+- If you know the assembly's file system path, you can call the `static` (C#) or `Shared` (Visual Basic) <xref:System.Reflection.AssemblyName.GetAssemblyName*?displayProperty=nameWithType> method to get the fully qualified assembly name. The following is a simple example.
 
   ```csharp
   using System;
@@ -46,13 +50,13 @@ For .NET Core assemblies, and for .NET Framework assemblies that aren't in the g
   '   UtilityLibrary, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null
   ```
 
-- You can use the Ildasm.exe (IL Disassembler) to examine the assembly's metadata, which contains the fully qualified name.
+- You can use the [Ildasm.exe (IL Disassembler)](../../framework/tools/ildasm-exe-il-disassembler.md) to examine the assembly's metadata, which contains the fully qualified name.
 
-For more information about setting assembly attributes such as version, culture, and assembly name, see Set assembly attributes. For more information about giving an assembly a strong name, see Create and use strong-named assemblies.
+For more information about setting assembly attributes such as version, culture, and assembly name, see [Set assembly attributes](set-attributes.md). For more information about giving an assembly a strong name, see [Create and use strong-named assemblies](create-use-strong-named.md).
 
 ## Example
 
-The following example shows how to display the fully qualified name of an assembly containing a specified class to the console. It uses the `System.Type.Assembly` property to retrieve a reference to an assembly from a type that's defined in that assembly.
+The following example shows how to display the fully qualified name of an assembly containing a specified class to the console. It uses the <xref:System.Type.Assembly?displayProperty=nameWithType> property to retrieve a reference to an assembly from a type that's defined in that assembly.
 
 ```csharp
 using System;
@@ -85,8 +89,8 @@ End Class
 
 ## See also
 
-- Assembly names
-- Create assemblies
-- Create and use strong-named assemblies
-- Global assembly cache
-- How the runtime locates assemblies
+- [Assembly names](names.md)
+- [Create assemblies](create.md)
+- [Create and use strong-named assemblies](create-use-strong-named.md)
+- [Global assembly cache](../../framework/app-domains/gac.md)
+- [How the runtime locates assemblies](../../framework/deployment/how-the-runtime-locates-assemblies.md)

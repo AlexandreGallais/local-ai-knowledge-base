@@ -1,48 +1,37 @@
----
-title: "built-in-TH"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/built-in-TH.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# built-in-TH
-
 ## Built-in ASP.NET Core Tag Helpers
 
-**Anchor**
+**[Anchor](../mvc/views/tag-helpers/built-in/anchor-tag-helper.md)**
 
-**Cache**
+**[Cache](../mvc/views/tag-helpers/built-in/cache-tag-helper.md)**
 
-**Component**
+**[Component](../mvc/views/tag-helpers/built-in/component-tag-helper.md)**
 
-**Distributed Cache**
+**[Distributed Cache](../mvc/views/tag-helpers/built-in/distributed-cache-tag-helper.md)**
 
-**Environment**
+**[Environment](../mvc/views/tag-helpers/built-in/environment-tag-helper.md)**
 
-**Form**
+**[Form](../mvc/views/working-with-forms.md#the-form-tag-helper)**
 
-**Form Action**
+**[Form Action](../mvc/views/working-with-forms.md#the-form-action-tag-helper)**
 
-**Image**
+**[Image](../mvc/views/tag-helpers/built-in/image-tag-helper.md)**
 
-**Input**
+**[Input](../mvc/views/working-with-forms.md#the-input-tag-helper)**
 
-**Label**
+**[Label](../mvc/views/working-with-forms.md#the-label-tag-helper)**
 
-**Link**
+**[Link](../mvc/views/tag-helpers/built-in/link-tag-helper.md)**
 
-**Partial**
+**[Partial](../mvc/views/tag-helpers/built-in/partial-tag-helper.md)**
 
-**Persist Component State**
+**[Persist Component State](../mvc/views/tag-helpers/built-in/persist-component-state.md)**
 
-**Script**
+**[Script](../mvc/views/tag-helpers/built-in/script-tag-helper.md)**
 
-**Select**
+**[Select](../mvc/views/working-with-forms.md#the-select-tag-helper)**
 
-**Textarea**
+**[Textarea](../mvc/views/working-with-forms.md#the-textarea-tag-helper)**
 
-**Validation Message**
+**[Validation Message](../mvc/views/working-with-forms.md#the-validation-message-tag-helper)**
 
-**Validation Summary**
+**[Validation Summary](../mvc/views/working-with-forms.md#the-validation-summary-tag-helper)**

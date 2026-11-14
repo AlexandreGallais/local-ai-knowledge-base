@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugILFrame::CanSetIP Method"
 title: "ICorDebugILFrame::CanSetIP Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugilframe-cansetip-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugILFrame.CanSetIP"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugILFrame::CanSetIP"
+helpviewer_keywords:
+  - "CanSetIP method, ICorDebugILFrame interface [.NET debugging]"
+  - "ICorDebugILFrame::CanSetIP method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugILFrame::CanSetIP Method
 
 Gets an HRESULT that indicates whether it is safe to set the instruction pointer to the specified offset location in common intermediate language (CIL) code.
@@ -26,11 +35,11 @@ HRESULT CanSetIP (
 
 ## Remarks
 
-Use the `CanSetIP` method before calling the ICorDebugILFrame::SetIP method. If `CanSetIP` returns any HRESULT other than S_OK, you can still invoke `ICorDebugILFrame::SetIP`, but there is no guarantee that the debugger will continue the safe and correct execution of the code being debugged.
+Use the `CanSetIP` method before calling the [ICorDebugILFrame::SetIP](icordebugilframe-setip-method.md) method. If `CanSetIP` returns any HRESULT other than S_OK, you can still invoke `ICorDebugILFrame::SetIP`, but there is no guarantee that the debugger will continue the safe and correct execution of the code being debugged.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug,h
 

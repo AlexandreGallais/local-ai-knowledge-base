@@ -1,21 +1,27 @@
 ---
-title: "ASP.NET Core Blazor static files (part 1 of 2)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/fundamentals/static-files.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core Blazor static files
+ai-usage: ai-assisted
+description: Learn how to configure and manage static files for Blazor apps.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 08/24/2026
 ---
-
 # ASP.NET Core Blazor static files
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
 This article describes Blazor app configuration for serving static files.
 
-For general information on serving static files with Map Static Assets routing endpoint conventions, see Serve static files in ASP.NET Core apps before reading this article.
+:::moniker range=">= aspnetcore-9.0"
+
+For general information on serving static files with Map Static Assets routing endpoint conventions, see [Serve static files in ASP.NET Core apps](../../fundamentals/static-files.md) before reading this article.
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-10.0"
 
 ## Preloaded Blazor framework static assets
 
-In Blazor Web Apps, framework static assets are automatically preloaded using `Link` headers, which allows the browser to preload resources before the initial page is fetched and rendered.
+In Blazor Web Apps, framework static assets are automatically preloaded using [`Link` headers](https://developer.mozilla.org/docs/Web/HTTP/Reference/Headers/Link), which allows the browser to preload resources before the initial page is fetched and rendered.
 
 In standalone Blazor WebAssembly apps, framework assets are scheduled for high priority downloading and caching early in browser `index.html` page processing when:
 
@@ -27,48 +33,56 @@ In standalone Blazor WebAssembly apps, framework assets are scheduled for high p
   </PropertyGroup>
   ```
 
-* The following `<link>` element containing `rel="preload"` is present in the `<head>` content of `wwwroot/index.html`:
+* The following `<link>` element containing [`rel="preload"`](https://developer.mozilla.org/docs/Web/HTML/Reference/Attributes/rel/preload) is present in the `<head>` content of `wwwroot/index.html`:
 
   ```html
   <link rel="preload" id="webassembly" />
   ```
 
-> **Note:**
-> Blazor Web App enhanced navigation doesn't attempt to preload resources in .NET 11 or later. For more information, see Blazor enhanced navigation no longer preloads resources.
+:::moniker-end
+
+:::moniker range=">= aspnetcore-11.0"
+
+> [!NOTE]
+> Blazor Web App enhanced navigation doesn't attempt to preload resources in .NET 11 or later. For more information, see [Blazor enhanced navigation no longer preloads resources](../../breaking-changes/11/blazor-enhanced-nav-preloading-disabled.md).
+
+:::moniker-end
 
 ## Static asset delivery in server-side Blazor apps
+
+:::moniker range=">= aspnetcore-9.0"
 
 Serving static assets is managed by either routing endpoint conventions or a middleware described in the following table.
 
 Feature | API | .NET Version | Description
 --- | --- | :---: | ---
-Map Static Assets routing endpoint conventions | `Microsoft.AspNetCore.Builder.StaticAssetsEndpointRouteBuilderExtensions.MapStaticAssets*` | .NET 9 or later | Optimizes the delivery of static assets to clients.
-Static file middleware | `Microsoft.AspNetCore.Builder.StaticFileExtensions.UseStaticFiles*` | All .NET versions | Serves static assets to clients without the optimizations of Map Static Assets but useful for some tasks that Map Static Assets isn't capable of managing.
+Map Static Assets routing endpoint conventions | <xref:Microsoft.AspNetCore.Builder.StaticAssetsEndpointRouteBuilderExtensions.MapStaticAssets*> | .NET 9 or later | Optimizes the delivery of static assets to clients.
+Static file middleware | <xref:Microsoft.AspNetCore.Builder.StaticFileExtensions.UseStaticFiles*> | All .NET versions | Serves static assets to clients without the optimizations of Map Static Assets but useful for some tasks that Map Static Assets isn't capable of managing.
 
-Map Static Assets can replace `Microsoft.AspNetCore.Builder.StaticFileExtensions.UseStaticFiles*` in most situations. However, Map Static Assets is optimized for serving the assets from known locations in the app at build and publish time. If the app serves assets from other locations, such as disk or embedded resources, `Microsoft.AspNetCore.Builder.StaticFileExtensions.UseStaticFiles*` should be used.
+Map Static Assets can replace <xref:Microsoft.AspNetCore.Builder.StaticFileExtensions.UseStaticFiles*> in most situations. However, Map Static Assets is optimized for serving the assets from known locations in the app at build and publish time. If the app serves assets from other locations, such as disk or embedded resources, <xref:Microsoft.AspNetCore.Builder.StaticFileExtensions.UseStaticFiles*> should be used.
 
-Map Static Assets (`Microsoft.AspNetCore.Builder.StaticAssetsEndpointRouteBuilderExtensions.MapStaticAssets*`) also replaces calling `Microsoft.AspNetCore.Builder.ComponentsWebAssemblyApplicationBuilderExtensions.UseBlazorFrameworkFiles*` in apps that serve Blazor WebAssembly framework files, and explicitly calling `Microsoft.AspNetCore.Builder.ComponentsWebAssemblyApplicationBuilderExtensions.UseBlazorFrameworkFiles*` in a Blazor Web App isn't necessary because the API is automatically called when invoking `Microsoft.Extensions.DependencyInjection.WebAssemblyRazorComponentsBuilderExtensions.AddInteractiveWebAssemblyComponents*`.
+Map Static Assets (<xref:Microsoft.AspNetCore.Builder.StaticAssetsEndpointRouteBuilderExtensions.MapStaticAssets*>) also replaces calling <xref:Microsoft.AspNetCore.Builder.ComponentsWebAssemblyApplicationBuilderExtensions.UseBlazorFrameworkFiles*> in apps that serve Blazor WebAssembly framework files, and explicitly calling <xref:Microsoft.AspNetCore.Builder.ComponentsWebAssemblyApplicationBuilderExtensions.UseBlazorFrameworkFiles*> in a Blazor Web App isn't necessary because the API is automatically called when invoking <xref:Microsoft.Extensions.DependencyInjection.WebAssemblyRazorComponentsBuilderExtensions.AddInteractiveWebAssemblyComponents*>.
 
-When Interactive WebAssembly or Interactive Auto render modes are enabled:
+When [Interactive WebAssembly or Interactive Auto render modes](index.md#render-modes) are enabled:
 
 * Blazor creates an endpoint to expose the resource collection as a JS module.
 * The URL is emitted to the body of the request as persisted component state when a WebAssembly component is rendered into the page.
 * During WebAssembly boot, Blazor retrieves the URL, imports the module, and calls a function to retrieve the asset collection and reconstruct it in memory. The URL is specific to the content and cached forever, so this overhead cost is only paid once per user until the app is updated.
-* The resource collection is also exposed at a human-readable URL (`_framework/resource-collection.js`), so JS has access to the resource collection for enhanced navigation or to implement features of other frameworks and third-party components.
+* The resource collection is also exposed at a human-readable URL (`_framework/resource-collection.js`), so JS has access to the resource collection for [enhanced navigation](navigation.md#enhanced-navigation-and-form-handling) or to implement features of other frameworks and third-party components.
 
-Static file middleware (`Microsoft.AspNetCore.Builder.StaticFileExtensions.UseStaticFiles*`) is useful in the following situations that Map Static Assets (`Microsoft.AspNetCore.Builder.StaticAssetsEndpointRouteBuilderExtensions.MapStaticAssets*`) can't handle:
+Static file middleware (<xref:Microsoft.AspNetCore.Builder.StaticFileExtensions.UseStaticFiles*>) is useful in the following situations that Map Static Assets (<xref:Microsoft.AspNetCore.Builder.StaticAssetsEndpointRouteBuilderExtensions.MapStaticAssets*>) can't handle:
 
 * Serving files from disk that aren't part of the build or publish process, for example, files added to the application folder during or after deployment.
-* Applying a path prefix to Blazor WebAssembly static asset files, which is covered in the Prefix for Blazor WebAssembly assets section.
-* Configuring file mappings of extensions to specific content types and setting static file options, which is covered in the File mappings and static file options section.
-
-For more information, see Serve static files in ASP.NET Core apps.
+* Applying a path prefix to Blazor WebAssembly static asset files, which is covered in the [Prefix for Blazor WebAssembly assets](#prefix-for-blazor-webassembly-assets) section.
+* Configuring file mappings of extensions to specific content types and setting static file options, which is covered in the [File mappings and static file options](#file-mappings-and-static-file-options) section.
+      
+For more information, see [Serve static files in ASP.NET Core apps](../../fundamentals/static-files.md).
 
 ## Deliver assets with Map Static Assets routing endpoint conventions
 
 *This section applies to server-side Blazor apps.*
 
-Assets are delivered via the `Microsoft.AspNetCore.Components.ComponentBase.Assets` property, which resolves the fingerprinted URL for a given asset. In the following example, Bootstrap, the Blazor project template app stylesheet (`app.css`), and the CSS isolation stylesheet (based on an app's namespace of `BlazorSample`) are linked in a root component, typically the `App` component (`Components/App.razor`):
+Assets are delivered via the <xref:Microsoft.AspNetCore.Components.ComponentBase.Assets?displayProperty=nameWithType> property, which resolves the fingerprinted URL for a given asset. In the following example, Bootstrap, the Blazor project template app stylesheet (`app.css`), and the [CSS isolation stylesheet](../components/css-isolation.md) (based on an app's namespace of `BlazorSample`) are linked in a root component, typically the `App` component (`Components/App.razor`):
 
 ```razor
 <link rel="stylesheet" href="@Assets["bootstrap/bootstrap.min.css"]" />
@@ -78,22 +92,22 @@ Assets are delivered via the `Microsoft.AspNetCore.Components.ComponentBase.Asse
 
 ## `ImportMap` component
 
-*This section applies to Blazor Web Apps that call `Microsoft.AspNetCore.Builder.RazorComponentsEndpointRouteBuilderExtensions.MapRazorComponents*`.*
+*This section applies to Blazor Web Apps that call <xref:Microsoft.AspNetCore.Builder.RazorComponentsEndpointRouteBuilderExtensions.MapRazorComponents*>.*
 
-The `ImportMap` component (`Microsoft.AspNetCore.Components.ImportMap`) represents an import map element (``) that defines the import map for module scripts. The Import Map component is placed in `<head>` content of the root component, typically the `App` component (`Components/App.razor`).
+The `ImportMap` component (<xref:Microsoft.AspNetCore.Components.ImportMap>) represents an import map element (`<script type="importmap"></script>`) that defines the import map for module scripts. The Import Map component is placed in `<head>` content of the root component, typically the `App` component (`Components/App.razor`).
 
 ```razor
 <ImportMap />
 ```
 
-If a custom `Microsoft.AspNetCore.Components.ImportMapDefinition` isn't assigned to an Import Map component, the import map is generated based on the app's assets.
+If a custom <xref:Microsoft.AspNetCore.Components.ImportMapDefinition> isn't assigned to an Import Map component, the import map is generated based on the app's assets.
 
-> **Note:**
-> `Microsoft.AspNetCore.Components.ImportMapDefinition` instances are expensive to create, so we recommended caching them when creating an additional instance.
+> [!NOTE]
+> <xref:Microsoft.AspNetCore.Components.ImportMapDefinition> instances are expensive to create, so we recommended caching them when creating an additional instance.
 
 The following examples demonstrate custom import map definitions and the import maps that they create.
 
-Basic <example-value> map:
+Basic import map:
 
 ```csharp
 new ImportMapDefinition(
@@ -170,9 +184,9 @@ The preceding code results in the following import map:
 }
 ```
 
-Combine import map definitions (`Microsoft.AspNetCore.Components.ImportMapDefinition`) with `Microsoft.AspNetCore.Components.ImportMapDefinition.Combine*`.
+Combine import map definitions (<xref:Microsoft.AspNetCore.Components.ImportMapDefinition>) with <xref:Microsoft.AspNetCore.Components.ImportMapDefinition.Combine*?displayProperty=nameWithType>.
 
-Import map created from a `Microsoft.AspNetCore.Components.ResourceAssetCollection` that maps static assets to their corresponding unique URLs:
+Import map created from a <xref:Microsoft.AspNetCore.Components.ResourceAssetCollection> that maps static assets to their corresponding unique URLs:
 
 ```csharp
 ImportMapDefinition.FromResourceCollection(
@@ -202,15 +216,27 @@ The preceding code results in the following import map:
 
 ## Import map Content Security Policy (CSP) violations
 
-*This section applies to Blazor Web Apps that call `Microsoft.AspNetCore.Builder.RazorComponentsEndpointRouteBuilderExtensions.MapRazorComponents*`.*
+*This section applies to Blazor Web Apps that call <xref:Microsoft.AspNetCore.Builder.RazorComponentsEndpointRouteBuilderExtensions.MapRazorComponents*>.*
 
-The `ImportMap` component is rendered as an inline `<script>` tag, which violates a strict Content Security Policy (CSP) that sets the `default-src` or `script-src` directive.
+The `ImportMap` component is rendered as an inline `<script>` tag, which violates a strict [Content Security Policy (CSP)](https://developer.mozilla.org/docs/Web/HTTP/Guides/CSP) that sets the `default-src` or `script-src` directive.
 
-For examples of how to address the policy violation with Subresource Integrity (SRI) or a cryptographic nonce, see Resolving CSP violations with Subresource Integrity (SRI) or a nonce.
+For examples of how to address the policy violation with Subresource Integrity (SRI) or a cryptographic nonce, see [Resolving CSP violations with Subresource Integrity (SRI) or a nonce](../security/content-security-policy.md#resolving-csp-violations-with-subresource-integrity-sri-or-a-cryptographic-nonce).
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-9.0"
+
+Configure static file middleware to serve static assets to clients by calling <xref:Microsoft.AspNetCore.Builder.StaticFileExtensions.UseStaticFiles*> in the app's request processing pipeline. For more information, see [Serve static files in ASP.NET Core apps](../../fundamentals/static-files.md).
+
+In releases prior to .NET 8, Blazor framework static files, such as the Blazor script, are served via static file middleware. In .NET 8 or later, Blazor framework static files are mapped using endpoint routing, and static file middleware is no longer used.
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-10.0"
 
 ## Fingerprint client-side static assets in standalone Blazor WebAssembly apps
 
-In standalone Blazor WebAssembly apps during build and publish, the framework overrides placeholders in `index.html` with values computed during build to fingerprint static assets for client-side rendering. A fingerprint is placed into the `blazor.webassembly.js` script file name, and an import map is generated for other .NET assets.
+In standalone Blazor WebAssembly apps during build and publish, the framework overrides placeholders in `index.html` with values computed during build to fingerprint static assets for client-side rendering. A [fingerprint](https://wikipedia.org/wiki/Fingerprint_(computing)) is placed into the `blazor.webassembly.js` script file name, and an import map is generated for other .NET assets.
 
 The following configuration must be present in the `wwwwoot/index.html` file of a standalone Blazor WebAssembly app to adopt fingerprinting:
 
@@ -261,7 +287,7 @@ Any JS file (`*.js`) in `index.html` with the fingerprint marker is fingerprinte
 
 ## Fingerprint client-side static assets in Blazor Web Apps
 
-For client-side rendering (CSR) in Blazor Web Apps (Interactive Auto or Interactive WebAssembly render modes), static asset server-side fingerprinting is enabled by adopting Map Static Assets routing endpoint conventions (`MapStaticAssets`), `ImportMap` component, and the `Microsoft.AspNetCore.Components.ComponentBase.Assets` property (`@Assets["..."]`). For more information, see Serve static files in ASP.NET Core apps.
+For client-side rendering (CSR) in Blazor Web Apps (Interactive Auto or Interactive WebAssembly render modes), static asset server-side [fingerprinting](https://wikipedia.org/wiki/Fingerprint_(computing)) is enabled by adopting [Map Static Assets routing endpoint conventions (`MapStaticAssets`)](../../fundamentals/static-files.md), [`ImportMap` component](static-files.md#importmap-component), and the <xref:Microsoft.AspNetCore.Components.ComponentBase.Assets?displayProperty=nameWithType> property (`@Assets["..."]`). For more information, see [Serve static files in ASP.NET Core apps](../../fundamentals/static-files.md).
 
 To fingerprint additional JavaScript modules for CSR, use the `<StaticWebAssetFingerprintPattern>` item in the app's project file (`.csproj`). In the following example, a fingerprint is added for all developer-supplied `.mjs` files in the app:
 
@@ -274,37 +300,279 @@ To fingerprint additional JavaScript modules for CSR, use the `<StaticWebAssetFi
 
 When resolving imports for JavaScript interop, the import map is used by the browser resolve fingerprinted files.
 
+:::moniker-end
+
 ## Summary of static file `<link>` `href` formats
 
 *This section applies to all .NET releases and Blazor apps.*
 
 The following tables summarize static file `<link>` `href` formats by .NET release.
 
-For the location of `<head>` content where static file links are placed, see ASP.NET Core Blazor project structure. Static asset links can also be supplied using `<HeadContent>` components in individual Razor components.
+:::moniker range=">= aspnetcore-6.0"
+
+For the location of `<head>` content where static file links are placed, see [ASP.NET Core Blazor project structure](../project-structure.md#location-of-head-and-body-content). Static asset links can also be supplied using [`<HeadContent>` components](../components/control-head-content.md) in individual Razor components.
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-6.0"
+
+For the location of `<head>` content where static file links are placed, see [ASP.NET Core Blazor project structure](../project-structure.md#location-of-head-and-body-content).
+
+:::moniker-end
 
 ### .NET 9 or later
 
 App type | `href` value | Examples
 --- | --- | ---
-Blazor Web App | `@Assets["{PATH}"]` | `<link rel="stylesheet" href="@Assets["app.css"]" />``<link href="@Assets["_content/ComponentLib/styles.css"]" rel="stylesheet" />`
-Blazor Server&dagger; | `@Assets["{PATH}"]` | `<link href="@Assets["css/site.css"]" rel="stylesheet" />``<link href="@Assets["_content/ComponentLib/styles.css"]" rel="stylesheet" />`
-Standalone Blazor WebAssembly | `{PATH}` | `<link rel="stylesheet" href="css/app.css" />``<link href="_content/ComponentLib/styles.css" rel="stylesheet" />`
+Blazor Web App | `@Assets["{PATH}"]` | `<link rel="stylesheet" href="@Assets["app.css"]" />`<br>`<link href="@Assets["_content/ComponentLib/styles.css"]" rel="stylesheet" />`
+Blazor Server&dagger; | `@Assets["{PATH}"]` | `<link href="@Assets["css/site.css"]" rel="stylesheet" />`<br>`<link href="@Assets["_content/ComponentLib/styles.css"]" rel="stylesheet" />`
+Standalone Blazor WebAssembly | `{PATH}` | `<link rel="stylesheet" href="css/app.css" />`<br>`<link href="_content/ComponentLib/styles.css" rel="stylesheet" />`
 
 ### .NET 8.x
 
 App type | `href` value | Examples
 --- | --- | ---
-Blazor Web App | `{PATH}` | `<link rel="stylesheet" href="app.css" />``<link href="_content/ComponentLib/styles.css" rel="stylesheet" />`
-Blazor Server&dagger; | `{PATH}` | `<link href="css/site.css" rel="stylesheet" />``<link href="_content/ComponentLib/styles.css" rel="stylesheet" />`
-Standalone Blazor WebAssembly | `{PATH}` | `<link rel="stylesheet" href="css/app.css" />``<link href="_content/ComponentLib/styles.css" rel="stylesheet" />`
+Blazor Web App | `{PATH}` | `<link rel="stylesheet" href="app.css" />`<br>`<link href="_content/ComponentLib/styles.css" rel="stylesheet" />`
+Blazor Server&dagger; | `{PATH}` | `<link href="css/site.css" rel="stylesheet" />`<br>`<link href="_content/ComponentLib/styles.css" rel="stylesheet" />`
+Standalone Blazor WebAssembly | `{PATH}` | `<link rel="stylesheet" href="css/app.css" />`<br>`<link href="_content/ComponentLib/styles.css" rel="stylesheet" />`
 
 ### .NET 7.x or earlier
 
 App type | `href` value | Examples
 --- | --- | ---
-Blazor Server&dagger; | `{PATH}` | `<link href="css/site.css" rel="stylesheet" />``<link href="_content/ComponentLib/styles.css" rel="stylesheet" />`
-Hosted Blazor WebAssembly&Dagger; | `{PATH}` | `<link href="css/app.css" rel="stylesheet" />``<link href="_content/ComponentLib/styles.css" rel="stylesheet" />`
-Blazor WebAssembly | `{PATH}` | `<link href="css/app.css" rel="stylesheet" />``<link href="_content/ComponentLib/styles.css" rel="stylesheet" />`
+Blazor Server&dagger; | `{PATH}` | `<link href="css/site.css" rel="stylesheet" />`<br>`<link href="_content/ComponentLib/styles.css" rel="stylesheet" />`
+Hosted Blazor WebAssembly&Dagger; | `{PATH}` | `<link href="css/app.css" rel="stylesheet" />`<br>`<link href="_content/ComponentLib/styles.css" rel="stylesheet" />`
+Blazor WebAssembly | `{PATH}` | `<link href="css/app.css" rel="stylesheet" />`<br>`<link href="_content/ComponentLib/styles.css" rel="stylesheet" />`
 
-&dagger;Blazor Server is supported in .NET 8 or later but is no longer a project template after .NET 7.
+&dagger;Blazor Server is supported in .NET 8 or later but is no longer a project template after .NET 7.  
 &Dagger;We recommend updating Hosted Blazor WebAssembly apps to Blazor Web Apps when adopting .NET 8 or later.
+
+:::moniker range=">= aspnetcore-8.0"
+
+## Static Web Asset Project Mode
+
+*This section applies to the `.Client` project of a Blazor Web App.*
+
+The required `<StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>` setting in the `.Client` project of a Blazor Web App reverts Blazor WebAssembly static asset behaviors back to the defaults, so that the project behaves as part of the hosted project. The Blazor WebAssembly SDK (`Microsoft.NET.Sdk.BlazorWebAssembly`) configures static web assets in a specific way to work in "standalone" mode with a server simply consuming the outputs from the library. This isn't appropriate for a Blazor Web App, where the WebAssembly portion of the app is a logical part of the host and must behave more like a library. For example, the project doesn't expose the styles bundle (for example, `BlazorSample.Client.styles.css`) and instead only provides the host with the project bundle, so that the host can include it in its own styles bundle.
+
+Changing the value (`Default`) of `<StaticWebAssetProjectMode>` or removing the property from the `.Client` project isn't supported.
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0"
+
+## Prefix for Blazor WebAssembly assets
+
+*This section applies to Blazor Web Apps.*
+
+Use the <xref:Microsoft.AspNetCore.Components.WebAssembly.Server.WebAssemblyComponentsEndpointOptions.PathPrefix?displayProperty=nameWithType> endpoint option to set the path string that indicates the prefix for Blazor WebAssembly assets. The path must correspond to a referenced Blazor WebAssembly application project.
+
+```csharp
+endpoints.MapRazorComponents<App>()
+    .AddInteractiveWebAssemblyRenderMode(options => 
+        options.PathPrefix = "{PATH PREFIX}");
+```
+
+In the preceding example, the `{PATH PREFIX}` placeholder is the path prefix and must start with a forward slash (`/`).
+
+In the following example, the path prefix is set to `/path-prefix`:
+
+```csharp
+endpoints.MapRazorComponents<App>()
+    .AddInteractiveWebAssemblyRenderMode(options => 
+        options.PathPrefix = "/path-prefix");
+```
+
+:::moniker-end
+
+## Static web asset base path
+
+:::moniker range=">= aspnetcore-8.0"
+
+*This section applies to standalone Blazor WebAssembly apps.*
+
+Publishing the app places the app's static assets, including Blazor framework files (`_framework` folder assets), at the root path (`/`) in published output. The `<StaticWebAssetBasePath>` property specified in the project file (`.csproj`) sets the base path to a non-root path:
+
+```xml
+<PropertyGroup>
+  <StaticWebAssetBasePath>{PATH}</StaticWebAssetBasePath>
+</PropertyGroup>
+```
+
+In the preceding example, the `{PATH}` placeholder is the path.
+
+Without setting the `<StaticWebAssetBasePath>` property, a standalone app is published at `/BlazorStandaloneSample/bin/Release/{TFM}/publish/wwwroot/`.
+
+In the preceding example, the `{TFM}` placeholder is the [Target Framework Moniker (TFM)](/dotnet/standard/frameworks).
+
+If the `<StaticWebAssetBasePath>` property in a standalone Blazor WebAssembly app sets the published static asset path to `app1`, the root path to the app in published output is `/app1`.
+
+In the standalone Blazor WebAssembly app's project file (`.csproj`):
+
+```xml
+<PropertyGroup>
+  <StaticWebAssetBasePath>app1</StaticWebAssetBasePath>
+</PropertyGroup>
+```
+
+In published output, the path to the standalone Blazor WebAssembly app is `/BlazorStandaloneSample/bin/Release/{TFM}/publish/wwwroot/app1/`.
+
+In the preceding example, the `{TFM}` placeholder is the [Target Framework Moniker (TFM)](/dotnet/standard/frameworks).
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-8.0"
+
+*This section applies to standalone Blazor WebAssembly apps and hosted Blazor WebAssembly solutions.*
+
+Publishing the app places the app's static assets, including Blazor framework files (`_framework` folder assets), at the root path (`/`) in published output. The `<StaticWebAssetBasePath>` property specified in the project file (`.csproj`) sets the base path to a non-root path:
+
+```xml
+<PropertyGroup>
+  <StaticWebAssetBasePath>{PATH}</StaticWebAssetBasePath>
+</PropertyGroup>
+```
+
+In the preceding example, the `{PATH}` placeholder is the path.
+
+Without setting the `<StaticWebAssetBasePath>` property, the client app of a hosted solution or a standalone app is published at the following paths:
+
+* In the **:::no-loc text="Server":::** project of a hosted Blazor WebAssembly solution: `/BlazorHostedSample/Server/bin/Release/{TFM}/publish/wwwroot/`
+* In a standalone Blazor WebAssembly app: `/BlazorStandaloneSample/bin/Release/{TFM}/publish/wwwroot/`
+
+If the `<StaticWebAssetBasePath>` property in the **:::no-loc text="Client":::** project of a hosted Blazor WebAssembly app or in a standalone Blazor WebAssembly app sets the published static asset path to `app1`, the root path to the app in published output is `/app1`.
+
+In the **:::no-loc text="Client":::** app's project file (`.csproj`) or the standalone Blazor WebAssembly app's project file (`.csproj`):
+
+```xml
+<PropertyGroup>
+  <StaticWebAssetBasePath>app1</StaticWebAssetBasePath>
+</PropertyGroup>
+```
+
+In published output:
+
+* Path to the client app in the **:::no-loc text="Server":::** project of a hosted Blazor WebAssembly solution: `/BlazorHostedSample/Server/bin/Release/{TFM}/publish/wwwroot/app1/`
+* Path to a standalone Blazor WebAssembly app: `/BlazorStandaloneSample/bin/Release/{TFM}/publish/wwwroot/app1/`
+
+The `<StaticWebAssetBasePath>` property is most commonly used to control the paths to published static assets of multiple Blazor WebAssembly apps in a single hosted deployment. For more information, see [Multiple hosted ASP.NET Core Blazor WebAssembly apps](../host-and-deploy/webassembly/multiple-hosted-webassembly.md). The property is also effective in standalone Blazor WebAssembly apps.
+
+In the preceding examples, the `{TFM}` placeholder is the [Target Framework Moniker (TFM)](/dotnet/standard/frameworks).
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-8.0"
+
+## File mappings and static file options
+
+*This section applies to server-side static files.*
+
+To create additional file mappings with a <xref:Microsoft.AspNetCore.StaticFiles.FileExtensionContentTypeProvider> or configure other <xref:Microsoft.AspNetCore.Builder.StaticFileOptions>, use **one** of the following approaches. In the following examples, the `{EXTENSION}` placeholder is the file extension, and the `{CONTENT TYPE}` placeholder is the content type.
+
+* Configure options through [dependency injection (DI)](dependency-injection.md) in the `Program` file using <xref:Microsoft.AspNetCore.Builder.StaticFileOptions>:
+
+  ```csharp
+  using Microsoft.AspNetCore.StaticFiles;
+
+  ...
+
+  var provider = new FileExtensionContentTypeProvider();
+  provider.Mappings["{EXTENSION}"] = "{CONTENT TYPE}";
+
+  builder.Services.Configure<StaticFileOptions>(options =>
+  {
+      options.ContentTypeProvider = provider;
+  });
+  ```
+
+  This approach configures the same file provider used to serve the Blazor script. Make sure that your custom configuration doesn't interfere with serving the Blazor script. For example, don't remove the mapping for JavaScript files by configuring the provider with `provider.Mappings.Remove(".js")`.
+
+* Use two calls to <xref:Microsoft.AspNetCore.Builder.StaticFileExtensions.UseStaticFiles*> in the `Program` file:
+  * Configure the custom file provider in the first call with <xref:Microsoft.AspNetCore.Builder.StaticFileOptions>.
+  * The second middleware serves the Blazor script, which uses the default static files configuration provided by the Blazor framework.
+
+  ```csharp
+  using Microsoft.AspNetCore.StaticFiles;
+
+  ...
+
+  var provider = new FileExtensionContentTypeProvider();
+  provider.Mappings["{EXTENSION}"] = "{CONTENT TYPE}";
+
+  app.UseStaticFiles(new StaticFileOptions { ContentTypeProvider = provider });
+  app.UseStaticFiles();
+  ```
+
+* You can avoid interfering with serving `_framework/blazor.server.js` by using <xref:Microsoft.AspNetCore.Builder.MapWhenExtensions.MapWhen*> to execute a custom static files middleware:
+
+  ```csharp
+  app.MapWhen(ctx => !ctx.Request.Path
+      .StartsWithSegments("/_framework/blazor.server.js"),
+          subApp => subApp.UseStaticFiles(new StaticFileOptions() { ... }));
+  ```
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0"
+
+## Serve files from multiple locations
+
+*The guidance in this section only applies to Blazor Web Apps.*
+
+To serve files from multiple locations with a <xref:Microsoft.Extensions.FileProviders.CompositeFileProvider>:
+
+* Add the namespace for <xref:Microsoft.Extensions.FileProviders?displayProperty=fullName> to the top of the `Program` file of the server project.
+* In the server project's `Program` file ***before*** the call to <xref:Microsoft.AspNetCore.Builder.StaticFileExtensions.UseStaticFiles*>:
+  * Create a <xref:Microsoft.Extensions.FileProviders.PhysicalFileProvider> with the path to the static assets.
+  * Create a <xref:Microsoft.Extensions.FileProviders.CompositeFileProvider> from the <xref:Microsoft.AspNetCore.Hosting.IWebHostEnvironment.WebRootFileProvider> and the <xref:Microsoft.Extensions.FileProviders.PhysicalFileProvider>. Assign the composite file provider back to the app's <xref:Microsoft.AspNetCore.Hosting.IWebHostEnvironment.WebRootFileProvider>.
+
+Example:
+
+Create a new folder in the server project named `AdditionalStaticAssets`. Place an image into the folder.
+
+Add the following `using` statement to the top of the server project's `Program` file:
+
+```csharp
+using Microsoft.Extensions.FileProviders;
+```
+
+In the server project's `Program` file ***before*** any calls to <xref:Microsoft.AspNetCore.Builder.StaticAssetsEndpointRouteBuilderExtensions.MapStaticAssets*> and <xref:Microsoft.AspNetCore.Builder.StaticFileExtensions.UseStaticFiles*>, add the following code:
+
+```csharp
+var secondaryProvider = new PhysicalFileProvider(
+    Path.Combine(builder.Environment.ContentRootPath, "AdditionalStaticAssets"));
+app.Environment.WebRootFileProvider = new CompositeFileProvider(
+    app.Environment.WebRootFileProvider, secondaryProvider);
+```
+
+In the app's `Home` component (`Home.razor`) markup, reference the image with an `<img>` tag:
+
+```razor
+<img src="{IMAGE FILE NAME}" alt="{ALT TEXT}" />
+```
+
+In the preceding example:
+
+* The `{IMAGE FILE NAME}` placeholder is the image file name. There's no need to provide a path segment if the image file is at the root of the `AdditionalStaticAssets` folder.
+* The `{ALT TEXT}` placeholder is the image alternate text.
+
+Run the app.
+
+:::moniker-end
+
+## Related content
+
+:::moniker range=">= aspnetcore-8.0"
+
+* [ASP.NET Core Blazor app base path](../host-and-deploy/app-base-path.md)
+* [Avoid file capture in a route parameter](routing.md#avoid-file-capture-in-a-route-parameter)
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-8.0"
+
+* [ASP.NET Core Blazor app base path](../host-and-deploy/app-base-path.md)
+* [Avoid file capture in a route parameter](routing.md#avoid-file-capture-in-a-route-parameter)
+* [Multiple hosted ASP.NET Core Blazor WebAssembly apps](../host-and-deploy/webassembly/multiple-hosted-webassembly.md)
+
+:::moniker-end

@@ -1,24 +1,24 @@
 ---
-title: "Microsoft Fakes support for Microsoft.Testing.Platform (MTP)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/microsoft-testing-platform-fakes.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Microsoft Fakes support for Microsoft.Testing.Platform (MTP)
+description: Learn about the MTP Fakes extension capabilities and how to use it.
+author: drognanar
+ms.author: arturs
+ms.date: 02/25/2026
+ai-usage: ai-assisted
 ---
 
 # Microsoft Fakes
 
-This feature requires the Microsoft.Testing.Extensions.Fakes NuGet package.
+This feature requires the [Microsoft.Testing.Extensions.Fakes](https://nuget.org/packages/Microsoft.Testing.Extensions.Fakes) NuGet package.
 
-> **Tip:**
-> When using Microsoft.Testing.Platform.MSBuild (included transitively by MSTest, NUnit, and xUnit runners), this extension is auto-registered when you install its NuGet package — no code changes needed.
+> [!TIP]
+> When using [Microsoft.Testing.Platform.MSBuild](https://www.nuget.org/packages/Microsoft.Testing.Platform.MSBuild) (included transitively by MSTest, NUnit, and xUnit runners), this extension is auto-registered when you install its NuGet package — no code changes needed.
 
 The `Microsoft.Testing.Extensions.Fakes` extension provides support to execute a test project that makes use of `Microsoft Fakes`.
 
-Microsoft Fakes allows you to better test your code by either generating `Stub`s (for instance creating a testable implementation of `INotifyPropertyChanged`) or by `Shim`ing methods and static methods (replacing the implementation of `File.Open` with a one you can control in your tests).
+[Microsoft Fakes](/visualstudio/test/isolating-code-under-test-with-microsoft-fakes) allows you to better test your code by either generating `Stub`s (for instance creating a testable implementation of `INotifyPropertyChanged`) or by `Shim`ing methods and static methods (replacing the implementation of `File.Open` with a one you can control in your tests).
 
-> **Note:**
+> [!NOTE]
 > This extension requires a Visual Studio Enterprise installation with the minimum version of 17.11 preview 1 in order to work correctly.
 
 ## Upgrade your project to the new extension

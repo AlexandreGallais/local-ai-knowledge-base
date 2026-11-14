@@ -1,25 +1,17 @@
----
-title: "AtomicBoolean class (java.util.concurrent.atomic)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/atomic/AtomicBoolean.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AtomicBoolean class (java.util.concurrent.atomic)
 
 ```java
 public class AtomicBoolean implements java.io.Serializable
 ```
 
-A `boolean` value that may be updated atomically. See the
-`VarHandle` specification for descriptions of the properties
-of atomic accesses. An `AtomicBoolean` is used in
+A {@code boolean} value that may be updated atomically. See the
+{@link VarHandle} specification for descriptions of the properties
+of atomic accesses. An {@code AtomicBoolean} is used in
 applications such as atomically updated flags, and cannot be used
-as a replacement for a `java.lang.Boolean`.
+as a replacement for a {@link java.lang.Boolean}.
 
-**Since:** 1.5
+@since 1.5
+@author Doug Lea
 
 ## AtomicBoolean.AtomicBoolean(boolean)
 
@@ -27,11 +19,9 @@ as a replacement for a `java.lang.Boolean`.
 public AtomicBoolean(boolean initialValue)
 ```
 
-Creates a new `AtomicBoolean` with the given initial value.
+Creates a new {@code AtomicBoolean} with the given initial value.
 
-Parameters:
-
-- `initialValue`: the initial value
+@param initialValue the initial value
 
 ## AtomicBoolean.AtomicBoolean()
 
@@ -39,7 +29,7 @@ Parameters:
 public AtomicBoolean()
 ```
 
-Creates a new `AtomicBoolean` with initial value `false`.
+Creates a new {@code AtomicBoolean} with initial value {@code false}.
 
 ## AtomicBoolean.get()
 
@@ -48,9 +38,9 @@ public final boolean get()
 ```
 
 Returns the current value,
-with memory effects as specified by `VarHandle.getVolatile`.
+with memory effects as specified by {@link VarHandle#getVolatile}.
 
-**Returns:** the current value
+@return the current value
 
 ## AtomicBoolean.compareAndSet(boolean, boolean)
 
@@ -58,16 +48,13 @@ with memory effects as specified by `VarHandle.getVolatile`.
 public final boolean compareAndSet(boolean expectedValue, boolean newValue)
 ```
 
-Atomically sets the value to `newValue`
-if the current value `== expectedValue`,
-with memory effects as specified by `VarHandle.compareAndSet`.
+Atomically sets the value to {@code newValue}
+if the current value {@code == expectedValue},
+with memory effects as specified by {@link VarHandle#compareAndSet}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** `true` if successful. False return indicates that
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful. False return indicates that
 the actual value was not equal to the expected value.
 
 ## AtomicBoolean.weakCompareAndSet(boolean, boolean)
@@ -76,24 +63,20 @@ the actual value was not equal to the expected value.
 public boolean weakCompareAndSet(boolean expectedValue, boolean newValue)
 ```
 
-Possibly atomically sets the value to `newValue`
-if the current value `== expectedValue`,
-with memory effects as specified by `VarHandle.weakCompareAndSetPlain`.
+Possibly atomically sets the value to {@code newValue}
+if the current value {@code == expectedValue},
+with memory effects as specified by {@link VarHandle#weakCompareAndSetPlain}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Deprecated:** This method has plain memory effects but the method
+@deprecated This method has plain memory effects but the method
 name implies volatile memory effects (see methods such as
-`compareAndExchange` and `compareAndSet`).  To avoid
+{@link #compareAndExchange} and {@link #compareAndSet}).  To avoid
 confusion over plain or volatile memory effects it is recommended that
-the method `weakCompareAndSetPlain` be used instead.
+the method {@link #weakCompareAndSetPlain} be used instead.
 
-**Returns:** `true` if successful
-
-**See also:** #weakCompareAndSetPlain
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful
+@see #weakCompareAndSetPlain
 
 ## AtomicBoolean.weakCompareAndSetPlain(boolean, boolean)
 
@@ -101,18 +84,14 @@ the method `weakCompareAndSetPlain` be used instead.
 public boolean weakCompareAndSetPlain(boolean expectedValue, boolean newValue)
 ```
 
-Possibly atomically sets the value to `newValue`
-if the current value `== expectedValue`,
-with memory effects as specified by `VarHandle.weakCompareAndSetPlain`.
+Possibly atomically sets the value to {@code newValue}
+if the current value {@code == expectedValue},
+with memory effects as specified by {@link VarHandle#weakCompareAndSetPlain}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** `true` if successful
-
-**Since:** 9
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful
+@since 9
 
 ## AtomicBoolean.set(boolean)
 
@@ -120,12 +99,10 @@ Parameters:
 public final void set(boolean newValue)
 ```
 
-Sets the value to `newValue`,
-with memory effects as specified by `VarHandle.setVolatile`.
+Sets the value to {@code newValue},
+with memory effects as specified by {@link VarHandle#setVolatile}.
 
-Parameters:
-
-- `newValue`: the new value
+@param newValue the new value
 
 ## AtomicBoolean.lazySet(boolean)
 
@@ -133,14 +110,11 @@ Parameters:
 public final void lazySet(boolean newValue)
 ```
 
-Sets the value to `newValue`,
-with memory effects as specified by `VarHandle.setRelease`.
+Sets the value to {@code newValue},
+with memory effects as specified by {@link VarHandle#setRelease}.
 
-Parameters:
-
-- `newValue`: the new value
-
-**Since:** 1.6
+@param newValue the new value
+@since 1.6
 
 ## AtomicBoolean.getAndSet(boolean)
 
@@ -148,20 +122,19 @@ Parameters:
 public final boolean getAndSet(boolean newValue)
 ```
 
-Atomically sets the value to `newValue` and returns the old value,
-with memory effects as specified by `VarHandle.getAndSet`.
+Atomically sets the value to {@code newValue} and returns the old value,
+with memory effects as specified by {@link VarHandle#getAndSet}.
 
-Parameters:
-
-- `newValue`: the new value
-
-**Returns:** the previous value
+@param newValue the new value
+@return the previous value
 
 ## AtomicBoolean.toString()
 
 ```java
 public String toString()
 ```
+
+{@return the String representation of the current value}
 
 ## AtomicBoolean.getPlain()
 
@@ -170,11 +143,10 @@ public final boolean getPlain()
 ```
 
 Returns the current value, with memory semantics of reading as
-if the variable was declared non-`volatile`.
+if the variable was declared non-{@code volatile}.
 
-**Returns:** the value
-
-**Since:** 9
+@return the value
+@since 9
 
 ## AtomicBoolean.setPlain(boolean)
 
@@ -182,15 +154,12 @@ if the variable was declared non-`volatile`.
 public final void setPlain(boolean newValue)
 ```
 
-Sets the value to `newValue`, with memory semantics
-of setting as if the variable was declared non-`volatile`
-and non-`final`.
+Sets the value to {@code newValue}, with memory semantics
+of setting as if the variable was declared non-{@code volatile}
+and non-{@code final}.
 
-Parameters:
-
-- `newValue`: the new value
-
-**Since:** 9
+@param newValue the new value
+@since 9
 
 ## AtomicBoolean.getOpaque()
 
@@ -199,11 +168,10 @@ public final boolean getOpaque()
 ```
 
 Returns the current value,
-with memory effects as specified by `VarHandle.getOpaque`.
+with memory effects as specified by {@link VarHandle#getOpaque}.
 
-**Returns:** the value
-
-**Since:** 9
+@return the value
+@since 9
 
 ## AtomicBoolean.setOpaque(boolean)
 
@@ -211,14 +179,11 @@ with memory effects as specified by `VarHandle.getOpaque`.
 public final void setOpaque(boolean newValue)
 ```
 
-Sets the value to `newValue`,
-with memory effects as specified by `VarHandle.setOpaque`.
+Sets the value to {@code newValue},
+with memory effects as specified by {@link VarHandle#setOpaque}.
 
-Parameters:
-
-- `newValue`: the new value
-
-**Since:** 9
+@param newValue the new value
+@since 9
 
 ## AtomicBoolean.getAcquire()
 
@@ -227,11 +192,10 @@ public final boolean getAcquire()
 ```
 
 Returns the current value,
-with memory effects as specified by `VarHandle.getAcquire`.
+with memory effects as specified by {@link VarHandle#getAcquire}.
 
-**Returns:** the value
-
-**Since:** 9
+@return the value
+@since 9
 
 ## AtomicBoolean.setRelease(boolean)
 
@@ -239,14 +203,11 @@ with memory effects as specified by `VarHandle.getAcquire`.
 public final void setRelease(boolean newValue)
 ```
 
-Sets the value to `newValue`,
-with memory effects as specified by `VarHandle.setRelease`.
+Sets the value to {@code newValue},
+with memory effects as specified by {@link VarHandle#setRelease}.
 
-Parameters:
-
-- `newValue`: the new value
-
-**Since:** 9
+@param newValue the new value
+@since 9
 
 ## AtomicBoolean.compareAndExchange(boolean, boolean)
 
@@ -254,20 +215,16 @@ Parameters:
 public final boolean compareAndExchange(boolean expectedValue, boolean newValue)
 ```
 
-Atomically sets the value to `newValue` if the current value,
-referred to as the *witness value*, `== expectedValue`,
+Atomically sets the value to {@code newValue} if the current value,
+referred to as the <em>witness value</em>, {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.compareAndExchange`.
+{@link VarHandle#compareAndExchange}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** the *witness value*, which will be the same as the
+@param expectedValue the expected value
+@param newValue the new value
+@return the <em>witness value</em>, which will be the same as the
 expected value if successful
-
-**Since:** 9
+@since 9
 
 ## AtomicBoolean.compareAndExchangeAcquire(boolean, boolean)
 
@@ -275,20 +232,16 @@ expected value if successful
 public final boolean compareAndExchangeAcquire(boolean expectedValue, boolean newValue)
 ```
 
-Atomically sets the value to `newValue` if the current value,
-referred to as the *witness value*, `== expectedValue`,
+Atomically sets the value to {@code newValue} if the current value,
+referred to as the <em>witness value</em>, {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.compareAndExchangeAcquire`.
+{@link VarHandle#compareAndExchangeAcquire}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** the *witness value*, which will be the same as the
+@param expectedValue the expected value
+@param newValue the new value
+@return the <em>witness value</em>, which will be the same as the
 expected value if successful
-
-**Since:** 9
+@since 9
 
 ## AtomicBoolean.compareAndExchangeRelease(boolean, boolean)
 
@@ -296,20 +249,16 @@ expected value if successful
 public final boolean compareAndExchangeRelease(boolean expectedValue, boolean newValue)
 ```
 
-Atomically sets the value to `newValue` if the current value,
-referred to as the *witness value*, `== expectedValue`,
+Atomically sets the value to {@code newValue} if the current value,
+referred to as the <em>witness value</em>, {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.compareAndExchangeRelease`.
+{@link VarHandle#compareAndExchangeRelease}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** the *witness value*, which will be the same as the
+@param expectedValue the expected value
+@param newValue the new value
+@return the <em>witness value</em>, which will be the same as the
 expected value if successful
-
-**Since:** 9
+@since 9
 
 ## AtomicBoolean.weakCompareAndSetVolatile(boolean, boolean)
 
@@ -317,19 +266,15 @@ expected value if successful
 public final boolean weakCompareAndSetVolatile(boolean expectedValue, boolean newValue)
 ```
 
-Possibly atomically sets the value to `newValue` if the current
-value `== expectedValue`,
+Possibly atomically sets the value to {@code newValue} if the current
+value {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.weakCompareAndSet`.
+{@link VarHandle#weakCompareAndSet}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** `true` if successful
-
-**Since:** 9
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful
+@since 9
 
 ## AtomicBoolean.weakCompareAndSetAcquire(boolean, boolean)
 
@@ -337,19 +282,15 @@ Parameters:
 public final boolean weakCompareAndSetAcquire(boolean expectedValue, boolean newValue)
 ```
 
-Possibly atomically sets the value to `newValue` if the current
-value `== expectedValue`,
+Possibly atomically sets the value to {@code newValue} if the current
+value {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.weakCompareAndSetAcquire`.
+{@link VarHandle#weakCompareAndSetAcquire}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** `true` if successful
-
-**Since:** 9
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful
+@since 9
 
 ## AtomicBoolean.weakCompareAndSetRelease(boolean, boolean)
 
@@ -357,16 +298,12 @@ Parameters:
 public final boolean weakCompareAndSetRelease(boolean expectedValue, boolean newValue)
 ```
 
-Possibly atomically sets the value to `newValue` if the current
-value `== expectedValue`,
+Possibly atomically sets the value to {@code newValue} if the current
+value {@code == expectedValue},
 with memory effects as specified by
-`VarHandle.weakCompareAndSetRelease`.
+{@link VarHandle#weakCompareAndSetRelease}.
 
-Parameters:
-
-- `expectedValue`: the expected value
-- `newValue`: the new value
-
-**Returns:** `true` if successful
-
-**Since:** 9
+@param expectedValue the expected value
+@param newValue the new value
+@return {@code true} if successful
+@since 9

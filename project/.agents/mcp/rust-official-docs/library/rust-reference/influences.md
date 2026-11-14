@@ -1,12 +1,3 @@
----
-title: "Influences"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/influences.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 # Influences
 
 Rust is not a particularly original language, with design elements coming from a wide range of sources. Some of these are listed below (including elements that have since been removed):
@@ -22,4 +13,4 @@ Rust is not a particularly original language, with design elements coming from a
 * C#: attributes
 * Ruby: closure syntax, ~~block syntax~~
 * NIL, Hermes: ~~typestate~~
-* Unicode Annex #31: identifier and pattern syntax
+* [Unicode Annex #31](http://www.unicode.org/reports/tr31/): identifier and pattern syntax

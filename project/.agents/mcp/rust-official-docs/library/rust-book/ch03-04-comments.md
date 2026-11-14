@@ -1,14 +1,3 @@
----
-title: "ch03-04-comments"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch03-04-comments.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# ch03-04-comments
-
 ## Comments
 
 All programmers strive to make their code easy to understand, but sometimes
@@ -34,26 +23,23 @@ single line, you’ll need to include `//` on each line, like this:
 
 Comments can also be placed at the end of lines containing code:
 
-Filename: src/main.rs
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn main() {
-    let lucky_number = 7; // I'm feeling lucky today
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-24-comments-end-of-line/src/main.rs}}
 ```
 
 But you’ll more often see them used in this format, with the comment on a
 separate line above the code it’s annotating:
 
-Filename: src/main.rs
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
-fn main() {
-    // I'm feeling lucky today
-    let lucky_number = 7;
-}
+{{#rustdoc_include ../listings/ch03-common-programming-concepts/no-listing-25-comments-above-line/src/main.rs}}
 ```
 
 Rust also has another kind of comment, documentation comments, which we’ll
-discuss in the “Publishing a Crate to Crates.io”
+discuss in the [“Publishing a Crate to Crates.io”][publishing]<!-- ignore -->
 section of Chapter 14.
+
+[publishing]: ch14-02-publishing-to-crates-io.html

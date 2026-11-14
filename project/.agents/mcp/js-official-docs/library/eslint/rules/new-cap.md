@@ -1,13 +1,8 @@
 ---
-title: "new-cap"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/new-cap.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: new-cap
+rule_type: suggestion
 ---
 
-# new-cap
 
 The `new` operator in JavaScript creates a new instance of a particular type of object. That type of object is represented by a constructor function. Since constructor functions are just regular functions, the only defining characteristic is that `new` is being used as part of the call. Native JavaScript functions begin with an uppercase letter to distinguish those functions that are to be used as constructors from functions that are not. Many style guides recommend following this pattern to more easily determine which functions are to be used as constructors.
 
@@ -35,7 +30,7 @@ These identifiers are exempt only when they reference the global built-in, eithe
 
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint new-cap: "error"*/
@@ -53,9 +48,11 @@ const time = Date.UTC(2000, 0);
 const otherTime = globalThis.Date.UTC(2000, 0);
 ```
 
+:::
+
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint new-cap: "error"*/
@@ -70,6 +67,8 @@ const Date = { UTC() { return 0; } };
 
 const time = Date.UTC(2000, 0);
 ```
+
+:::
 
 ## Options
 
@@ -90,7 +89,7 @@ This rule has an object option:
 
 Examples of **incorrect** code for this rule with the default `{ "newIsCap": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint new-cap: ["error", { "newIsCap": true }]*/
@@ -98,9 +97,11 @@ Examples of **incorrect** code for this rule with the default `{ "newIsCap": tru
 const friend = new person();
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `{ "newIsCap": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint new-cap: ["error", { "newIsCap": true }]*/
@@ -108,9 +109,11 @@ Examples of **correct** code for this rule with the default `{ "newIsCap": true 
 const friend = new Person();
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "newIsCap": false }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint new-cap: ["error", { "newIsCap": false }]*/
@@ -118,11 +121,13 @@ Examples of **correct** code for this rule with the `{ "newIsCap": false }` opti
 const friend = new person();
 ```
 
+:::
+
 ### capIsNew
 
 Examples of **incorrect** code for this rule with the default `{ "capIsNew": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint new-cap: ["error", { "capIsNew": true }]*/
@@ -130,9 +135,11 @@ Examples of **incorrect** code for this rule with the default `{ "capIsNew": tru
 const colleague = Person();
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `{ "capIsNew": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint new-cap: ["error", { "capIsNew": true }]*/
@@ -140,9 +147,11 @@ Examples of **correct** code for this rule with the default `{ "capIsNew": true 
 const colleague = new Person();
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "capIsNew": false }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint new-cap: ["error", { "capIsNew": false }]*/
@@ -150,11 +159,13 @@ Examples of **correct** code for this rule with the `{ "capIsNew": false }` opti
 const colleague = Person();
 ```
 
+:::
+
 ### newIsCapExceptions
 
 Examples of additional **correct** code for this rule with the `{ "newIsCapExceptions": ["events"] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint new-cap: ["error", { "newIsCapExceptions": ["events"] }]*/
@@ -164,11 +175,13 @@ const events = require('events');
 const emitter = new events();
 ```
 
+:::
+
 ### newIsCapExceptionPattern
 
 Examples of additional **correct** code for this rule with the `{ "newIsCapExceptionPattern": "^person\\.." }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint new-cap: ["error", { "newIsCapExceptionPattern": "^person\\.." }]*/
@@ -178,9 +191,11 @@ const friend = new person.acquaintance();
 const bestFriend = new person.friend();
 ```
 
+:::
+
 Examples of additional **correct** code for this rule with the `{ "newIsCapExceptionPattern": "\\.bar$" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint new-cap: ["error", { "newIsCapExceptionPattern": "\\.bar$" }]*/
@@ -188,11 +203,13 @@ Examples of additional **correct** code for this rule with the `{ "newIsCapExcep
 const friend = new person.bar();
 ```
 
+:::
+
 ### capIsNewExceptions
 
 Examples of additional **correct** code for this rule with the `{ "capIsNewExceptions": ["Person"] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint new-cap: ["error", { "capIsNewExceptions": ["Person"] }]*/
@@ -202,11 +219,13 @@ function foo(arg) {
 }
 ```
 
+:::
+
 ### capIsNewExceptionPattern
 
 Examples of additional **correct** code for this rule with the `{ "capIsNewExceptionPattern": "^person\\.." }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint new-cap: ["error", { "capIsNewExceptionPattern": "^person\\.." }]*/
@@ -215,9 +234,11 @@ const friend = person.Acquaintance();
 const bestFriend = person.Friend();
 ```
 
+:::
+
 Examples of additional **correct** code for this rule with the `{ "capIsNewExceptionPattern": "\\.Bar$" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint new-cap: ["error", { "capIsNewExceptionPattern": "\\.Bar$" }]*/
@@ -225,9 +246,11 @@ Examples of additional **correct** code for this rule with the `{ "capIsNewExcep
 foo.Bar();
 ```
 
+:::
+
 Examples of additional **correct** code for this rule with the `{ "capIsNewExceptionPattern": "^Foo" }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint new-cap: ["error", { "capIsNewExceptionPattern": "^Foo" }]*/
@@ -239,11 +262,13 @@ const y = Foobar(42);
 const z = Foo.Bar(42);
 ```
 
+:::
+
 ### properties
 
 Examples of **incorrect** code for this rule with the default `{ "properties": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint new-cap: ["error", { "properties": true }]*/
@@ -251,9 +276,11 @@ Examples of **incorrect** code for this rule with the default `{ "properties": t
 const friend = new person.acquaintance();
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `{ "properties": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint new-cap: ["error", { "properties": true }]*/
@@ -261,15 +288,19 @@ Examples of **correct** code for this rule with the default `{ "properties": tru
 const friend = new person.Acquaintance();
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "properties": false }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint new-cap: ["error", { "properties": false }]*/
 
 const friend = new person.acquaintance();
 ```
+
+:::
 
 ## When Not To Use It
 

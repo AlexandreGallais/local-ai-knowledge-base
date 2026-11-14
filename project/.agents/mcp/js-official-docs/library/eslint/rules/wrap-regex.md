@@ -1,14 +1,7 @@
 ---
-title: "wrap-regex"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/wrap-regex.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: wrap-regex
+rule_type: layout
 ---
-
-# wrap-regex
-
 When a regular expression is used in certain situations, it can end up looking like a division operator. For example:
 
 ```js
@@ -23,7 +16,7 @@ This is used to disambiguate the slash operator and facilitates more readable co
 
 Example of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint wrap-regex: "error"*/
@@ -33,9 +26,11 @@ function a() {
 }
 ```
 
+:::
+
 Example of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint wrap-regex: "error"*/
@@ -44,3 +39,5 @@ function a() {
     return (/foo/).test("bar");
 }
 ```
+
+:::

@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: LoggingLevelEnum Enumeration"
 title: "LoggingLevelEnum Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/logginglevelenum-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "LoggingLevelEnum"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "LoggingLevelEnum"
+helpviewer_keywords:
+  - "LoggingLevelEnum enumeration [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # LoggingLevelEnum Enumeration
 
 Indicates the severity level of a descriptive message that is written to the event log when a managed thread logs an event.
@@ -51,11 +59,11 @@ typedef enum LoggingLevelEnum {
 
 ## Remarks
 
- The common language runtime (CLR) calls the ICorDebugManagedCallback::LogMessage method to notify the debugger that a managed thread has logged an event. The CLR passes a value of the `LoggingLevelEnum` enumeration to indicate the severity level of the message that the managed thread wrote to the event log.
+ The common language runtime (CLR) calls the [ICorDebugManagedCallback::LogMessage](icordebugmanagedcallback-logmessage-method.md) method to notify the debugger that a managed thread has logged an event. The CLR passes a value of the `LoggingLevelEnum` enumeration to indicate the severity level of the message that the managed thread wrote to the event log.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -65,4 +73,4 @@ typedef enum LoggingLevelEnum {
 
 ## See also
 
-- `System.Diagnostics.EventLog`
+- <xref:System.Diagnostics.EventLog>

@@ -1,24 +1,28 @@
 ---
-title: "When to use a reverse proxy with the ASP.NET Core Kestrel web server"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/kestrel/when-to-use-a-reverse-proxy.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: When to use a reverse proxy with the ASP.NET Core Kestrel web server
+description: Learn about when to use a reverse proxy in front of Kestrel, the cross-platform web server for ASP.NET Core.
+monikerRange: '>= aspnetcore-5.0'
+ms.date: 02/06/2025
 ---
 
 # When to use Kestrel with a reverse proxy
 
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
 Kestrel can be used by itself or with a *reverse proxy server*. A reverse proxy server receives HTTP requests from the network and forwards them to Kestrel. Examples of a reverse proxy server include:
 
-* Internet Information Services (IIS)
-* Nginx
-* Apache
-* YARP: Yet Another Reverse Proxy
+* [Internet Information Services (IIS)](https://www.iis.net/)
+* [Nginx](https://nginx.org)
+* [Apache](https://httpd.apache.org/)
+* [YARP: Yet Another Reverse Proxy](https://dotnet.github.io/yarp/)
 
 Kestrel used as an edge (Internet-facing) web server:
 
+:::image source="_static/kestrel-to-internet2.png" alt-text="Kestrel communicates directly with the Internet without a reverse proxy server":::
+
 Kestrel used in a reverse proxy configuration:
+
+:::image source="_static/kestrel-to-internet.png" alt-text="Kestrel communicates indirectly with the Internet through a reverse proxy server, such as IIS, Nginx, or Apache":::
 
 Either configuration, with or without a reverse proxy server, is a supported hosting configuration.
 
@@ -33,9 +37,10 @@ A reverse proxy:
 * Might integrate better with existing infrastructure.
 * Simplifies load balancing and secure communication (HTTPS) configuration. Only the reverse proxy server requires the X.509 certificate for the public domain. That server can communicate with the app's servers on the internal network using plain HTTP or HTTPS with locally managed certificates. Internal HTTPS increases security but adds significant overhead.
 
-> **Warning:**
-> Hosting in a reverse proxy configuration requires host filtering.
+> [!WARNING]
+> Hosting in a reverse proxy configuration requires [host filtering](host-filtering.md).
 
 ## Related content
 
-Configure ASP.NET Core to work with proxy servers and load balancers
+[Configure ASP.NET Core to work with proxy servers and load balancers](../../../host-and-deploy/proxy-load-balancer.md)
+

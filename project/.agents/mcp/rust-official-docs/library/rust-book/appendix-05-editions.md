@@ -1,14 +1,3 @@
----
-title: "appendix-05-editions"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/appendix-05-editions.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# appendix-05-editions
-
 ## Appendix E: Editions
 
 In Chapter 1, you saw that `cargo new` adds a bit of metadata to your
@@ -63,6 +52,8 @@ made. However, in some cases, mainly when new keywords are added, some new
 features might only be available in later editions. You will need to switch
 editions if you want to take advantage of such features.
 
-For more details, see _The Rust Edition Guide_. This is a
+For more details, see [_The Rust Edition Guide_][edition-guide]. This is a
 complete book that enumerates the differences between editions and explains how
 to automatically upgrade your code to a new edition via `cargo fix`.
+
+[edition-guide]: https://doc.rust-lang.org/stable/edition-guide

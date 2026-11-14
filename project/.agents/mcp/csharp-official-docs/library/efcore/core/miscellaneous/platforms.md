@@ -1,10 +1,9 @@
 ---
-title: "Supported .NET implementations - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/miscellaneous/platforms.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Supported .NET implementations - EF Core
+description: Information on supported platforms across Entity Framework Core versions
+author: SamMonoRT
+ms.date: 12/13/2022
+uid: core/miscellaneous/platforms
 ---
 
 # .NET implementations supported by EF Core
@@ -28,7 +27,7 @@ Several older .NET implementations are no longer supported. See the sections bel
 
 EF Core is a .NET library. EF Core version 11.0 targets .NET version 11.0.
 
-.NET supports multiple platforms including Windows, Linux, macOS, iOS, Android, and Wasm. For more details on which version are supported, see the .NET Supported OS Policy.
+.NET supports multiple platforms including Windows, Linux, macOS, iOS, Android, and Wasm. For more details on which version are supported, see the [.NET Supported OS Policy](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 ## .NET Core
 
@@ -36,24 +35,24 @@ The last release of .NET Core was version 3.1. It was renamed to just .NET in ve
 
 ## .NET Standard
 
-.NET Standard has been superseded by a new approach to uniformity. For more information, see The future of .NET Standard. The last version of EF Core that supported .NET Standard was version 5.0.
+.NET Standard has been superseded by a new approach to uniformity. For more information, see [The future of .NET Standard](https://devblogs.microsoft.com/dotnet/the-future-of-net-standard/). The last version of EF Core that supported .NET Standard was version 5.0.
 
 ## .NET Framework
 
-The last version of EF Core that supported .NET Framework was version 3.1. We recommend using .NET instead which continues to support WinForms and WPF applications. The .NET Upgrade Assistant can help you with the migration process.
+The last version of EF Core that supported .NET Framework was version 3.1. We recommend using .NET instead which continues to support WinForms and WPF applications. The [.NET Upgrade Assistant](/dotnet/core/porting/upgrade-assistant-overview) can help you with the migration process.
 
 ## Xamarin
 
-The last version of EF Core that supported Xamarin was version 5.0. We recommend using .NET and .NET MAUI instead. .NET supports multiple platforms including Android, iOS, macOS, and Windows. .NET MAUI is an evolution of the Xamarin.Forms UI framework. Xamarin.Android, Xamarin.iOS, Xamarin.Mac are now integrated directly into .NET (starting with .NET 6) as .NET for Android, .NET for iOS, and .NET for macOS. If you're building with these project types today, they should be upgraded to .NET SDK-style projects for continued support. For more information about upgrading Xamarin projects to .NET, see the Upgrade from Xamarin to .NET & .NET MAUI documentation.
+The last version of EF Core that supported Xamarin was version 5.0. We recommend using .NET and [.NET MAUI](/dotnet/maui/) instead. .NET supports multiple platforms including Android, iOS, macOS, and Windows. .NET MAUI is an evolution of the Xamarin.Forms UI framework. Xamarin.Android, Xamarin.iOS, Xamarin.Mac are now integrated directly into .NET (starting with .NET 6) as .NET for Android, .NET for iOS, and .NET for macOS. If you're building with these project types today, they should be upgraded to .NET SDK-style projects for continued support. For more information about upgrading Xamarin projects to .NET, see the [Upgrade from Xamarin to .NET & .NET MAUI](/dotnet/maui/migration) documentation.
 
 ## Universal Windows Platform
 
-The last version of EF Core that supported UWP was version 3.1. We recommend using .NET and the Windows App SDK instead.
+The last version of EF Core that supported UWP was version 3.1. We recommend using .NET and the [Windows App SDK](/windows/apps/windows-app-sdk/) instead.
 
 ## Unity
 
-Unity currently only supports .NET Standard libraries. The last version of EF Core that supported .NET Standard was version 5.0. Unity is currently working towards an implementation that uses .NET. For more information, see Unity and .NET, what’s next?
+Unity currently only supports .NET Standard libraries. The last version of EF Core that supported .NET Standard was version 5.0. Unity is currently working towards an implementation that uses .NET. For more information, see [Unity and .NET, what’s next?](https://blog.unity.com/technology/unity-and-net-whats-next)
 
 ## Tizen
 
-Tizen is an open source operating system that runs on various Samsung devices including phones, tablets, watches, TVs, cameras, and appliances. Tizen .NET enables you to develop apps for it using .NET and .NET MAUI. EF Core compatibility with Tizen is largely unknown. If you've tried it, we'd love your feedback.
+Tizen is an open source operating system that runs on various Samsung devices including phones, tablets, watches, TVs, cameras, and appliances. [Tizen .NET](https://developer.samsung.com/tizen/About-Tizen.NET/Tizen.NET.html) enables you to develop apps for it using .NET and .NET MAUI. EF Core compatibility with Tizen is largely unknown. If you've tried it, we'd love your feedback.

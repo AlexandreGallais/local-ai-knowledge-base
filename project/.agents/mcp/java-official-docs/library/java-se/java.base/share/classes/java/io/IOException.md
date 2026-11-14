@@ -1,12 +1,3 @@
----
-title: "IOException class (java.io)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/io/IOException.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # IOException class (java.io)
 
 ```java
@@ -17,11 +8,9 @@ Signals that an I/O exception of some sort has occurred. This
 class is the general class of exceptions produced by failed or
 interrupted I/O operations.
 
-**See also:** java.io.InputStream
-
-**See also:** java.io.OutputStream
-
-**Since:** 1.0
+@see     java.io.InputStream
+@see     java.io.OutputStream
+@since   1.0
 
 ## IOException.IOException()
 
@@ -29,7 +18,7 @@ interrupted I/O operations.
 public IOException()
 ```
 
-Constructs an `IOException` with `null`
+Constructs an {@code IOException} with {@code null}
 as its error detail message.
 
 ## IOException.IOException(String)
@@ -38,11 +27,11 @@ as its error detail message.
 public IOException(String message)
 ```
 
-Constructs an `IOException` with the specified detail message.
+Constructs an {@code IOException} with the specified detail message.
 
-Parameters:
-
-- `message`: The detail message (which is saved for later retrieval by the `getMessage()` method)
+@param message
+       The detail message (which is saved for later retrieval
+       by the {@link #getMessage()} method)
 
 ## IOException.IOException(String, Throwable)
 
@@ -50,19 +39,23 @@ Parameters:
 public IOException(String message, Throwable cause)
 ```
 
-Constructs an `IOException` with the specified detail message
+Constructs an {@code IOException} with the specified detail message
 and cause.
 
- Note that the detail message associated with `cause` is
-*not* automatically incorporated into this exception's detail
+<p> Note that the detail message associated with {@code cause} is
+<i>not</i> automatically incorporated into this exception's detail
 message.
 
-Parameters:
+@param message
+       The detail message (which is saved for later retrieval
+       by the {@link #getMessage()} method)
 
-- `message`: The detail message (which is saved for later retrieval by the `getMessage()` method)
-- `cause`: The cause (which is saved for later retrieval by the `getCause()` method). (A null value is permitted, and indicates that the cause is nonexistent or unknown.)
+@param cause
+       The cause (which is saved for later retrieval by the
+       {@link #getCause()} method).  (A null value is permitted,
+       and indicates that the cause is nonexistent or unknown.)
 
-**Since:** 1.6
+@since 1.6
 
 ## IOException.IOException(Throwable)
 
@@ -70,14 +63,15 @@ Parameters:
 public IOException(Throwable cause)
 ```
 
-Constructs an `IOException` with the specified cause and a
-detail message of `(cause==null ? null : cause.toString())`
-(which typically contains the class and detail message of `cause`).
+Constructs an {@code IOException} with the specified cause and a
+detail message of {@code (cause==null ? null : cause.toString())}
+(which typically contains the class and detail message of {@code cause}).
 This constructor is useful for IO exceptions that are little more
 than wrappers for other throwables.
 
-Parameters:
+@param cause
+       The cause (which is saved for later retrieval by the
+       {@link #getCause()} method).  (A null value is permitted,
+       and indicates that the cause is nonexistent or unknown.)
 
-- `cause`: The cause (which is saved for later retrieval by the `getCause()` method). (A null value is permitted, and indicates that the cause is nonexistent or unknown.)
-
-**Since:** 1.6
+@since 1.6

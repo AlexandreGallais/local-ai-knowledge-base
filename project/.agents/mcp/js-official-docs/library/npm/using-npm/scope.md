@@ -1,13 +1,8 @@
 ---
-title: "Scope"
-tool: "npm"
-version: "12.2"
-source: "https://github.com/npm/cli/blob/60e11343e61316d966c86805d803df5a0eb99230/docs/lib/content/using-npm/scope.md"
-commit: "60e11343e61316d966c86805d803df5a0eb99230"
-license: "Artistic-2.0"
+title: Scope
+section: 7
+description: Scoped packages
 ---
-
-# Scope
 
 ### Description
 
@@ -50,7 +45,7 @@ Or in `package.json`:
 }
 ```
 
-Note that if the `@` symbol is omitted, in either case, npm will instead attempt to install from GitHub; see `npm install`.
+Note that if the `@` symbol is omitted, in either case, npm will instead attempt to install from GitHub; see [`npm install`](/commands/npm-install).
 
 ### Requiring scoped packages
 
@@ -90,7 +85,7 @@ You do not need to do this when publishing new versions of an existing scoped pa
 
 #### Publishing private scoped packages to the npm registry
 
-To publish a private scoped package to the npm registry, you must have an npm Private Modules account.
+To publish a private scoped package to the npm registry, you must have an [npm Private Modules](https://docs.npmjs.com/private-modules/intro) account.
 
 You can then publish the module with `npm publish` or `npm publish
 --access restricted`, and it will be present in the npm registry, with restricted access.
@@ -99,7 +94,7 @@ You can then change the access permissions, if desired, with `npm access` or on 
 ### Associating a scope with a registry
 
 Scopes can be associated with a separate registry.
-This allows you to seamlessly use a mix of packages from the primary npm registry and one or more private registries, such as GitHub Packages or the open source Verdaccio project.
+This allows you to seamlessly use a mix of packages from the primary npm registry and one or more private registries, such as [GitHub Packages](https://github.com/features/packages) or the open source [Verdaccio](https://verdaccio.org) project.
 
 You can associate a scope with a registry at login, e.g.
 
@@ -122,7 +117,7 @@ that registry instead.
 
 ### See also
 
-* npm install
-* npm publish
-* npm access
-* npm registry
+* [npm install](/commands/npm-install)
+* [npm publish](/commands/npm-publish)
+* [npm access](/commands/npm-access)
+* [npm registry](/using-npm/registry)

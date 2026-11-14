@@ -1,14 +1,7 @@
 ---
-title: "switch-colon-spacing"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/switch-colon-spacing.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: switch-colon-spacing
+rule_type: layout
 ---
-
-# switch-colon-spacing
-
 Spacing around colons improves readability of `case`/`default` clauses.
 
 ## Rule Details
@@ -31,7 +24,7 @@ This rule has 2 options that are boolean value.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint switch-colon-spacing: "error"*/
@@ -42,9 +35,11 @@ switch (a) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint switch-colon-spacing: "error"*/
@@ -60,9 +55,11 @@ switch (a) {
 }
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with `{"after": false, "before": true}` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint switch-colon-spacing: ["error", {"after": false, "before": true}]*/
@@ -73,9 +70,11 @@ switch (a) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with `{"after": false, "before": true}` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint switch-colon-spacing: ["error", {"after": false, "before": true}]*/
@@ -90,6 +89,8 @@ switch (a) {
         break;
 }
 ```
+
+:::
 
 ## When Not To Use It
 

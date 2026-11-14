@@ -1,0 +1,29 @@
+# core/src/metadata/do_bootstrap
+
+## DoBootstrap
+
+```ts
+export interface DoBootstrap
+```
+
+@description
+Hook for manual bootstrapping of the application instead of using `bootstrap` array in @NgModule
+annotation. This hook is invoked only when the `bootstrap` array is empty or not provided.
+
+Reference to the current application is provided as a parameter.
+
+See ["Bootstrapping"](/guide/ngmodules/overview#bootstrapping-an-application).
+
+@usageNotes
+The example below uses `ApplicationRef.bootstrap()` to render the
+`AppComponent` on the page.
+
+```ts
+class AppModule implements DoBootstrap {
+  ngDoBootstrap(appRef: ApplicationRef) {
+    appRef.bootstrap(AppComponent); // Or some other component
+  }
+}
+```
+
+@publicApi

@@ -1,24 +1,18 @@
----
-title: "number-literal-case"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/number-literal-case.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # number-literal-case
 
 📝 Enforce proper case for numeric literals.
 
-💼🚫 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `recommended-css`, 🧩 `recommended-json`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, 📋 `recommended-yaml`. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, 🎨 `recommended-css`, 🧩 `recommended-json`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, 📋 `recommended-yaml`. This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Differentiating the casing of the identifier and value clearly separates them and makes your code more readable.
 
-- Lowercase radix identifier `0x` `0o` `0b` for `Number` and `BigInt`.
-- Uppercase or lowercase hexadecimal value for `Number` and `BigInt`.
+- Lowercase radix identifier `0x` `0o` `0b` for [`Number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type) and [`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#BigInt_type).
+- Uppercase or lowercase hexadecimal value for [`Number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type) and [`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#BigInt_type).
 - Lowercase `e` for exponential notation.
 
 This rule also supports JSON, JSONC, JSON5, and TOML numeric literals. In CSS, it lowercases the exponent marker in numbers, percentages, dimensions, and custom property values while preserving units.
@@ -37,7 +31,7 @@ exponent = -1.2e+3
 
 ## Examples
 
-Hexadecimal
+[Hexadecimal](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#Hexadecimal)
 
 ```js
 // ❌
@@ -61,7 +55,7 @@ const foo = 0Xffn;
 const foo = 0xFFn;
 ```
 
-Binary
+[Binary](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#Binary)
 
 ```js
 // ❌
@@ -79,7 +73,7 @@ const foo = 0B10n;
 const foo = 0b10n;
 ```
 
-Octal
+[Octal](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#Octal)
 
 ```js
 // ❌
@@ -97,7 +91,7 @@ const foo = 0O76n;
 const foo = 0o76n;
 ```
 
-Exponential notation
+[Exponential notation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#Exponential)
 
 ```js
 // ❌

@@ -1,10 +1,6 @@
 ---
-title: "Commands | Browser Mode"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/api/browser/commands.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Commands | Browser Mode
+outline: deep
 ---
 
 # Commands
@@ -15,14 +11,15 @@ Command is a function that invokes another function on the server and passes dow
 
 ### Files Handling
 
-You can use the `readFile`, `writeFile`, and `removeFile` APIs to handle files in your browser tests. Since Vitest 3.2, all paths are resolved relative to the project root (which is `process.cwd()`, unless overridden manually). Previously, paths were resolved relative to the test file.
+You can use the `readFile`, `writeFile`, and `removeFile` APIs to handle files in your browser tests. Since Vitest 3.2, all paths are resolved relative to the [project](/guide/projects) root (which is `process.cwd()`, unless overridden manually). Previously, paths were resolved relative to the test file.
 
 By default, Vitest uses `utf-8` encoding but you can override it with options.
 
-**Tip:**
-The built-in file commands follow Vite's `server.fs` restrictions for security reasons.
+::: tip
+The built-in file commands follow Vite's [`server.fs`](https://vitejs.dev/config/server-options.html#server-fs-allow) restrictions for security reasons.
 
-`writeFile` and `removeFile` also require write access through `api.allowWrite`.
+`writeFile` and `removeFile` also require write access through [`api.allowWrite`](/config/api#api-allowwrite).
+:::
 
 ```ts
 import { server } from 'vitest/browser'
@@ -60,14 +57,15 @@ await cdp().send('Input.dispatchKeyEvent', {
 expect(input).toHaveValue('a')
 ```
 
-**Warning:**
-CDP session works only with `playwright` provider and only when using `chromium` browser. You can read more about it in playwright's `CDPSession` documentation.
+::: warning
+CDP session works only with `playwright` provider and only when using `chromium` browser. You can read more about it in playwright's [`CDPSession`](https://playwright.dev/docs/api/class-cdpsession) documentation.
 
-CDP is a privileged debugging API. It is available only when browser API write and exec operations are enabled through `api.allowWrite`, and `api.allowExec`.
+CDP is a privileged debugging API. It is available only when browser API write and exec operations are enabled through [`api.allowWrite`](/config/api#api-allowwrite), and [`api.allowExec`](/config/api#api-allowexec).
+:::
 
 ## Custom Commands
 
-You can also add your own commands via `browser.commands` config option. If you develop a library, you can provide them via a `config` hook inside a plugin:
+You can also add your own commands via [`browser.commands`](/config/browser/commands) config option. If you develop a library, you can provide them via a `config` hook inside a plugin:
 
 ```ts
 import type { Plugin } from 'vitest/config'
@@ -124,15 +122,16 @@ declare module 'vitest/browser' {
 }
 ```
 
-**Warning:**
+::: warning
 Custom functions will override built-in ones if they have the same name.
+:::
 
-**Security**
+::: warning Security
 Custom commands run in the Vitest Node process and are callable from browser test code through Vitest's browser RPC connection. They can access local files, environment variables, network services, databases, shell commands, and other Node APIs.
 
-Vitest's built-in file commands validate paths against Vite's `server.fs` restrictions and separately check whether writes are allowed. Custom commands do not automatically inherit these protections. If a custom command accepts browser-provided input and uses it to read, write, delete, execute, or expose local resources, validate that input before using it.
+Vitest's built-in file commands validate paths against Vite's [`server.fs`](https://vite.dev/config/server-options#server-fs-allow) restrictions and separately check whether writes are allowed. Custom commands do not automatically inherit these protections. If a custom command accepts browser-provided input and uses it to read, write, delete, execute, or expose local resources, validate that input before using it.
 
-For file reads or fixture loading, use `isFileLoadingAllowed` from `vitest/node` or an explicit allowlist. For writes and deletes, also require an explicit mutation policy, such as `api.allowWrite`, and a command-specific allowed directory. For commands that execute code, shell commands, or project scripts, also check `api.allowExec`.
+For file reads or fixture loading, use `isFileLoadingAllowed` from `vitest/node` or an explicit allowlist. For writes and deletes, also require an explicit mutation policy, such as [`api.allowWrite`](/config/api#api-allowwrite), and a command-specific allowed directory. For commands that execute code, shell commands, or project scripts, also check [`api.allowExec`](/config/api#api-allowexec).
 
 For example, if you create your own file-writing command instead of using Vitest's built-in `writeFile`, apply the same checks:
 
@@ -173,9 +172,11 @@ export const myWriteFileCommand: BrowserCommand<[path: string, content: string]>
 }
 ```
 
+:::
+
 ### Recording trace markers
 
-Custom commands can record trace markers for the test that triggered them through `context.mark`. This is the server-side equivalent of `page.mark` and helps annotate the trace view with custom actions performed inside a command.
+Custom commands can record [trace markers](/api/browser/context#mark) for the test that triggered them through `context.mark`. This is the server-side equivalent of `page.mark` and helps annotate the [trace view](/guide/browser/trace-view) with custom actions performed inside a command.
 
 ```ts
 import type { BrowserCommand } from 'vitest/node'
@@ -197,9 +198,9 @@ export const uploadFixture: BrowserCommand<[name: string]> = async (
 Vitest exposes several `playwright` specific properties on the command context.
 
 - `page` references the full page that contains the test iframe. This is the orchestrator HTML and you most likely shouldn't touch it to not break things.
-- `frame` is an async method that will resolve tester `Frame`. It has a similar API to the `page`, but it doesn't support certain methods. If you need to query an element, you should prefer using `context.iframe` instead because it is more stable and faster.
-- `iframe` is a `FrameLocator` that should be used to query other elements on the page.
-- `context` refers to the unique BrowserContext.
+- `frame` is an async method that will resolve tester [`Frame`](https://playwright.dev/docs/api/class-frame). It has a similar API to the `page`, but it doesn't support certain methods. If you need to query an element, you should prefer using `context.iframe` instead because it is more stable and faster.
+- `iframe` is a [`FrameLocator`](https://playwright.dev/docs/api/class-framelocator) that should be used to query other elements on the page.
+- `context` refers to the unique [BrowserContext](https://playwright.dev/docs/api/class-browsercontext).
 
 ```ts
 import { BrowserCommand } from 'vitest/node'

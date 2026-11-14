@@ -1,12 +1,3 @@
----
-title: "use-consistent-global-store-name"
-tool: "ngrx-signals"
-version: "22.0"
-source: "https://github.com/ngrx/platform/blob/a4995391ef631f1bd60d539f436a1aa5c23c4fe5/projects/www/src/app/pages/guide/eslint-plugin/rules/use-consistent-global-store-name.md"
-commit: "a4995391ef631f1bd60d539f436a1aa5c23c4fe5"
-license: "MIT"
----
-
 # use-consistent-global-store-name
 
 Use a consistent name for the global store.
@@ -16,6 +7,9 @@ Use a consistent name for the global store.
 - **Suggestion**: Yes
 - **Requires type checking**: No
 - **Configurable**: Yes
+
+<!-- Everything above this generated, do not edit -->
+<!-- MANUAL-DOC:START -->
 
 ## Rule Details
 

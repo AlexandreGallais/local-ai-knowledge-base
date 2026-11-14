@@ -1,15 +1,12 @@
 ---
-title: "Application metadata"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/ambient-metadata/application-metadata.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Application metadata
+description: Learn how to use the application metadata to add service-specific information to your service in .NET.
+ms.date: 10/14/2025
 ---
 
 # Application ambient metadata
 
-The `Microsoft.Extensions.AmbientMetadata.Application` NuGet package provides functionality to capture and flow application-level ambient metadata throughout your application. This metadata includes information such as the application name, version, deployment environment, and deployment ring, which is valuable for enriching telemetry, troubleshooting, and analysis.
+The [`Microsoft.Extensions.AmbientMetadata.Application`](https://www.nuget.org/packages/Microsoft.Extensions.AmbientMetadata.Application) NuGet package provides functionality to capture and flow application-level ambient metadata throughout your application. This metadata includes information such as the application name, version, deployment environment, and deployment ring, which is valuable for enriching telemetry, troubleshooting, and analysis.
 
 ## Why use application metadata
 
@@ -23,9 +20,9 @@ Application metadata provides essential context about your running application t
 
 ## Install the package
 
-To get started, install the 📦 Microsoft.Extensions.AmbientMetadata.Application NuGet package:
+To get started, install the [📦 Microsoft.Extensions.AmbientMetadata.Application](https://www.nuget.org/packages/Microsoft.Extensions.AmbientMetadata.Application) NuGet package:
 
-### .NET CLI
+### [.NET CLI](#tab/dotnet-cli)
 
 ```dotnetcli
 dotnet add package Microsoft.Extensions.AmbientMetadata.Application
@@ -37,7 +34,7 @@ Or, if you're using .NET 10+ SDK:
 dotnet package add Microsoft.Extensions.AmbientMetadata.Application
 ```
 
-### PackageReference
+### [PackageReference](#tab/package-reference)
 
 ```xml
 <PackageReference Include="Microsoft.Extensions.AmbientMetadata.Application"
@@ -69,10 +66,10 @@ Add the application metadata to your `appsettings.json` file:
 
 ### Configure with IHostBuilder
 
-Use the `Microsoft.Extensions.Hosting.ApplicationMetadataHostBuilderExtensions.UseApplicationMetadata*` extensions method to register application metadata, which populates `ApplicationName` and `EnvironmentName` values automatically from `IHostEnvironment`.
+Use the <xref:Microsoft.Extensions.Hosting.ApplicationMetadataHostBuilderExtensions.UseApplicationMetadata*> extensions method to register application metadata, which populates `ApplicationName` and `EnvironmentName` values automatically from `IHostEnvironment`.
 Optionally, you can provide values for `BuildVersion` and `DeploymentRing` via the `appsettings.json` file.
 
-The following table shows the metadata made available by the provider via `Microsoft.Extensions.Configuration.IConfiguration`:
+The following table shows the metadata made available by the provider via <xref:Microsoft.Extensions.Configuration.IConfiguration>:
 
 | Key | Required? | Where the value comes from | Value example | Description |
 |-----|-----------|----------------------------|---------------|-------------|
@@ -110,17 +107,11 @@ var buildVersion = metadataOptions.Value.BuildVersion;
 
 Your `appsettings.json` can have a section as follows:
 
-```json
-"AmbientMetadata": {
-    "Application": {
-        "DeploymentRing": "testring",
-        "BuildVersion": "1.2.3"
-    }
-}
-```
+:::code language="json" source="snippets/applicationmetadata/appsettings.json" range="2-7":::
+
 ### Configure with IHostApplicationBuilder
 
-For applications using `Microsoft.Extensions.Hosting.IHostApplicationBuilder`:
+For applications using <xref:Microsoft.Extensions.Hosting.IHostApplicationBuilder>:
 
 ```csharp
 var builder = Host.CreateApplicationBuilder(args)
@@ -137,17 +128,11 @@ var buildVersion = metadataOptions.Value.BuildVersion;
 
 Your `appsettings.json` can have a section as follows:
 
-```json
-"AmbientMetadata": {
-    "Application": {
-        "DeploymentRing": "testring",
-        "BuildVersion": "1.2.3"
-    }
-}
-```
+:::code language="json" source="snippets/applicationmetadata/appsettings.json" range="2-7":::
+
 ## Access application metadata
 
-Once configured, you can inject and use the `Microsoft.Extensions.AmbientMetadata.ApplicationMetadata` type:
+Once configured, you can inject and use the <xref:Microsoft.Extensions.AmbientMetadata.ApplicationMetadata> type:
 
 ```csharp
 using Microsoft.Extensions.AmbientMetadata;
@@ -171,7 +156,7 @@ await host.RunAsync();
 
 ## ApplicationMetadata properties
 
-The `Microsoft.Extensions.AmbientMetadata.ApplicationMetadata` class includes the following properties:
+The <xref:Microsoft.Extensions.AmbientMetadata.ApplicationMetadata> class includes the following properties:
 
 | Property          | Description                                                     |
 |-------------------|-----------------------------------------------------------------|
@@ -223,7 +208,7 @@ public class LoggingService(
 
 ## Custom configuration section
 
-If you prefer to use a different configuration section name, specify it when calling `Microsoft.Extensions.Hosting.ApplicationMetadataHostBuilderExtensions.UseApplicationMetadata``1(``0,System.String)`:
+If you prefer to use a different configuration section name, specify it when calling <xref:Microsoft.Extensions.Hosting.ApplicationMetadataHostBuilderExtensions.UseApplicationMetadata``1(``0,System.String)>:
 
 ```csharp
 using Microsoft.Extensions.Hosting;

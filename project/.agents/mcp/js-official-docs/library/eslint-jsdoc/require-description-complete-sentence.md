@@ -1,22 +1,16 @@
----
-title: "require-description-complete-sentence"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/require-description-complete-sentence.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-require-description-complete-sentence"></a>
+<a name="require-description-complete-sentence"></a>
+# <code>require-description-complete-sentence</code>
 
-# `require-description-complete-sentence`
+* [Fixer](#user-content-require-description-complete-sentence-fixer)
+* [Options](#user-content-require-description-complete-sentence-options)
+    * [`abbreviations`](#user-content-require-description-complete-sentence-options-abbreviations)
+    * [`newlineBeforeCapsAssumesBadSentenceEnd`](#user-content-require-description-complete-sentence-options-newlinebeforecapsassumesbadsentenceend)
+    * [`tags`](#user-content-require-description-complete-sentence-options-tags)
+* [Context and settings](#user-content-require-description-complete-sentence-context-and-settings)
+* [Failing examples](#user-content-require-description-complete-sentence-failing-examples)
+* [Passing examples](#user-content-require-description-complete-sentence-passing-examples)
 
-* Fixer
-* Options
-    * `abbreviations`
-    * `newlineBeforeCapsAssumesBadSentenceEnd`
-    * `tags`
-* Context and settings
-* Failing examples
-* Passing examples
 
 Requires that block description, explicit `@description`, and
 `@param`/`@returns` tag descriptions are written in complete sentences, i.e.,
@@ -32,6 +26,8 @@ Requires that block description, explicit `@description`, and
 * Periods after items within the `abbreviations` option array are not treated
   as sentence endings.
 
+<a name="user-content-require-description-complete-sentence-fixer"></a>
+<a name="require-description-complete-sentence-fixer"></a>
 ## Fixer
 
 If sentences do not end with terminal punctuation, a period will be added.
@@ -39,23 +35,31 @@ If sentences do not end with terminal punctuation, a period will be added.
 If sentences do not start with an uppercase character, the initial
 letter will be capitalized.
 
+<a name="user-content-require-description-complete-sentence-options"></a>
+<a name="require-description-complete-sentence-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `abbreviations`
+<a name="user-content-require-description-complete-sentence-options-abbreviations"></a>
+<a name="require-description-complete-sentence-options-abbreviations"></a>
+### <code>abbreviations</code>
 
 You can provide an `abbreviations` options array to avoid such strings of text
 being treated as sentence endings when followed by dots. The `.` is not
 necessary at the end of the array items.
 
-### `newlineBeforeCapsAssumesBadSentenceEnd`
+<a name="user-content-require-description-complete-sentence-options-newlinebeforecapsassumesbadsentenceend"></a>
+<a name="require-description-complete-sentence-options-newlinebeforecapsassumesbadsentenceend"></a>
+### <code>newlineBeforeCapsAssumesBadSentenceEnd</code>
 
 When `false` (the new default), we will not assume capital letters after
 newlines are an incorrect way to end the sentence (they may be proper
 nouns, for example).
 
-### `tags`
+<a name="user-content-require-description-complete-sentence-options-tags"></a>
+<a name="require-description-complete-sentence-options-tags"></a>
+### <code>tags</code>
 
 If you want additional tags to be checked for their descriptions, you may
 add them within this option.
@@ -78,6 +82,9 @@ its "description" (e.g., for `@returns {someType} some description`, the
 description is `some description` while for `@some-tag xyz`, the description
 is `xyz`).
 
+
+<a name="user-content-require-description-complete-sentence-context-and-settings"></a>
+<a name="require-description-complete-sentence-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -88,6 +95,8 @@ is `xyz`).
 |Recommended|false|
 |Options|`abbreviations`, `newlineBeforeCapsAssumesBadSentenceEnd`, `tags`|
 
+<a name="user-content-require-description-complete-sentence-failing-examples"></a>
+<a name="require-description-complete-sentence-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -424,6 +433,10 @@ function quux () {}
 // Message: Sentences must be more than punctuation.
 ````
 
+
+
+<a name="user-content-require-description-complete-sentence-passing-examples"></a>
+<a name="require-description-complete-sentence-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -727,6 +740,7 @@ function quux () {
 }
 // "jsdoc/require-description-complete-sentence": ["error"|"warn", {"abbreviations":["etc","e.g.","i.e."]}]
 
+
 **
 * Do not have dynamic content; e.g. homepage. Here a simple unique id
 * suffices.
@@ -833,3 +847,4 @@ export class ClassExemple {
 
 /** {@inheritDoc SomeClass} */
 ````
+

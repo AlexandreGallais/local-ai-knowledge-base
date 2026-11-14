@@ -1,16 +1,15 @@
 ---
-title: "Configure Plugins"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/use/configure/plugins.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: Configure Plugins
+eleventyNavigation:
+    key: configure plugins
+    parent: configure
+    title: Configure Plugins
+    order: 4
 ---
 
-# Configure Plugins
-
-**Tip:**
+::: tip
 This page explains how to configure plugins using the flat config format.
+:::
 
 You can extend ESLint with plugins in a variety of different ways. Plugins can include:
 
@@ -22,7 +21,7 @@ You can extend ESLint with plugins in a variety of different ways. Plugins can i
 
 ESLint supports the use of third-party plugins. Plugins are simply objects that conform to a specific interface that ESLint recognizes.
 
-To configure plugins inside of a configuration file, use the `plugins` key, which contains an object with properties representing plugin namespaces and values equal to the plugin object.
+To configure plugins inside of a [configuration file](./configuration-files#configuration-file), use the `plugins` key, which contains an object with properties representing plugin namespaces and values equal to the plugin object.
 
 ```js
 // eslint.config.js
@@ -41,8 +40,9 @@ export default defineConfig([
 ]);
 ```
 
-**Tip:**
+::: tip
 When creating a namespace for a plugin, the convention is to use the npm package name without the `eslint-plugin-` prefix. In the preceding example, `eslint-plugin-example` is assigned a namespace of `example`.
+:::
 
 ### Configure a Local Plugin
 
@@ -92,7 +92,7 @@ export default defineConfig([
 ]);
 ```
 
-Here, the namespace `local` is used to define a virtual plugin. The rule `myRule` is then assigned a name of `my-rule` inside of the virtual plugin's `rules` object. (See Create Plugins for the complete format of a plugin.) You can then reference the rule as `local/my-rule` to configure it.
+Here, the namespace `local` is used to define a virtual plugin. The rule `myRule` is then assigned a name of `my-rule` inside of the virtual plugin's `rules` object. (See [Create Plugins](../../extend/plugins) for the complete format of a plugin.) You can then reference the rule as `local/my-rule` to configure it.
 
 ## Use Plugin Rules
 
@@ -167,7 +167,7 @@ This configuration object uses `jsd` as the prefix plugin instead of `jsdoc`.
 
 Plugins may provide processors. Processors can extract JavaScript code from other kinds of files, then let ESLint lint the JavaScript code. Alternatively, processors can convert JavaScript code during preprocessing.
 
-To specify processors in a configuration file, use the `processor` key and assign the name of processor in the format `namespace/processor-name`. For example, the following uses the processor from `@eslint/markdown` for `*.md` files.
+To specify processors in a [configuration file](./configuration-files#configuration-file), use the `processor` key and assign the name of processor in the format `namespace/processor-name`. For example, the following uses the processor from `@eslint/markdown` for `*.md` files.
 
 ```js
 // eslint.config.js
@@ -219,7 +219,7 @@ export default defineConfig([
 ]);
 ```
 
-ESLint only lints named code blocks when they are JavaScript files or if they match a `files` entry in a config object. Be sure to add a config object with a matching `files` entry if you want to lint non-JavaScript named code blocks. Also note that global ignores apply to named code blocks as well.
+ESLint only lints named code blocks when they are JavaScript files or if they match a `files` entry in a config object. Be sure to add a config object with a matching `files` entry if you want to lint non-JavaScript named code blocks. Also note that [global ignores](./ignore) apply to named code blocks as well.
 
 ```js
 // eslint.config.js
@@ -257,7 +257,7 @@ export default defineConfig([
 
 ## Specify a Language
 
-Plugins may provide languages. Languages allow ESLint to lint programming languages besides JavaScript. To specify a language in a configuration file, use the `language` key and assign the name of language in the format `namespace/language-name`. For example, the following uses the `json/jsonc` language from `@eslint/json` for `*.json` files.
+Plugins may provide languages. Languages allow ESLint to lint programming languages besides JavaScript. To specify a language in a [configuration file](./configuration-files#configuration-file), use the `language` key and assign the name of language in the format `namespace/language-name`. For example, the following uses the `json/jsonc` language from `@eslint/json` for `*.json` files.
 
 ```js
 // eslint.config.js
@@ -275,10 +275,11 @@ export default defineConfig([
 ]);
 ```
 
-**Tip:**
+::: tip
 When you specify a `language` in a config object, `languageOptions` becomes specific to that language. Each language defines its own `languageOptions`, so check the documentation of the plugin to determine which options are available.
+:::
 
 ## Common Problems
 
-- Plugin rules using the ESLint < v9.0.0 API
-- Plugin configurations have not been upgraded to flat config
+- [Plugin rules using the ESLint < v9.0.0 API](../troubleshooting/v9-rule-api-changes)
+- [Plugin configurations have not been upgraded to flat config](migration-guide#use-eslintrc-configs-in-flat-config)

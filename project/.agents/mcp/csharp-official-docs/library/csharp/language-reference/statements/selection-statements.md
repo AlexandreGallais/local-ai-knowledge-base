@@ -1,22 +1,27 @@
 ---
 title: "if and switch statements - select a code path to execute"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/statements/selection-statements.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "The `if` and `switch` statements provide branching logic in C#. You use `if, `else` and `switch` to choose the path your program follows."
+ms.date: 01/16/2026
+f1_keywords:
+  - "if_CSharpKeyword"
+  - "else_CSharpKeyword"
+  - "switch_CSharpKeyword"
+  - "case_CSharpKeyword"
+  - "defaultcase_CSharpKeyword"
+helpviewer_keywords:
+  - "if statement [C#]"
+  - "if keyword [C#]"
+  - "else keyword [C#]"
+  - "switch statement [C#]"
+  - "switch keyword [C#]"
+  - "case keyword [C#]"
+  - "default keyword [C#]"
 ---
-
 # Selection statements - `if`, `if-else`, and `switch`
 
-The `if`, `if-else`, and `switch` statements select statements to execute from many possible paths based on the value of an expression. The `if` statement executes a statement only if a provided Boolean expression evaluates to `true`. The `if-else` statement lets you choose which of the two code paths to follow based on a Boolean expression. The `switch` statement selects a statement list to execute based on a pattern match with an expression.
+The `if`, `if-else`, and `switch` statements select statements to execute from many possible paths based on the value of an expression. The [`if` statement](#the-if-statement) executes a statement only if a provided Boolean expression evaluates to `true`. The [`if-else` statement](#the-if-statement) lets you choose which of the two code paths to follow based on a Boolean expression. The [`switch` statement](#the-switch-statement) selects a statement list to execute based on a pattern match with an expression.
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
-
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
-
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
 ## The `if` statement
 
@@ -24,192 +29,78 @@ An `if` statement can be any of the following two forms:
 
 - An `if` statement with an `else` part selects one of the two statements to execute based on the value of a Boolean expression, as the following example shows:
 
-```csharp
-DisplayWeatherReport(15.0);  // Output: Cold.
-DisplayWeatherReport(24.0);  // Output: Perfect!
+  :::code language="csharp" source="snippets/selection-statements/IfStatement.cs" id="IfElse":::
 
-void DisplayWeatherReport(double tempInCelsius)
-{
-    if (tempInCelsius < 20.0)
-    {
-        Console.WriteLine("Cold.");
-    }
-    else
-    {
-        Console.WriteLine("Perfect!");
-    }
-}
-```
 - An `if` statement without an `else` part executes its body only if a Boolean expression evaluates to `true`, as the following example shows:
 
-```csharp
-DisplayMeasurement(45);  // Output: The measurement value is 45
-DisplayMeasurement(-3);  // Output: Warning: not acceptable value! The measurement value is -3
+  :::code language="csharp" source="snippets/selection-statements/IfStatement.cs" id="OnlyIf":::
 
-void DisplayMeasurement(double value)
-{
-    if (value < 0 || value > 100)
-    {
-        Console.Write("Warning: not acceptable value! ");
-    }
-
-    Console.WriteLine($"The measurement value is {value}");
-}
-```
 You can nest `if` statements to check multiple conditions, as the following example shows:
 
-```csharp
-DisplayCharacter('f');  // Output: A lowercase letter: f
-DisplayCharacter('R');  // Output: An uppercase letter: R
-DisplayCharacter('8');  // Output: A digit: 8
-DisplayCharacter(',');  // Output: Not alphanumeric character: ,
+:::code language="csharp" source="snippets/selection-statements/IfStatement.cs" id="NestedIf":::
 
-void DisplayCharacter(char ch)
-{
-    if (char.IsUpper(ch))
-    {
-        Console.WriteLine($"An uppercase letter: {ch}");
-    }
-    else if (char.IsLower(ch))
-    {
-        Console.WriteLine($"A lowercase letter: {ch}");
-    }
-    else if (char.IsDigit(ch))
-    {
-        Console.WriteLine($"A digit: {ch}");
-    }
-    else
-    {
-        Console.WriteLine($"Not alphanumeric character: {ch}");
-    }
-}
-```
-In an expression context, use the conditional operator `?:` to evaluate one of the two expressions based on the value of a Boolean expression.
+In an expression context, use the [conditional operator `?:`](../operators/conditional-operator.md) to evaluate one of the two expressions based on the value of a Boolean expression.
 
 ## The `switch` statement
 
 The `switch` statement selects a series of statements to execute based on a pattern match with a match expression, as the following example shows:
 
-```csharp
-DisplayMeasurement(-4);  // Output: Measured value is -4; too low.
-DisplayMeasurement(5);  // Output: Measured value is 5.
-DisplayMeasurement(30);  // Output: Measured value is 30; too high.
-DisplayMeasurement(double.NaN);  // Output: Failed measurement.
+:::code language="csharp" source="snippets/selection-statements/SwitchStatement.cs" id="Example":::
 
-void DisplayMeasurement(double measurement)
-{
-    switch (measurement)
-    {
-        case < 0.0:
-            Console.WriteLine($"Measured value is {measurement}; too low.");
-            break;
-
-        case > 15.0:
-            Console.WriteLine($"Measured value is {measurement}; too high.");
-            break;
-
-        case double.NaN:
-            Console.WriteLine("Failed measurement.");
-            break;
-
-        default:
-            Console.WriteLine($"Measured value is {measurement}.");
-            break;
-    }
-}
-```
 In the preceding example, the `switch` statement uses the following patterns:
 
-- A relational pattern: to compare an expression result with a constant.
-- A constant pattern: test if an expression result equals a constant.
+- A [relational pattern](../operators/patterns.md#relational-patterns): to compare an expression result with a constant.
+- A [constant pattern](../operators/patterns.md#constant-pattern): test if an expression result equals a constant.
 
-> **Important:**
-> For information about the patterns supported by the `switch` statement, see Patterns.
+> [!IMPORTANT]
+> For information about the patterns supported by the `switch` statement, see [Patterns](../operators/patterns.md).
 
 The preceding example also demonstrates the `default` case. The `default` case specifies statements to execute when a match expression doesn't match any other case pattern. If a match expression doesn't match any case pattern and there's no `default` case, control falls through a `switch` statement.
 
-A `switch` statement executes the *statement list* in the first *switch section* whose *case pattern* matches a match expression and whose case guard, if present, evaluates to `true`. A `switch` statement evaluates case patterns in text order from top to bottom. The compiler generates an error when a `switch` statement contains an unreachable case. That error occurs when an upper case already handles the case or when the pattern is impossible to match.
+A `switch` statement executes the *statement list* in the first *switch section* whose *case pattern* matches a match expression and whose [case guard](#case-guards), if present, evaluates to `true`. A `switch` statement evaluates case patterns in text order from top to bottom. The compiler generates an error when a `switch` statement contains an unreachable case. That error occurs when an upper case already handles the case or when the pattern is impossible to match.
 
-> **Note:**
+> [!NOTE]
 > The `default` case can appear in any place within a `switch` statement. Regardless of its position, the `default` case is evaluated only if all other case patterns aren't matched or the `goto default;` statement is executed in one of the switch sections.
 
 You can specify multiple case patterns for one section of a `switch` statement, as the following example shows:
 
-```csharp
-DisplayMeasurement(-4);  // Output: Measured value is -4; out of an acceptable range.
-DisplayMeasurement(50);  // Output: Measured value is 50.
-DisplayMeasurement(132);  // Output: Measured value is 132; out of an acceptable range.
+:::code language="csharp" source="snippets/selection-statements/SwitchStatement.cs" id="MultipleCases":::
 
-void DisplayMeasurement(int measurement)
-{
-    switch (measurement)
-    {
-        case < 0:
-        case > 100:
-            Console.WriteLine($"Measured value is {measurement}; out of an acceptable range.");
-            break;
-        
-        default:
-            Console.WriteLine($"Measured value is {measurement}.");
-            break;
-    }
-}
-```
-Within a `switch` statement, control can't fall through from one switch section to the next. As the examples in this section show, typically you use the `break` statement at the end of each switch section to pass <example-value> out of a `switch` statement. You can also use the return and throw statements to pass <example-value> out of a `switch` statement. To imitate the fall-through behavior and pass <example-value> to other switch section, you can use the `goto` statement.
+Within a `switch` statement, control can't fall through from one switch section to the next. As the examples in this section show, typically you use the `break` statement at the end of each switch section to pass control out of a `switch` statement. You can also use the [return](jump-statements.md#the-return-statement) and [throw](exception-handling-statements.md#the-throw-statement) statements to pass control out of a `switch` statement. To imitate the fall-through behavior and pass control to other switch section, you can use the [`goto` statement](jump-statements.md#the-goto-statement).
 
-> **Important:**
+> [!IMPORTANT]
 > Every *switch section* must end with a `break`, `goto`, or `return`. Falling through from one switch section to the next generates a compiler error. However, you can apply multiple switch labels to the same switch section, like `case < 0:` in the preceding example. This deliberate design choice allows for concisely handling multiple cases that share the same or interdependent logic.
 
-In an expression context, you can use the `switch` expression to evaluate a single expression from a list of candidate expressions based on a pattern match with an expression.
+In an expression context, you can use the [`switch` expression](../operators/switch-expression.md) to evaluate a single expression from a list of candidate expressions based on a pattern match with an expression.<br>
 
-> **Important:**
+> [!IMPORTANT]
 > Differences between **switch expression** and **switch statement**:
 >
 > - **switch statement** is used to control the execution flow within a block of code.
-> - **switch expression** is typically used in contexts of value return and value assignment, often as expression-bodied members.
+> - **switch expression** is typically used in contexts of value return and value assignment, often as [expression-bodied members](../operators/lambda-operator.md#expression-body-definition).
 > - a **switch expression** case section can't be empty, but a **switch statement** case section can.
 
 ### Case guards
 
 A case pattern might not be expressive enough to specify the condition for the execution of the switch section. In such a case, use a *case guard*. The condition must be satisfied together with a matched pattern. A case guard must be a Boolean expression. Specify a case guard after the `when` keyword that follows a pattern, as the following example shows:
 
-```csharp
-DisplayMeasurements(3, 4);  // Output: First measurement is 3, second measurement is 4.
-DisplayMeasurements(5, 5);  // Output: Both measurements are valid and equal to 5.
+:::code language="csharp" source="snippets/selection-statements/SwitchStatement.cs" id="WithCaseGuard":::
 
-void DisplayMeasurements(int a, int b)
-{
-    switch ((a, b))
-    {
-        case (> 0, > 0) when a == b:
-            Console.WriteLine($"Both measurements are valid and equal to {a}.");
-            break;
-
-        case (> 0, > 0):
-            Console.WriteLine($"First measurement is {a}, second measurement is {b}.");
-            break;
-
-        default:
-            Console.WriteLine("One or both measurements are not valid.");
-            break;
-    }
-}
-```
-The preceding example uses positional patterns with nested relational patterns.
+The preceding example uses [positional patterns](../operators/patterns.md#positional-pattern) with nested [relational patterns](../operators/patterns.md#relational-patterns).
 
 ## C# language specification
 
-For more information, see the following sections of the C# language specification:
+For more information, see the following sections of the [C# language specification](~/_csharpstandard/standard/README.md):
 
-- The `if` statement
-- The `switch` statement
+- [The `if` statement](~/_csharpstandard/standard/statements.md#1382-the-if-statement)
+- [The `switch` statement](~/_csharpstandard/standard/statements.md#1383-the-switch-statement)
 
-For more information about patterns, see the Patterns and pattern matching section of the C# language specification.
+For more information about patterns, see the [Patterns and pattern matching](~/_csharpstandard/standard/patterns.md) section of the [C# language specification](~/_csharpstandard/standard/README.md).
 
 ## See also
 
-- Conditional operator `?:`
-- Logical operators
-- Patterns
-- `switch` expression
-- Add missing cases to switch statement (style rule IDE0010)
+- [Conditional operator `?:`](../operators/conditional-operator.md)
+- [Logical operators](../operators/boolean-logical-operators.md)
+- [Patterns](../operators/patterns.md)
+- [`switch` expression](../operators/switch-expression.md)
+- [Add missing cases to switch statement (style rule IDE0010)](../../../fundamentals/code-analysis/style-rules/ide0010.md)

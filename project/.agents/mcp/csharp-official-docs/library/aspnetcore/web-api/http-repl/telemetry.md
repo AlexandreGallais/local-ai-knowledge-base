@@ -1,15 +1,12 @@
 ---
-title: "HttpRepl telemetry"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/web-api/http-repl/telemetry.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: HttpRepl telemetry
+description: Learn about the telemetry collected by the HttpRepl.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 11/11/2020
 ---
-
 # HttpRepl telemetry
 
-The HttpRepl includes a telemetry feature that collects usage data. It's important that the HttpRepl team understands how the tool is used so it can be improved.
+The [HttpRepl](index.md) includes a telemetry feature that collects usage data. It's important that the HttpRepl team understands how the tool is used so it can be improved.
 
 ## How to opt out
 
@@ -38,8 +35,8 @@ The data is sent securely to Microsoft servers and held under restricted access.
 
 Protecting your privacy is important to us. If you suspect the telemetry feature is collecting sensitive data or the data is being insecurely or inappropriately handled, take one of the following actions:
 
-* File an issue in the dotnet/httprepl repository.
-* Send an email to user@example.com for investigation.
+* File an issue in the [dotnet/httprepl](https://github.com/dotnet/httprepl/issues) repository.
+* Send an email to [dotnet@microsoft.com](mailto:dotnet@microsoft.com) for investigation.
 
 The telemetry feature collects the following data.
 
@@ -63,5 +60,5 @@ The telemetry feature collects the following data.
 
 ## Related content
 
-* .NET SDK telemetry
-* .NET CLI telemetry data
+* [.NET SDK telemetry](/dotnet/core/tools/telemetry)
+* [.NET CLI telemetry data](https://dotnet.microsoft.com/platform/telemetry)

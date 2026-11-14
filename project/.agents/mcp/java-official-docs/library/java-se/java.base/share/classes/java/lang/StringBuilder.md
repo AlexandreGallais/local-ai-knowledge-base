@@ -1,12 +1,3 @@
----
-title: "StringBuilder class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/StringBuilder.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # StringBuilder class (java.lang)
 
 ```java
@@ -14,58 +5,58 @@ public final class StringBuilder extends AbstractStringBuilder implements Append
 ```
 
 A mutable sequence of characters.  This class provides an API compatible
-with `StringBuffer`, but with no guarantee of synchronization.
+with {@code StringBuffer}, but with no guarantee of synchronization.
 This class is designed for use as a drop-in replacement for
-`StringBuffer` in places where the string buffer was being
+{@code StringBuffer} in places where the string buffer was being
 used by a single thread (as is generally the case).   Where possible,
 it is recommended that this class be used in preference to
-`StringBuffer` as it will be faster under most implementations.
+{@code StringBuffer} as it will be faster under most implementations.
 
-The principal operations on a `StringBuilder` are the
-`append` and `insert` methods, which are
+<p>The principal operations on a {@code StringBuilder} are the
+{@code append} and {@code insert} methods, which are
 overloaded so as to accept data of any type. Each effectively
 converts a given datum to a string and then appends or inserts the
 characters of that string to the string builder. The
-`append` method always adds these characters at the end
-of the builder; the `insert` method adds the characters at
+{@code append} method always adds these characters at the end
+of the builder; the {@code insert} method adds the characters at
 a specified point.
-
-For example, if `z` refers to a string builder object
-whose current contents are "`start`", then
-the method call `z.append("le")` would cause the string
-builder to contain "`startle`", whereas
-`z.insert(4, "le")` would alter the string builder to
-contain "`starlet`".
-
-In general, if sb refers to an instance of a `StringBuilder`,
-then `sb.append(x)` has the same effect as
-`sb.insert(sb.length(), x)`.
-
+<p>
+For example, if {@code z} refers to a string builder object
+whose current contents are "{@code start}", then
+the method call {@code z.append("le")} would cause the string
+builder to contain "{@code startle}", whereas
+{@code z.insert(4, "le")} would alter the string builder to
+contain "{@code starlet}".
+<p>
+In general, if sb refers to an instance of a {@code StringBuilder},
+then {@code sb.append(x)} has the same effect as
+{@code sb.insert(sb.length(), x)}.
+<p>
 Every string builder has a capacity. As long as the length of the
 character sequence contained in the string builder does not exceed
 the capacity, it is not necessary to allocate a new internal
 buffer. If the internal buffer overflows, it is automatically made larger.
 
-Instances of `StringBuilder` are not safe for
+<p>Instances of {@code StringBuilder} are not safe for
 use by multiple threads. If such synchronization is required then it is
-recommended that `java.lang.StringBuffer` be used.
+recommended that {@link java.lang.StringBuffer} be used.
 
-Unless otherwise noted, passing a `null` argument to a constructor
-or method in this class will cause a `NullPointerException` to be
+<p>Unless otherwise noted, passing a {@code null} argument to a constructor
+or method in this class will cause a {@link NullPointerException} to be
 thrown.
 
-**API note:** `StringBuilder` implements `Comparable` but does not override
-equals. Thus, the natural ordering of `StringBuilder`
-is inconsistent with equals. Care should be exercised if `StringBuilder`
-objects are used as keys in a `SortedMap` or elements in a `SortedSet`.
-See `Comparable`, SortedMap, or
-SortedSet for more information.
+@apiNote
+{@code StringBuilder} implements {@code Comparable} but does not override
+{@link Object#equals equals}. Thus, the natural ordering of {@code StringBuilder}
+is inconsistent with equals. Care should be exercised if {@code StringBuilder}
+objects are used as keys in a {@code SortedMap} or elements in a {@code SortedSet}.
+See {@link Comparable}, {@link java.util.SortedMap SortedMap}, or
+{@link java.util.SortedSet SortedSet} for more information.
 
-**See also:** java.lang.StringBuffer
-
-**See also:** java.lang.String
-
-**Since:** 1.5
+@author      Michael McCloskey
+@see         java.lang.StringBuffer
+@see         java.lang.String
+@since       1.5
 
 ## StringBuilder.StringBuilder()
 
@@ -83,15 +74,11 @@ public StringBuilder(int capacity)
 ```
 
 Constructs a string builder with no characters in it and an
-initial capacity specified by the `capacity` argument.
+initial capacity specified by the {@code capacity} argument.
 
-Parameters:
-
-- `capacity`: the initial capacity.
-
-Throws:
-
-- `NegativeArraySizeException`: if the `capacity` argument is less than `0`.
+@param      capacity  the initial capacity.
+@throws     NegativeArraySizeException  if the {@code capacity}
+              argument is less than {@code 0}.
 
 ## StringBuilder.StringBuilder(String)
 
@@ -101,11 +88,9 @@ public StringBuilder(String str)
 
 Constructs a string builder initialized to the contents of the
 specified string. The initial capacity of the string builder is
-`16` plus the length of the string argument.
+{@code 16} plus the length of the string argument.
 
-Parameters:
-
-- `str`: the initial contents of the buffer.
+@param   str   the initial contents of the buffer.
 
 ## StringBuilder.StringBuilder(CharSequence)
 
@@ -114,13 +99,11 @@ public StringBuilder(CharSequence seq)
 ```
 
 Constructs a string builder that contains the same characters
-as the specified `CharSequence`. The initial capacity of
-the string builder is `16` plus the length of the
-`CharSequence` argument.
+as the specified {@code CharSequence}. The initial capacity of
+the string builder is {@code 16} plus the length of the
+{@code CharSequence} argument.
 
-Parameters:
-
-- `seq`: the sequence to copy.
+@param      seq   the sequence to copy.
 
 ## StringBuilder.compareTo(StringBuilder)
 
@@ -128,24 +111,24 @@ Parameters:
 public int compareTo(StringBuilder another)
 ```
 
-Compares two `StringBuilder` instances lexicographically. This method
+Compares two {@code StringBuilder} instances lexicographically. This method
 follows the same rules for lexicographical comparison as defined in the
-java.lang.CharSequence) CharSequence.compare(this, another) method.
+{@linkplain java.lang.CharSequence#compare(java.lang.CharSequence,
+java.lang.CharSequence)  CharSequence.compare(this, another)} method.
 
+<p>
 For finer-grained, locale-sensitive String comparison, refer to
-`java.text.Collator`.
+{@link java.text.Collator}.
 
-Parameters:
+@param another the {@code StringBuilder} to be compared with
 
-- `another`: the `StringBuilder` to be compared with
+@return  the value {@code 0} if this {@code StringBuilder} contains the same
+character sequence as that of the argument {@code StringBuilder}; a negative integer
+if this {@code StringBuilder} is lexicographically less than the
+{@code StringBuilder} argument; or a positive integer if this {@code StringBuilder}
+is lexicographically greater than the {@code StringBuilder} argument.
 
-**Returns:** the value `0` if this `StringBuilder` contains the same
-character sequence as that of the argument `StringBuilder`; a negative integer
-if this `StringBuilder` is lexicographically less than the
-`StringBuilder` argument; or a positive integer if this `StringBuilder`
-is lexicographically greater than the `StringBuilder` argument.
-
-**Since:** 11
+@since 11
 
 ## StringBuilder.append(StringBuffer)
 
@@ -153,26 +136,23 @@ is lexicographically greater than the `StringBuilder` argument.
 public StringBuilder append(StringBuffer sb)
 ```
 
-Appends the specified `StringBuffer` to this sequence.
-
-The characters of the `StringBuffer` argument are appended,
+Appends the specified {@code StringBuffer} to this sequence.
+<p>
+The characters of the {@code StringBuffer} argument are appended,
 in order, to this sequence, increasing the
 length of this sequence by the length of the argument.
-If `sb` is `null`, then the four characters
-`"null"` are appended to this sequence.
+If {@code sb} is {@code null}, then the four characters
+{@code "null"} are appended to this sequence.
+<p>
+Let <i>n</i> be the length of this character sequence just prior to
+execution of the {@code append} method. Then the character at index
+<i>k</i> in the new character sequence is equal to the character at
+index <i>k</i> in the old character sequence, if <i>k</i> is less than
+<i>n</i>; otherwise, it is equal to the character at index <i>k-n</i>
+in the argument {@code sb}.
 
-Let *n* be the length of this character sequence just prior to
-execution of the `append` method. Then the character at index
-*k* in the new character sequence is equal to the character at
-index *k* in the old character sequence, if *k* is less than
-*n*; otherwise, it is equal to the character at index *k-n*
-in the argument `sb`.
-
-Parameters:
-
-- `sb`: the `StringBuffer` to append.
-
-**Returns:** a reference to this object.
+@param   sb   the {@code StringBuffer} to append.
+@return  a reference to this object.
 
 ## StringBuilder.append(CharSequence, int, int)
 
@@ -180,9 +160,7 @@ Parameters:
 public StringBuilder append(CharSequence s, int start, int end)
 ```
 
-Throws:
-
-- `IndexOutOfBoundsException`: (inherited documentation)
+@throws     IndexOutOfBoundsException {@inheritDoc}
 
 ## StringBuilder.append(char[], int, int)
 
@@ -190,9 +168,7 @@ Throws:
 public StringBuilder append(char[] str, int offset, int len)
 ```
 
-Throws:
-
-- `IndexOutOfBoundsException`: (inherited documentation)
+@throws IndexOutOfBoundsException {@inheritDoc}
 
 ## StringBuilder.appendCodePoint(int)
 
@@ -200,7 +176,7 @@ Throws:
 public StringBuilder appendCodePoint(int codePoint)
 ```
 
-**Since:** 1.5
+@since 1.5
 
 ## StringBuilder.delete(int, int)
 
@@ -208,9 +184,7 @@ public StringBuilder appendCodePoint(int codePoint)
 public StringBuilder delete(int start, int end)
 ```
 
-Throws:
-
-- `StringIndexOutOfBoundsException`: (inherited documentation)
+@throws StringIndexOutOfBoundsException {@inheritDoc}
 
 ## StringBuilder.deleteCharAt(int)
 
@@ -218,9 +192,7 @@ Throws:
 public StringBuilder deleteCharAt(int index)
 ```
 
-Throws:
-
-- `StringIndexOutOfBoundsException`: (inherited documentation)
+@throws StringIndexOutOfBoundsException {@inheritDoc}
 
 ## StringBuilder.replace(int, int, String)
 
@@ -228,9 +200,7 @@ Throws:
 public StringBuilder replace(int start, int end, String str)
 ```
 
-Throws:
-
-- `StringIndexOutOfBoundsException`: (inherited documentation)
+@throws StringIndexOutOfBoundsException {@inheritDoc}
 
 ## StringBuilder.insert(int, char[], int, int)
 
@@ -238,9 +208,7 @@ Throws:
 public StringBuilder insert(int index, char[] str, int offset, int len)
 ```
 
-Throws:
-
-- `StringIndexOutOfBoundsException`: (inherited documentation)
+@throws StringIndexOutOfBoundsException {@inheritDoc}
 
 ## StringBuilder.insert(int, Object)
 
@@ -248,9 +216,7 @@ Throws:
 public StringBuilder insert(int offset, Object obj)
 ```
 
-Throws:
-
-- `StringIndexOutOfBoundsException`: (inherited documentation)
+@throws StringIndexOutOfBoundsException {@inheritDoc}
 
 ## StringBuilder.insert(int, String)
 
@@ -258,9 +224,7 @@ Throws:
 public StringBuilder insert(int offset, String str)
 ```
 
-Throws:
-
-- `StringIndexOutOfBoundsException`: (inherited documentation)
+@throws StringIndexOutOfBoundsException {@inheritDoc}
 
 ## StringBuilder.insert(int, char[])
 
@@ -268,9 +232,7 @@ Throws:
 public StringBuilder insert(int offset, char[] str)
 ```
 
-Throws:
-
-- `StringIndexOutOfBoundsException`: (inherited documentation)
+@throws StringIndexOutOfBoundsException {@inheritDoc}
 
 ## StringBuilder.insert(int, CharSequence)
 
@@ -278,9 +240,7 @@ Throws:
 public StringBuilder insert(int dstOffset, CharSequence s)
 ```
 
-Throws:
-
-- `IndexOutOfBoundsException`: (inherited documentation)
+@throws IndexOutOfBoundsException {@inheritDoc}
 
 ## StringBuilder.insert(int, CharSequence, int, int)
 
@@ -288,9 +248,7 @@ Throws:
 public StringBuilder insert(int dstOffset, CharSequence s, int start, int end)
 ```
 
-Throws:
-
-- `IndexOutOfBoundsException`: (inherited documentation)
+@throws IndexOutOfBoundsException {@inheritDoc}
 
 ## StringBuilder.insert(int, boolean)
 
@@ -298,9 +256,7 @@ Throws:
 public StringBuilder insert(int offset, boolean b)
 ```
 
-Throws:
-
-- `StringIndexOutOfBoundsException`: (inherited documentation)
+@throws StringIndexOutOfBoundsException {@inheritDoc}
 
 ## StringBuilder.insert(int, char)
 
@@ -308,9 +264,7 @@ Throws:
 public StringBuilder insert(int offset, char c)
 ```
 
-Throws:
-
-- `IndexOutOfBoundsException`: (inherited documentation)
+@throws IndexOutOfBoundsException {@inheritDoc}
 
 ## StringBuilder.insert(int, int)
 
@@ -318,9 +272,7 @@ Throws:
 public StringBuilder insert(int offset, int i)
 ```
 
-Throws:
-
-- `StringIndexOutOfBoundsException`: (inherited documentation)
+@throws StringIndexOutOfBoundsException {@inheritDoc}
 
 ## StringBuilder.insert(int, long)
 
@@ -328,9 +280,7 @@ Throws:
 public StringBuilder insert(int offset, long l)
 ```
 
-Throws:
-
-- `StringIndexOutOfBoundsException`: (inherited documentation)
+@throws StringIndexOutOfBoundsException {@inheritDoc}
 
 ## StringBuilder.insert(int, float)
 
@@ -338,9 +288,7 @@ Throws:
 public StringBuilder insert(int offset, float f)
 ```
 
-Throws:
-
-- `StringIndexOutOfBoundsException`: (inherited documentation)
+@throws StringIndexOutOfBoundsException {@inheritDoc}
 
 ## StringBuilder.insert(int, double)
 
@@ -348,9 +296,7 @@ Throws:
 public StringBuilder insert(int offset, double d)
 ```
 
-Throws:
-
-- `StringIndexOutOfBoundsException`: (inherited documentation)
+@throws StringIndexOutOfBoundsException {@inheritDoc}
 
 ## StringBuilder.repeat(int, int)
 
@@ -358,11 +304,9 @@ Throws:
 public StringBuilder repeat(int codePoint, int count)
 ```
 
-**Since:** 21
+@throws IllegalArgumentException {@inheritDoc}
 
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+@since 21
 
 ## StringBuilder.repeat(CharSequence, int)
 
@@ -370,8 +314,6 @@ Throws:
 public StringBuilder repeat(CharSequence cs, int count)
 ```
 
-**Since:** 21
+@throws IllegalArgumentException {@inheritDoc}
 
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
+@since 21

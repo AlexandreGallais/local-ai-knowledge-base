@@ -1,20 +1,14 @@
----
-title: "no-types"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/no-types.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-no-types"></a>
+<a name="no-types"></a>
+# <code>no-types</code>
 
-# `no-types`
+* [Fixer](#user-content-no-types-fixer)
+* [Options](#user-content-no-types-options)
+    * [`contexts`](#user-content-no-types-options-contexts)
+* [Context and settings](#user-content-no-types-context-and-settings)
+* [Failing examples](#user-content-no-types-failing-examples)
+* [Passing examples](#user-content-no-types-passing-examples)
 
-* Fixer
-* Options
-    * `contexts`
-* Context and settings
-* Failing examples
-* Passing examples
 
 This rule reports types being used on `@param` or `@returns`.
 
@@ -24,15 +18,21 @@ the type information would be redundant with TypeScript.
 When `contexts` are supplied, will also strip `@property` when on a
 `ClassDeclaration`.
 
+<a name="user-content-no-types-fixer"></a>
+<a name="no-types-fixer"></a>
 ## Fixer
 
 Strips any types that are found.
 
+<a name="user-content-no-types-options"></a>
+<a name="no-types-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `contexts`
+<a name="user-content-no-types-options-contexts"></a>
+<a name="no-types-options-contexts"></a>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
 optional `context` and `comment` properties) where you wish the rule to be applied.
@@ -47,9 +47,12 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
-See the "AST and Selectors"
+See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
 section of our Advanced docs for more on the expected format.
 
+
+<a name="user-content-no-types-context-and-settings"></a>
+<a name="no-types-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -60,6 +63,8 @@ section of our Advanced docs for more on the expected format.
 |Recommended|false|
 |Options|`contexts`|
 
+<a name="user-content-no-types-failing-examples"></a>
+<a name="no-types-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -172,6 +177,10 @@ export const sleep = (ms: number): Promise<unknown> => {};
 // Message: Types are not permitted on @param.
 ````
 
+
+
+<a name="user-content-no-types-passing-examples"></a>
+<a name="no-types-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -202,3 +211,4 @@ function quux (foo) {
 /*** Oops that's too many asterisks by accident **/
 function a () {}
 ````
+

@@ -1,138 +1,57 @@
 ---
 title: "Coalesce cancellation tokens from timeouts"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/asynchronous-programming-patterns/coalesce-cancellation-tokens-from-timeouts.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to combine caller-driven cancellation with timeout-driven cancellation by using linked cancellation token sources in modern .NET.
+ms.date: 04/13/2026
+ai-usage: ai-assisted
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "CancellationTokenSource.CreateLinkedTokenSource"
+  - "timeout, cancellation"
+  - "linked cancellation token"
+  - "CancelAfter"
+  - "WaitAsync"
 ---
-
 # Coalesce cancellation tokens from timeouts
 
 Many APIs need two cancellation triggers:
 
-- A caller-provided `System.Threading.CancellationToken`.
+- A caller-provided <xref:System.Threading.CancellationToken>.
 - A timeout enforced by your component.
 
-Use `System.Threading.CancellationTokenSource.CreateLinkedTokenSource*` to merge both into a single token that your async work can consume.
+Use <xref:System.Threading.CancellationTokenSource.CreateLinkedTokenSource*> to merge both into a single token that your async work can consume.
 
-## Use a linked token <example-value> for caller token plus timeout
+## Use a linked token source for caller token plus timeout
 
-Create a timeout `System.Threading.CancellationTokenSource`, link it with the caller token, and pass the linked token to the operation:
+Create a timeout <xref:System.Threading.CancellationTokenSource>, link it with the caller token, and pass the linked token to the operation:
 
-```csharp
-public static class LinkedTokenBasicDemo
-{
-    public static async Task RunAsync(CancellationToken <example-value>)
-    {
-        using var timeoutCts = new CancellationTokenSource(TimeSpan.FromMilliseconds(150));
-        using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
-            userToken,
-            timeoutCts.Token);
+:::code language="csharp" source="./snippets/coalescing-cancellation-tokens-from-timeouts/csharp/Program.cs" id="LinkedTokenBasic":::
+:::code language="vb" source="./snippets/coalescing-cancellation-tokens-from-timeouts/vb/Program.vb" id="LinkedTokenBasic":::
 
-        await Task.Delay(500, linkedCts.Token);
-    }
-}
-```
-```vb
-Public Module LinkedTokenBasicDemo
-    Public Async Function RunAsync(userToken As CancellationToken) As Task
-        Using timeoutCts = New CancellationTokenSource(TimeSpan.FromMilliseconds(150)),
-            linkedCts = CancellationTokenSource.CreateLinkedTokenSource(userToken, timeoutCts.Token)
-
-            Await Task.Delay(500, linkedCts.Token)
-        End Using
-    End Function
-End Module
-```
 Dispose both `CancellationTokenSource` instances after the operation completes so registrations and timers are released promptly.
 
 ## Encapsulate linking in a helper
 
 Wrap linking logic in a helper method when several call sites need the same policy:
 
-```csharp
-public static class TimeoutPolicy
-{
-    public static async Task ExecuteWithLinkedTimeoutAsync(
-        Func<CancellationToken, Task> operation,
-        TimeSpan timeout,
-        CancellationToken <example-value>)
-    {
-        using var timeoutCts = new CancellationTokenSource(timeout);
-        using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
-            userToken,
-            timeoutCts.Token);
+:::code language="csharp" source="./snippets/coalescing-cancellation-tokens-from-timeouts/csharp/Program.cs" id="LinkedTokenHelper":::
+:::code language="vb" source="./snippets/coalescing-cancellation-tokens-from-timeouts/vb/Program.vb" id="LinkedTokenHelper":::
 
-        await operation(linkedCts.Token);
-    }
-}
-```
-```vb
-Public Module TimeoutPolicy
-    Public Async Function ExecuteWithLinkedTimeoutAsync(
-        operation As Func(Of CancellationToken, Task),
-        timeout As TimeSpan,
-        userToken As CancellationToken) As Task
-
-        Using timeoutCts = New CancellationTokenSource(timeout),
-            linkedCts = CancellationTokenSource.CreateLinkedTokenSource(userToken, timeoutCts.Token)
-
-            Await operation(linkedCts.Token)
-        End Using
-    End Function
-End Module
-```
 A helper keeps timeout behavior consistent and avoids duplicate disposal bugs.
 
 ## Choose the right timeout model
 
 Linked tokens are useful when the callee accepts a token and you need one unified cancellation path. In modern .NET, you also have these alternatives:
 
-- Use `System.Threading.CancellationTokenSource.CancelAfter*` to enforce timeouts on a `CancellationTokenSource` you own.
-- Use `System.Threading.Tasks.Task.WaitAsync*` when you want to time out the wait without canceling underlying work.
+- Use <xref:System.Threading.CancellationTokenSource.CancelAfter*> to enforce timeouts on a `CancellationTokenSource` you own.
+- Use <xref:System.Threading.Tasks.Task.WaitAsync*> when you want to time out the wait without canceling underlying work.
 
 This example shows a `WaitAsync` timeout for "cancel wait only" semantics:
 
-```csharp
-public static class WaitOnlyTimeoutDemo
-{
-    public static async Task RunAsync(CancellationToken <example-value>)
-    {
-        Task operation = Task.Delay(500);
+:::code language="csharp" source="./snippets/coalescing-cancellation-tokens-from-timeouts/csharp/Program.cs" id="WaitAsyncAlternative":::
+:::code language="vb" source="./snippets/coalescing-cancellation-tokens-from-timeouts/vb/Program.vb" id="WaitAsyncAlternative":::
 
-        try
-        {
-            await operation.WaitAsync(TimeSpan.FromMilliseconds(100), userToken);
-            Console.WriteLine("Operation completed before timeout.");
-        }
-        catch (TimeoutException)
-        {
-            Console.WriteLine("Timed out waiting without canceling operation.");
-        }
-        catch (OperationCanceledException)
-        {
-            Console.WriteLine("Canceled while waiting for the operation.");
-        }
-    }
-}
-```
-```vb
-Public Module WaitOnlyTimeoutDemo
-    Public Async Function RunAsync(userToken As CancellationToken) As Task
-        Dim operation As Task = Task.Delay(500)
-
-        Try
-            Await operation.WaitAsync(TimeSpan.FromMilliseconds(100), userToken)
-            Console.WriteLine("Operation completed before timeout.")
-        Catch ex As TimeoutException
-            Console.WriteLine("Timed out waiting without canceling operation.")
-        Catch ex As OperationCanceledException
-            Console.WriteLine("<example-value>")
-        End Try
-    End Function
-End Module
-```
 ## Summary
 
 Use linked tokens when you need to combine caller intent and infrastructure timeouts into one cancellation contract. Keep ownership and disposal rules explicit:
@@ -143,9 +62,9 @@ Use linked tokens when you need to combine caller intent and infrastructure time
 
 ## See also
 
-- Cancel non-cancelable async operations
-- Task cancellation
-- Cancellation in managed threads
-- `System.Threading.CancellationTokenSource.CreateLinkedTokenSource*`
-- `System.Threading.CancellationTokenSource.CancelAfter*`
-- `System.Threading.Tasks.Task.WaitAsync*`
+- [Cancel non-cancelable async operations](cancel-non-cancelable-async-operations.md)
+- [Task cancellation](../parallel-programming/task-cancellation.md)
+- [Cancellation in managed threads](../threading/cancellation-in-managed-threads.md)
+- <xref:System.Threading.CancellationTokenSource.CreateLinkedTokenSource*>
+- <xref:System.Threading.CancellationTokenSource.CancelAfter*>
+- <xref:System.Threading.Tasks.Task.WaitAsync*>

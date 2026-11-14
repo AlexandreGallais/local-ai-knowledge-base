@@ -1,13 +1,11 @@
 ---
-title: "prefer-object-has-own"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/prefer-object-has-own.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: prefer-object-has-own
+rule_type: suggestion
+further_reading:
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn
 ---
 
-# prefer-object-has-own
+
 
 It is very common to write code like:
 
@@ -17,7 +15,7 @@ if (Object.prototype.hasOwnProperty.call(object, "foo")) {
 }
 ```
 
-This is a common practice because methods on `Object.prototype` can sometimes be unavailable or redefined (see the no-prototype-builtins rule).
+This is a common practice because methods on `Object.prototype` can sometimes be unavailable or redefined (see the [no-prototype-builtins](no-prototype-builtins) rule).
 
 Introduced in ES2022, `Object.hasOwn()` is a shorter alternative to `Object.prototype.hasOwnProperty.call()`:
 
@@ -31,7 +29,7 @@ if (Object.hasOwn(object, "foo")) {
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint prefer-object-has-own: "error"*/
@@ -45,9 +43,11 @@ Object.hasOwnProperty.call(obj, "a");
 const hasProperty = Object.prototype.hasOwnProperty.call(object, property);
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint prefer-object-has-own: "error"*/
@@ -56,6 +56,8 @@ Object.hasOwn(obj, "a");
 
 const hasProperty = Object.hasOwn(object, property);
 ```
+
+:::
 
 ## Options
 

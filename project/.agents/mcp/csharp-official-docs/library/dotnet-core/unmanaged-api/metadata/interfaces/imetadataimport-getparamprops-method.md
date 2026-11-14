@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataImport::GetParamProps Method"
 title: "IMetaDataImport::GetParamProps Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-getparamprops-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.GetParamProps"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::GetParamProps"
+  - "GetParamProps method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::GetParamProps Method
 
 Gets metadata values for the parameter referenced by the specified ParamDef token.
@@ -34,7 +41,7 @@ HRESULT GetParamProps (
  [in] A ParamDef token that represents the parameter to return metadata for.
 
  `pmd`
- [out] A pointer to a MethodDef token <example-value> the method that takes the parameter.
+ [out] A pointer to a MethodDef token representing the method that takes the parameter.
 
  `pulSequence`
  [out] The ordinal position of the parameter in the method argument list.
@@ -52,7 +59,7 @@ HRESULT GetParamProps (
  [out] A pointer to any attribute flags associated with the parameter. This is a bitmask of `CorParamAttr` values.
 
  `pdwCPlusTypeFlag`
- [out] A pointer to a flag specifying that the parameter is a `System.ValueType`.
+ [out] A pointer to a flag specifying that the parameter is a <xref:System.ValueType>.
 
  `ppValue`
  [out] A pointer to a constant string returned by the parameter.
@@ -66,7 +73,7 @@ The sequence values in `pulSequence` begin with 1 for parameters. A return value
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -74,5 +81,5 @@ The sequence values in `pulSequence` begin with 1 for parameters. A return value
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

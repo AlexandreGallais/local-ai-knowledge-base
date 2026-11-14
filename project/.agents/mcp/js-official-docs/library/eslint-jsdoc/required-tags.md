@@ -1,24 +1,22 @@
----
-title: "required-tags"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/required-tags.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
-
-# `required-tags`
+<a name="user-content-required-tags"></a>
+<a name="required-tags"></a>
+# <code>required-tags</code>
 
 Requires tags be present, optionally for specific contexts.
 
+<a name="user-content-required-tags-options"></a>
+<a name="required-tags-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `tags`
+<a name="user-content-required-tags-options-tags"></a>
+<a name="required-tags-options-tags"></a>
+### <code>tags</code>
 
 May be an array of either strings or objects with
 a string `tag` property and `context` string property.
+
 
 |||
 |---|---|
@@ -28,6 +26,8 @@ a string `tag` property and `context` string property.
 |Settings||
 |Options|`tags`|
 
+<a name="user-content-required-tags-failing-examples"></a>
+<a name="required-tags-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -61,6 +61,10 @@ function quux () {}
 // Message: Rule `required-tags` is missing a `tags` option.
 ````
 
+
+
+<a name="user-content-required-tags-passing-examples"></a>
+<a name="required-tags-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -78,3 +82,4 @@ function quux () {}
 class Quux {}
 // "jsdoc/required-tags": ["error"|"warn", {"tags":[{"context":"FunctionDeclaration","tag":"see"}]}]
 ````
+

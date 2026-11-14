@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Option -p for 'dotnet run' deprecated"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/6.0/deprecate-p-option-dotnet-run.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 6 where the '-p' option is deprecated for 'dotnet run'.
+ms.date: 07/13/2021
 ---
-
 # `-p` option for `dotnet run` is deprecated
 
 `-p` is deprecated as an abbreviation for `--project`, and using `-p` generates a warning.
@@ -27,7 +23,7 @@ Starting in .NET 6, passing `-p` to `dotnet run` results in a warning that it is
 
 ## Reason for change
 
-We are deprecating `-p` because of the close relationship `dotnet run` has with `dotnet build` and `dotnet publish`. This breaking change is the first step in aligning abbreviations for these commands. For more information, see Spec for resolving '-p' in 'dotnet run'.
+We are deprecating `-p` because of the close relationship `dotnet run` has with `dotnet build` and `dotnet publish`. This breaking change is the first step in aligning abbreviations for these commands. For more information, see [Spec for resolving '-p' in 'dotnet run'](https://github.com/dotnet/designs/pull/229/files).
 
 ## Recommended action
 
@@ -43,4 +39,12 @@ N/A
 
 ## See also
 
-- Spec for resolving '-p' in 'dotnet run'
+- [Spec for resolving '-p' in 'dotnet run'](https://github.com/dotnet/designs/pull/229/files)
+
+<!--
+
+### Affected APIs
+
+Not detectable via API analysis.
+
+-->

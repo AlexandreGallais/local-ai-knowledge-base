@@ -1,12 +1,3 @@
----
-title: "core::io::cursor"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/io/cursor.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::io::cursor
 
 ## struct Cursor
@@ -15,7 +6,14 @@ license: "MIT OR Apache-2.0"
 pub struct Cursor<T>
 ```
 
-```rust
+[bytes]: crate::slice "slice"
+[`File`]: ../../std/fs/struct.File.html
+[`Read`]: ../../std/io/trait.Read.html
+[`Write`]: crate::io::Write
+[`Seek`]: crate::io::Seek
+[Vec]: ../../alloc/vec/struct.Vec.html
+
+```no_run
 use std::io::prelude::*;
 use std::io::{self, SeekFrom};
 use std::fs::File;
@@ -32,6 +30,7 @@ fn write_ten_bytes_at_end<W: Write + Seek>(mut writer: W) -> io::Result<()> {
     Ok(())
 }
 
+# fn foo() -> io::Result<()> {
 // Here's some code that uses this library function.
 //
 // We might want to use a BufReader here for efficiency, but let's
@@ -41,6 +40,8 @@ let mut file = File::create("foo.txt")?;
 file.set_len(10)?;
 
 write_ten_bytes_at_end(&mut file)?;
+# Ok(())
+# }
 
 // now let's write a test
 #[test]
@@ -62,12 +63,16 @@ fn test_writes_bytes() {
 pub const fn new(inner: T) -> Cursor<T>
 ```
 
+[`Vec`]: ../../alloc/vec/struct.Vec.html
+
 # Examples
 
-```rust
+```
 use std::io::Cursor;
 
 let buff = Cursor::new(Vec::new());
+# fn force_inference(_: &Cursor<Vec<u8>>) {}
+# force_inference(&buff);
 ```
 
 ## Cursor::into_inner
@@ -80,10 +85,12 @@ Consumes this cursor, returning the underlying value.
 
 # Examples
 
-```rust
+```
 use std::io::Cursor;
 
 let buff = Cursor::new(Vec::new());
+# fn force_inference(_: &Cursor<Vec<u8>>) {}
+# force_inference(&buff);
 
 let vec = buff.into_inner();
 ```
@@ -98,10 +105,12 @@ Gets a reference to the underlying value in this cursor.
 
 # Examples
 
-```rust
+```
 use std::io::Cursor;
 
 let buff = Cursor::new(Vec::new());
+# fn force_inference(_: &Cursor<Vec<u8>>) {}
+# force_inference(&buff);
 
 let reference = buff.get_ref();
 ```
@@ -119,10 +128,12 @@ underlying value as it may corrupt this cursor's position.
 
 # Examples
 
-```rust
+```
 use std::io::Cursor;
 
 let mut buff = Cursor::new(Vec::new());
+# fn force_inference(_: &Cursor<Vec<u8>>) {}
+# force_inference(&buff);
 
 let reference = buff.get_mut();
 ```
@@ -137,7 +148,7 @@ Returns the current position of this cursor.
 
 # Examples
 
-```rust
+```
 use std::io::Cursor;
 use std::io::prelude::*;
 use std::io::SeekFrom;
@@ -163,7 +174,7 @@ Sets the position of this cursor.
 
 # Examples
 
-```rust
+```
 use std::io::Cursor;
 
 let mut buff = Cursor::new(vec![1, 2, 3, 4, 5]);

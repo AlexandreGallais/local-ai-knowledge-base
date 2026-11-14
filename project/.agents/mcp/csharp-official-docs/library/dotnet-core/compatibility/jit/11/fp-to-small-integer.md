@@ -1,21 +1,20 @@
 ---
 title: "Breaking change: Floating-point conversions to small integral types are saturating"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/jit/11/fp-to-small-integer.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where unchecked floating-point conversions to small integral types saturate at the destination type's bounds."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/runtime/pull/128604
 ---
 
 # Floating-point conversions to small integral types are saturating
 
 In .NET 11, unchecked floating-point conversions to `sbyte`, `byte`, `short`, `ushort`, and `char` now have *saturating* behavior at the destination type's bounds. Values that are too small or too large are set to the destination type's minimum or maximum value, respectively.
 
-This change continues the .NET 9 change to floating point-to-integer conversions, which standardized conversions from `float` and `double` to `int`, `uint`, `long`, and `ulong`. .NET 11 extends saturation to 8- and 16-bit destinations.
+This change continues the [.NET 9 change to floating point-to-integer conversions](../9.0/fp-to-integer.md), which standardized conversions from `float` and `double` to `int`, `uint`, `long`, and `ulong`. .NET 11 extends saturation to 8- and 16-bit destinations.
 
 The change applies to CoreCLR, including its interpreter, and Native AOT. Mono is not included in this change.
 
-For more information, see dotnet/runtime#128604.
+For more information, see [dotnet/runtime#128604](https://github.com/dotnet/runtime/pull/128604).
 
 ## Version introduced
 
@@ -67,23 +66,23 @@ Starting in .NET 11, unchecked conversions saturate at the destination type's bo
 
 The preceding example now returns `32767` (`short.MaxValue`) instead of `42`. Similarly, a conversion from `298` to `byte` now returns `255` instead of `42`, and a conversion from `-42` to `ushort` now returns `0` instead of `65494`.
 
-Because they convert through `float`, the corresponding unchecked conversions from `System.Half` also use the new behavior. `System.Single.ConvertToInteger``1(System.Single)` and `System.Double.ConvertToInteger``1(System.Double)` now correctly saturate for these small destination types.
+Because they convert through `float`, the corresponding unchecked conversions from <xref:System.Half> also use the new behavior. <xref:System.Single.ConvertToInteger``1(System.Single)> and <xref:System.Double.ConvertToInteger``1(System.Double)> now correctly saturate for these small destination types.
 
-Checked conversions are unchanged and continue to throw `System.OverflowException` when the conversion overflows. This change does not alter integer-to-integer narrowing conversions or the wider integer and vector conversions covered by the .NET 9 change.
+Checked conversions are unchanged and continue to throw <xref:System.OverflowException> when the conversion overflows. This change does not alter integer-to-integer narrowing conversions or the wider integer and vector conversions covered by the .NET 9 change.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-The .NET 9 change established saturating behavior for conversions to wider integer types, but conversions to 8-bit and 16-bit destinations still had hardware-dependent and implementation-dependent behavior for out-of-range values and `NaN`. This change gives those conversions deterministic, saturating behavior and makes the JIT, CoreCLR interpreter, and Native AOT preinitialized values agree.
+The [.NET 9 change](../9.0/fp-to-integer.md) established saturating behavior for conversions to wider integer types, but conversions to 8-bit and 16-bit destinations still had hardware-dependent and implementation-dependent behavior for out-of-range values and `NaN`. This change gives those conversions deterministic, saturating behavior and makes the JIT, CoreCLR interpreter, and Native AOT preinitialized values agree.
 
 ## Recommended action
 
 If your code relies on previous results for out-of-range inputs, update it to expect saturation at the destination type's bounds where possible.
 
-If you need the platform-native behavior commonly used before these changes, the simplest workaround is `System.Single.ConvertToIntegerNative``1(System.Single)` or `System.Double.ConvertToIntegerNative``1(System.Double)`. For example, replace a direct `(ushort)x` cast with `double.ConvertToIntegerNative<ushort>(x)` when `x` is a `double`, or `float.ConvertToIntegerNative<ushort>(x)` when it is a `float`.
+If you need the platform-native behavior commonly used before these changes, the simplest workaround is <xref:System.Single.ConvertToIntegerNative``1(System.Single)> or <xref:System.Double.ConvertToIntegerNative``1(System.Double)>. For example, replace a direct `(ushort)x` cast with `double.ConvertToIntegerNative<ushort>(x)` when `x` is a `double`, or `float.ConvertToIntegerNative<ushort>(x)` when it is a `float`.
 
 You can also select the intermediate conversion explicitly. The following examples use a `double` input `x` and a `ushort` destination:
 
@@ -101,12 +100,12 @@ If the converted value is used as an array index, buffer offset, or length, vali
 
 ## Affected APIs
 
-- Unchecked explicit casts from `System.Single` or `System.Double` to `System.SByte`, `System.Byte`, `System.Int16`, `System.UInt16`, or `System.Char`.
-- `System.Half` unchecked explicit conversion operators:
-  - `System.Half.op_Explicit(System.Half)~System.SByte`
-  - `System.Half.op_Explicit(System.Half)~System.Byte`
-  - `System.Half.op_Explicit(System.Half)~System.Int16`
-  - `System.Half.op_Explicit(System.Half)~System.UInt16`
-  - `System.Half.op_Explicit(System.Half)~System.Char`
-- `System.Single.ConvertToInteger``1(System.Single)` when `TInteger` is `System.SByte`, `System.Byte`, `System.Int16`, `System.UInt16`, or `System.Char`.
-- `System.Double.ConvertToInteger``1(System.Double)` when `TInteger` is `System.SByte`, `System.Byte`, `System.Int16`, `System.UInt16`, or `System.Char`.
+- Unchecked explicit casts from <xref:System.Single> or <xref:System.Double> to <xref:System.SByte>, <xref:System.Byte>, <xref:System.Int16>, <xref:System.UInt16>, or <xref:System.Char>.
+- <xref:System.Half> unchecked explicit conversion operators:
+  - <xref:System.Half.op_Explicit(System.Half)~System.SByte>
+  - <xref:System.Half.op_Explicit(System.Half)~System.Byte>
+  - <xref:System.Half.op_Explicit(System.Half)~System.Int16>
+  - <xref:System.Half.op_Explicit(System.Half)~System.UInt16>
+  - <xref:System.Half.op_Explicit(System.Half)~System.Char>
+- <xref:System.Single.ConvertToInteger``1(System.Single)> when `TInteger` is <xref:System.SByte>, <xref:System.Byte>, <xref:System.Int16>, <xref:System.UInt16>, or <xref:System.Char>.
+- <xref:System.Double.ConvertToInteger``1(System.Double)> when `TInteger` is <xref:System.SByte>, <xref:System.Byte>, <xref:System.Int16>, <xref:System.UInt16>, or <xref:System.Char>.

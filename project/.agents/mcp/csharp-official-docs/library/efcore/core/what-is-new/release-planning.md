@@ -1,10 +1,9 @@
 ---
-title: "EF Core release planning"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/what-is-new/release-planning.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: EF Core release planning
+description: Information on how Entity Framework Core planning and releasing is done
+author: SamMonoRT
+ms.date: 01/28/2020
+uid: core/what-is-new/release-planning
 ---
 
 # Release planning process
@@ -43,7 +42,7 @@ We are less likely to patch an issue if:
 * The fix has high risk of breaking something else
 * The bug is in a corner-case
 
-This bar gradually rises through the lifetime of a long-term support (LTS) release. This is because LTS releases emphasize stability.
+This bar gradually rises through the lifetime of a [long-term support (LTS)](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) release. This is because LTS releases emphasize stability.
 
 The final decision about whether or not to patch an issue is made by the .NET Directors at Microsoft.
 
@@ -66,27 +65,27 @@ Major releases:
 
 ### GitHub issue tracking
 
-GitHub (https://github.com/dotnet/efcore) is the source-of-truth for all EF Core planning.
+GitHub ([https://github.com/dotnet/efcore](https://github.com/dotnet/efcore)) is the source-of-truth for all EF Core planning.
 
 Issues on GitHub have:
 
 * A state
-  * Open issues have not been addressed.
-  * Closed issues have been addressed.
-    * All issues that have been fixed are tagged with closed-fixed. An issue tagged with closed-fixed is fixed and merged, but may not have been released.
+  * [Open](https://github.com/dotnet/efcore/issues) issues have not been addressed.
+  * [Closed](https://github.com/dotnet/efcore/issues?q=is%3Aissue+is%3Aclosed) issues have been addressed.
+    * All issues that have been fixed are [tagged with closed-fixed](https://github.com/dotnet/efcore/issues?q=is%3Aissue+label%3Aclosed-fixed+is%3Aclosed). An issue tagged with closed-fixed is fixed and merged, but may not have been released.
     * Other `closed-` labels indicate other reasons for closing an issue. For example, duplicates are tagged with closed-duplicate.
 * A type
-  * Bugs represent bugs.
-  * Enhancements represent new features or better functionality in existing features.
+  * [Bugs](https://github.com/dotnet/efcore/issues?q=is%3Aissue+is%3Aopen+label%3Atype-bug) represent bugs.
+  * [Enhancements](https://github.com/dotnet/efcore/issues?q=is%3Aissue+is%3Aopen+label%3Atype-enhancement) represent new features or better functionality in existing features.
 * A milestone
-  * Issues with no milestone are being considered by the team. The decision on what to do with the issue has not yet been made or a change in the decision is being considered.
-  * Issues in the Backlog milestone are items that the EF team will consider working on in a future release
-    * Issues in the backlog may be tagged with consider-for-next-release indicating that this work item is high on the list for the next release.
-  * Open issues in a versioned milestone are items that the team plans to work on in that version. For example, these are the issues we plan to work on for EF Core 5.0.
-  * Closed issues in a versioned milestone are issues that are completed for that version. Note that the version may not yet have been released. For example, these are the issues completed for EF Core 3.0.
+  * [Issues with no milestone](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+no%3Amilestone) are being considered by the team. The decision on what to do with the issue has not yet been made or a change in the decision is being considered.
+  * [Issues in the Backlog milestone](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+milestone%3ABacklog) are items that the EF team will consider working on in a future release
+    * Issues in the backlog may be [tagged with consider-for-next-release](https://github.com/dotnet/efcore/issues?q=is%3Aissue+is%3Aopen+label%3Aconsider-for-next-release) indicating that this work item is high on the list for the next release.
+  * Open issues in a versioned milestone are items that the team plans to work on in that version. For example, [these are the issues we plan to work on for EF Core 5.0](https://github.com/dotnet/efcore/issues?q=is%3Aopen+is%3Aissue+milestone%3A5.0.0).
+  * Closed issues in a versioned milestone are issues that are completed for that version. Note that the version may not yet have been released. For example, [these are the issues completed for EF Core 3.0](https://github.com/dotnet/efcore/issues?q=is%3Aissue+milestone%3A3.0.0+is%3Aclosed).
 * Votes!
   * Voting is the best way to indicate that an issue is important to you.
-  * To vote, just add a "thumbs-up" 👍 to the issue. For example, these are the top-voted issues
+  * To vote, just add a "thumbs-up" 👍 to the issue. For example, [these are the top-voted issues](https://github.com/dotnet/efcore/issues?q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc)
   * Please also comment describing specific reasons you need the feature if you feel this adds value. Commenting "+1" or similar does not add value.
 
 ### The planning process

@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugArrayValue::GetRank Method"
 title: "ICorDebugArrayValue::GetRank Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugarrayvalue-getrank-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugArrayValue.GetRank"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugArrayValue::GetRank"
+helpviewer_keywords:
+  - "ICorDebugArrayValue::GetRank method [.NET debugging]"
+  - "GetRank method, ICorDebugArrayValue interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugArrayValue::GetRank Method
 
 Gets the number of dimensions in the array.
@@ -26,7 +35,7 @@ HRESULT GetRank (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

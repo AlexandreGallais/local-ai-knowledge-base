@@ -1,41 +1,28 @@
----
-title: "Constructor class (java.lang.reflect)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/reflect/Constructor.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Constructor class (java.lang.reflect)
 
 ```java
 public final class Constructor<T> extends Executable
 ```
 
-`Constructor` provides information about, and access to, a single
+{@code Constructor} provides information about, and access to, a single
 constructor for a class.
 
-`Constructor` permits widening conversions to occur when matching the
+<p>{@code Constructor} permits widening conversions to occur when matching the
 actual parameters to newInstance() with the underlying
 constructor's formal parameters, but throws an
-`IllegalArgumentException` if a narrowing conversion would occur.
+{@code IllegalArgumentException} if a narrowing conversion would occur.
 
-Parameters:
+@param <T> the class in which the constructor is declared
 
-- `<T>`: the class in which the constructor is declared
+@see Member
+@see java.lang.Class
+@see java.lang.Class#getConstructors()
+@see java.lang.Class#getConstructor(Class[])
+@see java.lang.Class#getDeclaredConstructors()
 
-**See also:** Member
-
-**See also:** java.lang.Class
-
-**See also:** java.lang.Class#getConstructors()
-
-**See also:** java.lang.Class#getConstructor(Class[])
-
-**See also:** java.lang.Class#getDeclaredConstructors()
-
-**Since:** 1.1
+@author      Kenneth Russell
+@author      Nakul Saraiya
+@since 1.1
 
 ## Constructor.setAccessible(boolean)
 
@@ -43,20 +30,16 @@ Parameters:
 public void setAccessible(boolean flag)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
- A `SecurityException` is thrown if this object is a
-`Constructor` object for the class `Class` and `flag`
-is true.
+<p> A {@code SecurityException} is thrown if this object is a
+{@code Constructor} object for the class {@code Class} and {@code flag}
+is true. </p>
 
-Parameters:
+@param flag {@inheritDoc}
 
-- `flag`: (inherited documentation)
-
-Throws:
-
-- `InaccessibleObjectException`: (inherited documentation)
-- `SecurityException`: if this is a constructor for `java.lang.Class`
+@throws InaccessibleObjectException {@inheritDoc}
+@throws SecurityException if this is a constructor for {@code java.lang.Class}
 
 ## Constructor.getDeclaringClass()
 
@@ -64,7 +47,7 @@ Throws:
 public Class<T> getDeclaringClass()
 ```
 
-Returns the `Class` object representing the class that
+Returns the {@code Class} object representing the class that
 declares the constructor represented by this object.
 
 ## Constructor.getName()
@@ -82,9 +65,8 @@ the binary name of the constructor's declaring class.
 public int getModifiers()
 ```
 
-(inherited documentation)
-
-**JLS:** 8.8.3 Constructor Modifiers
+{@inheritDoc}
+@jls 8.8.3 Constructor Modifiers
 
 ## Constructor.getTypeParameters()
 
@@ -92,13 +74,9 @@ public int getModifiers()
 public TypeVariable<Constructor<T>>[] getTypeParameters()
 ```
 
-(inherited documentation)
-
-**Since:** 1.5
-
-Throws:
-
-- `GenericSignatureFormatError`: (inherited documentation)
+{@inheritDoc}
+@throws GenericSignatureFormatError {@inheritDoc}
+@since 1.5
 
 ## Constructor.getParameterTypes()
 
@@ -106,7 +84,7 @@ Throws:
 public Class<?>[] getParameterTypes()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
 ## Constructor.getParameterCount()
 
@@ -114,9 +92,8 @@ public Class<?>[] getParameterTypes()
 public int getParameterCount()
 ```
 
-(inherited documentation)
-
-**Since:** 1.8
+{@inheritDoc}
+@since 1.8
 
 ## Constructor.getGenericParameterTypes()
 
@@ -124,15 +101,11 @@ public int getParameterCount()
 public Type[] getGenericParameterTypes()
 ```
 
-(inherited documentation)
-
-**Since:** 1.5
-
-Throws:
-
-- `GenericSignatureFormatError`: (inherited documentation)
-- `TypeNotPresentException`: (inherited documentation)
-- `MalformedParameterizedTypeException`: (inherited documentation)
+{@inheritDoc}
+@throws GenericSignatureFormatError {@inheritDoc}
+@throws TypeNotPresentException {@inheritDoc}
+@throws MalformedParameterizedTypeException {@inheritDoc}
+@since 1.5
 
 ## Constructor.getExceptionTypes()
 
@@ -140,7 +113,7 @@ Throws:
 public Class<?>[] getExceptionTypes()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
 ## Constructor.getGenericExceptionTypes()
 
@@ -148,15 +121,11 @@ public Class<?>[] getExceptionTypes()
 public Type[] getGenericExceptionTypes()
 ```
 
-(inherited documentation)
-
-**Since:** 1.5
-
-Throws:
-
-- `GenericSignatureFormatError`: (inherited documentation)
-- `TypeNotPresentException`: (inherited documentation)
-- `MalformedParameterizedTypeException`: (inherited documentation)
+{@inheritDoc}
+@throws GenericSignatureFormatError {@inheritDoc}
+@throws TypeNotPresentException {@inheritDoc}
+@throws MalformedParameterizedTypeException {@inheritDoc}
+@since 1.5
 
 ## Constructor.equals(Object)
 
@@ -164,8 +133,8 @@ Throws:
 public boolean equals(Object obj)
 ```
 
-Compares this `Constructor` against the specified object.
-Returns true if the objects are the same.  Two `Constructor` objects are
+Compares this {@code Constructor} against the specified object.
+Returns true if the objects are the same.  Two {@code Constructor} objects are
 the same if they were declared by the same class and have the
 same formal parameter types.
 
@@ -175,7 +144,7 @@ same formal parameter types.
 public int hashCode()
 ```
 
-Returns a hashcode for this `Constructor`. The hashcode is
+Returns a hashcode for this {@code Constructor}. The hashcode is
 the same as the hashcode for the underlying constructor's
 declaring class name.
 
@@ -185,31 +154,28 @@ declaring class name.
 public String toString()
 ```
 
-Returns a string describing this `Constructor`.  The string is
+Returns a string describing this {@code Constructor}.  The string is
 formatted as the constructor access modifiers, if any,
 followed by the fully-qualified name of the declaring class,
 followed by a parenthesized, comma-separated list of the
 constructor's formal parameter types.  For example:
-
-```java
+<pre>{@code
    public java.util.HashMap(int,float)
-```
+}</pre>
 
-If the constructor is declared to throw exceptions, the
+<p>If the constructor is declared to throw exceptions, the
 parameter list is followed by a space, followed by the word
-"`throws`" followed by a comma-separated list of the
+"{@code throws}" followed by a comma-separated list of the
 thrown exception types.
 
-The only possible modifiers for constructors are the access
-modifiers `public`, `protected` or
-`private`.  Only one of these may appear, or none if the
+<p>The only possible modifiers for constructors are the access
+modifiers {@code public}, {@code protected} or
+{@code private}.  Only one of these may appear, or none if the
 constructor has default (package) access.
 
-**Returns:** a string describing this `Constructor`
-
-**JLS:** 8.8.3 Constructor Modifiers
-
-**JLS:** 8.9.2 Enum Body Declarations
+@return a string describing this {@code Constructor}
+@jls 8.8.3 Constructor Modifiers
+@jls 8.9.2 Enum Body Declarations
 
 ## Constructor.toGenericString()
 
@@ -217,7 +183,7 @@ constructor has default (package) access.
 public String toGenericString()
 ```
 
-Returns a string describing this `Constructor`,
+Returns a string describing this {@code Constructor},
 including type parameters.  The string is formatted as the
 constructor access modifiers, if any, followed by an
 angle-bracketed comma separated list of the constructor's type
@@ -228,8 +194,8 @@ list of the constructor's generic formal parameter types.
 
 If this constructor was declared to take a variable number of
 arguments, instead of denoting the last parameter as
-"`*Type*[]`", it is denoted as
-"`*Type*...`".
+"<code><i>Type</i>[]</code>", it is denoted as
+"<code><i>Type</i>...</code>".
 
 A space is used to separate access modifiers from one another
 and from the type parameters or class name.  If there are no
@@ -237,22 +203,20 @@ type parameters, the type parameter list is elided; if the type
 parameter list is present, a space separates the list from the
 class name.  If the constructor is declared to throw
 exceptions, the parameter list is followed by a space, followed
-by the word "`throws`" followed by a
+by the word "{@code throws}" followed by a
 comma-separated list of the generic thrown exception types.
 
-The only possible modifiers for constructors are the access
-modifiers `public`, `protected` or
-`private`.  Only one of these may appear, or none if the
+<p>The only possible modifiers for constructors are the access
+modifiers {@code public}, {@code protected} or
+{@code private}.  Only one of these may appear, or none if the
 constructor has default (package) access.
 
-**Returns:** a string describing this `Constructor`,
+@return a string describing this {@code Constructor},
 include type parameters
 
-**Since:** 1.5
-
-**JLS:** 8.8.3 Constructor Modifiers
-
-**JLS:** 8.9.2 Enum Body Declarations
+@since 1.5
+@jls 8.8.3 Constructor Modifiers
+@jls 8.9.2 Enum Body Declarations
 
 ## Constructor.newInstance(Object ...)
 
@@ -260,42 +224,52 @@ include type parameters
 public T newInstance(Object ... initargs) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
 ```
 
-Uses the constructor represented by this `Constructor` object to
+Uses the constructor represented by this {@code Constructor} object to
 create and initialize a new instance of the constructor's
 declaring class, with the specified initialization parameters.
 Individual parameters are automatically unwrapped to match
 primitive formal parameters, and both primitive and reference
 parameters are subject to method invocation conversions as necessary.
 
-If the number of formal parameters required by the underlying constructor
-is 0, the supplied `initargs` array may be of length 0 or null.
+<p>If the number of formal parameters required by the underlying constructor
+is 0, the supplied {@code initargs} array may be of length 0 or null.
 
-If the constructor's declaring class is an inner class in a
+<p>If the constructor's declaring class is an inner class in a
 non-static context, the first argument to the constructor needs
-to be the enclosing instance; see section  of
-*The Java Language Specification*.
+to be the enclosing instance; see section {@jls 15.9.3} of
+<cite>The Java Language Specification</cite>.
 
-If the required access and argument checks succeed and the
+<p>If the required access and argument checks succeed and the
 instantiation will proceed, the constructor's declaring class
 is initialized if it has not already been initialized.
 
-If the constructor completes normally, returns the newly
+<p>If the constructor completes normally, returns the newly
 created and initialized instance.
 
-Parameters:
+@param initargs array of objects to be passed as arguments to
+the constructor call; values of primitive types are wrapped in
+a wrapper object of the appropriate type (e.g. a {@code float}
+in a {@link java.lang.Float Float})
 
-- `initargs`: array of objects to be passed as arguments to the constructor call; values of primitive types are wrapped in a wrapper object of the appropriate type (e.g. a `float` in a Float)
-
-**Returns:** a new object created by calling the constructor
+@return a new object created by calling the constructor
 this object represents
 
-Throws:
-
-- `IllegalAccessException`: if this `Constructor` object is enforcing Java language access control and the underlying constructor is inaccessible.
-- `IllegalArgumentException`: if the number of actual and formal parameters differ; if an unwrapping conversion for primitive arguments fails; or if, after possible unwrapping, a parameter value cannot be converted to the corresponding formal parameter type by a method invocation conversion; if this constructor pertains to an enum class.
-- `InstantiationException`: if the class that declares the underlying constructor represents an abstract class.
-- `InvocationTargetException`: if the underlying constructor throws an exception.
-- `ExceptionInInitializerError`: if the initialization provoked by this method fails.
+@throws    IllegalAccessException    if this {@code Constructor} object
+             is enforcing Java language access control and the underlying
+             constructor is inaccessible.
+@throws    IllegalArgumentException  if the number of actual
+             and formal parameters differ; if an unwrapping
+             conversion for primitive arguments fails; or if,
+             after possible unwrapping, a parameter value
+             cannot be converted to the corresponding formal
+             parameter type by a method invocation conversion; if
+             this constructor pertains to an enum class.
+@throws    InstantiationException    if the class that declares the
+             underlying constructor represents an abstract class.
+@throws    InvocationTargetException if the underlying constructor
+             throws an exception.
+@throws    ExceptionInInitializerError if the initialization provoked
+             by this method fails.
 
 ## Constructor.isVarArgs()
 
@@ -303,11 +277,9 @@ Throws:
 public boolean isVarArgs()
 ```
 
-(inherited documentation)
-
-**Since:** 1.5
-
-**JLS:** 8.4.1 Formal Parameters
+{@inheritDoc}
+@since 1.5
+@jls 8.4.1 Formal Parameters
 
 ## Constructor.isSynthetic()
 
@@ -315,16 +287,13 @@ public boolean isVarArgs()
 public boolean isSynthetic()
 ```
 
-(inherited documentation)
-
-**JLS:** 13.1 The Form of a Binary
-
-**jvms:** 4.6 Methods
-
-**Since:** 1.5
-
-**See also:** Java
-programming language and JVM modeling in core reflection
+{@inheritDoc}
+@jls 13.1 The Form of a Binary
+@jvms 4.6 Methods
+@since 1.5
+@see <a
+href="{@docRoot}/java.base/java/lang/reflect/package-summary.html#LanguageJvmModel">Java
+programming language and JVM modeling in core reflection</a>
 
 ## Constructor.getAnnotation(Class<T>)
 
@@ -332,13 +301,10 @@ programming language and JVM modeling in core reflection
 public <T extends Annotation> T getAnnotation(Class<T> annotationClass)
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Since:** 1.5
-
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException  {@inheritDoc}
+@since 1.5
 
 ## Constructor.getDeclaredAnnotations()
 
@@ -346,9 +312,8 @@ Throws:
 public Annotation[] getDeclaredAnnotations()
 ```
 
-(inherited documentation)
-
-**Since:** 1.5
+{@inheritDoc}
+@since 1.5
 
 ## Constructor.getParameterAnnotations()
 
@@ -356,9 +321,8 @@ public Annotation[] getDeclaredAnnotations()
 public Annotation[][] getParameterAnnotations()
 ```
 
-(inherited documentation)
-
-**Since:** 1.5
+{@inheritDoc}
+@since 1.5
 
 ## Constructor.getAnnotatedReturnType()
 
@@ -366,9 +330,8 @@ public Annotation[][] getParameterAnnotations()
 public AnnotatedType getAnnotatedReturnType()
 ```
 
-(inherited documentation)
-
-**Since:** 1.8
+{@inheritDoc}
+@since 1.8
 
 ## Constructor.getAnnotatedReceiverType()
 
@@ -376,6 +339,5 @@ public AnnotatedType getAnnotatedReturnType()
 public AnnotatedType getAnnotatedReceiverType()
 ```
 
-(inherited documentation)
-
-**Since:** 1.8
+{@inheritDoc}
+@since 1.8

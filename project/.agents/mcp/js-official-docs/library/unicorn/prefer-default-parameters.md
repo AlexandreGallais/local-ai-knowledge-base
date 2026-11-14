@@ -1,24 +1,18 @@
----
-title: "prefer-default-parameters"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-default-parameters.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-default-parameters
 
 📝 Prefer default parameters and destructuring defaults over reassignment and fallback expressions.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 This rule prefers default parameters and destructuring defaults over fallback expressions and parameter reassignments, including `||=` and `??=`.
 
-> **Important:**
-> Defaults only handle `undefined`; `??` also handles `null`, and `||` handles all falsy values. Suggestions can therefore change behavior. Disable the rule if these distinctions matter. We recommend moving away from `null`.
+> [!IMPORTANT]
+> Defaults only handle `undefined`; `??` also handles `null`, and `||` handles all falsy values. Suggestions can therefore change behavior. Disable the rule if these distinctions matter. We recommend [moving away from `null`](https://github.com/sindresorhus/meta/discussions/7).
 
 For an empty `versionRange`, the suggestion changes the output:
 
@@ -52,7 +46,7 @@ Logical OR fallbacks are skipped when the binding's type or generic constraint a
 
 Nullability checks require TypeScript's `strictNullChecks` option. Unconstrained generics are checked on a best-effort basis. Without type information, review types before applying suggestions. TypeScript setter parameters are skipped, except destructured bindings.
 
-Code relying on non-strict `arguments` aliasing is unsupported. Parameter defaults break that connection and can change `function.length`.
+Code relying on [non-strict `arguments` aliasing](https://eslint.org/docs/latest/rules/no-param-reassign) is unsupported. Parameter defaults break that connection and can change `function.length`.
 
 ## Options
 

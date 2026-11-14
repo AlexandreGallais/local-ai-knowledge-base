@@ -1,0 +1,373 @@
+<Type Name="Match" FullName="System.Text.RegularExpressions.Match">
+  <TypeSignature Language="C#" Value="public class Match : System.Text.RegularExpressions.Group" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Match extends System.Text.RegularExpressions.Group" />
+  <TypeSignature Language="DocId" Value="T:System.Text.RegularExpressions.Match" />
+  <TypeSignature Language="VB.NET" Value="Public Class Match&#xA;Inherits Group" />
+  <TypeSignature Language="F#" Value="type Match = class&#xA;    inherit Group" />
+  <TypeSignature Language="C++ CLI" Value="public ref class Match : System::Text::RegularExpressions::Group" />
+  <AssemblyInfo>
+    <AssemblyName>System.Text.RegularExpressions</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <AssemblyVersion>4.0.10.0</AssemblyVersion>
+    <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <AssemblyVersion>4.1.1.0</AssemblyVersion>
+    <AssemblyVersion>4.2.0.0</AssemblyVersion>
+    <AssemblyVersion>4.2.1.0</AssemblyVersion>
+    <AssemblyVersion>4.2.2.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+    <AssemblyVersion>11.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>System</AssemblyName>
+    <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.5.0</AssemblyVersion>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>netstandard</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Text.RegularExpressions" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Text.RegularExpressions" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Text.RegularExpressions" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Text.RegularExpressions" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+  </TypeForwardingChain>
+  <Base>
+    <BaseTypeName>System.Text.RegularExpressions.Group</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Attributes>
+    <Attribute>
+      <AttributeName Language="C#">[System.Runtime.CompilerServices.Nullable(0)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.Runtime.CompilerServices.Nullable(0)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>Represents the results from a single regular expression match.</summary>
+    <remarks>
+      <para>
+            The <see cref="T:System.Text.RegularExpressions.Match" /> class is immutable and has no public constructor. An instance of the
+            <see cref="T:System.Text.RegularExpressions.Match" /> class is returned by the <see cref="M:System.Text.RegularExpressions.Regex.Match(System.String)" /> method and
+            represents the first pattern match in a string. Subsequent matches are represented by
+            <see cref="T:System.Text.RegularExpressions.Match" /> objects returned by the <see cref="M:System.Text.RegularExpressions.Match.NextMatch" /> method. In addition, a
+            <see cref="T:System.Text.RegularExpressions.MatchCollection" /> object that consists of zero, one, or more <see cref="T:System.Text.RegularExpressions.Match" />
+            objects is returned by the <see cref="M:System.Text.RegularExpressions.Regex.Matches(System.String)" /> method.
+            </para>
+      <para>
+            If the <see cref="M:System.Text.RegularExpressions.Regex.Matches(System.String)" /> method fails to match a regular expression pattern in
+            an input string, it returns an empty <see cref="T:System.Text.RegularExpressions.MatchCollection" /> object. You can then use a
+            <see langword="foreach" /> construct to iterate over the collection.
+            </para>
+      <para>
+            If the <see cref="M:System.Text.RegularExpressions.Regex.Match(System.String)" /> method fails to match the regular expression pattern, it
+            returns a <see cref="T:System.Text.RegularExpressions.Match" /> object that is equal to <see cref="P:System.Text.RegularExpressions.Match.Empty" />. You can use the
+            <see cref="P:System.Text.RegularExpressions.Group.Success" /> property to determine whether the match was successful.
+            </para>
+      <para>
+            If a pattern match is successful, the <see cref="P:System.Text.RegularExpressions.Capture.Value" /> property contains the matched
+            substring, the <see cref="P:System.Text.RegularExpressions.Capture.Index" /> property indicates the zero-based starting position of
+            the matched substring in the input string, and the <see cref="P:System.Text.RegularExpressions.Capture.Length" /> property indicates
+            the length of the matched substring in the input string.
+            </para>
+      <para>
+            Because a single match can involve multiple capturing groups, <see cref="T:System.Text.RegularExpressions.Match" /> has a
+            <see cref="P:System.Text.RegularExpressions.Match.Groups" /> property that returns the <see cref="T:System.Text.RegularExpressions.GroupCollection" />. The
+            <see cref="T:System.Text.RegularExpressions.Match" /> instance itself is equivalent to the first object in the collection, at
+            <c>Match.Groups[0]</c>, which represents the entire match.
+            </para>
+    </remarks>
+    <altmember cref="T:System.Text.RegularExpressions.MatchCollection" />
+    <altmember cref="T:System.Text.RegularExpressions.Regex" />
+  </Docs>
+  <Members>
+    <Member MemberName="Empty">
+      <MemberSignature Language="C#" Value="public static System.Text.RegularExpressions.Match Empty { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property class System.Text.RegularExpressions.Match Empty" />
+      <MemberSignature Language="DocId" Value="P:System.Text.RegularExpressions.Match.Empty" />
+      <MemberSignature Language="VB.NET" Value="Public Shared ReadOnly Property Empty As Match" />
+      <MemberSignature Language="F#" Value="static member Empty : System.Text.RegularExpressions.Match" Usage="System.Text.RegularExpressions.Match.Empty" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static property System::Text::RegularExpressions::Match ^ Empty { System::Text::RegularExpressions::Match ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Text.RegularExpressions</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Text.RegularExpressions.Match</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Gets the empty match. All failed matches return this empty match.</summary>
+        <value>An empty match.</value>
+        <remarks>
+            This property should not be used to determine if a match is successful. Instead, use the
+            <see cref="P:System.Text.RegularExpressions.Group.Success" /> property.
+            </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Groups">
+      <MemberSignature Language="C#" Value="public virtual System.Text.RegularExpressions.GroupCollection Groups { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class System.Text.RegularExpressions.GroupCollection Groups" />
+      <MemberSignature Language="DocId" Value="P:System.Text.RegularExpressions.Match.Groups" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable ReadOnly Property Groups As GroupCollection" />
+      <MemberSignature Language="F#" Value="member this.Groups : System.Text.RegularExpressions.GroupCollection" Usage="System.Text.RegularExpressions.Match.Groups" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual property System::Text::RegularExpressions::GroupCollection ^ Groups { System::Text::RegularExpressions::GroupCollection ^ get(); };" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Text.RegularExpressions</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Text.RegularExpressions.GroupCollection</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>
+            Gets a collection of groups matched by the regular expression.
+            </summary>
+        <value>The character groups matched by the pattern.</value>
+        <remarks>
+          <para>
+            A regular expression pattern can include subexpressions, which are defined by enclosing a
+            portion of the regular expression pattern in parentheses. Every such subexpression forms a
+            group. The <see cref="P:System.Text.RegularExpressions.Match.Groups" /> property provides access to information about those
+            subexpression matches. For example, the regular expression pattern <c>(\d{3})-(\d{3}-\d{4})</c>,
+            which matches North American telephone numbers, has two subexpressions. The first consists of
+            the area code, which composes the first three digits of the telephone number. This group is
+            captured by the first set of parentheses, <c>(\d{3})</c>. The second consists of the
+            individual telephone number, which composes the last seven digits of the telephone number.
+            This group is captured by the second set of parentheses, <c>(\d{3}-\d{4})</c>.
+            </para>
+          <para>
+            The <see cref="T:System.Text.RegularExpressions.GroupCollection" /> object returned by the <see cref="P:System.Text.RegularExpressions.Match.Groups" /> property always
+            has at least one member. If the regular expression engine cannot find any matches in a
+            particular input string, the single <see cref="T:System.Text.RegularExpressions.Group" /> object in the collection has its
+            <c>Group.Success</c> property set to <see langword="false" /> and its <c>Group.Value</c>
+            property set to <see cref="F:System.String.Empty" />.
+            </para>
+          <para>
+            If the collection has more than one member, the first item in the collection is the same as
+            the <see cref="T:System.Text.RegularExpressions.Match" /> object (the entire match). Each subsequent member represents a
+            captured group, if the regular expression includes capturing groups. Groups can be accessed by
+            their integer index or, for named groups, by name.
+            </para>
+        </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="NextMatch">
+      <MemberSignature Language="C#" Value="public System.Text.RegularExpressions.Match NextMatch ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class System.Text.RegularExpressions.Match NextMatch() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Text.RegularExpressions.Match.NextMatch" />
+      <MemberSignature Language="VB.NET" Value="Public Function NextMatch () As Match" />
+      <MemberSignature Language="F#" Value="member this.NextMatch : unit -&gt; System.Text.RegularExpressions.Match" Usage="match.NextMatch " />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; System::Text::RegularExpressions::Match ^ NextMatch();" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Text.RegularExpressions</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Text.RegularExpressions.Match</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>
+            Returns a new <see cref="T:System.Text.RegularExpressions.Match" /> object with the results for the next match, starting at the
+            position at which the last match ended (at the character after the last matched character).
+            </summary>
+        <returns>The next regular expression match.</returns>
+        <remarks>
+          <para>
+            This method is similar to calling <see cref="M:System.Text.RegularExpressions.Regex.Match(System.String,System.Int32)" /> again and passing
+            <c>Index + Length</c> as the new starting position.
+            </para>
+          <para>
+            This method does not modify the current instance. Instead, it returns a new
+            <see cref="T:System.Text.RegularExpressions.Match" /> object that contains information about the next match.
+            </para>
+          <para>
+            Attempting to retrieve the next match may throw a <see cref="T:System.Text.RegularExpressions.RegexMatchTimeoutException" /> if
+            a time-out value for matching operations is in effect and the attempt to find the next match
+            exceeds that time-out interval.
+            </para>
+          <para>
+            When attempting to match a regular expression pattern against an empty match, the regular
+            expression engine will advance one character in the input string before retrying the match, to
+            avoid an infinite loop. Callers should not assume that each match will advance by at least one
+            position, since zero-width matches are possible.
+            </para>
+        </remarks>
+        <exception cref="T:System.Text.RegularExpressions.RegexMatchTimeoutException">A time-out occurred.</exception>
+        <block subset="none" type="usage">
+          <para>When a match attempt is repeated by calling the <see cref="M:System.Text.RegularExpressions.Match.NextMatch" /> method, the regular expression engine gives empty matches special treatment. Usually, <see cref="M:System.Text.RegularExpressions.Match.NextMatch" /> begins the search for the next match exactly where the previous match left off. However, after an empty match, the <see cref="M:System.Text.RegularExpressions.Match.NextMatch" /> method advances by one character before trying the next match. This behavior guarantees that the regular expression engine will progress through the string. Otherwise, because an empty match does not result in any forward movement, the next match would start in exactly the same place as the previous match, and it would match the same empty string repeatedly.
+
+ The following example provides an illustration. The regular expression pattern <c>a*</c> searches for zero or more occurrences of the letter "a" in the string "abaabb". As the output from the example shows, the search finds six matches. The first match attempt finds the first "a". The second match starts exactly where the first match ends, before the first b; it finds zero occurrences of "a" and returns an empty string. The third match does not begin exactly where the second match ended, because the second match returned an empty string. Instead, it begins one character later, after the first "b". The third match finds two occurrences of "a" and returns "aa". The fourth match attempt begins where the third match ended, before the second "b", and returns an empty string. The fifth match attempt again advances one character so that it begins before the third "b" and returns an empty string. The sixth match begins after the last "b" and returns an empty string again.
+
+ :::code language="csharp" source="~/snippets/csharp/System.Text.RegularExpressions/Match/NextMatch/nextmatch1.cs" id="Snippet1":::
+ :::code language="vb" source="~/snippets/visualbasic/System.Text.RegularExpressions/Match/NextMatch/nextmatch1.vb" id="Snippet1":::</para>
+        </block>
+      </Docs>
+    </Member>
+    <Member MemberName="Result">
+      <MemberSignature Language="C#" Value="public virtual string Result (string replacement);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance string Result(string replacement) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Text.RegularExpressions.Match.Result(System.String)" />
+      <MemberSignature Language="VB.NET" Value="Public Overridable Function Result (replacement As String) As String" />
+      <MemberSignature Language="F#" Value="abstract member Result : string -&gt; string&#xA;override this.Result : string -&gt; string" Usage="match.Result replacement" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; virtual System::String ^ Result(System::String ^ replacement);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System.Text.RegularExpressions</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="replacement" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="replacement">The replacement pattern to use.</param>
+        <summary>
+            Returns the expansion of the passed replacement pattern. For example, if the replacement
+            pattern is <c>$1$2</c>, <see cref="M:System.Text.RegularExpressions.Match.Result(System.String)" /> returns the concatenation of
+            <c>Groups[1].Value</c> and <c>Groups[2].Value</c>.
+            </summary>
+        <returns>The expanded version of the <paramref name="replacement" /> parameter.</returns>
+        <remarks>
+          <para>
+            Whereas the <see cref="M:System.Text.RegularExpressions.Regex.Replace(System.String,System.String)" /> method replaces all matches in an
+            input string with a specified replacement pattern, the <see cref="M:System.Text.RegularExpressions.Match.Result(System.String)" /> method replaces a
+            single match with a specified replacement pattern. Because it operates on an individual match,
+            it is also possible to perform processing on the matched string before you call the
+            <see cref="M:System.Text.RegularExpressions.Match.Result(System.String)" /> method.
+            </para>
+          <para>
+            The <paramref name="replacement" /> parameter is a standard regular expression replacement
+            pattern. It can consist of literal characters and regular expression substitutions. For more
+            information, see
+            <see href="https://github.com/dotnet/docs/blob/main/docs/standard/base-types/substitutions-in-regular-expressions.md">Substitutions</see>.
+            </para>
+        </remarks>
+        <altmember cref="M:System.Text.RegularExpressions.Regex.Replace(System.String,System.String)" />
+        <related type="Article" href="/dotnet/standard/base-types/substitutions-in-regular-expressions">Substitutions in Regular Expressions</related>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="replacement" /> is <see langword="null" />.
+            </exception>
+        <exception cref="T:System.NotSupportedException">Expansion is not allowed for this pattern.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Synchronized">
+      <MemberSignature Language="C#" Value="public static System.Text.RegularExpressions.Match Synchronized (System.Text.RegularExpressions.Match inner);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig class System.Text.RegularExpressions.Match Synchronized(class System.Text.RegularExpressions.Match inner) cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Text.RegularExpressions.Match.Synchronized(System.Text.RegularExpressions.Match)" />
+      <MemberSignature Language="VB.NET" Value="Public Shared Function Synchronized (inner As Match) As Match" />
+      <MemberSignature Language="F#" Value="static member Synchronized : System.Text.RegularExpressions.Match -&gt; System.Text.RegularExpressions.Match" Usage="System.Text.RegularExpressions.Match.Synchronized inner" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; static System::Text::RegularExpressions::Match ^ Synchronized(System::Text::RegularExpressions::Match ^ inner);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>System</AssemblyName>
+        <AssemblyVersion>1.0.5000.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Text.RegularExpressions</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Text.RegularExpressions.Match</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="inner" Type="System.Text.RegularExpressions.Match" />
+      </Parameters>
+      <Docs>
+        <param name="inner">The input <see cref="T:System.Text.RegularExpressions.Match" /> object.</param>
+        <summary>
+            Returns a <see cref="T:System.Text.RegularExpressions.Match" /> instance equivalent to the one supplied that is safe to share
+            between multiple threads.
+            </summary>
+        <returns>A regular expression <see cref="T:System.Text.RegularExpressions.Match" /> object.</returns>
+        <remarks>To be added.</remarks>
+        <exception cref="T:System.ArgumentNullException">
+          <paramref name="inner" /> is <see langword="null" />.
+            </exception>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

@@ -1,28 +1,29 @@
 ---
-title: "API endpoint authentication behavior in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/authentication/api-endpoint-auth.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: API endpoint authentication behavior in ASP.NET Core
+ai-usage: ai-assisted
+description: Learn how ASP.NET Core 10 and later handles authentication failures for API endpoints using cookie authentication.
+monikerRange: '>= aspnetcore-10.0'
+ms.date: 09/16/2026
 ---
 
 # API endpoint authentication behavior in ASP.NET Core
+
+:::moniker range=">= aspnetcore-10.0"
 
 When using cookie authentication, API endpoints return the appropriate HTTP status codes (401 or 403) for authentication failures instead of redirecting unauthenticated requests to login pages. This behavior, which is more suitable for programmatic API access, was introduced in ASP.NET Core in .NET 10.
 
 ## How ASP.NET Core identifies API endpoints
 
-ASP.NET Core adds `Microsoft.AspNetCore.Http.Metadata.IDisableCookieRedirectMetadata` to the endpoints that it recognizes as API endpoints, including:
+ASP.NET Core adds <xref:Microsoft.AspNetCore.Http.Metadata.IDisableCookieRedirectMetadata> to the endpoints that it recognizes as API endpoints, including:
 
 * Controllers decorated with the `[ApiController]` attribute.
 * Minimal API endpoints that read JSON request bodies or write JSON responses.
-* Endpoints using `Microsoft.AspNetCore.Http.TypedResults` return types.
+* Endpoints using <xref:Microsoft.AspNetCore.Http.TypedResults> return types.
 * SignalR hubs and endpoints.
 
 Detection is based on metadata that's inferred when the app builds its endpoints. It isn't based on the `Accept` header of an incoming request, and it isn't based on which `Map{Verb}` method registered the route.
 
-A minimal API handler whose declared return type is `void`, `string`, or the `Microsoft.AspNetCore.Http.IResult` interface doesn't contribute the metadata through its return type, although the concrete `TypedResults` types such as `Ok<TValue>` do. For example, `app.MapGet("/hello", () => "Hello").RequireAuthorization()` writes a `text/plain` response and takes no JSON request body, so unauthenticated requests to it still redirect to the login page.
+A minimal API handler whose declared return type is `void`, `string`, or the <xref:Microsoft.AspNetCore.Http.IResult> interface doesn't contribute the metadata through its return type, although the concrete `TypedResults` types such as `Ok<TValue>` do. For example, `app.MapGet("/hello", () => "Hello").RequireAuthorization()` writes a `text/plain` response and takes no JSON request body, so unauthenticated requests to it still redirect to the login page.
 
 ## Default behavior
 
@@ -31,14 +32,14 @@ By default, ASP.NET Core applies cookie authentication logic based on the endpoi
 * **Web pages**: Redirect to the login or access-denied page with a 302 status code.
 * **API endpoints**: Return 401 or 403 status codes instead of a 302 redirect.
 
-XMLHttpRequests (XHRs) receive 401 and 403 responses regardless of the endpoint they target. That behavior predates .NET 10 and is unchanged.
+[XMLHttpRequests (XHRs)](https://developer.mozilla.org/docs/Web/API/XMLHttpRequest) receive 401 and 403 responses regardless of the endpoint they target. That behavior predates .NET 10 and is unchanged.
 
-> **Note:**
+> [!NOTE]
 > Endpoint metadata only affects the challenge (401) and forbid (403) paths. Sign-out redirects aren't affected. When a sign-out request specifies a redirect URI or a valid return URL, non-XHR requests redirect as they did before .NET 10. XHR behavior is unchanged.
 
 ## Configure the behavior for specific endpoints
 
-Call `Microsoft.AspNetCore.Builder.CookieRedirectEndpointConventionBuilderExtensions.DisableCookieRedirect*` to return 401 and 403 status codes for endpoints that aren't detected automatically:
+Call <xref:Microsoft.AspNetCore.Builder.CookieRedirectEndpointConventionBuilderExtensions.DisableCookieRedirect*> to return 401 and 403 status codes for endpoints that aren't detected automatically:
 
 ```csharp
 var api = app.MapGroup("/api").DisableCookieRedirect();
@@ -47,7 +48,7 @@ api.MapGet("/status", () => "Ready")
    .RequireAuthorization();
 ```
 
-Call `Microsoft.AspNetCore.Builder.CookieRedirectEndpointConventionBuilderExtensions.AllowCookieRedirect*` to keep login redirects for endpoints that are detected as API endpoints:
+Call <xref:Microsoft.AspNetCore.Builder.CookieRedirectEndpointConventionBuilderExtensions.AllowCookieRedirect*> to keep login redirects for endpoints that are detected as API endpoints:
 
 ```csharp
 app.MapGet("/reports/summary", () => new { Total = 1000 })
@@ -55,7 +56,7 @@ app.MapGet("/reports/summary", () => new { Total = 1000 })
    .AllowCookieRedirect();
 ```
 
-For controllers, apply the `Microsoft.AspNetCore.Http.AllowCookieRedirectAttribute` to an action method or to the controller class:
+For controllers, apply the <xref:Microsoft.AspNetCore.Http.AllowCookieRedirectAttribute> to an action method or to the controller class:
 
 ```csharp
 [ApiController]
@@ -69,8 +70,8 @@ public class ReportsController : ControllerBase
 }
 ```
 
-> **Important:**
-> `Microsoft.AspNetCore.Http.Metadata.IAllowCookieRedirectMetadata` overrides `Microsoft.AspNetCore.Http.Metadata.IDisableCookieRedirectMetadata` no matter the order in which the metadata is added. Calling `DisableCookieRedirect` after `AllowCookieRedirect` on the same endpoint doesn't restore the status code behavior.
+> [!IMPORTANT]
+> <xref:Microsoft.AspNetCore.Http.Metadata.IAllowCookieRedirectMetadata> overrides <xref:Microsoft.AspNetCore.Http.Metadata.IDisableCookieRedirectMetadata> no matter the order in which the metadata is added. Calling `DisableCookieRedirect` after `AllowCookieRedirect` on the same endpoint doesn't restore the status code behavior.
 
 ## Opt out of the behavior app-wide
 
@@ -86,7 +87,7 @@ Set the switch in the project file so that it applies before any app code runs:
 </ItemGroup>
 ```
 
-The switch can also be set in code. It's read once, the first time cookie authentication is used, so call `System.AppContext.SetSwitch*` before the host is built:
+The switch can also be set in code. It's read once, the first time cookie authentication is used, so call <xref:System.AppContext.SetSwitch*> before the host is built:
 
 ```csharp
 AppContext.SetSwitch(
@@ -97,7 +98,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 ## Breaking change considerations
 
-The change introduced in .NET 10 is a behavioral change. An app that combines cookie authentication with endpoints that ASP.NET Core detects as API endpoints returns 401 and 403 responses where it previously returned a 302 redirect to the login or access-denied page. For the full breaking change notice, see Cookie login redirects are disabled for known API endpoints.
+The change introduced in .NET 10 is a [behavioral change](/dotnet/core/compatibility/categories#behavioral-change). An app that combines cookie authentication with endpoints that ASP.NET Core detects as API endpoints returns 401 and 403 responses where it previously returned a 302 redirect to the login or access-denied page. For the full breaking change notice, see [Cookie login redirects are disabled for known API endpoints](../../breaking-changes/10/cookie-authentication-api-endpoints.md).
 
 Consider the impact on each kind of app:
 
@@ -127,8 +128,10 @@ public async Task UnauthorizedApiRequest_Returns401()
 
 ## Related topics
 
-* Use cookie authentication without ASP.NET Core Identity
-* Create web APIs with ASP.NET Core
-* Create responses in Minimal API applications
-* SignalR authentication and authorization
-* Cookie login redirects are disabled for known API endpoints
+* [Use cookie authentication without ASP.NET Core Identity](cookie.md)
+* [Create web APIs with ASP.NET Core](../../web-api/index.md)
+* [Create responses in Minimal API applications](../../fundamentals/minimal-apis/responses.md)
+* [SignalR authentication and authorization](../../signalr/authn-and-authz.md)
+* [Cookie login redirects are disabled for known API endpoints](../../breaking-changes/10/cookie-authentication-api-endpoints.md)
+
+:::moniker-end

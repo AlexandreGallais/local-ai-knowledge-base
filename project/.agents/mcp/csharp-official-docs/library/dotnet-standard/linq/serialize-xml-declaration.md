@@ -1,23 +1,24 @@
 ---
-title: "Serialize with an XML declaration - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/serialize-xml-declaration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Serialize with an XML declaration - LINQ to XML
+description: You can control whether an XML declaration is generated when you serialize XML in C# or Visual Basic.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # Serialize with an XML declaration (LINQ to XML)
 
 This article describes how to control whether an XML declaration is generated when you serialize XML in C# or Visual Basic.
 
-Serializing to a `System.IO.File` or a `System.IO.TextWriter` using the `System.Xml.Linq.XElement.Save*` method or the `System.Xml.Linq.XDocument.Save*` method generates an XML declaration. When you serialize to an `System.Xml.XmlWriter`, the writer settings (specified in an `System.Xml.XmlWriterSettings` object) determine whether an XML declaration is generated.
+Serializing to a <xref:System.IO.File> or a <xref:System.IO.TextWriter> using the <xref:System.Xml.Linq.XElement.Save*?displayProperty=nameWithType> method or the <xref:System.Xml.Linq.XDocument.Save*?displayProperty=nameWithType> method generates an XML declaration. When you serialize to an <xref:System.Xml.XmlWriter>, the writer settings (specified in an <xref:System.Xml.XmlWriterSettings> object) determine whether an XML declaration is generated.
 
 If you're serializing to a string using the `ToString` method, the resulting XML won't include an XML declaration.
 
 ## Example: Serialize with an XML declaration
 
-The following example creates an `System.Xml.Linq.XElement`, saves the document to a file, and then prints the file to the console:
+The following example creates an <xref:System.Xml.Linq.XElement>, saves the document to a file, and then prints the file to the console:
 
 ```csharp
 XElement root = new XElement("Root",
@@ -48,7 +49,7 @@ This example produces the following output:
 
 ## Example: Serialize without an XML declaration
 
-The following example shows how to save an `System.Xml.Linq.XElement` to an `System.Xml.XmlWriter`.
+The following example shows how to save an <xref:System.Xml.Linq.XElement> to an <xref:System.Xml.XmlWriter>.
 
 ```csharp
 StringBuilder sb = new StringBuilder();

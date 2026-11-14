@@ -1,50 +1,253 @@
 ---
-title: "ASP.NET Core built-in Razor components"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/components/built-in-components.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core built-in Razor components
+description: Find information on Razor components provided by the Blazor framework.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 08/14/2026
 ---
-
 # ASP.NET Core built-in Razor components
 
-The following built-in Razor components are provided by the Blazor framework. For information on non-security-related project template components, see ASP.NET Core Blazor project structure. For information on security-related project template components, see the Security node articles.
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
-* `AntiforgeryToken`
-* `AuthorizeView`
-* `CacheView`
-* `CascadingValue`
-* `DataAnnotationsValidator`
-* `DynamicComponent`
-* `Editor<T>`
-* `EditForm`
-* `ErrorBoundary`
-* `FocusOnNavigate`
-* `HeadContent`
-* `HeadOutlet`
-* `ImportMap`
-* `InputCheckbox`
-* `InputDate`
-* `InputFile`
-* `InputNumber`
-* `InputRadio`
-* `InputRadioGroup`
-* `InputSelect`
-* `InputText`
-* `InputTextArea`
-* `LayoutComponentBase`
-* `LayoutView`
-* `NavigationLock`
-* `NavLink`
-* `PageTitle`
-* `OwningComponentBase`
-* `Paginator`
-* `QuickGrid`
-* `Router`
-* `RouteView`
-* `SectionContent`
-* `SectionOutlet`
-* `ValidationMessage`
-* `ValidationSummary`
-* `Virtualize`
+The following built-in Razor components are provided by the Blazor framework. For information on non-security-related project template components, see [ASP.NET Core Blazor project structure](../project-structure.md). For information on security-related project template components, see the [Security node articles](../security/index.md).
+
+:::moniker range=">= aspnetcore-11.0"
+
+* [`AntiforgeryToken`](../forms/index.md#antiforgery-support)
+* [`AuthorizeView`](../security/index.md#authorizeview-component)
+* [`CacheView`](../state-management/cacheview-component.md)
+* [`CascadingValue`](cascading-values-and-parameters.md#cascadingvalue-component)
+* [`DataAnnotationsValidator`](../forms/validation.md#data-annotations-validator-component-and-custom-validation)
+* [`DynamicComponent`](dynamiccomponent.md)
+* [`Editor<T>`](../forms/binding.md#nest-and-bind-forms)
+* [`EditForm`](../forms/binding.md#editformeditcontext-model)
+* [`ErrorBoundary`](../fundamentals/handle-errors.md#error-boundaries)
+* [`FocusOnNavigate`](../fundamentals/routing.md#focus-an-element-on-navigation)
+* [`HeadContent`](control-head-content.md)
+* [`HeadOutlet`](control-head-content.md)
+* [`ImportMap`](../fundamentals/static-files.md#importmap-component)
+* [`InputCheckbox`](../forms/input-components.md)
+* [`InputDate`](../forms/input-components.md)
+* [`InputFile`](../file-uploads.md)
+* [`InputNumber`](../forms/input-components.md)
+* [`InputRadio`](../forms/input-components.md)
+* [`InputRadioGroup`](../forms/input-components.md)
+* [`InputSelect`](../forms/input-components.md)
+* [`InputText`](../forms/input-components.md)
+* [`InputTextArea`](../forms/input-components.md)
+* [`LayoutComponentBase`](layouts.md#create-a-layout-component)
+* [`LayoutView`](layouts.md#apply-a-layout-to-arbitrary-content-layoutview-component)
+* [`NavigationLock`](../fundamentals/navigation.md#handleprevent-location-changes)
+* [`NavLink`](../fundamentals/navigation.md#navlink-component)
+* [`PageTitle`](control-head-content.md)
+* [`OwningComponentBase`](../fundamentals/dependency-injection.md#utility-base-component-classes-to-manage-a-di-scope)
+* [`Paginator`](quickgrid.md#page-items-with-a-paginator-component)
+* [`QuickGrid`](quickgrid.md)
+* [`Router`](../fundamentals/routing.md#route-templates)
+* [`RouteView`](../fundamentals/routing.md#route-templates)
+* [`SectionContent`](sections.md)
+* [`SectionOutlet`](sections.md)
+* [`ValidationMessage`](../forms/validation.md#validation-summary-and-validation-message-components)
+* [`ValidationSummary`](../forms/validation.md#validation-summary-and-validation-message-components)
+* [`Virtualize`](virtualization.md)
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-9.0 < aspnetcore-11.0"
+
+* [`AntiforgeryToken`](../forms/index.md#antiforgery-support)
+* [`AuthorizeView`](../security/index.md#authorizeview-component)
+* [`CascadingValue`](cascading-values-and-parameters.md#cascadingvalue-component)
+* [`DataAnnotationsValidator`](../forms/validation.md#data-annotations-validator-component-and-custom-validation)
+* [`DynamicComponent`](dynamiccomponent.md)
+* [`Editor<T>`](../forms/binding.md#nest-and-bind-forms)
+* [`EditForm`](../forms/binding.md#editformeditcontext-model)
+* [`ErrorBoundary`](../fundamentals/handle-errors.md#error-boundaries)
+* [`FocusOnNavigate`](../fundamentals/routing.md#focus-an-element-on-navigation)
+* [`HeadContent`](control-head-content.md)
+* [`HeadOutlet`](control-head-content.md)
+* [`ImportMap`](../fundamentals/static-files.md#importmap-component)
+* [`InputCheckbox`](../forms/input-components.md)
+* [`InputDate`](../forms/input-components.md)
+* [`InputFile`](../file-uploads.md)
+* [`InputNumber`](../forms/input-components.md)
+* [`InputRadio`](../forms/input-components.md)
+* [`InputRadioGroup`](../forms/input-components.md)
+* [`InputSelect`](../forms/input-components.md)
+* [`InputText`](../forms/input-components.md)
+* [`InputTextArea`](../forms/input-components.md)
+* [`LayoutComponentBase`](layouts.md#create-a-layout-component)
+* [`LayoutView`](layouts.md#apply-a-layout-to-arbitrary-content-layoutview-component)
+* [`NavigationLock`](../fundamentals/navigation.md#handleprevent-location-changes)
+* [`NavLink`](../fundamentals/navigation.md#navlink-component)
+* [`PageTitle`](control-head-content.md)
+* [`OwningComponentBase`](../fundamentals/dependency-injection.md#utility-base-component-classes-to-manage-a-di-scope)
+* [`Paginator`](quickgrid.md#page-items-with-a-paginator-component)
+* [`QuickGrid`](quickgrid.md)
+* [`Router`](../fundamentals/routing.md#route-templates)
+* [`RouteView`](../fundamentals/routing.md#route-templates)
+* [`SectionContent`](sections.md)
+* [`SectionOutlet`](sections.md)
+* [`ValidationMessage`](../forms/validation.md#validation-summary-and-validation-message-components)
+* [`ValidationSummary`](../forms/validation.md#validation-summary-and-validation-message-components)
+* [`Virtualize`](virtualization.md)
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
+
+* [`AntiforgeryToken`](../forms/index.md#antiforgery-support)
+* [`AuthorizeView`](../security/index.md#authorizeview-component)
+* [`CascadingValue`](cascading-values-and-parameters.md#cascadingvalue-component)
+* [`DataAnnotationsValidator`](../forms/validation.md#data-annotations-validator-component-and-custom-validation)
+* [`DynamicComponent`](dynamiccomponent.md)
+* [`Editor<T>`](../forms/binding.md#nest-and-bind-forms)
+* [`EditForm`](../forms/binding.md#editformeditcontext-model)
+* [`ErrorBoundary`](../fundamentals/handle-errors.md#error-boundaries)
+* [`FocusOnNavigate`](../fundamentals/routing.md#focus-an-element-on-navigation)
+* [`HeadContent`](control-head-content.md)
+* [`HeadOutlet`](control-head-content.md)
+* [`InputCheckbox`](../forms/input-components.md)
+* [`InputDate`](../forms/input-components.md)
+* [`InputFile`](../file-uploads.md)
+* [`InputNumber`](../forms/input-components.md)
+* [`InputRadio`](../forms/input-components.md)
+* [`InputRadioGroup`](../forms/input-components.md)
+* [`InputSelect`](../forms/input-components.md)
+* [`InputText`](../forms/input-components.md)
+* [`InputTextArea`](../forms/input-components.md)
+* [`LayoutComponentBase`](layouts.md#create-a-layout-component)
+* [`LayoutView`](layouts.md#apply-a-layout-to-arbitrary-content-layoutview-component)
+* [`NavigationLock`](../fundamentals/navigation.md#handleprevent-location-changes)
+* [`NavLink`](../fundamentals/navigation.md#navlink-component)
+* [`PageTitle`](control-head-content.md)
+* [`OwningComponentBase`](../fundamentals/dependency-injection.md#utility-base-component-classes-to-manage-a-di-scope)
+* [`Paginator`](quickgrid.md#page-items-with-a-paginator-component)
+* [`QuickGrid`](quickgrid.md)
+* [`Router`](../fundamentals/routing.md#route-templates)
+* [`RouteView`](../fundamentals/routing.md#route-templates)
+* [`SectionContent`](sections.md)
+* [`SectionOutlet`](sections.md)
+* [`ValidationMessage`](../forms/validation.md#validation-summary-and-validation-message-components)
+* [`ValidationSummary`](../forms/validation.md#validation-summary-and-validation-message-components)
+* [`Virtualize`](virtualization.md)
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
+
+* [`AuthorizeView`](../security/index.md#authorizeview-component)
+* [`CascadingValue`](cascading-values-and-parameters.md#cascadingvalue-component)
+* [`DataAnnotationsValidator`](../forms/validation.md#data-annotations-validator-component-and-custom-validation)
+* [`DynamicComponent`](dynamiccomponent.md)
+* [`EditForm`](../forms/binding.md#editformeditcontext-model)
+* [`ErrorBoundary`](../fundamentals/handle-errors.md#error-boundaries)
+* [`FocusOnNavigate`](../fundamentals/routing.md#focus-an-element-on-navigation)
+* [`HeadContent`](control-head-content.md)
+* [`HeadOutlet`](control-head-content.md)
+* [`InputCheckbox`](../forms/input-components.md)
+* [`InputDate`](../forms/input-components.md)
+* [`InputFile`](../file-uploads.md)
+* [`InputNumber`](../forms/input-components.md)
+* [`InputRadio`](../forms/input-components.md)
+* [`InputRadioGroup`](../forms/input-components.md)
+* [`InputSelect`](../forms/input-components.md)
+* [`InputText`](../forms/input-components.md)
+* [`InputTextArea`](../forms/input-components.md)
+* [`LayoutComponentBase`](layouts.md#create-a-layout-component)
+* [`LayoutView`](layouts.md#apply-a-layout-to-arbitrary-content-layoutview-component)
+* [`NavigationLock`](../fundamentals/navigation.md#handleprevent-location-changes)
+* [`NavLink`](../fundamentals/navigation.md#navlink-component)
+* [`OwningComponentBase`](../fundamentals/dependency-injection.md#utility-base-component-classes-to-manage-a-di-scope)
+* [`PageTitle`](control-head-content.md)
+* [`Router`](../fundamentals/routing.md#route-templates)
+* [`RouteView`](../fundamentals/routing.md#route-templates)
+* [`ValidationMessage`](../forms/validation.md#validation-summary-and-validation-message-components)
+* [`ValidationSummary`](../forms/validation.md#validation-summary-and-validation-message-components)
+* [`Virtualize`](virtualization.md)
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
+
+* [`AuthorizeView`](../security/index.md#authorizeview-component)
+* [`CascadingValue`](cascading-values-and-parameters.md#cascadingvalue-component)
+* [`DataAnnotationsValidator`](../forms/validation.md#data-annotations-validator-component-and-custom-validation)
+* [`DynamicComponent`](dynamiccomponent.md)
+* [`EditForm`](../forms/binding.md#editformeditcontext-model)
+* [`ErrorBoundary`](../fundamentals/handle-errors.md#error-boundaries)
+* [`FocusOnNavigate`](../fundamentals/routing.md#focus-an-element-on-navigation)
+* [`HeadContent`](control-head-content.md)
+* [`HeadOutlet`](control-head-content.md)
+* [`InputCheckbox`](../forms/input-components.md)
+* [`InputDate`](../forms/input-components.md)
+* [`InputFile`](../file-uploads.md)
+* [`InputNumber`](../forms/input-components.md)
+* [`InputRadio`](../forms/input-components.md)
+* [`InputRadioGroup`](../forms/input-components.md)
+* [`InputSelect`](../forms/input-components.md)
+* [`InputText`](../forms/input-components.md)
+* [`InputTextArea`](../forms/input-components.md)
+* [`LayoutComponentBase`](layouts.md#create-a-layout-component)
+* [`LayoutView`](layouts.md#apply-a-layout-to-arbitrary-content-layoutview-component)
+* [`NavLink`](../fundamentals/navigation.md#navlink-component)
+* [`OwningComponentBase`](../fundamentals/dependency-injection.md#utility-base-component-classes-to-manage-a-di-scope)
+* [`PageTitle`](control-head-content.md)
+* [`Router`](../fundamentals/routing.md#route-templates)
+* [`RouteView`](../fundamentals/routing.md#route-templates)
+* [`ValidationMessage`](../forms/validation.md#validation-summary-and-validation-message-components)
+* [`ValidationSummary`](../forms/validation.md#validation-summary-and-validation-message-components)
+* [`Virtualize`](virtualization.md)
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
+
+* [`AuthorizeView`](../security/index.md#authorizeview-component)
+* [`CascadingValue`](cascading-values-and-parameters.md#cascadingvalue-component)
+* [`DataAnnotationsValidator`](../forms/validation.md#data-annotations-validator-component-and-custom-validation)
+* [`EditForm`](../forms/binding.md#editformeditcontext-model)
+* [`InputCheckbox`](../forms/input-components.md)
+* [`InputDate`](../forms/input-components.md)
+* [`InputFile`](../file-uploads.md)
+* [`InputNumber`](../forms/input-components.md)
+* [`InputRadio`](../forms/input-components.md)
+* [`InputRadioGroup`](../forms/input-components.md)
+* [`InputSelect`](../forms/input-components.md)
+* [`InputText`](../forms/input-components.md)
+* [`InputTextArea`](../forms/input-components.md)
+* [`LayoutComponentBase`](layouts.md#create-a-layout-component)
+* [`LayoutView`](layouts.md#apply-a-layout-to-arbitrary-content-layoutview-component)
+* [`NavLink`](../fundamentals/navigation.md#navlink-component)
+* [`OwningComponentBase`](../fundamentals/dependency-injection.md#utility-base-component-classes-to-manage-a-di-scope)
+* [`Router`](../fundamentals/routing.md#route-templates)
+* [`RouteView`](../fundamentals/routing.md#route-templates)
+* [`ValidationMessage`](../forms/validation.md#validation-summary-and-validation-message-components)
+* [`ValidationSummary`](../forms/validation.md#validation-summary-and-validation-message-components)
+* [`Virtualize`](virtualization.md)
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-5.0"
+
+* [`AuthorizeView`](../security/index.md#authorizeview-component)
+* [`CascadingValue`](cascading-values-and-parameters.md#cascadingvalue-component)
+* [`DataAnnotationsValidator`](../forms/validation.md#data-annotations-validator-component-and-custom-validation)
+* [`EditForm`](../forms/binding.md#editformeditcontext-model)
+* [`InputCheckbox`](../forms/input-components.md)
+* [`InputDate`](../forms/input-components.md)
+* [`InputNumber`](../forms/input-components.md)
+* [`InputRadio`](../forms/input-components.md)
+* [`InputRadioGroup`](../forms/input-components.md)
+* [`InputSelect`](../forms/input-components.md)
+* [`InputText`](../forms/input-components.md)
+* [`InputTextArea`](../forms/input-components.md)
+* [`LayoutComponentBase`](layouts.md#create-a-layout-component)
+* [`LayoutView`](layouts.md#apply-a-layout-to-arbitrary-content-layoutview-component)
+* [`NavLink`](../fundamentals/navigation.md#navlink-component)
+* [`OwningComponentBase`](../fundamentals/dependency-injection.md#utility-base-component-classes-to-manage-a-di-scope)
+* [`Router`](../fundamentals/routing.md#route-templates)
+* [`RouteView`](../fundamentals/routing.md#route-templates)
+* [`ValidationMessage`](../forms/validation.md#validation-summary-and-validation-message-components)
+* [`ValidationSummary`](../forms/validation.md#validation-summary-and-validation-message-components)
+
+:::moniker-end

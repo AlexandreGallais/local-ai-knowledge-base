@@ -1,0 +1,26 @@
+{
+  "sources": [
+    {
+      "tool": "git",
+      "title": "Git reference: the manual page of every git command, and the guides of the Git documentation",
+      "repository": "https://github.com/git/git.git",
+      "ref": "v2.56.1",
+      "version": "2.56",
+      "license": "GPL-2.0-only",
+      "attribution": "Linus Torvalds, Junio C Hamano and the Git contributors",
+      "paths": [
+        "Documentation/"
+      ],
+      "docs": [
+        "Documentation"
+      ],
+      "exclude": [
+        "Documentation/RelNotes",
+        "Documentation/howto",
+        "Documentation/technical",
+        "Documentation/config"
+      ],
+      "files": "\\.(?:adoc|txt)$"
+    }
+  ]
+}

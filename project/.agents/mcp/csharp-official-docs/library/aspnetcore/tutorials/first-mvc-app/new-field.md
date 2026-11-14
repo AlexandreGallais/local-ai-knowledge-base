@@ -1,15 +1,17 @@
 ---
-title: "Part 8, add a new field to an ASP.NET Core MVC app"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/tutorials/first-mvc-app/new-field.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Part 8, add a new field to an ASP.NET Core MVC app
+ai-usage: ai-assisted
+description: Part 8 of tutorial series on ASP.NET Core MVC.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 03/26/2026
 ---
-
 # Part 8, add a new field to an ASP.NET Core MVC app
 
-In this section Entity Framework Core migrations is used to:
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+:::moniker range=">= aspnetcore-10.0"
+
+In this section [Entity Framework Core migrations](/ef/core/managing-schemas/migrations/) is used to:
 
 * Add a new field to the model.
 * Migrate the new field to the database.
@@ -23,36 +25,15 @@ When Entity Framework (EF) is used to automatically create a database from model
 
 Add a `Rating` property to `Models/Movie.cs`:
 
-```csharp
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace MvcMovie.Models;
-
-public class Movie
-{
-    public int Id { get; set; }
-    public string? Title { get; set; }
-
-    [Display(Name = "Release Date")]
-    [DataType(DataType.Date)]
-    public DateTime ReleaseDate { get; set; }
-    public string? Genre { get; set; }
-    
-    [Column(TypeName = "decimal(18, 2)")]
-    public decimal Price { get; set; }
-    public string? Rating {  get; set; }
-}
-```
+[!code-csharp[](~/tutorials/first-mvc-app/start-mvc/samples/MvcMovie10/Models/Movie.cs?name=snippet_AddRating&highlight=19)]
 
 Build the app
 
-### Visual Studio
+### [Visual Studio](#tab/visual-studio)
 
-Press `Ctrl`+`Shift`+`B`
+Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd>
 
-### Visual Studio Code
+### [Visual Studio Code](#tab/visual-studio-code)
 
 From the *View* menu, select *Terminal* and enter the following command:
 
@@ -71,67 +52,21 @@ Update the view templates in order to display, create, and edit the new `Rating`
 
 Edit the `/Views/Movies/Index.cshtml` file and add a `Rating` field:
 
-```cshtml
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Movies![0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Movies![0].ReleaseDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Movies![0].Genre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Movies![0].Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Movies![0].Rating)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Movies!)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReleaseDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Genre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Rating)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-```
+[!code-cshtml[](~/tutorials/first-mvc-app/start-mvc/samples/MvcMovie10/Views/Movies/IndexGenreRating.cshtml?highlight=16-18,38-40&range=24-72)]
 
 Update the `/Views/Movies/Create.cshtml` with a `Rating` field.
 
-# Visual Studio
+# [Visual Studio](#tab/visual-studio)
 
-You can copy/paste the previous "form group" and let intelliSense help you update the fields. IntelliSense works with Tag Helpers.
+You can copy/paste the previous "form group" and let intelliSense help you update the fields. IntelliSense works with [Tag Helpers](../../mvc/views/tag-helpers/intro.md).
 
-# Visual Studio Code
+:::image type="content" source="~/tutorials/first-mvc-app/new-field/media/add-rating-field.png" alt-text="The developer has typed the letter R for the attribute value of asp-for in the second label element of the view. An Intellisense contextual menu has appeared showing the available fields, including Rating, which is highlighted in the list automatically. When the developer clicks the field or presses Enter on the keyboard, the value will be set to Rating.":::
 
-You can copy/paste the previous "form group" and let IntelliSense help you update the fields. IntelliSense works with Tag Helpers. The C# Dev Kit extension provides IntelliSense support in Visual Studio Code.
+# [Visual Studio Code](#tab/visual-studio-code)
+
+You can copy/paste the previous "form group" and let IntelliSense help you update the fields. IntelliSense works with [Tag Helpers](../../mvc/views/tag-helpers/intro.md). The [C# Dev Kit](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit) extension provides IntelliSense support in Visual Studio Code.
+
+:::image type="content" source="~/tutorials/first-mvc-app/new-field/media/vscode-update-form.png" alt-text="Updating the existing form by inserting the new field Rating.":::
 
 ---
 
@@ -139,16 +74,7 @@ Add the `Rating` property to the remaining `Create.cshtml`, `Delete.cshtml`, `De
 
 Update the `SeedData` class so that it provides a value for the new column. A sample change is shown in the following code snippet, but you'll want to make this change for each `new Movie`.
 
-```csharp
-new Movie
-{
-    Title = "When Harry Met Sally",
-    ReleaseDate = DateTime.Parse("1989-1-11"),
-    Genre = "Romantic Comedy",
-    Rating = "R",
-    Price = 7.99M
-},
-```
+[!code-csharp[](~/tutorials/first-mvc-app/start-mvc/samples/MvcMovie10/Models/SeedDataRating.cs?name=snippet_SeedRating&highlight=6)]
 
 The app won't work until the DB is updated to include the new field. If it's run now, the following `SqlException` is thrown:
 
@@ -166,9 +92,11 @@ There are a few approaches to resolving the error:
 
 For this tutorial, Entity Framework Migrations is used.
 
-# Visual Studio
+# [Visual Studio](#tab/visual-studio)
 
 From the **Tools** menu, select **NuGet Package Manager > Package Manager Console**.
+
+:::image type="content" source="~/tutorials/first-mvc-app/new-field/media/open-package-manager-console.png" alt-text="PMC menu.":::
 
 In the Package Manager Console, enter the following command:
 
@@ -190,24 +118,9 @@ Update-Database
 
 The Update-Database command runs the Up method in migrations that have not been applied.
 
-# Visual Studio Code
+# [Visual Studio Code](#tab/visual-studio-code)
 
-> **Note:**
-> For this tutorial you use the Entity Framework Core *migrations* feature where possible. Migrations updates the database schema to match changes in the data model. However, migrations can only do the kinds of changes that the EF Core provider supports, and the SQLite provider's capabilities are limited. For example, adding a column is supported, but removing or changing a column is not supported. If a migration is created to remove or change a column, the `ef migrations add` command succeeds but the `ef database update` command fails. Due to these limitations, this tutorial doesn't use migrations for SQLite schema changes. Instead, when the schema changes, you drop and re-create the database.
->
->The workaround for the SQLite limitations is to manually write migrations code to perform a table rebuild when something in the table changes. A table rebuild involves:
->
->* Creating a new table.
->* Copying data from the old table to the new table.
->* Dropping the old table.
->* Renaming the new table.
->
->For more information, see the following resources:
->
-> * SQLite EF Core Database Provider Limitations
-> * Customize migration code
-> * Data seeding
-> * SQLite ALTER TABLE statement
+[!INCLUDE[](~/includes/RP-mvc-shared/sqlite-warn.md)]
 
 Delete the Migrations folder and the database file, and then run the following .NET CLI commands:
 
@@ -219,11 +132,27 @@ dotnet ef migrations add InitialCreate
 dotnet ef database update
 ```
 
-For more information, see Resetting all migrations.
+For more information, see [Resetting all migrations](/ef/core/managing-schemas/migrations/managing?tabs=dotnet-core-cli#resetting-all-migrations).
 
 ---
+<!-- End of VS tabs -->
 
 Run the app and verify you can create, edit, and display movies with a `Rating` field.
 
-> Previous
-> Next
+> [!div class="step-by-step"]
+> [Previous](~/tutorials/first-mvc-app/search.md)
+> [Next](~/tutorials/first-mvc-app/validation.md)
+
+:::moniker-end
+
+[!INCLUDE[](~/tutorials/first-mvc-app/new-field/includes/new-field9.md)]
+
+[!INCLUDE[](~/tutorials/first-mvc-app/new-field/includes/new-field8.md)]
+
+[!INCLUDE[](~/tutorials/first-mvc-app/new-field/includes/new-field7.md)]
+
+[!INCLUDE[](~/tutorials/first-mvc-app/new-field/includes/new-field6.md)]
+
+[!INCLUDE[](~/tutorials/first-mvc-app/new-field/includes/new-field5.md)]
+
+[!INCLUDE[](~/tutorials/first-mvc-app/new-field/includes/new-field3.md)]

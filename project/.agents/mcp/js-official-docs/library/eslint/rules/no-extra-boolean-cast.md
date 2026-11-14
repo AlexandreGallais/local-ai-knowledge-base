@@ -1,13 +1,7 @@
 ---
-title: "no-extra-boolean-cast"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-extra-boolean-cast.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-extra-boolean-cast
+rule_type: suggestion
 ---
-
-# no-extra-boolean-cast
 
 In contexts such as an `if` statement's test where the result of the expression will already be coerced to a Boolean, casting to a Boolean via double negation (`!!`) or a `Boolean` call is unnecessary. For example, these `if` statements are equivalent:
 
@@ -31,7 +25,7 @@ This rule disallows unnecessary boolean casts.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-extra-boolean-cast: "error"*/
@@ -65,9 +59,11 @@ for (; !!foo; ) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-extra-boolean-cast: "error"*/
@@ -82,19 +78,21 @@ function qux() {
 foo = bar ? !!baz : !!bat;
 ```
 
+:::
+
 ## Options
 
 This rule has an object option:
 
 *   `"enforceForInnerExpressions"` when set to `true`, in addition to checking default contexts, checks whether extra boolean casts are present in expressions whose result is used in a boolean context. See examples below. Default is `false`, meaning that this rule by default does not warn about extra booleans cast inside inner expressions.
 
-**Deprecated:** The object property `enforceForLogicalOperands` is deprecated (eslint#18222). Please use `enforceForInnerExpressions` instead.
+**Deprecated:** The object property `enforceForLogicalOperands` is deprecated ([eslint#18222](https://github.com/eslint/eslint/pull/18222)). Please use `enforceForInnerExpressions` instead.
 
 ### enforceForInnerExpressions
 
 Examples of **incorrect** code for this rule with `"enforceForInnerExpressions"` option set to `true`:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-extra-boolean-cast: ["error", {"enforceForInnerExpressions": true}]*/
@@ -127,9 +125,11 @@ for (let i = 0; console.log(i), Boolean(i < 10); i++) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with `"enforceForInnerExpressions"` option set to `true`:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-extra-boolean-cast: ["error", {"enforceForInnerExpressions": true}]*/
@@ -168,3 +168,5 @@ for (let i = 0; console.log(i), i < 10; i++) {
 // comma operator in non-final position
 Boolean((Boolean(bar), baz, bat));
 ```
+
+:::

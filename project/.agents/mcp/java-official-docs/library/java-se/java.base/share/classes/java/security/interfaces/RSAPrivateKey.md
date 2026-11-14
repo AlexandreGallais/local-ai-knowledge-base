@@ -1,23 +1,16 @@
----
-title: "RSAPrivateKey <example-value> (java.security.interfaces)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/interfaces/RSAPrivateKey.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
-# RSAPrivateKey <example-value> (java.security.interfaces)
+# RSAPrivateKey interface (java.security.interfaces)
 
 ```java
-public interface RSAPrivateKey <example-value> java.security.PrivateKey, RSAKey
+public interface RSAPrivateKey extends java.security.PrivateKey, RSAKey
 ```
 
 The interface to an RSA private key.
 
-**Since:** 1.2
+@author Jan Luehe
+@since 1.2
 
-**See also:** RSAPrivateCrtKey
+
+@see RSAPrivateCrtKey
 
 ## RSAPrivateKey.serialVersionUID
 
@@ -29,7 +22,7 @@ The type fingerprint that is set to indicate
 serialization compatibility with a previous
 version of the type.
 
-**Deprecated:** A `serialVersionUID` field in an interface is
+@deprecated A {@code serialVersionUID} field in an interface is
 ineffectual. Do not use; no replacement.
 
 ## RSAPrivateKey.getPrivateExponent()
@@ -40,7 +33,7 @@ BigInteger getPrivateExponent()
 
 Returns the private exponent.
 
-**Returns:** the private exponent
+@return the private exponent
 
 ## RSAPrivateKey.getParams()
 
@@ -48,10 +41,10 @@ Returns the private exponent.
 default AlgorithmParameterSpec getParams()
 ```
 
-(inherited documentation)
+{@inheritDoc java.security.AsymmetricKey}
 
-**Implementation requirements:** The default implementation returns `null`.
+@implSpec
+The default implementation returns {@code null}.
 
-**Returns:** (inherited documentation)
-
-**Since:** 11
+@return {@inheritDoc java.security.AsymmetricKey}
+@since 11

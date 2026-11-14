@@ -1,12 +1,10 @@
 ---
 title: "Breaking change: NUGET_ENABLE_ENHANCED_HTTP_RETRY environment variable removed"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/nuget-enhanced-http-retry-removed.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where NUGET_ENABLE_ENHANCED_HTTP_RETRY environment variable no longer disables exponential retry."
+ms.date: 06/24/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/46537
 ---
-
 # NUGET_ENABLE_ENHANCED_HTTP_RETRY environment variable removed
 
 The `NUGET_ENABLE_ENHANCED_HTTP_RETRY` environment variable no longer has any effect in .NET 10. Previously, this environment variable could be used to disable exponential retry back-off for failed HTTP calls in NuGet operations.
@@ -25,7 +23,7 @@ The `NUGET_ENABLE_ENHANCED_HTTP_RETRY` environment variable has no effect. NuGet
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

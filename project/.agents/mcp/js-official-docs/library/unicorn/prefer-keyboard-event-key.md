@@ -1,21 +1,15 @@
----
-title: "prefer-keyboard-event-key"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-keyboard-event-key.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-keyboard-event-key
 
 📝 Prefer `KeyboardEvent#key` over deprecated keyboard event properties.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-Enforces the use of `KeyboardEvent#key` over deprecated keyboard event properties like `KeyboardEvent#keyCode`, `.charCode`, and `.which`. The `.key` property is also more semantic and readable.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+Enforces the use of [`KeyboardEvent#key`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key) over deprecated keyboard event properties like [`KeyboardEvent#keyCode`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode), `.charCode`, and `.which`. The `.key` property is also more semantic and readable.
 
 This rule is partly fixable. It can only fix direct property access. A comparison of `.keyCode` or `.which` with a character key, like `65` for `A`, is only suggested, because the character also depends on Shift, CapsLock, and the keyboard layout.
 

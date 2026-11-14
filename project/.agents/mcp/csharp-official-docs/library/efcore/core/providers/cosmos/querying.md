@@ -1,17 +1,15 @@
 ---
-title: "Querying - Azure Cosmos DB Provider - EF Core (part 1 of 2)"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/providers/cosmos/querying.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Querying - Azure Cosmos DB Provider - EF Core
+description: Querying with the Azure Cosmos DB EF Core Provider
+author: SamMonoRT
+ms.date: 08/03/2026
+uid: core/providers/cosmos/querying
 ---
-
 # Querying with the EF Core Azure Cosmos DB Provider
 
 ## Querying basics
 
-EF Core LINQ queries can be executed against Azure Cosmos DB in the same way as for other database providers. For example:
+[EF Core LINQ queries](xref:core/querying/index) can be executed against Azure Cosmos DB in the same way as for other database providers. For example:
 
 ```csharp
 public class Session
@@ -32,7 +30,7 @@ var stringResults = await context.Sessions
     .ToListAsync();
 ```
 
-> **Note:**
+> [!NOTE]
 > The Azure Cosmos DB provider does not translate the same set of LINQ queries as other providers.
 > For example, the EF `Include()` operator isn't supported on Azure Cosmos DB, since cross-document queries aren't supported in the database.
 
@@ -40,7 +38,7 @@ var stringResults = await context.Sessions
 
 The advantage of partitioning is to have your queries execute only against the partition where the relevant data is found, saving costs and ensuring faster result speed. Queries which don't specify partition keys are executed on all the partitions, which can be quite costly.
 
-Starting with EF 9.0, EF automatically detects and extracts partition key <example-value> in your LINQ query's `Where` operators. Let's assume we execute the following query against our `Session` entity type, which is configured with a hierarchical partition key:
+Starting with EF 9.0, EF automatically detects and extracts partition key comparisons in your LINQ query's `Where` operators. Let's assume we execute the following query against our `Session` entity type, which is configured with a hierarchical partition key:
 
 ```csharp
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -77,9 +75,9 @@ In these logs, we notice the following:
 * `SessionId` is also part of the hierarchical partition key, but instead of an equality comparison, it uses a greater-than operator (`>`), and therefore cannot be lifted out. It is part of the `WHERE` clause like any regular property.
 * `Username` is a regular property - not part of the partition key - and therefore remains in the `WHERE` clause as well.
 
-Note that even though some of the partition key <example-value> are not provided, hierarchical partition keys still allow targeting only the subpartitions which correspond to the first two properties. While this isn't as efficient as targeting a single partition (as identified by all three properties), it's still much more efficient than targeting all partitions.
+Note that even though some of the partition key values are not provided, hierarchical partition keys still allow targeting only the subpartitions which correspond to the first two properties. While this isn't as efficient as targeting a single partition (as identified by all three properties), it's still much more efficient than targeting all partitions.
 
-Rather than referencing partition key <example-value> in a `Where` operator, you can explicitly specify them by using the `Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.WithPartitionKey*` operator:
+Rather than referencing partition key properties in a `Where` operator, you can explicitly specify them by using the <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.WithPartitionKey*> operator:
 
 ```c#
 var sessions = await context.Sessions
@@ -88,13 +86,13 @@ var sessions = await context.Sessions
     .ToListAsync();
 ```
 
-This executes in the same way as the above query, and can be preferable if you want to make partition keys more explicit in your queries. Using `Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.WithPartitionKey*` may be necessary in versions of EF prior to 9.0 - keep an eye on the logs to ensure that queries are using partition keys as expected.
+This executes in the same way as the above query, and can be preferable if you want to make partition keys more explicit in your queries. Using <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.WithPartitionKey*> may be necessary in versions of EF prior to 9.0 - keep an eye on the logs to ensure that queries are using partition keys as expected.
 
 ## Point reads
 
-While Azure Cosmos DB allows for powerful querying via SQL, such queries can be quite expensive. Azure Cosmos DB also supports _point reads_, which should be used when retrieving a single document if both the `id` property and the entire partition key are known. Point reads directly identify a specific document in a specific partition, and execute extremely efficiently and with reduced costs compared to retrieving the same document with a query. It's recommended to design your system to leverage point reads as often as possible. To read more, see the Azure Cosmos DB documentation.
+While Azure Cosmos DB allows for powerful querying via SQL, such queries can be quite expensive. Azure Cosmos DB also supports _point reads_, which should be used when retrieving a single document if both the `id` property and the entire partition key are known. Point reads directly identify a specific document in a specific partition, and execute extremely efficiently and with reduced costs compared to retrieving the same document with a query. It's recommended to design your system to leverage point reads as often as possible. To read more, see the [Azure Cosmos DB documentation](/azure/cosmos-db/nosql/how-to-dotnet-read-item).
 
-In the previous section, we saw EF identifying and extracting partition key <example-value> from the `Where` clause for more efficient querying, restricting processing only to the relevant partitions. It's possible to go a step further, and provide the `id` property in the query as well. Let's examine the following query:
+In the previous section, we saw EF identifying and extracting partition key comparisons from the `Where` clause for more efficient querying, restricting processing only to the relevant partitions. It's possible to go a step further, and provide the `id` property in the query as well. Let's examine the following query:
 
 ```c#
 var session = await context.Sessions.SingleAsync(
@@ -112,11 +110,11 @@ Executed ReadItem (46 ms, 1 RU) ActivityId='d7391311-2266-4811-ae2d-535904c42c43
 
 Note the `ReadItem`, which indicates that the query was executed as an efficient point read - no SQL query is involved.
 
-Note that as with partition key <example-value>, significant improvements have been made to this mechanism in EF 9.0; older versions do not reliably detect and use point reads.
+Note that as with partition key extraction, significant improvements have been made to this mechanism in EF 9.0; older versions do not reliably detect and use point reads.
 
 ## Pagination
 
-> **Note:**
+> [!NOTE]
 > This feature was introduced in EF Core 9.0 and is still experimental. Please let us know how it works for you and if you have any feedback.
 
 Pagination refers to retrieving results in pages, rather than all at once; this is typically done for large resultsets, where a user interface is displayed, allowing users to navigate through pages of the results.
@@ -146,7 +144,7 @@ foreach (var session in firstPage.Values)
 }
 ```
 
-Rather than terminating the LINQ query with `ToListAsync` or similar, we use the `Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.ToPageAsync*` method, instructing it to get at most 10 items in every page (note that there may be fewer items in the database). Since this is our first query, we'd like to get results from the beginning, and pass `null` as the continuation token. `Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.ToPageAsync*` returns a `Microsoft.EntityFrameworkCore.CosmosPage`1`, which exposes a continuation token and the values in the page (up to 10 items). Your program will typically send those values to the client, along with the continuation token; this will allow resuming the query later and fetching more results.
+Rather than terminating the LINQ query with `ToListAsync` or similar, we use the <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.ToPageAsync*> method, instructing it to get at most 10 items in every page (note that there may be fewer items in the database). Since this is our first query, we'd like to get results from the beginning, and pass `null` as the continuation token. <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.ToPageAsync*> returns a <xref:Microsoft.EntityFrameworkCore.CosmosPage`1>, which exposes a continuation token and the values in the page (up to 10 items). Your program will typically send those values to the client, along with the continuation token; this will allow resuming the query later and fetching more results.
 
 Let's assume the user now clicks on the "Next" button in their UI, asking for the next 10 items. You can then execute the query as follows:
 
@@ -159,20 +157,20 @@ foreach (var session in nextPage.Values)
 }
 ```
 
-We execute the same query, but this time we pass in the continuation token <example-value> from the first execution; this instructs the query engine to continue the query where it left off, and fetch the next 10 items. Once we fetch the last page and there are no more results, the continuation token will be `null`, and the "<example-value>" button can be grayed out. This method of paginating is extremely efficient and cost-effective compared to using `Skip` and `Take`.
+We execute the same query, but this time we pass in the continuation token received from the first execution; this instructs the query engine to continue the query where it left off, and fetch the next 10 items. Once we fetch the last page and there are no more results, the continuation token will be `null`, and the "Next" button can be grayed out. This method of paginating is extremely efficient and cost-effective compared to using `Skip` and `Take`.
 
-To learn more about pagination in Azure Cosmos DB, see this page.
+To learn more about pagination in Azure Cosmos DB, [see this page](/azure/cosmos-db/nosql/query/pagination).
 
-> **Note:**
+> [!NOTE]
 > Azure Cosmos DB does not support backwards pagination, and does not provide a count of the total pages or items.
 >
-> `Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.ToPageAsync*` is currently annotated as experimental, since it may be replaced with a more generic EF pagination API that isn't Azure Cosmos DB specific. Although using the current API will generate a compilation warning (`EF9102`), doing so should be safe - future changes may require minor tweaks in the API shape.
+> <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.ToPageAsync*> is currently annotated as experimental, since it may be replaced with a more generic EF pagination API that isn't Azure Cosmos DB specific. Although using the current API will generate a compilation warning (`EF9102`), doing so should be safe - future changes may require minor tweaks in the API shape.
 
 ## `FindAsync`
 
-`FindAsync` is a useful API for getting an entity by its primary key, and avoiding a database roundtrip when the entity has already been loaded and is tracked by the context.
+[`FindAsync`](xref:core/change-tracking/entity-entries#find-and-findasync) is a useful API for getting an entity by its primary key, and avoiding a database roundtrip when the entity has already been loaded and is tracked by the context.
 
-Developers familiar with relational databases are used to the primary key of an entity type consisting e.g. of an `Id` property. When using the EF Azure Cosmos DB provider, the primary key <example-value> the partition key <example-value> in addition to the property mapped to the JSON `id` property; this is the case since Azure Cosmos DB allows different partitions to contain documents with the same JSON `id` property, and so only the combined `id` and partition key <example-value> identify a single document in a container:
+Developers familiar with relational databases are used to the primary key of an entity type consisting e.g. of an `Id` property. When using the EF Azure Cosmos DB provider, the primary key contains the partition key properties in addition to the property mapped to the JSON `id` property; this is the case since Azure Cosmos DB allows different partitions to contain documents with the same JSON `id` property, and so only the combined `id` and partition key uniquely identify a single document in a container:
 
 ```csharp
 public class Session
@@ -185,15 +183,15 @@ public class Session
 var mySession = await context.FindAsync(id, pkey);
 ```
 
-If you have a hierarchical partition key, you must pass all partition key <example-value> to `FindAsync`, in the order in which they were configured.
+If you have a hierarchical partition key, you must pass all partition key values to `FindAsync`, in the order in which they were configured.
 
-> **Note:**
+> [!NOTE]
 > Use `FindAsync` only when the entity might already be tracked by your context, and you want to avoid the database roundtrip.
 > Otherwise, simply use `SingleAsync` - there is no performance difference between the two when the entity needs to be loaded from the database.
 
 ## SQL queries
 
-Queries can also be written directly in SQL. For example:
+Queries can also be written [directly in SQL](xref:core/querying/sql-queries). For example:
 
 ```csharp
 var rating = 3;
@@ -211,17 +209,17 @@ FROM (
 ) s
 ```
 
-Note that `Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSql*` was introduced in EF 9.0. In previous versions, `Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSqlRaw*` can be used instead, although note that that method is vulnerable to SQL injection attacks.
+Note that <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSql*> was introduced in EF 9.0. In previous versions, <xref:Microsoft.EntityFrameworkCore.CosmosQueryableExtensions.FromSqlRaw*> can be used instead, although note that that method is vulnerable to SQL injection attacks.
 
-For more information on SQL querying, see the relational documentation on SQL queries; most of that content is relevant for the Azure Cosmos DB provider as well.
+For more information on SQL querying, see the [relational documentation on SQL queries](xref:core/querying/sql-queries); most of that content is relevant for the Azure Cosmos DB provider as well.
 
 ## Undefined values in projections
 
 In Azure Cosmos DB, a document property can be `undefined` — this happens when the property is simply not present in the JSON document. This can occur when navigating through an optional relationship that is absent for some documents, or when a property was added to the model after existing documents were written.
 
-Starting with EF Core 11, when any part of an anonymous type or DTO projection evaluates to `undefined`, an `InvalidOperationException` is thrown with the message "A part of the projection was undefined, use the coalesce operator to handle possible undefined values." See the breaking changes documentation for details on upgrading from EF Core 10 and earlier.
+Starting with EF Core 11, when any part of an anonymous type or DTO projection evaluates to `undefined`, an `InvalidOperationException` is thrown with the message "A part of the projection was undefined, use the coalesce operator to handle possible undefined values." See the [breaking changes documentation](xref:core/what-is-new/ef-core-11.0/breaking-changes#cosmos-undefined-projection) for details on upgrading from EF Core 10 and earlier.
 
-To handle undefined values in projections, use `Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.IsDefined*` to filter out documents where a value is missing:
+To handle undefined values in projections, use <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.IsDefined*> to filter out documents where a value is missing:
 
 ```csharp
 var results = await context.Entities
@@ -230,7 +228,7 @@ var results = await context.Entities
     .ToListAsync();
 ```
 
-Alternatively, use `Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.CoalesceUndefined*` to substitute a default value for any property that could be `undefined`:
+Alternatively, use <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.CoalesceUndefined*> to substitute a default value for any property that could be `undefined`:
 
 ```csharp
 var results = await context.Entities
@@ -259,3 +257,112 @@ var results = await context.Entities
     .Select(x => new { x.Associate!.NestedAssociate!.Id })
     .ToListAsync();
 ```
+
+## Function mappings
+
+This section shows which .NET methods and members are translated into which SQL functions when querying with the Azure Cosmos DB provider.
+
+### Date and time functions
+
+.NET                                       | SQL                                                                               | Added in
+------------------------------------------ | --------------------------------------------------------------------------------- | --------
+DateTime.UtcNow                            | [GetCurrentDateTime()](/azure/cosmos-db/nosql/query/getcurrentdatetime)
+DateTimeOffset.UtcNow                      | [GetCurrentDateTime()](/azure/cosmos-db/nosql/query/getcurrentdatetime)
+dateTime.Year<sup>1</sup>                  | [DateTimePart("yyyy", dateTime)](/azure/cosmos-db/nosql/query/datetimepart)       | EF 9
+dateTimeOffset.Year<sup>1</sup>            | [DateTimePart("yyyy", dateTimeOffset)](/azure/cosmos-db/nosql/query/datetimepart) | EF 9
+dateTime.AddYears(years)<sup>1</sup>       | [DateTimeAdd("yyyy", dateTime)](/azure/cosmos-db/nosql/query/datetimeadd)         | EF 9
+dateTimeOffset.AddYears(years)<sup>1</sup> | [DateTimeAdd("yyyy", dateTimeOffset)](/azure/cosmos-db/nosql/query/datetimeadd)   | EF 9
+
+<sup>1</sup> The other component members are translated as well (Month, Day...).
+
+### Numeric functions
+
+.NET                       | SQL
+-------------------------- | ---------------------------------------------------
+double.DegreesToRadians(x) | [RADIANS(@x)](/azure/cosmos-db/nosql/query/radians)
+double.RadiansToDegrees(x) | [DEGREES(@x)](/azure/cosmos-db/nosql/query/degrees)
+EF.Functions.Random()      | [RAND()](/azure/cosmos-db/nosql/query/rand)
+Math.Abs(value)            | [ABS(@value)](/azure/cosmos-db/nosql/query/abs)
+Math.Acos(d)               | [ACOS(@d)](/azure/cosmos-db/nosql/query/acos)
+Math.Asin(d)               | [ASIN(@d)](/azure/cosmos-db/nosql/query/asin)
+Math.Atan(d)               | [ATAN(@d)](/azure/cosmos-db/nosql/query/atan)
+Math.Atan2(y, x)           | [ATN2(@y, @x)](/azure/cosmos-db/nosql/query/atn2)
+Math.Ceiling(d)            | [CEILING(@d)](/azure/cosmos-db/nosql/query/ceiling)
+Math.Cos(d)                | [COS(@d)](/azure/cosmos-db/nosql/query/cos)
+Math.Exp(d)                | [EXP(@d)](/azure/cosmos-db/nosql/query/exp)
+Math.Floor(d)              | [FLOOR(@d)](/azure/cosmos-db/nosql/query/floor)
+Math.Log(a, newBase)       | [LOG(@a, @newBase)](/azure/cosmos-db/nosql/query/log)
+Math.Log(d)                | [LOG(@d)](/azure/cosmos-db/nosql/query/log)
+Math.Log10(d)              | [LOG10(@d)](/azure/cosmos-db/nosql/query/log10)
+Math.Pow(x, y)             | [POWER(@x, @y)](/azure/cosmos-db/nosql/query/power)
+Math.Round(d)              | [ROUND(@d)](/azure/cosmos-db/nosql/query/round)
+Math.Sign(value)           | [SIGN(@value)](/azure/cosmos-db/nosql/query/sign)
+Math.Sin(a)                | [SIN(@a)](/azure/cosmos-db/nosql/query/sin)
+Math.Sqrt(d)               | [SQRT(@d)](/azure/cosmos-db/nosql/query/sqrt)
+Math.Tan(a)                | [TAN(@a)](/azure/cosmos-db/nosql/query/atan)
+Math.Truncate(d)           | [TRUNC(@d)](/azure/cosmos-db/nosql/query/trunc)
+
+> [!TIP]
+> In addition to the methods listed here, corresponding [generic math](/dotnet/standard/generics/math) implementations
+> and [MathF](/dotnet/api/system.mathf) methods are also translated. For example, `Math.Sin`, `MathF.Sin`, `double.Sin`,
+> and `float.Sin` all map to the `SIN` function in SQL.
+
+### String functions
+
+.NET                                                              | SQL                                                                                | Added in
+----------------------------------------------------------------- | ---------------------------------------------------------------------------------- | --------
+Regex.IsMatch(input, pattern)                                     | [RegexMatch(@pattern, @input)](/azure/cosmos-db/nosql/query/regexmatch)
+Regex.IsMatch(input, pattern, options)                            | [RegexMatch(@input, @pattern, @options)](/azure/cosmos-db/nosql/query/regexmatch)
+string.Concat(str0, str1)                                         | @str0 + @str1
+string.Equals(a, b, StringComparison.Ordinal)                     | [STRINGEQUALS(@a, @b)](/azure/cosmos-db/nosql/query/stringequals)
+string.Equals(a, b, StringComparison.OrdinalIgnoreCase)           | [STRINGEQUALS(@a, @b, true)](/azure/cosmos-db/nosql/query/stringequals)
+stringValue.Contains(value)                                       | [CONTAINS(@stringValue, @value)](/azure/cosmos-db/nosql/query/contains)
+stringValue.Contains(value, StringComparison.Ordinal)             | [CONTAINS(@stringValue, @value, false)](/azure/cosmos-db/nosql/query/contains)     | EF 9
+stringValue.Contains(value, StringComparison.OrdinalIgnoreCase)   | [CONTAINS(@stringValue, @value, true)](/azure/cosmos-db/nosql/query/contains)      | EF 9
+stringValue.EndsWith(value)                                       | [ENDSWITH(@stringValue, @value)](/azure/cosmos-db/nosql/query/endswith)
+stringValue.EndsWith(value, StringComparison.Ordinal)             | [ENDSWITH(@stringValue, @value, false)](/azure/cosmos-db/nosql/query/endswith)     | EF 9
+stringValue.EndsWith(value, StringComparison.OrdinalIgnoreCase)   | [ENDSWITH(@stringValue, @value, true)](/azure/cosmos-db/nosql/query/endswith)      | EF 9
+stringValue.Equals(value, StringComparison.Ordinal)               | [STRINGEQUALS(@stringValue, @value)](/azure/cosmos-db/nosql/query/stringequals)
+stringValue.Equals(value, StringComparison.OrdinalIgnoreCase)     | [STRINGEQUALS(@stringValue, @value, true)](/azure/cosmos-db/nosql/query/stringequals)
+stringValue.FirstOrDefault()                                      | [LEFT(@stringValue, 1)](/azure/cosmos-db/nosql/query/left)
+stringValue.IndexOf(value)                                        | [INDEX_OF(@stringValue, @value)](/azure/cosmos-db/nosql/query/index-of)
+stringValue.IndexOf(value, startIndex)                            | [INDEX_OF(@stringValue, @value, @startIndex)](/azure/cosmos-db/nosql/query/index-of)
+stringValue.LastOrDefault()                                       | [RIGHT(@stringValue, 1)](/azure/cosmos-db/nosql/query/right)
+stringValue.Length                                                | [LENGTH(@stringValue)](/azure/cosmos-db/nosql/query/length)
+stringValue.Replace(oldValue, newValue)                           | [REPLACE(@stringValue, @oldValue, @newValue)](/azure/cosmos-db/nosql/query/replace)
+stringValue.StartsWith(value)                                     | [STARTSWITH(@stringValue, @value)](/azure/cosmos-db/nosql/query/startswith)
+stringValue.StartsWith(value, StringComparison.Ordinal)           | [STARTSWITH(@stringValue, @value, false)](/azure/cosmos-db/nosql/query/startswith) | EF 9
+stringValue.StartsWith(value, StringComparison.OrdinalIgnoreCase) | [STARTSWITH(@stringValue, @value, true)](/azure/cosmos-db/nosql/query/startswith)  | EF 9
+stringValue.Substring(startIndex)                                 | [SUBSTRING(@stringValue, @startIndex, LENGTH(@stringValue))](/azure/cosmos-db/nosql/query/substring)
+stringValue.Substring(startIndex, length)                         | [SUBSTRING(@stringValue, @startIndex, @length)](/azure/cosmos-db/nosql/query/substring)
+stringValue.ToLower()                                             | [LOWER(@stringValue)](/azure/cosmos-db/nosql/query/lower)
+stringValue.ToUpper()                                             | [UPPER(@stringValue)](/azure/cosmos-db/nosql/query/upper)
+stringValue.Trim()                                                | [TRIM(@stringValue)](/azure/cosmos-db/nosql/query/trim)
+stringValue.TrimEnd()                                             | [RTRIM(@stringValue)](/azure/cosmos-db/nosql/query/rtrim)
+stringValue.TrimStart()                                           | [LTRIM(@stringValue)](/azure/cosmos-db/nosql/query/ltrim)
+
+### Vector and full-text search
+
+.NET                                                                        | SQL                                                                                                           | Added in
+--------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -----
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.VectorDistance*>(vector1, vector2).                              | [VectorDistance(vector1, vector2)](/azure/cosmos-db/nosql/query/vectordistance)                               | EF 9
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.VectorDistance*>(vector1, vector2, bruteForce)                   | [VectorDistance(vector1, vector2, bruteForce)](/azure/cosmos-db/nosql/query/vectordistance)                   | EF 9
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.VectorDistance*>(vector1, vector2, bruteForce, distanceFunction) | [VectorDistance(vector1, vector2, bruteForce, distanceFunction)](/azure/cosmos-db/nosql/query/vectordistance) | EF 9
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.FullTextContains*>(property, keyword)                            | [FullTextContains(property, keyword)](/azure/cosmos-db/nosql/query/fulltextcontains)                          | EF 10
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.FullTextContainsAll*>(property, keyword1, keyword2)              | [FullTextContainsAll(property, keyword1, keyword2)](/azure/cosmos-db/nosql/query/fulltextcontainsall)         | EF 10
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.FullTextContainsAny*>(property, keyword1, keyword2)              | [FullTextContainsAny(property, keyword1, keyword2)](/azure/cosmos-db/nosql/query/fulltextcontainsany)         | EF 10
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.FullTextScore*>(property, keyword1, keyword2)                    | [FullTextScore(property, keyword1, keyword2)](/azure/cosmos-db/nosql/query/fulltextscore)                     | EF 10
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.Rrf*>(search1, search2)                                          | [RRF(property, search1, search2)](/azure/cosmos-db/nosql/query/rrf).                                          | EF 10
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.Rrf*>(new[] { search1, search2 }, weights)                       | [RRF(property, search1, search2, weights)](/azure/cosmos-db/nosql/query/rrf)                                  | EF 10
+
+For more information on vector search, see [the documentation](xref:core/providers/cosmos/vector-search). For more information on full-text search, see [the documentation](xref:core/providers/cosmos/full-text-search).
+
+### Miscellaneous functions
+
+.NET                                                                                    | SQL                                                                                                           | Added in
+--------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -----
+collection.Contains(item)                                                               | @item IN @collection
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.CoalesceUndefined*>(x, y)<sup>1</sup>                                        | [x ?? y](/azure/cosmos-db/nosql/query/ternary-coalesce-operators#coalesce-operator)                           | EF 9
+<xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.IsDefined*>(x)                                                               | [IS_DEFINED(x)](/azure/cosmos-db/nosql/query/is-defined)                                                      | EF 9
+
+<sup>1</sup> Note that <xref:Microsoft.EntityFrameworkCore.CosmosDbFunctionsExtensions.CoalesceUndefined*> coalesces `undefined`, not `null`. To coalesce `null`, use the regular C# `??` operator.

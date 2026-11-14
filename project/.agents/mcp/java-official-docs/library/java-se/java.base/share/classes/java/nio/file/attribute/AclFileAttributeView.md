@@ -1,12 +1,3 @@
----
-title: "AclFileAttributeView interface (java.nio.file.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/file/attribute/AclFileAttributeView.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AclFileAttributeView interface (java.nio.file.attribute)
 
 ```java
@@ -16,75 +7,115 @@ public interface AclFileAttributeView extends FileOwnerAttributeView
 A file attribute view that supports reading or updating a file's Access
 Control Lists (ACL) or file owner attributes.
 
- ACLs are used to specify access rights to file system objects. An ACL is
-an ordered list of access-control-entries, each specifying a
-`UserPrincipal` and the level of access for that user principal. This
-file attribute view defines the getAcl, and setAcl methods to read and write ACLs based on the ACL
-model specified in *RFC 3530:
-Network File System (NFS) version 4 Protocol*. This file attribute view
+<p> ACLs are used to specify access rights to file system objects. An ACL is
+an ordered list of {@link AclEntry access-control-entries}, each specifying a
+{@link UserPrincipal} and the level of access for that user principal. This
+file attribute view defines the {@link #getAcl() getAcl}, and {@link
+#setAcl(List) setAcl} methods to read and write ACLs based on the ACL
+model specified in <a href="http://www.ietf.org/rfc/rfc3530.txt"><i>RFC&nbsp;3530:
+Network File System (NFS) version 4 Protocol</i></a>. This file attribute view
 is intended for file system implementations that support the NFSv4 ACL model
-or have a *well-defined* mapping between the NFSv4 ACL model and the ACL
+or have a <em>well-defined</em> mapping between the NFSv4 ACL model and the ACL
 model used by the file system. The details of such mapping are implementation
 dependent and are therefore unspecified.
 
- This class also extends `FileOwnerAttributeView` so as to define
+<p> This class also extends {@code FileOwnerAttributeView} so as to define
 methods to get and set the file owner.
 
- When a file system provides access to a set of file-systems that are not homogeneous then only some of the file systems may
-support ACLs. The supportsFileAttributeView method can be used to test if a file system
+<p> When a file system provides access to a set of {@link FileStore
+file-systems} that are not homogeneous then only some of the file systems may
+support ACLs. The {@link FileStore#supportsFileAttributeView
+supportsFileAttributeView} method can be used to test if a file system
 supports ACLs.
 
-#### Interoperability
+<h2>Interoperability</h2>
 
-RFC 3530 allows for special user identities to be used on platforms that
+RFC&nbsp;3530 allows for special user identities to be used on platforms that
 support the POSIX defined access permissions. The special user identities
-are "`OWNER@`", "`GROUP@`", and "`EVERYONE@`". When both
-the `AclFileAttributeView` and the `PosixFileAttributeView`
-are supported then these special user identities may be included in ACL entries that are read or written. The file system's `UserPrincipalLookupService` may be used to obtain a `UserPrincipal`
-to represent these special identities by invoking the lookupPrincipalByName
+are "{@code OWNER@}", "{@code GROUP@}", and "{@code EVERYONE@}". When both
+the {@code AclFileAttributeView} and the {@link PosixFileAttributeView}
+are supported then these special user identities may be included in ACL {@link
+AclEntry entries} that are read or written. The file system's {@link
+UserPrincipalLookupService} may be used to obtain a {@link UserPrincipal}
+to represent these special identities by invoking the {@link
+UserPrincipalLookupService#lookupPrincipalByName lookupPrincipalByName}
 method.
 
- **Usage Example:**
+<p> <b>Usage Example:</b>
 Suppose we wish to add an entry to an existing ACL to grant "joe" access:
+{@snippet lang=java :
+    // lookup "joe"
+    UserPrincipal joe = file.getFileSystem().getUserPrincipalLookupService()
+        .lookupPrincipalByName("joe");
 
-####  Dynamic Access
+    // get view
+    AclFileAttributeView view = Files.getFileAttributeView(file, AclFileAttributeView.class);
 
- Where dynamic access to file attributes is required, the attributes
+    // create ACE to give "joe" read access
+    AclEntry entry = AclEntry.newBuilder()
+        .setType(AclEntryType.ALLOW)
+        .setPrincipal(joe)
+        .setPermissions(AclEntryPermission.READ_DATA, AclEntryPermission.READ_ATTRIBUTES)
+        .build();
+
+    // read ACL, insert ACE, re-write ACL
+    List<AclEntry> acl = view.getAcl();
+    acl.add(0, entry);   // insert before any DENY entries
+    view.setAcl(acl);
+}
+
+<h2> Dynamic Access </h2>
+<p> Where dynamic access to file attributes is required, the attributes
 supported by this attribute view are as follows:
+<blockquote>
+<table class="striped">
+<caption style="display:none">Supported attributes</caption>
+<thead>
+  <tr>
+    <th scope="col"> Name </th>
+    <th scope="col"> Type </th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <th scope="row"> "acl" </th>
+    <td> {@link List}&lt;{@link AclEntry}&gt; </td>
+  </tr>
+  <tr>
+    <th scope="row"> "owner" </th>
+    <td> {@link UserPrincipal} </td>
+  </tr>
+</tbody>
+</table>
+</blockquote>
 
-Supported attributes
+<p> The {@link Files#getAttribute getAttribute} method may be used to read
+the ACL or owner attributes as if by invoking the {@link #getAcl getAcl} or
+{@link #getOwner getOwner} methods.
 
-     Name
-     Type
+<p> The {@link Files#setAttribute setAttribute} method may be used to
+update the ACL or owner attributes as if by invoking the {@link #setAcl setAcl}
+or {@link #setOwner setOwner} methods.
 
-     "acl"
-     `List`<`AclEntry`>
+<h2> Setting the ACL when creating a file </h2>
 
-     "owner"
-     `UserPrincipal`
-
- The getAttribute method may be used to read
-the ACL or owner attributes as if by invoking the getAcl or
-getOwner methods.
-
- The setAttribute method may be used to
-update the ACL or owner attributes as if by invoking the setAcl
-or setOwner methods.
-
-####  Setting the ACL when creating a file
-
- Implementations supporting this attribute view may also support setting
+<p> Implementations supporting this attribute view may also support setting
 the initial ACL when creating a file or directory. The initial ACL
-may be provided to methods such as createFile or createDirectory as an `FileAttribute` with name `"acl:acl"` and a value that is the list of `AclEntry` objects.
+may be provided to methods such as {@link Files#createFile createFile} or {@link
+Files#createDirectory createDirectory} as an {@link FileAttribute} with {@link
+FileAttribute#name name} {@code "acl:acl"} and a {@link FileAttribute#value
+value} that is the list of {@code AclEntry} objects.
 
- Where an implementation supports an ACL model that differs from the NFSv4
+<p> Where an implementation supports an ACL model that differs from the NFSv4
 defined ACL model then setting the initial ACL when creating the file must
 translate the ACL to the model supported by the file system. Methods that
-create a file should reject (by throwing IOException)
+create a file should reject (by throwing {@link IOException IOException})
 any attempt to create a file that would be less secure as a result of the
 translation.
 
-**Since:** 1.7
+@spec https://www.rfc-editor.org/info/rfc3530
+     RFC 3530: Network File System (NFS) version 4 Protocol
+@since 1.7
 
 ## AclFileAttributeView.name()
 
@@ -93,7 +124,7 @@ String name()
 ```
 
 Returns the name of the attribute view. Attribute views of this type
-have the name `"acl"`.
+have the name {@code "acl"}.
 
 ## AclFileAttributeView.getAcl()
 
@@ -103,20 +134,19 @@ List<AclEntry> getAcl() throws IOException
 
 Reads the access control list.
 
- When the file system uses an ACL model that differs from the NFSv4
+<p> When the file system uses an ACL model that differs from the NFSv4
 defined ACL model, then this method returns an ACL that is the translation
 of the ACL to the NFSv4 ACL model.
 
- The returned list is modifiable so as to facilitate changes to the
-existing ACL. The setAcl method is used to update
+<p> The returned list is modifiable so as to facilitate changes to the
+existing ACL. The {@link #setAcl setAcl} method is used to update
 the file's ACL attribute.
 
-**Returns:** an ordered list of entries representing the
+@return  an ordered list of {@link AclEntry entries} representing the
          ACL
 
-Throws:
-
-- `IOException`: if an I/O error occurs
+@throws  IOException
+         if an I/O error occurs
 
 ## AclFileAttributeView.setAcl(List<AclEntry>)
 
@@ -126,28 +156,28 @@ void setAcl(List<AclEntry> acl) throws IOException
 
 Updates (replace) the access control list.
 
- Where the file system supports Access Control Lists, and it uses an
+<p> Where the file system supports Access Control Lists, and it uses an
 ACL model that differs from the NFSv4 defined ACL model, then this method
 must translate the ACL to the model supported by the file system. This
-method should reject (by throwing IOException) any
+method should reject (by throwing {@link IOException IOException}) any
 attempt to write an ACL that would appear to make the file more secure
 than would be the case if the ACL were updated. Where an implementation
-does not support a mapping of `AclEntryType.AUDIT` or `AclEntryType.ALARM` entries, then this method ignores these entries when
+does not support a mapping of {@link AclEntryType#AUDIT} or {@link
+AclEntryType#ALARM} entries, then this method ignores these entries when
 writing the ACL.
 
- If an ACL entry contains a user-principal
+<p> If an ACL entry contains a {@link AclEntry#principal user-principal}
 that is not associated with the same provider as this attribute view then
-`ProviderMismatchException` is thrown. Additional validation, if
+{@link ProviderMismatchException} is thrown. Additional validation, if
 any, is implementation dependent.
 
- If the file system supports other security related file attributes
-(such as a file access-permissions for example), the updating the access control list
+<p> If the file system supports other security related file attributes
+(such as a file {@link PosixFileAttributes#permissions
+access-permissions} for example), the updating the access control list
 may also cause these security related attributes to be updated.
 
-Parameters:
+@param   acl
+         the new access control list
 
-- `acl`: the new access control list
-
-Throws:
-
-- `IOException`: if an I/O error occurs or the ACL is invalid
+@throws  IOException
+         if an I/O error occurs or the ACL is invalid

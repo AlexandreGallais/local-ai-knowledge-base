@@ -1,15 +1,6 @@
----
-title: "RxJS Core Semantics"
-tool: "rxjs"
-version: "7.8"
-source: "https://github.com/ReactiveX/rxjs/blob/e5351d02e225e275ac0e497c7b66eaa5f0c88791/docs_app/content/guide/core-semantics.md"
-commit: "e5351d02e225e275ac0e497c7b66eaa5f0c88791"
-license: "Apache-2.0"
----
-
 # RxJS Core Semantics
 
-Starting in version 8, all RxJS operators that are provided in the core library MUST meet the following semantics. In the current version, version 7, all operators SHOULD meet the following semantics (as guidelines). If they do not, we need to track the issue on GitHub.
+Starting in version 8, all RxJS operators that are provided in the core library MUST meet the following semantics. In the current version, version 7, all operators SHOULD meet the following semantics (as guidelines). If they do not, we need to track the issue on [GitHub](https://github.com/ReactiveX/rxjs/issues).
 
 ## Purpose
 
@@ -21,8 +12,8 @@ The purpose of these semantics is provide predictable behavior for the users of 
 
 ## Operators
 
-- MUST be a function that returns an operator function. That is `(source: Observable<In>) => Observable<Out>`.
-- The returned operator function MUST be referentially transparent. That is to say, that if you capture the return value of the operator (e.g. `const double => map(x => x + x)`), you can use that value to operate on any many observables as you like without changing any underlying state in the operator reference. (e.g. `a$.pipe(double)` and `b$.pipe(double)`).
+- MUST be a function that returns an [operator function](https://rxjs.dev/api/index/interface/OperatorFunction). That is `(source: Observable<In>) => Observable<Out>`.
+- The returned operator function MUST be [referentially transparent](https://en.wikipedia.org/wiki/Referential_transparency). That is to say, that if you capture the return value of the operator (e.g. `const double => map(x => x + x)`), you can use that value to operate on any many observables as you like without changing any underlying state in the operator reference. (e.g. `a$.pipe(double)` and `b$.pipe(double)`).
 - The observable returned by the operator function MUST subscribe to the source.
 - If the operation performed by the operator can tell it not change anything about the output of the source, it MUST return the reference to the source. For example `take(Infinity)` or `skip(0)`.
 - Operators that accept a "notifier", that is another observable source that is used to trigger some behavior, must accept any type that can be converted to an `Observable` with `from`. For example `takeUntil`.

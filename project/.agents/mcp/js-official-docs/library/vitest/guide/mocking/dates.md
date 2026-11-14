@@ -1,15 +1,6 @@
----
-title: "Mocking Dates"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/mocking/dates.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # Mocking Dates
 
-Sometimes you need to be in control of the date to ensure consistency when testing. Vitest uses `@sinonjs/fake-timers` package for manipulating timers, as well as system date. You can find more about the specific API in detail here.
+Sometimes you need to be in control of the date to ensure consistency when testing. Vitest uses [`@sinonjs/fake-timers`](https://github.com/sinonjs/fake-timers) package for manipulating timers, as well as system date. You can find more about the specific API in detail [here](/api/vi#vi-setsystemtime).
 
 ## Example
 

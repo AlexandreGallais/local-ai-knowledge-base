@@ -1,17 +1,8 @@
----
-title: "Slice types"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/types/slice.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[type.slice]
 # Slice types
 
 r[type.slice.syntax]
-```grammar
+```grammar,types
 SliceType -> `[` Type `]`
 ```
 
@@ -37,3 +28,5 @@ let slice: &[i32] = &boxed_array[..];
 
 r[type.slice.safe]
 All elements of slices are always initialized, and access to a slice is always bounds-checked in safe methods and operators.
+
+[dynamically sized type]: ../dynamically-sized-types.md

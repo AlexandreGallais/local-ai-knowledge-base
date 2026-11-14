@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: WFDEV002 obsoletion is now an error"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/windows-forms/8.0/domainupdownaccessibleobject.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 8 for Windows Forms where the compile-time diagnostic WFDEV002 has been promoted from a warning to an error.
+ms.date: 01/30/2023
 ---
-
 # WFDEV002 obsoletion is now an error
 
-The WFDEV002 obsoletion has been promoted from a warning to an error in .NET 8. Any reference to `System.Windows.Forms.DomainUpDown.DomainUpDownAccessibleObject` will result in a compilation error that can't be suppressed. In addition, `System.Windows.Forms.DomainUpDown.CreateAccessibilityInstance` now returns an object of the internal type `UpDownBase.UpDownBaseAccessibleObject`.
+The WFDEV002 obsoletion has been promoted from a warning to an error in .NET 8. Any reference to <xref:System.Windows.Forms.DomainUpDown.DomainUpDownAccessibleObject> will result in a compilation error that can't be suppressed. In addition, <xref:System.Windows.Forms.DomainUpDown.CreateAccessibilityInstance?displayProperty=nameWithType> now returns an object of the internal type `UpDownBase.UpDownBaseAccessibleObject`.
 
 ## Version introduced
 
@@ -17,29 +13,29 @@ The WFDEV002 obsoletion has been promoted from a warning to an error in .NET 8. 
 
 ## Previous behavior
 
-Previously, if you referenced the `System.Windows.Forms.DomainUpDown.DomainUpDownAccessibleObject` type, you got compile-time warning WFDEV002.
+Previously, if you referenced the <xref:System.Windows.Forms.DomainUpDown.DomainUpDownAccessibleObject> type, you got compile-time warning [WFDEV002](/dotnet/desktop/winforms/wfdev-diagnostics/wfdev002).
 
-Also, `System.Windows.Forms.DomainUpDown.CreateAccessibilityInstance` returned an object of type `System.Windows.Forms.DomainUpDown.DomainUpDownAccessibleObject`.
+Also, <xref:System.Windows.Forms.DomainUpDown.CreateAccessibilityInstance?displayProperty=nameWithType> returned an object of type <xref:System.Windows.Forms.DomainUpDown.DomainUpDownAccessibleObject>.
 
 ## New behavior
 
-If you reference the `System.Windows.Forms.DomainUpDown.DomainUpDownAccessibleObject` type, you'll get a compile-time error with the same diagnostic ID (WFDEV002).
+If you reference the <xref:System.Windows.Forms.DomainUpDown.DomainUpDownAccessibleObject> type, you'll get a compile-time error with the same diagnostic ID ([WFDEV002](/dotnet/desktop/winforms/wfdev-diagnostics/wfdev002)).
 
-In addition, since the type has been removed, `System.Windows.Forms.DomainUpDown.CreateAccessibilityInstance` now returns an object of type `UpDownBase.UpDownBaseAccessibleObject` (which is an internal type).
+In addition, since the type has been removed, <xref:System.Windows.Forms.DomainUpDown.CreateAccessibilityInstance?displayProperty=nameWithType> now returns an object of type `UpDownBase.UpDownBaseAccessibleObject` (which is an internal type).
 
 ## Change category
 
-This change can affect *source compatibility*.
+This change can affect [*source compatibility*](../../categories.md#source-compatibility).
 
 ## Reason for change
 
-The `System.Windows.Forms.DomainUpDown.DomainUpDownAccessibleObject` class has always been documented as "internal use only". All functionality of the class was moved to the base class.
+The <xref:System.Windows.Forms.DomainUpDown.DomainUpDownAccessibleObject> class has always been documented as "internal use only". All functionality of the class was moved to the base class.
 
 ## Recommended action
 
-Update your code to use `System.Windows.Forms.Control.ControlAccessibleObject` or `System.Windows.Forms.AccessibleObject` instead of `System.Windows.Forms.DomainUpDown.DomainUpDownAccessibleObject`.
+Update your code to use <xref:System.Windows.Forms.Control.ControlAccessibleObject?displayProperty=nameWithType> or <xref:System.Windows.Forms.AccessibleObject> instead of <xref:System.Windows.Forms.DomainUpDown.DomainUpDownAccessibleObject>.
 
 ## Affected APIs
 
-- `System.Windows.Forms.DomainUpDown.DomainUpDownAccessibleObject`
-- `System.Windows.Forms.DomainUpDown.CreateAccessibilityInstance`
+- <xref:System.Windows.Forms.DomainUpDown.DomainUpDownAccessibleObject?displayProperty=fullName>
+- <xref:System.Windows.Forms.DomainUpDown.CreateAccessibilityInstance?displayProperty=fullName>

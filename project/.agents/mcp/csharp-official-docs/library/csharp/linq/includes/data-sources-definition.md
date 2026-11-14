@@ -1,53 +1,13 @@
 ---
-title: "data-sources-definition"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/linq/includes/data-sources-definition.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+author: BillWagner
+ms.author: wiwagn
+ms.topic: include
+ms.date: 10/04/2024
 ---
 
-# data-sources-definition
+> [!NOTE]
+> The following examples in this article use the common data sources for this area.  
+> Each `Student` has a grade level, a primary department, and a series of scores. A `Teacher` also has a `City` property that identifies the campus where the teacher holds classes. A `Department` has a name, and a reference to a `Teacher` who serves as the department head.  
+> You can find the example data set in the [source repo](https://github.com/dotnet/docs/blob/main/docs/csharp/linq/standard-query-operators/snippets/standard-query-operators/DataSources.cs#L41).
 
-> **Note:**
-> The following examples in this article use the common data sources for this area.
-> Each `Student` has a grade level, a primary department, and a series of scores. A `Teacher` also has a `City` property that identifies the campus where the teacher holds classes. A `Department` has a name, and a reference to a `Teacher` who serves as the department head.
-> You can find the example data set in the source repo.
-
-```csharp
-public enum GradeLevel
-{
-    FirstYear = 1,
-    SecondYear,
-    ThirdYear,
-    FourthYear
-};
-
-public class Student
-{
-    public required string FirstName { get; init; }
-    public required string LastName { get; init; }
-    public required int ID { get; init; }
-
-    public required GradeLevel Year { get; init; }
-    public required List<int> Scores { get; init; }
-
-    public required int DepartmentID { get; init; }
-}
-
-public class Teacher
-{
-    public required string First { get; init; }
-    public required string Last { get; init; }
-    public required int ID { get; init; }
-    public required string City { get; init; }
-}
-
-public class Department
-{
-    public required string Name { get; init; }
-    public int ID { get; init; }
-
-    public required int TeacherID { get; init; }
-}
-```
+:::code language="csharp" source="../standard-query-operators/snippets/standard-query-operators/DataSources.cs" id="QueryDataSource":::

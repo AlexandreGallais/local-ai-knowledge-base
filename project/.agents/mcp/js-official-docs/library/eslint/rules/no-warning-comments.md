@@ -1,13 +1,8 @@
 ---
-title: "no-warning-comments"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-warning-comments.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-warning-comments
+rule_type: suggestion
 ---
 
-# no-warning-comments
 
 Developers often add comments to code which is not complete or needs review. Most likely you want to fix or review the code, and then remove the comment, before you consider the code to be production ready.
 
@@ -30,7 +25,7 @@ This rule has an options object literal:
 
 Example of **incorrect** code for the default `{ "terms": ["todo", "fixme", "xxx"], "location": "start" }` options:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-warning-comments: "error"*/
@@ -47,9 +42,11 @@ function callback(err, results) {
 }
 ```
 
+:::
+
 Example of **correct** code for the default `{ "terms": ["todo", "fixme", "xxx"], "location": "start" }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-warning-comments: "error"*/
@@ -64,11 +61,13 @@ function callback(err, results) {
 }
 ```
 
+:::
+
 ### terms and location
 
 Examples of **incorrect** code for the `{ "terms": ["todo", "fixme", "any other term"], "location": "anywhere" }` options:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-warning-comments: ["error", { "terms": ["todo", "fixme", "any other term"], "location": "anywhere" }]*/
@@ -83,9 +82,11 @@ Examples of **incorrect** code for the `{ "terms": ["todo", "fixme", "any other 
  */
 ```
 
+:::
+
 Examples of **correct** code for the `{ "terms": ["todo", "fixme", "any other term"], "location": "anywhere" }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-warning-comments: ["error", { "terms": ["todo", "fixme", "any other term"], "location": "anywhere" }]*/
@@ -100,11 +101,13 @@ Examples of **correct** code for the `{ "terms": ["todo", "fixme", "any other te
  */
 ```
 
+:::
+
 ### Decoration Characters
 
 Examples of **incorrect** code for the `{ "decoration": ["*"] }` options:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-warning-comments: ["error", { "decoration": ["*"] }]*/
@@ -115,9 +118,11 @@ Examples of **incorrect** code for the `{ "decoration": ["*"] }` options:
  */
 ```
 
+:::
+
 Examples of **incorrect** code for the `{ "decoration": ["/", "*"] }` options:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-warning-comments: ["error", { "decoration": ["/", "*"] }]*/
@@ -129,9 +134,11 @@ Examples of **incorrect** code for the `{ "decoration": ["/", "*"] }` options:
  */
 ```
 
+:::
+
 Examples of **correct** code for the `{ "decoration": ["/", "*"] }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-warning-comments: ["error", { "decoration": ["/", "*"] }]*/
@@ -141,6 +148,8 @@ Examples of **correct** code for the `{ "decoration": ["/", "*"] }` options:
  *!TODO preceded by non-decoration character in a block comment
  */
 ```
+
+:::
 
 ## When Not To Use It
 

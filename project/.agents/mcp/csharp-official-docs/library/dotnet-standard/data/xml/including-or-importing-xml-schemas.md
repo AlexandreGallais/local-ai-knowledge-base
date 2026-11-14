@@ -1,121 +1,36 @@
 ---
+description: "Learn more about: Including or Importing XML Schemas"
 title: "Including or Importing XML Schemas"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/including-or-importing-xml-schemas.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
 ---
-
 # Include or import XML schemas
 
-An XML schema may contain `<xs:import />`, `<xs:include />`, and `<xs:redefine />` elements. These schema elements refer to other XML schemas that can be used to supplement the structure of the schema that includes or imports them. The `System.Xml.Schema.XmlSchemaImport`, `System.Xml.Schema.XmlSchemaInclude` and `System.Xml.Schema.XmlSchemaRedefine` classes, map to these elements in the Schema Object Model (SOM) API.
+An XML schema may contain `<xs:import />`, `<xs:include />`, and `<xs:redefine />` elements. These schema elements refer to other XML schemas that can be used to supplement the structure of the schema that includes or imports them. The <xref:System.Xml.Schema.XmlSchemaImport>, <xref:System.Xml.Schema.XmlSchemaInclude> and <xref:System.Xml.Schema.XmlSchemaRedefine> classes, map to these elements in the Schema Object Model (SOM) API.
 
 ## Including or Importing an XML Schema
 
- The following code example supplements the customer schema created in the Building XML Schemas topic with the address schema. Supplementing the customer schema with the address schema makes address types available in the customer schema.
+ The following code example supplements the customer schema created in the [Building XML Schemas](building-xml-schemas.md) topic with the address schema. Supplementing the customer schema with the address schema makes address types available in the customer schema.
 
  The address schema can be incorporated using either `<xs:include />` or `<xs:import />` elements to use the components of the address schema as-is, or using an `<xs:redefine />` element to modify any of its components to suit the need of the customer schema. Because the address schema has a `targetNamespace` that is different from that of the customer schema, the `<xs:import />` element and therefore import semantics is used.
 
  The code example includes the address schema in the following steps.
 
-1. Adds the customer schema and the address schema to a new `System.Xml.Schema.XmlSchemaSet` object and then compiles them. Any schema validation warnings and errors encountered reading or compiling the schemas are handled by the `System.Xml.Schema.ValidationEventHandler` delegate.
+1. Adds the customer schema and the address schema to a new <xref:System.Xml.Schema.XmlSchemaSet> object and then compiles them. Any schema validation warnings and errors encountered reading or compiling the schemas are handled by the <xref:System.Xml.Schema.ValidationEventHandler> delegate.
 
-2. Retrieves the compiled `System.Xml.Schema.XmlSchema` objects for both the customer and address schemas from the `System.Xml.Schema.XmlSchemaSet` by iterating over the `System.Xml.Schema.XmlSchemaSet.Schemas` property. Because the schemas are compiled, Post-Schema-Compilation-Infoset (PSCI) properties are accessible.
+2. Retrieves the compiled <xref:System.Xml.Schema.XmlSchema> objects for both the customer and address schemas from the <xref:System.Xml.Schema.XmlSchemaSet> by iterating over the <xref:System.Xml.Schema.XmlSchemaSet.Schemas> property. Because the schemas are compiled, Post-Schema-Compilation-Infoset (PSCI) properties are accessible.
 
-3. Creates an `System.Xml.Schema.XmlSchemaImport` object, sets the `System.Xml.Schema.XmlSchemaImport.Namespace` property of the import to the namespace of the address schema, sets the `System.Xml.Schema.XmlSchemaExternal.Schema` property of the import to the `System.Xml.Schema.XmlSchema` object of the address schema, and adds the import to the `System.Xml.Schema.XmlSchema.Includes` property of the customer schema.
+3. Creates an <xref:System.Xml.Schema.XmlSchemaImport> object, sets the <xref:System.Xml.Schema.XmlSchemaImport.Namespace> property of the import to the namespace of the address schema, sets the <xref:System.Xml.Schema.XmlSchemaExternal.Schema> property of the import to the <xref:System.Xml.Schema.XmlSchema> object of the address schema, and adds the import to the <xref:System.Xml.Schema.XmlSchema.Includes> property of the customer schema.
 
-4. Reprocesses and compiles the modified `System.Xml.Schema.XmlSchema` object of the customer schema using the `System.Xml.Schema.XmlSchemaSet.Reprocess*` and `System.Xml.Schema.XmlSchemaSet.Compile*` methods of the `System.Xml.Schema.XmlSchemaSet` class and writes it to the console.
+4. Reprocesses and compiles the modified <xref:System.Xml.Schema.XmlSchema> object of the customer schema using the <xref:System.Xml.Schema.XmlSchemaSet.Reprocess*> and <xref:System.Xml.Schema.XmlSchemaSet.Compile*> methods of the <xref:System.Xml.Schema.XmlSchemaSet> class and writes it to the console.
 
-5. Finally, recursively writes all of the schemas imported into the customer schema to the console using the `System.Xml.Schema.XmlSchema.Includes` property of the customer schema. The `System.Xml.Schema.XmlSchema.Includes` property provides access to all the includes, imports, or redefines added to a schema.
+5. Finally, recursively writes all of the schemas imported into the customer schema to the console using the <xref:System.Xml.Schema.XmlSchema.Includes> property of the customer schema. The <xref:System.Xml.Schema.XmlSchema.Includes> property provides access to all the includes, imports, or redefines added to a schema.
 
  The following is the complete code example and the customer and address schemas written to the console.
- ```csharp
-using System;
-using System.Xml;
-using System.Xml.Schema;
-
-class XmlSchemaImportExample
-{
-    static void Main(string[] args)
-    {
-        // Add the customer and address schemas to a new XmlSchemaSet and compile them.
-        // Any schema validation warnings and errors encountered reading or
-        // compiling the schemas are handled by the ValidationEventHandler delegate.
-        XmlSchemaSet schemaSet = new XmlSchemaSet();
-        schemaSet.ValidationEventHandler += new ValidationEventHandler(ValidationCallback);
-        schemaSet.Add("http://www.tempuri.org", "customer.xsd");
-        schemaSet.Add("http://www.example.com/IPO", "address.xsd");
-        schemaSet.Compile();
-
-        // Retrieve the compiled XmlSchema objects for the customer and
-        // address schema from the XmlSchemaSet by iterating over
-        // the Schemas property.
-        XmlSchema customerSchema = null;
-        XmlSchema addressSchema = null;
-        foreach (XmlSchema schema in schemaSet.Schemas())
-        {
-            if (schema.TargetNamespace == "http://www.tempuri.org")
-                customerSchema = schema;
-            else if (schema.TargetNamespace == "http://www.example.com/IPO")
-                addressSchema = schema;
-        }
-
-        // Create an XmlSchemaImport object, set the Namespace property
-        // to the namespace of the address schema, the Schema property
-        // to the address schema, and add it to the Includes property
-        // of the customer schema.
-        XmlSchemaImport import = new XmlSchemaImport();
-        import.Namespace = "http://www.example.com/IPO";
-        import.Schema = addressSchema;
-        customerSchema.Includes.Add(import);
-
-        // Reprocess and compile the modified XmlSchema object
-        // of the customer schema and write it to the console.
-        schemaSet.Reprocess(customerSchema);
-        schemaSet.Compile();
-        customerSchema.Write(Console.Out);
-
-        // Recursively write all of the schemas imported into the
-        // customer schema to the console using the Includes
-        // property of the customer schema.
-        RecurseExternals(customerSchema);
-    }
-
-    static void RecurseExternals(XmlSchema schema)
-    {
-        foreach (XmlSchemaExternal external in schema.Includes)
-        {
-            if (external.SchemaLocation != null)
-            {
-                Console.WriteLine($"External SchemaLocation: {external.SchemaLocation}");
-            }
-
-            if (external is XmlSchemaImport)
-            {
-                XmlSchemaImport import = external as XmlSchemaImport;
-                Console.WriteLine($"Imported namespace: {import.Namespace}");
-            }
-
-            if (external.Schema != null)
-            {
-                external.Schema.Write(Console.Out);
-                RecurseExternals(external.Schema);
-            }
-        }
-    }
-
-    static void ValidationCallback(object sender, ValidationEventArgs args)
-    {
-        if (args.Severity == XmlSeverityType.Warning)
-            Console.Write("WARNING: ");
-        else if (args.Severity == XmlSeverityType.Error)
-            Console.Write("ERROR: ");
-
-        Console.WriteLine(args.Message);
-    }
-}
-```
+ [!code-csharp[XmlSchemaImportExample#1](../../../../samples/snippets/csharp/VS_Snippets_Data/XmlSchemaImportExample/CS/XmlSchemaImportExample.cs#1)]
+ [!code-vb[XmlSchemaImportExample#1](../../../../samples/snippets/visualbasic/VS_Snippets_Data/XmlSchemaImportExample/VB/XmlSchemaImportExample.vb#1)]
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -172,13 +87,13 @@ class XmlSchemaImportExample
 </schema>
 ```
 
- For more information about the `<xs:import />`, `<xs:include />`, and `<xs:redefine />` elements and the `System.Xml.Schema.XmlSchemaImport`, `System.Xml.Schema.XmlSchemaInclude` and `System.Xml.Schema.XmlSchemaRedefine` classes, see the W3C XML Schema and the `System.Xml.Schema` namespace class reference documentation.
+ For more information about the `<xs:import />`, `<xs:include />`, and `<xs:redefine />` elements and the <xref:System.Xml.Schema.XmlSchemaImport>, <xref:System.Xml.Schema.XmlSchemaInclude> and <xref:System.Xml.Schema.XmlSchemaRedefine> classes, see the [W3C XML Schema](https://www.w3.org/XML/Schema) and the <xref:System.Xml.Schema?displayProperty=nameWithType> namespace class reference documentation.
 
 ## See also
 
-- XML Schema Object Model Overview
-- Reading and Writing XML Schemas
-- Building XML Schemas
-- Traversing XML Schemas
-- Editing XML Schemas
-- XmlSchemaSet for Schema Compilation
+- [XML Schema Object Model Overview](xml-schema-object-model-overview.md)
+- [Reading and Writing XML Schemas](reading-and-writing-xml-schemas.md)
+- [Building XML Schemas](building-xml-schemas.md)
+- [Traversing XML Schemas](traversing-xml-schemas.md)
+- [Editing XML Schemas](editing-xml-schemas.md)
+- [XmlSchemaSet for Schema Compilation](xmlschemaset-for-schema-compilation.md)

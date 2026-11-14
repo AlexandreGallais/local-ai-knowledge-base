@@ -1,19 +1,15 @@
 ---
-title: "snapshotFormat | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/snapshotformat.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: snapshotFormat | Config
+outline: deep
 ---
 
 # snapshotFormat <CRoot />
 
 - **Type:** `Omit<PrettyFormatOptions, 'plugins' | 'compareKeys'> & { compareKeys?: null | undefined }`
 
-Format options for snapshot testing. These options configure the snapshot-specific formatting layer built on top of `@vitest/pretty-format`.
+Format options for snapshot testing. These options configure the snapshot-specific formatting layer built on top of [`@vitest/pretty-format`](https://npmx.dev/package/@vitest/pretty-format).
 
-For the full option surface of `PrettyFormatOptions`, see `@vitest/pretty-format`. This page focuses on the Vitest snapshot-specific defaults and constraints.
+For the full option surface of `PrettyFormatOptions`, see [`@vitest/pretty-format`](https://npmx.dev/package/@vitest/pretty-format). This page focuses on the Vitest snapshot-specific defaults and constraints.
 
 Vitest snapshots already apply these defaults before your `snapshotFormat` overrides:
 
@@ -30,7 +26,8 @@ Vitest also supports formatter options such as `printShadowRoot` and `maxOutputL
 
 By default, snapshot keys are sorted using the formatter's default behavior. Set `compareKeys` to `null` to disable key sorting. Custom compare functions are not supported in `snapshotFormat`.
 
-**Tip:**
+::: tip
 Beware that `plugins` on this object will be ignored.
 
-If you need to extend snapshot serialization via pretty-format plugins, use `expect.addSnapshotSerializer` or `snapshotSerializers` instead.
+If you need to extend snapshot serialization via pretty-format plugins, use [`expect.addSnapshotSerializer`](/api/expect#expect-addsnapshotserializer) or [`snapshotSerializers`](/config/snapshotserializers) instead.
+:::

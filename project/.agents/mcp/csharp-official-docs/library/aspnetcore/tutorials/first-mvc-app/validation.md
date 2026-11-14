@@ -1,13 +1,16 @@
 ---
-title: "Part 9, add validation to an ASP.NET Core MVC app"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/tutorials/first-mvc-app/validation.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Part 9, add validation to an ASP.NET Core MVC app
+ai-usage: ai-assisted
+description: Part 9 of tutorial series on ASP.NET Core MVC.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 03/26/2026
 ---
 
 # Part 9, add validation to an ASP.NET Core MVC app
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+:::moniker range=">= aspnetcore-10.0"
 
 In this section:
 
@@ -16,7 +19,7 @@ In this section:
 
 ## Keeping things DRY
 
-One of the design tenets of MVC is DRY ("Don't Repeat Yourself"). ASP.NET Core MVC encourages you to specify functionality or behavior only once, and then have it be reflected everywhere in an app. This reduces the amount of code you need to write and makes the code you do write less error prone, easier to test, and easier to maintain.
+One of the design tenets of MVC is [DRY](https://wikipedia.org/wiki/Don%27t_repeat_yourself) ("Don't Repeat Yourself"). ASP.NET Core MVC encourages you to specify functionality or behavior only once, and then have it be reflected everywhere in an app. This reduces the amount of code you need to write and makes the code you do write less error prone, easier to test, and easier to maintain.
 
 The validation support provided by MVC and Entity Framework Core is a good example of the DRY principle in action. You can declaratively specify validation rules in one place (in the model class) and the rules are enforced everywhere in the app.
 
@@ -31,41 +34,7 @@ The DataAnnotations namespace provides a set of built-in validation attributes t
 
 Update the `Movie` class to take advantage of the built-in validation attributes `Required`, `StringLength`, `RegularExpression`, `Range` and the `DataType` formatting attribute.
 
-```csharp
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace MvcMovie.Models;
-
-public class Movie
-{
-    public int Id { get; set; }
-
-    [StringLength(60, MinimumLength = 3)]
-    [Required]
-    public string? Title { get; set; }
-
-    [Display(Name = "Release Date")]
-    [DataType(DataType.Date)]
-    public DateTime ReleaseDate { get; set; }
-
-    [Range(1, 100)]
-    [DataType(DataType.Currency)]
-    [Column(TypeName = "decimal(18, 2)")]
-    public decimal Price { get; set; }    
-
-    [RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$")]
-    [Required]
-    [StringLength(30)]
-    public string? Genre { get; set; }
-
-    [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
-    [StringLength(5)]
-    [Required]
-    public string? Rating { get; set; }
-}
-```
+[!code-csharp[](~/tutorials/first-mvc-app/start-mvc/samples/MvcMovie10/Models/Movie.cs?name=snippet_Final&highlight=11-12,19-20,24-26,29-31)]
 
 The validation attributes specify behavior that you want to enforce on the model properties they're applied to:
 
@@ -93,42 +62,21 @@ Run the app and navigate to the Movies controller.
 
 Select the **Create New** link to add a new movie. Fill out the form with some invalid values. As soon as jQuery client side validation detects the error, it displays an error message.
 
-> **Note:**
-> You may not be able to enter decimal commas in decimal fields. To support jQuery validation for non-English locales that use a comma (",") for a decimal point, and non US-English date formats, you must take steps to globalize your app. See this GitHub comment 4076 for instructions on adding decimal comma.
+:::image type="content" source="~/tutorials/first-mvc-app/validation/media/validation-errors.png" alt-text="Movie view form with multiple jQuery client side validation errors.":::
+
+[!INCLUDE[](~/includes/localization/currency.md)]
 
 Notice how the form has automatically rendered an appropriate validation error message in each field containing an invalid value. The errors are enforced both client-side (using JavaScript and jQuery) and server-side (in case a user has JavaScript disabled).
 
 A significant benefit is that you didn't need to change a single line of code in the `MoviesController` class or in the `Create.cshtml` view in order to enable this validation UI. The controller and views you created earlier in this tutorial automatically picked up the validation rules that you specified by using validation attributes on the properties of the `Movie` model class. Test validation using the `Edit` action method, and the same validation is applied.
 
-The form data isn't sent to the server until there are no client side validation errors. You can verify this by putting a break point in the `HTTP Post` method, by using the Fiddler tool , or the F12 Developer tools.
+The form data isn't sent to the server until there are no client side validation errors. You can verify this by putting a break point in the `HTTP Post` method, by using the [Fiddler tool](https://www.telerik.com/fiddler) , or the [F12 Developer tools](/microsoft-edge/devtools-guide).
 
 ## How validation works
 
 You might wonder how the validation UI was generated without any updates to the code in the controller or views. The following code shows the two `Create` methods.
 
-```csharp
-// GET: Movies/Create
-public IActionResult Create()
-{
-    return View();
-}
-
-// POST: Movies/Create
-// To protect from overposting attacks, enable the specific properties you want to bind to.
-// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-[HttpPost]
-[ValidateAntiForgeryToken]
-public async Task<IActionResult> Create([Bind("Id,Title,ReleaseDate,Genre,Price,Rating")] Movie movie)
-{
-    if (ModelState.IsValid)
-    {
-        _context.Add(movie);
-        await _context.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
-    }
-    return View(movie);
-}
-```
+[!code-csharp[](~/tutorials/first-mvc-app/start-mvc/samples/MvcMovie10/Controllers/MoviesController.cs?name=snippet_Create)]
 
 The first (HTTP GET) `Create` action method displays the initial Create form. The second (`[HttpPost]`) version handles the form post. The second `Create` method (The `[HttpPost]` version) calls `ModelState.IsValid` to check whether the movie has any validation errors. Calling this method evaluates any validation attributes that have been applied to the object. If the object has validation errors, the `Create` method re-displays the form. If there are no errors, the method saves the new movie in the database. In our movie example, the form isn't posted to the server when there are validation errors detected on the client side; the second `Create` method is never called when there are client side validation errors. If you disable JavaScript in your browser, client validation is disabled and you can test the HTTP POST `Create` method `ModelState.IsValid` detecting any validation errors.
 
@@ -136,29 +84,19 @@ You can set a break point in the `[HttpPost] Create` method and verify the metho
 
 The following image shows how to disable JavaScript in the Chrome browser. Search in the settings for how to disable JavaScript in the browser that you use.
 
+:::image type="content" source="~/tutorials/first-mvc-app/validation/media/chrome.png" alt-text="Google Chrome: In the JavaScript section of Content settings, select Do not allow any site to run JavaScript.":::
+
 After you disable JavaScript, post invalid data and step through the debugger.
+
+:::image type="content" source="~/tutorials/first-mvc-app/validation/media/ms.png" alt-text="While debugging on a post of invalid data, Intellisense on ModelState.IsValid shows the value is false.":::
 
 A portion of the `Create.cshtml` view template is shown in the following markup:
 
-```html
-﻿<h4>Movie</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-
-            @*Markup removed for brevity.*@
-```
+[!code-HTML[](~/tutorials/first-mvc-app/start-mvc/samples/MvcMovie10/Views/Movies/CreateRatingBrevity.html)]
 
 The preceding markup is used by the action methods to display the initial form and to redisplay it in the event of an error.
 
-The Input Tag Helper uses the DataAnnotations attributes and produces HTML attributes needed for jQuery Validation on the client side. The Validation Tag Helper displays validation errors. See Validation for more information.
+The [Input Tag Helper](../../mvc/views/working-with-forms.md) uses the [DataAnnotations](/aspnet/mvc/overview/older-versions/mvc-music-store/mvc-music-store-part-6) attributes and produces HTML attributes needed for jQuery Validation on the client side. The [Validation Tag Helper](../../mvc/views/working-with-forms.md#the-validation-tag-helpers) displays validation errors. See [Validation](../../mvc/models/validation.md) for more information.
 
 What's really nice about this approach is that neither the controller nor the `Create` view template knows anything about the actual validation rules being enforced or about the specific error messages displayed. The validation rules and the error strings are specified only in the `Movie` class. These same validation rules are automatically applied to the `Edit` view and any other views templates you might create that edit your model.
 
@@ -168,18 +106,9 @@ When you need to change validation logic, you can do so in exactly one place by 
 
 Open the `Movie.cs` file and examine the `Movie` class. The `System.ComponentModel.DataAnnotations` namespace provides formatting attributes in addition to the built-in set of validation attributes. We've already applied a `DataType` enumeration value to the release date and to the price fields. The following code shows the `ReleaseDate` and `Price` properties with the appropriate `DataType` attribute.
 
-```csharp
-[Display(Name = "Release Date")]
-[DataType(DataType.Date)]
-public DateTime ReleaseDate { get; set; }
+[!code-csharp[](~/tutorials/first-mvc-app/start-mvc/samples/MvcMovie10/Models/Movie.cs?highlight=2,6&name=snippet_DataType)]
 
-[Range(1, 100)]
-[DataType(DataType.Currency)]
-[Column(TypeName = "decimal(18, 2)")]
-public decimal Price { get; set; }    
-```
-
-The `DataType` attributes only provide hints for the view engine to format the data and supplies elements/attributes such as `` for URL's and `` for email. You can use the `RegularExpression` attribute to validate the format of the data. The `DataType` attribute is used to specify a data type that's more specific than the database intrinsic type, they're not validation attributes. In this case we only want to keep track of the date, not the time. The `DataType` Enumeration provides for many data types, such as Date, Time, PhoneNumber, Currency, EmailAddress and more. The `DataType` attribute can also enable the application to automatically provide type-specific features. For example, a `mailto:` link can be created for `DataType.EmailAddress`, and a date selector can be provided for `DataType.Date` in browsers that support HTML5. The `DataType` attributes emit HTML 5 `data-` (pronounced data dash) attributes that HTML 5 browsers can understand. The
+The `DataType` attributes only provide hints for the view engine to format the data and supplies elements/attributes such as `<a>` for URL's and `<a href="mailto:EmailAddress.com">` for email. You can use the `RegularExpression` attribute to validate the format of the data. The `DataType` attribute is used to specify a data type that's more specific than the database intrinsic type, they're not validation attributes. In this case we only want to keep track of the date, not the time. The `DataType` Enumeration provides for many data types, such as Date, Time, PhoneNumber, Currency, EmailAddress and more. The `DataType` attribute can also enable the application to automatically provide type-specific features. For example, a `mailto:` link can be created for `DataType.EmailAddress`, and a date selector can be provided for `DataType.Date` in browsers that support HTML5. The `DataType` attributes emit HTML 5 `data-` (pronounced data dash) attributes that HTML 5 browsers can understand. The
 `DataType` attributes do **not** provide any validation.
 
 `DataType.Date` doesn't specify the format of the date that's displayed. By default, the data field is displayed according to the default formats based on the server's `CultureInfo`.
@@ -201,11 +130,12 @@ You can use the `DisplayFormat` attribute by itself, but it's generally a good i
 
 * The `DataType` attribute can enable MVC to choose the right field template to render the data (the `DisplayFormat` if used by itself uses the string template).
 
+
 ## Apply migrations
 
 Some validation attributes affect the database schema. For example, `[Required]` makes a column `NOT NULL` and `[StringLength(60)]` limits the column type to `nvarchar(60)`. Run a migration to keep the database schema consistent with the model.
 
-# Visual Studio
+# [Visual Studio](#tab/visual-studio)
 
 From the **Tools** menu, select **NuGet Package Manager > Package Manager Console**.
 
@@ -216,24 +146,9 @@ Add-Migration New_DataAnnotations
 Update-Database
 ```
 
-# Visual Studio Code
+# [Visual Studio Code](#tab/visual-studio-code)
 
-> **Note:**
-> For this tutorial you use the Entity Framework Core *migrations* feature where possible. Migrations updates the database schema to match changes in the data model. However, migrations can only do the kinds of changes that the EF Core provider supports, and the SQLite provider's capabilities are limited. For example, adding a column is supported, but removing or changing a column is not supported. If a migration is created to remove or change a column, the `ef migrations add` command succeeds but the `ef database update` command fails. Due to these limitations, this tutorial doesn't use migrations for SQLite schema changes. Instead, when the schema changes, you drop and re-create the database.
->
->The workaround for the SQLite limitations is to manually write migrations code to perform a table rebuild when something in the table changes. A table rebuild involves:
->
->* Creating a new table.
->* Copying data from the old table to the new table.
->* Dropping the old table.
->* Renaming the new table.
->
->For more information, see the following resources:
->
-> * SQLite EF Core Database Provider Limitations
-> * Customize migration code
-> * Data seeding
-> * SQLite ALTER TABLE statement
+[!INCLUDE[](~/includes/RP-mvc-shared/sqlite-warn.md)]
 
 Delete the Migrations folder and the database file, and then run the following .NET CLI commands:
 
@@ -245,17 +160,30 @@ dotnet ef migrations add InitialCreate
 dotnet ef database update
 ```
 
-For more information, see Resetting all migrations.
+For more information, see [Resetting all migrations](/ef/core/managing-schemas/migrations/managing?tabs=dotnet-core-cli#resetting-all-migrations).
 
 ---
 
 ## Related content
 
-* Part 8, Add a new field (EF Core migrations)
-* Working with Forms
-* Globalization and localization
-* Introduction to Tag Helpers
-* Author Tag Helpers
+* [Part 8, Add a new field (EF Core migrations)](new-field.md)
+* [Working with Forms](../../mvc/views/working-with-forms.md)
+* [Globalization and localization](../../fundamentals/localization.md)
+* [Introduction to Tag Helpers](../../mvc/views/tag-helpers/intro.md)
+* [Author Tag Helpers](../../mvc/views/tag-helpers/authoring.md)
 
-> Previous
-> Next
+> [!div class="step-by-step"]
+> [Previous](~/tutorials/first-mvc-app/new-field.md)
+> [Next](~/tutorials/first-mvc-app/details.md)
+
+:::moniker-end
+
+[!INCLUDE[](~/tutorials/first-mvc-app/validation/includes/validation9.md)]
+
+[!INCLUDE[](~/tutorials/first-mvc-app/validation/includes/validation8.md)]
+
+[!INCLUDE[](~/tutorials/first-mvc-app/validation/includes/validation7.md)]
+
+[!INCLUDE[](~/tutorials/first-mvc-app/validation/includes/validation6.md)]
+
+[!INCLUDE[](~/tutorials/first-mvc-app/validation/includes/validation3-5.md)]

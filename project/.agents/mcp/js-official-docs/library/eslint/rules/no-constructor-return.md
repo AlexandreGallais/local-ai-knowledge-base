@@ -1,13 +1,8 @@
 ---
-title: "no-constructor-return"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-constructor-return.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-constructor-return
+rule_type: problem
 ---
 
-# no-constructor-return
 
 In JavaScript, returning a value in the constructor of a class may be a mistake. Forbidding this pattern prevents mistakes resulting from unfamiliarity with the language or a copy-paste error.
 
@@ -17,7 +12,7 @@ This rule disallows return statements in the constructor of a class. Note that r
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-constructor-return: "error"*/
@@ -38,9 +33,11 @@ class B {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-constructor-return: "error"*/
@@ -68,6 +65,8 @@ class E {
 }
 
 ```
+
+:::
 
 ## Options
 

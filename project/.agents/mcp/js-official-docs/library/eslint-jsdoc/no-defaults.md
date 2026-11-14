@@ -1,21 +1,15 @@
----
-title: "no-defaults"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/no-defaults.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-no-defaults"></a>
+<a name="no-defaults"></a>
+# <code>no-defaults</code>
 
-# `no-defaults`
+* [Fixer](#user-content-no-defaults-fixer)
+* [Options](#user-content-no-defaults-options)
+    * [`contexts`](#user-content-no-defaults-options-contexts)
+    * [`noOptionalParamNames`](#user-content-no-defaults-options-nooptionalparamnames)
+* [Context and settings](#user-content-no-defaults-context-and-settings)
+* [Failing examples](#user-content-no-defaults-failing-examples)
+* [Passing examples](#user-content-no-defaults-passing-examples)
 
-* Fixer
-* Options
-    * `contexts`
-    * `noOptionalParamNames`
-* Context and settings
-* Failing examples
-* Passing examples
 
 This rule reports defaults being used on the relevant portion of `@param`
 or `@default`. It also optionally reports the presence of the
@@ -33,15 +27,21 @@ to an appropriate context, including, if you wish, "any".
 an accessor has no initializer which the tag could repeat; there it
 documents the default value of the property.
 
+<a name="user-content-no-defaults-fixer"></a>
+<a name="no-defaults-fixer"></a>
 ## Fixer
 
 Strips the default value.
 
+<a name="user-content-no-defaults-options"></a>
+<a name="no-defaults-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `contexts`
+<a name="user-content-no-defaults-options-contexts"></a>
+<a name="no-defaults-options-contexts"></a>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context (or an object with
 optional `context` and `comment` properties) where you wish the rule to be applied.
@@ -55,10 +55,12 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
-See the "AST and Selectors"
+See the ["AST and Selectors"](../advanced.md#ast-and-selectors)
 section of our Advanced docs for more on the expected format.
 
-### `noOptionalParamNames`
+<a name="user-content-no-defaults-options-nooptionalparamnames"></a>
+<a name="no-defaults-options-nooptionalparamnames"></a>
+### <code>noOptionalParamNames</code>
 
 Set this to `true` to report the presence of optional parameters. May be
 used if the project is insisting on optionality being indicated by
@@ -66,6 +68,9 @@ the presence of ES6 default parameters (bearing in mind that such
 "defaults" are only applied when the supplied value is missing or
 `undefined` but not for `null` or other "falsey" values).
 
+
+<a name="user-content-no-defaults-context-and-settings"></a>
+<a name="no-defaults-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -76,6 +81,8 @@ the presence of ES6 default parameters (bearing in mind that such
 |Recommended|true|
 |Options|`contexts`, `noOptionalParamNames`|
 
+<a name="user-content-no-defaults-failing-examples"></a>
+<a name="no-defaults-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -166,6 +173,10 @@ class Filter {
 // Message: Defaults are not permitted on @param.
 ````
 
+
+
+<a name="user-content-no-defaults-passing-examples"></a>
+<a name="no-defaults-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -253,3 +264,4 @@ class Filter {
 }
 // "jsdoc/no-defaults": ["error"|"warn", {"contexts":["MethodDefinition"]}]
 ````
+

@@ -1,12 +1,3 @@
----
-title: "IllegalThreadStateException class (java.lang)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/IllegalThreadStateException.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # IllegalThreadStateException class (java.lang)
 
 ```java
@@ -16,9 +7,8 @@ public class IllegalThreadStateException extends IllegalArgumentException
 Thrown to indicate that a thread is not in an appropriate state
 for the requested operation.
 
-**See also:** Thread#start()
-
-**Since:** 1.0
+@see Thread#start()
+@since   1.0
 
 ## IllegalThreadStateException.IllegalThreadStateException()
 
@@ -26,7 +16,7 @@ for the requested operation.
 public IllegalThreadStateException()
 ```
 
-Constructs an `IllegalThreadStateException` with no
+Constructs an {@code IllegalThreadStateException} with no
 detail message.
 
 ## IllegalThreadStateException.IllegalThreadStateException(String)
@@ -35,9 +25,7 @@ detail message.
 public IllegalThreadStateException(String s)
 ```
 
-Constructs an `IllegalThreadStateException` with the
+Constructs an {@code IllegalThreadStateException} with the
 specified detail message.
 
-Parameters:
-
-- `s`: the detail message.
+@param   s   the detail message.

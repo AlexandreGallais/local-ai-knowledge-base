@@ -1,31 +1,30 @@
----
-title: "Punycode"
-tool: "node"
-version: "26.13"
-source: "https://github.com/nodejs/node/blob/e9c277643b0249c50f6e6de5413be8a88ea11b6a/doc/api/punycode.md"
-commit: "e9c277643b0249c50f6e6de5413be8a88ea11b6a"
-license: "MIT"
----
-
 # Punycode
 
+<!-- YAML
+deprecated: v7.0.0
+-->
+
+<!--introduced_in=v0.10.0-->
+
 > Stability: 0 - Deprecated
+
+<!-- source_link=lib/punycode.js -->
 
 **The version of the punycode module bundled in Node.js is being deprecated.**
 In a future major version of Node.js this module will be removed. Users
 currently depending on the `punycode` module should switch to using the
-userland-provided Punycode.js module instead. For punycode-based URL
-encoding, see `url.domainToASCII` or, more generally, the
-WHATWG URL API.
+userland-provided [Punycode.js][] module instead. For punycode-based URL
+encoding, see [`url.domainToASCII`][] or, more generally, the
+[WHATWG URL API][].
 
-The `punycode` module is a bundled version of the Punycode.js module. It
+The `punycode` module is a bundled version of the [Punycode.js][] module. It
 can be accessed using:
 
 ```js
 const punycode = require('node:punycode');
 ```
 
-Punycode is a character encoding scheme defined by RFC 3492 that is
+[Punycode][] is a character encoding scheme defined by RFC 3492 that is
 primarily intended for use in Internationalized Domain Names. Because host
 names in URLs are limited to ASCII characters only, Domain Names that contain
 non-ASCII characters must be converted into ASCII using the Punycode scheme.
@@ -38,13 +37,17 @@ The `punycode` module provides a simple implementation of the Punycode standard.
 
 The `punycode` module is a third-party dependency used by Node.js and
 made available to developers as a convenience. Fixes or other modifications to
-the module must be directed to the Punycode.js project.
+the module must be directed to the [Punycode.js][] project.
 
 ## `punycode.decode(string)`
 
+<!-- YAML
+added: v0.5.1
+-->
+
 * `string` {string}
 
-The `punycode.decode()` method converts a Punycode string of ASCII-only
+The `punycode.decode()` method converts a [Punycode][] string of ASCII-only
 characters to the equivalent string of Unicode codepoints.
 
 ```js
@@ -54,10 +57,14 @@ punycode.decode('--dqo34k'); // '☃-⌘'
 
 ## `punycode.encode(string)`
 
+<!-- YAML
+added: v0.5.1
+-->
+
 * `string` {string}
 
 The `punycode.encode()` method converts a string of Unicode codepoints to a
-Punycode string of ASCII-only characters.
+[Punycode][] string of ASCII-only characters.
 
 ```js
 punycode.encode('mañana'); // 'maana-pta'
@@ -66,10 +73,14 @@ punycode.encode('☃-⌘'); // '--dqo34k'
 
 ## `punycode.toASCII(domain)`
 
+<!-- YAML
+added: v0.6.1
+-->
+
 * `domain` {string}
 
 The `punycode.toASCII()` method converts a Unicode string representing an
-Internationalized Domain Name to Punycode. Only the non-ASCII parts of the
+Internationalized Domain Name to [Punycode][]. Only the non-ASCII parts of the
 domain name will be converted. Calling `punycode.toASCII()` on a string that
 already only contains ASCII characters will have no effect.
 
@@ -82,10 +93,14 @@ punycode.toASCII('example.com'); // 'example.com'
 
 ## `punycode.toUnicode(domain)`
 
+<!-- YAML
+added: v0.6.1
+-->
+
 * `domain` {string}
 
 The `punycode.toUnicode()` method converts a string representing a domain name
-containing Punycode encoded characters into Unicode. Only the Punycode
+containing [Punycode][] encoded characters into Unicode. Only the [Punycode][]
 encoded parts of the domain name are converted.
 
 ```js
@@ -97,7 +112,15 @@ punycode.toUnicode('example.com');       // 'example.com'
 
 ## `punycode.ucs2`
 
+<!-- YAML
+added: v0.7.0
+-->
+
 ### `punycode.ucs2.decode(string)`
+
+<!-- YAML
+added: v0.7.0
+-->
 
 * `string` {string}
 
@@ -112,6 +135,10 @@ punycode.ucs2.decode('\uD834\uDF06'); // [0x1D306]
 
 ### `punycode.ucs2.encode(codePoints)`
 
+<!-- YAML
+added: v0.7.0
+-->
+
 * `codePoints` {integer\[]}
 
 The `punycode.ucs2.encode()` method returns a string based on an array of
@@ -124,6 +151,15 @@ punycode.ucs2.encode([0x1D306]); // '\uD834\uDF06'
 
 ## `punycode.version`
 
+<!-- YAML
+added: v0.6.1
+-->
+
 * Type: {string}
 
-Returns a string identifying the current Punycode.js version number.
+Returns a string identifying the current [Punycode.js][] version number.
+
+[Punycode]: https://tools.ietf.org/html/rfc3492
+[Punycode.js]: https://github.com/bestiejs/punycode.js
+[WHATWG URL API]: url.md#the-whatwg-url-api
+[`url.domainToASCII`]: url.md#urldomaintoasciidomain

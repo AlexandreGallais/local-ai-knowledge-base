@@ -1,16 +1,18 @@
 ---
 title: "Enum Design"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/enum.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Design for enums, which are a special kind of value type. Simple enums hold small, closed sets of choices. Flag enums support bitwise operations on enum values.
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "type design guidelines, enumerations"
+  - "simple enumerations"
+  - "enumerations [.NET Framework], design guidelines"
+  - "class library design guidelines [.NET Framework], enumerations"
+  - "flags enumerations"
+ms.assetid: dd53c952-9d9a-4736-86ff-9540e815d545
 ---
-
 # Enum Design
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
 Enums are a special kind of value type. There are two kinds of enums: simple enums and flag enums.
 
@@ -26,7 +28,7 @@ Flag enums are designed to support bitwise operations on the enum values. A comm
 
 ❌ DO NOT provide reserved enum values that are intended for future use.
 
-You can always simply add values to the existing enum at a later stage. See Adding Values to Enums for more details on adding values to enums. Reserved values just pollute the set of real values and tend to lead to user errors.
+You can always simply add values to the existing enum at a later stage. See [Adding Values to Enums](#add_value) for more details on adding values to enums. Reserved values just pollute the set of real values and tend to lead to user errors.
 
 ❌ AVOID publicly exposing enums with only one value.
 
@@ -40,11 +42,11 @@ Although they are sometimes helpful to framework developers, sentinel values are
 
 Consider calling the value something like "None." If such a value is not appropriate for this particular enum, the most common default value for the enum should be assigned the underlying value of zero.
 
-✔️ CONSIDER using `System.Int32` (the default in most programming languages) as the underlying type of an enum unless any of the following is true:
+✔️ CONSIDER using <xref:System.Int32> (the default in most programming languages) as the underlying type of an enum unless any of the following is true:
 
 - The enum is a flags enum and you have more than 32 flags, or expect to have more in the future.
 
-- The underlying type needs to be different than `System.Int32` for easier interoperability with unmanaged code expecting different-size enums.
+- The underlying type needs to be different than <xref:System.Int32> for easier interoperability with unmanaged code expecting different-size enums.
 
 - A smaller underlying type would result in substantial savings in space. If you expect the enum to be used mainly as an argument for flow of control, the size makes little difference. The size savings might be significant if:
 
@@ -58,25 +60,29 @@ For in-memory usage, be aware that managed objects are always `DWORD`-aligned, s
 
 ✔️ DO name flag enums with plural nouns or noun phrases and simple enums with singular nouns or noun phrases.
 
-❌ DO NOT extend `System.Enum` directly.
+❌ DO NOT extend <xref:System.Enum?displayProperty=nameWithType> directly.
 
-`System.Enum` is a special type used by the CLR to create user-defined enumerations. Most programming languages provide a programming element that gives you access to this functionality. For example, in C# the `enum` keyword is used to define an enumeration.
+<xref:System.Enum?displayProperty=nameWithType> is a special type used by the CLR to create user-defined enumerations. Most programming languages provide a programming element that gives you access to this functionality. For example, in C# the `enum` keyword is used to define an enumeration.
+
+<a name="design"></a>
 
 ### Designing Flag Enums
 
-✔️ DO apply the `System.FlagsAttribute` to flag enums. Do not apply this attribute to simple enums.
+✔️ DO apply the <xref:System.FlagsAttribute?displayProperty=nameWithType> to flag enums. Do not apply this attribute to simple enums.
 
 ✔️ DO use powers of two for the flag enum values so they can be freely combined using the bitwise OR operation.
 
 ✔️ CONSIDER providing special enum values for commonly used combinations of flags.
 
-Bitwise operations are an advanced concept and should not be required for simple tasks. `System.IO.FileAccess.ReadWrite` is an example of such a special value.
+Bitwise operations are an advanced concept and should not be required for simple tasks. <xref:System.IO.FileAccess.ReadWrite> is an example of such a special value.
 
 ❌ AVOID creating flag enums where certain combinations of values are invalid.
 
 ❌ AVOID using flag enum values of zero unless the value represents "all flags are cleared" and is named appropriately, as prescribed by the next guideline.
 
 ✔️ DO name the zero value of flag enums `None`. For a flag enum, the value must always mean "all flags are cleared."
+
+<a name="add_value"></a>
 
 ### Adding Value to Enums
 
@@ -88,9 +94,9 @@ If you have real data about application incompatibilities caused by additions to
 
 *Portions © 2005, 2009 Microsoft Corporation. All rights reserved.*
 
-*Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+*Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Type Design Guidelines
-- Framework Design Guidelines
+- [Type Design Guidelines](type.md)
+- [Framework Design Guidelines](index.md)

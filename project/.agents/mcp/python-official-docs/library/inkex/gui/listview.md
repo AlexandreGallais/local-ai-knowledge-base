@@ -1,12 +1,3 @@
----
-title: "inkex.gui.listview"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/gui/listview.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.gui.listview
 
 Wraps the gtk treeview and iconview in something a little nicer.
@@ -254,8 +245,8 @@ def create_column(self, name, expand=True)
 Create and pack a new column to this list.
 
 Args:
-name: Label in the column header
-expand: Should the column expand
+    name: Label in the column header
+    expand: Should the column expand
 
 ## TreeView.create_sort
 
@@ -265,7 +256,7 @@ def create_sort(self, *args, **kwargs)
 
 Create and attach a sorting view to this list.
 
-see `ViewSort` arguments for details.
+see :class:`ViewSort` arguments for details.
 
 ## class ComboBox
 
@@ -395,10 +386,10 @@ class ViewSort(object)
 
 A sorting function for use is ListViews
 
-ascending - Boolean which direction to sort
-contains - Contains this string
-data - A string or function to get data from each item.
-exact - Compare to this exact string instead.
+ ascending - Boolean which direction to sort
+ contains - Contains this string
+ data - A string or function to get data from each item.
+ exact - Compare to this exact string instead.
 
 ## ViewSort.get_data
 
@@ -425,8 +416,8 @@ class ViewColumn(object)
 Add a column to a gtk treeview.
 
 Args:
-name: The column name used as a label.
-expand: Set column expansion.
+    name: The column name used as a label.
+    expand: Set column expansion.
 
 ## ViewColumn.add_renderer
 
@@ -445,10 +436,10 @@ def add_image_renderer(self, icon, pad=0, pixmaps=None, size=None)
 Set the image renderer
 
 Args:
-icon: The function that returns the image to be displayed.
-pad: The amount of padding around the image.
-pixmaps: The pixmap manager to use to get images.
-size: Restrict the images to this size.
+    icon: The function that returns the image to be displayed.
+    pad: The amount of padding around the image.
+    pixmaps: The pixmap manager to use to get images.
+    size: Restrict the images to this size.
 
 ## ViewColumn.add_text_renderer
 
@@ -459,9 +450,9 @@ def add_text_renderer(self, text, wrap=None, template=None)
 Set the text renderer.
 
 Args:
-text: The function that returns the text to be displayed.
-wrap: The wrapping setting for this renderer.
-template: A standard template used for this text markup.
+    text: The function that returns the text to be displayed.
+    wrap: The wrapping setting for this renderer.
+    template: A standard template used for this text markup.
 
 ## ViewColumn.clean
 

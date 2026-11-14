@@ -1,12 +1,3 @@
----
-title: "core::ascii"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/ascii.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::ascii
 
 Operations on ASCII strings and characters.
@@ -15,7 +6,7 @@ Most string operations in Rust act on UTF-8 strings. However, at times it
 makes more sense to only consider the ASCII character set for a specific
 operation.
 
-The `escape_default` function provides an iterator over the bytes of an
+The [`escape_default`] function provides an iterator over the bytes of an
 escaped version of the character given.
 
 ## struct EscapeDefault
@@ -26,7 +17,7 @@ pub struct EscapeDefault(EscapeIterInner<4, AlwaysEscaped>)
 
 An iterator over the escaped version of a byte.
 
-This `struct` is created by the `escape_default` function. See its
+This `struct` is created by the [`escape_default`] function. See its
 documentation for more.
 
 ## fn escape_default
@@ -54,7 +45,7 @@ languages. The exact rules are:
 
 # Examples
 
-```rust
+```
 use std::ascii;
 
 let escaped = ascii::escape_default(b'0').next().unwrap();

@@ -1,17 +1,8 @@
----
-title: "Variables"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/variables.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[variable]
 # Variables
 
 r[variable.intro]
-A _variable_ is a component of a stack frame, either a named function parameter, an anonymous temporary, or a named local variable.
+A _variable_ is a component of a stack frame, either a named function parameter, an anonymous [temporary](expressions.md#temporaries), or a named local variable.
 
 r[variable.local]
 A _local variable_ (or *stack-local* allocation) holds a value directly, allocated within the stack's memory. The value is a part of the stack frame.
@@ -44,3 +35,5 @@ fn initialization_example() {
     // uninit_after_if; // err: use of possibly uninitialized `uninit_after_if`
 }
 ```
+
+[`if` expression]: expressions/if-expr.md#if-expressions

@@ -1,13 +1,10 @@
 ---
-title: "handle-callback-err"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/handle-callback-err.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: handle-callback-err
+rule_type: suggestion
+further_reading:
+- https://github.com/maxogden/art-of-node#callbacks
+- https://web.archive.org/web/20171224042620/https://docs.nodejitsu.com/articles/errors/what-are-the-error-conventions/
 ---
-
-# handle-callback-err
 
 In Node.js, a common pattern for dealing with asynchronous behavior is called the callback pattern.
 This pattern expects an `Error` object or `null` as the first argument of the callback.
@@ -29,7 +26,7 @@ The rule takes a single string option: the name of the error parameter. The defa
 
 Examples of **incorrect** code for this rule with the default `"err"` parameter name:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint handle-callback-err: "error"*/
@@ -40,9 +37,11 @@ function loadData (err, data) {
 
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"err"` parameter name:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint handle-callback-err: "error"*/
@@ -59,9 +58,11 @@ function generateError (err) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with a sample `"error"` parameter name:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint handle-callback-err: ["error", "error"]*/
@@ -73,6 +74,8 @@ function loadData (error, data) {
     doSomething();
 }
 ```
+
+:::
 
 ### regular expression
 

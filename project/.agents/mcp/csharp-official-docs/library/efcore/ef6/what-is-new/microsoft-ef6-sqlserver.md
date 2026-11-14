@@ -1,17 +1,17 @@
 ---
-title: "Entity Framework 6 SQL Server provider based on Microsoft.Data.SqlClient"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/what-is-new/microsoft-ef6-sqlserver.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Entity Framework 6 SQL Server provider based on Microsoft.Data.SqlClient
+description: Microsoft.EntityFramework.SqlServer guide
+author: SamMonoRT
+ms.date: 06/11/2024
+uid: ef6/what-is-new/microsoft-ef6-sqlserver
+ms.custom: sfi-ropc-nochange
 ---
 
 # Entity Framework 6 SQL Server provider based on Microsoft.Data.SqlClient
 
 This Entity Framework 6 provider is a replacement provider for the built-in SQL Server provider.
 
-This provider depends on the modern Microsoft.Data.SqlClient ADO.NET provider, which includes the following advantages over the currently used driver:
+This provider depends on the modern [Microsoft.Data.SqlClient](https://github.com/dotnet/SqlClient) ADO.NET provider, which includes the following advantages over the currently used driver:
 
 - Current client receiving full support in contrast to `System.Data.SqlClient`, which is in maintenance mode
 - Supports new SQL Server features, including support for the SQL Server 2022 enhanced client protocol (TDS8)
@@ -20,7 +20,7 @@ This provider depends on the modern Microsoft.Data.SqlClient ADO.NET provider, w
 
 Notice that this provider is a runtime only update and will not work with the existing Visual Studio tooling.
 
-The latest build of this package is available from NuGet
+The latest build of this package is available from [NuGet](https://www.nuget.org/packages/Microsoft.EntityFramework.SqlServer)
 
 ## Configuration
 
@@ -63,7 +63,7 @@ You can also use App.Config based configuration:
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
     <configSections>
-        <section name="<example-value>" type="<example-value>" requirePermission="<example-value>" />    
+        <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />    
     </configSections>
     <entityFramework>
         <providers>
@@ -138,7 +138,7 @@ The following classes have been renamed to avoid conflicts with classes that use
 
 **Azure App Service with .NET Framework and connection strings configuration**
 
-If you use Azure App Service with .NET Framework and the connection strings configuration feature, you can encounter runtime issues, as the `ProviderName` connection string setting in this scenario is hardcoded to `System.Data.SqlClient`.
+If you use Azure App Service with .NET Framework and the [connection strings configuration feature](/azure/app-service/configure-common?tabs=portal#configure-connection-strings), you can encounter runtime issues, as the `ProviderName` connection string setting in this scenario is hardcoded to `System.Data.SqlClient`.
 
 Solution is to use a derived MicrosoftSqlDbConfiguration class like this:
 

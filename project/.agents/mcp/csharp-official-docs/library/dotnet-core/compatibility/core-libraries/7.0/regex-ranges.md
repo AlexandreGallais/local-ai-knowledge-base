@@ -1,15 +1,11 @@
 ---
 title: ".NET 7 breaking change: Regex patterns with ranges corrected"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/7.0/regex-ranges.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 7 breaking change in core .NET libraries where regular expressions that have ranges in the pattern and are used with the RegexOptions.IgnoreCase option might break.
+ms.date: 12/08/2023
 ---
-
 # Regex patterns with ranges corrected
 
-Regex incorrectly handles the casing of some ranges in .NET Framework, and in .NET 6 and earlier versions. This bug was fixed in .NET 7.
+Regex [incorrectly handles the casing of some ranges](https://github.com/dotnet/runtime/issues/36149) in .NET Framework, and in .NET 6 and earlier versions. This bug was fixed in .NET 7.
 
 The fix for this bug could cause a breaking change if your regular expression has a bug that was hidden because of this bug or if you implemented a workaround for this bug.
 
@@ -41,7 +37,7 @@ Regex.IsMatch("\xF7", @"^(?i:[\xD7-\xD8])$", RegexOptions.IgnoreCase | RegexOpti
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -53,10 +49,10 @@ If your regular expression has a hidden bug, fix it. If you had a workaround for
 
 ## Affected APIs
 
-- `System.Text.RegularExpressions.Regex.Count*`
-- `System.Text.RegularExpressions.Regex.EnumerateMatches*`
-- `System.Text.RegularExpressions.Regex.IsMatch*`
-- `System.Text.RegularExpressions.Regex.Match*`
-- `System.Text.RegularExpressions.Regex.Matches*`
-- `System.Text.RegularExpressions.Regex.Replace*`
-- `System.Text.RegularExpressions.Regex.Split*`
+- <xref:System.Text.RegularExpressions.Regex.Count*?displayProperty=fullName>
+- <xref:System.Text.RegularExpressions.Regex.EnumerateMatches*?displayProperty=fullName>
+- <xref:System.Text.RegularExpressions.Regex.IsMatch*?displayProperty=fullName>
+- <xref:System.Text.RegularExpressions.Regex.Match*?displayProperty=fullName>
+- <xref:System.Text.RegularExpressions.Regex.Matches*?displayProperty=fullName>
+- <xref:System.Text.RegularExpressions.Regex.Replace*?displayProperty=fullName>
+- <xref:System.Text.RegularExpressions.Regex.Split*?displayProperty=fullName>

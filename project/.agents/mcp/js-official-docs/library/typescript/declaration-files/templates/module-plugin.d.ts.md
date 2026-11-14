@@ -1,13 +1,8 @@
 ---
 title: "Module: Plugin"
-tool: "typescript"
-version: "6.0"
-source: "https://github.com/microsoft/TypeScript-Website/blob/4ec663ac4412c3a7086401bd5a8811565589b11d/packages/documentation/copy/en/declaration-files/templates/module-plugin.d.ts.md"
-commit: "4ec663ac4412c3a7086401bd5a8811565589b11d"
-license: "CC-BY-4.0"
+layout: docs
+permalink: /docs/handbook/declaration-files/templates/module-plugin-d-ts.html
 ---
-
-# Module: Plugin
 
 For example, when you want to work with JavaScript code which extends another library.
 
@@ -63,7 +58,7 @@ export module "super-greeter" {
 }
 ```
 
-This uses declaration merging
+This uses [declaration merging](/docs/handbook/declaration-merging.html)
 
 ## The Impact of ES6 on Module Plugins
 

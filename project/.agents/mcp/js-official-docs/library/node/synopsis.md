@@ -1,27 +1,22 @@
----
-title: "Usage and example"
-tool: "node"
-version: "26.13"
-source: "https://github.com/nodejs/node/blob/e9c277643b0249c50f6e6de5413be8a88ea11b6a/doc/api/synopsis.md"
-commit: "e9c277643b0249c50f6e6de5413be8a88ea11b6a"
-license: "MIT"
----
-
 # Usage and example
+
+<!--introduced_in=v0.10.0-->
+
+<!--type=misc-->
 
 ## Usage
 
 `node [options] [V8 options] [script.js | -e "script" | - ] [arguments]`
 
-Please see the Command-line options document for more information.
+Please see the [Command-line options][] document for more information.
 
 ## Example
 
-An example of a web server written with Node.js which responds with
+An example of a [web server][] written with Node.js which responds with
 `'Hello, World!'`:
 
 First, make sure to have downloaded and installed Node.js. See
-Installing Node.js for further install information.
+[Installing Node.js][] for further install information.
 
 Now, create an empty project folder called `projects`, then navigate into it.
 
@@ -86,3 +81,7 @@ Now, open any preferred web browser and visit `http://127.0.0.1:3000`.
 
 If the browser displays the string `Hello, World!`, that indicates
 the server is working.
+
+[Command-line options]: cli.md#options
+[Installing Node.js]: https://nodejs.org/en/download
+[web server]: http.md

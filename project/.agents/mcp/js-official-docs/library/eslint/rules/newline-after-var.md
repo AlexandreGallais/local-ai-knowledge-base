@@ -1,13 +1,7 @@
 ---
-title: "newline-after-var"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/newline-after-var.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: newline-after-var
+rule_type: layout
 ---
-
-# newline-after-var
 
 As of today there is no consistency in separating variable declarations from the rest of the code. Some developers leave an empty line between var statements and the rest of the code like:
 
@@ -44,7 +38,7 @@ This rule has a string option:
 
 Examples of **incorrect** code for this rule with the default `"always"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint newline-after-var: ["error", "always"]*/
@@ -66,10 +60,12 @@ var name = "world";
 // var name = require("world");
 console.log(greet, name);
 ```
+
+:::
 
 Examples of **correct** code for this rule with the default `"always"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint newline-after-var: ["error", "always"]*/
@@ -95,12 +91,14 @@ var name = "world";
 
 console.log(greet, name);
 ```
+
+:::
 
 ### never
 
 Examples of **incorrect** code for this rule with the `"never"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint newline-after-var: ["error", "never"]*/
@@ -126,10 +124,12 @@ var name = "world";
 
 console.log(greet, name);
 ```
+
+:::
 
 Examples of **correct** code for this rule with the `"never"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint newline-after-var: ["error", "never"]*/
@@ -151,3 +151,5 @@ var name = "world";
 // var name = require("world");
 console.log(greet, name);
 ```
+
+:::

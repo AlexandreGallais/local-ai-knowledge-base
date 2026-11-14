@@ -1,22 +1,23 @@
 ---
-title: "How to find a union of two location paths - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/find-union-two-location-paths.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to find a union of two location paths - LINQ to XML
+description: "Learn how to find the union of the results of two XPath location paths. Two methods are shown: one uses XPathSelectElements, the other uses the Concat standard query operator."
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to find a union of two location paths (LINQ to XML)
 
-This article shows how to use `System.Xml.XPath.Extensions.XPathSelectElements*` to find the union of the results of two XPath location paths, and how to use the `System.Linq.Enumerable.Concat*` standard query operator to do the same thing.
+This article shows how to use <xref:System.Xml.XPath.Extensions.XPathSelectElements*> to find the union of the results of two XPath location paths, and how to use the <xref:System.Linq.Enumerable.Concat*> standard query operator to do the same thing.
 
 ## Example: Find all `Category` and `Price` elements and concatenate them
 
-This example finds all of the `Category` elements and all of the `Price` elements in XML document Sample XML file: Numerical data, and concatenates them into a single collection. The XPath expression is `//Category|//Price`.
+This example finds all of the `Category` elements and all of the `Price` elements in XML document [Sample XML file: Numerical data](sample-xml-file-numerical-data.md), and concatenates them into a single collection. The XPath expression is `//Category|//Price`.
 
-> **Note:**
-> The LINQ to XML query calls `System.Xml.Linq.Extensions.InDocumentOrder*` to put the results in document order. The XPath expression results are also in document order.
+> [!NOTE]
+> The LINQ to XML query calls <xref:System.Xml.Linq.Extensions.InDocumentOrder*> to put the results in document order. The XPath expression results are also in document order.
 
 ```csharp
 XDocument data = XDocument.Load("Data.xml");
@@ -87,4 +88,4 @@ Results are identical
 
 ## See also
 
-- LINQ to XML for XPath Users (Visual Basic)
+- [LINQ to XML for XPath Users (Visual Basic)](./comparison-xpath-linq-xml.md)

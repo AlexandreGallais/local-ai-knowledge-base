@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: C# templates use application bootstrap"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/windows-forms/6.0/application-bootstrap.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 6 where C# templates for Windows Forms apps include application bootstrap code.
+ms.date: 10/27/2021
 ---
-
 # C# templates use application bootstrap
 
-In line with related changes in .NET workloads, Windows Forms templates for C# have been updated to support `global using` directives, file-scoped namespaces, and nullable reference types. Because a typical Windows Forms app consist of multiple types split across multiple files, for example, Form1.cs and Form1.Designer.cs, top-level statements are notably absent from the Windows Forms templates. However, the updated templates do include application bootstrap code. This can cause incompatibility if you target an earlier version of .NET.
+In line with [related changes in .NET workloads](../../sdk/6.0/csharp-template-code.md), Windows Forms templates for C# have been updated to support `global using` directives, file-scoped namespaces, and nullable reference types. Because a typical Windows Forms app consist of multiple types split across multiple files, for example, Form1.cs and Form1.Designer.cs, top-level statements are notably absent from the Windows Forms templates. However, the updated templates do include application bootstrap code. This can cause incompatibility if you target an earlier version of .NET.
 
 ## Version introduced
 
@@ -68,10 +64,10 @@ static class Program
 
 `ApplicationConfiguration.Initialize()` is an ephemeral API produced by the Roslyn compiler (via source generators). This method emits the same calls that the original templates had. You can configure the behavior of this API by setting the following MSBuild properties:
 
-- ApplicationDefaultFont
-- ApplicationHighDpiMode
-- ApplicationUseCompatibleTextRendering
-- ApplicationVisualStyles
+- [ApplicationDefaultFont](../../../project-sdk/msbuild-props-desktop.md#applicationdefaultfont)
+- [ApplicationHighDpiMode](../../../project-sdk/msbuild-props-desktop.md#applicationhighdpimode)
+- [ApplicationUseCompatibleTextRendering](../../../project-sdk/msbuild-props-desktop.md#applicationusecompatibletextrendering)
+- [ApplicationVisualStyles](../../../project-sdk/msbuild-props-desktop.md#applicationvisualstyles)
 
 If you don't explicitly configure any properties, the following code is executed at runtime:
 
@@ -96,7 +92,7 @@ static class Program
 
 ## Change category
 
-This change affects *source compatibility*.
+This change affects [*source compatibility*](../../categories.md#source-compatibility).
 
 ## Reason for change
 

@@ -1,35 +1,31 @@
 ---
-title: "ADO.NET limitations"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/sqlite/adonet-limitations.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: ADO.NET limitations
+ms.date: 12/13/2019
+description: Describes some of the ADO.NET limitations you might encounter.
 ---
-
 # ADO.NET limitations
 
 Microsoft.Data.Sqlite provides implementations of many of the ADO.NET abstractions, but there are some limitations.
 
 ## Database schema information
 
-Metadata about query results is available using the `Microsoft.Data.Sqlite.SqliteDataReader.GetSchemaTable*` method.
+Metadata about query results is available using the <xref:Microsoft.Data.Sqlite.SqliteDataReader.GetSchemaTable*> method.
 
-`DbConnection.GetSchema()` isn't implemented. This API isn't well-defined, so we recommend retrieving database metadata directly using standard SQLite APIs like the sqlite_master table and the table_info PRAGMA.
+`DbConnection.GetSchema()` isn't implemented. This API isn't well-defined, so we recommend retrieving database metadata directly using standard SQLite APIs like the [sqlite_master](https://www.sqlite.org/fileformat.html#storage_of_the_sql_database_schema) table and the [table_info](https://www.sqlite.org/pragma.html#pragma_table_info) PRAGMA.
 
-For more information, see Metadata.
+For more information, see [Metadata](metadata.md).
 
 ## System.Transactions
 
-Microsoft.Data.Sqlite doesn't yet support System.Transactions. Use ADO.NET transactions instead. For more information, see Transactions.
+Microsoft.Data.Sqlite doesn't yet support System.Transactions. Use ADO.NET transactions instead. For more information, see [Transactions](transactions.md).
 
-Provide feedback about the lack of support for System.Transactions on issue #13825.
+Provide feedback about the lack of support for System.Transactions on issue [#13825](https://github.com/dotnet/efcore/issues/13825).
 
 ## Data adapters
 
 `DbDataAdapter` isn't yet implemented by Microsoft.Data.Sqlite. This means you can only use ADO.NET `DataSet` and `DataTable` to load data and not update it.
 
-Use issue #13838 to provide feedback about implementing `DbDataAdapter`.
+Use issue [#13838](https://github.com/dotnet/efcore/issues/13838) to provide feedback about implementing `DbDataAdapter`.
 
 ## Output parameters
 
@@ -37,7 +33,7 @@ SQLite doesn't support output parameters.
 
 ## Positional parameters
 
-Microsoft.Data.Sqlite only supports named parameters. Positional parameters aren't supported.
+Microsoft.Data.Sqlite only supports named [parameters](parameters.md). Positional parameters aren't supported.
 
 ## Stored procedures
 
@@ -49,6 +45,6 @@ The `Chaos` and `Snapshot` isolation levels aren't supported in SQLite transacti
 
 ## See also
 
-* Async limitations
-* Data types
-* Transactions
+* [Async limitations](async.md)
+* [Data types](types.md)
+* [Transactions](transactions.md)

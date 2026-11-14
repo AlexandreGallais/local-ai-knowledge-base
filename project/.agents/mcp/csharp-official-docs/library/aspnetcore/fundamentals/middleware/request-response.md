@@ -1,21 +1,20 @@
 ---
-title: "Request and Response operations in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/middleware/request-response.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Request and Response operations in ASP.NET Core
+description: Learn how to read the request body and write the response body in ASP.NET Core.
+monikerRange: '>= aspnetcore-3.0'
+ms.date: 04/24/2025
 ---
-
 # Request and response operations in ASP.NET Core
 
-By Justin Kotalik
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+By [Justin Kotalik](https://github.com/jkotalik)
 
 This article explains how to read from the request body and write to the response body. Code for these operations might be required when writing middleware. Outside of writing middleware, custom code isn't generally required because the operations are handled by MVC and Razor Pages.
 
-There are two abstractions for the request and response bodies: `System.IO.Stream` and `System.IO.Pipelines.Pipe`. For request reading, `Microsoft.AspNetCore.Http.HttpRequest.Body` is a `System.IO.Stream`, and `HttpRequest.BodyReader` is a `System.IO.Pipelines.PipeReader`. For response writing, `Microsoft.AspNetCore.Http.HttpResponse.Body` is a `System.IO.Stream`, and `HttpResponse.BodyWriter` is a `System.IO.Pipelines.PipeWriter`.
+There are two abstractions for the request and response bodies: <xref:System.IO.Stream> and <xref:System.IO.Pipelines.Pipe>. For request reading, <xref:Microsoft.AspNetCore.Http.HttpRequest.Body?displayProperty=nameWithType> is a <xref:System.IO.Stream>, and `HttpRequest.BodyReader` is a <xref:System.IO.Pipelines.PipeReader>. For response writing, <xref:Microsoft.AspNetCore.Http.HttpResponse.Body?displayProperty=nameWithType> is a <xref:System.IO.Stream>, and `HttpResponse.BodyWriter` is a <xref:System.IO.Pipelines.PipeWriter>.
 
-Pipelines are recommended over streams. Streams can be easier to use for some simple operations, but pipelines have a performance advantage and are easier to use in most scenarios. ASP.NET Core is starting to use pipelines instead of streams internally. Examples include:
+[Pipelines](/dotnet/standard/io/pipelines) are recommended over streams. Streams can be easier to use for some simple operations, but pipelines have a performance advantage and are easier to use in most scenarios. ASP.NET Core is starting to use pipelines instead of streams internally. Examples include:
 
 * `FormReader`
 * `TextReader`
@@ -29,43 +28,16 @@ Streams aren't being removed from the framework. Streams continue to be used thr
 
 ## Stream examples
 
+<!-- see "fundamentals\middleware\request-response\static\TestPipes.JPG for testing sample -->
+
 Suppose the goal is to create a middleware that reads the entire request body as a list of strings, splitting on new lines. A simple stream implementation might look like the following example:
 
-> **Warning:**
+> [!WARNING]
 > The following code:
 > * Is used to demonstrate the problems with not using a pipe to read the request body.
 > * Is not intended to be used in production apps.
 
-```csharp
-private async Task<List<string>> GetListOfStringsFromStream(Stream requestBody)
-{
-    // Build up the request body in a string builder.
-    StringBuilder builder = new StringBuilder();
-
-    // Rent a shared buffer to write the request body into.
-    byte[] buffer = ArrayPool<byte>.Shared.Rent(4096);
-
-    while (true)
-    {
-        var bytesRemaining = await requestBody.ReadAsync(buffer, offset: 0, buffer.Length);
-        if (bytesRemaining == 0)
-        {
-            break;
-        }
-
-        // Append the encoded string into the string builder.
-        var encodedString = Encoding.UTF8.GetString(buffer, 0, bytesRemaining);
-        builder.Append(encodedString);
-    }
-
-    ArrayPool<byte>.Shared.Return(buffer);
-
-    var entireRequestBody = builder.ToString();
-
-    // Split on \n in the string.
-    return new List<string>(entireRequestBody.Split("\n"));
-}
-```
+[!code-csharp[](request-response/samples/RequestResponseSample/Startup.cs?name=GetListOfStringsFromStream)]
 
 This code works, but there are some issues:
 
@@ -74,66 +46,12 @@ This code works, but there are some issues:
 
 Here's an example that fixes some of the preceding issues:
 
-> **Warning:**
+> [!WARNING]
 > The following code:
 > * Is used to demonstrate the solutions to some problems in the preceding code while not solving all the problems.
 > * Is not intended to be used in production apps.
 
-```csharp
-private async Task<List<string>> GetListOfStringsFromStreamMoreEfficient(Stream requestBody)
-{
-    StringBuilder builder = new StringBuilder();
-    byte[] buffer = ArrayPool<byte>.Shared.Rent(4096);
-    List<string> results = new List<string>();
-
-    while (true)
-    {
-        var bytesRemaining = await requestBody.ReadAsync(buffer, offset: 0, buffer.Length);
-
-        if (bytesRemaining == 0)
-        {
-            results.Add(builder.ToString());
-            break;
-        }
-
-        // Instead of adding the entire buffer into the StringBuilder
-        // only add the remainder after the last \n in the array.
-        var prevIndex = 0;
-        int index;
-        while (true)
-        {
-            index = Array.IndexOf(buffer, (byte)'\n', prevIndex);
-            if (index == -1)
-            {
-                break;
-            }
-
-            var encodedString = Encoding.UTF8.GetString(buffer, prevIndex, index - prevIndex);
-
-            if (builder.Length > 0)
-            {
-                // If there was a remainder in the string buffer, include it in the next string.
-                results.Add(builder.Append(encodedString).ToString());
-                builder.Clear();
-            }
-            else
-            {
-                results.Add(encodedString);
-            }
-
-            // Skip past last \n
-            prevIndex = index + 1;
-        }
-
-        var remainingString = Encoding.UTF8.GetString(buffer, prevIndex, bytesRemaining - prevIndex);
-        builder.Append(remainingString);
-    }
-
-    ArrayPool<byte>.Shared.Return(buffer);
-
-    return results;
-}
-```
+[!code-csharp[](request-response/samples/RequestResponseSample/Startup.cs?name=GetListOfStringsFromStreamMoreEfficient)]
 
 This preceding example:
 
@@ -149,61 +67,9 @@ These issues are fixable, but the code is becoming progressively more complicate
 
 ## Pipelines
 
-The following example shows how the preceding stream scenario can be handled using a PipeReader:
+The following example shows how the preceding stream scenario can be handled using a [PipeReader](/dotnet/standard/io/pipelines#pipe):
 
-```csharp
-private async Task<List<string>> GetListOfStringFromPipe(PipeReader reader)
-{
-    List<string> results = new List<string>();
-
-    while (true)
-    {
-        ReadResult readResult = await reader.ReadAsync();
-        var buffer = readResult.Buffer;
-
-        SequencePosition? position = null;
-
-        do
-        {
-            // Look for a EOL in the buffer
-            position = buffer.PositionOf((byte)'\n');
-
-            if (position != null)
-            {
-                var readOnlySequence = buffer.Slice(0, position.Value);
-                AddStringToList(results, in readOnlySequence);
-
-                // Skip the line + the \n character (basically position)
-                buffer = buffer.Slice(buffer.GetPosition(1, position.Value));
-            }
-        }
-        while (position != null);
-
-        if (readResult.IsCompleted && buffer.Length > 0)
-        {
-            AddStringToList(results, in buffer);
-        }
-
-        reader.AdvanceTo(buffer.Start, buffer.End);
-
-        // At this point, buffer will be updated to point one byte after the last
-        // \n character.
-        if (readResult.IsCompleted)
-        {
-            break;
-        }
-    }
-
-    return results;
-}
-
-private static void AddStringToList(List<string> results, in ReadOnlySequence<byte> readOnlySequence)
-{
-    // Separate method because Span/ReadOnlySpan cannot be used in async methods
-    ReadOnlySpan<byte> span = readOnlySequence.IsSingleSegment ? readOnlySequence.First.Span : readOnlySequence.ToArray().AsSpan();
-    results.Add(Encoding.UTF8.GetString(span));
-}
-```
+[!code-csharp[](request-response/samples/RequestResponseSample/Startup.cs?name=GetListOfStringFromPipe)]
 
 This example fixes many issues that the streams implementations had:
 
@@ -216,7 +82,7 @@ When writing directly to `HttpResponse.BodyWriter`, call `PipeWriter.FlushAsync`
 * `HttpResponse.BodyWriter` is a `PipeWriter` that buffers data until a flush operation is triggered.
 * Calling `FlushAsync` writes the buffered data to the underlying response body.
 
-It's up to the developer to decide when to call `FlushAsync`, balancing factors such as buffer size, network write overhead, and whether the data should be sent in discrete chunks. For more information, see System.IO.Pipelines in .NET.
+It's up to the developer to decide when to call `FlushAsync`, balancing factors such as buffer size, network write overhead, and whether the data should be sent in discrete chunks. For more information, see [System.IO.Pipelines in .NET](/dotnet/standard/io/pipelines).
 
 ## Adapters
 
@@ -224,9 +90,11 @@ The `Body`, `BodyReader`, and `BodyWriter` properties are available for `HttpReq
 
 ## StartAsync
 
-`HttpResponse.StartAsync` is used to indicate that headers are unmodifiable and to run `OnStarting` callbacks. When using Kestrel as a server, calling `StartAsync` before using the `PipeReader` guarantees that memory returned by `GetMemory` belongs to Kestrel's internal `System.IO.Pipelines.Pipe` rather than an external buffer.
+`HttpResponse.StartAsync` is used to indicate that headers are unmodifiable and to run `OnStarting` callbacks. When using Kestrel as a server, calling `StartAsync` before using the `PipeReader` guarantees that memory returned by `GetMemory` belongs to Kestrel's internal <xref:System.IO.Pipelines.Pipe> rather than an external buffer.
 
 ## Related content
 
-* System.IO.Pipelines in .NET
-* Write custom ASP.NET Core middleware
+* [System.IO.Pipelines in .NET](/dotnet/standard/io/pipelines)
+* [Write custom ASP.NET Core middleware](write.md)
+
+<!-- Test with Fiddler, .http files for Visual Studio, dotnet httprepl for CLI or other tool. See image in static directory. -->

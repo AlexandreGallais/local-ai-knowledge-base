@@ -1,15 +1,8 @@
----
-title: "empty-tags"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/empty-tags.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-empty-tags"></a>
+<a name="empty-tags"></a>
+### <code>empty-tags</code>
 
-# empty-tags
 
-### `empty-tags`
 
 Expects the following tags to be empty of any content:
 
@@ -42,15 +35,21 @@ causes rules not to take effect).
 Similarly, `@internal` will still be checked for content by this rule even with
 `settings.jsdoc.ignoreInternal` set to `true`.
 
+<a name="user-content-fixer"></a>
+<a name="fixer"></a>
 ## Fixer
 
 Strips content if present for the above-mentioned tags.
 
+<a name="user-content-options"></a>
+<a name="options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `tags`
+<a name="user-content-options-tags"></a>
+<a name="options-tags"></a>
+### <code>tags</code>
 
 If you want additional tags to be checked for their descriptions, you may
 add them within this option.
@@ -61,6 +60,9 @@ add them within this option.
 }
 ```
 
+
+<a name="user-content-context-and-settings"></a>
+<a name="context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -70,6 +72,8 @@ add them within this option.
 |Recommended|true|
 |Options|`tags`|
 
+<a name="user-content-failing-examples"></a>
+<a name="failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -148,6 +152,10 @@ const a = "a";
 // Message: @private should be empty.
 ````
 
+
+
+<a name="user-content-passing-examples"></a>
+<a name="passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -221,3 +229,4 @@ function quux () {}
   @private **/
 function quux () {}
 ````
+

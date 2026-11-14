@@ -1,0 +1,1830 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec-bases"
+	 xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <title>
+    Bases and coordinate systems
+  </title>
+
+  <introduction>
+    <p> In this section, we will develop the concept of a
+    <em>basis</em> through which we will create new coordinate systems
+    in <m>\real^m</m>.  We will see that the right choice of a
+    coordinate system provides a more natural way to approach some
+    problems.
+    </p>
+  </introduction>
+
+  <subsection>
+    <title>Introduction</title>
+
+    <p> Standard Cartesian coordinates are commonly used to describe
+    points in the plane.  If we mention the point
+    <m>(4,3)</m>, we know that we arrive at this point from the origin
+    by moving four units to the right and three units up.
+    </p>
+
+    <p> Sometimes, however, it is more natural to work in a different
+    coordinate system.  Suppose that you live in the
+    city whose map is shown in <xref ref = "fig-city-map" /> and that
+    you would like to give a guest directions for getting from your
+    house to the store.  You would probably say something like, "Go
+    four blocks up Maple.  Then turn left on Main for three blocks."
+    The grid of streets in the city gives a more
+    natural coordinate system than standard north-south, east-west
+    coordinates.  We will see how a basis provides the right
+    framework for this type of thinking.
+    </p>
+
+    <figure xml:id="fig-city-map">
+      <caption>
+	A city map.
+      </caption>
+      <image width="45%">
+        <shortdescription>
+          Street map of a city
+        </shortdescription>
+        <description>
+          <p>A street map of a fictitious city with two sets
+          of parallel streets and an arrow indicating that north is
+          to the top of the map.  One set of streets runs roughly
+          southwest to northeast, and one of these streets is
+          labelled <q>Maple</q> and has a marked location labelled
+          <q>House</q>.  A second set of streets runs roughly
+          northwest to southeast and has a street labelled
+          <q>Main</q> with a location labelled <q>Store</q>.</p>
+        </description>
+        <prefigure xmlns="https://prefigure.org"
+                   label="pf-city-map">
+          <xi:include href="prefigure/section3-2/city-map.xml"/>
+        </prefigure>
+      </image>
+    </figure>
+
+    <exploration label="ula-preview-3-2">
+      <introduction>
+        <p> Consider the vectors
+        <md>
+	  \vvec_1 = \twovec{2}{1},
+	  \vvec_2 = \twovec{1}{2}
+        </md>
+        in <m>\real^2</m>, which are shown in
+        <xref ref="fig-basis-1" />.
+        </p>
+
+        <figure xml:id="fig-basis-1">
+	  <caption>
+	    Linear combinations of <m>\vvec_1</m> and <m>\vvec_2</m>.
+	  </caption>
+	  <image width="50%">
+            <shortdescription>
+              Two vectors and a set of skewed grid lines
+              representing their linear combinations.
+            </shortdescription>
+            <description>
+              <p>There is a set of coordinate axes and a standard
+              <m>1\times1</m> coordinate grid in the background.
+              There are also two vectors <m>\vvec_1=\twovec21</m>
+              and <m>\vvec_2=\twovec12</m> and two sets of parallel
+              lines representing the linear combinations of
+              <m>\vvec_1</m> and <m>\vvec_2</m>.  One set of
+              parallel lines is parallel to <m>\vvec_1</m> and
+              passes through the integer multiples of <m>\vvec_2</m>
+              while the other set is parallel to <m>\vvec_2</m> and
+              passes through integer multiples of
+              <m>\vvec_1</m>.</p>
+            </description>
+            <prefigure xmlns="https://prefigure.org"
+                       label="pf-basis-1">
+              <xi:include href="prefigure/section3-2/basis-1.xml"/>
+            </prefigure>
+          </image>
+        </figure>
+      </introduction>
+
+      <task label="ula-preview-3-2-a">
+        <statement>
+          <p>Indicate the linear combination <m>\vvec_1 -
+	  2\vvec_2</m> on the figure.
+	  </p>
+        </statement>
+        <response component="rs-preview"/>
+        <solution>
+	  <p> We can see graphically, or we can compute, that
+	  <m>\vvec_1-2\vvec_2 = \twovec{0}{-3}</m>.
+	  </p>
+        </solution>
+      </task>
+
+      <task label="ula-preview-3-2-b">
+        <statement>
+	  <p> Express the vector <m>\twovec{-3}{0}</m> as a linear
+	  combination of <m>\vvec_1</m> and <m>\vvec_2</m>. </p>
+        </statement>
+        <response component="rs-preview"/>
+        <solution>
+	  <p> Again, we graphically see that <m>\twovec{-3}{0} =
+	  -2\vvec_1+\vvec_2</m>.
+	  </p>
+        </solution>
+      </task>
+
+      <task label="ula-preview-3-2-c">
+        <statement>
+	  <p> Find the linear combination <m>10\vvec_1 -
+	  13\vvec_2</m>.  </p>
+        </statement>
+        <response component="rs-preview"/>
+        <solution>
+	  <p> Since the linear combination extends beyond the
+	  figure, we compute that <m>10\vvec_1-13\vvec_2 =
+	  \twovec{7}{-16}</m>.
+	  </p>
+        </solution>
+      </task>
+
+      <task label="ula-preview-3-2-d">
+        <statement>
+	  <p> Express the vector <m>\twovec{16}{-4}</m> as a linear
+	  combination of <m>\vvec_1</m> and <m>\vvec_2</m>. </p>
+        </statement>
+        <response component="rs-preview"/>
+        <solution>
+	  <p> We need to find the solution to the linear system
+	  <m>c_1\vvec_1 + c_2\vvec_2 = \twovec{16}{-4}</m>, which is
+	  <m>\twovec{c_1}{c_2} = \twovec{12}{-8}</m>.
+	  </p>
+        </solution>
+      </task>
+
+      <task label="ula-preview-3-2-e">
+        <statement>
+	  <p> Explain why every vector in <m>\real^2</m> can be
+	  written as a linear combination of <m>\vvec_1</m> and
+	  <m>\vvec_2</m> in exactly one way. </p>
+        </statement>
+        <response component="rs-preview"/>
+        <solution>
+	  <p> The matrix <m>\left[\begin{array}{rr} \vvec_1 \amp
+	  \vvec_2 \end{array}\right]</m> has a pivot position in every
+	  row and every column.
+	  </p>
+        </solution>
+      </task>
+
+      <task component="rs-preview">
+        <query label="ula-preview-3-2-poll" visibility="instructor">
+          <statement>
+            <p>I feel confident with the material in this activity.</p>
+          </statement>
+          <choices>
+            <choice><p>Strongly Agree</p></choice>
+            <choice><p>Agree</p></choice>
+            <choice><p>Neutral</p></choice>
+            <choice><p>Disagree</p></choice>
+            <choice><p>Strongly Disagree</p></choice>
+          </choices>
+        </query>
+      </task>
+
+      <task component="rs-preview"
+            label="ula-preview-3-2-what-else">
+        <statement>
+          <p>What would you need to know to feel
+          more confident about this material?</p>
+        </statement>
+        <response/>
+      </task>
+    </exploration>
+
+    <p> In the preview activity, we worked with a set of two vectors
+    in <m>\real^2</m> and found that we could express any vector in
+    <m>\real^2</m> in two different ways:  in the usual way where the
+    components of the
+    vector describe horizontal and vertical changes, and in a new
+    way as a linear combination of <m>\vvec_1</m> and <m>\vvec_2</m>.
+    We could also translate between these two 
+    descriptions.  This example illustrates the central idea of this
+    section.  </p> 
+  </subsection>
+
+  <subsection>
+    <title> Bases </title>
+
+    <p> In the preview activity, we created a new coordinate system
+    for <m>\real^2</m> using linear combinations of a set of two
+    vectors.  More generally, the following definition will guide us.
+    </p>
+
+    <definition>
+      <statement>
+        <p>
+	  <idx> basis </idx>
+	  A set of vectors <m>\vvec_1,\vvec_2,\ldots,\vvec_n</m> in
+	  <m>\real^m</m> is called a <em>basis</em> for <m>\real^m</m>
+	  if the set of vectors spans <m>\real^m</m> and is linearly
+	  independent.
+        </p>
+      </statement>
+    </definition>
+
+    <activity>
+      <statement>
+	<p>
+	  We will look at some examples of bases in this activity.
+	  <ol marker="a.">
+	    <li><p> In the preview activity, we worked with the set of
+	    vectors in <m>\real^2</m>:
+	    <md>
+	      \vvec_1 = \twovec{2}{1},
+	      \vvec_2 = \twovec{1}{2}
+	      </md>.
+	      Explain why these vectors form a basis for <m>\real^2</m>.
+	    </p></li>
+
+	    <li><p> Consider the set of vectors in <m>\real^3</m>
+	    <md>
+	      \vvec_1 = \threevec{1}{1}{1},
+	      \vvec_2 = \threevec{0}{1}{-1},
+	      \vvec_3 = \threevec{1}{0}{-1}
+	    </md>
+	    and determine whether they form a basis for
+	    <m>\real^3</m>.</p>
+	    <sage>
+	      <input>
+	      </input>
+	    </sage>
+	    </li>
+
+	    <li><p> Do the vectors
+	    <md>
+	      \vvec_1 = \threevec{-2}{1}{3},
+	      \vvec_2 = \threevec{3}{0}{-1},
+	      \vvec_3 = \threevec{1}{1}{0},
+	      \vvec_4 = \threevec{0}{3}{-2}
+	    </md>
+	    form a basis for <m>\real^3</m>?  </p></li>
+
+	    <li><p> Explain why the vectors
+	    <m>\evec_1,\evec_2,\evec_3</m> form a basis for
+	    <m>\real^3</m>.  </p></li>
+
+	    <li><p> If a set of vectors
+	    <m>\vvec_1,\vvec_2,\ldots,\vvec_n</m> forms a basis for
+	    <m>\real^m</m>, what can you guarantee about the pivot
+	    positions of the matrix
+	    <md>
+	      \left[\begin{array}{rrrr}
+	      \vvec_1 \amp \vvec_2 \amp \ldots \amp \vvec_n
+	      \end{array}\right]
+	      </md>?
+	    </p></li>
+
+	    <li><p> If the set of vectors
+	    <m>\vvec_1,\vvec_2,\ldots,\vvec_n</m> is a basis 
+	    for <m>\real^{10}</m>, how many vectors must be in the set?
+	    </p></li>
+	  </ol>
+	</p>
+      </statement>
+
+      <solution>
+	<p><ol marker="a.">
+	  <li><p> The matrix <m>\left[\begin{array}{rr} \vvec_1 \amp
+	  \vvec_2 \end{array}\right]</m> is row equivalent to the
+	  identity matrix so it has a pivot position in every row.
+	  The span of the columns is therefore <m>\real^2</m>.  There
+	  is also a pivot position in every column, which means that
+	  the columns are linearly independent.  </p></li>
+
+	  <li><p> We note that
+	  <md>
+	    \left[\begin{array}{rrr}
+	    1 \amp 0 \amp 1 \\
+	    1 \amp 1 \amp 0 \\
+	    1 \amp -1 \amp -1
+	    \end{array}\right]
+	    \sim
+	    \left[\begin{array}{rrr}
+	    1 \amp 0 \amp 0 \\
+	    0 \amp 1 \amp 0 \\
+	    0 \amp 0 \amp 1
+	    \end{array}\right]\text{.}
+	  </md>
+	  Since there is a pivot position in every row, the span of
+	  the vectors is <m>\real^3</m>.  Since there is a pivot
+	  position in every column, the vectors are linearly
+	  independent.  Consequently, this set of vectors forms a
+	  basis for <m>\real^3</m>.  </p></li>
+
+	  <li><p> The matrix whose columns are the
+	  vectors <m>\vvec_1</m>, <m>\vvec_2</m>, <m>\vvec_3</m>, and
+	  <m>\vvec_4</m> has dimensions <m>3\times4</m>.
+	  Therefore, there cannot be a pivot position in every column,
+	  which tells us that the columns cannot be linearly
+	  independent.  Therefore, the set of vectors do not form a
+	  basis for <m>\real^3</m>.
+	  </p></li>
+
+	  <li><p> Putting these vectors into a matrix produces the
+	  identity matrix, which has a pivot position in every row and
+	  every column.  Therefore, the span of the vectors is
+	  <m>\real^3</m>, and they are linearly independent.
+	  </p></li>
+
+	  <li><p> There must be a pivot position in every row and
+	  every column.
+	  </p></li>
+
+	  <li><p> A basis for <m>\real^{10}</m> must have <m>10</m>
+	  vectors.  Because the associated matrix must have a pivot
+	  position in every row and every column, there must be the
+	  same number of columns as there are rows.  Since the vectors
+	  are <m>10</m>-dimensional, there must be 10 vectors.
+	  </p></li>
+	</ol></p>
+      </solution>
+	    
+    </activity>
+	
+    <p> We can develop a test to determine if a set of vectors
+    <m>\vvec_1,\vvec_2,\ldots,\vvec_n</m> forms a
+    basis for <m>\real^m</m> by considering the matrix
+    <md>
+      A = \left[\begin{array}{rrrr}
+      \vvec_1 \amp \vvec_2 \amp \ldots \amp \vvec_n
+      \end{array}\right]
+    </md>.
+    To be a basis, this set of vectors must span <m>\real^m</m> and be
+    linearly independent.
+    </p>
+
+    <p> We know that the span of the set of vectors is
+    <m>\real^m</m> if and only if <m>A</m> has a pivot position in every
+    row.  We also know that the set of vectors is linearly
+    independent if and only if <m>A</m> has a pivot position in every
+    column.  This means that a set of vectors forms a basis if and
+    only if <m>A</m> has a pivot in every row and every column.
+    Therefore, <m>A</m> must be row equivalent to the identity matrix
+    <m>I</m>: 
+    <md>
+      A \sim \left[\begin{array}{cccc}
+      1 \amp 0 \amp \cdots \amp 0 \\
+      0 \amp 1 \amp \cdots \amp 0 \\
+      \vdots \amp \vdots \amp \ddots \amp \vdots \\
+      0 \amp 0 \amp \cdots \amp 1
+      \end{array}\right] = I
+    </md>.
+    </p>
+
+    <p> In addition to helping identify bases, this fact tells us
+    something important about the number of vectors in a basis.  Since
+    the matrix <m>A</m> has a pivot position in every row and every
+    column, it must have the same number of rows as columns.
+    Therefore, the number of vectors in a basis for <m>\real^m</m>
+    must be <m>m</m>.  For example, a basis for <m>\real^{23}</m> must
+    have exactly 23 vectors.
+    </p>
+
+    <proposition>
+      <statement>
+	<p> A set of vectors forms a basis for <m>\real^m</m> if and
+	only if the matrix 
+	<md>
+	  A = \left[\begin{array}{rrrr}
+	  \vvec_1 \amp \vvec_2 \amp \cdots \amp \vvec_n
+	  \end{array}\right]
+	  \sim I.
+	</md>
+	This means there must be <m>m</m> vectors in a basis for
+	<m>\real^m</m>. </p>
+      </statement>
+    </proposition>
+
+    <example>
+      <statement>
+	<p> Notice that the vectors 
+	<md>
+	  \evec_1 = \threevec{1}{0}{0},
+	  \evec_2 = \threevec{0}{1}{0},
+	  \evec_3 = \threevec{0}{0}{1}
+	</md>
+	form the columns of the
+	<m>3\times3</m> identity matrix, which implies that this set
+	forms a basis for <m>\real^3</m>.
+	More generally, the set of vectors
+	<m>\evec_1,\evec_2,\ldots,\evec_m</m> forms a basis for
+	<m>\real^m</m>, which we call the <em>standard</em>
+	basis for <m>\real^m</m>.
+	<idx> basis, standard </idx>
+	</p>
+      </statement>
+    </example>
+
+  </subsection>
+
+  <subsection>
+    <title> Coordinate systems </title>
+
+    <p> A basis for <m>\real^m</m> forms a coordinate system for
+    <m>\real^m</m>, as we will describe.  Rather than continuing to
+    write a list of vectors, we will find it convenient to denote a
+    basis using a single symbol, such as
+    <md>
+      \bcal = \{\vvec_1,\vvec_2,\ldots,\vvec_m\}
+    </md>
+    </p>
+
+    <example>
+      <statement>
+	<p>
+	  In this section's preview activity, we considered the
+	  vectors
+	  <md>
+	    \vvec_1 = \twovec{2}{1},
+	    \vvec_2 = \twovec{1}{2}
+	  </md>,
+	  which form a basis <m>\bcal=\{\vvec_1,\vvec_2\}</m> for
+	  <m>\real^2</m>.  
+	</p>
+
+	<sidebyside widths="45% 45%">
+	  <p> In the standard coordinate system, the point <m>(2,-3)</m>
+	  is found by moving 2 units to the right and 3 units down.  We
+	  would like to define a new coordinate system where we interpret
+	  <m>(2,-3)</m> to mean we move two times along <m>\vvec_1</m> and
+	  3 times along <m>-\vvec_2</m>.  As we see in the figure,
+	  doing so leaves us at the point <m>(1,-4)</m>, expressed in
+	  the usual coordinate system.
+	  </p>
+	  <image>
+            <shortdescription>
+              Two vectors and a set of skewed grid lines
+              representing their linear combinations.
+            </shortdescription>
+            <description>
+              <p>There is a set of coordinate axes and a standard
+              <m>1\times1</m> coordinate grid in the background.
+              There are also two vectors <m>\vvec_1=\twovec21</m>
+              and <m>\vvec_2=\twovec12</m> and two sets of parallel
+              lines representing the linear combinations of
+              <m>\vvec_1</m> and <m>\vvec_2</m>.  One set of
+              parallel lines is parallel to <m>\vvec_1</m> and
+              passes through the integer multiples of <m>\vvec_2</m>
+              while the other set is parallel to <m>\vvec_2</m> and
+              passes through integer multiples of
+              <m>\vvec_1</m>.</p>
+            </description>
+            <prefigure xmlns="https://prefigure.org"
+                       label="pf-basis-1-2">
+              <xi:include href="prefigure/section3-2/basis-1.xml"/>
+            </prefigure>
+          </image>
+        </sidebyside>
+
+	<p> We have seen that
+	<md>
+	  \xvec = \twovec{1}{-4} = 2\vvec_1 - 3\vvec_2 </md>.  The
+	  coordinates of the vector <m>\xvec</m> in the new coordinate
+	  system are the weights that we use to create <m>\xvec</m> as
+	  a linear combination of <m>\vvec_1</m> and <m>\vvec_2</m>.
+	</p>
+
+	<p> Since we now have two descriptions of the vector <m>\xvec</m>,
+	we need some notation to keep track of
+	which coordinate system we are 
+	using.  Because <m>\twovec{1}{-4} = 2\vvec_1 - 3\vvec_2</m>, we
+	will write 
+	<md>
+	  \coords{\twovec{1}{-4}}{\bcal} =
+	  \twovec{2}{-3} 
+	</md>.
+	More generally, <m>\coords{\xvec}{\bcal}</m> will denote the
+	coordinates of <m>\xvec</m> in the basis <m>\bcal</m>;  that
+	is, <m>\coords{\xvec}{\bcal}</m> is the vector
+	<m>\twovec{c_1}{c_2}</m> of weights such that
+	<md>
+	  \xvec = c_1\vvec_1 + c_2 \vvec_2
+	</md>.
+	</p>
+
+	<p> For example, if the coordinates of <m>\xvec</m> in the
+	basis <m>\bcal</m> are
+	<md>
+	  \coords{\xvec}{\bcal} = \twovec{5}{-2}
+	</md>,
+	then
+	<md>
+	  \xvec = 5\vvec_1 - 2\vvec_2 = 5\twovec{2}{1}-2\twovec{1}{2}
+	  = \twovec{8}{1},
+	</md>
+	and we conclude that
+	<md>
+	  \coords{\twovec{8}{1}}{\bcal} = \twovec{5}{-2}
+	</md>.
+	This demonstrates how we can translate coordinates in the
+	basis <m>\bcal</m> into standard coordinates.
+	</p>
+
+	<p> Suppose we know the expression of a vector <m>\xvec</m> in
+	standard coordinates.  How can we find its coordinates in the
+	basis <m>\bcal</m>?  For instance, suppose
+	<m>\xvec=\twovec{-8}{2}</m> and that we would like to find
+	<m>\coords{\xvec}{\bcal}</m>.  We can write
+	<md>
+	  \coords{\twovec{-8}{2}}{\bcal}=\twovec{c_1}{c_2},
+	</md>
+	which means that
+	<md>
+	  \twovec{-8}{2} = c_1\vvec_1 + c_2\vvec_2
+	</md>
+	or
+	<md>
+	  c_1 \twovec{2}{1} + c_2 \twovec{1}{2} = \twovec{-8}{2}.
+	</md>
+	This linear system for the weights defines an augmented matrix
+	<md>
+	  \left[\begin{array}{rr|r}
+	  2 \amp 1 \amp -8 \\
+	  1 \amp 2 \amp 2 \\
+	  \end{array}\right]
+	  \sim
+	  \left[\begin{array}{rr|r}
+	  1 \amp 0 \amp -6 \\
+	  0 \amp 1 \amp 4 \\
+	  \end{array}\right],
+	</md>.
+	which means that
+	<md>
+	  \coords{\twovec{-8}{2}}{\bcal} = \twovec{-6}{4}
+	</md>.
+	</p>
+      </statement>
+    </example>
+
+    <p> This example illustrates how a basis in <m>\real^2</m>
+    provides a new coordinate system for <m>\real^2</m> and shows how
+    we may translate between this coordinate system and the standard
+    one. </p>
+
+    <p> More generally, suppose that
+    <m>\bcal=\{\vvec_1,\vvec_2,\ldots,\vvec_m\}</m> is a basis for
+    <m>\real^m</m>.  We know that the span of the vectors is
+    <m>\real^m</m>, which implies that any vector <m>\xvec</m> in
+    <m>\real^m</m> can be written as a linear combination of the
+    vectors.  In addition, we know that the vectors are linearly
+    independent, which means that we can write <m>\xvec</m> as a
+    linear combination of the vectors in exactly one way.  Therefore,
+    we have
+    <md>
+      \xvec = c_1\vvec_1 + c_2\vvec_2 + \ldots + c_m\vvec_m
+    </md>
+    where the weights <m>c_1, c_2,\ldots, c_m</m> are unique.  In this
+    case, we write the coordinate description of <m>\xvec</m> in the
+    basis <m>\bcal</m> as
+    <md>
+      \coords{\xvec}{\bcal} = \cfourvec{c_1}{c_2}{\vdots}{c_m}
+    </md>.
+    </p>
+
+    <activity>
+      <statement>
+      <p> Let's begin with the basis <m>\bcal =
+      \{\vvec_1,\vvec_2\}</m> of <m>\real^2</m> where
+      <md>
+	\vvec_1 = \twovec{3}{-2},
+	\vvec_2 = \twovec{2}{1}
+      </md>.
+      <ol marker="a.">
+	<li><p> If the coordinates of <m>\xvec</m> in the basis
+	<m>\bcal</m> are  <m>\coords{\xvec}{\bcal} = \twovec{-2}{4}</m>, what
+	is the vector <m>\xvec</m>? </p></li>
+
+	<li><p> If <m>\xvec = \twovec{3}{5}</m>, find the coordinates
+	of <m>\xvec</m> in the basis <m>\bcal</m>;  that is, find
+	<m>\coords{\xvec}{\bcal}</m>. </p></li>
+
+	<li><p> Find a matrix <m>A</m> such that, for any vector
+	<m>\xvec</m>, we have <m>\xvec = A\coords{\xvec}{\bcal}</m>.
+	Explain why this matrix is invertible. </p></li>
+
+	<li><p> Using what you found in the previous part, find a
+	matrix <m>B</m> such that, for any vector <m>\xvec</m>, we
+	have <m>\coords{\xvec}{\bcal} = B\xvec</m>.  What is the
+	relationship between the two matrices <m>A</m> and <m>B</m>?
+	Explain why this relationship holds. </p></li>
+
+	<li><p> Suppose we consider the standard basis
+	<md>\ecal = \{\evec_1,\evec_2\}</md>.
+	What is the relationship between <m>\xvec</m> and
+	<m>\coords{\xvec}{\ecal}</m>? </p></li>
+
+	<li><p> Suppose we also consider the basis
+	<md>
+	  \ccal = \left\{\twovec{1}{2}, \twovec{-2}{1}\right\}
+	</md>.
+	Find a matrix <m>C</m> that converts coordinates in the basis
+	<m>\ccal</m> into coordinates in the basis <m>\bcal</m>;  that
+	is, 
+	<md>
+	  \coords{\xvec}{\bcal} = C \coords{\xvec}{\ccal}
+	</md>.
+	You may wish to think about converting coordinates from the basis
+	<m>\ccal</m> into the standard coordinate system and then into
+	the basis <m>\bcal</m>.
+	</p></li>
+      </ol></p>
+      </statement>
+
+      <solution>
+	<p><ol marker="a.">
+	  <li><p> We know that
+	  <m>\xvec=-2\vvec_1+4\vvec_2=\twovec{2}{8}</m>.
+	  </p></li>
+
+	  <li><p> We solve the linear system
+	  <m>c_1\vvec_1+c_2\vvec_2=\twovec{3}{5}</m> to find
+	  <m>\coords{\xvec}{\bcal}=\twovec{-1}{3}</m>.
+	  </p></li>
+
+	  <li><p> If <m>\xvec=\twovec{c_1}{c_2}</m>, we have
+	  <md>
+	    \xvec=c_1\vvec_1+c_2\vvec_2 =
+	    \left[\begin{array}{rr}
+	    3 \amp 2 \\
+	    -2 \amp 1 \\
+	    \end{array}\right]\twovec{c_1}{c_2}
+	    = A \coords{\xvec}{\bcal}\text{.}
+	  </md>
+	  This matrix <m>A</m>, whose columns are the vectors
+	  <m>\vvec_1</m> and <m>\vvec_2</m>, has a pivot position in
+	  every row and every column because the vectors form a basis.
+	  It is, therefore, row equivalent to the identity matrix and
+	  hence invertible.
+	  </p></li>
+
+	  <li><p> Since we have <m>\xvec = A\coords{\xvec}{\bcal}</m>,
+	  we also have <m>A^{-1}\xvec = \coords{\xvec}{\bcal}</m>.
+	  </p></li>
+
+	  <li><p> We have
+	  <md>
+	    \xvec=\left[\begin{array}{rr}
+	    1\amp0 \\
+	    0 \amp 1 \\
+	    \end{array}\right]
+	    \coords{\xvec}{\ecal} = I\coords{\xvec}{\ecal} =
+	    \coords{\xvec}{\ecal}\text{.}
+	  </md>
+	  </p></li>
+
+	  <li><p> If we define <m>B</m> to be the matrix whose columns
+	  are <m>\twovec{1}{2}</m> and <m>\twovec{-2}{1}</m>, then
+	  <md>
+	    \coords{\xvec}{\bcal} = A^{-1}\xvec =
+	    A^{-1}B\coords{\xvec}{\ccal}\text{.} 
+	  </md>
+	  Therefore,
+	  <m>C=A^{-1}B = \left[\begin{array}{rr}
+	  -\frac{3}{7} \amp -\frac{4}{7} \\
+	  \frac{8}{7} \amp -\frac{1}{7}
+	  \end{array}\right]\text{.}
+	  </m>
+	  </p></li>
+
+	</ol></p>
+      </solution>
+	    
+    </activity>
+
+    <p> This activity demonstrates how we can efficiently convert
+    between coordinate systems defined by different bases.  Let's
+    consider a basis <m>\bcal = \{\vvec_1,\vvec_2,\ldots,\vvec_m\}</m>
+    and a vector <m>\xvec</m>.  We know that
+    <md>
+      \begin{aligned}
+      \xvec \amp {}={} c_1\vvec_1 +c_2\vvec_2+\ldots+c_m\vvec_m \\
+      \\
+      \amp {}={}
+      \left[\begin{array}{rrrr}
+      \vvec_1 \amp \vvec_2 \amp \cdots \amp \vvec_m
+      \end{array}\right]
+      \cfourvec{c_1}{c_2}{\vdots}{c_m} \\
+      \\
+      \amp {}={}
+      \left[\begin{array}{rrrr}
+      \vvec_1 \amp \vvec_2 \amp \cdots \amp \vvec_m
+      \end{array}\right]
+      \coords{\xvec}{\bcal}\text{.}
+      \end{aligned}
+    </md>
+    If we use <m>P_{\bcal}</m> to denote the matrix whose columns are
+    the basis vectors, then we find that
+    <md>
+      \xvec = P_{\bcal}\coords{\xvec}{\bcal}
+    </md>
+    where <m>P_{\bcal} = \left[\begin{array}{rrrr}
+    \vvec_1 \amp \vvec_2 \amp \cdots \amp \vvec_m
+    \end{array}\right]</m>.  This means that the matrix
+    <m>P_{\bcal}</m> converts coordinates in the basis <m>\bcal</m>
+    into standard coordinates.</p>
+
+    <p> Since the columns of <m>P_{\bcal}</m> are the basis vectors
+    <m>\vvec_1,\vvec_2,\ldots,\vvec_m</m>, we know that <m>P_{\bcal}
+    \sim I_m</m>, and <m>P_{\bcal}</m> is therefore invertible.
+    Since we have
+    <md>
+      \xvec = P_{\bcal}\coords{\xvec}{\bcal}
+    </md>,
+    we must also have
+    <md>
+      P_{\bcal}^{-1}\xvec = \coords{\xvec}{\bcal}
+    </md>.
+    </p>
+
+    <proposition xml:id="proposition-coordinate-transform">
+      <statement>
+	<p>
+	  If <m>\bcal</m> is a basis and <m>P_{\bcal}</m> the matrix
+	  whose columns are the basis vectors, then
+	  <md>
+	    \begin{aligned}
+	    \xvec \amp = P_{\bcal}\coords{\xvec}{\bcal}, \\ \\
+	    \coords{\xvec}{\bcal} \amp = P_{\bcal}^{-1}\xvec.
+	    \end{aligned}
+	  </md>
+	</p>
+      </statement>
+    </proposition>
+
+    <p> If we have another basis <m>\ccal</m>, we find, in the same
+    way, that <m>\xvec = P_{\ccal}\coords{\xvec}{\ccal}</m> for the
+    conversion between coordinates in the basis <m>\ccal</m> into
+    standard coordinates.  We then have
+    <md>\coords{\xvec}{\bcal} = P^{-1}_{\bcal} \xvec
+    = P_{\bcal}^{-1}(P_{\ccal} \coords{\xvec}{\ccal})
+    = (P_{\bcal}^{-1}P_{\ccal}) \coords{\xvec}{\ccal}
+    </md>.
+    Therefore, <m>P_{\bcal}^{-1}P_{\ccal}</m> is the matrix that
+    converts <m>\ccal</m>-coordinates into <m>\bcal</m>-coordinates.
+    </p>
+
+  </subsection>
+
+  <subsection>
+    <title> Examples of bases </title>
+
+    <p> We will now look at some examples of bases that illustrate how
+    it can be useful to study a problem using a different coordinate
+    system. 
+    </p>
+
+    <example>
+      <statement>
+	<p> Let's consider the basis of <m>\real^3</m>:
+	<md>
+	  \bcal = \left\{
+	  \threevec{1}{0}{-2},
+	  \threevec{-2}{1}{0},
+	  \threevec{1}{1}{2}
+	  \right\}.
+	</md>
+	It is relatively straightforward to convert a vector's
+	representation in this basis into to the standard basis using
+	the matrix whose columns are the basis vectors:
+	<md>
+	  P_{\bcal} =
+	  \left[\begin{array}{rrr}
+	  1 \amp -2 \amp 1 \\
+	  0 \amp 1 \amp 1 \\
+	  -2 \amp 0 \amp 2 \\
+	  \end{array}\right].
+	</md>
+	For example, suppose that the vector <m>\xvec</m> is described
+	in the coordinate system defined by the basis as
+	<m>\coords{\xvec}{\bcal} = \threevec{2}{-2}{1}</m>.  We then
+	have
+	<md>
+	  \xvec = P_{\bcal}\coords{\xvec}{\bcal} =
+	  \left[\begin{array}{rrr}
+	  1 \amp -2 \amp 1 \\
+	  0 \amp 1 \amp 1 \\
+	  -2 \amp 0 \amp 2 \\
+	  \end{array}\right]
+	  \threevec{2}{-2}{1}
+	  =
+	  \threevec{7}{-1}{-2}
+	</md>.
+	</p>
+
+	<p> Consider now the vector <m>\xvec=\threevec{3}{1}{-2}</m>.
+	If we would like to express <m>\xvec</m> in the coordinate
+	system defined by <m>\bcal</m>, then we compute
+	<md>
+	  \coords{\xvec}{\bcal} = P^{-1}_{\bcal}\xvec
+	  =
+	  \left[\begin{array}{rrr}
+	  \frac14 \amp \frac 12 \amp -\frac38 \\
+	  -\frac14 \amp \frac12 \amp -\frac18 \\
+	  \frac14 \amp \frac12 \amp \frac18 \\
+	  \end{array}\right]
+	  \threevec{3}{1}{-2}
+	  =
+	  \threevec{2}{0}{1}
+	</md>.
+	</p>
+      </statement>
+    </example>
+
+    <example xml:id="example-wavelet-basis">
+      <statement>
+	<p>
+	  Suppose we work for a company that records its quarterly
+	  revenue, in millions of dollars, as:
+	</p>
+	<table>
+	  <title>A company's quarterly revenue</title>
+	  <tabular top="major" halign="center">
+	    <row bottom = "minor">
+	      <cell> Quarter </cell>
+	      <cell> Revenue </cell>
+	    </row>
+	    <row> <cell> 1 </cell> <cell> 10.3 </cell></row>
+	    <row> <cell> 2 </cell> <cell> 13.1 </cell></row>
+	    <row> <cell> 3 </cell> <cell> 7.5 </cell></row>
+	    <row bottom="medium">
+	      <cell> 4 </cell> <cell> 8.2 </cell>
+	    </row>
+	  </tabular>
+	</table>
+
+	<sidebyside widths="45% 45%">
+	  <p> Rather than using a table to record the data, we could
+	  display it in a graph or write it as a vector in
+	  <m>\real^4</m>: 
+	  <md>\xvec=\fourvec{10.3}{13.1}{7.5}{8.2}
+	  </md>.
+	  </p>
+	  <image>
+            <shortdescription>
+              Plot of four data points representing a company's
+              revenue in the four quarters of a year.
+            </shortdescription>
+            <description>
+              <p>Four data points are plotted representing a company's
+              revenue in the four quarters of a year.  The horizontal
+              axis is labelled <q>Quarter</q> and indicates quarters
+              one, two, three, and four.  The vertical axis is
+              labelled <q>Revenue</q> and has labelled positions five,
+              ten, and fifteen.  The data points are plotted at
+              <m>(1,10.3)</m>, <m>(2,13.1)</m>, <m>(3,7.5)</m>, and
+              <m>(4,8.2)</m>.</p>
+            </description>
+            <prefigure xmlns="https://prefigure.org"
+                       label="pf-basis-revenue">
+              <xi:include href="prefigure/section3-2/basis-revenue.xml"/>
+            </prefigure>
+          </image>
+	</sidebyside>
+
+	<p> Let's consider a new basis <m>\bcal</m> for
+	<m>\real^4</m> using vectors
+	<md>
+	  \vvec_1=\fourvec{1}{1}{1}{1},~~~
+	  \vvec_2=\fourvec{1}{1}{-1}{-1},~~~
+	  \vvec_3=\fourvec{1}{-1}{0}{0},~~~
+	  \vvec_4=\fourvec{0}{0}{1}{-1}
+	</md>.
+	We may view these basis elements graphically, as in <xref
+	ref="fig-basis-revenue-elements" />
+	</p>
+
+	<figure xml:id="fig-basis-revenue-elements">
+	  <caption> A representation of the basis elements of
+	  <m>\bcal</m>.
+	  </caption>
+	  <sbsgroup widths="40% 40%">
+            <sidebyside>
+	      <image>
+                <shortdescription>
+                  A visual representation of the first basis vector
+                </shortdescription>
+                <description>
+                  <p>A visual representation of the first basis vector
+                  in which each component is one.</p>
+                </description>
+                <prefigure xmlns="https://prefigure.org"
+                           label="pf-basis-revenue-elements-a">
+                  <xi:include href="prefigure/section3-2/basis-revenue-elements-a.xml"/>
+                </prefigure>
+              </image>
+	      <image>
+                <shortdescription>
+                  A visual representation of the second basis vector
+                </shortdescription>
+                <description>
+                  <p>A visual representation of the second basis vector
+                  in which the first two components are one and the
+                  last two are negative one.</p>
+                </description>
+                <prefigure xmlns="https://prefigure.org"
+                           label="pf-basis-revenue-elements-b">
+                  <xi:include href="prefigure/section3-2/basis-revenue-elements-b.xml"/>
+                </prefigure>
+              </image>
+	    </sidebyside>
+            <sidebyside>
+	      <image>
+                <shortdescription>
+                  A visual representation of the third basis vector
+                </shortdescription>
+                <description>
+                  <p>A visual representation of the third basis vector
+                  in which the first two components are one and
+                  negative one and the last two are zero.</p>
+                </description>
+                <prefigure xmlns="https://prefigure.org"
+                           label="pf-basis-revenue-elements-c">
+                  <xi:include href="prefigure/section3-2/basis-revenue-elements-c.xml"/>
+                </prefigure>
+              </image>
+	      <image>
+                <shortdescription>
+                  A visual representation of the fourth basis vector
+                </shortdescription>
+                <description>
+                  <p>A visual representation of the fourth basis vector
+                  in which the first two components are zero and the
+                  last two are one and negative one.</p>
+                </description>
+                <prefigure xmlns="https://prefigure.org"
+                           label="pf-basis-revenue-elements-d">
+                  <xi:include href="prefigure/section3-2/basis-revenue-elements-d.xml"/>
+                </prefigure>
+              </image>
+	    </sidebyside>
+          </sbsgroup>
+	</figure>
+
+	<p>
+	  To convert our revenue vectors into the
+	  coordinates given by <m>\bcal</m>, we form the matrices:
+	  <md>
+	    P_{\bcal} =
+	    \left[\begin{array}{rrrr}
+	    1 \amp 1 \amp 1 \amp 0 \\
+	    1 \amp 1 \amp -1 \amp 0 \\
+	    1 \amp -1 \amp 0 \amp 1 \\
+	    1 \amp -1 \amp 0 \amp -1 \\
+	    \end{array}\right],~~~
+	    P_{\bcal}^{-1} =
+	    \left[\begin{array}{rrrr}
+	    \frac14 \amp \frac14 \amp \frac14 \amp \frac14 \\
+	    \frac14 \amp \frac14 \amp -\frac14 \amp -\frac14 \\
+	    \frac12 \amp -\frac12 \amp 0 \amp 0 \\
+	    0 \amp 0 \amp \frac12 \amp -\frac12 \\
+	    \end{array}\right].
+	  </md>
+	  In particular, if the revenue vector is <m>\xvec =
+	  \fourvec{x_1}{x_2}{x_3}{x_4}</m>, then
+	  <md>
+	    \coords{\xvec}{\bcal} = \cfourvec
+	    {\frac14 x_1 + \frac14 x_2 + \frac14 x_3 + \frac14 x_4}
+	    {\frac14 x_1 + \frac14 x_2 - \frac14 x_3 - \frac14 x_4}
+	    {\frac12 x_1 - \frac12 x_2}
+	    {\frac12 x_3 - \frac12 x_4}.
+	  </md>
+	  Notice that the first component of
+	  <m>\coords{\xvec}{\bcal}</m> is the average of the
+	  components of <m>\xvec</m>.
+	</p>
+
+	<p>
+	  For our particular revenue vector <m>\xvec = 
+	  \fourvec{10.3}{13.1}{7.5}{8.2}</m>, we have
+	  <md>
+	    \coords{\xvec}{\bcal} = P_{\bcal}^{-1} \xvec =
+	    P_{\bcal}^{-1} \fourvec{10.3}{13.1}{7.5}{8.2} =
+	    \fourvec{9.775}{1.925}{-1.400}{-0.350}.
+	  </md>
+	  This means that our revenue vector is
+	  <md>
+	    \xvec = 9.775 \vvec_1 + 1.925 \vvec_2 - 1.400\vvec_3 -
+	    0.350 \vvec_4
+	  </md>.
+	  We will think about what these terms mean by adding
+	  them together one at a time.
+	</p>
+
+	<sbsgroup>
+	  <sidebyside widths="45% 45%">
+	    <p> The first term,
+	    <md>9.775\vvec_1 = \fourvec{9.775}{9.775}{9.775}{9.775},</md>
+	    gives us the average revenue over the year.
+	    </p>
+	    <image>
+              <shortdescription>
+                Plot of the revenue data points and a horizontal drawn
+                at their average.
+              </shortdescription>
+              <description>
+                <p>This diagram plots the four revenue data points as
+                before and adds a horiztonal line drawn at the average
+                of the four revenue values and extending across the
+                width of the diagram.</p>
+              </description>
+              <prefigure xmlns="https://prefigure.org"
+                         label="pf-basis-revenue-approx-1">
+                <xi:include
+                    href="prefigure/section3-2/basis-revenue-approx-1.xml"/>
+              </prefigure>
+            </image>
+	  </sidebyside>
+
+	  <sidebyside widths="45% 45%">
+	    <p> The average revenue for the first two quarters is
+	    11.7, which is 1.925 million dollars above the yearly
+	    average.  Similarly, the average revenue for the last two
+	    quarters is 1.925 million dollars below the yearly
+	    average.  This is recorded by the second term
+	    <md>1.925\vvec_2 =
+	    \cfourvec{1.925}{1.925}{-1.925}{-1.925}.
+	    </md>
+	    </p>
+	    <image>
+              <shortdescription>
+                Plot of the data points with horiztonal lines
+                indicating averages over two halves of a year.
+              </shortdescription>
+              <description>
+                <p>The four revenue data points are again plotted with
+                a horizontal line indicating the average drawn in the
+                background.  There are two horizontal line segments
+                added, the first of which represents the average of
+                the first two quarters with the second representing
+                the average of the last two quarters.  The two new
+                horizontal lines show the difference in the averages
+                over the two halves of the year compared to the
+                average over the entire year.</p>
+              </description>
+              <prefigure xmlns="https://prefigure.org"
+                         label="pf-basis-revenue-approx-2">
+                <xi:include
+                    href="prefigure/section3-2/basis-revenue-approx-2.xml"/>
+              </prefigure>
+            </image>
+	  </sidebyside>
+
+
+	  <sidebyside widths="45% 45%">
+	    <p> Finally, the first quarter's revenue is 1.400 million
+	    dollars below the average over the first two quarters and
+	    the second quarter's revenue is 1.400 million dollars
+	    above that average.  This, and the corresponding data for
+	    the last two quarters, is captured by the last two terms:
+	    <md>
+	      -1.400\vvec_3 - 0.350\vvec_4 = \cfourvec
+	      {-1.400}{1.400}{-0.350}{0.350}
+	    </md>.
+	    </p>
+	    <image>
+              <shortdescription>
+                Four revenue data points and short horizontal lines
+                through each of the points
+              </shortdescription>
+              <description>
+                <p>The four revenue data points are plotted with two
+                horizontal lines indicating the averages over the
+                first and second halves of the year drawn in the
+                background.</p>
+                <p>There are also four new horizontal lines passing
+                through each of the data points that indicate
+                the revenue in each quarter.  This demonstrates how
+                the revenue in each quarter differs from the average
+                revenue over its half of the year.</p>
+              </description>
+              <prefigure xmlns="https://prefigure.org"
+                         label="pf-basis-revenue-approx-3">
+                <xi:include
+                    href="prefigure/section3-2/basis-revenue-approx-3.xml"/>
+              </prefigure>
+            </image>
+	  </sidebyside>
+	</sbsgroup>
+
+	<p> If we write <m>\coords{\xvec}{\bcal} =
+	\fourvec{c_1}{c_2}{c_3}{c_4}</m>, we see that the coefficient
+	<m>c_1</m> measures the average revenue over the year,
+	<m>c_2</m> measures the deviation from the annual average in
+	the first and second halves of the year, and <m>c_3</m> 
+	measures how the revenue in the first and second quarter
+	differs from the average in the first half of the year.  In
+	this way, the coefficients provide a view of the revenue over
+	different time scales, from an annual summary to a finer view
+	of quarterly behavior.
+	</p>
+
+	<p> This basis is sometimes called a <em>Haar</em> wavelet
+	basis, and the change of basis is known as a <em>Haar</em>
+	wavelet transform.  In the next section, we will see how this
+	basis provides a useful way to store digital images.
+	</p>
+
+      </statement>
+    </example>
+
+    <activity>
+      <title> Edge detection </title>
+
+      <statement>
+      <p> An important problem in the field of computer vision is to
+      detect edges in a digital photograph, as is shown in <xref
+      ref="fig-edge-detection" />.  Edge detection algorithms are
+      useful when, say, we want a robot to locate an object in its
+      field of view.  Graphic designers also use these algorithms to
+      create artistic effects.
+      </p>
+
+      <figure xml:id = "fig-edge-detection">
+	<caption> A canyon wall in Capitol Reef National Park and the
+	result of an edge detection algorithm.
+	</caption>
+	<sidebyside widths="45% 45%">
+	  <image source="images/spring-canyon-cropped.jpg">
+            <shortdescription>
+              A color photograph of a red rock canyon wall against a
+              blue sky.
+            </shortdescription>
+            <description>
+              <p>A color photograph showing a red rock canyon wall
+              against a blue sky.  There are a few shadows in the
+              canyon wall, but the region of the photograph occupied
+              by the wall is fairly homogeneous.  The blue sky is also
+              fairly homogeneous so that there is a sharp division
+              between the area occupied by the canyon wall and the
+              area occupied by the sky.  There is also some vegetation
+              at the bottom and branches of a tree on the left.</p>
+            </description>
+          </image>
+	  <image source="images/spring-canyon-edges.jpg">
+            <shortdescription>
+              Black and white image showing the edges detected in the
+              photograph by an edge detection algorithm.
+            </shortdescription>
+            <description>
+              <p>This image has a pure white background and curves
+              drawn in black indicating edges detected in the
+              photograph.  There is a prominent vertical curve
+              representing the edge between the canyon wall and the
+              sky.  Additional curves highlight some of the shadows in
+              the canyon wall as well as the vegetation and branches
+              of the tree.</p>
+            </description>
+          </image>
+	</sidebyside>
+      </figure>
+
+      <p> We will consider a very simple version of an edge detection
+      algorithm to give a sense of how this works.  Rather than
+      considering a two-dimensional photograph, we will think about a
+      one-dimensional row of pixels in a photograph.  The grayscale
+      values of a pixel measure the brightness of a pixel;  a
+      grayscale value of 0 corresponds to black, and a value of 255
+      corresponds to white.
+      </p>
+
+      <p> Suppose, for simplicity, that the grayscale values for a row
+      of six pixels are represented by a vector <m>\xvec</m> in
+      <m>\real^6</m>: 
+      </p>
+
+      <sidebyside widths="45% 45%" valign="top">
+	<p>
+	  <md>
+	  \xvec = \left[\begin{array}{r}
+	  25 \\ 34 \\ 30 \\ 45 \\ 190 \\ 200
+	  \end{array}\right]
+	  </md>.
+	</p>
+
+	<image>
+          <shortdescription>
+            Plot of grayscale values for the six pixels.
+          </shortdescription>
+          <description>
+            <p>A horizontal axis with labelled locations one through
+            six representing the six pixels and a vertical axis with a
+            scale from zero to 250.  There are six points plotted
+            representing the grayscale values of the six pixels.  The
+            first four grayscale values are relatively small, but the
+            fifth and sixth are relatively large so that we see a jump
+            in the values between the fourth and fifth pixel.</p>
+          </description>
+          <prefigure xmlns="https://prefigure.org"
+                     label="pf-edges-grayscale">
+            <xi:include
+                href="prefigure/section3-2/edges-grayscale.xml"/>
+          </prefigure>
+        </image>
+      </sidebyside>
+
+      <p> We can easily see that there is a jump in brightness between
+      pixels 4 and 5, but how can we detect it computationally?  We
+      will introduce a new basis <m>\bcal</m> for <m>\real^6</m> with
+      vectors:
+      <md>
+	\vvec_1=\left[\begin{array}{r} 1 \\ 0 \\ 0 \\ 0 \\ 0
+	\\ 0 \end{array}\right],
+	\vvec_2=\left[\begin{array}{r} 1 \\ 1 \\ 0 \\ 0 \\ 0
+	\\ 0 \end{array}\right],
+	\vvec_3=\left[\begin{array}{r} 1 \\ 1 \\ 1 \\ 0 \\ 0
+	\\ 0 \end{array}\right],
+	\vvec_4=\left[\begin{array}{r} 1 \\ 1 \\ 1 \\ 1 \\ 0
+	\\ 0 \end{array}\right],
+	\vvec_5=\left[\begin{array}{r} 1 \\ 1 \\ 1 \\ 1 \\ 1
+	\\ 0 \end{array}\right],
+	\vvec_6=\left[\begin{array}{r} 1 \\ 1 \\ 1 \\ 1 \\ 1
+	\\ 1 \end{array}\right]
+      </md>.
+
+      <ol marker="a.">
+	<li><p> Construct the matrix <m>P_\bcal</m> that relates the
+	standard coordinate system with the coordinates in the basis
+	<m>\bcal</m>.
+	</p></li>
+
+	<li><p> Determine the matrix 
+	<m>P_\bcal^{-1}</m> that converts the representation of
+	<m>\xvec</m> in standard coordinates into the coordinate
+	system defined by <m>\bcal</m>.</p>
+	<sage>
+	  <input>
+	  </input>
+	</sage>
+	</li>
+
+	<li><p> Suppose the
+	vectors are expressed in general terms as
+	<md>
+	  \xvec = \left[\begin{array}{r}
+	  x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5 \\ x_6 \end{array}\right],~~~
+	  \coords{\xvec}{\bcal} = \left[\begin{array}{r}
+	  c_1 \\ c_2 \\ c_3 \\ c_4 \\ c_5 \\ c_6 \end{array}\right]
+	</md>.
+	Using the relationship <m>\coords{\xvec}{\bcal} =
+	P_{\bcal}^{-1}\xvec</m>, determine an expression for the
+	coefficient <m>c_2</m> in terms of <m>x_1,x_2,\ldots,x_6</m>.
+	What does <m>c_2</m> measure in terms of the grayscale values
+	of the pixels?  What does <m>c_4</m> measure in terms of the
+	grayscale values of the pixels?
+	</p></li>
+
+	<li><p> Now for the specific vector
+	  <md>
+	  \xvec = \left[\begin{array}{r}
+	  25 \\ 34 \\ 30 \\ 45 \\ 190 \\ 200
+	  \end{array}\right]
+	  </md>,
+	  determine the representation of <m>\xvec</m> in the
+	  <m>\bcal</m>-coordinate system.
+	</p></li>
+
+	<li><p>
+	  Explain how the coefficients in <m>\coords{\xvec}{\bcal}</m>
+	  determine the location of the jump in brightness in the
+	  grayscale values represented by the vector <m>\xvec</m>.
+	</p></li>
+      </ol>
+      </p>
+
+      <p> Readers who are familiar with calculus may recognize that
+      this change of basis converts a vector <m>\xvec</m> into
+      <m>\coords{\xvec}{\bcal}</m>, the set of changes in
+      <m>\xvec</m>.  This process is similar to differentiation in
+      calculus.  Similarly, the process of converting
+      <m>\coords{\xvec}{\bcal}</m> into the vector <m>\xvec</m> adds
+      together the changes in a process similar to integration.  As a
+      result, this
+      change of basis represents a linear algebraic
+      version of the Fundamental Theorem of Calculus.
+      </p>
+    </statement>
+
+    <solution>
+      <p><ol marker="a.">
+	<li><p> We form the matrix
+	<md>
+	  P_{\bcal} =
+	  \left[\begin{array}{rrrrrr}
+	  1 \amp 1 \amp 1 \amp 1 \amp 1 \amp 1 \\
+	  0 \amp 1 \amp 1 \amp 1 \amp 1 \amp 1 \\
+	  0 \amp 0 \amp 1 \amp 1 \amp 1 \amp 1 \\
+	  0 \amp 0 \amp 0 \amp 1 \amp 1 \amp 1 \\
+	  0 \amp 0 \amp 0 \amp 0 \amp 1 \amp 1 \\
+	  0 \amp 0 \amp 0 \amp 0 \amp 0 \amp 1
+	  \end{array}\right]\text{.}
+	</md>
+	</p></li>
+
+	<li><p>
+	  We find that
+	  <md>
+	    P_{\bcal}^{-1} = 
+	    \left[\begin{array}{rrrrrr}
+	    1 \amp -1 \amp 0 \amp 0 \amp 0 \amp 0 \\
+	    0 \amp 1 \amp -1 \amp 0 \amp 0 \amp 0 \\
+	    0 \amp 0 \amp 1 \amp -1 \amp 0 \amp 0 \\
+	    0 \amp 0 \amp 0 \amp 1 \amp -1 \amp 0 \\
+	    0 \amp 0 \amp 0 \amp 0 \amp 1 \amp -1 \\
+	    0 \amp 0 \amp 0 \amp 0 \amp 0 \amp 1
+	    \end{array}\right]\text{.}
+	  </md>
+	</p></li>
+
+	<li><p> We see that <m>c_2=x_3-x_2</m> so <m>c_2</m> measures
+	the change in brightness between one pixel and its neighbor.
+	Similarly, <m>c_4=x_5-x_4</m>, which measures another change
+	in brightness.
+	</p></li>
+
+	<li><p> We compute that
+	<md>\coords{\xvec}{\bcal}=P_{\bcal}^{-1}\xvec =
+	\left[\begin{array}{c}
+	-9 \\ 4 \\ -15 \\ -145 \\ -10 \\ 200
+	\end{array}\right]\text{.}
+	</md>
+	</p></li>
+
+	<li><p>
+	  Most of the coefficients that measure changes are relatively
+	  small in absolute value.  The coefficient <m>c_4</m>,
+	  however, which measures the change in brightness between the
+	  fourth and fifth pixel, has a large absolute value.  This
+	  tells us that there is a large change in brightness between
+	  the fourth and fifth pixel, which points to an edge in the
+	  image.
+	</p></li>
+      </ol></p>
+    </solution>
+
+  </activity>
+
+  </subsection>
+
+  <subsection>
+    <title> Summary </title>
+
+    <p> We defined a basis to be a set of vectors <m>\bcal =
+    \{\vvec_1,\vvec_2,\ldots,\vvec_n\}</m> that 
+    is linearly independent and whose span is <m>\real^m</m>.
+    <ul>
+      <li><p> A set of vectors forms a basis for <m>\real^m</m> if and
+      only if the matrix 
+      <md>
+      A = \left[\begin{array}{rrrr}
+      \vvec_1 \amp \vvec_2 \amp \cdots \amp \vvec_n
+      \end{array}\right]
+      \sim I
+      </md>.
+      This means there must be <m>m</m> vectors in a basis for
+      <m>\real^m</m>. </p></li>
+
+      <li><p> If <m>\vvec_1,\vvec_2,\ldots,\vvec_m</m> forms a basis
+      for <m>\real^m</m>, then any vector in <m>\real^m</m> can be
+      written as a linear combination of the vectors in exactly one
+      way. </p></li>
+
+      <li><p> We used the basis <m>\bcal</m> to define a coordinate
+      system in which
+      <m> \coords{\xvec}{\bcal} = \cfourvec{c_1}{c_2}{\vdots}{c_n}
+      </m>, the coordinates of <m>\xvec</m> in the basis <m>\bcal</m>,
+      are defined by
+      <md>\xvec = c_1\vvec_1+c_2\vvec_2 + \cdots + c_n\vvec_m</md>.
+      </p> </li>
+
+      <li><p> Forming the matrix <m>P_{\bcal}</m> whose columns are
+      the basis vectors, we can convert between coordinate systems:
+      <md>
+	\begin{aligned}
+	x \amp {}={} P_{\bcal}\coords{\xvec}{\bcal}, \\
+	P_{\bcal}^{-1} x \amp {}={} \coords{\xvec}{\bcal}. \\
+	\end{aligned}
+      </md>.
+      </p></li>
+    </ul>
+    </p>
+
+    <exercise component="proteus"
+              label="ula-proteus-3-2-def-basis">
+      <title>Defining the concept of basis</title>
+
+      <statement>
+        <p>
+          Select the best definition of a basis for <m>\real^n</m>.
+        </p>
+      </statement>
+
+      <choices>
+        <choice>
+          <statement>
+            <p>A set of <m>n</m> vectors that span <m>\real^n</m>.</p> 
+          </statement>
+          <feedback>This is a consequence of the definition but does
+          not make clear both of the main properties of being a
+          basis.</feedback>
+        </choice>
+
+        <choice correct="yes">
+          <statement>
+            <p>A set of vectors in <m>\real^n</m> that are linearly
+            independent and that span <m>\real^n</m>.</p>
+          </statement>
+          <feedback>This is correct!  You may wish to also select the
+          other choices and consider why they are not the best
+          definition. </feedback>
+        </choice>
+
+        <choice>
+          <statement>
+            <p>A matrix that is row equivalent to the identity
+            matrix</p>.
+          </statement>
+          <feedback>This is a test to determine if the vectors form a
+          basis but is not what we mean by a basis.</feedback>
+        </choice>
+
+        <choice>
+          <statement>
+            <p>The columns of an <m>n\times n</m> invertible
+            matrix.</p>
+          </statement>
+          <feedback>This a consequence of being a basis but does not
+          make clear the significance of a basis.</feedback>
+        </choice>
+      </choices>
+    </exercise>
+
+    <exercise component="proteus"
+              label="ula-proteus-3-2-recognizing-basis-props">
+      <title>Recognizing the properties of a basis</title>
+
+      <statement>
+        <p>Suppose that <m>\basis{\vvec}{9}</m> is a set of <m>9</m>
+        vectors in <m>\real^9</m> and that <m>A</m> is the matrix
+        whose columns are <m>\basis{\vvec}{9}</m>.  Determine whether
+        each of the conditions on the left implies that the set of
+        vectors is a basis.</p>
+      </statement>
+
+      <cardsort>
+        <match>
+          <premise>
+            <p>If <m>A\xvec=\zerovec</m>, then <m>\xvec=\zerovec</m>.
+            </p>
+          </premise>
+          <premise>
+            <p>Every row of <m>A</m> has a pivot position.</p>
+          </premise>
+          <premise>
+            <p><m>A</m> is invertible.</p>
+          </premise>
+          <premise>
+            <p>Any vector in <m>\real^9</m> can be written as a linear
+            combination of <m>\basis{\vvec}{9}</m>.</p>
+          </premise>
+          <response>
+            <p><m>\basis{\vvec}9</m> is a basis for <m>\real^9</m>.
+            </p>
+          </response>
+        </match>
+
+        <match>
+          <premise>
+            <p>Some column of <m>A</m> has no pivot position.</p>
+          </premise>
+          <premise>
+            <p><m>\vvec_8 = 3\vvec_1 -4\vvec_5</m>.</p>
+          </premise>
+          <response>
+            <p><m>\basis{\vvec}9</m> is not a basis for
+            <m>\real^9</m>.</p>
+          </response>
+        </match>
+
+        <match>
+          <premise>
+            <p>For some vector <m>\bvec</m>, the equation <m>A\xvec =
+            \bvec</m> has a solution.
+            </p>
+          </premise>
+          <premise>
+            <p>If <m>\xvec=\zerovec</m>, then <m>A\xvec=\zerovec</m>.
+            </p>
+          </premise>
+          <response>
+            <p>Not enough information to determine</p>
+          </response>
+        </match>
+
+      </cardsort>
+    </exercise>
+
+    <exercise component="proteus"
+              label="ula_proteus_3-2_Change_of_Basis_v1">
+      <title>Explaining change of basis</title>
+      <introduction>
+        <p>
+          Suppose <m>B=\{\vvec_1,\vvec_2,\vvec_3\}</m> is a basis of
+          <m>\real^3</m>.
+        </p>
+      </introduction>
+      <task label="ula_proteus_3-2_Change_of_Basis_taskA">
+        <statement>
+          <p>
+            Explain the process for converting a coordinate vector
+            <m>\{\xvec \}_B</m> in basis <m>B</m> to a standard
+            coordinate vector <m>\xvec</m>.
+          </p>
+        </statement>
+        <response />
+      </task>
+      <task label="ula_proteus_3-2_Change_of_Basis_taskB">
+        <statement>
+          <p>
+            Explain the process for converting a standard coordinate
+            vector <m>\xvec</m> to a coordinate vector <m>\{\xvec
+            \}_B</m> in basis <m>B</m>.
+          </p>
+        </statement>
+        <response />
+      </task>
+      <!--
+      <task label="ula_proteus_3-2_Change_of_Basis_taskC">
+        <p>
+          Explain why <m>A = \begin{bmatrix} \vvec_1 \amp \vvec_2 \amp
+          \vvec_3 \end{bmatrix} </m> is the matrix that changes a
+          coordinate vector <m>\{\xvec \}_B</m> in basis <m>B</m> to
+          the corresponding standard coordinate vector <m>\xvec</m>.
+        </p>
+        <response />
+      </task>
+      <task label="ula_proteus_3-2_Change_of_Basis_taskD">
+        <p>
+          How would you use <m>A = \begin{bmatrix} \vvec_1 \amp
+          \vvec_2 \amp \vvec_3 \end{bmatrix} </m> to obtain the matrix
+          that changes a standard coordinate vector <m>\xvec</m> to
+          the corresponding coordinate vector <m>\{\xvec\}_B</m> in
+          basis <m>B\,</m>?
+        </p>
+        <response />
+        </task>
+      -->
+    </exercise>
+
+    <exercise component="proteus"
+              label="ula-proteus-3-2-basismatch-v1">
+      <title>Changing coordinate representations algebraically</title>
+      <statement><p> Consider the basis
+      <md>
+        \bcal = \left\{\fourvec{1}{0}{1}{0}, \fourvec{-1}{0}{1}{0},
+        \fourvec{0}{1}{0}{1}, \fourvec{0}{-1}{0}{1}\right\}
+        </md>.
+        If possible, match each vector <m>\xvec</m> on the left with
+        its coordinates, <m>\coords{\xvec}{\bcal}</m>, in the
+        basis <m>\bcal</m>.</p>
+      </statement>
+      <cardsort>
+        <match>
+          <premise ><m>\xvec=\fourvec{-1}{-3}{3}{1}</m></premise>
+          <response><m>\coords{\xvec}{\bcal}=\fourvec{1}{2}{-1}{2}</m></response>
+        </match>
+        <match>
+          <premise ><m>\xvec=\fourvec{-1}{-2}{5}{0}</m></premise>
+          <response><m>\coords{\xvec}{\bcal}=\fourvec{2}{3}{-1}{1}</m></response>
+        </match>
+        <match>
+          <premise ><m>\xvec=\fourvec{-2}{-2}{2}{4}</m></premise>
+          <response><m>\coords{\xvec}{\bcal}=\fourvec{0}{2}{1}{3}</m></response>
+        </match>
+        <match>
+          <premise ><m>\xvec=\fourvec{0}{-1}{2}{0}</m></premise>
+        </match>
+        <match>
+          <premise ><m>\xvec=\fourvec{1/2}{-3/2}{2}{-1}</m></premise>
+        </match>
+        <match>
+          <premise ><m>\xvec=\fourvec{1/2}{1/2}{5/2}{1/2}</m></premise>
+        </match>
+      </cardsort>
+    </exercise>
+
+    <exercise component="proteus"
+              label="ula_proteus_3-2_Coordinate_Representations_v1">
+      <title>Changing coordinate representations graphically</title>
+      <statement>
+        <p>The vectors <m>\bvec_1=\twovec{2}{-1}</m> and
+        <m>\bvec_2=\twovec{1}{2}</m> shown below form a basis <m>\bcal</m>
+        of <m>\real^2</m>. Match each column vector on the left with
+        its description on the right. Some vectors do not match with a
+        description.</p>
+        <figure xml:id="diagram-coord-reps">
+          <caption>Coordinate representations</caption>
+          <image width="50%">
+            <prefigure xmlns="https://prefigure.org"
+                       label="ula_proteus_Section_3_2_Coordinate_Representations_diagram">
+              <diagram dimensions="(250,250)" margins="5">
+                <coordinates bbox="(-8,-8,8,8)">
+                  <grid-axes decorations="no" basis="((2,-1),(1,2))" stroke="gray" thickness="0.5"/>
+                  <axes decorations="no" arrows="0" thickness="1"/>
+                  <definition>pa=(2.7,-1.8)</definition>
+                  <definition>pb=(1,2.8)</definition>
+                  <definition>pc=(6.5,2.2)</definition>
+                  <definition>pd=(-5.1,5.5)</definition>
+                  <definition>pe=(-4.5,-3.3)</definition>
+                  <vector v="(2,-1)" head-location="0.95" thickness="2"/>
+                  <vector v="(1,2)" head-location="0.95" thickness="2"/>
+                  <vector v="(6,2)" head-location="0.99" thickness="2"/>
+                  <vector v="(-5,5)" head-location="0.98" thickness="2"/>
+                  <vector v="(-4,-3)" head-location="0.98" thickness="2"/>
+                  <label p="pa" clear-background="no"><m>\bvec_1</m></label>
+                  <label p="pb" clear-background="no"><m>\bvec_2</m></label>
+                  <label p="pc" clear-background="no"><m>\xvec</m></label>
+                  <label p="pd" clear-background="no"><m>\yvec</m></label>
+                  <label p="pe" clear-background="no"><m>\zvec</m></label>
+                </coordinates>
+              </diagram>
+            </prefigure>
+            <shortdescription>
+              Two vectors and the skewed grid of linear combinations
+              along with three other vectors.
+            </shortdescription>
+            <description>
+              <p>Vectors <m>\bvec_1=\twovec{2}{-1}</m> and
+              <m>\bvec_2=\twovec12</m> along with the skewed grid of
+              linear combinations of these two vectors.  There is a
+              vector <m>\xvec</m> that begins at the origin and ends on
+              the grid lines found by starting at the origin and
+              moving twice in the <m>\bvec_1</m> direction and twice
+              in the <m>\bvec_2</m> direction.</p>
+              <p>The vector <m>\yvec</m> begins at the origin and ends
+              on the grid lines found by moving <m>-1</m> times in the
+              <m>\bvec_1</m> direction and <m>-2</m> times in the
+              <m>\bvec_2</m> direction.</p>
+              <p>The vector <m>\zvec</m> begins at the origin and ends
+              on the grid lines found by moving <m>-3</m> times in the
+              <m>\bvec_1</m> direction and <m>1</m> time in the
+              <m>\bvec_2</m> direction.</p>
+            </description>
+          </image>
+        </figure>
+      </statement>
+      <cardsort>
+        <match>
+          <premise>
+            <md>\twovec62</md>
+          </premise>
+          <response>
+            The coordinates of <m>\xvec</m> in the standard basis
+          </response>
+        </match>
+        <match>
+          <premise>
+            <md>\twovec{-5}{5}</md>
+          </premise>
+          <response>
+            The coordinates of <m>\yvec</m> in the standard basis
+          </response>
+        </match>
+        <match>
+          <premise>
+            <md>\twovec{-4}{-3}</md>
+          </premise>
+          <response>
+            The coordinates of <m>\zvec</m> in the standard basis
+          </response>
+        </match>
+        <match>
+          <premise>
+            <md>\twovec22</md>
+          </premise>
+          <response>
+            The coordinates of <m>\xvec</m> in the basis <m>\bcal</m>
+          </response>
+        </match>
+        <match>
+          <premise>
+            <md>\twovec{-3}{1}</md>
+          </premise>
+          <response>
+            The coordinates of <m>\yvec</m> in the basis <m>\bcal</m>
+          </response>
+        </match>
+        <match>
+          <premise>
+            <md>\twovec{-1}{-2}</md>
+          </premise>
+          <response>
+            The coordinates of <m>\zvec</m> in the basis <m>\bcal</m>
+          </response>
+        </match>
+        <match>
+          <premise>
+            <md>\twovec{-4}{4}</md>
+          </premise>
+        </match>
+        <match>
+          <premise>
+            <md>\twovec{5}{2}</md>
+          </premise>
+        </match>
+        <match>
+          <premise>
+            <md>\twovec{-2}{-1}</md>
+          </premise>
+        </match>
+      </cardsort>
+    </exercise>
+
+    <exercise component="proteus"
+              label="ula-proteus-3-2-changebasismatrix-v1">
+      <title>Changing coordinates between several bases</title>
+      <statement>
+        <p>Consider the three bases
+        <md>
+          \bcal_1=\left\{\twovec{1}{-1}, \twovec{2}{1}\right\},
+          \bcal_2=\left\{\twovec{1}{1}, \twovec{1}{0}\right\},
+          \bcal_3=\left\{\twovec{1}{2}, \twovec{1}{1}\right\}
+          </md>.
+          Match each matrix on the left with the appropriate change of
+          basis description.
+        </p>
+      </statement>
+      <cardsort>
+        <match>
+          <premise><m>\left[\begin{array}{rr}
+          1 \amp 2 \\
+          -1 \amp 1 \\
+          \end{array}\right]</m></premise>
+          <response><p>The matrix <m>M</m> for which
+          <m>\xvec = M\coords{\xvec}{\bcal_1}</m>.</p></response>
+        </match>
+        <match>
+          <premise><m>\left[\begin{array}{rr}
+          1/3 \amp -2/3 \\
+          1/3 \amp 1/3 \\
+          \end{array}\right]</m></premise>
+          <response><p>The matrix <m>M</m> for which
+          <m>\coords{\xvec}{\bcal_1} = M\xvec</m>.</p></response>
+        </match>
+        <match>
+          <premise><m>\left[\begin{array}{rr}
+          2 \amp 1 \\
+          -1 \amp 0 \\
+          \end{array}\right]</m></premise>
+          <response><p>The matrix <m>M</m> for which
+          <m>\coords{\xvec}{\bcal_2} =
+          M\coords{\xvec}{\bcal_3}</m>.</p></response>
+        </match>
+        <match>
+          <premise><m>\left[\begin{array}{rr}
+          0 \amp -1 \\
+          1 \amp 2 \\
+          \end{array}\right]</m></premise>
+          <response><p>The matrix <m>M</m> for which
+          <m>\coords{\xvec}{\bcal_3} =
+          M\coords{\xvec}{\bcal_2}</m>.</p></response>
+        </match>
+
+        <match>
+          <premise>
+            <m>\begin{bmatrix}
+            1 \amp 1 \\
+            1 \amp 0
+            \end{bmatrix}</m>
+          </premise>
+
+          <premise>
+            <m>\begin{bmatrix}
+            0 \amp 1 \\
+            1 \amp -1
+            \end{bmatrix}</m>
+          </premise>
+
+          <premise>
+            <m>\begin{bmatrix}
+            -1 \amp 1 \\
+            2 \amp -1
+            \end{bmatrix}</m>
+          </premise>
+        </match>
+      </cardsort>
+    </exercise>
+
+  </subsection>
+
+  <xi:include href="exercises/exercises3-2.xml" />
+  
+</section>
+  
+

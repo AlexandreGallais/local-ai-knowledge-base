@@ -1,103 +1,58 @@
 ---
-title: "Part 6, add search"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/tutorials/razor-pages/search.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Part 6, add search
+ai-usage: ai-assisted
+description: Part 6 of tutorial series on Razor Pages.
+ms.date: 01/08/2026
 ---
-
 # Part 6, add search to ASP.NET Core Razor Pages
 
-By Rick Anderson
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+By [Rick Anderson](https://twitter.com/RickAndMSFT)
+
+:::moniker range=">= aspnetcore-10.0"
 
 In the following sections, you add the ability to search movies by *genre* or *name*.
 
 Add the following highlighted code to `Pages/MoviePages/Index.cshtml.cs`:
 
-```csharp
-public class IndexModel : PageModel
-{
-    private readonly RazorPagesMovieContext _context;
-
-    public IndexModel(RazorPagesMovieContext context)
-    {
-        _context = context;
-    }
-
-    public IList<Movie> Movie { get;set; }  = default!;
-
-    [BindProperty(SupportsGet = true)]
-    public string? SearchString { get; set; }
-
-    public SelectList? Genres { get; set; }
-
-    [BindProperty(SupportsGet = true)]
-    public string? MovieGenre { get; set; }
-```
+[!code-csharp[](~/tutorials/razor-pages/razor-pages-start/samples/snapshot-10/Pages/MoviePages/Index.cshtml.cs?name=snippet_search_newProps&highlight=12-18)]
 
 In the previous code:
 
-* `SearchString`: Contains the text users enter in the search text box. `SearchString` has the `[BindProperty]` attribute. `[BindProperty]` binds form values and query strings with the same name as the property. `[BindProperty(SupportsGet = true)]` is required for binding on HTTP GET requests.
+* `SearchString`: Contains the text users enter in the search text box. `SearchString` has the [`[BindProperty]`](xref:Microsoft.AspNetCore.Mvc.BindPropertyAttribute) attribute. `[BindProperty]` binds form values and query strings with the same name as the property. `[BindProperty(SupportsGet = true)]` is required for binding on HTTP GET requests.
 * `Genres`: Contains the list of genres. `Genres` allows the user to select a genre from the list. `SelectList` requires `using Microsoft.AspNetCore.Mvc.Rendering;`
 * `MovieGenre`: Contains the specific genre the user selects. For example, "Western".
 * `Genres` and `MovieGenre` are used later in this tutorial.
 
-> **Warning:**
-> For security reasons, you must opt in to binding `GET` request data to page model properties. Verify user input before mapping it to properties. Opting into `GET` binding is useful when addressing scenarios that rely on query string or route values.
->
-> To bind a property on `GET` requests, set the `[BindProperty]` attribute's `SupportsGet` property to `true`:
->
-> ```csharp
-> [BindProperty(SupportsGet = true)]
-> ```
->
-> For more information, see ASP.NET Core Community Standup: Bind on GET discussion (YouTube).
+[!INCLUDE[](~/includes/bind-get.md)]
 
 Update the `MoviePages/Index` page's `OnGetAsync` method with the following code:
 
-```csharp
-public async Task OnGetAsync()
-{
-    var movies = from m in _context.Movie
-                 select m;
-    if (!string.IsNullOrEmpty(SearchString))
-    {
-        movies = movies.Where(s => s.Title.Contains(SearchString));
-    }
+[!code-csharp[](~/tutorials/razor-pages/razor-pages-start/samples/snapshot-10/Pages/MoviePages/Index.cshtml.cs?name=snippet_search_1stSearch)]
 
-    Movie = await movies.ToListAsync();
-}
-```
+The first line of the `OnGetAsync` method creates a [LINQ](/dotnet/csharp/programming-guide/concepts/linq/) query to select the movies:
 
-The first line of the `OnGetAsync` method creates a LINQ query to select the movies:
-
-```csharp
-var movies = from m in _context.Movie
-             select m;
-```
+[!code-csharp[](~/tutorials/razor-pages/razor-pages-start/samples/snapshot-10/Pages/MoviePages/Index.cshtml.cs?name=snippet_search_linq)]
 
 The query is only ***defined*** at this point. It isn't run against the database.
 
 If the `SearchString` property isn't `null` or empty, the movies query is modified to filter on the search string:
 
-```csharp
-if (!string.IsNullOrEmpty(SearchString))
-{
-    movies = movies.Where(s => s.Title.Contains(SearchString));
-}
-```
+[!code-csharp[](~/tutorials/razor-pages/razor-pages-start/samples/snapshot-10/Pages/MoviePages/Index.cshtml.cs?name=snippet_search_SearchNull)]
 
-The `s => s.Title.Contains()` code is a Lambda Expression. Lambdas are used in method-based LINQ queries as arguments to standard query operator methods such as the Where method or `Contains`. LINQ queries aren't executed when you define them or when you modify them by calling a method, such as `Where`, `Contains`, or `OrderBy`. Rather, query execution is deferred. The evaluation of an expression is delayed until its realized value is iterated over or the `ToListAsync` method is called. For more information, see Query Execution.
+The `s => s.Title.Contains()` code is a [Lambda Expression](/dotnet/csharp/programming-guide/statements-expressions-operators/lambda-expressions). Lambdas are used in method-based [LINQ](/dotnet/csharp/programming-guide/concepts/linq/) queries as arguments to standard query operator methods such as the [Where](/dotnet/csharp/programming-guide/concepts/linq/query-syntax-and-method-syntax-in-linq) method or `Contains`. LINQ queries aren't executed when you define them or when you modify them by calling a method, such as `Where`, `Contains`, or `OrderBy`. Rather, query execution is deferred. The evaluation of an expression is delayed until its realized value is iterated over or the `ToListAsync` method is called. For more information, see [Query Execution](/dotnet/csharp/linq/get-started/introduction-to-linq-queries#deferred).
 
-> **Note:**
-> The `System.Data.Objects.DataClasses.EntityCollection`1.Contains*` method runs on the database, not in the C# code. The case sensitivity on the query depends on the database and the collation. On SQL Server, `Contains` maps to SQL LIKE, which is case insensitive. SQLite with the default collation is a mixture of case sensitive and case ***IN***sensitive, depending on the query. For information on making case insensitive SQLite queries, see the following:
->
-> * How to use case-insensitive query with Sqlite provider? (`dotnet/efcore` #11414)
-> * How to make a SQLite column case insensitive (`dotnet/AspNetCore.Docs` #22314)
-> * Collations and Case Sensitivity
+> [!NOTE]
+> The <xref:System.Data.Objects.DataClasses.EntityCollection`1.Contains*> method runs on the database, not in the C# code. The case sensitivity on the query depends on the database and the collation. On SQL Server, `Contains` maps to [SQL LIKE](/sql/t-sql/language-elements/like-transact-sql), which is case insensitive. SQLite with the default collation is a mixture of case sensitive and case ***IN***sensitive, depending on the query. For information on making case insensitive SQLite queries, see the following:
+> 
+> * [How to use case-insensitive query with Sqlite provider? (`dotnet/efcore` #11414)](https://github.com/dotnet/efcore/issues/11414)
+> * [How to make a SQLite column case insensitive (`dotnet/AspNetCore.Docs` #22314)](https://github.com/dotnet/AspNetCore.Docs/issues/22314)
+> * [Collations and Case Sensitivity](/ef/core/miscellaneous/collations-and-case-sensitivity)
 
 Navigate to the MoviePages page and append a query string such as `?searchString=Ghost` to the URL. For example, `https://localhost:7247/MoviePages?searchString=Ghost`. The filtered movies are displayed.
+
+:::image type="content" source="~/tutorials/razor-pages/search/media/search-string-ghost.png" alt-text="Index view with the search string ghost in the URL and a returned movie list.":::
 
 If you add the following route template to the Index page, you can pass the search string as a URL segment. For example, `https://localhost:7247/MoviePages/Ghost`.
 
@@ -107,123 +62,64 @@ If you add the following route template to the Index page, you can pass the sear
 
 The preceding route constraint allows searching the title as route data (a URL segment) instead of as a query string value.  The `?` in `"{searchString?}"` means this is an optional route parameter.
 
-The ASP.NET Core runtime uses model binding to set the value of the `SearchString` property from the query string (`?searchString=Ghost`) or route data (`https://localhost:7247/MoviePages/Ghost`). Model binding isn't case sensitive.
+:::image type="content" source="~/tutorials/razor-pages/search/media/ghost-title-route-data.png" alt-text="Index view with the word ghost added to the Url and a returned movie list of two movies, Ghostbusters and Ghostbusters 2.":::
+
+The ASP.NET Core runtime uses [model binding](../../mvc/models/model-binding.md) to set the value of the `SearchString` property from the query string (`?searchString=Ghost`) or route data (`https://localhost:7247/MoviePages/Ghost`). Model binding isn't case sensitive.
 
 However, users can't be expected to modify the URL to search for a movie. In this step, you add UI to filter movies. If you added the route constraint `"{searchString?}"`, remove it.
 
 Open the `Pages/MoviePages/Index.cshtml` file, and add the markup highlighted in the following code:
 
-```cshtml
-﻿@page
-@model RazorPagesMovie.Pages.MoviePages.IndexModel
+[!code-cshtml[](~/tutorials/razor-pages/razor-pages-start/samples/snapshot-10/Pages/MoviePages/Index_SearchAddedTitle.cshtml?highlight=14-19&range=1-22)]
 
-@{
-    ViewData["Title"] = "Index";
-}
+The HTML `<form>` tag uses the following [Tag Helpers](../../mvc/views/tag-helpers/intro.md):
 
-<h1>Index</h1>
-
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-
-<form>
-    <p>
-        <label>Title: <input type="text" asp-for="SearchString" /></label>
-        <input type="submit" value="Filter" />
-    </p>
-</form>
-
-<table class="table">
-    <thead>
-```
-
-The HTML `<form>` tag uses the following Tag Helpers:
-
-* Form Tag Helper. When you submit the form, it sends the filter string to the *Pages/MoviePages/Index* page through the query string.
-* Input Tag Helper
+* [Form Tag Helper](../../mvc/views/working-with-forms.md#the-form-tag-helper). When you submit the form, it sends the filter string to the *Pages/MoviePages/Index* page through the query string.
+* [Input Tag Helper](../../mvc/views/working-with-forms.md#the-input-tag-helper)
 
 Save your changes and test the filter.
+
+:::image type="content" source="~/tutorials/razor-pages/search/media/filter-by-title.png" alt-text="Index view with the word ghost typed into the Title filter textbox.":::
 
 ## Search by genre
 
 Update the `MoviePages/Index.cshtml.cs` page `OnGetAsync` method with the following code:
 
-```csharp
-public async Task OnGetAsync()
-{
-    // <snippet_search_linqQuery>
-    IQueryable<string> genreQuery = from m in _context.Movie
-                                    orderby m.Genre
-                                    select m.Genre;
-    // </snippet_search_linqQuery>
-
-    var movies = from m in _context.Movie
-                 select m;
-
-    if (!string.IsNullOrEmpty(SearchString))
-    {
-        movies = movies.Where(s => s.Title.Contains(SearchString));
-    }
-
-    if (!string.IsNullOrEmpty(MovieGenre))
-    {
-        movies = movies.Where(x => x.Genre == MovieGenre);
-    }
-
-    // <snippet_search_selectList>
-    Genres = new SelectList(await genreQuery.Distinct().ToListAsync());
-    // </snippet_search_selectList>
-    Movie = await movies.ToListAsync();
-}
-```
+[!code-csharp[](~/tutorials/razor-pages/razor-pages-start/samples/snapshot-10/Pages/MoviePages/Index_SearchAddedGenre.cshtml.cs?range=30-55)]
 
 The following code is a LINQ query that retrieves all the genres from the database.
 
-```csharp
-IQueryable<string> genreQuery = from m in _context.Movie
-                                orderby m.Genre
-                                select m.Genre;
-```
+[!code-csharp[](~/tutorials/razor-pages/razor-pages-start/samples/snapshot-10/Pages/MoviePages/Index_SearchAddedGenre.cshtml.cs?name=snippet_search_linqQuery)]
 
 The `SelectList` of genres is created by projecting the distinct genres:
 
-```csharp
-Genres = new SelectList(await genreQuery.Distinct().ToListAsync());
-```
+[!code-csharp[](~/tutorials/razor-pages/razor-pages-start/samples/snapshot-10/Pages/MoviePages/Index_SearchAddedGenre.cshtml.cs?name=snippet_search_selectList)]
 
 ### Add search by genre to the Razor Page
 
-Update the `Index.cshtml` `<form>` element as highlighted in the following markup:
+Update the `Index.cshtml` [`<form>` element](https://developer.mozilla.org/docs/Web/HTML/Element/form) as highlighted in the following markup:
 
-```cshtml
-﻿@page
-@model RazorPagesMovie.Pages.MoviePages.IndexModel
-
-@{
-    ViewData["Title"] = "Index";
-}
-
-<h1>Index</h1>
-
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-
-<form>
-    <p>
-        <select asp-for="MovieGenre" asp-items="Model.Genres">
-            <option value="">All</option>
-        </select>
-        <label>Title: <input type="text" asp-for="SearchString" /></label>
-        <input type="submit" value="Filter" />
-    </p>
-</form>
-```
+[!code-cshtml[](~/tutorials/razor-pages/razor-pages-start/samples/snapshot-10/Pages/MoviePages/Index_SearchAddedGenre.cshtml?highlight=16-18&range=1-22)]
 
 Test the app by searching by genre, by movie title, and by both:
 
+:::image type="content" source="~/tutorials/razor-pages/search/media/filter-by-genre-title.png" alt-text="Index view complete with Genre selector and Title textbox search filters.":::
+
 ## Next steps
 
-> Previous: Update the pages
-> Next: Add a new field
+
+> [!div class="step-by-step"]
+> [Previous: Update the pages](da1.md)
+> [Next: Add a new field](new-field.md)
+
+:::moniker-end
+
+[!INCLUDE[](~/tutorials/razor-pages/search/includes/search9.md)]
+
+[!INCLUDE[](~/tutorials/razor-pages/search/includes/search8.md)]
+
+[!INCLUDE[](~/tutorials/razor-pages/search/includes/search7.md)]
+
+[!INCLUDE[](~/tutorials/razor-pages/search/includes/search6.md)]
+
+[!INCLUDE[](~/tutorials/razor-pages/search/includes/search3-5.md)]

@@ -1,19 +1,17 @@
 ---
-title: "Function Mappings - SQLite Database Provider - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/providers/sqlite/functions.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Function Mappings - SQLite Database Provider - EF Core
+description: Function Mappings of the SQLite EF Core database provider
+author: SamMonoRT
+ms.date: 10/22/2026
+uid: core/providers/sqlite/functions
 ---
-
 # Function Mappings of the SQLite EF Core Provider
 
 This page shows which .NET members are translated into which SQL functions when using the SQLite provider.
 
 ## Aggregate functions
 
-For general information about using aggregate functions in queries, see Aggregate functions.
+For general information about using aggregate functions in queries, see [Aggregate functions](xref:core/querying/complex-query-operators#aggregate-functions).
 
 .NET                                                  | SQL                                | Added in
 ----------------------------------------------------- | ---------------------------------- | --------
@@ -105,7 +103,7 @@ dateTime.Ticks                  | (julianday(@dateTime) - julianday('0001-01-01 
 dateTime.TimeOfDay              | time(@dateTime)
 dateTime.Year                   | strftime('%Y', @dateTime)
 
-> **Note:**
+> [!NOTE]
 > Some SQL has been simplified for illustration purposes. The actual SQL is more complex to handle a wider range of values.
 
 ## Numeric functions
@@ -156,12 +154,12 @@ Math.Tan(a)                      | tan(@a)                               | EF Co
 Math.Tanh(value)                 | tanh(@value)                          | EF Core 8.0
 Math.Truncate(d)                 | trunc(@d)                             | EF Core 8.0
 
-> **Tip:**
-> In addition to the methods listed here, corresponding generic math implementations
-> and `System.MathF` methods are also translated. For example, `Math.Sin`, `MathF.Sin`, `double.Sin`,
+> [!TIP]
+> In addition to the methods listed here, corresponding [generic math](/dotnet/standard/generics/math) implementations
+> and <xref:System.MathF> methods are also translated. For example, `Math.Sin`, `MathF.Sin`, `double.Sin`,
 > and `float.Sin` all map to the `sin` function in SQL.
 
-> **Tip:**
+> [!TIP]
 > SQL functions prefixed with `ef_` are created by EF Core.
 
 ## String functions
@@ -199,7 +197,7 @@ stringValue.TrimEnd(trimChar)                                | rtrim(@stringValu
 stringValue.TrimStart()                                      | ltrim(@stringValue)
 stringValue.TrimStart(trimChar)                              | ltrim(@stringValue, @trimChar)
 
-> **Note:**
+> [!NOTE]
 > Some SQL has been simplified for illustration purposes. The actual SQL is more complex to handle a wider range of values.
 
 ## Miscellaneous functions
@@ -213,4 +211,4 @@ nullable.GetValueOrDefault(defaultValue) | coalesce(@nullable, @defaultValue)
 
 ## See also
 
-* Spatial Function Mappings
+* [Spatial Function Mappings](xref:core/providers/sqlite/spatial#spatial-function-mappings)

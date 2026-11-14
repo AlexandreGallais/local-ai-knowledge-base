@@ -1,12 +1,17 @@
 ---
 title: "MSTEST0048: Avoid TestContext properties in fixture methods"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/mstest0048.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about code analysis rule MSTEST0048: Avoid TestContext properties in fixture methods"
+ms.date: 10/01/2026
+ai-usage: ai-assisted
+f1_keywords:
+- MSTEST0048
+- TestContextPropertyUsageAnalyzer
+helpviewer_keywords:
+- TestContextPropertyUsageAnalyzer
+- MSTEST0048
+author: Evangelink
+ms.author: amauryleve
 ---
-
 # MSTEST0048: Avoid TestContext properties in fixture methods
 
 | Property                            | Value                                                                                    |
@@ -22,13 +27,13 @@ license: "CC-BY-4.0"
 
 ## Cause
 
-A fixture method (methods with `Microsoft.VisualStudio.TestTools.UnitTesting.AssemblyInitializeAttribute`, `Microsoft.VisualStudio.TestTools.UnitTesting.AssemblyCleanupAttribute`, `Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute`, or `Microsoft.VisualStudio.TestTools.UnitTesting.ClassCleanupAttribute`) accesses restricted `Microsoft.VisualStudio.TestTools.UnitTesting.TestContext` properties.
+A fixture method (methods with <xref:Microsoft.VisualStudio.TestTools.UnitTesting.AssemblyInitializeAttribute>, <xref:Microsoft.VisualStudio.TestTools.UnitTesting.AssemblyCleanupAttribute>, <xref:Microsoft.VisualStudio.TestTools.UnitTesting.ClassInitializeAttribute>, or <xref:Microsoft.VisualStudio.TestTools.UnitTesting.ClassCleanupAttribute>) accesses restricted <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext> properties.
 
 Starting with MSTest.Analyzers 4.4, the rule also reports constant indexer access to a restricted key, such as `testContext.Properties["TestName"]`. It doesn't report indexer access when the key isn't a constant string.
 
 ## Rule description
 
-Certain `Microsoft.VisualStudio.TestTools.UnitTesting.TestContext` properties aren't available in fixture methods because they're specific to individual test execution:
+Certain <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext> properties aren't available in fixture methods because they're specific to individual test execution:
 
 Properties unavailable in class and assembly fixture methods:
 
@@ -44,7 +49,7 @@ Properties unavailable in assembly-level fixture methods:
 
 ## How to fix violations
 
-Remove the usage of restricted `Microsoft.VisualStudio.TestTools.UnitTesting.TestContext` properties from fixture methods. Consider using alternative approaches for class/assembly initialization and cleanup that don't rely on test-specific context information.
+Remove the usage of restricted <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext> properties from fixture methods. Consider using alternative approaches for class/assembly initialization and cleanup that don't rely on test-specific context information.
 
 ## When to suppress warnings
 

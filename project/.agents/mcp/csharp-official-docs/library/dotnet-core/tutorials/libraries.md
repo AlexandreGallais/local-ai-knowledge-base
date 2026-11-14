@@ -1,23 +1,21 @@
 ---
-title: "Develop libraries with the .NET CLI (part 1 of 2)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tutorials/libraries.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Develop libraries with the .NET CLI
+description: Learn how to create .NET libraries using the .NET CLI. You'll create a library that supports multiple frameworks.
+ms.topic: how-to
+ms.date: 10/23/2025
+ai-usage: ai-assisted
 ---
-
 # Develop libraries with the .NET CLI
 
-This article covers how to write libraries for .NET using the .NET CLI. The CLI provides an efficient and low-level experience that works across any supported OS. You can still build libraries with Visual Studio, and if that's your preferred experience refer to the Visual Studio guide.
+This article covers how to write libraries for .NET using the .NET CLI. The CLI provides an efficient and low-level experience that works across any supported OS. You can still build libraries with Visual Studio, and if that's your preferred experience [refer to the Visual Studio guide](create-class-library.md).
 
 ## Prerequisites
 
-You need the .NET SDK installed on your machine.
+You need the [.NET SDK](https://dotnet.microsoft.com/download) installed on your machine.
 
-For the sections of this document dealing with .NET Framework versions, you need the .NET Framework installed on a Windows machine.
+For the sections of this document dealing with .NET Framework versions, you need the [.NET Framework](https://dotnet.microsoft.com/download/dotnet-framework) installed on a Windows machine.
 
-Additionally, if you wish to support older .NET Framework targets, you need to install targeting packs or developer packs from the .NET Framework downloads page. Refer to this table:
+Additionally, if you wish to support older .NET Framework targets, you need to install targeting packs or developer packs from the [.NET Framework downloads page](https://dotnet.microsoft.com/download/dotnet-framework). Refer to this table:
 
 | .NET Framework version | What to download                                       |
 | ---------------------- | ------------------------------------------------------ |
@@ -31,7 +29,7 @@ Additionally, if you wish to support older .NET Framework targets, you need to i
 
 ## How to target .NET 5+ or .NET Standard
 
-You control your project's target framework by adding it to your project file (*.csproj* or *.fsproj*). For guidance on how to choose between targeting .NET 5+ or .NET Standard, see .NET 5+ and .NET Standard.
+You control your project's target framework by adding it to your project file (*.csproj* or *.fsproj*). For guidance on how to choose between targeting .NET 5+ or .NET Standard, see [.NET 5+ and .NET Standard](../../standard/net-standard.md#net-5-and-net-standard).
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
@@ -53,10 +51,10 @@ If you want to target .NET Framework versions 4.0 or below, or you wish to use a
 
 ## How to target .NET Framework
 
-> **Note:**
-> These instructions assume you have .NET Framework installed on your machine. Refer to the Prerequisites to get dependencies installed.
+> [!NOTE]
+> These instructions assume you have .NET Framework installed on your machine. Refer to the [Prerequisites](#prerequisites) to get dependencies installed.
 
-Keep in mind that some of the .NET Framework versions used here are no longer supported. Refer to the .NET Framework Support Lifecycle Policy FAQ about unsupported versions.
+Keep in mind that some of the .NET Framework versions used here are no longer supported. Refer to the [.NET Framework Support Lifecycle Policy FAQ](/lifecycle/faq/dotnet-framework) about unsupported versions.
 
 If you want to reach the maximum number of developers and projects, use .NET Framework 4.0 as your baseline target. To target .NET Framework, begin by using the correct Target Framework Moniker (TFM) that corresponds to the .NET Framework version you wish to support.
 
@@ -89,8 +87,8 @@ And that's it! Although this compiled only for .NET Framework 4, you can use the
 
 ## How to multitarget
 
-> **Note:**
-> The following instructions assume you have the .NET Framework installed on your machine. Refer to the Prerequisites section to learn which dependencies you need to install and where to download them from.
+> [!NOTE]
+> The following instructions assume you have the .NET Framework installed on your machine. Refer to the [Prerequisites](#prerequisites) section to learn which dependencies you need to install and where to download them from.
 
 You may need to target older versions of the .NET Framework when your project supports both the .NET Framework and .NET. In this scenario, if you want to use newer APIs and language constructs for the newer targets, use `#if` directives in your code. You also might need to add different packages and dependencies for each platform you're targeting to include the different APIs needed for each case.
 
@@ -127,19 +125,7 @@ You'll notice three major changes here:
 
 The build system is aware of the following preprocessor symbols used in `#if` directives:
 
-| Target Frameworks | Symbols | Additional symbols(available in .NET 5+ SDKs) | Platform symbols (available onlywhen you specify an OS-specific TFM) |
-| ------------------| ------- | ------------------------------------------------ | -------------------------------------------------------------------- |
-| .NET Framework    | `NETFRAMEWORK`, `NET481`, `NET48`, `NET472`, `NET471`, `NET47`, `NET462`, `NET461`, `NET46`, `NET452`, `NET451`, `NET45`, `NET40`, `NET35`, `NET20` | `NET48_OR_GREATER`, `NET472_OR_GREATER`, `NET471_OR_GREATER`, `NET47_OR_GREATER`, `NET462_OR_GREATER`, `NET461_OR_GREATER`, `NET46_OR_GREATER`, `NET452_OR_GREATER`, `NET451_OR_GREATER`, `NET45_OR_GREATER`, `NET40_OR_GREATER`, `NET35_OR_GREATER`, `NET20_OR_GREATER` | |
-| .NET Standard     | `NETSTANDARD`, `NETSTANDARD2_1`, `NETSTANDARD2_0`, `NETSTANDARD1_6`, `NETSTANDARD1_5`, `NETSTANDARD1_4`, `NETSTANDARD1_3`, `NETSTANDARD1_2`, `NETSTANDARD1_1`, `NETSTANDARD1_0` | `NETSTANDARD2_1_OR_GREATER`, `NETSTANDARD2_0_OR_GREATER`, `NETSTANDARD1_6_OR_GREATER`, `NETSTANDARD1_5_OR_GREATER`, `NETSTANDARD1_4_OR_GREATER`, `NETSTANDARD1_3_OR_GREATER`, `NETSTANDARD1_2_OR_GREATER`, `NETSTANDARD1_1_OR_GREATER`, `NETSTANDARD1_0_OR_GREATER` | |
-| .NET 5+ (and .NET Core) | `NET`, `NET11_0`, `NET10_0`, `NET9_0`, `NET8_0`, `NET7_0`, `NET6_0`, `NET5_0`, `NETCOREAPP`, `NETCOREAPP3_1`, `NETCOREAPP3_0`, `NETCOREAPP2_2`, `NETCOREAPP2_1`, `NETCOREAPP2_0`, `NETCOREAPP1_1`, `NETCOREAPP1_0` | `NET11_0_OR_GREATER`, `NET10_0_OR_GREATER`, `NET9_0_OR_GREATER`, `NET8_0_OR_GREATER`, `NET7_0_OR_GREATER`, `NET6_0_OR_GREATER`, `NET5_0_OR_GREATER`, `NETCOREAPP3_1_OR_GREATER`, `NETCOREAPP3_0_OR_GREATER`, `NETCOREAPP2_2_OR_GREATER`, `NETCOREAPP2_1_OR_GREATER`, `NETCOREAPP2_0_OR_GREATER`, `NETCOREAPP1_1_OR_GREATER`, `NETCOREAPP1_0_OR_GREATER` | `ANDROID`, `BROWSER`, `IOS`, `MACCATALYST`, `MACOS`, `TVOS`, `WINDOWS`,`OS` (for example `IOS15_1`),`OS_OR_GREATER` (for example `IOS15_1_OR_GREATER`) |
-
-> **Note:**
->
-> * Versionless symbols are defined regardless of the version you're targeting.
-> * Version-specific symbols are only defined for the version you're targeting.
-> * The `<framework>_OR_GREATER` symbols are defined for the version you're targeting and all earlier versions. For example, if you're targeting .NET Framework 2.0, the following symbols are defined: `NET20`, `NET20_OR_GREATER`, `NET11_OR_GREATER`, and `NET10_OR_GREATER`.
-> * The `NETSTANDARD<x>_<y>_OR_GREATER` symbols are only defined for .NET Standard targets, and not for targets that implement .NET Standard, such as .NET Core and .NET Framework.
-> * These are different from the target framework monikers (TFMs) used by the MSBuild `TargetFramework` property and NuGet.
+[!INCLUDE [Preprocessor symbols](../../../includes/preprocessor-symbols.md)]
 
 Here is an example making use of conditional compilation per-target:
 
@@ -216,10 +202,10 @@ Each of these contains the `.dll` files for each target.
 
 ## How to test libraries on .NET
 
-It's important to be able to test across platforms. You can use either xUnit or MSTest out of the box. Both are perfectly suitable for unit testing your library on .NET. How you set up your solution with test projects will depend on the structure of your solution. The following example assumes that the test and source directories live in the same top-level directory.
+It's important to be able to test across platforms. You can use either [xUnit](https://xunit.net/) or MSTest out of the box. Both are perfectly suitable for unit testing your library on .NET. How you set up your solution with test projects will depend on the [structure of your solution](#structuring-a-solution). The following example assumes that the test and source directories live in the same top-level directory.
 
-> **Note:**
-> This uses some .NET CLI commands. See dotnet new and dotnet sln for more information.
+> [!NOTE]
+> This uses some [.NET CLI](../tools/index.md) commands. See [dotnet new](../tools/dotnet-new.md) and [dotnet sln](../tools/dotnet-sln.md) for more information.
 
 1. Set up your solution. You can do so with the following commands:
 
@@ -264,3 +250,77 @@ And that's it! You can now test your library across all platforms using command-
 1. Run tests from the command line, in your test directory, with `dotnet test` command.
 
 Your code will be automatically rebuilt when you invoke `dotnet test` command.
+
+## How to use multiple projects
+
+A common need for larger libraries is to place functionality in different projects.
+
+Imagine you want to build a library that could be consumed in idiomatic C# and F#. That would mean that consumers of your library consume it in ways that are natural to C# or F#. For example, in C# you might consume the library like this:
+
+```csharp
+using AwesomeLibrary.CSharp;
+
+public Task DoThings(Data data)
+{
+    var convertResult = await AwesomeLibrary.ConvertAsync(data);
+    var result = AwesomeLibrary.Process(convertResult);
+    // do something with result
+}
+```
+
+In F#, it might look like this:
+
+```fsharp
+open AwesomeLibrary.FSharp
+
+let doWork data = async {
+    let! result = AwesomeLibrary.AsyncConvert data // Uses an F# async function rather than C# async method
+    // do something with result
+}
+```
+
+Consumption scenarios like this mean that the APIs being accessed have to have a different structure for C# and F#.  A common approach to accomplishing this is to factor all of the logic of a library into a core project, with C# and F# projects defining the API layers that call into that core project.  The rest of the section will use the following names:
+
+* **AwesomeLibrary.Core** - A core project that contains all logic for the library
+* **AwesomeLibrary.CSharp** - A project with public APIs intended for consumption in C#
+* **AwesomeLibrary.FSharp** - A project with public APIs intended for consumption in F#
+
+You can run the following commands in your terminal to produce the same structure as this guide:
+
+```dotnetcli
+mkdir AwesomeLibrary && cd AwesomeLibrary
+dotnet new sln
+mkdir AwesomeLibrary.Core && cd AwesomeLibrary.Core && dotnet new classlib
+cd ..
+mkdir AwesomeLibrary.CSharp && cd AwesomeLibrary.CSharp && dotnet new classlib
+cd ..
+mkdir AwesomeLibrary.FSharp && cd AwesomeLibrary.FSharp && dotnet new classlib -lang "F#"
+cd ..
+dotnet sln add AwesomeLibrary.Core/AwesomeLibrary.Core.csproj
+dotnet sln add AwesomeLibrary.CSharp/AwesomeLibrary.CSharp.csproj
+dotnet sln add AwesomeLibrary.FSharp/AwesomeLibrary.FSharp.fsproj
+```
+
+This will add the three projects above and a solution file that links them together. Creating the solution file and linking projects will allow you to restore and build projects from a top level.
+
+### Project-to-project referencing
+
+The best way to reference a project is to use the .NET CLI to add a project reference. From the **AwesomeLibrary.CSharp** and **AwesomeLibrary.FSharp** project directories, you can run the following command:
+
+```dotnetcli
+dotnet reference add ../AwesomeLibrary.Core/AwesomeLibrary.Core.csproj
+```
+
+The project files for both **AwesomeLibrary.CSharp** and **AwesomeLibrary.FSharp** will now reference **AwesomeLibrary.Core** as a `ProjectReference` target.  You can verify this by inspecting the project files and seeing the following in them:
+
+```xml
+<ItemGroup>
+  <ProjectReference Include="..\AwesomeLibrary.Core\AwesomeLibrary.Core.csproj" />
+</ItemGroup>
+```
+
+You can add this section to each project file manually if you prefer not to use the .NET CLI.
+
+### Structuring a solution
+
+Another important aspect of multi-project solutions is establishing a good overall project structure. You can organize code however you like, and as long as you link each project to your solution file with `dotnet sln add`, you will be able to run `dotnet restore` and `dotnet build` at the solution level.

@@ -1,10 +1,8 @@
 ---
-title: "LINQ to XML Security - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/linq-xml-security.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: LINQ to XML Security - LINQ to XML
+description: Learn about LINQ to XML security issues, and ways to mitigate security exposure.
+ms.date: 07/20/2015
+ms.assetid: ef2c0dc9-ecf9-4c17-b24e-144184ab725f
 ---
 
 # LINQ to XML security
@@ -15,17 +13,17 @@ This article describes security issues associated with LINQ to XML, and provides
 
 LINQ to XML is designed more for programming convenience than for server-side applications with stringent security requirements. Most XML scenarios consist of processing trusted XML documents, rather than processing untrusted XML documents that are uploaded to a server. LINQ to XML is optimized for these scenarios.
 
-If you must process untrusted data from unknown sources, Microsoft recommends that you use an instance of the `System.Xml.XmlReader` class that has been configured to filter out known XML denial of service (DoS) attacks.
+If you must process untrusted data from unknown sources, Microsoft recommends that you use an instance of the <xref:System.Xml.XmlReader> class that has been configured to filter out known XML denial of service (DoS) attacks.
 
-If you've configured an `System.Xml.XmlReader` to mitigate denial of service attacks, you can use that reader to populate a LINQ to XML tree and still benefit from the programmer productivity enhancements of LINQ to XML. Many mitigation techniques involve creating readers that are configured to mitigate the security issue, and then instantiating an XML tree through the configured reader.
+If you've configured an <xref:System.Xml.XmlReader> to mitigate denial of service attacks, you can use that reader to populate a LINQ to XML tree and still benefit from the programmer productivity enhancements of LINQ to XML. Many mitigation techniques involve creating readers that are configured to mitigate the security issue, and then instantiating an XML tree through the configured reader.
 
 XML is intrinsically vulnerable to denial of service attacks because documents are unbounded in size, depth, element name size, and more. Regardless of the component that you use to process XML, you should always be prepared to recycle the application domain if it uses excessive resources.
 
 ## Mitigation of XML, XSD, XPath, and XSLT attacks
 
-LINQ to XML is built upon `System.Xml.XmlReader` and `System.Xml.XmlWriter`. LINQ to XML supports XSD and XPath through extension methods in the `System.Xml.Schema` and `System.Xml.XPath` namespaces. By using the `System.Xml.XmlReader`, `System.Xml.XPath.XPathNavigator`, and `System.Xml.XmlWriter` classes in conjunction with LINQ to XML, you can invoke XSLT to transform XML trees.
+LINQ to XML is built upon <xref:System.Xml.XmlReader> and <xref:System.Xml.XmlWriter>. LINQ to XML supports XSD and XPath through extension methods in the <xref:System.Xml.Schema?displayProperty=nameWithType> and <xref:System.Xml.XPath?displayProperty=nameWithType> namespaces. By using the <xref:System.Xml.XmlReader>, <xref:System.Xml.XPath.XPathNavigator>, and <xref:System.Xml.XmlWriter> classes in conjunction with LINQ to XML, you can invoke XSLT to transform XML trees.
 
-If you're  operating in a less secure environment, there are a number of security issues that are associated with XML and the use of the classes in `System.Xml`, `System.Xml.Schema`, `System.Xml.XPath`, and `System.Xml.Xsl`. These issues include, but aren't limited to, the following:
+If you're  operating in a less secure environment, there are a number of security issues that are associated with XML and the use of the classes in <xref:System.Xml?displayProperty=nameWithType>, <xref:System.Xml.Schema?displayProperty=nameWithType>, <xref:System.Xml.XPath?displayProperty=nameWithType>, and <xref:System.Xml.Xsl?displayProperty=nameWithType>. These issues include, but aren't limited to, the following:
 
 - XSD, XPath, and XSLT are string-based languages in which you can specify operations that consume a lot of time or memory. It's the responsibility of application programmers who take XSD, XPath, or XSLT strings from untrusted sources to validate that the strings aren't malicious, or to monitor and mitigate the possibility that evaluating these strings will lead to excessive system resource consumption.
 - XSD schemas (including inline schemas) are inherently vulnerable to denial of service attacks; you shouldn't accept schemas from untrusted sources.
@@ -33,7 +31,7 @@ If you're  operating in a less secure environment, there are a number of securit
 - External entities in DTDs can result in cross-zone and cross-domain attacks.
 - DTDs are vulnerable to denial of service attacks.
 - Exceptionally deep XML documents can pose denial of service issues; you might want to limit the depth of XML documents.
-- Don't accept supporting components, such as `System.Xml.NameTable`, `System.Xml.XmlNamespaceManager`, and `System.Xml.XmlResolver` objects, from untrusted assemblies.
+- Don't accept supporting components, such as <xref:System.Xml.NameTable>, <xref:System.Xml.XmlNamespaceManager>, and <xref:System.Xml.XmlResolver> objects, from untrusted assemblies.
 - Read data in chunks to mitigate large document attacks.
 - Script blocks in XSLT style sheets can expose a number of attacks.
 - Validate carefully before constructing dynamic XPath expressions.
@@ -56,9 +54,9 @@ The description of an error might reveal data, such as the data being transforme
 
 An assembly can have lesser or greater permissions. An assembly that has greater permissions has greater control over the computer and its environments.
 
-If code in an assembly with greater permissions calls `System.Security.CodeAccessPermission.Assert*` in an event handler, and then the XML tree is passed to a malicious assembly that has restricted permissions, the malicious assembly can cause an event to be raised. Because the event runs code that's in the assembly with greater permissions, the malicious assembly would then be operating with elevated privileges.
+If code in an assembly with greater permissions calls <xref:System.Security.CodeAccessPermission.Assert*?displayProperty=nameWithType> in an event handler, and then the XML tree is passed to a malicious assembly that has restricted permissions, the malicious assembly can cause an event to be raised. Because the event runs code that's in the assembly with greater permissions, the malicious assembly would then be operating with elevated privileges.
 
-Microsoft recommends that you never call `System.Security.CodeAccessPermission.Assert*` in an event handler.
+Microsoft recommends that you never call <xref:System.Security.CodeAccessPermission.Assert*?displayProperty=nameWithType> in an event handler.
 
 ### Don't accept DTDs from untrusted sources
 
@@ -70,29 +68,29 @@ One example of accepting DTDs from untrusted sources is a Web application that a
 
 Application developers should be aware that extremely large data sources can lead to resource exhaustion and denial of service attacks.
 
-If a malicious user submits or uploads a very large XML document, it could cause LINQ to XML to consume excessive system resources. This can constitute a denial of service attack. To prevent this, you can set the `System.Xml.XmlReaderSettings.MaxCharactersInDocument` property, and create a reader that's then limited in the size of document that it can load. You then use the reader to create the XML tree.
+If a malicious user submits or uploads a very large XML document, it could cause LINQ to XML to consume excessive system resources. This can constitute a denial of service attack. To prevent this, you can set the <xref:System.Xml.XmlReaderSettings.MaxCharactersInDocument?displayProperty=nameWithType> property, and create a reader that's then limited in the size of document that it can load. You then use the reader to create the XML tree.
 
-For example, if you know that the maximum expected size of your XML documents coming from an untrusted source will be less than 50K bytes, set `System.Xml.XmlReaderSettings.MaxCharactersInDocument*` to 100,000. This will not encumber your processing of XML documents, and at the same time it will mitigate denial of service threats where documents might be uploaded that would consume large amounts of memory.
+For example, if you know that the maximum expected size of your XML documents coming from an untrusted source will be less than 50K bytes, set <xref:System.Xml.XmlReaderSettings.MaxCharactersInDocument*?displayProperty=nameWithType> to 100,000. This will not encumber your processing of XML documents, and at the same time it will mitigate denial of service threats where documents might be uploaded that would consume large amounts of memory.
 
 ### Avoid excess entity expansion
 
-One of the known denial of service attacks when using a DTD is a document that causes excessive entity expansion. To prevent this, you can set the `System.Xml.XmlReaderSettings.MaxCharactersFromEntities` property, and create a reader that's then limited in the number of characters that result from entity expansion. You then use the reader to create the XML tree.
+One of the known denial of service attacks when using a DTD is a document that causes excessive entity expansion. To prevent this, you can set the <xref:System.Xml.XmlReaderSettings.MaxCharactersFromEntities?displayProperty=nameWithType> property, and create a reader that's then limited in the number of characters that result from entity expansion. You then use the reader to create the XML tree.
 
 ### Limit the depth of the XML hierarchy
 
-One possible denial of service attack is when a document is submitted that has excessive depth of hierarchy. To prevent this, you can wrap an `System.Xml.XmlReader` in your own class that counts the depth of elements. If the depth exceeds a predetermined reasonable level, you can terminate the processing of the malicious document.
+One possible denial of service attack is when a document is submitted that has excessive depth of hierarchy. To prevent this, you can wrap an <xref:System.Xml.XmlReader> in your own class that counts the depth of elements. If the depth exceeds a predetermined reasonable level, you can terminate the processing of the malicious document.
 
 ### Protect against untrusted XmlReader or XmlWriter implementations
 
-Administrators should verify that any externally supplied `System.Xml.XmlReader` or `System.Xml.XmlWriter` implementations have strong names and have been registered in the machine configuration. This prevents malicious code masquerading as a reader or writer from being loaded.
+Administrators should verify that any externally supplied <xref:System.Xml.XmlReader> or <xref:System.Xml.XmlWriter> implementations have strong names and have been registered in the machine configuration. This prevents malicious code masquerading as a reader or writer from being loaded.
 
 ### Periodically free objects that reference XName
 
-To protect against certain kinds of attacks, application programmers should free all objects that reference an `System.Xml.Linq.XName` object in the application domain on a regular basis.
+To protect against certain kinds of attacks, application programmers should free all objects that reference an <xref:System.Xml.Linq.XName> object in the application domain on a regular basis.
 
 ### Protect against random XML names
 
-Applications that take data from untrusted sources should consider using an `System.Xml.XmlReader` that's wrapped in custom code to inspect for the possibility of random XML names and namespaces. If such random XML names and namespaces are detected, the application can then terminate the processing of the malicious document.
+Applications that take data from untrusted sources should consider using an <xref:System.Xml.XmlReader> that's wrapped in custom code to inspect for the possibility of random XML names and namespaces. If such random XML names and namespaces are detected, the application can then terminate the processing of the malicious document.
 
 You might want to limit the number of names in any given namespace (including names in no namespace) to a reasonable limit.
 
@@ -104,4 +102,4 @@ Some security is provided by the common language runtime (CLR). For example, a c
 
 ## See also
 
-- LINQ to XML overview
+- [LINQ to XML overview](linq-xml-overview.md)

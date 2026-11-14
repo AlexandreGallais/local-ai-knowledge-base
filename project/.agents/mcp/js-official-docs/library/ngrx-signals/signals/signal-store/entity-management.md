@@ -1,12 +1,3 @@
----
-title: "Entity Management"
-tool: "ngrx-signals"
-version: "22.0"
-source: "https://github.com/ngrx/platform/blob/a4995391ef631f1bd60d539f436a1aa5c23c4fe5/projects/www/src/app/pages/guide/signals/signal-store/entity-management.md"
-commit: "a4995391ef631f1bd60d539f436a1aa5c23c4fe5"
-license: "MIT"
----
-
 # Entity Management
 
 The `@ngrx/signals/entities` plugin offers a simple and efficient way to manage entity collections with NgRx SignalStore.
@@ -37,9 +28,9 @@ export const TodosStore = signalStore(withEntities<Todo>());
 
 The `withEntities` feature adds the following signals to the `TodosStore`:
 
-- `ids: Signal<EntityId[]>`: An array of all entity IDs.
-- `entityMap: Signal<EntityMap<Todo>>`: A map of entities where each key is an ID.
-- `entities: Signal<Todo[]>`: An array of all entities.
+- `ids: Signal&lt;EntityId[]&gt;`: An array of all entity IDs.
+- `entityMap: Signal&lt;EntityMap&lt;Todo&gt;&gt;`: A map of entities where each key is an ID.
+- `entities: Signal&lt;Todo[]&gt;`: An array of all entities.
 
 The `ids` and `entityMap` are state slices, while `entities` is a computed signal.
 
@@ -288,7 +279,7 @@ import {
 } from '@ngrx/signals/entities';
 
 type Todo = {
-  key: <example-value>;
+  key: number;
   text: string;
   completed: boolean;
 };
@@ -310,7 +301,7 @@ export const TodosStore = signalStore(
         updateAllEntities({ completed: true }, { selectId })
       );
     },
-    removeTodo(key: <example-value>): void {
+    removeTodo(key: number): void {
       patchState(store, removeEntity(key));
     },
   }))
@@ -435,7 +426,7 @@ import {
 } from '@ngrx/signals/entities';
 
 type Todo = {
-  key: <example-value>;
+  key: number;
   text: string;
   completed: boolean;
 };
@@ -499,6 +490,6 @@ class Todos {
 
 <ngrx-docs-alert type="help">
 
-Learn more about private store members in the Private Store Members guide.
+Learn more about private store members in the [Private Store Members](/guide/signals/signal-store/private-store-members) guide.
 
 </ngrx-docs-alert>

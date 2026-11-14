@@ -1,13 +1,14 @@
 ---
-title: "no-unreachable"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-unreachable.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-unreachable
+rule_type: problem
+handled_by_typescript: true
+extra_typescript_info: >-
+    TypeScript must be configured with
+    [`allowUnreachableCode: false`](https://www.typescriptlang.org/tsconfig#allowUnreachableCode)
+    for it to consider unreachable code an error.
 ---
 
-# no-unreachable
+
 
 Because the `return`, `throw`, `continue`, and `break` statements unconditionally exit a block of code, any statements after them cannot be executed. Unreachable statements are usually a mistake.
 
@@ -37,7 +38,7 @@ This rule disallows unreachable code after `return`, `throw`, `continue`, and `b
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-unreachable: "error"*/
@@ -73,9 +74,11 @@ for (;;) {}
 console.log("done");
 ```
 
+:::
+
 Examples of **correct** code for this rule, because of JavaScript function and variable hoisting:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-unreachable: "error"*/
@@ -99,9 +102,11 @@ switch (foo) {
 }
 ```
 
+:::
+
 Examples of additional **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-unreachable: "error"*/
@@ -118,9 +123,11 @@ class C extends B {
 }
 ```
 
+:::
+
 Examples of additional **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-unreachable: "error"*/
@@ -156,6 +163,8 @@ class F extends B {
     }
 }
 ```
+
+:::
 
 ## Options
 

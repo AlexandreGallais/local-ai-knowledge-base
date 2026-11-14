@@ -1,15 +1,14 @@
 ---
 title: "Breaking change - PackageReference without a version raises an error"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/10.0/nu1015-packagereference-version.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where PackageReference without a version raises NU1015 error instead of NU1604 warning."
+ms.date: 06/23/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/46386
 ---
 
 # PackageReference without a version will raise an error
 
-Starting in .NET 10, NuGet raises a `NU1015` error when a `PackageReference` item doesn't have a version specified, instead of the previous `NU1604` warning.
+Starting in .NET 10, NuGet raises a `NU1015` error when a `PackageReference` item doesn't have a version specified, instead of the previous [`NU1604` warning](/nuget/reference/errors-and-warnings/nu1604).
 
 There's no change when using Central Package Management, since by design the PackageReference XML should not have a version in that scenario.
 
@@ -31,7 +30,7 @@ Starting in .NET 10, NuGet raises a NU1015 error with the following text:
 
 ## Type of breaking change
 
-This is a behavioral change.
+This is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

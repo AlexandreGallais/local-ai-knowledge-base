@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataImport::GetNativeCallConvFromSig Method"
 title: "IMetaDataImport::GetNativeCallConvFromSig Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-getnativecallconvfromsig-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.GetNativeCallConvFromSig"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::GetNativeCallConvFromSig"
+  - "IMetaDataImport::GetNativeCallConvFromSig method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::GetNativeCallConvFromSig Method
 
 Gets the native calling convention for the method that is represented by the specified signature pointer.
@@ -34,7 +41,7 @@ HRESULT GetNativeCallConvFromSig (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -42,6 +49,6 @@ HRESULT GetNativeCallConvFromSig (
 
 ## See also
 
-- `System.Runtime.InteropServices.CallingConvention`
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- <xref:System.Runtime.InteropServices.CallingConvention>
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

@@ -1,15 +1,14 @@
 ---
-title: "Audit reports for privacy and compliance"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/audit-reports.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Audit reports for privacy and compliance
+description: Learn how to generate audit reports for privacy-sensitive data and metrics using Microsoft.Extensions.AuditReports in .NET.
+ms.date: 02/26/2026
+ms.topic: concept-article
+ai-usage: ai-assisted
 ---
 
 # Audit reports for privacy and compliance
 
-The 📦 `Microsoft.Extensions.AuditReports` NuGet package provides functionality to generate audit reports about the code being compiled. These reports are particularly useful for privacy audits, compliance reviews, and understanding what telemetry data your application collects and transmits.
+The [📦 `Microsoft.Extensions.AuditReports`](https://www.nuget.org/packages/Microsoft.Extensions.AuditReports) NuGet package provides functionality to generate audit reports about the code being compiled. These reports are particularly useful for privacy audits, compliance reviews, and understanding what telemetry data your application collects and transmits.
 
 ## Why use audit reports
 
@@ -25,13 +24,13 @@ Audit reports help organizations maintain compliance and transparency:
 
 The `Microsoft.Extensions.AuditReports` package is a build-time tool that generates reports during compilation. Install it as a development dependency:
 
-### .NET CLI
+### [.NET CLI](#tab/dotnet-cli)
 
 ```dotnetcli
 dotnet add package Microsoft.Extensions.AuditReports
 ```
 
-### PackageReference
+### [PackageReference](#tab/package-reference)
 
 ```xml
 <PackageReference Include="Microsoft.Extensions.AuditReports" Version="10.0.0" PrivateAssets="all" />
@@ -39,7 +38,7 @@ dotnet add package Microsoft.Extensions.AuditReports
 
 ---
 
-For more information, see dotnet add package or Manage package dependencies in .NET applications.
+For more information, see [dotnet add package](../tools/dotnet-package-add.md) or [Manage package dependencies in .NET applications](../tools/dependencies.md).
 
 ## Report types
 
@@ -47,7 +46,7 @@ The package can generate three types of reports:
 
 | Report type | Description |
 |-------------|-------------|
-| Metrics     | Generates a report on source-generated metric definitions used in your code, so you can understand what metrics your application emits. |
+| Metrics     | Generates a report on [source-generated metric definitions](../diagnostics/metrics-generator.md) used in your code, so you can understand what metrics your application emits. |
 | Compliance  | Generates a report on the usage of privacy-sensitive data, including source-generated logging methods that handle personal or sensitive information. |
 | Metadata    | Generates a comprehensive report that combines both metrics and compliance information. |
 
@@ -308,7 +307,7 @@ When using audit reports, consider the following best practices:
 
 ## See also
 
-- Data classification in .NET
-- Logging in .NET
-- High-performance logging in .NET
-- Compile-time logging source generation
+- [Data classification in .NET](data-classification.md)
+- [Logging in .NET](logging/overview.md)
+- [High-performance logging in .NET](logging/high-performance-logging.md)
+- [Compile-time logging source generation](logging/source-generation.md)

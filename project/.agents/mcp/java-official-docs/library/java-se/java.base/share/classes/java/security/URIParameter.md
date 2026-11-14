@@ -1,12 +1,3 @@
----
-title: "URIParameter class (java.security)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/URIParameter.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # URIParameter class (java.security)
 
 ```java
@@ -16,7 +7,7 @@ public class URIParameter implements Policy.Parameters, javax.security.auth.logi
 A parameter that contains a URI pointing to data intended for a
 PolicySpi or ConfigurationSpi implementation.
 
-**Since:** 1.6
+@since 1.6
 
 ## URIParameter.URIParameter(java.net.URI)
 
@@ -24,16 +15,12 @@ PolicySpi or ConfigurationSpi implementation.
 public URIParameter(java.net.URI uri)
 ```
 
-Constructs a `URIParameter` with the URI pointing to
+Constructs a {@code URIParameter} with the URI pointing to
 data intended for an SPI implementation.
 
-Parameters:
+@param uri the URI pointing to the data.
 
-- `uri`: the URI pointing to the data.
-
-Throws:
-
-- `NullPointerException`: if the specified URI is `null`.
+@throws    NullPointerException if the specified URI is {@code null}.
 
 ## URIParameter.getURI()
 
@@ -43,4 +30,4 @@ public java.net.URI getURI()
 
 Returns the URI.
 
-**Returns:** uri the URI.
+@return uri the URI.

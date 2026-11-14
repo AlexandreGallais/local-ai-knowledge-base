@@ -1,10 +1,8 @@
 ---
-title: "Tutorial Part 5, apply migrations to the Contoso University sample"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/data/ef-mvc/migrations.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Tutorial Part 5, apply migrations to the Contoso University sample
+description: Part 5 of the Contoso University tutorial series. Use the EF Core migrations feature for managing data model changes in an ASP.NET Core MVC app.
+ms.date: 11/13/2020
+ms.topic: tutorial
 ---
 
 # Tutorial: Part 5, apply migrations to the Contoso University sample
@@ -13,6 +11,7 @@ In this tutorial, you start using the EF Core migrations feature for managing da
 
 In this tutorial, you:
 
+> [!div class="checklist"]
 > * Learn about migrations
 > * Create an initial migration
 > * Examine Up and Down methods
@@ -21,7 +20,7 @@ In this tutorial, you:
 
 ## Prerequisites
 
-* Sorting, filtering, and paging
+* [Sorting, filtering, and paging](sort-filter-page.md)
 
 ## About migrations
 
@@ -29,21 +28,18 @@ When you develop a new application, your data model changes frequently, and each
 
 This method of keeping the database in sync with the data model works well until you deploy the application to production. When the application is running in production it's usually storing data that you want to keep, and you don't want to lose everything each time you make a change such as adding a new column. The EF Core Migrations feature solves this problem by enabling EF to update the database schema instead of creating  a new database.
 
-To work with migrations, you can use the **Package Manager Console** (PMC) or the CLI.  These tutorials show how to use CLI commands. Information about the PMC is at the end of this tutorial.
+To work with migrations, you can use the **Package Manager Console** (PMC) or the CLI.  These tutorials show how to use CLI commands. Information about the PMC is at [the end of this tutorial](#pmc).
 
 ## Drop the database
 
-Install EF Core tools as a global tool and delete the database:
+Install EF Core tools as a [global tool](/ef/core/miscellaneous/cli/dotnet) and delete the database:
 
  ```dotnetcli
  dotnet tool install --global dotnet-ef
  dotnet ef database drop
  ```
 
-> **Note:**
-> By default, the architecture of the .NET binaries to install represents the currently running operating system architecture.
-> To specify a different architecture, review how to use the `dotnet tool install` command with the '--arch' option.
-> For more information, see GitHub dotnet/aspnetcore.docs issue #29262 - _Add '-a arm64' on Apple Silicon_.
+[!INCLUDE[](~/includes/dotnet-tool-install-arch-options.md)]
 
 The following section explains how to run CLI commands.
 
@@ -53,7 +49,11 @@ Save your changes and build the project. Then open a command window and navigate
 
 * In **Solution Explorer**, right-click the project and choose **Open Folder in File Explorer** from the context menu.
 
+  ![Open in File Explorer menu item](migrations/_static/open-in-file-explorer.png)
+
 * Enter "cmd" in the address bar and press Enter.
+
+  ![Open command window](migrations/_static/open-command-window.png)
 
 Enter the following command in the command window:
 
@@ -75,35 +75,7 @@ If you see an error message "*cannot access the file ... ContosoUniversity.dll b
 
 When you executed the `migrations add` command, EF generated the code that will create the database from scratch. This code is in the *Migrations* folder, in the file named `<timestamp>_InitialCreate.cs`. The `Up` method of the `InitialCreate` class creates the database tables that correspond to the data model entity sets, and the `Down` method deletes them, as shown in the following example.
 
-```csharp
-public partial class InitialCreate : Migration
-{
-    protected override void Up(MigrationBuilder migrationBuilder)
-    {
-        migrationBuilder.CreateTable(
-            name: "Course",
-            columns: table => new
-            {
-                CourseID = table.Column<int>(nullable: false),
-                Credits = table.Column<int>(nullable: false),
-                Title = table.Column<string>(nullable: true)
-            },
-            constraints: table =>
-            {
-                table.PrimaryKey("PK_Course", x => x.CourseID);
-            });
-
-        // Additional code not shown
-    }
-
-    protected override void Down(MigrationBuilder migrationBuilder)
-    {
-        migrationBuilder.DropTable(
-            name: "Enrollment");
-        // Additional code not shown
-    }
-}
-```
+[!code-csharp[](intro/samples/cu/Migrations/20170215220724_InitialCreate.cs?range=92-118)]
 
 Migrations calls the `Up` method to implement the data model changes for a migration. When you enter a command to roll back the update, Migrations calls the `Down` method.
 
@@ -115,9 +87,9 @@ If you created the initial migration when the database already exists, the datab
 
 Migrations creates a *snapshot* of the current database schema in `Migrations/SchoolContextModelSnapshot.cs`. When you add a migration, EF determines what changed by comparing the data model to the snapshot file.
 
-Use the dotnet ef migrations remove command to remove a migration. `dotnet ef migrations remove` deletes the migration and ensures the snapshot is correctly reset. If `dotnet ef migrations remove` fails, use `dotnet ef migrations remove -v` to get more information on the failure.
+Use the [dotnet ef migrations remove](/ef/core/miscellaneous/cli/dotnet#dotnet-ef-migrations-remove) command to remove a migration. `dotnet ef migrations remove` deletes the migration and ensures the snapshot is correctly reset. If `dotnet ef migrations remove` fails, use `dotnet ef migrations remove -v` to get more information on the failure.
 
-See EF Core Migrations in Team Environments for more information about how the snapshot file is used.
+See [EF Core Migrations in Team Environments](/ef/core/managing-schemas/migrations/teams) for more information about how the snapshot file is used.
 
 ## Apply the migration
 
@@ -127,7 +99,7 @@ In the command window, enter the following command to create the database and ta
 dotnet ef database update
 ```
 
-The output from the command is similar to the `migrations add` command, except that you see logs for the SQL commands that set up the database. Most of the logs are omitted in the following sample output. If you prefer not to see this level of detail in log messages, you can change the log level in the `appsettings.Development.json` file. For more information, see Logging in .NET and ASP.NET Core.
+The output from the command is similar to the `migrations add` command, except that you see logs for the SQL commands that set up the database. Most of the logs are omitted in the following sample output. If you prefer not to see this level of detail in log messages, you can change the log level in the `appsettings.Development.json` file. For more information, see [Logging in .NET and ASP.NET Core](../../fundamentals/logging/index.md).
 
 ```text
 info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
@@ -162,24 +134,29 @@ Use **SQL Server Object Explorer** to inspect the database as you did in the fir
 
 Run the application to verify that everything still works the same as before.
 
+![Students Index page](migrations/_static/students-index.png)
+
+<a id="pmc"></a>
+
 ## Compare CLI and PMC
 
 The EF tooling for managing migrations is available from .NET CLI commands or from PowerShell cmdlets in the Visual Studio **Package Manager Console** (PMC) window. This tutorial shows how to use the CLI, but you can use the PMC if you prefer.
 
-The EF commands for the PMC commands are in the Microsoft.EntityFrameworkCore.Tools package. This package is included in the Microsoft.AspNetCore.App metapackage, so you don't need to add a package reference if your app has a package reference for `Microsoft.AspNetCore.App`.
+The EF commands for the PMC commands are in the [Microsoft.EntityFrameworkCore.Tools](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools) package. This package is included in the [Microsoft.AspNetCore.App metapackage](../../fundamentals/metapackage-app.md), so you don't need to add a package reference if your app has a package reference for `Microsoft.AspNetCore.App`.
 
 **Important:** This isn't the same package as the one you install for the CLI by editing the `.csproj` file. The name of this one ends in `Tools`, unlike the CLI package name which ends in `Tools.DotNet`.
 
-For more information about the CLI commands, see .NET CLI.
+For more information about the CLI commands, see [.NET CLI](/ef/core/miscellaneous/cli/dotnet).
 
-For more information about the PMC commands, see Package Manager Console (Visual Studio).
+For more information about the PMC commands, see [Package Manager Console (Visual Studio)](/ef/core/miscellaneous/cli/powershell).
 
 ## Get the code
 
-Download or view the completed application.
+[Download or view the completed application.](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/data/ef-mvc/intro/samples)
 
 ## Next step
 
 Advance to the next tutorial to begin looking at more advanced topics about expanding the data model. Along the way you'll create and apply additional migrations.
 
-> Create and apply additional migrations
+> [!div class="nextstepaction"]
+> [Create and apply additional migrations](complex-data-model.md)

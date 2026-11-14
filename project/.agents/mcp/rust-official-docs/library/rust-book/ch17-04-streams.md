@@ -1,18 +1,11 @@
----
-title: "ch17-04-streams"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch17-04-streams.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
+<!-- Old headings. Do not remove or links may break. -->
 
-# ch17-04-streams
+<a id="streams"></a>
 
 ## Streams: Futures in Sequence
 
 Recall how we used the receiver for our async channel earlier in this chapter
-in the “Message Passing” section. The async
+in the [“Message Passing”][17-02-messages]<!-- ignore --> section. The async
 `recv` method produces a sequence of items over time. This is an instance of a
 much more general pattern known as a _stream_. Many concepts are naturally
 represented as streams: items becoming available in a queue, chunks of data
@@ -24,7 +17,8 @@ triggering too many network calls, set timeouts on sequences of long-running
 operations, or throttle user interface events to avoid doing needless work.
 
 We saw a sequence of items back in Chapter 13, when we looked at the Iterator
-trait in “The Iterator Trait and the `next` Method” section, but there are two differences between iterators and the
+trait in [“The Iterator Trait and the `next` Method”][iterator-trait]<!--
+ignore --> section, but there are two differences between iterators and the
 async channel receiver. The first difference is time: iterators are
 synchronous, while the channel receiver is asynchronous. The second difference
 is the API. When working directly with `Iterator`, we call its synchronous
@@ -40,17 +34,13 @@ create a stream from any iterator. As with an iterator, we can work with a
 stream by calling its `next` method and then awaiting the output, as in Listing
 17-21, which won’t compile yet.
 
-**Listing 17-21: Creating a stream from an iterator and printing its values** (src/main.rs)
+<Listing number="17-21" caption="Creating a stream from an iterator and printing its values" file-name="src/main.rs">
 
-```rust
-let values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-let iter = values.iter().map(|n| n * 2);
-let mut stream = trpl::stream_from_iter(iter);
-
-while let Some(value) = stream.next().await {
-    println!("The value was: {value}");
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch17-async-await/listing-17-21/src/main.rs:stream}}
 ```
+
+</Listing>
 
 We start with an array of numbers, which we convert to an iterator and then
 call `map` on to double all the values. Then we convert the iterator into a
@@ -59,6 +49,12 @@ items in the stream as they arrive with the `while let` loop.
 
 Unfortunately, when we try to run the code, it doesn’t compile but instead
 reports that there’s no `next` method available:
+
+<!-- manual-regeneration
+cd listings/ch17-async-await/listing-17-21
+cargo build
+copy only the error output
+-->
 
 ```text
 error[E0599]: no method named `next` found for struct `tokio_stream::iter::Iter` in the current scope
@@ -100,17 +96,17 @@ crates use similar definitions.
 The fix to the compiler error is to add a `use` statement for
 `trpl::StreamExt`, as in Listing 17-22.
 
-**Listing 17-22: Successfully using an iterator as the basis for a stream** (src/main.rs)
+<Listing number="17-22" caption="Successfully using an iterator as the basis for a stream" file-name="src/main.rs">
 
 ```rust
-use trpl::StreamExt;
-
-fn main() {
-    trpl::block_on(async {
-        let values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        // --snip--
+{{#rustdoc_include ../listings/ch17-async-await/listing-17-22/src/main.rs:all}}
 ```
+
+</Listing>
 
 With all those pieces put together, this code works the way we want! What’s
 more, now that we have `StreamExt` in scope, we can use all of its utility
 methods, just as with iterators.
+
+[17-02-messages]: ch17-02-concurrency-with-async.html#message-passing
+[iterator-trait]: ch13-02-iterators.html#the-iterator-trait-and-the-next-method

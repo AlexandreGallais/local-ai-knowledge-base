@@ -1,36 +1,28 @@
 ---
-title: ".NET Standard overview"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/net-standard.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: .NET Standard overview
+description: Learn what .NET Standard is, which .NET implementations support each version, and why .NET 5 and later versions simplify cross-platform code sharing.
+ms.date: 11/11/2026
+ms.service: dotnet
+ms.subservice: standard-library
+ms.custom: "updateeachrelease"
 ---
-
 # .NET Standard
 
-.NET Standard is a formal specification of .NET APIs that are available on multiple .NET implementations. The motivation behind .NET Standard was to establish greater uniformity in the .NET ecosystem. .NET 5 and later versions adopt a different approach to establishing uniformity that eliminates the need for .NET Standard in most scenarios. However, if you want to share code between .NET Framework and any other .NET implementation, such as .NET Core, your library should target .NET Standard 2.0. No new versions of .NET Standard will be released, but .NET 5 and all later versions will continue to support .NET Standard 2.1 and earlier.
+.NET Standard is a formal specification of .NET APIs that are available on multiple .NET implementations. The motivation behind .NET Standard was to establish greater uniformity in the .NET ecosystem. .NET 5 and later versions adopt a different approach to establishing uniformity that eliminates the need for .NET Standard in most scenarios. However, if you want to share code between .NET Framework and any other .NET implementation, such as .NET Core, your library should target .NET Standard 2.0. [No new versions of .NET Standard will be released](https://devblogs.microsoft.com/dotnet/the-future-of-net-standard/), but .NET 5 and all later versions will continue to support .NET Standard 2.1 and earlier.
 
-For information about choosing between .NET 5+ and .NET Standard, see .NET 5+ and .NET Standard later in this article.
+For information about choosing between .NET 5+ and .NET Standard, see [.NET 5+ and .NET Standard](#net-5-and-net-standard) later in this article.
 
-## .NET Standard versions
-
-.NET Standard is versioned. Each new version adds more APIs. When a library is built against a certain version of .NET Standard, it can run on any .NET implementation that implements that version of .NET Standard (or higher).
-
-Targeting a higher version of .NET Standard allows a library to use more APIs but means it can only be used on more recent versions of .NET. Targeting a lower version reduces the available APIs but means the library can run in more places.
-
-### 2.1
-
----
+<span id="net-implementation-support"></span>
+[!INCLUDE [net-standard-selector](../../includes/net-standard-selector.md)]
 
 ### Which .NET Standard version to target
 
 If you're targeting .NET Standard, we recommend you target .NET Standard 2.0, unless you need to support an earlier version. Most general-purpose libraries should not need APIs outside of .NET Standard 2.0, and .NET Framework doesn't support .NET Standard 2.1. .NET Standard 2.0 is supported by all modern platforms and is the recommended way to support multiple platforms with one target.
 
-If you need to support .NET Standard 1.x, we recommend that you *also* target .NET Standard 2.0. .NET Standard 1.x is distributed as a granular set of NuGet packages, which creates a large package dependency graph and results in a lot of packages being downloaded when the project is built. For more information, see Cross-platform targeting and .NET 5+ and .NET Standard later in this article.
+If you need to support .NET Standard 1.x, we recommend that you *also* target .NET Standard 2.0. .NET Standard 1.x is distributed as a granular set of NuGet packages, which creates a large package dependency graph and results in a lot of packages being downloaded when the project is built. For more information, see [Cross-platform targeting](library-guidance/cross-platform-targeting.md) and [.NET 5+ and .NET Standard](#net-5-and-net-standard) later in this article.
 
-> **Note:**
-> Starting in .NET 9, a build warning is emitted if your project targets .NET Standard 1.x. For more information, see Warning emitted for .NET Standard 1.x targets.
+> [!NOTE]
+> Starting in .NET 9, a build warning is emitted if your project targets .NET Standard 1.x. For more information, see [Warning emitted for .NET Standard 1.x targets](../core/compatibility/sdk/9.0/netstandard-warning.md).
 
 ### .NET Standard versioning rules
 
@@ -39,7 +31,7 @@ There are two primary versioning rules:
 - Additive: .NET Standard versions are logically concentric circles: higher versions incorporate all APIs from previous versions. There are no breaking changes between versions.
 - Immutable: Once shipped, .NET Standard versions are frozen.
 
-There will be no new .NET Standard versions after 2.1. For more information, see .NET 5+ and .NET Standard later in this article.
+There will be no new .NET Standard versions after 2.1. For more information, see [.NET 5+ and .NET Standard](#net-5-and-net-standard) later in this article.
 
 ## Specification
 
@@ -47,9 +39,9 @@ The .NET Standard specification is a standardized set of APIs. The specification
 
 ### Official artifacts
 
-The official specification is a set of *.cs* files that define the APIs that are part of the standard. The ref directory in the (now archived) dotnet/standard repository defines the .NET Standard APIs.
+The official specification is a set of *.cs* files that define the APIs that are part of the standard. The [ref directory](https://github.com/dotnet/standard/tree/v2.1.0/src/netstandard/ref) in the (now archived) [dotnet/standard repository](https://github.com/dotnet/standard) defines the .NET Standard APIs.
 
-The NETStandard.Library metapackage (source) describes the set of libraries that define (in part) one or more .NET Standard versions.
+The [NETStandard.Library](https://www.nuget.org/packages/NETStandard.Library) metapackage ([source](https://github.com/dotnet/standard/blob/v2.1.0/src/netstandard/pkg/NETStandard.Library.dependencies.props)) describes the set of libraries that define (in part) one or more .NET Standard versions.
 
 A given component, like `System.Runtime`, describes:
 
@@ -58,16 +50,16 @@ A given component, like `System.Runtime`, describes:
 
 Derivative artifacts are provided to enable more convenient reading and to enable certain developer scenarios (for example, using a compiler).
 
-- API list in markdown.
-- Reference assemblies, distributed as NuGet packages and referenced by the NETStandard.Library metapackage.
+- [API list in markdown](https://github.com/dotnet/standard/tree/v2.1.0/docs/versions).
+- Reference assemblies, distributed as NuGet packages and referenced by the [NETStandard.Library](https://www.nuget.org/packages/NETStandard.Library/) metapackage.
 
 ### Package representation
 
 The primary distribution vehicle for the .NET Standard reference assemblies is NuGet packages. Implementations are delivered in a variety of ways, appropriate for each .NET implementation.
 
-NuGet packages target one or more frameworks. .NET Standard packages target the ".NET Standard" framework. You can target the .NET Standard framework using the `netstandard` compact target framework moniker (TFM), for example, `netstandard1.4`. Libraries that are intended to run on multiple implementations of .NET should target the .NET Standard framework. For the broadest set of APIs, target `netstandard2.0`, because the number of available APIs more than doubled between .NET Standard 1.6 and 2.0.
+NuGet packages target one or more [frameworks](frameworks.md). .NET Standard packages target the ".NET Standard" framework. You can target the .NET Standard framework using the `netstandard` [compact target framework moniker (TFM)](frameworks.md), for example, `netstandard1.4`. Libraries that are intended to run on multiple implementations of .NET should target the .NET Standard framework. For the broadest set of APIs, target `netstandard2.0`, because the number of available APIs more than doubled between .NET Standard 1.6 and 2.0.
 
-The `NETStandard.Library` metapackage references the complete set of NuGet packages that define .NET Standard. The most common way to target `netstandard` is by referencing this metapackage. It describes and provides access to the ~40 .NET libraries and associated APIs that define .NET Standard. You can reference additional packages that target `netstandard` to get access to additional APIs.
+The [`NETStandard.Library`](https://www.nuget.org/packages/NETStandard.Library/) metapackage references the complete set of NuGet packages that define .NET Standard. The most common way to target `netstandard` is by referencing this metapackage. It describes and provides access to the ~40 .NET libraries and associated APIs that define .NET Standard. You can reference additional packages that target `netstandard` to get access to additional APIs.
 
 ### Versioning
 
@@ -79,23 +71,23 @@ As noted earlier, there will be no new .NET Standard versions after 2.1.
 
 ## Target .NET Standard
 
-You can build .NET Standard Libraries using a combination of the `netstandard` framework and the `NETStandard.Library` metapackage.
+You can [build .NET Standard Libraries](../core/tutorials/libraries.md) using a combination of the `netstandard` framework and the `NETStandard.Library` metapackage.
 
 ## .NET Framework compatibility mode
 
 Starting with .NET Standard 2.0, the .NET Framework compatibility mode was introduced. This compatibility mode allows .NET Standard projects to reference .NET Framework libraries as if they were compiled for .NET Standard. Referencing .NET Framework libraries doesn't work for all projects, such as libraries that use Windows Presentation Foundation (WPF) APIs.
 
-For more information, see .NET Framework compatibility mode.
+For more information, see [.NET Framework compatibility mode](../core/porting/third-party-deps.md#net-framework-compatibility-mode).
 
 ## .NET Standard libraries and Visual Studio
 
-To build .NET Standard libraries in Visual Studio, make sure you have Visual Studio 2019 or later or Visual Studio 2017 version 15.3 or later installed on Windows.
+To build .NET Standard libraries in Visual Studio, make sure you have [Visual Studio 2019 or later](https://visualstudio.microsoft.com/downloads/?utm_medium=microsoft&utm_source=learn.microsoft.com&utm_campaign=inline+link) or Visual Studio 2017 version 15.3 or later installed on Windows.
 
-If you only need to consume .NET Standard 2.0 libraries in your projects, you can also do that in Visual Studio 2015. However, you need NuGet client 3.6 or higher installed. You can download the NuGet client for Visual Studio 2015 from the NuGet downloads page.
+If you only need to consume .NET Standard 2.0 libraries in your projects, you can also do that in Visual Studio 2015. However, you need NuGet client 3.6 or higher installed. You can download the NuGet client for Visual Studio 2015 from the [NuGet downloads](https://www.nuget.org/downloads) page.
 
 ## .NET 5+ and .NET Standard
 
-.NET 5, .NET 6, .NET 7, .NET 8, .NET 9, .NET 10, and .NET 11 are single products with a uniform set of capabilities and APIs that can be used for Windows desktop apps and cross-platform console apps, cloud services, and websites. The .NET 11 TFMs, for example, reflect this broad range of scenarios:
+.NET 5, .NET 6, .NET 7, .NET 8, .NET 9, .NET 10, and .NET 11 are single products with a uniform set of capabilities and APIs that can be used for Windows desktop apps and cross-platform console apps, cloud services, and websites. The .NET 11 [TFMs](frameworks.md), for example, reflect this broad range of scenarios:
 
 - `net11.0`
 
@@ -103,14 +95,14 @@ If you only need to consume .NET Standard 2.0 libraries in your projects, you ca
 
 - `net11.0-windows`
 
-  This is an example of an OS-specific TFM that adds OS-specific functionality to everything that `net11.0` refers to.
+  This is an example of an [OS-specific TFM](frameworks.md#os-specific-tfms) that adds OS-specific functionality to everything that `net11.0` refers to.
 
 ### When to target `netx.0` vs. `netstandard`
 
 For existing code that targets .NET Standard 2.0 or later, there's no need to change the TFM just to use a newer .NET release. .NET 10 and .NET 11 implement .NET Standard 2.1 and earlier. The only reason to retarget from .NET Standard to .NET 11 or later would be to gain access to more runtime features, language features, or APIs. For example, to use C# 9, you need to target .NET 5 or a later version. You can multitarget .NET and .NET Standard to get access to newer features and still have your library available to other .NET implementations.
 
-> **Note:**
-> If your project targets .NET Standard 1.x, we recommend you retarget it to .NET Standard 2.0 or .NET 11+. For more information, see Warning emitted for .NET Standard 1.x targets.
+> [!NOTE]
+> If your project targets .NET Standard 1.x, we recommend you retarget it to .NET Standard 2.0 or .NET 11+. For more information, see [Warning emitted for .NET Standard 1.x targets](../core/compatibility/sdk/9.0/netstandard-warning.md).
 
 Here are some guidelines for new code for .NET 5+:
 
@@ -138,13 +130,13 @@ Here are some problems with .NET Standard that help explain why .NET 5 and later
 
   The separation of the API specification from its implementations results in complex mapping between API specification versions and implementation versions. This complexity is evident in the table shown earlier in this article and the instructions for how to interpret it.
 
-  **Solution in .NET 5+:** There's no separation between a .NET 5+ API specification and its implementation. The result is a simplified TFM scheme. There's one TFM prefix for all workloads: `net11.0` is used for libraries, console apps, and web apps. The only variation is a suffix that specifies platform-specific APIs for a particular platform, such as `net11.0-windows`. Thanks to this TFM naming convention, you can easily tell whether a given app can use a given library. No version number equivalents table, like the one for .NET Standard, is needed.
+  **Solution in .NET 5+:** There's no separation between a .NET 5+ API specification and its implementation. The result is a simplified TFM scheme. There's one TFM prefix for all workloads: `net11.0` is used for libraries, console apps, and web apps. The only variation is a [suffix that specifies platform-specific APIs](frameworks.md#os-specific-tfms) for a particular platform, such as `net11.0-windows`. Thanks to this TFM naming convention, you can easily tell whether a given app can use a given library. No version number equivalents table, like the one for .NET Standard, is needed.
 
 - Platform-unsupported exceptions at runtime
 
   .NET Standard exposes platform-specific APIs. Your code might compile without errors and appear to be portable to any platform even if it isn't portable. When it runs on a platform that doesn't have an implementation for a given API, you get runtime errors.
 
-  **Solution in .NET 5+:** The .NET 5+ SDKs include code analyzers that are enabled by default. The platform compatibility analyzer detects unintentional use of APIs that aren't supported on the platforms you intend to run on. For more information, see Platform compatibility analyzer.
+  **Solution in .NET 5+:** The .NET 5+ SDKs include code analyzers that are enabled by default. The platform compatibility analyzer detects unintentional use of APIs that aren't supported on the platforms you intend to run on. For more information, see [Platform compatibility analyzer](analyzers/platform-compat-analyzer.md).
 
 ### .NET Standard not deprecated
 
@@ -155,7 +147,7 @@ Here are some problems with .NET Standard that help explain why .NET 5 and later
 
 ## See also
 
-- .NET Standard versions (source)
-- .NET Standard versions (interactive UI)
-- Build a .NET Standard library
-- Cross-platform targeting
+- [.NET Standard versions (source)](https://github.com/dotnet/standard/blob/v2.1.0/docs/versions.md)
+- [.NET Standard versions (interactive UI)](https://dotnet.microsoft.com/platform/dotnet-standard#versions)
+- [Build a .NET Standard library](../core/tutorials/create-class-library.md)
+- [Cross-platform targeting](./library-guidance/cross-platform-targeting.md)

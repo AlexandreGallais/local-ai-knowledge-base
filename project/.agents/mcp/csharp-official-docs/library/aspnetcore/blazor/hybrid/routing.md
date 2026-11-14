@@ -1,13 +1,14 @@
 ---
-title: "ASP.NET Core Blazor Hybrid routing and navigation"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/hybrid/routing.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core Blazor Hybrid routing and navigation
+ai-usage: ai-assisted
+description: Learn how to manage request routing and navigation in Blazor Hybrid apps.
+monikerRange: '>= aspnetcore-6.0'
+ms.date: 08/31/2026
+zone_pivot_groups: blazor-hybrid-frameworks
 ---
-
 # ASP.NET Core Blazor Hybrid routing and navigation
+
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
 This article explains how to manage request routing and navigation in Blazor Hybrid apps.
 
@@ -22,30 +23,30 @@ Default URI request routing behavior:
   * WPF and Windows Forms: The host page content is returned.
   * .NET MAUI: A 404 response is returned.
 
-To change the link handling behavior for links that don't set `target="_blank"`, register the `UrlLoading` event and set the `Microsoft.AspNetCore.Components.WebView.UrlLoadingEventArgs.UrlLoadingStrategy` property. The `Microsoft.AspNetCore.Components.WebView.UrlLoadingEventArgs.UrlLoadingStrategy` enumeration allows setting link handling behavior to any of the following values:
+To change the link handling behavior for links that don't set `target="_blank"`, register the `UrlLoading` event and set the <xref:Microsoft.AspNetCore.Components.WebView.UrlLoadingEventArgs.UrlLoadingStrategy?displayProperty=nameWithType> property. The <xref:Microsoft.AspNetCore.Components.WebView.UrlLoadingEventArgs.UrlLoadingStrategy> enumeration allows setting link handling behavior to any of the following values:
 
-* `Microsoft.AspNetCore.Components.WebView.UrlLoadingStrategy.OpenExternally`: Load the URL using an app determined by the device. This is the default strategy for URIs with an external host.
-* `Microsoft.AspNetCore.Components.WebView.UrlLoadingStrategy.OpenInWebView`: Load the URL within the `BlazorWebView`. This is the default strategy for URLs with a host matching the app origin. ***Don't use this strategy for external links unless you can ensure the destination URI is fully trusted.***
-* `Microsoft.AspNetCore.Components.WebView.UrlLoadingStrategy.CancelLoad`: Cancels the current URL loading attempt.
+* <xref:Microsoft.AspNetCore.Components.WebView.UrlLoadingStrategy.OpenExternally>: Load the URL using an app determined by the device. This is the default strategy for URIs with an external host.
+* <xref:Microsoft.AspNetCore.Components.WebView.UrlLoadingStrategy.OpenInWebView>: Load the URL within the `BlazorWebView`. This is the default strategy for URLs with a host matching the app origin. ***Don't use this strategy for external links unless you can ensure the destination URI is fully trusted.***
+* <xref:Microsoft.AspNetCore.Components.WebView.UrlLoadingStrategy.CancelLoad>: Cancels the current URL loading attempt.
 
-The `Microsoft.AspNetCore.Components.WebView.UrlLoadingEventArgs.Url` property is used to get or dynamically set the URL.
+The <xref:Microsoft.AspNetCore.Components.WebView.UrlLoadingEventArgs.Url?displayProperty=nameWithType> property is used to get or dynamically set the URL.
 
-> **Warning:**
+> [!WARNING]
 > External links are opened in an app determined by the device. Opening external links within a `BlazorWebView` can introduce security vulnerabilities and shouldn't be enabled unless you can ensure that the external links are fully trusted.
 
 API documentation:
 
-* .NET MAUI: `Microsoft.AspNetCore.Components.WebView.Maui.BlazorWebView.UrlLoading`
-* WPF: `Microsoft.AspNetCore.Components.WebView.Wpf.BlazorWebView.UrlLoading`
-* Windows Forms: `Microsoft.AspNetCore.Components.WebView.WindowsForms.BlazorWebView.UrlLoading`
+* .NET MAUI: <xref:Microsoft.AspNetCore.Components.WebView.Maui.BlazorWebView.UrlLoading?displayProperty=nameWithType>
+* WPF: <xref:Microsoft.AspNetCore.Components.WebView.Wpf.BlazorWebView.UrlLoading?displayProperty=nameWithType>
+* Windows Forms: <xref:Microsoft.AspNetCore.Components.WebView.WindowsForms.BlazorWebView.UrlLoading?displayProperty=nameWithType>
 
-The `Microsoft.AspNetCore.Components.WebView` namespace is required for the following examples:
+The <xref:Microsoft.AspNetCore.Components.WebView?displayProperty=fullName> namespace is required for the following examples:
 
 ```csharp
 using Microsoft.AspNetCore.Components.WebView;
 ```
 
-**maui:**
+:::zone pivot="maui"
 
 Add the following event handler to the constructor of the `Page` where the `BlazorWebView` is created, which is `MainPage.xaml.cs` in an app created from the .NET MAUI project template.
 
@@ -61,7 +62,9 @@ blazorWebView.UrlLoading +=
     };
 ```
 
-**wpf:**
+:::zone-end
+
+:::zone pivot="wpf"
 
 Add the `UrlLoading="Handle_UrlLoading"` attribute to the `BlazorWebView` control in the `.xaml` file:
 
@@ -86,7 +89,9 @@ private void Handle_UrlLoading(object sender,
 }
 ```
 
-**winforms:**
+:::zone-end
+
+:::zone pivot="winforms"
 
 In the constructor of the form containing the `BlazorWebView` control, add the following event registration:
 
@@ -102,11 +107,15 @@ blazorWebView.UrlLoading +=
     };
 ```
 
+:::zone-end
+
+:::moniker range=">= aspnetcore-8.0"
+
 ## Get or set a path for initial navigation
 
 Use the `BlazorWebView.StartPath` property to get or set the path for initial navigation within the Blazor navigation context when the Razor component is finished loading. The default start path is the relative root URL path (`/`).
 
-**maui:**
+:::zone pivot="maui"
 
 In the `MainPage` XAML markup (`MainPage.xaml`), specify the start path. The following example sets the path to a welcome page at `/welcome`:
 
@@ -122,7 +131,9 @@ Alternatively, the start path can be set in the `MainPage` constructor (`MainPag
 blazorWebView.StartPath = "/welcome";
 ```
 
-**wpf:**
+:::zone-end
+
+:::zone pivot="wpf"
 
 In the `MainWindow` designer (`MainWindow.xaml`), specify the start path. The following example sets the path to a welcome page at `/welcome`:
 
@@ -132,7 +143,9 @@ In the `MainWindow` designer (`MainWindow.xaml`), specify the start path. The fo
 </blazor:BlazorWebView>
 ```
 
-**winforms:**
+:::zone-end
+
+:::zone pivot="winforms"
 
 Inside the `Form1` constructor of the `Form1.cs` file, specify the start path. The following example sets the path to a welcome page at `/welcome`:
 
@@ -140,20 +153,24 @@ Inside the `Form1` constructor of the `Form1.cs` file, specify the start path. T
 blazorWebView1.StartPath = "/welcome";
 ```
 
-**maui:**
+:::zone-end
+
+:::moniker-end
+
+:::zone pivot="maui"
 
 ## Navigation among pages and Razor components
 
 This section explains how to navigate among .NET MAUI content pages and Razor components.
 
-The .NET MAUI Blazor hybrid project template isn't a Shell-based app, so the URI-based navigation for Shell-based apps isn't suitable for a project based on the project template. The examples in this section use a `Microsoft.Maui.Controls.NavigationPage` to perform modeless or modal navigation.
+The .NET MAUI Blazor hybrid project template isn't a [Shell-based app](/dotnet/maui/fundamentals/shell/), so the [URI-based navigation for Shell-based apps](/dotnet/maui/fundamentals/shell/navigation) isn't suitable for a project based on the project template. The examples in this section use a <xref:Microsoft.Maui.Controls.NavigationPage> to perform modeless or modal navigation.
 
 In the following example:
 
-* The namespace of the app is `MauiApp1`, which matches the suggested project name of the Build your first app tutorial.
-* A `Microsoft.Maui.Controls.ContentPage` is placed in a new folder added to the app named `Views`.
+* The namespace of the app is `MauiApp1`, which matches the suggested project name of the [Build your first app](/dotnet/maui/get-started/first-app) tutorial.
+* A <xref:Microsoft.Maui.Controls.ContentPage> is placed in a new folder added to the app named `Views`.
 
-In `App.xaml.cs`, create the `MainPage` as a `Microsoft.Maui.Controls.NavigationPage` by making the following change:
+In `App.xaml.cs`, create the `MainPage` as a <xref:Microsoft.Maui.Controls.NavigationPage> by making the following change:
 
 ```diff
 - MainPage = new MainPage();
@@ -181,7 +198,7 @@ In `App.xaml.cs`, create the `MainPage` as a `Microsoft.Maui.Controls.Navigation
 </ContentPage>
 ```
 
-In the following `NavigationExample` code file, the `CloseButton_Clicked` event handler for the close button calls `Microsoft.Maui.Controls.INavigation.PopAsync*` to pop the `Microsoft.Maui.Controls.ContentPage` off of the navigation stack.
+In the following `NavigationExample` code file, the `CloseButton_Clicked` event handler for the close button calls <xref:Microsoft.Maui.Controls.INavigation.PopAsync*> to pop the <xref:Microsoft.Maui.Controls.ContentPage> off of the navigation stack.
 
 `Views/NavigationExample.xaml.cs`:
 
@@ -205,8 +222,8 @@ public partial class NavigationExample : ContentPage
 In a Razor component:
 
 * Add the namespace for the app's content pages. In the following example, the namespace is `MauiApp1.Views`.
-* Add an HTML `button` element with an `@onclick` event handler to open the content page. The event handler method is named `OpenPage`.
-* In the event handler, call `Microsoft.Maui.Controls.INavigation.PushAsync*` to push the `Microsoft.Maui.Controls.ContentPage`, `NavigationExample`, onto the navigation stack.
+* Add an HTML `button` element with an [`@onclick` event handler](../components/event-handling.md) to open the content page. The event handler method is named `OpenPage`.
+* In the event handler, call <xref:Microsoft.Maui.Controls.INavigation.PushAsync*> to push the <xref:Microsoft.Maui.Controls.ContentPage>, `NavigationExample`, onto the navigation stack.
 
 The following example is based on the `Index` component in the .NET MAUI Blazor project template.
 
@@ -234,14 +251,14 @@ Welcome to your new app.
 
 To change the preceding example to modal navigation:
 
-* In the `CloseButton_Clicked` method (`Views/NavigationExample.xaml.cs`), change `Microsoft.Maui.Controls.INavigation.PopAsync*` to `Microsoft.Maui.Controls.INavigation.PopModalAsync*`:
+* In the `CloseButton_Clicked` method (`Views/NavigationExample.xaml.cs`), change <xref:Microsoft.Maui.Controls.INavigation.PopAsync*> to <xref:Microsoft.Maui.Controls.INavigation.PopModalAsync*>:
 
   ```diff
   - await Navigation.PopAsync();
   + await Navigation.PopModalAsync();
   ```
 
-* In the `OpenPage` method (`Pages/Index.razor`), change `Microsoft.Maui.Controls.INavigation.PushAsync*` to `Microsoft.Maui.Controls.INavigation.PushModalAsync*`:
+* In the `OpenPage` method (`Pages/Index.razor`), change <xref:Microsoft.Maui.Controls.INavigation.PushAsync*> to <xref:Microsoft.Maui.Controls.INavigation.PushModalAsync*>:
 
   ```diff
   - await App.Current.MainPage.Navigation.PushAsync(new NavigationExample());
@@ -250,10 +267,14 @@ To change the preceding example to modal navigation:
 
 For more information, see the following resources:
 
-* `NavigationPage` article (.NET MAUI documentation)
-* `NavigationPage` (API documentation)
+* [`NavigationPage` article (.NET MAUI documentation)](/dotnet/maui/user-interface/pages/navigationpage)
+* [`NavigationPage` (API documentation)](xref:Microsoft.Maui.Controls.NavigationPage)
 
-**maui:**
+:::zone-end
+
+:::moniker range=">= aspnetcore-8.0"
+
+:::zone pivot="maui"
 
 ## App linking (deep linking)
 
@@ -261,5 +282,9 @@ It's often desirable to connect a website and a mobile app so that links on a we
 
 For more information, see the following articles in the .NET MAUI documentation:
 
-* Android app links
-* Apple universal links
+* [Android app links](/dotnet/maui/android/app-links)
+* [Apple universal links](/dotnet/maui/macios/universal-links)
+
+:::zone-end
+
+:::moniker-end

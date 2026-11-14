@@ -1,15 +1,12 @@
----
-title: "Query string"
-tool: "node"
-version: "26.13"
-source: "https://github.com/nodejs/node/blob/e9c277643b0249c50f6e6de5413be8a88ea11b6a/doc/api/querystring.md"
-commit: "e9c277643b0249c50f6e6de5413be8a88ea11b6a"
-license: "MIT"
----
-
 # Query string
 
+<!--introduced_in=v0.1.25-->
+
 > Stability: 2 - Stable
+
+<!--name=querystring-->
+
+<!-- source_link=lib/querystring.js -->
 
 The `node:querystring` module provides utilities for parsing and formatting URL
 query strings. It can be accessed using:
@@ -24,13 +21,25 @@ when compatibility with browser code is desirable.
 
 ## `querystring.decode()`
 
+<!-- YAML
+added: v0.1.99
+-->
+
 The `querystring.decode()` function is an alias for `querystring.parse()`.
 
 ## `querystring.encode()`
 
+<!-- YAML
+added: v0.1.99
+-->
+
 The `querystring.encode()` function is an alias for `querystring.stringify()`.
 
 ## `querystring.escape(str)`
+
+<!-- YAML
+added: v0.1.25
+-->
 
 * `str` {string}
 
@@ -45,6 +54,22 @@ necessary by assigning `querystring.escape` to an alternative function.
 
 ## `querystring.parse(str[, sep[, eq[, options]]])`
 
+<!-- YAML
+added: v0.1.25
+changes:
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/10967
+    description: Multiple empty entries are now parsed correctly (e.g. `&=&=`).
+  - version: v6.0.0
+    pr-url: https://github.com/nodejs/node/pull/6055
+    description: The returned object no longer inherits from `Object.prototype`.
+  - version:
+    - v6.0.0
+    - v4.2.4
+    pr-url: https://github.com/nodejs/node/pull/3807
+    description: The `eq` parameter may now have a length of more than `1`.
+-->
+
 * `str` {string} The URL query string to parse
 * `sep` {string} The substring used to delimit key and value pairs in the
   query string. **Default:** `'&'`.
@@ -55,7 +80,7 @@ necessary by assigning `querystring.escape` to an alternative function.
     percent-encoded characters in the query string. **Default:**
     `querystring.unescape()`.
   * `maxKeys` {number} Specifies the maximum number of keys to parse.
-    Specify `0` to remove key <example-value> limitations. **Default:** `1000`.
+    Specify `0` to remove key counting limitations. **Default:** `1000`.
 
 The `querystring.parse()` method parses a URL query string (`str`) into a
 collection of key and value pairs.
@@ -86,6 +111,10 @@ querystring.parse('w=%D6%D0%CE%C4&foo=bar', null, null,
 ```
 
 ## `querystring.stringify(obj[, sep[, eq[, options]]])`
+
+<!-- YAML
+added: v0.1.25
+-->
 
 * `obj` {Object} The object to serialize into a URL query string
 * `sep` {string} The substring used to delimit key and value pairs in the
@@ -125,6 +154,10 @@ querystring.stringify({ w: '中文', foo: 'bar' }, null, null,
 ```
 
 ## `querystring.unescape(str)`
+
+<!-- YAML
+added: v0.1.25
+-->
 
 * `str` {string}
 

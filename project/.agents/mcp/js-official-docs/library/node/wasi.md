@@ -1,22 +1,17 @@
----
-title: "WebAssembly System Interface (WASI)"
-tool: "node"
-version: "26.13"
-source: "https://github.com/nodejs/node/blob/e9c277643b0249c50f6e6de5413be8a88ea11b6a/doc/api/wasi.md"
-commit: "e9c277643b0249c50f6e6de5413be8a88ea11b6a"
-license: "MIT"
----
-
 # WebAssembly System Interface (WASI)
+
+<!--introduced_in=v12.16.0-->
 
 > Stability: 1 - Experimental
 
-The `node:wasi` module does not currently provide the
+<strong class="critical">The `node:wasi` module does not currently provide the
 comprehensive file system security properties provided by some WASI runtimes.
 Full support for secure file system sandboxing may or may not be implemented in
-future. In the mean time, do not rely on it to run untrusted code.
+future. In the mean time, do not rely on it to run untrusted code. </strong>
 
-The WASI API provides an implementation of the WebAssembly System Interface
+<!-- source_link=lib/wasi.js -->
+
+The WASI API provides an implementation of the [WebAssembly System Interface][]
 specification. WASI gives WebAssembly applications access to the underlying
 operating system via a collection of POSIX-like functions.
 
@@ -100,13 +95,25 @@ To run the above example, create a new WebAssembly text format file named
 )
 ```
 
-Use wabt to compile `.wat` to `.wasm`
+Use [wabt](https://github.com/WebAssembly/wabt) to compile `.wat` to `.wasm`
 
 ```bash
 wat2wasm demo.wat
 ```
 
 ## Security
+
+<!-- YAML
+added:
+  - v21.2.0
+  - v20.11.0
+changes:
+  - version:
+    - v21.2.0
+    - v20.11.0
+    pr-url: https://github.com/nodejs/node/pull/50396
+    description: Clarify WASI security properties.
+-->
 
 WASI provides a capabilities-based model through which applications are provided
 their own custom `env`, `preopens`, `stdin`, `stdout`, `stderr`, and `exit`
@@ -122,11 +129,33 @@ added in future.
 
 ## Class: `WASI`
 
+<!-- YAML
+added:
+ - v13.3.0
+ - v12.16.0
+-->
+
 The `WASI` class provides the WASI system call API and additional convenience
 methods for working with WASI-based applications. Each `WASI` instance
 represents a distinct environment.
 
 ### `new WASI([options])`
+
+<!-- YAML
+added:
+ - v13.3.0
+ - v12.16.0
+changes:
+ - version: v20.1.0
+   pr-url: https://github.com/nodejs/node/pull/47390
+   description: default value of returnOnExit changed to true.
+ - version: v20.0.0
+   pr-url: https://github.com/nodejs/node/pull/47391
+   description: The version option is now required and has no default value.
+ - version: v19.8.0
+   pr-url: https://github.com/nodejs/node/pull/46469
+   description: version field added to options.
+-->
 
 * `options` {Object}
   * `args` {Array} An array of strings that the WebAssembly application will
@@ -155,6 +184,10 @@ represents a distinct environment.
 
 ### `wasi.getImportObject()`
 
+<!-- YAML
+added: v19.8.0
+-->
+
 Return an import object that can be passed to `WebAssembly.instantiate()` if
 no other WASM imports are needed beyond those provided by WASI.
 
@@ -172,18 +205,30 @@ If version `preview1` was passed into the constructor it will return:
 
 ### `wasi.start(instance)`
 
+<!-- YAML
+added:
+ - v13.3.0
+ - v12.16.0
+-->
+
 * `instance` {WebAssembly.Instance}
 
 Attempt to begin execution of `instance` as a WASI command by invoking its
 `_start()` export. If `instance` does not contain a `_start()` export, or if
 `instance` contains an `_initialize()` export, then an exception is thrown.
 
-`start()` requires that `instance` exports a `WebAssembly.Memory` named
+`start()` requires that `instance` exports a [`WebAssembly.Memory`][] named
 `memory`. If `instance` does not have a `memory` export an exception is thrown.
 
 If `start()` is called more than once, an exception is thrown.
 
 ### `wasi.initialize(instance)`
+
+<!-- YAML
+added:
+ - v14.6.0
+ - v12.19.0
+-->
 
 * `instance` {WebAssembly.Instance}
 
@@ -191,12 +236,16 @@ Attempt to initialize `instance` as a WASI reactor by invoking its
 `_initialize()` export, if it is present. If `instance` contains a `_start()`
 export, then an exception is thrown.
 
-`initialize()` requires that `instance` exports a `WebAssembly.Memory` named
+`initialize()` requires that `instance` exports a [`WebAssembly.Memory`][] named
 `memory`. If `instance` does not have a `memory` export an exception is thrown.
 
 If `initialize()` is called more than once, an exception is thrown.
 
 ### `wasi.finalizeBindings(instance[, options])`
+
+<!-- YAML
+added: v24.4.0
+-->
 
 * `instance` {WebAssembly.Instance}
 * `options` {Object}
@@ -207,8 +256,8 @@ or `start()`. This method is useful when the WASI module is instantiated in
 child threads for sharing the memory across threads.
 
 `finalizeBindings()` requires that either `instance` exports a
-`WebAssembly.Memory` named `memory` or user specify a
-`WebAssembly.Memory` object in `options.memory`. If the `memory` is invalid
+[`WebAssembly.Memory`][] named `memory` or user specify a
+[`WebAssembly.Memory`][] object in `options.memory`. If the `memory` is invalid
 an exception is thrown.
 
 `start()` and `initialize()` will call `finalizeBindings()` internally.
@@ -216,8 +265,18 @@ If `finalizeBindings()` is called more than once, an exception is thrown.
 
 ### `wasi.wasiImport`
 
+<!-- YAML
+added:
+ - v13.3.0
+ - v12.16.0
+-->
+
 * Type: {Object}
 
 `wasiImport` is an object that implements the WASI system call API. This object
 should be passed as the `wasi_snapshot_preview1` import during the instantiation
-of a `WebAssembly.Instance`.
+of a [`WebAssembly.Instance`][].
+
+[WebAssembly System Interface]: https://wasi.dev/
+[`WebAssembly.Instance`]: https://developer.mozilla.org/en-US/docs/WebAssembly/Reference/JavaScript_interface/Instance
+[`WebAssembly.Memory`]: https://developer.mozilla.org/en-US/docs/WebAssembly/Reference/JavaScript_interface/Memory

@@ -1,14 +1,9 @@
 ---
-title: "nonblock-statement-body-position"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/nonblock-statement-body-position.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: nonblock-statement-body-position
+rule_type: layout
+further_reading:
+- https://jscs-dev.github.io/rule/requireNewlineBeforeSingleStatementsInIf
 ---
-
-# nonblock-statement-body-position
-
 When writing `if`, `else`, `while`, `do-while`, and `for` statements, the body can be a single statement instead of a block. It can be useful to enforce a consistent location for these single statements.
 
 For example, some developers avoid writing code like this:
@@ -36,7 +31,7 @@ if (foo) bar();
 
 This rule aims to enforce a consistent location for single-line statements.
 
-Note that this rule does not enforce the usage of single-line statements in general. If you would like to disallow single-line statements, use the `curly` rule instead.
+Note that this rule does not enforce the usage of single-line statements in general. If you would like to disallow single-line statements, use the [`curly`](curly) rule instead.
 
 ### Options
 
@@ -53,7 +48,7 @@ Additionally, the rule accepts an optional object option with an `"overrides"` k
 
 Examples of **incorrect** code for this rule with the default `"beside"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint nonblock-statement-body-position: ["error", "beside"] */
@@ -75,9 +70,11 @@ while (foo)
 
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"beside"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint nonblock-statement-body-position: ["error", "beside"] */
@@ -98,9 +95,11 @@ if (foo) { // block statements are always allowed with this rule
 }
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `"below"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint nonblock-statement-body-position: ["error", "below"] */
@@ -115,9 +114,11 @@ for (let i = 1; i < foo; i++) bar();
 do bar(); while (foo)
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"below"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint nonblock-statement-body-position: ["error", "below"] */
@@ -144,9 +145,11 @@ if (foo) {
 }
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `"beside", { "overrides": { "while": "below" } }` rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint nonblock-statement-body-position: ["error", "beside", { "overrides": { "while": "below" } }] */
@@ -157,9 +160,11 @@ if (foo)
 while (foo) bar();
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"beside", { "overrides": { "while": "below" } }` rule:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint nonblock-statement-body-position: ["error", "beside", { "overrides": { "while": "below" } }] */
@@ -170,6 +175,8 @@ while (foo)
   bar();
 ```
 
+:::
+
 ## When Not To Use It
 
-If you're not concerned about consistent locations of single-line statements, you should not turn on this rule. You can also disable this rule if you're using the `"all"` option for the `curly` rule, because this will disallow single-line statements entirely.
+If you're not concerned about consistent locations of single-line statements, you should not turn on this rule. You can also disable this rule if you're using the `"all"` option for the [`curly`](curly) rule, because this will disallow single-line statements entirely.

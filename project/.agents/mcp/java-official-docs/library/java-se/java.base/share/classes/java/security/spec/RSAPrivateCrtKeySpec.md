@@ -1,12 +1,3 @@
----
-title: "RSAPrivateCrtKeySpec class (java.security.spec)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/spec/RSAPrivateCrtKeySpec.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # RSAPrivateCrtKeySpec class (java.security.spec)
 
 ```java
@@ -14,22 +5,21 @@ public class RSAPrivateCrtKeySpec extends RSAPrivateKeySpec
 ```
 
 This class specifies an RSA private key, as defined in the
-PKCS#1 v2.2 standard,
+<a href="https://tools.ietf.org/rfc/rfc8017.txt">PKCS#1 v2.2</a> standard,
 using the Chinese Remainder Theorem (CRT) information values for efficiency.
 
-**Since:** 1.2
+@spec https://www.rfc-editor.org/info/rfc8017
+     RFC 8017: PKCS #1: RSA Cryptography Specifications Version 2.2
+@author Jan Luehe
+@since 1.2
 
-**See also:** java.security.Key
 
-**See also:** java.security.KeyFactory
-
-**See also:** KeySpec
-
-**See also:** PKCS8EncodedKeySpec
-
-**See also:** RSAPrivateKeySpec
-
-**See also:** RSAPublicKeySpec
+@see java.security.Key
+@see java.security.KeyFactory
+@see KeySpec
+@see PKCS8EncodedKeySpec
+@see RSAPrivateKeySpec
+@see RSAPublicKeySpec
 
 ## RSAPrivateCrtKeySpec.RSAPrivateCrtKeySpec(BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger)
 
@@ -37,18 +27,17 @@ using the Chinese Remainder Theorem (CRT) information values for efficiency.
 public RSAPrivateCrtKeySpec(BigInteger modulus, BigInteger publicExponent, BigInteger privateExponent, BigInteger primeP, BigInteger primeQ, BigInteger primeExponentP, BigInteger primeExponentQ, BigInteger crtCoefficient)
 ```
 
-Creates a new `RSAPrivateCrtKeySpec`.
+Creates a new {@code RSAPrivateCrtKeySpec}.
 
-Parameters:
-
-- `modulus`: the modulus n
-- `publicExponent`: the public exponent e
-- `privateExponent`: the private exponent d
-- `primeP`: the prime factor p of n
-- `primeQ`: the prime factor q of n
-- `primeExponentP`: this is d mod (p-1)
-- `primeExponentQ`: this is d mod (q-1)
-- `crtCoefficient`: the Chinese Remainder Theorem coefficient q-1 mod p
+@param modulus the modulus n
+@param publicExponent the public exponent e
+@param privateExponent the private exponent d
+@param primeP the prime factor p of n
+@param primeQ the prime factor q of n
+@param primeExponentP this is d mod (p-1)
+@param primeExponentQ this is d mod (q-1)
+@param crtCoefficient the Chinese Remainder Theorem
+coefficient q-1 mod p
 
 ## RSAPrivateCrtKeySpec.RSAPrivateCrtKeySpec(BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, BigInteger, AlgorithmParameterSpec)
 
@@ -56,22 +45,20 @@ Parameters:
 public RSAPrivateCrtKeySpec(BigInteger modulus, BigInteger publicExponent, BigInteger privateExponent, BigInteger primeP, BigInteger primeQ, BigInteger primeExponentP, BigInteger primeExponentQ, BigInteger crtCoefficient, AlgorithmParameterSpec keyParams)
 ```
 
-Creates a new `RSAPrivateCrtKeySpec` with additional
+Creates a new {@code RSAPrivateCrtKeySpec} with additional
 key parameters.
 
-Parameters:
-
-- `modulus`: the modulus n
-- `publicExponent`: the public exponent e
-- `privateExponent`: the private exponent d
-- `primeP`: the prime factor p of n
-- `primeQ`: the prime factor q of n
-- `primeExponentP`: this is d mod (p-1)
-- `primeExponentQ`: this is d mod (q-1)
-- `crtCoefficient`: the Chinese Remainder Theorem coefficient q-1 mod p
-- `keyParams`: the parameters associated with key
-
-**Since:** 11
+@param modulus the modulus n
+@param publicExponent the public exponent e
+@param privateExponent the private exponent d
+@param primeP the prime factor p of n
+@param primeQ the prime factor q of n
+@param primeExponentP this is d mod (p-1)
+@param primeExponentQ this is d mod (q-1)
+@param crtCoefficient the Chinese Remainder Theorem
+coefficient q-1 mod p
+@param keyParams the parameters associated with key
+@since 11
 
 ## RSAPrivateCrtKeySpec.getPublicExponent()
 
@@ -81,7 +68,7 @@ public BigInteger getPublicExponent()
 
 Returns the public exponent.
 
-**Returns:** the public exponent
+@return the public exponent
 
 ## RSAPrivateCrtKeySpec.getPrimeP()
 
@@ -91,7 +78,7 @@ public BigInteger getPrimeP()
 
 Returns the primeP.
 
-**Returns:** the primeP
+@return the primeP
 
 ## RSAPrivateCrtKeySpec.getPrimeQ()
 
@@ -101,7 +88,7 @@ public BigInteger getPrimeQ()
 
 Returns the primeQ.
 
-**Returns:** the primeQ
+@return the primeQ
 
 ## RSAPrivateCrtKeySpec.getPrimeExponentP()
 
@@ -111,7 +98,7 @@ public BigInteger getPrimeExponentP()
 
 Returns the primeExponentP.
 
-**Returns:** the primeExponentP
+@return the primeExponentP
 
 ## RSAPrivateCrtKeySpec.getPrimeExponentQ()
 
@@ -121,7 +108,7 @@ public BigInteger getPrimeExponentQ()
 
 Returns the primeExponentQ.
 
-**Returns:** the primeExponentQ
+@return the primeExponentQ
 
 ## RSAPrivateCrtKeySpec.getCrtCoefficient()
 
@@ -131,4 +118,4 @@ public BigInteger getCrtCoefficient()
 
 Returns the crtCoefficient.
 
-**Returns:** the crtCoefficient
+@return the crtCoefficient

@@ -1,19 +1,15 @@
 ---
-title: "Use the LibMan CLI with ASP.NET Core (part 1 of 2)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/client-side/libman/libman-cli.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Use the LibMan CLI with ASP.NET Core
+description: Learn how to use the LibMan CLI in an ASP.NET Core project.
+ms.date: 01/11/2024
 ---
-
 # Use the LibMan CLI with ASP.NET Core
 
-Library Manager (LibMan) is a lightweight, client-side library acquisition tool. LibMan downloads popular libraries and frameworks from the file system or from a content delivery network (CDN). The supported CDNs include CDNJS, jsDelivr, and unpkg. The selected library files are fetched and placed in the appropriate location within the ASP.NET Core project.
+Library Manager (LibMan) is a lightweight, client-side library acquisition tool. LibMan downloads popular libraries and frameworks from the file system or from a [content delivery network (CDN)](https://wikipedia.org/wiki/Content_delivery_network). The supported CDNs include [CDNJS](https://cdnjs.com/), [jsDelivr](https://www.jsdelivr.com/), and [unpkg](https://unpkg.com/#/). The selected library files are fetched and placed in the appropriate location within the ASP.NET Core project.
 
 ## Prerequisites
 
-* latest .NET SDK
+* [latest .NET SDK](https://dotnet.microsoft.com/download/dotnet)
 
 ## Installation
 
@@ -23,12 +19,9 @@ The following command installs LibMan:
 dotnet tool install -g Microsoft.Web.LibraryManager.Cli
 ```
 
-> **Note:**
-> By default, the architecture of the .NET binaries to install represents the currently running operating system architecture.
-> To specify a different architecture, review how to use the `dotnet tool install` command with the '--arch' option.
-> For more information, see GitHub dotnet/aspnetcore.docs issue #29262 - _Add '-a arm64' on Apple Silicon_.
+[!INCLUDE[](~/includes/dotnet-tool-install-arch-options.md)]
 
-A .NET Global Tool is installed from the `Microsoft.Web.LibraryManager.Cli` NuGet package.
+A [.NET Global Tool](/dotnet/core/tools/global-tools#install-a-global-tool) is installed from the [`Microsoft.Web.LibraryManager.Cli`](https://www.nuget.org/packages/Microsoft.Web.LibraryManager.Cli/) NuGet package.
 
 ## Usage
 
@@ -92,30 +85,17 @@ libman init [-h|--help]
 
 The following options are available for the `libman init` command:
 
-* `-d|--default-destination `
+* `-d|--default-destination <PATH>`
 
-  A path relative to the current folder. Library files are installed in this location if no `destination` property is defined for a library in `libman.json`. The `` value is written to the `defaultDestination` property of `libman.json`.
+  A path relative to the current folder. Library files are installed in this location if no `destination` property is defined for a library in `libman.json`. The `<PATH>` value is written to the `defaultDestination` property of `libman.json`.
 
 * `-p|--default-provider <PROVIDER>`
 
   The provider to use if no provider is defined for a given library. The `<PROVIDER>` value is written to the `defaultProvider` property of `libman.json`. Replace `<PROVIDER>` with one of the following values:
 
-  * `cdnjs`
-* `filesystem`
-* `jsdelivr`
-* `unpkg`
+  [!INCLUDE [LibMan provider names](../../includes/libman-cli/provider-names.md)]
 
-* `-h|--help`
-
-  Show help information.
-
-* `--verbosity <LEVEL>`
-
-  Set the verbosity of the output. Replace `<LEVEL>` with one of the following values:
-
-  * `quiet`
-  * `normal`
-  * `detailed`
+[!INCLUDE [standard-cli-options](../../includes/libman-cli/standard-cli-options.md)]
 
 ### Examples
 
@@ -130,10 +110,9 @@ To create a `libman.json` file in an ASP.NET Core project:
 
 * Type the name of the default provider, or press `Enter` to use the default CDNJS provider. Valid values include:
 
-  * `cdnjs`
-* `filesystem`
-* `jsdelivr`
-* `unpkg`
+  [!INCLUDE [LibMan provider names](../../includes/libman-cli/provider-names.md)]
+
+  ![libman init command - default provider](_static/libman-init-provider.png)
 
 A `libman.json` file is added to the project root with the following content:
 
@@ -166,11 +145,11 @@ The name of the library to install. This name may include version number notatio
 
 The following options are available for the `libman install` command:
 
-* `-d|--destination `
+* `-d|--destination <PATH>`
 
   The location to install the library. If not specified, the default location is used. If no `defaultDestination` property is specified in `libman.json`, this option is required.
 
-   ***Note:*** There are limitations to the destination path. For example, when the package source has a full project structure and not just the distribution folder, you can't specify moving a folder. For more information, see Issue #407 and Issue #702
+   ***Note:*** There are limitations to the destination path. For example, when the package source has a full project structure and not just the distribution folder, you can't specify moving a folder. For more information, see [Issue #407](https://github.com/aspnet/LibraryManager/issues/407) and [Issue #702](https://github.com/aspnet/LibraryManager/issues/702)
 
 * `--files <FILE>`
 
@@ -179,25 +158,12 @@ The following options are available for the `libman install` command:
 * `-p|--provider <PROVIDER>`
 
   The name of the provider to use for the library acquisition. Replace `<PROVIDER>` with one of the following values:
-
-  * `cdnjs`
-* `filesystem`
-* `jsdelivr`
-* `unpkg`
+  
+  [!INCLUDE [LibMan provider names](../../includes/libman-cli/provider-names.md)]
 
   If not specified, the `defaultProvider` property in `libman.json` is used. If no `defaultProvider` property is specified in `libman.json`, this option is required.
 
-* `-h|--help`
-
-  Show help information.
-
-* `--verbosity <LEVEL>`
-
-  Set the verbosity of the output. Replace `<LEVEL>` with one of the following values:
-
-  * `quiet`
-  * `normal`
-  * `detailed`
+[!INCLUDE [standard-cli-options](../../includes/libman-cli/standard-cli-options.md)]
 
 ### Examples
 
@@ -214,7 +180,7 @@ Consider the following `libman.json` file:
 To install the jQuery version 3.2.1 `jquery.min.js` file to the *wwwroot/scripts/jquery* folder using the CDNJS provider:
 
 ```console
-libman install user@example.com --provider cdnjs --destination wwwroot/scripts/jquery --files jquery.min.js
+libman install jquery@3.2.1 --provider cdnjs --destination wwwroot/scripts/jquery --files jquery.min.js
 ```
 
 The `libman.json` file resembles the following:
@@ -225,7 +191,7 @@ The `libman.json` file resembles the following:
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "user@example.com",
+      "library": "jquery@3.2.1",
       "destination": "wwwroot/scripts/jquery",
       "files": [
         "jquery.min.js"
@@ -246,6 +212,8 @@ The following prompt appears for two reasons:
 * The `libman.json` file doesn't contain a `defaultDestination` property.
 * The `libman install` command doesn't contain the `-d|--destination` option.
 
+![libman install command - destination](_static/libman-install-destination.png)
+
 After accepting the default destination, the `libman.json` file resembles the following:
 
 ```json
@@ -254,7 +222,7 @@ After accepting the default destination, the `libman.json` file resembles the fo
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "user@example.com",
+      "library": "jquery@3.2.1",
       "destination": "wwwroot/scripts/jquery",
       "files": [
         "jquery.min.js"
@@ -292,17 +260,7 @@ libman restore [-h|--help]
 
 The following options are available for the `libman restore` command:
 
-* `-h|--help`
-
-  Show help information.
-
-* `--verbosity <LEVEL>`
-
-  Set the verbosity of the output. Replace `<LEVEL>` with one of the following values:
-
-  * `quiet`
-  * `normal`
-  * `detailed`
+[!INCLUDE [standard-cli-options](../../includes/libman-cli/standard-cli-options.md)]
 
 ### Examples
 
@@ -327,17 +285,7 @@ libman clean [-h|--help]
 
 The following options are available for the `libman clean` command:
 
-* `-h|--help`
-
-  Show help information.
-
-* `--verbosity <LEVEL>`
-
-  Set the verbosity of the output. Replace `<LEVEL>` with one of the following values:
-
-  * `quiet`
-  * `normal`
-  * `detailed`
+[!INCLUDE [standard-cli-options](../../includes/libman-cli/standard-cli-options.md)]
 
 ### Examples
 
@@ -378,44 +326,13 @@ The name of the library to uninstall. This name may include version number notat
 
 The following options are available for the `libman uninstall` command:
 
-* `-h|--help`
-
-  Show help information.
-
-* `--verbosity <LEVEL>`
-
-  Set the verbosity of the output. Replace `<LEVEL>` with one of the following values:
-
-  * `quiet`
-  * `normal`
-  * `detailed`
+[!INCLUDE [standard-cli-options](../../includes/libman-cli/standard-cli-options.md)]
 
 ### Examples
 
 Consider the following `libman.json` file:
 
-```json
-{
-  "version": "1.0",
-  "defaultProvider": "cdnjs",
-  "libraries": [
-    {
-      "library": "user@example.com",
-      "files": [
-        "jquery.min.js",
-        "jquery.js",
-        "jquery.min.map"
-      ],
-      "destination": "wwwroot/lib/jquery/"
-    },
-    {
-      "provider": "unpkg",
-      "library": "user@example.com",
-      "destination": "wwwroot/lib/bootstrap/"
-    }
-  ]
-}
-```
+[!code-json[](samples/LibManSample/libman.json)]
 
 * To uninstall jQuery, either of the following commands succeed:
 
@@ -424,7 +341,7 @@ Consider the following `libman.json` file:
   ```
 
   ```console
-  libman uninstall user@example.com
+  libman uninstall jquery@3.3.1
   ```
 
 * To uninstall the Lodash files installed via the `filesystem` provider:
@@ -469,17 +386,7 @@ The following options are available for the `libman update` command:
 
   Obtain a specific version of the library.
 
-* `-h|--help`
-
-  Show help information.
-
-* `--verbosity <LEVEL>`
-
-  Set the verbosity of the output. Replace `<LEVEL>` with one of the following values:
-
-  * `quiet`
-  * `normal`
-  * `detailed`
+[!INCLUDE [standard-cli-options](../../includes/libman-cli/standard-cli-options.md)]
 
 ### Examples
 
@@ -500,3 +407,159 @@ The following options are available for the `libman update` command:
   ```console
   libman update jquery -pre
   ```
+
+## Manage library cache
+
+The `libman cache` command manages the LibMan library cache. The `filesystem` provider doesn't use the library cache.
+
+### Synopsis
+
+```console
+libman cache clean [<PROVIDER>] [--verbosity]
+libman cache list [--files] [--libraries] [--verbosity]
+libman cache [-h|--help]
+```
+
+### Arguments
+
+`PROVIDER`
+
+Only used with the `clean` command. Specifies the provider cache to clean. Valid values include:
+
+[!INCLUDE [LibMan provider names](../../includes/libman-cli/provider-names.md)]
+
+### Options
+
+The following options are available for the `libman cache` command:
+
+* `--files`
+
+  List the names of files that are cached.
+
+* `--libraries`
+
+  List the names of libraries that are cached.
+
+[!INCLUDE [standard-cli-options](../../includes/libman-cli/standard-cli-options.md)]
+
+### Examples
+
+* To view the names of cached libraries per provider, use one of the following commands:
+
+  ```console
+  libman cache list
+  ```
+
+  ```console
+  libman cache list --libraries
+  ```
+
+  Output similar to the following is displayed:
+
+  ```console
+  Cache contents:
+  ---------------
+  unpkg:
+      knockout
+      react
+      vue
+  cdnjs:
+      font-awesome
+      jquery
+      knockout
+      lodash.js
+      react
+  ```
+
+* To view the names of cached library files per provider:
+
+  ```console
+  libman cache list --files
+  ```
+
+  Output similar to the following is displayed:
+
+  ```console
+  Cache contents:
+  ---------------
+  unpkg:
+      knockout:
+          <list omitted for brevity>
+      react:
+          <list omitted for brevity>
+      vue:
+          <list omitted for brevity>
+  cdnjs:
+      font-awesome
+          metadata.json
+      jquery
+          metadata.json
+          3.2.1\core.js
+          3.2.1\jquery.js
+          3.2.1\jquery.min.js
+          3.2.1\jquery.min.map
+          3.2.1\jquery.slim.js
+          3.2.1\jquery.slim.min.js
+          3.2.1\jquery.slim.min.map
+          3.3.1\core.js
+          3.3.1\jquery.js
+          3.3.1\jquery.min.js
+          3.3.1\jquery.min.map
+          3.3.1\jquery.slim.js
+          3.3.1\jquery.slim.min.js
+          3.3.1\jquery.slim.min.map
+      knockout
+          metadata.json
+          3.4.2\knockout-debug.js
+          3.4.2\knockout-min.js
+      lodash.js
+          metadata.json
+          4.17.10\lodash.js
+          4.17.10\lodash.min.js
+      react
+          metadata.json
+  ```
+
+  Notice the preceding output shows that jQuery versions 3.2.1 and 3.3.1 are cached under the CDNJS provider.
+
+* To empty the library cache for the CDNJS provider:
+
+  ```console
+  libman cache clean cdnjs
+  ```
+
+  After emptying the CDNJS provider cache, the `libman cache list` command displays the following:
+
+  ```console
+  Cache contents:
+  ---------------
+  unpkg:
+      knockout
+      react
+      vue
+  cdnjs:
+      (empty)
+  ```
+
+* To empty the cache for all supported providers:
+
+  ```console
+  libman cache clean
+  ```
+
+  After emptying all provider caches, the `libman cache list` command displays the following:
+
+  ```console
+  Cache contents:
+  ---------------
+  unpkg:
+      (empty)
+  cdnjs:
+      (empty)
+  ```
+
+## Related content
+
+* [Install a Global Tool](/dotnet/core/tools/global-tools#install-a-global-tool)
+* [Use LibMan with ASP.NET Core in Visual Studio](libman-vs.md)
+* [LibMan GitHub repository](https://github.com/aspnet/LibraryManager)

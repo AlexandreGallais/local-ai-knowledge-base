@@ -1,19 +1,13 @@
----
-title: "no-useless-else"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-useless-else.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-useless-else
 
 📝 Disallow `else` after a statement that exits.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 When an `if` branch always exits, its `else` branch is unnecessary. Moving the `else` body after the `if` makes the control flow flatter.
 
@@ -59,5 +53,5 @@ if (bar) {
 
 ## Related rules
 
-- ESLint `no-else-return` only checks `else` after `return`. This rule is a broader alternative that also checks `throw`, `break`, `continue`, and terminal calls to the global `process.exit()` function, and always reports `else if`.
-- `unicorn/prefer-early-return` is complementary. It reports trailing conditional wrappers without `else`; this rule reports an existing `else` after an exiting branch.
+- ESLint [`no-else-return`](https://eslint.org/docs/latest/rules/no-else-return) only checks `else` after `return`. This rule is a broader alternative that also checks `throw`, `break`, `continue`, and terminal calls to the global `process.exit()` function, and always reports `else if`.
+- [`unicorn/prefer-early-return`](./prefer-early-return.md) is complementary. It reports trailing conditional wrappers without `else`; this rule reports an existing `else` after an exiting branch.

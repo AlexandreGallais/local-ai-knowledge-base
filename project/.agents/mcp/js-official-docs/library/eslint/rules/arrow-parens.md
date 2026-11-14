@@ -1,14 +1,9 @@
 ---
-title: "arrow-parens"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/arrow-parens.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: arrow-parens
+rule_type: layout
+further_reading:
+- https://github.com/airbnb/javascript#arrows--one-arg-parens
 ---
-
-# arrow-parens
-
 Arrow functions can omit parentheses when they have exactly one parameter. In all other cases the parameter(s) must
 be wrapped in parentheses. This rule enforces the consistent use of parentheses in arrow functions.
 
@@ -64,7 +59,7 @@ Object properties for variants of the `"as-needed"` option:
 
 Examples of **incorrect** code for this rule with the default `"always"` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint arrow-parens: ["error", "always"]*/
@@ -77,9 +72,11 @@ a.then(foo => a);
 a(foo => { if (true) {} });
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"always"` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint arrow-parens: ["error", "always"]*/
@@ -91,6 +88,8 @@ Examples of **correct** code for this rule with the default `"always"` option:
 a.then((foo) => {});
 a.then((foo) => { if (true) {} });
 ```
+
+:::
 
 #### If Statements
 
@@ -145,7 +144,7 @@ var f = (a) => b ? c: d;
 
 Examples of **incorrect** code for this rule with the `"as-needed"` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint arrow-parens: ["error", "as-needed"]*/
@@ -161,9 +160,11 @@ const g = /* comment */ (a) => a + a;
 const h = (a) /* comment */ => a + a;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"as-needed"` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint arrow-parens: ["error", "as-needed"]*/
@@ -183,11 +184,13 @@ const g = (/* comment */ a) => a + a;
 const h = (a /* comment */) => a + a;
 ```
 
+:::
+
 ### requireForBlockBody
 
 Examples of **incorrect** code for the `{ "requireForBlockBody": true }` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint arrow-parens: [2, "as-needed", { "requireForBlockBody": true }]*/
@@ -202,9 +205,11 @@ a.map(x => {
 a.then(foo => {});
 ```
 
+:::
+
 Examples of **correct** code for the `{ "requireForBlockBody": true }` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint arrow-parens: [2, "as-needed", { "requireForBlockBody": true }]*/
@@ -222,3 +227,5 @@ a((foo) => { if (true) {} });
 ([a, b]) => a;
 ({a, b}) => a;
 ```
+
+:::

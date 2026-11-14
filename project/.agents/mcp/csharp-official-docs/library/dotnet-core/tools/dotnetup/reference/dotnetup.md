@@ -1,16 +1,14 @@
 ---
-title: "dotnetup command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/reference/dotnetup.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnetup command
+description: Command reference for the dotnetup toolchain manager.
+ms.topic: reference
+ms.date: 10/13/2026
+ai-usage: ai-assisted
 ---
 
 # dotnetup command
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 ## Name
 
@@ -35,16 +33,16 @@ exists, it can start first-use onboarding.
 
 | Command | Description |
 | --- | --- |
-| `sdk` | Manage .NET SDK installations. |
-| `runtime` | Manage .NET runtime installations. |
-| `install` | Install a component. |
-| `update` | Update all tracked components. |
-| `uninstall` | Remove a tracked component. |
-| `list` | List tracked specifications and installations. |
-| `init` | Run interactive setup. |
-| `env` | Manage environment configuration. |
-| `dotnet` | Run the dotnetup-managed `dotnet`. |
-| `self update` | Update the dotnetup executable or configure update notifications. |
+| [`sdk`](dotnetup-sdk.md) | Manage .NET SDK installations. |
+| [`runtime`](dotnetup-runtime.md) | Manage .NET runtime installations. |
+| [`install`](dotnetup-install.md) | Install a component. |
+| [`update`](dotnetup-update.md) | Update all tracked components. |
+| [`uninstall`](dotnetup-uninstall.md) | Remove a tracked component. |
+| [`list`](dotnetup-list.md) | List tracked specifications and installations. |
+| [`init`](dotnetup-init.md) | Run interactive setup. |
+| [`env`](dotnetup-env.md) | Manage environment configuration. |
+| [`dotnet`](dotnetup-dotnet.md) | Run the dotnetup-managed `dotnet`. |
+| [`self update`](dotnetup-self-update.md) | Update the dotnetup executable or configure update notifications. |
 
 ## Options
 

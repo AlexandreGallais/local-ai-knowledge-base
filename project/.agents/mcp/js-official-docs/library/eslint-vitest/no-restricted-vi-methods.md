@@ -1,17 +1,10 @@
----
-title: "vitest/no-restricted-vi-methods"
-tool: "eslint-vitest"
-version: "1.6"
-source: "https://github.com/vitest-dev/eslint-plugin-vitest/blob/c5df1054a25044a7ca5baf07461b7aee1f15f5f2/docs/rules/no-restricted-vi-methods.md"
-commit: "c5df1054a25044a7ca5baf07461b7aee1f15f5f2"
-license: "MIT"
----
-
 # vitest/no-restricted-vi-methods
 
 📝 Disallow specific `vi.` methods.
 
 ⚠️ This rule _warns_ in the 🌐 `all` config.
+
+<!-- end auto-generated rule header -->
 
 You may wish to restrict the use of specific `vi` methods.
 

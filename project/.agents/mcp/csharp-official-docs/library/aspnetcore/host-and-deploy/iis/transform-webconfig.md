@@ -1,33 +1,32 @@
 ---
-title: "Transform web.config"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/host-and-deploy/iis/transform-webconfig.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Transform web.config
+description: Learn how to transform the web.config file when publishing an ASP.NET Core app.
+monikerRange: '>= aspnetcore-2.2'
+ms.date: 01/13/2020
 ---
-
 # Transform web.config
 
-By Vijay Ramakrishnan
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+By [Vijay Ramakrishnan](https://github.com/vijayrkn)
 
 Transformations to the *web.config* file can be applied automatically when an app is published based on:
 
-* Build configuration
-* Profile
-* Environment
-* Custom
+* [Build configuration](#build-configuration)
+* [Profile](#profile)
+* [Environment](#environment)
+* [Custom](#custom)
 
 These transformations occur for either of the following *web.config* generation scenarios:
 
 * Generated automatically by the `Microsoft.NET.Sdk.Web` SDK.
-* Provided by the developer in the content root of the app.
+* Provided by the developer in the [content root](../../fundamentals/index.md#content-root) of the app.
 
 ## Build configuration
 
 Build configuration transforms are run first.
 
-Include a *web.{CONFIGURATION}.config* file for each build configuration (Debug|Release) requiring a *web.config* transformation.
+Include a *web.{CONFIGURATION}.config* file for each [build configuration (Debug|Release)](/dotnet/core/tools/dotnet-publish#options) requiring a *web.config* transformation.
 
 In the following example, a configuration-specific environment variable is set in *web.Release.config*:
 
@@ -59,7 +58,7 @@ The MSBuild property for the configuration is `$(Configuration)`.
 
 ## Profile
 
-Profile transformations are run second, after Build configuration transforms.
+Profile transformations are run second, after [Build configuration](#build-configuration) transforms.
 
 Include a *web.{PROFILE}.config* file for each profile configuration requiring a *web.config* transformation.
 
@@ -95,9 +94,9 @@ If no profile is passed, the default profile name is **FileSystem** and *web.Fil
 
 ## Environment
 
-Environment transformations are run third, after Build configuration and Profile transforms.
+Environment transformations are run third, after [Build configuration](#build-configuration) and [Profile](#profile) transforms.
 
-Include a *web.{ENVIRONMENT}.config* file for each environment requiring a *web.config* transformation.
+Include a *web.{ENVIRONMENT}.config* file for each [environment](../../fundamentals/environments.md) requiring a *web.config* transformation.
 
 In the following example, an environment-specific environment variable is set in *web.Production.config* for the `Production` environment:
 
@@ -127,13 +126,13 @@ dotnet publish --configuration Release /p:EnvironmentName=Production
 
 The MSBuild property for the environment is `$(EnvironmentName)`.
 
-When publishing from Visual Studio and using a publish profile, see Visual Studio publish profiles (.pubxml) for ASP.NET Core app deployment.
+When publishing from Visual Studio and using a publish profile, see [Visual Studio publish profiles (.pubxml) for ASP.NET Core app deployment](../visual-studio-publish-profiles.md#set-the-environment).
 
 The `ASPNETCORE_ENVIRONMENT` environment variable is automatically added to the *web.config* file when the environment name is specified.
 
 ## Custom
 
-Custom transformations are run last, after Build configuration, Profile, and Environment transforms.
+Custom transformations are run last, after [Build configuration](#build-configuration), [Profile](#profile), and [Environment](#environment) transforms.
 
 Include a *{CUSTOM_NAME}.transform* file for each custom configuration requiring a *web.config* transformation.
 
@@ -157,7 +156,7 @@ In the following example, a custom transform environment variable is set in *cus
 </configuration>
 ```
 
-The transform is applied when the `CustomTransformFileName` property is passed to the dotnet publish command:
+The transform is applied when the `CustomTransformFileName` property is passed to the [dotnet publish](/dotnet/core/tools/dotnet-publish) command:
 
 ```dotnetcli
 dotnet publish --configuration Release /p:CustomTransformFileName=custom.transform
@@ -175,5 +174,5 @@ dotnet publish /p:IsWebConfigTransformDisabled=true
 
 ## Related content
 
-* Web.config Transformation Syntax for Web Application Project Deployment
-* Web.config Transformation Syntax for Web Project Deployment Using Visual Studio
+* [Web.config Transformation Syntax for Web Application Project Deployment](/previous-versions/dd465326(v=vs.100))
+* [Web.config Transformation Syntax for Web Project Deployment Using Visual Studio](/previous-versions/aspnet/dd465326(v=vs.110))

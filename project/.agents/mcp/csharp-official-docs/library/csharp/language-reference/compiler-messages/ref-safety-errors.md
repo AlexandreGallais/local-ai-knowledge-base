@@ -1,52 +1,120 @@
 ---
-title: "Errors and warnings related to ref safety (part 1 of 2)"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/compiler-messages/ref-safety-errors.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Errors and warnings related to ref safety
+description: The compiler issues these errors and warnings when the referent of a reference variable might not be valid. These errors prevent you from creating dangling references.
+f1_keywords:
+  - "CS8166"
+  - "CS8167"
+  - "CS8168"
+  - "CS8169"
+  - "CS8345"
+  - "CS8348"
+  - "CS8349"
+  - "CS8350"
+  - "CS8351"
+  - "CS8374"
+  - "CS9075"
+  - "CS9076"
+  - "CS9077"
+  - "CS9078"
+  - "CS9079"
+  - "CS9080"
+  - "CS9081"
+  - "CS9082"
+  - "CS9083"
+  - "CS9084"
+  - "CS9085"
+  - "CS9086"
+  - "CS9087"
+  - "CS9088"
+  - "CS9089"
+  - "CS9090"
+  - "CS9091"
+  - "CS9092"
+  - "CS9093"
+  - "CS9094"
+  - "CS9095"
+  - "CS9096"
+  - "CS9097"
+helpviewer_keywords:
+  - "CS8166"
+  - "CS8167"
+  - "CS8168"
+  - "CS8169"
+  - "CS8345"
+  - "CS8348"
+  - "CS8349"
+  - "CS8350"
+  - "CS8351"
+  - "CS8374"
+  - "CS9075"
+  - "CS9076"
+  - "CS9077"
+  - "CS9078"
+  - "CS9079"
+  - "CS9080"
+  - "CS9081"
+  - "CS9082"
+  - "CS9083"
+  - "CS9084"
+  - "CS9085"
+  - "CS9086"
+  - "CS9087"
+  - "CS9088"
+  - "CS9089"
+  - "CS9090"
+  - "CS9091"
+  - "CS9092"
+  - "CS9093"
+  - "CS9094"
+  - "CS9095"
+  - "CS9096"
+  - "CS9097"
+ai-usage: ai-assisted
+ms.date: 09/23/2026
 ---
-
 # Errors and warnings related to ref safety
 
 The following errors can occur when you violate reference variable safety rules:
 
-- **CS8166**: *Cannot return a parameter by reference because it is not a `ref` parameter*
-- **CS8167**: *Cannot return by reference a member of parameter because it is not a `ref` or `out` parameter*
-- **CS8168**: *Cannot return local by reference because it is not a ref local*
-- **CS8169**: *Cannot return a member of local variable by reference because it is not a ref local*
-- **CS8345**: *Field or auto-implemented property cannot be of type unless it is an instance member of a `ref struct`.*
-- **CS8348**: *Cannot use a member of result of 'member' in this context because it may expose variables referenced by parameter 'parameter name' outside of their declaration scope*
-- **CS8349**: *Expression cannot be used in this context because it may indirectly expose variables outside of their declaration scope*
-- **CS8350**: *This combination of arguments to 'member' is disallowed because it may expose variables referenced by parameter 'parameter name' outside of their declaration scope*
-- **CS8351**: *Branches of a `ref` conditional operator cannot refer to variables with incompatible declaration scopes*
-- **CS8374**: *Cannot ref-assign source has a narrower escape scope than destination.*
-- **CS9075**: *Cannot return a parameter by reference because it is scoped to the current method*
-- **CS9076**: *Cannot return by reference a member of parameter because it is scoped to the current method*
-- **CS9077**: *Cannot return a parameter by reference through a `ref` parameter; it can only be returned in a return statement*
-- **CS9078**: *Cannot return by reference a member of parameter through a `ref` parameter; it can only be returned in a return statement*
-- **CS9079**: *Cannot ref-assign source to destination because source can only escape the current method through a return statement.*
-- **CS9096**: *Cannot ref-assign source to destination because source has a wider value escape scope than destination allowing assignment through destination of values with narrower escapes scopes than source.*
+<!-- The text in the bullet lists generate issues for Acrolinx, because they don't use contractions.
+That's by design. The text closely matches the text of the compiler error or warning for SEO purposes.
+ -->
+- [**CS8166**](#returning-references-with-incompatible-scopes): *Cannot return a parameter by reference because it is not a `ref` parameter*
+- [**CS8167**](#returning-references-with-incompatible-scopes): *Cannot return by reference a member of parameter because it is not a `ref` or `out` parameter*
+- [**CS8168**](#returning-references-with-incompatible-scopes): *Cannot return local by reference because it is not a ref local*
+- [**CS8169**](#returning-references-with-incompatible-scopes): *Cannot return a member of local variable by reference because it is not a ref local*
+- [**CS8345**](#struct-member-and-field-restrictions): *Field or auto-implemented property cannot be of type unless it is an instance member of a `ref struct`.*
+- [**CS8348**](#escape-scope-violations-and-conditional-operators): *Cannot use a member of result of 'member' in this context because it may expose variables referenced by parameter 'parameter name' outside of their declaration scope*
+- [**CS8349**](#escape-scope-violations-and-conditional-operators): *Expression cannot be used in this context because it may indirectly expose variables outside of their declaration scope*
+- [**CS8350**](#escape-scope-violations-and-conditional-operators): *This combination of arguments to 'member' is disallowed because it may expose variables referenced by parameter 'parameter name' outside of their declaration scope*
+- [**CS8351**](#escape-scope-violations-and-conditional-operators): *Branches of a `ref` conditional operator cannot refer to variables with incompatible declaration scopes*
+- [**CS8374**](#ref-assignments-with-incompatible-scopes): *Cannot ref-assign source has a narrower escape scope than destination.*
+- [**CS9075**](#returning-references-with-incompatible-scopes): *Cannot return a parameter by reference because it is scoped to the current method*
+- [**CS9076**](#returning-references-with-incompatible-scopes): *Cannot return by reference a member of parameter because it is scoped to the current method*
+- [**CS9077**](#returning-references-with-incompatible-scopes): *Cannot return a parameter by reference through a `ref` parameter; it can only be returned in a return statement*
+- [**CS9078**](#returning-references-with-incompatible-scopes): *Cannot return by reference a member of parameter through a `ref` parameter; it can only be returned in a return statement*
+- [**CS9079**](#ref-assignments-with-incompatible-scopes): *Cannot ref-assign source to destination because source can only escape the current method through a return statement.*
+- [**CS9096**](#ref-assignments-with-incompatible-scopes): *Cannot ref-assign source to destination because source has a wider value escape scope than destination allowing assignment through destination of values with narrower escapes scopes than source.*
 
 The following warnings can occur when you violate reference variable safety rules:
 
-- **CS9080**: *Use of variable in this context may expose referenced variables outside of their declaration scope*
-- **CS9081**: *A result of a stackalloc expression of type in this context may be exposed outside of the containing method*
-- **CS9082**: *Local is returned by reference but was initialized to a value that cannot be returned by reference*
-- **CS9083**: *A member is returned by reference but was initialized to a value that cannot be returned by reference*
-- **CS9084**: *Struct member returns 'this' or other instance members by reference*
-- **CS9085**: *This ref-assigns source to destination but source has a narrower escape scope than destination.*
-- **CS9086**: *The branches of the ref conditional operator refer to variables with incompatible declaration scopes*
-- **CS9087**: *This returns a parameter by reference but it is not a `ref` parameter*
-- **CS9088**: *This returns a parameter by reference but it is scoped to the current method*
-- **CS9089**: *This returns by reference a member of parameter that is not a `ref` or `out` parameter*
-- **CS9090**: *This returns by reference a member of parameter that is scoped to the current method*
-- **CS9091**: *This returns local by reference but it is not a ref local*
-- **CS9092**: *This returns a member of local by reference but it is not a ref local*
-- **CS9093**: *This ref-assigns source to destination but source can only escape the current method through a return statement.*
-- **CS9094**: *This returns a parameter by reference through a `ref` parameter; but it can only safely be returned in a return statement*
-- **CS9095**: *This returns by reference a member of parameter through a `ref` parameter; but it can only safely be returned in a return statement*
-- **CS9097**: *This ref-assigns source to destination but source has a wider value escape scope than destination allowing assignment through destination of values with narrower escapes scopes than source.*
+- [**CS9080**](#escape-scope-violations-and-conditional-operators): *Use of variable in this context may expose referenced variables outside of their declaration scope*
+- [**CS9081**](#escape-scope-violations-and-conditional-operators): *A result of a stackalloc expression of type in this context may be exposed outside of the containing method*
+- [**CS9082**](#struct-member-and-field-restrictions): *Local is returned by reference but was initialized to a value that cannot be returned by reference*
+- [**CS9083**](#struct-member-and-field-restrictions): *A member is returned by reference but was initialized to a value that cannot be returned by reference*
+- [**CS9084**](#struct-member-and-field-restrictions): *Struct member returns 'this' or other instance members by reference*
+- [**CS9085**](#ref-assignments-with-incompatible-scopes): *This ref-assigns source to destination but source has a narrower escape scope than destination.*
+- [**CS9086**](#escape-scope-violations-and-conditional-operators): *The branches of the ref conditional operator refer to variables with incompatible declaration scopes*
+- [**CS9087**](#returning-references-with-incompatible-scopes): *This returns a parameter by reference but it is not a `ref` parameter*
+- [**CS9088**](#returning-references-with-incompatible-scopes): *This returns a parameter by reference but it is scoped to the current method*
+- [**CS9089**](#returning-references-with-incompatible-scopes): *This returns by reference a member of parameter that is not a `ref` or `out` parameter*
+- [**CS9090**](#returning-references-with-incompatible-scopes): *This returns by reference a member of parameter that is scoped to the current method*
+- [**CS9091**](#returning-references-with-incompatible-scopes): *This returns local by reference but it is not a ref local*
+- [**CS9092**](#returning-references-with-incompatible-scopes): *This returns a member of local by reference but it is not a ref local*
+- [**CS9093**](#ref-assignments-with-incompatible-scopes): *This ref-assigns source to destination but source can only escape the current method through a return statement.*
+- [**CS9094**](#returning-references-with-incompatible-scopes): *This returns a parameter by reference through a `ref` parameter; but it can only safely be returned in a return statement*
+- [**CS9095**](#returning-references-with-incompatible-scopes): *This returns by reference a member of parameter through a `ref` parameter; but it can only safely be returned in a return statement*
+- [**CS9097**](#ref-assignments-with-incompatible-scopes): *This ref-assigns source to destination but source has a wider value escape scope than destination allowing assignment through destination of values with narrower escapes scopes than source.*
 
 ## Returning references with incompatible scopes
 
@@ -81,7 +149,7 @@ To resolve these errors:
 - When you declare a parameter with the `scoped` modifier, avoid returning it by reference. The `scoped` modifier explicitly restricts the parameter's reference from escaping the method, preventing potential dangling references (**CS9075**, **CS9076**, **CS9088**, **CS9090**).
 - If you need to return a reference that comes from a `ref` parameter, use a direct `return ref` statement rather than assigning the reference to another `ref` parameter and returning that reference. The compiler can only track the escape scope through direct return statements (**CS9077**, **CS9078**, **CS9094**, **CS9095**).
 
-For more information about ref safety rules, see the article on ref returns and the C# standard section on ref safe contexts.
+For more information about ref safety rules, see the article on [ref returns](../statements/jump-statements.md#ref-returns) and the C# standard section on [ref safe contexts](~/_csharpstandard/standard/variables.md#972-ref-safe-contexts).
 
 ## Ref assignments with incompatible scopes
 
@@ -105,7 +173,7 @@ To resolve these errors:
 - When a variable can only escape the method through a return statement, don't assign it to `ref` variables accessed through other means. Examples include storing in fields or returning through ref parameters. Those actions violate the restriction that the source can only be used in return statements (**CS9079**, **CS9093**).
 - For ref assignments involving value escape scopes, ensure the source's value escape scope isn't wider than the destination's. A mismatch would allow you to assign narrower-scoped values through the destination reference, potentially creating references to short-lived values (**CS9096**, **CS9097**).
 
-For more information about ref safety rules, see the article on ref returns and the C# standard section on ref safe contexts.
+For more information about ref safety rules, see the article on [ref returns](../statements/jump-statements.md#ref-returns) and the C# standard section on [ref safe contexts](~/_csharpstandard/standard/variables.md#972-ref-safe-contexts).
 
 ## Escape scope violations and conditional operators
 
@@ -126,10 +194,32 @@ Warnings:
 
 To resolve these errors:
 
-- For a member access on a call result or another expression that can carry references, don't use the value in a context where those references could outlive the parameter or local from which they were derived. Depending on the API contract, keep the use within its safe scope, pass <example-value> with a sufficiently wide lifetime, or change the API signature, such as adding `scoped` to a parameter when the method doesn't allow its references to escape (**CS8348**, **CS8349**).
+- For a member access on a call result or another expression that can carry references, don't use the value in a context where those references could outlive the parameter or local from which they were derived. Depending on the API contract, keep the use within its safe scope, pass storage with a sufficiently wide lifetime, or change the API signature, such as adding `scoped` to a parameter when the method doesn't allow its references to escape (**CS8348**, **CS8349**).
 - For a disallowed combination of call arguments, ensure that an argument with a narrower safe scope can't be stored in another argument or the receiver with a wider scope. Depending on the API contract, use arguments with compatible lifetimes, separate the operations, or add an appropriate `scoped` modifier to a parameter that doesn't allow references to escape (**CS8350**).
 - Modify the `ref` conditional operator (the `?:` operator with `ref` returns) so that both the true and false branches refer to variables that have compatible declaration scopes. Both variables must have lifetimes that extend to at least the same scope level, preventing the conditional expression from potentially returning a reference that becomes invalid (**CS8351**, **CS9086**).
 - When using variables in expressions or method calls, ensure the context doesn't allow referenced variables to escape beyond their declaration scope. Typically, avoid passing scoped variables to methods or expressions where they might be captured or stored beyond their intended lifetime (**CS9080**).
 - For `stackalloc` expressions, avoid assigning the result to variables or using it in contexts where the stack-allocated memory could be accessed outside the containing method. The method automatically frees stack-allocated memory when it returns, and accessing it afterward results in undefined behavior (**CS9081**).
 
-For more information, see the article on ref returns, the article on memory usage, and the C# standard section on ref safe contexts.
+For more information, see the article on [ref returns](../statements/jump-statements.md#ref-returns), the article on [memory usage](../../../standard/memory-and-spans/memory-t-usage-guidelines.md), and the C# standard section on [ref safe contexts](~/_csharpstandard/standard/variables.md#972-ref-safe-contexts).
+
+## Struct member and field restrictions
+
+The compiler enforces special rules for struct members and fields to prevent dangling references. These errors occur when struct members return references to instance state or when fields have types that require special handling.
+
+Errors:
+
+- **CS8345**: *Field or auto-implemented property cannot be of type unless it is an instance member of a `ref struct`.*
+
+Warnings:
+
+- **CS9082**: *Local is returned by reference but was initialized to a value that cannot be returned by reference*
+- **CS9083**: *A member is returned by reference but was initialized to a value that cannot be returned by reference*
+- **CS9084**: *Struct member returns 'this' or other instance members by reference*
+
+To resolve these errors:
+
+- Ensure that fields and auto-implemented properties with ref-like types (such as `Span<T>` or `ref struct` types) are only declared as instance members within a ref struct rather than in regular structs or classes, because ref-like types can only safely exist on the stack and ref structs provide the necessary lifetime guarantees (**CS8345**).
+- When returning a local variable by reference from a method, verify that the local was initialized from a source that has a sufficient escape scope such as a ref parameter or ref-returning method call, rather than from a value-typed expression or local-scoped variable that would create a reference to short-lived storage (**CS9082**, **CS9083**).
+- In struct instance methods or properties, avoid returning `this` or any instance fields by reference, because structs are value types that are often copied, and returning a reference to an instance member could create a reference to a temporary copy destroyed after the method returns (**CS9084**).
+
+For more information, see the article on [ref struct types](../../language-reference/builtin-types/ref-struct.md) and the C# standard section on [ref safe contexts](~/_csharpstandard/standard/variables.md#972-ref-safe-contexts).

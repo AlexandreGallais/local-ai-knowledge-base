@@ -1,17 +1,8 @@
----
-title: "Angular elements overview"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/elements.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Angular elements overview
 
 _Angular elements_ are Angular components packaged as _custom elements_ \(also called Web Components\), a web standard for defining new HTML elements in a framework-agnostic way.
 
-Custom elements are a Web Platform feature available on all browsers supported by Angular.
+[Custom elements](https://developer.mozilla.org/docs/Web/Web_Components/Using_custom_elements) are a Web Platform feature available on all browsers supported by Angular.
 A custom element extends HTML by allowing you to define a tag whose content is created and controlled by JavaScript code.
 The browser maintains a `CustomElementRegistry` of defined custom elements, which maps an instantiable JavaScript class to an HTML tag.
 
@@ -27,25 +18,20 @@ Once a custom element is added to the DOM for any page, it looks and behaves lik
 
 To add the `@angular/elements` package to your workspace, run the following command:
 
-```
-  
+<docs-code-multifile>
+  <docs-code header="npm" language="shell">
     npm install @angular/elements
-```
-  File: `yarn`
-
-```shell
+  </docs-code>
+  <docs-code header="yarn" language="shell">
     yarn add @angular/elements
-```
-  File: `pnpm`
-
-```shell
+  </docs-code>
+  <docs-code header="pnpm" language="shell">
     pnpm add @angular/elements
-```
-  File: `bun`
-
-```shell
+  </docs-code>
+  <docs-code header="bun" language="shell">
     bun add @angular/elements
-```
+  </docs-code>
+</docs-code-multifile>
 
 ### How it works
 
@@ -67,7 +53,7 @@ Angular provides the `createCustomElement()` function for converting an Angular 
 The conversion process implements the `NgElementConstructor` interface, and creates a
 constructor class that is configured to produce a self-bootstrapping instance of your component.
 
-Use the browser's native `customElements.define()` function to register the configured constructor and its associated custom-element tag with the browser's `CustomElementRegistry`.
+Use the browser's native [`customElements.define()`](https://developer.mozilla.org/docs/Web/API/CustomElementRegistry/define) function to register the configured constructor and its associated custom-element tag with the browser's [`CustomElementRegistry`](https://developer.mozilla.org/docs/Web/API/CustomElementRegistry).
 When the browser encounters the tag for the registered element, it uses the constructor to create a custom-element instance.
 
 IMPORTANT: Avoid using the component's selector as the custom element tag name.
@@ -84,15 +70,15 @@ Component properties and logic map directly into HTML attributes and the browser
   The resulting attribute names use dash-separated lowercase.
   For example, for a component with `inputProp = input('', {alias: 'myInputProp'})`, the corresponding custom element defines an attribute `my-input-prop`.
 
-- Component outputs are dispatched as HTML Custom Events, with the name of the custom event matching the output name.
+- Component outputs are dispatched as HTML [Custom Events](https://developer.mozilla.org/docs/Web/API/CustomEvent), with the name of the custom event matching the output name.
   For example, for a component with `valueChanged = output()`, the corresponding custom element dispatches events with the name "valueChanged", and the emitted data is stored on the event's `detail` property.
   If you provide an alias, that value is used; for example, `clicks = output<string>({alias: 'myClick'});` results in dispatch events with the name "myClick".
 
-For more information, see Web Component documentation for Creating custom events.
+For more information, see Web Component documentation for [Creating custom events](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Events#creating_custom_events).
 
 ## Example: A Popup Service
 
-To add a component to an application at runtime, you can render it programmatically with the `createComponent` API.
+To add a component to an application at runtime, you can [render it programmatically](guide/components/programmatic-rendering) with the `createComponent` API.
 With this approach, you are responsible for the surrounding infrastructure: attaching the component's host view to the `ApplicationRef` so that change detection runs, setting its inputs, subscribing to its outputs, and detaching and cleaning up the view when the component is removed.
 
 Using an Angular custom element makes the process simpler and more transparent, by providing all of this infrastructure automatically — all you have to do is define the kind of event handling you want.
@@ -109,151 +95,11 @@ For comparison, the demo shows both methods.
 One button adds the popup using the dynamic-loading method, and the other uses the custom element.
 The result is the same, but the preparation is different.
 
-    File: `popup.ts`
-
-```angular-ts
-import {Component, computed, input, output} from '@angular/core';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-
-@Component({
-  selector: 'my-popup',
-  template: `
-    <span>Popup: {{ message() }}</span>
-    <button type="button" (click)="closed.emit()">&#x2716;</button>
-  `,
-  animations: [
-    trigger('state', [
-      state('opened', style({transform: 'translateY(0%)'})),
-      state('void, closed', style({transform: 'translateY(100%)', opacity: 0})),
-      transition('* => *', animate('100ms ease-in')),
-    ]),
-  ],
-  styles: [
-    `
-      :host {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: #009cff;
-        height: 48px;
-        padding: 16px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-top: 1px solid black;
-        font-size: 24px;
-      }
-
-      button {
-        border-radius: 50%;
-      }
-    `,
-  ],
-  host: {
-    '[@state]': 'state()',
-  },
-})
-export class Popup {
-  readonly message = input('');
-  readonly closed = output<void>();
-
-  readonly state = computed(() => (this.message() ? 'opened' : 'closed'));
-}
-```
-    File: `popup.service.ts`
-
-```ts
-import {
-  ApplicationRef,
-  createComponent,
-  EnvironmentInjector,
-  inject,
-  Injectable,
-} from '@angular/core';
-import {NgElement, WithProperties} from '@angular/elements';
-import {Popup} from './popup';
-
-@Injectable()
-export class PopupService {
-  private readonly injector = inject(EnvironmentInjector);
-  private readonly applicationRef = inject(ApplicationRef);
-
-  // Previous dynamic-loading method required you to set up infrastructure
-  // before adding the popup to the DOM.
-  showAsComponent(message: string) {
-    // Create element
-    const popup = document.createElement('popup-component');
-
-    // Create the component and wire it up with the element
-    const popupComponentRef = createComponent(Popup, {
-      environmentInjector: this.injector,
-      hostElement: popup,
-    });
-
-    // Attach to the view so that the change detector knows to run
-    this.applicationRef.attachView(popupComponentRef.hostView);
-
-    // Listen to the close event
-    popupComponentRef.instance.closed.subscribe(() => {
-      document.body.removeChild(popup);
-      this.applicationRef.detachView(popupComponentRef.hostView);
-    });
-
-    // Set the message
-    popupComponentRef.setInput('message', message);
-
-    // Add to the DOM
-    document.body.appendChild(popup);
-  }
-
-  // This uses the new custom-element method to add the popup to the DOM.
-  showAsElement(message: string) {
-    // Create element
-    const popupEl: NgElement & WithProperties<Popup> = document.createElement(
-      'popup-element',
-    ) as any;
-
-    // Listen to the close event
-    popupEl.addEventListener('closed', () => document.body.removeChild(popupEl));
-
-    // Set the message
-    popupEl.setAttribute('message', message);
-    // Add to the DOM
-    document.body.appendChild(popupEl);
-  }
-}
-```
-    File: `app.ts`
-
-```ts
-import {Component, Injector} from '@angular/core';
-import {createCustomElement} from '@angular/elements';
-import {Popup} from './popup';
-import {PopupService} from './popup.service';
-
-@Component({
-  selector: 'app-root',
-  template: `
-    <input #input value="Message" />
-    <button type="button" (click)="popup.showAsComponent(input.value)">Show as component</button>
-    <button type="button" (click)="popup.showAsElement(input.value)">Show as element</button>
-  `,
-  providers: [PopupService],
-  imports: [Popup],
-})
-export class App {
-  constructor(
-    injector: Injector,
-    public popup: PopupService,
-  ) {
-    // Convert `PopupComponent` to a custom element.
-    const PopupElement = createCustomElement(Popup, {injector});
-    // Register the custom element with the browser.
-    customElements.define('popup-element', PopupElement);
-  }
-}
-```
+<docs-code-multifile>
+    <docs-code language="angular-ts" header="popup.ts" path="adev/src/content/examples/elements/src/app/popup.ts"/>
+    <docs-code header="popup.service.ts" path="adev/src/content/examples/elements/src/app/popup.service.ts"/>
+    <docs-code header="app.ts" path="adev/src/content/examples/elements/src/app/app.ts"/>
+</docs-code-multifile>
 
 ## Typings for custom elements
 
@@ -316,7 +162,7 @@ document.querySelector('my-other-element'); //--> NgElement & WithProperties<{fo
 
 ## Limitations
 
-Care should be taken when destroying and then re-attaching custom elements created with `@angular/elements` due to issues with the disconnect() callback. Cases where you may run into this issue are:
+Care should be taken when destroying and then re-attaching custom elements created with `@angular/elements` due to issues with the [disconnect()](https://github.com/angular/angular/issues/38778) callback. Cases where you may run into this issue are:
 
 - Rendering a component in an `ng-if` or `ng-repeat` in `AngularJS`
 - Manually detaching and re-attaching an element to the DOM

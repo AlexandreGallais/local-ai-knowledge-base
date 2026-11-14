@@ -1,29 +1,26 @@
 ---
-title: "Create a .NET Core application with plugins"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tutorials/creating-app-with-plugin-support.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Create a .NET Core application with plugins
+description: Learn how to create a .NET Core application that supports plugins.
+author: jkoritzinsky
+ms.author: jekoritz
+ms.date: 02/04/2026
 ---
 
 # Create a .NET Core application with plugins
 
-This tutorial shows you how to create a custom `System.Runtime.Loader.AssemblyLoadContext` to load plugins. An `System.Runtime.Loader.AssemblyDependencyResolver` is used to resolve the dependencies of the plugin. The tutorial provides a separate assembly context for the plugin's dependencies, allowing different assembly dependencies between the plugins and the hosting application. You'll learn how to:
+This tutorial shows you how to create a custom <xref:System.Runtime.Loader.AssemblyLoadContext> to load plugins. An <xref:System.Runtime.Loader.AssemblyDependencyResolver> is used to resolve the dependencies of the plugin. The tutorial provides a separate assembly context for the plugin's dependencies, allowing different assembly dependencies between the plugins and the hosting application. You'll learn how to:
 
 - Structure a project to support plugins.
-- Create a custom `System.Runtime.Loader.AssemblyLoadContext` to load each plugin.
-- Use the `System.Runtime.Loader.AssemblyDependencyResolver` type to allow plugins to have dependencies.
+- Create a custom <xref:System.Runtime.Loader.AssemblyLoadContext> to load each plugin.
+- Use the <xref:System.Runtime.Loader.AssemblyDependencyResolver?displayProperty=fullName> type to allow plugins to have dependencies.
 - Author plugins that can be easily deployed by just copying the build artifacts.
 
-> **Note:**
+> [!NOTE]
 > Untrusted code cannot be safely loaded into a trusted .NET process. To provide a security or reliability boundary, consider a technology provided by your OS or virtualization platform.
 
 ## Prerequisites
 
-- The latest .NET SDK
-- Visual Studio Code editor
-- The C# DevKit
+[!INCLUDE [Prerequisites](../../../includes/prerequisites-basic.md)]
 
 ## Create the application
 
@@ -112,7 +109,7 @@ The next step in building an app with plugins is defining the interface the plug
 
 In the root folder of the project, run `dotnet new classlib -o PluginBase`. Also, run `dotnet sln add PluginBase/PluginBase.csproj` to add the project to the solution file. Delete the `PluginBase/Class1.cs` file, and create a new file in the `PluginBase` folder named `ICommand.cs` with the following interface definition:
 
-_Code sample not included: ~/samples/snippets/core/tutorials/creating-app-with-plugin-support/csharp/PluginBase/ICommand.cs._
+[!code-csharp[the-plugin-interface](~/samples/snippets/core/tutorials/creating-app-with-plugin-support/csharp/PluginBase/ICommand.cs)]
 
 This `ICommand` interface is the interface that all of the plugins will implement.
 
@@ -190,9 +187,9 @@ static IEnumerable<ICommand> CreateCommands(Assembly assembly)
 
 Now the application can correctly load and instantiate commands from loaded plugin assemblies, but it's still unable to load the plugin assemblies. Create a file named *PluginLoadContext.cs* in the *AppWithPlugin* folder with the following contents:
 
-_Code sample not included: ~/samples/snippets/core/tutorials/creating-app-with-plugin-support/csharp/AppWithPlugin/PluginLoadContext.cs._
+[!code-csharp[loading-plugins](~/samples/snippets/core/tutorials/creating-app-with-plugin-support/csharp/AppWithPlugin/PluginLoadContext.cs)]
 
-The `PluginLoadContext` type derives from `System.Runtime.Loader.AssemblyLoadContext`. The `AssemblyLoadContext` type is a special type in the runtime that allows developers to isolate loaded assemblies into different groups to ensure that assembly versions don't conflict. Additionally, a custom `AssemblyLoadContext` can choose different paths to load assemblies from and override the default behavior. The `PluginLoadContext` uses an instance of the `AssemblyDependencyResolver` type introduced in .NET Core 3.0 to resolve assembly names to paths. The `AssemblyDependencyResolver` object is constructed with the path to a .NET class library. It resolves assemblies and native libraries to their relative paths based on the *.deps.json* file for the class library whose path was passed to the `AssemblyDependencyResolver` constructor. The custom `AssemblyLoadContext` enables plugins to have their own dependencies, and the `AssemblyDependencyResolver` makes it easy to correctly load the dependencies.
+The `PluginLoadContext` type derives from <xref:System.Runtime.Loader.AssemblyLoadContext>. The `AssemblyLoadContext` type is a special type in the runtime that allows developers to isolate loaded assemblies into different groups to ensure that assembly versions don't conflict. Additionally, a custom `AssemblyLoadContext` can choose different paths to load assemblies from and override the default behavior. The `PluginLoadContext` uses an instance of the `AssemblyDependencyResolver` type introduced in .NET Core 3.0 to resolve assembly names to paths. The `AssemblyDependencyResolver` object is constructed with the path to a .NET class library. It resolves assemblies and native libraries to their relative paths based on the *.deps.json* file for the class library whose path was passed to the `AssemblyDependencyResolver` constructor. The custom `AssemblyLoadContext` enables plugins to have their own dependencies, and the `AssemblyDependencyResolver` makes it easy to correctly load the dependencies.
 
 Now that the `AppWithPlugin` project has the `PluginLoadContext` type, update the `Program.LoadPlugin` method with the following body:
 
@@ -230,7 +227,7 @@ Back in the root folder, do the following:
 
 3. Replace the *HelloPlugin/Class1.cs* file with a file named *HelloCommand.cs* with the following contents:
 
-_Code sample not included: ~/samples/snippets/core/tutorials/creating-app-with-plugin-support/csharp/HelloPlugin/HelloCommand.cs._
+[!code-csharp[the-hello-plugin](~/samples/snippets/core/tutorials/creating-app-with-plugin-support/csharp/HelloPlugin/HelloCommand.cs)]
 
 Now, open the *HelloPlugin.csproj* file. It should look similar to the following:
 
@@ -253,7 +250,7 @@ In between the `<PropertyGroup>` tags, add the following element:
   <EnableDynamicLoading>true</EnableDynamicLoading>
 ```
 
-The `<EnableDynamicLoading>true</EnableDynamicLoading>` prepares the project so that it can be used as a plugin. Among other things, this will copy all of its dependencies to the output of the project. For more details see `EnableDynamicLoading`.
+The `<EnableDynamicLoading>true</EnableDynamicLoading>` prepares the project so that it can be used as a plugin. Among other things, this will copy all of its dependencies to the output of the project. For more details see [`EnableDynamicLoading`](../project-sdk/msbuild-props.md#enabledynamicloading).
 
 In between the `<Project>` tags, add the following elements:
 
@@ -278,7 +275,7 @@ Almost all plugins are more complex than a simple "Hello World", and many plugin
 
 ## Other examples in the sample
 
-The complete source code for this tutorial can be found in the dotnet/samples repository. The completed sample includes a few other examples of `AssemblyDependencyResolver` behavior. For example, the `AssemblyDependencyResolver` object can also resolve native libraries as well as localized satellite assemblies included in NuGet packages. The `UVPlugin` and `FrenchPlugin` in the samples repository demonstrate these scenarios.
+The complete source code for this tutorial can be found in [the dotnet/samples repository](https://github.com/dotnet/samples/tree/main/core/extensions/AppWithPlugin). The completed sample includes a few other examples of `AssemblyDependencyResolver` behavior. For example, the `AssemblyDependencyResolver` object can also resolve native libraries as well as localized satellite assemblies included in NuGet packages. The `UVPlugin` and `FrenchPlugin` in the samples repository demonstrate these scenarios.
 
 ## Reference a plugin interface from a NuGet package
 

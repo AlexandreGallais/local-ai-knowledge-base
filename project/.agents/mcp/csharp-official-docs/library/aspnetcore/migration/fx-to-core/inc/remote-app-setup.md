@@ -1,15 +1,16 @@
 ---
-title: "Remote app setup"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/migration/fx-to-core/inc/remote-app-setup.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Remote app setup
+ai-usage: ai-assisted
+description: Remote app setup
+monikerRange: '>= aspnetcore-6.0'
+ms.date: 01/26/2026
+ms.topic: concept-article
+zone_pivot_groups: migration-remote-app-setup
 ---
 
 # Remote app setup
 
-> **Important:**
+> [!IMPORTANT]
 > Framework and Core applications must use identical virtual directory layouts.
 >
 > The virtual directory setup is used for route generation, authorization, and other services within the system. At this point, no reliable method has been found to enable different virtual directories due to how ASP.NET Framework works.
@@ -18,11 +19,11 @@ In some incremental upgrade scenarios, it's useful for the new ASP.NET Core app 
 
 Common scenarios this enables:
 
-* Fallback to the legacy application with YARP
-* Remote app authentication
-* Remote session
+* Fallback to the legacy application with [YARP](~/fundamentals/servers/yarp/yarp-overview.md)
+* [Remote app authentication](../areas/authentication.md#remote-authentication)
+* [Remote session](../areas/session.md#remote-app-session-state)
 
-**manual:**
+:::zone pivot="manual"
 
 ## Configuration Values
 
@@ -30,32 +31,32 @@ To enable the ASP.NET Core app to communicate with the ASP.NET app, it's necessa
 
 You need to configure two configuration values in both applications:
 
-* `RemoteAppApiKey`: A key (required to be parseable as a GUID) that is shared between the two applications. This should be a GUID value like `12345678-1234-1234-1234-123456789012`.
+* `RemoteAppApiKey`: A key (required to be parseable as a [GUID](/dotnet/api/system.guid)) that is shared between the two applications. This should be a GUID value like `12345678-1234-1234-1234-123456789012`.
 * `RemoteAppUri`: The URI of the remote ASP.NET Framework application (only required in the ASP.NET Core application configuration). This should be the full URL where the ASP.NET Framework app is hosted, such as `https://localhost:44300` or `https://myapp.example.com`.
 
 ## Configure ASP.NET Framework Application
 
-> **Important:**
+> [!IMPORTANT]
 > The ASP.NET Framework application should be hosted with SSL enabled. In the remote app setup for incremental migration, it is not required to have direct access externally. It is recommended to only allow access from the client application via the proxy.
 
 For ASP.NET Framework applications, add these values to your `web.config` in the `<appSettings>` section:
 
-> **Important:**
-> ASP.NET Framework stores its appSettings in `web.config`. However, they can be retrieved from other sources (such as environment variables) with the use of configuration Builders. This makes sharing configuration values much easier between the local and remote applications in this setup.
+> [!IMPORTANT]
+> ASP.NET Framework stores its appSettings in `web.config`. However, they can be retrieved from other sources (such as environment variables) with the use of [configuration Builders](/aspnet/config-builder). This makes sharing configuration values much easier between the local and remote applications in this setup.
 
 ```xml
 <appSettings>
-  <add key="<example-value>" <example-value>"<example-value>" />
+  <add key="RemoteAppApiKey" value="..." />
 </appSettings>
 ```
 
 To configure the application to be available to handle the requests from the ASP.NET Core client, set up the following:
 
-1. Install the NuGet package `Microsoft.AspNetCore.SystemWebAdapters.FrameworkServices`
+1. Install the NuGet package [`Microsoft.AspNetCore.SystemWebAdapters.FrameworkServices`](https://www.nuget.org/packages/Microsoft.AspNetCore.SystemWebAdapters)
 
 1. Add the configuration code to the `Application_Start` method in your `Global.asax.cs` file:
 
-    ```csharp
+    ```CSharp
     protected void Application_Start()
     {
         HttpApplicationHost.RegisterHost(builder =>
@@ -64,14 +65,14 @@ To configure the application to be available to handle the requests from the ASP
                 .AddRemoteAppServer(options =>
                 {
                     // ApiKey is a string representing a GUID
-                    options.ApiKey = System.Configuration.ConfigurationManager.AppSettings["<example-value>"];
+                    options.ApiKey = System.Configuration.ConfigurationManager.AppSettings["RemoteAppApiKey"];
                 });
         });
         
         // ...existing code...
     }
     ```
-
+    
 1. Add the `SystemWebAdapterModule` module to the `web.config` if it wasn't already added by NuGet. This module configuration is required for IIS hosting scenarios. The `SystemWebAdapterModule` module is not added automatically when using SDK style projects for ASP.NET Core.
 
     ```diff
@@ -89,7 +90,7 @@ For ASP.NET Core applications, add these values to your `appsettings.json`:
 
 ```json
 {
-  "RemoteAppApiKey": "<example-value>",
+  "RemoteAppApiKey": "...",
   "RemoteAppUri": "https://localhost:44300"
 }
 ```
@@ -98,22 +99,22 @@ To set up the ASP.NET Core app to be able to send requests to the ASP.NET app, c
 
 Add this configuration to your `Program.cs` file:
 
-```csharp
+```CSharp
 builder.Services.AddSystemWebAdapters()
     .AddRemoteAppClient(options =>
     {
         options.RemoteAppUrl = new(builder.Configuration["RemoteAppUri"]);
-        options.ApiKey = builder.Configuration["<example-value>"];
+        options.ApiKey = builder.Configuration["RemoteAppApiKey"];
     });
 ```
 
-With both the ASP.NET and ASP.NET Core apps updated, extension methods can now be used to set up remote app authentication or remote session, as needed.
+With both the ASP.NET and ASP.NET Core apps updated, extension methods can now be used to set up [remote app authentication](../areas/authentication.md#remote-authentication) or [remote session](../areas/session.md#remote-app-session-state), as needed.
 
 ### Enable proxying
 
 To enable proxying from the ASP.NET Core application to the ASP.NET Framework application, you can set up a fallback route that forwards unmatched requests to the legacy application. This allows for a gradual migration where the ASP.NET Core app handles migrated functionality while falling back to the original app for unmigrated features.
 
-1. Install the YARP (Yet Another Reverse Proxy) NuGet package following the latest guidance.
+1. Install the YARP (Yet Another Reverse Proxy) NuGet package following the [latest guidance](~/fundamentals/servers/yarp/getting-started.md).
 
 1. Add the required using statements to your `Program.cs`:
 
@@ -129,7 +130,7 @@ To enable proxying from the ASP.NET Core application to the ASP.NET Framework ap
     ```
 
 1. After building the app and configuring other middleware, add the fallback route mapping:
-
+    
     ```csharp
     var app = builder.Build();
     
@@ -147,11 +148,13 @@ To enable proxying from the ASP.NET Core application to the ASP.NET Framework ap
     app.Run();
     ```
 
-**aspire:**
+:::zone-end
+
+:::zone pivot="aspire"
 
 ## Setup Aspire orchestration
 
-> **Important:**
+> [!IMPORTANT]
 > This integration is currently in preview and is published as a prerelease package on NuGet.org. When adding the package, enable prerelease packages in your tooling (for example, select `Include prerelease` in Visual Studio's NuGet Package Manager or use the equivalent prerelease option with the .NET CLI).
 
 1. Add Aspire orchestration for the ASP.NET Framework application
@@ -254,7 +257,7 @@ To enable proxying from the ASP.NET Core application to the ASP.NET Framework ap
 1. Reference the ServiceDefaults project
 1. Add the configuration code to the `Application_Start` method in your `Global.asax.cs` file:
 
-    ```csharp
+    ```CSharp
     protected void Application_Start()
     {
         HttpApplicationHost.RegisterHost(builder =>
@@ -294,6 +297,8 @@ To enable proxying from the ASP.NET Core application to the ASP.NET Framework ap
 
     app.Run();
     ```
+
+:::zone-end
 
 With this configuration:
 

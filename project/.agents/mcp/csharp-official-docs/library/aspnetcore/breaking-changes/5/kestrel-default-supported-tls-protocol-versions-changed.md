@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: Kestrel: Default supported TLS protocol versions changed"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/5/kestrel-default-supported-tls-protocol-versions-changed.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 5.0 titled Kestrel: Default supported TLS protocol versions changed"
+ms.date: 10/01/2020
+ms.custom: https://github.com/aspnet/Announcements/issues/418
 ---
-
 # Kestrel: Default supported TLS protocol versions changed
 
 Kestrel now uses the system default TLS protocol versions rather than restricting connections to the TLS 1.1 and TLS 1.2 protocols like it did previously.
@@ -14,9 +11,9 @@ Kestrel now uses the system default TLS protocol versions rather than restrictin
 This change allows:
 
 * TLS 1.3 to be used by default in environments that support it.
-* TLS 1.0 to be used in some environments (such as Windows Server 2016 by default), which is usually not desirable.
+* TLS 1.0 to be used in some environments (such as Windows Server 2016 by default), which is usually [not desirable](/security/engineering/solving-tls1-problem).
 
-For discussion, see issue dotnet/aspnetcore#22563.
+For discussion, see issue [dotnet/aspnetcore#22563](https://github.com/dotnet/aspnetcore/issues/22563).
 
 ## Version introduced
 
@@ -28,7 +25,7 @@ Kestrel required that connections use TLS 1.1 or TLS 1.2 by default.
 
 ## New behavior
 
-Kestrel allows the operating system to choose the best protocol to use and to block insecure protocols. `Microsoft.AspNetCore.Server.Kestrel.Https.HttpsConnectionAdapterOptions.SslProtocols` now defaults to `SslProtocols.None` instead of `SslProtocols.Tls12 | SslProtocols.Tls11`.
+Kestrel allows the operating system to choose the best protocol to use and to block insecure protocols. <xref:Microsoft.AspNetCore.Server.Kestrel.Https.HttpsConnectionAdapterOptions.SslProtocols?displayProperty=nameWithType> now defaults to `SslProtocols.None` instead of `SslProtocols.Tls12 | SslProtocols.Tls11`.
 
 ## Reason for change
 
@@ -40,7 +37,7 @@ Unless your app has a specific reason not to, you should use the new defaults. V
 
 To disable older protocols, take one of the following actions:
 
-* Disable older protocols, such as TLS 1.0, system-wide with the Windows instructions. It's currently enabled by default on all Windows versions.
+* Disable older protocols, such as TLS 1.0, system-wide with the [Windows instructions](/dotnet/framework/network-programming/tls#configure-schannel-protocols-in-the-windows-registry). It's currently enabled by default on all Windows versions.
 * Manually select which protocols you want to support in code as follows:
 
     ```csharp
@@ -74,4 +71,16 @@ Unfortunately, there's no API to exclude specific protocols.
 
 ## Affected APIs
 
-`Microsoft.AspNetCore.Server.Kestrel.Https.HttpsConnectionAdapterOptions.SslProtocols`
+<xref:Microsoft.AspNetCore.Server.Kestrel.Https.HttpsConnectionAdapterOptions.SslProtocols?displayProperty=nameWithType>
+
+<!--
+
+### Category
+
+ASP.NET Core
+
+### Affected APIs
+
+`P:Microsoft.AspNetCore.Server.Kestrel.Https.HttpsConnectionAdapterOptions.SslProtocols`
+
+-->

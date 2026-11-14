@@ -1,10 +1,9 @@
 ---
-title: "Connection Resiliency - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/miscellaneous/connection-resiliency.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Connection Resiliency - EF Core
+description: Using connection resiliency to automatically retry failed commands with Entity Framework Core
+author: AndriySvyryd
+ms.date: 11/15/2016
+uid: core/miscellaneous/connection-resiliency
 ---
 
 # Connection Resiliency
@@ -15,15 +14,7 @@ As an example, the SQL Server provider includes an execution strategy that is sp
 
 An execution strategy is specified when configuring the options for your context. This is typically in the `OnConfiguring` method of your derived context:
 
-```csharp
-protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-{
-    optionsBuilder
-        .UseSqlServer(
-            @"Server=(localdb)\mssqllocaldb;Database=EFMiscellanous.ConnectionResiliency;Trusted_Connection=True;ConnectRetryCount=0",
-            options => options.EnableRetryOnFailure());
-}
-```
+[!code-csharp[Main](../../../samples/core/Miscellaneous/ConnectionResiliency/Program.cs#OnConfiguring)]
 
 or in `Startup.cs` for an ASP.NET Core application:
 
@@ -37,8 +28,8 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-> **Note:**
-> Enabling retry on failure causes EF to internally buffer the resultset, which may significantly increase memory requirements for queries returning large resultsets. See buffering and streaming for more details.
+> [!NOTE]
+> Enabling retry on failure causes EF to internally buffer the resultset, which may significantly increase memory requirements for queries returning large resultsets. See [buffering and streaming](xref:core/performance/efficient-querying#buffering-and-streaming) for more details.
 
 ## Custom execution strategy
 
@@ -64,50 +55,11 @@ However, if your code initiates a transaction using `BeginTransactionAsync()` yo
 
 The solution is to manually invoke the execution strategy with a delegate representing everything that needs to be executed. If a transient failure occurs, the execution strategy will invoke the delegate again.
 
-```csharp
-
-using var db = new BloggingContext();
-var strategy = db.Database.CreateExecutionStrategy();
-
-await strategy.ExecuteAsync(
-    async () =>
-    {
-        using var context = new BloggingContext();
-        await using var transaction = await context.Database.BeginTransactionAsync();
-
-        context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-        await context.SaveChangesAsync();
-
-        context.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/visualstudio" });
-        await context.SaveChangesAsync();
-
-        await transaction.CommitAsync();
-    });
-```
+[!code-csharp[Main](../../../samples/core/Miscellaneous/ConnectionResiliency/Program.cs#ManualTransaction)]
 
 This approach can also be used with ambient transactions.
 
-```csharp
-
-using var context1 = new BloggingContext();
-context1.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/visualstudio" });
-
-var strategy = context1.Database.CreateExecutionStrategy();
-
-await strategy.ExecuteAsync(
-    async () =>
-    {
-        using var context2 = new BloggingContext();
-        using var transaction = new TransactionScope();
-
-        context2.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-        await context2.SaveChangesAsync();
-
-        await context1.SaveChangesAsync();
-
-        transaction.Complete();
-    });
-```
+[!code-csharp[Main](../../../samples/core/Miscellaneous/ConnectionResiliency/Program.cs#AmbientTransaction)]
 
 ## Transaction commit failure and the idempotency issue
 
@@ -135,23 +87,9 @@ For most of the operations that change the database state it is possible to add 
 
 This method begins and commits a transaction and also accepts a function in the `verifySucceeded` parameter that is invoked when a transient error occurs during the transaction commit.
 
-```csharp
+[!code-csharp[Main](../../../samples/core/Miscellaneous/ConnectionResiliency/Program.cs#Verification)]
 
-using var db = new BloggingContext();
-var strategy = db.Database.CreateExecutionStrategy();
-
-var blogToAdd = new Blog { Url = "http://blogs.msdn.com/dotnet" };
-db.Blogs.Add(blogToAdd);
-
-await strategy.ExecuteInTransactionAsync(
-    db,
-    operation: (context, cancellationToken) => context.SaveChangesAsync(acceptAllChangesOnSuccess: false, cancellationToken),
-    verifySucceeded: (context, cancellationToken) => context.Blogs.AsNoTracking().AnyAsync(b => b.BlogId == blogToAdd.BlogId, cancellationToken));
-
-db.ChangeTracker.AcceptAllChanges();
-```
-
-> **Note:**
+> [!NOTE]
 > Here `SaveChanges` is invoked with `acceptAllChangesOnSuccess` set to `false` to avoid changing the state of the `Blog` entity to `Unchanged` if `SaveChanges` succeeds. This allows to retry the same operation if the commit fails and the transaction is rolled back.
 
 ### Option 4 - Manually track the transaction
@@ -163,29 +101,11 @@ If you need to use store-generated keys or need a generic way of handling commit
 3. If the connection fails during the commit, check for the presence of the corresponding row in the database.
 4. If the commit is successful, delete the corresponding row to avoid the growth of the table.
 
-```csharp
+[!code-csharp[Main](../../../samples/core/Miscellaneous/ConnectionResiliency/Program.cs#Tracking)]
 
-using var db = new BloggingContext();
-var strategy = db.Database.CreateExecutionStrategy();
-
-db.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/dotnet" });
-
-var transaction = new TransactionRow { Id = Guid.NewGuid() };
-db.Transactions.Add(transaction);
-
-await strategy.ExecuteInTransactionAsync(
-    db,
-    operation: (context, cancellationToken) => context.SaveChangesAsync(acceptAllChangesOnSuccess: false, cancellationToken),
-    verifySucceeded: (context, cancellationToken) => context.Transactions.AsNoTracking().AnyAsync(t => t.Id == transaction.Id, cancellationToken));
-
-db.ChangeTracker.AcceptAllChanges();
-db.Transactions.Remove(transaction);
-await db.SaveChangesAsync();
-```
-
-> **Note:**
+> [!NOTE]
 > Make sure that the context used for the verification has an execution strategy defined as the connection is likely to fail again during verification if it failed during transaction commit.
 
 ## Additional resources
 
-* Troubleshoot transient connection errors in Azure SQL Database and SQL Managed Instance
+* [Troubleshoot transient connection errors in Azure SQL Database and SQL Managed Instance](/azure/azure-sql/database/troubleshoot-common-connectivity-issues)

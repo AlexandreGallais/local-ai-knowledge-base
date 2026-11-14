@@ -1,12 +1,16 @@
 ---
+description: "Learn more about: ICorDebugILFrame3 Interface"
 title: "ICorDebugILFrame3 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugilframe3-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugILFrame3"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugILFrame3 Interface
 
 Provides a method that encapsulates the return value of a function. `ICorDebugILFrame3` is a logical extension of the ICorDebugILFrame and ICorDebugILFrame2 interfaces.
@@ -15,16 +19,16 @@ Provides a method that encapsulates the return value of a function. `ICorDebugIL
 
 |Method|Description|
 |------------|-----------------|
-|GetReturnValueForILOffset Method|Gets an ICorDebugValue object that encapsulates the return value of a function.|
+|[GetReturnValueForILOffset Method](icordebugilframe3-getreturnvalueforiloffset-method.md)|Gets an ICorDebugValue object that encapsulates the return value of a function.|
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -34,4 +38,4 @@ Provides a method that encapsulates the return value of a function. `ICorDebugIL
 
 ## See also
 
-- ICorDebugCode3 Interface
+- [ICorDebugCode3 Interface](icordebugcode3-interface.md)

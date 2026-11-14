@@ -1,25 +1,19 @@
----
-title: "core::char"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/char/mod.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::char
 
 Utilities for the `char` primitive type.
 
-*See also the `char` primitive type.*
+*[See also the `char` primitive type](primitive@char).*
 
 The `char` type represents a single character. More specifically, since
 'character' isn't a well-defined concept in Unicode, `char` is a '[Unicode
 scalar value]', which is similar to, but not the same as, a '[Unicode code
 point]'.
 
+[Unicode scalar value]: https://www.unicode.org/glossary/#unicode_scalar_value
+[Unicode code point]: https://www.unicode.org/glossary/#code_point
+
 This module exists for technical reasons, the primary documentation for
-`char` is directly on the `char` primitive type itself.
+`char` is directly on [the `char` primitive type][char] itself.
 
 This module is the home of the iterator implementations for the iterators
 implemented on `char`, as well as some useful constants and conversion
@@ -31,7 +25,7 @@ functions that convert various types to `char`.
 pub const MAX: char = char::MAX
 ```
 
-The highest valid code point a `char` can have, `'\u{10FFFF}'`. Use `char::MAX` instead.
+The highest valid code point a `char` can have, `'\u{10FFFF}'`. Use [`char::MAX`] instead.
 
 ## const REPLACEMENT_CHARACTER
 
@@ -40,7 +34,7 @@ pub const REPLACEMENT_CHARACTER: char = char::REPLACEMENT_CHARACTER
 ```
 
 `U+FFFD REPLACEMENT CHARACTER` (�) is used in Unicode to represent a
-decoding error. Use `char::REPLACEMENT_CHARACTER` instead.
+decoding error. Use [`char::REPLACEMENT_CHARACTER`] instead.
 
 ## const UNICODE_VERSION
 
@@ -48,8 +42,8 @@ decoding error. Use `char::REPLACEMENT_CHARACTER` instead.
 pub const UNICODE_VERSION: (u8, u8, u8) = char::UNICODE_VERSION
 ```
 
-The version of Unicode that the Unicode parts of
-`char` and `str` methods are based on. Use `char::UNICODE_VERSION` instead.
+The version of [Unicode](https://www.unicode.org/) that the Unicode parts of
+`char` and `str` methods are based on. Use [`char::UNICODE_VERSION`] instead.
 
 ## fn decode_utf16
 
@@ -58,7 +52,7 @@ pub fn decode_utf16<I: IntoIterator<Item = u16>>(iter: I) -> DecodeUtf16<I::Into
 ```
 
 Creates an iterator over the UTF-16 encoded code points in `iter`, returning
-unpaired surrogates as `Err`s. Use `char::decode_utf16` instead.
+unpaired surrogates as `Err`s. Use [`char::decode_utf16`] instead.
 
 ## fn from_u32
 
@@ -66,7 +60,7 @@ unpaired surrogates as `Err`s. Use `char::decode_utf16` instead.
 pub const fn from_u32(i: u32) -> Option<char>
 ```
 
-Converts a `u32` to a `char`. Use `char::from_u32` instead.
+Converts a `u32` to a `char`. Use [`char::from_u32`] instead.
 
 ## fn from_u32_unchecked
 
@@ -74,7 +68,7 @@ Converts a `u32` to a `char`. Use `char::from_u32` instead.
 pub const unsafe fn from_u32_unchecked(i: u32) -> char
 ```
 
-Converts a `u32` to a `char`, ignoring validity. Use `char::from_u32_unchecked`
+Converts a `u32` to a `char`, ignoring validity. Use [`char::from_u32_unchecked`]
 instead.
 
 ## fn from_digit
@@ -83,7 +77,7 @@ instead.
 pub const fn from_digit(num: u32, radix: u32) -> Option<char>
 ```
 
-Converts a digit in the given radix to a `char`. Use `char::from_digit` instead.
+Converts a digit in the given radix to a `char`. Use [`char::from_digit`] instead.
 
 ## struct EscapeUnicode
 
@@ -94,8 +88,10 @@ pub struct EscapeUnicode(EscapeIterInner<10, AlwaysEscaped>)
 Returns an iterator that yields the hexadecimal Unicode escape of a
 character, as `char`s.
 
-This `struct` is created by the `escape_unicode` method on `char`. See
+This `struct` is created by the [`escape_unicode`] method on [`char`]. See
 its documentation for more.
+
+[`escape_unicode`]: char::escape_unicode
 
 ## struct EscapeDefault
 
@@ -105,8 +101,10 @@ pub struct EscapeDefault(EscapeIterInner<10, AlwaysEscaped>)
 
 An iterator that yields the literal escape code of a `char`.
 
-This `struct` is created by the `escape_default` method on `char`. See
+This `struct` is created by the [`escape_default`] method on [`char`]. See
 its documentation for more.
+
+[`escape_default`]: char::escape_default
 
 ## struct EscapeDebug
 
@@ -116,8 +114,10 @@ pub struct EscapeDebug(EscapeIterInner<10, MaybeEscaped>)
 
 An iterator that yields the literal escape code of a `char`.
 
-This `struct` is created by the `escape_debug` method on `char`. See its
+This `struct` is created by the [`escape_debug`] method on [`char`]. See its
 documentation for more.
+
+[`escape_debug`]: char::escape_debug
 
 ## struct TryFromCharError
 

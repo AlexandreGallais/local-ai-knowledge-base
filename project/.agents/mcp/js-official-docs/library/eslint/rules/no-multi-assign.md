@@ -1,13 +1,8 @@
 ---
-title: "no-multi-assign"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-multi-assign.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-multi-assign
+rule_type: suggestion
 ---
 
-# no-multi-assign
 
 Chaining the assignment of variables can lead to unexpected results and be difficult to read.
 
@@ -25,7 +20,7 @@ This rule disallows using multiple assignments within a single statement.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-multi-assign: "error"*/
@@ -45,9 +40,11 @@ class Foo {
 a = b = "quux";
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-multi-assign: "error"*/
@@ -71,6 +68,8 @@ a = "quux";
 b = "quux";
 ```
 
+:::
+
 ## Options
 
 This rule has an object option:
@@ -81,7 +80,7 @@ This rule has an object option:
 
 Examples of **correct** code for the `{ "ignoreNonDeclaration": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-multi-assign: ["error", { "ignoreNonDeclaration": true }]*/
@@ -95,9 +94,11 @@ const y = {};
 x.one = y.one = 1;
 ```
 
+:::
+
 Examples of **incorrect** code for the `{ "ignoreNonDeclaration": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-multi-assign: ["error", { "ignoreNonDeclaration": true }]*/
@@ -110,3 +111,5 @@ class Foo {
     a = b = 10;
 }
 ```
+
+:::

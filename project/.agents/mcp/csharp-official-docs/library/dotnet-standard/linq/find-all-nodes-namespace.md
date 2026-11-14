@@ -1,10 +1,11 @@
 ---
-title: "How to find all nodes in a namespace - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/find-all-nodes-namespace.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to find all nodes in a namespace - LINQ to XML
+description: You can filter on the namespace of each element or attribute to find all nodes in that particular namespace.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to find all nodes in a namespace (LINQ to XML)
@@ -73,7 +74,7 @@ Nodes in the http://www.adventure-works.com namespace
 
 ## Example: Create an XML tree from one of two namespaces contained in a file
 
-XML document Sample XML file: Consolidated purchase orders contains purchase orders in two different namespaces. The following query creates a new tree from the elements of one of them.
+XML document [Sample XML file: Consolidated purchase orders](sample-xml-file-consolidated-purchase-orders.md) contains purchase orders in two different namespaces. The following query creates a new tree from the elements of one of them.
 
 ```csharp
 XDocument cpo = XDocument.Load("ConsolidatedPurchaseOrders.xml");

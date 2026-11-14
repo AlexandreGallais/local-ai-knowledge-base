@@ -1,0 +1,79 @@
+# core/src/di/forward_ref
+
+## ForwardRefFn
+
+```ts
+export interface ForwardRefFn
+```
+
+An interface that a function passed into `forwardRef` has to implement.
+
+@usageNotes
+### Example
+
+{@example core/di/ts/forward_ref/forward_ref_spec.ts region='forward_ref_fn'}
+@publicApi
+
+## forwardRef
+
+```ts
+export function forwardRef(forwardRefFn: ForwardRefFn): Type<any>
+```
+
+Allows to refer to references which are not yet defined.
+
+For instance, `forwardRef` is used when the `token` which we need to refer to for the purposes of
+DI is declared, but not yet defined. It is also used when the `token` which we use when creating
+a query is not yet defined.
+
+`forwardRef` is also used to break circularities in standalone components imports.
+
+@usageNotes
+### Circular dependency example
+{@example core/di/ts/forward_ref/forward_ref_spec.ts region='forward_ref'}
+
+### Circular standalone reference import example
+```angular-ts
+@Component({
+  imports: [ChildComponent],
+  selector: 'app-parent',
+  template: `<app-child [hideParent]="hideParent()"/>`,
+})
+export class ParentComponent {
+   hideParent = input.required<boolean>();
+}
+
+
+@Component({
+  imports: [forwardRef(() => ParentComponent)],
+  selector: 'app-child',
+  template: `
+   @if(!hideParent()) {
+      <app-parent/>
+   }
+ `,
+})
+export class ChildComponent {
+   hideParent = input.required<boolean>();
+}
+```
+@see [Resolve circular dependencies with a forward reference](guide/di/di-in-action#resolve-circular-dependencies-with-a-forward-reference)
+@publicApi
+
+## resolveForwardRef
+
+```ts
+export function resolveForwardRef<T>(type: T): T
+```
+
+Lazily retrieves the reference value from a forwardRef.
+
+Acts as the identity function when given a non-forward-ref value.
+
+@usageNotes
+### Example
+
+{@example core/di/ts/forward_ref/forward_ref_spec.ts region='resolve_forward_ref'}
+
+@see {@link forwardRef}
+@publicApi

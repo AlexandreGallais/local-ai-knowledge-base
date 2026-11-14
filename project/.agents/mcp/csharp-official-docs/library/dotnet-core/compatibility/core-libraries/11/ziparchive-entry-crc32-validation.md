@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: CRC32 validation added when reading ZIP archive entries"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/11/ziparchive-entry-crc32-validation.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where reading ZIP archive entries now validates CRC32 checksums and throws InvalidDataException for corrupted data."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # CRC32 validation added when reading ZIP archive entries
 
-Starting in .NET 11, the `System.IO.Compression` library validates CRC32 checksums when reading ZIP archive entries. If the computed CRC32 checksum doesn't match the expected value stored in the ZIP file's metadata, an `System.IO.InvalidDataException` is thrown.
+Starting in .NET 11, the <xref:System.IO.Compression> library validates CRC32 checksums when reading ZIP archive entries. If the computed CRC32 checksum doesn't match the expected value stored in the ZIP file's metadata, an <xref:System.IO.InvalidDataException> is thrown.
 
 ## Version introduced
 
@@ -35,19 +33,19 @@ stream.ReadExactly(buffer);
 
 ## New behavior
 
-Starting in .NET 11, the library verifies the integrity of ZIP entries during read operations. If the computed CRC32 checksum doesn't match the expected value from the ZIP file's metadata, an `System.IO.InvalidDataException` is thrown.
+Starting in .NET 11, the library verifies the integrity of ZIP entries during read operations. If the computed CRC32 checksum doesn't match the expected value from the ZIP file's metadata, an <xref:System.IO.InvalidDataException> is thrown.
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-This change improves the reliability and security of `System.IO.Compression`. By validating CRC32 checksums, the library detects and prevents use of corrupted or tampered ZIP entries, ensuring applications don't inadvertently process invalid data. For more information, see dotnet/runtime#124766.
+This change improves the reliability and security of `System.IO.Compression`. By validating CRC32 checksums, the library detects and prevents use of corrupted or tampered ZIP entries, ensuring applications don't inadvertently process invalid data. For more information, see [dotnet/runtime#124766](https://github.com/dotnet/runtime/pull/124766).
 
 ## Recommended action
 
-If your application processes ZIP files that might be corrupted or tampered with, handle `System.IO.InvalidDataException` appropriately:
+If your application processes ZIP files that might be corrupted or tampered with, handle <xref:System.IO.InvalidDataException> appropriately:
 
 ```csharp
 try
@@ -69,4 +67,4 @@ catch (InvalidDataException ex)
 
 ## Affected APIs
 
-- `System.IO.Compression.ZipArchiveEntry.Open`
+- <xref:System.IO.Compression.ZipArchiveEntry.Open?displayProperty=fullName>

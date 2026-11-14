@@ -1,25 +1,23 @@
 ---
-title: "Use dotnetup daily channels"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/channels/daily.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Use dotnetup daily channels
+description: Install and update .NET daily builds with scoped dotnetup channels.
+ms.topic: how-to
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # Use dotnetup daily channels
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 Daily channels select builds from component-specific daily-build endpoints.
 Use them to test changes that are not yet available in a stable or preview
 release.
 
-> **Caution:**
+> [!CAUTION]
 > Daily builds can change frequently and are not supported releases. They are not code-signed.
 > For more information, see
-> How dotnetup verifies downloads.
+> [How dotnetup verifies downloads](../concepts/download-verification.md).
 
 ## Daily channel forms
 
@@ -53,13 +51,13 @@ dotnetup sdk install 11.0.1xx-preview.5-daily
 ## Install daily runtimes
 
 ```dotnetcli
-dotnetup runtime install user@example.com user@example.com
+dotnetup runtime install runtime@11.0-daily aspnetcore@11.0-daily
 ```
 
 On Windows, you can also install the Windows Desktop daily runtime:
 
 ```dotnetcli
-dotnetup runtime install user@example.com
+dotnetup runtime install windowsdesktop@11.0-daily
 ```
 
 ## Update a daily build

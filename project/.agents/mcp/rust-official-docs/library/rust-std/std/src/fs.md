@@ -1,22 +1,13 @@
----
-title: "std::fs (part 1 of 5)"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/fs.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::fs
 
 Filesystem manipulation operations.
 
-This module contains basic <example-value> to manipulate the contents of the local
+This module contains basic methods to manipulate the contents of the local
 filesystem. All methods in this module represent cross-platform filesystem
 operations. Extra platform-specific functionality can be found in the
 extension traits of `std::os::$platform`.
 
-#### Time of Check to Time of Use (TOCTOU)
+# Time of Check to Time of Use (TOCTOU)
 
 Many filesystem operations are subject to a race condition known as "Time of Check to Time of Use"
 (TOCTOU). This occurs when a program checks a condition (like file existence or permissions)
@@ -28,13 +19,13 @@ TOCTOU - another process could create the file between your check and creation a
 
 Another example is with symbolic links: when removing a directory, if another process replaces
 the directory with a symbolic link between the check and the removal operation, the removal
-might affect the wrong location. This is why operations like `remove_dir_all` need to use
+might affect the wrong location. This is why operations like [`remove_dir_all`] need to use
 atomic operations to prevent such race conditions.
 
 To avoid TOCTOU issues:
-- Be aware that metadata operations (like `metadata` or `symlink_metadata`) may be affected by
+- Be aware that metadata operations (like [`metadata`] or [`symlink_metadata`]) may be affected by
 changes made by other processes.
-- Use atomic operations when possible (like `File::create_new` instead of checking existence then creating).
+- Use atomic operations when possible (like [`File::create_new`] instead of checking existence then creating).
 - Keep file open for the duration of operations.
 
 ## struct File
@@ -46,22 +37,22 @@ pub struct File
 An object providing access to an open file on the filesystem.
 
 An instance of a `File` can be read and/or written depending on what options
-it was opened with. Files also implement `Seek` to alter the logical cursor
+it was opened with. Files also implement [`Seek`] to alter the logical cursor
 that the file contains internally.
 
 Files are automatically closed when they go out of scope.  Errors detected
 on closing are ignored by the implementation of `Drop`.  Use the method
-`sync_all` if these errors must be manually handled.
+[`sync_all`] if these errors must be manually handled.
 
 `File` does not buffer reads and writes. For efficiency, consider wrapping the
-file in a `BufReader` or `BufWriter` when performing many small `read`
-or `write` calls, unless unbuffered reads and writes are required.
+file in a [`BufReader`] or [`BufWriter`] when performing many small [`read`]
+or [`write`] calls, unless unbuffered reads and writes are required.
 
 # Examples
 
-Creates a new file and write bytes to it (you can also use `write`):
+Creates a new file and write bytes to it (you can also use [`write`]):
 
-```rust
+```no_run
 use std::fs::File;
 use std::io::prelude::*;
 
@@ -72,9 +63,9 @@ fn main() -> std::io::Result<()> {
 }
 ```
 
-Reads the contents of a file into a `String` (you can also use `read`):
+Reads the contents of a file into a [`String`] (you can also use [`read`]):
 
-```rust
+```no_run
 use std::fs::File;
 use std::io::prelude::*;
 
@@ -87,9 +78,9 @@ fn main() -> std::io::Result<()> {
 }
 ```
 
-Using a buffered `Read`er:
+Using a buffered [`Read`]er:
 
-```rust
+```no_run
 use std::fs::File;
 use std::io::BufReader;
 use std::io::prelude::*;
@@ -105,7 +96,7 @@ fn main() -> std::io::Result<()> {
 ```
 
 Note that, although read and write methods require a `&mut File`, because
-of the interfaces for `Read` and `Write`, the holder of a `&File` can
+of the interfaces for [`Read`] and [`Write`], the holder of a `&File` can
 still modify the file, either through methods that take `&File` or by
 retrieving the underlying OS object and modifying the file that way.
 Additionally, many operating systems allow concurrent modification of files
@@ -114,9 +105,15 @@ file will not change.
 
 # Platform-specific behavior
 
-On Windows, the implementation of `Read` and `Write` traits for `File`
+On Windows, the implementation of [`Read`] and [`Write`] traits for `File`
 perform synchronous I/O operations. Therefore the underlying file must not
 have been opened for asynchronous I/O (e.g. by using `FILE_FLAG_OVERLAPPED`).
+
+[`BufReader`]: io::BufReader
+[`BufWriter`]: io::BufWriter
+[`sync_all`]: File::sync_all
+[`write`]: File::write
+[`read`]: File::read
 
 ## enum TryLockError
 
@@ -125,7 +122,10 @@ pub enum TryLockError
 ```
 
 An enumeration of possible errors which can occur while trying to acquire a lock
-from the `try_lock` method and `try_lock_shared` method on a `File`.
+from the [`try_lock`] method and [`try_lock_shared`] method on a [`File`].
+
+[`try_lock`]: File::try_lock
+[`try_lock_shared`]: File::try_lock_shared
 
 ## struct Metadata
 
@@ -135,8 +135,8 @@ pub struct Metadata(fs_imp::FileAttr)
 
 Metadata information about a file.
 
-This structure is returned from the `metadata` or
-`symlink_metadata` function or method and represents known
+This structure is returned from the [`metadata`] or
+[`symlink_metadata`] function or method and represents known
 metadata about a file such as its permissions, size, modification
 times, etc.
 
@@ -148,8 +148,8 @@ pub struct ReadDir(fs_imp::ReadDir)
 
 Iterator over the entries in a directory.
 
-This iterator is returned from the `read_dir` function of this module and
-will yield instances of <code>[io::Result]<[DirEntry]></code>. Through a `DirEntry`
+This iterator is returned from the [`read_dir`] function of this module and
+will yield instances of <code>[io::Result]<[DirEntry]></code>. Through a [`DirEntry`]
 information like the entry's path and possibly other metadata can be
 learned.
 
@@ -157,7 +157,7 @@ The order in which this iterator returns entries is platform and filesystem
 dependent.
 
 # Errors
-This `io::Result` will be an `Err` if an error occurred while fetching
+This [`io::Result`] will be an [`Err`] if an error occurred while fetching
 the next entry from the OS.
 
 ## struct DirEntry
@@ -166,7 +166,7 @@ the next entry from the OS.
 pub struct DirEntry(fs_imp::DirEntry)
 ```
 
-Entries returned by the `ReadDir` iterator.
+Entries returned by the [`ReadDir`] iterator.
 
 An instance of `DirEntry` represents an entry inside of a directory on the
 filesystem. Each entry can be inspected via methods to learn about the full
@@ -178,7 +178,9 @@ On Unix, the `DirEntry` struct contains an internal reference to the open
 directory. Holding `DirEntry` objects will consume a file handle even
 after the `ReadDir` iterator is dropped.
 
-Note that this may change in the future.
+Note that this [may change in the future][changes].
+
+[changes]: io#platform-specific-behavior
 
 ## struct OpenOptions
 
@@ -188,22 +190,22 @@ pub struct OpenOptions(fs_imp::OpenOptions)
 
 Options and flags which can be used to configure how a file is opened.
 
-This builder exposes the ability to configure how a `File` is opened and
-what operations are permitted on the open file. The `File::open` and
-`File::create` methods are aliases for commonly used options using this
+This builder exposes the ability to configure how a [`File`] is opened and
+what operations are permitted on the open file. The [`File::open`] and
+[`File::create`] methods are aliases for commonly used options using this
 builder.
 
 Generally speaking, when using `OpenOptions`, you'll first call
-`OpenOptions::new`, then chain calls to methods to set each option, then
-call `OpenOptions::open`, passing the path of the file you're trying to
-open. This will give you a `io::Result` with a `File` inside that you
+[`OpenOptions::new`], then chain calls to methods to set each option, then
+call [`OpenOptions::open`], passing the path of the file you're trying to
+open. This will give you a [`io::Result`] with a [`File`] inside that you
 can further operate on.
 
 # Examples
 
 Opening a file to read:
 
-```rust
+```no_run
 use std::fs::OpenOptions;
 
 let file = OpenOptions::new().read(true).open("foo.txt");
@@ -212,7 +214,7 @@ let file = OpenOptions::new().read(true).open("foo.txt");
 Opening a file for both reading and writing, as well as creating it if it
 doesn't exist:
 
-```rust
+```no_run
 use std::fs::OpenOptions;
 
 let file = OpenOptions::new()
@@ -239,9 +241,11 @@ pub struct Permissions(fs_imp::FilePermissions)
 Representation of the various permissions on a file.
 
 This module only currently provides one bit of information,
-`Permissions::readonly`, which is exposed on all currently supported
+[`Permissions::readonly`], which is exposed on all currently supported
 platforms. Unix-specific functionality, such as mode bits, is available
-through the `PermissionsExt` trait.
+through the [`PermissionsExt`] trait.
+
+[`PermissionsExt`]: crate::os::unix::fs::PermissionsExt
 
 ## struct FileType
 
@@ -250,7 +254,7 @@ pub struct FileType(fs_imp::FileType)
 ```
 
 A structure representing a type of file with accessors for each file type.
-It is returned by `Metadata::file_type` method.
+It is returned by [`Metadata::file_type`] method.
 
 ## struct DirBuilder
 
@@ -270,20 +274,22 @@ pub fn read<P: AsRef<Path>>(path: P) -> io::Result<Vec<u8>>
 
 Reads the entire contents of a file into a bytes vector.
 
-This is a convenience function for using `File::open` and `read_to_end`
+This is a convenience function for using [`File::open`] and [`read_to_end`]
 with fewer imports and without an intermediate variable.
+
+[`read_to_end`]: Read::read_to_end
 
 # Errors
 
 This function will return an error if `path` does not already exist.
-Other errors may also be returned according to `OpenOptions::open`.
+Other errors may also be returned according to [`OpenOptions::open`].
 
-While reading from the file, this function handles `io::ErrorKind::Interrupted`
+While reading from the file, this function handles [`io::ErrorKind::Interrupted`]
 with automatic retries. See [io::Read] documentation for details.
 
 # Examples
 
-```rust
+```no_run
 use std::fs;
 
 fn main() -> Result<(), Box<dyn std::error::Error + 'static>> {
@@ -301,23 +307,25 @@ pub fn read_to_string<P: AsRef<Path>>(path: P) -> io::Result<String>
 
 Reads the entire contents of a file into a string.
 
-This is a convenience function for using `File::open` and `read_to_string`
+This is a convenience function for using [`File::open`] and [`read_to_string`]
 with fewer imports and without an intermediate variable.
+
+[`read_to_string`]: Read::read_to_string
 
 # Errors
 
 This function will return an error if `path` does not already exist.
-Other errors may also be returned according to `OpenOptions::open`.
+Other errors may also be returned according to [`OpenOptions::open`].
 
 If the contents of the file are not valid UTF-8, then an error will also be
 returned.
 
-While reading from the file, this function handles `io::ErrorKind::Interrupted`
+While reading from the file, this function handles [`io::ErrorKind::Interrupted`]
 with automatic retries. See [io::Read] documentation for details.
 
 # Examples
 
-```rust
+```no_run
 use std::fs;
 use std::error::Error;
 
@@ -342,12 +350,14 @@ and will entirely replace its contents if it does.
 Depending on the platform, this function may fail if the
 full directory path does not exist.
 
-This is a convenience function for using `File::create` and `write_all`
+This is a convenience function for using [`File::create`] and [`write_all`]
 with fewer imports.
+
+[`write_all`]: Write::write_all
 
 # Examples
 
-```rust
+```no_run
 use std::fs;
 
 fn main() -> std::io::Result<()> {
@@ -381,7 +391,7 @@ target file or symlink. It may also return an error if the OS does not support i
 
 # Examples
 
-```rust
+```no_run
 use std::fs::{self, FileTimes};
 use std::time::SystemTime;
 
@@ -420,7 +430,7 @@ target file or symlink. It may also return an error if the OS does not support i
 
 # Examples
 
-```rust
+```no_run
 use std::fs::{self, FileTimes};
 use std::time::SystemTime;
 
@@ -442,20 +452,20 @@ pub fn open<P: AsRef<Path>>(path: P) -> io::Result<File>
 
 Attempts to open a file in read-only mode.
 
-See the `OpenOptions::open` method for more details.
+See the [`OpenOptions::open`] method for more details.
 
 If you only need to read the entire file contents,
-consider `std::fs::read()`[self::read] or
-`std::fs::read_to_string()`[self::read_to_string] instead.
+consider [`std::fs::read()`][self::read] or
+[`std::fs::read_to_string()`][self::read_to_string] instead.
 
 # Errors
 
 This function will return an error if `path` does not already exist.
-Other errors may also be returned according to `OpenOptions::open`.
+Other errors may also be returned according to [`OpenOptions::open`].
 
 # Examples
 
-```rust
+```no_run
 use std::fs::File;
 use std::io::Read;
 
@@ -480,14 +490,14 @@ and will truncate it if it does.
 
 Depending on the platform, this function may fail if the
 full directory path does not exist.
-See the `OpenOptions::open` function for more details.
+See the [`OpenOptions::open`] function for more details.
 
-See also `std::fs::write()`[self::write] for a simple function to
+See also [`std::fs::write()`][self::write] for a simple function to
 create a file with some given data.
 
 # Examples
 
-```rust
+```no_run
 use std::fs::File;
 use std::io::Write;
 
@@ -508,8 +518,8 @@ Creates a new file in read-write mode; error if the file exists.
 
 This function will create a file if it does not exist, or return an error if it does. This
 way, if the call succeeds, the file returned is guaranteed to be new.
-If a file exists at the target location, creating a new file will fail with `AlreadyExists`
-or another error based on the situation. See `OpenOptions::open` for a
+If a file exists at the target location, creating a new file will fail with [`AlreadyExists`]
+or another error based on the situation. See [`OpenOptions::open`] for a
 non-exhaustive list of likely errors.
 
 This option is useful because it is atomic. Otherwise between checking whether a file
@@ -519,9 +529,12 @@ race condition / attack).
 This can also be written using
 `File::options().read(true).write(true).create_new(true).open(...)`.
 
+[`AlreadyExists`]: crate::io::ErrorKind::AlreadyExists
+[TOCTOU]: self#time-of-check-to-time-of-use-toctou
+
 # Examples
 
-```rust
+```no_run
 use std::fs::File;
 use std::io::Write;
 
@@ -531,3 +544,2292 @@ fn main() -> std::io::Result<()> {
     Ok(())
 }
 ```
+
+## File::options
+
+```rust
+pub fn options() -> OpenOptions
+```
+
+Returns a new OpenOptions object.
+
+This function returns a new OpenOptions object that you can use to
+open or create a file with specific options if `open()` or `create()`
+are not appropriate.
+
+It is equivalent to `OpenOptions::new()`, but allows you to write more
+readable code. Instead of
+`OpenOptions::new().append(true).open("example.log")`,
+you can write `File::options().append(true).open("example.log")`. This
+also avoids the need to import `OpenOptions`.
+
+See the [`OpenOptions::new`] function for more details.
+
+# Examples
+
+```no_run
+use std::fs::File;
+use std::io::Write;
+
+fn main() -> std::io::Result<()> {
+    let mut f = File::options().append(true).open("example.log")?;
+    writeln!(&mut f, "new line")?;
+    Ok(())
+}
+```
+
+## File::sync_all
+
+```rust
+pub fn sync_all(&self) -> io::Result<()>
+```
+
+Attempts to sync all OS-internal file content and metadata to disk.
+
+This function will attempt to ensure that all in-memory data reaches the
+filesystem before returning.
+
+This can be used to handle errors that would otherwise only be caught
+when the `File` is closed, as dropping a `File` will ignore all errors.
+Note, however, that `sync_all` is generally more expensive than closing
+a file by dropping it, because the latter is not required to block until
+the data has been written to the filesystem.
+
+If synchronizing the metadata is not required, use [`sync_data`] instead.
+
+[`sync_data`]: File::sync_data
+
+# Examples
+
+```no_run
+use std::fs::File;
+use std::io::prelude::*;
+
+fn main() -> std::io::Result<()> {
+    let mut f = File::create("foo.txt")?;
+    f.write_all(b"Hello, world!")?;
+
+    f.sync_all()?;
+    Ok(())
+}
+```
+
+## File::sync_data
+
+```rust
+pub fn sync_data(&self) -> io::Result<()>
+```
+
+This function is similar to [`sync_all`], except that it might not
+synchronize file metadata to the filesystem.
+
+This is intended for use cases that must synchronize content, but don't
+need the metadata on disk. The goal of this method is to reduce disk
+operations.
+
+Note that some platforms may simply implement this in terms of
+[`sync_all`].
+
+[`sync_all`]: File::sync_all
+
+# Examples
+
+```no_run
+use std::fs::File;
+use std::io::prelude::*;
+
+fn main() -> std::io::Result<()> {
+    let mut f = File::create("foo.txt")?;
+    f.write_all(b"Hello, world!")?;
+
+    f.sync_data()?;
+    Ok(())
+}
+```
+
+## File::lock
+
+```rust
+pub fn lock(&self) -> io::Result<()>
+```
+
+Acquire an exclusive lock on the file. Blocks until the lock can be acquired.
+
+This acquires an exclusive lock. No *other* file handle to this file, in this or any other
+process, may acquire another lock.
+If this file handle/descriptor, or a clone of it, already holds a lock, the exact behavior
+is unspecified and platform dependent, including the possibility that it will deadlock.
+However, if this method returns, then an exclusive lock is held.
+
+This lock may be advisory or mandatory. This lock is meant to interact with [`lock`],
+[`try_lock`], [`lock_shared`], [`try_lock_shared`], and [`unlock`]. Its interactions with
+other methods, such as [`read`] and [`write`] are platform specific, and it may or may not
+cause non-lockholders to block.
+
+If the file is not open for writing, it is unspecified whether this function returns an error.
+
+The lock will be released when this file (along with any other file descriptors/handles
+duplicated or inherited from it) is closed, or if the [`unlock`] method is called.
+
+# Platform-specific behavior
+
+This function currently corresponds to the `flock` function on Unix with the `LOCK_EX` flag,
+and the `LockFileEx` function on Windows with the `LOCKFILE_EXCLUSIVE_LOCK` flag. Note that,
+this [may change in the future][changes].
+
+On Windows, locking a file will fail if the file is opened only for append. To lock a file,
+open it with one of `.read(true)`, `.read(true).append(true)`, or `.write(true)`.
+
+[changes]: io#platform-specific-behavior
+
+[`lock`]: File::lock
+[`lock_shared`]: File::lock_shared
+[`try_lock`]: File::try_lock
+[`try_lock_shared`]: File::try_lock_shared
+[`unlock`]: File::unlock
+[`read`]: Read::read
+[`write`]: Write::write
+
+# Examples
+
+```no_run
+use std::fs::File;
+
+fn main() -> std::io::Result<()> {
+    let f = File::create("foo.txt")?;
+    f.lock()?;
+    Ok(())
+}
+```
+
+## File::lock_shared
+
+```rust
+pub fn lock_shared(&self) -> io::Result<()>
+```
+
+Acquire a shared (non-exclusive) lock on the file. Blocks until the lock can be acquired.
+
+This acquires a shared lock. More than one file handle to this file, in this or any other
+process, may hold a shared lock, but no *other* file handle may hold an exclusive lock at
+the same time.
+If this file handle/descriptor, or a clone of it, already holds a lock, the exact
+behavior is unspecified and platform dependent, including the possibility that it will
+deadlock. However, if this method returns, then a shared lock is held.
+
+This lock may be advisory or mandatory. This lock is meant to interact with [`lock`],
+[`try_lock`], [`lock_shared`], [`try_lock_shared`], and [`unlock`]. Its interactions with
+other methods, such as [`read`] and [`write`] are platform specific, and it may or may not
+cause non-lockholders to block.
+
+The lock will be released when this file (along with any other file descriptors/handles
+duplicated or inherited from it) is closed, or if the [`unlock`] method is called.
+
+# Platform-specific behavior
+
+This function currently corresponds to the `flock` function on Unix with the `LOCK_SH` flag,
+and the `LockFileEx` function on Windows. Note that, this
+[may change in the future][changes].
+
+On Windows, locking a file will fail if the file is opened only for append. To lock a file,
+open it with one of `.read(true)`, `.read(true).append(true)`, or `.write(true)`.
+
+[changes]: io#platform-specific-behavior
+
+[`lock`]: File::lock
+[`lock_shared`]: File::lock_shared
+[`try_lock`]: File::try_lock
+[`try_lock_shared`]: File::try_lock_shared
+[`unlock`]: File::unlock
+[`read`]: Read::read
+[`write`]: Write::write
+
+# Examples
+
+```no_run
+use std::fs::File;
+
+fn main() -> std::io::Result<()> {
+    let f = File::open("foo.txt")?;
+    f.lock_shared()?;
+    Ok(())
+}
+```
+
+## File::try_lock
+
+```rust
+pub fn try_lock(&self) -> Result<(), TryLockError>
+```
+
+Try to acquire an exclusive lock on the file.
+
+Returns `Err(TryLockError::WouldBlock)` if a different lock is already held on this file
+(via another handle/descriptor).
+
+This acquires an exclusive lock; no other file handle to this file, in this or any other
+process, may acquire another lock.
+
+This lock may be advisory or mandatory. This lock is meant to interact with [`lock`],
+[`try_lock`], [`lock_shared`], [`try_lock_shared`], and [`unlock`]. Its interactions with
+other methods, such as [`read`] and [`write`] are platform specific, and it may or may not
+cause non-lockholders to block.
+
+If this file handle/descriptor, or a clone of it, already holds a lock, the exact behavior
+is unspecified and platform dependent, including the possibility that it will deadlock.
+However, if this method returns `Ok(())`, then it has acquired an exclusive lock.
+
+If the file is not open for writing, it is unspecified whether this function returns an error.
+
+The lock will be released when this file (along with any other file descriptors/handles
+duplicated or inherited from it) is closed, or if the [`unlock`] method is called.
+
+# Platform-specific behavior
+
+This function currently corresponds to the `flock` function on Unix with the `LOCK_EX` and
+`LOCK_NB` flags, and the `LockFileEx` function on Windows with the `LOCKFILE_EXCLUSIVE_LOCK`
+and `LOCKFILE_FAIL_IMMEDIATELY` flags. Note that, this
+[may change in the future][changes].
+
+On Windows, locking a file will fail if the file is opened only for append. To lock a file,
+open it with one of `.read(true)`, `.read(true).append(true)`, or `.write(true)`.
+
+[changes]: io#platform-specific-behavior
+
+[`lock`]: File::lock
+[`lock_shared`]: File::lock_shared
+[`try_lock`]: File::try_lock
+[`try_lock_shared`]: File::try_lock_shared
+[`unlock`]: File::unlock
+[`read`]: Read::read
+[`write`]: Write::write
+
+# Examples
+
+```no_run
+use std::fs::{File, TryLockError};
+
+fn main() -> std::io::Result<()> {
+    let f = File::create("foo.txt")?;
+    // Explicit handling of the WouldBlock error
+    match f.try_lock() {
+        Ok(_) => (),
+        Err(TryLockError::WouldBlock) => (), // Lock not acquired
+        Err(TryLockError::Error(err)) => return Err(err),
+    }
+    // Alternately, propagate the error as an io::Error
+    f.try_lock()?;
+    Ok(())
+}
+```
+
+## File::try_lock_shared
+
+```rust
+pub fn try_lock_shared(&self) -> Result<(), TryLockError>
+```
+
+Try to acquire a shared (non-exclusive) lock on the file.
+
+Returns `Err(TryLockError::WouldBlock)` if a different lock is already held on this file
+(via another handle/descriptor).
+
+This acquires a shared lock; more than one file handle, in this or any other process, may
+hold a shared lock, but none may hold an exclusive lock at the same time.
+
+This lock may be advisory or mandatory. This lock is meant to interact with [`lock`],
+[`try_lock`], [`lock_shared`], [`try_lock_shared`], and [`unlock`]. Its interactions with
+other methods, such as [`read`] and [`write`] are platform specific, and it may or may not
+cause non-lockholders to block.
+
+If this file handle, or a clone of it, already holds a lock, the exact behavior is
+unspecified and platform dependent, including the possibility that it will deadlock.
+However, if this method returns `Ok(())`, then it has acquired a shared lock.
+
+The lock will be released when this file (along with any other file descriptors/handles
+duplicated or inherited from it) is closed, or if the [`unlock`] method is called.
+
+# Platform-specific behavior
+
+This function currently corresponds to the `flock` function on Unix with the `LOCK_SH` and
+`LOCK_NB` flags, and the `LockFileEx` function on Windows with the
+`LOCKFILE_FAIL_IMMEDIATELY` flag. Note that, this
+[may change in the future][changes].
+
+On Windows, locking a file will fail if the file is opened only for append. To lock a file,
+open it with one of `.read(true)`, `.read(true).append(true)`, or `.write(true)`.
+
+[changes]: io#platform-specific-behavior
+
+[`lock`]: File::lock
+[`lock_shared`]: File::lock_shared
+[`try_lock`]: File::try_lock
+[`try_lock_shared`]: File::try_lock_shared
+[`unlock`]: File::unlock
+[`read`]: Read::read
+[`write`]: Write::write
+
+# Examples
+
+```no_run
+use std::fs::{File, TryLockError};
+
+fn main() -> std::io::Result<()> {
+    let f = File::open("foo.txt")?;
+    // Explicit handling of the WouldBlock error
+    match f.try_lock_shared() {
+        Ok(_) => (),
+        Err(TryLockError::WouldBlock) => (), // Lock not acquired
+        Err(TryLockError::Error(err)) => return Err(err),
+    }
+    // Alternately, propagate the error as an io::Error
+    f.try_lock_shared()?;
+
+    Ok(())
+}
+```
+
+## File::unlock
+
+```rust
+pub fn unlock(&self) -> io::Result<()>
+```
+
+Release all locks on the file.
+
+All locks are released when the file (along with any other file descriptors/handles
+duplicated or inherited from it) is closed. This method allows releasing locks without
+closing the file.
+
+If no lock is currently held via this file descriptor/handle, this method may return an
+error, or may return successfully without taking any action.
+
+# Platform-specific behavior
+
+This function currently corresponds to the `flock` function on Unix with the `LOCK_UN` flag,
+and the `UnlockFile` function on Windows. Note that, this
+[may change in the future][changes].
+
+On Windows, locking a file will fail if the file is opened only for append. To lock a file,
+open it with one of `.read(true)`, `.read(true).append(true)`, or `.write(true)`.
+
+[changes]: io#platform-specific-behavior
+
+# Examples
+
+```no_run
+use std::fs::File;
+
+fn main() -> std::io::Result<()> {
+    let f = File::open("foo.txt")?;
+    f.lock()?;
+    f.unlock()?;
+    Ok(())
+}
+```
+
+## File::set_len
+
+```rust
+pub fn set_len(&self, size: u64) -> io::Result<()>
+```
+
+Truncates or extends the underlying file, updating the size of
+this file to become `size`.
+
+If the `size` is less than the current file's size, then the file will
+be shrunk. If it is greater than the current file's size, then the file
+will be extended to `size` and have all of the intermediate data filled
+in with 0s.
+
+The file's cursor isn't changed. In particular, if the cursor was at the
+end and the file is shrunk using this operation, the cursor will now be
+past the end.
+
+# Errors
+
+This function will return an error if the file is not opened for writing.
+Also, [`std::io::ErrorKind::InvalidInput`](crate::io::ErrorKind::InvalidInput)
+will be returned if the desired length would cause an overflow due to
+the implementation specifics.
+
+# Examples
+
+```no_run
+use std::fs::File;
+
+fn main() -> std::io::Result<()> {
+    let mut f = File::create("foo.txt")?;
+    f.set_len(10)?;
+    Ok(())
+}
+```
+
+Note that this method alters the content of the underlying file, even
+though it takes `&self` rather than `&mut self`.
+
+## File::metadata
+
+```rust
+pub fn metadata(&self) -> io::Result<Metadata>
+```
+
+Queries metadata about the underlying file.
+
+# Examples
+
+```no_run
+use std::fs::File;
+
+fn main() -> std::io::Result<()> {
+    let mut f = File::open("foo.txt")?;
+    let metadata = f.metadata()?;
+    Ok(())
+}
+```
+
+## File::try_clone
+
+```rust
+pub fn try_clone(&self) -> io::Result<File>
+```
+
+Creates a new `File` instance that shares the same underlying file handle
+as the existing `File` instance. Reads, writes, and seeks will affect
+both `File` instances simultaneously.
+
+# Examples
+
+Creates two handles for a file named `foo.txt`:
+
+```no_run
+use std::fs::File;
+
+fn main() -> std::io::Result<()> {
+    let mut file = File::open("foo.txt")?;
+    let file_copy = file.try_clone()?;
+    Ok(())
+}
+```
+
+Assuming there’s a file named `foo.txt` with contents `abcdef\n`, create
+two handles, seek one of them, and read the remaining bytes from the
+other handle:
+
+```no_run
+use std::fs::File;
+use std::io::SeekFrom;
+use std::io::prelude::*;
+
+fn main() -> std::io::Result<()> {
+    let mut file = File::open("foo.txt")?;
+    let mut file_copy = file.try_clone()?;
+
+    file.seek(SeekFrom::Start(3))?;
+
+    let mut contents = vec![];
+    file_copy.read_to_end(&mut contents)?;
+    assert_eq!(contents, b"def\n");
+    Ok(())
+}
+```
+
+## File::set_permissions
+
+```rust
+pub fn set_permissions(&self, perm: Permissions) -> io::Result<()>
+```
+
+Changes the permissions on the underlying file.
+
+# Platform-specific behavior
+
+This function currently corresponds to the `fchmod` function on Unix and
+the `SetFileInformationByHandle` function on Windows. Note that, this
+[may change in the future][changes].
+
+[changes]: io#platform-specific-behavior
+
+# Errors
+
+This function will return an error if the user lacks permission change
+attributes on the underlying file. It may also return an error in other
+os-specific unspecified cases.
+
+# Examples
+
+```no_run
+fn main() -> std::io::Result<()> {
+    use std::fs::File;
+
+    let file = File::open("foo.txt")?;
+    let mut perms = file.metadata()?.permissions();
+    perms.set_readonly(true);
+    file.set_permissions(perms)?;
+    Ok(())
+}
+```
+
+Note that this method alters the permissions of the underlying file,
+even though it takes `&self` rather than `&mut self`.
+
+## File::set_times
+
+```rust
+pub fn set_times(&self, times: FileTimes) -> io::Result<()>
+```
+
+Changes the timestamps of the underlying file.
+
+# Platform-specific behavior
+
+This function currently corresponds to the `futimens` function on Unix (falling back to
+`futimes` on macOS before 10.13) and the `SetFileTime` function on Windows. Note that this
+[may change in the future][changes].
+
+On most platforms, including UNIX and Windows platforms, this function can also change the
+timestamps of a directory. To get a `File` representing a directory in order to call
+`set_times`, open the directory with `File::open` without attempting to obtain write
+permission.
+
+[changes]: io#platform-specific-behavior
+
+# Errors
+
+This function will return an error if the user lacks permission to change timestamps on the
+underlying file. It may also return an error in other os-specific unspecified cases.
+
+This function may return an error if the operating system lacks support to change one or
+more of the timestamps set in the `FileTimes` structure.
+
+# Examples
+
+```no_run
+fn main() -> std::io::Result<()> {
+    use std::fs::{self, File, FileTimes};
+
+    let src = fs::metadata("src")?;
+    let dest = File::open("dest")?;
+    let times = FileTimes::new()
+        .set_accessed(src.accessed()?)
+        .set_modified(src.modified()?);
+    dest.set_times(times)?;
+    Ok(())
+}
+```
+
+## File::set_modified
+
+```rust
+pub fn set_modified(&self, time: SystemTime) -> io::Result<()>
+```
+
+Changes the modification time of the underlying file.
+
+This is an alias for `set_times(FileTimes::new().set_modified(time))`.
+
+## OpenOptions::new
+
+```rust
+pub fn new() -> Self
+```
+
+Creates a blank new set of options ready for configuration.
+
+All options are initially set to `false`.
+
+# Examples
+
+```no_run
+use std::fs::OpenOptions;
+
+let mut options = OpenOptions::new();
+let file = options.read(true).open("foo.txt");
+```
+
+## OpenOptions::read
+
+```rust
+pub fn read(&mut self, read: bool) -> &mut Self
+```
+
+Sets the option for read access.
+
+This option, when true, will indicate that the file should be
+`read`-able if opened.
+
+# Examples
+
+```no_run
+use std::fs::OpenOptions;
+
+let file = OpenOptions::new().read(true).open("foo.txt");
+```
+
+## OpenOptions::write
+
+```rust
+pub fn write(&mut self, write: bool) -> &mut Self
+```
+
+Sets the option for write access.
+
+This option, when true, will indicate that the file should be
+`write`-able if opened.
+
+If the file already exists, any write calls on it will overwrite its
+contents, without truncating it.
+
+# Examples
+
+```no_run
+use std::fs::OpenOptions;
+
+let file = OpenOptions::new().write(true).open("foo.txt");
+```
+
+## OpenOptions::append
+
+```rust
+pub fn append(&mut self, append: bool) -> &mut Self
+```
+
+Sets the option for the append mode.
+
+This option, when true, means that writes will append to a file instead
+of overwriting previous contents.
+Note that setting `.write(true).append(true)` has the same effect as
+setting only `.append(true)`.
+
+Append mode guarantees that writes will be positioned at the current end of file,
+even when there are other processes or threads appending to the same file. This is
+unlike <code>[seek]\([SeekFrom]::[End]\(0))</code> followed by `write()`, which
+has a race between seeking and writing during which another writer can write, with
+our `write()` overwriting their data.
+
+Keep in mind that this does not necessarily guarantee that data appended by
+different processes or threads does not interleave. The amount of data accepted a
+single `write()` call depends on the operating system and file system. A
+successful `write()` is allowed to write only part of the given data, so even if
+you're careful to provide the whole message in a single call to `write()`, there
+is no guarantee that it will be written out in full. If you rely on the filesystem
+accepting the message in a single write, make sure that all data that belongs
+together is written in one operation. This can be done by concatenating strings
+before passing them to [`write()`].
+
+If a file is opened with both read and append access, beware that after
+opening, and after every write, the position for reading may be set at the
+end of the file. So, before writing, save the current position (using
+<code>[Seek]::[stream_position]</code>), and restore it before the next read.
+
+## Note
+
+This function doesn't create the file if it doesn't exist. Use the
+[`OpenOptions::create`] method to do so.
+
+[`write()`]: Write::write "io::Write::write"
+[`flush()`]: Write::flush "io::Write::flush"
+[stream_position]: Seek::stream_position "io::Seek::stream_position"
+[seek]: Seek::seek "io::Seek::seek"
+[Current]: SeekFrom::Current "io::SeekFrom::Current"
+[End]: SeekFrom::End "io::SeekFrom::End"
+
+# Examples
+
+```no_run
+use std::fs::OpenOptions;
+
+let file = OpenOptions::new().append(true).open("foo.txt");
+```
+
+## OpenOptions::truncate
+
+```rust
+pub fn truncate(&mut self, truncate: bool) -> &mut Self
+```
+
+Sets the option for truncating a previous file.
+
+If a file is successfully opened with this option set to true, it will truncate
+the file to 0 length if it already exists.
+
+The file must be opened with write access for truncate to work.
+
+# Examples
+
+```no_run
+use std::fs::OpenOptions;
+
+let file = OpenOptions::new().write(true).truncate(true).open("foo.txt");
+```
+
+## OpenOptions::create
+
+```rust
+pub fn create(&mut self, create: bool) -> &mut Self
+```
+
+Sets the option to create a new file, or open it if it already exists.
+
+In order for the file to be created, [`OpenOptions::write`] or
+[`OpenOptions::append`] access must be used.
+
+See also [`std::fs::write()`][self::write] for a simple function to
+create a file with some given data.
+
+# Errors
+
+If `.create(true)` is set without `.write(true)` or `.append(true)`,
+calling [`open`](Self::open) will fail with [`InvalidInput`](io::ErrorKind::InvalidInput) error.
+# Examples
+
+```no_run
+use std::fs::OpenOptions;
+
+let file = OpenOptions::new().write(true).create(true).open("foo.txt");
+```
+
+## OpenOptions::create_new
+
+```rust
+pub fn create_new(&mut self, create_new: bool) -> &mut Self
+```
+
+Sets the option to create a new file, failing if it already exists.
+
+No file is allowed to exist at the target location, also no (dangling) symlink. In this
+way, if the call succeeds, the file returned is guaranteed to be new.
+If a file exists at the target location, creating a new file will fail with [`AlreadyExists`]
+or another error based on the situation. See [`OpenOptions::open`] for a
+non-exhaustive list of likely errors.
+
+This option is useful because it is atomic. Otherwise between checking
+whether a file exists and creating a new one, the file may have been
+created by another process (a [TOCTOU] race condition / attack).
+
+If `.create_new(true)` is set, [`.create()`] and [`.truncate()`] are
+ignored.
+
+The file must be opened with write or append access in order to create
+a new file.
+
+[`.create()`]: OpenOptions::create
+[`.truncate()`]: OpenOptions::truncate
+[`AlreadyExists`]: io::ErrorKind::AlreadyExists
+[TOCTOU]: self#time-of-check-to-time-of-use-toctou
+
+# Examples
+
+```no_run
+use std::fs::OpenOptions;
+
+let file = OpenOptions::new().write(true)
+                             .create_new(true)
+                             .open("foo.txt");
+```
+
+## OpenOptions::open
+
+```rust
+pub fn open<P: AsRef<Path>>(&self, path: P) -> io::Result<File>
+```
+
+Opens a file at `path` with the options specified by `self`.
+
+# Errors
+
+This function will return an error under a number of different
+circumstances. Some of these error conditions are listed here, together
+with their [`io::ErrorKind`]. The mapping to [`io::ErrorKind`]s is not
+part of the compatibility contract of the function.
+
+* [`NotFound`]: The specified file does not exist and neither `create`
+  or `create_new` is set.
+* [`NotFound`]: One of the directory components of the file path does
+  not exist.
+* [`PermissionDenied`]: The user lacks permission to get the specified
+  access rights for the file.
+* [`PermissionDenied`]: The user lacks permission to open one of the
+  directory components of the specified path.
+* [`AlreadyExists`]: `create_new` was specified and the file already
+  exists.
+* [`InvalidInput`]: Invalid combinations of open options (truncate
+  without write access, create without write or append access,
+  no access mode set, etc.).
+
+The following errors don't match any existing [`io::ErrorKind`] at the moment:
+* One of the directory components of the specified file path
+  was not, in fact, a directory.
+* Filesystem-level errors: full disk, write permission
+  requested on a read-only file system, exceeded disk quota, too many
+  open files, too long filename, too many symbolic links in the
+  specified path (Unix-like systems only), etc.
+
+# Examples
+
+```no_run
+use std::fs::OpenOptions;
+
+let file = OpenOptions::new().read(true).open("foo.txt");
+```
+
+[`AlreadyExists`]: io::ErrorKind::AlreadyExists
+[`InvalidInput`]: io::ErrorKind::InvalidInput
+[`NotFound`]: io::ErrorKind::NotFound
+[`PermissionDenied`]: io::ErrorKind::PermissionDenied
+
+## Metadata::file_type
+
+```rust
+pub fn file_type(&self) -> FileType
+```
+
+Returns the file type for this metadata.
+
+# Examples
+
+```no_run
+fn main() -> std::io::Result<()> {
+    use std::fs;
+
+    let metadata = fs::metadata("foo.txt")?;
+
+    println!("{:?}", metadata.file_type());
+    Ok(())
+}
+```
+
+## Metadata::is_dir
+
+```rust
+pub fn is_dir(&self) -> bool
+```
+
+Returns `true` if this metadata is for a directory. The
+result is mutually exclusive to the result of
+[`Metadata::is_file`], and will be false for symlink metadata
+obtained from [`symlink_metadata`].
+
+# Examples
+
+```no_run
+fn main() -> std::io::Result<()> {
+    use std::fs;
+
+    let metadata = fs::metadata("foo.txt")?;
+
+    assert!(!metadata.is_dir());
+    Ok(())
+}
+```
+
+## Metadata::is_file
+
+```rust
+pub fn is_file(&self) -> bool
+```
+
+Returns `true` if this metadata is for a regular file. The
+result is mutually exclusive to the result of
+[`Metadata::is_dir`], and will be false for symlink metadata
+obtained from [`symlink_metadata`].
+
+When the goal is simply to read from (or write to) the source, the most
+reliable way to test the source can be read (or written to) is to open
+it. Only using `is_file` can break workflows like `diff <( prog_a )` on
+a Unix-like system for example. See [`File::open`] or
+[`OpenOptions::open`] for more information.
+
+# Examples
+
+```no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    let metadata = fs::metadata("foo.txt")?;
+
+    assert!(metadata.is_file());
+    Ok(())
+}
+```
+
+## Metadata::is_symlink
+
+```rust
+pub fn is_symlink(&self) -> bool
+```
+
+use std::fs;
+use std::path::Path;
+use std::os::unix::fs::symlink;
+
+fn main() -> std::io::Result<()> {
+    let link_path = Path::new("link");
+    symlink("/origin_does_not_exist/", link_path)?;
+
+    let metadata = fs::symlink_metadata(link_path)?;
+
+    assert!(metadata.is_symlink());
+    Ok(())
+}
+```
+
+## Metadata::len
+
+```rust
+pub fn len(&self) -> u64
+```
+
+Returns the size of the file, in bytes, this metadata is for.
+
+# Examples
+
+```no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    let metadata = fs::metadata("foo.txt")?;
+
+    assert_eq!(0, metadata.len());
+    Ok(())
+}
+```
+
+## Metadata::permissions
+
+```rust
+pub fn permissions(&self) -> Permissions
+```
+
+Returns the permissions of the file this metadata is for.
+
+# Examples
+
+```no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    let metadata = fs::metadata("foo.txt")?;
+
+    assert!(!metadata.permissions().readonly());
+    Ok(())
+}
+```
+
+## Metadata::modified
+
+```rust
+pub fn modified(&self) -> io::Result<SystemTime>
+```
+
+Returns the last modification time listed in this metadata.
+
+The returned value corresponds to the `mtime` field of `stat` on Unix
+platforms and the `ftLastWriteTime` field on Windows platforms.
+
+# Errors
+
+This field might not be available on all platforms, and will return an
+`Err` on platforms where it is not available.
+
+# Examples
+
+```no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    let metadata = fs::metadata("foo.txt")?;
+
+    if let Ok(time) = metadata.modified() {
+        println!("{time:?}");
+    } else {
+        println!("Not supported on this platform");
+    }
+    Ok(())
+}
+```
+
+## Metadata::accessed
+
+```rust
+pub fn accessed(&self) -> io::Result<SystemTime>
+```
+
+Returns the last access time of this metadata.
+
+The returned value corresponds to the `atime` field of `stat` on Unix
+platforms and the `ftLastAccessTime` field on Windows platforms.
+
+Note that not all platforms will keep this field update in a file's
+metadata, for example Windows has an option to disable updating this
+time when files are accessed and Linux similarly has `noatime`.
+
+# Errors
+
+This field might not be available on all platforms, and will return an
+`Err` on platforms where it is not available.
+
+# Examples
+
+```no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    let metadata = fs::metadata("foo.txt")?;
+
+    if let Ok(time) = metadata.accessed() {
+        println!("{time:?}");
+    } else {
+        println!("Not supported on this platform");
+    }
+    Ok(())
+}
+```
+
+## Metadata::created
+
+```rust
+pub fn created(&self) -> io::Result<SystemTime>
+```
+
+Returns the creation time listed in this metadata.
+
+The returned value corresponds to the `btime` field of `statx` on
+Linux kernel starting from to 4.11, the `birthtime` field of `stat` on other
+Unix platforms, and the `ftCreationTime` field on Windows platforms.
+
+# Errors
+
+This field might not be available on all platforms, and will return an
+`Err` on platforms or filesystems where it is not available.
+
+# Examples
+
+```no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    let metadata = fs::metadata("foo.txt")?;
+
+    if let Ok(time) = metadata.created() {
+        println!("{time:?}");
+    } else {
+        println!("Not supported on this platform or filesystem");
+    }
+    Ok(())
+}
+```
+
+## FileTimes::new
+
+```rust
+pub fn new() -> Self
+```
+
+Creates a new `FileTimes` with no times set.
+
+Using the resulting `FileTimes` in [`File::set_times`] will not modify any timestamps.
+
+## FileTimes::set_accessed
+
+```rust
+pub fn set_accessed(mut self, t: SystemTime) -> Self
+```
+
+Set the last access time of a file.
+
+## FileTimes::set_modified
+
+```rust
+pub fn set_modified(mut self, t: SystemTime) -> Self
+```
+
+Set the last modified time of a file.
+
+## Permissions::readonly
+
+```rust
+pub fn readonly(&self) -> bool
+```
+
+Returns `true` if these permissions describe a readonly (unwritable) file.
+
+# Note
+
+This function does not take Access Control Lists (ACLs), Unix group
+membership and other nuances into account.
+Therefore the return value of this function cannot be relied upon
+to predict whether attempts to read or write the file will actually succeed.
+
+# Windows
+
+On Windows this returns [`FILE_ATTRIBUTE_READONLY`](https://docs.microsoft.com/en-us/windows/win32/fileio/file-attribute-constants).
+If `FILE_ATTRIBUTE_READONLY` is set then writes to the file will fail
+but the user may still have permission to change this flag. If
+`FILE_ATTRIBUTE_READONLY` is *not* set then writes may still fail due
+to lack of write permission.
+The behavior of this attribute for directories depends on the Windows
+version.
+
+# Unix (including macOS)
+
+On Unix-based platforms this checks if *any* of the owner, group or others
+write permission bits are set. It does not consider anything else, including:
+
+* Whether the current user is in the file's assigned group.
+* Permissions granted by ACL.
+* That `root` user can write to files that do not have any write bits set.
+* Writable files on a filesystem that is mounted read-only.
+
+The [`PermissionsExt`] trait gives direct access to the permission bits but
+also does not read ACLs.
+
+[`PermissionsExt`]: crate::os::unix::fs::PermissionsExt
+
+# Examples
+
+```no_run
+use std::fs::File;
+
+fn main() -> std::io::Result<()> {
+    let mut f = File::create("foo.txt")?;
+    let metadata = f.metadata()?;
+
+    assert_eq!(false, metadata.permissions().readonly());
+    Ok(())
+}
+```
+
+## Permissions::set_readonly
+
+```rust
+pub fn set_readonly(&mut self, readonly: bool)
+```
+
+Modifies the readonly flag for this set of permissions. If the
+`readonly` argument is `true`, using the resulting `Permission` will
+update file permissions to forbid writing. Conversely, if it's `false`,
+using the resulting `Permission` will update file permissions to allow
+writing.
+
+This operation does **not** modify the files attributes. This only
+changes the in-memory value of these attributes for this `Permissions`
+instance. To modify the files attributes use the [`set_permissions`]
+function which commits these attribute changes to the file.
+
+# Note
+
+`set_readonly(false)` makes the file *world-writable* on Unix.
+You can use the [`PermissionsExt`] trait on Unix to avoid this issue.
+
+It also does not take Access Control Lists (ACLs) or Unix group
+membership into account.
+
+# Windows
+
+On Windows this sets or clears [`FILE_ATTRIBUTE_READONLY`](https://docs.microsoft.com/en-us/windows/win32/fileio/file-attribute-constants).
+If `FILE_ATTRIBUTE_READONLY` is set then writes to the file will fail
+but the user may still have permission to change this flag. If
+`FILE_ATTRIBUTE_READONLY` is *not* set then the write may still fail if
+the user does not have permission to write to the file.
+
+In Windows 7 and earlier this attribute prevents deleting empty
+directories. It does not prevent modifying the directory contents.
+On later versions of Windows this attribute is ignored for directories.
+
+# Unix (including macOS)
+
+On Unix-based platforms this sets or clears the write access bit for
+the owner, group *and* others, equivalent to `chmod a+w <file>`
+or `chmod a-w <file>` respectively. The latter will grant write access
+to all users! You can use the [`PermissionsExt`] trait on Unix
+to avoid this issue.
+
+[`PermissionsExt`]: crate::os::unix::fs::PermissionsExt
+
+# Examples
+
+```no_run
+use std::fs::File;
+
+fn main() -> std::io::Result<()> {
+    let f = File::create("foo.txt")?;
+    let metadata = f.metadata()?;
+    let mut permissions = metadata.permissions();
+
+    permissions.set_readonly(true);
+
+    // filesystem doesn't change, only the in memory state of the
+    // readonly permission
+    assert_eq!(false, metadata.permissions().readonly());
+
+    // just this particular `permissions`.
+    assert_eq!(true, permissions.readonly());
+    Ok(())
+}
+```
+
+## FileType::is_dir
+
+```rust
+pub fn is_dir(&self) -> bool
+```
+
+Tests whether this file type represents a directory. The
+result is mutually exclusive to the results of
+[`is_file`] and [`is_symlink`]; only zero or one of these
+tests may pass.
+
+[`is_file`]: FileType::is_file
+[`is_symlink`]: FileType::is_symlink
+
+# Examples
+
+```no_run
+fn main() -> std::io::Result<()> {
+    use std::fs;
+
+    let metadata = fs::metadata("foo.txt")?;
+    let file_type = metadata.file_type();
+
+    assert_eq!(file_type.is_dir(), false);
+    Ok(())
+}
+```
+
+## FileType::is_file
+
+```rust
+pub fn is_file(&self) -> bool
+```
+
+Tests whether this file type represents a regular file.
+The result is mutually exclusive to the results of
+[`is_dir`] and [`is_symlink`]; only zero or one of these
+tests may pass.
+
+When the goal is simply to read from (or write to) the source, the most
+reliable way to test the source can be read (or written to) is to open
+it. Only using `is_file` can break workflows like `diff <( prog_a )` on
+a Unix-like system for example. See [`File::open`] or
+[`OpenOptions::open`] for more information.
+
+[`is_dir`]: FileType::is_dir
+[`is_symlink`]: FileType::is_symlink
+
+# Examples
+
+```no_run
+fn main() -> std::io::Result<()> {
+    use std::fs;
+
+    let metadata = fs::metadata("foo.txt")?;
+    let file_type = metadata.file_type();
+
+    assert_eq!(file_type.is_file(), true);
+    Ok(())
+}
+```
+
+## FileType::is_symlink
+
+```rust
+pub fn is_symlink(&self) -> bool
+```
+
+Tests whether this file type represents a symbolic link.
+The result is mutually exclusive to the results of
+[`is_dir`] and [`is_file`]; only zero or one of these
+tests may pass.
+
+The underlying [`Metadata`] struct needs to be retrieved
+with the [`fs::symlink_metadata`] function and not the
+[`fs::metadata`] function. The [`fs::metadata`] function
+follows symbolic links, so [`is_symlink`] would always
+return `false` for the target file.
+
+[`fs::metadata`]: metadata
+[`fs::symlink_metadata`]: symlink_metadata
+[`is_dir`]: FileType::is_dir
+[`is_file`]: FileType::is_file
+[`is_symlink`]: FileType::is_symlink
+
+# Examples
+
+```no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    let metadata = fs::symlink_metadata("foo.txt")?;
+    let file_type = metadata.file_type();
+
+    assert_eq!(file_type.is_symlink(), false);
+    Ok(())
+}
+```
+
+## DirEntry::path
+
+```rust
+pub fn path(&self) -> PathBuf
+```
+
+Returns the full path to the file that this entry represents.
+
+The full path is created by joining the original path to `read_dir`
+with the filename of this entry.
+
+# Examples
+
+```no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    for entry in fs::read_dir(".")? {
+        let dir = entry?;
+        println!("{:?}", dir.path());
+    }
+    Ok(())
+}
+```
+
+This prints output like:
+
+```text
+"./whatever.txt"
+"./foo.html"
+"./hello_world.rs"
+```
+
+The exact text, of course, depends on what files you have in `.`.
+
+## DirEntry::metadata
+
+```rust
+pub fn metadata(&self) -> io::Result<Metadata>
+```
+
+Returns the metadata for the file that this entry points at.
+
+This function will not traverse symlinks if this entry points at a
+symlink. To traverse symlinks use [`fs::metadata`] or [`fs::File::metadata`].
+
+[`fs::metadata`]: metadata
+[`fs::File::metadata`]: File::metadata
+
+# Platform-specific behavior
+
+On Windows this function is cheap to call (no extra system calls
+needed), but on Unix platforms this function is the equivalent of
+calling `symlink_metadata` on the path.
+
+# Examples
+
+```
+use std::fs;
+
+if let Ok(entries) = fs::read_dir(".") {
+    for entry in entries {
+        if let Ok(entry) = entry {
+            // Here, `entry` is a `DirEntry`.
+            if let Ok(metadata) = entry.metadata() {
+                // Now let's show our entry's permissions!
+                println!("{:?}: {:?}", entry.path(), metadata.permissions());
+            } else {
+                println!("Couldn't get metadata for {:?}", entry.path());
+            }
+        }
+    }
+}
+```
+
+## DirEntry::file_type
+
+```rust
+pub fn file_type(&self) -> io::Result<FileType>
+```
+
+Returns the file type for the file that this entry points at.
+
+This function will not traverse symlinks if this entry points at a
+symlink.
+
+# Platform-specific behavior
+
+On Windows and most Unix platforms this function is free (no extra
+system calls needed), but some Unix platforms may require the equivalent
+call to `symlink_metadata` to learn about the target file type.
+
+# Examples
+
+```
+use std::fs;
+
+if let Ok(entries) = fs::read_dir(".") {
+    for entry in entries {
+        if let Ok(entry) = entry {
+            // Here, `entry` is a `DirEntry`.
+            if let Ok(file_type) = entry.file_type() {
+                // Now let's show our entry's file type!
+                println!("{:?}: {:?}", entry.path(), file_type);
+            } else {
+                println!("Couldn't get file type for {:?}", entry.path());
+            }
+        }
+    }
+}
+```
+
+## DirEntry::file_name
+
+```rust
+pub fn file_name(&self) -> OsString
+```
+
+Returns the file name of this directory entry without any
+leading path component(s).
+
+As an example,
+the output of the function will result in "foo" for all the following paths:
+- "./foo"
+- "/the/foo"
+- "../../foo"
+
+# Examples
+
+```
+use std::fs;
+
+if let Ok(entries) = fs::read_dir(".") {
+    for entry in entries {
+        if let Ok(entry) = entry {
+            // Here, `entry` is a `DirEntry`.
+            println!("{:?}", entry.file_name());
+        }
+    }
+}
+```
+
+## fn remove_file
+
+```rust
+pub fn remove_file<P: AsRef<Path>>(path: P) -> io::Result<()>
+```
+
+Removes a file from the filesystem.
+
+Note that there is no
+guarantee that the file is immediately deleted (e.g., depending on
+platform, other open file descriptors may prevent immediate removal).
+
+# Platform-specific behavior
+
+This function currently corresponds to the `unlink` function on Unix.
+On Windows, `DeleteFile` is used or `CreateFileW` and `SetInformationByHandle` for readonly files.
+Note that, this [may change in the future][changes].
+
+[changes]: io#platform-specific-behavior
+
+# Errors
+
+This function will return an error in the following situations, but is not
+limited to just these cases:
+
+* `path` points to a directory.
+* The file doesn't exist.
+* The user lacks permissions to remove the file.
+
+This function will only ever return an error of kind `NotFound` if the given
+path does not exist. Note that the inverse is not true,
+i.e. if a path does not exist, its removal may fail for a number of reasons,
+such as insufficient permissions.
+
+# Examples
+
+```no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    fs::remove_file("a.txt")?;
+    Ok(())
+}
+```
+
+## fn metadata
+
+```rust
+pub fn metadata<P: AsRef<Path>>(path: P) -> io::Result<Metadata>
+```
+
+Given a path, queries the file system to get information about a file,
+directory, etc.
+
+This function will traverse symbolic links to query information about the
+destination file. To query metadata about the path itself without following
+symbolic links, use [`symlink_metadata`].
+
+# Platform-specific behavior
+
+This function currently corresponds to the `stat` function on Unix
+and the `GetFileInformationByHandle` function on Windows.
+Note that, this [may change in the future][changes].
+
+[changes]: io#platform-specific-behavior
+
+# Errors
+
+This function will return an error in the following situations, but is not
+limited to just these cases:
+
+* The user lacks permissions to perform `metadata` call on `path`.
+* `path` does not exist.
+* `path` is a symbolic link, but the destination file cannot be resolved.
+
+# Examples
+
+```rust,no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    let attr = fs::metadata("/some/file/path.txt")?;
+    // inspect attr ...
+    Ok(())
+}
+```
+
+## fn symlink_metadata
+
+```rust
+pub fn symlink_metadata<P: AsRef<Path>>(path: P) -> io::Result<Metadata>
+```
+
+Queries the metadata about a file without following symlinks.
+
+This function will return the [`Metadata`] of the exact path without
+traversing symbolic links to a resolved destination file. Using this function
+on a path that is a file or directory (not a symbolic link) will behave the
+same as [`metadata`].
+
+# Platform-specific behavior
+
+This function currently corresponds to the `lstat` function on Unix
+and the `GetFileInformationByHandle` function on Windows.
+Note that, this [may change in the future][changes].
+
+[changes]: io#platform-specific-behavior
+
+# Errors
+
+This function will return an error in the following situations, but is not
+limited to just these cases:
+
+* The user lacks permissions to perform `metadata` call on `path`.
+* `path` does not exist.
+
+# Examples
+
+```rust,no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    let attr = fs::symlink_metadata("/some/file/path.txt")?;
+    // inspect attr ...
+    Ok(())
+}
+```
+
+## fn rename
+
+```rust
+pub fn rename<P: AsRef<Path>, Q: AsRef<Path>>(from: P, to: Q) -> io::Result<()>
+```
+
+Renames a file or directory to a new name, replacing the original file if
+`to` already exists.
+
+This will not work if the new name is on a different mount point.
+
+# Platform-specific behavior
+
+This function currently corresponds to the [rename] function on Unix, and
+`MoveFileExW` with a fallback to `SetFileInformationByHandle` on Windows.
+The exact behavior differs:
+
+- If `to` does not exist, `from` can be anything.
+- On Unix, when `from` is a directory and `to` exists, `to` must be an empty directory.
+- On Unix, when `from` is not a directory and `to` exists, `to` may not be a directory.
+- On Windows 10 version 1607 and above, the behavior is the same as Unix if the
+  filesystem supports  `FileRenameInfoEx`.
+- Otherwise on Windows, `from` can be anything but `to` must not be a directory.
+
+Note that, this [may change in the future][changes].
+
+[changes]: io#platform-specific-behavior
+[rename]: https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html
+
+# Errors
+
+This function will return an error in the following situations, but is not
+limited to just these cases:
+
+* `from` does not exist.
+* The user lacks permissions to view contents.
+* `from` and `to` are on separate filesystems.
+
+# Examples
+
+```no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    fs::rename("a.txt", "b.txt")?; // Rename a.txt to b.txt
+    Ok(())
+}
+```
+
+## fn copy
+
+```rust
+pub fn copy<P: AsRef<Path>, Q: AsRef<Path>>(from: P, to: Q) -> io::Result<u64>
+```
+
+Copies the contents of one file to another. This function will also
+copy the permission bits of the original file to the destination file.
+
+This function will **overwrite** the contents of `to`.
+
+Note that if `from` and `to` both point to the same file, then the file
+will likely get truncated by this operation.
+
+On success, the total number of bytes copied is returned and it is equal to
+the length of the `to` file as reported by `metadata`.
+
+If you want to copy the contents of one file to another and you’re
+working with [`File`]s, see the [`io::copy`](io::copy()) function.
+
+# Platform-specific behavior
+
+This function currently corresponds to the `open` function in Unix
+with `O_RDONLY` for `from` and `O_WRONLY`, `O_CREAT`, and `O_TRUNC` for `to`.
+`O_CLOEXEC` is set for returned file descriptors.
+
+On Linux (including Android), this function uses copy_file_range(2),
+sendfile(2), or splice(2) syscalls to move data directly between files
+if possible.
+
+On Windows, this function currently corresponds to `CopyFileEx`. Alternate
+NTFS streams are copied but only the size of the main stream is returned by
+this function.
+
+On MacOS, this function corresponds to `fclonefileat` and `fcopyfile`.
+
+Note that platform-specific behavior [may change in the future][changes].
+
+[changes]: io#platform-specific-behavior
+
+# Errors
+
+This function will return an error in the following situations, but is not
+limited to just these cases:
+
+* `from` is neither a regular file nor a symlink to a regular file.
+* `from` does not exist.
+* The current process does not have the permission rights to read
+  `from` or write `to`.
+* The parent directory of `to` doesn't exist.
+
+# Examples
+
+```no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    fs::copy("foo.txt", "bar.txt")?;  // Copy foo.txt to bar.txt
+    Ok(())
+}
+```
+
+## fn hard_link
+
+```rust
+pub fn hard_link<P: AsRef<Path>, Q: AsRef<Path>>(original: P, link: Q) -> io::Result<()>
+```
+
+Creates a new hard link on the filesystem.
+
+The `link` path will be a link pointing to the `original` path. Note that
+systems often require these two paths to both be located on the same
+filesystem.
+
+If `original` names a symbolic link, it is platform-specific whether the
+symbolic link is followed. On platforms where it's possible to not follow
+it, it is not followed, and the created hard link points to the symbolic
+link itself.
+
+# Platform-specific behavior
+
+This function currently corresponds to the `CreateHardLink` function on Windows.
+On most Unix systems, it corresponds to the `linkat` function with no flags.
+On VxWorks and Redox, it instead corresponds to the `link` function.
+On MacOS, it uses the `linkat` function if it is available, but on very old
+systems where `linkat` is not available, `link` is selected at runtime instead.
+Note that, this [may change in the future][changes].
+
+[changes]: io#platform-specific-behavior
+
+# Errors
+
+This function will return an error in the following situations, but is not
+limited to just these cases:
+
+* The `original` path is not a file or doesn't exist.
+* The 'link' path already exists.
+
+# Examples
+
+```no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    fs::hard_link("a.txt", "b.txt")?; // Hard link a.txt to b.txt
+    Ok(())
+}
+```
+
+## fn soft_link
+
+```rust
+pub fn soft_link<P: AsRef<Path>, Q: AsRef<Path>>(original: P, link: Q) -> io::Result<()>
+```
+
+Creates a new symbolic link on the filesystem.
+
+The `link` path will be a symbolic link pointing to the `original` path.
+On Windows, this will be a file symlink, not a directory symlink;
+for this reason, the platform-specific [`std::os::unix::fs::symlink`]
+and [`std::os::windows::fs::symlink_file`] or [`symlink_dir`] should be
+used instead to make the intent explicit.
+
+[`std::os::unix::fs::symlink`]: crate::os::unix::fs::symlink
+[`std::os::windows::fs::symlink_file`]: crate::os::windows::fs::symlink_file
+[`symlink_dir`]: crate::os::windows::fs::symlink_dir
+
+# Examples
+
+```no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    fs::soft_link("a.txt", "b.txt")?;
+    Ok(())
+}
+```
+
+## fn read_link
+
+```rust
+pub fn read_link<P: AsRef<Path>>(path: P) -> io::Result<PathBuf>
+```
+
+Reads a symbolic link, returning the file that the link points to.
+
+# Platform-specific behavior
+
+This function currently corresponds to the `readlink` function on Unix
+and the `CreateFile` function with `FILE_FLAG_OPEN_REPARSE_POINT` and
+`FILE_FLAG_BACKUP_SEMANTICS` flags on Windows.
+Note that, this [may change in the future][changes].
+
+[changes]: io#platform-specific-behavior
+
+# Errors
+
+This function will return an error in the following situations, but is not
+limited to just these cases:
+
+* `path` is not a symbolic link.
+* `path` does not exist.
+
+# Examples
+
+```no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    let path = fs::read_link("a.txt")?;
+    Ok(())
+}
+```
+
+## fn canonicalize
+
+```rust
+pub fn canonicalize<P: AsRef<Path>>(path: P) -> io::Result<PathBuf>
+```
+
+Returns the canonical, absolute form of a path with all intermediate
+components normalized and symbolic links resolved.
+
+# Platform-specific behavior
+
+This function currently corresponds to the `realpath` function on Unix
+and the `CreateFile` and `GetFinalPathNameByHandle` functions on Windows.
+Note that this [may change in the future][changes].
+
+On Windows, this converts the path to use [extended length path][path]
+syntax, which allows your program to use longer path names, but means you
+can only join backslash-delimited paths to it, and it may be incompatible
+with other applications (if passed to the application on the command-line,
+or written to a file another application may read).
+
+[changes]: io#platform-specific-behavior
+[path]: https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file
+
+# Errors
+
+This function will return an error in the following situations, but is not
+limited to just these cases:
+
+* `path` does not exist.
+* A non-final component in path is not a directory.
+
+# Examples
+
+```no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    let path = fs::canonicalize("../a/../foo.txt")?;
+    Ok(())
+}
+```
+
+## fn create_dir
+
+```rust
+pub fn create_dir<P: AsRef<Path>>(path: P) -> io::Result<()>
+```
+
+Creates a new, empty directory at the provided path.
+
+# Platform-specific behavior
+
+This function currently corresponds to the `mkdir` function on Unix
+and the `CreateDirectoryW` function on Windows.
+Note that, this [may change in the future][changes].
+
+[changes]: io#platform-specific-behavior
+
+**NOTE**: If a parent of the given path doesn't exist, this function will
+return an error. To create a directory and all its missing parents at the
+same time, use the [`create_dir_all`] function.
+
+# Errors
+
+This function will return an error in the following situations, but is not
+limited to just these cases:
+
+* User lacks permissions to create directory at `path`.
+* A parent of the given path doesn't exist. (To create a directory and all
+  its missing parents at the same time, use the [`create_dir_all`]
+  function.)
+* `path` already exists.
+
+# Examples
+
+```no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    fs::create_dir("/some/dir")?;
+    Ok(())
+}
+```
+
+## fn create_dir_all
+
+```rust
+pub fn create_dir_all<P: AsRef<Path>>(path: P) -> io::Result<()>
+```
+
+Recursively create a directory and all of its parent components if they
+are missing.
+
+This function is not atomic. If it returns an error, any parent components it was able to create
+will remain.
+
+If the empty path is passed to this function, it always succeeds without
+creating any directories.
+
+# Platform-specific behavior
+
+This function currently corresponds to multiple calls to the `mkdir`
+function on Unix and the `CreateDirectoryW` function on Windows.
+
+Note that, this [may change in the future][changes].
+
+[changes]: io#platform-specific-behavior
+
+# Errors
+
+The function will return an error if any directory specified in path does not exist and
+could not be created. There may be other error conditions; see [`fs::create_dir`] for specifics.
+
+Notable exception is made for situations where any of the directories
+specified in the `path` could not be created as it was being created concurrently.
+Such cases are considered to be successful. That is, calling `create_dir_all`
+concurrently from multiple threads or processes is guaranteed not to fail
+due to a race condition with itself.
+
+[`fs::create_dir`]: create_dir
+
+# Examples
+
+```no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    fs::create_dir_all("/some/dir")?;
+    Ok(())
+}
+```
+
+## fn remove_dir
+
+```rust
+pub fn remove_dir<P: AsRef<Path>>(path: P) -> io::Result<()>
+```
+
+Removes an empty directory.
+
+If you want to remove a directory that is not empty, as well as all
+of its contents recursively, consider using [`remove_dir_all`]
+instead.
+
+# Platform-specific behavior
+
+This function currently corresponds to the `rmdir` function on Unix
+and the `RemoveDirectory` function on Windows.
+Note that, this [may change in the future][changes].
+
+[changes]: io#platform-specific-behavior
+
+# Errors
+
+This function will return an error in the following situations, but is not
+limited to just these cases:
+
+* `path` doesn't exist.
+* `path` isn't a directory.
+* The user lacks permissions to remove the directory at the provided `path`.
+* The directory isn't empty.
+
+This function will only ever return an error of kind `NotFound` if the given
+path does not exist. Note that the inverse is not true,
+i.e. if a path does not exist, its removal may fail for a number of reasons,
+such as insufficient permissions.
+
+# Examples
+
+```no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    fs::remove_dir("/some/dir")?;
+    Ok(())
+}
+```
+
+## fn remove_dir_all
+
+```rust
+pub fn remove_dir_all<P: AsRef<Path>>(path: P) -> io::Result<()>
+```
+
+Removes a directory at this path, after removing all its contents. Use
+carefully!
+
+This function does **not** follow symbolic links and it will simply remove the
+symbolic link itself.
+
+# Platform-specific behavior
+
+These implementation details [may change in the future][changes].
+
+- "Unix-like": By default, this function currently corresponds to
+`openat`, `fdopendir`, `unlinkat` and `lstat`
+on Unix-family platforms, except where noted otherwise.
+- "Windows": This function currently corresponds to `CreateFileW`,
+`GetFileInformationByHandleEx`, `SetFileInformationByHandle`, and `NtCreateFile`.
+
+## Time-of-check to time-of-use (TOCTOU) race conditions
+See the [module-level TOCTOU explanation](self#time-of-check-to-time-of-use-toctou).
+
+On most platforms, `fs::remove_dir_all` protects against symlink TOCTOU races by default.
+However, on the following platforms, this protection is not provided and the function should
+not be used in security-sensitive contexts:
+- **Miri**: Even when emulating targets where the underlying implementation will protect against
+  TOCTOU races, Miri will not do so.
+- **ESP-IDF**, **Horizon**, **PS Vita**, **QNX**, **Redox OS**, **VxWorks**: This function does
+  not protect against TOCTOU races, as the underlying platform does not implement the required
+  platform support to do so.
+
+[TOCTOU]: self#time-of-check-to-time-of-use-toctou
+[changes]: io#platform-specific-behavior
+
+# Errors
+
+See [`fs::remove_file`] and [`fs::remove_dir`].
+
+[`remove_dir_all`] will fail if [`remove_dir`] or [`remove_file`] fail on *any* constituent
+paths, *including* the root `path`. Consequently,
+
+- The directory you are deleting *must* exist, meaning that this function is *not idempotent*.
+- [`remove_dir_all`] will fail if the `path` is *not* a directory.
+
+Consider ignoring the error if validating the removal is not required for your use case.
+
+This function may return [`io::ErrorKind::DirectoryNotEmpty`] if the directory is concurrently
+written into, which typically indicates some contents were removed but not all.
+[`io::ErrorKind::NotFound`] is only returned if no removal occurs.
+
+[`fs::remove_file`]: remove_file
+[`fs::remove_dir`]: remove_dir
+
+# Examples
+
+```no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    fs::remove_dir_all("/some/dir")?;
+    Ok(())
+}
+```
+
+## fn read_dir
+
+```rust
+pub fn read_dir<P: AsRef<Path>>(path: P) -> io::Result<ReadDir>
+```
+
+Returns an iterator over the entries within a directory.
+
+The iterator will yield instances of <code>[io::Result]<[DirEntry]></code>.
+New errors may be encountered after an iterator is initially constructed.
+Entries for the current and parent directories (typically `.` and `..`) are
+skipped.
+
+The order in which `read_dir` returns entries can change between calls. If reproducible
+ordering is required, the entries should be explicitly sorted.
+
+# Platform-specific behavior
+
+This function currently corresponds to the `opendir` function on Unix
+and the `FindFirstFileEx` function on Windows. Advancing the iterator
+currently corresponds to `readdir` on Unix and `FindNextFile` on Windows.
+Note that, this [may change in the future][changes].
+
+[changes]: io#platform-specific-behavior
+
+The order in which this iterator returns entries is platform and filesystem
+dependent.
+
+# Errors
+
+This function will return an error in the following situations, but is not
+limited to just these cases:
+
+* The provided `path` doesn't exist.
+* The process lacks permissions to view the contents.
+* The `path` points at a non-directory file.
+
+# Examples
+
+```
+use std::io;
+use std::fs::{self, DirEntry};
+use std::path::Path;
+
+// one possible implementation of walking a directory only visiting files
+fn visit_dirs(dir: &Path, cb: &dyn Fn(&DirEntry)) -> io::Result<()> {
+    if dir.is_dir() {
+        for entry in fs::read_dir(dir)? {
+            let entry = entry?;
+            let path = entry.path();
+            if path.is_dir() {
+                visit_dirs(&path, cb)?;
+            } else {
+                cb(&entry);
+            }
+        }
+    }
+    Ok(())
+}
+```
+
+```rust,no_run
+use std::{fs, io};
+
+fn main() -> io::Result<()> {
+    let mut entries = fs::read_dir(".")?
+        .map(|res| res.map(|e| e.path()))
+        .collect::<Result<Vec<_>, io::Error>>()?;
+
+    // The order in which `read_dir` returns entries is not guaranteed. If reproducible
+    // ordering is required the entries should be explicitly sorted.
+
+    entries.sort();
+
+    // The entries have now been sorted by their path.
+
+    Ok(())
+}
+```
+
+## fn set_permissions
+
+```rust
+pub fn set_permissions<P: AsRef<Path>>(path: P, perm: Permissions) -> io::Result<()>
+```
+
+Changes the permissions found on a file or a directory.
+
+# Platform-specific behavior
+
+This function currently corresponds to the `chmod` function on Unix
+and the `SetFileAttributes` function on Windows.
+Note that, this [may change in the future][changes].
+
+[changes]: io#platform-specific-behavior
+
+## Symlinks
+On UNIX-like systems, this function will update the permission bits
+of the file pointed to by the symlink.
+
+Note that this behavior can lead to privilege escalation vulnerabilities,
+where the ability to create a symlink in one directory allows you to
+cause the permissions of another file or directory to be modified.
+
+For this reason, using this function with symlinks should be avoided.
+When possible, permissions should be set at creation time instead.
+
+# Rationale
+POSIX does not specify an `lchmod` function,
+and symlinks can be followed regardless of what permission bits are set.
+
+# Errors
+
+This function will return an error in the following situations, but is not
+limited to just these cases:
+
+* `path` does not exist.
+* The user lacks the permission to change attributes of the file.
+
+# Examples
+
+```no_run
+use std::fs;
+
+fn main() -> std::io::Result<()> {
+    let mut perms = fs::metadata("foo.txt")?.permissions();
+    perms.set_readonly(true);
+    fs::set_permissions("foo.txt", perms)?;
+    Ok(())
+}
+```
+
+## DirBuilder::new
+
+```rust
+pub fn new() -> DirBuilder
+```
+
+Creates a new set of options with default mode/security settings for all
+platforms and also non-recursive.
+
+# Examples
+
+```
+use std::fs::DirBuilder;
+
+let builder = DirBuilder::new();
+```
+
+## DirBuilder::recursive
+
+```rust
+pub fn recursive(&mut self, recursive: bool) -> &mut Self
+```
+
+Indicates that directories should be created recursively, creating all
+parent directories. Parents that do not exist are created with the same
+security and permissions settings.
+
+This option defaults to `false`.
+
+# Examples
+
+```
+use std::fs::DirBuilder;
+
+let mut builder = DirBuilder::new();
+builder.recursive(true);
+```
+
+## DirBuilder::create
+
+```rust
+pub fn create<P: AsRef<Path>>(&self, path: P) -> io::Result<()>
+```
+
+Creates the specified directory with the options configured in this
+builder.
+
+It is considered an error if the directory already exists unless
+recursive mode is enabled.
+
+# Examples
+
+```no_run
+use std::fs::{self, DirBuilder};
+
+let path = "/tmp/foo/bar/baz";
+DirBuilder::new()
+    .recursive(true)
+    .create(path).unwrap();
+
+assert!(fs::metadata(path).unwrap().is_dir());
+```
+
+## fn exists
+
+```rust
+pub fn exists<P: AsRef<Path>>(path: P) -> io::Result<bool>
+```
+
+Returns `Ok(true)` if the path points at an existing entity.
+
+This function will traverse symbolic links to query information about the
+destination file. In case of broken symbolic links this will return `Ok(false)`.
+
+As opposed to the [`Path::exists`] method, this will only return `Ok(true)` or `Ok(false)`
+if the path was _verified_ to exist or not exist. If its existence can neither be confirmed
+nor denied, an `Err(_)` will be propagated instead. This can be the case if e.g. listing
+permission is denied on one of the parent directories.
+
+Note that while this avoids some pitfalls of the `exists()` method, it still can not
+prevent time-of-check to time-of-use ([TOCTOU]) bugs. You should only use it in scenarios
+where those bugs are not an issue.
+
+# Examples
+
+```no_run
+use std::fs;
+
+assert!(!fs::exists("does_not_exist.txt").expect("Can't check existence of file does_not_exist.txt"));
+assert!(fs::exists("/root/secret_file.txt").is_err());
+```
+
+[`Path::exists`]: crate::path::Path::exists
+[TOCTOU]: self#time-of-check-to-time-of-use-toctou

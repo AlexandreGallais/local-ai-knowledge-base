@@ -1,15 +1,22 @@
 ---
+description: "Learn more about: IMetaDataImport::GetTypeDefProps Method"
 title: "IMetaDataImport::GetTypeDefProps Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-gettypedefprops-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.GetTypeDefProps"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::GetTypeDefProps"
+  - "IMetaDataImport::GetTypeDefProps method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::GetTypeDefProps Method
 
-Returns metadata information for the `System.Type` represented by the specified TypeDef token.
+Returns metadata information for the <xref:System.Type> represented by the specified TypeDef token.
 
 ## Syntax
 
@@ -39,14 +46,14 @@ HRESULT GetTypeDefProps (
  [out] The number of wide characters returned in `szTypeDef`.
 
  `pdwTypeDefFlags`
- [out] A pointer to any flags that modify the type definition. This value is a bitmask from the CorTypeAttr enumeration.
+ [out] A pointer to any flags that modify the type definition. This value is a bitmask from the [CorTypeAttr](../enumerations/cortypeattr-enumeration.md) enumeration.
 
  `ptkExtends`
  [out] A TypeDef or TypeRef metadata token that represents the base type of the requested type.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -54,5 +61,5 @@ HRESULT GetTypeDefProps (
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

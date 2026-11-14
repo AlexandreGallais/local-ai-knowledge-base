@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: ICorDebugSymbolProvider::GetAssemblyImageBytes Method"
 title: "ICorDebugSymbolProvider::GetAssemblyImageBytes Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugsymbolprovider-getassemblyimagebytes-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugSymbolProvider::GetAssemblyImageBytes Method
 
 Reads data from a merged assembly given a relative virtual address (RVA) in the merged assembly.
@@ -30,16 +26,16 @@ HRESULT GetAssemblyImageBytes(
 The number of bytes to read from the merged assembly.
 
  `ppMemoryBuffer`
-A pointer to the address of an ICorDebugMemoryBuffer object that contains information about the memory buffer with merged assembly metadata.
+A pointer to the address of an [ICorDebugMemoryBuffer](icordebugmemorybuffer-interface.md) object that contains information about the memory buffer with merged assembly metadata.
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This method is available with .NET Native only.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -49,4 +45,4 @@ A pointer to the address of an ICorDebugMemoryBuffer object that contains inform
 
 ## See also
 
-- ICorDebugSymbolProvider Interface
+- [ICorDebugSymbolProvider Interface](icordebugsymbolprovider-interface.md)

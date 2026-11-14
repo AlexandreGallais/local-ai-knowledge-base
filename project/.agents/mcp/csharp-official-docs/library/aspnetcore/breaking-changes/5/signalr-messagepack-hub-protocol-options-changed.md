@@ -1,17 +1,14 @@
 ---
 title: "Breaking change: SignalR: MessagePack Hub Protocol options type changed"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/5/signalr-messagepack-hub-protocol-options-changed.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 5.0 titled SignalR: MessagePack Hub Protocol options type changed"
+ms.date: 10/01/2020
+ms.custom: https://github.com/aspnet/Announcements/issues/404
 ---
-
 # SignalR: MessagePack Hub Protocol options type changed
 
-The ASP.NET Core SignalR MessagePack Hub Protocol options type has changed from `IList<MessagePack.IFormatterResolver>` to the MessagePack library's `MessagePackSerializerOptions` type.
+The ASP.NET Core SignalR MessagePack Hub Protocol options type has changed from `IList<MessagePack.IFormatterResolver>` to the [MessagePack](https://www.nuget.org/packages/MessagePack) library's `MessagePackSerializerOptions` type.
 
-For discussion on this change, see dotnet/aspnetcore#20506.
+For discussion on this change, see [dotnet/aspnetcore#20506](https://github.com/dotnet/aspnetcore/issues/20506).
 
 ## Version introduced
 
@@ -70,12 +67,24 @@ services.AddSignalR()
 
 ## Reason for change
 
-This change is part of moving to MessagePack v2.x, which was announced in aspnet/Announcements#404. The v2.x library has added an options API that's easier to use and provides more features than the list of `MessagePack.IFormatterResolver` that was exposed before.
+This change is part of moving to MessagePack v2.x, which was announced in [aspnet/Announcements#404](https://github.com/aspnet/Announcements/issues/404). The v2.x library has added an options API that's easier to use and provides more features than the list of `MessagePack.IFormatterResolver` that was exposed before.
 
 ## Recommended action
 
-This breaking change affects anyone who is configuring values on `Microsoft.AspNetCore.SignalR.MessagePackHubProtocolOptions`. If you're using the ASP.NET Core SignalR MessagePack Hub Protocol and modifying the options, update your usage to use the new options API as shown above.
+This breaking change affects anyone who is configuring values on <xref:Microsoft.AspNetCore.SignalR.MessagePackHubProtocolOptions>. If you're using the ASP.NET Core SignalR MessagePack Hub Protocol and modifying the options, update your usage to use the new options API as shown above.
 
 ## Affected APIs
 
-`Microsoft.AspNetCore.SignalR.MessagePackHubProtocolOptions`
+<xref:Microsoft.AspNetCore.SignalR.MessagePackHubProtocolOptions?displayProperty=nameWithType>
+
+<!--
+
+### Category
+
+ASP.NET Core
+
+### Affected APIs
+
+`T:Microsoft.AspNetCore.SignalR.MessagePackHubProtocolOptions`
+
+-->

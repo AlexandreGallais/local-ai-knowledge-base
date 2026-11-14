@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: Package part URIs are now compared case-insensitively in System.IO.Packaging"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/8.0/system-io-packaging-case-insensitive-uri.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 8 where System.IO.Packaging now compares package part URIs case-insensitively to align with the OPC specification."
+ms.date: 09/29/2024
+ai-usage: ai-generated
 ---
 
 # Package part URIs are now compared case-insensitively in System.IO.Packaging
 
-Previously, part names and overrides that differed only by ASCII case (for example, `/part` vs `/PART`) were not considered equivalent in `System.IO.Packaging`, even though the Open Packaging Conventions (OPC) specification requires case-insensitive equivalence (§7.2.3.5, ECMA-376). This change fixes the bug and brings .NET 5–9 in line with both .NET Framework and the OPC specification.
+Previously, part names and overrides that differed only by ASCII case (for example, `/part` vs `/PART`) were not considered equivalent in <xref:System.IO.Packaging>, even though the Open Packaging Conventions (OPC) specification requires case-insensitive equivalence (§7.2.3.5, ECMA-376). This change fixes the bug and brings .NET 5–9 in line with both .NET Framework and the OPC specification.
 
 ## Version introduced
 
@@ -23,22 +21,22 @@ Some non-compliant packages containing duplicate entries differing only in case 
 
 ## New behavior
 
-URI comparisons are case-insensitive (`System.StringComparison.OrdinalIgnoreCase`).
+URI comparisons are case-insensitive (<xref:System.StringComparison.OrdinalIgnoreCase?displayProperty=nameWithType>).
 Overrides with different casing now work as expected.
 Non-compliant packages containing multiple entries that differ only by case are now rejected when opened. This aligns with .NET Framework and the OPC specification.
 
 ## Type of breaking change
 
-This is a behavioral change.
+This is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-This change aligns `System.IO.Packaging` behavior with:
+This change aligns <xref:System.IO.Packaging> behavior with:
 
 - The OPC specification (case-insensitive URI equivalence is mandatory).
 - Existing .NET Framework behavior, which already enforces case-insensitive matching.
 
-It prevents ambiguous lookups and ensures consistent results, and fixes dotnet/runtime#112783.
+It prevents ambiguous lookups and ensures consistent results, and fixes [dotnet/runtime#112783](https://github.com/dotnet/runtime/issues/112783).
 
 ## Recommended action
 
@@ -51,5 +49,5 @@ If consuming packages that violate the specification:
 
 ## Affected APIs
 
-- `System.IO.Packaging.Package.GetPart(System.Uri)`
-- `System.IO.Packaging.Package.CreatePart(System.Uri,System.String)`
+- <xref:System.IO.Packaging.Package.GetPart(System.Uri)?displayProperty=fullName>
+- <xref:System.IO.Packaging.Package.CreatePart(System.Uri,System.String)?displayProperty=fullName>

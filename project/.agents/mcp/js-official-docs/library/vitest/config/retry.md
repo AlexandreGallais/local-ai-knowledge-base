@@ -1,10 +1,6 @@
 ---
-title: "retry | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/retry.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: retry | Config
+outline: deep
 ---
 
 # retry
@@ -91,8 +87,9 @@ A RegExp pattern or a function to determine if a test should be retried based on
 - When a **RegExp**, it's tested against the error message
 - When a **function**, it receives the error and returns a boolean
 
-**Warning:**
+::: warning
 When defining `condition` as a function, it must be done in a test file directly, not in a configuration file (configurations are serialized for worker threads).
+:::
 
 #### RegExp condition (in config file):
 

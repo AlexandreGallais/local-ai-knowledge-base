@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: New non-root 'app' user in Linux images"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/containers/8.0/app-user.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in containers where a new non-root 'app' user was added in Linux container images.
+ms.date: 07/12/2023
+ms.custom: linux-related-content
 ---
-
 # New non-root 'app' user in Linux images
 
 The .NET Linux container images include a new non-root user named `app`. You can opt in to this new user to provide security benefits. The name of this user may conflict with an existing user defined by an application's Dockerfile.
@@ -25,7 +22,7 @@ Starting in .NET 8, Linux container images define a user named `app` that can be
 
 ## Type of change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -44,4 +41,4 @@ None.
 
 ## See also
 
-- Blog post: Rootless Linux containers
+- [Blog post: Rootless Linux containers](https://devblogs.microsoft.com/dotnet/securing-containers-with-rootless/)

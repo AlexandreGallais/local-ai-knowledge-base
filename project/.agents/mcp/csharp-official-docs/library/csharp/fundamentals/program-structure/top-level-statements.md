@@ -1,18 +1,18 @@
 ---
 title: "Top-level statements - programs without Main methods"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/fundamentals/program-structure/top-level-statements.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
----
+description: Learn about top-level statements. You can create programs without the ceremony of a Program class and a Main method.
+ms.date: 03/16/2026
+ai-usage: ai-assisted
 
+#customer intent: As a C# developer, I want to understand top-level statements so that I can write programs without explicit Main method boilerplate.
+
+---
 # Top-level statements - programs without `Main` methods
 
-> **Tip:**
-> **New to developing software?** Start with the Get started tutorials first. Those tutorials use top-level statements, so you'll already be familiar with the basics.
+> [!TIP]
+> **New to developing software?** Start with the [Get started](../../tour-of-csharp/tutorials/index.md) tutorials first. Those tutorials use top-level statements, so you'll already be familiar with the basics.
 >
-> **Looking for the `Main` method alternative?** See Main method entry point for the explicit `Main` method approach.
+> **Looking for the `Main` method alternative?** See [Main method entry point](main-command-line.md) for the explicit `Main` method approach.
 
 Use *top-level statements* for new apps. By using top-level statements, you can write executable code directly at the root of a file.
 
@@ -28,7 +28,7 @@ The following sections explain the rules on what you can and can't do with top-l
 
 ## Entry point rules
 
-An application must have only one entry point. A project can have only one file with top-level statements, but it can have any number of source code files that don't have top-level statements. You can explicitly write a `Main` method, but it can't function as an entry point. In a project with top-level statements, you can't use the `-main` compiler option to select the entry point, even if the project has one or more `Main` methods.
+An application must have only one entry point. A project can have only one file with top-level statements, but it can have any number of source code files that don't have top-level statements. You can explicitly write a `Main` method, but it can't function as an entry point. In a project with top-level statements, you can't use the [`-main`](../../language-reference/compiler-options/advanced.md#startupobject) compiler option to select the entry point, even if the project has one or more `Main` methods.
 
 The compiler generates a method to serve as the program entry point for a project with top-level statements. The signature of the method depends on whether the top-level statements contain the `await` keyword or the `return` statement. The following table shows what the method signature looks like, using the method name `Main` in the table for convenience.
 
@@ -39,90 +39,38 @@ The compiler generates a method to serve as the program entry point for a projec
 | `return`                | `static int Main(string[] args)`             |
 | No `await` or `return`  | `static void Main(string[] args)`            |
 
-Starting with C# 14, programs can be *file-based apps*, where a single file contains the program. You run *file-based apps* by using the command `dotnet <file.cs>`, or directly using the filename on Unix (for example, `./file.cs`). The latter requires including the `#!/usr/bin/env dotnet` directive as the first line and setting the execute permission (`chmod +x <file>`).
+Starting with C# 14, programs can be [*file-based apps*](./index.md#building-and-running-c-programs), where a single file contains the program. You run *file-based apps* by using the command `dotnet <file.cs>`, or directly using the filename on Unix (for example, `./file.cs`). The latter requires including the `#!/usr/bin/env dotnet` directive as the first line and setting the execute permission (`chmod +x <file>`).
 
 ## `using` directives
 
 For the single file containing top-level statements, `using` directives must come first in that file, as in the following example:
 
-```csharp
-﻿using System.Text;
+:::code language="csharp" source="snippets/top-level-statements-1/Program.cs":::
 
-StringBuilder builder = new();
-builder.AppendLine("The following arguments are passed:");
-
-foreach (var arg in args)
-{
-    builder.AppendLine($"Argument={arg}");
-}
-
-Console.WriteLine(builder.ToString());
-
-return 0;
-```
 ## Namespaces and type definitions
 
 Top-level statements are implicitly in the global namespace. A file with top-level statements can also contain namespaces and type definitions, but they must come after the top-level statements. For example:
 
-```csharp
-﻿MyClass.TestMethod();
-MyNamespace.MyClass.MyMethod();
+:::code language="csharp" source="snippets/top-level-statements-2/Program.cs":::
 
-public class MyClass
-{
-    public static void TestMethod()
-    {
-        Console.WriteLine("Hello World!");
-    }
-}
-
-namespace MyNamespace
-{
-    class MyClass
-    {
-        public static void MyMethod()
-        {
-            Console.WriteLine("Hello World from MyNamespace.MyClass.MyMethod!");
-        }
-    }
-}
-```
 ## `args`
 
 Top-level statements can reference the `args` variable to access any command-line arguments passed to the app when it starts. The `args` variable is never `null`, but its `Length` is zero if no command-line arguments were provided. For example:
 
-```csharp
-﻿if (args.Length > 0)
-{
-    foreach (var arg in args)
-    {
-        Console.WriteLine($"Argument={arg}");
-    }
-}
-else
-{
-    Console.WriteLine("No arguments");
-}
-```
+:::code language="csharp" source="snippets/top-level-statements-3/Program.cs":::
+
 ## `await` and exit code
 
 Use `await` to call an async method. When your top-level code contains `await`, the compiler generates an entry point that returns a `Task`. The runtime monitors that `Task` for completion, keeping the process alive until all asynchronous work finishes. For example:
 
-```csharp
-﻿Console.Write("Hello ");
-await Task.Delay(5000);
-Console.WriteLine("World!");
-```
+:::code language="csharp" source="snippets/top-level-statements-4/Program.cs":::
+
 To return an exit code when the application ends, use the `return` statement. The compiler generates an entry point that returns `Task<int>` when your code contains both `await` and `return`, or `int` when it contains only `return`. For example:
 
-```csharp
-﻿string? s = Console.ReadLine();
+:::code language="csharp" source="snippets/top-level-statements-5/Program.cs":::
 
-int returnValue = int.Parse(s ?? "-1");
-return returnValue;
-```
 ## Related content
 
-- Main() and command-line arguments
-- General structure of a C# program
-- Feature specification - Top-level statements
+- [Main() and command-line arguments](main-command-line.md)
+- [General structure of a C# program](index.md)
+- [Feature specification - Top-level statements](~/_csharpstandard/standard/basic-concepts.md#713-using-top-level-statements)

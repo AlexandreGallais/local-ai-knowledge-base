@@ -1,23 +1,25 @@
 ---
-title: "Consume ASP.NET Core Razor components from a Razor class library (RCL) (part 1 of 2)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/components/class-libraries.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Consume ASP.NET Core Razor components from a Razor class library (RCL)
+ai-usage: ai-assisted
+description: Discover how components can be included in Blazor apps from an external Razor class library (RCL).
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 07/02/2026
 ---
-
 # Consume ASP.NET Core Razor components from a Razor class library (RCL)
 
-Components can be shared in a Razor class library (RCL) across projects. Include components and static assets in an app from:
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
-* Another project in the solution.
+Components can be shared in a [Razor class library (RCL)](../../razor-pages/ui-class.md) across projects. Include components and static assets in an app from:
+
+* Another project in the [solution](../tooling.md#visual-studio-solution-file-sln).
 * A referenced .NET library.
 * A NuGet package.
 
 Just as components are regular .NET types, components provided by an RCL are normal .NET assemblies.
 
-# Visual Studio
+## Create an RCL
+
+# [Visual Studio](#tab/visual-studio)
 
 1. Create a new project.
 1. In the **Create a new project** dialog, select **Razor Class Library** from the list of ASP.NET Core project templates. Select **Next**.
@@ -32,15 +34,15 @@ Just as components are regular .NET types, components provided by an RCL are nor
    1. Right-click the app project. Select **Add** > **Project Reference**.
    1. Select the RCL project. Select **OK**.
 
-# Visual Studio Code / .NET CLI
+# [Visual Studio Code / .NET CLI](#tab/visual-studio-code+net-cli)
 
-1. Use the **Razor Class Library** project template (`razorclasslib`) with the `dotnet new` command in a command shell. In the following example, an RCL is created and named `ComponentLibrary` using the `-o|--output` option. The folder that holds `ComponentLibrary` is created automatically when the command is executed:
+1. Use the **Razor Class Library** project template (`razorclasslib`) with the [`dotnet new`](/dotnet/core/tools/dotnet-new) command in a command shell. In the following example, an RCL is created and named `ComponentLibrary` using the `-o|--output` option. The folder that holds `ComponentLibrary` is created automatically when the command is executed:
 
    ```dotnetcli
    dotnet new razorclasslib -o ComponentLibrary
    ```
 
-1. To add the library to an existing project, use the `dotnet add reference` command in a command shell. In the following command, the `{PATH TO LIBRARY}` placeholder is the path to the library's project folder:
+1. To add the library to an existing project, use the [`dotnet add reference`](/dotnet/core/tools/dotnet-add-reference) command in a command shell. In the following command, the `{PATH TO LIBRARY}` placeholder is the path to the library's project folder:
 
    ```dotnetcli
    dotnet add reference {PATH TO LIBRARY}
@@ -54,16 +56,20 @@ The following characteristics distinguish an RCL from an ASP.NET Core class libr
 
 * An RCL uses the `Microsoft.NET.Sdk.Razor` SDK, while an ordinary class library project uses the `Microsoft.NET.Sdk` SDK. The `Microsoft.NET.Sdk.Razor` SDK builds the library with custom MSBuild tooling specifically designed to compile, build, and package Razor files (`.cshtml`) and Razor component files (`.razor`).
 
-* An RCL's project file (`.csproj`) includes the `SupportedPlatform` property for the `browser` platform. For more information, see the Client-side browser compatibility analyzer section.
+:::moniker range=">= aspnetcore-5.0"
 
-* An RCL references the `Microsoft.AspNetCore.Components.Web` NuGet package and usually relies on an imports file (`_Imports.razor`) with an `@using` statement for the `Microsoft.AspNetCore.Components.Web` namespace. The package provides web-specific infrastructure, HTML element abstractions, and event handling bindings required to run Blazor apps inside a web browser.
+* An RCL's project file (`.csproj`) includes the `SupportedPlatform` property for the `browser` platform. For more information, see the [Client-side browser compatibility analyzer](#client-side-browser-compatibility-analyzer) section.
+
+:::moniker-end
+
+* An RCL references the [`Microsoft.AspNetCore.Components.Web` NuGet package](https://www.nuget.org/packages/Microsoft.AspNetCore.Components.Web) and usually relies on an imports file (`_Imports.razor`) with an `@using` statement for the <xref:Microsoft.AspNetCore.Components.Web?displayProperty=fullName> namespace. The package provides web-specific infrastructure, HTML element abstractions, and event handling bindings required to run Blazor apps inside a web browser.
 
 ## Consume a Razor component from an RCL
 
 To consume components from an RCL in another project, use either of the following approaches:
 
 * Use the full component type name, which includes the RCL's namespace.
-* Individual components can be added by name without the RCL's namespace if Razor's `@using` directive declares the RCL's namespace. Use the following approaches:
+* Individual components can be added by name without the RCL's namespace if Razor's [`@using`](../../mvc/views/razor.md#using) directive declares the RCL's namespace. Use the following approaches:
   * Add the `@using` directive to individual components.
   * Include the `@using` directive in the top-level imports file (`_Imports.razor`) to make the library's components available to an entire project. Add the directive to an imports file at any level to apply the namespace to a single component or set of components within a folder. When an imports file is used, individual components don't require an `@using` directive for the RCL's namespace.
 
@@ -89,7 +95,7 @@ In the app that consumes the RCL, reference the `Component1` component using its
 <ComponentLibrary.Component1 />
 ```
 
-Alternatively, add a `@using` directive and use the component without its namespace. The following `@using` directive can also appear in any imports file (`_Imports.razor`) in or above the current folder.
+Alternatively, add a [`@using`](../../mvc/views/razor.md#using) directive and use the component without its namespace. The following `@using` directive can also appear in any imports file (`_Imports.razor`) in or above the current folder.
 
 `ConsumeComponent2.razor`:
 
@@ -102,8 +108,10 @@ Alternatively, add a `@using` directive and use the component without its namesp
 <Component1 />
 ```
 
-For library components that use CSS isolation, the component styles are automatically made available to the consuming app. There's no need to manually link or import the library's individual component stylesheets or its bundled CSS file in the app that consumes the library. The app uses CSS imports to reference the RCL's bundled styles. The bundled styles aren't published as a static web asset of the app that consumes the library. For a class library named `ClassLib` and a Blazor app with a `BlazorSample.styles.css` stylesheet, the RCL's stylesheet is imported at the top of the app's stylesheet automatically at build time:
+:::moniker range=">= aspnetcore-6.0"
 
+For library components that use [CSS isolation](css-isolation.md), the component styles are automatically made available to the consuming app. There's no need to manually link or import the library's individual component stylesheets or its bundled CSS file in the app that consumes the library. The app uses CSS imports to reference the RCL's bundled styles. The bundled styles aren't published as a static web asset of the app that consumes the library. For a class library named `ClassLib` and a Blazor app with a `BlazorSample.styles.css` stylesheet, the RCL's stylesheet is imported at the top of the app's stylesheet automatically at build time:
+  
 ```css
 @import '_content/ClassLib/ClassLib.bundle.scp.css';
 ```
@@ -125,14 +133,18 @@ The background image is also included from the RCL project template and resides 
 
 `wwwroot/background.png` in the `ComponentLibrary` RCL:
 
+![Diagonally-striped background image from the RCL project template](~/blazor/components/class-libraries/_static/background.png)
+
 To provide additional library component styles from stylesheets in the library's `wwwroot` folder, add stylesheet `<link>` tags to the RCL's consumer, as the next example demonstrates.
 
-> **Important:**
-> Generally, library components use CSS isolation to bundle and provide component styles. Component styles that rely upon CSS isolation are automatically made available to the app that uses the RCL. There's no need to manually link or import the library's individual component stylesheets or its bundled CSS file in the app that consumes the library. The following example is for providing global stylesheets *outside of CSS isolation*, which usually isn't a requirement for typical apps that consume RCLs.
+> [!IMPORTANT]
+> Generally, library components use [CSS isolation](css-isolation.md) to bundle and provide component styles. Component styles that rely upon CSS isolation are automatically made available to the app that uses the RCL. There's no need to manually link or import the library's individual component stylesheets or its bundled CSS file in the app that consumes the library. The following example is for providing global stylesheets *outside of CSS isolation*, which usually isn't a requirement for typical apps that consume RCLs.
 
 The following background image is used in the next example. If you implement the example shown in this section, right-click the image to save it locally.
 
 `wwwroot/extra-background.png` in the `ComponentLibrary` RCL:
+
+![Diagonally-striped background image added to the library by the developer](~/blazor/components/class-libraries/_static/extra-background.png)
 
 Add a new stylesheet to the RCL with an `extra-style` class.
 
@@ -172,7 +184,11 @@ Add a page to the app that uses the `ExtraStyles` component from the RCL.
 <ExtraStyles />
 ```
 
-Link to the library's stylesheet in the app's `<head>` markup (location of `<head>` content):
+Link to the library's stylesheet in the app's `<head>` markup ([location of `<head>` content](../project-structure.md#location-of-head-and-body-content)):
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-9.0"
 
 Blazor Web Apps:
 
@@ -186,29 +202,97 @@ Standalone Blazor WebAssembly apps:
 <link href="_content/ComponentLibrary/additionalStyles.css" rel="stylesheet">
 ```
 
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0 < aspnetcore-9.0"
+
+```html
+<link href="_content/ComponentLibrary/additionalStyles.css" rel="stylesheet">
+```
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
+
+For library components that use [CSS isolation](css-isolation.md), the component styles are automatically made available to the consuming app. There's no need to manually link or import the library's individual component stylesheets or its bundled CSS file in the app that consumes the library. The app uses CSS imports to reference the RCL's bundled styles. The bundled styles aren't published as a static web asset of the app that consumes the library. For a class library named `ClassLib` and a Blazor app with a `BlazorSample.styles.css` stylesheet, the RCL's stylesheet is imported at the top of the app's stylesheet automatically at build time:
+  
+```css
+@import '_content/ClassLib/ClassLib.bundle.scp.css';
+```
+
+For the preceding examples, `Component1`'s stylesheet (`Component1.razor.css`) is bundled automatically.
+
+`Component1.razor.css` in the `ComponentLibrary` RCL:
+
+```css
+.my-component {
+    border: 2px dashed red;
+    padding: 1em;
+    margin: 1em 0;
+    background-image: url('background.png');
+}
+```
+
+The background image is also included from the RCL project template and resides in the `wwwroot` folder of the RCL.
+
+`wwwroot/background.png` in the `ComponentLibrary` RCL:
+
+![Diagonally-striped background image from the RCL project template](~/blazor/components/class-libraries/_static/background.png)
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-5.0"
+
+The following background image and stylesheet are used by the RCL's `Component1` example component. There's no need to add these static assets to a new RCL created from the RCL project template, as they're added automatically by the project template.
+
+`wwwroot/background.png` in the `ComponentLibrary` RCL:
+
+![Diagonally-striped background image added to the library by the RCL project template](~/blazor/components/class-libraries/_static/background.png)
+
+`wwwroot/styles.css` in the `ComponentLibrary` RCL:
+
+```css
+.my-component {
+    border: 2px dashed red;
+    padding: 1em;
+    margin: 1em 0;
+    background-image: url('background.png');
+}
+```
+
+To provide `Component1`'s `my-component` CSS class, link to the library's stylesheet in the app's `<head>` markup ([location of `<head>` content](../project-structure.md#location-of-head-and-body-content)):
+
+```html
+<link href="_content/ComponentLibrary/styles.css" rel="stylesheet" />
+```
+
+:::moniker-end
+
 ## Make routable components available from the RCL
 
 To make routable components in the RCL available for direct requests, the RCL's assembly must be disclosed to the app's router.
 
-Open the app's `App` component (`App.razor`). Assign an `System.Reflection.Assembly` collection to the `Microsoft.AspNetCore.Components.Routing.Router.AdditionalAssemblies` parameter of the `Microsoft.AspNetCore.Components.Routing.Router` component to include the RCL's assembly. In the following example, the `ComponentLibrary.Component1` component is used to discover the RCL's assembly.
+Open the app's `App` component (`App.razor`). Assign an <xref:System.Reflection.Assembly> collection to the <xref:Microsoft.AspNetCore.Components.Routing.Router.AdditionalAssemblies> parameter of the <xref:Microsoft.AspNetCore.Components.Routing.Router> component to include the RCL's assembly. In the following example, the `ComponentLibrary.Component1` component is used to discover the RCL's assembly.
 
 ```razor
 AdditionalAssemblies="new[] { typeof(ComponentLibrary.Component1).Assembly }"
 ```
 
-For more information, see ASP.NET Core Blazor routing.
+For more information, see [ASP.NET Core Blazor routing](../fundamentals/routing.md#route-to-components-from-multiple-assemblies).
 
 ## Create an RCL with static assets in the `wwwroot` folder
 
 An RCL's static assets are available to any app that consumes the library.
 
-Place static assets in the `wwwroot` folder of the RCL and reference the static assets with the following path in the app: `_content/{PACKAGE ID}/{PATH AND FILE NAME}`. The `{PACKAGE ID}` placeholder is the library's package ID. The package ID defaults to the project's assembly name if `<PackageId>` isn't specified in the project file. The `{PATH AND FILE NAME}` placeholder is path and file name under `wwwroot`. This path format is also used in the app for static assets supplied by NuGet packages added to the RCL.
+Place static assets in the `wwwroot` folder of the RCL and reference the static assets with the following path in the app: `_content/{PACKAGE ID}/{PATH AND FILE NAME}`. The `{PACKAGE ID}` placeholder is the library's [package ID](/nuget/create-packages/creating-a-package-msbuild#set-properties). The package ID defaults to the project's assembly name if `<PackageId>` isn't specified in the project file. The `{PATH AND FILE NAME}` placeholder is path and file name under `wwwroot`. This path format is also used in the app for static assets supplied by NuGet packages added to the RCL.
 
 The following example demonstrates the use of RCL static assets with an RCL named `ComponentLibrary` and a Blazor app that consumes the RCL. The app has a project reference for the `ComponentLibrary` RCL.
 
 The following Jeep&reg; image is used in this section's example. If you implement the example shown in this section, right-click the image to save it locally.
 
 `wwwroot/jeep-yj.png` in the `ComponentLibrary` RCL:
+
+![Jeep YJ&reg;](~/blazor/components/class-libraries/_static/jeep-yj.png)
 
 Add the following `JeepYJ` component to the RCL.
 
@@ -251,4 +335,108 @@ Add the following `Jeep` component to the app that consumes the `ComponentLibrar
 
 Rendered `Jeep` component:
 
-For more information, see Reusable Razor UI in class libraries with ASP.NET Core.
+![Jeep component](~/blazor/components/class-libraries/_static/jeep-component.png)
+
+For more information, see [Reusable Razor UI in class libraries with ASP.NET Core](../../razor-pages/ui-class.md#create-an-rcl-with-static-assets).
+
+:::moniker range=">= aspnetcore-6.0"
+
+## Create an RCL with JavaScript files collocated with components
+
+[!INCLUDE[](~/blazor/includes/js-interop/js-collocation.md)]
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-8.0"
+
+## Supply components and static assets to multiple hosted Blazor apps
+
+For more information, see [Multiple hosted ASP.NET Core Blazor WebAssembly apps](../host-and-deploy/webassembly/multiple-hosted-webassembly.md).
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-5.0"
+
+## Client-side browser compatibility analyzer
+
+Client-side apps target the full .NET API surface area, but not all .NET APIs are supported on WebAssembly due to browser sandbox constraints. Unsupported APIs throw <xref:System.PlatformNotSupportedException> when running on WebAssembly. A platform compatibility analyzer warns the developer when the app uses APIs that aren't supported by the app's target platforms. For client-side apps, this means checking that APIs are supported in browsers. Annotating .NET framework APIs for the compatibility analyzer is an on-going process, so not all .NET framework API is currently annotated.
+
+Blazor Web Apps that enable Interactive WebAssembly components, Blazor WebAssembly apps, and RCL projects *automatically* enable browser compatibility checks by adding `browser` as a supported platform with the `SupportedPlatform` MSBuild item. Library developers can manually add the `SupportedPlatform` item to a library's project file to enable the feature:
+
+```xml
+<ItemGroup>
+  <SupportedPlatform Include="browser" />
+</ItemGroup>
+```
+
+When authoring a library, indicate that a particular API isn't supported in browsers by specifying `browser` to <xref:System.Runtime.Versioning.UnsupportedOSPlatformAttribute>:
+
+```csharp
+using System.Runtime.Versioning;
+
+...
+
+[UnsupportedOSPlatform("browser")]
+private static string GetLoggingDirectory()
+{
+    ...
+}
+```
+
+For more information, see [Annotating APIs as unsupported on specific platforms (`dotnet/designs` GitHub repository](https://github.com/dotnet/designs/blob/main/accepted/2020/platform-exclusion/platform-exclusion.md#build-configuration-for-platforms).
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-5.0"
+
+## JavaScript isolation in JavaScript modules
+
+Blazor enables JavaScript isolation in standard [JavaScript modules](https://developer.mozilla.org/docs/Web/JavaScript/Guide/Modules). JavaScript isolation provides the following benefits:
+
+* Imported JavaScript no longer pollutes the global namespace.
+* Consumers of the library and components aren't required to manually import the related JavaScript.
+
+For more information, see [Call JavaScript functions from .NET methods in ASP.NET Core Blazor](../javascript-interoperability/call-javascript-from-dotnet.md#javascript-isolation-in-javascript-modules).
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0"
+
+## Avoid trimming JavaScript-invokable .NET methods
+
+[Runtime relinking](../performance/webassembly-runtime-performance.md#runtime-relinking) trims class instance JavaScript-invokable .NET methods unless they're explicitly preserved. For more information, see [Call .NET methods from JavaScript functions in ASP.NET Core Blazor](../javascript-interoperability/call-dotnet-from-javascript.md#avoid-trimming-javascript-invokable-net-methods).
+
+:::moniker-end
+
+## Build, pack, and ship to NuGet
+
+Because Razor class libraries that contain Razor components are standard .NET libraries, packing and shipping them to NuGet is no different from packing and shipping any library to NuGet. Packing is performed using the [`dotnet pack`](/dotnet/core/tools/dotnet-pack) command in a command shell:
+
+```dotnetcli
+dotnet pack
+```
+
+Upload the package to NuGet using the [`dotnet nuget push`](/dotnet/core/tools/dotnet-nuget-push) command in a command shell.
+
+## Trademarks
+
+*Jeep* and *Jeep YJ* are registered trademarks of [FCA US LLC (Stellantis NV)](https://www.stellantis.com).
+
+## Related content
+
+:::moniker range=">= aspnetcore-5.0"
+
+* [Reusable Razor UI in class libraries with ASP.NET Core](../../razor-pages/ui-class.md)
+* [Use ASP.NET Core APIs in a class library](../../fundamentals/target-aspnetcore.md)
+* [Add an XML Intermediate Language (IL) Trimmer configuration file to a library](../host-and-deploy/configure-trimmer.md)
+* [CSS isolation support with Razor class libraries](css-isolation.md#razor-class-library-rcl-support)
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-5.0"
+
+* [Reusable Razor UI in class libraries with ASP.NET Core](../../razor-pages/ui-class.md)
+* [Use ASP.NET Core APIs in a class library](../../fundamentals/target-aspnetcore.md)
+* [Add an XML Intermediate Language (IL) Linker configuration file to a library](../host-and-deploy/configure-linker.md#add-an-xml-linker-configuration-file-to-a-library)
+
+:::moniker-end

@@ -1,31 +1,23 @@
----
-title: "SourceFileAttribute interface (java.lang.classfile.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/attribute/SourceFileAttribute.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # SourceFileAttribute interface (java.lang.classfile.attribute)
 
 ```java
 public sealed interface SourceFileAttribute extends Attribute<SourceFileAttribute>, ClassElement permits BoundAttribute.BoundSourceFileAttribute, UnboundAttribute.UnboundSourceFileAttribute
 ```
 
-Models the SourceFile attribute (JVMS ), which indicates the name of the source file from which this `class` file was compiled.
-
-This attribute only appears on classes, and does not permit multiple instances in a class.  It has a data
-dependency on the constant pool.
-
+Models the {@link Attributes#sourceFile() SourceFile} attribute (JVMS {@jvms
+4.7.10}), which indicates the name of the source file from which this {@code
+class} file was compiled.
+<p>
+This attribute only appears on classes, and does not permit {@linkplain
+AttributeMapper#allowMultiple multiple instances} in a class.  It has a data
+dependency on the {@linkplain AttributeStability#CP_REFS constant pool}.
+<p>
 The attribute was introduced in the Java SE Platform version 5.0, major
-version `ClassFile#JAVA_5_VERSION`.
+version {@value ClassFile#JAVA_5_VERSION}.
 
-**See also:** Attributes#sourceFile()
-
-**jvms:** 4.7.10 The `SourceFile` Attribute
-
-**Since:** 24
+@see Attributes#sourceFile()
+@jvms 4.7.10 The {@code SourceFile} Attribute
+@since 24
 
 ## SourceFileAttribute.sourceFile()
 
@@ -33,15 +25,17 @@ version `ClassFile#JAVA_5_VERSION`.
 Utf8Entry sourceFile()
 ```
 
+{@return the name of the source file from which this class was compiled}
+
 ## SourceFileAttribute.of(String)
 
 ```java
 static SourceFileAttribute of(String sourceFile)
 ```
 
-Parameters:
+{@return a source file attribute}
 
-- `sourceFile`: the source file name
+@param sourceFile the source file name
 
 ## SourceFileAttribute.of(Utf8Entry)
 
@@ -49,6 +43,6 @@ Parameters:
 static SourceFileAttribute of(Utf8Entry sourceFile)
 ```
 
-Parameters:
+{@return a source file attribute}
 
-- `sourceFile`: the source file name
+@param sourceFile the source file name

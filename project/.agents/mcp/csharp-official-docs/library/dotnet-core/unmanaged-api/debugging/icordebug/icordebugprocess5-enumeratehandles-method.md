@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugProcess5::EnumerateHandles Method"
 title: "ICorDebugProcess5::EnumerateHandles Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess5-enumeratehandles-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugProcess5.EnumerateHandles"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugProcess5::EnumerateHandles"
+helpviewer_keywords:
+  - "EnumerateHandles method, ICorDebugProcess5 interface [.NET debugging]"
+  - "ICorDebugProcess5::EnumerateHandles method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugProcess5::EnumerateHandles Method
 
 Gets an enumerator for object handles in a process.
@@ -21,16 +30,16 @@ HRESULT EnumerateHandles(     [in] CorGCReferenceType types,
 ## Parameters
 
  `types`
- [in] A bitwise combination of CorGCReferenceType values that specifies the type of handles to include in the collection.
+ [in] A bitwise combination of [CorGCReferenceType](corgcreferencetype-enumeration.md) values that specifies the type of handles to include in the collection.
 
  `ppENum`
- [out] A pointer to the address of an ICorDebugGCReferenceEnum that is an enumerator for the objects to be garbage-collected.
+ [out] A pointer to the address of an [ICorDebugGCReferenceEnum](icordebuggcreferenceenum-interface.md) that is an enumerator for the objects to be garbage-collected.
 
 ## Remarks
 
- `EnumerateHandles` is a helper function that supports inspection of the handle table. It is similar to the ICorDebugProcess5::EnumerateGCReferences method, except that rather than populating an ICorDebugGCReferenceEnum collection with all objects to be garbage-collected, it includes only objects that have handles from the handle table.
+ `EnumerateHandles` is a helper function that supports inspection of the handle table. It is similar to the [ICorDebugProcess5::EnumerateGCReferences](icordebugprocess5-enumerategcreferences-method.md) method, except that rather than populating an [ICorDebugGCReferenceEnum](icordebuggcreferenceenum-interface.md) collection with all objects to be garbage-collected, it includes only objects that have handles from the handle table.
 
-The `types` parameter specifies the handle types to include in the collection. `types` can be any of the following three members of the CorGCReferenceType enumeration:
+The `types` parameter specifies the handle types to include in the collection. `types` can be any of the following three members of the [CorGCReferenceType](corgcreferencetype-enumeration.md) enumeration:
 
 - `CorHandleStrongOnly` (handles to strong references only).
 
@@ -40,7 +49,7 @@ The `types` parameter specifies the handle types to include in the collection. `
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

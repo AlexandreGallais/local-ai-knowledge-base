@@ -1,15 +1,13 @@
 ---
-title: "Chain queries example (C#) - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/chain-queries-example.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Chain queries example (C#) - LINQ to XML
+description: Learn what happens when you chain together two queries that both use deferred execution and lazy evaluation.
+ms.date: 07/20/2015
+ms.assetid: abbca162-d95e-43af-b92c-e46e6aa2540e
 ---
 
 # Chain queries example (C#) (LINQ to XML)
 
-This example builds on the example in Deferred execution example and shows what happens when you chain together two queries that both use deferred execution and lazy evaluation.
+This example builds on the example in [Deferred execution example](deferred-execution-example.md) and shows what happens when you chain together two queries that both use deferred execution and lazy evaluation.
 
 ## Example: Add a second extension method that uses `yield return` to defer execution
 
@@ -84,8 +82,8 @@ What should be clear from this example is that even though we have chained toget
 
 The next article in this tutorial illustrates intermediate materialization:
 
-- Intermediate materialization (C#)
+- [Intermediate materialization (C#)](intermediate-materialization.md)
 
 ## See also
 
-- Deferred execution and lazy evaluation
+- [Deferred execution and lazy evaluation](deferred-execution-lazy-evaluation.md)

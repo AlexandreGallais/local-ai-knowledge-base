@@ -1,17 +1,10 @@
----
-title: "Disallow sending redundant notifications from completed or errored observables (rxjs-x/no-redundant-notify)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/no-redundant-notify.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Disallow sending redundant notifications from completed or errored observables (`rxjs-x/no-redundant-notify`)
 
 💼 This rule is enabled in the following configs: ✅ `recommended`, 🔒 `strict`.
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule effects failures if an attempt is made to send a notification to an observer after a `complete` or `error` notification has already been sent,
 or if `unsubscribe` has been called.
@@ -49,9 +42,9 @@ Type checked lint rules are more powerful than traditional lint rules, but also 
 
 ## Related To
 
-- `no-subject-unsubscribe`
+- [`no-subject-unsubscribe`](./no-subject-unsubscribe.md)
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/no-redundant-notify.ts)
+- [Test source](/tests/rules/no-redundant-notify.test.ts)

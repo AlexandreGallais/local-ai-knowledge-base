@@ -1,17 +1,14 @@
 ---
 title: "Breaking change: HTTP: Kestrel and IIS BadHttpRequestException types marked obsolete and replaced"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/5/http-badhttprequestexception-obsolete.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 5.0 titled HTTP: Kestrel and IIS BadHttpRequestException types marked obsolete and replaced"
+ms.date: 10/01/2020
+ms.custom: https://github.com/aspnet/Announcements/issues/414
 ---
-
 # HTTP: Kestrel and IIS BadHttpRequestException types marked obsolete and replaced
 
 `Microsoft.AspNetCore.Server.Kestrel.BadHttpRequestException` and `Microsoft.AspNetCore.Server.IIS.BadHttpRequestException` have been marked obsolete and changed to derive from `Microsoft.AspNetCore.Http.BadHttpRequestException`. The Kestrel and IIS servers still throw their old exception types for backwards compatibility. The obsolete types will be removed in a future release.
 
-For discussion, see dotnet/aspnetcore#20614.
+For discussion, see [dotnet/aspnetcore#20614](https://github.com/dotnet/aspnetcore/issues/20614).
 
 ## Version introduced
 
@@ -19,7 +16,7 @@ For discussion, see dotnet/aspnetcore#20614.
 
 ## Old behavior
 
-`Microsoft.AspNetCore.Server.Kestrel.BadHttpRequestException` and `Microsoft.AspNetCore.Server.IIS.BadHttpRequestException` derived from `System.IO.IOException`.
+`Microsoft.AspNetCore.Server.Kestrel.BadHttpRequestException` and `Microsoft.AspNetCore.Server.IIS.BadHttpRequestException` derived from <xref:System.IO.IOException?displayProperty=nameWithType>.
 
 ## New behavior
 
@@ -40,5 +37,18 @@ Replace usages of `Microsoft.AspNetCore.Server.Kestrel.BadHttpRequestException` 
 
 ## Affected APIs
 
-- Microsoft.AspNetCore.Server.IIS.BadHttpRequestException
-- Microsoft.AspNetCore.Server.Kestrel.BadHttpRequestException
+- [Microsoft.AspNetCore.Server.IIS.BadHttpRequestException](/dotnet/api/microsoft.aspnetcore.server.iis.badhttprequestexception?view=aspnetcore-3.1&preserve-view=false)
+- [Microsoft.AspNetCore.Server.Kestrel.BadHttpRequestException](/dotnet/api/microsoft.aspnetcore.server.kestrel.badhttprequestexception?view=aspnetcore-1.1&preserve-view=false)
+
+<!--
+
+### Category
+
+ASP.NET Core
+
+### Affected APIs
+
+- `T:Microsoft.AspNetCore.Server.IIS.BadHttpRequestException`
+- `T:Microsoft.AspNetCore.Server.Kestrel.BadHttpRequestException`
+
+-->

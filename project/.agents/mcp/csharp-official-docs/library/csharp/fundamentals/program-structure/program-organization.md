@@ -1,16 +1,16 @@
 ---
 title: "Program organization"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/fundamentals/program-structure/program-organization.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
----
+description: Learn how to organize C# programs using solutions, projects, assemblies, namespaces, and types to build maintainable, well-structured applications.
+ms.date: 03/16/2026
+ai-usage: ai-assisted
 
+#customer intent: As a C# developer, I want to understand how to organize my code using solutions, projects, assemblies, and namespaces so that I can build maintainable applications.
+
+---
 # Program organization
 
-> **Tip:**
-> **New to developing software?** Start with the Get started tutorials first. You'll learn about program organization naturally as your projects grow.
+> [!TIP]
+> **New to developing software?** Start with the [Get started](../../tour-of-csharp/tutorials/index.md) tutorials first. You'll learn about program organization naturally as your projects grow.
 >
 > **Experienced in another language?** If you're familiar with solutions and projects in Visual Studio, or build systems like Maven or Cargo, this article maps those concepts to .NET.
 
@@ -44,25 +44,11 @@ A single project works well for many applications. Resist the urge to create sep
 
 Namespace names should follow the folder structure of your project. When you see the namespace `MyApp.Services.Payments`, you know to look in the `Services/Payments` folder for the source code of the types defined in that namespace. The .NET SDK supports this convention, and it is so widely followed that violating it actively confuses other developers:
 
-```csharp
-// File: Services/OrderService.cs
-// Namespace mirrors the folder path
-using MyApp.Core;
+:::code language="csharp" source="snippets/organizing-programs/OrderService.cs" id="NamespaceMirroring":::
 
-namespace MyApp.Services;
-
-public class OrderService
-{
-    public Order CreateOrder(string product, int quantity, decimal price) =>
-        new() { ProductName = product, Quantity = quantity, UnitPrice = price };
-
-    public string FormatSummary(Order order) =>
-        $"{order.Quantity}x {order.ProductName} = {order.Total:C}";
-}
-```
 Your root namespace is automatically set to the name of your project file. Types in subfolders don't automatically get sub-namespaces—you declare the namespace explicitly in each file—but always keep them in sync.
 
-> **Tip:**
+> [!TIP]
 > You can change the root namespace by setting `<RootNamespace>` in your project file.
 >
 > ```xml
@@ -77,61 +63,22 @@ Your root namespace is automatically set to the name of your project file. Types
 
 Group related types into namespaces by feature or responsibility. Place an interface, its implementations, and supporting types together:
 
-```csharp
-// Good: group by feature
-namespace MyApp.Payments;
+:::code language="csharp" source="snippets/organizing-programs/Payments.cs" id="FeatureOrganization":::
 
-public interface IPaymentProcessor
-{
-    bool ProcessPayment(decimal amount);
-}
-
-public class CreditCardProcessor : IPaymentProcessor
-{
-    public bool ProcessPayment(decimal amount)
-    {
-        Console.WriteLine($"Processing credit card payment of {amount:C}");
-        return true;
-    }
-}
-
-public record PaymentResult(bool Success, string? TransactionId);
-```
 Feature-based organization keeps everything you need in one place, making the code easier to navigate and reason about.
 
 ## Access modifiers and assemblies
 
 Access modifiers work with the project and assembly structure to control accessibility:
 
-- `public` — accessible from any assembly that references this assembly.
-- `internal` — accessible only within the same assembly (the default for top-level types).
-- `private`, `protected`, `private protected`, `protected internal` — accessible based on the containing type, the assembly, or derived types.
+- [`public`](../../language-reference/keywords/public.md) — accessible from any assembly that references this assembly.
+- [`internal`](../../language-reference/keywords/internal.md) — accessible only within the same assembly (the default for top-level types).
+- [`private`](../../language-reference/keywords/private.md), [`protected`](../../language-reference/keywords/protected.md), [`private protected`](../../language-reference/keywords/private-protected.md), [`protected internal`](../../language-reference/keywords/protected-internal.md) — accessible based on the containing type, the assembly, or derived types.
 
 Default to `internal` for types that other projects don't need. This practice hides implementation details and gives you freedom to refactor without breaking consumers. It's especially important for shared libraries:
 
-```csharp
-namespace MyApp.Inventory;
+:::code language="csharp" source="snippets/organizing-programs/Inventory.cs" id="AccessModifiers":::
 
-// Public — other projects can use this type
-public class InventoryService
-{
-    public int GetStockLevel(string productName) =>
-        StockDatabase.Lookup(productName);
-}
-
-// Internal — only visible within this assembly
-internal static class StockDatabase
-{
-    private static readonly Dictionary<string, int> _stock = new()
-    {
-        ["Widget"] = 42,
-        ["Gadget"] = 17
-    };
-
-    internal static int Lookup(string productName) =>
-        _stock.GetValueOrDefault(productName);
-}
-```
 ## Recommended practices
 
 - **Name namespaces consistently.** Use `CompanyName.ProductName.Feature` as your naming pattern. For example, use `Contoso.Inventory.Shipping`. Consistent naming helps developers find types without searching.
@@ -141,6 +88,6 @@ internal static class StockDatabase
 
 ## Related content
 
-- Namespaces and using directives
-- Assemblies in .NET
-- .NET project SDKs
+- [Namespaces and using directives](namespaces.md)
+- [Assemblies in .NET](../../../standard/assembly/index.md)
+- [.NET project SDKs](../../../core/project-sdk/overview.md)

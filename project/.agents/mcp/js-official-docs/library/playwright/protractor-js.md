@@ -1,19 +1,13 @@
 ---
+id: protractor
 title: "Migrating from Protractor"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/protractor-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# Migrating from Protractor
 
 ## Migration Principles
 
 - No need for "webdriver-manager" / Selenium.
-- Protractor’s [ElementFinder] ⇄ Playwright Test Locator
-- Protractor’s [`waitForAngular`] ⇄ Playwright Test auto-waiting
+- Protractor’s [ElementFinder] ⇄ [Playwright Test Locator](./api/class-locator)
+- Protractor’s [`waitForAngular`] ⇄ Playwright Test [auto-waiting](./actionability.md)
 - Don’t forget to await in Playwright Test
 
 ## Cheat Sheet
@@ -57,6 +51,7 @@ describe('angularjs homepage todo list', function() {
 
 Line-by-line migration to Playwright Test:
 
+
 ```js
 const { test, expect } = require('@playwright/test'); // 1
 
@@ -85,13 +80,13 @@ Migration highlights (see inline comments in the Playwright Test code snippet):
 
 1. Each Playwright Test file has explicit import of the `test` and `expect` functions
 1. Test function is marked with `async`
-1. Playwright Test is given a `page` as one of its parameters. This is one of the many useful fixtures in Playwright Test.
+1. Playwright Test is given a `page` as one of its parameters. This is one of the many [useful fixtures](./api/class-fixtures) in Playwright Test.
 1. Almost all Playwright calls are prefixed with `await`
 1. Locator creation with [`method: Page.locator`] is one of the few methods that is sync.
 
 ## Polyfilling `waitForAngular`
 
-Playwright Test has built-in auto-waiting that makes protractor's [`waitForAngular`] unneeded in general case.
+Playwright Test has built-in [auto-waiting](./actionability.md) that makes protractor's [`waitForAngular`] unneeded in general case.
 
 However, it might come handy in some edge cases.
 Here's how to polyfill `waitForAngular` function in Playwright Test:
@@ -150,21 +145,24 @@ Once you're on Playwright Test, you get a lot!
 
 - Full zero-configuration TypeScript support
 - Run tests across **all web engines** (Chrome, Firefox, Safari) on **any popular operating system** (Windows, macOS, Ubuntu)
-- Full support for multiple origins, (i)frames, tabs and contexts
+- Full support for multiple origins, [(i)frames](./api/class-frame), [tabs and contexts](./pages)
 - Run tests in parallel across multiple browsers
-- Built-in test artifact collection
+- Built-in test [artifact collection](./test-use-options.md#recording-options)
 
 You also get all these ✨ awesome tools ✨ that come bundled with Playwright Test:
-- Playwright Inspector
-- Playwright Test Code generation
-- Playwright Tracing for post-mortem debugging
+- [Playwright Inspector](./debug.md)
+- [Playwright Test Code generation](./codegen-intro.md)
+- [Playwright Tracing](./trace-viewer.md) for post-mortem debugging
 
 ## Further Reading
 
 Learn more about Playwright Test runner:
 
-- Getting Started
-- Fixtures
-- Locators
-- Assertions
-- Auto-waiting
+- [Getting Started](./intro)
+- [Fixtures](./test-fixtures)
+- [Locators](./locators)
+- [Assertions](./test-assertions)
+- [Auto-waiting](./actionability)
+
+[ElementFinder]: https://www.protractortest.org/#/api?view=ElementFinder
+[`waitForAngular`]: https://www.protractortest.org/#/api?view=ProtractorBrowser.prototype.waitForAngular

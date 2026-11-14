@@ -1,13 +1,6 @@
----
-title: "reject-function-type"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/reject-function-type.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
-
-# `reject-function-type`
+<a name="user-content-reject-function-type"></a>
+<a name="reject-function-type"></a>
+# <code>reject-function-type</code>
 
 Reports use of `Function` type within JSDoc tag types.
 
@@ -21,6 +14,8 @@ Reports use of `Function` type within JSDoc tag types.
 |Settings|`mode`|
 |Options||
 
+<a name="user-content-reject-function-type-failing-examples"></a>
+<a name="reject-function-type-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -41,6 +36,10 @@ function buzz (abc) {}
 // Message: Prefer a more specific type to `Function`
 ````
 
+
+
+<a name="user-content-reject-function-type-passing-examples"></a>
+<a name="reject-function-type-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -59,6 +58,7 @@ function quux (abc) {}
  * @return   {number}
  */
 
+
 // Then reference the callback name as the type.
 /**
  * @param {FOOBAR} fooBar
@@ -72,3 +72,4 @@ function quux (fooBar) {
  */
 function buzz (abc) {}
 ````
+

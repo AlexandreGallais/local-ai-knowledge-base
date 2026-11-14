@@ -1,18 +1,16 @@
 ---
-title: "NativeAOT Support and Precompiled Queries (Experimental) - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/performance/nativeaot-and-precompiled-queries.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: NativeAOT Support and Precompiled Queries (Experimental) - EF Core
+description: Publishing NativeAOT Entity Framework Core applications and using precompiled queries
+author: SamMonoRT
+ms.date: 11/10/2024
+uid: core/performance/nativeaot-and-precompiled-queries
 ---
-
 # NativeAOT Support and Precompiled Queries (Experimental)
 
-> **Warning:**
+> [!WARNING]
 > NativeAOT and query precompilation are highly experimental feature, and are not yet suited for production use. The support described below should be viewed as infrastructure towards the final feature, which will be released in a future version. We encourage you to experiment with the current support and report on your experiences, but recommend against deploying EF NativeAOT applications in production. See below for specific known limitations.
 
-.NET NativeAOT allows publishing self-contained .NET applications that have been compiled ahead-of-time (AOT). Doing so offers the following advantages:
+[.NET NativeAOT](/dotnet/core/deploying/native-aot) allows publishing self-contained .NET applications that have been compiled ahead-of-time (AOT). Doing so offers the following advantages:
 
 * Significantly faster application startup time
 * Small, self-contained binaries that have smaller memory footprints and are easier to deploy
@@ -30,7 +28,7 @@ First, enable NativeAOT publishing for your project as follows:
 </PropertyGroup>
 ```
 
-EF's support for LINQ query execution under NativeAOT relies on *query precompilation*: this mechanism statically identifies EF LINQ queries and generates C# *interceptors*, which contain code to execute each specific query. This can significantly cut down on your application's startup time, as the heavy lifting of processing and compiling your LINQ queries into SQL no longer happens every time your application starts up. Instead, each query's interceptor contains the finalized SQL for that query, as well as optimized code to materialize database results as .NET objects.
+EF's support for LINQ query execution under NativeAOT relies on *query precompilation*: this mechanism statically identifies EF LINQ queries and generates C# [*interceptors*](/dotnet/csharp/whats-new/csharp-12#interceptors), which contain code to execute each specific query. This can significantly cut down on your application's startup time, as the heavy lifting of processing and compiling your LINQ queries into SQL no longer happens every time your application starts up. Instead, each query's interceptor contains the finalized SQL for that query, as well as optimized code to materialize database results as .NET objects.
 
 C# interceptors are currently an experimental feature, and require a special opt-in in your project file:
 
@@ -40,7 +38,7 @@ C# interceptors are currently an experimental feature, and require a special opt
 </PropertyGroup>
 ```
 
-Finally, the `Microsoft.EntityFrameworkCore.Tasks` package contains MSBuild integration that will perform the query precompilation (and generate the required compiled model) when you publish your application:
+Finally, the [`Microsoft.EntityFrameworkCore.Tasks`](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tasks) package contains [MSBuild integration](xref:core/cli/msbuild) that will perform the query precompilation (and generate the required compiled model) when you publish your application:
 
 ```xml
 <ItemGroup>
@@ -57,7 +55,7 @@ You're now ready to publish your EF NativeAOT application:
 dotnet publish -r linux-arm64 -c Release
 ```
 
-> **Note:**
+> [!NOTE]
 >
 > The publish command may fail with error `CS9137`. The cause of this error are outdated transitive package references `Microsoft.CodeAnalysis.CSharp.Workspaces` and `Microsoft.CodeAnalysis.Workspaces.MSBuild`. As a workaround add those packages explicitly to your .csproj file:
 >
@@ -66,13 +64,13 @@ dotnet publish -r linux-arm64 -c Release
 > <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="4.13.0" />
 > ```
 >
-> See this issue for more information.
+> See [this issue](https://github.com/dotnet/efcore/issues/35945) for more information.
 
-This shows publishing a NativeAOT publishing for Linux running on ARM64; consult this catalog to find your runtime identifier. If you'd like to generate the interceptors without publishing - for example to examine the generated sources - you can do so via the `dotnet ef dbcontext optimize --precompile-queries --nativeaot` command.
+This shows publishing a NativeAOT publishing for Linux running on ARM64; [consult this catalog](/dotnet/core/rid-catalog) to find your runtime identifier. If you'd like to generate the interceptors without publishing - for example to examine the generated sources - you can do so via the `dotnet ef dbcontext optimize --precompile-queries --nativeaot` command.
 
 Due to the way C# interceptors work, any change in the application source invalidates them and requires repeating the above process. As a result, interceptor generation and actual publishing aren't expected to happen in the inner loop, as the developer is working on code; instead, both `dotnet ef dbcontext optimize` and `dotnet publish` can be executed in a publishing/deployment workflow, in a CI/CD system.
 
-> **Note:**
+> [!NOTE]
 > Publishing currently reports a number of trimming and NativeAOT warnings, meaning that your application isn't fully guaranteed to run properly. This is expected given the current experimental state of NativeAOT support; the final, non-experimental feature will report no warnings.
 
 ## Limitations

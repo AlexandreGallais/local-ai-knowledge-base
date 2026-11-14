@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: 'libintl' package removed from Alpine images"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/containers/8.0/libintl-package.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in containers where the 'libintl' package was removed from Alpine container images.
+ms.date: 07/11/2023
 ---
-
 # 'libintl' package removed from Alpine images
 
 The `libintl` package is no longer included in .NET's Alpine container images.
@@ -29,7 +25,7 @@ If your application has its own dependency on `libintl`, you might see the follo
 
 ## Type of change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -47,4 +43,4 @@ None.
 
 ## See also
 
-- dotnet/docker issue 4627
+- [dotnet/docker issue 4627](https://github.com/dotnet/dotnet-docker/issues/4627)

@@ -1,17 +1,14 @@
 ---
-title: "Type marshalling - .NET"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/native-interop/type-marshalling.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Type marshalling - .NET
+description: Learn how .NET marshals your types to a native representation.
+ms.date: 04/08/2024
 ---
 
 # Type marshalling
 
 **Marshalling** is the process of transforming types when they need to cross between managed and native code.
 
-Marshalling is needed because the types in the managed and unmanaged code are different. In managed code, for instance, you have a `string`, while unmanaged strings can be .NET `string` encoding (UTF-16), ANSI Code Page encoding, UTF-8, null-terminated, ASCII, etc. By default, the P/Invoke subsystem tries to do the right thing based on the default behavior, described in this article. However, for those situations where you need extra control, you can employ the MarshalAs attribute to specify what is the expected type on the unmanaged side. For instance, if you want the string to be sent as a null-terminated UTF-8 string, you could do it like this:
+Marshalling is needed because the types in the managed and unmanaged code are different. In managed code, for instance, you have a `string`, while unmanaged strings can be .NET `string` encoding (UTF-16), ANSI Code Page encoding, UTF-8, null-terminated, ASCII, etc. By default, the P/Invoke subsystem tries to do the right thing based on the default behavior, described in this article. However, for those situations where you need extra control, you can employ the [MarshalAs](xref:System.Runtime.InteropServices.MarshalAsAttribute) attribute to specify what is the expected type on the unmanaged side. For instance, if you want the string to be sent as a null-terminated UTF-8 string, you could do it like this:
 
 ```csharp
 [LibraryImport("somenativelibrary.dll")]
@@ -23,7 +20,7 @@ static extern int MethodA([MarshalAs(UnmanagedType.LPUTF8Str)] string parameter)
 static extern int MethodB(string parameter);
 ```
 
-If you apply the `System.Runtime.CompilerServices.DisableRuntimeMarshallingAttribute` attribute to the assembly, the rules in the following section don't apply. For information on how .NET values are exposed to native code when this attribute is applied, see disabled runtime marshalling.
+If you apply the [`System.Runtime.CompilerServices.DisableRuntimeMarshallingAttribute`](xref:System.Runtime.CompilerServices.DisableRuntimeMarshallingAttribute) attribute to the assembly, the rules in the following section don't apply. For information on how .NET values are exposed to native code when this attribute is applied, see [disabled runtime marshalling](disabled-marshalling.md).
 
 ## Default rules for marshalling common types
 
@@ -31,14 +28,14 @@ Generally, the runtime tries to do the "right thing" when marshalling to require
 
 This first table describes the mappings for types for which the marshalling is the same for both P/Invoke and field marshalling.
 
-> **Important:**
-> When calling a C function that uses `long`, use `System.Runtime.InteropServices.CLong` or `System.Runtime.InteropServices.CULong` (.NET 6+) instead of C# `long`. For details and workarounds for earlier .NET versions, see Cross-platform data type considerations.
+> [!IMPORTANT]
+> When calling a C function that uses `long`, use <xref:System.Runtime.InteropServices.CLong> or <xref:System.Runtime.InteropServices.CULong> (.NET 6+) instead of C# `long`. For details and workarounds for earlier .NET versions, see [Cross-platform data type considerations](best-practices.md#cross-platform-data-type-considerations).
 
-> **Note:**
+> [!NOTE]
 > The `wchar_t` type is UTF-16 (2 bytes) on Windows but is compiler-defined on other platforms—typically UTF-32 (4 bytes) on Linux and macOS. Because of this, `wchar_t*` is hard to use as a single cross-platform ABI. When you design a cross-platform native API, prefer `char*` with a clearly defined encoding contract (for example, UTF-8) instead of `wchar_t*`.
 >
-> **Note:**
-> Native `char*` strings use the encoding that the library or platform defines. When you call a C function that takes `char*`, match that expected encoding by choosing the correct string marshalling option, such as `System.Runtime.InteropServices.StringMarshalling.Utf8` for UTF-8, `System.Runtime.InteropServices.StringMarshalling.Utf16` for UTF-16, or `System.Runtime.InteropServices.StringMarshalling.Custom` for other encodings.
+> [!NOTE]
+> Native `char*` strings use the encoding that the library or platform defines. When you call a C function that takes `char*`, match that expected encoding by choosing the correct string marshalling option, such as <xref:System.Runtime.InteropServices.StringMarshalling.Utf8?displayProperty=nameWithType> for UTF-8, <xref:System.Runtime.InteropServices.StringMarshalling.Utf16?displayProperty=nameWithType> for UTF-16, or <xref:System.Runtime.InteropServices.StringMarshalling.Custom?displayProperty=nameWithType> for other encodings.
 
 | C# keyword  | .NET Type        | Native Type             |
 |-------------|------------------|-------------------------|
@@ -50,8 +47,8 @@ This first table describes the mappings for types for which the marshalling is t
 | `uint`      | `System.UInt32`  | `uint32_t`              |
 | `long`      | `System.Int64`   | `int64_t`               |
 | `ulong`     | `System.UInt64`  | `uint64_t`              |
-| `char`      | `System.Char`    | Either `char` or `char16_t` depending on the encoding of the P/Invoke or structure. See the charset documentation. |
-|             | `System.Char`    | Either `char*` or `char16_t*` depending on the encoding of the P/Invoke or structure. See the charset documentation. |
+| `char`      | `System.Char`    | Either `char` or `char16_t` depending on the encoding of the P/Invoke or structure. See the [charset documentation](charset.md). |
+|             | `System.Char`    | Either `char*` or `char16_t*` depending on the encoding of the P/Invoke or structure. See the [charset documentation](charset.md). |
 | `nint`      | `System.IntPtr`  | `intptr_t`        |
 | `nuint`     | `System.UIntPtr` | `uintptr_t`      |
 |             | .NET Pointer types (ex. `void*`)  | `void*` |
@@ -85,12 +82,12 @@ Some types can only be marshalled as parameters and not as fields. These types a
 
 | .NET Type | Native Type (Parameter Only) |
 |-----------|------------------------------|
-| `System.Text.StringBuilder` | Either `char*` or `char16_t*` depending on the `CharSet` of the P/Invoke.  See the charset documentation. |
+| `System.Text.StringBuilder` | Either `char*` or `char16_t*` depending on the `CharSet` of the P/Invoke.  See the [charset documentation](charset.md). |
 | `System.ArgIterator` | `va_list` (on Windows x86/x64/arm64 only) |
 | `System.Runtime.InteropServices.ArrayWithOffset` | `void*` |
 | `System.Runtime.InteropServices.HandleRef` | `void*` |
 
-If these defaults don't do exactly what you want, you can customize how parameters are marshalled. The parameter marshalling article walks you through how to customize how different parameter types are marshalled.
+If these defaults don't do exactly what you want, you can customize how parameters are marshalled. The [parameter marshalling](customize-parameter-marshalling.md) article walks you through how to customize how different parameter types are marshalled.
 
 ## Default marshalling in COM scenarios
 
@@ -153,4 +150,4 @@ typedef struct _SYSTEMTIME {
 } SYSTEMTIME, *PSYSTEMTIME, *LPSYSTEMTIME;
 ```
 
-Sometimes the default marshalling for your structure doesn't do what you need. The Customizing structure marshalling article teaches you how to customize how your structure is marshalled.
+Sometimes the default marshalling for your structure doesn't do what you need. The [Customizing structure marshalling](customize-struct-marshalling.md) article teaches you how to customize how your structure is marshalled.

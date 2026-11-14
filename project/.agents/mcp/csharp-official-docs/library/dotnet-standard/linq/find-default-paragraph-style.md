@@ -1,23 +1,23 @@
 ---
-title: "Find the default paragraph style - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/find-default-paragraph-style.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Find the default paragraph style - LINQ to XML
+description: Learn how to find the default style of paragraphs in a WordprocessingML document.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
-
 # Find the default paragraph style (LINQ to XML)
 
-The first task in Tutorial: Manipulate content in a WordprocessingML document is to find the default style of paragraphs in the document.
+The first task in [Tutorial: Manipulate content in a WordprocessingML document](xml-shape-wordprocessingml-documents.md) is to find the default style of paragraphs in the document.
 
 ## Example: Find the default style name
 
-The following example opens an Office Open XML WordprocessingML document, finds the document and style parts of the package, and then executes a query that finds the default style name. For information about Office Open XML document packages, and the parts they comprise, see Details of Office Open XML WordprocessingML documents.
+The following example opens an Office Open XML WordprocessingML document, finds the document and style parts of the package, and then executes a query that finds the default style name. For information about Office Open XML document packages, and the parts they comprise, see [Details of Office Open XML WordprocessingML documents](wordprocessingml-document-styles.md).
 
-The query finds a node named `w:style` that has an attribute named `w:type` with a value of "paragraph", and also has an attribute named `w:default` with a value of "1". Because there will be only one XML node with these attributes, the query uses the `System.Linq.Enumerable.First*` operator to convert a collection to a singleton. It then gets the value of the attribute with the name `w:styleId`.
+The query finds a node named `w:style` that has an attribute named `w:type` with a value of "paragraph", and also has an attribute named `w:default` with a value of "1". Because there will be only one XML node with these attributes, the query uses the <xref:System.Linq.Enumerable.First*?displayProperty=nameWithType> operator to convert a collection to a singleton. It then gets the value of the attribute with the name `w:styleId`.
 
-This example uses classes from the WindowsBase assembly. It uses types in the `System.IO.Packaging` namespace.
+This example uses classes from the WindowsBase assembly. It uses types in the <xref:System.IO.Packaging?displayProperty=nameWithType> namespace.
 
 ```csharp
 const string fileName = "SampleDoc.docx";
@@ -136,8 +136,8 @@ The default style is: Normal
 
 In the next article in this tutorial you'll create a similar query that finds all the paragraphs in a document and their styles:
 
-- Retrieve the paragraphs and their styles
+- [Retrieve the paragraphs and their styles](retrieve-paragraphs-styles.md)
 
 ## See also
 
-- Tutorial: Manipulate content in a WordprocessingML document
+- [Tutorial: Manipulate content in a WordprocessingML document](xml-shape-wordprocessingml-documents.md)

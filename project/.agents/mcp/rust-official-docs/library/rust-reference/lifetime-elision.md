@@ -1,12 +1,3 @@
----
-title: "Lifetime elision"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/lifetime-elision.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[lifetime-elision]
 # Lifetime elision
 
@@ -26,7 +17,7 @@ r[lifetime-elision.function.explicit-placeholder]
 The placeholder lifetime, `'_`, can also be used to have a lifetime inferred in the same way. For lifetimes in paths, using `'_` is preferred.
 
 r[lifetime-elision.function.only-functions]
-Trait object lifetimes follow different rules discussed below.
+Trait object lifetimes follow different rules discussed [below](#default-trait-object-lifetimes).
 
 r[lifetime-elision.function.implicit-lifetime-parameters]
 * Each elided lifetime in the parameters becomes a distinct lifetime parameter.
@@ -79,7 +70,7 @@ type FunTrait1 = dyn Fn(&str) -> &str;                // elided
 type FunTrait2 = dyn for<'a> Fn(&'a str) -> &'a str;  // expanded
 ```
 
-```rust
+```rust,compile_fail
 // The following examples show situations where it is not allowed to elide the
 // lifetime parameter.
 
@@ -146,7 +137,7 @@ type T5<'a> = std::cell::Ref<'a, dyn Foo>;
 type T6<'a> = std::cell::Ref<'a, dyn Foo + 'a>;
 ```
 
-```rust
+```rust,compile_fail
 // This is an example of an error.
 # trait Foo { }
 struct TwoBounds<'a, 'b, T: ?Sized + 'a + 'b> {
@@ -212,7 +203,7 @@ const RESOLVED_SINGLE: fn(&str) -> &str = |x| x;
 const RESOLVED_MULTIPLE: &dyn Fn(&Foo, &Bar, &Baz) -> usize = &somefunc;
 ```
 
-```rust
+```rust,compile_fail
 # struct Foo;
 # struct Bar;
 # struct Baz;
@@ -224,3 +215,12 @@ const RESOLVED_STATIC: &dyn Fn(&Foo, &Bar) -> &Baz = &somefunc;
 // this function's return type contains a borrowed value, but the signature
 // does not say whether it is borrowed from argument 1 or argument 2
 ```
+
+[closure trait]: types/closure.md
+[constant]: items/constant-items.md
+[function item]: types/function-item.md
+[function pointer]: types/function-pointer.md
+[RFC 599]: https://github.com/rust-lang/rfcs/blob/master/text/0599-default-object-bound.md
+[RFC 1156]: https://github.com/rust-lang/rfcs/blob/master/text/1156-adjust-default-object-bounds.md
+[static]: items/static-items.md
+[trait object]: types/trait-object.md

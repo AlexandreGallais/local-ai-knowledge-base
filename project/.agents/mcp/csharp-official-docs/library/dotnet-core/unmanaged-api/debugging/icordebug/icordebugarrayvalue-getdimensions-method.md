@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugArrayValue::GetDimensions Method"
 title: "ICorDebugArrayValue::GetDimensions Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugarrayvalue-getdimensions-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugArrayValue.GetDimensions"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugArrayValue::GetDimensions"
+helpviewer_keywords:
+  - "ICorDebugArrayValue::GetDimensions method [.NET debugging]"
+  - "GetDimensions method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugArrayValue::GetDimensions Method
 
 Gets the number of elements in each dimension of this array.
@@ -33,7 +42,7 @@ This value is also the size of the `dims` array because its size is equal to the
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

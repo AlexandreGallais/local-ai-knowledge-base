@@ -1,26 +1,26 @@
 ---
-title: "Deploy files alongside MSTest tests"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/unit-testing-mstest-writing-tests-deployment-items.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Deploy files alongside MSTest tests
+description: Learn how to use the DeploymentItemAttribute in MSTest to copy files and folders alongside test assemblies for use during test execution.
+author: Evangelink
+ms.author: amauryleve
+ms.date: 06/09/2026
+ai-usage: ai-assisted
 ---
 
 # Deploy files alongside MSTest tests
 
-Some tests need extra files at runtime, such as test data, configuration files, golden masters, or native dependencies. Use the `Microsoft.VisualStudio.TestTools.UnitTesting.DeploymentItemAttribute` to declare files and folders that should be available next to your test assembly when each test runs.
+Some tests need extra files at runtime, such as test data, configuration files, golden masters, or native dependencies. Use the <xref:Microsoft.VisualStudio.TestTools.UnitTesting.DeploymentItemAttribute> to declare files and folders that should be available next to your test assembly when each test runs.
 
 ## Overview
 
-When you apply `[DeploymentItem]` to a test class or a test method, MSTest copies the specified files or folders into the directory exposed by `Microsoft.VisualStudio.TestTools.UnitTesting.TestContext.DeploymentDirectory` before any test in that scope runs. The deployment directory is also the current working directory for the test, so your test code can open the files by their copied names.
+When you apply `[DeploymentItem]` to a test class or a test method, MSTest copies the specified files or folders into the directory exposed by <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext.DeploymentDirectory?displayProperty=nameWithType> before any test in that scope runs. The deployment directory is also the current working directory for the test, so your test code can open the files by their copied names.
 
 The attribute accepts a relative or absolute path:
 
 - **Relative paths** are resolved against the build output directory (the folder that contains the test assembly, for example `bin\Debug\net10.0\`).
 - **Absolute paths** are used as-is.
 
-> **Important:**
+> [!IMPORTANT]
 > In MSTest 3.x, deployment items are copied per test run. To make a file available at deployment time, the file must already exist in (or be copied to) the build output directory.
 
 ## Apply `[DeploymentItem]`
@@ -47,12 +47,12 @@ public class ConfigurationTests
 }
 ```
 
-> **Note:**
-> When you apply `[DeploymentItem]` to a test class, the class must contain at least one test method. Applying it to a class that only has `AssemblyInitialize` or `ClassInitialize` methods has no effect. Analyzer MSTEST0035 flags such misuse.
+> [!NOTE]
+> When you apply `[DeploymentItem]` to a test class, the class must contain at least one test method. Applying it to a class that only has `AssemblyInitialize` or `ClassInitialize` methods has no effect. Analyzer [MSTEST0035](mstest-analyzers/mstest0035.md) flags such misuse.
 
 ## Constructor overloads
 
-`DeploymentItemAttribute` has two constructors: `DeploymentItemAttribute(string path)` and `DeploymentItemAttribute(string path, string outputDirectory)`.
+`DeploymentItemAttribute` has two constructors: [`DeploymentItemAttribute(string path)`](#deploymentitemattributestring-path) and [`DeploymentItemAttribute(string path, string outputDirectory)`](#deploymentitemattributestring-path-string-outputdirectory).
 
 ### `DeploymentItemAttribute(string path)`
 
@@ -119,7 +119,7 @@ For files that live outside the test project, copy them into the build output di
 
 ## Inspect the deployment directory at runtime
 
-If you need the absolute path of the deployment directory—for example, to pass it to a process you spawn or to log it for diagnostics—use `Microsoft.VisualStudio.TestTools.UnitTesting.TestContext.DeploymentDirectory`:
+If you need the absolute path of the deployment directory&mdash;for example, to pass it to a process you spawn or to log it for diagnostics&mdash;use <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext.DeploymentDirectory?displayProperty=nameWithType>:
 
 ```csharp
 using System.IO;
@@ -134,7 +134,7 @@ public void ProcessInput_FromDeployedFile_Succeeds()
 }
 ```
 
-For more on `TestContext`, see The `TestContext` class.
+For more on `TestContext`, see [The `TestContext` class](unit-testing-mstest-writing-tests-testcontext.md).
 
 ## When deployment doesn't happen
 
@@ -148,15 +148,15 @@ By default, MSTest creates a per-run deployment directory and copies items into 
 </RunSettings>
 ```
 
-When deployment is disabled, `[DeploymentItem]` attributes have no effect, and the test runs in the build output directory itself. For more configuration options, see Configure MSTest.
+When deployment is disabled, `[DeploymentItem]` attributes have no effect, and the test runs in the build output directory itself. For more configuration options, see [Configure MSTest](unit-testing-mstest-configure.md).
 
 ## Legacy mode and `.testsettings`
 
-When MSTest runs in legacy mode (a `.testsettings` file is used, or `RunSettings/MSTest/ForcedLegacyMode` is set to `true` in a `.runsettings` file), relative paths might be resolved against the solution root directory instead of the build output directory. Avoid legacy mode for new projects—the modern `.runsettings`-based configuration is the recommended approach.
+When MSTest runs in legacy mode (a `.testsettings` file is used, or `RunSettings/MSTest/ForcedLegacyMode` is set to `true` in a `.runsettings` file), relative paths might be resolved against the solution root directory instead of the build output directory. Avoid legacy mode for new projects&mdash;the modern `.runsettings`-based configuration is the recommended approach.
 
 ## Best practices
 
-- **Prefer `CopyToOutputDirectory` over deep relative paths.** Don't reach into source folders with `..\..\` style paths—they tie your tests to a specific repository layout. Stage the files in the build output directory first.
+- **Prefer `CopyToOutputDirectory` over deep relative paths.** Don't reach into source folders with `..\..\` style paths&mdash;they tie your tests to a specific repository layout. Stage the files in the build output directory first.
 - **Keep deployment items small.** Each item is copied for every test run; large files slow down test execution.
 - **Use folders to deploy related assets together.** `[DeploymentItem("TestFiles")]` is easier to maintain than dozens of per-file attributes.
 - **Prefer embedded resources or in-memory data for small fixtures.** Embedded resources eliminate the need for deployment and avoid I/O at test time.
@@ -164,9 +164,9 @@ When MSTest runs in legacy mode (a `.testsettings` file is used, or `RunSettings
 
 ## See also
 
-- `Microsoft.VisualStudio.TestTools.UnitTesting.DeploymentItemAttribute`
-- `Microsoft.VisualStudio.TestTools.UnitTesting.TestContext.DeploymentDirectory`
-- The `TestContext` class
-- MSTEST0035: `[DeploymentItem]` can be specified only on test class or test method
-- Configure MSTest
-- Write tests with MSTest
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.DeploymentItemAttribute>
+- <xref:Microsoft.VisualStudio.TestTools.UnitTesting.TestContext.DeploymentDirectory?displayProperty=nameWithType>
+- [The `TestContext` class](unit-testing-mstest-writing-tests-testcontext.md)
+- [MSTEST0035: `[DeploymentItem]` can be specified only on test class or test method](mstest-analyzers/mstest0035.md)
+- [Configure MSTest](unit-testing-mstest-configure.md)
+- [Write tests with MSTest](unit-testing-mstest-writing-tests.md)

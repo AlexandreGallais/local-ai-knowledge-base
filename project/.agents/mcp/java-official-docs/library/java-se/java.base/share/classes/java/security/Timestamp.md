@@ -1,12 +1,3 @@
----
-title: "Timestamp class (java.security)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/Timestamp.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Timestamp class (java.security)
 
 ```java
@@ -18,7 +9,8 @@ It is immutable.
 It includes the timestamp's date and time as well as information about the
 Timestamping Authority (TSA) which generated and signed the timestamp.
 
-**Since:** 1.5
+@since 1.5
+@author Vincent Ryan
 
 ## Timestamp.Timestamp(Date, CertPath)
 
@@ -26,16 +18,14 @@ Timestamping Authority (TSA) which generated and signed the timestamp.
 public Timestamp(Date timestamp, CertPath signerCertPath)
 ```
 
-Constructs a `Timestamp`.
+Constructs a {@code Timestamp}.
 
-Parameters:
-
-- `timestamp`: is the timestamp's date and time. It must not be `null`.
-- `signerCertPath`: is the TSA's certificate path. It must not be `null`.
-
-Throws:
-
-- `NullPointerException`: if timestamp or signerCertPath is `null`.
+@param timestamp is the timestamp's date and time. It must not be
+{@code null}.
+@param signerCertPath is the TSA's certificate path. It must not be
+{@code null}.
+@throws NullPointerException if timestamp or signerCertPath is
+{@code null}.
 
 ## Timestamp.getTimestamp()
 
@@ -43,9 +33,9 @@ Throws:
 public Date getTimestamp()
 ```
 
-Returns the date and time when the `Timestamp` was generated.
+Returns the date and time when the {@code Timestamp} was generated.
 
-**Returns:** The timestamp's date and time.
+@return The timestamp's date and time.
 
 ## Timestamp.getSignerCertPath()
 
@@ -55,7 +45,7 @@ public CertPath getSignerCertPath()
 
 Returns the certificate path for the Timestamping Authority.
 
-**Returns:** The TSA's certificate path.
+@return The TSA's certificate path.
 
 ## Timestamp.hashCode()
 
@@ -63,11 +53,11 @@ Returns the certificate path for the Timestamping Authority.
 public int hashCode()
 ```
 
-Returns the hash code value for this `Timestamp`.
+Returns the hash code value for this {@code Timestamp}.
 The hash code is generated using the date and time of the
-`Timestamp` and the TSA's certificate path.
+{@code Timestamp} and the TSA's certificate path.
 
-**Returns:** a hash code value for this `Timestamp`.
+@return a hash code value for this {@code Timestamp}.
 
 ## Timestamp.equals(Object)
 
@@ -76,15 +66,13 @@ public boolean equals(Object obj)
 ```
 
 Tests for equality between the specified object and this
-`Timestamp`. Two timestamps are considered equal if the date and
+{@code Timestamp}. Two timestamps are considered equal if the date and
 time of their timestamp's and their signer's certificate paths are equal.
 
-Parameters:
+@param obj the object to test for equality with this {@code Timestamp}.
 
-- `obj`: the object to test for equality with this `Timestamp`.
-
-**Returns:** `true` if the timestamps are considered equal,
-`false` otherwise.
+@return {@code true} if the timestamps are considered equal,
+{@code false} otherwise.
 
 ## Timestamp.toString()
 
@@ -92,7 +80,7 @@ Parameters:
 public String toString()
 ```
 
-Returns a string describing this `Timestamp`.
+Returns a string describing this {@code Timestamp}.
 
-**Returns:** A string comprising the date and time of the `Timestamp`
+@return A string comprising the date and time of the {@code Timestamp}
         and its signer's certificate.

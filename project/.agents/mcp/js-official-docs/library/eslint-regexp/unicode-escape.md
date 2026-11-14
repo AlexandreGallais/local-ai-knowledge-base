@@ -1,15 +1,15 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/unicode-escape"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/unicode-escape.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "enforce consistent usage of unicode escape or unicode codepoint escape"
+since: "v0.9.0"
 ---
-
 # regexp/unicode-escape
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 > enforce consistent usage of unicode escape or unicode codepoint escape
 
@@ -73,11 +73,15 @@ var foo = /\u{41}/u;
 - [regexp/prefer-unicode-codepoint-escapes]
 - [require-unicode-regexp]
 
+[regexp/hexadecimal-escape]: ./hexadecimal-escape.md
+[regexp/prefer-unicode-codepoint-escapes]: ./prefer-unicode-codepoint-escapes.md
+[require-unicode-regexp]: https://eslint.org/docs/rules/require-unicode-regexp
+
 ## :rocket: Version
 
 This rule was introduced in eslint-plugin-regexp v0.9.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/unicode-escape.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/unicode-escape.ts)

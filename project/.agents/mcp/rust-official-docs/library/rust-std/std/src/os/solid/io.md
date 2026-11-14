@@ -1,12 +1,3 @@
----
-title: "std::os::solid::io"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/os/solid/io.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::os::solid::io
 
 SOLID-specific extensions to general I/O primitives
@@ -21,9 +12,9 @@ analogous to types used for representing pointers:
 
 | Type               | Analogous to |
 | ------------------ | ------------ |
-| `RawFd`          | `*const _`   |
-| `BorrowedFd<'a>` | `&'a _`      |
-| `OwnedFd`        | `Box<_>`     |
+| [`RawFd`]          | `*const _`   |
+| [`BorrowedFd<'a>`] | `&'a _`      |
+| [`OwnedFd`]        | `Box<_>`     |
 
 Like raw pointers, `RawFd` values are primitive values. And in new code,
 they should be considered unsafe to do I/O on (analogous to dereferencing
@@ -52,6 +43,8 @@ description.
 
 Like boxes, `OwnedFd` values conceptually own the resource they point to,
 and free (close) it when they are dropped.
+
+[`BorrowedFd<'a>`]: crate::os::solid::io::BorrowedFd
 
 ## type RawFd
 
@@ -162,7 +155,7 @@ fn as_raw_fd(&self) -> RawFd
 
 Extracts the raw file descriptor.
 
-This method does **not** pass <example-value> of the raw file descriptor
+This method does **not** pass ownership of the raw file descriptor
 to the caller. The descriptor is only guaranteed to be valid while
 the original object has not yet been destroyed.
 
@@ -190,13 +183,15 @@ will take responsibility for closing it when the object goes out of
 scope.
 
 However, consuming ownership is not strictly required. Use a
-`From<OwnedFd>::from` implementation for an API which strictly
+[`From<OwnedFd>::from`] implementation for an API which strictly
 consumes ownership.
 
 # Safety
 
-The `fd` passed in must be an owned file descriptor;
+The `fd` passed in must be an [owned file descriptor][io-safety];
 in particular, it must be open.
+
+[io-safety]: io#io-safety
 
 ## trait IntoRawFd
 

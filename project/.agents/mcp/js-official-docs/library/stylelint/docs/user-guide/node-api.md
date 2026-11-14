@@ -1,12 +1,3 @@
----
-title: "Node.js API"
-tool: "stylelint"
-version: "18.0"
-source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/docs/user-guide/node-api.md"
-commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
-license: "MIT"
----
-
 # Node.js API
 
 The Stylelint module includes a `lint()` function that provides the Node.js API.
@@ -17,14 +8,14 @@ const result = await stylelint.lint(options);
 
 ## Options
 
-In addition to the standard options, the Node API accepts:
+In addition to the [standard options](options.md), the Node API accepts:
 
 ### `abortSignal`
 
-> **Warning:**
+> [!WARNING]
 > This option is **experimental**, and might change in a future release.
 
-An `AbortSignal` to cancel the lint operation. When the signal is aborted, `stylelint.lint()` will reject with the signal's reason.
+An [`AbortSignal`](https://nodejs.org/api/globals.html#class-abortsignal) to cancel the lint operation. When the signal is aborted, `stylelint.lint()` will reject with the signal's reason.
 
 This is useful for long-running consumers like language servers that need to cancel in-flight linting when a document changes.
 
@@ -41,12 +32,12 @@ const resultPromise = stylelint.lint({
 controller.abort();
 ```
 
-> **Warning:**
-> Aborting a lint operation that has `fix` enabled with `files` may leave a workspace in a partially-fixed state, as some files may have already been written before cancellation.
+> [!WARNING]
+> Aborting a lint operation that has [`fix`](options.md#fix) enabled with [`files`](node-api.md#files) may leave a workspace in a partially-fixed state, as some files may have already been written before cancellation.
 
 ### `config`
 
-A configuration object.
+A [configuration object](./configure.md).
 
 Stylelint does not bother looking for a configuration file (e.g. `stylelint.config.js`) if you use this option.
 
@@ -60,7 +51,7 @@ The directory from which Stylelint will look for files. Defaults to the current 
 
 ### `files`
 
-A file glob, or array of file globs.
+A file glob, or array of [file globs](https://github.com/SuperchupuDev/tinyglobby).
 
 Relative globs are considered relative to `cwd`.
 
@@ -97,12 +88,12 @@ Boolean. If `true`, at least one rule with an "error"-level severity registered 
 
 ### `output`
 
-> **Warning:**
-> This property has been removed in 17.0.0. Use `report` or `code` instead. See the migration guide to 16.0.0.
+> [!WARNING]
+> This property has been removed in 17.0.0. Use [`report`](#report) or [`code`](#code-1) instead. See [the migration guide to 16.0.0](../migration-guide/to-16.md).
 
 ### `postcssResults`
 
-An array containing all the accumulated PostCSS LazyResults.
+An array containing all the accumulated [PostCSS LazyResults](https://postcss.org/api/#lazyresult).
 
 ### `report`
 
@@ -118,7 +109,7 @@ An object containing the maximum number of warnings and the amount found, e.g. `
 
 ### `color`
 
-The value of the `color` option, if it was set.
+The value of the [`color`](options.md#color) option, if it was set.
 
 ## Result object
 
@@ -158,7 +149,7 @@ The value of the `color` option, if it was set.
 
 ### Edit info
 
-When the `computeEditInfo` option is enabled, a warning may include a `fix` property that provides information about suggested fixes:
+When the [`computeEditInfo` option](options.md#computeeditinfo) is enabled, a warning may include a `fix` property that provides information about suggested fixes:
 
 - `range` (`[number, number]`) - the pair of 0-based indices in source code text to remove
 - `text` (`string`) - the text to add
@@ -191,7 +182,7 @@ Only a single `EditInfo` will be recorded for a specific region in source code. 
 ## Syntax errors
 
 `stylelint.lint()` does not reject the `Promise` when your CSS contains syntax errors.
-It resolves with an object (see the returned promise) that contains information about the syntax error.
+It resolves with an object (see [the returned promise](#the-returned-promise)) that contains information about the syntax error.
 
 ## Usage examples
 
@@ -273,8 +264,8 @@ const result = await stylelint.lint({
 });
 ```
 
-> **Note:**
-> The `customSyntax` option also accepts a string. Refer to the options documentation for details.
+> [!NOTE]
+> The `customSyntax` option also accepts a string. [Refer to the options documentation for details](./options.md#customsyntax).
 
 ### Example F
 
@@ -316,7 +307,7 @@ const config = await stylelint.resolveConfig(filePath);
 
 If a configuration cannot be found for a file, `resolveConfig()` will return a `Promise` that resolves to `undefined`.
 
-You can also pass the following subset of the options that you would normally pass to `lint()`:
+You can also pass the following subset of the [options that you would normally pass to `lint()`](#options):
 
 - `cwd`
 - `config`

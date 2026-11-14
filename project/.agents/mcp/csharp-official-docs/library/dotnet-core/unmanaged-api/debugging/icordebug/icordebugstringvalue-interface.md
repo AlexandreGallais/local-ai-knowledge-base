@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugStringValue Interface"
 title: "ICorDebugStringValue Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugstringvalue-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugStringValue"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugStringValue"
+helpviewer_keywords:
+  - "ICorDebugStringValue interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugStringValue Interface
 
 A subclass of ICorDebugHeapValue that applies to string values.
@@ -15,17 +23,17 @@ A subclass of ICorDebugHeapValue that applies to string values.
 
 |Method|Description|
 |------------|-----------------|
-|GetLength Method|Gets the number of characters in the string referenced by this `ICorDebugStringValue`.|
-|GetString Method|Gets the string referenced by this `ICorDebugStringValue`.|
+|[GetLength Method](icordebugstringvalue-getlength-method.md)|Gets the number of characters in the string referenced by this `ICorDebugStringValue`.|
+|[GetString Method](icordebugstringvalue-getstring-method.md)|Gets the string referenced by this `ICorDebugStringValue`.|
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This interface does not support being called remotely, either cross-machine or cross-process.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

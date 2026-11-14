@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugThread4::GetBlockingObjects Method"
 title: "ICorDebugThread4::GetBlockingObjects Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugthread4-getblockingobjects-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugThread4.GetBlockingObjects Method"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugThread4::GetBlockingObjects"
+helpviewer_keywords:
+  - "GetBlockingObjects method [.NET debugging]"
+  - "ICorDebugThread4::GetBlockingObjects method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugThread4::GetBlockingObjects Method
 
-Provides an ordered enumeration of CorDebugBlockingObject structures that provide thread blocking information.
+Provides an ordered enumeration of [CorDebugBlockingObject](cordebugblockingobject-structure.md) structures that provide thread blocking information.
 
 ## Syntax
 
@@ -21,7 +30,7 @@ HRESULT GetBlockingObjects (
 ## Parameters
 
  `ppBlockingObjectEnum`
- [out] A pointer to an ordered enumeration of CorDebugBlockingObject structures.
+ [out] A pointer to an ordered enumeration of [CorDebugBlockingObject](cordebugblockingobject-structure.md) structures.
 
 ## Remarks
 
@@ -37,7 +46,7 @@ If a thread is blocked and the error cannot be determined, the method returns an
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -47,4 +56,4 @@ If a thread is blocked and the error cannot be determined, the method returns an
 
 ## See also
 
-- ICorDebugThread4 Interface
+- [ICorDebugThread4 Interface](icordebugthread4-interface.md)

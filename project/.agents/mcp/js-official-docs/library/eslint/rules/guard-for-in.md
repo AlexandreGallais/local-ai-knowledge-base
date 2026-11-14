@@ -1,13 +1,14 @@
 ---
-title: "guard-for-in"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/guard-for-in.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: guard-for-in
+rule_type: suggestion
+related_rules:
+- prefer-object-has-own
+- no-prototype-builtins
+further_reading:
+- https://javascriptweblog.wordpress.com/2011/01/04/exploring-javascript-for-in-loops/
+- https://2ality.com/2012/01/objects-as-maps.html
 ---
 
-# guard-for-in
 
 Looping over objects with a `for in` loop will include properties that are inherited through the prototype chain. This behavior can lead to unexpected items in your for loop.
 
@@ -19,9 +20,9 @@ for (key in foo) {
 
 For codebases that do not support ES2022, `Object.prototype.hasOwnProperty.call(foo, key)` can be used as a check that the property is not inherited.
 
-For codebases that do support ES2022, `Object.hasOwn(foo, key)` can be used as a shorter alternative; see prefer-object-has-own.
+For codebases that do support ES2022, `Object.hasOwn(foo, key)` can be used as a shorter alternative; see [prefer-object-has-own](prefer-object-has-own).
 
-Note that simply checking `foo.hasOwnProperty(key)` is likely to cause an error in some cases; see no-prototype-builtins.
+Note that simply checking `foo.hasOwnProperty(key)` is likely to cause an error in some cases; see [no-prototype-builtins](no-prototype-builtins).
 
 ## Rule Details
 
@@ -29,7 +30,7 @@ This rule is aimed at preventing unexpected behavior that could arise from using
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint guard-for-in: "error"*/
@@ -39,9 +40,11 @@ for (key in foo) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint guard-for-in: "error"*/
@@ -64,6 +67,8 @@ for (key in foo) {
     }
 }
 ```
+
+:::
 
 ## Options
 

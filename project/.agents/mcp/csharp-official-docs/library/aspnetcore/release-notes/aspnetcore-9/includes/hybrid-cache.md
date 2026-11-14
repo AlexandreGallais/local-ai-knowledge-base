@@ -1,20 +1,13 @@
 ---
-title: "hybrid-cache"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-9/includes/hybrid-cache.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+ms.topic: include
+ms.date: 05/21/2024
 ---
-
-# hybrid-cache
-
 ### New `HybridCache` library
 
-> **Important:**
+> [!IMPORTANT]
 > `HybridCache` is currently still in preview but will be fully released *after* .NET 9 in a future minor release of .NET Extensions.
 
-The `Microsoft.Extensions.Caching.Hybrid.HybridCache` API bridges some gaps in the existing `Microsoft.Extensions.Caching.Distributed.IDistributedCache` and `Microsoft.Extensions.Caching.Memory.IMemoryCache` APIs. It also adds new capabilities, such as:
+The <xref:Microsoft.Extensions.Caching.Hybrid.HybridCache> API bridges some gaps in the existing <xref:Microsoft.Extensions.Caching.Distributed.IDistributedCache> and <xref:Microsoft.Extensions.Caching.Memory.IMemoryCache> APIs. It also adds new capabilities, such as:
 
 * **"Stampede" protection** to prevent parallel fetches of the same work.
 * Configurable serialization.
@@ -27,7 +20,7 @@ To see how the `HybridCache` API is simplified, compare it to code that uses `ID
 public class SomeService(IDistributedCache cache)
 {
     public async Task<SomeInformation> GetSomeInformationAsync
-        (string name, int id, CancellationToken token = <example-value>)
+        (string name, int id, CancellationToken token = default)
     {
         var key = $"someinfo:{name}:{id}"; // Unique key for this combination.
         var bytes = await cache.GetAsync(key, token); // Try to get from cache.
@@ -51,7 +44,7 @@ public class SomeService(IDistributedCache cache)
 
     // This is the work we're trying to cache.
     private async Task<SomeInformation> SomeExpensiveOperationAsync(string name, int id,
-        CancellationToken token = <example-value>)
+        CancellationToken token = default)
     { /* ... */ }
 }
 ```
@@ -76,7 +69,7 @@ Now most caching concerns can be offloaded to `HybridCache`:
 public class SomeService(HybridCache cache)
 {
     public async Task<SomeInformation> GetSomeInformationAsync
-        (string name, int id, CancellationToken token = <example-value>)
+        (string name, int id, CancellationToken token = default)
     {
         return await cache.GetOrCreateAsync(
             $"someinfo:{name}:{id}", // Unique key for this combination.
@@ -87,14 +80,14 @@ public class SomeService(HybridCache cache)
 }
 ```
 
-We provide a concrete implementation of the `HybridCache` abstract class via dependency injection, but it's intended that developers can provide custom implementations of the API. The `HybridCache` implementation deals with everything related to caching, including concurrent operation handling. The `cancel` token here represents the combined cancellation of *all* concurrent callers—not just the cancellation of the caller we can see (that is, `token`).
+We provide a concrete implementation of the `HybridCache` abstract class via dependency injection, but it's intended that developers can provide custom implementations of the API. The `HybridCache` implementation deals with everything related to caching, including concurrent operation handling. The `cancel` token here represents the combined cancellation of *all* concurrent callers&mdash;not just the cancellation of the caller we can see (that is, `token`).
 
 High throughput scenarios can be further optimized by using the `TState` pattern, to avoid some overhead from captured variables and per-instance callbacks:
 
 ```csharp
 public class SomeService(HybridCache cache)
 {
-    public async Task<SomeInformation> GetSomeInformationAsync(string name, int id, CancellationToken token = <example-value>)
+    public async Task<SomeInformation> GetSomeInformationAsync(string name, int id, CancellationToken token = default)
     {
         return await cache.GetOrCreateAsync(
             $"someinfo:{name}:{id}", // unique key for this combination
@@ -140,4 +133,4 @@ else.
 
 `HybridCache` supports older .NET runtimes, down to .NET Framework 4.7.2 and .NET Standard 2.0.
 
-For more information about `HybridCache`, see HybridCache library in ASP.NET Core
+For more information about `HybridCache`, see [HybridCache library in ASP.NET Core](../../../performance/caching/hybrid.md)

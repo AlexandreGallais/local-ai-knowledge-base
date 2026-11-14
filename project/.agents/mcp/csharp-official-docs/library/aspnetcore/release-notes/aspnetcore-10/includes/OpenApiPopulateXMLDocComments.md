@@ -1,14 +1,3 @@
----
-title: "OpenApiPopulateXMLDocComments"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-10/includes/OpenApiPopulateXMLDocComments.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# OpenApiPopulateXMLDocComments
-
 ### Populate XML doc comments into OpenAPI document
 
 ASP.NET Core OpenAPI document generation will now include metadata from XML doc comments on method, class, and member definitions in the OpenAPI document. You must enable XML doc comments in your project file to use this feature. You can do this by adding the following property to your project file:
@@ -56,7 +45,7 @@ static partial class Program
 In the previous example the `Hello` method is added to the `Program` class, but you can add it to any class in your project.
 
 The previous example illustrates the `<summary>`, `<remarks>`, and `<param>` XML doc comments.
-For more information about XML doc comments, including all the supported tags, see the C# documentation.
+For more information about XML doc comments, including all the supported tags, see the [C# documentation](/dotnet/csharp/language-reference/xmldoc/recommended-tags).
 
 Since the core functionality is provided via a source generator, it can be disabled by adding the following MSBuild to your project file.
 

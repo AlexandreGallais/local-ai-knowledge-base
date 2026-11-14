@@ -1,18 +1,17 @@
 ---
 title: "Local functions"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/fundamentals/building-software/local-functions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how C# local functions keep named helper logic near its caller, capture local state, and support recursion.
+ms.date: 10/15/2026
+ms.topic: concept-article
+ai-usage: ai-generated
 ---
 
 # Local functions
 
 Choose a local function when you want to give helper logic a descriptive name and only one member needs that helper. Compared with a method on the containing type, a local function tells readers that the helper belongs to this operation. Its name lets readers follow the main flow before they inspect the details.
 
-> **Tip:**
-> This article teaches practical use of local functions for developers who know how to write methods. For declaration details and diagnostic rules, see Local function declarations.
+> [!TIP]
+> This article teaches practical use of local functions for developers who know how to write methods. For declaration details and diagnostic rules, see [Local function declarations](~/_csharpstandard/standard/statements.md#1364-local-function-declarations).
 
 A *local function* is a named function declared inside another member, such as a method or constructor. Its name is in scope only within that member.
 
@@ -33,46 +32,8 @@ string CreateMessage(string name)
 
 Local functions let the main flow state what happens while helper functions explain individual steps. The following example creates a reading plan. It uses a local function to add one week's assignment at a time.
 
-```csharp
-IReadOnlyList<ReadingWeek> plan =
-    CreateReadingPlan("The Long Way Home", chapterCount: 10, chaptersPerWeek: 3);
+:::code language="csharp" source="snippets/local-functions/Program.cs" id="NearbyHelper":::
 
-foreach (ReadingWeek week in plan)
-{
-    Console.WriteLine(
-        $"Week {week.Number}: {week.BookTitle}, chapters {week.FirstChapter}-{week.LastChapter}");
-}
-
-static IReadOnlyList<ReadingWeek> CreateReadingPlan(
-    string bookTitle,
-    int chapterCount,
-    int chaptersPerWeek)
-{
-    var plan = new List<ReadingWeek>();
-    AddWeek(firstChapter: 1);
-    return plan;
-
-    void AddWeek(int firstChapter)
-    {
-        if (firstChapter > chapterCount)
-        {
-            return;
-        }
-
-        int lastChapter = Math.Min(
-            firstChapter + chaptersPerWeek - 1,
-            chapterCount);
-
-        plan.Add(new ReadingWeek(
-            plan.Count + 1,
-            bookTitle,
-            firstChapter,
-            lastChapter));
-
-        AddWeek(lastChapter + 1);
-    }
-}
-```
 A `ReadingWeek` records a week number and the range of chapters assigned for that week. `AddWeek` belongs only to `CreateReadingPlan`, so its local scope communicates that relationship.
 
 You can declare a local function before or after the statements that call it. Place it where readers can follow the main flow without losing context.
@@ -119,35 +80,18 @@ Local functions and lambda expressions can both use surrounding variables, but t
 
 The following code uses both forms:
 
-```csharp
-static IEnumerable<string> DescribeShortWeeks(
-    IEnumerable<ReadingWeek> plan,
-    int maximumChapters)
-{
-    return plan
-        .Where(IsShortWeek)
-        .Select(week => $"Week {week.Number}: {week.FirstChapter}-{week.LastChapter}");
+:::code language="csharp" source="snippets/local-functions/Program.cs" id="LocalAndLambda":::
 
-    bool IsShortWeek(ReadingWeek week) =>
-        week.LastChapter - week.FirstChapter + 1 <= maximumChapters;
-}
-
-Console.WriteLine("Short weeks:");
-foreach (string description in DescribeShortWeeks(plan, maximumChapters: 2))
-{
-    Console.WriteLine(description);
-}
-```
 `IsShortWeek` gives the rule passed to `Where` a descriptive name. The lambda passed to `Select` performs one short transformation at its point of use. Both forms supply behavior to another method here. A local function can also be a helper you call directly, as `AddWeek` is in the reading-plan example.
 
 Use a regular method instead of a local function when several members need the helper. Use a lambda instead when the behavior is short and its purpose is clear from the receiving method.
 
-Local functions can also be iterator functions that contain `yield return`. For that use, see Iterators.
+Local functions can also be iterator functions that contain `yield return`. For that use, see [Iterators](iterators.md).
 
 ## See also
 
-- Building software
-- Lambda expressions
-- Methods
-- Local function compiler diagnostics
-- Use local function instead of lambda (style rule IDE0039)
+- [Building software](index.md)
+- [Lambda expressions](lambdas.md)
+- [Methods](../../methods.md)
+- [Local function compiler diagnostics](../../language-reference/compiler-messages/local-function-errors.md)
+- [Use local function instead of lambda (style rule IDE0039)](../../../fundamentals/code-analysis/style-rules/ide0039.md)

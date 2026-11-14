@@ -1,41 +1,54 @@
 ---
-title: "ASP.NET Core Blazor with Entity Framework Core (EF Core)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/blazor-ef-core.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: ASP.NET Core Blazor with Entity Framework Core (EF Core)
+description: Learn how to use Entity Framework Core (EF Core) in Blazor apps.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 11/11/2025
 ---
-
 # ASP.NET Core Blazor with Entity Framework Core (EF Core)
 
-This article explains how to use Entity Framework Core (EF Core) in server-side Blazor apps.
+[!INCLUDE[](~/includes/not-latest-version.md)]
 
-Server-side Blazor is a stateful app framework. The app maintains an ongoing connection to the server, and the user's state is held in the server's memory in a *circuit*. One example of user state is data held in dependency injection (DI) service instances that are scoped to the circuit. The unique application model that Blazor provides requires a special approach to use Entity Framework Core.
+This article explains how to use [Entity Framework Core (EF Core)](/ef/core/) in server-side Blazor apps.
 
-> **Note:**
+Server-side Blazor is a stateful app framework. The app maintains an ongoing connection to the server, and the user's state is held in the server's memory in a *circuit*. One example of user state is data held in [dependency injection (DI)](../fundamentals/dependency-injection.md) service instances that are scoped to the circuit. The unique application model that Blazor provides requires a special approach to use Entity Framework Core.
+
+> [!NOTE]
 > This article addresses EF Core in server-side Blazor apps. Blazor WebAssembly apps run in a WebAssembly sandbox that prevents most direct database connections. Running EF Core in Blazor WebAssembly is beyond the scope of this article.
+
+:::moniker range=">= aspnetcore-8.0"
 
 This guidance applies to components that adopt interactive server-side rendering (interactive SSR) in a Blazor Web App.
 
+:::moniker-end
+
+:::moniker range="< aspnetcore-8.0"
+
+This guidance applies to the **`Server`** project of a hosted Blazor WebAssembly solution or a Blazor Server app.
+
+:::moniker-end
+
 ## Secure authentication flow required for production apps
 
-This article pertains to the use of a local database that doesn't require user authentication. Production apps should use the most secure authentication flow available. For more information on authentication for deployed test and production Blazor apps, see the articles in the Blazor *Security and Identity* node.
+This article pertains to the use of a local database that doesn't require user authentication. Production apps should use the most secure authentication flow available. For more information on authentication for deployed test and production Blazor apps, see the articles in the [Blazor *Security and Identity* node](security/index.md).
 
 For Microsoft Azure services, we recommend using *managed identities*. Managed identities securely authenticate to Azure services without storing credentials in app code. For more information, see the following resources:
 
-* What are managed identities for Azure resources? (Microsoft Entra documentation)
+* [What are managed identities for Azure resources? (Microsoft Entra documentation)](/entra/identity/managed-identities-azure-resources/overview)
 * Azure services documentation
-  * Managed identities in Microsoft Entra for Azure SQL
-  * How to use managed identities for App Service and Azure Functions
+  * [Managed identities in Microsoft Entra for Azure SQL](/azure/azure-sql/database/authentication-azure-ad-user-assigned-managed-identity)
+  * [How to use managed identities for App Service and Azure Functions](/azure/app-service/overview-managed-identity)
+
+:::moniker range=">= aspnetcore-8.0"
 
 ## Build a Blazor movie database app tutorial
 
-For a tutorial experience building an app that uses EF Core for database operations, see Build a Blazor movie database app (Overview). The tutorial shows you how to create a Blazor Web App that can display and manage movies in a movie database.
+For a tutorial experience building an app that uses EF Core for database operations, see [Build a Blazor movie database app (Overview)](tutorials/movie-database-app/index.md). The tutorial shows you how to create a Blazor Web App that can display and manage movies in a movie database.
+
+:::moniker-end
 
 ## Database access
 
-EF Core relies on a `Microsoft.EntityFrameworkCore.DbContext` as the means to configure database access and act as a *unit of work*. EF Core provides the `Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext*` extension for ASP.NET Core apps that registers the context as a *scoped* service. In server-side Blazor apps, scoped service registrations can be problematic because the instance is shared across components within the user's circuit. `Microsoft.EntityFrameworkCore.DbContext` isn't thread safe and isn't designed for concurrent use. The existing lifetimes are inappropriate for these reasons:
+EF Core relies on a <xref:Microsoft.EntityFrameworkCore.DbContext> as the means to [configure database access](/ef/core/miscellaneous/configuring-dbcontext) and act as a [*unit of work*](https://martinfowler.com/eaaCatalog/unitOfWork.html). EF Core provides the <xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext*> extension for ASP.NET Core apps that registers the context as a *scoped* service. In server-side Blazor apps, scoped service registrations can be problematic because the instance is shared across components within the user's circuit. <xref:Microsoft.EntityFrameworkCore.DbContext> isn't thread safe and isn't designed for concurrent use. The existing lifetimes are inappropriate for these reasons:
 
 * **Singleton** shares state across all users of the app and leads to inappropriate concurrent use.
 * **Scoped** (the default) poses a similar issue between components for the same user.
@@ -72,33 +85,81 @@ The following recommendations are designed to provide a consistent approach to u
   ```
 
   Place database operations after the `Loading = true;` line in the `try` block.
-
+  
   Thread safety isn't a concern, so loading logic doesn't require locking database records. The loading logic is used to disable UI controls so that users don't inadvertently select buttons or update fields while data is fetched.
+  
+* If there's any chance that multiple threads may access the same code block, [inject a factory](#scope-a-database-context-to-the-lifetime-of-the-component) and make a new instance per operation. Otherwise, injecting and using the context is usually sufficient.
 
-* If there's any chance that multiple threads may access the same code block, inject a factory and make a new instance per operation. Otherwise, injecting and using the context is usually sufficient.
-
-* For longer-lived operations that take advantage of EF Core's change tracking or concurrency control, scope the context to the lifetime of the component.
+* For longer-lived operations that take advantage of EF Core's [change tracking](/ef/core/querying/tracking) or [concurrency control](/ef/core/saving/concurrency), [scope the context to the lifetime of the component](#scope-a-database-context-to-the-lifetime-of-the-component).
 
 ## New `DbContext` instances
 
-The fastest way to create a new `Microsoft.EntityFrameworkCore.DbContext` instance is by using `new` to create a new instance. However, there are scenarios that require resolving additional dependencies:
+The fastest way to create a new <xref:Microsoft.EntityFrameworkCore.DbContext> instance is by using `new` to create a new instance. However, there are scenarios that require resolving additional dependencies:
 
-* Using `DbContextOptions` to configure the context.
-* Using a connection string per `Microsoft.EntityFrameworkCore.DbContext`, such as when you use ASP.NET Core's Identity model. For more information, see Multi-tenancy (EF Core documentation).
+* Using [`DbContextOptions`](/ef/core/miscellaneous/configuring-dbcontext#configuring-dbcontextoptions) to configure the context.
+* Using a connection string per <xref:Microsoft.EntityFrameworkCore.DbContext>, such as when you use [ASP.NET Core's Identity model](../security/authentication/customize-identity-model.md). For more information, see [Multi-tenancy (EF Core documentation)](/ef/core/miscellaneous/multitenancy).
 
-> **Warning:**
-> Don'<example-value>'t the most secure approach. For local development testing, the Secret <example-value> tool is recommended for securing sensitive data. For more information, see Securely maintain sensitive data and credentials.
+[!INCLUDE[](~/blazor/security/includes/secure-authentication-flows.md)]
 
-The recommended approach to create a new `Microsoft.EntityFrameworkCore.DbContext` with dependencies is to use a factory. EF Core in .NET 5 or later provides a built-in factory for creating new contexts.
+The recommended approach to create a new <xref:Microsoft.EntityFrameworkCore.DbContext> with dependencies is to use a factory. EF Core in .NET 5 or later provides a built-in factory for creating new contexts.
 
-The following example configures SQLite and enables data logging in an app that manages contacts. The code uses an extension method (`Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextFactory*`) to configure the database factory for DI and provide default options:
+:::moniker range="< aspnetcore-5.0"
+
+In versions of .NET prior to .NET 5, use the following `DbContextFactory`:
+
+```csharp
+using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace BlazorServerDbContextExample.Data
+{
+    public class DbContextFactory<TContext> 
+        : IDbContextFactory<TContext> where TContext : DbContext
+    {
+        private readonly IServiceProvider provider;
+
+        public DbContextFactory(IServiceProvider provider)
+        {
+            this.provider = provider ?? throw new ArgumentNullException(
+                $"{nameof(provider)}: You must configure an instance of " +
+                "IServiceProvider");
+        }
+
+        public TContext CreateDbContext() => 
+            ActivatorUtilities.CreateInstance<TContext>(provider);
+    }
+}
+```
+
+In the preceding factory:
+
+* <xref:Microsoft.Extensions.DependencyInjection.ActivatorUtilities.CreateInstance*?displayProperty=nameWithType> satisfies any dependencies via the service provider.
+* <xref:Microsoft.EntityFrameworkCore.IDbContextFactory`1> is available in EF Core in .NET 5 or later, so the preceding interface is only required for ASP.NET Core 3.x.
+
+:::moniker-end
+
+The following example configures [SQLite](https://www.sqlite.org/index.html) and enables data logging in an app that manages contacts. The code uses an extension method (<xref:Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContextFactory*>) to configure the database factory for DI and provide default options:
+
+:::moniker range=">= aspnetcore-6.0"
 
 ```csharp
 builder.Services.AddDbContextFactory<ContactContext>(opt =>
     opt.UseSqlite($"Data Source={nameof(ContactContext.ContactsDb)}.db"));
 ```
 
-The factory is injected into components to create new `Microsoft.EntityFrameworkCore.DbContext` instances.
+:::moniker-end
+
+:::moniker range="< aspnetcore-6.0"
+
+```csharp
+services.AddDbContextFactory<ContactContext>(opt =>
+    opt.UseSqlite($"Data Source={nameof(ContactContext.ContactsDb)}.db"));
+```
+
+:::moniker-end
+
+The factory is injected into components to create new <xref:Microsoft.EntityFrameworkCore.DbContext> instances.
 
 ## Scope a database context to a component method
 
@@ -108,7 +169,7 @@ The factory is injected into the component:
 @inject IDbContextFactory<ContactContext> DbFactory
 ```
 
-Create a `Microsoft.EntityFrameworkCore.DbContext` for a method using the factory (`DbFactory`):
+Create a <xref:Microsoft.EntityFrameworkCore.DbContext> for a method using the factory (`DbFactory`):
 
 ```csharp
 private async Task DeleteContactAsync()
@@ -130,22 +191,22 @@ private async Task DeleteContactAsync()
 
 ## Scope a database context to the lifetime of the component
 
-You may wish to create a `Microsoft.EntityFrameworkCore.DbContext` that exists for the lifetime of a component. This allows you to use it as a unit of work and take advantage of built-in features, such as change tracking and concurrency resolution.
+You may wish to create a <xref:Microsoft.EntityFrameworkCore.DbContext> that exists for the lifetime of a component. This allows you to use it as a [unit of work](https://martinfowler.com/eaaCatalog/unitOfWork.html) and take advantage of built-in features, such as change tracking and concurrency resolution.
 
-Implement `System.IDisposable` and inject the factory into the component:
+Implement <xref:System.IDisposable> and inject the factory into the component:
 
 ```razor
 @implements IDisposable
 @inject IDbContextFactory<ContactContext> DbFactory
 ```
 
-Establish a property for the `Microsoft.EntityFrameworkCore.DbContext`:
+Establish a property for the <xref:Microsoft.EntityFrameworkCore.DbContext>:
 
 ```csharp
 private ContactContext? Context { get; set; }
 ```
 
-`OnInitializedAsync` is overridden to create the `Microsoft.EntityFrameworkCore.DbContext`:
+[`OnInitializedAsync`](components/lifecycle.md) is overridden to create the <xref:Microsoft.EntityFrameworkCore.DbContext>:
 
 ```csharp
 protected override async Task OnInitializedAsync()
@@ -154,7 +215,7 @@ protected override async Task OnInitializedAsync()
 }
 ```
 
-The `Microsoft.EntityFrameworkCore.DbContext` is disposed when the component is disposed:
+The <xref:Microsoft.EntityFrameworkCore.DbContext> is disposed when the component is disposed:
 
 ```csharp
 public void Dispose() => Context?.Dispose();
@@ -162,9 +223,9 @@ public void Dispose() => Context?.Dispose();
 
 ## Enable sensitive data logging
 
-`Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging*` includes application data in exception messages and framework logging. The logged data can include the values assigned to properties of entity instances and parameter values for commands sent to the database. Logging data with `Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging*` is a **security risk**, as it may expose passwords and other Personally Identifiable Information (PII) when it logs SQL statements executed against the database.
+<xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging*> includes application data in exception messages and framework logging. The logged data can include the values assigned to properties of entity instances and parameter values for commands sent to the database. Logging data with <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging*> is a **security risk**, as it may expose passwords and other [Personally Identifiable Information (PII)](security/index.md#personally-identifiable-information-pii) when it logs SQL statements executed against the database.
 
-We recommend only enabling `Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging*` for local development and testing:
+We recommend only enabling <xref:Microsoft.EntityFrameworkCore.DbContextOptionsBuilder.EnableSensitiveDataLogging*> for local development and testing:
 
 ```csharp
 if (builder.Environment.IsDevelopment())
@@ -182,6 +243,6 @@ else
 
 ## Related content
 
-* EF Core documentation
-* Blazor samples GitHub repository (`dotnet/blazor-samples`)
-* Blazor *Security and Identity* node articles
+* [EF Core documentation](/ef/)
+* [Blazor samples GitHub repository (`dotnet/blazor-samples`)](https://github.com/dotnet/blazor-samples)
+* [Blazor *Security and Identity* node articles](security/index.md)

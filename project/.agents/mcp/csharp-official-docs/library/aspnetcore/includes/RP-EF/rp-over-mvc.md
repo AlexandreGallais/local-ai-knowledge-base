@@ -1,15 +1,4 @@
----
-title: "rp-over-mvc"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/RP-EF/rp-over-mvc.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# rp-over-mvc
-
-This tutorial teaches ASP.NET Core MVC and Entity Framework Core with controllers and views. Razor Pages is an alternative programming model. For new development, we recommend Razor Pages over MVC with controllers and views. See the Razor Pages version of this tutorial. Each tutorial covers some material the other doesn't:
+This tutorial teaches ASP.NET Core MVC and Entity Framework Core with controllers and views. [Razor Pages](../../razor-pages/index.md) is an alternative programming model. For new development, we recommend Razor Pages over MVC with controllers and views. See the [Razor Pages](../../data/ef-rp/intro.md) version of this tutorial. Each tutorial covers some material the other doesn't:
 
 Some things this MVC tutorial has that the Razor Pages tutorial doesn't:
 

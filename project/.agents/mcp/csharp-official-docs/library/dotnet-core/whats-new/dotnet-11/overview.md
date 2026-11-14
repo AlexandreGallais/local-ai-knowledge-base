@@ -1,17 +1,17 @@
 ---
-title: "What's new in .NET 11"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/whats-new/dotnet-11/overview.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: What's new in .NET 11
+description: Learn about the new features introduced in .NET 11 for the runtime, libraries, and SDK. Also find links to what's new in other areas, such as ASP.NET Core.
+titleSuffix: ""
+ms.date: 11/10/2026
+ai-usage: ai-assisted
+ms.update-cycle: 3650-days
 ---
 
 # What's new in .NET 11
 
 This article describes new features in .NET 11. It was last updated for the general availability (GA) release.
 
-.NET 11 is generally available. You can download .NET 11 here.
+.NET 11 is generally available. You can [download .NET 11 here](https://dotnet.microsoft.com/download/dotnet/11.0).
 
 ## .NET runtime
 
@@ -30,53 +30,53 @@ The .NET 11 runtime includes:
 - Hardware FP16 instructions for `Half` arithmetic and conversions on x64 and Arm64.
 - Advisory file locking that's disabled by default on iOS and tvOS to avoid operating-system termination when an app enters the background, plus reliability fixes for Linux, assembly unloading, and Windows garbage collection.
 
-For more information, see What's new in the .NET 11 runtime.
+For more information, see [What's new in the .NET 11 runtime](runtime.md).
 
 ## .NET libraries
 
 The .NET 11 libraries include new APIs for:
 
-- `System.Diagnostics.Process` expansion with run-and-capture helpers, fire-and-forget launches, `Microsoft.Win32.SafeHandles.SafeProcessHandle` lifecycle methods, tighter handle control, new `System.Diagnostics.ProcessStartInfo.StartSuspended` for suspended starts, `System.Diagnostics.Process.TryGetProcessById(System.Int32,System.Diagnostics.Process@)` for safe process lookup, and `System.Diagnostics.Process.Signal(System.Runtime.InteropServices.PosixSignal)` with `System.Diagnostics.ProcessExitStatus` for signaling processes and inspecting how they exited.
-- Compression, including improved Base64 APIs, new methods for ZIP archive entries, Zstandard compression in `System.IO.Compression`, CRC32 validation when reading ZIP entries, and a `Reset()` method on the streamless Deflate, ZLib, and GZip encoders and decoders. Zstandard dictionary training returns raw bytes that you pass to `System.IO.Compression.ZstandardDictionary.Create*`.
-- New numeric APIs, including IEEE 754 decimal floating-point types (`System.Numerics.Decimal32`, `System.Numerics.Decimal64`, and `System.Numerics.Decimal128`), `System.Numerics.INumberBase`1.TryParsePartial*` for delimiter-aware parsing, and generic `System.Numerics.Complex`1`.
+- <xref:System.Diagnostics.Process> expansion with run-and-capture helpers, fire-and-forget launches, <xref:Microsoft.Win32.SafeHandles.SafeProcessHandle> lifecycle methods, tighter handle control, new <xref:System.Diagnostics.ProcessStartInfo.StartSuspended?displayProperty=nameWithType> for suspended starts, <xref:System.Diagnostics.Process.TryGetProcessById(System.Int32,System.Diagnostics.Process@)?displayProperty=nameWithType> for safe process lookup, and <xref:System.Diagnostics.Process.Signal(System.Runtime.InteropServices.PosixSignal)?displayProperty=nameWithType> with <xref:System.Diagnostics.ProcessExitStatus> for signaling processes and inspecting how they exited.
+- Compression, including improved Base64 APIs, new methods for ZIP archive entries, Zstandard compression in <xref:System.IO.Compression?displayProperty=fullName>, CRC32 validation when reading ZIP entries, and a `Reset()` method on the streamless Deflate, ZLib, and GZip encoders and decoders. Zstandard dictionary training returns raw bytes that you pass to <xref:System.IO.Compression.ZstandardDictionary.Create*>.
+- New numeric APIs, including IEEE 754 decimal floating-point types (<xref:System.Numerics.Decimal32>, <xref:System.Numerics.Decimal64>, and <xref:System.Numerics.Decimal128>), <xref:System.Numerics.INumberBase`1.TryParsePartial*?displayProperty=nameWithType> for delimiter-aware parsing, and generic <xref:System.Numerics.Complex`1>.
 - The `System.Numerics.Tensors` package updates shape alignment and rejects unsupported overlapping storage layouts.
 - System.Text.Json improvements, including C# and F# union support, JSON Lines (JSONL) output, expanded polymorphism and source generation, new naming and ignore controls, and built-in numeric converters and collection contracts.
-- Built-in OpenTelemetry metrics for `Microsoft.Extensions.Caching.Memory.MemoryCache`.
-- Union scaffolding (`UnionAttribute` and `IUnion`) in `System.Runtime.CompilerServices`.
+- Built-in OpenTelemetry metrics for <xref:Microsoft.Extensions.Caching.Memory.MemoryCache>.
+- Union scaffolding (`UnionAttribute` and `IUnion`) in <xref:System.Runtime.CompilerServices>.
 - Tar archive format selection and GNU sparse format 1.0 support.
 - `Console` support for the `FORCE_COLOR` environment variable.
 - TLS handshake hardening, certificate-validation alerts on Linux, channel binding validation on Unix, and an experimental caller-driven TLS session API (`TlsBufferSession` and `TlsSocketSession`).
-- Networking additions, including HTTP request-body compression wrappers, configurable HTTP connection eviction, and typed DNS record resolution APIs on Windows, Linux, and macOS through `System.Net.Dns` and the new `System.Net.DnsResolver` class.
+- Networking additions, including HTTP request-body compression wrappers, configurable HTTP connection eviction, and typed DNS record resolution APIs on Windows, Linux, and macOS through <xref:System.Net.Dns> and the new <xref:System.Net.DnsResolver> class.
 - HTTP/2 automatic downgrade for Windows authentication.
-- LINQ join improvements, including `FullJoin` and tuple-returning `Join` and `GroupJoin` overloads, across `System.Linq.Enumerable`, `System.Linq.Queryable`, and `System.Linq.AsyncEnumerable`.
-- A new `System.Security.Cryptography.X25519DiffieHellman` class for X25519 key <example-value>, and unpadded AES Key Wrap support (`EncryptKeyWrap`/`DecryptKeyWrap`) on `System.Security.Cryptography.Aes`.
-- Generic overloads on `System.Random` — `NextInteger<T>` and `NextBinaryFloat<T>` — that work with any numeric generic type.
-- `System.Collections.Generic.EqualityComparer`1.Create*` factory method that creates a comparer from a key selector.
-- `System.Net.Quic.QuicStream.Priority` for HTTP/3 stream prioritization.
-- Video MIME type constants in `System.Net.Mime.MediaTypeNames.Video`.
+- LINQ join improvements, including `FullJoin` and tuple-returning `Join` and `GroupJoin` overloads, across <xref:System.Linq.Enumerable>, <xref:System.Linq.Queryable>, and <xref:System.Linq.AsyncEnumerable>.
+- A new <xref:System.Security.Cryptography.X25519DiffieHellman> class for X25519 key exchange, and unpadded AES Key Wrap support (`EncryptKeyWrap`/`DecryptKeyWrap`) on <xref:System.Security.Cryptography.Aes>.
+- Generic overloads on <xref:System.Random> — `NextInteger<T>` and `NextBinaryFloat<T>` — that work with any numeric generic type.
+- <xref:System.Collections.Generic.EqualityComparer`1.Create*?displayProperty=nameWithType> factory method that creates a comparer from a key selector.
+- <xref:System.Net.Quic.QuicStream.Priority?displayProperty=nameWithType> for HTTP/3 stream prioritization.
+- Video MIME type constants in <xref:System.Net.Mime.MediaTypeNames.Video>.
 - Four new `Stream` types (`ReadOnlyMemoryStream`, `WritableMemoryStream`, `ReadOnlySequenceStream`, `StringStream`) that wrap in-memory data without copying.
-- `System.Collections.BitArray` constructors that accept `ReadOnlySpan<bool>`, `ReadOnlySpan<byte>`, and `ReadOnlySpan<int>`.
+- <xref:System.Collections.BitArray> constructors that accept `ReadOnlySpan<bool>`, `ReadOnlySpan<byte>`, and `ReadOnlySpan<int>`.
 - Asynchronous validation in `System.ComponentModel.DataAnnotations` via `AsyncValidationAttribute`, `IAsyncValidatableObject`, and new `Validator.ValidateObjectAsync` methods, along with asynchronous `Microsoft.Extensions.Options` validation through `IAsyncStartupValidator`.
 - Activity tracing configuration using rules in `Microsoft.Extensions.Diagnostics`, enabling declarative control of `Activity` tracing without wiring up `ActivityListener` instances manually.
 - Cross-lane vector operations including `CreateGeometricSequence`, `Zip`, `Unzip`, and the `Concat` family on `Vector128<T>`, `Vector256<T>`, `Vector512<T>`, `Vector64<T>`, and `Vector<T>`.
-- Incremental Concise Binary Object Representation (CBOR) reading with `System.Formats.Cbor.CborReader`.
-- Experimental composite Module-Lattice-Based Key-Encapsulation Mechanism (ML-KEM) and Hybrid Public Key <example-value> (HPKE) APIs, plus ML-KEM recipient support in `System.Security.Cryptography.Pkcs.EnvelopedCms`.
-- Hybrid Public Key <example-value> support includes managed implementations for supported suites, and asynchronous JSON Lines serialization streams entries without buffering each full entry.
+- Incremental Concise Binary Object Representation (CBOR) reading with <xref:System.Formats.Cbor.CborReader>.
+- Experimental composite Module-Lattice-Based Key-Encapsulation Mechanism (ML-KEM) and Hybrid Public Key Encryption (HPKE) APIs, plus ML-KEM recipient support in <xref:System.Security.Cryptography.Pkcs.EnvelopedCms>.
+- Hybrid Public Key Encryption support includes managed implementations for supported suites, and asynchronous JSON Lines serialization streams entries without buffering each full entry.
 - `ValidationAttribute.FormatMessage` for formatting validation messages with attribute-specific arguments.
 - `SocketsHttpHandler.InitialHttp2MaxConcurrentStreams` to limit initial HTTP/2 concurrency before the server's `SETTINGS` frame arrives.
-- More accurate IEEE decimal transcendental functions on `System.Numerics.Decimal32`, `System.Numerics.Decimal64`, and `System.Numerics.Decimal128`, and renamed `MemoryCache` metric attributes.
+- More accurate IEEE decimal transcendental functions on <xref:System.Numerics.Decimal32>, <xref:System.Numerics.Decimal64>, and <xref:System.Numerics.Decimal128>, and renamed `MemoryCache` metric attributes.
 
-For more information, see What's new in the .NET 11 libraries.
+For more information, see [What's new in the .NET 11 libraries](libraries.md).
 
 ## .NET SDK
 
 The .NET 11 SDK includes:
 
 - Smaller SDK installers on Linux and macOS through assembly deduplication, with additional savings by skipping crossgen for `DotnetTools`-only assemblies.
-- Improved CA1873 code analyzer with reduced noise and clearer diagnostic messages.
+- Improved [CA1873](../../../fundamentals/code-analysis/quality-rules/ca1873.md) code analyzer with reduced noise and clearer diagnostic messages.
 - Support for creating and editing solution filters (`.slnf`) from the `dotnet sln` CLI.
 - File-based app support for `#:include` to split apps across multiple files and to include compiled DLL references directly, plus Native AOT build-output reuse and `dotnet format` support for file-based apps.
-- A new `dotnet run -e` option to pass <example-value> variables from the command line.
+- A new `dotnet run -e` option to pass environment variables from the command line.
 - `dotnet watch` improvements, including Aspire app-host integration, automatic crash recovery, and device selection for MAUI and mobile projects.
 - OpenTelemetry replaces Application Insights for CLI telemetry.
 - NativeAOT CLI entry point that serves the full command surface—including `--help` for all built-in commands and tool/external-command launches—out-of-process from the AOT path, skipping managed CLI startup.
@@ -97,41 +97,41 @@ The .NET 11 SDK includes:
 - Faster MSBuild wildcard matching during project evaluation.
 - A `--min-publish-age-hours` option on `dotnet nuget add source` and `dotnet nuget update source` to set the minimum package publication age.
 
-For more information, see What's new in the SDK for .NET 11.
+For more information, see [What's new in the SDK for .NET 11](sdk.md).
 
 ## ASP.NET Core
 
-For information about what's new in ASP.NET Core, see What's new in ASP.NET Core for .NET 11.
+For information about what's new in ASP.NET Core, see [What's new in ASP.NET Core for .NET 11](/aspnet/core/release-notes/aspnetcore-11).
 
 ## C# 15
 
 C# 15 is the default language version for projects that target .NET 11 and includes these features:
 
-- Collection expression arguments
-- Union types
-- Closed hierarchies
-- Extension indexers
-- Labeled `break` and `continue`
-- Memory safety
+- [Collection expression arguments](../../../csharp/whats-new/csharp-15.md#collection-expression-arguments)
+- [Union types](../../../csharp/whats-new/csharp-15.md#union-types)
+- [Closed hierarchies](../../../csharp/whats-new/csharp-15.md#closed-hierarchies)
+- [Extension indexers](../../../csharp/whats-new/csharp-15.md#extension-indexers)
+- [Labeled `break` and `continue`](../../../csharp/whats-new/csharp-15.md#labeled-break-and-continue)
+- [Memory safety](../../../csharp/whats-new/csharp-15.md#memory-safety)
 
-For information about new C# features, see What's new in C# 15.
+For information about new C# features, see [What's new in C# 15](../../../csharp/whats-new/csharp-15.md).
 
 ## EF Core
 
-See What's new in EF Core for .NET 11.
+See [What's new in EF Core for .NET 11](/ef/core/what-is-new/ef-core-11.0/whatsnew).
 
 ## Extensions libraries
 
-See dotnet/extensions release notes.
+See [dotnet/extensions release notes](https://github.com/dotnet/extensions/releases).
 
 ## Windows Forms
 
-See What's new in Windows Forms for .NET 11.
+See [What's new in Windows Forms for .NET 11](/dotnet/desktop/winforms/whats-new/net110).
 
 ## WPF
 
-See What's new in WPF in .NET 11.
+See [What's new in WPF in .NET 11](/dotnet/desktop/wpf/whats-new/net110).
 
 ## See also
 
-- What's new in .NET 10
+- [What's new in .NET 10](../dotnet-10/overview.md)

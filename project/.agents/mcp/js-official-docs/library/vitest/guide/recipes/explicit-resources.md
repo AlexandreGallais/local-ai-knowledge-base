@@ -1,19 +1,14 @@
 ---
-title: "Auto-Cleanup with `using` | Recipes"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/recipes/explicit-resources.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Auto-Cleanup with `using` | Recipes
 ---
 
 # Auto-Cleanup with `using`
 
-Spies and mocks need to be restored after the test that installed them, otherwise state leaks between tests. The usual approaches are an `afterEach(() => vi.restoreAllMocks())` at the suite level or a per-test `onTestFinished(() => spy.mockRestore())` inline.
+Spies and mocks need to be restored after the test that installed them, otherwise state leaks between tests. The usual approaches are an `afterEach(() => vi.restoreAllMocks())` at the suite level or a per-test [`onTestFinished(() => spy.mockRestore())`](/api/hooks#ontestfinished) inline.
 
-If your runtime supports Explicit Resource Management (Node.js 24+, or via TypeScript 5.2+ in modern bundlers), there's a tighter option: declare the spy with `using` instead of `const`, and restoration happens automatically when the block exits.
+If your runtime supports [Explicit Resource Management](https://github.com/tc39/proposal-explicit-resource-management) (Node.js 24+, or via TypeScript 5.2+ in modern bundlers), there's a tighter option: declare the spy with `using` instead of `const`, and restoration happens automatically when the block exits.
 
-This works for `vi.spyOn`, `vi.fn`, and `vi.doMock`. <Version>3.2.0</Version>
+This works for [`vi.spyOn`](/api/vi#vi-spyon), [`vi.fn`](/api/vi#vi-fn), and [`vi.doMock`](/api/vi#vi-domock). <Version>3.2.0</Version>
 
 ## Pattern
 
@@ -66,7 +61,7 @@ it('only mocks fetch for the auth call', async () => {
     using fetchSpy = vi.spyOn(globalThis, 'fetch')
       .mockResolvedValue(new Response('{"ok":true}'))
 
-    await login('<example-value>', '<example-value>')
+    await login('alice', 'secret')
     expect(fetchSpy).toHaveBeenCalledOnce()
   }
 
@@ -75,7 +70,7 @@ it('only mocks fetch for the auth call', async () => {
 })
 ```
 
-This is also a way to avoid turning on the global `restoreMocks: true` config when only a handful of calls actually need restoration.
+This is also a way to avoid turning on the global [`restoreMocks: true`](/config/restoremocks) config when only a handful of calls actually need restoration.
 
 ## Compatibility
 
@@ -84,7 +79,7 @@ This is also a way to avoid turning on the global `restoreMocks: true` config wh
 - TypeScript ≥ 5.2 (with `target: 'es2022'` or higher and the `disposable` lib included by default).
 - Node.js ≥ 24 (or Node 22+ with `--harmony`-style flags) for native runtime support.
 
-If your environment doesn't support it yet, the closest equivalent for whole-test cleanup is `onTestFinished`, which registers the cleanup inline and runs after the test completes regardless of pass or failure:
+If your environment doesn't support it yet, the closest equivalent for whole-test cleanup is [`onTestFinished`](/api/hooks#ontestfinished), which registers the cleanup inline and runs after the test completes regardless of pass or failure:
 
 ```ts
 import { expect, it, onTestFinished, vi } from 'vitest'
@@ -102,9 +97,9 @@ it('calls console.log', () => {
 
 ## See also
 
-- `vi.spyOn`
-- `vi.fn`
-- `vi.doMock`
-- `onTestFinished`
-- `restoreMocks`
-- TC39 Explicit Resource Management proposal
+- [`vi.spyOn`](/api/vi#vi-spyon)
+- [`vi.fn`](/api/vi#vi-fn)
+- [`vi.doMock`](/api/vi#vi-domock)
+- [`onTestFinished`](/api/hooks#ontestfinished)
+- [`restoreMocks`](/config/restoremocks)
+- [TC39 Explicit Resource Management proposal](https://github.com/tc39/proposal-explicit-resource-management)

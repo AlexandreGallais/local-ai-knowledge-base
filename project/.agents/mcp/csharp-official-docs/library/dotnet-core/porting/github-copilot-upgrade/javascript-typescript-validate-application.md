@@ -1,10 +1,11 @@
 ---
-title: "Validate a JavaScript or TypeScript application"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/porting/github-copilot-upgrade/javascript-typescript-validate-application.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Validate a JavaScript or TypeScript application
+description: Use GitHub Copilot upgrade to compile, build, test, run, and inspect a JavaScript or TypeScript application.
+ms.topic: how-to
+ms.date: 09/21/2026
+ai-usage: ai-generated
+
+#customer intent: As a JavaScript or TypeScript developer, I want to validate my application so that I can detect regressions before and after an upgrade.
 ---
 
 # Validate a JavaScript or TypeScript application
@@ -13,7 +14,7 @@ Use GitHub Copilot upgrade to create and run a repeatable validation plan for a 
 
 ## Start validation
 
-1. Install GitHub Copilot upgrade. For instructions, see Install GitHub Copilot upgrade.
+1. Install GitHub Copilot upgrade. For instructions, see [Install GitHub Copilot upgrade](install.md).
 1. Open the repository in a supported GitHub Copilot environment.
 1. Ask the agent to validate the application. For example, enter _"Validate this application before I upgrade its dependencies."_
 1. Review the checks that the agent selects for the project.
@@ -30,7 +31,7 @@ The validation plan reflects how the project actually runs. Based on the availab
 - Probe application endpoints.
 - Exercise browser workflows and verify expected results.
 
-The agent keeps the plan deterministic so it can safely repeat the same checks. The plan distinguishes application failures from invalid checks and reports environment or credential <example-value> instead of weakening assertions.
+The agent keeps the plan deterministic so it can safely repeat the same checks. The plan distinguishes application failures from invalid checks and reports environment or credential blockers instead of weakening assertions.
 
 ## Validation during an upgrade
 
@@ -40,7 +41,7 @@ Standalone validation checks the current project health without creating or chan
 
 ## Related content
 
-- Upgrade JavaScript and TypeScript projects
-- Upgrade JavaScript and TypeScript dependencies
-- Upgrade the TypeScript compiler
-- JavaScript and TypeScript capabilities
+- [Upgrade JavaScript and TypeScript projects](javascript-typescript-overview.md)
+- [Upgrade JavaScript and TypeScript dependencies](javascript-typescript-upgrade-dependencies.md)
+- [Upgrade the TypeScript compiler](javascript-typescript-upgrade-typescript.md)
+- [JavaScript and TypeScript capabilities](javascript-typescript-capabilities.md)

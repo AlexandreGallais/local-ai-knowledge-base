@@ -1,16 +1,15 @@
 ---
 title: "Declaration, constant, and var patterns"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/fundamentals/patterns/declaration-constant-var-patterns.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn when to use C# declaration, constant, and var patterns to test or capture the result of an expression.
+ms.date: 09/15/2026
+ms.topic: concept-article
+ai-usage: ai-assisted
 ---
 
 # Declaration, constant, and `var` patterns
 
-> **Tip:**
-> This article is part of the **Fundamentals** section for developers who already know at least one programming language and are learning C#. Start with the pattern matching overview if you haven't used C# patterns before. For complete language rules, see the patterns reference.
+> [!TIP]
+> This article is part of the **Fundamentals** section for developers who already know at least one programming language and are learning C#. Start with the [pattern matching overview](pattern-matching.md) if you haven't used C# patterns before. For complete language rules, see the [patterns reference](../../language-reference/operators/patterns.md).
 
 A pattern is applied to an *input expression*. C# evaluates the expression, then the pattern tests or captures the resulting value. Declaration, constant, and `var` patterns answer three practical questions:
 
@@ -24,70 +23,8 @@ A *declaration pattern* consists of a type and a *designation*. The type specifi
 
 The following example receives an `object`, so the expression might produce many different types. The declaration pattern lets the matching branch use a decimal amount without a separate type test and cast:
 
-```csharp
-static class BasicPatterns
-{
-    public static void Run()
-    {
-        PrintPrice(19.95m);
-        Console.WriteLine(FormatSensorValue(21.5));
-        Console.WriteLine(GetCommandMessage(Command.Start));
-        Console.WriteLine(HasText("ready"));
-        Console.WriteLine(GetDeliveryMessage(new ExpressDelivery(800)));
-    }
+:::code language="csharp" source="snippets/patterns/BasicPatterns.cs" ID="DeclarationPattern":::
 
-    static void PrintPrice(object value)
-    {
-        if (value is decimal amount)
-        {
-            Console.WriteLine($"Price: {amount:C}");
-        }
-    }
-
-    static string FormatSensorValue(object reading) =>
-        reading switch
-        {
-            int count => $"Count: {count}",
-            double temperature => $"Temperature: {temperature:F1}°C",
-            string message => $"Message: {message}",
-            _ => "Unsupported reading"
-        };
-
-    enum Command
-    {
-        Start,
-        Stop,
-        Pause
-    }
-
-    static string GetCommandMessage(Command command) =>
-        command switch
-        {
-            Command.Start => "Starting",
-            Command.Stop => "Stopping",
-            Command.Pause => "Pausing",
-            _ => "Unknown command"
-        };
-
-    static bool HasText(string? text) => text is not null;
-
-    static string GetDeliveryMessage(object delivery) =>
-        delivery switch
-        {
-            ExpressDelivery express
-                when EstimateDays(express) is var days && days <= 2
-                    => $"Arrives in {days} day{(days == 1 ? "" : "s")}",
-            ExpressDelivery => "Express delivery for your location takes more than two days",
-            _ => "Standard delivery"
-        };
-
-    static int EstimateDays(ExpressDelivery delivery) =>
-        delivery.MilesAway <= 500 ? 1 :
-        delivery.MilesAway <= 1_000 ? 2 : 3;
-
-    record ExpressDelivery(int MilesAway);
-}
-```
 In `value is decimal amount`:
 
 - `value` is the input expression. C# evaluates it first.
@@ -100,71 +37,9 @@ Choose a declaration pattern when the matching branch needs to use the result as
 
 You can also use declaration patterns when one expression might produce several useful types:
 
-```csharp
-static class BasicPatterns
-{
-    public static void Run()
-    {
-        PrintPrice(19.95m);
-        Console.WriteLine(FormatSensorValue(21.5));
-        Console.WriteLine(GetCommandMessage(Command.Start));
-        Console.WriteLine(HasText("ready"));
-        Console.WriteLine(GetDeliveryMessage(new ExpressDelivery(800)));
-    }
+:::code language="csharp" source="snippets/patterns/BasicPatterns.cs" ID="DeclarationSwitch":::
 
-    static void PrintPrice(object value)
-    {
-        if (value is decimal amount)
-        {
-            Console.WriteLine($"Price: {amount:C}");
-        }
-    }
-
-    static string FormatSensorValue(object reading) =>
-        reading switch
-        {
-            int count => $"Count: {count}",
-            double temperature => $"Temperature: {temperature:F1}°C",
-            string message => $"Message: {message}",
-            _ => "Unsupported reading"
-        };
-
-    enum Command
-    {
-        Start,
-        Stop,
-        Pause
-    }
-
-    static string GetCommandMessage(Command command) =>
-        command switch
-        {
-            Command.Start => "Starting",
-            Command.Stop => "Stopping",
-            Command.Pause => "Pausing",
-            _ => "Unknown command"
-        };
-
-    static bool HasText(string? text) => text is not null;
-
-    static string GetDeliveryMessage(object delivery) =>
-        delivery switch
-        {
-            ExpressDelivery express
-                when EstimateDays(express) is var days && days <= 2
-                    => $"Arrives in {days} day{(days == 1 ? "" : "s")}",
-            ExpressDelivery => "Express delivery for your location takes more than two days",
-            _ => "Standard delivery"
-        };
-
-    static int EstimateDays(ExpressDelivery delivery) =>
-        delivery.MilesAway <= 500 ? 1 :
-        delivery.MilesAway <= 1_000 ? 2 : 3;
-
-    record ExpressDelivery(int MilesAway);
-}
-```
-Each arm declares a variable of the matched type because the result needs that type's formatting behavior. A declaration pattern matches only when the evaluated value is non-null and already has a run-time type that's compatible with the tested type through the conversions permitted for patterns. `null` has no run-time type for the pattern to match. The pattern also doesn't run user-defined conversion operators: It's a type test and capture, not a request to convert the value to another type. For the complete compatibility rules, see Declaration and type patterns.
+Each arm declares a variable of the matched type because the result needs that type's formatting behavior. A declaration pattern matches only when the evaluated value is non-null and already has a run-time type that's compatible with the tested type through the conversions permitted for patterns. `null` has no run-time type for the pattern to match. The pattern also doesn't run user-defined conversion operators: It's a type test and capture, not a request to convert the value to another type. For the complete compatibility rules, see [Declaration and type patterns](../../language-reference/operators/patterns.md#declaration-and-type-patterns).
 
 ## Match a specific value with a constant pattern
 
@@ -172,223 +47,37 @@ A *constant pattern* tests whether an expression produces a particular constant,
 
 Constant patterns fit a switch expression when several known values each produce a different result:
 
-```csharp
-static class BasicPatterns
-{
-    public static void Run()
-    {
-        PrintPrice(19.95m);
-        Console.WriteLine(FormatSensorValue(21.5));
-        Console.WriteLine(GetCommandMessage(Command.Start));
-        Console.WriteLine(HasText("ready"));
-        Console.WriteLine(GetDeliveryMessage(new ExpressDelivery(800)));
-    }
+:::code language="csharp" source="snippets/patterns/BasicPatterns.cs" ID="ConstantPatterns":::
 
-    static void PrintPrice(object value)
-    {
-        if (value is decimal amount)
-        {
-            Console.WriteLine($"Price: {amount:C}");
-        }
-    }
-
-    static string FormatSensorValue(object reading) =>
-        reading switch
-        {
-            int count => $"Count: {count}",
-            double temperature => $"Temperature: {temperature:F1}°C",
-            string message => $"Message: {message}",
-            _ => "Unsupported reading"
-        };
-
-    enum Command
-    {
-        Start,
-        Stop,
-        Pause
-    }
-
-    static string GetCommandMessage(Command command) =>
-        command switch
-        {
-            Command.Start => "Starting",
-            Command.Stop => "Stopping",
-            Command.Pause => "Pausing",
-            _ => "Unknown command"
-        };
-
-    static bool HasText(string? text) => text is not null;
-
-    static string GetDeliveryMessage(object delivery) =>
-        delivery switch
-        {
-            ExpressDelivery express
-                when EstimateDays(express) is var days && days <= 2
-                    => $"Arrives in {days} day{(days == 1 ? "" : "s")}",
-            ExpressDelivery => "Express delivery for your location takes more than two days",
-            _ => "Standard delivery"
-        };
-
-    static int EstimateDays(ExpressDelivery delivery) =>
-        delivery.MilesAway <= 500 ? 1 :
-        delivery.MilesAway <= 1_000 ? 2 : 3;
-
-    record ExpressDelivery(int MilesAway);
-}
-```
 `Command` is an enum, a type that defines a set of named constants. `Command.Start`, `Command.Stop`, and `Command.Pause` are its enum members, so each switch arm uses a constant pattern to test one named command value.
 
 Choose this form when the command can have several discrete meanings. The switch arms keep the values and their results together. For one simple equality comparison, an `if` statement such as `if (command == Command.Start)` is usually easier to read.
 
-Constant-pattern matching uses built-in language equality rules rather than a user-defined `==` operator. For the detailed equality and conversion rules, see the constant pattern reference.
+Constant-pattern matching uses built-in language equality rules rather than a user-defined `==` operator. For the detailed equality and conversion rules, see the [constant pattern reference](../../language-reference/operators/patterns.md#constant-pattern).
 
 The `null` constant pattern is useful for a reliable null check:
 
-```csharp
-static class BasicPatterns
-{
-    public static void Run()
-    {
-        PrintPrice(19.95m);
-        Console.WriteLine(FormatSensorValue(21.5));
-        Console.WriteLine(GetCommandMessage(Command.Start));
-        Console.WriteLine(HasText("ready"));
-        Console.WriteLine(GetDeliveryMessage(new ExpressDelivery(800)));
-    }
+:::code language="csharp" source="snippets/patterns/BasicPatterns.cs" ID="ConstantNullPattern":::
 
-    static void PrintPrice(object value)
-    {
-        if (value is decimal amount)
-        {
-            Console.WriteLine($"Price: {amount:C}");
-        }
-    }
-
-    static string FormatSensorValue(object reading) =>
-        reading switch
-        {
-            int count => $"Count: {count}",
-            double temperature => $"Temperature: {temperature:F1}°C",
-            string message => $"Message: {message}",
-            _ => "Unsupported reading"
-        };
-
-    enum Command
-    {
-        Start,
-        Stop,
-        Pause
-    }
-
-    static string GetCommandMessage(Command command) =>
-        command switch
-        {
-            Command.Start => "Starting",
-            Command.Stop => "Stopping",
-            Command.Pause => "Pausing",
-            _ => "Unknown command"
-        };
-
-    static bool HasText(string? text) => text is not null;
-
-    static string GetDeliveryMessage(object delivery) =>
-        delivery switch
-        {
-            ExpressDelivery express
-                when EstimateDays(express) is var days && days <= 2
-                    => $"Arrives in {days} day{(days == 1 ? "" : "s")}",
-            ExpressDelivery => "Express delivery for your location takes more than two days",
-            _ => "Standard delivery"
-        };
-
-    static int EstimateDays(ExpressDelivery delivery) =>
-        delivery.MilesAway <= 500 ? 1 :
-        delivery.MilesAway <= 1_000 ? 2 : 3;
-
-    record ExpressDelivery(int MilesAway);
-}
-```
 Choose `is null` or `is not null` when you're checking null state. These patterns don't call a user-defined equality operator, even when the expression's type overloads `==`.
 
 ## Capture a result for a guard with a `var` pattern
 
 A *`var` pattern* matches every result, including `null`, and declares a variable whose type is the input expression's compile-time type. It can capture a computed value while another pattern is already matching an object:
 
-```csharp
-static class BasicPatterns
-{
-    public static void Run()
-    {
-        PrintPrice(19.95m);
-        Console.WriteLine(FormatSensorValue(21.5));
-        Console.WriteLine(GetCommandMessage(Command.Start));
-        Console.WriteLine(HasText("ready"));
-        Console.WriteLine(GetDeliveryMessage(new ExpressDelivery(800)));
-    }
+:::code language="csharp" source="snippets/patterns/BasicPatterns.cs" ID="VarPatternWhen":::
 
-    static void PrintPrice(object value)
-    {
-        if (value is decimal amount)
-        {
-            Console.WriteLine($"Price: {amount:C}");
-        }
-    }
-
-    static string FormatSensorValue(object reading) =>
-        reading switch
-        {
-            int count => $"Count: {count}",
-            double temperature => $"Temperature: {temperature:F1}°C",
-            string message => $"Message: {message}",
-            _ => "Unsupported reading"
-        };
-
-    enum Command
-    {
-        Start,
-        Stop,
-        Pause
-    }
-
-    static string GetCommandMessage(Command command) =>
-        command switch
-        {
-            Command.Start => "Starting",
-            Command.Stop => "Stopping",
-            Command.Pause => "Pausing",
-            _ => "Unknown command"
-        };
-
-    static bool HasText(string? text) => text is not null;
-
-    static string GetDeliveryMessage(object delivery) =>
-        delivery switch
-        {
-            ExpressDelivery express
-                when EstimateDays(express) is var days && days <= 2
-                    => $"Arrives in {days} day{(days == 1 ? "" : "s")}",
-            ExpressDelivery => "Express delivery for your location takes more than two days",
-            _ => "Standard delivery"
-        };
-
-    static int EstimateDays(ExpressDelivery delivery) =>
-        delivery.MilesAway <= 500 ? 1 :
-        delivery.MilesAway <= 1_000 ? 2 : 3;
-
-    record ExpressDelivery(int MilesAway);
-}
-```
 The declaration pattern `ExpressDelivery express` first captures the delivery object as `express`. The method call `EstimateDays(express)` is the input expression for the `var` pattern. C# evaluates that method call, and `var days` captures the resulting estimate as `days` without testing its type or value. The estimate can be one or two days when the guard succeeds. The arm result needs the captured value to report the actual number of days.
 
 An ordinary local variable can't be declared between a switch-arm pattern and its `when` guard. Calling `EstimateDays(express)` again in the result would repeat the calculation. Choose this `var` pattern form when the code is already matching, and both the guard and result need a computed intermediate value.
 
-If you don't need the captured value, use the discard pattern `_` instead of declaring a variable.
+If you don't need the captured value, use the [discard pattern `_`](discards.md#pattern-matching-with-switch) instead of declaring a variable.
 
 ## See also
 
-- Pattern matching overview
-- Type patterns
-- Discards and the discard pattern.
-- Declaration and type pattern reference.
-- Constant pattern reference.
-- `var` pattern reference.
+- [Pattern matching overview](pattern-matching.md)
+- [Type patterns](type-patterns.md)
+- [Discards and the discard pattern](discards.md).
+- [Declaration and type pattern reference](../../language-reference/operators/patterns.md#declaration-and-type-patterns).
+- [Constant pattern reference](../../language-reference/operators/patterns.md#constant-pattern).
+- [`var` pattern reference](../../language-reference/operators/patterns.md#var-pattern).

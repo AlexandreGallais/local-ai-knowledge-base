@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataEmit2::DefineGenericParam Method"
 title: "IMetaDataEmit2::DefineGenericParam Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataemit2-definegenericparam-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataEmit2.DefineGenericParam"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataEmit2::DefineGenericParam"
+  - "DefineGenericParam method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataEmit2::DefineGenericParam Method
 
 Creates a definition for a generic type parameter, and gets a token to that generic type parameter.
@@ -20,7 +27,7 @@ HRESULT DefineGenericParam (
     [in]  DWORD           dwParamFlags,
     [in]  LPCWSTR         szname,
     [in]  DWORD           reserved,
-    [in]  mdToken         <example-value>[],
+    [in]  mdToken         rtkConstraints[],
     [out] mdGenericParam  *pgp
 );
 ```
@@ -34,7 +41,7 @@ HRESULT DefineGenericParam (
  [in] The index of the generic parameter.
 
  `dwParamFlags`
- [in] A value of the CorGenericParamAttr enumeration that describes the type for the generic parameter.
+ [in] A value of the [CorGenericParamAttr](../enumerations/corgenericparamattr-enumeration.md) enumeration that describes the type for the generic parameter.
 
  `szname`
  [in] The name of the parameter.
@@ -50,7 +57,7 @@ HRESULT DefineGenericParam (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -60,5 +67,5 @@ HRESULT DefineGenericParam (
 
 ## See also
 
-- IMetaDataEmit2 Interface
-- IMetaDataEmit Interface
+- [IMetaDataEmit2 Interface](imetadataemit2-interface.md)
+- [IMetaDataEmit Interface](imetadataemit-interface.md)

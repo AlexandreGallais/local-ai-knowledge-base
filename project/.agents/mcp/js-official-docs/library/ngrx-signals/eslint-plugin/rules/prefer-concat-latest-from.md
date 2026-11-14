@@ -1,12 +1,3 @@
----
-title: "prefer-concat-latest-from"
-tool: "ngrx-signals"
-version: "22.0"
-source: "https://github.com/ngrx/platform/blob/a4995391ef631f1bd60d539f436a1aa5c23c4fe5/projects/www/src/app/pages/guide/eslint-plugin/rules/prefer-concat-latest-from.md"
-commit: "a4995391ef631f1bd60d539f436a1aa5c23c4fe5"
-license: "MIT"
----
-
 # prefer-concat-latest-from
 
 Use `concatLatestFrom` instead of `withLatestFrom` to prevent the selector from firing until the correct `Action` is dispatched.
@@ -16,6 +7,9 @@ Use `concatLatestFrom` instead of `withLatestFrom` to prevent the selector from 
 - **Suggestion**: No
 - **Requires type checking**: No
 - **Configurable**: Yes
+
+<!-- Everything above this generated, do not edit -->
+<!-- MANUAL-DOC:START -->
 
 ## Rule Details
 
@@ -86,5 +80,5 @@ To report only needed uses of `withLatestFrom` use:
 
 ## Further reading
 
-- `concatLatestFrom` API
-- Incorporating State
+- [`concatLatestFrom` API](api/operators/concatLatestFrom)
+- [Incorporating State](guide/effects#incorporating-state)

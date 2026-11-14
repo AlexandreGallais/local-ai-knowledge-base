@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: Nullable.GetUnderlyingType throws for custom Type subclasses"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/11/nullable-getunderlyingtype-throws.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where Nullable.GetUnderlyingType throws NotSupportedException for custom Type subclasses that don't override Type.GetNullableUnderlyingType."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # Nullable.GetUnderlyingType throws for custom Type subclasses
 
-`System.Nullable.GetUnderlyingType(System.Type)` now forwards to the new virtual method `System.Type.GetNullableUnderlyingType()`. Custom `System.Type` subclasses that don't override this new virtual throw `System.NotSupportedException` instead of returning `null`.
+<xref:System.Nullable.GetUnderlyingType(System.Type)?displayProperty=nameWithType> now forwards to the new virtual method `System.Type.GetNullableUnderlyingType()`. Custom <xref:System.Type> subclasses that don't override this new virtual throw <xref:System.NotSupportedException> instead of returning `null`.
 
 ## Version introduced
 
@@ -28,7 +26,7 @@ Type? u = Nullable.GetUnderlyingType(t); // returned null
 
 ## New behavior
 
-Starting in .NET 11, `Nullable.GetUnderlyingType` calls the new virtual `Type.GetNullableUnderlyingType`. The base implementation on `System.Type` throws `System.NotSupportedException`, so custom `Type` subclasses that don't override the virtual throw:
+Starting in .NET 11, `Nullable.GetUnderlyingType` calls the new virtual `Type.GetNullableUnderlyingType`. The base implementation on `System.Type` throws <xref:System.NotSupportedException>, so custom `Type` subclasses that don't override the virtual throw:
 
 ```csharp
 class MyType : Type { /* does not override GetNullableUnderlyingType */ }
@@ -43,11 +41,11 @@ The `Type` subclasses shipped with .NET (runtime `Type` implementation, `TypeDel
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-`Nullable.GetUnderlyingType` previously hard-coded a comparison against the runtime's `typeof(Nullable<>)`. That comparison produced incorrect results for `Type` subclasses that represent types from a different reflection universe. Most notably, in `MetadataLoadContext`, `Nullable<T>` was always reported as a non-nullable type (see dotnet/runtime#124216). The new virtual gives each `Type` implementation a hook to identify nullable types correctly within its own reflection model. This mirrors the long-standing `Type.GetEnumUnderlyingType` pattern.
+`Nullable.GetUnderlyingType` previously hard-coded a comparison against the runtime's `typeof(Nullable<>)`. That comparison produced incorrect results for `Type` subclasses that represent types from a different reflection universe. Most notably, in `MetadataLoadContext`, `Nullable<T>` was always reported as a non-nullable type (see [dotnet/runtime#124216](https://github.com/dotnet/runtime/issues/124216)). The new virtual gives each `Type` implementation a hook to identify nullable types correctly within its own reflection model. This mirrors the long-standing `Type.GetEnumUnderlyingType` pattern.
 
 The base implementation throws rather than returning `null` by design so that custom `Type` subclass authors are notified that they need to provide a correct answer for their domain.
 
@@ -86,5 +84,5 @@ Compiling against .NET 11 surfaces the new virtual on `Type`, making the overrid
 
 ## Affected APIs
 
-- `System.Nullable.GetUnderlyingType(System.Type)`
-- `System.Type.GetNullableUnderlyingType()` (new virtual; default throws `System.NotSupportedException`)
+- <xref:System.Nullable.GetUnderlyingType(System.Type)?displayProperty=fullName>
+- `System.Type.GetNullableUnderlyingType()` (new virtual; default throws <xref:System.NotSupportedException>)

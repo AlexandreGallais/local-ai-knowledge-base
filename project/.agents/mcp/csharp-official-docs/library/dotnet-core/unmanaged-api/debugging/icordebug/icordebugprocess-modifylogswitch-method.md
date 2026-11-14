@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugProcess::ModifyLogSwitch Method"
 title: "ICorDebugProcess::ModifyLogSwitch Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess-modifylogswitch-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugProcess.ModifyLogSwitch"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugProcess::ModifyLogSwitch"
+helpviewer_keywords:
+  - "ICorDebugProcess::ModifyLogSwitch method [.NET debugging]"
+  - "ModifyLogSwitch method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugProcess::ModifyLogSwitch Method
 
 Sets the severity level of the specified log switch.
@@ -29,11 +38,11 @@ HRESULT ModifyLogSwitch(
 
 ## Remarks
 
-This method is valid only after the ICorDebugManagedCallback::CreateProcess callback has occurred.
+This method is valid only after the [ICorDebugManagedCallback::CreateProcess](icordebugmanagedcallback-createprocess-method.md) callback has occurred.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

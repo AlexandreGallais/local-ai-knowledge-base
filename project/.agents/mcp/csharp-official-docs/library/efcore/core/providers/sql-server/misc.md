@@ -1,53 +1,43 @@
 ---
-title: "Miscellaneous - Microsoft SQL Server Database Provider - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/providers/sql-server/misc.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Miscellaneous - Microsoft SQL Server Database Provider - EF Core
+description: Miscellaneous for the Microsoft SQL Server database provider
+author: SamMonoRT
+ms.date: 09/20/2022
+uid: core/providers/sql-server/misc
 ---
-
 # Miscellaneous notes for SQL Server
 
 ## Azure SQL database options
 
-> **Note:**
-> You should use `UseAzureSql` method instead of `UseSqlServer` when connecting to Azure SQL.
+> [!NOTE]
+> You should [use `UseAzureSql` method](xref:core/providers/sql-server/index#usage) instead of `UseSqlServer` when connecting to Azure SQL.
 
-Azure SQL Database provides a variety of pricing options that are usually configured through the Azure Portal. However, if you are managing the schema using EF Core migrations, you can configure the desired options with EF, and they will get applied when EF creates the database.
+Azure SQL Database provides [a variety of pricing options](https://azure.microsoft.com/pricing/details/sql-database/single/) that are usually configured through the Azure Portal. However, if you are managing the schema using [EF Core migrations](xref:core/managing-schemas/migrations/index), you can configure the desired options with EF, and they will get applied when EF creates the database.
 
-You can specify the service tier of the database (EDITION) using HasServiceTier:
+You can specify the service tier of the database (EDITION) using [HasServiceTier](/dotnet/api/Microsoft.EntityFrameworkCore.SqlServerModelBuilderExtensions.HasServiceTier):
 
-```csharp
-modelBuilder.HasServiceTier("BusinessCritical");
-```
+[!code-csharp[HasServiceTier](../../../../samples/core/SqlServer/AzureDatabase/AzureSqlContext.cs?name=HasServiceTier)]
 
-You can specify the maximum size of the database using HasDatabaseMaxSize:
+You can specify the maximum size of the database using [HasDatabaseMaxSize](/dotnet/api/Microsoft.EntityFrameworkCore.SqlServerModelBuilderExtensions.HasDatabaseMaxSize):
 
-```csharp
-modelBuilder.HasDatabaseMaxSize("2 GB");
-```
+[!code-csharp[HasDatabaseMaxSize](../../../../samples/core/SqlServer/AzureDatabase/AzureSqlContext.cs?name=HasDatabaseMaxSize)]
 
-You can specify the performance level of the database (SERVICE_OBJECTIVE) using HasPerformanceLevel:
+You can specify the performance level of the database (SERVICE_OBJECTIVE) using [HasPerformanceLevel](/dotnet/api/Microsoft.EntityFrameworkCore.SqlServerModelBuilderExtensions.HasPerformanceLevel):
 
-```csharp
-modelBuilder.HasPerformanceLevel("BC_Gen4_1");
-```
+[!code-csharp[HasPerformanceLevel](../../../../samples/core/SqlServer/AzureDatabase/AzureSqlContext.cs?name=HasPerformanceLevel)]
 
-Use HasPerformanceLevelSql to configure the elastic pool, since the value is not a string literal:
+Use [HasPerformanceLevelSql](/dotnet/api/Microsoft.EntityFrameworkCore.SqlServerModelBuilderExtensions.HasPerformanceLevelSql) to configure the elastic pool, since the value is not a string literal:
 
-```csharp
-modelBuilder.HasPerformanceLevelSql("ELASTIC_POOL ( name = myelasticpool )");
-```
+[!code-csharp[HasPerformanceLevel](../../../../samples/core/SqlServer/AzureDatabase/AzureSqlContext.cs?name=HasPerformanceLevelSql)]
 
-> **Tip:**
-> You can find all the supported values in the ALTER DATABASE documentation.
+> [!TIP]
+> You can find all the supported values in the [ALTER DATABASE documentation](/sql/t-sql/statements/alter-database-transact-sql?view=azuresqldb-current&preserve-view=true).
 
 ## SaveChanges, triggers and the OUTPUT clause
 
-When EF Core saves changes to the database, it does so with an optimized technique using the T-SQL OUTPUT clause. Unfortunately, the OUTPUT clause has some limitations; it notably cannot be used with tables that have triggers, for example.
+When EF Core saves changes to the database, it does so with an optimized technique using the T-SQL [OUTPUT clause](/sql/t-sql/queries/output-clause-transact-sql#remarks). Unfortunately, the OUTPUT clause has some limitations; it notably cannot be used with tables that have triggers, for example.
 
-If you run into a limitation related to the use of the OUTPUT clause, you can disable it on a specific table via `Microsoft.EntityFrameworkCore.SqlServerEntityTypeExtensions.UseSqlOutputClause*`:
+If you run into a limitation related to the use of the OUTPUT clause, you can disable it on a specific table via <xref:Microsoft.EntityFrameworkCore.SqlServerEntityTypeExtensions.UseSqlOutputClause*>:
 
 ```c#
 protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -59,7 +49,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 Doing this will make EF switch to an older, less efficient technique for updating the table.
 
-If most or all of your tables have triggers, you can configure this for all your model's tables by using the following model building convention:
+If most or all of your tables have triggers, you can configure this for all your model's tables by using the following [model building convention](xref:core/modeling/bulk-configuration#conventions):
 
 ```c#
 public class NoOutputClauseConvention : IModelFinalizingConvention
@@ -85,4 +75,4 @@ public class NoOutputClauseConvention : IModelFinalizingConvention
 }
 ```
 
-This effectively calls `Microsoft.EntityFrameworkCore.SqlServerEntityTypeExtensions.UseSqlOutputClause*` on all your model's tables, instead of you having to do it manually for each and every table.
+This effectively calls <xref:Microsoft.EntityFrameworkCore.SqlServerEntityTypeExtensions.UseSqlOutputClause*> on all your model's tables, instead of you having to do it manually for each and every table.

@@ -1,12 +1,3 @@
----
-title: "CertPathValidatorException class (java.security.cert)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/cert/CertPathValidatorException.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # CertPathValidatorException class (java.security.cert)
 
 ```java
@@ -15,29 +6,31 @@ public class CertPathValidatorException extends GeneralSecurityException
 
 An exception indicating one of a variety of problems encountered when
 validating a certification path.
-
-A `CertPathValidatorException` provides support for wrapping
-exceptions. The getCause method returns the throwable,
+<p>
+A {@code CertPathValidatorException} provides support for wrapping
+exceptions. The {@link #getCause getCause} method returns the throwable,
 if any, that caused this exception to be thrown.
-
-A `CertPathValidatorException` may also include the
+<p>
+A {@code CertPathValidatorException} may also include the
 certification path that was being validated when the exception was thrown,
 the index of the certificate in the certification path that caused the
 exception to be thrown, and the reason that caused the failure. Use the
-getCertPath, getIndex, and
-getReason methods to retrieve this information.
+{@link #getCertPath getCertPath}, {@link #getIndex getIndex}, and
+{@link #getReason getReason} methods to retrieve this information.
 
-**Concurrent Access**
-
+<p>
+<b>Concurrent Access</b>
+<p>
 Unless otherwise specified, the methods defined in this class are not
 thread-safe. Multiple threads that need to access a single
 object concurrently should synchronize amongst themselves and
 provide the necessary locking. Multiple threads each manipulating
 separate objects need not synchronize.
 
-**See also:** CertPathValidator
+@see CertPathValidator
 
-**Since:** 1.4
+@since       1.4
+@author      Yassir Elley
 
 ## CertPathValidatorException.CertPathValidatorException()
 
@@ -45,7 +38,7 @@ separate objects need not synchronize.
 public CertPathValidatorException()
 ```
 
-Creates a `CertPathValidatorException` with
+Creates a {@code CertPathValidatorException} with
 no detail message.
 
 ## CertPathValidatorException.CertPathValidatorException(String)
@@ -54,13 +47,11 @@ no detail message.
 public CertPathValidatorException(String msg)
 ```
 
-Creates a `CertPathValidatorException` with the given
-detail message. A detail message is a `String` that
+Creates a {@code CertPathValidatorException} with the given
+detail message. A detail message is a {@code String} that
 describes this particular exception.
 
-Parameters:
-
-- `msg`: the detail message
+@param msg the detail message
 
 ## CertPathValidatorException.CertPathValidatorException(Throwable)
 
@@ -68,17 +59,17 @@ Parameters:
 public CertPathValidatorException(Throwable cause)
 ```
 
-Creates a `CertPathValidatorException` that wraps the
+Creates a {@code CertPathValidatorException} that wraps the
 specified throwable. This allows any exception to be converted into a
-`CertPathValidatorException`, while retaining information
+{@code CertPathValidatorException}, while retaining information
 about the wrapped exception, which may be useful for debugging. The
-detail message is set to (`cause==null ? null : cause.toString()`)
+detail message is set to ({@code cause==null ? null : cause.toString()})
 (which typically contains the class and detail message of
 cause).
 
-Parameters:
-
-- `cause`: the cause (which is saved for later retrieval by the getCause() method). (A `null` value is permitted, and indicates that the cause is nonexistent or unknown.)
+@param cause the cause (which is saved for later retrieval by the
+{@link #getCause getCause()} method). (A {@code null} value is
+permitted, and indicates that the cause is nonexistent or unknown.)
 
 ## CertPathValidatorException.CertPathValidatorException(String, Throwable)
 
@@ -86,13 +77,13 @@ Parameters:
 public CertPathValidatorException(String msg, Throwable cause)
 ```
 
-Creates a `CertPathValidatorException` with the specified
+Creates a {@code CertPathValidatorException} with the specified
 detail message and cause.
 
-Parameters:
-
-- `msg`: the detail message
-- `cause`: the cause (which is saved for later retrieval by the getCause() method). (A `null` value is permitted, and indicates that the cause is nonexistent or unknown.)
+@param msg the detail message
+@param cause the cause (which is saved for later retrieval by the
+{@link #getCause getCause()} method). (A {@code null} value is
+permitted, and indicates that the cause is nonexistent or unknown.)
 
 ## CertPathValidatorException.CertPathValidatorException(String, Throwable, CertPath, int)
 
@@ -100,20 +91,21 @@ Parameters:
 public CertPathValidatorException(String msg, Throwable cause, CertPath certPath, int index)
 ```
 
-Creates a `CertPathValidatorException` with the specified
+Creates a {@code CertPathValidatorException} with the specified
 detail message, cause, certification path, and index.
 
-Parameters:
-
-- `msg`: the detail message (or `null` if none)
-- `cause`: the cause (or `null` if none)
-- `certPath`: the certification path that was in the process of being validated when the error was encountered
-- `index`: the index of the certificate in the certification path that caused the error (or -1 if not applicable). Note that the list of certificates in a `CertPath` is zero based.
-
-Throws:
-
-- `IndexOutOfBoundsException`: if the index is out of range `(index < -1 || (certPath != null && index >= certPath.getCertificates().size())`
-- `IllegalArgumentException`: if `certPath` is `null` and `index` is not -1
+@param msg the detail message (or {@code null} if none)
+@param cause the cause (or {@code null} if none)
+@param certPath the certification path that was in the process of
+being validated when the error was encountered
+@param index the index of the certificate in the certification path
+that caused the error (or -1 if not applicable). Note that
+the list of certificates in a {@code CertPath} is zero based.
+@throws IndexOutOfBoundsException if the index is out of range
+{@code (index < -1 || (certPath != null && index >=
+certPath.getCertificates().size()) }
+@throws IllegalArgumentException if {@code certPath} is
+{@code null} and {@code index} is not -1
 
 ## CertPathValidatorException.CertPathValidatorException(String, Throwable, CertPath, int, Reason)
 
@@ -121,24 +113,25 @@ Throws:
 public CertPathValidatorException(String msg, Throwable cause, CertPath certPath, int index, Reason reason)
 ```
 
-Creates a `CertPathValidatorException` with the specified
+Creates a {@code CertPathValidatorException} with the specified
 detail message, cause, certification path, index, and reason.
 
-Parameters:
+@param msg the detail message (or {@code null} if none)
+@param cause the cause (or {@code null} if none)
+@param certPath the certification path that was in the process of
+being validated when the error was encountered
+@param index the index of the certificate in the certification path
+that caused the error (or -1 if not applicable). Note that
+the list of certificates in a {@code CertPath} is zero based.
+@param reason the reason the validation failed
+@throws IndexOutOfBoundsException if the index is out of range
+{@code (index < -1 || (certPath != null && index >=
+certPath.getCertificates().size()) }
+@throws IllegalArgumentException if {@code certPath} is
+{@code null} and {@code index} is not -1
+@throws NullPointerException if {@code reason} is {@code null}
 
-- `msg`: the detail message (or `null` if none)
-- `cause`: the cause (or `null` if none)
-- `certPath`: the certification path that was in the process of being validated when the error was encountered
-- `index`: the index of the certificate in the certification path that caused the error (or -1 if not applicable). Note that the list of certificates in a `CertPath` is zero based.
-- `reason`: the reason the validation failed
-
-**Since:** 1.7
-
-Throws:
-
-- `IndexOutOfBoundsException`: if the index is out of range `(index < -1 || (certPath != null && index >= certPath.getCertificates().size())`
-- `IllegalArgumentException`: if `certPath` is `null` and `index` is not -1
-- `NullPointerException`: if `reason` is `null`
+@since 1.7
 
 ## CertPathValidatorException.getCertPath()
 
@@ -149,8 +142,8 @@ public CertPath getCertPath()
 Returns the certification path that was being validated when
 the exception was thrown.
 
-**Returns:** the `CertPath` that was being validated when
-the exception was thrown (or `null` if not specified)
+@return the {@code CertPath} that was being validated when
+the exception was thrown (or {@code null} if not specified)
 
 ## CertPathValidatorException.getIndex()
 
@@ -160,10 +153,10 @@ public int getIndex()
 
 Returns the index of the certificate in the certification path
 that caused the exception to be thrown. Note that the list of
-certificates in a `CertPath` is zero based. If no
+certificates in a {@code CertPath} is zero based. If no
 index has been set, -1 is returned.
 
-**Returns:** the index that has been set, or -1 if none has been set
+@return the index that has been set, or -1 if none has been set
 
 ## CertPathValidatorException.getReason()
 
@@ -173,13 +166,13 @@ public Reason getReason()
 
 Returns the reason that the validation failed. The reason is
 associated with the index of the certificate returned by
-`getIndex`.
+{@link #getIndex}.
 
-**Returns:** the reason that the validation failed, or
-   `BasicReason.UNSPECIFIED` if a reason has not been
+@return the reason that the validation failed, or
+   {@code BasicReason.UNSPECIFIED} if a reason has not been
    specified
 
-**Since:** 1.7
+@since 1.7
 
 ## CertPathValidatorException.UNSPECIFIED, /** * The certificate is expired. */ EXPIRED, /** * The certificate is not yet valid. */ NOT_YET_VALID, /** * The certificate is revoked. */ REVOKED, /** * The revocation status of the certificate could not be determined. */ UNDETERMINED_REVOCATION_STATUS, /** * The signature is invalid. */ INVALID_SIGNATURE, /** * The public key or the signature algorithm has been constrained. */ ALGORITHM_CONSTRAINED } }
 

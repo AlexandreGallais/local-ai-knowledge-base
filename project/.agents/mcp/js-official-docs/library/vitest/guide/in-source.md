@@ -1,26 +1,22 @@
 ---
-title: "In-Source Testing | Guide"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/in-source.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: In-Source Testing | Guide
 ---
 
 # In-Source Testing
 
-Vitest provides a way to run tests within your source code along side the implementation, similar to Rust's module tests.
+Vitest provides a way to run tests within your source code along side the implementation, similar to [Rust's module tests](https://doc.rust-lang.org/book/ch11-03-test-organization.html#the-tests-module-and-cfgtest).
 
 This makes the tests share the same closure as the implementations and able to test against private states without exporting. Meanwhile, it also brings a closer feedback loop for development.
 
-**Warning:**
-This guide explains how to write tests inside your source code. If you need to write tests in separate test files, follow the "Writing Tests" guide.
+::: warning
+This guide explains how to write tests inside your source code. If you need to write tests in separate test files, follow the ["Writing Tests" guide](/guide/#writing-tests).
+:::
 
 ## Setup
 
 To get started, put a `if (import.meta.vitest)` block at the end of your source file and write some tests inside it. For example:
 
-```ts
+```ts [src/index.ts]
 // the implementation
 export function add(...args: number[]) {
   return args.reduce((a, b) => a + b, 0)
@@ -39,7 +35,7 @@ if (import.meta.vitest) {
 
 Update the `includeSource` config for Vitest to grab the files under `src/`:
 
-```ts
+```ts [vitest.config.ts]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -59,7 +55,7 @@ $ npx vitest
 
 For the production build, you will need to set the `define` options in your config file, letting the bundler do the dead code elimination. For example, in Vite
 
-```ts
+```ts [vite.config.ts]
 /// <reference types="vitest/config" />
 
 import { defineConfig } from 'vite'
@@ -78,7 +74,7 @@ export default defineConfig({
 
 ::: details Rolldown
 
-```js
+```js [rolldown.config.js]
 import { defineConfig } from 'rolldown/config'
 
 export default defineConfig({
@@ -90,11 +86,12 @@ export default defineConfig({
 })
 ```
 
-Learn more: Rolldown
+Learn more: [Rolldown](https://rolldown.rs/)
+:::
 
 ::: details Rollup
 
-```js
+```js [rollup.config.js]
 import replace from '@rollup/plugin-replace' // [!code ++]
 
 export default {
@@ -107,11 +104,12 @@ export default {
 }
 ```
 
-Learn more: Rollup
+Learn more: [Rollup](https://rollupjs.org/)
+:::
 
 ::: details unbuild
 
-```js
+```js [build.config.js]
 import { defineBuildConfig } from 'unbuild'
 
 export default defineBuildConfig({
@@ -122,11 +120,12 @@ export default defineBuildConfig({
 })
 ```
 
-Learn more: unbuild
+Learn more: [unbuild](https://github.com/unjs/unbuild)
+:::
 
 ::: details webpack
 
-```js
+```js [webpack.config.js]
 const webpack = require('webpack')
 
 module.exports = {
@@ -138,13 +137,14 @@ module.exports = {
 }
 ```
 
-Learn more: webpack
+Learn more: [webpack](https://webpack.js.org/plugins/define-plugin/)
+:::
 
 ## TypeScript
 
 To get TypeScript support for `import.meta.vitest`, add `vitest/importMeta` to your `tsconfig.json`:
 
-```json
+```json [tsconfig.json]
 {
   "compilerOptions": {
     "types": [
@@ -154,10 +154,11 @@ To get TypeScript support for `import.meta.vitest`, add `vitest/importMeta` to y
 }
 ```
 
-Reference to `examples/in-source-test` for the full example.
+Reference to [`examples/in-source-test`](https://github.com/vitest-dev/vitest/tree/main/examples/in-source-test) for the full example.
 
-**Warning:**
-There is a limitation when using assertion functions such as `assert` in in-source tests. See `assert` for details and workarounds.
+::: warning
+There is a limitation when using [assertion functions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#assertion-functions) such as `assert` in in-source tests. See [`assert`](/api/assert#in-source-testing) for details and workarounds.
+:::
 
 ## Notes
 

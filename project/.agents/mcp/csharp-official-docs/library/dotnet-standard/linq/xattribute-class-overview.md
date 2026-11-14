@@ -1,15 +1,16 @@
 ---
-title: "XAttribute class overview"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/xattribute-class-overview.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: XAttribute class overview
+description: The XAttribute class represents XML attributes. Working with attributes in LINQ to XML is similar to working with elements.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: 5a630f24-f9ad-400e-831e-c14ebfc9e142
 ---
 
 # XAttribute class overview
 
-Attributes are name-value pairs that are associated with an element. The `System.Xml.Linq.XAttribute` class represents XML attributes.
+Attributes are name-value pairs that are associated with an element. The <xref:System.Xml.Linq.XAttribute> class represents XML attributes.
 
 Working with attributes in LINQ to XML is similar to working with elements. Their constructors are similar. The methods that you use to retrieve collections of them are similar. A LINQ query expression for a collection of attributes looks similar to a LINQ query expression for a collection of elements.
 
@@ -17,11 +18,11 @@ The order in which attributes were added to an element is preserved. That is, wh
 
 ## The XAttribute constructor
 
-The following constructor of the `System.Xml.Linq.XAttribute` class is the one that you'll most commonly use:
+The following constructor of the <xref:System.Xml.Linq.XAttribute> class is the one that you'll most commonly use:
 
 |Constructor|Description|
 |-----------------|-----------------|
-|`XAttribute(XName name, object content)`|Creates an `System.Xml.Linq.XAttribute` object. The `name` argument specifies the name of the attribute; `content` specifies the content of the attribute.|
+|`XAttribute(XName name, object content)`|Creates an <xref:System.Xml.Linq.XAttribute> object. The `name` argument specifies the name of the attribute; `content` specifies the content of the attribute.|
 
 ## Example: Create an element with an attribute
 
@@ -47,7 +48,7 @@ This example produces the following output:
 
 ## Example: Functional construction of attributes
 
-You can construct `System.Xml.Linq.XAttribute` objects in-line with the construction of `System.Xml.Linq.XElement` objects, as shown in the following example:
+You can construct <xref:System.Xml.Linq.XAttribute> objects in-line with the construction of <xref:System.Xml.Linq.XElement> objects, as shown in the following example:
 
 ```csharp
 XElement c = new XElement("Customers",
@@ -96,10 +97,10 @@ This example produces the following output:
 
 ## Attributes aren't nodes
 
-There are some differences between attributes and elements. `System.Xml.Linq.XAttribute` objects aren't nodes in the XML tree. They're name-value pairs associated with an XML element. In contrast to the Document Object Model (DOM), this more closely reflects the structure of XML. Although `System.Xml.Linq.XAttribute` objects aren't actually nodes in the XML tree, working with `System.Xml.Linq.XAttribute` objects is similar to working with `System.Xml.Linq.XElement` objects.
+There are some differences between attributes and elements. <xref:System.Xml.Linq.XAttribute> objects aren't nodes in the XML tree. They're name-value pairs associated with an XML element. In contrast to the Document Object Model (DOM), this more closely reflects the structure of XML. Although <xref:System.Xml.Linq.XAttribute> objects aren't actually nodes in the XML tree, working with <xref:System.Xml.Linq.XAttribute> objects is similar to working with <xref:System.Xml.Linq.XElement> objects.
 
 This distinction is primarily important only to developers who are writing code that works with XML trees at the node level. Many developers won't be concerned with this distinction.
 
 ## See also
 
-- LINQ to XML overview
+- [LINQ to XML overview](linq-xml-overview.md)

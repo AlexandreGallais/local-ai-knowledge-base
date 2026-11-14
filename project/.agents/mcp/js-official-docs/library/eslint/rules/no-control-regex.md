@@ -1,13 +1,12 @@
 ---
-title: "no-control-regex"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-control-regex.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-control-regex
+rule_type: problem
+related_rules:
+- no-div-regex
+- no-regex-spaces
 ---
 
-# no-control-regex
+
 
 Control characters are special, invisible characters in the ASCII range 0-31. These characters are rarely used in JavaScript strings so a regular expression containing elements that explicitly match these characters is most likely a mistake.
 
@@ -26,7 +25,7 @@ Control escapes such as `\t` and `\n` are allowed by this rule. Control letter e
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-control-regex: "error"*/
@@ -40,9 +39,11 @@ const pattern6 = new RegExp("\x0C"); // raw U+000C character in the pattern
 const pattern7 = new RegExp("\\x0C"); // \x0C pattern
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-control-regex: "error"*/
@@ -57,6 +58,8 @@ const pattern7 = new RegExp("\\t");
 const pattern8 = new RegExp("\\n");
 const pattern9 = /\cJ/; // control letter escape for U+000A
 ```
+
+:::
 
 ## Options
 

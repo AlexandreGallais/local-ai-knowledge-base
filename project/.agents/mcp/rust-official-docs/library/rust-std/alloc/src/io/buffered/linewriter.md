@@ -1,12 +1,3 @@
----
-title: "alloc::io::buffered::linewriter"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/alloc/src/io/buffered/linewriter.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # alloc::io::buffered::linewriter
 
 ## struct LineWriter
@@ -18,13 +9,13 @@ pub struct LineWriter<W: ?Sized + Write>
 Wraps a writer and buffers output to it, flushing whenever a newline
 (`0x0a`, `'\n'`) is detected.
 
-The `BufWriter` struct wraps a writer and buffers its output.
+The [`BufWriter`] struct wraps a writer and buffers its output.
 But it only does this batched write when it goes out of scope, or when the
 internal buffer is full. Sometimes, you'd prefer to write each line as it's
 completed, rather than the entire buffer at once. Enter `LineWriter`. It
 does exactly that.
 
-Like `BufWriter`, a `LineWriter`’s buffer will also be flushed when the
+Like [`BufWriter`], a `LineWriter`’s buffer will also be flushed when the
 `LineWriter` goes out of scope or when its internal buffer is full.
 
 If there's still a partial line in the buffer when the `LineWriter` is
@@ -35,7 +26,7 @@ dropped, it will flush those contents.
 We can use `LineWriter` to write one line at a time, significantly
 reducing the number of actual writes to the file.
 
-```rust
+```no_run
 use std::fs::{self, File};
 use std::io::prelude::*;
 use std::io::LineWriter;
@@ -88,7 +79,7 @@ Creates a new `LineWriter`.
 
 # Examples
 
-```rust
+```no_run
 use std::fs::File;
 use std::io::LineWriter;
 
@@ -110,7 +101,7 @@ internal buffer.
 
 # Examples
 
-```rust
+```no_run
 use std::fs::File;
 use std::io::LineWriter;
 
@@ -134,7 +125,7 @@ returned as extra writes could corrupt the output stream.
 
 # Examples
 
-```rust
+```no_run
 use std::fs::File;
 use std::io::LineWriter;
 
@@ -160,11 +151,11 @@ The internal buffer is written out before returning the writer.
 
 # Errors
 
-An `Err` will be returned if an error occurs while flushing the buffer.
+An [`Err`] will be returned if an error occurs while flushing the buffer.
 
 # Examples
 
-```rust
+```no_run
 use std::fs::File;
 use std::io::LineWriter;
 
@@ -188,7 +179,7 @@ Gets a reference to the underlying writer.
 
 # Examples
 
-```rust
+```no_run
 use std::fs::File;
 use std::io::LineWriter;
 

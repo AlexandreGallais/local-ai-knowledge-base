@@ -1,15 +1,11 @@
 ---
-title: "Test Annotations | Guide"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/test-annotations.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Test Annotations | Guide
+outline: deep
 ---
 
 # Test Annotations
 
-Vitest supports annotating your tests with custom messages and files via the `context.annotate` API. These annotations will be attached to the test case and passed down to reporters in the `onTestAnnotate` hook.
+Vitest supports annotating your tests with custom messages and files via the [`context.annotate`](/guide/test-context#annotate) API. These annotations will be attached to the test case and passed down to reporters in the [`onTestAnnotate`](/api/advanced/reporters#ontestannotate) hook.
 
 ```ts
 test('hello world', async ({ annotate }) => {
@@ -30,8 +26,9 @@ test('hello world', async ({ annotate }) => {
 })
 ```
 
-**Warning:**
+::: warning
 The `annotate` function returns a Promise, so it needs to be awaited if you rely on it somehow. However, Vitest will also automatically await any non-awaited annotation before the test finishes.
+:::
 
 Depending on your reporter, you will see these annotations differently.
 
@@ -79,6 +76,9 @@ The `verbose` reporter is the only terminal reporter that reports annotations wh
 
 The HTML reporter shows annotations the same way the UI does. You can see the annotation on the line where it was called. At the moment, if the annotation wasn't called in a test file, you cannot see it in the UI. We are planning to support a separate test summary view where it will be visible.
 
+<img alt="Vitest UI" img-light src="/annotations-html-light.png">
+<img alt="Vitest UI" img-dark src="/annotations-html-dark.png">
+
 ### junit
 
 The `junit` reporter lists annotations inside the testcase's `properties` tag. The JUnit reporter will ignore all attachments and will print only the type and the message.
@@ -94,7 +94,10 @@ The `junit` reporter lists annotations inside the testcase's `properties` tag. T
 
 ### github-actions
 
-The `github-actions` reporter will print the annotation as a notice message by default. You can configure the `type` by passing down the second argument as `notice`, `warning` or `error`. If type is none of these, Vitest will show the message as a notice.
+The `github-actions` reporter will print the annotation as a [notice message](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#setting-a-notice-message) by default. You can configure the `type` by passing down the second argument as `notice`, `warning` or `error`. If type is none of these, Vitest will show the message as a notice.
+
+<img alt="GitHub Actions" img-light src="/annotations-gha-light.png">
+<img alt="GitHub Actions" img-dark src="/annotations-gha-dark.png">
 
 ### tap
 

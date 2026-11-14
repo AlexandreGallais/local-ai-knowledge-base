@@ -1,12 +1,3 @@
----
-title: "Animating your applications with animate.enter and animate.leave (part 1 of 2)"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/animations/enter-and-leave.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Animating your applications with `animate.enter` and `animate.leave`
 
 Well-designed animations can make your application more intuitive and engaging, but they aren't just cosmetic.
@@ -22,84 +13,11 @@ Angular provides `animate.enter` and `animate.leave` to animate your application
 
 You can use `animate.enter` to animate elements as they _enter_ the DOM. You can define enter animations using CSS classes with either transitions or keyframe animations.
 
-    File: `enter.ts`
-
-```ts
-// #docplaster
-import {Component, signal} from '@angular/core';
-
-@Component({
-  selector: 'app-enter',
-  templateUrl: 'enter.html',
-  styleUrls: ['enter.css'],
-})
-export class Enter {
-  isShown = signal(false);
-
-  toggle() {
-    this.isShown.update((isShown) => !isShown);
-  }
-}
-```
-    File: `enter.html`
-
-```html
-<!-- #docplaster -->
-<h2><code>animate.enter</code> Example</h2>
-
-<button type="button" class="toggle-btn" (click)="toggle()">Toggle Element</button>
-
-@if (isShown()) {
-  <div class="enter-container" animate.enter="enter-animation">
-    <p>The box is entering.</p>
-  </div>
-}
-```
-    File: `enter.css`
-
-```css
-:host {
-  display: block;
-  height: 200px;
-}
-
-.enter-container {
-  border: 1px solid #dddddd;
-  margin-top: 1em;
-  padding: 20px;
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.enter-container p {
-  margin: 0;
-}
-
-.enter-animation {
-  animation: slide-fade 1s;
-}
-
-@keyframes slide-fade {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.toggle-btn {
-  background: transparent;
-  border: 1px solid var(--primary-contrast, black);
-  color: var(--primary-contrast, black);
-  padding: 10px 24px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-```
+<docs-code-multifile preview path="adev/src/content/examples/animations/src/app/enter-and-leave/enter.ts">
+    <docs-code header="enter.ts" path="adev/src/content/examples/animations/src/app/enter-and-leave/enter.ts" />
+    <docs-code header="enter.html" path="adev/src/content/examples/animations/src/app/enter-and-leave/enter.html" />
+    <docs-code header="enter.css" path="adev/src/content/examples/animations/src/app/enter-and-leave/enter.css"/>
+</docs-code-multifile>
 
 When the animation completes, Angular removes the class or classes that you specified in `animate.enter` from the DOM. Animation classes are only present while the animation is active.
 
@@ -109,167 +27,21 @@ You can use `animate.enter` with any other Angular features, such as control flo
 
 A quick note about using CSS transitions: If you choose to use transitions instead of keyframe animations, the classes added to the element with `animate.enter` represent the state that the transition will animate _to_. Your base element CSS is what the element will look like when no animations run, which is likely similar to the end state of the CSS transition. So you would still need to pair it with `@starting-style` to have an appropriate _from_ state for your transition to work.
 
-    File: `enter-binding.ts`
-
-```ts
-// #docplaster
-import {Component, signal} from '@angular/core';
-
-@Component({
-  selector: 'app-enter-binding',
-  templateUrl: 'enter-binding.html',
-  styleUrls: ['enter-binding.css'],
-})
-export class EnterBinding {
-  isShown = signal(false);
-
-  toggle() {
-    this.isShown.update((isShown) => !isShown);
-  }
-
-  enterClass = signal('enter-animation');
-}
-```
-    File: `enter-binding.html`
-
-```html
-<!-- #docplaster -->
-<h2><code>animate.enter</code> Binding Example</h2>
-
-<button type="button" class="toggle-btn" (click)="toggle()">Toggle Element</button>
-
-@if (isShown()) {
-  <div class="enter-container" [animate.enter]="enterClass()">
-    <p>The box is entering.</p>
-  </div>
-}
-```
-    File: `enter-binding.css`
-
-```css
-:host {
-  display: block;
-  height: 200px;
-}
-
-.enter-container {
-  border: 1px solid #dddddd;
-  margin-top: 1em;
-  padding: 20px;
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.enter-container p {
-  margin: 0;
-}
-
-.enter-animation {
-  animation: slide-fade 1s;
-}
-
-@keyframes slide-fade {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.toggle-btn {
-  background: transparent;
-  border: 1px solid var(--primary-contrast, black);
-  color: var(--primary-contrast, black);
-  padding: 10px 24px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-```
+<docs-code-multifile preview path="adev/src/content/examples/animations/src/app/enter-and-leave/enter-binding.ts">
+    <docs-code header="enter-binding.ts" path="adev/src/content/examples/animations/src/app/enter-and-leave/enter-binding.ts" />
+    <docs-code header="enter-binding.html" path="adev/src/content/examples/animations/src/app/enter-and-leave/enter-binding.html" />
+    <docs-code header="enter-binding.css" path="adev/src/content/examples/animations/src/app/enter-and-leave/enter-binding.css"/>
+</docs-code-multifile>
 
 ## `animate.leave`
 
 You can use `animate.leave` to animate elements as they _leave_ the DOM. You can define leave animations using CSS classes with either transforms or keyframe animations.
 
-    File: `leave.ts`
-
-```ts
-// #docplaster
-import {Component, signal} from '@angular/core';
-
-@Component({
-  selector: 'app-leave',
-  templateUrl: 'leave.html',
-  styleUrls: ['leave.css'],
-})
-export class Leave {
-  isShown = signal(false);
-
-  toggle() {
-    this.isShown.update((isShown) => !isShown);
-  }
-}
-```
-    File: `leave.html`
-
-```html
-<!-- #docplaster -->
-<h2><code>animate.leave</code> Example</h2>
-
-<button type="button" class="toggle-btn" (click)="toggle()">Toggle Element</button>
-
-@if (isShown()) {
-  <div class="leave-container" animate.leave="leaving">
-    <p>Goodbye</p>
-  </div>
-}
-```
-    File: `leave.css`
-
-```css
-:host {
-  display: block;
-  height: 200px;
-}
-
-.leave-container {
-  border: 1px solid #dddddd;
-  margin-top: 1em;
-  padding: 20px;
-  font-weight: bold;
-  font-size: 20px;
-  opacity: 1;
-  transition: opacity 200ms ease-in;
-
-  @starting-style {
-    opacity: 0;
-  }
-}
-
-.leave-container p {
-  margin: 0;
-}
-
-.leaving {
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 500ms ease-out,
-    transform 500ms ease-out;
-}
-
-.toggle-btn {
-  background: transparent;
-  border: 1px solid var(--primary-contrast, black);
-  color: var(--primary-contrast, black);
-  padding: 10px 24px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-```
+<docs-code-multifile preview path="adev/src/content/examples/animations/src/app/enter-and-leave/leave.ts">
+    <docs-code header="leave.ts" path="adev/src/content/examples/animations/src/app/enter-and-leave/leave.ts" />
+    <docs-code header="leave.html" path="adev/src/content/examples/animations/src/app/enter-and-leave/leave.html" />
+    <docs-code header="leave.css" path="adev/src/content/examples/animations/src/app/enter-and-leave/leave.css"/>
+</docs-code-multifile>
 
 When the animation completes, Angular automatically removes the animated element from the DOM.
 
@@ -277,263 +49,33 @@ NOTE: When using multiple keyframe animations or transition properties on an ele
 
 `animate.leave` can also be used with signals, and other bindings. You can use `animate.leave` with a single class or multiple classes. Either specify it as a simple string with spaces or a string array.
 
-    File: `leave-binding.ts`
-
-```ts
-// #docplaster
-import {Component, signal} from '@angular/core';
-
-@Component({
-  selector: 'app-leave-binding',
-  templateUrl: 'leave-binding.html',
-  styleUrls: ['leave-binding.css'],
-})
-export class LeaveBinding {
-  isShown = signal(false);
-
-  toggle() {
-    this.isShown.update((isShown) => !isShown);
-  }
-
-  farewell = signal('leaving');
-}
-```
-    File: `leave-binding.html`
-
-```html
-<!-- #docplaster -->
-<h2><code>animate.leave</code> Binding Example</h2>
-
-<button type="button" class="toggle-btn" (click)="toggle()">Toggle Element</button>
-
-@if (isShown()) {
-  <div class="leave-container" [animate.leave]="farewell()">
-    <p>Goodbye</p>
-  </div>
-}
-```
-    File: `leave-binding.css`
-
-```css
-:host {
-  display: block;
-  height: 200px;
-}
-
-.leave-container {
-  border: 1px solid #dddddd;
-  margin-top: 1em;
-  padding: 20px;
-  font-weight: bold;
-  font-size: 20px;
-  opacity: 1;
-  transition: opacity 200ms ease-in;
-
-  @starting-style {
-    opacity: 0;
-  }
-}
-
-.leave-container p {
-  margin: 0;
-}
-
-.leaving {
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 500ms ease-out,
-    transform 500ms ease-out;
-}
-
-.toggle-btn {
-  background: transparent;
-  border: 1px solid var(--primary-contrast, black);
-  color: var(--primary-contrast, black);
-  padding: 10px 24px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-```
+<docs-code-multifile preview path="adev/src/content/examples/animations/src/app/enter-and-leave/leave-binding.ts">
+    <docs-code header="leave-binding.ts" path="adev/src/content/examples/animations/src/app/enter-and-leave/leave-binding.ts" />
+    <docs-code header="leave-binding.html" path="adev/src/content/examples/animations/src/app/enter-and-leave/leave-binding.html" />
+    <docs-code header="leave-binding.css" path="adev/src/content/examples/animations/src/app/enter-and-leave/leave-binding.css"/>
+</docs-code-multifile>
 
 ### Element removal order
 
 There is some nuance to how `animate.leave` animations are run and when an animation will occur. `animate.leave` works if it is placed on the element that is being removed, and if `animate.leave` is placed on an element that is a _descendant_ of the element being removed _within the same component template_, those child `animate.leave` animations will happen _before_ the parent node is removed from the DOM. This ensures that you can confidently animate away child elements without the parent node disappearing prematurely.
 
-    File: `leave-parent.ts`
-
-```ts
-// #docplaster
-import {Component, signal} from '@angular/core';
-
-@Component({
-  selector: 'app-leave-parent',
-  templateUrl: 'leave-parent.html',
-  styleUrls: ['leave-parent.css'],
-})
-export class LeaveParent {
-  isShown = signal(false);
-
-  toggle() {
-    this.isShown.update((isShown) => !isShown);
-  }
-}
-```
-    File: `leave-parent.html`
-
-```html
-<!-- #docplaster -->
-<h2><code>animate.leave</code> Parent Sub-tree Animation Example</h2>
-
-<button type="button" class="toggle-btn" (click)="toggle()">Toggle Element</button>
-
-@if (isShown()) {
-  <div class="leave-parent">
-    <!-- the child node with `animate.leave` will animate first
-         before the parent node is removed from the DOM. -->
-    <div class="leave-container" animate.leave="leaving">
-      <p>Goodbye</p>
-    </div>
-  </div>
-}
-```
-    File: `leave-parent.css`
-
-```css
-:host {
-  display: block;
-  height: 200px;
-}
-
-.leave-container {
-  border: 1px solid #dddddd;
-  margin-top: 1em;
-  padding: 20px;
-  font-weight: bold;
-  font-size: 20px;
-  opacity: 1;
-  transition: opacity 200ms ease-in;
-
-  @starting-style {
-    opacity: 0;
-  }
-}
-
-.leave-container p {
-  margin: 0;
-}
-
-.leaving {
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 500ms ease-out,
-    transform 500ms ease-out;
-}
-
-.toggle-btn {
-  background: transparent;
-  border: 1px solid var(--primary-contrast, black);
-  color: var(--primary-contrast, black);
-  padding: 10px 24px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-```
+<docs-code-multifile preview path="adev/src/content/examples/animations/src/app/enter-and-leave/leave-parent.ts">
+    <docs-code header="leave-parent.ts" path="adev/src/content/examples/animations/src/app/enter-and-leave/leave-parent.ts" />
+    <docs-code header="leave-parent.html" path="adev/src/content/examples/animations/src/app/enter-and-leave/leave-parent.html" />
+    <docs-code header="leave-parent.css" path="adev/src/content/examples/animations/src/app/enter-and-leave/leave-parent.css"/>
+</docs-code-multifile>
 
 IMPORTANT: Child animations fire only for elements within the same component template. If an element being removed contains child components, any `animate.leave` animations defined inside those child component templates will **not** run before the parent is removed. To animate a child component on removal, apply `animate.leave` to the child component's host element directly within the parent template instead, or programmatically handle triggering the animation in the child component and delaying the removal of the parent until that animation completes.
 
 ## Event Bindings, Functions, and Third-party Libraries
 
-Both `animate.enter` and `animate.leave` support event binding syntax that allows for function calls. You can use this syntax to call a function in your component code or utilize third-party animation libraries, like GSAP, anime.js, or any other JavaScript animation library.
+Both `animate.enter` and `animate.leave` support event binding syntax that allows for function calls. You can use this syntax to call a function in your component code or utilize third-party animation libraries, like [GSAP](https://gsap.com/), [anime.js](https://animejs.com/), or any other JavaScript animation library.
 
-    File: `leave-event.ts`
-
-```ts
-// #docplaster
-import {AnimationCallbackEvent, Component, signal} from '@angular/core';
-
-@Component({
-  selector: 'app-leave-binding',
-  templateUrl: 'leave-event.html',
-  styleUrls: ['leave-event.css'],
-})
-export class LeaveEvent {
-  isShown = signal(false);
-
-  toggle() {
-    this.isShown.update((isShown) => !isShown);
-  }
-
-  leavingFn(event: AnimationCallbackEvent) {
-    // Example of calling GSAP
-    // gsap.to(event.target, {
-    //   duration: 1,
-    //   x: 100,
-    //   // arrow functions are handy for concise callbacks
-    //   onComplete: () => event.animationComplete()
-    // });
-    event.animationComplete();
-  }
-}
-```
-    File: `leave-event.html`
-
-```html
-<!-- #docplaster -->
-<h2><code>animate.leave</code> Function Example</h2>
-
-<button type="button" class="toggle-btn" (click)="toggle()">Toggle Element</button>
-
-@if (isShown()) {
-  <div class="leave-container" (animate.leave)="leavingFn($event)">
-    <p>Goodbye</p>
-  </div>
-}
-```
-    File: `leave-event.css`
-
-```css
-:host {
-  display: block;
-  height: 200px;
-}
-
-.leave-container {
-  border: 1px solid #dddddd;
-  margin-top: 1em;
-  padding: 20px;
-  font-weight: bold;
-  font-size: 20px;
-  opacity: 1;
-  transition: opacity 200ms ease-in;
-
-  @starting-style {
-    opacity: 0;
-  }
-}
-
-.leave-container p {
-  margin: 0;
-}
-
-.leaving {
-  opacity: 0;
-  transform: translateY(20px);
-  transition:
-    opacity 500ms ease-out,
-    transform 500ms ease-out;
-}
-
-.toggle-btn {
-  background: transparent;
-  border: 1px solid var(--primary-contrast, black);
-  color: var(--primary-contrast, black);
-  padding: 10px 24px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-```
+<docs-code-multifile preview path="adev/src/content/examples/animations/src/app/enter-and-leave/leave-event.ts">
+    <docs-code header="leave-event.ts" path="adev/src/content/examples/animations/src/app/enter-and-leave/leave-event.ts" />
+    <docs-code header="leave-event.html" path="adev/src/content/examples/animations/src/app/enter-and-leave/leave-event.html" />
+    <docs-code header="leave-event.css" path="adev/src/content/examples/animations/src/app/enter-and-leave/leave-event.css"/>
+</docs-code-multifile>
 
 The `$event` object has the type `AnimationCallbackEvent`. It includes the element as the `target` and provides an `animationComplete()` function to notify the framework when the animation finishes.
 
@@ -562,3 +104,12 @@ TestBed.configureTestingModule({animationsEnabled: true});
 This will configure animations in your test environment to behave normally.
 
 NOTE: Some test environments do not emit animation events like `animationstart`, `animationend` and their transition event equivalents.
+
+## More on Angular animations
+
+You might also be interested in the following:
+
+<docs-pill-row>
+  <docs-pill href="guide/animations/css" title="Complex Animations with CSS"/>
+  <docs-pill href="guide/routing/route-transition-animations" title="Route transition animations"/>
+</docs-pill-row>

@@ -1,15 +1,15 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/no-potentially-useless-backreference"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/no-potentially-useless-backreference.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "disallow backreferences that reference a group that might not be matched"
+since: "v0.9.0"
 ---
-
 # regexp/no-potentially-useless-backreference
 
 ⚠️ This rule _warns_ in the following configs: 🟢 `flat/recommended`, 🔵 `recommended`.
+
+<!-- end auto-generated rule header -->
 
 > disallow backreferences that reference a group that might not be matched
 
@@ -27,6 +27,7 @@ This will not handle backreferences that always trivially accept. Use [regexp/no
 /* ✓ GOOD */
 var foo = /(a+)b\1/;
 var foo = /(a+)b|\1/;  // this will be done by regexp/no-useless-backreference
+
 
 /* ✗ BAD */
 var foo = /(?:(a)|b)\1/;
@@ -52,10 +53,15 @@ Nothing.
 
 - [regexp/no-useless-backreference]
 
+[regexp/no-useless-backreference]: ./no-useless-backreference.md
+
 ## :heart: Compatibility
 
 This rule was taken from [eslint-plugin-clean-regex].\
 This rule is compatible with [clean-regex/no-potentially-empty-backreference] rule.
+
+[eslint-plugin-clean-regex]: https://github.com/RunDevelopment/eslint-plugin-clean-regex
+[clean-regex/no-potentially-empty-backreference]: https://github.com/RunDevelopment/eslint-plugin-clean-regex/blob/master/docs/rules/no-potentially-empty-backreference.md
 
 ## :rocket: Version
 
@@ -63,5 +69,5 @@ This rule was introduced in eslint-plugin-regexp v0.9.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/no-potentially-useless-backreference.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/no-potentially-useless-backreference.ts)

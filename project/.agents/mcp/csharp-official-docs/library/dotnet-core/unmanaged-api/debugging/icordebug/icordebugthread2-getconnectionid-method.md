@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugThread2::GetConnectionID Method"
 title: "ICorDebugThread2::GetConnectionID Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugthread2-getconnectionid-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugThread2.GetConnectionID"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugThread2::GetConnectionID"
+helpviewer_keywords:
+  - "ICorDebugThread2::GetConnectionID method [.NET debugging]"
+  - "GetConnectionID method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugThread2::GetConnectionID Method
 
 Gets the connection identifier for this ICorDebugThread2 object.
@@ -32,7 +41,7 @@ If this thread is connected to an instance of Microsoft SQL Server 2005 Analysis
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

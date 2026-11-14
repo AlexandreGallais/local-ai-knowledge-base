@@ -1,12 +1,3 @@
----
-title: "ConstantBootstraps class (java.lang.invoke)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/invoke/ConstantBootstraps.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ConstantBootstraps class (java.lang.invoke)
 
 ```java
@@ -15,12 +6,12 @@ public final class ConstantBootstraps
 
 Bootstrap methods for dynamically-computed constants.
 
-The bootstrap methods in this class will throw a
-`NullPointerException` for any reference argument that is `null`,
+<p>The bootstrap methods in this class will throw a
+{@code NullPointerException} for any reference argument that is {@code null},
 unless the argument is specified to be unused or specified to accept a
-`null` value.
+{@code null} value.
 
-**Since:** 11
+@since 11
 
 ## ConstantBootstraps.nullConstant(MethodHandles.Lookup, String, Class<?>)
 
@@ -28,20 +19,14 @@ unless the argument is specified to be unused or specified to accept a
 public static Object nullConstant(MethodHandles.Lookup lookup, String name, Class<?> type)
 ```
 
-Returns a `null` object reference for the reference type specified
-by `type`.
+Returns a {@code null} object reference for the reference type specified
+by {@code type}.
 
-Parameters:
-
-- `lookup`: unused
-- `name`: unused
-- `type`: a reference type
-
-**Returns:** a `null` value
-
-Throws:
-
-- `IllegalArgumentException`: if `type` is not a reference type
+@param lookup unused
+@param name unused
+@param type a reference type
+@return a {@code null} value
+@throws IllegalArgumentException if {@code type} is not a reference type
 
 ## ConstantBootstraps.primitiveClass(MethodHandles.Lookup, String, Class<?>)
 
@@ -49,20 +34,15 @@ Throws:
 public static Class<?> primitiveClass(MethodHandles.Lookup lookup, String name, Class<?> type)
 ```
 
-Returns a `Class` mirror for the primitive type whose type
-descriptor is specified by `name`.
+Returns a {@link Class} mirror for the primitive type whose type
+descriptor is specified by {@code name}.
 
-Parameters:
-
-- `lookup`: unused
-- `name`: the descriptor (JVMS ) of the desired primitive type
-- `type`: the required result type (must be `Class.class`)
-
-**Returns:** the `Class` mirror
-
-Throws:
-
-- `IllegalArgumentException`: if the name is not a descriptor for a primitive type or the type is not `Class.class`
+@param lookup unused
+@param name the descriptor (JVMS {@jvms 4.3}) of the desired primitive type
+@param type the required result type (must be {@code Class.class})
+@return the {@link Class} mirror
+@throws IllegalArgumentException if the name is not a descriptor for a
+primitive type or the type is not {@code Class.class}
 
 ## ConstantBootstraps.enumConstant(MethodHandles.Lookup, String, Class<E>)
 
@@ -70,25 +50,24 @@ Throws:
 public static <E extends Enum<E>> E enumConstant(MethodHandles.Lookup lookup, String name, Class<E> type)
 ```
 
-Returns an `enum` constant of the type specified by `type`
-with the name specified by `name`.
+Returns an {@code enum} constant of the type specified by {@code type}
+with the name specified by {@code name}.
 
-Parameters:
-
-- `lookup`: the lookup context describing the class performing the operation (normally stacked by the JVM)
-- `name`: the name of the constant to return, which must exactly match an enum constant in the specified type.
-- `type`: the `Class` object describing the enum type for which a constant is to be returned
-- `<E>`: The enum type for which a constant value is to be returned
-
-**Returns:** the enum constant of the specified enum type with the
+@param lookup the lookup context describing the class performing the
+operation (normally stacked by the JVM)
+@param name the name of the constant to return, which must exactly match
+an enum constant in the specified type.
+@param type the {@code Class} object describing the enum type for which
+a constant is to be returned
+@param <E> The enum type for which a constant value is to be returned
+@return the enum constant of the specified enum type with the
 specified name
-
-**See also:** Enum#valueOf(Class, String)
-
-Throws:
-
-- `IllegalAccessError`: if the declaring class or the field is not accessible to the class performing the operation
-- `IllegalArgumentException`: if the specified enum type has no constant with the specified name, or the specified class object does not represent an enum type
+@throws IllegalAccessError if the declaring class or the field is not
+accessible to the class performing the operation
+@throws IllegalArgumentException if the specified enum type has
+no constant with the specified name, or the specified
+class object does not represent an enum type
+@see Enum#valueOf(Class, String)
 
 ## ConstantBootstraps.getStaticFinal(MethodHandles.Lookup, String, Class<?>, Class<?>)
 
@@ -98,20 +77,17 @@ public static Object getStaticFinal(MethodHandles.Lookup lookup, String name, Cl
 
 Returns the value of a static final field.
 
-Parameters:
-
-- `lookup`: the lookup context describing the class performing the operation (normally stacked by the JVM)
-- `name`: the name of the field
-- `type`: the type of the field
-- `declaringClass`: the class in which the field is declared
-
-**Returns:** the value of the field
-
-Throws:
-
-- `IllegalAccessError`: if the declaring class or the field is not accessible to the class performing the operation
-- `NoSuchFieldError`: if the specified field does not exist
-- `IncompatibleClassChangeError`: if the specified field is not `final`
+@param lookup the lookup context describing the class performing the
+operation (normally stacked by the JVM)
+@param name the name of the field
+@param type the type of the field
+@param declaringClass the class in which the field is declared
+@return the value of the field
+@throws IllegalAccessError if the declaring class or the field is not
+accessible to the class performing the operation
+@throws NoSuchFieldError if the specified field does not exist
+@throws IncompatibleClassChangeError if the specified field is not
+{@code final}
 
 ## ConstantBootstraps.getStaticFinal(MethodHandles.Lookup, String, Class<?>)
 
@@ -122,25 +98,21 @@ public static Object getStaticFinal(MethodHandles.Lookup lookup, String name, Cl
 Returns the value of a static final field declared in the class which
 is the same as the field's type (or, for primitive-valued fields,
 declared in the wrapper class.)  This is a simplified form of
-String, Class, Class)
+{@link #getStaticFinal(MethodHandles.Lookup, String, Class, Class)}
 for the case where a class declares distinguished constant instances of
 itself.
 
-Parameters:
-
-- `lookup`: the lookup context describing the class performing the operation (normally stacked by the JVM)
-- `name`: the name of the field
-- `type`: the type of the field
-
-**Returns:** the value of the field
-
-**See also:** #getStaticFinal(MethodHandles.Lookup, String, Class, Class)
-
-Throws:
-
-- `IllegalAccessError`: if the declaring class or the field is not accessible to the class performing the operation
-- `NoSuchFieldError`: if the specified field does not exist
-- `IncompatibleClassChangeError`: if the specified field is not `final`
+@param lookup the lookup context describing the class performing the
+operation (normally stacked by the JVM)
+@param name the name of the field
+@param type the type of the field
+@return the value of the field
+@throws IllegalAccessError if the declaring class or the field is not
+accessible to the class performing the operation
+@throws NoSuchFieldError if the specified field does not exist
+@throws IncompatibleClassChangeError if the specified field is not
+{@code final}
+@see #getStaticFinal(MethodHandles.Lookup, String, Class, Class)
 
 ## ConstantBootstraps.invoke(MethodHandles.Lookup, String, Class<?>, MethodHandle, Object...)
 
@@ -150,26 +122,26 @@ public static Object invoke(MethodHandles.Lookup lookup, String name, Class<?> t
 
 Returns the result of invoking a method handle with the provided
 arguments.
-
+<p>
 This method behaves as if the method handle to be invoked is the result
-of adapting the given method handle, via `MethodHandle.asType`, to
+of adapting the given method handle, via {@link MethodHandle#asType}, to
 adjust the return type to the desired type.
 
-Parameters:
-
-- `lookup`: unused
-- `name`: unused
-- `type`: the desired type of the value to be returned, which must be compatible with the return type of the method handle
-- `handle`: the method handle to be invoked
-- `args`: the arguments to pass to the method handle, as if with `MethodHandle.invokeWithArguments`. Each argument may be `null`.
-
-**Returns:** the result of invoking the method handle
-
-Throws:
-
-- `WrongMethodTypeException`: if the handle's method type cannot be adjusted to take the given number of arguments, or if the handle's return type cannot be adjusted to the desired type
-- `ClassCastException`: if an argument or the result produced by invoking the handle cannot be converted by reference casting
-- `Throwable`: anything thrown by the method handle invocation
+@param lookup unused
+@param name unused
+@param type the desired type of the value to be returned, which must be
+compatible with the return type of the method handle
+@param handle the method handle to be invoked
+@param args the arguments to pass to the method handle, as if with
+{@link MethodHandle#invokeWithArguments}.  Each argument may be
+{@code null}.
+@return the result of invoking the method handle
+@throws WrongMethodTypeException if the handle's method type cannot be
+adjusted to take the given number of arguments, or if the handle's return
+type cannot be adjusted to the desired type
+@throws ClassCastException if an argument or the result produced by
+invoking the handle cannot be converted by reference casting
+@throws Throwable anything thrown by the method handle invocation
 
 ## ConstantBootstraps.fieldVarHandle(MethodHandles.Lookup, String, Class<VarHandle>, Class<?>, Class<?>)
 
@@ -177,23 +149,19 @@ Throws:
 public static VarHandle fieldVarHandle(MethodHandles.Lookup lookup, String name, Class<VarHandle> type, Class<?> declaringClass, Class<?> fieldType)
 ```
 
-Finds a `VarHandle` for an instance field.
+Finds a {@link VarHandle} for an instance field.
 
-Parameters:
-
-- `lookup`: the lookup context describing the class performing the operation (normally stacked by the JVM)
-- `name`: the name of the field
-- `type`: the required result type (must be `Class<VarHandle>`)
-- `declaringClass`: the class in which the field is declared
-- `fieldType`: the type of the field
-
-**Returns:** the `VarHandle`
-
-Throws:
-
-- `IllegalAccessError`: if the declaring class or the field is not accessible to the class performing the operation
-- `NoSuchFieldError`: if the specified field does not exist
-- `IllegalArgumentException`: if the type is not `VarHandle`
+@param lookup the lookup context describing the class performing the
+operation (normally stacked by the JVM)
+@param name the name of the field
+@param type the required result type (must be {@code Class<VarHandle>})
+@param declaringClass the class in which the field is declared
+@param fieldType the type of the field
+@return the {@link VarHandle}
+@throws IllegalAccessError if the declaring class or the field is not
+accessible to the class performing the operation
+@throws NoSuchFieldError if the specified field does not exist
+@throws IllegalArgumentException if the type is not {@code VarHandle}
 
 ## ConstantBootstraps.staticFieldVarHandle(MethodHandles.Lookup, String, Class<VarHandle>, Class<?>, Class<?>)
 
@@ -201,23 +169,19 @@ Throws:
 public static VarHandle staticFieldVarHandle(MethodHandles.Lookup lookup, String name, Class<VarHandle> type, Class<?> declaringClass, Class<?> fieldType)
 ```
 
-Finds a `VarHandle` for a static field.
+Finds a {@link VarHandle} for a static field.
 
-Parameters:
-
-- `lookup`: the lookup context describing the class performing the operation (normally stacked by the JVM)
-- `name`: the name of the field
-- `type`: the required result type (must be `Class<VarHandle>`)
-- `declaringClass`: the class in which the field is declared
-- `fieldType`: the type of the field
-
-**Returns:** the `VarHandle`
-
-Throws:
-
-- `IllegalAccessError`: if the declaring class or the field is not accessible to the class performing the operation
-- `NoSuchFieldError`: if the specified field does not exist
-- `IllegalArgumentException`: if the type is not `VarHandle`
+@param lookup the lookup context describing the class performing the
+operation (normally stacked by the JVM)
+@param name the name of the field
+@param type the required result type (must be {@code Class<VarHandle>})
+@param declaringClass the class in which the field is declared
+@param fieldType the type of the field
+@return the {@link VarHandle}
+@throws IllegalAccessError if the declaring class or the field is not
+accessible to the class performing the operation
+@throws NoSuchFieldError if the specified field does not exist
+@throws IllegalArgumentException if the type is not {@code VarHandle}
 
 ## ConstantBootstraps.arrayVarHandle(MethodHandles.Lookup, String, Class<VarHandle>, Class<?>)
 
@@ -225,21 +189,17 @@ Throws:
 public static VarHandle arrayVarHandle(MethodHandles.Lookup lookup, String name, Class<VarHandle> type, Class<?> arrayClass)
 ```
 
-Finds a `VarHandle` for an array type.
+Finds a {@link VarHandle} for an array type.
 
-Parameters:
-
-- `lookup`: the lookup context describing the class performing the operation (normally stacked by the JVM)
-- `name`: unused
-- `type`: the required result type (must be `Class<VarHandle>`)
-- `arrayClass`: the type of the array
-
-**Returns:** the `VarHandle`
-
-Throws:
-
-- `IllegalAccessError`: if the component type of the array is not accessible to the class performing the operation
-- `IllegalArgumentException`: if the type is not `VarHandle`
+@param lookup the lookup context describing the class performing the
+operation (normally stacked by the JVM)
+@param name unused
+@param type the required result type (must be {@code Class<VarHandle>})
+@param arrayClass the type of the array
+@return the {@link VarHandle}
+@throws IllegalAccessError if the component type of the array is not
+accessible to the class performing the operation
+@throws IllegalArgumentException if the type is not {@code VarHandle}
 
 ## ConstantBootstraps.explicitCast(MethodHandles.Lookup, String, Class<?>, Object)
 
@@ -248,50 +208,46 @@ public static Object explicitCast(MethodHandles.Lookup lookup, String name, Clas
 ```
 
 Applies a conversion from a source type to a destination type.
-
-Given a destination type `dstType` and an input
-value `value`, one of the following will happen:
-
-- If `dstType` is `void.class`,
-    a `ClassCastException` is thrown.
-
-- If `dstType` is `Object.class`, `value` is returned as is.
-
-Otherwise one of the following conversions is applied to `value`:
-
-- If `dstType` is a reference type, a reference cast
-    is applied to `value` as if by calling `dstType.cast(value)`.
-
-- If `dstType` is a primitive type, then, if the runtime type
-    of `value` is a primitive wrapper type (such as `Integer`),
-    a Java unboxing conversion is applied  followed by a
-    Java casting conversion  converting either directly to
-    `dstType`, or, if `dstType` is `boolean`,
-    to `int`, which is then converted to either `true`
-    or `false` depending on whether the least-significant-bit
-    is 1 or 0 respectively. If the runtime type of `value` is
-    not a primitive wrapper type a `ClassCastException` is thrown.
-
+<p>
+Given a destination type {@code dstType} and an input
+value {@code value}, one of the following will happen:
+<ul>
+<li>If {@code dstType} is {@code void.class},
+    a {@link ClassCastException} is thrown.
+<li>If {@code dstType} is {@code Object.class}, {@code value} is returned as is.
+</ul>
+<p>
+Otherwise one of the following conversions is applied to {@code value}:
+<ol>
+<li>If {@code dstType} is a reference type, a reference cast
+    is applied to {@code value} as if by calling {@code dstType.cast(value)}.
+<li>If {@code dstType} is a primitive type, then, if the runtime type
+    of {@code value} is a primitive wrapper type (such as {@link Integer}),
+    a Java unboxing conversion is applied {@jls 5.1.8} followed by a
+    Java casting conversion {@jls 5.5} converting either directly to
+    {@code dstType}, or, if {@code dstType} is {@code boolean},
+    to {@code int}, which is then converted to either {@code true}
+    or {@code false} depending on whether the least-significant-bit
+    is 1 or 0 respectively. If the runtime type of {@code value} is
+    not a primitive wrapper type a {@link ClassCastException} is thrown.
+</ol>
+<p>
 The result is the same as when using the following code:
-
-```java
+<blockquote><pre>{@code
 MethodHandle id = MethodHandles.identity(dstType);
 MethodType mt = MethodType.methodType(dstType, Object.class);
 MethodHandle conv = MethodHandles.explicitCastArguments(id, mt);
 return conv.invoke(value);
-```
+}</pre></blockquote>
 
-Parameters:
+@param lookup unused
+@param name unused
+@param dstType the destination type of the conversion
+@param value the value to be converted
+@return the converted value
+@throws ClassCastException when {@code dstType} is {@code void},
+        when a cast per (1) fails, or when {@code dstType} is a primitive type
+        and the runtime type of {@code value} is not a primitive wrapper type
+        (such as {@link Integer})
 
-- `lookup`: unused
-- `name`: unused
-- `dstType`: the destination type of the conversion
-- `value`: the value to be converted
-
-**Returns:** the converted value
-
-**Since:** 15
-
-Throws:
-
-- `ClassCastException`: when `dstType` is `void`, when a cast per (1) fails, or when `dstType` is a primitive type and the runtime type of `value` is not a primitive wrapper type (such as `Integer`)
+@since 15

@@ -1,35 +1,27 @@
----
-title: "AbstractResourceBundleProvider class (java.util.spi)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/spi/AbstractResourceBundleProvider.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AbstractResourceBundleProvider class (java.util.spi)
 
 ```java
 public abstract class AbstractResourceBundleProvider implements ResourceBundleProvider
 ```
 
-`AbstractResourceBundleProvider` is an abstract class that provides
-the basic <example-value> for a provider implementation class for
-`ResourceBundleProvider`.
+{@code AbstractResourceBundleProvider} is an abstract class that provides
+the basic support for a provider implementation class for
+{@link ResourceBundleProvider}.
 
+<p>
 Resource bundles can be packaged in one or more
-named modules, *service provider modules*.  The *consumer* of the
-resource bundle is the one calling `ResourceBundle.getBundle(String)`.
+named modules, <em>service provider modules</em>.  The <em>consumer</em> of the
+resource bundle is the one calling {@link ResourceBundle#getBundle(String)}.
 In order for the consumer module to load a resource bundle
-"`com.example.app.MyResources`" provided by another module,
-it will use the service loader
-mechanism.  A service interface named "`com.example.app.spi.MyResourcesProvider`"
-must be defined and a *service provider module* will provide an
-implementation class of "`com.example.app.spi.MyResourcesProvider`"
+"{@code com.example.app.MyResources}" provided by another module,
+it will use the {@linkplain java.util.ServiceLoader service loader}
+mechanism.  A service interface named "{@code com.example.app.spi.MyResourcesProvider}"
+must be defined and a <em>service provider module</em> will provide an
+implementation class of "{@code com.example.app.spi.MyResourcesProvider}"
 as follows:
 
-```java
-import com.example.app.spi.MyResourcesProvider;
+<blockquote><pre>
+{@code import com.example.app.spi.MyResourcesProvider;
 class MyResourcesProviderImpl extends AbstractResourceBundleProvider
     implements MyResourcesProvider
 {
@@ -49,14 +41,12 @@ class MyResourcesProviderImpl extends AbstractResourceBundleProvider
         // otherwise return null
         return null;
     }
-}
-```
+}}</pre></blockquote>
+<p>
+Refer to {@link ResourceBundleProvider} for details.
 
-Refer to `ResourceBundleProvider` for details.
-
-**See also:** ResourceBundle##resource-bundle-modules Resource Bundles and Named Modules
-
-**Since:** 9
+@see ResourceBundle##resource-bundle-modules Resource Bundles and Named Modules
+@since 9
 
 ## AbstractResourceBundleProvider.AbstractResourceBundleProvider()
 
@@ -64,9 +54,9 @@ Refer to `ResourceBundleProvider` for details.
 protected AbstractResourceBundleProvider()
 ```
 
-Constructs an `AbstractResourceBundleProvider` with the
+Constructs an {@code AbstractResourceBundleProvider} with the
 "java.properties" format. This constructor is equivalent to
-`AbstractResourceBundleProvider("java.properties")`.
+{@code AbstractResourceBundleProvider("java.properties")}.
 
 ## AbstractResourceBundleProvider.AbstractResourceBundleProvider(String...)
 
@@ -74,19 +64,15 @@ Constructs an `AbstractResourceBundleProvider` with the
 protected AbstractResourceBundleProvider(String... formats)
 ```
 
-Constructs an `AbstractResourceBundleProvider` with the specified
-`formats`. The Locale) method looks up
-resource bundles for the given `formats`. `formats` must
+Constructs an {@code AbstractResourceBundleProvider} with the specified
+{@code formats}. The {@link #getBundle(String, Locale)} method looks up
+resource bundles for the given {@code formats}. {@code formats} must
 be "java.class" or "java.properties".
 
-Parameters:
-
-- `formats`: the formats to be used for loading resource bundles
-
-Throws:
-
-- `NullPointerException`: if the given `formats` is null
-- `IllegalArgumentException`: if the given `formats` is not "java.class" or "java.properties".
+@param formats the formats to be used for loading resource bundles
+@throws NullPointerException if the given {@code formats} is null
+@throws IllegalArgumentException if the given {@code formats} is not
+        "java.class" or "java.properties".
 
 ## AbstractResourceBundleProvider.toBundleName(String, Locale)
 
@@ -94,35 +80,35 @@ Throws:
 protected String toBundleName(String baseName, Locale locale)
 ```
 
-Returns the bundle name for the given `baseName` and `locale` that this provider provides.
+Returns the bundle name for the given {@code baseName} and {@code
+locale} that this provider provides.
 
-Parameters:
-
-- `baseName`: the base name of the resource bundle, a fully qualified class name
-- `locale`: the locale for which a resource bundle should be loaded
-
-**API note:** A resource bundle provider may package its resource bundles in the
+@apiNote
+A resource bundle provider may package its resource bundles in the
 same package as the base name of the resource bundle if the package
 is not split among other named modules.  If there are more than one
 bundle providers providing the resource bundle of a given base name,
 the resource bundles can be packaged with per-language grouping
 or per-region grouping to eliminate the split packages.
 
-For example, if `baseName` is `"p.resources.Bundle"` then
-the resource bundle name of `"p.resources.Bundle"` of
-Locale("ja", "", "XX")
-and `Locale("en")` could be
-"p.resources.ja.Bundle_ja_&thinsp;_XX" and
-`"p.resources.Bundle_en"` respectively.
+<p>For example, if {@code baseName} is {@code "p.resources.Bundle"} then
+the resource bundle name of {@code "p.resources.Bundle"} of
+<code style="white-space:nowrap">Locale("ja", "", "XX")</code>
+and {@code Locale("en")} could be <code style="white-space:nowrap">
+"p.resources.ja.Bundle_ja_&thinsp;_XX"</code> and
+{@code "p.resources.Bundle_en"} respectively.
 
- This method is called from the default implementation of the
-Locale) method.
+<p> This method is called from the default implementation of the
+{@link #getBundle(String, Locale)} method.
 
-**Implementation note:** The default implementation of this method is the same as the
+@implNote The default implementation of this method is the same as the
 implementation of
-Locale).
+{@link java.util.ResourceBundle.Control#toBundleName(String, Locale)}.
 
-**Returns:** the bundle name for the resource bundle
+@param baseName the base name of the resource bundle, a fully qualified
+                class name
+@param locale   the locale for which a resource bundle should be loaded
+@return the bundle name for the resource bundle
 
 ## AbstractResourceBundleProvider.getBundle(String, Locale)
 
@@ -130,25 +116,23 @@ Locale).
 public ResourceBundle getBundle(String baseName, Locale locale)
 ```
 
-Returns a `ResourceBundle` for the given `baseName` and
-`locale`.
+Returns a {@code ResourceBundle} for the given {@code baseName} and
+{@code locale}.
 
-Parameters:
-
-- `baseName`: the base bundle name of the resource bundle, a fully qualified class name.
-- `locale`: the locale for which the resource bundle should be instantiated
-
-**Implementation note:** The default implementation of this method calls the
-Locale) toBundleName method to get the
-bundle name for the `baseName` and `locale` and finds the
+@implNote
+The default implementation of this method calls the
+{@link #toBundleName(String, Locale) toBundleName} method to get the
+bundle name for the {@code baseName} and {@code locale} and finds the
 resource bundle of the bundle name local in the module of this provider.
 It will only search the formats specified when this provider was
 constructed.
 
-**Returns:** `ResourceBundle` of the given `baseName` and
-        `locale`, or `null` if no resource bundle is found
-
-Throws:
-
-- `NullPointerException`: if `baseName` or `locale` is `null`
-- `UncheckedIOException`: if any IO exception occurred during resource bundle loading
+@param baseName the base bundle name of the resource bundle, a fully
+                qualified class name.
+@param locale the locale for which the resource bundle should be instantiated
+@return {@code ResourceBundle} of the given {@code baseName} and
+        {@code locale}, or {@code null} if no resource bundle is found
+@throws NullPointerException if {@code baseName} or {@code locale} is
+        {@code null}
+@throws UncheckedIOException if any IO exception occurred during resource
+        bundle loading

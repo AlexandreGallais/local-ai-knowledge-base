@@ -1,15 +1,15 @@
 ---
-title: "Statically compiled queries - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/statically-compiled-queries.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Statically compiled queries - LINQ to XML
+description: Learn how LINQ to XML queries gain a performance advantage over XMLDocument by being statically compiled.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: 3bf558fe-0705-479d-86d4-00188f5fcf9c
 ---
-
 # Statically compiled queries (LINQ to XML)
 
-One of the most important performance advantages of LINQ to XML, as compared to `System.Xml.XmlDocument`, is that queries in LINQ to XML are statically compiled, whereas XPath queries must be interpreted at runtime. This feature is built into LINQ to XML, so you don't have to perform extra steps to take advantage of it, but it's helpful to understand the distinction when choosing between the two technologies. This article explains the difference.
+One of the most important performance advantages of LINQ to XML, as compared to <xref:System.Xml.XmlDocument>, is that queries in LINQ to XML are statically compiled, whereas XPath queries must be interpreted at runtime. This feature is built into LINQ to XML, so you don't have to perform extra steps to take advantage of it, but it's helpful to understand the distinction when choosing between the two technologies. This article explains the difference.
 
 ## Statically compiled queries vs. XPath
 
@@ -62,7 +62,7 @@ For Each el In list1
 Next
 ```
 
-The `System.Linq.Enumerable.Where*` method is an extension method. For more information, see Extension Methods (C# Programming Guide). Because `System.Linq.Enumerable.Where*` is an extension method, the query above is compiled as though it were written as follows:
+The <xref:System.Linq.Enumerable.Where*> method is an extension method. For more information, see [Extension Methods (C# Programming Guide)](../../csharp/programming-guide/classes-and-structs/extension-methods.md). Because <xref:System.Linq.Enumerable.Where*> is an extension method, the query above is compiled as though it were written as follows:
 
 ```csharp
 XDocument po = XDocument.Load("PurchaseOrders.xml");
@@ -86,14 +86,14 @@ For Each el In list1
 Next
 ```
 
-This example produces exactly the same results as the previous two examples. This illustrates the fact that queries are effectively compiled into statically linked method calls. This, combined with the deferred execution semantics of iterators, improves performance. For more information about the deferred execution semantics of iterators, see Deferred execution and lazy evaluation.
+This example produces exactly the same results as the previous two examples. This illustrates the fact that queries are effectively compiled into statically linked method calls. This, combined with the deferred execution semantics of iterators, improves performance. For more information about the deferred execution semantics of iterators, see [Deferred execution and lazy evaluation](deferred-execution-lazy-evaluation.md).
 
-> **Note:**
+> [!NOTE]
 > These examples are representative of the code that the compiler might write. The actual implementation might differ slightly from these examples, but the performance will be the same as, or similar to, these examples.
 
 ## Executing XPath expressions with XmlDocument
 
-The following example uses `System.Xml.XmlDocument` to accomplish the same results as the previous examples:
+The following example uses <xref:System.Xml.XmlDocument> to accomplish the same results as the previous examples:
 
 ```csharp
 XmlReader reader = XmlReader.Create("PurchaseOrders.xml");
@@ -116,13 +116,13 @@ Next
 reader.Close()
 ```
 
-This query returns the same output as the examples that use LINQ to XML; the only difference is that LINQ to XML indents the printed XML, whereas `System.Xml.XmlDocument` doesn't.
+This query returns the same output as the examples that use LINQ to XML; the only difference is that LINQ to XML indents the printed XML, whereas <xref:System.Xml.XmlDocument> doesn't.
 
-However, the `System.Xml.XmlDocument` approach generally doesn't perform as well as LINQ to XML, because the `System.Xml.XmlNode.SelectNodes*` method must do the following every time it's called:
+However, the <xref:System.Xml.XmlDocument> approach generally doesn't perform as well as LINQ to XML, because the <xref:System.Xml.XmlNode.SelectNodes*> method must do the following every time it's called:
 
 - Parse the string that contains the XPath expression, breaking the string into tokens.
 - Validate the tokens to make sure that the XPath expression is valid.
 - Translate the expression into an internal expression tree.
 - Iterate through the nodes, appropriately selecting the nodes for the result set based on the evaluation of the expression.
 
-This is significantly more than the work done by the corresponding LINQ to XML query. The specific performance difference varies for different types of queries, but in general LINQ to XML queries do less work, and therefore perform better, than evaluating XPath expressions using `System.Xml.XmlDocument`.
+This is significantly more than the work done by the corresponding LINQ to XML query. The specific performance difference varies for different types of queries, but in general LINQ to XML queries do less work, and therefore perform better, than evaluating XPath expressions using <xref:System.Xml.XmlDocument>.

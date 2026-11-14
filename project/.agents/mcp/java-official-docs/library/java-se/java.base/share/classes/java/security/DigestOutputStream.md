@@ -1,12 +1,3 @@
----
-title: "DigestOutputStream class (java.security)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/security/DigestOutputStream.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # DigestOutputStream class (java.security)
 
 ```java
@@ -16,22 +7,22 @@ public class DigestOutputStream extends FilterOutputStream
 A transparent stream that updates the associated message digest using
 the bits going through the stream.
 
-To complete the message digest computation, call one of the
-`digest` methods on the associated message
+<p>To complete the message digest computation, call one of the
+{@code digest} methods on the associated message
 digest after your calls to one of this digest output stream's
-write methods.
+{@link #write(int) write} methods.
 
-It is possible to turn this stream on or off (see
-on). When it is on, a call to one of the
-`write` methods results in
+<p>It is possible to turn this stream on or off (see
+{@link #on(boolean) on}). When it is on, a call to one of the
+{@code write} methods results in
 an update on the message digest.  But when it is off, the message
 digest is not updated. The default is for the stream to be on.
 
-**See also:** MessageDigest
+@see MessageDigest
+@see DigestInputStream
 
-**See also:** DigestInputStream
-
-**Since:** 1.2
+@author Benjamin Renaud
+@since 1.2
 
 ## DigestOutputStream.digest
 
@@ -50,10 +41,9 @@ public DigestOutputStream(OutputStream stream, MessageDigest digest)
 Creates a digest output stream, using the specified output stream
 and message digest.
 
-Parameters:
+@param stream the output stream.
 
-- `stream`: the output stream.
-- `digest`: the message digest to associate with this stream.
+@param digest the message digest to associate with this stream.
 
 ## DigestOutputStream.getMessageDigest()
 
@@ -63,9 +53,8 @@ public MessageDigest getMessageDigest()
 
 Returns the message digest associated with this stream.
 
-**Returns:** the message digest associated with this stream.
-
-**See also:** #setMessageDigest(java.security.MessageDigest)
+@return the message digest associated with this stream.
+@see #setMessageDigest(java.security.MessageDigest)
 
 ## DigestOutputStream.setMessageDigest(MessageDigest)
 
@@ -75,11 +64,8 @@ public void setMessageDigest(MessageDigest digest)
 
 Associates the specified message digest with this stream.
 
-Parameters:
-
-- `digest`: the message digest to be associated with this stream.
-
-**See also:** #getMessageDigest()
+@param digest the message digest to be associated with this stream.
+@see #getMessageDigest()
 
 ## DigestOutputStream.write(int)
 
@@ -90,21 +76,18 @@ public void write(int b) throws IOException
 Updates the message digest (if the digest function is on) using
 the specified byte, and in any case writes the byte
 to the output stream. That is, if the digest function is on
-(see on), this method calls
-`update` on the message digest associated with this
-stream, passing it the byte `b`. This method then
+(see {@link #on(boolean) on}), this method calls
+{@code update} on the message digest associated with this
+stream, passing it the byte {@code b}. This method then
 writes the byte to the output stream, blocking until the byte
 is actually written.
 
-Parameters:
+@param b the byte to be used for updating and writing to the
+output stream.
 
-- `b`: the byte to be used for updating and writing to the output stream.
+@throws    IOException if an I/O error occurs.
 
-**See also:** MessageDigest#update(byte)
-
-Throws:
-
-- `IOException`: if an I/O error occurs.
+@see MessageDigest#update(byte)
 
 ## DigestOutputStream.write(byte[], int, int)
 
@@ -115,23 +98,24 @@ public void write(byte[] b, int off, int len) throws IOException
 Updates the message digest (if the digest function is on) using
 the specified subarray, and in any case writes the subarray to
 the output stream. That is, if the digest function is on (see
-on), this method calls `update`
+{@link #on(boolean) on}), this method calls {@code update}
 on the message digest associated with this stream, passing it
 the subarray specifications. This method then writes the subarray
 bytes to the output stream, blocking until the bytes are actually
 written.
 
-Parameters:
+@param b the array containing the subarray to be used for updating
+and writing to the output stream.
 
-- `b`: the array containing the subarray to be used for updating and writing to the output stream.
-- `off`: the offset into `b` of the first byte to be updated and written.
-- `len`: the number of bytes of data to be updated and written from `b`, starting at offset `off`.
+@param off the offset into {@code b} of the first byte to
+be updated and written.
 
-**See also:** MessageDigest#update(byte[], int, int)
+@param len the number of bytes of data to be updated and written
+from {@code b}, starting at offset {@code off}.
 
-Throws:
+@throws    IOException if an I/O error occurs.
 
-- `IOException`: if an I/O error occurs.
+@see MessageDigest#update(byte[], int, int)
 
 ## DigestOutputStream.on(boolean)
 
@@ -140,13 +124,12 @@ public void on(boolean on)
 ```
 
 Turns the digest function on or off. The default is on.  When
-it is on, a call to one of the `write` methods results in an
+it is on, a call to one of the {@code write} methods results in an
 update on the message digest.  But when it is off, the message
 digest is not updated.
 
-Parameters:
-
-- `on`: `true` to turn the digest function on, `false` to turn it off.
+@param on {@code true} to turn the digest function on,
+{@code false} to turn it off.
 
 ## DigestOutputStream.toString()
 

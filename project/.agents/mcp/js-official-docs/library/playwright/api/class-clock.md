@@ -1,16 +1,7 @@
----
-title: "class: Clock"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-clock.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: Clock
 * since: v1.45
 
-Accurately simulating time-dependent behavior is essential for verifying the correctness of applications. Learn more about clock emulation.
+Accurately simulating time-dependent behavior is essential for verifying the correctness of applications. Learn more about [clock emulation](../clock.md).
 
 Note that clock is installed for the entire [BrowserContext], so the time
 in all the pages and iframes is controlled by the same clock.
@@ -28,12 +19,12 @@ await page.clock.fastForward(1000);
 await page.clock.fastForward('30:00');
 ```
 
-```python
+```python async
 await page.clock.fast_forward(1000)
 await page.clock.fast_forward("30:00")
 ```
 
-```python
+```python sync
 page.clock.fast_forward(1000)
 page.clock.fast_forward("30:00")
 ```
@@ -106,12 +97,12 @@ await page.clock.runFor(1000);
 await page.clock.runFor('30:00');
 ```
 
-```python
+```python async
 await page.clock.run_for(1000);
 await page.clock.run_for("30:00")
 ```
 
-```python
+```python sync
 page.clock.run_for(1000);
 page.clock.run_for("30:00")
 ```
@@ -132,6 +123,7 @@ await page.Clock.RunForAsync("30:00");
 
 Time may be a finite number of milliseconds to advance the clock by or a human-readable string. Valid string formats are "08" for eight seconds, "01:00" for one minute and "02:34:10" for two hours, 34 minutes and ten seconds.
 
+
 ## async method: Clock.pauseAt
 * since: v1.45
 
@@ -149,12 +141,12 @@ await page.clock.pauseAt(new Date('2020-02-02'));
 await page.clock.pauseAt('2020-02-02');
 ```
 
-```python
+```python async
 await page.clock.pause_at(datetime.datetime(2020, 2, 2))
 await page.clock.pause_at("2020-02-02")
 ```
 
-```python
+```python sync
 page.clock.pause_at(datetime.datetime(2020, 2, 2))
 page.clock.pause_at("2020-02-02")
 ```
@@ -180,7 +172,7 @@ await page.goto('http://localhost:3333');
 await page.clock.pauseAt(new Date('2024-12-10T10:00:00'));
 ```
 
-```python
+```python async
 # Initialize clock with some time before the test time and let the page load
 # naturally. `Date.now` will progress as the timers fire.
 await page.clock.install(time=datetime.datetime(2024, 12, 10, 8, 0, 0))
@@ -188,7 +180,7 @@ await page.goto("http://localhost:3333")
 await page.clock.pause_at(datetime.datetime(2024, 12, 10, 10, 0, 0))
 ```
 
-```python
+```python sync
 # Initialize clock with some time before the test time and let the page load
 # naturally. `Date.now` will progress as the timers fire.
 page.clock.install(time=datetime.datetime(2024, 12, 10, 8, 0, 0))
@@ -237,7 +229,7 @@ Resumes timers. Once this method is called, time resumes flowing, timers are fir
 Makes `Date.now` and `new Date()` return fixed fake time at all times,
 keeps all the timers running.
 
-Use this method for simple scenarios where you only need to test with a predefined time. For more advanced scenarios, use [`method: Clock.install`] instead. Read docs on clock emulation to learn more.
+Use this method for simple scenarios where you only need to test with a predefined time. For more advanced scenarios, use [`method: Clock.install`] instead. Read docs on [clock emulation](../clock.md) to learn more.
 
 **Usage**
 
@@ -247,13 +239,13 @@ await page.clock.setFixedTime(new Date('2020-02-02'));
 await page.clock.setFixedTime('2020-02-02');
 ```
 
-```python
+```python async
 await page.clock.set_fixed_time(datetime.datetime.now())
 await page.clock.set_fixed_time(datetime.datetime(2020, 2, 2))
 await page.clock.set_fixed_time("2020-02-02")
 ```
 
-```python
+```python sync
 page.clock.set_fixed_time(datetime.datetime.now())
 page.clock.set_fixed_time(datetime.datetime(2020, 2, 2))
 page.clock.set_fixed_time("2020-02-02")
@@ -305,13 +297,13 @@ await page.clock.setSystemTime(new Date('2020-02-02'));
 await page.clock.setSystemTime('2020-02-02');
 ```
 
-```python
+```python async
 await page.clock.set_system_time(datetime.datetime.now())
 await page.clock.set_system_time(datetime.datetime(2020, 2, 2))
 await page.clock.set_system_time("2020-02-02")
 ```
 
-```python
+```python sync
 page.clock.set_system_time(datetime.datetime.now())
 page.clock.set_system_time(datetime.datetime(2020, 2, 2))
 page.clock.set_system_time("2020-02-02")

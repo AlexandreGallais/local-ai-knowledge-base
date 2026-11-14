@@ -1,31 +1,21 @@
----
-title: "RecordComponentInfo interface (java.lang.classfile.attribute)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/attribute/RecordComponentInfo.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # RecordComponentInfo interface (java.lang.classfile.attribute)
 
 ```java
 public sealed interface RecordComponentInfo extends AttributedElement permits BoundRecordComponentInfo, UnboundAttribute.UnboundRecordComponentInfo
 ```
 
-Models a single record component in the `RecordAttribute`.
-
-`SignatureAttribute`, `RuntimeVisibleAnnotationsAttribute`,
-`RuntimeInvisibleAnnotationsAttribute`, `RuntimeVisibleTypeAnnotationsAttribute`, and `RuntimeInvisibleTypeAnnotationsAttribute` are the only predefined attributes
+Models a single record component in the {@link RecordAttribute}.
+<p>
+{@link SignatureAttribute}, {@link RuntimeVisibleAnnotationsAttribute},
+{@link RuntimeInvisibleAnnotationsAttribute}, {@link
+RuntimeVisibleTypeAnnotationsAttribute}, and {@link
+RuntimeInvisibleTypeAnnotationsAttribute} are the only predefined attributes
 that may exist on record components.
 
-**See also:** RecordAttribute#components()
-
-**See also:** RecordComponent
-
-**jvms:** 4.7.30 The `Record` Attribute
-
-**Since:** 24
+@see RecordAttribute#components()
+@see RecordComponent
+@jvms 4.7.30 The {@code Record} Attribute
+@since 24
 
 ## RecordComponentInfo.name()
 
@@ -33,7 +23,9 @@ that may exist on record components.
 Utf8Entry name()
 ```
 
-**See also:** RecordComponent#getName()
+{@return the name of this component}
+
+@see RecordComponent#getName()
 
 ## RecordComponentInfo.descriptor()
 
@@ -41,10 +33,13 @@ Utf8Entry name()
 Utf8Entry descriptor()
 ```
 
-**API note:** A record component may have a generic type; this information is stored
-in the Signature attribute in this component.
+{@return the field descriptor string of this component}
 
-**See also:** RecordComponent#getType()
+@apiNote
+A record component may have a generic type; this information is stored
+in the {@link SignatureAttribute Signature} attribute in this component.
+
+@see RecordComponent#getType()
 
 ## RecordComponentInfo.descriptorSymbol()
 
@@ -52,10 +47,13 @@ in the Signature attribute in this component.
 default ClassDesc descriptorSymbol()
 ```
 
-**API note:** A record component may have a generic type; this information is stored
-in the Signature attribute in this component.
+{@return the symbolic field descriptor of this component}
 
-**See also:** RecordComponent#getType()
+@apiNote
+A record component may have a generic type; this information is stored
+in the {@link SignatureAttribute Signature} attribute in this component.
+
+@see RecordComponent#getType()
 
 ## RecordComponentInfo.of(Utf8Entry, Utf8Entry, List<Attribute<?>>)
 
@@ -63,11 +61,11 @@ in the Signature attribute in this component.
 static RecordComponentInfo of(Utf8Entry name, Utf8Entry descriptor, List<Attribute<?>> attributes)
 ```
 
-Parameters:
+{@return a record component description}
 
-- `name`: the component name
-- `descriptor`: the component field descriptor string
-- `attributes`: the component attributes
+@param name the component name
+@param descriptor the component field descriptor string
+@param attributes the component attributes
 
 ## RecordComponentInfo.of(Utf8Entry, Utf8Entry, Attribute<?>...)
 
@@ -75,11 +73,11 @@ Parameters:
 static RecordComponentInfo of(Utf8Entry name, Utf8Entry descriptor, Attribute<?>... attributes)
 ```
 
-Parameters:
+{@return a record component description}
 
-- `name`: the component name
-- `descriptor`: the component field descriptor sting
-- `attributes`: the component attributes
+@param name the component name
+@param descriptor the component field descriptor sting
+@param attributes the component attributes
 
 ## RecordComponentInfo.of(String, ClassDesc, List<Attribute<?>>)
 
@@ -87,11 +85,11 @@ Parameters:
 static RecordComponentInfo of(String name, ClassDesc descriptor, List<Attribute<?>> attributes)
 ```
 
-Parameters:
+{@return a record component description}
 
-- `name`: the component name
-- `descriptor`: the component symbolic field descriptor
-- `attributes`: the component attributes
+@param name the component name
+@param descriptor the component symbolic field descriptor
+@param attributes the component attributes
 
 ## RecordComponentInfo.of(String, ClassDesc, Attribute<?>...)
 
@@ -99,8 +97,8 @@ Parameters:
 static RecordComponentInfo of(String name, ClassDesc descriptor, Attribute<?>... attributes)
 ```
 
-Parameters:
+{@return a record component description}
 
-- `name`: the component name
-- `descriptor`: the component symbolic field descriptor
-- `attributes`: the component attributes
+@param name the component name
+@param descriptor the component symbolic field descriptor
+@param attributes the component attributes

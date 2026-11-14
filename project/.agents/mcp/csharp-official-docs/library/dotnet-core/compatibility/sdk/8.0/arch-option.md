@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: Architecture option doesn't imply self-contained"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/8.0/arch-option.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in the .NET 8 SDK where the `--arch` option no longer implies that an app is self-contained.
+ms.date: 10/05/2023
 ---
-
 # --arch option doesn't imply self-contained
 
-Up until now, the `--arch` option for `dotnet` CLI commands such as dotnet publish implied that the app was self-contained. The behavior of the `--arch` option has now been changed to match that of the `--runtime` option, and it no longer implies that an app is self-contained.
+Up until now, the `--arch` option for `dotnet` CLI commands such as [dotnet publish](../../../tools/dotnet-publish.md) implied that the app was [self-contained](../../../deploying/index.md#publish-as-self-contained). The behavior of the `--arch` option has now been changed to match that of the `--runtime` option, and it no longer implies that an app is self-contained.
 
 ## Previous behavior
 
@@ -25,11 +21,11 @@ Up until now, the `--arch` option for `dotnet` CLI commands such as dotnet publi
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-This change was made to unify the behavior of `--arch` with that of `--runtime`, which it's an alias for. The behavior for `--runtime` was also changed in .NET 8.
+This change was made to unify the behavior of `--arch` with that of `--runtime`, which it's an alias for. The [behavior for `--runtime` was also changed](runtimespecific-app-default.md) in .NET 8.
 
 ## Recommended action
 
@@ -37,4 +33,4 @@ If your application needs to be self contained, set `--self-contained` on your C
 
 ## See also
 
-- Runtime-specific apps no longer self-contained
+- [Runtime-specific apps no longer self-contained](runtimespecific-app-default.md)

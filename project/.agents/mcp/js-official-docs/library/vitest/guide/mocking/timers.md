@@ -1,17 +1,8 @@
----
-title: "Timers"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/mocking/timers.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # Timers
 
 When we test code that involves timeouts or intervals, instead of having our tests wait it out or timeout, we can speed up our tests by using "fake" timers that mock calls to `setTimeout` and `setInterval`.
 
-See the `vi.useFakeTimers` API section for a more in depth detailed API description.
+See the [`vi.useFakeTimers` API section](/api/vi#vi-usefaketimers) for a more in depth detailed API description.
 
 ## Example
 
@@ -60,13 +51,13 @@ describe('delayed execution', () => {
 
 Some Vitest APIs wait for a condition to be met. When fake timers are enabled, these APIs advance them while they run:
 
-- `vi.waitFor` and `vi.waitUntil` advance timers by `interval` before every check.
-- `expect.poll` advances timers by `interval` after every failed attempt.
-- In Browser Mode, `expect.element` advances timers while it retries, and locator and `userEvent` methods that take an element advance them while they run, even when the element already exists. The amount depends on how long the action takes in real time, so it can vary between runs. Methods that don't take an element, such as `userEvent.keyboard` and `userEvent.tab`, don't advance timers.
+- [`vi.waitFor`](/api/vi#vi-waitfor) and [`vi.waitUntil`](/api/vi#vi-waituntil) advance timers by `interval` before every check.
+- [`expect.poll`](/api/expect#poll) advances timers by `interval` after every failed attempt.
+- In Browser Mode, [`expect.element`](/api/browser/assertions) advances timers while it retries, and [locator](/api/browser/locators#methods) and [`userEvent`](/api/browser/interactivity) methods that take an element advance them while they run, even when the element already exists. The amount depends on how long the action takes in real time, so it can vary between runs. Methods that don't take an element, such as `userEvent.keyboard` and `userEvent.tab`, don't advance timers.
 
 ## Tick Modes {#tick-modes}
 
-By default, fake timers only move when you advance them or when one of the APIs above runs. `vi.setTimerTickMode` makes them advance on their own:
+By default, fake timers only move when you advance them or when one of the APIs above runs. [`vi.setTimerTickMode`](/api/vi#vi-settimertickmode) makes them advance on their own:
 
 - `interval` advances fake time by a fixed step on a real-time interval, so it stays roughly in step with real time. It suits code where some state only lasts for a limited time.
 - `nextTimerAsync` runs the next pending timer after each macrotask, so chained timers fire almost back to back. It suits code that eventually settles, but state that only lasts for a limited time can disappear before an assertion or action sees it.

@@ -1,17 +1,15 @@
 ---
-title: "Unit testing F# in .NET Core with dotnet test and xUnit"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/unit-testing-fsharp-with-xunit.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Unit testing F# in .NET Core with dotnet test and xUnit
+description: Learn unit test concepts for F# in .NET Core through an interactive experience building a sample solution step-by-step using dotnet test and xUnit.
+author: billwagner
+ms.author: wiwagn
+ms.date: 08/30/2017
 ---
-
 # Unit testing F# libraries in .NET Core using dotnet test and xUnit
 
-This tutorial takes you through an interactive experience building a sample solution step-by-step to learn unit testing concepts. If you prefer to follow the tutorial using a pre-built solution, view or download the sample code before you begin. For download instructions, see Samples and Tutorials.
+This tutorial takes you through an interactive experience building a sample solution step-by-step to learn unit testing concepts. If you prefer to follow the tutorial using a pre-built solution, [view or download the sample code](https://github.com/dotnet/samples/tree/main/core/getting-started/unit-testing-with-fsharp/) before you begin. For download instructions, see [Samples and Tutorials](../../samples-and-tutorials/index.md#view-and-download-samples).
 
-This article is about testing a .NET Core project. If you're testing an ASP.NET Core project, see Integration tests in ASP.NET Core.
+[!INCLUDE [testing an ASP.NET Core project from .NET Core](../../../includes/core-testing-note-aspnet.md)]
 
 ## Creating the source project
 
@@ -64,10 +62,10 @@ The test project requires other packages to create and run unit tests. `dotnet n
 dotnet reference add ../MathService/MathService.fsproj
 ```
 
-> **Tip:**
+> [!TIP]
 > If you're using .NET 9 SDK or earlier, use the "verb first" form (`dotnet add reference`) instead. The "noun first" form was introduced in .NET 10.
 
-You can see the entire file in the samples repository on GitHub.
+You can see the entire file in the [samples repository](https://github.com/dotnet/samples/blob/main/core/getting-started/unit-testing-with-fsharp/MathService.Tests/MathService.Tests.fsproj) on GitHub.
 
 You have the following final solution layout:
 
@@ -99,7 +97,7 @@ let ``Fail every time`` () = Assert.True(false)
 
 The `[<Fact>]` attribute denotes a test method that is run by the test runner. From the *unit-testing-with-fsharp*, execute `dotnet test` to build the tests and the class library and then run the tests. The xUnit test runner contains the program entry point to run your tests. `dotnet test` starts the test runner using the unit test project you've created.
 
-These two tests show the most basic <example-value> and failing tests. `My test` passes, and `Fail every time` fails. Now, create a test for the `squaresOfOdds` method. The `squaresOfOdds` method returns a sequence of the squares of all odd integer values that are part of the input sequence. Rather than trying to write all of those functions at once, you can iteratively create tests that validate the functionality. Making each test pass means creating the necessary functionality for the method.
+These two tests show the most basic passing and failing tests. `My test` passes, and `Fail every time` fails. Now, create a test for the `squaresOfOdds` method. The `squaresOfOdds` method returns a sequence of the squares of all odd integer values that are part of the input sequence. Rather than trying to write all of those functions at once, you can iteratively create tests that validate the functionality. Making each test pass means creating the necessary functionality for the method.
 
 The simplest test we can write is to call `squaresOfOdds` with all even numbers, where the result should be an empty sequence of integers.  Here's that test:
 
@@ -168,7 +166,7 @@ You've built a small library and a set of unit tests for that library. You've st
 
 ## See also
 
-- dotnet new
-- dotnet sln
-- dotnet reference add
-- dotnet test
+- [dotnet new](../tools/dotnet-new.md)
+- [dotnet sln](../tools/dotnet-sln.md)
+- [dotnet reference add](../tools/dotnet-reference-add.md)
+- [dotnet test](../tools/dotnet-test.md)

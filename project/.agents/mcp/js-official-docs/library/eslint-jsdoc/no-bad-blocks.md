@@ -1,15 +1,8 @@
----
-title: "no-bad-blocks"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/no-bad-blocks.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-no-bad-blocks"></a>
+<a name="no-bad-blocks"></a>
+### <code>no-bad-blocks</code>
 
-# no-bad-blocks
 
-### `no-bad-blocks`
 
 This rule checks for multi-line-style comments which fail to meet the
 criteria of a JSDoc block, namely that it should begin with two and only two
@@ -20,15 +13,21 @@ an at-sign (`@`) and some non-whitespace (as with a JSDoc block tag).
 Exceptions are made for ESLint directive comments (which may use `@` in
 rule names).
 
+<a name="user-content-fixer"></a>
+<a name="fixer"></a>
 ## Fixer
 
 Repairs badly-formed blocks missing two initial asterisks.
 
+<a name="user-content-options"></a>
+<a name="options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `ignore`
+<a name="user-content-options-ignore"></a>
+<a name="options-ignore"></a>
+### <code>ignore</code>
 
 An array of directives that will not be reported if present at the beginning of
 a multi-comment block and at-sign `/* @`.
@@ -36,15 +35,20 @@ a multi-comment block and at-sign `/* @`.
 Defaults to `['ts-check', 'ts-expect-error', 'ts-ignore', 'ts-nocheck',
 'license', 'license-end', 'licstart', 'licend', 'source',]`
 
-(directives that are either used by TypeScript
-or by the LibreJS standard).
+(directives that are either [used by TypeScript](https://www.typescriptlang.org/docs/handbook/intro-to-js-ts.html#ts-check)
+or by the [LibreJS standard](https://www.gnu.org/software/librejs/free-your-javascript.html)).
 
-### `preventAllMultiAsteriskBlocks`
+<a name="user-content-options-preventallmultiasteriskblocks"></a>
+<a name="options-preventallmultiasteriskblocks"></a>
+### <code>preventAllMultiAsteriskBlocks</code>
 
 A boolean (defaulting to `false`) which if `true` will prevent all
 JSDoc-like blocks with more than two initial asterisks even those without
 apparent tag content.
 
+
+<a name="user-content-context-and-settings"></a>
+<a name="context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -54,6 +58,8 @@ apparent tag content.
 |Recommended|false|
 |Options|`ignore`, `preventAllMultiAsteriskBlocks`|
 
+<a name="user-content-failing-examples"></a>
+<a name="failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -110,6 +116,10 @@ function quux (foo) {
 // Message: Expected JSDoc-like comment to begin with two asterisks.
 ````
 
+
+
+<a name="user-content-passing-examples"></a>
+<a name="passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -170,3 +180,4 @@ function quux (foo) {
 
 /* eslint-disable @stylistic/max-len  */
 ````
+

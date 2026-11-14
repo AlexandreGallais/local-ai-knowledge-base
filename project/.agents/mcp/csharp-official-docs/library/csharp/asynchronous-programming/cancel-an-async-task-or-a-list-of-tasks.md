@@ -1,18 +1,17 @@
 ---
-title: "Cancel a list of tasks"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/asynchronous-programming/cancel-an-async-task-or-a-list-of-tasks.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Cancel a list of tasks
+description: Learn how to use cancellation tokens to signal a cancellation request to a list of tasks.
+ms.date: 02/09/2023
+ms.topic: tutorial
 ---
 
 # Cancel a list of tasks
 
-You can cancel an async console application if you don'<example-value>'t yet complete.
+You can cancel an async console application if you don't want to wait for it to finish. By following the example in this topic, you can add a cancellation to an application that downloads the contents of a list of websites. You can cancel many tasks by associating the <xref:System.Threading.CancellationTokenSource> instance with each task. If you select the <kbd>Enter</kbd> key, you cancel all tasks that aren't yet complete.
 
 This tutorial covers:
 
+> [!div class="checklist"]
 >
 > - Creating a .NET console application
 > - Writing an async application that supports cancellation
@@ -20,13 +19,11 @@ This tutorial covers:
 
 ## Prerequisites
 
-- The latest .NET SDK
-- Visual Studio Code editor
-- The C# DevKit
+[!INCLUDE [Prerequisites](../../../includes/prerequisites-basic.md)]
 
 ### Create example application
 
-Create a new .NET Core console application. You can create one by using the `dotnet new console` command or from Visual Studio. Open the *Program.cs* file in your favorite code editor.
+Create a new .NET Core console application. You can create one by using the [`dotnet new console`](../../core/tools/dotnet-new-sdk-templates.md#console) command or from [Visual Studio](/visualstudio/install/install-visual-studio). Open the *Program.cs* file in your favorite code editor.
 
 ### Replace using directives
 
@@ -77,7 +74,7 @@ static readonly IEnumerable<string> s_urlList = new string[]
 };
 ```
 
-The `System.Threading.CancellationTokenSource` is used to signal a requested cancellation to a `System.Threading.CancellationToken`. The `HttpClient` exposes the ability to send HTTP requests and receive HTTP responses. The `s_urlList` holds all of the URLs that the application plans to process.
+The <xref:System.Threading.CancellationTokenSource> is used to signal a requested cancellation to a <xref:System.Threading.CancellationToken>. The `HttpClient` exposes the ability to send HTTP requests and receive HTTP responses. The `s_urlList` holds all of the URLs that the application plans to process.
 
 ## Update application entry point
 
@@ -96,7 +93,7 @@ static async Task Main()
             Console.WriteLine("Press the ENTER key to cancel...");
         }
 
-        Console.WriteLine("\nENTER key <example-value>: cancelling downloads.\n");
+        Console.WriteLine("\nENTER key pressed: cancelling downloads.\n");
         s_cts.Cancel();
     });
 
@@ -121,9 +118,9 @@ static async Task Main()
 }
 ```
 
-The updated `Main` method is now considered an Async main, which allows for an asynchronous entry point into the executable. It writes a few instructional messages to the console, then declares a `System.Threading.Tasks.Task` instance named `cancelTask`, which will read console key strokes. If the `Enter` key is pressed, a call to `System.Threading.CancellationTokenSource.Cancel` is made. This will signal cancellation. Next, the `sumPageSizesTask` variable is assigned from the `SumPageSizesAsync` method. Both tasks are then passed to `System.Threading.Tasks.Task.WhenAny(System.Threading.Tasks.Task[])`, which will continue when any of the two tasks have completed.
+The updated `Main` method is now considered an [Async main](../fundamentals/program-structure/main-command-line.md#main-return-values), which allows for an asynchronous entry point into the executable. It writes a few instructional messages to the console, then declares a <xref:System.Threading.Tasks.Task> instance named `cancelTask`, which will read console key strokes. If the <kbd>Enter</kbd> key is pressed, a call to <xref:System.Threading.CancellationTokenSource.Cancel?displayProperty=nameWithType> is made. This will signal cancellation. Next, the `sumPageSizesTask` variable is assigned from the `SumPageSizesAsync` method. Both tasks are then passed to <xref:System.Threading.Tasks.Task.WhenAny(System.Threading.Tasks.Task[])?displayProperty=nameWithType>, which will continue when any of the two tasks have completed.
 
-The next block of code ensures that the application doesn't exit until the cancellation has been processed. If the first task to complete is the `cancelTask`, the `sumPageSizeTask` is awaited. If it was cancelled, when awaited it throws a `System.Threading.Tasks.TaskCanceledException`. The block catches that exception, and prints a message.
+The next block of code ensures that the application doesn't exit until the cancellation has been processed. If the first task to complete is the `cancelTask`, the `sumPageSizeTask` is awaited. If it was cancelled, when awaited it throws a <xref:System.Threading.Tasks.TaskCanceledException?displayProperty=nameWithType>. The block catches that exception, and prints a message.
 
 ## Create the asynchronous sum page sizes method
 
@@ -148,7 +145,7 @@ static async Task SumPageSizesAsync()
 }
 ```
 
-The method starts by instantiating and starting a `System.Diagnostics.Stopwatch`. It then loops through each URL in the `s_urlList` and calls `ProcessUrlAsync`. With each iteration, the `s_cts.Token` is passed into the `ProcessUrlAsync` method and the code returns a `System.Threading.Tasks.Task`1`, where `TResult` is an integer:
+The method starts by instantiating and starting a <xref:System.Diagnostics.Stopwatch>. It then loops through each URL in the `s_urlList` and calls `ProcessUrlAsync`. With each iteration, the `s_cts.Token` is passed into the `ProcessUrlAsync` method and the code returns a <xref:System.Threading.Tasks.Task`1>, where `TResult` is an integer:
 
 ```csharp
 int total = 0;
@@ -174,7 +171,7 @@ static async Task<int> ProcessUrlAsync(string url, HttpClient client, Cancellati
 }
 ```
 
-For any given URL, the method will use the `client` instance provided to get the response as a `byte[]`. The `System.Threading.CancellationToken` instance is passed into the `System.Net.Http.HttpClient.GetAsync(System.String,System.Threading.CancellationToken)` and `System.Net.Http.HttpContent.ReadAsByteArrayAsync` methods. The `token` is used to register for requested cancellation. The length is returned after the URL and length is written to the console.
+For any given URL, the method will use the `client` instance provided to get the response as a `byte[]`. The <xref:System.Threading.CancellationToken> instance is passed into the <xref:System.Net.Http.HttpClient.GetAsync(System.String,System.Threading.CancellationToken)?displayProperty=nameWithType> and <xref:System.Net.Http.HttpContent.ReadAsByteArrayAsync?displayProperty=nameWithType> methods. The `token` is used to register for requested cancellation. The length is returned after the URL and length is written to the console.
 
 ### Example application output
 
@@ -190,7 +187,7 @@ https://learn.microsoft.com/dotnet                                67,452
 https://learn.microsoft.com/dynamics365                           48,582
 https://learn.microsoft.com/education                             22,924
 
-ENTER key <example-value>: cancelling downloads.
+ENTER key pressed: cancelling downloads.
 
 Application ending.
 ```
@@ -199,110 +196,15 @@ Application ending.
 
 The following code is the complete text of the *Program.cs* file for the example.
 
-```csharp
-﻿using System.Diagnostics;
+:::code language="csharp" source="snippets/cancel-tasks/Program.cs":::
 
-class Program
-{
-    static readonly CancellationTokenSource s_cts = new CancellationTokenSource();
-
-    static readonly HttpClient s_client = new HttpClient
-    {
-        MaxResponseContentBufferSize = 1_000_000
-    };
-
-    static readonly IEnumerable<string> s_urlList = new string[]
-    {
-            "https://learn.microsoft.com",
-            "https://learn.microsoft.com/aspnet/core",
-            "https://learn.microsoft.com/azure",
-            "https://learn.microsoft.com/azure/devops",
-            "https://learn.microsoft.com/dotnet",
-            "https://learn.microsoft.com/dynamics365",
-            "https://learn.microsoft.com/education",
-            "https://learn.microsoft.com/enterprise-mobility-security",
-            "https://learn.microsoft.com/gaming",
-            "https://learn.microsoft.com/graph",
-            "https://learn.microsoft.com/microsoft-365",
-            "https://learn.microsoft.com/office",
-            "https://learn.microsoft.com/powershell",
-            "https://learn.microsoft.com/sql",
-            "https://learn.microsoft.com/surface",
-            "https://learn.microsoft.com/system-center",
-            "https://learn.microsoft.com/visualstudio",
-            "https://learn.microsoft.com/windows",
-            "https://learn.microsoft.com/maui"
-    };
-
-    static async Task Main()
-    {
-        Console.WriteLine("Application started.");
-        Console.WriteLine("Press the ENTER key to cancel...\n");
-
-        Task cancelTask = Task.Run(() =>
-        {
-            while (Console.ReadKey().Key != ConsoleKey.Enter)
-            {
-                Console.WriteLine("Press the ENTER key to cancel...");
-            }
-
-            Console.WriteLine("\nENTER key <example-value>: cancelling downloads.\n");
-            s_cts.Cancel();
-        });
-
-        Task sumPageSizesTask = SumPageSizesAsync();
-
-        Task finishedTask = await Task.WhenAny(new[] { cancelTask, sumPageSizesTask });
-        if (finishedTask == cancelTask)
-        {
-            // wait for the cancellation to take place:
-            try
-            {
-                await sumPageSizesTask;
-                Console.WriteLine("Download task completed before cancel request was processed.");
-            }
-            catch (OperationCanceledException)
-            {
-                Console.WriteLine("Download task has been cancelled.");
-            }
-        }
-
-        Console.WriteLine("Application ending.");
-    }
-
-    static async Task SumPageSizesAsync()
-    {
-        var stopwatch = Stopwatch.StartNew();
-
-        int total = 0;
-        foreach (string url in s_urlList)
-        {
-            int contentLength = await ProcessUrlAsync(url, s_client, s_cts.Token);
-            total += contentLength;
-        }
-
-        stopwatch.Stop();
-
-        Console.WriteLine($"\nTotal bytes returned:  {total:#,#}");
-        Console.WriteLine($"Elapsed time:          {stopwatch.Elapsed}\n");
-    }
-
-    static async Task<int> ProcessUrlAsync(string url, HttpClient client, CancellationToken token)
-    {
-        HttpResponseMessage response = await client.GetAsync(url, token);
-        byte[] content = await response.Content.ReadAsByteArrayAsync(token);
-        Console.WriteLine($"{url,-60} {content.Length,10:#,#}");
-
-        return content.Length;
-    }
-}
-```
 ## See also
 
-- `System.Threading.CancellationToken`
-- `System.Threading.CancellationTokenSource`
-- Asynchronous programming with async and await (C#)
+- <xref:System.Threading.CancellationToken>
+- <xref:System.Threading.CancellationTokenSource>
+- [Asynchronous programming with async and await (C#)](index.md)
 
 ## Next steps
 
-> Cancel async tasks after a period of time (C#)
+> [!div class="nextstepaction"]
+> [Cancel async tasks after a period of time (C#)](cancel-async-tasks-after-a-period-of-time.md)

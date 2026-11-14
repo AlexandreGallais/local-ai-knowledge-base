@@ -1,19 +1,17 @@
 ---
 title: "Breaking change: GnuTarEntry and PaxTarEntry exclude atime and ctime by default"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/10.0/tar-atime-ctime-default.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 10 where GnuTarEntry and PaxTarEntry no longer automatically set access time and change time fields."
+ms.date: 06/05/2025
+ai-usage: ai-assisted
+ms.custom: https://github.com/dotnet/docs/issues/46465
 ---
-
 # GnuTarEntry and PaxTarEntry exclude atime and ctime by default
 
-Starting in .NET 10, `System.Formats.Tar.GnuTarEntry` and `System.Formats.Tar.PaxTarEntry` no longer automatically set access time (`atime`) and change time (`ctime`) fields when creating new entries. These fields are problematic in tar entries because not all tar readers support them. The fields will still be preserved when reading, and you set them directly. But they won't be set on existing entries that didn't have them to start, or when converting from other entry types.
+Starting in .NET 10, <xref:System.Formats.Tar.GnuTarEntry> and <xref:System.Formats.Tar.PaxTarEntry> no longer automatically set access time (`atime`) and change time (`ctime`) fields when creating new entries. These fields are problematic in tar entries because not all tar readers support them. The fields will still be preserved when reading, and you set them directly. But they won't be set on existing entries that didn't have them to start, or when converting from other entry types.
 
-The behavior of `System.Formats.Tar.TarEntry.ModificationTime` is unchanged. It's initialized to `System.DateTime.UtcNow` for tar entries created with a constructor, and uses the file modification time for entries created from files.
+The behavior of <xref:System.Formats.Tar.TarEntry.ModificationTime?displayProperty=nameWithType> is unchanged. It's initialized to <xref:System.DateTime.UtcNow> for tar entries created with a constructor, and uses the file modification time for entries created from files.
 
-Other minor fixes have been made to `System.Formats.Tar` to prioritize round-tripping of `TarEntry` entries from read to write without change.
+Other minor fixes have been made to <xref:System.Formats.Tar> to prioritize round-tripping of `TarEntry` entries from read to write without change.
 
 ## Version introduced
 
@@ -30,11 +28,11 @@ Starting in .NET 10, `GnuTarEntry` and `PaxTarEntry` only set `atime` and `ctime
 - The entry is read from a tar archive that already contains these fields.
 - The user explicitly set them using the appropriate properties.
 
-The behavior of `System.Formats.Tar.TarEntry.ModificationTime` remains unchanged. It's initialized to `System.DateTime.UtcNow` for tar entries created with a constructor, and uses the file modification time for entries created from files.
+The behavior of <xref:System.Formats.Tar.TarEntry.ModificationTime?displayProperty=nameWithType> remains unchanged. It's initialized to <xref:System.DateTime.UtcNow?displayProperty=nameWithType> for tar entries created with a constructor, and uses the file modification time for entries created from files.
 
 ## Type of breaking change
 
-This is a behavioral change.
+This is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -42,18 +40,18 @@ This change was made for better compatibility with other tar readers and to impr
 
 ## Recommended action
 
-No action required for most users—most archives have no use for these timestamps.
+No action required for most users&mdash;most archives have no use for these timestamps.
 
 If you require these fields to be set, you can use the following APIs:
 
-- For `GnuTarEntry`: Use the `System.Formats.Tar.GnuTarEntry.AccessTime` and `System.Formats.Tar.GnuTarEntry.ChangeTime` properties.
-- For `PaxTarEntry`: Use the constructor that accepts extended attributes: `System.Formats.Tar.PaxTarEntry.#ctor(System.Formats.Tar.TarEntryType,System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})`.
+- For `GnuTarEntry`: Use the <xref:System.Formats.Tar.GnuTarEntry.AccessTime?displayProperty=nameWithType> and <xref:System.Formats.Tar.GnuTarEntry.ChangeTime?displayProperty=nameWithType> properties.
+- For `PaxTarEntry`: Use the constructor that accepts extended attributes: <xref:System.Formats.Tar.PaxTarEntry.%23ctor(System.Formats.Tar.TarEntryType,System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})>.
 
 However, be aware that setting these fields creates a tar file that isn't readable by many tar clients.
 
 ## Affected APIs
 
-- `System.Formats.Tar.GnuTarEntry`
-- `System.Formats.Tar.PaxTarEntry`
-- `System.Formats.Tar.TarReader`
-- `System.Formats.Tar.TarWriter`
+- <xref:System.Formats.Tar.GnuTarEntry?displayProperty=fullName>
+- <xref:System.Formats.Tar.PaxTarEntry?displayProperty=fullName>
+- <xref:System.Formats.Tar.TarReader?displayProperty=fullName>
+- <xref:System.Formats.Tar.TarWriter?displayProperty=fullName>

@@ -1,21 +1,19 @@
 ---
-title: "Compile-time logging source generation (part 1 of 2)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/logging/source-generation.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Compile-time logging source generation
+description: Learn how to use the LoggerMessageAttribute and compile-time source generation for logging in .NET.
+ms.date: 03/17/2026
+ai-usage: ai-assisted
 ---
 
 # Compile-time logging source generation
 
-Source-generated logging is designed to deliver a highly usable and highly performant logging solution for modern .NET apps. The auto-generated source code relies on the `Microsoft.Extensions.Logging.ILogger` interface in conjunction with `Microsoft.Extensions.Logging.LoggerMessage.Define*` functionality.
+Source-generated logging is designed to deliver a highly usable and highly performant logging solution for modern .NET apps. The auto-generated source code relies on the <xref:Microsoft.Extensions.Logging.ILogger> interface in conjunction with <xref:Microsoft.Extensions.Logging.LoggerMessage.Define*?displayProperty=nameWithType> functionality.
 
-The source generator is triggered when `Microsoft.Extensions.Logging.LoggerMessageAttribute` is used on `partial` logging methods. When triggered, it autogenerates the implementation of the `partial` methods it's decorating. If there's a problem, it produces compile-time diagnostics with hints about proper usage. This compile-time logging solution is considerably faster at runtime than previously available logging approaches. It eliminates boxing, temporary allocations, and copies to the maximum extent possible.
+The source generator is triggered when <xref:Microsoft.Extensions.Logging.LoggerMessageAttribute> is used on `partial` logging methods. When triggered, it autogenerates the implementation of the `partial` methods it's decorating. If there's a problem, it produces compile-time diagnostics with hints about proper usage. This compile-time logging solution is considerably faster at runtime than previously available logging approaches. It eliminates boxing, temporary allocations, and copies to the maximum extent possible.
 
 ## Basic usage
 
-> **Tip:**
+> [!TIP]
 > The examples in this article use the following namespace:
 >
 > ```csharp
@@ -24,82 +22,31 @@ The source generator is triggered when `Microsoft.Extensions.Logging.LoggerMessa
 
 To use the `LoggerMessageAttribute`, the consuming class and method need to be `partial`. The code generator is triggered at compile time and generates an implementation of the `partial` method.
 
-```csharp
-public static partial class Log
-{
-    [LoggerMessage(
-        EventId = 0,
-        Level = LogLevel.Critical,
-        Message = "Could not open socket to `{HostName}`")]
-    public static partial void CouldNotOpenSocket(
-        ILogger logger, string hostName);
-}
-```
+:::code language="csharp" source="./snippets/source-generation/csharp/BasicUsage/StaticLog.cs" id="StaticLogMethod":::
+
 In the preceding example, the logging method is `static` and the log level is specified in the attribute definition. When you use `LoggerMessageAttribute` in a static context, the `ILogger` instance must be passed as an argument. Or, add the `this` modifier to the `ILogger` parameter to define the method as an extension method.
 
-```csharp
-public static partial class Log
-{
-    [LoggerMessage(
-        EventId = 0,
-        Level = LogLevel.Critical,
-        Message = "Could not open socket to `{HostName}`")]
-    public static partial void CouldNotOpenSocket(
-        this ILogger logger, string hostName);
-}
-```
+:::code language="csharp" source="./snippets/source-generation/csharp/BasicUsage/ExtensionLog.cs" id="ExtensionLogMethod":::
+
 You can choose to use the attribute in a non-static context as well. Consider the following example where the logging method is declared as an instance method. In this context, the logging method gets the logger by accessing an `ILogger` field in the containing class.
 
-```csharp
-public partial class InstanceLoggingExample
-{
-    private readonly ILogger _logger;
+:::code language="csharp" source="./snippets/source-generation/csharp/BasicUsage/InstanceLog.cs" id="InstanceLogWithField":::
 
-    public InstanceLoggingExample(ILogger logger)
-    {
-        _logger = logger;
-    }
-
-    [LoggerMessage(
-        EventId = 0,
-        Level = LogLevel.Critical,
-        Message = "Could not open socket to `{HostName}`")]
-    public partial void CouldNotOpenSocket(string hostName);
-}
-```
 Starting with .NET 9, the logging method can additionally get the logger from an `ILogger` primary constructor parameter in the containing class.
 
-```csharp
-public partial class InstanceLoggingExample(ILogger logger)
-{
-    [LoggerMessage(
-        EventId = 0,
-        Level = LogLevel.Critical,
-        Message = "Could not open socket to `{HostName}`")]
-    public partial void CouldNotOpenSocket(string hostName);
-}
-```
+:::code language="csharp" source="./snippets/source-generation/csharp/BasicUsage/PrimaryCtorLog.cs" id="InstanceLogWithPrimaryCtor":::
+
 If there's both an `ILogger` field and a primary constructor parameter, the logging method gets the logger from the field.
 
 ### Dynamic log level
 
 Sometimes, the log level needs to be dynamic rather than statically built into the code. You can do this by omitting the log level from the attribute and instead requiring it as a parameter to the logging method.
 
-```csharp
-public static partial class Log
-{
-    [LoggerMessage(
-        EventId = 0,
-        Message = "Could not open socket to `{HostName}`")]
-    public static partial void CouldNotOpenSocket(
-        ILogger logger,
-        LogLevel level,
-        string hostName);
-}
-```
+:::code language="csharp" source="./snippets/source-generation/csharp/BasicUsage/DynamicLog.cs" id="DynamicLogLevel":::
+
 ### `Message` property
 
-The `Microsoft.Extensions.Logging.LoggerMessageAttribute.Message` property on `LoggerMessageAttribute` is optional. If you omit it, `System.String.Empty` is used for the message. However, if the logging method has parameters without corresponding template placeholders, the compiler emits a SYSLIB1015 warning. Those parameters are stored in the log state but don't appear in the formatted log output. Only structured logging providers that enumerate the log state surface them.
+The <xref:Microsoft.Extensions.Logging.LoggerMessageAttribute.Message> property on `LoggerMessageAttribute` is optional. If you omit it, <xref:System.String.Empty?displayProperty=nameWithType> is used for the message. However, if the logging method has parameters without corresponding template placeholders, the compiler emits a [SYSLIB1015](../../../fundamentals/syslib-diagnostics/syslib1015.md) warning. Those parameters are stored in the log state but don't appear in the formatted log output. Only structured logging providers that enumerate the log state surface them.
 
 ## Log method constraints
 
@@ -112,11 +59,11 @@ Logging methods that are decorated with `LoggerMessageAttribute` must meet the f
 - Logging method parameters can't use the `params`, `scoped`, or `out` modifiers, and can't be `ref struct` types.
 - If a logging method is `static`, the `ILogger` instance is required as a parameter.
 
-The code-generation model depends on code being compiled with a modern C# compiler, that is, version 9 or later. For information about changing the language version, see C# language versioning.
+The code-generation model depends on code being compiled with a modern C# compiler, that is, version 9 or later. For information about changing the language version, see [C# language versioning](../../../csharp/language-reference/configure-language-version.md).
 
 ## Log method anatomy
 
-The `Microsoft.Extensions.Logging.ILogger.Log*` signature accepts the `Microsoft.Extensions.Logging.LogLevel` and optionally an `System.Exception`, as shown in the following code example.
+The <xref:Microsoft.Extensions.Logging.ILogger.Log*?displayProperty=nameWithType> signature accepts the <xref:Microsoft.Extensions.Logging.LogLevel> and optionally an <xref:System.Exception>, as shown in the following code example.
 
 ```csharp
 public interface ILogger
@@ -132,16 +79,8 @@ public interface ILogger
 
 As a general rule, the first instance of `ILogger`, `LogLevel`, and `Exception` are treated specially in the log method signature of the source generator. Subsequent instances are treated like normal parameters to the message template:
 
-```csharp
-// This is a valid attribute usage
-[LoggerMessage(
-    EventId = 110, Level = LogLevel.Debug, Message = "M1 {Ex3} {Ex2}")]
-public static partial void ValidLogMethod(
-    ILogger logger,
-    Exception ex,
-    Exception ex2,
-    Exception ex3);
-```
+:::code language="csharp" source="./snippets/source-generation/csharp/LogMethodAnatomy/LogMethods.cs" id="ValidLogMethod":::
+
 The following shows a usage that produces a compiler diagnostic:
 
 ```csharp
@@ -154,7 +93,7 @@ public static partial void WarningLogMethod(
     Exception ex2);
 ```
 
-> **Important:**
+> [!IMPORTANT]
 > The warnings emitted provide details as to the correct usage of the `LoggerMessageAttribute`. In the preceding example, the `WarningLogMethod` reports a `DiagnosticSeverity.Warning` of `SYSLIB0025`.
 >
 > ```console
@@ -165,29 +104,8 @@ public static partial void WarningLogMethod(
 
 The generator does a case-insensitive comparison between items in the message template and argument names in the log message. This means that when the `ILogger` enumerates the state, the argument is picked up by the message template, which can make the logs nicer to consume:
 
-```csharp
-public partial class LoggingExample
-{
-    private readonly ILogger _logger;
+:::code language="csharp" source="./snippets/source-generation/csharp/LogMethodAnatomy/CaseInsensitiveExample.cs" id="CaseInsensitiveNames":::
 
-    public LoggingExample(ILogger logger)
-    {
-        _logger = logger;
-    }
-
-    [LoggerMessage(
-        EventId = 10,
-        Level = LogLevel.Information,
-        Message = "Welcome to {City} {Province}!")]
-    public partial void LogMethodSupportsPascalCasingOfNames(
-        string city, string province);
-
-    public void TestLogging()
-    {
-        LogMethodSupportsPascalCasingOfNames("Vancouver", "BC");
-    }
-}
-```
 Consider the example logging output when using the `JsonConsole` formatter:
 
 ```json
@@ -209,18 +127,9 @@ Consider the example logging output when using the `JsonConsole` formatter:
 
 There are no constraints on the ordering of log method parameters. A developer could define the `ILogger` as the last parameter, although it might appear a bit awkward.
 
-```csharp
-[LoggerMessage(
-    EventId = 110,
-    Level = LogLevel.Debug,
-    Message = "M1 {Ex3} {Ex2}")]
-static partial void LogMethod(
-    Exception ex,
-    Exception ex2,
-    Exception ex3,
-    ILogger logger);
-```
-> **Tip:**
+:::code language="csharp" source="./snippets/source-generation/csharp/LogMethodAnatomy/IndeterminateOrder.cs" id="IndeterminateParameterOrder":::
+
+> [!TIP]
 > The order of the parameters on a log method isn't required to correspond to the order of the template placeholders. Instead, the placeholder names in the template are expected to match the parameters. Consider the following `JsonConsole` output and the order of the errors.
 >
 > ```json
@@ -246,47 +155,8 @@ The following samples demonstrate how to retrieve the event name, set the log le
 - `LogWithDynamicLogLevel`: Set log level dynamically, to allow log level to be set based on configuration input.
 - `UsingFormatSpecifier`: Use format specifiers to format logging parameters.
 
-```csharp
-public partial class LoggingSample
-{
-    private readonly ILogger _logger;
+:::code language="csharp" source="./snippets/source-generation/csharp/MoreLoggingExamples/LoggingSample.cs" id="MoreLoggingExamples":::
 
-    public LoggingSample(ILogger logger)
-    {
-        _logger = logger;
-    }
-
-    [LoggerMessage(
-        EventId = 20,
-        Level = LogLevel.Critical,
-        Message = "Value is {Value:E}")]
-    public static partial void UsingFormatSpecifier(
-        ILogger logger, double value);
-
-    [LoggerMessage(
-        EventId = 9,
-        Level = LogLevel.Trace,
-        Message = "Fixed message",
-        EventName = "CustomEventName")]
-    public partial void LogWithCustomEventName();
-
-    [LoggerMessage(
-        EventId = 10,
-        Message = "Welcome to {City} {Province}!")]
-    public partial void LogWithDynamicLogLevel(
-        string city, LogLevel level, string province);
-
-    public void TestLogging()
-    {
-        LogWithCustomEventName();
-
-        LogWithDynamicLogLevel("Vancouver", LogLevel.Warning, "BC");
-        LogWithDynamicLogLevel("Vancouver", LogLevel.Information, "BC");
-
-        UsingFormatSpecifier(_logger, 12345.6789);
-    }
-}
-```
 Consider the example logging output when using the `SimpleConsole` formatter:
 
 ```console
@@ -354,18 +224,14 @@ Consider the example logging output when using the `JsonConsole` formatter:
 
 When logging sensitive data, it's important to prevent accidental exposure. Even with compile-time generated logging methods, logging raw sensitive values can lead to data leaks and compliance issues.
 
-The Microsoft.Extensions.Telemetry library provides advanced logging and telemetry enrichment capabilities for .NET applications. It extends the logging pipeline to automatically apply redaction to classified data when writing logs. It enables you to enforce data protection policies throughout your application by integrating redaction into your logging workflow. It's built for applications needing sophisticated telemetry and logging insights.
+The [Microsoft.Extensions.Telemetry](https://www.nuget.org/packages/Microsoft.Extensions.Telemetry) library provides advanced logging and telemetry enrichment capabilities for .NET applications. It extends the logging pipeline to automatically apply redaction to classified data when writing logs. It enables you to enforce data protection policies throughout your application by integrating redaction into your logging workflow. It's built for applications needing sophisticated telemetry and logging insights.
 
-To enable redaction, use the Microsoft.Extensions.Compliance.Redaction library. This library provides **redactors**—components that transform sensitive data (for example, by erasing, masking, or hashing it) so that it's safe to output. Redactors are selected based on **data classification**, which lets you label data according to its sensitivity (such as personal, private, or public).
+To enable redaction, use the [Microsoft.Extensions.Compliance.Redaction](https://www.nuget.org/packages/Microsoft.Extensions.Compliance.Redaction) library. This library provides **redactors**—components that transform sensitive data (for example, by erasing, masking, or hashing it) so that it's safe to output. Redactors are selected based on **data classification**, which lets you label data according to its sensitivity (such as personal, private, or public).
 
 The redaction examples require the following namespaces:
 
-```csharp
-using Microsoft.Extensions.Compliance.Classification;
-using Microsoft.Extensions.Compliance.Redaction;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-```
+:::code language="csharp" source="./snippets/source-generation/csharp/Usings.cs":::
+
 To use redaction with source-generated logging methods, you should:
 
 1. Classify your sensitive data using a data classification system.
@@ -375,34 +241,40 @@ To use redaction with source-generated logging methods, you should:
 
 For example, if you have a log message that has a parameter that is considered private:
 
-```csharp
-public static partial class LogRedactionExample
-{
-    [LoggerMessage(0, LogLevel.Information, "User SSN: {SSN}")]
-    public static partial void LogPrivateInformation(
-        this ILogger logger,
-        [MyTaxonomyClassifications.Private] string SSN);
-}
-```
+:::code language="csharp" source="./snippets/source-generation/csharp/RedactingSensitiveInformation/RedactionSetup.cs" id="LogPrivateInformation":::
+
 You'll need to have a setting similar to this:
 
-```csharp
-var services = new ServiceCollection();
-services.AddLogging(builder =>
-{
-    // Enable redaction.
-    builder.EnableRedaction();
-});
+:::code language="csharp" source="./snippets/source-generation/csharp/RedactingSensitiveInformation/RedactionSetup.cs" id="RedactionSetup":::
 
-services.AddRedaction(builder =>
-{
-    // Configure redactors for your data classifications.
-    builder.SetRedactor<StarRedactor>(MyTaxonomyClassifications.Private);
-});
-```
 The output should be like this: `User SSN: *****`.
 
 This approach ensures that only redacted data is logged, even when using compile-time generated logging APIs. You can use different redactors for different data types or classifications, and update your redaction logic centrally.
 
-For more information about how to classify your data, see Data classification in .NET.
-For more information about redaction and redactors, see Data redaction in .NET.
+For more information about how to classify your data, see [Data classification in .NET](../data-classification.md).
+For more information about redaction and redactors, see [Data redaction in .NET](../data-redaction.md).
+
+## Summary
+
+With the advent of C# source generators, writing highly performant logging APIs is easier. Using the source generator approach has several key benefits:
+
+- Allows the logging structure to be preserved and enables the exact format syntax required by [Message Templates](https://messagetemplates.org).
+- Allows supplying alternative names for the template placeholders and using format specifiers.
+- Allows the passing of all original data as-is, without any complication around how it's stored before something is done with it (other than creating a `string`).
+- Provides logging-specific diagnostics and emits warnings for duplicate event IDs.
+
+Additionally, there are benefits over manually using <xref:Microsoft.Extensions.Logging.LoggerMessage.Define*?displayProperty=nameWithType>:
+
+- Shorter and simpler syntax: Declarative attribute usage rather than coding boilerplate.
+- Guided developer experience: The generator gives warnings to help developers do the right thing.
+- Support for an arbitrary number of logging parameters. `LoggerMessage.Define` supports a maximum of six.
+- Support for dynamic log level. This isn't possible with `LoggerMessage.Define` alone.
+
+## See also
+
+- [Logging in .NET](overview.md)
+- [High-performance logging in .NET](high-performance-logging.md)
+- [Console log formatting](console-log-formatter.md)
+- [Data redaction in .NET](../data-redaction.md)
+- [Data classification in .NET](../data-classification.md)
+- [NuGet: Microsoft.Extensions.Logging.Abstractions](https://www.nuget.org/packages/microsoft.extensions.logging.abstractions)

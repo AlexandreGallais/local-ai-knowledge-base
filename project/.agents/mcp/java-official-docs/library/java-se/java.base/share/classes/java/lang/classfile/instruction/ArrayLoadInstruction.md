@@ -1,32 +1,25 @@
----
-title: "ArrayLoadInstruction interface (java.lang.classfile.instruction)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/instruction/ArrayLoadInstruction.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # ArrayLoadInstruction interface (java.lang.classfile.instruction)
 
 ```java
 public sealed interface ArrayLoadInstruction extends Instruction permits AbstractInstruction.UnboundArrayLoadInstruction
 ```
 
-Models an array load instruction in the `code` array of a `Code`
-attribute.  Corresponding opcodes have a kind
-of `Opcode.Kind.ARRAY_LOAD`.  Delivered as a `CodeElement` when
-traversing the elements of a `CodeModel`.
-
+Models an array load instruction in the {@code code} array of a {@code Code}
+attribute.  Corresponding opcodes have a {@linkplain Opcode#kind() kind}
+of {@link Opcode.Kind#ARRAY_LOAD}.  Delivered as a {@link CodeElement} when
+traversing the elements of a {@link CodeModel}.
+<p>
 An array load instruction is composite:
+{@snippet lang=text :
+// @link substring="ArrayLoadInstruction" target="CodeBuilder#arrayLoad(TypeKind)" :
+ArrayLoadInstruction(TypeKind typeKind) // @link substring="typeKind" target="#typeKind"
+}
+where {@code typeKind} is not {@link TypeKind#VOID void}, and {@link
+TypeKind#BOOLEAN boolean} is converted to {@link TypeKind#BYTE byte}.
 
-where `typeKind` is not void, and boolean is converted to byte.
-
-**See also:** Opcode.Kind#ARRAY_LOAD
-
-**See also:** CodeBuilder#arrayLoad CodeBuilder::arrayLoad
-
-**Since:** 24
+@see Opcode.Kind#ARRAY_LOAD
+@see CodeBuilder#arrayLoad CodeBuilder::arrayLoad
+@since 24
 
 ## ArrayLoadInstruction.typeKind()
 
@@ -34,10 +27,10 @@ where `typeKind` is not void, and boolean is converted to byte.
 TypeKind typeKind()
 ```
 
-The byte
-type load instruction baload also operates on
-boolean arrays, so this never returns
-`boolean`.
+{@return the component type of the array}  The {@link TypeKind#BYTE byte}
+type load instruction {@link Opcode#BALOAD baload} also operates on
+{@link TypeKind#BOOLEAN boolean} arrays, so this never returns
+{@code boolean}.
 
 ## ArrayLoadInstruction.of(Opcode)
 
@@ -45,10 +38,9 @@ boolean arrays, so this never returns
 static ArrayLoadInstruction of(Opcode op)
 ```
 
-Parameters:
+{@return an array load instruction}
 
-- `op`: the opcode for the specific type of array load instruction, which must be of kind `Opcode.Kind.ARRAY_LOAD`
-
-Throws:
-
-- `IllegalArgumentException`: if the opcode kind is not `Opcode.Kind.ARRAY_LOAD`
+@param op the opcode for the specific type of array load instruction,
+          which must be of kind {@link Opcode.Kind#ARRAY_LOAD}
+@throws IllegalArgumentException if the opcode kind is not
+        {@link Opcode.Kind#ARRAY_LOAD}

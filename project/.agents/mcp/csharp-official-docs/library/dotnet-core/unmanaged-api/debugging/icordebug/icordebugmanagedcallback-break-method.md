@@ -1,15 +1,25 @@
 ---
+description: "Learn more about: ICorDebugManagedCallback::Break Method"
 title: "ICorDebugManagedCallback::Break Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmanagedcallback-break-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugManagedCallback.Break"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugManagedCallback::Break"
+helpviewer_keywords:
+  - "Break method [.NET debugging]"
+  - "ICorDebugManagedCallback::Break method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
 
 # ICorDebugManagedCallback::Break Method
 
-Notifies the debugger when a `System.Reflection.Emit.OpCodes.Break` instruction in the code stream is executed.
+Notifies the debugger when a <xref:System.Reflection.Emit.OpCodes.Break> instruction in the code stream is executed.
 
 ## Syntax
 
@@ -30,7 +40,7 @@ HRESULT Break (
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** CorDebug.idl, CorDebug.h
 
@@ -40,4 +50,4 @@ HRESULT Break (
 
 ## See also
 
-- ICorDebugManagedCallback Interface
+- [ICorDebugManagedCallback Interface](icordebugmanagedcallback-interface.md)

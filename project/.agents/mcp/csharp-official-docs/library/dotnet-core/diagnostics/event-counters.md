@@ -1,24 +1,23 @@
 ---
-title: "EventCounters in .NET Core (part 1 of 2)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/diagnostics/event-counters.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: EventCounters in .NET Core
+description: In this article, you'll learn what EventCounters are, how to implement them, and how to consume them.
+ms.date: 08/27/2024
 ---
 
 # EventCounters in .NET
 
 **This article applies to: ✔️** .NET Core 3.0 SDK and later versions
 
-  > **Note:**
-  > For developing new .NET projects Microsoft recommends using the newer System.Diagnostics.Metrics APIs instead. The System.Diagnostics.Metrics APIs offer increased functionality, standardization and integration with a broader ecosystem of tools. See the metrics API comparison for more information.
+  > [!NOTE]
+  > For developing new .NET projects Microsoft recommends using the newer [System.Diagnostics.Metrics](metrics-instrumentation.md) APIs instead. The System.Diagnostics.Metrics APIs offer increased functionality, standardization and integration with a broader ecosystem of tools. See [the metrics API comparison](compare-metric-apis.md) for more information.
 
 EventCounters are .NET APIs used for lightweight, cross-platform, and near real-time performance metric collection. EventCounters were added as a cross-platform alternative to the "performance counters" of .NET Framework on Windows. In this article, you'll learn what EventCounters are, how to implement them, and how to consume them.
 
-The .NET runtime and a few .NET libraries publish basic <example-value> information using EventCounters starting in .NET Core 3.0. Apart from the EventCounters that are provided by the .NET runtime, you may choose to implement your own EventCounters. EventCounters can be used to track various metrics. Learn more about them in well-known EventCounters in .NET.
+The .NET runtime and a few .NET libraries publish basic diagnostics information using EventCounters starting in .NET Core 3.0. Apart from the EventCounters that are provided by the .NET runtime, you may choose to implement your own EventCounters. EventCounters can be used to track various metrics. Learn more about them in [well-known EventCounters in .NET](available-counters.md).
 
-EventCounters live as a part of an `System.Diagnostics.Tracing.EventSource`, and are automatically pushed to listener tools on a regular basis. Like all other events on an `System.Diagnostics.Tracing.EventSource`, they can be consumed both in-proc and out-of-proc via `System.Diagnostics.Tracing.EventListener` and EventPipe. This article focuses on the cross-platform capabilities of EventCounters, and intentionally excludes PerfView and ETW (Event Tracing for Windows) - although both can be used with EventCounters.
+EventCounters live as a part of an <xref:System.Diagnostics.Tracing.EventSource>, and are automatically pushed to listener tools on a regular basis. Like all other events on an <xref:System.Diagnostics.Tracing.EventSource>, they can be consumed both in-proc and out-of-proc via <xref:System.Diagnostics.Tracing.EventListener> and [EventPipe](./eventpipe.md). This article focuses on the cross-platform capabilities of EventCounters, and intentionally excludes PerfView and ETW (Event Tracing for Windows) - although both can be used with EventCounters.
+
+![EventCounters in-proc and out-of-proc diagram image](media/event-counters.svg)
 
 ## EventCounter API overview
 
@@ -26,57 +25,27 @@ There are two primary categories of EventCounters. Some counters are for "rate" 
 
 The counters are represented by the following implementations:
 
-* `System.Diagnostics.Tracing.EventCounter`
-* `System.Diagnostics.Tracing.IncrementingEventCounter`
-* `System.Diagnostics.Tracing.PollingCounter`
-* `System.Diagnostics.Tracing.IncrementingPollingCounter`
+* <xref:System.Diagnostics.Tracing.EventCounter>
+* <xref:System.Diagnostics.Tracing.IncrementingEventCounter>
+* <xref:System.Diagnostics.Tracing.PollingCounter>
+* <xref:System.Diagnostics.Tracing.IncrementingPollingCounter>
 
 An event listener specifies how long measurement intervals are. At the end of each interval a value is transmitted to the listener for each counter. The implementations of a counter determine what APIs and calculations are used to produce the value each interval.
 
-- The `System.Diagnostics.Tracing.EventCounter` records a set of values. The `System.Diagnostics.Tracing.EventCounter.WriteMetric*` method adds a new value to the set. With each interval, a statistical summary for the set is computed, such as the min, max, and mean. The dotnet-counters tool will always display the mean value. The `System.Diagnostics.Tracing.EventCounter` is useful to describe a discrete set of operations. Common usage may include monitoring the average size in bytes of recent IO operations, or the average monetary value of a set of financial transactions.
+- The <xref:System.Diagnostics.Tracing.EventCounter> records a set of values. The <xref:System.Diagnostics.Tracing.EventCounter.WriteMetric*?displayProperty=nameWithType> method adds a new value to the set. With each interval, a statistical summary for the set is computed, such as the min, max, and mean. The [dotnet-counters](dotnet-counters.md) tool will always display the mean value. The <xref:System.Diagnostics.Tracing.EventCounter> is useful to describe a discrete set of operations. Common usage may include monitoring the average size in bytes of recent IO operations, or the average monetary value of a set of financial transactions.
 
-- The `System.Diagnostics.Tracing.IncrementingEventCounter` records a running total for each time interval. The `System.Diagnostics.Tracing.IncrementingEventCounter.Increment*` method adds to the total. For example, if `Increment()` is called three times during one interval with values `1`, `2`, and `5`, then the running total of `8` will be reported as the counter value for this interval. The dotnet-counters tool will display the rate as the recorded total / time. The `System.Diagnostics.Tracing.IncrementingEventCounter` is useful to measure how frequently an action is occurring, such as the number of requests processed per second.
+- The <xref:System.Diagnostics.Tracing.IncrementingEventCounter> records a running total for each time interval. The <xref:System.Diagnostics.Tracing.IncrementingEventCounter.Increment*?displayProperty=nameWithType> method adds to the total. For example, if `Increment()` is called three times during one interval with values `1`, `2`, and `5`, then the running total of `8` will be reported as the counter value for this interval. The [dotnet-counters](dotnet-counters.md) tool will display the rate as the recorded total / time. The <xref:System.Diagnostics.Tracing.IncrementingEventCounter> is useful to measure how frequently an action is occurring, such as the number of requests processed per second.
 
-- The `System.Diagnostics.Tracing.PollingCounter` uses a callback to determine the value that is reported. With each time interval, the user provided callback function is invoked and the return value is used as the counter value. A `System.Diagnostics.Tracing.PollingCounter` can be used to query a metric from an external source, for example getting the current free bytes on a disk. It can also be used to report custom statistics that can be computed on demand by an application. Examples include reporting the 95th percentile of recent request latencies, or the current hit or miss ratio of a cache.
+- The <xref:System.Diagnostics.Tracing.PollingCounter> uses a callback to determine the value that is reported. With each time interval, the user provided callback function is invoked and the return value is used as the counter value. A <xref:System.Diagnostics.Tracing.PollingCounter> can be used to query a metric from an external source, for example getting the current free bytes on a disk. It can also be used to report custom statistics that can be computed on demand by an application. Examples include reporting the 95th percentile of recent request latencies, or the current hit or miss ratio of a cache.
 
-- The `System.Diagnostics.Tracing.IncrementingPollingCounter` uses a callback to determine the reported increment value. With each time interval, the callback is invoked, and then the difference between the current invocation, and the last invocation is the reported value. The dotnet-counters tool will always display the difference as a rate, the reported value / time. This counter is useful when it isn't feasible to call an API on each occurrence, but it's possible to query the total number of occurrences. For example, you could report the number of bytes written to a file per second, even without a notification each time a byte is written.
+- The <xref:System.Diagnostics.Tracing.IncrementingPollingCounter> uses a callback to determine the reported increment value. With each time interval, the callback is invoked, and then the difference between the current invocation, and the last invocation is the reported value. The [dotnet-counters](dotnet-counters.md) tool will always display the difference as a rate, the reported value / time. This counter is useful when it isn't feasible to call an API on each occurrence, but it's possible to query the total number of occurrences. For example, you could report the number of bytes written to a file per second, even without a notification each time a byte is written.
 
 ## Implement an EventSource
 
-The following code implements a sample `System.Diagnostics.Tracing.EventSource` exposed as the named `"Sample.EventCounter.Minimal"` provider. This source contains an `System.Diagnostics.Tracing.EventCounter` representing request-processing time. Such a counter has a name (that is, its unique ID in the source) and a display name, both used by listener tools such as dotnet-counters.
+The following code implements a sample <xref:System.Diagnostics.Tracing.EventSource> exposed as the named `"Sample.EventCounter.Minimal"` provider. This source contains an <xref:System.Diagnostics.Tracing.EventCounter> representing request-processing time. Such a counter has a name (that is, its unique ID in the source) and a display name, both used by listener tools such as [dotnet-counters](dotnet-counters.md).
 
-```csharp
-﻿using System.Diagnostics.Tracing;
+:::code language="csharp" source="snippets/EventCounters/MinimalEventCounterSource.cs":::
 
-[EventSource(Name = "Sample.EventCounter.Minimal")]
-public sealed class MinimalEventCounterSource : EventSource
-{
-    public static readonly MinimalEventCounterSource Log = new MinimalEventCounterSource();
-
-    private EventCounter _requestCounter;
-
-    private MinimalEventCounterSource() =>
-        _requestCounter = new EventCounter("request-time", this)
-        {
-            DisplayName = "Request Processing Time",
-            DisplayUnits = "ms"
-        };
-
-    public void Request(string url, long elapsedMilliseconds)
-    {
-        WriteEvent(1, url, elapsedMilliseconds);
-        _requestCounter?.WriteMetric(elapsedMilliseconds);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        _requestCounter?.Dispose();
-        _requestCounter = null;
-
-        base.Dispose(disposing);
-    }
-}
-```
 You use `dotnet-counters ps` to display a list of .NET processes that can be monitored:
 
 ```console
@@ -88,7 +57,7 @@ dotnet-counters ps
    1400180 sample-counters C:\sample-counters\bin\Debug\netcoreapp3.1\sample-counters.exe
 ```
 
-Pass the `System.Diagnostics.Tracing.EventSource` name to the `--counters` option to start monitoring your counter:
+Pass the <xref:System.Diagnostics.Tracing.EventSource> name to the `--counters` option to start monitoring your counter:
 
 ```console
 dotnet-counters monitor --process-id 1400180 --counters Sample.EventCounter.Minimal
@@ -104,54 +73,15 @@ Press p to pause, r to resume, q to quit.
     Request Processing Time (ms)                            0.445
 ```
 
-Press `q` to stop the monitoring command.
+Press <kbd>q</kbd> to stop the monitoring command.
 
 ### Conditional counters
 
-When implementing an `System.Diagnostics.Tracing.EventSource`, the containing counters can be conditionally instantiated when the `System.Diagnostics.Tracing.EventSource.OnEventCommand*` method is called with a `System.Diagnostics.Tracing.EventCommandEventArgs.Command` value of `EventCommand.Enable`. To safely instantiate a counter instance only if it is `null`, use the null-coalescing assignment operator. Additionally, custom methods can evaluate the `System.Diagnostics.DiagnosticSource.IsEnabled*` method to determine whether or not the current event source is enabled.
+When implementing an <xref:System.Diagnostics.Tracing.EventSource>, the containing counters can be conditionally instantiated when the <xref:System.Diagnostics.Tracing.EventSource.OnEventCommand*?displayProperty=nameWithType> method is called with a <xref:System.Diagnostics.Tracing.EventCommandEventArgs.Command> value of `EventCommand.Enable`. To safely instantiate a counter instance only if it is `null`, use the [null-coalescing assignment operator](../../csharp/language-reference/operators/null-coalescing-operator.md). Additionally, custom methods can evaluate the <xref:System.Diagnostics.DiagnosticSource.IsEnabled*> method to determine whether or not the current event source is enabled.
 
-```csharp
-﻿using System.Diagnostics.Tracing;
+:::code language="csharp" source="snippets/EventCounters/ConditionalEventCounterSource.cs":::
 
-[EventSource(Name = "Sample.EventCounter.Conditional")]
-public sealed class ConditionalEventCounterSource : EventSource
-{
-    public static readonly ConditionalEventCounterSource Log = new ConditionalEventCounterSource();
-
-    private EventCounter _requestCounter;
-
-    private ConditionalEventCounterSource() { }
-
-    protected override void OnEventCommand(EventCommandEventArgs args)
-    {
-        if (args.Command == EventCommand.Enable)
-        {
-            _requestCounter ??= new EventCounter("request-time", this)
-            {
-                DisplayName = "Request Processing Time",
-                DisplayUnits = "ms"
-            };
-        }
-    }
-
-    public void Request(string url, float elapsedMilliseconds)
-    {
-        if (IsEnabled())
-        {
-            _requestCounter?.WriteMetric(elapsedMilliseconds);
-        }
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        _requestCounter?.Dispose();
-        _requestCounter = null;
-
-        base.Dispose(disposing);
-    }
-}
-```
-> **Tip:**
+> [!TIP]
 > Conditional counters are counters that are conditionally instantiated, a micro-optimization. The runtime adopts this pattern for scenarios where counters are normally not used, to save a fraction of a millisecond.
 
 ### .NET Core runtime example counters
@@ -169,14 +99,14 @@ var workingSetCounter = new PollingCounter(
 };
 ```
 
-The `System.Diagnostics.Tracing.PollingCounter` reports the current amount of physical memory mapped to the process (working set) of the app, since it captures a metric at a moment in time. The callback for polling a value is the provided lambda expression, which is just a call to the `System.Environment.WorkingSet` API. `System.Diagnostics.Tracing.DiagnosticCounter.DisplayName` and `System.Diagnostics.Tracing.DiagnosticCounter.DisplayUnits` are optional properties that can be set to help the consumer side of the counter to display the value more clearly. For example, dotnet-counters uses these properties to display the more display-friendly version of the counter names.
+The <xref:System.Diagnostics.Tracing.PollingCounter> reports the current amount of physical memory mapped to the process (working set) of the app, since it captures a metric at a moment in time. The callback for polling a value is the provided lambda expression, which is just a call to the <xref:System.Environment.WorkingSet?displayProperty=fullName> API. <xref:System.Diagnostics.Tracing.DiagnosticCounter.DisplayName> and <xref:System.Diagnostics.Tracing.DiagnosticCounter.DisplayUnits> are optional properties that can be set to help the consumer side of the counter to display the value more clearly. For example, [dotnet-counters](dotnet-counters.md) uses these properties to display the more display-friendly version of the counter names.
 
-> **Important:**
+> [!IMPORTANT]
 > The `DisplayName` properties are not localized.
 
-For the `System.Diagnostics.Tracing.PollingCounter`, and the `System.Diagnostics.Tracing.IncrementingPollingCounter`, nothing else needs to be done. They both poll the values themselves at an interval requested by the consumer.
+For the <xref:System.Diagnostics.Tracing.PollingCounter>, and the <xref:System.Diagnostics.Tracing.IncrementingPollingCounter>, nothing else needs to be done. They both poll the values themselves at an interval requested by the consumer.
 
-Here is an example of a runtime counter implemented using `System.Diagnostics.Tracing.IncrementingPollingCounter`.
+Here is an example of a runtime counter implemented using <xref:System.Diagnostics.Tracing.IncrementingPollingCounter>.
 
 ```csharp
 var monitorContentionCounter = new IncrementingPollingCounter(
@@ -190,56 +120,29 @@ var monitorContentionCounter = new IncrementingPollingCounter(
 };
 ```
 
-The `System.Diagnostics.Tracing.IncrementingPollingCounter` uses the `System.Threading.Monitor.LockContentionCount` API to report the increment of the total lock contention count. The `System.Diagnostics.Tracing.IncrementingPollingCounter.DisplayRateTimeScale` property is optional, but when used it can provide a hint for what time interval the counter is best displayed at. For example, the lock contention count is best displayed as _count per second_, so its `System.Diagnostics.Tracing.IncrementingPollingCounter.DisplayRateTimeScale` is set to one second. The display rate can be adjusted for different types of rate counters.
+The <xref:System.Diagnostics.Tracing.IncrementingPollingCounter> uses the <xref:System.Threading.Monitor.LockContentionCount?displayProperty=nameWithType> API to report the increment of the total lock contention count. The <xref:System.Diagnostics.Tracing.IncrementingPollingCounter.DisplayRateTimeScale> property is optional, but when used it can provide a hint for what time interval the counter is best displayed at. For example, the lock contention count is best displayed as _count per second_, so its <xref:System.Diagnostics.Tracing.IncrementingPollingCounter.DisplayRateTimeScale> is set to one second. The display rate can be adjusted for different types of rate counters.
 
-> **Note:**
-> The `System.Diagnostics.Tracing.IncrementingPollingCounter.DisplayRateTimeScale` is _not_ used by dotnet-counters, and event listeners are not required to use it.
+> [!NOTE]
+> The <xref:System.Diagnostics.Tracing.IncrementingPollingCounter.DisplayRateTimeScale> is _not_ used by [dotnet-counters](dotnet-counters.md), and event listeners are not required to use it.
 
-There are more counter implementations to use as a reference in the .NET runtime repo.
+There are more counter implementations to use as a reference in the [.NET runtime](https://github.com/dotnet/runtime/blob/main/src/libraries/System.Private.CoreLib/src/System/Diagnostics/Tracing/RuntimeEventSource.cs) repo.
 
 ## Concurrency
 
-> **Tip:**
-> The EventCounters API does not guarantee thread safety. When the delegates passed to `System.Diagnostics.Tracing.PollingCounter` or `System.Diagnostics.Tracing.IncrementingPollingCounter` instances are called by multiple threads, it's your responsibility to guarantee the delegates' thread-safety.
+> [!TIP]
+> The EventCounters API does not guarantee thread safety. When the delegates passed to <xref:System.Diagnostics.Tracing.PollingCounter> or <xref:System.Diagnostics.Tracing.IncrementingPollingCounter> instances are called by multiple threads, it's your responsibility to guarantee the delegates' thread-safety.
 
-For example, consider the following `System.Diagnostics.Tracing.EventSource` to keep track of requests.
+For example, consider the following <xref:System.Diagnostics.Tracing.EventSource> to keep track of requests.
 
-```csharp
-﻿using System;
-using System.Diagnostics.Tracing;
+:::code language="csharp" source="snippets/EventCounters/RequestEventSource.cs":::
 
-public class RequestEventSource : EventSource
-{
-    public static readonly RequestEventSource Log = new RequestEventSource();
-
-    private IncrementingPollingCounter _requestRateCounter;
-    private long _requestCount = 0;
-
-    private RequestEventSource() =>
-        _requestRateCounter = new IncrementingPollingCounter("request-rate", this, () => _requestCount)
-        {
-            DisplayName = "Request Rate",
-            DisplayRateTimeScale = TimeSpan.FromSeconds(1)
-        };
-
-    public void AddRequest() => ++ _requestCount;
-
-    protected override void Dispose(bool disposing)
-    {
-        _requestRateCounter?.Dispose();
-        _requestRateCounter = null;
-
-        base.Dispose(disposing);
-    }
-}
-```
-The `AddRequest()` method can be called from a request handler, and the `RequestRateCounter` polls the value at the interval specified by the consumer of the counter. However, the `AddRequest()` method can be called by multiple threads at once, putting a race condition on `_requestCount`. A thread-safe alternative way to increment the `_requestCount` is to use `System.Threading.Interlocked.Increment*`.
+The `AddRequest()` method can be called from a request handler, and the `RequestRateCounter` polls the value at the interval specified by the consumer of the counter. However, the `AddRequest()` method can be called by multiple threads at once, putting a race condition on `_requestCount`. A thread-safe alternative way to increment the `_requestCount` is to use <xref:System.Threading.Interlocked.Increment*?displayProperty=nameWithType>.
 
 ```csharp
 public void AddRequest() => Interlocked.Increment(ref _requestCount);
 ```
 
-To prevent torn reads (on 32-bit architectures) of the `long`-field `_requestCount` use `System.Threading.Interlocked.Read*`.
+To prevent torn reads (on 32-bit architectures) of the `long`-field `_requestCount` use <xref:System.Threading.Interlocked.Read*?displayProperty=nameWithType>.
 
 ```csharp
 _requestRateCounter = new IncrementingPollingCounter("request-rate", this, () => Interlocked.Read(ref _requestCount))
@@ -248,3 +151,58 @@ _requestRateCounter = new IncrementingPollingCounter("request-rate", this, () =>
     DisplayRateTimeScale = TimeSpan.FromSeconds(1)
 };
 ```
+
+## Consume EventCounters
+
+There are two primary ways of consuming EventCounters: in-proc and out-of-proc. The consumption of EventCounters can be distinguished into three layers of various consuming technologies.
+
+- Transporting events in a raw stream via ETW or EventPipe:
+
+  ETW APIs come with the Windows OS, and EventPipe is accessible as a [.NET API](https://github.com/dotnet/diagnostics/blob/main/documentation/design-docs/diagnostics-client-library.md#1-attaching-to-a-process-and-dumping-out-all-the-runtime-gc-events-in-real-time-to-the-console), or the diagnostic [IPC protocol](https://github.com/dotnet/diagnostics/blob/main/documentation/design-docs/ipc-protocol.md).
+
+- Decoding the binary event stream into events:
+
+  The [TraceEvent library](https://www.nuget.org/packages/Microsoft.Diagnostics.Tracing.TraceEvent) handles both ETW and EventPipe stream formats.
+
+- Command-line and GUI tools:
+
+  Tools like PerfView (ETW or EventPipe), dotnet-counters (EventPipe only), and dotnet-monitor (EventPipe only).
+
+### Consume out-of-proc
+
+Consuming EventCounters out-of-proc is a common approach. You can use [dotnet-counters](dotnet-counters.md) to consume them in a cross-platform manner via an EventPipe. The `dotnet-counters` tool is a cross-platform dotnet CLI global tool that can be used to monitor the counter values. To find out how to use `dotnet-counters` to monitor your counters, see [dotnet-counters](dotnet-counters.md), or work through the [Measure performance using EventCounters](event-counter-perf.md) tutorial.
+
+#### Azure Application Insights
+
+EventCounters can be consumed by Azure Monitor, specifically Azure Application Insights. Counters can be added and removed, and you're free to specify custom counters, or well-known counters. For more information, see [Customizing counters to be collected](/azure/azure-monitor/app/eventcounters#customizing-counters-to-be-collected).
+
+#### dotnet-monitor
+
+The `dotnet-monitor` tool makes it easier to access diagnostics from a .NET process in a remote and automated fashion. In addition to traces, it can monitor metrics,
+collect memory dumps, and collect GC dumps. It's distributed as both a CLI tool and a docker image. It exposes a REST API, and the collection of diagnostic artifacts occurs through REST calls.
+
+For more information, see [dotnet-monitor](dotnet-monitor.md).
+
+### Consume in-proc
+
+You can consume the counter values via the <xref:System.Diagnostics.Tracing.EventListener> API. An <xref:System.Diagnostics.Tracing.EventListener> is an in-proc way of consuming any events written by all instances of an <xref:System.Diagnostics.Tracing.EventSource> in your application. For more information on how to use the `EventListener` API, see <xref:System.Diagnostics.Tracing.EventListener>.
+
+First, the <xref:System.Diagnostics.Tracing.EventSource> that produces the counter value needs to be enabled. Override the <xref:System.Diagnostics.Tracing.EventListener.OnEventSourceCreated*?displayProperty=nameWithType> method to get a notification when an <xref:System.Diagnostics.Tracing.EventSource> is created, and if this is the correct <xref:System.Diagnostics.Tracing.EventSource> with your EventCounters, then you can call <xref:System.Diagnostics.Tracing.EventListener.EnableEvents*?displayProperty=nameWithType> on it. Here is an example override:
+
+:::code language="csharp" source="snippets/EventCounters/SimpleEventListener.cs" range="11-22":::
+
+#### Sample code
+
+Here is a sample <xref:System.Diagnostics.Tracing.EventListener> class that prints all the counter names and values from the .NET runtime's <xref:System.Diagnostics.Tracing.EventSource>, for publishing its internal counters (`System.Runtime`) every second.
+
+:::code language="csharp" source="snippets/EventCounters/SimpleEventListener.cs":::
+
+As shown above, you _must_ make sure the `"EventCounterIntervalSec"` argument is set in the `filterPayload` argument when calling <xref:System.Diagnostics.Tracing.EventListener.EnableEvents*>. Otherwise the counters will not be able to flush out values since it doesn't know at which interval it should be getting flushed out.
+
+## See also
+
+- [dotnet-counters](dotnet-counters.md)
+- [dotnet-trace](dotnet-trace.md)
+- <xref:System.Diagnostics.Tracing.EventCounter>
+- <xref:System.Diagnostics.Tracing.EventListener>
+- <xref:System.Diagnostics.Tracing.EventSource>

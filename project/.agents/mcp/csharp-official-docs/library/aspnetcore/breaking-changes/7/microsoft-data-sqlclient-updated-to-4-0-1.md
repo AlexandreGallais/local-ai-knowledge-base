@@ -1,10 +1,8 @@
 ---
 title: "Breaking change: Microsoft.Data.SqlClient updated to 4.0.1"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/7/microsoft-data-sqlclient-updated-to-4-0-1.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in ASP.NET Core 7.0 where Microsoft.Data.SqlClient has been updated to 4.0.1.
+ms.date: 03/07/2022
+ms.custom: https://github.com/aspnet/Announcements/issues/481
 ---
 
 # Microsoft.Data.SqlClient updated to 4.0.1
@@ -21,13 +19,13 @@ The previous version of the package was `1.0.19249.1`.
 
 ## New behavior
 
-The new version of the `Microsoft.Data.SqlClient` package is `4.0.1`. You can see breaking changes in the 4.0 band in the Microsoft.Data.SqlClient 4.0.0 Release Notes.
+The new version of the `Microsoft.Data.SqlClient` package is `4.0.1`. You can see breaking changes in the 4.0 band in the [Microsoft.Data.SqlClient 4.0.0 Release Notes](https://github.com/dotnet/SqlClient/blob/main/release-notes/4.0/4.0.0.md#breaking-changes).
 
-By default, `Encrypt` now equals `true`. For more information, see Encrypt default value set to true.
+By default, `Encrypt` now equals `true`. For more information, see [Encrypt default value set to true](https://github.com/dotnet/SqlClient/blob/main/release-notes/4.0/4.0.0.md#encrypt-default-value-set-to-true).
 
 ## Type of breaking change
 
-This change affects source compatibility.
+This change affects [source compatibility](/dotnet/core/compatibility/categories#source-compatibility).
 
 ## Reason for change
 
@@ -39,4 +37,4 @@ The ASP.NET Core team didn't have to react to any public API changes from this c
 
 ## Affected APIs
 
-* `Microsoft.Extensions.Caching.SqlServer`
+* <xref:Microsoft.Extensions.Caching.SqlServer?displayProperty=fullName>

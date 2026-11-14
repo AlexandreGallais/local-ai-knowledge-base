@@ -1,15 +1,12 @@
 ---
 title: "Breaking change: Output caching API changes"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/7/output-caching-renames.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in ASP.NET Core 7.0 where changes were made to some output caching APIs.
+ms.date: 10/10/2022
+ms.custom: https://github.com/aspnet/Announcements/issues/492
 ---
-
 # Output caching API changes
 
-Some APIs in the `Microsoft.AspNetCore.OutputCaching` namespace have changed to better represent their intent.
+Some APIs in the <xref:Microsoft.AspNetCore.OutputCaching?displayProperty=fullName> namespace have changed to better represent their intent.
 
 The following APIs were removed:
 
@@ -20,17 +17,17 @@ The following APIs were renamed:
 
 | Previous name | New name |
 | - | - |
-| `AllowLocking(System.Boolean)` | `Microsoft.AspNetCore.OutputCaching.OutputCachePolicyBuilder.SetLocking(System.Boolean)` |
-| `VaryByRouteValue(System.String[])` | `Microsoft.AspNetCore.OutputCaching.OutputCachePolicyBuilder.SetVaryByRouteValue(System.String[])` |
-| `VaryByQuery(System.String[])` | `Microsoft.AspNetCore.OutputCaching.OutputCachePolicyBuilder.SetVaryByQuery(System.String[])` |
-| `VaryByHeader(System.String[])` | `Microsoft.AspNetCore.OutputCaching.OutputCachePolicyBuilder.SetVaryByHeader(System.String[])` |
+| `AllowLocking(System.Boolean)` | <xref:Microsoft.AspNetCore.OutputCaching.OutputCachePolicyBuilder.SetLocking(System.Boolean)> |
+| `VaryByRouteValue(System.String[])` | <xref:Microsoft.AspNetCore.OutputCaching.OutputCachePolicyBuilder.SetVaryByRouteValue(System.String[])> |
+| `VaryByQuery(System.String[])` | <xref:Microsoft.AspNetCore.OutputCaching.OutputCachePolicyBuilder.SetVaryByQuery(System.String[])> |
+| `VaryByHeader(System.String[])` | <xref:Microsoft.AspNetCore.OutputCaching.OutputCachePolicyBuilder.SetVaryByHeader(System.String[])> |
 
 The following APIs were added:
 
-- `Microsoft.AspNetCore.OutputCaching.CacheVaryByRules.VaryByHost`
-- `Microsoft.AspNetCore.OutputCaching.OutputCacheOptions.AddPolicy(System.String,System.Action{Microsoft.AspNetCore.OutputCaching.OutputCachePolicyBuilder},System.Boolean)`
-- `Microsoft.AspNetCore.OutputCaching.OutputCacheOptions.AddBasePolicy(System.Action{Microsoft.AspNetCore.OutputCaching.OutputCachePolicyBuilder},System.Boolean)`
-- `Microsoft.Extensions.DependencyInjection.OutputCacheConventionBuilderExtensions.CacheOutput``1(``0,System.Action{Microsoft.AspNetCore.OutputCaching.OutputCachePolicyBuilder},System.Boolean)`
+- <xref:Microsoft.AspNetCore.OutputCaching.CacheVaryByRules.VaryByHost?displayProperty=nameWithType>
+- <xref:Microsoft.AspNetCore.OutputCaching.OutputCacheOptions.AddPolicy(System.String,System.Action{Microsoft.AspNetCore.OutputCaching.OutputCachePolicyBuilder},System.Boolean)?displayProperty=nameWithType>
+- <xref:Microsoft.AspNetCore.OutputCaching.OutputCacheOptions.AddBasePolicy(System.Action{Microsoft.AspNetCore.OutputCaching.OutputCachePolicyBuilder},System.Boolean)?displayProperty=nameWithType>
+- <xref:Microsoft.Extensions.DependencyInjection.OutputCacheConventionBuilderExtensions.CacheOutput``1(``0,System.Action{Microsoft.AspNetCore.OutputCaching.OutputCachePolicyBuilder},System.Boolean)?displayProperty=fullName>
 
 ## Version introduced
 
@@ -42,13 +39,13 @@ ASP.NET Core 7.0 RC 2
 
 ## New behavior
 
-The `OutputCachePolicyBuilder.VaryByQuery(System.String[])` method is now named `Microsoft.AspNetCore.OutputCaching.OutputCachePolicyBuilder.SetVaryByQuery(System.String[])`, and each call replaces existing query string keys.
+The `OutputCachePolicyBuilder.VaryByQuery(System.String[])` method is now named <xref:Microsoft.AspNetCore.OutputCaching.OutputCachePolicyBuilder.SetVaryByQuery(System.String[])?displayProperty=nameWithType>, and each call replaces existing query string keys.
 
 For other changes, see the first section of this article.
 
 ## Type of breaking change
 
-This change affects source compatibility and binary compatibility.
+This change affects [source compatibility](/dotnet/core/compatibility/categories#source-compatibility) and [binary compatibility](/dotnet/core/compatibility/categories#binary-compatibility).
 
 ## Reason for change
 

@@ -1,13 +1,12 @@
 ---
-title: "no-promise-executor-return"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-promise-executor-return.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-promise-executor-return
+rule_type: problem
+related_rules:
+- no-async-promise-executor
+further_reading:
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
 ---
 
-# no-promise-executor-return
 
 The `new Promise` constructor accepts a single argument, called an *executor*.
 
@@ -35,7 +34,7 @@ Only `return` without a value is allowed, as it's a control flow statement.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-promise-executor-return: "error"*/
@@ -68,9 +67,11 @@ new Promise(() => {
 new Promise(r => r(1));
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-promise-executor-return: "error"*/
@@ -106,6 +107,8 @@ new Promise(r => { r(1) });
 Promise.resolve(1);
 ```
 
+:::
+
 ## Options
 
 This rule takes one option, an object, with the following properties:
@@ -116,7 +119,7 @@ This rule takes one option, an object, with the following properties:
 
 Examples of **correct** code for this rule with the `{ "allowVoid": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-promise-executor-return: ["error", { allowVoid: true }]*/
@@ -144,3 +147,5 @@ new Promise((resolve, reject) => void getSomething((err, data) => {
 
 new Promise(r => void r(1));
 ```
+
+:::

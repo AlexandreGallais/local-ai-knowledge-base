@@ -1,12 +1,8 @@
 ---
 title: ".NET 9 container images no longer install `zlib`"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/containers/9.0/no-zlib.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in containers where .NET 9 container images no longer install the zlib package.
+ms.date: 08/29/2024
 ---
-
 # .NET 9 container images no longer install zlib
 
 .NET 9 container images no longer install `zlib` since it's not a dependency of the .NET Runtime anymore.
@@ -25,7 +21,7 @@ Starting in .NET 9, container images no longer install `zlib`. In addition, `zli
 
 ## Type of change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 

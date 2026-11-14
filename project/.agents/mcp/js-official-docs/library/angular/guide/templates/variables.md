@@ -1,12 +1,3 @@
----
-title: "Variables in templates"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/templates/variables.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Variables in templates
 
 Angular has two types of variable declarations in templates: local template variables and template reference variables.
@@ -15,11 +6,11 @@ HELPFUL: In this guide, “template” does not mean the entire HTML template fi
 
 ## Local template variables with `@let`
 
-Angular's `@let` syntax allows you to define a local variable and re-use it across a template, similar to the JavaScript `let` syntax.
+Angular's `@let` syntax allows you to define a local variable and re-use it across a template, similar to the [JavaScript `let` syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let).
 
 ### Using `@let`
 
-Use `@let` to declare a variable whose value is based on the result of a template expression. Angular automatically keeps the variable's value up-to-date with the given expression, similar to bindings.
+Use `@let` to declare a variable whose value is based on the result of a template expression. Angular automatically keeps the variable's value up-to-date with the given expression, similar to [bindings](/guide/templates/binding).
 
 ```angular-html
 @let name = user.name;
@@ -58,7 +49,7 @@ Once you've declared a variable with `@let`, you can reuse it in the same templa
 
 ### Assignability
 
-A key <example-value> between `@let` and JavaScript's `let` is that `@let` cannot be reassigned after declaration. However, Angular automatically keeps the variable's value up-to-date with the given expression.
+A key difference between `@let` and JavaScript's `let` is that `@let` cannot be reassigned after declaration. However, Angular automatically keeps the variable's value up-to-date with the given expression.
 
 ```angular-html
 @let value = 1;
@@ -118,9 +109,9 @@ Template reference variables give you a way to declare a variable that reference
 
 A template reference variable can refer to the following:
 
-- a DOM element within a template (including custom elements)
+- a DOM element within a template (including [custom elements](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements))
 - an Angular component or directive
-- a TemplateRef from an ng-template
+- a [TemplateRef](/api/core/TemplateRef) from an [ng-template](/api/core/ng-template)
 
 You can use template reference variables to read information from one part of the template in another part of the same template.
 
@@ -144,7 +135,7 @@ If you declare the variable on a Angular component, the variable refers to the c
 <my-datepicker #startDate />
 ```
 
-If you declare the variable on an `<ng-template>` element, the variable refers to a TemplateRef instance which represents the template. For more information, see How Angular uses the asterisk, \*, syntax in Structural directives.
+If you declare the variable on an `<ng-template>` element, the variable refers to a TemplateRef instance which represents the template. For more information, see [How Angular uses the asterisk, \*, syntax](/guide/directives/structural-directives#structural-directive-shorthand) in [Structural directives](/guide/directives/structural-directives).
 
 ```angular-html
 <!-- The `myFragment` variable is assigned the `TemplateRef` instance corresponding to this template fragment. -->
@@ -185,7 +176,7 @@ You cannot refer to a directive that does not specify an `exportAs` name.
 
 ### Using template reference variables with queries
 
-In addition to using template variables to read values from another part of the same template, you can also use this style of variable declaration to "mark" an element for component and directive queries.
+In addition to using template variables to read values from another part of the same template, you can also use this style of variable declaration to "mark" an element for [component and directive queries](/guide/components/queries).
 
 When you want to query for a specific element in a template, you can declare a template variable on that element and then query for the element based on the variable name.
 
@@ -204,13 +195,13 @@ export class AppComponent {
 }
 ```
 
-See Referencing children with queries for more information on queries.
+See [Referencing children with queries](/guide/components/queries) for more information on queries.
 
 ### Template variable scope
 
 Just like variables in JavaScript or TypeScript code, template variables are scoped to the template that declares them.
 
-Similarly, control flow blocks like `@if` and `@for`, structural directives, and `<ng-template>` declarations create a new nested template scope, much like JavaScript's control flow statements like `if` and `for` create new lexical scopes. You cannot access template variables within one of these nested templates from outside of its boundaries.
+Similarly, [control flow blocks](guide/templates/control-flow) like `@if` and `@for`, [structural directives](guide/directives/structural-directives), and `<ng-template>` declarations create a new nested template scope, much like JavaScript's control flow statements like `if` and `for` create new lexical scopes. You cannot access template variables within one of these nested templates from outside of its boundaries.
 
 HELPFUL: Define a variable only once in the template so the runtime value remains predictable.
 
@@ -218,7 +209,7 @@ HELPFUL: Define a variable only once in the template so the runtime value remain
 
 An inner template can access template variables that the outer template defines.
 
-In the following example, changing the text in the `` changes the value in the `` because Angular immediately updates changes through the template variable, `ref1`.
+In the following example, changing the text in the `<input>` changes the value in the `<span>` because Angular immediately updates changes through the template variable, `ref1`.
 
 ```angular-html
 <input #ref1 type="text" [(ngModel)]="firstExample" />
@@ -232,7 +223,7 @@ In this case, the `@if` block creates a new template scope, which includes the `
 
 However, accessing a template variable from a child scope in the parent template doesn't work:
 
-```angular-html
+```angular-html {avoid}
 @if (true) {
   <input #ref2 type="text" [(ngModel)]="secondExample" />
 }

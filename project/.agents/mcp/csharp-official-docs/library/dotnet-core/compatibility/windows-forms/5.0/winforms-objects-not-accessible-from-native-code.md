@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: WinForms objects not accessible from native code"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/windows-forms/5.0/winforms-objects-not-accessible-from-native-code.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 5 where Windows Forms objects are no longer accessible from native code.
+ms.date: 01/29/2021
 ---
-
 # Native code can't access Windows Forms objects
 
 Starting in .NET 5, you can no longer access Windows Forms objects from native code.
@@ -125,3 +121,11 @@ There are two possible ways to make the example work on .NET 5 and later version
 ## Affected APIs
 
 All Windows Forms APIs.
+
+<!--
+
+### Category
+
+- Windows Forms
+
+-->

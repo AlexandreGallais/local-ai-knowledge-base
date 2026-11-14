@@ -1,27 +1,23 @@
 ---
+description: "internal - C# Reference"
 title: "internal keyword"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/keywords/internal.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 01/21/2026
+f1_keywords: 
+  - "internal_CSharpKeyword"
+  - "internal"
+helpviewer_keywords: 
+  - "internal keyword [C#]"
 ---
-
 # internal (C# reference)
 
-The `internal` keyword is an access modifier for types and type members.
+The `internal` keyword is an [access modifier](./access-modifiers.md) for types and type members.
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
+> [!NOTE]
+> This article covers `internal` access. The `internal` keyword is also part of the [`protected internal`](./protected-internal.md) access modifier.
 
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
-
-> **Note:**
-> This article covers `internal` access. The `internal` keyword is also part of the `protected internal` access modifier.
-
-You can access internal types or members only within files in the same assembly, as shown in the following example:
+You can access internal types or members only within files in the same [assembly](../../../standard/assembly/index.md), as shown in the following example:
 
 ```csharp
 public class BaseClass
@@ -31,11 +27,11 @@ public class BaseClass
 }
 ```
 
-For a comparison of `internal` with the other access modifiers, see Accessibility Levels and Access Modifiers.
+For a comparison of `internal` with the other access modifiers, see [Accessibility Levels](./accessibility-levels.md) and [Access Modifiers](../../programming-guide/classes-and-structs/access-modifiers.md).
 
 An `assembly` is an executable or dynamic link library (DLL) produced from compiling one or more source files.
 
-For more information about assemblies, see Assemblies in .NET.
+For more information about assemblies, see [Assemblies in .NET](../../../standard/assembly/index.md).
 
 A common use of internal access is in component-based development because it enables a group of components to cooperate in a private manner without being exposed to the rest of the application code. For example, a framework for building graphical user interfaces could provide `Control` and `Form` classes that cooperate by using members with internal access. Since these members are internal, they aren't exposed to code that uses the framework.
 
@@ -92,14 +88,14 @@ public class TestAccess
 
 ## C# Language Specification
 
-For more information, see Declared accessibility in the C# Language Specification. The language specification is the definitive source for C# syntax and usage.
+For more information, see [Declared accessibility](~/_csharpstandard/standard/basic-concepts.md#742-declared-accessibility) in the [C# Language Specification](~/_csharpstandard/standard/README.md). The language specification is the definitive source for C# syntax and usage.
 
 ## See also
 
-- C# Keywords
-- Access Modifiers
-- Accessibility Levels
-- Modifiers
-- public
-- private
-- protected
+- [C# Keywords](./index.md)
+- [Access Modifiers](./access-modifiers.md)
+- [Accessibility Levels](./accessibility-levels.md)
+- [Modifiers](index.md)
+- [public](./public.md)
+- [private](./private.md)
+- [protected](./protected.md)

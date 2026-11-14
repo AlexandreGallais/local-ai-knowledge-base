@@ -1,21 +1,15 @@
----
-title: "numeric-separators-style"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/numeric-separators-style.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # numeric-separators-style
 
 📝 Enforce the style of numeric separators by correctly grouping digits.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, ☑️ `unopinionated`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
-Enforces a convention of grouping digits using numeric separators.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+Enforces a convention of grouping digits using [numeric separators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#Numeric_separators).
 Long numbers can become really hard to read, so cutting it into groups of digits, separated with a `_`, is important to keep your code clear. This rule also enforces a proper usage of the numeric separator, by checking if the groups of digits are of the correct size.
 
 By default, this doesn't apply to numbers below `10_000`, but that can be customized.
@@ -78,7 +72,7 @@ const foo = 1_294_287_712n;
 
 If you want a custom group size for a specific number type, you can specify it here.
 
-There are four number types; `hexadecimal`, `binary`, `octal` and `number`. Each of them can be associated with an object containing the following options:
+There are four number types; [`hexadecimal`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#Hexadecimal), [`binary`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#Binary), [`octal`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#Octal) and [`number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Number_type). Each of them can be associated with an object containing the following options:
 
 **`onlyIfContainsSeparator`**
 
@@ -103,7 +97,7 @@ Type: `integer`
 
 The minimum amount of digits in a number where you shouldn't use a numeric separator.
 
-Example: With `5` as the minimum digits, `1024` will pass <example-value> it has 4 digits, and `1_024` will fail.
+Example: With `5` as the minimum digits, `1024` will pass because it has 4 digits, and `1_024` will fail.
 
 **`groupLength`**
 
@@ -120,7 +114,7 @@ Default: `Infinity`
 
 The size a group of digits in the fractional part (after the decimal point) should be. Only applies to the `number` type.
 
-By default, the fractional part is not grouped, since separators there tend to obscure the decimal point. Set this to group it, for example `5` to match the convention used by Wikipedia: `3.14159_26535_89793`.
+By default, the fractional part is not grouped, since separators there tend to obscure the decimal point. Set this to group it, for example `5` to match the convention used by [Wikipedia](https://en.wikipedia.org/wiki/Decimal_separator#Digit_grouping): `3.14159_26535_89793`.
 
 Example: With `5` as the fraction group length, `0.5522847498` will be reported and fixed to `0.55228_47498`.
 

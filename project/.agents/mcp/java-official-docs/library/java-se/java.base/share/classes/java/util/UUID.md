@@ -1,12 +1,3 @@
----
-title: "UUID class (java.util)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/UUID.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # UUID class (java.util)
 
 ```java
@@ -16,42 +7,43 @@ public final class UUID implements java.io.Serializable, Comparable<UUID>
 A class that represents an immutable universally unique identifier (UUID).
 A UUID represents a 128-bit value.
 
- There exist different variants of these global identifiers.  The methods
+<p> There exist different variants of these global identifiers.  The methods
 of this class are for manipulating the Leach-Salz variant, although the
 constructors allow the creation of any variant of UUID (described below).
 
- The layout of a variant 2 (Leach-Salz) UUID is as follows:
+<p> The layout of a variant 2 (Leach-Salz) UUID is as follows:
 
 The most significant long consists of the following unsigned fields:
-
-```java
+<pre>
 0xFFFFFFFF00000000 time_low
 0x00000000FFFF0000 time_mid
 0x000000000000F000 version
 0x0000000000000FFF time_hi
-```
-
+</pre>
 The least significant long consists of the following unsigned fields:
-
-```java
+<pre>
 0xC000000000000000 variant
 0x3FFF000000000000 clock_seq
 0x0000FFFFFFFFFFFF node
-```
+</pre>
 
- The variant field contains a value which identifies the layout of the
-`UUID`.  The bit layout described above is valid only for a `UUID` with a variant value of 2, which indicates the Leach-Salz variant.
+<p> The variant field contains a value which identifies the layout of the
+{@code UUID}.  The bit layout described above is valid only for a {@code
+UUID} with a variant value of 2, which indicates the Leach-Salz variant.
 
- The version field holds a value that describes the type of this `UUID`.  There are four different basic types of UUIDs: time-based, DCE
+<p> The version field holds a value that describes the type of this {@code
+UUID}.  There are four different basic types of UUIDs: time-based, DCE
 security, name-based, and randomly generated UUIDs.  These types have a
 version value of 1, 2, 3 and 4, respectively.
 
- For more information including algorithms used to create `UUID`s,
-see  *RFC 4122: A
-Universally Unique IDentifier (UUID) URN Namespace*, section 4.2
-"Algorithms for Creating a Time-Based UUID".
+<p> For more information including algorithms used to create {@code UUID}s,
+see <a href="http://www.ietf.org/rfc/rfc4122.txt"> <i>RFC&nbsp;4122: A
+Universally Unique IDentifier (UUID) URN Namespace</i></a>, section 4.2
+&quot;Algorithms for Creating a Time-Based UUID&quot;.
 
-**Since:** 1.5
+@spec https://www.rfc-editor.org/info/rfc4122
+     RFC 4122: A Universally Unique IDentifier (UUID) URN Namespace
+@since   1.5
 
 ## UUID.UUID(long, long)
 
@@ -59,13 +51,16 @@ Universally Unique IDentifier (UUID) URN Namespace*, section 4.2
 public UUID(long mostSigBits, long leastSigBits)
 ```
 
-Constructs a new `UUID` using the specified data.  `mostSigBits` is used for the most significant 64 bits of the `UUID` and `leastSigBits` becomes the least significant 64 bits of
-the `UUID`.
+Constructs a new {@code UUID} using the specified data.  {@code
+mostSigBits} is used for the most significant 64 bits of the {@code
+UUID} and {@code leastSigBits} becomes the least significant 64 bits of
+the {@code UUID}.
 
-Parameters:
+@param  mostSigBits
+        The most significant bits of the {@code UUID}
 
-- `mostSigBits`: The most significant bits of the `UUID`
-- `leastSigBits`: The least significant bits of the `UUID`
+@param  leastSigBits
+        The least significant bits of the {@code UUID}
 
 ## UUID.randomUUID()
 
@@ -75,10 +70,10 @@ public static UUID randomUUID()
 
 Static factory to retrieve a type 4 (pseudo randomly generated) UUID.
 
-The `UUID` is generated using a cryptographically strong pseudo
+The {@code UUID} is generated using a cryptographically strong pseudo
 random number generator.
 
-**Returns:** A randomly generated `UUID`
+@return  A randomly generated {@code UUID}
 
 ## UUID.nameUUIDFromBytes(byte[])
 
@@ -86,14 +81,13 @@ random number generator.
 public static UUID nameUUIDFromBytes(byte[] name)
 ```
 
-Static factory to retrieve a type 3 (name based) `UUID` based on
+Static factory to retrieve a type 3 (name based) {@code UUID} based on
 the specified byte array.
 
-Parameters:
+@param  name
+        A byte array to be used to construct a {@code UUID}
 
-- `name`: A byte array to be used to construct a `UUID`
-
-**Returns:** A `UUID` generated from the specified array
+@return  A {@code UUID} generated from the specified array
 
 ## UUID.fromString(String)
 
@@ -101,18 +95,17 @@ Parameters:
 public static UUID fromString(String name)
 ```
 
-Creates a `UUID` from the string standard representation as
-described in the `toString` method.
+Creates a {@code UUID} from the string standard representation as
+described in the {@link #toString} method.
 
-Parameters:
+@param  name
+        A string that specifies a {@code UUID}
 
-- `name`: A string that specifies a `UUID`
+@return  A {@code UUID} with the specified value
 
-**Returns:** A `UUID` with the specified value
-
-Throws:
-
-- `IllegalArgumentException`: If name does not conform to the string representation as described in `toString`
+@throws  IllegalArgumentException
+         If name does not conform to the string representation as
+         described in {@link #toString}
 
 ## UUID.getLeastSignificantBits()
 
@@ -122,7 +115,7 @@ public long getLeastSignificantBits()
 
 Returns the least significant 64 bits of this UUID's 128 bit value.
 
-**Returns:** The least significant 64 bits of this UUID's 128 bit value
+@return  The least significant 64 bits of this UUID's 128 bit value
 
 ## UUID.getMostSignificantBits()
 
@@ -132,7 +125,7 @@ public long getMostSignificantBits()
 
 Returns the most significant 64 bits of this UUID's 128 bit value.
 
-**Returns:** The most significant 64 bits of this UUID's 128 bit value
+@return  The most significant 64 bits of this UUID's 128 bit value
 
 ## UUID.version()
 
@@ -140,20 +133,18 @@ Returns the most significant 64 bits of this UUID's 128 bit value.
 public int version()
 ```
 
-The version number associated with this `UUID`.  The version
-number describes how this `UUID` was generated.
+The version number associated with this {@code UUID}.  The version
+number describes how this {@code UUID} was generated.
 
 The version number has the following meaning:
+<ul>
+<li>1    Time-based UUID
+<li>2    DCE security UUID
+<li>3    Name-based UUID
+<li>4    Randomly generated UUID
+</ul>
 
-- 1    Time-based UUID
-
-- 2    DCE security UUID
-
-- 3    Name-based UUID
-
-- 4    Randomly generated UUID
-
-**Returns:** The version number of this `UUID`
+@return  The version number of this {@code UUID}
 
 ## UUID.variant()
 
@@ -161,21 +152,22 @@ The version number has the following meaning:
 public int variant()
 ```
 
-The variant number associated with this `UUID`.  The variant
-number describes the layout of the `UUID`.
+The variant number associated with this {@code UUID}.  The variant
+number describes the layout of the {@code UUID}.
 
 The variant number has the following meaning:
-
-- 0    Reserved for NCS backward compatibility
-
-- 2    IETF RFC 4122
+<ul>
+<li>0    Reserved for NCS backward compatibility
+<li>2    <a href="http://www.ietf.org/rfc/rfc4122.txt">IETF&nbsp;RFC&nbsp;4122</a>
 (Leach-Salz), used by this class
+<li>6    Reserved, Microsoft Corporation backward compatibility
+<li>7    Reserved for future definition
+</ul>
 
-- 6    Reserved, Microsoft Corporation backward compatibility
+@return  The variant number of this {@code UUID}
 
-- 7    Reserved for future definition
-
-**Returns:** The variant number of this `UUID`
+@spec https://www.rfc-editor.org/info/rfc4122
+     RFC 4122: A Universally Unique IDentifier (UUID) URN Namespace
 
 ## UUID.timestamp()
 
@@ -185,20 +177,18 @@ public long timestamp()
 
 The timestamp value associated with this UUID.
 
- The 60 bit timestamp value is constructed from the time_low,
-time_mid, and time_hi fields of this `UUID`.  The resulting
+<p> The 60 bit timestamp value is constructed from the time_low,
+time_mid, and time_hi fields of this {@code UUID}.  The resulting
 timestamp is measured in 100-nanosecond units since midnight,
 October 15, 1582 UTC.
 
- The timestamp value is only meaningful in a time-based UUID, which
-has version type 1.  If this `UUID` is not a time-based UUID then
+<p> The timestamp value is only meaningful in a time-based UUID, which
+has version type 1.  If this {@code UUID} is not a time-based UUID then
 this method throws UnsupportedOperationException.
 
-**Returns:** The timestamp of this `UUID`.
-
-Throws:
-
-- `UnsupportedOperationException`: If this UUID is not a version 1 UUID
+@throws UnsupportedOperationException
+        If this UUID is not a version 1 UUID
+@return The timestamp of this {@code UUID}.
 
 ## UUID.clockSequence()
 
@@ -208,19 +198,18 @@ public int clockSequence()
 
 The clock sequence value associated with this UUID.
 
- The 14 bit clock sequence value is constructed from the clock
+<p> The 14 bit clock sequence value is constructed from the clock
 sequence field of this UUID.  The clock sequence field is used to
 guarantee temporal uniqueness in a time-based UUID.
 
- The `clockSequence` value is only meaningful in a time-based
+<p> The {@code clockSequence} value is only meaningful in a time-based
 UUID, which has version type 1.  If this UUID is not a time-based UUID
 then this method throws UnsupportedOperationException.
 
-**Returns:** The clock sequence of this `UUID`
+@return  The clock sequence of this {@code UUID}
 
-Throws:
-
-- `UnsupportedOperationException`: If this UUID is not a version 1 UUID
+@throws  UnsupportedOperationException
+         If this UUID is not a version 1 UUID
 
 ## UUID.node()
 
@@ -230,19 +219,18 @@ public long node()
 
 The node value associated with this UUID.
 
- The 48 bit node value is constructed from the node field of this
+<p> The 48 bit node value is constructed from the node field of this
 UUID.  This field is intended to hold the IEEE 802 address of the machine
 that generated this UUID to guarantee spatial uniqueness.
 
- The node value is only meaningful in a time-based UUID, which has
+<p> The node value is only meaningful in a time-based UUID, which has
 version type 1.  If this UUID is not a time-based UUID then this method
 throws UnsupportedOperationException.
 
-**Returns:** The node value of this `UUID`
+@return  The node value of this {@code UUID}
 
-Throws:
-
-- `UnsupportedOperationException`: If this UUID is not a version 1 UUID
+@throws  UnsupportedOperationException
+         If this UUID is not a version 1 UUID
 
 ## UUID.toString()
 
@@ -250,11 +238,11 @@ Throws:
 public String toString()
 ```
 
-Returns a `String` object representing this `UUID`.
+Returns a {@code String} object representing this {@code UUID}.
 
- The UUID string representation is as described by this BNF:
-
-```java
+<p> The UUID string representation is as described by this BNF:
+<blockquote><pre>
+{@code
 UUID                   = <time_low> "-" <time_mid> "-"
                          <time_high_and_version> "-"
                          <variant_and_sequence> "-"
@@ -269,9 +257,9 @@ hexDigit               =
       "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
       | "a" | "b" | "c" | "d" | "e" | "f"
       | "A" | "B" | "C" | "D" | "E" | "F"
-```
+}</pre></blockquote>
 
-**Returns:** A string representation of this `UUID`
+@return  A string representation of this {@code UUID}
 
 ## UUID.hashCode()
 
@@ -279,9 +267,9 @@ hexDigit               =
 public int hashCode()
 ```
 
-Returns a hash code for this `UUID`.
+Returns a hash code for this {@code UUID}.
 
-**Returns:** A hash code value for this `UUID`
+@return  A hash code value for this {@code UUID}
 
 ## UUID.equals(Object)
 
@@ -289,15 +277,15 @@ Returns a hash code for this `UUID`.
 public boolean equals(Object obj)
 ```
 
-Compares this object to the specified object.  The result is `true` if and only if the argument is not `null`, is a `UUID`
+Compares this object to the specified object.  The result is {@code
+true} if and only if the argument is not {@code null}, is a {@code UUID}
 object, has the same variant, and contains the same value, bit for bit,
-as this `UUID`.
+as this {@code UUID}.
 
-Parameters:
+@param  obj
+        The object to be compared
 
-- `obj`: The object to be compared
-
-**Returns:** `true` if the objects are the same; `false`
+@return  {@code true} if the objects are the same; {@code false}
          otherwise
 
 ## UUID.compareTo(UUID)
@@ -308,13 +296,12 @@ public int compareTo(UUID val)
 
 Compares this UUID with the specified UUID.
 
- The first of two UUIDs is greater than the second if the most
+<p> The first of two UUIDs is greater than the second if the most
 significant field in which the UUIDs differ is greater for the first
 UUID.
 
-Parameters:
+@param  val
+        {@code UUID} to which this {@code UUID} is to be compared
 
-- `val`: `UUID` to which this `UUID` is to be compared
-
-**Returns:** -1, 0 or 1 as this `UUID` is less than, equal to, or
-         greater than `val`
+@return  -1, 0 or 1 as this {@code UUID} is less than, equal to, or
+         greater than {@code val}

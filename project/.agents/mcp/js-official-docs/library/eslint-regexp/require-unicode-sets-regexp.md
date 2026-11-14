@@ -1,15 +1,15 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/require-unicode-sets-regexp"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/require-unicode-sets-regexp.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "enforce the use of the `v` flag"
+since: "v2.0.0-next.7"
 ---
-
 # regexp/require-unicode-sets-regexp
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 > enforce the use of the `v` flag
 
@@ -51,9 +51,13 @@ Nothing.
 
 - [regexp/require-unicode-regexp]
 
+[regexp/require-unicode-regexp]: ./require-unicode-regexp.md
+
 ## :books: Further reading
 
 - [require-unicode-regexp]
+
+[require-unicode-regexp]: https://eslint.org/docs/rules/require-unicode-regexp
 
 ## :rocket: Version
 
@@ -61,5 +65,5 @@ This rule was introduced in eslint-plugin-regexp v2.0.0-next.7
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/require-unicode-sets-regexp.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/require-unicode-sets-regexp.ts)

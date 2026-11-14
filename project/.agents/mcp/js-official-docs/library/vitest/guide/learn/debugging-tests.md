@@ -1,10 +1,11 @@
 ---
-title: "Debugging Failing Tests | Guide"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/learn/debugging-tests.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Debugging Failing Tests | Guide
+prev:
+  text: Testing in Practice
+  link: /guide/learn/testing-in-practice
+next:
+  text: Writing Tests with AI
+  link: /guide/learn/writing-tests-with-ai
 ---
 
 # Debugging Failing Tests
@@ -44,7 +45,7 @@ vitest -t "sets the default role"
 vitest src/user.test.js -t "sets the default role"
 ```
 
-You can also add `.only` to the test itself:
+You can also add [`.only`](/api/test#only) to the test itself:
 
 ```js
 test.only('sets the default role', () => {
@@ -52,7 +53,7 @@ test.only('sets the default role', () => {
 })
 ```
 
-If you have many failures and want to focus on the first one, use `--bail` to stop after a set number of failures:
+If you have many failures and want to focus on the first one, use [`--bail`](/config/bail) to stop after a set number of failures:
 
 ```bash
 vitest --bail 1
@@ -81,7 +82,7 @@ test('starts empty', () => {
 })
 ```
 
-The fix is to reset the state before each test with `beforeEach`, or better yet, use `test.extend` to create fresh state for each test automatically:
+The fix is to reset the state before each test with [`beforeEach`](/api/hooks#beforeeach), or better yet, use [`test.extend`](/guide/test-context#extend-test-context) to create fresh state for each test automatically:
 
 ```js
 const test = baseTest.extend('users', () => [])
@@ -121,13 +122,13 @@ If a test hangs and eventually times out, it usually means a promise never resol
 
 ### Stale Snapshots
 
-If you're using snapshot tests and you intentionally changed the output of your code, the existing snapshots will be outdated. The test fails and shows a diff between the old snapshot and the new output.
+If you're using [snapshot tests](/guide/learn/snapshots) and you intentionally changed the output of your code, the existing snapshots will be outdated. The test fails and shows a diff between the old snapshot and the new output.
 
 This is expected. Review the diff to confirm the changes are correct, then update the snapshots by pressing `u` in watch mode or running `vitest -u`.
 
 ### Wrong Test Environment
 
-If your code accesses browser APIs like `document` or `window` and you see errors like "document is not defined", your test is running in the Node environment (the default). You can switch to a browser-like environment with the `environment` config option, or better yet, use Browser Mode which runs tests in a real browser.
+If your code accesses browser APIs like `document` or `window` and you see errors like "document is not defined", your test is running in the Node environment (the default). You can switch to a browser-like environment with the [`environment`](/config/environment) config option, or better yet, use [Browser Mode](/guide/browser/) which runs tests in a real browser.
 
 ### Mocks Not Cleaned Up
 
@@ -135,7 +136,7 @@ If a mock from one test leaks into another, you'll get unexpected behavior. For 
 
 The easiest fix is to enable automatic mock restoration in your config:
 
-```js
+```js [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -145,7 +146,7 @@ export default defineConfig({
 })
 ```
 
-This calls `mockRestore()` on every mock after each test. See the Mock Functions tutorial for more details.
+This calls [`mockRestore()`](/api/mock#mockrestore) on every mock after each test. See the [Mock Functions](/guide/learn/mock-functions#resetting-mocks) tutorial for more details.
 
 ## Debugging Tools
 
@@ -175,11 +176,11 @@ For a visual overview of your test suite, run Vitest with the `--ui` flag:
 vitest --ui
 ```
 
-This opens a browser-based dashboard where you can see all your tests, their status, and their output. It also includes a module graph that shows how your files are connected, which can help you understand why a change in one file causes failures in another. See the Vitest UI guide for more details.
+This opens a browser-based dashboard where you can see all your tests, their status, and their output. It also includes a module graph that shows how your files are connected, which can help you understand why a change in one file causes failures in another. See the [Vitest UI](/guide/ui) guide for more details.
 
 ### VS Code Extension
 
-The Vitest VS Code extension lets you run and debug individual tests directly from your editor. You can click a "play" button next to any test, set breakpoints, and step through code in the VS Code debugger. This is often faster than switching between the terminal and your editor.
+The [Vitest VS Code extension](https://vitest.dev/vscode) lets you run and debug individual tests directly from your editor. You can click a "play" button next to any test, set breakpoints, and step through code in the VS Code debugger. This is often faster than switching between the terminal and your editor.
 
 ### Verbose Output
 
@@ -199,12 +200,21 @@ For more complex issues where you need to step through code line by line, you ca
 vitest --inspect-brk --no-file-parallelism
 ```
 
-Then attach from VS Code, IntelliJ, or Chrome DevTools (`chrome://inspect`). See the Debugging guide for detailed setup instructions for each editor.
+Then attach from VS Code, IntelliJ, or Chrome DevTools (`chrome://inspect`). See the [Debugging](/guide/debugging) guide for detailed setup instructions for each editor.
 
 ## Getting Help
 
 If you're stuck, these resources can help:
 
-- The Common Errors page covers specific error messages and their solutions
-- GitHub Issues for searching known bugs and workarounds
-- The Discord community for real-time help from other Vitest users and maintainers
+- The [Common Errors](/guide/common-errors) page covers specific error messages and their solutions
+- [GitHub Issues](https://github.com/vitest-dev/vitest/issues) for searching known bugs and workarounds
+- The [Discord community](https://chat.vitest.dev) for real-time help from other Vitest users and maintainers
+
+<style>
+.vp-doc code.diff-add {
+  color: var(--vp-c-green-2) !important;
+}
+.vp-doc code.diff-remove {
+  color: var(--vp-c-red-2) !important;
+}
+</style>

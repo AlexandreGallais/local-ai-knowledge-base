@@ -1,37 +1,25 @@
----
-title: "Signature interface (java.lang.classfile)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/Signature.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # Signature interface (java.lang.classfile)
 
 ```java
 public sealed interface Signature
 ```
 
-Models generic Java type signatures, as defined in JVMS .
+Models generic Java type signatures, as defined in JVMS {@jvms 4.7.9.1}.
 
-**See also:** Type
-
-**See also:** SignatureAttribute
-
-**JLS:** 4.1 The Kinds of Types and Values
-
-**jvms:** 4.7.9.1 Signatures
-
-**sealedGraph:**
-
-**Since:** 24
+@see Type
+@see SignatureAttribute
+@jls 4.1 The Kinds of Types and Values
+@jvms 4.7.9.1 Signatures
+@sealedGraph
+@since 24
 
 ## Signature.signatureString()
 
 ```java
 String signatureString()
 ```
+
+{@return the raw signature string}
 
 ## Signature.parseFrom(String)
 
@@ -41,15 +29,10 @@ public static Signature parseFrom(String javaTypeSignature)
 
 Parses a Java type signature from a raw string.
 
-Parameters:
-
-- `javaTypeSignature`: raw Java type signature string
-
-**Returns:** a Java type signature
-
-Throws:
-
-- `IllegalArgumentException`: if the string is not a valid Java type signature string
+@param javaTypeSignature raw Java type signature string
+@return a Java type signature
+@throws IllegalArgumentException if the string is not a valid Java type
+        signature string
 
 ## Signature.of(ClassDesc)
 
@@ -57,12 +40,10 @@ Throws:
 public static Signature of(ClassDesc classDesc)
 ```
 
-The returned
-signature represents a reifiable type (JLS ).
+{@return a Java type signature from a field descriptor}  The returned
+signature represents a reifiable type (JLS {@jls 4.7}).
 
-Parameters:
-
-- `classDesc`: the symbolic description of the Java type
+@param classDesc the symbolic description of the Java type
 
 ## Signature.baseType()
 
@@ -70,19 +51,19 @@ Parameters:
 char baseType()
 ```
 
+{@return the single-letter descriptor for the base type}
+
 ## Signature.of(ClassDesc)
 
 ```java
 public static BaseTypeSig of(ClassDesc classDesc)
 ```
 
-Parameters:
-
-- `classDesc`: a symbolic descriptor for the base type, must correspond to a primitive type
-
-Throws:
-
-- `IllegalArgumentException`: if the `classDesc` is not primitive
+{@return the signature of a primitive type or void}
+@param classDesc a symbolic descriptor for the base type, must correspond
+                 to a primitive type
+@throws IllegalArgumentException if the {@code classDesc} is not
+        primitive
 
 ## Signature.of(char)
 
@@ -90,13 +71,10 @@ Throws:
 public static BaseTypeSig of(char baseType)
 ```
 
-Parameters:
-
-- `baseType`: the single-letter descriptor for the base type
-
-Throws:
-
-- `IllegalArgumentException`: if the `baseType` is not a valid descriptor character for a primitive type or void
+{@return the signature of a primitive type or void}
+@param baseType the single-letter descriptor for the base type
+@throws IllegalArgumentException if the {@code baseType} is not a
+        valid descriptor character for a primitive type or void
 
 ## Signature.outerType()
 
@@ -104,10 +82,11 @@ Throws:
 Optional<ClassTypeSig> outerType()
 ```
 
-Note that the outer class may be
+{@return the signature of the class that this class is a member of,
+only if this is a member class}  Note that the outer class may be
 absent if it is not a parameterized type.
 
-**JLS:** 4.5 Parameterized Types
+@jls 4.5 Parameterized Types
 
 ## Signature.className()
 
@@ -115,11 +94,17 @@ absent if it is not a parameterized type.
 String className()
 ```
 
+{@return the class or interface name; includes the {@linkplain
+ClassEntry##internalname slash-separated} package name if there is no
+outer type}
+
 ## Signature.classDesc()
 
 ```java
 default ClassDesc classDesc()
 ```
+
+{@return this class or interface, as a symbolic descriptor}
 
 ## Signature.typeArgs()
 
@@ -127,9 +112,10 @@ default ClassDesc classDesc()
 List<TypeArg> typeArgs()
 ```
 
+{@return the type arguments of this class or interface}
 Note that the outer type may have more type arguments.
 
-**JLS:** 4.5 Parameterized Types
+@jls 4.5 Parameterized Types
 
 ## Signature.of(ClassDesc, TypeArg...)
 
@@ -137,14 +123,12 @@ Note that the outer type may have more type arguments.
 public static ClassTypeSig of(ClassDesc className, TypeArg... typeArgs)
 ```
 
-Parameters:
+{@return a class or interface signature without an outer type}
 
-- `className`: the name of the class or interface
-- `typeArgs`: the type arguments
-
-Throws:
-
-- `IllegalArgumentException`: if `className` does not represent a class or interface
+@param className the name of the class or interface
+@param typeArgs the type arguments
+@throws IllegalArgumentException if {@code className} does not
+        represent a class or interface
 
 ## Signature.of(ClassTypeSig, ClassDesc, TypeArg...)
 
@@ -152,15 +136,13 @@ Throws:
 public static ClassTypeSig of(ClassTypeSig outerType, ClassDesc className, TypeArg... typeArgs)
 ```
 
-Parameters:
+{@return a class or interface signature}
 
-- `outerType`: signature of the outer type, may be `null`
-- `className`: the name of this class or interface
-- `typeArgs`: the type arguments
-
-Throws:
-
-- `IllegalArgumentException`: if `className` does not represent a class or interface
+@param outerType signature of the outer type, may be {@code null}
+@param className the name of this class or interface
+@param typeArgs the type arguments
+@throws IllegalArgumentException if {@code className} does not
+        represent a class or interface
 
 ## Signature.of(String, TypeArg...)
 
@@ -168,10 +150,10 @@ Throws:
 public static ClassTypeSig of(String className, TypeArg... typeArgs)
 ```
 
-Parameters:
+{@return a class or interface signature without an outer type}
 
-- `className`: the name of the class or interface
-- `typeArgs`: the type arguments
+@param className the name of the class or interface
+@param typeArgs the type arguments
 
 ## Signature.of(ClassTypeSig, String, TypeArg...)
 
@@ -179,11 +161,11 @@ Parameters:
 public static ClassTypeSig of(ClassTypeSig outerType, String className, TypeArg... typeArgs)
 ```
 
-Parameters:
+{@return a class type signature}
 
-- `outerType`: signature of the outer type, may be `null`
-- `className`: the name of this class or interface
-- `typeArgs`: the type arguments
+@param outerType signature of the outer type, may be {@code null}
+@param className the name of this class or interface
+@param typeArgs the type arguments
 
 ## Signature.indicator
 
@@ -192,10 +174,10 @@ NONE, /** * Upper-bound indicator
 ```
 
 No wildcard (empty), an exact type.  Also known as
-invariant.  This is the direct use of a
+{@index invariant}.  This is the direct use of a
 reference type in Java programs.
 
-**See also:** Type
+@see Type
 
 ## Signature.indicator
 
@@ -203,11 +185,11 @@ reference type in Java programs.
 EXTENDS, /** * Lower-bound indicator
 ```
 
-Upper-bound indicator `+`.  Also known as
-covariant.  This is the `? extends`
+Upper-bound indicator {@code +}.  Also known as
+{@index covariant}.  This is the {@code ? extends}
 prefix in Java programs.
 
-**See also:** WildcardType#getUpperBounds()
+@see WildcardType#getUpperBounds()
 
 ## Signature.SUPER
 
@@ -215,11 +197,11 @@ prefix in Java programs.
 SUPER
 ```
 
-Lower-bound indicator `-`.  Also known as
-contravariant.  This is the `? super`
+Lower-bound indicator {@code -}.  Also known as
+{@index contravariant}.  This is the {@code ? super}
 prefix in Java programs.
 
-**See also:** WildcardType#getLowerBounds()
+@see WildcardType#getLowerBounds()
 
 ## Signature.wildcardIndicator()
 
@@ -227,11 +209,15 @@ prefix in Java programs.
 WildcardIndicator wildcardIndicator()
 ```
 
+{@return the kind of wildcard}
+
 ## Signature.boundType()
 
 ```java
 RefTypeSig boundType()
 ```
+
+{@return the signature of the type bound}
 
 ## Signature.of(RefTypeSig)
 
@@ -239,11 +225,10 @@ RefTypeSig boundType()
 public static TypeArg.Bounded of(RefTypeSig boundType)
 ```
 
-Parameters:
+{@return a type argument of a reference type}
 
-- `boundType`: the reference type
-
-**See also:** Bounded.WildcardIndicator#NONE
+@param boundType the reference type
+@see Bounded.WildcardIndicator#NONE
 
 ## Signature.unbounded()
 
@@ -251,17 +236,18 @@ Parameters:
 public static TypeArg.Unbounded unbounded()
 ```
 
+{@return an unbounded wildcard type argument {@code *}}
+
 ## Signature.extendsOf(RefTypeSig)
 
 ```java
 public static TypeArg.Bounded extendsOf(RefTypeSig boundType)
 ```
 
-Parameters:
+{@return an upper-bounded wildcard type argument}
 
-- `boundType`: the upper bound
-
-**See also:** Bounded.WildcardIndicator#EXTENDS
+@param boundType the upper bound
+@see Bounded.WildcardIndicator#EXTENDS
 
 ## Signature.superOf(RefTypeSig)
 
@@ -269,11 +255,10 @@ Parameters:
 public static TypeArg.Bounded superOf(RefTypeSig boundType)
 ```
 
-Parameters:
+{@return a lower-bounded wildcard type argument}
 
-- `boundType`: the lower bound
-
-**See also:** Bounded.WildcardIndicator#SUPER
+@param boundType the lower bound
+@see Bounded.WildcardIndicator#SUPER
 
 ## Signature.bounded(Bounded.WildcardIndicator, RefTypeSig)
 
@@ -281,16 +266,18 @@ Parameters:
 public static TypeArg.Bounded bounded(Bounded.WildcardIndicator wildcard, RefTypeSig boundType)
 ```
 
-Parameters:
+{@return a bounded type argument}
 
-- `wildcard`: the wildcard indicator
-- `boundType`: the bound type
+@param wildcard the wildcard indicator
+@param boundType the bound type
 
 ## Signature.identifier()
 
 ```java
 String identifier()
 ```
+
+{@return the name of the type variable}
 
 ## Signature.of(String)
 
@@ -298,9 +285,9 @@ String identifier()
 public static TypeVarSig of(String identifier)
 ```
 
-Parameters:
+{@return a signature for a type variable}
 
-- `identifier`: the name of the type variable
+@param identifier the name of the type variable
 
 ## Signature.componentSignature()
 
@@ -308,15 +295,16 @@ Parameters:
 Signature componentSignature()
 ```
 
+{@return the signature of the component type}
+
 ## Signature.of(Signature)
 
 ```java
 public static ArrayTypeSig of(Signature componentSignature)
 ```
 
-Parameters:
-
-- `componentSignature`: the component type
+{@return an array type with the given component type}
+@param componentSignature the component type
 
 ## Signature.of(int, Signature)
 
@@ -324,14 +312,11 @@ Parameters:
 public static ArrayTypeSig of(int dims, Signature componentSignature)
 ```
 
-Parameters:
-
-- `dims`: the dimension of the array
-- `componentSignature`: the component type
-
-Throws:
-
-- `IllegalArgumentException`: if `dims < 1` or the resulting array type exceeds 255 dimensions
+{@return a signature for an array type}
+@param dims the dimension of the array
+@param componentSignature the component type
+@throws IllegalArgumentException if {@code dims < 1} or the
+        resulting array type exceeds 255 dimensions
 
 ## Signature.identifier()
 
@@ -339,13 +324,15 @@ Throws:
 String identifier()
 ```
 
+{@return the name of the type parameter}
+
 ## Signature.classBound()
 
 ```java
 Optional<RefTypeSig> classBound()
 ```
 
-This may be empty
+{@return the class bound of the type parameter}  This may be empty
 if this type parameter only has interface bounds.
 
 ## Signature.interfaceBounds()
@@ -354,7 +341,7 @@ if this type parameter only has interface bounds.
 List<RefTypeSig> interfaceBounds()
 ```
 
-This may be
+{@return the interface bounds of the type parameter}  This may be
 empty.
 
 ## Signature.of(String, RefTypeSig, RefTypeSig...)
@@ -363,11 +350,11 @@ empty.
 public static TypeParam of(String identifier, RefTypeSig classBound, RefTypeSig... interfaceBounds)
 ```
 
-Parameters:
+{@return a signature for a type parameter}
 
-- `identifier`: the name of the type parameter
-- `classBound`: the class bound of the type parameter, may be `null`
-- `interfaceBounds`: the interface bounds of the type parameter
+@param identifier the name of the type parameter
+@param classBound the class bound of the type parameter, may be {@code null}
+@param interfaceBounds the interface bounds of the type parameter
 
 ## Signature.of(String, Optional<RefTypeSig>, RefTypeSig...)
 
@@ -375,8 +362,8 @@ Parameters:
 public static TypeParam of(String identifier, Optional<RefTypeSig> classBound, RefTypeSig... interfaceBounds)
 ```
 
-Parameters:
+{@return a signature for a type parameter}
 
-- `identifier`: the name of the type parameter
-- `classBound`: the optional class bound of the type parameter
-- `interfaceBounds`: the interface bounds of the type parameter
+@param identifier the name of the type parameter
+@param classBound the optional class bound of the type parameter
+@param interfaceBounds the interface bounds of the type parameter

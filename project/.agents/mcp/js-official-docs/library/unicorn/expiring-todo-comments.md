@@ -1,21 +1,15 @@
----
-title: "expiring-todo-comments (part 1 of 2)"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/expiring-todo-comments.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # expiring-todo-comments
 
 📝 Add expiration conditions to TODO comments.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `recommended-css`, 🌐 `recommended-html`, 🧩 `recommended-json`, 📚 `recommended-markdown`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, 📋 `recommended-yaml`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, 🎨 `recommended-css`, 🌐 `recommended-html`, 🧩 `recommended-json`, 📚 `recommended-markdown`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, 📋 `recommended-yaml`, ☑️ `unopinionated`.
 
-This rule makes it possible to pass <example-value> to TODO, FIXME and XXX comments to trigger ESLint to report.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
-From ESLint's documentation:
+This rule makes it possible to pass arguments to TODO, FIXME and XXX comments to trigger ESLint to report.
+
+From [ESLint's documentation](https://eslint.org/docs/latest/rules/no-warning-comments):
 
 > Developers often add comments to code which is not complete or needs review.
 
@@ -23,9 +17,9 @@ TODO comments are useful when a piece of code needs some work. Unfortunately the
 
 With this rule, a TODO can have a condition right from the beginning to define its lifespan. When the condition is met, ESLint will take care of reporting that there's work to be done.
 
-This rule will ignore all TODOs without conditions. For more information, read the below `eslint/no-warning-comments` section.
+This rule will ignore all TODOs without conditions. For more information, read the below [`eslint/no-warning-comments`](#disallow-warning-comments-no-warning-comments) section.
 
-This rule also supports CSS comments when linting with `@eslint/css`, HTML comments when linting with `@html-eslint/eslint-plugin`, JSONC/JSON5 comments when linting with `@eslint/json`, HTML comments in Markdown when linting with `@eslint/markdown`, SOML `#` and block comments when linting with `eslint-soml`, TOML `#` comments when linting with `eslint-plugin-toml`, and YAML `#` comments when linting with `eslint-plugin-yml`.
+This rule also supports CSS comments when linting with [`@eslint/css`](https://github.com/eslint/css), HTML comments when linting with [`@html-eslint/eslint-plugin`](https://github.com/yeonjuan/html-eslint), JSONC/JSON5 comments when linting with [`@eslint/json`](https://github.com/eslint/json), HTML comments in Markdown when linting with [`@eslint/markdown`](https://github.com/eslint/markdown), SOML `#` and block comments when linting with [`eslint-soml`](https://github.com/soml-lang/eslint-soml), TOML `#` comments when linting with [`eslint-plugin-toml`](https://github.com/ota-meshi/eslint-plugin-toml), and YAML `#` comments when linting with [`eslint-plugin-yml`](https://github.com/ota-meshi/eslint-plugin-yml).
 
 Quick overview of conditions:
 
@@ -42,7 +36,7 @@ Quick overview of conditions:
 
 Using a date as condition, a TODO will only work as long as this date is not met. This is especially useful when you either know when the action should take place or simply want to set boundaries for yourself.
 
-Date expiry checks are disabled by default. Set `checkDates` to `true` to enable them.
+Date expiry checks are disabled by default. Set [`checkDates`](#checkdates) to `true` to enable them.
 
 ```js
 // TODO [2019-11-15]: Refactor this code before the sprint ends.
@@ -50,13 +44,13 @@ Date expiry checks are disabled by default. Set `checkDates` to `true` to enable
 // TODO [2019-08-10]: I must refactor this for sure before I deliver.
 ```
 
-Dates are in ISO 8601 format and use UTC as timezone.
+Dates are in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601#Dates) and use [UTC](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) as timezone.
 
 Multiple dates on the same TODO are not valid and will be reported. There's no point in having two dates as the closest one will always be the one that is reported.
 
 ### Package Version
 
-If you're working on an npm package, you should have a root level package.json with a `version` field as specified by npm. This condition takes place under this value.
+If you're working on an npm package, you should have a root level package.json with a [`version`](https://docs.npmjs.com/files/package.json#version) field as specified by npm. This condition takes place under this value.
 
 By assigning a condition to compare a package.json `version`, the TODO will report as soon as the condition is met. It's really useful when the work is related to the version of the package itself such as deprecated APIs.
 
@@ -70,7 +64,7 @@ Multiple package versions on the same TODO are not valid and will be reported. J
 
 ### Engine Version
 
-In package.json, you can specify an `"engines"` field with the Node.js (`node`) versions that your package supports.
+In package.json, you can specify an [`"engines"` field](https://docs.npmjs.com/files/package.json#engines) with the Node.js (`node`) versions that your package supports.
 
 With that in mind, this condition is triggered as soon as package.json's `node` engine reaches the target version. This is particularly useful for maintainers that strive for compatibility but have plans for the future when some feature will be widely available and when support for older versions could be dropped.
 
@@ -81,7 +75,7 @@ Imagine you want to use `async`/`await` but for now you support Node.js versions
 // FIXME [engine:node@>=20.0.0]: Hey, node can use import/export now, we should refactor.
 ```
 
-Argument versions should be semver compatible such as: `1.2.45`, `5.3`, `1`.
+Argument versions should be [semver](https://semver.org/) compatible such as: `1.2.45`, `5.3`, `1`.
 
 Only the `node` engine is supported by this condition.
 
@@ -89,7 +83,7 @@ Supported comparisons are `>` and `>=`. Comparison must have a `@` before such a
 
 ### Dependency Presence
 
-As a Node.js developer, you probably already know about package.json dependencies and devDependencies. This condition works based on the presence or absence of dependencies in both fields.
+As a Node.js developer, you probably already know about package.json [dependencies](https://docs.npmjs.com/files/package.json#dependencies) and [devDependencies](https://docs.npmjs.com/files/package.json#devdependencies). This condition works based on the presence or absence of dependencies in both fields.
 
 You may use `+` to trigger when a dependency is added and `-` when a dependency is removed.
 
@@ -111,15 +105,15 @@ Another way to make conditions based on dependencies is to look at versions. Thi
 // XXX [popura@>=2.0.0]: This API is deprecated so we should not use it by then.
 ```
 
-Argument versions should be semver compatible such as: `1.2.45`, `5.3`, `1`.
+Argument versions should be [semver](https://semver.org/) compatible such as: `1.2.45`, `5.3`, `1`.
 
 Supported comparisons are `>` and `>=`. Comparison must have a `@` before such as `@>` and `@>=`.
 
-Package manager catalogs (`catalog:` version references in `package.json`) are not resolved; dependency and peer dependency version checks that use them are reported as unsupported.
+[Package manager catalogs](https://pnpm.io/catalogs) (`catalog:` version references in `package.json`) are not resolved; dependency and peer dependency version checks that use them are reported as unsupported.
 
 ### Peer Dependency Version
 
-If your package declares `peerDependencies`, you can make conditions based on the **minimum supported version** of a peer dependency. This is useful when you want a TODO to trigger once you bump the lowest version you support, for example to drop a fallback for a deprecated API.
+If your package declares [`peerDependencies`](https://docs.npmjs.com/cli/configuring-npm/package-json#peerdependencies), you can make conditions based on the **minimum supported version** of a peer dependency. This is useful when you want a TODO to trigger once you bump the lowest version you support, for example to drop a fallback for a deprecated API.
 
 ```js
 // TODO [peer:eslint@>=9]: Drop the `CLIEngine` fallback once we require ESLint 9.
@@ -127,9 +121,9 @@ If your package declares `peerDependencies`, you can make conditions based on th
 
 The peer dependency value is a version range (such as `>=8`, `^8 || ^9`), so the comparison is made against the **floor** of that range. For example, with `"eslint": "^8 || ^9"` the minimum supported version is `8`, so `[peer:eslint@>=9]` will **not** trigger; it triggers only once the floor reaches `9`.
 
-This condition is separate from the Dependency Version condition, which only checks `dependencies` and `devDependencies`. Use `peer:` when the same package can appear in both with independent versions.
+This condition is separate from the [Dependency Version](#dependency-version) condition, which only checks `dependencies` and `devDependencies`. Use `peer:` when the same package can appear in both with independent versions.
 
-Argument versions should be semver compatible such as: `1.2.45`, `5.3`, `1`.
+Argument versions should be [semver](https://semver.org/) compatible such as: `1.2.45`, `5.3`, `1`.
 
 Supported comparisons are `>` and `>=`. Comparison must have a `@` before such as `@>` and `@>=`.
 
@@ -139,7 +133,7 @@ TODO comments with rules for package.json and dependency versions support the se
 
 Keep in mind that pre-releases compare by number and alphabetical order. Example: `1.0.0-alpha` < `1.0.0-alpha.1` < `1.0.0-alpha.beta` < `1.0.0-beta` < `1.0.0-beta.2` < `1.0.0-beta.11` < `1.0.0-rc.1` < `1.0.0`.
 
-You can read more about the semver pre-release format here and semver precedence rules here.
+You can read more about the semver pre-release format [here](https://semver.org/#spec-item-9) and semver precedence rules [here](https://semver.org/#spec-item-11).
 
 ### Combinations
 
@@ -175,7 +169,7 @@ You can also use block comments to specify TODOs with conditions. Each line can 
 
 ### CSS
 
-When used with `@eslint/css`, this rule can check CSS block comments too.
+When used with [`@eslint/css`](https://github.com/eslint/css), this rule can check CSS block comments too.
 
 ```css
 /* TODO [2019-11-15]: Remove this fallback. */
@@ -186,7 +180,7 @@ When used with `@eslint/css`, this rule can check CSS block comments too.
 
 ### HTML
 
-When used with `@html-eslint/eslint-plugin`, this rule can check HTML comments too.
+When used with [`@html-eslint/eslint-plugin`](https://github.com/yeonjuan/html-eslint), this rule can check HTML comments too.
 
 ```html
 <!-- TODO [2019-11-15]: Remove this fallback. -->
@@ -195,7 +189,7 @@ When used with `@html-eslint/eslint-plugin`, this rule can check HTML comments t
 
 ### JSONC / JSON5
 
-When used with `@eslint/json`, this rule can check line comments in `.jsonc` and `.json5` files too.
+When used with [`@eslint/json`](https://github.com/eslint/json), this rule can check line comments in `.jsonc` and `.json5` files too.
 
 ```jsonc
 // TODO [2019-11-15]: Update this configuration.
@@ -206,7 +200,7 @@ When used with `@eslint/json`, this rule can check line comments in `.jsonc` and
 
 ### Markdown
 
-When used with `@eslint/markdown`, this rule can check HTML comments in Markdown files too.
+When used with [`@eslint/markdown`](https://github.com/eslint/markdown), this rule can check HTML comments in Markdown files too.
 
 ```md
 <!-- TODO [2019-11-15]: Update this section. -->
@@ -216,7 +210,7 @@ When used with `@eslint/markdown`, this rule can check HTML comments in Markdown
 
 ### YAML
 
-When used with `eslint-plugin-yml`, this rule can check comments in YAML files too.
+When used with [`eslint-plugin-yml`](https://github.com/ota-meshi/eslint-plugin-yml), this rule can check comments in YAML files too.
 
 ```yaml
 # TODO [2019-11-15]: Update this configuration.
@@ -225,25 +219,25 @@ key: value
 
 ## Disallow Warning Comments (no-warning-comments)
 
-This rule implements `eslint/no-warning-comments`.
+This rule implements [`eslint/no-warning-comments`](https://eslint.org/docs/rules/no-warning-comments).
 
-The sole difference is that first we check for **valid conditions** to apply this rule. If no valid conditions are met, we fall back to `eslint/no-warning-comments` if `allowWarningComments` is set to `false` (default `true`) and you'll see something like `Unexpected 'todo': 'TODO: …'.`
+The sole difference is that first we check for **valid conditions** to apply this rule. If no valid conditions are met, we fall back to `eslint/no-warning-comments` if [`allowWarningComments`](#allowwarningcomments) is set to `false` (default `true`) and you'll see something like `Unexpected 'todo': 'TODO: …'.`
 
 The reason behind this is that now that you have a powerful rule to make sure there are no stray TODOs on your code, you should strive for best practices. Don't just add TODO comments and leave them forever. Define conditions to justify the presence of warning comments.
 
 With that in mind, you **could** disable that ESLint rule in favor of this one as you will get its same behavior and more.
 
-Since by default the option `allowWarningComments` is `true`, both rules can coexist even with different reporting levels. For example, one might want to error when conditions are met, but just warn on TODOs without conditions (See `allowWarningComments` below).
+Since by default the option `allowWarningComments` is `true`, both rules can coexist even with different reporting levels. For example, one might want to error when conditions are met, but just warn on TODOs without conditions (See [`allowWarningComments`](#allowwarningcomments) below).
 
 ## Legacy Branches
 
 Although this rule works just fine when you maintain a `main` branch, it gets trickier when you have legacy branches that happen to have unclosed TODOs.
 
-Imagine you maintain a `main` branch at a version such as 10 and always keep working on it and also keep fixing your TODOs. But your package happens to **publish and support** legacy branches such as 8 and 9 for long term support with code such as security patches, meaning you might have stray TODOs that won't get fixed and will cause your build to break unless you either fix or drop the TODO.
+Imagine you maintain a `main` branch at a version such as 10 and always keep working on it and also keep fixing your TODOs. But your package happens to **publish and support** legacy branches such as 8 and 9 for [long term support](https://en.wikipedia.org/wiki/Long-term_support) with code such as security patches, meaning you might have stray TODOs that won't get fixed and will cause your build to break unless you either fix or drop the TODO.
 
 ## Conditions Overview
 
-- `[YYYY-MM-DD]` to define a UTC due date in the ISO 8601 format.
+- `[YYYY-MM-DD]` to define a [UTC](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) due date in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Dates) format.
 - `[>1]` or `[>=2]` to expire at some version (from package.json). No whitespace.
 - `[+package]` or `[-package]` to expire when you add/remove a package.
 - `[package@>1]` or `[package@>=2]` to expire when a package hits some version. No whitespace.
@@ -257,13 +251,13 @@ Imagine you maintain a `main` branch at a version such as 10 and always keep wor
 - You cannot stack multiple dates or multiple versions of
   your package on the same TODO.
 - You can use either `TODO`, `FIXME`, or `XXX`. You can change
-  these using options. (See options.terms).
+  these using options. (See [options.terms](#terms)).
 - TODOs may have any string before arguments. Really useful
   when you want to highlight more information such as author name
   like `TODO (lubien) [2019-05-30]` or `TODO @lubien [2019-05-30]`.
 - TODOs may or may not have a colon before the message such as
   `TODO [...]: message` or `TODO [...] message`.
-- If no proper argument is found, you'll be notified that the TODO is useless (See `eslint/no-warning-comments`).
+- If no proper argument is found, you'll be notified that the TODO is useless (See [`eslint/no-warning-comments`](#disallow-warning-comments-no-warning-comments)).
 - CSS, HTML, JSONC, JSON5, Markdown, SOML, TOML, and YAML comments are supported with their respective ESLint plugins.
 
 ## Examples
@@ -318,4 +312,152 @@ Imagine you maintain a `main` branch at a version such as 10 and always keep wor
  * TODO [2200-12-25]: Another
  * TODO [2200-12-25]: Way
  */
+```
+
+## Options
+
+### checkDates
+
+Type: `boolean`\
+Default: `false`
+
+Whether to check expiration dates.
+
+This option does not disable date argument validation. For example, TODO comments with multiple dates are still reported as invalid.
+
+```js
+'unicorn/expiring-todo-comments': [
+	'error',
+	{
+		checkDates: false,
+	},
+]
+```
+
+### checkDatesOnPullRequests
+
+Type: `boolean`\
+Default: `false`
+
+Whether to check expiration dates on pull requests.
+
+Sometimes developers may send [Pull Requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) at a time when TODO expiry dates are triggered. This means that their code would fail to pass linting, causing a false-positive.
+
+When date checks are enabled, this rule will not trigger expiry dates while on Pull Requests by default so that the one responsible for the fix will be the maintainer not the contributor.
+
+```js
+'unicorn/expiring-todo-comments': [
+	'error',
+	{
+		checkDates: true,
+		checkDatesOnPullRequests: true,
+	},
+]
+```
+
+### terms
+
+Type: `string[]`\
+Default: `['todo', 'fixme', 'xxx']`
+
+Add or remove TODO verbs.
+
+The defaults come from the [`eslint/no-warning-comments` rule](https://eslint.org/docs/rules/no-warning-comments#options).
+
+If you just want to add a verb, make sure to explicitly include the default ones like `['todo', 'fixme', 'xxx', 'mytodo']` or otherwise any default TODO verb will be ignored. Similarly, when you want to remove a verb, leave the others in like `['todo', 'fixme']`.
+
+```js
+'unicorn/expiring-todo-comments': [
+	'error',
+	{
+		terms: [
+			'todo',
+			'fixme',
+			'xxx',
+		],
+	},
+]
+```
+
+### allowWarningComments
+
+Type: `boolean`\
+Default: `true`
+
+Ignore TODOs without conditions.
+
+As mentioned before, the [`eslint/no-warning-comments` rule](#disallow-warning-comments-no-warning-comments) will be triggered when there are no valid conditions on a TODO comment.
+
+This is helpful if you want to use **both** this rule and the [`eslint/no-warning-comments` rule](#disallow-warning-comments-no-warning-comments), **but want different warning levels**, as it's not possible to set multiple warning levels on the same rule.
+
+If you want this rule to trigger on stray TODO conditions, you can enable this fallback rule with this option.
+
+```js
+'unicorn/expiring-todo-comments': [
+	'error',
+	{
+		allowWarningComments: false,
+	},
+]
+```
+
+### ignore
+
+Type: `Array<string | RegExp>`\
+Default: `[]`
+
+Ignore TODOs matching any of the given regex patterns. This option is only useful if you have `allowWarningComments` set to `false`.
+
+When a string is given, it will be interpreted as a regular expression inside of a string.
+
+Don't forget that you must escape special characters in string regexes. If you want to ignore numbers with `\d` for example, to match `#\d`, you must use `/#\d/` or `'#\\d'`.
+
+As an example of this option, if you want this rule to **completely ignore** comments containing references to GitHub issues, you can do so by ignoring `"#\\d+"`:
+
+```js
+'unicorn/expiring-todo-comments': [
+	'error',
+	{
+		allowWarningComments: false,
+		ignore: [
+			'#\\d+',
+			/issue-\d+/i,
+		],
+	},
+]
+```
+
+### date
+
+Type: `string` (`date` format)\
+Default: `<today>`
+
+For TODOs with date deadlines, this option makes them trigger only if the deadline is later than the specified date. You could set this to a date in the future to find TODOs that expire soon, or set it far in the past if you want to ignore recently-expired TODOs.
+
+The format must match [json-schema's date](https://json-schema.org/understanding-json-schema/reference/string.html#dates-and-times).
+
+### examples
+
+Find tech debt that has grown up and gone to college by triggering the rule only for incredibly old TODOs:
+
+```js
+'unicorn/expiring-todo-comments': [
+	'error',
+	{
+		checkDates: true,
+		date: '2000-01-01',
+	},
+]
+```
+
+Prepare for the future by triggering the rule on known Y3K bugs:
+
+```js
+'unicorn/expiring-todo-comments': [
+	'error',
+	{
+		checkDates: true,
+		date: '3000-01-01',
+	},
+]
 ```

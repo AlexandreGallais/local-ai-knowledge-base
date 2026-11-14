@@ -1,22 +1,14 @@
----
-title: "Move to Per-environment APIs"
-tool: "vite"
-version: "8.3"
-source: "https://github.com/vitejs/vite/blob/b39e6e63dcbfc3cf4be871acf3554efbd6d0e268/docs/changes/per-environment-apis.md"
-commit: "b39e6e63dcbfc3cf4be871acf3554efbd6d0e268"
-license: "MIT"
----
-
 # Move to Per-environment APIs
 
-**Feedback**
-Give us feedback at Environment API feedback discussion
+::: tip Feedback
+Give us feedback at [Environment API feedback discussion](https://github.com/vitejs/vite/discussions/16358)
+:::
 
 Multiple APIs from `ViteDevServer` related to module graph and modules transforms have been moved to the `DevEnvironment` instances.
 
 Affected scope: `Vite Plugin Authors`
 
-**Future Deprecation**
+::: warning Future Deprecation
 The `Environment` instance was first introduced at `v6.0`. The deprecation of `server.moduleGraph` and other methods that are now in environments is planned for a future major. We don't recommend moving away from server methods yet. To identify your usage, set these in your vite config.
 
 ```ts
@@ -30,6 +22,8 @@ future: {
 }
 ```
 
+:::
+
 ## Motivation
 
 In Vite v5 and before, a single Vite dev server always had two environments (`client` and `ssr`). The `server.moduleGraph` had mixed modules from both of these environments. Nodes were connected through `clientImportedModules` and `ssrImportedModules` lists (but a single `importers` list was maintained for each). A transformed module was represented by an `id` and a `ssr` boolean. This boolean needed to be passed to APIs, for example `server.moduleGraph.getModuleByUrl(url, ssr)` and `server.transformRequest(url, { ssr })`.
@@ -38,7 +32,7 @@ In Vite v6, it is now possible to create any number of custom environments (`cli
 
 ## Migration Guide
 
-- `server.moduleGraph` -> `environment.moduleGraph`
+- `server.moduleGraph` -> [`environment.moduleGraph`](/guide/api-environment-instances#separate-module-graphs)
 - `server.reloadModule(module)` -> `environment.reloadModule(module)`
 - `server.pluginContainer` -> `environment.pluginContainer`
 - `server.transformRequest(url, ssr)` -> `environment.transformRequest(url)`

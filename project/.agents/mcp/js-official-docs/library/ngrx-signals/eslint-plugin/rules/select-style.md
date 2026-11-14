@@ -1,12 +1,3 @@
----
-title: "select-style"
-tool: "ngrx-signals"
-version: "22.0"
-source: "https://github.com/ngrx/platform/blob/a4995391ef631f1bd60d539f436a1aa5c23c4fe5/projects/www/src/app/pages/guide/eslint-plugin/rules/select-style.md"
-commit: "a4995391ef631f1bd60d539f436a1aa5c23c4fe5"
-license: "MIT"
----
-
 # select-style
 
 Selector can be used either with `select` as a pipeable operator or as a method.
@@ -16,6 +7,9 @@ Selector can be used either with `select` as a pipeable operator or as a method.
 - **Suggestion**: No
 - **Requires type checking**: No
 - **Configurable**: Yes
+
+<!-- Everything above this generated, do not edit -->
+<!-- MANUAL-DOC:START -->
 
 ## Rule Details
 

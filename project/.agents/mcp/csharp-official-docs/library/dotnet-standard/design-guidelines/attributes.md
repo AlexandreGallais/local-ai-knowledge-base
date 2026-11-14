@@ -1,30 +1,29 @@
 ---
+description: "Learn more about design guidelines for attributes"
 title: "Attributes"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/attributes.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "attributes [.NET Framework], about"
+  - "class library design guidelines [.NET Framework], attributes"
+ms.assetid: ee0038ef-b247-4747-a650-3c5c5cd58d8b
 ---
-
 # Attributes (.NET Framework design guidelines)
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
-`System.Attribute` is a base class used to define custom attributes.
+<xref:System.Attribute?displayProperty=nameWithType> is a base class used to define custom attributes.
 
- Attributes are annotations that can be added to programming elements such as assemblies, types, members, and parameters. They are stored in the metadata of the assembly and can be accessed at run time using the reflection APIs. For example, the Framework defines the `System.ObsoleteAttribute`, which can be applied to a type or a member to indicate that the type or member has been deprecated.
+ Attributes are annotations that can be added to programming elements such as assemblies, types, members, and parameters. They are stored in the metadata of the assembly and can be accessed at run time using the reflection APIs. For example, the Framework defines the <xref:System.ObsoleteAttribute>, which can be applied to a type or a member to indicate that the type or member has been deprecated.
 
  Attributes can have one or more properties that carry additional data related to the attribute. For example, `ObsoleteAttribute` could carry additional information about the release in which a type or a member got deprecated and the description of the new APIs replacing the obsolete API.
 
- Some properties of an attribute must be specified when the attribute is applied. These are referred to as the required properties or required arguments, because they are represented as positional constructor parameters. For example, the `System.Diagnostics.ConditionalAttribute.ConditionString` property of the `System.Diagnostics.ConditionalAttribute` is a required property.
+ Some properties of an attribute must be specified when the attribute is applied. These are referred to as the required properties or required arguments, because they are represented as positional constructor parameters. For example, the <xref:System.Diagnostics.ConditionalAttribute.ConditionString> property of the <xref:System.Diagnostics.ConditionalAttribute> is a required property.
 
- Properties that do not necessarily have to be specified when the attribute is applied are called optional properties (or optional arguments). They are represented by settable properties. Compilers provide special syntax to set these properties when an attribute is applied. For example, the `System.AttributeUsageAttribute.Inherited` property represents an optional argument.
+ Properties that do not necessarily have to be specified when the attribute is applied are called optional properties (or optional arguments). They are represented by settable properties. Compilers provide special syntax to set these properties when an attribute is applied. For example, the <xref:System.AttributeUsageAttribute.Inherited?displayProperty=nameWithType> property represents an optional argument.
 
  ✔️ DO name custom attribute classes with the suffix "Attribute."
 
- ✔️ DO apply the `System.AttributeUsageAttribute` to custom attributes.
+ ✔️ DO apply the <xref:System.AttributeUsageAttribute> to custom attributes.
 
  ✔️ DO provide settable properties for optional arguments.
 
@@ -44,9 +43,9 @@ license: "CC-BY-4.0"
 
  *Portions &copy; 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Framework Design Guidelines
-- Usage Guidelines
+- [Framework Design Guidelines](index.md)
+- [Usage Guidelines](usage-guidelines.md)

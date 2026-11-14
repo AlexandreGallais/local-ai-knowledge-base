@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugModule2::SetJMCStatus Method"
 title: "ICorDebugModule2::SetJMCStatus Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmodule2-setjmcstatus-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugModule2.SetJMCStatus"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugModule2::SetJMCStatus"
+helpviewer_keywords:
+  - "SetJMCStatus method, ICorDebugModule2 interface [.NET debugging]"
+  - "ICorDebugModule2::SetJMCStatus method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugModule2::SetJMCStatus Method
 
 Sets the Just My Code (JMC) status of all methods of all the classes in this ICorDebugModule2 to the specified value, except those in the `pTokens` array, which it sets to the opposite value.
@@ -17,7 +26,7 @@ Sets the Just My Code (JMC) status of all methods of all the classes in this ICo
 HRESULT SetJMCStatus (
     [in] BOOL                        bIsJustMyCode,
     [in] ULONG32                     cTokens,
-    [in, size_is(cTokens)] mdToken   <example-value>[]
+    [in, size_is(cTokens)] mdToken   pTokens[]
 );
 ```
 
@@ -42,7 +51,7 @@ The `SetJMCStatus` method returns an S_OK HRESULT if all functions were set succ
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

@@ -1,15 +1,22 @@
 ---
+description: "Learn more about: IMetaDataImport::FindMember Method"
 title: "IMetaDataImport::FindMember Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-findmember-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.FindMember"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::FindMember"
+  - "FindMember method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::FindMember Method
 
-Gets a pointer to the MemberDef token for field or method that is enclosed by the specified `System.Type` and that has the specified name and metadata signature.
+Gets a pointer to the MemberDef token for field or method that is enclosed by the specified <xref:System.Type> and that has the specified name and metadata signature.
 
 ## Syntax
 
@@ -48,12 +55,12 @@ HRESULT FindMember (
 
  `FindMember` finds only members that were defined directly in the class or interface; it does not find inherited members.
 
-> **Note:**
-> `FindMember` is a helper method. It calls IMetaDataImport::FindMethod; if that call does not find a match, `FindMember` then calls IMetaDataImport::FindField.
+> [!NOTE]
+> `FindMember` is a helper method. It calls [IMetaDataImport::FindMethod](imetadataimport-findmethod-method.md); if that call does not find a match, `FindMember` then calls [IMetaDataImport::FindField](imetadataimport-findfield-method.md).
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -61,5 +68,5 @@ HRESULT FindMember (
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

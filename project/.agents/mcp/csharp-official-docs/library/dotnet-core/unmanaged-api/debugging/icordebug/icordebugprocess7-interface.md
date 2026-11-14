@@ -1,12 +1,16 @@
 ---
+description: "Learn more about: ICorDebugProcess7 Interface"
 title: "ICorDebugProcess7 Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess7-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugProcess7"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugProcess7 Interface
 
 Provides a method that configures the debugger to handle in-memory metadata updates in the target process.
@@ -15,11 +19,13 @@ Provides a method that configures the debugger to handle in-memory metadata upda
 
 |Method|Description|
 |------------|-----------------|
-|SetWriteableMetadataUpdateMode Method|Sets a value that determines how the debugger handles in-memory updates to metadata within the target process.|
+|[SetWriteableMetadataUpdateMode Method](icordebugprocess7-setwriteablemetadataupdatemode-method.md)|Sets a value that determines how the debugger handles in-memory updates to metadata within the target process.|
+
+## Remarks
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

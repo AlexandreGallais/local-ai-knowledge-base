@@ -1,16 +1,11 @@
 ---
-title: "array-callback-return"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/array-callback-return.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: array-callback-return
+rule_type: problem
 ---
 
-# array-callback-return
 
 `Array` has several methods for filtering, mapping, and folding.
-If we forget to write `return` statement in a callback of those, it's probably a mistake. If you don't want to use a return or don't need the returned results, consider using .forEach instead.
+If we forget to write `return` statement in a callback of those, it's probably a mistake. If you don't want to use a return or don't need the returned results, consider using [.forEach](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach) instead.
 
 ```js
 // example: convert ['a', 'b', 'c'] --> {a: 0, b: 1, c: 2}
@@ -26,27 +21,27 @@ Additionally, it may also enforce the `forEach` array method callback to **not**
 
 This rule finds callback functions of the following methods, then checks usage of `return` statement.
 
-* `Array.from`
-* `Array.fromAsync`
-* `Array.prototype.every`
-* `Array.prototype.filter`
-* `Array.prototype.find`
-* `Array.prototype.findIndex`
-* `Array.prototype.findLast`
-* `Array.prototype.findLastIndex`
-* `Array.prototype.flatMap`
-* `Array.prototype.forEach` (optional, based on `checkForEach` parameter)
-* `Array.prototype.map`
-* `Array.prototype.reduce`
-* `Array.prototype.reduceRight`
-* `Array.prototype.some`
-* `Array.prototype.sort`
-* `Array.prototype.toSorted`
+* [`Array.from`](https://www.ecma-international.org/ecma-262/6.0/#sec-array.from)
+* [`Array.fromAsync`](https://tc39.es/ecma262/#sec-array.fromasync)
+* [`Array.prototype.every`](https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.every)
+* [`Array.prototype.filter`](https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.filter)
+* [`Array.prototype.find`](https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.find)
+* [`Array.prototype.findIndex`](https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.findindex)
+* [`Array.prototype.findLast`](https://www.ecma-international.org/ecma-262/14.0/#sec-array.prototype.findlast)
+* [`Array.prototype.findLastIndex`](https://www.ecma-international.org/ecma-262/14.0/#sec-array.prototype.findlastindex)
+* [`Array.prototype.flatMap`](https://www.ecma-international.org/ecma-262/10.0/#sec-array.prototype.flatmap)
+* [`Array.prototype.forEach`](https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.foreach) (optional, based on `checkForEach` parameter)
+* [`Array.prototype.map`](https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.map)
+* [`Array.prototype.reduce`](https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.reduce)
+* [`Array.prototype.reduceRight`](https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.reduceright)
+* [`Array.prototype.some`](https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.some)
+* [`Array.prototype.sort`](https://www.ecma-international.org/ecma-262/6.0/#sec-array.prototype.sort)
+* [`Array.prototype.toSorted`](https://www.ecma-international.org/ecma-262/14.0/#sec-array.prototype.tosorted)
 * And above of typed arrays if applicable.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint array-callback-return: "error"*/
@@ -70,9 +65,11 @@ const bar = foo.filter(function(x) {
 });
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-callback-return: "error"*/
@@ -92,6 +89,8 @@ const foo = Array.from(nodes, function(node) {
 const bar = foo.map(node => node.getAttribute("id"));
 ```
 
+:::
+
 ## Options
 
 This rule accepts a configuration object with three options:
@@ -106,7 +105,7 @@ This rule accepts a configuration object with three options:
 
 Examples of **correct** code for the `{ "allowImplicit": true }` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-callback-return: ["error", { allowImplicit: true }]*/
@@ -115,11 +114,13 @@ const undefAllTheThings = myArray.map(function(item) {
 });
 ```
 
+:::
+
 ### checkForEach
 
 Examples of **incorrect** code for the `{ "checkForEach": true }` option:
 
-**Incorrect:**
+:::incorrect
 
 ```js
 /*eslint array-callback-return: ["error", { checkForEach: true }]*/
@@ -155,9 +156,11 @@ myArray.forEach(item => {
 });
 ```
 
+:::
+
 Examples of **correct** code for the `{ "checkForEach": true }` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-callback-return: ["error", { checkForEach: true }]*/
@@ -183,11 +186,13 @@ myArray.forEach(item => {
 });
 ```
 
+:::
+
 ### allowVoid
 
 Examples of **correct** code for the `{ "allowVoid": true }` option:
 
-**Correct:**
+:::correct
 
 ```js
 /*eslint array-callback-return: ["error", { checkForEach: true, allowVoid: true }]*/
@@ -205,6 +210,8 @@ myArray.forEach(item => {
     handleItem(item);
 });
 ```
+
+:::
 
 ## Known Limitations
 

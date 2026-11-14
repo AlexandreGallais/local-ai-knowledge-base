@@ -1,19 +1,15 @@
 ---
 title: "Breaking change: URI paths with non-ASCII characters parse correctly on Unix"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/5.0/non-ascii-chars-in-uri-parsed-correctly.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 5 breaking change in core .NET libraries where absolute URI paths that contain non-ASCII characters now parse correctly on Unix platforms.
+ms.date: 11/01/2020
 ---
-
 # URI paths with non-ASCII characters parse correctly on Unix
 
-A bug was fixed in the `System.Uri` class such that absolute URI paths that contain non-ASCII characters now parse correctly on Unix platforms.
+A bug was fixed in the <xref:System.Uri?displayProperty=fullName> class such that absolute URI paths that contain non-ASCII characters now parse correctly on Unix platforms.
 
 ## Change description
 
-In previous versions of .NET, absolute URI paths that contain non-ASCII characters are parsed incorrectly on Unix platforms, and segments of the path are duplicated. (Absolute paths are those that start with "/".) The parsing issue has been fixed for .NET 5. If you move from a previous version of .NET to .NET 5 or later, you'll get different values produced by `System.Uri.AbsoluteUri`, `System.Uri.ToString`, and other `System.Uri` members.
+In previous versions of .NET, absolute URI paths that contain non-ASCII characters are parsed incorrectly on Unix platforms, and segments of the path are duplicated. (Absolute paths are those that start with "/".) The parsing issue has been fixed for .NET 5. If you move from a previous version of .NET to .NET 5 or later, you'll get different values produced by <xref:System.Uri.AbsoluteUri?displayProperty=nameWithType>, <xref:System.Uri.ToString?displayProperty=nameWithType>, and other <xref:System.Uri> members.
 
 Consider the output of the following code when run on Unix.
 
@@ -48,4 +44,16 @@ If you have code that expects and accounts for the duplicated path segments, you
 
 ## Affected APIs
 
-- `System.Uri`
+- <xref:System.Uri?displayProperty=fullName>
+
+<!--
+
+### Category
+
+Core .NET libraries
+
+### Affected APIs
+
+- `T:System.Uri`
+
+-->

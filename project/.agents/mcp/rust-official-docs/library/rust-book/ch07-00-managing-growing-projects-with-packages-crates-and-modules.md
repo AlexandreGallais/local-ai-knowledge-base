@@ -1,11 +1,6 @@
----
-title: "Packages, Crates, and Modules"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch07-00-managing-growing-projects-with-packages-crates-and-modules.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="managing-growing-projects-with-packages-crates-and-modules"></a>
 
 # Packages, Crates, and Modules
 
@@ -21,7 +16,7 @@ optionally one library crate. As a package grows, you can extract parts into
 separate crates that become external dependencies. This chapter covers all
 these techniques. For very large projects comprising a set of interrelated
 packages that evolve together, Cargo provides workspaces, which we’ll cover in
-“Cargo Workspaces” in Chapter 14.
+[“Cargo Workspaces”][workspaces]<!-- ignore --> in Chapter 14.
 
 We’ll also discuss encapsulating implementation details, which lets you reuse
 code at a higher level: Once you’ve implemented an operation, other code can
@@ -53,3 +48,5 @@ paths
 In this chapter, we’ll cover all these features, discuss how they interact, and
 explain how to use them to manage scope. By the end, you should have a solid
 understanding of the module system and be able to work with scopes like a pro!
+
+[workspaces]: ch14-03-cargo-workspaces.html

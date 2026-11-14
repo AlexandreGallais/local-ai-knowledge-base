@@ -1,13 +1,7 @@
----
-title: "ch15-02-deref"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/ch15-02-deref.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
+<!-- Old headings. Do not remove or links may break. -->
 
-# ch15-02-deref
+<a id="treating-smart-pointers-like-regular-references-with-the-deref-trait"></a>
+<a id="treating-smart-pointers-like-regular-references-with-deref"></a>
 
 ## Treating Smart Pointers Like Regular References
 
@@ -25,6 +19,11 @@ smart pointers to work in ways similar to references. Then, we’ll look at
 Rust’s deref coercion feature and how it lets us work with either references or
 smart pointers.
 
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="following-the-pointer-to-the-value-with-the-dereference-operator"></a>
+<a id="following-the-pointer-to-the-value"></a>
+
 ### Following the Reference to the Value
 
 A regular reference is a type of pointer, and one way to think of a pointer is
@@ -32,17 +31,13 @@ as an arrow to a value stored somewhere else. In Listing 15-6, we create a
 reference to an `i32` value and then use the dereference operator to follow the
 reference to the value.
 
-**Listing 15-6: Using the dereference operator to follow a reference to an `i32` value** (src/main.rs)
+<Listing number="15-6" file-name="src/main.rs" caption="Using the dereference operator to follow a reference to an `i32` value">
 
 ```rust
-fn main() {
-    let x = 5;
-    let y = &x;
-
-    assert_eq!(5, x);
-    assert_eq!(5, *y);
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-06/src/main.rs}}
 ```
+
+</Listing>
 
 The variable `x` holds an `i32` value `5`. We set `y` equal to a reference to
 `x`. We can assert that `x` is equal to `5`. However, if we want to make an
@@ -55,28 +50,7 @@ If we tried to write `assert_eq!(5, y);` instead, we would get this compilation
 error:
 
 ```console
-$ cargo run
-   Compiling deref-example v0.1.0 (file:///projects/deref-example)
-error[E0277]: can't compare `{integer}` with `&{integer}`
- --> src/main.rs:6:5
-  |
-6 |     assert_eq!(5, y);
-  |     ^^^^^^^^^^^^^^^^ no implementation for `{integer} == &{integer}`
-  |
-  = help: the trait `PartialEq<&{integer}>` is not implemented for `{integer}`
-  = help: the following other types implement trait `PartialEq<Rhs>`:
-            f128
-            f16
-            f32
-            f64
-            i128
-            i16
-            i32
-            i64
-          and 8 others
-
-For more information about this error, try `rustc --explain E0277`.
-error: could not compile `deref-example` (bin "deref-example") due to 1 previous error
+{{#include ../listings/ch15-smart-pointers/output-only-01-comparing-to-reference/output.txt}}
 ```
 
 Comparing a number and a reference to a number isn’t allowed because they’re
@@ -90,17 +64,13 @@ reference; the dereference operator used on the `Box<T>` in Listing 15-7
 functions in the same way as the dereference operator used on the reference in
 Listing 15-6.
 
-**Listing 15-7** (src/main.rs)`">
+<Listing number="15-7" file-name="src/main.rs" caption="Using the dereference operator on a `Box<i32>`">
 
 ```rust
-fn main() {
-    let x = 5;
-    let y = Box::new(x);
-
-    assert_eq!(5, x);
-    assert_eq!(5, *y);
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-07/src/main.rs}}
 ```
+
+</Listing>
 
 The main difference between Listing 15-7 and Listing 15-6 is that here we set
 `y` to be an instance of a box pointing to a copied value of `x` rather than a
@@ -125,17 +95,13 @@ The `Box<T>` type is ultimately defined as a tuple struct with one element, so
 Listing 15-8 defines a `MyBox<T>` type in the same way. We’ll also define a
 `new` function to match the `new` function defined on `Box<T>`.
 
-**Listing 15-8** (src/main.rs)` type">
+<Listing number="15-8" file-name="src/main.rs" caption="Defining a `MyBox<T>` type">
 
 ```rust
-struct MyBox<T>(T);
-
-impl<T> MyBox<T> {
-    fn new(x: T) -> MyBox<T> {
-        MyBox(x)
-    }
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-08/src/main.rs:here}}
 ```
+
+</Listing>
 
 We define a struct named `MyBox` and declare a generic parameter `T` because we
 want our type to hold values of any type. The `MyBox` type is a tuple struct
@@ -147,59 +113,44 @@ changing it to use the `MyBox<T>` type we’ve defined instead of `Box<T>`. The
 code in Listing 15-9 won’t compile, because Rust doesn’t know how to
 dereference `MyBox`.
 
-**Listing 15-9** (src/main.rs)` in the same way we used references and `Box<T>`">
+<Listing number="15-9" file-name="src/main.rs" caption="Attempting to use `MyBox<T>` in the same way we used references and `Box<T>`">
 
-```rust
-fn main() {
-    let x = 5;
-    let y = MyBox::new(x);
-
-    assert_eq!(5, x);
-    assert_eq!(5, *y);
-}
+```rust,ignore,does_not_compile
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-09/src/main.rs:here}}
 ```
+
+</Listing>
 
 Here’s the resultant compilation error:
 
 ```console
-$ cargo run
-   Compiling deref-example v0.1.0 (file:///projects/deref-example)
-error[E0614]: type `MyBox<{integer}>` cannot be dereferenced
-  --> src/main.rs:14:19
-   |
-14 |     assert_eq!(5, *y);
-   |                   ^^ can't be dereferenced
-
-For more information about this error, try `rustc --explain E0614`.
-error: could not compile `deref-example` (bin "deref-example") due to 1 previous error
+{{#include ../listings/ch15-smart-pointers/listing-15-09/output.txt}}
 ```
 
 Our `MyBox<T>` type can’t be dereferenced because we haven’t implemented that
 ability on our type. To enable dereferencing with the `*` operator, we
 implement the `Deref` trait.
 
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="treating-a-type-like-a-reference-by-implementing-the-deref-trait"></a>
+
 ### Implementing the `Deref` Trait
 
-As discussed in “Implementing a Trait on a Type” in
+As discussed in [“Implementing a Trait on a Type”][impl-trait]<!-- ignore --> in
 Chapter 10, to implement a trait we need to provide implementations for the
 trait’s required methods. The `Deref` trait, provided by the standard library,
 requires us to implement one method named `deref` that borrows `self` and
 returns a reference to the inner data. Listing 15-10 contains an implementation
 of `Deref` to add to the definition of `MyBox<T>`.
 
-**Listing 15-10** (src/main.rs)`">
+<Listing number="15-10" file-name="src/main.rs" caption="Implementing `Deref` on `MyBox<T>`">
 
 ```rust
-use std::ops::Deref;
-
-impl<T> Deref for MyBox<T> {
-    type Target = T;
-
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-10/src/main.rs:here}}
 ```
+
+</Listing>
 
 The `type Target = T;` syntax defines an associated type for the `Deref` trait
 to use. Associated types are a slightly different way of declaring a generic
@@ -208,7 +159,8 @@ more detail in Chapter 20.
 
 We fill in the body of the `deref` method with `&self.0` so that `deref`
 returns a reference to the value we want to access with the `*` operator;
-recall from “Creating Different Types with Tuple Structs” in Chapter 5 that `.0` accesses the first value in a tuple struct.
+recall from [“Creating Different Types with Tuple Structs”][tuple-structs]<!--
+ignore --> in Chapter 5 that `.0` accesses the first value in a tuple struct.
 The `main` function in Listing 15-9 that calls `*` on the `MyBox<T>` value now
 compiles, and the assertions pass!
 
@@ -220,7 +172,7 @@ it knows how to dereference.
 When we entered `*y` in Listing 15-9, behind the scenes Rust actually ran this
 code:
 
-```rust
+```rust,ignore
 *(y.deref())
 ```
 
@@ -242,6 +194,11 @@ then a call to the `*` operator just once, each time we use a `*` in our code.
 Because the substitution of the `*` operator does not recurse infinitely, we
 end up with data of type `i32`, which matches the `5` in `assert_eq!` in
 Listing 15-9.
+
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="implicit-deref-coercions-with-functions-and-methods"></a>
+<a id="using-deref-coercions-in-functions-and-methods"></a>
 
 ### Using Deref Coercion in Functions and Methods
 
@@ -265,26 +222,25 @@ Listing 15-8 as well as the implementation of `Deref` that we added in Listing
 15-10. Listing 15-11 shows the definition of a function that has a string slice
 parameter.
 
-**Listing 15-11: A `hello` function that has the parameter `name` of type `&str`** (src/main.rs)
+<Listing number="15-11" file-name="src/main.rs" caption="A `hello` function that has the parameter `name` of type `&str`">
 
 ```rust
-fn hello(name: &str) {
-    println!("Hello, {name}!");
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-11/src/main.rs:here}}
 ```
+
+</Listing>
 
 We can call the `hello` function with a string slice as an argument, such as
 `hello("Rust");`, for example. Deref coercion makes it possible to call `hello`
 with a reference to a value of type `MyBox<String>`, as shown in Listing 15-12.
 
-**Listing 15-12** (src/main.rs)` value, which works because of deref coercion">
+<Listing number="15-12" file-name="src/main.rs" caption="Calling `hello` with a reference to a `MyBox<String>` value, which works because of deref coercion">
 
 ```rust
-fn main() {
-    let m = MyBox::new(String::from("Rust"));
-    hello(&m);
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-12/src/main.rs:here}}
 ```
+
+</Listing>
 
 Here we’re calling the `hello` function with the argument `&m`, which is a
 reference to a `MyBox<String>` value. Because we implemented the `Deref` trait
@@ -298,14 +254,13 @@ If Rust didn’t implement deref coercion, we would have to write the code in
 Listing 15-13 instead of the code in Listing 15-12 to call `hello` with a value
 of type `&MyBox<String>`.
 
-**Listing 15-13: The code we would have to write if Rust didn’t have deref coercion** (src/main.rs)
+<Listing number="15-13" file-name="src/main.rs" caption="The code we would have to write if Rust didn’t have deref coercion">
 
 ```rust
-fn main() {
-    let m = MyBox::new(String::from("Rust"));
-    hello(&(*m)[..]);
-}
+{{#rustdoc_include ../listings/ch15-smart-pointers/listing-15-13/src/main.rs:here}}
 ```
+
+</Listing>
 
 The `(*m)` dereferences the `MyBox<String>` into a `String`. Then, the `&` and
 `[..]` take a string slice of the `String` that is equal to the whole string to
@@ -318,6 +273,10 @@ types and use `Deref::deref` as many times as necessary to get a reference to
 match the parameter’s type. The number of times that `Deref::deref` needs to be
 inserted is resolved at compile time, so there is no runtime penalty for taking
 advantage of deref coercion!
+
+<!-- Old headings. Do not remove or links may break. -->
+
+<a id="how-deref-coercion-interacts-with-mutability"></a>
 
 ### Handling Deref Coercion with Mutable References
 
@@ -348,3 +307,6 @@ initial immutable reference is the only immutable reference to that data, but
 the borrowing rules don’t guarantee that. Therefore, Rust can’t make the
 assumption that converting an immutable reference to a mutable reference is
 possible.
+
+[impl-trait]: ch10-02-traits.html#implementing-a-trait-on-a-type
+[tuple-structs]: ch05-01-defining-structs.html#creating-different-types-with-tuple-structs

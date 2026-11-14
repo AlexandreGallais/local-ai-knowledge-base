@@ -1,17 +1,11 @@
----
-title: "no-impossible-length-comparison"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-impossible-length-comparison.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-impossible-length-comparison
 
 📝 Disallow impossible comparisons against `.length` or `.size`.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 The `length` property of arrays and strings, and the `size` property of built-in collections, represent a count, so they cannot be negative. Comparing them against a negative bound, or checking whether they are at least zero, is either always `false` or always `true`, which usually means the wrong value or comparison operator was used.
 

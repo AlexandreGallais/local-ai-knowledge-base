@@ -1,18 +1,16 @@
 ---
-title: "Customizing the migrations history table - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/modeling/code-first/migrations/history-customization.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Customizing the migrations history table - EF6
+description: Customizing the migrations history table in Entity Framework 6
+author: SamMonoRT
+ms.date: 10/23/2016
+uid: ef6/modeling/code-first/migrations/history-customization
 ---
-
 # Customizing the migrations history table
-> **Note:**
+> [!NOTE]
 > **EF6 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 6. If you are using an earlier version, some or all of the information does not apply.
 
-> **Note:**
-> This article assumes you know how to use Code First Migrations in basic scenarios. If you don’t, then you’ll need to read Code First Migrations before continuing.
+> [!NOTE]
+> This article assumes you know how to use Code First Migrations in basic scenarios. If you don’t, then you’ll need to read [Code First Migrations](xref:ef6/modeling/code-first/migrations/index) before continuing.
 
 ## What is Migrations History Table?
 
@@ -22,7 +20,7 @@ Migrations history table is a table used by Code First Migrations to store detai
 
 Migrations history table is supposed to be used solely by Code First Migrations and changing it manually can break migrations. However sometimes the default configuration is not suitable and the table needs to be customized, for instance:
 
--   You need to change names and/or facets of the columns to enable a 3rd party Migrations provider
+-   You need to change names and/or facets of the columns to enable a 3<sup>rd</sup> party Migrations provider
 -   You want to change the name of the table
 -   You need to use a non-default schema for the \_\_MigrationHistory table
 -   You need to store additional data for a given version of the context and therefore you need to add an additional column to the table
@@ -37,12 +35,12 @@ Before you start you need to know that you can customize the migrations history 
 
 First, you will need to create a class derived from System.Data.Entity.Migrations.History.HistoryContext class. The HistoryContext class is derived from the DbContext class so configuring the migrations history table is very similar to configuring EF models with fluent API. You just need to override the OnModelCreating method and use fluent API to configure the table.
 
->**Note:**
+>[!NOTE]
 > Typically when you configure EF models you don’t need to call base.OnModelCreating() from the overridden OnModelCreating method since the DbContext.OnModelCreating() has empty body. This is not the case when configuring the migrations history table. In this case the first thing to do in your OnModelCreating() override is to actually call base.OnModelCreating(). This will configure the migrations history table in the default way which you then tweak in the overriding method.
 
 Let’s say you want to rename the migrations history table and put it to a custom schema called “admin”. In addition your DBA would like you to rename the MigrationId column to Migration\_ID.  You could achieve this by creating the following class derived from HistoryContext:
 
-```csharp
+``` csharp
     using System.Data.Common;
     using System.Data.Entity;
     using System.Data.Entity.Migrations.History;
@@ -66,9 +64,9 @@ Let’s say you want to rename the migrations history table and put it to a cust
     }
 ```
 
-Once your custom HistoryContext is ready you need to make EF aware of it by registering it via code-based configuration:
+Once your custom HistoryContext is ready you need to make EF aware of it by registering it via [code-based configuration](https://msdn.com/data/jj680699):
 
-```csharp
+``` csharp
     using System.Data.Entity;
 
     namespace CustomizableMigrationsHistoryTableSample
@@ -85,3 +83,5 @@ Once your custom HistoryContext is ready you need to make EF aware of it by regi
 ```
 
 That’s pretty much it. Now you can go to the Package Manager Console, Enable-Migrations, Add-Migration and finally Update-Database. This should result in adding to the database a migrations history table configured according to the details you specified in your HistoryContext derived class.
+
+![Migrations History Table](~/ef6/media/database.png)

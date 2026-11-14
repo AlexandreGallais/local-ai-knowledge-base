@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: ICorDebugVirtualUnwinder::Next Method"
 title: "ICorDebugVirtualUnwinder::Next Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugvirtualunwinder-next-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugVirtualUnwinder::Next Method
 
 Advances to the caller's context.
@@ -31,12 +27,12 @@ If a failing HRESULT is returned, ICorDebug APIs will return `CORDBG_E_DATA_TARG
 
 The stack walker should ensure that it makes forward progress, so that eventually a call to `Next` will return a failing HRESULT or `CORDBG_S_AT_END_OF_STACK`. Returning `S_OK` indefinitely may cause an infinite loop.
 
-> **Note:**
+> [!NOTE]
 > This method is available with .NET Native only.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -46,4 +42,4 @@ The stack walker should ensure that it makes forward progress, so that eventuall
 
 ## See also
 
-- ICorDebugMemoryBuffer Interface
+- [ICorDebugMemoryBuffer Interface](icordebugmemorybuffer-interface.md)

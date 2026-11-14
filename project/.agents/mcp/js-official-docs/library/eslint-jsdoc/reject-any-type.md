@@ -1,13 +1,6 @@
----
-title: "reject-any-type"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/reject-any-type.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
-
-# `reject-any-type`
+<a name="user-content-reject-any-type"></a>
+<a name="reject-any-type"></a>
+# <code>reject-any-type</code>
 
 Reports use of `any` (or `*`) type within JSDoc tag types.
 
@@ -21,6 +14,8 @@ Reports use of `any` (or `*`) type within JSDoc tag types.
 |Settings|`mode`|
 |Options||
 
+<a name="user-content-reject-any-type-failing-examples"></a>
+<a name="reject-any-type-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -64,6 +59,10 @@ function quux () {}
 // Message: Prefer a more specific type to `any`
 ````
 
+
+
+<a name="user-content-reject-any-type-passing-examples"></a>
+<a name="reject-any-type-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -74,3 +73,4 @@ The following patterns are not considered problems:
  */
 function quux () {}
 ````
+

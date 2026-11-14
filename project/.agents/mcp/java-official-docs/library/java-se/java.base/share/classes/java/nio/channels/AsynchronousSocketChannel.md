@@ -1,12 +1,3 @@
----
-title: "AsynchronousSocketChannel class (java.nio.channels) (part 1 of 2)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/channels/AsynchronousSocketChannel.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AsynchronousSocketChannel class (java.nio.channels)
 
 ```java
@@ -15,73 +6,89 @@ public abstract class AsynchronousSocketChannel implements AsynchronousByteChann
 
 An asynchronous channel for stream-oriented connecting sockets.
 
- Asynchronous socket channels are created in one of two ways. A newly-created
-`AsynchronousSocketChannel` is created by invoking one of the open methods defined by this class. A newly-created channel is open but
-not yet connected. A connected `AsynchronousSocketChannel` is created
-when a connection is made to the socket of an `AsynchronousServerSocketChannel`.
+<p> Asynchronous socket channels are created in one of two ways. A newly-created
+{@code AsynchronousSocketChannel} is created by invoking one of the {@link
+#open open} methods defined by this class. A newly-created channel is open but
+not yet connected. A connected {@code AsynchronousSocketChannel} is created
+when a connection is made to the socket of an {@link AsynchronousServerSocketChannel}.
 It is not possible to create an asynchronous socket channel for an arbitrary,
-pre-existing socket.
+pre-existing {@link java.net.Socket socket}.
 
- A newly-created channel is connected by invoking its connect
+<p> A newly-created channel is connected by invoking its {@link #connect connect}
 method; once connected, a channel remains connected until it is closed.  Whether
-or not a socket channel is connected may be determined by invoking its getRemoteAddress method. An attempt to invoke an I/O
-operation upon an unconnected channel will cause a `NotYetConnectedException`
+or not a socket channel is connected may be determined by invoking its {@link
+#getRemoteAddress getRemoteAddress} method. An attempt to invoke an I/O
+operation upon an unconnected channel will cause a {@link NotYetConnectedException}
 to be thrown.
 
- Channels of this type are safe for use by multiple concurrent threads.
+<p> Channels of this type are safe for use by multiple concurrent threads.
 They support concurrent reading and writing, though at most one read operation
 and one write operation can be outstanding at any time.
 If a thread initiates a read operation before a previous read operation has
-completed then a `ReadPendingException` will be thrown. Similarly, an
+completed then a {@link ReadPendingException} will be thrown. Similarly, an
 attempt to initiate a write operation before a previous write has completed
-will throw a `WritePendingException`.
+will throw a {@link WritePendingException}.
 
- Socket options are configured using the setOption method. Asynchronous socket channels support the following options:
-
-Socket options
-
-    Option Name
-    Description
-
-     SO_SNDBUF
-     The size of the socket send buffer
-
-     SO_RCVBUF
-     The size of the socket receive buffer
-
-     SO_KEEPALIVE
-     Keep connection alive
-
-     SO_REUSEADDR
-     Re-use address
-
-     TCP_NODELAY
-     Disable the Nagle algorithm
-
+<p> Socket options are configured using the {@link #setOption(SocketOption,Object)
+setOption} method. Asynchronous socket channels support the following options:
+<blockquote>
+<table class="striped">
+<caption style="display:none">Socket options</caption>
+<thead>
+  <tr>
+    <th scope="col">Option Name</th>
+    <th scope="col">Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <th scope="row"> {@link java.net.StandardSocketOptions#SO_SNDBUF SO_SNDBUF} </th>
+    <td> The size of the socket send buffer </td>
+  </tr>
+  <tr>
+    <th scope="row"> {@link java.net.StandardSocketOptions#SO_RCVBUF SO_RCVBUF} </th>
+    <td> The size of the socket receive buffer </td>
+  </tr>
+  <tr>
+    <th scope="row"> {@link java.net.StandardSocketOptions#SO_KEEPALIVE SO_KEEPALIVE} </th>
+    <td> Keep connection alive </td>
+  </tr>
+  <tr>
+    <th scope="row"> {@link java.net.StandardSocketOptions#SO_REUSEADDR SO_REUSEADDR} </th>
+    <td> Re-use address </td>
+  </tr>
+  <tr>
+    <th scope="row"> {@link java.net.StandardSocketOptions#TCP_NODELAY TCP_NODELAY} </th>
+    <td> Disable the Nagle algorithm </td>
+  </tr>
+</tbody>
+</table>
+</blockquote>
 Additional (implementation specific) options may also be supported.
 
-#### Timeouts
+<h2>Timeouts</h2>
 
- The read
-and write
+<p> The {@link #read(ByteBuffer,long,TimeUnit,Object,CompletionHandler) read}
+and {@link #write(ByteBuffer,long,TimeUnit,Object,CompletionHandler) write}
 methods defined by this class allow a timeout to be specified when initiating
 a read or write operation. If the timeout elapses before an operation completes
-then the operation completes with the exception `InterruptedByTimeoutException`. A timeout may leave the channel, or the
+then the operation completes with the exception {@link
+InterruptedByTimeoutException}. A timeout may leave the channel, or the
 underlying connection, in an inconsistent state. Where the implementation
 cannot guarantee that bytes have not been read from the channel then it puts
-the channel into an implementation specific *error state*. A subsequent
-attempt to initiate a `read` operation causes an unspecified runtime
-exception to be thrown. Similarly if a `write` operation times out and
+the channel into an implementation specific <em>error state</em>. A subsequent
+attempt to initiate a {@code read} operation causes an unspecified runtime
+exception to be thrown. Similarly if a {@code write} operation times out and
 the implementation cannot guarantee bytes have not been written to the
-channel then further attempts to `write` to the channel cause an
+channel then further attempts to {@code write} to the channel cause an
 unspecified runtime exception to be thrown. When a timeout elapses then the
-state of the `ByteBuffer`, or the sequence of buffers, for the I/O
+state of the {@link ByteBuffer}, or the sequence of buffers, for the I/O
 operation is not defined. Buffers should be discarded or at least care must
 be taken to ensure that the buffers are not accessed while the channel remains
 open. All methods that accept timeout parameters treat values less than or
 equal to zero to mean that the I/O operation does not timeout.
 
-**Since:** 1.7
+@since 1.7
 
 ## AsynchronousSocketChannel.AsynchronousSocketChannel(AsynchronousChannelProvider)
 
@@ -91,9 +98,8 @@ protected AsynchronousSocketChannel(AsynchronousChannelProvider provider)
 
 Initializes a new instance of this class.
 
-Parameters:
-
-- `provider`: The provider that created this channel
+@param  provider
+        The provider that created this channel
 
 ## AsynchronousSocketChannel.provider()
 
@@ -103,7 +109,7 @@ public final AsynchronousChannelProvider provider()
 
 Returns the provider that created this channel.
 
-**Returns:** The provider that created this channel
+@return  The provider that created this channel
 
 ## AsynchronousSocketChannel.open(AsynchronousChannelGroup)
 
@@ -113,20 +119,23 @@ public static AsynchronousSocketChannel open(AsynchronousChannelGroup group) thr
 
 Opens an asynchronous socket channel.
 
- The new channel is created by invoking the openAsynchronousSocketChannel method on the `AsynchronousChannelProvider` that created the group. If the group parameter
-is `null` then the resulting channel is created by the system-wide
-default provider, and bound to the *default group*.
+<p> The new channel is created by invoking the {@link
+AsynchronousChannelProvider#openAsynchronousSocketChannel
+openAsynchronousSocketChannel} method on the {@link
+AsynchronousChannelProvider} that created the group. If the group parameter
+is {@code null} then the resulting channel is created by the system-wide
+default provider, and bound to the <em>default group</em>.
 
-Parameters:
+@param   group
+         The group to which the newly constructed channel should be bound,
+         or {@code null} for the default group
 
-- `group`: The group to which the newly constructed channel should be bound, or `null` for the default group
+@return  A new asynchronous socket channel
 
-**Returns:** A new asynchronous socket channel
-
-Throws:
-
-- `ShutdownChannelGroupException`: If the channel group is shutdown
-- `IOException`: If an I/O error occurs
+@throws  ShutdownChannelGroupException
+         If the channel group is shutdown
+@throws  IOException
+         If an I/O error occurs
 
 ## AsynchronousSocketChannel.open()
 
@@ -136,15 +145,17 @@ public static AsynchronousSocketChannel open() throws IOException
 
 Opens an asynchronous socket channel.
 
- This method returns an asynchronous socket channel that is bound to
-the *default group*.This method is equivalent to evaluating the
+<p> This method returns an asynchronous socket channel that is bound to
+the <em>default group</em>.This method is equivalent to evaluating the
 expression:
+{@snippet lang=java :
+    open((AsynchronousChannelGroup)null);
+}
 
-**Returns:** A new asynchronous socket channel
+@return  A new asynchronous socket channel
 
-Throws:
-
-- `IOException`: If an I/O error occurs
+@throws  IOException
+         If an I/O error occurs
 
 ## AsynchronousSocketChannel.bind(SocketAddress)
 
@@ -152,13 +163,12 @@ Throws:
 public abstract AsynchronousSocketChannel bind(SocketAddress local) throws IOException
 ```
 
-Throws:
-
-- `ConnectionPendingException`: If a connection operation is already in progress on this channel
-- `AlreadyBoundException`: (inherited documentation)
-- `UnsupportedAddressTypeException`: (inherited documentation)
-- `ClosedChannelException`: (inherited documentation)
-- `IOException`: (inherited documentation)
+@throws  ConnectionPendingException
+         If a connection operation is already in progress on this channel
+@throws  AlreadyBoundException               {@inheritDoc}
+@throws  UnsupportedAddressTypeException     {@inheritDoc}
+@throws  ClosedChannelException              {@inheritDoc}
+@throws  IOException                         {@inheritDoc}
 
 ## AsynchronousSocketChannel.setOption(SocketOption<T>, T)
 
@@ -166,11 +176,9 @@ Throws:
 public abstract <T> AsynchronousSocketChannel setOption(SocketOption<T> name, T value) throws IOException
 ```
 
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
-- `ClosedChannelException`: (inherited documentation)
-- `IOException`: (inherited documentation)
+@throws  IllegalArgumentException                {@inheritDoc}
+@throws  ClosedChannelException                  {@inheritDoc}
+@throws  IOException                             {@inheritDoc}
 
 ## AsynchronousSocketChannel.shutdownInput()
 
@@ -180,21 +188,22 @@ public abstract AsynchronousSocketChannel shutdownInput() throws IOException
 
 Shutdown the connection for reading without closing the channel.
 
- Once shutdown for reading then further reads on the channel will
-return `-1`, the end-of-stream indication. If the input side of the
+<p> Once shutdown for reading then further reads on the channel will
+return {@code -1}, the end-of-stream indication. If the input side of the
 connection is already shutdown then invoking this method has no effect.
 The effect on an outstanding read operation is system dependent and
 therefore not specified. The effect, if any, when there is data in the
 socket receive buffer that has not been read, or data arrives subsequently,
 is also system dependent.
 
-**Returns:** The channel
+@return  The channel
 
-Throws:
-
-- `NotYetConnectedException`: If this channel is not yet connected
-- `ClosedChannelException`: If this channel is closed
-- `IOException`: If some other I/O error occurs
+@throws  NotYetConnectedException
+         If this channel is not yet connected
+@throws  ClosedChannelException
+         If this channel is closed
+@throws  IOException
+         If some other I/O error occurs
 
 ## AsynchronousSocketChannel.shutdownOutput()
 
@@ -204,19 +213,20 @@ public abstract AsynchronousSocketChannel shutdownOutput() throws IOException
 
 Shutdown the connection for writing without closing the channel.
 
- Once shutdown for writing then further attempts to write to the
-channel will throw `ClosedChannelException`. If the output side of
+<p> Once shutdown for writing then further attempts to write to the
+channel will throw {@link ClosedChannelException}. If the output side of
 the connection is already shutdown then invoking this method has no
 effect. The effect on an outstanding write operation is system dependent
 and therefore not specified.
 
-**Returns:** The channel
+@return  The channel
 
-Throws:
-
-- `NotYetConnectedException`: If this channel is not yet connected
-- `ClosedChannelException`: If this channel is closed
-- `IOException`: If some other I/O error occurs
+@throws  NotYetConnectedException
+         If this channel is not yet connected
+@throws  ClosedChannelException
+         If this channel is closed
+@throws  IOException
+         If some other I/O error occurs
 
 ## AsynchronousSocketChannel.getRemoteAddress()
 
@@ -226,16 +236,17 @@ public abstract SocketAddress getRemoteAddress() throws IOException
 
 Returns the remote address to which this channel's socket is connected.
 
- Where the channel is bound and connected to an Internet Protocol
-socket address then the return value from this method is of type `java.net.InetSocketAddress`.
+<p> Where the channel is bound and connected to an Internet Protocol
+socket address then the return value from this method is of type {@link
+java.net.InetSocketAddress}.
 
-**Returns:** The remote address; `null` if the channel's socket is not
+@return  The remote address; {@code null} if the channel's socket is not
          connected
 
-Throws:
-
-- `ClosedChannelException`: If the channel is closed
-- `IOException`: If an I/O error occurs
+@throws  ClosedChannelException
+         If the channel is closed
+@throws  IOException
+         If an I/O error occurs
 
 ## AsynchronousSocketChannel.connect(SocketAddress, A, CompletionHandler<Void,? super A>)
 
@@ -245,28 +256,33 @@ public abstract <A> void connect(SocketAddress remote, A attachment, CompletionH
 
 Connects this channel.
 
- This method initiates an operation to connect this channel. The
-`handler` parameter is a completion handler that is invoked when
+<p> This method initiates an operation to connect this channel. The
+{@code handler} parameter is a completion handler that is invoked when
 the connection is successfully established or connection cannot be
 established. If the connection cannot be established then the channel is
 closed.
 
-Parameters:
+@param   <A>
+         The type of the attachment
+@param   remote
+         The remote address to which this channel is to be connected
+@param   attachment
+         The object to attach to the I/O operation; can be {@code null}
+@param   handler
+         The handler for consuming the result
 
-- ``: The type of the attachment
-- `remote`: The remote address to which this channel is to be connected
-- `attachment`: The object to attach to the I/O operation; can be `null`
-- `handler`: The handler for consuming the result
+@throws  UnresolvedAddressException
+         If the given remote address is not fully resolved
+@throws  UnsupportedAddressTypeException
+         If the type of the given remote address is not supported
+@throws  AlreadyConnectedException
+         If this channel is already connected
+@throws  ConnectionPendingException
+         If a connection operation is already in progress on this channel
+@throws  ShutdownChannelGroupException
+         If the channel group has terminated
 
-**See also:** #getRemoteAddress
-
-Throws:
-
-- `UnresolvedAddressException`: If the given remote address is not fully resolved
-- `UnsupportedAddressTypeException`: If the type of the given remote address is not supported
-- `AlreadyConnectedException`: If this channel is already connected
-- `ConnectionPendingException`: If a connection operation is already in progress on this channel
-- `ShutdownChannelGroupException`: If the channel group has terminated
+@see #getRemoteAddress
 
 ## AsynchronousSocketChannel.connect(SocketAddress)
 
@@ -276,22 +292,26 @@ public abstract Future<Void> connect(SocketAddress remote)
 
 Connects this channel.
 
- This method initiates an operation to connect this channel. This
-method behaves in exactly the same manner as the Object, CompletionHandler) method except that
-instead of specifying a completion handler, this method returns a `Future` representing the pending result. The `Future`'s get method returns `null` on successful completion.
+<p> This method initiates an operation to connect this channel. This
+method behaves in exactly the same manner as the {@link
+#connect(SocketAddress, Object, CompletionHandler)} method except that
+instead of specifying a completion handler, this method returns a {@code
+Future} representing the pending result. The {@code Future}'s {@link
+Future#get() get} method returns {@code null} on successful completion.
 
-Parameters:
+@param   remote
+         The remote address to which this channel is to be connected
 
-- `remote`: The remote address to which this channel is to be connected
+@return  A {@code Future} object representing the pending result
 
-**Returns:** A `Future` object representing the pending result
-
-Throws:
-
-- `UnresolvedAddressException`: If the given remote address is not fully resolved
-- `UnsupportedAddressTypeException`: If the type of the given remote address is not supported
-- `AlreadyConnectedException`: If this channel is already connected
-- `ConnectionPendingException`: If a connection operation is already in progress on this channel
+@throws  UnresolvedAddressException
+         If the given remote address is not fully resolved
+@throws  UnsupportedAddressTypeException
+         If the type of the given remote address is not supported
+@throws  AlreadyConnectedException
+         If this channel is already connected
+@throws  ConnectionPendingException
+         If a connection operation is already in progress on this channel
 
 ## AsynchronousSocketChannel.read(ByteBuffer, long, TimeUnit, A, CompletionHandler<Integer,? super A>)
 
@@ -301,37 +321,46 @@ public abstract <A> void read(ByteBuffer dst, long timeout, TimeUnit unit, A att
 
 Reads a sequence of bytes from this channel into the given buffer.
 
- This method initiates an asynchronous read operation to read a
-sequence of bytes from this channel into the given buffer. The `handler` parameter is a completion handler that is invoked when the read
+<p> This method initiates an asynchronous read operation to read a
+sequence of bytes from this channel into the given buffer. The {@code
+handler} parameter is a completion handler that is invoked when the read
 operation completes (or fails). The result passed to the completion
-handler is the number of bytes read or `-1` if no bytes could be
+handler is the number of bytes read or {@code -1} if no bytes could be
 read because the channel has reached end-of-stream.
 
- If a timeout is specified and the timeout elapses before the operation
-completes then the operation completes with the exception `InterruptedByTimeoutException`. Where a timeout occurs, and the
+<p> If a timeout is specified and the timeout elapses before the operation
+completes then the operation completes with the exception {@link
+InterruptedByTimeoutException}. Where a timeout occurs, and the
 implementation cannot guarantee that bytes have not been read, or will not
 be read from the channel into the given buffer, then further attempts to
 read from the channel will cause an unspecific runtime exception to be
 thrown.
 
- Otherwise this method works in the same manner as the `AsynchronousByteChannel.read(ByteBuffer,Object,CompletionHandler)`
+<p> Otherwise this method works in the same manner as the {@link
+AsynchronousByteChannel#read(ByteBuffer,Object,CompletionHandler)}
 method.
 
-Parameters:
+@param   <A>
+         The type of the attachment
+@param   dst
+         The buffer into which bytes are to be transferred
+@param   timeout
+         The maximum time for the I/O operation to complete
+@param   unit
+         The time unit of the {@code timeout} argument
+@param   attachment
+         The object to attach to the I/O operation; can be {@code null}
+@param   handler
+         The handler for consuming the result
 
-- ``: The type of the attachment
-- `dst`: The buffer into which bytes are to be transferred
-- `timeout`: The maximum time for the I/O operation to complete
-- `unit`: The time unit of the `timeout` argument
-- `attachment`: The object to attach to the I/O operation; can be `null`
-- `handler`: The handler for consuming the result
-
-Throws:
-
-- `IllegalArgumentException`: If the buffer is read-only
-- `ReadPendingException`: If a read operation is already in progress on this channel
-- `NotYetConnectedException`: If this channel is not yet connected
-- `ShutdownChannelGroupException`: If the channel group has terminated
+@throws  IllegalArgumentException
+         If the buffer is read-only
+@throws  ReadPendingException
+         If a read operation is already in progress on this channel
+@throws  NotYetConnectedException
+         If this channel is not yet connected
+@throws  ShutdownChannelGroupException
+         If the channel group has terminated
 
 ## AsynchronousSocketChannel.read(ByteBuffer, A, CompletionHandler<Integer,? super A>)
 
@@ -339,12 +368,12 @@ Throws:
 public final <A> void read(ByteBuffer dst, A attachment, CompletionHandler<Integer,? super A> handler)
 ```
 
-Throws:
-
-- `IllegalArgumentException`: (inherited documentation)
-- `ReadPendingException`: (inherited documentation)
-- `NotYetConnectedException`: If this channel is not yet connected
-- `ShutdownChannelGroupException`: If the channel group has terminated
+@throws  IllegalArgumentException        {@inheritDoc}
+@throws  ReadPendingException            {@inheritDoc}
+@throws  NotYetConnectedException
+         If this channel is not yet connected
+@throws  ShutdownChannelGroupException
+         If the channel group has terminated
 
 ## AsynchronousSocketChannel.read(ByteBuffer)
 
@@ -352,8 +381,250 @@ Throws:
 public abstract Future<Integer> read(ByteBuffer dst)
 ```
 
-Throws:
+@throws  IllegalArgumentException        {@inheritDoc}
+@throws  ReadPendingException            {@inheritDoc}
+@throws  NotYetConnectedException
+         If this channel is not yet connected
 
-- `IllegalArgumentException`: (inherited documentation)
-- `ReadPendingException`: (inherited documentation)
-- `NotYetConnectedException`: If this channel is not yet connected
+## AsynchronousSocketChannel.read(ByteBuffer[], int, int, long, TimeUnit, A, CompletionHandler<Long,? super A>)
+
+```java
+public abstract <A> void read(ByteBuffer[] dsts, int offset, int length, long timeout, TimeUnit unit, A attachment, CompletionHandler<Long,? super A> handler)
+```
+
+Reads a sequence of bytes from this channel into a subsequence of the
+given buffers. This operation, sometimes called a <em>scattering read</em>,
+is often useful when implementing network protocols that group data into
+segments consisting of one or more fixed-length headers followed by a
+variable-length body. The {@code handler} parameter is a completion
+handler that is invoked when the read operation completes (or fails). The
+result passed to the completion handler is the number of bytes read or
+{@code -1} if no bytes could be read because the channel has reached
+end-of-stream.
+
+<p> This method initiates a read of up to <i>r</i> bytes from this channel,
+where <i>r</i> is the total number of bytes remaining in the specified
+subsequence of the given buffer array, that is,
+
+{@snippet lang=java :
+    dsts[offset].remaining()
+        + dsts[offset+1].remaining()
+        + ... + dsts[offset+length-1].remaining()
+}
+
+at the moment that the read is attempted.
+
+<p> Suppose that a byte sequence of length <i>n</i> is read, where
+{@code 0}&nbsp;{@code <}&nbsp;<i>n</i>&nbsp;{@code <=}&nbsp;<i>r</i>.
+Up to the first {@code dsts[offset].remaining()} bytes of this sequence
+are transferred into buffer {@code dsts[offset]}, up to the next
+{@code dsts[offset+1].remaining()} bytes are transferred into buffer
+{@code dsts[offset+1]}, and so forth, until the entire byte sequence
+is transferred into the given buffers.  As many bytes as possible are
+transferred into each buffer, hence the final position of each updated
+buffer, except the last updated buffer, is guaranteed to be equal to
+that buffer's limit. The underlying operating system may impose a limit
+on the number of buffers that may be used in an I/O operation. Where the
+number of buffers (with bytes remaining), exceeds this limit, then the
+I/O operation is performed with the maximum number of buffers allowed by
+the operating system.
+
+<p> If a timeout is specified and the timeout elapses before the operation
+completes then it completes with the exception {@link
+InterruptedByTimeoutException}. Where a timeout occurs, and the
+implementation cannot guarantee that bytes have not been read, or will not
+be read from the channel into the given buffers, then further attempts to
+read from the channel will cause an unspecific runtime exception to be
+thrown.
+
+@param   <A>
+         The type of the attachment
+@param   dsts
+         The buffers into which bytes are to be transferred
+@param   offset
+         The offset within the buffer array of the first buffer into which
+         bytes are to be transferred; must be non-negative and no larger than
+         {@code dsts.length}
+@param   length
+         The maximum number of buffers to be accessed; must be non-negative
+         and no larger than {@code dsts.length - offset}
+@param   timeout
+         The maximum time for the I/O operation to complete
+@param   unit
+         The time unit of the {@code timeout} argument
+@param   attachment
+         The object to attach to the I/O operation; can be {@code null}
+@param   handler
+         The handler for consuming the result
+
+@throws  IndexOutOfBoundsException
+         If the pre-conditions for the {@code offset}  and {@code length}
+         parameter aren't met
+@throws  IllegalArgumentException
+         If the buffer is read-only
+@throws  ReadPendingException
+         If a read operation is already in progress on this channel
+@throws  NotYetConnectedException
+         If this channel is not yet connected
+@throws  ShutdownChannelGroupException
+         If the channel group has terminated
+
+## AsynchronousSocketChannel.write(ByteBuffer, long, TimeUnit, A, CompletionHandler<Integer,? super A>)
+
+```java
+public abstract <A> void write(ByteBuffer src, long timeout, TimeUnit unit, A attachment, CompletionHandler<Integer,? super A> handler)
+```
+
+Writes a sequence of bytes to this channel from the given buffer.
+
+<p> This method initiates an asynchronous write operation to write a
+sequence of bytes to this channel from the given buffer. The {@code
+handler} parameter is a completion handler that is invoked when the write
+operation completes (or fails). The result passed to the completion
+handler is the number of bytes written.
+
+<p> If a timeout is specified and the timeout elapses before the operation
+completes then it completes with the exception {@link
+InterruptedByTimeoutException}. Where a timeout occurs, and the
+implementation cannot guarantee that bytes have not been written, or will
+not be written to the channel from the given buffer, then further attempts
+to write to the channel will cause an unspecific runtime exception to be
+thrown.
+
+<p> Otherwise this method works in the same manner as the {@link
+AsynchronousByteChannel#write(ByteBuffer,Object,CompletionHandler)}
+method.
+
+@param   <A>
+         The type of the attachment
+@param   src
+         The buffer from which bytes are to be retrieved
+@param   timeout
+         The maximum time for the I/O operation to complete
+@param   unit
+         The time unit of the {@code timeout} argument
+@param   attachment
+         The object to attach to the I/O operation; can be {@code null}
+@param   handler
+         The handler for consuming the result
+
+@throws  WritePendingException
+         If a write operation is already in progress on this channel
+@throws  NotYetConnectedException
+         If this channel is not yet connected
+@throws  ShutdownChannelGroupException
+         If the channel group has terminated
+
+## AsynchronousSocketChannel.write(ByteBuffer, A, CompletionHandler<Integer,? super A>)
+
+```java
+public final <A> void write(ByteBuffer src, A attachment, CompletionHandler<Integer,? super A> handler)
+```
+
+@throws  WritePendingException          {@inheritDoc}
+@throws  NotYetConnectedException
+         If this channel is not yet connected
+@throws  ShutdownChannelGroupException
+         If the channel group has terminated
+
+## AsynchronousSocketChannel.write(ByteBuffer)
+
+```java
+public abstract Future<Integer> write(ByteBuffer src)
+```
+
+@throws  WritePendingException       {@inheritDoc}
+@throws  NotYetConnectedException
+         If this channel is not yet connected
+
+## AsynchronousSocketChannel.write(ByteBuffer[], int, int, long, TimeUnit, A, CompletionHandler<Long,? super A>)
+
+```java
+public abstract <A> void write(ByteBuffer[] srcs, int offset, int length, long timeout, TimeUnit unit, A attachment, CompletionHandler<Long,? super A> handler)
+```
+
+Writes a sequence of bytes to this channel from a subsequence of the given
+buffers. This operation, sometimes called a <em>gathering write</em>, is
+often useful when implementing network protocols that group data into
+segments consisting of one or more fixed-length headers followed by a
+variable-length body. The {@code handler} parameter is a completion
+handler that is invoked when the write operation completes (or fails).
+The result passed to the completion handler is the number of bytes written.
+
+<p> This method initiates a write of up to <i>r</i> bytes to this channel,
+where <i>r</i> is the total number of bytes remaining in the specified
+subsequence of the given buffer array, that is,
+
+{@snippet lang=java :
+    srcs[offset].remaining()
+        + srcs[offset+1].remaining()
+        + ... + srcs[offset+length-1].remaining()
+}
+
+at the moment that the write is attempted.
+
+<p> Suppose that a byte sequence of length <i>n</i> is written, where
+{@code 0}&nbsp;{@code <}&nbsp;<i>n</i>&nbsp;{@code <=}&nbsp;<i>r</i>.
+Up to the first {@code srcs[offset].remaining()} bytes of this sequence
+are written from buffer {@code srcs[offset]}, up to the next
+{@code srcs[offset+1].remaining()} bytes are written from buffer
+{@code srcs[offset+1]}, and so forth, until the entire byte sequence is
+written.  As many bytes as possible are written from each buffer, hence
+the final position of each updated buffer, except the last updated
+buffer, is guaranteed to be equal to that buffer's limit. The underlying
+operating system may impose a limit on the number of buffers that may be
+used in an I/O operation. Where the number of buffers (with bytes
+remaining), exceeds this limit, then the I/O operation is performed with
+the maximum number of buffers allowed by the operating system.
+
+<p> If a timeout is specified and the timeout elapses before the operation
+completes then it completes with the exception {@link
+InterruptedByTimeoutException}. Where a timeout occurs, and the
+implementation cannot guarantee that bytes have not been written, or will
+not be written to the channel from the given buffers, then further attempts
+to write to the channel will cause an unspecific runtime exception to be
+thrown.
+
+@param   <A>
+         The type of the attachment
+@param   srcs
+         The buffers from which bytes are to be retrieved
+@param   offset
+         The offset within the buffer array of the first buffer from which
+         bytes are to be retrieved; must be non-negative and no larger
+         than {@code srcs.length}
+@param   length
+         The maximum number of buffers to be accessed; must be non-negative
+         and no larger than {@code srcs.length - offset}
+@param   timeout
+         The maximum time for the I/O operation to complete
+@param   unit
+         The time unit of the {@code timeout} argument
+@param   attachment
+         The object to attach to the I/O operation; can be {@code null}
+@param   handler
+         The handler for consuming the result
+
+@throws  IndexOutOfBoundsException
+         If the pre-conditions for the {@code offset}  and {@code length}
+         parameter aren't met
+@throws  WritePendingException
+         If a write operation is already in progress on this channel
+@throws  NotYetConnectedException
+         If this channel is not yet connected
+@throws  ShutdownChannelGroupException
+         If the channel group has terminated
+
+## AsynchronousSocketChannel.getLocalAddress()
+
+```java
+public abstract SocketAddress getLocalAddress() throws IOException
+```
+
+{@inheritDoc}
+
+@return  The {@code SocketAddress} that the socket is bound to; {@code null}
+         if the channel's socket is not bound
+
+@throws  ClosedChannelException     {@inheritDoc}
+@throws  IOException                {@inheritDoc}

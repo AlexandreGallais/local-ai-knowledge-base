@@ -1,25 +1,14 @@
----
-title: "top-level-domain"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/release-notes/aspnetcore-10/includes/top-level-domain.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# top-level-domain
-
 ### Support for the .localhost Top-Level Domain
 
-The `.localhost` top-level domain (TLD) is defined in RFC2606 and RFC6761 as being reserved for testing purposes and available for users to use locally as they would any other domain name. This means using a name like `myapp.localhost` locally that resolves to the IP loopback address is allowed and expected according to these RFCs. Additionally, modern evergreen browsers already automatically resolve any `*.localhost` name to the IP loopback address (`127.0.0.1`/`::1`), effectively making them an alias for any service already being hosted at `localhost` on the local machine, that is, any service responding to `http://localhost:6789` will also respond to `http://anything-here.localhost:6789`, assuming no further specific hostname verification or enforcement is being performed by the service.
+The `.localhost` top-level domain (TLD) is defined in [RFC2606](https://www.rfc-editor.org/rfc/rfc2606) and [RFC6761](https://www.rfc-editor.org/rfc/rfc6761) as being reserved for testing purposes and available for users to use locally as they would any other domain name. This means using a name like `myapp.localhost` locally that resolves to the IP loopback address is allowed and expected according to these RFCs. Additionally, modern evergreen browsers already automatically resolve any `*.localhost` name to the IP loopback address (`127.0.0.1`/`::1`), effectively making them an alias for any service already being hosted at `localhost` on the local machine, that is, any service responding to `http://localhost:6789` will also respond to `http://anything-here.localhost:6789`, assuming no further specific hostname verification or enforcement is being performed by the service.
 
 ASP.NET Core has been updated in .NET 10 Preview 7 to better support the `.localhost` TLD, such that it can now be easily used when creating and running ASP.NET Core applications in your local development environment. Having different apps running locally be resolvable via different names allows for better separation of some domain-name-associated website assets, e.g. cookies, and makes it easier to identify which app you're browsing via the name displayed in the browser address bar.
 
-ASP.NET Core's built-in HTTP server, Kestrel, will now correctly treat any `*.localhost` name set via supported endpoint configuration mechanisms as the local loopback address and thus bind to it rather than all external address (i.e. bind to `127.0.0.1`/`::1` rather than `0.0.0.0`/`::`). This includes the `"applicationUrl"` property in launch profiles configured in a *launchSettings.json* file, and the `ASPNETCORE_URLS` environment variable. When configured to listen on a `.localhost` address, Kestrel will log an information message for both the `.localhost` **and** `localhost` addresses, to make it clear that both names can be used.
+ASP.NET Core's built-in HTTP server, Kestrel, will now correctly treat any `*.localhost` name set via [supported endpoint configuration mechanisms](../../../fundamentals/servers/kestrel/endpoints.md?view=aspnetcore-10.0#configure-endpoints) as the local loopback address and thus bind to it rather than all external address (i.e. bind to `127.0.0.1`/`::1` rather than `0.0.0.0`/`::`). This includes the `"applicationUrl"` property in [launch profiles configured in a *launchSettings.json* file](../../../fundamentals/environments.md?view=aspnetcore-10.0#set-the-environment-with-the-launch-settings-file-launchsettingsjson), and the `ASPNETCORE_URLS` environment variable. When configured to listen on a `.localhost` address, Kestrel will log an information message for both the `.localhost` **and** `localhost` addresses, to make it clear that both names can be used.
 
 While web browsers automatically resolve `*.localhost` names to the local loopback address, other apps might treat `*.localhost` names as regular domain names and attempt to resolve them via their corresponding DNS stack. If your DNS configuration doesn't resolve `*.localhost` names to an address, they fail to connect. You can continue to use the regular `localhost` name to address your apps when not in a web browser.
 
-The ASP.NET Core HTTPS development certificate (including the `dotnet dev-certs https` command) has been updated to ensure the certificate is valid for use with the `*.dev.localhost` domain name. After installing .NET 10 SDK Preview 7, trust the new developer certificate by running `dotnet dev-certs https --trust` at the command line to ensure your system is configured to trust the new certificate.
+The [ASP.NET Core HTTPS development certificate](../../../security/enforcing-ssl.md?view=aspnetcore-10.0&preserve-view=true#trust-the-aspnet-core-https-development-certificate) (including the `dotnet dev-certs https` command) has been updated to ensure the certificate is valid for use with the `*.dev.localhost` domain name. After installing .NET 10 SDK Preview 7, trust the new developer certificate by running `dotnet dev-certs https --trust` at the command line to ensure your system is configured to trust the new certificate.
 
 The certificate lists the `*.dev.localhost` name as a Subject Alternative Name (SAN) rather than `*.localhost` because using a wildcard certificate for a top-level domain name is invalid.
 

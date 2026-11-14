@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Warning emitted for .NET Standard 1.x targets"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/9.0/netstandard-warning.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in the .NET 9 SDK where the a build warning is produced if your project targets any .NET Standard version below 2.0.
+ms.date: 07/09/2024
 ---
-
 # Warning emitted for .NET Standard 1.x targets
 
 A warning is now emitted when a project that targets `netstandard1.x` is built with the .NET 9+ SDK.
@@ -27,13 +23,13 @@ Starting in .NET 9, if you build a project that targets .NET Standard 1.0 - .NET
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
 The build warning was introduced to encourage customers to target .NET Standard 2.0 or .NET 6+. If you target .NET Standard 1.x, you're limiting yourself to a subset of .NET Framework 4.5, which is over 10 years old. A lot of innovation has happened since then that you're missing out on. In addition, .NET Standard 1.x is distributed as a granular set of NuGet packages, which creates a large package dependency graph and results in a lot of packages being downloaded when the project is built.
 
-For more information, see What is the downside of targeting .NET Standard 1.x?.
+For more information, see [What is the downside of targeting .NET Standard 1.x?](https://github.com/dotnet/designs/blob/main/accepted/2024/net-standard-recommendation.md#what-is-the-downside-of-targeting-net-standard-1x).
 
 ## Recommended action
 
@@ -64,4 +60,4 @@ N/A
 
 ## See also
 
-- .NET Standard Targeting Recommendations
+- [.NET Standard Targeting Recommendations](https://github.com/dotnet/designs/blob/main/accepted/2024/net-standard-recommendation.md)

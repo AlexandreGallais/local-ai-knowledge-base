@@ -1,12 +1,3 @@
----
-title: "class: ConsoleMessage"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-consolemessage.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: ConsoleMessage
 * since: v1.8
 
@@ -57,7 +48,7 @@ msg.args().get(0).jsonValue(); // hello
 msg.args().get(1).jsonValue(); // 42
 ```
 
-```python
+```python async
 # Listen for all console logs
 page.on("console", lambda msg: print(msg.text))
 
@@ -75,7 +66,7 @@ await msg.args[0].json_value() # hello
 await msg.args[1].json_value() # 42
 ```
 
-```python
+```python sync
 # Listen for all console logs
 page.on("console", lambda msg: print(msg.text))
 

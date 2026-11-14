@@ -1,12 +1,3 @@
----
-title: "net-prereqs-vs-11-latest"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/net-prereqs-vs-11-latest.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
+* [Visual Studio](https://visualstudio.microsoft.com/downloads/) with the **ASP.NET and web development** workload.
 
-# net-prereqs-vs-11-latest
-
-* Visual Studio with the **ASP.NET and web development** workload.
+  ![VS22 installer workloads](~/tutorials/min-web-api/static/asp-net-web-dev.png)

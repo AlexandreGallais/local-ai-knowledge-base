@@ -1,13 +1,7 @@
 ---
+id: codegen-intro
 title: "Generating tests"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/codegen-intro.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# Generating tests
 
 ## Introduction
 
@@ -15,26 +9,26 @@ Playwright can generate tests automatically, providing a quick way to get starte
 
 **You will learn**
 
-- How to record a test
-- How to generate locators
+- [How to record a test](/codegen.md#recording-a-test)
+- [How to generate locators](/codegen.md#generating-locators)
 
 ## Running Codegen
 
 Use the `codegen` command to run the test generator followed by the URL of the website you want to generate tests for. The URL is optional and can be added directly in the browser window if omitted.
 
-```bash
+```bash js
 npx playwright codegen demo.playwright.dev/todomvc
 ```
 
-```bash
+```bash java
 mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="codegen demo.playwright.dev/todomvc"
 ```
 
-```bash
+```bash python
 playwright codegen demo.playwright.dev/todomvc
 ```
 
-```bash
+```bash csharp
 pwsh bin/Debug/net8.0/playwright.ps1 codegen demo.playwright.dev/todomvc
 ```
 
@@ -52,14 +46,22 @@ With the test generator you can record:
 ######
 * langs: js
 
+![Recording a test](./images/getting-started/record-test-js.png)
+
 ######
 * langs: java
+
+![recording a test](./images/getting-started/record-test-java.png)
 
 ######
 * langs: python
 
+![recording a test](./images/getting-started/record-test-python.png)
+
 ######
 * langs: csharp
+
+![recording a test](./images/getting-started/record-test-csharp.png)
 
 ######
 * langs: js, java, python, csharp
@@ -68,11 +70,11 @@ When you finish interacting with the page, press the `'record'` button to stop r
 
 Use the `'clear'` button to clear the code and start recording again. Once finished, close the Playwright Inspector window or stop the terminal command.
 
-To learn more about generating tests, check out our detailed guide on Codegen.
+To learn more about generating tests, check out our detailed guide on [Codegen](./codegen.md).
 
 ### Generating locators
 
-You can generate locators with the test generator.
+You can generate [locators](/locators.md) with the test generator.
 
 * Press the `'Record'` button to stop recording and the `'Pick Locator'` button will appear
 * Click the `'Pick Locator'` button and hover over elements in the browser window to see the locator highlighted underneath each element
@@ -83,19 +85,27 @@ You can generate locators with the test generator.
 ######
 * langs: js
 
+![picking a locator](./images/getting-started/pick-locator-js.png)
+
 ######
 * langs: java
+
+![picking a locator](./images/getting-started/pick-locator-java.png)
 
 ######
 * langs: python
 
+![picking a locator](./images/getting-started/pick-locator-python.png)
+
 ######
 * langs: csharp
 
+![picking a locator](./images/getting-started/pick-locator-csharp.png)
+
 ### Emulation
 
-You can generate tests using emulation for specific viewports, devices, color schemes, geolocation, language, or timezone. The test generator can also preserve authenticated state. Check out the Test Generator guide to learn more.
+You can generate tests using emulation for specific viewports, devices, color schemes, geolocation, language, or timezone. The test generator can also preserve authenticated state. Check out the [Test Generator](./codegen.md#emulation) guide to learn more.
 
 ## What's Next
 
-- See a trace of your tests
+- [See a trace of your tests](./trace-viewer-intro.md)

@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: TargetFramework change from netcoreapp to net"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/5.0/targetframework-name-change.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 5 where the value for the MSBuild TargetFramework property changed from netcoreapp3.1 to net5.0.
+ms.date: 10/17/2020
 ---
-
 # TargetFramework change from netcoreapp to net
 
 The value for the MSBuild `TargetFramework` property changed from `netcoreapp3.1` to `net5.0`. This can break code that relies on parsing the value of `TargetFramework`.
@@ -19,7 +15,7 @@ The value for the MSBuild `TargetFramework` property changed from `netcoreapp3.1
 
 In .NET Core 1.0 - 3.1, the value for the MSBuild `TargetFramework` property starts with `netcoreapp`, for example, `netcoreapp3.1` for apps that target .NET Core 3.1. Starting in .NET 5, this value is simplified to just start with `net`, for example, `net5.0` for .NET 5.0.
 
-For more information, see The future of .NET Standard and Target framework names in .NET 5.
+For more information, see [The future of .NET Standard](https://devblogs.microsoft.com/dotnet/the-future-of-net-standard/) and [Target framework names in .NET 5](https://github.com/dotnet/designs/blob/main/accepted/2020/net5/net5.md).
 
 ## Reason for change
 
@@ -43,3 +39,15 @@ For this requirement, you can update the code to compare the target framework id
 ## Affected APIs
 
 N/A
+
+<!--
+
+### Affected APIs
+
+Not detectable via API analysis.
+
+### Category
+
+MSBuild
+
+-->

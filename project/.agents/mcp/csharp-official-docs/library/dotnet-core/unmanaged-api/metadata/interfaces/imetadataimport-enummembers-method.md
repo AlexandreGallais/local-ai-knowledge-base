@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataImport::EnumMembers Method"
 title: "IMetaDataImport::EnumMembers Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataimport-enummembers-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataImport.EnumMembers"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataImport::EnumMembers"
+  - "EnumMembers method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataImport::EnumMembers Method
 
 Enumerates MemberDef tokens representing members of the specified type.
@@ -17,7 +24,7 @@ Enumerates MemberDef tokens representing members of the specified type.
 HRESULT EnumMembers (
    [in, out]  HCORENUM    *phEnum,
    [in]  mdTypeDef   cl,
-   [out] mdToken     <example-value>[],
+   [out] mdToken     rMembers[],
    [in]  ULONG       cMax,
    [out] ULONG       *pcTokens
 );
@@ -29,7 +36,7 @@ HRESULT EnumMembers (
  [in, out] A pointer to the enumerator.
 
  `cl`
- [in] A TypeDef token <example-value> the type whose members are to be enumerated.
+ [in] A TypeDef token representing the type whose members are to be enumerated.
 
  `rMembers`
  [out] The array used to hold the MemberDef tokens.
@@ -51,11 +58,11 @@ HRESULT EnumMembers (
 
  When enumerating collections of members for a class, `EnumMembers` returns only members (fields and methods, but **not** properties or events) defined directly on the class. It does not return any members that the class inherits, even if the class provides an implementation for those inherited members. To enumerate inherited members, the caller must explicitly walk the inheritance chain. Note that the rules for the inheritance chain may vary depending on the language or compiler that emitted the original metadata.
 
- Properties and events are not enumerated by `EnumMembers`. To enumerate those, use EnumProperties or EnumEvents.
+ Properties and events are not enumerated by `EnumMembers`. To enumerate those, use [EnumProperties](imetadataimport-enumproperties-method.md) or [EnumEvents](imetadataimport-enumevents-method.md).
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -63,5 +70,5 @@ HRESULT EnumMembers (
 
 ## See also
 
-- IMetaDataImport Interface
-- IMetaDataImport2 Interface
+- [IMetaDataImport Interface](imetadataimport-interface.md)
+- [IMetaDataImport2 Interface](imetadataimport2-interface.md)

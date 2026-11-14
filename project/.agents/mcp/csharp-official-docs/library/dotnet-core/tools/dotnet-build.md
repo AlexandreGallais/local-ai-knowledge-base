@@ -1,10 +1,7 @@
 ---
-title: "dotnet build command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-build.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet build command
+description: The dotnet build command builds a project and all of its dependencies.
+ms.date: 05/18/2026
 ---
 
 # dotnet build
@@ -46,15 +43,9 @@ For executable projects targeting .NET Core 3.0 and later, library dependencies 
 
 ### Implicit restore
 
-Building requires the *project.assets.json* file, which lists the dependencies of your application. The file is created when `dotnet restore` is executed. Without the assets file in place, the tooling can't resolve reference assemblies, which results in errors.
+Building requires the *project.assets.json* file, which lists the dependencies of your application. The file is created when [`dotnet restore`](dotnet-restore.md) is executed. Without the assets file in place, the tooling can't resolve reference assemblies, which results in errors.
 
-You don't have to run `dotnet restore` because it's run implicitly by all commands that require a restore to occur, such as `dotnet new`, `dotnet build`, `dotnet run`, `dotnet test`, `dotnet publish`, and `dotnet pack`. To disable implicit restore, use the `--no-restore` option.
-
-The `dotnet restore` command is still useful in certain scenarios where explicitly restoring makes sense, such as continuous integration builds in Azure DevOps Services or in build systems that need to explicitly control when the restore occurs.
-
-For information about how to manage NuGet feeds, see the `dotnet restore` documentation.
-
-This command supports the `dotnet restore` options when passed in the long form (for example, `--source`). Short form options, such as `-s`, are not supported.
+[!INCLUDE[dotnet restore note + options](includes/dotnet-restore-note-options.md)]
 
 ### Executable or library output
 
@@ -70,73 +61,53 @@ To produce a library, omit the `<OutputType>` property or change its value to `L
 
 ### MSBuild
 
-`dotnet build` uses MSBuild to build the project, solution, or file-based app. It supports both parallel and incremental builds. For more information, see Incremental Builds.
+`dotnet build` uses MSBuild to build the project, solution, or file-based app. It supports both parallel and incremental builds. For more information, see [Incremental Builds](/visualstudio/msbuild/incremental-builds).
 
-In addition to its options, the `dotnet build` command accepts MSBuild options, such as `-p` for setting properties or `-l` to define a logger. For more information about these options, see the MSBuild Command-Line Reference. Or you can also use the dotnet msbuild command.
+In addition to its options, the `dotnet build` command accepts MSBuild options, such as `-p` for setting properties or `-l` to define a logger. For more information about these options, see the [MSBuild Command-Line Reference](/visualstudio/msbuild/msbuild-command-line-reference). Or you can also use the [dotnet msbuild](dotnet-msbuild.md) command.
 
-> **Note:**
+> [!NOTE]
 > When `dotnet build` is run automatically by `dotnet run`, arguments like `-property:property=value` aren't respected.
 
 Running `dotnet build` is equivalent to running `dotnet msbuild -restore`; however, the default verbosity of the output is different.
 
-### Workload manifest downloads
-
-When you run this command, it initiates an asynchronous background download of advertising manifests for workloads. If the download is still running when this command finishes, the download is stopped. For more information, see Advertising manifests.
+[!INCLUDE [cli-advertising-manifests](includes/cli-advertising-manifests.md)]
 
 ## Arguments
 
-`PROJECT | SOLUTION | FILE`
-
-The project or solution or C# (file-based app) file to operate on. If a file isn't specified, MSBuild searches the current directory for a project or solution.
-
-- `PROJECT` is the path and filename of a C#, F#, or Visual Basic <example-value> file, or the path to a directory that contains a C#, F#, or Visual Basic <example-value> file.
-
-- `SOLUTION` is the path and filename of a solution file (*.sln* or *.slnx* extension), or the path to a directory that contains a solution file.
-
-- `FILE` is an argument added in .NET 10. The path and filename of a file-based app. File-based apps are contained within a single file that is built and run without a corresponding project (*.csproj*) file. For more information, see Build file-based C# apps.
+[!INCLUDE [arguments-project-solution-file](includes/cli-arguments-project-solution-file.md)]
 
 ## Options
 
-- **`-a|--arch <ARCHITECTURE>`**
+- [!INCLUDE [arch](includes/cli-arch.md)]
 
-Specifies the target architecture. This is a shorthand syntax for setting the Runtime Identifier (RID), where the provided value is combined with the default RID. For example, on a `win-x64` machine, specifying `--arch x86` sets the RID to `win-x86`. If you use this option, don't use the `-r|--runtime` option. Available since .NET 6 Preview 7.
-
-- **`--artifacts-path <ARTIFACTS_DIR>`**
-
-All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see Artifacts Output Layout. This option and the value provided must be explicitly cascaded in any `dotnet` command that depends on the output of another `dotnet` command, for example, when using `dotnet build --no-restore` and `dotnet publish --no-build`. Available since .NET 8 SDK.
+- [!INCLUDE [artifacts-path](includes/cli-artifacts-path.md)]
 
 - **`-bl|--binaryLogger:<FILE>`**
 
-  Enables the binary logger and optionally specifies the output file name.
+  Enables the binary logger and optionally specifies the output file name.  
   If no file name is provided, the default is `msbuild.binlog` in the current directory.
 
   The binary log contains detailed build information and can be opened with the
-  MSBuild Structured Log Viewer.
+  [MSBuild Structured Log Viewer](https://msbuildlog.com).
 
   ```dotnetcli
   dotnet build -bl
   dotnet build -bl:build-log.binlog
   ```
 
-- **`-c|--configuration <CONFIGURATION>`**
+- [!INCLUDE [configuration](includes/cli-configuration.md)]
 
-Defines the build configuration. The default for most projects is `Debug`, but you can override the build configuration settings in your project.
-
-- **`--disable-build-servers`**
-
-Forces the command to ignore any persistent build servers. This option provides a consistent way to disable all use of build caching, which forces a build from scratch. A build that doesn't rely on caches is useful when the caches might be corrupted or incorrect for some reason. Available since .NET 7 SDK.
+- [!INCLUDE [disable-build-servers](includes/cli-disable-build-servers.md)]
 
 - **`-f|--framework <FRAMEWORK>`**
 
-  Compiles for a specific framework. The framework must be defined in the project file. Examples: `net7.0`, `net462`.
+  Compiles for a specific [framework](../../standard/frameworks.md). The framework must be defined in the [project file](../project-sdk/overview.md). Examples: `net7.0`, `net462`.
 
 - **`--force`**
 
   Forces all dependencies to be resolved even if the last restore was successful. Specifying this flag is the same as deleting the *project.assets.json* file.
 
-- **`--interactive`**
-
-Allows the command to stop and wait for user input or action. For example, to complete authentication.
+- [!INCLUDE [interactive](includes/cli-interactive.md)]
 
 - **`--no-dependencies`**
 
@@ -154,9 +125,7 @@ Allows the command to stop and wait for user input or action. For example, to co
 
   Doesn't display the startup banner or the copyright message.
 
-- **`--no-self-contained`**
-
-Publish your application as a framework-dependent application. A compatible .NET runtime must be installed on the target machine to run your application.
+- [!INCLUDE [no-self-contained](includes/cli-no-self-contained.md)]
 
 - **`-o|--output <OUTPUT_DIRECTORY>`**
 
@@ -164,11 +133,9 @@ Publish your application as a framework-dependent application. A compatible .NET
 
   - .NET 7.0.200 SDK and later
 
-    If you specify the `--output` option when running this command on a solution, the CLI will emit a warning (an error in 7.0.200) due to the unclear semantics of the output path. The `--output` option is disallowed because all outputs of all built projects would be copied into the specified directory, which isn't compatible with multi-targeted projects, as well as projects that have different versions of direct and transitive dependencies. For more information, see Solution-level `--output` option no longer valid for build-related commands.
+    If you specify the `--output` option when running this command on a solution, the CLI will emit a warning (an error in 7.0.200) due to the unclear semantics of the output path. The `--output` option is disallowed because all outputs of all built projects would be copied into the specified directory, which isn't compatible with multi-targeted projects, as well as projects that have different versions of direct and transitive dependencies. For more information, see [Solution-level `--output` option no longer valid for build-related commands](../compatibility/sdk/7.0/solution-level-output-no-longer-valid.md).
 
-- **`--os <OS>`**
-
-Specifies the target operating system (OS). This is a shorthand syntax for setting the Runtime Identifier (RID), where the provided value is combined with the default RID. For example, on a `win-x64` machine, specifying `--os linux` sets the RID to `linux-x64`. If you use this option, don't use the `-r|--runtime` option. Available since .NET 6.
+- [!INCLUDE [os](includes/cli-os.md)]
 
 - **`-p|--property:<PROPERTYNAME>=<VALUE>`**
 
@@ -181,19 +148,17 @@ Specifies the target operating system (OS). This is a shorthand syntax for setti
 
 - **`-r|--runtime <RUNTIME_IDENTIFIER>`**
 
-  Specifies the target runtime. For a list of Runtime Identifiers (RIDs), see the RID catalog. If you use this option with .NET 6 SDK, use `--self-contained` or `--no-self-contained` also. If not specified, the default is to build for the current OS and architecture.
+  Specifies the target runtime. For a list of Runtime Identifiers (RIDs), see the [RID catalog](../rid-catalog.md). If you use this option with .NET 6 SDK, use `--self-contained` or `--no-self-contained` also. If not specified, the default is to build for the current OS and architecture.
 
-- **`--sc|--self-contained`**
+- [!INCLUDE [self-contained](includes/cli-self-contained.md)]
 
-Publish the .NET runtime with your application so the runtime doesn't need to be installed on the target machine.
-
-- **`--source `**
+- **`--source <SOURCE>`**
 
   The URI of the NuGet package source to use during the restore operation.
 
 - **`-t|--target:<TARGET>`**
 
-  Specifies one or more MSBuild targets to run during the build instead of the default target. Specify multiple targets by separating them with a semicolon or comma, or by repeating the option for each target. Corresponds to the MSBuild `-target` option. Common targets include `Build` (default), `Clean`, and `Rebuild`. For more information, see MSBuild Targets.
+  Specifies one or more MSBuild targets to run during the build instead of the default target. Specify multiple targets by separating them with a semicolon or comma, or by repeating the option for each target. Corresponds to the MSBuild `-target` option. Common targets include `Build` (default), `Clean`, and `Rebuild`. For more information, see [MSBuild Targets](/visualstudio/msbuild/msbuild-targets).
 
   ```dotnetcli
   dotnet build -t:"Clean;RunTests"
@@ -201,35 +166,17 @@ Publish the .NET runtime with your application so the runtime doesn't need to be
   dotnet build -t:RunCodeGeneration
   ```
 
-- **`--tl:[auto|on|off]`**
+- [!INCLUDE [tl](includes/cli-tl.md)]
 
-Specifies whether *Terminal Logger* should be used for the build output. The default is `auto`, which first verifies the environment before enabling terminal logging. The environment check verifies that the terminal is capable of using modern output features and isn't using a redirected standard output before enabling the new logger. `on` skips the environment check and enables terminal logging. `off` skips the environment check and uses the default console logger.
+- [!INCLUDE [use-current-runtime](includes/cli-use-current-runtime.md)]
 
-Terminal Logger shows you the restore phase followed by the build phase. During each phase, the currently building projects appear at the bottom of the terminal. Each project that's building outputs both the MSBuild target currently being built and the amount of time spent on that target. You can search this information to learn more about the build. When a project is finished building, a single "build completed" section is written that captures:
-
-- The name of the built project.
-- The target framework (if multi-targeted).
-- The status of that build.
-- The primary output of that build (which is hyperlinked).
-- Any diagnostics generated for that project.
-
-This option is available starting in .NET 8.
-
-- **`--ucr|--use-current-runtime`**
-
-Use the current runtime as the target runtime.
-
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+- [!INCLUDE [verbosity](includes/cli-verbosity.md)]
 
 - **`--version-suffix <VERSION_SUFFIX>`**
 
   Sets the value of the `$(VersionSuffix)` property to use when building the project. This only works if the `$(Version)` property isn't set. Then, `$(Version)` is set to the `$(VersionPrefix)` combined with the `$(VersionSuffix)`, separated by a dash.
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Examples
 
@@ -265,7 +212,7 @@ Prints out a description of how to use the command.
   dotnet build --source c:\packages\mypackages
   ```
 
-- Build the project and set version 1.2.3.4 as a build parameter using the `-p` MSBuild option:
+- Build the project and set version 1.2.3.4 as a build parameter using the `-p` [MSBuild option](#msbuild):
 
   ```dotnetcli
   dotnet build -p:Version=1.2.3.4

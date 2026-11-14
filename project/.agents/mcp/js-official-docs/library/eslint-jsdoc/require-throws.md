@@ -1,25 +1,19 @@
----
-title: "require-throws"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/require-throws.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-require-throws"></a>
+<a name="require-throws"></a>
+# <code>require-throws</code>
 
-# `require-throws`
+* [Options](#user-content-require-throws-options)
+    * [`contexts`](#user-content-require-throws-options-contexts)
+    * [`exemptedBy`](#user-content-require-throws-options-exemptedby)
+* [Context and settings](#user-content-require-throws-context-and-settings)
+* [Failing examples](#user-content-require-throws-failing-examples)
+* [Passing examples](#user-content-require-throws-passing-examples)
 
-* Options
-    * `contexts`
-    * `exemptedBy`
-* Context and settings
-* Failing examples
-* Passing examples
 
 Requires that throw statements are documented.
 
 See
-this discussion
+[this discussion](https://stackoverflow.com/questions/50071115/typescript-promise-rejection-type)
 on why TypeScript doesn't offer such a feature.
 
 Note that since throw statements within async functions end up as rejected
@@ -27,11 +21,15 @@ Note that since throw statements within async functions end up as rejected
 this rule. See the `require-rejects` rule for a non-standard way to document
 `Promise` rejections.
 
+<a name="user-content-require-throws-options"></a>
+<a name="require-throws-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `contexts`
+<a name="user-content-require-throws-options-contexts"></a>
+<a name="require-throws-options-contexts"></a>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
 (or objects with optional `context` and `comment` properties) where you wish
@@ -46,7 +44,9 @@ for finding function blocks not attached to a function declaration or
 expression, i.e., `@callback` or `@function` (or its aliases `@func` or
 `@method`) (including those associated with an `@interface`).
 
-### `exemptedBy`
+<a name="user-content-require-throws-options-exemptedby"></a>
+<a name="require-throws-options-exemptedby"></a>
+### <code>exemptedBy</code>
 
 Array of tags (e.g., `['type']`) whose presence on the
 document block avoids the need for a `@throws`. Defaults to an array
@@ -54,6 +54,9 @@ with `inheritdoc`. If you set this array, it will overwrite the default,
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
 
+
+<a name="user-content-require-throws-context-and-settings"></a>
+<a name="require-throws-context-and-settings"></a>
 ## Context and settings
 
 | | |
@@ -65,6 +68,8 @@ exemption of the rule.
 | Options  |`contexts`, `exemptedBy`|
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
+<a name="user-content-require-throws-failing-examples"></a>
+<a name="require-throws-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -262,6 +267,10 @@ function quux (foo) {
 // Message: JSDoc @throws declaration set to "never" but throw value found.
 ````
 
+
+
+<a name="user-content-require-throws-passing-examples"></a>
+<a name="require-throws-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -340,3 +349,4 @@ async function foo() {
 function quux (foo) {
 }
 ````
+

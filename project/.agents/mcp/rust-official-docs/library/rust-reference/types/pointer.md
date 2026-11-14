@@ -1,12 +1,3 @@
----
-title: "Pointer types"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/types/pointer.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[type.pointer]
 # Pointer types
 
@@ -17,7 +8,7 @@ r[type.pointer.reference]
 ## References (`&` and `&mut`)
 
 r[type.pointer.reference.syntax]
-```grammar
+```grammar,types
 ReferenceType -> `&` Lifetime? `mut`? TypeNoBounds
 ```
 
@@ -46,7 +37,7 @@ r[type.pointer.raw]
 ## Raw pointers (`*const` and `*mut`)
 
 r[type.pointer.raw.syntax]
-```grammar
+```grammar,types
 RawPointerType -> `*` ( `mut` | `const` ) TypeNoBounds
 ```
 
@@ -76,7 +67,13 @@ r[type.pointer.validity]
 ## Bit validity
 
 r[type.pointer.validity.pointer-fragment]
-Despite pointers and references being similar to `usize`s in the machine code emitted on most platforms, the semantics of transmuting a reference or pointer type to a non-pointer type is currently undecided. Thus, it may not be valid to transmute a pointer or reference type, `P`, to a `[u8; size_of::()]`.
+Despite pointers and references being similar to `usize`s in the machine code emitted on most platforms, the semantics of transmuting a reference or pointer type to a non-pointer type is currently undecided. Thus, it may not be valid to transmute a pointer or reference type, `P`, to a `[u8; size_of::<P>()]`.
 
 r[type.pointer.validity.raw]
 For thin raw pointers (i.e., for `P = *const T` or `P = *mut T` for `T: Sized`), the inverse direction (transmuting from an integer or array of integers to `P`) is always valid. However, the pointer produced via such a transmutation may not be dereferenced (not even if `T` has [size zero]).
+
+[Interior mutability]: ../interior-mutability.md
+[`unsafe` operation]: ../unsafety.md
+[dynamically sized types]: ../dynamically-sized-types.md
+[size zero]: glossary.zst
+[temporary value]: ../expressions.md#temporaries

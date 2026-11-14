@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: Automatic RuntimeIdentifier"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/7.0/automatic-runtimeidentifier.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in the .NET 7 SDK where a RuntimeIdentifier is automatically added to projects that use certain publish properties.
+ms.date: 12/05/2022
 ---
-
 # Automatic RuntimeIdentifier for certain projects
 
-Projects that specify any of the following properties now get a runtime identifier (RID) automatically. An RID enables publishing a self-contained deployment.
+Projects that specify any of the following properties now get a [runtime identifier (RID)](../../../rid-catalog.md) automatically. An RID enables publishing a self-contained deployment.
 
 - `SelfContained`
 - `PublishAot`
@@ -26,8 +22,8 @@ The following projects might be affected by this change:
 
 There are other potential nuances that could break individual situations that we're not yet aware of.
 
-> **Note:**
-> This change was restricted to the `dotnet publish` command in .NET 7.0.200 SDK. For more information, see Automatic RuntimeIdentifier for publish only.
+> [!NOTE]
+> This change was restricted to the `dotnet publish` command in .NET 7.0.200 SDK. For more information, see [Automatic RuntimeIdentifier for publish only](automatic-rid-publish-only.md).
 
 ## Version introduced
 
@@ -53,7 +49,7 @@ Projects that specify any of the properties listed at the beginning of this arti
 
 ## Type of breaking change
 
-This change can affect source compatibility.
+This change can affect [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
@@ -67,4 +63,4 @@ If you encounter a break due to the output path changing, add `<AppendRuntimeIde
 
 ## See also
 
-- Automatic RuntimeIdentifier for publish only
+- [Automatic RuntimeIdentifier for publish only](automatic-rid-publish-only.md)

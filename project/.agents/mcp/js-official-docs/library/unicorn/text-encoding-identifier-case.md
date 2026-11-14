@@ -1,32 +1,26 @@
----
-title: "text-encoding-identifier-case"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/text-encoding-identifier-case.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # text-encoding-identifier-case
 
 📝 Enforce consistent case for text encoding identifiers.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `recommended-css`, 🌐 `recommended-html`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, 🎨 `recommended-css`, 🌐 `recommended-html`, ☑️ `unopinionated`.
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Consistent encoding spellings avoid visually different forms of the same encoding and make encoding intent easier to scan.
 
-- Enforce `'utf8'` for UTF-8 encoding.
-- Enforce `'ascii'` for ASCII encoding.
+- Enforce `'utf8'` for [UTF-8](https://en.wikipedia.org/wiki/UTF-8) encoding.
+- Enforce `'ascii'` for [ASCII](https://en.wikipedia.org/wiki/ASCII) encoding.
 
 This rule only auto-fix encoding in `fs.readFile()` and `fs.readFileSync()`.
 
 Module specifiers, like `import utf8 from 'utf-8'` or `require('utf-8')`, are package names, so they are ignored.
 
-When linting CSS files with `@eslint/css`, this rule also checks `@charset` declarations and enforces the dash form (`utf-8`) as required by the CSS specification.
+When linting CSS files with [`@eslint/css`](https://github.com/eslint/css), this rule also checks `@charset` declarations and enforces the dash form (`utf-8`) as required by the CSS specification.
 
-When linting HTML files with `@html-eslint/eslint-plugin`, this rule also checks `<meta charset>` and `<form accept-charset>` attributes.
+When linting HTML files with [`@html-eslint/eslint-plugin`](https://github.com/yeonjuan/html-eslint), this rule also checks `<meta charset>` and `<form accept-charset>` attributes.
 
 ## Examples
 

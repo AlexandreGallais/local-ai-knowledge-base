@@ -1,34 +1,48 @@
 ---
-title: "Custom authorization policies with `IAuthorizationRequirementData`"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/authorization/custom-authorization-policies-with-iauthorizationrequirementdata.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Custom authorization policies with `IAuthorizationRequirementData`
+ai-usage: ai-assisted
+description: Learn how to specify requirements associated with the authorization policy in attribute definitions with the IAuthorizationRequirementData interface.
+monikerRange: '>= aspnetcore-8.0'
+ms.date: 10/13/2026
 ---
-
 # Custom authorization policies with `IAuthorizationRequirementData`
 
-Use the `Microsoft.AspNetCore.Authorization.IAuthorizationRequirementData` interface to specify requirements associated with the authorization policy in attribute definitions.
+Use the <xref:Microsoft.AspNetCore.Authorization.IAuthorizationRequirementData> interface to specify requirements associated with the authorization policy in attribute definitions.
 
-This article uses a Minimal API endpoint within the app and focuses on testing JWT-based authorization. For a demonstration of similar guidance in an MVC app with a controller, see the Custom authorization policies with \`IAuthorizationRequirementData\` in ASP.NET Core MVC.
+This article uses a [Minimal API](../../fundamentals/minimal-apis.md) endpoint within the app and focuses on testing JWT-based authorization. For a demonstration of similar guidance in an MVC app with a controller, see the [Custom authorization policies with \`IAuthorizationRequirementData\` in ASP.NET Core MVC](../../mvc/security/authorization/custom-authorization-policies-with-iauthorizationrequirementdata-in-mvc.md).
 
-You can apply `Microsoft.AspNetCore.Authorization.IAuthorizationRequirementData` attributes to SignalR hubs and hub methods, MVC controllers and actions, and Blazor's `AuthorizeView` and `AuthorizeRouteView` components, not just to endpoints. For apps that target releases earlier than .NET 11, these attributes are only enforced on Minimal API and routed endpoints.
+:::moniker range=">= aspnetcore-11.0"
 
-Framework authors can use the `Microsoft.AspNetCore.Authorization.AuthorizationPolicy.CombineAsync*` overload to combine mixed authorization metadata using the same rules as the authorization middleware.
+You can apply <xref:Microsoft.AspNetCore.Authorization.IAuthorizationRequirementData> attributes to SignalR hubs and hub methods, MVC controllers and actions, and Blazor's [`AuthorizeView`](../../blazor/security/index.md#authorizeview-component) and [`AuthorizeRouteView`](../../blazor/security/authentication-state.md?pivots=server#implement-a-custom-authenticationstateprovider) components, not just to endpoints. For apps that target releases earlier than .NET 11, these attributes are only enforced on Minimal API and routed endpoints.
 
+Framework authors can use the <xref:Microsoft.AspNetCore.Authorization.AuthorizationPolicy.CombineAsync*> overload to combine mixed authorization metadata using the same rules as the authorization middleware.
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-11.0"
+
+<xref:Microsoft.AspNetCore.Authorization.IAuthorizationRequirementData> isn't supported for authorization attributes applied to:
+
+* SignalR hubs and hub methods
+* MVC controllers and actions
+* Blazor's [`AuthorizeView`](../../blazor/security/index.md#authorizeview-component) and [`AuthorizeRouteView`](../../blazor/security/authentication-state.md?pivots=server#implement-a-custom-authenticationstateprovider) components
+
+Support for the preceding is available for apps that target .NET 11 or later.
+
+:::moniker-end
 ## Sample app
 
-The Blazor Web App sample for this article is the `AuthRequirementsDataBWA` sample app (`dotnet/AspNetCore.Docs.Samples` GitHub repository) (how to download). The sample app implements a minimum age handler for users accessing a Minimal API endpoint at `/api/greetings/hello`, requiring a user to present a birth date claim indicating that they're at least 21 years old.
+The Blazor Web App sample for this article is the [`AuthRequirementsDataBWA` sample app (`dotnet/AspNetCore.Docs.Samples` GitHub repository)](https://github.com/dotnet/AspNetCore.Docs.Samples/tree/main/security/authorization/AuthRequirementsDataBWA) ([how to download](../../fundamentals/index.md#how-to-download-a-sample)). The sample app implements a minimum age handler for users accessing a Minimal API endpoint at `/api/greetings/hello`, requiring a user to present a birth date claim indicating that they're at least 21 years old.
 
 ## Minimum age authorize attribute
 
-The `MinimumAgeAuthorizeAttribute` implementation of `Microsoft.AspNetCore.Authorization.IAuthorizationRequirementData` sets an authorization age:
+The `MinimumAgeAuthorizeAttribute` implementation of <xref:Microsoft.AspNetCore.Authorization.IAuthorizationRequirementData> sets an authorization age:
 
-_Code sample not included: ~/../AspNetCore.Docs.Samples/security/authorization/AuthRequirementsDataBWA/Authorization/MinimumAgeAuthorizeAttribute.cs._
+:::code language="csharp" source="~/../AspNetCore.Docs.Samples/security/authorization/AuthRequirementsDataBWA/Authorization/MinimumAgeAuthorizeAttribute.cs":::
+
 ## Minimum age authorization handler
 
-The `MinimumAgeAuthorizationHandler` class handles the single `Microsoft.AspNetCore.Authorization.IAuthorizationRequirement` provided by `MinimumAgeAuthorizeAttribute`, as specified by the generic parameter `MinimumAgeAuthorizeAttribute`.
+The `MinimumAgeAuthorizationHandler` class handles the single <xref:Microsoft.AspNetCore.Authorization.IAuthorizationRequirement> provided by `MinimumAgeAuthorizeAttribute`, as specified by the generic parameter `MinimumAgeAuthorizeAttribute`.
 
 The `HandleRequirementAsync` method:
 
@@ -38,15 +52,16 @@ The `HandleRequirementAsync` method:
 * Marks the authorization requirement succeeded if the user meets the age requirement.
 * Implements logging for demonstration purposes.
 
-_Code sample not included: ~/../AspNetCore.Docs.Samples/security/authorization/AuthRequirementsDataBWA/Authorization/MinimumAgeAuthorizationHandler.cs._
-The `MinimumAgeAuthorizationHandler` is registered as a singleton `Microsoft.AspNetCore.Authorization.IAuthorizationHandler` service in the app's `Program` file:
+:::code language="csharp" source="~/../AspNetCore.Docs.Samples/security/authorization/AuthRequirementsDataBWA/Authorization/MinimumAgeAuthorizationHandler.cs":::
+
+The `MinimumAgeAuthorizationHandler` is registered as a singleton <xref:Microsoft.AspNetCore.Authorization.IAuthorizationHandler> service in the app's `Program` file:
 
 ```csharp
 builder.Services.AddSingleton<IAuthorizationHandler,
     MinimumAgeAuthorizationHandler>();
 ```
 
-A Minimal API endpoint is configured in the app's `Program` file with the `Microsoft.AspNetCore.Builder.AuthorizationEndpointConventionBuilderExtensions.RequireAuthorization*` extension method and the `MinimumAgeAuthorizeAttribute`:
+A [Minimal API](../../fundamentals/minimal-apis.md) endpoint is configured in the app's `Program` file with the <xref:Microsoft.AspNetCore.Builder.AuthorizationEndpointConventionBuilderExtensions.RequireAuthorization*> extension method and the `MinimumAgeAuthorizeAttribute`:
 
 ```csharp
 app.MapGet("/api/greetings/hello", (HttpContext context) =>
@@ -59,16 +74,16 @@ The endpoint displays the user's name when they satisfy the minimum age policy, 
 
 If the user's birth date claim indicates that they're at least 21 years old, the endpoint displays the greeting string, issuing a 200 (OK) status code. If the user is missing the birth date claim or the claim indicates that they aren't at least 21 years old, the greeting isn't displayed and a 403 (Forbidden) status code is issued.
 
-> **Note:**
-> For MVC controller guidance that demonstrates the same behavior, see Custom authorization policies with \`IAuthorizationRequirementData\` in ASP.NET Core MVC.
+> [!NOTE]
+> For MVC controller guidance that demonstrates the same behavior, see [Custom authorization policies with \`IAuthorizationRequirementData\` in ASP.NET Core MVC](../../mvc/security/authorization/custom-authorization-policies-with-iauthorizationrequirementdata-in-mvc.md).
 
-JWT bearer <example-value> services are added in the app's `Program` file:
+JWT bearer authentication services are added in the app's `Program` file:
 
 ```csharp
 builder.Services.AddAuthentication().AddJwtBearer();
 ```
 
-The app settings file (`appsettings.Development.json`) configures the audience and issuer for JWT bearer <example-value>:
+The app settings file (`appsettings.Development.json`) configures the audience and issuer for JWT bearer authentication:
 
 ```json
 "Authentication": {
@@ -88,7 +103,7 @@ In the preceding example, the localhost audience matches the localhost address s
 
 ## Demonstration
 
-Test the sample with `dotnet user-jwts` and curl.
+Test the sample with [`dotnet user-jwts`](../authentication/jwt-authn.md) and curl.
 
 From the project's folder in a command shell, execute the following command to create a JWT bearer token with a birth date claim that makes the user over 21 years old:
 
@@ -96,7 +111,7 @@ From the project's folder in a command shell, execute the following command to c
 dotnet user-jwts create --claim http://schemas.xmlsoap.org/ws/2005/05/identity/claims/dateofbirth=1989-01-01
 ```
 
-The output produces a token after "<example-value>" in the command shell:
+The output produces a token after "`Token:`" in the command shell:
 
 ```dotnetcli
 New JWT saved with ID '{JWT ID}'.
@@ -108,7 +123,7 @@ Token: {TOKEN}
 
 Set the value of the token (where the `{TOKEN}` placeholder appears in the preceding output) aside for use later.
 
-You can decode the token in an online JWT decoder, such as `jwt.ms` to see its contents, revealing that it contains a `birthdate` claim with the user's birth date:
+You can decode the token in an online JWT decoder, such as [`jwt.ms`](https://jwt.ms/) to see its contents, revealing that it contains a `birthdate` claim with the user's birth date:
 
 ```json
 {
@@ -147,7 +162,7 @@ dotnet watch
 In a command shell, use the .NET CLI to execute the following `curl.exe` command to request the `api/greetings/hello` endpoint. Replace the `{TOKEN}` placeholder with the first JWT bearer token that you saved earlier:
 
 ```dotnetcli
-curl.exe -i -H "<example-value>" https://localhost:5001/api/greetings/hello
+curl.exe -i -H "Authorization: Bearer {TOKEN}" https://localhost:5001/api/greetings/hello
 ```
 
 The output indicates success because the user's birth date claim indicates that they're at least 21 years old:
@@ -164,6 +179,14 @@ Hello {USER}!
 
 Logging indicates that the age requirement was met:
 
+<!-- DOC AUTHOR NOTE
+
+The following block quote uses two spaces at the ends of lines (except the
+last line) to create returns in the rendered content. Don't remove the two
+spaces at the ends of the lines when editing the following content.
+
+-->
+
 > :::no-loc text="MinimumAgeAuthorizationHandler: Information: Evaluating authorization requirement for age >= 21":::
 > :::no-loc text="MinimumAgeAuthorizationHandler: Information: Minimum age authorization requirement 21 satisfied":::
 
@@ -178,9 +201,17 @@ Server: Kestrel
 
 Logging indicates that the age requirement wasn't met:
 
+<!-- DOC AUTHOR NOTE
+
+The following block quote uses two spaces at the ends of lines (except the
+last line) to create returns in the rendered content. Don't remove the two
+spaces at the ends of the lines when editing the following content.
+
+-->
+
 > :::no-loc text="MinimumAgeAuthorizationHandler: Information: Evaluating authorization requirement for age >= 21":::
 > :::no-loc text="MinimumAgeAuthorizationHandler: Information: Current user's DateOfBirth claim (2020-01-01) doesn't satisfy the minimum age authorization requirement 21":::
 
 ## Related content
 
-Custom authorization policies with \`IAuthorizationRequirementData\` in ASP.NET Core MVC
+[Custom authorization policies with \`IAuthorizationRequirementData\` in ASP.NET Core MVC](../../mvc/security/authorization/custom-authorization-policies-with-iauthorizationrequirementdata-in-mvc.md)

@@ -1,15 +1,10 @@
 ---
-title: "vitest-browser-react"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/api/browser/react.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+outline: deep
 ---
 
 # vitest-browser-react
 
-The community `vitest-browser-react` package renders React components in Browser Mode.
+The community [`vitest-browser-react`](https://npmx.dev/package/vitest-browser-react) package renders [React](https://react.dev/) components in [Browser Mode](/guide/browser/).
 
 ```jsx
 import { render } from 'vitest-browser-react'
@@ -25,12 +20,13 @@ test('counter button increments the count', async () => {
 })
 ```
 
-**Warning:**
-This library takes inspiration from `@testing-library/react`.
+::: warning
+This library takes inspiration from [`@testing-library/react`](https://github.com/testing-library/react-testing-library).
 
 If you have used `@testing-library/react` in your tests before, you can keep using it, however the `vitest-browser-react` package provides certain benefits unique to the Browser Mode that `@testing-library/react` lacks:
 
-`vitest-browser-react` returns APIs that interact well with built-in locators, user events and assertions: for example, Vitest will automatically retry the element until the assertion is successful, even if it was rerendered between the assertions.
+`vitest-browser-react` returns APIs that interact well with built-in [locators](/api/browser/locators), [user events](/api/browser/interactivity) and [assertions](/api/browser/assertions): for example, Vitest will automatically retry the element until the assertion is successful, even if it was rerendered between the assertions.
+:::
 
 The package exposes two entry points: `vitest-browser-react` and `vitest-browser-react/pure`. They expose almost identical API (`pure` also exposes `configure`), but the `pure` entry point doesn't add a handler to remove the component before the next test has started.
 
@@ -43,16 +39,18 @@ export function render(
 ): Promise<RenderResult>
 ```
 
-The `render` function records a `react.render` trace mark, visible in the Trace View.
+The `render` function records a `react.render` trace mark, visible in the [Trace View](/guide/browser/trace-view).
 
-**Warning:**
-Note that `render` is asynchronous, unlike in other packages. This is to support `Suspense` correctly.
+:::warning
+Note that `render` is asynchronous, unlike in other packages. This is to support [`Suspense`](https://react.dev/reference/react/Suspense) correctly.
 
 ```tsx
 import { render } from 'vitest-browser-react'
 const screen = render(<Component />) // [!code --]
 const screen = await render(<Component />) // [!code ++]
 ```
+
+:::
 
 ### Options
 
@@ -102,7 +100,7 @@ export function customRender(ui, options) {
 
 ### Render Result
 
-In addition to documented return value, the `render` function also returns all available locators relative to the `baseElement`, including custom ones.
+In addition to documented return value, the `render` function also returns all available [locators](/api/browser/locators) relative to the [`baseElement`](#baseelement), including [custom ones](/api/browser/locators#custom-locators).
 
 ```tsx
 const screen = await render(<TableBody {...props} />)
@@ -114,8 +112,9 @@ await screen.getByRole('link', { name: 'Expand' }).click()
 
 The containing `div` DOM node of your rendered React Element (rendered using `ReactDOM.render`). This is a regular DOM node, so you technically could call `container.querySelector` etc. to inspect the children.
 
-**Danger:**
-If you find yourself using `container` to query for rendered elements then you should reconsider! The locators are designed to be more resilient to changes that will be made to the component you're testing. Avoid using `container` to query for elements!
+:::danger
+If you find yourself using `container` to query for rendered elements then you should reconsider! The [locators](/api/browser/locators) are designed to be more resilient to changes that will be made to the component you're testing. Avoid using `container` to query for elements!
+:::
 
 #### baseElement
 
@@ -123,12 +122,13 @@ The containing DOM node where your React Element is rendered in the `container`.
 
 This is useful when the component you want to test renders something outside the container `div`, e.g. when you want to snapshot test your portal component which renders its HTML directly in the body.
 
-**Tip:**
+:::tip
 The queries returned by the `render` looks into `baseElement`, so you can use queries to test your portal component without the `baseElement`.
+:::
 
 #### locator
 
-The locator of your `container`. It is useful to use queries scoped only to your component, or pass it down to other assertions:
+The [locator](/api/browser/locators) of your `container`. It is useful to use queries scoped only to your component, or pass it down to other assertions:
 
 ```jsx
 import { render } from 'vitest-browser-react'
@@ -157,7 +157,7 @@ This method is a shortcut for `console.log(prettyDOM(baseElement))`. It will pri
 function rerender(ui: React.ReactNode): Promise<void>
 ```
 
-Also records a `react.rerender` trace mark in the Trace View.
+Also records a `react.rerender` trace mark in the [Trace View](/guide/browser/trace-view).
 
 It is better if you test the component that's doing the prop updating to ensure that the props are being updated correctly to avoid relying on implementation details in your tests. That said, if you'd prefer to update the props of a rendered component in your test, this function can be used to update props of the rendered component.
 
@@ -176,7 +176,7 @@ await rerender(<NumberDisplay number={2} />)
 function unmount(): Promise<void>
 ```
 
-Also records a `react.unmount` trace mark in the Trace View.
+Also records a `react.unmount` trace mark in the [Trace View](/guide/browser/trace-view).
 
 This will cause the rendered component to be unmounted. This is useful for testing what happens when your component is removed from the page (like testing that you don't leave event handlers hanging around causing memory leaks).
 
@@ -202,7 +202,7 @@ Returns a `DocumentFragment` of your rendered component. This can be useful if y
 export function cleanup(): Promise<void>
 ```
 
-Remove all components rendered with `render`.
+Remove all components rendered with [`render`](#render).
 
 ## renderHook
 
@@ -226,7 +226,7 @@ test('returns logged in user', async () => {
 
 ### Options
 
-`renderHook` accepts the same options as `render` with an addition to `initialProps`:
+`renderHook` accepts the same options as [`render`](#render) with an addition to `initialProps`:
 
 It declares the props that are passed to the render-callback when first invoked. These will not be passed if you call `rerender` without props.
 
@@ -243,7 +243,7 @@ test('returns logged in user', async () => {
 })
 ```
 
-**Warning:**
+:::warning
 When using `renderHook` in conjunction with the `wrapper` and `initialProps` options, the `initialProps` are not passed to the `wrapper` component. To provide props to the `wrapper` component, consider a solution like this:
 
 ```jsx
@@ -259,6 +259,8 @@ await renderHook(() => {}, {
   wrapper: createWrapper(Wrapper, { value: 'foo' }),
 })
 ```
+
+:::
 
 `renderHook` returns a few useful methods and properties:
 
@@ -285,7 +287,7 @@ const { result } = await renderHook(() => {
 expect(result.current).toBe('Alice')
 ```
 
-Note that the value is held in `result.current`. Think of result as a ref for the most recently committed value.
+Note that the value is held in `result.current`. Think of result as a [ref](https://react.dev/learn/referencing-values-with-refs) for the most recently committed value.
 
 #### rerender {#renderhooks-rerender}
 
@@ -314,9 +316,9 @@ await unmount()
 
 ## Extend Queries
 
-To extend locator queries, see `"Custom Locators"`. For example, to make `render` return a new custom locator, define it using the `locators.extend` API:
+To extend locator queries, see [`"Custom Locators"`](/api/browser/locators#custom-locators). For example, to make `render` return a new custom locator, define it using the `locators.extend` API:
 
-```jsx
+```jsx {5-7,12}
 import { locators } from 'vitest/browser'
 import { render } from 'vitest-browser-react'
 
@@ -347,4 +349,4 @@ configure({
 
 ## See also
 
-- React Testing Library documentation
+- [React Testing Library documentation](https://testing-library.com/docs/react-testing-library/intro)

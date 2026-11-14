@@ -1,25 +1,19 @@
----
-title: "require-yields"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/require-yields.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-require-yields"></a>
+<a name="require-yields"></a>
+# <code>require-yields</code>
 
-# `require-yields`
+* [Options](#user-content-require-yields-options)
+    * [`contexts`](#user-content-require-yields-options-contexts)
+    * [`exemptedBy`](#user-content-require-yields-options-exemptedby)
+    * [`forceRequireNext`](#user-content-require-yields-options-forcerequirenext)
+    * [`forceRequireYields`](#user-content-require-yields-options-forcerequireyields)
+    * [`next`](#user-content-require-yields-options-next)
+    * [`nextWithGeneratorTag`](#user-content-require-yields-options-nextwithgeneratortag)
+    * [`withGeneratorTag`](#user-content-require-yields-options-withgeneratortag)
+* [Context and settings](#user-content-require-yields-context-and-settings)
+* [Failing examples](#user-content-require-yields-failing-examples)
+* [Passing examples](#user-content-require-yields-passing-examples)
 
-* Options
-    * `contexts`
-    * `exemptedBy`
-    * `forceRequireNext`
-    * `forceRequireYields`
-    * `next`
-    * `nextWithGeneratorTag`
-    * `withGeneratorTag`
-* Context and settings
-* Failing examples
-* Passing examples
 
 Requires that yields are documented.
 
@@ -28,11 +22,15 @@ Will also report if multiple `@yields` tags are present.
 See the `next`, `forceRequireNext`, and `nextWithGeneratorTag` options for an
 option to expect a non-standard `@next` tag.
 
+<a name="user-content-require-yields-options"></a>
+<a name="require-yields-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `contexts`
+<a name="user-content-require-yields-options-contexts"></a>
+<a name="require-yields-options-contexts"></a>
+### <code>contexts</code>
 
 Set this to an array of strings representing the AST context
 (or objects with optional `context` and `comment` properties) where you wish
@@ -52,7 +50,9 @@ present and the `forceRequireYields` option is set or if the
 (since we are not checking against the actual `yield` values in these
 cases).
 
-### `exemptedBy`
+<a name="user-content-require-yields-options-exemptedby"></a>
+<a name="require-yields-options-exemptedby"></a>
+### <code>exemptedBy</code>
 
 Array of tags (e.g., `['type']`) whose presence on the
 document block avoids the need for a `@yields`. Defaults to an array
@@ -60,14 +60,18 @@ with `inheritdoc`. If you set this array, it will overwrite the default,
 so be sure to add back `inheritdoc` if you wish its presence to cause
 exemption of the rule.
 
-### `forceRequireNext`
+<a name="user-content-require-yields-options-forcerequirenext"></a>
+<a name="require-yields-options-forcerequirenext"></a>
+### <code>forceRequireNext</code>
 
 Set to `true` to always insist on
 `@next` documentation even if there are no `yield` statements in the
 function or none return values. May be desired to flag that a project is
 aware of the expected yield return being `undefined`. Defaults to `false`.
 
-### `forceRequireYields`
+<a name="user-content-require-yields-options-forcerequireyields"></a>
+<a name="require-yields-options-forcerequireyields"></a>
+### <code>forceRequireYields</code>
 
 Set to `true` to always insist on
 `@yields` documentation for generators even if there are only
@@ -75,7 +79,9 @@ expressionless `yield` statements in the function. May be desired to flag
 that a project is aware of an `undefined`/`void` yield. Defaults to
 `false`.
 
-### `next`
+<a name="user-content-require-yields-options-next"></a>
+<a name="require-yields-options-next"></a>
+### <code>next</code>
 
 If `true`, this option will insist that any use of a `yield` return
 value (e.g., `const rv = yield;` or `const rv = yield value;`) has a
@@ -87,7 +93,9 @@ expected if the generator function body merely has plain `yield;` or
 `yield value;` statements without returning the values. Defaults to
 `false`.
 
-### `nextWithGeneratorTag`
+<a name="user-content-require-yields-options-nextwithgeneratortag"></a>
+<a name="require-yields-options-nextwithgeneratortag"></a>
+### <code>nextWithGeneratorTag</code>
 
 If a `@generator` tag is present on a block, require
 (non-standard ) `@next` (see `next` option). This will require using `void`
@@ -96,12 +104,17 @@ incoming `yield`-returned value. Defaults to `false`. See `contexts` to
 `any` if you want to catch `@generator` with `@callback` or such not
 attached to a function.
 
-### `withGeneratorTag`
+<a name="user-content-require-yields-options-withgeneratortag"></a>
+<a name="require-yields-options-withgeneratortag"></a>
+### <code>withGeneratorTag</code>
 
 If a `@generator` tag is present on a block, require
 `@yields`/`@yield`. Defaults to `true`. See `contexts` to `any` if you want
 to catch `@generator` with `@callback` or such not attached to a function.
 
+
+<a name="user-content-require-yields-context-and-settings"></a>
+<a name="require-yields-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -113,6 +126,8 @@ to catch `@generator` with `@callback` or such not attached to a function.
 | Options  |`contexts`, `exemptedBy`, `forceRequireNext`, `forceRequireYields`, `next`, `nextWithGeneratorTag`, `withGeneratorTag`|
 | Settings | `ignoreReplacesDocs`, `overrideReplacesDocs`, `augmentsExtendsReplacesDocs`, `implementsReplacesDocs` |
 
+<a name="user-content-require-yields-failing-examples"></a>
+<a name="require-yields-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -511,6 +526,10 @@ function * quux () {
 // Message: Missing JSDoc @yields declaration.
 ````
 
+
+
+<a name="user-content-require-yields-passing-examples"></a>
+<a name="require-yields-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -832,3 +851,4 @@ function * quux (foo) {
 export { foo } from "bar"
 // "jsdoc/require-yields": ["error"|"warn", {"contexts":["ExportNamedDeclaration"]}]
 ````
+

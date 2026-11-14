@@ -1,21 +1,15 @@
----
-title: "no-useless-override"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-useless-override.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-useless-override
 
 📝 Disallow useless overrides of class methods.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
-A class method that does nothing but forward to `super.sameMethod(...)` with the same arguments is dead code. Removing it is equivalent to inheriting the parent method, so the override only adds noise and a maintenance burden. This is the method counterpart to `no-useless-constructor`.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+A class method that does nothing but forward to `super.sameMethod(...)` with the same arguments is dead code. Removing it is equivalent to inheriting the parent method, so the override only adds noise and a maintenance burden. This is the method counterpart to [`no-useless-constructor`](https://eslint.org/docs/latest/rules/no-useless-constructor).
 
 ## Examples
 
@@ -61,6 +55,6 @@ class Foo extends Bar {
 
 To stay safe, the rule only reports cases where removal cannot change behavior. It skips getters/setters, generators, decorated methods, methods with accessibility modifiers, and methods with TypeScript overload signatures.
 
-The statement form `super.method(…)` (without `return`) and `async` methods are only reported with type information available — when the parent is known to return nothing or a promise, respectively. Removing an `async` override does not preserve promise identity or the extra microtask ticks of its wrapper.
+The statement form `super.method(…)` (without `return`) and `async` methods are only reported with [type information](https://typescript-eslint.io/getting-started/typed-linting) available — when the parent is known to return nothing or a promise, respectively. Removing an `async` override does not preserve promise identity or the extra microtask ticks of its wrapper.
 
 Computed method and `super` keys with side effects are left unchanged.

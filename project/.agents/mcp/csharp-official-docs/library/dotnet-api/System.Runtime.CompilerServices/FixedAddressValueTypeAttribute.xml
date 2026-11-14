@@ -1,0 +1,110 @@
+<Type Name="FixedAddressValueTypeAttribute" FullName="System.Runtime.CompilerServices.FixedAddressValueTypeAttribute">
+  <TypeSignature Language="C#" Value="public sealed class FixedAddressValueTypeAttribute : Attribute" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed beforefieldinit FixedAddressValueTypeAttribute extends System.Attribute" />
+  <TypeSignature Language="DocId" Value="T:System.Runtime.CompilerServices.FixedAddressValueTypeAttribute" />
+  <TypeSignature Language="VB.NET" Value="Public NotInheritable Class FixedAddressValueTypeAttribute&#xA;Inherits Attribute" />
+  <TypeSignature Language="F#" Value="type FixedAddressValueTypeAttribute = class&#xA;    inherit Attribute" />
+  <TypeSignature Language="C++ CLI" Value="public ref class FixedAddressValueTypeAttribute sealed : Attribute" />
+  <AssemblyInfo>
+    <AssemblyName>mscorlib</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.0.5.0</AssemblyVersion>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>netstandard</AssemblyName>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <AssemblyInfo>
+    <AssemblyName>System.Runtime</AssemblyName>
+    <AssemblyVersion>4.2.0.0</AssemblyVersion>
+    <AssemblyVersion>4.2.1.0</AssemblyVersion>
+    <AssemblyVersion>4.2.2.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
+    <AssemblyVersion>9.0.0.0</AssemblyVersion>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+    <AssemblyVersion>11.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <TypeForwardingChain>
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="10.0.0.0" FrameworkAlternate="net-10.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="11.0.0.0" FrameworkAlternate="net-11.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="8.0.0.0" FrameworkAlternate="net-8.0" />
+    <TypeForwarding From="netstandard" FromVersion="2.1.0.0" To="System.Runtime" ToVersion="9.0.0.0" FrameworkAlternate="net-9.0" />
+  </TypeForwardingChain>
+  <Base>
+    <BaseTypeName>System.Attribute</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Attributes>
+    <Attribute>
+      <AttributeName Language="C#">[System.AttributeUsage(System.AttributeTargets.Field)]</AttributeName>
+      <AttributeName Language="F#">[&lt;System.AttributeUsage(System.AttributeTargets.Field)&gt;]</AttributeName>
+    </Attribute>
+  </Attributes>
+  <Docs>
+    <summary>Fixes the address of a static value type field throughout its lifetime. This class cannot be inherited.</summary>
+    <remarks>
+      <format type="text/markdown"><![CDATA[
+
+## Remarks
+ Use the <xref:System.Runtime.CompilerServices.FixedAddressValueTypeAttribute> attribute to mark static value type fields as pinned upon creation. This attribute does not apply to primitive value type and enum fields.
+
+ This attribute is used by the Microsoft Visual C++ compiler.
+
+ The storage for static value type fields might be allocated on the GC heap. This means that their address can change as garbage collection is performed. When you apply this attribute to a static value type field, its address remains constant during its lifetime.
+
+## Examples
+ The following example illustrates the use of the <xref:System.Runtime.CompilerServices.FixedAddressValueTypeAttribute> attribute to pin a static field in memory. It defines an `Age` structure and initializes two classes that have static fields of type `Age`. The second class applies <xref:System.Runtime.CompilerServices.FixedAddressValueTypeAttribute> to pin the field's address. A number of memory allocations are made before and after these two objects are instantiated and the garbage collector is invoked. The output from the example shows that although the address of the first `Age` field has changed after garbage collection, the address of the field to which <xref:System.Runtime.CompilerServices.FixedAddressValueTypeAttribute> is applied has not.
+
+ :::code language="csharp" source="~/snippets/csharp/System.Runtime.CompilerServices/FixedAddressValueTypeAttribute/Overview/example1.cs" id="Snippet1":::
+
+ ]]></format>
+    </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public FixedAddressValueTypeAttribute ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberSignature Language="DocId" Value="M:System.Runtime.CompilerServices.FixedAddressValueTypeAttribute.#ctor" />
+      <MemberSignature Language="VB.NET" Value="Public Sub New ()" />
+      <MemberSignature Language="C++ CLI" Value="public:&#xA; FixedAddressValueTypeAttribute();" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyName>mscorlib</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.5.0</AssemblyVersion>
+        <AssemblyVersion>4.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>netstandard</AssemblyName>
+        <AssemblyVersion>2.0.0.0</AssemblyVersion>
+        <AssemblyVersion>2.1.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <AssemblyInfo>
+        <AssemblyName>System.Runtime</AssemblyName>
+        <AssemblyVersion>8.0.0.0</AssemblyVersion>
+        <AssemblyVersion>9.0.0.0</AssemblyVersion>
+        <AssemblyVersion>10.0.0.0</AssemblyVersion>
+        <AssemblyVersion>11.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>Initializes a new instance of the <see cref="T:System.Runtime.CompilerServices.FixedAddressValueTypeAttribute" /> class.</summary>
+        <remarks>
+          <format type="text/markdown"><![CDATA[
+
+## Examples
+ The following example illustrates the use of the <xref:System.Runtime.CompilerServices.FixedAddressValueTypeAttribute> attribute to pin a static field in memory. It defines an `Age` structure and initializes two classes that have static fields of type `Age`. The second class applies <xref:System.Runtime.CompilerServices.FixedAddressValueTypeAttribute> to pin the field's address. A number of memory allocations are made before and after these two objects are instantiated and the garbage collector is invoked. The output from the example shows that although the address of the first `Age` field has changed after garbage collection, the address of the field to which <xref:System.Runtime.CompilerServices.FixedAddressValueTypeAttribute> is applied has not.
+
+ :::code language="csharp" source="~/snippets/csharp/System.Runtime.CompilerServices/FixedAddressValueTypeAttribute/Overview/example1.cs" id="Snippet1":::
+
+ ]]></format>
+        </remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

@@ -1,15 +1,15 @@
 ---
-title: "How to project an anonymous type - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/project-anonymous-type.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to project an anonymous type - LINQ to XML
+description: You can project to an anonymous type rather than create a type just for use in the projection. This article provides an example for C# and Visual Basic.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
-
 # How to project an anonymous type (LINQ to XML)
 
-In some cases, you might want to project a query to a new type, but the query would be your only use for the new type. Rather than create the type, you can project to an anonymous type. Anonymous types provide a convenient way to encapsulate a set of read-only properties in an object without having to explicitly define a type first. If you write a query that creates an object of an anonymous type in the `select` clause, the query returns an `System.Collections.IEnumerable` of the type.
+In some cases, you might want to project a query to a new type, but the query would be your only use for the new type. Rather than create the type, you can project to an anonymous type. Anonymous types provide a convenient way to encapsulate a set of read-only properties in an object without having to explicitly define a type first. If you write a query that creates an object of an anonymous type in the `select` clause, the query returns an <xref:System.Collections.IEnumerable> of the type.
 
 The following example shows creation of an object of an anonymous type that's initialized with two properties, `Amount` and `Message`.
 
@@ -25,14 +25,14 @@ The type of each property is inferred by the compiler. The type name is generate
 
 For more information about anonymous types, see:
 
-- Anonymous Types (C# Programming Guide)
-- Anonymous Types (Visual Basic)
+- [Anonymous Types (C# Programming Guide)](../../csharp/programming-guide/classes-and-structs/anonymous-types.md)
+- [Anonymous Types (Visual Basic)](../../visual-basic/programming-guide/language-features/objects-and-classes/anonymous-types.md)
 
 ## Example: Project an anonymous type by creating objects in the `select` clause
 
 In this example, the `select` clause projects an anonymous type. The example then uses `var` to create the `IEnumerable` object. Within the `foreach` loop, the iteration variable becomes an instance of the anonymous type created in the query expression.
 
-This example uses XML document Sample XML file: Customers and orders.
+This example uses XML document [Sample XML file: Customers and orders](sample-xml-file-customers-orders.md).
 
 ```csharp
 XElement custOrd = XElement.Load("CustomersOrders.xml");
@@ -72,5 +72,5 @@ LETSS:Let's Stop N Shop:Jaime Yorres
 
 ## See also
 
-- Anonymous Types (C# Programming Guide)
-- Anonymous Types (Visual Basic)
+- [Anonymous Types (C# Programming Guide)](../../csharp/programming-guide/classes-and-structs/anonymous-types.md)
+- [Anonymous Types (Visual Basic)](../../visual-basic/programming-guide/language-features/objects-and-classes/anonymous-types.md)

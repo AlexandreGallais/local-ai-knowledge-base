@@ -1,23 +1,21 @@
 ---
-title: "Update tracked .NET installations with dotnetup"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/usecases/update-installations.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Update tracked .NET installations with dotnetup
+description: Update rolling SDK and runtime requirements and remove unused versions.
+ms.topic: how-to
+ms.date: 10/13/2026
+ai-usage: ai-assisted
 ---
 
 # Update tracked .NET installations with dotnetup
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 `dotnetup` stores the requested channel separately from the resolved version.
 An update resolves each rolling channel again.
 
 These updates don't update the dotnetup executable.
 To update the tool itself, use
-`dotnetup self update`.
+[`dotnetup self update`](../reference/dotnetup-self-update.md).
 
 ## Choose an update scope
 
@@ -108,12 +106,12 @@ not the warnings.
 
 For runtime requirements, use `dotnetup runtime uninstall`.
 For details, see
-SDK uninstall and
-Runtime uninstall.
+[SDK uninstall](../reference/dotnetup-sdk-uninstall.md) and
+[Runtime uninstall](../reference/dotnetup-runtime-uninstall.md).
 
 ## See also
 
-- dotnetup update
-- dotnetup sdk update
-- dotnetup runtime update
-- Update or remove dotnetup
+- [dotnetup update](../reference/dotnetup-update.md)
+- [dotnetup sdk update](../reference/dotnetup-sdk-update.md)
+- [dotnetup runtime update](../reference/dotnetup-runtime-update.md)
+- [Update or remove dotnetup](manage-dotnetup.md)

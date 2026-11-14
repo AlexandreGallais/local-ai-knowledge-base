@@ -1,13 +1,10 @@
 ---
-title: "prefer-named-capture-group"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/prefer-named-capture-group.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: prefer-named-capture-group
+rule_type: suggestion
+related_rules:
+- no-invalid-regexp
 ---
 
-# prefer-named-capture-group
 
 ## Rule Details
 
@@ -26,7 +23,7 @@ const regex = /(?:cauli|sun)flower/;
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint prefer-named-capture-group: "error"*/
@@ -38,9 +35,11 @@ const baz = RegExp('(ba[rz])');
 foo.exec('bar')[1]; // Retrieve the group result.
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint prefer-named-capture-group: "error"*/
@@ -52,6 +51,8 @@ const xyz = /xyz(?:zy|abc)/;
 
 foo.exec('bar').groups.id; // Retrieve the group result.
 ```
+
+:::
 
 ## Options
 

@@ -1,12 +1,23 @@
 ---
+description: "Learn more about: CreateVersionStringFromModule Function"
 title: "CreateVersionStringFromModule Function"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/createversionstringfrommodule-function.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/21/2022"
+api_name:
+  - "CreateVersionStringFromModule"
+api_location:
+  - "dbgshim.dll"
+  - "libdbgshim.so"
+  - "libdbgshim.dylib"
+f1_keywords:
+  - "CreateVersionStringFromModule"
+helpviewer_keywords:
+  - "debugging API [.NET Core]"
+  - ".NET Core, debugging"
+  - "CreateVersionStringFromModule function"
+ms.assetid: 3d2fe9bd-75ef-4364-84a6-da1e1994ac1a
+topic_type:
+  - "apiref"
 ---
-
 # CreateVersionStringFromModule function
 
 Creates a version string from a common language runtime (CLR) path in a target process.
@@ -60,13 +71,13 @@ HRESULT CreateVersionStringFromModule (
 
 ## Remarks
 
- This function accepts a CLR process that is identified by `pidDebuggee` and a string path that is specified by `szModuleName`. The version string is returned in the buffer that `pBuffer` points to. This string is opaque to the function user; that is, there is no intrinsic meaning in the version string itself. It is used solely in the context of this function and the CreateDebuggingInterfaceFromVersion function.
+ This function accepts a CLR process that is identified by `pidDebuggee` and a string path that is specified by `szModuleName`. The version string is returned in the buffer that `pBuffer` points to. This string is opaque to the function user; that is, there is no intrinsic meaning in the version string itself. It is used solely in the context of this function and the [CreateDebuggingInterfaceFromVersion function](createdebugginginterfacefromversion-function.md).
 
  This function should be called twice. When you call it the first time, pass null for both `pBuffer` and `cchBuffer`. When you do this, the size of the buffer necessary for `pBuffer` will be returned in `pdwLength`. You can then call the function a second time, and pass the buffer in `pBuffer` and its size in `cchBuffer`.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** dbgshim.h
 

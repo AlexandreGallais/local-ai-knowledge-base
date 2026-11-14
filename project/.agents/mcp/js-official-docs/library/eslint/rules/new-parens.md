@@ -1,14 +1,7 @@
 ---
-title: "new-parens"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/new-parens.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: new-parens
+rule_type: layout
 ---
-
-# new-parens
-
 JavaScript allows the omission of parentheses when invoking a function via the `new` keyword and the constructor has no arguments. However, some coders believe that omitting the parentheses is inconsistent with the rest of the language and thus makes code less clear.
 
 ```js
@@ -30,7 +23,7 @@ This rule takes one option.
 
 Examples of **incorrect** code for this rule with the `"always"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint new-parens: "error"*/
@@ -39,9 +32,11 @@ var person = new Person;
 var person = new (Person);
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"always"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint new-parens: "error"*/
@@ -50,11 +45,13 @@ var person = new Person();
 var person = new (Person)();
 ```
 
+:::
+
 ### never
 
 Examples of **incorrect** code for this rule with the `"never"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint new-parens: ["error", "never"]*/
@@ -63,9 +60,11 @@ var person = new Person();
 var person = new (Person)();
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"never"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint new-parens: ["error", "never"]*/
@@ -74,3 +73,5 @@ var person = new Person;
 var person = (new Person);
 var person = new Person("Name");
 ```
+
+:::

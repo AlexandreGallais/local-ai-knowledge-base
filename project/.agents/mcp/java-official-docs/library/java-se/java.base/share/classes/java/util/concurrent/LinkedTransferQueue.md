@@ -1,55 +1,45 @@
----
-title: "LinkedTransferQueue class (java.util.concurrent)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/LinkedTransferQueue.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # LinkedTransferQueue class (java.util.concurrent)
 
 ```java
 public class LinkedTransferQueue<E> extends AbstractQueue<E> implements TransferQueue<E>, java.io.Serializable
 ```
 
-An unbounded `TransferQueue` based on linked nodes.
+An unbounded {@link TransferQueue} based on linked nodes.
 This queue orders elements FIFO (first-in-first-out) with respect
-to any given producer.  The *head* of the queue is that
+to any given producer.  The <em>head</em> of the queue is that
 element that has been on the queue the longest time for some
-producer.  The *tail* of the queue is that element that has
+producer.  The <em>tail</em> of the queue is that element that has
 been on the queue the shortest time for some producer.
 
-Beware that, unlike in most collections, the `size` method
-is *NOT* a constant-time operation. Because of the
+<p>Beware that, unlike in most collections, the {@code size} method
+is <em>NOT</em> a constant-time operation. Because of the
 asynchronous nature of these queues, determining the current number
 of elements requires a traversal of the elements, and so may report
 inaccurate results if this collection is modified during traversal.
 
-Bulk operations that add, remove, or examine multiple elements,
-such as `addAll`, `removeIf` or `forEach`,
-are *not* guaranteed to be performed atomically.
-For example, a `forEach` traversal concurrent with an `addAll` operation might observe only some of the added elements.
+<p>Bulk operations that add, remove, or examine multiple elements,
+such as {@link #addAll}, {@link #removeIf} or {@link #forEach},
+are <em>not</em> guaranteed to be performed atomically.
+For example, a {@code forEach} traversal concurrent with an {@code
+addAll} operation might observe only some of the added elements.
 
-This class and its iterator implement all of the *optional*
-methods of the `Collection` and `Iterator` interfaces.
+<p>This class and its iterator implement all of the <em>optional</em>
+methods of the {@link Collection} and {@link Iterator} interfaces.
 
-Memory consistency effects: As with other concurrent
+<p>Memory consistency effects: As with other concurrent
 collections, actions in a thread prior to placing an object into a
-`LinkedTransferQueue`
-*happen-before*
+{@code LinkedTransferQueue}
+<a href="package-summary.html#MemoryVisibility"><i>happen-before</i></a>
 actions subsequent to the access or removal of that element from
-the `LinkedTransferQueue` in another thread.
+the {@code LinkedTransferQueue} in another thread.
 
-This class is a member of the
+<p>This class is a member of the
+<a href="{@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+Java Collections Framework</a>.
 
-Java Collections Framework.
-
-Parameters:
-
-- `<E>`: the type of elements held in this queue
-
-**Since:** 1.7
+@since 1.7
+@author Doug Lea
+@param <E> the type of elements held in this queue
 
 ## LinkedTransferQueue.toArray()
 
@@ -60,14 +50,14 @@ public Object[] toArray()
 Returns an array containing all of the elements in this queue, in
 proper sequence.
 
-The returned array will be "safe" in that no references to it are
+<p>The returned array will be "safe" in that no references to it are
 maintained by this queue.  (In other words, this method must allocate
 a new array).  The caller is thus free to modify the returned array.
 
-This method acts as bridge between array-based and collection-based
+<p>This method acts as bridge between array-based and collection-based
 APIs.
 
-**Returns:** an array containing all of the elements in this queue
+@return an array containing all of the elements in this queue
 
 ## LinkedTransferQueue.toArray(T[])
 
@@ -81,37 +71,33 @@ the specified array.  If the queue fits in the specified array, it
 is returned therein.  Otherwise, a new array is allocated with the
 runtime type of the specified array and the size of this queue.
 
-If this queue fits in the specified array with room to spare
+<p>If this queue fits in the specified array with room to spare
 (i.e., the array has more elements than this queue), the element in
 the array immediately following the end of the queue is set to
-`null`.
+{@code null}.
 
-Like the `toArray()` method, this method acts as bridge between
+<p>Like the {@link #toArray()} method, this method acts as bridge between
 array-based and collection-based APIs.  Further, this method allows
 precise control over the runtime type of the output array, and may,
 under certain circumstances, be used to save allocation costs.
 
-Suppose `x` is a queue known to contain only strings.
+<p>Suppose {@code x} is a queue known to contain only strings.
 The following code can be used to dump the queue into a newly
-allocated array of `String`:
+allocated array of {@code String}:
 
-```java
-String[] y = x.toArray(new String[0]);
-```
+<pre> {@code String[] y = x.toArray(new String[0]);}</pre>
 
-Note that `toArray(new Object[0])` is identical in function to
-`toArray()`.
+Note that {@code toArray(new Object[0])} is identical in function to
+{@code toArray()}.
 
-Parameters:
-
-- `a`: the array into which the elements of the queue are to be stored, if it is big enough; otherwise, a new array of the same runtime type is allocated for this purpose
-
-**Returns:** an array containing all of the elements in this queue
-
-Throws:
-
-- `ArrayStoreException`: if the runtime type of the specified array is not a supertype of the runtime type of every element in this queue
-- `NullPointerException`: if the specified array is null
+@param a the array into which the elements of the queue are to
+         be stored, if it is big enough; otherwise, a new array of the
+         same runtime type is allocated for this purpose
+@return an array containing all of the elements in this queue
+@throws ArrayStoreException if the runtime type of the specified array
+        is not a supertype of the runtime type of every element in
+        this queue
+@throws NullPointerException if the specified array is null
 
 ## LinkedTransferQueue.spliterator()
 
@@ -119,20 +105,20 @@ Throws:
 public Spliterator<E> spliterator()
 ```
 
-Returns a `Spliterator` over the elements in this queue.
+Returns a {@link Spliterator} over the elements in this queue.
 
-The returned spliterator is
-*weakly consistent*.
+<p>The returned spliterator is
+<a href="package-summary.html#Weakly"><i>weakly consistent</i></a>.
 
-The `Spliterator` reports `Spliterator.CONCURRENT`,
-`Spliterator.ORDERED`, and `Spliterator.NONNULL`.
+<p>The {@code Spliterator} reports {@link Spliterator#CONCURRENT},
+{@link Spliterator#ORDERED}, and {@link Spliterator#NONNULL}.
 
-**Implementation note:** The `Spliterator` implements `trySplit` to permit limited
+@implNote
+The {@code Spliterator} implements {@code trySplit} to permit limited
 parallelism.
 
-**Returns:** a `Spliterator` over the elements in this queue
-
-**Since:** 1.8
+@return a {@code Spliterator} over the elements in this queue
+@since 1.8
 
 ## LinkedTransferQueue.LinkedTransferQueue()
 
@@ -140,7 +126,7 @@ parallelism.
 public LinkedTransferQueue()
 ```
 
-Creates an initially empty `LinkedTransferQueue`.
+Creates an initially empty {@code LinkedTransferQueue}.
 
 ## LinkedTransferQueue.LinkedTransferQueue(Collection<? extends E>)
 
@@ -148,17 +134,13 @@ Creates an initially empty `LinkedTransferQueue`.
 public LinkedTransferQueue(Collection<? extends E> c)
 ```
 
-Creates a `LinkedTransferQueue`
+Creates a {@code LinkedTransferQueue}
 initially containing the elements of the given collection,
 added in traversal order of the collection's iterator.
 
-Parameters:
-
-- `c`: the collection of elements to initially contain
-
-Throws:
-
-- `NullPointerException`: if the specified collection or any of its elements are null
+@param c the collection of elements to initially contain
+@throws NullPointerException if the specified collection or any
+        of its elements are null
 
 ## LinkedTransferQueue.put(E)
 
@@ -169,9 +151,7 @@ public void put(E e)
 Inserts the specified element at the tail of this queue.
 As the queue is unbounded, this method will never block.
 
-Throws:
-
-- `NullPointerException`: if the specified element is null
+@throws NullPointerException if the specified element is null
 
 ## LinkedTransferQueue.offer(E, long, TimeUnit)
 
@@ -181,14 +161,11 @@ public boolean offer(E e, long timeout, TimeUnit unit)
 
 Inserts the specified element at the tail of this queue.
 As the queue is unbounded, this method will never block or
-return `false`.
+return {@code false}.
 
-**Returns:** `true` (as specified by
- BlockingQueue.offer)
-
-Throws:
-
-- `NullPointerException`: if the specified element is null
+@return {@code true} (as specified by
+ {@link BlockingQueue#offer(Object,long,TimeUnit) BlockingQueue.offer})
+@throws NullPointerException if the specified element is null
 
 ## LinkedTransferQueue.offer(E)
 
@@ -197,13 +174,10 @@ public boolean offer(E e)
 ```
 
 Inserts the specified element at the tail of this queue.
-As the queue is unbounded, this method will never return `false`.
+As the queue is unbounded, this method will never return {@code false}.
 
-**Returns:** `true` (as specified by `Queue.offer`)
-
-Throws:
-
-- `NullPointerException`: if the specified element is null
+@return {@code true} (as specified by {@link Queue#offer})
+@throws NullPointerException if the specified element is null
 
 ## LinkedTransferQueue.add(E)
 
@@ -213,13 +187,10 @@ public boolean add(E e)
 
 Inserts the specified element at the tail of this queue.
 As the queue is unbounded, this method will never throw
-`IllegalStateException` or return `false`.
+{@link IllegalStateException} or return {@code false}.
 
-**Returns:** `true` (as specified by `Collection.add`)
-
-Throws:
-
-- `NullPointerException`: if the specified element is null
+@return {@code true} (as specified by {@link Collection#add})
+@throws NullPointerException if the specified element is null
 
 ## LinkedTransferQueue.tryTransfer(E)
 
@@ -229,14 +200,12 @@ public boolean tryTransfer(E e)
 
 Transfers the element to a waiting consumer immediately, if possible.
 
-More precisely, transfers the specified element immediately
+<p>More precisely, transfers the specified element immediately
 if there exists a consumer already waiting to receive it (in
-`take` or timed poll),
-otherwise returning `false` without enqueuing the element.
+{@link #take} or timed {@link #poll(long,TimeUnit) poll}),
+otherwise returning {@code false} without enqueuing the element.
 
-Throws:
-
-- `NullPointerException`: if the specified element is null
+@throws NullPointerException if the specified element is null
 
 ## LinkedTransferQueue.transfer(E)
 
@@ -246,15 +215,13 @@ public void transfer(E e) throws InterruptedException
 
 Transfers the element to a consumer, waiting if necessary to do so.
 
-More precisely, transfers the specified element immediately
+<p>More precisely, transfers the specified element immediately
 if there exists a consumer already waiting to receive it (in
-`take` or timed poll),
+{@link #take} or timed {@link #poll(long,TimeUnit) poll}),
 else inserts the specified element at the tail of this queue
 and waits until the element is received by a consumer.
 
-Throws:
-
-- `NullPointerException`: if the specified element is null
+@throws NullPointerException if the specified element is null
 
 ## LinkedTransferQueue.tryTransfer(E, long, TimeUnit)
 
@@ -265,17 +232,15 @@ public boolean tryTransfer(E e, long timeout, TimeUnit unit) throws InterruptedE
 Transfers the element to a consumer if it is possible to do so
 before the timeout elapses.
 
-More precisely, transfers the specified element immediately
+<p>More precisely, transfers the specified element immediately
 if there exists a consumer already waiting to receive it (in
-`take` or timed poll),
+{@link #take} or timed {@link #poll(long,TimeUnit) poll}),
 else inserts the specified element at the tail of this queue
 and waits until the element is received by a consumer,
-returning `false` if the specified wait time elapses
+returning {@code false} if the specified wait time elapses
 before the element can be transferred.
 
-Throws:
-
-- `NullPointerException`: if the specified element is null
+@throws NullPointerException if the specified element is null
 
 ## LinkedTransferQueue.drainTo(Collection<? super E>)
 
@@ -283,10 +248,8 @@ Throws:
 public int drainTo(Collection<? super E> c)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
-- `IllegalArgumentException`: (inherited documentation)
+@throws NullPointerException     {@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}
 
 ## LinkedTransferQueue.drainTo(Collection<? super E>, int)
 
@@ -294,10 +257,8 @@ Throws:
 public int drainTo(Collection<? super E> c, int maxElements)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
-- `IllegalArgumentException`: (inherited documentation)
+@throws NullPointerException     {@inheritDoc}
+@throws IllegalArgumentException {@inheritDoc}
 
 ## LinkedTransferQueue.iterator()
 
@@ -308,10 +269,10 @@ public Iterator<E> iterator()
 Returns an iterator over the elements in this queue in proper sequence.
 The elements will be returned in order from first (head) to last (tail).
 
-The returned iterator is
-*weakly consistent*.
+<p>The returned iterator is
+<a href="package-summary.html#Weakly"><i>weakly consistent</i></a>.
 
-**Returns:** an iterator over the elements in this queue in proper sequence
+@return an iterator over the elements in this queue in proper sequence
 
 ## LinkedTransferQueue.isEmpty()
 
@@ -319,9 +280,9 @@ The returned iterator is
 public boolean isEmpty()
 ```
 
-Returns `true` if this queue contains no elements.
+Returns {@code true} if this queue contains no elements.
 
-**Returns:** `true` if this queue contains no elements
+@return {@code true} if this queue contains no elements
 
 ## LinkedTransferQueue.size()
 
@@ -330,15 +291,15 @@ public int size()
 ```
 
 Returns the number of elements in this queue.  If this queue
-contains more than `Integer.MAX_VALUE` elements, returns
-`Integer.MAX_VALUE`.
+contains more than {@code Integer.MAX_VALUE} elements, returns
+{@code Integer.MAX_VALUE}.
 
-Beware that, unlike in most collections, this method is
-*NOT* a constant-time operation. Because of the
+<p>Beware that, unlike in most collections, this method is
+<em>NOT</em> a constant-time operation. Because of the
 asynchronous nature of these queues, determining the current
 number of elements requires an O(n) traversal.
 
-**Returns:** the number of elements in this queue
+@return the number of elements in this queue
 
 ## LinkedTransferQueue.remove(Object)
 
@@ -347,17 +308,14 @@ public boolean remove(Object o)
 ```
 
 Removes a single instance of the specified element from this queue,
-if it is present.  More formally, removes an element `e` such
-that `o.equals(e)`, if this queue contains one or more such
+if it is present.  More formally, removes an element {@code e} such
+that {@code o.equals(e)}, if this queue contains one or more such
 elements.
-Returns `true` if this queue contained the specified element
+Returns {@code true} if this queue contained the specified element
 (or equivalently, if this queue changed as a result of the call).
 
-Parameters:
-
-- `o`: element to be removed from this queue, if present
-
-**Returns:** `true` if this queue changed as a result of the call
+@param o element to be removed from this queue, if present
+@return {@code true} if this queue changed as a result of the call
 
 ## LinkedTransferQueue.contains(Object)
 
@@ -365,15 +323,12 @@ Parameters:
 public boolean contains(Object o)
 ```
 
-Returns `true` if this queue contains the specified element.
-More formally, returns `true` if and only if this queue contains
-at least one element `e` such that `o.equals(e)`.
+Returns {@code true} if this queue contains the specified element.
+More formally, returns {@code true} if and only if this queue contains
+at least one element {@code e} such that {@code o.equals(e)}.
 
-Parameters:
-
-- `o`: object to be checked for containment in this queue
-
-**Returns:** `true` if this queue contains the specified element
+@param o object to be checked for containment in this queue
+@return {@code true} if this queue contains the specified element
 
 ## LinkedTransferQueue.remainingCapacity()
 
@@ -381,11 +336,11 @@ Parameters:
 public int remainingCapacity()
 ```
 
-Always returns `Integer.MAX_VALUE` because a
-`LinkedTransferQueue` is not capacity constrained.
+Always returns {@code Integer.MAX_VALUE} because a
+{@code LinkedTransferQueue} is not capacity constrained.
 
-**Returns:** `Integer.MAX_VALUE` (as specified by
-        `BlockingQueue.remainingCapacity()`)
+@return {@code Integer.MAX_VALUE} (as specified by
+        {@link BlockingQueue#remainingCapacity()})
 
 ## LinkedTransferQueue.removeIf(Predicate<? super E>)
 
@@ -393,9 +348,7 @@ Always returns `Integer.MAX_VALUE` because a
 public boolean removeIf(Predicate<? super E> filter)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## LinkedTransferQueue.removeAll(Collection<?>)
 
@@ -403,9 +356,7 @@ Throws:
 public boolean removeAll(Collection<?> c)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## LinkedTransferQueue.retainAll(Collection<?>)
 
@@ -413,9 +364,7 @@ Throws:
 public boolean retainAll(Collection<?> c)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## LinkedTransferQueue.forEach(Consumer<? super E>)
 
@@ -423,6 +372,4 @@ Throws:
 public void forEach(Consumer<? super E> action)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}

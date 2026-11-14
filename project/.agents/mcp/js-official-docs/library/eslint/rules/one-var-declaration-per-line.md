@@ -1,14 +1,9 @@
 ---
-title: "one-var-declaration-per-line"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/one-var-declaration-per-line.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: one-var-declaration-per-line
+rule_type: suggestion
+related_rules:
+- one-var
 ---
-
-# one-var-declaration-per-line
-
 Some developers declare multiple var statements on the same line:
 
 ```js
@@ -40,7 +35,7 @@ This rule has a single string option:
 
 Examples of **incorrect** code for this rule with the default `"initializations"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint one-var-declaration-per-line: ["error", "initializations"]*/
@@ -51,9 +46,11 @@ let d,
     e = 0, f;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"initializations"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint one-var-declaration-per-line: ["error", "initializations"]*/
@@ -67,11 +64,13 @@ let e,
     f = 0;
 ```
 
+:::
+
 ### always
 
 Examples of **incorrect** code for this rule with the `"always"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint one-var-declaration-per-line: ["error", "always"]*/
@@ -83,9 +82,11 @@ let c, d = 0;
 const e = 0, f = 0;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"always"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint one-var-declaration-per-line: ["error", "always"]*/
@@ -96,3 +97,5 @@ var a,
 let c,
     d = 0;
 ```
+
+:::

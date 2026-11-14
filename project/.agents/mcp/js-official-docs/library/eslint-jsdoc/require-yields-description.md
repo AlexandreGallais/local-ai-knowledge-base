@@ -1,13 +1,6 @@
----
-title: "require-yields-description"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/require-yields-description.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
-
-# `require-yields-description`
+<a name="user-content-require-yields-description"></a>
+<a name="require-yields-description"></a>
+# <code>require-yields-description</code>
 
 Requires a description for `@yields` tags.
 
@@ -19,6 +12,8 @@ Requires a description for `@yields` tags.
 |Settings||
 |Options||
 
+<a name="user-content-require-yields-description-failing-examples"></a>
+<a name="require-yields-description-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -30,6 +25,10 @@ The following patterns are considered problems:
 // Message: @yields should have a description
 ````
 
+
+
+<a name="user-content-require-yields-description-passing-examples"></a>
+<a name="require-yields-description-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -45,3 +44,4 @@ The following patterns are not considered problems:
  */
 export function *test1(): IterableIterator<string> { yield "hello"; }
 ````
+

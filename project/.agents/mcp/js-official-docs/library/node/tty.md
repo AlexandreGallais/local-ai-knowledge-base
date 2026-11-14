@@ -1,15 +1,10 @@
----
-title: "TTY"
-tool: "node"
-version: "26.13"
-source: "https://github.com/nodejs/node/blob/e9c277643b0249c50f6e6de5413be8a88ea11b6a/doc/api/tty.md"
-commit: "e9c277643b0249c50f6e6de5413be8a88ea11b6a"
-license: "MIT"
----
-
 # TTY
 
+<!--introduced_in=v0.10.0-->
+
 > Stability: 2 - Stable
+
+<!-- source_link=lib/tty.js -->
 
 The `node:tty` module provides the `tty.ReadStream` and `tty.WriteStream`
 classes. In most cases, it will not be necessary or possible to use this module
@@ -20,8 +15,8 @@ const tty = require('node:tty');
 ```
 
 When Node.js detects that it is being run with a text terminal ("TTY")
-attached, `process.stdin` will, by default, be initialized as an instance of
-`tty.ReadStream` and both `process.stdout` and `process.stderr` will, by
+attached, [`process.stdin`][] will, by default, be initialized as an instance of
+`tty.ReadStream` and both [`process.stdout`][] and [`process.stderr`][] will, by
 default, be instances of `tty.WriteStream`. The preferred method of determining
 whether Node.js is being run within a TTY context is to check that the value of
 the `process.stdout.isTTY` property is `true`:
@@ -39,13 +34,21 @@ classes.
 
 ## Class: `tty.ReadStream`
 
+<!-- YAML
+added: v0.5.8
+-->
+
 * Extends: {net.Socket}
 
 Represents the readable side of a TTY. In normal circumstances
-`process.stdin` will be the only `tty.ReadStream` instance in a Node.js
+[`process.stdin`][] will be the only `tty.ReadStream` instance in a Node.js
 process and there should be no reason to create additional instances.
 
 ### `readStream.isRaw`
+
+<!-- YAML
+added: v0.7.7
+-->
 
 A `boolean` that is `true` if the TTY is currently configured to operate as a
 raw device.
@@ -56,9 +59,21 @@ operating in raw mode. Its value will change with subsequent calls to
 
 ### `readStream.isTTY`
 
+<!-- YAML
+added: v0.5.8
+-->
+
 A `boolean` that is always `true` for `tty.ReadStream` instances.
 
 ### `readStream.setRawMode(mode)`
+
+<!-- YAML
+added: v0.7.7
+changes:
+  - version: v26.8.0
+    pr-url: https://github.com/nodejs/node/pull/64140
+    description: The `mode` argument supports `'raw'` and `'io'`.
+-->
 
 * `mode` {boolean|string} If `true` or `'raw'`, configures the
   `tty.ReadStream` to operate as a raw device. If `'io'`, configures the
@@ -73,12 +88,12 @@ Allows configuration of `tty.ReadStream` so that it operates as a raw device.
 When in raw mode, input is always available character-by-character, not
 including modifiers. Additionally, all special processing of input characters
 by the terminal is disabled, including echoing input
-characters. `Ctrl`+`C` will no longer cause a `SIGINT` when
+characters. <kbd>Ctrl</kbd>+<kbd>C</kbd> will no longer cause a `SIGINT` when
 in this mode. This mode does not affect terminal output processing, such as
 newline translation on Unix terminals.
 
 On Windows, `setRawMode()` requires write permission to the console input
-buffer. When opening `"\\\\.\\CONIN$"` with the `fs.open()` family of APIs
+buffer. When opening `"\\\\.\\CONIN$"` with the [`fs.open()`][] family of APIs
 (for passing into `new tty.ReadStream()`), be sure to use a read/write flag
 such as `'r+'`.
 
@@ -88,6 +103,10 @@ Windows.
 
 ### `readStream.rawMode`
 
+<!-- YAML
+added: v26.8.0
+-->
+
 * {boolean|string}
 
 The current raw mode for the `tty.ReadStream`. This is `false` when the stream
@@ -96,23 +115,38 @@ binary-safe I/O mode is enabled.
 
 ## Class: `tty.WriteStream`
 
+<!-- YAML
+added: v0.5.8
+-->
+
 * Extends: {net.Socket}
 
 Represents the writable side of a TTY. In normal circumstances,
-`process.stdout` and `process.stderr` will be the only
+[`process.stdout`][] and [`process.stderr`][] will be the only
 `tty.WriteStream` instances created for a Node.js process and there
 should be no reason to create additional instances.
 
 ### `new tty.ReadStream(fd[, options])`
 
+<!-- YAML
+added: v0.5.8
+changes:
+  - version: v0.9.4
+    description: The `options` argument is supported.
+-->
+
 * `fd` {number} A file descriptor associated with a TTY.
 * `options` {Object} Options passed to parent `net.Socket`,
-  see `options` of `net.Socket` constructor.
+  see `options` of [`net.Socket` constructor][].
 * Returns: {tty.ReadStream}
 
 Creates a `ReadStream` for `fd` associated with a TTY.
 
 ### `new tty.WriteStream(fd)`
+
+<!-- YAML
+added: v0.5.8
+-->
 
 * `fd` {number} A file descriptor associated with a TTY.
 * Returns: {tty.WriteStream}
@@ -120,6 +154,10 @@ Creates a `ReadStream` for `fd` associated with a TTY.
 Creates a `WriteStream` for `fd` associated with a TTY.
 
 ### Event: `'resize'`
+
+<!-- YAML
+added: v0.7.7
+-->
 
 The `'resize'` event is emitted whenever either of the `writeStream.columns`
 or `writeStream.rows` properties have changed. No arguments are passed to the
@@ -133,6 +171,14 @@ process.stdout.on('resize', () => {
 ```
 
 ### `writeStream.clearLine(dir[, callback])`
+
+<!-- YAML
+added: v0.7.7
+changes:
+  - version: v12.7.0
+    pr-url: https://github.com/nodejs/node/pull/28721
+    description: The stream's write() callback and return value are exposed.
+-->
 
 * `dir` {number}
   * `-1`: to the left from cursor
@@ -148,6 +194,14 @@ direction identified by `dir`.
 
 ### `writeStream.clearScreenDown([callback])`
 
+<!-- YAML
+added: v0.7.7
+changes:
+  - version: v12.7.0
+    pr-url: https://github.com/nodejs/node/pull/28721
+    description: The stream's write() callback and return value are exposed.
+-->
+
 * `callback` {Function} Invoked once the operation completes.
 * Returns: {boolean} `false` if the stream wishes for the calling code to wait
   for the `'drain'` event to be emitted before continuing to write additional
@@ -158,10 +212,22 @@ cursor down.
 
 ### `writeStream.columns`
 
+<!-- YAML
+added: v0.7.7
+-->
+
 A `number` specifying the number of columns the TTY currently has. This property
 is updated whenever the `'resize'` event is emitted.
 
-### `writeStream.cursorTo(x, y)`
+### `writeStream.cursorTo(x[, y][, callback])`
+
+<!-- YAML
+added: v0.7.7
+changes:
+  - version: v12.7.0
+    pr-url: https://github.com/nodejs/node/pull/28721
+    description: The stream's write() callback and return value are exposed.
+-->
 
 * `x` {number}
 * `y` {number}
@@ -174,6 +240,10 @@ is updated whenever the `'resize'` event is emitted.
 position.
 
 ### `writeStream.getColorDepth([env])`
+
+<!-- YAML
+added: v9.9.0
+-->
 
 * `env` {Object} An object containing the environment variables to check. This
   enables simulating the usage of a specific terminal. **Default:**
@@ -206,6 +276,10 @@ Disabling color support is also possible by using the `NO_COLOR` and
 
 ### `writeStream.getWindowSize()`
 
+<!-- YAML
+added: v0.7.7
+-->
+
 * Returns: {number\[]}
 
 `writeStream.getWindowSize()` returns the size of the TTY
@@ -213,7 +287,13 @@ corresponding to this `WriteStream`. The array is of the type
 `[numColumns, numRows]` where `numColumns` and `numRows` represent the number
 of columns and rows in the corresponding TTY.
 
-### `writeStream.hasColors(count)`
+### `writeStream.hasColors([count][, env])`
+
+<!-- YAML
+added:
+ - v11.13.0
+ - v10.16.0
+-->
 
 * `count` {integer} The number of colors that are requested (minimum 2).
   **Default:** 16.
@@ -226,7 +306,7 @@ Returns `true` if the `writeStream` supports at least as many colors as provided
 in `count`. Minimum support is 2 (black and white).
 
 This has the same false positives and negatives as described in
-`writeStream.getColorDepth()`.
+[`writeStream.getColorDepth()`][].
 
 ```js
 process.stdout.hasColors();
@@ -241,9 +321,21 @@ process.stdout.hasColors(2 ** 24, { TMUX: '1' });
 
 ### `writeStream.isTTY`
 
+<!-- YAML
+added: v0.5.8
+-->
+
 A `boolean` that is always `true`.
 
 ### `writeStream.moveCursor(dx, dy[, callback])`
+
+<!-- YAML
+added: v0.7.7
+changes:
+  - version: v12.7.0
+    pr-url: https://github.com/nodejs/node/pull/28721
+    description: The stream's write() callback and return value are exposed.
+-->
 
 * `dx` {number}
 * `dy` {number}
@@ -257,10 +349,18 @@ current position.
 
 ### `writeStream.rows`
 
+<!-- YAML
+added: v0.7.7
+-->
+
 A `number` specifying the number of rows the TTY currently has. This property
 is updated whenever the `'resize'` event is emitted.
 
 ## `tty.isatty(fd)`
+
+<!-- YAML
+added: v0.5.8
+-->
 
 * `fd` {number} A numeric file descriptor
 * Returns: {boolean}
@@ -268,3 +368,10 @@ is updated whenever the `'resize'` event is emitted.
 The `tty.isatty()` method returns `true` if the given `fd` is associated with
 a TTY and `false` if it is not, including whenever `fd` is not a non-negative
 integer.
+
+[`fs.open()`]: fs.md#fsopenpath-flags-mode-callback
+[`net.Socket` constructor]: net.md#new-netsocketoptions
+[`process.stderr`]: process.md#processstderr
+[`process.stdin`]: process.md#processstdin
+[`process.stdout`]: process.md#processstdout
+[`writeStream.getColorDepth()`]: #writestreamgetcolordepthenv

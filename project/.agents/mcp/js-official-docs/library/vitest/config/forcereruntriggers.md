@@ -1,10 +1,6 @@
 ---
-title: "forceRerunTriggers | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/forcereruntriggers.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: forceRerunTriggers | Config
+outline: deep
 ---
 
 # forceRerunTriggers <CRoot />
@@ -23,5 +19,6 @@ test('execute a script', async () => {
 })
 ```
 
-**Tip:**
-Make sure that your files are not excluded by `server.watch.ignored`.
+::: tip
+Make sure that your files are not excluded by [`server.watch.ignored`](https://vitejs.dev/config/server-options.html#server-watch).
+:::

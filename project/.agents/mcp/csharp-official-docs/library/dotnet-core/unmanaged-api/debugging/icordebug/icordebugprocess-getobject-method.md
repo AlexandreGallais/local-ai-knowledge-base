@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugProcess::GetObject Method"
 title: "ICorDebugProcess::GetObject Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess-getobject-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugProcess.GetObject"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugProcess::GetObject"
+helpviewer_keywords:
+  - "GetObject method, ICorDebugProcess interface [.NET debugging]"
+  - "ICorDebugProcess::GetObject method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugProcess::GetObject Method
 
 This method has not been implemented.

@@ -1,17 +1,14 @@
 ---
 title: "Floating point-to-integer conversions are saturating"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/jit/9.0/fp-to-integer.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 9 where floating point-to-integer conversions have saturating behavior.
+ms.date: 09/03/2024
+ai-usage: ai-assisted
 ---
-
 # Floating point-to-integer conversions are saturating
 
 Floating point-to-integer conversions now have *saturating* behavior on x86 and x64 machines. Saturating behavior means that if the converted value is too small or large for the target type, the value is set to the minimum or maximum value, respectively, for that type.
 
-In .NET 11, this behavior extends to unchecked conversions to `sbyte`, `byte`, `short`, `ushort`, and `char` on CoreCLR (including its interpreter) and Native AOT, but not Mono. For details, see Floating-point conversions to small integral types are saturating.
+In .NET 11, this behavior extends to unchecked conversions to `sbyte`, `byte`, `short`, `ushort`, and `char` on CoreCLR (including its interpreter) and Native AOT, but not Mono. For details, see [Floating-point conversions to small integral types are saturating](../11/fp-to-small-integer.md).
 
 ## Previous behavior
 
@@ -54,7 +51,7 @@ The following table shows the new behavior when converting a `float` or `double`
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -62,11 +59,11 @@ This change was made to standardize all floating point-to-integer conversions to
 
 ## Recommended action
 
-If you relied on the values shown in the Previous behavior section to be returned from the conversion, even if they were incorrect, update your code to expect the values shown in the New behavior section.
+If you relied on the values shown in the [Previous behavior](#previous-behavior) section to be returned from the conversion, even if they were incorrect, update your code to expect the values shown in the [New behavior](#new-behavior) section.
 
-If the performance overhead of the new behavior is undesirable for your scenario, you can use the new `ConvertToIntegerNative<TInteger>` methods on Single), Double), and Half) instead, which are fast. In most cases, the behavior of these methods matches the previous floating point-to-integer conversion behavior. However, these methods have *platform-specific* behavior that's **not guaranteed to match the previous conversion behavior** (which was already non-deterministic). Instead, these methods do whatever is most efficient for the native platform. Notably, the result isn't guaranteed for values that are outside of the representable range of the `TInteger` type.
+If the performance overhead of the new behavior is undesirable for your scenario, you can use the new `ConvertToIntegerNative<TInteger>` methods on [Single](xref:System.Single.ConvertToIntegerNative``1(System.Single)), [Double](xref:System.Double.ConvertToIntegerNative``1(System.Double)), and [Half](xref:System.Half.ConvertToIntegerNative``1(System.Half)) instead, which are fast. In most cases, the behavior of these methods matches the previous floating point-to-integer conversion behavior. However, these methods have *platform-specific* behavior that's **not guaranteed to match the previous conversion behavior** (which was already non-deterministic). Instead, these methods do whatever is most efficient for the native platform. Notably, the result isn't guaranteed for values that are outside of the representable range of the `TInteger` type.
 
-In the uncommon case where you need performance and a strict guarantee of matching the previous conversion behavior, you can use the platform-specific hardware intrinsics. For example, you can use Sse.ConvertToInt32(Vector128.CreateScalar(val))) to handle `(int)val` for `float`. You must check `if (Sse.IsSupported)` prior to use. Using these intrinsics is tricky, however, because other target platforms (such Arm64) already produce different results.
+In the uncommon case where you need performance and a strict guarantee of matching the previous conversion behavior, you can use the platform-specific hardware intrinsics. For example, you can use [Sse.ConvertToInt32(Vector128.CreateScalar(val))](xref:System.Runtime.Intrinsics.X86.Sse.ConvertToInt32(System.Runtime.Intrinsics.Vector128{System.Single})) to handle `(int)val` for `float`. You must check `if (Sse.IsSupported)` prior to use. Using these intrinsics is tricky, however, because other target platforms (such Arm64) already produce different results.
 
 ## Affected APIs
 

@@ -1,20 +1,31 @@
 ---
 title: "Asynchronous File I/O"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/io/asynchronous-file-i-o.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Read about asynchronous file I/O in .NET. Learn async methods to simplify asynchronous operations, such as ReadAsync, WriteAsync, and more.
+ms.date: 08/06/2026
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "streams, synchronous streams"
+  - "asynchronous I/O"
+  - "synchronous I/O"
+  - "streams, asynchronous streams"
+  - "I/O [.NET], asynchronous I/O"
+  - "Stream class, synchronous I/O"
+  - "data streams, asynchronous streams"
+  - "Stream class, asynchronous I/O"
+  - "multiple I/O requests"
+  - "data streams, synchronous streams"
+ms.assetid: dbdd55e7-d6b9-4f9e-8abb-ab0edd4457f7
 ---
-
 # Asynchronous File I/O
 
 Asynchronous operations enable you to perform resource-intensive I/O operations without blocking the main thread. This performance consideration is particularly important in a Windows 8.x Store app or desktop app where a time-consuming stream operation can block the UI thread and make your app appear as if it is not working.
 
-The I/O types include async methods to simplify asynchronous operations. An async method contains `Async` in its name, such as `System.IO.Stream.ReadAsync*`, `System.IO.Stream.WriteAsync*`, `System.IO.Stream.CopyToAsync*`, `System.IO.Stream.FlushAsync*`, `System.IO.TextReader.ReadLineAsync*`, and `System.IO.TextReader.ReadToEndAsync*`. These async methods are implemented on stream classes, such as `System.IO.Stream`, `System.IO.FileStream`, and `System.IO.MemoryStream`, and on classes that are used for reading from or writing to streams, such `System.IO.TextReader` and `System.IO.TextWriter`.
+The I/O types include async methods to simplify asynchronous operations. An async method contains `Async` in its name, such as <xref:System.IO.Stream.ReadAsync*>, <xref:System.IO.Stream.WriteAsync*>, <xref:System.IO.Stream.CopyToAsync*>, <xref:System.IO.Stream.FlushAsync*>, <xref:System.IO.TextReader.ReadLineAsync*>, and <xref:System.IO.TextReader.ReadToEndAsync*>. These async methods are implemented on stream classes, such as <xref:System.IO.Stream>, <xref:System.IO.FileStream>, and <xref:System.IO.MemoryStream>, and on classes that are used for reading from or writing to streams, such <xref:System.IO.TextReader> and <xref:System.IO.TextWriter>.
 
-> **Important:**
-> In .NET Framework 4 and earlier versions, you have to use methods such as `System.IO.Stream.BeginRead*` and `System.IO.Stream.EndRead*` to implement asynchronous I/O operations. These methods are still available in current .NET versions to support legacy code; however, the async methods help you implement asynchronous I/O operations more easily.
+> [!IMPORTANT]
+> In .NET Framework 4 and earlier versions, you have to use methods such as <xref:System.IO.Stream.BeginRead*> and <xref:System.IO.Stream.EndRead*> to implement asynchronous I/O operations. These methods are still available in current .NET versions to support legacy code; however, the async methods help you implement asynchronous I/O operations more easily.
 
 C# and Visual Basic each have two keywords for asynchronous programming:
 
@@ -22,161 +33,28 @@ C# and Visual Basic each have two keywords for asynchronous programming:
 
 - `Await` (Visual Basic) or `await` (C#) operator, which is applied to the result of an async method.
 
-To implement asynchronous I/O operations, use these keywords in conjunction with the async methods, as shown in the following examples. For more information, see Asynchronous programming with async and await (C#) or Asynchronous Programming with Async and Await (Visual Basic).
+To implement asynchronous I/O operations, use these keywords in conjunction with the async methods, as shown in the following examples. For more information, see [Asynchronous programming with async and await (C#)](../../csharp/asynchronous-programming/index.md) or [Asynchronous Programming with Async and Await (Visual Basic)](../../visual-basic/programming-guide/concepts/async/index.md).
 
-The following example demonstrates how to use two `System.IO.FileStream` objects to copy files asynchronously from one directory to another. Notice that the `System.Web.UI.WebControls.Button.Click` event handler for the `System.Windows.Controls.Button` control is marked with the `async` modifier because it calls an asynchronous method.
+The following example demonstrates how to use two <xref:System.IO.FileStream> objects to copy files asynchronously from one directory to another. Notice that the <xref:System.Web.UI.WebControls.Button.Click> event handler for the <xref:System.Windows.Controls.Button> control is marked with the `async` modifier because it calls an asynchronous method.
 
-```csharp
-using System;
-using System.Threading.Tasks;
-using System.Windows;
-using System.IO;
+[!code-csharp[Asynchronous_File_IO_async#1](../../../samples/snippets/csharp/VS_Snippets_CLR/Asynchronous_File_IO_async/cs/example.cs#1)]
+[!code-vb[Asynchronous_File_IO_async#1](../../../samples/snippets/visualbasic/VS_Snippets_CLR/Asynchronous_File_IO_async/vb/example.vb#1)]
 
-namespace WpfApplication
-{
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+The next example is similar to the previous one but uses <xref:System.IO.StreamReader> and <xref:System.IO.StreamWriter> objects to read and write the contents of a text file asynchronously.
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            string startDirectory = @"c:\Users\exampleuser\start";
-            string endDirectory = @"c:\Users\exampleuser\end";
+[!code-csharp[Asynchronous_File_IO_async#2](../../../samples/snippets/csharp/VS_Snippets_CLR/Asynchronous_File_IO_async/cs/example2.cs#2)]
+[!code-vb[Asynchronous_File_IO_async#2](../../../samples/snippets/visualbasic/VS_Snippets_CLR/Asynchronous_File_IO_async/vb/example2.vb#2)]
 
-            foreach (string filename in Directory.EnumerateFiles(startDirectory))
-            {
-                using (FileStream sourceStream = File.Open(filename, FileMode.Open))
-                {
-                    using (FileStream destinationStream = File.Create(Path.Combine(endDirectory, Path.GetFileName(filename))))
-                    {
-                        await sourceStream.CopyToAsync(destinationStream);
-                    }
-                }
-            }
-        }
-    }
-}
-```
+The next example shows the code-behind file and the XAML file that are used to open a file as a <xref:System.IO.Stream> in a Windows 8.x Store app, and read its contents by using an instance of the <xref:System.IO.StreamReader> class. It uses asynchronous methods to open the file as a stream and to read its contents.
 
-The next example is similar to the previous one but uses `System.IO.StreamReader` and `System.IO.StreamWriter` objects to read and write the contents of a text file asynchronously.
+[!code-csharp[System.IO.WindowsRuntimeStorageExtensions#2](../../../samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestorageextensions/cs/blankpage.xaml.cs#2)]
+[!code-vb[System.IO.WindowsRuntimeStorageExtensions#2](../../../samples/snippets/visualbasic/VS_Snippets_CLR_System/system.io.windowsruntimestorageextensions/vb/blankpage.xaml.vb#2)]
 
-```csharp
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows;
-using System.IO;
-
-namespace WpfApplication1
-{
-    public partial class MainWindow2 : Window
-    {
-        public MainWindow2()
-        {
-            InitializeComponent();
-        }
-
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            string UserDirectory = @"c:\Users\exampleuser\";
-
-            using (StreamReader SourceReader = File.OpenText(UserDirectory + "BigFile.txt"))
-            {
-                using (StreamWriter DestinationWriter = File.CreateText(UserDirectory + "CopiedFile.txt"))
-                {
-                    await CopyFilesAsync(SourceReader, DestinationWriter);
-                }
-            }
-        }
-
-        public async Task CopyFilesAsync(StreamReader Source, StreamWriter Destination)
-        {
-            char[] buffer = new char[0x1000];
-            int numRead;
-            while ((numRead = await Source.ReadAsync(buffer, 0, buffer.Length)) != 0)
-            {
-                await Destination.WriteAsync(buffer, 0, numRead);
-            }
-        }
-    }
-}
-```
-
-The next example shows the code-behind file and the XAML file that are used to open a file as a `System.IO.Stream` in a Windows 8.x Store app, and read its contents by using an instance of the `System.IO.StreamReader` class. It uses asynchronous methods to open the file as a stream and to read its contents.
-
-```csharp
-using System;
-using System.IO;
-using System.Text;
-using Windows.Storage.Pickers;
-using Windows.Storage;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-
-namespace ExampleApplication
-{
-    public sealed partial class BlankPage : Page
-    {
-        public BlankPage()
-        {
-            this.InitializeComponent();
-        }
-
-        private async void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            StringBuilder contents = new StringBuilder();
-            string nextLine;
-            int lineCounter = 1;
-
-            var openPicker = new FileOpenPicker();
-            openPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-            openPicker.FileTypeFilter.Add(".txt");
-            StorageFile selectedFile = await openPicker.PickSingleFileAsync();
-
-            using (StreamReader reader = new StreamReader(await selectedFile.OpenStreamForReadAsync()))
-            {
-                while ((nextLine = await reader.ReadLineAsync()) != null)
-                {
-                    contents.AppendFormat("{0}. ", lineCounter);
-                    contents.Append(nextLine);
-                    contents.AppendLine();
-                    lineCounter++;
-                    if (lineCounter > 3)
-                    {
-                        contents.AppendLine("Only first 3 lines shown.");
-                        break;
-                    }
-                }
-            }
-            DisplayContentsBlock.Text = contents.ToString();
-        }
-    }
-}
-```
-
-```xaml
-<Page
-    x:Class="ExampleApplication.BlankPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ExampleApplication"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
-
-    <StackPanel Background="{StaticResource ApplicationPageBackgroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
-        <TextBlock Text="Display lines from a file."></TextBlock>
-        <Button Content="Load File" Click="Button_Click_1"></Button>
-        <TextBlock Name="DisplayContentsBlock"></TextBlock>
-    </StackPanel>
-</Page>
-```
+[!code-xaml[System.IO.WindowsRuntimeStorageExtensions#1](../../../samples/snippets/csharp/VS_Snippets_CLR_System/system.io.windowsruntimestorageextensions/cs/blankpage.xaml#1)]
 
 ## See also
 
-- `System.IO.Stream`
-- File and Stream I/O
-- Asynchronous programming with async and await (C#)
-- Asynchronous Programming with Async and Await (Visual Basic)
+- <xref:System.IO.Stream>
+- [File and Stream I/O](index.md)
+- [Asynchronous programming with async and await (C#)](../../csharp/asynchronous-programming/index.md)
+- [Asynchronous Programming with Async and Await (Visual Basic)](../../visual-basic/programming-guide/concepts/async/index.md)

@@ -1,12 +1,3 @@
----
-title: "inkex.gui.pixmap"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/gui/pixmap.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.gui.pixmap
 
 Provides wrappers for pixmap access.
@@ -44,11 +35,11 @@ class OverlayFilter(PixmapFilter)
 Adds an overlay to output images, overlay can be any name that
 the owning pixmap manager can find.
 
-- overlay  : Name of overlay image
-- position : Location of the image:
-- 0      - Full size (1 to 1 overlay, default)
-- (x,y)  - Percentage from one end to the other position 0-1
-- alpha    : Blending alpha, 0 - 255
+    * overlay  : Name of overlay image
+    * position : Location of the image:
+        * 0      - Full size (1 to 1 overlay, default)
+        * (x,y)  - Percentage from one end to the other position 0-1
+    * alpha    : Blending alpha, 0 - 255
 
 ## OverlayFilter.set_position
 
@@ -66,12 +57,12 @@ class SizeFilter(PixmapFilter)
 
 Resizes images to a certain size:
 
-`resize_mode` - Way in which the size is calculated
+:attr:`resize_mode` - Way in which the size is calculated
 
-- 0 - Best Aspect, don't grow
-- 1 - Best Aspect, grow
-- 2 - Cropped Aspect
-- 3 - Stretch
+* 0 - Best Aspect, don't grow
+* 1 - Best Aspect, grow
+* 2 - Cropped Aspect
+* 3 - Stretch
 
 ## SizeFilter.aspect
 
@@ -130,9 +121,9 @@ def get_pixmap(self, data, **kwargs)
 
 There are three types of images this might return.
 
-1. A named gtk-image such as "gtk-stop"
-1. A file on the disk such as "/tmp/a.png"
-1. Data as either svg or binary png
+#. A named gtk-image such as "gtk-stop"
+#. A file on the disk such as "/tmp/a.png"
+#. Data as either svg or binary png
 
 All pixmaps are cached for multiple use.
 

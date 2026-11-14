@@ -1,13 +1,8 @@
 ---
-title: "Folders"
-tool: "npm"
-version: "12.2"
-source: "https://github.com/npm/cli/blob/60e11343e61316d966c86805d803df5a0eb99230/docs/lib/content/configuring-npm/folders.md"
-commit: "60e11343e61316d966c86805d803df5a0eb99230"
-license: "Artistic-2.0"
+title: Folders
+section: 5
+description: Folder structures used by npm
 ---
-
-# Folders
 
 ### Description
 
@@ -26,7 +21,7 @@ This document will tell you what it puts where.
 
 #### prefix Configuration
 
-The `prefix` config defaults to the location where node is installed.
+The [`prefix` config](/using-npm/config#prefix) defaults to the location where node is installed.
 On most systems, this is `/usr/local`.
 On Windows, it's `%AppData%\npm`.
 On Unix systems, it's one level up, since node is typically installed at `{prefix}/bin/node` rather than `{prefix}/node.exe`.
@@ -43,7 +38,7 @@ Global installs on Unix systems go to `{prefix}/lib/node_modules`.
 Global installs on Windows go to `{prefix}/node_modules` (that is, no `lib` folder.)
 
 Scoped packages are installed the same way, except they are grouped together in a sub-folder of the relevant `node_modules` folder with the name of that scope prefix by the @ symbol, e.g. `npm install @myorg/package` would place the package in `{prefix}/node_modules/@myorg/package`.
-See `scope` for more details.
+See [`scope`](/using-npm/scope) for more details.
 
 If you wish to `require()` a package, then install it locally.
 
@@ -65,15 +60,15 @@ Man pages are not installed on Windows systems.
 
 #### Cache
 
-See `npm cache`.
+See [`npm cache`](/commands/npm-cache).
 Cache files are stored in `~/.npm` on Posix, or `%LocalAppData%/npm-cache` on Windows.
 
-This is controlled by the `cache` config param.
+This is controlled by the [`cache` config](/using-npm/config#cache) param.
 
 ### More Information
 
 When installing locally, npm first tries to find an appropriate `prefix` folder.
-This is so that `npm install user@example.com` will install to the sensible root of your package, even if you happen to have `cd`ed into some other folder.
+This is so that `npm install foo@1.2.3` will install to the sensible root of your package, even if you happen to have `cd`ed into some other folder.
 
 Starting at the $PWD, npm will walk up the folder tree checking for a folder that contains either a `package.json` file, or a `node_modules` folder.
 If such a thing is found, then that is treated as the effective "current directory" for the purpose of running npm commands.
@@ -81,14 +76,14 @@ If such a thing is found, then that is treated as the effective "current directo
 
 If no package root is found, then the current folder is used.
 
-When you run `npm install user@example.com`, then the package is loaded into the cache, and then unpacked into `./node_modules/foo`.
+When you run `npm install foo@1.2.3`, then the package is loaded into the cache, and then unpacked into `./node_modules/foo`.
 Then, any of foo's dependencies are similarly unpacked into `./node_modules/foo/node_modules/...`.
 
 Any bin files are symlinked to `./node_modules/.bin/`, so that they may be found by npm scripts when necessary.
 
 #### Global Installation
 
-If the `global` config is set to true, then npm will install packages "globally".
+If the [`global` config](/using-npm/config#global) is set to true, then npm will install packages "globally".
 
 For global installation, packages are installed roughly the same way, but using the folders described above.
 
@@ -115,15 +110,15 @@ Consider this dependency graph:
 
 ```bash
 foo
-+-- user@example.com
-+-- user@example.com
-|   +-- user@example.com (latest=1.3.7)
-|   +-- user@example.com
-|   |   `-- user@example.com
-|   |       `-- user@example.com (cycle)
++-- blerg@1.2.5
++-- bar@1.2.3
+|   +-- blerg@1.x (latest=1.3.7)
+|   +-- baz@2.x
+|   |   `-- quux@3.x
+|   |       `-- bar@1.2.3 (cycle)
 |   `-- asdf@*
-`-- user@example.com
-    `-- user@example.com
+`-- baz@1.2.3
+    `-- quux@3.x
         `-- bar
 ```
 
@@ -141,14 +136,14 @@ foo
     +-- quux (3.2.0) <---[E]
 ```
 
-Since foo depends directly on `user@example.com` and `user@example.com`, those are installed in foo's `node_modules` folder.
+Since foo depends directly on `bar@1.2.3` and `baz@1.2.3`, those are installed in foo's `node_modules` folder.
 
 Even though the latest copy of blerg is 1.3.7, foo has a specific dependency on version 1.2.5.
 So, that gets installed at [A].
-Since the parent installation of blerg satisfies bar's dependency on `user@example.com`, it does not install another copy under [B].
+Since the parent installation of blerg satisfies bar's dependency on `blerg@1.x`, it does not install another copy under [B].
 
 Bar [B] also has dependencies on baz and asdf.
-Because it depends on `user@example.com`, it cannot re-use the `user@example.com` installed in the parent `node_modules` folder [D], and must install its own copy [C].
+Because it depends on `baz@2.x`, it cannot re-use the `baz@1.2.3` installed in the parent `node_modules` folder [D], and must install its own copy [C].
 In order to minimize duplication, npm hoists dependencies to the top level by default, so asdf is installed under [A].
 
 Underneath bar, the `baz -> quux -> bar` dependency creates a cycle.
@@ -163,15 +158,15 @@ Upon publishing, npm will look in the `node_modules` folder.
 If any of the items there are not in the `bundleDependencies` array, then they will not be included in the package tarball.
 
 This allows a package maintainer to install all of their dependencies (and dev dependencies) locally, but only re-publish those items that cannot be found elsewhere.
-See `package.json` for more information.
+See [`package.json`](/configuring-npm/package-json) for more information.
 
 ### See also
 
-* package.json
-* npm install
-* npm pack
-* npm cache
-* npm config
-* npmrc
-* config
-* npm publish
+* [package.json](/configuring-npm/package-json)
+* [npm install](/commands/npm-install)
+* [npm pack](/commands/npm-pack)
+* [npm cache](/commands/npm-cache)
+* [npm config](/commands/npm-config)
+* [npmrc](/configuring-npm/npmrc)
+* [config](/using-npm/config)
+* [npm publish](/commands/npm-publish)

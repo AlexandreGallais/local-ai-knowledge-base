@@ -1,145 +1,31 @@
 ---
 title: "How to: Handle Exceptions in Parallel Loops"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/parallel-programming/how-to-handle-exceptions-in-parallel-loops.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to handle exceptions in parallel loops in .NET. See an example of how to wrap all exceptions from the loop in a System.AggregateException.
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "parallel loops, how to handle exceptions"
+ms.assetid: 512f0d5a-4636-4875-b766-88f20044f143
 ---
-
 # How to: Handle Exceptions in Parallel Loops
 
-The `System.Threading.Tasks.Parallel.For*` and `System.Threading.Tasks.Parallel.ForEach*` overloads do not have any special mechanism to handle exceptions that might be thrown. In this respect, they resemble regular `for` and `foreach` loops (`For` and `For Each` in Visual Basic); an unhandled exception causes the loop to terminate as soon as all currently running iterations finish.
+The <xref:System.Threading.Tasks.Parallel.For*?displayProperty=nameWithType> and <xref:System.Threading.Tasks.Parallel.ForEach*?displayProperty=nameWithType> overloads do not have any special mechanism to handle exceptions that might be thrown. In this respect, they resemble regular `for` and `foreach` loops (`For` and `For Each` in Visual Basic); an unhandled exception causes the loop to terminate as soon as all currently running iterations finish.
 
- When you add your own exception-handling logic to parallel loops, handle the case in which similar exceptions might be thrown on multiple threads concurrently, and the case in which an exception thrown on one thread causes another exception to be thrown on another thread. You can handle both cases by wrapping all exceptions from the loop in a `System.AggregateException`. The following example shows one possible approach.
+ When you add your own exception-handling logic to parallel loops, handle the case in which similar exceptions might be thrown on multiple threads concurrently, and the case in which an exception thrown on one thread causes another exception to be thrown on another thread. You can handle both cases by wrapping all exceptions from the loop in a <xref:System.AggregateException?displayProperty=nameWithType>. The following example shows one possible approach.
 
-> **Note:**
+> [!NOTE]
 > When "Just My Code" is enabled, Visual Studio in some cases will break on the line that throws the exception and display an error message that says "exception not handled by user code." This error is benign. You can press F5 to continue from it, and see the exception-handling behavior that is demonstrated in the example below. To prevent Visual Studio from breaking on the first error, just uncheck the "Just My Code" checkbox under **Tools, Options, Debugging, General**.
 
 ## Example
 
- In this example, all exceptions are caught and then wrapped in an `System.AggregateException` which is thrown. The caller can decide which exceptions to handle.
+ In this example, all exceptions are caught and then wrapped in an <xref:System.AggregateException?displayProperty=nameWithType> which is thrown. The caller can decide which exceptions to handle.
 
- ```csharp
-﻿using System.Collections.Concurrent;
-
-public static partial class Program
-{
-    public static void ThrowDemo()
-    {
-        var task = Task.Factory.StartNew(
-            () => throw new CustomException("I'm bad, but not too bad!"));
-
-        try
-        {
-            task.Wait();
-        }
-        catch (AggregateException ae)
-        {
-            // Assume we know what's going on with this particular exception.
-            // Rethrow anything else. AggregateException.Handle provides
-            // another way to express this. See later example.
-            foreach (var ex in ae.InnerExceptions)
-            {
-                if (ex is CustomException)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                else
-                {
-                    throw;
-                }
-            }
-        }
-    }
-
-    static void CancelDemo()
-    {
-        bool someCondition = true;
-        var tokenSource = new CancellationTokenSource();
-        var token = tokenSource.Token;
-        var task = Task.Factory.StartNew(() =>
-        {
-            CancellationToken ct = token;
-            while (someCondition)
-            {
-                // Do some work...
-                Thread.SpinWait(50_000);
-                ct.ThrowIfCancellationRequested();
-            }
-        },
-        token);
-
-        // No waiting required.
-        tokenSource.Dispose();
-    }
-}
-
-public static partial class Program
-{
-    public static void ExceptionTwo()
-    {
-        // Create some random data to process in parallel.
-        // There is a good probability this data will cause some exceptions to be thrown.
-        byte[] data = new byte[5_000];
-        Random r = Random.Shared;
-        r.NextBytes(data);
-
-        try
-        {
-            ProcessDataInParallel(data);
-        }
-        catch (AggregateException ae)
-        {
-            var ignoredExceptions = new List<Exception>();
-            // This is where you can choose which exceptions to handle.
-            foreach (var ex in ae.Flatten().InnerExceptions)
-            {
-                if (ex is ArgumentException) Console.WriteLine(ex.Message);
-                else ignoredExceptions.Add(ex);
-            }
-            if (ignoredExceptions.Count > 0)
-            {
-                throw new AggregateException(ignoredExceptions);
-            }
-        }
-
-        Console.WriteLine("Press any key to exit.");
-        Console.ReadKey();
-    }
-
-    private static void ProcessDataInParallel(byte[] data)
-    {
-        // Use ConcurrentQueue to enable safe enqueueing from multiple threads.
-        var exceptions = new ConcurrentQueue<Exception>();
-
-        // Execute the complete loop and capture all exceptions.
-        Parallel.ForEach(data, d =>
-        {
-            try
-            {
-                // Cause a few exceptions, but not too many.
-                if (d < 3) throw new ArgumentException($"Value is {d}. Value must be greater than or equal to 3.");
-                else Console.Write(d + " ");
-            }
-            // Store the exception and continue with the loop.
-            catch (Exception e)
-            {
-                exceptions.Enqueue(e);
-            }
-        });
-        Console.WriteLine();
-
-        // Throw the exceptions here after the loop completes.
-        if (!exceptions.IsEmpty)
-        {
-            throw new AggregateException(exceptions);
-        }
-    }
-}
-```
+ [!code-csharp[TPL_Exceptions#08](../../../samples/snippets/csharp/VS_Snippets_Misc/tpl_exceptions/cs/exceptions.cs#08)]
+ [!code-vb[TPL_Exceptions#08](../../../samples/snippets/visualbasic/VS_Snippets_Misc/tpl_exceptions/vb/exceptionsinloops.vb#08)]
 
 ## See also
 
-- Data Parallelism
-- Lambda Expressions in PLINQ and TPL
+- [Data Parallelism](data-parallelism-task-parallel-library.md)
+- [Lambda Expressions in PLINQ and TPL](lambda-expressions-in-plinq-and-tpl.md)

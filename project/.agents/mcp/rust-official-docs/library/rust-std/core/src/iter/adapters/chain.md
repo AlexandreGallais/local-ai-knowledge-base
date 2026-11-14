@@ -1,12 +1,3 @@
----
-title: "core::iter::adapters::chain"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/iter/adapters/chain.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::iter::adapters::chain
 
 ## struct Chain
@@ -17,12 +8,12 @@ pub struct Chain<A, B>
 
 An iterator that links two iterators together, in a chain.
 
-This `struct` is created by `chain` or `Iterator::chain`. See their
+This `struct` is created by [`chain`] or [`Iterator::chain`]. See their
 documentation for more.
 
 # Examples
 
-```rust
+```
 use std::iter::Chain;
 use std::slice::Iter;
 
@@ -39,11 +30,11 @@ pub fn chain<A, B>(a: A, b: B) -> Chain<A::IntoIter, B::IntoIter> where A: IntoI
 
 Converts the arguments to iterators and links them together, in a chain.
 
-See the documentation of `Iterator::chain` for more.
+See the documentation of [`Iterator::chain`] for more.
 
 # Examples
 
-```rust
+```
 use std::iter::chain;
 
 let a = [1, 2, 3];

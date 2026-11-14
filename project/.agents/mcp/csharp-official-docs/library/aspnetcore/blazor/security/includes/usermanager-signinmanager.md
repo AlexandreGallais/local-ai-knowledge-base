@@ -1,20 +1,9 @@
----
-title: "usermanager-signinmanager"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/security/includes/usermanager-signinmanager.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# usermanager-signinmanager
-
 ## `UserManager` and `SignInManager`
 
 Set the user identifier claim type when a Server app requires:
 
-* `Microsoft.AspNetCore.Identity.UserManager`1` or `Microsoft.AspNetCore.Identity.SignInManager`1` in an API endpoint.
-* `Microsoft.AspNetCore.Identity.IdentityUser` details, such as the user's name, email address, or lockout end time.
+* <xref:Microsoft.AspNetCore.Identity.UserManager`1> or <xref:Microsoft.AspNetCore.Identity.SignInManager`1> in an API endpoint.
+* <xref:Microsoft.AspNetCore.Identity.IdentityUser> details, such as the user's name, email address, or lockout end time.
 
 In `Program.cs` for ASP.NET Core in .NET 6 or later:
 
@@ -38,13 +27,13 @@ services.Configure<IdentityOptions>(options =>
     options.ClaimsIdentity.UserIdClaimType = ClaimTypes.NameIdentifier);
 ```
 
-The following `WeatherForecastController` logs the `Microsoft.AspNetCore.Identity.IdentityUser`1.UserName` when the `Get` method is called.
+The following `WeatherForecastController` logs the <xref:Microsoft.AspNetCore.Identity.IdentityUser`1.UserName> when the `Get` method is called.
 
-> **Note:**
+> [!NOTE]
 > The following example uses:
 >
-> * A file-scoped namespace, which is a C# 10 or later (.NET 6 or later) feature.
-> * A primary constructor, which is a C# 12 or later (.NET 8 or later) feature.
+> * A [file-scoped namespace](/dotnet/csharp/language-reference/keywords/namespace), which is a C# 10 or later (.NET 6 or later) feature.
+> * A [primary constructor](/dotnet/csharp/whats-new/tutorials/primary-constructors), which is a C# 12 or later (.NET 8 or later) feature.
 
 ```csharp
 using System;

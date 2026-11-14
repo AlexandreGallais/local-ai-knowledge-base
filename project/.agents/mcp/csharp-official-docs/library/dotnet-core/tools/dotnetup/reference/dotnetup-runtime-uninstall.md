@@ -1,16 +1,14 @@
 ---
-title: "dotnetup runtime uninstall command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnetup/reference/dotnetup-runtime-uninstall.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnetup runtime uninstall command
+description: Command reference for removing tracked .NET runtime requirements.
+ms.topic: reference
+ms.date: 10/13/2026
+ai-usage: ai-assisted
 ---
 
 # dotnetup runtime uninstall command
 
-> **Note:**
-> `dotnetup` is in public preview. Its features and behavior might change before general availability.
+[!INCLUDE [public-preview](../includes/public-preview.md)]
 
 ## Name
 
@@ -32,7 +30,7 @@ The stored runtime requirement to remove. Use
 component selects the core .NET runtime.
 
 The command accepts one argument and matches the stored specification name.
-For the core runtime, use `user@example.com` or `11.0`, not `11.0@core`.
+For the core runtime, use `runtime@11.0` or `11.0`, not `11.0@core`.
 
 ## Options
 
@@ -65,6 +63,6 @@ removed, but that runtime stays installed.
 
 ```dotnetcli
 dotnetup runtime uninstall 10.0
-dotnetup runtime uninstall user@example.com
-dotnetup runtime uninstall user@example.com --install-path .\.dotnet
+dotnetup runtime uninstall aspnetcore@10.0
+dotnetup runtime uninstall windowsdesktop@10.0 --install-path .\.dotnet
 ```

@@ -1,12 +1,16 @@
 ---
 title: "closed modifier"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/keywords/closed.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the closed class modifier in C#. A closed class restricts derivation to its declaring assembly so consumers can write exhaustive switch expressions over its direct descendants."
+ms.date: 10/19/2026
+f1_keywords:
+  - "closed"
+  - "closed_CSharpKeyword"
+helpviewer_keywords:
+  - "closed keyword [C#]"
+  - "closed class [C#]"
+  - "closed hierarchy [C#]"
+ai-usage: ai-assisted
 ---
-
 # closed (C# Reference)
 
 Starting in C# 15, you can apply the `closed` modifier to a class to declare a *closed hierarchy*. You can only derive a direct subtype from a closed class within its declaring assembly. Because the set of direct descendants is fixed, a `switch` expression that handles each direct descendant exhausts the closed base type and doesn't need a default arm.
@@ -32,25 +36,20 @@ public record class RetryableFailed(string Error, int Attempts) : Failed(Error);
 
 If you want to prevent derivation from `Failed` as well, declare it as `sealed` or `closed`.
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
-
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
-
-> **Note:**
+> [!NOTE]
 > `closed` is a contextual keyword. It has special meaning only when it appears as a modifier on a class declaration. You can continue to use `closed` as an identifier in other contexts. If you need to use `closed` as an identifier in a position where the modifier would also be valid, prefix it with `@` (for example, `@closed`) to tell the compiler to treat it as an identifier rather than the modifier.
 
 ## Declaration rules
 
 The `closed` modifier is a class modifier:
 
-- A `closed` class is implicitly `abstract`. You can't combine `closed` with `sealed`, `static`, or an explicit `abstract` modifier.
+- A `closed` class is implicitly [`abstract`](abstract.md). You can't combine `closed` with `sealed`, `static`, or an explicit `abstract` modifier.
 - You must declare a direct subtype of a closed class in the same assembly and module as the closed base class.
 - A class that derives from a closed class isn't itself closed. Apply the `closed` modifier again if you want a derived class to also be closed.
 
-If a generic class directly derives from a `closed` class, every type parameter on the derived class must be used in the base class specification. A *closed constructed type* is a generic type whose type arguments are fully specified (such as `Tree<int>`), as opposed to an *open type* like `Tree<T>`. An open type can also have some type arguments specified, such as `Dictionary<string, TValue>`, where `TValue` is still a type parameter. For the definitions, see Open and closed types in the language specification. The restriction lets the compiler determine the possible constructed descendants for a given base construction. A particular base construction can have no corresponding construction of a particular descendant; the rule doesn't guarantee one.
+If a generic class directly derives from a `closed` class, every type parameter on the derived class must be used in the base class specification. A *closed constructed type* is a generic type whose type arguments are fully specified (such as `Tree<int>`), as opposed to an *open type* like `Tree<T>`. An open type can also have some type arguments specified, such as `Dictionary<string, TValue>`, where `TValue` is still a type parameter. For the definitions, see [Open and closed types](~/_csharpstandard/standard/types.md#843-open-and-closed-types) in the language specification. The restriction lets the compiler determine the possible constructed descendants for a given base construction. A particular base construction can have no corresponding construction of a particular descendant; the rule doesn't guarantee one.
 
 ```csharp
 public closed record class Tree<T>;
@@ -64,56 +63,30 @@ public record class Constant<U>(U Value) : Tree<int> { } // Error: 'U' isn't use
 
 When a `switch` expression handles every direct descendant of a closed class, the compiler considers the switch exhaustive and doesn't generate a non-exhaustiveness warning:
 
-```csharp
-public static string Describe(JobStatus status) => status switch
-{
-    Queued => "waiting to start",
-    Running(var percent) => $"{percent}% complete",
-    Completed(var elapsed) => $"finished in {elapsed.TotalSeconds:F1}s",
-    Failed(var error) => $"failed: {error}",
-    // No warning: every direct descendant of 'JobStatus' is handled.
-};
-```
+:::code language="csharp" source="./snippets/shared/Closed.cs" id="ExhaustiveSwitch":::
+
 When the switch governing expression is nullable, `null` becomes another possible value that the switch must handle. A switch over `JobStatus?` is exhaustive only when it also covers `null`:
 
-```csharp
-public static string DescribeOrUnknown(JobStatus? status) => status switch
-{
-    null => "unknown",
-    Queued => "waiting to start",
-    Running(var percent) => $"{percent}% complete",
-    Completed(var elapsed) => $"finished in {elapsed.TotalSeconds:F1}s",
-    Failed(var error) => $"failed: {error}",
-    // No warning: every direct descendant of 'JobStatus' is handled, and null is handled.
-};
-```
+:::code language="csharp" source="./snippets/shared/Closed.cs" id="NullableSwitch":::
+
 If you omit the `null` arm, the compiler warns that the pattern `null` isn't handled. The `closed` modifier applies only to classes, including record classes.
 
-For more information about how the compiler determines exhaustiveness, including how closed hierarchies interact with generic constraints and accessibility, see Closed hierarchy patterns.
+For more information about how the compiler determines exhaustiveness, including how closed hierarchies interact with generic constraints and accessibility, see [Closed hierarchy patterns](../operators/patterns.md#closed-hierarchy-patterns).
 
 ## Type parameters constrained to a closed type
 
-The closed hierarchies feature specification treats a type parameter constrained to a closed class the same as that closed class for exhaustiveness checks. A `switch` expression whose governing value has such a type parameter is exhaustive when it handles every direct descendant of the closed constraint, regardless of whether the type parameter appears on a method or on the containing type:
+The [closed hierarchies feature specification](~/_csharplang/proposals/csharp-15.0/closed-hierarchies.md#exhaustiveness-of-type-parameters-constrained-to-closed-type) treats a type parameter constrained to a closed class the same as that closed class for exhaustiveness checks. A `switch` expression whose governing value has such a type parameter is exhaustive when it handles every direct descendant of the closed constraint, regardless of whether the type parameter appears on a method or on the containing type:
 
-```csharp
-public static string DescribeJob<X>(X status) where X : JobStatus => status switch
-{
-    Queued => "waiting to start",
-    Running(var percent) => $"{percent}% complete",
-    Completed(var elapsed) => $"finished in {elapsed.TotalSeconds:F1}s",
-    Failed(var error) => $"failed: {error}",
-    // No warning: 'X' is constrained to a closed type, so the compiler treats
-    // this switch as exhaustive because every direct descendant is handled.
-};
-```
+:::code language="csharp" source="./snippets/shared/Closed.cs" id="TypeParameterConstrained":::
+
 ## C# language specification
 
-For more information, see the Closed hierarchies feature specification.
+For more information, see the [Closed hierarchies](~/_csharplang/proposals/csharp-15.0/closed-hierarchies.md) feature specification.
 
 ## See also
 
-- Inheritance
-- sealed
-- abstract
-- Pattern matching
-- Switch expression
+- [Inheritance](../../fundamentals/object-oriented/inheritance.md)
+- [sealed](sealed.md)
+- [abstract](abstract.md)
+- [Pattern matching](../operators/patterns.md)
+- [Switch expression](../operators/switch-expression.md)

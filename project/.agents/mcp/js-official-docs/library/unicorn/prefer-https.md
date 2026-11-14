@@ -1,23 +1,17 @@
----
-title: "prefer-https"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/prefer-https.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # prefer-https
 
 📝 Prefer HTTPS over HTTP.
 
-💼🚫 This rule is enabled in the following configs: ✅ `recommended`, 🎨 `recommended-css`, 🌐 `recommended-html`, 🧩 `recommended-json`, 📚 `recommended-markdown`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, 📋 `recommended-yaml`. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, 🎨 `recommended-css`, 🌐 `recommended-html`, 🧩 `recommended-json`, 📚 `recommended-markdown`, 💎 `recommended-soml`, 🛠️ `recommended-toml`, 📋 `recommended-yaml`. This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Using HTTPS avoids sending URLs to public resources over an insecure protocol.
 
-This rule checks source text, including strings, template literals, JSX, comments, and non-JavaScript files when they are linted with ESLint language plugins such as `@eslint/css`, `@eslint/json`, `@eslint/markdown`, and `html-eslint`.
+This rule checks source text, including strings, template literals, JSX, comments, and non-JavaScript files when they are linted with ESLint language plugins such as [`@eslint/css`](https://github.com/eslint/css), [`@eslint/json`](https://github.com/eslint/json), [`@eslint/markdown`](https://github.com/eslint/markdown), and [`html-eslint`](https://html-eslint.org).
 
 URLs without a public-looking top-level domain are ignored. For example, `http://localhost`, `http://example`, and `http://127.0.0.1` are allowed. Reserved non-public top-level domains are ignored too: `.example`, `.internal`, `.invalid`, `.local`, `.localdomain`, `.localhost`, `.onion`, and `.test`.
 

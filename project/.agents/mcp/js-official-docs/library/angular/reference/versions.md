@@ -1,12 +1,3 @@
----
-title: "Version compatibility"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/reference/versions.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Version compatibility
 
 The following tables describe the versions of Node.js, TypeScript, and RxJS that each version of
@@ -14,7 +5,7 @@ Angular requires.
 
 ## Actively supported versions
 
-This table covers Angular versions under active support.
+This table covers [Angular versions under active support](reference/releases#actively-supported-versions).
 
 | Angular            | Node.js                             | TypeScript     | RxJS               |
 | ------------------ | ----------------------------------- | -------------- | ------------------ |
@@ -81,7 +72,7 @@ Until Angular v9, Angular and Angular CLI versions were not synced.
 
 ## Browser support
 
-Angular uses the "widely available" Baseline to define browser
+Angular uses the ["widely available" Baseline](https://web.dev/baseline) to define browser
 support. For each major version, Angular supports browsers included in the Baseline of a
 chosen date near the release date for that major.
 
@@ -91,9 +82,13 @@ targets supporting approximately 95% of web users.
 
 | Angular | Baseline Date | Browser Set                 |
 | ------- | ------------- | --------------------------- |
-| v22     | 2026-05-07    | Browser Set |
-| v21     | 2025-10-20    | Browser Set |
-| v20     | 2025-04-30    | Browser Set |
+| v22     | 2026-05-07    | [Browser Set][browsers-v22] |
+| v21     | 2025-10-20    | [Browser Set][browsers-v21] |
+| v20     | 2025-04-30    | [Browser Set][browsers-v20] |
+
+[browsers-v22]: https://web-platform-dx.github.io/supported-browsers/?widelyAvailableOnDate=2026-05-07&includeDownstream=false
+[browsers-v21]: https://web-platform-dx.github.io/supported-browsers/?widelyAvailableOnDate=2025-10-20&includeDownstream=false
+[browsers-v20]: https://web-platform-dx.github.io/supported-browsers/?widelyAvailableOnDate=2025-04-30&includeDownstream=false
 
 Angular versions prior to v20 support the following specific browser versions:
 
@@ -120,10 +115,10 @@ HELPFUL: Polyfills cannot magically transform an old, slow browser into a modern
 
 ## Enabling polyfills with CLI projects
 
-The Angular CLI provides support for polyfills.
-If you are not using the CLI to create your projects, see Polyfill instructions for non-CLI users.
+The [Angular CLI](tools/cli) provides support for polyfills.
+If you are not using the CLI to create your projects, see [Polyfill instructions for non-CLI users](#polyfills-for-non-cli-users).
 
-The `polyfills` options of the browser and test builder can be a full path for a file \(Example: `src/polyfills.ts`\) or,
+The `polyfills` options of the [browser and test builder](tools/cli/cli-builder) can be a full path for a file \(Example: `src/polyfills.ts`\) or,
 relative to the current workspace or module specifier \(Example: `zone.js`\).
 
 If you create a TypeScript file, make sure to include it in the `files` property of your `tsconfig` file.
@@ -149,9 +144,7 @@ If you are not using the CLI, add your polyfill scripts directly to the host web
 
 For example:
 
-File: `src/index.html`
-
-```html
+<docs-code header="src/index.html" language="html">
 <!-- pre-zone polyfills -->
 <script src="node_modules/core-js/client/shim.min.js"></script>
 <script>
@@ -172,4 +165,4 @@ File: `src/index.html`
 <!-- zone.js required by Angular -->
 <script src="node_modules/zone.js/bundles/zone.umd.js"></script>
 <!-- application polyfills -->
-```
+</docs-code>

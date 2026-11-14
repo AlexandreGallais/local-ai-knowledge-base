@@ -1,23 +1,17 @@
----
-title: "require-array-sort-compare"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/require-array-sort-compare.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # require-array-sort-compare
 
 📝 Require a compare function when calling `Array#sort()` or `Array#toSorted()`.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
-Without an explicit compare function, `Array#sort()` and `Array#toSorted()` sort elements by converting them to strings, which produces unexpected results for numbers and other non-string values.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
-A typed array is never reported, because `TypedArray#sort()` already sorts numerically. Most array rules do report a typed array receiver, since it shares `Array`'s method surface.
+Without an explicit compare function, [`Array#sort()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) and [`Array#toSorted()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/toSorted) sort elements by converting them to strings, which produces unexpected results for numbers and other non-string values.
+
+A typed array is never reported, because [`TypedArray#sort()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/sort) already sorts numerically. Most array rules do report a typed array receiver, since it shares `Array`'s method surface.
 
 ## Examples
 
@@ -59,5 +53,5 @@ const numbers = [3, 1, 4, 1, 5, 9];
 numbers.sort((a, b) => b - a); // [9, 5, 4, 3, 1, 1]
 ```
 
-> **Tip:**
-> If you use typed linting, the `@typescript-eslint/require-array-sort-compare` rule is type-aware and can be more accurate.
+> [!TIP]
+> If you use [typed linting](https://typescript-eslint.io/getting-started/typed-linting), the [`@typescript-eslint/require-array-sort-compare`](https://typescript-eslint.io/rules/require-array-sort-compare/) rule is type-aware and can be more accurate.

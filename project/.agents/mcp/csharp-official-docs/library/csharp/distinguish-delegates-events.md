@@ -1,15 +1,12 @@
 ---
-title: "Delegates vs. events"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/distinguish-delegates-events.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Delegates vs. events
+description: Learn the difference between delegates and events and when to use each of these features of .NET Core.
+ms.date: 03/11/2025
+ms.subservice: fundamentals
 ---
-
 # Delegates vs. events
 
-Previous
+[Previous](modern-events.md)
 
 Developers that are new to the .NET platform often struggle when deciding between a design based on `delegates` and a design based on `events`. The choice of delegates or events is often difficult, because the two language features are similar. Events are even built using the language support for delegates. An event handler declaration declares a delegate type.
 
@@ -27,7 +24,7 @@ Consider the `Progress` event. It reports progress on a task. The task continues
 
 ## Return values require delegates
 
-Another consideration is the method prototype you would want for your delegate method. As you saw, the delegates used for events all have a void return type. There are idioms to create event handlers that do pass <example-value> back to event sources through modifying properties of the event argument object. While these idioms do work, they aren't as natural as returning a value from a method.
+Another consideration is the method prototype you would want for your delegate method. As you saw, the delegates used for events all have a void return type. There are idioms to create event handlers that do pass information back to event sources through modifying properties of the event argument object. While these idioms do work, they aren't as natural as returning a value from a method.
 
 Notice that these two heuristics can often both be present: If your delegate method returns a value, it affects the algorithm in some way.
 

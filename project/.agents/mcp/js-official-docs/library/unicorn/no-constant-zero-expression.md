@@ -1,19 +1,13 @@
----
-title: "no-constant-zero-expression"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-constant-zero-expression.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-constant-zero-expression
 
 📝 Disallow arithmetic and bitwise operations that always evaluate to `0`.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-💡 This rule is manually fixable by editor suggestions.
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Multiplying by `0`, doing a bitwise AND with `0`, or dividing `0` by something always produces `0` regardless of the other operand. This is almost never intentional. It usually means a typo, leftover debugging code, or a misunderstanding (for example, `* 1` was intended, or the wrong variable is being used).
 

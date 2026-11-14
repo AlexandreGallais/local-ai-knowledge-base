@@ -1,12 +1,19 @@
 ---
+description: "Learn more about: IMetaDataEmit2::GetDeltaSaveSize Method"
 title: "IMetaDataEmit2::GetDeltaSaveSize Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imetadataemit2-getdeltasavesize-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMetaDataEmit2.GetDeltaSaveSize"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMetaDataEmit2::GetDeltaSaveSize"
+  - "GetDeltaSaveSize method [.NET metadata]"
+topic_type:
+  - "apiref"
 ---
-
 # IMetaDataEmit2::GetDeltaSaveSize Method
 
 Gets a value indicating any change in metadata size that results from the current edit-and-continue session.
@@ -23,14 +30,14 @@ HRESULT GetDeltaSaveSize (
 ## Parameters
 
  `fSave`\
- [in] One of the CorSaveSize values, indicating the level of precision desired.
+ [in] One of the [CorSaveSize](../enumerations/corsavesize-enumeration.md) values, indicating the level of precision desired.
 
  `pdwSaveSize`\
  [out] The change in the size of the metadata.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -40,5 +47,5 @@ HRESULT GetDeltaSaveSize (
 
 ## See also
 
-- IMetaDataEmit2 Interface
-- IMetaDataEmit Interface
+- [IMetaDataEmit2 Interface](imetadataemit2-interface.md)
+- [IMetaDataEmit Interface](imetadataemit-interface.md)

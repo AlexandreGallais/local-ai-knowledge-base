@@ -1,17 +1,18 @@
 ---
-title: "How to catch parsing errors - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/catch-parsing-errors.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to catch parsing errors - LINQ to XML
+description: An exception can occur in your C# or Visual Basic program if it tries to parse invalid XML with a method such as XElement.Parse. You can write the program to catch and respond to such exceptions.
+ms.date: 7/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to catch parsing errors (LINQ to XML)
 
 This article shows how to detect badly formed or invalid XML in C# or Visual Basic.
 
-LINQ to XML is implemented using `System.Xml.XmlReader`. If badly formed or invalid XML is passed to LINQ to XML, the underlying `System.Xml.XmlReader` class will throw an exception. The various methods that parse XML, such as `System.Xml.Linq.XElement.Parse*`, don't catch the exception; the exception can then be caught by your application.
+LINQ to XML is implemented using <xref:System.Xml.XmlReader>. If badly formed or invalid XML is passed to LINQ to XML, the underlying <xref:System.Xml.XmlReader> class will throw an exception. The various methods that parse XML, such as <xref:System.Xml.Linq.XElement.Parse*?displayProperty=nameWithType>, don't catch the exception; the exception can then be caught by your application.
 
 ## Example: Parse invalid XML
 
@@ -54,8 +55,8 @@ Because of the invalid end tag `</Contcts>`, the example throws the following ex
 The 'Contacts' start tag on line 1 doesn't match the end tag of 'Contcts'. Line 5, position 13.
 ```
 
-For information about the exceptions that the `System.Xml.Linq.XElement.Parse*`, `System.Xml.Linq.XDocument.Parse*`, `System.Xml.Linq.XElement.Load*`, and `System.Xml.Linq.XDocument.Load*` methods throw, see the `System.Xml.XmlReader` documentation.
+For information about the exceptions that the <xref:System.Xml.Linq.XElement.Parse*?displayProperty=nameWithType>, <xref:System.Xml.Linq.XDocument.Parse*?displayProperty=nameWithType>, <xref:System.Xml.Linq.XElement.Load*?displayProperty=nameWithType>, and <xref:System.Xml.Linq.XDocument.Load*?displayProperty=nameWithType> methods throw, see the <xref:System.Xml.XmlReader> documentation.
 
 ## See also
 
-- How to parse a string
+- [How to parse a string](parse-string.md)

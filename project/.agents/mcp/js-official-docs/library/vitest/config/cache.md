@@ -1,10 +1,6 @@
 ---
-title: "cache | Config"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/config/cache.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: cache | Config
+outline: deep
 ---
 
 # cache <CRoot />
@@ -13,13 +9,13 @@ license: "MIT"
 - **Default:** `true`
 - **CLI:** `--cache`, `--no-cache`
 
-Store the results of test runs on the file system. Vitest uses them to run failed and longer test files first and to select tests with `--last-failed`.
+Store the results of test runs on the file system. Vitest uses them to run failed and longer test files first and to select tests with [`--last-failed`](/guide/cli#last-failed).
 
-For every test file, Vitest stores whether the file failed, which tests failed, how long it ran and when it ran last. A run that did not execute the whole file (for example, a run filtered with `--testNamePattern` or cancelled by `bail`) can mark the file as failed, but it cannot mark it as passed.
+For every test file, Vitest stores whether the file failed, which tests failed, how long it ran and when it ran last. A run that did not execute the whole file (for example, a run filtered with [`--testNamePattern`](/config/testnamepattern) or cancelled by [`bail`](/config/bail)) can mark the file as failed, but it cannot mark it as passed.
 
-You can delete the cache by running `vitest --clearCache`.
+You can delete the cache by running [`vitest --clearCache`](/guide/cli#clearcache).
 
-The cache directory is controlled by the Vite's `cacheDir` option:
+The cache directory is controlled by the Vite's [`cacheDir`](https://vitejs.dev/config/shared-options.html#cachedir) option:
 
 ```ts
 import { defineConfig } from 'vitest/config'
@@ -39,5 +35,6 @@ export default defineConfig({
 })
 ```
 
-**Warning:**
+::: warning
 The deprecated `cache.dir` option has no effect anymore. Use `cacheDir` to change the cache directory.
+:::

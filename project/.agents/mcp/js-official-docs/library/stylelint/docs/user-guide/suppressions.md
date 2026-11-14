@@ -1,15 +1,6 @@
----
-title: "Bulk suppressions"
-tool: "stylelint"
-version: "18.0"
-source: "https://github.com/stylelint/stylelint/blob/7c49e1828311b9d413826cb47703ef1c6ccae4ef/docs/user-guide/suppressions.md"
-commit: "7c49e1828311b9d413826cb47703ef1c6ccae4ef"
-license: "MIT"
----
-
 # Bulk suppressions
 
-> **Warning:**
+> [!WARNING]
 > This feature is **experimental**, and might change significantly.
 
 Turning on a rule with the severity of `error` can be difficult when an established codebase already contains many problems that can't be auto-fixed. You can suppress those legacy problems so the rule is enforced only for new code, and then clear the backlog at your own pace.
@@ -22,17 +13,17 @@ If no rule is specified, all problems are suppressed. Otherwise, only problems w
 
 Subsequent runs without the `--suppress` flag will not report these problems, unless there are more problems for the same rule in the same file.
 
-> **Tip:**
+> [!TIP]
 > We recommend committing the suppressions file to your repository and using the `--fix` option alongside the `--suppress`.
 
-> **Note:**
+> [!NOTE]
 > `--suppress` can't be combined with stdin input (e.g., piping code via `echo "..." | stylelint`).
 
-## `--suppress-location `
+## `--suppress-location <path>`
 
 Path to a suppressions file or directory. Defaults to `stylelint-suppressions.json`.
 
 If you specify a directory path, Stylelint will create a file named `stylelint-suppressions.json` in that directory.
 
-> **Important:**
+> [!IMPORTANT]
 > You must use `--suppress-location` on all subsequent runs, even when not using the `--suppress` flag.

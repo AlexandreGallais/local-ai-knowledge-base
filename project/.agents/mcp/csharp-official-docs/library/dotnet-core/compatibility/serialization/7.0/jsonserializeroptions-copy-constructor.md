@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: JsonSerializerOptions copy constructor includes JsonSerializerContext"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/serialization/7.0/jsonserializeroptions-copy-constructor.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 7 breaking change in serialization where the JsonSerializerOptions copy constructor now includes JsonSerializerContext.
+ms.date: 09/12/2022
 ---
-
 # JsonSerializerOptions copy constructor includes JsonSerializerContext
 
-With the release of source generation in .NET 6, the `System.Text.Json.JsonSerializerOptions` copy constructor was intentionally made to ignore its `System.Text.Json.Serialization.JsonSerializerContext` state. This made sense at the time since `System.Text.Json.Serialization.JsonSerializerContext` was designed to have a 1:1 relationship with `System.Text.Json.JsonSerializerOptions` instances. In .NET 7, `System.Text.Json.Serialization.Metadata.IJsonTypeInfoResolver` replaces `System.Text.Json.Serialization.JsonSerializerContext` to generalize the context, which removes the need for tight coupling between `System.Text.Json.JsonSerializerOptions` and `System.Text.Json.Serialization.JsonSerializerContext`. The copy constructor now includes the `System.Text.Json.Serialization.Metadata.IJsonTypeInfoResolver`/`System.Text.Json.Serialization.JsonSerializerContext` information, which could manifest as a breaking change for some scenarios.
+With the release of source generation in .NET 6, the <xref:System.Text.Json.JsonSerializerOptions> copy constructor was intentionally made to ignore its <xref:System.Text.Json.Serialization.JsonSerializerContext> state. This made sense at the time since <xref:System.Text.Json.Serialization.JsonSerializerContext> was designed to have a 1:1 relationship with <xref:System.Text.Json.JsonSerializerOptions> instances. In .NET 7, <xref:System.Text.Json.Serialization.Metadata.IJsonTypeInfoResolver> replaces <xref:System.Text.Json.Serialization.JsonSerializerContext> to generalize the context, which removes the need for tight coupling between <xref:System.Text.Json.JsonSerializerOptions> and <xref:System.Text.Json.Serialization.JsonSerializerContext>. The copy constructor now includes the <xref:System.Text.Json.Serialization.Metadata.IJsonTypeInfoResolver>/<xref:System.Text.Json.Serialization.JsonSerializerContext> information, which could manifest as a breaking change for some scenarios.
 
 ## Previous behavior
 
@@ -28,7 +24,7 @@ public class Poco2 {}
 
 ## New behavior
 
-Starting in .NET 7, the same code as shown in the Previous behavior section throws an `System.InvalidOperationException`. That's because the copy constructor now incorporates `MyContext` metadata, which doesn't support `Poco2` contracts.
+Starting in .NET 7, the same code as shown in the [Previous behavior](#previous-behavior) section throws an <xref:System.InvalidOperationException>. That's because the copy constructor now incorporates `MyContext` metadata, which doesn't support `Poco2` contracts.
 
 ## Version introduced
 
@@ -36,15 +32,15 @@ Starting in .NET 7, the same code as shown in the Previous behavior section thro
 
 ## Type of breaking change
 
-This change can affect binary compatibility.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility).
 
 ## Reason for change
 
-`System.Text.Json.Serialization.JsonSerializerContext` was the only setting ignored by the copy constructor. This behavior was surprising for some users.
+<xref:System.Text.Json.Serialization.JsonSerializerContext> was the only setting ignored by the copy constructor. This behavior was surprising for some users.
 
 ## Recommended action
 
-If you depend on the .NET 6 behavior, you can manually unset the `System.Text.Json.JsonSerializerOptions.TypeInfoResolver` property to get back reflection-based contract resolution:
+If you depend on the .NET 6 behavior, you can manually unset the <xref:System.Text.Json.JsonSerializerOptions.TypeInfoResolver> property to get back reflection-based contract resolution:
 
 ```csharp
 var options = new JsonSerializerOptions(MyContext.Default.Options);
@@ -53,4 +49,4 @@ options.TypeInfoResolver = null; // Unset `MyContext.Default` as the resolver fo
 
 ## Affected APIs
 
-- `System.Text.Json.JsonSerializerOptions.#ctor(System.Text.Json.JsonSerializerOptions)`
+- <xref:System.Text.Json.JsonSerializerOptions.%23ctor(System.Text.Json.JsonSerializerOptions)?displayProperty=fullName>

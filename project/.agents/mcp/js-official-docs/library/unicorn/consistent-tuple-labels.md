@@ -1,19 +1,13 @@
----
-title: "consistent-tuple-labels"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/consistent-tuple-labels.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # consistent-tuple-labels
 
 📝 Enforce consistent labels on tuple type elements.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-Labeled tuple elements document what each position in a tuple means. Labeling only some of the elements is inconsistent: the unlabeled positions read as an oversight, and the tuple is harder to scan than one that is either fully labeled or fully unlabeled.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
+
+[Labeled tuple elements](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-0.html#labeled-tuple-elements) document what each position in a tuple means. Labeling only some of the elements is inconsistent: the unlabeled positions read as an oversight, and the tuple is harder to scan than one that is either fully labeled or fully unlabeled.
 
 This rule requires that, when at least one element of a tuple type is labeled, every element is labeled. A tuple with no labels at all is left alone.
 

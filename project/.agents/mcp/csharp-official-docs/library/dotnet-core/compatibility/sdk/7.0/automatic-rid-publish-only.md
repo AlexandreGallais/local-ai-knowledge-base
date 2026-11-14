@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: Automatic RuntimeIdentifier for publish only"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/7.0/automatic-rid-publish-only.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in the .NET 7 SDK where a RuntimeIdentifier is automatically added to projects only for the dotnet publish command.
+ms.date: 01/12/2023
 ---
-
 # Automatic RuntimeIdentifier for publish only
 
-In the 7.0.100 SDK, there was a change to automatically add `<RuntimeIdentifier>` to projects with properties that require a runtime identifier (RID). Those properties are as follows:
+In the 7.0.100 SDK, there was [a change](automatic-runtimeidentifier.md) to automatically add `<RuntimeIdentifier>` to projects with properties that require a runtime identifier (RID). Those properties are as follows:
 
 - `SelfContained`
 - `PublishAot`
@@ -17,7 +13,7 @@ In the 7.0.100 SDK, there was a change to automatically add `<RuntimeIdentifier>
 - `PublishSingleFile`
 - `PublishSelfContained`
 
-However, all of these properties except for `SelfContained` are only used for publishing. Yet the implicit `<RuntimeIdentifier>` was added for any `dotnet` operation if these properties were in the project file or specified as part of the `dotnet` command.
+However, all of these properties except for `SelfContained` are only used for publishing. Yet the implicit `<RuntimeIdentifier>` was added for any [`dotnet` operation](../../../tools/dotnet.md) if these properties were in the project file or specified as part of the `dotnet` command.
 
 Now, the automatic RID for these properties, excluding `SelfContained`, is only added during publish. In addition, the automatic RID is only added when using the `dotnet publish` CLI command. It's not added when you publish from Visual Studio or `msbuild`, as those are separate mechanisms, and Visual Studio should provide its own RID.
 
@@ -37,7 +33,7 @@ If you performed a restore without an RID in .NET 7 and use it to restore for a 
 
 ## Type of breaking change
 
-This change can affect binary compatibility and source compatibility.
+This change can affect [binary compatibility](../../categories.md#binary-compatibility) and [source compatibility](../../categories.md#source-compatibility).
 
 ## Reason for change
 
@@ -51,4 +47,4 @@ For everything else, no action is needed. However, if you want to keep the RID, 
 
 ## See also
 
-- Automatic RuntimeIdentifier for certain projects
+- [Automatic RuntimeIdentifier for certain projects](automatic-runtimeidentifier.md)

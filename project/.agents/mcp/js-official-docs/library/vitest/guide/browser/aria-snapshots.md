@@ -1,10 +1,6 @@
 ---
-title: "ARIA Snapshots | Guide"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/browser/aria-snapshots.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: ARIA Snapshots | Guide
+outline: deep
 ---
 
 # ARIA Snapshots <Experimental /> <Version>4.1.4</Version> {#aria-snapshots}
@@ -34,13 +30,13 @@ await expect.element(page.getByRole('navigation')).toMatchAriaInlineSnapshot(`
 
 This catches accessibility regressions: missing labels, broken roles, incorrect heading levels, and more — things that DOM snapshots would miss. Even if the underlying HTML structure changes, the assertion would not fail as long as content matches semantically.
 
-For advanced cases, you can also generate and inspect the ARIA tree through `utils.aria` from `vitest/browser`. See the Context API for details.
+For advanced cases, you can also generate and inspect the ARIA tree through `utils.aria` from `vitest/browser`. See the [Context API](/api/browser/context#aria) for details.
 
 ## Snapshot Workflow
 
 ARIA snapshots use the same Vitest snapshot workflow as other snapshot assertions. File snapshots, inline snapshots, `--update` / `-u`, watch mode updates, and CI snapshot behavior all work the same way.
 
-See the main Snapshot guide for the general snapshot workflow, update behavior, and review guidelines.
+See the main [Snapshot guide](/guide/snapshot) for the general snapshot workflow, update behavior, and review guidelines.
 
 ## Basic Usage
 
@@ -49,7 +45,7 @@ Given a page with this HTML:
 ```html
 <form aria-label="Log In">
   <input aria-label="Email" />
-  <input aria-label="<example-value>" type="<example-value>" />
+  <input aria-label="Password" type="password" />
   <button>Submit</button>
 </form>
 ```
@@ -58,7 +54,7 @@ Given a page with this HTML:
 
 Use `toMatchAriaSnapshot()` to store the snapshot in a `.snap` file alongside your test:
 
-```ts
+```ts [basic.test.ts]
 import { expect, test } from 'vitest'
 
 test('login form', async () => {
@@ -68,13 +64,13 @@ test('login form', async () => {
 
 On first run, Vitest generates a snapshot file entry:
 
-```js
+```js [__snapshots__/basic.test.ts.snap]
 // Vitest Snapshot ...
 
 exports[`login form 1`] = `
 - form "Log In":
   - textbox "Email"
-  - textbox "<example-value>"
+  - textbox "Password"
   - button "Submit"
 `
 ```
@@ -90,7 +86,7 @@ test('login form', async () => {
   await expect.element(page.getByRole('form')).toMatchAriaInlineSnapshot(`
     - form "Log In":
       - textbox "Email"
-      - textbox "<example-value>"
+      - textbox "Password"
       - button "Submit"
   `)
 })
@@ -98,13 +94,13 @@ test('login form', async () => {
 
 ## Browser Mode Retry Behavior
 
-In Browser Mode, `expect.element()` polls the DOM and waits for the accessibility tree to **stabilize** before evaluating the result. On each poll, the matcher re-queries the element and re-captures the accessibility tree. The snapshot is considered stable when two consecutive polls produce the same output.
+In [Browser Mode](/guide/browser/), `expect.element()` polls the DOM and waits for the accessibility tree to **stabilize** before evaluating the result. On each poll, the matcher re-queries the element and re-captures the accessibility tree. The snapshot is considered stable when two consecutive polls produce the same output.
 
 ```ts
 await expect.element(page.getByRole('form')).toMatchAriaInlineSnapshot(`
   - form "Log In":
     - textbox "Email"
-    - textbox "<example-value>"
+    - textbox "Password"
     - button "Submit"
 `)
 ```
@@ -162,10 +158,11 @@ The regex patterns you wrote in step 2 are preserved because they still match th
 
 ARIA snapshots use a YAML-like syntax. Each line represents a node in the accessibility tree.
 
-**Info:**
+::: info
 ARIA snapshot templates use a **subset of YAML** syntax. Only the features needed for accessibility trees are supported: scalar values, nested mappings via indentation, and sequences (`- item`). Advanced YAML features like anchors, tags, flow collections, and multi-line scalars are not supported.
 
-Captured text is also whitespace-normalized before it is rendered into the snapshot. Newlines, `` line breaks, tabs, and repeated whitespace collapse to single spaces, so multi-line DOM text is emitted as a single-line snapshot value.
+Captured text is also whitespace-normalized before it is rendered into the snapshot. Newlines, `<br>` line breaks, tabs, and repeated whitespace collapse to single spaces, so multi-line DOM text is emitted as a single-line snapshot value.
+:::
 
 Each accessible element in the tree is represented as a YAML node:
 
@@ -174,7 +171,7 @@ Each accessible element in the tree is represented as a YAML node:
 ```
 
 - `role`: The ARIA role of the element, such as `heading`, `list`, `listitem`, or `button`
-- `"name"`: The accessible name, when present. Quoted strings match exact values, and `/patterns/` match regular expressions
+- `"name"`: The [accessible name](https://w3c.github.io/accname/), when present. Quoted strings match exact values, and `/patterns/` match regular expressions
 - `[attribute=value]`: Accessibility states and properties such as `checked`, `disabled`, `expanded`, `level`, `pressed`, or `selected`
 
 These values come from ARIA attributes and the browser's accessibility tree, including semantics inferred from native HTML elements.
@@ -201,7 +198,7 @@ For example:
 
 The role usually comes from the element's native semantics, though it can also be defined with ARIA. The accessible name is computed from text content, associated labels, `aria-label`, `aria-labelledby`, and related naming rules.
 
-For a closer look at how names are computed, see Accessible Name and Description Computation.
+For a closer look at how names are computed, see [Accessible Name and Description Computation](https://w3c.github.io/accname/).
 
 Some content appears in the snapshot as a text node instead of a role-based element:
 
@@ -277,13 +274,13 @@ ARIA states and properties appear in brackets:
 
 | HTML                                                                   | Snapshot                                  |
 | ---------------------------------------------------------------------- | ----------------------------------------- |
-| ``                   | `- checkbox "Agree" [checked]`            |
-| `` | `- checkbox "Select all" [checked=mixed]` |
-| `Submit`                         | `- button "Submit" [disabled]`            |
-| `Menu`                           | `- button "Menu" [expanded]`              |
+| `<input type="checkbox" checked aria-label="Agree">`                   | `- checkbox "Agree" [checked]`            |
+| `<input type="checkbox" aria-checked="mixed" aria-label="Select all">` | `- checkbox "Select all" [checked=mixed]` |
+| `<button aria-disabled="true">Submit</button>`                         | `- button "Submit" [disabled]`            |
+| `<button aria-expanded="true">Menu</button>`                           | `- button "Menu" [expanded]`              |
 | `<h2>Title</h2>`                                                       | `- heading "Title" [level=2]`             |
-| `Bold`                            | `- button "Bold" [pressed]`               |
-| `Bold`                           | `- button "Bold" [pressed=mixed]`         |
+| `<button aria-pressed="true">Bold</button>`                            | `- button "Bold" [pressed]`               |
+| `<button aria-pressed="mixed">Bold</button>`                           | `- button "Bold" [pressed=mixed]`         |
 | `<option selected>English</option>`                                    | `- option "English" [selected]`           |
 
 Attributes only appear when they are active. A button that is not disabled simply has no `[disabled]` attribute — there is no `[disabled=false]`.
@@ -318,9 +315,9 @@ Textboxes can include their placeholder text:
     - /placeholder: user@example.com
 ```
 
-**When does `/placeholder:` appear?**
+::: tip When does `/placeholder:` appear?
 
-The `/placeholder:` pseudo-attribute only appears when the placeholder text is **different from the accessible name**. When an input has a placeholder but no `aria-label` or associated ``, the browser uses the placeholder as the accessible name. In that case, the placeholder information is already in the name and is not duplicated.
+The `/placeholder:` pseudo-attribute only appears when the placeholder text is **different from the accessible name**. When an input has a placeholder but no `aria-label` or associated `<label>`, the browser uses the placeholder as the accessible name. In that case, the placeholder information is already in the name and is not duplicated.
 
 - When placeholder is the accessible name:
 
@@ -342,6 +339,8 @@ The `/placeholder:` pseudo-attribute only appears when the placeholder text is *
 - textbox "Search products":
     - /placeholder: Search
 ```
+
+:::
 
 ## Matching
 
@@ -371,7 +370,7 @@ Regex also works in pseudo-attribute values:
     - /placeholder: /Type .*/
 ```
 
-**Escaping backslashes in regex patterns**
+::: warning Escaping backslashes in regex patterns
 Snapshots are stored as JavaScript strings — in backtick-delimited template literals for inline snapshots and in `.snap` files. Because of this, backslashes need to be **doubled** when you hand-edit a snapshot to add a regex pattern.
 
 For example, to match one or more digits with `\d+`:
@@ -389,6 +388,7 @@ await expect.element(button).toMatchAriaInlineSnapshot(`
 ```
 
 This applies to both inline snapshots and `.snap` files. When Vitest **auto-generates** or **updates** a snapshot, escaping is handled automatically — you only need to worry about this when hand-editing regex patterns.
+:::
 
 ### Child Matching
 

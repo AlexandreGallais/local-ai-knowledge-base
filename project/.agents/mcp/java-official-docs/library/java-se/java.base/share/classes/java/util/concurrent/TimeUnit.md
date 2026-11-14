@@ -1,22 +1,13 @@
----
-title: "TimeUnit enum (java.util.concurrent)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/TimeUnit.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # TimeUnit enum (java.util.concurrent)
 
 ```java
 public enum TimeUnit
 ```
 
-A `TimeUnit` represents time durations at a given unit of
+A {@code TimeUnit} represents time durations at a given unit of
 granularity and provides utility methods to convert across units,
 and to perform timing and delay operations in these units.  A
-`TimeUnit` does not maintain time information, but only
+{@code TimeUnit} does not maintain time information, but only
 helps organize and use time representations that may be maintained
 separately across various contexts.  A nanosecond is defined as one
 thousandth of a microsecond, a microsecond as one thousandth of a
@@ -24,27 +15,26 @@ millisecond, a millisecond as one thousandth of a second, a minute
 as sixty seconds, an hour as sixty minutes, and a day as twenty four
 hours.
 
-A `TimeUnit` is mainly used to inform time-based methods
+<p>A {@code TimeUnit} is mainly used to inform time-based methods
 how a given timing parameter should be interpreted. For example,
-the following code will timeout in 50 milliseconds if the lock is not available:
+the following code will timeout in 50 milliseconds if the {@link
+java.util.concurrent.locks.Lock lock} is not available:
 
-```java
+<pre> {@code
 Lock lock = ...;
-if (lock.tryLock(50L, TimeUnit.MILLISECONDS)) ...
-```
+if (lock.tryLock(50L, TimeUnit.MILLISECONDS)) ...}</pre>
 
 while this code will timeout in 50 seconds:
-
-```java
+<pre> {@code
 Lock lock = ...;
-if (lock.tryLock(50L, TimeUnit.SECONDS)) ...
-```
+if (lock.tryLock(50L, TimeUnit.SECONDS)) ...}</pre>
 
 Note however, that there is no guarantee that a particular timeout
 implementation will be able to notice the passage of time at the
-same granularity as the given `TimeUnit`.
+same granularity as the given {@code TimeUnit}.
 
-**Since:** 1.5
+@since 1.5
+@author Doug Lea
 
 ## TimeUnit.convert(long, TimeUnit)
 
@@ -54,23 +44,20 @@ public long convert(long sourceDuration, TimeUnit sourceUnit)
 
 Converts the given time duration in the given unit to this unit.
 Conversions from finer to coarser granularities truncate, so
-lose precision. For example, converting `999` milliseconds
-to seconds results in `0`. Conversions from coarser to
+lose precision. For example, converting {@code 999} milliseconds
+to seconds results in {@code 0}. Conversions from coarser to
 finer granularities with arguments that would numerically
-overflow saturate to `Long.MIN_VALUE` if negative or
-`Long.MAX_VALUE` if positive.
+overflow saturate to {@code Long.MIN_VALUE} if negative or
+{@code Long.MAX_VALUE} if positive.
 
-For example, to convert 10 minutes to milliseconds, use:
-`TimeUnit.MILLISECONDS.convert(10L, TimeUnit.MINUTES)`
+<p>For example, to convert 10 minutes to milliseconds, use:
+{@code TimeUnit.MILLISECONDS.convert(10L, TimeUnit.MINUTES)}
 
-Parameters:
-
-- `sourceDuration`: the time duration in the given `sourceUnit`
-- `sourceUnit`: the unit of the `sourceDuration` argument
-
-**Returns:** the converted duration in this unit,
-or `Long.MIN_VALUE` if conversion would negatively overflow,
-or `Long.MAX_VALUE` if it would positively overflow.
+@param sourceDuration the time duration in the given {@code sourceUnit}
+@param sourceUnit the unit of the {@code sourceDuration} argument
+@return the converted duration in this unit,
+or {@code Long.MIN_VALUE} if conversion would negatively overflow,
+or {@code Long.MAX_VALUE} if it would positively overflow.
 
 ## TimeUnit.convert(Duration)
 
@@ -80,31 +67,24 @@ public long convert(Duration duration)
 
 Converts the given time duration to this unit.
 
-For any TimeUnit `unit`,
-`unit.convert(Duration.ofNanos(n))`
+<p>For any TimeUnit {@code unit},
+{@code unit.convert(Duration.ofNanos(n))}
 is equivalent to
-`unit.convert(n, NANOSECONDS)`, and
-`unit.convert(Duration.of(n, unit.toChronoUnit()))`
-is equivalent to `n` (in the absence of overflow).
+{@code unit.convert(n, NANOSECONDS)}, and
+{@code unit.convert(Duration.of(n, unit.toChronoUnit()))}
+is equivalent to {@code n} (in the absence of overflow).
 
-Parameters:
+@apiNote
+This method differs from {@link Duration#toNanos()} in that it
+does not throw {@link ArithmeticException} on numeric overflow.
 
-- `duration`: the time duration
-
-**API note:** This method differs from `Duration.toNanos()` in that it
-does not throw `ArithmeticException` on numeric overflow.
-
-**Returns:** the converted duration in this unit,
-or `Long.MIN_VALUE` if conversion would negatively overflow,
-or `Long.MAX_VALUE` if it would positively overflow.
-
-**See also:** Duration#of(long,TemporalUnit)
-
-**Since:** 11
-
-Throws:
-
-- `NullPointerException`: if `duration` is null
+@param duration the time duration
+@return the converted duration in this unit,
+or {@code Long.MIN_VALUE} if conversion would negatively overflow,
+or {@code Long.MAX_VALUE} if it would positively overflow.
+@throws NullPointerException if {@code duration} is null
+@see Duration#of(long,TemporalUnit)
+@since 11
 
 ## TimeUnit.toNanos(long)
 
@@ -113,15 +93,11 @@ public long toNanos(long duration)
 ```
 
 Equivalent to
-TimeUnit) NANOSECONDS.convert(duration, this).
-
-Parameters:
-
-- `duration`: the duration
-
-**Returns:** the converted duration,
-or `Long.MIN_VALUE` if conversion would negatively overflow,
-or `Long.MAX_VALUE` if it would positively overflow.
+{@link #convert(long, TimeUnit) NANOSECONDS.convert(duration, this)}.
+@param duration the duration
+@return the converted duration,
+or {@code Long.MIN_VALUE} if conversion would negatively overflow,
+or {@code Long.MAX_VALUE} if it would positively overflow.
 
 ## TimeUnit.toMicros(long)
 
@@ -130,15 +106,11 @@ public long toMicros(long duration)
 ```
 
 Equivalent to
-TimeUnit) MICROSECONDS.convert(duration, this).
-
-Parameters:
-
-- `duration`: the duration
-
-**Returns:** the converted duration,
-or `Long.MIN_VALUE` if conversion would negatively overflow,
-or `Long.MAX_VALUE` if it would positively overflow.
+{@link #convert(long, TimeUnit) MICROSECONDS.convert(duration, this)}.
+@param duration the duration
+@return the converted duration,
+or {@code Long.MIN_VALUE} if conversion would negatively overflow,
+or {@code Long.MAX_VALUE} if it would positively overflow.
 
 ## TimeUnit.toMillis(long)
 
@@ -147,15 +119,11 @@ public long toMillis(long duration)
 ```
 
 Equivalent to
-TimeUnit) MILLISECONDS.convert(duration, this).
-
-Parameters:
-
-- `duration`: the duration
-
-**Returns:** the converted duration,
-or `Long.MIN_VALUE` if conversion would negatively overflow,
-or `Long.MAX_VALUE` if it would positively overflow.
+{@link #convert(long, TimeUnit) MILLISECONDS.convert(duration, this)}.
+@param duration the duration
+@return the converted duration,
+or {@code Long.MIN_VALUE} if conversion would negatively overflow,
+or {@code Long.MAX_VALUE} if it would positively overflow.
 
 ## TimeUnit.toSeconds(long)
 
@@ -164,15 +132,11 @@ public long toSeconds(long duration)
 ```
 
 Equivalent to
-TimeUnit) SECONDS.convert(duration, this).
-
-Parameters:
-
-- `duration`: the duration
-
-**Returns:** the converted duration,
-or `Long.MIN_VALUE` if conversion would negatively overflow,
-or `Long.MAX_VALUE` if it would positively overflow.
+{@link #convert(long, TimeUnit) SECONDS.convert(duration, this)}.
+@param duration the duration
+@return the converted duration,
+or {@code Long.MIN_VALUE} if conversion would negatively overflow,
+or {@code Long.MAX_VALUE} if it would positively overflow.
 
 ## TimeUnit.toMinutes(long)
 
@@ -181,17 +145,12 @@ public long toMinutes(long duration)
 ```
 
 Equivalent to
-TimeUnit) MINUTES.convert(duration, this).
-
-Parameters:
-
-- `duration`: the duration
-
-**Returns:** the converted duration,
-or `Long.MIN_VALUE` if conversion would negatively overflow,
-or `Long.MAX_VALUE` if it would positively overflow.
-
-**Since:** 1.6
+{@link #convert(long, TimeUnit) MINUTES.convert(duration, this)}.
+@param duration the duration
+@return the converted duration,
+or {@code Long.MIN_VALUE} if conversion would negatively overflow,
+or {@code Long.MAX_VALUE} if it would positively overflow.
+@since 1.6
 
 ## TimeUnit.toHours(long)
 
@@ -200,17 +159,12 @@ public long toHours(long duration)
 ```
 
 Equivalent to
-TimeUnit) HOURS.convert(duration, this).
-
-Parameters:
-
-- `duration`: the duration
-
-**Returns:** the converted duration,
-or `Long.MIN_VALUE` if conversion would negatively overflow,
-or `Long.MAX_VALUE` if it would positively overflow.
-
-**Since:** 1.6
+{@link #convert(long, TimeUnit) HOURS.convert(duration, this)}.
+@param duration the duration
+@return the converted duration,
+or {@code Long.MIN_VALUE} if conversion would negatively overflow,
+or {@code Long.MAX_VALUE} if it would positively overflow.
+@since 1.6
 
 ## TimeUnit.toDays(long)
 
@@ -219,15 +173,10 @@ public long toDays(long duration)
 ```
 
 Equivalent to
-TimeUnit) DAYS.convert(duration, this).
-
-Parameters:
-
-- `duration`: the duration
-
-**Returns:** the converted duration
-
-**Since:** 1.6
+{@link #convert(long, TimeUnit) DAYS.convert(duration, this)}.
+@param duration the duration
+@return the converted duration
+@since 1.6
 
 ## TimeUnit.timedWait(Object, long)
 
@@ -235,16 +184,16 @@ Parameters:
 public void timedWait(Object obj, long timeout) throws InterruptedException
 ```
 
-Performs a timed int) Object.wait
+Performs a timed {@link Object#wait(long, int) Object.wait}
 using this time unit.
 This is a convenience method that converts timeout arguments
-into the form required by the `Object.wait` method.
+into the form required by the {@code Object.wait} method.
 
-For example, you could implement a blocking `poll` method
-(see TimeUnit) BlockingQueue.poll)
+<p>For example, you could implement a blocking {@code poll} method
+(see {@link BlockingQueue#poll(long, TimeUnit) BlockingQueue.poll})
 using:
 
-```java
+<pre> {@code
 public E poll(long timeout, TimeUnit unit)
     throws InterruptedException {
   synchronized (lock) {
@@ -253,17 +202,12 @@ public E poll(long timeout, TimeUnit unit)
       ...
     }
   }
-}
-```
+}}</pre>
 
-Parameters:
-
-- `obj`: the object to wait on
-- `timeout`: the maximum time to wait. If less than or equal to zero, do not wait at all.
-
-Throws:
-
-- `InterruptedException`: if interrupted while waiting
+@param obj the object to wait on
+@param timeout the maximum time to wait. If less than
+or equal to zero, do not wait at all.
+@throws InterruptedException if interrupted while waiting
 
 ## TimeUnit.timedJoin(Thread, long)
 
@@ -271,19 +215,15 @@ Throws:
 public void timedJoin(Thread thread, long timeout) throws InterruptedException
 ```
 
-Performs a timed int) Thread.join
+Performs a timed {@link Thread#join(long, int) Thread.join}
 using this time unit.
 This is a convenience method that converts time arguments into the
-form required by the `Thread.join` method.
+form required by the {@code Thread.join} method.
 
-Parameters:
-
-- `thread`: the thread to wait for
-- `timeout`: the maximum time to wait. If less than or equal to zero, do not wait at all.
-
-Throws:
-
-- `InterruptedException`: if interrupted while waiting
+@param thread the thread to wait for
+@param timeout the maximum time to wait. If less than
+or equal to zero, do not wait at all.
+@throws InterruptedException if interrupted while waiting
 
 ## TimeUnit.sleep(long)
 
@@ -291,18 +231,14 @@ Throws:
 public void sleep(long timeout) throws InterruptedException
 ```
 
-Performs a int) Thread.sleep using
+Performs a {@link Thread#sleep(long, int) Thread.sleep} using
 this time unit.
 This is a convenience method that converts time arguments into the
-form required by the `Thread.sleep` method.
+form required by the {@code Thread.sleep} method.
 
-Parameters:
-
-- `timeout`: the minimum time to sleep. If less than or equal to zero, do not sleep at all.
-
-Throws:
-
-- `InterruptedException`: if interrupted while sleeping
+@param timeout the minimum time to sleep. If less than
+or equal to zero, do not sleep at all.
+@throws InterruptedException if interrupted while sleeping
 
 ## TimeUnit.toChronoUnit()
 
@@ -310,11 +246,10 @@ Throws:
 public ChronoUnit toChronoUnit()
 ```
 
-Converts this `TimeUnit` to the equivalent `ChronoUnit`.
+Converts this {@code TimeUnit} to the equivalent {@code ChronoUnit}.
 
-**Returns:** the converted equivalent ChronoUnit
-
-**Since:** 9
+@return the converted equivalent ChronoUnit
+@since 9
 
 ## TimeUnit.of(ChronoUnit)
 
@@ -322,17 +257,11 @@ Converts this `TimeUnit` to the equivalent `ChronoUnit`.
 public static TimeUnit of(ChronoUnit chronoUnit)
 ```
 
-Converts a `ChronoUnit` to the equivalent `TimeUnit`.
+Converts a {@code ChronoUnit} to the equivalent {@code TimeUnit}.
 
-Parameters:
-
-- `chronoUnit`: the ChronoUnit to convert
-
-**Returns:** the converted equivalent TimeUnit
-
-**Since:** 9
-
-Throws:
-
-- `IllegalArgumentException`: if `chronoUnit` has no equivalent TimeUnit
-- `NullPointerException`: if `chronoUnit` is null
+@param chronoUnit the ChronoUnit to convert
+@return the converted equivalent TimeUnit
+@throws IllegalArgumentException if {@code chronoUnit} has no
+        equivalent TimeUnit
+@throws NullPointerException if {@code chronoUnit} is null
+@since 9

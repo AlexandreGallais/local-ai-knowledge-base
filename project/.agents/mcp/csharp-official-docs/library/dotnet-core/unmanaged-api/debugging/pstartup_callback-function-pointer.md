@@ -1,15 +1,23 @@
 ---
+description: "Learn more about: PSTARTUP_CALLBACK Function Pointer"
 title: "PSTARTUP_CALLBACK Function Pointer"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/pstartup_callback-function-pointer.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 09/20/2023
+api_name:
+  - "PSTARTUP_CALLBACK"
+api_location:
+  - "dbgshim.dll"
+  - "libdbgshim.so"
+  - "libdbgshim.dylib"
+f1_keywords:
+  - "PSTARTUP_CALLBACK"
+helpviewer_keywords:
+  - "PSTARTUP_CALLBACK function pointer [.NET Core debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # PSTARTUP_CALLBACK function Pointer
 
-Points to a function that's called when the .NET runtime has started for the RegisterForRuntimeStartup API.
+Points to a function that's called when the .NET runtime has started for the [RegisterForRuntimeStartup](registerforruntimestartup-function.md) API.
 
 ## Syntax
 
@@ -23,21 +31,21 @@ typedef VOID (*PSTARTUP_CALLBACK)(
 ## Parameters
 
 `pCordb`\
-[in] Pointer to a pointer to a COM object (`IUnknown`). This object will be cast to an ICorDebug object before it's returned.
+[in] Pointer to a pointer to a COM object (`IUnknown`). This object will be cast to an [ICorDebug](./icordebug/icordebug-interface.md) object before it's returned.
 
 `parameter`\
-[in] The `parameter` value passed to RegisterForRuntimeStartup.
+[in] The `parameter` value passed to [RegisterForRuntimeStartup](registerforruntimestartup-function.md).
 
 `hr`\
 [in] The result of the operation. The values are:
 
-- `S_OK`: `pCordb` references a valid object that implements the ICorDebug interface interface.
+- `S_OK`: `pCordb` references a valid object that implements the [ICorDebug interface](./icordebug/icordebug-interface.md) interface.
 
 - `CORDBG_E_DEBUG_COMPONENT_MISSING`: A component that is necessary for CLR debugging cannot be located. Either _mscordbi.dll_ or _mscordaccore.dll_ was not found in the same directory as the target CoreCLR.dll.
 
 - `CORDBG_E_INCOMPATIBLE_PROTOCOL`: Either _mscordbi.dll_ or _mscordaccore.dll_ is not the same version as the target CoreCLR.dll.
 
-- `E_FAIL` (or other `E_` return codes): Unable to return an ICorDebug interface.
+- `E_FAIL` (or other `E_` return codes): Unable to return an [ICorDebug interface](./icordebug/icordebug-interface.md).
 
 ## Remarks
 
@@ -45,7 +53,7 @@ The interface that's provided has the facilities for attaching to a CLR in a tar
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** dbgshim.h
 

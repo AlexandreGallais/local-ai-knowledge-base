@@ -1,12 +1,3 @@
----
-title: "FileVisitor interface (java.nio.file)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/file/FileVisitor.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # FileVisitor interface (java.nio.file)
 
 ```java
@@ -14,25 +5,24 @@ public interface FileVisitor<T>
 ```
 
 A visitor of files. An implementation of this interface is provided to the
-Files.walkFileTree methods to visit each file in
+{@link Files#walkFileTree Files.walkFileTree} methods to visit each file in
 a file tree.
 
- **Usage Examples:**
+<p> <b>Usage Examples:</b>
 Suppose we want to delete a file tree. In that case, each directory should
 be deleted after the entries in the directory are deleted.
-
-Parameters:
-
-- `<T>`: the type of file/directory
-
-**Override:** public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+{@snippet lang=java :
+    Path start = ...
+    Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
+        @Override
+        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
             throws IOException
         {
             Files.delete(file);
             return FileVisitResult.CONTINUE;
         }
-
-**Override:** public FileVisitResult postVisitDirectory(Path dir, IOException e)
+        @Override
+        public FileVisitResult postVisitDirectory(Path dir, IOException e)
             throws IOException
         {
             if (e == null) {
@@ -45,12 +35,17 @@ Parameters:
         }
     });
 }
-
- Furthermore, suppose we want to copy a file tree to a target location.
+<p> Furthermore, suppose we want to copy a file tree to a target location.
 In that case, symbolic links should be followed and the target directory
 should be created before the entries in the directory are copied.
+{@snippet lang=java :
+    final Path source = ...
+    final Path target = ...
 
-**Override:** public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
+    Files.walkFileTree(source, EnumSet.of(FileVisitOption.FOLLOW_LINKS), Integer.MAX_VALUE,
+        new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
                 throws IOException
             {
                 Path targetdir = target.resolve(source.relativize(dir));
@@ -62,8 +57,8 @@ should be created before the entries in the directory are copied.
                 }
                 return CONTINUE;
             }
-
-**Override:** public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
                 throws IOException
             {
                 Files.copy(file, target.resolve(source.relativize(file)));
@@ -71,8 +66,9 @@ should be created before the entries in the directory are copied.
             }
         });
 }
+@param <T> the type of file/directory
 
-**Since:** 1.7
+@since 1.7
 
 ## FileVisitor.preVisitDirectory(T, BasicFileAttributes)
 
@@ -82,20 +78,21 @@ FileVisitResult preVisitDirectory(T dir, BasicFileAttributes attrs) throws IOExc
 
 Invoked for a directory before entries in the directory are visited.
 
- If this method returns CONTINUE,
-then entries in the directory are visited. If this method returns SKIP_SUBTREE or SKIP_SIBLINGS then entries in the
+<p> If this method returns {@link FileVisitResult#CONTINUE CONTINUE},
+then entries in the directory are visited. If this method returns {@link
+FileVisitResult#SKIP_SUBTREE SKIP_SUBTREE} or {@link
+FileVisitResult#SKIP_SIBLINGS SKIP_SIBLINGS} then entries in the
 directory (and any descendants) will not be visited.
 
-Parameters:
+@param   dir
+         a reference to the directory
+@param   attrs
+         the directory's basic attributes
 
-- `dir`: a reference to the directory
-- `attrs`: the directory's basic <example-value>
+@return  the visit result
 
-**Returns:** the visit result
-
-Throws:
-
-- `IOException`: if an I/O error occurs
+@throws  IOException
+         if an I/O error occurs
 
 ## FileVisitor.visitFile(T, BasicFileAttributes)
 
@@ -105,16 +102,15 @@ FileVisitResult visitFile(T file, BasicFileAttributes attrs) throws IOException
 
 Invoked for a file in a directory.
 
-Parameters:
+@param   file
+         a reference to the file
+@param   attrs
+         the file's basic attributes
 
-- `file`: a reference to the file
-- `attrs`: the file's basic <example-value>
+@return  the visit result
 
-**Returns:** the visit result
-
-Throws:
-
-- `IOException`: if an I/O error occurs
+@throws  IOException
+         if an I/O error occurs
 
 ## FileVisitor.visitFileFailed(T, IOException)
 
@@ -126,16 +122,15 @@ Invoked for a file that could not be visited. This method is invoked
 if the file's attributes could not be read, the file is a directory
 that could not be opened, and other reasons.
 
-Parameters:
+@param   file
+         a reference to the file
+@param   exc
+         the I/O exception that prevented the file from being visited
 
-- `file`: a reference to the file
-- `exc`: the I/O exception that prevented the file from being visited
+@return  the visit result
 
-**Returns:** the visit result
-
-Throws:
-
-- `IOException`: if an I/O error occurs
+@throws  IOException
+         if an I/O error occurs
 
 ## FileVisitor.postVisitDirectory(T, IOException)
 
@@ -145,17 +140,18 @@ FileVisitResult postVisitDirectory(T dir, IOException exc) throws IOException
 
 Invoked for a directory after entries in the directory, and all of their
 descendants, have been visited. This method is also invoked when iteration
-of the directory completes prematurely (by a visitFile
-method returning SKIP_SIBLINGS,
+of the directory completes prematurely (by a {@link #visitFile visitFile}
+method returning {@link FileVisitResult#SKIP_SIBLINGS SKIP_SIBLINGS},
 or an I/O error when iterating over the directory).
 
-Parameters:
+@param   dir
+         a reference to the directory
+@param   exc
+         {@code null} if the iteration of the directory completes without
+         an error; otherwise the I/O exception that caused the iteration
+         of the directory to complete prematurely
 
-- `dir`: a reference to the directory
-- `exc`: `null` if the iteration of the directory completes without an error; otherwise the I/O exception that caused the iteration of the directory to complete prematurely
+@return  the visit result
 
-**Returns:** the visit result
-
-Throws:
-
-- `IOException`: if an I/O error occurs
+@throws  IOException
+         if an I/O error occurs

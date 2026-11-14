@@ -1,0 +1,32 @@
+{
+  "cppreference": {
+    "commit": "744e05d554d42a5a58422b4d209d76552eb2d6ff",
+    "files": 6640,
+    "bytes": 346973285,
+    "built": "2026-11-14"
+  },
+  "cmake": {
+    "commit": "f3a3cb0c6542ee497d8e9ec85f3603acb64736ca",
+    "files": 2591,
+    "bytes": 4188851,
+    "built": "2026-11-14"
+  },
+  "clang": {
+    "commit": "392dfff97d29b59d77e5cac6d4b6ef2585fe7117",
+    "files": 130,
+    "bytes": 3640259,
+    "built": "2026-11-14"
+  },
+  "gnu-make": {
+    "commit": "d66a65ad5a0e31b287f53930b0f09e31801f1613",
+    "files": 1,
+    "bytes": 525891,
+    "built": "2026-11-14"
+  },
+  "gcc": {
+    "commit": "78d4ac73dd391005b895a6148cd9831e28e1208b",
+    "files": 63,
+    "bytes": 6075202,
+    "built": "2026-11-14"
+  }
+}

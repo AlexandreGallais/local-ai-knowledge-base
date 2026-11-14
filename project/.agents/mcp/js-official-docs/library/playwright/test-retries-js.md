@@ -1,15 +1,11 @@
 ---
+id: test-retries
 title: "Retries"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/test-retries-js.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
 
 ## Introduction
 
-Test retries are a way to automatically re-run a test when it fails. This is useful when a test is flaky and fails intermittently. Test retries are configured in the configuration file.
+Test retries are a way to automatically re-run a test when it fails. This is useful when a test is flaky and fails intermittently. Test retries are configured in the [configuration file](./test-configuration.md).
 
 ## Failures
 
@@ -48,7 +44,7 @@ Should **any test fail**, Playwright Test will discard the entire worker process
   * `third good` passes
   * `afterAll` hook runs
 
-If you **enable retries**, second worker process will start by retrying the failed test and continue from there.
+If you **enable [retries](#retries)**, second worker process will start by retrying the failed test and continue from there.
 * Worker process #1 starts
   * `beforeAll` hook runs
   * `first good` passes
@@ -73,7 +69,7 @@ npx playwright test --retries=3
 
 You can configure retries in the configuration file:
 
-```js
+```js title="playwright.config.ts"
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -148,14 +144,14 @@ test('second flaky', async ({ page }) => { /* ... */ });
 test('third good', async ({ page }) => { /* ... */ });
 ```
 
-When running without retries, all tests after the failure are skipped:
+When running without [retries](#retries), all tests after the failure are skipped:
 * Worker process #1:
   * `beforeAll` hook runs
   * `first good` passes
   * `second flaky` fails
   * `third good` is skipped entirely
 
-When running with retries, all tests are retried together:
+When running with [retries](#retries), all tests are retried together:
 * Worker process #1:
   * `beforeAll` hook runs
   * `first good` passes
@@ -175,7 +171,7 @@ It is usually better to make your tests isolated, so they can be efficiently run
 
 Playwright Test creates an isolated [Page] object for each test. However, if you'd like to reuse a single [Page] object between multiple tests, you can create your own in [`method: Test.beforeAll`] and close it in [`method: Test.afterAll`].
 
-```js
+```js tab=js-js title="example.spec.js"
 // @ts-check
 
 const { test } = require('@playwright/test');
@@ -202,7 +198,7 @@ test('runs second', async () => {
 });
 ```
 
-```js
+```js tab=js-ts title="example.spec.ts"
 import { test, type Page } from '@playwright/test';
 
 test.describe.configure({ mode: 'serial' });

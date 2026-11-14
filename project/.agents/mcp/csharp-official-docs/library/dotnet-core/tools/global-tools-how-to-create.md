@@ -1,25 +1,24 @@
 ---
 title: "Tutorial: Create a .NET tool"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/global-tools-how-to-create.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn how to create a .NET tool. A tool is a console application that you install using the .NET CLI. In this tutorial, you build a tool that reports .NET runtime information, OS details, and key environment variable settings.
+ms.topic: tutorial
+ms.date: 04/24/2026
+ai-usage: ai-assisted
 ---
 
 # Tutorial: Create a .NET tool using the .NET CLI
 
 **This article applies to:** ✔️ .NET 8 SDK and later versions
 
-This tutorial teaches you how to create and package a .NET tool. The .NET CLI lets you create a console application as a tool, which others can install and run. .NET tools are NuGet packages that are installed from the .NET CLI. For more information about tools, see .NET tools overview.
+This tutorial teaches you how to create and package a .NET tool. The .NET CLI lets you create a console application as a tool, which others can install and run. .NET tools are NuGet packages that are installed from the .NET CLI. For more information about tools, see [.NET tools overview](global-tools.md).
 
-The tool you'll create is a console application that takes information about the current .NET environment and displays it, including the .NET version, operating system details, and key <example-value> variable settings.
+The tool you'll create is a console application that takes information about the current .NET environment and displays it, including the .NET version, operating system details, and key environment variable settings.
 
-This tutorial is the first in a series of three tutorials. In this tutorial, you create and package a tool. In the next two tutorials, you use the tool as a global tool and use the tool as a local tool. The procedures for creating a tool are the same whether you use it as a global tool or as a local tool.
+This tutorial is the first in a series of three tutorials. In this tutorial, you create and package a tool. In the next two tutorials, you [use the tool as a global tool](global-tools-how-to-use.md) and [use the tool as a local tool](local-tools-how-to-use.md). The procedures for creating a tool are the same whether you use it as a global tool or as a local tool.
 
 ## Prerequisites
 
-- .NET SDK 10.0 or a later version.
+- [.NET SDK 10.0](https://dotnet.microsoft.com/download/dotnet/10.0) or a later version.
 
   This tutorial uses .NET SDK 10.0, but this guide applies to .NET 8.0 and later.
 
@@ -49,43 +48,8 @@ This tutorial is the first in a series of three tutorials. In this tutorial, you
 
 1. Replace the contents with the following code:
 
-```csharp
-﻿using System.Reflection;
-using System.Runtime.InteropServices;
+   :::code language="csharp" source="./snippets/global-tools-how-to-create/csharp/Program.cs":::
 
-var versionString = Assembly.GetEntryAssembly()?
-                        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
-                        .InformationalVersion
-                        .ToString();
-
-Console.WriteLine($"dotnet-env v{versionString}");
-Console.WriteLine(new string('-', 40));
-
-Console.WriteLine();
-Console.WriteLine("Runtime");
-Console.WriteLine($"  .NET Version          {Environment.Version}");
-Console.WriteLine($"  Framework             {RuntimeInformation.FrameworkDescription}");
-Console.WriteLine($"  Runtime Identifier    {RuntimeInformation.RuntimeIdentifier}");
-
-Console.WriteLine();
-Console.WriteLine("System");
-Console.WriteLine($"  OS                    {RuntimeInformation.OSDescription}");
-Console.WriteLine($"  Architecture          {RuntimeInformation.OSArchitecture}");
-Console.WriteLine($"  Machine Name          {Environment.MachineName}");
-Console.WriteLine($"  Processor Count       {Environment.ProcessorCount}");
-
-Console.WriteLine();
-Console.WriteLine("Environment Variables");
-string[] envVars = { "DOTNET_ROOT", "DOTNET_HOST_PATH",
-                        "DOTNET_CLI_HOME", "DOTNET_NOLOGO",
-                        "NUGET_PACKAGES", "DOTNET_ENVIRONMENT" };
-
-foreach (string name in envVars)
-{
-    string? value = Environment.GetEnvironmentVariable(name);
-    Console.WriteLine($"  {name,-24}{value ?? "(not set)"}");
-}
-```
    The program uses top-level statements to read the assembly's informational version using `Assembly.GetEntryAssembly()` and `AssemblyInformationalVersionAttribute`, then prints the app name and a separator line before displaying three sections of information:
 
    - **Runtime** — the .NET version, framework description, and runtime identifier, using `Environment.Version` and `RuntimeInformation`.
@@ -130,7 +94,7 @@ Environment Variables
   DOTNET_ENVIRONMENT      (not set)
 ```
 
-> **Note:**
+> [!NOTE]
 > The values shown depend on your machine and .NET installation. The output varies by platform.
 
 ## Package the tool
@@ -139,39 +103,20 @@ To pack and distribute the application as a tool, modify the project file.
 
 1. Open the *dotnet-env.csproj* file and add three new XML nodes to the end of the `<PropertyGroup>` node:
 
-```xml
-<PackAsTool>true</PackAsTool>
-<ToolCommandName>dotnet-env</ToolCommandName>
-<PackageOutputPath>./nupkg</PackageOutputPath>
-```
+   :::code language="xml" source="./snippets/global-tools-how-to-create/csharp/dotnet-env.csproj" id="toolsettings":::
+
    `<ToolCommandName>` is an optional element that specifies the command that invokes the tool after installation. If this element isn't provided, the command name for the tool is the assembly name, which is typically the project file name without the *.csproj* extension.
 
-   > **Note:**
+   > [!NOTE]
    > Choose a unique value for `<ToolCommandName>`. Avoid using file extensions (like `.exe` or `.cmd`) because the tool is installed as an app host and the command shouldn't include an extension. This helps prevent conflicts with existing commands and ensures a smooth installation experience.
 
    `<PackageOutputPath>` is an optional element that determines where .NET produces the NuGet package. The .NET CLI uses the NuGet package to install your tool.
 
    The project file now looks like the following example:
 
-```xml
-<Project Sdk="Microsoft.NET.Sdk">
+   :::code language="xml" source="./snippets/global-tools-how-to-create/csharp/dotnet-env.csproj" id="full":::
 
-  <PropertyGroup>
-
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-
-    <PackAsTool>true</PackAsTool>
-    <ToolCommandName>dotnet-env</ToolCommandName>
-    <PackageOutputPath>./nupkg</PackageOutputPath>
-
-  </PropertyGroup>
-
-</Project>
-```
-1. Create a NuGet package by running the dotnet pack command:
+1. Create a NuGet package by running the [dotnet pack](dotnet-pack.md) command:
 
    ```dotnetcli
    dotnet pack
@@ -179,22 +124,24 @@ To pack and distribute the application as a tool, modify the project file.
 
    The *dotnet-env.1.0.0.nupkg* file is created in the folder identified by the `<PackageOutputPath>` value from the *dotnet-env.csproj* file, which in this example is the *./nupkg* folder.
 
-   To release a tool publicly, upload it to `https://www.nuget.org`. Once the tool is available on NuGet, developers can install the tool using the dotnet tool install command. For this tutorial you install the package directly from the local *nupkg* folder, so there's no need to upload the package to NuGet.
+   To release a tool publicly, upload it to `https://www.nuget.org`. Once the tool is available on NuGet, developers can install the tool using the [dotnet tool install](dotnet-tool-install.md) command. For this tutorial you install the package directly from the local *nupkg* folder, so there's no need to upload the package to NuGet.
 
 ## Troubleshoot
 
-If you get an error message while following the tutorial, see Troubleshoot .NET tool usage issues.
+If you get an error message while following the tutorial, see [Troubleshoot .NET tool usage issues](troubleshoot-usage-issues.md).
 
 ## Next steps
 
 In this tutorial, you created a console application and packaged it as a tool. To learn how to use the tool as a global tool, advance to the next tutorial.
 
-> Install and use a global tool
+> [!div class="nextstepaction"]
+> [Install and use a global tool](global-tools-how-to-use.md)
 
 If you prefer, you can skip the global tools tutorial and go directly to the local tools tutorial.
 
-> Install and use a local tool
+> [!div class="nextstepaction"]
+> [Install and use a local tool](local-tools-how-to-use.md)
 
 ## See also
 
-- Create RID-specific and AOT .NET tools
+- [Create RID-specific and AOT .NET tools](rid-specific-tools.md)

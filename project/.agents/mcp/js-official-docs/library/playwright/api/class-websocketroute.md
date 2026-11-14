@@ -1,16 +1,7 @@
----
-title: "class: WebSocketRoute"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-websocketroute.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: WebSocketRoute
 * since: v1.48
 
-Whenever a `WebSocket` route is set up with [`method: Page.routeWebSocket`] or [`method: BrowserContext.routeWebSocket`], the `WebSocketRoute` object allows to handle the WebSocket, like an actual server would do.
+Whenever a [`WebSocket`](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) route is set up with [`method: Page.routeWebSocket`] or [`method: BrowserContext.routeWebSocket`], the `WebSocketRoute` object allows to handle the WebSocket, like an actual server would do.
 
 **Mocking**
 
@@ -34,7 +25,7 @@ page.routeWebSocket("wss://example.com/ws", ws -> {
 });
 ```
 
-```python
+```python async
 def message_handler(ws: WebSocketRoute, message: Union[str, bytes]):
   if message == "request":
     ws.send("response")
@@ -44,7 +35,7 @@ await page.route_web_socket("wss://example.com/ws", lambda ws: ws.on_message(
 ))
 ```
 
-```python
+```python sync
 def message_handler(ws: WebSocketRoute, message: Union[str, bytes]):
   if message == "request":
     ws.send("response")
@@ -90,7 +81,7 @@ page.routeWebSocket("wss://example.com/ws", ws -> {
 });
 ```
 
-```python
+```python async
 def message_handler(ws: WebSocketRoute, message: Union[str, bytes]):
   json_message = json.loads(message)
   if json_message["request"] == "question":
@@ -101,7 +92,7 @@ await page.route_web_socket("wss://example.com/ws", lambda ws: ws.on_message(
 ))
 ```
 
-```python
+```python sync
 def message_handler(ws: WebSocketRoute, message: Union[str, bytes]):
   json_message = json.loads(message)
   if json_message["request"] == "question":
@@ -126,6 +117,7 @@ await page.RouteWebSocketAsync("wss://example.com/ws", ws => {
   });
 });
 ```
+
 
 **Intercepting**
 
@@ -157,7 +149,7 @@ page.routeWebSocket("/ws", ws -> {
 });
 ```
 
-```python
+```python async
 def message_handler(server: WebSocketRoute, message: Union[str, bytes]):
   if message == "request":
     server.send("request2")
@@ -171,7 +163,7 @@ def handler(ws: WebSocketRoute):
 await page.route_web_socket("/ws", handler)
 ```
 
-```python
+```python sync
 def message_handler(server: WebSocketRoute, message: Union[str, bytes]):
   if message == "request":
     server.send("request2")
@@ -203,6 +195,7 @@ However, if you call [`method: WebSocketRoute.onMessage`] on the original route,
 
 Similarly, calling [`method: WebSocketRoute.onMessage`] on the server-side WebSocket will **stop forwarding messages** from the server to the page, and [`param: WebSocketRoute.onMessage.handler`] should take care of them.
 
+
 The following example blocks some messages in both directions. Since it calls [`method: WebSocketRoute.onMessage`] in both directions, there is no automatic forwarding at all.
 
 ```js
@@ -233,7 +226,7 @@ page.routeWebSocket("/ws", ws -> {
 });
 ```
 
-```python
+```python async
 def ws_message_handler(server: WebSocketRoute, message: Union[str, bytes]):
   if message != "blocked-from-the-page":
     server.send(message)
@@ -250,7 +243,7 @@ def handler(ws: WebSocketRoute):
 await page.route_web_socket("/ws", handler)
 ```
 
-```python
+```python sync
 def ws_message_handler(server: WebSocketRoute, message: Union[str, bytes]):
   if message != "blocked-from-the-page":
     server.send(message)
@@ -281,6 +274,8 @@ await page.RouteWebSocketAsync("/ws", ws => {
 });
 ```
 
+
+
 ## async method: WebSocketRoute.close
 * since: v1.48
 
@@ -290,13 +285,15 @@ Closes one side of the WebSocket connection.
 * since: v1.48
 - `code` <[int]>
 
-Optional close code.
+Optional [close code](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close#code).
 
 ### option: WebSocketRoute.close.reason
 * since: v1.48
 - `reason` <[string]>
 
-Optional close reason.
+Optional [close reason](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close#reason).
+
+
 
 ## method: WebSocketRoute.connectToServer
 * since: v1.48
@@ -306,14 +303,16 @@ By default, routed WebSocket does not connect to the server, so you can mock ent
 
 Once connected to the server:
 * Messages received from the server will be **automatically forwarded** to the WebSocket in the page, unless [`method: WebSocketRoute.onMessage`] is called on the server-side `WebSocketRoute`.
-* Messages sent by the `WebSocket.send()` call in the page will be **automatically forwarded** to the server, unless [`method: WebSocketRoute.onMessage`] is called on the original `WebSocketRoute`.
+* Messages sent by the [`WebSocket.send()`](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/send) call in the page will be **automatically forwarded** to the server, unless [`method: WebSocketRoute.onMessage`] is called on the original `WebSocketRoute`.
 
 See examples at the top for more details.
+
+
 
 ## method: WebSocketRoute.onClose
 * since: v1.48
 
-Allows to handle `WebSocket.close`.
+Allows to handle [`WebSocket.close`](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close).
 
 By default, closing one side of the connection, either in the page or on the server, will close the other side. However, when [`method: WebSocketRoute.onClose`] handler is set up, the default forwarding of closure is disabled, and handler should take care of it.
 
@@ -322,21 +321,21 @@ By default, closing one side of the connection, either in the page or on the ser
 * langs: js, python
 - `handler` <[function]\([int]|[undefined], [string]|[undefined]\): [Promise<any>|any]>
 
-Function that will handle WebSocket closure. Received an optional close code and an optional close reason.
+Function that will handle WebSocket closure. Received an optional [close code](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close#code) and an optional [close reason](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close#reason).
 
 ### param: WebSocketRoute.onClose.handler
 * since: v1.48
 * langs: java
 - `handler` <[function]\([null]|[int], [null]|[string]\)>
 
-Function that will handle WebSocket closure. Received an optional close code and an optional close reason.
+Function that will handle WebSocket closure. Received an optional [close code](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close#code) and an optional [close reason](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close#reason).
 
 ### param: WebSocketRoute.onClose.handler
 * since: v1.48
 * langs: csharp
 - `handler` <[function]\([int?], [string?]\)>
 
-Function that will handle WebSocket closure. Received an optional close code and an optional close reason.
+Function that will handle WebSocket closure. Received an optional [close code](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close#code) and an optional [close reason](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close#reason).
 
 ## method: WebSocketRoute.onMessage
 * since: v1.48
@@ -363,6 +362,8 @@ Function that will handle messages.
 
 Function that will handle messages.
 
+
+
 ## method: WebSocketRoute.send
 * since: v1.48
 
@@ -374,11 +375,13 @@ Sends a message to the WebSocket. When called on the original WebSocket, sends t
 
 Message to send.
 
+
+
 ## method: WebSocketRoute.protocols
 * since: v1.60
 - returns: <[Array]<[string]>>
 
-The list of WebSocket subprotocols requested by the page, as passed via the second argument to the `WebSocket` constructor. Corresponds to the `Sec-WebSocket-Protocol` request header.
+The list of WebSocket subprotocols requested by the page, as passed via the second argument to the [`WebSocket` constructor](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/WebSocket). Corresponds to the `Sec-WebSocket-Protocol` request header.
 
 Returns an empty array if no protocols were specified.
 
@@ -403,7 +406,7 @@ page.routeWebSocket("wss://example.com/ws", ws -> {
 });
 ```
 
-```python
+```python async
 async def handler(ws: WebSocketRoute):
   if "chat.v2" in ws.protocols:
     ws.on_message(lambda message: ws.send(f"v2:{message}"))
@@ -413,7 +416,7 @@ async def handler(ws: WebSocketRoute):
 await page.route_web_socket("wss://example.com/ws", handler)
 ```
 
-```python
+```python sync
 def handler(ws: WebSocketRoute):
   if "chat.v2" in ws.protocols:
     ws.on_message(lambda message: ws.send(f"v2:{message}"))
@@ -431,6 +434,7 @@ await page.RouteWebSocketAsync("wss://example.com/ws", ws => {
     ws.CloseAsync(new() { Code = 1002, Reason = "Unsupported protocol" });
 });
 ```
+
 
 ## method: WebSocketRoute.url
 * since: v1.48

@@ -1,13 +1,22 @@
 ---
+description: "Learn more about: ICorDebugFunction::GetToken Method"
 title: "ICorDebugFunction::GetToken Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugfunction-gettoken-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugFunction.GetToken"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugFunction::GetToken"
+helpviewer_keywords:
+  - "ICorDebugFunction::GetToken method [.NET debugging]"
+  - "GetToken method, ICorDebugFunction interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
-# ICorDebugFunction::GetToken <example-value>
+# ICorDebugFunction::GetToken Method
 
 Gets the metadata token for this function.
 
@@ -26,7 +35,7 @@ HRESULT GetToken (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

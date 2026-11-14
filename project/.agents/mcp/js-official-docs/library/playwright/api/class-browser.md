@@ -1,12 +1,3 @@
----
-title: "class: Browser"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-browser.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: Browser
 * since: v1.8
 
@@ -39,7 +30,7 @@ public class Example {
 }
 ```
 
-```python
+```python async
 import asyncio
 from playwright.async_api import async_playwright, Playwright
 
@@ -56,7 +47,7 @@ async def main():
 asyncio.run(main())
 ```
 
-```python
+```python sync
 from playwright.sync_api import sync_playwright, Playwright
 
 def run(playwright: Playwright):
@@ -145,14 +136,14 @@ BrowserContext context = browser.newContext();
 System.out.println(browser.contexts().size()); // prints "1"
 ```
 
-```python
+```python async
 browser = await pw.webkit.launch()
 print(len(browser.contexts)) # prints `0`
 context = await browser.new_context()
 print(len(browser.contexts)) # prints `1`
 ```
 
-```python
+```python sync
 browser = pw.webkit.launch()
 print(len(browser.contexts)) # prints `0`
 context = browser.new_context()
@@ -224,7 +215,7 @@ context.close();
 browser.close();
 ```
 
-```python
+```python async
 browser = await playwright.firefox.launch() # or "chromium" or "webkit".
 # create a new incognito browser context.
 context = await browser.new_context()
@@ -237,7 +228,7 @@ await context.close()
 await browser.close()
 ```
 
-```python
+```python sync
 browser = playwright.firefox.launch() # or "chromium" or "webkit".
 # create a new incognito browser context.
 context = browser.new_context()
@@ -374,7 +365,7 @@ Allows to wait for async listeners to complete or to ignore subsequent errors fr
 * langs: java, js, python
 
 :::note
-This API controls Chromium Tracing which is a low-level chromium-specific debugging tool. API to control Playwright Tracing could be found here.
+This API controls [Chromium Tracing](https://www.chromium.org/developers/how-tos/trace-event-profiling-tool) which is a low-level chromium-specific debugging tool. API to control [Playwright Tracing](../trace-viewer) could be found [here](./class-tracing).
 :::
 
 You can use [`method: Browser.startTracing`] and [`method: Browser.stopTracing`] to create a trace file that can
@@ -395,13 +386,13 @@ page.navigate("https://www.google.com");
 browser.stopTracing();
 ```
 
-```python
+```python async
 await browser.start_tracing(page, path="trace.json")
 await page.goto("https://www.google.com")
 await browser.stop_tracing()
 ```
 
-```python
+```python sync
 browser.start_tracing(page, path="trace.json")
 page.goto("https://www.google.com")
 browser.stop_tracing()
@@ -445,7 +436,7 @@ specify custom categories to use instead of default.
 - returns: <[Buffer]>
 
 :::note
-This API controls Chromium Tracing which is a low-level chromium-specific debugging tool. API to control Playwright Tracing could be found here.
+This API controls [Chromium Tracing](https://www.chromium.org/developers/how-tos/trace-event-profiling-tool) which is a low-level chromium-specific debugging tool. API to control [Playwright Tracing](../trace-viewer) could be found [here](./class-tracing).
 :::
 
 Returns the buffer with trace data.

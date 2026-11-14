@@ -1,12 +1,9 @@
 ---
-title: "Entity Framework 5 License (CHT) - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/resources/licenses/ef5/cht.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Entity Framework 5 License (CHT) - EF6
+description: Entity Framework 5 License (CHT)
+author: SamMonoRT
+ms.date: 10/23/2016
 ---
-
 # Entity Framework 5 License (CHT)
 **MICROSOFT 軟體增補程式授權條款**
 

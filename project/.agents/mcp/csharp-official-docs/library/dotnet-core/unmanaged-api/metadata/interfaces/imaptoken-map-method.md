@@ -1,12 +1,18 @@
 ---
+description: "Learn more about: IMapToken::Map Method"
 title: "IMapToken::Map Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/interfaces/imaptoken-map-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "IMapToken.Map"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "IMapToken::Map"
+topic_type:
+  - "apiref"
 ---
-
 # IMapToken::Map Method
 
 Maps a relationship between the assemblies using metadata signatures.
@@ -16,7 +22,7 @@ Maps a relationship between the assemblies using metadata signatures.
 ```cpp
 HRESULT Map (
     [in]  mdToken tkImp,
-    [in]  mdToken <example-value>
+    [in]  mdToken tkEmit
 );
 ```
 
@@ -30,11 +36,11 @@ HRESULT Map (
 
 ## Remarks
 
- When the token <example-value> occurs during a merge, the original token is scoped in the imported (source) metadata scope and the new token is scoped in the emitted (target) metadata scope.
+ When the token re-map occurs during a merge, the original token is scoped in the imported (source) metadata scope and the new token is scoped in the emitted (target) metadata scope.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** Cor.h
 
@@ -42,4 +48,4 @@ HRESULT Map (
 
 ## See also
 
-- IMapToken <example-value>
+- [IMapToken Interface](imaptoken-interface.md)

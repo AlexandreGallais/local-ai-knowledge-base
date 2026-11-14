@@ -1,32 +1,22 @@
----
-title: "MethodBuilder interface (java.lang.classfile)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/MethodBuilder.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # MethodBuilder interface (java.lang.classfile)
 
 ```java
 public sealed interface MethodBuilder extends ClassFileBuilder<MethodElement, MethodBuilder> permits ChainedMethodBuilder, TerminalMethodBuilder
 ```
 
-A builder for methods.  The main way to obtain a method builder is via MethodTypeDesc, int, Consumer).  MethodTypeDesc, int, Consumer) is
-useful if no attribute on the method except Code needs to
+A builder for methods.  The main way to obtain a method builder is via {@link
+ClassBuilder#withMethod(String, MethodTypeDesc, int, Consumer)}.  {@link
+ClassBuilder#withMethodBody(String, MethodTypeDesc, int, Consumer)} is
+useful if no attribute on the method except {@link CodeModel Code} needs to
 be configured, skipping the method handler.
+<p>
+Refer to {@link ClassFileBuilder} for general guidance and caution around
+the use of builders for structures in the {@code class} file format.
 
-Refer to `ClassFileBuilder` for general guidance and caution around
-the use of builders for structures in the `class` file format.
-
-**See also:** MethodModel
-
-**See also:** MethodTransform
-
-**jvms:** 4.6 Methods
-
-**Since:** 24
+@see MethodModel
+@see MethodTransform
+@jvms 4.6 Methods
+@since 24
 
 ## MethodBuilder.withFlags(int)
 
@@ -34,22 +24,15 @@ the use of builders for structures in the `class` file format.
 default MethodBuilder withFlags(int flags)
 ```
 
-Sets the method access flags.  The `AccessFlag.STATIC` flag cannot
+Sets the method access flags.  The {@link AccessFlag#STATIC} flag cannot
 be modified after the builder is created.
 
-Parameters:
-
-- `flags`: the access flags, as a bit mask
-
-**Returns:** this builder
-
-**See also:** AccessFlags
-
-**See also:** AccessFlag.Location#METHOD
-
-Throws:
-
-- `IllegalArgumentException`: if the ACC_STATIC flag is modified
+@param flags the access flags, as a bit mask
+@return this builder
+@throws IllegalArgumentException if the {@link ClassFile#ACC_STATIC
+        ACC_STATIC} flag is modified
+@see AccessFlags
+@see AccessFlag.Location#METHOD
 
 ## MethodBuilder.withFlags(AccessFlag...)
 
@@ -57,22 +40,15 @@ Throws:
 default MethodBuilder withFlags(AccessFlag... flags)
 ```
 
-Sets the method access flags.  The `AccessFlag.STATIC` flag cannot
+Sets the method access flags.  The {@link AccessFlag#STATIC} flag cannot
 be modified after the builder is created.
 
-Parameters:
-
-- `flags`: the access flags, as a bit mask
-
-**Returns:** this builder
-
-**See also:** AccessFlags
-
-**See also:** AccessFlag.Location#METHOD
-
-Throws:
-
-- `IllegalArgumentException`: if the ACC_STATIC flag is modified
+@param flags the access flags, as a bit mask
+@return this builder
+@throws IllegalArgumentException if the {@link ClassFile#ACC_STATIC
+        ACC_STATIC} flag is modified
+@see AccessFlags
+@see AccessFlag.Location#METHOD
 
 ## MethodBuilder.withCode(Consumer<? super CodeBuilder>)
 
@@ -82,13 +58,9 @@ MethodBuilder withCode(Consumer<? super CodeBuilder> code)
 
 Build the method body for this method.
 
-Parameters:
-
-- `code`: a handler receiving a `CodeBuilder`
-
-**Returns:** this builder
-
-**See also:** CodeModel
+@param code a handler receiving a {@link CodeBuilder}
+@return this builder
+@see CodeModel
 
 ## MethodBuilder.transformCode(CodeModel, CodeTransform)
 
@@ -98,14 +70,13 @@ MethodBuilder transformCode(CodeModel code, CodeTransform transform)
 
 Build the method body for this method by transforming the body of another
 method.
-
+<p>
 This method behaves as if:
+{@snippet lang=java :
+withCode(cob -> cob.transform(code, transform));
+}
 
-Parameters:
-
-- `code`: the method body to be transformed
-- `transform`: the transform to apply to the method body
-
-**Returns:** this builder
-
-**See also:** CodeTransform
+@param code the method body to be transformed
+@param transform the transform to apply to the method body
+@return this builder
+@see CodeTransform

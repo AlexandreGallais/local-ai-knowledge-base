@@ -1,24 +1,16 @@
----
-title: "Custom Benchmark Provider <Version type=\"experimental\">5.0.0</Version> <Badge type=\"danger\">advanced</Badge> {#custom-benchmark-provider}"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/advanced/benchmark-provider.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # Custom Benchmark Provider <Version type="experimental">5.0.0</Version> <Badge type="danger">advanced</Badge> {#custom-benchmark-provider}
 
-**Warning:**
-This is an advanced, experimental API. If you only need to run benchmarks with Vitest's built-in provider, read the Benchmarking guide instead.
+::: warning
+This is an advanced, experimental API. If you only need to run benchmarks with Vitest's built-in provider, read the [Benchmarking](/guide/benchmarking) guide instead.
+:::
 
-Vitest uses a benchmark provider to execute the functions registered with `bench` and convert their measurements into results that Vitest can report. The built-in provider uses Tinybench, but you can replace it to use another benchmarking engine or execution strategy.
+Vitest uses a benchmark provider to execute the functions registered with `bench` and convert their measurements into results that Vitest can report. The built-in provider uses [Tinybench](https://github.com/tinylibs/tinybench), but you can replace it to use another benchmarking engine or execution strategy.
 
 ## Setup
 
-Set `benchmark.provider` to the path of your provider module. Relative paths are resolved from the project root.
+Set [`benchmark.provider`](/config/benchmark#benchmark-provider) to the path of your provider module. Relative paths are resolved from the project root.
 
-```ts
+```ts [vitest.config.ts]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -32,7 +24,7 @@ export default defineConfig({
 
 The module must have a default export with an object that implements `BenchmarkProvider`. This example wraps Tinybench to demonstrate how registrations and results flow through a provider. If you use Tinybench in your provider, add it as a direct dependency of your project.
 
-```ts
+```ts [benchmark-provider.ts]
 import type { BenchmarkProvider } from 'vitest'
 import { Bench } from 'tinybench'
 

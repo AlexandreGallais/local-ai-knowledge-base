@@ -1,15 +1,8 @@
----
-title: "std::os::unix::thread"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/std/src/os/unix/thread.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # std::os::unix::thread
 
-Unix-specific extensions to primitives in the `std::thread` module.
+Unix-specific extensions to primitives in the [`std::thread`] module.
+
+[`std::thread`]: crate::thread
 
 ## trait JoinHandleExt
 
@@ -17,7 +10,7 @@ Unix-specific extensions to primitives in the `std::thread` module.
 pub trait JoinHandleExt
 ```
 
-Unix-specific extensions to `JoinHandle`.
+Unix-specific extensions to [`JoinHandle`].
 
 ## JoinHandleExt::as_pthread_t
 

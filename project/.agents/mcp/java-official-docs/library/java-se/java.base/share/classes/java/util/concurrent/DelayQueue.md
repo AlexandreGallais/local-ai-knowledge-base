@@ -1,70 +1,58 @@
----
-title: "DelayQueue class (java.util.concurrent)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/DelayQueue.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # DelayQueue class (java.util.concurrent)
 
 ```java
 public class DelayQueue<E extends Delayed> extends AbstractQueue<E> implements BlockingQueue<E>
 ```
 
-An unbounded blocking queue of `Delayed`
+An unbounded {@linkplain BlockingQueue blocking queue} of {@link Delayed}
 elements, in which an element generally becomes eligible for removal when its
 delay has expired.
 
-An element is considered *expired* when its
-`getDelay(TimeUnit.NANOSECONDS)` method would return a value less than
-or equal to zero.
+<p><a id="expired">An element is considered <em>expired</em> when its
+{@code getDelay(TimeUnit.NANOSECONDS)} method would return a value less than
+or equal to zero.</a>
 
-An element is considered the *head* of the queue if it
+<p><a id="head">An element is considered the <em>head</em> of the queue if it
 is the element with the earliest expiration time, whether in the past or the
-future, if there is such an element.
+future, if there is such an element.</a>
 
-An element is considered the *expired head* of
-the queue if it is the *expired* element with the earliest expiration
+<p><a id="expired-head">An element is considered the <em>expired head</em> of
+the queue if it is the <em>expired</em> element with the earliest expiration
 time in the past, if there is such an element.
-The *expired head*, when present, is also the *head*.
+The <em>expired head</em>, when present, is also the <em>head</em>.</a>
 
-While this class implements the `BlockingQueue` interface, it
-intentionally violates the general contract of `BlockingQueue`, in that
+<p>While this class implements the {@code BlockingQueue} interface, it
+intentionally violates the general contract of {@code BlockingQueue}, in that
 the following methods disregard the presence of unexpired elements and only
-ever remove the *expired head*:
+ever remove the <em>expired head</em>:
 
--  `poll()`
+<ul>
+<li> {@link #poll()}
+<li> {@link #poll(long,TimeUnit)}
+<li> {@link #take()}
+<li> {@link #remove()}
+</ul>
 
--  `poll(long,TimeUnit)`
+<p>All other methods operate on both expired and unexpired elements.
+For example, the {@link #size()} method returns the count of all elements.
+Method {@link #peek()} may return the (non-null) <em>head</em> even when
+{@code take()} would block waiting for that element to expire.
 
--  `take()`
+<p>This queue does not permit null elements.
 
--  `remove()`
-
-All other methods operate on both expired and unexpired elements.
-For example, the `size()` method returns the count of all elements.
-Method `peek()` may return the (non-null) *head* even when
-`take()` would block waiting for that element to expire.
-
-This queue does not permit null elements.
-
-This class and its iterator implement all of the *optional*
-methods of the `Collection` and `Iterator` interfaces.
-The Iterator provided in method `iterator()` is *not*
+<p>This class and its iterator implement all of the <em>optional</em>
+methods of the {@link Collection} and {@link Iterator} interfaces.
+The Iterator provided in method {@link #iterator()} is <em>not</em>
 guaranteed to traverse the elements of the DelayQueue in any
 particular order.
 
-This class is a member of the
+<p>This class is a member of the
+<a href="{@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+Java Collections Framework</a>.
 
-Java Collections Framework.
-
-Parameters:
-
-- `<E>`: the type of elements held in this queue
-
-**Since:** 1.5
+@since 1.5
+@author Doug Lea
+@param <E> the type of elements held in this queue
 
 ## DelayQueue.DelayQueue()
 
@@ -72,7 +60,7 @@ Parameters:
 public DelayQueue()
 ```
 
-Creates a new `DelayQueue` that is initially empty.
+Creates a new {@code DelayQueue} that is initially empty.
 
 ## DelayQueue.DelayQueue(Collection<? extends E>)
 
@@ -80,16 +68,12 @@ Creates a new `DelayQueue` that is initially empty.
 public DelayQueue(Collection<? extends E> c)
 ```
 
-Creates a `DelayQueue` initially containing the elements of the
-given collection of `Delayed` instances.
+Creates a {@code DelayQueue} initially containing the elements of the
+given collection of {@link Delayed} instances.
 
-Parameters:
-
-- `c`: the collection of elements to initially contain
-
-Throws:
-
-- `NullPointerException`: if the specified collection or any of its elements are null
+@param c the collection of elements to initially contain
+@throws NullPointerException if the specified collection or any
+        of its elements are null
 
 ## DelayQueue.add(E)
 
@@ -99,15 +83,9 @@ public boolean add(E e)
 
 Inserts the specified element into this delay queue.
 
-Parameters:
-
-- `e`: the element to add
-
-**Returns:** `true` (as specified by `Collection.add`)
-
-Throws:
-
-- `NullPointerException`: if the specified element is null
+@param e the element to add
+@return {@code true} (as specified by {@link Collection#add})
+@throws NullPointerException if the specified element is null
 
 ## DelayQueue.offer(E)
 
@@ -117,15 +95,9 @@ public boolean offer(E e)
 
 Inserts the specified element into this delay queue.
 
-Parameters:
-
-- `e`: the element to add
-
-**Returns:** `true`
-
-Throws:
-
-- `NullPointerException`: if the specified element is null
+@param e the element to add
+@return {@code true}
+@throws NullPointerException if the specified element is null
 
 ## DelayQueue.put(E)
 
@@ -136,13 +108,8 @@ public void put(E e)
 Inserts the specified element into this delay queue. As the queue is
 unbounded this method will never block.
 
-Parameters:
-
-- `e`: the element to add
-
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@param e the element to add
+@throws NullPointerException {@inheritDoc}
 
 ## DelayQueue.offer(E, long, TimeUnit)
 
@@ -153,17 +120,11 @@ public boolean offer(E e, long timeout, TimeUnit unit)
 Inserts the specified element into this delay queue. As the queue is
 unbounded this method will never block.
 
-Parameters:
-
-- `e`: the element to add
-- `timeout`: This parameter is ignored as the method never blocks
-- `unit`: This parameter is ignored as the method never blocks
-
-**Returns:** `true`
-
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@param e the element to add
+@param timeout This parameter is ignored as the method never blocks
+@param unit This parameter is ignored as the method never blocks
+@return {@code true}
+@throws NullPointerException {@inheritDoc}
 
 ## DelayQueue.poll()
 
@@ -171,11 +132,11 @@ Throws:
 public E poll()
 ```
 
-Retrieves and removes the expired head of
-this queue, or returns `null` if this queue has no
-expired elements.
+Retrieves and removes the <a href="#expired-head">expired head</a> of
+this queue, or returns {@code null} if this queue has no
+<a href="#expired">expired elements</a>.
 
-**Returns:** the *expired head* of this queue, or `null` if this
+@return the <em>expired head</em> of this queue, or {@code null} if this
         queue has no elements with an expired delay
 
 ## DelayQueue.take()
@@ -184,15 +145,12 @@ expired elements.
 public E take() throws InterruptedException
 ```
 
-Retrieves and removes the expired head of
+Retrieves and removes the <a href="#expired-head">expired head</a> of
 this queue, waiting if necessary until an
-expired element is available on this queue.
+<a href="#expired">expired element</a> is available on this queue.
 
-**Returns:** the *expired head* of this queue
-
-Throws:
-
-- `InterruptedException`: (inherited documentation)
+@return the <em>expired head</em> of this queue
+@throws InterruptedException {@inheritDoc}
 
 ## DelayQueue.poll(long, TimeUnit)
 
@@ -200,18 +158,15 @@ Throws:
 public E poll(long timeout, TimeUnit unit) throws InterruptedException
 ```
 
-Retrieves and removes the expired head of
+Retrieves and removes the <a href="#expired-head">expired head</a> of
 this queue, waiting if necessary until an
-expired element is available on this queue,
+<a href="#expired">expired element</a> is available on this queue,
 or the specified wait time expires.
 
-**Returns:** the *expired head* of this queue, or `null` if the
+@return the <em>expired head</em> of this queue, or {@code null} if the
         specified waiting time elapses before an element with
         an expired delay becomes available
-
-Throws:
-
-- `InterruptedException`: (inherited documentation)
+@throws InterruptedException {@inheritDoc}
 
 ## DelayQueue.remove()
 
@@ -219,17 +174,15 @@ Throws:
 public E remove()
 ```
 
-Retrieves and removes the expired head of
+Retrieves and removes the <a href="#expired-head">expired head</a> of
 this queue, or throws an exception if this queue has no
-expired elements.
+<a href="#expired">expired elements</a>.
 
-**Returns:** the *expired head* of this queue
+@return the <em>expired head</em> of this queue
+@throws NoSuchElementException if this queue has no elements with an
+        expired delay
 
-**Since:** 21
-
-Throws:
-
-- `NoSuchElementException`: if this queue has no elements with an expired delay
+@since 21
 
 ## DelayQueue.peek()
 
@@ -237,12 +190,12 @@ Throws:
 public E peek()
 ```
 
-Retrieves, but does not remove, the head of this
-queue, or returns `null` if this queue is empty.
-Unlike `poll`, if no expired elements are available in the queue,
+Retrieves, but does not remove, the <a href="#head">head</a> of this
+queue, or returns {@code null} if this queue is empty.
+Unlike {@code poll}, if no expired elements are available in the queue,
 this method returns the element that will expire next, if one exists.
 
-**Returns:** the *head* of this queue, or `null` if this
+@return the <em>head</em> of this queue, or {@code null} if this
         queue is empty
 
 ## DelayQueue.drainTo(Collection<? super E>)
@@ -251,12 +204,10 @@ this method returns the element that will expire next, if one exists.
 public int drainTo(Collection<? super E> c)
 ```
 
-Throws:
-
-- `UnsupportedOperationException`: (inherited documentation)
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
-- `IllegalArgumentException`: (inherited documentation)
+@throws UnsupportedOperationException {@inheritDoc}
+@throws ClassCastException            {@inheritDoc}
+@throws NullPointerException          {@inheritDoc}
+@throws IllegalArgumentException      {@inheritDoc}
 
 ## DelayQueue.drainTo(Collection<? super E>, int)
 
@@ -264,12 +215,10 @@ Throws:
 public int drainTo(Collection<? super E> c, int maxElements)
 ```
 
-Throws:
-
-- `UnsupportedOperationException`: (inherited documentation)
-- `ClassCastException`: (inherited documentation)
-- `NullPointerException`: (inherited documentation)
-- `IllegalArgumentException`: (inherited documentation)
+@throws UnsupportedOperationException {@inheritDoc}
+@throws ClassCastException            {@inheritDoc}
+@throws NullPointerException          {@inheritDoc}
+@throws IllegalArgumentException      {@inheritDoc}
 
 ## DelayQueue.clear()
 
@@ -288,10 +237,10 @@ simply discarded from the queue.
 public int remainingCapacity()
 ```
 
-Always returns `Integer.MAX_VALUE` because
-a `DelayQueue` is not capacity constrained.
+Always returns {@code Integer.MAX_VALUE} because
+a {@code DelayQueue} is not capacity constrained.
 
-**Returns:** `Integer.MAX_VALUE`
+@return {@code Integer.MAX_VALUE}
 
 ## DelayQueue.toArray()
 
@@ -302,14 +251,14 @@ public Object[] toArray()
 Returns an array containing all of the elements in this queue.
 The returned array elements are in no particular order.
 
-The returned array will be "safe" in that no references to it are
+<p>The returned array will be "safe" in that no references to it are
 maintained by this queue.  (In other words, this method must allocate
 a new array).  The caller is thus free to modify the returned array.
 
-This method acts as bridge between array-based and collection-based
+<p>This method acts as bridge between array-based and collection-based
 APIs.
 
-**Returns:** an array containing all of the elements in this queue
+@return an array containing all of the elements in this queue
 
 ## DelayQueue.toArray(T[])
 
@@ -324,36 +273,32 @@ If the queue fits in the specified array, it is returned therein.
 Otherwise, a new array is allocated with the runtime type of the
 specified array and the size of this queue.
 
-If this queue fits in the specified array with room to spare
+<p>If this queue fits in the specified array with room to spare
 (i.e., the array has more elements than this queue), the element in
 the array immediately following the end of the queue is set to
-`null`.
+{@code null}.
 
-Like the `toArray()` method, this method acts as bridge between
+<p>Like the {@link #toArray()} method, this method acts as bridge between
 array-based and collection-based APIs.  Further, this method allows
 precise control over the runtime type of the output array, and may,
 under certain circumstances, be used to save allocation costs.
 
-The following code can be used to dump a delay queue into a newly
-allocated array of `Delayed`:
+<p>The following code can be used to dump a delay queue into a newly
+allocated array of {@code Delayed}:
 
-```java
-Delayed[] a = q.toArray(new Delayed[0]);
-```
+<pre> {@code Delayed[] a = q.toArray(new Delayed[0]);}</pre>
 
-Note that `toArray(new Object[0])` is identical in function to
-`toArray()`.
+Note that {@code toArray(new Object[0])} is identical in function to
+{@code toArray()}.
 
-Parameters:
-
-- `a`: the array into which the elements of the queue are to be stored, if it is big enough; otherwise, a new array of the same runtime type is allocated for this purpose
-
-**Returns:** an array containing all of the elements in this queue
-
-Throws:
-
-- `ArrayStoreException`: if the runtime type of the specified array is not a supertype of the runtime type of every element in this queue
-- `NullPointerException`: if the specified array is null
+@param a the array into which the elements of the queue are to
+         be stored, if it is big enough; otherwise, a new array of the
+         same runtime type is allocated for this purpose
+@return an array containing all of the elements in this queue
+@throws ArrayStoreException if the runtime type of the specified array
+        is not a supertype of the runtime type of every element in
+        this queue
+@throws NullPointerException if the specified array is null
 
 ## DelayQueue.remove(Object)
 
@@ -374,7 +319,7 @@ Returns an iterator over all the elements (both expired and
 unexpired) in this queue. The iterator does not return the
 elements in any particular order.
 
-The returned iterator is
-*weakly consistent*.
+<p>The returned iterator is
+<a href="package-summary.html#Weakly"><i>weakly consistent</i></a>.
 
-**Returns:** an iterator over the elements in this queue
+@return an iterator over the elements in this queue

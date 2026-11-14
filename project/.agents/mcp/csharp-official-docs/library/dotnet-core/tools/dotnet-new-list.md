@@ -1,12 +1,8 @@
 ---
-title: "dotnet new list"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-new-list.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet new list
+description: The dotnet new list command lists available templates.
+ms.date: 10/28/2025
 ---
-
 # dotnet new list
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -26,25 +22,15 @@ dotnet new list [<TEMPLATE_NAME>] [--author <AUTHOR>] [-lang|--language {"C#"|"F
 
 ## Description
 
-The `dotnet new list` command lists available templates to use with `dotnet new`. If the <TEMPLATE_NAME> is specified, lists templates containing the specified name. This option lists only default and installed templates. To find templates in NuGet that you can install locally, use the `search` command.
+The `dotnet new list` command lists available templates to use with `dotnet new`. If the <TEMPLATE_NAME> is specified, lists templates containing the specified name. This option lists only default and installed templates. To find templates in NuGet that you can install locally, use the [`search`](dotnet-new-search.md) command.
 
 Starting with .NET SDK 7.0.100, the `list` command might not show all the templates installed on the machine. It takes the result of template constraints into account, and the templates that can't be used won't be shown. To force show all the templates, use the `--ignore-constraints` option.
 
-> **Warning:**
+> [!WARNING]
 > To limit the list of templates to those that are relevant, .NET walks up the current tree to find a .NET project to scope the list of templates. Ensure you only run `dotnet new` commands from trusted directories.
 
-> **Note:**
-> Starting with the .NET 7 SDK, the `dotnet new` syntax has changed:
-
-- The `--list`, `--search`, `--install`, and `--uninstall` options became `list`, `search`, `install`, and `uninstall` subcommands.
-- The `--update-apply` option became the `update` subcommand.
-- To use `--update-check`, use the `update` subcommand with the `--check-only` option.
-
-Other options that were available before are still available to use with their respective subcommands.
-Separate help for each subcommand is available via the `-h` or `--help` option: `dotnet new <subcommand> --help` lists all supported options for the subcommand.
-
-Additionally, tab completion is now available for `dotnet new`. It supports completion for installed template names and for the options a selected template provides.
-To activate tab completion for the .NET SDK, see Enable tab completion.
+> [!NOTE]
+> [!INCLUDE [new syntax](includes/dotnet-new-7-0-syntax.md)]
 >
 > Examples of the old syntax:
 >
@@ -80,7 +66,7 @@ To activate tab completion for the .NET SDK, see Enable tab completion.
   - `tags` - The list of template tags.
   - `author` - The template author.
   - `type` - The template type: project or item.
-
+  
   The template name and short name are always shown. The default list of columns is template name, short name, language, and tags. This list is equivalent to specifying `--columns=language,tags`.
   Available since .NET SDK 5.0.300.
 
@@ -92,9 +78,7 @@ To activate tab completion for the .NET SDK, see Enable tab completion.
 
   Enables diagnostic output. Available since .NET SDK 7.0.100.
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 - **`--ignore-constraints`**
 
@@ -104,7 +88,7 @@ Prints out a description of how to use the command.
 
   Filters templates based on language supported by the template. The language accepted varies by the template. Not valid for some templates.
 
-  > **Note:**
+  > [!NOTE]
   > Some shells interpret `#` as a special character. In those cases, enclose the language parameter value in quotes. For example, `dotnet new --list --language "F#"`.
 
 - **`-o|--output <OUTPUT_DIRECTORY>`**
@@ -122,10 +106,8 @@ Prints out a description of how to use the command.
 - **`--type <TYPE>`**
 
   Filters templates based on template type. Predefined values are `project`, `item`, and `solution`.
-
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+  
+- [!INCLUDE [verbosity](includes/cli-verbosity.md)]
 
 ## Examples
 
@@ -167,6 +149,6 @@ Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal
 
 ## See also
 
-- dotnet new command
-- dotnet new search command
-- .NET templates for authors
+- [dotnet new command](dotnet-new.md)
+- [dotnet new search command](dotnet-new-search.md)
+- [.NET templates for authors](templates.md)

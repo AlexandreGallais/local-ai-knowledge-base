@@ -8,8 +8,6 @@
       "version": "25",
       "license": "GPL-2.0-only WITH Classpath-exception-2.0",
       "attribution": "Oracle and/or its affiliates, and the OpenJDK contributors",
-      "flavor": "markdown",
-      "core": false,
       "paths": [
         "src/java.base/share/classes/java/",
         "src/java.net.http/share/classes/java/net/http/"
@@ -18,7 +16,40 @@
         "src/java.base/share/classes/java",
         "src/java.net.http/share/classes/java"
       ],
-      "converter": "javadoc"
+      "extract": "javadoc"
+    },
+    {
+      "tool": "gradle",
+      "title": "Gradle User Manual: build scripts, dependencies, tasks, plugins",
+      "repository": "https://github.com/gradle/gradle.git",
+      "ref": "v9.9.1",
+      "version": "9.9",
+      "license": "Apache-2.0",
+      "attribution": "Gradle Inc. and the Gradle contributors",
+      "paths": [
+        "platforms/documentation/docs/src/docs/userguide/"
+      ],
+      "docs": [
+        "platforms/documentation/docs/src/docs/userguide"
+      ]
+    },
+    {
+      "tool": "maven",
+      "title": "Maven documentation: the POM, the build lifecycle, dependencies, plugins, guides",
+      "repository": "https://github.com/apache/maven-site.git",
+      "ref": "master",
+      "version": "2026-11",
+      "license": "Apache-2.0",
+      "attribution": "The Apache Software Foundation",
+      "paths": [
+        "content/markdown/"
+      ],
+      "docs": [
+        "content/markdown"
+      ],
+      "licenseTexts": {
+        "LICENSE": "https://www.apache.org/licenses/LICENSE-2.0.txt"
+      }
     }
   ]
 }

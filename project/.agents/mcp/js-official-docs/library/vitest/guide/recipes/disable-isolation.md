@@ -1,21 +1,16 @@
 ---
-title: "Per-File Isolation Settings | Recipes"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/recipes/disable-isolation.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Per-File Isolation Settings | Recipes
 ---
 
 # Per-File Isolation Settings
 
 By default, every test file runs in its own isolated module graph, which protects against one file leaking state into another. That isolation costs setup time on every file, which is fine for integration tests that genuinely need it and wasted on pure unit tests that don't share mutable state.
 
-Use `projects` to apply `isolate: false` to the unit suite while keeping the integration suite isolated.
+Use [`projects`](/guide/projects) to apply [`isolate: false`](/config/isolate) to the unit suite while keeping the integration suite isolated.
 
 ## Pattern
 
-```ts
+```ts [vitest.config.ts]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -46,7 +41,7 @@ export default defineConfig({
 A test file is safe to deisolate when it does not:
 
 - mutate module-level state (counters, caches, top-level `let` bindings)
-- call `vi.stubGlobal` or `vi.stubEnv`
+- call [`vi.stubGlobal`](/api/vi#vi-stubglobal) or [`vi.stubEnv`](/api/vi#vi-stubenv)
 - monkey-patch prototypes (`Date.prototype`, `Array.prototype`, …)
 - register listeners on `process` or other long-lived emitters
 - depend on a fresh module instance for `vi.mock` factories
@@ -66,11 +61,11 @@ If the second run produces different results, you have order-dependent tests. Ei
 
 ## Per-pool isolation
 
-`isolate` only governs the `threads` and `forks` pools. The `vmThreads` and `vmForks` pools always run isolated regardless of the flag, since they trade startup cost for stronger guarantees.
+`isolate` only governs the [`threads`](/config/pool) and [`forks`](/config/pool) pools. The `vmThreads` and `vmForks` pools always run isolated regardless of the flag, since they trade startup cost for stronger guarantees.
 
 ## See also
 
-- `isolate`
-- Test Projects
-- Improving Performance
-- Parallel and Sequential Test Files
+- [`isolate`](/config/isolate)
+- [Test Projects](/guide/projects)
+- [Improving Performance](/guide/improving-performance)
+- [Parallel and Sequential Test Files](/guide/recipes/parallel-sequential)

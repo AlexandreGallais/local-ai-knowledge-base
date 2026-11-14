@@ -1,12 +1,3 @@
----
-title: "class: TestStep"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/test-reporter-api/class-teststep.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: TestStep
 * since: v1.10
 * langs: js
@@ -24,6 +15,7 @@ Step category to differentiate steps with different origin and verbosity. Built-
 * `pw:api` for Playwright API calls.
 * `test.step` for test.step API calls.
 * `test.attach` for testInfo.attach API calls.
+
 
 ## property: TestStep.duration
 * since: v1.10
@@ -64,8 +56,8 @@ await page.getByRole('button').click();
 // { url: 'https://example.com' }
 await page.goto('https://example.com');
 
-// { locator: '<example-value>', value: '<example-value>' }
-await page.getByLabel('<example-value>').fill('<example-value>');
+// { locator: 'getByLabel(\'Password\')', value: 'secret' }
+await page.getByLabel('Password').fill('secret');
 
 // { orderId: 42 }
 await test.step('checkout', async () => {

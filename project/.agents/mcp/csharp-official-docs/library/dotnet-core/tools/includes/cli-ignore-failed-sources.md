@@ -1,14 +1,7 @@
 ---
-title: "cli-ignore-failed-sources"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/includes/cli-ignore-failed-sources.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: 08/12/2021
+ms.topic: include
 ---
-
-# cli-ignore-failed-sources
-
 **`--ignore-failed-sources`**
 
 Treats package source failures as warnings.

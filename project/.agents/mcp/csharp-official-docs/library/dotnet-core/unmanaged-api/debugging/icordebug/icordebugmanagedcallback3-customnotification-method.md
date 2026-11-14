@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugManagedCallback3::CustomNotification Method"
 title: "ICorDebugManagedCallback3::CustomNotification Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmanagedcallback3-customnotification-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugManagedCallback3.CustomNotification Method"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugManagedCallback3::CustomNotification"
+helpviewer_keywords:
+  - "ICorDebugManagedCallback3::CustomNotification method [.NET debugging]"
+  - "CustomNotification method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugManagedCallback3::CustomNotification Method
 
 Indicates that a custom debugger notification has been raised.
@@ -34,15 +43,17 @@ This method returns the following specific HRESULTs as well as HRESULT errors th
 |-------------|-----------------|
 |S_OK|The method completed successfully.|
 
+## Exceptions
+
 ## Remarks
 
-A subsequent call to the ICorDebugThread4::GetCurrentCustomDebuggerNotification method retrieves the thread object that was passed to the `System.Diagnostics.Debugger.NotifyOfCrossThreadDependency*` method. The thread object's type must have been previously enabled by calling the ICorDebugProcess3::SetEnableCustomNotification method. The debugger can read type-specific parameters from the fields of the thread object, and can store responses into fields.
+A subsequent call to the [ICorDebugThread4::GetCurrentCustomDebuggerNotification](icordebugthread4-getcurrentcustomdebuggernotification-method.md) method retrieves the thread object that was passed to the <xref:System.Diagnostics.Debugger.NotifyOfCrossThreadDependency*?displayProperty=nameWithType> method. The thread object's type must have been previously enabled by calling the [ICorDebugProcess3::SetEnableCustomNotification](icordebugprocess3-setenablecustomnotification-method.md) method. The debugger can read type-specific parameters from the fields of the thread object, and can store responses into fields.
 
-The ICorDebug interface imposes no policy on the types of notifications or their contents, and the semantics of the notifications are strictly a contract between debuggers, applications, and .NET.
+The [ICorDebug](icordebug-interface.md) interface imposes no policy on the types of notifications or their contents, and the semantics of the notifications are strictly a contract between debuggers, applications, and .NET.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -52,4 +63,4 @@ The ICorDebug interface imposes no policy on the types of notifications or their
 
 ## See also
 
-- ICorDebugManagedCallback3 Interface
+- [ICorDebugManagedCallback3 Interface](icordebugmanagedcallback3-interface.md)

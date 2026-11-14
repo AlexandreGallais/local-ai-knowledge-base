@@ -1,17 +1,15 @@
 ---
-title: "High-performance logging"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/extensions/logging/high-performance-logging.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: High-performance logging
+description: Learn how to use source-generated logging with LoggerMessageAttribute to create high-performance logs with minimal overhead in .NET apps.
+ms.date: 02/02/2026
+ai-usage: ai-assisted
 ---
 
 # High-performance logging in .NET
 
-For high-performance logging scenarios in .NET 6 and later versions, use the `Microsoft.Extensions.Logging.LoggerMessageAttribute` with compile-time source generation. This approach provides the best performance by eliminating boxing, temporary allocations, and message template parsing at runtime.
+For high-performance logging scenarios in .NET 6 and later versions, use the <xref:Microsoft.Extensions.Logging.LoggerMessageAttribute> with [compile-time source generation](source-generation.md). This approach provides the best performance by eliminating boxing, temporary allocations, and message template parsing at runtime.
 
-Source-generated logging provides the following performance advantages over logger extension methods, such as `Microsoft.Extensions.Logging.LoggerExtensions.LogInformation*` and `Microsoft.Extensions.Logging.LoggerExtensions.LogDebug*`:
+Source-generated logging provides the following performance advantages over [logger extension methods](xref:Microsoft.Extensions.Logging.LoggerExtensions), such as <xref:Microsoft.Extensions.Logging.LoggerExtensions.LogInformation*> and <xref:Microsoft.Extensions.Logging.LoggerExtensions.LogDebug*>:
 
 - **Eliminates boxing:** Logger extension methods require "boxing" (converting) value types, such as `int`, into `object`. Source-generated logging avoids boxing by using strongly typed parameters.
 - **Parses templates at compile time:** Logger extension methods must parse the message template (named format string) every time a log message is written. Source-generated logging parses templates once at compile time.
@@ -19,14 +17,13 @@ Source-generated logging provides the following performance advantages over logg
 
 The sample app demonstrates high-performance logging features with a priority queue processing worker service. The app processes work items in priority order. As these operations occur, log messages are generated using source-generated logging.
 
-> **Tip:**
-> All of the logging example source code is available in the **Samples Browser** for download. For more information, see Browse code samples: Logging in .NET.
+[!INCLUDE [logging-samples-browser](includes/logging-samples-browser.md)]
 
 ## Define logger messages with source generation
 
-To create high-performance log messages in .NET 6 and later, define `partial` methods decorated with `Microsoft.Extensions.Logging.LoggerMessageAttribute`. The source generator creates the implementation at compile time.
+To create high-performance log messages in .NET 6 and later, define `partial` methods decorated with <xref:Microsoft.Extensions.Logging.LoggerMessageAttribute>. The source generator creates the implementation at compile time.
 
-### Basic <example-value> method
+### Basic logging method
 
 For a simple log message, define a partial method with the attribute specifying the event ID, log level, and message template:
 
@@ -42,7 +39,7 @@ public static partial class Log
 }
 ```
 
-The message template uses placeholders that are filled by method parameters. Placeholder names should be descriptive and consistent across templates. They serve as property names within structured log data. We recommend Pascal casing for placeholder names. For example, `{Item}`, `{DateTime}`.
+The message template uses placeholders that are filled by method parameters. Placeholder names should be descriptive and consistent across templates. They serve as property names within structured log data. We recommend [Pascal casing](../../../standard/design-guidelines/capitalization-conventions.md) for placeholder names. For example, `{Item}`, `{DateTime}`.
 
 Call the logging method from your code. For example, when an exception occurs during work item processing:
 
@@ -67,7 +64,7 @@ crit: WorkerServiceOptions.Example.Worker[13]
 
 ### Logging with parameters
 
-To pass <example-value> to a log message, add them as method parameters. The parameter names match the placeholders in the message template:
+To pass parameters to a log message, add them as method parameters. The parameter names match the placeholders in the message template:
 
 ```csharp
 public static partial class Log
@@ -95,28 +92,16 @@ info: WorkerServiceOptions.Example.Worker[1]
       Processing priority item: Priority-Extreme (50db062a-9732-4418-936d-110549ad79e4): 'Verify communications'
 ```
 
-Structured logging stores can use the event name when it's supplied with the event ID to enrich logging. For example, Serilog uses the event name.
+Structured logging stores can use the event name when it's supplied with the event ID to enrich logging. For example, [Serilog](https://github.com/serilog/serilog-extensions-logging) uses the event name.
 
 ## Define logger message scope with source generation
 
-You can define log scopes to wrap a series of log messages with additional context. With source-generated logging, you combine the `LoggerMessageAttribute` methods with the standard `ILogger.BeginScope` method.
+You can define [log scopes](overview.md#log-scopes) to wrap a series of log messages with additional context. With source-generated logging, you combine the `LoggerMessageAttribute` methods with the standard `ILogger.BeginScope` method.
 
 Enable `IncludeScopes` in the console logger section of *appsettings.json*:
 
-```json
-{
-    "Logging": {
-        "Console": {
-            "IncludeScopes": true
-        },
-        "LogLevel": {
-            "Default": "Information",
-            "Microsoft": "Warning",
-            "Microsoft.Hosting.Lifetime": "Information"
-        }
-    }
-}
-```
+:::code language="json" source="../snippets/logging/worker-service-options/appsettings.json" highlight="3-5":::
+
 Create source-generated logging methods and wrap them in a scope using `BeginScope`:
 
 ```csharp
@@ -150,137 +135,74 @@ info: WorkerServiceOptions.Example.Worker[1]
 
 ## Legacy approach: LoggerMessage.Define (for .NET Framework and .NET Core 3.1)
 
-Before source-generated logging was introduced in .NET 6, the recommended high-performance logging approach was to use the `Microsoft.Extensions.Logging.LoggerMessage.Define*` method to create cacheable delegates. While this approach is still supported for backward compatibility, new code should use source-generated logging with `LoggerMessageAttribute` instead.
+Before source-generated logging was introduced in .NET 6, the recommended high-performance logging approach was to use the <xref:Microsoft.Extensions.Logging.LoggerMessage.Define*?displayProperty=nameWithType> method to create cacheable delegates. While this approach is still supported for backward compatibility, new code should use source-generated logging with `LoggerMessageAttribute` instead.
 
-The `Microsoft.Extensions.Logging.LoggerMessage` class exposes functionality to create cacheable delegates that require fewer object allocations and reduced computational overhead compared to logger extension methods, such as `Microsoft.Extensions.Logging.LoggerExtensions.LogInformation*` and `Microsoft.Extensions.Logging.LoggerExtensions.LogDebug*`. `Microsoft.Extensions.Logging.LoggerMessage` provides the following performance advantages over logger extension methods:
+The <xref:Microsoft.Extensions.Logging.LoggerMessage> class exposes functionality to create cacheable delegates that require fewer object allocations and reduced computational overhead compared to [logger extension methods](xref:Microsoft.Extensions.Logging.LoggerExtensions), such as <xref:Microsoft.Extensions.Logging.LoggerExtensions.LogInformation*> and <xref:Microsoft.Extensions.Logging.LoggerExtensions.LogDebug*>. <xref:Microsoft.Extensions.Logging.LoggerMessage> provides the following performance advantages over logger extension methods:
 
-- Logger extension methods require "boxing" (converting) value types, such as `int`, into `object`. The `Microsoft.Extensions.Logging.LoggerMessage` pattern avoids boxing by using static `System.Action` fields and extension methods with strongly typed parameters.
-- Logger extension methods must parse the message template (named format string) every time a log message is written. `Microsoft.Extensions.Logging.LoggerMessage` only requires parsing a template once when the message is defined.
+- Logger extension methods require "boxing" (converting) value types, such as `int`, into `object`. The <xref:Microsoft.Extensions.Logging.LoggerMessage> pattern avoids boxing by using static <xref:System.Action> fields and extension methods with strongly typed parameters.
+- Logger extension methods must parse the message template (named format string) every time a log message is written. <xref:Microsoft.Extensions.Logging.LoggerMessage> only requires parsing a template once when the message is defined.
 
-> **Note:**
-> If you're maintaining code that uses `LoggerMessage.Define`, consider migrating to source-generated logging. For .NET Framework or .NET Core 3.1 applications, continue using `LoggerMessage.Define`.
+> [!NOTE]
+> If you're maintaining code that uses `LoggerMessage.Define`, consider migrating to [source-generated logging](source-generation.md). For .NET Framework or .NET Core 3.1 applications, continue using `LoggerMessage.Define`.
 
 ### Define a logger message
 
-Use Define(LogLevel, EventId, String) to create an `System.Action` delegate for logging a message. `Microsoft.Extensions.Logging.LoggerMessage.Define*` overloads permit passing up to six type parameters to a named format string (template).
+Use [Define(LogLevel, EventId, String)](xref:Microsoft.Extensions.Logging.LoggerMessage.Define%2A) to create an <xref:System.Action> delegate for logging a message. <xref:Microsoft.Extensions.Logging.LoggerMessage.Define*> overloads permit passing up to six type parameters to a named format string (template).
 
-The string provided to the `Microsoft.Extensions.Logging.LoggerMessage.Define*` method is a template and not an interpolated string. Placeholders are filled in the order that the types are specified. Placeholder names in the template should be descriptive and consistent across templates. They serve as property names within structured log data. We recommend Pascal casing for placeholder names. For example, `{Item}`, `{DateTime}`.
+The string provided to the <xref:Microsoft.Extensions.Logging.LoggerMessage.Define*> method is a template and not an interpolated string. Placeholders are filled in the order that the types are specified. Placeholder names in the template should be descriptive and consistent across templates. They serve as property names within structured log data. We recommend [Pascal casing](../../../standard/design-guidelines/capitalization-conventions.md) for placeholder names. For example, `{Item}`, `{DateTime}`.
 
-Each log message is an `System.Action` held in a static field created by LoggerMessage.Define. For example, the sample app creates a field to describe a log message for the processing of work items:
+Each log message is an <xref:System.Action> held in a static field created by [LoggerMessage.Define](xref:Microsoft.Extensions.Logging.LoggerMessage.Define%2A). For example, the sample app creates a field to describe a log message for the processing of work items:
 
-```csharp
-private static readonly Action<ILogger, Exception> s_failedToProcessWorkItem;
-```
-For the `System.Action`, specify:
+:::code language="csharp" source="../snippets/logging/worker-service-options/Extensions/LoggerExtensions.cs" id="FailedProcessingField":::
+
+For the <xref:System.Action>, specify:
 
 - The log level.
-- A unique event identifier (`Microsoft.Extensions.Logging.EventId`) with the name of the static extension method.
+- A unique event identifier (<xref:Microsoft.Extensions.Logging.EventId>) with the name of the static extension method.
 - The message template (named format string).
 
 As work items are dequeued for processing, the worker service app sets the:
 
-- Log level to `Microsoft.Extensions.Logging.LogLevel.Critical`.
+- Log level to <xref:Microsoft.Extensions.Logging.LogLevel.Critical?displayProperty=nameWithType>.
 - Event ID to `13` with the name of the `FailedToProcessWorkItem` method.
 - Message template (named format string) to a string.
 
-```csharp
-s_failedToProcessWorkItem = LoggerMessage.Define(
-    LogLevel.Critical,
-    new EventId(13, nameof(FailedToProcessWorkItem)),
-    "Epic failure processing item!");
-```
-The `Microsoft.Extensions.Logging.LoggerMessage.Define*` method is used to configure and define an `System.Action` delegate, which represents a log message.
+:::code language="csharp" source="../snippets/logging/worker-service-options/Extensions/LoggerExtensions.cs" id="FailedProcessingAssignment":::
 
-Structured logging stores can use the event name when it's supplied with the event ID to enrich logging. For example, Serilog uses the event name.
+The <xref:Microsoft.Extensions.Logging.LoggerMessage.Define*?displayProperty=nameWithType> method is used to configure and define an <xref:System.Action> delegate, which represents a log message.
 
-The `System.Action` is invoked through a strongly typed extension method. The `PriorityItemProcessed` method logs a message every time a work item is processed. `FailedToProcessWorkItem` is called if and when an exception occurs:
+Structured logging stores can use the event name when it's supplied with the event ID to enrich logging. For example, [Serilog](https://github.com/serilog/serilog-extensions-logging) uses the event name.
 
-```csharp
-protected override async Task ExecuteAsync(
-    CancellationToken <example-value>)
-{
-    using (IDisposable? scope = logger.ProcessingWorkScope(DateTime.Now))
-    {
-        while (!stoppingToken.IsCancellationRequested)
-        {
-            try
-            {
-                WorkItem? nextItem = priorityQueue.ProcessNextHighestPriority();
+The <xref:System.Action> is invoked through a strongly typed extension method. The `PriorityItemProcessed` method logs a message every time a work item is processed. `FailedToProcessWorkItem` is called if and when an exception occurs:
 
-                if (nextItem is not null)
-                {
-                    logger.PriorityItemProcessed(nextItem);
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.FailedToProcessWorkItem(ex);
-            }
+:::code language="csharp" source="../snippets/logging/worker-service-options/Worker.cs" range="9-33" highlight="17-20":::
 
-            await Task.Delay(1_000, stoppingToken);
-        }
-    }
-}
-```
 Inspect the app's console output:
 
 ```console
 crit: WorkerServiceOptions.Example.Worker[13]
       Epic failure processing item!
       System.Exception: Failed to verify communications.
-         at WorkerServiceOptions.Example.Worker.ExecuteAsync(CancellationToken <example-value>) in
+         at WorkerServiceOptions.Example.Worker.ExecuteAsync(CancellationToken stoppingToken) in
          ..\Worker.cs:line 27
 ```
 
-To pass <example-value> to a log message, define up to six types when creating the static field. The sample app logs the work item details when processing items by defining a `WorkItem` type for the `System.Action` field:
+To pass parameters to a log message, define up to six types when creating the static field. The sample app logs the work item details when processing items by defining a `WorkItem` type for the <xref:System.Action> field:
 
-```csharp
-private static readonly Action<ILogger, WorkItem, Exception> s_processingPriorityItem;
-```
+:::code language="csharp" source="../snippets/logging/worker-service-options/Extensions/LoggerExtensions.cs" id="ProcessingItemField":::
+
 The delegate's log message template receives its placeholder values from the types provided. The sample app defines a delegate for adding a work item where the item parameter is a `WorkItem`:
 
-```csharp
-s_processingPriorityItem = LoggerMessage.Define<WorkItem>(
-    LogLevel.Information,
-    new EventId(1, nameof(PriorityItemProcessed)),
-    "Processing priority item: {Item}");
-```
-The static extension method for logging that a work item is being processed, `PriorityItemProcessed`, receives the work item argument value and passes it to the `System.Action` delegate:
+:::code language="csharp" source="../snippets/logging/worker-service-options/Extensions/LoggerExtensions.cs" id="ProcessingItemAssignment":::
 
-```csharp
-public static void PriorityItemProcessed(
-    this ILogger logger, WorkItem workItem) =>
-    s_processingPriorityItem(logger, workItem, default!);
-```
+The static extension method for logging that a work item is being processed, `PriorityItemProcessed`, receives the work item argument value and passes it to the <xref:System.Action> delegate:
+
+:::code language="csharp" source="../snippets/logging/worker-service-options/Extensions/LoggerExtensions.cs" id="ProcessingItemMethod":::
+
 In the worker service's `ExecuteAsync` method, `PriorityItemProcessed` is called to log the message:
 
-```csharp
-protected override async Task ExecuteAsync(
-    CancellationToken <example-value>)
-{
-    using (IDisposable? scope = logger.ProcessingWorkScope(DateTime.Now))
-    {
-        while (!stoppingToken.IsCancellationRequested)
-        {
-            try
-            {
-                WorkItem? nextItem = priorityQueue.ProcessNextHighestPriority();
+:::code language="csharp" source="../snippets/logging/worker-service-options/Worker.cs" range="9-33" highlight="14":::
 
-                if (nextItem is not null)
-                {
-                    logger.PriorityItemProcessed(nextItem);
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.FailedToProcessWorkItem(ex);
-            }
-
-            await Task.Delay(1_000, stoppingToken);
-        }
-    }
-}
-```
 Inspect the app's console output:
 
 ```console
@@ -290,14 +212,14 @@ info: WorkerServiceOptions.Example.Worker[1]
 
 ## Log-level guarded optimizations
 
-You can optimize performance by checking the `Microsoft.Extensions.Logging.LogLevel` with `Microsoft.Extensions.Logging.ILogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)` before invoking the corresponding `Log*` method. When logging isn't configured for the given `LogLevel`, `Microsoft.Extensions.Logging.ILogger.Log*` isn't called. In addition, value-type boxing and an allocation of `object[]` (to represent the parameters) are avoided.
+You can optimize performance by checking the <xref:Microsoft.Extensions.Logging.LogLevel> with <xref:Microsoft.Extensions.Logging.ILogger.IsEnabled(Microsoft.Extensions.Logging.LogLevel)?displayProperty=nameWithType> before invoking the corresponding `Log*` method. When logging isn't configured for the given `LogLevel`, <xref:Microsoft.Extensions.Logging.ILogger.Log*?displayProperty=nameWithType> isn't called. In addition, value-type boxing and an allocation of `object[]` (to represent the parameters) are avoided.
 
 For more information, see:
 
-- Micro benchmarks in the .NET runtime
-- Background and motivation for log-level checks
+- [Micro benchmarks in the .NET runtime](https://github.com/dotnet/runtime/issues/51927#issuecomment-842993859)
+- [Background and motivation for log-level checks](https://github.com/dotnet/runtime/issues/45290#issue-752502603)
 
 ## See also
 
-- Logging in .NET
-- Compile-time logging source generation
+- [Logging in .NET](overview.md)
+- [Compile-time logging source generation](source-generation.md)

@@ -1,12 +1,3 @@
----
-title: "inkex.elements._filters"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/elements/_filters.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.elements._filters
 
 Element interface for patterns, filters, gradients and path effects.
@@ -100,7 +91,7 @@ class DistantLight(Primitive)
 DistanceLight Filter element
 defines a light source for a DiffuseLighting or SpecularLighting Filter element
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## class Filter.Flood
 
@@ -119,7 +110,7 @@ class FuncA(Primitive)
 FuncR Filter element
 defines the alpha channel transfer for a ComponentTransfer Filter element
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## class Filter.FuncB
 
@@ -130,7 +121,7 @@ class FuncB(Primitive)
 FuncR Filter element
 defines the blue channel transfer for a ComponentTransfer Filter element
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## class Filter.FuncG
 
@@ -141,7 +132,7 @@ class FuncG(Primitive)
 FuncR Filter element
 defines the green channel transfer for a ComponentTransfer Filter element
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## class Filter.FuncR
 
@@ -152,7 +143,7 @@ class FuncR(Primitive)
 FuncR Filter element
 defines the red channel transfer for a ComponentTransfer Filter element
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## class Filter.GaussianBlur
 
@@ -187,7 +178,7 @@ class MergeNode(Primitive)
 MergeNode Filter element
 defines an input for a Merge Filter element
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## class Filter.Morphology
 
@@ -214,7 +205,7 @@ class PointLight(Primitive)
 PointLight Filter elements
 defines a light source for a DiffuseLighting or SpecularLighting Filter element
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## class Filter.SpecularLighting
 
@@ -233,7 +224,7 @@ class SpotLight(Primitive)
 SpotLight Filter element
 defines a light source for a DiffuseLighting or SpecularLighting Filter element
 
-> *Added in version 1.4.*
+.. versionadded:: 1.4
 
 ## class Filter.Tile
 
@@ -259,7 +250,7 @@ class Stop(BaseElement)
 
 Gradient stop
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## Stop.offset
 
@@ -293,7 +284,7 @@ def get_viewbox(self) -> Optional[List[float]]
 
 Get the viewbox of the pattern, falling back to the href's viewbox
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 ## Pattern.get_effective_parent
 
@@ -304,7 +295,7 @@ def get_effective_parent(self, depth=0, maxDepth=10)
 If a pattern has no children, but a href, it uses the children from the href.
 Avoids infinite recursion.
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 ## class Mask
 
@@ -314,7 +305,7 @@ class Mask(GroupBase)
 
 A structural object that serves as opacity mask
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 ## class Gradient
 
@@ -332,7 +323,7 @@ def stops(self)
 
 Return an ordered list of own or linked stop nodes
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## Gradient.stop_styles
 
@@ -342,7 +333,7 @@ def stop_styles(self): # type: () -> List[Style] """Return a list of own or link
 
 Remove all orientation attributes from this element
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## Gradient.remove_orientation
 
@@ -352,7 +343,7 @@ def remove_orientation(self)
 
 Remove all orientation attributes from this element
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## Gradient.interpolate
 
@@ -362,7 +353,7 @@ def interpolate(self, other: LinearGradient, fraction: float, svg: Optional[SvgD
 
 Interpolate with another gradient.
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## Gradient.stops_and_orientation
 
@@ -372,7 +363,7 @@ def stops_and_orientation(self)
 
 Return a copy of all the stops in this gradient
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## Gradient.get_percentage_parsed_unit
 
@@ -384,7 +375,7 @@ Parses an attribute of a gradient, respecting percentage values of
 "userSpaceOnUse" as percentages of document size. See
 https://www.w3.org/TR/SVG2/pservers.html#LinearGradientAttributes for details
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 ## class LinearGradient
 
@@ -402,7 +393,7 @@ def apply_transform(self): # type: () -> None """Apply transform to orientation 
 
 Get the x1 attribute
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 ## LinearGradient.x1
 
@@ -412,7 +403,7 @@ def x1(self, svg=None)
 
 Get the x1 attribute
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 ## LinearGradient.x2
 
@@ -422,7 +413,7 @@ def x2(self, svg=None)
 
 Get the x2 attribute
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 ## LinearGradient.y1
 
@@ -432,7 +423,7 @@ def y1(self, svg=None)
 
 Get the y1 attribute
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 ## LinearGradient.y2
 
@@ -442,7 +433,7 @@ def y2(self, svg=None)
 
 Get the y2 attribute
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 ## class RadialGradient
 
@@ -460,7 +451,7 @@ def apply_transform(self): # type: () -> None """Apply transform to orientation 
 
 Get the effective cx (horizontal center) attribute in user units
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 ## RadialGradient.cx
 
@@ -470,7 +461,7 @@ def cx(self, svg=None)
 
 Get the effective cx (horizontal center) attribute in user units
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 ## RadialGradient.cy
 
@@ -480,7 +471,7 @@ def cy(self, svg=None)
 
 Get the effective cy (vertical center) attribute in user units
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 ## RadialGradient.fx
 
@@ -490,7 +481,7 @@ def fx(self, svg=None)
 
 Get the effective fx (horizontal focal point) attribute in user units
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 ## RadialGradient.fy
 
@@ -500,7 +491,7 @@ def fy(self, svg=None)
 
 Get the effective fx (vertical focal point) attribute in user units
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 ## RadialGradient.r
 
@@ -510,7 +501,7 @@ def r(self, svg=None)
 
 Get the effective r (gradient radius) attribute in user units
 
-> *Added in version 1.3.*
+.. versionadded:: 1.3
 
 ## class PathEffect
 
@@ -528,7 +519,7 @@ class MeshGradient(Gradient)
 
 Usable MeshGradient XML base class
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## MeshGradient.new_mesh
 
@@ -546,7 +537,7 @@ class MeshRow(BaseElement)
 
 Each row of a mesh gradient
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## class MeshPatch
 
@@ -556,7 +547,7 @@ class MeshPatch(BaseElement)
 
 Each column or 'patch' in a mesh gradient
 
-> *Added in version 1.1.*
+.. versionadded:: 1.1
 
 ## MeshPatch.stops
 

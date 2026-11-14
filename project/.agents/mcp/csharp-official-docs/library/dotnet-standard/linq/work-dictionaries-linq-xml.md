@@ -1,23 +1,24 @@
 ---
-title: "How to work with dictionaries using LINQ to XML - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/work-dictionaries-linq-xml.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to work with dictionaries using LINQ to XML - LINQ to XML
+description: You can convert many kinds of data structures to XML, and you can convert XML to structures. Here is an example that converts a Generic.Dictionary to XML and back.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: 57bcefe3-8433-4d3b-935a-511c9bcbdfa8
 ---
 
 # How to work with dictionaries using LINQ to XML
 
-It's often convenient to convert data structures of various kinds to XML, and then from XML to other data structures. This article shows a conversion of a `System.Collections.Generic.Dictionary`2` to XML and back.
+It's often convenient to convert data structures of various kinds to XML, and then from XML to other data structures. This article shows a conversion of a <xref:System.Collections.Generic.Dictionary`2> to XML and back.
 
 ## Example: Create a Dictionary and convert its contents to XML
 
-This first example creates a `System.Collections.Generic.Dictionary`2`, and then converts it to XML.
+This first example creates a <xref:System.Collections.Generic.Dictionary`2>, and then converts it to XML.
 
-This C# version of the example uses a form of functional construction in which a query projects new `System.Xml.Linq.XElement` objects, and the resulting collection is passed as an argument to the constructor of the Root `System.Xml.Linq.XElement` object.
+This C# version of the example uses a form of functional construction in which a query projects new <xref:System.Xml.Linq.XElement> objects, and the resulting collection is passed as an argument to the constructor of the Root <xref:System.Xml.Linq.XElement> object.
 
-The Visual Basic <example-value> uses XML literals and a query in an embedded expression. The query projects new `System.Xml.Linq.XElement` objects which then become the new content for the `Root` `System.Xml.Linq.XElement` object.
+The Visual Basic version uses XML literals and a query in an embedded expression. The query projects new <xref:System.Xml.Linq.XElement> objects which then become the new content for the `Root` <xref:System.Xml.Linq.XElement> object.
 
 ```csharp
 Dictionary<string, string> dict = new Dictionary<string, string>();
@@ -105,4 +106,4 @@ Child4:Value4
 
 ## See also
 
-- Projection Operations (Visual Basic)
+- [Projection Operations (Visual Basic)](../../visual-basic/programming-guide/concepts/linq/projection-operations.md)

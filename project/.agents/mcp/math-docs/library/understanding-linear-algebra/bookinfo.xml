@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<docinfo>
+  <brandlogo url="https://understandinglinearalgebra.org"
+	     source="images/ula-logo.png" />
+  <document-id component="production">ula</document-id>
+  <document-id component="proteus-id">ula-proteus</document-id>
+  <document-id component="proteus-playground">ula-proteus-playground</document-id>
+  <blurb shelf="Mathematics">
+    A open-access textbook to support a two-course sequence in linear
+    algebra that does not require calculus as a prerequisite.  The text
+    includes many activities designed to facilitate an active learning
+    environment, embedded Sage cells to develop
+    computational proficiency, and numerous realistic applications.
+  </blurb>
+  <macros>
+    \newcommand{\avec}{{\mathbf a}}
+    \newcommand{\bvec}{{\mathbf b}}
+    \newcommand{\cvec}{{\mathbf c}}
+    \newcommand{\dvec}{{\mathbf d}}
+    \newcommand{\dtil}{\widetilde{\mathbf d}}
+    \newcommand{\evec}{{\mathbf e}}
+    \newcommand{\fvec}{{\mathbf f}}
+    \newcommand{\nvec}{{\mathbf n}}
+    \newcommand{\pvec}{{\mathbf p}}
+    \newcommand{\qvec}{{\mathbf q}}
+    \newcommand{\svec}{{\mathbf s}}
+    \newcommand{\tvec}{{\mathbf t}}
+    \newcommand{\uvec}{{\mathbf u}}
+    \newcommand{\vvec}{{\mathbf v}}
+    \newcommand{\wvec}{{\mathbf w}}
+    \newcommand{\xvec}{{\mathbf x}}
+    \newcommand{\yvec}{{\mathbf y}}
+    \newcommand{\zvec}{{\mathbf z}}
+    \newcommand{\rvec}{{\mathbf r}}
+    \newcommand{\mvec}{{\mathbf m}}
+    \newcommand{\zerovec}{{\mathbf 0}}
+    \newcommand{\onevec}{{\mathbf 1}}
+    \newcommand{\real}{{\mathbb R}}
+    \newcommand{\twovec}[2]{\left[\begin{array}{r}#1 \\ #2
+    \end{array}\right]}
+    \newcommand{\ctwovec}[2]{\left[\begin{array}{c}#1 \\ #2
+    \end{array}\right]}
+    \newcommand{\threevec}[3]{\left[\begin{array}{r}#1 \\ #2 \\ #3
+    \end{array}\right]}
+    \newcommand{\cthreevec}[3]{\left[\begin{array}{c}#1 \\ #2 \\ #3
+    \end{array}\right]}
+    \newcommand{\fourvec}[4]{\left[\begin{array}{r}#1 \\ #2 \\ #3 \\ #4
+    \end{array}\right]}
+    \newcommand{\cfourvec}[4]{\left[\begin{array}{c}#1 \\ #2 \\ #3 \\ #4
+    \end{array}\right]}
+    \newcommand{\fivevec}[5]{\left[\begin{array}{r}#1 \\ #2 \\ #3 \\
+    #4 \\ #5 \\ \end{array}\right]}
+    \newcommand{\cfivevec}[5]{\left[\begin{array}{c}#1 \\ #2 \\ #3 \\
+    #4 \\ #5 \\ \end{array}\right]}
+    \newcommand{\mattwo}[4]{\left[\begin{array}{rr}#1 \amp #2 \\ #3 \amp #4 \\ \end{array}\right]}
+    \newcommand{\laspan}[1]{\text{Span}\left\{#1\right\}}
+    \newcommand{\bcal}{{\cal B}}
+    \newcommand{\ccal}{{\cal C}}
+    \newcommand{\scal}{{\cal S}}
+    \newcommand{\wcal}{{\cal W}}
+    \newcommand{\ecal}{{\cal E}}
+    \newcommand{\coords}[2]{\left\{#1\right\}_{#2}}
+    \newcommand{\gray}[1]{\color{gray}{#1}}
+    \newcommand{\lgray}[1]{\color{lightgray}{#1}}
+    \newcommand{\rank}{\operatorname{rank}}
+    \newcommand{\row}{\text{Row}}
+    \newcommand{\col}{\text{Col}}
+    \renewcommand{\row}{\text{Row}}
+    \newcommand{\nul}{\text{Nul}}
+    \newcommand{\var}{\text{Var}}
+    \newcommand{\corr}{\text{corr}}
+    \newcommand{\len}[1]{\left|#1\right|}
+    \newcommand{\xbar}{\bar{\xvec}}
+    \newcommand{\bbar}{\overline{\bvec}}
+    \newcommand{\bhat}{\widehat{\bvec}}
+    \newcommand{\bperp}{\bvec^\perp}
+    \newcommand{\xhat}{\widehat{\xvec}}
+    \newcommand{\vhat}{\widehat{\vvec}}
+    \newcommand{\uhat}{\widehat{\uvec}}
+    \newcommand{\what}{\widehat{\wvec}}
+    \newcommand{\Sighat}{\widehat{\Sigma}}
+    \newcommand{\basis}[2]{#1_1,#1_2,\ldots,#1_{#2}}
+  </macros>
+  <directories data="data"/>
+  <rename element="exploration">Preview Activity</rename>
+  <rename element="convention">Notation</rename>
+
+</docinfo>

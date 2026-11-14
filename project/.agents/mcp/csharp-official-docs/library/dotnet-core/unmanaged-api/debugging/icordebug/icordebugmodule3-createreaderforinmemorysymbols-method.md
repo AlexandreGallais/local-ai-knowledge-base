@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugModule3::CreateReaderForInMemorySymbols Method"
 title: "ICorDebugModule3::CreateReaderForInMemorySymbols Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmodule3-createreaderforinmemorysymbols-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugModule3.CreateReaderForInMemorySymbols"
+api_location:
+  - "CorDebug.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugModule3::CreateReaderForInMemorySymbols"
+helpviewer_keywords:
+  - "CreateReaderForInMemorySymbols method, ICorDebugModule3 interface [.NET debugging]"
+  - "ICorDebugModule3::CreateReaderForInMemorySymbols method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugModule3::CreateReaderForInMemorySymbols Method
 
 Creates a debug symbol reader for a dynamic module.
@@ -22,7 +31,7 @@ HRESULT CreateReaderForInMemorySymbols (
 ## Parameters
 
 `riid`\
-[in] The IID of the COM interface to return. Typically, this is an ISymUnmanagedReader Interface.
+[in] The IID of the COM interface to return. Typically, this is an [ISymUnmanagedReader Interface](../../../../framework/unmanaged-api/diagnostics/isymunmanagedreader-interface.md).
 
 `ppObj`\
 [out] Pointer to a pointer to the returned interface.
@@ -43,15 +52,15 @@ Unable to create the reader.
 
 ## Remarks
 
-This method can also be used to create a symbol reader object for in-memory (non-dynamic) modules, but only after the symbols are first available (indicated by the UpdateModuleSymbols Method callback).
+This method can also be used to create a symbol reader object for in-memory (non-dynamic) modules, but only after the symbols are first available (indicated by the [UpdateModuleSymbols Method](icordebugmanagedcallback-updatemodulesymbols-method.md) callback).
 
-This method returns a new reader instance every time it is called (like CComPtrBase::CoCreateInstance). Therefore, the debugger should cache the result and request a new instance only when the underlying data may have changed (that is, when a LoadClass Method callback is received).
+This method returns a new reader instance every time it is called (like [CComPtrBase::CoCreateInstance](/cpp/atl/reference/ccomptrbase-class#cocreateinstance)). Therefore, the debugger should cache the result and request a new instance only when the underlying data may have changed (that is, when a [LoadClass Method](icordebugmanagedcallback-loadclass-method.md) callback is received).
 
-Dynamic modules do not have any symbols available until the first type has been loaded (as indicated by the LoadClass Method callback).
+Dynamic modules do not have any symbols available until the first type has been loaded (as indicated by the [LoadClass Method](icordebugmanagedcallback-loadclass-method.md) callback).
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -61,5 +70,5 @@ Dynamic modules do not have any symbols available until the first type has been 
 
 ## See also
 
-- ICorDebugRemoteTarget Interface
-- ICorDebug Interface
+- [ICorDebugRemoteTarget Interface](icordebugremotetarget-interface.md)
+- [ICorDebug Interface](icordebug-interface.md)

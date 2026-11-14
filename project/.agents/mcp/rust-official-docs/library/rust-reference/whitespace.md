@@ -1,17 +1,8 @@
----
-title: "Whitespace"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/whitespace.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[lex.whitespace]
 # Whitespace
 
 r[whitespace.syntax]
-```grammar
+```grammar,lexer
 WHITESPACE ->
       U+0009 // Horizontal tab, `'\t'`
     | U+000A // Line feed, `'\n'`
@@ -38,7 +29,9 @@ r[lex.whitespace.intro]
 Whitespace is any non-empty string containing only characters that have the [`Pattern_White_Space`] Unicode property.
 
 r[lex.whitespace.token-sep]
-Rust is a "<example-value>" language, meaning that all forms of whitespace serve only to separate _tokens_ in the grammar, and have no semantic significance.
+Rust is a "free-form" language, meaning that all forms of whitespace serve only to separate _tokens_ in the grammar, and have no semantic significance.
 
 r[lex.whitespace.replacement]
 A Rust program has identical meaning if each whitespace element is replaced with any other legal whitespace element, such as a single space character.
+
+[`Pattern_White_Space`]: https://www.unicode.org/reports/tr31/

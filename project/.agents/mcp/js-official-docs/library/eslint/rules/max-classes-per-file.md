@@ -1,13 +1,8 @@
 ---
-title: "max-classes-per-file"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/max-classes-per-file.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: max-classes-per-file
+rule_type: suggestion
 ---
 
-# max-classes-per-file
 
 Files containing multiple classes can often result in a less navigable
 and poorly structured codebase. Best practice is to keep each file
@@ -20,7 +15,7 @@ of classes and no more.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint max-classes-per-file: "error"*/
@@ -29,15 +24,19 @@ class Foo {}
 class Bar {}
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint max-classes-per-file: "error"*/
 
 class Foo {}
 ```
+
+:::
 
 ## Options
 
@@ -67,7 +66,7 @@ For example:
 
 Examples of **correct** code for this rule with the `max` option set to `2`:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint max-classes-per-file: ["error", 2] */
@@ -76,9 +75,11 @@ class Foo {}
 class Bar {}
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `ignoreExpressions` option set to `true`:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint max-classes-per-file: ["error", { ignoreExpressions: true }] */
@@ -93,3 +94,5 @@ class VisitorFactory {
     }
 }
 ```
+
+:::

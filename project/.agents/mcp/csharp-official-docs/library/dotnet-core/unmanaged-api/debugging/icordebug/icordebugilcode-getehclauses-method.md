@@ -1,12 +1,18 @@
 ---
+description: "Learn more about: ICorDebugILCode::GetEHClauses Method"
 title: "ICorDebugILCode::GetEHClauses Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugilcode-getehclauses-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "cpp"
+api_name:
+  - "ICorDebugILCode.GetEHClauses"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugILCode::GetEHClauses Method
 
 Returns a pointer to a list of exception handling (EH) clauses that are defined for this intermediate language (IL).
@@ -29,7 +35,7 @@ HRESULT GetEHClauses(
  [out] The number of clauses about which information is written to the `clauses` array.
 
 clauses
- [out] An array of CorDebugEHClause objects that contain information on exception handling clauses defined for this IL.
+ [out] An array of [CorDebugEHClause](cordebugehclause-structure.md) objects that contain information on exception handling clauses defined for this IL.
 
 ## Remarks
 
@@ -37,7 +43,7 @@ If `cClauses` is 0 and `pcClauses` is non-**null**, `pcClauses` is set to the nu
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -47,5 +53,5 @@ If `cClauses` is 0 and `pcClauses` is non-**null**, `pcClauses` is set to the nu
 
 ## See also
 
-- ICorDebugILCode Interface
-- CorDebugEHClause Structure
+- [ICorDebugILCode Interface](icordebugilcode-interface.md)
+- [CorDebugEHClause Structure](cordebugehclause-structure.md)

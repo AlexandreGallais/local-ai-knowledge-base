@@ -1,17 +1,17 @@
 ---
+pageClass: "rule-details"
+sidebarDepth: 0
 title: "regexp/no-misleading-unicode-character"
-tool: "eslint-regexp"
-version: "3.3"
-source: "https://github.com/ota-meshi/eslint-plugin-regexp/blob/8200d2990ca2685610c98ce2d0eefef23e35ed8f/docs/rules/no-misleading-unicode-character.md"
-commit: "8200d2990ca2685610c98ce2d0eefef23e35ed8f"
-license: "MIT"
+description: "disallow multi-code-point characters in character classes and quantifiers"
+since: "v1.2.0"
 ---
-
 # regexp/no-misleading-unicode-character
 
 💼 This rule is enabled in the following configs: 🟢 `flat/recommended`, 🔵 `recommended`.
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
 
 > disallow multi-code-point characters in character classes and quantifiers
 
@@ -66,11 +66,13 @@ var foo = /[❇️🏴‍☠️👨‍👩‍👦]❤️/;
 
 - [no-misleading-character-class]
 
+[no-misleading-character-class]: https://eslint.org/docs/rules/no-misleading-character-class
+
 ## :rocket: Version
 
 This rule was introduced in eslint-plugin-regexp v1.2.0
 
 ## :mag: Implementation
 
-- Rule source
-- Test source
+- [Rule source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/lib/rules/no-misleading-unicode-character.ts)
+- [Test source](https://github.com/ota-meshi/eslint-plugin-regexp/blob/master/tests/lib/rules/no-misleading-unicode-character.ts)

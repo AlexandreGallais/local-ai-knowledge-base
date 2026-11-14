@@ -1,12 +1,3 @@
----
-title: "Code coverage"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/testing/code-coverage.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Code coverage
 
 Code coverage reports show you any parts of your code base that might not be properly tested by your unit tests.
@@ -15,25 +6,20 @@ Code coverage reports show you any parts of your code base that might not be pro
 
 To generate code coverage reports with Vitest, you must install the `@vitest/coverage-v8` package:
 
-```
-  
+<docs-code-multifile>
+  <docs-code header="npm" language="shell">
     npm install --save-dev @vitest/coverage-v8
-```
-  File: `yarn`
-
-```shell
+  </docs-code>
+  <docs-code header="yarn" language="shell">
     yarn add --dev @vitest/coverage-v8
-```
-  File: `pnpm`
-
-```shell
+  </docs-code>
+  <docs-code header="pnpm" language="shell">
     pnpm add -D @vitest/coverage-v8
-```
-  File: `bun`
-
-```shell
+  </docs-code>
+  <docs-code header="bun" language="shell">
     bun add --dev @vitest/coverage-v8
-```
+  </docs-code>
+</docs-code-multifile>
 
 ## Generating a report
 

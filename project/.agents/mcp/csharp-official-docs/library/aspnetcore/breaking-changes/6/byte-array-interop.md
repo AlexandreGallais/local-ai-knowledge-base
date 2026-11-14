@@ -1,12 +1,10 @@
 ---
 title: "Breaking change: Blazor: Byte Array Interop"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/6/byte-array-interop.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 6.0 titled Blazor: Byte Array Interop"
+no-loc: [ Blazor ]
+ms.date: 06/21/2021
+ms.custom: https://github.com/dotnet/Announcements/issues/187
 ---
-
 # Blazor: Byte-array interop
 
 Blazor now supports optimized byte-array interop, which avoids encoding and decoding byte-arrays into Base64 and facilitates a more efficient interop process. This applies to both Blazor Server and Blazor WebAssembly.
@@ -59,3 +57,15 @@ For example, if you have the following code, then you _should_ provide a `Uint8A
 ```csharp
 var bytes = await _jsRuntime.InvokeAsync<byte[]>("someJSMethodReturningAByteArray");
 ```
+
+<!--
+
+## Category
+
+ASP.NET Core
+
+## Affected APIs
+
+Not detectable via API analysis
+
+-->

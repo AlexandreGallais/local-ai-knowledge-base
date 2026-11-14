@@ -1,21 +1,19 @@
 ---
-title: "Async query and save - EF6"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/ef6/fundamentals/async.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Async query and save - EF6
+description: Async query and save in Entity Framework 6
+author: SamMonoRT
+ms.date: 10/23/2016
+uid: ef6/fundamentals/async
 ---
-
 # Async query and save
-> **Note:**
+> [!NOTE]
 > **EF6 Onwards Only** - The features, APIs, etc. discussed in this page were introduced in Entity Framework 6. If you are using an earlier version, some or all of the information does not apply.
 
-EF6 introduced support for asynchronous query and save using the async and await keywords that were introduced in .NET 4.5. While not all applications may benefit from asynchrony, it can be used to improve client responsiveness and server scalability when handling long-running, network or I/O-bound tasks.
+EF6 introduced support for asynchronous query and save using the [async and await keywords](https://msdn.microsoft.com/library/vstudio/hh191443.aspx) that were introduced in .NET 4.5. While not all applications may benefit from asynchrony, it can be used to improve client responsiveness and server scalability when handling long-running, network or I/O-bound tasks.
 
 ## When to really use async
 
-The purpose of this walkthrough is to introduce the async concepts in a way that makes it easy to observe the difference between asynchronous and synchronous program execution. This walkthrough is not intended to illustrate any of the key <example-value> where async programming provides benefits.
+The purpose of this walkthrough is to introduce the async concepts in a way that makes it easy to observe the difference between asynchronous and synchronous program execution. This walkthrough is not intended to illustrate any of the key scenarios where async programming provides benefits.
 
 Async programming is primarily focused on freeing up the current managed thread (thread running .NET code) to do other work while it waits for an operation that does not require any compute time from a managed thread. For example, whilst the database engine is processing a query there is nothing to be done by .NET code.
 
@@ -25,12 +23,12 @@ In most applications using async will have no noticeable benefits and even could
 
 Here are some more resources to learn about async:
 
--   Brandon Bray’s overview of async/await in .NET 4.5
--   Asynchronous Programming pages in the MSDN Library
+-   [Brandon Bray’s overview of async/await in .NET 4.5](https://devblogs.microsoft.com/dotnet/async-in-4-5-worth-the-await/)
+-   [Asynchronous Programming](https://msdn.microsoft.com/library/hh191443.aspx) pages in the MSDN Library
 
 ## Create the model
 
-We’ll be using the Code First workflow to create our model and generate the database, however the asynchronous functionality will work with all EF models including those created with the EF Designer.
+We’ll be using the [Code First workflow](xref:ef6/modeling/code-first/workflows/new-database) to create our model and generate the database, however the asynchronous functionality will work with all EF models including those created with the EF Designer.
 
 -   Create a Console Application and call it **AsyncDemo**
 -   Add the EntityFramework NuGet package
@@ -40,7 +38,7 @@ We’ll be using the Code First workflow to create our model and generate the da
     -   Click **Install**
 -   Add a **Model.cs** class with the following implementation
 
-```csharp
+``` csharp
     using System.Collections.Generic;
     using System.Data.Entity;
 
@@ -80,7 +78,7 @@ Now that we have an EF model, let's write some code that uses it to perform some
 
 -   Replace the contents of **Program.cs** with the following code
 
-```csharp
+``` csharp
     using System;
     using System.Linq;
 
@@ -142,7 +140,7 @@ Since the code is synchronous, we can observe the following execution flow when 
 4.  Query returns and results are written to **Console**
 5.  Quote of the day is written to **Console**
 
- 
+![Sync Output](~/ef6/media/syncoutput.png) 
 
  
 
@@ -159,7 +157,7 @@ Now that we have our program up and running, we can begin making use of the new 
 
 For a comprehensive list of available extension methods in the `System.Data.Entity` namespace, refer to the `QueryableExtensions` class. *You’ll also need to add `using System.Data.Entity` to your using statements.*
 
-```csharp
+``` csharp
     using System;
     using System.Data.Entity;
     using System.Linq;
@@ -217,16 +215,16 @@ For a comprehensive list of available extension methods in the `System.Data.Enti
 
 Now that the code is asynchronous, we can observe a different execution flow when we run the program:
 
-1. `SaveChanges` begins to push the new **Blog** to the database
+1. `SaveChanges` begins to push the new **Blog** to the database  
     *Once the command is sent to the database no more compute time is needed on the current managed thread. The `PerformDatabaseOperations` method returns (even though it hasn't finished executing) and program flow in the Main method continues.*
-2. **Quote of the day is written to Console**
+2. **Quote of the day is written to Console**  
     *Since there is no more work to do in the Main method, the managed thread is blocked on the `Wait` call until the database operation completes. Once it completes, the remainder of our `PerformDatabaseOperations` will be executed.*
-3.  `SaveChanges` completes
-4.  Query for all **Blogs** is sent to the database
+3.  `SaveChanges` completes  
+4.  Query for all **Blogs** is sent to the database  
     *Again, the managed thread is free to do other work while the query is processed in the database. Since all other execution has completed, the thread will just halt on the Wait call though.*
-5.  Query returns and results are written to **Console**
+5.  Query returns and results are written to **Console**  
 
- 
+![Async Output](~/ef6/media/asyncoutput.png) 
 
  
 

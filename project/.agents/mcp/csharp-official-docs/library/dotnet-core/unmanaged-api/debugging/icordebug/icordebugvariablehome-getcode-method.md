@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugVariableHome::GetCode Method"
 title: "ICorDebugVariableHome::GetCode Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugvariablehome-getcode-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugVariableHome.GetCode"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugVariableHome::GetCode"
+helpviewer_keywords:
+  - "ICorDebugVariableHome::GetCode method [.NET debugging]"
+  - "GetCode method, ICorDebugVariableHome interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugVariableHome::GetCode Method
 
-Gets the "ICorDebugCode" instance that contains this ICorDebugVariableHome object.
+Gets the "ICorDebugCode" instance that contains this [ICorDebugVariableHome](icordebugvariablehome-interface.md) object.
 
 ## Syntax
 
@@ -22,11 +31,11 @@ HRESULT GetCode(
 ## Parameters
 
  `ppCode`
- [out] A pointer to the address of the "ICorDebugCode" instance that contains this ICorDebugVariableHome object.
+ [out] A pointer to the address of the "ICorDebugCode" instance that contains this [ICorDebugVariableHome](icordebugvariablehome-interface.md) object.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -36,4 +45,4 @@ HRESULT GetCode(
 
 ## See also
 
-- ICorDebugVariableHome Interface
+- [ICorDebugVariableHome Interface](icordebugvariablehome-interface.md)

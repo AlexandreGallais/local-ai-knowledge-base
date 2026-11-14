@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: ICorDebugDataTarget2::GetImageFromPointer Method"
 title: "ICorDebugDataTarget2::GetImageFromPointer Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugdatatarget2-getimagefrompointer-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugDataTarget2::GetImageFromPointer Method
 
 Returns the module base address and size from an address in that module.
@@ -24,22 +20,22 @@ HRESULT GetImageFromPointer(
 ## Parameters
 
 `addr`\
-A CORDB_ADDRESS value that represents an address in a module.
+A [CORDB_ADDRESS](../../../../framework/unmanaged-api/common-data-types-unmanaged-api-reference.md) value that represents an address in a module.
 
 `pImageBase`\
-[out] A CORDB_ADDRESS value that represents the module's base address.
+[out] A [CORDB_ADDRESS](../../../../framework/unmanaged-api/common-data-types-unmanaged-api-reference.md) value that represents the module's base address.
 
 `pSize`\
 A pointer to the module size.
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This method is available with .NET Native only.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -49,4 +45,4 @@ A pointer to the module size.
 
 ## See also
 
-- ICorDebugDataTarget2 Interface
+- [ICorDebugDataTarget2 Interface](icordebugdatatarget2-interface.md)

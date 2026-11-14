@@ -1,33 +1,32 @@
 ---
-title: "What's new in the SDK and tooling for .NET 8"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/whats-new/dotnet-8/sdk.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: What's new in the SDK and tooling for .NET 8
+description: Learn about the new .NET SDK and tooling features introduced in .NET 8.
+titleSuffix: ""
+ms.date: 11/14/2023
+ms.custom: linux-related-content
+ms.update-cycle: 3650-days
 ---
-
 # What's new in the SDK and tooling for .NET 8
 
-This article describes new features in the .NET SDK and tooling for .NET 8. You can download .NET 8 here.
+This article describes new features in the .NET SDK and tooling for .NET 8. You can [download .NET 8 here](https://dotnet.microsoft.com/download/dotnet/8.0).
 
 ## SDK
 
 This section contains the following subtopics:
 
-- CLI-based project evaluation
-- Terminal build output
-- Simplified output paths
-- 'dotnet workload clean' command
-- 'dotnet publish' and 'dotnet pack' assets
-- `dotnet restore` security auditing
-- Template engine
-- Source Link
-- Source-build SDK
+- [CLI-based project evaluation](#cli-based-project-evaluation)
+- [Terminal build output](#terminal-build-output)
+- [Simplified output paths](#simplified-output-paths)
+- ['dotnet workload clean' command](#dotnet-workload-clean-command)
+- ['dotnet publish' and 'dotnet pack' assets](#dotnet-publish-and-dotnet-pack-assets)
+- [`dotnet restore` security auditing](#dotnet-restore-security-auditing)
+- [Template engine](#template-engine)
+- [Source Link](#source-link)
+- [Source-build SDK](#source-build-sdk)
 
 ### CLI-based project evaluation
 
-MSBuild includes a new feature that makes it easier to incorporate data from MSBuild into your scripts or tools. The following new flags are available for CLI commands such as dotnet publish to obtain data for use in CI pipelines and elsewhere.
+MSBuild includes a new feature that makes it easier to incorporate data from MSBuild into your scripts or tools. The following new flags are available for CLI commands such as [dotnet publish](../../tools/dotnet-publish.md) to obtain data for use in CI pipelines and elsewhere.
 
 | Flag                              | Description                                              |
 |-----------------------------------|----------------------------------------------------------|
@@ -67,13 +66,13 @@ bin\Release\net8.0\
 
 ### Terminal build output
 
-`dotnet build` has a new option to produce more modernized build output. This *Terminal Logger* output groups errors with the project they came from, better differentiates the different target frameworks for multi-targeted projects, and provides real-time information about what the build is doing. To opt in to the new output, use the `--tl` option. For more information about this option, see dotnet build options.
+`dotnet build` has a new option to produce more modernized build output. This *Terminal Logger* output groups errors with the project they came from, better differentiates the different target frameworks for multi-targeted projects, and provides real-time information about what the build is doing. To opt in to the new output, use the `--tl` option. For more information about this option, see [dotnet build options](../../tools/dotnet-build.md#options).
 
 ### Simplified output paths
 
 .NET 8 introduces an option to simplify the output path and folder structure for build outputs. Previously, .NET apps produced a deep and complex set of output paths for different build artifacts. The new, simplified output path structure gathers all build outputs into a common location, which makes it easier for tooling to anticipate.
 
-For more information, see Artifacts output layout.
+For more information, see [Artifacts output layout](../../sdk/artifacts-output.md).
 
 ### `dotnet workload clean` command
 
@@ -81,7 +80,7 @@ For more information, see Artifacts output layout.
 
 - `dotnet workload clean`
 
-  Runs workload garbage collection for file-based or MSI-based workloads, which cleans up orphaned packs. Orphaned packs are from uninstalled versions of the .NET SDK or packs where installation records for the pack no longer exist.
+  Runs [workload garbage collection](https://github.com/dotnet/designs/blob/main/accepted/2021/workloads/workload-installation.md#workload-pack-installation-records-and-garbage-collection) for file-based or MSI-based workloads, which cleans up orphaned packs. Orphaned packs are from uninstalled versions of the .NET SDK or packs where installation records for the pack no longer exist.
 
   If Visual Studio is installed, the command also lists any workloads that you should clean up manually using Visual Studio.
 
@@ -91,7 +90,7 @@ For more information, see Artifacts output layout.
 
 ### `dotnet publish` and `dotnet pack` assets
 
-Since the `dotnet publish` and `dotnet pack` commands are intended to produce production assets, they now produce `Release` assets by default.
+Since the [`dotnet publish`](../../tools/dotnet-publish.md) and [`dotnet pack`](../../tools/dotnet-pack.md) commands are intended to produce production assets, they now produce `Release` assets by default.
 
 The following output shows the different behavior between `dotnet build` and `dotnet publish`, and how you can revert to publishing `Debug` assets by setting the `PublishRelease` property to `false`.
 
@@ -107,15 +106,15 @@ The following output shows the different behavior between `dotnet build` and `do
   app -> /app/bin/Debug/net8.0/publish/
 ```
 
-For more information, see 'dotnet pack' uses Release config and 'dotnet publish' uses Release config.
+For more information, see ['dotnet pack' uses Release config](../../compatibility/sdk/8.0/dotnet-pack-config.md) and ['dotnet publish' uses Release config](../../compatibility/sdk/8.0/dotnet-publish-config.md).
 
 ### `dotnet restore` security auditing
 
-Starting in .NET 8, you can opt in to security checks for known vulnerabilities when dependency packages are restored. This auditing produces a report of security vulnerabilities with the affected package name, the severity of the vulnerability, and a link to the advisory for more details. When you run `dotnet add` or `dotnet restore`, warnings NU1901-NU1904 will appear for any vulnerabilities that are found. For more information, see Audit for security vulnerabilities.
+Starting in .NET 8, you can opt in to security checks for known vulnerabilities when dependency packages are restored. This auditing produces a report of security vulnerabilities with the affected package name, the severity of the vulnerability, and a link to the advisory for more details. When you run `dotnet add` or `dotnet restore`, warnings NU1901-NU1904 will appear for any vulnerabilities that are found. For more information, see [Audit for security vulnerabilities](../../tools/dotnet-restore.md#audit-for-security-vulnerabilities).
 
 ### Template engine
 
-The template engine provides a more secure experience in .NET 8 by integrating some of NuGet's security-related features. The improvements include:
+The [template engine](https://github.com/dotnet/templating) provides a more secure experience in .NET 8 by integrating some of NuGet's security-related features. The improvements include:
 
 - Prevent downloading packages from `http://` feeds by default. For example, the following command will fail to install the template package because the source URL doesn't use HTTPS.
 
@@ -127,14 +126,14 @@ The template engine provides a more secure experience in .NET 8 by integrating s
 
 - For `dotnet new`, provide information about the template package owner. Ownership is verified by the NuGet portal and can be considered a trustworthy characteristic.
 
-- For `dotnet search` and `dotnet uninstall`, indicate whether a template is installed from a package that's "trusted"—that is, it uses a reserved prefix.
+- For `dotnet search` and `dotnet uninstall`, indicate whether a template is installed from a package that's "trusted"&mdash;that is, it uses a [reserved prefix](/nuget/nuget-org/id-prefix-reservation).
 
 ### Source Link
 
-Source Link is now included in the .NET SDK. The goal is that by bundling Source Link into the SDK, instead of requiring a separate `<PackageReference>` for the package, more packages will include this information by default. That information will improve the IDE experience for developers.
+[Source Link](../../../standard/library-guidance/sourcelink.md) is now included in the .NET SDK. The goal is that by bundling Source Link into the SDK, instead of requiring a separate `<PackageReference>` for the package, more packages will include this information by default. That information will improve the IDE experience for developers.
 
-> **Note:**
-> As a side effect of this change, commit information is included in the `InformationalVersion` value of built libraries and applications, even those that target .NET 7 or an earlier version. For more information, see Source Link included in the .NET SDK.
+> [!NOTE]
+> As a side effect of this change, commit information is included in the `InformationalVersion` value of built libraries and applications, even those that target .NET 7 or an earlier version. For more information, see [Source Link included in the .NET SDK](../../compatibility/sdk/8.0/source-link.md).
 
 ### Source-build SDK
 
@@ -146,7 +145,7 @@ The default console app template now includes support for AOT out-of-the-box. To
 
 - Generates a native self-contained executable with Native AOT when you publish the project, for example, with `dotnet publish` or Visual Studio.
 - Enables compatibility analyzers for trimming, AOT, and single file. These analyzers alert you to potentially problematic parts of your project (if there are any).
-- Enables debug-time emulation of AOT so that when you debug your project without AOT compilation, you get a similar experience to AOT. For example, if you use `System.Reflection.Emit` in a NuGet package that wasn't annotated for AOT (and therefore was missed by the compatibility analyzer), the emulation means you won't have any surprises when you try to publish the project with AOT.
+- Enables debug-time emulation of AOT so that when you debug your project without AOT compilation, you get a similar experience to AOT. For example, if you use <xref:System.Reflection.Emit?displayProperty=nameWithType> in a NuGet package that wasn't annotated for AOT (and therefore was missed by the compatibility analyzer), the emulation means you won't have any surprises when you try to publish the project with AOT.
 
 ## .NET on Linux
 
@@ -154,19 +153,19 @@ The default console app template now includes support for AOT out-of-the-box. To
 
 The minimum support baselines for Linux have been updated for .NET 8. .NET is built targeting Ubuntu 16.04, for all architectures. That's primarily important for defining the minimum `glibc` version for .NET 8. .NET 8 will fail to start on distro versions that include an older glibc, such as Ubuntu 14.04 or Red Hat Enterprise Linux 7.
 
-For more information, see Red Hat Enterprise Linux Family support.
+For more information, see [Red Hat Enterprise Linux Family support](https://github.com/dotnet/core/blob/main/linux-support.md#red-hat-enterprise-linux-family-support).
 
 ### Build your own .NET on Linux
 
-In previous .NET versions, you could build .NET from source, but it required you to create a "source tarball" from the dotnet/installer repo commit that corresponded to a release. In .NET 8, that's no longer necessary and you can build .NET on Linux directly from the dotnet/dotnet repository. That repo uses dotnet/source-build to build .NET runtimes, tools, and SDKs. This is the same build that Red Hat and Canonical use to build .NET.
+In previous .NET versions, you could build .NET from source, but it required you to create a "source tarball" from the [dotnet/installer](https://github.com/dotnet/installer) repo commit that corresponded to a release. In .NET 8, that's no longer necessary and you can build .NET on Linux directly from the [dotnet/dotnet](https://github.com/dotnet/dotnet) repository. That repo uses [dotnet/source-build](https://github.com/dotnet/source-build) to build .NET runtimes, tools, and SDKs. This is the same build that Red Hat and Canonical use to build .NET.
 
-Building in a container is the easiest approach for most people, since the `dotnet-buildtools/prereqs` container images contain all the required dependencies. For more information, see the build instructions.
+Building in a container is the easiest approach for most people, since the `dotnet-buildtools/prereqs` container images contain all the required dependencies. For more information, see the [build instructions](https://github.com/dotnet/dotnet#building).
 
 ### NuGet signature verification
 
 Starting in .NET 8, NuGet verifies signed packages on Linux by default. NuGet continues to verify signed packages on Windows as well.
 
-Most users shouldn't notice the verification. However, if you have an existing root certificate bundle located at */etc/pki/ca-trust/extracted/pem/objsign-ca-bundle.pem*, you may see trust failures accompanied by warning NU3042.
+Most users shouldn't notice the verification. However, if you have an existing root certificate bundle located at */etc/pki/ca-trust/extracted/pem/objsign-ca-bundle.pem*, you may see trust failures accompanied by [warning NU3042](/nuget/reference/errors-and-warnings/nu3042).
 
 You can opt out of verification by setting the environment variable `DOTNET_NUGET_SIGNATURE_VERIFICATION` to `false`.
 
@@ -176,22 +175,22 @@ You can opt out of verification by setting the environment variable `DOTNET_NUGE
 
 | Rule ID | Category | Description |
 |---------|----------|-------------|
-| CA1856 | Performance | Fires when the `System.Diagnostics.CodeAnalysis.ConstantExpectedAttribute` attribute is not applied correctly on a parameter. |
-| CA1857 | Performance | Fires when a parameter is annotated with `System.Diagnostics.CodeAnalysis.ConstantExpectedAttribute` but the provided argument isn't a constant. |
-| CA1858 | Performance | To determine whether a string starts with a given prefix, it's better to call `System.String.StartsWith*` than to call `System.String.IndexOf*` and then compare the result with zero. |
-| CA1859 | Performance | This rule recommends upgrading the type of specific local variables, fields, properties, method parameters, and method return types from interface or abstract types to concrete types when possible. Using concrete types leads to higher quality generated code. |
-| CA1860 | Performance | To determine whether a collection type has any elements, it's better to use `Length`, `Count`, or `IsEmpty` than to call `System.Linq.Enumerable.Any*`. |
-| CA1861 | Performance | Constant arrays passed as arguments aren't reused when called repeatedly, which implies a new array is created each time. To improve performance, consider extracting the array to a static readonly field. |
-| CA1865-CA1867 | Performance | The char overload is a better-performing overload for a string with a single char. |
-| CA2021 | Reliability | `System.Linq.Enumerable.Cast``1(System.Collections.IEnumerable)` and `System.Linq.Enumerable.OfType``1(System.Collections.IEnumerable)` require compatible types to function correctly. Widening and user-defined conversions aren't supported with generic types. |
-| CA1510-CA1513 | Maintainability | Throw helpers are simpler and more efficient than an `if` block constructing a new exception instance. These four analyzers were created for the following exceptions: `System.ArgumentNullException`, `System.ArgumentException`, `System.ArgumentOutOfRangeException` and `System.ObjectDisposedException`. |
+| [CA1856](../../../fundamentals/code-analysis/quality-rules/ca1856.md) | Performance | Fires when the <xref:System.Diagnostics.CodeAnalysis.ConstantExpectedAttribute> attribute is not applied correctly on a parameter. |
+| [CA1857](../../../fundamentals/code-analysis/quality-rules/ca1857.md) | Performance | Fires when a parameter is annotated with <xref:System.Diagnostics.CodeAnalysis.ConstantExpectedAttribute> but the provided argument isn't a constant. |
+| [CA1858](../../../fundamentals/code-analysis/quality-rules/ca1858.md) | Performance | To determine whether a string starts with a given prefix, it's better to call <xref:System.String.StartsWith*?displayProperty=nameWithType> than to call <xref:System.String.IndexOf*?displayProperty=nameWithType> and then compare the result with zero. |
+| [CA1859](../../../fundamentals/code-analysis/quality-rules/ca1859.md) | Performance | This rule recommends upgrading the type of specific local variables, fields, properties, method parameters, and method return types from interface or abstract types to concrete types when possible. Using concrete types leads to higher quality generated code. |
+| [CA1860](../../../fundamentals/code-analysis/quality-rules/ca1860.md) | Performance | To determine whether a collection type has any elements, it's better to use `Length`, `Count`, or `IsEmpty` than to call <xref:System.Linq.Enumerable.Any*?displayProperty=nameWithType>. |
+| [CA1861](../../../fundamentals/code-analysis/quality-rules/ca1861.md) | Performance | Constant arrays passed as arguments aren't reused when called repeatedly, which implies a new array is created each time. To improve performance, consider extracting the array to a static readonly field. |
+| [CA1865-CA1867](../../../fundamentals/code-analysis/quality-rules/ca1865-ca1867.md) | Performance | The char overload is a better-performing overload for a string with a single char. |
+| [CA2021](../../../fundamentals/code-analysis/quality-rules/ca2021.md) | Reliability | <xref:System.Linq.Enumerable.Cast``1(System.Collections.IEnumerable)?displayProperty=nameWithType> and <xref:System.Linq.Enumerable.OfType``1(System.Collections.IEnumerable)?displayProperty=nameWithType> require compatible types to function correctly. Widening and user-defined conversions aren't supported with generic types. |
+| [CA1510-CA1513](../../../fundamentals/code-analysis/quality-rules/ca1510.md) | Maintainability | Throw helpers are simpler and more efficient than an `if` block constructing a new exception instance. These four analyzers were created for the following exceptions: <xref:System.ArgumentNullException>, <xref:System.ArgumentException>, <xref:System.ArgumentOutOfRangeException> and <xref:System.ObjectDisposedException>. |
 
 ## Diagnostics
 
 ### C# Hot Reload supports modifying generics
 
-Starting in .NET 8, C# Hot Reload supports modifying generic types and generic methods. When you debug console, desktop, mobile, or WebAssembly applications with Visual Studio, you can apply changes to generic classes and generic methods in C# code or Razor pages. For more information, see the full list of edits supported by Roslyn.
+Starting in .NET 8, C# Hot Reload [supports modifying generic types and generic methods](https://devblogs.microsoft.com/dotnet/hot-reload-generics/). When you debug console, desktop, mobile, or WebAssembly applications with Visual Studio, you can apply changes to generic classes and generic methods in C# code or Razor pages. For more information, see the [full list of edits supported by Roslyn](https://github.com/dotnet/roslyn/blob/main/docs/wiki/EnC-Supported-Edits.md).
 
 ### See also
 
-- What's new in .NET 8
+- [What's new in .NET 8](overview.md)

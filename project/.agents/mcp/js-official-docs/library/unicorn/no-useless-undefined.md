@@ -1,19 +1,13 @@
----
-title: "no-useless-undefined"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-useless-undefined.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-useless-undefined
 
 📝 Disallow useless `undefined`.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧💡 This rule is automatically fixable by the `--fix` CLI option and manually fixable by editor suggestions.
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 `undefined` is the default value for new variables, parameters, return statements, etc… so specifying it doesn't make any difference.
 
@@ -23,7 +17,7 @@ This rule does not check function call arguments in TypeScript files because Typ
 
 Using `undefined` as arrow function body sometimes makes the purpose more explicit. You can use the `checkArrowFunctionBody: false` option to allow this.
 
-In TypeScript, when a function has an explicit return type, `return undefined` is only reported if that type is `undefined` or `void`. When the return type is a union with a real value type, such as `number | undefined`, the explicit `undefined` is kept, since it can document intent and avoid conflicts with the `consistent-return` rule.
+In TypeScript, when a function has an explicit return type, `return undefined` is only reported if that type is `undefined` or `void`. When the return type is a union with a real value type, such as `number | undefined`, the explicit `undefined` is kept, since it can document intent and avoid conflicts with the [`consistent-return`](https://eslint.org/docs/latest/rules/consistent-return) rule.
 
 ## Examples
 
@@ -170,8 +164,8 @@ const foo = () => undefined;
 
 We recommend setting `allowImplicit` option to `true` for these ESLint rules:
 
-- `array-callback-return`
-- `getter-return`
+- [`array-callback-return`](https://eslint.org/docs/rules/array-callback-return#options)
+- [`getter-return`](https://eslint.org/docs/rules/getter-return#options)
 
 ```js
 {

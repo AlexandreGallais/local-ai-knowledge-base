@@ -1,15 +1,18 @@
 ---
-title: "no-useless-assignment"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-useless-assignment.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-useless-assignment
+rule_type: suggestion
+related_rules:
+- no-unused-vars
+further_reading:
+- https://en.wikipedia.org/wiki/Dead_store
+- https://rules.sonarsource.com/javascript/RSPEC-1854/
+- https://cwe.mitre.org/data/definitions/563.html
+- https://wiki.sei.cmu.edu/confluence/display/c/MSC13-C.+Detect+and+remove+unused+values
+- https://wiki.sei.cmu.edu/confluence/display/java/MSC56-J.+Detect+and+remove+superfluous+code+and+values
 ---
 
-# no-useless-assignment
 
-Wikipedia describes a "dead store" as follows:
+[Wikipedia describes a "dead store"](https://en.wikipedia.org/wiki/Dead_store) as follows:
 
 > In computer programming, a local variable that is assigned a value but is not read by any subsequent instruction is referred to as a **dead store**.
 
@@ -35,7 +38,7 @@ This rule aims to report variable assignments when the value is not used.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint no-useless-assignment: "error" */
@@ -84,9 +87,11 @@ function fn5() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint no-useless-assignment: "error" */
@@ -127,10 +132,12 @@ function fn4() {
 }
 ```
 
-This rule will not report variables that are never read.
-Because it's clearly an unused variable. If you want it reported, please enable the no-unused-vars rule.
+:::
 
-**Correct:**
+This rule will not report variables that are never read.
+Because it's clearly an unused variable. If you want it reported, please enable the [no-unused-vars](./no-unused-vars) rule.
+
+::: correct
 
 ```js
 /* eslint no-useless-assignment: "error" */
@@ -141,6 +148,8 @@ function fn() {
     doSomething();
 }
 ```
+
+:::
 
 ## Options
 

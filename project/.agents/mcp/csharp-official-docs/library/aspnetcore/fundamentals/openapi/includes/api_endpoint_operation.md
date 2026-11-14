@@ -1,14 +1,3 @@
----
-title: "api_endpoint_operation"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/openapi/includes/api_endpoint_operation.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# api_endpoint_operation
-
 ## API v. API operation v. API endpoint
 
 The following sections explain the differences between an API, an API endpoint, and an API operation in the context of ASP.NET Core and OpenAPI documentation.
@@ -19,9 +8,9 @@ An API is a set of rules and protocols for building and interacting with softwar
 
 In ASP.NET Core, an API is usually built using controllers or Minimal APIs, which handle incoming HTTP requests and return responses.
 
-ASP.NET Core's internal naming conventions sometimes use "API" differently. For instance, in API Explorer, an "ApiDescription" actually represents an API Operation rather than the full API service. This distinction reflects internal naming conventions and sometimes differ from the broader definition used here.
+ASP.NET Core's internal naming conventions sometimes use "API" differently. For instance, in [API Explorer](/dotnet/api/microsoft.aspnetcore.mvc.apiexplorer), an "ApiDescription" actually represents an [API Operation](#api-operation) rather than the full API service. This distinction reflects internal naming conventions and sometimes differ from the broader definition used here.
 
-See Introduction to the ApiExplorer in ASP.NET Core for more information on API Explorer.
+See [Introduction to the ApiExplorer in ASP.NET Core](https://andrewlock.net/introduction-to-the-apiexplorer-in-asp-net-core/) for more information on API Explorer.
 
 ### API Operation
 
@@ -58,7 +47,7 @@ Endpoints often include query parameters, for example, `GET /api/products?catego
 
 In the context of OpenAPI, the documentation describes the API as a whole, including all its endpoints and operations. OpenAPI provides a structured way to document APIs, making it easier for developers to understand how to interact with them.
 
-API Operations are the primary focus of OpenAPI documentation. The OpenAPI specification organizes documentation by operations, which are grouped by paths (endpoints). Each operation is described with details such as parameters, request bodies, responses, and more. This structured format allows tools to generate client libraries, server stubs, and interactive documentation automatically.
+API Operations are the primary focus of OpenAPI documentation. The [OpenAPI specification](https://spec.openapis.org/oas/latest.html) organizes documentation by operations, which are grouped by paths (endpoints). Each operation is described with details such as parameters, request bodies, responses, and more. This structured format allows tools to generate client libraries, server stubs, and interactive documentation automatically.
 
 In an OpenAPI document:
 
@@ -69,7 +58,7 @@ In an OpenAPI document:
 
 Example in OpenAPI JSON format:
 
-```json
+```JSON
 json{
   "paths": {
     "/api/products/{id}": {  // This is the endpoint

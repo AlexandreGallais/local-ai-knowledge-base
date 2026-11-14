@@ -1,12 +1,3 @@
----
-title: "class: TestCase"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/test-reporter-api/class-testcase.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: TestCase
 * since: v1.10
 * langs: js
@@ -69,7 +60,7 @@ Suite this test case belongs to.
 * since: v1.10
 - type: <[int]>
 
-Contains the repeat index when running in "repeat each" mode. This mode is enabled by passing `--repeat-each` to the command line.
+Contains the repeat index when running in "repeat each" mode. This mode is enabled by passing `--repeat-each` to the [command line](../test-cli.md).
 
 ## property: TestCase.results
 * since: v1.10
@@ -83,7 +74,7 @@ Results for each run of this test.
 
 The maximum number of retries given to this test in the configuration.
 
-Learn more about test retries.
+Learn more about [test retries](../test-retries.md#retries).
 
 ## property: TestCase.tags
 * since: v1.42
@@ -91,7 +82,7 @@ Learn more about test retries.
 
 The list of tags defined on the test or suite via [`method: Test.(call)`] or [`method: Test.describe`], as well as `@`-tokens extracted from test and suite titles.
 
-Learn more about test tags.
+Learn more about [test tags](../test-annotations.md#tag-tests).
 
 ## property: TestCase.timeout
 * since: v1.10

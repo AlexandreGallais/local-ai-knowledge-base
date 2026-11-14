@@ -1,59 +1,50 @@
----
-title: "troubleshoot-server"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/security/includes/troubleshoot-server.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# troubleshoot-server
-
 ### Logging
 
-The server app is a standard ASP.NET Core app. See the ASP.NET Core logging guidance to enable a lower logging level in the server app.
+The server app is a standard ASP.NET Core app. See the [ASP.NET Core logging guidance](../../../fundamentals/logging/index.md) to enable a lower logging level in the server app.
 
-To enable debug or trace logging for Blazor WebAssembly authentication, see the *Client-side authentication logging* section of ASP.NET Core Blazor logging with the article version selector set to ASP.NET Core in .NET 7 or later.
+To enable debug or trace logging for Blazor WebAssembly authentication, see the *Client-side authentication logging* section of [ASP.NET Core Blazor logging](../../fundamentals/logging.md) with the article version selector set to ASP.NET Core in .NET 7 or later.
 
 ### Common errors
 
 * Debugger breaks on an exception during logout with Microsoft Entra External ID
 
-  The following exception stops the Visual Studio debugger during logout with Microsoft Entra External ID:
+  The following exception stops the Visual Studio debugger during logout with [Microsoft Entra External ID](/entra/external-id/external-identities-overview):
 
   > :::no-loc text="Uncaught TypeError TypeError: Failed to execute 'postMessage' on 'Window': The provided value cannot be converted to a sequence.":::
+
+  ![Visual Studio Debugger breaking on JavaScript exception during logout](../_static/entra-external-id-logout-exception.png)
 
   The exception is thrown from Entra JavaScript code, so this isn't a problem with ASP.NET Core. The exception doesn't impact app functionality in production, so the exception can be ignored during local development testing.
 
 * Misconfiguration of the app or Identity Provider (IP)
 
   The most common errors are caused by incorrect configuration. The following are a few examples:
-
+  
   * Depending on the requirements of the scenario, a missing or incorrect Authority, Instance, Tenant ID, Tenant domain, Client ID, or Redirect URI prevents an app from authenticating clients.
   * Incorrect request scopes prevent clients from accessing server web API endpoints.
   * Incorrect or missing server API permissions prevent clients from accessing server web API endpoints.
   * Running the app at a different port than is configured in the Redirect URI of the IP's app registration. Note that a port isn't required for Microsoft Entra ID and an app running at a `localhost` development testing address, but the app's port configuration and the port where the app is running must match for non-`localhost` addresses.
-
+  
   Configuration coverage in this article shows examples of the correct configuration. Carefully check the configuration looking for app and IP misconfiguration.
-
+  
   If the configuration appears correct:
-
+  
   * Analyze application logs.
   * Examine the network traffic between the client app and the IP or server app with the browser's developer tools. Often, an exact error message or a message with a clue to what's causing the problem is returned to the client by the IP or server app after making a request. Developer tools guidance is found in the following articles:
 
-    * Google Chrome (Google documentation)
-    * Microsoft Edge
-    * Mozilla Firefox (Mozilla documentation)
-
+    * [Google Chrome](https://developers.google.com/web/tools/chrome-devtools/network) (Google documentation)
+    * [Microsoft Edge](/microsoft-edge/devtools-guide-chromium/network/)
+    * [Mozilla Firefox](https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/index.html) (Mozilla documentation)
+  
   The documentation team responds to document feedback and bugs in articles (open an issue from the **This page** feedback section) but is unable to provide product support. Several public support forums are available to assist with troubleshooting an app. We recommend the following:
-
-  * Stack Overflow (tag: `blazor`)
-  * ASP.NET Core Slack Team
-  * Blazor Gitter
-
+  
+  * [Stack Overflow (tag: `blazor`)](https://stackoverflow.com/questions/tagged/blazor)
+  * [ASP.NET Core Slack Team](https://join.slack.com/t/aspnetcore/shared_invite/zt-1mv5487zb-EOZxJ1iqb0A0ajowEbxByQ)
+  * [Blazor Gitter](https://gitter.im/aspnet/Blazor)
+  
   *The preceding forums are not owned or controlled by Microsoft.*
-
-  For non-security, non-sensitive, and non-confidential reproducible framework bug reports, open an issue with the ASP.NET Core product unit. Don't open an issue with the product unit until you've thoroughly investigated the cause of a problem and can't resolve it on your own and with the help of the community on a public support forum. The product unit isn't able to troubleshoot individual apps that are broken due to simple misconfiguration or use cases involving third-party services. If a report is sensitive or confidential in nature or describes a potential security flaw in the product that cyberattackers may exploit, see Reporting security issues and bugs (`dotnet/aspnetcore` GitHub repository).
+  
+  For non-security, non-sensitive, and non-confidential reproducible framework bug reports, [open an issue with the ASP.NET Core product unit](https://github.com/dotnet/aspnetcore/issues). Don't open an issue with the product unit until you've thoroughly investigated the cause of a problem and can't resolve it on your own and with the help of the community on a public support forum. The product unit isn't able to troubleshoot individual apps that are broken due to simple misconfiguration or use cases involving third-party services. If a report is sensitive or confidential in nature or describes a potential security flaw in the product that cyberattackers may exploit, see [Reporting security issues and bugs (`dotnet/aspnetcore` GitHub repository)](https://github.com/dotnet/aspnetcore/blob/main/CONTRIBUTING.md#reporting-security-issues-and-bugs).
 
 * Unauthorized client for ME-ID
 
@@ -68,8 +59,8 @@ To enable debug or trace logging for Blazor WebAssembly authentication, see the 
 
   To resolve the error:
 
-  1. In the Azure portal, access the app's manifest.
-  1. Set the `allowPublicClient` attribute to `null` or `true`.
+  1. In the Azure portal, access the [app's manifest](/entra/identity-platform/reference-app-manifest).
+  1. Set the [`allowPublicClient` attribute](/entra/identity-platform/reference-app-manifest#allowpublicclient-attribute) to `null` or `true`.
 
 ### Cookies and site data
 
@@ -104,13 +95,13 @@ One approach to prevent lingering cookies and site data from interfering with te
 
 A functioning app may fail immediately after upgrading either the .NET SDK on the development machine or changing package versions within the app. In some cases, incoherent packages may break an app when performing major upgrades. Most of these issues can be fixed by following these instructions:
 
-1. Clear the local system's NuGet package caches by executing `dotnet nuget locals all --clear` from a command shell.
+1. Clear the local system's NuGet package caches by executing [`dotnet nuget locals all --clear`](/dotnet/core/tools/dotnet-nuget-locals) from a command shell.
 1. Delete the project's `bin` and `obj` folders.
 1. Restore and rebuild the project.
 1. Delete all of the files in the deployment folder on the server prior to redeploying the app.
 
-> **Note:**
-> Use of package versions incompatible with the app's target framework isn't supported. For information on a package, use the NuGet Gallery.
+> [!NOTE]
+> Use of package versions incompatible with the app's target framework isn't supported. For information on a package, use the [NuGet Gallery](https://www.nuget.org).
 
 ### Start the solution from the correct project
 
@@ -170,9 +161,9 @@ The following `UserClaims` component can be used directly in apps or serve as th
 
 ### Inspect the access token
 
-Obtaining the access token <example-value> development is often helpful when troubleshooting app and Azure configuration problems. In the following example for a weather forecast endpoint, the bearer token and token <example-value> are logged only when the app is compiled with the `DEBUG` symbol, which is typically a Debug build. You can decode the token using an online JWT token <example-value>, such as the Microsoft JWT token <example-value>, or log details from the token in C#, as the following example demonstrates.
+Obtaining the access token during development is often helpful when troubleshooting app and Azure configuration problems. In the following example for a weather forecast endpoint, the bearer token and token details are logged only when the app is compiled with the `DEBUG` symbol, which is typically a Debug build. You can decode the token using an online JWT token decoder, such as the [Microsoft JWT token decoder](https://jwt.ms/), or log details from the token in C#, as the following example demonstrates.
 
-> **Caution:**
+> [!CAUTION]
 > In production, avoid logging the token or its contents.
 
 ```csharp
@@ -185,8 +176,8 @@ app.MapGet("/weather-forecast", (HttpContext context, ILogger<Program> logger) =
 
     if (authHeader is not null)
     {
-        var token = <example-value>["<example-value>".Length..].Trim();
-        logger.LogDebug("<example-value>", token);
+        var token = authHeader["Bearer ".Length..].Trim();
+        logger.LogDebug("Token: {Token}", token);
 
         try
         {
@@ -194,16 +185,16 @@ app.MapGet("/weather-forecast", (HttpContext context, ILogger<Program> logger) =
                     new Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler();
                 var jwtToken = handler.ReadJsonWebToken(token);
                 logger.LogDebug("Audience: {Audience}", 
-                    string.Join("<example-value>", jwtToken.Audiences));
-                logger.LogDebug("<example-value>", jwtToken.Issuer);
+                    string.Join(", ", jwtToken.Audiences));
+                logger.LogDebug("Issuer: {Issuer}", jwtToken.Issuer);
             var jwtToken = handler.ReadJwtToken(token);
             logger.LogDebug("Audience: {Audience}", 
-                string.Join("<example-value>", jwtToken.Audiences));
-            logger.LogDebug("<example-value>", jwtToken.Issuer);
+                string.Join(", ", jwtToken.Audiences));
+            logger.LogDebug("Issuer: {Issuer}", jwtToken.Issuer);
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "<example-value>");
+            logger.LogError(ex, "Failed to decode token.");
         }
     }
 #endif

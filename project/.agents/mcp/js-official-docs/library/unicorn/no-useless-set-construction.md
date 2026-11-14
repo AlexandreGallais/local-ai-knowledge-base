@@ -1,19 +1,13 @@
----
-title: "no-useless-set-construction"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-useless-set-construction.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-useless-set-construction
 
 📝 Disallow unnecessary `Set` construction around `Set` methods.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Modern Set methods accept Set-like arguments and do not mutate their receiver, so intermediate Sets are often unnecessary.
 
@@ -87,6 +81,6 @@ The rule skips optional calls, computed method names, calls with spread or unexp
 
 ## Related rules
 
-- prefer-set-methods replaces manual Set operations with modern methods.
-- no-useless-spread and no-useless-iterator-to-array remove intermediate arrays and can expose further opportunities for this rule.
-- no-useless-collection-argument removes unnecessary empty constructor arguments.
+- [prefer-set-methods](./prefer-set-methods.md) replaces manual Set operations with modern methods.
+- [no-useless-spread](./no-useless-spread.md) and [no-useless-iterator-to-array](./no-useless-iterator-to-array.md) remove intermediate arrays and can expose further opportunities for this rule.
+- [no-useless-collection-argument](./no-useless-collection-argument.md) removes unnecessary empty constructor arguments.

@@ -1,19 +1,13 @@
----
-title: "no-negated-condition"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/no-negated-condition.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # no-negated-condition
 
 📝 Disallow negated conditions.
 
-💼 This rule is enabled in the following configs: ✅ `recommended`, ☑️ `unopinionated`.
+💼 This rule is enabled in the following [configs](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config): ✅ `recommended`, ☑️ `unopinionated`.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Negated conditions are more difficult to understand. Code can be made more readable by inverting the condition.
 
@@ -23,9 +17,9 @@ It also checks `&&`/`||` chains where every operand is negated with `!`, `!=`, o
 
 TypeScript assertions wrapping negated operands or the whole condition are ignored to preserve their types. Assertions inside negations, such as `!(value as boolean)`, are supported.
 
-Use `no-unnecessary-boolean-comparison` to simplify `value === false` before inversion, using TypeScript type information when available.
+Use [`no-unnecessary-boolean-comparison`](./no-unnecessary-boolean-comparison.md) to simplify `value === false` before inversion, using TypeScript type information when available.
 
-This is an improved version of the `no-negated-condition` ESLint rule that makes it automatically fixable. ESLint did not want to make it fixable.
+This is an improved version of the [`no-negated-condition`](https://eslint.org/docs/latest/rules/no-negated-condition) ESLint rule that makes it automatically fixable. [ESLint did not want to make it fixable.](https://github.com/eslint/eslint/issues/14792)
 
 Comments directly before branches move with them during autofixing. Comments directly after branch expressions or bodies prevent autofixing because their association is ambiguous.
 

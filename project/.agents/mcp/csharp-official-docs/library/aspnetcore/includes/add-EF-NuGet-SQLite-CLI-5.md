@@ -1,14 +1,3 @@
----
-title: "add-EF-NuGet-SQLite-CLI-5"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/includes/add-EF-NuGet-SQLite-CLI-5.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
-
-# add-EF-NuGet-SQLite-CLI-5
-
 Run the following .NET CLI commands:
 
 ```dotnetcli
@@ -21,37 +10,14 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 ```
 
 The preceding commands add:
-* The command-line interface (CLI) tools for EF Core
-* The aspnet-codegenerator scaffolding tool.
+* The [command-line interface (CLI) tools for EF Core](/ef/core/miscellaneous/cli/dotnet)
+* The [aspnet-codegenerator scaffolding tool](../fundamentals/tools/dotnet-aspnet-codegenerator.md).
 * Design time tools for EF Core
 * The EF Core SQLite provider, which installs the EF Core package as a dependency.
 * Packages needed for scaffolding: `Microsoft.VisualStudio.Web.CodeGeneration.Design` and `Microsoft.EntityFrameworkCore.SqlServer`.
 
-For guidance on multiple environment configuration that permits an app to configure its database contexts by environment, see ASP.NET Core runtime environments.
+For guidance on multiple environment configuration that permits an app to configure its database contexts by environment, see [ASP.NET Core runtime environments](../fundamentals/environments.md#environment-specific-startup-class).
 
-> **Note:**
-> By default, the architecture of the .NET binaries to install represents the currently running operating system architecture.
-> To specify a different architecture, review how to use the `dotnet tool install` command with the '--arch' option.
-> For more information, see GitHub dotnet/aspnetcore.docs issue #29262 - _Add '-a arm64' on Apple Silicon_.
+[!INCLUDE[](~/includes/dotnet-tool-install-arch-options.md)]
 
-If you get a scaffolding error, verify the Target Framework Moniker (TFM) matches the NuGet package version in the project file. For example, the following project file uses version 5.0 for .NET and the listed NuGet packages:
-
-```xml
-<Project Sdk="Microsoft.NET.Sdk.Web">
-
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.0-*" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.0-*" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.0-*" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0-*" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0-*" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.0-*" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.0-*" />
-  </ItemGroup>
-
-</Project>
-```
+[!INCLUDE[](~/includes/scaffoldTFM-5.md)]

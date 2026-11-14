@@ -1,12 +1,3 @@
----
-title: "core::str::iter"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/str/iter.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::str::iter
 
 Iterators for `str` methods.
@@ -17,10 +8,14 @@ Iterators for `str` methods.
 pub struct Chars<'a>
 ```
 
-An iterator over the `char`s of a string slice.
+An iterator over the [`char`]s of a string slice.
 
-This struct is created by the `chars` method on `str`.
+
+This struct is created by the [`chars`] method on [`str`].
 See its documentation for more.
+
+[`char`]: prim@char
+[`chars`]: str::chars
 
 ## Chars::as_str
 
@@ -35,7 +30,7 @@ iterator can continue to be used while this exists.
 
 # Examples
 
-```rust
+```
 let mut chars = "abc".chars();
 
 assert_eq!(chars.as_str(), "abc");
@@ -52,10 +47,13 @@ assert_eq!(chars.as_str(), "");
 pub struct CharIndices<'a>
 ```
 
-An iterator over the `char`s of a string slice, and their positions.
+An iterator over the [`char`]s of a string slice, and their positions.
 
-This struct is created by the `char_indices` method on `str`.
+This struct is created by the [`char_indices`] method on [`str`].
 See its documentation for more.
+
+[`char`]: prim@char
+[`char_indices`]: str::char_indices
 
 ## CharIndices::as_str
 
@@ -79,11 +77,11 @@ of the underlying string if there are no more characters.
 
 This means that, when the iterator has not been fully consumed,
 the returned value will match the index that will be returned
-by the next call to `next()`.
+by the next call to [`next()`](Self::next).
 
 # Examples
 
-```rust
+```
 let mut chars = "a楽".char_indices();
 
 // `next()` has not been called yet, so `offset()` returns the byte
@@ -112,8 +110,10 @@ pub struct Bytes<'a>(pub(super) Copied<slice::Iter<'a, u8>>)
 
 An iterator over the bytes of a string slice.
 
-This struct is created by the `bytes` method on `str`.
+This struct is created by the [`bytes`] method on [`str`].
 See its documentation for more.
+
+[`bytes`]: str::bytes
 
 ## macro derive_pattern_clone!
 
@@ -177,8 +177,10 @@ pub struct Lines<'a>(pub(super) Map<SplitInclusive<'a, char>, LinesMap>)
 
 An iterator over the lines of a string, as string slices.
 
-This struct is created with the `lines` method on `str`.
+This struct is created with the [`lines`] method on [`str`].
 See its documentation for more.
+
+[`lines`]: str::lines
 
 ## struct LinesAny
 
@@ -186,7 +188,9 @@ See its documentation for more.
 pub struct LinesAny<'a>(pub(super) Lines<'a>)
 ```
 
-Created with the method `lines_any`.
+Created with the method [`lines_any`].
+
+[`lines_any`]: str::lines_any
 
 ## ::SplitWhitespace
 
@@ -197,8 +201,10 @@ pub struct SplitWhitespace<'a>
 An iterator over the non-whitespace substrings of a string,
 separated by any amount of whitespace.
 
-This struct is created by the `split_whitespace` method on `str`.
+This struct is created by the [`split_whitespace`] method on [`str`].
 See its documentation for more.
+
+[`split_whitespace`]: str::split_whitespace
 
 ## struct SplitAsciiWhitespace
 
@@ -209,8 +215,10 @@ pub struct SplitAsciiWhitespace<'a>
 An iterator over the non-ASCII-whitespace substrings of a string,
 separated by any amount of ASCII whitespace.
 
-This struct is created by the `split_ascii_whitespace` method on `str`.
+This struct is created by the [`split_ascii_whitespace`] method on [`str`].
 See its documentation for more.
+
+[`split_ascii_whitespace`]: str::split_ascii_whitespace
 
 ## struct SplitInclusive
 
@@ -223,8 +231,10 @@ terminated by a substring matching to a predicate function
 Unlike `Split`, it contains the matched part as a terminator
 of the subslice.
 
-This struct is created by the `split_inclusive` method on `str`.
+This struct is created by the [`split_inclusive`] method on [`str`].
 See its documentation for more.
+
+[`split_inclusive`]: str::split_inclusive
 
 ## struct EncodeUtf16
 
@@ -232,10 +242,12 @@ See its documentation for more.
 pub struct EncodeUtf16<'a>
 ```
 
-An iterator of `u16` over the string encoded as UTF-16.
+An iterator of [`u16`] over the string encoded as UTF-16.
 
-This struct is created by the `encode_utf16` method on `str`.
+This struct is created by the [`encode_utf16`] method on [`str`].
 See its documentation for more.
+
+[`encode_utf16`]: str::encode_utf16
 
 ## ::EscapeDebug
 
@@ -243,7 +255,7 @@ See its documentation for more.
 pub struct EscapeDebug<'a>
 ```
 
-The return type of `str::escape_debug`.
+The return type of [`str::escape_debug`].
 
 ## struct EscapeDefault
 
@@ -251,7 +263,7 @@ The return type of `str::escape_debug`.
 pub struct EscapeDefault<'a>
 ```
 
-The return type of `str::escape_default`.
+The return type of [`str::escape_default`].
 
 ## struct EscapeUnicode
 
@@ -259,4 +271,4 @@ The return type of `str::escape_default`.
 pub struct EscapeUnicode<'a>
 ```
 
-The return type of `str::escape_unicode`.
+The return type of [`str::escape_unicode`].

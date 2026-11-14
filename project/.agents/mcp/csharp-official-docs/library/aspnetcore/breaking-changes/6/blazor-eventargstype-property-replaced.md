@@ -1,17 +1,15 @@
 ---
 title: "Breaking change: Blazor: WebEventDescriptor.EventArgsType property replaced"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/6/blazor-eventargstype-property-replaced.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in ASP.NET Core 6.0 where the WebEventDescriptor.EventArgsType property is replaced by the EventName property."
+ms.date: 02/24/2021
+ms.custom: https://github.com/aspnet/Announcements/issues/453
+no-loc: [ Blazor ]
 ---
-
 # Blazor: :::no-loc text="WebEventDescriptor.EventArgsType"::: property replaced
 
-The `Microsoft.AspNetCore.Components.RenderTree.WebEventDescriptor` class is part of Blazor's internal protocol for communicating events from JavaScript into .NET. This class isn't typically used by app code, but rather by platform authors.
+The <xref:Microsoft.AspNetCore.Components.RenderTree.WebEventDescriptor> class is part of Blazor's internal protocol for communicating events from JavaScript into .NET. This class isn't typically used by app code, but rather by platform authors.
 
-Starting in ASP.NET Core 6.0, the `Microsoft.AspNetCore.Components.RenderTree.WebEventDescriptor.EventArgsType` property on `WebEventDescriptor` is being replaced by a new `EventName` property. This change is unlikely to affect any app code, as it's a low-level platform implementation detail.
+Starting in ASP.NET Core 6.0, the <xref:Microsoft.AspNetCore.Components.RenderTree.WebEventDescriptor.EventArgsType> property on `WebEventDescriptor` is being replaced by a new `EventName` property. This change is unlikely to affect any app code, as it's a low-level platform implementation detail.
 
 ## Version introduced
 
@@ -27,7 +25,7 @@ Starting in ASP.NET Core 6.0, the new property `EventName` only specifies the or
 
 ## Reason for change
 
-In pull request dotnet/aspnetcore#29993, support for custom event arguments classes was introduced. As part of this support, the framework no longer relies on all events fitting into a predefined set of categories. The framework now only needs to know the original event name.
+In pull request [dotnet/aspnetcore#29993](https://github.com/dotnet/aspnetcore/pull/29993), support for custom event arguments classes was introduced. As part of this support, the framework no longer relies on all events fitting into a predefined set of categories. The framework now only needs to know the original event name.
 
 ## Recommended action
 
@@ -37,4 +35,16 @@ If building a custom Blazor rendering platform, you may need to update the mecha
 
 ## Affected APIs
 
-`Microsoft.AspNetCore.Components.RenderTree.WebEventDescriptor.EventArgsType`
+<xref:Microsoft.AspNetCore.Components.RenderTree.WebEventDescriptor.EventArgsType?displayProperty=nameWithType>
+
+<!--
+
+## Category
+
+ASP.NET Core
+
+## Affected APIs
+
+`P:Microsoft.AspNetCore.Components.RenderTree.WebEventDescriptor.EventArgsType`
+
+-->

@@ -1,25 +1,19 @@
 ---
 title: "Converting Data Types"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/linq/standard-query-operators/converting-data-types.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Conversion methods change the type of input objects. See conversion operations in LINQ queries in C#, such as Enumerable.AsEnumerable and Enumerable.OfType.
+ms.date: 05/29/2024
 ---
-
 # Converting Data Types (C#)
 
 Conversion methods change the type of input objects.
 
-> **Important:**
->
-> These samples use an `System.Collections.Generic.IEnumerable`1` data source. Data sources based on `System.Linq.IQueryProvider` use `System.Linq.IQueryable`1` data sources and expression trees. Expression trees have limitations on the allowed C# syntax. Furthermore, each `IQueryProvider` data source, such as EF Core may impose more restrictions. Check the documentation for your data source.
+[!INCLUDE [Prerequisites](../includes/linq-syntax.md)]
 
 Conversion operations in LINQ queries are useful in various applications. Following are some examples:
 
-- The `System.Linq.Enumerable.AsEnumerable*` method can be used to hide a type's custom implementation of a standard query operator.
-- The `System.Linq.Enumerable.OfType*` method can be used to enable non-parameterized collections for LINQ querying.
-- The `System.Linq.Enumerable.ToArray*`, `System.Linq.Enumerable.ToDictionary*`, `System.Linq.Enumerable.ToList*`, and `System.Linq.Enumerable.ToLookup*` methods can be used to force immediate query execution instead of deferring it until the query is enumerated.
+- The <xref:System.Linq.Enumerable.AsEnumerable*?displayProperty=nameWithType> method can be used to hide a type's custom implementation of a standard query operator.
+- The <xref:System.Linq.Enumerable.OfType*?displayProperty=nameWithType> method can be used to enable non-parameterized collections for LINQ querying.
+- The <xref:System.Linq.Enumerable.ToArray*?displayProperty=nameWithType>, <xref:System.Linq.Enumerable.ToDictionary*?displayProperty=nameWithType>, <xref:System.Linq.Enumerable.ToList*?displayProperty=nameWithType>, and <xref:System.Linq.Enumerable.ToLookup*?displayProperty=nameWithType> methods can be used to force immediate query execution instead of deferring it until the query is enumerated.
 
 ## Methods
 
@@ -29,91 +23,30 @@ The conversion methods in this table whose names start with "As" change the stat
 
 |Method Name|Description|C# Query Expression Syntax|More Information|
 |-----------------|-----------------|---------------------------------|----------------------|
-|AsEnumerable|Returns the input typed as `System.Collections.Generic.IEnumerable`1`.|Not applicable.|`System.Linq.Enumerable.AsEnumerable*`|
-|AsQueryable|Converts a (generic) `System.Collections.IEnumerable` to a (generic) `System.Linq.IQueryable`.|Not applicable.|`System.Linq.Queryable.AsQueryable*`|
-|Cast|Casts the elements of a collection to a specified type.|Use an explicitly typed range variable. For example: `from string str in words`|`System.Linq.Enumerable.Cast*` `System.Linq.Queryable.Cast*`|
-|OfType|Filters values, depending on their ability to be cast to a specified type.|Not applicable.|`System.Linq.Enumerable.OfType*` `System.Linq.Queryable.OfType*`|
-|ToArray|Converts a collection to an array. This method forces query execution.|Not applicable.|`System.Linq.Enumerable.ToArray*`|
-|ToDictionary|Puts elements into a `System.Collections.Generic.Dictionary`2` based on a key <example-value> function. This method forces query execution.|Not applicable.|`System.Linq.Enumerable.ToDictionary*`|
-|ToList|Converts a collection to a `System.Collections.Generic.List`1`. This method forces query execution.|Not applicable.|`System.Linq.Enumerable.ToList*`|
-|ToLookup|Puts elements into a `System.Linq.Lookup`2` (a one-to-many dictionary) based on a key <example-value> function. This method forces query execution.|Not applicable.|`System.Linq.Enumerable.ToLookup*`|
+|AsEnumerable|Returns the input typed as <xref:System.Collections.Generic.IEnumerable`1>.|Not applicable.|<xref:System.Linq.Enumerable.AsEnumerable*?displayProperty=nameWithType>|
+|AsQueryable|Converts a (generic) <xref:System.Collections.IEnumerable> to a (generic) <xref:System.Linq.IQueryable>.|Not applicable.|<xref:System.Linq.Queryable.AsQueryable*?displayProperty=nameWithType>|
+|Cast|Casts the elements of a collection to a specified type.|Use an explicitly typed range variable. For example:<br /><br /> `from string str in words`|<xref:System.Linq.Enumerable.Cast*?displayProperty=nameWithType><br /><br /> <xref:System.Linq.Queryable.Cast*?displayProperty=nameWithType>|
+|OfType|Filters values, depending on their ability to be cast to a specified type.|Not applicable.|<xref:System.Linq.Enumerable.OfType*?displayProperty=nameWithType><br /><br /> <xref:System.Linq.Queryable.OfType*?displayProperty=nameWithType>|
+|ToArray|Converts a collection to an array. This method forces query execution.|Not applicable.|<xref:System.Linq.Enumerable.ToArray*?displayProperty=nameWithType>|
+|ToDictionary|Puts elements into a <xref:System.Collections.Generic.Dictionary`2> based on a key selector function. This method forces query execution.|Not applicable.|<xref:System.Linq.Enumerable.ToDictionary*?displayProperty=nameWithType>|
+|ToList|Converts a collection to a <xref:System.Collections.Generic.List`1>. This method forces query execution.|Not applicable.|<xref:System.Linq.Enumerable.ToList*?displayProperty=nameWithType>|
+|ToLookup|Puts elements into a <xref:System.Linq.Lookup`2> (a one-to-many dictionary) based on a key selector function. This method forces query execution.|Not applicable.|<xref:System.Linq.Enumerable.ToLookup*?displayProperty=nameWithType>|
 
-> **Note:**
-> The following examples in this article use the common data sources for this area.
-> Each `Student` has a grade level, a primary department, and a series of scores. A `Teacher` also has a `City` property that identifies the campus where the teacher holds classes. A `Department` has a name, and a reference to a `Teacher` who serves as the department head.
-> You can find the example data set in the source repo.
+[!INCLUDE [Datasources](../includes/data-sources-definition.md)]
 
-```csharp
-public enum GradeLevel
-{
-    FirstYear = 1,
-    SecondYear,
-    ThirdYear,
-    FourthYear
-};
-
-public class Student
-{
-    public required string FirstName { get; init; }
-    public required string LastName { get; init; }
-    public required int ID { get; init; }
-
-    public required GradeLevel Year { get; init; }
-    public required List<int> Scores { get; init; }
-
-    public required int DepartmentID { get; init; }
-}
-
-public class Teacher
-{
-    public required string First { get; init; }
-    public required string Last { get; init; }
-    public required int ID { get; init; }
-    public required string City { get; init; }
-}
-
-public class Department
-{
-    public required string Name { get; init; }
-    public int ID { get; init; }
-
-    public required int TeacherID { get; init; }
-}
-```
-> **Note:**
-> You can refer to the common data sources for this area in the Standard Query Operators Overview article.
+[!INCLUDE [Common Datasources reference](../includes/common-data-sources-reference.md)]
 
 ## Query Expression Syntax Example
 
 The following code example uses an explicitly typed range variable to cast a type to a subtype before accessing a member that is available only on the subtype.
 
-```csharp
-IEnumerable people = students;
+:::code language="csharp" source="./snippets/standard-query-operators/ConversionExamples.cs" id="CastOperatorQuerySyntax":::
 
-var query = from Student student in people
-            where student.Year == GradeLevel.ThirdYear
-            select student;
-
-foreach (Student student in query)
-{
-    Console.WriteLine(student.FirstName);
-}
-```
 The equivalent query can be expressed using method syntax as shown in the following example:
 
-```csharp
-IEnumerable people = students;
+:::code language="csharp" source="./snippets/standard-query-operators/ConversionExamples.cs" id="CastOperatorMethodSyntax":::
 
-var query = people
-    .Cast<Student>()
-    .Where(student => student.Year == GradeLevel.ThirdYear);
-
-foreach (Student student in query)
-{
-    Console.WriteLine(student.FirstName);
-}
-```
 ## See also
 
-- `System.Linq`
-- from clause
+- <xref:System.Linq>
+- [from clause](../../language-reference/keywords/from-clause.md)

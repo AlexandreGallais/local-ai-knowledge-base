@@ -1,10 +1,9 @@
 ---
-title: "MSTest Performance rules (code analysis)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/mstest-analyzers/performance-rules.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: MSTest Performance rules (code analysis)
+description: Learn about MSTest code analysis performance rules.
+author: evangelink
+ms.author: amauryleve
+ms.date: 12/20/2023
 ---
 
 # MSTest performance rules
@@ -15,7 +14,7 @@ Performance rules support high-performance testing by identifying opportunities 
 
 | Rule ID | Title | Severity | Fix Available |
 |---------|-------|----------|---------------|
-| MSTEST0001 | Use Parallelize attribute. | Info | Yes |
+| [MSTEST0001](mstest0001.md) | Use Parallelize attribute. | Info | Yes |
 
 ## Common scenarios
 
@@ -23,7 +22,7 @@ Performance rules support high-performance testing by identifying opportunities 
 
 By default, MSTest runs tests sequentially, which can significantly impact execution time for large test suites.
 
-- **MSTEST0001**: Reminds you to explicitly enable parallelization with `[assembly: Parallelize]` or acknowledge sequential execution with `[assembly: DoNotParallelize]`.
+- **[MSTEST0001](mstest0001.md)**: Reminds you to explicitly enable parallelization with `[assembly: Parallelize]` or acknowledge sequential execution with `[assembly: DoNotParallelize]`.
 
 **Why this matters**: Parallelization can dramatically reduce test execution time by running tests concurrently across multiple threads or processes. However, not all test suites are safe to parallelize (for example, tests that modify shared state). This rule ensures you make a conscious decision about parallelization.
 
@@ -42,5 +41,5 @@ By default, MSTest runs tests sequentially, which can significantly impact execu
 
 ## Related documentation
 
-- Configure MSTest
-- Running tests
+- [Configure MSTest](../unit-testing-mstest-configure.md)
+- [Running tests](../unit-testing-mstest-running-tests.md)

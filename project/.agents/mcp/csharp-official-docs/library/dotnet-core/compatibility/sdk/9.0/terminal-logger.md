@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: Terminal Logger is default"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/sdk/9.0/terminal-logger.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about a breaking change in the .NET 9 SDK where Terminal Logger is used by default for interactive MSBuild invocations.
+ms.date: 01/10/2024
 ---
-
 # Terminal Logger is default
 
-Terminal Logger is now enabled by default for all "interactive" terminal sessions. Terminal Logger formats the console output for builds differently to the console logger. For more information about Terminal Logger, see 'dotnet build' options, specifically the `--tl` option.
+Terminal Logger is now enabled by default for all "interactive" terminal sessions. Terminal Logger formats the console output for builds differently to the console logger. For more information about Terminal Logger, see ['dotnet build' options](../../../tools/dotnet-build.md#options), specifically the `--tl` option.
 
 ## Previous behavior
 
@@ -25,7 +21,7 @@ If the terminal supports various layout and colorization features, `dotnet build
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -44,5 +40,5 @@ N/A
 
 ## See also
 
-- 'dotnet build' options
-- Terminal Logger
+- ['dotnet build' options](../../../tools/dotnet-build.md#options)
+- [Terminal Logger](../../../whats-new/dotnet-9/sdk.md#terminal-logger)

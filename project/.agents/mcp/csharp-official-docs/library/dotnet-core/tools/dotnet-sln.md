@@ -1,12 +1,9 @@
 ---
-title: "dotnet sln command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-sln.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet sln command
+ai-usage: ai-assisted
+description: The dotnet-sln command provides a convenient option to add, remove, and list projects in a solution file or solution filter.
+ms.date: 09/16/2026
 ---
-
 # dotnet sln
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -29,7 +26,7 @@ The `dotnet sln` command provides a convenient way to list and modify projects i
 
 ### Create a solution file
 
-To use the `dotnet sln` command, the solution file must already exist. If you need to create one, use the dotnet new command with the `sln` template name.
+To use the `dotnet sln` command, the solution file must already exist. If you need to create one, use the [dotnet new](dotnet-new.md) command with the `sln` template name.
 
 The following example creates an *.slnx* file in the current folder, with the same name as the folder:
 
@@ -49,12 +46,12 @@ The following example creates an *.slnx* file in the specified folder, with the 
 dotnet new sln --output MySolution
 ```
 
-> **Note:**
+> [!NOTE]
 > In .NET 9 and earlier versions, `dotnet new sln` creates an *.sln* file instead of an *.slnx* file.
 
 ### Create a solution filter
 
-Starting with .NET 11, you can create a solution filter (*.slnf* file) with the `slnf` template:
+Starting with .NET 11, you can create a [solution filter](/visualstudio/msbuild/solution-filters) (*.slnf* file) with the `slnf` template:
 
 ```dotnetcli
 dotnet new slnf --name MyApp.slnf
@@ -70,18 +67,16 @@ dotnet new slnf --name MyApp.slnf
 
 ## Options
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Commands
 
 The following commands are available:
 
-- `list`
-- `add`
-- `remove`
-- `migrate`
+- [`list`](#list)
+- [`add`](#add)
+- [`remove`](#remove)
+- [`migrate`](#migrate)
 
 ### `list`
 
@@ -97,7 +92,7 @@ dotnet sln list [-h|--help]
 
 - **`SOLUTION_FILE`**
 
-  The solution file (*.sln* or *.slnx* file) or solution filter (*.slnf* file) to use.
+  The solution file (*.sln* or *.slnx* file) or [solution filter](/visualstudio/msbuild/solution-filters) (*.slnf* file) to use.
 
   If unspecified, the command searches the current directory for an *.sln*, *.slnx*, or *.slnf* file and, if it finds exactly one, uses that file. If multiple solution files or filters are found, the user is prompted to specify a file explicitly. If none are found, the command fails.
 
@@ -105,9 +100,7 @@ dotnet sln list [-h|--help]
 
 #### Options
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ### `add`
 
@@ -132,9 +125,9 @@ dotnet sln add [-h|--help]
 
 - **`PROJECT_PATH`**
 
-  The path to the project or projects to add to the solution or solution filter. Unix/Linux shell globbing pattern expansions are processed correctly by the `dotnet sln` command. Solution filters don't support the `--in-root` or `-s|--solution-folder` options.
+  The path to the project or projects to add to the solution or solution filter. Unix/Linux shell [globbing pattern](https://en.wikipedia.org/wiki/Glob_(programming)) expansions are processed correctly by the `dotnet sln` command. Solution filters don't support the `--in-root` or `-s|--solution-folder` options.
 
-  If `PROJECT_PATH` includes folders that contain the project folder, that portion of the path is used to create solution folders. For example, the following commands create a solution with `myapp` in solution folder `folder1/folder2`:
+  If `PROJECT_PATH` includes folders that contain the project folder, that portion of the path is used to create [solution folders](/visualstudio/ide/solutions-and-projects-in-visual-studio#solution-folder). For example, the following commands create a solution with `myapp` in solution folder `folder1/folder2`:
 
   ```dotnetcli
   dotnet new sln
@@ -142,21 +135,19 @@ dotnet sln add [-h|--help]
   dotnet sln add folder1/folder2/myapp
   ```
 
-  You can override this default behavior by using the `--in-root` or the `-s|--solution-folder ` option.
+  You can override this default behavior by using the `--in-root` or the `-s|--solution-folder <PATH>` option.
 
 #### Options
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 - **`--in-root`**
 
-  Places the projects in the root of the solution, rather than creating a solution folder. Can't be used with `-s|--solution-folder`.
+  Places the projects in the root of the solution, rather than creating a [solution folder](/visualstudio/ide/solutions-and-projects-in-visual-studio#solution-folder). Can't be used with `-s|--solution-folder`.
 
-- **`-s|--solution-folder `**
+- **`-s|--solution-folder <PATH>`**
 
-  The destination solution folder path to add the projects to. Can't be used with `--in-root`.
+  The destination [solution folder](/visualstudio/ide/solutions-and-projects-in-visual-studio#solution-folder) path to add the projects to. Can't be used with `--in-root`.
 
 - **`--include-references`**
 
@@ -185,15 +176,13 @@ dotnet sln [<SOLUTION_FILE>] remove [-h|--help]
 
 - **`PROJECT_PATH` or `PROJECT_NAME`**
 
-  The path to, or name of, the project or projects to remove from the solution or solution filter. Unix/Linux shell globbing pattern expansions are processed correctly by the `dotnet sln` command.
+  The path to, or name of, the project or projects to remove from the solution or solution filter. Unix/Linux shell [globbing pattern](https://en.wikipedia.org/wiki/Glob_(programming)) expansions are processed correctly by the `dotnet sln` command.
 
   If a project name is provided instead of a path, the project in the solution that matches the name, regardless of its path, is removed. If more than one matching project is found in the solution, the command errors out. Omit the project file extension in the name. (Support for removing projects by name was added in .NET 10.)
 
 #### Options
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ### `migrate`
 
@@ -218,9 +207,7 @@ dotnet sln [<SOLUTION_FILE>] migrate [-h|--help]
 
 #### Options
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Examples
 
@@ -321,6 +308,8 @@ Prints out a description of how to use the command.
 
   The following screenshot shows the result in Visual Studio 2019 **Solution Explorer**:
 
+  :::image type="content" source="media/dotnet-sln/dotnet-sln-solution-folder.png" alt-text="Solution Explorer showing class library projects grouped into a solution folder.":::
+
 ## See also
 
-- dotnet/sdk GitHub repo (.NET CLI source)
+- [dotnet/sdk GitHub repo](https://github.com/dotnet/sdk) (.NET CLI source)

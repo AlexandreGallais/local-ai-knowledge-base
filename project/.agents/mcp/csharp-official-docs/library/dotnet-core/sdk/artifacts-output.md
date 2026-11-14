@@ -1,19 +1,15 @@
 ---
-title: "Artifacts output layout"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/sdk/artifacts-output.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Artifacts output layout
+description: Learn about a .NET SDK feature that centralizes and simplifies the layout of project outputs.
+ms.date: 05/28/2025
 ---
-
 # Artifacts output layout
 
 In .NET 8 and later versions, there's an option to simplify the output path and folder structure for build outputs. All build outputs from all projects are gathered into a common location, separated by project. A common location makes it easy for tooling to anticipate where to find the outputs.
 
 By default, the common location is a directory named *artifacts* next to the *Directory.Build.props* file. The folder structure under the root *artifacts* folder is as follows:
 
-```directory
+```Directory
 📁 artifacts
     └──📂 <Type of output>
         └──📂 <Project name>
@@ -25,8 +21,8 @@ The following table shows the default values for each level in the folder struct
 | Folder level   | Description                       | Examples                           |
 |----------------|-----------------------------------|------------------------------------|
 | Type of output | Categories of build outputs, such as binaries, intermediate/generated files, published applications, and NuGet packages. | `bin`, `obj`, `publish`, `package` |
-| Project name†  | Separates output by each project. Defaults to the MSBuild project name. Can be customized using the `ArtifactsProjectName` MSBuild property. | `MyApp`                            |
-| Pivot†         | Distinguishes between builds of a project for different configurations, target frameworks, and runtime identifiers. If multiple elements are needed, they're joined by an underscore (`_`). Can be customized using the `ArtifactsPivots` MSBuild property. | `debug`, `debug_net8.0`, `release`, `release_linux-x64` |
+| Project name†  | Separates output by each project. Defaults to the MSBuild project name. Can be [customized](#how-to-configure) using the `ArtifactsProjectName` MSBuild property. | `MyApp`                            |
+| Pivot†         | Distinguishes between builds of a project for different configurations, target frameworks, and runtime identifiers. If multiple elements are needed, they're joined by an underscore (`_`). Can be [customized](#how-to-configure) using the `ArtifactsPivots` MSBuild property. | `debug`, `debug_net8.0`, `release`, `release_linux-x64` |
 
 † The project name subfolder is omitted for package output paths. In addition, the pivot subfolder includes only the configuration.
 

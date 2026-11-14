@@ -1,20 +1,19 @@
 ---
-title: "Configure Rules"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/use/configure/rules.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: Configure Rules
+eleventyNavigation:
+    key: configure rules
+    parent: configure
+    title: Configure Rules
+    order: 3
 ---
 
-# Configure Rules
-
-**Tip:**
+::: tip
 This page explains how to configure rules using the flat config format.
+:::
 
 Rules are the core building block of ESLint. A rule validates if your code meets a certain expectation, and what to do if it does not meet that expectation. Rules can also contain additional configuration options specific to that rule.
 
-ESLint comes with a large number of built-in rules and you can add more rules through plugins. You can modify which rules your project uses with either configuration comments or configuration files.
+ESLint comes with a large number of [built-in rules](../../rules/) and you can add more rules through plugins. You can modify which rules your project uses with either configuration comments or configuration files.
 
 ## Rule Severities
 
@@ -36,13 +35,13 @@ To configure rules inside of a file using configuration comments, use a comment 
 /* eslint eqeqeq: "off", curly: "error" */
 ```
 
-In this example, `eqeqeq` is turned off and `curly` is turned on as an error. You can also use the numeric equivalent for the rule severity:
+In this example, [`eqeqeq`](../../rules/eqeqeq) is turned off and [`curly`](../../rules/curly) is turned on as an error. You can also use the numeric equivalent for the rule severity:
 
 ```js
 /* eslint eqeqeq: 0, curly: 2 */
 ```
 
-This example is the same as the last example, only it uses the numeric codes instead of the string values. The `eqeqeq` rule is off and the `curly` rule is set to be an error.
+This example is the same as the last example, only it uses the numeric codes instead of the string values. The [`eqeqeq`](../../rules/eqeqeq) rule is off and the [`curly`](../../rules/curly) rule is set to be an error.
 
 If a rule has additional options, you can specify them using array literal syntax, such as:
 
@@ -50,7 +49,7 @@ If a rule has additional options, you can specify them using array literal synta
 /* eslint quotes: ["error", "double"], curly: 2 */
 ```
 
-This comment specifies the `"double"` option for the `quotes` rule. The first item in the array is always the rule severity (number or string).
+This comment specifies the `"double"` option for the [`quotes`](../../rules/quotes) rule. The first item in the array is always the rule severity (number or string).
 
 #### Configuration Comment Descriptions
 
@@ -92,14 +91,15 @@ export default defineConfig([
 
 This setting defaults to `"off"`.
 
-This setting is similar to the `--report-unused-inline-configs` CLI option.
+This setting is similar to the [`--report-unused-inline-configs`](../command-line-interface#--report-unused-inline-configs) CLI option.
 
-**Tip:**
-To enforce best practices around configuration comments, take a look at `eslint-plugin-eslint-comments` (Docs).
+::: tip
+To enforce best practices around configuration comments, take a look at [`eslint-plugin-eslint-comments`](https://github.com/eslint-community/eslint-plugin-eslint-comments) ([Docs](https://eslint-community.github.io/eslint-plugin-eslint-comments/)).
+:::
 
 ### Use Configuration Files
 
-To configure rules inside of a configuration file, use the `rules` key along with an error level and any options you want to use. For example:
+To configure rules inside of a [configuration file](./configuration-files#configuration-file), use the `rules` key along with an error level and any options you want to use. For example:
 
 ```js
 // eslint.config.js
@@ -156,14 +156,15 @@ export default defineConfig([
 
 Here, the second configuration object only overrides the severity, so the final configuration for `semi` is `["warn", "never"]`.
 
-**Important:**
+::: important
 Rules configured via configuration comments have the highest priority and are applied after all configuration files settings.
+:::
 
 ## Rules from Plugins
 
 To configure a rule that is defined within a plugin, prefix the rule ID with the plugin namespace and `/`.
 
-In a configuration file, for example:
+In a [configuration file](./configuration-files#configuration-file), for example:
 
 ```js
 // eslint.config.js
@@ -190,8 +191,9 @@ You can also use this format with configuration comments, such as:
 /* eslint "example/rule1": "error" */
 ```
 
-**Important:**
+:::important
 In order to use plugin rules in configuration comments, your configuration file must load the plugin and specify it in the `plugins` object of your config. Configuration comments can not load plugins on their own.
+:::
 
 ## Disable Rules
 
@@ -229,8 +231,9 @@ console.log("bar");
 /* eslint-enable no-alert, no-console */
 ```
 
-**Warning:**
+::: warning
 `/* eslint-enable */` without any specific rules listed causes all disabled rules to be re-enabled.
+:::
 
 To disable rule warnings in an entire file, put a `/* eslint-disable */` block comment at the top of the file:
 
@@ -312,8 +315,9 @@ foo(); // eslint-disable-line example/rule-name
 foo(); /* eslint-disable-line example/rule-name */
 ```
 
-**Tip:**
+::: tip
 Comments that disable warnings for a portion of a file tell ESLint not to report rule violations for the disabled code. ESLint still parses the entire file, however, so disabled code still needs to be syntactically valid JavaScript.
+:::
 
 #### Comment descriptions
 
@@ -332,7 +336,7 @@ console.log("hello");
 
 ### Use configuration files
 
-To disable rules inside of a configuration file for a group of files, use a subsequent config object with a `files` key. For example:
+To disable rules inside of a [configuration file](./configuration-files#configuration-file) for a group of files, use a subsequent config object with a `files` key. For example:
 
 ```js
 // eslint.config.js
@@ -373,7 +377,7 @@ export default defineConfig([
 ]);
 ```
 
-You can also use the `--no-inline-config` CLI option to disable rule comments, in addition to other in-line configuration.
+You can also use the [`--no-inline-config`](../command-line-interface#--no-inline-config) CLI option to disable rule comments, in addition to other in-line configuration.
 
 #### Report unused `eslint-disable` comments
 
@@ -394,4 +398,4 @@ export default defineConfig([
 
 This setting defaults to `"warn"`.
 
-This setting is similar to `--report-unused-disable-directives` and `--report-unused-disable-directives-severity` CLI options.
+This setting is similar to [`--report-unused-disable-directives`](../command-line-interface#--report-unused-disable-directives) and [`--report-unused-disable-directives-severity`](../command-line-interface#--report-unused-disable-directives-severity) CLI options.

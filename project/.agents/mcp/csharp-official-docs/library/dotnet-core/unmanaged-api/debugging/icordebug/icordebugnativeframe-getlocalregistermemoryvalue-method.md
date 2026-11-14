@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugNativeFrame::GetLocalRegisterMemoryValue Method"
 title: "ICorDebugNativeFrame::GetLocalRegisterMemoryValue Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugnativeframe-getlocalregistermemoryvalue-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugNativeFrame.GetLocalRegisterMemoryValue"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugNativeFrame::GetLocalRegisterMemoryValue"
+helpviewer_keywords:
+  - "ICorDebugNativeFrame::GetLocalRegisterMemoryValue method [.NET debugging]"
+  - "GetLocalRegisterMemoryValue method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugNativeFrame::GetLocalRegisterMemoryValue Method
 
 Gets the value of an argument or local variable, of which the low word and high word are stored in the memory location and specified register, respectively, for this native frame.
@@ -42,10 +51,12 @@ HRESULT GetLocalRegisterMemoryValue (
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
  **Library:** CorGuids.lib
 
  **.NET versions:** Available since .NET Framework 2.0
+
+## See also

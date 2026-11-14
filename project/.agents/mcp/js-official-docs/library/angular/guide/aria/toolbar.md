@@ -1,643 +1,295 @@
----
-title: "Toolbar (part 1 of 7)"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/aria/toolbar.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Toolbar
 
-  - Toolbar ARIA pattern
-  - Toolbar API Reference
+<docs-pill-row>
+  <docs-pill href="https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/" title="Toolbar ARIA pattern"/>
+  <docs-pill href="/api/aria/toolbar/Toolbar" title="Toolbar API Reference"/>
+</docs-pill-row>
 
 ## Overview
 
 A container for grouping related controls and actions with keyboard navigation, commonly used for text formatting, toolbars, and command panels.
 
-  **Basic**
+<docs-tab-group>
+  <docs-tab label="Basic">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/toolbar/src/basic/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/toolbar/src/basic/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/toolbar/src/basic/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/toolbar/src/basic/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
 
-      File: `app.ts`
+  <docs-tab label="Material">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/toolbar/src/basic/material/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/toolbar/src/basic/material/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/toolbar/src/basic/material/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/toolbar/src/basic/material/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
 
-```ts
-import {Component, signal} from '@angular/core';
-import {Toolbar, ToolbarWidget, ToolbarWidgetGroup} from '@angular/aria/toolbar';
+  <docs-tab label="Retro">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/toolbar/src/basic/retro/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/toolbar/src/basic/retro/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/toolbar/src/basic/retro/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/toolbar/src/basic/retro/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+</docs-tab-group>
 
-@Component({
-  selector: 'app-root',
-  templateUrl: 'app.html',
-  styleUrl: 'app.css',
-  imports: [Toolbar, ToolbarWidget, ToolbarWidgetGroup],
-})
-export class App {
-  readonly bold = signal(false);
-  readonly italic = signal(false);
-  readonly underlined = signal(false);
-  readonly alignment = signal<'left' | 'center' | 'right'>('left');
-}
-```
-      File: `app.html`
+## Usage
 
-```html
-<div ngToolbar aria-label="Text Formatting Tools">
-  <div class="group">
-    <button
-      ngToolbarWidget
-      value="undo"
-      type="button"
-      aria-label="undo"
-      class="material-symbols-outlined"
-      translate="no"
-    >
-      undo
-    </button>
+Toolbar works best for grouping related controls that users access frequently. Consider using toolbar when:
 
-    <button
-      ngToolbarWidget
-      value="redo"
-      type="button"
-      aria-label="redo"
-      class="material-symbols-outlined"
-      translate="no"
-    >
-      redo
-    </button>
-  </div>
+- **Multiple related actions** - You have several controls that perform related functions (like text formatting buttons)
+- **Keyboard efficiency matters** - Users benefit from quick keyboard navigation through arrow keys
+- **Grouped controls** - You need to organize controls into logical sections with separators
+- **Frequent access** - Controls are used repeatedly within a workflow
 
-  <div class="separator" role="separator"></div>
+Avoid toolbar when:
 
-  <div class="group">
-    <button
-      ngToolbarWidget
-      value="bold"
-      type="button"
-      aria-label="bold"
-      class="material-symbols-outlined"
-      [attr.aria-pressed]="bold()"
-      (click)="bold.set(!bold())"
-      translate="no"
-    >
-      format_bold
-    </button>
+- A simple button group is sufficient - For just 2-3 unrelated actions, individual buttons work better
+- Controls aren't related - Toolbar implies a logical grouping; unrelated controls confuse users
+- Complex nested navigation - Deep hierarchies are better served by menus or navigation components
 
-    <button
-      ngToolbarWidget
-      value="italic"
-      type="button"
-      aria-label="italic"
-      class="material-symbols-outlined"
-      [attr.aria-pressed]="italic()"
-      (click)="italic.set(!italic())"
-      translate="no"
-    >
-      format_italic
-    </button>
+## Features
 
-    <button
-      ngToolbarWidget
-      value="underlined"
-      type="button"
-      aria-label="underlined"
-      class="material-symbols-outlined"
-      [attr.aria-pressed]="underlined()"
-      (click)="underlined.set(!underlined())"
-      translate="no"
-    >
-      format_underlined
-    </button>
-  </div>
+Angular's toolbar provides a fully accessible toolbar implementation with:
 
-  <div class="separator" role="separator"></div>
+- **Keyboard Navigation** - Navigate widgets with arrow keys, Home, and End using roving tabindex, while controls retain native activation
+- **Screen Reader Support** - Built-in ARIA attributes for assistive technologies
+- **Widget Groups** - Organize related widgets like radio button groups or toggle button groups
+- **Flexible Orientation** - Horizontal or vertical layouts with automatic keyboard navigation
+- **Signal-Based Reactivity** - Reactive state management using Angular signals
+- **Bidirectional Text Support** - Automatically handles right-to-left (RTL) languages
+- **Configurable Focus** - Choose between wrapping navigation or hard stops at edges
 
-  <div ngToolbarWidgetGroup role="radiogroup" class="group" aria-label="Text alignment options">
-    <button
-      ngToolbarWidget
-      role="radio"
-      type="button"
-      value="align left"
-      aria-label="align left"
-      class="material-symbols-outlined"
-      [attr.aria-checked]="alignment() === 'left'"
-      (click)="alignment.set('left')"
-      translate="no"
-    >
-      format_align_left
-    </button>
+## Examples
 
-    <button
-      ngToolbarWidget
-      role="radio"
-      type="button"
-      value="align center"
-      aria-label="align center"
-      class="material-symbols-outlined"
-      [attr.aria-checked]="alignment() === 'center'"
-      (click)="alignment.set('center')"
-      translate="no"
-    >
-      format_align_center
-    </button>
+### Basic horizontal toolbar
 
-    <button
-      ngToolbarWidget
-      role="radio"
-      type="button"
-      value="align right"
-      aria-label="align right"
-      class="material-symbols-outlined"
-      [attr.aria-checked]="alignment() === 'right'"
-      (click)="alignment.set('right')"
-      translate="no"
-    >
-      format_align_right
-    </button>
-  </div>
+Horizontal toolbars organize controls from left to right, matching the common pattern in text editors and design tools. Arrow keys navigate between widgets, maintaining focus within the toolbar until users press Tab to move to the next page element.
+
+<docs-tab-group>
+  <docs-tab label="Basic">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/toolbar/src/basic/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/toolbar/src/basic/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/toolbar/src/basic/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/toolbar/src/basic/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+
+  <docs-tab label="Material">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/toolbar/src/basic/material/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/toolbar/src/basic/material/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/toolbar/src/basic/material/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/toolbar/src/basic/material/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+
+  <docs-tab label="Retro">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/toolbar/src/basic/retro/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/toolbar/src/basic/retro/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/toolbar/src/basic/retro/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/toolbar/src/basic/retro/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+</docs-tab-group>
+
+### Vertical toolbar
+
+Vertical toolbars stack controls top to bottom, useful for side panels or vertical command palettes. Up and down arrow keys navigate between widgets.
+
+<docs-tab-group>
+  <docs-tab label="Basic">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/toolbar/src/vertical/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/toolbar/src/vertical/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/toolbar/src/vertical/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/toolbar/src/vertical/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+
+  <docs-tab label="Material">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/toolbar/src/vertical/material/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/toolbar/src/vertical/material/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/toolbar/src/vertical/material/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/toolbar/src/vertical/material/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+
+  <docs-tab label="Retro">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/toolbar/src/vertical/retro/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/toolbar/src/vertical/retro/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/toolbar/src/vertical/retro/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/toolbar/src/vertical/retro/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+</docs-tab-group>
+
+### Widget groups
+
+Widget groups organize related controls that work together, such as text alignment options or formatting toggles. Groups maintain roving tabindex navigation while presenting the appropriate semantic structure to assistive technologies.
+
+In the examples above, the alignment buttons are wrapped in `ngToolbarWidgetGroup` with `role="radiogroup"`. Selection is decoupled from the toolbar container, allowing you to manage state using Angular signals or custom directives:
+
+```angular-html
+<!-- Mutually exclusive radio group -->
+<div ngToolbarWidgetGroup role="radiogroup" aria-label="Alignment">
+  <button
+    ngToolbarWidget
+    role="radio"
+    type="button"
+    [attr.aria-checked]="alignment() === 'left'"
+    (click)="alignment.set('left')"
+  >
+    Left
+  </button>
+  <button
+    ngToolbarWidget
+    role="radio"
+    type="button"
+    [attr.aria-checked]="alignment() === 'center'"
+    (click)="alignment.set('center')"
+  >
+    Center
+  </button>
+  <button
+    ngToolbarWidget
+    role="radio"
+    type="button"
+    [attr.aria-checked]="alignment() === 'right'"
+    (click)="alignment.set('right')"
+  >
+    Right
+  </button>
+</div>
+
+<!-- Toggle button group -->
+<div class="group" role="group" aria-label="Text styling">
+  <button ngToolbarWidget type="button" [attr.aria-pressed]="bold()" (click)="bold.set(!bold())">
+    Bold
+  </button>
+  <button
+    ngToolbarWidget
+    type="button"
+    [attr.aria-pressed]="italic()"
+    (click)="italic.set(!italic())"
+  >
+    Italic
+  </button>
 </div>
 ```
-      File: `app.css`
 
-```css
-@import url('https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined');
+### Disabled widgets
 
-:host {
-  display: flex;
-  justify-content: center;
-}
+Toolbars support two disabled modes:
 
-[ngToolbar] {
-  gap: 1.5rem;
-  display: flex;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  background-color: var(--septenary-contrast);
-}
+1. **Soft-disabled** widgets remain focusable but visually indicate they're unavailable
+2. **Hard-disabled** widgets are completely removed from keyboard navigation.
 
-.group {
-  gap: 0.5rem;
-  display: flex;
-}
+By default, `softDisabled` is `true`, which allows disabled widgets to still receive focus. If you want to enable hard-disabled mode, set `[softDisabled]="false"` on the toolbar.
 
-.separator {
-  width: 1px;
-  align-self: center;
-  height: calc(100% - 1rem);
-  background-color: var(--quinary-contrast);
-}
+<docs-tab-group>
+  <docs-tab label="Basic">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/toolbar/src/disabled/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/toolbar/src/disabled/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/toolbar/src/disabled/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/toolbar/src/disabled/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
 
-[ngToolbarWidget] {
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 4px;
-  font-size: 1.25rem;
-  background-color: transparent;
-  color: var(--primary-contrast);
-}
+  <docs-tab label="Material">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/toolbar/src/disabled/material/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/toolbar/src/disabled/material/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/toolbar/src/disabled/material/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/toolbar/src/disabled/material/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
 
-[ngToolbarWidget]:hover {
-  background-color: color-mix(in srgb, var(--primary-contrast) 10%, transparent);
-}
+  <docs-tab label="Retro">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/toolbar/src/disabled/retro/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/toolbar/src/disabled/retro/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/toolbar/src/disabled/retro/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/toolbar/src/disabled/retro/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+</docs-tab-group>
 
-[ngToolbarWidget]:active {
-  background-color: color-mix(in srgb, var(--primary-contrast) 15%, transparent);
-}
+### Right-to-left (RTL) support
 
-[ngToolbarWidget]:focus {
-  outline-offset: -1px;
-  outline: 1px solid color-mix(in srgb, var(--hot-pink) 60%, transparent);
-}
+Toolbars automatically support right-to-left languages. Wrap the toolbar in a container with `dir="rtl"` to reverse the layout and keyboard navigation direction. Arrow key navigation adjusts automatically: left arrow moves to the next widget, right arrow to the previous.
 
-[ngToolbarWidget][aria-pressed="true"],
-[ngToolbarWidget][aria-checked="true"] {
-  color: color-mix(in srgb, var(--hot-pink) 80%, var(--primary-contrast));
-  background-color: color-mix(in srgb, var(--hot-pink) 10%, transparent);
-}
+<docs-tab-group>
+  <docs-tab label="Basic">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/toolbar/src/rtl/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/toolbar/src/rtl/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/toolbar/src/rtl/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/toolbar/src/rtl/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+
+  <docs-tab label="Material">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/toolbar/src/rtl/material/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/toolbar/src/rtl/material/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/toolbar/src/rtl/material/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/toolbar/src/rtl/material/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+
+  <docs-tab label="Retro">
+    <docs-code-multifile preview hideCode path="adev/src/content/examples/aria/toolbar/src/rtl/retro/app/app.ts">
+      <docs-code header="app.ts" path="adev/src/content/examples/aria/toolbar/src/rtl/retro/app/app.ts"/>
+      <docs-code header="app.html" path="adev/src/content/examples/aria/toolbar/src/rtl/retro/app/app.html"/>
+      <docs-code header="app.css" path="adev/src/content/examples/aria/toolbar/src/rtl/retro/app/app.css"/>
+    </docs-code-multifile>
+  </docs-tab>
+</docs-tab-group>
+
+## Testing
+
+Angular Aria provides component harnesses for testing toolbar components.
+Here is an example of how to use the harnesses in a component test:
+
+```typescript
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {HarnessLoader} from '@angular/cdk/testing';
+import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
+import {ToolbarHarness} from '@angular/aria/toolbar/testing';
+import {MyToolbarComponent} from './my-toolbar'; // Your component
+
+describe('MyToolbarComponent', () => {
+  let fixture: ComponentFixture<MyToolbarComponent>;
+  let loader: HarnessLoader;
+
+  beforeEach(async () => {
+    TestBed.configureTestingModule({
+      imports: [MyToolbarComponent],
+    });
+
+    fixture = TestBed.createComponent(MyToolbarComponent);
+    await fixture.whenStable();
+    loader = TestbedHarnessEnvironment.loader(fixture);
+  });
+
+  it('should have widgets and update toggle state on click', async () => {
+    // Load the toolbar harness
+    const toolbar = await loader.getHarness(ToolbarHarness);
+
+    // Get all widgets
+    const widgets = await toolbar.getWidgets();
+    expect(widgets.length).toBe(3);
+
+    // Click the first widget
+    await widgets[0].click();
+
+    // Verify pressed state updated via click handler
+    expect(await widgets[0].isSelected()).toBe(true);
+  });
+});
 ```
 
-  **Material**
+## API reference
 
-      File: `app.ts`
+For detailed API documentation, inspect the following API references:
 
-```ts
-import {Component, signal} from '@angular/core';
-import {Toolbar, ToolbarWidget, ToolbarWidgetGroup} from '@angular/aria/toolbar';
-
-@Component({
-  selector: 'app-root',
-  templateUrl: 'app.html',
-  styleUrl: 'app.css',
-  imports: [Toolbar, ToolbarWidget, ToolbarWidgetGroup],
-})
-export class App {
-  readonly bold = signal(false);
-  readonly italic = signal(false);
-  readonly underlined = signal(false);
-  readonly alignment = signal<'left' | 'center' | 'right'>('left');
-}
-```
-      File: `app.html`
-
-```html
-<div ngToolbar class="material-toolbar" aria-label="Text Formatting Tools">
-  <div class="group">
-    <button
-      ngToolbarWidget
-      value="undo"
-      type="button"
-      aria-label="undo"
-      class="material-symbols-outlined"
-      translate="no"
-    >
-      undo
-    </button>
-
-    <button
-      ngToolbarWidget
-      value="redo"
-      type="button"
-      aria-label="redo"
-      class="material-symbols-outlined"
-      translate="no"
-    >
-      redo
-    </button>
-  </div>
-
-  <div class="separator" role="separator"></div>
-
-  <div class="group">
-    <button
-      ngToolbarWidget
-      value="bold"
-      type="button"
-      aria-label="bold"
-      class="material-symbols-outlined"
-      [attr.aria-pressed]="bold()"
-      (click)="bold.set(!bold())"
-      translate="no"
-    >
-      format_bold
-    </button>
-
-    <button
-      ngToolbarWidget
-      value="italic"
-      type="button"
-      aria-label="italic"
-      class="material-symbols-outlined"
-      [attr.aria-pressed]="italic()"
-      (click)="italic.set(!italic())"
-      translate="no"
-    >
-      format_italic
-    </button>
-
-    <button
-      ngToolbarWidget
-      value="underlined"
-      type="button"
-      aria-label="underlined"
-      class="material-symbols-outlined"
-      [attr.aria-pressed]="underlined()"
-      (click)="underlined.set(!underlined())"
-      translate="no"
-    >
-      format_underlined
-    </button>
-  </div>
-
-  <div class="separator" role="separator"></div>
-
-  <div ngToolbarWidgetGroup role="radiogroup" class="group" aria-label="Text alignment options">
-    <button
-      ngToolbarWidget
-      role="radio"
-      type="button"
-      value="align left"
-      aria-label="align left"
-      class="material-symbols-outlined"
-      [attr.aria-checked]="alignment() === 'left'"
-      (click)="alignment.set('left')"
-      translate="no"
-    >
-      format_align_left
-    </button>
-
-    <button
-      ngToolbarWidget
-      role="radio"
-      type="button"
-      value="align center"
-      aria-label="align center"
-      class="material-symbols-outlined"
-      [attr.aria-checked]="alignment() === 'center'"
-      (click)="alignment.set('center')"
-      translate="no"
-    >
-      format_align_center
-    </button>
-
-    <button
-      ngToolbarWidget
-      role="radio"
-      type="button"
-      value="align right"
-      aria-label="align right"
-      class="material-symbols-outlined"
-      [attr.aria-checked]="alignment() === 'right'"
-      (click)="alignment.set('right')"
-      translate="no"
-    >
-      format_align_right
-    </button>
-  </div>
-</div>
-```
-      File: `app.css`
-
-```css
-@import url('https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined');
-
-:host {
-  display: flex;
-  justify-content: center;
-}
-
-[ngToolbar] {
-  display: flex;
-}
-
-[ngToolbarWidget] {
-  border: none;
-  outline: none;
-  cursor: pointer;
-  width: 3rem;
-  height: 3rem;
-  font-size: 1.25rem;
-  border-radius: 2rem;
-  color: color-mix(in srgb, var(--vivid-pink) 70%, var(--full-contrast));
-  background-color: color-mix(in srgb, var(--vivid-pink) 20%, transparent);
-  transition:
-    width 0.2s ease-in-out,
-    background-color 0.15s ease-in-out,
-    color 0.15s ease-in-out;
-}
-
-[ngToolbarWidget]:focus {
-  outline-offset: 2px;
-  outline: 2px solid var(--vivid-pink);
-}
-
-[ngToolbarWidget]:active,
-[ngToolbarWidget][aria-pressed='true'],
-[ngToolbarWidget][aria-checked='true'] {
-  background-color: color-mix(in srgb, var(--vivid-pink) 80%, var(--full-contrast));
-  color: var(--page-background);
-}
-
-[ngToolbarWidget][aria-checked='true'] {
-  width: 4.5rem;
-}
-
-.group {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.separator {
-  width: 1px;
-  margin: 0 1rem;
-  height: calc(100% - 2rem);
-  background-color: var(--quinary-contrast);
-}
-```
-
-  **Retro**
-
-      File: `app.ts`
-
-```ts
-import {Component, signal} from '@angular/core';
-import {Toolbar, ToolbarWidget, ToolbarWidgetGroup} from '@angular/aria/toolbar';
-
-@Component({
-  selector: 'app-root',
-  templateUrl: 'app.html',
-  styleUrl: 'app.css',
-  imports: [Toolbar, ToolbarWidget, ToolbarWidgetGroup],
-})
-export class App {
-  readonly bold = signal(false);
-  readonly italic = signal(false);
-  readonly underlined = signal(false);
-  readonly alignment = signal<'left' | 'center' | 'right'>('left');
-}
-```
-      File: `app.html`
-
-```html
-<div ngToolbar class="retro-toolbar" aria-label="Text Formatting Tools">
-  <div class="group">
-    <button
-      ngToolbarWidget
-      value="undo"
-      type="button"
-      aria-label="undo"
-      class="material-symbols-outlined"
-      translate="no"
-    >
-      undo
-    </button>
-
-    <button
-      ngToolbarWidget
-      value="redo"
-      type="button"
-      aria-label="redo"
-      class="material-symbols-outlined"
-      translate="no"
-    >
-      redo
-    </button>
-  </div>
-
-  <div class="separator" role="separator"></div>
-
-  <div class="group">
-    <button
-      ngToolbarWidget
-      value="bold"
-      type="button"
-      aria-label="bold"
-      class="material-symbols-outlined"
-      [attr.aria-pressed]="bold()"
-      (click)="bold.set(!bold())"
-      translate="no"
-    >
-      format_bold
-    </button>
-
-    <button
-      ngToolbarWidget
-      value="italic"
-      type="button"
-      aria-label="italic"
-      class="material-symbols-outlined"
-      [attr.aria-pressed]="italic()"
-      (click)="italic.set(!italic())"
-      translate="no"
-    >
-      format_italic
-    </button>
-
-    <button
-      ngToolbarWidget
-      value="underlined"
-      type="button"
-      aria-label="underlined"
-      class="material-symbols-outlined"
-      [attr.aria-pressed]="underlined()"
-      (click)="underlined.set(!underlined())"
-      translate="no"
-    >
-      format_underlined
-    </button>
-  </div>
-
-  <div class="separator" role="separator"></div>
-
-  <div ngToolbarWidgetGroup role="radiogroup" class="group" aria-label="Text alignment options">
-    <button
-      ngToolbarWidget
-      role="radio"
-      type="button"
-      value="align left"
-      aria-label="align left"
-      class="material-symbols-outlined"
-      [attr.aria-checked]="alignment() === 'left'"
-      (click)="alignment.set('left')"
-      translate="no"
-    >
-      format_align_left
-    </button>
-
-    <button
-      ngToolbarWidget
-      role="radio"
-      type="button"
-      value="align center"
-      aria-label="align center"
-      class="material-symbols-outlined"
-      [attr.aria-checked]="alignment() === 'center'"
-      (click)="alignment.set('center')"
-      translate="no"
-    >
-      format_align_center
-    </button>
-
-    <button
-      ngToolbarWidget
-      role="radio"
-      type="button"
-      value="align right"
-      aria-label="align right"
-      class="material-symbols-outlined"
-      [attr.aria-checked]="alignment() === 'right'"
-      (click)="alignment.set('right')"
-      translate="no"
-    >
-      format_align_right
-    </button>
-  </div>
-</div>
-```
-      File: `app.css`
-
-```css
-@import url('https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined');
-
-:host {
-  display: flex;
-  justify-content: center;
-
-  font-family: 'Press Start 2P';
-  --retro-button-color: color-mix(in srgb, var(--vivid-pink) 80%, var(--page-background));
-  --retro-pressed-tint: #fbfbfb;
-  --retro-shadow-light: color-mix(in srgb, var(--retro-button-color) 90%, #fff);
-  --retro-shadow-dark: color-mix(in srgb, var(--retro-button-color) 90%, #000);
-  --retro-elevated-shadow:
-    inset 4px 4px 0px 0px var(--retro-shadow-light),
-    inset -4px -4px 0px 0px var(--retro-shadow-dark), 4px 0px 0px 0px var(--tertiary-contrast),
-    0px 4px 0px 0px var(--tertiary-contrast), -4px 0px 0px 0px var(--tertiary-contrast),
-    0px -4px 0px 0px var(--tertiary-contrast);
-  --retro-flat-shadow:
-    4px 0px 0px 0px var(--tertiary-contrast), 0px 4px 0px 0px var(--tertiary-contrast),
-    -4px 0px 0px 0px var(--tertiary-contrast), 0px -4px 0px 0px var(--tertiary-contrast);
-  --retro-clickable-shadow:
-    inset 4px 4px 0px 0px var(--retro-shadow-light),
-    inset -4px -4px 0px 0px var(--retro-shadow-dark), 4px 0px 0px 0px var(--tertiary-contrast),
-    0px 4px 0px 0px var(--tertiary-contrast), -4px 0px 0px 0px var(--tertiary-contrast),
-    0px -4px 0px 0px var(--tertiary-contrast), 8px 8px 0px 0px var(--tertiary-contrast);
-  --retro-pressed-shadow:
-    inset 4px 4px 0px 0px var(--retro-shadow-dark),
-    inset -4px -4px 0px 0px var(--retro-shadow-light), 4px 0px 0px 0px var(--tertiary-contrast),
-    0px 4px 0px 0px var(--tertiary-contrast), -4px 0px 0px 0px var(--tertiary-contrast),
-    0px -4px 0px 0px var(--tertiary-contrast), 0px 0px 0px 0px var(--tertiary-contrast);
-}
-
-:host-context(.docs-dark-mode) {
-  --retro-pressed-tint: #151417;
-}
-
-[ngToolbar] {
-  gap: 1.5rem;
-  display: flex;
-  padding: 1rem;
-}
-
-.group {
-  gap: 1rem;
-  display: flex;
-}
-
-.separator {
-  width: 1px;
-  align-self: center;
-  height: calc(100% - 1rem);
-  background-color: var(--quinary-contrast);
-}
-
-[ngToolbarWidget] {
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 0.5rem;
-  font-size: 1.25rem;
-  color: var(--page-background);
-
-  background-color: var(--retro-button-color);
-  box-shadow: var(--retro-clickable-shadow);
-  transition:
-    transform 0.1s,
-    box-shadow 0.1s;
-}
-
-[ngToolbarWidget]:focus,
-[ngToolbarWidget]:hover {
-  transform: translate(1px, 1px);
-}
-
-[ngToolbarWidget]:active,
-[ngToolbarWidget][aria-pressed='true'],
-[ngToolbarWidget][aria-checked='true'] {
-  transform: translate(4px, 4px);
-  box-shadow: var(--retro-pressed-shadow);
-  background-color: color-mix(in srgb, var(--retro-button-color) 60%, var(--retro-pressed-tint));
-}
-
-[ngToolbarWidget]:focus {
-  outline-offset: 4px;
-  outline: 4px dashed var(--retro-button-color);
-}
-```
+- [`Toolbar`](/api/aria/toolbar/Toolbar)
+- [`ToolbarWidget`](/api/aria/toolbar/ToolbarWidget)
+- [`ToolbarWidgetGroup`](/api/aria/toolbar/ToolbarWidgetGroup)

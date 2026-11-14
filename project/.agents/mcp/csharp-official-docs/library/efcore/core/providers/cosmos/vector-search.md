@@ -1,18 +1,16 @@
 ---
-title: "Vector Search - Azure Cosmos DB Provider - EF Core"
-tool: "efcore"
-version: "11"
-source: "https://github.com/dotnet/EntityFramework.Docs/blob/1459c99ecffb85202e1bbcf32504d074c430bfde/entity-framework/core/providers/cosmos/vector-search.md"
-commit: "1459c99ecffb85202e1bbcf32504d074c430bfde"
-license: "CC-BY-4.0"
+title: Vector Search - Azure Cosmos DB Provider - EF Core
+description: Vector search with the Azure Cosmos DB EF Core Provider
+author: SamMonoRT
+ms.date: 09/20/2024
+uid: core/providers/cosmos/vector-search
 ---
-
 # Vector search
 
-> **Note:**
+> [!NOTE]
 > The below describes the vector search support in EF 10. EF 9 includes similar experimental support with slightly different method naming.
 
-Azure Cosmos DB now offers support for vector similarity search. Vector search is a fundamental part of some application types, including AI, semantic search and others. Azure Cosmos DB allows you to store vectors directly in your documents alongside the rest of your data, meaning you can perform all of your queries against a single database. This can considerably simplify your architecture and remove the need for an additional, dedicated vector database solution in your stack. To learn more about Azure Cosmos DB vector search, see the documentation.
+Azure Cosmos DB now offers support for vector similarity search. Vector search is a fundamental part of some application types, including AI, semantic search and others. Azure Cosmos DB allows you to store vectors directly in your documents alongside the rest of your data, meaning you can perform all of your queries against a single database. This can considerably simplify your architecture and remove the need for an additional, dedicated vector database solution in your stack. To learn more about Azure Cosmos DB vector search, [see the documentation](/azure/cosmos-db/nosql/vector-search).
 
 Vector property can be configured inside `OnModelCreating`:
 
@@ -61,6 +59,6 @@ This will returns the top five Blogs, based on the similarity of their `Vector` 
 
 ## Hybrid search
 
-Vector similarity search can be used with full-text search in the same query (i.e. hybrid search), by combining results of `VectorDistance` and `FullTextScore` functions using the `RRF` (Reciprocal Rank Fusion) function.
+Vector similarity search can be used with full-text search in the same query (i.e. hybrid search), by combining results of `VectorDistance` and `FullTextScore` functions using the [`RRF`](/azure/cosmos-db/nosql/query/rrf) (Reciprocal Rank Fusion) function.
 
-See documentation to learn how to enable full-text search support in EF model and how to use hybrid search in queries.
+See [documentation](xref:core/providers/cosmos/full-text-search?#hybrid-search) to learn how to enable full-text search support in EF model and how to use hybrid search in queries.

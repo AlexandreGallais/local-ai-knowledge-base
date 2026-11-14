@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: ICorDebugSymbolProvider2::GetGenericDictionaryInfo Method"
 title: "ICorDebugSymbolProvider2::GetGenericDictionaryInfo Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugsymbolprovider2-getgenericdictionaryinfo-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugSymbolProvider2::GetGenericDictionaryInfo Method
 
 Retrieves a generic dictionary map.
@@ -22,18 +18,20 @@ HRESULT GetGenericDictionaryInfo(
 ## Parameters
 
 `ppMemoryBuffer`\
-[out] A pointer to the address of an ICorDebugMemoryBuffer object containing the generic dictionary map. See the Remarks section for more information.
+[out] A pointer to the address of an [ICorDebugMemoryBuffer](icordebugmemorybuffer-interface.md) object containing the generic dictionary map. See the Remarks section for more information.
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This method is available with .NET Native only.
 
 The map consists of two top-level sections:
 
-- A directory containing the relative virtual addresses (RVA) of all dictionaries included in this map.
+- A [directory](#Directory) containing the relative virtual addresses (RVA) of all dictionaries included in this map.
 
-- A byte-aligned heap that contains object instantiation information. It starts immediately after the last directory entry.
+- A byte-aligned [heap](#Heap) that contains object instantiation information. It starts immediately after the last directory entry.
+
+<a name="Directory"></a>
 
 ## The Directory
 
@@ -48,6 +46,8 @@ The directory portion of the generic dictionary map has the following structure:
   - Bytes 0-3: RVA; the dictionary's relative virtual address.
 
   - Bytes 4-7: Offset; an offset relative to the start of the heap.
+
+<a name="Heap"></a>
 
 ## The Heap
 
@@ -71,7 +71,7 @@ The inclusion of the length for each heap element enables simple sorting of the 
 
 ## Requirements
 
-**Platforms:** See .NET supported operating systems.
+**Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
 **Header:** CorDebug.idl, CorDebug.h
 
@@ -81,4 +81,4 @@ The inclusion of the length for each heap element enables simple sorting of the 
 
 ## See also
 
-- ICorDebugSymbolProvider2 Interface
+- [ICorDebugSymbolProvider2 Interface](icordebugsymbolprovider2-interface.md)

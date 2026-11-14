@@ -1,13 +1,7 @@
 ---
-title: "multiline-comment-style"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/multiline-comment-style.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: multiline-comment-style
+rule_type: suggestion
 ---
-
-# multiline-comment-style
 
 Many style guides require a particular style for comments that span multiple lines. For example, some style guides prefer the use of a single block comment for multiline comments, whereas other style guides prefer consecutive line comments.
 
@@ -27,7 +21,7 @@ The rule always ignores directive comments such as `/* eslint-disable */`.
 
 Examples of **incorrect** code for this rule with the default `"starred-block"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 
@@ -59,9 +53,11 @@ foo();
 
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `"starred-block"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint multiline-comment-style: ["error", "starred-block"] */
@@ -75,9 +71,11 @@ foo();
 // single-line comment
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `"bare-block"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /* eslint multiline-comment-style: ["error", "bare-block"] */
@@ -93,9 +91,11 @@ foo();
 foo();
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"bare-block"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint multiline-comment-style: ["error", "bare-block"] */
@@ -105,9 +105,11 @@ Examples of **correct** code for this rule with the `"bare-block"` option:
 foo();
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `"separate-lines"` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 
@@ -125,9 +127,11 @@ foo();
 
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"separate-lines"` option:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint multiline-comment-style: ["error", "separate-lines"] */
@@ -138,9 +142,11 @@ foo();
 
 ```
 
+:::
+
 Examples of **incorrect** code for this rule with the `"separate-lines"` option and `checkJSDoc` set to `true`:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 
@@ -154,9 +160,11 @@ foo();
 
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"separate-lines"` option and `checkJSDoc` set to `true`:
 
-**Correct:**
+::: correct
 
 ```js
 /* eslint multiline-comment-style: ["error", "separate-lines", { "checkJSDoc": true }] */
@@ -166,6 +174,8 @@ Examples of **correct** code for this rule with the `"separate-lines"` option an
 foo();
 
 ```
+
+:::
 
 ## When Not To Use It
 

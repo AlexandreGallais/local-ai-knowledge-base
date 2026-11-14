@@ -1,19 +1,13 @@
----
-title: "catch-error-name"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/catch-error-name.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # catch-error-name
 
 📝 Enforce a specific parameter name in catch clauses.
 
-💼🚫 This rule is enabled in the ✅ `recommended` config. This rule is _disabled_ in the ☑️ `unopinionated` config.
+💼🚫 This rule is enabled in the ✅ `recommended` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config). This rule is _disabled_ in the ☑️ `unopinionated` [config](https://github.com/sindresorhus/eslint-plugin-unicorn#recommended-config).
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
 Enforces a consistent name for caught errors across:
 
@@ -23,13 +17,13 @@ Enforces a consistent name for caught errors across:
 
 Using one recognizable name makes error handlers easier to scan and avoids renaming the same concept across callback styles.
 
-The desired parameter name is configurable, but defaults to `error`.
+The desired parameter name is [configurable](#name), but defaults to `error`.
 
 The following names are ignored:
 
 - `_`, but only if the error is not used.
 - Descriptive names, for example, `fsError` or `authError`.
-- Names matching `options.ignore`.
+- Names matching [`options.ignore`](#ignore).
 
 ## Examples
 

@@ -1,12 +1,3 @@
----
-title: "AsynchronousChannelProvider class (java.nio.channels.spi)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/nio/channels/spi/AsynchronousChannelProvider.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # AsynchronousChannelProvider class (java.nio.channels.spi)
 
 ```java
@@ -15,16 +6,17 @@ public abstract class AsynchronousChannelProvider
 
 Service-provider class for asynchronous channels.
 
- An asynchronous channel provider is a concrete subclass of this class that
+<p> An asynchronous channel provider is a concrete subclass of this class that
 has a zero-argument constructor and implements the abstract methods specified
 below.  A given invocation of the Java virtual machine maintains a single
-system-wide default provider instance, which is returned by the provider method.  The first invocation of that method will locate
+system-wide default provider instance, which is returned by the {@link
+#provider() provider} method.  The first invocation of that method will locate
 the default provider as specified below.
 
- All of the methods in this class are safe for use by multiple concurrent
-threads.
+<p> All of the methods in this class are safe for use by multiple concurrent
+threads.  </p>
 
-**Since:** 1.7
+@since 1.7
 
 ## AsynchronousChannelProvider.AsynchronousChannelProvider()
 
@@ -43,38 +35,36 @@ public static AsynchronousChannelProvider provider()
 Returns the system-wide default asynchronous channel provider for this
 invocation of the Java virtual machine.
 
- The first invocation of this method locates the default provider
-object as follows:
+<p> The first invocation of this method locates the default provider
+object as follows: </p>
 
--
+<ol>
 
- If the system property
-  `java.nio.channels.spi.AsynchronousChannelProvider` is
+  <li><p> If the system property
+  {@systemProperty java.nio.channels.spi.AsynchronousChannelProvider} is
   defined then it is taken to be the fully-qualified name of a concrete
   provider class. The class is loaded and instantiated; if this process
-  fails then an unspecified error is thrown.
+  fails then an unspecified error is thrown.  </p></li>
 
--
-
- If a provider class has been installed in a jar file that is
+  <li><p> If a provider class has been installed in a jar file that is
   visible to the system class loader, and that jar file contains a
   provider-configuration file named
-  `java.nio.channels.spi.AsynchronousChannelProvider` in the resource
-  directory `META-INF/services`, then the first class name
+  {@code java.nio.channels.spi.AsynchronousChannelProvider} in the resource
+  directory {@code META-INF/services}, then the first class name
   specified in that file is taken.  The class is loaded and
   instantiated; if this process fails then an unspecified error is
-  thrown.
+  thrown.  </p></li>
 
--
-
- Finally, if no provider has been specified by any of the above
+  <li><p> Finally, if no provider has been specified by any of the above
   means then the system-default provider class is instantiated and the
-  result is returned.
+  result is returned.  </p></li>
 
- Subsequent invocations of this method return the provider that was
-returned by the first invocation.
+</ol>
 
-**Returns:** The system-wide default AsynchronousChannel provider
+<p> Subsequent invocations of this method return the provider that was
+returned by the first invocation.  </p>
+
+@return  The system-wide default AsynchronousChannel provider
 
 ## AsynchronousChannelProvider.openAsynchronousChannelGroup(int, ThreadFactory)
 
@@ -84,19 +74,19 @@ public abstract AsynchronousChannelGroup openAsynchronousChannelGroup(int nThrea
 
 Constructs a new asynchronous channel group with a fixed thread pool.
 
-Parameters:
+@param   nThreads
+         The number of threads in the pool
+@param   threadFactory
+         The factory to use when creating new threads
 
-- `nThreads`: The number of threads in the pool
-- `threadFactory`: The factory to use when creating new threads
+@return  A new asynchronous channel group
 
-**Returns:** A new asynchronous channel group
+@throws  IllegalArgumentException
+         If {@code nThreads <= 0}
+@throws  IOException
+         If an I/O error occurs
 
-**See also:** AsynchronousChannelGroup#withFixedThreadPool
-
-Throws:
-
-- `IllegalArgumentException`: If `nThreads <= 0`
-- `IOException`: If an I/O error occurs
+@see AsynchronousChannelGroup#withFixedThreadPool
 
 ## AsynchronousChannelProvider.openAsynchronousChannelGroup(ExecutorService, int)
 
@@ -106,18 +96,18 @@ public abstract AsynchronousChannelGroup openAsynchronousChannelGroup(ExecutorSe
 
 Constructs a new asynchronous channel group with the given thread pool.
 
-Parameters:
+@param   executor
+         The thread pool
+@param   initialSize
+         A value {@code >=0} or a negative value for implementation
+         specific default
 
-- `executor`: The thread pool
-- `initialSize`: A value `>=0` or a negative value for implementation specific default
+@return  A new asynchronous channel group
 
-**Returns:** A new asynchronous channel group
+@throws  IOException
+         If an I/O error occurs
 
-**See also:** AsynchronousChannelGroup#withCachedThreadPool
-
-Throws:
-
-- `IOException`: If an I/O error occurs
+@see AsynchronousChannelGroup#withCachedThreadPool
 
 ## AsynchronousChannelProvider.openAsynchronousServerSocketChannel(AsynchronousChannelGroup)
 
@@ -127,17 +117,18 @@ public abstract AsynchronousServerSocketChannel openAsynchronousServerSocketChan
 
 Opens an asynchronous server-socket channel.
 
-Parameters:
+@param   group
+         The group to which the channel is bound, or {@code null} to
+         bind to the default group
 
-- `group`: The group to which the channel is bound, or `null` to bind to the default group
+@return  The new channel
 
-**Returns:** The new channel
-
-Throws:
-
-- `IllegalChannelGroupException`: If the provider that created the group differs from this provider
-- `ShutdownChannelGroupException`: The group is shutdown
-- `IOException`: If an I/O error occurs
+@throws  IllegalChannelGroupException
+         If the provider that created the group differs from this provider
+@throws  ShutdownChannelGroupException
+         The group is shutdown
+@throws  IOException
+         If an I/O error occurs
 
 ## AsynchronousChannelProvider.openAsynchronousSocketChannel(AsynchronousChannelGroup)
 
@@ -147,14 +138,15 @@ public abstract AsynchronousSocketChannel openAsynchronousSocketChannel (Asynchr
 
 Opens an asynchronous socket channel.
 
-Parameters:
+@param   group
+         The group to which the channel is bound, or {@code null} to
+         bind to the default group
 
-- `group`: The group to which the channel is bound, or `null` to bind to the default group
+@return  The new channel
 
-**Returns:** The new channel
-
-Throws:
-
-- `IllegalChannelGroupException`: If the provider that created the group differs from this provider
-- `ShutdownChannelGroupException`: The group is shutdown
-- `IOException`: If an I/O error occurs
+@throws  IllegalChannelGroupException
+         If the provider that created the group differs from this provider
+@throws  ShutdownChannelGroupException
+         The group is shutdown
+@throws  IOException
+         If an I/O error occurs

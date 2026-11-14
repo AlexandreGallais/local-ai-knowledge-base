@@ -1,10 +1,9 @@
 ---
-title: "Platform Invoke (P/Invoke)"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/native-interop/pinvoke.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Platform Invoke (P/Invoke)
+description: Learn how to call native functions via P/Invoke in .NET.
+ms.date: 04/08/2024
+ms.topic: how-to
+ms.custom: linux-related-content
 ---
 
 # Platform Invoke (P/Invoke)
@@ -13,12 +12,12 @@ P/Invoke is a technology that allows you to access structs, callbacks, and funct
 
 Let's start from the most common example, and that is calling unmanaged functions in your managed code. Let's show a message box from a command-line application:
 
-_Code sample not included: ~/samples/snippets/standard/interop/pinvoke/messagebox.cs._
+[!code-csharp[MessageBox](~/samples/snippets/standard/interop/pinvoke/messagebox.cs)]
 
 The previous example is simple, but it does show off what's needed to invoke unmanaged functions from managed code. Let's step through the example:
 
 - Line #2 shows the `using` directive for the `System.Runtime.InteropServices` namespace that holds all the items needed.
-- Line #8 introduces the `System.Runtime.InteropServices.LibraryImportAttribute` attribute. This attribute tells the runtime that it should load the unmanaged binary. The string passed in is the unmanaged binary that contains the target function. Additionally, it specifies the encoding to use for marshalling the strings. Finally, it specifies that this function calls SetLastError and that the runtime should capture that error code so the user can retrieve it via `System.Runtime.InteropServices.Marshal.GetLastPInvokeError`.
+- Line #8 introduces the <xref:System.Runtime.InteropServices.LibraryImportAttribute> attribute. This attribute tells the runtime that it should load the unmanaged binary. The string passed in is the unmanaged binary that contains the target function. Additionally, it specifies the encoding to use for marshalling the strings. Finally, it specifies that this function calls [SetLastError](/windows/desktop/api/errhandlingapi/nf-errhandlingapi-setlasterror) and that the runtime should capture that error code so the user can retrieve it via <xref:System.Runtime.InteropServices.Marshal.GetLastPInvokeError?displayProperty=nameWithType>.
 - Line #9 is the crux of the P/Invoke work. It defines a managed method that has the **exact same signature** as the unmanaged one. The declaration uses the `LibraryImport` attribute and the `partial` keyword to tell a compiler extension to generate code to call into the unmanaged library.
   - Within the generated code and prior to .NET 7, the `DllImport` is used. This declaration uses the `extern` keyword to indicate to the runtime this is an external method, and that when you invoke it, the runtime should find it in the unmanaged binary specified in the `DllImport` attribute.
 
@@ -26,11 +25,11 @@ The rest of the example is invoking the method as you would any other managed me
 
 The sample is similar for macOS. The name of the library in the `LibraryImport` attribute needs to change since macOS has a different scheme of naming dynamic libraries. The following sample uses the `getpid(2)` function to get the process ID of the application and print it out to the console:
 
-_Code sample not included: ~/samples/snippets/standard/interop/pinvoke/getpid-macos.cs._
+[!code-csharp[getpid macOS](~/samples/snippets/standard/interop/pinvoke/getpid-macos.cs)]
 
-It is also similar on Linux. The function name is the same, since `getpid(2)` is a standard POSIX system call.
+It is also similar on Linux. The function name is the same, since `getpid(2)` is a standard [POSIX](https://en.wikipedia.org/wiki/POSIX) system call.
 
-_Code sample not included: ~/samples/snippets/standard/interop/pinvoke/getpid-linux.cs._
+[!code-csharp[getpid Linux](~/samples/snippets/standard/interop/pinvoke/getpid-linux.cs)]
 
 ## Invoking managed code from unmanaged code
 
@@ -38,7 +37,7 @@ The runtime allows communication to flow in both directions, enabling you to cal
 
 The way to use this feature is similar to the managed to native process previously described. For a given callback, you define a delegate that matches the signature and pass that into the external method. The runtime will take care of everything else.
 
-_Code sample not included: ~/samples/snippets/standard/interop/pinvoke/enumwindows.cs._
+[!code-csharp[EnumWindows](~/samples/snippets/standard/interop/pinvoke/enumwindows.cs)]
 
 Before walking through the example, it's good to review the signatures of the unmanaged functions you need to work with. The function to be called to enumerate all of the windows has the following signature: `BOOL EnumWindows (WNDENUMPROC lpEnumFunc, LPARAM lParam);`
 
@@ -53,18 +52,18 @@ Now, let's walk through the example:
 
 The Linux and macOS examples are shown below. For them, we use the `ftw` function that can be found in `libc`, the C library. This function is used to traverse directory hierarchies and it takes a pointer to a function as one of its parameters. The said function has the following signature: `int (*fn) (const char *fpath, const struct stat *sb, int typeflag)`.
 
-_Code sample not included: ~/samples/snippets/standard/interop/pinvoke/ftw-linux.cs._
+[!code-csharp[ftw Linux](~/samples/snippets/standard/interop/pinvoke/ftw-linux.cs)]
 
 macOS example uses the same function, and the only difference is the argument to the `LibraryImport` attribute, as macOS keeps `libc` in a different place.
 
-_Code sample not included: ~/samples/snippets/standard/interop/pinvoke/ftw-macos.cs._
+[!code-csharp[ftw macOS](~/samples/snippets/standard/interop/pinvoke/ftw-macos.cs)]
 
-Both of the previous examples depend on parameters, and in both cases, the parameters are given as managed types. Runtime does the "right thing" and processes these into its equivalents on the other side. Learn about how types are marshalled to native code in our page on Type marshalling.
+Both of the previous examples depend on parameters, and in both cases, the parameters are given as managed types. Runtime does the "right thing" and processes these into its equivalents on the other side. Learn about how types are marshalled to native code in our page on [Type marshalling](type-marshalling.md).
 
 ## More resources
 
-- Writing cross platform P/Invokes
-- Source generated P/Invoke marshalling
-- C#/Win32 P/Invoke source generator automatically generates definitions for Windows APIs.
-- P/Invoke in C++/CLI
-- Mono documentation on P/Invoke
+- [Writing cross platform P/Invokes](./native-library-loading.md)
+- [Source generated P/Invoke marshalling](./pinvoke-source-generation.md)
+- [C#/Win32 P/Invoke source generator](https://github.com/microsoft/CsWin32/) automatically generates definitions for Windows APIs.
+- [P/Invoke in C++/CLI](/cpp/dotnet/native-and-dotnet-interoperability)
+- [Mono documentation on P/Invoke](https://www.mono-project.com/docs/advanced/pinvoke/)

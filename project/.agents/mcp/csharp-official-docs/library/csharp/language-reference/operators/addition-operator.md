@@ -1,240 +1,50 @@
 ---
 title: "Addition operators - + and +="
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/language-reference/operators/addition-operator.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "The C# addition operators (`+`, and `+=`) work with operands of numeric, string, or delegate types."
+ms.date: 01/20/2026
+f1_keywords: 
+  - "+_CSharpKeyword"
+  - "+=_CSharpKeyword"
+helpviewer_keywords: 
+  - "addition operator [C#]"
+  - "concatenation operator [C#]"
+  - "delegate combination [C#]"
+  - "+ operator [C#]"
+  - "addition assignment operator [C#]"
+  - "event subscription [C#]"
+  - "+= operator [C#]"
 ---
-
 # Addition operators - `+` and `+=`
 
-The built-in integral and floating-point numeric types, the string type, and delegate types all support the `+` and `+=` operators.
+The built-in [integral](../builtin-types/integral-numeric-types.md) and [floating-point](../builtin-types/floating-point-numeric-types.md) numeric types, the [string](../builtin-types/reference-types.md#the-string-type) type, and [delegate](../builtin-types/reference-types.md#the-delegate-type) types all support the `+` and `+=` operators.
 
-The C# language reference documents the most recently released version of the C# language. It also contains initial documentation for features in public previews for the upcoming language release.
+[!INCLUDE[csharp-version-note](../includes/initial-version.md)]
 
-The documentation identifies any feature first introduced in the last three versions of the language or in current public previews.
-
-> **Tip:**
-> To find when a feature was first introduced in C#, consult the article on the C# language version history.
-
-For information about the arithmetic `+` operator, see the Unary plus and minus operators and Addition operator + sections of the Arithmetic operators article.
+For information about the arithmetic `+` operator, see the [Unary plus and minus operators](arithmetic-operators.md#unary-plus-and-minus-operators) and [Addition operator +](arithmetic-operators.md#addition-operator-) sections of the [Arithmetic operators](arithmetic-operators.md) article.
 
 ## String concatenation
 
-When one or both operands are of type string, the `+` operator concatenates the string representations of its operands (the string representation of `null` is an empty string):
+When one or both operands are of type [string](../builtin-types/reference-types.md#the-string-type), the `+` operator concatenates the string representations of its operands (the string representation of `null` is an empty string):
 
-```csharp
-﻿namespace operators;
+:::code language="csharp" source="snippets/shared/AdditionOperator.cs" id="AddStrings":::
 
-public static class AdditionOperator
-{
-    public static void Examples()
-    {
-        NumericAddition();
-        StringConcatenation();
-        AddDelegates();
-        AddAndAssign();
-    }
+[String interpolation](../tokens/interpolated.md) provides a more convenient way to format strings:
 
-    private static void NumericAddition()
-    {
-        Console.WriteLine(5 + 4);       // output: 9
-        Console.WriteLine(5 + 4.3);     // output: 9.3
-        Console.WriteLine(5.1m + 4.2m); // output: 9.3
-    }
+:::code language="csharp" source="snippets/shared/AdditionOperator.cs" id="UseStringInterpolation":::
 
-    private static void StringConcatenation()
-    {
-        Console.WriteLine("Forgot" + "white space");
-        Console.WriteLine("Probably the oldest constant: " + Math.PI);
-        Console.WriteLine(null + "Nothing to add.");
-        // Output:
-        // Forgotwhite space
-        // Probably the oldest constant: 3.14159265358979
-        // Nothing to add.
-
-        Console.WriteLine($"Probably the oldest constant: {Math.PI:F2}");
-        // Output:
-        // Probably the oldest constant: 3.14
-    }
-
-    private static void AddDelegates()
-    {
-        Action a = () => Console.Write("a");
-        Action b = () => Console.Write("b");
-        Action ab = a + b;
-        ab();  // output: ab
-        Console.WriteLine();
-    }
-
-    private static void AddAndAssign()
-    {
-        int i = 5;
-        i += 9;
-        Console.WriteLine(i);
-        // Output: 14
-
-        string story = "Start. ";
-        story += "End.";
-        Console.WriteLine(story);
-        // Output: Start. End.
-
-        Action printer = () => Console.Write("a");
-        printer();  // output: a
-
-        Console.WriteLine();
-        printer += () => Console.Write("b");
-        printer();  // output: ab
-        Console.WriteLine();
-    }
-}
-```
-String interpolation provides a more convenient way to format strings:
-
-```csharp
-﻿namespace operators;
-
-public static class AdditionOperator
-{
-    public static void Examples()
-    {
-        NumericAddition();
-        StringConcatenation();
-        AddDelegates();
-        AddAndAssign();
-    }
-
-    private static void NumericAddition()
-    {
-        Console.WriteLine(5 + 4);       // output: 9
-        Console.WriteLine(5 + 4.3);     // output: 9.3
-        Console.WriteLine(5.1m + 4.2m); // output: 9.3
-    }
-
-    private static void StringConcatenation()
-    {
-        Console.WriteLine("Forgot" + "white space");
-        Console.WriteLine("Probably the oldest constant: " + Math.PI);
-        Console.WriteLine(null + "Nothing to add.");
-        // Output:
-        // Forgotwhite space
-        // Probably the oldest constant: 3.14159265358979
-        // Nothing to add.
-
-        Console.WriteLine($"Probably the oldest constant: {Math.PI:F2}");
-        // Output:
-        // Probably the oldest constant: 3.14
-    }
-
-    private static void AddDelegates()
-    {
-        Action a = () => Console.Write("a");
-        Action b = () => Console.Write("b");
-        Action ab = a + b;
-        ab();  // output: ab
-        Console.WriteLine();
-    }
-
-    private static void AddAndAssign()
-    {
-        int i = 5;
-        i += 9;
-        Console.WriteLine(i);
-        // Output: 14
-
-        string story = "Start. ";
-        story += "End.";
-        Console.WriteLine(story);
-        // Output: Start. End.
-
-        Action printer = () => Console.Write("a");
-        printer();  // output: a
-
-        Console.WriteLine();
-        printer += () => Console.Write("b");
-        printer();  // output: ab
-        Console.WriteLine();
-    }
-}
-```
 You can use string interpolation to initialize a constant string when all the expressions used for placeholders are also constant strings.
 
 The `+` operator performs string concatenation for UTF-8 literal strings. This operator concatenates two `ReadOnlySpan<byte>` objects.
 
 ## Delegate combination
 
-For operands of the same delegate type, the `+` operator returns a new delegate instance that, when invoked, calls the left-hand operand and then calls the right-hand operand. If any of the operands is `null`, the `+` operator returns the value of the other operand (which also might be `null`). The following example shows how delegates can be combined using the `+` operator:
+For operands of the same [delegate](../builtin-types/reference-types.md#the-delegate-type) type, the `+` operator returns a new delegate instance that, when invoked, calls the left-hand operand and then calls the right-hand operand. If any of the operands is `null`, the `+` operator returns the value of the other operand (which also might be `null`). The following example shows how delegates can be combined using the `+` operator:
 
-```csharp
-﻿namespace operators;
+:::code language="csharp" source="snippets/shared/AdditionOperator.cs" id="AddDelegates":::
 
-public static class AdditionOperator
-{
-    public static void Examples()
-    {
-        NumericAddition();
-        StringConcatenation();
-        AddDelegates();
-        AddAndAssign();
-    }
+To remove a delegate, use the [`-` operator](subtraction-operator.md#delegate-removal).
 
-    private static void NumericAddition()
-    {
-        Console.WriteLine(5 + 4);       // output: 9
-        Console.WriteLine(5 + 4.3);     // output: 9.3
-        Console.WriteLine(5.1m + 4.2m); // output: 9.3
-    }
-
-    private static void StringConcatenation()
-    {
-        Console.WriteLine("Forgot" + "white space");
-        Console.WriteLine("Probably the oldest constant: " + Math.PI);
-        Console.WriteLine(null + "Nothing to add.");
-        // Output:
-        // Forgotwhite space
-        // Probably the oldest constant: 3.14159265358979
-        // Nothing to add.
-
-        Console.WriteLine($"Probably the oldest constant: {Math.PI:F2}");
-        // Output:
-        // Probably the oldest constant: 3.14
-    }
-
-    private static void AddDelegates()
-    {
-        Action a = () => Console.Write("a");
-        Action b = () => Console.Write("b");
-        Action ab = a + b;
-        ab();  // output: ab
-        Console.WriteLine();
-    }
-
-    private static void AddAndAssign()
-    {
-        int i = 5;
-        i += 9;
-        Console.WriteLine(i);
-        // Output: 14
-
-        string story = "Start. ";
-        story += "End.";
-        Console.WriteLine(story);
-        // Output: Start. End.
-
-        Action printer = () => Console.Write("a");
-        printer();  // output: a
-
-        Console.WriteLine();
-        printer += () => Console.Write("b");
-        printer();  // output: ab
-        Console.WriteLine();
-    }
-}
-```
-To remove a delegate, use the `-` operator.
-
-For more information about delegate types, see Delegates.
+For more information about delegate types, see [Delegates](../../programming-guide/delegates/index.md).
 
 ## Addition assignment operator +=
 
@@ -254,86 +64,22 @@ Except that `x` is only evaluated once.
 
 The following example demonstrates the usage of the `+=` operator:
 
-```csharp
-﻿namespace operators;
+:::code language="csharp" source="snippets/shared/AdditionOperator.cs" id="AddAndAssign":::
 
-public static class AdditionOperator
-{
-    public static void Examples()
-    {
-        NumericAddition();
-        StringConcatenation();
-        AddDelegates();
-        AddAndAssign();
-    }
-
-    private static void NumericAddition()
-    {
-        Console.WriteLine(5 + 4);       // output: 9
-        Console.WriteLine(5 + 4.3);     // output: 9.3
-        Console.WriteLine(5.1m + 4.2m); // output: 9.3
-    }
-
-    private static void StringConcatenation()
-    {
-        Console.WriteLine("Forgot" + "white space");
-        Console.WriteLine("Probably the oldest constant: " + Math.PI);
-        Console.WriteLine(null + "Nothing to add.");
-        // Output:
-        // Forgotwhite space
-        // Probably the oldest constant: 3.14159265358979
-        // Nothing to add.
-
-        Console.WriteLine($"Probably the oldest constant: {Math.PI:F2}");
-        // Output:
-        // Probably the oldest constant: 3.14
-    }
-
-    private static void AddDelegates()
-    {
-        Action a = () => Console.Write("a");
-        Action b = () => Console.Write("b");
-        Action ab = a + b;
-        ab();  // output: ab
-        Console.WriteLine();
-    }
-
-    private static void AddAndAssign()
-    {
-        int i = 5;
-        i += 9;
-        Console.WriteLine(i);
-        // Output: 14
-
-        string story = "Start. ";
-        story += "End.";
-        Console.WriteLine(story);
-        // Output: Start. End.
-
-        Action printer = () => Console.Write("a");
-        printer();  // output: a
-
-        Console.WriteLine();
-        printer += () => Console.Write("b");
-        printer();  // output: ab
-        Console.WriteLine();
-    }
-}
-```
-You also use the `+=` operator to specify an event handler method when you subscribe to an event. For more information, see How to: subscribe to and unsubscribe from events.
+You also use the `+=` operator to specify an event handler method when you subscribe to an [event](../keywords/event.md). For more information, see [How to: subscribe to and unsubscribe from events](../../programming-guide/events/how-to-subscribe-to-and-unsubscribe-from-events.md).
 
 ## Operator overloadability
 
-A user-defined type can overload the `+` operator. When you overload a binary `+` operator, you also implicitly overload the `+=` operator. Starting with C# 14, a user-defined type can explicitly overload the `+=` operator to provide a more efficient implementation. Typically, a type overloads the `+=` operator because the value can be updated in place, rather than allocate a new instance to hold the result of the addition. If a type doesn't provide an explicit overload, the compiler generates the implicit overload.
+A user-defined type can [overload](operator-overloading.md) the `+` operator. When you overload a binary `+` operator, you also implicitly overload the `+=` operator. Starting with C# 14, a user-defined type can explicitly overload the `+=` operator to provide a more efficient implementation. Typically, a type overloads the `+=` operator because the value can be updated in place, rather than allocate a new instance to hold the result of the addition. If a type doesn't provide an explicit overload, the compiler generates the implicit overload.
 
 ## C# language specification
 
-For more information, see the Unary plus operator and Addition operator sections of the C# language specification. For more information on overloading the compound assignment operators in C# 14 and later, see the user defined compound assignment feature specification.
+For more information, see the [Unary plus operator](~/_csharpstandard/standard/expressions.md#1292-unary-plus-operator) and [Addition operator](~/_csharpstandard/standard/expressions.md#12135-addition-operator) sections of the [C# language specification](~/_csharpstandard/standard/README.md). For more information on overloading the compound assignment operators in C# 14 and later, see the [user defined compound assignment](~/_csharplang/proposals/csharp-14.0/user-defined-compound-assignment.md) feature specification.
 
 ## See also
 
-- C# operators and expressions
-- How to concatenate multiple strings
-- Events
-- Arithmetic operators
-- - and -= operators
+- [C# operators and expressions](index.md)
+- [How to concatenate multiple strings](../../fundamentals/strings/common-tasks/concatenate.md)
+- [Events](../../programming-guide/events/index.md)
+- [Arithmetic operators](arithmetic-operators.md)
+- [- and -= operators](subtraction-operator.md)

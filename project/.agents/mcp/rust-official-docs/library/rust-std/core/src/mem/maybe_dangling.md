@@ -1,12 +1,3 @@
----
-title: "core::mem::maybe_dangling"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/mem/maybe_dangling.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::mem::maybe_dangling
 
 ## struct MaybeDangling
@@ -15,8 +6,10 @@ license: "MIT OR Apache-2.0"
 pub struct MaybeDangling<P: ?Sized>(P)
 ```
 
-```rust
+```rust,no_run
 #![feature(maybe_dangling)]
+# use std::alloc::{dealloc, Layout};
+# use std::mem::{self, MaybeDangling};
 
 let mut boxed = MaybeDangling::new(Box::new(0_u32));
 let ptr = Box::as_mut_ptr(boxed.as_mut());
@@ -31,15 +24,21 @@ Note that the bit pattern must still be valid for the wrapped type. That is, [re
 (and [boxes]) still must be aligned and non-null.
 
 Additionally note that safe code can still assume that the inner value in a `MaybeDangling` is
-**not** dangling -- functions like `as_ref` and `into_inner` are safe. It is not sound to
+**not** dangling -- functions like [`as_ref`] and [`into_inner`] are safe. It is not sound to
 return a dangling reference in a `MaybeDangling` to safe code. However, it *is* sound
 to hold such values internally inside your code -- and there's no way to do that without
 this type. Note that other types can use this type and thus get the same effect; in particular,
-`ManuallyDrop` will use `MaybeDangling`.
+[`ManuallyDrop`] will use `MaybeDangling`.
 
 Note that `MaybeDangling` doesn't prevent drops from being run, which can lead to UB if the
-drop observes a dangling value. If you need to prevent drops from being run use `ManuallyDrop`
+drop observes a dangling value. If you need to prevent drops from being run use [`ManuallyDrop`]
 instead.
+
+[references]: prim@reference
+[boxes]: ../../std/boxed/struct.Box.html
+[`into_inner`]: MaybeDangling::into_inner
+[`as_ref`]: MaybeDangling::as_ref
+[`ManuallyDrop`]: crate::mem::ManuallyDrop
 
 ## MaybeDangling::new
 

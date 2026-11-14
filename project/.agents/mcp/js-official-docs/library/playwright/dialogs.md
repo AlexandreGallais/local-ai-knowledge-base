@@ -1,17 +1,11 @@
 ---
+id: dialogs
 title: "Dialogs"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/dialogs.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
 ---
-
-# Dialogs
 
 ## Introduction
 
-Playwright can interact with the web page dialogs such as `alert`, `confirm`, `prompt` as well as `beforeunload` confirmation. For print dialogs, see Print.
+Playwright can interact with the web page dialogs such as [`alert`](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert), [`confirm`](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm), [`prompt`](https://developer.mozilla.org/en-US/docs/Web/API/Window/prompt) as well as [`beforeunload`](https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event) confirmation. For print dialogs, see [Print](#print-dialogs).
 
 ## alert(), confirm(), prompt() dialogs
 
@@ -27,12 +21,12 @@ page.onDialog(dialog -> dialog.accept());
 page.getByRole(AriaRole.BUTTON).click();
 ```
 
-```python
+```python async
 page.on("dialog", lambda dialog: dialog.accept())
 await page.get_by_role("button").click()
 ```
 
-```python
+```python sync
 page.on("dialog", lambda dialog: dialog.accept())
 page.get_by_role("button").click()
 ```
@@ -65,12 +59,12 @@ page.onDialog(dialog -> System.out.println(dialog.message()));
 page.getByRole(AriaRole.BUTTON).click(); // Will hang here
 ```
 
-```python
+```python async
 page.on("dialog", lambda dialog: print(dialog.message))
 await page.get_by_role("button").click() # Will hang here
 ```
 
-```python
+```python sync
 page.on("dialog", lambda dialog: print(dialog.message))
 page.get_by_role("button").click() # Will hang here
 ```
@@ -106,7 +100,7 @@ page.onDialog(dialog -> {
 page.close(new Page.CloseOptions().setRunBeforeUnload(true));
 ```
 
-```python
+```python async
 async def handle_dialog(dialog):
     assert dialog.type == 'beforeunload'
     await dialog.dismiss()
@@ -115,7 +109,7 @@ page.on('dialog', handle_dialog)
 await page.close(run_before_unload=True)
 ```
 
-```python
+```python sync
 def handle_dialog(dialog):
     assert dialog.type == 'beforeunload'
     dialog.dismiss()
@@ -135,7 +129,7 @@ await Page.CloseAsync(new() { RunBeforeUnload = true });
 
 ## Print dialogs
 
-In order to assert that a print dialog via `window.print` was triggered, you can use the following snippet:
+In order to assert that a print dialog via [`window.print`](https://developer.mozilla.org/en-US/docs/Web/API/Window/print) was triggered, you can use the following snippet:
 
 ```js
 await page.goto('<url>');
@@ -155,7 +149,7 @@ page.getByText("Print it!").click();
 page.waitForFunction("window.waitForPrintDialog");
 ```
 
-```python
+```python async
 await page.goto("<url>")
 
 await page.evaluate("(() => {window.waitForPrintDialog = new Promise(f => window.print = f);})()")
@@ -164,7 +158,7 @@ await page.get_by_text("Print it!").click()
 await page.wait_for_function("window.waitForPrintDialog")
 ```
 
-```python
+```python sync
 page.goto("<url>")
 
 page.evaluate("(() => {window.waitForPrintDialog = new Promise(f => window.print = f);})()")

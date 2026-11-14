@@ -1,23 +1,17 @@
----
-title: "indent"
-tool: "unicorn"
-version: "79.0"
-source: "https://github.com/sindresorhus/eslint-plugin-unicorn/blob/d078ad9e080d7eba07a1aab65c5faa6461a2eed7/docs/rules/indent.md"
-commit: "d078ad9e080d7eba07a1aab65c5faa6461a2eed7"
-license: "MIT"
----
-
 # indent
 
 📝 Enforce consistent indentation in JSON and CSS.
 
 🚫 Disabled by default.
 
-🔧 This rule is automatically fixable by the `--fix` CLI option.
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
-Enforce leading indentation in JSON, JSONC, and JSON5 (`@eslint/json`) and CSS (`@eslint/css`). JSON checks nesting depth; CSS checks indentation style only.
+<!-- end auto-generated rule header -->
+<!-- Do not manually modify this header. Run: `npm run fix:eslint-docs` -->
 
-JavaScript and TypeScript are excluded because their statements and expressions need more detailed indentation rules. Use `@stylistic/indent` for those languages.
+Enforce leading indentation in JSON, JSONC, and JSON5 ([`@eslint/json`](https://github.com/eslint/json)) and CSS ([`@eslint/css`](https://github.com/eslint/css)). JSON checks nesting depth; CSS checks indentation style only.
+
+JavaScript and TypeScript are excluded because their statements and expressions need more detailed indentation rules. Use [`@stylistic/indent`](https://eslint.style/rules/indent) for those languages.
 
 ## Options
 

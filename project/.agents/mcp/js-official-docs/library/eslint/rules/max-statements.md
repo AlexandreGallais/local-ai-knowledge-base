@@ -1,13 +1,15 @@
 ---
-title: "max-statements"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/max-statements.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: max-statements
+rule_type: suggestion
+related_rules:
+- complexity
+- max-depth
+- max-lines
+- max-lines-per-function
+- max-nested-callbacks
+- max-params
 ---
 
-# max-statements
 
 The `max-statements` rule allows you to specify the maximum number of statements allowed in a function.
 
@@ -39,7 +41,7 @@ This rule has an object option:
 
 Examples of **incorrect** code for this rule with the default `{ "max": 10 }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint max-statements: ["error", 10]*/
@@ -75,9 +77,11 @@ const bar = () => {
 };
 ```
 
+:::
+
 Examples of **correct** code for this rule with the default `{ "max": 10 }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint max-statements: ["error", 10]*/
@@ -125,11 +129,13 @@ const bar = () => {
 }
 ```
 
+:::
+
 Note that this rule does not apply to class static blocks, and that statements in class static blocks do not count as statements in the enclosing function.
 
 Examples of **correct** code for this rule with `{ "max": 2 }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint max-statements: ["error", 2]*/
@@ -151,11 +157,13 @@ function foo() {
 }
 ```
 
+:::
+
 ### ignoreTopLevelFunctions
 
 Examples of additional **correct** code for this rule with the `{ "max": 10 }, { "ignoreTopLevelFunctions": true }` options:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint max-statements: ["error", 10, { "ignoreTopLevelFunctions": true }]*/
@@ -174,3 +182,5 @@ function foo() {
   const foo11 = 11;
 }
 ```
+
+:::

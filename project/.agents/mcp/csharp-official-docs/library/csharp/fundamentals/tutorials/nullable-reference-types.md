@@ -1,16 +1,17 @@
 ---
 title: "Tutorial: Express your design intent with nullable and non-nullable reference types"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/fundamentals/tutorials/nullable-reference-types.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
----
+description: Build a small survey app that uses nullable and non-nullable reference types to declare which references can be null and have the compiler enforce that intent.
+ms.date: 05/04/2026
+ms.topic: tutorial
+ms.subservice: nullable-reference-types
+ai-usage: ai-assisted
 
+#customer intent: As a C# developer, I want to use nullable and non-nullable reference types in a real design so that the compiler catches null-handling mistakes for me.
+---
 # Tutorial: Express your design intent with nullable and non-nullable reference types
 
-> **Tip:**
-> **New to nullable reference types?** Read Nullable reference types first. This tutorial assumes you understand the difference between non-nullable and nullable reference types and how the compiler tracks null-state.
+> [!TIP]
+> **New to nullable reference types?** Read [Nullable reference types](../null-safety/nullable-reference-types.md) first. This tutorial assumes you understand the difference between non-nullable and nullable reference types and how the compiler tracks null-state.
 >
 > **Coming from another language?** If you've used Kotlin's nullable types, TypeScript's `strictNullChecks`, or Swift's optionals, the conceptual model maps directly. The exercise here is about *expressing design intent*, not learning the syntax.
 
@@ -23,6 +24,7 @@ You declare those rules with non-nullable and nullable reference types. The comp
 
 In this tutorial, you:
 
+> [!div class="checklist"]
 >
 > - Create the application.
 > - Build the survey questions.
@@ -44,9 +46,7 @@ Each type uses non-nullable reference types for required values and nullable ref
 
 ## Prerequisites
 
-- The latest .NET SDK
-- Visual Studio Code editor
-- The C# DevKit
+[!INCLUDE [Prerequisites](../../../../includes/prerequisites-basic.md)]
 
 This tutorial assumes you're familiar with C# and either Visual Studio or the .NET CLI.
 
@@ -63,22 +63,8 @@ cd NullableIntroduction
 
 Add a new file named `SurveyQuestion.cs` to the project, and replace its contents with the following code. The text and the question type are non-nullable, so the constructor must initialize both:
 
-```csharp
-﻿namespace NullableIntroduction;
+:::code language="csharp" source="snippets/NullableIntroduction/SurveyQuestion.cs":::
 
-public enum QuestionType
-{
-    YesNo,
-    Number,
-    Text
-}
-
-public class SurveyQuestion(QuestionType typeOfQuestion, string text)
-{
-    public string QuestionText { get; } = text;
-    public QuestionType TypeOfQuestion { get; } = typeOfQuestion;
-}
-```
 The constructor parameters are non-nullable reference types, so the compiler warns the caller if either argument might be `null`.
 
 ## Build a survey of questions
@@ -100,16 +86,12 @@ public class SurveyRun
 }
 ```
 
-The `surveyQuestions` field is a non-nullable `List<SurveyQuestion>`. It uses a collection expression to initialize an empty list. Both `AddQuestion` overloads accept non-nullable parameters, so the compiler enforces that callers don't pass `null`.
+The `surveyQuestions` field is a non-nullable `List<SurveyQuestion>`. It uses a [collection expression](../../language-reference/operators/collection-expressions.md) to initialize an empty list. Both `AddQuestion` overloads accept non-nullable parameters, so the compiler enforces that callers don't pass `null`.
 
 In `Program.cs`, create a `SurveyRun` and add three questions:
 
-```csharp
-var surveyRun = new SurveyRun();
-surveyRun.AddQuestion(QuestionType.YesNo, "Has your code ever thrown a NullReferenceException?");
-surveyRun.AddQuestion(new SurveyQuestion(QuestionType.Number, "How many times (to the nearest 100) has that happened?"));
-surveyRun.AddQuestion(QuestionType.Text, "What is your favorite color?");
-```
+:::code language="csharp" source="snippets/NullableIntroduction/Program.cs" id="SnippetAddQuestions":::
+
 ## Test the not-null requirement
 
 To see how the compiler enforces non-nullable parameters, try adding the following line and rebuilding:
@@ -124,7 +106,7 @@ The compiler issues warning *CS8625* because `default` evaluates to `null` for a
 
 Respondents can decline to take the survey, and even when they participate, they can skip individual questions. Both forms of "missing" are valid outcomes, and the type system should make them visible. You express both forms with `null`.
 
-Add a new file named `SurveyResponse.cs` to the project and define a `SurveyResponse` class. Use a primary constructor (parameters declared on the type itself, available throughout the body) to capture the always-required `Id`:
+Add a new file named `SurveyResponse.cs` to the project and define a `SurveyResponse` class. Use a [primary constructor](../../whats-new/tutorials/primary-constructors.md) (parameters declared on the type itself, available throughout the body) to capture the always-required `Id`:
 
 ```csharp
 namespace NullableIntroduction;
@@ -139,131 +121,46 @@ public class SurveyResponse(int id)
 
 Add a *static factory method* (a `static` method that creates and returns a new instance of the type, an alternative to calling the constructor directly) that creates respondents with a random ID:
 
-```csharp
-private static readonly Random randomGenerator = new Random();
-public static SurveyResponse GetRandomId() => new SurveyResponse(randomGenerator.Next());
-```
+:::code language="csharp" source="snippets/NullableIntroduction/SurveyResponse.cs" id="SnippetRandom":::
+
 ## Generate one survey response
 
 Next, add the method that asks the survey to a respondent. Store the answers in a nullable dictionary so the type itself communicates that the respondent might decline:
 
-```csharp
-private Dictionary<int, string>? surveyResponses;
-public bool AnswerSurvey(IEnumerable<SurveyQuestion> questions)
-{
-    if (ConsentToSurvey())
-    {
-        surveyResponses = new Dictionary<int, string>();
-        int index = 0;
-        foreach (var question in questions)
-        {
-            var answer = GenerateAnswer(question);
-            if (answer != null)
-            {
-                surveyResponses.Add(index, answer);
-            }
-            index++;
-        }
-    }
-    return surveyResponses != null;
-}
+:::code language="csharp" source="snippets/NullableIntroduction/SurveyResponse.cs" id="SnippetAnswerSurvey":::
 
-private bool ConsentToSurvey() => randomGenerator.Next(0, 2) == 1;
-
-private string? GenerateAnswer(SurveyQuestion question)
-{
-    switch (question.TypeOfQuestion)
-    {
-        case QuestionType.YesNo:
-            int n = randomGenerator.Next(-1, 2);
-            return (n == -1) ? default : (n == 0) ? "No" : "Yes";
-        case QuestionType.Number:
-            n = randomGenerator.Next(-30, 101);
-            return (n < 0) ? default : n.ToString();
-        case QuestionType.Text:
-        default:
-            switch (randomGenerator.Next(0, 5))
-            {
-                case 0:
-                    return default;
-                case 1:
-                    return "Red";
-                case 2:
-                    return "Green";
-                case 3:
-                    return "Blue";
-            }
-            return "Red. No, Green. Wait.. Blue... AAARGGGGGHHH!";
-    }
-}
-```
 The `surveyResponses` field is `Dictionary<int, string>?`. If you dereference the field without first checking for `null`, the compiler issues a warning. Inside `AnswerSurvey`, the compiler tracks that `surveyResponses` is *not-null* immediately after the `new` expression, so the loop body needs no extra check.
 
 ## Build a set of survey responses
 
 Add a method on `SurveyRun` that builds up a list of respondents until enough consent to participate:
 
-```csharp
-private List<SurveyResponse>? respondents;
-public void PerformSurvey(int numberOfRespondents)
-{
-    int respondentsConsenting = 0;
-    respondents = [];
-    while (respondentsConsenting < numberOfRespondents)
-    {
-        var respondent = SurveyResponse.GetRandomId();
-        if (respondent.AnswerSurvey(surveyQuestions))
-            respondentsConsenting++;
-        respondents.Add(respondent);
-    }
-}
-```
+:::code language="csharp" source="snippets/NullableIntroduction/SurveyRun.cs" id="SnippetPerformSurvey":::
+
 The `respondents` field is `List<SurveyResponse>?` - it's `null` until the survey runs.
 
 Call `PerformSurvey` from `Main`:
 
-```csharp
-surveyRun.PerformSurvey(50);
-```
+:::code language="csharp" source="snippets/NullableIntroduction/Program.cs" id="SnippetRunSurvey":::
+
 ## Examine the survey results
 
-To report results, expose a few helpers from `SurveyResponse` and `SurveyRun`. On `SurveyResponse`, add expression-bodied members (members defined with `=>` and a single expression instead of a `{ ... }` block) that handle the nullable dictionary:
+To report results, expose a few helpers from `SurveyResponse` and `SurveyRun`. On `SurveyResponse`, add [expression-bodied members](../../language-reference/operators/lambda-operator.md#expression-body-definition) (members defined with `=>` and a single expression instead of a `{ ... }` block) that handle the nullable dictionary:
 
-```csharp
-public bool AnsweredSurvey => surveyResponses != null;
-public string Answer(int index) => surveyResponses?.GetValueOrDefault(index) ?? "No answer";
-```
-`AnsweredSurvey` checks the field against `null`. `Answer` uses the `?.` null-conditional operator (which evaluates to `null` when the left side is `null` instead of throwing) to dereference safely, and the `??` null-coalescing operator (which substitutes the right operand when the left is `null`) to provide a non-null fallback. The method's return type is non-nullable `string`, so callers don't need null checks.
+:::code language="csharp" source="snippets/NullableIntroduction/SurveyResponse.cs" id="SnippetSurveyStatus":::
+
+`AnsweredSurvey` checks the field against `null`. `Answer` uses the [`?.` null-conditional operator](../../language-reference/operators/member-access-operators.md#null-conditional-operators--and-) (which evaluates to `null` when the left side is `null` instead of throwing) to dereference safely, and the [`??` null-coalescing operator](../../language-reference/operators/null-coalescing-operator.md) (which substitutes the right operand when the left is `null`) to provide a non-null fallback. The method's return type is non-nullable `string`, so callers don't need null checks.
 
 On `SurveyRun`, add expression-bodied members that expose the list of participants and questions:
 
-```csharp
-public IEnumerable<SurveyResponse> AllParticipants => (respondents ?? Enumerable.Empty<SurveyResponse>());
-public ICollection<SurveyQuestion> Questions => surveyQuestions;
-public SurveyQuestion GetQuestion(int index) => surveyQuestions[index];
-```
+:::code language="csharp" source="snippets/NullableIntroduction/SurveyRun.cs" id="SnippetRunReport":::
+
 `AllParticipants` returns a non-nullable sequence even though `respondents` might be `null`. The `??` operator substitutes `Enumerable.Empty<SurveyResponse>()` when the field isn't populated yet. If you remove the `??` clause, the compiler warns that the method might return `null` despite a non-nullable return type.
 
 Finally, write the report at the bottom of `Main`:
 
-```csharp
-foreach (var participant in surveyRun.AllParticipants)
-{
-    Console.WriteLine($"Participant: {participant.Id}:");
-    if (participant.AnsweredSurvey)
-    {
-        for (int i = 0; i < surveyRun.Questions.Count; i++)
-        {
-            var answer = participant.Answer(i);
-            Console.WriteLine($"\t{surveyRun.GetQuestion(i).QuestionText} : {answer}");
-        }
-    }
-    else
-    {
-        Console.WriteLine("\tNo responses");
-    }
-}
-```
+:::code language="csharp" source="snippets/NullableIntroduction/Program.cs" id="SnippetWriteAnswers":::
+
 Notice that no null check is needed for `participant`, `surveyRun.Questions`, or `surveyRun.GetQuestion(i)`. The types declare those values as non-nullable, so the compiler treats them as *not-null* throughout the loop.
 
 Run the application:
@@ -276,11 +173,11 @@ The output is different on each run because respondents are generated randomly, 
 
 ## Conclusion
 
-The finished sample is in the csharp/NullableIntroduction folder of the dotnet/samples repository. Experiment by changing types between nullable and non-nullable. Removing a `?` where the design allows missing values produces compiler warnings that point to every place the missing value matters.
+The finished sample is in the [csharp/NullableIntroduction](https://github.com/dotnet/samples/tree/main/csharp/NullableIntroduction) folder of the [dotnet/samples](https://github.com/dotnet/samples) repository. Experiment by changing types between nullable and non-nullable. Removing a `?` where the design allows missing values produces compiler warnings that point to every place the missing value matters.
 
 ## Related content
 
-- Nullable reference types
-- Resolve nullable warnings
-- Nullable migration strategies
-- Working with nullable reference types in EF Core
+- [Nullable reference types](../null-safety/nullable-reference-types.md)
+- [Resolve nullable warnings](../null-safety/common-tasks/resolve-warnings.md)
+- [Nullable migration strategies](../../advanced-topics/update-applications/nullable-migration-strategies.md)
+- [Working with nullable reference types in EF Core](/ef/core/miscellaneous/nullable-reference-types)

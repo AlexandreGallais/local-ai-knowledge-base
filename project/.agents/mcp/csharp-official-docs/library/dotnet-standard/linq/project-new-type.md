@@ -1,19 +1,20 @@
 ---
-title: "How to project a new type - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/project-new-type.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to project a new type - LINQ to XML
+description: Your query can return an IEnumerable of a type other than the common ones. This article shows how in an example.
+ms.date: 07/20/2015
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.topic: how-to
 ---
 
 # How to project a new type (LINQ to XML)
 
-Other examples in this section have shown queries that return results as `System.Collections.Generic.IEnumerable`1` of `System.Xml.Linq.XElement`, `System.Collections.Generic.IEnumerable`1` of `string`, and `System.Collections.Generic.IEnumerable`1` of `int`. These are common result types, but they're not appropriate for every scenario. In many cases, you'll want your queries to return an `System.Collections.Generic.IEnumerable`1` of some other type.
+Other examples in this section have shown queries that return results as <xref:System.Collections.Generic.IEnumerable`1> of <xref:System.Xml.Linq.XElement>, <xref:System.Collections.Generic.IEnumerable`1> of `string`, and <xref:System.Collections.Generic.IEnumerable`1> of `int`. These are common result types, but they're not appropriate for every scenario. In many cases, you'll want your queries to return an <xref:System.Collections.Generic.IEnumerable`1> of some other type.
 
 ## Example: Define a new type and have the `select` statement create an instance of the type
 
-This example shows how to instantiate objects in the `select` clause. The code first invokes a constructor to define a new class, and then modifies the `select` statement so that the expression is a new instance of the new class. The example uses XML document Sample XML file: Typical purchase order.
+This example shows how to instantiate objects in the `select` clause. The code first invokes a constructor to define a new class, and then modifies the `select` statement so that the expression is a new instance of the new class. The example uses XML document [Sample XML file: Typical purchase order](sample-xml-file-typical-purchase-order.md).
 
 ```csharp
 class NameQty
@@ -71,7 +72,7 @@ Public Class Program
 End Class
 ```
 
-This example uses the `System.Xml.Linq.XContainer.Element*` method that was introduced in the How to retrieve a single child element article. It also uses casts to retrieve the values of the elements that are returned by the `System.Xml.Linq.XContainer.Element*` method.
+This example uses the <xref:System.Xml.Linq.XContainer.Element*> method that was introduced in the [How to retrieve a single child element](retrieve-single-child-element.md) article. It also uses casts to retrieve the values of the elements that are returned by the <xref:System.Xml.Linq.XContainer.Element*> method.
 
 This example produces the following output:
 
@@ -82,4 +83,4 @@ Baby Monitor:2
 
 ## See also
 
-- Projections and Transformations (LINQ to XML) (Visual Basic)
+- [Projections and Transformations (LINQ to XML) (Visual Basic)](./work-dictionaries-linq-xml.md)

@@ -1,12 +1,21 @@
 ---
+description: "Learn more about: ICorDebugManagedCallback2::MDANotification Method"
 title: "ICorDebugManagedCallback2::MDANotification Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmanagedcallback2-mdanotification-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugManagedCallback2.MDANotification"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugManagedCallback2::MDANotification"
+helpviewer_keywords:
+  - "MDANotification method [.NET debugging]"
+  - "ICorDebugManagedCallback2::MDANotification method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugManagedCallback2::MDANotification Method
 
 Provides notification that code execution has encountered a managed debugging assistant (MDA) in the application that is being debugged.
@@ -36,11 +45,11 @@ If the MDA occurred on an unmanaged thread, the value of `pThread` will be null.
 You must get the operating system (OS) thread ID from the MDA object itself.
 
  `pMDA`
- [in] A pointer to an ICorDebugMDA interface that exposes the MDA information.
+ [in] A pointer to an [ICorDebugMDA](icordebugmda-interface.md) interface that exposes the MDA information.
 
 ## Remarks
 
-An MDA is a heuristic warning and does not require any explicit debugger action except for calling ICorDebugController::Continue to resume execution of the application that is being debugged.
+An MDA is a heuristic warning and does not require any explicit debugger action except for calling [ICorDebugController::Continue](icordebugcontroller-continue-method.md) to resume execution of the application that is being debugged.
 
 The common language runtime (CLR) can determine which MDAs are fired and which data is in any given MDA at any point. Therefore, debuggers should not build any functionality requiring specific MDA patterns.
 
@@ -50,7 +59,7 @@ A debugger should release the reference to an `ICorDebugMDA` instance immediatel
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -60,6 +69,6 @@ A debugger should release the reference to an `ICorDebugMDA` instance immediatel
 
 ## See also
 
-- Diagnose Errors with Managed Debugging Assistants
-- ICorDebugManagedCallback2 Interface
-- ICorDebugManagedCallback Interface
+- [Diagnose Errors with Managed Debugging Assistants](../../../../framework/debug-trace-profile/diagnosing-errors-with-managed-debugging-assistants.md)
+- [ICorDebugManagedCallback2 Interface](icordebugmanagedcallback2-interface.md)
+- [ICorDebugManagedCallback Interface](icordebugmanagedcallback-interface.md)

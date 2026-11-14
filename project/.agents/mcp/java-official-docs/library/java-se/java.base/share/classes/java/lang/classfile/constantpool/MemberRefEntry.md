@@ -1,12 +1,3 @@
----
-title: "MemberRefEntry interface (java.lang.classfile.constantpool)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/lang/classfile/constantpool/MemberRefEntry.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # MemberRefEntry interface (java.lang.classfile.constantpool)
 
 ```java
@@ -14,21 +5,29 @@ public sealed interface MemberRefEntry extends PoolEntry permits FieldRefEntry, 
 ```
 
 Superinterface modeling symbolic references to a member of a class or interface
-in the constant pool of a `class` file, which include references to
-fields, class methods,
-and interface methods.
-
+in the constant pool of a {@code class} file, which include references to
+{@linkplain FieldRefEntry fields}, {@linkplain MethodRefEntry class methods},
+and {@linkplain InterfaceMethodRefEntry interface methods}.
+<p>
 Different types of symbolic references to a member of a class or interface
 bear structural similarities and share parts of the resolution processes, and
-they can sometimes appear in the same locations.  For example, both `MethodRefEntry` and `InterfaceMethodRefEntry` can appear in an invokestatic instruction.
-
+they can sometimes appear in the same locations.  For example, both {@link
+MethodRefEntry} and {@link InterfaceMethodRefEntry} can appear in an {@link
+Opcode#INVOKESTATIC invokestatic} instruction.
+<p>
 A member reference entry is composite:
+{@snippet lang=text :
+MemberRefEntry(
+    ClassEntry owner, // @link substring="owner" target="#owner()"
+    NameAndTypeEntry nameAndType // @link substring="nameAndType" target="#nameAndType()"
+)
+}
 
-**jvms:** 4.4.2 The `CONSTANT_Fieldref_info`, `CONSTANT_Methodref_info`, and `CONSTANT_InterfaceMethodref_info` Structures
-
-**sealedGraph:**
-
-**Since:** 24
+@jvms 4.4.2 The {@code CONSTANT_Fieldref_info}, {@code
+            CONSTANT_Methodref_info}, and {@code
+            CONSTANT_InterfaceMethodref_info} Structures
+@sealedGraph
+@since 24
 
 ## MemberRefEntry.owner()
 
@@ -36,11 +35,15 @@ A member reference entry is composite:
 ClassEntry owner()
 ```
 
+{@return the class or interface which this member belongs to}
+
 ## MemberRefEntry.nameAndType()
 
 ```java
 NameAndTypeEntry nameAndType()
 ```
+
+{@return the name and descriptor string of the member}
 
 ## MemberRefEntry.name()
 
@@ -48,15 +51,19 @@ NameAndTypeEntry nameAndType()
 default Utf8Entry name()
 ```
 
+{@return the name of the member}
+
 ## MemberRefEntry.type()
 
 ```java
 default Utf8Entry type()
 ```
 
-This is a field descriptor
-string if this entry is a `FieldRefEntry`, or a method descriptor
-string if this entry is a `MethodRefEntry` or `InterfaceMethodRefEntry`.
+{@return the descriptor string of the member}  This is a field descriptor
+string if this entry is a {@link FieldRefEntry}, or a method descriptor
+string if this entry is a {@link MethodRefEntry} or {@link
+InterfaceMethodRefEntry}.
 
-**API note:** Each subinterface defines a `typeSymbol()` accessor for the
+@apiNote
+Each subinterface defines a {@code typeSymbol()} accessor for the
 symbolic descriptor for the member type.

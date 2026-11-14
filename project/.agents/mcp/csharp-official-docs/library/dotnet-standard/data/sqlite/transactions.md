@@ -1,21 +1,17 @@
 ---
-title: "Transactions"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/sqlite/transactions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Transactions
+ms.date: 09/08/2020
+description: Learn how to use transactions.
 ---
-
 # Transactions
 
 Transactions let you group multiple SQL statements into a single unit of work that is committed to the database as one atomic unit. If any statement in the transaction fails, changes made by the previous statements can be rolled back. The initial state of the database when the transaction was started is preserved. Using a transaction can also improve performance on SQLite when making numerous changes to the database at once.
 
 ## Concurrency
 
-In SQLite, only one transaction is allowed to have changes pending in the database at a time. Because of this, calls to `Microsoft.Data.Sqlite.SqliteConnection.BeginTransaction*` and the `Execute` methods on `Microsoft.Data.Sqlite.SqliteCommand` may time out if another transaction takes too long to complete.
+In SQLite, only one transaction is allowed to have changes pending in the database at a time. Because of this, calls to <xref:Microsoft.Data.Sqlite.SqliteConnection.BeginTransaction*> and the `Execute` methods on <xref:Microsoft.Data.Sqlite.SqliteCommand> may time out if another transaction takes too long to complete.
 
-For more information about locking, retries, and timeouts, see Database errors.
+For more information about locking, retries, and timeouts, see [Database errors](database-errors.md).
 
 ## Isolation levels
 
@@ -29,19 +25,19 @@ SQLite also supports **read uncommitted** when using a shared cache. This level 
 
 - *Phantoms* are rows that get changed or added to meet the where clause of a query during a transaction. If allowed, the same query could return different rows when executed twice in the same transaction.
 
-Microsoft.Data.Sqlite treats the IsolationLevel passed to `Microsoft.Data.Sqlite.SqliteConnection.BeginTransaction*` as a minimum level. The actual isolation level will be promoted to either read uncommitted or serializable.
+Microsoft.Data.Sqlite treats the IsolationLevel passed to <xref:Microsoft.Data.Sqlite.SqliteConnection.BeginTransaction*> as a minimum level. The actual isolation level will be promoted to either read uncommitted or serializable.
 
 The following code simulates a dirty read. Note, the connection string must include `Cache=Shared`.
 
-_Code sample not included: ../../../../samples/snippets/standard/data/sqlite/DirtyReadSample/Program.cs._
+[!code-csharp[](../../../../samples/snippets/standard/data/sqlite/DirtyReadSample/Program.cs?name=snippet_DirtyRead)]
 
 ## Deferred transactions
 
 Starting with Microsoft.Data.Sqlite version 5.0, transactions can be deferred. This defers the creation of the actual transaction in the database until the first command is executed. It also causes the transaction to gradually upgrade from a read transaction to a write transaction as needed by its commands. This can be useful for enabling concurrent access to the database during the transaction.
 
-_Code sample not included: ../../../../samples/snippets/standard/data/sqlite/DeferredTransactionSample/Program.cs._
+[!code-csharp[](../../../../samples/snippets/standard/data/sqlite/DeferredTransactionSample/Program.cs?name=snippet_DeferredTransaction)]
 
-> **Warning:**
+> [!WARNING]
 > Commands inside a deferred transaction can fail if they cause the transaction to be upgraded from a read transaction to a write transaction while the database is locked. When this happens, the application will need to retry the entire transaction.
 
 ## Savepoints
@@ -50,4 +46,4 @@ Version 6.0 of Microsoft.Data.Sqlite supports savepoints. Savepoints can be used
 
 The following code illustrates using the Optimistic Offline Lock pattern to detect concurrent updates and resolve conflicts within a savepoint as part of a larger transaction.
 
-_Code sample not included: ../../../../samples/snippets/standard/data/sqlite/SavepointSample/Program.cs._
+[!code-csharp[](../../../../samples/snippets/standard/data/sqlite/SavepointSample/Program.cs#snippet_Savepoint)]

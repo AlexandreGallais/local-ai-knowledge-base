@@ -1,15 +1,8 @@
----
-title: "Disallow accessing the value property of a BehaviorSubject instance (rxjs-x/no-subject-value)"
-tool: "rxjs-x"
-version: "1.0"
-source: "https://github.com/JasonWeinzierl/eslint-plugin-rxjs-x/blob/f7f9e1f72be9fc25c35de69d052af38a828a9c85/docs/rules/no-subject-value.md"
-commit: "f7f9e1f72be9fc25c35de69d052af38a828a9c85"
-license: "MIT"
----
-
 # Disallow accessing the `value` property of a `BehaviorSubject` instance (`rxjs-x/no-subject-value`)
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
+<!-- end auto-generated rule header -->
 
 This rule effects an error if the `value` property - or `getValue` method - of a `BehaviorSubject` is used.
 
@@ -22,5 +15,5 @@ Type checked lint rules are more powerful than traditional lint rules, but also 
 
 ## Resources
 
-- Rule source
-- Test source
+- [Rule source](/src/rules/no-subject-value.ts)
+- [Test source](/tests/rules/no-subject-value.test.ts)

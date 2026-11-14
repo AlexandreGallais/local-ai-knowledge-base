@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: ICorDebugProcess6::GetExportStepInfo Method"
 title: "ICorDebugProcess6::GetExportStepInfo Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugprocess6-getexportstepinfo-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugProcess6::GetExportStepInfo Method
 
 Provides information on runtime exported functions to help step through managed code.
@@ -26,10 +22,10 @@ pszExportName
  [in] The name of a runtime export function as written in the PE export table.
 
 invokeKind
- [out] A pointer to a member of the CorDebugCodeInvokeKind enumeration that describes how the exported function will invoke managed code.
+ [out] A pointer to a member of the [CorDebugCodeInvokeKind](cordebugcodeinvokekind-enumeration.md) enumeration that describes how the exported function will invoke managed code.
 
 invokePurpose
- [out] A pointer to a member of the CorDebugCodeInvokePurpose enumeration that describes why the exported function will call managed code.
+ [out] A pointer to a member of the [CorDebugCodeInvokePurpose](cordebugcodeinvokepurpose-enumeration.md) enumeration that describes why the exported function will call managed code.
 
 ## Return Value
 
@@ -43,12 +39,12 @@ The method can return the values listed in the following table.
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This method is available with .NET Native only.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -58,4 +54,4 @@ The method can return the values listed in the following table.
 
 ## See also
 
-- ICorDebugProcess6 Interface
+- [ICorDebugProcess6 Interface](icordebugprocess6-interface.md)

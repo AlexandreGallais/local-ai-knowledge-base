@@ -1,12 +1,8 @@
 ---
 title: "Breaking change: Removed status bar controls"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/windows-forms/5.0/winforms-deprecated-controls.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the breaking change in .NET 5 where some Windows Forms controls are no longer available.
+ms.date: 07/18/2020
 ---
-
 # Removed status bar controls
 
 Starting in .NET 5, some Windows Forms controls are no longer available.
@@ -37,17 +33,37 @@ Move to the replacement APIs for these controls and their scenarios:
 
 | Old Control (API) | Recommended Replacement                          |
 |-------------------|--------------------------------------------------|
-| StatusBar         | `System.Windows.Forms.StatusStrip`          |
-| StatusBarPanel    | `System.Windows.Forms.ToolStripStatusLabel` |
+| StatusBar         | <xref:System.Windows.Forms.StatusStrip>          |
+| StatusBarPanel    | <xref:System.Windows.Forms.ToolStripStatusLabel> |
 
 ## Affected APIs
 
-- `System.Windows.Forms.StatusBar`
-- `System.Windows.Forms.StatusBarDrawItemEventArgs`
-- `System.Windows.Forms.StatusBarDrawItemEventHandler`
-- `System.Windows.Forms.StatusBarPanel`
-- `System.Windows.Forms.StatusBarPanelAutoSize`
-- `System.Windows.Forms.StatusBarPanelBorderStyle`
-- `System.Windows.Forms.StatusBarPanelClickEventArgs`
-- `System.Windows.Forms.StatusBarPanelClickEventHandler`
-- `System.Windows.Forms.StatusBarPanelStyle`
+- <xref:System.Windows.Forms.StatusBar?displayProperty=fullName>
+- <xref:System.Windows.Forms.StatusBarDrawItemEventArgs?displayProperty=fullName>
+- <xref:System.Windows.Forms.StatusBarDrawItemEventHandler?displayProperty=fullName>
+- <xref:System.Windows.Forms.StatusBarPanel?displayProperty=fullName>
+- <xref:System.Windows.Forms.StatusBarPanelAutoSize?displayProperty=fullName>
+- <xref:System.Windows.Forms.StatusBarPanelBorderStyle?displayProperty=fullName>
+- <xref:System.Windows.Forms.StatusBarPanelClickEventArgs?displayProperty=fullName>
+- <xref:System.Windows.Forms.StatusBarPanelClickEventHandler?displayProperty=fullName>
+- <xref:System.Windows.Forms.StatusBarPanelStyle?displayProperty=fullName>
+
+<!--
+
+### Affected APIs
+
+- `T:System.Windows.Forms.StatusBar`
+- `T:System.Windows.Forms.StatusBarDrawItemEventArgs`
+- `T:System.Windows.Forms.StatusBarDrawItemEventHandler`
+- `T:System.Windows.Forms.StatusBarPanel`
+- `T:System.Windows.Forms.StatusBarPanelAutoSize`
+- `T:System.Windows.Forms.StatusBarPanelBorderStyle`
+- `T:System.Windows.Forms.StatusBarPanelClickEventArgs`
+- `T:System.Windows.Forms.StatusBarPanelClickEventHandler`
+- `T:System.Windows.Forms.StatusBarPanelStyle`
+
+### Category
+
+Windows Forms
+
+-->

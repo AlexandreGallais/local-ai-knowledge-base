@@ -1,13 +1,9 @@
 ---
-title: "strict"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/strict.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: strict
+rule_type: suggestion
 ---
 
-# strict
+
 
 A strict mode directive is a `"use strict"` literal at the beginning of a script or function body. It enables strict mode semantics.
 
@@ -51,14 +47,14 @@ In **ECMAScript** modules, which always have strict mode semantics, the directiv
 
 This rule requires or disallows strict mode directives.
 
-This rule disallows strict mode directives, no matter which option is specified, if ESLint configuration specifies either of the following as parser options:
+This rule disallows strict mode directives, no matter which option is specified, if ESLint configuration specifies either of the following as [parser options](../use/configure/language-options#specify-javascript-options):
 
 * `"sourceType": "module"` that is, files are **ECMAScript** modules.
 * `"impliedStrict": true` property in the `ecmaFeatures` object.
 
-This rule disallows strict mode directives, no matter which option is specified, in functions with non-simple parameter lists (for example, parameter lists with default parameter values) because that is a syntax error in **ECMAScript 2016** and later. See the examples of the function option.
+This rule disallows strict mode directives, no matter which option is specified, in functions with non-simple parameter lists (for example, parameter lists with default parameter values) because that is a syntax error in **ECMAScript 2016** and later. See the examples of the [function](#function) option.
 
-This rule does not apply to class static blocks, no matter which option is specified, because class static blocks do not have directives. Therefore, a `"use strict"` statement in a class static block is not a directive, and will be reported by the no-unused-expressions rule.
+This rule does not apply to class static blocks, no matter which option is specified, because class static blocks do not have directives. Therefore, a `"use strict"` statement in a class static block is not a directive, and will be reported by the [no-unused-expressions](no-unused-expressions) rule.
 
 The `--fix` option on the command line does not insert new `"use strict"` statements, but only removes unneeded statements.
 
@@ -77,8 +73,8 @@ This rule has a string option:
 
 The `"safe"` option corresponds to the `"global"` option if ESLint considers a file to be a **Node.js** or **CommonJS** module because the configuration specifies either of the following:
 
-* `"sourceType": "commonjs"` in language options
-* `"globalReturn": true` property in the `ecmaFeatures` object of parser options
+* `"sourceType": "commonjs"` in [language options](../use/configure/language-options#specify-javascript-options)
+* `"globalReturn": true` property in the `ecmaFeatures` object of [parser options](../use/configure/language-options#specify-parser-options)
 
 Otherwise the `"safe"` option corresponds to the `"function"` option.
 
@@ -86,7 +82,7 @@ Otherwise the `"safe"` option corresponds to the `"function"` option.
 
 Examples of **incorrect** code for this rule with the `"global"` option:
 
-**Incorrect:**
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint strict: ["error", "global"]*/
@@ -95,7 +91,9 @@ function foo() {
 }
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint strict: ["error", "global"]*/
@@ -105,7 +103,9 @@ function foo() {
 }
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint strict: ["error", "global"]*/
@@ -116,10 +116,12 @@ function foo() {
     "use strict";
 }
 ```
+
+:::
 
 Examples of **correct** code for this rule with the `"global"` option:
 
-**Correct:**
+::: correct { "sourceType": "script" }
 
 ```js
 /*eslint strict: ["error", "global"]*/
@@ -129,6 +131,8 @@ Examples of **correct** code for this rule with the `"global"` option:
 function foo() {
 }
 ```
+
+:::
 
 ### function
 
@@ -136,7 +140,7 @@ This option ensures that all function bodies are strict mode code, while global 
 
 Examples of **incorrect** code for this rule with the `"function"` option:
 
-**Incorrect:**
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint strict: ["error", "function"]*/
@@ -147,7 +151,9 @@ function foo() {
 }
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint strict: ["error", "function"]*/
@@ -162,7 +168,9 @@ function foo() {
 }());
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect { "ecmaVersion": 2015, "sourceType": "script" }
 
 ```js
 /*eslint strict: ["error", "function"]*/
@@ -179,9 +187,11 @@ function foo(a = 1) {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"function"` option:
 
-**Correct:**
+::: correct { "sourceType": "script" }
 
 ```js
 /*eslint strict: ["error", "function"]*/
@@ -208,11 +218,13 @@ const foo2 = (function() {
 }());
 ```
 
+:::
+
 ### never
 
 Examples of **incorrect** code for this rule with the `"never"` option:
 
-**Incorrect:**
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint strict: ["error", "never"]*/
@@ -223,7 +235,9 @@ function foo() {
 }
 ```
 
-**Incorrect:**
+:::
+
+::: incorrect { "sourceType": "script" }
 
 ```js
 /*eslint strict: ["error", "never"]*/
@@ -233,9 +247,11 @@ function foo() {
 }
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"never"` option:
 
-**Correct:**
+::: correct { "sourceType": "script" }
 
 ```js
 /*eslint strict: ["error", "never"]*/
@@ -243,6 +259,8 @@ Examples of **correct** code for this rule with the `"never"` option:
 function foo() {
 }
 ```
+
+:::
 
 ### earlier default (removed)
 
@@ -301,4 +319,4 @@ function foo() {
 
 ## When Not To Use It
 
-In a codebase that has both strict and non-strict code, either turn this rule off, or selectively disable it where necessary. For example, functions referencing `arguments.callee` are invalid in strict mode. A full list of strict mode differences is available on MDN.
+In a codebase that has both strict and non-strict code, either turn this rule off, or [selectively disable it](../use/configure/rules#disable-rules) where necessary. For example, functions referencing `arguments.callee` are invalid in strict mode. A [full list of strict mode differences](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode/Transitioning_to_strict_mode#Differences_from_non-strict_to_strict) is available on MDN.

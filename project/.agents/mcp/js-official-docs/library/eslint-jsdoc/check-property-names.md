@@ -1,24 +1,20 @@
----
-title: "check-property-names"
-tool: "eslint-jsdoc"
-version: "65.4"
-source: "https://github.com/gajus/eslint-plugin-jsdoc/blob/9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3/docs/rules/check-property-names.md"
-commit: "9adbdb25fedc1bb8024399c1bf2b5465ec9a21f3"
-license: "BSD-3-Clause"
----
+<a name="user-content-check-property-names"></a>
+<a name="check-property-names"></a>
+# <code>check-property-names</code>
 
-# `check-property-names`
+* [Fixer](#user-content-check-property-names-fixer)
+* [Options](#user-content-check-property-names-options)
+    * [`enableFixer`](#user-content-check-property-names-options-enablefixer)
+* [Context and settings](#user-content-check-property-names-context-and-settings)
+* [Failing examples](#user-content-check-property-names-failing-examples)
+* [Passing examples](#user-content-check-property-names-passing-examples)
 
-* Fixer
-* Options
-    * `enableFixer`
-* Context and settings
-* Failing examples
-* Passing examples
 
 Ensures that property names in JSDoc are not duplicated on the same block
 and that nested properties have defined roots.
 
+<a name="user-content-check-property-names-fixer"></a>
+<a name="check-property-names-fixer"></a>
 ## Fixer
 
 Auto-removes `@property` duplicates (based on identical names).
@@ -27,11 +23,15 @@ Note that this option will remove duplicates of the same name even if
 the definitions do not match in other ways (e.g., the second property will
 be removed even if it has a different type or description).
 
+<a name="user-content-check-property-names-options"></a>
+<a name="check-property-names-options"></a>
 ## Options
 
 A single options object has the following properties.
 
-### `enableFixer`
+<a name="user-content-check-property-names-options-enablefixer"></a>
+<a name="check-property-names-options-enablefixer"></a>
+### <code>enableFixer</code>
 
 Set to `true` to auto-remove `@property` duplicates (based on
 identical names).
@@ -40,6 +40,9 @@ Note that this option will remove duplicates of the same name even if
 the definitions do not match in other ways (e.g., the second property will
 be removed even if it has a different type or description).
 
+
+<a name="user-content-check-property-names-context-and-settings"></a>
+<a name="check-property-names-context-and-settings"></a>
 ## Context and settings
 
 |||
@@ -50,6 +53,8 @@ be removed even if it has a different type or description).
 |Aliases|`prop`|
 |Recommended|true|
 
+<a name="user-content-check-property-names-failing-examples"></a>
+<a name="check-property-names-failing-examples"></a>
 ## Failing examples
 
 The following patterns are considered problems:
@@ -200,6 +205,10 @@ function quux ({foo, bar}, baz) {
 // Message: Duplicate @property "type"
 ````
 
+
+
+<a name="user-content-check-property-names-passing-examples"></a>
+<a name="check-property-names-passing-examples"></a>
 ## Passing examples
 
 The following patterns are not considered problems:
@@ -286,3 +295,4 @@ function quux (code = 1) {
  * @property {number} anotherType
  */
 ````
+

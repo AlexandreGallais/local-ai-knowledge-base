@@ -1,19 +1,10 @@
----
-title: "Expression Syntax"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/guide/templates/expression-syntax.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Expression Syntax
 
 Angular expressions are based on JavaScript, but differ in some key ways. This guide walks through the similarities and differences between Angular expressions and standard JavaScript.
 
 ## Value literals
 
-Angular supports a subset of literal values from JavaScript.
+Angular supports a subset of [literal values](https://developer.mozilla.org/en-US/docs/Glossary/Literal) from JavaScript.
 
 ### Supported value literals
 
@@ -37,10 +28,10 @@ Angular supports a subset of literal values from JavaScript.
 
 ## Globals
 
-Angular expressions support the following globals:
+Angular expressions support the following [globals](https://developer.mozilla.org/en-US/docs/Glossary/Global_object):
 
-- undefined
-- $any
+- [undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)
+- [$any](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any)
 
 No other JavaScript globals are supported. Common JavaScript globals include `Number`, `Boolean`, `NaN`, `Infinity`, `parseInt`, and more.
 
@@ -93,7 +84,7 @@ Angular supports the following operators from standard JavaScript.
 | Rest in function calls        | `fn(...args)`                                  |
 | Arrow function                | `items.filter((i) => i.active)`                |
 
-NOTE: Assignment and increment/decrement operators are only valid in event listener statements. Using them in a binding or interpolation is a compile error, unless they are inside an arrow function.
+NOTE: Assignment and increment/decrement operators are only valid in [event listener statements](#event-listener-statements). Using them in a binding or interpolation is a compile error, unless they are inside an arrow function.
 
 Arrow functions must have an expression body. Pipes cannot be used inside an arrow function, but you can pass an arrow function as an argument to a pipe.
 
@@ -101,7 +92,7 @@ Angular expressions additionally also support the following non-standard operato
 
 | Operator                        | Example(s)                     |
 | ------------------------------- | ------------------------------ |
-| Pipe  | `{{ total \| currency }}`      |
+| [Pipe](/guide/templates/pipes)  | `{{ total \| currency }}`      |
 | Optional chaining\*             | `someObj.someProp?.nestedProp` |
 | Non-null assertion (TypeScript) | `someObj!.someProp`            |
 
@@ -132,9 +123,9 @@ NOTE: Prefer migrating expressions to no longer rely on `null` vs `undefined` di
 
 ## Lexical context for expressions
 
-Angular expressions are evaluated within the context of the component class as well as any relevant template variables, locals, and globals.
+Angular expressions are evaluated within the context of the component class as well as any relevant [template variables](/guide/templates/variables), locals, and globals.
 
-When referring to component class members, `this` is always implied. However, if a template declares a template variables with the same name as a member, the variable shadows that member. You can unambiguously reference such a class member by explicitly using `this.`. This can be useful when creating an `@let` declaration that shadows a class member, e.g. for signal narrowing purposes.
+When referring to component class members, `this` is always implied. However, if a template declares a [template variables](guide/templates/variables) with the same name as a member, the variable shadows that member. You can unambiguously reference such a class member by explicitly using `this.`. This can be useful when creating an `@let` declaration that shadows a class member, e.g. for signal narrowing purposes.
 
 ## Declarations
 
@@ -149,7 +140,7 @@ Generally speaking, declarations are not supported in Angular expressions. This 
 
 ## Event listener statements
 
-Event handlers are **statements** rather than expressions. While they support all of the same syntax as Angular expressions, there are two key <example-value>:
+Event handlers are **statements** rather than expressions. While they support all of the same syntax as Angular expressions, there are two key differences:
 
 1. Statements **do support** assignment operators (but not destructuring assignments)
 1. Statements **do not support** pipes

@@ -1,26 +1,29 @@
 ---
 title: "How to: Serialize an Object"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/serialization/how-to-serialize-an-object.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: This article shows you how to serialize an object. Select a transport format in which the XML stream is stored, either as a stream or as a file.
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+helpviewer_keywords:
+  - "serializing objects"
+  - "objects, serializing steps"
+ms.assetid: a1207d05-32b2-4953-8582-959607991227
 ---
-
 # How to: Serialize an Object
 
-To serialize an object, first create the object that is to be serialized and set its public properties and fields. To do this, you must determine the transport format in which the XML stream is to be stored, either as a stream or as a file. For example, if the XML stream must be saved in a permanent form, create a `System.IO.FileStream` object.
+To serialize an object, first create the object that is to be serialized and set its public properties and fields. To do this, you must determine the transport format in which the XML stream is to be stored, either as a stream or as a file. For example, if the XML stream must be saved in a permanent form, create a <xref:System.IO.FileStream> object.
 
-> **Note:**
-> For more examples of XML serialization, see Examples of XML Serialization.
+> [!NOTE]
+> For more examples of XML serialization, see [Examples of XML Serialization](examples-of-xml-serialization.md).
 
 ### To serialize an object
 
 1. Create the object and set its public fields and properties.
 
-2. Construct a `System.Xml.Serialization.XmlSerializer` using the type of the object. For more information, see the `System.Xml.Serialization.XmlSerializer` class constructors.
+2. Construct a <xref:System.Xml.Serialization.XmlSerializer> using the type of the object. For more information, see the <xref:System.Xml.Serialization.XmlSerializer> class constructors.
 
-3. Call the `System.Xml.Serialization.XmlSerializer.Serialize*` method to generate either an XML stream or a file representation of the object's public properties and fields. The following example creates a file.
+3. Call the <xref:System.Xml.Serialization.XmlSerializer.Serialize*> method to generate either an XML stream or a file representation of the object's public properties and fields. The following example creates a file.
 
     ```vb
     Dim myObject As MySerializableClass = New MySerializableClass()
@@ -45,5 +48,5 @@ To serialize an object, first create the object that is to be serialized and set
 
 ## See also
 
-- Introducing XML Serialization
-- How to: Deserialize an Object
+- [Introducing XML Serialization](introducing-xml-serialization.md)
+- [How to: Deserialize an Object](how-to-deserialize-an-object.md)

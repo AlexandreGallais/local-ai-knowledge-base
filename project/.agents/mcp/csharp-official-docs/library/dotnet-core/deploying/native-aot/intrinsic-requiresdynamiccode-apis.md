@@ -1,15 +1,14 @@
 ---
-title: "Intrinsic APIs marked RequiresDynamicCode"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/deploying/native-aot/intrinsic-requiresdynamiccode-apis.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Intrinsic APIs marked RequiresDynamicCode
+description: Learn how the tooling recognizes certain patterns in calls to APIs annotated with RequiresDynamicCode.
+author: MichalStrehovsky
+ms.author: michals
+ms.date: 09/09/2024
 ---
 
 # Intrinsic APIs marked RequiresDynamicCode
 
-Under normal circumstances, calling APIs annotated with `System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute` in an app published with native AOT triggers warning IL3050 (Avoid calling members annotated with 'RequiresDynamicCodeAttribute' when publishing as native AOT). APIs that trigger the warning might not behave correctly after AOT compilation.
+Under normal circumstances, calling APIs annotated with <xref:System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute> in an app published with native AOT triggers warning [IL3050 (Avoid calling members annotated with 'RequiresDynamicCodeAttribute' when publishing as native AOT)](warnings/il3050.md). APIs that trigger the warning might not behave correctly after AOT compilation.
 
 Some APIs annotated RequiresDynamicCode can still be used without triggering the warning when called in a specific pattern. When used as part of a pattern, the call to the API can be statically analyzed by the compiler, does not generate a warning, and behaves as expected at runtime.
 

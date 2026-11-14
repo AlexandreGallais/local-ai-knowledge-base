@@ -1,12 +1,3 @@
----
-title: "Application binary interface (ABI)"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/abi.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[abi]
 # Application binary interface (ABI)
 
@@ -15,6 +6,7 @@ This section documents features that affect the ABI of the compiled output of a 
 
 See *[extern functions]* for information on specifying the ABI for exporting functions. See *[external blocks]* for information on specifying the ABI for linking external libraries.
 
+<!-- template:attributes -->
 r[abi.used]
 ## The `used` attribute
 
@@ -51,10 +43,10 @@ The *`used` [attribute]* forces a [static] to be kept in the output object file 
 > ```console
 > $ rustc -O --emit=obj --crate-type=rlib lib.rs
 > $ LC_ALL=C nm -C lib.o
-> <example-card-number> R lib::S1
-> <example-card-number> R lib::S3
-> <example-card-number> r lib::S4
-> <example-card-number> T f4
+> 0000000000000000 R lib::S1
+> 0000000000000000 R lib::S3
+> 0000000000000000 r lib::S4
+> 0000000000000000 T f4
 > ```
 
 r[abi.used.syntax]
@@ -66,7 +58,7 @@ The `used` attribute may only be applied to [`static` items].
 r[abi.used.duplicates]
 Only the first use of `used` on an item has effect.
 
-> **Note:**
+> [!NOTE]
 > `rustc` lints against any use following the first.
 
 r[abi.no_mangle]
@@ -87,13 +79,19 @@ The `no_mangle` attribute uses the [MetaWord] syntax.
 r[abi.no_mangle.allowed-positions]
 The `no_mangle` attribute may only be applied to:
 
-- Static items
-- Free functions
-- Inherent associated functions
-- Trait impl functions
+- [Static items][items.static]
+- [Free functions][items.fn]
+- [Inherent associated functions][items.associated.fn]
+- [Trait impl functions][items.impl.trait]
 
-> **Note:**
+> [!NOTE]
 > `rustc` lints against use in other positions. This may become an error in the future.
+
+<!-- TODO: Currently it works on a trait function with a body, but generates a warning about being phased out. how do we document that?
+https://github.com/rust-lang/rust/pull/86492#issuecomment-885682960
+-->
+
+<!-- TODO: should this clarify that external block items are already unmangled?, and thus the attribute does nothing? Currently it is "phased out" warning. -->
 
 r[abi.no_mangle.closures]
 The `no_mangle` attribute may not be used with a [closure].
@@ -104,24 +102,24 @@ The `no_mangle` attribute may not be used on an item with generic parameters.
 r[abi.no_mangle.duplicates]
 Only the first use of `no_mangle` on an item has effect.
 
-> **Note:**
+> [!NOTE]
 > `rustc` lints against any use following the first.
 
 r[abi.no_mangle.export_name]
-When the `no_mangle` and `export_name` attributes are both applied to the same item, the symbol name from `export_name` is used, and `no_mangle` has no effect.
+When the `no_mangle` and [`export_name`][abi.export_name] attributes are both applied to the same item, the symbol name from `export_name` is used, and `no_mangle` has no effect.
 
-> **Note:**
+> [!NOTE]
 > `rustc` lints against this combination.
 
 r[abi.no_mangle.unsafe]
-The `no_mangle` attribute must be marked with `unsafe` because an unmangled symbol may collide with another symbol with the same name (or with a well-known symbol), leading to undefined behavior.
+The `no_mangle` attribute must be marked with [`unsafe`][attributes.safety] because an unmangled symbol may collide with another symbol with the same name (or with a well-known symbol), leading to undefined behavior.
 
 r[abi.no_mangle.edition2024]
 > [!EDITION-2024]
 > Before the 2024 edition, it is allowed to use the `no_mangle` attribute without `unsafe`.
 
 r[abi.no_mangle.publicly-exported]
-In addition to disabling name mangling, the `no_mangle` attribute causes the symbol to be publicly exported from the produced library or object file, similar to the `used` attribute.
+In addition to disabling name mangling, the `no_mangle` attribute causes the symbol to be publicly exported from the produced library or object file, similar to the [`used`][abi.used] attribute.
 
 r[abi.no_mangle.ascii-only]
 The `no_mangle` attribute may only be used on items with a name that contains only ASCII characters.
@@ -135,7 +133,8 @@ The *`link_section` attribute* specifies the section of the object file that a [
 r[abi.link_section.syntax]
 The `link_section` attribute uses the [MetaNameValueStr] syntax to specify the section name.
 
-```rust
+<!-- no_run: don't link. The format of the section name is platform-specific. -->
+```rust,no_run
 # #[cfg(target_os = "linux")] {
 #[unsafe(no_mangle)]
 #[unsafe(link_section = ".example_section")]
@@ -149,7 +148,7 @@ This attribute is unsafe as it allows users to place data and code into sections
 r[abi.link_section.duplicates]
 Only the first use of `link_section` on an item has effect.
 
-> **Note:**
+> [!NOTE]
 > `rustc` lints against any use following the first with a future-compatibility warning. This may become an error in the future.
 
 r[abi.link_section.edition2024]
@@ -176,9 +175,18 @@ This attribute is unsafe as a symbol with a custom name may collide with another
 r[abi.export_name.duplicates]
 Only the first use of `export_name` on an item has effect.
 
-> **Note:**
+> [!NOTE]
 > `rustc` lints against any use following the first with a future-compatibility warning. This may become an error in the future.
 
 r[abi.export_name.edition2024]
 > [!EDITION-2024]
 > Before the 2024 edition it is allowed to use the `export_name` attribute without the `unsafe` qualification.
+
+[attribute]: attributes.md
+[closure]: expr.closure
+[extern functions]: items/functions.md#extern-function-qualifier
+[external blocks]: items/external-blocks.md
+[function]: items/functions.md
+[item]: items.md
+[`static` items]: items.static
+[static]: items/static-items.md

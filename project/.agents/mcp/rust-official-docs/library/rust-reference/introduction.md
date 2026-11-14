@@ -1,17 +1,8 @@
----
-title: "Introduction"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/introduction.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 # Introduction
 
 This book is the primary reference for the Rust programming language.
 
-> **Note:**
+> [!NOTE]
 > For known bugs and omissions in this book, see our [GitHub issues]. If you see a case where the compiler behavior and the text here do not agree, file an issue so we can think about which is correct.
 
 ## Rust releases
@@ -35,8 +26,8 @@ Those libraries are documented separately by extracting documentation attributes
 Many of the features that one might expect to be language features are library features in Rust, so what you're looking for may be there, not here.
 
 Similarly, this book does not usually document the specifics of `rustc` as a tool or of Cargo.
-`rustc` has its own book.
-Cargo has a book that contains a reference.
+`rustc` has its own [book][rustc book].
+Cargo has a [book][cargo book] that contains a [reference][cargo reference].
 There are a few pages such as [linkage] that still describe how `rustc` works.
 
 This book also only serves as a reference to what is available in stable Rust.
@@ -84,7 +75,7 @@ These conventions are documented here.
 
 * Notes that contain useful information about the state of the book or point out useful, but mostly out of scope, information are in note blocks.
 
-  > **Note:**
+  > [!NOTE]
   > This is an example note.
 
 * Example blocks show an example that demonstrates some rule or points out some interesting aspect. Some examples may have hidden lines which can be viewed by clicking the eye icon that appears when hovering or tapping the example.
@@ -97,7 +88,7 @@ These conventions are documented here.
 
 * Warnings that show unsound behavior in the language or possibly confusing interactions of language features are in a special warning box.
 
-  > **Warning:**
+  > [!WARNING]
   > This is an example warning.
 
 * Code snippets inline in the text are inside `<code>` tags.
@@ -116,16 +107,16 @@ These conventions are documented here.
 * The grammar and lexical productions are described in the [Notation] chapter.
 
 r[example.rule.label]
-* Rule identifiers appear before each language rule enclosed in square brackets. These identifiers provide a way to refer to and link to a specific rule in the language (e.g.). The rule identifier uses periods to separate sections from most general to most specific ([destructors.scope.nesting-function-body] for example). On narrow screens, the rule name will collapse to display `[*]`.
+* Rule identifiers appear before each language rule enclosed in square brackets. These identifiers provide a way to refer to and link to a specific rule in the language ([e.g.][example rule]). The rule identifier uses periods to separate sections from most general to most specific ([destructors.scope.nesting-function-body] for example). On narrow screens, the rule name will collapse to display `[*]`.
 
   The rule name can be clicked to link to that rule.
 
-  > **Warning:**
+  > [!WARNING]
   > The organization of the rules is currently in flux. For the time being, these identifier names are not stable between releases, and links to these rules may fail if they are changed. We intend to stabilize these once the organization has settled so that links to the rule names will not break between releases.
 
 * Rules that have associated tests will include a `Tests` link below them (on narrow screens, the link is `[T]`). Clicking the link will pop up a list of tests, which can be clicked to view the test. For example, see [input.encoding.utf8].
 
-  Linking rules to tests is an ongoing effort. See the Test summary chapter for an overview.
+  Linking rules to tests is an ongoing effort. See the [Test summary](test-summary.md) chapter for an overview.
 
 ## Contributing
 
@@ -135,3 +126,19 @@ You can contribute to this book by opening an issue or sending a pull request to
 If this book does not answer your question, and you think its answer is in scope of it, please do not hesitate to [file an issue] or ask about it in the `t-lang/doc` stream on [Zulip].
 Knowing what people use this book for the most helps direct our attention to making those sections the best that they can be.
 And of course, if you see anything that is wrong or is non-normative but not specifically called out as such, please also [file an issue].
+
+[book]: ../book/index.html
+[github issues]: https://github.com/rust-lang/reference/issues
+[standard library]: std
+[the Rust Reference repository]: https://github.com/rust-lang/reference/
+[Unstable Book]: https://doc.rust-lang.org/nightly/unstable-book/
+[cargo book]: ../cargo/index.html
+[cargo reference]: ../cargo/reference/index.html
+[example rule]: example.rule.label
+[expressions chapter]: expressions.html
+[file an issue]: https://github.com/rust-lang/reference/issues
+[lifetime of temporaries]: expressions.html#temporaries
+[linkage]: linkage.html
+[rustc book]: ../rustc/index.html
+[Notation]: notation.md
+[Zulip]: https://rust-lang.zulipchat.com/#narrow/stream/237824-t-lang.2Fdoc

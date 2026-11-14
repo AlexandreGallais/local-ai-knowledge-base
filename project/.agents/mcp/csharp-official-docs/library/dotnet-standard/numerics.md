@@ -1,21 +1,28 @@
 ---
+description: "Learn more about: Numerics in .NET"
 title: "Numerics in .NET"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/numerics.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+titleSuffix: ""
+ms.date: 04/23/2021
+ai-usage: ai-assisted
+helpviewer_keywords:
+  - "SIMD"
+  - "System.Numerics.Vectors"
+  - "vectors"
+  - "scientific computing"
+  - "Complex"
+  - "numerics"
+  - "BigInteger"
+ms.assetid: dfebc18e-acde-4510-9fa7-9a0f4aa3bd11
 ---
-
 # Numerics in .NET
 
 .NET provides a range of numeric integer and floating-point primitives, as well as:
 
-- `System.Half`, which represents a half-precision floating-point number.
-- `System.Decimal`, which represents a decimal floating-point number.
-- `System.Numerics.BigInteger`, which is an integral type with no theoretical upper or lower bound.
-- `System.Numerics.Complex`, which represents complex numbers.
-- A set of SIMD-enabled types in the `System.Numerics` namespace.
+- <xref:System.Half?displayProperty=nameWithType>, which represents a half-precision floating-point number.
+- <xref:System.Decimal?displayProperty=nameWithType>, which represents a decimal floating-point number.
+- <xref:System.Numerics.BigInteger?displayProperty=nameWithType>, which is an integral type with no theoretical upper or lower bound.
+- <xref:System.Numerics.Complex?displayProperty=nameWithType>, which represents complex numbers.
+- A set of SIMD-enabled types in the <xref:System.Numerics> namespace.
 
 ## Integer types
 
@@ -25,36 +32,36 @@ license: "CC-BY-4.0"
 
 |Type|Size (in bytes)|Minimum value|Maximum value|
 |----------|--------------------|-------------------|-------------------|
-|`System.Int16`|2|-32,768|32,767|
-|`System.Int32`|4|-2,147,483,648|2,147,483,647|
-|`System.Int64`|8|-9,223,372,036,854,775,808|9,223,372,036,854,775,807|
-|`System.Int128`|16|−170,141,183,460,469,231,731,687,303,715,884,105,728|170,141,183,460,469,231,731,687,303,715,884,105,727|
-|`System.SByte`|1|-128|127|
-|`System.IntPtr` (in 32-bit process)|4|-2,147,483,648|2,147,483,647|
-|`System.IntPtr` (in 64-bit process)|8|-9,223,372,036,854,775,808|9,223,372,036,854,775,807|
+|<xref:System.Int16?displayProperty=nameWithType>|2|-32,768|32,767|
+|<xref:System.Int32?displayProperty=nameWithType>|4|-2,147,483,648|2,147,483,647|
+|<xref:System.Int64?displayProperty=nameWithType>|8|-9,223,372,036,854,775,808|9,223,372,036,854,775,807|
+|<xref:System.Int128?displayProperty=nameWithType>|16|−170,141,183,460,469,231,731,687,303,715,884,105,728|170,141,183,460,469,231,731,687,303,715,884,105,727|
+|<xref:System.SByte?displayProperty=nameWithType>|1|-128|127|
+|<xref:System.IntPtr?displayProperty=nameWithType> (in 32-bit process)|4|-2,147,483,648|2,147,483,647|
+|<xref:System.IntPtr?displayProperty=nameWithType> (in 64-bit process)|8|-9,223,372,036,854,775,808|9,223,372,036,854,775,807|
 
 **Unsigned integer types**
 
 |Type|Size (in bytes)|Minimum value|Maximum value|
 |----------|--------------------|-------------------|-------------------|
-|`System.Byte`|1|0|255|
-|`System.UInt16`|2|0|65,535|
-|`System.UInt32`|4|0|4,294,967,295|
-|`System.UInt64`|8|0|18,446,744,073,709,551,615|
-|`System.UInt128`|16|0|340,282,366,920,938,463,463,374,607,431,768,211,455|
-|`System.UIntPtr` (in 32-bit process)|4|0|4,294,967,295|
-|`System.UIntPtr` (in 64-bit process)|8|0|18,446,744,073,709,551,615|
+|<xref:System.Byte?displayProperty=nameWithType>|1|0|255|
+|<xref:System.UInt16?displayProperty=nameWithType>|2|0|65,535|
+|<xref:System.UInt32?displayProperty=nameWithType>|4|0|4,294,967,295|
+|<xref:System.UInt64?displayProperty=nameWithType>|8|0|18,446,744,073,709,551,615|
+|<xref:System.UInt128?displayProperty=nameWithType>|16|0|340,282,366,920,938,463,463,374,607,431,768,211,455|
+|<xref:System.UIntPtr?displayProperty=nameWithType> (in 32-bit process)|4|0|4,294,967,295|
+|<xref:System.UIntPtr?displayProperty=nameWithType> (in 64-bit process)|8|0|18,446,744,073,709,551,615|
 
-Each integer type supports a set of standard arithmetic operators. The `System.Math` class provides methods for a broader set of mathematical functions.
+Each integer type supports a set of standard arithmetic operators. The <xref:System.Math?displayProperty=nameWithType> class provides methods for a broader set of mathematical functions.
 
-You can also work with the individual bits in an integer value by using the `System.BitConverter` class.
+You can also work with the individual bits in an integer value by using the <xref:System.BitConverter?displayProperty=nameWithType> class.
 
-> **Note:**
-> The unsigned integer types are not CLS-compliant. For more information, see Language independence and language-independent components.
+> [!NOTE]
+> The unsigned integer types are not CLS-compliant. For more information, see [Language independence and language-independent components](language-independence.md).
 
 ## BigInteger
 
-The `System.Numerics.BigInteger` structure is an immutable type that represents an arbitrarily large integer whose value in theory has no upper or lower bounds. The methods of the `System.Numerics.BigInteger` type closely parallel those of the other integral types.
+The <xref:System.Numerics.BigInteger?displayProperty=nameWithType> structure is an immutable type that represents an arbitrarily large integer whose value in theory has no upper or lower bounds. The methods of the <xref:System.Numerics.BigInteger> type closely parallel those of the other integral types.
 
 ## Floating-point types
 
@@ -62,54 +69,54 @@ The `System.Numerics.BigInteger` structure is an immutable type that represents 
 
 | Type                                               | Size (in bytes) | Approximate range         | Primitive? | Notes                |
 |----------------------------------------------------|-----------------|---------------------------|------------|----------------------|
-| `System.Half`    | 2               | ±65504                    | No         | Introduced in .NET 5 |
-| `System.Single`  | 4               | ±3.4 x 1038    | Yes        |                      |
-| `System.Double`  | 8               | ±1.7 × 10308   | Yes        |                      |
-| `System.Decimal` | 16              | ±7.9228 x 1028 | No         |                      |
+| <xref:System.Half?displayProperty=nameWithType>    | 2               | ±65504                    | No         | Introduced in .NET 5 |
+| <xref:System.Single?displayProperty=nameWithType>  | 4               | ±3.4 x 10<sup>38</sup>    | Yes        |                      |
+| <xref:System.Double?displayProperty=nameWithType>  | 8               | ±1.7 × 10<sup>308</sup>   | Yes        |                      |
+| <xref:System.Decimal?displayProperty=nameWithType> | 16              | ±7.9228 x 10<sup>28</sup> | No         |                      |
 
-The `System.Half`, `System.Single`, and `System.Double` types support special values that represent not-a-number and infinity. For example, the `System.Double` type provides the following values: `System.Double.NaN`, `System.Double.NegativeInfinity`, and `System.Double.PositiveInfinity`. You use the `System.Double.IsNaN*`, `System.Double.IsInfinity*`, `System.Double.IsPositiveInfinity*`, and `System.Double.IsNegativeInfinity*` methods to test for these special values.
+The <xref:System.Half>, <xref:System.Single>, and <xref:System.Double> types support special values that represent not-a-number and infinity. For example, the <xref:System.Double> type provides the following values: <xref:System.Double.NaN?displayProperty=nameWithType>, <xref:System.Double.NegativeInfinity?displayProperty=nameWithType>, and <xref:System.Double.PositiveInfinity?displayProperty=nameWithType>. You use the <xref:System.Double.IsNaN*?displayProperty=nameWithType>, <xref:System.Double.IsInfinity*?displayProperty=nameWithType>, <xref:System.Double.IsPositiveInfinity*?displayProperty=nameWithType>, and <xref:System.Double.IsNegativeInfinity*?displayProperty=nameWithType> methods to test for these special values.
 
-Each floating-point type supports a set of standard arithmetic operators. The `System.Math` class provides methods for a broader set of mathematical functions. .NET Core 2.0 and later includes the `System.MathF` class, which provides methods that accept arguments of the `System.Single` type.
+Each floating-point type supports a set of standard arithmetic operators. The <xref:System.Math?displayProperty=nameWithType> class provides methods for a broader set of mathematical functions. .NET Core 2.0 and later includes the <xref:System.MathF?displayProperty=nameWithType> class, which provides methods that accept arguments of the <xref:System.Single> type.
 
-You can also work with the individual bits in `System.Double`, `System.Single`, and `System.Half` values by using the `System.BitConverter` class. The `System.Decimal` structure has its own methods, `System.Decimal.GetBits*` and `System.Decimal.#ctor(System.Int32[])`, for working with a decimal value's individual bits, as well as its own set of methods for performing some additional mathematical operations.
+You can also work with the individual bits in <xref:System.Double>, <xref:System.Single>, and <xref:System.Half> values by using the <xref:System.BitConverter?displayProperty=nameWithType> class. The <xref:System.Decimal?displayProperty=nameWithType> structure has its own methods, <xref:System.Decimal.GetBits*?displayProperty=nameWithType> and <xref:System.Decimal.%23ctor%28System.Int32%5B%5D%29>, for working with a decimal value's individual bits, as well as its own set of methods for performing some additional mathematical operations.
 
-The `System.Double`, `System.Single`, and `System.Half` types are intended to be used for values that, by their nature, are imprecise (for example, the distance between two stars) and for applications in which a high degree of precision and small rounding error is not required. Use the `System.Decimal` type for cases in which greater precision is required and rounding errors should be minimized.
+The <xref:System.Double>, <xref:System.Single>, and <xref:System.Half> types are intended to be used for values that, by their nature, are imprecise (for example, the distance between two stars) and for applications in which a high degree of precision and small rounding error is not required. Use the <xref:System.Decimal?displayProperty=nameWithType> type for cases in which greater precision is required and rounding errors should be minimized.
 
-> **Note:**
-> The `System.Decimal` type doesn't eliminate the need for rounding. Rather, it minimizes errors due to rounding.
+> [!NOTE]
+> The <xref:System.Decimal> type doesn't eliminate the need for rounding. Rather, it minimizes errors due to rounding.
 
 ## Complex
 
-The `System.Numerics.Complex` structure represents a complex number, that is, a number with a real number part and an imaginary number part. It supports a standard set of arithmetic, comparison, equality, explicit and implicit conversion operators, as well as mathematical, algebraic, and trigonometric methods.
+The <xref:System.Numerics.Complex?displayProperty=nameWithType> structure represents a complex number, that is, a number with a real number part and an imaginary number part. It supports a standard set of arithmetic, comparison, equality, explicit and implicit conversion operators, as well as mathematical, algebraic, and trigonometric methods.
 
 ## SIMD-enabled types
 
-The `System.Numerics` namespace includes a set of .NET SIMD-enabled types. SIMD (Single Instruction Multiple Data) operations can be parallelized at the hardware level. That increases the throughput of the vectorized computations, which are common in mathematical, scientific, and graphics apps.
+The <xref:System.Numerics> namespace includes a set of .NET SIMD-enabled types. SIMD (Single Instruction Multiple Data) operations can be parallelized at the hardware level. That increases the throughput of the vectorized computations, which are common in mathematical, scientific, and graphics apps.
 
 The .NET SIMD-enabled types include the following:
 
-- The `System.Numerics.Vector2`, `System.Numerics.Vector3`, and `System.Numerics.Vector4` types, which represent vectors with 2, 3, and 4 `System.Single` values.
+- The <xref:System.Numerics.Vector2>, <xref:System.Numerics.Vector3>, and <xref:System.Numerics.Vector4> types, which represent vectors with 2, 3, and 4 <xref:System.Single> values.
 
-- Two matrix types, `System.Numerics.Matrix3x2`, which represents a 3x2 matrix, and `System.Numerics.Matrix4x4`, which represents a 4x4 matrix.
+- Two matrix types, <xref:System.Numerics.Matrix3x2>, which represents a 3x2 matrix, and <xref:System.Numerics.Matrix4x4>, which represents a 4x4 matrix.
 
-- The `System.Numerics.Plane` type, which represents a plane in three-dimensional space.
+- The <xref:System.Numerics.Plane> type, which represents a plane in three-dimensional space.
 
-- The `System.Numerics.Quaternion` type, which represents a vector that is used to encode three-dimensional physical rotations.
+- The <xref:System.Numerics.Quaternion> type, which represents a vector that is used to encode three-dimensional physical rotations.
 
-- The `System.Numerics.Vector`1` type, which represents a vector of a specified numeric type and provides a broad set of operators that benefit from SIMD support. The count of a `System.Numerics.Vector`1` instance is fixed, but its value `System.Numerics.Vector`1.Count*` depends on the CPU of the machine, on which code is executed.
+- The <xref:System.Numerics.Vector`1> type, which represents a vector of a specified numeric type and provides a broad set of operators that benefit from SIMD support. The count of a <xref:System.Numerics.Vector`1> instance is fixed, but its value <xref:System.Numerics.Vector`1.Count*?displayProperty=nameWithType> depends on the CPU of the machine, on which code is executed.
 
-  > **Note:**
-  > The `System.Numerics.Vector`1` type is included with .NET Core and .NET 5+, but not .NET Framework. If you're using .NET Framework, install the System.Numerics.Vectors NuGet package to get access to this type.
+  > [!NOTE]
+  > The <xref:System.Numerics.Vector`1> type is included with .NET Core and .NET 5+, but not .NET Framework. If you're using .NET Framework, install the [System.Numerics.Vectors](https://www.nuget.org/packages/System.Numerics.Vectors) NuGet package to get access to this type.
 
 The SIMD-enabled types are implemented in such a way that they can be used with non-SIMD-enabled hardware or JIT compilers. To take advantage of SIMD instructions, your 64-bit apps must be run by the runtime that uses the RyuJIT compiler, which is included in .NET Core and in .NET Framework 4.6 and later versions. It adds SIMD support when targeting 64-bit processors.
 
-For more information, see Use SIMD-accelerated numeric types.
+For more information, see [Use SIMD-accelerated numeric types](simd.md).
 
 ## Tensors
 
-The System.Numerics.Tensors package provides multidimensional tensor types and operations over spans. For shape and stride conventions, supported overlapping operations, and differences from NumPy, see Tensor shapes, storage, and NumPy differences.
+The [System.Numerics.Tensors](https://www.nuget.org/packages/System.Numerics.Tensors) package provides multidimensional tensor types and operations over spans. For shape and stride conventions, supported overlapping operations, and differences from NumPy, see [Tensor shapes, storage, and NumPy differences](tensor-shapes-and-storage.md).
 
 ## See also
 
-- Standard numeric format strings
-- Floating-point numeric types in C#
+- [Standard numeric format strings](base-types/standard-numeric-format-strings.md)
+- [Floating-point numeric types in C#](../csharp/language-reference/builtin-types/floating-point-numeric-types.md)

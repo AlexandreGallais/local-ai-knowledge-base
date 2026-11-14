@@ -1,12 +1,3 @@
----
-title: "Function item types"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/types/function-item.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[type.fn-item]
 # Function item types
 
@@ -21,7 +12,7 @@ There is no syntax that directly refers to a function item type, but the compile
 
 Because the function item type explicitly identifies the function, the item types of different functions - different items, or the same item with different generics - are distinct, and mixing them will create a type error:
 
-```rust
+```rust,compile_fail,E0308
 fn foo<T>() { }
 let x = &mut foo::<i32>;
 *x = foo::<u32>; //~ ERROR mismatched types
@@ -50,6 +41,14 @@ All function items implement [`Copy`], [`Clone`], [`Send`], and [`Sync`].
 
 [`Fn`], [`FnMut`], and [`FnOnce`] are implemented unless the function has any of the following:
 
-- an `unsafe` qualifier
-- a `target_feature` attribute
-- an ABI other than `"Rust"`
+- an [`unsafe`][unsafe.fn] qualifier
+- a [`target_feature` attribute][attributes.codegen.target_feature]
+- an [ABI][items.fn.extern] other than `"Rust"`
+
+[`Clone`]: ../special-types-and-traits.md#clone
+[`Copy`]: ../special-types-and-traits.md#copy
+[`Send`]: ../special-types-and-traits.md#send
+[`Sync`]: ../special-types-and-traits.md#sync
+[coercion]: ../type-coercions.md
+[function pointers]: function-pointer.md
+[zero-sized]: glossary.zst

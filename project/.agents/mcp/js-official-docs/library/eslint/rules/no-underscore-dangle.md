@@ -1,13 +1,7 @@
 ---
-title: "no-underscore-dangle"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-underscore-dangle.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-underscore-dangle
+rule_type: suggestion
 ---
-
-# no-underscore-dangle
 
 As far as naming conventions for identifiers go, dangling underscores may be the most polarizing in JavaScript. Dangling underscores are underscores at either the beginning or end of an identifier, such as:
 
@@ -15,9 +9,9 @@ As far as naming conventions for identifiers go, dangling underscores may be the
 let _foo;
 ```
 
-There is a long history of marking "private" members with dangling underscores in JavaScript, beginning with SpiderMonkey <example-value> nonstandard methods such as `__defineGetter__()`. Since that time, using a single underscore prefix has become the most popular convention for indicating a member is not part of the public interface of an object.
+There is a long history of marking "private" members with dangling underscores in JavaScript, beginning with SpiderMonkey adding nonstandard methods such as `__defineGetter__()`. Since that time, using a single underscore prefix has become the most popular convention for indicating a member is not part of the public interface of an object.
 
-It is recommended to use the formal private class features introduced in ECMAScript 2022 for encapsulating private data and methods rather than relying on naming conventions.
+It is recommended to use the formal [private class features](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_class_fields) introduced in ECMAScript 2022 for encapsulating private data and methods rather than relying on naming conventions.
 
 Allowing dangling underscores in identifiers is purely a convention and has no effect on performance, readability, or complexity. They do not have the same encapsulation benefits as private class features, even with this rule enabled.
 
@@ -27,7 +21,7 @@ This rule disallows dangling underscores in identifiers.
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-underscore-dangle: "error"*/
@@ -37,9 +31,11 @@ const __proto__ = {};
 foo._bar();
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-underscore-dangle: "error"*/
@@ -52,6 +48,8 @@ function foo(_bar) {};
 const bar = { onClick(_bar) {} };
 const baz = (_bar) => {};
 ```
+
+:::
 
 ## Options
 
@@ -71,7 +69,7 @@ This rule has an object option:
 
 Examples of additional **correct** code for this rule with the `{ "allow": ["foo_", "_bar"] }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-underscore-dangle: ["error", { "allow": ["foo_", "_bar"] }]*/
@@ -80,11 +78,13 @@ let foo_;
 foo._bar();
 ```
 
+:::
+
 ### allowAfterThis
 
 Examples of **correct** code for this rule with the `{ "allowAfterThis": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-underscore-dangle: ["error", { "allowAfterThis": true }]*/
@@ -93,11 +93,13 @@ const a = this.foo_;
 this._bar();
 ```
 
+:::
+
 ### allowAfterSuper
 
 Examples of **correct** code for this rule with the `{ "allowAfterSuper": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-underscore-dangle: ["error", { "allowAfterSuper": true }]*/
@@ -110,11 +112,13 @@ class Foo extends Bar {
 }
 ```
 
+:::
+
 ### allowAfterThisConstructor
 
 Examples of **correct** code for this rule with the `{ "allowAfterThisConstructor": true }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-underscore-dangle: ["error", { "allowAfterThisConstructor": true }]*/
@@ -123,11 +127,13 @@ const a = this.constructor.foo_;
 this.constructor._bar();
 ```
 
+:::
+
 ### enforceInMethodNames
 
 Examples of **incorrect** code for this rule with the `{ "enforceInMethodNames": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-underscore-dangle: ["error", { "enforceInMethodNames": true }]*/
@@ -149,11 +155,13 @@ const o2 = {
 };
 ```
 
+:::
+
 ### enforceInClassFields
 
 Examples of **incorrect** code for this rule with the `{ "enforceInClassFields": true }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-underscore-dangle: ["error", { "enforceInClassFields": true }]*/
@@ -179,11 +187,13 @@ class FooBar {
 }
 ```
 
+:::
+
 ### allowInArrayDestructuring
 
 Examples of **incorrect** code for this rule with the `{ "allowInArrayDestructuring": false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-underscore-dangle: ["error", { "allowInArrayDestructuring": false }]*/
@@ -193,11 +203,13 @@ const [foo_, ..._qux] = list;
 const [foo, [bar, _baz]] = list;
 ```
 
+:::
+
 ### allowInObjectDestructuring
 
 Examples of **incorrect** code for this rule with the `{ "allowInObjectDestructuring": false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-underscore-dangle: ["error", { "allowInObjectDestructuring": false }]*/
@@ -206,9 +218,11 @@ const { foo, bar: _bar } = collection;
 const { qux, xyz, _baz } = collection;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `{ "allowInObjectDestructuring": false }` option:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-underscore-dangle: ["error", { "allowInObjectDestructuring": false }]*/
@@ -217,11 +231,13 @@ const { foo, bar, _baz: { a, b } } = collection;
 const { qux, xyz, _baz: baz } = collection;
 ```
 
+:::
+
 ### allowFunctionParams
 
 Examples of **incorrect** code for this rule with the `{ "allowFunctionParams": false }` option:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-underscore-dangle: ["error", { "allowFunctionParams": false }]*/
@@ -238,6 +254,8 @@ const foo7 = (_bar) => {};
 const foo8 = (_bar = 0) => {};
 const foo9 = (..._bar) => {};
 ```
+
+:::
 
 ## When Not To Use It
 

@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: MVC compatibility options removed"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/11/mvc-compatibility-options-removed.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+ai-usage: ai-assisted
+description: "Learn about the breaking change in ASP.NET Core 11 where the MVC compatibility version APIs, including CompatibilityVersion and SetCompatibilityVersion, are removed."
+ms.date: 08/05/2026
 ---
-
 # MVC compatibility options removed
 
 The MVC compatibility version APIs, such as `CompatibilityVersion` and `SetCompatibilityVersion`, are removed in ASP.NET Core 11. These APIs were no-ops since ASP.NET Core 3.0 and have been marked obsolete since ASP.NET Core 6.
@@ -26,15 +23,15 @@ services.AddMvc()
 
 ## New behavior
 
-Starting in ASP.NET Core 11, these APIs no longer exist. Code that calls them fails to compile, and existing binaries that reference them fail at runtime with a `System.MissingMethodException` or `System.TypeLoadException`.
+Starting in ASP.NET Core 11, these APIs no longer exist. Code that calls them fails to compile, and existing binaries that reference them fail at runtime with a <xref:System.MissingMethodException> or <xref:System.TypeLoadException>.
 
 ## Type of breaking change
 
-This change can affect source compatibility and binary compatibility.
+This change can affect [source compatibility](/dotnet/core/compatibility/categories#source-compatibility) and [binary compatibility](/dotnet/core/compatibility/categories#binary-compatibility).
 
 ## Reason for change
 
-The APIs have been marked obsolete since ASP.NET Core 6 and did nothing since ASP.NET Core 3.0, so they served no value. For more information, see dotnet/aspnetcore#67077.
+The APIs have been marked obsolete since ASP.NET Core 6 and did nothing since ASP.NET Core 3.0, so they served no value. For more information, see [dotnet/aspnetcore#67077](https://github.com/dotnet/aspnetcore/pull/67077).
 
 ## Recommended action
 

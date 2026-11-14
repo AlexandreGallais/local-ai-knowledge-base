@@ -1,17 +1,14 @@
 ---
 title: "Breaking change: ActivitySource.CreateActivity and ActivitySource.StartActivity behavior changes"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/10.0/activity-sampling.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 10.0 breaking change in core .NET libraries where ActivitySource.CreateActivity and ActivitySource.StartActivity behavior is modified.
+ms.date: 01/30/2025
+ai-usage: ai-assisted
 ---
-
 # ActivitySource.CreateActivity and ActivitySource.StartActivity behavior change
 
-The `System.Diagnostics.ActivitySource.CreateActivity*` and `System.Diagnostics.ActivitySource.StartActivity*` APIs only return an `System.Diagnostics.Activity` when there's a registered listener that decides the instance should be created. This is generally known as sampling.
+The <xref:System.Diagnostics.ActivitySource.CreateActivity*?displayProperty=nameWithType> and <xref:System.Diagnostics.ActivitySource.StartActivity*?displayProperty=nameWithType> APIs only return an <xref:System.Diagnostics.Activity> when there's a registered listener that decides the instance should be created. This is generally known as sampling.
 
-The `System.Diagnostics.ActivitySamplingResult` enum defines the possible sampling decisions.
+The <xref:System.Diagnostics.ActivitySamplingResult?displayProperty=nameWithType> enum defines the possible sampling decisions.
 
 When creating an `Activity` without a parent, `ActivitySamplingResult` drives whether the `Activity` is created and then how the `Recorded` and `IsAllDataRequested` properties are set:
 
@@ -46,7 +43,7 @@ Starting in .NET 10, when you create an `Activity` as `PropagationData` with a p
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
@@ -60,5 +57,5 @@ If you use OpenTelemetry .NET and have customized the sampler, verify your sampl
 
 ## Affected APIs
 
-- `System.Diagnostics.ActivitySource.CreateActivity*`
-- `System.Diagnostics.ActivitySource.StartActivity*`
+- <xref:System.Diagnostics.ActivitySource.CreateActivity*?displayProperty=fullName>
+- <xref:System.Diagnostics.ActivitySource.StartActivity*?displayProperty=fullName>

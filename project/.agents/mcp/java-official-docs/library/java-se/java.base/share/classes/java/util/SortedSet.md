@@ -1,108 +1,86 @@
----
-title: "SortedSet interface (java.util)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/SortedSet.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # SortedSet interface (java.util)
 
 ```java
 public interface SortedSet<E> extends Set<E>, SequencedSet<E>
 ```
 
-A `Set` that further provides a *total ordering* on its elements.
-The elements are ordered using their natural ordering, or by a `Comparator` typically provided at sorted
+A {@link Set} that further provides a <i>total ordering</i> on its elements.
+The elements are ordered using their {@linkplain Comparable natural
+ordering}, or by a {@link Comparator} typically provided at sorted
 set creation time.  The set's iterator will traverse the set in
 ascending element order. Several additional operations are provided
 to take advantage of the ordering.  (This interface is the set
-analogue of `SortedMap`.)
+analogue of {@link SortedMap}.)
 
-All elements inserted into a sorted set must implement the `Comparable`
+<p>All elements inserted into a sorted set must implement the {@code Comparable}
 interface (or be accepted by the specified comparator).  Furthermore, all
-such elements must be *mutually comparable*: `e1.compareTo(e2)`
-(or `comparator.compare(e1, e2)`) must not throw a
-`ClassCastException` for any elements `e1` and `e2` in
+such elements must be <i>mutually comparable</i>: {@code e1.compareTo(e2)}
+(or {@code comparator.compare(e1, e2)}) must not throw a
+{@code ClassCastException} for any elements {@code e1} and {@code e2} in
 the sorted set.  Attempts to violate this restriction will cause the
 offending method or constructor invocation to throw a
-`ClassCastException`.
+{@code ClassCastException}.
 
-Note that the ordering maintained by a sorted set (whether or not an
-explicit comparator is provided) must be *consistent with equals* if
-the sorted set is to correctly implement the `Set` interface.  (See
-the `Comparable` interface or `Comparator` interface for a
-precise definition of *consistent with equals*.)  This is so because
-the `Set` interface is defined in terms of the `equals`
+<p>Note that the ordering maintained by a sorted set (whether or not an
+explicit comparator is provided) must be <i>consistent with equals</i> if
+the sorted set is to correctly implement the {@code Set} interface.  (See
+the {@code Comparable} interface or {@code Comparator} interface for a
+precise definition of <i>consistent with equals</i>.)  This is so because
+the {@code Set} interface is defined in terms of the {@code equals}
 operation, but a sorted set performs all element comparisons using its
-`compareTo` (or `compare`) method, so two elements that are
+{@code compareTo} (or {@code compare}) method, so two elements that are
 deemed equal by this method are, from the standpoint of the sorted set,
-equal.  The behavior of a sorted set *is* well-defined even if its
+equal.  The behavior of a sorted set <i>is</i> well-defined even if its
 ordering is inconsistent with equals; it just fails to obey the general
-contract of the `Set` interface.
+contract of the {@code Set} interface.
 
-All general-purpose sorted set implementation classes should
+<p>All general-purpose sorted set implementation classes should
 provide four "standard" constructors: 1) A void (no arguments)
 constructor, which creates an empty sorted set sorted according to
 the natural ordering of its elements.  2) A constructor with a
-single argument of type `Comparator`, which creates an empty
+single argument of type {@code Comparator}, which creates an empty
 sorted set sorted according to the specified comparator.  3) A
-constructor with a single argument of type `Collection`,
+constructor with a single argument of type {@code Collection},
 which creates a new sorted set with the same elements as its
 argument, sorted according to the natural ordering of the elements.
-4) A constructor with a single argument of type `SortedSet`,
+4) A constructor with a single argument of type {@code SortedSet},
 which creates a new sorted set with the same elements and the same
 ordering as the input sorted set.  There is no way to enforce this
 recommendation, as interfaces cannot contain constructors.
 
-Note: several methods return subsets with restricted ranges.
-Such ranges are *half-open*, that is, they include their low
+<p>Note: several methods return subsets with restricted ranges.
+Such ranges are <i>half-open</i>, that is, they include their low
 endpoint but not their high endpoint (where applicable).
-If you need a *closed range* (which includes both endpoints), and
+If you need a <i>closed range</i> (which includes both endpoints), and
 the element type allows for calculation of the successor of a given
-value, merely request the subrange from `lowEndpoint` to
-`successor(highEndpoint)`.  For example, suppose that `s`
+value, merely request the subrange from {@code lowEndpoint} to
+{@code successor(highEndpoint)}.  For example, suppose that {@code s}
 is a sorted set of strings.  The following idiom obtains a view
-containing all of the strings in `s` from `low` to
-`high`, inclusive:
+containing all of the strings in {@code s} from {@code low} to
+{@code high}, inclusive:<pre>
+  SortedSet&lt;String&gt; sub = s.subSet(low, high+"\0");</pre>
 
-```java
-  SortedSet<String> sub = s.subSet(low, high+"\0");
-```
-
-A similar technique can be used to generate an *open range* (which
+A similar technique can be used to generate an <i>open range</i> (which
 contains neither endpoint).  The following idiom obtains a view
-containing all of the Strings in `s` from `low` to
-`high`, exclusive:
+containing all of the Strings in {@code s} from {@code low} to
+{@code high}, exclusive:<pre>
+  SortedSet&lt;String&gt; sub = s.subSet(low+"\0", high);</pre>
 
-```java
-  SortedSet<String> sub = s.subSet(low+"\0", high);
-```
+<p>This interface is a member of the
+<a href="{@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+Java Collections Framework</a>.
 
-This interface is a member of the
+@param <E> the type of elements maintained by this set
 
-Java Collections Framework.
-
-Parameters:
-
-- `<E>`: the type of elements maintained by this set
-
-**See also:** Set
-
-**See also:** TreeSet
-
-**See also:** SortedMap
-
-**See also:** Collection
-
-**See also:** Comparable
-
-**See also:** Comparator
-
-**See also:** ClassCastException
-
-**Since:** 1.2
+@author  Josh Bloch
+@see Set
+@see TreeSet
+@see SortedMap
+@see Collection
+@see Comparable
+@see Comparator
+@see ClassCastException
+@since 1.2
 
 ## SortedSet.comparator()
 
@@ -111,10 +89,11 @@ Comparator<? super E> comparator()
 ```
 
 Returns the comparator used to order the elements in this set,
-or `null` if this set uses the natural ordering of its elements.
+or {@code null} if this set uses the {@linkplain Comparable
+natural ordering} of its elements.
 
-**Returns:** the comparator used to order the elements in this set,
-        or `null` if this set uses the natural ordering
+@return the comparator used to order the elements in this set,
+        or {@code null} if this set uses the natural ordering
         of its elements
 
 ## SortedSet.subSet(E, E)
@@ -124,29 +103,34 @@ SortedSet<E> subSet(E fromElement, E toElement)
 ```
 
 Returns a view of the portion of this set whose elements range
-from `fromElement`, inclusive, to `toElement`,
-exclusive.  (If `fromElement` and `toElement` are
+from {@code fromElement}, inclusive, to {@code toElement},
+exclusive.  (If {@code fromElement} and {@code toElement} are
 equal, the returned set is empty.)  The returned set is backed
 by this set, so changes in the returned set are reflected in
 this set, and vice-versa.  The returned set supports all
 optional set operations that this set supports.
 
-The returned set will throw an `IllegalArgumentException`
+<p>The returned set will throw an {@code IllegalArgumentException}
 on an attempt to insert an element outside its range.
 
-Parameters:
-
-- `fromElement`: low endpoint (inclusive) of the returned set
-- `toElement`: high endpoint (exclusive) of the returned set
-
-**Returns:** a view of the portion of this set whose elements range from
-        `fromElement`, inclusive, to `toElement`, exclusive
-
-Throws:
-
-- `ClassCastException`: if `fromElement` and `toElement` cannot be compared to one another using this set's comparator (or, if the set has no comparator, using natural ordering). Implementations may, but are not required to, throw this exception if `fromElement` or `toElement` cannot be compared to elements currently in the set.
-- `NullPointerException`: if `fromElement` or `toElement` is null and this set does not permit null elements
-- `IllegalArgumentException`: if `fromElement` is greater than `toElement`; or if this set itself has a restricted range, and `fromElement` or `toElement` lies outside the bounds of the range
+@param fromElement low endpoint (inclusive) of the returned set
+@param toElement high endpoint (exclusive) of the returned set
+@return a view of the portion of this set whose elements range from
+        {@code fromElement}, inclusive, to {@code toElement}, exclusive
+@throws ClassCastException if {@code fromElement} and
+        {@code toElement} cannot be compared to one another using this
+        set's comparator (or, if the set has no comparator, using
+        natural ordering).  Implementations may, but are not required
+        to, throw this exception if {@code fromElement} or
+        {@code toElement} cannot be compared to elements currently in
+        the set.
+@throws NullPointerException if {@code fromElement} or
+        {@code toElement} is null and this set does not permit null
+        elements
+@throws IllegalArgumentException if {@code fromElement} is
+        greater than {@code toElement}; or if this set itself
+        has a restricted range, and {@code fromElement} or
+        {@code toElement} lies outside the bounds of the range
 
 ## SortedSet.headSet(E)
 
@@ -155,26 +139,28 @@ SortedSet<E> headSet(E toElement)
 ```
 
 Returns a view of the portion of this set whose elements are
-strictly less than `toElement`.  The returned set is
+strictly less than {@code toElement}.  The returned set is
 backed by this set, so changes in the returned set are
 reflected in this set, and vice-versa.  The returned set
 supports all optional set operations that this set supports.
 
-The returned set will throw an `IllegalArgumentException`
+<p>The returned set will throw an {@code IllegalArgumentException}
 on an attempt to insert an element outside its range.
 
-Parameters:
-
-- `toElement`: high endpoint (exclusive) of the returned set
-
-**Returns:** a view of the portion of this set whose elements are strictly
-        less than `toElement`
-
-Throws:
-
-- `ClassCastException`: if `toElement` is not compatible with this set's comparator (or, if the set has no comparator, if `toElement` does not implement `Comparable`). Implementations may, but are not required to, throw this exception if `toElement` cannot be compared to elements currently in the set.
-- `NullPointerException`: if `toElement` is null and this set does not permit null elements
-- `IllegalArgumentException`: if this set itself has a restricted range, and `toElement` lies outside the bounds of the range
+@param toElement high endpoint (exclusive) of the returned set
+@return a view of the portion of this set whose elements are strictly
+        less than {@code toElement}
+@throws ClassCastException if {@code toElement} is not compatible
+        with this set's comparator (or, if the set has no comparator,
+        if {@code toElement} does not implement {@link Comparable}).
+        Implementations may, but are not required to, throw this
+        exception if {@code toElement} cannot be compared to elements
+        currently in the set.
+@throws NullPointerException if {@code toElement} is null and
+        this set does not permit null elements
+@throws IllegalArgumentException if this set itself has a
+        restricted range, and {@code toElement} lies outside the
+        bounds of the range
 
 ## SortedSet.tailSet(E)
 
@@ -183,26 +169,28 @@ SortedSet<E> tailSet(E fromElement)
 ```
 
 Returns a view of the portion of this set whose elements are
-greater than or equal to `fromElement`.  The returned
+greater than or equal to {@code fromElement}.  The returned
 set is backed by this set, so changes in the returned set are
 reflected in this set, and vice-versa.  The returned set
 supports all optional set operations that this set supports.
 
-The returned set will throw an `IllegalArgumentException`
+<p>The returned set will throw an {@code IllegalArgumentException}
 on an attempt to insert an element outside its range.
 
-Parameters:
-
-- `fromElement`: low endpoint (inclusive) of the returned set
-
-**Returns:** a view of the portion of this set whose elements are greater
-        than or equal to `fromElement`
-
-Throws:
-
-- `ClassCastException`: if `fromElement` is not compatible with this set's comparator (or, if the set has no comparator, if `fromElement` does not implement `Comparable`). Implementations may, but are not required to, throw this exception if `fromElement` cannot be compared to elements currently in the set.
-- `NullPointerException`: if `fromElement` is null and this set does not permit null elements
-- `IllegalArgumentException`: if this set itself has a restricted range, and `fromElement` lies outside the bounds of the range
+@param fromElement low endpoint (inclusive) of the returned set
+@return a view of the portion of this set whose elements are greater
+        than or equal to {@code fromElement}
+@throws ClassCastException if {@code fromElement} is not compatible
+        with this set's comparator (or, if the set has no comparator,
+        if {@code fromElement} does not implement {@link Comparable}).
+        Implementations may, but are not required to, throw this
+        exception if {@code fromElement} cannot be compared to elements
+        currently in the set.
+@throws NullPointerException if {@code fromElement} is null
+        and this set does not permit null elements
+@throws IllegalArgumentException if this set itself has a
+        restricted range, and {@code fromElement} lies outside the
+        bounds of the range
 
 ## SortedSet.first()
 
@@ -212,11 +200,8 @@ E first()
 
 Returns the first (lowest) element currently in this set.
 
-**Returns:** the first (lowest) element currently in this set
-
-Throws:
-
-- `NoSuchElementException`: if this set is empty
+@return the first (lowest) element currently in this set
+@throws NoSuchElementException if this set is empty
 
 ## SortedSet.last()
 
@@ -226,11 +211,8 @@ E last()
 
 Returns the last (highest) element currently in this set.
 
-**Returns:** the last (highest) element currently in this set
-
-Throws:
-
-- `NoSuchElementException`: if this set is empty
+@return the last (highest) element currently in this set
+@throws NoSuchElementException if this set is empty
 
 ## SortedSet.spliterator()
 
@@ -238,34 +220,35 @@ Throws:
 default Spliterator<E> spliterator()
 ```
 
-Creates a `Spliterator` over the elements in this sorted set.
+Creates a {@code Spliterator} over the elements in this sorted set.
 
-The `Spliterator` reports `Spliterator.DISTINCT`,
-`Spliterator.SORTED` and `Spliterator.ORDERED`.
+<p>The {@code Spliterator} reports {@link Spliterator#DISTINCT},
+{@link Spliterator#SORTED} and {@link Spliterator#ORDERED}.
 Implementations should document the reporting of additional
 characteristic values.
 
-The spliterator's comparator (see
-`java.util.Spliterator.getComparator()`) must be `null` if
-the sorted set's comparator (see `comparator()`) is `null`.
+<p>The spliterator's comparator (see
+{@link java.util.Spliterator#getComparator()}) must be {@code null} if
+the sorted set's comparator (see {@link #comparator()}) is {@code null}.
 Otherwise, the spliterator's comparator must be the same as or impose the
 same total ordering as the sorted set's comparator.
 
-**Implementation requirements:** The default implementation creates a
-*late-binding* spliterator
-from the sorted set's `Iterator`.  The spliterator inherits the
-*fail-fast* properties of the set's iterator.  The
+@implSpec
+The default implementation creates a
+<em><a href="Spliterator.html#binding">late-binding</a></em> spliterator
+from the sorted set's {@code Iterator}.  The spliterator inherits the
+<em>fail-fast</em> properties of the set's iterator.  The
 spliterator's comparator is the same as the sorted set's comparator.
+<p>
+The created {@code Spliterator} additionally reports
+{@link Spliterator#SIZED}.
 
-The created `Spliterator` additionally reports
-`Spliterator.SIZED`.
+@implNote
+The created {@code Spliterator} additionally reports
+{@link Spliterator#SUBSIZED}.
 
-**Implementation note:** The created `Spliterator` additionally reports
-`Spliterator.SUBSIZED`.
-
-**Returns:** a `Spliterator` over the elements in this sorted set
-
-**Since:** 1.8
+@return a {@code Spliterator} over the elements in this sorted set
+@since 1.8
 
 ## SortedSet.addFirst(E)
 
@@ -273,17 +256,15 @@ The created `Spliterator` additionally reports
 default void addFirst(E e)
 ```
 
-Throws `UnsupportedOperationException`. The encounter order induced by this
+Throws {@code UnsupportedOperationException}. The encounter order induced by this
 set's comparison method determines the position of elements, so explicit positioning
 is not supported.
 
-**Implementation requirements:** The implementation in this interface always throws `UnsupportedOperationException`.
+@implSpec
+The implementation in this interface always throws {@code UnsupportedOperationException}.
 
-**Since:** 21
-
-Throws:
-
-- `UnsupportedOperationException`: always
+@throws UnsupportedOperationException always
+@since 21
 
 ## SortedSet.addLast(E)
 
@@ -291,17 +272,15 @@ Throws:
 default void addLast(E e)
 ```
 
-Throws `UnsupportedOperationException`. The encounter order induced by this
+Throws {@code UnsupportedOperationException}. The encounter order induced by this
 set's comparison method determines the position of elements, so explicit positioning
 is not supported.
 
-**Implementation requirements:** The implementation in this interface always throws `UnsupportedOperationException`.
+@implSpec
+The implementation in this interface always throws {@code UnsupportedOperationException}.
 
-**Since:** 21
-
-Throws:
-
-- `UnsupportedOperationException`: always
+@throws UnsupportedOperationException always
+@since 21
 
 ## SortedSet.getFirst()
 
@@ -309,15 +288,13 @@ Throws:
 default E getFirst()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Implementation requirements:** The implementation in this interface returns the result of calling the `first` method.
+@implSpec
+The implementation in this interface returns the result of calling the {@code first} method.
 
-**Since:** 21
-
-Throws:
-
-- `NoSuchElementException`: (inherited documentation)
+@throws NoSuchElementException {@inheritDoc}
+@since 21
 
 ## SortedSet.getLast()
 
@@ -325,15 +302,13 @@ Throws:
 default E getLast()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Implementation requirements:** The implementation in this interface returns the result of calling the `last` method.
+@implSpec
+The implementation in this interface returns the result of calling the {@code last} method.
 
-**Since:** 21
-
-Throws:
-
-- `NoSuchElementException`: (inherited documentation)
+@throws NoSuchElementException {@inheritDoc}
+@since 21
 
 ## SortedSet.removeFirst()
 
@@ -341,18 +316,16 @@ Throws:
 default E removeFirst()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Implementation requirements:** The implementation in this interface calls the `first` method to obtain the first
-element, then it calls `remove(element)` to remove the element, and then it returns
+@implSpec
+The implementation in this interface calls the {@code first} method to obtain the first
+element, then it calls {@code remove(element)} to remove the element, and then it returns
 the element.
 
-**Since:** 21
-
-Throws:
-
-- `NoSuchElementException`: (inherited documentation)
-- `UnsupportedOperationException`: (inherited documentation)
+@throws NoSuchElementException {@inheritDoc}
+@throws UnsupportedOperationException {@inheritDoc}
+@since 21
 
 ## SortedSet.removeLast()
 
@@ -360,18 +333,16 @@ Throws:
 default E removeLast()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Implementation requirements:** The implementation in this interface calls the `last` method to obtain the last
-element, then it calls `remove(element)` to remove the element, and then it returns
+@implSpec
+The implementation in this interface calls the {@code last} method to obtain the last
+element, then it calls {@code remove(element)} to remove the element, and then it returns
 the element.
 
-**Since:** 21
-
-Throws:
-
-- `NoSuchElementException`: (inherited documentation)
-- `UnsupportedOperationException`: (inherited documentation)
+@throws NoSuchElementException {@inheritDoc}
+@throws UnsupportedOperationException {@inheritDoc}
+@since 21
 
 ## SortedSet.reversed()
 
@@ -379,17 +350,17 @@ Throws:
 default SortedSet<E> reversed()
 ```
 
-(inherited documentation)
+{@inheritDoc}
 
-**Implementation requirements:** The implementation in this interface returns a reverse-ordered SortedSet
-view. The `reversed()` method of the view returns a reference
+@implSpec
+The implementation in this interface returns a reverse-ordered SortedSet
+view. The {@code reversed()} method of the view returns a reference
 to this SortedSet. Other operations on the view are implemented via calls to
 public methods on this SortedSet. The exact relationship between calls on the
 view and calls on this SortedSet is unspecified. However, order-sensitive
 operations generally behave as if they delegate to the appropriate method
-with the opposite orientation. For example, calling `getFirst` on the
-view might result in a call to `getLast` on this SortedSet.
+with the opposite orientation. For example, calling {@code getFirst} on the
+view might result in a call to {@code getLast} on this SortedSet.
 
-**Returns:** a reverse-ordered view of this collection, as a `SortedSet`
-
-**Since:** 21
+@return a reverse-ordered view of this collection, as a {@code SortedSet}
+@since 21

@@ -1,21 +1,12 @@
----
-title: "class: Tracing (part 1 of 2)"
-tool: "playwright"
-version: "1.65"
-source: "https://github.com/microsoft/playwright/blob/a1f35e1955976e84411f9c10358228a80b763ebe/docs/src/api/class-tracing.md"
-commit: "a1f35e1955976e84411f9c10358228a80b763ebe"
-license: "Apache-2.0"
----
-
 # class: Tracing
 * since: v1.12
 
-API for collecting and saving Playwright traces. Playwright traces can be opened in Trace Viewer after Playwright script runs.
+API for collecting and saving Playwright traces. Playwright traces can be opened in [Trace Viewer](../trace-viewer.md) after Playwright script runs.
 
 :::note
-You probably want to enable tracing in your config file instead of using `context.tracing`.
+You probably want to [enable tracing in your config file](https://playwright.dev/docs/api/class-testoptions#test-options-trace) instead of using `context.tracing`.
 
-The `context.tracing` API captures browser operations and network activity, but it doesn't record test assertions (like `expect` calls). We recommend enabling tracing through Playwright Test configuration, which includes those assertions and provides a more complete trace for debugging test failures.
+The `context.tracing` API captures browser operations and network activity, but it doesn't record test assertions (like `expect` calls). We recommend [enabling tracing through Playwright Test configuration](https://playwright.dev/docs/api/class-testoptions#test-options-trace), which includes those assertions and provides a more complete trace for debugging test failures.
 :::
 
 Start recording a trace before performing actions. At the end, stop tracing and save it to a file.
@@ -42,7 +33,7 @@ context.tracing().stop(new Tracing.StopOptions()
   .setPath(Paths.get("trace.zip")));
 ```
 
-```python
+```python async
 browser = await chromium.launch()
 context = await browser.new_context()
 await context.tracing.start(screenshots=True, snapshots=True)
@@ -51,7 +42,7 @@ await page.goto("https://playwright.dev")
 await context.tracing.stop(path = "trace.zip")
 ```
 
-```python
+```python sync
 browser = chromium.launch()
 context = browser.new_context()
 context.tracing.start(screenshots=True, snapshots=True)
@@ -84,9 +75,9 @@ await context.Tracing.StopAsync(new()
 Start tracing. Disposing the returned [Disposable] stops tracing without saving the trace, similarly to calling [`method: Tracing.stop`] without a path.
 
 :::note
-You probably want to enable tracing in your config file instead of using `Tracing.start`.
+You probably want to [enable tracing in your config file](https://playwright.dev/docs/api/class-testoptions#test-options-trace) instead of using `Tracing.start`.
 
-The `context.tracing` API captures browser operations and network activity, but it doesn't record test assertions (like `expect` calls). We recommend enabling tracing through Playwright Test configuration, which includes those assertions and provides a more complete trace for debugging test failures.
+The `context.tracing` API captures browser operations and network activity, but it doesn't record test assertions (like `expect` calls). We recommend [enabling tracing through Playwright Test configuration](https://playwright.dev/docs/api/class-testoptions#test-options-trace), which includes those assertions and provides a more complete trace for debugging test failures.
 :::
 
 **Usage**
@@ -109,14 +100,14 @@ context.tracing().stop(new Tracing.StopOptions()
   .setPath(Paths.get("trace.zip")));
 ```
 
-```python
+```python async
 await context.tracing.start(screenshots=True, snapshots=True)
 page = await context.new_page()
 await page.goto("https://playwright.dev")
 await context.tracing.stop(path = "trace.zip")
 ```
 
-```python
+```python sync
 context.tracing.start(screenshots=True, snapshots=True)
 page = context.new_page()
 page.goto("https://playwright.dev")
@@ -261,7 +252,7 @@ context.tracing().stopChunk(new Tracing.StopChunkOptions()
   .setPath(Paths.get("trace2.zip")));
 ```
 
-```python
+```python async
 await context.tracing.start(screenshots=True, snapshots=True)
 page = await context.new_page()
 await page.goto("https://playwright.dev")
@@ -277,7 +268,7 @@ await page.goto("http://example.com")
 await context.tracing.stop_chunk(path = "trace2.zip")
 ```
 
-```python
+```python sync
 context.tracing.start(screenshots=True, snapshots=True)
 page = context.new_page()
 page.goto("https://playwright.dev")
@@ -361,14 +352,14 @@ page.navigate("https://playwright.dev");
 context.tracing().stopHar();
 ```
 
-```python
+```python async
 await context.tracing.start_har("trace.har")
 page = await context.new_page()
 await page.goto("https://playwright.dev")
 await context.tracing.stop_har()
 ```
 
-```python
+```python sync
 context.tracing.start_har("trace.har")
 page = context.new_page()
 page.goto("https://playwright.dev")
@@ -413,3 +404,105 @@ A glob or regex pattern to filter requests that are stored in the HAR. Defaults 
 
 Only used together with `content: 'attach'`. When set, response bodies are placed in this directory instead of next to
 the HAR file. Not compatible with a `.zip` HAR file.
+
+## async method: Tracing.group
+* since: v1.49
+- returns: <[Disposable]>
+
+:::caution
+Use `test.step` instead when available.
+:::
+
+Creates a new group within the trace, assigning any subsequent API calls to this group, until [`method: Tracing.groupEnd`] is called. Groups can be nested and will be visible in the trace viewer.
+
+**Usage**
+
+```js
+// use test.step instead
+await test.step('Log in', async () => {
+  // ...
+});
+```
+
+```java
+// All actions between group and groupEnd
+// will be shown in the trace viewer as a group.
+page.context().tracing().group("Open Playwright.dev > API");
+page.navigate("https://playwright.dev/");
+page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("API")).click();
+page.context().tracing().groupEnd();
+```
+
+```python sync
+# All actions between group and group_end
+# will be shown in the trace viewer as a group.
+page.context.tracing.group("Open Playwright.dev > API")
+page.goto("https://playwright.dev/")
+page.get_by_role("link", name="API").click()
+page.context.tracing.group_end()
+```
+
+```python async
+# All actions between group and group_end
+# will be shown in the trace viewer as a group.
+await page.context.tracing.group("Open Playwright.dev > API")
+await page.goto("https://playwright.dev/")
+await page.get_by_role("link", name="API").click()
+await page.context.tracing.group_end()
+```
+
+```csharp
+// All actions between GroupAsync and GroupEndAsync
+// will be shown in the trace viewer as a group.
+await Page.Context.Tracing.GroupAsync("Open Playwright.dev > API");
+await Page.GotoAsync("https://playwright.dev/");
+await Page.GetByRole(AriaRole.Link, new() { Name = "API" }).ClickAsync();
+await Page.Context.Tracing.GroupEndAsync();
+```
+
+### param: Tracing.group.name
+* since: v1.49
+- `name` <[string]>
+
+Group name shown in the trace viewer.
+
+### option: Tracing.group.location
+* since: v1.49
+- `location` "Location" ?<[Object]>
+  - `file` <[string]>
+  - `line` ?<[int]>
+  - `column` ?<[int]>
+
+Specifies a custom location for the group to be shown in the trace viewer. Defaults to the location of the [`method: Tracing.group`] call.
+
+## async method: Tracing.groupEnd
+* since: v1.49
+
+Closes the last group created by [`method: Tracing.group`].
+
+## async method: Tracing.stop
+* since: v1.12
+
+Stop tracing.
+
+### option: Tracing.stop.path
+* since: v1.12
+- `path` <[path]>
+
+Export trace into the file with the given path.
+
+## async method: Tracing.stopChunk
+* since: v1.15
+
+Stop the trace chunk. See [`method: Tracing.startChunk`] for more details about multiple trace chunks.
+
+### option: Tracing.stopChunk.path
+* since: v1.15
+- `path` <[path]>
+
+Export trace collected since the last [`method: Tracing.startChunk`] call into the file with the given path.
+
+## async method: Tracing.stopHar
+* since: v1.60
+
+Stop HAR recording and save the HAR file to the path given to [`method: Tracing.startHar`].

@@ -1,17 +1,8 @@
----
-title: "Block expressions"
-tool: "rust-reference"
-version: "2026-11"
-source: "https://github.com/rust-lang/reference/blob/bcd62f35e8bf480ec5b0fa569b6d12ea5924030c/src/expressions/block-expr.md"
-commit: "bcd62f35e8bf480ec5b0fa569b6d12ea5924030c"
-license: "MIT OR Apache-2.0"
----
-
 r[expr.block]
 # Block expressions
 
 r[expr.block.syntax]
-```grammar
+```grammar,expressions
 BlockExpression ->
     `{`
         InnerAttribute*
@@ -79,13 +70,13 @@ assert_eq!(x, ());
 r[expr.block.value-diverges-no-trailing-expr]
 When a block does not contain a [final operand] and the block [diverges], the block has the [never type] and has no final value (because its type is [uninhabited]).
 
-```rust
+```rust,no_run
 fn f() -> ! { loop {}; } // Diverges and has no final operand.
 //          ^^^^^^^^^^^^
 // The body of a function is a block expression.
 ```
 
-> **Note:**
+> [!NOTE]
 > Observe that a block having no final operand is distinct from having an explicit final operand with unit type.  E.g., even though this block diverges, the type of the block is [unit] rather than [never].
 >
 > ```rust,compile_fail,E0308
@@ -93,13 +84,13 @@ fn f() -> ! { loop {}; } // Diverges and has no final operand.
 > //          ^^^^^^^^^^^^^^^ This block has unit type.
 > ```
 
-> **Note:**
+> [!NOTE]
 > As a control flow expression, if a block expression is the outer expression of an expression statement, the expected type is `()` unless it is followed immediately by a semicolon.
 
 r[expr.block.diverging]
-A block is considered to be diverging if all reachable control flow paths contain a diverging expression, unless that expression is a [place expression] that is not read from.
+A block is considered to be [diverging][divergence] if all reachable control flow paths contain a diverging expression, unless that expression is a [place expression] that is not read from.
 
-```rust
+```rust,no_run
 fn no_control_flow() -> ! {
     // There are no conditional statements, so this entire function body is diverging.
     loop {}
@@ -129,7 +120,7 @@ fn diverging_place_read(x: !) -> ! {
 }
 ```
 
-```rust
+```rust,compile_fail,E0308
 fn diverging_place_not_read(x: !) -> ! {
     // Assignment to `_` means the place is not read.
     let _ = x;
@@ -139,7 +130,7 @@ fn diverging_place_not_read(x: !) -> ! {
 r[expr.block.value]
 Blocks are always [value expressions] and evaluate the last operand in value expression context.
 
-> **Note:**
+> [!NOTE]
 > This can be used to force moving a value if really needed. For example, the following example fails on the call to `consume_self` because the struct was moved out of `s` in the block expression.
 >
 > ```rust,compile_fail
@@ -165,7 +156,7 @@ r[expr.block.async]
 ## `async` blocks
 
 r[expr.block.async.syntax]
-```grammar
+```grammar,expressions
 AsyncBlockExpression -> `async` `move`? BlockExpression
 ```
 
@@ -184,7 +175,7 @@ Whereas closures return a type that implements one or more of the [`std::ops::Fn
 r[expr.block.async.layout-unspecified]
 The actual data format for this type is unspecified.
 
-> **Note:**
+> [!NOTE]
 > The future type that rustc generates is roughly equivalent to an enum with one variant per `await` point, where each variant stores the data needed to resume from its corresponding point.
 
 r[expr.block.async.edition2018]
@@ -213,7 +204,7 @@ Therefore, the `?` operator and `return` expressions both affect the output of t
 r[expr.block.async.function.control-flow]
 Finally, the `break` and `continue` keywords cannot be used to branch out from an async block. Therefore the following is illegal:
 
-```rust
+```rust,compile_fail
 loop {
     async move {
         break; // error[E0267]: `break` inside of an `async` block
@@ -225,7 +216,7 @@ r[expr.block.const]
 ## `const` blocks
 
 r[expr.block.const.syntax]
-```grammar
+```grammar,expressions
 ConstBlockExpression -> `const` BlockExpression
 ```
 
@@ -236,7 +227,7 @@ r[expr.block.const.context]
 Const blocks allows you to define a constant value without having to define new [constant items], and thus they are also sometimes referred as *inline consts*. It also supports type inference so there is no need to specify the type, unlike [constant items].
 
 r[expr.block.const.generic-params]
-Const blocks have the ability to reference generic parameters in scope, unlike free constant items. They are desugared to constant items with generic parameters in scope (similar to associated constants, but without a trait or type they are associated with). For example, this code:
+Const blocks have the ability to reference generic parameters in scope, unlike [free][free item] constant items. They are desugared to constant items with generic parameters in scope (similar to associated constants, but without a trait or type they are associated with). For example, this code:
 
 ```rust
 fn foo<T>() -> usize {
@@ -276,7 +267,7 @@ fn foo<T>() -> usize {
 r[expr.block.const.not-executed]
 
 If the const block expression is not executed at runtime, it may or may not be evaluated:
-```rust
+```rust,compile_fail
 if false {
     // The panic may or may not occur when the program is built.
     const { panic!(); }
@@ -287,7 +278,7 @@ r[expr.block.unsafe]
 ## `unsafe` blocks
 
 r[expr.block.unsafe.syntax]
-```grammar
+```grammar,expressions
 UnsafeBlockExpression -> `unsafe` BlockExpression
 ```
 
@@ -324,6 +315,7 @@ r[expr.block.attributes.inner-attributes]
 * Block expressions used as a [statement].
 * Block expressions as elements of [array expressions], [tuple expressions], [call expressions], and tuple-style [struct] expressions.
 * A block expression as the tail expression of another block expression.
+<!-- Keep list in sync with expressions.md -->
 
 r[expr.block.attributes.valid]
 The attributes that have meaning on a block expression are [`cfg`] and [the lint check attributes].
@@ -336,3 +328,38 @@ fn is_unix_platform() -> bool {
     #[cfg(not(unix))] { false }
 }
 ```
+
+[`await` expressions]: await-expr.md
+[`cfg`]: ../conditional-compilation.md
+[`for`]: loop-expr.md#iterator-loops
+[`loop`]: loop-expr.md#infinite-loops
+[`unsafe` blocks]: ../unsafe-keyword.md#unsafe-blocks-unsafe-
+[`while`]: loop-expr.md#predicate-loops
+[array expressions]: array-expr.md
+[call expressions]: call-expr.md
+[capture modes]: ../types/closure.md#capture-modes
+[constant items]: ../items/constant-items.md
+[diverges]: expr.block.diverging
+[final operand]: expr.block.inner-attributes
+[free item]: ../glossary.md#free-item
+[function]: ../items/functions.md
+[inner attributes]: ../attributes.md
+[method]: ../items/associated-items.md#methods
+[mutable reference]: ../types/pointer.md#mutables-references-
+[never type]: type.never
+[never]: type.never
+[place expression]: expr.place-value.place-memory-location
+[scopes]: ../names/scopes.md
+[shared references]: ../types/pointer.md#shared-references-
+[statement]: ../statements.md
+[statements]: ../statements.md
+[struct]: struct-expr.md
+[the lint check attributes]: ../attributes/diagnostics.md#lint-check-attributes
+[tuple expressions]: tuple-expr.md
+[uninhabited]: glossary.uninhabited
+[unit type]: type.tuple.unit
+[unit value]: type.tuple.unit
+[unit]: type.tuple.unit
+[unsafe operations]: ../unsafety.md
+[value expressions]: ../expressions.md#place-expressions-and-value-expressions
+[Loops and other breakable expressions]: expr.loop.block-labels

@@ -1,14 +1,3 @@
----
-title: "appendix-04-useful-development-tools"
-tool: "rust-book"
-version: "2026-11"
-source: "https://github.com/rust-lang/book/blob/2771df165f092a4fbb9f46b5b2e7450f19010adb/src/appendix-04-useful-development-tools.md"
-commit: "2771df165f092a4fbb9f46b5b2e7450f19010adb"
-license: "MIT OR Apache-2.0"
----
-
-# appendix-04-useful-development-tools
-
 ## Appendix D: Useful Development Tools
 
 In this appendix, we talk about some useful development tools that the Rust
@@ -33,7 +22,7 @@ $ cargo fmt
 
 Running this command reformats all the Rust code in the current crate. This
 should only change the code style, not the code semantics. For more information
-on `rustfmt`, see its documentation.
+on `rustfmt`, see [its documentation][rustfmt].
 
 ### Fix Your Code with `rustfix`
 
@@ -42,7 +31,7 @@ fix compiler warnings that have a clear way to correct the problem that’s
 likely what you want. You’ve probably seen compiler warnings before. For
 example, consider this code:
 
-Filename: src/main.rs
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -82,7 +71,7 @@ $ cargo fix
 When we look at _src/main.rs_ again, we’ll see that `cargo fix` has changed the
 code:
 
-Filename: src/main.rs
+<span class="filename">Filename: src/main.rs</span>
 
 ```rust
 fn main() {
@@ -94,7 +83,8 @@ fn main() {
 The variable `x` is now immutable, and the warning no longer appears.
 
 You can also use the `cargo fix` command to transition your code between
-different Rust editions. Editions are covered in Appendix E.
+different Rust editions. Editions are covered in [Appendix E][editions]<!--
+ignore -->.
 
 ### More Lints with Clippy
 
@@ -111,7 +101,7 @@ $ cargo clippy
 For example, say you write a program that uses an approximation of a
 mathematical constant, such as pi, as this program does:
 
-**Listing** (src/main.rs)
+<Listing file-name="src/main.rs">
 
 ```rust
 fn main() {
@@ -120,6 +110,8 @@ fn main() {
     println!("the area of the circle is {}", x * r * r);
 }
 ```
+
+</Listing>
 
 Running `cargo clippy` on this project results in this error:
 
@@ -141,7 +133,7 @@ instead. You would then change your code to use the `PI` constant.
 
 The following code doesn’t result in any errors or warnings from Clippy:
 
-**Listing** (src/main.rs)
+<Listing file-name="src/main.rs">
 
 ```rust
 fn main() {
@@ -151,17 +143,27 @@ fn main() {
 }
 ```
 
-For more information on Clippy, see its documentation.
+</Listing>
+
+For more information on Clippy, see [its documentation][clippy].
 
 ### IDE Integration Using `rust-analyzer`
 
 To help with IDE integration, the Rust community recommends using
-`rust-analyzer`. This tool is a set of
-compiler-centric utilities that speak Language Server Protocol, which is a specification for IDEs and programming languages to
+[`rust-analyzer`][rust-analyzer]<!-- ignore -->. This tool is a set of
+compiler-centric utilities that speak [Language Server Protocol][lsp]<!--
+ignore -->, which is a specification for IDEs and programming languages to
 communicate with each other. Different clients can use `rust-analyzer`, such as
-the Rust analyzer plug-in for Visual Studio Code.
+[the Rust analyzer plug-in for Visual Studio Code][vscode].
 
-Visit the `rust-analyzer` project’s home page
+Visit the `rust-analyzer` project’s [home page][rust-analyzer]<!-- ignore -->
 for installation instructions, then install the language server support in your
 particular IDE. Your IDE will gain capabilities such as autocompletion, jump to
 definition, and inline errors.
+
+[rustfmt]: https://github.com/rust-lang/rustfmt
+[editions]: appendix-05-editions.md
+[clippy]: https://github.com/rust-lang/rust-clippy
+[rust-analyzer]: https://rust-analyzer.github.io
+[lsp]: http://langserver.org/
+[vscode]: https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer

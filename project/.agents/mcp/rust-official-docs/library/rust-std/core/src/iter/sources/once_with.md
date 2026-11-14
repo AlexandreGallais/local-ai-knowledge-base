@@ -1,12 +1,3 @@
----
-title: "core::iter::sources::once_with"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/iter/sources/once_with.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::iter::sources::once_with
 
 ## fn once_with
@@ -18,18 +9,21 @@ pub fn once_with<A, F: FnOnce() -> A>(make: F) -> OnceWith<F>
 Creates an iterator that lazily generates a value exactly once by invoking
 the provided closure.
 
-This is commonly used to adapt a single value coroutine into a `chain()` of
+This is commonly used to adapt a single value coroutine into a [`chain()`] of
 other kinds of iteration. Maybe you have an iterator that covers almost
 everything, but you need an extra special case. Maybe you have a function
 which works on iterators, but you only need to process one value.
 
-Unlike `once()`, this function will lazily generate the value on request.
+Unlike [`once()`], this function will lazily generate the value on request.
+
+[`chain()`]: Iterator::chain
+[`once()`]: crate::iter::once
 
 # Examples
 
 Basic usage:
 
-```rust
+```
 use std::iter;
 
 // one is the loneliest number
@@ -45,7 +39,7 @@ Chaining together with another iterator. Let's say that we want to iterate
 over each file of the `.foo` directory, but also a configuration file,
 `.foorc`:
 
-```rust
+```no_run
 use std::iter;
 use std::fs;
 use std::path::PathBuf;
@@ -77,5 +71,5 @@ pub struct OnceWith<F>
 An iterator that yields a single element of type `A` by
 applying the provided closure `F: FnOnce() -> A`.
 
-This `struct` is created by the `once_with()` function.
+This `struct` is created by the [`once_with()`] function.
 See its documentation for more.

@@ -1,15 +1,24 @@
 ---
+description: "Learn more about: ICorDebugThread3::CreateStackWalk Method"
 title: "ICorDebugThread3::CreateStackWalk Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugthread3-createstackwalk-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugThread3.CreateStackWalk Method"
+api_location:
+  - "mscordbi.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugThread3::CreateStackWalk"
+helpviewer_keywords:
+  - "CreateStackWalk method [.NET debugging]"
+  - "ICorDebugThread3::CreateStackWalk method [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugThread3::CreateStackWalk Method
 
-Creates an ICorDebugStackWalk object for the thread whose stack you want to unwind.
+Creates an [ICorDebugStackWalk](icordebugstackwalk-interface.md) object for the thread whose stack you want to unwind.
 
 ## Syntax
 
@@ -20,7 +29,7 @@ HRESULT CreateStackWalk([out] ICorDebugStackWalk **ppStackWalk);
 ## Parameters
 
  `ppStackWalk`
- [out] A pointer to address of the ICorDebugStackWalk object for the thread whose stack you want to unwind.
+ [out] A pointer to address of the [ICorDebugStackWalk](icordebugstackwalk-interface.md) object for the thread whose stack you want to unwind.
 
 ## Return Value
 
@@ -31,13 +40,15 @@ This method returns the following specific HRESULTs as well as HRESULT errors th
 |S_OK|The `ICorDebugStackWalk` object was successfully created.|
 |E_FAIL|The `ICorDebugStackWalk` object was not created.|
 
+## Exceptions
+
 ## Remarks
 
 If the `CreateStackWalk` method succeeds, the returned `ICorDebugStackWalk` object's context is set to the thread's current context.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

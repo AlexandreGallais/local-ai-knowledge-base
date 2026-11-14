@@ -1,12 +1,18 @@
 ---
+description: "Learn more about: CorRefToDefCheck Enumeration"
 title: "CorRefToDefCheck Enumeration"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/metadata/enumerations/correftodefcheck-enumeration.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "CorRefToDefCheck"
+api_location:
+  - "mscoree.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "CorRefToDefCheck"
+topic_type:
+  - "apiref"
 ---
-
 # CorRefToDefCheck Enumeration
 
 Specifies flags to control which referenced items are converted to their definitions in order to optimize the code.
@@ -35,6 +41,6 @@ typedef enum CorRefToDefCheck {
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorHdr.h

@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: ICorDebugVariableSymbol Interface"
 title: "ICorDebugVariableSymbol Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugvariablesymbol-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugVariableSymbol Interface
 
 Retrieves the debug symbol information for a variable.
@@ -15,20 +11,20 @@ Retrieves the debug symbol information for a variable.
 
 |Method|Description|
 |------------|-----------------|
-|GetName Method|Gets the name of a variable.|
-|GetSize Method|Gets the size of a variable in bytes.|
-|GetSlotIndex Method|Gets the managed slot index of a local variable.|
-|GetValue Method|Gets the value of a variable as a byte array.|
-|SetValue Method|Assigns the value of a byte array to a variable.|
+|[GetName Method](icordebugvariablesymbol-getname-method.md)|Gets the name of a variable.|
+|[GetSize Method](icordebugvariablesymbol-getsize-method.md)|Gets the size of a variable in bytes.|
+|[GetSlotIndex Method](icordebugvariablesymbol-getslotindex-method.md)|Gets the managed slot index of a local variable.|
+|[GetValue Method](icordebugvariablesymbol-getvalue-method.md)|Gets the value of a variable as a byte array.|
+|[SetValue Method](icordebugvariablesymbol-setvalue-method.md)|Assigns the value of a byte array to a variable.|
 
 ## Remarks
 
-> **Note:**
+> [!NOTE]
 > This interface is available with .NET Native only. If you implement this interface for ICorDebug scenarios outside of .NET Native, the common language runtime will ignore this interface.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 

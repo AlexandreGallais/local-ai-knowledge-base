@@ -1,16 +1,17 @@
 ---
 title: "Capitalization Conventions"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/design-guidelines/capitalization-conventions.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Apply capitalization conventions for identifiers, compound words, and common terms. Understand how case sensitivity works in .NET.
+ms.date: "10/22/2008"
+helpviewer_keywords:
+  - "camel-case names [.NET Framework]"
+  - "class library design guidelines [.NET Framework], capitalization"
+  - "Pascal-case names [.NET Framework]"
+  - "case sensitivity, capitalization conventions"
+  - "names [.NET Framework], capitalization"
 ---
-
 # Capitalization Conventions
 
-> **Note:**
-> This content is reprinted by permission of Pearson Education, Inc. from *Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition*. That edition was published in 2008, and the book has since been fully revised in the third edition. Some of the information on this page may be out-of-date.
+[!INCLUDE [not-current](includes/not-current.md)]
 
 The guidelines in this chapter lay out a simple method for using case that, when applied consistently, make identifiers for types, members, and parameters easy to read.
 
@@ -48,12 +49,12 @@ The guidelines in this chapter lay out a simple method for using case that, when
 |Namespace|Pascal|`namespace System.Security { ... }`|
 |Type|Pascal|`public class StreamReader { ... }`|
 |Interface|Pascal|`public interface IEnumerable { ... }`|
-|Method|Pascal|`public class Object {`   `public virtual string ToString();`  `}`|
-|Property|Pascal|`public class String {`   `public int Length { get; }`  `}`|
-|Event|Pascal|`public class Process {`   `public event EventHandler Exited;`  `}`|
-|Field|Pascal|`public class MessageQueue {`   `public static readonly TimeSpan`  `InfiniteTimeout;`  `}`  `public struct UInt32 {`   `public const Min = 0;`  `}`|
-|Enum value|Pascal|`public enum FileMode {`   `Append,`   `...`  `}`|
-|Parameter|Camel|`public class Convert {`   `public static int ToInt32(string value);`  `}`|
+|Method|Pascal|`public class Object {` <br />  `public virtual string ToString();` <br /> `}`|
+|Property|Pascal|`public class String {` <br />  `public int Length { get; }` <br /> `}`|
+|Event|Pascal|`public class Process {` <br />  `public event EventHandler Exited;` <br /> `}`|
+|Field|Pascal|`public class MessageQueue {` <br />  `public static readonly TimeSpan` <br /> `InfiniteTimeout;` <br /> `}` <br /> `public struct UInt32 {` <br />  `public const Min = 0;` <br /> `}`|
+|Enum value|Pascal|`public enum FileMode {` <br />  `Append,` <br />  `...` <br /> `}`|
+|Parameter|Camel|`public class Convert {` <br />  `public static int ToInt32(string value);` <br /> `}`|
 
 ## Capitalizing Compound Words and Common Terms
 
@@ -99,9 +100,9 @@ The guidelines in this chapter lay out a simple method for using case that, when
 
  *Portions &copy; 2005, 2009 Microsoft Corporation. All rights reserved.*
 
- *Reprinted by permission of Pearson Education, Inc. from Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
+ *Reprinted by permission of Pearson Education, Inc. from [Framework Design Guidelines: Conventions, Idioms, and Patterns for Reusable .NET Libraries, 2nd Edition](https://www.informit.com/store/framework-design-guidelines-conventions-idioms-and-9780321545619) by Krzysztof Cwalina and Brad Abrams, published Oct 22, 2008 by Addison-Wesley Professional as part of the Microsoft Windows Development Series.*
 
 ## See also
 
-- Framework Design Guidelines
-- Naming Guidelines
+- [Framework Design Guidelines](index.md)
+- [Naming Guidelines](naming-guidelines.md)

@@ -1,18 +1,18 @@
 ---
+description: "Learn more about: How to: Perform an XSLT Transformation by Using an Assembly"
 title: "How to: Perform an XSLT Transformation by Using an Assembly"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/data/xml/how-to-perform-an-xslt-transformation-by-using-an-assembly.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+dev_langs:
+  - "csharp"
+  - "vb"
+ms.assetid: 76ee440b-d134-4f8f-8262-b917ad6dcbf6
 ---
-
 # How to: Perform an XSLT transformation by using an assembly
 
-> **Note:**
-> Script blocks and the XSLT compiler are supported only in .NET Framework. They are _not_ supported on .NET, and assemblies compiled using xsltc.exe cannot be referenced in .NET. For more information about .NET and .NET Framework, see Introduction to .NET - .NET ecosystem.
+> [!NOTE]
+> Script blocks and the XSLT compiler are supported only in .NET Framework. They are _not_ supported on .NET, and assemblies compiled using xsltc.exe cannot be referenced in .NET. For more information about .NET and .NET Framework, see [Introduction to .NET - .NET ecosystem](../../../core/introduction.md#net-ecosystem).
 
-The XSLT compiler (xsltc.exe) compiles XSLT style sheets and generates an assembly. The assembly can be passed directly into the `System.Xml.Xsl.XslCompiledTransform.Load(System.Type)` method.
+The XSLT compiler (xsltc.exe) compiles XSLT style sheets and generates an assembly. The assembly can be passed directly into the <xref:System.Xml.Xsl.XslCompiledTransform.Load(System.Type)?displayProperty=nameWithType> method.
 
 ## To copy the XML and XSLT files to your local computer
 
@@ -160,23 +160,8 @@ xsltc /settings:script+ /class:Transform Transform.xsl
 
 The following example shows how to execute the XSLT transformation by using the compiled style sheet.
 
-```csharp
-using System;
-using System.Xml.Xsl;
-
-class Example
-{
-    static void Main()
-    {
-        //Create a new XslCompiledTransform and load the compiled transformation.
-        XslCompiledTransform xslt = new XslCompiledTransform();
-        xslt.Load(typeof(Transform));
-
-        // Execute the transformation and output the results to a file.
-        xslt.Transform("books.xml", "discount_books.html");
-    }
-}
-```
+[!code-csharp[XslTransform_XSLTC#1](../../../../samples/snippets/csharp/VS_Snippets_Data/XslTransform_XSLTC/CS/XslTransform_XSLTC.cs#1)]
+[!code-vb[XslTransform_XSLTC#1](../../../../samples/snippets/visualbasic/VS_Snippets_Data/XslTransform_XSLTC/VB/XslTransform_XSLTC.vb#1)]
 
 To dynamically link to the compiled assembly, replace
 
@@ -190,10 +175,10 @@ with
 xslt.Load(System.Reflection.Assembly.Load("Transform").GetType("Transform"));
 ```
 
-For more information on the `Assembly.Load` method, see `System.Reflection.Assembly.Load*`.
+For more information on the `Assembly.Load` method, see <xref:System.Reflection.Assembly.Load*>.
 
 ## See also
 
-- `System.Xml.Xsl.XslCompiledTransform`
-- XSLT Compiler (xsltc.exe)
-- XSLT Transformations
+- <xref:System.Xml.Xsl.XslCompiledTransform>
+- [XSLT Compiler (xsltc.exe)](xslt-compiler-xsltc-exe.md)
+- [XSLT Transformations](xslt-transformations.md)

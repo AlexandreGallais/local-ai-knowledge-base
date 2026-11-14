@@ -1,12 +1,3 @@
----
-title: "inkex.localization"
-tool: "inkex"
-version: "1.4.1"
-source: "https://gitlab.com/inkscape/extensions/blob/2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892/inkex/localization.py"
-commit: "2044255c7a79a0d0b5fb20cb8b0f573ed1ae7892"
-license: "GPL-2.0-or-later"
----
-
 # inkex.localization
 
 Allow extensions to translate messages.
@@ -36,16 +27,12 @@ Inkscape uses
 def inkex_fgettext(message, *args, **kwargs)
 ```
 
-Shortcut for gettext and subsequent formatting. Import as:
+Shortcut for gettext and subsequent formatting. Import as::
 
-```
-from inkex.localize import inkex_fgettext as _f
-```
+    from inkex.localize import inkex_fgettext as _f
 
-The positionals and keyword arguments are passed to `str.format()`.
+The positionals and keyword arguments are passed to ``str.format()``.
 
-The call to xgettext must contain:
+The call to xgettext must contain::
 
-```
---keyword=_f
-```
+    --keyword=_f

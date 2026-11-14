@@ -1,15 +1,6 @@
----
-title: "Mocking Classes"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/mocking/classes.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
----
-
 # Mocking Classes
 
-You can mock an entire class with a single `vi.fn` call.
+You can mock an entire class with a single [`vi.fn`](/api/vi#fn) call.
 
 ```ts
 class Dog {
@@ -57,7 +48,7 @@ const Dog = vi.fn(class {
 })
 ```
 
-**Warning:**
+::: warning
 If a non-primitive is returned from the constructor function, that value will become the result of the new expression. In this case the `[[Prototype]]` may not be correctly bound:
 
 ```ts
@@ -77,8 +68,9 @@ Newt instanceof IncorrectDogClass // ❌ false!
 ```
 
 If you are mocking classes, prefer the class syntax over the function.
+:::
 
-**WHEN TO USE?**
+::: tip WHEN TO USE?
 Generally speaking, you would re-create a class like this inside the module factory if the class is re-exported from another module:
 
 ```ts
@@ -95,13 +87,13 @@ vi.mock(import('./dog.js'), () => {
 
 This method can also be used to pass an instance of a class to a function that accepts the same interface:
 
-```ts
+```ts [src/feed.ts]
 function feed(dog: Dog) {
   // ...
 }
 ```
 
-```ts
+```ts [tests/dog.test.ts]
 import { expect, test, vi } from 'vitest'
 import { feed } from '../src/feed.js'
 
@@ -119,6 +111,8 @@ test('can feed dogs', () => {
   expect(dogMax.isHungry()).toBe(false)
 })
 ```
+
+:::
 
 Now, when we create a new instance of the `Dog` class its `speak` method (alongside `feed` and `greet`) is already mocked:
 
@@ -185,10 +179,11 @@ expect(vi.mocked(MockedDog.prototype.speak).mock.contexts).toEqual([cooper, max]
 
 Assigning on `MockedDog.prototype` instead of `OriginalDog.prototype` keeps the original class untouched: the lookup order is `instance` → `MockedDog.prototype` → `OriginalDog.prototype`, so the assigned function shadows the original method. Because instances look the method up on every call rather than keeping a copy, the mock is visible to all of them, even those created before the assignment. The trade-off is that they also share a single call history, unlike class fields, which give every instance its own mock.
 
-**Warning:**
+::: warning
 The mock's `prototype` always follows the current implementation: it is re-pointed when you set a new implementation, when a queued `mockImplementationOnce` class is constructed, and when the mock is reset. If a single mock uses different class implementations, instances created by earlier implementations lose access to their prototype methods once a newer implementation takes over. Own properties assigned in the constructor or via class fields are not affected.
+:::
 
-If you want to mock the method of one instance only, use `vi.spyOn`. It defines the mock directly on that instance, shadowing the prototype method just for it:
+If you want to mock the method of one instance only, use [`vi.spyOn`](/api/vi#vi-spyon). It defines the mock directly on that instance, shadowing the prototype method just for it:
 
 ```ts
 const cooper = new MockedDog('Cooper')
@@ -227,8 +222,10 @@ expect(dog.name).toBe('Max')
 expect(nameSpy).toHaveBeenCalledTimes(1)
 ```
 
-**Tip:**
+::: tip
 You can also spy on getters and setters using the same method.
+:::
 
-**Danger:**
-Using classes with `vi.fn()` was introduced in Vitest 4. Previously, you had to use `function` and `prototype` inheritance directly. See v3 guide.
+::: danger
+Using classes with `vi.fn()` was introduced in Vitest 4. Previously, you had to use `function` and `prototype` inheritance directly. See [v3 guide](https://v3.vitest.dev/guide/mocking.html#classes).
+:::

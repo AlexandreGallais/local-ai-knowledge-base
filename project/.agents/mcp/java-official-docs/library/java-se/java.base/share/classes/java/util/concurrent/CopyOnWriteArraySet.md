@@ -1,44 +1,32 @@
----
-title: "CopyOnWriteArraySet class (java.util.concurrent)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/util/concurrent/CopyOnWriteArraySet.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # CopyOnWriteArraySet class (java.util.concurrent)
 
 ```java
 public class CopyOnWriteArraySet<E> extends AbstractSet<E> implements java.io.Serializable
 ```
 
-A `Set` that uses an internal `CopyOnWriteArrayList`
-for all of its operations.  Thus, it shares the same basic <example-value>:
-
-- It is best suited for applications in which set sizes generally
+A {@link Set} that uses an internal {@link CopyOnWriteArrayList}
+for all of its operations.  Thus, it shares the same basic properties:
+<ul>
+ <li>It is best suited for applications in which set sizes generally
       stay small, read-only operations
       vastly outnumber mutative operations, and you need
       to prevent interference among threads during traversal.
-
-- It is thread-safe.
-
-- Mutative operations (`add`, `set`, `remove`, etc.)
+ <li>It is thread-safe.
+ <li>Mutative operations ({@code add}, {@code set}, {@code remove}, etc.)
      are expensive since they usually entail copying the entire underlying
      array.
-
-- Iterators do not support the mutative `remove` operation.
-
-- Traversal via iterators is fast and cannot encounter
+ <li>Iterators do not support the mutative {@code remove} operation.
+ <li>Traversal via iterators is fast and cannot encounter
      interference from other threads. Iterators rely on
      unchanging snapshots of the array at the time the iterators were
      constructed.
+</ul>
 
-**Sample Usage.** The following code sketch uses a
+<p><b>Sample Usage.</b> The following code sketch uses a
 copy-on-write set to maintain a set of Handler objects that
 perform some action upon state updates.
 
-```java
+<pre> {@code
 class Handler { void handle() { ... } }
 
 class X {
@@ -54,20 +42,16 @@ class X {
     for (Handler handler : handlers)
       handler.handle();
   }
-}
-```
+}}</pre>
 
-This class is a member of the
+<p>This class is a member of the
+<a href="{@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+Java Collections Framework</a>.
 
-Java Collections Framework.
-
-Parameters:
-
-- `<E>`: the type of elements held in this set
-
-**See also:** CopyOnWriteArrayList
-
-**Since:** 1.5
+@see CopyOnWriteArrayList
+@since 1.5
+@author Doug Lea
+@param <E> the type of elements held in this set
 
 ## CopyOnWriteArraySet.CopyOnWriteArraySet()
 
@@ -86,13 +70,8 @@ public CopyOnWriteArraySet(Collection<? extends E> c)
 Creates a set containing all of the elements of the specified
 collection.
 
-Parameters:
-
-- `c`: the collection of elements to initially contain
-
-Throws:
-
-- `NullPointerException`: if the specified collection is null
+@param c the collection of elements to initially contain
+@throws NullPointerException if the specified collection is null
 
 ## CopyOnWriteArraySet.size()
 
@@ -102,7 +81,7 @@ public int size()
 
 Returns the number of elements in this set.
 
-**Returns:** the number of elements in this set
+@return the number of elements in this set
 
 ## CopyOnWriteArraySet.isEmpty()
 
@@ -110,9 +89,9 @@ Returns the number of elements in this set.
 public boolean isEmpty()
 ```
 
-Returns `true` if this set contains no elements.
+Returns {@code true} if this set contains no elements.
 
-**Returns:** `true` if this set contains no elements
+@return {@code true} if this set contains no elements
 
 ## CopyOnWriteArraySet.contains(Object)
 
@@ -120,15 +99,12 @@ Returns `true` if this set contains no elements.
 public boolean contains(Object o)
 ```
 
-Returns `true` if this set contains the specified element.
-More formally, returns `true` if and only if this set
-contains an element `e` such that `Objects.equals(o, e)`.
+Returns {@code true} if this set contains the specified element.
+More formally, returns {@code true} if and only if this set
+contains an element {@code e} such that {@code Objects.equals(o, e)}.
 
-Parameters:
-
-- `o`: element whose presence in this set is to be tested
-
-**Returns:** `true` if this set contains the specified element
+@param o element whose presence in this set is to be tested
+@return {@code true} if this set contains the specified element
 
 ## CopyOnWriteArraySet.toArray()
 
@@ -141,15 +117,15 @@ If this set makes any guarantees as to what order its elements
 are returned by its iterator, this method must return the
 elements in the same order.
 
-The returned array will be "safe" in that no references to it
+<p>The returned array will be "safe" in that no references to it
 are maintained by this set.  (In other words, this method must
 allocate a new array even if this set is backed by an array).
 The caller is thus free to modify the returned array.
 
-This method acts as bridge between array-based and collection-based
+<p>This method acts as bridge between array-based and collection-based
 APIs.
 
-**Returns:** an array containing all the elements in this set
+@return an array containing all the elements in this set
 
 ## CopyOnWriteArraySet.toArray(T[])
 
@@ -163,43 +139,39 @@ If the set fits in the specified array, it is returned therein.
 Otherwise, a new array is allocated with the runtime type of the
 specified array and the size of this set.
 
-If this set fits in the specified array with room to spare
+<p>If this set fits in the specified array with room to spare
 (i.e., the array has more elements than this set), the element in
 the array immediately following the end of the set is set to
-`null`.  (This is useful in determining the length of this
-set *only* if the caller knows that this set does not contain
+{@code null}.  (This is useful in determining the length of this
+set <i>only</i> if the caller knows that this set does not contain
 any null elements.)
 
-If this set makes any guarantees as to what order its elements
+<p>If this set makes any guarantees as to what order its elements
 are returned by its iterator, this method must return the elements
 in the same order.
 
-Like the `toArray()` method, this method acts as bridge between
+<p>Like the {@link #toArray()} method, this method acts as bridge between
 array-based and collection-based APIs.  Further, this method allows
 precise control over the runtime type of the output array, and may,
 under certain circumstances, be used to save allocation costs.
 
-Suppose `x` is a set known to contain only strings.
+<p>Suppose {@code x} is a set known to contain only strings.
 The following code can be used to dump the set into a newly allocated
-array of `String`:
+array of {@code String}:
 
-```java
-String[] y = x.toArray(new String[0]);
-```
+<pre> {@code String[] y = x.toArray(new String[0]);}</pre>
 
-Note that `toArray(new Object[0])` is identical in function to
-`toArray()`.
+Note that {@code toArray(new Object[0])} is identical in function to
+{@code toArray()}.
 
-Parameters:
-
-- `a`: the array into which the elements of this set are to be stored, if it is big enough; otherwise, a new array of the same runtime type is allocated for this purpose.
-
-**Returns:** an array containing all the elements in this set
-
-Throws:
-
-- `ArrayStoreException`: if the runtime type of the specified array is not a supertype of the runtime type of every element in this set
-- `NullPointerException`: if the specified array is null
+@param a the array into which the elements of this set are to be
+       stored, if it is big enough; otherwise, a new array of the same
+       runtime type is allocated for this purpose.
+@return an array containing all the elements in this set
+@throws ArrayStoreException if the runtime type of the specified array
+        is not a supertype of the runtime type of every element in this
+        set
+@throws NullPointerException if the specified array is null
 
 ## CopyOnWriteArraySet.clear()
 
@@ -217,17 +189,14 @@ public boolean remove(Object o)
 ```
 
 Removes the specified element from this set if it is present.
-More formally, removes an element `e` such that
-`Objects.equals(o, e)`, if this set contains such an element.
-Returns `true` if this set contained the element (or
+More formally, removes an element {@code e} such that
+{@code Objects.equals(o, e)}, if this set contains such an element.
+Returns {@code true} if this set contained the element (or
 equivalently, if this set changed as a result of the call).
 (This set will not contain the element once the call returns.)
 
-Parameters:
-
-- `o`: object to be removed from this set, if present
-
-**Returns:** `true` if this set contained the specified element
+@param o object to be removed from this set, if present
+@return {@code true} if this set contained the specified element
 
 ## CopyOnWriteArraySet.add(E)
 
@@ -236,17 +205,14 @@ public boolean add(E e)
 ```
 
 Adds the specified element to this set if it is not already present.
-More formally, adds the specified element `e` to this set if
-the set contains no element `e2` such that
-`Objects.equals(e, e2)`.
+More formally, adds the specified element {@code e} to this set if
+the set contains no element {@code e2} such that
+{@code Objects.equals(e, e2)}.
 If this set already contains the element, the call leaves the set
-unchanged and returns `false`.
+unchanged and returns {@code false}.
 
-Parameters:
-
-- `e`: element to be added to this set
-
-**Returns:** `true` if this set did not already contain the specified
+@param e element to be added to this set
+@return {@code true} if this set did not already contain the specified
         element
 
 ## CopyOnWriteArraySet.containsAll(Collection<?>)
@@ -255,22 +221,15 @@ Parameters:
 public boolean containsAll(Collection<?> c)
 ```
 
-Returns `true` if this set contains all of the elements of the
+Returns {@code true} if this set contains all of the elements of the
 specified collection.  If the specified collection is also a set, this
-method returns `true` if it is a *subset* of this set.
+method returns {@code true} if it is a <i>subset</i> of this set.
 
-Parameters:
-
-- `c`: collection to be checked for containment in this set
-
-**Returns:** `true` if this set contains all of the elements of the
+@param  c collection to be checked for containment in this set
+@return {@code true} if this set contains all of the elements of the
         specified collection
-
-**See also:** #contains(Object)
-
-Throws:
-
-- `NullPointerException`: if the specified collection is null
+@throws NullPointerException if the specified collection is null
+@see #contains(Object)
 
 ## CopyOnWriteArraySet.addAll(Collection<? extends E>)
 
@@ -280,22 +239,15 @@ public boolean addAll(Collection<? extends E> c)
 
 Adds all of the elements in the specified collection to this set if
 they're not already present.  If the specified collection is also a
-set, the `addAll` operation effectively modifies this set so
-that its value is the *union* of the two sets.  The behavior of
+set, the {@code addAll} operation effectively modifies this set so
+that its value is the <i>union</i> of the two sets.  The behavior of
 this operation is undefined if the specified collection is modified
 while the operation is in progress.
 
-Parameters:
-
-- `c`: collection containing elements to be added to this set
-
-**Returns:** `true` if this set changed as a result of the call
-
-**See also:** #add(Object)
-
-Throws:
-
-- `NullPointerException`: if the specified collection is null
+@param  c collection containing elements to be added to this set
+@return {@code true} if this set changed as a result of the call
+@throws NullPointerException if the specified collection is null
+@see #add(Object)
 
 ## CopyOnWriteArraySet.removeAll(Collection<?>)
 
@@ -306,20 +258,18 @@ public boolean removeAll(Collection<?> c)
 Removes from this set all of its elements that are contained in the
 specified collection.  If the specified collection is also a set,
 this operation effectively modifies this set so that its value is the
-*asymmetric set difference* of the two sets.
+<i>asymmetric set difference</i> of the two sets.
 
-Parameters:
-
-- `c`: collection containing elements to be removed from this set
-
-**Returns:** `true` if this set changed as a result of the call
-
-**See also:** #remove(Object)
-
-Throws:
-
-- `ClassCastException`: if the class of an element of this set is incompatible with the specified collection (optional)
-- `NullPointerException`: if this set contains a null element and the specified collection does not permit null elements (optional), or if the specified collection is null
+@param  c collection containing elements to be removed from this set
+@return {@code true} if this set changed as a result of the call
+@throws ClassCastException if the class of an element of this set
+        is incompatible with the specified collection
+(<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
+@throws NullPointerException if this set contains a null element and the
+        specified collection does not permit null elements
+(<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>),
+        or if the specified collection is null
+@see #remove(Object)
 
 ## CopyOnWriteArraySet.retainAll(Collection<?>)
 
@@ -331,21 +281,19 @@ Retains only the elements in this set that are contained in the
 specified collection.  In other words, removes from this set all of
 its elements that are not contained in the specified collection.  If
 the specified collection is also a set, this operation effectively
-modifies this set so that its value is the *intersection* of the
+modifies this set so that its value is the <i>intersection</i> of the
 two sets.
 
-Parameters:
-
-- `c`: collection containing elements to be retained in this set
-
-**Returns:** `true` if this set changed as a result of the call
-
-**See also:** #remove(Object)
-
-Throws:
-
-- `ClassCastException`: if the class of an element of this set is incompatible with the specified collection (optional)
-- `NullPointerException`: if this set contains a null element and the specified collection does not permit null elements (optional), or if the specified collection is null
+@param  c collection containing elements to be retained in this set
+@return {@code true} if this set changed as a result of the call
+@throws ClassCastException if the class of an element of this set
+        is incompatible with the specified collection
+(<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
+@throws NullPointerException if this set contains a null element and the
+        specified collection does not permit null elements
+(<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>),
+        or if the specified collection is null
+@see #remove(Object)
 
 ## CopyOnWriteArraySet.iterator()
 
@@ -356,12 +304,12 @@ public Iterator<E> iterator()
 Returns an iterator over the elements contained in this set
 in the order in which these elements were added.
 
-The returned iterator provides a snapshot of the state of the set
+<p>The returned iterator provides a snapshot of the state of the set
 when the iterator was constructed. No synchronization is needed while
-traversing the iterator. The iterator does *NOT* support the
-`remove` method.
+traversing the iterator. The iterator does <em>NOT</em> support the
+{@code remove} method.
 
-**Returns:** an iterator over the elements in this set
+@return an iterator over the elements in this set
 
 ## CopyOnWriteArraySet.equals(Object)
 
@@ -370,22 +318,19 @@ public boolean equals(Object o)
 ```
 
 Compares the specified object with this set for equality.
-Returns `true` if the specified object is the same object
-as this object, or if it is also a `Set` and the elements
-returned by an iterator over the
+Returns {@code true} if the specified object is the same object
+as this object, or if it is also a {@link Set} and the elements
+returned by an {@linkplain Set#iterator() iterator} over the
 specified set are the same as the elements returned by an
 iterator over this set.  More formally, the two iterators are
 considered to return the same elements if they return the same
-number of elements and for every element `e1` returned by
+number of elements and for every element {@code e1} returned by
 the iterator over the specified set, there is an element
-`e2` returned by the iterator over this set such that
-`Objects.equals(e1, e2)`.
+{@code e2} returned by the iterator over this set such that
+{@code Objects.equals(e1, e2)}.
 
-Parameters:
-
-- `o`: object to be compared for equality with this set
-
-**Returns:** `true` if the specified object is equal to this set
+@param o object to be compared for equality with this set
+@return {@code true} if the specified object is equal to this set
 
 ## CopyOnWriteArraySet.removeIf(Predicate<? super E>)
 
@@ -393,9 +338,7 @@ Parameters:
 public boolean removeIf(Predicate<? super E> filter)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## CopyOnWriteArraySet.forEach(Consumer<? super E>)
 
@@ -403,9 +346,7 @@ Throws:
 public void forEach(Consumer<? super E> action)
 ```
 
-Throws:
-
-- `NullPointerException`: (inherited documentation)
+@throws NullPointerException {@inheritDoc}
 
 ## CopyOnWriteArraySet.spliterator()
 
@@ -413,17 +354,16 @@ Throws:
 public Spliterator<E> spliterator()
 ```
 
-Returns a `Spliterator` over the elements in this set in the order
+Returns a {@link Spliterator} over the elements in this set in the order
 in which these elements were added.
 
-The `Spliterator` reports `Spliterator.IMMUTABLE`,
-`Spliterator.DISTINCT`, `Spliterator.SIZED`, and
-`Spliterator.SUBSIZED`.
+<p>The {@code Spliterator} reports {@link Spliterator#IMMUTABLE},
+{@link Spliterator#DISTINCT}, {@link Spliterator#SIZED}, and
+{@link Spliterator#SUBSIZED}.
 
-The spliterator provides a snapshot of the state of the set
+<p>The spliterator provides a snapshot of the state of the set
 when the spliterator was constructed. No synchronization is needed while
 operating on the spliterator.
 
-**Returns:** a `Spliterator` over the elements in this set
-
-**Since:** 1.8
+@return a {@code Spliterator} over the elements in this set
+@since 1.8

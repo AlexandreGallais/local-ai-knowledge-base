@@ -1,24 +1,24 @@
 ---
-title: "no-restricted-syntax"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-restricted-syntax.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-restricted-syntax
+rule_type: suggestion
+related_rules:
+- no-alert
+- no-console
+- no-debugger
+- no-restricted-properties
 ---
 
-# no-restricted-syntax
 
 JavaScript has a lot of language features, and not everyone likes all of them. As a result, some projects choose to disallow the use of certain language features altogether. For instance, you might decide to disallow the use of `try-catch` or `class`, or you might decide to disallow the use of the `in` operator.
 
-Rather than creating separate rules for every language feature you want to turn off, this rule allows you to configure the syntax elements you want to restrict use of. For the JavaScript language, these elements are represented by their ESTree node types. For example, a function declaration is represented by `FunctionDeclaration` and the `with` statement is represented by `WithStatement`. You may use Code Explorer to determine the nodes that represent your code.
+Rather than creating separate rules for every language feature you want to turn off, this rule allows you to configure the syntax elements you want to restrict use of. For the JavaScript language, these elements are represented by their [ESTree](https://github.com/estree/estree) node types. For example, a function declaration is represented by `FunctionDeclaration` and the `with` statement is represented by `WithStatement`. You may use [Code Explorer](https://explorer.eslint.org) to determine the nodes that represent your code.
 
-You can also specify AST selectors to restrict, allowing much more precise control over syntax patterns.
+You can also specify [AST selectors](../extend/selectors) to restrict, allowing much more precise control over syntax patterns.
 
 Note: This rule can be used with any language you lint using ESLint. To see what type of nodes your code in another language consists of, you can use:
 
-* typescript-eslint Playground if you're using ESLint with `typescript-eslint`.
-* ESLint Code Explorer if you're using ESLint to lint JavaScript, JSON, Markdown, or CSS.
+* [typescript-eslint Playground](https://typescript-eslint.io/play) if you're using ESLint with `typescript-eslint`.
+* [ESLint Code Explorer](https://explorer.eslint.org/) if you're using ESLint to lint JavaScript, JSON, Markdown, or CSS.
 
 ## Rule Details
 
@@ -62,7 +62,7 @@ The string and object formats can be freely mixed in the configuration as needed
 
 Examples of **incorrect** code for this rule with the `"FunctionExpression", "WithStatement", BinaryExpression[operator='in']` options:
 
-**Incorrect:**
+::: incorrect { "sourceType": "script" }
 
 ```js
 /* eslint no-restricted-syntax: ["error", "FunctionExpression", "WithStatement", "BinaryExpression[operator='in']"] */
@@ -76,9 +76,11 @@ const doSomething = function () {};
 foo in bar;
 ```
 
+:::
+
 Examples of **correct** code for this rule with the `"FunctionExpression", "WithStatement", BinaryExpression[operator='in']` options:
 
-**Correct:**
+::: correct { "sourceType": "script" }
 
 ```js
 /* eslint no-restricted-syntax: ["error", "FunctionExpression", "WithStatement", "BinaryExpression[operator='in']"] */
@@ -89,6 +91,8 @@ function doSomething() {};
 
 foo instanceof bar;
 ```
+
+:::
 
 ## When Not To Use It
 

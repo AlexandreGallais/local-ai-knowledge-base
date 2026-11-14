@@ -1,17 +1,12 @@
 ---
-title: "Custom Assertion Helpers | Recipes"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/recipes/custom-assertions.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Custom Assertion Helpers | Recipes
 ---
 
 # Custom Assertion Helpers
 
 Reusable assertion helpers make tests easier to read, at the cost of stack traces. When an assertion fails inside a helper, the trace points at the line inside the helper rather than the test that called it. With the same helper used across many tests, the stack trace alone doesn't identify which call site failed.
 
-`vi.defineHelper` <Version>4.1.0</Version> wraps a function so Vitest strips its internals from the stack and points the error back at the call site instead.
+[`vi.defineHelper`](/api/vi#vi-defineHelper) <Version>4.1.0</Version> wraps a function so Vitest strips its internals from the stack and points the error back at the call site instead.
 
 ## Pattern
 
@@ -52,9 +47,9 @@ A failure in any of the inner `expect` calls is reported against the `expectVali
 
 Reach for `defineHelper` whenever a reusable check calls `expect` more than once, whether that's a domain-specific helper like `expectValidJWT` or any block of `expect` calls you'd otherwise inline into every test.
 
-For asymmetric matchers and custom matchers attached to `expect.extend`, see Extending Matchers.
+For asymmetric matchers and custom matchers attached to `expect.extend`, see [Extending Matchers](/guide/extending-matchers).
 
 ## See also
 
-- `vi.defineHelper`
-- Extending Matchers
+- [`vi.defineHelper`](/api/vi#vi-defineHelper)
+- [Extending Matchers](/guide/extending-matchers)

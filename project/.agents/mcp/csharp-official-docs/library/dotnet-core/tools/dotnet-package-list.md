@@ -1,12 +1,8 @@
 ---
-title: "dotnet package list command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-package-list.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet package list command
+description: The 'dotnet package list' command provides a convenient option to list the package references for a project or solution.
+ms.date: 10/28/2025
 ---
-
 # dotnet package list
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -15,8 +11,8 @@ license: "CC-BY-4.0"
 
 `dotnet package list` - Lists the package references for a project or solution.
 
-> **Note:**
-> If you're using .NET 9 SDK or earlier, use the "verb first" form (`dotnet list package`) instead. The "noun first" form was introduced in .NET 10. For more information, see More consistent command order.
+> [!NOTE]
+> If you're using .NET 9 SDK or earlier, use the "verb first" form (`dotnet list package`) instead. The "noun first" form was introduced in .NET 10. For more information, see [More consistent command order](../whats-new/dotnet-10/sdk.md#more-consistent-command-order).
 
 ## Synopsis
 
@@ -38,7 +34,7 @@ dotnet package list -h|--help
 The `dotnet package list` command provides a convenient option to list all NuGet package references for a specific project or a solution.
 Starting with **.NET 10**, the command automatically performs restore if necessary before generating the results.
 In earlier versions, you first need to **build/restore the project** in order to have the assets needed for this command to process.
-The following example shows the output of the `dotnet package list` command for the SentimentAnalysis project:
+The following example shows the output of the `dotnet package list` command for the [SentimentAnalysis](https://github.com/dotnet/samples/tree/main/machine-learning/tutorials/SentimentAnalysis) project:
 
 ```output
 Restore complete (5.9s)
@@ -68,7 +64,7 @@ Project 'SentimentAnalysis' has the following package references
 (A) : Auto-referenced package.
 ```
 
-Use the `--outdated` option to find out if there are newer versions available of the packages you're using in your projects. By default, `--outdated` lists the latest stable packages unless the resolved version is also a prerelease version. To include prerelease versions when listing newer versions, also specify the `--include-prerelease` option. To update a package to the latest version, use dotnet package add.
+Use the `--outdated` option to find out if there are newer versions available of the packages you're using in your projects. By default, `--outdated` lists the latest stable packages unless the resolved version is also a prerelease version. To include prerelease versions when listing newer versions, also specify the `--include-prerelease` option. To update a package to the latest version, use [dotnet package add](dotnet-package-add.md).
 
 The following example shows the output of the `dotnet package list --outdated --include-prerelease` command for the same project as the previous example:
 
@@ -87,7 +83,7 @@ Project `SentimentAnalysis` has the following updates to its packages
    > Microsoft.ML         1.4.0       1.4.0      1.5.0-preview
 ```
 
-If you need to find out whether your project has transitive dependencies, use the `--include-transitive` option. Transitive dependencies occur when you add a package to your project that in turn relies on another package. The following example shows the output from running the `dotnet package list --include-transitive` command for the HelloPlugin project, which displays top-level packages and the packages they depend on:
+If you need to find out whether your project has transitive dependencies, use the `--include-transitive` option. Transitive dependencies occur when you add a package to your project that in turn relies on another package. The following example shows the output from running the `dotnet package list --include-transitive` command for the [HelloPlugin](https://github.com/dotnet/samples/tree/main/core/extensions/AppWithPlugin/HelloPlugin) project, which displays top-level packages and the packages they depend on:
 
 ```output
 Restore complete (0.6s)
@@ -107,7 +103,7 @@ The project or solution file to operate on. If not specified, the command search
 
 ## Options
 
-- **`--config `**
+- **`--config <SOURCE>`**
 
   The NuGet sources to use when searching for newer packages. Requires the `--outdated` option.
 
@@ -117,11 +113,9 @@ The project or solution file to operate on. If not specified, the command search
 
 - **`-f|--framework <FRAMEWORK>`**
 
-  Displays only the packages applicable for the specified target framework. To specify multiple frameworks, repeat the option multiple times. For example: `--framework net6.0 --framework netstandard2.0`. The short form of the option (`-f`) is available starting in .NET 9 SDK.
+  Displays only the packages applicable for the specified [target framework](../../standard/frameworks.md). To specify multiple frameworks, repeat the option multiple times. For example: `--framework net6.0 --framework netstandard2.0`. The short form of the option (`-f`) is available starting in .NET 9 SDK.
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 - **`--highest-minor`**
 
@@ -139,32 +133,28 @@ Prints out a description of how to use the command.
 
   Lists transitive packages, in addition to the top-level packages. When specifying this option, you get a list of packages that the top-level packages depend on.
 
-- **`--interactive`**
-
-Allows the command to stop and wait for user input or action. For example, to complete authentication.
+- [!INCLUDE [interactive](includes/cli-interactive.md)]
 
 - **`--no-restore`**
-
+  
   Don't restore before running the command.
 
 - **`--outdated`**
 
   Lists packages that have newer versions available.
 
-- **`-s|--source `**
+- **`-s|--source <SOURCE>`**
 
   The NuGet sources to use when searching for newer packages. Requires the `--outdated` or `--deprecated` option.
 
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. The default is `minimal`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+- [!INCLUDE [verbosity](includes/cli-verbosity-minimal.md)]
 
 - **`--vulnerable`**
 
   Lists packages that have known vulnerabilities. Cannot be combined with `--deprecated` or `--outdated` options.
-  Available starting in **.NET SDK 9.0.300**, this option uses the `<AuditSources>` property in your configuration file to specify your source of vulnerability data, which is acquired from the VulnerabilityInfo resource.
+  Available starting in **.NET SDK 9.0.300**, this option uses the `<AuditSources>` property in your configuration file to specify your source of vulnerability data, which is acquired from the [VulnerabilityInfo](/nuget/api/vulnerability-info) resource.
   If `<AuditSources>` is not specified, the specified `<PackageSources>` are used to load vulnerability data.
-  For more information, see Audit sources and How to scan NuGet packages for security vulnerabilities.
+  For more information, see [Audit sources](/nuget/concepts/auditing-packages#audit-sources) and [How to scan NuGet packages for security vulnerabilities](https://devblogs.microsoft.com/nuget/how-to-scan-nuget-packages-for-security-vulnerabilities/).
 
 - **`--format <console|json>`**
 

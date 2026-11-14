@@ -1,12 +1,3 @@
----
-title: "FileDescriptor class (java.io)"
-tool: "java-se"
-version: "25"
-source: "https://github.com/openjdk/jdk/blob/6c48f4ed707bf0b15f9b6098de30db8aae6fa40f/src/java.base/share/classes/java/io/FileDescriptor.java"
-commit: "6c48f4ed707bf0b15f9b6098de30db8aae6fa40f"
-license: "GPL-2.0-only WITH Classpath-exception-2.0"
----
-
 # FileDescriptor class (java.io)
 
 ```java
@@ -17,11 +8,12 @@ Instances of the file descriptor class serve as an opaque handle
 to the underlying machine-specific structure representing an open
 file, an open socket, or another source or sink of bytes.
 The main practical use for a file descriptor is to create a
-`FileInputStream` or `FileOutputStream` to contain it.
-
+{@link FileInputStream} or {@link FileOutputStream} to contain it.
+<p>
 Applications should not create their own file descriptors.
 
-**Since:** 1.0
+@author  Pavani Diwanji
+@since   1.0
 
 ## FileDescriptor.FileDescriptor()
 
@@ -40,9 +32,9 @@ public static final FileDescriptor in
 
 A handle to the standard input stream. Usually, this file
 descriptor is not used directly, but rather via the input stream
-known as `System.in`.
+known as {@code System.in}.
 
-**See also:** java.lang.System#in
+@see     java.lang.System#in
 
 ## FileDescriptor.out
 
@@ -52,9 +44,8 @@ public static final FileDescriptor out
 
 A handle to the standard output stream. Usually, this file
 descriptor is not used directly, but rather via the output stream
-known as `System.out`.
-
-**See also:** java.lang.System#out
+known as {@code System.out}.
+@see     java.lang.System#out
 
 ## FileDescriptor.err
 
@@ -64,9 +55,9 @@ public static final FileDescriptor err
 
 A handle to the standard error stream. Usually, this file
 descriptor is not used directly, but rather via the output stream
-known as `System.err`.
+known as {@code System.err}.
 
-**See also:** java.lang.System#err
+@see     java.lang.System#err
 
 ## FileDescriptor.valid()
 
@@ -76,9 +67,9 @@ public boolean valid()
 
 Tests if this file descriptor object is valid.
 
-**Returns:** `true` if the file descriptor object represents a
+@return  {@code true} if the file descriptor object represents a
          valid, open file, socket, or other active I/O connection;
-         `false` otherwise.
+         {@code false} otherwise.
 
 ## FileDescriptor.sync()
 
@@ -107,8 +98,8 @@ example, by a BufferedOutputStream object), those buffers must
 be flushed into the FileDescriptor (for example, by invoking
 OutputStream.flush) before that data will be affected by sync.
 
-**Since:** 1.1
-
-Throws:
-
-- `SyncFailedException`: Thrown when the buffers cannot be flushed, or because the system cannot guarantee that all the buffers have been synchronized with physical media.
+@throws    SyncFailedException
+       Thrown when the buffers cannot be flushed,
+       or because the system cannot guarantee that all the
+       buffers have been synchronized with physical media.
+@since     1.1

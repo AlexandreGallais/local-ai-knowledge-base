@@ -1,10 +1,8 @@
 ---
-title: "How to create a document with namespaces in C# - LINQ to XML"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/linq/create-document-namespaces-csharp.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: How to create a document with namespaces in C# - LINQ to XML
+description: Use the XNamespace object in C# to create documents that have default namespaces or namespaces with a prefix.
+ms.date: 01/23/2025
+ms.topic: how-to
 ---
 
 # How to create a document with namespaces in C# (LINQ to XML)
@@ -13,7 +11,7 @@ This article shows how to create documents in C# that have namespaces.
 
 ## Example: Declare and initialize a default namespace
 
-To create an element or an attribute that's in a namespace, you first declare and initialize an `System.Xml.Linq.XNamespace` object. You then use the addition operator overload to combine the namespace with the local name, expressed as a string.
+To create an element or an attribute that's in a namespace, you first declare and initialize an <xref:System.Xml.Linq.XNamespace> object. You then use the addition operator overload to combine the namespace with the local name, expressed as a string.
 
 The following example creates a document with one namespace. By default, LINQ to XML serializes this document with a default namespace.
 
@@ -36,7 +34,7 @@ This example produces the following output:
 
 ## Example: Create a document that has a namespace and an attribute
 
-The following example creates a document with one namespace. It also creates an attribute that declares the namespace with a namespace prefix. To create an attribute that declares a namespace with a prefix, you create an attribute where the name of the attribute is the namespace prefix, and this name is in the `System.Xml.Linq.XNamespace.Xmlns*` namespace. The value of this attribute is the URI of the namespace.
+The following example creates a document with one namespace. It also creates an attribute that declares the namespace with a namespace prefix. To create an attribute that declares a namespace with a prefix, you create an attribute where the name of the attribute is the namespace prefix, and this name is in the <xref:System.Xml.Linq.XNamespace.Xmlns*> namespace. The value of this attribute is the URI of the namespace.
 
 ```csharp
 // Create an XML tree in a namespace, with a specified prefix
@@ -132,11 +130,11 @@ This example produces the following output:
 
 ## Example: Create a namespace using expanded names
 
-Another way to accomplish the same result is to use expanded names instead of declaring and creating an `System.Xml.Linq.XNamespace` object.
+Another way to accomplish the same result is to use expanded names instead of declaring and creating an <xref:System.Xml.Linq.XNamespace> object.
 
-This approach has performance implications. Each time you pass a string that contains an expanded name to LINQ to XML, LINQ to XML must parse the name, find the atomized namespace, and find the atomized name. This process takes CPU time. If performance is important, you might want to declare and use an `System.Xml.Linq.XNamespace` object explicitly.
+This approach has performance implications. Each time you pass a string that contains an expanded name to LINQ to XML, LINQ to XML must parse the name, find the atomized namespace, and find the atomized name. This process takes CPU time. If performance is important, you might want to declare and use an <xref:System.Xml.Linq.XNamespace> object explicitly.
 
-If performance is an important issue, see Pre-Atomization of XName Objects for more information.
+If performance is an important issue, see [Pre-Atomization of XName Objects](pre-atomization-xname-objects.md) for more information.
 
 ```csharp
 // Create an XML tree in a namespace, with a specified prefix
@@ -157,4 +155,4 @@ This example produces the following output:
 
 ## See also
 
-- Namespaces overview
+- [Namespaces overview](namespaces-overview.md)

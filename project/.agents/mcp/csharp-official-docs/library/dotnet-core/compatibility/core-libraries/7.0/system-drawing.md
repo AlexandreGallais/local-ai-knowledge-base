@@ -1,15 +1,11 @@
 ---
 title: "Breaking change: System.Drawing.Common config switch removed"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/7.0/system-drawing.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Learn about the .NET 7 breaking change where the EnableUnixSupport switch to enable System.Drawing.Common support on non-Windows operating systems was removed.
+ms.date: 05/18/2023
 ---
-
 # System.Drawing.Common config switch removed
 
-The System.Drawing.Common NuGet package has been attributed as a Windows-specific library since .NET 6 and using it resulted in compile-time warnings and runtime exceptions. The runtime configuration switch to re-enable usage of the package on non-Windows operating systems has been removed in .NET 7.
+The [System.Drawing.Common](https://www.nuget.org/packages/System.Drawing.Common/) NuGet package has been attributed as a Windows-specific library since .NET 6 and using it resulted in compile-time warnings and runtime exceptions. The runtime configuration switch to re-enable usage of the package on non-Windows operating systems has been removed in .NET 7.
 
 ## Old behavior
 
@@ -17,7 +13,7 @@ Prior to .NET 6, using the System.Drawing.Common package did not produce any com
 
 ## New behavior
 
-Starting in .NET 7, the `System.Drawing.EnableUnixSupport` switch has been removed and you can no longer use the System.Drawing.Common package on non-Windows operating systems.
+Starting in .NET 7, the `System.Drawing.EnableUnixSupport` switch has been removed and you can no longer use the [System.Drawing.Common](https://www.nuget.org/packages/System.Drawing.Common/) package on non-Windows operating systems.
 
 ## Version introduced
 
@@ -25,26 +21,26 @@ Starting in .NET 7, the `System.Drawing.EnableUnixSupport` switch has been remov
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-The switch to re-enable functionality on non-Windows operating systems was added in .NET 6 to give customers time to migrate to an alternative, modern library. Now that .NET 7 has been released, the switch has been removed. For more information, see Reason for change (.NET 6 breaking change).
+The switch to re-enable functionality on non-Windows operating systems was added in .NET 6 to give customers time to migrate to an alternative, modern library. Now that .NET 7 has been released, the switch has been removed. For more information, see [Reason for change (.NET 6 breaking change)](../6.0/system-drawing-common-windows-only.md#reason-for-change).
 
 ## Recommended action
 
 To use these APIs for cross-platform apps, migrate to an alternative library, such as one of the following:
 
-- SkiaSharp
-- ImageSharp (tiered license)
-- Aspose.Drawing (commercial license)
-- Microsoft.Maui.Graphics
+- [SkiaSharp](https://github.com/mono/SkiaSharp)
+- [ImageSharp](https://sixlabors.com/products/imagesharp) (tiered license)
+- [Aspose.Drawing](https://products.aspose.com/drawing/net/) (commercial license)
+- [Microsoft.Maui.Graphics](/dotnet/maui/user-interface/graphics/)
 
 ## Affected APIs
 
-See Affected APIs (.NET 6 breaking change).
+See [Affected APIs (.NET 6 breaking change)](../6.0/system-drawing-common-windows-only.md#affected-apis).
 
 ## See also
 
-- System.Drawing.Common only supported on Windows (.NET 6)
-- `System.Drawing.Common` only supported on Windows - dotnet/designs
+- [System.Drawing.Common only supported on Windows (.NET 6)](../6.0/system-drawing-common-windows-only.md)
+- [`System.Drawing.Common` only supported on Windows - dotnet/designs](https://github.com/dotnet/designs/blob/main/accepted/2021/system-drawing-win-only/system-drawing-win-only.md)

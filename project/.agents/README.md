@@ -28,14 +28,19 @@ copy of the small MCP core (`mcp.ts`, the same text everywhere). They need no np
 | Brick | What it gives |
 | --- | --- |
 | `parse` | The outline, then one part, then the images of a heavy file. |
-| `js-official-docs` | The official documentation of the JavaScript and TypeScript tools: search, then one section. |
-| `csharp-official-docs` | The same for C# and .NET: the language, .NET, ASP.NET Core, EF Core and the API reference. |
+| `js-official-docs` | The official documentation of the JavaScript and TypeScript tools: search, then one section. MDN, ARIA patterns, Angular (guides, API, CLI), TypeScript, RxJS, NgRx Signals, Node.js, npm, Vite, Vitest, Playwright, Storybook, Sass, Prettier, ESLint, Stylelint. |
+| `csharp-official-docs` | The same for C# and .NET: the language, .NET, ASP.NET Core, EF Core, Aspire and their API reference. |
 | `python-official-docs` | The same for Python, and the `inkex` API of the Inkscape extensions. |
-| `rust-official-docs` | The same for Rust: the book, the reference and the standard library. |
-| `java-official-docs` | The same for the Java SE API (`java.base`, `java.net.http`). |
+| `rust-official-docs` | The same for Rust: the book, the reference, Rust by Example, Cargo and the standard library. |
+| `java-official-docs` | The same for the Java SE API (`java.base`, `java.net.http`), Gradle and Maven. |
+| `containers-official-docs` | The same for Docker, Podman, Compose, Dev Containers and the OCI specifications. |
+| `git-official-docs` | The same for Git: every command. |
+| `cpp-official-docs` | The same for C and C++: cppreference, CMake, Clang, GNU Make, GCC. |
+| `math-docs` | Free mathematics textbooks, in LaTeX, PreTeXt and XML: linear algebra, discrete mathematics, combinatorics. |
 
-The documentation bricks share the same server code; `brick.json` gives each its name. Keep only the
-languages the project uses: each one is its own pack in the export.
+The documentation bricks share the same server code; `brick.json` gives each its name. Each file of
+their documentation is the official file, unchanged, in its own format. Keep only the bricks the
+project needs: each one is its own pack in the export.
 
 ## Remove a brick
 

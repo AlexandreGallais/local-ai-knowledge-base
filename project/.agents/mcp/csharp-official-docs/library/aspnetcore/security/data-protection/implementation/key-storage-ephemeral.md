@@ -1,17 +1,15 @@
 ---
-title: "Ephemeral data protection providers in ASP.NET Core"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/security/data-protection/implementation/key-storage-ephemeral.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Ephemeral data protection providers in ASP.NET Core
+description: Learn implementation details of the ASP.NET Core ephemeral data protection providers.
+ms.date: 10/14/2016
 ---
-
 # Ephemeral data protection providers in ASP.NET Core
 
-There are scenarios where an application needs a throwaway `IDataProtectionProvider`. For example, the developer might just be experimenting in a one-off console application, or the application itself is transient (it's scripted or a unit test project). To support these scenarios the Microsoft.AspNetCore.DataProtection package includes a type `EphemeralDataProtectionProvider`. This type provides a basic <example-value> of `IDataProtectionProvider` whose key <example-value> is held solely in-memory and isn't written out to any backing store.
+<a name="data-protection-implementation-key-storage-ephemeral"></a>
 
-Each instance of `EphemeralDataProtectionProvider` uses its own unique primary key. Therefore, if an `IDataProtector` rooted at an `EphemeralDataProtectionProvider` generates a protected payload, that payload can only be unprotected by an equivalent `IDataProtector` (given the same purpose chain) rooted at the same `EphemeralDataProtectionProvider` instance.
+There are scenarios where an application needs a throwaway `IDataProtectionProvider`. For example, the developer might just be experimenting in a one-off console application, or the application itself is transient (it's scripted or a unit test project). To support these scenarios the [Microsoft.AspNetCore.DataProtection](https://www.nuget.org/packages/Microsoft.AspNetCore.DataProtection/) package includes a type `EphemeralDataProtectionProvider`. This type provides a basic implementation of `IDataProtectionProvider` whose key repository is held solely in-memory and isn't written out to any backing store.
+
+Each instance of `EphemeralDataProtectionProvider` uses its own unique primary key. Therefore, if an `IDataProtector` rooted at an `EphemeralDataProtectionProvider` generates a protected payload, that payload can only be unprotected by an equivalent `IDataProtector` (given the same [purpose](../consumer-apis/purpose-strings.md#data-protection-consumer-apis-purposes) chain) rooted at the same `EphemeralDataProtectionProvider` instance.
 
 The following sample demonstrates instantiating an `EphemeralDataProtectionProvider` and using it to protect and unprotect data.
 

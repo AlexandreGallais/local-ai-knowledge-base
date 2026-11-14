@@ -1,15 +1,13 @@
 ---
 title: "Breaking change: SafeFileHandle.IsAsync and FileStream.IsAsync accurately reflect non-blocking state on Unix"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/compatibility/core-libraries/11/safefilehandle-isasync-unix.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Learn about the breaking change in .NET 11 where SafeFileHandle.IsAsync and FileStream.IsAsync on Unix now accurately reflect whether the underlying file descriptor is in non-blocking mode."
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # SafeFileHandle.IsAsync and FileStream.IsAsync accurately reflect non-blocking state on Unix
 
-On Unix, `Microsoft.Win32.SafeHandles.SafeFileHandle.IsAsync` and `System.IO.FileStream.IsAsync` now accurately reflect whether the underlying file descriptor has the `O_NONBLOCK` flag set. Previously, `IsAsync` unconditionally returned `true` for regular files opened with `System.IO.FileOptions.Asynchronous`, even though regular file I/O on Unix is inherently synchronous at the kernel level.
+On Unix, <xref:Microsoft.Win32.SafeHandles.SafeFileHandle.IsAsync?displayProperty=nameWithType> and <xref:System.IO.FileStream.IsAsync?displayProperty=nameWithType> now accurately reflect whether the underlying file descriptor has the `O_NONBLOCK` flag set. Previously, `IsAsync` unconditionally returned `true` for regular files opened with <xref:System.IO.FileOptions.Asynchronous?displayProperty=nameWithType>, even though regular file I/O on Unix is inherently synchronous at the kernel level.
 
 ## Version introduced
 
@@ -55,11 +53,11 @@ Additionally, on non-Windows platforms, constructing a `SendPacketsElement` with
 
 ## Type of breaking change
 
-This change is a behavioral change.
+This change is a [behavioral change](../../categories.md#behavioral-change).
 
 ## Reason for change
 
-The previous behavior was incorrect and misleading. `SafeFileHandle.IsAsync` reported `false` for file descriptors (such as pipes or sockets) that genuinely had `O_NONBLOCK` set. This caused APIs and user code that relied on this property to make incorrect decisions. Accurate `IsAsync` reporting was also a prerequisite for the new `SafeFileHandle.CreateAnonymousPipe` API to correctly expose per-end async semantics on Unix. For more information, see dotnet/runtime#125220.
+The previous behavior was incorrect and misleading. `SafeFileHandle.IsAsync` reported `false` for file descriptors (such as pipes or sockets) that genuinely had `O_NONBLOCK` set. This caused APIs and user code that relied on this property to make incorrect decisions. Accurate `IsAsync` reporting was also a prerequisite for the new `SafeFileHandle.CreateAnonymousPipe` API to correctly expose per-end async semantics on Unix. For more information, see [dotnet/runtime#125220](https://github.com/dotnet/runtime/pull/125220).
 
 ## Recommended action
 
@@ -73,7 +71,7 @@ Review any code that checks `SafeFileHandle.IsAsync` or `FileStream.IsAsync` on 
 
 ## Affected APIs
 
-- `Microsoft.Win32.SafeHandles.SafeFileHandle.IsAsync`
-- `System.IO.FileStream.IsAsync`
-- `System.Net.Sockets.SendPacketsElement.#ctor(System.IO.FileStream,System.Int64,System.Int32)`
-- `System.Net.Sockets.SendPacketsElement.#ctor(System.IO.FileStream,System.Int64,System.Int32,System.Boolean)`
+- <xref:Microsoft.Win32.SafeHandles.SafeFileHandle.IsAsync?displayProperty=fullName>
+- <xref:System.IO.FileStream.IsAsync?displayProperty=fullName>
+- <xref:System.Net.Sockets.SendPacketsElement.%23ctor(System.IO.FileStream,System.Int64,System.Int32)?displayProperty=fullName>
+- <xref:System.Net.Sockets.SendPacketsElement.%23ctor(System.IO.FileStream,System.Int64,System.Int32,System.Boolean)?displayProperty=fullName>

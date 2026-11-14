@@ -1,12 +1,9 @@
 ---
-title: "dotnet nuget trust command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-nuget-trust.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet nuget trust command
+description: The dotnet nuget trust command gets or sets trusted signers to the NuGet configuration.
+author: erdembayar
+ms.date: 10/28/2025
 ---
-
 # dotnet nuget trust
 
 **This article applies to:** ✔️ .NET 6 SDK and later versions
@@ -25,16 +22,14 @@ dotnet nuget trust -h|--help
 
 ## Description
 
-The `dotnet nuget trust` command manages the trusted signers. By default, NuGet accepts all authors and repositories. These commands allow you to specify only a specific subset of signers whose signatures will be accepted, while rejecting all others. For more information, see Common NuGet configurations. For details on what the nuget.config schema looks like, refer to the NuGet config file reference.
+The `dotnet nuget trust` command manages the trusted signers. By default, NuGet accepts all authors and repositories. These commands allow you to specify only a specific subset of signers whose signatures will be accepted, while rejecting all others. For more information, see [Common NuGet configurations](/nuget/consume-packages/configuring-nuget-behavior). For details on what the nuget.config schema looks like, refer to the [NuGet config file reference](/nuget/reference/nuget-config-file).
 
-  > **Note:**
-  > This command requires a certificate root store that is valid for both code signing and timestamping. Also, this command may not be supported on some combinations of operating system and .NET SDK. For more information, see NuGet signed package verification.
+  > [!NOTE]
+  > This command requires a certificate root store that is valid for both code signing and timestamping. Also, this command may not be supported on some combinations of operating system and .NET SDK. For more information, see [NuGet signed package verification](nuget-signed-package-verification.md).
 
 ## Options
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 ## Commands
 
@@ -52,17 +47,11 @@ dotnet nuget trust list [--configfile <PATH>] [-h|--help] [-v, --verbosity <LEVE
 
 #### Options:
 
-- **`--configfile <FILE>`**
+- [!INCLUDE [configfile](includes/cli-configfile.md)]
 
-The NuGet configuration file (*nuget.config*) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see Common NuGet Configurations.
+- [!INCLUDE [help](includes/cli-help.md)]
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
-
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. The default is `minimal`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+- [!INCLUDE [verbosity](includes/cli-verbosity-minimal.md)]
 
 ### `sync`
 
@@ -82,17 +71,11 @@ dotnet nuget trust sync <NAME> [--configfile <PATH>] [-h|--help] [-v, --verbosit
 
 #### Options:
 
-- **`--configfile <FILE>`**
+- [!INCLUDE [configfile](includes/cli-configfile.md)]
 
-The NuGet configuration file (*nuget.config*) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see Common NuGet Configurations.
+- [!INCLUDE [help](includes/cli-help.md)]
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
-
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. The default is `minimal`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+- [!INCLUDE [verbosity](includes/cli-verbosity-minimal.md)]
 
 ### `remove`
 
@@ -109,20 +92,14 @@ dotnet nuget trust remove <NAME> [--configfile <PATH>] [-h|--help] [-v, --verbos
 - **`NAME`**
 
   The name of the existing trusted signer to remove.
-
+  
 #### Options:
 
-- **`--configfile <FILE>`**
+- [!INCLUDE [configfile](includes/cli-configfile.md)]
 
-The NuGet configuration file (*nuget.config*) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see Common NuGet Configurations.
+- [!INCLUDE [help](includes/cli-help.md)]
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
-
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. The default is `minimal`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+- [!INCLUDE [verbosity](includes/cli-verbosity-minimal.md)]
 
 ### `author`
 
@@ -143,24 +120,18 @@ dotnet nuget trust author <NAME> <PACKAGE> [--allow-untrusted-root] [--configfil
 - **`PACKAGE`**
 
   The given `PACKAGE` should be a local path to the signed *.nupkg* file.
-
+  
 #### Options:
 
 - **`--allow-untrusted-root`**
 
   Specifies if the certificate for the trusted signer should be allowed to chain to an untrusted root. This is not recommended.
 
-- **`--configfile <FILE>`**
+- [!INCLUDE [configfile](includes/cli-configfile.md)]
 
-The NuGet configuration file (*nuget.config*) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see Common NuGet Configurations.
+- [!INCLUDE [help](includes/cli-help.md)]
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
-
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. The default is `minimal`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+- [!INCLUDE [verbosity](includes/cli-verbosity-minimal.md)]
 
 ### `repository`
 
@@ -188,21 +159,15 @@ dotnet nuget trust repository <NAME> <PACKAGE> [--allow-untrusted-root] [--confi
 
   Specifies if the certificate for the trusted signer should be allowed to chain to an untrusted root. This is not recommended.
 
-- **`--configfile <FILE>`**
+- [!INCLUDE [configfile](includes/cli-configfile.md)]
 
-The NuGet configuration file (*nuget.config*) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see Common NuGet Configurations.
-
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 - **`--owners <LIST>`**
 
   Semicolon-separated list of trusted owners to further restrict the trust of a repository.
 
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. The default is `minimal`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+- [!INCLUDE [verbosity](includes/cli-verbosity-minimal.md)]
 
 ### `certificate`
 
@@ -234,17 +199,11 @@ dotnet nuget trust certificate <NAME> <FINGERPRINT> [--algorithm <ALGORITHM>] [-
 
   Specifies if the certificate for the trusted signer should be allowed to chain to an untrusted root. This is not recommended.
 
-- **`--configfile <FILE>`**
+- [!INCLUDE [configfile](includes/cli-configfile.md)]
 
-The NuGet configuration file (*nuget.config*) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see Common NuGet Configurations.
+- [!INCLUDE [help](includes/cli-help.md)]
 
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
-
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. The default is `minimal`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+- [!INCLUDE [verbosity](includes/cli-verbosity-minimal.md)]
 
 ### `source`
 
@@ -260,17 +219,13 @@ dotnet nuget trust source <NAME> [--configfile <PATH>] [-h|--help] [--owners <LI
 
 - **`NAME`**
 
-  The name of the trusted signer to add. If only `<NAME>` is provided without `--`, the package source from your NuGet configuration files with the same name is added to the trusted list. If `<NAME>` already exists in the configuration, the package source is appended to it.
+  The name of the trusted signer to add. If only `<NAME>` is provided without `--<source-url>`, the package source from your NuGet configuration files with the same name is added to the trusted list. If `<NAME>` already exists in the configuration, the package source is appended to it.
 
 #### Options:
 
-- **`--configfile <FILE>`**
+- [!INCLUDE [configfile](includes/cli-configfile.md)]
 
-The NuGet configuration file (*nuget.config*) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see Common NuGet Configurations.
-
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 - **`--owners <LIST>`**
 
@@ -280,9 +235,7 @@ Prints out a description of how to use the command.
 
   If a `source-url` is provided, it must be a v3 package source URL (like `https://api.nuget.org/v3/index.json`). Other package source types are not supported.
 
-- **`-v|--verbosity <LEVEL>`**
-
-Sets the verbosity level of the command. Allowed values are `q[uiet]`, `m[inimal]`, `n[ormal]`, `d[etailed]`, and `diag[nostic]`. The default is `minimal`. For more information, see `Microsoft.Build.Framework.LoggerVerbosity`.
+- [!INCLUDE [verbosity](includes/cli-verbosity-minimal.md)]
 
 ## Examples
 

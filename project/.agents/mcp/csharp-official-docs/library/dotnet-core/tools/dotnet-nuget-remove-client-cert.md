@@ -1,12 +1,9 @@
 ---
-title: "dotnet nuget remove client-cert command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/tools/dotnet-nuget-remove-client-cert.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dotnet nuget remove client-cert command
+description: The dotnet nuget remove client-cert command removes the client certificate configuration for a NuGet package source.
+ms.date: 10/23/2026
+ai-usage: ai-generated
 ---
-
 # dotnet nuget remove client-cert
 
 **This article applies to:** ✔️ .NET Core 3.1.400 SDK and later versions
@@ -32,13 +29,9 @@ The command doesn't delete the certificate file, remove certificates from a cert
 
 ## Options
 
-- **`--configfile <FILE>`**
+- [!INCLUDE [configfile](includes/cli-configfile.md)]
 
-The NuGet configuration file (*nuget.config*) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see Common NuGet Configurations.
-
-- **`-?|-h|--help`**
-
-Prints out a description of how to use the command.
+- [!INCLUDE [help](includes/cli-help.md)]
 
 - **`-s|--package-source <SOURCE_NAME>`**
 
@@ -54,7 +47,7 @@ dotnet nuget remove client-cert --package-source Contoso --configfile .\nuget.co
 
 ## See also
 
-- dotnet nuget add client-cert
-- dotnet nuget list client-cert
-- dotnet nuget update client-cert
-- dotnet nuget remove source
+- [dotnet nuget add client-cert](dotnet-nuget-add-client-cert.md)
+- [dotnet nuget list client-cert](dotnet-nuget-list-client-cert.md)
+- [dotnet nuget update client-cert](dotnet-nuget-update-client-cert.md)
+- [dotnet nuget remove source](dotnet-nuget-remove-source.md)

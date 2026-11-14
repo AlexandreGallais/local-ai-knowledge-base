@@ -1,23 +1,23 @@
 ---
-title: "ASP.NET Core SignalR .NET client (part 1 of 2)"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/signalr/dotnet-client.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
----
+title: ASP.NET Core SignalR .NET client
+ai-usage: ai-assisted
+description: Work with the ASP.NET Core SignalR .NET client, including package installation, connecting to a hub, calling hub and client methods, and error handling.
+monikerRange: '>= aspnetcore-2.1'
+ms.date: 10/27/2026
 
+# customer intent: As an ASP.NET developer, I want to configure the ASP.NET Core SignalR .NET client, so I can connect to a SignalR hub and use hub and client methods.
+---
 # ASP.NET Core SignalR .NET client
 
 The ASP.NET Core SignalR .NET client library lets you communicate with SignalR hubs from .NET apps. This article describes how to use the APIs to connect to a SignalR hub, and call the .NET hub and client methods. The code sample in this article is a Windows Presentation Foundation (WPF) app that uses the ASP.NET Core SignalR .NET client.
 
-View or download sample code (how to download)
+[View or download sample code](https://github.com/dotnet/AspNetCore.Docs/tree/main/aspnetcore/signalr/dotnet-client/samples) ([how to download](../fundamentals/index.md#how-to-download-a-sample))
 
 ## Install the SignalR .NET client package
 
-The Microsoft.AspNetCore.SignalR.Client package is required for .NET clients to connect to SignalR hubs. You can install the client library from the Visual Studio **Package Manager Console** or by using the .NET CLI.
+The [Microsoft.AspNetCore.SignalR.Client](https://www.nuget.org/packages/Microsoft.AspNetCore.SignalR.Client) package is required for .NET clients to connect to SignalR hubs. You can install the client library from the Visual Studio **Package Manager Console** or by using the .NET CLI.
 
-# Visual Studio
+# [Visual Studio](#tab/visual-studio)
 
 Run the following command in the **Package Manager Console** window:
 
@@ -25,7 +25,7 @@ Run the following command in the **Package Manager Console** window:
 Install-Package Microsoft.AspNetCore.SignalR.Client
 ```
 
-# .NET CLI
+# [.NET CLI](#tab/net-cli)
 
 Run the following command in a command shell:
 
@@ -39,39 +39,18 @@ dotnet add package Microsoft.AspNetCore.SignalR.Client
 
 To establish a connection, create a `HubConnectionBuilder` and call `Build`. The hub URL, protocol, transport type, log level, headers, and other options can be configured while building a connection. Configure any required options by inserting any of the `HubConnectionBuilder` methods into `Build`. Start the connection with `StartAsync`.
 
-```csharp
-using System;
-using System.Threading.Tasks;
-using System.Windows;
-using Microsoft.AspNetCore.SignalR.Client;
+[!code-csharp[Build hub connection](dotnet-client/samples/SignalRChatClient/MainWindow.xaml.cs?name=snippet_MainWindowClass&highlight=15-17,39)]
 
-namespace SignalRChatClient
-{
-    public partial class MainWindow : Window
-    {
-        HubConnection connection;
-        public MainWindow()
-        {
-            InitializeComponent();
-
-            connection = new HubConnectionBuilder()
-                .WithUrl("http://localhost:53353/ChatHub")
-                .Build();
-
-            connection.Closed += async (error) =>
-            {
-                await Task.Delay(new Random().Next(0,5) * 1000);
-                await connection.StartAsync();
-            };
-```
 
 ## Handle lost connection
+
+:::moniker range=">= aspnetcore-3.0"
 
 To reconnect with clients, you can set up automatic reconnection or configure the reconnection manually.
 
 ### Automatically reconnect
 
-The `Microsoft.AspNetCore.SignalR.Client.HubConnection` can be configured to automatically reconnect by using the `WithAutomaticReconnect` method on the `Microsoft.AspNetCore.SignalR.Client.HubConnectionBuilder`. It doesn't automatically reconnect by default.
+The <xref:Microsoft.AspNetCore.SignalR.Client.HubConnection> can be configured to automatically reconnect by using the `WithAutomaticReconnect` method on the <xref:Microsoft.AspNetCore.SignalR.Client.HubConnectionBuilder>. It doesn't automatically reconnect by default.
 
 ```csharp
 HubConnection connection= new HubConnectionBuilder()
@@ -100,8 +79,8 @@ If the client successfully reconnects within its first four attempts, the `HubCo
 
 Because the connection looks entirely new to the server, a new `ConnectionId` is provided to the `Reconnected` event handlers.
 
-> **Warning:**
-> The `Reconnected` event handler's `connectionId` parameter is `null` if the `HubConnection` is configured to skip negotiation.
+> [!WARNING]
+> The `Reconnected` event handler's `connectionId` parameter is `null` if the `HubConnection` is configured to [skip negotiation](configuration.md#configure-client-options).
 
 ```csharp
 connection.Reconnected += connectionId =>
@@ -143,7 +122,7 @@ public static async Task<bool> ConnectWithRetryAsync(HubConnection connection, C
 }
 ```
 
-If the client doesn't successfully reconnect within its first four attempts, the `HubConnection` transitions to the `Disconnected` state and fires the `Microsoft.AspNetCore.SignalR.Client.HubConnection.Closed` event. This approach provides an opportunity to attempt to restart the connection manually or inform users the connection is now permanently lost.
+If the client doesn't successfully reconnect within its first four attempts, the `HubConnection` transitions to the `Disconnected` state and fires the <xref:Microsoft.AspNetCore.SignalR.Client.HubConnection.Closed> event. This approach provides an opportunity to attempt to restart the connection manually or inform users the connection is now permanently lost.
 
 ```csharp
 connection.Closed += error =>
@@ -214,9 +193,18 @@ HubConnection connection = new HubConnectionBuilder()
 
 Alternatively, you can write code to reconnect your client manually, as demonstrated in the next section.
 
+:::moniker-end
+
 ### Manually reconnect
 
-Use the `Microsoft.AspNetCore.SignalR.Client.HubConnection.Closed` event to respond to a lost connection. For example, you might want to automate reconnection.
+:::moniker range="< aspnetcore-3.0"
+
+> [!WARNING]
+> In versions earlier than 3.0, the .NET client for SignalR doesn't automatically reconnect. You must write code to reconnect your client manually.
+
+:::moniker-end
+
+Use the <xref:Microsoft.AspNetCore.SignalR.Client.HubConnection.Closed> event to respond to a lost connection. For example, you might want to automate reconnection.
 
 The `Closed` event requires a delegate that returns a `Task`, which allows async code to run without using `async void`. To satisfy the delegate signature in a `Closed` event handler that runs synchronously, return `Task.CompletedTask`:
 
@@ -231,33 +219,26 @@ The main reason for the async support is so you can restart the connection. Star
 
 In a `Closed` handler that restarts the connection, consider waiting for some random delay to prevent overloading the server, as shown in the following example:
 
-```csharp
-connection.Closed += async (error) =>
-{
-    await Task.Delay(new Random().Next(0,5) * 1000);
-    await connection.StartAsync();
-};
-```
+[!code-csharp[Use Closed event handler to automate reconnection](dotnet-client/samples/SignalRChatClient/MainWindow.xaml.cs?name=snippet_ClosedRestart)]
 
 ## Call hub methods from client
 
 `InvokeAsync` calls methods on the hub. Pass the hub method name and any arguments defined in the hub method to `InvokeAsync`. SignalR is asynchronous, so use `async` and `await` when making the calls.
 
-```csharp
-await connection.InvokeAsync("SendMessage", 
-    userTextBox.Text, messageTextBox.Text);
-```
+[!code-csharp[InvokeAsync method](dotnet-client/samples/SignalRChatClient/MainWindow.xaml.cs?name=snippet_InvokeAsync)]
 
 The `InvokeAsync` method returns a `Task` that completes when the server method returns. The return value, if any, is provided as the result of the `Task`. Any exceptions thrown by the method on the server produce a faulted `Task`. Use `await` syntax to wait for the server method to complete and `try...catch` syntax to handle errors.
 
 The `SendAsync` method returns a `Task` that completes when the message is sent to the server. No return value is provided because this `Task` doesn't wait until the server method completes. Any exceptions thrown on the client while sending the message produce a faulted `Task`. Use `await` and `try...catch` syntax to handle message send errors.
 
-> **Note:**
-> Calling hub methods from a client is supported only when using the Azure SignalR Service in *Default* mode. For more information, see Frequently Asked Questions.
+> [!NOTE]
+> Calling hub methods from a client is supported only when using the Azure SignalR Service in *Default* mode. For more information, see [Frequently Asked Questions](/azure/azure-signalr/signalr-resource-faq).
+
+:::moniker range=">= aspnetcore-11.0"
 
 ### Cancel a hub method invocation
 
-Pass a `System.Threading.CancellationToken` to `InvokeAsync` to cancel a long-running hub method. Canceling the token sends a cancellation message to the server, which triggers the `CancellationToken` parameter of the running hub method:
+Pass a <xref:System.Threading.CancellationToken> to `InvokeAsync` to cancel a long-running hub method. Canceling the token sends a cancellation message to the server, which triggers the `CancellationToken` parameter of the running hub method:
 
 ```csharp
 using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
@@ -265,7 +246,7 @@ using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 try
 {
     var report = await hubConnection.InvokeAsync<Report>(
-        "<example-value>", reportId, cts.Token);
+        "GenerateReport", reportId, cts.Token);
 }
 catch (OperationCanceledException)
 {
@@ -279,9 +260,9 @@ The hub method must declare a `CancellationToken` parameter to observe the cance
 public class ReportHub : Hub
 {
     public async Task<Report> GenerateReport(
-        int reportId, CancellationToken <example-value>)
+        int reportId, CancellationToken cancellationToken)
     {
-        // Pass <example-value> to the work being performed.
+        // Pass cancellationToken to the work being performed.
     }
 }
 ```
@@ -289,11 +270,69 @@ public class ReportHub : Hub
 Note the following about cancellation:
 
 * Cancellation is cooperative. The server requests cancellation, but the hub method decides whether and how quickly to stop. The server sends a completion message for the invocation either way.
-* If the hub method allows an `System.OperationCanceledException` to propagate, the invocation completes with an error rather than as a canceled invocation.
+* If the hub method allows an <xref:System.OperationCanceledException> to propagate, the invocation completes with an error rather than as a canceled invocation.
 * The `CancellationToken` supplied to the hub method is also canceled when the connection closes, so it isn't only triggered by an explicit client cancellation.
 * The caller's `Task` is canceled on the client as soon as the cancellation message is sent. It doesn't wait for the hub method to stop.
 * Cancellation applies to `InvokeAsync`, which tracks an invocation ID. `SendAsync` doesn't wait for the hub method, so there's nothing for it to cancel.
 
 Before ASP.NET Core 11.0, a `CancellationToken` passed to a non-streaming `InvokeAsync` only canceled the wait on the client. The hub method ran to completion on the server. Only streaming invocations could be canceled. This is also the behavior against a server running an earlier version of ASP.NET Core.
 
-Canceling a non-streaming invocation is supported by the .NET client only. The JavaScript, Java, and Swift clients can cancel streaming invocations, but their `invoke` equivalents don't accept a cancellation argument. See ASP.NET Core SignalR clients.
+Canceling a non-streaming invocation is supported by the .NET client only. The JavaScript, Java, and Swift clients can cancel streaming invocations, but their `invoke` equivalents don't accept a cancellation argument. See [ASP.NET Core SignalR clients](client-features.md).
+
+:::moniker-end
+
+## Call client methods from hub
+
+Define the methods that the hub calls by using `connection.On`. Typically, handlers are registered after building the connection and before starting it:
+
+[!code-csharp[Define client methods](dotnet-client/samples/SignalRChatClient/MainWindow.xaml.cs?name=snippet_ConnectionOn)]
+
+The preceding code in `connection.On` runs when server-side code calls it by using the `SendAsync` method:
+
+[!code-csharp[Call client method](dotnet-client/samples/SignalRChat/Hubs/ChatHub.cs?name=snippet_SendMessage)]
+
+Registering handlers before calling `StartAsync` is recommended to avoid missing incoming messages that the server may send immediately upon connecting. However, handlers can also be registered dynamically after the connection has already started.
+
+To unregister a handler:
+
+* Call <xref:System.IDisposable.Dispose*> on the `IDisposable` returned by `connection.On`:
+
+  ```csharp
+  IDisposable handler = connection.On<string, string>("ReceiveMessage", (user, message) =>
+  {
+      // ...
+  });
+
+  // Later, stop listening for messages:
+  handler.Dispose();
+  ```
+
+* In ASP.NET Core 2.2 and later, call <xref:Microsoft.AspNetCore.SignalR.Client.HubConnection.Remove*> with the method name to remove all handlers registered for that method:
+
+  ```csharp
+  connection.Remove("ReceiveMessage");
+  ```
+
+> [!NOTE]
+> While the hub side of the connection supports strongly typed messaging, the client must register by using the generic method <xref:Microsoft.AspNetCore.SignalR.Client.HubConnection.On*?displayProperty=nameWithType> with the method name. For an example, see [Host ASP.NET Core SignalR in background services](background-services.md#call-a-signalr-hub-from-a-background-service).
+
+## Error handling and logging
+
+Handle errors with a `try...catch` statement. Inspect the `Exception` object to determine the proper action to take after an error occurs:
+
+[!code-csharp[Logging](dotnet-client/samples/SignalRChatClient/MainWindow.xaml.cs?name=snippet_ErrorHandling)]
+
+:::moniker range=">= aspnetcore-11.0"
+
+## Refresh authentication without reconnecting
+
+When the server enables authentication refresh, the .NET client can replace the credentials on an open connection instead of letting the connection close when its access token expires. Automatic refresh is enabled by default, and <xref:Microsoft.AspNetCore.SignalR.Client.HubConnection> exposes a `RefreshAuthenticationAsync` method that requests an immediate refresh. To change the refresh timing or turn automatic refresh off, call `WithAuthenticationRefresh` when building the connection. For the client options, the refresh events, and the server options that enable the feature, see [SignalR authentication and authorization](authn-and-authz.md#authentication-refresh).
+
+:::moniker-end
+
+## Related content
+
+* [Hubs](hubs.md)
+* [JavaScript client](javascript-client.md)
+* [Publish to Azure](publish-to-azure-web-app.md)
+* [Azure Functions development and configuration with Azure SignalR Service](/azure/azure-signalr/signalr-concept-serverless-development-config)

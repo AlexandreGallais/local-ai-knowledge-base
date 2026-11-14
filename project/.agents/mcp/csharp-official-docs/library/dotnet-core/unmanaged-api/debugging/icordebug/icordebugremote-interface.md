@@ -1,12 +1,20 @@
 ---
+description: "Learn more about: ICorDebugRemote Interface"
 title: "ICorDebugRemote Interface"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugremote-interface.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
+api_name:
+  - "ICorDebugRemote"
+api_location:
+  - "CorDebug.dll"
+api_type:
+  - "COM"
+f1_keywords:
+  - "ICorDebugRemote"
+helpviewer_keywords:
+  - "ICorDebugRemote interface [.NET debugging]"
+topic_type:
+  - "apiref"
 ---
-
 # ICorDebugRemote Interface
 
 Provides the ability to launch or attach a managed debugger to a remote target process.
@@ -47,8 +55,8 @@ interface ICorDebugRemote : IUnknown
 
 |Method|Description|
 |------------|-----------------|
-|ICorDebugRemote::CreateProcessEx Method|Creates a process on a remote machine for managed debugging.|
-|ICorDebugRemote::DebugActiveProcessEx Method|Launches a process on a remote machine under the debugger.|
+|[ICorDebugRemote::CreateProcessEx Method](icordebugremote-createprocessex-method.md)|Creates a process on a remote machine for managed debugging.|
+|[ICorDebugRemote::DebugActiveProcessEx Method](icordebugremote-debugactiveprocessex-method.md)|Launches a process on a remote machine under the debugger.|
 
 ## Remarks
 
@@ -56,7 +64,7 @@ Currently, this functionality is supported only for debugging a Silverlight-base
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -66,5 +74,5 @@ Currently, this functionality is supported only for debugging a Silverlight-base
 
 ## See also
 
-- ICorDebugRemoteTarget Interface
-- ICorDebug Interface
+- [ICorDebugRemoteTarget Interface](icordebugremotetarget-interface.md)
+- [ICorDebug Interface](icordebug-interface.md)

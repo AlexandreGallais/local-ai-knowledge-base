@@ -1,12 +1,8 @@
 ---
+description: "Learn more about: ICorDebugMutableDataTarget::SetThreadContext Method"
 title: "ICorDebugMutableDataTarget::SetThreadContext Method"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/unmanaged-api/debugging/icordebug/icordebugmutabledatatarget-setthreadcontext-method.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+ms.date: "03/30/2017"
 ---
-
 # ICorDebugMutableDataTarget::SetThreadContext Method
 
 Sets the context (register values) for a thread.
@@ -32,11 +28,11 @@ HRESULT SetThreadContext(
 
 ## Remarks
 
-The `SetThreadContext` method updates the current context for the thread specified by the operating system-defined `dwThreadID` argument. The format of the context record is determined by the platform indicated by the ICorDebugDataTarget::GetPlatform method. On Windows, this is a CONTEXT structure.
+The `SetThreadContext` method updates the current context for the thread specified by the operating system-defined `dwThreadID` argument. The format of the context record is determined by the platform indicated by the [ICorDebugDataTarget::GetPlatform](icordebugdatatarget-getplatform-method.md) method. On Windows, this is a [CONTEXT](/windows/win32/api/winnt/ns-winnt-arm64_nt_context) structure.
 
 ## Requirements
 
- **Platforms:** See .NET supported operating systems.
+ **Platforms:** See [.NET supported operating systems](https://github.com/dotnet/core/blob/main/os-lifecycle-policy.md).
 
  **Header:** CorDebug.idl, CorDebug.h
 
@@ -46,4 +42,4 @@ The `SetThreadContext` method updates the current context for the thread specifi
 
 ## See also
 
-- ICorDebugMutableDataTarget Interface
+- [ICorDebugMutableDataTarget Interface](icordebugmutabledatatarget-interface.md)

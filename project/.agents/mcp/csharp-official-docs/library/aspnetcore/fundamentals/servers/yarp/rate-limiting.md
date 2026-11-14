@@ -1,10 +1,10 @@
 ---
-title: "YARP Rate Limiting"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/fundamentals/servers/yarp/rate-limiting.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: YARP Rate Limiting
+description: YARP Rate Limiting
+ms.date: 2/6/2025
+ms.topic: concept-article
+content_well_notification: AI-contribution
+ai-usage: ai-assisted
 ---
 
 # YARP Rate Limiting
@@ -25,7 +25,7 @@ services.AddRateLimiter(options => options.GlobalLimiter = globalLimiter);
 ```
 
 ## Configuration
-Rate Limiter policies can be specified per route via RouteConfig.RateLimiterPolicy and can be bound from the `Routes` sections of the config file. As with other route properties, this can be modified and reloaded without restarting the proxy. Policy names are case insensitive.
+Rate Limiter policies can be specified per route via [RouteConfig.RateLimiterPolicy](xref:Yarp.ReverseProxy.Configuration.RouteConfig) and can be bound from the `Routes` sections of the config file. As with other route properties, this can be modified and reloaded without restarting the proxy. Policy names are case insensitive.
 
 Example:
 ```json
@@ -53,7 +53,7 @@ Example:
 }
 ```
 
-RateLimiter policies are an ASP.NET Core concept that the proxy utilizes. The proxy provides the above configuration to specify a policy per route and the rest is handled by existing ASP.NET Core rate limiting middleware.
+[RateLimiter policies](../../../performance/rate-limit.md) are an ASP.NET Core concept that the proxy utilizes. The proxy provides the above configuration to specify a policy per route and the rest is handled by existing ASP.NET Core rate limiting middleware.
 
 RateLimiter policies can be configured in services as follows:
 
@@ -78,7 +78,7 @@ app.UseRateLimiter();
 app.MapReverseProxy();
 ```
 
-See the Rate Limiting docs for setting up your preferred kind of rate limiting.
+See the [Rate Limiting](../../../performance/rate-limit.md) docs for setting up your preferred kind of rate limiting.
 
 ### Disable Rate Limiting
 

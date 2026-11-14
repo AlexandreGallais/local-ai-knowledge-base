@@ -1,12 +1,9 @@
 ---
 title: "Breaking change: Obsolete ModelMetadataIdentity.ForProperty overload removed"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/breaking-changes/11/modelmetadataidentity-forproperty-removed.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+ai-usage: ai-assisted
+description: "Learn about the breaking change in ASP.NET Core 11 where the obsolete ModelMetadataIdentity.ForProperty(Type, string, Type) overload is removed."
+ms.date: 08/05/2026
 ---
-
 # Obsolete `ModelMetadataIdentity.ForProperty` overload removed
 
 The `ModelMetadataIdentity.ForProperty(Type modelType, string name, Type containerType)` overload, which has been obsolete since ASP.NET Core 3.1, is removed in ASP.NET Core 11.
@@ -26,15 +23,15 @@ var identity = ModelMetadataIdentity.ForProperty(
 
 ## New behavior
 
-Starting in ASP.NET Core 11, the API no longer exists. Code that calls it fails to compile, and existing binaries that call it fail at runtime with a `System.MissingMethodException`.
+Starting in ASP.NET Core 11, the API no longer exists. Code that calls it fails to compile, and existing binaries that call it fail at runtime with a <xref:System.MissingMethodException>.
 
 ## Type of breaking change
 
-This change can affect binary compatibility and source compatibility.
+This change can affect [binary compatibility](/dotnet/core/compatibility/categories#binary-compatibility) and [source compatibility](/dotnet/core/compatibility/categories#source-compatibility).
 
 ## Reason for change
 
-The API was marked obsolete in ASP.NET Core 3.1 in dotnet/aspnetcore#15134 because a better overload that accepts a `System.Reflection.PropertyInfo` is available. The obsolete overload was removed in dotnet/aspnetcore#67077.
+The API was marked obsolete in ASP.NET Core 3.1 in [dotnet/aspnetcore#15134](https://github.com/dotnet/aspnetcore/pull/15134) because a better overload that accepts a <xref:System.Reflection.PropertyInfo> is available. The obsolete overload was removed in [dotnet/aspnetcore#67077](https://github.com/dotnet/aspnetcore/pull/67077).
 
 ## Recommended action
 

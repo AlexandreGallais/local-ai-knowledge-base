@@ -1,10 +1,9 @@
 ---
-title: "dnim update command"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/additional-tools/dnim-cli-update.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: dnim update command
+description: The update command updates existing .NET installations.
+author: joeloff
+ms.date: 11/10/2026
+ai-usage: ai-assisted
 ---
 
 # dnim update
@@ -53,7 +52,7 @@ dnim-win-[x86|x64|arm64] update -?|-h|--help
 
 The `update` command detects, classifies, removes and updates .NET installations on Windows. MSIs and bundles are detected by default. Bin deployed (xcopy/zip) installs under `Program Files` can be detected using the `--include-bin-deployed-installs` option.
 
-> **Caution:**
+> [!CAUTION]
 > DNIM always attempts to remove all copies of .NET on a device before updating, even if the latest release is installed. Use the `--what-if` option to review planned actions and consider using the `--keep-latest-product-version` and `--keep-latest-support-phase` options to retain specific installations.
 
 The command can target specific products based on their product version, support phase, type and release version. Only standalone bundles can be updated. Installations of .NET that came from Visual Studio will require you to update Visual Studio. DNIM will not update Visual Studio.
@@ -62,140 +61,61 @@ The command will first remove any applicable installs before applying updates. T
 
 ## Options
 
-- **`-a|--accept-license`**
+- [!INCLUDE [accept-license](includes/dnim-cli-accept-license.md)]
 
-Automatically accept the license agreement. On first run, the user will be prompted to accept the license. The command will fail if the verbosity is set to `quiet` and the tool is executed for the first time. Administrators should include this option when deploying DNIM across their network.
+- [!INCLUDE [bin-deployed-installs](includes/dnim-cli-include-bin-deployed-installs.md)]
 
-- **`-b|--include-bin-deployed-installs`**
+- [!INCLUDE [create-system-restore-point](includes/dnim-cli-create-system-restore-point.md)]
 
-Search for bin-deployed installations under Program Files. This option will incur additional overhead to verify installations that aren't backed by an MSI.
+- [!INCLUDE [download-updates-when-offline](includes/dnim-cli-download-updates-when-offline.md)]
 
-- **`--csrp|--create-system-restore-point`**
+- [!INCLUDE [except-product-version](includes/dnim-cli-except-product-version.md)]
+  
+- [!INCLUDE [except-support-phase](includes/dnim-cli-except-support-phase.md)]
 
-Create a system restore point before making changes to the machine. This option has no effect when System Restore isn't supported, such as on Windows Server, or when the service is disabled.
+- [!INCLUDE [ignore-dependents](includes/dnim-cli-ignore-dependents.md)]
 
-Refer to the System Restore documentation for additional information.
+- [!INCLUDE [install-type](includes/dnim-cli-install-type.md)]
 
-- **`--duwo|--download-updates-when-offline`**
+- [!INCLUDE [keep-latest-product-version](includes/dnim-cli-keep-latest-product-version.md)]
 
-Allow missing updates to be downloaded when offline.
+- [!INCLUDE [keep-latest-support-phase](includes/dnim-cli-keep-latest-support-phase.md)]
 
-> **Tip:**
-> This option is useful when DNIM is deployed offline, but Administrators still want devices to update even when they are not connected to a corporate network. For example, a user might take their laptop home before DNIM is deployed.
+- [!INCLUDE [log-file](includes/dnim-cli-log-file.md)]
 
-- **`--epv|--except-product-version <PRODUCT_VERSION>`**
+- [!INCLUDE [log-extra-debug-information](includes/dnim-cli-log-extra-debug-information.md)]
 
-Exclude installations that match the specified product version. Product versions contain a major and minor version, such as `2.2` or `5.0`. Specify the option once for each product version.
+- [!INCLUDE [no-wua](includes/dnim-cli-no-wua.md)]
 
-> **Note:**
-> The `--product-version` and `--except-product-version` options are mutually exclusive.
+- [!INCLUDE [output-file](includes/dnim-cli-output-file.md)]
 
-- **`--esp|--except-support-phase <active|eol|golive|maintenance|preview>`**
+- [!INCLUDE [offline](includes/dnim-cli-offline.md)]
 
-Exclude installations that match the specified support phase. Specify the option once for each support phase.
+- [!INCLUDE [offline-revocation-checks](includes/dnim-cli-offline-revocation-checks.md)]
 
-> **Note:**
-> The `--support-phase` and `--except-support-phase` options are mutually exclusive.
+- [!INCLUDE [output-format](includes/dnim-cli-output-format.md)]
 
-- **`--ignore-dependents`**
+- [!INCLUDE [product-version](includes/dnim-cli-product-version.md)]
 
-Ignore installation dependencies that would otherwise prevent packages from being removed.
+- [!INCLUDE [remove-EOL-versions-from-VS](includes/dnim-cli-remove-eol-versions-from-vs.md)]
 
-- **`--it|--install-type <msi|bundle|bin|hosting|runtime|aspnetruntime|desktopruntime|sdk|x86|x64|arm64>`**
+- [!INCLUDE [remove-orphaned-installs](includes/dnim-cli-remove-orphaned-installs.md)]
 
-Target installations based on their package type, component, or architecture. You can specify this option multiple times. For example, use `--it sdk --it x64` to only target 64-bit SDK installations.
+- [!INCLUDE [report-issues](includes/dnim-cli-report-issues.md)]
 
-- **`--klpv|--keep-latest-product-version <PRODUCT_VERSION>`**
+- [!INCLUDE [release-version](includes/dnim-cli-release-version.md)]
 
-Keep an installation when it matches the specified product version and is the latest known version of that product. Specify the option once for each product version.
+- [!INCLUDE [support-phase](includes/dnim-cli-support-phase.md)]
 
-- **`--klsp|--keep-latest-support-phase <active|eol|golive|maintenance|preview>`**
+- [!INCLUDE [update-discontinued-sdks](includes/dnim-cli-update-discontinued-sdks.md)]
 
-Keep an installation when it matches the specified support phase and is the latest known version. Specify the option once for each support phase.
+- [!INCLUDE [update-EOL-versions](includes/dnim-cli-update-eol-versions.md)]
 
-- **`-l|--log-file <LOG_FILE>`**
+- [!INCLUDE [verbosity](includes/dnim-cli-verbosity.md)]
 
-Specify the path of the log file. By default, DNIM creates a timestamped log file in the user's temporary directory.
+- [!INCLUDE [verify-signatures](includes/dnim-cli-verify-signatures.md)]
 
-- **`--lx|--log-extra-debug-information`**
-
-Enable additional debug logging when directly executing an MSI. This option doesn't set the Windows Installer logging policy and doesn't affect MSIs executed as part of a bundle.
-
-- **`--no-wua`**
-
-Temporarily stop the Windows Update Agent service when executing installation packages. DNIM stops the service only if it's running and restarts it only if DNIM stopped it. The option is intended to minimize the impact from other updates that may interfere with updating .NET.
-
-> **Caution:**
-> DNIM will make a best effort to restart WUA. It is possible for DNIM to exit abruptly before it is able to restart WUA if the process is killed. This could leave a device in a vulnerable state.
-
-- **`-o|--output-file <OUTPUT_FILE>`**
-
-Specify the full path of the file where DNIM writes the command results.
-
-- **`--offline <LAYOUT_DIRECTORY>`**
-
-Use files from the specified layout directory instead of retrieving required files from the internet.
-
-- **`--offline-revocation-checks`**
-
-Use cached certificate revocation lists when verifying file signatures. Use this option on machines with restricted network access.
-
-- **`--output-format <text|csv|html|json>`**
-
-Specify the output format for command results. The default format is `csv`.
-
-- **`--pv|--product-version <PRODUCT_VERSION>`**
-
-Include installations that match the specified product version. Product versions contain a major and minor version, such as `2.2` or `5.0`. Specify the option once for each product version. By default, all known product versions are included.
-
-> **Note:**
-> The `--product-version` and `--except-product-version` options are mutually exclusive.
-
-- **`--remove-EOL-versions-from-VS`**
-
-Remove end-of-life .NET installations installed by Visual Studio if every Visual Studio instance designates the installation as out of support.
-
-> **Note:**
-> Starting with Visual Studio 15.9.27, 16.0.18, 16.4.13, 16.7.3 and 16.8 Preview 3, packages and components can be designated as out-of-support. Visual Studio will not reinstall out-of-support packages that have been manually uninstalled.
-
-- **`--remove-orphaned-installs`**
-
-Identify and remove orphaned installations that have dangling dependents.
-
-- **`--ri|--report-issues`**
-
-Return a nonzero exit code when the command succeeds but detects installations that require action. This option applies only when combined with `--what-if` and can be used by Intune detection scripts to trigger remediation.
-
-- **`--rv|--release-version <RELEASE_VERSION_RANGE>`**
-
-Include a specific version or range of versions using interval notation. For example, `[,7.0.3)` selects versions earlier than 7.0.3, and `[6.0.15]` selects only version 6.0.15. This option can't be combined with other installation filtering options.
-
-- **`--sp|--support-phase <active|eol|golive|maintenance|preview>`**
-
-Include only products, releases, or installations that match the specified support phase. Specify the option once for each support phase. By default, all support phases are included.
-
-> **Note:**
-> The `--support-phase` and `--except-support-phase` options are mutually exclusive.
-
-- **`--update-discontinued-sdks`**
-
-Allow SDK updates when an installed feature band has been discontinued. DNIM selects the highest applicable feature band and patch.
-
-- **`--update-EOL-versions`**
-
-Update end-of-life installations to the latest available version.
-
-- **`-v|--verbosity <quiet|normal|diagnostic>`**
-
-Set the console output verbosity. Log files always contain diagnostic output. The default value is `normal`.
-
-- **`--verify-signatures <always|bypass|never>`**
-
-Control signature verification before DNIM executes a bundle. Daily .NET builds are unsigned and aren't removed by default. The default value is `always`.
-
-- **`--what-if`**
-
-Display the actions the command would take without making changes to the system.
+- [!INCLUDE [what-if](includes/dnim-cli-what-if.md)]
 
 ## Results
 
@@ -223,4 +143,4 @@ The results are similar to that of the uninstall command, but additional columns
 
 ## See also
 
-.NET Installs
+[.NET Installs](dnim-net-installs.md)

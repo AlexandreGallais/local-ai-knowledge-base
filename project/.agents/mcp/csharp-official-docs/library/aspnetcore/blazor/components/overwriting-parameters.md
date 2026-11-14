@@ -1,15 +1,14 @@
 ---
-title: "Avoid overwriting parameters in ASP.NET Core Blazor"
-tool: "aspnetcore"
-version: "11"
-source: "https://github.com/dotnet/AspNetCore.Docs/blob/692feee601358eeb5d8915b46143303f45e83887/aspnetcore/blazor/components/overwriting-parameters.md"
-commit: "692feee601358eeb5d8915b46143303f45e83887"
-license: "CC-BY-4.0"
+title: Avoid overwriting parameters in ASP.NET Core Blazor
+description: Learn how to avoid overwriting parameters in Blazor apps during rerendering.
+monikerRange: '>= aspnetcore-3.1'
+ms.date: 11/11/2025
 ---
-
 # Avoid overwriting parameters in ASP.NET Core Blazor
 
-By Robert Haken
+[!INCLUDE[](~/includes/not-latest-version.md)]
+
+By [Robert Haken](https://havit.blazor.eu)
 
 This article explains how to avoid overwriting parameters in Blazor apps during rerendering.
 
@@ -28,7 +27,7 @@ A child component receives new parameter values that possibly overwrite existing
 
 The potential for overwriting parameter values extends into the child component's property `set` accessors, too.
 
-> **Important:**
+> [!IMPORTANT]
 > Our general guidance is not to create components that directly write to their own parameters after the component is rendered for the first time.
 
 Consider the following `ShowMoreExpander` component that:
@@ -41,42 +40,147 @@ After the following `ShowMoreExpander` component demonstrates an overwritten par
 
 `ShowMoreExpander.razor`:
 
-_Code sample not included: ~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/BadShowMoreExpander.razor._
-The `ShowMoreExpander` component is added to the following `Expanders` parent component that may call `Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*`:
+:::moniker range=">= aspnetcore-9.0"
 
-* Calling `Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*` in developer code notifies a component that its state has changed and typically enqueues component rerendering to update the UI. `Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*` is covered in more detail later in ASP.NET Core Razor component lifecycle and ASP.NET Core Razor component rendering.
-* The button's `@onclick` directive attribute attaches an event handler to the button's `onclick` event. Event handling is covered in more detail later in ASP.NET Core Blazor event handling.
+:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/BadShowMoreExpander.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
+
+:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/BadShowMoreExpander.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
+
+:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Shared/overwriting-parameters/BadShowMoreExpander.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
+
+:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Shared/overwriting-parameters/BadShowMoreExpander.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
+
+:::code language="razor" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/Shared/overwriting-parameters/BadShowMoreExpander.razor":::
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-5.0"
+
+:::code language="razor" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/Shared/overwriting-parameters/BadShowMoreExpander.razor":::
+
+:::moniker-end
+
+The `ShowMoreExpander` component is added to the following `Expanders` parent component that may call <xref:Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*>:
+
+* Calling <xref:Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*> in developer code notifies a component that its state has changed and typically enqueues component rerendering to update the UI. <xref:Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*> is covered in more detail later in [ASP.NET Core Razor component lifecycle](lifecycle.md) and [ASP.NET Core Razor component rendering](rendering.md#statehaschanged).
+* The button's `@onclick` directive attribute attaches an event handler to the button's `onclick` event. Event handling is covered in more detail later in [ASP.NET Core Blazor event handling](event-handling.md).
 
 `Expanders.razor`:
 
-_Code sample not included: ~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/Expanders.razor._
+:::moniker range=">= aspnetcore-9.0"
+
+:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/Expanders.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
+
+:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/Expanders.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
+
+:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/overwriting-parameters/Expanders.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
+
+:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Pages/overwriting-parameters/Expanders.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
+
+:::code language="razor" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/Pages/overwriting-parameters/Expanders.razor":::
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-5.0"
+
+:::code language="razor" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/Pages/overwriting-parameters/Expanders.razor":::
+
+:::moniker-end
+
 Initially, the `ShowMoreExpander` components behave independently when their `InitiallyExpanded` properties are set. The child components maintain their states as expected.
 
-If `Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*` is called in a parent component, the Blazor framework rerenders child components if their parameters might have changed:
+If <xref:Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*> is called in a parent component, the Blazor framework rerenders child components if their parameters might have changed:
 
 * For a group of parameter types that Blazor explicitly checks, Blazor rerenders a child component if it detects that any of the parameters have changed.
-* For unchecked parameter types, Blazor rerenders the child component *regardless of whether or not the parameters have changed*. Child content falls into this category of parameter types because child content is of type `Microsoft.AspNetCore.Components.RenderFragment`, which is a delegate that refers to other mutable objects.
+* For unchecked parameter types, Blazor rerenders the child component *regardless of whether or not the parameters have changed*. Child content falls into this category of parameter types because child content is of type <xref:Microsoft.AspNetCore.Components.RenderFragment>, which is a delegate that refers to other mutable objects.
 
 For the `Expanders` component:
 
-* The first `ShowMoreExpander` component sets child content in a potentially mutable `Microsoft.AspNetCore.Components.RenderFragment`, so a call to `Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*` in the parent component automatically rerenders the component and potentially overwrites the value of `InitiallyExpanded` to its initial value of `false`.
-* The second `ShowMoreExpander` component doesn't set child content. Therefore, a potentially mutable `Microsoft.AspNetCore.Components.RenderFragment` doesn't exist. A call to `Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*` in the parent component doesn't automatically rerender the child component, so the component's `InitiallyExpanded` value isn't overwritten.
+* The first `ShowMoreExpander` component sets child content in a potentially mutable <xref:Microsoft.AspNetCore.Components.RenderFragment>, so a call to <xref:Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*> in the parent component automatically rerenders the component and potentially overwrites the value of `InitiallyExpanded` to its initial value of `false`.
+* The second `ShowMoreExpander` component doesn't set child content. Therefore, a potentially mutable <xref:Microsoft.AspNetCore.Components.RenderFragment> doesn't exist. A call to <xref:Microsoft.AspNetCore.Components.ComponentBase.StateHasChanged*> in the parent component doesn't automatically rerender the child component, so the component's `InitiallyExpanded` value isn't overwritten.
 
 To maintain state in the preceding scenario, use a *private field* in the `ShowMoreExpander` component to maintain its state.
 
 The following revised `ShowMoreExpander` component:
 
 * Accepts the `InitiallyExpanded` component parameter value from the parent.
-* Assigns the component parameter value to a *private field* (`expanded`) in the `OnInitialized` event.
+* Assigns the component parameter value to a *private field* (`expanded`) in the [`OnInitialized` event](lifecycle.md#component-initialization-oninitializedasync).
 * Uses the private field to maintain its internal toggle state, which demonstrates how to avoid writing directly to a parameter.
 
-> **Note:**
+> [!NOTE]
 > The advice in this section extends to similar logic in component parameter `set` accessors, which can result in similar undesirable side effects.
 
 `ShowMoreExpander.razor`:
 
-_Code sample not included: ~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/ShowMoreExpander.razor._
-> **Note:**
+:::moniker range=">= aspnetcore-9.0"
+
+:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/ShowMoreExpander.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
+
+:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/ShowMoreExpander.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
+
+:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Shared/overwriting-parameters/ShowMoreExpander.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
+
+:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Shared/overwriting-parameters/ShowMoreExpander.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
+
+:::code language="razor" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/Shared/overwriting-parameters/ShowMoreExpander.razor":::
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-5.0"
+
+:::code language="razor" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/Shared/overwriting-parameters/ShowMoreExpander.razor":::
+
+:::moniker-end
+
+> [!NOTE]
 > The revised `ShowMoreExpander` doesn't reflect changes to the `InitiallyExpanded` parameter after initialization (`OnInitialized`). In certain scenarios, an already initialized component might receive new parameter values. This can happen, for example, in a primary-subordinate view where the same component is used to render different detail views or when the `/item/{id}` route parameter changes to display a different item.
 
 Consider following `ToggleExpander` component that:
@@ -86,16 +190,86 @@ Consider following `ToggleExpander` component that:
 
 `ToggleExpander.razor`:
 
-_Code sample not included: ~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/ToggleExpander.razor._
+:::moniker range=">= aspnetcore-9.0"
+
+:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/ToggleExpander.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
+
+:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/ToggleExpander.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
+
+:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Shared/overwriting-parameters/ToggleExpander.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
+
+:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Shared/overwriting-parameters/ToggleExpander.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
+
+:::code language="razor" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/Shared/overwriting-parameters/ToggleExpander.razor":::
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-5.0"
+
+:::code language="razor" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/Shared/overwriting-parameters/ToggleExpander.razor":::
+
+:::moniker-end
+
 The `ToggleExpander` component should be used with the `@bind-Expanded="{field}"` binding syntax, allowing two-way synchronization of the parameter.
 
 `ExpandersToggle.razor`:
 
-_Code sample not included: ~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/ExpandersToggle.razor._
+:::moniker range=">= aspnetcore-9.0"
+
+:::code language="razor" source="~/../blazor-samples/9.0/BlazorSample_BlazorWebApp/Components/Pages/ExpandersToggle.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-8.0 < aspnetcore-9.0"
+
+:::code language="razor" source="~/../blazor-samples/8.0/BlazorSample_BlazorWebApp/Components/Pages/ExpandersToggle.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-7.0 < aspnetcore-8.0"
+
+:::code language="razor" source="~/../blazor-samples/7.0/BlazorSample_WebAssembly/Pages/overwriting-parameters/ExpandersToggle.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-6.0 < aspnetcore-7.0"
+
+:::code language="razor" source="~/../blazor-samples/6.0/BlazorSample_WebAssembly/Pages/overwriting-parameters/ExpandersToggle.razor":::
+
+:::moniker-end
+
+:::moniker range=">= aspnetcore-5.0 < aspnetcore-6.0"
+
+:::code language="razor" source="~/../blazor-samples/5.0/BlazorSample_WebAssembly/Pages/overwriting-parameters/ExpandersToggle.razor":::
+
+:::moniker-end
+
+:::moniker range="< aspnetcore-5.0"
+
+:::code language="razor" source="~/../blazor-samples/3.1/BlazorSample_WebAssembly/Pages/overwriting-parameters/ExpandersToggle.razor":::
+
+:::moniker-end
+
 For more information on parent-child binding, see the following resources:
 
-* Binding with component parameters
-* Bind across more than two components
-* Blazor Two Way Binding Error (dotnet/aspnetcore #24599)
+* [Binding with component parameters](data-binding.md#binding-with-component-parameters)
+* [Bind across more than two components](data-binding.md#bind-across-more-than-two-components)
+* [Blazor Two Way Binding Error (dotnet/aspnetcore #24599)](https://github.com/dotnet/aspnetcore/issues/24599)
 
-For more information on change detection, including information on the exact types that Blazor checks, see ASP.NET Core Razor component rendering.
+For more information on change detection, including information on the exact types that Blazor checks, see [ASP.NET Core Razor component rendering](rendering.md#rendering-conventions-for-componentbase).

@@ -1,25 +1,28 @@
 ---
 title: "BinaryFormatter migration guide: Migrate to protobuf-net (binary)"
-tool: "dotnet-standard"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/standard/serialization/binaryformatter-migration-guide/migrate-to-protobuf-net.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: "Migrate from BinaryFormatter to protobuf-net for binary serialization."
+ms.date: 5/31/2024
+no-loc: [BinaryFormatter, Serialization]
+helpviewer_keywords:
+  - "BinaryFormatter"
+  - "serializing objects"
+  - "serialization"
+  - "objects, serializing"
 ---
 
 # Migrate to protobuf-net (binary)
 
-The protobuf-net library is a contract-based serializer for .NET that uses the binary Protocol Buffers serialization format. The API follows typical .NET patterns and is broadly comparable to `XmlSerializer` and `DataContractSerializer`.
+The [protobuf-net](https://github.com/protobuf-net/protobuf-net) library is a contract-based serializer for .NET that uses the binary [Protocol Buffers](https://protobuf.dev) serialization format. The API follows typical .NET patterns and is broadly comparable to `XmlSerializer` and `DataContractSerializer`.
 
 Some behaviors and features of protobuf-net will be notable during migrations from BinaryFormatter, and many scenarios require applying attributes to members.
 
 - By default, both public and non-public types are serializable, with the serializer expecting a parameterless constructor.
 - protobuf-net requires each serializable type to be annotated with `[ProtoContract]` attribute; this attribute can optionally specify the `SkipConstructor = true` property, which *removes* the need for any particular constructor.
 - Every serializable non-static field and a property needs to be annotated with `[ProtoMember(int identifier)]` attribute. The member names aren't encoded in the data. Instead, the users must pick a positive integer to identify each member which must be unique within that type.
-- Inheritance must be explicitly declared via `[ProtoInclude(...)]` attribute on each type with known subtypes.
+- [Inheritance](https://github.com/protobuf-net/protobuf-net?tab=readme-ov-file#inheritance) must be explicitly declared via `[ProtoInclude(...)]` attribute on each type with known subtypes.
 - Read-only fields are supported by default.
 - Alternatively, some non-attributed tuple-like types are recognized by *constructor pattern*; a type with a constructor that has parameters that match (by name) all of the declared public members will be interpreted as a tuple, and the parameter order will be used to infer the identifier for that member.
-- The use of the `protobuf-net.BuildTools` design-time package is highly recommended; this offers compile-time warnings of common errors.
+- The use of the [`protobuf-net.BuildTools`](https://protobuf-net.github.io/protobuf-net/build_tools) design-time package is highly recommended; this offers compile-time warnings of common errors.
 
 ## Step by step migration
 

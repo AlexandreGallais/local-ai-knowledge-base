@@ -1,26 +1,17 @@
----
-title: "Deployment"
-tool: "angular"
-version: "22.2"
-source: "https://github.com/angular/angular/blob/dda2d41d948380d63619d597c9815db0aa77fd1d/adev/src/content/tools/cli/deployment.md"
-commit: "dda2d41d948380d63619d597c9815db0aa77fd1d"
-license: "CC-BY-4.0"
----
-
 # Deployment
 
 When you are ready to deploy your Angular application to a remote server, you have various options.
 
 ## Automatic deployment with the CLI
 
-The Angular CLI command `ng deploy` executes the `deploy` CLI builder associated with your project.
+The Angular CLI command `ng deploy` executes the `deploy` [CLI builder](tools/cli/cli-builder) associated with your project.
 A number of third-party builders implement deployment capabilities to different platforms.
 You can add any of them to your project with `ng add`.
 
 When you add a package with deployment capability, it will automatically update your workspace configuration (`angular.json` file) with a `deploy` section for the selected project.
 You can then use the `ng deploy` command to deploy that project.
 
-For example, the following command automatically deploys a project to Firebase.
+For example, the following command automatically deploys a project to [Firebase](https://firebase.google.com/).
 
 ```shell
 
@@ -39,19 +30,19 @@ You can read more by following the links associated with the package names below
 
 | Deployment to                                                     | Setup Command                                                                               |
 | :---------------------------------------------------------------- | :------------------------------------------------------------------------------------------ |
-| Firebase hosting      | `ng add @angular/fire`                       |
-| Vercel                    | `vercel init angular`        |
-| Netlify                                | `ng add @netlify-builder/deploy`   |
-| GitHub Pages                          | `ng add angular-cli-ghpages`           |
-| Amazon Cloud S3 | `ng add @jefiozie/ngx-aws-deploy` |
+| [Firebase hosting](https://firebase.google.com/docs/hosting)      | [`ng add @angular/fire`](https://www.npmjs.com/package/@angular/fire)                       |
+| [Vercel](https://vercel.com/solutions/angular)                    | [`vercel init angular`](https://github.com/vercel/vercel/tree/main/examples/angular)        |
+| [Netlify](https://www.netlify.com)                                | [`ng add @netlify-builder/deploy`](https://www.npmjs.com/package/@netlify-builder/deploy)   |
+| [GitHub Pages](https://pages.github.com)                          | [`ng add angular-cli-ghpages`](https://www.npmjs.com/package/angular-cli-ghpages)           |
+| [Amazon Cloud S3](https://aws.amazon.com/s3/?nc2=h_ql_prod_st_s3) | [`ng add @jefiozie/ngx-aws-deploy`](https://www.npmjs.com/package/@jefiozie/ngx-aws-deploy) |
 
-If you're deploying to a self-managed server or there's no builder for your favorite cloud platform, you can either create a builder that allows you to use the `ng deploy` command, or read through this guide to learn how to manually deploy your application.
+If you're deploying to a self-managed server or there's no builder for your favorite cloud platform, you can either [create a builder](tools/cli/cli-builder) that allows you to use the `ng deploy` command, or read through this guide to learn how to manually deploy your application.
 
 ## Manual deployment to a remote server
 
 To manually deploy your application, create a production build and deploy the output artifacts to your hosting environment.
 By default, `ng build` uses the `production` configuration.
-If you have customized your build configurations, you may want to confirm production optimizations are being applied before deploying.
+If you have customized your build configurations, you may want to confirm [production optimizations](tools/cli/deployment#production-optimizations) are being applied before deploying.
 
 `ng build` outputs the built artifacts to `dist/my-app/` by default, however this path can be configured with the `outputPath` option in the `@angular/build:application` builder.
 What you deploy depends on how your application is rendered:
@@ -59,7 +50,7 @@ What you deploy depends on how your application is rendered:
 - **Static hosting (client-side rendering or `outputMode: "static"`):** Copy the `dist/my-app/browser/` directory to a web server or content delivery network (CDN), and configure it to serve that directory.
 - **Server-side rendering (`outputMode: "server"`):** Copy both the `dist/my-app/browser/` and `dist/my-app/server/` directories to the server, then run `node dist/my-app/server/server.mjs`.
 
-For more details, see Server and hybrid rendering.
+For more details, see [Server and hybrid rendering](guide/ssr).
 
 While this is a minimal deployment solution, there are a few requirements for the server to serve your Angular application correctly.
 
@@ -93,16 +84,16 @@ IMPORTANT: When you prerender your application with `outputMode: "static"`, conf
 Once the browser loads the application, Angular router will read the URL to determine which page it is on and display `/users/42` correctly.
 
 For "real" 404 pages such as `http://my-app.test/does-not-exist`, the server does not require any additional configuration.
-404 pages implemented in the Angular router will be displayed correctly.
+[404 pages implemented in the Angular router](guide/routing/common-router-tasks#displaying-a-404-page) will be displayed correctly.
 
 ### Requesting data from a different server (CORS)
 
-Web developers may encounter a _cross-origin resource sharing_ error when making a network request to a server other than the application's own host server.
+Web developers may encounter a [_cross-origin resource sharing_](https://developer.mozilla.org/docs/Web/HTTP/CORS 'Cross-origin resource sharing') error when making a network request to a server other than the application's own host server.
 Browsers forbid such requests unless the server explicitly permits them.
 
 There isn't anything Angular or the client application can do about these errors.
 The _server_ must be configured to accept the application's requests.
-Read about how to enable CORS for specific servers at enable-cors.org.
+Read about how to enable CORS for specific servers at [enable-cors.org](https://enable-cors.org/server.html 'Enabling CORS server').
 
 ## Production optimizations
 
@@ -110,23 +101,23 @@ Read about how to enable CORS for specific servers at enable-cors.org.
 
 | Features                                                          | Details                                                                                       |
 | :---------------------------------------------------------------- | :-------------------------------------------------------------------------------------------- |
-| Ahead-of-Time (AOT) Compilation         | Pre-compiles Angular component templates.                                                     |
-| Production mode | Optimizes the application for the best runtime performance                                    |
+| [Ahead-of-Time (AOT) Compilation](tools/cli/aot-compiler)         | Pre-compiles Angular component templates.                                                     |
+| [Production mode](tools/cli/deployment#development-only-features) | Optimizes the application for the best runtime performance                                    |
 | Bundling                                                          | Concatenates your many application and library files into a minimum number of deployed files. |
 | Minification                                                      | Removes excess whitespace, comments, and optional tokens.                                     |
 | Mangling                                                          | Renames functions, classes, and variables to use shorter, arbitrary identifiers.              |
 | Dead code elimination                                             | Removes unreferenced modules and unused code.                                                 |
 
-See `ng build` for more about CLI build options and their effects.
+See [`ng build`](cli/build) for more about CLI build options and their effects.
 
 ### Development-only features
 
 When you run an application locally using `ng serve`, Angular uses the development configuration
 at runtime which enables:
 
-- Extra safety checks such as `expression-changed-after-checked` detection.
+- Extra safety checks such as [`expression-changed-after-checked`](errors/NG0100) detection.
 - More detailed error messages.
-- Additional debugging utilities such as the global `ng` variable with debugging functions and Angular DevTools support.
+- Additional debugging utilities such as the global `ng` variable with [debugging functions](api#angular_core_globals) and [Angular DevTools](tools/devtools) support.
 
 These features are helpful during development, but they require extra code in the app, which is
 undesirable in production. To ensure these features do not negatively impact bundle size for end users, Angular CLI
@@ -144,7 +135,7 @@ ng build --deploy-url /my/assets
 
 ```
 
-The effect and purpose of `--deploy-url` overlaps with `<base href>`. Both can be used for initial scripts, stylesheets, lazy scripts, and css resources.
+The effect and purpose of `--deploy-url` overlaps with [`<base href>`](guide/routing/router-reference#base-href). Both can be used for initial scripts, stylesheets, lazy scripts, and css resources.
 
 Unlike `<base href>` which can be defined in a single place at runtime, the `--deploy-url` needs to be hard-coded into an application at build time.
 Prefer `<base href>` where possible.

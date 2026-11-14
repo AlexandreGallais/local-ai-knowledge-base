@@ -1,15 +1,14 @@
 ---
 title: "Indexers in Interfaces"
-tool: "csharp"
-version: "15"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/csharp/programming-guide/indexers/indexers-in-interfaces.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+description: Indexers can be declared on an interface in C#. Learn how accessors of interface indexers differ from the accessors of class indexers.
+ms.date: 08/20/2024
+helpviewer_keywords: 
+  - "indexers [C#], in interfaces"
+  - "accessors [C#], indexers"
 ---
-
 # Indexers in Interfaces (C# Programming Guide)
 
-Indexers can be declared on an interface. Accessors of interface indexers differ from the accessors of class indexers in the following ways:
+Indexers can be declared on an [interface](../../language-reference/keywords/interface.md). Accessors of interface indexers differ from the accessors of [class](../../language-reference/keywords/class.md) indexers in the following ways:
 
 - Interface accessors don't use modifiers.
 - An interface accessor typically doesn't have a body.
@@ -18,7 +17,7 @@ The purpose of the accessor is to indicate whether the indexer is read-write, re
 
 The following is an example of an interface indexer accessor:
 
-_Code sample not included: ~/samples/snippets/csharp/interfaces/indexers.cs._
+[!code-csharp[DefineInterface](~/samples/snippets/csharp/interfaces/indexers.cs#DefineIndexer)]
 
 The signature of an indexer must differ from the signatures of all other indexers declared in the same interface.
 
@@ -26,9 +25,9 @@ The signature of an indexer must differ from the signatures of all other indexer
 
 The following example shows how to implement interface indexers.
 
-_Code sample not included: ~/samples/snippets/csharp/interfaces/indexers.cs._
+[!code-csharp[Implement](~/samples/snippets/csharp/interfaces/indexers.cs#ImplementInterface)]
 
-_Code sample not included: ~/samples/snippets/csharp/interfaces/indexers.cs._
+[!code-csharp[DefineInterface](~/samples/snippets/csharp/interfaces/indexers.cs#ExampleCode)]
 
 In the preceding example, you could use the explicit interface member implementation by using the fully qualified name of the interface member. For example
 
@@ -58,6 +57,6 @@ Implements the indexer on the `ICitizen` interface.
 
 ## See also
 
-- Indexers
-- Properties
-- Interfaces
+- [Indexers](./index.md)
+- [Properties](../classes-and-structs/properties.md)
+- [Interfaces](../../fundamentals/types/interfaces.md)

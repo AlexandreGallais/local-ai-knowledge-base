@@ -1,13 +1,10 @@
 ---
-title: "no-new-symbol"
-tool: "eslint"
-version: "10.14"
-source: "https://github.com/eslint/eslint/blob/12cbff4125db3f6446f72fa0c48c46b92b120427/docs/src/rules/no-new-symbol.md"
-commit: "12cbff4125db3f6446f72fa0c48c46b92b120427"
-license: "MIT"
+title: no-new-symbol
+rule_type: problem
+handled_by_typescript: true
+further_reading:
+- https://www.ecma-international.org/ecma-262/6.0/#sec-symbol-objects
 ---
-
-# no-new-symbol
 
 `Symbol` is not intended to be used with the `new` operator, but to be called as a function.
 
@@ -23,7 +20,7 @@ This rule is aimed at preventing the accidental calling of `Symbol` with the `ne
 
 Examples of **incorrect** code for this rule:
 
-**Incorrect:**
+::: incorrect
 
 ```js
 /*eslint no-new-symbol: "error"*/
@@ -31,9 +28,11 @@ Examples of **incorrect** code for this rule:
 var foo = new Symbol('foo');
 ```
 
+:::
+
 Examples of **correct** code for this rule:
 
-**Correct:**
+::: correct
 
 ```js
 /*eslint no-new-symbol: "error"*/
@@ -46,6 +45,8 @@ function bar(Symbol) {
 }
 
 ```
+
+:::
 
 ## When Not To Use It
 

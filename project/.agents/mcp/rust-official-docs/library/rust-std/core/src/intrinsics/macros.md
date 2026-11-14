@@ -1,12 +1,3 @@
----
-title: "core::intrinsics::macros"
-tool: "rust-std"
-version: "1.100"
-source: "https://github.com/rust-lang/rust/blob/0ef1bc386059596dada8fb65b50425aab2ea637a/library/core/src/intrinsics/macros.rs"
-commit: "0ef1bc386059596dada8fb65b50425aab2ea637a"
-license: "MIT OR Apache-2.0"
----
-
 # core::intrinsics::macros
 
 Macros used to declare intrinsics.
@@ -21,7 +12,7 @@ Declares an intrinsic that is generic over its type, but whose fallback body has
 written per-type. This is needed for the float intrinsics, which are generics but may
 have different fallback bodies for each float width.
 
-```
+```ignore (illustrative)
 intrinsic_dispatch_on_type! {
     /// Returns the exponential of a float.
     #[rustc_nounwind]
@@ -33,4 +24,4 @@ intrinsic_dispatch_on_type! {
     f64 => { libm::likely_available::exp(x) }
     f128 => { libm::maybe_available::expf128(x) }
 }
-```rust
+```

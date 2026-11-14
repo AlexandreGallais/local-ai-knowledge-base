@@ -1,30 +1,30 @@
 ---
-title: "Create custom extensions for Microsoft.Testing.Platform (MTP)"
-tool: "dotnet-core"
-version: "11"
-source: "https://github.com/dotnet/docs/blob/94b7dca39d8dca4374f326176874381661f4dd59/docs/core/testing/microsoft-testing-platform-architecture.md"
-commit: "94b7dca39d8dca4374f326176874381661f4dd59"
-license: "CC-BY-4.0"
+title: Create custom extensions for Microsoft.Testing.Platform (MTP)
+description: Learn how to build custom test frameworks and extensions for Microsoft.Testing.Platform (MTP).
+author: MarcoRossignoli
+ms.author: mrossignoli
+ms.date: 02/24/2026
+ai-usage: ai-assisted
 ---
 
 # Create custom extensions
 
 This article is for developers building custom test frameworks or extensions for Microsoft.Testing.Platform (MTP).
 
-> **Note:**
-> For complete sample code, see the TestingPlatformExamples in the Microsoft Test Framework repository.
+> [!NOTE]
+> For complete sample code, see the [TestingPlatformExamples](https://github.com/microsoft/testfx/tree/main/samples/public/TestingPlatformExamples) in the Microsoft Test Framework repository.
 
 ## Extension point summary
 
 | Extension point | In/Out of process | Purpose |
 |---|---|---|
-| ITestFramework | In-process | The only mandatory extension. Discovers and runs tests. |
-| IDataConsumer | In-process | Subscribes to and processes test data from the message bus. |
-| ITestSessionLifetimeHandler | In-process | Runs code before and after a test session. |
-| ITestApplicationLifecycleCallbacks | In-process | Runs code at the very start and very end of the test host. |
-| ICommandLineOptionsProvider | Both | Adds custom command-line options. |
-| ITestHostEnvironmentVariableProvider | Out-of-process | Sets environment variables before the test host starts. |
-| ITestHostProcessLifetimeHandler | Out-of-process | Observes the test host process externally. |
+| [ITestFramework](./microsoft-testing-platform-architecture-test-framework.md) | In-process | The only mandatory extension. Discovers and runs tests. |
+| [IDataConsumer](./microsoft-testing-platform-architecture-extensions.md#the-idataconsumer-extensions) | In-process | Subscribes to and processes test data from the message bus. |
+| [ITestSessionLifetimeHandler](./microsoft-testing-platform-architecture-extensions.md#the-itestsessionlifetimehandler-extensions) | In-process | Runs code before and after a test session. |
+| [ITestApplicationLifecycleCallbacks](./microsoft-testing-platform-architecture-extensions.md#the-itestapplicationlifecyclecallbacks-extensions) | In-process | Runs code at the very start and very end of the test host. |
+| [ICommandLineOptionsProvider](./microsoft-testing-platform-architecture-extensions.md#the-icommandlineoptionsprovider-extensions) | Both | Adds custom command-line options. |
+| [ITestHostEnvironmentVariableProvider](./microsoft-testing-platform-architecture-extensions.md#the-itesthostenvironmentvariableprovider-extensions) | Out-of-process | Sets environment variables before the test host starts. |
+| [ITestHostProcessLifetimeHandler](./microsoft-testing-platform-architecture-extensions.md#the-itesthostprocesslifetimehandler-extensions) | Out-of-process | Observes the test host process externally. |
 
 ## In-process vs out-of-process extensions
 
@@ -67,15 +67,15 @@ public interface IExtension
 ```
 
 - `Uid`: A unique identifier for the extension. Choose a unique value to avoid conflicts.
-- `Version`: The version of the extension, using semantic versioning.
+- `Version`: The version of the extension, using [semantic versioning](https://semver.org/).
 - `DisplayName`: A user-friendly name that appears in logs and `--info` output.
 - `Description`: A description that appears in `--info` output.
 - `IsEnabledAsync()`: Return `false` to exclude the extension from the session. Typically decisions are based on configuration or command-line options.
 
 ## What to read next
 
-- Build a test framework: Create a custom `ITestFramework` implementation, handle requests, and report test results.
-- Build extensions: Create in-process and out-of-process extensions such as data consumers, session handlers, and process monitors.
-- VSTest Bridge: Simplify migration of existing VSTest-based test frameworks to MTP.
-- Capabilities: Declare and query framework and extension capabilities.
-- Services: Access configuration, logging, message bus, and other platform services.
+- [Build a test framework](./microsoft-testing-platform-architecture-test-framework.md): Create a custom `ITestFramework` implementation, handle requests, and report test results.
+- [Build extensions](./microsoft-testing-platform-architecture-extensions.md): Create in-process and out-of-process extensions such as data consumers, session handlers, and process monitors.
+- [VSTest Bridge](./microsoft-testing-platform-extensions-vstest-bridge.md): Simplify migration of existing VSTest-based test frameworks to MTP.
+- [Capabilities](./microsoft-testing-platform-architecture-capabilities.md): Declare and query framework and extension capabilities.
+- [Services](./microsoft-testing-platform-architecture-services.md): Access configuration, logging, message bus, and other platform services.

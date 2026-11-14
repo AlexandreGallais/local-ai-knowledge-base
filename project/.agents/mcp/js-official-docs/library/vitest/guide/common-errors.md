@@ -1,10 +1,5 @@
 ---
-title: "Common Errors | Guide"
-tool: "vitest"
-version: "5.1"
-source: "https://github.com/vitest-dev/vitest/blob/7a3844954d8753fc0d5bed76a96ffd3a21716c22/docs/guide/common-errors.md"
-commit: "7a3844954d8753fc0d5bed76a96ffd3a21716c22"
-license: "MIT"
+title: Common Errors | Guide
 ---
 
 # Common Errors
@@ -15,7 +10,7 @@ If you receive an error that module cannot be found, it might mean several diffe
 
 1. You misspelled the path. Make sure the path is correct.
 
-2. It's possible that you rely on `baseUrl` in your `tsconfig.json`. Vite doesn't take into account `tsconfig.json` by default, so you might need to install `vite-tsconfig-paths` yourself, if you rely on this behavior.
+2. It's possible that you rely on `baseUrl` in your `tsconfig.json`. Vite doesn't take into account `tsconfig.json` by default, so you might need to install [`vite-tsconfig-paths`](https://npmx.dev/package/vite-tsconfig-paths) yourself, if you rely on this behavior.
 
 ```ts
 import { defineConfig } from 'vitest/config'
@@ -33,7 +28,7 @@ Or rewrite your path to not be relative to root:
 + import helpers from '../src/helpers'
 ```
 
-3. Make sure you don't have relative aliases. Vite treats them as relative to the file where the import is instead of the root.
+3. Make sure you don't have relative [aliases](/config/alias). Vite treats them as relative to the file where the import is instead of the root.
 
 ```ts
 import { defineConfig } from 'vitest/config'
@@ -50,17 +45,17 @@ export default defineConfig({
 
 ## Failed to Terminate Worker
 
-This error can happen when NodeJS's `fetch` is used with `pool: 'threads'`. See #3077 for details.
+This error can happen when NodeJS's `fetch` is used with [`pool: 'threads'`](/config/pool#threads). See [#3077](https://github.com/vitest-dev/vitest/issues/3077) for details.
 
-The default `pool: 'forks'` does not have this issue. If you've explicitly set `pool: 'threads'`, switching back to `'forks'` or using `'vmForks'` will resolve it.
+The default [`pool: 'forks'`](/config/pool#forks) does not have this issue. If you've explicitly set `pool: 'threads'`, switching back to `'forks'` or using [`'vmForks'`](/config/pool#vmforks) will resolve it.
 
 ## Project Working Directory Does Not Change
 
-In a multi-project run, `process.cwd()` in project config files and tests returns the directory where Vitest was started by default. A project's `root` controls where Vitest looks for its files, but it does not change the process working directory. Vite plugins can read the project root from the resolved Vite config's `root` property.
+In a [multi-project run](/guide/projects), `process.cwd()` in project config files and tests returns the directory where Vitest was started by default. A project's [`root`](/config/root) controls where Vitest looks for its files, but it does not change the process working directory. Vite plugins can read the project root from the resolved Vite config's `root` property.
 
-If your tests need `process.cwd()` to point to the project directory, use the `forks` pool and a project-specific `setupFiles` file:
+If your tests need `process.cwd()` to point to the project directory, use the [`forks` pool](/config/pool#forks) and a project-specific [`setupFiles`](/config/setupfiles) file:
 
-```ts
+```ts [packages/lib1/vitest.config.ts]
 import { defineProject } from 'vitest/config'
 
 export default defineProject({
@@ -71,17 +66,17 @@ export default defineProject({
 })
 ```
 
-```ts
+```ts [packages/lib1/setup.chdir.ts]
 import { fileURLToPath } from 'node:url'
 
 process.chdir(fileURLToPath(new URL('.', import.meta.url)))
 ```
 
-This changes the working directory in the test worker, after config loading. The `threads` pool cannot use `process.chdir()`.
+This changes the working directory in the test worker, after config loading. The [`threads` pool](/config/pool#threads) cannot use `process.chdir()`.
 
 ## Custom package conditions are not resolved
 
-If you are using custom conditions in your `package.json` exports or subpath imports, you may find that Vitest does not respect these conditions by default.
+If you are using custom conditions in your `package.json` [exports](https://nodejs.org/api/packages.html#package-entry-points) or [subpath imports](https://nodejs.org/api/packages.html#subpath-imports), you may find that Vitest does not respect these conditions by default.
 
 For example, if you have the following in your `package.json`:
 
@@ -102,9 +97,9 @@ For example, if you have the following in your `package.json`:
 }
 ```
 
-By default, Vitest will only use the `import` and `default` conditions. To make Vitest respect custom conditions, you need to configure `ssr.resolve.conditions` in your Vitest config:
+By default, Vitest will only use the `import` and `default` conditions. To make Vitest respect custom conditions, you need to configure [`ssr.resolve.conditions`](https://vite.dev/config/ssr-options#ssr-resolve-conditions) in your Vitest config:
 
-```ts
+```ts [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -116,19 +111,20 @@ export default defineConfig({
 })
 ```
 
-**Why `ssr.resolve.conditions` and not `resolve.conditions`?**
+::: tip Why `ssr.resolve.conditions` and not `resolve.conditions`?
 Vitest follows Vite's configuration convention:
 
-- `resolve.conditions` applies to Vite's `client` environment, which corresponds to Vitest's browser mode, jsdom, happy-dom, or custom environments with `viteEnvironment: 'client'`.
-- `ssr.resolve.conditions` applies to Vite's `ssr` environment, which corresponds to Vitest's node environment or custom environments with `viteEnvironment: 'ssr'`.
+- [`resolve.conditions`](https://vite.dev/config/shared-options#resolve-conditions) applies to Vite's `client` environment, which corresponds to Vitest's browser mode, jsdom, happy-dom, or custom environments with `viteEnvironment: 'client'`.
+- [`ssr.resolve.conditions`](https://vite.dev/config/ssr-options#ssr-resolve-conditions) applies to Vite's `ssr` environment, which corresponds to Vitest's node environment or custom environments with `viteEnvironment: 'ssr'`.
 
 Since Vitest defaults to the `node` environment (which uses `viteEnvironment: 'ssr'`), module resolution uses `ssr.resolve.conditions`. This applies to both package exports and subpath imports.
 
-You can learn more about Vite environments and Vitest environments in `environment`.
+You can learn more about Vite environments and Vitest environments in [`environment`](/config/environment).
+:::
 
 ## Segfaults and Native Code Errors
 
-Running native NodeJS modules in `pool: 'threads'` can run into cryptic errors coming from the native code.
+Running [native NodeJS modules](https://nodejs.org/api/addons.html) in `pool: 'threads'` can run into cryptic errors coming from the native code.
 
 - `Segmentation fault (core dumped)`
 - `thread '<unnamed>' panicked at 'assertion failed`
@@ -139,7 +135,7 @@ In these cases the native module is likely not built to be multi-thread safe. As
 
 ::: code-group
 
-```ts
+```ts [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -149,28 +145,30 @@ export default defineConfig({
 })
 ```
 
-```bash
+```bash [CLI]
 vitest --pool=forks
 ```
 
+:::
+
 ## Time Zone Does Not Change in Worker Threads
 
-Setting `process.env.TZ` in a setup file or in a test, or setting `TZ` via `env`, has no effect on `Date` in `pool: 'threads'` and `pool: 'vmThreads'`. Node.js applies `TZ` only when the main thread sets it. A worker thread sees the new value on `process.env`, but keeps the time zone of the main process.
+Setting `process.env.TZ` in a setup file or in a test, or setting `TZ` via [`env`](/config/env), has no effect on `Date` in `pool: 'threads'` and `pool: 'vmThreads'`. Node.js applies `TZ` only when the main thread sets it. A worker thread sees the new value on `process.env`, but keeps the time zone of the main process.
 
 ```ts
 process.env.TZ = 'Asia/Tokyo'
 new Date('2026-01-01T00:00:00Z').getHours() // 9 in forks, unchanged in threads
 ```
 
-Set the time zone before workers start. Use the shell, the config file, or `globalSetup`; all of them run in the main process and work in every pool.
+Set the time zone before workers start. Use the shell, the config file, or [`globalSetup`](/config/globalsetup); all of them run in the main process and work in every pool.
 
 ::: code-group
 
-```bash
+```bash [CLI]
 TZ=Asia/Tokyo vitest
 ```
 
-```ts
+```ts [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 process.env.TZ = 'Asia/Tokyo'
@@ -178,17 +176,19 @@ process.env.TZ = 'Asia/Tokyo'
 export default defineConfig({})
 ```
 
-```ts
+```ts [globalSetup.js]
 export default function () {
   process.env.TZ = 'Asia/Tokyo'
 }
 ```
 
+:::
+
 If tests need different time zones at runtime, use `pool: 'forks'` or `pool: 'vmForks'`, where each worker is a separate process, or pass the `timeZone` option to `Intl.DateTimeFormat` instead of changing `TZ`.
 
 ## Unhandled Promise Rejection
 
-This error happens when a Promise rejects but no `.catch()` handler or `await` is attached to it before the microtask queue flushes. This behavior comes from JavaScript itself and is not specific to Vitest. Learn more in the Node.js documentation.
+This error happens when a Promise rejects but no `.catch()` handler or `await` is attached to it before the microtask queue flushes. This behavior comes from JavaScript itself and is not specific to Vitest. Learn more in the [Node.js documentation](https://nodejs.org/api/process.html#event-unhandledrejection).
 
 A common cause is calling an async function without `await`ing it:
 
@@ -222,7 +222,7 @@ test('fetches user', async () => {
 })
 ```
 
-If you expect the call to throw, use `expect().rejects`:
+If you expect the call to throw, use [`expect().rejects`](/api/expect#rejects):
 
 ```ts
 test('rejects for missing user', async () => {
@@ -232,7 +232,7 @@ test('rejects for missing user', async () => {
 
 ## Package fails to load in Vitest but works in your app
 
-Some packages work in an app build but fail in Vitest because they are only valid after a bundler has rewritten or resolved them. When Vitest externalizes a dependency, Node.js loads it directly, so Node's ESM and package rules apply. See Node.js documentation on ECMAScript modules and packages for the precise rules.
+Some packages work in an app build but fail in Vitest because they are only valid after a bundler has rewritten or resolved them. When Vitest externalizes a dependency, Node.js loads it directly, so Node's ESM and package rules apply. See Node.js documentation on [ECMAScript modules](https://nodejs.org/docs/latest/api/esm.html) and [packages](https://nodejs.org/docs/latest/api/packages.html) for the precise rules.
 
 Common examples include packages that:
 
@@ -245,7 +245,7 @@ Common examples include packages that:
 You might see errors such as:
 
 - `Cannot find module './relative-path' imported from ...`
-- `Unexpected token '<example-value>'`
+- `Unexpected token 'export'`
 - `Cannot use import statement outside a module`
 - `Module ... seems to be an ES Module but shipped in a CommonJS package.`
 - `Unknown file extension ".css"`
@@ -254,7 +254,7 @@ When possible, fix the package so Node.js can load it directly: add `"type": "mo
 
 If you cannot fix the package itself, inline it so Vite handles it instead of passing it to Node.js as an external dependency. Inline the whole dependency chain that leads to the invalid package. If your source imports `wrapper-package`, and `wrapper-package` imports `broken-package`, inline both packages:
 
-```ts
+```ts [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -268,9 +268,9 @@ export default defineConfig({
 })
 ```
 
-You can also use Vite's `ssr.resolve.noExternal` for the same purpose. Vitest merges `ssr.resolve.noExternal` into `server.deps.inline`, so this is useful when the dependency also needs to be bundled by Vite in SSR builds:
+You can also use Vite's [`ssr.resolve.noExternal`](https://vite.dev/config/ssr-options#ssr-resolve-noexternal) for the same purpose. Vitest merges `ssr.resolve.noExternal` into [`server.deps.inline`](/config/server#server-deps-inline), so this is useful when the dependency also needs to be bundled by Vite in SSR builds:
 
-```ts
+```ts [vitest.config.js]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -284,7 +284,7 @@ export default defineConfig({
 
 ## CommonJS source code is not fully supported
 
-Vitest is ESM-first. By default, source files run in Vite's module runner, which provides CommonJS variables such as `require`, `module`, and `exports` for compatibility but does not reproduce Node.js CommonJS semantics completely.
+Vitest is ESM-first. By default, source files run in Vite's [module runner](/config/experimental#experimental-vitemodulerunner), which provides CommonJS variables such as `require`, `module`, and `exports` for compatibility but does not reproduce Node.js CommonJS semantics completely.
 
 Calls to `require()` always use Node.js directly and leave the module runner. As a result:
 
@@ -292,9 +292,9 @@ Calls to `require()` always use Node.js directly and leave the module runner. As
 - requiring TypeScript or other files that Node.js cannot execute is not supported
 - importing and requiring the same file can evaluate it twice, which can break singleton state, object identity, or `instanceof` checks
 
-If your project uses CommonJS and doesn't need Vite transforms, set `experimental.viteModuleRunner` to `false` so the whole module graph is loaded by the native runtime:
+If your project uses CommonJS and doesn't need Vite transforms, set [`experimental.viteModuleRunner`](/config/experimental#experimental-vitemodulerunner) to `false` so the whole module graph is loaded by the native runtime:
 
-```ts
+```ts [vitest.config.ts]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -306,9 +306,9 @@ export default defineConfig({
 })
 ```
 
-If the application uses ESM source but imports a CommonJS package from the same monorepo, you can instead use `server.deps.external` to externalize the complete CommonJS package. This keeps its entry points and internal `require()` calls in the same native module cache. For example:
+If the application uses ESM source but imports a CommonJS package from the same monorepo, you can instead use [`server.deps.external`](/config/server#server-deps-external) to externalize the complete CommonJS package. This keeps its entry points and internal `require()` calls in the same native module cache. For example:
 
-```ts
+```ts [vitest.config.ts]
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
